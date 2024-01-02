@@ -1,118 +1,142 @@
-Received: from mail-ot1-f48.google.com (mail-ot1-f48.google.com [209.85.210.48])
+Received: from mail-pj1-f45.google.com (mail-pj1-f45.google.com [209.85.216.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DB0B16410
-	for <git@vger.kernel.org>; Tue,  2 Jan 2024 20:36:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ttaylorr.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BE6918053
+	for <git@vger.kernel.org>; Tue,  2 Jan 2024 22:07:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="PuasZFz8"
-Received: by mail-ot1-f48.google.com with SMTP id 46e09a7af769-6dc076e9e59so3158956a34.2
-        for <git@vger.kernel.org>; Tue, 02 Jan 2024 12:36:23 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IFLWajzZ"
+Received: by mail-pj1-f45.google.com with SMTP id 98e67ed59e1d1-28c9d424cceso2861770a91.0
+        for <git@vger.kernel.org>; Tue, 02 Jan 2024 14:07:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1704227782; x=1704832582; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=Or5xKPlHJ1jnUdF3X5w16ul2J5ic4bsV8Gurwy23T6M=;
-        b=PuasZFz8nXWVaQa7zgFgVethGLtPMaoYSEHGuvQe9KmM6zauz22m2DjRXKCyEgTzFn
-         ALz+FTu5+nxLBdxC58duu/9cP3VhnKkcaHZ8oZVxGY1KAQQeXjUVIzS7CBlB4taYu6Uf
-         y8SPj/end77lbu3Wm22nlD4J5ieF8IfCSv7/qkLxE5+Hmom5rr/t1ecRtI8FdaVVhJeY
-         Snv6PZlMazlcEWATdrqPEpqiQBJAyHa58Y//TfhEFtwgcckP0uf6/DESdI2BxqxPTmAy
-         eroP0c2ZCR4R2fUxBdGmShMzb75gXcu7Xl4GBRKSigUkX1bDQkGLyp/BYhrWQqa4RrEh
-         FL2A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1704227782; x=1704832582;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1704233242; x=1704838042; darn=vger.kernel.org;
+        h=content-transfer-encoding:subject:from:cc:to:content-language
+         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=Or5xKPlHJ1jnUdF3X5w16ul2J5ic4bsV8Gurwy23T6M=;
-        b=wcx9o4hBDLaamArMOnuA4wAO2R9qocbBYSH4uF7Qf4gRdwjaj8VPDAbm5G83+rE14A
-         EXSe7aCu6m8xCndXkRJlDAeL4GiteMeOCR5x7BQzhV7WyHXB6waeOkTDazBUfFuTRK4t
-         uKGtjP8MCMlOg5/hR5C17hhbehJ1rIFuarqIsH4DKcJs+1guBwqyl6WWNhQzJaNn7bbO
-         /cMiz966t0G/ZXwJn13JTLjBghZRskrQ2tkje46qsySMSiZQ03y7htCPJAoYtoX5BC7o
-         IuQ9O6detWcY/QZ09+/cN1EdYSpXNE+A43NlPyH/XoyiO9YotORfEC7cQlPfGpSBKAAG
-         Cv8g==
-X-Gm-Message-State: AOJu0YynchxXLePa3+zWWFknRBE0cKNETbvjBM1OE7HeznSQbTyLZAXt
-	5DaaGxG1h868wy/X8TvgPIKvVOisuSm7rPTLUDDWq0kD4g0jbA==
-X-Google-Smtp-Source: AGHT+IEPfO4UbsTNlTTvUBSUJHCII7IEZpUsioSqoMo2BDG02TBQBcOWI7xfp7FYMaHVKQN5zbUQnw==
-X-Received: by 2002:a05:6830:1e66:b0:6dc:2da9:90be with SMTP id m6-20020a0568301e6600b006dc2da990bemr4867358otr.67.1704227782403;
-        Tue, 02 Jan 2024 12:36:22 -0800 (PST)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id z9-20020a9d65c9000000b006ce2c31dd9bsm4145201oth.20.2024.01.02.12.36.22
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 02 Jan 2024 12:36:22 -0800 (PST)
-Date: Tue, 2 Jan 2024 15:36:21 -0500
-From: Taylor Blau <me@ttaylorr.com>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Jakub Wilk <jwilk@jwilk.net>, git@vger.kernel.org,
-	Eric Wong <normalperson@yhbt.net>
-Subject: Re: [PATCH] git-clone.txt: document -4 and -6
-Message-ID: <ZZRzxZNb2Aq+2feW@nand.local>
-References: <20230527123849.5990-1-jwilk@jwilk.net>
- <xmqq1qivd8d0.fsf@gitster.g>
- <ZZRqgmDycyAXCrGZ@nand.local>
+        bh=U13yF7ptkMxg4C8fUXe03vzoLg4Zd3YskBGUtG1zdWk=;
+        b=IFLWajzZMpHQkur4TUS6u/x5TjmS6DvxFlOSWLJ0FkGsU5F5M0BQiRoBsTu6uZdS3B
+         YLW0HNkvh2e+Db56uOtbd1SgzSQlCl/qC5WdMjvY3WQ18c1AjnGlfvaUZdmQw9XwC5t1
+         mm6fnCXeyGUpwpCA0ruJHrfy8zCcoX8GZYQTuvQfM9JljW/5ybScAzdQfXoD3p3RHWUI
+         0TBBTd2DtcegwrtumLAIjWvXFShdaBllrgd2JE2ady0DBVyLgE2bXy6KR7IWrkB+9slU
+         IWo+RyAFsLTFXSK2SXrl3HRsIYjmsJ8qAMFWmaF/Hx48e38N77xy7o8fQKC1SShRm/ue
+         2l8Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1704233242; x=1704838042;
+        h=content-transfer-encoding:subject:from:cc:to:content-language
+         :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=U13yF7ptkMxg4C8fUXe03vzoLg4Zd3YskBGUtG1zdWk=;
+        b=aX+QF/5ngi0Cd1sJn1s27n1Jt5nMPuHokH8kPVVONj76TgTSPEDzirMckrOGl+yj5O
+         IrWbpX1PHtmZaRHUQDwh6ZcPfgYPga/IxpXnv1ZX6zY7Noo0x9KNFMwmH7S04iY+HtjO
+         0W1+kYE6fuC8Zh1JWbk0IFieLOgjDnlVpgeMp92enelW4n2LqEymTJFDmNIRoXxLmer/
+         kXZ0Ybvue/5jjsZePmeFU9o/vPH/zsoa5IzaO6vtb3dHXqCJX38+E/iNXJVdY4wlwrHp
+         cbqooDUjB25+8LX1+jxGU790xa4SjnQWpY1gONbrTkYnEEgv9U8BWzqpYw0pS9vFYYH6
+         Tftg==
+X-Gm-Message-State: AOJu0Yx4qCjUxen3FKKdcZ5InN2MaqdoD7GIkuhIMnzge3b8LrUPfKgR
+	XzI8nBjsIsi57WDjBBJxxgqTmTgGxWtXm60Xj5o=
+X-Google-Smtp-Source: AGHT+IE5IVN9G6jvjlzAqNKgbHJGeMk0f8zs+lR/uNnnF7d5qbYCTc637pCCsByyD36n2kVrnizg0w==
+X-Received: by 2002:a17:90a:db94:b0:28c:a5ff:ea4d with SMTP id h20-20020a17090adb9400b0028ca5ffea4dmr142340pjv.1.1704233242567;
+        Tue, 02 Jan 2024 14:07:22 -0800 (PST)
+Received: from ?IPV6:2402:a00:401:a99b:65e8:f5a4:7adb:5726? ([2402:a00:401:a99b:65e8:f5a4:7adb:5726])
+        by smtp.gmail.com with ESMTPSA id y8-20020a17090264c800b001d1cd7e4ad2sm22918866pli.125.2024.01.02.14.07.20
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 02 Jan 2024 14:07:22 -0800 (PST)
+Message-ID: <85d4e83c-b6c4-4308-ac8c-a65c911c8a95@gmail.com>
+Date: Wed, 3 Jan 2024 03:37:18 +0530
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <ZZRqgmDycyAXCrGZ@nand.local>
+User-Agent: Mozilla Thunderbird
+Content-Language: en-US
+To: git@vger.kernel.org
+Cc: newren@gmail.com, gitster@pobox.com, johannes.schindelin@gmx.de
+From: Ghanshyam Thakkar <shyamthakkar001@gmail.com>
+Subject: [GSOC][RFC] Heed core.bare from template config file when no command
+ line override given, as a microproject.
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Tue, Jan 02, 2024 at 02:56:50PM -0500, Taylor Blau wrote:
-> It turned up the following results:
->
->     -a
->     --depth
->     --shallow-since
->     --shallow-exclude
->     --no-tags
->     --recurse-submodules
->     -j, --jobs
->     -u, --upload-pack
->     -q, --quiet
->     -v, --verbose
->     --progress
->     -o, --server-option
+Hello,
 
-Hmm. I think the story is a little more complicated. Just looking at the
-ones that we agree on:
+I'm currently an undergrad beginning my journey of contributing to the
+Git project. I am seeking feedback on doing "Heed core.bare from
+template config file when no command line override given" described
+here 
+https://lore.kernel.org/git/5b39c530f2a0edf3b1492fa13a1132d622a0678e.1684218850.git.gitgitgadget@gmail.com/
+by Elijah Newren, as a microproject. I would like to know from the
+community, if the complexity and scope of the project is appropriate
+for a microproject.
 
-  * -j, --jobs
-  * -u, --upload-pack
-  * --progress
-  * -o, --server-option
-  * --[ipv]4
-  * --[ipv]6
+Approach:
+As described by Elijah in commit message that fixing this cannot be
+done in the create_default_files() function as it occurs too late.
+This is because both clone and init have different checks and steps
+for working with bare flag, like clone creates a new directory
+[name].git and sets the GIT_DIR_ENVIRONMENT to it (when not provided
+with an explicit dir name arg), while init sets the
+GIT_DIR_ENVIRONMENT to the current working directory (when not
+provided with an dir name arg). Also there are other steps like
+setting no_checkout in a bare repository in builtin/clone.c. These are
+all command specific steps which occur in builtin/clone.c and
+builtin/init-db.c ,before we ever hit the TODO comment via
+[builtin/clone.c]cmd_clone()->[setup.c]init_db()->
+[setup.c]create_default_files().
 
-Note that the 'clone' and 'fetch' versions for many of these options
-have different wording. For example, in Documentation/git-clone.txt we
-have:
+Therefore, rather than centralizing the code in setup.c and adding a
+bunch of if-else statements to handle different command specific
+scenarios related to bare option, I propose to add a check for
+template file config just after parsing of the flags and args in
+builtin/init-db.c and builtin/clone.c.
 
-    -j::
-    --jobs=<n>::
-           Number of parallel children to be used for all forms of fetching.
+e.g. in builtin/init-db.c :
 
-Whereas the description in the original fetch-options.txt is more
-verbose.
+static int template_bare_config(const char *var, const char *value,
+                     const struct config_context *ctx, void *cb)
+{
+       if(!strcmp(var,"core.bare")) {
+             is_bare_repository_cfg = git_config_bool(var, value);
+       }
+       return 0;
+}
 
-In fact, the story is even more complicated than that, since even though
-the 'push' builtin would benefit from having a shared source of
-documentation for the --ipv4 and --ipv6 options, 'push' does not have a
---jobs option.
+int cmd_init_db(int argc, const char **argv, const char *prefix)
+{
+...
+...
+       if(is_bare_repository_cfg==-1) {
+             if(!template_dir)
+                   git_config_get_pathname("init.templateDir",
+                                           &template_dir);
 
-'clone', 'fetch', and 'pull' all share an '--upload-pack' option as you
-note, though 'push' naturally doesn't (so we would need another ifdef
-there, too). But the instances in 'clone', 'fetch', and 'pull' all
-differ in their wording (e.g., the 'clone' documentation says "the
-repository to clone from ..." but the others say "the repository to
-fetch from ...").
+             if(template_dir) {
+                   const char* template_config_path
+                                = xstrfmt("%s/config",
+                   struct stat st;
 
---progress could be shared, as could --server-option, and the two
---ipv4/6 options. But the number of nested ifdefs necessary to share the
-other options probably dose not justify the effort to do so.
+                   if(!stat(template_config_path, &st) &&
+                     !S_ISDIR(st.st_mode)) {
+                         git_config_from_file(template_bare_cfg,
+                                        template_config_path, NULL);
+                   }
+             }
+...
+...
+       return init_db(git_dir, real_git_dir, template_dir, hash_algo,
+                      initial_branch, init_shared_repository, flags);
+}
 
-Thanks,
-Taylor
+I also wanted to know if the global config files should have an effect
+in deciding if the repo is bare or not.
+
+Curious to know your thoughts on, if this is the right approach or
+does it require doing refactoring to bring all the logic in setup.c.
+Based on your feedback, I can quickly send a patch.
+
+p.s.: Apologies for the weird indenting, due to 70 character limit.
+consider it just a prototype.
+
+Thanks!
