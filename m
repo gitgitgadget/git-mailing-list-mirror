@@ -1,71 +1,69 @@
-Received: from out3-smtp.messagingengine.com (out3-smtp.messagingengine.com [66.111.4.27])
+Received: from out1-smtp.messagingengine.com (out1-smtp.messagingengine.com [66.111.4.25])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 885CB1864E
-	for <git@vger.kernel.org>; Wed,  3 Jan 2024 06:22:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F65D18032
+	for <git@vger.kernel.org>; Wed,  3 Jan 2024 07:33:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="xDrDuSeA";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="tJCOWOQ+"
-Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
-	by mailout.nyi.internal (Postfix) with ESMTP id DB24A5C00E2;
-	Wed,  3 Jan 2024 01:22:45 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="tmojUC1s";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="DdrF/RHc"
+Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
+	by mailout.nyi.internal (Postfix) with ESMTP id 7CD575C00CF;
+	Wed,  3 Jan 2024 02:33:29 -0500 (EST)
 Received: from mailfrontend2 ([10.202.2.163])
-  by compute5.internal (MEProxy); Wed, 03 Jan 2024 01:22:45 -0500
+  by compute2.internal (MEProxy); Wed, 03 Jan 2024 02:33:29 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1704262965; x=1704349365; bh=FqbAHKp6GZ
-	pMNU6U9RvoV84G+vN6lNcnKBEXD1pYKy4=; b=xDrDuSeANg0OubpLbcQRkbqg+C
-	pzdd6DMKztyX0LoOJgdqUhO9m8VMNv2UWod/lr/2KfzI2zpUzGfIO88JfyFrZrik
-	tc9I0dMrfl1L4Kj9nR/gxZDbLHAkK4aZ3fT6EAXY9rMTydeAWmm0/wl0GGFl+wFa
-	2PlYRy6fX45Hn3Snl0mR9I5UjkkC0KxDPRnd20QX7QWhRODSN7P4Ncu+1UpkCTKt
-	CJPSPiRwW072UqztVvwCXuMCLSwAPd6i90LRNlwMS2zPli7iG0WMI3Nzu2Zi35IX
-	IUYwYEbWDCGyLeaqC8crCpdFBCZZVaLNRgbM9elN9s1pTHHt4QGNvebBGVqA==
+	:subject:to:to; s=fm2; t=1704267209; x=1704353609; bh=C1WV5eGU1l
+	xGxsJ7ro5UzU6nJkjlQt/qJd+aOY229WQ=; b=tmojUC1sloyKJxJdLwElrAwLue
+	2fwvCxiKbFTcktvy2+kQX9lGI99CGtxXP4ukiJiu7xKFTCF0uTwC612tdCaV0dK3
+	UnrY6okS6e3j4vUD0/6P+6Ms55ymqVaeSkiCOq6PMxW1wbeyHqKsLZnbzQgYJWDp
+	arimHp2IpUamVdqv5pjLof/wtcf+31QmMgh3x58DhjQ+XWCSkVhcfi8zbspuAa4k
+	c4eGYfjbPCMxVccEMJMZoICzGt92NZ1J4QnSsY1q+vnxAHnwByrezP2N0DDJ+1x5
+	E6JIdmmVbakkziWeRSdm5gTU3OQgDprFalWUaiJifRJ2RFHgkLnTcuH3bijg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1704262965; x=1704349365; bh=FqbAHKp6GZpMNU6U9RvoV84G+vN6
-	lNcnKBEXD1pYKy4=; b=tJCOWOQ+m5mSc/riWQkkTJRkYamud4uTvW0flj3Bidj6
-	+Lo6BXRWTsyyTLG1bSfWup/bKJomhMlsqrz9gi6c+b25zs3pR1c2/YIcc15qDkX6
-	8Vqrteb/+/mkx+19QE5d6ij6Zl8UvvYPG1Y8O563d6Ji5kTRydbzcfBL7KHSxqgS
-	VBCa47k97+C9DQMLSUCIjhO+lzf5QJt2upioR4mQMdi7Zmz67I0ZQsvih4Uo5MxI
-	Fm4Spd5SLMdopVUQ2J4uZ7lBdQGV1PSZbV2xIZFZCWpqXvKv9FDBXlOrgt8beyw9
-	vI7umEszWegJCHXQ095v4L2S5HzVIadz1FG38MCREg==
-X-ME-Sender: <xms:Nf2UZfHJU-z30hsfKx7ucOtB41BMYYuxytiBztArkzBAiQueSA9zSw>
-    <xme:Nf2UZcWdPVdg_gi13C5Y2kP_BY_lLoJWsE7-3m9-P9qoZE4CbxQsAlnhlAZf0DYw6
-    zZ9DLQP9A-04mDcDg>
-X-ME-Received: <xmr:Nf2UZRKD97_iqVHyC_n7chWnMQQTbWy9wB6O4hwpYx6tzM7zVt1eOuJb9NnYyGt2TeVoSLNywYP0wOfC1O51KPFaSuV1xeLxaUKrzYDkEBIYcg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrvdeggedgleeiucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvvefukfhfgggtuggjsehgtd
-    erredttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshes
-    phhkshdrihhmqeenucggtffrrghtthgvrhhnpeeukedtvedtffevleejtefgheehieegke
-    eluddvfeefgeehgfeltddtheejleffteenucevlhhushhtvghrufhiiigvpedtnecurfgr
-    rhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhm
-X-ME-Proxy: <xmx:Nf2UZdFmoNF1ztsyzrUXnZDervwaaRcYTwLwsPUh1dUjLbD-Y6h6WQ>
-    <xmx:Nf2UZVVRm6D3tU_YL7fDzob6gO_3qjjBbWcBS_TBsQcCzi7j-AUJPg>
-    <xmx:Nf2UZYObdh7n799MdfGhMPcITA77oOaONEsLQha1VwhcJX29CTQf2w>
-    <xmx:Nf2UZUcbFWyLw2E58WTtcUJKsdYThuNYxNJJhele64eW0omHE_kq3w>
+	fm2; t=1704267209; x=1704353609; bh=C1WV5eGU1lxGxsJ7ro5UzU6nJkjl
+	Qt/qJd+aOY229WQ=; b=DdrF/RHcV04G4tZtcxfXdbyLUmhQnzG+TQS3+ElLVNGX
+	+RtH6qb/Nk+cdpZJKyUrAAuD98ma2vkM1W4CYHw+gB+CK8xwOr2nKfq+2QYKPxGM
+	kfZir46Um9IWtOdrneGW7netrPRBpgo3/seLnNxRtyKq4sAzmop4W3zpuhVKKAe3
+	gKBcc91duL232PnC72mZA85yHU7seJ8D132egNUpocex5qz/xhztIneodbDoBkA9
+	ktZpkrR79icLBB+2e73lIKfZeqfKBiO7wKVLiLbq4qfotPOGe2bjsc9/xy+EVE85
+	GBAwwZ7FrZPr8IRa05S7Ziwab3ois+nUXQvOIYUX4Q==
+X-ME-Sender: <xms:yA2VZRefOVdsJc2KzUg4GFrl-uEh8F0PgS_oatCTroNfJ7cGhFo5og>
+    <xme:yA2VZfOCocsNjX65n8lKia1Jy83PikOYaBLNh6-dBJADsTeUZA0mtdU7zARB7YFpt
+    aVMVAuP1CeRtcy5Jg>
+X-ME-Received: <xmr:yA2VZahrzzi2KdImOC-pp1EOXHGnZRjTMixlhRuC3pN1Q1jb7SmbaddSOPh6BnijFej5ZFk03SNNdPBZKRvV3fPbDtH_10KFoOtgFon97E8ITQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrvdeggedgudduvdcutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
+    necuuegrihhlohhuthemuceftddtnecunecujfgurhepfffhvfevuffkfhggtggujgesgh
+    dtreertddtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhs
+    sehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepueektdevtdffveeljeetgfehheeige
+    ekleduvdeffeeghefgledttdehjeelffetnecuvehluhhsthgvrhfuihiivgeptdenucfr
+    rghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimh
+X-ME-Proxy: <xmx:yQ2VZa8yzb5qYqsotehwtB7Pre-HjhTxEd1E3b7cLbxblmyXNnAltQ>
+    <xmx:yQ2VZduSf1B6eMcIrdiRKkQLTNz3HQ3U2VleSR80ZGpxk31WHxh-RQ>
+    <xmx:yQ2VZZHlDLG_pV3fYm3uIDTVj_GyByRHMGHUy1qhvJTMWOp9ApIgFw>
+    <xmx:yQ2VZeVEkCossLxrBGCYHoxXo75S5PEgAam0sUq2RulRxli1m5dNuw>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 3 Jan 2024 01:22:44 -0500 (EST)
+ 3 Jan 2024 02:33:28 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 63004312 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 3 Jan 2024 06:20:19 +0000 (UTC)
-Date: Wed, 3 Jan 2024 07:22:43 +0100
+	by vm-mail (OpenSMTPD) with ESMTPSA id 2719b46c (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 3 Jan 2024 07:31:00 +0000 (UTC)
+Date: Wed, 3 Jan 2024 08:33:24 +0100
 From: Patrick Steinhardt <ps@pks.im>
-To: git@vger.kernel.org
-Cc: Han-Wen Nienhuys <hanwenn@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v3 8/8] reftable/merged: transfer ownership of records when
- iterating
-Message-ID: <eea0e161adca68e986cd7af0a195e60b8d4cbc9f.1704262787.git.ps@pks.im>
-References: <cover.1703063544.git.ps@pks.im>
- <cover.1704262787.git.ps@pks.im>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Stefan Haller <lists@haller-berlin.de>, git@vger.kernel.org
+Subject: Re: Concurrent fetch commands
+Message-ID: <ZZUNxNciNb_xZveY@tanuki>
+References: <c11ca0b3-aaf4-4a8d-80a1-3832954aa7aa@haller-berlin.de>
+ <xmqqy1daffk8.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -73,98 +71,100 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="IK3gTZSBVwkAcZ6/"
+	protocol="application/pgp-signature"; boundary="qeOvRqTVEbT/cmJo"
 Content-Disposition: inline
-In-Reply-To: <cover.1704262787.git.ps@pks.im>
+In-Reply-To: <xmqqy1daffk8.fsf@gitster.g>
 
 
---IK3gTZSBVwkAcZ6/
+--qeOvRqTVEbT/cmJo
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-When iterating over records with the merged iterator we put the records
-into a priority queue before yielding them to the caller. This means
-that we need to allocate the contents of these records before we can
-pass them over to the caller.
+On Sun, Dec 31, 2023 at 09:27:19AM -0800, Junio C Hamano wrote:
+> Stefan Haller <lists@haller-berlin.de> writes:
+>=20
+> > I can reliably reproduce this by doing
+> >
+> >    $ git fetch&; sleep 0.1; git pull
+> >    [1] 42160
+> >    [1]  + done       git fetch
+> >    fatal: Cannot rebase onto multiple branches.
+>=20
+> I see a bug here.
+>=20
+> How this _ought_ to work is
+>=20
+>  - The first "git fetch" wants to report what it fetched by writing
+>    into the $GIT_DIR/FETCH_HEAD file ("git merge FETCH_HEAD" after
+>    the fetch finishes can consume its contents).
+>=20
+>  - The second "git pull" runs "git fetch" under the hood.  Because
+>    it also wants to write to $GIT_DIR/FETCH_HEAD, and because there
+>    is already somebody writing to the file, it should notice and
+>    barf, saying "fatal: a 'git fetch' is already working" or
+>    something.
+>=20
+> But because there is no "Do not overwrite FETCH_HEAD somebody else
+> is using" protection, "git merge" or "git rebase" that is run as the
+> second half of the "git pull" ends up working on the contents of
+> FETCH_HEAD that is undefined, and GIGO result follows.
+>=20
+> The "bug" that the second "git fetch" does not notice an already
+> running one (who is in possession of FETCH_HEAD) and refrain from
+> starting is not easy to design a fix for---we cannot just abort by
+> opening it with O_CREAT|O_EXCL because it is a normal thing for
+> $GIT_DIR/FETCH_HEAD to exist after the "last" fetch.  We truncate
+> its contents before starting to avoid getting affected by contents
+> leftover by the last fetch, but when there is a "git fetch" that is
+> actively running, and it finishes _after_ the second one starts and
+> truncates the file, the second one will end up seeing the contents
+> the first one left.  We have the "--no-write-fetch-head" option for
+> users to explicitly tell which invocation of "git fetch" should not
+> write FETCH_HEAD.
 
-The handover to the caller is quite inefficient though because we first
-deallocate the record passed in by the caller and then copy over the new
-record, which requires us to reallocate memory.
+While I agree that it's the right thing to use "--no-write-fetch-head"
+in this context, I still wonder whether we want to fix this "bug". It
+would be a rather easy change on our side to start using the lockfile
+API to write to FETCH_HEAD, which has a bunch of benefits:
 
-Refactor the code to instead transfer ownership of the new record to the
-caller. So instead of reallocating all contents, we now release the old
-record and then copy contents of the new record into place.
+  - We would block concurrent processes of writing to FETCH_HEAD at the
+    same time (well, at least for clients aware of the new semantics).
 
-The following benchmark of `git show-ref --quiet` in a repository with
-around 350k refs shows a clear improvement. Before:
+  - Consequentially, we do not write a corrupted FETCH_HEAD anymore when
+    multiple processes write to it at the same time.
 
-    HEAP SUMMARY:
-        in use at exit: 21,163 bytes in 193 blocks
-      total heap usage: 708,058 allocs, 707,865 frees, 36,783,255 bytes all=
-ocated
+  - We're also more robust against corruption in the context of hard
+    crashes due to atomic rename semantics and proper flushing.
 
-After:
+I don't really see much of a downside except for the fact that we change
+how this special ref is being written to, so other implementations would
+need to adapt accordingly. But even if they didn't, if clients with both
+the new and old behaviour write FETCH_HEAD at the same point in time the
+result would still be a consistent FETCH_HEAD if both writes finish. We
+do have a race now which of both versions of FETCH_HEAD we see, but that
+feels better than corrupted contents to me.
 
-    HEAP SUMMARY:
-        in use at exit: 21,163 bytes in 193 blocks
-      total heap usage: 357,007 allocs, 356,814 frees, 24,193,602 bytes all=
-ocated
+Patrick
 
-This shows that we now have roundabout a single allocation per record
-that we're yielding from the iterator. Ideally, we'd also get rid of
-this allocation so that the number of allocations doesn't scale with the
-number of refs anymore. This would require some larger surgery though
-because the memory is owned by the priority queue before transferring it
-over to the caller.
-
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
----
- reftable/merged.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
-
-diff --git a/reftable/merged.c b/reftable/merged.c
-index a28bb99aaf..a52914d667 100644
---- a/reftable/merged.c
-+++ b/reftable/merged.c
-@@ -124,10 +124,12 @@ static int merged_iter_next_entry(struct merged_iter =
-*mi,
- 		reftable_record_release(&top.rec);
- 	}
-=20
--	reftable_record_copy_from(rec, &entry.rec, hash_size(mi->hash_id));
-+	reftable_record_release(rec);
-+	*rec =3D entry.rec;
-=20
- done:
--	reftable_record_release(&entry.rec);
-+	if (err)
-+		reftable_record_release(&entry.rec);
- 	return err;
- }
-=20
---=20
-2.43.GIT
-
-
---IK3gTZSBVwkAcZ6/
+--qeOvRqTVEbT/cmJo
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmWU/TIACgkQVbJhu7ck
-PpTuDg/+PpQ8esEJFnNShZrTmsSe2p1YU4aNcCa9Bpkya/UtbQi4FvsDRgtJCqOi
-sJMUhbkRcIeQxK5np8G2jH+56Er032VA4GeOi9j/65BAT1oshN859C2ybboSWNLc
-1Rt7q7tX7ww9MxjCOVjWC4RxKcq9zeyd9DtP8HrjFVYvH8RvG22dYRLm8Ejd5g9l
-ufpvsaKbj+XgI1Xs5/bFngZi7k/LIPJDRykutcWbNSq590UW9mM4Yfj1nqoOsM4K
-PUfldB4i37dpmmlIo9KEnAy+ztoVWkLuRS9sEgBh5QdF1PqpCnw4DyZhJ8AR1eFt
-rseCIXS/p2AOJyfVgpPkwTxcXMLgl+V54NODmjpBsm3jOjyHWFWwUp+r2FMMJy3L
-f/hl9LtoFEPUyTiQGOx63vIYlMgmQli/BbLVlmeRh7ohc5CgtR7OqleL9IQJfa9L
-Uh7iBqBhZqR8jyo1OIJvI3U7Fl23ZYq/IiAxPmEydWDkXBM6EycvKMIhvqe49oA9
-9+xr97wzX9L1qi87NkHh4aX3MSTFNGYXs88zlp3vJYrtEIDYKlzZaJCV+4VMESfr
-K7eIfkVg4dOSiUzPStXGFj0PfPeWmzxJBeXh8nC+TN7Uw0DQg+we58C9jMbz3DDG
-hDqs5EDzQxTBb+tyztRfgQvS8DQjn0pFfTzclMZ1BZQOIN5kiCU=
-=v90e
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmWVDcMACgkQVbJhu7ck
+PpQitA//Utcz4SmstkZOpgVw1Idt4EPQ89OItGg+3uXr/zKMGmCN2m9Bqn9FQJ4f
+Ckv0y5lbsXQsqlLYV7Z45V2rtsQKXvIBYQLOP3NPT63y/MNXLpc138yNot7BZ6M8
+4cwEFIj4CicfQQeFpMWUDZ1gunzAZ+axtXOPH0gVXGbkJP1Fy9VQaK5u0DRQppHx
+QKhKiA4CRo2KozTCv505qLwPN9D3Tq9E9AmE43zat6NeHMKSOSTBz+jXSLf/ccHT
+DY/H+T+1jBM6CeZuXI3iA8hGZhjqFyaGkEF2CaUSYHepgFG23hafoCGTvN4NFRPh
+jM0IkMcSVRIloRjDEMDmO8BcK+PXPGzXjFt85Z+MW3vh1eoSKv/UzLk8LbYESAD/
+I19HX4X92N0EtgYKqH65eB38CdmEvB37019HR+UhdnfuSuJtYoPsNwZ/4fU2i88e
+3uM6SboABI4b2N1ymEYE2WmyJkzay85l4y78zSL+VAkbcfmLs0L/U176Tee3RhLE
+qppWew+F5QVFavtJ5X6+wTfFJUAr1kFHUgLTN88SeMkn929eGk7Rh95PXe8O3GZ9
+1tS9Gmw3wmQayEz/wA6rXMW3dJ3FwRGV77h8zgDgfZe92k7ngasQDztzlchmFoiW
+aXD4dAZ7sp5VbsNccIvQVBt9fh/aohRF5iNyKeahS8fKTdBb5Sg=
+=j8Z9
 -----END PGP SIGNATURE-----
 
---IK3gTZSBVwkAcZ6/--
+--qeOvRqTVEbT/cmJo--
