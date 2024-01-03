@@ -1,45 +1,45 @@
 Received: from out1-smtp.messagingengine.com (out1-smtp.messagingengine.com [66.111.4.25])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BD8D18624
-	for <git@vger.kernel.org>; Wed,  3 Jan 2024 08:33:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64CB7182A4
+	for <git@vger.kernel.org>; Wed,  3 Jan 2024 08:52:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="tGdHn/8D";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="SiJrdWFz"
-Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
-	by mailout.nyi.internal (Postfix) with ESMTP id A7D545C006B;
-	Wed,  3 Jan 2024 03:33:26 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="IqDvrTL1";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="gxpmnvUm"
+Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
+	by mailout.nyi.internal (Postfix) with ESMTP id 7BC355C0081;
+	Wed,  3 Jan 2024 03:52:38 -0500 (EST)
 Received: from mailfrontend2 ([10.202.2.163])
-  by compute3.internal (MEProxy); Wed, 03 Jan 2024 03:33:26 -0500
+  by compute2.internal (MEProxy); Wed, 03 Jan 2024 03:52:38 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1704270806; x=1704357206; bh=kuao2uUHQN
-	FiRFrzo8tjgkTcLGiPCkUk3jUdoxE8Pqo=; b=tGdHn/8DBGi08m0nBscqX3Kcjj
-	GgxvQjc+r12w6TH5n2DJ9iR5N75hdury8Fukd1Pv/kfcDeCRva8wDlF+M22K7RNt
-	kTg+jWrSn5TNa0KJVWDJWzKXi24axHIrcMgszOq24MNecLWvMM+l0Hy/QicDPj1I
-	ZU3nXXL+KsCwF3TldjQyXnJa4WfTh2m475ROfXN9zLoSxV4f1sDXprppnb4bNNiz
-	ikILqeiaeptexNSnDRNnvPkiH7gWA9RHP3yoMN8yMdpktPlgWK4WgCaDuxdu9YAn
-	mFx3nVU9WmHu1m6bZfssMioyoXU52tUiH467orZWE/ubGMSGSnyDi4AxfgWg==
+	:subject:to:to; s=fm2; t=1704271958; x=1704358358; bh=/mOXt/Q2CH
+	9oaFG2ww7hE6wPXkhX0ARjV3RATADdhLM=; b=IqDvrTL1DhLSBJIFV0OL0aCtxU
+	BoEnelEvNZkaeX8arxDRIwRlFgZDrCQUPeusyAN1E1D9CM/vBwhBCq4ZeaBthZqq
+	5ZvG4b/U2bmu2cVmB8WsmoFjY6B13BFVc/tXpMAOPJGVquA/yISbG4P1AmhiSp50
+	nVXj+SsPbVu9eG7nc1HWUq3mA8Tbv/YX36PGPmZy6gdBDJehGKP+qyypp7HGJDrP
+	I6utnPY95073VjyG7giqXLGtGAgu66AsTbklhVQE7nJnrWtCW3WSHQg0QE8Mxt7+
+	8C9rs0nncV3JO5m/+jEZD9IFPSjY8e7Z44YkQy4HntxAEIEvepMb6TN7t4dw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1704270806; x=1704357206; bh=kuao2uUHQNFiRFrzo8tjgkTcLGiP
-	CkUk3jUdoxE8Pqo=; b=SiJrdWFzY9g2BPojYRy7ZA9NTdtgkp7xUWMXP3v6x8a/
-	3hbHFqR9V0UoGWKCFxWv4GZ3ayY7aACj6ewiQL2aGf6TnJhUxmY2xbxF0MOrUHhV
-	SF0uOqyvw9JZm55Okfm/r+BGAdVsHJxnzVEBHiVk+NnxTJEO1O13HR1Q9Cegdhvt
-	G6ayBiWTsbdYZAEeQtrsQ8IO9sh0uBVBfUSVCwjcpKqnyZhm6CoFZKGlIBkd45us
-	Jqat+wL2UuSnBR/fqhMW7NvDxbzfQA4ffZGgMR/0wFtZ9rUca3JVHOAUl4t/o8lE
-	0xjuWlCYIlBtGAdLhPWmQ45QvVsGDes1muTmsMKOGA==
-X-ME-Sender: <xms:1huVZVn9v1kqWYEdwBY6E8vLRqcrDUzSD_-P3Gucr9N7mSdZDfmi_Q>
-    <xme:1huVZQ3xXrh-agrEARzIU56tsAMzWRlVk4F6TTCENQ3r8RjDnRon8y-LQOEoFqkKz
-    YF3O4Zu6BEBcOZB9g>
-X-ME-Received: <xmr:1huVZbqoWkKns4BjIWNoLJXbv8dTcuehVBu5oxldjIV1dcEPBQJQDtj5-tp7vyvSJSZdzslvtNyVfcs7OQCRQFkSjy7Hp7hj6_PX7MK4o05rWQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrvdeggedguddvfecutefuodetggdotefrod
+	fm2; t=1704271958; x=1704358358; bh=/mOXt/Q2CH9oaFG2ww7hE6wPXkhX
+	0ARjV3RATADdhLM=; b=gxpmnvUmm8OiGfSsBE1xQcc81IKIQrX5J9BqOLBAqOpp
+	w16j8UT2i6sC6Ow37V2w2uJqQmPxfyN5BOyvpwI0cMYk0pbr3jCpXJsgMsue1b0R
+	k/B+R7YzM3R2GkDuLAa/cDaW6hdBu1/9MxrKsAC60ZZXLglpaASK7rCVgXboTbjw
+	jOHRezTs9O4pRsD47Kcrj2FbUsqRPYCQC6VfhrMMe2uXDd+rol8jWhREFjw5hfdU
+	B8s/2yw7bWYku49CTVIC3/aVU+AQIEVK/aTD7qpFl1HPCk/b1SLFqMrgYVuvhNe5
+	/3nho73yoqoHhZL9IxcI9oDM76Ya3UWjGLT3qrLBZQ==
+X-ME-Sender: <xms:ViCVZQhbKjcO1OYD2gZ6n-WuTJDM9ru8eQ0KvxhkXe1u5DBAqG2VvQ>
+    <xme:ViCVZZAOKK4iN7EbKg3sdu_oe-CY_-4fKYzbwnInyC2cRZKJS8b3iIUcyovNwYtJl
+    ih_FhXJv-4RbkjtLw>
+X-ME-Received: <xmr:ViCVZYHrQ2ijKijrxj96Qm6ebqgC3moP1CdYPVIzQIWLBLWym7ZByUyGg291yIhWb87sKpJyJ2yPtGdpdgGJ8D6p5v5dN513BJdOOeRYDZpBEQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrvdeggedguddvjecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
     necuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
     enucfjughrpeffhffvvefukfhfgggtuggjsehgtderredttddvnecuhfhrohhmpefrrght
@@ -47,26 +47,31 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrvdeggedguddvfecutefuodetgg
     gvrhhnpeeukedtvedtffevleejtefgheehieegkeeluddvfeefgeehgfeltddtheejleff
     teenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpsh
     esphhkshdrihhm
-X-ME-Proxy: <xmx:1huVZVlfjNAUL4UaGhXFCJDN6Wj9e2VWfAWJVfcceios0twBb1uacQ>
-    <xmx:1huVZT1Tvjn_rHUTwZqQ68O8qWKSGpWnUDnVbnUaZxhAsPm1rZRwlA>
-    <xmx:1huVZUvb9LefvIYd1lwZjhH6klOn3ecwvL1WmO3vvDRjofpTJFih3w>
-    <xmx:1huVZQ9jqu19CcplEn-nf2s9ldVi5UwvtWrVppKBFsaz07C8HC0vhw>
+X-ME-Proxy: <xmx:ViCVZRSYUKi8uctzgYXoqtbfJuG6H2pH7n0KfbpaZcawxBKHP_EcSw>
+    <xmx:ViCVZdx8ptkMQIqJt16OOT3EBz5RVxapwaSGroje2BIosaW7PC4B8g>
+    <xmx:ViCVZf5tx6NAncLZn_KGHGzxj82UaxSWxJwTYPH1QDuiki702ErW9A>
+    <xmx:ViCVZV9VZIdATtBBxn3l-4Lln37sqaaEt6M7SSVvi41sVxlBr8sfjA>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 3 Jan 2024 03:33:25 -0500 (EST)
+ 3 Jan 2024 03:52:37 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 1d8e86a3 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 3 Jan 2024 08:30:58 +0000 (UTC)
-Date: Wed, 3 Jan 2024 09:33:22 +0100
+	by vm-mail (OpenSMTPD) with ESMTPSA id cb1cef97 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 3 Jan 2024 08:50:09 +0000 (UTC)
+Date: Wed, 3 Jan 2024 09:52:33 +0100
 From: Patrick Steinhardt <ps@pks.im>
-To: Karthik Nayak <karthik.188@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 2/6] setup: move creation of "refs/" into the files
- backend
-Message-ID: <ZZUb0rj7be6wLQz5@tanuki>
-References: <cover.1703754513.git.ps@pks.im>
- <ae013eaa4aba0d68172ff03dbe9f2c2bca596285.1703754513.git.ps@pks.im>
- <CAOLa=ZTR6aW5aoxcMOS3U3TL1VxSfmyVno9fu7B5201pJTqyyg@mail.gmail.com>
+To: Taylor Blau <me@ttaylorr.com>
+Cc: Karthik Nayak <karthik.188@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	christian.couder@gmail.com
+Subject: Re: [PATCH 2/2] ref-filter: support filtering of operational refs
+Message-ID: <ZZUgUUlB8A-rhep5@tanuki>
+References: <20231221170715.110565-1-karthik.188@gmail.com>
+ <20231221170715.110565-3-karthik.188@gmail.com>
+ <xmqqzfy3l270.fsf@gitster.g>
+ <CAOLa=ZRedfBUjukbN8dFT9CZETe4pz1UR+eWfJwORWuMHSk0Rw@mail.gmail.com>
+ <xmqqsf3oj3u8.fsf@gitster.g>
+ <CAOLa=ZTPxWXnZ8kpBB7=cybNfdEv6d6O37Em7Vpmcw=enpY1_w@mail.gmail.com>
+ <ZZRaOhK869S1Sg1h@nand.local>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -74,66 +79,108 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="izlt0sxPtqHSkJFY"
+	protocol="application/pgp-signature"; boundary="Ps6hXz//6n3rctWg"
 Content-Disposition: inline
-In-Reply-To: <CAOLa=ZTR6aW5aoxcMOS3U3TL1VxSfmyVno9fu7B5201pJTqyyg@mail.gmail.com>
+In-Reply-To: <ZZRaOhK869S1Sg1h@nand.local>
 
 
---izlt0sxPtqHSkJFY
+--Ps6hXz//6n3rctWg
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Tue, Jan 02, 2024 at 05:23:18AM -0800, Karthik Nayak wrote:
-> Patrick Steinhardt <ps@pks.im> writes:
->=20
-> > Move the code to create the directory into the files backend itself to
-> > make it so. This means that future ref backends will also need to have
-> > equivalent logic around to ensure that the directory exists, but it
-> > seems a lot more sensible to have it this way round than to require
-> > callers to create the directory themselves.
+On Tue, Jan 02, 2024 at 01:47:22PM -0500, Taylor Blau wrote:
+> On Tue, Jan 02, 2024 at 07:18:48AM -0800, Karthik Nayak wrote:
+> > > As "git for-each-ref" takes pattern that is prefix match, e.g.,
+> > >
+> > >     $ git for-each-ref refs/remotes/
+> > >
+> > > shows everything like refs/remotes/origin/main that begins with
+> > > refs/remotes/, I wonder if
+> > >
+> > >     $ git for-each-ref ""
+> > >
+> > > should mean what you are asking for.  After all, "git for-each-ref"
+> > > does *not* take "--branches" and others like "git log" family to
+> > > limit its operation to subhierarchy of "refs/" to begin with.
 > >
+> > But I don't think using an empty pattern is the best way to go forward.
+> > This would break the pattern matching feature. For instance, what if the
+> > user wanted to print all refs, but pattern match "*_HEAD"?
+> >
+> > Would that be
+> >
+> >       $ git for-each-ref "" "*_HEAD"
+> >
+> > I think this would be confusing, since the first pattern is now acting
+> > as an option, since its not really filtering rather its changing the
+> > search space.
+> >
+> > Maybe "--all-refs" or "--all-ref-types" instead?
 >=20
-> Why not move it to refs.c:refs_init_db() instead? this way each
-> implementation doesn't have to do it?
+> I tend to agree that the special empty pattern would be a good shorthand
+> for listing all references underneath refs/, including any top-level
+> psuedo-refs.
+>=20
+> But I don't think that I quite follow what Karthik is saying here.
+> for-each-ref returns the union of references that match the given
+> pattern(s), not their intersection. So if you wanted to list just the
+> psudo-refs ending in '_HEAD', you'd do:
+>=20
+>   $ git for-each-ref "*_HEAD"
+>=20
+> I think if you wanted to list all pseudo-refs, calling the option
+> `--pseudo-refs` seems reasonable. But if you want to list some subset of
+> psueod-refs matching a given pattern, you should specify that pattern
+> directly.
 
-True, that would be another possibility. But I think it is conceptually
-unclean to split up creation of the refdb into multiple locations. The
-"files" backend already has to create "refs/heads/" and "refs/tags/",
-and the "reftable" backend will set up "refs/heads" as a file so that
-it's impossible to create branches as loose files by accident. So both
-do have specific knowledge around how exactly this directory hierarchy
-should look like, and thus I think it is sensible to make the code self
-contained inside of the backends.
+Where I think this proposal falls short is if you have refs outside of
+the "refs/" hierarchy. Granted, this is nothing that should usually
+happen nowadays. But I think we should safeguard us for the future:
 
-My opinion on this would be different if we expected a proliferation of
-backends to happen, but that's quite unlikely. Furthermore, we may at
-some point decide that repos don't need "refs/" and/or "HEAD" at all
-anymore, at which point it is easier to drop the creation of those files
-and dirs from the reftable backend.
+  - There may be bugs in the reftable backend that allow for such refs
+    to be created.
 
-I'll update the commit message to include these considerations.
+  - We may even eventually end up saying that it's valid for refs to not
+    start with "refs/". I consider this to be mostly an artifact of how
+    the files backend works, so it is not entirely unreasonable for us
+    to eventually lift the restriction for the reftable backend.
+
+I do not want to push for the second bullet point anytime soon, nor do I
+have any plans to do so in the future. But regardless of that I would
+really love to have a way to ask the ref backend for _any_ reference
+that it knows of, regardless of its prefix. Otherwise it becomes next to
+impossible for a user to learn about what the reftable binary-format
+actually contains. So I think that the current focus on pseudo-refs is
+too short-sighted, and would want to aim for a more complete solution to
+this problem.
+
+This could be in the form of a `--all-refs` flag that gets translated
+into a new `DO_FOR_EACH_REF_ALL_REFS` bit, which would indicate to the
+ref backend to also enumerate refs outside of the "refs/" hierarchy.
+This is orthogonal to the already existing `--all` pseudo-opt, because
+`--all` would only ever enumerate refs inside of the "refs/" hierarchy.
 
 Patrick
 
---izlt0sxPtqHSkJFY
+--Ps6hXz//6n3rctWg
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmWVG9EACgkQVbJhu7ck
-PpQM9Q/+JfQlINzGyNJ3i0onBSwwRiCepzml8aHea6gU7Fd6AI7VcvLSnh07FRqd
-HdhoSwx/V7X+fM85G0s8Nn1S2NTLWF1bZbqpg8z9y6hQUPj8hdo+rmlYr2CyUqbL
-YWyjXiMDMwE2nu5PnCzvj3rl1NiPsDQXzf44u7oKRZYyvnExlcXS2xb1YdsvZzE3
-8WKBeg3CkV+43WVnW/P9danoAqFuJFSznneRyLIzg3kbZYoIu4BFEgiyZg1gf0Zj
-kvzf/F5yPCaRuoAkKiSSRmweiKu1E/3gvl60zYjwno5VKAgL2hKw9yTQKoBos1V2
-WcDLmHBKdJWRzad5BVKcA97/KO7MfIXIys7ufDJpON/pK0lTpn/SjvEacWfbIfK3
-/LBac85uiqqsMdLJYuUCxQ9HmTkX2cKtwuuvd0Y764UK299QcSxSnv2ncMsxDIB3
-JA8sfAhIt2TEmyhBLn1XLYQhRLrLpImNgsDVUi8llVUY4HXViI2H4Kiu8IPhu0BV
-W6jWr9x4s92r7HuzErEJxWh5wk5X6ODCBBdA62TWgoqHFHvZBzXtbjOTYnvpXjnb
-Gn3PLzJs//XpY3p9zhZZWQK0Eok77kkg4hXJLUSBNTgaDZFv3mrd6Z8LYwb9E3zm
-iIUKhX5qq5tFZiqdOK1kkPL4KlTwa7I1NhDGdgezQM75u4c67vw=
-=TZBH
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmWVIFAACgkQVbJhu7ck
+PpSImRAAg/FD91UW+07H6G3pLmDzl8H8NMbJ+zxbkb1wtqcVBXtJwqElyCH9j1BL
+2YxGGmbVXtIKHOX8iwlxvP7NHoqIhCdFpoQfqBn2svsewXWRqdGYiH7h57PDisrO
+ypcbPVT1z9kxl8WKHpvPywXAOKW+E2BnUocGJMafM+wmeslvGrq7zULqLo+Pu+rf
+fdUuY8HPGiIVp2IXq9muJv3JRZ1qhO5UpzzT0dWwmugk4CpclRDngMHzJZ2HJvhz
+KOSMH4+T10/LqxLh/eOhtwf4um2rDjC0ewM4KFt6AFhVhs5eIrW2FGoLOEFYDsDI
+mCXWFVJgBvEnjfKIzuizcfVPzEvvnLAqrp/qxLDf5yi84YX3M86U/4HzWvxsDefF
+d4D1udywTUGF68sf3AoRpjBEPIHxuJ4ehP7qmGZhgpt1i3jWi4rAW1vHtVBSVyo4
+LeREJoco1mzwmNFwrL0yLKk12PXIS3d/rCOcGO2lvi+7S+5MxXj0bKt6mdOpAeY/
+VBd4UzVcczuzly9BJkiemSV7OOyQiRhyeeYWc+hstQyiMjQmxc14H7QmT9CKeXUg
+iayRYNUpd5jpbVI3/k6QQ78qSsOcyxSmqfa2A8toEjKheyOm0KC9dPqDONwcSgat
+EFOeyYBz208x7mPYRKko5jHD9yHjM5Bm/lL+8AAuC2D5pXCxjrE=
+=oe/u
 -----END PGP SIGNATURE-----
 
---izlt0sxPtqHSkJFY--
+--Ps6hXz//6n3rctWg--
