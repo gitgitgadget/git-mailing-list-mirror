@@ -1,44 +1,60 @@
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qt1-f175.google.com (mail-qt1-f175.google.com [209.85.160.175])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52A1B1BDD1
-	for <git@vger.kernel.org>; Wed,  3 Jan 2024 16:38:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1B731BDCD
+	for <git@vger.kernel.org>; Wed,  3 Jan 2024 16:40:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="MqKwd9rR"
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id BC4371CB135;
-	Wed,  3 Jan 2024 11:38:01 -0500 (EST)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=HHL1Z6z5wUFI
-	apRhxBOQUqHL+sMZQNi4oOkW0HAtOgo=; b=MqKwd9rR/ElnrznZxOpT1TyA2ZpI
-	z0PEoye4RtSN0xV6zjNRyN2dYsl8xAY3Of5kJNsRkd2kDocpeQbc1HxZyebDTO4t
-	DnMG13g03uEGO82XcW5L3RACzuaYCIH54pptIt5aXbKqL8kGrnSfEQauXNJnB01z
-	wjJuIyy3acsMPjY=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id A32D81CB133;
-	Wed,  3 Jan 2024 11:38:01 -0500 (EST)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.200.93])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id AA1391CB130;
-	Wed,  3 Jan 2024 11:38:00 -0500 (EST)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
-Cc: =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,  git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Jan 2024, #01; Tue, 2)
-In-Reply-To: <20240103090152.GB1866508@coredump.intra.peff.net> (Jeff King's
-	message of "Wed, 3 Jan 2024 04:01:52 -0500")
-References: <xmqq5y0bcjpw.fsf@gitster.g>
-	<20240103090152.GB1866508@coredump.intra.peff.net>
-Date: Wed, 03 Jan 2024 08:37:59 -0800
-Message-ID: <xmqq8r56bcew.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="PA4ebe9r"
+Received: by mail-qt1-f175.google.com with SMTP id d75a77b69052e-4283cd9bd87so1342601cf.3
+        for <git@vger.kernel.org>; Wed, 03 Jan 2024 08:40:39 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1704300038; x=1704904838; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=jFXzoekn5ZpLKCAo94L8SVgQ5SIf4BsClcmgUbxhnAk=;
+        b=PA4ebe9rtYA27D4Cnn2EdFzLX9ery2jwBcU26z2zrlf+pbKvzEH//PXuRsXVXswL7D
+         hb3ScW9+cn5fyhGrFXzjZrXRxmy6T3DRxWHz8LpSsFO1nhJW2oNBbWEL+R94x6p46RLa
+         n64+BJ/MtLL/8okquhAwoRh1eVeAY7YnhSekOGiElavV7bULQQESm3P/nS4p/OQmd3NZ
+         eCdDpV7G90a/0oh8OGOhWqEoolJ0UZeOJ8jtv/uA73sgd8BuJTe4O9QXnRfEXgUt39JZ
+         jjeqox/ckNnjOp3JO8KhRzrdY095Z4+QJC+3UeCUyaK2dNE5AEki019IowQWbIfSHWKD
+         liyg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1704300038; x=1704904838;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=jFXzoekn5ZpLKCAo94L8SVgQ5SIf4BsClcmgUbxhnAk=;
+        b=V2IJud1d/YF8/lrddBr0daVTd7BoJo7spCfygi58DGSCBjuC7tXW0N7P1EGX/m7Tu1
+         oVnVTPasCZZhwpgESasA392PE8xjYFNcfNY2rFsGYJIB9s4NY/CP1Q1Xp5ZJSX8pl+0Q
+         rAx4WH4hxLxrsN2hv8JMr6iV4p1JjdGK3xoMNWHaNVXQKQKNh4Vzz/cLJSm5TvRVQArz
+         E6lMr2+jrQ5E8susfSN6RCgL6pBJhROMpXAXOcad8eAUoKy0AuRAu15B893E0fmvZBiW
+         se2p3r5D5RU9FC3TpW8BYObzgdon74f8zMCOExcDL/0mAvTjYFdeDzXoBk9HVx2UoQQD
+         /ZGw==
+X-Gm-Message-State: AOJu0YyrOKDPeOzdZ0i0aVVxPeCExCiEc3y9p4/UIxD6XZr2/43SJpQc
+	njoISNnxiI43fDe9oUR+cewGUkpVToNwbw==
+X-Google-Smtp-Source: AGHT+IE17VHduI3KlpPqq3PB85nziSSsPNrDe3RJDq+DTBxufNWxY2MjqejMrYonZqDcYV6LqyYMiw==
+X-Received: by 2002:ac8:5849:0:b0:428:30f6:aae3 with SMTP id h9-20020ac85849000000b0042830f6aae3mr2601263qth.14.1704300038432;
+        Wed, 03 Jan 2024 08:40:38 -0800 (PST)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id ep5-20020a05622a548500b004282589b74asm2822442qtb.28.2024.01.03.08.40.37
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 03 Jan 2024 08:40:38 -0800 (PST)
+Date: Wed, 3 Jan 2024 11:40:36 -0500
+From: Taylor Blau <me@ttaylorr.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: Oswald Buddenhagen <oswald.buddenhagen@gmx.de>,
+	Junio C Hamano <gitster@pobox.com>,
+	Stefan Haller <lists@haller-berlin.de>, git@vger.kernel.org
+Subject: Re: Concurrent fetch commands
+Message-ID: <ZZWOBObBmLW9Nid6@nand.local>
+References: <c11ca0b3-aaf4-4a8d-80a1-3832954aa7aa@haller-berlin.de>
+ <xmqqy1daffk8.fsf@gitster.g>
+ <ZZUNxNciNb_xZveY@tanuki>
+ <ZZUWmy3rTjpBsH-w@tanuki>
+ <ZZU1TCyQdLqoLxPw@ugly>
+ <ZZU5s4LKQF1NLgnC@tanuki>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -46,115 +62,30 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID:
- 75501282-AA56-11EE-A708-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
+In-Reply-To: <ZZU5s4LKQF1NLgnC@tanuki>
 
-Jeff King <peff@peff.net> writes:
-
-> It looks like this is the original version. I posted a v2 that took
-> Ren=C3=A9's suggestion to swap out the awk for shell, but it got overlo=
-oked.
-> I'm happy enough either way, but if we want to salvage that effort,
-> here's a patch which could go on top:
-
-Thanks.  I was happy enough with the old one and placed the updated
-one on backburner.
-
-A commit message that explains why this incremental update (i.e.,
-rewrite from awk to a shell loop) is a good idea below does make it
-worthwhile ;-)
-
-> -- >8 --
-> From: Ren=C3=A9 Scharfe <l.s.r@web.de>
-> Subject: [PATCH] t1006: prefer shell loop to awk for packed object size=
-s
+On Wed, Jan 03, 2024 at 11:40:51AM +0100, Patrick Steinhardt wrote:
+>   - `--append` should handle concurrency just fine, that is it knows to
+>     append to a preexisting lockfile. This is messy though, and the
+>     original creator of the lockfile wouldn't know when it can commit it
+>     into place.
 >
-> To compute the expected on-disk size of packed objects, we sort the
-> output of show-index by pack offset and then compute the difference
-> between adjacent entries using awk. This works but has a few readabilit=
-y
-> problems:
->
->   1. Reading the index in pack order means don't find out the size of a=
-n
->      oid's entry until we see the _next_ entry. So we have to save it t=
-o
->      print later.
->
->      We can instead iterate in reverse order, so we compute each oid's
->      size as we see it.
+> Both options are kind of ugly, so I'm less sure now whether lockfiles
+> are the way to go.
 
-If you go forward, you need "the end of the previous round" (which
-is "the beginning of the current round") to be subtracted from "the
-end of the current round".  If you go forward, you have to have "the
-beginning of the previous round" (which is "the end of the current
-round") from which you subtract "the beginning of the current round".
+Interesting. Thinking a little bit about what you wrote here, I feel
+like `--append[=<FETCH_HEAD>] would do what you need here. The creator
+of the lockfile would commit it into place exactly when all children
+have finished writing into the existing lockfile.
 
-So from that point of view, the only difference is that you would
-not be ready to emit in the first round, and you would need to emit
-for the last entry after the loop.  Because we happen to have the
-end of the last entry outside the loop, we can omit the awkwardness.
+It seems like that could work, but I haven't poked around to figure out
+whether or not that is the case. Regardless, supposing that it does
+work, I wonder what users reasonably expect in the presence of multiple
+'git fetch' operations. I suppose the answer is that they expect
+concurrent fetches to be tolerated, but that the contents of FETCH_HEAD
+(and of course the remote references) are consistent at the end of all
+of the fetches.
 
-OK.  But iterating over a list backwards is a bit awkward ;-).
-
->   2. Since the awk invocation is inside a text_expect block, we can't
->      easily use single-quotes to hold the script. So we use
->      double-quotes, but then have to escape the dollar signs in the awk
->      script.
-
-Yup.  The joy of shell quoting rules ;-)
-
-> I gave Ren=C3=A9 authorship since this was his cleverness, but obviousl=
-y I
-> wrote the commit message. Giving an explicit signoff would be nice,
-> though.
-
-Indeed.
-
->  t/t1006-cat-file.sh | 14 ++++++++------
->  1 file changed, 8 insertions(+), 6 deletions(-)
->
-> diff --git a/t/t1006-cat-file.sh b/t/t1006-cat-file.sh
-> index 0c2eafae65..5ea3326128 100755
-> --- a/t/t1006-cat-file.sh
-> +++ b/t/t1006-cat-file.sh
-> @@ -1117,14 +1117,16 @@ test_expect_success 'cat-file %(objectsize:disk=
-) with --batch-all-objects' '
->  		while read idx
->  		do
->  			git show-index <"$idx" >idx.raw &&
-> -			sort -n <idx.raw >idx.sorted &&
-> +			sort -nr <idx.raw >idx.sorted &&
->  			packsz=3D$(test_file_size "${idx%.idx}.pack") &&
->  			end=3D$((packsz - rawsz)) &&
-> -			awk -v end=3D"$end" "
-> -			  NR > 1 { print oid, \$1 - start }
-> -			  { start =3D \$1; oid =3D \$2 }
-> -			  END { print oid, end - start }
-> -			" idx.sorted ||
-> +			while read start oid rest
-> +			do
-> +				size=3D$((end - start)) &&
-> +				end=3D$start &&
-> +				echo "$oid $size" ||
-> +				return 1
-> +			done <idx.sorted ||
->  			return 1
->  		done
->  	} >expect.raw &&
-
-This is totally unrelated tangent, but the way "show-index" gets
-invoked in the above loop makes readers wonder how the caller found
-out which $idx file to read.
-
-Of course, the above loop sits downstream of a pipe
-
-    find .git/objects/pack -type f -name \*.idx
-
-which means that any user of "git show-index" must be intimately
-familiar with how the object database is structured.  I wonder if we
-want an extra layer of abstraction, similar to how the reference
-database can have different backend implementation.
-
-Anyway, will queue.  Thanks.
+Thanks,
+Taylor
