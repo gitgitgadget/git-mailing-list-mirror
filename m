@@ -1,142 +1,79 @@
-Received: from wout5-smtp.messagingengine.com (wout5-smtp.messagingengine.com [64.147.123.21])
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3233A1CA8B
-	for <git@vger.kernel.org>; Wed,  3 Jan 2024 17:36:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A0551C2A6
+	for <git@vger.kernel.org>; Wed,  3 Jan 2024 17:59:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="mH50T0Df";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="F9kgBsQ1"
-Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
-	by mailout.west.internal (Postfix) with ESMTP id C6D0D3200A26;
-	Wed,  3 Jan 2024 12:36:55 -0500 (EST)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute2.internal (MEProxy); Wed, 03 Jan 2024 12:36:56 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1704303415; x=1704389815; bh=6cwmA6uj0l
-	8sbOXLpJbQ7/SysWVsMf+JcveS31JgFOc=; b=mH50T0Dfxs7NKuHssTv+wSCMLq
-	amefUkX0yYvAFSxXNdwN6eJTNWDemjdLylYm2QmOJXZDIS1DfvekkOJTAxI/BQ9J
-	Z/C3XkK7dCNGDBGJTrBmAM8zu2dUR7L5wtrluJ8yPUkDDQGDCKNfoI3K8Uh6xPRm
-	84aho7uqG5nlJapVKcQYYWZzntJOhIMEZWgDKMhCc60+QXex7kxyBH/1Ld4Skakn
-	MdFsb3vvIfSs15cAZhfauuSes8bJDHA6g6+MknWy2uN5f35+Wq10AzqEoKmZMahV
-	QcNsaq573v8posy/bsO30jc4KbR+HJP6suh/KARHoo+Ya4qqDY9HXm+xr7QA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1704303415; x=1704389815; bh=6cwmA6uj0l8sbOXLpJbQ7/SysWVs
-	Mf+JcveS31JgFOc=; b=F9kgBsQ1J02BNKxEzgYJzy45qw4gPlgwc5pdkXJGB+to
-	RrEhlAg6M6PVrlYoLl+QTdSrf2ciSDBe3VXEcbDOVVpn6jDTyrC0O6XKBYPAbSjg
-	G5K+0xhriQZuF9k3PnuM3dzWTodqyOjKSWsl9t1TfCWNlrXuwoII4AuUkY5Tv3r/
-	Wn0veGUKZXYzw1Nh5cBSgXjXgbMWntqQcr+zQDu7FBPj19OQYoVNsXkEY9W7X3qO
-	H8XOG6c3cyIxmTCOKaTjl/XrKFI0LxJscm9WpJIJJiu6z0EqrX+Tn/BFVqMvGQvt
-	7RIWZOi688ka14I6v6TCFn2VvyEXYWqvW5GQWDYSCA==
-X-ME-Sender: <xms:NpuVZfh9y4a0l4YxCtQvklPI4HsO4KFB4MDOsLaMHmztlig3kVcmbQ>
-    <xme:NpuVZcCOZ7BfOoeM5ZZVgHloFnwSTrGVzCYIOjfymOsh26p2bt-32wOIHtW2KBmHp
-    XMeAfzpVWVGa0lzUA>
-X-ME-Received: <xmr:NpuVZfGfuDbdnjiTI3z-LoSZbhn43s0ygc6N-HwvhVuPc8OkQB9i20e-EOooABaW0vSHKQj9WHN-vzeZOqt4f3hcSrMEArPA1V3Xhwj68jYCeg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrvdeghedguddtfecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
-    necuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
-    enucfjughrpeffhffvvefukfhfgggtuggjsehgtderredttddvnecuhfhrohhmpefrrght
-    rhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtth
-    gvrhhnpeeukedtvedtffevleejtefgheehieegkeeluddvfeefgeehgfeltddtheejleff
-    teenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpsh
-    esphhkshdrihhm
-X-ME-Proxy: <xmx:NpuVZcQLXuEiLfMkIhvu2CAaXl3VgQXlubZSwnEN1SbYlXiu8rUKXw>
-    <xmx:NpuVZczekIC8h45ib9LSklKVbiYpqdHtjLiDICbwBq8hOX9th7xo3Q>
-    <xmx:NpuVZS7B0LKdACMZqypbQWl2KPR2ir5RjujLnvz_AVxw-O4pemD-XA>
-    <xmx:N5uVZY_eMhhjz-xMg-V_voHveg7IPBvNgXxQDkeZwXraUmIdLhPE-g>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 3 Jan 2024 12:36:53 -0500 (EST)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id c958e4d4 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 3 Jan 2024 17:34:25 +0000 (UTC)
-Date: Wed, 3 Jan 2024 18:36:49 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Karthik Nayak <karthik.188@gmail.com>, Taylor Blau <me@ttaylorr.com>,
-	git@vger.kernel.org, christian.couder@gmail.com
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="fcjMr8dy"
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id 552FD2AF02;
+	Wed,  3 Jan 2024 12:59:18 -0500 (EST)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=PcdI1yzfNcESKFsatoWpCWxyC0+fw1Vej0LlPy
+	lE8oI=; b=fcjMr8dyObAEBByl3a2Jz8/+uboYuvhzTBrM65yT2gw7aaam1HH40N
+	t1Itw+AozOSKQrACAaD8D2tEOcwBbg/YFddL0qAs5hG+vjPAz5BByBQomstuQcIk
+	JsXEIfxTa3xH2qCP7yBxCB9Q0PelhhJfHqR3n59xClUlg+CyHeAkk=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id 4D5512AF01;
+	Wed,  3 Jan 2024 12:59:18 -0500 (EST)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.200.93])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id F09F92AEFF;
+	Wed,  3 Jan 2024 12:59:14 -0500 (EST)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: Karthik Nayak <karthik.188@gmail.com>,  Taylor Blau <me@ttaylorr.com>,
+  git@vger.kernel.org,  christian.couder@gmail.com
 Subject: Re: [PATCH 2/2] ref-filter: support filtering of operational refs
-Message-ID: <ZZWbMekL2URby0qV@tanuki>
+In-Reply-To: <ZZWbMekL2URby0qV@tanuki> (Patrick Steinhardt's message of "Wed,
+	3 Jan 2024 18:36:49 +0100")
 References: <xmqqsf3oj3u8.fsf@gitster.g>
- <CAOLa=ZTPxWXnZ8kpBB7=cybNfdEv6d6O37Em7Vpmcw=enpY1_w@mail.gmail.com>
- <ZZRaOhK869S1Sg1h@nand.local>
- <ZZUgUUlB8A-rhep5@tanuki>
- <CAOLa=ZS4OOAmyRvf4HH-c_3GvnVkh6zS2kD3hEhRZ7NZT-rvyA@mail.gmail.com>
- <xmqqwmsqbhyt.fsf@gitster.g>
- <ZZWCXFghtql4i4YE@tanuki>
- <xmqqsf3ebe1l.fsf@gitster.g>
- <ZZWIlx-9D2r9AfDW@tanuki>
- <xmqqil4a9vue.fsf@gitster.g>
+	<CAOLa=ZTPxWXnZ8kpBB7=cybNfdEv6d6O37Em7Vpmcw=enpY1_w@mail.gmail.com>
+	<ZZRaOhK869S1Sg1h@nand.local> <ZZUgUUlB8A-rhep5@tanuki>
+	<CAOLa=ZS4OOAmyRvf4HH-c_3GvnVkh6zS2kD3hEhRZ7NZT-rvyA@mail.gmail.com>
+	<xmqqwmsqbhyt.fsf@gitster.g> <ZZWCXFghtql4i4YE@tanuki>
+	<xmqqsf3ebe1l.fsf@gitster.g> <ZZWIlx-9D2r9AfDW@tanuki>
+	<xmqqil4a9vue.fsf@gitster.g> <ZZWbMekL2URby0qV@tanuki>
+Date: Wed, 03 Jan 2024 09:59:13 -0800
+Message-ID: <xmqqedey9u32.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="JlRW4TxmZu9DtzH3"
-Content-Disposition: inline
-In-Reply-To: <xmqqil4a9vue.fsf@gitster.g>
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ CE9D0182-AA61-11EE-BDA0-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
 
+Patrick Steinhardt <ps@pks.im> writes:
 
---JlRW4TxmZu9DtzH3
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+>> I think we should tighten things up over time.  First by teaching
+>> the ref backend that anything that is not a pseudoref, HEAD or a
+>> proper ref (one item of whose definition is "lives under refs/
+>> hierarchy) should not resolve_ref() successfully.  That should
+>> correctly fail things like
+>> 
+>>     $ git rev-parse worktrees/$name/bisect/bad
+>>     $ git update-ref foo/bar HEAD
+> ...
+> Yeah, agreed, that's something we should do. I do wonder whether this
+> will break existing usecases, but in any case I'd rather consider it an
+> accident that it is possible to write (and read) such refs in the first
+> place.
 
-On Wed, Jan 03, 2024 at 09:21:13AM -0800, Junio C Hamano wrote:
-> Patrick Steinhardt <ps@pks.im> writes:
->=20
-> > ... But the problem is that tools like git-update-ref(1) don't
-> > enforce this, so something like `git update-ref foo/bar HEAD` happily
-> > creates "$GIT_DIR/foo/bar". And I bet there are other ways to write refs
-> > at arbitrary paths.
->=20
-> I think we should tighten things up over time.  First by teaching
-> the ref backend that anything that is not a pseudoref, HEAD or a
-> proper ref (one item of whose definition is "lives under refs/
-> hierarchy) should not resolve_ref() successfully.  That should
-> correctly fail things like
->=20
->     $ git rev-parse worktrees/$name/bisect/bad
->     $ git update-ref foo/bar HEAD
->=20
-> I'd hope.
->=20
-> Thanks.
-
-Yeah, agreed, that's something we should do. I do wonder whether this
-will break existing usecases, but in any case I'd rather consider it an
-accident that it is possible to write (and read) such refs in the first
-place.
-
-Patrick
-
---JlRW4TxmZu9DtzH3
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmWVmzEACgkQVbJhu7ck
-PpQ42g//T/gBwWLTUBwcI8mi9MtBq7sOfICWIS5pL+07TwcTk0+XBa0P3bz/+dDn
-DLELpsKEbv66cDrM4FMH9jh7sD8Cb+juWKLulx7QyYupSKdaqSdKM10cMgOqp0wk
-tV48cn8Uq+4YbBkd6LdOg3bdfEFAZi6k+F6RYuez1tY5jawWDIujNHtKd/iJ6wkL
-W/L0Wgn//VpTh3drtcUcthng4oQKhy4gyz9fQIdETBPUijgmKJAPLuQ3Fj+QgRA+
-oftMSCIiC83xkuklZ0IDEU9WioHBKRDTXgih9GERl+69eYiv/gp3/FqWcV1Ii91R
-FkoKE8efZ3QcfI7oisnkhzASaw6LrxthAJlw6eKlzHchrL+nIwGvuw8IyFMRek4R
-6SAR6allGr1+39xWQHuARciy4EMpGfzSwkkzEIdNZLCzBwqjckhiOwu6eOhvZ+l5
-JKfDC1w5CD9jZITqMM74zKx1RydimxEusEiONBJVhIEK0eQe5CCfPj+8GyeqXlpn
-n39HAm/SgTtzmHvHx2FPJHHOgikwNF9vzgWW07ogir8YxqVPsHh8YHz4yGtLmA3D
-Kb36RFaV1jP8MYJqkFLh1PrF35nW4MDvv9ZOU5+dLXxEFlGPz4sySVb5S2kMFChX
-+aTfqGj5d3hGy9KqL5VAvaKwe2YctaaEY2J0S6s3Es3vFK6uVCE=
-=0FWd
------END PGP SIGNATURE-----
-
---JlRW4TxmZu9DtzH3--
+Unfortunately, the worktrees/$name/refs/bisect/bad and its friends
+are documented in "git worktree" and the refs.c layer is aware of
+the "main-worktree/" and "worktrees/" hierarchy, so while I still
+think it is a good long-term direction to make it impossible to
+create random refs like "foo/bar" and "resf/heads/master" via the
+commands like "git update-ref", we cannot limit ourselves only to
+"refs/" hierarchy.
