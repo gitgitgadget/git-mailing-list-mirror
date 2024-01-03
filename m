@@ -1,210 +1,162 @@
-Received: from mail-oa1-f48.google.com (mail-oa1-f48.google.com [209.85.160.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from out4-smtp.messagingengine.com (out4-smtp.messagingengine.com [66.111.4.28])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5454918C10
-	for <git@vger.kernel.org>; Wed,  3 Jan 2024 10:33:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC38318C19
+	for <git@vger.kernel.org>; Wed,  3 Jan 2024 10:40:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mu92oxQv"
-Received: by mail-oa1-f48.google.com with SMTP id 586e51a60fabf-20475bf35a2so632113fac.1
-        for <git@vger.kernel.org>; Wed, 03 Jan 2024 02:33:25 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1704278004; x=1704882804; darn=vger.kernel.org;
-        h=mime-version:message-id:in-reply-to:date:subject:cc:to:from
-         :user-agent:references:from:to:cc:subject:date:message-id:reply-to;
-        bh=mw4yLId3O8ZWQuY39AALLzM35PWnpzwAvB+oqAgMmbo=;
-        b=mu92oxQv7vsmj/Y8uGZZPtU4ucsFwnpFaT53svKIpGcrx7EFGsR8wt/zpX3KBP+8fK
-         fElCX39/hAyEDRWHxFLoncjNKOROOVX6lfyuElNPDD4t4++1M8HyOhf3G7JpqXAa1Z6q
-         Fq5h2vRpzGWHPFCfjODnBxzdLUVdWtpcw0uCtYYeFFOP+GNvm6kvZVArDq+BazBFTjYk
-         7VQ1HHdZKZ0Lp+5J7otcZmizO9SG4qA5MMRbj1fErtVCt1wJ9i5rjFe5e4ROJ9LnwqNa
-         haSOYF7PiJYpMjmbCTKrSyRMX4DiCfrunub0VpKHmqZsGyQZ3iGksKXvMGynC4qS5LJA
-         xz/A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1704278004; x=1704882804;
-        h=mime-version:message-id:in-reply-to:date:subject:cc:to:from
-         :user-agent:references:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=mw4yLId3O8ZWQuY39AALLzM35PWnpzwAvB+oqAgMmbo=;
-        b=F8As8Vj6bOB98v4nyIDoYlf9sf/1REi17Aoprnf0BUgh+38DNtSh2obe77lUKO538z
-         DHDl4NcpfA3ijW5zMKT8bZl5YQD8GCXW0ydqnptQwbH8uTO1TW4MblQ7NOcd4KoL/pHw
-         EZqc5m239Bh8wKRIoGpoXozFWPNgusAJpCgoOwREZnrsx3QNusmvml2SSZ6yudBhO/4a
-         Tc5KHInuOkkEmDN7XoOnfhvE9Oc8aa12z/Uz2sgUwReiu0BYdOvXwLJ0bZL1dEMnTerS
-         UzQFFjtTn0WWQGiETDIcqIccMizrw2W5R8O80YvNunmi6uyRTb0o0j8l4VuQkjFyuY/f
-         sPxg==
-X-Gm-Message-State: AOJu0YzQFXvlwO/xnq+AzxS307IsnwX9X5/WEBaZzqhNw/FW6XncgR2n
-	bkgDx1Oic5GWxrlOvPR5ncrNJgkjuIs=
-X-Google-Smtp-Source: AGHT+IGxAT/99LY/kExfCaFBwqvFbG1HduMHTyDFvkvDrWDyXBD3p+MCfa7DnoD9Xsyx9IkfMsPmUg==
-X-Received: by 2002:a05:6870:1706:b0:204:1d62:9a8b with SMTP id h6-20020a056870170600b002041d629a8bmr35183508oae.5.1704278004188;
-        Wed, 03 Jan 2024 02:33:24 -0800 (PST)
-Received: from epic96565.epic.com ([2620:72:0:6480::1])
-        by smtp.gmail.com with ESMTPSA id bi42-20020a05620a31aa00b00781ea9404dfsm140775qkb.90.2024.01.03.02.33.23
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 03 Jan 2024 02:33:23 -0800 (PST)
-References: <m0y1e7kkft.fsf@epic96565.epic.com> <xmqqcyvgz3ih.fsf@gitster.g>
- <m0sf43abw7.fsf@epic96565.epic.com> <xmqqa5qbmnrm.fsf@gitster.g>
- <35f24a01d15ce28932bb6be098d6a164a49cc542008f75673cd6221a9b24b578@mu.id>
- <m0frzeu89w.fsf@epic96565.epic.com>
-User-agent: mu4e 1.10.8; emacs 29.1
-From: Sean Allred <allred.sean@gmail.com>
-To: git <git@vger.kernel.org>
-Cc: Junio C Hamano <gitster@pobox.com>
-Subject: Re: What's the recommendation for forgetting all rerere's records?
-Date: Wed, 03 Jan 2024 03:27:51 -0600
-In-reply-to: <m0frzeu89w.fsf@epic96565.epic.com>
-Message-ID: <m05y0au2od.fsf@epic96565.epic.com>
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="XgWpXHpU";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="9nDx065K"
+Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
+	by mailout.nyi.internal (Postfix) with ESMTP id A2AA05C01F9;
+	Wed,  3 Jan 2024 05:40:56 -0500 (EST)
+Received: from mailfrontend1 ([10.202.2.162])
+  by compute3.internal (MEProxy); Wed, 03 Jan 2024 05:40:56 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1704278456; x=1704364856; bh=vbaKC5lqZz
+	xVFBgcrLr9LtqS/z8LQqil8DSAzgQEQ2Q=; b=XgWpXHpU43AghOVrMdw/OCCQf0
+	h2tmlyK+lqsgyQ4LPtoI4Q6D7E3YTsItt6ULyuUfqLdlftOFUKV8VEsU1Jq4QuP7
+	4AZaZER4gbuMsytL4u6LyL4kxb8ZwqZOYTF2Naef4jq5lQiOE3xoDETP2NIoH01K
+	QSA+Yyiaxq+Dg366JdPp1ud0VkNCV2FUomvgc5ra4nQm++ExNZNvjXVfY2+0J1Xv
+	Nc/zo9EC03p/xmSSXTC1t5rnf1cdtVHKPVQVPS+PM1+Yc6F80AO1VPHZ6ppf4mFC
+	Lu+/dO2wlagsBsZWonDyHXJuV9G2Mx8GDfzkI6tzhVkK0S7V1uDc5cZrwbyg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm2; t=1704278456; x=1704364856; bh=vbaKC5lqZzxVFBgcrLr9LtqS/z8L
+	Qqil8DSAzgQEQ2Q=; b=9nDx065KdMOEdysw7QBlXtD9v+HIpFJk4+ju5FGYBNjq
+	MCdKztrfmSx7SfiRkcd70qp8R36PyjrBstdxqaqPz05jabx98AE5RDXI8xTbX/4e
+	3wPGMpDT1CUwjeUCVAh0YtlRzhW1sgLRqQDOnVcb8kdB3oGAhNj7IBrih76gUqZT
+	vKHPefT/lY88/AdWXKBT71hXbu09oUafPA6TcOgS+8fvjbZFKARcgKZK2EHXPIJ2
+	8uTjmrFqdc+lMqoJyMxe6fxE/+7ynetfj6LBwO/b+vw8HhYVGnS4oGnnyoAyJxlO
+	uyjtGdC7CK9YtM99r7pWf8J0xlwcwKgBLY+pVesUcA==
+X-ME-Sender: <xms:uDmVZf6B6hb3RK5PvmnxWELD4ywjS-JbHkQ4O0thBNoqBPr_qD4P0w>
+    <xme:uDmVZU6pwdQXUWwseN-XK-NNAUVyzCf_-9qMHYGyYHH8z6SZTDahxMhaF27VOP117
+    yeYKnybkkJlUC_Kcw>
+X-ME-Received: <xmr:uDmVZWeC2UO4jkdtntF6FzKZ4UfKSqS731T8uBBP_rc4nVs6xKt2fyQutp0hYko32kMf0tvIxsKxpwQSL6pOV5Ep8w3TAzja2gC4AwcQnx6wqA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrvdeghedgudelucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+    cujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtvdenucfhrhhomheprfgrthhr
+    ihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvg
+    hrnhepueektdevtdffveeljeetgfehheeigeekleduvdeffeeghefgledttdehjeelffet
+    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
+    hpkhhsrdhimh
+X-ME-Proxy: <xmx:uDmVZQJ8nBw4aZBjtAD7pWsvKu-5L24AMgnwZzLs71Korl16CmnMhA>
+    <xmx:uDmVZTJdJhBKs4tvK5iz5-kND9_cq6QX-T4vY2lfrJteuoznbCooRw>
+    <xmx:uDmVZZw2Dx81LhDLEJZmcIhvlhV4uDqsCr0SV_5a_QwLY_Sj0MLc6g>
+    <xmx:uDmVZaUe2St1Q5d5t-o6HM7AGD7Uhs4cFCiJZeb3Vp6mfYoVqk4YZA>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 3 Jan 2024 05:40:55 -0500 (EST)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id 283f95f2 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 3 Jan 2024 10:38:27 +0000 (UTC)
+Date: Wed, 3 Jan 2024 11:40:51 +0100
+From: Patrick Steinhardt <ps@pks.im>
+To: Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Stefan Haller <lists@haller-berlin.de>, git@vger.kernel.org
+Subject: Re: Concurrent fetch commands
+Message-ID: <ZZU5s4LKQF1NLgnC@tanuki>
+References: <c11ca0b3-aaf4-4a8d-80a1-3832954aa7aa@haller-berlin.de>
+ <xmqqy1daffk8.fsf@gitster.g>
+ <ZZUNxNciNb_xZveY@tanuki>
+ <ZZUWmy3rTjpBsH-w@tanuki>
+ <ZZU1TCyQdLqoLxPw@ugly>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="/eSlt0kbQJNWAsV3"
+Content-Disposition: inline
+In-Reply-To: <ZZU1TCyQdLqoLxPw@ugly>
 
 
-There was enough going on with that prior email that I gave it another
-look and found some errors.
+--/eSlt0kbQJNWAsV3
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
->     $ echo 'bad merge' >file
->     $ git add file
->
->     $ EDITOR=: git rebase --continue
->     file: needs merge
->     You must edit all merge conflicts and then
->     mark them as resolved using git add
->
->     $ git rebase --abort
->
->     $ git rebase main
->     Auto-merging file
->     CONFLICT (content): Merge conflict in file
->     error: could not apply b4d7aeb... local
->     hint: Resolve all conflicts manually, mark them as resolved with
->     hint: "git add/rm <conflicted_files>", then run "git rebase --continue".
->     hint: You can instead skip this commit: run "git rebase --skip".
->     hint: To abort and get back to the state before "git rebase", run "git rebase --abort".
->     Recorded preimage for 'file'
->     Could not apply b4d7aeb... local
->
->     $ git checkout --merge .
->     Recreated 1 merge conflict
->
->     $ git rerere forget .
->     error: no remembered resolution for 'file'
->
->     $ echo 'good merge' >file
->
->     $ EDITOR=: git rebase --continue
->     file: needs merge
->     You must edit all merge conflicts and then
->     mark them as resolved using git add
+On Wed, Jan 03, 2024 at 11:22:04AM +0100, Oswald Buddenhagen wrote:
+> On Wed, Jan 03, 2024 at 09:11:07AM +0100, Patrick Steinhardt wrote:
+> > Ah, one thing I didn't think of is parallel fetches. It's expected that
+> > all of the fetches write into FETCH_HEAD at the same point in time
+> > concurrently
+> >=20
+> is it, though? given that the contents could be already randomly scramble=
+d,
+> it would not seem particularly bad if the behavior changed.
+>=20
+> the one real complication i see is the --append option, which requires us=
+ing
+> a waiting lock after the actual fetch, rather than acquiring it immediate=
+ly
+> and erroring out on failure (and ideally giving a hint to use
+> --no-write-fetch-head).
 
-This section should have read:
+I should probably clarify, but with "parallel fetches" I meant `git
+fetch --jobs=3D`, not two separate executions of git-fetch(1). And these
+do in fact use `--append` internally: the main process first truncates
+FETCH_HEAD and then spawns its children, which will then append to
+FETCH_HEAD in indeterministic order.
 
-    $ echo 'bad merge' >file
-    $ git add file
+But even though the order is indeterministic, I wouldn't go as far as
+claiming that the complete feature is broken. It works and records all
+updated refs in FETCH_HEAD just fine, even if it's not particularly
+elegant. Which to me shows that we should try hard not to break it.
 
-    $ EDITOR=: git rebase --continue
-    Recorded resolution for 'file'.
-    [detached HEAD 5e3c431] local
-     1 file changed, 1 insertion(+), 1 deletion(-)
-    Successfully rebased and updated refs/heads/feature.
+> an extra complication is that concurrent runs with and without --append
+> should be precluded, because that would again result in undefined behavio=
+r.
+> it generally seems tricky to get --append straight if parallel fetches are
+> supposed to work.
 
-    $ git reset --hard @{1}
-    HEAD is now at b4d7aeb local
+Yeah, the `--append` flag indeed complicates things. There are two ways
+to handle this:
 
-    $ git rebase main
-    Auto-merging file
-    CONFLICT (content): Merge conflict in file
-    error: could not apply b4d7aeb... local
-    hint: Resolve all conflicts manually, mark them as resolved with
-    hint: "git add/rm <conflicted_files>", then run "git rebase --continue".
-    hint: You can instead skip this commit: run "git rebase --skip".
-    hint: To abort and get back to the state before "git rebase", run "git rebase --abort".
-    Resolved 'file' using previous resolution.
-    Could not apply b4d7aeb... local
+  - `--append` should refrain from running when there is a lockfile.
+    This breaks `git fetch --jobs` without extra infra to handle this
+    case, and furthermore a user may (rightfully?) expect that two
+    manually spawned `git fetch --append` processes should work just
+    fine.
 
-    $ git checkout --merge .
-    Recreated 1 merge conflict
+  - `--append` should handle concurrency just fine, that is it knows to
+    append to a preexisting lockfile. This is messy though, and the
+    original creator of the lockfile wouldn't know when it can commit it
+    into place.
 
-    $ git rerere forget .
-    error: no remembered resolution for 'file'
+Both options are kind of ugly, so I'm less sure now whether lockfiles
+are the way to go.
 
-I've driven myself a little nuts trying to reproduce it this morning,
-but in doing so I've come to an important discovery: this bug presents
-if `core.autocrlf=true` but does *not* present if `core.autocrlf=input`.
+Patrick
 
-For completeness and future reference, the following script reproduces
-the issue on Windows:
+--/eSlt0kbQJNWAsV3
+Content-Type: application/pgp-signature; name="signature.asc"
 
-    git init
-    echo aaa >file
-    git add file
-    git commit -ambase
-    git branch feature
-    echo bbb >file
-    git commit -amremote
-    git switch feature
-    echo ccc >file
-    git commit -amlocal
-    git config rerere.enabled true
-    git config core.autocrlf true     # <--
+-----BEGIN PGP SIGNATURE-----
 
-    # setup complete; let's rebase!
-    git rebase main
-    echo 'bad merge' >file
-    git add file
-    EDITOR=: git rebase --continue
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmWVObMACgkQVbJhu7ck
+PpTHWA/+Ixney1hVZv/TOCAlYGvUApuJJ7jd6KVwmmQG/otfxCm4XnkYJkZNlLQf
+NGIMJLaYuqZnRkf0YPzXtuNNEqKLhk1x2NWhsF8qx6whvmPsdxr82IKlWGqrkFWl
+leWWYMTK7wjIwrogf391YMvb71X0L9xpZJs2ehB3N8bmc4v/l1sI5V/PpHskxG/M
+eYlGBtYPGJS4gjrmZiHRxx/4Szx+pJrM0R1KJfH0YTlnn86G5DZKq0JI3MArYv+b
+p/2q0n5f560bgPE2vbFaoEdW9KnyE8/j86tEcLAhLSAONZRT5zlffSLqdWltJ24n
+2klhCvPngV7gs/kVPP4qi9Nnr08ipRG9xzEoa2msr2wYY56bWSFyPI4jac9jLYJ+
+lF6IuFmYLaaMByoME13GCbUhWVVcX6GE1rXhhGdzCVJedwlWN6M1Nr5Q7/Uhni6n
+6cLC2WXnrbdd2XQsG9mHB93Wq8+6MVvUmrjFYpH89mpt5ob8jz4kV/TAVphjOfK+
+eF6pWbWhWXi/D1kr6bJhXdl444BvPtQKgG+mVur20u91B4B4Rk0ux4qfdxV1IaAl
+qlx4kZHYkvb0CnpREsW8MwWeDpQcpmKxArwye/cAcaO47KQ6w0XHF/cw2Ph+Grtj
+canjTBfyvU8gYc0lgx7PxzYZSqJGDvsQhaWF6hPyV3t1zZMdb5Q=
+=dUCN
+-----END PGP SIGNATURE-----
 
-    # uh oh; that was a bad resolution; let's try again
-    git reset --hard @{1}
-    git rebase main
-    git checkout --merge .
-    git rerere forget .               # fails
-    echo 'good merge' >file
-    git add file
-    EDITOR=: git rebase --continue
-
-At the end of this script, the 'bad merge' is still the recorded
-resolution and no rerere record exists for the 'good merge'.
-
-Just in case there's another piece of config somehow relevant, here's a
-dump of the system that reproduced this:
-
-    $ git config --list --show-scope | sort
-    global	user.email=[clip]
-    global	user.name=[clip]
-    local	core.autocrlf=true
-    local	core.bare=false
-    local	core.filemode=false
-    local	core.ignorecase=true
-    local	core.logallrefupdates=true
-    local	core.repositoryformatversion=0
-    local	core.symlinks=false
-    local	rerere.enabled=true
-    system	core.autocrlf=input
-    system	core.fscache=true
-    system	core.fsmonitor=true
-    system	core.symlinks=false
-    system	credential.helper=manager
-    system	credential.https://dev.azure.com.usehttppath=true
-    system	diff.astextplain.textconv=astextplain
-    system	filter.lfs.clean=git-lfs clean -- %f
-    system	filter.lfs.process=git-lfs filter-process
-    system	filter.lfs.required=true
-    system	filter.lfs.smudge=git-lfs smudge -- %f
-    system	http.sslbackend=schannel
-    system	http.sslcainfo=C:/Program Files/Git/mingw64/etc/ssl/certs/ca-bundle.crt
-    system	init.defaultbranch=main
-    system	pull.rebase=true
-
-    $ git --version
-    git version 2.43.0.windows.1
-
-It's worth noting at this point that while I believe I reproduced on
-macOS last week, that doesn't jive with the available evidence (and I
-can't reproduce it on macOS this morning, though I suspect that has more
-to do with native use of LF over CRLF than anything else).
-
---
-Sean Allred
+--/eSlt0kbQJNWAsV3--
