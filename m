@@ -1,108 +1,83 @@
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yb1-f201.google.com (mail-yb1-f201.google.com [209.85.219.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7A961DDE4
-	for <git@vger.kernel.org>; Wed,  3 Jan 2024 22:23:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7ED1B1DDE4
+	for <git@vger.kernel.org>; Wed,  3 Jan 2024 22:41:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--delmerico.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="re5qC4/U"
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 0884A2CAB0;
-	Wed,  3 Jan 2024 17:23:03 -0500 (EST)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=EeiLY5omU4fJ
-	xZw6+3R5wK224JDmKPazKUdsOrY6DVQ=; b=re5qC4/UvMWeFi7VqRJvOsiR0f4C
-	eztv9i0fGAszzc2PpGtGB/+A4Q+We8b9LZ0rB6KbRxjWj8tMoJo7EWSYmkz1N7dl
-	WfvXDCaW/myHTqibbakk8IdgLzPqQOqE9ZLy10FLpwk4toNrN4wZQK88uSo8PlHn
-	abzYzBsXKTEUf7Q=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 01BFC2CAAF;
-	Wed,  3 Jan 2024 17:23:03 -0500 (EST)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.200.93])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id B4CEC2CAAC;
-	Wed,  3 Jan 2024 17:22:59 -0500 (EST)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Matthias =?utf-8?Q?A=C3=9Fhauer?= <mha1993@live.de>
-Cc: =?utf-8?Q?S=C3=B6ren?= Krecker <soekkle@freenet.de>,  Johannes
- Schindelin
- <Johannes.Schindelin@gmx.de>,  git@vger.kernel.org,
-  sunshine@sunshineco.com
-Subject: Re: [PATCH V4 1/1] Replace SID with domain/username
-In-Reply-To: <DB9P250MB0692C8B4D93ED92FEE680AA9A560A@DB9P250MB0692.EURP250.PROD.OUTLOOK.COM>
-	("Matthias =?utf-8?Q?A=C3=9Fhauer=22's?= message of "Wed, 3 Jan 2024
- 09:21:16 +0100
-	(CET)")
-References: <xmqqsf3feilq.fsf@gitster.g>
-	<20240102191514.2583-1-soekkle@freenet.de>
-	<20240102191514.2583-2-soekkle@freenet.de>
-	<xmqqa5pnckm4.fsf@gitster.g>
-	<DB9P250MB0692C8B4D93ED92FEE680AA9A560A@DB9P250MB0692.EURP250.PROD.OUTLOOK.COM>
-Date: Wed, 03 Jan 2024 14:22:58 -0800
-Message-ID: <xmqqil4a83b1.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="dEkJjkkU"
+Received: by mail-yb1-f201.google.com with SMTP id 3f1490d57ef6-dbe9e13775aso1500537276.1
+        for <git@vger.kernel.org>; Wed, 03 Jan 2024 14:41:07 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1704321666; x=1704926466; darn=vger.kernel.org;
+        h=cc:to:from:subject:message-id:mime-version:date:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=4Z9rIdcj+A8n0sHkoGwGU1B8PLWYIS97hx7LaMZiVxc=;
+        b=dEkJjkkUUT8kKYI06v6VJ19W5KQqqpeRcxHRE0HBcixCLMID7PBMHGbSTOnHLU5rlt
+         tYpz4OKyeeaxQ4xF2ovp45janVremYzMXk0cqOBFFPy0FJoficAI1agsGjBsn/AbFAYR
+         Ij+FOixEw0bhGppsrHyZP0ZCuvbxiKW0YZnf1J25gtBTq+r5iBE/A6cEGhwcLpMIksaZ
+         1wS3MPYiP+q8o2NOlXaQWJDmG9CGM8H5iBfn3cGXuV4fDL59EOV4GOYBXT7/AEIm73+f
+         AYqQoVijq/2u92d5mDXVlpZLC2UG/7sI/VNL9NFd4igNP6jOFKf7gngJ4WEbIPiTnDhE
+         cceg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1704321666; x=1704926466;
+        h=cc:to:from:subject:message-id:mime-version:date:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=4Z9rIdcj+A8n0sHkoGwGU1B8PLWYIS97hx7LaMZiVxc=;
+        b=AarAmkxbCRsUx2pDt+2ZIUyQbGZTEObRG9YiiHTBI74SXJsApp/k+FsDIl95sAs7bB
+         3YzGMnYtdkw3QZ7zODJV/1r3gpE3y/li0+PHJ5aXVbaFNjiRZNlN5QaSvCjYbt1JPlM+
+         PjIv2XmnRLHsS+0VMtlb/U9PdfJgNgyC03qXtUIw/jLepN0cZ5oAfGD630peWmQFLNPI
+         8ilP0fTuH/6jzfk30iRLcTY0hJU9dAW6Cqpt7F7SNU+90r+RFYmbY/3w/HneRCpFegWn
+         ulB4+vjjVwPyBxsLVqfBRam2as0EB2GOClobhJaRGP0rtxBL21TymmYFcOJOl5K50Ppu
+         Tvlw==
+X-Gm-Message-State: AOJu0YxV0q6fJ0WqVi0cLJhhQyOoesdKsFUJNOaoB5RkEC9RsvJCVFNv
+	S8x8iAZS/fezcmEfCu0lQOY86J24uon7p3itgqPKSXOFeuJ0UqxS6Jw5ETSXwxcMhJBTrvnNauR
+	8wTkDkP3h7Y6jwn3Uwrbe85ZzCl8q8ZYPA4SFGkz0K1hf9nW+OiYdNWY9l44+ZDVAIXvOoHTO
+X-Google-Smtp-Source: AGHT+IH9QCL9ZbPbDbKsDbsNqHP0Axz+xTqD/AtMFiSpdEDDVaWj3xzawT/N6QetLvFo1H+gFBza5Ae1UYHalf8=
+X-Received: from h2o.c.googlers.com ([fda3:e722:ac3:cc00:20:ed76:c0a8:2868])
+ (user=delmerico job=sendgmr) by 2002:a05:6902:56b:b0:dbd:b756:983a with SMTP
+ id a11-20020a056902056b00b00dbdb756983amr7289532ybt.9.1704321666449; Wed, 03
+ Jan 2024 14:41:06 -0800 (PST)
+Date: Wed,  3 Jan 2024 14:40:54 -0800
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID:
- A6E6CF04-AA86-11EE-86C1-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.43.0.472.g3155946c3a-goog
+Message-ID: <20240103224054.1940209-1-delmerico@google.com>
+Subject: [PATCH] push: region_leave trace for negotiate_using_fetch
+From: Sam Delmerico <delmerico@google.com>
+To: git@vger.kernel.org
+Cc: steadmon@google.com, Sam Delmerico <delmerico@google.com>
+Content-Type: text/plain; charset="UTF-8"
 
-Matthias A=C3=9Fhauer <mha1993@live.de> writes:
+There were two region_enter events for negotiate_using_fetch instead of
+one enter and one leave. This commit replaces the second region_enter
+event with a region_leave.
 
-> This patch only changes the output of our error message, though.
-> It does not change what ownership information we actually compare.
-> So if we had a hypothetical user Bob that was part of the  domain
-> example.com (SID S-1-5-21-100000001-1000000001-10000001-1001) and
-> had been moved over from the example.org domain (old SID S-1-5-21-
-> 2000000002-2000000002-20000002-2002) and we would detect a repository
-> owned by bobs old SID, we would now lookup the old SID, find it
-> attached to a user named example.com\Bob, look up Bobs  current SID,
-> find it belongs to a user named example.com\Bob and print a confusing
-> error message.
+Signed-off-by: Sam Delmerico <delmerico@google.com>
+---
+ fetch-pack.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Yup, that is exactly the kind of breakage I was worried about.
+diff --git a/fetch-pack.c b/fetch-pack.c
+index 31a72d43de..dba6d79944 100644
+--- a/fetch-pack.c
++++ b/fetch-pack.c
+@@ -2218,7 +2218,7 @@ void negotiate_using_fetch(const struct oid_array *negotiation_tips,
+ 					   the_repository, "%d",
+ 					   negotiation_round);
+ 	}
+-	trace2_region_enter("fetch-pack", "negotiate_using_fetch", the_repository);
++	trace2_region_leave("fetch-pack", "negotiate_using_fetch", the_repository);
+ 	trace2_data_intmax("negotiate_using_fetch", the_repository,
+ 			   "total_rounds", negotiation_round);
+ 	clear_common_flag(acked_commits);
 
-Perhaps we should do something along the lines of ...
-
- - The erroring out should be done purely by SID comparison, as that
-   is what we have been doing to protect the users.
-
- - When creating a message, use LookupAccountSidA() to come up with
-   a pair of domain\user strings for the directory and the process
-   to be used in the error message:
-
-   - If they are different (which is expected to be the normal
-     case), we just use the pair of strings.
-
-   - If they are the same, show old and new SID in stringified form
-     (hopefully different SIDs would strigify to different
-     strings?), and optionally we give the domain\user string next
-     to it.
-
-... then?  Then we would emit an error message (in the best case)
-
-    'directory' is owned by:
-    'bob@example.org'
-    but the current user is:
-    'charlie@example.com'
-
-and in a bad case we would instead see something like:
-
-    'directory' is owned by:
-    SID S-1-5-21-100000001-1000000001-10000001-1001 ('bob@example.org')
-    but the current user is:
-    SID S-1-5-21-200000002-2000000002-20000002-2002 ('bob@example.org')
-
-which may still be serviceable.  I dunno.
+base-commit: a26002b62827b89a19b1084bd75d9371d565d03c
+-- 
+2.43.0.472.g3155946c3a-goog
 
