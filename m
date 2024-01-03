@@ -1,162 +1,98 @@
-Received: from out4-smtp.messagingengine.com (out4-smtp.messagingengine.com [66.111.4.28])
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC38318C19
-	for <git@vger.kernel.org>; Wed,  3 Jan 2024 10:40:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5046A1A599
+	for <git@vger.kernel.org>; Wed,  3 Jan 2024 14:38:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="XgWpXHpU";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="9nDx065K"
-Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
-	by mailout.nyi.internal (Postfix) with ESMTP id A2AA05C01F9;
-	Wed,  3 Jan 2024 05:40:56 -0500 (EST)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute3.internal (MEProxy); Wed, 03 Jan 2024 05:40:56 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1704278456; x=1704364856; bh=vbaKC5lqZz
-	xVFBgcrLr9LtqS/z8LQqil8DSAzgQEQ2Q=; b=XgWpXHpU43AghOVrMdw/OCCQf0
-	h2tmlyK+lqsgyQ4LPtoI4Q6D7E3YTsItt6ULyuUfqLdlftOFUKV8VEsU1Jq4QuP7
-	4AZaZER4gbuMsytL4u6LyL4kxb8ZwqZOYTF2Naef4jq5lQiOE3xoDETP2NIoH01K
-	QSA+Yyiaxq+Dg366JdPp1ud0VkNCV2FUomvgc5ra4nQm++ExNZNvjXVfY2+0J1Xv
-	Nc/zo9EC03p/xmSSXTC1t5rnf1cdtVHKPVQVPS+PM1+Yc6F80AO1VPHZ6ppf4mFC
-	Lu+/dO2wlagsBsZWonDyHXJuV9G2Mx8GDfzkI6tzhVkK0S7V1uDc5cZrwbyg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1704278456; x=1704364856; bh=vbaKC5lqZzxVFBgcrLr9LtqS/z8L
-	Qqil8DSAzgQEQ2Q=; b=9nDx065KdMOEdysw7QBlXtD9v+HIpFJk4+ju5FGYBNjq
-	MCdKztrfmSx7SfiRkcd70qp8R36PyjrBstdxqaqPz05jabx98AE5RDXI8xTbX/4e
-	3wPGMpDT1CUwjeUCVAh0YtlRzhW1sgLRqQDOnVcb8kdB3oGAhNj7IBrih76gUqZT
-	vKHPefT/lY88/AdWXKBT71hXbu09oUafPA6TcOgS+8fvjbZFKARcgKZK2EHXPIJ2
-	8uTjmrFqdc+lMqoJyMxe6fxE/+7ynetfj6LBwO/b+vw8HhYVGnS4oGnnyoAyJxlO
-	uyjtGdC7CK9YtM99r7pWf8J0xlwcwKgBLY+pVesUcA==
-X-ME-Sender: <xms:uDmVZf6B6hb3RK5PvmnxWELD4ywjS-JbHkQ4O0thBNoqBPr_qD4P0w>
-    <xme:uDmVZU6pwdQXUWwseN-XK-NNAUVyzCf_-9qMHYGyYHH8z6SZTDahxMhaF27VOP117
-    yeYKnybkkJlUC_Kcw>
-X-ME-Received: <xmr:uDmVZWeC2UO4jkdtntF6FzKZ4UfKSqS731T8uBBP_rc4nVs6xKt2fyQutp0hYko32kMf0tvIxsKxpwQSL6pOV5Ep8w3TAzja2gC4AwcQnx6wqA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrvdeghedgudelucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    cujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtvdenucfhrhhomheprfgrthhr
-    ihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvg
-    hrnhepueektdevtdffveeljeetgfehheeigeekleduvdeffeeghefgledttdehjeelffet
-    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
-    hpkhhsrdhimh
-X-ME-Proxy: <xmx:uDmVZQJ8nBw4aZBjtAD7pWsvKu-5L24AMgnwZzLs71Korl16CmnMhA>
-    <xmx:uDmVZTJdJhBKs4tvK5iz5-kND9_cq6QX-T4vY2lfrJteuoznbCooRw>
-    <xmx:uDmVZZw2Dx81LhDLEJZmcIhvlhV4uDqsCr0SV_5a_QwLY_Sj0MLc6g>
-    <xmx:uDmVZaUe2St1Q5d5t-o6HM7AGD7Uhs4cFCiJZeb3Vp6mfYoVqk4YZA>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 3 Jan 2024 05:40:55 -0500 (EST)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 283f95f2 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 3 Jan 2024 10:38:27 +0000 (UTC)
-Date: Wed, 3 Jan 2024 11:40:51 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Stefan Haller <lists@haller-berlin.de>, git@vger.kernel.org
-Subject: Re: Concurrent fetch commands
-Message-ID: <ZZU5s4LKQF1NLgnC@tanuki>
-References: <c11ca0b3-aaf4-4a8d-80a1-3832954aa7aa@haller-berlin.de>
- <xmqqy1daffk8.fsf@gitster.g>
- <ZZUNxNciNb_xZveY@tanuki>
- <ZZUWmy3rTjpBsH-w@tanuki>
- <ZZU1TCyQdLqoLxPw@ugly>
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="Ko9ZunAz"
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id 7BA81298D0;
+	Wed,  3 Jan 2024 09:38:07 -0500 (EST)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=RdCKyyICdoMn+zz6Vmb8BkEjp6ZJXsrf1c7+KZ
+	xbWw8=; b=Ko9ZunAz9TVrdxHS9kN6EPU5ozD6wiZuk29PMti+CLQxMcnG2B6iPw
+	N9Z53HzCPT8RoXtwn6TMQOWECuYT+M53jeXWww0SiS0KdB2jweeFh9zh+3xEqVqx
+	KbKgz+am4yTRhZENCfFpuNrjQpnphYCVCsnobnWB1WKw2t4WAoeak=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id 73A03298CF;
+	Wed,  3 Jan 2024 09:38:07 -0500 (EST)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.200.93])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id DFFCA298CE;
+	Wed,  3 Jan 2024 09:38:03 -0500 (EST)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Karthik Nayak <karthik.188@gmail.com>
+Cc: Patrick Steinhardt <ps@pks.im>,  Taylor Blau <me@ttaylorr.com>,
+  git@vger.kernel.org,  christian.couder@gmail.com
+Subject: Re: [PATCH 2/2] ref-filter: support filtering of operational refs
+In-Reply-To: <CAOLa=ZS4OOAmyRvf4HH-c_3GvnVkh6zS2kD3hEhRZ7NZT-rvyA@mail.gmail.com>
+	(Karthik Nayak's message of "Wed, 3 Jan 2024 02:22:47 -0800")
+References: <20231221170715.110565-1-karthik.188@gmail.com>
+	<20231221170715.110565-3-karthik.188@gmail.com>
+	<xmqqzfy3l270.fsf@gitster.g>
+	<CAOLa=ZRedfBUjukbN8dFT9CZETe4pz1UR+eWfJwORWuMHSk0Rw@mail.gmail.com>
+	<xmqqsf3oj3u8.fsf@gitster.g>
+	<CAOLa=ZTPxWXnZ8kpBB7=cybNfdEv6d6O37Em7Vpmcw=enpY1_w@mail.gmail.com>
+	<ZZRaOhK869S1Sg1h@nand.local> <ZZUgUUlB8A-rhep5@tanuki>
+	<CAOLa=ZS4OOAmyRvf4HH-c_3GvnVkh6zS2kD3hEhRZ7NZT-rvyA@mail.gmail.com>
+Date: Wed, 03 Jan 2024 06:38:02 -0800
+Message-ID: <xmqqwmsqbhyt.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="/eSlt0kbQJNWAsV3"
-Content-Disposition: inline
-In-Reply-To: <ZZU1TCyQdLqoLxPw@ugly>
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ B3B2032A-AA45-11EE-95C7-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
 
+Karthik Nayak <karthik.188@gmail.com> writes:
 
---/eSlt0kbQJNWAsV3
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> The confusion was that I thought Junio was referring to using
+>
+>     $ git for-each-ref ""
+>
+> to print all refs under $GIT_DIR, while he was actually talking about
+> "$GIT_DIR/refs/" directory.
 
-On Wed, Jan 03, 2024 at 11:22:04AM +0100, Oswald Buddenhagen wrote:
-> On Wed, Jan 03, 2024 at 09:11:07AM +0100, Patrick Steinhardt wrote:
-> > Ah, one thing I didn't think of is parallel fetches. It's expected that
-> > all of the fetches write into FETCH_HEAD at the same point in time
-> > concurrently
-> >=20
-> is it, though? given that the contents could be already randomly scramble=
-d,
-> it would not seem particularly bad if the behavior changed.
->=20
-> the one real complication i see is the --append option, which requires us=
-ing
-> a waiting lock after the actual fetch, rather than acquiring it immediate=
-ly
-> and erroring out on failure (and ideally giving a hint to use
-> --no-write-fetch-head).
+I do not think you misunderstood me here, though.  
 
-I should probably clarify, but with "parallel fetches" I meant `git
-fetch --jobs=3D`, not two separate executions of git-fetch(1). And these
-do in fact use `--append` internally: the main process first truncates
-FETCH_HEAD and then spawns its children, which will then append to
-FETCH_HEAD in indeterministic order.
+When you have your master branch (refs/heads/master), your v1.0 tag
+(refs/tags/v1.0), and the usual pseudorefs, giving "refs" to "git
+for-each-ref" would yield refs/heads/master and refs/tags/v1.0 but
+not HEAD and others, simply because the pattern "refs" in
 
-But even though the order is indeterministic, I wouldn't go as far as
-claiming that the complete feature is broken. It works and records all
-updated refs in FETCH_HEAD just fine, even if it's not particularly
-elegant. Which to me shows that we should try hard not to break it.
+    $ git for-each-ref "refs"
 
-> an extra complication is that concurrent runs with and without --append
-> should be precluded, because that would again result in undefined behavio=
-r.
-> it generally seems tricky to get --append straight if parallel fetches are
-> supposed to work.
+works as a hierarchy prefix match.  You give "refs/heads" and you
+get only your master branch but not tags or HEAD in such a
+repository.  As a natural extension to that behaviour, an empty
+string as a hierarchy prefix that matches everything would work
+well: you'd get HEAD, refs/heads/master, and refs/tags/v1.0 as an
+empty prefix would cover all of the hiearchies these three refs (and
+pseudorefs if you had ORIG_HEAD and MERGE_HEAD there) live in.
 
-Yeah, the `--append` flag indeed complicates things. There are two ways
-to handle this:
+In any case, it is not a very much interesting to define the syntax
+to tell for-each-ref not to limit itself under "refs/".  My point
+was that you do not need a special option for that, as shown above.
 
-  - `--append` should refrain from running when there is a lockfile.
-    This breaks `git fetch --jobs` without extra infra to handle this
-    case, and furthermore a user may (rightfully?) expect that two
-    manually spawned `git fetch --append` processes should work just
-    fine.
+What is more interesting is what to do with refs that are specific
+to other worktrees, e.g.
 
-  - `--append` should handle concurrency just fine, that is it knows to
-    append to a preexisting lockfile. This is messy though, and the
-    original creator of the lockfile wouldn't know when it can commit it
-    into place.
+    $ git rev-parse "worktrees/$name/refs/bisect/bad"
 
-Both options are kind of ugly, so I'm less sure now whether lockfiles
-are the way to go.
+would currently let you peek into (and worse yet, muck with, if you
+really wanted to, with something like "git update-ref") refs that
+should be only visible in another worktree.  Should for-each-ref and
+friends learn a way to iterate over them?  I have no answer to that
+question.
 
-Patrick
-
---/eSlt0kbQJNWAsV3
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmWVObMACgkQVbJhu7ck
-PpTHWA/+Ixney1hVZv/TOCAlYGvUApuJJ7jd6KVwmmQG/otfxCm4XnkYJkZNlLQf
-NGIMJLaYuqZnRkf0YPzXtuNNEqKLhk1x2NWhsF8qx6whvmPsdxr82IKlWGqrkFWl
-leWWYMTK7wjIwrogf391YMvb71X0L9xpZJs2ehB3N8bmc4v/l1sI5V/PpHskxG/M
-eYlGBtYPGJS4gjrmZiHRxx/4Szx+pJrM0R1KJfH0YTlnn86G5DZKq0JI3MArYv+b
-p/2q0n5f560bgPE2vbFaoEdW9KnyE8/j86tEcLAhLSAONZRT5zlffSLqdWltJ24n
-2klhCvPngV7gs/kVPP4qi9Nnr08ipRG9xzEoa2msr2wYY56bWSFyPI4jac9jLYJ+
-lF6IuFmYLaaMByoME13GCbUhWVVcX6GE1rXhhGdzCVJedwlWN6M1Nr5Q7/Uhni6n
-6cLC2WXnrbdd2XQsG9mHB93Wq8+6MVvUmrjFYpH89mpt5ob8jz4kV/TAVphjOfK+
-eF6pWbWhWXi/D1kr6bJhXdl444BvPtQKgG+mVur20u91B4B4Rk0ux4qfdxV1IaAl
-qlx4kZHYkvb0CnpREsW8MwWeDpQcpmKxArwye/cAcaO47KQ6w0XHF/cw2Ph+Grtj
-canjTBfyvU8gYc0lgx7PxzYZSqJGDvsQhaWF6hPyV3t1zZMdb5Q=
-=dUCN
------END PGP SIGNATURE-----
-
---/eSlt0kbQJNWAsV3--
