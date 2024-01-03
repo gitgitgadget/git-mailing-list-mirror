@@ -1,176 +1,210 @@
-Received: from mail-oa1-f41.google.com (mail-oa1-f41.google.com [209.85.160.41])
+Received: from mail-oa1-f48.google.com (mail-oa1-f48.google.com [209.85.160.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B440D18AFB
-	for <git@vger.kernel.org>; Wed,  3 Jan 2024 10:22:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5454918C10
+	for <git@vger.kernel.org>; Wed,  3 Jan 2024 10:33:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZmadbyPi"
-Received: by mail-oa1-f41.google.com with SMTP id 586e51a60fabf-204fdd685fdso3815623fac.2
-        for <git@vger.kernel.org>; Wed, 03 Jan 2024 02:22:49 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mu92oxQv"
+Received: by mail-oa1-f48.google.com with SMTP id 586e51a60fabf-20475bf35a2so632113fac.1
+        for <git@vger.kernel.org>; Wed, 03 Jan 2024 02:33:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1704277369; x=1704882169; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=0j9LcyNjdX9ns3+PAtCiqYivsgqsLoLeArkWYtYrVn4=;
-        b=ZmadbyPicbU5k3MbLqA+z9IW62KeCjy2hjEjyaey7zYbGfPln6yC1PDce0V2iRDNA0
-         RTO88kDkBLdyPbsq7mh4eyg2iR69qJva8qTLjDeRNIUze69jZSI/EHKojc04pDebDScx
-         vS6PmvRDtFV/DgiqIFHm7YTXOa32Bd+ZwNYyqKmctaqGrqZSlA7vbGtkRiucDyHvIWL8
-         kBPMVrt3oE5H9/FN47C4P10N+H0Ka7kdKRwgsyf5hkaIC6M6M9zmwIjyl8gDaC8QdWxS
-         tq9jwIargChhZyQuapyLc0uVm60svljSFWqKiEEIPUbmiR9yAORE9whGyAcnDBp742vF
-         CYsg==
+        d=gmail.com; s=20230601; t=1704278004; x=1704882804; darn=vger.kernel.org;
+        h=mime-version:message-id:in-reply-to:date:subject:cc:to:from
+         :user-agent:references:from:to:cc:subject:date:message-id:reply-to;
+        bh=mw4yLId3O8ZWQuY39AALLzM35PWnpzwAvB+oqAgMmbo=;
+        b=mu92oxQv7vsmj/Y8uGZZPtU4ucsFwnpFaT53svKIpGcrx7EFGsR8wt/zpX3KBP+8fK
+         fElCX39/hAyEDRWHxFLoncjNKOROOVX6lfyuElNPDD4t4++1M8HyOhf3G7JpqXAa1Z6q
+         Fq5h2vRpzGWHPFCfjODnBxzdLUVdWtpcw0uCtYYeFFOP+GNvm6kvZVArDq+BazBFTjYk
+         7VQ1HHdZKZ0Lp+5J7otcZmizO9SG4qA5MMRbj1fErtVCt1wJ9i5rjFe5e4ROJ9LnwqNa
+         haSOYF7PiJYpMjmbCTKrSyRMX4DiCfrunub0VpKHmqZsGyQZ3iGksKXvMGynC4qS5LJA
+         xz/A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1704277369; x=1704882169;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=0j9LcyNjdX9ns3+PAtCiqYivsgqsLoLeArkWYtYrVn4=;
-        b=vX8sbW+LVNQEjgYGqEDBQUgwA+70dIiJjrz+inTBQjeYSEHUviFERzBpK2o5muWdhy
-         +0Uqwj3GyLtOuUMLnjfZ+lg+HfjRDvG4aPbJaeu6IvN+iWV1wim6S4RWowzjFf56yEBO
-         zbbhgSgmZiuJCVu/xxLKh14zJwQ3+sEtWH7S6gbsQDSzxdqOUtysBJHdpc83lcTw6KTf
-         RTmRdY9KOqZsaMGIhOG3I56IpwPuxBKojnzm5VJs9FHIiZtjXBi52MB32o4jrowf9YD+
-         xcdTpogCSg5RFP5OXQo5mePP8EA00pF7ixLgWM5dQUwyMY7rtHfcYaU9waS7a+9GIJ8D
-         xLPw==
-X-Gm-Message-State: AOJu0YxhseJkZm3JyElxe0fgs/kQ9+9zG2fz5T61SBf/8KZQ/dtKSnNV
-	8FXtxZPJfZgGFwnEB2GL+pLcWEWmA9nqgHVExbg=
-X-Google-Smtp-Source: AGHT+IF/EKBW10Rh6AirbatSO+sw85VWoej9rBp7wRHL1YsIC91k6Zv/nwYeO0yBb/bJr/VlSSZnu86MHTkZa9K0iTg=
-X-Received: by 2002:a05:6870:b24f:b0:203:7bef:1691 with SMTP id
- b15-20020a056870b24f00b002037bef1691mr24790032oam.109.1704277368681; Wed, 03
- Jan 2024 02:22:48 -0800 (PST)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Wed, 3 Jan 2024 02:22:47 -0800
-From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <ZZUgUUlB8A-rhep5@tanuki>
-References: <20231221170715.110565-1-karthik.188@gmail.com>
- <20231221170715.110565-3-karthik.188@gmail.com> <xmqqzfy3l270.fsf@gitster.g>
- <CAOLa=ZRedfBUjukbN8dFT9CZETe4pz1UR+eWfJwORWuMHSk0Rw@mail.gmail.com>
- <xmqqsf3oj3u8.fsf@gitster.g> <CAOLa=ZTPxWXnZ8kpBB7=cybNfdEv6d6O37Em7Vpmcw=enpY1_w@mail.gmail.com>
- <ZZRaOhK869S1Sg1h@nand.local> <ZZUgUUlB8A-rhep5@tanuki>
+        d=1e100.net; s=20230601; t=1704278004; x=1704882804;
+        h=mime-version:message-id:in-reply-to:date:subject:cc:to:from
+         :user-agent:references:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=mw4yLId3O8ZWQuY39AALLzM35PWnpzwAvB+oqAgMmbo=;
+        b=F8As8Vj6bOB98v4nyIDoYlf9sf/1REi17Aoprnf0BUgh+38DNtSh2obe77lUKO538z
+         DHDl4NcpfA3ijW5zMKT8bZl5YQD8GCXW0ydqnptQwbH8uTO1TW4MblQ7NOcd4KoL/pHw
+         EZqc5m239Bh8wKRIoGpoXozFWPNgusAJpCgoOwREZnrsx3QNusmvml2SSZ6yudBhO/4a
+         Tc5KHInuOkkEmDN7XoOnfhvE9Oc8aa12z/Uz2sgUwReiu0BYdOvXwLJ0bZL1dEMnTerS
+         UzQFFjtTn0WWQGiETDIcqIccMizrw2W5R8O80YvNunmi6uyRTb0o0j8l4VuQkjFyuY/f
+         sPxg==
+X-Gm-Message-State: AOJu0YzQFXvlwO/xnq+AzxS307IsnwX9X5/WEBaZzqhNw/FW6XncgR2n
+	bkgDx1Oic5GWxrlOvPR5ncrNJgkjuIs=
+X-Google-Smtp-Source: AGHT+IGxAT/99LY/kExfCaFBwqvFbG1HduMHTyDFvkvDrWDyXBD3p+MCfa7DnoD9Xsyx9IkfMsPmUg==
+X-Received: by 2002:a05:6870:1706:b0:204:1d62:9a8b with SMTP id h6-20020a056870170600b002041d629a8bmr35183508oae.5.1704278004188;
+        Wed, 03 Jan 2024 02:33:24 -0800 (PST)
+Received: from epic96565.epic.com ([2620:72:0:6480::1])
+        by smtp.gmail.com with ESMTPSA id bi42-20020a05620a31aa00b00781ea9404dfsm140775qkb.90.2024.01.03.02.33.23
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 03 Jan 2024 02:33:23 -0800 (PST)
+References: <m0y1e7kkft.fsf@epic96565.epic.com> <xmqqcyvgz3ih.fsf@gitster.g>
+ <m0sf43abw7.fsf@epic96565.epic.com> <xmqqa5qbmnrm.fsf@gitster.g>
+ <35f24a01d15ce28932bb6be098d6a164a49cc542008f75673cd6221a9b24b578@mu.id>
+ <m0frzeu89w.fsf@epic96565.epic.com>
+User-agent: mu4e 1.10.8; emacs 29.1
+From: Sean Allred <allred.sean@gmail.com>
+To: git <git@vger.kernel.org>
+Cc: Junio C Hamano <gitster@pobox.com>
+Subject: Re: What's the recommendation for forgetting all rerere's records?
+Date: Wed, 03 Jan 2024 03:27:51 -0600
+In-reply-to: <m0frzeu89w.fsf@epic96565.epic.com>
+Message-ID: <m05y0au2od.fsf@epic96565.epic.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Wed, 3 Jan 2024 02:22:47 -0800
-Message-ID: <CAOLa=ZS4OOAmyRvf4HH-c_3GvnVkh6zS2kD3hEhRZ7NZT-rvyA@mail.gmail.com>
-Subject: Re: [PATCH 2/2] ref-filter: support filtering of operational refs
-To: Patrick Steinhardt <ps@pks.im>, Taylor Blau <me@ttaylorr.com>
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org, christian.couder@gmail.com
-Content-Type: multipart/mixed; boundary="00000000000028d65f060e07ffb5"
+Content-Type: text/plain
 
---00000000000028d65f060e07ffb5
-Content-Type: text/plain; charset="UTF-8"
 
-Patrick Steinhardt <ps@pks.im> writes:
+There was enough going on with that prior email that I gave it another
+look and found some errors.
 
-> On Tue, Jan 02, 2024 at 01:47:22PM -0500, Taylor Blau wrote:
->> On Tue, Jan 02, 2024 at 07:18:48AM -0800, Karthik Nayak wrote:
->> > > As "git for-each-ref" takes pattern that is prefix match, e.g.,
->> > >
->> > >     $ git for-each-ref refs/remotes/
->> > >
->> > > shows everything like refs/remotes/origin/main that begins with
->> > > refs/remotes/, I wonder if
->> > >
->> > >     $ git for-each-ref ""
->> > >
->> > > should mean what you are asking for.  After all, "git for-each-ref"
->> > > does *not* take "--branches" and others like "git log" family to
->> > > limit its operation to subhierarchy of "refs/" to begin with.
->> >
->> > But I don't think using an empty pattern is the best way to go forward.
->> > This would break the pattern matching feature. For instance, what if the
->> > user wanted to print all refs, but pattern match "*_HEAD"?
->> >
->> > Would that be
->> >
->> >       $ git for-each-ref "" "*_HEAD"
->> >
->> > I think this would be confusing, since the first pattern is now acting
->> > as an option, since its not really filtering rather its changing the
->> > search space.
->> >
->> > Maybe "--all-refs" or "--all-ref-types" instead?
->>
->> I tend to agree that the special empty pattern would be a good shorthand
->> for listing all references underneath refs/, including any top-level
->> psuedo-refs.
->>
->> But I don't think that I quite follow what Karthik is saying here.
->> for-each-ref returns the union of references that match the given
->> pattern(s), not their intersection. So if you wanted to list just the
->> psudo-refs ending in '_HEAD', you'd do:
->>
->>   $ git for-each-ref "*_HEAD"
->>
->> I think if you wanted to list all pseudo-refs, calling the option
->> `--pseudo-refs` seems reasonable. But if you want to list some subset of
->> psueod-refs matching a given pattern, you should specify that pattern
->> directly.
+>     $ echo 'bad merge' >file
+>     $ git add file
 >
-> Where I think this proposal falls short is if you have refs outside of
-> the "refs/" hierarchy. Granted, this is nothing that should usually
-> happen nowadays. But I think we should safeguard us for the future:
+>     $ EDITOR=: git rebase --continue
+>     file: needs merge
+>     You must edit all merge conflicts and then
+>     mark them as resolved using git add
 >
->   - There may be bugs in the reftable backend that allow for such refs
->     to be created.
+>     $ git rebase --abort
 >
->   - We may even eventually end up saying that it's valid for refs to not
->     start with "refs/". I consider this to be mostly an artifact of how
->     the files backend works, so it is not entirely unreasonable for us
->     to eventually lift the restriction for the reftable backend.
+>     $ git rebase main
+>     Auto-merging file
+>     CONFLICT (content): Merge conflict in file
+>     error: could not apply b4d7aeb... local
+>     hint: Resolve all conflicts manually, mark them as resolved with
+>     hint: "git add/rm <conflicted_files>", then run "git rebase --continue".
+>     hint: You can instead skip this commit: run "git rebase --skip".
+>     hint: To abort and get back to the state before "git rebase", run "git rebase --abort".
+>     Recorded preimage for 'file'
+>     Could not apply b4d7aeb... local
 >
-> I do not want to push for the second bullet point anytime soon, nor do I
-> have any plans to do so in the future. But regardless of that I would
-> really love to have a way to ask the ref backend for _any_ reference
-> that it knows of, regardless of its prefix. Otherwise it becomes next to
-> impossible for a user to learn about what the reftable binary-format
-> actually contains. So I think that the current focus on pseudo-refs is
-> too short-sighted, and would want to aim for a more complete solution to
-> this problem.
+>     $ git checkout --merge .
+>     Recreated 1 merge conflict
 >
-> This could be in the form of a `--all-refs` flag that gets translated
-> into a new `DO_FOR_EACH_REF_ALL_REFS` bit, which would indicate to the
-> ref backend to also enumerate refs outside of the "refs/" hierarchy.
-> This is orthogonal to the already existing `--all` pseudo-opt, because
-> `--all` would only ever enumerate refs inside of the "refs/" hierarchy.
+>     $ git rerere forget .
+>     error: no remembered resolution for 'file'
 >
-> Patrick
+>     $ echo 'good merge' >file
+>
+>     $ EDITOR=: git rebase --continue
+>     file: needs merge
+>     You must edit all merge conflicts and then
+>     mark them as resolved using git add
 
-Thanks Patrick. I think the confusion was because I was referring to add
-a new command to print all refs, meaning all refs including the ones
-outside the "refs/" folder.
+This section should have read:
 
-The confusion was that I thought Junio was referring to using
+    $ echo 'bad merge' >file
+    $ git add file
 
-    $ git for-each-ref ""
+    $ EDITOR=: git rebase --continue
+    Recorded resolution for 'file'.
+    [detached HEAD 5e3c431] local
+     1 file changed, 1 insertion(+), 1 deletion(-)
+    Successfully rebased and updated refs/heads/feature.
 
-to print all refs under $GIT_DIR, while he was actually talking about
-"$GIT_DIR/refs/" directory.
+    $ git reset --hard @{1}
+    HEAD is now at b4d7aeb local
 
-So to loop back, I'm suggesting to add `--all-refs` to print all the
-refs under $GIT_DIR. This would include refs traditionally found under
-"refs/" and other refs like pseudo refs, HEAD and perhaps user created
-refs under $GIT_DIR.
+    $ git rebase main
+    Auto-merging file
+    CONFLICT (content): Merge conflict in file
+    error: could not apply b4d7aeb... local
+    hint: Resolve all conflicts manually, mark them as resolved with
+    hint: "git add/rm <conflicted_files>", then run "git rebase --continue".
+    hint: You can instead skip this commit: run "git rebase --skip".
+    hint: To abort and get back to the state before "git rebase", run "git rebase --abort".
+    Resolved 'file' using previous resolution.
+    Could not apply b4d7aeb... local
 
---00000000000028d65f060e07ffb5
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: 439e97346c96ad2a_0.1
+    $ git checkout --merge .
+    Recreated 1 merge conflict
 
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1XVk5YWVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1meWlCQy80a2E3ZFhEcFFQRFNvc1BkTG1FcmV4RHZlRgoyMFMzdXJLVVVY
-TldPd2JMN24ybFBUNUU4Y3U5dW5BWVhBZDIvNnVJVDY5QmlPY0xTd0JLa29CS1B0cjROWmhMClNh
-MEJNVnB2enNOSDdBd0UyYmdjQmpIYWNHa2FKTGo5U2ZOZnJURTB0TFY2QjVoZHpoMkxOUS9HOGQz
-N1NlYUMKQnhpMDluWDZTOEJBZ04yTXlGTmpCdVNEcGc3SWVjcXludlQyT3REV1FTSDJpTGpoSFBP
-cW9SSk5XZlhPQ2ozTwp1Z0g0TG9DUFd6RnVoOUdYSGlRWkNWTVdQWlBhSXdwaXZ6L3FCTVdocWxI
-K1JYalpkR3ZoMjRremdvT2NHT01SCkZVRmp4VFU4SlkyU2oxSTU3aUNXY3dwcW9Bem5tRmNkRS9v
-NlNTbkdrd2wrNG9hWnExblYwbVpsZnpkcElpVlQKZ01pTThGMEY2UVVjdXFaV2h2WS9DaEUxTUlX
-ZWdLOTZWNEJvaEs4Q2h0eFVXOGxkaWpzc0ZkYWNKWFF5eGxBcApEWFZJZ3Jxc1NOVzdHQ1l2RE95
-N2o1dmxXZDQ2ZTFGc0NxV1FMMjZJNVNUSkhJeHVIc3JtNkF2VlhXb1VNZlpoCmR0MjBPd055WDBS
-cVZJNVZUbVphdk5XMzNGSno4bVlUSlF5aXVDbz0KPVRiTW4KLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---00000000000028d65f060e07ffb5--
+    $ git rerere forget .
+    error: no remembered resolution for 'file'
+
+I've driven myself a little nuts trying to reproduce it this morning,
+but in doing so I've come to an important discovery: this bug presents
+if `core.autocrlf=true` but does *not* present if `core.autocrlf=input`.
+
+For completeness and future reference, the following script reproduces
+the issue on Windows:
+
+    git init
+    echo aaa >file
+    git add file
+    git commit -ambase
+    git branch feature
+    echo bbb >file
+    git commit -amremote
+    git switch feature
+    echo ccc >file
+    git commit -amlocal
+    git config rerere.enabled true
+    git config core.autocrlf true     # <--
+
+    # setup complete; let's rebase!
+    git rebase main
+    echo 'bad merge' >file
+    git add file
+    EDITOR=: git rebase --continue
+
+    # uh oh; that was a bad resolution; let's try again
+    git reset --hard @{1}
+    git rebase main
+    git checkout --merge .
+    git rerere forget .               # fails
+    echo 'good merge' >file
+    git add file
+    EDITOR=: git rebase --continue
+
+At the end of this script, the 'bad merge' is still the recorded
+resolution and no rerere record exists for the 'good merge'.
+
+Just in case there's another piece of config somehow relevant, here's a
+dump of the system that reproduced this:
+
+    $ git config --list --show-scope | sort
+    global	user.email=[clip]
+    global	user.name=[clip]
+    local	core.autocrlf=true
+    local	core.bare=false
+    local	core.filemode=false
+    local	core.ignorecase=true
+    local	core.logallrefupdates=true
+    local	core.repositoryformatversion=0
+    local	core.symlinks=false
+    local	rerere.enabled=true
+    system	core.autocrlf=input
+    system	core.fscache=true
+    system	core.fsmonitor=true
+    system	core.symlinks=false
+    system	credential.helper=manager
+    system	credential.https://dev.azure.com.usehttppath=true
+    system	diff.astextplain.textconv=astextplain
+    system	filter.lfs.clean=git-lfs clean -- %f
+    system	filter.lfs.process=git-lfs filter-process
+    system	filter.lfs.required=true
+    system	filter.lfs.smudge=git-lfs smudge -- %f
+    system	http.sslbackend=schannel
+    system	http.sslcainfo=C:/Program Files/Git/mingw64/etc/ssl/certs/ca-bundle.crt
+    system	init.defaultbranch=main
+    system	pull.rebase=true
+
+    $ git --version
+    git version 2.43.0.windows.1
+
+It's worth noting at this point that while I believe I reproduced on
+macOS last week, that doesn't jive with the available evidence (and I
+can't reproduce it on macOS this morning, though I suspect that has more
+to do with native use of LF over CRLF than anything else).
+
+--
+Sean Allred
