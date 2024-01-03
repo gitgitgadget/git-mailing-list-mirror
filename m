@@ -1,151 +1,226 @@
-Received: from out1-smtp.messagingengine.com (out1-smtp.messagingengine.com [66.111.4.25])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qv1-f42.google.com (mail-qv1-f42.google.com [209.85.219.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D01D182A2
-	for <git@vger.kernel.org>; Wed,  3 Jan 2024 08:22:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8E1418624
+	for <git@vger.kernel.org>; Wed,  3 Jan 2024 08:32:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="OnSe9WDb";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="7p3jSIoW"
-Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
-	by mailout.nyi.internal (Postfix) with ESMTP id CFBF35C01C0;
-	Wed,  3 Jan 2024 03:22:17 -0500 (EST)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute2.internal (MEProxy); Wed, 03 Jan 2024 03:22:17 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1704270137; x=1704356537; bh=kNmsSWJ09e
-	/OBp4ELSt9lb2xsyV2MfAvTn4SljgMSHM=; b=OnSe9WDbP+Rp6KIhqN9eSkkB4u
-	8+qx1LiU4dDHKThvf6dHV4XEaeSZBxlbdGr0LOd5sGWg0ghh+GtT7mPyUFtatFPh
-	qHx5Z6OeN6XH7LTKe6nMw9ZvD64Ve6lBxGR2AD8czvmkaGsHS0xrY3pmiGzQiauJ
-	JH0L/nclykCcu28/mruhXd1BiAWfRq7IgMMHekNCB64GChqqdku0bZg/kaPacHby
-	knV1hEdO7WUAxt4xSndcc4hWMwbrr4htkzjNJdZ1moWv0Rz4IzL0sqDxOHxeCgx0
-	n6do07tH9xbZx3ICjxplmLNeLYOHfcaJhIfb3ldD4oma2rW5MdqK8NLbhCEw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1704270137; x=1704356537; bh=kNmsSWJ09e/OBp4ELSt9lb2xsyV2
-	MfAvTn4SljgMSHM=; b=7p3jSIoWAjCIUXvFFwxXy2sOO9er3ktylqFNfilIZe1S
-	BbvApezmrxd6S7w9lsCFHd9azoiO+LKmIXTVvOBwXhYehNg1B6fTcUQS69/hXLlB
-	sPxDswG09OPmzkQbBo8Y5PhPtOmAf6CGukins47VrQ9d57ySfEJuifBY230e18mx
-	t3rcdFKlh29ncagFUPeQJXTYS36oh1VLhGWhc83T42htk2eAVoMkSPImbZrfPSXY
-	1NonNQvMsXhN/ZEqLZlZYDF10A6mmNUStMPBC6iXFkpQJRGdOLp4mPWTTBc0439u
-	lJV16RVUZEfNMOB4Bk0FJ1sZWHDBsBuOnKJVOsTwug==
-X-ME-Sender: <xms:ORmVZerWswJ0_cQAcKKlrL3UxLz7-rCeVGpVzboYw7iSBxR_8BnXBw>
-    <xme:ORmVZcrZVg3C8jdcQJEzMQf7DTibRbQDsC9FXCO1T4zVOux_81LqMkHdkUQMAh-gP
-    3XEsWzLYFmPwHDFEQ>
-X-ME-Received: <xmr:ORmVZTOPPp961Gflq5Pz-rrthr6HMDY1se0x_miMytCpayKIbbo8XCQffofyxM6rY8g8NGO7rhbn5ye69itzlIARJe85MDb6EZ2i9p-VX6FBBA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrvdeggedguddvudcutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
-    necuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
-    enucfjughrpeffhffvvefukfhfgggtuggjsehgtderredttddvnecuhfhrohhmpefrrght
-    rhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtth
-    gvrhhnpeeukedtvedtffevleejtefgheehieegkeeluddvfeefgeehgfeltddtheejleff
-    teenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpsh
-    esphhkshdrihhm
-X-ME-Proxy: <xmx:ORmVZd42MoTdN7HnyKwCfU76zvm6Cs4hS2EOY1yd7_GwrbeDFVl8KA>
-    <xmx:ORmVZd6UmLvGNn2QaHgzuieWWaVV0B7ZF1MpXxMG9TluhFqbn2T7zQ>
-    <xmx:ORmVZdhyRTcxz2lSAjCMNqKOu0NJz_aVLbj5goKoXM4dpE3zU_we7Q>
-    <xmx:ORmVZdEfAhYY5FdRRAZ4yAkc56tNhhjo2dnVSZR7oePEa07uv5evJQ>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 3 Jan 2024 03:22:16 -0500 (EST)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 68b0fed2 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 3 Jan 2024 08:19:49 +0000 (UTC)
-Date: Wed, 3 Jan 2024 09:22:13 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: Chandra Pratap via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, Chandra Pratap <chandrapratap376@gmail.com>,
-	Chandra Pratap <chandrapratap3519@gmail.com>
-Subject: Re: [PATCH v2] write-or-die: make GIT_FLUSH a Boolean environment
- variable
-Message-ID: <ZZUZNQqDTx3bnveJ@tanuki>
-References: <pull.1628.git.1703955246308.gitgitgadget@gmail.com>
- <pull.1628.v2.git.1704268708720.gitgitgadget@gmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IoUgKetT"
+Received: by mail-qv1-f42.google.com with SMTP id 6a1803df08f44-6805941cb74so11331966d6.0
+        for <git@vger.kernel.org>; Wed, 03 Jan 2024 00:32:31 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1704270750; x=1704875550; darn=vger.kernel.org;
+        h=mime-version:message-id:in-reply-to:date:subject:cc:to:from
+         :user-agent:references:from:to:cc:subject:date:message-id:reply-to;
+        bh=yuXkiA/Z2M/Doj4MguseXSAwEW8dJOQpS2y8a2mTMcQ=;
+        b=IoUgKetTPOmb+ZX6MjkzB+mD5pMACUP/urRQv1uchwgC8rDnQr8bIyU51Pbs0R0xmj
+         BarjAx/pINaF/n6zZBPwFfKAy6CHeiacDQFjcAbSqjXRXCWznwpBeTjQo6TkgrBBbXid
+         VYHzmnxU/WYB90Y4U013rLSWkkOVjNjzhqEPtqHHADtY2Z32BjfkWtfEXd9FQeJHQ1wE
+         BYg3j69rvcViLd1+n9h604L/fPLKomiZd/JYB++UvfgHYyYaPgIPEb1sV4ebILzShOLF
+         xMIc4+VqvffyitwXx2glVYh+HxGYItMQNidCX4A19MiHKLxuiB/Zj4ZiZH86aN+fs7ab
+         oWug==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1704270750; x=1704875550;
+        h=mime-version:message-id:in-reply-to:date:subject:cc:to:from
+         :user-agent:references:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=yuXkiA/Z2M/Doj4MguseXSAwEW8dJOQpS2y8a2mTMcQ=;
+        b=cxDqgizxET1X6C/e4beefbcVd0LH8f6RpKUvrqjE8RJideuwKbvJe9T14veqdIxi7/
+         g3Zt5cnTblwjwHtRinM7B8Y1+UD3itT7PrDHhv0QvmMxiBYck7M6Ekkr54mKTZ0Hsd/6
+         whgRk8Uru1jlFrwSRbvwInv5oHm4ppbZp4NRkLnh31o3rlTm2SZaOcuMKKG6DhlYBXla
+         GqtG5FaYXDWC1H20NAnKeU98odgjNPj7zTPP7JSq0yPpEVEmQ/A97mmNgxcJ61XYAmMi
+         4VPcxGFXiLEq/e/63EFDgupRzGDs9a5Lf2Db6+K4i/qVIbNgE1jjkZFvZ1CuAbv7TS+Q
+         jKVA==
+X-Gm-Message-State: AOJu0YxoHsJaqm38xcPtyb8eBJcZ76/i6pfojIm60gF8/WWPSHq27AWR
+	jKXXhGXd92Ku4fw0003MR9rfdmUZ8mI=
+X-Google-Smtp-Source: AGHT+IEtCxV4yJg6+QMND3gt1dWZsrr9em2Xn5AJGL0WFKUeWz5sWFd66GNKc7zyPFeryF99gxMR9w==
+X-Received: by 2002:a05:622a:1907:b0:425:4420:c5c3 with SMTP id w7-20020a05622a190700b004254420c5c3mr40629039qtc.1.1704270749969;
+        Wed, 03 Jan 2024 00:32:29 -0800 (PST)
+Received: from epic96565.epic.com ([2620:72:0:6480::1])
+        by smtp.gmail.com with ESMTPSA id fd5-20020a05622a4d0500b00427f1fa87e6sm7007613qtb.56.2024.01.03.00.32.28
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 03 Jan 2024 00:32:29 -0800 (PST)
+References: <m0y1e7kkft.fsf@epic96565.epic.com> <xmqqcyvgz3ih.fsf@gitster.g>
+ <m0sf43abw7.fsf@epic96565.epic.com> <xmqqa5qbmnrm.fsf@gitster.g>
+ <35f24a01d15ce28932bb6be098d6a164a49cc542008f75673cd6221a9b24b578@mu.id>
+User-agent: mu4e 1.10.8; emacs 29.1
+From: Sean Allred <allred.sean@gmail.com>
+To: Sean Allred <sallred@epic.com>
+Cc: Junio C Hamano <gitster@pobox.com>, Sean Allred <allred.sean@gmail.com>,
+ git <git@vger.kernel.org>
+Subject: Re: What's the recommendation for forgetting all rerere's records?
+Date: Wed, 03 Jan 2024 02:30:45 -0600
+In-reply-to: <35f24a01d15ce28932bb6be098d6a164a49cc542008f75673cd6221a9b24b578@mu.id>
+Message-ID: <m0frzeu89w.fsf@epic96565.epic.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="wO9kszr8PtdisSrN"
-Content-Disposition: inline
-In-Reply-To: <pull.1628.v2.git.1704268708720.gitgitgadget@gmail.com>
+Content-Type: text/plain
 
 
---wO9kszr8PtdisSrN
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+(Doesn't look like this actually got picked up by lore when I originally
+sent it at Fri, 22 Dec 2023 12:19:50 -0600. This is a re-send; apologies
+if you get this message twice.)
 
-On Wed, Jan 03, 2024 at 07:58:28AM +0000, Chandra Pratap via GitGitGadget w=
-rote:
-[snip]
-> diff --git a/write-or-die.c b/write-or-die.c
-> index 42a2dc73cd3..a6acabd329f 100644
-> --- a/write-or-die.c
-> +++ b/write-or-die.c
-> @@ -20,15 +20,12 @@ void maybe_flush_or_die(FILE *f, const char *desc)
->  {
->  	static int skip_stdout_flush =3D -1;
->  	struct stat st;
-> -	char *cp;
-> =20
->  	if (f =3D=3D stdout) {
->  		if (skip_stdout_flush < 0) {
-> -			/* NEEDSWORK: make this a normal Boolean */
-> -			cp =3D getenv("GIT_FLUSH");
-> -			if (cp)
-> -				skip_stdout_flush =3D (atoi(cp) =3D=3D 0);
-> -			else if ((fstat(fileno(stdout), &st) =3D=3D 0) &&
-> +			if (!git_env_bool("GIT_FLUSH", -1))
-> +				skip_stdout_flush =3D 1;
+==
 
-It's a bit surprising to pass `-1` as default value to `git_env_bool()`
-here, as this value would hint that the caller wants to explicitly
-handle the case where the "GIT_FLUSH" envvar is not set at all. We don't
-though, and essentially fall back to "GIT_FLUSH=3D1", so passing `1` as
-the fallback value would be less confusing.
+There might be a bug here.
 
-Anyway, the resulting behaviour is the same regardless of whether we
-pass `1` or `-1`, so I'm not sure whether this is worth a reroll.
+Junio C Hamano <gitster@pobox.com> writes:
+     # Now the fun command you seem to have missed.  You MUST give
+     # "git checkout --merge" a pathspec.  I do not encourage it but
+     # using "." to say "unresolve everything under the sun" should
+     # also work.
+     $ git checkout --merge builtin/mv.c
+     Recreated 1 merge conflict
 
-Patrick
+Yep, I definitely missed this! Very handy, thank you :-)
 
-> +			else if (!fstat(fileno(stdout), &st) &&
->  				 S_ISREG(st.st_mode))
->  				skip_stdout_flush =3D 1;
->  			else
->=20
-> base-commit: 1a87c842ece327d03d08096395969aca5e0a6996
-> --=20
-> gitgitgadget
->=20
+     # You should then be able to correct the resolution with your
+     # editor.
+     $ edit builtin/mv.c
 
---wO9kszr8PtdisSrN
-Content-Type: application/pgp-signature; name="signature.asc"
+     # If this is one-time fix (you are happy with the original
+     # resolution and wanted to deviate from it only once this time),
+     # there is nothing else need to be done.  If you want to record
+     # this as a new resolution, you'd get rid of the old one and
+     # record this one.
+     $ git rerere forget builtin/mv.c
+     $ git rerere
 
------BEGIN PGP SIGNATURE-----
+It's taken some time to investigate on our end, but it appears that the
+issue we're seeing is particular to git-rebase.
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmWVGTQACgkQVbJhu7ck
-PpR2ahAAqOx843RscwX4mLP4hqjqyf8ISKP40T0fHBs5el0lhN4aOMvNYEbYVN8x
-5TTPZKOJCZwg/EOLA+laTNvMu2I6yi5uEehM6eFg+QFf97tlnIRrhy28UNRBDNED
-aBRWHGuDE5dVAnYSoC7GrbZzvK+VYOGVmyX2oUaDZafbQQ6BFMyxTvrt3t8BHk4j
-LLfohML3hwuQTd163KEfm9t+eCtiu46x4QRDH9qmS2nucL12NkclG5CpXFmyGePo
-d6BSXentH9WFWbT7Tjf1e1hPMzyz5R/P6ritFJvdUqb2Fw1ctqt/yb+TlClgHqvC
-moIg4y8hMs9vkD7DmRgQ0f3+E0COmPF2/wGKEhyuVAP2CeAIjYGJvo+cjoSGTUBn
-21/FdhBOyv8pHuLuJFMeqE9Tc7twSn7p3UI7DKMLIDvaOkuTLcc1MiwK9Tbh9gop
-uRxolCNRjQfGf7ndGdgMpf8srWgC4ONolC23V/EpOhSaR8Q82M3jIHpKxWNUM8ah
-YyXwN8u1Cr8eg2mulXOkc8ZYrajAIAaaaUSQL5+nsUYnaMPAmio0ebQQd/k0cRyI
-S3YqWFN4ADidclux9/hZ0AuKF2UojbkWf8vtQ38plb5WUNDAfUsdYP+UtBMpSKOa
-HLpAKYL9WwXnaPh/ywOmMGoT/IvM2SFJWZPRgxIiGALGKcFxh3E=
-=MEaC
------END PGP SIGNATURE-----
+Consider a run using git-merge, which works perfectly as you describe:
 
---wO9kszr8PtdisSrN--
+    # Let's set up our conflict; most output here elided for brevity.
+    $ git init
+    $ echo aaa >file
+    $ git add file
+    $ git commit -ambase
+    $ git branch feature
+    $ echo bbb >file
+    $ git commit -amremote
+    $ git switch feature
+    $ echo ccc >file
+    $ git commit -amlocal
+    $ git --no-pager log --oneline --graph --all
+    * 6b33f42 (HEAD -> feature) local
+    | * 7e189f6 (main) remote
+    |/
+    * c5901f5 base
+
+    # Now for the fun part!
+    $ git config rerere.enabled true
+
+    $ git merge main
+    Auto-merging file
+    CONFLICT (content): Merge conflict in file
+    Recorded preimage for 'file'
+    Automatic merge failed; fix conflicts and then commit the result.
+
+    $ echo 'bad merge' >file
+    $ git commit -ammerge
+    Recorded resolution for 'file'.
+    [feature 75d45f0] merge
+
+    # Ack! That merge was bad. Let's try that again.
+    $ git reset --hard @^
+    HEAD is now at 6b33f42 local
+
+    $ git merge main
+    Auto-merging file
+    CONFLICT (content): Merge conflict in file
+    Resolved 'file' using previous resolution.
+    Automatic merge failed; fix conflicts and then commit the result.
+
+    # Your method to correct this single bad merge works flawlessly:
+    $ git checkout --merge file
+    Recreated 1 merge conflict
+
+    $ git rerere forget file
+    Updated preimage for 'file'
+    Forgot resolution for 'file'
+
+    $ echo 'good merge' >file
+
+    $ git commit -ammerge
+    Recorded resolution for 'file'.
+    [feature 1770541] merge
+
+Let's compare this with git-rebase:
+
+    # Same setup as before
+    $ git init
+    $ echo aaa >file
+    $ git add file
+    $ git commit -ambase
+    $ git branch feature
+    $ echo bbb >file
+    $ git commit -amremote
+    $ git switch feature
+    $ echo ccc >file
+    $ git commit -amlocal
+    $ git --no-pager log --oneline --graph --all
+    * b4d7aeb (HEAD -> feature) local
+    | * 2a0978d (main) remote
+    |/
+    * 91140a6 base
+
+    # Now for the fun part! Just like before, but we're going to use
+    # git-rebase instead of git-merge.
+    $ git config rerere.enabled true
+
+    $ git rebase main
+    Auto-merging file
+    CONFLICT (content): Merge conflict in file
+    error: could not apply b4d7aeb... local
+    hint: Resolve all conflicts manually, mark them as resolved with
+    hint: "git add/rm <conflicted_files>", then run "git rebase --continue".
+    hint: You can instead skip this commit: run "git rebase --skip".
+    hint: To abort and get back to the state before "git rebase", run "git rebase --abort".
+    Recorded preimage for 'file'
+    Could not apply b4d7aeb... local
+
+    $ echo 'bad merge' >file
+    $ git add file
+
+    $ EDITOR=: git rebase --continue
+    file: needs merge
+    You must edit all merge conflicts and then
+    mark them as resolved using git add
+
+    $ git rebase --abort
+
+    $ git rebase main
+    Auto-merging file
+    CONFLICT (content): Merge conflict in file
+    error: could not apply b4d7aeb... local
+    hint: Resolve all conflicts manually, mark them as resolved with
+    hint: "git add/rm <conflicted_files>", then run "git rebase --continue".
+    hint: You can instead skip this commit: run "git rebase --skip".
+    hint: To abort and get back to the state before "git rebase", run "git rebase --abort".
+    Recorded preimage for 'file'
+    Could not apply b4d7aeb... local
+
+    $ git checkout --merge .
+    Recreated 1 merge conflict
+
+    $ git rerere forget .
+    error: no remembered resolution for 'file'
+
+    $ echo 'good merge' >file
+
+    $ EDITOR=: git rebase --continue
+    file: needs merge
+    You must edit all merge conflicts and then
+    mark them as resolved using git add
+
+Is this a bug?
+
+--
+Sean Allred
