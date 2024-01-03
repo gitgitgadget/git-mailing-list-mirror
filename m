@@ -1,168 +1,101 @@
-Received: from wout5-smtp.messagingengine.com (wout5-smtp.messagingengine.com [64.147.123.21])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f41.google.com (mail-ej1-f41.google.com [209.85.218.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DD301BDC2
-	for <git@vger.kernel.org>; Wed,  3 Jan 2024 16:17:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 912D51CFAE
+	for <git@vger.kernel.org>; Wed,  3 Jan 2024 16:33:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="ojfY16yn";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Tnugv4gx"
-Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
-	by mailout.west.internal (Postfix) with ESMTP id CEDC83200B1C;
-	Wed,  3 Jan 2024 11:17:32 -0500 (EST)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute3.internal (MEProxy); Wed, 03 Jan 2024 11:17:33 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1704298652; x=1704385052; bh=r+2ZA0Xs4M
-	jgMHBHCtOttveWcjdik2mFQSLY75h/fLY=; b=ojfY16ynvpQmoylR0IR0Ss/1I5
-	cW1SUGUne00dz0fzgKuxd46y9CQzeORztUFfvyBJ9fO+uxTDTe5C5tIDJw/z/w6T
-	LtntzRcR6QsNS1Lyr7MH9/laDgo8KwEbqaDXZe9/yrjB5ra8PfIjzFY1w1OiYM/8
-	7kLqTsDcDu+mhROoGjeNhi/HsGk4FN9CFfCPjjOdJ2pvYJvkz0EbJtMLAObLjKux
-	m+OH9FcfmBohaqYk5glJaqzD4R+kdJKJwr/TVAak/fcN6oUzF5/xb+aux67pv8s1
-	4K4AstX+ek4/hr2DcIvVwZHK6J5gzpoMLqxW8QxujEOK+6asMk60VF6IzjtQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1704298652; x=1704385052; bh=r+2ZA0Xs4MjgMHBHCtOttveWcjdi
-	k2mFQSLY75h/fLY=; b=Tnugv4gxTNCaPgzRNDAsnpgnBN8qiSQfyis9sRmxIyJ8
-	6kgCIESc0RioLLa9Ckglrv0eOY0YFdEignfLSuH/TnwTerUIrNRDvVNj0nJo+WYm
-	TpzZu1txxCuMrR9N96rk9zm27wjKWUfOXex+yRMb69OueONYsiAJIcCL0HdhJKiW
-	xsrh01VWFL5vEGIpYNfYMsGKwHILp5dqbevdtE0wxKIVVafjAFnK0aILlamt/xmd
-	oF8RBKfgRQbGv6WbA9GIyh2F/0Elmyg1GywMZkdmOy/E6gGSvTSDGtoBur+SFNre
-	BOjwQssn8+R32YaNOoo4guO+W1xXlF+StrPHLHBsqg==
-X-ME-Sender: <xms:nIiVZZra1uiDCCGGeTXIGp19BBWalR7gCTF1MeBETtiN5qc6Paijlg>
-    <xme:nIiVZbqLz4XeKOCiHvrHnCITEeWHEZW9sKitpQ-qsLQMwTP7tyhDiShxc9opTlPK3
-    2cBwoGMUgjcILnXPA>
-X-ME-Received: <xmr:nIiVZWPyv4N5BwDXR93NshHIvXumQnp3K0potf10d-5YVAG5n_47b2Yf26Lhkosz6oK6Rrmx4aXzWuoco7OD1hVmkYCHX0ywMKUG2I5QoKo_xw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrvdeghedgkeeiucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    cujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtvdenucfhrhhomheprfgrthhr
-    ihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvg
-    hrnhepueektdevtdffveeljeetgfehheeigeekleduvdeffeeghefgledttdehjeelffet
-    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
-    hpkhhsrdhimh
-X-ME-Proxy: <xmx:nIiVZU6Sph7WeA0b7SVqSg8a7j2nzwb4qJ3s-gKKkiI6GoNa_naarw>
-    <xmx:nIiVZY4jinQ7k3IUa1ZxbPoxNjdLdeqgLTJnGAGUjiI7Bwg-aCkmJA>
-    <xmx:nIiVZchTkSavkAY6iHsd2Rb7R-nQO9ewNokkMPVGzPhGdMfmhcYdRQ>
-    <xmx:nIiVZWlqVXWlcN8qvlvgx5nj2yVMnLsI_rkNivK6WrY7xOHHpROy-A>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 3 Jan 2024 11:17:31 -0500 (EST)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 7b65dfba (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 3 Jan 2024 16:15:03 +0000 (UTC)
-Date: Wed, 3 Jan 2024 17:17:27 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Karthik Nayak <karthik.188@gmail.com>, Taylor Blau <me@ttaylorr.com>,
-	git@vger.kernel.org, christian.couder@gmail.com
-Subject: Re: [PATCH 2/2] ref-filter: support filtering of operational refs
-Message-ID: <ZZWIlx-9D2r9AfDW@tanuki>
-References: <xmqqzfy3l270.fsf@gitster.g>
- <CAOLa=ZRedfBUjukbN8dFT9CZETe4pz1UR+eWfJwORWuMHSk0Rw@mail.gmail.com>
- <xmqqsf3oj3u8.fsf@gitster.g>
- <CAOLa=ZTPxWXnZ8kpBB7=cybNfdEv6d6O37Em7Vpmcw=enpY1_w@mail.gmail.com>
- <ZZRaOhK869S1Sg1h@nand.local>
- <ZZUgUUlB8A-rhep5@tanuki>
- <CAOLa=ZS4OOAmyRvf4HH-c_3GvnVkh6zS2kD3hEhRZ7NZT-rvyA@mail.gmail.com>
- <xmqqwmsqbhyt.fsf@gitster.g>
- <ZZWCXFghtql4i4YE@tanuki>
- <xmqqsf3ebe1l.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="a+u2z9bU"
+Received: by mail-ej1-f41.google.com with SMTP id a640c23a62f3a-a26ed1e05c7so859246666b.2
+        for <git@vger.kernel.org>; Wed, 03 Jan 2024 08:33:15 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1704299594; x=1704904394; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=oJqkYji9erDfAiR0Xb6668cT0eMYlBfGy3zzgu5hdZ8=;
+        b=a+u2z9bUkUvAIn0Qz5kJLQ0hY94MQfg92HuvK1k2HrZSM+7WWUXKxtafkomDf2kDyM
+         B/tOZ/HdgxSgjRu5tUPkwjQo1FTtL9KriYOMErPfnvYCFYAhRAICqVbI/nsJRiXGSWaa
+         J0mCkwy+rbvDxD7boGSDeAg//3aEe6r7STBj+wCtEk7/MENd/IQsyXgmIrsbcCq2cI2P
+         uaQTaAbO0w7JAwraB3k3F7wDTDGNDSgpUetYsc+B8tDSDLYoP3fY4OgK5a6kJU3Fid3u
+         ygkaV2Ze/2GN4MJ0lgr+q6BUhYF7yJIiyI6ENBZKWhoolfPrpMlDocc/kQrZRaLKUtqA
+         z3UA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1704299594; x=1704904394;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=oJqkYji9erDfAiR0Xb6668cT0eMYlBfGy3zzgu5hdZ8=;
+        b=BiZViZfC8gD+Sf2ZlFUZmmdgmcyphW8VGs1x68xN7zx+eW1l1OjqegvqXCug1dUByp
+         T9yPSM5jw/S+BBAAleb7us/mvkr0ufudqPIdhZhjNYA6TArwtaxG++maLLPhWchem5zb
+         X4Jx3xqxLvcB3Fs4wuw+tPS2ZzcPi6ex8bswddIfIUN5B0+QkT8mhhEpZLdbPcy0ww4O
+         mE4uXS6RdQIWbv4phrn4UOC+kjMesJbL2BTlveYmsX2I6eNPrr1Z0RFC70SodQLeTBF2
+         x4KnCrtwLYH4hiRRINM8eyIvssMtGY/V1AtrjIvvYQsXYFLSDi5ybd7QOzkdl0EZG9M5
+         VRGg==
+X-Gm-Message-State: AOJu0YxlpYO1nd0ms+lb4wj9JOBwOtGI5gSmS6J4LFjayy/lCmxiXH65
+	3FRAFZ7hRLUkNgF0qbsQ5zhfTZ5bwAIWvMgCVy0/8F6p9WY=
+X-Google-Smtp-Source: AGHT+IHPtUzG+tDgeUeaQW622bYIpI02pR9460IAO1q2KcOpQMKSs3tBneGEcM77g9OhKBAWU9FnRkVKm7fbQUjr78Q=
+X-Received: by 2002:a17:906:d511:b0:a23:645f:af3b with SMTP id
+ cq17-20020a170906d51100b00a23645faf3bmr5392050ejc.1.1704299593445; Wed, 03
+ Jan 2024 08:33:13 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="cqZWbe4I2Bx2tu3h"
-Content-Disposition: inline
-In-Reply-To: <xmqqsf3ebe1l.fsf@gitster.g>
-
-
---cqZWbe4I2Bx2tu3h
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+References: <pull.1587.v5.git.1701206267300.gitgitgadget@gmail.com>
+ <pull.1587.v6.git.1701442494319.gitgitgadget@gmail.com> <CAP8UFD3FzP6QW4dJ9yiG1BAytLcsk+zGE+CBeArRJBJ8gsaDMQ@mail.gmail.com>
+ <CAEWN6q3RTbVuMb0VyCYz196ZL+OGAAHbJLZ2-MnW1RVVabg7Mw@mail.gmail.com>
+ <CAP8UFD19phFz54d8fDM=MBRMSD9Rz4R0_463KgptN8eeFs7MnQ@mail.gmail.com>
+ <xmqqzfyfoy2w.fsf@gitster.g> <CAEWN6q2XeDDLvSM-ik_-HVqpeyYZLWpPwoj2SUyB9L9NyMJPLw@mail.gmail.com>
+In-Reply-To: <CAEWN6q2XeDDLvSM-ik_-HVqpeyYZLWpPwoj2SUyB9L9NyMJPLw@mail.gmail.com>
+From: Christian Couder <christian.couder@gmail.com>
+Date: Wed, 3 Jan 2024 17:33:00 +0100
+Message-ID: <CAP8UFD38X5sT2qTB7P4oeOgWyc3W2Y4gp6DO3VZrAELSS8TzbQ@mail.gmail.com>
+Subject: Re: [PATCH v6] subtree: fix split processing with multiple subtrees present
+To: Zach FettersMoore <zach.fetters@apollographql.com>
+Cc: Junio C Hamano <gitster@pobox.com>, 
+	Zach FettersMoore via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Wed, Jan 03, 2024 at 08:02:46AM -0800, Junio C Hamano wrote:
-> Patrick Steinhardt <ps@pks.im> writes:
->=20
-> > The downside of an empty prefix is that you wouldn't be able to filter
-> > refs outside of the "refs/" hierarchy in case we'd use the empty prefix.
-> > A better alternative would be to use "/" as an indicator that you want
-> > to list refs outside of "refs/". That'd allow for more flexible queries:
+(Sorry for replying only to Zach instead of everyone previously.)
+
+On Wed, Dec 13, 2023 at 4:20=E2=80=AFPM Zach FettersMoore
+<zach.fetters@apollographql.com> wrote:
+>
+> Christian Couder <christian.couder@gmail.com> writes:
+>
+> >>> > $ git subtree split --prefix=3Dapollo-ios-codegen --squash --rejoin
+> >>> > Merge made by the 'ort' strategy.
+> >>> > e274aed3ba6d0659fb4cc014587cf31c1e8df7f4
+> >>>
+> >>> Looking into this some it looks like it could be a bash config
+> >>> difference? My machine always runs it all the way through vs
+> >>> failing for recursion depth. Although that would also be an issue
+> >>> which is solved by this fix.
+> >>
+> >> I use Ubuntu where /bin/sh is dash so my current guess is that dash
+> >> might have a smaller recursion limit than bash.
 > >
-> >   - "/" prints all refs and pseudo refs, even those outside of the
-> >     "refs/" hierarchy.
-> >
-> >   - "/refs" prints your normal refs.
-> >
-> >   - "/something/else" prints refs in "$GIT_DIR/something/else".
->=20
-> I do not get this at all, sorry.  What makes your "/" cover "refs/"
-> but not "something/"?=20
+> > That sounds quite bad. Does it have to be recursive (iow, if we can
+> > rewrite the logic to be iterative instead, that would be a much better
+> > way to fix the issue)?
+>
+> I don't think an iterative vs recursive approach fixes this
+> particular issue, the root of the issue this patch is fixing
+> is that lots of commits from the history of subtrees not
+> being acted upon are being processed when they don't need to
+> be. So the iterative approach would likely resolve the
+> recursion limit issue for some shells, but in my instance
+> I don't see a recursion limit error, it just takes an
+> extraordinary amount of time to run the split command
+> because of all the unnecessary processing which needs to be
+> avoided which this patch fixes.
 
-It does cover "something/". But...
-
-> Unless you have some rule that special cases "/" to apply the
-> "hierarchy prefix" matching rule unevenly, that is not possible.  So
-> you can easily lose the "/" all of your above patterns share, go back
-> to what I showed, and apply the morally equivalent special case to an
-> empty prefix and you'd be OK.
-
-=2E.. I think you're right -- I was arguing under the misassumption that
-the typical rev-parse rules kicked in for git-for-each-ref(1) (e.g.
-matching "heads/foo" to "refs/heads/foo"). But they don't, so my point
-indeed becomes moot and I see what you're getting at now and agree with
-you.
-
-> In any case, I do not think supporting anything other than
-> pseudorefs and HEAD outside "refs/" is a good idea to begin with
-> (the "worktrees/$name/" example), and requiring that all normal
-> references live inside "refs/" hierarchy is a good idea, so all of
-> the above is moot, I would say.
-
-Yeah, I'm on the same page: anything outside of "refs/" should not be
-supported. But the problem is that tools like git-update-ref(1) don't
-enforce this, so something like `git update-ref foo/bar HEAD` happily
-creates "$GIT_DIR/foo/bar". And I bet there are other ways to write refs
-at arbitrary paths.
-
-With the files backend it's easy to see that this was created and can be
-rectified. But with the reftable library you wouldn't be able to learn
-about the existence of this ref at all if we ignored anything but
-pseudo-refs and refs prefixed with "refs/".
-
-So while I agree that we shouldn't endorse such refs, we need to at
-least give an escape hatch in case such refs end up in the refdb anyway.
-
-Patrick
-
---cqZWbe4I2Bx2tu3h
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmWViJcACgkQVbJhu7ck
-PpSCvw//Zqwd5prB84/eQanU6hUCwzeUOgQn7niqMUDtACnlr0Wd9ln0V/pdLaXA
-Fx3BbPI+Q7YjkkMalZOIRHIs9HE9M4aKWvOp2XgLRTN0xjvf9HVH3zkyKlL866v5
-OPXYV78IJ4/k2DsCeZlZ0OBOySAH9h8kXJjo+RK3/QXqhUwsOw3J4q752mSAOSC0
-1qxmoN5Ctl1/P0SBd0UttgFqswowkioqXtkLsigWxE5K/YLU8nbDnrisw0IcxSsm
-WhqaSwHCKSk5g2nNt4TD691l4xep1gf3pQfXtWx7zeZ07zSVkFX0zWL/VYx+I2n4
-bAGkwZTEn9kwFyFsK5xpmBpF5eCy1unfNL02IQ9LuMvxtkW34an7rNa2iD8If30c
-JEEbFq8WMeD6I6B25mjXfKny5GX9j+xb2d2pYlNwsghqPW8etJQsR2CzoyteY+qQ
-slm/icPRy+rj8wj5PFrjC9d6bLk8fUEgkWUNZfLDlIVJtrt2sMuXiEVfKIq7qhej
-EkOvEUzhhpnvmJvRmOseKrMcHfpQAfI6bVhWZvlwO0l7e6k6QTIRlTLjXbZABZqT
-zEJW8ElUaQNZj+Le2fK8hf/cebFDiF1Hhj343GGOROm5esWEpRMPX5k5OCSXfwsO
-RSj1dSFs9mrtg68i7i+m0Ur4LshG7zd7+iMGtapuO6HCFX6o8Gk=
-=cZnw
------END PGP SIGNATURE-----
-
---cqZWbe4I2Bx2tu3h--
+Fixing possible recursion might be an improvement on top of your
+patch. But without your patch the test case it describes would anyway
+take a lot more time than seems necessary. So I agree that your patch
+should definitely be merged anyway.
