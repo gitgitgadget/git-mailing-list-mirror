@@ -1,155 +1,91 @@
-Received: from mout.web.de (mout.web.de [212.227.15.14])
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F7061C6AB
-	for <git@vger.kernel.org>; Wed,  3 Jan 2024 18:42:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A74A01CA9A
+	for <git@vger.kernel.org>; Wed,  3 Jan 2024 19:19:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=web.de header.i=tboegi@web.de header.b="Fx17JPQa"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de; s=s29768273;
-	t=1704307324; x=1704912124; i=tboegi@web.de;
-	bh=h/nndAiFfF/bN5uNKqhMjHfqt1zkdAEleW03ryqx6CE=;
-	h=X-UI-Sender-Class:Date:From:To:Cc:Subject:References:
-	 In-Reply-To;
-	b=Fx17JPQaewCTOm0l+vvS0Q1n2/bM1dTNOx01BnMJywUTGstFO9noarQlDVw2+WL2
-	 hpcGve3mErBSB103Vb6WJ5N6e8SCf/sl2KJheWVlqrMeHMOzr49BXe0rQl5qWkjHC
-	 i4gAK8yqffb29mI68fjV9wsRn+OCJ8VeHXBa3U0s9R75sxxgGaxdUEfFLmW5RA1Dz
-	 3pyUOHUM1+NVk74MM7uJE7/nw1TC4sJWf3oDLZuY3/CWhA3p4PNXZmwci2+xHysfx
-	 nX+2gW7ZgD2MbhAQkRwzHR4jmKzU1tjBQ8+i+/pl6I7CKhlAvd/AdmXtGdUybtnkN
-	 D0h4+Ab/L8oV3yU58A==
-X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
-Received: from localhost ([195.198.253.159]) by smtp.web.de (mrweb005
- [213.165.67.108]) with ESMTPSA (Nemesis) id 1MNfYN-1raqgR2aK3-00Ouji; Wed, 03
- Jan 2024 19:42:04 +0100
-Date: Wed, 3 Jan 2024 19:42:03 +0100
-From: Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
-To: Taylor Blau <me@ttaylorr.com>
-Cc: Patrick Steinhardt <ps@pks.im>,
-	Chandra Pratap via GitGitGadget <gitgitgadget@gmail.com>,
-	git@vger.kernel.org, Chandra Pratap <chandrapratap376@gmail.com>,
-	Chandra Pratap <chandrapratap3519@gmail.com>
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="dTwnnEAl"
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id AF45D1802C;
+	Wed,  3 Jan 2024 14:18:55 -0500 (EST)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=J12deXs19kGx
+	0hshIEdpsel5udB10/0nJ8PE5QXcm/Y=; b=dTwnnEAl5SOrLRR/uhEWyo6FRrTR
+	18RLsPupHj90ADroTVkedE2F60HZ8zAvuBKSlQYtoSCn8AjQjFujn4fAQH4t2wl3
+	Fi2fu9ffIdJSe8CHop1ergnQ9q3mrA860DhK2OVe8ojdDkDVGnMWOxUKRig9zRWC
+	zZuBLHUDCz3+MoM=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id A70DF1802B;
+	Wed,  3 Jan 2024 14:18:55 -0500 (EST)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.200.93])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 554B61802A;
+	Wed,  3 Jan 2024 14:18:52 -0500 (EST)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
+Cc: Taylor Blau <me@ttaylorr.com>,  Patrick Steinhardt <ps@pks.im>,  Chandra
+ Pratap via GitGitGadget <gitgitgadget@gmail.com>,  git@vger.kernel.org,
+  Chandra Pratap <chandrapratap376@gmail.com>,  Chandra Pratap
+ <chandrapratap3519@gmail.com>
 Subject: Re: [PATCH v2] write-or-die: make GIT_FLUSH a Boolean environment
  variable
-Message-ID: <20240103184203.GA4334@tb-raspi4>
+In-Reply-To: <20240103184203.GA4334@tb-raspi4> ("Torsten =?utf-8?Q?B=C3=B6?=
+ =?utf-8?Q?gershausen=22's?=
+	message of "Wed, 3 Jan 2024 19:42:03 +0100")
 References: <pull.1628.git.1703955246308.gitgitgadget@gmail.com>
- <pull.1628.v2.git.1704268708720.gitgitgadget@gmail.com>
- <ZZUZNQqDTx3bnveJ@tanuki>
- <ZZWWLkY+ixg+OMM4@nand.local>
+	<pull.1628.v2.git.1704268708720.gitgitgadget@gmail.com>
+	<ZZUZNQqDTx3bnveJ@tanuki> <ZZWWLkY+ixg+OMM4@nand.local>
+	<20240103184203.GA4334@tb-raspi4>
+Date: Wed, 03 Jan 2024 11:18:50 -0800
+Message-ID: <xmqq5y0a9qed.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <ZZWWLkY+ixg+OMM4@nand.local>
-User-Agent: Mutt/1.10.1 (2018-07-13)
-X-Provags-ID: V03:K1:562mt8K7gii+28r7an0dfS6zB8giZRLf2ggkRHQJCzUzfBRxNfy
- QWQvFanzFPsrbP6oVDcbEmihSOoUoEDPty8lIp5rmDNfq4xwhspBu4aG+boMr3ThdToqzDD
- cqjNQsuxkHeGG3xDGBGEESYKKybpVOV/MLpP2cFvdvw4rBW4WEdQi//l95JVg6HCnxoeeOS
- A/DW6lFASCQtHhiQK+WuQ==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:d7s+s9Ha9Jo=;RfqLI5g2mOD4u42h6NQaivRQv7k
- gNjyqdlc0H83i+MdefXWw4VPI6BPhLVYKpSkvSueSKOflrPw/3RQXxQXX5JZOLksomVK8O7+1
- /JWAeWA1FqP2wT/jk5XZYJgUWHgSwWUbEI6FpoBsF2bsqE9JLttlJW9UV00xtUGl6U9LrWaD2
- xis9yPTh3n/SJU85G6/53hQlviDAgNVrQRpAw+TTWEkNzYZ05mVQo81wa8BrggdtHluN4Oppl
- SYFm+bhmTMhmx1/9JMyLELWWN4b3u9OfSGm/URFYjN8SWMXh6yaGIHThU9vcqBIwXpzadFzvX
- WltC3izJ/2YzHGqJKz1qtsl3y2ijVapFqwWb7rLBcW4u0lDUxTvPhgfRBspBa8PGbkgLL/nbu
- Vq1PSSrlTLQEzPvy0xKxznUW5PBQEBQxcfjn3pnQ+Tyb4LIngpeQwBTVFXZ96eeAZvBEMk54e
- LpIOhiD7iWf+vBL+Cxb/BiucqD/dLQtvtTQM04IaSPE18rSG/8JkPfeiryL9M/LRDfVRvVI7H
- W21ZJHgTZOpY+lreVDeKv3EPUJ4hXZxxOugu9ekezUAE6DyH2E02AeTPBlOKjoSRlCPK2J/Og
- 2VJtUv7MOjdB+4LayhbJ/shhKnxxvD9gcBgbG2Fl3ttDtWf833PP9Pb7cMRpQ9BeVZK3jk2wO
- 1ezySjCNfp9e4Seth2z0JIKhai4qyAW1wOZrEZLfD4ObcM7TSam+IODlj4glsXY3JnIEHMh5W
- KQTRUOqPP+pRo9KOPpqA5o3bOCNnRzJKsvl883TGjvNrc8Czx+G2rLxKwASL4D0HPuY0/P0h9
- rTgNzlDHV4QBTENNJa34VAlFGv9mVtaHYhFwn/NnmSky5mkpzubOXPMr7sjt5DbkrzMubtODi
- NOFCZfkvXc/0YrU2lYxIzVEVRE/6W7rzSIzREp5xWEShjr+BowRTY2NyCT/gtVtk+UBxA20Du
- 2YTkxMiAhNAKgkFvPaLIX7CqCA8=
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID:
+ EE252772-AA6C-11EE-9B19-A19503B9AAD1-77302942!pb-smtp21.pobox.com
 Content-Transfer-Encoding: quoted-printable
 
-On Wed, Jan 03, 2024 at 12:15:26PM -0500, Taylor Blau wrote:
-> On Wed, Jan 03, 2024 at 09:22:13AM +0100, Patrick Steinhardt wrote:
-> > On Wed, Jan 03, 2024 at 07:58:28AM +0000, Chandra Pratap via GitGitGad=
-get wrote:
-> > [snip]
-> > > diff --git a/write-or-die.c b/write-or-die.c
-> > > index 42a2dc73cd3..a6acabd329f 100644
-> > > --- a/write-or-die.c
-> > > +++ b/write-or-die.c
-> > > @@ -20,15 +20,12 @@ void maybe_flush_or_die(FILE *f, const char *des=
-c)
-> > >  {
-> > >  	static int skip_stdout_flush =3D -1;
-> > >  	struct stat st;
-> > > -	char *cp;
-> > >
-> > >  	if (f =3D=3D stdout) {
-> > >  		if (skip_stdout_flush < 0) {
-> > > -			/* NEEDSWORK: make this a normal Boolean */
-> > > -			cp =3D getenv("GIT_FLUSH");
-> > > -			if (cp)
-> > > -				skip_stdout_flush =3D (atoi(cp) =3D=3D 0);
-> > > -			else if ((fstat(fileno(stdout), &st) =3D=3D 0) &&
-> > > +			if (!git_env_bool("GIT_FLUSH", -1))
-> > > +				skip_stdout_flush =3D 1;
-> >
-> > It's a bit surprising to pass `-1` as default value to `git_env_bool()=
-`
-> > here, as this value would hint that the caller wants to explicitly
-> > handle the case where the "GIT_FLUSH" envvar is not set at all. We don=
-'t
-> > though, and essentially fall back to "GIT_FLUSH=3D1", so passing `1` a=
-s
-> > the fallback value would be less confusing.
-> >
-> > Anyway, the resulting behaviour is the same regardless of whether we
-> > pass `1` or `-1`, so I'm not sure whether this is worth a reroll.
->
-> Hmm. If we pass -1 as the default value in the call to git_env_bool(),
-> the only time we'll end up in the else branch is if the environment is
-> set to some false-y value.
->
-> I don't think that matches the existing behavior, since right now we'll
-> infer skip_stdout_flush based on whether or not stdout is a regular file
-> or something else.
->
-> I think you'd probably want something closer to:
->
-> --- 8< ---
-> diff --git a/write-or-die.c b/write-or-die.c
-> index 42a2dc73cd..f12e111688 100644
-> --- a/write-or-die.c
-> +++ b/write-or-die.c
-> @@ -19,20 +19,17 @@
->  void maybe_flush_or_die(FILE *f, const char *desc)
->  {
->  	static int skip_stdout_flush =3D -1;
-> -	struct stat st;
-> -	char *cp;
->
->  	if (f =3D=3D stdout) {
->  		if (skip_stdout_flush < 0) {
-> -			/* NEEDSWORK: make this a normal Boolean */
-> -			cp =3D getenv("GIT_FLUSH");
-> -			if (cp)
-> -				skip_stdout_flush =3D (atoi(cp) =3D=3D 0);
-> -			else if ((fstat(fileno(stdout), &st) =3D=3D 0) &&
-> -				 S_ISREG(st.st_mode))
-> -				skip_stdout_flush =3D 1;
-> -			else
-> -				skip_stdout_flush =3D 0;
-> +			skip_stdout_flush =3D git_env_bool("GIT_FLUSH", -1);
-> +			if (skip_stdout_flush < 0) {
-> +				struct stat st;
-> +				if (fstat(fileno(f), &st))
-> +					skip_stdout_flush =3D 0;
-> +				else
-> +					skip_stdout_flush =3D S_ISREG(st.st_mode);
-> +			}
->  		}
->  		if (skip_stdout_flush && !ferror(f))
->  			return;
-> --- >8 ---
+Torsten B=C3=B6gershausen <tboegi@web.de> writes:
 
-Thanks for a nice reading - I can not imagine a better version.
+>> -			cp =3D getenv("GIT_FLUSH");
+>> -			if (cp)
+>> -				skip_stdout_flush =3D (atoi(cp) =3D=3D 0);
+>> -			else if ((fstat(fileno(stdout), &st) =3D=3D 0) &&
+>> -				 S_ISREG(st.st_mode))
+>> -				skip_stdout_flush =3D 1;
+>> -			else
+>> -				skip_stdout_flush =3D 0;
+>> +			skip_stdout_flush =3D git_env_bool("GIT_FLUSH", -1);
+>> +			if (skip_stdout_flush < 0) {
+>> +				struct stat st;
+>> +				if (fstat(fileno(f), &st))
+>> +					skip_stdout_flush =3D 0;
+>> +				else
+>> +					skip_stdout_flush =3D S_ISREG(st.st_mode);
+>> +			}
+>>  		}
+>>  		if (skip_stdout_flush && !ferror(f))
+>>  			return;
+>> --- >8 ---
+>
+> Thanks for a nice reading - I can not imagine a better version.
+
+Yup, the flow of the logic feels very natural with this version by
+making it clear that the case that the default "-1" is returned to
+us is where we need to figure out an appropriate value ourselves.
+An added bonus is that the scope "struct stat" has is limited to the
+absolute minimum.  I like it, too.
+
+Thanks.
