@@ -1,124 +1,169 @@
-Received: from mail-oo1-f46.google.com (mail-oo1-f46.google.com [209.85.161.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3DC11BDE9
-	for <git@vger.kernel.org>; Wed,  3 Jan 2024 17:00:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ttaylorr.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CCEF1BDFF
+	for <git@vger.kernel.org>; Wed,  3 Jan 2024 17:13:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="XBDA6IIf"
-Received: by mail-oo1-f46.google.com with SMTP id 006d021491bc7-595b208a050so983367eaf.0
-        for <git@vger.kernel.org>; Wed, 03 Jan 2024 09:00:57 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1704301256; x=1704906056; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=CsM4NN6owLyECW3Y0oAEH1dgh3wc9Oiy6ZCRnUEVKbc=;
-        b=XBDA6IIfdQ2AWEDRY2m/nd44GtW5ISTCVHnHBsNTngBje/Jef22DW5Hk1mWQFd0FQR
-         lPuxhQzqu3hQL1uSdkBDZuwqqTnQp/oVuo99+rheJPp7uWf73MCbazZ+RKhvAc9lcDmJ
-         PyyE4kg68WTqr3JARltLwB/8aG081aioJSfM1zFb7hgLKRUqIPB4nBHh9hGX9wepUrs5
-         PH4Pw6+yoLAFEALxAuW2ZoVp5A9zJhvL1RURNBhicie/U7lq4ITSqitcsUjiQ0ZmghAx
-         HoUUWdI7VgvTnM1mg38W8wtq/nIDqeIQMLJ6KJls6IlLDQPlySVHPrzq7le5yfhXK4V4
-         f5RQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1704301256; x=1704906056;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=CsM4NN6owLyECW3Y0oAEH1dgh3wc9Oiy6ZCRnUEVKbc=;
-        b=oCRxO1N6CWCR7WOCLe5CvTRqyqjHuqzOHCxeFsushXIS6vENGfz0PPJbaS/X7NO/4O
-         PR5FCrPrKI92//4raFWK/2z96VgsksJ1FGxEq+hlIBfJz5yP/k209eb2C3YUOsqG2+9K
-         vPc0VgOmboi5an5GZgMV8xsVtCP7eZ3aMvOdVzs1sRnNUsQ+hNZgjY7Np4gBUyxuGmiC
-         WtG08oeLbE9vJCKArGBz5pqBouPlxy5dgpl2KphgMh9pZ8xr2er5GiCiWwrnNp8TheeB
-         Y3JKInAwH8zu79nJyyDxETHFA3xrBu8OJPOeIPjvjowRXHJhcdkwRZs6/66Z0ct0KY0U
-         hbIA==
-X-Gm-Message-State: AOJu0YzXOnqqi+GF8Mxfei7UlEY2XBUuWi74GR2DZdEV5xPJ1jvepxwV
-	HjJfWYA0QKQvhSNuI1uh/aRH8gp8roTp2g==
-X-Google-Smtp-Source: AGHT+IHIiPSJv5O16MwB25puTZLsPDbJfENhXR2TWsdUHe9LNVC8Op4ZyvXSePgdYd1v2SvbSGBf7Q==
-X-Received: by 2002:a05:6358:9387:b0:174:f48c:3871 with SMTP id h7-20020a056358938700b00174f48c3871mr13015079rwb.43.1704301256416;
-        Wed, 03 Jan 2024 09:00:56 -0800 (PST)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id w39-20020a05622a192700b004283babeeacsm456862qtc.4.2024.01.03.09.00.56
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 03 Jan 2024 09:00:56 -0800 (PST)
-Date: Wed, 3 Jan 2024 12:00:55 -0500
-From: Taylor Blau <me@ttaylorr.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: Karthik Nayak <karthik.188@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	christian.couder@gmail.com
-Subject: Re: [PATCH 2/2] ref-filter: support filtering of operational refs
-Message-ID: <ZZWSxyv4QxSPQOSd@nand.local>
-References: <20231221170715.110565-1-karthik.188@gmail.com>
- <20231221170715.110565-3-karthik.188@gmail.com>
- <xmqqzfy3l270.fsf@gitster.g>
- <CAOLa=ZRedfBUjukbN8dFT9CZETe4pz1UR+eWfJwORWuMHSk0Rw@mail.gmail.com>
- <xmqqsf3oj3u8.fsf@gitster.g>
- <CAOLa=ZTPxWXnZ8kpBB7=cybNfdEv6d6O37Em7Vpmcw=enpY1_w@mail.gmail.com>
- <ZZRaOhK869S1Sg1h@nand.local>
- <ZZUgUUlB8A-rhep5@tanuki>
- <ZZWBLafB3pIlZqpw@nand.local>
- <ZZWCxIHf9ySEOWEJ@tanuki>
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="V9V0H0On"
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 0D31C1DDB5E;
+	Wed,  3 Jan 2024 12:13:48 -0500 (EST)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=W1uwDyWNj0n3dSp8/VX4W+/aIZoG3Msnja+ugV
+	KqD+Q=; b=V9V0H0OnFNCXr6rHaFPxrHxCGiSr0hL0MIMrw/x32wfbXnApHldGeJ
+	aCS20XucT35/c2emC38gIkAbtGpHWz1vZYvjfh2C/okTUjfMTbw61t4B3tcRrCo2
+	XniWaPCfdMpkOKcRwKxSJvzH30iR11GPmyFGdjkA5QBitv3HBqG/c=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 03B941DDB5D;
+	Wed,  3 Jan 2024 12:13:48 -0500 (EST)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.200.93])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 6269A1DDB5C;
+	Wed,  3 Jan 2024 12:13:47 -0500 (EST)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Chandra Pratap via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Chandra Pratap <chandrapratap376@gmail.com>,
+  Chandra Pratap <chandrapratap3519@gmail.com>
+Subject: Re: [PATCH v2] write-or-die: make GIT_FLUSH a Boolean environment
+ variable
+In-Reply-To: <pull.1628.v2.git.1704268708720.gitgitgadget@gmail.com> (Chandra
+	Pratap via GitGitGadget's message of "Wed, 03 Jan 2024 07:58:28
+	+0000")
+References: <pull.1628.git.1703955246308.gitgitgadget@gmail.com>
+	<pull.1628.v2.git.1704268708720.gitgitgadget@gmail.com>
+Date: Wed, 03 Jan 2024 09:13:46 -0800
+Message-ID: <xmqqmstm9w6t.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <ZZWCxIHf9ySEOWEJ@tanuki>
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 74D8FECC-AA5B-11EE-801B-25B3960A682E-77302942!pb-smtp2.pobox.com
 
-On Wed, Jan 03, 2024 at 04:52:36PM +0100, Patrick Steinhardt wrote:
-> On Wed, Jan 03, 2024 at 10:45:49AM -0500, Taylor Blau wrote:
-> > On Wed, Jan 03, 2024 at 09:52:33AM +0100, Patrick Steinhardt wrote:
-> > > > I tend to agree that the special empty pattern would be a good shorthand
-> > > > for listing all references underneath refs/, including any top-level
-> > > > psuedo-refs.
-> > > >
-> > > > But I don't think that I quite follow what Karthik is saying here.
-> > > > for-each-ref returns the union of references that match the given
-> > > > pattern(s), not their intersection. So if you wanted to list just the
-> > > > psudo-refs ending in '_HEAD', you'd do:
-> > > >
-> > > >   $ git for-each-ref "*_HEAD"
-> > > >
-> > > > I think if you wanted to list all pseudo-refs, calling the option
-> > > > `--pseudo-refs` seems reasonable. But if you want to list some subset of
-> > > > psueod-refs matching a given pattern, you should specify that pattern
-> > > > directly.
-> > >
-> > > Where I think this proposal falls short is if you have refs outside of
-> > > the "refs/" hierarchy. Granted, this is nothing that should usually
-> > > happen nowadays. But I think we should safeguard us for the future:
-> >
-> > Hmm. Maybe I misspoke, but I was thinking that `--pseudo-refs` would
-> > imply that we list all references (regardless of whether they appear in
-> > the top-level refs/ hierarchy). But perhaps I'm misunderstanding what
-> > you're trying to accomplish here.
+"Chandra Pratap via GitGitGadget" <gitgitgadget@gmail.com> writes:
+
+>  Documentation/git.txt | 16 +++++++---------
+>  write-or-die.c        |  9 +++------
+>  2 files changed, 10 insertions(+), 15 deletions(-)
 >
-> Ah, okay. I think in that case it's simply a misunderstanding. To me a
-> pseudo-ref only includes refs that match `is_pseudoref_syntax()`, so
-> things like "HEAD", "ORIG_HEAD" or "MERGE_HEAD". So with that
-> understanding, a ref "something/outside/refs" would not be included,
-> but I'd very much like to see it listed.
+> diff --git a/Documentation/git.txt b/Documentation/git.txt
+> index 2535a30194f..83fd60f2d11 100644
+> --- a/Documentation/git.txt
+> +++ b/Documentation/git.txt
+> @@ -724,16 +724,14 @@ for further details.
+>  	waiting for someone with sufficient permissions to fix it.
+>  
+>  `GIT_FLUSH`::
+> -// NEEDSWORK: make it into a usual Boolean environment variable
+> -	If this environment variable is set to "1", then commands such
+> +	If this Boolean environment variable is set to true, then commands such
+>  	as 'git blame' (in incremental mode), 'git rev-list', 'git log',
+> -	'git check-attr' and 'git check-ignore' will
+> -	force a flush of the output stream after each record have been
+> -	flushed. If this
+> -	variable is set to "0", the output of these commands will be done
+> -	using completely buffered I/O.   If this environment variable is
+> -	not set, Git will choose buffered or record-oriented flushing
+> -	based on whether stdout appears to be redirected to a file or not.
+> +	'git check-attr' and 'git check-ignore' will force a flush of the output
+> +	stream after each record have been flushed. If this variable is set to
+> +	false, the output of these commands will be done using completely buffered
+> +	I/O. If this environment variable is not set, Git will choose buffered or
+> +	record-oriented flushing based on whether stdout appears to be redirected
+> +	to a file or not.
 
-OK, I see: you're trying to add an option that lists all references
-(including those outside of the top-level "refs/" hierarchy). But my
-proposal to use `--pseudo-refs` was to list *just* those references
-outside of the top-level hierarchy.
+It is somewhat irritating to see that we need to change this many
+lines to just change "0" to "false" and "1" to "true".  I wonder if
+it becomes easier to grok if we changed the description into a sub
+enumeration of three possibilities, but that would be outside the
+scope of this change [*].
 
-I wonder if we might want to do something else entirely, which is an
-option which controls the top-level "namespace" of references that we
-want to see. The behavior would then be to list all references under
-"namespace" (which presumably would be "refs/" by default).
+> diff --git a/write-or-die.c b/write-or-die.c
+> index 42a2dc73cd3..a6acabd329f 100644
+> --- a/write-or-die.c
+> +++ b/write-or-die.c
+> @@ -20,15 +20,12 @@ void maybe_flush_or_die(FILE *f, const char *desc)
+>  {
+>  	static int skip_stdout_flush = -1;
+>  	struct stat st;
+> -	char *cp;
+>  
+>  	if (f == stdout) {
+>  		if (skip_stdout_flush < 0) {
+> -			/* NEEDSWORK: make this a normal Boolean */
+> -			cp = getenv("GIT_FLUSH");
+> -			if (cp)
+> -				skip_stdout_flush = (atoi(cp) == 0);
+> -			else if ((fstat(fileno(stdout), &st) == 0) &&
+> +			if (!git_env_bool("GIT_FLUSH", -1))
+> +				skip_stdout_flush = 1;
+> +			else if (!fstat(fileno(stdout), &st) &&
+>  				 S_ISREG(st.st_mode))
+>  				skip_stdout_flush = 1;
+>  			else
 
-If you want to list references like something/outside/refs, your
-namespace would then be --namespace="".
+The above logic does not look correct to me, primarily because the
+return value of git_env_bool() is inspected only once to see if it
+is zero, and does not differentiate the "unset" case from other
+cases.
 
-I think that this would be a bit more flexible than the current
-suggestions, but I am also not as familiar as you are at this particular
-problem :-).
+Since git_env_bool(k, def) returns
 
-Thanks,
-Taylor
+    - "def" (-1 in this case) when k is not exported (in which case
+      you need to do the "fstat" dance).
+
+    - 0 when k is exported and has a string that is "false" (in
+      which case you would want to set skip_stdout_flush to true).
+
+    - 1 when k is exported and has a string that is "true" (in which
+      case you would want to set skip_stdout_flush to false).
+
+    - or dies if the string exported in k is bogus.
+
+shouldn't it be more like
+
+                        skip_stdout_flush = 0; /* assume flushing */
+                        switch (git_env_bool("GIT_FLUSH", -1)) {
+                        case 0: /* told not to flush */
+                                skip_stdout_flush = 1;
+                                ;;
+                        case -1: /* unspecified */
+                                if (!fstat(...) && S_ISREG())
+                                        skip_stdout_flush = 1;
+                                ;;
+                        default: /* told to flush */
+                                ;;
+                        }
+
+perhaps?
+
+
+[Footnote]
+
+ * If I were to do this change, and if I were to also improve the
+   style of the documentation before I forget, the way I would do so
+   probably is with a two-patch series:
+
+    (1) update "0" and "1" in the documentation with "false" and
+        "true", without reflowing the text at all, and update the
+        code.
+
+    (2) rewrite the documentation to use 3-possibility
+        sub-enumeration for values (imitate the way how other
+        variables, like `diff.algorithm`, that can choose from a
+        set of handful possible values are described).
+
+   These two changes can be done in either order, but perhaps (1) is
+   much less controversial change than the other, so I'd probably do
+   so first.
