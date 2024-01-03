@@ -1,59 +1,47 @@
-Received: from mail-ot1-f43.google.com (mail-ot1-f43.google.com [209.85.210.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1331171C6
-	for <git@vger.kernel.org>; Tue,  2 Jan 2024 22:31:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ttaylorr.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F2AF17980
+	for <git@vger.kernel.org>; Wed,  3 Jan 2024 00:43:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="3Wu+BWim"
-Received: by mail-ot1-f43.google.com with SMTP id 46e09a7af769-6dc1fe0889fso2827195a34.3
-        for <git@vger.kernel.org>; Tue, 02 Jan 2024 14:31:19 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1704234679; x=1704839479; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=OvUBVjhcqbkouovW6qKbdG7eQPxN0tiCriPE/JiHQ54=;
-        b=3Wu+BWimX4PsXp/MChh830KIP05F/P+fXoqsgiT4j0WGaLKpa8qbzZVNhyOkJPH3p6
-         JDJkFh4cnLQosXj+3zdGPPN5/9oqdrqraG7zqpkTMuj/cW+Qek7XDIedEg/OEof3hsuE
-         LthhRnZh/+sNypsjk7/FZ5PAWSzYZdsRLxfKpws7ouIZQYTGtaH165xZiJWUprs2wAGr
-         HFDMZZI+jmBHoN6bKYVkOWQBIsdQMCRjlAyDumS6Lhqyj9dcp2oKHpaqcCtz5qfCEUXx
-         +MEzLF7qN7F1UuRGKTAXIxIFfkSDAh8IQxrWjz+VlSvqjVMHO75TSiUcIRAwjcZtQsnf
-         8I7g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1704234679; x=1704839479;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=OvUBVjhcqbkouovW6qKbdG7eQPxN0tiCriPE/JiHQ54=;
-        b=oOBaoOyO8vvvoJI46yL2voS4U3jgdrTCa0QA/Ol/p2jeKvyCK+VKtw43ryDfRxRNWM
-         CnmhFi063C7OSW/xMH0m3ohQZCBHr2eLPYE+AKM1nwavs0C8Y511yWgA7povYyyF2yoK
-         G4mE/bF5vAmRCrg97QDmlTPlKN19nWnTx0aCNkQLD8e13E1NQu4hHXhG1jcK6NjFtJro
-         6hni20bAyfnChicAjAnLeoK99lY6370mSfOnULjvLy5pRI/kG+dX6pqWfdNA4Qzb3yU4
-         zUEM9Eg/wCl1q9W6PhsS+rjstmy9Z4Wh9b+xBgWWdqeJ+7E/Bm0QpZbavWR1dylYy5YD
-         Xflg==
-X-Gm-Message-State: AOJu0Yx+WGQj5KwkBtZtsh051+Tv4NmV5tSgpg2FUO/e5Z7xa7MEMjR5
-	agXFEKWBC+DrOv3EEfEKzWPAwHRBOn6hPg==
-X-Google-Smtp-Source: AGHT+IHOxk3n4plU6HeHeHWGW85KyZ7+qJM8sfI+EwAgdtQxm0XTD4JDWUaiBsIrjMtILOgdxziG6Q==
-X-Received: by 2002:a05:6830:1105:b0:6dc:3798:6aba with SMTP id w5-20020a056830110500b006dc37986abamr4409971otq.41.1704234679056;
-        Tue, 02 Jan 2024 14:31:19 -0800 (PST)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id q65-20020a4a4b44000000b005944c7f6bb6sm4604736ooa.29.2024.01.02.14.31.18
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 02 Jan 2024 14:31:18 -0800 (PST)
-Date: Tue, 2 Jan 2024 17:31:18 -0500
-From: Taylor Blau <me@ttaylorr.com>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,
-	Chandra Pratap via GitGitGadget <gitgitgadget@gmail.com>,
-	git@vger.kernel.org, Chandra Pratap <chandrapratap376@gmail.com>,
-	Chandra Pratap <chandrapratap3519@gmail.com>
-Subject: Re: [PATCH] sideband.c: replace int with size_t for clarity
-Message-ID: <ZZSOtiZSPSthcDgp@nand.local>
-References: <pull.1625.git.1703264469238.gitgitgadget@gmail.com>
- <20231222175747.GA2880@tb-raspi4>
- <xmqqedfejc32.fsf@gitster.g>
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="v37VCPX8"
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 7BFA11D8302;
+	Tue,  2 Jan 2024 19:43:18 -0500 (EST)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=jYPMDcKlI68A
+	TPBoP9aA/6Z/WW6NY8qWEhmcsLLS2Xo=; b=v37VCPX8KU1rN1883C6YJgCo3/LF
+	0aAdSJJGXnMMGe7yDzd93fv6CKbzdNO5V9Zmk71uQY+5VkGkbv8Aqcpx1FQz+RdP
+	gRS758wPjuySrBhKrvtdwrIYenmdePhEdmeSdp3+3dioz/6ZdGMau+VJeqMqvuJo
+	KO3BpzidK0SjRNM=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 7407C1D8301;
+	Tue,  2 Jan 2024 19:43:18 -0500 (EST)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.200.93])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id AB8A91D8300;
+	Tue,  2 Jan 2024 19:43:16 -0500 (EST)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: =?utf-8?Q?S=C3=B6ren?= Krecker <soekkle@freenet.de>, Johannes Schindelin
+ <Johannes.Schindelin@gmx.de>
+Cc: git@vger.kernel.org,  sunshine@sunshineco.com
+Subject: Re: [PATCH V4 1/1] Replace SID with domain/username
+In-Reply-To: <20240102191514.2583-2-soekkle@freenet.de> (=?utf-8?Q?=22S?=
+ =?utf-8?Q?=C3=B6ren?= Krecker"'s
+	message of "Tue, 2 Jan 2024 20:15:14 +0100")
+References: <xmqqsf3feilq.fsf@gitster.g>
+	<20240102191514.2583-1-soekkle@freenet.de>
+	<20240102191514.2583-2-soekkle@freenet.de>
+Date: Tue, 02 Jan 2024 16:43:15 -0800
+Message-ID: <xmqqa5pnckm4.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -61,43 +49,108 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <xmqqedfejc32.fsf@gitster.g>
+X-Pobox-Relay-ID:
+ 156405FC-A9D1-11EE-8D42-25B3960A682E-77302942!pb-smtp2.pobox.com
+Content-Transfer-Encoding: quoted-printable
 
-On Fri, Dec 22, 2023 at 11:01:37AM -0800, Junio C Hamano wrote:
-> Torsten Bögershausen <tboegi@web.de> writes:
->
-> Just this part.
->
-> > Further down, we read
-> > 	for (i = 0; i < ARRAY_SIZE(keywords); i++) {
-> >
-> > However, a size of an array can never be negative, so that
-> > an unsigned data type is a better choice than a signed.
-> > And, arrays can have more elements than an int can address,
-> > at least in theory.
-> > For a reader it makes more sense, to replace
-> > int i;
-> > with
-> > size_t i;
->
-> It is a very good discipline to use size_t to index into an array
-> whose size is externally controled (e.g., we slurp what the end user
-> or the server on the other end of the connection gave us into a
-> piece of memory we allocate) to avoid integer overflows as "int" is
-> often narrower than "size_t".  But this particular one is a Meh; the
-> keywords[] is a small hardcoded array whose size and contents are
-> totally under our control.
+S=C3=B6ren Krecker <soekkle@freenet.de> writes:
 
-I certainly agree in theory, though I've always erred on the side of
-always using size_t for indexing into arrays, even if they're small. It
-removes a potential pitfall if you are working with an
-externally-controlled array and happen to forget to use size_t.
+> Replace SID with domain/username in error message, if owner of reposito=
+ry
+> and user are not equal on windows systems. Each user should have a uniq=
+ue
+> SID (https://learn.microsoft.com/en-us/windows-server/identity/ad-ds/ma=
+nage/understand-security-identifiers#what-are-security-identifiers).
 
-But if there is an existing index variable with type "int", and we can
-easily validate that it's small, I probably wouldn't bother changing it
-if I was editing nearby code.
+That paragraph your URL refers to does say that a SID that is used
+for an account will never be reused to identify a different account.
+But I am not sure if it means a user will never be assigned more
+than one SID (in other words, the reverse is not necessarily true).
 
-Thanks,
-Taylor
+The paragraph also mentions that a SID can identify a non-user
+entity like a computer account (as opposed to "a user account")---I
+do not know what its implications are in the context of this patch,
+though.
+
+> This means that domain/username is not a loss of information.
+
+This statement does not (grammatically) make sense, but more
+importantly, loss of information may not be a bad thing in this
+case.  If more than one SIDs are given to a user account and
+processes working for that account, these different SIDs may be
+translated, by using LookupAccountSidA(), to the same string for a
+single user@domain, and it would be an operation that loses
+information in that sense.
+
+But if what we *care* about is user@domain between the current
+process and the owner of the directory in question being the same
+(or not), then such a loss of information is a *good* thing. =20
+
+So I dunno.  Arguing what we care about (is that exact SID equality
+between the "owner of the directory" and the "user, which the
+current process is working on behalf of", or do we care about the
+equality of the "accounts"?) may be a better way to justify this
+change, if you ask me.
+
+> +static BOOL user_sid_to_user_name(PSID sid, LPSTR *str)
+> +{
+> +	SID_NAME_USE pe_use;
+> +	DWORD len_user =3D 0, len_domain =3D 0;
+> +	BOOL translate_sid_to_user;
+> +
+> +	/* returns only FALSE, because the string pointers are NULL*/
+> +	LookupAccountSidA(NULL, sid, NULL, &len_user, NULL, &len_domain,
+> +			  &pe_use);=20
+> +	/*Alloc needed space of the strings*/
+> +	ALLOC_ARRAY((*str), (size_t)len_domain + (size_t)len_user);=20
+> +	translate_sid_to_user =3D LookupAccountSidA(NULL, sid, (*str) + len_d=
+omain, &len_user,
+> +				   *str, &len_domain, &pe_use);
+> +	if (translate_sid_to_user =3D=3D FALSE) {
+> +		FREE_AND_NULL(*str);
+> +	}
+
+Style: do not enclose a single-statement block inside {}.
+
+> +	else
+> +		(*str)[len_domain] =3D '/';
+> +	return translate_sid_to_user;
+> +}
+
+> @@ -2767,7 +2788,9 @@ int is_path_owned_by_current_sid(const char *path=
+, struct strbuf *report)
+>  		} else if (report) {
+>  			LPSTR str1, str2, to_free1 =3D NULL, to_free2 =3D NULL;
+> =20
+> -			if (ConvertSidToStringSidA(sid, &str1))
+> +			if (user_sid_to_user_name(sid, &str1))
+> +				to_free1 =3D str1;
+> +			else if (ConvertSidToStringSidA(sid, &str1))
+>  				to_free1 =3D str1;
+
+Do these two helper functions return pointers pointing into the same
+kind of memory that you can free with the same function?  That is ...
+
+> ...
+>  				    "'%s' is owned by:\n"
+>  				    "\t'%s'\nbut the current user is:\n"
+>  				    "\t'%s'\n", path, str1, str2);
+> -			LocalFree(to_free1);
+> -			LocalFree(to_free2);
+> +			free(to_free1);
+> +			free(to_free2);
+
+... the original code seems to say that the piece of memory we
+obtain from ConvertSidToStringSidA() must not be freed by calling
+free() but use something special called LocalFree().  I am assuing
+that your user_sid_to_user_name() returns a regular piece of memory
+that can be freed by calling regular free()?  Do we need to keep
+track of where we got the memory from and use different function to
+free each variable, or something (again I do not do Windows so I'll
+defer all of these to Dscho, who is CC'ed this time).
+
+Thanks and a happy new year.
+
+>  		}
+>  	}
+
