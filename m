@@ -1,56 +1,54 @@
-Received: from mail-qt1-f177.google.com (mail-qt1-f177.google.com [209.85.160.177])
+Received: from mail-oo1-f48.google.com (mail-oo1-f48.google.com [209.85.161.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F5BC2C18C
-	for <git@vger.kernel.org>; Thu,  4 Jan 2024 19:13:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58B4A2C19A
+	for <git@vger.kernel.org>; Thu,  4 Jan 2024 19:20:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="sLt/9wW8"
-Received: by mail-qt1-f177.google.com with SMTP id d75a77b69052e-4283f7d53f2so4180751cf.0
-        for <git@vger.kernel.org>; Thu, 04 Jan 2024 11:13:21 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="sqPEDSdP"
+Received: by mail-oo1-f48.google.com with SMTP id 006d021491bc7-594bea92494so431965eaf.2
+        for <git@vger.kernel.org>; Thu, 04 Jan 2024 11:20:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1704395600; x=1705000400; darn=vger.kernel.org;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1704396030; x=1705000830; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=VU8vUAv2h6So0DL9oXnNxOZI0BbXvkCyx0qXNM/D5Q0=;
-        b=sLt/9wW8i+uwv8sdVFsFxYwJVfTAW3bA1JrLLnMaZ3LGgade4iGC05c8JYoPOcXWz/
-         +qGLxHaGD0AE5scS4uCMp0H29M0qnf4N2OCosgtXoxIqiN4tfO7NnQWvVQRVICftKjX/
-         Bu4CYynWlPvrt2pftXxH8UM4/vsgTwCoz9lmtdnTfAYcsiz34BHUviBJbNQyRryRA+qU
-         p/+uzmGk1D4FLZtVT8FiswwPVG/vSyuLcmRKcAoQT5anyglwr95fKhKnDGtBJaIWxqL7
-         +Vnemu5kxrkxbPmx2kUvDdj4iyiOJdbAYm2nRYKWLSek7WvJxMSLc3LkLwgEXKG7R3GR
-         x1cQ==
+        bh=B4c2572UnUZzes87s9JIZ1+YqtXQ3Itvx6N9NQnsCGk=;
+        b=sqPEDSdPhErNoW2sAR5TBHzVfwIvWuPr+VOMzmjSTVlv/yVpc2HHrDnaHJTp8YzR2M
+         nkPN6fEGUUxrbGD102GkTnHMiyNCNuMKSm/tqSpioz/v8y3+O9oyU3btao6Dn+4oAt58
+         FV40TRpP9vwpTcfY2002aiyIZEz8WRtx+2WThw6aMYkqyyH0WTiuQSntMOQo0ARwaktT
+         gGlIubWNU/S9JGPkydL4uC5tOEfyoSAFlhuV4WHtgrIYuVyDky31ODrGejuA8PQAZieb
+         BBaE/rjX9eyiJMFRAqF9u96BRE/AhamJtTsTsYP7pjW5MCbDTQKnZCdo1wJoNBFuY0V1
+         G0eA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1704395600; x=1705000400;
+        d=1e100.net; s=20230601; t=1704396030; x=1705000830;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=VU8vUAv2h6So0DL9oXnNxOZI0BbXvkCyx0qXNM/D5Q0=;
-        b=h3IBsk6bxrsJ3yoT7WyFt+ikiEwJ0yqtT3MT35VGG708FUdwvRxBkpnWqIcc7XUoyT
-         OOkcLt0e6K9OPw+ISY+vwgx7zZuF14paZiwbxRMbKXxFKnoD7+YRtwVoQwO3Bb2fOG0X
-         Bi+JLr5mFEBVQv4j8XqbKCSFe3r9YJ0ksC3oBBEdThq2TI7ZVVudIS5EIcRO7FA0TYYm
-         J0PEgx+bIMNAGVvdJBNhZnTCGXbZu9gB3pcCgdFyvaF3wVPYgp+IIcrkH2L/o851InPg
-         k9SmCYbTZ4tZ7oPMvf8FGWRpul9dgDqmKNJrEFF6QycfaESPadTY6U/OAENcjLnApwH3
-         3UKA==
-X-Gm-Message-State: AOJu0YzrIovAc8MJpyqLzTrvOgIZqXYb2ezmDGJ92Bdt2J1RllmmRvTp
-	/in3imKGsIIb2D81tyWP8zfM6kwXTXJZWw==
-X-Google-Smtp-Source: AGHT+IFnlxIC+b+mhxU0oAkW98Sfsy7eRoF649xSHFGXxYiwzoiUABxQuGEgnKH+PGxYj2k7cL4uNg==
-X-Received: by 2002:ac8:5a13:0:b0:428:40d8:b129 with SMTP id n19-20020ac85a13000000b0042840d8b129mr1148659qta.67.1704395600428;
-        Thu, 04 Jan 2024 11:13:20 -0800 (PST)
+        bh=B4c2572UnUZzes87s9JIZ1+YqtXQ3Itvx6N9NQnsCGk=;
+        b=isOKGvpjC28gk0l3uQnLFk06BpRqytEZ7ufTS88mtOmWfxp0e4szR0O9WG+9MBQl3y
+         kXAB4+9CcXl7jU8Hbx59X4UMfrF8Py2DauUOCI5hex3S45mHbtpyz/iOF9u1zSyOk0ww
+         UXcP05rv84rcK6fCLDxUFCpRytgSgFdvjhNfTREfBB+IuIUJfd7oi4j4orrEflDTYOgk
+         y7ptOhwC0Ehh9XmP47iWdH/LBLyWKPXWpey+dST/Nx6Nuo4WjIUfCi6kXwA9I40IJy8Y
+         2GlD9U/oAgK+RJJNeO7HIVD2gSyrzLqgHeYEosUxVqG5o4U/GymuHHjboG4Zd1gctr6O
+         3FTw==
+X-Gm-Message-State: AOJu0Yw9DZFZrH/MfgeN+eQ8ByHiI4Fji6oOE7OlMxYXD3tFK6FtwhaI
+	W1ABuZ0X/BKiyM/XcMxGKve1lvPsYsdHexM92tECUfhTXwZbLA==
+X-Google-Smtp-Source: AGHT+IFD9yRzId65rOvo7eYV3ax4nFJeYwnsU8QqAuYk2WZGweLg6r4kr8upOVVP3Ju9St3jgObmBA==
+X-Received: by 2002:a05:6820:221b:b0:596:eb1:1014 with SMTP id cj27-20020a056820221b00b005960eb11014mr1197913oob.5.1704396029898;
+        Thu, 04 Jan 2024 11:20:29 -0800 (PST)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id j26-20020ac84c9a000000b00427cd0b90c8sm51261qtv.53.2024.01.04.11.13.19
+        by smtp.gmail.com with ESMTPSA id ex27-20020a05622a519b00b004282dea946fsm51568qtb.69.2024.01.04.11.20.29
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 04 Jan 2024 11:13:20 -0800 (PST)
-Date: Thu, 4 Jan 2024 14:13:19 -0500
+        Thu, 04 Jan 2024 11:20:29 -0800 (PST)
+Date: Thu, 4 Jan 2024 14:20:28 -0500
 From: Taylor Blau <me@ttaylorr.com>
-To: Tamino Bauknecht <dev@tb6.eu>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH] fetch: add new config option fetch.all
-Message-ID: <ZZcDT3R0NavkyNYh@nand.local>
-References: <cc74dc58-4fbe-470d-a212-4c2d2249918c@tb6.eu>
- <20240104143656.615117-1-dev@tb6.eu>
- <ZZbr4yAJe0dnHRcO@nand.local>
- <88407aeb-bff7-4899-af7b-e7cb671d991a@tb6.eu>
+To: Illia Bobyr <illia.bobyr@gmail.com>
+Cc: git@vger.kernel.org,
+	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Subject: Re: [PATCH] rebase: clarify --reschedule-failed-exec default
+Message-ID: <ZZcE/Kw24YKlqSOT@nand.local>
+References: <20240104080631.3666413-1-illia.bobyr@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -59,60 +57,31 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <88407aeb-bff7-4899-af7b-e7cb671d991a@tb6.eu>
+In-Reply-To: <20240104080631.3666413-1-illia.bobyr@gmail.com>
 
-On Thu, Jan 04, 2024 at 07:32:03PM +0100, Tamino Bauknecht wrote:
-> > I don't feel particularly strongly about whether or not you reorganize
-> > these if-statements, but we should change "argc == 0" to "!argc", which
-> > matches the conventions of the rest of the project.
+On Thu, Jan 04, 2024 at 12:06:31AM -0800, Illia Bobyr wrote:
+> Documentation should mention the default behavior.
 >
-> Are you sure that I shouldn't use "argc == 0" here instead since it's also
-> used in the next "else if" condition? Or is the goal to gradually transition
-> to "!argc" in the entire code base?
-> I agree with keeping the diff minimal, will change that to your suggestion.
+> It is better to explain the persistent nature of the
+> --reschedule-failed-exec flag from the user standpoint, rather than from
+> the implementation standpoint.
 
-See Documentation/CodingGuidelines.txt for more information about the
-Git project's style guidelines, but in short: yes, any x == 0 should be
-replaced with !x instead within if-statements.
+The first paragraph looks good, and I think your wording is an
+improvement over what's already there (though of course this is
+subjective, and YMMV).
 
-> > This should be `cat >expect <<-\EOF` (without the space between the
-> > redirect and heredoc, as well as indicating that the heredoc does not
-> > need any shell expansions).
->
-> Will do so, thanks.
-> I tried to match the existing test cases as closely as possible, but if they
-> are outdated, it might be better to use the more recent structure.
+> +Recording this option for the whole rebase is a convenience feature. Otherwise
+> +an explicit `--no-reschedule-failed-exec` at the start would be overridden by
+> +the presence of a `rebase.rescheduleFailedExec=true` configuration when `git
+> +rebase --continue` is invoked. Currently, you can not, pass
+> +`--[no-]reschedule-failed-exec` to `git rebase --continue`.
 
-Junio notes in the thread further up that it is OK to imitate the
-existing style of tests. I don't disagree, but I personally think it's
-OK to introduce new tests in a better style without touching the
-existing ones in the same patch (or requiring a preparatory patch to the
-same effect).
+The last sentence was a bit confusing to me. I assume you meant
 
-> > It looks like these tests match the existing style of the test suite,
-> > but they are somewhat out of date with respect to our more modern
-> > standards. I would probably write this like:
-> >
-> >      test_expect_success 'git fetch --all (works with fetch.all = true)' '
-> >        git clone one test10 &&
-> >        test_config -C test10 fetch.all true &&
-> >        for r in one two three
-> >        do
-> >          git -C test10 remote add $r ../$r || return 1
-> >        done &&
-> >        git -C test10 fetch --all &&
-> >        git -C test10 branch -r >actual &&
-> >        test_cmp expect actual
-> >      '
->
-> I think I'd prefer having the "actual" (and maybe also "expected") output in
-> the repository so that it won't be overwritten by the next test case.
+    Currently, you cannot pass `--[no-]reschedule-failed-exec` [...]
 
-Very reasonable.
-
-> Thanks for the great review, will send an updated patch later.
-
-Thanks for working on this!
+without the comma between "pass" and "`--[no]reschedule-failed-exect`",
+and replacing "can not" with "cannot".
 
 Thanks,
 Taylor
