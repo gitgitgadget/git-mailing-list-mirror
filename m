@@ -1,62 +1,63 @@
-Received: from mail-qt1-f177.google.com (mail-qt1-f177.google.com [209.85.160.177])
+Received: from mail-qk1-f172.google.com (mail-qk1-f172.google.com [209.85.222.172])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AED2286B2
-	for <git@vger.kernel.org>; Thu,  4 Jan 2024 17:34:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96C3E28688
+	for <git@vger.kernel.org>; Thu,  4 Jan 2024 17:35:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="SH17c5cl"
-Received: by mail-qt1-f177.google.com with SMTP id d75a77b69052e-4281f6400feso12507191cf.1
-        for <git@vger.kernel.org>; Thu, 04 Jan 2024 09:34:41 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="EB18+h65"
+Received: by mail-qk1-f172.google.com with SMTP id af79cd13be357-78104f6f692so53368885a.1
+        for <git@vger.kernel.org>; Thu, 04 Jan 2024 09:35:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1704389681; x=1704994481; darn=vger.kernel.org;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1704389718; x=1704994518; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=ujXauwv8NyLCYft/2ezqwZOzEzL9kmeiSsZxUSVECBA=;
-        b=SH17c5claS6JlVN9pdLTnbX2dLVyc4ZtNFXFRP3h4CtBvWDlAjyNIX7gVzpnvksNWH
-         Ehq1SUvf/kLLnMeA2qzCp5sLWYDcN1M4xn3Fc2wBdNLI5wB9tnED/JF0JF/A5ow2ifuk
-         l9MLg7+PsbjHaYc8/UMmdC/H/lxO0rKWU8UebiRCuZRh3T9h62SGinvegDI0Ywx5qI4h
-         6Bwy5h3J8HGVMGxlEtQdfnBdkeaPt5b6JMvPiww8v77NnTGlxF545OPFtM8EevBu0Xew
-         YhMUvuvwoosS6WX8P9mUR2XZlpiSWX45drnl207+uy1q+p9GbfJt58CKBtfudk1hzwVd
-         vOdw==
+        bh=2oRm0cJwXJX6CqC1QukqT8AOYQvP+rh87Ngyu4uFJjE=;
+        b=EB18+h65xwnyMahSWBkF1CX2C0BxHjWra5ONa+MIc6ItOgY1BhYjOsoS05WBzvYTHY
+         hPpeJ3e7+zUKIQ8B192EnEaKbVJRX7XXsaSlspV6LqhCU0XSb3iGghdeyMqw47e/fdiP
+         QLf6HxdLo+jFrq5OPFo1XmMtijP+88SaQKHuSxUGz6c1KHS1ta4E48SY2PJuIEspbwbz
+         /iKJVo+u6N9iY5pUWNhcrQVPqcJlP8ZDPSizfq3T2UYDzyqBaBlmHiZNnC3rs6J7R1fd
+         k0xaAiuGNqVMV2wbS02EbZtfgtdqlfwrAzTqFUDYk7HtTkK69pqhQP5n2IQB49m52tjp
+         Ceyw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1704389681; x=1704994481;
+        d=1e100.net; s=20230601; t=1704389718; x=1704994518;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=ujXauwv8NyLCYft/2ezqwZOzEzL9kmeiSsZxUSVECBA=;
-        b=MXoTgcaHx/Apy0j+IABjJylhpc/lOXmTEe3hmfZPwTbTPPA0YD3HrJZU04u8taRUj9
-         fr8pFuWcF80FIv8uSJrojXR/Gmr1I+pBSS7HmkChBNqte8ty/TIuOSKJOKn4Fn3FVqcT
-         rB5bJ+mN3tjNW/ZHcO+ojfZ8FNb8TWvtcxqncOhPo0z47rDMSznAFXPFZiX6fjSEKs1p
-         7snUytktgJTvD2nrEjF3Z/4jWxbUoBuUYSFD92Msmx20DkgkMznuSxL84bJdHAqkIM1f
-         xac0b6UrzrMExl1dKn+1dmAIxaEvy6gR8HcrX16AEA2tcWdyrLDjAhr7CQH6dW5LnzOI
-         fXJA==
-X-Gm-Message-State: AOJu0YyMnh3bcoIuQSW6bsjCy7hEkj81+TRb8Rxcoj9wSDmgWWMyeHac
-	8qXv0ctDGuDKgPwKuIzhJTOc8XPsbfWx1Q==
-X-Google-Smtp-Source: AGHT+IHDD2pkknuzE0V290AuCUUZ0cVSQcKAQbC1+sfqh8ITF6d5ddmRwl8cb2kVbo7WEYXUZUjl4w==
-X-Received: by 2002:a05:6214:528a:b0:67f:6ddb:58c4 with SMTP id kj10-20020a056214528a00b0067f6ddb58c4mr1163132qvb.45.1704389681060;
-        Thu, 04 Jan 2024 09:34:41 -0800 (PST)
+        bh=2oRm0cJwXJX6CqC1QukqT8AOYQvP+rh87Ngyu4uFJjE=;
+        b=NWCvCGxKE52mX9ltUqlEd0Ip0YqwP9lKI6o2JCpSvqoJLG6N33wNCbuyWgmUzrKGfN
+         ZVsZch23wQBighafNsk250OhwnTlfO48Y9yvo9NIZ+d7e5oZZEavF2jllqVfwzLtFgUI
+         Pp8XyNHSu8eYtXGZ11K8q64rbs8ySgXIPorYH2wCzFJ5OQDvecVRMPOHKPwjC0MFo8Ma
+         gUIvJcGA7/qYyrjr9y1N2fbQ97fdk45ObpCY3tSiPrKIvT/bQl2pU/iRA6IMR+AX4s2n
+         lxJYA9D0bwbKopDDq6H3a5BS/WMQez4uFt8urpokUumTZgsTr6rXQfGdnaUrlkZCj06x
+         VE5w==
+X-Gm-Message-State: AOJu0Yz12/5Qtm7tAufAdGGBL/GI2BhYncuj7yEu4G0m2PfvYpTx7/QR
+	Ipw75G7vY+SwhZcjtpL8Z++WaFvom8+JdA==
+X-Google-Smtp-Source: AGHT+IGf8/y47ZS5eo8le0U3hRNQ0dwsvQS9gJt+QeS8hYWhMeboxJ9pgg6FKO40DbAuLBuvVjetWg==
+X-Received: by 2002:ae9:c30f:0:b0:781:a651:df40 with SMTP id n15-20020ae9c30f000000b00781a651df40mr1069181qkg.9.1704389718472;
+        Thu, 04 Jan 2024 09:35:18 -0800 (PST)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id kk9-20020a05622a2c0900b0042839736d9fsm1812908qtb.19.2024.01.04.09.34.40
+        by smtp.gmail.com with ESMTPSA id bj28-20020a05620a191c00b007830634ea18sm101742qkb.88.2024.01.04.09.35.18
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 04 Jan 2024 09:34:40 -0800 (PST)
-Date: Thu, 4 Jan 2024 12:34:39 -0500
+        Thu, 04 Jan 2024 09:35:18 -0800 (PST)
+Date: Thu, 4 Jan 2024 12:35:17 -0500
 From: Taylor Blau <me@ttaylorr.com>
 To: Junio C Hamano <gitster@pobox.com>
-Cc: Patrick Steinhardt <ps@pks.im>,
-	Oswald Buddenhagen <oswald.buddenhagen@gmx.de>,
-	Stefan Haller <lists@haller-berlin.de>, git@vger.kernel.org
-Subject: Re: Concurrent fetch commands
-Message-ID: <ZZbsL8/2KfSITJv3@nand.local>
-References: <c11ca0b3-aaf4-4a8d-80a1-3832954aa7aa@haller-berlin.de>
- <xmqqy1daffk8.fsf@gitster.g>
- <ZZUNxNciNb_xZveY@tanuki>
- <ZZUWmy3rTjpBsH-w@tanuki>
- <ZZU1TCyQdLqoLxPw@ugly>
- <ZZU5s4LKQF1NLgnC@tanuki>
- <ZZWOBObBmLW9Nid6@nand.local>
- <xmqqwmsq83v3.fsf@gitster.g>
+Cc: Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,
+	Patrick Steinhardt <ps@pks.im>,
+	Chandra Pratap via GitGitGadget <gitgitgadget@gmail.com>,
+	git@vger.kernel.org, Chandra Pratap <chandrapratap376@gmail.com>,
+	Chandra Pratap <chandrapratap3519@gmail.com>
+Subject: Re: [PATCH v2] write-or-die: make GIT_FLUSH a Boolean environment
+ variable
+Message-ID: <ZZbsVfFpJNQHGGEn@nand.local>
+References: <pull.1628.git.1703955246308.gitgitgadget@gmail.com>
+ <pull.1628.v2.git.1704268708720.gitgitgadget@gmail.com>
+ <ZZUZNQqDTx3bnveJ@tanuki>
+ <ZZWWLkY+ixg+OMM4@nand.local>
+ <20240103184203.GA4334@tb-raspi4>
+ <xmqq5y0a9qed.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -65,37 +66,18 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <xmqqwmsq83v3.fsf@gitster.g>
+In-Reply-To: <xmqq5y0a9qed.fsf@gitster.g>
 
-On Wed, Jan 03, 2024 at 02:10:56PM -0800, Junio C Hamano wrote:
-> Taylor Blau <me@ttaylorr.com> writes:
+On Wed, Jan 03, 2024 at 11:18:50AM -0800, Junio C Hamano wrote:
+> > Thanks for a nice reading - I can not imagine a better version.
 >
-> > ... I suppose the answer is that they expect
-> > concurrent fetches to be tolerated, but that the contents of FETCH_HEAD
-> > (and of course the remote references) are consistent at the end of all
-> > of the fetches.
->
-> What does it mean to be "consistent" in this case, though?  For the
-> controlled form of multiple fetches performed by "git fetch --all",
-> the answer is probably "as if we fetched sequentially from these
-> remotes, one by one, and concatenated what these individual fetch
-> invocations left in FETCH_HEAD".  But for an uncontrolled background
-> fetch IDE and others perform behind user's back, it is unclear what
-> it means, or for that matter, it is dubious if there is a reasonable
-> definition for the word.
+> Yup, the flow of the logic feels very natural with this version by
+> making it clear that the case that the default "-1" is returned to
+> us is where we need to figure out an appropriate value ourselves.
+> An added bonus is that the scope "struct stat" has is limited to the
+> absolute minimum.  I like it, too.
 
-Yeah, on thinking on it more I tend to agree here.
-
-> Nobody brought up the latter so far on this discussion thread, but
-> mucking with the remote-tracking branches behind user's back means
-> completely breaking the end-user expectation that --force-with-lease
-> would do something useful even when it is not given the commit the
-> user expects to see at the remote.  Perhaps those third-party tools
-> that want to run "git fetch" in the background can learn from how
-> "prefetch" task works to avoid the breakage they are inflicting on
-> their users?
-
-Probably so.
+Thanks, both.
 
 Thanks,
 Taylor
