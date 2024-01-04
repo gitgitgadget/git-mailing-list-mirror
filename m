@@ -1,216 +1,139 @@
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+Received: from www133.your-server.de (www133.your-server.de [88.198.195.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BDDA2C682
-	for <git@vger.kernel.org>; Thu,  4 Jan 2024 20:09:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38D7E2C68F
+	for <git@vger.kernel.org>; Thu,  4 Jan 2024 20:18:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=tb6.eu
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=tb6.eu
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="XLQY06E3"
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 25A271D69F1;
-	Thu,  4 Jan 2024 15:09:23 -0500 (EST)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=FD8vOzZNgG9e
-	qonZn8tRRF3pqbJeCDjDLWPKg8qRTd0=; b=XLQY06E3bYfctWZRc0fS8RPRDqpH
-	Qcm31BVqVpMc+dzvktjysLYPTKHNBv7x0Vlr08F7G2TmBKY/XKs8OUD4CEJwOF34
-	OoxVwKQCA6TvAxXH94emVyj28YGNvjBL7Xph+vxEY6Im0XFS3OfVEk77n/YDw2bW
-	zex+qVYI71uTqWg=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 18D321D69F0;
-	Thu,  4 Jan 2024 15:09:23 -0500 (EST)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.200.93])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 714031D69EE;
-	Thu,  4 Jan 2024 15:09:22 -0500 (EST)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: =?utf-8?Q?S=C3=B6ren?= Krecker <soekkle@freenet.de>, Johannes Schindelin
- <Johannes.Schindelin@gmx.de>
-Cc: git@vger.kernel.org,  sunshine@sunshineco.com
-Subject: Re: [PATCH v5 1/1] Adds domain/username to error message
-In-Reply-To: <20240104192202.2124-2-soekkle@freenet.de> (=?utf-8?Q?=22S?=
- =?utf-8?Q?=C3=B6ren?= Krecker"'s
-	message of "Thu, 4 Jan 2024 20:22:02 +0100")
-References: <DB9P250MB0692C8B4D93ED92FEE680AA9A560A@DB9P250MB0692.EURP250.PROD.OUTLOOK.COM>
-	<20240104192202.2124-1-soekkle@freenet.de>
-	<20240104192202.2124-2-soekkle@freenet.de>
-Date: Thu, 04 Jan 2024 12:09:21 -0800
-Message-ID: <xmqqbka07te6.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=tb6.eu header.i=@tb6.eu header.b="T4ceUhYL"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=tb6.eu;
+	s=default2109; h=Content-Transfer-Encoding:Content-Type:In-Reply-To:From:
+	References:Cc:To:Subject:MIME-Version:Date:Message-ID:Sender:Reply-To:
+	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
+	Resent-To:Resent-Cc:Resent-Message-ID;
+	bh=WJgSSbDup/hbU9DNiEdfQjjzyXY7DQLYIPBWG+YfyKY=; b=T4ceUhYLcm9YRPTmkikcb81q7f
+	j60xVZvcdMSZILVn7ajiEdIx1PtjkXFddwiWc87x8TB1RDaBOiPOblqCUBLrpqG9jttnT2VzBAY+J
+	KiaZiCz7/Z+JhpJTvFj7JQgDNUHXd4zSO+8HfZ32mMxfjplUYjqA04lfT2NYae6USK2CQEjHq1LZf
+	wcE3Vm4LHbzOPZHHUhyq+WnSBdwG/Z7MhGAV2WpK0DxTjNTkT5ChLHa00NB8iNXu5hTGDRFikpimb
+	h9x0eQrgZtIcdTxyfLOUry4+3E76fb9+DTQkMkiD38MAXuB0A9z6MZt6Dfn/NjLTLy7/Yw9litOCg
+	Ilfm3lSg==;
+Received: from sslproxy02.your-server.de ([78.47.166.47])
+	by www133.your-server.de with esmtpsa  (TLS1.3) tls TLS_AES_256_GCM_SHA384
+	(Exim 4.94.2)
+	(envelope-from <dev@tb6.eu>)
+	id 1rLUAE-000Ey5-J7; Thu, 04 Jan 2024 21:18:02 +0100
+Received: from [2a02:810d:1380:a8:8800:9ec1:b722:bc9d]
+	by sslproxy02.your-server.de with esmtpsa (TLSv1.3:TLS_AES_256_GCM_SHA384:256)
+	(Exim 4.92)
+	(envelope-from <dev@tb6.eu>)
+	id 1rLUAE-000O11-Cy; Thu, 04 Jan 2024 21:18:02 +0100
+Message-ID: <70f17f0c-2226-41eb-ae08-348c794a3411@tb6.eu>
+Date: Thu, 4 Jan 2024 21:18:02 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID:
- 26A5876A-AB3D-11EE-94AA-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] fetch: add new config option fetch.all
+Content-Language: en-US
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org
+References: <cc74dc58-4fbe-470d-a212-4c2d2249918c@tb6.eu>
+ <20240104143656.615117-1-dev@tb6.eu> <xmqqv8896jqo.fsf@gitster.g>
+From: Tamino Bauknecht <dev@tb6.eu>
+Autocrypt: addr=dev@tb6.eu; keydata=
+ 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
+In-Reply-To: <xmqqv8896jqo.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Authenticated-Sender: dev@tb6.eu
+X-Virus-Scanned: Clear (ClamAV 0.103.10/27144/Thu Jan  4 10:39:55 2024)
 
-S=C3=B6ren Krecker <soekkle@freenet.de> writes:
+On 1/4/24 19:23, Junio C Hamano wrote:> This sounds like a usability 
+annoyance for forks that use --all some
+> of the time and not always, as they now have to remember not just to
+> pass something to countermand the configured fetch.all but what that
+> something exactly is (i.e., the name of the remote they fetch from
+> by default), which makes fetch.all less appealing.  I wonder if we
+> can instead take "--no-all" from the command line to make configured
+> fetch.all ignored (hence, giving an explicit remote will fetch from
+> there, and not giving any remote will fetch from whereever the
+> command will fetch from with "git -c fetch.all=false fetch")?
 
-> Subject: Re: [PATCH v5 1/1] Adds domain/username to error message
+I don't think I fully understand the scenario you describe here.
+But I see that the change would disallow users to fetch only the default 
+remote without its name in a straight-forward way - either your proposed 
+solution to overrule the config value or using something like
+`git config "branch.$(git branch --show-current).remote"` in combination 
+with `git fetch` would be workarounds.
+Do you think it is worth adding a flag for it? I can't really think of a 
+real-world use case for it. E.g. the config option "fetch.prune" also 
+doesn't have anything to counteract it (as far as I see).
 
-Looking at past commits that worked on the area this patch touches,
-namely, 7c83470e (mingw: be more informative when ownership check
-fails on FAT32, 2022-08-08) and e883e04b (mingw: provide details
-about unsafe directories' ownership, 2022-08-08), I would retitle
-the commit perhaps like so:
+If a flag is necessary, I think something like "--default-only" (or 
+similar) might be more descriptive than "--no-all".
 
-    Subject: [PATCH v5] mingw: give more details about unsafe directory's=
- ownership
+> Missing sign-off.
 
-if I were doing this patch.
+Sorry, thanks for pointing it out.
 
-> Adds domain/username in error message, if owner sid of repository and
+> And we should say that this configuration variable defaults to false.
 
-"Adds" -> "Add".
+Will do so.
 
-> user sid are not equal on windows systems.
->
-> Old Prompted error message:
-> '''
-> fatal: detected dubious ownership in repository at 'C:/Users/test/sourc=
-e/repos/git'
-> 'C:/Users/test/source/repos/git' is owned by:
-> 	'S-1-5-21-571067702-4104414259-3379520149-500'
-> but the current user is:
-> 	'S-1-5-21-571067702-4104414259-3379520149-1001'
-> To add an exception for this directory, call:
->
-> 	git config --global --add safe.directory C:/Users/test/source/repos/gi=
-t
-> '''
->
-> New prompted error massage:
+> This conditional cascade will probably need to change when we allow
+> "--no-all" to countermand the configured fetch.all anyway, so I
+> won't worry about it now, but it looks somewhat convoluted that we
+> have to re-check "all" many times, which was the point of the
+> original that implemented this as a nested conditional.
 
-"massage" -> "message".
-
-I probably would drop two "prompted" from the above, too, if I were
-doing this patch.
-
-Thanks for working on making this error message more readable.  I'll
-queue it when I see an Ack from Dscho.
-
-
-
-
-
-> '''
-> fatal: detected dubious ownership in repository at 'C:/Users/test/sourc=
-e/repos/git'
-> 'C:/Users/test/source/repos/git' is owned by:
->         'DESKTOP-L78JVA6/Administrator' (S-1-5-21-571067702-4104414259-=
-3379520149-500)
-> but the current user is:
->         'DESKTOP-L78JVA6/test' (S-1-5-21-571067702-4104414259-337952014=
-9-1001)
-> To add an exception for this directory, call:
->
->         git config --global --add safe.directory C:/Users/test/source/r=
-epos/git
-> '''
->
-> Signed-off-by: S=C3=B6ren Krecker <soekkle@freenet.de>
-> ---
->  compat/mingw.c | 64 ++++++++++++++++++++++++++++++++++++++++----------
->  1 file changed, 51 insertions(+), 13 deletions(-)
->
-> diff --git a/compat/mingw.c b/compat/mingw.c
-> index 42053c1f65..6240387205 100644
-> --- a/compat/mingw.c
-> +++ b/compat/mingw.c
-> @@ -2684,6 +2684,26 @@ static PSID get_current_user_sid(void)
->  	return result;
->  }
-> =20
-> +static BOOL user_sid_to_user_name(PSID sid, LPSTR *str)
-> +{
-> +	SID_NAME_USE pe_use;
-> +	DWORD len_user =3D 0, len_domain =3D 0;
-> +	BOOL translate_sid_to_user;
-> +
-> +	/* returns only FALSE, because the string pointers are NULL*/
-> +	LookupAccountSidA(NULL, sid, NULL, &len_user, NULL, &len_domain,
-> +			  &pe_use);=20
-> +	/*Alloc needed space of the strings*/
-> +	ALLOC_ARRAY((*str), (size_t)len_domain + (size_t)len_user);=20
-> +	translate_sid_to_user =3D LookupAccountSidA(NULL, sid, (*str) + len_d=
-omain, &len_user,
-> +				   *str, &len_domain, &pe_use);
-> +	if (translate_sid_to_user =3D=3D FALSE)
-> +		FREE_AND_NULL(*str);
-> +	else
-> +		(*str)[len_domain] =3D '/';
-> +	return translate_sid_to_user;
-> +}
-> +
->  static int acls_supported(const char *path)
->  {
->  	size_t offset =3D offset_1st_component(path);
-> @@ -2765,27 +2785,45 @@ int is_path_owned_by_current_sid(const char *pa=
-th, struct strbuf *report)
->  			strbuf_addf(report, "'%s' is on a file system that does "
->  				    "not record ownership\n", path);
->  		} else if (report) {
-> -			LPSTR str1, str2, to_free1 =3D NULL, to_free2 =3D NULL;
-> +			LPSTR str1, str2, str3, str4, to_free1 =3D NULL, to_free3 =3D NULL,=
- to_local_free2=3DNULL, to_local_free4=3DNULL;
-> =20
-> -			if (ConvertSidToStringSidA(sid, &str1))
-> +			if (user_sid_to_user_name(sid, &str1))
->  				to_free1 =3D str1;
->  			else
->  				str1 =3D "(inconvertible)";
-> -
-> -			if (!current_user_sid)
-> -				str2 =3D "(none)";
-> -			else if (!IsValidSid(current_user_sid))
-> -				str2 =3D "(invalid)";
-> -			else if (ConvertSidToStringSidA(current_user_sid, &str2))
-> -				to_free2 =3D str2;
-> +			if (ConvertSidToStringSidA(sid, &str2))
-> +				to_local_free2 =3D str2;
->  			else
->  				str2 =3D "(inconvertible)";
-> +
-> +			if (!current_user_sid) {
-> +				str3 =3D "(none)";
-> +				str4 =3D "(none)";
-> +			}
-> +			else if (!IsValidSid(current_user_sid)) {
-> +				str3 =3D "(invalid)";
-> +				str4 =3D "(invalid)";
-> +			} else {
-> +				if (user_sid_to_user_name(current_user_sid,
-> +							  &str3))
-> +					to_free3 =3D str3;
-> +				else
-> +					str3 =3D "(inconvertible)";
-> +				if (ConvertSidToStringSidA(current_user_sid,
-> +							   &str4))
-> +					to_local_free4 =3D str4;
-> +				else
-> +					str4 =3D "(inconvertible)";
-> +			}
->  			strbuf_addf(report,
->  				    "'%s' is owned by:\n"
-> -				    "\t'%s'\nbut the current user is:\n"
-> -				    "\t'%s'\n", path, str1, str2);
-> -			LocalFree(to_free1);
-> -			LocalFree(to_free2);
-> +				    "\t'%s' (%s)\nbut the current user is:\n"
-> +				    "\t'%s' (%s)\n",
-> +				    path, str1, str2, str3, str4);
-> +			free(to_free1);
-> +			LocalFree(to_local_free2);
-> +			free(to_free3);
-> +			LocalFree(to_local_free4);
->  		}
->  	}
+It's probably because of the tab width of 8 that I feel like three 
+indentation levels are already too much. I'll use Taylor's suggestion to 
+keep the `argc` check as-is (although two checks will still be necessary).
+As an alternative I thought about modifying the current behavior of
+"--all" in combination with an explicit remote as well, but discarded 
+that idea because it might be less intuitive than the error.
