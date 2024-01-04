@@ -1,66 +1,77 @@
-Received: from mout0.freenet.de (mout0.freenet.de [195.4.92.90])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oa1-f42.google.com (mail-oa1-f42.google.com [209.85.160.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9D292C681
-	for <git@vger.kernel.org>; Thu,  4 Jan 2024 19:22:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=freenet.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=freenet.de
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 209062E838
+	for <git@vger.kernel.org>; Thu,  4 Jan 2024 19:33:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=freenet.de header.i=@freenet.de header.b="ys0jD/W/"
-Received: from [195.4.92.120] (helo=sub1.freenet.de)
-	by mout0.freenet.de with esmtpa (ID soekkle@freenet.de) (port 25) (Exim 4.94.2 #2)
-	id 1rLTIC-00EZcS-J0; Thu, 04 Jan 2024 20:22:12 +0100
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=freenet.de;
-	s=mjaymdexmjqk; h=Content-Transfer-Encoding:Content-Type:MIME-Version:
-	References:In-Reply-To:Message-Id:Date:Subject:Cc:To:From:Sender:Reply-To:
-	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
-	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
-	List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=MrJ+vPCBomFSrfPyCBPpUru4GCPxkbN6sSmsP0zvn7w=; b=ys0jD/W/oYiDMKfGqitglLOoTR
-	9Pu4a8s2IrTgKEvfeL2j0oubefVjNJks1PaQkNbOMtP96MZR61USIHOwLzfWKJ1fduWPXPcAylFzy
-	eIgtbtJvl0EuCJTY0iKCGywc1V27IhVzDWdFgq/pm5H6V6uvuzfSIX2E7qGiqMm9VynNVMTwEK/GB
-	eGkKv2SVCTK6mkZgde5Im+H7nCThDMEa83JUcuKg2pKuENtfwn4NaDtNRQcps++o7N83hgj5w9isV
-	k2efI4U7CHVMZpc1tr1ldyyj920ie53Ca1OGyEC32VER5VvRp4gtdEAoPo2Qq1aiqp5olLABNn7FC
-	mFxQ2TOw==;
-Received: from p200300e2e7202b00dacb8afffee0ca63.dip0.t-ipconnect.de ([2003:e2:e720:2b00:dacb:8aff:fee0:ca63]:35642 helo=soren-pc.lan)
-	by sub1.freenet.de with esmtpsa (ID soekkle@freenet.de) (TLS1.3:ECDHE_X25519__RSA_PSS_RSAE_SHA256__AES_256_GCM:256) (port 465) (Exim 4.94.2 #2)
-	id 1rLTIC-00FhVK-9B; Thu, 04 Jan 2024 20:22:12 +0100
-From: =?UTF-8?q?S=C3=B6ren=20Krecker?= <soekkle@freenet.de>
-To: git@vger.kernel.org
-Cc: sunshine@sunshineco.com,
-	=?UTF-8?q?S=C3=B6ren=20Krecker?= <soekkle@freenet.de>
-Subject: [PATCH v5 0/1] Replace SID with domain/username on Windows
-Date: Thu,  4 Jan 2024 20:22:01 +0100
-Message-Id: <20240104192202.2124-1-soekkle@freenet.de>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <DB9P250MB0692C8B4D93ED92FEE680AA9A560A@DB9P250MB0692.EURP250.PROD.OUTLOOK.COM>
-References: <DB9P250MB0692C8B4D93ED92FEE680AA9A560A@DB9P250MB0692.EURP250.PROD.OUTLOOK.COM>
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="n4eM92sx"
+Received: by mail-oa1-f42.google.com with SMTP id 586e51a60fabf-204e1203a22so362823fac.1
+        for <git@vger.kernel.org>; Thu, 04 Jan 2024 11:33:49 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1704396829; x=1705001629; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=L1tyz0iXUyaasTww+LnSjIaATGPxkuqxSeNFg0+6d8w=;
+        b=n4eM92sxs4N0a2RSmUn7vxv6ZwexkgUEEhDV860eDQ5wPz903rFANTdv7FFOg4K4mw
+         /XEYQmP2ABholznnJ9UNolPwqMIiKiloYRQSMxEFaMCNprDl1lDi73Tro+Dq6hYusuk6
+         hpXZR9JMRGzq2OZj/ipWbJxwQSwJAqIgzcc2oEfm1udr4y6QSVvM0mwzuicaVqjp/7cz
+         APosw+qVgQEeIHFzUL95D4+W4k18v2gL1y7QEb8HecezZn+aLkiqs/pEziPrGER9BzT1
+         2OZZGOSHfjqFw98p4th00oQq9Ovs7E5yq7j/rnwsdaZx+ZULy6fl3NqG5rO/lmA6O4n6
+         WVeQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1704396829; x=1705001629;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=L1tyz0iXUyaasTww+LnSjIaATGPxkuqxSeNFg0+6d8w=;
+        b=Ty2qGhuONOHjdXmsNAtkjoAmmSvlnFhLH39m01HIQNbW2Cy9bDTaNQsMzX6mYC5emO
+         mRVOVG+X5Axc4wn+6ithHjCO8MksrvzkzGYOKl3Re9v+z9u4ydv3cp4V9zv+o1tFIbsX
+         gajwX/84zQk+FUw8+ilJVawHblIY48iqmoo3FzLR6gY43SnpeRmvNyZ/ZO/rEGHHVR6M
+         022bj3HKOA69QpqRCjZObz0usvjqW5XXVtuMH+Bbrkvm6pBpCfA2Y5PLbGZOgavojmWX
+         DuHrkvghwEAfuhgtWqMbJuxb6Z+pcg5a3pzbLqcLIJFjggNE+APFQFpdGLGVEH/zWQSj
+         LiHQ==
+X-Gm-Message-State: AOJu0YxJ5n8WKvMltIdlM6/1BkSO317g/C/QWN+f2UI/LEOywGZ0RZoc
+	jNnakNEw/++m6Z7LIV7Bv+4QMabsdUcD3w==
+X-Google-Smtp-Source: AGHT+IEVVbr9ThmMKK7PaL538XycN6rh8KSv41uD/AGpnkXSPsHosHKba/swvGh+uECclAJnsxm87A==
+X-Received: by 2002:a05:6870:164b:b0:205:cd32:dfd1 with SMTP id c11-20020a056870164b00b00205cd32dfd1mr720569oae.36.1704396829149;
+        Thu, 04 Jan 2024 11:33:49 -0800 (PST)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id pj27-20020a05620a1d9b00b00781b73f77b1sm30695qkn.128.2024.01.04.11.33.48
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 04 Jan 2024 11:33:48 -0800 (PST)
+Date: Thu, 4 Jan 2024 14:33:47 -0500
+From: Taylor Blau <me@ttaylorr.com>
+To: Brian Lyles <brianmlyles@gmail.com>
+Cc: Elijah Newren <newren@gmail.com>, git@vger.kernel.org
+Subject: Re: Does extending `--empty` to git-cherry-pick make sense?
+Message-ID: <ZZcIG+mNXhZ0rHw3@nand.local>
+References: <CAHPHrSevBdQF0BisR8VK=jM=wj1dTUYEVrv31gLerAzL9=Cd8Q@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-FN-MUUID: 1704396132C798A01E962BO
-X-Originated-At: 2003:e2:e720:2b00:dacb:8aff:fee0:ca63!35642
-X-Scan-TS: Thu, 04 Jan 2024 20:22:12 +0100
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CAHPHrSevBdQF0BisR8VK=jM=wj1dTUYEVrv31gLerAzL9=Cd8Q@mail.gmail.com>
 
-Hi everyone,
+[+cc Elijah]
 
-I change the error message. I Hope that it is now better for every one.
+On Thu, Jan 04, 2024 at 12:57:18AM -0600, Brian Lyles wrote:
+> Is there any real barrier to exposing that option to git-cherry-pick as
+> well? Was this an oversight, or intentionally left out? The
+> corresponding commit message doesn't seem to indicate any specific
+> reason for limiting it to git-rebase.
 
-Thanks
+I am not nearly as familiar with this code as Elijah is, but this
+certainly appears possible by setting the `drop_redundant_commits` and
+`keep_redundant_commits` flags in the replay_opts struct.
 
-Sören Krecker (1):
-  Adds domain/username to error message
+I don't see any fundamental reason why cherry-pick shouldn't have the
+same functionality.
 
- compat/mingw.c | 64 ++++++++++++++++++++++++++++++++++++++++----------
- 1 file changed, 51 insertions(+), 13 deletions(-)
-
-
-base-commit: e79552d19784ee7f4bbce278fe25f93fbda196fa
--- 
-2.39.2
-
+Thanks,
+Taylor
