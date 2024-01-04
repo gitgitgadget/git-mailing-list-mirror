@@ -1,139 +1,227 @@
 Received: from www133.your-server.de (www133.your-server.de [88.198.195.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38D7E2C68F
-	for <git@vger.kernel.org>; Thu,  4 Jan 2024 20:18:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4645A2C68C
+	for <git@vger.kernel.org>; Thu,  4 Jan 2024 20:26:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=tb6.eu
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=tb6.eu
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=tb6.eu header.i=@tb6.eu header.b="T4ceUhYL"
+	dkim=pass (2048-bit key) header.d=tb6.eu header.i=@tb6.eu header.b="kM1aUqkw"
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=tb6.eu;
-	s=default2109; h=Content-Transfer-Encoding:Content-Type:In-Reply-To:From:
-	References:Cc:To:Subject:MIME-Version:Date:Message-ID:Sender:Reply-To:
+	s=default2109; h=Content-Transfer-Encoding:MIME-Version:References:
+	In-Reply-To:Message-ID:Date:Subject:Cc:To:From:Sender:Reply-To:Content-Type:
 	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
 	Resent-To:Resent-Cc:Resent-Message-ID;
-	bh=WJgSSbDup/hbU9DNiEdfQjjzyXY7DQLYIPBWG+YfyKY=; b=T4ceUhYLcm9YRPTmkikcb81q7f
-	j60xVZvcdMSZILVn7ajiEdIx1PtjkXFddwiWc87x8TB1RDaBOiPOblqCUBLrpqG9jttnT2VzBAY+J
-	KiaZiCz7/Z+JhpJTvFj7JQgDNUHXd4zSO+8HfZ32mMxfjplUYjqA04lfT2NYae6USK2CQEjHq1LZf
-	wcE3Vm4LHbzOPZHHUhyq+WnSBdwG/Z7MhGAV2WpK0DxTjNTkT5ChLHa00NB8iNXu5hTGDRFikpimb
-	h9x0eQrgZtIcdTxyfLOUry4+3E76fb9+DTQkMkiD38MAXuB0A9z6MZt6Dfn/NjLTLy7/Yw9litOCg
-	Ilfm3lSg==;
-Received: from sslproxy02.your-server.de ([78.47.166.47])
+	bh=nU4LK+maprhBAf/rywtGISArzpNN8CwkHOL0sYOI15E=; b=kM1aUqkwMfChteAUrDLVZiQ+NF
+	Od0+2LjG40u+SNenTGOZa/+goamSW6jgI7OYEHqmnj38PC/jtBvA2/+ktdVKd3gGddKgulG8qSMq3
+	nr3Pv17zgDIsWpH2xBt7trA/eK9tB6w/Ia0rhNxHp3gZOFFiL4d8FoULK/LoaXAkz7F36h39EutOn
+	nCugTWgPUToU3Gf64O/IccVfModUIsKaPCc70HQA3wwprrhGYK6QcIw5X1q0Pwu5PIVcJKaKQTfwF
+	I65Z3+ZZGOrTV24j6IlxEiloNxVj4OU+/dXAOyQVujEBhYzWuSrLe7i+aoqWNWgQGEoRk/RNoxXd4
+	OlQE9uuA==;
+Received: from sslproxy04.your-server.de ([78.46.152.42])
 	by www133.your-server.de with esmtpsa  (TLS1.3) tls TLS_AES_256_GCM_SHA384
 	(Exim 4.94.2)
 	(envelope-from <dev@tb6.eu>)
-	id 1rLUAE-000Ey5-J7; Thu, 04 Jan 2024 21:18:02 +0100
-Received: from [2a02:810d:1380:a8:8800:9ec1:b722:bc9d]
-	by sslproxy02.your-server.de with esmtpsa (TLSv1.3:TLS_AES_256_GCM_SHA384:256)
+	id 1rLUIF-000Ftj-4i; Thu, 04 Jan 2024 21:26:19 +0100
+Received: from [2a02:810d:1380:a8:3d72:5b35:9164:f910] (helo=localhost.localdomain)
+	by sslproxy04.your-server.de with esmtpsa (TLSv1.3:TLS_AES_256_GCM_SHA384:256)
 	(Exim 4.92)
 	(envelope-from <dev@tb6.eu>)
-	id 1rLUAE-000O11-Cy; Thu, 04 Jan 2024 21:18:02 +0100
-Message-ID: <70f17f0c-2226-41eb-ae08-348c794a3411@tb6.eu>
-Date: Thu, 4 Jan 2024 21:18:02 +0100
+	id 1rLUIE-000CKp-T8; Thu, 04 Jan 2024 21:26:18 +0100
+From: Tamino Bauknecht <dev@tb6.eu>
+To: git@vger.kernel.org
+Cc: Tamino Bauknecht <dev@tb6.eu>
+Subject: [PATCH] fetch: add new config option fetch.all
+Date: Thu,  4 Jan 2024 21:25:00 +0100
+Message-ID: <20240104202605.7382-1-dev@tb6.eu>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <cc74dc58-4fbe-470d-a212-4c2d2249918c@tb6.eu>
+References: <cc74dc58-4fbe-470d-a212-4c2d2249918c@tb6.eu>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] fetch: add new config option fetch.all
-Content-Language: en-US
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org
-References: <cc74dc58-4fbe-470d-a212-4c2d2249918c@tb6.eu>
- <20240104143656.615117-1-dev@tb6.eu> <xmqqv8896jqo.fsf@gitster.g>
-From: Tamino Bauknecht <dev@tb6.eu>
-Autocrypt: addr=dev@tb6.eu; keydata=
- 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
-In-Reply-To: <xmqqv8896jqo.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 X-Authenticated-Sender: dev@tb6.eu
 X-Virus-Scanned: Clear (ClamAV 0.103.10/27144/Thu Jan  4 10:39:55 2024)
 
-On 1/4/24 19:23, Junio C Hamano wrote:> This sounds like a usability 
-annoyance for forks that use --all some
-> of the time and not always, as they now have to remember not just to
-> pass something to countermand the configured fetch.all but what that
-> something exactly is (i.e., the name of the remote they fetch from
-> by default), which makes fetch.all less appealing.  I wonder if we
-> can instead take "--no-all" from the command line to make configured
-> fetch.all ignored (hence, giving an explicit remote will fetch from
-> there, and not giving any remote will fetch from whereever the
-> command will fetch from with "git -c fetch.all=false fetch")?
+This commit introduces the new boolean configuration option fetch.all
+which allows to fetch all available remotes by default. The config
+option can be overridden by explicitly specifying a remote.
+The behavior for --all is unchanged and calling git-fetch with --all and
+a remote will still result in an error.
 
-I don't think I fully understand the scenario you describe here.
-But I see that the change would disallow users to fetch only the default 
-remote without its name in a straight-forward way - either your proposed 
-solution to overrule the config value or using something like
-`git config "branch.$(git branch --show-current).remote"` in combination 
-with `git fetch` would be workarounds.
-Do you think it is worth adding a flag for it? I can't really think of a 
-real-world use case for it. E.g. the config option "fetch.prune" also 
-doesn't have anything to counteract it (as far as I see).
+The option was also added to the config documentation and new tests
+cover the expected behavior.
 
-If a flag is necessary, I think something like "--default-only" (or 
-similar) might be more descriptive than "--no-all".
+Signed-off-by: Tamino Bauknecht <dev@tb6.eu>
+---
+I hopefully incorporated the feedback of all of you, thanks for the
+valuable suggestions.
 
-> Missing sign-off.
+I'm still not entirely happy with the tests (especially the `cp` in
+there) and the heredoc doesn't seem to respect the one additional
+space of its indentation - I am admittedly not the best POSIX shell
+developer, if anyone has an idea on how to improve it, your suggestion
+is welcome.
 
-Sorry, thanks for pointing it out.
+ Documentation/config/fetch.txt |  5 +++
+ builtin/fetch.c                | 11 +++++
+ t/t5514-fetch-multiple.sh      | 75 ++++++++++++++++++++++++++++++++++
+ 3 files changed, 91 insertions(+)
 
-> And we should say that this configuration variable defaults to false.
+diff --git a/Documentation/config/fetch.txt b/Documentation/config/fetch.txt
+index aea5b97477..0638cf276e 100644
+--- a/Documentation/config/fetch.txt
++++ b/Documentation/config/fetch.txt
+@@ -50,6 +50,11 @@ fetch.pruneTags::
+ 	refs. See also `remote.<name>.pruneTags` and the PRUNING
+ 	section of linkgit:git-fetch[1].
+ 
++fetch.all::
++	If true, fetch will attempt to update all available remotes.
++	This behavior can be overridden by explicitly specifying one or
++	more remote(s) to fetch from. Defaults to false.
++
+ fetch.output::
+ 	Control how ref update status is printed. Valid values are
+ 	`full` and `compact`. Default value is `full`. See the
+diff --git a/builtin/fetch.c b/builtin/fetch.c
+index a284b970ef..f1ad3e608e 100644
+--- a/builtin/fetch.c
++++ b/builtin/fetch.c
+@@ -102,6 +102,7 @@ static struct string_list negotiation_tip = STRING_LIST_INIT_NODUP;
+ 
+ struct fetch_config {
+ 	enum display_format display_format;
++	int all;
+ 	int prune;
+ 	int prune_tags;
+ 	int show_forced_updates;
+@@ -115,6 +116,11 @@ static int git_fetch_config(const char *k, const char *v,
+ {
+ 	struct fetch_config *fetch_config = cb;
+ 
++	if (!strcmp(k, "fetch.all")) {
++		fetch_config->all = git_config_bool(k, v);
++		return 0;
++	}
++
+ 	if (!strcmp(k, "fetch.prune")) {
+ 		fetch_config->prune = git_config_bool(k, v);
+ 		return 0;
+@@ -2121,6 +2127,7 @@ int cmd_fetch(int argc, const char **argv, const char *prefix)
+ {
+ 	struct fetch_config config = {
+ 		.display_format = DISPLAY_FORMAT_FULL,
++		.all = -1,
+ 		.prune = -1,
+ 		.prune_tags = -1,
+ 		.show_forced_updates = 1,
+@@ -2342,6 +2349,10 @@ int cmd_fetch(int argc, const char **argv, const char *prefix)
+ 			die(_("fetch --all does not take a repository argument"));
+ 		else if (argc > 1)
+ 			die(_("fetch --all does not make sense with refspecs"));
++	}
++
++	if (all || (config.all > 0 && !argc)) {
++		/* Only use fetch.all config option if no remotes were explicitly given */
+ 		(void) for_each_remote(get_one_remote_for_fetch, &list);
+ 
+ 		/* do not do fetch_multiple() of one */
+diff --git a/t/t5514-fetch-multiple.sh b/t/t5514-fetch-multiple.sh
+index a95841dc36..806b87c727 100755
+--- a/t/t5514-fetch-multiple.sh
++++ b/t/t5514-fetch-multiple.sh
+@@ -24,6 +24,15 @@ setup_repository () {
+ 	)
+ }
+ 
++setup_test_clone () {
++	test_dir="$1"
++	git clone one "$test_dir"
++	for r in one two three
++	do
++		git -C "$test_dir" remote add "$r" "../$r" || return 1
++	done
++}
++
+ test_expect_success setup '
+ 	setup_repository one &&
+ 	setup_repository two &&
+@@ -209,4 +218,70 @@ test_expect_success 'git fetch --multiple --jobs=0 picks a default' '
+ 	 git fetch --multiple --jobs=0)
+ '
+ 
++for fetch_all in true false
++do
++	test_expect_success "git fetch --all (works with fetch.all = $fetch_all)" '
++		test_dir="test_fetch_all_$fetch_all" &&
++		setup_test_clone "$test_dir" && (
++		 cd "$test_dir" &&
++		 git config fetch.all $fetch_all &&
++		 git fetch --all &&
++		 cat >expect <<-\ EOF &&
++		  one/main
++		  one/side
++		  origin/HEAD -> origin/main
++		  origin/main
++		  origin/side
++		  three/another
++		  three/main
++		  three/side
++		  two/another
++		  two/main
++		  two/side
++		 EOF
++		 git branch -r >actual &&
++		 test_cmp expect actual)
++	'
++done
++
++test_expect_success 'git fetch (fetch all remotes with fetch.all = true)' '
++	setup_test_clone test9 && (
++	 cd test9 &&
++	 git config fetch.all true &&
++	 git fetch --all &&
++	 git branch -r >actual &&
++	 cp ../test_fetch_all_true/expect . &&
++	 test_cmp expect actual)
++'
++
++test_expect_success 'git fetch one (explicit remote overrides fetch.all)' '
++	setup_test_clone test10 && (
++	 cd test10 &&
++	 git config fetch.all true &&
++	 git fetch one &&
++	 cat >expect <<-\ EOF &&
++	  one/main
++	  one/side
++	  origin/HEAD -> origin/main
++	  origin/main
++	  origin/side
++	 EOF
++	 git branch -r >actual &&
++	 test_cmp expect actual)
++'
++
++test_expect_success 'git config fetch.all false (fetch only default remote)' '
++	setup_test_clone test11 && (
++	 cd test11 &&
++	 git config fetch.all false &&
++	 git fetch &&
++	 cat >expect <<-\ EOF &&
++	  origin/HEAD -> origin/main
++	  origin/main
++	  origin/side
++	 EOF
++	 git branch -r >actual &&
++	 test_cmp expect actual)
++'
++
+ test_done
+-- 
+2.43.0
 
-Will do so.
-
-> This conditional cascade will probably need to change when we allow
-> "--no-all" to countermand the configured fetch.all anyway, so I
-> won't worry about it now, but it looks somewhat convoluted that we
-> have to re-check "all" many times, which was the point of the
-> original that implemented this as a nested conditional.
-
-It's probably because of the tab width of 8 that I feel like three 
-indentation levels are already too much. I'll use Taylor's suggestion to 
-keep the `argc` check as-is (although two checks will still be necessary).
-As an alternative I thought about modifying the current behavior of
-"--all" in combination with an explicit remote as well, but discarded 
-that idea because it might be less intuitive than the error.
