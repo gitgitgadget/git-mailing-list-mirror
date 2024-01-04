@@ -1,78 +1,95 @@
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ot1-f54.google.com (mail-ot1-f54.google.com [209.85.210.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFC3C2C850
-	for <git@vger.kernel.org>; Thu,  4 Jan 2024 22:14:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 199142C855
+	for <git@vger.kernel.org>; Thu,  4 Jan 2024 22:22:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="pueViWqk"
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id A772A205D0;
-	Thu,  4 Jan 2024 17:14:55 -0500 (EST)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=1Yu4zLJPsaMMDAwPvPirRaw4roBd549R+UX11l
-	ymYkc=; b=pueViWqk3z9yEVe+nRlEkfStZ878ebrdeBK/HBCUxZXpXjzWpm3TtW
-	4cvwlbumPL00z0Dihjgg6h3+7HiWB9ZdfD/FblQb8Slq1xe0ONDXz2WkH0NbDiv5
-	Yo3Dykm6iuTMTGMDT5OgUf6YqJQpNmmolPbTMbnEQnPc2T1uUyeQQ=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id A0831205CF;
-	Thu,  4 Jan 2024 17:14:55 -0500 (EST)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.200.93])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 44BD9205CC;
-	Thu,  4 Jan 2024 17:14:52 -0500 (EST)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Mike Hommey <mh@glandium.org>
-Cc: Stefan Haller <lists@haller-berlin.de>,  Taylor Blau <me@ttaylorr.com>,
-  Patrick Steinhardt <ps@pks.im>,  Oswald Buddenhagen
- <oswald.buddenhagen@gmx.de>,  git@vger.kernel.org
-Subject: Re: Concurrent fetch commands
-In-Reply-To: <20240104205408.h5wvcissfbat7acw@glandium.org> (Mike Hommey's
-	message of "Fri, 5 Jan 2024 05:54:08 +0900")
-References: <c11ca0b3-aaf4-4a8d-80a1-3832954aa7aa@haller-berlin.de>
-	<xmqqy1daffk8.fsf@gitster.g> <ZZUNxNciNb_xZveY@tanuki>
-	<ZZUWmy3rTjpBsH-w@tanuki> <ZZU1TCyQdLqoLxPw@ugly>
-	<ZZU5s4LKQF1NLgnC@tanuki> <ZZWOBObBmLW9Nid6@nand.local>
-	<xmqqwmsq83v3.fsf@gitster.g>
-	<80efcb43-122c-421a-b763-6da6ff620538@haller-berlin.de>
-	<20240104205408.h5wvcissfbat7acw@glandium.org>
-Date: Thu, 04 Jan 2024 14:14:50 -0800
-Message-ID: <xmqq34vc7nl1.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="U0Nc74am"
+Received: by mail-ot1-f54.google.com with SMTP id 46e09a7af769-6dc02ab3cc9so606876a34.3
+        for <git@vger.kernel.org>; Thu, 04 Jan 2024 14:22:22 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1704406942; x=1705011742; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=tKMgsWWr9Krk7bKPxLVo54Q8YJqEICITioYS3HvC1EQ=;
+        b=U0Nc74amEu7RmFO7ug8NYIBWENyTwRgWRAi/lqyBT3rUOKQheE+2PYCYhtT2reF6W0
+         AmG/0tlFFD5dbz+p9vCsUUZp4a+HmE7UIal5aOWFYGI0oeYIfL5C1o/QQJ+rmCvA0QHk
+         +4IzjiWepBZSP1LBA+7UFB2WirP6KqRIhCLNZjW5PdbSJvY49JapjWSXm1cY8E/FZLiq
+         YlAZm7s7hV4RCCg7ko/yZxtj+csfPKEdkVu8kVtgQF0/EfELqHb2/rDz7y4vHo34ggFH
+         3WxV6cux2ZcKkpEN4W80Cv3ELL78N2gPtSfx6eLoCAAbNAZUlUlBGQ6Z3Isk0UqpzKKN
+         8G5A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1704406942; x=1705011742;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=tKMgsWWr9Krk7bKPxLVo54Q8YJqEICITioYS3HvC1EQ=;
+        b=OcZTMXuOcaHix6oQEyBlorJedwGotYZoSTAu9XKT1tOax2R/xyWsr6xaf2VZweC7kr
+         NwNdgYaWyoUnCqsuaRbYdS57ebYNHbCJzYQwgBjZeFWUab8OrvJo7PyBQmyBBYDDsENS
+         RYLnnO8u1SH6Vs8dLq7n2zb2euc0DQkTL60S62SmKvJBcuTpiByn0oCEgvUKe51/asc9
+         +Pgn1rcL7/pFB3i8TwbKBms5fK9sYk/BZwUoozD/kZ3t3MYiMbcTl9Kj03LsogAe2x9b
+         kawa/oJMzmBjfqQ8SvibjRWKGVYQoqpZ3ZdbWSzyHrZi0um1vTTM6srDnmE73/WvMW6q
+         B4AQ==
+X-Gm-Message-State: AOJu0YxOtZezd7DZKBBbbGpkW7KU1vdh97O90kbxrPFMQJ7KP+dkIIQT
+	YjkdLObNhQBFb7rHDfTD+KDEYU2zKTDL0yfVVqL87Jc7H3pQFg==
+X-Google-Smtp-Source: AGHT+IENAINmMCPpkasraV3dDjEzsokv82DN/K5Tb+L0vIyHjCrfGdNcP9sWEIvlRAANbA9SAnzCdQ==
+X-Received: by 2002:a05:6830:3a16:b0:6dc:7837:56e6 with SMTP id di22-20020a0568303a1600b006dc783756e6mr1390437otb.30.1704406942143;
+        Thu, 04 Jan 2024 14:22:22 -0800 (PST)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id j25-20020a37ef19000000b007816d94195esm126268qkk.54.2024.01.04.14.22.21
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 04 Jan 2024 14:22:21 -0800 (PST)
+Date: Thu, 4 Jan 2024 17:22:20 -0500
+From: Taylor Blau <me@ttaylorr.com>
+To: Jeff King <peff@peff.net>
+Cc: git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>,
+	Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 00/24] pack-objects: multi-pack verbatim reuse
+Message-ID: <ZZcvnF8wcOYoA8Dd@nand.local>
+References: <cover.1701198172.git.me@ttaylorr.com>
+ <20231212081238.GD1117953@coredump.intra.peff.net>
+ <ZXxy1USjjjAbBi++@nand.local>
+ <20231221111333.GE570888@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- AEC492D8-AB4E-11EE-AFB0-A19503B9AAD1-77302942!pb-smtp21.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20231221111333.GE570888@coredump.intra.peff.net>
 
-Mike Hommey <mh@glandium.org> writes:
-
-> On Thu, Jan 04, 2024 at 01:01:26PM +0100, Stefan Haller wrote:
->> On 03.01.24 23:10, Junio C Hamano wrote:
->> > Folks who invented "git maintenance" designed their "prefetch" task
->> > to perform the best practice, without interfering any foreground
->> > fetches by not touching FETCH_HEAD and the remote-tracking branches.
->> 
->> That's good, but it's for a very different purpose than an IDE's
->> background fetch. git maintenance's prefetch is just to improve
->> performance for the next pull; the point of an IDE's background fetch is
->> to show me which of my remote branches have new stuff that I might be
->> interested in pulling, without having to fetch myself. So I *want* this
->> to be mucking with my remote-tracking branches.
+On Thu, Dec 21, 2023 at 06:13:33AM -0500, Jeff King wrote:
+> But that's not quite the whole story. There is still a CPU improvement
+> in your series (1.2s vs 1.0s, a 20% speedup). And as I'd expect, a
+> memory improvement from avoiding the extra book-keeping (almost 10%):
 >
-> Use `git remote update`?
+> >     Benchmark 1: single-pack reuse, pack.window=0
+> >     354.224 MB (max RSS)
+> >     Benchmark 4: multi-pack reuse, pack.window=10
+> >     328.786 MB (max RSS)
 
-Hmph, it seems that it does not pass "--no-write-fetch-head" so it
-would interfere with the foreground "fetch" or "pull" the end user
-consciously makes, exactly the same way Stefan's demonstration in
-the first message in the thread, no?
+I agree. And I expect that we'd see larger savings on larger, real-world
+repositories (the numbers here are generated from a semi out-of-date
+copy of git.git).
+
+> So while it's a lot less code to just set the window size, I do think
+> those improvements are worth it. And really, it's the same tradeoff we
+> make for the single-pack case (i.e., one could argue that we
+> could/should rip out the verbatim-reuse code entirely in favor of just
+> tweaking the window size).
+
+Definitely an interesting direction. One question that comes to mind is
+whether or not we'd want to keep the "verbatim" reuse code around to
+avoid adding objects to the packing list directly. That's a
+non-negligible memory savings when generating large packs where we can
+reuse large swaths of existing packs.
+
+That seems like a topic for another day, though ;-). Not quite
+left-over-bits, so maybe... #leftoverboulders?
+
+Thanks,
+Taylor
