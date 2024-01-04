@@ -1,110 +1,96 @@
-Received: from mail-pl1-f181.google.com (mail-pl1-f181.google.com [209.85.214.181])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B59CF2D606
-	for <git@vger.kernel.org>; Thu,  4 Jan 2024 23:54:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CD1C2D606
+	for <git@vger.kernel.org>; Thu,  4 Jan 2024 23:59:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="xWhVURyk"
-Received: by mail-pl1-f181.google.com with SMTP id d9443c01a7336-1d3ec3db764so5541855ad.2
-        for <git@vger.kernel.org>; Thu, 04 Jan 2024 15:54:17 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1704412457; x=1705017257; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:mail-followup-to:message-id:subject:cc:to
-         :from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=J3wzi32SgaVuj8CklCK8iI+7u7N4ByhvzEWAWayEKo8=;
-        b=xWhVURykvEUW7Z/rzVIuJmE4PMYcQ16JVQIuAPPpC7DY2HkT9UVC5470bIkf+BvhV7
-         0bv/NEB9mjfCcYhXd+GJsiriiTjHLOgYZ2HU09kI2kipz5OYvCihFDEJDDan/07o9KKK
-         iTEbSDU4QhSJKkQpiXuzepqiICdTuh1sW4/xXujDo4ZweOVfEVpIHio3/ipMdoJCKO/a
-         NCzi5pg5XXrsq6iJk30ErYUuMzGZTQdV1GIzPSNWWHPPeOwa9/OI9l6aZY0d6am4VXjo
-         V2aQv3fPrpPbK5EHPZA2AY72wu0euex4kZ9e1TL3MFr6mIugwKU+/5fg4HqoVGAXJML0
-         R1LA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1704412457; x=1705017257;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:mail-followup-to:message-id:subject:cc:to
-         :from:date:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=J3wzi32SgaVuj8CklCK8iI+7u7N4ByhvzEWAWayEKo8=;
-        b=UwOWQwsqZ9TzIFfLHFxEUdMfQhp93hrvkcmPAw5ouehtYjx9glcjJjvZ2l6jzm/AEN
-         bh+vCjxiqWpuMW4Je4NtjlwaPYpn1dLtnD5llOCAXuB8SNJZJ1tGVb2f71bOtRdVFAmx
-         KfOcmE/daWUXOasNmR6fJYfecW1GS20a/JkT4E0eTyhHpUXv3GuQuUd8ta23s5E2cxgH
-         aWQB7U3S+uB+oLyre5/N7U65tMShwFZVievm4C838GG5SCjYLOM5SX+DUV1bryfX0ews
-         lwfPqHVG59Qch8wZaDwQWsi+yWBu0+H+/qpa7t2Bx74FUEGUnXgjEnsKn+ENUEuxNDhj
-         iiWA==
-X-Gm-Message-State: AOJu0Yy2Q7TRANiznbPFVgyKG/OaBcGUnpiouRWUEkPg4fb9gi7+V7ki
-	4FJZo4acUmtxneOXK6PIWWjgCk++FZKg
-X-Google-Smtp-Source: AGHT+IHYDST5ZtQU5TKM4OG6kOV6tKu7/sPzlhK+Qw4GZ3HpkRXrQjJAlNEWzEQA4IUtn7rZlF/mCA==
-X-Received: by 2002:a17:902:e5c6:b0:1d4:2b6d:d745 with SMTP id u6-20020a170902e5c600b001d42b6dd745mr1354943plf.56.1704412456737;
-        Thu, 04 Jan 2024 15:54:16 -0800 (PST)
-Received: from google.com ([2620:15c:2d3:204:a7e4:a1c4:6ce:d64])
-        by smtp.gmail.com with ESMTPSA id y9-20020a17090322c900b001d38a7e6a30sm171904plg.70.2024.01.04.15.54.15
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 04 Jan 2024 15:54:16 -0800 (PST)
-Date: Thu, 4 Jan 2024 15:54:11 -0800
-From: Josh Steadmon <steadmon@google.com>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc: Jeff King <peff@peff.net>,
-	Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-	Phillip Wood <phillip.wood@dunelm.org.uk>, git@vger.kernel.org
-Subject: Re: Feasibility of folding `unit-tests` into `make test`, was Re:
- [PATCH] ci: avoid running the test suite _twice_
-Message-ID: <ZZdFI8KXsVaZuQiY@google.com>
-Mail-Followup-To: Josh Steadmon <steadmon@google.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Jeff King <peff@peff.net>,
-	Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-	Phillip Wood <phillip.wood@dunelm.org.uk>, git@vger.kernel.org
-References: <pull.1613.git.1699894837844.gitgitgadget@gmail.com>
- <20231113184909.GB3838361@coredump.intra.peff.net>
- <ZVU4EVcj0MDrSNcG@google.com>
- <850ea42c-f103-68d5-896b-9120e2628686@gmx.de>
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="eDsNjb5n"
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id C9B5120FE8;
+	Thu,  4 Jan 2024 18:59:24 -0500 (EST)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=otzxmiPIf441vXVVV+STO+mup9GDBV4g+e+5yY
+	GbKIQ=; b=eDsNjb5nu1IfEuxxPNV2jtzoYERKap9htLMx9bJkbkZSLONTidPaHK
+	PI9bTCJ4WA9Mjg5EKB9DL68nBLWRW30PdlvUpvoeixZLesjbQROHIWr9J6+mhkOG
+	oZlRZ2YtPCtl8BWKCRDiP++vRXWoKyuPpQvDtrNxSRarZEDrbQtbQ=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id C1B4320FE7;
+	Thu,  4 Jan 2024 18:59:24 -0500 (EST)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.200.93])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 62FBC20FE6;
+	Thu,  4 Jan 2024 18:59:21 -0500 (EST)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Karthik Nayak <karthik.188@gmail.com>
+Cc: Patrick Steinhardt <ps@pks.im>,  Taylor Blau <me@ttaylorr.com>,
+  git@vger.kernel.org,  christian.couder@gmail.com
+Subject: Re: [PATCH 2/2] ref-filter: support filtering of operational refs
+In-Reply-To: <CAOLa=ZStP6F1njTeoQZwN58k+_0r9LT7z-wg2819FWZPq90wQg@mail.gmail.com>
+	(Karthik Nayak's message of "Thu, 4 Jan 2024 03:31:10 -0800")
+References: <ZZRaOhK869S1Sg1h@nand.local> <ZZUgUUlB8A-rhep5@tanuki>
+	<CAOLa=ZS4OOAmyRvf4HH-c_3GvnVkh6zS2kD3hEhRZ7NZT-rvyA@mail.gmail.com>
+	<xmqqwmsqbhyt.fsf@gitster.g> <ZZWCXFghtql4i4YE@tanuki>
+	<xmqqsf3ebe1l.fsf@gitster.g> <ZZWIlx-9D2r9AfDW@tanuki>
+	<xmqqil4a9vue.fsf@gitster.g> <ZZWbMekL2URby0qV@tanuki>
+	<xmqqedey9u32.fsf@gitster.g> <ZZWg5JvjQymy2wcn@tanuki>
+	<CAOLa=ZStP6F1njTeoQZwN58k+_0r9LT7z-wg2819FWZPq90wQg@mail.gmail.com>
+Date: Thu, 04 Jan 2024 15:59:19 -0800
+Message-ID: <xmqq1qawr6p4.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <850ea42c-f103-68d5-896b-9120e2628686@gmx.de>
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 4774ED08-AB5D-11EE-B3AA-A19503B9AAD1-77302942!pb-smtp21.pobox.com
 
-On 2023.11.16 09:42, Johannes Schindelin wrote:
-> Hi Josh,
-> 
-> On Wed, 15 Nov 2023, Josh Steadmon wrote:
+Karthik Nayak <karthik.188@gmail.com> writes:
 
-[snip]
+> Thanks all for the discussion, I'll try to summarize the path forward
+> as per my understanding.
 
-> > If I was forced to pick a way to get everything under one process, I'd
-> > lean towards autogenerating individual shell script wrappers for each
-> > unit test. But I'm open to discussion, especially if people have other
-> > approaches I haven't thought of.
-> 
-> One alternative would be to avoid running the unit tests via `prove` in
-> the first place.
-> 
-> For example, we could use the helper from be5d88e11280 (test-tool
-> run-command: learn to run (parts of) the testsuite, 2019-10-04) [*1*]. It
-> would probably need a few improvements, but certainly no wizardry nor
-> witchcraft would be required. It would also help on Windows, where running
-> a simple test helper written in C is vastly faster than running a complex
-> Perl script (which `prove` is).
-> 
-> Ciao,
-> Johannes
-> 
-> Footnote *1*: I had always wanted to improve that test helper to the point
-> where it could replace our use of `prove`, at least on Windows. It seems,
-> however, that as of 4c2c38e800f3 (ci: modification of main.yml to use
-> cmake for vs-build job, 2020-06-26) we do not use the helper at all
-> anymore. Hopefully it can still be useful. 🤞
+It has already been clear for the past 5 years or so since 3a3b9d8c
+(refs: new ref types to make per-worktree refs visible to all
+worktrees, 2018-10-21) that we need to treat "worktrees/foo/HEAD",
+"worktrees/bar/refs/bisect/bad", etc. as something end-users can
+access via the normal ref mechansim (by a resolve_ref() call that is
+eventually made from get_sha1() when these are passed to say "git
+log"); I just did not remember that one but that does not mean we
+can suddenly change the rules.
 
-Sorry for the silence on this topic; the holidays plus some family
-illnesses kept me away from the list for a while. I have a working
-implementation of this. I plan on cleaning it up a bit and sending it as
-an RFC series either tomorrow or next week. Thank you for the
-suggestion!
+So you'd probably need to tweak the end of your bullet point #3, but
+other than that it is a great summary.
+
+Thanks.
+
+> 1. We want to introduce a way to output all refs. This includes refs
+> under "refs/", pseudo refs, HEAD, and any other ref like objects under
+> $GIT_DIR. The reasoning being that users are allowed currently to create
+> refs without any directory restrictions. So with the upcoming reftable
+> backend, it becomes important to provide a utility to print all the refs
+> held in the reftable. Ideally we want to restrict such ref's from being
+> created but for the time being, since thats allowed, we should also
+> provide the utility to print such refs.
+>
+> 2. In the files backend, this would involve iterating through the
+> $GIT_DIR and finding all ref-like objects and printing them.
+>
+> 3. To expose this to the user, we could do something like
+>
+>    $ git for-each-ref ""
+>
+> Which is a natural extension of the current syntax, where the empty
+> string would imply that we do not filter to the "refs/" directory.
+> It is still not clear whether we should support "worktrees".
+>
+> Any corrections here?
