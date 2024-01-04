@@ -1,117 +1,76 @@
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qt1-f175.google.com (mail-qt1-f175.google.com [209.85.160.175])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50EDB2C191
-	for <git@vger.kernel.org>; Thu,  4 Jan 2024 18:23:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 766A428E1B
+	for <git@vger.kernel.org>; Thu,  4 Jan 2024 18:27:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="n/eYoXcI"
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id C94CF33481;
-	Thu,  4 Jan 2024 13:23:16 -0500 (EST)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=LRN4YgaO3RLW6qJ5ajPZxWcPxb0eXyKt9dG9aL
-	vHR/Q=; b=n/eYoXcI8rfSw2ZTapfJBSm7R55OL9I24Lg+lqQNhHhJMuF9t7BYKz
-	zqo0fYLtVT562rYzpXyln/nEsphv4vaf8BQtmuxEj09F+LxTfB7PckcNU8VsmSPS
-	HyybrfA9+3CvW24GNs8FGxWP4PKjAXigbT/Ops4ccSXmfjT8vc75g=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id BA91633480;
-	Thu,  4 Jan 2024 13:23:16 -0500 (EST)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.200.93])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 55CB13347F;
-	Thu,  4 Jan 2024 13:23:13 -0500 (EST)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Tamino Bauknecht <dev@tb6.eu>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH] fetch: add new config option fetch.all
-In-Reply-To: <20240104143656.615117-1-dev@tb6.eu> (Tamino Bauknecht's message
-	of "Thu, 4 Jan 2024 15:33:55 +0100")
-References: <cc74dc58-4fbe-470d-a212-4c2d2249918c@tb6.eu>
-	<20240104143656.615117-1-dev@tb6.eu>
-Date: Thu, 04 Jan 2024 10:23:11 -0800
-Message-ID: <xmqqv8896jqo.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="PHogGAuX"
+Received: by mail-qt1-f175.google.com with SMTP id d75a77b69052e-427e69f70afso12958131cf.0
+        for <git@vger.kernel.org>; Thu, 04 Jan 2024 10:27:51 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1704392870; x=1704997670; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=F/i8Lys7H8rjk+Bc1vdCJ0luaHdcB8W/a62TZxeCEoA=;
+        b=PHogGAuX7uGeGTc3+ESbf469vyGbt1tUbAPWpCoKWVn+Jg6yWime4bOrlfwDGGlMQy
+         8sw6mVVw2Q8zHQ5fBZEdPR5jKb5h0VUIdAOV23BHv29Fhp41s0KioFtSZCWFjASuHbxG
+         ep1FG8UQfPfWEYuBxL588q9ZpHwAoBvX+H4HxssaQlWYyVYEWGZVr0XABWOv0TpR/ASy
+         oN9HyboSGhUEyX0rJ6oVn8SKku6YU/GwgdBhXlic+NEAS2+XFwp2UdDtQQI75HjU5GOW
+         n7RWLvvHHtJCKXp1hYadSkUsPgpK4uEf2XUTGgl1rYD6bQAxfwV1SQqT2wbSb4mQAxYc
+         ZwcQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1704392870; x=1704997670;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=F/i8Lys7H8rjk+Bc1vdCJ0luaHdcB8W/a62TZxeCEoA=;
+        b=WBAo2J0ZKMT5R54jl4zLWpop1ti9HvaAtZGjkw6DDVFosd3cZl9Q4QlYgPV19PoVxE
+         BsfLwjYwepKC+yF6Ox5IEhPstnVpSAC92ki0nivT8n6sdtm8EQtEB+DUap9FmCHvdnYH
+         fmsWOcsx42kFrk0NmGDslFQJSpe1tgYcrcD4r0pmTQcpg1Yb/iqGRM/bSyNbWXlidEG4
+         vba2ON01qsGTrBOZlAEHzG6vvBDO6LBldmvB+2oKiJnca1n6ZJ+ZIRMgyQbqAddLjwFh
+         WIPSeONaPbsJaMV6/rmT9sZ6z09hH5++921hAja34rQw9tI6zrGe+nVaJ5NiWi95B+0w
+         eG0w==
+X-Gm-Message-State: AOJu0YwoWwrGJ3gkRcIDuC3quVVG7ECskQIjLUBPtbseHoh5ZODaETWw
+	rBi/+EeDvmflCI0DEc0pUZeju2Rwp+PQnw==
+X-Google-Smtp-Source: AGHT+IGj+sVr3237r+YFb0lVslmn1wWBIFB7fFyw21szl1hFaZzCYUce3nQwkIga5wV0k7MAdPK+jw==
+X-Received: by 2002:ac8:7d42:0:b0:425:7334:2fa7 with SMTP id h2-20020ac87d42000000b0042573342fa7mr1055481qtb.52.1704392870268;
+        Thu, 04 Jan 2024 10:27:50 -0800 (PST)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id fc24-20020a05622a489800b00428346b88bfsm12558qtb.65.2024.01.04.10.27.49
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 04 Jan 2024 10:27:49 -0800 (PST)
+Date: Thu, 4 Jan 2024 13:27:48 -0500
+From: Taylor Blau <me@ttaylorr.com>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Jonathan Tan <jonathantanmy@google.com>,
+	Chen Xuewei via GitGitGadget <gitgitgadget@gmail.com>,
+	git@vger.kernel.org, Chen Xuewei <316403398@qq.com>
+Subject: Re: [PATCH] fix: platform accordance while calculating murmur3
+Message-ID: <ZZb4pN/zR12m93L4@nand.local>
+References: <pull.1636.git.git.1704376606625.gitgitgadget@gmail.com>
+ <xmqq7ckp7ysl.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- 525C461E-AB2E-11EE-A22B-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqq7ckp7ysl.fsf@gitster.g>
 
-Tamino Bauknecht <dev@tb6.eu> writes:
+On Thu, Jan 04, 2024 at 10:12:42AM -0800, Junio C Hamano wrote:
+> Jonathan and Taylor, isn't this what you two were working together
+> on?  How would we want to proceed?
 
-> This commit introduces the new boolean configuration option fetch.all
-> which allows to fetch all available remotes by default. The config
-> option can be overridden by explicitly specifying a remote.
-> The behavior for --all is unchanged and calling git-fetch with --all and
-> a remote will still result in an error.
+They are indeed similar. I think that Jonathan and my series would
+supersede this effort.
 
-This sounds like a usability annoyance for forks that use --all some
-of the time and not always, as they now have to remember not just to
-pass something to countermand the configured fetch.all but what that
-something exactly is (i.e., the name of the remote they fetch from
-by default), which makes fetch.all less appealing.  I wonder if we
-can instead take "--no-all" from the command line to make configured
-fetch.all ignored (hence, giving an explicit remote will fetch from
-there, and not giving any remote will fetch from whereever the
-command will fetch from with "git -c fetch.all=false fetch")?
+But I would appreciate if Chen took a look at the approach in that
+series to make sure that we're all on the same page and that Jonathan
+and I aren't missing anything.
 
-> The option was also added to the config documentation and new tests
-> cover the expected behavior.
-> ---
-
-Missing sign-off.
-
->  Documentation/config/fetch.txt |  4 ++
->  builtin/fetch.c                | 18 +++++--
->  t/t5514-fetch-multiple.sh      | 88 ++++++++++++++++++++++++++++++++++
->  3 files changed, 105 insertions(+), 5 deletions(-)
->
-> diff --git a/Documentation/config/fetch.txt b/Documentation/config/fetch.txt
-> index aea5b97477..4f12433874 100644
-> --- a/Documentation/config/fetch.txt
-> +++ b/Documentation/config/fetch.txt
-> @@ -50,6 +50,10 @@ fetch.pruneTags::
->  	refs. See also `remote.<name>.pruneTags` and the PRUNING
->  	section of linkgit:git-fetch[1].
->  
-> +fetch.all::
-> +	If true, fetch will attempt to update all available remotes.
-> +	This behavior can be overridden by explicitly specifying a remote.
-
-And we should say that this configuration variable defaults to false.
-
-> @@ -2337,11 +2344,12 @@ int cmd_fetch(int argc, const char **argv, const char *prefix)
->  	    fetch_bundle_uri(the_repository, bundle_uri, NULL))
->  		warning(_("failed to fetch bundles from '%s'"), bundle_uri);
->  
-> -	if (all) {
-> -		if (argc == 1)
-> -			die(_("fetch --all does not take a repository argument"));
-> -		else if (argc > 1)
-> -			die(_("fetch --all does not make sense with refspecs"));
-> +	if (all && argc == 1) {
-> +		die(_("fetch --all does not take a repository argument"));
-> +	} else if (all && argc > 1) {
-> +		die(_("fetch --all does not make sense with refspecs"));
-> +	} else if (all || (config.all > 0 && argc == 0)) {
-> +		/* Only use fetch.all config option if no remotes were explicitly given */
->  		(void) for_each_remote(get_one_remote_for_fetch, &list);
-
-This conditional cascade will probably need to change when we allow
-"--no-all" to countermand the configured fetch.all anyway, so I
-won't worry about it now, but it looks somewhat convoluted that we
-have to re-check "all" many times, which was the point of the
-original that implemented this as a nested conditional.
-
-Thanks.
+Thanks,
+Taylor
