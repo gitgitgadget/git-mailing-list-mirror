@@ -1,87 +1,175 @@
-Received: from mail-oo1-f48.google.com (mail-oo1-f48.google.com [209.85.161.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mout0.freenet.de (mout0.freenet.de [195.4.92.90])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58B4A2C19A
-	for <git@vger.kernel.org>; Thu,  4 Jan 2024 19:20:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ttaylorr.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B7AF2C685
+	for <git@vger.kernel.org>; Thu,  4 Jan 2024 19:22:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=freenet.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=freenet.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="sqPEDSdP"
-Received: by mail-oo1-f48.google.com with SMTP id 006d021491bc7-594bea92494so431965eaf.2
-        for <git@vger.kernel.org>; Thu, 04 Jan 2024 11:20:30 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1704396030; x=1705000830; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=B4c2572UnUZzes87s9JIZ1+YqtXQ3Itvx6N9NQnsCGk=;
-        b=sqPEDSdPhErNoW2sAR5TBHzVfwIvWuPr+VOMzmjSTVlv/yVpc2HHrDnaHJTp8YzR2M
-         nkPN6fEGUUxrbGD102GkTnHMiyNCNuMKSm/tqSpioz/v8y3+O9oyU3btao6Dn+4oAt58
-         FV40TRpP9vwpTcfY2002aiyIZEz8WRtx+2WThw6aMYkqyyH0WTiuQSntMOQo0ARwaktT
-         gGlIubWNU/S9JGPkydL4uC5tOEfyoSAFlhuV4WHtgrIYuVyDky31ODrGejuA8PQAZieb
-         BBaE/rjX9eyiJMFRAqF9u96BRE/AhamJtTsTsYP7pjW5MCbDTQKnZCdo1wJoNBFuY0V1
-         G0eA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1704396030; x=1705000830;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=B4c2572UnUZzes87s9JIZ1+YqtXQ3Itvx6N9NQnsCGk=;
-        b=isOKGvpjC28gk0l3uQnLFk06BpRqytEZ7ufTS88mtOmWfxp0e4szR0O9WG+9MBQl3y
-         kXAB4+9CcXl7jU8Hbx59X4UMfrF8Py2DauUOCI5hex3S45mHbtpyz/iOF9u1zSyOk0ww
-         UXcP05rv84rcK6fCLDxUFCpRytgSgFdvjhNfTREfBB+IuIUJfd7oi4j4orrEflDTYOgk
-         y7ptOhwC0Ehh9XmP47iWdH/LBLyWKPXWpey+dST/Nx6Nuo4WjIUfCi6kXwA9I40IJy8Y
-         2GlD9U/oAgK+RJJNeO7HIVD2gSyrzLqgHeYEosUxVqG5o4U/GymuHHjboG4Zd1gctr6O
-         3FTw==
-X-Gm-Message-State: AOJu0Yw9DZFZrH/MfgeN+eQ8ByHiI4Fji6oOE7OlMxYXD3tFK6FtwhaI
-	W1ABuZ0X/BKiyM/XcMxGKve1lvPsYsdHexM92tECUfhTXwZbLA==
-X-Google-Smtp-Source: AGHT+IFD9yRzId65rOvo7eYV3ax4nFJeYwnsU8QqAuYk2WZGweLg6r4kr8upOVVP3Ju9St3jgObmBA==
-X-Received: by 2002:a05:6820:221b:b0:596:eb1:1014 with SMTP id cj27-20020a056820221b00b005960eb11014mr1197913oob.5.1704396029898;
-        Thu, 04 Jan 2024 11:20:29 -0800 (PST)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id ex27-20020a05622a519b00b004282dea946fsm51568qtb.69.2024.01.04.11.20.29
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 04 Jan 2024 11:20:29 -0800 (PST)
-Date: Thu, 4 Jan 2024 14:20:28 -0500
-From: Taylor Blau <me@ttaylorr.com>
-To: Illia Bobyr <illia.bobyr@gmail.com>
-Cc: git@vger.kernel.org,
-	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Subject: Re: [PATCH] rebase: clarify --reschedule-failed-exec default
-Message-ID: <ZZcE/Kw24YKlqSOT@nand.local>
-References: <20240104080631.3666413-1-illia.bobyr@gmail.com>
+	dkim=pass (2048-bit key) header.d=freenet.de header.i=@freenet.de header.b="R95oZjOe"
+Received: from [195.4.92.120] (helo=sub1.freenet.de)
+	by mout0.freenet.de with esmtpa (ID soekkle@freenet.de) (port 25) (Exim 4.94.2 #2)
+	id 1rLTIE-00EZgi-2U; Thu, 04 Jan 2024 20:22:14 +0100
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=freenet.de;
+	s=mjaymdexmjqk; h=Content-Transfer-Encoding:Content-Type:MIME-Version:
+	References:In-Reply-To:Message-Id:Date:Subject:Cc:To:From:Sender:Reply-To:
+	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
+	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
+	List-Subscribe:List-Post:List-Owner:List-Archive;
+	bh=8ruGf9RZOwix9UpHzqP5i0rn0viiITJ4DBoUVnAGJlk=; b=R95oZjOetl3TuyONfubTZm8u3i
+	4KANMKl0lhb7H2G/i4qczkEVc8ZJx9ybQhvsH69Ih7nY8aXJsLkL6NVEvxea7ZR8yxYRUOO4kSdNd
+	b20GhNrghc2xXgCodiLHPbh6biHShqF+rgy3ipCV86pFhxRgcAtzK0nCTFBPyihx1MPFo2FpesGjU
+	p4KsAW4sLXLK8yI7lI8iPi/1g6cgYu34uecuBHw14BrVrAo5xqIkSR3yj71+O4tozm1xWxLfUa1+4
+	X6gd7wPpXBbH4MeiC/qRlO1gjwVD3pYdmtm72sSEGzWoXKQzgqTQ3rD0H9hHvGCBIpyafMQudAv/E
+	0dwEntSQ==;
+Received: from p200300e2e7202b00dacb8afffee0ca63.dip0.t-ipconnect.de ([2003:e2:e720:2b00:dacb:8aff:fee0:ca63]:35642 helo=soren-pc.lan)
+	by sub1.freenet.de with esmtpsa (ID soekkle@freenet.de) (TLS1.3:ECDHE_X25519__RSA_PSS_RSAE_SHA256__AES_256_GCM:256) (port 465) (Exim 4.94.2 #2)
+	id 1rLTID-00FhVK-Pf; Thu, 04 Jan 2024 20:22:13 +0100
+From: =?UTF-8?q?S=C3=B6ren=20Krecker?= <soekkle@freenet.de>
+To: git@vger.kernel.org
+Cc: sunshine@sunshineco.com,
+	=?UTF-8?q?S=C3=B6ren=20Krecker?= <soekkle@freenet.de>
+Subject: [PATCH v5 1/1] Adds domain/username to error message
+Date: Thu,  4 Jan 2024 20:22:02 +0100
+Message-Id: <20240104192202.2124-2-soekkle@freenet.de>
+X-Mailer: git-send-email 2.39.2
+In-Reply-To: <20240104192202.2124-1-soekkle@freenet.de>
+References: <DB9P250MB0692C8B4D93ED92FEE680AA9A560A@DB9P250MB0692.EURP250.PROD.OUTLOOK.COM>
+ <20240104192202.2124-1-soekkle@freenet.de>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20240104080631.3666413-1-illia.bobyr@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-FN-MUUID: 17043961335443E03570A7O
+X-Originated-At: 2003:e2:e720:2b00:dacb:8aff:fee0:ca63!35642
+X-Scan-TS: Thu, 04 Jan 2024 20:22:13 +0100
 
-On Thu, Jan 04, 2024 at 12:06:31AM -0800, Illia Bobyr wrote:
-> Documentation should mention the default behavior.
->
-> It is better to explain the persistent nature of the
-> --reschedule-failed-exec flag from the user standpoint, rather than from
-> the implementation standpoint.
+Adds domain/username in error message, if owner sid of repository and
+user sid are not equal on windows systems.
 
-The first paragraph looks good, and I think your wording is an
-improvement over what's already there (though of course this is
-subjective, and YMMV).
+Old Prompted error message:
+'''
+fatal: detected dubious ownership in repository at 'C:/Users/test/source/repos/git'
+'C:/Users/test/source/repos/git' is owned by:
+	'S-1-5-21-571067702-4104414259-3379520149-500'
+but the current user is:
+	'S-1-5-21-571067702-4104414259-3379520149-1001'
+To add an exception for this directory, call:
 
-> +Recording this option for the whole rebase is a convenience feature. Otherwise
-> +an explicit `--no-reschedule-failed-exec` at the start would be overridden by
-> +the presence of a `rebase.rescheduleFailedExec=true` configuration when `git
-> +rebase --continue` is invoked. Currently, you can not, pass
-> +`--[no-]reschedule-failed-exec` to `git rebase --continue`.
+	git config --global --add safe.directory C:/Users/test/source/repos/git
+'''
 
-The last sentence was a bit confusing to me. I assume you meant
+New prompted error massage:
+'''
+fatal: detected dubious ownership in repository at 'C:/Users/test/source/repos/git'
+'C:/Users/test/source/repos/git' is owned by:
+        'DESKTOP-L78JVA6/Administrator' (S-1-5-21-571067702-4104414259-3379520149-500)
+but the current user is:
+        'DESKTOP-L78JVA6/test' (S-1-5-21-571067702-4104414259-3379520149-1001)
+To add an exception for this directory, call:
 
-    Currently, you cannot pass `--[no-]reschedule-failed-exec` [...]
+        git config --global --add safe.directory C:/Users/test/source/repos/git
+'''
 
-without the comma between "pass" and "`--[no]reschedule-failed-exect`",
-and replacing "can not" with "cannot".
+Signed-off-by: Sören Krecker <soekkle@freenet.de>
+---
+ compat/mingw.c | 64 ++++++++++++++++++++++++++++++++++++++++----------
+ 1 file changed, 51 insertions(+), 13 deletions(-)
 
-Thanks,
-Taylor
+diff --git a/compat/mingw.c b/compat/mingw.c
+index 42053c1f65..6240387205 100644
+--- a/compat/mingw.c
++++ b/compat/mingw.c
+@@ -2684,6 +2684,26 @@ static PSID get_current_user_sid(void)
+ 	return result;
+ }
+ 
++static BOOL user_sid_to_user_name(PSID sid, LPSTR *str)
++{
++	SID_NAME_USE pe_use;
++	DWORD len_user = 0, len_domain = 0;
++	BOOL translate_sid_to_user;
++
++	/* returns only FALSE, because the string pointers are NULL*/
++	LookupAccountSidA(NULL, sid, NULL, &len_user, NULL, &len_domain,
++			  &pe_use); 
++	/*Alloc needed space of the strings*/
++	ALLOC_ARRAY((*str), (size_t)len_domain + (size_t)len_user); 
++	translate_sid_to_user = LookupAccountSidA(NULL, sid, (*str) + len_domain, &len_user,
++				   *str, &len_domain, &pe_use);
++	if (translate_sid_to_user == FALSE)
++		FREE_AND_NULL(*str);
++	else
++		(*str)[len_domain] = '/';
++	return translate_sid_to_user;
++}
++
+ static int acls_supported(const char *path)
+ {
+ 	size_t offset = offset_1st_component(path);
+@@ -2765,27 +2785,45 @@ int is_path_owned_by_current_sid(const char *path, struct strbuf *report)
+ 			strbuf_addf(report, "'%s' is on a file system that does "
+ 				    "not record ownership\n", path);
+ 		} else if (report) {
+-			LPSTR str1, str2, to_free1 = NULL, to_free2 = NULL;
++			LPSTR str1, str2, str3, str4, to_free1 = NULL, to_free3 = NULL, to_local_free2=NULL, to_local_free4=NULL;
+ 
+-			if (ConvertSidToStringSidA(sid, &str1))
++			if (user_sid_to_user_name(sid, &str1))
+ 				to_free1 = str1;
+ 			else
+ 				str1 = "(inconvertible)";
+-
+-			if (!current_user_sid)
+-				str2 = "(none)";
+-			else if (!IsValidSid(current_user_sid))
+-				str2 = "(invalid)";
+-			else if (ConvertSidToStringSidA(current_user_sid, &str2))
+-				to_free2 = str2;
++			if (ConvertSidToStringSidA(sid, &str2))
++				to_local_free2 = str2;
+ 			else
+ 				str2 = "(inconvertible)";
++
++			if (!current_user_sid) {
++				str3 = "(none)";
++				str4 = "(none)";
++			}
++			else if (!IsValidSid(current_user_sid)) {
++				str3 = "(invalid)";
++				str4 = "(invalid)";
++			} else {
++				if (user_sid_to_user_name(current_user_sid,
++							  &str3))
++					to_free3 = str3;
++				else
++					str3 = "(inconvertible)";
++				if (ConvertSidToStringSidA(current_user_sid,
++							   &str4))
++					to_local_free4 = str4;
++				else
++					str4 = "(inconvertible)";
++			}
+ 			strbuf_addf(report,
+ 				    "'%s' is owned by:\n"
+-				    "\t'%s'\nbut the current user is:\n"
+-				    "\t'%s'\n", path, str1, str2);
+-			LocalFree(to_free1);
+-			LocalFree(to_free2);
++				    "\t'%s' (%s)\nbut the current user is:\n"
++				    "\t'%s' (%s)\n",
++				    path, str1, str2, str3, str4);
++			free(to_free1);
++			LocalFree(to_local_free2);
++			free(to_free3);
++			LocalFree(to_local_free4);
+ 		}
+ 	}
+ 
+-- 
+2.39.2
+
