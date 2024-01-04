@@ -1,147 +1,99 @@
-Received: from out1-smtp.messagingengine.com (out1-smtp.messagingengine.com [66.111.4.25])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oa1-f48.google.com (mail-oa1-f48.google.com [209.85.160.48])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D5D523748
-	for <git@vger.kernel.org>; Thu,  4 Jan 2024 14:47:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD66C22EEE
+	for <git@vger.kernel.org>; Thu,  4 Jan 2024 14:53:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="FWckbZ9K";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="NiMP9hxs"
-Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
-	by mailout.nyi.internal (Postfix) with ESMTP id F31825C00C5;
-	Thu,  4 Jan 2024 09:47:57 -0500 (EST)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute3.internal (MEProxy); Thu, 04 Jan 2024 09:47:57 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1704379677; x=1704466077; bh=oMwCmDNTc8
-	Sr3+UFe4cJGPNzulOXmQ8ki2/zSwdt0U0=; b=FWckbZ9KeYuadqrfWeSNqWmaOV
-	cCgC05ZL9nhgGsIdvwezkOiCkPlaA6p/UHhcK5nE2Re82xZLi47HMcXU39H5QUzO
-	SD3Vf8TKim6X6cOvJP3DCnNeev23mLAD54pD2//WCGxYHZpvd+prRxOa/vEu/J0Q
-	klg/CScBWfykiwibGq0vFZTdFLaN/tRfIZq8jBIB3JRnid27FKdZ9mfdXg4oy/Kv
-	kVOpHUbI2jzCa703/J1pLDSJWx8QDhr/dqujmWUyKENpuniiwW3OgDj2nVm6u5JN
-	loy3CQc5eJfaE1gduE44cdbVkfnD4Bd57z7ZsJA456CtvSQRGaSGkCf7NqSQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1704379677; x=1704466077; bh=oMwCmDNTc8Sr3+UFe4cJGPNzulOX
-	mQ8ki2/zSwdt0U0=; b=NiMP9hxs+6k/7eJVxkC3wSYwEWMb2d7Lh026Q+WiyMhm
-	uRd4QrBVpKSfOpN83hRGJ5naocvvEQZcj7XOJg+zL/BydxYjaSrVsZZmtyDN0XoD
-	k7pOZws22O4XhdvTqs+8LRJMS4u4iygug5dhn7ogrYJdBF9oXadKyJv21St1YYpC
-	nRoTkyCukut1NyUhvcw1mQN63c8zbHWfz70yYiYsH31dHzEpF5S7rv5/8R7JxXXu
-	+NA44lh1G3pe9emuDd3yGr7jCqdwmxayehlgopSAYOMj3QZVWL3RGJa0iPR1tvS7
-	7436qoz1+7MzrtfB86aJFwGYJYkIshBiMwT6G/xevQ==
-X-ME-Sender: <xms:HcWWZZZZa82m60CXU6VdAx07FRqluK4UDpU8qjW1uOBYG81NhFQiyw>
-    <xme:HcWWZQYFcNtTCx8LUZm588CCouOma9KZs0XLiQlEwdVGLpXPb-8UMs16I6ODz03qQ
-    2IV_kWf-nQr-m-7fw>
-X-ME-Received: <xmr:HcWWZb_fHeDspkSCEYTDjyNmKQ1fJDno8eUUET5ADSbcr-kltZityuKTQF4hImuP36EZ95ChQazO0suFXYeEKjH_AuphthpSx-vLOV4DCjIcwQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrvdegjedgieekucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    cujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtvdenucfhrhhomheprfgrthhr
-    ihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvg
-    hrnhepueektdevtdffveeljeetgfehheeigeekleduvdeffeeghefgledttdehjeelffet
-    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
-    hpkhhsrdhimh
-X-ME-Proxy: <xmx:HcWWZXpKtW6u6cff5i5Kp7IOYJ0LkVHKrHhgMS9gQljQD0RsW8U3DA>
-    <xmx:HcWWZUoW1rTmOT-hUnlUH2hgIYs9RAnih9EObV_cTlegbXzK-NN8eA>
-    <xmx:HcWWZdSVTJCq1R6G5HNgOiKTLzD7U21_qk2XbaN859hkFLAjksr48w>
-    <xmx:HcWWZfVhOmRk1KRkDm3catoQfLRKP6a3ztD2tJQBJmxXcbm77mCiMw>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 4 Jan 2024 09:47:56 -0500 (EST)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id bf9001e6 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 4 Jan 2024 14:45:26 +0000 (UTC)
-Date: Thu, 4 Jan 2024 15:47:53 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
-Cc: git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
-	SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder.dev@gmail.com>,
-	Karthik Nayak <karthik.188@gmail.com>
-Subject: Re: [PATCH v2] git-prompt: stop manually parsing HEAD with unknown
- ref formats
-Message-ID: <ZZbFGTkM8aR7MXQu@tanuki>
-References: <cc902954f30c2faa92d1c5a4469f0dcc23e4acfe.1700825779.git.ps@pks.im>
- <ef4e36a5a40c369da138242a8fdc9e12a846613b.1704356313.git.ps@pks.im>
- <ZZabqfPDcA1jtmZS@ugly>
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="Zwes+C9u"
+Received: by mail-oa1-f48.google.com with SMTP id 586e51a60fabf-2041c292da8so267940fac.3
+        for <git@vger.kernel.org>; Thu, 04 Jan 2024 06:53:27 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1704380007; x=1704984807; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=Jpj14VsBEto8/DzqFs/oDSgRd0+nbvGG8wTGwR9EGgk=;
+        b=Zwes+C9uXnHU/HkkEbf6mYBKE3CspkV5XU71l8DenkizzgkDBk29SVdPlEHrxsNsKl
+         nTD+qjiAxT744j8N6Hgdknu+dXY1K7S/S5FuTrGSIiyTkpFOc1LuvXWEqDYKWxWhLMYv
+         8JzRkX4Nr5YD5a2UfwHhSA5+2jl5GpLft7lmJbEwnvva2o2at0wpsP9kOP15hezWlujs
+         GQRhddH8jKehbkyOOmCQUpnSnLpiTE22WK+tlAMHGvHt+5ISOUVUr+cz7I4qmGxhszt/
+         XbrzvcLLFxVLbB7oB/LAtse00AS3qrO52f5hIwbLGevcWO5WMtFW9lehjtfPQ0kS5yUh
+         QgUA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1704380007; x=1704984807;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Jpj14VsBEto8/DzqFs/oDSgRd0+nbvGG8wTGwR9EGgk=;
+        b=TAiO0DBsrXQrnLSB1xZieSXRiQFKG6iriVrFy82B94MP9Vk2EZfKAUnec7mav6TQY2
+         I1+elBFXY8iGOuLWG+Ho4rzZ+EDt4vnzvvY1d2Uyp7bO/ksHnD3nxyL1C93Z+Wa28ZGD
+         U4zd8k/l8LyKgwYC44iYElRAcrYdBdJLE8d8DsdzSsBIL+PdH0OzV/VFF15uEtXjZ9i0
+         k6eLbSYmzP1I3aNaR0N+FUSkYdb8yZhBKIe9CLUz4Rqx8+nbDZ21WH9vWdPkFyFRYOKp
+         Rr15jgfLnrMfF73juWANhnXZubTSKWe+/We9cQ15h974yEwkt3q4rJEpQXQ1/rIeWZTo
+         2k7A==
+X-Gm-Message-State: AOJu0Yw4O6rJOwirE7p2g8KbHfyCbylzr43dODqmWXQa35XuLafQETe7
+	18RH1rd/CediLfKZcWy9BCWCiSJfM7wwbQ==
+X-Google-Smtp-Source: AGHT+IEoIeNzaWDUFDUVRhcEr0BEYqEIvKQq3aXhe3jPY73eKHGzMdKC5Taa9Fy1O0MB0mY0Dmm4kw==
+X-Received: by 2002:a05:6870:44c6:b0:204:2ea8:3f41 with SMTP id t6-20020a05687044c600b002042ea83f41mr668482oai.52.1704380006787;
+        Thu, 04 Jan 2024 06:53:26 -0800 (PST)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id bl8-20020a05620a1a8800b0078305ec597esm41588qkb.71.2024.01.04.06.53.25
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 04 Jan 2024 06:53:26 -0800 (PST)
+Date: Thu, 4 Jan 2024 09:53:25 -0500
+From: Taylor Blau <me@ttaylorr.com>
+To: Chen Xuewei via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, Chen Xuewei <316403398@qq.com>
+Subject: Re: [PATCH] fix: platform accordance while calculating murmur3
+Message-ID: <ZZbGZYhhWpHh2pS/@nand.local>
+References: <pull.1636.git.git.1704376606625.gitgitgadget@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="LCKlhVILzOMwHVSk"
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <ZZabqfPDcA1jtmZS@ugly>
+In-Reply-To: <pull.1636.git.git.1704376606625.gitgitgadget@gmail.com>
 
+Hi Chen,
 
---LCKlhVILzOMwHVSk
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+On Thu, Jan 04, 2024 at 01:56:46PM +0000, Chen Xuewei via GitGitGadget wrote:
+> From: Chen Xuewei <316403398@qq.com>
+>
+> It is known that whether the highest bit is extended when char cast to
+> uint32, depends on CPU architecture, which will lead different hash
+> value. This is a fix to accord all architecture behaviour.
 
-On Thu, Jan 04, 2024 at 12:51:05PM +0100, Oswald Buddenhagen wrote:
-> On Thu, Jan 04, 2024 at 09:21:53AM +0100, Patrick Steinhardt wrote:
-> > --- a/contrib/completion/git-prompt.sh
-> > +++ b/contrib/completion/git-prompt.sh
-> > @@ -408,7 +408,7 @@ __git_ps1 ()
-> >=20
-> > 	local repo_info rev_parse_exit_code
-> > 	repo_info=3D"$(git rev-parse --git-dir --is-inside-git-dir \
-> > -		--is-bare-repository --is-inside-work-tree \
-> > +		--is-bare-repository --is-inside-work-tree --show-ref-format \
-> > 		--short HEAD 2>/dev/null)"
-> >=20
-> that makes me wonder whether adding support for `--symbolic-ref HEAD` here
-> would not be the cleaner solution? and why stop there, and not add a few
-> more ps1 would need, like --upstream and --sequencer-state?  (though
-> arguably, this overloading of `rev-parse` should be deprecated in favor o=
-f a
-> new generalized `query` command, maybe even unified with `var`.)
+Thanks for your patch. A similar fix is being pursued in [1], part of
+which includes [2], which I believe is functionally equivalent to your
+patch here.
 
-I'm on board with extending git-rev-parse(1) to support direct output of
-symbolic refs without resolving them to an object ID. Indeed, we plan to
-tackle this lack of support soonish at GitLab. But given that such a
-feature currently doesn't exist, and that I expect there to be some
-discussion around it, I'd rather want to postpone this to a later point
-so that we can meanwhile unblock the reftable backend.
+>     Others
+>     ======
+>
+>     after fixed the bug, the historical bloom_filter data stored in
+>     commit-graph need to be updated. because the path's hash value is
+>     already calculated through a bad way. so we need to update it. this need
+>     to be done in repository
 
-Regarding the other options like `--upstream` and `--sequencer-state`
-I'm less sure. As you say, git-rev-parse(1) is already quite loaded with
-semi-related tools, and extending it even further like this is only
-going to make this state worse. I also wish for an "informative" tool
-that queries repository-level information and state like you propose,
-but would argue that this is also a bigger topic.
+We would not want to impose that burden on all users upon upgrading to
+the latest Git version. In [1] we are perusing an approach where:
 
-So... for now I'd like to keep the current version, but I certainly
-agree that the state can and should eventually be improved.
+  - The Bloom data is stored with a version identifier, meaning that we
+    can still use the existing/non-murmur3 Bloom filters after
+    upgrading.
 
-Patrick
+  - When the user decides to upgrade from v1 -> v2 Bloom filters, we
+    reuse the existing Bloom filter data when possible, namely when all
+    paths within a tree have no non-ASCII characters.
 
---LCKlhVILzOMwHVSk
-Content-Type: application/pgp-signature; name="signature.asc"
+If you have thoughts on the approach in [1], they would be most welcome.
 
------BEGIN PGP SIGNATURE-----
+Thanks,
+Taylor
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmWWxRgACgkQVbJhu7ck
-PpQ5LA//SC3+RUHbfsCFOq30jhOTp0TYVJmQA+PWXxBHr5dAFBkyHF5kUfwmKa68
-sc9xhKJ0qGW/gV2v7LpfVMfKpXmBbbDFI2H1VLGv+Wr97iIa0lYg3vwX3kX5tX7z
-fOzBwpl96Ti4NGkessCnRnUc87CMHGZXeCdAFmmNu+U7vw/+wiJQSmlpWe9BOish
-8kTfA1NEs/5PxGA9mMU4wajpzSpmYzO2LMRKWNV/4ZwuTrUilPnIiD3E4xLg9tsH
-ee2kMzcdIaHZaXg+NcYOvjzv1gy09C36FJyQcoL3ZMifkdrgDTWwK7zVi+2CbCgj
-EG5EU/hH+TM2Uq2BABs8zXlg/0qr9rMaCgJGkoeldHiUCUEh0l5x4Z+YsuR584dq
-MiVWhF+4WVN5UwMVDmJ3FnpDsVGOC1TfAiYKA5edACH0GbAg4GFMDzmErTEpZeYP
-uV0zsFM61likxvEXqFqNPncJW2OHoAfzh85eLH8mUP0Se2+1pBHpLK3YsurKa16M
-/r1c49k9gKATaYliYuDQXf5dQJd0IHvpfdPLFyuR5+wAEfqV5XwZR7wGdYgglG7b
-QoTjD5FENPPjuTjoOQ8Q3Ed4DW4lKa63Fes4WEsffAbMehs+Z8QWnujqOncGZer3
-QxY4M641qRpDxhqD1/u4Xpd7gxKTRWJJCoxtY5gzLwAPXXWMmpo=
-=dm2K
------END PGP SIGNATURE-----
-
---LCKlhVILzOMwHVSk--
+[1]: https://lore.kernel.org/git/cover.1697653929.git.me@ttaylorr.com/
+[2]: https://lore.kernel.org/git/f6ab427ead86bc82284b2c721f3c177947ece3c9.1697653929.git.me@ttaylorr.com/
