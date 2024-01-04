@@ -1,41 +1,40 @@
 Received: from mout0.freenet.de (mout0.freenet.de [195.4.92.90])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B7AF2C685
-	for <git@vger.kernel.org>; Thu,  4 Jan 2024 19:22:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9D292C681
+	for <git@vger.kernel.org>; Thu,  4 Jan 2024 19:22:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=freenet.de
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=freenet.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=freenet.de header.i=@freenet.de header.b="R95oZjOe"
+	dkim=pass (2048-bit key) header.d=freenet.de header.i=@freenet.de header.b="ys0jD/W/"
 Received: from [195.4.92.120] (helo=sub1.freenet.de)
 	by mout0.freenet.de with esmtpa (ID soekkle@freenet.de) (port 25) (Exim 4.94.2 #2)
-	id 1rLTIE-00EZgi-2U; Thu, 04 Jan 2024 20:22:14 +0100
+	id 1rLTIC-00EZcS-J0; Thu, 04 Jan 2024 20:22:12 +0100
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=freenet.de;
 	s=mjaymdexmjqk; h=Content-Transfer-Encoding:Content-Type:MIME-Version:
 	References:In-Reply-To:Message-Id:Date:Subject:Cc:To:From:Sender:Reply-To:
 	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
 	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
 	List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=8ruGf9RZOwix9UpHzqP5i0rn0viiITJ4DBoUVnAGJlk=; b=R95oZjOetl3TuyONfubTZm8u3i
-	4KANMKl0lhb7H2G/i4qczkEVc8ZJx9ybQhvsH69Ih7nY8aXJsLkL6NVEvxea7ZR8yxYRUOO4kSdNd
-	b20GhNrghc2xXgCodiLHPbh6biHShqF+rgy3ipCV86pFhxRgcAtzK0nCTFBPyihx1MPFo2FpesGjU
-	p4KsAW4sLXLK8yI7lI8iPi/1g6cgYu34uecuBHw14BrVrAo5xqIkSR3yj71+O4tozm1xWxLfUa1+4
-	X6gd7wPpXBbH4MeiC/qRlO1gjwVD3pYdmtm72sSEGzWoXKQzgqTQ3rD0H9hHvGCBIpyafMQudAv/E
-	0dwEntSQ==;
+	bh=MrJ+vPCBomFSrfPyCBPpUru4GCPxkbN6sSmsP0zvn7w=; b=ys0jD/W/oYiDMKfGqitglLOoTR
+	9Pu4a8s2IrTgKEvfeL2j0oubefVjNJks1PaQkNbOMtP96MZR61USIHOwLzfWKJ1fduWPXPcAylFzy
+	eIgtbtJvl0EuCJTY0iKCGywc1V27IhVzDWdFgq/pm5H6V6uvuzfSIX2E7qGiqMm9VynNVMTwEK/GB
+	eGkKv2SVCTK6mkZgde5Im+H7nCThDMEa83JUcuKg2pKuENtfwn4NaDtNRQcps++o7N83hgj5w9isV
+	k2efI4U7CHVMZpc1tr1ldyyj920ie53Ca1OGyEC32VER5VvRp4gtdEAoPo2Qq1aiqp5olLABNn7FC
+	mFxQ2TOw==;
 Received: from p200300e2e7202b00dacb8afffee0ca63.dip0.t-ipconnect.de ([2003:e2:e720:2b00:dacb:8aff:fee0:ca63]:35642 helo=soren-pc.lan)
 	by sub1.freenet.de with esmtpsa (ID soekkle@freenet.de) (TLS1.3:ECDHE_X25519__RSA_PSS_RSAE_SHA256__AES_256_GCM:256) (port 465) (Exim 4.94.2 #2)
-	id 1rLTID-00FhVK-Pf; Thu, 04 Jan 2024 20:22:13 +0100
+	id 1rLTIC-00FhVK-9B; Thu, 04 Jan 2024 20:22:12 +0100
 From: =?UTF-8?q?S=C3=B6ren=20Krecker?= <soekkle@freenet.de>
 To: git@vger.kernel.org
 Cc: sunshine@sunshineco.com,
 	=?UTF-8?q?S=C3=B6ren=20Krecker?= <soekkle@freenet.de>
-Subject: [PATCH v5 1/1] Adds domain/username to error message
-Date: Thu,  4 Jan 2024 20:22:02 +0100
-Message-Id: <20240104192202.2124-2-soekkle@freenet.de>
+Subject: [PATCH v5 0/1] Replace SID with domain/username on Windows
+Date: Thu,  4 Jan 2024 20:22:01 +0100
+Message-Id: <20240104192202.2124-1-soekkle@freenet.de>
 X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20240104192202.2124-1-soekkle@freenet.de>
+In-Reply-To: <DB9P250MB0692C8B4D93ED92FEE680AA9A560A@DB9P250MB0692.EURP250.PROD.OUTLOOK.COM>
 References: <DB9P250MB0692C8B4D93ED92FEE680AA9A560A@DB9P250MB0692.EURP250.PROD.OUTLOOK.COM>
- <20240104192202.2124-1-soekkle@freenet.de>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -44,132 +43,24 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-FN-MUUID: 17043961335443E03570A7O
+X-FN-MUUID: 1704396132C798A01E962BO
 X-Originated-At: 2003:e2:e720:2b00:dacb:8aff:fee0:ca63!35642
-X-Scan-TS: Thu, 04 Jan 2024 20:22:13 +0100
+X-Scan-TS: Thu, 04 Jan 2024 20:22:12 +0100
 
-Adds domain/username in error message, if owner sid of repository and
-user sid are not equal on windows systems.
+Hi everyone,
 
-Old Prompted error message:
-'''
-fatal: detected dubious ownership in repository at 'C:/Users/test/source/repos/git'
-'C:/Users/test/source/repos/git' is owned by:
-	'S-1-5-21-571067702-4104414259-3379520149-500'
-but the current user is:
-	'S-1-5-21-571067702-4104414259-3379520149-1001'
-To add an exception for this directory, call:
+I change the error message. I Hope that it is now better for every one.
 
-	git config --global --add safe.directory C:/Users/test/source/repos/git
-'''
+Thanks
 
-New prompted error massage:
-'''
-fatal: detected dubious ownership in repository at 'C:/Users/test/source/repos/git'
-'C:/Users/test/source/repos/git' is owned by:
-        'DESKTOP-L78JVA6/Administrator' (S-1-5-21-571067702-4104414259-3379520149-500)
-but the current user is:
-        'DESKTOP-L78JVA6/test' (S-1-5-21-571067702-4104414259-3379520149-1001)
-To add an exception for this directory, call:
+Sören Krecker (1):
+  Adds domain/username to error message
 
-        git config --global --add safe.directory C:/Users/test/source/repos/git
-'''
-
-Signed-off-by: Sören Krecker <soekkle@freenet.de>
----
  compat/mingw.c | 64 ++++++++++++++++++++++++++++++++++++++++----------
  1 file changed, 51 insertions(+), 13 deletions(-)
 
-diff --git a/compat/mingw.c b/compat/mingw.c
-index 42053c1f65..6240387205 100644
---- a/compat/mingw.c
-+++ b/compat/mingw.c
-@@ -2684,6 +2684,26 @@ static PSID get_current_user_sid(void)
- 	return result;
- }
- 
-+static BOOL user_sid_to_user_name(PSID sid, LPSTR *str)
-+{
-+	SID_NAME_USE pe_use;
-+	DWORD len_user = 0, len_domain = 0;
-+	BOOL translate_sid_to_user;
-+
-+	/* returns only FALSE, because the string pointers are NULL*/
-+	LookupAccountSidA(NULL, sid, NULL, &len_user, NULL, &len_domain,
-+			  &pe_use); 
-+	/*Alloc needed space of the strings*/
-+	ALLOC_ARRAY((*str), (size_t)len_domain + (size_t)len_user); 
-+	translate_sid_to_user = LookupAccountSidA(NULL, sid, (*str) + len_domain, &len_user,
-+				   *str, &len_domain, &pe_use);
-+	if (translate_sid_to_user == FALSE)
-+		FREE_AND_NULL(*str);
-+	else
-+		(*str)[len_domain] = '/';
-+	return translate_sid_to_user;
-+}
-+
- static int acls_supported(const char *path)
- {
- 	size_t offset = offset_1st_component(path);
-@@ -2765,27 +2785,45 @@ int is_path_owned_by_current_sid(const char *path, struct strbuf *report)
- 			strbuf_addf(report, "'%s' is on a file system that does "
- 				    "not record ownership\n", path);
- 		} else if (report) {
--			LPSTR str1, str2, to_free1 = NULL, to_free2 = NULL;
-+			LPSTR str1, str2, str3, str4, to_free1 = NULL, to_free3 = NULL, to_local_free2=NULL, to_local_free4=NULL;
- 
--			if (ConvertSidToStringSidA(sid, &str1))
-+			if (user_sid_to_user_name(sid, &str1))
- 				to_free1 = str1;
- 			else
- 				str1 = "(inconvertible)";
--
--			if (!current_user_sid)
--				str2 = "(none)";
--			else if (!IsValidSid(current_user_sid))
--				str2 = "(invalid)";
--			else if (ConvertSidToStringSidA(current_user_sid, &str2))
--				to_free2 = str2;
-+			if (ConvertSidToStringSidA(sid, &str2))
-+				to_local_free2 = str2;
- 			else
- 				str2 = "(inconvertible)";
-+
-+			if (!current_user_sid) {
-+				str3 = "(none)";
-+				str4 = "(none)";
-+			}
-+			else if (!IsValidSid(current_user_sid)) {
-+				str3 = "(invalid)";
-+				str4 = "(invalid)";
-+			} else {
-+				if (user_sid_to_user_name(current_user_sid,
-+							  &str3))
-+					to_free3 = str3;
-+				else
-+					str3 = "(inconvertible)";
-+				if (ConvertSidToStringSidA(current_user_sid,
-+							   &str4))
-+					to_local_free4 = str4;
-+				else
-+					str4 = "(inconvertible)";
-+			}
- 			strbuf_addf(report,
- 				    "'%s' is owned by:\n"
--				    "\t'%s'\nbut the current user is:\n"
--				    "\t'%s'\n", path, str1, str2);
--			LocalFree(to_free1);
--			LocalFree(to_free2);
-+				    "\t'%s' (%s)\nbut the current user is:\n"
-+				    "\t'%s' (%s)\n",
-+				    path, str1, str2, str3, str4);
-+			free(to_free1);
-+			LocalFree(to_local_free2);
-+			free(to_free3);
-+			LocalFree(to_local_free4);
- 		}
- 	}
- 
+
+base-commit: e79552d19784ee7f4bbce278fe25f93fbda196fa
 -- 
 2.39.2
 
