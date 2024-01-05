@@ -1,75 +1,85 @@
-Received: from mail-qt1-f177.google.com (mail-qt1-f177.google.com [209.85.160.177])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mail.manjaro.org (mail.manjaro.org [116.203.91.91])
+	(using TLSv1.2 with cipher DHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43D7035EF1
-	for <git@vger.kernel.org>; Fri,  5 Jan 2024 19:11:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ttaylorr.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AFB236082
+	for <git@vger.kernel.org>; Fri,  5 Jan 2024 19:14:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=manjaro.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="IGnMB1c2"
-Received: by mail-qt1-f177.google.com with SMTP id d75a77b69052e-4297ce134b0so2264201cf.1
-        for <git@vger.kernel.org>; Fri, 05 Jan 2024 11:11:25 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1704481884; x=1705086684; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=ZpSCKa/PxImlBd0jhgSCs1MO0kF1p9DTBv8IwYwmlYU=;
-        b=IGnMB1c2r8xme7AmQRvDYwotQnijRococUMLZUhNQ3hBieXQX5MfsCg6T0RuQhjIjg
-         HVML9/BwEGgnRC9FgsB/ScHXfzyip47yTQzrCiAqyw7iRadblFgysugXFY5lsGqaJSxD
-         YEt0UBeUOvzHQH+PMD2FpPnegcfRxBi0VqLv3TT7tTOFLwh3E/gn/RbP5RO1gWrcOAPH
-         L4MYg026Suti/UN7SaqToh8kZyOD6Q7dXCAOBV1oDBcg+ZfnRl/LmHUbQ9mRcI64dLv+
-         j0EjqsXIu1nFKNWzgKbPatPVBcVGdXoqpC3ziuANwZUIPZDdpjyE+KVKgt7dh3gqOL0u
-         N7MA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1704481884; x=1705086684;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=ZpSCKa/PxImlBd0jhgSCs1MO0kF1p9DTBv8IwYwmlYU=;
-        b=ghutFVQHrWk/eA1j8HT5MxywC1d/QMaLJh4sZLVbGrd2BO3uX2CUytTkUuhfaXbg0e
-         ep7hbUsobFWTvJB9vq1V+ad44bst7x7+0uicz/8ysUm0EPcFD4L7YCjTqRrUH3GJIZOl
-         /zHM/bGVFGVPUDZ4XHyXvuW2Wx2eTXELzp3th8IooOYBzo9JmbSIOGd2fr0JPD5uAcYd
-         aPEFoSymaz4aQppq7JRME0X+JZTpkdBqpNlKsqeNUcSjst+o5WQO7Bbropgkmuz35oU1
-         mXQTDGVD80wrXmuIkwdcI3G9zCq/ghV01kOktvSi/B3z75LlqlHPzAX+HPTQSCx0jlpN
-         rftA==
-X-Gm-Message-State: AOJu0YwtPzuWkzi53EqBs4wVyhTl4bETWjQf81j7wCY/xkT2HJ9c5VdG
-	z8p3QniWAazwPI+OOr5YoyjPHrGYN5cukvJDXfQZyQHyTDAZvg==
-X-Google-Smtp-Source: AGHT+IELSDTpxicNqkVkdDOeGcxXeHDKV9uJZuJpwD3gz3BEe006uQYc+d7rQXKVXSRrNCDpBrEVLA==
-X-Received: by 2002:a05:6214:5007:b0:680:c731:a35f with SMTP id jo7-20020a056214500700b00680c731a35fmr2939584qvb.13.1704481884396;
-        Fri, 05 Jan 2024 11:11:24 -0800 (PST)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id dm4-20020ad44e24000000b00680613267d5sm825611qvb.115.2024.01.05.11.11.23
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 05 Jan 2024 11:11:23 -0800 (PST)
-Date: Fri, 5 Jan 2024 14:11:22 -0500
-From: Taylor Blau <me@ttaylorr.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH] commit-graph: fix memory leak when not writing graph
-Message-ID: <ZZhUWu5pgBEYK409@nand.local>
-References: <0feab5e7d5bc6275e2c7671cd8f6786ea86fd610.1702891190.git.ps@pks.im>
+	dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b="rrYT6WVG"
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <0feab5e7d5bc6275e2c7671cd8f6786ea86fd610.1702891190.git.ps@pks.im>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=manjaro.org; s=2021;
+	t=1704482074;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=yCbNbaaNXt/Xe2F9tx4Nh9kpBF3HXKONjSh3ukDwoZM=;
+	b=rrYT6WVGUOkKQu7me/V1ifuymTfeCfQ4dyJa3XbunJ7C6DRGCQDHjCrEuuH13BqGWDp3HQ
+	LiJjBd0hzFtFjsOJbVUiE/xpCxS6GtSyCdeBOz4e6keNBcmtR8IJsY6qKiNYMX5V8M6YFs
+	1aW+V7lyhqnYqtcsI3fvu2jYuk1lZcNR0qYEMKHMrOX4wxFePM5WFax0mzifG/Ls/f6LP8
+	XxqG4QwE0hKcoz9PmwyHtbUoRGcBVf6DWBjwgiygZXBCykNRKqE04mbxp7JCbAzkCRGkD4
+	ro66PUCZeUUb//1GuO1ADqeqNuT+DKpJSXkSk/orCatV3dz4EnnT1iK1PzCbIA==
+Date: Fri, 05 Jan 2024 20:14:34 +0100
+From: Dragan Simic <dsimic@manjaro.org>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Jacob Stopak <jacob@initialcommit.io>, Oswald Buddenhagen
+ <oswald.buddenhagen@gmx.de>, git@vger.kernel.org
+Subject: Re: [RFC PATCH 0/5] Introduce -t, --table for status/add commands
+In-Reply-To: <8d45763bb4fa4c7d1e1f69dfaf93e647@manjaro.org>
+References: <ZTS4jfsU6oS6LW0u.jacob@initialcommit.io>
+ <5fac8607a3c270e06fd610551d7403c7@manjaro.org> <ZTT5uI5Hm1+n0Agx@ugly>
+ <58a6a25a7b2eb82c21d9b87143033cef@manjaro.org> <ZTZQZhtTxvGT/s81@ugly>
+ <bc55e29274da0d8059a8cd4383aa1b22@manjaro.org>
+ <ZTatzlzCkPOW3Rn7.jacob@initialcommit.io> <ZTa4iqe0lqn/Yg5L@ugly>
+ <ZTbJiIkIyXwWK8JP.jacob@initialcommit.io> <ZTbVY7Nf+DTYqHky@ugly>
+ <ZTb/HeILRHnZjaz6.jacob@initialcommit.io>
+ <62164acf4a787042dbb6e5abe212559b@manjaro.org> <xmqqil6w6al3.fsf@gitster.g>
+ <8d45763bb4fa4c7d1e1f69dfaf93e647@manjaro.org>
+Message-ID: <778c4540924ad076269ac72097cf3789@manjaro.org>
+X-Sender: dsimic@manjaro.org
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Authentication-Results: ORIGINATING;
+	auth=pass smtp.auth=dsimic@manjaro.org smtp.mailfrom=dsimic@manjaro.org
 
-On Mon, Dec 18, 2023 at 11:02:28AM +0100, Patrick Steinhardt wrote:
-> When `write_commit_graph()` bails out writing a split commit-graph early
-> then it may happen that we have already gathered the set of existing
-> commit-graph file names without yet determining the new merged set of
-> files. This can result in a memory leak though because we only clear the
-> preimage of files when we have collected the postimage.
->
-> Fix this issue by dropping the condition altogether so that we always
-> try to free both preimage and postimage filenames. As the context
-> structure is zero-initialized this simplification is safe to do.
+On 2023-10-24 04:21, Dragan Simic wrote:
+> On 2023-10-24 04:03, Junio C Hamano wrote:
+>> I think the "use more verbose report format to help relatively
+>> inexperienced folks, in exchange for spending more screen real
+>> estate" is a good direction to think about this thing.
+>> 
+>> I am not personally interested in adding such support all that much
+>> myself, but one piece of advice I can offer those who are interested
+>> is not to be too deeply attached to the word "table".
+>> 
+>> ... snip ...
+>> 
+>> So be very careful when choosing what to call this new thing, and
+>> avoid naming it after the implementation details (e.g., in what
+>> particular shape the data gets presented) that may turn out not to
+>> be the most important part of the concept.
+> 
+> Totally agreed, "table" simply sneaked in and remained here as the
+> term.  Perhaps "<command>.verbose = extra" or something similar would
+> be a good choice.
 
-Looks obviously good to me, thanks for finding and fixing.
+Just a brief update...  Some of the associated patches are already ready 
+to go, and some more are still pending to be implemented.  It took me a 
+while, which I apologize for, and now I've also unfortunately contracted 
+some really bad flu.  I'll be back to the patches as soon as the flu 
+decides to go away.
 
-Thanks,
-Taylor
+>> [Footnote]
+>> 
+>>  * FWIW, "git status -s" is a tabular presentation.  Maybe we can
+>>    add a more verbose form of "-s" and be done with it for the
+>>    command?
+> 
+> That's also an option.
