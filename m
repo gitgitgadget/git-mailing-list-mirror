@@ -1,403 +1,170 @@
-Received: from mail-lf1-f50.google.com (mail-lf1-f50.google.com [209.85.167.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A27EE5243
-	for <git@vger.kernel.org>; Fri,  5 Jan 2024 04:59:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SiS4XQOX"
-Received: by mail-lf1-f50.google.com with SMTP id 2adb3069b0e04-50ea226bda8so1279870e87.2
-        for <git@vger.kernel.org>; Thu, 04 Jan 2024 20:59:43 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1704430781; x=1705035581; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=5QLFf4JrA/ctB/bsonNukBqmr/lWH2pGGIKvduXjJ2I=;
-        b=SiS4XQOXRoXlND1vkOuDmDcjFYChgDBTsP5jApaDIFU0Y8X2okzjsr97oBG41XGXrq
-         pWsKZ81kSWV2K3P3cfSwf5O1dhBdOuj5cOlW+VAHbPIfwRmcs3Pkqmk8wNAwR5lpzfjf
-         0d+CBwX/0prkcX13+X7O1tzJNEmYsai1+25ZOozp2aa5vpUoJqHn5Gr5awMgXCh/xfhF
-         tOYajIm8RjO1ZwR1ZKZQJTX+PsCvy4XmKuXGpr0KwQLux2DS7gRKebga0zimDKn77Gzj
-         yy6D5jprWRIDp7sbjuGW5P79cjRKfuloTfN70POOm/Zcmz8j6aBzQEDN7Fna3xN4XGB9
-         GQMQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1704430781; x=1705035581;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=5QLFf4JrA/ctB/bsonNukBqmr/lWH2pGGIKvduXjJ2I=;
-        b=EZPrKzXDc+rkzUGcfStX0+q8FUri0hXzuAXBxmmAoyrA8RuzsLpw8y//FwZlZcU1WA
-         zp6JekDYx3o6cJOYHK87R0j8YOdZUtBf+mGr6lLEReSMDacag3nr+3seZaePYW+zs3nt
-         0eZnbD/G9ujhEeEdQxi1fEClJ8WsuP63ArvLZSR/bd/hwy4MTZmmqprPExs0R70SemjP
-         byKaFYY27Z52xBwLlewiX1rikoeUhwoHSEoru4hSZJqVU55dsii7phD5JVCeRGIh0Y8C
-         00G4kLejLx59X/VFxmNEyENuQz9q5NSADb2amEpX8GLoOl+eG48VNUIZSnO8LkGsAk9A
-         Paqg==
-X-Gm-Message-State: AOJu0YzzP1jyi0270DeLBi+fRyq0UXs23sKtc9O427MYEQu2MzBzGCU0
-	X+GOxR54Nfp10zZy4nWGCd14nt1WWA9upYbJOjg=
-X-Google-Smtp-Source: AGHT+IEFrqNbNB3vf3BUDyVAjqusNodCX2Zb57aJ67IGgtAeTvVEQsoKbFFAIUd7RlG3UgLdWxE70I9HEXujUHRZoLg=
-X-Received: by 2002:a05:6512:4db:b0:50e:8487:1ec0 with SMTP id
- w27-20020a05651204db00b0050e84871ec0mr685708lfq.69.1704430781044; Thu, 04 Jan
- 2024 20:59:41 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25E92566A
+	for <git@vger.kernel.org>; Fri,  5 Jan 2024 05:41:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+Received: (qmail 6000 invoked by uid 109); 5 Jan 2024 05:41:43 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 05 Jan 2024 05:41:43 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 1705 invoked by uid 111); 5 Jan 2024 05:41:44 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 05 Jan 2024 00:41:44 -0500
+Authentication-Results: peff.net; auth=none
+Date: Fri, 5 Jan 2024 00:41:42 -0500
+From: Jeff King <peff@peff.net>
+To: git@vger.kernel.org
+Cc: Junio C Hamano <gitster@pobox.com>, Scott Leggett <scott@sl.id.au>,
+	Taylor Blau <me@ttaylorr.com>
+Subject: [PATCH] commit-graph: retain commit slab when closing NULL
+ commit_graph
+Message-ID: <20240105054142.GA2035092@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <m0sf3vi86g.fsf@epic96565.epic.com> <CABPp-BFbvRDCbMp9Gs9PuV7WfgoVNwyOOn1rB7fe_8UvEEdehA@mail.gmail.com>
- <m0sf3itvpy.fsf@epic96565.epic.com>
-In-Reply-To: <m0sf3itvpy.fsf@epic96565.epic.com>
-From: Elijah Newren <newren@gmail.com>
-Date: Thu, 4 Jan 2024 20:59:28 -0800
-Message-ID: <CABPp-BFpdQ-uSMgOWdRxbPmVKZd1TzaqKVzcD1gnRb4usWo3iA@mail.gmail.com>
-Subject: Re: rebase invoking pre-commit
-To: Sean Allred <allred.sean@gmail.com>
-Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 
-Hi,
+This fixes a regression introduced in ac6d45d11f (commit-graph: move
+slab-clearing to close_commit_graph(), 2023-10-03), in which running:
 
-On Sun, Dec 31, 2023 at 4:14=E2=80=AFAM Sean Allred <allred.sean@gmail.com>=
- wrote:
->
-> Elijah Newren <newren@gmail.com> writes:
->
-> > On Thu, Dec 21, 2023 at 12:59=E2=80=AFPM Sean Allred <allred.sean@gmail=
-.com> wrote:
-> >> Is there a current reason why pre-commit shouldn't be invoked during
-> >> rebase, or is this just waiting for a reviewable patch?
-> >>
-> >> This was brought up before at [1] in 2015, but that thread so old at
-> >> this point that it seemed prudent to double-check before investing tim=
-e
-> >> in a developing and testing a patch.
-> >>
-> >> [1]: https://lore.kernel.org/git/1m55i3m.1fum4zo1fpnhncM%25lists@halle=
-r-berlin.de/
-> >
-> > I'm very opinionated here.  I'm just one person, so definitely take
-> > this with a grain of salt, but in my view...
-> >
-> > Personally, I think implementing any per-commit hook in rebase by
-> > default is a mistake. It enforces a must-be-in-a-worktree-and-the-
-> > worktree-must-be-updated-with-every-replayed-commit mindset, which I
-> > find highly problematic[2], even if that's "what we always used to
-> > do".
-> >
-> > [2] https://lore.kernel.org/git/20231124111044.3426007-1-christian.coud=
-er@gmail.com/
->
-> I'm not hip with what most pre-commit hooks do, but I'll point out that
-> a hook like pre-commit assuming there is a worktree is the fault of the
-> hook implementation, not of the infrastructure that invokes the hook. I
-> imagine most folks on this list are aware that a worktree is not needed
-> to create a commit and update a branch to point at it.
+  git -c fetch.writeCommitGraph=true fetch --recurse-submodules
 
-Well, since git-commit requires a worktree (cmd_commit in cmd_struct
-in git.c has NEED_WORK_TREE in its options), and "pre-commit" is
-likely to be inferred to be a "git-commit" thing (in fact, my reading
-of the current text of the pre-commit hook in the githooks(1) manpage
-seems to suggest that this hook is tied exclusively to git-commit),
-assuming a working tree for "pre-commit" doesn't seem like a very far
-leap at all.  In fact, I can't see why that assumption is broken given
-our current documentation.
+multiple times in a freshly cloned repository causes a segfault. What
+happens in the second (and subsequent) runs is this:
 
-Perhaps we'd like to change the documentation and try to avoid such an
-assumption...but even in cases where we've made explicit claims in the
-past about various assumptions not being reliable, users have gone
-ahead and made those assumptions anyway (Hyrum's Law), and then we
-have sometimes been unable to make changes that broke those
-assumptions.
+  1. We make a "struct commit" for any ref tips which we're storing
+     (even if we already have them, they still go into FETCH_HEAD).
 
-So, I'm still concerned, especially if this is applied to every commit.
+     Because the first run will have created a commit graph, we'll find
+     those commits in the graph.
 
-Granted, hooks are already pretty messed up.  We invoke the
-post-commit hook -- IF we're using the merge backend (and don't invoke
-it if we're using the apply backend), meaning it's not clear to users
-whether the post-commit hook will be invoked or not in a rebase.
-(Especially since while the backend can be specified directly, it's
-often just selected based on other options that are only implemented
-by one of the two backends).  I've put a lot of work into making the
-rebase backends more consistent and would like them to be even more
-so, but the history here is slightly troubling.  The interactive
-backend was "fixed" once, accidentally, and then the accident was
-realized and was treated as a bug and reverted
-(https://lore.kernel.org/git/67a711754efce038914e8ec15c5dec4a5983566d.15711=
-35132.git.gitgitgadget@gmail.com/),
-leaving us again inconsistent.  At least we've documented the
-inconsistency and the desire to change it
-(https://lore.kernel.org/git/pull.749.v3.git.git.1586044818132.gitgitgadget=
-@gmail.com/).
+     The commit struct is therefore created with a NULL "maybe_tree"
+     entry, because we can load its oid from the graph later. But to do
+     that we need to remember that we got the commit from the graph,
+     which is recorded in a global commit_graph_data_slab object.
 
-> FWIW, I would also find such a mindset to be highly problematic :-) I'll
-> take a moment here to thank you, Christian, and everyone else in that
-> effort for your interest in and work on git-replay; I've been trying to
-> watch its activity on-list closely in the hopes that we can adopt it
-> into our system once it's ready.
+  2. Because we're using --recurse-submodules, we'll try to fetch each
+     of the possible submodules. That implies creating a separate
+     "struct repository" in-process for each submodule, which will
+     require a later call to repo_clear().
 
-I'm glad others are interested in git-replay.  Sadly, the work on
-pushing it forward stopped about a year and a half ago.  All work
-since then was limited to pulling out the bits that were ready to be
-upstreamed and cleaning those up.
+     The call to repo_clear() calls raw_object_store_clear(), which in
+     turn calls close_object_store(), which in turn calls
+     close_commit_graph(). And the latter frees the commit graph data
+     slab.
 
-> > Because of that, I would prefer to see this at most be a command line
-> > flag. However, we've already got a command line flag that while not
-> > identical, is essentially equivalent: "--exec $MY_SCRIPT" (it's not
-> > the same because it's a post-commit check, but you get notification of
-> > any problematic commits, and an immediate stop of the rebase for you
-> > to fix up the problematic commit; fixing up the commit shouldn't be
-> > problematic since you are, after all, already rebasing).
->
-> Indeed, and an
->
->     --exec 'git hook run pre-commit || git reset --soft HEAD~'
->
-> would probably get you farther. I can certainly see an argument for
-> this, but from the perspective of designing a system for other
-> developers to use, such a rebase would have to be triggered
-> automatically (perhaps on pre-push).
+  3. Later, when trying to write out a new commit graph, we'll ask for
+     their tree oid via get_commit_tree_oid(), which will see that the
+     object is parsed but with a NULL maybe_tree field. We'd then
+     usually pull it from the graph file, but because the slab was
+     cleared, we don't realize that we can do so! We end up returning
+     NULL and segfaulting.
 
-Well, there is a pre-push hook...  ;-)
+     (It seems questionable that we'd write a graph entry for such a
+     commit anyway, since we know we already have one. I didn't
+     double-check, but that may simply be another side effect of having
+     cleared the slab).
 
-But yeah, it does defer the discovery of the issue for the developer,
-which is kind of counter-productive.
+The bug is in step (2) above. We should not be clearing the slab when
+cleaning up the submodule repository structs. Prior to ac6d45d11f, we
+did not do so because it was done inside a helper function that returned
+early when it saw NULL. So the behavior change from that commit is that
+we'll now _always_ clear the slab via repo_clear(), even if the
+repository being closed did not have a commit graph (and thus would have
+a NULL commit_graph struct).
 
-> > I see Phillip already responded and suggested not running the
-> > pre-commit hook with every commit, but only upon the first commit
-> > after a "git rebase --continue".  That seems far more reasonable to me
-> > than running on every commit...though even that worries me in regards
-> > to what assumptions that entails about what is present in the working
-> > tree.
->
-> It's worth noting the context here is to prevent developers from
-> committing conflict markers, so this would actually be exactly
-> sufficient.
+The most immediate fix is to add in a NULL check in close_commit_graph(),
+making it a true noop when passed in an object_store with a NULL
+commit_graph (it's OK to just return early, since the rest of its code
+is already a noop when passed NULL). That restores the pre-ac6d45d11f
+behavior. And that's what this patch does, along with a test that
+exercises it (we already have a test that uses submodules along with
+fetch.writeCommitGraph, but the bug only triggers when there is a
+subsequent fetch and when that fetch uses --recurse-submodules).
 
-Ah, that makes sense what you want to do.  Totally fair.
+So that fixes the regression in the least-risky way possible.
 
-> Invoking pre-commit at this time would also be consistent with the
-> behaviors of prepare-commit-msg, commit-msg, and post-commit -- at least
-> when I reword a commit during a rebase.
->
-> However, post-commit is executed after each picked commit during a
-> rebase
+I do think there's some fragility here that we might want to follow up
+on. We have a global commit_graph_data_slab that contains graph
+positions, and our global commit structs depend on the that slab
+remaining valid. But close_commit_graph() is just about closing _one_
+object store's graph. So it's dangerous to call that function and clear
+the slab without also throwing away any "struct commit" we might have
+parsed that depends on it.
 
-Only if using the merge backend, and even in that case I personally
-don't think it should be executed; see the "Hooks" subsection of the
-"Behavioral Differences" section of the git-rebase manpage.
+Which at first glance seems like a bug we could already trigger. In the
+situation described here, there is no commit graph in the submodule
+repository, so our commit graph is NULL (in fact, in our test script
+there is no submodule repo at all, so we immediately return from
+repo_init() and call repo_clear() only to free up memory). But what
+would happen if there was one? Wouldn't we see a non-NULL commit_graph
+entry, and then clear the global slab anyway?
 
-> , so pre-commit there would also be consistent.
+The answer is "no", but for very bizarre reasons. Remember that
+repo_clear() calls raw_object_store_clear(), which then calls
+close_object_store() and thus close_commit_graph(). But before it does
+so, raw_object_store_clear() does something else: it frees the commit
+graph and sets it to NULL! So by this code path we'll _never_ see a
+non-NULL commit_graph struct, and thus never clear the slab.
 
-Or maybe consistently inconsistent (i.e. being consistent with the
-inconsistency that exists with the post-commit hook between backends),
-and diverging even further from the aspirational goal in the "Hooks"
-documentation in the git-rebase manpage.
+So it happens to work out. But it still seems questionable to me that we
+would clear a global slab (which might still be in use) when closing the
+commit graph. This clearing comes from 957ba814bf (commit-graph: when
+closing the graph, also release the slab, 2021-09-08), and was fixing a
+case where we really did need it to be closed (and in that case we
+presumably call close_object_store() more directly).
 
-> > (For example, what about folks with large repositories, so large that
-> > a branch switch or full checkout is extremely costly, and which could
-> > benefit from resolving conflicts in a separate sparse-checkout
-> > worktree, potentially much more sparse than their main checkout?
->
-> As it happens, a single checkout of our source runs upwards of 2GB, so
-> I'm exactly in the population you're describing :-)  The main reason
-> we're moving to Git from SVN is that an SVN checkout can take upwards of
-> an hour for us today -- even with some real shenanigans to make them go
-> faster. On the Git side, we've also looked into (though I don't recall
-> if we had much success with) narrowing the sparsity patterns to just the
-> conflicts for conflict resolution workflows -- particularly when moving
-> feature code between separate trunks. So I guess I'm also glad we
-> weren't too far off in left field on that one! (As I recall, one of the
-> main challenges we faced there was ensuring there was enough stuff
-> 'still around' so that both binary and project references could resolve
-> and folks could use that information to help resolve conflicts.
-> Hopefully git-replay can be smart enough to allow some customization on
-> that front. We found some success with feeding the list of conflicted
-> files into some arbitrary logic that spat out the sparsity pattern to
-> use.)
+So I suspect there may still be a bug waiting to happen there, as any
+object loaded before the call to close_object_store() may be stranded
+with a bogus maybe_tree entry (and thus looking at it after the call
+might cause an error). But I'm not sure how to trigger it, nor what the
+fix should look like (you probably would need to "unparse" any objects
+pulled from the graph). And so this patch punts on that for now in favor
+of fixing the recent regression in the most direct way, which should not
+have any other fallouts.
 
-An hour?  For a mere 2 GB?  I mean, I know 2 GB isn't exactly tiny and
-it's a pain to deal with...but an hour?  Do you have some directories
-with an extraordinary number of files directly within them (i.e. not
-multiple subdirectories deep, but a directory immediately containing a
-huge number of files)?  Or some kind of network filesystem?  Or some
-really slow hooks?
+Signed-off-by: Jeff King <peff@peff.net>
+---
+I prepared this on top of jk/commit-graph-leak-fixes, which is the
+branch in v2.43.0 that introduced the regression.
 
-Anyway, I'm glad others are concerned with slow checkouts and branch
-switches too.  And yeah, the idea was just that we make an initial
-sparse checkout limited to the conflicted files, but users can use the
-sparse-checkout command to widen as needed.  The bigger piece was
-making sure the git code didn't defeat this by unnecessarily expanding
-the index (currently with a sparse index, any conflicted files causes
-the sparse-index to be expanded to a completely full index).
+ commit-graph.c   | 3 +++
+ t/t5510-fetch.sh | 3 ++-
+ 2 files changed, 5 insertions(+), 1 deletion(-)
 
-> > And what if people like that really fast rebase resolution (namely,
-> > done in a separate very sparse checkout which also has the advantage
-> > of not polluting your current working tree) so much that they use it
-> > on smaller repositories as well? Can I not even experiment with this
-> > idea because of the historical per-commit-at-least-as-full-as-main
-> > -worktree-checkout assumptions we've baked into rebase?)
->
-> I'd be interested in reading more about this baked-in assumption. Are
-> these mostly laid out in replay-design-notes.txt[3]?
-
-merge-recursive, our default merge backend for about 15 years (and
-reused in rebase, cherry-pick, etc. too) only worked in a worktree and
-muddied it as it went.  The other merge algorithms also assumed a
-worktree was present.  When I wrote merge-ort and removed the
-requirement for having a worktree, I naturally wanted to fix rebase
-(and cherry-pick) to stop updating the working tree with every single
-commit being rebased; it was such a needless waste of resources.  But
-that assumption was all over the code and hard to remove.  And, I ran
-into several items where it was unclear if "fixing" the code would be
-deemed a backward compatibility break.  Hooks were one of the issues.
-
-It's been quite a while since I've looked at it, but yes, I suspect
-some of the issues are documented (explicitly or implicitly) in the
-replay-design-notes.txt file, and you may see some as well in the
-"Behavioral differences" section of the git-rebase manpage.
-
-But there may well be additional parts that aren't documented, since I
-never went through the full effort to de-worktree-ify rebase, and only
-got git-replay doing some basic things.  So, at least part of the
-issue is what other unknown assumptions are in the code which people
-may have knowingly or unknowingly depended upon.
-
-> > While at it, I should also mention that I'm not a fan of the broken
-> > pre-rebase hook; its design ties us to doing a single branch at a
-> > time.  Maybe that hook is not quite as bad, though, since we already
-> > broke that hook and no one seemed to care (in particular, when
-> > --update-refs was implemented).  But if no one seems to care about
-> > broken hooks, I think the proper answer is to either get rid of the
-> > hook or fix it.
->
-> If I were to guess, this likely stems either from an inexact definition
-> of the hook in documentation (ultimately resulting in incomplete tests)
-> or folks incorrectly assuming what each hook should do based purely on
-> its name.
-
-No, neither is true.  The definition is very exact; the problem is
-that the definition is excessively rigid.  It says, "The second
-parameter is *the* branch being rebased" (emphasis added).  There is
-no facility in the hook for rebasing more than one branch or
-reference, and if we attempt to pass additional parameters, we're
-potentially breaking all the existing pre-rebase hooks (which won't be
-prepared to handle the extra parameters and thus may fail to reject
-the rebase for those other branches that are being rebased, and thus
-defeat the point of the hook).  Therefore, allowing rebase to operate
-on multiple branches is a backward compatibility break...though one
-that we overlooked/ignored when we added --update-refs.
-
-And I want something more general than rebase's --update-refs; I want
-the ability to replay multiple branches that aren't entirely contained
-within each other, and perhaps only have a little common history (or
-maybe even none) since the base point(s) we're replaying from.
-
-> Which leads to an interesting point: pre-commit specifically states that
-> it is invoked by git-commit -- not that it's invoked whenever a commit
-> is created. So perhaps the correct thing to do here (if a hook is in
-> fact needed) would be to define a new hook -- but I worry about doing
-> that in the current state where there doesn't *seem* to be very rigid
-> coordination of when client hooks are invoked in terms of plumbing
-> rather than porcelain.
-
-Yeah, as you're discovering, hooks are a mess.  Made all the more
-messy by the fact that higher level commands traditionally started as
-scripts that invoked other lower-level commands (git-rebase.sh
-literally called git-cherry-pick and git-commit, or git-format-patch
-and git-am, or git-merge-recursive and git-commit, or ...), and now
-that we've discovered inconsistencies between backends, and
-performance problems, and whatnot, it is not clear what we should or
-even can do.  Also, even when we rewrote the scripts into C code,
-we've often done so by reimplementing shell in C -- we just fork
-various subprocesses repeatedly (yes, really), and then maybe come
-along later and clean it up a little.
-
-> > Anyway, as I mentioned, I'm quite opinionated here.  To the point that
-> > I deemed git-rebase in its current form to possibly be unfixable
-> > (after first putting a lot of work into improving it over the past
-> > years) and eventually introduced a new "git-replay" command which I
-> > hope to make into a competent replacement for it.  Given that I do
-> > have another command to do my experiments, others on the list may
-> > think it's fine to send rebase further down this route, but I was
-> > hoping to avoid further drift so that there might be some way of
-> > re-implementing rebase on top of my "git-replay" ideas/design.
->
-> I appreciate your perspective; you've certainly thought a lot about this
-> space -- and I definitely share your goal of consolidating
-> implementations for obvious reasons.
->
-> So I suppose that leaves me with four possible paths forward:
->
-> 1. Pursue invoking pre-commit before each commit in `git rebase` (likely
->    generic in the sequencer) to be consistent with post-commit.
->
->    It sounds like this isn't a popular option, but I'm curious to folks'
->    thoughts on the noted behavior of post-commit here.
-
-I've already said quite a bit about this above, but as a quick
-reminder: (1) I'm not sure it makes sense to make something consistent
-with something that is inconsistent, and (2) we have a documented
-desire to stop calling post-commit from rebase even in the situations
-where it is currently called.
-
-> 2. Pursue invoking pre-commit on `git rebase --continue` (likely on any
->    --continue in the sequencer). This has the benefit of using existing
->    configuration on developer machines to purportedly 'do the right
->    thing' when its likely humans are touching code during conflict
->    resolution. It's worth noting this isn't the only reason you might
->    --continue, though, since the naive interpretation of this approach
->    completely ignores sequencer commands like 'break', though it could
->    probably just do what commit-msg does.
-
-In the case of `break`, though, the commit was already transplanted,
-so a `--continue` doesn't need to create one before moving on.  Thus,
-we could say that only when rebase --continue has an unfinished commit
-that needs to be created (i.e. we have a conflicted commit to resolve)
-that the `pre-commit` hook gets called.
-
-The idea of having an 'unfinished' commit state is also useful because
-interactive rebases make it easy to forget if you're in the middle of
-a break/edit or trying to resolve a conflict elsewhere.  That seems to
-happen to me far too many times, and I really want `git commit
---amend` to throw an error (unless overridden with e.g. --force) when
-you have an unfinished commit that you are working on by resolving
-conflicts.  In fact, this state is probably already recorded
-somewhere, we just need to make better use of it...but I'm going off
-on a tangent now.
-
-> 3. Define and implement a new hook that is called whenever a new commit
->    is about to be (or has been?) written. Such a hook could be
->    specifically designed to discourage assuming there's a working copy,
->    though we're kidding nobody by thinking it won't be used downstream
->    with that assumption. At least we could be explicit about
->    expectations, though.
->
->    This is *probably* a lot more design work than this little paragraph
->    lets on, but I've not personally watched the introduction of a new
->    hook so I don't have context for what to expect.
-
-Yeah, and at least as worded, this suggestion would run afoul of the
-logic for the distinction between pre-commit and pre-merge-commit.
-And it seems to have all the same problems as #1, unless we restrict
-it to just when running "rebase --continue", in which case it's not
-clear what it buys us over #2.
-
-> 4. Trigger a rebase --exec in our pre-push. This is certainly the least
->    work in git.git (i.e., no work at all), but it comes with the
->    distinct disadvantage of playing whiplash with the developer's focus.
->    During conflict resolution, they're thinking about conflicts. When
->    you're ready to push, its likely that you're no longer thinking about
->    conflicts.
-
-Yeah, simple to implement but much less helpful.
-
-> Does the behavior of post-commit here change any minds?
-
-No...but although I'm slightly worried about solution #2 (as opposed
-to very worried with #1), your usecase for pre-commit seems quite
-reasonable.  So, I can get behind #2, though it'd be nice if we could
-update the description of the `pre-commit` hook (so that it's clear
-that it's not just "git-commit"), and while we're at it perhaps try to
-be more explicit about what can and can't be assumed by the hook.
+diff --git a/commit-graph.c b/commit-graph.c
+index e4d09da090..f26503295a 100644
+--- a/commit-graph.c
++++ b/commit-graph.c
+@@ -727,6 +727,9 @@ struct bloom_filter_settings *get_bloom_filter_settings(struct repository *r)
+ 
+ void close_commit_graph(struct raw_object_store *o)
+ {
++	if (!o->commit_graph)
++		return;
++
+ 	clear_commit_graph_data_slab(&commit_graph_data_slab);
+ 	free_commit_graph(o->commit_graph);
+ 	o->commit_graph = NULL;
+diff --git a/t/t5510-fetch.sh b/t/t5510-fetch.sh
+index 19c36b57f4..bcf524d549 100755
+--- a/t/t5510-fetch.sh
++++ b/t/t5510-fetch.sh
+@@ -802,7 +802,8 @@ test_expect_success 'fetch.writeCommitGraph with submodules' '
+ 		cd super-clone &&
+ 		rm -rf .git/objects/info &&
+ 		git -c fetch.writeCommitGraph=true fetch origin &&
+-		test_path_is_file .git/objects/info/commit-graphs/commit-graph-chain
++		test_path_is_file .git/objects/info/commit-graphs/commit-graph-chain &&
++		git -c fetch.writeCommitGraph=true fetch --recurse-submodules origin
+ 	)
+ '
+ 
+-- 
+2.43.0.514.g7147b80757
