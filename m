@@ -1,26 +1,24 @@
 Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25E92566A
-	for <git@vger.kernel.org>; Fri,  5 Jan 2024 05:41:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9805219FE
+	for <git@vger.kernel.org>; Fri,  5 Jan 2024 08:50:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
-Received: (qmail 6000 invoked by uid 109); 5 Jan 2024 05:41:43 -0000
+Received: (qmail 7838 invoked by uid 109); 5 Jan 2024 08:50:35 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 05 Jan 2024 05:41:43 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 05 Jan 2024 08:50:35 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 1705 invoked by uid 111); 5 Jan 2024 05:41:44 -0000
+Received: (qmail 2940 invoked by uid 111); 5 Jan 2024 08:50:37 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 05 Jan 2024 00:41:44 -0500
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 05 Jan 2024 03:50:37 -0500
 Authentication-Results: peff.net; auth=none
-Date: Fri, 5 Jan 2024 00:41:42 -0500
+Date: Fri, 5 Jan 2024 03:50:34 -0500
 From: Jeff King <peff@peff.net>
 To: git@vger.kernel.org
-Cc: Junio C Hamano <gitster@pobox.com>, Scott Leggett <scott@sl.id.au>,
-	Taylor Blau <me@ttaylorr.com>
-Subject: [PATCH] commit-graph: retain commit slab when closing NULL
- commit_graph
-Message-ID: <20240105054142.GA2035092@coredump.intra.peff.net>
+Cc: Taylor Blau <me@ttaylorr.com>
+Subject: [PATCH] index-pack: spawn threads atomically
+Message-ID: <20240105085034.GA3078476@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -30,141 +28,109 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 
-This fixes a regression introduced in ac6d45d11f (commit-graph: move
-slab-clearing to close_commit_graph(), 2023-10-03), in which running:
+The t5309 script triggers a racy false positive with SANITIZE=leak on a
+multi-core system. Running with "--stress --run=6" usually fails within
+10 seconds or so for me, complaining with something like:
 
-  git -c fetch.writeCommitGraph=true fetch --recurse-submodules
+    + git index-pack --fix-thin --stdin
+    fatal: REF_DELTA at offset 46 already resolved (duplicate base 01d7713666f4de822776c7622c10f1b07de280dc?)
 
-multiple times in a freshly cloned repository causes a segfault. What
-happens in the second (and subsequent) runs is this:
+    =================================================================
+    ==3904583==ERROR: LeakSanitizer: detected memory leaks
 
-  1. We make a "struct commit" for any ref tips which we're storing
-     (even if we already have them, they still go into FETCH_HEAD).
+    Direct leak of 32 byte(s) in 1 object(s) allocated from:
+        #0 0x7fa790d01986 in __interceptor_realloc ../../../../src/libsanitizer/lsan/lsan_interceptors.cpp:98
+        #1 0x7fa790add769 in __pthread_getattr_np nptl/pthread_getattr_np.c:180
+        #2 0x7fa790d117c5 in __sanitizer::GetThreadStackTopAndBottom(bool, unsigned long*, unsigned long*) ../../../../src/libsanitizer/sanitizer_common/sanitizer_linux_libcdep.cpp:150
+        #3 0x7fa790d11957 in __sanitizer::GetThreadStackAndTls(bool, unsigned long*, unsigned long*, unsigned long*, unsigned long*) ../../../../src/libsanitizer/sanitizer_common/sanitizer_linux_libcdep.cpp:598
+        #4 0x7fa790d03fe8 in __lsan::ThreadStart(unsigned int, unsigned long long, __sanitizer::ThreadType) ../../../../src/libsanitizer/lsan/lsan_posix.cpp:51
+        #5 0x7fa790d013fd in __lsan_thread_start_func ../../../../src/libsanitizer/lsan/lsan_interceptors.cpp:440
+        #6 0x7fa790adc3eb in start_thread nptl/pthread_create.c:444
+        #7 0x7fa790b5ca5b in clone3 ../sysdeps/unix/sysv/linux/x86_64/clone3.S:81
 
-     Because the first run will have created a commit graph, we'll find
-     those commits in the graph.
+    SUMMARY: LeakSanitizer: 32 byte(s) leaked in 1 allocation(s).
+    Aborted
 
-     The commit struct is therefore created with a NULL "maybe_tree"
-     entry, because we can load its oid from the graph later. But to do
-     that we need to remember that we got the commit from the graph,
-     which is recorded in a global commit_graph_data_slab object.
+What happens is this:
 
-  2. Because we're using --recurse-submodules, we'll try to fetch each
-     of the possible submodules. That implies creating a separate
-     "struct repository" in-process for each submodule, which will
-     require a later call to repo_clear().
+  0. We construct a bogus pack with a duplicate object in it and trigger
+     index-pack.
 
-     The call to repo_clear() calls raw_object_store_clear(), which in
-     turn calls close_object_store(), which in turn calls
-     close_commit_graph(). And the latter frees the commit graph data
-     slab.
+  1. We spawn a bunch of worker threads to resolve deltas (on my system
+     it is 16 threads).
 
-  3. Later, when trying to write out a new commit graph, we'll ask for
-     their tree oid via get_commit_tree_oid(), which will see that the
-     object is parsed but with a NULL maybe_tree field. We'd then
-     usually pull it from the graph file, but because the slab was
-     cleared, we don't realize that we can do so! We end up returning
-     NULL and segfaulting.
+  2. One of the threads sees the duplicate object and bails by calling
+     exit(), taking down all of the threads. This is expected and is the
+     point of the test.
 
-     (It seems questionable that we'd write a graph entry for such a
-     commit anyway, since we know we already have one. I didn't
-     double-check, but that may simply be another side effect of having
-     cleared the slab).
+  3. At the time exit() is called, we may still be spawning threads from
+     the main process via pthread_create(). LSan hooks thread creation
+     to update its book-keeping; it has to know where each thread's
+     stack is (so it can find entry points for reachable memory). So it
+     calls pthread_getattr_np() to get information about the new thread.
+     That may allocate memory that must be freed with a matching call to
+     pthread_attr_destroy(). Probably LSan does that immediately, but
+     if you're unlucky enough, the exit() will happen while it's between
+     those two calls, and the allocated pthread_attr_t appears as a
+     leak.
 
-The bug is in step (2) above. We should not be clearing the slab when
-cleaning up the submodule repository structs. Prior to ac6d45d11f, we
-did not do so because it was done inside a helper function that returned
-early when it saw NULL. So the behavior change from that commit is that
-we'll now _always_ clear the slab via repo_clear(), even if the
-repository being closed did not have a commit graph (and thus would have
-a NULL commit_graph struct).
+This isn't a real leak. It's not even in our code, but rather in the
+LSan instrumentation code. So we could just ignore it. But the false
+positive can cause people to waste time tracking it down.
 
-The most immediate fix is to add in a NULL check in close_commit_graph(),
-making it a true noop when passed in an object_store with a NULL
-commit_graph (it's OK to just return early, since the rest of its code
-is already a noop when passed NULL). That restores the pre-ac6d45d11f
-behavior. And that's what this patch does, along with a test that
-exercises it (we already have a test that uses submodules along with
-fetch.writeCommitGraph, but the bug only triggers when there is a
-subsequent fetch and when that fetch uses --recurse-submodules).
+It's possibly something that LSan could protect against (e.g., cover the
+getattr/destroy pair with a mutex, and then in the final post-exit()
+check for leaks try to take the same mutex). But I don't know enough
+about LSan to say if that's a reasonable approach or not (or if my
+analysis is even completely correct).
 
-So that fixes the regression in the least-risky way possible.
+In the meantime, it's pretty easy to avoid the race by making creation
+of the worker threads "atomic". That is, we'll spawn all of them before
+letting any of them start to work. That's easy to do because we already
+have a work_lock() mutex for handing out that work. If the main process
+takes it, then all of the threads will immediately block until we've
+finished spawning and released it.
 
-I do think there's some fragility here that we might want to follow up
-on. We have a global commit_graph_data_slab that contains graph
-positions, and our global commit structs depend on the that slab
-remaining valid. But close_commit_graph() is just about closing _one_
-object store's graph. So it's dangerous to call that function and clear
-the slab without also throwing away any "struct commit" we might have
-parsed that depends on it.
+This shouldn't make any practical difference for non-LSan runs. The
+thread spawning is quick, and could happen before any worker thread gets
+scheduled anyway.
 
-Which at first glance seems like a bug we could already trigger. In the
-situation described here, there is no commit graph in the submodule
-repository, so our commit graph is NULL (in fact, in our test script
-there is no submodule repo at all, so we immediately return from
-repo_init() and call repo_clear() only to free up memory). But what
-would happen if there was one? Wouldn't we see a non-NULL commit_graph
-entry, and then clear the global slab anyway?
-
-The answer is "no", but for very bizarre reasons. Remember that
-repo_clear() calls raw_object_store_clear(), which then calls
-close_object_store() and thus close_commit_graph(). But before it does
-so, raw_object_store_clear() does something else: it frees the commit
-graph and sets it to NULL! So by this code path we'll _never_ see a
-non-NULL commit_graph struct, and thus never clear the slab.
-
-So it happens to work out. But it still seems questionable to me that we
-would clear a global slab (which might still be in use) when closing the
-commit graph. This clearing comes from 957ba814bf (commit-graph: when
-closing the graph, also release the slab, 2021-09-08), and was fixing a
-case where we really did need it to be closed (and in that case we
-presumably call close_object_store() more directly).
-
-So I suspect there may still be a bug waiting to happen there, as any
-object loaded before the call to close_object_store() may be stranded
-with a bogus maybe_tree entry (and thus looking at it after the call
-might cause an error). But I'm not sure how to trigger it, nor what the
-fix should look like (you probably would need to "unparse" any objects
-pulled from the graph). And so this patch punts on that for now in favor
-of fixing the recent regression in the most direct way, which should not
-have any other fallouts.
+Probably other spots that use threads are subject to the same issues.
+But since we have to manually insert locking (and since this really is
+kind of a hack), let's not bother with them unless somebody experiences
+a similar racy false-positive in practice.
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
-I prepared this on top of jk/commit-graph-leak-fixes, which is the
-branch in v2.43.0 that introduced the regression.
+Rescuing this from:
 
- commit-graph.c   | 3 +++
- t/t5510-fetch.sh | 3 ++-
- 2 files changed, 5 insertions(+), 1 deletion(-)
+  https://lore.kernel.org/git/20231221105124.GD570888@coredump.intra.peff.net/
 
-diff --git a/commit-graph.c b/commit-graph.c
-index e4d09da090..f26503295a 100644
---- a/commit-graph.c
-+++ b/commit-graph.c
-@@ -727,6 +727,9 @@ struct bloom_filter_settings *get_bloom_filter_settings(struct repository *r)
- 
- void close_commit_graph(struct raw_object_store *o)
- {
-+	if (!o->commit_graph)
-+		return;
-+
- 	clear_commit_graph_data_slab(&commit_graph_data_slab);
- 	free_commit_graph(o->commit_graph);
- 	o->commit_graph = NULL;
-diff --git a/t/t5510-fetch.sh b/t/t5510-fetch.sh
-index 19c36b57f4..bcf524d549 100755
---- a/t/t5510-fetch.sh
-+++ b/t/t5510-fetch.sh
-@@ -802,7 +802,8 @@ test_expect_success 'fetch.writeCommitGraph with submodules' '
- 		cd super-clone &&
- 		rm -rf .git/objects/info &&
- 		git -c fetch.writeCommitGraph=true fetch origin &&
--		test_path_is_file .git/objects/info/commit-graphs/commit-graph-chain
-+		test_path_is_file .git/objects/info/commit-graphs/commit-graph-chain &&
-+		git -c fetch.writeCommitGraph=true fetch --recurse-submodules origin
- 	)
- '
- 
+where it was buried deep in a thread. I still think it's kind of gross,
+but it may be the least-bad thing.
+
+ builtin/index-pack.c | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/builtin/index-pack.c b/builtin/index-pack.c
+index dda94a9f46..0e94819216 100644
+--- a/builtin/index-pack.c
++++ b/builtin/index-pack.c
+@@ -1257,13 +1257,15 @@ static void resolve_deltas(void)
+ 	base_cache_limit = delta_base_cache_limit * nr_threads;
+ 	if (nr_threads > 1 || getenv("GIT_FORCE_THREADS")) {
+ 		init_thread();
++		work_lock();
+ 		for (i = 0; i < nr_threads; i++) {
+ 			int ret = pthread_create(&thread_data[i].thread, NULL,
+ 						 threaded_second_pass, thread_data + i);
+ 			if (ret)
+ 				die(_("unable to create thread: %s"),
+ 				    strerror(ret));
+ 		}
++		work_unlock();
+ 		for (i = 0; i < nr_threads; i++)
+ 			pthread_join(thread_data[i].thread, NULL);
+ 		cleanup_thread();
 -- 
-2.43.0.514.g7147b80757
+2.43.0.553.g8113c77dd0
