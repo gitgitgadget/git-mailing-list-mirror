@@ -1,70 +1,162 @@
-Received: from mail-qv1-f45.google.com (mail-qv1-f45.google.com [209.85.219.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from out5-smtp.messagingengine.com (out5-smtp.messagingengine.com [66.111.4.29])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B68832182
-	for <git@vger.kernel.org>; Fri,  5 Jan 2024 17:11:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ttaylorr.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6755D321AA
+	for <git@vger.kernel.org>; Fri,  5 Jan 2024 17:41:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=khaugsbakk.name
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=khaugsbakk.name
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="KN+nZNhN"
-Received: by mail-qv1-f45.google.com with SMTP id 6a1803df08f44-680b12e5d42so8401336d6.3
-        for <git@vger.kernel.org>; Fri, 05 Jan 2024 09:11:09 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1704474669; x=1705079469; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=ZZb8IAVDJoSsvR9d9YDzZmlicfejd6hBYPnQjTSGAYk=;
-        b=KN+nZNhN9LvHir+ENunYTTFu4sjvweMG2v+6CekUlvOGcWbtPsudzp4amq5nFlq9KE
-         nXsXlapHiIkX/MVQU2L6DlEXKNa5cXnK/mh8GdqdwoyvZcqTtkLSJ4jSmZiUjOcwQw2H
-         TIP/t7djQSOC3/TNw2IQrm8mYkkqo7QC93TPDFi4/U/rusD6QSpAxkFkF0Lxuy9cUpiq
-         wT1G9YUw493jzyifJSibBRZmKb2Z2pyJRiYNLqWUBq75EB9cMsc5/MvzxCzThUCW0nuO
-         hRyt34UECzg5cJCI4+qLbW/NBQ5oaEH8GRBZ7ZB9rgJ6hMJZToRlI+V22F/0DgQlTGQe
-         QSpw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1704474669; x=1705079469;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=ZZb8IAVDJoSsvR9d9YDzZmlicfejd6hBYPnQjTSGAYk=;
-        b=vWeLB/yPb4sjW0G49Vt7LKV48YgrI5EIKZwxoZgoo0X5U5C+YjDEijCw3j2aw4T0j/
-         CA9733G9Z/5eN5dHCTJzLplD+14v1qvM1wn2TSAUiCC52u0KiGxZhrA1uIpYWPN2t9jO
-         OTquQ8mgrGLuK2SZSnXPXil5BrPSjzyKHlyr38i/CsSbz5G3TEGmulQ3IZjMOV3j/f0q
-         9tXXbRO64jTMc/tZWRZvdGYhRGcH0hKjeYPmierQvhsXQsfQUFigTzgkVgCBuwSoVtpG
-         fqEiJtpp/8uLsdMNVpJt+hj1kPoiVAK51NVsASjEzMqJ2Ih5ntUuMktld9/zVqr1l/GY
-         hoZA==
-X-Gm-Message-State: AOJu0YyB4Urrc9t7x5vJyrcUS22HHlB8YsdAOvJtb3SqRIY8abAxc/KH
-	aHEOFRbWWibjhC/7cwJRuVWHuFWlMrRacVnEJb2HCzRE8iH8zw==
-X-Google-Smtp-Source: AGHT+IHnC+8Tk+ts+9z18YrduZRHUk8NMdeV3bd7MArOVmz0aFYqCW+oOhIw7V5bsUc80emwaJdiyQ==
-X-Received: by 2002:a05:6214:2686:b0:680:a13:3852 with SMTP id gm6-20020a056214268600b006800a133852mr2300713qvb.131.1704474669066;
-        Fri, 05 Jan 2024 09:11:09 -0800 (PST)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id kc28-20020a056214411c00b0067f7f73d632sm741263qvb.138.2024.01.05.09.11.08
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 05 Jan 2024 09:11:08 -0800 (PST)
-Date: Fri, 5 Jan 2024 12:11:08 -0500
-From: Taylor Blau <me@ttaylorr.com>
-To: Illia Bobyr <illia.bobyr@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH v3] rebase: clarify --reschedule-failed-exec default
-Message-ID: <ZZg4LO7L2q8GtLHh@nand.local>
-References: <20240104080631.3666413-1-illia.bobyr@gmail.com>
- <20240105011424.1443732-2-illia.bobyr@gmail.com>
+	dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b="j7EvItb7";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="zzqcJXxz"
+Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
+	by mailout.nyi.internal (Postfix) with ESMTP id 36BAE5C0121
+	for <git@vger.kernel.org>; Fri,  5 Jan 2024 12:41:56 -0500 (EST)
+Received: from imap49 ([10.202.2.99])
+  by compute1.internal (MEProxy); Fri, 05 Jan 2024 12:41:56 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=khaugsbakk.name;
+	 h=cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:message-id:mime-version:reply-to
+	:subject:subject:to:to; s=fm1; t=1704476516; x=1704562916; bh=3m
+	4qIGioVhdpQGP6lipXtqxaaGwV7QcuJSvGjexFph4=; b=j7EvItb7t/raATXx6f
+	/rJK6tznLcRUyVHTdRG1r+kJtbd5fm1U8al2AY8TIm59Fc+SokDGvBK1I+ZAN5pL
+	bvsIhij9iI+pF6UqgIUoQ7S20u8KJW9WHrn9QRNEfEWzddrnjvt2PsnK+XdPVXlk
+	vOTuwAFlOT47bx4tJL/axi72L+XMK5mIqGrBL5khjyt9i32orhf6ng7+Ea65/e2S
+	rajj0p4i3YtcmStNkQqQllocc+bo+wkqNHPAcGr8ie54chYgiU3qa7li3ZqL4WGa
+	sLUZHiV5Ca1cZXIvAYXvkW+v8xtxlKkC0421kj1u0eXgsvFmfAySnx2qkr33i1NU
+	ZKHQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-transfer-encoding:content-type
+	:content-type:date:date:feedback-id:feedback-id:from:from
+	:in-reply-to:message-id:mime-version:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm2; t=1704476516; x=1704562916; bh=3m4qIGioVhdpQGP6lipXtqxaaGwV
+	7QcuJSvGjexFph4=; b=zzqcJXxzB5MJy0Xvs2YErO492441ftLmB7CCTvdmiJUE
+	LgVlhrdODbKmYxCeHrGYBAuaAuDY6th0GiOc3IYEZ8t391yNA0bqJOO+ER8sZmtd
+	ZjihNCW6q6ubC2Hqc1bgUIBDTadu9vsGm8xZGDe8ashxTW2EXfLWL25ox2wYFbuD
+	LFZGNtT7lBMf6/2V3Z9dOzpq6K9tzJgkKjAnSI4OSV3mRfuxbCJ7sPVs+7YiBKzR
+	RbYV9Cq8pxT9gxw37s6nSLLqF0oLDAyzk1XhA2NYcEY5tWkDnOonV7kStnzVxL6g
+	h9yRPgYEbdmVojjqj1Y0PlH8WWEsL28IZV29DblPYA==
+X-ME-Sender: <xms:Yz-YZVmZNKSyB5Pt8FxvFFnAvyKPxDOTS0YvchVhYJtJXz_buLDEnaw>
+    <xme:Yz-YZQ1dLQAcADR86yAzKXC4xeTiOzf6eH-B0kApbcUX-P8DH1FSh_oLFg3A1xmRG
+    lL-d6HNTPVbznohIw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrvdegledgleelucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucenucfjughrpefofgggkfffhffvufgtgfesthhqre
+    dtreerjeenucfhrhhomhepfdfmrhhishhtohhffhgvrhcujfgruhhgshgsrghkkhdfuceo
+    tghouggvsehkhhgruhhgshgsrghkkhdrnhgrmhgvqeenucggtffrrghtthgvrhhnpeeffe
+    ehffeltdduveetheeiudeihfejtdfgffegffdutedtffefteevteefvdfhfeenucevlhhu
+    shhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpegtohguvgeskhhhrg
+    hughhssggrkhhkrdhnrghmvg
+X-ME-Proxy: <xmx:ZD-YZbqkRto43HwF3F5Rz5RGoJUFAQOju0PhEVa0dY3Fy-HLrvNy6Q>
+    <xmx:ZD-YZVmrbtTFlFGL4gqhoWzUVOzTKLqPVX-JgRhzEdx1cn88eHLtSg>
+    <xmx:ZD-YZT2vYEE-EE29b2ZJ_U_e1vYvbaQCtIc6hT-_D7Yf21uFJL92xw>
+    <xmx:ZD-YZUB2M9PBtqktlbF9LZB3S14wpeSzEV77-3yofjmB5rfd2BjIbA>
+Feedback-ID: i2671468f:Fastmail
+Received: by mailuser.nyi.internal (Postfix, from userid 501)
+	id DDA6815A0092; Fri,  5 Jan 2024 12:41:55 -0500 (EST)
+X-Mailer: MessagingEngine.com Webmail Interface
+User-Agent: Cyrus-JMAP/3.9.0-alpha0-1364-ga51d5fd3b7-fm-20231219.001-ga51d5fd3
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20240105011424.1443732-2-illia.bobyr@gmail.com>
+Message-Id: <d1f739fe-b28e-451f-9e01-3d2e24a0fe0d@app.fastmail.com>
+Date: Fri, 05 Jan 2024 18:41:35 +0100
+From: "Kristoffer Haugsbakk" <code@khaugsbakk.name>
+To: git@vger.kernel.org
+Subject: [BUG] mv: can trigger assertion failure with three parameters
+ (builtin/mv.c:481)
+Content-Type: text/plain;charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-On Thu, Jan 04, 2024 at 05:14:26PM -0800, Illia Bobyr wrote:
-> ---
->  Documentation/git-rebase.txt | 17 ++++++++++-------
->  1 file changed, 10 insertions(+), 7 deletions(-)
+You can trigger an assertion by giving these arguments to `git mv`:
 
-LGTM.
+    <dir>/file <dir> <other dir>
 
-Thanks,
-Taylor
+> Thank you for filling out a Git bug report!
+> Please answer the following questions to help us understand your issue.
+>
+> What did you do before the bug happened? (Steps to reproduce your issu=
+e)
+
+```
+git config --global --add safe.directory /tmp
+dir=3D$(mktemp -d)
+cd $dir
+git init
+mkdir a
+touch a/a.txt
+git add a/a.txt
+git commit -m 'init'
+mkdir b
+# Assertion triggered
+git mv a/a.txt a b
+# `.git/index.lock` still lingers after this; commands like `git add
+# <file>` will fail
+```
+
+The output:
+
+```
+git: builtin/mv.c:481: cmd_mv: Assertion `pos >=3D 0' failed.
+Aborted (core dumped)
+```
+
+Also `.git/index.lock` is still there.
+
+> What did you expect to happen? (Expected behavior)
+
+A normal error message if the command is nonsensical (I don=E2=80=99t kn=
+ow; that=E2=80=99s
+not the point). Also `.git/index.lock` to be cleaned up.
+
+> What happened instead? (Actual behavior)
+
+An assertion failed. `.git/index.lock` is not cleaned up.
+
+> What's different between what you expected and what actually happened?
+
+See above.
+
+> Anything else you want to add:
+
+Same behavior on `master` (a26002b628 (The fifth batch, 2024-01-02)).
+
+```
+./bin-wrappers/git config --global --add safe.directory /tmp
+dir=3D$(mktemp -d)
+./bin-wrappers/git -C $dir init
+mkdir $dir/a
+touch $dir/a/a.txt
+./bin-wrappers/git -C $dir add $dir/a/a.txt
+./bin-wrappers/git -C $dir commit -m 'init'
+mkdir $dir/b
+# Assertion triggered
+./bin-wrappers/git -C $dir mv $dir/a/a.txt $dir/a $dir/b
+```
+
+> Please review the rest of the bug report below.
+> You can delete any lines you don't wish to share.
+
+
+[System Info]
+git version:
+git version 2.43.0
+cpu: x86_64
+no commit associated with this build
+sizeof-long: 8
+sizeof-size_t: 8
+shell-path: /bin/sh
+uname: Linux 6.2.0-39-generic #40~22.04.1-Ubuntu SMP PREEMPT_DYNAMIC Thu=
+ Nov 16 10:53:04 UTC 2 x86_64
+compiler info: gnuc: 11.4
+libc info: glibc: 2.35
+$SHELL (typically, interactive shell): /bin/bash
+
+
+[Enabled Hooks]
+
+--=20
+Kristoffer Haugsbakk
