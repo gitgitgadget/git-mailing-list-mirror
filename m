@@ -1,133 +1,77 @@
-Received: from ring.crustytoothpaste.net (ring.crustytoothpaste.net [172.105.110.227])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F0B3E541
-	for <git@vger.kernel.org>; Sat,  6 Jan 2024 18:31:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
+Received: from smtpfb1-g21.free.fr (smtpfb1-g21.free.fr [212.27.42.9])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BCA26E56D
+	for <git@vger.kernel.org>; Sat,  6 Jan 2024 19:14:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=free.fr
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=free.fr
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="OBmQrbf4"
-Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:e59a:3ed0:5f5c:31f3])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (P-256) server-signature RSA-PSS (3072 bits) server-digest SHA256)
-	(No client certificate requested)
-	by ring.crustytoothpaste.net (Postfix) with ESMTPSA id CB9ED5A388;
-	Sat,  6 Jan 2024 18:21:57 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1704565317;
-	bh=UYP12V9hJtjKhgDg/QCwlIqiNv5cIPFxuVzXVdj//QU=;
-	h=Date:From:To:Cc:Subject:References:Content-Type:
-	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-	 Content-Type:Content-Disposition;
-	b=OBmQrbf4lFSujf8jBjTi0LEf6lYZmjRUfpjV73iGE6nJf8z1rIkJP8RLXsgoBPDxN
-	 +HcX++BlFhgNyMFrRRyDO1CLsXXLkhzMEGM0P2RlRCDj36vgHs/6fUR/joukKnbk5f
-	 kxuR/h+OtQwu5ZYBRn/wmtlU51M9usOlP7921ajSXFGV9QnskMFSLwN3ZAAvhYL9Gj
-	 Q5vrLtyAGxxGHPVzR5y8IT4Ll1DSzcj0eUwOdIMuRONUjsRf3/zb/BkZSdmpNk1YKM
-	 By+iPSWw2sfJikAualbxDMYVYJCESl5qBph/Wow3GWhxe0jfgjFGRAVslFIZvCo2Rs
-	 aL47YgL0C0fLQ+AKCKg0JiCe0He5NkDiiIFcqZzgPVD2A0ltjin6JwGoBI5g8IlOIM
-	 cKe6X0u7tO2w3RI4NvxmPy4v85+1PVIv26qQ3yGB3iy9mYEfy/61ukX3c/0J93XW54
-	 0Cm7T+3BBldy/pYuIqyUE9MWnM3G1/eb+aUGO1l7uLv21WwNcaF
-Date: Sat, 6 Jan 2024 18:21:55 +0000
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: Maxim Iorsh <iorsh@users.sourceforge.net>
-Cc: git@vger.kernel.org
-Subject: Re: Bug: git log with log.showSignature enabled
-Message-ID: <ZZmaQ0RoxJpU2PSH@tapette.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Maxim Iorsh <iorsh@users.sourceforge.net>, git@vger.kernel.org
-References: <CADQ_TR56X_iMitPEiaOyR_h=1dp9ThUQMu_Vqjest1i8xbh9Tw@mail.gmail.com>
+	dkim=pass (2048-bit key) header.d=free.fr header.i=@free.fr header.b="RkwQBs9r"
+Received: from smtp4-g21.free.fr (smtp4-g21.free.fr [212.27.42.4])
+	by smtpfb1-g21.free.fr (Postfix) with ESMTP id 7E052DF94A1
+	for <git@vger.kernel.org>; Sat,  6 Jan 2024 20:05:39 +0100 (CET)
+Received: from zimbra39-e7.priv.proxad.net (unknown [172.20.243.189])
+	by smtp4-g21.free.fr (Postfix) with ESMTP id 59AB419F5A5
+	for <git@vger.kernel.org>; Sat,  6 Jan 2024 20:05:32 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=free.fr;
+	s=smtp-20201208; t=1704567932;
+	bh=3YL3JTKV7Aw3efdIf9kLRfCFRumMryFjrWSwNlOIIjU=;
+	h=Date:From:To:In-Reply-To:Subject:From;
+	b=RkwQBs9rHdnFVXXpSNKT/ZpnClc5aAusH57vFrxiT74wjq/eK/LtYKRL1AkWJWQZW
+	 2ZSV5HFj6GiAlW1bVYFA5VQtBQ3oX4KHitplMekO5br80ESQrMaD+o0G/Ef+Ex0rAp
+	 NZoOcMqZQjCUcw/71RsT1PvkUEupMrI5+FDeWmUmoOUr3+fV2PFqM2azwGTrMhtwRK
+	 O7kvsitrWsGUGW8oASsY53llEzIFPI+qakkUytNLud5RdKKLcz9w2d4AJMu0QcMZKg
+	 Zlxzlm9QIatSjxIw7SxAPhF/q1b4WGJ/bFLeYRJSbbTsjrXnVs5Vky9rKdeS9WQk/S
+	 EK6Bk505KeUrQ==
+Date: Sat, 6 Jan 2024 20:05:32 +0100 (CET)
+From: Yann Dirson <ydirson@free.fr>
+To: "git " <git@vger.kernel.org>
+Message-ID: <133456672.1820149400.1704567932308.JavaMail.root@zimbra39-e7>
+In-Reply-To: <763603689.1820092086.1704566524953.JavaMail.root@zimbra39-e7>
+Subject: Leveraging --rebase-merges --update-refs mechanism to rebase
+ several branches in one run
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="0D/8p0lt1gEZ21Ab"
-Content-Disposition: inline
-In-Reply-To: <CADQ_TR56X_iMitPEiaOyR_h=1dp9ThUQMu_Vqjest1i8xbh9Tw@mail.gmail.com>
-User-Agent: Mutt/2.2.12 (2023-09-09)
-
-
---0D/8p0lt1gEZ21Ab
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 7bit
+X-Mailer: Zimbra 7.2.0-GA2598 (ZimbraWebClient - FF3.0 (Linux)/7.2.0-GA2598)
+X-Authenticated-User: ydirson@free.fr
 
-On 2024-01-06 at 16:56:29, Maxim Iorsh wrote:
-> Thank you for filling out a Git bug report!
-> Please answer the following questions to help us understand your issue.
->=20
-> What did you do before the bug happened? (Steps to reproduce your issue)
->=20
-> iorsh-linux:~/devel/fontforge/build> git log -n 1 --oneline
-> 2aa98f6a5 (HEAD -> master) Dummy signed commit
-> iorsh-linux:~/devel/fontforge/build> git config log.showSignature true
-> iorsh-linux:~/devel/fontforge/build> git log -n 1 --oneline
-> 2aa98f6a5 (HEAD -> master) gpg: Signature made 17:47:50 2024 =D7=99=D7=A0=
-=D7=95 06 =D7=A9' IST
-> gpg:                using RSA key XXXXXXXXXX
-> gpg:                issuer "iorsh@users.sourceforge.net"
-> gpg: Good signature from "Maxim Iorsh <iorsh@users.sourceforge.net>" [ult=
-imate]
-> Dummy signed commit
->=20
-> What did you expect to happen? (Expected behavior)
->=20
-> When asked for oneliner or any specific format, `git log` shouldn't
-> show signature event when configured.
->=20
-> What happened instead? (Actual behavior)
->=20
-> `git log` always show signatures with log.showSignature enabled, even
-> for explicit formatting requests.
->=20
-> What's different between what you expected and what actually happened?
->=20
-> Anything else you want to add:
->=20
-> This behavior obviously breaks any script which relies on git log to
-> produce preformatted info about commits. It's also quite rare, becaus
-> e probably very few users set log.showSignature config option.
+This idea comes from a repo[1] where I am experimenting with code variants:
+on one side I have a branch where I add to the core mechanisms, and on the
+other(s) I have several branches where I experiment with different rendering
+options.
 
-I think this is behaving as designed.  git log is a porcelain command,
-which means it's designed for the user to use, but is not intended for
-scripting.  The documentation for `log.showSignature` says this:
+There are indeed 2 different workflows here:
+- improving the variants themselves, where occasionally some fixup or new
+  commit for the core branch gets introduced
+- adding feature to the core branch, then merging that into each variant,
+  where fixups already appear quite regularly
 
-  If true, makes git-log(1), git-show(1), and git-whatchanged(1) assume --s=
-how-signature.
+That produces a set closely-related branches with lots of merges, and applying
+the fixups is a bit tricky.
 
-As long as the output is what you would have gotten if you manually
-added --show-signature, the result is correct.
+The "core + 1 variant" case pretty much works out of the box, with --rebase-merges
+and --update-refs generating a perfect instructions sheet.
 
-However, if you want to script things, you can use git rev-list, which
-is a plumbing command that's specifically designed to allow scripting.
-It works very similarly to git log, but doesn't have configuration
-options that change its behaviour, so it doesn't suffer from this
-problem.
+But if I was to rebase just one variant while rewriting the core branch, obviously
+all other variants would still fork off the pre-rewrite core branch, and we'd loose
+all chances of automating the same work on the other variants.
 
-For example, on one of my branches, I get this:
+OTOH, if I get `git-rebase` to generate the instruction sheets for those other
+variants first, strip them (manually) from the common part, and insert them in the
+instruction sheet of my "core + 1 variant" case ... I do get the whole of my branches
+rebased together, and sharing the updated core.
 
-$ git rev-list -n 1 --oneline HEAD
-404bf1f83a credential: add an argument to keep state
 
-Note that the implicit HEAD of git log doesn't work with git rev-list,
-so you need to specify HEAD explicitly.
---=20
-brian m. carlson (he/him or they/them)
-Toronto, Ontario, CA
+So the question is, would there be any obstacles to let git-rebase automate this
+completely?  By chance it could even be a trivial change?
+I guess we'd only want this feature to be enabled under certain conditions, like
+--update-refs being specified so the many heads of the rebase would be reachable.
 
---0D/8p0lt1gEZ21Ab
-Content-Type: application/pgp-signature; name="signature.asc"
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.4.3 (GNU/Linux)
+[1] https://github.com/ydirson/test-yew-tutorial/tree/opr is the "core" branch,
+and branches opr-* are the variants
 
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZZmaQwAKCRB8DEliiIei
-gWYOAP9fH+UmrS3A/GIRAv6Wqc38dv4UAFwL4ejAz9a3QqlGjAD+LGp0OL/6Tq8Q
-ggiIkB1PUw9R4hs1TpQMtchNl27T3Qg=
-=9t0T
------END PGP SIGNATURE-----
-
---0D/8p0lt1gEZ21Ab--
