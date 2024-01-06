@@ -1,96 +1,133 @@
-Received: from mail-yw1-f173.google.com (mail-yw1-f173.google.com [209.85.128.173])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from ring.crustytoothpaste.net (ring.crustytoothpaste.net [172.105.110.227])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8787C135
-	for <git@vger.kernel.org>; Sat,  6 Jan 2024 16:57:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=users.sourceforge.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-yw1-f173.google.com with SMTP id 00721157ae682-5e86fc3f1e2so4635737b3.0
-        for <git@vger.kernel.org>; Sat, 06 Jan 2024 08:57:06 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1704560226; x=1705165026;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=ixa4iwWGo1U4f/etORVWvBj2I72794xJcG2W8/THZzY=;
-        b=O5sIfxyubZk0YSLzAc4CvH0yconkc7nWVOIB/rlEU8WhDEX14J4U8o4bKeO7ssaB07
-         k5rmZiOlouaiHuYNs9AIsyFU2eU0d6Rzb7toI+lB/kukAPoIZR169y2uxD9chJQgspFe
-         uBSlbt1iFJUf2Jbrkeo5rSnBAGzl7Bqs+D7pU04UhQQDkA5/MAd6xofsHKCHrd2CaKds
-         qMtcfJ8uQjwgjCKm45bYMczIIQwyskZVkIHVXHmdnxjcQqmUimJLuMJp3Lq7RKVdQwQl
-         DrN0y6BPYLrDyoREl/XNhXSnjRL9F9Uy3skKP64OyNG6yUx4Aek1uysJZ781dmEP6dGZ
-         61ig==
-X-Gm-Message-State: AOJu0YyyfiHrSab3qe7waG2+AKaGYAczhi1IbFIoUohpwtYcnedu85jm
-	XVhqw+4cOsPHVr5y0fl0Cex4pio+rIQL195XJjA7yzN9RQ8=
-X-Google-Smtp-Source: AGHT+IEbP3TKTDmhsp4sGw9Z9qjd3A/l4w+MlrsKocDfxOB35OfG+cC+ysFWnxFSl/aktymXVj05O+qKG+OLajA3DMU=
-X-Received: by 2002:a81:8a44:0:b0:5ea:eb5c:a797 with SMTP id
- a65-20020a818a44000000b005eaeb5ca797mr792862ywg.10.1704560225559; Sat, 06 Jan
- 2024 08:57:05 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F0B3E541
+	for <git@vger.kernel.org>; Sat,  6 Jan 2024 18:31:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="OBmQrbf4"
+Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:e59a:3ed0:5f5c:31f3])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (P-256) server-signature RSA-PSS (3072 bits) server-digest SHA256)
+	(No client certificate requested)
+	by ring.crustytoothpaste.net (Postfix) with ESMTPSA id CB9ED5A388;
+	Sat,  6 Jan 2024 18:21:57 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1704565317;
+	bh=UYP12V9hJtjKhgDg/QCwlIqiNv5cIPFxuVzXVdj//QU=;
+	h=Date:From:To:Cc:Subject:References:Content-Type:
+	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+	 Content-Type:Content-Disposition;
+	b=OBmQrbf4lFSujf8jBjTi0LEf6lYZmjRUfpjV73iGE6nJf8z1rIkJP8RLXsgoBPDxN
+	 +HcX++BlFhgNyMFrRRyDO1CLsXXLkhzMEGM0P2RlRCDj36vgHs/6fUR/joukKnbk5f
+	 kxuR/h+OtQwu5ZYBRn/wmtlU51M9usOlP7921ajSXFGV9QnskMFSLwN3ZAAvhYL9Gj
+	 Q5vrLtyAGxxGHPVzR5y8IT4Ll1DSzcj0eUwOdIMuRONUjsRf3/zb/BkZSdmpNk1YKM
+	 By+iPSWw2sfJikAualbxDMYVYJCESl5qBph/Wow3GWhxe0jfgjFGRAVslFIZvCo2Rs
+	 aL47YgL0C0fLQ+AKCKg0JiCe0He5NkDiiIFcqZzgPVD2A0ltjin6JwGoBI5g8IlOIM
+	 cKe6X0u7tO2w3RI4NvxmPy4v85+1PVIv26qQ3yGB3iy9mYEfy/61ukX3c/0J93XW54
+	 0Cm7T+3BBldy/pYuIqyUE9MWnM3G1/eb+aUGO1l7uLv21WwNcaF
+Date: Sat, 6 Jan 2024 18:21:55 +0000
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+To: Maxim Iorsh <iorsh@users.sourceforge.net>
+Cc: git@vger.kernel.org
+Subject: Re: Bug: git log with log.showSignature enabled
+Message-ID: <ZZmaQ0RoxJpU2PSH@tapette.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Maxim Iorsh <iorsh@users.sourceforge.net>, git@vger.kernel.org
+References: <CADQ_TR56X_iMitPEiaOyR_h=1dp9ThUQMu_Vqjest1i8xbh9Tw@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: Maxim Iorsh <iorsh@users.sourceforge.net>
-Date: Sat, 6 Jan 2024 18:56:29 +0200
-Message-ID: <CADQ_TR56X_iMitPEiaOyR_h=1dp9ThUQMu_Vqjest1i8xbh9Tw@mail.gmail.com>
-Subject: Bug: git log with log.showSignature enabled
-To: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="0D/8p0lt1gEZ21Ab"
+Content-Disposition: inline
+In-Reply-To: <CADQ_TR56X_iMitPEiaOyR_h=1dp9ThUQMu_Vqjest1i8xbh9Tw@mail.gmail.com>
+User-Agent: Mutt/2.2.12 (2023-09-09)
+
+
+--0D/8p0lt1gEZ21Ab
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-Thank you for filling out a Git bug report!
-Please answer the following questions to help us understand your issue.
-
-What did you do before the bug happened? (Steps to reproduce your issue)
-
-iorsh-linux:~/devel/fontforge/build> git log -n 1 --oneline
-2aa98f6a5 (HEAD -> master) Dummy signed commit
-iorsh-linux:~/devel/fontforge/build> git config log.showSignature true
-iorsh-linux:~/devel/fontforge/build> git log -n 1 --oneline
-2aa98f6a5 (HEAD -> master) gpg: Signature made 17:47:50 2024 =D7=99=D7=A0=
+On 2024-01-06 at 16:56:29, Maxim Iorsh wrote:
+> Thank you for filling out a Git bug report!
+> Please answer the following questions to help us understand your issue.
+>=20
+> What did you do before the bug happened? (Steps to reproduce your issue)
+>=20
+> iorsh-linux:~/devel/fontforge/build> git log -n 1 --oneline
+> 2aa98f6a5 (HEAD -> master) Dummy signed commit
+> iorsh-linux:~/devel/fontforge/build> git config log.showSignature true
+> iorsh-linux:~/devel/fontforge/build> git log -n 1 --oneline
+> 2aa98f6a5 (HEAD -> master) gpg: Signature made 17:47:50 2024 =D7=99=D7=A0=
 =D7=95 06 =D7=A9' IST
-gpg:                using RSA key XXXXXXXXXX
-gpg:                issuer "iorsh@users.sourceforge.net"
-gpg: Good signature from "Maxim Iorsh <iorsh@users.sourceforge.net>" [ultim=
-ate]
-Dummy signed commit
+> gpg:                using RSA key XXXXXXXXXX
+> gpg:                issuer "iorsh@users.sourceforge.net"
+> gpg: Good signature from "Maxim Iorsh <iorsh@users.sourceforge.net>" [ult=
+imate]
+> Dummy signed commit
+>=20
+> What did you expect to happen? (Expected behavior)
+>=20
+> When asked for oneliner or any specific format, `git log` shouldn't
+> show signature event when configured.
+>=20
+> What happened instead? (Actual behavior)
+>=20
+> `git log` always show signatures with log.showSignature enabled, even
+> for explicit formatting requests.
+>=20
+> What's different between what you expected and what actually happened?
+>=20
+> Anything else you want to add:
+>=20
+> This behavior obviously breaks any script which relies on git log to
+> produce preformatted info about commits. It's also quite rare, becaus
+> e probably very few users set log.showSignature config option.
 
-What did you expect to happen? (Expected behavior)
+I think this is behaving as designed.  git log is a porcelain command,
+which means it's designed for the user to use, but is not intended for
+scripting.  The documentation for `log.showSignature` says this:
 
-When asked for oneliner or any specific format, `git log` shouldn't
-show signature event when configured.
+  If true, makes git-log(1), git-show(1), and git-whatchanged(1) assume --s=
+how-signature.
 
-What happened instead? (Actual behavior)
+As long as the output is what you would have gotten if you manually
+added --show-signature, the result is correct.
 
-`git log` always show signatures with log.showSignature enabled, even
-for explicit formatting requests.
+However, if you want to script things, you can use git rev-list, which
+is a plumbing command that's specifically designed to allow scripting.
+It works very similarly to git log, but doesn't have configuration
+options that change its behaviour, so it doesn't suffer from this
+problem.
 
-What's different between what you expected and what actually happened?
+For example, on one of my branches, I get this:
 
-Anything else you want to add:
+$ git rev-list -n 1 --oneline HEAD
+404bf1f83a credential: add an argument to keep state
 
-This behavior obviously breaks any script which relies on git log to
-produce preformatted info about commits. It's also quite rare, becaus
-e probably very few users set log.showSignature config option.
+Note that the implicit HEAD of git log doesn't work with git rev-list,
+so you need to specify HEAD explicitly.
+--=20
+brian m. carlson (he/him or they/them)
+Toronto, Ontario, CA
 
-Please review the rest of the bug report below.
-You can delete any lines you don't wish to share.
+--0D/8p0lt1gEZ21Ab
+Content-Type: application/pgp-signature; name="signature.asc"
 
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.4.3 (GNU/Linux)
 
-[System Info]
-git version:
-git version 2.34.1
-cpu: x86_64
-no commit associated with this build
-sizeof-long: 8
-sizeof-size_t: 8
-shell-path: /bin/sh
-uname: Linux 5.15.0-91-generic #101-Ubuntu SMP Tue Nov 14 13:30:08 UTC
-2023 x86_64
-compiler info: gnuc: 11.4
-libc info: glibc: 2.35
-$SHELL (typically, interactive shell): /bin/tcsh
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZZmaQwAKCRB8DEliiIei
+gWYOAP9fH+UmrS3A/GIRAv6Wqc38dv4UAFwL4ejAz9a3QqlGjAD+LGp0OL/6Tq8Q
+ggiIkB1PUw9R4hs1TpQMtchNl27T3Qg=
+=9t0T
+-----END PGP SIGNATURE-----
 
-
-[Enabled Hooks]
+--0D/8p0lt1gEZ21Ab--
