@@ -1,123 +1,97 @@
-Received: from smtp2-g21.free.fr (smtp2-g21.free.fr [212.27.42.2])
+Received: from ring.crustytoothpaste.net (ring.crustytoothpaste.net [172.105.110.227])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F47613ACA
-	for <git@vger.kernel.org>; Sun,  7 Jan 2024 15:31:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=free.fr
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=free.fr
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 322CC1118F
+	for <git@vger.kernel.org>; Sun,  7 Jan 2024 19:40:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=free.fr header.i=@free.fr header.b="ad0CPPSX"
-Received: from zimbra39-e7.priv.proxad.net (unknown [172.20.243.189])
-	by smtp2-g21.free.fr (Postfix) with ESMTP id BD7872003D3;
-	Sun,  7 Jan 2024 16:31:14 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=free.fr;
-	s=smtp-20201208; t=1704641474;
-	bh=iovYTBEmEfUK4zgNNmAnN7fjapOhL23y86EjxHpgUtg=;
-	h=Date:From:To:Cc:In-Reply-To:Subject:From;
-	b=ad0CPPSXq3dhYxfeD8i44394mY9/pNUHrCjR24NkHv8rHrl5cRKiGsYocoOc8ei4s
-	 q5PtWtunvxwUGUem0DXlsk5/NlEMfHJskIFeJZ5LNixWKHkbWyKLTfngjzr8T9hgup
-	 E06komMNRLbNEkUy6o1FTUxYzs5gOMryFlOi/h62E334vziJBGgLNX2B7YRsh/ZQd7
-	 60Tms9isYOuRn9UA170xh7Vgxqix5wp1Rxu0I1ELEwPBFpntxaWo3GAliSZSnErU5S
-	 9cOQiwXEK9qoMiZVf4Qd11QFuuhjZLUBzRQSwUPbytWyzcERNa5bwQOwTIVOqhbCMk
-	 eqzIJ8dbTGOTQ==
-Date: Sun, 7 Jan 2024 16:31:14 +0100 (CET)
-From: Yann Dirson <ydirson@free.fr>
-To: git <git@vger.kernel.org>
-Cc: Johannes Sixt <j6t@kdbg.org>
-Message-ID: <2065332308.1823640486.1704641474724.JavaMail.root@zimbra39-e7>
-In-Reply-To: <1930018756.1822864601.1704627466836.JavaMail.root@zimbra39-e7>
-Subject: Interactive rebase doc (Was: Leveraging --rebase-merges
- --update-refs mechanism to rebase several branches in one run)
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="eNDGkF0Q"
+Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:e59a:3ed0:5f5c:31f3])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (P-256) server-signature RSA-PSS (3072 bits) server-digest SHA256)
+	(No client certificate requested)
+	by ring.crustytoothpaste.net (Postfix) with ESMTPSA id 94E265A38E
+	for <git@vger.kernel.org>; Sun,  7 Jan 2024 19:40:22 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1704656422;
+	bh=0IbYGiXjc52B6V/mwi/VhtVG30T86yEDWEnAqebpYzU=;
+	h=Date:From:To:Subject:Content-Type:Content-Disposition:From:
+	 Reply-To:Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:
+	 Resent-Cc:In-Reply-To:References:Content-Type:Content-Disposition;
+	b=eNDGkF0QWcTv7gowL3HHTDD4O0l4pKLhSnbHmfVWrmAKBpmxiVsQlUIMaXPFs759R
+	 xd0MErH1BAh9PDnzYPAKRxRBbp5wt63VGfTlmp+llzkRkSqHmnYgdnPuEFzdPEyWng
+	 mGJGb8l9WwIP7aPHOjmr1/GCNGJB0jWTIhn2+oA/et2H38fuFLasoGNIcJ3NBr/wPO
+	 LG2OEOI5MxaxQcKgl26AvzvBMO8rti97vP+UmoYRUo9Z3xTh/VaPtTr8xwRK+biCmH
+	 GhX8XosI/D9bE46jgEKckFTywRHAPfPM+IPLF1gk4xsDGK4EYEZeE3EORdPdjCM8Mj
+	 tmTfzbNQNOf9D0gWwGicoXEuokQgqXaZlWW6CbeFDw2rRUJ19J4NtUXLh0o2UGETUp
+	 3LfAv611vUaO8oiPtIemreRKqJyE6oAg8PPz4bfr3ObPrfOQQpftXSxzQL21EVuvgH
+	 tg5EDHajplTfEKo0U07XLYHrCDiTxWXL2hAEGTR8nxOkNqCjqqq
+Date: Sun, 7 Jan 2024 19:40:20 +0000
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+To: git@vger.kernel.org
+Subject: Limited operations in unsafe repositories
+Message-ID: <ZZr-JLxubCvWe0EU@tapette.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	git@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="CuiSFmfICWrxh9p+"
+Content-Disposition: inline
+User-Agent: Mutt/2.2.12 (2023-09-09)
+
+
+--CuiSFmfICWrxh9p+
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-X-Mailer: Zimbra 7.2.0-GA2598 (ZimbraWebClient - FF3.0 (Linux)/7.2.0-GA2598)
-X-Authenticated-User: ydirson@free.fr
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> Johannes Sixt wrote:
-> > Am 06.01.24 um 20:05 schrieb Yann Dirson:
-> > > The "core + 1 variant" case pretty much works out of the box,
-> > > with
-> > > --rebase-merges
-> > > and --update-refs generating a perfect instructions sheet.
-> > > 
-> > > But if I was to rebase just one variant while rewriting the core
-> > > branch, obviously
-> > > all other variants would still fork off the pre-rewrite core
-> > > branch, and we'd loose
-> > > all chances of automating the same work on the other variants.
-> > > 
-> > > OTOH, if I get `git-rebase` to generate the instruction sheets
-> > > for
-> > > those other
-> > > variants first, strip them (manually) from the common part, and
-> > > insert them in the
-> > > instruction sheet of my "core + 1 variant" case ... I do get the
-> > > whole of my branches
-> > > rebased together, and sharing the updated core.
-> > 
-> > Not a complete automation, but... You can merge all variant
-> > branches
-> > into a temporary branch (or detached HEAD), even if that are merely
-> > -s
-> > ours merges, and then rebase the temporary branch with
-> > --rebase-merges
-> > --update-refs. This will generate the instruction sheet that you
-> > want.
-> > You can remove the final merge instructions (the temporary ones)
-> > from
-> > the instruction sheet if you do not want them to be executed.
-> 
-> Nice idea, and this is indeed automatable for the most part, Q&D PoC
-> below.
-> 
-> There are a few things I can see missing in this PoC:
-> 
-> - removal of the final merge from instruction sheet
-> 
->   Could be done by wrapping $EDITOR - I'm not particularly fond doing
->   things
->   behind the user's back, but I lack better ideas.
-> 
-> - restoration of HEAD
-> 
->   In the general case it cannot be done from the script, so we would
->   naturally
->   want to do that from the instruction sheet?
-> 
->   While I was at manually removing the final merge, I experimented
->   with changing
->   the "reset onto" to "reset <a branch name>", but that resulted in
->   moving HEAD
->   to the pre-rebase version of the requested branch.
+Right now, any time we try to set up a repository in that's owned by
+another user, we die.  While good for security, this is inconvenient in
+a bunch of ways.
 
-Related to this, I turned to the rebase manpage to get reference
-information about update-ref, but I could not find anything about it:
-only --update-refs is described, but this description also only seems to
-address the non-interactive behavior.
+For example, when Git LFS wants to push data locally, it needs to know
+where the `.git` directory is because it pushes the objects into
+`.git/lfs`.  Thus, we want to do `git rev-parse --absolute-git-dir` to
+find the remote Git directory, but we can't do that if the repository is
+owned by a different user.
 
-In fact:
-- there does not appear to be a reference to the interactive
-instruction sheet in the rebase doc, only in the default template
-- --interactive only directs the user to "Splitting commits", not to
-"interactive mode"
-- the "interactive mode" section really looks more like a didactic intro
-to interactive rebase than like a reference doc
+That issue also affects the Git LFS SSH transfer server (Scutiger),
+which also needs to read the configuration (to set the umask
+appropriately for `core.sharedrepository`).
 
-Would it seem OK to change things as follows?
+I had looked at sending a patch to make `git rev-parse` operate in a
+special mode where it's impossible to invoke any binaries at all, but
+unfortunately, `get_superproject_working_tree` invokes binaries, so
+that's not possible.  (If anyone is interested in picking this up, there
+is a start on it, failing many tests, in the `rev-parse-safe-directory`
+on my GitHub remote.)
 
-- move current "interactive mode", "splitting commits", and "rebasing merges"
-contents into a new gitrebase(7) guide
-- leave in git-rebase(1) only an "interactive mode" with the reference doc
-for the instruction sheet, and a pointer to the guide for detailed walkthrough
-- selectively move back a few things like --strategy paragraph from
-"rebasing merges"
+I guess I'm looking for us to provide some basic functionality that is
+guaranteed to work in this case, including `git rev-parse` and `git
+config -l`.  I don't think it's useful for every program that wants to
+work with Git to need to implement its own repository discovery and
+config parsing, and those are essential needs for tooling that needs to
+work with untrusted repositories.
+--=20
+brian m. carlson (he/him or they/them)
+Toronto, Ontario, CA
 
-Best regards,
--- 
-Yann
+--CuiSFmfICWrxh9p+
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.4.3 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZZr+IwAKCRB8DEliiIei
+gWMeAP4jWd2wI1uX1uZF+mfQcl2inVM6wnTEqQtAtEuE2xBT3wD/WwBJueATP4jY
+UPljV8te7Tk0N7Xnl7SiNDmRDl7G0QQ=
+=PwZC
+-----END PGP SIGNATURE-----
+
+--CuiSFmfICWrxh9p+--
