@@ -1,97 +1,184 @@
-Received: from ring.crustytoothpaste.net (ring.crustytoothpaste.net [172.105.110.227])
+Received: from bsmtp5.bon.at (bsmtp5.bon.at [195.3.86.187])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 322CC1118F
-	for <git@vger.kernel.org>; Sun,  7 Jan 2024 19:40:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="eNDGkF0Q"
-Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:e59a:3ed0:5f5c:31f3])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (P-256) server-signature RSA-PSS (3072 bits) server-digest SHA256)
-	(No client certificate requested)
-	by ring.crustytoothpaste.net (Postfix) with ESMTPSA id 94E265A38E
-	for <git@vger.kernel.org>; Sun,  7 Jan 2024 19:40:22 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1704656422;
-	bh=0IbYGiXjc52B6V/mwi/VhtVG30T86yEDWEnAqebpYzU=;
-	h=Date:From:To:Subject:Content-Type:Content-Disposition:From:
-	 Reply-To:Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:
-	 Resent-Cc:In-Reply-To:References:Content-Type:Content-Disposition;
-	b=eNDGkF0QWcTv7gowL3HHTDD4O0l4pKLhSnbHmfVWrmAKBpmxiVsQlUIMaXPFs759R
-	 xd0MErH1BAh9PDnzYPAKRxRBbp5wt63VGfTlmp+llzkRkSqHmnYgdnPuEFzdPEyWng
-	 mGJGb8l9WwIP7aPHOjmr1/GCNGJB0jWTIhn2+oA/et2H38fuFLasoGNIcJ3NBr/wPO
-	 LG2OEOI5MxaxQcKgl26AvzvBMO8rti97vP+UmoYRUo9Z3xTh/VaPtTr8xwRK+biCmH
-	 GhX8XosI/D9bE46jgEKckFTywRHAPfPM+IPLF1gk4xsDGK4EYEZeE3EORdPdjCM8Mj
-	 tmTfzbNQNOf9D0gWwGicoXEuokQgqXaZlWW6CbeFDw2rRUJ19J4NtUXLh0o2UGETUp
-	 3LfAv611vUaO8oiPtIemreRKqJyE6oAg8PPz4bfr3ObPrfOQQpftXSxzQL21EVuvgH
-	 tg5EDHajplTfEKo0U07XLYHrCDiTxWXL2hAEGTR8nxOkNqCjqqq
-Date: Sun, 7 Jan 2024 19:40:20 +0000
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: git@vger.kernel.org
-Subject: Limited operations in unsafe repositories
-Message-ID: <ZZr-JLxubCvWe0EU@tapette.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	git@vger.kernel.org
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C9BC11702
+	for <git@vger.kernel.org>; Sun,  7 Jan 2024 20:02:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kdbg.org
+Received: from bsmtp2.bon.at (unknown [192.168.181.105])
+	by bsmtp5.bon.at (Postfix) with ESMTPS id 4T7SlZ1z3yz5tyS
+	for <git@vger.kernel.org>; Sun,  7 Jan 2024 21:02:18 +0100 (CET)
+Received: from [192.168.0.101] (unknown [93.83.142.38])
+	by bsmtp2.bon.at (Postfix) with ESMTPSA id 4T7SlP1xyGz5tl9;
+	Sun,  7 Jan 2024 21:02:09 +0100 (CET)
+Message-ID: <de9cf40a-1ad6-45fb-8b70-8b0c71a3bfbb@kdbg.org>
+Date: Sun, 7 Jan 2024 21:02:09 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="CuiSFmfICWrxh9p+"
-Content-Disposition: inline
-User-Agent: Mutt/2.2.12 (2023-09-09)
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v6 1/1] mingw: give more details about unsafe directory's
+ ownership
+Content-Language: en-US
+To: =?UTF-8?Q?S=C3=B6ren_Krecker?= <soekkle@freenet.de>
+Cc: sunshine@sunshineco.com, git@vger.kernel.org
+References: <xmqqbka07te6.fsf@gitster.g>
+ <20240106112917.1870-1-soekkle@freenet.de>
+ <20240106112917.1870-2-soekkle@freenet.de>
+From: Johannes Sixt <j6t@kdbg.org>
+In-Reply-To: <20240106112917.1870-2-soekkle@freenet.de>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
+Am 06.01.24 um 12:29 schrieb Sören Krecker:
+> Add domain/username in error message, if owner sid of repository and
+> user sid are not equal on windows systems.
+> 
+> Old error message:
+> '''
+> fatal: detected dubious ownership in repository at 'C:/Users/test/source/repos/git'
+> 'C:/Users/test/source/repos/git' is owned by:
+> 	'S-1-5-21-571067702-4104414259-3379520149-500'
+> but the current user is:
+> 	'S-1-5-21-571067702-4104414259-3379520149-1001'
+> To add an exception for this directory, call:
+> 
+> 	git config --global --add safe.directory C:/Users/test/source/repos/git
+> '''
+> 
+> New error message:
+> '''
+> fatal: detected dubious ownership in repository at 'C:/Users/test/source/repos/git'
+> 'C:/Users/test/source/repos/git' is owned by:
+>         'DESKTOP-L78JVA6/Administrator' (S-1-5-21-571067702-4104414259-3379520149-500)
+> but the current user is:
+>         'DESKTOP-L78JVA6/test' (S-1-5-21-571067702-4104414259-3379520149-1001)
+> To add an exception for this directory, call:
+> 
+>         git config --global --add safe.directory C:/Users/test/source/repos/git
+> '''
 
---CuiSFmfICWrxh9p+
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+I am not a fan of putting everything and the kitchen sink inside quotes.
+In particular, the single-quotes around the user names are unnecessary,
+IMO. Would you mind dropping them? (I do not mean to remove the quotes
+around the path names because you do not touch this part of the code.)
 
-Right now, any time we try to set up a repository in that's owned by
-another user, we die.  While good for security, this is inconvenient in
-a bunch of ways.
+> 
+> Signed-off-by: Sören Krecker <soekkle@freenet.de>
+> ---
+>  compat/mingw.c | 64 ++++++++++++++++++++++++++++++++++++++++----------
+>  1 file changed, 51 insertions(+), 13 deletions(-)
+> 
+> diff --git a/compat/mingw.c b/compat/mingw.c
+> index 42053c1f65..6240387205 100644
+> --- a/compat/mingw.c
+> +++ b/compat/mingw.c
+> @@ -2684,6 +2684,26 @@ static PSID get_current_user_sid(void)
+>  	return result;
+>  }
+>  
+> +static BOOL user_sid_to_user_name(PSID sid, LPSTR *str)
+> +{
+> +	SID_NAME_USE pe_use;
+> +	DWORD len_user = 0, len_domain = 0;
+> +	BOOL translate_sid_to_user;
+> +
+> +	/* returns only FALSE, because the string pointers are NULL*/
+> +	LookupAccountSidA(NULL, sid, NULL, &len_user, NULL, &len_domain,
+> +			  &pe_use); 
+> +	/*Alloc needed space of the strings*/
 
-For example, when Git LFS wants to push data locally, it needs to know
-where the `.git` directory is because it pushes the objects into
-`.git/lfs`.  Thus, we want to do `git rev-parse --absolute-git-dir` to
-find the remote Git directory, but we can't do that if the repository is
-owned by a different user.
+This comment line doesn't follow our style. Please either fix that (add
+blanks after /* and before */ or (my preference) remove it altogether;
+the code is clear without it.
 
-That issue also affects the Git LFS SSH transfer server (Scutiger),
-which also needs to read the configuration (to set the umask
-appropriately for `core.sharedrepository`).
+> +	ALLOC_ARRAY((*str), (size_t)len_domain + (size_t)len_user); 
+> +	translate_sid_to_user = LookupAccountSidA(NULL, sid, (*str) + len_domain, &len_user,
+> +				   *str, &len_domain, &pe_use);
+> +	if (translate_sid_to_user == FALSE)
 
-I had looked at sending a patch to make `git rev-parse` operate in a
-special mode where it's impossible to invoke any binaries at all, but
-unfortunately, `get_superproject_working_tree` invokes binaries, so
-that's not possible.  (If anyone is interested in picking this up, there
-is a start on it, failing many tests, in the `rev-parse-safe-directory`
-on my GitHub remote.)
+We prefer to write this condition as
 
-I guess I'm looking for us to provide some basic functionality that is
-guaranteed to work in this case, including `git rev-parse` and `git
-config -l`.  I don't think it's useful for every program that wants to
-work with Git to need to implement its own repository discovery and
-config parsing, and those are essential needs for tooling that needs to
-work with untrusted repositories.
---=20
-brian m. carlson (he/him or they/them)
-Toronto, Ontario, CA
+	if (!translate_sid_to_user)
 
---CuiSFmfICWrxh9p+
-Content-Type: application/pgp-signature; name="signature.asc"
+> +		FREE_AND_NULL(*str);
+> +	else
+> +		(*str)[len_domain] = '/';
+> +	return translate_sid_to_user;
+> +}
+> +
+>  static int acls_supported(const char *path)
+>  {
+>  	size_t offset = offset_1st_component(path);
+> @@ -2765,27 +2785,45 @@ int is_path_owned_by_current_sid(const char *path, struct strbuf *report)
+>  			strbuf_addf(report, "'%s' is on a file system that does "
+>  				    "not record ownership\n", path);
+>  		} else if (report) {
+> -			LPSTR str1, str2, to_free1 = NULL, to_free2 = NULL;
+> +			LPSTR str1, str2, str3, str4, to_free1 = NULL, to_free3 = NULL, to_local_free2=NULL, to_local_free4=NULL;
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.4.3 (GNU/Linux)
+This line grew a bit long now. Maybe break it to have lines not exceed
+80 characters? While you do so, please insert blanks around = signs.
 
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZZr+IwAKCRB8DEliiIei
-gWMeAP4jWd2wI1uX1uZF+mfQcl2inVM6wnTEqQtAtEuE2xBT3wD/WwBJueATP4jY
-UPljV8te7Tk0N7Xnl7SiNDmRDl7G0QQ=
-=PwZC
------END PGP SIGNATURE-----
+>  
+> -			if (ConvertSidToStringSidA(sid, &str1))
+> +			if (user_sid_to_user_name(sid, &str1))
+>  				to_free1 = str1;
+>  			else
+>  				str1 = "(inconvertible)";
+> -
+> -			if (!current_user_sid)
+> -				str2 = "(none)";
+> -			else if (!IsValidSid(current_user_sid))
+> -				str2 = "(invalid)";
+> -			else if (ConvertSidToStringSidA(current_user_sid, &str2))
+> -				to_free2 = str2;
+> +			if (ConvertSidToStringSidA(sid, &str2))
+> +				to_local_free2 = str2;
+>  			else
+>  				str2 = "(inconvertible)";
+> +
+> +			if (!current_user_sid) {
+> +				str3 = "(none)";
+> +				str4 = "(none)";
+> +			}
+> +			else if (!IsValidSid(current_user_sid)) {
+> +				str3 = "(invalid)";
+> +				str4 = "(invalid)";
+> +			} else {
+> +				if (user_sid_to_user_name(current_user_sid,
+> +							  &str3))
+> +					to_free3 = str3;
+> +				else
+> +					str3 = "(inconvertible)";
+> +				if (ConvertSidToStringSidA(current_user_sid,
+> +							   &str4))
+> +					to_local_free4 = str4;
+> +				else
+> +					str4 = "(inconvertible)";
+> +			}
+>  			strbuf_addf(report,
+>  				    "'%s' is owned by:\n"
+> -				    "\t'%s'\nbut the current user is:\n"
+> -				    "\t'%s'\n", path, str1, str2);
+> -			LocalFree(to_free1);
+> -			LocalFree(to_free2);
+> +				    "\t'%s' (%s)\nbut the current user is:\n"
+> +				    "\t'%s' (%s)\n",
+> +				    path, str1, str2, str3, str4);
+> +			free(to_free1);
+> +			LocalFree(to_local_free2);
+> +			free(to_free3);
+> +			LocalFree(to_local_free4);
+>  		}
+>  	}
+>  
 
---CuiSFmfICWrxh9p+--
+Aside from this, the patch works well for me. It is a real usability
+improvement. Thank you for working on it.
+
+-- Hannes
+
