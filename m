@@ -1,93 +1,123 @@
-Received: from wout5-smtp.messagingengine.com (wout5-smtp.messagingengine.com [64.147.123.21])
+Received: from smtp2-g21.free.fr (smtp2-g21.free.fr [212.27.42.2])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E64ED134D8
-	for <git@vger.kernel.org>; Sun,  7 Jan 2024 15:22:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=lemon.garden
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lemon.garden
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F47613ACA
+	for <git@vger.kernel.org>; Sun,  7 Jan 2024 15:31:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=free.fr
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=free.fr
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=lemon.garden header.i=@lemon.garden header.b="rCAJqcwB";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="t693q34Q"
-Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
-	by mailout.west.internal (Postfix) with ESMTP id F1D8A3200A32
-	for <git@vger.kernel.org>; Sun,  7 Jan 2024 10:22:23 -0500 (EST)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute6.internal (MEProxy); Sun, 07 Jan 2024 10:22:24 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=lemon.garden; h=
-	cc:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
-	:subject:to:to; s=fm2; t=1704640943; x=1704727343; bh=Tkhzr5fiII
-	aXfmn26CJfYnNCTMaanMKo7FTCQeWqrfs=; b=rCAJqcwBJXXdZhVGch22wvl+r/
-	kQ26ETRrIpb114fs5D4vqZfyXHzOSY1VJqYPBw9XaewM8y1XEkfPT+v81B+TngLc
-	pOBvPDoxNv0V/TLC2ipPy+irWzb3we2aQPlxrEkXouWuYTppwn+GNGkJuAYk+TVI
-	edzvx68KqMrN8a/166qEycihgclgSsxy+whtSHsRm6aXrgAt5r0f+BDVYPmV/f96
-	Kz+UID721BvnZ6aSNqGpY+pj5ocZ1VerAOejQRSxnVuQEheX+Xq0jvLW1HD7MlMU
-	wJ7g/btyWAjFBkcpEDbmdLALlqLEBvpjRHSDzQ2hMan3pwbOe5h3SIulugRg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-transfer-encoding:content-type
-	:content-type:date:date:feedback-id:feedback-id:from:from
-	:in-reply-to:message-id:mime-version:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1704640943; x=1704727343; bh=Tkhzr5fiIIaXfmn26CJfYnNCTMaa
-	nMKo7FTCQeWqrfs=; b=t693q34QvJI4nFZoHYJEQPKbx8j5Y2uc4KB5R+Hu5f6V
-	nMY7FAbxwTLKuiGIdZFZqYgZwe3faoftI/WqlbRj5TZ/KpqxdJq20Zpdkh80plew
-	nkCBeU3r1/kH9XScWo9AcQ3v6RgNdC6eb46gs3n/1JPihr2dDSNlzghmoinuFIJB
-	Qygq70SWNPSwrazH/6t8CFOvf6K4U8b4cZOdjfuZbe571pi/4WlDgVgR0DQQbooo
-	d1pe34wP9ePK4Dph/JSRq+vDUgMznF5oO9bdXUA5AkgR0dkwB5KQrw/WrTsPjHPr
-	sFcaeQ0TrsAD2rZNsgA3aeNV19TnGF23HhU80rjUWw==
-X-ME-Sender: <xms:r8GaZVLh-7GeYqB3YMQgzZFLzAlULSEY7BdsgRQxvwc_4M0D8nByyA>
-    <xme:r8GaZRK4PDB4fIfSf20_WtNffxmwVAku6BgaCyOLRAo5iZqwcg_-rVsZupXP4_i7J
-    T7-NOz3MtUkOWS7WWw>
-X-ME-Received: <xmr:r8GaZdvjMluq73KXJzZxZ2e5CDP6aHZ3_2Tln4Z0r77mW5SP0Oxi51g1ARx5YU9IVFDXGCzjJdo5mYHJgTvosYUUfu2Jds4WnA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrvdehgedgudehucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucenucfjughrpefhtgfgggfukfffvffosehtqhhmtd
-    hhtddvnecuhfhrohhmpefprghthhgrnhcuofgrnhgtvggruhigqdfrrghnohhtuceofhhr
-    vghshhdrthhrvggvfeeihedusehlvghmohhnrdhgrghruggvnheqnecuggftrfgrthhtvg
-    hrnhepveekudekhfejhfduleffueelvdfgudduteeufedvheelkeetkeejfeefudegvdeu
-    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepfhhrvg
-    hshhdrthhrvggvfeeihedusehlvghmohhnrdhgrghruggvnh
-X-ME-Proxy: <xmx:r8GaZWYyKcqiCgtjIeaZKHSbzpzRvvpalU6BBdYZs9BPWpRHx0CYGQ>
-    <xmx:r8GaZcbdHT2LYN-NBZhs4QSX7NM9tMIaWlBvdGZkAli2KuiUwF8tZA>
-    <xmx:r8GaZaDtZYJWucKKQEKbXbU8TcFIiVL20i9me_dKvVNfWU_s0YwI8Q>
-    <xmx:r8GaZS0bhSYhuaddol8bD7KS3QUngQGg9LbZARRmQ-CMajtYOjkgoA>
-Feedback-ID: i28a14937:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Sun, 7 Jan 2024 10:22:22 -0500 (EST)
-From: Nathan Manceaux-Panot <fresh.tree3651@lemon.garden>
-Content-Type: text/plain;
-	charset=us-ascii
-Content-Transfer-Encoding: quoted-printable
+	dkim=pass (2048-bit key) header.d=free.fr header.i=@free.fr header.b="ad0CPPSX"
+Received: from zimbra39-e7.priv.proxad.net (unknown [172.20.243.189])
+	by smtp2-g21.free.fr (Postfix) with ESMTP id BD7872003D3;
+	Sun,  7 Jan 2024 16:31:14 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=free.fr;
+	s=smtp-20201208; t=1704641474;
+	bh=iovYTBEmEfUK4zgNNmAnN7fjapOhL23y86EjxHpgUtg=;
+	h=Date:From:To:Cc:In-Reply-To:Subject:From;
+	b=ad0CPPSXq3dhYxfeD8i44394mY9/pNUHrCjR24NkHv8rHrl5cRKiGsYocoOc8ei4s
+	 q5PtWtunvxwUGUem0DXlsk5/NlEMfHJskIFeJZ5LNixWKHkbWyKLTfngjzr8T9hgup
+	 E06komMNRLbNEkUy6o1FTUxYzs5gOMryFlOi/h62E334vziJBGgLNX2B7YRsh/ZQd7
+	 60Tms9isYOuRn9UA170xh7Vgxqix5wp1Rxu0I1ELEwPBFpntxaWo3GAliSZSnErU5S
+	 9cOQiwXEK9qoMiZVf4Qd11QFuuhjZLUBzRQSwUPbytWyzcERNa5bwQOwTIVOqhbCMk
+	 eqzIJ8dbTGOTQ==
+Date: Sun, 7 Jan 2024 16:31:14 +0100 (CET)
+From: Yann Dirson <ydirson@free.fr>
+To: git <git@vger.kernel.org>
+Cc: Johannes Sixt <j6t@kdbg.org>
+Message-ID: <2065332308.1823640486.1704641474724.JavaMail.root@zimbra39-e7>
+In-Reply-To: <1930018756.1822864601.1704627466836.JavaMail.root@zimbra39-e7>
+Subject: Interactive rebase doc (Was: Leveraging --rebase-merges
+ --update-refs mechanism to rebase several branches in one run)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3774.200.91.1.1\))
-Subject: Analyzing a corrupted index file
-Message-Id: <B38C5D82-33E3-4D10-8119-7E0D59DD3DA2@lemon.garden>
-Date: Sun, 7 Jan 2024 16:22:02 +0100
-To: git@vger.kernel.org
-X-Mailer: Apple Mail (2.3774.200.91.1.1)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+X-Mailer: Zimbra 7.2.0-GA2598 (ZimbraWebClient - FF3.0 (Linux)/7.2.0-GA2598)
+X-Authenticated-User: ydirson@free.fr
 
-Hello all,
+> Johannes Sixt wrote:
+> > Am 06.01.24 um 20:05 schrieb Yann Dirson:
+> > > The "core + 1 variant" case pretty much works out of the box,
+> > > with
+> > > --rebase-merges
+> > > and --update-refs generating a perfect instructions sheet.
+> > > 
+> > > But if I was to rebase just one variant while rewriting the core
+> > > branch, obviously
+> > > all other variants would still fork off the pre-rewrite core
+> > > branch, and we'd loose
+> > > all chances of automating the same work on the other variants.
+> > > 
+> > > OTOH, if I get `git-rebase` to generate the instruction sheets
+> > > for
+> > > those other
+> > > variants first, strip them (manually) from the common part, and
+> > > insert them in the
+> > > instruction sheet of my "core + 1 variant" case ... I do get the
+> > > whole of my branches
+> > > rebased together, and sharing the updated core.
+> > 
+> > Not a complete automation, but... You can merge all variant
+> > branches
+> > into a temporary branch (or detached HEAD), even if that are merely
+> > -s
+> > ours merges, and then rebase the temporary branch with
+> > --rebase-merges
+> > --update-refs. This will generate the instruction sheet that you
+> > want.
+> > You can remove the final merge instructions (the temporary ones)
+> > from
+> > the instruction sheet if you do not want them to be executed.
+> 
+> Nice idea, and this is indeed automatable for the most part, Q&D PoC
+> below.
+> 
+> There are a few things I can see missing in this PoC:
+> 
+> - removal of the final merge from instruction sheet
+> 
+>   Could be done by wrapping $EDITOR - I'm not particularly fond doing
+>   things
+>   behind the user's back, but I lack better ideas.
+> 
+> - restoration of HEAD
+> 
+>   In the general case it cannot be done from the script, so we would
+>   naturally
+>   want to do that from the instruction sheet?
+> 
+>   While I was at manually removing the final merge, I experimented
+>   with changing
+>   the "reset onto" to "reset <a branch name>", but that resulted in
+>   moving HEAD
+>   to the pre-rebase version of the requested branch.
 
-I have a corrupted git index file, and am trying to read it by hand, to =
-understand what's wrong with it. Are there any tools that'll let me =
-parse the on-disk, binary version of the index file, to unpack it into a =
-human-readable data structure?
-I found the spec for the index binary format, but reading it in that way =
-is beyond my abilities.
+Related to this, I turned to the rebase manpage to get reference
+information about update-ref, but I could not find anything about it:
+only --update-refs is described, but this description also only seems to
+address the non-interactive behavior.
 
-For context, I'm writing a git tool, and my code is causing the index =
-file to be screwed up in some unknown way. When it's in that state, git =
-(v2.43) becomes inconsistent with itself:
-- In the workdir, the file contains A
-- According to `git show :file`, the file in the index contains B
-- But `git diff` reports no changes!
-The inconsistency goes away with a simple `git reset`, but can then be =
-easily reproduced by re-executing my tool.
+In fact:
+- there does not appear to be a reference to the interactive
+instruction sheet in the rebase doc, only in the default template
+- --interactive only directs the user to "Splitting commits", not to
+"interactive mode"
+- the "interactive mode" section really looks more like a didactic intro
+to interactive rebase than like a reference doc
 
-Thank you,
-Nathan
+Would it seem OK to change things as follows?
 
+- move current "interactive mode", "splitting commits", and "rebasing merges"
+contents into a new gitrebase(7) guide
+- leave in git-rebase(1) only an "interactive mode" with the reference doc
+for the instruction sheet, and a pointer to the guide for detailed walkthrough
+- selectively move back a few things like --strategy paragraph from
+"rebasing merges"
+
+Best regards,
+-- 
+Yann
