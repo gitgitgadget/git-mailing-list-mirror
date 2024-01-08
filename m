@@ -1,44 +1,44 @@
 Received: from out3-smtp.messagingengine.com (out3-smtp.messagingengine.com [66.111.4.27])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1989A14A8D
-	for <git@vger.kernel.org>; Mon,  8 Jan 2024 10:05:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D85B14A90
+	for <git@vger.kernel.org>; Mon,  8 Jan 2024 10:05:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="OKVc/T5Y";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="uYkSuIKE"
-Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
-	by mailout.nyi.internal (Postfix) with ESMTP id 386855C17BC;
-	Mon,  8 Jan 2024 05:05:42 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="anJwvVMR";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="2LKoM+hi"
+Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
+	by mailout.nyi.internal (Postfix) with ESMTP id 939E35C17BF;
+	Mon,  8 Jan 2024 05:05:46 -0500 (EST)
 Received: from mailfrontend2 ([10.202.2.163])
-  by compute6.internal (MEProxy); Mon, 08 Jan 2024 05:05:42 -0500
+  by compute3.internal (MEProxy); Mon, 08 Jan 2024 05:05:46 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1704708342; x=1704794742; bh=rq39K/0IFR
-	FERDws20nMVI9KKN0Ty1Qanko7HeTZ4wI=; b=OKVc/T5YyOTpar7KsUwdAs7w6j
-	/b6FEOwr9PZRWBRO2oiR3WIQGF7w4g1KRJatHG+H2sjATgUnvW6We83zHGeYkYMg
-	QWNZKO/mmdF8jtFHxiR+RQEmpElYJDzsKlnLj1WfsJot1b8PSmS1LdBuCpxReKJy
-	Op4ffpsGsehyNZ5oPalHorl6RJ3F9EheyTjn2EpZQQvZPRe+RxrCc0voy+p9lJ3F
-	NDWAtVE5iL7NlePSXzXM7u7RuC5h5jBYtHQ9xIs6sRQs7eXDwGCp7YTK5tCkLtQv
-	53W1O9UUKN8wIkmZDBzRWVzK2rlp1l0b+MglPa+Bv1qtBRhd7C0z62ld+drw==
+	:subject:to:to; s=fm2; t=1704708346; x=1704794746; bh=yS4bNgNyoO
+	WJgSOZGpQCn0dV8NLN59V9hdpmjptq+hM=; b=anJwvVMRbdEafQ3K93HXpsEZf0
+	KY6sxLzAQ0hPywTDRnwyBXWRa+h8PHZjaGZKSl/1ycxBuSmTuIcXpGzf1OAxndUR
+	UDPh6s9UTszwBdjCzoWu1kpDp/q243/RFJKLAZGjB5Lvu3xxOeeehzwoCynVfTax
+	W0NU1kMhXGmZMjvchS7xmBxoNDLxTbjHJ5vtuZsPXfYaYxbMRUis3DpVcY/pcR+W
+	FebcEhBR2hwPY8F0biXEoikjS4NYzBUUpFaTWhDuPQFyz+woePWDaRBDIx2UyVCs
+	ni1kV7iwpH5QSs8B4Zw5wAVMOtucE5F9KiIU5aHswAixkW6DQjt9iDGe+KWg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1704708342; x=1704794742; bh=rq39K/0IFRFERDws20nMVI9KKN0T
-	y1Qanko7HeTZ4wI=; b=uYkSuIKEjRl6oKceKe53Zv4memsuVLWQk3LIuscHyh8c
-	LjRvIjvQEEUGcdtKGjvG1Q6wZztSNH5DFL8HzLtLu4YzKHN3O5L79rRJ0ryrdc1s
-	hT77QJ1co4JqDRXa8JzODaT2/xX3XZqEw9WczQuj96pc2x2CpHNnuTNCe0M8876z
-	nBtMRxEZANHYNs+bhH5YzAv8j3JdEpZ1gnJGrYeQSUsptFFIYupSNwH6vqQJ6W1W
-	ab6TIa681kI6ylFD4TigzTEMjWmkw87RBRXSmNRWrFTSp1Sn41PMcuYiAi/OWYDv
-	0QbCTS+3dhy/DHYY6BNJ0DJym3XKB5Jn6Hi06ZZzBg==
-X-ME-Sender: <xms:9cibZZpa2n_mg0qts2EYNRsdfLIZMQ7o2MWxggO5Czzndf7ObBExsw>
-    <xme:9cibZboLTffOePm5EaVvQ6DXfTp5O8zEnxXY5SxRDpQuacgtabGb8YqUnJE7u5T4H
-    0hpyJwSFybYfroWYg>
-X-ME-Received: <xmr:9cibZWNyL5c-4Hzm83IqBubNwU8L8bI5k4Ynwybg92LuHMbIwxtyrV5zP7gZjAMglM6asFFiwPuw_c6iHut7pzdhc1RNqxfgeuiJ-xwSG24LVOQ>
+	fm2; t=1704708346; x=1704794746; bh=yS4bNgNyoOWJgSOZGpQCn0dV8NLN
+	59V9hdpmjptq+hM=; b=2LKoM+hi1FyDKxnXjP4WGNTWTP17qO4hFWFPgi1JFAw8
+	WKKfNOqz9KBqXxwtf9F8eLoK4+Lkq7uT9kKkRL27KCYgHe2OvbOq3NXL1uymBE+S
+	/W46WA1dw2c2tu/SfqeFMaheN+tkW9bZUKM7fN3LvzsmSY6Jfz7PrlLdmgAZpcoJ
+	V8xmBgSijGWShyo4bGV4LiwAMz+8jhQv3cI1k8MNWj1D2j+7Q+2pLZPkoDP1Bv2+
+	yyWJzvzgSx5hOnUvdSJLP+M2BX2Bid6JtYJbzomD1ynsODw3cuSmtI15pl2KjrMX
+	/fONPh9b8wD89a+3LfxUvE8dPozbyrhCSUKLERw1hQ==
+X-ME-Sender: <xms:-sibZR3c9lpEOsdMJ3EGLYpkTk0SiSGLpTXheXTcKbZrQRTEoUAGVw>
+    <xme:-sibZYHij92dkt4h2n2xZAMBEKT4j7EtHlWcmTaXlY9UjlK9KhueDm0eU2rNM6Y5l
+    rKzXWrO_UKRgfyvmA>
+X-ME-Received: <xmr:-sibZR6vD0BemBlL-7P14ma-d4pKllDTQG209AlwQxlHw7A_TT9zAdIYambzgKZSFgE0fmeIcejO-RVf62Kt31b58_-C3XWeuVQNOwLwJNgsbi0>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrvdehjedgudduucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
     uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
@@ -47,24 +47,24 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrvdehjedgudduucetufdoteggod
     hrnhepueektdevtdffveeljeetgfehheeigeekleduvdeffeeghefgledttdehjeelffet
     necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
     hpkhhsrdhimh
-X-ME-Proxy: <xmx:9cibZU4SIJIH44rP9Ualo1WR-MmRp4Zr2jBdYB3SJX4EvugDa3rtKg>
-    <xmx:9cibZY6jRcgtEApEW4MV2uIIehnrkw6lYGV0xJrI2kCKfYuxCDblMA>
-    <xmx:9cibZcjTZkIdhSNj72ubylxYp5fBOnX-qKv7l05oky2BGgxWrm0FXw>
-    <xmx:9sibZYFU4KOj3nfWsUor2VF031VwqyqSpZtJqhcB1E9c1zntIwZiuw>
+X-ME-Proxy: <xmx:-sibZe3vjRaWqSuLfzZLrebEOou3EFNxSMXw5thJYZ8QmyeYz5btBQ>
+    <xmx:-sibZUHavRBBIybh8L4GErs4u-yZ3ZuR40FwXaNJilRjO0K-FiolYA>
+    <xmx:-sibZf_vvsW3zNhB6xG1xY4vRBFKlcX1QBdt69hgGQAZlSUMqEJk9g>
+    <xmx:-sibZZSON7ohjOoxQPlX-9mzNrWM8IrhgIYxO1uaskv1IFgCHj1maA>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 8 Jan 2024 05:05:40 -0500 (EST)
+ 8 Jan 2024 05:05:45 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id b5c5205f (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 8 Jan 2024 10:03:04 +0000 (UTC)
-Date: Mon, 8 Jan 2024 11:05:39 +0100
+	by vm-mail (OpenSMTPD) with ESMTPSA id b088f2c9 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 8 Jan 2024 10:03:09 +0000 (UTC)
+Date: Mon, 8 Jan 2024 11:05:43 +0100
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
 Cc: Junio C Hamano <gitster@pobox.com>,
 	Karthik Nayak <karthik.188@gmail.com>,
 	Eric Sunshine <sunshine@sunshineco.com>
-Subject: [PATCH v2 4/6] builtin/worktree: move setup of commondir file earlier
-Message-ID: <f2eb02028840fb791b038550d6af7fba3ff49731.1704705733.git.ps@pks.im>
+Subject: [PATCH v2 5/6] worktree: expose interface to look up worktree by name
+Message-ID: <5525a9f9c2dbc424ef5ba4f766eb6143185bfe5d.1704705733.git.ps@pks.im>
 References: <cover.1703754513.git.ps@pks.im>
  <cover.1704705733.git.ps@pks.im>
 Precedence: bulk
@@ -74,77 +74,130 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="VyZVWAtQ4IPPIS0T"
+	protocol="application/pgp-signature"; boundary="Q0W+/uCos0kKC1KM"
 Content-Disposition: inline
 In-Reply-To: <cover.1704705733.git.ps@pks.im>
 
 
---VyZVWAtQ4IPPIS0T
+--Q0W+/uCos0kKC1KM
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-Shuffle around how we create supporting worktree files so that we first
-ensure that the worktree has all link files ("gitdir", "commondir")
-before we try to initialize the ref database by writing "HEAD". This
-will be required by a subsequent commit where we start to initialize the
-ref database via `refs_init_db()`, which will require an initialized
-`struct worktree *`.
+Our worktree interfaces do not provide a way to look up a worktree by
+its name. Expose `get_linked_worktree()` to allow for this usecase. As
+callers are responsible for freeing this worktree, introduce a new
+function `free_worktree()` that does so.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- builtin/worktree.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ worktree.c | 27 ++++++++++++++++-----------
+ worktree.h | 12 ++++++++++++
+ 2 files changed, 28 insertions(+), 11 deletions(-)
 
-diff --git a/builtin/worktree.c b/builtin/worktree.c
-index 4ac1621541..58937a2a68 100644
---- a/builtin/worktree.c
-+++ b/builtin/worktree.c
-@@ -495,6 +495,10 @@ static int add_worktree(const char *path, const char *=
-refname,
- 	strbuf_realpath(&realpath, get_git_common_dir(), 1);
- 	write_file(sb_git.buf, "gitdir: %s/worktrees/%s",
- 		   realpath.buf, name);
-+	strbuf_reset(&sb);
-+	strbuf_addf(&sb, "%s/commondir", sb_repo.buf);
-+	write_file(sb.buf, "../..");
-+
- 	/*
- 	 * This is to keep resolve_ref() happy. We need a valid HEAD
- 	 * or is_git_directory() will reject the directory. Any value which
-@@ -505,9 +509,6 @@ static int add_worktree(const char *path, const char *r=
-efname,
- 	strbuf_reset(&sb);
- 	strbuf_addf(&sb, "%s/HEAD", sb_repo.buf);
- 	write_file(sb.buf, "%s", oid_to_hex(null_oid()));
--	strbuf_reset(&sb);
--	strbuf_addf(&sb, "%s/commondir", sb_repo.buf);
--	write_file(sb.buf, "../..");
+diff --git a/worktree.c b/worktree.c
+index cc34a3419b..5d5dd46609 100644
+--- a/worktree.c
++++ b/worktree.c
+@@ -12,18 +12,23 @@
+ #include "wt-status.h"
+ #include "config.h"
 =20
- 	/*
- 	 * If the current worktree has sparse-checkout enabled, then copy
++void free_worktree(struct worktree *worktree)
++{
++	if (!worktree)
++		return;
++	free(worktree->path);
++	free(worktree->id);
++	free(worktree->head_ref);
++	free(worktree->lock_reason);
++	free(worktree->prune_reason);
++	free(worktree);
++}
++
+ void free_worktrees(struct worktree **worktrees)
+ {
+ 	int i =3D 0;
+-
+-	for (i =3D 0; worktrees[i]; i++) {
+-		free(worktrees[i]->path);
+-		free(worktrees[i]->id);
+-		free(worktrees[i]->head_ref);
+-		free(worktrees[i]->lock_reason);
+-		free(worktrees[i]->prune_reason);
+-		free(worktrees[i]);
+-	}
++	for (i =3D 0; worktrees[i]; i++)
++		free_worktree(worktrees[i]);
+ 	free (worktrees);
+ }
+=20
+@@ -75,8 +80,8 @@ static struct worktree *get_main_worktree(int skip_readin=
+g_head)
+ 	return worktree;
+ }
+=20
+-static struct worktree *get_linked_worktree(const char *id,
+-					    int skip_reading_head)
++struct worktree *get_linked_worktree(const char *id,
++				     int skip_reading_head)
+ {
+ 	struct worktree *worktree =3D NULL;
+ 	struct strbuf path =3D STRBUF_INIT;
+diff --git a/worktree.h b/worktree.h
+index ce45b66de9..f14784a2ff 100644
+--- a/worktree.h
++++ b/worktree.h
+@@ -57,6 +57,13 @@ struct worktree *find_worktree(struct worktree **list,
+ 			       const char *prefix,
+ 			       const char *arg);
+=20
++/*
++ * Look up the worktree corresponding to `id`, or NULL of no such worktree
++ * exists.
++ */
++struct worktree *get_linked_worktree(const char *id,
++				     int skip_reading_head);
++
+ /*
+  * Return the worktree corresponding to `path`, or NULL if no such worktree
+  * exists.
+@@ -134,6 +141,11 @@ void repair_worktrees(worktree_repair_fn, void *cb_dat=
+a);
+  */
+ void repair_worktree_at_path(const char *, worktree_repair_fn, void *cb_da=
+ta);
+=20
++/*
++ * Free up the memory for a worktree.
++ */
++void free_worktree(struct worktree *);
++
+ /*
+  * Free up the memory for worktree(s)
+  */
 --=20
 2.43.GIT
 
 
---VyZVWAtQ4IPPIS0T
+--Q0W+/uCos0kKC1KM
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmWbyPIACgkQVbJhu7ck
-PpRpLw//WVcWqftYhKzx6RsfcggXBolZYCzOiT37KMKhRTHFpLhmpVqXJnxEPuUI
-Yq6mU8pl7kryh3BA/9KZdJNrBrVZz5/LcbqT+IzK2OXPpNpTp5todRJJ1WIrv5RE
-qtwz4rZ9LNt42oxg3KnyEgI+ln/oBZLkH22ND5wIzKXWS4J6JGjKonXNl0pJ2wsz
-sgLQjQllChfNeg9j+eCec+gvQ7lwjk+MpJhspQ+PPhTLSzMpq3o2SM6cNz2fhlql
-9KmcyGR2d8P60falleFJ8b7Q7Hivto8A2Tg6RYI9/WmAXz5ka6puRSeSdjtxZ4KC
-xJvLGQuFTgwdYicKGypqhGz23/VZCQR0wGNPMbL/r4rumhlgEicMCQ+FKOoxdbla
-z0tdogdIXZwZJbbXtCQKuAv7QYcRn+EyKRvLT9VH/NLfxM+NtVxsMeFHFJk5JGVj
-YGG9BOI0DMxJvxkCm7hdzPHrB5W7Ose2EZfQXdS7qfxgIlz7TObNK16ORHwM/OJZ
-NvhGWYa0NTrZOzeb2RVTqBxBGaxHylkmQ2223SK0iJcO2p2e4Jway2MBLC4hsiDK
-TBKFcKauwwLd9Q9Ocn2M4S8xhSwSL7fjvwvCCUWU8FKTro4FffBDvYBStb1j2ki8
-4SPHJOYtaK6x0qok4oGbon5W0FhAwNVauii0piVkQ05ytxQHq1Y=
-=rrqC
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmWbyPYACgkQVbJhu7ck
+PpTgkRAAknbNTImzQwbXjCxhAbFdy4ZQNiVU35KIbBgqGqkr7JkJB7IZohHiviZK
+deTB1E8aPM4f15NksKJ/0AWSfFICdrfsqwVDitAbWtPsMpuF4KFEhqFEO6VVdXuR
+yib/s7ehf3CZvIMILExx58J+TX5HbKxoCYQHXW+y7hr9AAYxCMUB1ABqJbLp22Q7
+I61BEZ8R1xDYv/mRxJ1UfSShCJDzF1uhRYXFUf3hPkaKDV/3D0my/TfGLmcy5JKC
+LDVS69v2+KLY1jY0ciF7ihUfWkBFHP8guKYcMrXh8Qyl/EOk1orjma2eCvKQKX1c
+sRai5aBeYjDlQip0lGd/KzuZz+k7RsmbqH6fwCr/mR9JdDoiJ7zof8lW9cPClCaa
+MUXmLJza9tRI6UBAsJXEDPbHFL3AKKOPeYBG+WfEzKlHAmGcPl4nksZ2ZWLpzJsM
+l0YV+/VtoQ+u/cClZdJ15ziGVV+ZZMMyKEsY6cj2pAJS/C8MlBUQ/0wAYtPDf+q4
+WD2OujSM0A4mBwu+ZwZ7QXAamrFNG4/vWcbFvPjbkS7xp207hadOG0lAQl54Ya2N
+HFXlpvNi2GoqZY4TexQaon8gg1AFyiLyd5Mvxbwtm+kD8Szxe8oReFhWpUXrGIsD
+E5lzEJXHOVBPzG+J0BG0oDNMfN+GguXpPYnXWOx1d1k0cwWjXlQ=
+=3C+w
 -----END PGP SIGNATURE-----
 
---VyZVWAtQ4IPPIS0T--
+--Q0W+/uCos0kKC1KM--
