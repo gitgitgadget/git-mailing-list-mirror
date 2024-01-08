@@ -1,45 +1,45 @@
 Received: from out3-smtp.messagingengine.com (out3-smtp.messagingengine.com [66.111.4.27])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEF83134A9
-	for <git@vger.kernel.org>; Mon,  8 Jan 2024 10:05:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC3BF13ADC
+	for <git@vger.kernel.org>; Mon,  8 Jan 2024 10:05:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="LHyJZgp+";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="nqKRkicP"
-Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
-	by mailout.nyi.internal (Postfix) with ESMTP id A96775C17B9;
-	Mon,  8 Jan 2024 05:05:26 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="JpcfkzPt";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="p4yz3V74"
+Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
+	by mailout.nyi.internal (Postfix) with ESMTP id 1349A5C17AE;
+	Mon,  8 Jan 2024 05:05:30 -0500 (EST)
 Received: from mailfrontend2 ([10.202.2.163])
-  by compute5.internal (MEProxy); Mon, 08 Jan 2024 05:05:26 -0500
+  by compute2.internal (MEProxy); Mon, 08 Jan 2024 05:05:30 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1704708326; x=1704794726; bh=hb9G6pY8Pi
-	po1RRqxqBA080tuleGoV2TMKPsQtd07TU=; b=LHyJZgp+icLbAB3HKHjBaHIUN1
-	9hWlIAe8P3FE2otGm8c3wXrAudqK3sJqZxkssviCiZYAt0Wyob9kB1zk6wN7K2hW
-	slEpWK6eDcBzsrDz8cqMNPieBFUMD1pYIPoYfMkil5YykoqA7w+mcmedOmd6oTSt
-	HlWLJeDjTxlU8pp5OL5Jv8yd+DBtHJ5xfxQDeQ54nwaMH8QLk+WW48iyujVTFj7O
-	cixxbfkrSTRRIb7ZrGQF/Yw19QG/e6whTXdhsn5TLVS3dCHer5cibe3Gm1USS96L
-	K0Vbs2WV4X8gJn6RA33/p7eLVzXquLzAbbgyxhtdiJMKggYXeVsoA4UURrXw==
+	:subject:to:to; s=fm2; t=1704708330; x=1704794730; bh=u03mXpqfwD
+	pGRcsqqauszz3ZYI9hwvjIVDUwcoetir4=; b=JpcfkzPt0mHmPCjQ/WXhuWfMvY
+	x2SBzhZjl4meQD8Jyy1n/VxFD3h8sgiHTBQLtQnSbrbaN4w3z2eb345TIEDhRL7o
+	nbNb5kiBTq4rQixAP53PQla4c3MVxWgUkEnN+b51GL/dHD6baL5inkmgHocmSsnX
+	NuUfvhERcEZk4Qc6eDCJiqCiAT1lGevCYrl8zlKTPPsDJzgswkd8vFjOAeSAAWE9
+	GPmRimcmIgNwZoWvFUT0pYhf/LihWuIRZ/EhIXercGAGLnvrxMm7dBIRK1EuPhHz
+	veJZdkCjNZMH3T1aUq5hX2gh6qLPIfu/mK6UR0zrh0ycPBP5YPgorbzewvTg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1704708326; x=1704794726; bh=hb9G6pY8Pipo1RRqxqBA080tuleG
-	oV2TMKPsQtd07TU=; b=nqKRkicPanLHzFNK5teosiXts+vw1TFI+jaF828oi+xk
-	GzFamgNgNvya4v5Z2vLN+2sLwkCXfWIuyr5XNjAjycw0HlKAwc6GlrrXVkNAkfLw
-	sxyuB6u8PeCiL5F9VIAX11EL30/bxZo5gsPZ4v023rzyWs7+UBQqCWzcNDFD2oUs
-	+HIRXtQ+GIEhJlx6Nr360g/ByxQnCdRKnKmrVj6SKq9BxXPltoyYwtWDc2m0JDPk
-	MJFZuk/KolRJaF1Olh89LbBhoz+YYNeZogS+pC+aB6XyLmoqk6UGbXZMwEAw1Bs9
-	zDiIdk3qfkutTiWFQEGPDKRZsPhhbMtMY0ml/Z8Qeg==
-X-ME-Sender: <xms:5sibZeTMiiJ6xQi3g82HU4wLZKeJrYalVESJzhW-PtpvI4tXjOmdlA>
-    <xme:5sibZTwxVEsq-kP7_jn-njD1DK-enppHhyEJ0ISW1Chg_Y_uw8wVoTdsPon9Pd_nE
-    KfsbERR7_OT8GDOLQ>
-X-ME-Received: <xmr:5sibZb02xRkwQA-pnR2O_aLvfJ2QxaZ9DE9p0IrFAJ2RoVmekN3TE_giF4xUuQAEyxOzzaLIoDVrJEMgktrho8Gr1YsJ2GXH60fROrjSMgqsUN0>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrvdehjedgudduucetufdoteggodetrfdotf
+	fm2; t=1704708330; x=1704794730; bh=u03mXpqfwDpGRcsqqauszz3ZYI9h
+	wvjIVDUwcoetir4=; b=p4yz3V74hnQUiO9ehdTasn6dlR1USsEzzUyZEGM8O3cV
+	q2I3aPb5Qyk3YlpX6uKGnXhW71mhp8gUZ8ry86S4/0r9BfveuY43pYs26GnzsIh2
+	STC0QCrRDR2rLRt7fKaHdUkHo2MeJCv1NznsnYZp53qqa778LQ7MiB5saMipS9rA
+	pIB2KDJZ8aK30grt1Ybv6inKel1ayXbpzDVfRtWRgwYAVyQm+rY+mqSlosJsYsYk
+	nA1mpOLZ94e95y9VfqrgQoNHUkUTHhOLcGlR3PSEduMFXf5fdAfb0ikH+r0XiwZ/
+	ltmrVdWf/u+W3eTj6nX4WeXy6ddjAP5GXUsPowvRlg==
+X-ME-Sender: <xms:6cibZbHCx2uMkS66oE20DthrZbZlb5jPGVRjdRlwgRlSvfdZNME7Lw>
+    <xme:6cibZYUHG55pytAOPIkdQvj2qujfGHw-HtKhME3F5RzT7ZDE6b6mZkQCqWNBrHsu1
+    OuFLYgQDqAP-DjStw>
+X-ME-Received: <xmr:6cibZdIJQNbJ9F5P24sMnuqadQcg7ABB1xZ_EyJWzzi5r9Pvj_aHZp7bJH3wl5pEOYpPVMEz-VUWxiPEkPAOQQ49OHn7a5QwlMfhFi-R_J8gukk>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrvdehjedguddtucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
     uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
     cujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtvdenucfhrhhomheprfgrthhr
@@ -47,25 +47,27 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrvdehjedgudduucetufdoteggod
     hrnhepueektdevtdffveeljeetgfehheeigeekleduvdeffeeghefgledttdehjeelffet
     necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
     hpkhhsrdhimh
-X-ME-Proxy: <xmx:5sibZaCIRcmRtXZFcUUBp3aRZGTDDOdvjC-D73DOMxgDjJvAP5GRKQ>
-    <xmx:5sibZXiwHhucuL40RATsnduXdZw5Vc17LW4aKSl4mD6JMKsLge-GUg>
-    <xmx:5sibZWqPI16AQPT4RVMCSz92Mrcm1hkXd7UVW_LG2qjUnuIuoF71jA>
-    <xmx:5sibZatUslStxx9BEce4rdnTMe1Az-nJXoUIX7tQkwg2yPr2yooL_Q>
+X-ME-Proxy: <xmx:6cibZZFGkjBbVKmU88t4tMaHtG7BSjmUOOi7LKQs7_ReUpNNk49ykw>
+    <xmx:6cibZRUWniF70Tl0FpgVCHGwF64zwj_--8gaN_1gVmZLs2aXKf2Niw>
+    <xmx:6cibZUPhaGqBiuzAM1V0tmgoKky0xJPFZw8Z02TYinjR0_Xha8taLw>
+    <xmx:6sibZejw630I8cybl2qZ_sXBDYcSd_drWC76Jiy-IREw_U1WkGmOPA>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 8 Jan 2024 05:05:25 -0500 (EST)
+ 8 Jan 2024 05:05:28 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 49e53807 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 8 Jan 2024 10:02:47 +0000 (UTC)
-Date: Mon, 8 Jan 2024 11:05:22 +0100
+	by vm-mail (OpenSMTPD) with ESMTPSA id 27d864aa (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 8 Jan 2024 10:02:52 +0000 (UTC)
+Date: Mon, 8 Jan 2024 11:05:26 +0100
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
 Cc: Junio C Hamano <gitster@pobox.com>,
 	Karthik Nayak <karthik.188@gmail.com>,
 	Eric Sunshine <sunshine@sunshineco.com>
-Subject: [PATCH v2 0/6] worktree: initialize refdb via ref backends
-Message-ID: <cover.1704705733.git.ps@pks.im>
+Subject: [PATCH v2 1/6] refs: prepare `refs_init_db()` for initializing
+ worktree refs
+Message-ID: <a4894b3e156617c4350ab2f8d794ab32039d3fab.1704705733.git.ps@pks.im>
 References: <cover.1703754513.git.ps@pks.im>
+ <cover.1704705733.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -73,202 +75,168 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="BdainDzP7VJ5G+on"
+	protocol="application/pgp-signature"; boundary="IODYJ/B65FhY5hgf"
 Content-Disposition: inline
-In-Reply-To: <cover.1703754513.git.ps@pks.im>
+In-Reply-To: <cover.1704705733.git.ps@pks.im>
 
 
---BdainDzP7VJ5G+on
+--IODYJ/B65FhY5hgf
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-Hi,
+The purpose of `refs_init_db()` is to initialize the on-disk files of a
+new ref database. The function is quite inflexible right now though, as
+callers can neither specify the `struct ref_store` nor can they pass any
+flags.
 
-this is the second version of my patch series that refactors the
-initialization of worktree refdbs to use the refs API.
+Refactor the interface to accept both of these. This will be required so
+that we can start initializing per-worktree ref databases via the ref
+backend instead of open-coding the initialization in "worktree.c".
 
-Changes compared to v1:
+Signed-off-by: Patrick Steinhardt <ps@pks.im>
+---
+ refs.c                | 6 ++----
+ refs.h                | 2 +-
+ refs/debug.c          | 4 ++--
+ refs/files-backend.c  | 4 +++-
+ refs/packed-backend.c | 1 +
+ refs/refs-internal.h  | 4 +++-
+ setup.c               | 2 +-
+ 7 files changed, 13 insertions(+), 10 deletions(-)
 
-  - Improved commit messages.
-
-  - This series is now based on `ps/refstorage-extension`, 1b2234079b
-    (t9500: write "extensions.refstorage" into config, 2023-12-29).
-    While there is no functional dependency between those series,
-    merging both topics causes a merge conflict.
-
-Patrick
-
-Patrick Steinhardt (6):
-  refs: prepare `refs_init_db()` for initializing worktree refs
-  setup: move creation of "refs/" into the files backend
-  refs/files: skip creation of "refs/{heads,tags}" for worktrees
-  builtin/worktree: move setup of commondir file earlier
-  worktree: expose interface to look up worktree by name
-  builtin/worktree: create refdb via ref backend
-
- builtin/worktree.c    | 53 ++++++++++++++++++++-----------------------
- refs.c                |  6 ++---
- refs.h                |  4 +++-
- refs/debug.c          |  4 ++--
- refs/files-backend.c  | 37 +++++++++++++++++++++++++-----
- refs/packed-backend.c |  1 +
- refs/refs-internal.h  |  4 +++-
- setup.c               | 17 +-------------
- worktree.c            | 27 +++++++++++++---------
- worktree.h            | 12 ++++++++++
- 10 files changed, 96 insertions(+), 69 deletions(-)
-
-Range-diff against v1:
-1:  6cb4e0a99f ! 1:  a4894b3e15 refs: prepare `refs_init_db()` for initiali=
-zing worktree refs
-    @@ refs/refs-internal.h: typedef struct ref_store *ref_store_init_fn(st=
-ruct reposit
-      				       struct ref_transaction *transaction,
-    =20
-      ## setup.c ##
-    -@@ setup.c: void create_reference_database(const char *initial_branch,=
- int quiet)
-    - 	safe_create_dir(git_path("refs"), 1);
-    +@@ setup.c: void create_reference_database(unsigned int ref_storage_fo=
-rmat,
-      	adjust_shared_perm(git_path("refs"));
-     =20
-    + 	repo_set_ref_storage_format(the_repository, ref_storage_format);
-     -	if (refs_init_db(&err))
-     +	if (refs_init_db(get_main_ref_store(the_repository), 0, &err))
-      		die("failed to set up refs db: %s", err.buf);
-2:  ae013eaa4a ! 2:  f500db51c2 setup: move creation of "refs/" into the fi=
-les backend
-    @@ Commit message
-         seems a lot more sensible to have it this way round than to require
-         callers to create the directory themselves.
-    =20
-    +    An alternative to this would be to create "refs/" in `refs_init_db=
-()`
-    +    directly. This feels conceptually unclean though as the creation o=
-f the
-    +    refdb is now cluttered across different callsites. Furthermore, bo=
-th the
-    +    "files" and the upcoming "reftable" backend write backend-specific=
- data
-    +    into the "refs/" directory anyway, so splitting up this logic woul=
-d only
-    +    make it harder to reason about.
-    +
-         Signed-off-by: Patrick Steinhardt <ps@pks.im>
-    =20
-      ## refs/files-backend.c ##
-    @@ refs/files-backend.c: static int files_init_db(struct ref_store *ref=
-_store,
-     =20
-    =20
-      ## setup.c ##
-    -@@ setup.c: void create_reference_database(const char *initial_branch,=
- int quiet)
-    +@@ setup.c: void create_reference_database(unsigned int ref_storage_fo=
-rmat,
-      	struct strbuf err =3D STRBUF_INIT;
-      	int reinit =3D is_reinit();
-     =20
-    @@ setup.c: void create_reference_database(const char *initial_branch, =
-int quiet)
-     -	safe_create_dir(git_path("refs"), 1);
-     -	adjust_shared_perm(git_path("refs"));
-     -
-    + 	repo_set_ref_storage_format(the_repository, ref_storage_format);
-      	if (refs_init_db(get_main_ref_store(the_repository), 0, &err))
-      		die("failed to set up refs db: %s", err.buf);
-    -=20
-3:  3cf6ceb274 ! 3:  9e99efeaa3 refs/files: skip creation of "refs/{heads,t=
-ags}" for worktrees
-    @@ Commit message
-    =20
-         The files ref backend will create both "refs/heads" and "refs/tags=
-" in
-         the Git directory. While this logic makes sense for normal reposit=
-ories,
-    -    it does not fo worktrees because those refs are "common" refs that=
- would
-    -    always be contained in the main repository's ref database.
-    +    it does not for worktrees because those refs are "common" refs that
-    +    would always be contained in the main repository's ref database.
-    =20
-         Introduce a new flag telling the backend that it is expected to cr=
-eate a
-         per-worktree ref database and skip creation of these dirs in the f=
-iles
-4:  1a6337fc51 =3D 4:  f2eb020288 builtin/worktree: move setup of commondir=
- file earlier
-5:  f344a915e9 ! 5:  5525a9f9c2 worktree: expose interface to look up workt=
-ree by name
-    @@ worktree.c
-      	free (worktrees);
-      }
-     =20
-    -@@ worktree.c: static struct worktree *get_main_worktree(void)
-    +@@ worktree.c: static struct worktree *get_main_worktree(int skip_read=
-ing_head)
-      	return worktree;
-      }
-     =20
-    --static struct worktree *get_linked_worktree(const char *id)
-    -+struct worktree *get_linked_worktree(const char *id)
-    +-static struct worktree *get_linked_worktree(const char *id,
-    +-					    int skip_reading_head)
-    ++struct worktree *get_linked_worktree(const char *id,
-    ++				     int skip_reading_head)
-      {
-      	struct worktree *worktree =3D NULL;
-      	struct strbuf path =3D STRBUF_INIT;
-    @@ worktree.h: struct worktree *find_worktree(struct worktree **list,
-     + * Look up the worktree corresponding to `id`, or NULL of no such wor=
-ktree
-     + * exists.
-     + */
-    -+struct worktree *get_linked_worktree(const char *id);
-    ++struct worktree *get_linked_worktree(const char *id,
-    ++				     int skip_reading_head);
-     +
-      /*
-       * Return the worktree corresponding to `path`, or NULL if no such wo=
-rktree
-6:  aae969301f ! 6:  240dc40de1 builtin/worktree: create refdb via ref back=
-end
-    @@ builtin/worktree.c: static int add_worktree(const char *path, const =
-char *refnam
-     -	strbuf_reset(&sb);
-     -	strbuf_addf(&sb, "%s/HEAD", sb_repo.buf);
-     -	write_file(sb.buf, "%s", oid_to_hex(null_oid()));
-    -+	wt =3D get_linked_worktree(name);
-    ++	wt =3D get_linked_worktree(name, 1);
-     +	if (!wt) {
-     +		ret =3D error(_("could not find created worktree '%s'"), name);
-     +		goto done;
-
-base-commit: 1b2234079b24da99dd78e4ce4bfe338a2a841aed
+diff --git a/refs.c b/refs.c
+index fdbf5f4cb1..254272ba6f 100644
+--- a/refs.c
++++ b/refs.c
+@@ -1944,11 +1944,9 @@ const char *refs_resolve_ref_unsafe(struct ref_store=
+ *refs,
+ }
+=20
+ /* backend functions */
+-int refs_init_db(struct strbuf *err)
++int refs_init_db(struct ref_store *refs, int flags, struct strbuf *err)
+ {
+-	struct ref_store *refs =3D get_main_ref_store(the_repository);
+-
+-	return refs->be->init_db(refs, err);
++	return refs->be->init_db(refs, flags, err);
+ }
+=20
+ const char *resolve_ref_unsafe(const char *refname, int resolve_flags,
+diff --git a/refs.h b/refs.h
+index 916b874ae3..114caa272a 100644
+--- a/refs.h
++++ b/refs.h
+@@ -126,7 +126,7 @@ int should_autocreate_reflog(const char *refname);
+=20
+ int is_branch(const char *refname);
+=20
+-int refs_init_db(struct strbuf *err);
++int refs_init_db(struct ref_store *refs, int flags, struct strbuf *err);
+=20
+ /*
+  * Return the peeled value of the oid currently being iterated via
+diff --git a/refs/debug.c b/refs/debug.c
+index b9775f2c37..634681ca44 100644
+--- a/refs/debug.c
++++ b/refs/debug.c
+@@ -33,10 +33,10 @@ struct ref_store *maybe_debug_wrap_ref_store(const char=
+ *gitdir, struct ref_stor
+ 	return (struct ref_store *)res;
+ }
+=20
+-static int debug_init_db(struct ref_store *refs, struct strbuf *err)
++static int debug_init_db(struct ref_store *refs, int flags, struct strbuf =
+*err)
+ {
+ 	struct debug_ref_store *drefs =3D (struct debug_ref_store *)refs;
+-	int res =3D drefs->refs->be->init_db(drefs->refs, err);
++	int res =3D drefs->refs->be->init_db(drefs->refs, flags, err);
+ 	trace_printf_key(&trace_refs, "init_db: %d\n", res);
+ 	return res;
+ }
+diff --git a/refs/files-backend.c b/refs/files-backend.c
+index 43fd0ac760..153efe6662 100644
+--- a/refs/files-backend.c
++++ b/refs/files-backend.c
+@@ -3220,7 +3220,9 @@ static int files_reflog_expire(struct ref_store *ref_=
+store,
+ 	return -1;
+ }
+=20
+-static int files_init_db(struct ref_store *ref_store, struct strbuf *err U=
+NUSED)
++static int files_init_db(struct ref_store *ref_store,
++			 int flags UNUSED,
++			 struct strbuf *err UNUSED)
+ {
+ 	struct files_ref_store *refs =3D
+ 		files_downcast(ref_store, REF_STORE_WRITE, "init_db");
+diff --git a/refs/packed-backend.c b/refs/packed-backend.c
+index 8d1090e284..217f052d34 100644
+--- a/refs/packed-backend.c
++++ b/refs/packed-backend.c
+@@ -1246,6 +1246,7 @@ static const char PACKED_REFS_HEADER[] =3D
+ 	"# pack-refs with: peeled fully-peeled sorted \n";
+=20
+ static int packed_init_db(struct ref_store *ref_store UNUSED,
++			  int flags UNUSED,
+ 			  struct strbuf *err UNUSED)
+ {
+ 	/* Nothing to do. */
+diff --git a/refs/refs-internal.h b/refs/refs-internal.h
+index 8e9f04cc67..82219829b0 100644
+--- a/refs/refs-internal.h
++++ b/refs/refs-internal.h
+@@ -529,7 +529,9 @@ typedef struct ref_store *ref_store_init_fn(struct repo=
+sitory *repo,
+ 					    const char *gitdir,
+ 					    unsigned int flags);
+=20
+-typedef int ref_init_db_fn(struct ref_store *refs, struct strbuf *err);
++typedef int ref_init_db_fn(struct ref_store *refs,
++			   int flags,
++			   struct strbuf *err);
+=20
+ typedef int ref_transaction_prepare_fn(struct ref_store *refs,
+ 				       struct ref_transaction *transaction,
+diff --git a/setup.c b/setup.c
+index 1ab1a66bcb..6c8f656f7c 100644
+--- a/setup.c
++++ b/setup.c
+@@ -1943,7 +1943,7 @@ void create_reference_database(unsigned int ref_stora=
+ge_format,
+ 	adjust_shared_perm(git_path("refs"));
+=20
+ 	repo_set_ref_storage_format(the_repository, ref_storage_format);
+-	if (refs_init_db(&err))
++	if (refs_init_db(get_main_ref_store(the_repository), 0, &err))
+ 		die("failed to set up refs db: %s", err.buf);
+=20
+ 	/*
 --=20
 2.43.GIT
 
 
---BdainDzP7VJ5G+on
+--IODYJ/B65FhY5hgf
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmWbyN0ACgkQVbJhu7ck
-PpTCag//eRRzfL7ghFA1rWSXdFhKlkX+IVZ+AcyVSXwgGFOLGacXUDQ+oW1hFyQy
-1c5rqIZrWO0+FViv0mqxN8RKo+bn2RgAK7KojsOnsOFIcjKWO0sxNfoB7JfigcDe
-ZMmQ7iKyl3Y42qndcTjebyKpP6GYeQRCU1CEiSdXk4s78JCHUf/AwXHXOX6O3lpk
-1OrZlnsi4AkKj6SrQ4GlSrVGqb78ubJfGRiFy5a+bq7647Z6UalM9APMNaYLeq2G
-o7EL60UpcyqsG1oBNhSd8Bk2yDJoKF4QcMycMXTaHBRQbLlCVz4GtfBYniVw3n8f
-yuQCS8g45pUI+IuJ3nqQyUEVh+2oqNNJMG1sHASDZmRhTKPbvIrBuqhHZ+TFraz5
-cKSE7io7390Px6zGPshuGNKx71AZ6SYEsj6UadCeruwR0AoidbHeSxvetqHka7mg
-o0Gy3jbdX6fNSHFeSpu5MLaX3T8iJJZRPHsXNpp/qs8QmJjZR8xQKygtz/rQOGcm
-q92N5FZJeZ2TgV01YGhV0iGoqLT9lz3xawv0Iq/k8nSpeyXgRSQ6CHFjQv6hbJg7
-blxq4GKxQqCHbYBj5EwhuGEQ/0jaJnTTjjVsfseeVV2s2Z52cdxI5brHS7Tv5RE8
-t9JVmSUVRlwtA7x7PoHiIQam2W2R/Of282cpUiOHqUiMAJlBGWM=
-=dcst
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmWbyOUACgkQVbJhu7ck
+PpS0GRAAm/gWgk8fc63U4v9+HMi9u84dTss1SqWFAGxhFgVSjnEvyPr5CwlM9YdV
+ldOsZQ4sbjKEltdCcS20Fa5Aun3cPqilrflvn+SSyYWGgyjAKrMw9G7/xcNRp2Ml
+7O+KxPNiRtIq0TYJvu0LPzmFwwfg8jCNMkXf4UIUq8IlJCS3oIKtBqlRLYLYDiUR
+gW4ZSK2MTR02c/s5rZJz2+MqQ6e6nYXi8JCMaqdEuuYZ22s+DBwkoARjfZH6OhdH
+BY8GYhFd0pr/DZddm3OqbnQriMXRjMXLVQ5OlCxy99cquN9U6IJ+nKi5CminnMEQ
+y89xcVAhefX6NPBisqDPgD6/HJYC/8Ojb4z6e+7uIAuIiD8vQqNmgUcdQagW41Bc
+iK3WU5OIl4xn7IY2BFwbKhhtFZ9ENEGWC9tXAP7fCgBCHXomIjfUIgdnGvPOFk4T
+2Solg8wCNG6pQwQDdy4BNfccLSK8z05Nzfoj/xqOEcQd01ELLfAdBVvl2BTCaF59
+xwGIHkbzEWqPMeBJIV34fgNb01Sc58TeJ6O1qS74+azk7H8s0PmXkgqnSe14y1a9
+h2KzE0ooN4D96FiSou7DlKmac7ipYxGoUgCpV2KvBgfT/bzKFuNYBj5KzlbQtxvM
+/3PFIs3deH2/qaFdkAVqSBGhbc/RCLr9MFJdA5b5k8UelSrxke4=
+=lwHe
 -----END PGP SIGNATURE-----
 
---BdainDzP7VJ5G+on--
+--IODYJ/B65FhY5hgf--
