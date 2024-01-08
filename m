@@ -1,310 +1,263 @@
-Received: from wout4-smtp.messagingengine.com (wout4-smtp.messagingengine.com [64.147.123.20])
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 923EC405E1
-	for <git@vger.kernel.org>; Mon,  8 Jan 2024 12:18:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F9435466A
+	for <git@vger.kernel.org>; Mon,  8 Jan 2024 17:25:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="TkXplaOx";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="XG7Sg43d"
-Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
-	by mailout.west.internal (Postfix) with ESMTP id 866E53201289;
-	Mon,  8 Jan 2024 07:18:46 -0500 (EST)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute3.internal (MEProxy); Mon, 08 Jan 2024 07:18:46 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1704716326; x=1704802726; bh=UF/ry2kAj9
-	LIC50i1Nw1RkSQaNsR/6vArd7ZxNIQpH8=; b=TkXplaOxgpF+adqWXF+R54Yfg1
-	9t8Gpi6Lj/J7wgJ33OufiGeqJ9njrVYuJQRhRXlJl4EGqRvjHtppt78xmUp2VUY1
-	+BwFzUuJ4Nx6qSizbQPAQw/umNgKsIF51+r/o5qwCdMJ7fw2w7zJRDzb5/kOGPeW
-	l/reOk227k9nMFpBWKb8G6eGEk2cURxV1hnyDGYyO1bkP5SvY25GFZa9yoIkBExt
-	dkeK+aqsG5KOMZr3vDT4DDkmmvW0/phQsKq1pMe/cTy4Q+gHoD0UzOI3mC2HN+4J
-	UyfgLTqhQqH/XNIjzh5TA7T5onMhlhIIHxxjc1mH0epkyIXGboB9/jADi+XQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1704716326; x=1704802726; bh=UF/ry2kAj9LIC50i1Nw1RkSQaNsR
-	/6vArd7ZxNIQpH8=; b=XG7Sg43dVudyHg5XhXcNIZZK9WczrmynqELZ0mVac1KM
-	MhWEQM7tbg3sdcOVyZ8qK6tee2x0rkyBD0Ygq8SMNN2A8jpQZ1k4gcJM90KDmB7/
-	hgPMVh2C9u8vzPTqWL3nmP6l/ghgwg7Fj1bDsHUYC53L2IUEPKbTJY670cCsGR5+
-	58CWOuNNfZAUnelKce9/jzKXwwvpRoEi8uCGN1yDPU5RDlpLC8neFB/ojqPUGk3m
-	uXTs3Mh4fVvxiqk7R1FS4Tw+xc9/EAvTPTVo4fwSSSdqcAXQOju2O3jDoorTmLrW
-	P3XpC54oiXJBdSmi3N1Dmn2icS8tmJLWEmsshLT9hg==
-X-ME-Sender: <xms:JeibZee1mZhY-sOG1HR1_FrZkOV9bDC_lIUbiA2zDhhSVrI4XHIsmQ>
-    <xme:JeibZYMZyl3w_0lwrtqXrc6WfVHV3v3X52pKXUncWclLKuR_MnKPYV888kl5KOU7w
-    lKvnPEdjyDr1ErS4w>
-X-ME-Received: <xmr:JeibZfjmHJjkTFwV_xn1FN-bQNRVZAXZcjOORYkNh5oy2wryrMQB4H5RmF4En8Rp0fbO2vdC7w2GG21YQ5-ZU0y1cHRcCCs4-VnCOBq84lbuy9U>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrvdehjedgfeejucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvvefukfhfgggtuggjsehgtd
-    erredttdejnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshes
-    phhkshdrihhmqeenucggtffrrghtthgvrhhnpeetueevhffhudefvdegieeuieelgedthf
-    egfedtueevjeejtdfgjeehudejuedtudenucevlhhushhtvghrufhiiigvpedtnecurfgr
-    rhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhm
-X-ME-Proxy: <xmx:JeibZb-TVP1UhSV5yfRw57NmoFTz_LUdsZh91e3IIPe0uZZSE6a7fw>
-    <xmx:JeibZatGGOyy9sPAUE8gXysRPTM5hxAm7h3p06XhG7i6h553XsWnIg>
-    <xmx:JeibZSFVXkb6cPlZhY0Jixha1mLj8G_JqxAYjhuZVbPLMmEOsp-PJQ>
-    <xmx:JuibZQ3rUiH7Mm3k_TXjo6JURg91zNVc3PMmUuk3votU-SKqTscx1A>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 8 Jan 2024 07:18:45 -0500 (EST)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id c775b688 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 8 Jan 2024 12:16:09 +0000 (UTC)
-Date: Mon, 8 Jan 2024 13:18:43 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: git@vger.kernel.org
-Cc: Han-Wen Nienhuys <hanwenn@gmail.com>
-Subject: [PATCH 4/4] reftable/blocksource: use mmap to read tables
-Message-ID: <a23f38a80609a5c5a6931400ffd28a92b33838bb.1704714575.git.ps@pks.im>
-References: <cover.1704714575.git.ps@pks.im>
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="sJWbj+Mt"
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id D83DA1D6077;
+	Mon,  8 Jan 2024 12:25:21 -0500 (EST)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=4RuLOc0KInyQpLzuMakF3brifvC+y7BSCxEwvs
+	Rln6g=; b=sJWbj+MtVDpg2w1rPaK1I1zFOhTpfJ/Nn8dNTVj4qGrSjgihb6rDEa
+	aLI9T0ILzKiN93KuRE62dKKiTzK4uf7KPJOqdZk9P60mK7njuNchyF8oHna4MYo0
+	mlKiqEMsuEV9NRbS4tTYOPHc2o5jnrTwB9FgdnYlpprZXavKW8R7I=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id CFFAB1D6076;
+	Mon,  8 Jan 2024 12:25:21 -0500 (EST)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.200.93])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 37B151D6075;
+	Mon,  8 Jan 2024 12:25:21 -0500 (EST)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Tamino Bauknecht <dev@tb6.eu>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH v3] fetch: add new config option fetch.all
+In-Reply-To: <20240106202352.7253-2-dev@tb6.eu> (Tamino Bauknecht's message of
+	"Sat, 6 Jan 2024 21:17:01 +0100")
+References: <xmqqa5pjpxm6.fsf@gitster.g> <20240106202352.7253-2-dev@tb6.eu>
+Date: Mon, 08 Jan 2024 09:25:20 -0800
+Message-ID: <xmqqwmsjlou7.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="NBAaQiMxmUDYVcfF"
-Content-Disposition: inline
-In-Reply-To: <cover.1704714575.git.ps@pks.im>
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ E676F99C-AE4A-11EE-A67F-25B3960A682E-77302942!pb-smtp2.pobox.com
+
+Tamino Bauknecht <dev@tb6.eu> writes:
+
+> This commit introduces the new boolean configuration option fetch.all
+
+"This commit introduces the new boolean" -> "Introduce a boolean"
+
+In general, our log messages are written as if we are giving an
+order to explain what should happen to the codebase.
+
+> which allows to fetch all available remotes by default. The config
+> option can be overridden by explicitly specifying a remote or by using
+> --no-all.
+> The behavior for --all is unchanged and calling git-fetch with --all and
+> a remote will still result in an error.
+
+Good.
+
+> The config option was also added to the config documentation and new
+
+"The config option was also added to the config" -> "Describe the
+configuration variable in the"
+
+> tests cover the expected behavior.
+> Additionally, --no-all was added to the command-line documentation of
+
+"--no-all was added to" -> "add --no-all to".
+
+> git-fetch.
+>
+> Signed-off-by: Tamino Bauknecht <dev@tb6.eu>
+> ---
+
+> +fetch.all::
+> +	If true, fetch will attempt to update all available remotes.
+> +	This behavior can be overridden by passing `--no-all` or by
+> +	explicitly specifying one or more remote(s) to fetch from.
+> +	Defaults to false.
+
+Good.
+
+> diff --git a/Documentation/fetch-options.txt b/Documentation/fetch-options.txt
+> index a1d6633a4f..5e70f6d2e4 100644
+> --- a/Documentation/fetch-options.txt
+> +++ b/Documentation/fetch-options.txt
+> @@ -1,5 +1,6 @@
+> ---all::
+> -	Fetch all remotes.
+> +--[no-]all::
+> +	Fetch all remotes. This overrides the configuration option
+> +	`fetch.all`.
+
+"configuration option" -> "configuration variable".
+
+> diff --git a/builtin/fetch.c b/builtin/fetch.c
+> index a284b970ef..5a0b249c07 100644
+> --- a/builtin/fetch.c
+> +++ b/builtin/fetch.c
+> @@ -102,6 +102,7 @@ static struct string_list negotiation_tip = STRING_LIST_INIT_NODUP;
+>  
+>  struct fetch_config {
+>  	enum display_format display_format;
+> +	int all;
+>  	int prune;
+>  	int prune_tags;
+>  	int show_forced_updates;
+> @@ -115,6 +116,11 @@ static int git_fetch_config(const char *k, const char *v,
+>  {
+>  	struct fetch_config *fetch_config = cb;
+>  
+> +	if (!strcmp(k, "fetch.all")) {
+> +		fetch_config->all = git_config_bool(k, v);
+> +		return 0;
+> +	}
+> +
+>  	if (!strcmp(k, "fetch.prune")) {
+>  		fetch_config->prune = git_config_bool(k, v);
+>  		return 0;
+> @@ -2121,6 +2127,7 @@ int cmd_fetch(int argc, const char **argv, const char *prefix)
+>  {
+>  	struct fetch_config config = {
+>  		.display_format = DISPLAY_FORMAT_FULL,
+> +		.all = -1,
+>  		.prune = -1,
+>  		.prune_tags = -1,
+>  		.show_forced_updates = 1,
+
+Not incorrect per-se, but I find it misleading, as there is no
+reason to initialize it to -1.  If left initialized to 0 (which
+would be the default), and if we do not see "fetch.all", it will be
+left to 0, which is the default value, and that is what you want.
+
+> @@ -2132,7 +2139,7 @@ int cmd_fetch(int argc, const char **argv, const char *prefix)
+>  	const char *bundle_uri;
+>  	struct string_list list = STRING_LIST_INIT_DUP;
+>  	struct remote *remote = NULL;
+> -	int all = 0, multiple = 0;
+> +	int all = -1, multiple = 0;
+>  	int result = 0;
+>  	int prune_tags_ok = 1;
+>  	int enable_auto_gc = 1;
+> @@ -2148,7 +2155,7 @@ int cmd_fetch(int argc, const char **argv, const char *prefix)
+>  
+>  	struct option builtin_fetch_options[] = {
+>  		OPT__VERBOSITY(&verbosity),
+> -		OPT_BOOL(0, "all", &all,
+> +		OPT_COUNTUP(0, "all", &all,
+
+I do not think this change from BOOL to COUNTUP is warranted.  Does
+it trigger an error if you feed a variable that is initialized to -1
+to OPT_BOOL()?  If not, "initialize to -1 and let OPT_BOOL() set
+either 0 or 1 when seeing a command line option" pattern would be
+preferrable.
+
+The idea is to initialize the "all" variable to -1 (unspecified) and
+then if there is a command line option set it to either 0 or 1.
+After the command line option parsing returns, we can tell:
+
+    -1: there was not --all and there was not --no-all.  We need to
+        look at the configuration variable.
+     0: there was --no-all.  Ignore the configuration.
+     1: there was --all.  Ignore the configuration.
+
+Use of COUNTUP can leave the variable set to say 2 or 3.  There are
+legitimate uses of COUNTUP (e.g., expressing verbosity levels via
+multiple use of "-v -v"), but you want "--all" and "--all --all"
+behave identically, so COUNTUP is not a good fit here.
+
+> @@ -2337,11 +2344,18 @@ int cmd_fetch(int argc, const char **argv, const char *prefix)
+>  	    fetch_bundle_uri(the_repository, bundle_uri, NULL))
+>  		warning(_("failed to fetch bundles from '%s'"), bundle_uri);
+>  
+
+OK.  The following has to be a bit unusual and different from the
+usual "we initialize a variable to its default, read into it from
+the config, and then overwrite it from the command line option"
+pattern because we want to ignore configured value upon factors
+other than the command line option that corresponds to the
+configuration variable (namely, even if --all or --no-all does not
+appear on the command line, a remote makes the fetch.all
+configuration ignored, without triggering an error).
+
+> -	if (all) {
+> +	if (all > 0) {
+
+Hence, we need to catch only the case where "--all" was given
+explicitly (i.e., all == -1 is not handled here).  Good.
+
+>  		if (argc == 1)
+>  			die(_("fetch --all does not take a repository argument"));
+>  		else if (argc > 1)
+>  			die(_("fetch --all does not make sense with refspecs"));
+> +	}
+> +
+> +	if (all > 0 || (config.all > 0 && !argc && all < 0)) {
+
+Here, you can say config.all (not "config.all > 0") if you
+initialized the .all member to 0 (remove the ".all = -1"
+initialization, in other words).
+
+> +		/*
+> +		 * Only use fetch.all config option if no remotes were
+> +		 * explicitly given and if no --no-all was passed
+> +		 */
+>  		(void) for_each_remote(get_one_remote_for_fetch, &list);
+>  
+>  		/* do not do fetch_multiple() of one */
+
+But I suspect that it is easier to understand if you added this
+
+	if (all < 0)
+               	/* no --[no-]all given. */
+		all = (!argc) ? config.all : 0;
+
+before all of the above, and leave the rest of the original
+untouched.  In other words, when there is no command line option
+"--[no-]all", we take "fetch.all" into consideration only when there
+is no explicit remote.  If there is an explicit remote and there is
+no "--[no-]all", we can explicitly set all to 0 here.
+
+And the remainder of the existing logic will work fine with all == 0
+or all == 1 so we do not have to touch it.
+
+> diff --git a/t/t5514-fetch-multiple.sh b/t/t5514-fetch-multiple.sh
+> index a95841dc36..63cd730718 100755
+> --- a/t/t5514-fetch-multiple.sh
+> +++ b/t/t5514-fetch-multiple.sh
+> @@ -24,6 +24,15 @@ setup_repository () {
+>  	)
+>  }
+>  
+> +setup_test_clone () {
+> +	test_dir="$1" &&
+> +	git clone one "$test_dir" &&
+> +	for r in one two three
+> +	do
+> +		git -C "$test_dir" remote add "$r" "../$r" || return 1
+> +	done
+> +}
+> +
+>  test_expect_success setup '
+>  	setup_repository one &&
+>  	setup_repository two &&
+> @@ -209,4 +218,156 @@ test_expect_success 'git fetch --multiple --jobs=0 picks a default' '
+>  	 git fetch --multiple --jobs=0)
+>  '
+>  
+> +create_fetch_all_expect () {
+> +	cat >expect <<-\EOF || return 1
+
+I saw there already was a comment on "|| return 1", which I agree
+with.
 
 
---NBAaQiMxmUDYVcfF
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-The blocksource interface provides an interface to read blocks from a
-reftable table. This interface is implemented using read(3P) calls on
-the underlying file descriptor. While this works alright, this pattern
-is very inefficient when repeatedly querying the reftable stack for one
-or more refs. This inefficiency can mostly be attributed to the fact
-that we often need to re-read the same blocks over and over again, and
-every single time we need to call read(3P) again.
-
-A natural fit in this context is to use mmap(3P) instead of read(3P),
-which has a bunch of benefits:
-
-  - We do not need to come up with a caching strategy for some of the
-    blocks as this will be handled by the kernel already.
-
-  - We can avoid the overhead of having to call into the read(3P)
-    syscall repeatedly.
-
-  - We do not need to allocate returned blocks repeatedly, but can
-    instead hand out pointers into the mmapped region directly.
-
-Using mmap comes with a significant drawback on Windows though, because
-mmapped files cannot be deleted and neither is it possible to rename
-files onto an mmapped file. But for one, the reftable library gracefully
-handles the case where auto-compaction cannot delete a still-open stack
-already and ignores any such errors. Also, `reftable_stack_clean()` will
-prune stale tables which are not referenced by "tables.list" anymore so
-that those files can eventually be pruned. And second, we never rewrite
-already-rewritten stacks, so it does not matter that we cannot rename a
-file over an mmaped file, either.
-
-Another unfortunate property of mmap is that it is not supported by all
-systems. But given that the size of reftables should typically be rather
-limited (megabytes at most in the vast majority of repositories), we can
-provide an easy fallback by just reading the complete table into memory
-on such platforms. This is the same strategy that the "packed" backend
-uses in case the platform does not provide mmap.
-
-While this change doesn't significantly improve performance in the case
-where we're seeking through stacks once (like e.g. git-for-each-ref(1)
-would). But it does speed up usecases where there is lots of random
-access to refs, e.g. when writing. The following benchmark demonstrates
-these savings with git-update-ref(1) creating N refs in an otherwise
-empty repository:
-
-  Benchmark 1: update-ref: create many refs (refcount =3D 1, revision =3D H=
-EAD~)
-    Time (mean =C2=B1 =CF=83):       5.6 ms =C2=B1   0.2 ms    [User: 2.7 m=
-s, System: 2.8 ms]
-    Range (min =E2=80=A6 max):     5.1 ms =E2=80=A6   6.0 ms    90 runs
-
-  Benchmark 2: update-ref: create many refs (refcount =3D 100, revision =3D=
- HEAD~)
-    Time (mean =C2=B1 =CF=83):      15.1 ms =C2=B1   0.4 ms    [User: 7.1 m=
-s, System: 8.0 ms]
-    Range (min =E2=80=A6 max):    14.2 ms =E2=80=A6  16.5 ms    71 runs
-
-  Benchmark 3: update-ref: create many refs (refcount =3D 10000, revision =
-=3D HEAD~)
-    Time (mean =C2=B1 =CF=83):     919.4 ms =C2=B1  11.2 ms    [User: 427.5=
- ms, System: 491.7 ms]
-    Range (min =E2=80=A6 max):   908.1 ms =E2=80=A6 936.6 ms    10 runs
-
-  Benchmark 4: update-ref: create many refs (refcount =3D 1, revision =3D H=
-EAD)
-    Time (mean =C2=B1 =CF=83):       5.5 ms =C2=B1   0.3 ms    [User: 2.4 m=
-s, System: 3.1 ms]
-    Range (min =E2=80=A6 max):     5.0 ms =E2=80=A6   7.3 ms    89 runs
-
-  Benchmark 5: update-ref: create many refs (refcount =3D 100, revision =3D=
- HEAD)
-    Time (mean =C2=B1 =CF=83):      10.4 ms =C2=B1   0.3 ms    [User: 5.1 m=
-s, System: 5.3 ms]
-    Range (min =E2=80=A6 max):     9.7 ms =E2=80=A6  11.0 ms    78 runs
-
-  Benchmark 6: update-ref: create many refs (refcount =3D 10000, revision =
-=3D HEAD)
-    Time (mean =C2=B1 =CF=83):     483.5 ms =C2=B1   6.3 ms    [User: 227.8=
- ms, System: 255.6 ms]
-    Range (min =E2=80=A6 max):   477.5 ms =E2=80=A6 498.8 ms    10 runs
-
-  Summary
-    update-ref: create many refs (refcount =3D 1, revision =3D HEAD) ran
-      1.01 =C2=B1 0.06 times faster than update-ref: create many refs (refc=
-ount =3D 1, revision =3D HEAD~)
-      1.89 =C2=B1 0.11 times faster than update-ref: create many refs (refc=
-ount =3D 100, revision =3D HEAD)
-      2.73 =C2=B1 0.16 times faster than update-ref: create many refs (refc=
-ount =3D 100, revision =3D HEAD~)
-     87.55 =C2=B1 4.65 times faster than update-ref: create many refs (refc=
-ount =3D 10000, revision =3D HEAD)
-    166.48 =C2=B1 8.80 times faster than update-ref: create many refs (refc=
-ount =3D 10000, revision =3D HEAD~)
-
-Theoretically, we could also replicate the strategy of the "packed"
-backend where small tables are read into memory instead of using mmap.
-Benchmarks did not confirm that this has a performance benefit though.
----
- reftable/blocksource.c | 48 ++++++++++++++++++++++++++++++------------
- 1 file changed, 35 insertions(+), 13 deletions(-)
-
-diff --git a/reftable/blocksource.c b/reftable/blocksource.c
-index a1ea304429..5d3f3d264c 100644
---- a/reftable/blocksource.c
-+++ b/reftable/blocksource.c
-@@ -13,6 +13,12 @@ license that can be found in the LICENSE file or at
- #include "reftable-blocksource.h"
- #include "reftable-error.h"
-=20
-+#if defined(NO_MMAP)
-+static int use_mmap =3D 0;
-+#else
-+static int use_mmap =3D 1;
-+#endif
-+
- static void strbuf_return_block(void *b, struct reftable_block *dest)
- {
- 	if (dest->len)
-@@ -78,6 +84,7 @@ struct reftable_block_source malloc_block_source(void)
- struct file_block_source {
- 	int fd;
- 	uint64_t size;
-+	unsigned char *data;
- };
-=20
- static uint64_t file_size(void *b)
-@@ -87,19 +94,23 @@ static uint64_t file_size(void *b)
-=20
- static void file_return_block(void *b, struct reftable_block *dest)
- {
--	if (dest->len)
--		memset(dest->data, 0xff, dest->len);
--	reftable_free(dest->data);
- }
-=20
--static void file_close(void *b)
-+static void file_close(void *v)
- {
--	int fd =3D ((struct file_block_source *)b)->fd;
--	if (fd > 0) {
--		close(fd);
--		((struct file_block_source *)b)->fd =3D 0;
-+	struct file_block_source *b =3D v;
-+
-+	if (b->fd >=3D 0) {
-+		close(b->fd);
-+		b->fd =3D -1;
- 	}
-=20
-+	if (use_mmap)
-+		munmap(b->data, b->size);
-+	else
-+		reftable_free(b->data);
-+	b->data =3D NULL;
-+
- 	reftable_free(b);
- }
-=20
-@@ -108,9 +119,7 @@ static int file_read_block(void *v, struct reftable_blo=
-ck *dest, uint64_t off,
- {
- 	struct file_block_source *b =3D v;
- 	assert(off + size <=3D b->size);
--	dest->data =3D reftable_malloc(size);
--	if (pread_in_full(b->fd, dest->data, size, off) !=3D size)
--		return -1;
-+	dest->data =3D b->data + off;
- 	dest->len =3D size;
- 	return size;
- }
-@@ -127,8 +136,10 @@ int reftable_block_source_from_file(struct reftable_bl=
-ock_source *bs,
- {
- 	struct stat st =3D { 0 };
- 	int err =3D 0;
--	int fd =3D open(name, O_RDONLY);
-+	int fd;
- 	struct file_block_source *p =3D NULL;
-+
-+	fd =3D open(name, O_RDONLY);
- 	if (fd < 0) {
- 		if (errno =3D=3D ENOENT) {
- 			return REFTABLE_NOT_EXIST_ERROR;
-@@ -144,7 +155,18 @@ int reftable_block_source_from_file(struct reftable_bl=
-ock_source *bs,
-=20
- 	p =3D reftable_calloc(sizeof(struct file_block_source));
- 	p->size =3D st.st_size;
--	p->fd =3D fd;
-+	if (use_mmap) {
-+		p->data =3D xmmap(NULL, st.st_size, PROT_READ, MAP_PRIVATE, fd, 0);
-+		p->fd =3D fd;
-+	} else {
-+		p->data =3D xmalloc(st.st_size);
-+		if (read_in_full(fd, p->data, st.st_size) !=3D st.st_size) {
-+			close(fd);
-+			return -1;
-+		}
-+		close(fd);
-+		p->fd =3D -1;
-+	}
-=20
- 	assert(!bs->ops);
- 	bs->ops =3D &file_vtable;
---=20
-2.43.GIT
-
-
---NBAaQiMxmUDYVcfF
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmWb6CIACgkQVbJhu7ck
-PpSWpQ//f6PwhgHU9w6DvvWIViFUhEmT4HwYn726BLfOXNHnv05o/kyrH/e5YR0L
-yXK15yYBa2ZjryEe2FHZeb1sLqbCo9mEvaSbrnfjMFt2dhqWXCvtVzk8QHEy3gfC
-PAil78bQapAL60poLOtlGnBNrOVqti2nkwNcxNsNnn/Z7NZLcK7k/z0uuJKS+NbW
-e927qvEnEM5KCBMfpY0hJarAqdbm5P3TBAj5Dytzvr55qdmTdtMB6a5cOjHPK3ct
-eoCscBDlIpwFwzPXwI3JwIssxKjyYxatArhXY2lTba7TkiU0E+i1eVVVrzR8SUMq
-ux7ryIJ0mzdI1jpGTRP7OjA+XQPg128T1lQ5yw0r4M4SI3lmq6E03SLK9fHFdmmV
-cV3mb2xYQeJC4lcjBSF1s2RpPmVZgPoP0SWv+FCf2D0OaKKhB6omB8l5y+Lw7r8G
-ZXX2RsXgi92B3PUd3P79E8Ou+/yu5E+XNAHpOp9TxhLVVRsz2Si8vvzqsA922Ztf
-Ymh8724zv5lm29ZjDTO/7nv9KQK/tH2ftRWOM8Y/St1hnYqoaR2aKB2i1FED4bwL
-hoBWvUIWal5v2eABcUf59tP4kBriXJDPIsgoiwSOJnXaW6UdIGudEQ0QeCqc3siF
-Lu8bBXI3GTdIFWtgyYHH2lu2iD6r6g0Vin/Ju9/Z6gIndL+WASQ=
-=5/f9
------END PGP SIGNATURE-----
-
---NBAaQiMxmUDYVcfF--
+Thanks.
