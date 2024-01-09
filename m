@@ -1,71 +1,104 @@
-Received: from mail-oi1-f176.google.com (mail-oi1-f176.google.com [209.85.167.176])
+Received: from mail-yb1-f178.google.com (mail-yb1-f178.google.com [209.85.219.178])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CEDA3D3AB
-	for <git@vger.kernel.org>; Tue,  9 Jan 2024 19:41:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA23B3DB83
+	for <git@vger.kernel.org>; Tue,  9 Jan 2024 19:54:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-oi1-f176.google.com with SMTP id 5614622812f47-3bd3b34a58dso793879b6e.3
-        for <git@vger.kernel.org>; Tue, 09 Jan 2024 11:41:02 -0800 (PST)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Wu3scSMz"
+Received: by mail-yb1-f178.google.com with SMTP id 3f1490d57ef6-dbd029beef4so3377904276.0
+        for <git@vger.kernel.org>; Tue, 09 Jan 2024 11:54:19 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1704830058; x=1705434858; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=vT2yeB4H+vUIvaQYSMK7JGdRM+jIU031sNmimb7c5BM=;
+        b=Wu3scSMz6A+LmI1w9vUr5aPbhdIiaEdAJYNDiTFyZyk5wu1X29Mf2b+3GURJcI/RGQ
+         2u3z8uG7saGG6G//sjs5x8YQ4/YmxhHIV5kl1KWZoHexvXM9M4DDAi9g05yjYZDCNG7R
+         TNoPOsa7Zyo4I159U2q8QPfzjg/kQ2JzGuu9HfuE6FPy80rPOvNGtBvXR74h88tYixEt
+         ICBry0c+Mv1xEU2vJ0ctFbSwhSFd8c1i26h3w1FCgewM9LidlfBzrUCndyIlCHNtfHvu
+         S8B16CGLYUsstTMwN2yvR7hCMGxqVXFm7eWkRNfs8qDr+pjBvnfzOI9IVYgMEulMUS3N
+         M5VQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1704829261; x=1705434061;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=E7PDAS8e8FXKn+ufDc0ld1cSRc0B2KUHnkKwdbM5nnU=;
-        b=gc3l6jL34lVasYWgVJffXFxnHryJrivnXen+s/DFLHFbk1KpWuRFZaZqN1ICCBZtzz
-         pK/QxV5QDEFLmmk4Utsptuh0uO7g303GmWpACaT+dHTGLfKwpMdN5DQnjfVF9XGN8cZm
-         IhrnNGcQEDTLSPcmg+am3MVL5nNl1MIaO+GgpB31JosGswSHVMeNupmnS5HabGpftAvj
-         8yW0rZ9BkEJOMuoTKNMzDCpgIwbQmgiAjN2yXsGDlAMoEMxCx8fQzaMuDMRCdRYpF60d
-         EPAJRk4uW5+0HErYlR0rrRF57bJjcFBj/BD9lxJCezQi7slSKSdb86Efsge3MCJrm5a5
-         k/eg==
-X-Gm-Message-State: AOJu0YzRBImvEa50BYnz2yxfXMJSB7k78KAeUSSdO7I6E/jIUOmt5bSu
-	vcyH9rtiSUdAfQegNL3rULBoJBfHHJvHPM7o2ivszEd2+iw=
-X-Google-Smtp-Source: AGHT+IG4dT4YxTY7cf5kdFgWDJMr8XNfP3MZ5A2KtXWz8PBZzdr8CPjwabzgsKFzx+TF0JSnOuz8I51P4jxfx98OapY=
-X-Received: by 2002:a05:6808:1415:b0:3bb:cd41:9c78 with SMTP id
- w21-20020a056808141500b003bbcd419c78mr6758306oiv.60.1704829261499; Tue, 09
- Jan 2024 11:41:01 -0800 (PST)
+        d=1e100.net; s=20230601; t=1704830058; x=1705434858;
+        h=cc:to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=vT2yeB4H+vUIvaQYSMK7JGdRM+jIU031sNmimb7c5BM=;
+        b=XhpibyDSTs/lH27cEqsMdIsn/iLF5wc2hIPA8N8eoQ4ZPgyJo0bbdYsFSukofHYYby
+         WAdWRlf6IukB3E1vArMFYBDzkMgfTgT+dmxzJCNObjIlpIMcXP7xr6vrRtk770jX119O
+         wxfSOkVnLReDivE5Vfon90oB0CMoQH/ZTWp0JVs+fa7yDdv4lGnQ9XVKRCM1xGUjW8DP
+         YN8WXOMea2jH996E25ze2vKr6xWOhhFgLm/hdu+skzUO/ROOoeAJ8umRiNO9HI46Mqkp
+         LOxouGg8yFxLkdB1CgEQZyQHw+Tl8JeUB14KTFEXS2UHAJzU6tEfKMpdoFkbwjNyELx7
+         M3qg==
+X-Gm-Message-State: AOJu0YyJS5AwHJHhVrE6MUcjPdx8rAwemPNqTG9Ur3DcKHMqEp3uNoUG
+	Oa9cdmds9HzCM+2b6KesdRCbZArV5RcbO+Oz8cSpHcIsrps1WAFc
+X-Google-Smtp-Source: AGHT+IEm4wYVWJaLl0xIFuQjgscBa0sBGuXfAP1MW7J7oIC0KxyUotacKm2fbMJhX+Zyy4YiOvR1pbIxHBu2QHpG538=
+X-Received: by 2002:a05:6902:200d:b0:dbd:2ae7:f363 with SMTP id
+ dh13-20020a056902200d00b00dbd2ae7f363mr2308ybb.4.1704830058577; Tue, 09 Jan
+ 2024 11:54:18 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <cover.1704802213.git.ps@pks.im> <d7c6b8b2a7b3b4d776f06ce577bdbdbaff66f225.1704802213.git.ps@pks.im>
-In-Reply-To: <d7c6b8b2a7b3b4d776f06ce577bdbdbaff66f225.1704802213.git.ps@pks.im>
-From: Eric Sunshine <sunshine@sunshineco.com>
-Date: Tue, 9 Jan 2024 14:40:50 -0500
-Message-ID: <CAPig+cTAiEFu9p1nRe9LC3mxyPmfQ9m4r7aQUj_9OC8pSbwbig@mail.gmail.com>
-Subject: Re: [PATCH 4/6] t1419: mark test suite as files-backend specific
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org
+From: Sergius Nyah <sergiusnyah@gmail.com>
+Date: Tue, 9 Jan 2024 20:54:07 +0100
+Message-ID: <CANAnif8L3+CoVdvcUntWz_JoDvubityXPsouLqgvca=BrtqR8g@mail.gmail.com>
+Subject: Add more builtin patterns for userdiff, as Microproject.
+To: git@vger.kernel.org, "gitster@pobox.com" <gitster@pobox.com>
+Cc: newren@gmail.com, l.s.r@web.de
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-On Tue, Jan 9, 2024 at 7:17=E2=80=AFAM Patrick Steinhardt <ps@pks.im> wrote=
-:
-> With 59c35fac54 (refs/packed-backend.c: implement jump lists to avoid
-> excluded pattern(s), 2023-07-10) we have implemented logic to handle
-> excluded refs more efficiently in the "packed" ref backend. This logic
-> allows us to skip emitting refs completely which we know to not be of
-> any interest to the caller, which can avoid quite some allocaitons and
-> object lookups.
+Hello everyone,
+I'm Sergius, a Computer Science undergraduate student, and I want to
+begin Contributing to the Git project. So far, I've gone through
+Matheus' tutorial on First steps Contributing to Git, and I found it
+very helpful. I've also read the Contribution guidelines keenly and
+built Git from source.
 
-s/allocaitons/allocations/
+In accordance with the contributor guidelines, I came across this
+Mircoproject idea from: https://git.github.io/SoC-2022-Microprojects/
+which I'm willing to work on. It talked about enhancing Git's
+"userdiff" feature in "userdiff.c" which is crucial for identifying
+function names in various programming languages, thereby improving the
+readability of "git diff" outputs.
 
-> This was wired up via a new `exclude_patterns` parameter passed to the
-> backend's ref iterator. The backend only needs to handle them on a best
-> effort basis though, and in fact we only handle it for the "packed-refs"
-> file, but not for loose references. Consequentially, all callers must
-> still filter emitted refs with those exclude patterns.
+From my understanding, the project involves extending the `userdiff`
+feature to support additional programming languages that are currently
+not covered such as Shell, Swift, Go and the others.
 
-s/Consequentially/Consequently/
+Here is a sample of how a language is defined in `userdiff.c`:
 
-> The result is that handling exclude patterns is completely optional in
-> the ref backend, and any future backends may or may not implement it.
-> Let's thus mark the test for t1419 to depend on the REFFILES prereq.
+> #define PATTERNS(lang, rx, wrx) { \
+> .name = lang, \
+> .binary = -1, \
+> .funcname = { \
+> .pattern = rx, \
+> .cflags = REG_EXTENDED, \
+> }, \
+> .word_regex = wrx "|[^[:space:]]|[\xc0-\xff][\x80-\xbf]+", \
+> .word_regex_multi_byte = wrx "|[^[:space:]]", \
+ > }
 
-This change seems to be abusing the meaning of the REFFILES
-prerequisite. Instead the above description argues for introduction of
-a new prerequisite which indicates whether or not the backend honors
-the exclude patterns. Or, am I misunderstanding this?
+In this code, `lang` is the name of the language, `rx` is the regular
+expression for identifying function names, and `wrx` is the word
+regex.
+
+Approach: I Identified the Programming Languages that are not
+currently supported by the userdiff feature by reviewing the existing
+patterns in userdiff.c and comparing them with some popular
+programming languages.
+For each supported language, I would define a regular expression that
+could help identify function names in that language. This could
+include researching each language's syntax and testing their
+expressions to ensure that they work well.
+Also, I'd add a new IPATTERN definition for each language to the
+"userdiff.c" file, then rebuild Git and test the changes by creating a
+repo with files in the newly supported languages then run "git diff"
+to ensure the line @@ ... @@ produces their correct function names.
+Then submit a patch.
+
+Best Regards!
+Sergius.
