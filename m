@@ -1,139 +1,90 @@
-Received: from mail-qk1-f174.google.com (mail-qk1-f174.google.com [209.85.222.174])
+Received: from mail-qv1-f49.google.com (mail-qv1-f49.google.com [209.85.219.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2161B3C46E
-	for <git@vger.kernel.org>; Tue,  9 Jan 2024 18:43:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ttaylorr.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="Jyqv2WtZ"
-Received: by mail-qk1-f174.google.com with SMTP id af79cd13be357-78333a8d428so14498785a.1
-        for <git@vger.kernel.org>; Tue, 09 Jan 2024 10:43:42 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1704825822; x=1705430622; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=hlc8JCmVHjIsf6jRvLLCY68E+S1Md0rdPYx34XEMwLs=;
-        b=Jyqv2WtZncPTqcwoETcZiZeQNtd29EaPL3qO8CUTrPo+860Qt1fYiMEXRKeJcGp8ar
-         OgDEwkEOwQXzW0p0Sm6qejRqduwvJoyxs8G7HYrqj0CEuN11CMJcluWb1vMB6Cq0rse1
-         xvg5r9L/VOouluVVUmILxPO03FAtJKMOdgsJQrOA+nKnfRLFr8GhMNfqRyRvj18sXNF/
-         FwcWOXn5S5cz7ekmnmklx3isEwQXWh5qqtyjPN9SyldV5gbted/XWZnbnhva7vFmtoSz
-         lOJQhfReDKyBOjUzVHQYQMj2zil7sF5yjNzEyADPm+phUfwpf0dTLyGZzRypP9V5lqxQ
-         sthg==
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 413CB39FC5
+	for <git@vger.kernel.org>; Tue,  9 Jan 2024 19:24:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-qv1-f49.google.com with SMTP id 6a1803df08f44-680b1956ca4so24149006d6.3
+        for <git@vger.kernel.org>; Tue, 09 Jan 2024 11:24:07 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1704825822; x=1705430622;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=hlc8JCmVHjIsf6jRvLLCY68E+S1Md0rdPYx34XEMwLs=;
-        b=JJMXg5tJ1O5/ZLGYelHxKRJl+gTGTg7rQlUP9mUw1rIefdLngrwtceLAg2TOu3AKNc
-         czZU488XDrrHqyvkmL1XjgGJTYBLKLuPx3NY4kNzevm2EZLPpxHBztxd+KaUWKXhV+yn
-         OeTqlwhnN1f1+1Ufx/jQFX2J+fTvmzBxCiZZKhJ9AZFprtPZ1fUrD627TTqafiWqPvAn
-         HU4zlqRJoWP8pL/rsQlIwhrs/AJ8xRwoyr/8ZhonnfUJklSOvjoxBz6at8Vuj29EUJCz
-         3+C0kn4b7CN9GzrtALxa1iKR8O0yofZoClbia95T+3gb2rwKy6rCuppV4kfrAfasiR0l
-         wVFA==
-X-Gm-Message-State: AOJu0Yw4eYx6X8p9wTtze8H+hqYqT4UqRUzzyxMlsq/dRLTN4L+B1XzG
-	gMJvc45wHK+6ZRk3HhqVXB23fILu1Q+paQ==
-X-Google-Smtp-Source: AGHT+IEMOVzjtihjbaMR+SjeLVYH1tKBG/tY8Qcopi54Txap+/AUEgt1BXlIJrTdn5XBYbKiwEJ2yQ==
-X-Received: by 2002:a05:620a:45a3:b0:783:2408:b546 with SMTP id bp35-20020a05620a45a300b007832408b546mr1938032qkb.37.1704825821894;
-        Tue, 09 Jan 2024 10:43:41 -0800 (PST)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id d6-20020a0cc686000000b00680b7496635sm1092120qvj.42.2024.01.09.10.43.41
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 09 Jan 2024 10:43:41 -0800 (PST)
-Date: Tue, 9 Jan 2024 13:43:40 -0500
-From: Taylor Blau <me@ttaylorr.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 3/6] t1302: make tests more robust with new extensions
-Message-ID: <ZZ2T3G+igA6zAIKO@nand.local>
-References: <cover.1704802213.git.ps@pks.im>
- <9af1e418d47730f503dabb271d30c848bf74fa0b.1704802213.git.ps@pks.im>
+        d=1e100.net; s=20230601; t=1704828246; x=1705433046;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=cCQZUC5L0sHDTvhZm7dorU5kX35VRWL9xSTHPxYnkKk=;
+        b=DCwqajC5tThIOGjgto0aSiPlQhVp0z21x/HHGOaciqPWFSm7myhMph1wrtrC97aau7
+         WMMORY9TtzRs9EuvIlzTzatxu84G8TnsOPw2d0hVD3hg7J3Xv0gExURLY+R2PhXRWe5w
+         2ZCNcwvtsWx4CEszVQkDbIa2AbtW5vGC4Q7a6TEpvMSJZ5DV38r4rNb/L0CW3Q50rQTI
+         cuOCuRyoFMI6pyQKLn4+67x01iy2ENnExMcyK+9WFUM/TbXwvWtXJJfJ3F9nFRxeEwRk
+         iHDOZ9P4rmACq7n7k3a3voq2tEExF2XUT+beoW9MORY3/Eya8xyB28Yi0wkF3XE05Fk4
+         cevw==
+X-Gm-Message-State: AOJu0Yx5g5ILO3kdUlUnndofVRf/l8mbKPJsMth5n7+hddxtDziaEZ1B
+	4owut68Nu644hCVMiPtIk+aS9YUv+YSdP2iqPSDaHsw+1ME=
+X-Google-Smtp-Source: AGHT+IH6F/NxT91DUodJxpFyWPyJO9fDDZs89z6/dAoceoP1AgzwnbW3ZhwhAt/beLKLpolBr5SIqrqjMEzTyRCUx14=
+X-Received: by 2002:a05:6214:1d2e:b0:680:c829:7169 with SMTP id
+ f14-20020a0562141d2e00b00680c8297169mr7865824qvd.82.1704828246102; Tue, 09
+ Jan 2024 11:24:06 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <9af1e418d47730f503dabb271d30c848bf74fa0b.1704802213.git.ps@pks.im>
+References: <cover.1704802213.git.ps@pks.im> <51e494a50e4416ed0cbfd3c474ffcaf8b72e6ef4.1704802213.git.ps@pks.im>
+In-Reply-To: <51e494a50e4416ed0cbfd3c474ffcaf8b72e6ef4.1704802213.git.ps@pks.im>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Date: Tue, 9 Jan 2024 14:23:55 -0500
+Message-ID: <CAPig+cTB5OH1hCD-EagxNAcaw1=RR7yCeeZ_AzeqHtFTGxT-0g@mail.gmail.com>
+Subject: Re: [PATCH 5/6] t5526: break test submodule differently
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Tue, Jan 09, 2024 at 01:17:12PM +0100, Patrick Steinhardt wrote:
-> In t1302 we exercise logic around "core.repositoryFormatVersion" and
-> extensions. These tests are not particularly robust against extensions
-> like the newly introduced "refStorage" extension.
+On Tue, Jan 9, 2024 at 7:17=E2=80=AFAM Patrick Steinhardt <ps@pks.im> wrote=
+:
+> In 10f5c52656 (submodule: avoid auto-discovery in
+> prepare_submodule_repo_env(), 2016-09-01) we fixed a bug when doing a
+> recursive fetch with submodule in the case where the submodule is broken
+> due to whatever reason. The test to exercise that the fix works breaks
+> the submodule by deleting its `HEAD` reference, which will cause us to
+> not detect the directory as a Git repository.
 >
-> Refactor the tests to be more robust:
->
->   - Check the DEFAULT_REPO_FORMAT prereq to determine the expected
->     repository format version. This helps to ensure that we only need to
->     update the prereq in a central place when new extensions are added.
->
->   - Use a separate repository to rewrite ".git/config" to test
->     combinations of the repository format version and extensions. This
->     ensures that we don't break the main test repository.
->
->   - Do not rewrite ".git/config" when exercising the "preciousObjects"
->     extension.
->
+> While this is perfectly fine in theory, this way of breaking the repo
+> becomes problematic with the current efforts to introduce another refdb
+> backend into Git. The new reftable backend has a stub HEAD file that
+> always contains "ref: refs/heads/.invalid" so that tools continue to be
+> able to detect such a repository. But as the reftable backend will never
+> delete this file even when asked to delete `HEAD` the current way to
+> delete the `HEAD` reference will stop working.
+
+This patch is not the appropriate place to bikeshed (but since this is
+the first time I've read or paid attention to it), if I saw "ref:
+refs/heads/.invalid", the word ".invalid" would make me think
+something was broken in my repository. Would it make sense to use some
+less alarming word, such as perhaps ".placeholder", ".stand-in",
+".synthesized" or even the name of the non-file-based backend in use?
+
+> Adapt the code to instead delete the objects database. Going back with
+> this new way to cuase breakage confirms that it triggers the infinite
+> recursion just the same, and there are no equivalent ongoing efforts to
+> replace the object database with an alternate backend.
+
+s/cuase/cause/
+
 > Signed-off-by: Patrick Steinhardt <ps@pks.im>
 > ---
->  t/t1302-repo-version.sh | 19 +++++++++++++++----
->  1 file changed, 15 insertions(+), 4 deletions(-)
->
-> diff --git a/t/t1302-repo-version.sh b/t/t1302-repo-version.sh
-> index 179474fa65..fb30c87e1b 100755
-> --- a/t/t1302-repo-version.sh
-> +++ b/t/t1302-repo-version.sh
-> @@ -28,7 +28,12 @@ test_expect_success 'setup' '
->  '
->
->  test_expect_success 'gitdir selection on normal repos' '
-> -	test_oid version >expect &&
-> +	if test_have_prereq DEFAULT_REPO_FORMAT
-> +	then
-> +		echo 0
-> +	else
-> +		echo 1
-> +	fi >expect &&
->  	git config core.repositoryformatversion >actual &&
->  	git -C test config core.repositoryformatversion >actual2 &&
->  	test_cmp expect actual &&
-> @@ -79,8 +84,13 @@ mkconfig () {
->
->  while read outcome version extensions; do
->  	test_expect_success "$outcome version=$version $extensions" "
-> -		mkconfig $version $extensions >.git/config &&
-> -		check_${outcome}
-> +		test_when_finished 'rm -rf extensions' &&
-> +		git init extensions &&
-> +		(
-> +			cd extensions &&
-> +			mkconfig $version $extensions >.git/config &&
-> +			check_${outcome}
-> +		)
->  	"
->  done <<\EOF
->  allow 0
-> @@ -94,7 +104,8 @@ allow 1 noop-v1
->  EOF
->
->  test_expect_success 'precious-objects allowed' '
-> -	mkconfig 1 preciousObjects >.git/config &&
-> +	git config core.repositoryformatversion 1 &&
+> diff --git a/t/t5526-fetch-submodules.sh b/t/t5526-fetch-submodules.sh
+> @@ -771,7 +771,7 @@ test_expect_success 'fetching submodule into a broken=
+ repository' '
+>         # Break the receiving submodule
+> -       test-tool -C dst/sub ref-store main delete-refs REF_NO_DEREF msg =
+HEAD &&
+> +       rm -r dst/sub/.git/objects &&
 
-I'm nit-picking, but it looks like core.repositoryformatversion is all
-lower-case, whereas extensions.preciousObjects is camel-case. I don't
-think it's a big deal either way, but I couldn't *not* mention it while
-reading ;-)
+If there is no guarantee that .git/objects will exist when any
+particular backend is in use, would it be more robust to use -f here,
+as well?
 
-> +	git config extensions.preciousObjects 1 &&
->  	check_allow
->  '
->
-> --
-> 2.43.GIT
-
-Thanks,
-Taylor
+    rm -rf dst/sub/.git/objects &&
