@@ -1,85 +1,66 @@
-Received: from bsmtp5.bon.at (bsmtp5.bon.at [195.3.86.187])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qv1-f45.google.com (mail-qv1-f45.google.com [209.85.219.45])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A9A43A1AF
-	for <git@vger.kernel.org>; Tue,  9 Jan 2024 19:27:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kdbg.org
-Received: from bsmtp1.bon.at (unknown [192.168.181.103])
-	by bsmtp5.bon.at (Postfix) with ESMTPS id 4T8gtm0WvHz5tnD
-	for <git@vger.kernel.org>; Tue,  9 Jan 2024 20:27:44 +0100 (CET)
-Received: from [192.168.0.101] (unknown [93.83.142.38])
-	by bsmtp1.bon.at (Postfix) with ESMTPSA id 4T8gtb52T5z5tlB;
-	Tue,  9 Jan 2024 20:27:35 +0100 (CET)
-Message-ID: <d1e1a543-ab9c-4b1b-9f1d-3728e791df2e@kdbg.org>
-Date: Tue, 9 Jan 2024 20:27:35 +0100
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B2A33D39F
+	for <git@vger.kernel.org>; Tue,  9 Jan 2024 19:35:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-qv1-f45.google.com with SMTP id 6a1803df08f44-6808c3938afso24792146d6.1
+        for <git@vger.kernel.org>; Tue, 09 Jan 2024 11:35:41 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1704828940; x=1705433740;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=Tw2yCuQD680+zknMxBfz6/k1H9mh+RDLT6uhLXDEDNs=;
+        b=PvxRp7GxlYUvufm1Y+LGt/7Q+tB/B17BuMlqLSye6LwlTj6W/A33+agDSLQbKvtgzA
+         6+asLxg1IJsP2KkRSjMHsqmuc9C5mmwVJlCxYy6YBFvRoJm4LIGL9Blnhf83tziCLJTm
+         HmGTOYdvqkaVyDZnr7MNGjb/xZ6tKhgJZ5vpt6PTTAWzZ+vVasi6ambBVzP04fg1xmqO
+         Z6SbA2nByE/Gwt9TSR05CJ/2mv7H2ldE/ybR+Ih8L1a8HqH3K/eft0ynA79dDki4NEeY
+         NR+kg6wFbcZiKuwSf3sIlBDSn6KOcAdwqf0M0GQQmbKNIbRVl3jVdlfX2vbu9va+ipe+
+         rJUA==
+X-Gm-Message-State: AOJu0YzYGDWzGrBgaIS/mUbXAWxgRMfDIHOqSOiWn/+noAxVhXNeNmYk
+	P2un1ndMpQiqhMoG1EgL/ZKl1wlqzEiXNjjwt5x4X32n
+X-Google-Smtp-Source: AGHT+IGt3KwkB2BU9ILb1CHurzyM3W8P6VGFoZWye0yjtX1HiXDw+4jXyNUf2PQFKLLwzBpzNz2LDjNZRhYt2u7ZRrU=
+X-Received: by 2002:a05:6214:5017:b0:67f:592b:d5da with SMTP id
+ jo23-20020a056214501700b0067f592bd5damr7164507qvb.11.1704828940147; Tue, 09
+ Jan 2024 11:35:40 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 1/1] mingw: give more details about unsafe directory's
- ownership
-To: =?UTF-8?Q?S=C3=B6ren_Krecker?= <soekkle@freenet.de>
-Cc: sunshine@sunshineco.com, git@vger.kernel.org
-References: <de9cf40a-1ad6-45fb-8b70-8b0c71a3bfbb@kdbg.org>
- <20240108173837.20480-1-soekkle@freenet.de>
- <20240108173837.20480-2-soekkle@freenet.de>
-Content-Language: en-US
-From: Johannes Sixt <j6t@kdbg.org>
-In-Reply-To: <20240108173837.20480-2-soekkle@freenet.de>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+References: <cover.1704802213.git.ps@pks.im> <ec1b5bdd176e6a3f093b76b732fd9e960a7880ca.1704802213.git.ps@pks.im>
+In-Reply-To: <ec1b5bdd176e6a3f093b76b732fd9e960a7880ca.1704802213.git.ps@pks.im>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Date: Tue, 9 Jan 2024 14:35:29 -0500
+Message-ID: <CAPig+cRdDSMACzB6mEfwbijLHHSJuQ_Tk8ggNkvFxEd1aSqw2A@mail.gmail.com>
+Subject: Re: [PATCH 1/6] t1300: mark tests to require default repo format
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Am 08.01.24 um 18:38 schrieb Sören Krecker:
-> +static BOOL user_sid_to_user_name(PSID sid, LPSTR *str)
-> +{
-> +	SID_NAME_USE pe_use;
-> +	DWORD len_user = 0, len_domain = 0;
-> +	BOOL translate_sid_to_user;
-> +
-> +	/*
-> +	 * returns only FALSE, because the string pointers are NULL
-> +	 */
-> +	LookupAccountSidA(NULL, sid, NULL, &len_user, NULL, &len_domain,
-> +			  &pe_use); 
+On Tue, Jan 9, 2024 at 7:17=E2=80=AFAM Patrick Steinhardt <ps@pks.im> wrote=
+:
+> The t1300 test suite exercises the git-config(1) tool. To do so we
+> overwrite ".git/config" to contain custom contents. While this is easy
+> enough to do, it may create problems when using a non-default repository
+> format because we also overwrite the repository format version as well
+> as any potential extensions.
+>
+> Mark these tests with the DEFAULT_REPO_FORMAT prerequisite to avoid the
+> problem. An alternative would be to carry over mandatory config keys
+> into the rewritten config file. But the effort does not seem worth it
+> given that the system under test is git-config(1), which is at a lower
+> level than the repository format.
 
-At this point, the function fails, so len_user and len_domain contain
-the required buffer size (including the trailing NUL).
+If I'm understanding correctly, with the approach taken by this patch,
+won't we undesirably lose some git-config test coverage if the
+file-based backend is ever retired, or if tests specific to it are
+ever disabled by default? As such, it seems like the alternative "fix"
+you mention above would be preferable to ensure that coverage of
+git-config doesn't get diluted.
 
-> +	/*
-> +	 * Alloc needed space of the strings
-> +	 */
-> +	ALLOC_ARRAY((*str), (size_t)len_domain + (size_t)len_user); 
-> +	translate_sid_to_user = LookupAccountSidA(NULL, sid,
-> +	    (*str) + len_domain, &len_user, *str, &len_domain, &pe_use);
-
-At this point, if the function is successful, len_user and len_domain
-contain the lengths of the names (without the trailing NUL).
-
-> +	if (!translate_sid_to_user)
-> +		FREE_AND_NULL(*str);
-> +	else
-> +		(*str)[len_domain] = '/';
-
-Therefore, this overwrites the NUL after the domain name and so
-concatenates the two names. Good.
-
-I found this by dumping the values of the variables, because the
-documentation of LookupAccountSid is not clear about the values that the
-variables receive in the success case.
-
-> +	return translate_sid_to_user;
-> +}
-> +
-
-This patch looks good and works for me.
-
-Acked-by: Johannes Sixt <j6t@kdbg.org>
-
-Thank you!
-
--- Hannes
-
+Or am I misunderstanding something?
