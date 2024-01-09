@@ -1,46 +1,56 @@
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oi1-f174.google.com (mail-oi1-f174.google.com [209.85.167.174])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F34753C08F
-	for <git@vger.kernel.org>; Tue,  9 Jan 2024 18:23:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B8C13C461
+	for <git@vger.kernel.org>; Tue,  9 Jan 2024 18:27:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="dtizIA5f"
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 29E7437090;
-	Tue,  9 Jan 2024 13:23:08 -0500 (EST)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=B1B3XtDJhEY0
-	p4ZUnvhnCF9Nc26ZOsEhdAK2U8ikdlk=; b=dtizIA5fhaBS6l71r8akkMmGf+Cf
-	ShtOIzJSI4r1cKJO4IAUJXUPjMbKceIW9B4ysIkI+GZRt8hlFlDBB1kkxTzJvs1s
-	T5pIfYeNFD41Or9Sh9Xu0kXlTeeFNd4gkzeUT5FPR/6Fh82PDyBFOWhWziWays+m
-	MnDZLPEytQlSF74=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 0CD463708F;
-	Tue,  9 Jan 2024 13:23:08 -0500 (EST)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.200.93])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 97C973708E;
-	Tue,  9 Jan 2024 13:23:04 -0500 (EST)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: =?utf-8?Q?Rub=C3=A9n?= Justo <rjusto@gmail.com>
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="1ZEOVFHM"
+Received: by mail-oi1-f174.google.com with SMTP id 5614622812f47-3bbce1202ebso3129527b6e.2
+        for <git@vger.kernel.org>; Tue, 09 Jan 2024 10:27:39 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1704824859; x=1705429659; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=KPFq6K/XdtZcuNKlIv4kpKSdiMRtFBwhw2lpzdyc3vg=;
+        b=1ZEOVFHMrmSfr+0I/oCBwFOouM6BbbUYEAoo04kZlOsOzfw6eczj3/Srl5qS5IYNar
+         KRHsXlOGHkamBMoSi2ow4l0uEusFurKIHHY8TBhtHSd6aBUIOK4jBw/1hzOw8OL/23Tt
+         lUj4Bw0wI4xN54A8Ab6+Heg4nsovAGYlLUC06bT5cmnmliGvhkRbM2aMlEYEioKqaLeV
+         JFsHTUKqNHx06PE5mV7s2C9f/CgGQKlDYi5OC7iUjiIf8+3Q28CtgcKYSUNHm8wrsJnc
+         wmyAmF0kAoRKdwS/WdB4yr79/7CKDRP2OtJRc3mMNuXFCkbKkVbH6JI4e7gycGz1MbQG
+         9C6w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1704824859; x=1705429659;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=KPFq6K/XdtZcuNKlIv4kpKSdiMRtFBwhw2lpzdyc3vg=;
+        b=T9GqEWDJeFaBWd/CkkIf5Ure9Q//BilOn76rQ6WReX+w29D7Kn3DK3XorlPYX5cboo
+         7/WS5z2wwQ6OiVPYl6+tGkCxmREdGxc4k/aT6kjlKt7VdA3EDyr2e5LhtkhUkkfAGx3n
+         c59/9KgKuQIsEa1iN/P38qwkPY+rdkyHPunzN5mN9kvu/NoKR1E9iISM2ibGAenvIFL/
+         psyr5xBGYbER/JF7A++fsDQKej0t3zBCi+bOw6fCFUHypzu84wOwlZ2WN+JuqhRyK9O/
+         bF01SpkvQVcuOLZzxAPQydhRXXOgLKRuybm6YkbjbpiNTq90j+PrX9YjQf9uY67UIVhT
+         NqGQ==
+X-Gm-Message-State: AOJu0YyW3DiKHl3Pe+bFeA6ZBWdnteOmu3C8BtKC3cFNscT/a7zly9yn
+	rFpW/qQ8fvFidz2xeUI358UiTnI8LRl5ew==
+X-Google-Smtp-Source: AGHT+IEPIPE8Frswh1s/EKGPQwE6F/A6dJGIl+tQIYA6DbtUR7J1al3LwH8jG/Q+rfYmcRUqYaQagA==
+X-Received: by 2002:a05:6808:3c8c:b0:3bc:9169:a0c3 with SMTP id gs12-20020a0568083c8c00b003bc9169a0c3mr10278506oib.2.1704824859001;
+        Tue, 09 Jan 2024 10:27:39 -0800 (PST)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id lg10-20020a056214548a00b0067f75dbf08fsm1088038qvb.11.2024.01.09.10.27.38
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 09 Jan 2024 10:27:38 -0800 (PST)
+Date: Tue, 9 Jan 2024 13:27:37 -0500
+From: Taylor Blau <me@ttaylorr.com>
+To: =?utf-8?B?UnViw6lu?= Justo <rjusto@gmail.com>
 Cc: Git List <git@vger.kernel.org>
 Subject: Re: [PATCH 3/3] advice: allow disabling the automatic hint in
  advise_if_enabled()
-In-Reply-To: <d6099d78-43c6-4709-9121-11f84228cf91@gmail.com>
- (=?utf-8?Q?=22Rub=C3=A9n?= Justo"'s
-	message of "Tue, 9 Jan 2024 16:30:16 +0100")
+Message-ID: <ZZ2QGYBBmK8cSYBD@nand.local>
 References: <7c68392c-af2f-4999-ae64-63221bf7833a@gmail.com>
-	<d6099d78-43c6-4709-9121-11f84228cf91@gmail.com>
-Date: Tue, 09 Jan 2024 10:23:03 -0800
-Message-ID: <xmqqo7dugyd4.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ <d6099d78-43c6-4709-9121-11f84228cf91@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -48,26 +58,32 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID:
- 2138810A-AF1C-11EE-B351-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <d6099d78-43c6-4709-9121-11f84228cf91@gmail.com>
 
-Rub=C3=A9n Justo <rjusto@gmail.com> writes:
-
+On Tue, Jan 09, 2024 at 04:30:16PM +0100, Rubén Justo wrote:
 > Using advise_if_enabled() to display an advice will automatically
 > include instructions on how to disable the advice, along with the
 > main advice:
 >
 > 	hint: use --reapply-cherry-picks to include skipped commits
-> 	hint: Disable this message with "git config advice.skippedCherryPicks =
-false"
+> 	hint: Disable this message with "git config advice.skippedCherryPicks false"
 >
 > This can become distracting or noisy over time, while the user may
 > still want to receive the main advice.
->
+
+Presumably for more trivial pieces of advice, a user may want to
+immediately disable those hints in the future more quickly after first
+receiving the advice, in which case this feature may not be as useful
+for them.
+
+But for trickier pieces of advice, I agree completely with your
+reasoning and think that something like this makes sense.
+
 > Let's have a switch to allow disabling this automatic advice.
 >
-> Signed-off-by: Rub=C3=A9n Justo <rjusto@gmail.com>
+> Signed-off-by: Rubén Justo <rjusto@gmail.com>
 > ---
 >  advice.c          | 3 ++-
 >  advice.h          | 3 ++-
@@ -79,23 +95,35 @@ false"
 > --- a/advice.c
 > +++ b/advice.c
 > @@ -79,6 +79,7 @@ static struct {
->  	[ADVICE_UPDATE_SPARSE_PATH]			=3D { "updateSparsePath", 1 },
->  	[ADVICE_WAITING_FOR_EDITOR]			=3D { "waitingForEditor", 1 },
->  	[ADVICE_WORKTREE_ADD_ORPHAN]			=3D { "worktreeAddOrphan", 1 },
-> +	[ADVICE_ADVICE_OFF]				=3D { "adviceOff", 1 },
+>  	[ADVICE_UPDATE_SPARSE_PATH]			= { "updateSparsePath", 1 },
+>  	[ADVICE_WAITING_FOR_EDITOR]			= { "waitingForEditor", 1 },
+>  	[ADVICE_WORKTREE_ADD_ORPHAN]			= { "worktreeAddOrphan", 1 },
+> +	[ADVICE_ADVICE_OFF]				= { "adviceOff", 1 },
+
+The name seems to imply that setting `advice.adviceOff=true` would cause
+Git to suppress the turn-off instructions. But...
+
 >  };
-> =20
->  static const char turn_off_instructions[] =3D
-> @@ -93,7 +94,7 @@ static void vadvise(const char *advice, int display_i=
-nstructions,
-> =20
+>
+>  static const char turn_off_instructions[] =
+> @@ -93,7 +94,7 @@ static void vadvise(const char *advice, int display_instructions,
+>
 >  	strbuf_vaddf(&buf, advice, params);
-> =20
+>
 > -	if (display_instructions)
 > +	if (display_instructions && advice_enabled(ADVICE_ADVICE_OFF))
 >  		strbuf_addf(&buf, turn_off_instructions, key);
-> =20
->  	for (cp =3D buf.buf; *cp; cp =3D np) {
+
+...it looks like the opposite is true. I guess the "adviceOff" part of
+this new configuration option suggests "show me advice on how to turn
+off advice of xyz kind in the future".
+
+Perhaps a clearer alternative might be "advice.showDisableInstructions"
+or something? I don't know, coming up with a direct/clear name of this
+configuration is challenging for me.
+
+>
+>  	for (cp = buf.buf; *cp; cp = np) {
 > diff --git a/advice.h b/advice.h
 > index 2affbe1426..1f2eef034e 100644
 > --- a/advice.h
@@ -115,38 +143,34 @@ nstructions,
 >  	ADVICE_WORKTREE_ADD_ORPHAN,
 > +	ADVICE_ADVICE_OFF,
 >  };
-> =20
+>
 >  int git_default_advice_config(const char *var, const char *value);
 > diff --git a/t/t0018-advice.sh b/t/t0018-advice.sh
 > index c13057a4ca..0b6a8b4a10 100755
 > --- a/t/t0018-advice.sh
 > +++ b/t/t0018-advice.sh
-> @@ -30,4 +30,12 @@ test_expect_success 'advice should not be printed wh=
-en config variable is set to
+> @@ -30,4 +30,12 @@ test_expect_success 'advice should not be printed when config variable is set to
 >  	test_must_be_empty actual
 >  '
-> =20
+>
 > +test_expect_success 'advice without the instructions to disable it' '
 > +	cat >expect <<-\EOF &&
 > +	hint: This is a piece of advice
 > +	EOF
-> +	test-tool -c advice.adviceOff=3D0 advise "This is a piece of advice" =
-2>actual &&
+> +	test-tool -c advice.adviceOff=0 advise "This is a piece of advice" 2>actual &&
 > +	test_cmp expect actual
 > +'
 
-This is testing the right thing but in a "showing off a shiny new
-toy" way.  We want to make sure we will catch regressions in the
-future by testing with a bit more conditions perturbed.  For
-example, with the new "-c var=3Dval" mechanism, we could
+Looking at this test, I wonder why we don't imitate the existing style
+of:
 
-  * set advice.nestedtag to off (which would disable the whole
-    advice)
+    test_config advice.adviceOff false &&
+    test-tool advise "This is a piece of advice" 2>actual &&
+    test_cmp expect actual
 
-  * set advice.adviceoff to on (which should be the same as not
-    setting it explicitly at all).
+instead of teaching the test-tool helpers how to interpret `-c`
+arguments. Doing so would allow us to drop the first couple of patches
+in this series and simplify things a bit.
 
-to test different combinations that we were unable to test before
-[2/3] invented the mechanism.
-
-Thanks.
+Thanks,
+Taylor
