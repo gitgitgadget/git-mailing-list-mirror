@@ -1,215 +1,62 @@
-Received: from mail-oo1-f51.google.com (mail-oo1-f51.google.com [209.85.161.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAC9339FFB
-	for <git@vger.kernel.org>; Tue,  9 Jan 2024 17:10:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3C7E3A8DC
+	for <git@vger.kernel.org>; Tue,  9 Jan 2024 17:12:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="daA4ELqr"
-Received: by mail-oo1-f51.google.com with SMTP id 006d021491bc7-598699c0f1eso861884eaf.2
-        for <git@vger.kernel.org>; Tue, 09 Jan 2024 09:10:24 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1704820224; x=1705425024; darn=vger.kernel.org;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-transfer-encoding:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=rmWebNt0fPkiDS4epbeJOhFmixU6/Q2TCjgbi1x/mII=;
-        b=daA4ELqrhm8i/RkV+oNE6hmGxItv6S7WQF9jZ1VjaQ5C+sQ/+QIsM4c7d6VzxQWVQ6
-         F80XGxteBJYqjHvQq/w4zDAX6sFp5Zq6MDPwDo7KwUJNL5Jey0dLMtn9v292wNQWH+Q3
-         yS5iRssj4lv6G6wivAI8Hf41vlJnDpZqZ65VUrcX2auog69+TyRRzIL9OiZIuFFgXkXJ
-         Vk5HYTBXWWHpHE/pdMwE6HQ1iDtS+iHGIXbHyJxx9KPrexzlmVaFRZSLBH7d34Qqn9h4
-         76Lje1z5+eyHCu4EYUO6nx/FmElDmIMoDaxx+IohalhHPnW9TbavhjDOqjeVabnGObOz
-         3rhQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1704820224; x=1705425024;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=rmWebNt0fPkiDS4epbeJOhFmixU6/Q2TCjgbi1x/mII=;
-        b=aqIRuNwOpcTsFFf++iArEHOqoH7k/ajNk2gRB/icPDVHEROhhNvl2sOCmFUZSV/lTb
-         R0yAu2/1J0P0K0hEZ60fE0AgUcCO+N/kmYkvqyQcPlbviVIkCx4ZvgC+rKsZ56YVauQb
-         y1bjqwWZfPFzD+g5oSVkXBafosxBxq8Hw2TA3D+hYvwfGJUXDpwMWsTx4RNAL5KeF714
-         WKK9N3imoXlD6gsDRap/8ie+LrZBR/vZXxobcfQJzlesNTwvVggfp8ESHXXDubMDN9ho
-         2Wnu1x9jiBTWbKhoXc7CGSAQyJ5auvltCAsqkktPlGDpvSjz9K1uS+nzpBU6RHTfNe9E
-         Gvjg==
-X-Gm-Message-State: AOJu0YxHPbFv+l3mM7VTAhWuy0LinAPpqne8R+1eh1XB1NbFuDirwJEj
-	Qi793+t5tHa6xOqOxbTg+Q1i+JXmC17XIu7H
-X-Google-Smtp-Source: AGHT+IGItU6A87ehn+MgBYixNT6g09/LCcVZXEE4GrAl/tNeAb0TEzL4v7cLE2ZLb7YzS//sFu64oQ==
-X-Received: by 2002:a05:6359:6297:b0:174:f1b6:d1c3 with SMTP id se23-20020a056359629700b00174f1b6d1c3mr3964696rwb.35.1704820223554;
-        Tue, 09 Jan 2024 09:10:23 -0800 (PST)
-Received: from localhost ([2402:a00:401:a99b:65e8:f5a4:7adb:5726])
-        by smtp.gmail.com with ESMTPSA id n15-20020a63ee4f000000b005c65e82a0cbsm1869540pgk.17.2024.01.09.09.10.22
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 09 Jan 2024 09:10:23 -0800 (PST)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="MP4yFsAA"
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id 00A0B36895;
+	Tue,  9 Jan 2024 12:12:06 -0500 (EST)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=I+JRCB0qiBDWxEXsKXGYolIb1d5YE1mkTlPxkW
+	5A+QE=; b=MP4yFsAAjEpSyR1cBZ3eCCPoHuopIw4TZJDezXAsYBWi12b1icMaBL
+	1G9riauFAit6baqtynGO1XQvNmHx0FYWn6Czkm98+WFUs8tsbqTULn9NI0yU9Hqn
+	a//KntJ22EodOxfr5PCfcxMeI1eveGjT2+S7GBFz9Xh5PlPMC/fzI=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id ED38E36894;
+	Tue,  9 Jan 2024 12:12:05 -0500 (EST)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.200.93])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 9F21936893;
+	Tue,  9 Jan 2024 12:12:02 -0500 (EST)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Phillip Wood <phillip.wood123@gmail.com>
+Cc: Achu Luma <ach.lumap@gmail.com>,  git@vger.kernel.org,
+  chriscool@tuxfamily.org,  christian.couder@gmail.com,  l.s.r@web.de,
+  phillip.wood@dunelm.org.uk,  steadmon@google.com,  me@ttaylorr.com
+Subject: Re: [Outreachy][PATCH v4] Port helper/test-ctype.c to
+ unit-tests/t-ctype.c
+In-Reply-To: <33c81610-0958-49da-b702-ba8d96ecf1d3@gmail.com> (Phillip Wood's
+	message of "Tue, 9 Jan 2024 10:35:11 +0000")
+References: <20240101104017.9452-2-ach.lumap@gmail.com>
+	<20240105161413.10422-1-ach.lumap@gmail.com>
+	<33c81610-0958-49da-b702-ba8d96ecf1d3@gmail.com>
+Date: Tue, 09 Jan 2024 09:12:01 -0800
+Message-ID: <xmqq5y02juse.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Tue, 09 Jan 2024 22:40:20 +0530
-Message-Id: <CYACBX8Y10KJ.3QVLHQN8LLZ86@gmail.com>
-Cc: <git@vger.kernel.org>
-Subject: Re: [PATCH 1/2] t7501: Add tests for various index usages, -i and
- -o, of commit command.
-From: "Ghanshyam Thakkar" <shyamthakkar001@gmail.com>
-To: "Christian Couder" <christian.couder@gmail.com>
-X-Mailer: aerc 0.15.2
-References: <20240109060417.1144647-2-shyamthakkar001@gmail.com>
- <20240109060417.1144647-3-shyamthakkar001@gmail.com>
- <CAP8UFD0GJf5+eOTxy6s+zCzpDmCU_FY4BjwtjTE7RvZ5mKettA@mail.gmail.com>
-In-Reply-To: <CAP8UFD0GJf5+eOTxy6s+zCzpDmCU_FY4BjwtjTE7RvZ5mKettA@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 34E3F734-AF12-11EE-A52E-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
 
-On Tue Jan 9, 2024 at 2:50 PM IST, Christian Couder wrote:
-> First about the commit subject:
->
-> "t7501: Add tests for various index usages, -i and -o, of commit command.=
-"
->
-> it should be shorter, shouldn't end with a "." and "Add" should be "add".
-Updated in v2.
+Phillip Wood <phillip.wood123@gmail.com> writes:
 
-> On Tue, Jan 9, 2024 at 7:10=E2=80=AFAM Ghanshyam Thakkar
-> <shyamthakkar001@gmail.com> wrote:
-> >
-> > This commit adds tests for -i and -o flags of the commit command. It
-> > includes testing -i with and without staged changes, testing -o with an=
-d
-> > without staged changes, and testing -i and -o together.
->
-> A few suggestions to make things a bit more clear:
->
->   - tell that -i is a synonymous for --include and -o for --only
->   - tell if there are already tests for these options
->   - tell why the tests you add are worth it if tests for an option alread=
-y exist
+> In the new version we only test the characters 0-255, not EOF. If
+> there is a good reason for removing the EOF tests then it should be
+> explained in the commit message. If not it would be good to add those
+> tests back.
 
-I have updated the commit messages in v2 to address these points.
-
-> > Signed-off-by: Ghanshyam Thakkar <shyamthakkar001@gmail.com>
-> > ---
-> >  t/t7501-commit-basic-functionality.sh | 90 +++++++++++++++++++++++++++
-> >  1 file changed, 90 insertions(+)
-> >
-> > diff --git a/t/t7501-commit-basic-functionality.sh b/t/t7501-commit-bas=
-ic-functionality.sh
-> > index 3d8500a52e..71dc52ce3a 100755
-> > --- a/t/t7501-commit-basic-functionality.sh
-> > +++ b/t/t7501-commit-basic-functionality.sh
-> > @@ -76,6 +76,96 @@ test_expect_success 'nothing to commit' '
-> >         test_must_fail git commit -m initial
-> >  '
-> >
-> > +test_expect_success 'commit with -i fails with untracked files' '
-> > +       test_when_finished "rm -rf testdir" &&
-> > +       git init testdir &&
-> > +       echo content >testdir/file.txt &&
-> > +       test_must_fail git -C testdir commit -i file.txt -m initial
-> > +'
->
-> Existing tests didn't need a repo, so I am not sure it's worth
-> creating a testdir repo just for this test.
-
-Yes, I just wanted to make sure the files were not tracked. However, I
-have updated these instaces to use the existing repo and use unique
-non-generic names for generating untracked files.
-
-> Also I am not sure this is the best place in the test script to add -i
-> and -o related tests. Here we are between a 'nothing to commit' test
-> and a '--dry-run fails with nothing to commit' and then more 'nothing
-> to commit' related tests. I think it would be better if all those
-> 'nothing to commit' related tests could stay together.
-
-I have moved these tests above the "--amend" related tests, which do not
-break the flow of the tests.
-
-> > +test_expect_success 'commit with -i' '
-> > +       echo content >bar &&
-> > +       git add bar &&
-> > +       git commit -m "bar" &&
->
-> Why is the above needed for this test?
-This was to make sure that the file is tracked, however, I realised that
-committing is not necessary, so I have updated this test to use existing
-files in repo and to not generate a new one.
->
-> > +       echo content2 >bar &&
-> > +       git commit -i bar -m "bar second"
-> > +'
-> > +
-> > +test_expect_success 'commit with -i multiple files' '
-> > +       test_when_finished "git reset --hard" &&
-> > +       echo content >bar &&
-> > +       echo content >baz &&
-> > +       echo content >saz &&
-> > +       git add bar baz saz &&
-> > +       git commit -m "bar baz saz" &&
->
-> Not sure why the above is needed here too.
-Similar to above, I have updated this test to use existing files in repo
-and to not generate a new one.
->
-> > +       echo content2 >bar &&
-> > +       echo content2 >baz &&
-> > +       echo content2 >saz &&
-> > +       git commit -i bar saz -m "bar" &&
-> > +       git diff --name-only >remaining &&
-> > +       test_grep "baz" remaining
-> > +'
-> > +
-> > +test_expect_success 'commit with -i includes staged changes' '
-> > +       test_when_finished "git reset --hard" &&
-> > +       echo content >bar &&
-> > +       git add bar &&
-> > +       git commit -m "bar" &&
-> > +
-> > +       echo content2 >bar &&
-> > +       echo content2 >baz &&
-> > +       git add baz &&
-> > +       git commit -i bar -m "bar baz" &&
-> > +       git diff --name-only >remaining &&
-> > +       test_must_be_empty remaining &&
-> > +       git diff --name-only --staged >remaining &&
-> > +       test_must_be_empty remaining
-> > +'
-> > +
-> > +test_expect_success 'commit with -o' '
-> > +       echo content >bar &&
-> > +       git add bar &&
-> > +       git commit -m "bar" &&
-> > +       echo content2 >bar &&
-> > +       git commit -o bar -m "bar again"
-> > +'
-> > +
-> > +test_expect_success 'commit with -o fails with untracked files' '
-> > +       test_when_finished "rm -rf testdir" &&
-> > +       git init testdir &&
-> > +       echo content >testdir/bar &&
-> > +       test_must_fail git -C testdir commit -o bar -m "bar"
-> > +'
-> > +
-> > +test_expect_success 'commit with -o exludes staged changes' '
->
-> s/exludes/excludes/
-Done.
->
-> > +       test_when_finished "git reset --hard" &&
-> > +       echo content >bar &&
-> > +       echo content >baz &&
-> > +       git add . &&
-> > +       git commit -m "bar baz" &&
-> > +
-> > +       echo content2 >bar &&
-> > +       echo content2 >baz &&
-> > +       git add baz &&
-> > +       git commit -o bar -m "bar" &&
-> > +       git diff --name-only --staged >actual &&
-> > +       test_grep "baz" actual
-> > +'
->
-> Thanks.
-
-Thanks for the review!
+Thanks for sharp eyes.  Didn't notice the handling of EOF myself.
