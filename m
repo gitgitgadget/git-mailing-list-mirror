@@ -1,42 +1,42 @@
-Received: from mail-yb1-f178.google.com (mail-yb1-f178.google.com [209.85.219.178])
+Received: from mail-yb1-f177.google.com (mail-yb1-f177.google.com [209.85.219.177])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA23B3DB83
-	for <git@vger.kernel.org>; Tue,  9 Jan 2024 19:54:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C352D3D54B
+	for <git@vger.kernel.org>; Tue,  9 Jan 2024 19:55:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Wu3scSMz"
-Received: by mail-yb1-f178.google.com with SMTP id 3f1490d57ef6-dbd029beef4so3377904276.0
-        for <git@vger.kernel.org>; Tue, 09 Jan 2024 11:54:19 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GVLw3FTh"
+Received: by mail-yb1-f177.google.com with SMTP id 3f1490d57ef6-db3a09e96daso2612334276.3
+        for <git@vger.kernel.org>; Tue, 09 Jan 2024 11:55:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1704830058; x=1705434858; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:mime-version:from:to:cc:subject
+        d=gmail.com; s=20230601; t=1704830156; x=1705434956; darn=vger.kernel.org;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
          :date:message-id:reply-to;
-        bh=vT2yeB4H+vUIvaQYSMK7JGdRM+jIU031sNmimb7c5BM=;
-        b=Wu3scSMz6A+LmI1w9vUr5aPbhdIiaEdAJYNDiTFyZyk5wu1X29Mf2b+3GURJcI/RGQ
-         2u3z8uG7saGG6G//sjs5x8YQ4/YmxhHIV5kl1KWZoHexvXM9M4DDAi9g05yjYZDCNG7R
-         TNoPOsa7Zyo4I159U2q8QPfzjg/kQ2JzGuu9HfuE6FPy80rPOvNGtBvXR74h88tYixEt
-         ICBry0c+Mv1xEU2vJ0ctFbSwhSFd8c1i26h3w1FCgewM9LidlfBzrUCndyIlCHNtfHvu
-         S8B16CGLYUsstTMwN2yvR7hCMGxqVXFm7eWkRNfs8qDr+pjBvnfzOI9IVYgMEulMUS3N
-         M5VQ==
+        bh=NGMQ2pLdmqaeBRVc+nZZcNGbWjqvItdJ8PvBcTu9E2g=;
+        b=GVLw3FTh7M81Jdx0LgF9huV/ml/67BocmLUVsuKRcK5occpfm0Xn+fjmdp8fFPa5op
+         BA8YACFG+aRcu5oiaYIIpgd2dqu3Qgw9sRn2dbFTj7zCNxlnGpLvPasMbvOmxdFyJqwm
+         rOo3xBXIqmDZsbqvK5g7osKBhjW/tlQy0HOB1sIo7bw89fiW6rpZhYRLHckzzZYWSW+E
+         EVubbINGPlDgZ7+Mwx+Cd6kNFBo1s74gtH/CxON8YYEk0Ie4bqESXzz3Ee057FnfhH5f
+         zuBOqwI0opw2qjtBhrfLIjddQVbJYwvcDN0mnXtjun97Qz7l5cabFFLbtcLxcInhI7Tg
+         Z7EA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1704830058; x=1705434858;
-        h=cc:to:subject:message-id:date:from:mime-version:x-gm-message-state
+        d=1e100.net; s=20230601; t=1704830156; x=1705434956;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=vT2yeB4H+vUIvaQYSMK7JGdRM+jIU031sNmimb7c5BM=;
-        b=XhpibyDSTs/lH27cEqsMdIsn/iLF5wc2hIPA8N8eoQ4ZPgyJo0bbdYsFSukofHYYby
-         WAdWRlf6IukB3E1vArMFYBDzkMgfTgT+dmxzJCNObjIlpIMcXP7xr6vrRtk770jX119O
-         wxfSOkVnLReDivE5Vfon90oB0CMoQH/ZTWp0JVs+fa7yDdv4lGnQ9XVKRCM1xGUjW8DP
-         YN8WXOMea2jH996E25ze2vKr6xWOhhFgLm/hdu+skzUO/ROOoeAJ8umRiNO9HI46Mqkp
-         LOxouGg8yFxLkdB1CgEQZyQHw+Tl8JeUB14KTFEXS2UHAJzU6tEfKMpdoFkbwjNyELx7
-         M3qg==
-X-Gm-Message-State: AOJu0YyJS5AwHJHhVrE6MUcjPdx8rAwemPNqTG9Ur3DcKHMqEp3uNoUG
-	Oa9cdmds9HzCM+2b6KesdRCbZArV5RcbO+Oz8cSpHcIsrps1WAFc
-X-Google-Smtp-Source: AGHT+IEm4wYVWJaLl0xIFuQjgscBa0sBGuXfAP1MW7J7oIC0KxyUotacKm2fbMJhX+Zyy4YiOvR1pbIxHBu2QHpG538=
-X-Received: by 2002:a05:6902:200d:b0:dbd:2ae7:f363 with SMTP id
- dh13-20020a056902200d00b00dbd2ae7f363mr2308ybb.4.1704830058577; Tue, 09 Jan
- 2024 11:54:18 -0800 (PST)
+        bh=NGMQ2pLdmqaeBRVc+nZZcNGbWjqvItdJ8PvBcTu9E2g=;
+        b=OI/GA2XbD5x+x9EY+T6ZxtJqR4kkHVm9W1+/VWBoBelkSg7CjYsd/7xT9Bs9nvQ6CZ
+         /+4mrutRabMbUYP0ywce5eSzUlqfzCw7eN9x0geKSOMc1kVl2sKgr5pzHIrTW/04gy+5
+         awRuSyTFI2ncJhOV7LIU5k0ZIbz4igw41QGm7CapJlX/GmuGXkxgYf/0ubS3ISgfBbjb
+         nSzJmNydqaisboDaxFrKkKWqf45ii3KZUOL/JEOTkbDEDBtUZ3YNPrjUQnAroCf5n7c3
+         sPPzWwHekx937RKecx9mqMY3PVvofNO5/H3ndrh+3b0ZdHGlQ0b/b0Nxw1HuPE6wZJbl
+         3xKA==
+X-Gm-Message-State: AOJu0Yx0oW5lJdjFNJD9LyyEVMTnKop5GghsVSCLZHLns2O2XgJAUIPv
+	Pn53aXJlzFsoz0AaiXjVVby5QbPMcC7f+dGWsJLhllRNigz152tI
+X-Google-Smtp-Source: AGHT+IFmi0qqOPeRVAuS68YVB/nRxtrS0cAyB4NGDhqEh6JIURxrdd6Nq5axv5vAgUh+c6snG7v1Il026QwVZlom7Rc=
+X-Received: by 2002:a25:8801:0:b0:dbd:ab80:8490 with SMTP id
+ c1-20020a258801000000b00dbdab808490mr2918636ybl.11.1704830155709; Tue, 09 Jan
+ 2024 11:55:55 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -44,11 +44,10 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 From: Sergius Nyah <sergiusnyah@gmail.com>
-Date: Tue, 9 Jan 2024 20:54:07 +0100
-Message-ID: <CANAnif8L3+CoVdvcUntWz_JoDvubityXPsouLqgvca=BrtqR8g@mail.gmail.com>
-Subject: Add more builtin patterns for userdiff, as Microproject.
+Date: Tue, 9 Jan 2024 20:55:44 +0100
+Message-ID: <CANAnif95ux=vCNCKbVw0q_vYamQRkbFqSa9_-u6xRvK6r+2a+Q@mail.gmail.com>
+Subject: [GSOC][RFC] Add more builtin patterns for userdiff, as Mircroproject.
 To: git@vger.kernel.org, "gitster@pobox.com" <gitster@pobox.com>
-Cc: newren@gmail.com, l.s.r@web.de
 Content-Type: text/plain; charset="UTF-8"
 
 Hello everyone,
@@ -58,7 +57,7 @@ Matheus' tutorial on First steps Contributing to Git, and I found it
 very helpful. I've also read the Contribution guidelines keenly and
 built Git from source.
 
-In accordance with the contributor guidelines, I came across this
+In accordance to the contributor guidelines, I came across this
 Mircoproject idea from: https://git.github.io/SoC-2022-Microprojects/
 which I'm willing to work on. It talked about enhancing Git's
 "userdiff" feature in "userdiff.c" which is crucial for identifying
@@ -80,7 +79,7 @@ Here is a sample of how a language is defined in `userdiff.c`:
 > }, \
 > .word_regex = wrx "|[^[:space:]]|[\xc0-\xff][\x80-\xbf]+", \
 > .word_regex_multi_byte = wrx "|[^[:space:]]", \
- > }
+> }
 
 In this code, `lang` is the name of the language, `rx` is the regular
 expression for identifying function names, and `wrx` is the word
