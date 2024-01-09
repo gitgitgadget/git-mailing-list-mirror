@@ -1,55 +1,55 @@
-Received: from mail-pl1-f176.google.com (mail-pl1-f176.google.com [209.85.214.176])
+Received: from mail-pl1-f179.google.com (mail-pl1-f179.google.com [209.85.214.179])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AFD3374FD
-	for <git@vger.kernel.org>; Tue,  9 Jan 2024 16:55:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11E0C3A8C5
+	for <git@vger.kernel.org>; Tue,  9 Jan 2024 17:01:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="iied/rHz"
-Received: by mail-pl1-f176.google.com with SMTP id d9443c01a7336-1d3e2972f65so10946385ad.3
-        for <git@vger.kernel.org>; Tue, 09 Jan 2024 08:55:22 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TneURXco"
+Received: by mail-pl1-f179.google.com with SMTP id d9443c01a7336-1d3f29fea66so15140175ad.3
+        for <git@vger.kernel.org>; Tue, 09 Jan 2024 09:01:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1704819321; x=1705424121; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1704819666; x=1705424466; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=jStjABErBhsaaPlaOf38TtG3OWPD2UzWwXnzkszdloQ=;
-        b=iied/rHzhKqb2UHOAgknizhdzm/Oa1ecL0Ck9ghywOF7R8IvvfPnmAeY2IdM9Cb+9E
-         ruDwhDXPLl0AUVjBuz0sWrZb6JzcqGkqTkRO9BF04TZm3UDSb+5CWlGZere3MkEvw71Z
-         BjA64O5KsoLOhCxQOpXenD+FgB6ofhpavU/b/Q9ydf4PwT2nQBvhDPWXYQZHvtkRGwRc
-         LUir/nO72yHdAbpa6Y5BGApcAih1qWYfz1ztJyJ6LfS19xDAS5Uke/3lSMOJhtiOQ4V/
-         2JKQ5CwcwPfWCGPsz//NsF1cJys2+6xBfPmUNWhPMEnrHtpBd6xsG6CRYkwJdIM3uEXF
-         nmSg==
+        bh=H05f5DT1QMn1RVd0xp9sVOBYi7QK2LvNizACYhubXJM=;
+        b=TneURXcobAIGmb6O+R2UAeAQHKPhi08Ngqrnz/pn4f/3BwNNLwoG3nYKRa0n5O5Xyh
+         BIYUg6EtAjQfiqxifCHy915Dm/WSB1MqXCqqS9iK/Owt51BvUB4hDRzD0D+WTmlT4iDc
+         zu/9P/VjW8zOFq+ksCNNfqoz4nU4EgIZz8bXDIE7W7783z2zqLxRVqvzhuz01uBeBuWp
+         3EhQYbacU4vJ4DbZXv4q2eLeaUctV746F7LyOBqie0GfMqMztMJyunGwe4ojLtjT9zPa
+         SuqaYNPQf0+TVBYndCSPnkTgEt8uhAYY68TCetbIs2QgoonzTv4g8Y/WeFmWGUH0V3aa
+         mYdw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1704819321; x=1705424121;
+        d=1e100.net; s=20230601; t=1704819666; x=1705424466;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=jStjABErBhsaaPlaOf38TtG3OWPD2UzWwXnzkszdloQ=;
-        b=h/v77kg1oTO49SF7zrbwsGgDTfvxgQsVblZTfmE0913R0DWrPRPbyv9P+1Bd3XLmGR
-         7i9Z4nOB2gF3tP4tg45OeWFYPRbn3x+YXxyHBP7y6MTCSUw031Nubm2J7QbH8CYSmJOK
-         Jd2Mu7DUT8EtAXu8iqFtIhCjh8hf8KeGwq4OYq395npp+Aj3vdVOpbNTru4NdjxViITW
-         IoQY/izRGLc9XOhBC3/QC+HCJkvZo1KKazjvv7C2k4aS+1mi+zRHEw/mqChdurgZjEz8
-         t1bMpBhYmyj42ckxYP6CoYp0ZZ9z65Y1Yaea3LvVsfcbX12UDO5eVoqz11Cf5hwzv9tZ
-         bPFw==
-X-Gm-Message-State: AOJu0YwdYrgTyb6p0hPEaBVglFf/HYKRjNBTVvA0p7cT3kdXWi+nHbWZ
-	9CtC9Qt1Fu7NTmymC4Cwj8o39yA4SMyKm9M0
-X-Google-Smtp-Source: AGHT+IEEtFIJ98YqBRdET8XpvuZvxAyQswfTmvL2PfslYw9I3Y/icuWP+J9CUSIAX3zMJz1aynesVQ==
-X-Received: by 2002:a17:903:40ce:b0:1d4:ab9e:4d51 with SMTP id t14-20020a17090340ce00b001d4ab9e4d51mr3979808pld.7.1704819321379;
-        Tue, 09 Jan 2024 08:55:21 -0800 (PST)
+        bh=H05f5DT1QMn1RVd0xp9sVOBYi7QK2LvNizACYhubXJM=;
+        b=NUeiNHu8dViKZ/O1FW7hOfsu0Znj25br0mOhHvqbJewh46Gm4TcPfwpzw1+0V7F/BL
+         qm6wQhWTbq/CCXzkVawBKdIw35Gk+4RzTMkyPrWtEdvTVI7lIMikfVmscus279gRazcV
+         tkyCB/78XI6JeU13MYyhVPtYLZ9++mMXAHBu+LQwrTtXwxviiplkOgj3vkIaTv8ITgo7
+         C8wvoJJb2TaPx3EiFIwHIzjzdJ+jdiO6XOJRMcTZg4FuCirygLidaK6vfJ/8BzQUlQm2
+         2L3qH0ZL0v4fEPZtYoySfDt4I8bU6RGqdp5TDKbUPVmCAErZmgrYTByxneuKpnUBRdBW
+         0mBw==
+X-Gm-Message-State: AOJu0YzjjjUn+iBJ4hnJ+/kKyp4NZacle9VldeXj/Zs5ZEvLgazYmyJd
+	2SManujehclPQwc1RxwKEXMpQlNvM0wTmd3J
+X-Google-Smtp-Source: AGHT+IGZrdN4Kfoc/iVb8PF7wVQfhhZAJKtXHhCr3BnVB6HDHFJkWXZlH6EnR/07WnwZ15jzi9an7Q==
+X-Received: by 2002:a17:903:495:b0:1d4:2266:64bf with SMTP id jj21-20020a170903049500b001d4226664bfmr2788031plb.52.1704819665836;
+        Tue, 09 Jan 2024 09:01:05 -0800 (PST)
 Received: from localhost.localdomain ([2402:a00:401:a99b:65e8:f5a4:7adb:5726])
-        by smtp.gmail.com with ESMTPSA id y24-20020a1709027c9800b001cca8a01e68sm1985851pll.278.2024.01.09.08.55.18
+        by smtp.gmail.com with ESMTPSA id y24-20020a1709027c9800b001cca8a01e68sm1985851pll.278.2024.01.09.09.01.03
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 09 Jan 2024 08:55:20 -0800 (PST)
+        Tue, 09 Jan 2024 09:01:05 -0800 (PST)
 From: Ghanshyam Thakkar <shyamthakkar001@gmail.com>
 To: git@vger.kernel.org
 Cc: christian.couder@gmail.com,
 	phillip.wood123@gmail.com,
 	Ghanshyam Thakkar <shyamthakkar001@gmail.com>
-Subject: [PATCH v2 0/2] t7501: add tests for --include, --only,
-Date: Tue,  9 Jan 2024 22:21:19 +0530
-Message-ID: <20240109165304.8027-2-shyamthakkar001@gmail.com>
+Subject: [PATCH v2 1/2] t7501: add tests for --include, --only of commit
+Date: Tue,  9 Jan 2024 22:21:21 +0530
+Message-ID: <20240109165304.8027-4-shyamthakkar001@gmail.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240109060417.1144647-2-shyamthakkar001@gmail.com>
 References: <20240109060417.1144647-2-shyamthakkar001@gmail.com>
@@ -59,27 +59,102 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-This patch series adds tests for --include, --only of commit and test
-for amending the commit with --signoff. And it also addresses the
-reviews of Christian Couder and Phillip Wood.
+This commit adds tests for testing --include (-o) and --only (-o). It
+include testing --include with and without staged changes, testing
+--only with and without staged changes and testing --only and --include
+together.
 
-The v2 of this patch removes unnecessary initialization of git repos
-and reuses existing files instead of creating new files. Also, it 
-removes some redundant code, namely committing everytime for tracking new
-files, instead of just staging the files.
+Some tests already exist in t7501 for testing --only, however, they
+are only tested in combination with --amend --allow-empty and to-be-born
+branch, and not for testing --only separately.
 
-The second patch of this series refactors the test with a better
-approach as suggested by Phillip Wood.
+Signed-off-by: Ghanshyam Thakkar <shyamthakkar001@gmail.com>
+---
+A single test also exists in t1092-sparse-checkout-compatibility.sh
+named "commit including unstaged changes" for --include, however, that
+compares the results of sparse-checkout with full-checkout when using
+--include and is not necessarily for testing --include itself. Otherthan
+that, I could not find any other test for --include.
 
-Ghanshyam Thakkar (2):
-  t7501: add tests for --include, --only of commit
-  t7501: add test for --amend with --signoff
+ t/t7501-commit-basic-functionality.sh | 55 ++++++++++++++++++++++++++-
+ 1 file changed, 54 insertions(+), 1 deletion(-)
 
- t/t7501-commit-basic-functionality.sh | 68 ++++++++++++++++++++++++++-
- 1 file changed, 66 insertions(+), 2 deletions(-)
-
+diff --git a/t/t7501-commit-basic-functionality.sh b/t/t7501-commit-basic-functionality.sh
+index 3d8500a52e..9325db1f66 100755
+--- a/t/t7501-commit-basic-functionality.sh
++++ b/t/t7501-commit-basic-functionality.sh
+@@ -3,7 +3,7 @@
+ # Copyright (c) 2007 Kristian Høgsberg <krh@redhat.com>
+ #
+ 
+-# FIXME: Test the various index usages, -i and -o, test reflog,
++# FIXME: Test the various index usages, test reflog,
+ # signoff
+ 
+ test_description='git commit'
+@@ -150,6 +150,59 @@ test_expect_success 'setup: commit message from file' '
+ 	git commit -F msg -a
+ '
+ 
++test_expect_success '--include fails with untracked files' '
++	echo content >baz &&
++	test_must_fail git commit --include baz -m initial
++'
++
++test_expect_success 'commit --include' '
++	test_when_finished "rm -rf remaining" &&
++	echo content >file &&
++	git commit --include file -m "file" &&
++	git diff --name-only >remaining &&
++	test_must_be_empty remaining
++'
++
++test_expect_success '--include with staged changes' '
++	echo newcontent >baz &&
++	echo newcontent >file &&
++	git add file &&
++	git commit --include baz -m "file baz" &&
++
++	git diff --name-only >remaining &&
++	test_must_be_empty remaining &&
++	git diff --name-only --staged >remaining &&
++	test_must_be_empty remaining
++'
++
++test_expect_success 'commit --only' '
++	echo change >file &&
++	git commit --only file -m "file" &&
++	git diff --name-only >actual &&
++	test_must_be_empty actual
++'
++
++test_expect_success '--only fails with untracked files' '
++	echo content >newfile &&
++	test_must_fail git commit --only newfile -m "newfile"
++'
++
++test_expect_success '--only excludes staged changes' '
++	echo content >file &&
++	echo content >baz &&
++	git add baz &&
++	git commit --only file -m "file" &&
++	git diff --name-only --staged >actual &&
++	test_grep "baz" actual
++'
++
++test_expect_success '--include and --only together fails' '
++	test_when_finished "git reset --hard" &&
++	echo new >file &&
++	echo new >baz &&
++	test_must_fail git commit --include baz --only bar -m "bar"
++'
++
+ test_expect_success 'amend commit' '
+ 	cat >editor <<-\EOF &&
+ 	#!/bin/sh
 -- 
 2.43.0
 
