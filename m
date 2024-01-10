@@ -1,44 +1,44 @@
 Received: from wout2-smtp.messagingengine.com (wout2-smtp.messagingengine.com [64.147.123.25])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B70A3C466
-	for <git@vger.kernel.org>; Wed, 10 Jan 2024 09:01:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A65AD3C466
+	for <git@vger.kernel.org>; Wed, 10 Jan 2024 09:01:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="qbmjOmni";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ruHdm2MB"
-Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
-	by mailout.west.internal (Postfix) with ESMTP id 5E2423200B44;
-	Wed, 10 Jan 2024 04:01:50 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="U9szqsY7";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="7fImizCg"
+Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
+	by mailout.west.internal (Postfix) with ESMTP id 8F1543200A02;
+	Wed, 10 Jan 2024 04:01:54 -0500 (EST)
 Received: from mailfrontend2 ([10.202.2.163])
-  by compute3.internal (MEProxy); Wed, 10 Jan 2024 04:01:50 -0500
+  by compute2.internal (MEProxy); Wed, 10 Jan 2024 04:01:54 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1704877309; x=1704963709; bh=3pIX0sII2d
-	L5B4G4hgysLOstEMigwsAfdygqpzpIMac=; b=qbmjOmni3zphENU0/adLVW6KCe
-	dRY5H5eNtj4G1PNu93s/7G35unha+k9hhFId5+GW1Esw3EPNNF7xu7k6YeAokOKD
-	BFziATWxq7bI/L/P0qNwnK5xcBheOpl9NZ7B82HGZ5WBskRJe++AV8P8Dv7hnp9r
-	qb45eTPzgRdkJUQ/47rwt7/oJG9VxtIkQKaDZpk9727w9DL+tTmTbO1Dsc+WIYBc
-	2rz6lZDFsdC35DF3aYMhUHdKC77qcelA5ob4Izf5PQfVrp3SFZKobfjSQXTV0XcE
-	8HBp/1r/CJAswrgDhn8X5A6IHMQgNfl0qMfi0K5EI6EinvFiWuWAJC26iOdA==
+	:subject:to:to; s=fm2; t=1704877314; x=1704963714; bh=AHUBPTRIdk
+	2XQ23ZlFiS9PVLuF8+pbs7IAZIcTdf0Do=; b=U9szqsY7OkGz5B7rlsHHTekfYW
+	ylVCAhh5M3v2F2neVNi+khAUfH9CScVZkHQGxl2wyU8xfAReX0v3PX/5ev1xiTUV
+	4M3aD1jvNYGkO5VqJHe3kANIolAroEA8Sl1bFy62Lkvps1BNm06aMUI4B2FoCok4
+	O+yiP2qVMTdcUHWQC2rENwvDES6NkGFfj79Hn0oJ5vxCU6rMA66uCoETjY/CtO9Y
+	InXO92ySK7tUZiwXjJBc+rflbe/rqyoq2TcrbfMloxUy6nKhwya0ra+MupGIDli+
+	iGBtI7MowfGVQ+DMVcwUU1jpK9DpGGd+Q2TVL4cRWlzc0POk2Lfhin/V+PoA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1704877309; x=1704963709; bh=3pIX0sII2dL5B4G4hgysLOstEMig
-	wsAfdygqpzpIMac=; b=ruHdm2MBRCMbSQzmNeVZ5Kzi0oMwnQfN2u4Qbj/OEt2D
-	u6u5jZbTgbLLydxBbXtjmLMf9wpjB955aCdGGFSGoP6jWypZ9Ay2RN4sn1rzUVPJ
-	3H/xbHzVnHksDQJBEiGPVqh/lGAKDu3aM7RM3phs66uZU1pKIIgD7qKgAPM8KG12
-	3GfignRTwKWJmjS3xHivv05+WL2CW4PdMyeZrnXICu8oDtyBaWz7yzUJl2wL0zKT
-	267zcF+KUoOHczAJ4vjRPxygWak500PYxJBhSpjKsqu+pz46CKA8s7rH+4ozm0dj
-	oPb8re8DFmuKjcfu5Ii1tEuCt7nG3keUBuiJWjJthg==
-X-ME-Sender: <xms:_VyeZcoJ5t-430Cs77ElTBQ1s8uxBXu1tpy3_U677dHcJ4gxENMeEw>
-    <xme:_VyeZSrD63sPF65MMSBuxt7W5smpfy4tE1gR7rO9dlhPftzuZKQfYPyUiEb2MiaNP
-    Nyf6q7EACV4hjkiOQ>
-X-ME-Received: <xmr:_VyeZRMt0uImWBuI9GYc5OxFzk85rxULyJECueDA1L1TZAuLTPLtuPgO14cQ4NCs8bKlNLD_aWvxDCXyOLnuYzNb0Knqlz6PAO4fTgmFCllC9QY>
+	fm2; t=1704877314; x=1704963714; bh=AHUBPTRIdk2XQ23ZlFiS9PVLuF8+
+	pbs7IAZIcTdf0Do=; b=7fImizCgt6J2i3p8AAbZpphcWHLYjJGSp2GMF3asGhdd
+	2bKLveQkZRXFCQ64wLnr7/OLonaHO0IgW1FIVUkLrO1yeGG0EXq8nTGarGJzMSiU
+	5F4ZpKJEaeB4MTEVpGn/tl3ltOC0xdcAyCgSAN7YtnuGQIDQg65SzxGosa6PZ68b
+	Cj9X2vtp4g660zpp5JAqpraaJtQnkfQMxCAzDL0tyxn58QNPm87eqP/GRUkf7ebB
+	EAtT6r/NFPSAT1+RdliX1lBCj00AVJBbIWGPHqOHb5TlAXUyo991UqvwyS/RJRHT
+	8FsuvoZU/HF0FgiXPkfJ1OTRr35OYRoppzpX6sgBwA==
+X-ME-Sender: <xms:AV2eZc7C2neNB3UdZsUKu0Ttf6yoi_E5XiA3VFy15HoYkn943p-WUg>
+    <xme:AV2eZd4hCBXRrfD7pgH1C7ok8XvNVU904YcptlobzV5_qZQEYGDAaBAH22KxzDD28
+    Rk1-AtTVid2yCWDxg>
+X-ME-Received: <xmr:AV2eZbc37PbCCD-P31N6wrTW4liW-tuMQvuJKz4l4JZWY5Ziu8XDUl7r_GvcvPwV_wNp1SIgLT_msngcZNVnkNwqa--HrCV_PpDuDDBA6ZQX3f4>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrvdeitddguddviecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
     necuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
@@ -47,22 +47,22 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrvdeitddguddviecutefuodetgg
     gvrhhnpeeukedtvedtffevleejtefgheehieegkeeluddvfeefgeehgfeltddtheejleff
     teenucevlhhushhtvghrufhiiigvpedunecurfgrrhgrmhepmhgrihhlfhhrohhmpehpsh
     esphhkshdrihhm
-X-ME-Proxy: <xmx:_VyeZT6vY7RPXshFdStNdo6mZAsXFMnsAZ4aqpfxI0jLBhcJEmiPaQ>
-    <xmx:_VyeZb4VT-tc4M0UhXnB-JsxZTG6X_u79tQBzAgj7jDukLwm3vvPmw>
-    <xmx:_VyeZTiSQ44EwJVVBYbUDrr1RpLoD3hwRq-8XuAfBO4Vq7bqsiL7vg>
-    <xmx:_VyeZVQk_hvFi1jf_gYSQfM1OnoVPNpn4-3j1b5KPi85tLeZnDK9FA>
+X-ME-Proxy: <xmx:AV2eZRKPObBf_YjDHfyVHdKM8W0Uhgrg0_O-DzO96EyZO75b4Gy4wg>
+    <xmx:AV2eZQLb53tBdPxb2bzpLRrrfSuKApp-V4DxEIAq4GuUmtcOE-MGXg>
+    <xmx:AV2eZSyoOjOyyI-KlXIsW5_Oe0LC25vyc0iIHr5rUUG1shwGwDIH9A>
+    <xmx:Al2eZaiqOG55c0bZ7TQZ_gp8jDovC0U2tZzNpvftI88u5eYa5d1xDA>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 10 Jan 2024 04:01:48 -0500 (EST)
+ 10 Jan 2024 04:01:53 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 8d20aad1 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 10 Jan 2024 08:59:09 +0000 (UTC)
-Date: Wed, 10 Jan 2024 10:01:47 +0100
+	by vm-mail (OpenSMTPD) with ESMTPSA id ac0f7ef1 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 10 Jan 2024 08:59:13 +0000 (UTC)
+Date: Wed, 10 Jan 2024 10:01:51 +0100
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
 Cc: Taylor Blau <me@ttaylorr.com>, Eric Sunshine <sunshine@sunshineco.com>
-Subject: [PATCH v2 3/6] t1302: make tests more robust with new extensions
-Message-ID: <1284b70fab6dd85114cb24fc5c7b6c49e35eb135.1704877233.git.ps@pks.im>
+Subject: [PATCH v2 4/6] t1419: mark test suite as files-backend specific
+Message-ID: <c6062b612ce5793a716bfaec8082a5ab992cdd75.1704877233.git.ps@pks.im>
 References: <cover.1704802213.git.ps@pks.im>
  <cover.1704877233.git.ps@pks.im>
 Precedence: bulk
@@ -72,104 +72,94 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="YmIWIYuRlsDtzHl7"
+	protocol="application/pgp-signature"; boundary="gml0pbnVoYVohA7O"
 Content-Disposition: inline
 In-Reply-To: <cover.1704877233.git.ps@pks.im>
 
 
---YmIWIYuRlsDtzHl7
+--gml0pbnVoYVohA7O
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-In t1302 we exercise logic around "core.repositoryFormatVersion" and
-extensions. These tests are not particularly robust against extensions
-like the newly introduced "refStorage" extension.
+With 59c35fac54 (refs/packed-backend.c: implement jump lists to avoid
+excluded pattern(s), 2023-07-10) we have implemented logic to handle
+excluded refs more efficiently in the "packed" ref backend. This logic
+allows us to skip emitting refs completely which we know to not be of
+any interest to the caller, which can avoid quite some allocations and
+object lookups.
 
-Refactor the tests to be more robust:
+This was wired up via a new `exclude_patterns` parameter passed to the
+backend's ref iterator. The backend only needs to handle them on a best
+effort basis though, and in fact we only handle it for the "packed-refs"
+file, but not for loose references. Consequently, all callers must still
+filter emitted refs with those exclude patterns.
 
-  - Check the DEFAULT_REPO_FORMAT prereq to determine the expected
-    repository format version. This helps to ensure that we only need to
-    update the prereq in a central place when new extensions are added.
+The result is that handling exclude patterns is completely optional in
+the ref backend, and any future backends may or may not implement it.
+Let's thus mark the test for t1419 to depend on the REFFILES prereq.
 
-  - Use a separate repository to rewrite ".git/config" to test
-    combinations of the repository format version and extensions. This
-    ensures that we don't break the main test repository.
+An alternative would be to introduce a new prereq that tells us whether
+the backend under test supports exclude patterns or not. But this does
+feel a bit overblown:
 
-  - Do not rewrite ".git/config" when exercising the "preciousObjects"
-    extension.
+  - It would either map to the REFFILES prereq, in which case it feels
+    overengineered because the prereq is only ever relevant to t1419.
+
+  - Otherwise, it could auto-detect whether the backend supports exclude
+    patterns. But this could lead to silent failures in case the support
+    for this feature breaks at any point in time.
+
+It should thus be good enough to just use the REFFILES prereq for now.
+If future backends ever grow support for exclude patterns we can easily
+add their respective prereq as another condition for this test suite to
+execute.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- t/t1302-repo-version.sh | 19 +++++++++++++++----
- 1 file changed, 15 insertions(+), 4 deletions(-)
+ t/t1419-exclude-refs.sh | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/t/t1302-repo-version.sh b/t/t1302-repo-version.sh
-index 179474fa65..7c680c91c4 100755
---- a/t/t1302-repo-version.sh
-+++ b/t/t1302-repo-version.sh
-@@ -28,7 +28,12 @@ test_expect_success 'setup' '
- '
+diff --git a/t/t1419-exclude-refs.sh b/t/t1419-exclude-refs.sh
+index 5d8c86b657..1359574419 100755
+--- a/t/t1419-exclude-refs.sh
++++ b/t/t1419-exclude-refs.sh
+@@ -8,6 +8,12 @@ export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+ TEST_PASSES_SANITIZE_LEAK=3Dtrue
+ . ./test-lib.sh
 =20
- test_expect_success 'gitdir selection on normal repos' '
--	test_oid version >expect &&
-+	if test_have_prereq DEFAULT_REPO_FORMAT
-+	then
-+		echo 0
-+	else
-+		echo 1
-+	fi >expect &&
- 	git config core.repositoryformatversion >actual &&
- 	git -C test config core.repositoryformatversion >actual2 &&
- 	test_cmp expect actual &&
-@@ -79,8 +84,13 @@ mkconfig () {
-=20
- while read outcome version extensions; do
- 	test_expect_success "$outcome version=3D$version $extensions" "
--		mkconfig $version $extensions >.git/config &&
--		check_${outcome}
-+		test_when_finished 'rm -rf extensions' &&
-+		git init extensions &&
-+		(
-+			cd extensions &&
-+			mkconfig $version $extensions >.git/config &&
-+			check_${outcome}
-+		)
- 	"
- done <<\EOF
- allow 0
-@@ -94,7 +104,8 @@ allow 1 noop-v1
- EOF
-=20
- test_expect_success 'precious-objects allowed' '
--	mkconfig 1 preciousObjects >.git/config &&
-+	git config core.repositoryFormatVersion 1 &&
-+	git config extensions.preciousObjects 1 &&
- 	check_allow
- '
-=20
++if test_have_prereq !REFFILES
++then
++	skip_all=3D'skipping `git for-each-ref --exclude` tests; need files backe=
+nd'
++	test_done
++fi
++
+ for_each_ref__exclude () {
+ 	GIT_TRACE2_PERF=3D1 test-tool ref-store main \
+ 		for-each-ref--exclude "$@" >actual.raw
 --=20
 2.43.GIT
 
 
---YmIWIYuRlsDtzHl7
+--gml0pbnVoYVohA7O
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmWeXPoACgkQVbJhu7ck
-PpTcEhAAkBIOBiF8IRtHw32izN9wcjzM/mM7jqD1NVnO8YjzBfl258FIuNDJ72mF
-0WjHj7N7JY3Xu48OtFM0uWjGl7jVJuRsrA1e0z0HuSDx9KZ9KFBezMb+P08YzbWN
-CefJbRb3mZe77r2ib7C1u+NleaF1Qt/2iH4nKb3gETrlbNgOhX1prEzsd+Oi8HNs
-0FK6E3PIMPhHpZxLMVUcMOxujzmUmiaSoQfPAOcxRXAdeRk6d4G/rXdeKR1E+SXJ
-miRApikxEXtnqF+JwSdD+OX8MB6EKpSabi6ns1bFV8Rw3IMl7pFXzkVstEpctEdm
-v1AgJtCCkigB9dPvcoxfhtDOthq8ShM9dm16L+wAbpiZGs9SkgjjAn7cI/WyUctU
-Tk+UC4UNe8x2fJ0Waa4uKI+vaEIPcPTQW9CLAq3hxZ4Lz6JSqceEB/IKj4xT/Kfe
-LHwrypgWkc9k+28QkUEO+s4wg8txcVRmkUSOONcDRtGscP0DcbBJKwZYJvG0BGAn
-IDemBqCmewow27gpiTCIEmUvdkcoUCFrNTysKKIMPgorFfQl1tzIwaoNhpadDilG
-Mx+s11aYdu/RODaGyWCWqLM//jsHpORM+xx0DTkNEo029pJFaM1oHH2rVgy+NxCh
-kW8PZO1PnAyzGZBvw22LedBpaidQbFYUIgkYV4mGj4ViTSXqLh4=
-=A2BJ
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmWeXP4ACgkQVbJhu7ck
+PpT+4g/+I5kBri/RuFSDpXiXXi1ErlpHtLJIkfAi+BveXZIaFKabjRJYxh/o6ilt
+LC4umgq5LqWSsk7iriBsD1aJgqjfB82LqZ4bl5fto3rVNAaV/kmZexuS4yBtvGFd
+maDF+mqchCnu8H8hGI4Eirl2nAOhl0iGWFl1cdlye3n1ds+o3IxVdDTrJBWh1yfX
+KHkZfsvhE7n/xAG0DJId1sgv/DiAdpYD1G7eyNPcBcbqscVA/EeDhbLpPOhV3wXD
+SRb+0iNy2SjbgqTrc8m777la+yz4vJiasFOipblaQKBj8dQXJNumz/XnHeDEiZ79
+64DRwP+UEhwtCPUUn61gRgB+XyvJrybzl9lmHJTVmLIka1GneSbNvC5+nua0hwWy
+LI/+BNWviyAWXYISWmoGw1MN8xGg5uwhwy479Rn3KThfsHYGcGKSrySZRMNgob3o
+iKTkfA+iC35Qs/vOFa2mj+dGaE6OjALddIIW391CVRGPkd8CkNooKd20FRYglt8y
+1Rs4C6UrtEbJgyR/NGFnDSH7Ts8eT6zbR4jOFRzBoLUsBbNMOFDvy8UPoOXd4bpf
+V7d3RkGYDQ1JSGIEnZkHyVnS+lehZQdfsmy8gQfH6GculnWv5rBUp3pJTma1U76a
+vE0VjKLpPUrEL99aWFPcEFsApCeNqXeoItnPO5WSIdrdKFQvt/4=
+=J4xi
 -----END PGP SIGNATURE-----
 
---YmIWIYuRlsDtzHl7--
+--gml0pbnVoYVohA7O--
