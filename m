@@ -1,50 +1,53 @@
-Received: from mail-wr1-f43.google.com (mail-wr1-f43.google.com [209.85.221.43])
+Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4679F4CDE0
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C81A14D58E
 	for <git@vger.kernel.org>; Wed, 10 Jan 2024 18:52:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fiAT45RA"
-Received: by mail-wr1-f43.google.com with SMTP id ffacd0b85a97d-336788cb261so3852421f8f.3
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="c3FhfS04"
+Received: by mail-wm1-f51.google.com with SMTP id 5b1f17b1804b1-40d5336986cso58199925e9.1
         for <git@vger.kernel.org>; Wed, 10 Jan 2024 10:52:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1704912751; x=1705517551; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1704912752; x=1705517552; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=DnJieZDeBkyQhnE/TYHW69Q9cORVHwx8j0wdDFWhkDQ=;
-        b=fiAT45RAmcg23SCsmfbyG2fizjSVSplQ5ozU0DcHSFWQir23VeGkSvIuJvNfHM4ouC
-         8XLV2YioTBGsKH0uCIVRX33o9isU7G7Yw04u0DzEg6VPexffo6ZlZpE7zncx9MqF3n2e
-         6vlUw4fmygOYbMdPrvvHcv6PSrKVaeFUgMqbh0Blm8AvFz0OB1sqt9oTo1Yrk5tuk2ke
-         1OXjZQ38VWt4sivYdyPGAMgaUZYPgt/uiQ/PXOPthFl5yibHncjcCkvmLKxLknbef+Vn
-         emi77kKYc6v/bwc4z0/OccelO1AsUmhNHLQhIn5ajslhNo6y2qTWNv0fhJOJkyRqTMjy
-         0ZjQ==
+         :references:in-reply-to:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=N0p3TiULwZJC5AIuWFRs5ppVhZ7TqXK+X0E5Qg88Kto=;
+        b=c3FhfS04Dumq+5ifyTeqo5r/4V8r++OIcPOIFt78dzILj+fhXukkOXHTYkWoCEg70k
+         12yj/7VdFuNRzFWK8rkZzYI9wCTRgzTCd702Ktf/pjEzefHTLxHel/goeV2fM+H2BPJw
+         Pu4xr05iCSCttDW/5Xk0F4U2M7MBocwc92mGwkyQHiKJoCuF/2Dm/JJUV9bXJw/kbQW9
+         0uUtkyShJensQADPv8N7CuwsCVaMFC3Nr51g9CZSFUqK+VEdaVUBvFsTCljnkUYgfdsg
+         TtcZ+dA3i7iz0IjcStps7KI7BFYLJfLhrrCU4Oq01qbBbep+gtRYpD/rvqYUpXslSYtO
+         SbtA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1704912751; x=1705517551;
+        d=1e100.net; s=20230601; t=1704912752; x=1705517552;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=DnJieZDeBkyQhnE/TYHW69Q9cORVHwx8j0wdDFWhkDQ=;
-        b=Kf/U/CjrX9XLf+HZARQGggBxpcK5mJMIXLVwFLlUu9jhIIKUwDiDBs65q5/tT/EB4b
-         PvlyIz+rXzk+Y6cHo5M7pewy9NjCn/rEMDlrpvrcbA2GLqzMa+WnZYh6yAMqiSDbyaIh
-         etf/fQYP8KUEml1hAldfC++BMZDAV+7+nCqBGW3nWpyjvRbHG74KYRZ1mYHq+d1BC0t4
-         I6iU4PMNFvm9VATOuy2v6x9WHs1DixNqHDnOoCvRMop4/p5CMbUyXej3KZkLXRq3FDvs
-         TwTkWVLglTynpR9hY6HocAFij6CLcSsMhiB+EZJVMX5l4obLH7Fno7Yz3dQ7NgsaT0By
-         NJyQ==
-X-Gm-Message-State: AOJu0Yy0FVH0HyzKxd6e+0H+jaUxjAOkqRgrmzAHAtnlqaSI6VxjTHVF
-	7vAHJ8lqfk1lRfwkr5v/ECpO4xjk4Do=
-X-Google-Smtp-Source: AGHT+IHMW489MBOeiGpCEmqUjvXYPlxVSTGLOwamuwwBLbrpCXZfbKIdZAwWyrAhO5JdX4J0H+VKCw==
-X-Received: by 2002:a5d:6647:0:b0:337:4c69:3ec3 with SMTP id f7-20020a5d6647000000b003374c693ec3mr971453wrw.32.1704912751117;
+         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=N0p3TiULwZJC5AIuWFRs5ppVhZ7TqXK+X0E5Qg88Kto=;
+        b=fFoN1aCFgZoFpI2TxFnHt6jlnPeDSAahN7w49Hmcs48y2YLLC4KByim55hU3h2cdLD
+         N8SDvYd2U/s7uIF3D4bC6FI3rqxDmi/cThCkYSC4+tI9pE4LZFEk70ILLMdQ7Y8BhBb0
+         eupcGE+6JNZ3+DqNb9SfKIUgZzphLygrL81+vPaeNbczyEI7/m6JkqciFg/trndcqk86
+         BO5SZQmojr2li9UwRH6m3MT+wxMI2d0f4UDrWQjkRtQT1PxmqrEwCijU52NuDIQfum+l
+         6DMnG4o3x3mxr8wO/Z1wGyb3JHsQJjNpIj2jqyono4gpVYcyAL8fM3UdWPqQajLyqR9c
+         Yuiw==
+X-Gm-Message-State: AOJu0YzeK4xz89nuw7ZO16QTQ4gxBTso5m28q+LhReTcVuH24IMl8Ihq
+	Rvl44gutt0rPVCT2gXobjcHFZITr798=
+X-Google-Smtp-Source: AGHT+IFctur9rMdL6cF0Q2Qe2kuom5iadC81mRYcyV0wdkhahP0Pl912WKWR0wuRnalmAdmR5/W7Jw==
+X-Received: by 2002:a7b:ca49:0:b0:40e:4ded:a87 with SMTP id m9-20020a7bca49000000b0040e4ded0a87mr816444wml.94.1704912751660;
         Wed, 10 Jan 2024 10:52:31 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id k16-20020a5d5190000000b00336c43b366fsm5509218wrv.12.2024.01.10.10.52.30
+        by smtp.gmail.com with ESMTPSA id d8-20020a5d6dc8000000b0033671314440sm5460531wrz.3.2024.01.10.10.52.31
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 10 Jan 2024 10:52:30 -0800 (PST)
-Message-ID: <pull.1634.git.1704912750.gitgitgadget@gmail.com>
+        Wed, 10 Jan 2024 10:52:31 -0800 (PST)
+Message-ID: <cb78b549e5e826ffef39c55bd726164e6b7bb755.1704912750.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1634.git.1704912750.gitgitgadget@gmail.com>
+References: <pull.1634.git.1704912750.gitgitgadget@gmail.com>
 From: "Justin Tobler via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Wed, 10 Jan 2024 18:52:28 +0000
-Subject: [PATCH 0/2] Generalize reference locking in tests
+Date: Wed, 10 Jan 2024 18:52:29 +0000
+Subject: [PATCH 1/2] t1401: generalize reference locking
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -55,32 +58,61 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 To: git@vger.kernel.org
-Cc: Justin Tobler <jltobler@gmail.com>
+Cc: Justin Tobler <jltobler@gmail.com>,
+    Justin Tobler <jltobler@gmail.com>
 
-There are two tests in t1401 and t5541 that rely on writing a reference lock
-file directly. While this works for the files reference backend, reftable
-reference locks operate differently and are incompatible with this approach.
-To be reference backend agnostic, this patch series refactors the two tests
-to use git-update-ref(1) to lock refs instead.
+From: Justin Tobler <jltobler@gmail.com>
 
-This approach is more verbose and may warrant consideration of implementing
-an abstraction to further simplify this operation. There appears to be one
-other existing test in t1400 that also follows this pattern. Being that
-there is only a handful of affected tests the implemented approach may be
-sufficient as is.
+Some tests set up reference locks by directly creating the lockfile.
+While this works for the files reference backend, reftable reference
+locks operate differently and are incompatible with this approach.
+Refactor the test to use git-update-ref(1) to lock refs instead so that
+the test does not need to be aware of how the ref backend locks refs.
 
-Justin Tobler (2):
-  t1401: generalize reference locking
-  t5541: generalize reference locking
+Signed-off-by: Justin Tobler <jltobler@gmail.com>
+---
+ t/t1401-symbolic-ref.sh | 28 ++++++++++++++++++++++++----
+ 1 file changed, 24 insertions(+), 4 deletions(-)
 
- t/t1401-symbolic-ref.sh    | 28 ++++++++++++++++++++++++----
- t/t5541-http-push-smart.sh | 25 +++++++++++++++++++++++--
- 2 files changed, 47 insertions(+), 6 deletions(-)
-
-
-base-commit: 624eb90fa8f65a79396615f3c2842ac5a3743350
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1634%2Fjltobler%2Fjt%2Fbackend-generic-ref-lock-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1634/jltobler/jt/backend-generic-ref-lock-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/1634
+diff --git a/t/t1401-symbolic-ref.sh b/t/t1401-symbolic-ref.sh
+index c7745e1bf69..bafe8db24df 100755
+--- a/t/t1401-symbolic-ref.sh
++++ b/t/t1401-symbolic-ref.sh
+@@ -105,10 +105,30 @@ test_expect_success LONG_REF 'we can parse long symbolic ref' '
+ 	test_cmp expect actual
+ '
+ 
+-test_expect_success 'symbolic-ref reports failure in exit code' '
+-	test_when_finished "rm -f .git/HEAD.lock" &&
+-	>.git/HEAD.lock &&
+-	test_must_fail git symbolic-ref HEAD refs/heads/whatever
++test_expect_success PIPE 'symbolic-ref reports failure in exit code' '
++	mkfifo in out &&
++	(git update-ref --stdin <in >out &) &&
++
++	exec 9>in &&
++	exec 8<out &&
++	test_when_finished "exec 9>&-" &&
++	test_when_finished "exec 8<&-" &&
++
++	echo "start" >&9 &&
++	echo "start: ok" >expected &&
++	read line <&8 &&
++	echo "$line" >actual &&
++	test_cmp expected actual &&
++
++	echo "update HEAD refs/heads/foo" >&9 &&
++
++	echo "prepare" >&9 &&
++	echo "prepare: ok" >expected &&
++	read line <&8 &&
++	echo "$line" >actual &&
++	test_cmp expected actual &&
++
++	test_must_fail git symbolic-ref HEAD refs/heads/bar
+ '
+ 
+ test_expect_success 'symbolic-ref writes reflog entry' '
 -- 
 gitgitgadget
+
