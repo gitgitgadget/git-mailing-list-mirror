@@ -1,73 +1,75 @@
-Received: from secure.elehost.com (secure.elehost.com [185.209.179.11])
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00A204F1E5
-	for <git@vger.kernel.org>; Wed, 10 Jan 2024 22:16:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nexbridge.com
-X-Virus-Scanned: Debian amavisd-new at secure.elehost.com
-Received: from Mazikeen (cpebc4dfb928313-cmbc4dfb928310.cpe.net.cable.rogers.com [99.228.251.108] (may be forged))
-	(authenticated bits=0)
-	by secure.elehost.com (8.15.2/8.15.2/Debian-22ubuntu3) with ESMTPSA id 40AMCBn71699562
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 10 Jan 2024 22:12:11 GMT
-Reply-To: <rsbecker@nexbridge.com>
-From: <rsbecker@nexbridge.com>
-To: "'Junio C Hamano'" <gitster@pobox.com>,
-        "'Dragan Simic'" <dsimic@manjaro.org>
-Cc: "'Taylor Blau'" <me@ttaylorr.com>, <git@vger.kernel.org>
-References: <ZZ77NQkSuiRxRDwt@nand.local>	<b2651b38a4f7edaf1c5ffee72af00e46@manjaro.org> <xmqqjzog96uh.fsf@gitster.g>
-In-Reply-To: <xmqqjzog96uh.fsf@gitster.g>
-Subject: RE: [DISCUSS] Introducing Rust into the Git project
-Date: Wed, 10 Jan 2024 17:15:53 -0500
-Organization: Nexbridge Inc.
-Message-ID: <006b01da4412$96c6c500$c4544f00$@nexbridge.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47D684CE1D
+	for <git@vger.kernel.org>; Wed, 10 Jan 2024 22:18:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="QCdynSLC"
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id F0F811C951F;
+	Wed, 10 Jan 2024 17:18:54 -0500 (EST)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=+LbJJ+M/Rx/lbGxh4Z0X1EhdsP027kM1P8QY15
+	jHwWg=; b=QCdynSLCxKXDvlagujRX3UO+35HD5zAz3SRyVzLkRGH7zP51TXiI2h
+	Ie1IRdyCKvs4emQNywCjWHWA446HqVShGmVBEe9R/J54qCj6RFQYz01+Cwvm+DIp
+	DKu1WOX7J90D/n23bIWfdYsdZhck1GDrCuTCEIGgBey5BkTXb5ano=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id E83181C951E;
+	Wed, 10 Jan 2024 17:18:54 -0500 (EST)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.200.93])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 09C621C951D;
+	Wed, 10 Jan 2024 17:18:53 -0500 (EST)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Taylor Blau <me@ttaylorr.com>
+Cc: git@vger.kernel.org,  Jeff King <peff@peff.net>
+Subject: Re: [PATCH 1/5] t5309: run expected-to-fail `index-pack`s with
+ `--threads=1`
+In-Reply-To: <588de2e4f16ab090ff477088084e0b81d9615ec5.1704909216.git.me@ttaylorr.com>
+	(Taylor Blau's message of "Wed, 10 Jan 2024 12:55:30 -0500")
+References: <ZZ7VEVXSg1T8ZkIK@nand.local>
+	<588de2e4f16ab090ff477088084e0b81d9615ec5.1704909216.git.me@ttaylorr.com>
+Date: Wed, 10 Jan 2024 14:18:52 -0800
+Message-ID: <xmqqfrz496ib.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain;
-	charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-X-Mailer: Microsoft Outlook 16.0
-Content-Language: en-ca
-Thread-Index: AQNL0k5wzhXZATyUnQ76Vxjn4eCV+QKEQ1wBALH7sDyt1s4UgA==
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 3D587CBA-B006-11EE-9555-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
 
-On Wednesday, January 10, 2024 5:12 PM, Junio C Hamano wrote:
->Dragan Simic <dsimic@manjaro.org> writes:
->
->> Thus, Git should probably follow the same approach of not converting
->> the already existing code, but frankly, I don't see what would
->> actually be the "new leafs" written in Rust.
->
->A few obvious ones that come to my mind are that you should be able to
-write a
->new merge strategy and link the resulting binary into Git without much
-hassle.  You
->might even want to make that a dynamically loaded object.  The interface
-into a
->merge strategy is fairly narrow IIRC.  Or possibly a new remote helper.
->
->Adding a new refs backend may need to wait for the work Patrick is doing to
-add
->reftable support, but once the abstraction gets to the point to
-sufficiently hide the
->differences between files and reftables backends, I do not see a reason why
-you
->cannot add the third one.
->
->And more into the future, we might want to have an object DB abstraction,
-similar
->to how we abstracted refs API over time, at which time you might be writing
-code
->that stores objects to and retrieves objects from persistent redis and
-whatnot in
->your favorite language.
+Taylor Blau <me@ttaylorr.com> writes:
 
-Just a brief concern: Rust is not broadly portable. Adding another
-dependency to git will remove many existing platforms from future releases.
-Please consider this carefully before going down this path.
---Randall
+> But that requires us to tweak production code (albeit at a negligible
+> cost) in order to appease LSan in this narrow circumstance. Another
+> approach is to simply run these expected-to-fail `index-pack`
+> invocations with `--threads=1` so that we bypass the above issue
+> entirely.
 
+But of course, multi-threaded operation that production folks use
+will not be tested at all with the alternative.
+
+> The downside of that approach is that the test doesn't match our
+> production code as well as it did before (where we might have run those
+> same `index-pack` invocations with >1 thread, depending on how many CPUs
+> the testing machine has). The risk there is that we might miss a
+> regression that would leave us in an inconsistent state. But that feels
+> rather unlikely in practice, and there are many other tests related to
+> `index-pack` in the suite.
+
+As long as "make sure we spawn all of them atmically" has negligible
+downside, I'd rather take that approach. Buying predictability with
+minimum cost is quite attractive.
+
+Thanks.
