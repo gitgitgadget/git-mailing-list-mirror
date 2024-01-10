@@ -1,71 +1,165 @@
-Received: from mail-4319.protonmail.ch (mail-4319.protonmail.ch [185.70.43.19])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail.manjaro.org (mail.manjaro.org [116.203.91.91])
+	(using TLSv1.2 with cipher DHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 884874CB4E
-	for <git@vger.kernel.org>; Wed, 10 Jan 2024 17:38:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=proton.me
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=proton.me
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7E6B4D121
+	for <git@vger.kernel.org>; Wed, 10 Jan 2024 17:45:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=manjaro.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=proton.me header.i=@proton.me header.b="DKRL7frZ"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=proton.me;
-	s=protonmail; t=1704908290; x=1705167490;
-	bh=CaCOUAemKoxkUwH+6T3GgnyidaLQ8lggGnoWS7jfdyA=;
-	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
-	 Message-ID:BIMI-Selector;
-	b=DKRL7frZAm1S/YIbxLZUJ0W8RKeXQLj3xCVmAk++lEaJfXNebJqkfpuhqSJ8FzgbI
-	 vR8YoeKmfODnC4OEf+ERKBTfJG0xtKXJUpI9z0fh9vNkBKav9qUx4AviaFYsx0DYia
-	 vfMkJU6+BlKLNX0jB9Qeoqfafh1mYTWKY+XnO1lHrHUZo8aRZGpmd3RySrKE55SIvx
-	 nu9QYaEX55HgfvKkZgaRMEm0PVFbmRQyArAiCcm2NJgRQJCWhFJwhHwGL3MTFWDblg
-	 oPJ9kqWMehaWVreVgUPuV/4IM784Kux0s9nOexUw7soKxMfBBQwq4i5qs4H/bwx/38
-	 /WEsjd1B1Ucyw==
-Date: Wed, 10 Jan 2024 17:38:07 +0000
-To: Christian Couder <christian.couder@gmail.com>
-From: Mohit Marathe <mohitmarathe@proton.me>
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>, "gitster@pobox.com" <gitster@pobox.com>, "britton.kerin@gmail.com" <britton.kerin@gmail.com>, "peff@peff.net" <peff@peff.net>
-Subject: Re: [GSoC][RFC] Replace use of atoi() with strtol_i(), as a microproject
-Message-ID: <F6ejgAfr2IMRNR3Tq0CDTHeT9xMWzJ9ley8M_fnSX97ayRNRp_CEgA62WdtOooi9bha1WJPGB53ptJYQFII2lCbIflwgNvbIaefw7nK8w7M=@proton.me>
-In-Reply-To: <CAP8UFD1d7FSa=mUzzUA5e3eSEcCVfaymxWewo5GjdDBi4GyE-g@mail.gmail.com>
-References: <OqD4xQ_p-jcftCbAw0ovvrBztfiuoMGcTonCc0i6x7Ziy-hx3uA-Hoz4-3tfRI39KMj-V5OZIGgOe66b1eyX3YrKZNThMYjjMkn6g4-Ww8c=@proton.me> <CAP8UFD1d7FSa=mUzzUA5e3eSEcCVfaymxWewo5GjdDBi4GyE-g@mail.gmail.com>
-Feedback-ID: 95862732:user:proton
+	dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b="qQG0tDEE"
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=manjaro.org; s=2021;
+	t=1704908750;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=F7vXgpgsexj2sOQkdKzO+WY4DQLaYvXYSbks8NVT39w=;
+	b=qQG0tDEET4I6cHUVuL6G60wHkNVib6bJvwxvIQRt8prhC7N60UYHqxyT073Y6IM4rE3OkE
+	tdmOZRmGrTTCrWP+7eP4dpDpV63X5771oUd5o7o7b8MTfOBAVGqxIxJf1yXcMhh8TeiFet
+	sR9Qy/jfJejTBwGaYJzJAPOII3ssQIAtyquhr/25fA/HwwK08HCIMuI9uJgQiIIGQtkpSs
+	n4Whw/7cc5tTcm/rVDyD+ME4uDKF+1RMGglrVwpWFq/xpG4/5W9n7/kv8YWX783ySX9tXq
+	lJksVEEDsjXnbxMoyufMW2dDuegW1Zfifu3346tQpJCvK6fZ5vazUBSfXvh4HA==
+Date: Wed, 10 Jan 2024 18:45:49 +0100
+From: Dragan Simic <dsimic@manjaro.org>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: =?UTF-8?Q?Rub=C3=A9n_Justo?= <rjusto@gmail.com>, Jeff King
+ <peff@peff.net>, Git List <git@vger.kernel.org>
+Subject: Re: [PATCH 3/3] advice: allow disabling the automatic hint in
+ advise_if_enabled()
+In-Reply-To: <xmqqil41duov.fsf@gitster.g>
+References: <7c68392c-af2f-4999-ae64-63221bf7833a@gmail.com>
+ <d6099d78-43c6-4709-9121-11f84228cf91@gmail.com>
+ <20240110110226.GC16674@coredump.intra.peff.net>
+ <aaf59fc82ef3132ece8e1f70623570a2@manjaro.org>
+ <97fdf6d4-1403-4fe9-b912-a85342a9fa56@gmail.com>
+ <a97b03a305a7b8b95341b63af1de0271@manjaro.org> <xmqqil41duov.fsf@gitster.g>
+Message-ID: <d6d72ec5431ad1ca775e6e4e9921f94c@manjaro.org>
+X-Sender: dsimic@manjaro.org
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Authentication-Results: ORIGINATING;
+	auth=pass smtp.auth=dsimic@manjaro.org smtp.mailfrom=dsimic@manjaro.org
 
->In https://public-inbox.org/git/xmqqjzpjsbjl.fsf@gitster.g/ Junio says:
->
->"Some places use atoi() immediately followed by strspn() to skip over
->digits, which means they are parsing an integer and want to continue
->reading after the integer, which is incompatible with what
->strtol_i() wants to do.  They need either a separate helper or an
->updated strtol_i() that optionally allows you to parse the prefix
->and report where the integer ended, e.g., something like:"
->
->and then he suggests the above helper.
->
->So it seems that the two instances you found look like good places
->where Junio says the new helper could be useful.
->
->Now if you want to continue further on this, I think you would need to
->take a closer look at those two instances to see if replacing atoi()
->there with the new helper would improve something there or not. If you
->find it would improve something, be sure to explain what would be
->improved in the commit message.
+On 2024-01-10 17:22, Junio C Hamano wrote:
+> Dragan Simic <dsimic@manjaro.org> writes:
+> 
+>> No worries.  Regarding disabling the advices for disabling the advice
+>> messages, maybe it would be better to have only one configuration knob
+>> for that purpose, e.g. "core.verboseAdvice", as a boolean knob.
+> 
+> I am not sure if you understood Peff's example that illustrates why
+> it is a bad thing, as ...
+> 
+>> That
+>> way, fishing for the right knob for some advice message wouldn't turn
+>> itself into an issue,
+> 
+> ... this is exactly what a single core.verboseAdvice knob that
+> squelches the "how to disable this particular advice message" part
+> from the message is problematic.  Before you see and familialize
+> yourself with all advice messages, you may see one piece of advice X
+> and find it useful to keep, feeling no need to turn it off.  If you
+> use that single knob to squelch the part to tell you how to turn
+> advice X off.  But what happens when you hit another unrelated
+> advice Y then?  Because your core.verboseAdvice is a single big red
+> button, the message does not say which advice.* variable to tweak
+> for this particular advice message Y.
 
-I took a closer look at `builtin/patch-id.c` and it seems replacing=20
-`atoi()` (which is used to parse numbers in the hunk header) wouldn't
-improve anything, unless I'm missing something.
+Makes sense, but please allow me to explain how I envisioned the whole 
+thing
+with the single, big core.verboseAdvice configuration knob:
 
-So then I tried finding other places where `atoi()` can be replaced
-but I find it difficult to find any reason that would justify the change.
-So far I've only looked at few of the MANY occurrences of `atoi()`.
-As far as I understand, the only advantage of `strtol_i()`
-over `atoi()` is better error handling. And most of places I've seen either
-already takes care of that or does not need that at all.
+1) You use git and find some advice useful, so you decide to keep it 
+displayed.
+    However, the additional advice about turning the advice off becomes 
+annoying
+    a bit, or better said, it becomes redundant because the main advice 
+stays.
 
-Thanks!
+2) As a result, you simply set core.verboseAdvice to false and voila, 
+the
+    redundant additional advice disappears.  Seems perfect!  Of course, 
+it
+    isn't perfect, as the next point will clearly show.
+
+3) You keep using git, and some advice becomes no longer needed, maybe 
+even
+    one of the advices that you previously used to find useful, or you 
+find
+    some newly added advice a bit annoying and, as a result, not needed.  
+But,
+    what do you do, where's that helpful additional advice?
+
+4) As a careful git user that remembers important things, you go back to 
+your
+    git configuration file and set core.verboseAdvice to true, and the 
+additional
+    advices are back, telling you how to disable the unwanted advice.
+
+5) After you disable the unwanted advice, you set core.verboseAdvice 
+back to
+    false and keep it that way until the next redundant advice pops up.
+
+However, I do see that this approach has its downsides, for example the 
+need
+for the unwanted advice to be displayed again together with the 
+additional advice,
+by executing the appropriate git commands, after the above-described 
+point #4.
+
+Let's see what it would look like with the granular, per-advice on/off 
+knobs:
+
+1) You use git and find some advice useful, so you decide to keep it 
+displayed.
+    However, the additional advice about turning the advice off becomes 
+annoying
+    a bit, or better said, it becomes redundant because the main advice 
+stays.
+
+2) As a result, you follow the additional advice and set the specific 
+knob to
+    false, and voila, the redundant additional advice disappears.  Of 
+course,
+    it once again isn't perfect, as the next point will clearly show.
+
+3) You keep using git, and one of the advices that you previously used 
+to find
+    useful becomes no longer needed.  But, what do you do, where's that 
+helpful
+    additional advice telling you how to turn the advice off?
+
+4) Now you need to dig though the manual pages, or to re-enable the 
+additional
+    advices in your git configuration file, perhaps all of them at once, 
+while
+    keeping a backup of your original settings, to restore it later.  
+Then, you
+    again need to wait until the original advice gets displayed.
+
+5) The additional advice is finally back, after some time passes or 
+after
+    specifically reproducing the exact git commands, telling you how to 
+disable
+    the unwanted advice.  Of course, you follow the advice and set the 
+right
+    knob in your git configuration file.
+
+5) After you disable the unwanted advice, you restore the git 
+configuration
+    backup that you made earlier (you did that, right?), taking care not 
+to
+    override the newly made changes that disabled the unwanted advice.
+
+Quite frankly, the second approach, although more granular, seems much 
+more
+complicated and more error-prone to me.
+
+Of course, please let me know if I'm missing something obvious.
