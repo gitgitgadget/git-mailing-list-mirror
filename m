@@ -1,113 +1,110 @@
-Received: from mail-wr1-f44.google.com (mail-wr1-f44.google.com [209.85.221.44])
+Received: from mail-qk1-f171.google.com (mail-qk1-f171.google.com [209.85.222.171])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23A174D590
-	for <git@vger.kernel.org>; Wed, 10 Jan 2024 18:52:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 254A24CB2C
+	for <git@vger.kernel.org>; Wed, 10 Jan 2024 19:43:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hm4u2XKF"
-Received: by mail-wr1-f44.google.com with SMTP id ffacd0b85a97d-33694bf8835so3781635f8f.3
-        for <git@vger.kernel.org>; Wed, 10 Jan 2024 10:52:33 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="EUi3yHj/"
+Received: by mail-qk1-f171.google.com with SMTP id af79cd13be357-78333a2ed06so70914685a.1
+        for <git@vger.kernel.org>; Wed, 10 Jan 2024 11:43:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1704912752; x=1705517552; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=8/DAsjkrOGdxZDpa6I//Fyv9T/SkQDL1/nU1q9K3z90=;
-        b=hm4u2XKFwXHmHhrySYoC1S8+m4+6J/3GT9ocCyqckBy3kOGdTt0qmOoZQsXV7oeyrN
-         SSvLMFOfdK0d+lpAe3W8bMRF7qL83HQHFivbQft+zKghzkMc+enzAqkmE52E7SRuRCYk
-         hWqSlbPeR8FrbybOJS9fxuZO7ozDri7uBEzfiyeHBPyMNmK/kKzRidHNqhF7NRI9s0cK
-         yRrQw3UUgEIP1V1RqS8K5A4QKuLE20vfTosLypptfl3fdD+xcfuXHeJ0K3Z/pEZ9cph4
-         hRbkwnfTM4hHZ/6fU37TRoqjNwwBbyLNkSZ5ny4EdYph4ftPURQu1EFCFyHavmygZRQm
-         exaA==
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1704915836; x=1705520636; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=W2218yfUTOnlx01kWhb/e3y+uePVKwUDL6YwlhKyKwM=;
+        b=EUi3yHj/NeTbApiDvaQjaPeoqDo5OUzMWy2uPfF5H6VECH/vRrZ5axOntMQyagPp2A
+         n0hWNrXDr7LMQvID1ZqMkiP4/07a4pJlFHon7qxJUYE7BCAGGG3qT1eU++qf2GqmnJ9r
+         NQlRda85UD/s1OoYxIaAIxiFk8M7RvzbGXdDdXUgD+tUHGsn/V0UT/L+ulQ409IDdYvn
+         ym7I9ydgJ4+mrV/Ak15gB+TBgxV9PW3eXjYqf62BKIBilmW88ZA1oPyg9FfFc7G58q+q
+         XoEjjyRTJIIczav7q3KY8/bGCfNwV0hUzJpBe44D5JRwi+jM7BDBVkV+wVkBRlolOw9F
+         wWEQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1704912752; x=1705517552;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=8/DAsjkrOGdxZDpa6I//Fyv9T/SkQDL1/nU1q9K3z90=;
-        b=PyGK4Co5Uvp+Er7MKo86GVqz5XXlI3pdi+kRDWSc8CDcq/8YxGlNc9VwJ+fmvR2W5G
-         Vw3+XAgpdZ6oShzAEgDTiJT1Szzj/28GI+CkCDPJvSr8pMisvDnnEXpmP9bFNo2p48fz
-         5H8QV+fEaxwFyXGCRZHpF+QG7cPwLeny2bQ9i7tKJKWO90vGOSGl8LT/YAH3EbjMfEwp
-         zBVyGFDJSHFwM64NM7m5EWcm9x4KsA0YyZbjBj1IqgIUn8+cHsIHhU0jdZa4gczB4ZS4
-         GGuCuAucjcMEzx+fTMtEzkSpUpXaeFIJWr+zqXe8Pped9gELtsTmV/E10essDUarFvwI
-         lCzQ==
-X-Gm-Message-State: AOJu0YzjMsyXYXxtUwUJedpbz+M6R6oi2HL9LDmkoTgtfBiCxNlc7cF5
-	1fXY8sgZ/ydmhstUPuODljfduS+9hHs=
-X-Google-Smtp-Source: AGHT+IGfV72tvMw5cnpnAs3FHY5lW1pqU47j9NSjU2fX7PLVrRIyKuxJjxM9tQ/WIJh9GKygfVZSuQ==
-X-Received: by 2002:a5d:63c8:0:b0:336:c434:5c1c with SMTP id c8-20020a5d63c8000000b00336c4345c1cmr631474wrw.34.1704912752189;
-        Wed, 10 Jan 2024 10:52:32 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id f6-20020adff446000000b003377ba25e48sm2447862wrp.66.2024.01.10.10.52.31
+        d=1e100.net; s=20230601; t=1704915836; x=1705520636;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=W2218yfUTOnlx01kWhb/e3y+uePVKwUDL6YwlhKyKwM=;
+        b=m+4oad+/XbROh2Aa8JnrUFuzuovb50R0qd3jz9E/k7jCQEoA933moBf8QDCsr2D2ev
+         FAS5qHoDQ253ctbJtDIYePVbO/okMsUQmO83WpHyzAb0ScJNhgiflB0WQYRCGGmh9bQN
+         0SzHBmnIT1i4Yd431lFEaShh+eZbalMImpc4tiY7fCcZc51mS7KTel3cgis8disoC0X8
+         3AFAFV5b37aexpgJIL0ynRHjN7KPQLaXNBv0clTgyGpko5Wvqk1Pq3kRyunpT40MJQMI
+         qwR7AYjuIRcGgQs1ir62biVySioeq2Ge1lwEAtEc6tsyyYyHXxxfpYIYR/NZg+AeWpCP
+         8KqA==
+X-Gm-Message-State: AOJu0Yxouv7vOdQfaqb6QxWlR39eKTuoqXUHNSfMGvBAJi2nAlnHqCBA
+	6TB4onDBYWMsYlFY02EeL9ZqChpG+giyE2Lu3V2CHDDL0rurmA==
+X-Google-Smtp-Source: AGHT+IFxysuqoost2bisDC4hfpysCYdqdeZK/ngQZbuUUnuP+0PF9cEu1AtBdDAtfZ9OSM5TYIlRYA==
+X-Received: by 2002:a05:620a:10a8:b0:781:ab42:88e7 with SMTP id h8-20020a05620a10a800b00781ab4288e7mr156821qkk.60.1704915836698;
+        Wed, 10 Jan 2024 11:43:56 -0800 (PST)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id h4-20020a37de04000000b007832a7c7fcbsm1825649qkj.108.2024.01.10.11.43.56
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 10 Jan 2024 10:52:32 -0800 (PST)
-Message-ID: <11fd5091d61b54d8862ab2e316bbd25fff63ce0f.1704912750.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1634.git.1704912750.gitgitgadget@gmail.com>
-References: <pull.1634.git.1704912750.gitgitgadget@gmail.com>
-From: "Justin Tobler via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Wed, 10 Jan 2024 18:52:30 +0000
-Subject: [PATCH 2/2] t5541: generalize reference locking
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        Wed, 10 Jan 2024 11:43:56 -0800 (PST)
+Date: Wed, 10 Jan 2024 14:43:55 -0500
+From: Taylor Blau <me@ttaylorr.com>
+To: git@vger.kernel.org
+Cc: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+	Christian Couder <christian.couder@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>, Dan Moore <dan@fusionauth.io>
+Subject: [ANNOUNCE] git-scm.com updates (was: Conservancy status report
+ (2023))
+Message-ID: <ZZ7zezSRZfdklS4u@nand.local>
+References: <ZRHTWaPthX/TETJz@nand.local>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Justin Tobler <jltobler@gmail.com>,
-    Justin Tobler <jltobler@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <ZRHTWaPthX/TETJz@nand.local>
 
-From: Justin Tobler <jltobler@gmail.com>
+On Mon, Sep 25, 2023 at 02:37:13PM -0400, Taylor Blau wrote:
+> One notable change from last time is that our hosting fees have gone up
+> significantly. These are entirely from Heroku's change in policy to no
+> longer grant the Git project hosting credits for the git-scm.com
+> project. Our costs in the meantime have been supported by a generous
+> donation from Dan Moore at FusionAuth. The below email has some more
+> details:
+>
+>   https://lore.kernel.org/git/YkcmtqcFaO7v1jW5@nand.local/
+>
+> It appears that since the above was written, Heroku has a new (?)
+> program for giving credits to open-source projects. The details are
+> below:
+>
+>   https://www.heroku.com/open-source-credit-program
+>
+> I applied on behalf of the Git project on 2023-09-25, and will follow-up
+> on the list if/when we hear back from them.
 
-Some tests set up reference locks by directly creating the lockfile.
-While this works for the files reference backend, reftable reference
-locks operate differently and are incompatible with this approach.
-Generalize reference locking by preparing a reference transaction.
+Out of the blue today I received an email from Heroku saying that our
+application to their open-source credit program was accepted. Quoting
+from their email:
 
-Signed-off-by: Justin Tobler <jltobler@gmail.com>
----
- t/t5541-http-push-smart.sh | 25 +++++++++++++++++++++++--
- 1 file changed, 23 insertions(+), 2 deletions(-)
+  [...] We are excited to announce that your project was a fit to
+  receive $250 credits/month for one year, totaling $3,000 in credits.
+  These credits have been applied to the account submitted on the
+  application, and will be valid from January 2024 to December 2024.
 
-diff --git a/t/t5541-http-push-smart.sh b/t/t5541-http-push-smart.sh
-index df758e187df..5b94c0b066f 100755
---- a/t/t5541-http-push-smart.sh
-+++ b/t/t5541-http-push-smart.sh
-@@ -232,8 +232,29 @@ test_expect_success 'push --atomic fails on server-side errors' '
- 	test_config -C "$d" http.receivepack true &&
- 	up="$HTTPD_URL"/smart/atomic-branches.git &&
- 
--	# break ref updates for other on the remote site
--	mkdir "$d/refs/heads/other.lock" &&
-+	mkfifo in out &&
-+	(git -C "$d" update-ref --stdin <in >out &) &&
-+
-+	exec 9>in &&
-+	exec 8<out &&
-+	test_when_finished "exec 9>&-" &&
-+	test_when_finished "exec 8<&-" &&
-+
-+	echo "start" >&9 &&
-+	echo "start: ok" >expected &&
-+	read line <&8 &&
-+	echo "$line" >actual &&
-+	test_cmp expected actual &&
-+
-+	echo "update refs/heads/other refs/heads/other" >&9 &&
-+
-+	# Prepare reference transaction on `other` reference to lock it and thus
-+	# break updates on the remote.
-+	echo "prepare" >&9 &&
-+	echo "prepare: ok" >expected &&
-+	read line <&8 &&
-+	echo "$line" >actual &&
-+	test_cmp expected actual &&
- 
- 	# add the new commit to other
- 	git branch -f other collateral &&
--- 
-gitgitgadget
+$250 per month is more than enough to cover our hosting costs (which
+average around ~$140 USD per month), so we should have plenty of room to
+host git-scm.com free of charge for this year.
+
+I know that there are some plans in the works to convert git-scm.com to
+a static site in [1]. So even though we likely won't be on Heroku
+forever, this should tide us over until we're ready to move to GitHub
+Pages.
+
+I would like to thank Dan Moore for his generous donation to the Git
+project, which has covered our Heroku bill in past years. Now that
+Heroku has agreed to cover out costs for this year, we will be able to
+use the funds Dan has graciously provided to on behalf of FusionAuth for
+other purposes.
+
+Thanks,
+Taylor
+
+[1]: https://github.com/git/git-scm.com/pull/1804
