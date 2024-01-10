@@ -1,70 +1,70 @@
 Received: from wout5-smtp.messagingengine.com (wout5-smtp.messagingengine.com [64.147.123.21])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B18A364A9
-	for <git@vger.kernel.org>; Wed, 10 Jan 2024 06:58:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0A373716F
+	for <git@vger.kernel.org>; Wed, 10 Jan 2024 07:15:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="iFEYJU20";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="1iTWK/yw"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="NHisGcYS";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="QUvOZ1bc"
 Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
-	by mailout.west.internal (Postfix) with ESMTP id 18B8E3200A01;
-	Wed, 10 Jan 2024 01:58:50 -0500 (EST)
+	by mailout.west.internal (Postfix) with ESMTP id 98D6B3200B69;
+	Wed, 10 Jan 2024 02:15:23 -0500 (EST)
 Received: from mailfrontend2 ([10.202.2.163])
-  by compute3.internal (MEProxy); Wed, 10 Jan 2024 01:58:50 -0500
+  by compute3.internal (MEProxy); Wed, 10 Jan 2024 02:15:23 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1704869929; x=1704956329; bh=+QcBTNsFe0
-	0WnvkRzikuzt2rmTtaktv6GH3nX2XIlms=; b=iFEYJU209di9C4MKnZHfBDsyYI
-	9jqW85q+NM51HlaDAV8pG/tKlpzU3rYEQ3n3aMW+mDC8bMpxCEi6j2iIq7aoblq0
-	oXuFnmbuRi41MuUgeqAqxpyp/++/u0lqw8hwNXt1XrcGoWxFw0xZTAWROZEbEHh6
-	V8wMIMSsLoA6xiy30shytiwyI/s3mqTPKUB0o4xsxUteL8Em5dg3WSgluzRcO6mt
-	NRwGByxQ0LRqT69ybwh4xINtPxFXXY65tDrNn83T48XQY+B1rj+eYRSTpOHcGE0i
-	lWrYZDssheakGzD101TsFHQDBMnBcKEz6jCzkwyl3nEv9j2AMNqeYT0Iv1PQ==
+	:subject:to:to; s=fm2; t=1704870923; x=1704957323; bh=kBNPAQY3Uk
+	/HL8SiMYIsM+9Qhnx7MN40713v4WgqZGE=; b=NHisGcYSMzE7DP7P/Peu+MYScc
+	83MWkDkUWp0k7t/OhGplIWM3lYU6OV6pRUVvICX5tTURV7GlH4GpmCpfswp3DcZA
+	2FTT+abnUaCbAiiUhjaHYsu+V7PGqnZpPtEdG/GKQ1Tr5zJmJu7yHa/gU1BkQ/q0
+	31w2wBUIHIbiOO7gipzE/k6c/c/T2YCRbWmTCvgcK074PUF/3DNxJDQHrDAXLPDi
+	CDaBBdG1xPVdkvxkAyTqj6ErpiRvsJxqeWVQFGocQXzW9juRsmPFN0H1EimFVOqq
+	kCPP+RvSxrQBdWqW8HUhQPH/cZ/EXCK9OjCYv4XnSXUtG/1vUFSNgYTpUE3w==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1704869929; x=1704956329; bh=+QcBTNsFe00WnvkRzikuzt2rmTta
-	ktv6GH3nX2XIlms=; b=1iTWK/ywxN0a/rrcy/E5pGXgQvazRM+Y8i5nfjZdmWox
-	fUx3vFUA51t16qFDrUIl+4y6eiikREY8uGaR+QYjpD5AAWjr0bQJNLKJnNhzIAW1
-	HDnOooGXB/7C7CjJhuOPEinMXv9csMj5dDN9O1alNUjHas7485dGfm1YhBSTPHOF
-	42RLczxc2NJCWn8VgUKbWINZ035PRru+DUmcHlnd5U4ZuL0Ux0ewIzcU15HCN8WK
-	IwZhBBk3IJ8dKcJWtTQ5rqceTyx/3bP0yiovrk+rWjD+1kg6yuUDbzunZrRneK7w
-	t8Rlw0eXAZPxtfUYnIPPUCr93Rc38Jhf41MiutG+DA==
-X-ME-Sender: <xms:KUCeZXCYCDpxsRZjQ6mRal_7tzPvLaNH_lckYzzFDO9psttwkWzBKA>
-    <xme:KUCeZdij011XmAnyUynNx92tP0qGyMtpX-a5Zz_OkldBTw_G0_ePfD0hYdnIM71vm
-    Rhrk366jXo-RiTz5w>
-X-ME-Received: <xmr:KUCeZSkr0WqaV5vu7lYO3sxUbX2iaKILzRDleBRGr4Glr3f-L3qOr_je3c1Ij7mF-B8u_f42GwSQ0Cpv-MaxuGJpvMIk_Yzxdx0LsZQW309NWjM>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrvdeitddguddtvdcutefuodetggdotefrod
+	fm2; t=1704870923; x=1704957323; bh=kBNPAQY3Uk/HL8SiMYIsM+9Qhnx7
+	MN40713v4WgqZGE=; b=QUvOZ1bcJ7KXObSIkKNJrK0q2D8ZlDN/TM6UXsvqmrU+
+	xNxYuRA0PZszjY+yWMbOvoqeLi1E4fuY4vYQHAxsfzoMgilmQynSz5vvnKsWXF+B
+	BCmP9S4gC4a0aLjbKeOboPKjEm7NHVj590sMELdLWrhxhKg/wfjYO9tiQTA2UoSs
+	6wsU7SC7er1/T9SFDO0txry64LNcGmDjXaO4Huy3sHMSoHnGnCzxg/SjNmqMtRjM
+	08ApHIdnsGHRJwzP5lS/6r2aAz8ZmU5QPQUKJEun/pjwUhmU1EhLMhx/LdIjFcQl
+	qrR8/IpRYgmylyaTOVQUi3L7pKMmiMCe2wKGAleiqg==
+X-ME-Sender: <xms:CkSeZRn5xVHqmBMDgOSOXuOAKcMKsdxn03AjmNiLmIcCMm3KtPKbFQ>
+    <xme:CkSeZc2hGUiXPUq6KK80E8t7jSgWwEoRLDdbnIf3HVF_-JE6osZFamE9Jz2wVc-53
+    QZ6cezkZ8Nra_s6Gg>
+X-ME-Received: <xmr:CkSeZXpqpKDa_pL8TFNa4Fg7gnKSfU8dzOHyF_uMTfvAHqCvYGfVXe9ZJxRoWXUORZVzDTnO7sV_fXCvNVZAKpSykG3XqimGCdnWPfe52Oa6vNc>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrvdeitddguddthecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
     necuuegrihhlohhuthemuceftddtnecunecujfgurhepfffhvfevuffkfhggtggujgesgh
     dtreertddtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhs
-    sehpkhhsrdhimheqnecuggftrfgrthhtvghrnheptdeiteevvedukeekheeiueevtdeigf
-    fgtefhkeelgeevtdejueelleffteeuieeunecuffhomhgrihhnpehpkhhsrdhimhenucev
-    lhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhksh
-    drihhm
-X-ME-Proxy: <xmx:KUCeZZyihQSpKs9fFPT4Cg4bMDQins38OF-45oaJCzv4GxITRzNBpg>
-    <xmx:KUCeZcQoEmmmRyHGxO1v8T75kQMZh--p4zTW7IeBg03opctGPatJ0g>
-    <xmx:KUCeZcYP8hpmp16S5t4Qknelo0Ct_A6MQ6FD1CgAc5B-kIekhtYbow>
-    <xmx:KUCeZV4k_4olEi_0ndvkl-XHwMCWeQBObThKXz9K-umEPR-G4SwtkQ>
+    sehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepueektdevtdffveeljeetgfehheeige
+    ekleduvdeffeeghefgledttdehjeelffetnecuvehluhhsthgvrhfuihiivgeptdenucfr
+    rghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimh
+X-ME-Proxy: <xmx:CkSeZRleBldJpo3VXy8_7aiDOx9toGoHO0H9yciEPCcVcTOVUcHumA>
+    <xmx:CkSeZf1KkG_v7KQabIiPyfduzeBIcQ-AgGP3hntGWIu1HJp3Tmi8Jg>
+    <xmx:CkSeZQvY8Su10hc5HLarhcwcejPEHy_rjvr_1644o6Tb5y6CLSAu0Q>
+    <xmx:C0SeZc-cQiWVRFoG8JTInfH46ECddyzDnQqytSmT9IJ5ejytbMx-yQ>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 10 Jan 2024 01:58:48 -0500 (EST)
+ 10 Jan 2024 02:15:22 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id d4003879 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 10 Jan 2024 06:56:06 +0000 (UTC)
-Date: Wed, 10 Jan 2024 07:58:44 +0100
+	by vm-mail (OpenSMTPD) with ESMTPSA id ee9a648c (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 10 Jan 2024 07:12:40 +0000 (UTC)
+Date: Wed, 10 Jan 2024 08:15:18 +0100
 From: Patrick Steinhardt <ps@pks.im>
-To: Junio C Hamano <gitster@pobox.com>
+To: Taylor Blau <me@ttaylorr.com>
 Cc: git@vger.kernel.org
-Subject: Re: ps/reftable-optimize-io (was: What's cooking in git.git (Jan
- 2024, #03; Tue, 9))
-Message-ID: <ZZ5AJL4di1TAC-up@tanuki>
-References: <xmqqsf36dotl.fsf@gitster.g>
+Subject: Re: [PATCH 1/6] t1300: mark tests to require default repo format
+Message-ID: <ZZ5EBojTbQ4pyGx-@tanuki>
+References: <cover.1704802213.git.ps@pks.im>
+ <ec1b5bdd176e6a3f093b76b732fd9e960a7880ca.1704802213.git.ps@pks.im>
+ <ZZ2TdYlcrLN9zckR@nand.local>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -72,60 +72,117 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="tfSCIDJCeI5wpliq"
+	protocol="application/pgp-signature"; boundary="TGxVJ9FiKJE61I3c"
 Content-Disposition: inline
-In-Reply-To: <xmqqsf36dotl.fsf@gitster.g>
+In-Reply-To: <ZZ2TdYlcrLN9zckR@nand.local>
 
 
---tfSCIDJCeI5wpliq
+--TGxVJ9FiKJE61I3c
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Tue, Jan 09, 2024 at 04:17:26PM -0800, Junio C Hamano wrote:
-> * ps/reftable-optimize-io (2024-01-08) 4 commits
->  - reftable/blocksource: use mmap to read tables
->  - reftable/stack: use stat info to avoid re-reading stack list
->  - reftable/stack: refactor reloading to use file descriptor
->  - reftable/stack: refactor stack reloading to have common exit path
+On Tue, Jan 09, 2024 at 01:41:57PM -0500, Taylor Blau wrote:
+> On Tue, Jan 09, 2024 at 01:17:04PM +0100, Patrick Steinhardt wrote:
+> > The t1300 test suite exercises the git-config(1) tool. To do so we
+> > overwrite ".git/config" to contain custom contents. While this is easy
+> > enough to do, it may create problems when using a non-default repository
+> > format because we also overwrite the repository format version as well
+> > as any potential extensions.
+> >
+> > Mark these tests with the DEFAULT_REPO_FORMAT prerequisite to avoid the
+> > problem. An alternative would be to carry over mandatory config keys
+> > into the rewritten config file. But the effort does not seem worth it
+> > given that the system under test is git-config(1), which is at a lower
+> > level than the repository format.
 >=20
->  Low-level I/O optimization for reftable.
+> I think I am missing something obvious here ;-).
 >=20
->  Will merge to 'next'?
->  source: <cover.1704714575.git.ps@pks.im>
+> > Signed-off-by: Patrick Steinhardt <ps@pks.im>
+> > ---
+> >  t/t1300-config.sh | 8 ++++----
+> >  1 file changed, 4 insertions(+), 4 deletions(-)
+> >
+> > diff --git a/t/t1300-config.sh b/t/t1300-config.sh
+> > index f4e2752134..1e953a0fc2 100755
+> > --- a/t/t1300-config.sh
+> > +++ b/t/t1300-config.sh
+> > @@ -1098,7 +1098,7 @@ test_expect_success SYMLINKS 'symlink to nonexist=
+ent configuration' '
+> >  	test_must_fail git config --file=3Dlinktolinktonada --list
+> >  '
+> >
+> > -test_expect_success 'check split_cmdline return' "
+> > +test_expect_success DEFAULT_REPO_FORMAT 'check split_cmdline return' "
+> >  	git config alias.split-cmdline-fix 'echo \"' &&
+> >  	test_must_fail git split-cmdline-fix &&
+> >  	echo foo > foo &&
+> > @@ -1156,7 +1156,7 @@ test_expect_success 'git -c works with aliases of=
+ builtins' '
+> >  	test_cmp expect actual
+> >  '
+>=20
+> Looking at this first test, for example, I see two places where we
+> modify the configuration file:
+>=20
+>   - git config alias.split-cmdline-fix 'echo \"'
+>   - git config branch.main.mergeoptions 'echo \"'
+>=20
+> I think I am missing some detail about why we can't do this when we have
+> extensions enabled?
 
-Let's wait a few days for reviews. I don't expect there to be a ton of
-reviews from the usual contributors due to the still-limited knowledge
-around reftables in our community. But I have been trying to rope in
-fellow team members at GitLab to get their feet wet with reviewing
-topics on the Git mailing list directly so that there is at least some
-more pairs of eyes for the reftable-related topics (and eventually more
-people who start to contribute to Git regularly).
+The issue is not directly visible in the tests I'm amending here, but
+happens in the setup code. What we do is to overwrite the repository's
+config like this:
 
-Also, the optimizations I'm doing in the reftable library are generally
-not part of the critical path to get the backend itself upstream, so I
-don't mind waiting a bit longer for those to land.
+```
+cat > .git/config << EOF
+[beta] ; silly comment # another comment
+noIndent=3D sillyValue ; 'nother silly comment
+
+# empty line
+		; comment
+		haha   =3D"beta" # last silly comment
+haha =3D hello
+	haha =3D bello
+[nextSection] noNewline =3D ouch
+EOF
+```
+
+The problem here is that we drop any extensions that the repository has
+been initialized with originally. This seems to work alright in the
+context of SHA256 repositories. But with the reftable backend this
+pattern will cause test failures because the discarded "refStorage"
+extension will make us assume that the repostiory uses the "files"
+backend instead of the "reftable" backend. And that starts to go
+downhill quite fast when trying to read or write refs.
+
+A "proper" fix for this issue would be to rewrite tests such that we
+know to retain those extensions. But I'm just not sure whether that is
+really worth it, mostly because the system under test is at a lower
+level and thus shouldn't care about repository extensions. After all,
+extensions build on top of our config code.
 
 Patrick
 
---tfSCIDJCeI5wpliq
+--TGxVJ9FiKJE61I3c
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmWeQCQACgkQVbJhu7ck
-PpTblw/+KMRHo2ZtTg8V8xsl+fcAWZQzJGHGvN/BYLVbBhgW0B4uoSvBCO4z196x
-z64+QjH2nNWAF1F7x4Jyxy82EZcdQT8kw7qTv0jTxddmGYBbjFNBc7oh+TorUsES
-w5/DrUHEKAVPQ1XQrYL5u1NJrjOdHSIfIfHK3NPPzFlYiWxR7ljpv7IY9oEzCt7y
-ujzAmsisHbR1JQmUS8jeLFHx70Mmvfi055DZlV3zhhcqZ6pVj8OAmA34muCHTClV
-xZJotILxDlDMgqyR2Gi30GV+whg+0AgDy7bO6ghnc38fVGaWCr0ZfGi/DOovm2xN
-P9zHAYrn4v5GfxFnzwzgdPsvDlD7dibRUEMgxeltnqLpzCtO1lFCB7L19BIixwD8
-tS6wxVckXtQX7vWKFye2s2nTcy2Mj2JQWQOnYL9bIhgzU2bGiyQWp8PABLsxfZ2b
-1vEyjmORlJu9ZtpsBo96Pylom9eXYXWsLrrkKGhmYpTy4d7APDS7dClYNsGpqBX+
-dQwikmDAP5wYZY195ujj+pTi/l5r02rd+aCLiQ8M8zgqhBXJz+e6HCFgPqT4HqG2
-Dk+B8IeB1BUZjhacpMS2EUKYSZ7JRJWtrvUHiWZ8sA0JLqnBmstU0Vi+nwy6Uamv
-1Eojn5LaCGVQXCVzNiGRdwzln2y43wXIxbN3XUH0upFx84VBvTc=
-=8K3p
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmWeRAUACgkQVbJhu7ck
+PpTrSxAAjuraiStJjkK/Y5hWVXZaBO/wQ6aFdlx+mm9sqQqtNKpbMUpseKGP9QMD
+pF20rC1B/MVR7zfAQ81dV1+PSih8E9fWY8pRIcnnNdYSek/1CIoxJvB3BThuR8ku
+2FgkRh/Xfj05PBNdQ/Ts7sslpXH/3TKJCzOLmddIYzphlQ2nOM4TFfZxNxB148Ab
+QQmDkC6oQ+19SESz2moEO82wD26O9FKJod85J2LDYZJITzpi3/p6g9xOI97a7inu
+/PRkp0S00qTjyX89BU10Aw52ZmT8zKJl41DtoYR9IOo/beQlFkoumKaWSBIc6J7O
+ZCdKiuLKjga1T8JN5aGoY/pmoNc4sOy7sFOlfz1E/g7uzL02QNdAtDsSIDvnPi6j
+TUSv+irD7uGFL9tDaObRIqlqeBdt5ZZ6QIZMdvb4PjO/tEfo5t+vZ6v5LfQSobjp
+LFLqc0oN+tAXuks4ujokbNHEY9H5LONHnoOgqVw4nu3WXDBtxOVcAACM/vDPDdzE
+XCMostCz6ruXQtgrK7AX8AYngJJ9/UKFLIV3Htu4wWtBLxbEGUmONTL04pIxkWA4
+0ANu4FEKwAdUJbNa6KeGuEgjbJFkRdr0rn6jvBkYSjxq/ObKT8fEOVXj7HWHJxVV
+GEGDp+9YOyUFSw2N/4JIJ7q3Xx7LAsZ0afzi7uyTpoURoxDs1bY=
+=5eoM
 -----END PGP SIGNATURE-----
 
---tfSCIDJCeI5wpliq--
+--TGxVJ9FiKJE61I3c--
