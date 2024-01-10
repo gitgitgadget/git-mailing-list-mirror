@@ -1,45 +1,49 @@
 Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 755214C601
-	for <git@vger.kernel.org>; Wed, 10 Jan 2024 16:14:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8D6A4CB2C
+	for <git@vger.kernel.org>; Wed, 10 Jan 2024 16:22:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="I/q7RSzl"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="UbLvyMKq"
 Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id EC5B11C66F5;
-	Wed, 10 Jan 2024 11:14:03 -0500 (EST)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 730411C6799;
+	Wed, 10 Jan 2024 11:22:58 -0500 (EST)
 	(envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=dAcKXEbBCeC9/Dem7YzghYhxgAF0rNvhSIV5zM
-	ev/LU=; b=I/q7RSzlwZh8V3uiXW5aiuF7qPEBh0MBWntZ1/wI05+8U3DDpV4cid
-	1dqnTG1G1CDpmyfRF585Td2wS5DkunHG1rWJr7LWIgL1a5ZXCKpmasXPQWhhK+2M
-	S/wWeivvWPFKUB9xVV4fWpYmIvzoGiliAnnUvMA9Gxpg0nc2i5ZwA=
+	:content-type; s=sasl; bh=rdG+WxvcU9F8EwxPmv0a/ekzZyoF1noPp0KwJ7
+	tbX78=; b=UbLvyMKqG57V9p2ItZoRy/bML1aj1x1oB7OqwZ0/9QThYfuEd7wzJ0
+	KoHYVy+5R/WgTOFqlUv2RX+x/qeuLM9pDS4T36ZTofaNLmJq7t3C17nvld0y8ZSA
+	exJih/lzZkDq2HRyFYx1zTNbuSzARSEcYLkRWWBa6iG0EhXZ5oZHk=
 Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id C81951C66F4;
-	Wed, 10 Jan 2024 11:14:03 -0500 (EST)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 6A4711C6798;
+	Wed, 10 Jan 2024 11:22:58 -0500 (EST)
 	(envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.125.200.93])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 013801C66F3;
-	Wed, 10 Jan 2024 11:14:02 -0500 (EST)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id CCFFA1C6797;
+	Wed, 10 Jan 2024 11:22:57 -0500 (EST)
 	(envelope-from junio@pobox.com)
 From: Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
-Cc: =?utf-8?Q?Rub=C3=A9n?= Justo <rjusto@gmail.com>,  Git List
+To: Dragan Simic <dsimic@manjaro.org>
+Cc: =?utf-8?Q?Rub=C3=A9n?= Justo <rjusto@gmail.com>,  Jeff King
+ <peff@peff.net>,  Git List
  <git@vger.kernel.org>
 Subject: Re: [PATCH 3/3] advice: allow disabling the automatic hint in
  advise_if_enabled()
-In-Reply-To: <20240110110226.GC16674@coredump.intra.peff.net> (Jeff King's
-	message of "Wed, 10 Jan 2024 06:02:26 -0500")
+In-Reply-To: <a97b03a305a7b8b95341b63af1de0271@manjaro.org> (Dragan Simic's
+	message of "Wed, 10 Jan 2024 15:44:41 +0100")
 References: <7c68392c-af2f-4999-ae64-63221bf7833a@gmail.com>
 	<d6099d78-43c6-4709-9121-11f84228cf91@gmail.com>
 	<20240110110226.GC16674@coredump.intra.peff.net>
-Date: Wed, 10 Jan 2024 08:14:01 -0800
-Message-ID: <xmqqo7dtdv3q.fsf@gitster.g>
+	<aaf59fc82ef3132ece8e1f70623570a2@manjaro.org>
+	<97fdf6d4-1403-4fe9-b912-a85342a9fa56@gmail.com>
+	<a97b03a305a7b8b95341b63af1de0271@manjaro.org>
+Date: Wed, 10 Jan 2024 08:22:56 -0800
+Message-ID: <xmqqil41duov.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -49,37 +53,28 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 X-Pobox-Relay-ID:
- 454558AE-AFD3-11EE-B4D6-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
+ 840EB39A-AFD4-11EE-AE3C-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
 
-Jeff King <peff@peff.net> writes:
+Dragan Simic <dsimic@manjaro.org> writes:
 
-> If I'm reading your patch correctly, this is a single option that
-> controls the extra line for _all_ advice messages. But I'd have expected
-> this to be something you'd want to set on a per-message basis. Here's my
-> thinking.
->
-> The original idea for advice messages was that they might be verbose and
-> annoying, but if you had one that showed up a lot you'd choose to shut
-> it up individually. But you wouldn't do so for _all_ messages, because
-> you might benefit from seeing others (including new ones that get
-> added). The "Disable this..." part was added later to help you easily
-> know which config option to tweak.
->
-> The expectation was that you'd fall into one of two categories:
->
->   1. You don't see the message often enough to care, so you do nothing.
->
->   2. You do find it annoying, so you disable this instance.
->
-> Your series proposes a third state:
->
->   3. You find the actual hint useful, but the verbosity of "how to shut
->      it up" is too much for you.
->
-> That make sense to me, along with being able to partially shut-up a
-> message. But wouldn't you still need the "how to shut up" hint for
-> _other_ messages, since it's customized for each situation?
+> No worries.  Regarding disabling the advices for disabling the advice
+> messages, maybe it would be better to have only one configuration knob
+> for that purpose, e.g. "core.verboseAdvice", as a boolean knob.
 
-Thanks for saying what I wanted to say in my one of the messages
-much clearly than I could.  The above is exactly why I would be more
-sympathetic to "advice.foo = (yes/no/always)".
+I am not sure if you understood Peff's example that illustrates why
+it is a bad thing, as ...
+
+> That
+> way, fishing for the right knob for some advice message wouldn't turn
+> itself into an issue,
+
+... this is exactly what a single core.verboseAdvice knob that
+squelches the "how to disable this particular advice message" part
+from the message is problematic.  Before you see and familialize
+yourself with all advice messages, you may see one piece of advice X
+and find it useful to keep, feeling no need to turn it off.  If you
+use that single knob to squelch the part to tell you how to turn
+advice X off.  But what happens when you hit another unrelated
+advice Y then?  Because your core.verboseAdvice is a single big red
+button, the message does not say which advice.* variable to tweak
+for this particular advice message Y.
