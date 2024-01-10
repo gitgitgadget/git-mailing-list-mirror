@@ -1,69 +1,86 @@
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f43.google.com (mail-wr1-f43.google.com [209.85.221.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9360DD51C
-	for <git@vger.kernel.org>; Wed, 10 Jan 2024 18:47:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4679F4CDE0
+	for <git@vger.kernel.org>; Wed, 10 Jan 2024 18:52:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="dQoOy2gg"
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 81B0E1D2F5D;
-	Wed, 10 Jan 2024 13:46:55 -0500 (EST)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=UpPiyLHmSgymiU1QaEl02I6LYJOHlZio3r4xtP
-	SvtFk=; b=dQoOy2gg+4/PNIH0n9dZEVpKz2pVXBUQCv3DSTDV8Gx5mljT8brr+1
-	HbQ4u2OCawWg2lpKXGBmMofqA8OLvISrovG8sY9+gCJ1S6ylFTajfT0W+rVXakzH
-	KiD4pVuF8WG2cSv/YdpnqqWUPnAWRS+MUL9Bur65RQfHFPcgvzCVI=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 7992A1D2F5B;
-	Wed, 10 Jan 2024 13:46:55 -0500 (EST)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.200.93])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id DBA8A1D2F5A;
-	Wed, 10 Jan 2024 13:46:54 -0500 (EST)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: <rsbecker@nexbridge.com>
-Cc: "'Mohit Marathe'" <mohitmarathe@proton.me>,  "'Christian Couder'"
- <christian.couder@gmail.com>,  <git@vger.kernel.org>,
-  <britton.kerin@gmail.com>,  <peff@peff.net>
-Subject: Re: [GSoC][RFC] Replace use of atoi() with strtol_i(), as a
- microproject
-In-Reply-To: <004601da43ee$2b6cd0c0$82467240$@nexbridge.com>
-	(rsbecker@nexbridge.com's message of "Wed, 10 Jan 2024 12:55:11
-	-0500")
-References: <OqD4xQ_p-jcftCbAw0ovvrBztfiuoMGcTonCc0i6x7Ziy-hx3uA-Hoz4-3tfRI39KMj-V5OZIGgOe66b1eyX3YrKZNThMYjjMkn6g4-Ww8c=@proton.me>
-	<CAP8UFD1d7FSa=mUzzUA5e3eSEcCVfaymxWewo5GjdDBi4GyE-g@mail.gmail.com>
-	<F6ejgAfr2IMRNR3Tq0CDTHeT9xMWzJ9ley8M_fnSX97ayRNRp_CEgA62WdtOooi9bha1WJPGB53ptJYQFII2lCbIflwgNvbIaefw7nK8w7M=@proton.me>
-	<004601da43ee$2b6cd0c0$82467240$@nexbridge.com>
-Date: Wed, 10 Jan 2024 10:46:53 -0800
-Message-ID: <xmqq5y01auw2.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fiAT45RA"
+Received: by mail-wr1-f43.google.com with SMTP id ffacd0b85a97d-336788cb261so3852421f8f.3
+        for <git@vger.kernel.org>; Wed, 10 Jan 2024 10:52:33 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1704912751; x=1705517551; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=DnJieZDeBkyQhnE/TYHW69Q9cORVHwx8j0wdDFWhkDQ=;
+        b=fiAT45RAmcg23SCsmfbyG2fizjSVSplQ5ozU0DcHSFWQir23VeGkSvIuJvNfHM4ouC
+         8XLV2YioTBGsKH0uCIVRX33o9isU7G7Yw04u0DzEg6VPexffo6ZlZpE7zncx9MqF3n2e
+         6vlUw4fmygOYbMdPrvvHcv6PSrKVaeFUgMqbh0Blm8AvFz0OB1sqt9oTo1Yrk5tuk2ke
+         1OXjZQ38VWt4sivYdyPGAMgaUZYPgt/uiQ/PXOPthFl5yibHncjcCkvmLKxLknbef+Vn
+         emi77kKYc6v/bwc4z0/OccelO1AsUmhNHLQhIn5ajslhNo6y2qTWNv0fhJOJkyRqTMjy
+         0ZjQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1704912751; x=1705517551;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=DnJieZDeBkyQhnE/TYHW69Q9cORVHwx8j0wdDFWhkDQ=;
+        b=Kf/U/CjrX9XLf+HZARQGggBxpcK5mJMIXLVwFLlUu9jhIIKUwDiDBs65q5/tT/EB4b
+         PvlyIz+rXzk+Y6cHo5M7pewy9NjCn/rEMDlrpvrcbA2GLqzMa+WnZYh6yAMqiSDbyaIh
+         etf/fQYP8KUEml1hAldfC++BMZDAV+7+nCqBGW3nWpyjvRbHG74KYRZ1mYHq+d1BC0t4
+         I6iU4PMNFvm9VATOuy2v6x9WHs1DixNqHDnOoCvRMop4/p5CMbUyXej3KZkLXRq3FDvs
+         TwTkWVLglTynpR9hY6HocAFij6CLcSsMhiB+EZJVMX5l4obLH7Fno7Yz3dQ7NgsaT0By
+         NJyQ==
+X-Gm-Message-State: AOJu0Yy0FVH0HyzKxd6e+0H+jaUxjAOkqRgrmzAHAtnlqaSI6VxjTHVF
+	7vAHJ8lqfk1lRfwkr5v/ECpO4xjk4Do=
+X-Google-Smtp-Source: AGHT+IHMW489MBOeiGpCEmqUjvXYPlxVSTGLOwamuwwBLbrpCXZfbKIdZAwWyrAhO5JdX4J0H+VKCw==
+X-Received: by 2002:a5d:6647:0:b0:337:4c69:3ec3 with SMTP id f7-20020a5d6647000000b003374c693ec3mr971453wrw.32.1704912751117;
+        Wed, 10 Jan 2024 10:52:31 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id k16-20020a5d5190000000b00336c43b366fsm5509218wrv.12.2024.01.10.10.52.30
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 10 Jan 2024 10:52:30 -0800 (PST)
+Message-ID: <pull.1634.git.1704912750.gitgitgadget@gmail.com>
+From: "Justin Tobler via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Wed, 10 Jan 2024 18:52:28 +0000
+Subject: [PATCH 0/2] Generalize reference locking in tests
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- A0259EF4-AFE8-11EE-ABFB-25B3960A682E-77302942!pb-smtp2.pobox.com
+To: git@vger.kernel.org
+Cc: Justin Tobler <jltobler@gmail.com>
 
-<rsbecker@nexbridge.com> writes:
+There are two tests in t1401 and t5541 that rely on writing a reference lock
+file directly. While this works for the files reference backend, reftable
+reference locks operate differently and are incompatible with this approach.
+To be reference backend agnostic, this patch series refactors the two tests
+to use git-update-ref(1) to lock refs instead.
 
-> I am not sure this is a good idea. The error detection inside strtol_i() reports a -1 if the supplied text value is invalid. This does not differentiate between an invalid value and a valid "-1" supplied. Replacing all instances of atoi() with strtol_i() will likely cause breakages as the error semantics are different between the two.
+This approach is more verbose and may warrant consideration of implementing
+an abstraction to further simplify this operation. There appears to be one
+other existing test in t1400 that also follows this pattern. Being that
+there is only a handful of affected tests the implemented approach may be
+sufficient as is.
 
-atoi() and strtol_i() have totally different function signatures, so
-it won't be a straight replacement.  The report of "-1" you mention
-is only about strtol_i() reporting "have we successfully read out a
-number [yes/no]?".  The value we parsed goes to a separate location,
-so there is no risk of confusion as long as the caller knows what it
-is doing.
+Justin Tobler (2):
+  t1401: generalize reference locking
+  t5541: generalize reference locking
 
-Thanks.
+ t/t1401-symbolic-ref.sh    | 28 ++++++++++++++++++++++++----
+ t/t5541-http-push-smart.sh | 25 +++++++++++++++++++++++--
+ 2 files changed, 47 insertions(+), 6 deletions(-)
 
+
+base-commit: 624eb90fa8f65a79396615f3c2842ac5a3743350
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1634%2Fjltobler%2Fjt%2Fbackend-generic-ref-lock-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1634/jltobler/jt/backend-generic-ref-lock-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/1634
+-- 
+gitgitgadget
