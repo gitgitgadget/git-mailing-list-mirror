@@ -1,98 +1,72 @@
-Received: from mail-pl1-f171.google.com (mail-pl1-f171.google.com [209.85.214.171])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DF0A482C5
-	for <git@vger.kernel.org>; Wed, 10 Jan 2024 22:05:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21A2448781
+	for <git@vger.kernel.org>; Wed, 10 Jan 2024 22:11:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WbuSsfbC"
-Received: by mail-pl1-f171.google.com with SMTP id d9443c01a7336-1d4414ec9c7so23637125ad.0
-        for <git@vger.kernel.org>; Wed, 10 Jan 2024 14:05:14 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1704924314; x=1705529114; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=HLUHhDR+LJbLQuLZJQGEt9wKaIN7qPQ/VBTEVwsqSjo=;
-        b=WbuSsfbCz03JVUGIwlzVY/LcKSnjWPpMqDqhqwrsgGyDlF/JDyU1XIqwxbS/ZaBhEj
-         pLY7Frc2e/fIVG6M16HLJ0dquF8x5B1JDknbYWBfoIEkPW6N0jyL6MDQfVCS83kJM4St
-         87j3rxowk8RNAR+Fa1Tgli+xQrxRkrqPElOCrleB8eMmbGiJdEBrrzKVsgTnIRxBK8C0
-         g+0ddWeRXETnA88/6oMkUV6WgjMak5/4Nbjb6SvITVrZpWI04/eIG2yGQlAE7e4T4DRd
-         s5LKcbrZUN5234Y8KTJunA1KndFkn6/K0vdEKaTi3d6ybkPe046u1hYimgPFCio6Kj8j
-         pxiQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1704924314; x=1705529114;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=HLUHhDR+LJbLQuLZJQGEt9wKaIN7qPQ/VBTEVwsqSjo=;
-        b=oFNFRpdbQ2vGHTcSZvEzsdmpDNS9XNJboofcXipnI0g0ql5o7yr2dlIzwuk52ELHem
-         nAe2oJstDnmB9NmF9bEAoRhhrzgCB0BuiEO8o3wkWxZOqqxIj+N7/EdEORPzjexbtCkp
-         JKRLhlQwTd0hOt2pcRgOdUgvjVbQf+o1nEKMEPScFYHO5Dl4UakbDJRsw8bR10CbjArm
-         6MyQaRZIp+Hj+NAIGPqtrrbObThWrLs1uKOH5EwP34ZHwb8f77tRHn/YOjcjGsk99Q4G
-         inyTfPTuUcF8jy7OecwLGadsBDM8cjA13P2FSqjlraqi/pe+6D97/2KcgSLpf5yoVNHE
-         ZS/g==
-X-Gm-Message-State: AOJu0YyEwMzI24CpkG0K1zf5LGLKo9iobqFVQJ8z2lQ3nkjLm7mfWVlo
-	8EX9Cw73DvUB0Dghy0eCFDyG48BMbxk=
-X-Google-Smtp-Source: AGHT+IFnF9aQIkhpuA0NcjJSNHs8NFc2LH9+Om4JOgUcmC1MqVHdD6e+7McJFHPI/KiwiCKjTXciug==
-X-Received: by 2002:a17:902:ba8a:b0:1d4:c235:9a94 with SMTP id k10-20020a170902ba8a00b001d4c2359a94mr170253pls.26.1704924314385;
-        Wed, 10 Jan 2024 14:05:14 -0800 (PST)
-Received: from linux-af78.suse ([189.122.227.168])
-        by smtp.gmail.com with ESMTPSA id jb11-20020a170903258b00b001d4752f540esm4142041plb.198.2024.01.10.14.05.12
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 10 Jan 2024 14:05:13 -0800 (PST)
-From: Marcelo Roberto Jimenez <marcelo.jimenez@gmail.com>
-To: marcelo.jimenez@gmail.com
-Cc: git@vger.kernel.org
-Subject: [PATCH] gitweb: Fixes error handling when reading configuration
-Date: Wed, 10 Jan 2024 19:05:06 -0300
-Message-ID: <20240110220506.27491-1-marcelo.jimenez@gmail.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <CACjc_5pdijCZrrXQWHswsxYrGUzZ7pZq+nj3SzY1z+Xxop64Ww@mail.gmail.com>
-References: <CACjc_5pdijCZrrXQWHswsxYrGUzZ7pZq+nj3SzY1z+Xxop64Ww@mail.gmail.com>
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="HQC1mOaj"
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id AF8FD1C9312;
+	Wed, 10 Jan 2024 17:11:36 -0500 (EST)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=4i80nBZeY0FJsIPKaDG60byiRoKg1Pq38s+2YR
+	EgF+M=; b=HQC1mOajFkpYpY2EDU/Wu5bZMvwQ7RseKen5fb44xt0cF0WY7a4xyX
+	evhrltTXePFOKbuODdSKNYU0XY2Y9mfVLad9BMVFyQyyBkLdTk7hPEDhv/XbYbxP
+	kx6quQT9FjBKq5vja9QcmtUVU6BYorusgniKyB3QuWwUdvq4GhAwM=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id A62671C9310;
+	Wed, 10 Jan 2024 17:11:36 -0500 (EST)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.200.93])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 10B751C930E;
+	Wed, 10 Jan 2024 17:11:35 -0500 (EST)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Dragan Simic <dsimic@manjaro.org>
+Cc: Taylor Blau <me@ttaylorr.com>,  git@vger.kernel.org
+Subject: Re: [DISCUSS] Introducing Rust into the Git project
+In-Reply-To: <b2651b38a4f7edaf1c5ffee72af00e46@manjaro.org> (Dragan Simic's
+	message of "Wed, 10 Jan 2024 22:57:21 +0100")
+References: <ZZ77NQkSuiRxRDwt@nand.local>
+	<b2651b38a4f7edaf1c5ffee72af00e46@manjaro.org>
+Date: Wed, 10 Jan 2024 14:11:34 -0800
+Message-ID: <xmqqjzog96uh.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 384B1A94-B005-11EE-A47D-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
 
-This patch fixes a possibility of a permission to access error go
-unnoticed.
+Dragan Simic <dsimic@manjaro.org> writes:
 
-Perl uses two different variables to manage errors from a do. One
-is $@, which is set in this case when do is unable to compile the
-file. The other is $!, which is set in case do cannot read the file.
-By printing the value of $! I found out that it was set to Permission
-denied. Since the script does not currently test for $!, the error
-goes unnoticed.
+> Thus, Git should probably follow the same approach of not converting
+> the already existing code, but frankly, I don't see what would
+> actually be the "new leafs" written in Rust.
 
-Perl do block documentation: https://perldoc.perl.org/functions/do
+A few obvious ones that come to my mind are that you should be able
+to write a new merge strategy and link the resulting binary into Git
+without much hassle.  You might even want to make that a dynamically
+loaded object.  The interface into a merge strategy is fairly narrow
+IIRC.  Or possibly a new remote helper.
 
-Signed-off-by: Marcelo Roberto Jimenez <marcelo.jimenez@gmail.com>
----
- gitweb/gitweb.perl | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+Adding a new refs backend may need to wait for the work Patrick is
+doing to add reftable support, but once the abstraction gets to the
+point to sufficiently hide the differences between files and reftables
+backends, I do not see a reason why you cannot add the third one.
 
-diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index e66eb3d9ba..47577ec566 100755
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -728,9 +728,11 @@ sub filter_and_validate_refs {
- sub read_config_file {
- 	my $filename = shift;
- 	return unless defined $filename;
--	# die if there are errors parsing config file
- 	if (-e $filename) {
- 		do $filename;
-+		#die if there is a problem accessing the file
-+		die $! if $!;
-+		# die if there are errors parsing config file
- 		die $@ if $@;
- 		return 1;
- 	}
--- 
-2.43.0
-
+And more into the future, we might want to have an object DB
+abstraction, similar to how we abstracted refs API over time, at
+which time you might be writing code that stores objects to and
+retrieves objects from persistent redis and whatnot in your favorite
+language.
