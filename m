@@ -1,42 +1,43 @@
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98DFC4D10C
-	for <git@vger.kernel.org>; Wed, 10 Jan 2024 19:45:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B74F64D5AF
+	for <git@vger.kernel.org>; Wed, 10 Jan 2024 19:57:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="JCRPP7VQ"
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id E34EB3F694;
-	Wed, 10 Jan 2024 14:45:28 -0500 (EST)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="A6gJyROU"
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 4351B1D38CB;
+	Wed, 10 Jan 2024 14:57:27 -0500 (EST)
 	(envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=Ft3t5vreluasJP/IAmWKYfANyq4/plgsNr6Htk
-	UoGeE=; b=JCRPP7VQ6e2D0UM6rGcokCIdPD7ZsgAOPNI9WYNTnP5sbD68wJuPLl
-	uAZfydTIetlVjiEak6ZNEap7LV8GpAQrVEdPNXKV1kSR9ZvirfqCUd1ijiazoR/C
-	JYyLQ2MopbQ6Kle7+E2Vqkbl1uFlv5Q5q75LPqnWB5NmT+Iz3BDdo=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id DBAA63F693;
-	Wed, 10 Jan 2024 14:45:28 -0500 (EST)
+	:content-type; s=sasl; bh=rYLiO2mckn/SRPZ1RXgxWNrgA+E0h1w/usDwPP
+	zbNH0=; b=A6gJyROUpsDG8meuN7/IZVihccjPusJEbNZiNtoGa6q9im3GJuakHn
+	qigf6OJ3EJ5FuXVrAoTnblwOSiNVCsQi0GUjGzScwOMMF2JeqDXXW5wGMuSjV66T
+	vc2D2Z4ALSlpcPZv6L6KGnWqYT/2EcyhWPUe7w66swgKDK1ihhZcU=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 39F621D38CA;
+	Wed, 10 Jan 2024 14:57:27 -0500 (EST)
 	(envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.125.200.93])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 16FE23F690;
-	Wed, 10 Jan 2024 14:45:25 -0500 (EST)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 9F1851D38C9;
+	Wed, 10 Jan 2024 14:57:26 -0500 (EST)
 	(envelope-from junio@pobox.com)
 From: Junio C Hamano <gitster@pobox.com>
-To: "Linus Arver via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Emily Shaffer <nasamuffin@google.com>,  Christian
- Couder <chriscool@tuxfamily.org>,  Linus Arver <linusa@google.com>
-Subject: Re: [PATCH 00/10] Enrich Trailer API
-In-Reply-To: <pull.1632.git.1704869487.gitgitgadget@gmail.com> (Linus Arver
-	via GitGitGadget's message of "Wed, 10 Jan 2024 06:51:16 +0000")
-References: <pull.1632.git.1704869487.gitgitgadget@gmail.com>
-Date: Wed, 10 Jan 2024 11:45:23 -0800
-Message-ID: <xmqqy1cx9dm4.fsf@gitster.g>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org,  Han-Wen Nienhuys <hanwenn@gmail.com>
+Subject: Re: [PATCH 2/4] reftable/stack: refactor reloading to use file
+ descriptor
+In-Reply-To: <726d302d7b21a5b948575492c717cfdb701de5cd.1704714575.git.ps@pks.im>
+	(Patrick Steinhardt's message of "Mon, 8 Jan 2024 13:18:35 +0100")
+References: <cover.1704714575.git.ps@pks.im>
+	<726d302d7b21a5b948575492c717cfdb701de5cd.1704714575.git.ps@pks.im>
+Date: Wed, 10 Jan 2024 11:57:25 -0800
+Message-ID: <xmqqsf359d22.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -46,55 +47,82 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 X-Pobox-Relay-ID:
- CC62AD1A-AFF0-11EE-9C0B-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
+ 7A7804DA-AFF2-11EE-851D-25B3960A682E-77302942!pb-smtp2.pobox.com
 
-"Linus Arver via GitGitGadget" <gitgitgadget@gmail.com> writes:
+Patrick Steinhardt <ps@pks.im> writes:
 
-> This patch series is the first 10 patches of a much larger series I've been
-> working. The main goal of this series is to enrich the API in trailer.h. The
-> larger series brings a number of additional code simplifications and
-> cleanups (exposing and fixing some bugs along the way), and builds on top of
-> this series. The goal of the larger series is to make the trailer interface
-> ready for unit testing. By "trailer API" I mean those functions exposed in
-> trailer.h.
+> We're about to introduce a stat(3P)-based caching mechanism to reload
+> the list of stacks only when it has changed. In order to avoid race
+> conditions this requires us to have a file descriptor available that we
+> can use to call fstat(3P) on.
+>
+> Prepare for this by converting the code to use `fd_read_lines()` so that
+> we have the file descriptor readily available.
+> ---
 
-Are there places in the current code that deals with trailers but
-does not use the trailer API (e.g., manually parse and/or insert the
-trailer in an in-core buffer)?  Is it part of the larger goal to
-update these places so that we will always use the trailer API to
-touch trailers, and if so, have these places been identified?
+Missing sign-off.
 
-Obviously the reason why I ask is that testing cannot be the goal by
-itself.  The "alternative" ...
+Other than that, the change is a refactoring that is very faithful
+to the original.  Instead of doing the "open - pretend we opened an
+empty file if it does not exist - read - close" dance all inside the
+read_lines() call, this sort-of open codes the helper in this caller,
+so that later steps of this series can look at the file descriptor
+open to it.
 
-> As an alternative to this patch series, we could keep trailer.h intact and
-> decide to unit-test the existing "trailer_info_get()" function which does
-> most of the trailer parsing work.
+Looking good.
 
-... may allow you to "test", but it would make it more difficult in
-the future to revamp the trailer API, if it is needed, in order to
-cover code paths that ought to be using but currently bypassing the
-trailer API.
-
-> This series breaks up "process_trailers()" into smaller pieces, exposing
-> many of the parts relevant to trailer-related processing in trailer.h. This
-> forces us to start writing unit tests for these now public functions, but
-> that is a good thing because those same unit tests should be easy to write
-> (due to their small(er) sizes), but also, because those unit tests will now
-> ensure some degree of stability across new versions of trailer.h (we will
-> start noticing when the behavior of any of these API functions change).
-
-And helper functions, each of which does one small thing well, may
-be more applicable to other code paths that are currently bypassing
-the API.
-
-> Thanks to the aggressive refactoring in this series, I've been able to
-> identify and fix a couple bugs in our existing implementation. Those fixes
-> build on top of this series but were not included here, in order to keep
-> this series small.
-
-It would be nicer to have a concise list of these fixes (in the form
-of "git shortlog") as a teaser here ;-).  That would hopefully
-entice others into reviewing this part that forms the foundation.
-
-Thanks.
+>  reftable/stack.c | 21 ++++++++++++++++++---
+>  1 file changed, 18 insertions(+), 3 deletions(-)
+>
+> diff --git a/reftable/stack.c b/reftable/stack.c
+> index bf869a6772..b1ee247601 100644
+> --- a/reftable/stack.c
+> +++ b/reftable/stack.c
+> @@ -308,6 +308,7 @@ static int reftable_stack_reload_maybe_reuse(struct reftable_stack *st,
+>  	struct timeval deadline;
+>  	int64_t delay = 0;
+>  	int tries = 0, err;
+> +	int fd = -1;
+>  
+>  	err = gettimeofday(&deadline, NULL);
+>  	if (err < 0)
+> @@ -329,9 +330,19 @@ static int reftable_stack_reload_maybe_reuse(struct reftable_stack *st,
+>  		if (tries > 3 && tv_cmp(&now, &deadline) >= 0)
+>  			goto out;
+>  
+> -		err = read_lines(st->list_file, &names);
+> -		if (err < 0)
+> -			goto out;
+> +		fd = open(st->list_file, O_RDONLY);
+> +		if (fd < 0) {
+> +			if (errno != ENOENT) {
+> +				err = REFTABLE_IO_ERROR;
+> +				goto out;
+> +			}
+> +
+> +			names = reftable_calloc(sizeof(char *));
+> +		} else {
+> +			err = fd_read_lines(fd, &names);
+> +			if (err < 0)
+> +				goto out;
+> +		}
+>  
+>  		err = reftable_stack_reload_once(st, names, reuse_open);
+>  		if (!err)
+> @@ -356,12 +367,16 @@ static int reftable_stack_reload_maybe_reuse(struct reftable_stack *st,
+>  		names = NULL;
+>  		free_names(names_after);
+>  		names_after = NULL;
+> +		close(fd);
+> +		fd = -1;
+>  
+>  		delay = delay + (delay * rand()) / RAND_MAX + 1;
+>  		sleep_millisec(delay);
+>  	}
+>  
+>  out:
+> +	if (fd >= 0)
+> +		close(fd);
+>  	free_names(names);
+>  	free_names(names_after);
+>  	return err;
