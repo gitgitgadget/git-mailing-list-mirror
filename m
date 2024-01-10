@@ -1,53 +1,53 @@
-Received: from mail-qv1-f47.google.com (mail-qv1-f47.google.com [209.85.219.47])
+Received: from mail-yw1-f177.google.com (mail-yw1-f177.google.com [209.85.128.177])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83C444D594
-	for <git@vger.kernel.org>; Wed, 10 Jan 2024 17:55:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5721A4E1D5
+	for <git@vger.kernel.org>; Wed, 10 Jan 2024 17:55:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="yyHBOtqd"
-Received: by mail-qv1-f47.google.com with SMTP id 6a1803df08f44-680d4584a81so35561206d6.1
-        for <git@vger.kernel.org>; Wed, 10 Jan 2024 09:55:39 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="eHzcweNH"
+Received: by mail-yw1-f177.google.com with SMTP id 00721157ae682-5f0c0ca5ef1so45296807b3.2
+        for <git@vger.kernel.org>; Wed, 10 Jan 2024 09:55:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1704909338; x=1705514138; darn=vger.kernel.org;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1704909341; x=1705514141; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=2dOkZsTsOFQEblTAxi1gmTvocVfTF9neXhlvxTQtV4w=;
-        b=yyHBOtqdv77FVewkv/9DSHu1B/3in6zqqkq4NK56tCiDT5EEXoyn31GrV8OJxi1z08
-         P9lVMwx1RQEcegWD+7tOD5ckQbKcBZPKoZ+5xjBAxG37Wc4BU0beLOcAQPv38j/1qbI0
-         cBbranYIPFOuw+xifnARzOARilz0E1KZJc+cPexN0SptLK/Hm7W/0Ge67ABBr1PCZkY1
-         wopsPTH2JoyqUn6lTcbVmsnmU/FKQdZsZOWusxSNkRFeTk/+1z+9BonE5KFxflHgpxIC
-         PXEeGe7pPh8eUg0Yxt7yt/gkoj0jlysh/gWX/Ht3rguAgJZ2ff+yXLV/+1TJjNa6kt/X
-         2frA==
+        bh=Ld0lXnybPOa+fO1nd5leKrxwaScb8pVs0NekyPyU4rc=;
+        b=eHzcweNHqw8bukIVLIYhA5YnQPL6ut6Ervj3r5kdsXSEPhmkZrbdvTHQ/5uhhWO4re
+         mWBIEFbXUfiz4tDGT3tQ/LDHgd/t8GSszrOOBLstxUQWYsfYdwFLzrkkCtuysH8VbtUi
+         D3ux0I2fT8CIMuTF7LuUDSC1Ay4yY4A70c1tjUJxqGW7V/xpVBDmdbTyKJ76Uj1Xp1Kn
+         Uyx6hqMEvWVEYcDPb3SVSS5vdgdwe8LeaqJ5IItrsvPxeOaJqahgqLMVxjO9yzG8DH2q
+         u+Yb5E/+daA1Kg8FoxHEeXPka2JkXnKO8a8qAlW1WRR/jzXfLk9gLKW65J3IFJ5PR8t8
+         /HVw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1704909338; x=1705514138;
+        d=1e100.net; s=20230601; t=1704909341; x=1705514141;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=2dOkZsTsOFQEblTAxi1gmTvocVfTF9neXhlvxTQtV4w=;
-        b=toizYX71jTROHNhXze4fNypRbCd/mOQ04oc37lB61/gDEDaU4jhiuxRv+23C3IvfHc
-         AngVODwctBM9ZIFn81ZpP3i/nKlH/YtVe9DqRHW+sH8t/WSzU/iZ9xZTLUY3vrEatj0f
-         znlMAEQaMDP/e49NZn0ywJCZaqqvQleShGuXYu8EG6qYc9VD6KJ9uxrbOznMqYNl+kyw
-         dq53dVLgCSMxWQb4V9xGoUwZHrLlVzayRFVIqQManvTdSBpeAhgMK3TJ+naGO/hGdOJC
-         Y5qwFKxDWcae+LOIEnbTJcVVi2Q09MJphc5f1N+PSPijObdOf59vJsivLZIcwPEEd+5f
-         VuEQ==
-X-Gm-Message-State: AOJu0YxfGB0pqtaaj6xUqqVw4lmBBKgFIJpiG/FP/1a4zcmy/suj7en5
-	/2pmG1ykPuYNyaH6oEYNMfia8/HZnjmXYQdc4ChyGv3mea0gsw==
-X-Google-Smtp-Source: AGHT+IGCVZUVOZdnOcK/Qw/f582bd53Swj6alHBS5hSQ8zmEhos//vWmAzbugDTTRb1TI11Tqt157A==
-X-Received: by 2002:a05:6214:29c7:b0:680:d2a6:8282 with SMTP id gh7-20020a05621429c700b00680d2a68282mr612794qvb.24.1704909338259;
-        Wed, 10 Jan 2024 09:55:38 -0800 (PST)
+        bh=Ld0lXnybPOa+fO1nd5leKrxwaScb8pVs0NekyPyU4rc=;
+        b=MevVuSaDK8FKVaP3xNcEplwhiy7kHyPqEZtL0b8tggy/jTFgYWdY8v1uwZEafrMmUk
+         uEWhvIeYSQSB7rkTHDno+q3u5ZYeCtzewFKZWExsozsPSarfbhQey8Ihv6bsMA3de3Rd
+         kXbMKdcfqSvvNhXdfs+Fv7NN7I/+x/qEjeoKVuJcbdzxywSt/l3DlEQKWfBWDYLBcKvs
+         zGEwk/vAryDOdEHd9j84XgoX3rAqbBjAYsinVGWJ4BdwOjharFPVmH+OEUmbRKG34zhM
+         /95J9Cg2BG7oyBc5muq8+Wj1Z9LIdXRQp5lgehpzqc1bJZukvnZlYHv4QlgszF3q6NBT
+         kYBg==
+X-Gm-Message-State: AOJu0YwxjjWLJz+yxFb9pT0JQax7NYAcvw4rEa3oEpl8GoFLe3WGi5oK
+	AZCzVBkFMKzBWUJgpALTuCrc7O/n8DkWs9/XSX0dZ/NNrnz/ag==
+X-Google-Smtp-Source: AGHT+IHi1HEyWMw8bgkg7W522H+bZODCsvMX8ggbc+w/2GI7rBBJVlcqzTvCK/NsiqZ2M8vxlphQ0Q==
+X-Received: by 2002:a0d:df82:0:b0:5e7:b0e9:625 with SMTP id i124-20020a0ddf82000000b005e7b0e90625mr1398881ywe.47.1704909341023;
+        Wed, 10 Jan 2024 09:55:41 -0800 (PST)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id p3-20020a0cfd83000000b00680c7c14d4bsm1883571qvr.129.2024.01.10.09.55.37
+        by smtp.gmail.com with ESMTPSA id pe30-20020a05620a851e00b00781baa4db60sm1755824qkn.66.2024.01.10.09.55.40
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 10 Jan 2024 09:55:38 -0800 (PST)
-Date: Wed, 10 Jan 2024 12:55:37 -0500
+        Wed, 10 Jan 2024 09:55:40 -0800 (PST)
+Date: Wed, 10 Jan 2024 12:55:39 -0500
 From: Taylor Blau <me@ttaylorr.com>
 To: git@vger.kernel.org
 Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 3/5] t5308: run expected-to-fail `index-pack`s with
+Subject: [PATCH 4/5] t5313: run expected-to-fail `index-pack`s with
  `--threads=1`
-Message-ID: <0170befabd160bd98a32372f14b5e1e9bbcb1069.1704909216.git.me@ttaylorr.com>
+Message-ID: <4477fc49b0e7ca9a1d973ff156d267676716bd8a.1704909216.git.me@ttaylorr.com>
 References: <ZZ7VEVXSg1T8ZkIK@nand.local>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -60,27 +60,72 @@ Content-Disposition: inline
 In-Reply-To: <ZZ7VEVXSg1T8ZkIK@nand.local>
 
 For identical reasons as in the previous commit, apply the same
-treatment to expected-to-fail `index-pack` invocations in t5308 with
+treatment to expected-to-fail `index-pack` invocations in t5313 with
 `--threads=1`.
 
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- t/t5308-pack-detect-duplicates.sh | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ t/t5313-pack-bounds-checks.sh | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/t/t5308-pack-detect-duplicates.sh b/t/t5308-pack-detect-duplicates.sh
-index 655cafa054..5df552a42e 100755
---- a/t/t5308-pack-detect-duplicates.sh
-+++ b/t/t5308-pack-detect-duplicates.sh
-@@ -76,7 +76,7 @@ test_expect_success 'lookup in duplicated pack' '
- test_expect_success 'index-pack can reject packs with duplicates' '
- 	clear_packs &&
- 	create_pack dups.pack 2 &&
--	test_must_fail git index-pack --strict --stdin <dups.pack &&
-+	test_must_fail git index-pack --threads=1 --strict --stdin <dups.pack &&
- 	test_expect_code 1 git cat-file -e $LO_SHA1
+diff --git a/t/t5313-pack-bounds-checks.sh b/t/t5313-pack-bounds-checks.sh
+index ceaa6700a2..e9829b6ef3 100755
+--- a/t/t5313-pack-bounds-checks.sh
++++ b/t/t5313-pack-bounds-checks.sh
+@@ -91,7 +91,7 @@ test_expect_success 'pack/index object count mismatch' '
+ 
+ 	# ...and make sure that index-pack --verify, which has its
+ 	# own reading routines, does not segfault.
+-	test_must_fail git index-pack --verify $pack
++	test_must_fail git index-pack --threads=1 --verify $pack
  '
  
+ test_expect_success 'matched bogus object count' '
+@@ -111,7 +111,7 @@ test_expect_success 'matched bogus object count' '
+ 	git cat-file blob $object >actual &&
+ 	test_cmp file actual &&
+ 
+-	test_must_fail git index-pack --verify $pack
++	test_must_fail git index-pack --threads=1 --verify $pack
+ '
+ 
+ # Note that we cannot check the fallback case for these
+@@ -128,7 +128,7 @@ test_expect_success 'bogus object offset (v1)' '
+ 	munge $idx $((4 * 256)) "\377\0\0\0" &&
+ 	clear_base &&
+ 	test_must_fail git cat-file blob $object &&
+-	test_must_fail git index-pack --verify $pack
++	test_must_fail git index-pack --threads=1 --verify $pack
+ '
+ 
+ test_expect_success 'bogus object offset (v2, no msb)' '
+@@ -136,7 +136,7 @@ test_expect_success 'bogus object offset (v2, no msb)' '
+ 	munge $idx $(ofs_table 1) "\0\377\0\0" &&
+ 	clear_base &&
+ 	test_must_fail git cat-file blob $object &&
+-	test_must_fail git index-pack --verify $pack
++	test_must_fail git index-pack --threads=1 --verify $pack
+ '
+ 
+ test_expect_success 'bogus offset into v2 extended table' '
+@@ -144,7 +144,7 @@ test_expect_success 'bogus offset into v2 extended table' '
+ 	munge $idx $(ofs_table 1) "\377\0\0\0" &&
+ 	clear_base &&
+ 	test_must_fail git cat-file blob $object &&
+-	test_must_fail git index-pack --verify $pack
++	test_must_fail git index-pack --threads=1 --verify $pack
+ '
+ 
+ test_expect_success 'bogus offset inside v2 extended table' '
+@@ -169,7 +169,7 @@ test_expect_success 'bogus offset inside v2 extended table' '
+ 	mv tmp "$idx" &&
+ 	clear_base &&
+ 	test_must_fail git cat-file blob $object &&
+-	test_must_fail git index-pack --verify $pack
++	test_must_fail git index-pack --threads=1 --verify $pack
+ '
+ 
+ test_expect_success 'bogus OFS_DELTA in packfile' '
 -- 
 2.43.0.288.g906e6a084d
 
