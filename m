@@ -1,64 +1,77 @@
-Received: from mail-qv1-f41.google.com (mail-qv1-f41.google.com [209.85.219.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mail.manjaro.org (mail.manjaro.org [116.203.91.91])
+	(using TLSv1.2 with cipher DHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E3964B5A8
-	for <git@vger.kernel.org>; Wed, 10 Jan 2024 14:36:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-qv1-f41.google.com with SMTP id 6a1803df08f44-680fdf7d52fso25168276d6.3
-        for <git@vger.kernel.org>; Wed, 10 Jan 2024 06:36:57 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1704897416; x=1705502216;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=ALgsbOwt/GsnaC3oWMhuSxMwjZKAILq2XKtjKpkvuPs=;
-        b=CfGdtJte5o5owlX1qurHrr4fy7QmLbJ2TQm7avfSk4GhStO8XLI3LjLMMCfC9Nybq9
-         ljM3L5bUahHQYZJ5VxDaLdEkt/c2uyDo00yZUboZmQl+HwLdJmawY4Bhhx09l+r320jP
-         vPLXjATZh2ucfbUU1Zg3Dn8K4Iic+JBZF8Ga7nd2rbWD9ZTWA9RlDg1PU/ZiKtYPWdZ9
-         aNo/N8FdezIKuCkl6CUv1rXQ/SKQppHgLvDvyydcj6WlYFXB1nyicV7WizXJF8tEC//y
-         XcFW0OL5foRXcJ04qs8oc06ukM52xBY/LSJ0jHFKVdBsUDdyCQ35vW4x9DiFglmBSb8K
-         jWjQ==
-X-Gm-Message-State: AOJu0YzTOLwyOM3LMc1KAyvXJC7IjSHaFsYDSwmig53Ew30rJMD+fBqw
-	JyQwb+SbpbNmXq4VYNvGAT2req5Yl0UD9YlazF7gQQfk
-X-Google-Smtp-Source: AGHT+IHuGbI52MaHZ1n+t9gGDmy6dqAzijDjvo19/lY28i51Eh1Vh25mop5ZgT1vcdmLjoz33sPJnlJHYoo2Yfb9ikE=
-X-Received: by 2002:a05:6214:27c2:b0:67f:8682:6d79 with SMTP id
- ge2-20020a05621427c200b0067f86826d79mr1367628qvb.2.1704897416116; Wed, 10 Jan
- 2024 06:36:56 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B21E4B5D2
+	for <git@vger.kernel.org>; Wed, 10 Jan 2024 14:44:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=manjaro.org
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b="xrjCBxXG"
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240110141559.387815-1-toon@iotcl.com> <20240110141559.387815-2-toon@iotcl.com>
-In-Reply-To: <20240110141559.387815-2-toon@iotcl.com>
-From: Eric Sunshine <sunshine@sunshineco.com>
-Date: Wed, 10 Jan 2024 09:36:43 -0500
-Message-ID: <CAPig+cTRHHJ3pzWJtVJf8rKhvAJFYqrO0JsyTRTi6T5s+gznDg@mail.gmail.com>
-Subject: Re: [PATCH 1/1] builtin/show-ref: treat directory directory as
- non-existing in --exists
-To: Toon Claes <toon@iotcl.com>
-Cc: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=manjaro.org; s=2021;
+	t=1704897881;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=XLtYXFoBcWNMAUKsuJt9TmAc45vtZIH+B5R8D4Oqxrk=;
+	b=xrjCBxXGQrMUSiWgWp+M0wpvKOszfLQWYVhVlZx+Z236tH/H8SEKa9D0X8QYMkzP7qEsJ7
+	cklW2/gQdMDsuuRrhYRVIEESY2tkyS+25hDqxOQ16stD6zIIVTkBMnWjbmPnacfNpEx1ku
+	Df0Y886LRBtwSF4D/6Pp1T0NCD9RehVlEnE5caSB5M0pnJErlqTAouVybl5Q+VbA+djIQI
+	y/XK1XciSBlRGm6VkrIFGXJsXtSrGEhFecTzxRQyzAj71nIZxy3BMbBbOjP8Pfmf+p0yOQ
+	u6cVbHvE5DLFVxMr0a1Ho6edP/zW/z1KuTumVBLypVyLhAO1nh0xprumv+UYdQ==
+Date: Wed, 10 Jan 2024 15:44:41 +0100
+From: Dragan Simic <dsimic@manjaro.org>
+To: =?UTF-8?Q?Rub=C3=A9n_Justo?= <rjusto@gmail.com>
+Cc: Jeff King <peff@peff.net>, Git List <git@vger.kernel.org>
+Subject: Re: [PATCH 3/3] advice: allow disabling the automatic hint in
+ advise_if_enabled()
+In-Reply-To: <97fdf6d4-1403-4fe9-b912-a85342a9fa56@gmail.com>
+References: <7c68392c-af2f-4999-ae64-63221bf7833a@gmail.com>
+ <d6099d78-43c6-4709-9121-11f84228cf91@gmail.com>
+ <20240110110226.GC16674@coredump.intra.peff.net>
+ <aaf59fc82ef3132ece8e1f70623570a2@manjaro.org>
+ <97fdf6d4-1403-4fe9-b912-a85342a9fa56@gmail.com>
+Message-ID: <a97b03a305a7b8b95341b63af1de0271@manjaro.org>
+X-Sender: dsimic@manjaro.org
+Content-Type: text/plain; charset=UTF-8;
+ format=flowed
+Content-Transfer-Encoding: 8bit
+Authentication-Results: ORIGINATING;
+	auth=pass smtp.auth=dsimic@manjaro.org smtp.mailfrom=dsimic@manjaro.org
 
-On Wed, Jan 10, 2024 at 9:19=E2=80=AFAM Toon Claes <toon@iotcl.com> wrote:
-> Recently [1] the option --exists was added to git-show-ref(1). When you
-> use this option against a ref that doesn't exist, but it is a parent
-> directory of an existing ref, you're getting the following error:
->
->     $ git show-ref --exists refs/heads
->     error: failed to look up reference: Is a directory
->
-> This error is confusing to the user. Instead, print the same error as
-> when the ref was not found:
->
->     error: reference does not exist
->
-> Signed-off-by: Toon Claes <toon@iotcl.com>
+On 2024-01-10 15:32, Rubén Justo wrote:
+> On 10-ene-2024 15:18:17, Dragan Simic wrote:
+>> On 2024-01-10 12:02, Jeff King wrote:
+> 
+>> Just to chime in and support this behavior of the advice messages.
+>> Basically, you don't want to have them all disabled at the same time, 
+>> but to
+>> have per-message enable/disable granularity.  I'd guess that some of 
+>> the
+>> messages are quite usable even to highly experienced users, and 
+>> encountering
+>> newly added messages is also very useful.  Thus, having them all 
+>> disabled
+>> wouldn't be the best idea.
+> 
+> Totally agree.
+> 
+> This series is about disabling _the part in the advice about how to
+> disable the advice_, but not the proper advice.
+> 
+> Maybe the name ADVICE_ADVICE_OFF has caused confusion.  Sorry if so.
 
-It may not be worth a reroll, but I found the explanation you gave in
-the cover letter more illuminating than what is written above for
-explaining why this change is desirable. In particular, the discussion
-of the reftable backend was very helpful.
+No worries.  Regarding disabling the advices for disabling the advice 
+messages, maybe it would be better to have only one configuration knob 
+for that purpose, e.g. "core.verboseAdvice", as a boolean knob.  That 
+way, fishing for the right knob for some advice message wouldn't turn 
+itself into an issue, and the users would be able to turn the additional 
+"advices about advices" on and off easily, to be able to see what knobs 
+actually turn off the advice messages that have become annoying enough 
+to them.
