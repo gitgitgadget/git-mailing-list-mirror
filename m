@@ -1,110 +1,100 @@
-Received: from mail-qk1-f171.google.com (mail-qk1-f171.google.com [209.85.222.171])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 254A24CB2C
-	for <git@vger.kernel.org>; Wed, 10 Jan 2024 19:43:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ttaylorr.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98DFC4D10C
+	for <git@vger.kernel.org>; Wed, 10 Jan 2024 19:45:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="EUi3yHj/"
-Received: by mail-qk1-f171.google.com with SMTP id af79cd13be357-78333a2ed06so70914685a.1
-        for <git@vger.kernel.org>; Wed, 10 Jan 2024 11:43:57 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1704915836; x=1705520636; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=W2218yfUTOnlx01kWhb/e3y+uePVKwUDL6YwlhKyKwM=;
-        b=EUi3yHj/NeTbApiDvaQjaPeoqDo5OUzMWy2uPfF5H6VECH/vRrZ5axOntMQyagPp2A
-         n0hWNrXDr7LMQvID1ZqMkiP4/07a4pJlFHon7qxJUYE7BCAGGG3qT1eU++qf2GqmnJ9r
-         NQlRda85UD/s1OoYxIaAIxiFk8M7RvzbGXdDdXUgD+tUHGsn/V0UT/L+ulQ409IDdYvn
-         ym7I9ydgJ4+mrV/Ak15gB+TBgxV9PW3eXjYqf62BKIBilmW88ZA1oPyg9FfFc7G58q+q
-         XoEjjyRTJIIczav7q3KY8/bGCfNwV0hUzJpBe44D5JRwi+jM7BDBVkV+wVkBRlolOw9F
-         wWEQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1704915836; x=1705520636;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=W2218yfUTOnlx01kWhb/e3y+uePVKwUDL6YwlhKyKwM=;
-        b=m+4oad+/XbROh2Aa8JnrUFuzuovb50R0qd3jz9E/k7jCQEoA933moBf8QDCsr2D2ev
-         FAS5qHoDQ253ctbJtDIYePVbO/okMsUQmO83WpHyzAb0ScJNhgiflB0WQYRCGGmh9bQN
-         0SzHBmnIT1i4Yd431lFEaShh+eZbalMImpc4tiY7fCcZc51mS7KTel3cgis8disoC0X8
-         3AFAFV5b37aexpgJIL0ynRHjN7KPQLaXNBv0clTgyGpko5Wvqk1Pq3kRyunpT40MJQMI
-         qwR7AYjuIRcGgQs1ir62biVySioeq2Ge1lwEAtEc6tsyyYyHXxxfpYIYR/NZg+AeWpCP
-         8KqA==
-X-Gm-Message-State: AOJu0Yxouv7vOdQfaqb6QxWlR39eKTuoqXUHNSfMGvBAJi2nAlnHqCBA
-	6TB4onDBYWMsYlFY02EeL9ZqChpG+giyE2Lu3V2CHDDL0rurmA==
-X-Google-Smtp-Source: AGHT+IFxysuqoost2bisDC4hfpysCYdqdeZK/ngQZbuUUnuP+0PF9cEu1AtBdDAtfZ9OSM5TYIlRYA==
-X-Received: by 2002:a05:620a:10a8:b0:781:ab42:88e7 with SMTP id h8-20020a05620a10a800b00781ab4288e7mr156821qkk.60.1704915836698;
-        Wed, 10 Jan 2024 11:43:56 -0800 (PST)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id h4-20020a37de04000000b007832a7c7fcbsm1825649qkj.108.2024.01.10.11.43.56
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 10 Jan 2024 11:43:56 -0800 (PST)
-Date: Wed, 10 Jan 2024 14:43:55 -0500
-From: Taylor Blau <me@ttaylorr.com>
-To: git@vger.kernel.org
-Cc: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-	Christian Couder <christian.couder@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>, Dan Moore <dan@fusionauth.io>
-Subject: [ANNOUNCE] git-scm.com updates (was: Conservancy status report
- (2023))
-Message-ID: <ZZ7zezSRZfdklS4u@nand.local>
-References: <ZRHTWaPthX/TETJz@nand.local>
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="JCRPP7VQ"
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id E34EB3F694;
+	Wed, 10 Jan 2024 14:45:28 -0500 (EST)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=Ft3t5vreluasJP/IAmWKYfANyq4/plgsNr6Htk
+	UoGeE=; b=JCRPP7VQ6e2D0UM6rGcokCIdPD7ZsgAOPNI9WYNTnP5sbD68wJuPLl
+	uAZfydTIetlVjiEak6ZNEap7LV8GpAQrVEdPNXKV1kSR9ZvirfqCUd1ijiazoR/C
+	JYyLQ2MopbQ6Kle7+E2Vqkbl1uFlv5Q5q75LPqnWB5NmT+Iz3BDdo=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id DBAA63F693;
+	Wed, 10 Jan 2024 14:45:28 -0500 (EST)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.200.93])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 16FE23F690;
+	Wed, 10 Jan 2024 14:45:25 -0500 (EST)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Linus Arver via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Emily Shaffer <nasamuffin@google.com>,  Christian
+ Couder <chriscool@tuxfamily.org>,  Linus Arver <linusa@google.com>
+Subject: Re: [PATCH 00/10] Enrich Trailer API
+In-Reply-To: <pull.1632.git.1704869487.gitgitgadget@gmail.com> (Linus Arver
+	via GitGitGadget's message of "Wed, 10 Jan 2024 06:51:16 +0000")
+References: <pull.1632.git.1704869487.gitgitgadget@gmail.com>
+Date: Wed, 10 Jan 2024 11:45:23 -0800
+Message-ID: <xmqqy1cx9dm4.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <ZRHTWaPthX/TETJz@nand.local>
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ CC62AD1A-AFF0-11EE-9C0B-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
 
-On Mon, Sep 25, 2023 at 02:37:13PM -0400, Taylor Blau wrote:
-> One notable change from last time is that our hosting fees have gone up
-> significantly. These are entirely from Heroku's change in policy to no
-> longer grant the Git project hosting credits for the git-scm.com
-> project. Our costs in the meantime have been supported by a generous
-> donation from Dan Moore at FusionAuth. The below email has some more
-> details:
->
->   https://lore.kernel.org/git/YkcmtqcFaO7v1jW5@nand.local/
->
-> It appears that since the above was written, Heroku has a new (?)
-> program for giving credits to open-source projects. The details are
-> below:
->
->   https://www.heroku.com/open-source-credit-program
->
-> I applied on behalf of the Git project on 2023-09-25, and will follow-up
-> on the list if/when we hear back from them.
+"Linus Arver via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-Out of the blue today I received an email from Heroku saying that our
-application to their open-source credit program was accepted. Quoting
-from their email:
+> This patch series is the first 10 patches of a much larger series I've been
+> working. The main goal of this series is to enrich the API in trailer.h. The
+> larger series brings a number of additional code simplifications and
+> cleanups (exposing and fixing some bugs along the way), and builds on top of
+> this series. The goal of the larger series is to make the trailer interface
+> ready for unit testing. By "trailer API" I mean those functions exposed in
+> trailer.h.
 
-  [...] We are excited to announce that your project was a fit to
-  receive $250 credits/month for one year, totaling $3,000 in credits.
-  These credits have been applied to the account submitted on the
-  application, and will be valid from January 2024 to December 2024.
+Are there places in the current code that deals with trailers but
+does not use the trailer API (e.g., manually parse and/or insert the
+trailer in an in-core buffer)?  Is it part of the larger goal to
+update these places so that we will always use the trailer API to
+touch trailers, and if so, have these places been identified?
 
-$250 per month is more than enough to cover our hosting costs (which
-average around ~$140 USD per month), so we should have plenty of room to
-host git-scm.com free of charge for this year.
+Obviously the reason why I ask is that testing cannot be the goal by
+itself.  The "alternative" ...
 
-I know that there are some plans in the works to convert git-scm.com to
-a static site in [1]. So even though we likely won't be on Heroku
-forever, this should tide us over until we're ready to move to GitHub
-Pages.
+> As an alternative to this patch series, we could keep trailer.h intact and
+> decide to unit-test the existing "trailer_info_get()" function which does
+> most of the trailer parsing work.
 
-I would like to thank Dan Moore for his generous donation to the Git
-project, which has covered our Heroku bill in past years. Now that
-Heroku has agreed to cover out costs for this year, we will be able to
-use the funds Dan has graciously provided to on behalf of FusionAuth for
-other purposes.
+... may allow you to "test", but it would make it more difficult in
+the future to revamp the trailer API, if it is needed, in order to
+cover code paths that ought to be using but currently bypassing the
+trailer API.
 
-Thanks,
-Taylor
+> This series breaks up "process_trailers()" into smaller pieces, exposing
+> many of the parts relevant to trailer-related processing in trailer.h. This
+> forces us to start writing unit tests for these now public functions, but
+> that is a good thing because those same unit tests should be easy to write
+> (due to their small(er) sizes), but also, because those unit tests will now
+> ensure some degree of stability across new versions of trailer.h (we will
+> start noticing when the behavior of any of these API functions change).
 
-[1]: https://github.com/git/git-scm.com/pull/1804
+And helper functions, each of which does one small thing well, may
+be more applicable to other code paths that are currently bypassing
+the API.
+
+> Thanks to the aggressive refactoring in this series, I've been able to
+> identify and fix a couple bugs in our existing implementation. Those fixes
+> build on top of this series but were not included here, in order to keep
+> this series small.
+
+It would be nicer to have a concise list of these fixes (in the form
+of "git shortlog") as a teaser here ;-).  That would hopefully
+entice others into reviewing this part that forms the foundation.
+
+Thanks.
