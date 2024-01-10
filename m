@@ -1,130 +1,241 @@
-Received: from NAM11-CO1-obe.outbound.protection.outlook.com (mail-co1nam11olkn2040.outbound.protection.outlook.com [40.92.18.40])
+Received: from wout2-smtp.messagingengine.com (wout2-smtp.messagingengine.com [64.147.123.25])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 479E93EA6B
-	for <git@vger.kernel.org>; Wed, 10 Jan 2024 08:15:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=outlook.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=outlook.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE3463B187
+	for <git@vger.kernel.org>; Wed, 10 Jan 2024 09:01:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=outlook.com header.i=@outlook.com header.b="TJM3kLE8"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=S4jZEOgpHqVuc4VfcgeCraITvyjISWtZDMBDFVfFsSXXhBISNieGY1q97LLSzN22EHAVRp8Q7MSopJmiKPn4E7yLbBcFcuHyqmVz1E0N/pxSwG2mk/PU5Oz7B8eflXUCVbkB3hX0WCWnq42yzy9qcM786cLyqiC9e5BF+m2CyjghwkqRIebt2Dl5juTbT4ancubeNGByRJCNAPJRetJgfodjtkQ06e02ApDkov3Qlu/6zkxYNOD6hkTS+9GeEeOptIpw37Y9/dISxNwUMIuBXfH6Nu1Hjk6bEqLhxme1/SRBTnpbtiEFbxK63WHKa57y2ASTtd9vVw+H/865WFRhCQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=33cd8/0oclYYX5fZ01HsxF9f1BZ62osykpKNS3z50FA=;
- b=VJMFkjHIwwu9MHe+UEv5Cv2iw2Q+pZNDq4JW6lqwUJhqK0+EwG3DsFP+iz2b9u8HNLGuMwvGJYTySMGPM4HJ0awzkC2DBcIoFajoskg/YFK6pPC5c0cc9EW4W/k8bv1ttU2e9FKZECU5gGgzTZxRZmtJDFRTlGVyav3fOyMcyIpva7qzY1kxfFBdQNYu5lPVRwNn+R7YZWZhzS5L00hdOX/7UY0Cz0Gt6oUaLy7PxLfWIZJG553p9DwDqZ3Ea3ETCoJc7q7ykyyzXAHvW4nJplpl+483qKwgDJTBtIP8y2+l9EukYbBdSbp34X23vIRGZENcLc2xQJSmdL3OJjsGew==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
- dkim=none; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=outlook.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=33cd8/0oclYYX5fZ01HsxF9f1BZ62osykpKNS3z50FA=;
- b=TJM3kLE881S7Tp0eYL+4FdnGlOYXMg23YH73TinXRerdreLdeiUsc56T5oA87QOSsfq8XjJlYGm2DCKiSverlV+bxl/LxSE6dBT/aq4eLki8N6X/dfmeUbBkDNAUFvb41Qja8XgVskusQruXXV6zamo36/WXYYz1jRAJ3IVTpnHUfU/JZ5g1K9L7Ra17Hs74sUz4+88Jx8wVddpByQkaLpmzw5Unb+yanX3sMUnVFTFWbjhQ/C5F9HSRUU3xkyguu6GnHYzEiqFQ+toxklTtu9oW3kGjum8uf9ht4zjAGCnkh8ZzPctVF9RvLLYPBXXDKPpeKo4WLVBynfOvc4xO4Q==
-Received: from LV3P220MB1286.NAMP220.PROD.OUTLOOK.COM (2603:10b6:408:1d9::7)
- by EA2P220MB1306.NAMP220.PROD.OUTLOOK.COM (2603:10b6:303:25d::17) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7159.21; Wed, 10 Jan
- 2024 08:15:19 +0000
-Received: from LV3P220MB1286.NAMP220.PROD.OUTLOOK.COM
- ([fe80::827f:5c25:3f99:20c9]) by LV3P220MB1286.NAMP220.PROD.OUTLOOK.COM
- ([fe80::827f:5c25:3f99:20c9%6]) with mapi id 15.20.7159.020; Wed, 10 Jan 2024
- 08:15:19 +0000
-From: ross nicholas Oneil thomas <rossrecovery93245@outlook.com>
-To: GitHub Developer Support <developer@githubsupport.com>, Github email
-	<git@vger.kernel.org>, "zimmermanda@sec.gov" <zimmermanda@sec.gov>,
-	"digital_identity@nist.gov" <digital_identity@nist.gov>, GitHub
-	<support@githubsupport.com>, Ross Nicholas Oneil Thomas <sales@github.com>,
-	ross nicholas Oneil thomas <rossrecovery93245@outlook.com>,
-	"jmap-owner@ietf.org" <jmap-owner@ietf.org>
-Subject:
- =?utf-8?B?TmV3IEZlYXR1cmUgUmVxdWVzdDogUmF0aW5nIGNvbnRyb2wgKHN0YXJzKSA=?=
- =?utf-8?B?wrcgSXNzdWUgIzMwNTQgwrcgbWljcm9zb2Z0L0FkYXB0aXZlQ2FyZHMgwrcg?=
- =?utf-8?Q?GitHub?=
-Thread-Topic:
- =?utf-8?B?TmV3IEZlYXR1cmUgUmVxdWVzdDogUmF0aW5nIGNvbnRyb2wgKHN0YXJzKSA=?=
- =?utf-8?B?wrcgSXNzdWUgIzMwNTQgwrcgbWljcm9zb2Z0L0FkYXB0aXZlQ2FyZHMgwrcg?=
- =?utf-8?Q?GitHub?=
-Thread-Index: AQHaQ50m38DmgNS26EievZSHzQ6pjg==
-Date: Wed, 10 Jan 2024 08:15:19 +0000
-Message-ID:
- <LV3P220MB128628B36F1C3E0F8194DF68FB692@LV3P220MB1286.NAMP220.PROD.OUTLOOK.COM>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-x-tmn: [PjuLhNUWHlb0802ckxH7KcvVdewchnCRpazyg4TLH88=]
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: LV3P220MB1286:EE_|EA2P220MB1306:EE_
-x-ms-office365-filtering-correlation-id: 7e2b6be9-b58d-4b22-16ab-08dc11b448e5
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info:
- how/NgFvjJrVcZ5nBEWu9uW6RrnXYY68JIsqj9oEhkzSc677EikJzzPPCx0MAw44MthKIqLqdD8nlZZGFxKaI9oudMCoU1FO6rTR0GnfRGVGULP6tzHtQ0+uxPVAl6z7tTtd81ktnbt4j3mig5hu9mQjKWEFie6uT+YY2zzEK13z6Pd0uKzbba1tjBZaMzTOstkRvLBQCneZ35pHwGsEL9OyYzEST7b5MmUlXLI5kjqrWqXM1Ty1zoceY5xkvf0uhEBOsRdpc8aAA7OwtTab+9NciPlWDK//mjTXKnu6lcq7gxR5CiszDnsTw/ijAh/8bky0G+xYbGbLRwC9nBjc+e6frWaLxOs00PYaVbPTCtUFp7LK2kdvaj6xIN1nrOPtmul4jCrYk3We4txZkW8PknsTptEj/s3Y0cGJTsZnjeJ5d3sfWQ3gPxTiwqu8Tf1h4V42a7M3qm3g9x9zxz02ojHJwvbZ6rZMfmFGYTVNnBUxZBO+BXKxKIfyEmaNunWr8tozYz48hQssgyUxaZbYAYenH4V3s9pVE2nlyQ8tP/OXgZZKO6lVPQtl2wmDp0ysWUntjahcvHkC1ot2GFhxKG0twHm6+QvxXdOygZqFh9KZkDcOzqNL9QSnpLCVzoyctsR+3DuYUGt9LcwkD/XausayZ8IwlRjKrSfQfkQGBtE=
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0:
- =?utf-8?B?di9NQWhhemR5Q2lTb25KVWRWWElTSnhxRVUxK05KVER2YU9LNFdhNUtxVkg2?=
- =?utf-8?B?K2gydlVlbncyMkVxNDk4K3lKOENEeE1KTDdyTTJPZUYzK1ZzZDFSQmxXb0Vn?=
- =?utf-8?B?QW55STFrc1d3Qkk0UWRyQUpPanVjQUFQMTRFWng2SDIyRXZRM1dMamFVZkZy?=
- =?utf-8?B?RC91aTFQMnp2OFh6VzNSNnVJZ0hzem4rb3ZOVlhvNHU1cEdFNWNCWExwMms0?=
- =?utf-8?B?S0VTNkJXdHc4dW10V3hmdGFLNXU2WTA4dDc3RE9oTlVVWnRLQ3czRUgrT09V?=
- =?utf-8?B?ekFnY1FjQnJkVFlwLzhDQjllM3oyc2x5LzVlN2hSKysraDlOQ1orYVo3ak56?=
- =?utf-8?B?ak9SOXF6bjFHc3dYV1ZCaXRlZndkUU5WbkYwQVY4ajlIK1BMSFRwT2ZRVFd5?=
- =?utf-8?B?ZFk3aTVHRUhEdU5qRU9PVk95aTBEd1FOUXp2cDFRakN1MVRkU096UUZSdGEz?=
- =?utf-8?B?eEIvV3lhYzZReERDcDhjYU8zeHdvTWo5aGQ4bjFlK25DMGpaaW43SU16ZzZv?=
- =?utf-8?B?V0t1dUQ4b3NiYzQ5OVhCNzF2L0cxbFJJZUhBMjNEQ0VtVzUvUGxFUGhZLzZ0?=
- =?utf-8?B?dVcvM0l0NXJxbW95QUdieVJqRkpqWHRlQmdFUk5UT2VQWGV3dzI2TmpZNXBL?=
- =?utf-8?B?a3F5WkEzb3BON0tkekxSTXN6T2xkOHZ4UWxYajVLbnV4WkdJWTl2TU9NdGgy?=
- =?utf-8?B?VFcwNVdJZ3Y3NlFLQjRqVUpQa2UvRGV2UmxFVTZ4cmI1WE9zSWVTQmVVc2Q1?=
- =?utf-8?B?Vlp0b2xTdU1GdHFnTXBNVWdKV21WWlIwMnZLa3J2VW80U2hOVzAxQXd5c2ps?=
- =?utf-8?B?cmdTWnhMWHplWVorVUM1a3gyWE9MODJUelc3cXpyVE9kRlVKTUc1VjZKK1Yv?=
- =?utf-8?B?UTFVK1hOOUxMK0FDdU5TSUJhV1ZUdXVPaWQxRFY0M3ppYkdJazNuMU4zdlpD?=
- =?utf-8?B?V3llRGEyb3B2cjlWd1dPYXZNN0w1OWxONDRGeVdZU1YrM1phR1M2cnN4YzVo?=
- =?utf-8?B?SlNXbWJQbjB3NjNWRUdiSTE2M3dVbnhsZkpoSnAwVEJiL1R0czZGQ3dyTGEz?=
- =?utf-8?B?Z3Q4ZGpTRWVPS2FBbGJVVkpzMFd6QTNoS29uN2w1dnBLSGhPVGxDSDRUb3ZE?=
- =?utf-8?B?dktuSjlDNzRKQjJtTEZYNUJJVzRPaU1LTnlIM1BMMWY5KzBucFFvNW9Wc0xR?=
- =?utf-8?B?NDZJSlJjOS90cllQUVNLS0Nadkk5RlZtNnA3VUlDdVlMZlVDWUlWMjJzVit0?=
- =?utf-8?B?OHdHZXl5a2trWnYzcys2ZXpCaTR1Z0dmeHgvTmNYbkNmY01ZaDZ3Wnl4WWY5?=
- =?utf-8?B?T21RWURpR05ERnhjQmlPcGdiRitEZjQ1dlRpK1pzQXpaeVA0Z0hKdlRBNVV1?=
- =?utf-8?B?ekZvN0RWYU90WHZDaGdQUEZObEVOaXBzTmYvQ05oSTVpQm1LNHZFVmNqMU1q?=
- =?utf-8?B?WE9uc1lUY0I5ZXlLRmF6ak9vZUhFV01xOC9JbmxxU1lTWHRRNFpjdDkrWGRE?=
- =?utf-8?B?OUlwZk1lMFE2SzV1Q0ZQRzNMVmlLK2FWQTBiL1d1TjhaTXlGQ0o4cU5FNWNY?=
- =?utf-8?B?RjNwUWJaWVJ1MmlEYUkzYUFDeEd0cEJ5dThaajNNb01ZRXJWR0Z2dHBxV2dh?=
- =?utf-8?B?NFVEaVhRYlNyM1E5RGQwd0w5SVZqTlFTNHUyeWw0RitLdUp4Z1UvcGZkejRI?=
- =?utf-8?Q?jrYjE2m6u1rrOYmz8Cci?=
-Content-Type: text/plain; charset="utf-8"
-Content-ID:
- <C75F22F84BC52846B0F4A995D485F19E@sct-15-20-4755-11-msonline-outlook-3458f.templateTenant>
-Content-Transfer-Encoding: base64
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="O7HcMn4P";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="RuWBZ5uI"
+Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
+	by mailout.west.internal (Postfix) with ESMTP id 9CC1B3200A89;
+	Wed, 10 Jan 2024 04:01:40 -0500 (EST)
+Received: from mailfrontend2 ([10.202.2.163])
+  by compute2.internal (MEProxy); Wed, 10 Jan 2024 04:01:40 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1704877300; x=1704963700; bh=erUUR4Zp+F
+	gGiTo1q1gKymGoi0eG/1QpFY+F7wdTTHw=; b=O7HcMn4PQrTgAfpbn4QhDLvc5R
+	Hbr5U2H8xuI5hova50BEni5vZ2Q1nwIVEM8SQIlQp1ckOjGhx/LswvxrqExYdpom
+	LF/Y+MuUrKQ1gSP3/n2v/HZyiQ6tkEPS2Zx+v0cytPVpduE1U0MwcIL6UI1zE7yu
+	YI84pUgoNdNuUPgqkqwOexwwHPyB/dnxwlO33QBz8MGelz7Qm6Fr3nDC4caAH3q6
+	jMNrVtbOVox2AzHGgQOQWUjDzQj0fHklXWOZ9ckj6hUHzlvjcnWVwKalC3Pk6EGV
+	9wdr5JRzZj+EhpiKcN9y8ORMYoBv+hfo3JmPwZUb5XsO1oaWp/hN6qAXPjUw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm2; t=1704877300; x=1704963700; bh=erUUR4Zp+FgGiTo1q1gKymGoi0eG
+	/1QpFY+F7wdTTHw=; b=RuWBZ5uIPxDIZ9hIISibmKZ7xVLF7i4XRgSymjqR2xIj
+	hiLGUfXGg7hA8rW5ag7aLeoFrQRu9hY6MvJ3hbIwKwXbwmjUdXUvd4NXE7/TL6rV
+	cbZ7v35375mMBqojos2SmHVQilNekmLGO1Vd8/+avST2M/zkLxMJMS4S6j8S64hW
+	WugowRaZy7qJ2EcnG+5fGl9F4ZLzwgAUklh69pfWx3JzhFBUBgzsHJfpeEiJJZhz
+	PWWl5TyUJk45htzR6mknAosdzTmyvJAEveWmzOUwsUDr4M52V6SLJzWY8vyIRLd5
+	+iQpr5+yZvaROJMBMEQoahpw/qiWgU1WuA5tmnyjzA==
+X-ME-Sender: <xms:81yeZTnU02grjxS3y1QSjVZW5vfzzGDwuZQRL96ekoYcfoWMY6AtjQ>
+    <xme:81yeZW2uXk1IKbPrR5n0BDmVODMOBVib5tmSjiMnG69o1KAgnv6PizueRFvW3kKQ6
+    c-AJeD5MSw4iuvQUA>
+X-ME-Received: <xmr:81yeZZqK4ktrBiFNjyqSaRUafKVbvMTxkpsJgyEzV6wNH_k5fkRemjncP9ppnOOS2mosr3FX5Uq9jKq3BWEa6ypmuPe4B0M3tYyQDGPTsyhQ5mo>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrvdeitddguddviecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
+    necuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
+    enucfjughrpeffhffvvefukfhfgggtuggjsehgtderredttddvnecuhfhrohhmpefrrght
+    rhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtth
+    gvrhhnpeeukedtvedtffevleejtefgheehieegkeeluddvfeefgeehgfeltddtheejleff
+    teenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpsh
+    esphhkshdrihhm
+X-ME-Proxy: <xmx:81yeZbnL1m7wROcoK7PI4pzsgfTyJWERltc8_MoeE8nX57VL5QXeMQ>
+    <xmx:81yeZR24TKXJ7IuP_YGz4rsnVk59WummZpesYXsJKPPN82pLnOpdlw>
+    <xmx:81yeZasOt7BuDvh8YfL4bD-QF2y5xVjud2kfOx8PdKtECw2YogCBew>
+    <xmx:9FyeZS81TCa568F7s52mv9pPieyMm3QZDGGVjBkammRkij2rJgHwqA>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 10 Jan 2024 04:01:38 -0500 (EST)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id b44c7369 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 10 Jan 2024 08:58:56 +0000 (UTC)
+Date: Wed, 10 Jan 2024 10:01:34 +0100
+From: Patrick Steinhardt <ps@pks.im>
+To: git@vger.kernel.org
+Cc: Taylor Blau <me@ttaylorr.com>, Eric Sunshine <sunshine@sunshineco.com>
+Subject: [PATCH v2 0/6] t: mark "files"-backend specific tests
+Message-ID: <cover.1704877233.git.ps@pks.im>
+References: <cover.1704802213.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-OriginatorOrg: outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: LV3P220MB1286.NAMP220.PROD.OUTLOOK.COM
-X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
-X-MS-Exchange-CrossTenant-Network-Message-Id: 7e2b6be9-b58d-4b22-16ab-08dc11b448e5
-X-MS-Exchange-CrossTenant-rms-persistedconsumerorg: 00000000-0000-0000-0000-000000000000
-X-MS-Exchange-CrossTenant-originalarrivaltime: 10 Jan 2024 08:15:19.4248
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: EA2P220MB1306
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="J+TigO0EYxxVJUoR"
+Content-Disposition: inline
+In-Reply-To: <cover.1704802213.git.ps@pks.im>
 
-DQpIZWxsb08gV29ybGQgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIDEyLzEwLzIw
-MjMNCkZyb206IGJhc2VfNjQ7DQoNCiAgICBBVFRFTlRJT04gTkVFRFMgQ09SUkVDVEVEDQoNCkFk
-YXB0aXZlIGNhcmQgaXMgYW5kIHdhcyBhbHRlcmVkIGZvciBHaXRIdWIgYW5kIHNvZnR3YXJlIGlz
-IGxpa2UgaXQgY29tcGFyZWQgYmFjayB0byBub3JtYWwhIEkgd291bGQgbWVzcyB3aXRoIGl0IGJ1
-dCBJ4oCZbSBhYm91dCB0byBob2xkIG1hbmFnZW1lbnQgYXQgR2l0SHViIGxpYWJsZSBmb3IgcG90
-ZW50aWFsbHkgaGF2aW5nIGEgc2NhbSBvciBwaGlzaGluZyBhdHRhY2sgb24gbXkgY29ycG9yYXRl
-IGFjY291bnRzIGFuZCBjb3Jwb3JhdGlvbiwgR2l0SHViLg0KDQpTb3VuZGx5IEkgaGF2ZSBubyBw
-b3dlciBvZiBhdHRvcm5leSwgbm8gcHJvcGVydHkgcmVzdHJpY3Rpb25zIG9yIGNvbnRyb2wgb3Zl
-ciBtZSBsZWdhbCBvciBmaW5hbmNpYWwgYW5kIG9yIG1lbnRhbGx5Lg0KDQpQbGVhc2UgbWFrZSB0
-aGlzIGFjY291bnQgYmFjayB0byB3aGF0IHNob3VsZCBiZSBvZiBhcyBmb3IgdGhlIGFkYXB0aXZl
-IGNhcmQgZWRpdGVkIG1vZGVsZWQgYnkgTWF0dCB3aG9ldmVyLA0KDQpUaGFua3MgZG9tYWluIG93
-bmVyLA0KUm9zcyBOaWNob2xhcyBPbmVpbCBUaG9tYXMNCkNhbGlmb3JuaWENCkRPQjoxMS8xNC8x
-OTg4DQoNCg0KaHR0cHM6Ly9naXRodWIuY29tL21pY3Jvc29mdC9BZGFwdGl2ZUNhcmRzL2lzc3Vl
-cy8zMDU0DQoNCg0KUm9zcyBOaWNob2xhcyBPbmVpbCBUaG9tYXMNCnd3dy5naXRodWIuY29tDQp3
-d3cuY29pbmJhc2UuY29tDQp3d3cuanNudWxsLmNvbQ0KKDU1OS04MTYtMjk1MA0KDQo=
+
+--J+TigO0EYxxVJUoR
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+Hi,
+
+this is the second version of my patch series that addresses tests which
+are specific to the "files" backend. Changes compared to v1:
+
+  - I've rewritten the patch addressing t1300 to not mark tests as
+    repository format specific anymoreg. Instead, we now create separate
+    repos for relevant tests where we are more careful to not discard
+    extensions.
+
+  - I've made the casing of config options more consistent.
+
+  - I've extended some commit messages to hopefully explain better why
+    I'm doing things the way I do them and fixed some typos.
+
+Thanks for your feedback!
+
+Patrick
+
+Patrick Steinhardt (6):
+  t1300: make tests more robust with non-default ref backends
+  t1301: mark test for `core.sharedRepository` as reffiles specific
+  t1302: make tests more robust with new extensions
+  t1419: mark test suite as files-backend specific
+  t5526: break test submodule differently
+  t: mark tests regarding git-pack-refs(1) to be backend specific
+
+ t/t1300-config.sh             | 74 +++++++++++++++++++++++------------
+ t/t1301-shared-repo.sh        |  2 +-
+ t/t1302-repo-version.sh       | 19 +++++++--
+ t/t1409-avoid-packing-refs.sh |  6 +++
+ t/t1419-exclude-refs.sh       |  6 +++
+ t/t3210-pack-refs.sh          |  6 +++
+ t/t5526-fetch-submodules.sh   |  2 +-
+ 7 files changed, 83 insertions(+), 32 deletions(-)
+
+Range-diff against v1:
+1:  ec1b5bdd17 < -:  ---------- t1300: mark tests to require default repo f=
+ormat
+-:  ---------- > 1:  0552123fa3 t1300: make tests more robust with non-defa=
+ult ref backends
+2:  68e308c200 =3D 2:  384250fec2 t1301: mark test for `core.sharedReposito=
+ry` as reffiles specific
+3:  9af1e418d4 ! 3:  1284b70fab t1302: make tests more robust with new exte=
+nsions
+    @@ t/t1302-repo-version.sh: allow 1 noop-v1
+     =20
+      test_expect_success 'precious-objects allowed' '
+     -	mkconfig 1 preciousObjects >.git/config &&
+    -+	git config core.repositoryformatversion 1 &&
+    ++	git config core.repositoryFormatVersion 1 &&
+     +	git config extensions.preciousObjects 1 &&
+      	check_allow
+      '
+4:  d7c6b8b2a7 ! 4:  c6062b612c t1419: mark test suite as files-backend spe=
+cific
+    @@ Commit message
+         excluded pattern(s), 2023-07-10) we have implemented logic to hand=
+le
+         excluded refs more efficiently in the "packed" ref backend. This l=
+ogic
+         allows us to skip emitting refs completely which we know to not be=
+ of
+    -    any interest to the caller, which can avoid quite some allocaitons=
+ and
+    +    any interest to the caller, which can avoid quite some allocations=
+ and
+         object lookups.
+    =20
+         This was wired up via a new `exclude_patterns` parameter passed to=
+ the
+         backend's ref iterator. The backend only needs to handle them on a=
+ best
+         effort basis though, and in fact we only handle it for the "packed=
+-refs"
+    -    file, but not for loose references. Consequentially, all callers m=
+ust
+    -    still filter emitted refs with those exclude patterns.
+    +    file, but not for loose references. Consequently, all callers must=
+ still
+    +    filter emitted refs with those exclude patterns.
+    =20
+         The result is that handling exclude patterns is completely optiona=
+l in
+         the ref backend, and any future backends may or may not implement =
+it.
+         Let's thus mark the test for t1419 to depend on the REFFILES prere=
+q.
+    =20
+    +    An alternative would be to introduce a new prereq that tells us wh=
+ether
+    +    the backend under test supports exclude patterns or not. But this =
+does
+    +    feel a bit overblown:
+    +
+    +      - It would either map to the REFFILES prereq, in which case it f=
+eels
+    +        overengineered because the prereq is only ever relevant to t14=
+19.
+    +
+    +      - Otherwise, it could auto-detect whether the backend supports e=
+xclude
+    +        patterns. But this could lead to silent failures in case the s=
+upport
+    +        for this feature breaks at any point in time.
+    +
+    +    It should thus be good enough to just use the REFFILES prereq for =
+now.
+    +    If future backends ever grow support for exclude patterns we can e=
+asily
+    +    add their respective prereq as another condition for this test sui=
+te to
+    +    execute.
+    +
+         Signed-off-by: Patrick Steinhardt <ps@pks.im>
+    =20
+      ## t/t1419-exclude-refs.sh ##
+5:  51e494a50e ! 5:  ae08afc459 t5526: break test submodule differently
+    @@ Commit message
+         delete the `HEAD` reference will stop working.
+    =20
+         Adapt the code to instead delete the objects database. Going back =
+with
+    -    this new way to cuase breakage confirms that it triggers the infin=
+ite
+    +    this new way to cause breakage confirms that it triggers the infin=
+ite
+         recursion just the same, and there are no equivalent ongoing effor=
+ts to
+         replace the object database with an alternate backend.
+    =20
+6:  a9620f329d =3D 6:  df648be535 t: mark tests regarding git-pack-refs(1) =
+to be backend specific
+--=20
+2.43.GIT
+
+
+--J+TigO0EYxxVJUoR
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmWeXO4ACgkQVbJhu7ck
+PpSu4BAAjtEImB9jAxzHKXIZOvuT2YYlgRFfsMndnecT/b1KSNwpApxrOS1VJg4J
+cUYwlYZccKhQb076++sj6nhYL0O2yzRTa5ip+/wI2s5ViionB2owI4ouNK9zTOJ2
+29D9854G0OJl5OE7kBcDNF8JN9pqZ+J/suhxpY5GDK6AtSZV8Eh0R6/4944m7IDt
+VV7VQiMFLa5BwJGUS+AYPl2ffz+hp3clIcHmILaJtEZ1bY2aZXpFe5ja9+TE/3bU
+WnRtriW55sqWwkf3HQklvrLSqC1v8QRMcqM6ZkkS9zHUUM96QG8k/1WpKcNiTn55
+LBmOpcuVWc5Xi5Q32gOAA3sowGEZE6QOc9Dh5pHvg/EsMXGrCLNVZsL/sm/HBSyP
+wlg1SHV03Q7QqW7HDvscGXC2N7H+4Lxe1JQdChrfAMKZ/flQ/TXQSA5Cie2YwjX7
+dzq5+04YYCU8VnFxKTY3FJHS/QxDH6Ody38V4CXS2CCFq3i02IqxLSkA0G0nreSR
+IsRBD91Lmoyaf+1RNp1HCOx3abnDEAcAlRJlpQxpYpbnmSCYNK1TC+Radmzwpx86
+QXx4ZQHzrb1fJgirIB+rl04BV6AMoa9UVueHvFm24GmNurDvRVRj0USoiIHQsS2z
+KSs5thusS9bt5l38PGpHN7E+KH/zYqlYAATaRE7UjzKeyONexxM=
+=XbUq
+-----END PGP SIGNATURE-----
+
+--J+TigO0EYxxVJUoR--
