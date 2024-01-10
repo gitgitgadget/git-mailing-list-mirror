@@ -1,85 +1,83 @@
-Received: from mail-qk1-f171.google.com (mail-qk1-f171.google.com [209.85.222.171])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from secure.elehost.com (secure.elehost.com [185.209.179.11])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E44854E1DC
-	for <git@vger.kernel.org>; Wed, 10 Jan 2024 17:55:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ttaylorr.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="bxKqW1d5"
-Received: by mail-qk1-f171.google.com with SMTP id af79cd13be357-78314e00350so394242385a.1
-        for <git@vger.kernel.org>; Wed, 10 Jan 2024 09:55:44 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1704909343; x=1705514143; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=mUW3EvxsaOgQnm91hC/Mf09e44n4GjdPJiii+Nt+qXk=;
-        b=bxKqW1d5Tc5PkhUmlvnuzVfCqC/EjGuW/dZQjJo6rVp7QO9Spozx1QX9ZG+9T2eT5w
-         NuFcrNa2i4POcFGGJL4jYClYQcHstTVaOv3mBD//hbslzkjJQtTVib+z+MaaVS0FBt94
-         YOGPFm6zaYW7FKh+/l6KeHvQRBCu8BCOKEBFL8s6q/xWI5XGHasD9HREZASh8GiyPZM8
-         9z5h6fU3HbJescu5xyKgG2Aau23IPQIaOcZPTptuYdjitjKZCs4WAscHKLftAcS9uu3X
-         1PWUWTuFix6cRLWUWnIGZ/eDWq+cvqkcw8JE5CbaSLFPJK4vDVHh4bt+Bk18cd3IoQ65
-         G6Fg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1704909344; x=1705514144;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=mUW3EvxsaOgQnm91hC/Mf09e44n4GjdPJiii+Nt+qXk=;
-        b=FsPP/MVZOxywxWRFQ+Vm4yZN5exwmTqq4gdlW1em9JYED02tgr2xrR7kNLKsdiFDvT
-         4A5X15S21tmUcD2Qtn4Gvpa5T17duWjT5rMt0RRWXdqCkOPNU80K0tNNHg6Px2k1owY1
-         b+P4jzXxXaFQabQkjO135ZxcEZhgxpiAHViy39D91JMZMtR9mwupziVJ0DtmneBh5L/8
-         bLJQVsVbLV5wkN9Rfgylsaa3LQtHEk3SsIwq+mTH0Iplm3KR6KR2NizsQAVcJAZG4/BI
-         VTszxAMH065O9kQyta3E99lVipcNIwX94pWI9kdaBTkYqPlQXOgIQESCBkBoGeadUf3A
-         kOyw==
-X-Gm-Message-State: AOJu0YztSw9QiqV13SfE8+BRpM/14iGe9AJ7XZ0T6+tFvRpdal2NQZKz
-	xsbfq25Hn7JlybrnW/4C4P1bClSsGnvOB+HE6RgwlJ9l+GvbQQ==
-X-Google-Smtp-Source: AGHT+IHH/5Lh5CLlplVF24gILFyBXAD5G5I8+mGv0yvQphH1z/sZR67M31FI/UB/68ac8yB2jmy+SQ==
-X-Received: by 2002:ac8:7c52:0:b0:429:9a70:9932 with SMTP id o18-20020ac87c52000000b004299a709932mr1681078qtv.85.1704909343736;
-        Wed, 10 Jan 2024 09:55:43 -0800 (PST)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id cp6-20020a05622a420600b004280cad48basm1937124qtb.77.2024.01.10.09.55.43
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 10 Jan 2024 09:55:43 -0800 (PST)
-Date: Wed, 10 Jan 2024 12:55:42 -0500
-From: Taylor Blau <me@ttaylorr.com>
-To: git@vger.kernel.org
-Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 5/5] t5325: run expected-to-fail `index-pack`s with
- `--threads=1`
-Message-ID: <7d0017342d4f9f81a1ec74ab02aac0d3d44d38ff.1704909216.git.me@ttaylorr.com>
-References: <ZZ7VEVXSg1T8ZkIK@nand.local>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D5074C3C1
+	for <git@vger.kernel.org>; Wed, 10 Jan 2024 18:04:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nexbridge.com
+X-Virus-Scanned: Debian amavisd-new at secure.elehost.com
+Received: from Mazikeen (ec2-99-79-189-168.ca-central-1.compute.amazonaws.com [99.79.189.168])
+	(authenticated bits=0)
+	by secure.elehost.com (8.15.2/8.15.2/Debian-22ubuntu3) with ESMTPSA id 40AHpSLD1657033
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 10 Jan 2024 17:51:28 GMT
+Reply-To: <rsbecker@nexbridge.com>
+From: <rsbecker@nexbridge.com>
+To: "'Mohit Marathe'" <mohitmarathe@proton.me>,
+        "'Christian Couder'" <christian.couder@gmail.com>
+Cc: <git@vger.kernel.org>, <gitster@pobox.com>, <britton.kerin@gmail.com>,
+        <peff@peff.net>
+References: <OqD4xQ_p-jcftCbAw0ovvrBztfiuoMGcTonCc0i6x7Ziy-hx3uA-Hoz4-3tfRI39KMj-V5OZIGgOe66b1eyX3YrKZNThMYjjMkn6g4-Ww8c=@proton.me> <CAP8UFD1d7FSa=mUzzUA5e3eSEcCVfaymxWewo5GjdDBi4GyE-g@mail.gmail.com> <F6ejgAfr2IMRNR3Tq0CDTHeT9xMWzJ9ley8M_fnSX97ayRNRp_CEgA62WdtOooi9bha1WJPGB53ptJYQFII2lCbIflwgNvbIaefw7nK8w7M=@proton.me>
+In-Reply-To: <F6ejgAfr2IMRNR3Tq0CDTHeT9xMWzJ9ley8M_fnSX97ayRNRp_CEgA62WdtOooi9bha1WJPGB53ptJYQFII2lCbIflwgNvbIaefw7nK8w7M=@proton.me>
+Subject: RE: [GSoC][RFC] Replace use of atoi() with strtol_i(), as a microproject
+Date: Wed, 10 Jan 2024 12:55:11 -0500
+Organization: Nexbridge Inc.
+Message-ID: <004601da43ee$2b6cd0c0$82467240$@nexbridge.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <ZZ7VEVXSg1T8ZkIK@nand.local>
+Content-Type: text/plain;
+	charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+X-Mailer: Microsoft Outlook 16.0
+Content-Language: en-ca
+Thread-Index: AQJ5DOmfqW7jSMfzP26k7WvTwFDDvAJhEw67AljiVW6vb/HgwA==
 
-For identical reasons as in the previous commit, apply the same
-treatment to expected-to-fail `index-pack` invocations in t5325 with
-`--threads=1`.
+On Wednesday, January 10, 2024 12:38 PM, Mohit Marathe wrote:
+>>In https://public-inbox.org/git/xmqqjzpjsbjl.fsf@gitster.g/ Junio =
+says:
+>>
+>>"Some places use atoi() immediately followed by strspn() to skip over
+>>digits, which means they are parsing an integer and want to continue
+>>reading after the integer, which is incompatible with what
+>>strtol_i() wants to do.  They need either a separate helper or an
+>>updated strtol_i() that optionally allows you to parse the prefix and
+>>report where the integer ended, e.g., something like:"
+>>
+>>and then he suggests the above helper.
+>>
+>>So it seems that the two instances you found look like good places
+>>where Junio says the new helper could be useful.
+>>
+>>Now if you want to continue further on this, I think you would need to
+>>take a closer look at those two instances to see if replacing atoi()
+>>there with the new helper would improve something there or not. If you
+>>find it would improve something, be sure to explain what would be
+>>improved in the commit message.
+>
+>I took a closer look at `builtin/patch-id.c` and it seems replacing =
+`atoi()` (which is
+>used to parse numbers in the hunk header) wouldn't improve anything, =
+unless I'm
+>missing something.
+>
+>So then I tried finding other places where `atoi()` can be replaced but =
+I find it
+>difficult to find any reason that would justify the change.
+>So far I've only looked at few of the MANY occurrences of `atoi()`.
+>As far as I understand, the only advantage of `strtol_i()` over =
+`atoi()` is better error
+>handling. And most of places I've seen either already takes care of =
+that or does not
+>need that at all.
 
-Signed-off-by: Taylor Blau <me@ttaylorr.com>
----
- t/t5325-reverse-index.sh | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+I am not sure this is a good idea. The error detection inside strtol_i() =
+reports a -1 if the supplied text value is invalid. This does not =
+differentiate between an invalid value and a valid "-1" supplied. =
+Replacing all instances of atoi() with strtol_i() will likely cause =
+breakages as the error semantics are different between the two.
+--Randall
 
-diff --git a/t/t5325-reverse-index.sh b/t/t5325-reverse-index.sh
-index 431a603ca0..dc3d2235e8 100755
---- a/t/t5325-reverse-index.sh
-+++ b/t/t5325-reverse-index.sh
-@@ -64,7 +64,7 @@ test_expect_success 'index-pack can verify reverse indexes' '
- 	chmod u+w $rev &&
- 	printf "xxxx" | dd of=$rev bs=1 count=4 conv=notrunc &&
- 
--	test_must_fail git index-pack --rev-index --verify \
-+	test_must_fail git index-pack --threads=1 --rev-index --verify \
- 		$packdir/pack-$pack.pack 2>err &&
- 	grep "validation error" err
- '
--- 
-2.43.0.288.g906e6a084d
