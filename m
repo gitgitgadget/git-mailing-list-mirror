@@ -1,45 +1,54 @@
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qv1-f53.google.com (mail-qv1-f53.google.com [209.85.219.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E1244D100
-	for <git@vger.kernel.org>; Wed, 10 Jan 2024 17:48:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADF904D135
+	for <git@vger.kernel.org>; Wed, 10 Jan 2024 17:55:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="jTeWl01F"
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 204F71C73B2;
-	Wed, 10 Jan 2024 12:48:54 -0500 (EST)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=pSPZitH2sE+M
-	60uiuu/IOOaQb6pnk/dZXgkVGXrKEyc=; b=jTeWl01F+tyubrDAvGz73px2ajyW
-	S2CB4PPv0bGamQXAG+Z+n/9hHRZlbo6nAXNAtOlaPjLpumb//JHA8tIUKueX3kf9
-	J/2lwsiCKI8ZUkrlAEXjgd0tPQq6oN6VmfxSbGbH1nlPz59FoYIOmz87Am6iF9Id
-	3Eg7BotyV931WQ4=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 181611C73B1;
-	Wed, 10 Jan 2024 12:48:54 -0500 (EST)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.200.93])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 6E00B1C73AF;
-	Wed, 10 Jan 2024 12:48:53 -0500 (EST)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: =?utf-8?Q?Rub=C3=A9n?= Justo <rjusto@gmail.com>
-Cc: Git List <git@vger.kernel.org>
-Subject: Re: [PATCH] branch: error description when deleting a not fully
- merged branch
-In-Reply-To: <04c3556f-0242-4ac3-b94a-be824cd2004a@gmail.com>
- (=?utf-8?Q?=22Rub=C3=A9n?= Justo"'s
-	message of "Wed, 10 Jan 2024 15:55:28 +0100")
-References: <04c3556f-0242-4ac3-b94a-be824cd2004a@gmail.com>
-Date: Wed, 10 Jan 2024 09:48:52 -0800
-Message-ID: <xmqqbk9tcc57.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="HpatuzkD"
+Received: by mail-qv1-f53.google.com with SMTP id 6a1803df08f44-67f8d9fe99fso29455666d6.2
+        for <git@vger.kernel.org>; Wed, 10 Jan 2024 09:55:33 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1704909332; x=1705514132; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=6iUMd0d/pviYe4gTvkVDLCNxjOk5mMN6jQaheKj99ic=;
+        b=HpatuzkDg+d1g9awyc780B5vo3LrBJ5H8hc+e4q5pEWmdd3b6j20hfwNmPF02iVUze
+         JzysyYUTXEZLNrfHFe+61qY/EwxYu+JBR69BimGe4bmIc+lnGxPIXEgtRPtmukI/wTMH
+         PiVGRjEkKIK6dICVjufJC1vQidj25DW5fcQ6HnIxaO/lMCzqUS1D1tKpNihSz7jiXFHu
+         tGJtr51dcAjhIWwgBQOfsWYST20UknyTpU2TLN9DBtnLK/iExGl7crc7qVWp3xTnJL9j
+         XfAEtuL2OzdjNY9xSXqIVpd6JZUsHWgebk8U+G0kpH5POQXDJv52MKPK6IEC1/tfWvAS
+         nrAQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1704909332; x=1705514132;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=6iUMd0d/pviYe4gTvkVDLCNxjOk5mMN6jQaheKj99ic=;
+        b=JU5kb6DJsF2yEqkXjCavEJzm6FJOz2s6gdYJa54CIXfFJDfzmSueG5orXIBZJBByKW
+         R44EXHFg9+nF+o3dzgVTn5/JZLYSH9g2vm1j3+s5OR2fXa31/x34Juz49GeoGepSJoe6
+         +bUlVPxh1mMAczMkQhLUXKZOnqBw44g7L6zJNvUyiwIiHKmNbQTbsYsazm3wLYon917H
+         nTCYuQpv/P1mZ2WM7lUgUM0XX1hui3SZRshgjDLhxJewi9n3BdoVBCqCe/CPv+QdnL5x
+         mZJNigYKcgvMOOGc7koIWwwMTPx5o5pbFB9Vn1qg76zYVadlyRPLidhhuXI9lwZFQ9Jn
+         7KSw==
+X-Gm-Message-State: AOJu0YwOHsgb/Jx5c/zFIaD72wdBtxY8F/yqvLHDIcbd/NfLeci7jbql
+	Q05+MzsHpOHr0VW8XZtlZLM4znkKFMOWwuljRsGS20Xd+6ndrg==
+X-Google-Smtp-Source: AGHT+IFbGnldD4zDChCKISOGy2Cq27nR7FAVOoGukA6SRDC0j+5EmxLVAa+e8w6xURUmWUCiZbLOGA==
+X-Received: by 2002:a05:6214:1c05:b0:681:1ada:a418 with SMTP id u5-20020a0562141c0500b006811adaa418mr1686656qvc.104.1704909332136;
+        Wed, 10 Jan 2024 09:55:32 -0800 (PST)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id kj1-20020a056214528100b0067f4e2ad746sm1870317qvb.44.2024.01.10.09.55.31
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 10 Jan 2024 09:55:31 -0800 (PST)
+Date: Wed, 10 Jan 2024 12:55:30 -0500
+From: Taylor Blau <me@ttaylorr.com>
+To: git@vger.kernel.org
+Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH 1/5] t5309: run expected-to-fail `index-pack`s with
+ `--threads=1`
+Message-ID: <588de2e4f16ab090ff477088084e0b81d9615ec5.1704909216.git.me@ttaylorr.com>
+References: <ZZ7VEVXSg1T8ZkIK@nand.local>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -47,133 +56,130 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID:
- 850AE3DE-AFE0-11EE-BB74-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
+In-Reply-To: <ZZ7VEVXSg1T8ZkIK@nand.local>
 
-Rub=C3=A9n Justo <rjusto@gmail.com> writes:
+The t5309 script triggers a racy false positive with SANITIZE=leak on a
+multi-core system. Running with "--stress --run=6" usually fails within
+10 seconds or so for me, complaining with something like:
 
-> The error message we show when the user tries to delete a not fully
-> merged branch describes the error and gives a hint to the user:
->
-> 	error: the branch 'foo' is not fully merged.
-> 	If you are sure you want to delete it, run 'git branch -D foo'.
->
-> Let's move the hint part so that it takes advantage of the advice
-> machinery:
->
-> 	error: the branch 'foo' is not fully merged
-> 	hint: If you are sure you want to delete it, run 'git branch -D foo'
-> 	hint: Disable this message with "git config advice.forceDeleteBranch f=
-alse"
+    + git index-pack --fix-thin --stdin
+    fatal: REF_DELTA at offset 46 already resolved (duplicate base 01d7713666f4de822776c7622c10f1b07de280dc?)
 
-This is probably one sensible step forward, so let's queue it as-is.
+    =================================================================
+    ==3904583==ERROR: LeakSanitizer: detected memory leaks
 
-But with reservations for longer-term future direction.  Stepping
-back a bit, when 'foo' is not fully merged and the user used "branch
--d" on it, is it sensible for us to suggest use of "branch -D"?
+    Direct leak of 32 byte(s) in 1 object(s) allocated from:
+        #0 0x7fa790d01986 in __interceptor_realloc ../../../../src/libsanitizer/lsan/lsan_interceptors.cpp:98
+        #1 0x7fa790add769 in __pthread_getattr_np nptl/pthread_getattr_np.c:180
+        #2 0x7fa790d117c5 in __sanitizer::GetThreadStackTopAndBottom(bool, unsigned long*, unsigned long*) ../../../../src/libsanitizer/sanitizer_common/sanitizer_linux_libcdep.cpp:150
+        #3 0x7fa790d11957 in __sanitizer::GetThreadStackAndTls(bool, unsigned long*, unsigned long*, unsigned long*, unsigned long*) ../../../../src/libsanitizer/sanitizer_common/sanitizer_linux_libcdep.cpp:598
+        #4 0x7fa790d03fe8 in __lsan::ThreadStart(unsigned int, unsigned long long, __sanitizer::ThreadType) ../../../../src/libsanitizer/lsan/lsan_posix.cpp:51
+        #5 0x7fa790d013fd in __lsan_thread_start_func ../../../../src/libsanitizer/lsan/lsan_interceptors.cpp:440
+        #6 0x7fa790adc3eb in start_thread nptl/pthread_create.c:444
+        #7 0x7fa790b5ca5b in clone3 ../sysdeps/unix/sysv/linux/x86_64/clone3.S:81
 
-Especially now this is a "hint" to help less experienced folks, it
-may be helpful to suggest how the user can answer "If you are sure
-you want to delete" part.  As this knows what unique commits on the
-branch being deleted are about to be lost, one way to do so may be
-to tell the user about them ("you are about to lose 'branch: error
-description when deleting a not fully merged branch' and other 47
-commits that are not merged the target branch 'main'", for example).
+    SUMMARY: LeakSanitizer: 32 byte(s) leaked in 1 allocation(s).
+    Aborted
 
-Another possibility is to suggest merging the branch into the
-target, instead of suggesting a destructive "deletion", but I
-suspect that it goes too far second-guessing the end-user intention.
+What happens is this:
 
-Thanks.
+  0. We construct a bogus pack with a duplicate object in it and trigger
+     index-pack.
 
-> Signed-off-by: Rub=C3=A9n Justo <rjusto@gmail.com>
-> ---
->
-> This change is a pending NEEDSWORK from a recent series about adjusting
-> the error messages in branch.c
->
-> Unfortunately the full message now becomes a three line message.
->
-> Hopefully we can find a way in the near future to keep it at two.
->
->  Documentation/config/advice.txt | 3 +++
->  advice.c                        | 1 +
->  advice.h                        | 3 ++-
->  builtin/branch.c                | 9 ++++++---
->  4 files changed, 12 insertions(+), 4 deletions(-)
->
-> diff --git a/Documentation/config/advice.txt b/Documentation/config/adv=
-ice.txt
-> index 4d7e5d8759..5814d659b9 100644
-> --- a/Documentation/config/advice.txt
-> +++ b/Documentation/config/advice.txt
-> @@ -142,4 +142,7 @@ advice.*::
->  		Advice shown when a user tries to create a worktree from an
->  		invalid reference, to instruct how to create a new unborn
->  		branch instead.
-> +	forceDeleteBranch::
-> +		Advice shown when a user tries to delete a not fully merged
-> +		branch without the force option set.
->  --
-> diff --git a/advice.c b/advice.c
-> index 50c79443ba..e91f5d7ab8 100644
-> --- a/advice.c
-> +++ b/advice.c
-> @@ -79,6 +79,7 @@ static struct {
->  	[ADVICE_UPDATE_SPARSE_PATH]			=3D { "updateSparsePath", 1 },
->  	[ADVICE_WAITING_FOR_EDITOR]			=3D { "waitingForEditor", 1 },
->  	[ADVICE_WORKTREE_ADD_ORPHAN]			=3D { "worktreeAddOrphan", 1 },
-> +	[ADVICE_FORCE_DELETE_BRANCH]			=3D { "forceDeleteBranch", 1 },
->  };
-> =20
->  static const char turn_off_instructions[] =3D
-> diff --git a/advice.h b/advice.h
-> index 2affbe1426..5bef900142 100644
-> --- a/advice.h
-> +++ b/advice.h
-> @@ -10,7 +10,7 @@ struct string_list;
->   * Add the new config variable to Documentation/config/advice.txt.
->   * Call advise_if_enabled to print your advice.
->   */
-> - enum advice_type {
-> +enum advice_type {
->  	ADVICE_ADD_EMBEDDED_REPO,
->  	ADVICE_ADD_EMPTY_PATHSPEC,
->  	ADVICE_ADD_IGNORED_FILE,
-> @@ -50,6 +50,7 @@ struct string_list;
->  	ADVICE_WAITING_FOR_EDITOR,
->  	ADVICE_SKIPPED_CHERRY_PICKS,
->  	ADVICE_WORKTREE_ADD_ORPHAN,
-> +	ADVICE_FORCE_DELETE_BRANCH,
->  };
-> =20
->  int git_default_advice_config(const char *var, const char *value);
-> diff --git a/builtin/branch.c b/builtin/branch.c
-> index 0a32d1b6c8..2240433bc8 100644
-> --- a/builtin/branch.c
-> +++ b/builtin/branch.c
-> @@ -24,6 +24,7 @@
->  #include "ref-filter.h"
->  #include "worktree.h"
->  #include "help.h"
-> +#include "advice.h"
->  #include "commit-reach.h"
-> =20
->  static const char * const builtin_branch_usage[] =3D {
-> @@ -190,9 +191,11 @@ static int check_branch_commit(const char *branchn=
-ame, const char *refname,
->  		return -1;
->  	}
->  	if (!force && !branch_merged(kinds, branchname, rev, head_rev)) {
-> -		error(_("the branch '%s' is not fully merged.\n"
-> -		      "If you are sure you want to delete it, "
-> -		      "run 'git branch -D %s'"), branchname, branchname);
-> +		error(_("the branch '%s' is not fully merged"),
-> +		      branchname);
-> +		advise_if_enabled(ADVICE_FORCE_DELETE_BRANCH,
-> +				  _("If you are sure you want to delete it, "
-> +				  "run 'git branch -D %s'"), branchname);
->  		return -1;
->  	}
->  	return 0;
+  1. We spawn a bunch of worker threads to resolve deltas (on my system
+     it is 16 threads).
+
+  2. One of the threads sees the duplicate object and bails by calling
+     exit(), taking down all of the threads. This is expected and is the
+     point of the test.
+
+  3. At the time exit() is called, we may still be spawning threads from
+     the main process via pthread_create(). LSan hooks thread creation
+     to update its book-keeping; it has to know where each thread's
+     stack is (so it can find entry points for reachable memory). So it
+     calls pthread_getattr_np() to get information about the new thread.
+     That may allocate memory that must be freed with a matching call to
+     pthread_attr_destroy(). Probably LSan does that immediately, but
+     if you're unlucky enough, the exit() will happen while it's between
+     those two calls, and the allocated pthread_attr_t appears as a
+     leak.
+
+This isn't a real leak. It's not even in our code, but rather in the
+LSan instrumentation code. So we could just ignore it. But the false
+positive can cause people to waste time tracking it down.
+
+It's possibly something that LSan could protect against (e.g., cover the
+getattr/destroy pair with a mutex, and then in the final post-exit()
+check for leaks try to take the same mutex). But I don't know enough
+about LSan to say if that's a reasonable approach or not (or if my
+analysis is even completely correct).
+
+One approach to papering over this issue (short of LSan fixing it
+upstream) is to make the creation of work threads "atomic", i.e. by
+spawning all of them before letting any of them start to work.  This
+shouldn't make any practical difference for non-LSan runs. The thread
+spawning is quick, and could happen before any worker thread gets
+scheduled anyway.
+
+But that requires us to tweak production code (albeit at a negligible
+cost) in order to appease LSan in this narrow circumstance. Another
+approach is to simply run these expected-to-fail `index-pack`
+invocations with `--threads=1` so that we bypass the above issue
+entirely.
+
+The downside of that approach is that the test doesn't match our
+production code as well as it did before (where we might have run those
+same `index-pack` invocations with >1 thread, depending on how many CPUs
+the testing machine has). The risk there is that we might miss a
+regression that would leave us in an inconsistent state. But that feels
+rather unlikely in practice, and there are many other tests related to
+`index-pack` in the suite.
+
+Original-patch-by: Jeff King <peff@peff.net>
+Signed-off-by: Taylor Blau <me@ttaylorr.com>
+---
+ t/t5309-pack-delta-cycles.sh | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/t/t5309-pack-delta-cycles.sh b/t/t5309-pack-delta-cycles.sh
+index 4e910c5b9d..4100595c89 100755
+--- a/t/t5309-pack-delta-cycles.sh
++++ b/t/t5309-pack-delta-cycles.sh
+@@ -44,7 +44,7 @@ test_expect_success 'index-pack detects missing base objects' '
+ 		pack_obj $A $B
+ 	} >missing.pack &&
+ 	pack_trailer missing.pack &&
+-	test_must_fail git index-pack --fix-thin --stdin <missing.pack
++	test_must_fail git index-pack --threads=1 --fix-thin --stdin <missing.pack
+ '
+ 
+ test_expect_success 'index-pack detects REF_DELTA cycles' '
+@@ -55,13 +55,13 @@ test_expect_success 'index-pack detects REF_DELTA cycles' '
+ 		pack_obj $B $A
+ 	} >cycle.pack &&
+ 	pack_trailer cycle.pack &&
+-	test_must_fail git index-pack --fix-thin --stdin <cycle.pack
++	test_must_fail git index-pack --threads=1 --fix-thin --stdin <cycle.pack
+ '
+ 
+ test_expect_success 'failover to an object in another pack' '
+ 	clear_packs &&
+ 	git index-pack --stdin <ab.pack &&
+-	test_must_fail git index-pack --stdin --fix-thin <cycle.pack
++	test_must_fail git index-pack --threads=1 --stdin --fix-thin <cycle.pack
+ '
+ 
+ test_expect_success 'failover to a duplicate object in the same pack' '
+@@ -73,7 +73,7 @@ test_expect_success 'failover to a duplicate object in the same pack' '
+ 		pack_obj $A
+ 	} >recoverable.pack &&
+ 	pack_trailer recoverable.pack &&
+-	test_must_fail git index-pack --fix-thin --stdin <recoverable.pack
++	test_must_fail git index-pack --threads=1 --fix-thin --stdin <recoverable.pack
+ '
+ 
+ test_done
+-- 
+2.43.0.288.g906e6a084d
+
