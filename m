@@ -1,120 +1,186 @@
-Received: from mail-oi1-f174.google.com (mail-oi1-f174.google.com [209.85.167.174])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AD4B4EB36
-	for <git@vger.kernel.org>; Wed, 10 Jan 2024 20:16:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ttaylorr.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D12344F5E9
+	for <git@vger.kernel.org>; Wed, 10 Jan 2024 21:24:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="ERcsujCg"
-Received: by mail-oi1-f174.google.com with SMTP id 5614622812f47-3bc1414b48eso5046141b6e.2
-        for <git@vger.kernel.org>; Wed, 10 Jan 2024 12:16:56 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1704917815; x=1705522615; darn=vger.kernel.org;
-        h=content-disposition:mime-version:message-id:subject:to:from:date
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=COXzVv5BnBG2u5Xwh65Xg1ArVLw+Yr13+J0AgZnOYeY=;
-        b=ERcsujCgLdSD8lUyBdsBkvqnVumf1f0ER6YLhqurtq4DfMrUkKn4JLLKFN7jxGaWl0
-         E8QyQxR1P9EPhVeiso8RtkTTnMH9s8tzDDvWygUUWWOxsn+WwbtxpNk2LQ2CdF133+yb
-         +VkvbNNzy9sN+UNmK2MlDHt6IOnD7xzqZ3XGNUZ/8YJsFZSQz84anSyGMn2/kJ4q4a5G
-         P/B2Yonf/6hAlsWkJMYRhgjjhgM2GRCg2pyB2hdI7jNgO689m10je/ZQIv/2MKQXDVQK
-         kRw/yRxbh9FpwxoV4Adj0X/Gq9kmLxbResCRohZnvGGWLr2peTUGRzM/GWNMFOG4cx6S
-         WXdQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1704917815; x=1705522615;
-        h=content-disposition:mime-version:message-id:subject:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=COXzVv5BnBG2u5Xwh65Xg1ArVLw+Yr13+J0AgZnOYeY=;
-        b=mJFOf8TfpkxuDog0pD+QibPUtEs8D1rPs2G0fCE9cWr/VYH9YztK6Ryez9GM9C6zwY
-         trmY7eCzLio4o+ExsyTWiH8LG6e0VfEQayWle17NI1xuT75NfLPoNpcjyXM6iJXpzIMd
-         2K8VKqzOC29KTDXEkYQ/G+gf2Ocmv64b27bVfJqmUdeN8VDWQEFGu7pK42oj+SD49XWf
-         T/Fli2Z7D77tHEllRgd8bFLGBseuVuhBRzBrzI+Ohn4noarrFSkOXuWD8ZE4pw45/vmT
-         omk07sIyMfzLwLQMwQ9UJND3LtjC+BwX05Lrh05iXcYzEbgs/DJ0uyUxLEvPwn7UbHbL
-         GZQw==
-X-Gm-Message-State: AOJu0YwKHX5ngLjlbkMCEZAqIBFJCOyzoqVB44hqXvdNezGg6n3Sacrk
-	WcB5mhXtf3xMt9zrLECyR3v825KAmQkTnsC6Y4EfULTAEYijiw==
-X-Google-Smtp-Source: AGHT+IFHLba86crNmT700XOwn1ixLOU5BjzFj+V5cMmN2yf3fUDrHAOvR9jr1PXwFBcdGdynFR8CBw==
-X-Received: by 2002:a05:6808:1208:b0:3bc:12af:5528 with SMTP id a8-20020a056808120800b003bc12af5528mr223974oil.76.1704917815250;
-        Wed, 10 Jan 2024 12:16:55 -0800 (PST)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id d1-20020a05620a158100b00783244c7a95sm1857242qkk.24.2024.01.10.12.16.54
-        for <git@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 10 Jan 2024 12:16:54 -0800 (PST)
-Date: Wed, 10 Jan 2024 15:16:53 -0500
-From: Taylor Blau <me@ttaylorr.com>
-To: git@vger.kernel.org
-Subject: [DISCUSS] Introducing Rust into the Git project
-Message-ID: <ZZ77NQkSuiRxRDwt@nand.local>
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="RsXFyZDH"
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 7E8121C8DDD;
+	Wed, 10 Jan 2024 16:24:26 -0500 (EST)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=VQ55qgQaNfHXXeBhQjMHw0qamSpLCCq36CD44N
+	9a/Rc=; b=RsXFyZDHgXmcmXAU7W46ADh0BxGcmzzy3JJ7aMfA/CxrowU0hPqm36
+	PD1FRjzwyVxgycLd3DItKT4tsLj8P5/Xj3Ad6x8qn++uSwemXcIAodqDZHaGU0+l
+	7Wo1NkghuCto2L1C/pXprsP5Dqj7xf96q60KXJNwrFU7XCnve0koY=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 766341C8DDC;
+	Wed, 10 Jan 2024 16:24:26 -0500 (EST)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.200.93])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id D53CE1C8DDB;
+	Wed, 10 Jan 2024 16:24:25 -0500 (EST)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org,  Han-Wen Nienhuys <hanwenn@gmail.com>
+Subject: Re: [PATCH 4/4] reftable/blocksource: use mmap to read tables
+In-Reply-To: <a23f38a80609a5c5a6931400ffd28a92b33838bb.1704714575.git.ps@pks.im>
+	(Patrick Steinhardt's message of "Mon, 8 Jan 2024 13:18:43 +0100")
+References: <cover.1704714575.git.ps@pks.im>
+	<a23f38a80609a5c5a6931400ffd28a92b33838bb.1704714575.git.ps@pks.im>
+Date: Wed, 10 Jan 2024 13:24:24 -0800
+Message-ID: <xmqq5y00anlj.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ A15DE464-AFFE-11EE-94AF-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
 
-Over the holiday break at the end of last year I spent some time
-thinking on what it would take to introduce Rust into the Git project.
+Patrick Steinhardt <ps@pks.im> writes:
 
-There is significant work underway to introduce Rust into the Linux
-kernel (see [1], [2]). Among their stated goals, I think there are a few
-which could be potentially relevant to the Git project:
+> Using mmap comes with a significant drawback on Windows though, because
+> mmapped files cannot be deleted and neither is it possible to rename
+> files onto an mmapped file. But for one, the reftable library gracefully
+> handles the case where auto-compaction cannot delete a still-open stack
+> already and ignores any such errors. Also, `reftable_stack_clean()` will
+> prune stale tables which are not referenced by "tables.list" anymore so
+> that those files can eventually be pruned. And second, we never rewrite
+> already-rewritten stacks, so it does not matter that we cannot rename a
+> file over an mmaped file, either.
 
-  - Lower risk of memory safety bugs, data races, memory leaks, etc.
-    thanks to the language's safety guarantees.
+I somehow thought that we use "read into an allocated memory and
+pretend as if we mapped" emulation on Windows, so all of that may be
+moot.
 
-  - Easier to gain confidence when refactoring or introducing new code
-    in Rust (assuming little to no use of the language's `unsafe`
-    feature).
+> diff --git a/reftable/blocksource.c b/reftable/blocksource.c
+> index a1ea304429..5d3f3d264c 100644
+> --- a/reftable/blocksource.c
+> +++ b/reftable/blocksource.c
+> @@ -13,6 +13,12 @@ license that can be found in the LICENSE file or at
+>  #include "reftable-blocksource.h"
+>  #include "reftable-error.h"
+>  
+> +#if defined(NO_MMAP)
+> +static int use_mmap = 0;
+> +#else
+> +static int use_mmap = 1;
+> +#endif
 
-  - Contributing to Git becomes easier and accessible to a broader group
-    of programmers by relying on a more modern language.
+Is there (do you need) some externally controllable knob that the
+user can use to turn this off on a system that is compiled without
+NO_MMAP?  Otherwise it is misleading to have this as a variable.
 
-Given the allure of these benefits, I think it's at least worth
-considering and discussing how Rust might make its way into Junio's
-tree.
+> -static void file_close(void *b)
+> +static void file_close(void *v)
+>  {
+> -	int fd = ((struct file_block_source *)b)->fd;
+> -	if (fd > 0) {
+> -		close(fd);
+> -		((struct file_block_source *)b)->fd = 0;
+> +	struct file_block_source *b = v;
+> +
+> +	if (b->fd >= 0) {
+> +		close(b->fd);
+> +		b->fd = -1;
+>  	}
+>  
+> +	if (use_mmap)
+> +		munmap(b->data, b->size);
+> +	else
+> +		reftable_free(b->data);
+> +	b->data = NULL;
+> +
+>  	reftable_free(b);
+>  }
 
-I imagine that the transition state would involve some parts of the
-project being built in C and calling into Rust code via FFI (and perhaps
-vice-versa, with Rust code calling back into the existing C codebase).
-Luckily for us, Rust's FFI provides a zero-cost abstraction [3], meaning
-there is no performance impact when calling code from one language in
-the other.
+It would have been nicer to do this kind of "a void pointer is taken
+and we immediately cast it to a concrete and useful type upon entry"
+clean-up as a separate step that is purely clean-up, if there were
+many instances.  It is the first such one in the series as far as I
+remember, so it is not a huge deal.
 
-Some open questions from me, at least to get the discussion going are:
+> @@ -108,9 +119,7 @@ static int file_read_block(void *v, struct reftable_block *dest, uint64_t off,
+>  {
+>  	struct file_block_source *b = v;
+>  	assert(off + size <= b->size);
+> -	dest->data = reftable_malloc(size);
+> -	if (pread_in_full(b->fd, dest->data, size, off) != size)
+> -		return -1;
+> +	dest->data = b->data + off;
+>  	dest->len = size;
+>  	return size;
+>  }
 
-  1. Platform support. The Rust compiler (rustc) does not enjoy the same
-     widespread availability that C compilers do. For instance, I
-     suspect that NonStop, AIX, Solaris, among others may not be
-     supported.
+So, we used to delay the allocation and reading of a block until
+this function gets called.  Now, by the time the control reaches
+the function, we are expected to have the data handy at b->data.
+That is ensured by reftable_block_source_from_file(), I presume?
 
-     One possible alternative is to have those platforms use a Rust
-     front-end for a compiler that they do support. The gccrs [4]
-     project would allow us to compile Rust anywhere where GCC is
-     available. The rustc_codegen_gcc [5] project uses GCC's libgccjit
-     API to target GCC from rustc itself.
+> @@ -127,8 +136,10 @@ int reftable_block_source_from_file(struct reftable_block_source *bs,
+>  {
+>  	struct stat st = { 0 };
+>  	int err = 0;
+> -	int fd = open(name, O_RDONLY);
+> +	int fd;
+>  	struct file_block_source *p = NULL;
+> +
+> +	fd = open(name, O_RDONLY);
+>  	if (fd < 0) {
+>  		if (errno == ENOENT) {
+>  			return REFTABLE_NOT_EXIST_ERROR;
 
-  2. Migration. What parts of Git are easiest to convert to Rust? My
-     hunch is that the answer is any stand-alone libraries, like
-     strbuf.h. I'm not sure how we should identify these, though, and in
-     what order we would want to move them over.
+This is a no-op clean-up that would have been better in a separate
+clean-up step.  Again, not a huge deal.
 
-  3. Interaction with the lib-ification effort. There is lots of work
-     going on in an effort to lib-ify much of the Git codebase done by
-     Google. I'm not sure how this would interact with that effort, but
-     we should make sure that one isn't a blocker for the other.
+> @@ -144,7 +155,18 @@ int reftable_block_source_from_file(struct reftable_block_source *bs,
+>  
+>  	p = reftable_calloc(sizeof(struct file_block_source));
+>  	p->size = st.st_size;
+> -	p->fd = fd;
+> +	if (use_mmap) {
+> +		p->data = xmmap(NULL, st.st_size, PROT_READ, MAP_PRIVATE, fd, 0);
+> +		p->fd = fd;
 
-I'm curious to hear what others think about this. I think that this
-would be an exciting and worthwhile direction for the project. Let's
-see!
+This is a bit unusual for our use of mmap() where the norm is to
+close the file descriptor once we mapped (we only need the memory
+region itself and not the originating file descriptor to unmap it).
 
-Thanks,
-Taylor
+Is there a reason why we need to keep p->fd?  Now the other side of
+this if/else preallocates the whole thing and slurps everything in
+core to allow the remainder of the code to mimic what happens on the
+mmaped block memory (e.g., we saw how file_read_block() assumes that
+b->data[0..b->size] are valid) and does not obviously need p->fd,
+can we just remove .fd member from the file_block_source structure?
 
-[1]: https://rust-for-linux.com/
-[2]: https://lore.kernel.org/rust-for-linux/20210414184604.23473-1-ojeda@kernel.org/
-[3]: https://blog.rust-lang.org/2015/04/24/Rust-Once-Run-Everywhere.html#c-talking-to-rust
-[4]: https://github.com/Rust-GCC/gccrs
-[5]: https://github.com/rust-lang/rustc_codegen_gcc
+That way, file_close() can also lose the conditional close() call.
+
+For that matter, do we need any codepath in this file that is
+enabled by !use_mmap?  Can't we just use xmmap() and let its
+"instead, we allocate, read into it and return" emulation?
+
+Thanks.
+
+> +	} else {
+> +		p->data = xmalloc(st.st_size);
+> +		if (read_in_full(fd, p->data, st.st_size) != st.st_size) {
+> +			close(fd);
+> +			return -1;
+> +		}
+> +		close(fd);
+> +		p->fd = -1;
+> +	}
+>  
+>  	assert(!bs->ops);
+>  	bs->ops = &file_vtable;
