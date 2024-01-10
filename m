@@ -1,53 +1,53 @@
-Received: from mail-qk1-f176.google.com (mail-qk1-f176.google.com [209.85.222.176])
+Received: from mail-qv1-f47.google.com (mail-qv1-f47.google.com [209.85.219.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C49504D5A4
-	for <git@vger.kernel.org>; Wed, 10 Jan 2024 17:55:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83C444D594
+	for <git@vger.kernel.org>; Wed, 10 Jan 2024 17:55:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="0aLS7oiW"
-Received: by mail-qk1-f176.google.com with SMTP id af79cd13be357-78104f6f692so359624785a.1
-        for <git@vger.kernel.org>; Wed, 10 Jan 2024 09:55:36 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="yyHBOtqd"
+Received: by mail-qv1-f47.google.com with SMTP id 6a1803df08f44-680d4584a81so35561206d6.1
+        for <git@vger.kernel.org>; Wed, 10 Jan 2024 09:55:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1704909335; x=1705514135; darn=vger.kernel.org;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1704909338; x=1705514138; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=m6SeAM3pmHZUNXyHKrPaR6yrgE2UjSNVt5yWi9JQboY=;
-        b=0aLS7oiWk3WBJmhcWLCOzDIO2y3SlKM0EvqTIJt+wZh4fzKMSyZoyXCfkn9qacbpzD
-         i7ESJX3+D/SqfLnvBz+JSTxRvkpUXF+rWj1x71rlBbp/jjBVhlor2WoZ/sFv6x9iB9Am
-         Nw4yRRkhyLI+RPRwmlDrSUUdp4H7F8OxvJnVhUt1jXQ0Uba1PJX0hfODrdtvNUbZX27V
-         8gmTRu/32nVDdRpKJ3R87ccihRmGtIIOwLkdUb2qeZnZlaRyLRuKUUMFXwbToeG73Rdx
-         HDttkCPH++F3jL3v7OrJKpL9eCo3iAo6H/TllrAqP0JQ7kcdw/08oeIelGBoktmTpMBx
-         VlUw==
+        bh=2dOkZsTsOFQEblTAxi1gmTvocVfTF9neXhlvxTQtV4w=;
+        b=yyHBOtqdv77FVewkv/9DSHu1B/3in6zqqkq4NK56tCiDT5EEXoyn31GrV8OJxi1z08
+         P9lVMwx1RQEcegWD+7tOD5ckQbKcBZPKoZ+5xjBAxG37Wc4BU0beLOcAQPv38j/1qbI0
+         cBbranYIPFOuw+xifnARzOARilz0E1KZJc+cPexN0SptLK/Hm7W/0Ge67ABBr1PCZkY1
+         wopsPTH2JoyqUn6lTcbVmsnmU/FKQdZsZOWusxSNkRFeTk/+1z+9BonE5KFxflHgpxIC
+         PXEeGe7pPh8eUg0Yxt7yt/gkoj0jlysh/gWX/Ht3rguAgJZ2ff+yXLV/+1TJjNa6kt/X
+         2frA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1704909335; x=1705514135;
+        d=1e100.net; s=20230601; t=1704909338; x=1705514138;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=m6SeAM3pmHZUNXyHKrPaR6yrgE2UjSNVt5yWi9JQboY=;
-        b=M2QXqnyQzAExcdVHJNrBOmOhbkquh330wAbPBdqNjLTY/6V4UT/Qgc+0Hrbx1wkb5M
-         VpBg7Xgzsk2NAWDIV4fJYr9QIHTY+cULvxA8MLgf12nMjCMO/7fP94T95wjDn6s+SktY
-         SF28csg3esSCCBvsfF0kcNwuauYMDUc2kKizS2nmw1ux+wq5v2yZVTJkBxNkBCgABXoV
-         94UnkKOrLb5f0Zxum0lw0iqWWQz3MdXaxNzi+nMVoo2PMwI2xo/Hrdwrzos9l6u4iBqh
-         wcV8XH3ZpwX92vG7bDhp49m8pudLu2yB0BxNcXfYcXaiYqoqDm9M3R5Nq5wV0HvAf2EY
-         fLRg==
-X-Gm-Message-State: AOJu0YzLmJIZ0IG/hKRXJp3+8mz1TCGYbE9/NSC1PsZU7Quzdwzbv9Es
-	taKOWJyhwxlXOr/ZKAaOR84h8mzLtstC1Bq1JCg8QQTbmUoCEQ==
-X-Google-Smtp-Source: AGHT+IEvbU+axw3E+Rkyoxoee6rkZesB/YXZpTA9Vx7uVa41lOXaSZIfWUYdRAMYdUUX9UbUxGpoVA==
-X-Received: by 2002:a05:620a:2984:b0:781:6821:2737 with SMTP id r4-20020a05620a298400b0078168212737mr781087qkp.53.1704909335124;
-        Wed, 10 Jan 2024 09:55:35 -0800 (PST)
+        bh=2dOkZsTsOFQEblTAxi1gmTvocVfTF9neXhlvxTQtV4w=;
+        b=toizYX71jTROHNhXze4fNypRbCd/mOQ04oc37lB61/gDEDaU4jhiuxRv+23C3IvfHc
+         AngVODwctBM9ZIFn81ZpP3i/nKlH/YtVe9DqRHW+sH8t/WSzU/iZ9xZTLUY3vrEatj0f
+         znlMAEQaMDP/e49NZn0ywJCZaqqvQleShGuXYu8EG6qYc9VD6KJ9uxrbOznMqYNl+kyw
+         dq53dVLgCSMxWQb4V9xGoUwZHrLlVzayRFVIqQManvTdSBpeAhgMK3TJ+naGO/hGdOJC
+         Y5qwFKxDWcae+LOIEnbTJcVVi2Q09MJphc5f1N+PSPijObdOf59vJsivLZIcwPEEd+5f
+         VuEQ==
+X-Gm-Message-State: AOJu0YxfGB0pqtaaj6xUqqVw4lmBBKgFIJpiG/FP/1a4zcmy/suj7en5
+	/2pmG1ykPuYNyaH6oEYNMfia8/HZnjmXYQdc4ChyGv3mea0gsw==
+X-Google-Smtp-Source: AGHT+IGCVZUVOZdnOcK/Qw/f582bd53Swj6alHBS5hSQ8zmEhos//vWmAzbugDTTRb1TI11Tqt157A==
+X-Received: by 2002:a05:6214:29c7:b0:680:d2a6:8282 with SMTP id gh7-20020a05621429c700b00680d2a68282mr612794qvb.24.1704909338259;
+        Wed, 10 Jan 2024 09:55:38 -0800 (PST)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id a15-20020a05620a02ef00b0078325452a32sm1772512qko.28.2024.01.10.09.55.34
+        by smtp.gmail.com with ESMTPSA id p3-20020a0cfd83000000b00680c7c14d4bsm1883571qvr.129.2024.01.10.09.55.37
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 10 Jan 2024 09:55:34 -0800 (PST)
-Date: Wed, 10 Jan 2024 12:55:33 -0500
+        Wed, 10 Jan 2024 09:55:38 -0800 (PST)
+Date: Wed, 10 Jan 2024 12:55:37 -0500
 From: Taylor Blau <me@ttaylorr.com>
 To: git@vger.kernel.org
 Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 2/5] t5302: run expected-to-fail `index-pack`s with
+Subject: [PATCH 3/5] t5308: run expected-to-fail `index-pack`s with
  `--threads=1`
-Message-ID: <c581719053dd3d3a4c60f5c841091ea0ab122f75.1704909216.git.me@ttaylorr.com>
+Message-ID: <0170befabd160bd98a32372f14b5e1e9bbcb1069.1704909216.git.me@ttaylorr.com>
 References: <ZZ7VEVXSg1T8ZkIK@nand.local>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -60,28 +60,25 @@ Content-Disposition: inline
 In-Reply-To: <ZZ7VEVXSg1T8ZkIK@nand.local>
 
 For identical reasons as in the previous commit, apply the same
-treatment to expected-to-fail `index-pack` invocations in t5302 with
+treatment to expected-to-fail `index-pack` invocations in t5308 with
 `--threads=1`.
-
-(Note that this treatment only needs to be applied in tests which are
-expected to pass when built with the leak-checker enabled).
 
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- t/t5302-pack-index.sh | 2 +-
+ t/t5308-pack-detect-duplicates.sh | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/t/t5302-pack-index.sh b/t/t5302-pack-index.sh
-index d88e6f1691..fdbcd80f89 100755
---- a/t/t5302-pack-index.sh
-+++ b/t/t5302-pack-index.sh
-@@ -290,7 +290,7 @@ test_expect_success 'too-large packs report the breach' '
- 	pack=$(git pack-objects --all pack </dev/null) &&
- 	sz="$(test_file_size pack-$pack.pack)" &&
- 	test "$sz" -gt 20 &&
--	test_must_fail git index-pack --max-input-size=20 pack-$pack.pack 2>err &&
-+	test_must_fail git index-pack --threads=1 --max-input-size=20 pack-$pack.pack 2>err &&
- 	grep "maximum allowed size (20 bytes)" err
+diff --git a/t/t5308-pack-detect-duplicates.sh b/t/t5308-pack-detect-duplicates.sh
+index 655cafa054..5df552a42e 100755
+--- a/t/t5308-pack-detect-duplicates.sh
++++ b/t/t5308-pack-detect-duplicates.sh
+@@ -76,7 +76,7 @@ test_expect_success 'lookup in duplicated pack' '
+ test_expect_success 'index-pack can reject packs with duplicates' '
+ 	clear_packs &&
+ 	create_pack dups.pack 2 &&
+-	test_must_fail git index-pack --strict --stdin <dups.pack &&
++	test_must_fail git index-pack --threads=1 --strict --stdin <dups.pack &&
+ 	test_expect_code 1 git cat-file -e $LO_SHA1
  '
  
 -- 
