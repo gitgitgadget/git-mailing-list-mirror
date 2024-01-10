@@ -1,165 +1,179 @@
-Received: from mail.manjaro.org (mail.manjaro.org [116.203.91.91])
-	(using TLSv1.2 with cipher DHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7E6B4D121
-	for <git@vger.kernel.org>; Wed, 10 Jan 2024 17:45:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=manjaro.org
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E1244D100
+	for <git@vger.kernel.org>; Wed, 10 Jan 2024 17:48:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b="qQG0tDEE"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="jTeWl01F"
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 204F71C73B2;
+	Wed, 10 Jan 2024 12:48:54 -0500 (EST)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=pSPZitH2sE+M
+	60uiuu/IOOaQb6pnk/dZXgkVGXrKEyc=; b=jTeWl01F+tyubrDAvGz73px2ajyW
+	S2CB4PPv0bGamQXAG+Z+n/9hHRZlbo6nAXNAtOlaPjLpumb//JHA8tIUKueX3kf9
+	J/2lwsiCKI8ZUkrlAEXjgd0tPQq6oN6VmfxSbGbH1nlPz59FoYIOmz87Am6iF9Id
+	3Eg7BotyV931WQ4=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 181611C73B1;
+	Wed, 10 Jan 2024 12:48:54 -0500 (EST)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.200.93])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 6E00B1C73AF;
+	Wed, 10 Jan 2024 12:48:53 -0500 (EST)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: =?utf-8?Q?Rub=C3=A9n?= Justo <rjusto@gmail.com>
+Cc: Git List <git@vger.kernel.org>
+Subject: Re: [PATCH] branch: error description when deleting a not fully
+ merged branch
+In-Reply-To: <04c3556f-0242-4ac3-b94a-be824cd2004a@gmail.com>
+ (=?utf-8?Q?=22Rub=C3=A9n?= Justo"'s
+	message of "Wed, 10 Jan 2024 15:55:28 +0100")
+References: <04c3556f-0242-4ac3-b94a-be824cd2004a@gmail.com>
+Date: Wed, 10 Jan 2024 09:48:52 -0800
+Message-ID: <xmqqbk9tcc57.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=manjaro.org; s=2021;
-	t=1704908750;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=F7vXgpgsexj2sOQkdKzO+WY4DQLaYvXYSbks8NVT39w=;
-	b=qQG0tDEET4I6cHUVuL6G60wHkNVib6bJvwxvIQRt8prhC7N60UYHqxyT073Y6IM4rE3OkE
-	tdmOZRmGrTTCrWP+7eP4dpDpV63X5771oUd5o7o7b8MTfOBAVGqxIxJf1yXcMhh8TeiFet
-	sR9Qy/jfJejTBwGaYJzJAPOII3ssQIAtyquhr/25fA/HwwK08HCIMuI9uJgQiIIGQtkpSs
-	n4Whw/7cc5tTcm/rVDyD+ME4uDKF+1RMGglrVwpWFq/xpG4/5W9n7/kv8YWX783ySX9tXq
-	lJksVEEDsjXnbxMoyufMW2dDuegW1Zfifu3346tQpJCvK6fZ5vazUBSfXvh4HA==
-Date: Wed, 10 Jan 2024 18:45:49 +0100
-From: Dragan Simic <dsimic@manjaro.org>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: =?UTF-8?Q?Rub=C3=A9n_Justo?= <rjusto@gmail.com>, Jeff King
- <peff@peff.net>, Git List <git@vger.kernel.org>
-Subject: Re: [PATCH 3/3] advice: allow disabling the automatic hint in
- advise_if_enabled()
-In-Reply-To: <xmqqil41duov.fsf@gitster.g>
-References: <7c68392c-af2f-4999-ae64-63221bf7833a@gmail.com>
- <d6099d78-43c6-4709-9121-11f84228cf91@gmail.com>
- <20240110110226.GC16674@coredump.intra.peff.net>
- <aaf59fc82ef3132ece8e1f70623570a2@manjaro.org>
- <97fdf6d4-1403-4fe9-b912-a85342a9fa56@gmail.com>
- <a97b03a305a7b8b95341b63af1de0271@manjaro.org> <xmqqil41duov.fsf@gitster.g>
-Message-ID: <d6d72ec5431ad1ca775e6e4e9921f94c@manjaro.org>
-X-Sender: dsimic@manjaro.org
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Authentication-Results: ORIGINATING;
-	auth=pass smtp.auth=dsimic@manjaro.org smtp.mailfrom=dsimic@manjaro.org
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID:
+ 850AE3DE-AFE0-11EE-BB74-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
+Content-Transfer-Encoding: quoted-printable
 
-On 2024-01-10 17:22, Junio C Hamano wrote:
-> Dragan Simic <dsimic@manjaro.org> writes:
-> 
->> No worries.  Regarding disabling the advices for disabling the advice
->> messages, maybe it would be better to have only one configuration knob
->> for that purpose, e.g. "core.verboseAdvice", as a boolean knob.
-> 
-> I am not sure if you understood Peff's example that illustrates why
-> it is a bad thing, as ...
-> 
->> That
->> way, fishing for the right knob for some advice message wouldn't turn
->> itself into an issue,
-> 
-> ... this is exactly what a single core.verboseAdvice knob that
-> squelches the "how to disable this particular advice message" part
-> from the message is problematic.  Before you see and familialize
-> yourself with all advice messages, you may see one piece of advice X
-> and find it useful to keep, feeling no need to turn it off.  If you
-> use that single knob to squelch the part to tell you how to turn
-> advice X off.  But what happens when you hit another unrelated
-> advice Y then?  Because your core.verboseAdvice is a single big red
-> button, the message does not say which advice.* variable to tweak
-> for this particular advice message Y.
+Rub=C3=A9n Justo <rjusto@gmail.com> writes:
 
-Makes sense, but please allow me to explain how I envisioned the whole 
-thing
-with the single, big core.verboseAdvice configuration knob:
+> The error message we show when the user tries to delete a not fully
+> merged branch describes the error and gives a hint to the user:
+>
+> 	error: the branch 'foo' is not fully merged.
+> 	If you are sure you want to delete it, run 'git branch -D foo'.
+>
+> Let's move the hint part so that it takes advantage of the advice
+> machinery:
+>
+> 	error: the branch 'foo' is not fully merged
+> 	hint: If you are sure you want to delete it, run 'git branch -D foo'
+> 	hint: Disable this message with "git config advice.forceDeleteBranch f=
+alse"
 
-1) You use git and find some advice useful, so you decide to keep it 
-displayed.
-    However, the additional advice about turning the advice off becomes 
-annoying
-    a bit, or better said, it becomes redundant because the main advice 
-stays.
+This is probably one sensible step forward, so let's queue it as-is.
 
-2) As a result, you simply set core.verboseAdvice to false and voila, 
-the
-    redundant additional advice disappears.  Seems perfect!  Of course, 
-it
-    isn't perfect, as the next point will clearly show.
+But with reservations for longer-term future direction.  Stepping
+back a bit, when 'foo' is not fully merged and the user used "branch
+-d" on it, is it sensible for us to suggest use of "branch -D"?
 
-3) You keep using git, and some advice becomes no longer needed, maybe 
-even
-    one of the advices that you previously used to find useful, or you 
-find
-    some newly added advice a bit annoying and, as a result, not needed.  
-But,
-    what do you do, where's that helpful additional advice?
+Especially now this is a "hint" to help less experienced folks, it
+may be helpful to suggest how the user can answer "If you are sure
+you want to delete" part.  As this knows what unique commits on the
+branch being deleted are about to be lost, one way to do so may be
+to tell the user about them ("you are about to lose 'branch: error
+description when deleting a not fully merged branch' and other 47
+commits that are not merged the target branch 'main'", for example).
 
-4) As a careful git user that remembers important things, you go back to 
-your
-    git configuration file and set core.verboseAdvice to true, and the 
-additional
-    advices are back, telling you how to disable the unwanted advice.
+Another possibility is to suggest merging the branch into the
+target, instead of suggesting a destructive "deletion", but I
+suspect that it goes too far second-guessing the end-user intention.
 
-5) After you disable the unwanted advice, you set core.verboseAdvice 
-back to
-    false and keep it that way until the next redundant advice pops up.
+Thanks.
 
-However, I do see that this approach has its downsides, for example the 
-need
-for the unwanted advice to be displayed again together with the 
-additional advice,
-by executing the appropriate git commands, after the above-described 
-point #4.
-
-Let's see what it would look like with the granular, per-advice on/off 
-knobs:
-
-1) You use git and find some advice useful, so you decide to keep it 
-displayed.
-    However, the additional advice about turning the advice off becomes 
-annoying
-    a bit, or better said, it becomes redundant because the main advice 
-stays.
-
-2) As a result, you follow the additional advice and set the specific 
-knob to
-    false, and voila, the redundant additional advice disappears.  Of 
-course,
-    it once again isn't perfect, as the next point will clearly show.
-
-3) You keep using git, and one of the advices that you previously used 
-to find
-    useful becomes no longer needed.  But, what do you do, where's that 
-helpful
-    additional advice telling you how to turn the advice off?
-
-4) Now you need to dig though the manual pages, or to re-enable the 
-additional
-    advices in your git configuration file, perhaps all of them at once, 
-while
-    keeping a backup of your original settings, to restore it later.  
-Then, you
-    again need to wait until the original advice gets displayed.
-
-5) The additional advice is finally back, after some time passes or 
-after
-    specifically reproducing the exact git commands, telling you how to 
-disable
-    the unwanted advice.  Of course, you follow the advice and set the 
-right
-    knob in your git configuration file.
-
-5) After you disable the unwanted advice, you restore the git 
-configuration
-    backup that you made earlier (you did that, right?), taking care not 
-to
-    override the newly made changes that disabled the unwanted advice.
-
-Quite frankly, the second approach, although more granular, seems much 
-more
-complicated and more error-prone to me.
-
-Of course, please let me know if I'm missing something obvious.
+> Signed-off-by: Rub=C3=A9n Justo <rjusto@gmail.com>
+> ---
+>
+> This change is a pending NEEDSWORK from a recent series about adjusting
+> the error messages in branch.c
+>
+> Unfortunately the full message now becomes a three line message.
+>
+> Hopefully we can find a way in the near future to keep it at two.
+>
+>  Documentation/config/advice.txt | 3 +++
+>  advice.c                        | 1 +
+>  advice.h                        | 3 ++-
+>  builtin/branch.c                | 9 ++++++---
+>  4 files changed, 12 insertions(+), 4 deletions(-)
+>
+> diff --git a/Documentation/config/advice.txt b/Documentation/config/adv=
+ice.txt
+> index 4d7e5d8759..5814d659b9 100644
+> --- a/Documentation/config/advice.txt
+> +++ b/Documentation/config/advice.txt
+> @@ -142,4 +142,7 @@ advice.*::
+>  		Advice shown when a user tries to create a worktree from an
+>  		invalid reference, to instruct how to create a new unborn
+>  		branch instead.
+> +	forceDeleteBranch::
+> +		Advice shown when a user tries to delete a not fully merged
+> +		branch without the force option set.
+>  --
+> diff --git a/advice.c b/advice.c
+> index 50c79443ba..e91f5d7ab8 100644
+> --- a/advice.c
+> +++ b/advice.c
+> @@ -79,6 +79,7 @@ static struct {
+>  	[ADVICE_UPDATE_SPARSE_PATH]			=3D { "updateSparsePath", 1 },
+>  	[ADVICE_WAITING_FOR_EDITOR]			=3D { "waitingForEditor", 1 },
+>  	[ADVICE_WORKTREE_ADD_ORPHAN]			=3D { "worktreeAddOrphan", 1 },
+> +	[ADVICE_FORCE_DELETE_BRANCH]			=3D { "forceDeleteBranch", 1 },
+>  };
+> =20
+>  static const char turn_off_instructions[] =3D
+> diff --git a/advice.h b/advice.h
+> index 2affbe1426..5bef900142 100644
+> --- a/advice.h
+> +++ b/advice.h
+> @@ -10,7 +10,7 @@ struct string_list;
+>   * Add the new config variable to Documentation/config/advice.txt.
+>   * Call advise_if_enabled to print your advice.
+>   */
+> - enum advice_type {
+> +enum advice_type {
+>  	ADVICE_ADD_EMBEDDED_REPO,
+>  	ADVICE_ADD_EMPTY_PATHSPEC,
+>  	ADVICE_ADD_IGNORED_FILE,
+> @@ -50,6 +50,7 @@ struct string_list;
+>  	ADVICE_WAITING_FOR_EDITOR,
+>  	ADVICE_SKIPPED_CHERRY_PICKS,
+>  	ADVICE_WORKTREE_ADD_ORPHAN,
+> +	ADVICE_FORCE_DELETE_BRANCH,
+>  };
+> =20
+>  int git_default_advice_config(const char *var, const char *value);
+> diff --git a/builtin/branch.c b/builtin/branch.c
+> index 0a32d1b6c8..2240433bc8 100644
+> --- a/builtin/branch.c
+> +++ b/builtin/branch.c
+> @@ -24,6 +24,7 @@
+>  #include "ref-filter.h"
+>  #include "worktree.h"
+>  #include "help.h"
+> +#include "advice.h"
+>  #include "commit-reach.h"
+> =20
+>  static const char * const builtin_branch_usage[] =3D {
+> @@ -190,9 +191,11 @@ static int check_branch_commit(const char *branchn=
+ame, const char *refname,
+>  		return -1;
+>  	}
+>  	if (!force && !branch_merged(kinds, branchname, rev, head_rev)) {
+> -		error(_("the branch '%s' is not fully merged.\n"
+> -		      "If you are sure you want to delete it, "
+> -		      "run 'git branch -D %s'"), branchname, branchname);
+> +		error(_("the branch '%s' is not fully merged"),
+> +		      branchname);
+> +		advise_if_enabled(ADVICE_FORCE_DELETE_BRANCH,
+> +				  _("If you are sure you want to delete it, "
+> +				  "run 'git branch -D %s'"), branchname);
+>  		return -1;
+>  	}
+>  	return 0;
