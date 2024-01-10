@@ -1,79 +1,88 @@
-Received: from mail-qv1-f44.google.com (mail-qv1-f44.google.com [209.85.219.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46AD24F88A
-	for <git@vger.kernel.org>; Wed, 10 Jan 2024 22:26:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ttaylorr.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68CBF47F5F
+	for <git@vger.kernel.org>; Wed, 10 Jan 2024 22:38:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="vkVQKfjW"
-Received: by mail-qv1-f44.google.com with SMTP id 6a1803df08f44-680c4475b8bso24962356d6.2
-        for <git@vger.kernel.org>; Wed, 10 Jan 2024 14:26:31 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1704925590; x=1705530390; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=2EsvjE7WLXqa4gm7MTRY9NKm4Mlrs+y61MnW/EgEItQ=;
-        b=vkVQKfjWK8fI3fX42LIbw290p17h5m5lyrtmH17MVdzypZKgzKJiVNy7l+BgNqfFLE
-         kySL+WoLL1h3ybBE8O6FEp00jnbeQvONz9+oxiwv5gnCdot1S55GsCTFGybJNgCFnuy0
-         OlRpMDbrXytNcwMcpWEjmRQryATHWkwx/R+HMlpo87BZKHw2fckTj6bcqBazSTPUjuFd
-         Zz9OsKt3gRjQaRg+JsI1OgLQYvhACkJSevYBOLU8RCaeBERXJZgs0P64g0Zj1EexvvR0
-         N+mYDwEjoLab4Ws8NS7bao+S4hoUWD3kGc5K0xalTrhVW2lu9hOrSQshmq+4IPhYqdcB
-         gGjA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1704925590; x=1705530390;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=2EsvjE7WLXqa4gm7MTRY9NKm4Mlrs+y61MnW/EgEItQ=;
-        b=pOvwO/e2Qp9NSHcQ9arEwOeaDCjOAbgS6gXsFMrRiCnfI6DoWoWClQCWHYLeIdkRYl
-         /vdS5wLgeWp7U3MTflusDSbyZobYlkwKf1Q7io99vvwZ8XXaElOEwDX/dOHYt+uEezum
-         CuLwgCO+ehnxwcHYMNLBl0gzKaRl/1gnnlJTT+X9jOiHEpWi4QcAJsu+wZ8mSdZup1xW
-         MzOJaagPyXVxsjlMYm6gENgqBPns3IqtQB6OA9uTBKvUx/4kj7fslAZIijz7nnB3x4bU
-         MDB2QOt5fvwc3tLUShDup1W5MvMtU7RcKo1YCOT2UlxfaAQvSySHNjfRWSwUpn0sOCK/
-         O2Kg==
-X-Gm-Message-State: AOJu0Yyl1tQ8Q+qk79PUcenyEEsq0s7UTKLa9recQEF+Ly3s8ySr/uDE
-	sVb702cAm/XLUQLLG8eru731ml23L1dyfw==
-X-Google-Smtp-Source: AGHT+IGiaIbu+wjzCJ6tn6MxaZR2cocZIo8qEtxpjOlOOSlnb5CUycXaKbSsojkzy7/FHOxHMV/t8Q==
-X-Received: by 2002:a05:6214:234f:b0:681:105:58b6 with SMTP id hu15-20020a056214234f00b00681010558b6mr177705qvb.127.1704925590203;
-        Wed, 10 Jan 2024 14:26:30 -0800 (PST)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id l11-20020a0ce84b000000b00680c50735c6sm2006651qvo.88.2024.01.10.14.26.29
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 10 Jan 2024 14:26:30 -0800 (PST)
-Date: Wed, 10 Jan 2024 17:26:29 -0500
-From: Taylor Blau <me@ttaylorr.com>
-To: rsbecker@nexbridge.com
-Cc: 'Junio C Hamano' <gitster@pobox.com>,
-	'Dragan Simic' <dsimic@manjaro.org>, git@vger.kernel.org
-Subject: Re: [DISCUSS] Introducing Rust into the Git project
-Message-ID: <ZZ8ZlX6bf+hjmhN+@nand.local>
-References: <ZZ77NQkSuiRxRDwt@nand.local>
- <b2651b38a4f7edaf1c5ffee72af00e46@manjaro.org>
- <xmqqjzog96uh.fsf@gitster.g>
- <006b01da4412$96c6c500$c4544f00$@nexbridge.com>
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="QCYxuXjV"
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 0756F1C9674;
+	Wed, 10 Jan 2024 17:38:17 -0500 (EST)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=MR0ZWt321F1nlDMexFaJmOab4tfDrkSy1TtqQv
+	9dvCc=; b=QCYxuXjVQdL9md3y3v747NehdSVG8Ec35LpF2toTadUk+AcIVZa3ek
+	kE/8oUBgXHAEf9TD/Npkrb19CI1MFAwcz2qou7o6O3mTeNwTfXHYdgdGLRm6qwj/
+	8NRqBNM+pIlFhlLDMTCpNdpVZYA1bn05EwMm2Mt4ovwRbPpER5Wkg=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id E90C61C9673;
+	Wed, 10 Jan 2024 17:38:17 -0500 (EST)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.200.93])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 54A8D1C9672;
+	Wed, 10 Jan 2024 17:38:17 -0500 (EST)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Britton Leo Kerin <britton.kerin@gmail.com>
+Cc: Taylor Blau <me@ttaylorr.com>,  git@vger.kernel.org
+Subject: Re: [PATCH v2 0/2] doc: bisect: change plural paths to singular
+ pathspec
+In-Reply-To: <ZZWWmXHa8ebtkZQ8@nand.local> (Taylor Blau's message of "Wed, 3
+	Jan 2024 12:17:13 -0500")
+References: <a5a8c257-8550-492e-a6fa-e88ee59d4d66@smtp-relay.sendinblue.com>
+	<6bcbd017-968e-4ac8-a56b-164b163c76d4@smtp-relay.sendinblue.com>
+	<ZZWWmXHa8ebtkZQ8@nand.local>
+Date: Wed, 10 Jan 2024 14:38:16 -0800
+Message-ID: <xmqqbk9s95lz.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <006b01da4412$96c6c500$c4544f00$@nexbridge.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ F2BAF25C-B008-11EE-9731-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
 
-Hi Randall,
+Taylor Blau <me@ttaylorr.com> writes:
 
-On Wed, Jan 10, 2024 at 05:15:53PM -0500, rsbecker@nexbridge.com wrote:
-> Just a brief concern: Rust is not broadly portable. Adding another
-> dependency to git will remove many existing platforms from future releases.
-> Please consider this carefully before going down this path.
+> On Tue, Jan 02, 2024 at 07:02:05PM -0900, Britton Leo Kerin wrote:
+>> Britton Leo Kerin (2):
+>>   doc: use singular form of repeatable path arg
+>>   doc: refer to pathspec instead of path
+>>
+>>  Documentation/git-bisect.txt | 4 ++--
+>>  1 file changed, 2 insertions(+), 2 deletions(-)
+>>
+>> Range-diff against v1:
+>> 1:  90c081dcab ! 1:  da40e4736b doc: use singular form of repeatable path arg
+>>     @@ Commit message
+>>          later document text mentions 'path' arguments, while it doesn't mention
+>>          'paths'.
+>>
+>>     -    Signed-off-by: Britton L Kerin <britton.kergin@gmail.com>
+>>     +    Signed-off-by: Britton Leo Kerin <britton.kergin@gmail.com>
+>>
+>>       ## Documentation/git-bisect.txt ##
+>>      @@ Documentation/git-bisect.txt: The command takes various subcommands, and different options depending
+>> -:  ---------- > 2:  d932b6d501 doc: refer to pathspec instead of path
+>> --
+>> 2.43.0
+>
+> Hmm. The end-state of these two patches looks good to me, but I probably
+> would have written this change as a single change from "paths" ->
+> "pathspec", not "paths" -> "path" -> "pathspec".
 
-I was hoping to hear from you as one of the few (only?) folks who
-participate on the list and represent HPE NonStop users.
+Have we seen a resolution to this comment?  I _think_ it is an OK
+approach to take to do this in two steps, if the use of technical
+term "pathspec" could be controversial, but since it is not, I am
+fine with either one or two patches.  Since we already have the
+two-patch version, let's take it.
 
-I'm curious which if any of the compiler frontends that I listed in my
-earlier email would work for you.
-
-Thanks,
-Taylor
+Thanks.
