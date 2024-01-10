@@ -1,158 +1,113 @@
-Received: from wout2-smtp.messagingengine.com (wout2-smtp.messagingengine.com [64.147.123.25])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f171.google.com (mail-pf1-f171.google.com [209.85.210.171])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 285833E49C
-	for <git@vger.kernel.org>; Wed, 10 Jan 2024 09:02:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2B841CFB3
+	for <git@vger.kernel.org>; Wed, 10 Jan 2024 09:29:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="qZVgDO4f";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="EbHxi4o0"
-Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
-	by mailout.west.internal (Postfix) with ESMTP id 0DCEB3200B4F;
-	Wed, 10 Jan 2024 04:02:02 -0500 (EST)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute6.internal (MEProxy); Wed, 10 Jan 2024 04:02:03 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1704877322; x=1704963722; bh=pX0vmVJoFU
-	1KAX0JhNsdfIwq38pXPRueRRT8g1z9Jiw=; b=qZVgDO4fihKhLZY2MKKUYjPWF1
-	EYSqYEFFt+v58bPsLlbuNJhKv3I/ucDlTmgYMgmRAIffl/5Mug66JPixNxOpulVa
-	BXK1WNigL2t6jM7y3TnBiPES7ep/Bnu0hmpMn6rZw9m+1FWu8eV3LDT4NNGWrV2c
-	32WyRoA/yvRHHppfhCZKcnTkLAAVj4gdvSAOlltEZvR/Sastzx60I5VPhN9Y8NwK
-	aprWmDsuAxrnJv9wBtJ7kEUAauvEmyuDwiZ2LB70L4vMTVSb/ZYUaI6SLPcTf4Vl
-	hLfH4pk8b4gH1HHuN26FNgHNFA3QfiNw/17A7mC58KF6Y0F/NupkGgYvZ1lQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1704877322; x=1704963722; bh=pX0vmVJoFU1KAX0JhNsdfIwq38pX
-	PRueRRT8g1z9Jiw=; b=EbHxi4o0EGGZwPwYMvHKT09yKlMbUNSCcj7rUWsS0vH9
-	ztcb0AyXFxzNyq8Stw6qT/8kCh6WLtC0uL4gAy94gdHNFmIGeP1NbnnhByTTSoFC
-	XLg9gCrFxN0CcNRDwcfKHAj0ySJRu21XqFoqcTf1FaxR3fNkczK3Raq2joyWy67x
-	3uzKWNQQtl0QmDKJ10UmrGEcTNwXZbST0oyXUd6Y2BbisBOP/mmUr0lzrTXLI+jF
-	58dWwwfOcuNPBMt4ozlkc6m9TWZWA8qNRUvNk8GUCQ2yefIABSy1O7xCGy5I7Daq
-	wBOzjxZSobi8tsfwK09D1Pkc7T8E+b6UF4FKNgI1eA==
-X-ME-Sender: <xms:Cl2eZaeGMvEe-MIBqEr1__vAzpqffbXCDKjHCPuvm8RXaCNtUyaydA>
-    <xme:Cl2eZUN7Z1M_Rz9twdiVqs_VUVHTgxJ6z8PR_1_NMFDkyIFnhKp1OQ37uWhCxrV0j
-    etjdHVTqBqZ9WYUOg>
-X-ME-Received: <xmr:Cl2eZbgF8i4W-_BKUlRkB3QMj9c9skLTcv23gcYho5uVGIeFhKrpSjIxUEPhWxuNGsWTPepkp7kOdjiqbqupXQfO-HzHN2Q29AfB5fhKo0ZFvPs>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrvdeitddguddviecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
-    necuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
-    enucfjughrpeffhffvvefukfhfgggtuggjsehgtderredttddvnecuhfhrohhmpefrrght
-    rhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtth
-    gvrhhnpeeukedtvedtffevleejtefgheehieegkeeluddvfeefgeehgfeltddtheejleff
-    teenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpsh
-    esphhkshdrihhm
-X-ME-Proxy: <xmx:Cl2eZX8rs4hrpCrred_kyF5roEDgU9LuD4ixXMwsnJ7lo9neNRv_xg>
-    <xmx:Cl2eZWtjtaS-GVMc-6A0QyOcyJDUVEHGd1h3SD2iMcV4Uu-tf1dz6w>
-    <xmx:Cl2eZeESGAoDmmjAjkHs8A-vwCx7tFcQIcRP9--ewR_JlupHRED7JA>
-    <xmx:Cl2eZbWHzixLvbZHXcxefWV4ZxULobf3syia3O4nnC2FyovS2Bdz2A>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 10 Jan 2024 04:02:01 -0500 (EST)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 79edf649 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 10 Jan 2024 08:59:21 +0000 (UTC)
-Date: Wed, 10 Jan 2024 10:01:59 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: git@vger.kernel.org
-Cc: Taylor Blau <me@ttaylorr.com>, Eric Sunshine <sunshine@sunshineco.com>
-Subject: [PATCH v2 6/6] t: mark tests regarding git-pack-refs(1) to be
- backend specific
-Message-ID: <df648be535737551ce7b6d6680841c7ac9ec44f3.1704877233.git.ps@pks.im>
-References: <cover.1704802213.git.ps@pks.im>
- <cover.1704877233.git.ps@pks.im>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="niN8Fkib"
+Received: by mail-pf1-f171.google.com with SMTP id d2e1a72fcca58-6db0fdd2b8fso830868b3a.2
+        for <git@vger.kernel.org>; Wed, 10 Jan 2024 01:29:54 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1704878994; x=1705483794; darn=vger.kernel.org;
+        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=biBJYwvYYzk+8roUR9sJ6zxCXqNonKvoZhBI5rFF7Ng=;
+        b=niN8FkibRIrsfwkkp/NO5LnwDyRzcHN7OR4H4LPgEvOZ1Ps5jin4koJ7l4zZYRuT35
+         Ly0Iv/gP8uS2Q2Wa4m1NLw4HLxewFWoYVmK229PA/A6IAMAIUFh6uq1TpovsrYJ6mwS+
+         0r05+ln9g9BhitzzHrVePm3dSbzsppsRqSmfwjKdLoSfXw+gFvvk0SxgkvnpCP/PFsrD
+         LLEjU9f6RtFReWtpSFjkMvFWDrEg08/bmbfrt+k6pV+SlPAux17jHxEsMWrMt5gcuAWM
+         0eqdaWyKrFCMWGt7a+3HBM/5cIATvsIVcC0emP3ra0pFGa635YDW3gZrfrNgBF1JCP6o
+         gllg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1704878994; x=1705483794;
+        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=biBJYwvYYzk+8roUR9sJ6zxCXqNonKvoZhBI5rFF7Ng=;
+        b=ky0XQhxnfFcEI2qO2HIepJsFBpXdbLphQCzn1h/4p49FbwPWABT6XqZB34IgaVir6i
+         zikeDaYJFFY7G6H5mu2EziqTNzOilW4jNN545zrUqTsupxHLLAhc3wq1jBdYp15/2mZr
+         GHzb3goegL5QIkGa60P9SMUP1Dixxh+BDOG2bJRgquSzQVA0iv0+YIa9xEjOcaK1tpkc
+         we+r8E40/o33FBL0sEFWoGBcsATZeNapVMW+hDLcYS/piFvZeWwDUyYlseK6NpNyuSY/
+         HhMhdZSdVLHdarbaC9k5pF1qWCUzD6QJWBeYYJgmiBb+xHsm3uYnJyWZ5z5lrtEcyQyw
+         jpGg==
+X-Gm-Message-State: AOJu0YyZ6tuOIuOH31biK8dBUNZzQIiTV01WXoxpReamoCu4JWJaByPr
+	RC8dg0Mdpy3RQH8jeb2qJIHqz6Ebiut3W6JYM7c=
+X-Google-Smtp-Source: AGHT+IGy9iz/ygL/kNcs3fc8ip0EXHsoYRcEzIQuHdev3CKjNwaWeCo8Syi5FTaJojlyvBvgTEImjwXm8eCiZJGMbBM=
+X-Received: by 2002:a05:6a00:4641:b0:6da:c8b7:d58d with SMTP id
+ kp1-20020a056a00464100b006dac8b7d58dmr846585pfb.15.1704878993533; Wed, 10 Jan
+ 2024 01:29:53 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="c8IaOzmnhpa/D/A1"
-Content-Disposition: inline
-In-Reply-To: <cover.1704877233.git.ps@pks.im>
+References: <CAF6dN-oEy-svp+6Bw_NAeOMrWc61ObcZ4Q2huVj9PPK1EQHquw@mail.gmail.com>
+ <ZZ3PB9mq8GTpGITC@tapette.crustytoothpaste.net>
+In-Reply-To: <ZZ3PB9mq8GTpGITC@tapette.crustytoothpaste.net>
+From: Domen Golob <domen.golob.px@gmail.com>
+Date: Wed, 10 Jan 2024 10:29:17 +0100
+Message-ID: <CAF6dN-oynGyZ5zE7Tif8K_BcUcox5PJF9UFCZZapJfpS+F8nEA@mail.gmail.com>
+Subject: Re: Bug: Git spawns subprocesses on windows
+To: "brian m. carlson" <sandals@crustytoothpaste.net>, Domen Golob <domen.golob.px@gmail.com>, 
+	git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
+Thanks for your answer, indeed this does not happen on Unix, and I
+don't have this issue there.
+Will report the bug to the windows team.
 
---c8IaOzmnhpa/D/A1
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Thanks.
 
-Both t1409 and t3210 exercise parts of git-pack-refs(1). Given that we
-must check the on-disk files to verify whether the backend has indeed
-packed refs as expected those test suites are deeply tied to the actual
-backend that is in use.
-
-Mark the test suites to depend on the REFFILES backend.
-
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
----
- t/t1409-avoid-packing-refs.sh | 6 ++++++
- t/t3210-pack-refs.sh          | 6 ++++++
- 2 files changed, 12 insertions(+)
-
-diff --git a/t/t1409-avoid-packing-refs.sh b/t/t1409-avoid-packing-refs.sh
-index f23c0152a8..7748973733 100755
---- a/t/t1409-avoid-packing-refs.sh
-+++ b/t/t1409-avoid-packing-refs.sh
-@@ -5,6 +5,12 @@ test_description=3D'avoid rewriting packed-refs unnecessar=
-ily'
- TEST_PASSES_SANITIZE_LEAK=3Dtrue
- . ./test-lib.sh
-=20
-+if test_have_prereq !REFFILES
-+then
-+  skip_all=3D'skipping files-backend specific pack-refs tests'
-+  test_done
-+fi
-+
- # Add an identifying mark to the packed-refs file header line. This
- # shouldn't upset readers, and it should be omitted if the file is
- # ever rewritten.
-diff --git a/t/t3210-pack-refs.sh b/t/t3210-pack-refs.sh
-index 7f4e98db7d..c0f1f9cfb7 100755
---- a/t/t3210-pack-refs.sh
-+++ b/t/t3210-pack-refs.sh
-@@ -15,6 +15,12 @@ export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
- TEST_PASSES_SANITIZE_LEAK=3Dtrue
- . ./test-lib.sh
-=20
-+if test_have_prereq !REFFILES
-+then
-+  skip_all=3D'skipping files-backend specific pack-refs tests'
-+  test_done
-+fi
-+
- test_expect_success 'enable reflogs' '
- 	git config core.logallrefupdates true
- '
---=20
-2.43.GIT
-
-
---c8IaOzmnhpa/D/A1
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmWeXQYACgkQVbJhu7ck
-PpQakxAAmErnxmBwnefOttYwrGZaKcY3YDH1RizPPUoI9Q5WP0Rx4t+s/Lnpl5t4
-Ivb3NHRa0T/sn0ooBwX/27n/WrWinJOOzI2reEBNEOCO3coR4T47y+eWPcXUdFV3
-RUJAHoC4Ix2Gw49ulhpBmPZUqi/9duREkJwcVeoCVUxGqrxl2yrWRK4UDtiSl+Kk
-Pt+Zz9F6gp9jN86yzyrNW14N5LnGj3RiO7aJgA7cNn9zc8EYA2eehVLCM0kEwqxC
-Xj5yStPwR5DHibTS+CGivW0+5yMmfmcnn/scGrz4Ugf0oQvAHusJM9B8MqWJ+1Cs
-Ul3wh65CHAZ0gxZBMfW5+cVoIqKYoZPXZj1ePLAlUTnLXiKvqZLVbbPmqGYNXs6T
-2F3VsbO+6MQ5QH85G1L0V20WNjv+4aBtvHbZjzWl1ip2RvsNOdLts1XlLme6xMa5
-6NmtNmBbI3YkR+NPy9Q2WlzMdILHT5GuAX8OtKw7Nkqq7dP1hPF+yTcgHsN0Uqo0
-xS3p3aA/2w8NnT2jNxb3CEpkBf0LhnSDdpVrcnx92Kh4StejQcxdA3ZhoZ9Uf0/B
-p+vdkyRI4nkLQizpOw4Xs8xVoLTpPH9dCd+vl5nhoFgq+5zpZXaywnXwYiCwCkD2
-a8Y5HaG93Io35WGqEwxGTmQM8xBCLsPDLiYkaTxXzTKhxbmiU9g=
-=aPzh
------END PGP SIGNATURE-----
-
---c8IaOzmnhpa/D/A1--
+On Tue, 9 Jan 2024 at 23:56, brian m. carlson
+<sandals@crustytoothpaste.net> wrote:
+>
+> On 2024-01-09 at 15:33:43, Domen Golob wrote:
+> > Hello,
+> > the problem is exactly the same as what was reported here on stackoverflow:
+> > c# - Git for windows seems to create sub-processes that never die -
+> > Stack Overflow
+> > https://stackoverflow.com/questions/69579065/git-for-windows-seems-to-create-sub-processes-that-never-die
+> >
+> > Additionally I have found out that:
+> > - a Git for Windows subprocess is created for each repository and
+> > every time a git command is issued this process grows in size and it
+> > never dies.
+> > - you cannot delete the .git folder from the terminal, but it works
+> > via file explorer
+> > - deleting the .git folder kills the Git for windows process
+> > - creating changes in several repos creates multiple processes, and
+> > sometimes the process is created as a subprocess
+>
+> You probably want to contact Git for Windows at
+> https://github.com/git-for-windows/git.  The reason I suggest that is
+> that this is usually not a behaviour we see on Unix, and seems to be
+> Windows-specific.
+>
+> I don't know if it's possible to see command-line arguments of processes
+> on Windows like it is with `ps` on Unix, but including that information
+> if possible will be very useful to the maintainers.  Without knowing
+> that information, it's very unlikely that anyone will be able to help
+> you since we don't know what's going on.
+>
+> There are some possibilities of what's going on here:
+>
+> * git gc is running.
+> * git maintenance or the fsmonitor is configured and is running.
+> * You have a non-default antivirus or monitoring software that causes
+>   processes to hang or not complete, so one of Git's subprocesses can't
+>   exit.  If you're using such software, we usually recommend completely
+>   removing it completely (disabling it is usually not sufficient),
+>   rebooting, and testing again to make sure it's not the problem.
+> * You have some other process which is running which spawns Git commands
+>   (editors, content indexers, etc.).
+> * We actually have a bug and some process is not waited for correctly,
+>   and zombie processes manifest differently on Windows than on Unix.
+> * Something else I haven't considered.
+>
+> However, as I said, you'll probably want to contact the Git for Windows
+> folks through their issue tracker.
+> --
+> brian m. carlson (he/him or they/them)
+> Toronto, Ontario, CA
