@@ -1,41 +1,43 @@
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70CCF4EB5B
-	for <git@vger.kernel.org>; Wed, 10 Jan 2024 21:25:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0A2B4F610
+	for <git@vger.kernel.org>; Wed, 10 Jan 2024 21:46:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="foJHBrgD"
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 360AF1C8DE5;
-	Wed, 10 Jan 2024 16:25:27 -0500 (EST)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="O7dAylCC"
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id 2E499315A9;
+	Wed, 10 Jan 2024 16:46:28 -0500 (EST)
 	(envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=ChifrKAlXnVX1MLegFi9Hf0AJ8JlEpiBaGCFCo
-	a8+B0=; b=foJHBrgDK1tHaWpMVk76tN6gNzRJKkpmZH+qa9YA4FYC1oOX2Y6R9u
-	zlZzwRo7IVDUv7P8G/IuauCsAJDOJ5PWOpL6e7noZ+ifaZSx4eKlIzKZLRYC+vQ/
-	LOAIwMaXLLi3FzXNVOcLfiExSPIY0xArblD1AnIk39h5xtr18kI78=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 2E72A1C8DE4;
-	Wed, 10 Jan 2024 16:25:27 -0500 (EST)
+	:content-type; s=sasl; bh=Zt64IiwBM+pLWam9bzhlbTK7ATwI3OQ8dD8+Ly
+	OC5Gc=; b=O7dAylCC+OFjoB46H9pRXG6iTfGdcv20+/DcAH/LNyEO7qddIFiTmC
+	5ETXV6uvhfkdLEJf4Eoy9t7ggXC9llYTDhITMeytkwMKApZfyPPM84wv+v4FReel
+	ORR+CiZQZ0vmrmLQ9LihfV066bJf2zDSNWeGMnmHPxFmB5qPgUaAE=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id 274F1315A8;
+	Wed, 10 Jan 2024 16:46:28 -0500 (EST)
 	(envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.125.200.93])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 71F5E1C8DE3;
-	Wed, 10 Jan 2024 16:25:26 -0500 (EST)
+	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 68394315A6;
+	Wed, 10 Jan 2024 16:46:24 -0500 (EST)
 	(envelope-from junio@pobox.com)
 From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org
-Subject: Re: ps/reftable-optimize-io
-In-Reply-To: <ZZ5AJL4di1TAC-up@tanuki> (Patrick Steinhardt's message of "Wed,
-	10 Jan 2024 07:58:44 +0100")
-References: <xmqqsf36dotl.fsf@gitster.g> <ZZ5AJL4di1TAC-up@tanuki>
-Date: Wed, 10 Jan 2024 13:25:25 -0800
-Message-ID: <xmqq1qaoanju.fsf@gitster.g>
+To: =?utf-8?Q?Rub=C3=A9n?= Justo <rjusto@gmail.com>
+Cc: Git List <git@vger.kernel.org>
+Subject: Re: [PATCH] branch: error description when deleting a not fully
+ merged branch
+In-Reply-To: <xmqqbk9tcc57.fsf@gitster.g> (Junio C. Hamano's message of "Wed,
+	10 Jan 2024 09:48:52 -0800")
+References: <04c3556f-0242-4ac3-b94a-be824cd2004a@gmail.com>
+	<xmqqbk9tcc57.fsf@gitster.g>
+Date: Wed, 10 Jan 2024 13:46:22 -0800
+Message-ID: <xmqqr0io980h.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -45,12 +47,44 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 X-Pobox-Relay-ID:
- C57B2208-AFFE-11EE-A563-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
+ B3494076-B001-11EE-BEF7-A19503B9AAD1-77302942!pb-smtp21.pobox.com
 
-Patrick Steinhardt <ps@pks.im> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> Let's wait a few days for reviews. I don't expect there to be a ton of
-> reviews from the usual contributors due to the still-limited knowledge
-> around reftables in our community.
+> This is probably one sensible step forward, so let's queue it as-is.
+>
+> But with reservations for longer-term future direction.  Stepping
+> back a bit, when 'foo' is not fully merged and the user used "branch
+> -d" on it, is it sensible for us to suggest use of "branch -D"?
+>
+> Especially now this is a "hint" to help less experienced folks, it
+> may be helpful to suggest how the user can answer "If you are sure
+> you want to delete" part.  As this knows what unique commits on the
+> branch being deleted are about to be lost, one way to do so may be
+> to tell the user about them ("you are about to lose 'branch: error
+> description when deleting a not fully merged branch' and other 47
+> commits that are not merged the target branch 'main'", for example).
+>
+> Another possibility is to suggest merging the branch into the
+> target, instead of suggesting a destructive "deletion", but I
+> suspect that it goes too far second-guessing the end-user intention.
 
-A successful nerd-sniping?
+The longer-term concerns aside, if you are inclined, we might want
+to have this as a two step series, where [1/2] does a clean-up of
+existing source file, i.e. losing the unwanted leading space from "
+enum advice_type {" in advice.h and sort the advice.*:: list in
+Documentation/config/advice.txt.  It is optional to sort the
+advice_setting[] list in advice.c and "enum advice_type" in
+advice.h, as they are not end-user facing, and we should be using
+the defined constant without relying on their exact values.  But
+keeping the config/advice.txt sorted would help readers more easily
+locate which configuration variable to use to squelch a message.
+
+And [2/2] does the rest.
+
+Also I forgot that in the version I queued, I fixed the title to
+
+    branch: make the advice to force-deleting a conditional one
+
+Thanks.
+
