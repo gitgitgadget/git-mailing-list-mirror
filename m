@@ -1,30 +1,35 @@
 Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26245EAD3
-	for <git@vger.kernel.org>; Thu, 11 Jan 2024 07:53:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79F67D534
+	for <git@vger.kernel.org>; Thu, 11 Jan 2024 08:04:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
-Received: (qmail 29526 invoked by uid 109); 11 Jan 2024 07:53:14 -0000
+Received: (qmail 29693 invoked by uid 109); 11 Jan 2024 08:04:30 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 11 Jan 2024 07:53:14 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 11 Jan 2024 08:04:30 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 3680 invoked by uid 111); 11 Jan 2024 07:53:16 -0000
+Received: (qmail 3737 invoked by uid 111); 11 Jan 2024 08:04:32 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 11 Jan 2024 02:53:16 -0500
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 11 Jan 2024 03:04:32 -0500
 Authentication-Results: peff.net; auth=none
-Date: Thu, 11 Jan 2024 02:53:13 -0500
+Date: Thu, 11 Jan 2024 03:04:29 -0500
 From: Jeff King <peff@peff.net>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org,
-	Scott Leggett <scott@sl.id.au>
-Subject: Re: [PATCH] commit-graph: retain commit slab when closing NULL
- commit_graph
-Message-ID: <20240111075313.GF48154@coredump.intra.peff.net>
-References: <20240105054142.GA2035092@coredump.intra.peff.net>
- <ZZg3YIEDCjbbGyVX@nand.local>
- <20240110113914.GE16674@coredump.intra.peff.net>
- <xmqq34v5dtz9.fsf@gitster.g>
+To: Dragan Simic <dsimic@manjaro.org>
+Cc: Junio C Hamano <gitster@pobox.com>,
+	=?utf-8?B?UnViw6lu?= Justo <rjusto@gmail.com>,
+	Git List <git@vger.kernel.org>
+Subject: Re: [PATCH 3/3] advice: allow disabling the automatic hint in
+ advise_if_enabled()
+Message-ID: <20240111080429.GG48154@coredump.intra.peff.net>
+References: <7c68392c-af2f-4999-ae64-63221bf7833a@gmail.com>
+ <d6099d78-43c6-4709-9121-11f84228cf91@gmail.com>
+ <20240110110226.GC16674@coredump.intra.peff.net>
+ <aaf59fc82ef3132ece8e1f70623570a2@manjaro.org>
+ <97fdf6d4-1403-4fe9-b912-a85342a9fa56@gmail.com>
+ <a97b03a305a7b8b95341b63af1de0271@manjaro.org>
+ <xmqqil41duov.fsf@gitster.g>
+ <d6d72ec5431ad1ca775e6e4e9921f94c@manjaro.org>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -33,92 +38,64 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <xmqq34v5dtz9.fsf@gitster.g>
+In-Reply-To: <d6d72ec5431ad1ca775e6e4e9921f94c@manjaro.org>
 
-On Wed, Jan 10, 2024 at 08:38:18AM -0800, Junio C Hamano wrote:
+On Wed, Jan 10, 2024 at 06:45:49PM +0100, Dragan Simic wrote:
 
-> > It should be easy-ish to iterate through the slab and look at the
-> > commits that are mentioned in it. Though maybe not? Each commit knows
-> > its slab-id, but I'm not sure if we have a master list of commits to go
-> > the other way.
+> 4) As a careful git user that remembers important things, you go back
+> to your git configuration file and set core.verboseAdvice to true, and
+> the additional advices are back, telling you how to disable the
+> unwanted advice.
 > 
-> We have table of all in-core objects, don't we?
-
-Oh, duh. Yes, we could iterate over obj_hash. I do think the "on demand"
-version I showed later in the message is better, though, as the work
-both scales with the number of affected commits (rather than the total
-number of objects) and can be done lazily (so callers that are not buggy
-pay no price at all).
-
-> > +	 * This will throw away the parents list, which is potentially sketchy.
-> > +	 * A better version of this would just unset commit->object.parsed
-> > +	 * and then do a minimal version of parse_commit() that _just_ loads
-> > +	 * the tree data (and/or graph position if available).
+> 5) After you disable the unwanted advice, you set core.verboseAdvice
+> back to false and keep it that way until the next redundant advice
+> pops up.
 > 
-> Yeah, it is a concern that we may be working with an in-core commit
-> object whose parent list has already been rewritten during revision
-> traversal.  Well thought out.
+> However, I do see that this approach has its downsides, for example
+> the need for the unwanted advice to be displayed again together with
+> the additional advice, by executing the appropriate git commands,
+> after the above-described point #4.
 
-Hmm. Looking at my "a better version" sentence, I guess we know that
-either:
+Right, the need to re-trigger the advice is the problematic part here, I
+think. In some cases it is easy. But in others, especially commands
+which mutate the repo state (like the empty-commit rebase that started
+this thread), you may need to do a lot of work to recreate the
+situation.
 
-  1. The object really is corrupt (i.e., we could not load the tree).
-
-  2. It came from a graph in the first place.
-
-So what if we just tried harder to look it up in the graph file (rather
-than the slab) when we see COMMIT_NOT_FROM_GRAPH? And indeed, we even
-have a function to do this already!
-
-So something like this almost works:
-
-diff --git a/commit.c b/commit.c
-index b3223478bc..096a3d18d0 100644
---- a/commit.c
-+++ b/commit.c
-@@ -418,10 +418,12 @@ static inline void set_commit_tree(struct commit *c, struct tree *t)
- struct tree *repo_get_commit_tree(struct repository *r,
- 				  const struct commit *commit)
- {
-+	uint32_t pos;
-+
- 	if (commit->maybe_tree || !commit->object.parsed)
- 		return commit->maybe_tree;
- 
--	if (commit_graph_position(commit) != COMMIT_NOT_FROM_GRAPH)
-+	if (repo_find_commit_pos_in_graph(r, commit, &pos))
- 		return get_commit_tree_in_graph(r, commit);
- 
- 	return NULL;
-
-but:
-
-  1. It doesn't update the slab, so get_commit_tree_in_graph() then
-     complains immediately, because it uses only
-     commit_graph_position(). I guess we'd need to do:
-
-       commit_graph_data_at(commit)->graph_pos = pos;
-
-     somewhere. That does make the recently-found segfault go away.
-     But...
-
-  2. I'm not sure if other spots would want similar treatment. We store
-     generation numbers in the slab, too. I think we'll figure things
-     out when they're not available, so there's no segfault problem. But
-     it's maybe a potential performance issue. Likewise, it is probably
-     a bug that the graph-writing code is looking at this commit at all
-     (since we know it is already in a graph file). So we might be
-     papering over that bug (that is, even though the segfault is gone,
-     we are perhaps still writing a duplicate graph entry).
-
-> > I dunno. I do feel like this is a lurking maintenance headache, and
-> > might even be a triggerable bug. But without knowing of a way that it
-> > happens in the current code base, it feels like it would be easy to make
-> > things worse rather than better.
+> Let's see what it would look like with the granular, per-advice on/off
+> knobs:
 > 
-> Unfortunately I share the feeling X-<.
+> 1) You use git and find some advice useful, so you decide to keep it
+> displayed.  However, the additional advice about turning the advice
+> off becomes annoying a bit, or better said, it becomes redundant
+> because the main advice stays.
+> 
+> 2) As a result, you follow the additional advice and set the specific
+> knob to false, and voila, the redundant additional advice disappears.
+> Of course, it once again isn't perfect, as the next point will clearly
+> show.
+> 
+> 3) You keep using git, and one of the advices that you previously used
+> to find useful becomes no longer needed.  But, what do you do, where's
+> that helpful additional advice telling you how to turn the advice off?
+> 
+> 4) Now you need to dig though the manual pages, or to re-enable the
+> additional advices in your git configuration file, perhaps all of them
+> at once, while keeping a backup of your original settings, to restore
+> it later.  Then, you again need to wait until the original advice gets
+> displayed.
 
-I somehow sniped myself into thinking about it more, but that has only
-reinforced my feeling that I'm afraid to touch it. ;)
+These steps (3) and (4) seem unlikely to me. These are by definition
+messages you have seen before and decided to configure specifically (to
+"always", and not just "off"). So you probably only have a handful (if
+even more than one) of them in your config file.
+
+Whereas for the case I am worried about, you are exposed to a _new_
+message that you haven't seen before (and is maybe even new to Git!),
+from the much-larger pool of "all advice messages Git knows about".
+
+It's possible we could implement both mechanisms and let people choose
+which one they want, depending on their preferences. It's not very much
+code. I just hesitate to make things more complex than they need to be.
 
 -Peff
