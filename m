@@ -1,27 +1,27 @@
 Received: from secure.elehost.com (secure.elehost.com [185.209.179.11])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A7F5A4A
-	for <git@vger.kernel.org>; Thu, 11 Jan 2024 02:57:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA14A63A0
+	for <git@vger.kernel.org>; Thu, 11 Jan 2024 03:24:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nexbridge.com
 X-Virus-Scanned: Debian amavisd-new at secure.elehost.com
 Received: from Mazikeen (cpebc4dfb928313-cmbc4dfb928310.cpe.net.cable.rogers.com [99.228.251.108] (may be forged))
 	(authenticated bits=0)
-	by secure.elehost.com (8.15.2/8.15.2/Debian-22ubuntu3) with ESMTPSA id 40B2s0cQ1732245
+	by secure.elehost.com (8.15.2/8.15.2/Debian-22ubuntu3) with ESMTPSA id 40B3KfbM1734724
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 11 Jan 2024 02:54:01 GMT
+	Thu, 11 Jan 2024 03:20:42 GMT
 Reply-To: <rsbecker@nexbridge.com>
 From: <rsbecker@nexbridge.com>
-To: "'Elijah Newren'" <newren@gmail.com>
+To: "'brian m. carlson'" <sandals@crustytoothpaste.net>
 Cc: "'Taylor Blau'" <me@ttaylorr.com>, "'Junio C Hamano'" <gitster@pobox.com>,
         "'Dragan Simic'" <dsimic@manjaro.org>, <git@vger.kernel.org>
-References: <ZZ77NQkSuiRxRDwt@nand.local> <b2651b38a4f7edaf1c5ffee72af00e46@manjaro.org> <xmqqjzog96uh.fsf@gitster.g> <006b01da4412$96c6c500$c4544f00$@nexbridge.com> <ZZ8ZlX6bf+hjmhN+@nand.local> <007c01da4420$10a7b700$31f72500$@nexbridge.com> <CABPp-BEw_HFL-9u6WdSEe-qr_JfJyQtfU6PP7izEdPChKooc6g@mail.gmail.com> <008701da442f$b2dfe420$189fac60$@nexbridge.com> <CABPp-BHx=4HPSN4enkHTL7PPnNBsJ1vGWe4Em5imH7HcOcH2PA@mail.gmail.com>
-In-Reply-To: <CABPp-BHx=4HPSN4enkHTL7PPnNBsJ1vGWe4Em5imH7HcOcH2PA@mail.gmail.com>
+References: <ZZ77NQkSuiRxRDwt@nand.local> <b2651b38a4f7edaf1c5ffee72af00e46@manjaro.org> <xmqqjzog96uh.fsf@gitster.g> <006b01da4412$96c6c500$c4544f00$@nexbridge.com> <ZZ8ZlX6bf+hjmhN+@nand.local> <007c01da4420$10a7b700$31f72500$@nexbridge.com> <ZZ9YrYvW_L9A02aI@tapette.crustytoothpaste.net>
+In-Reply-To: <ZZ9YrYvW_L9A02aI@tapette.crustytoothpaste.net>
 Subject: RE: [DISCUSS] Introducing Rust into the Git project
-Date: Wed, 10 Jan 2024 21:57:44 -0500
+Date: Wed, 10 Jan 2024 22:24:25 -0500
 Organization: Nexbridge Inc.
-Message-ID: <009c01da4439$f70beef0$e523ccd0$@nexbridge.com>
+Message-ID: <00a801da443d$b1539670$13fac350$@nexbridge.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -33,35 +33,72 @@ Content-Type: text/plain;
 Content-Transfer-Encoding: quoted-printable
 X-Mailer: Microsoft Outlook 16.0
 Content-Language: en-ca
-Thread-Index: AQNL0k5wzhXZATyUnQ76Vxjn4eCV+QKEQ1wBALH7sDwDPprtZwK9Rr3fAtB2bewByXD01gDMKZblA0KzuhetYfeX4A==
+Thread-Index: AQNL0k5wzhXZATyUnQ76Vxjn4eCV+QKEQ1wBALH7sDwDPprtZwK9Rr3fAtB2bewC03OFJa16Islg
 
-On Wednesday, January 10, 2024 9:21 PM, Elijah Newren wrote:
->On Wed, Jan 10, 2024 at 5:44=E2=80=AFPM <rsbecker@nexbridge.com> wrote:
->>
->> On Wednesday, January 10, 2024 7:59 PM, Elijah Newren wrote:
->[...]
->> >Would you be okay with the following alternative: requiring that all
->> >Rust code be optional for now?
->> >
->> >(In other words, allow you to build with USE_RUST=3D0, or something
->> >like that.  And then we have both a Rust and a C implementation of
->> >anything that is required for backward compatibility, while any new
->> >Rust-only stuff would not be included in your build.)
->>
->> To address the immediate above, I assume this means that platform
->> maintainers will be responsible for developing non-portable
->> implementations that duplicate Rust functionality
+On Wednesday, January 10, 2024 9:56 PM, brian m. carlson wrote:
+>On 2024-01-10 at 23:52:21, rsbecker@nexbridge.com wrote:
+>> Unfortunately, none of the compiler frontends listed previously can =
+be
+>> built for NonStop. These appear to all require gcc either directly or
+>> transitively, which cannot be ported to NonStop. I do not expect this
+>> to change any time soon - and is outside of my control anyway. An
+>> attempt was made to port Rust but it did not succeed primarily =
+because
+>> of that dependency.
 >
->This doesn't at all sound like what I thought I said.  The whole =
-proposal was so that
->folks like NonStop could continue using Git with no more work than =
-setting
->USE_RUST=3D0 at build time.
+>Can you tell us what the technical limitations are that prevent GCC =
+from being
+>ported so we can understand better?  I know LLVM doesn't support ia64, =
+which you
+>do support, but GCC is very likely the most portable compiler on the =
+planet and
+>supports architectures and OSes I've never otherwise heard of.
 >
->Why do you feel you'd need to duplicate any functionality?
+>I strongly suspect that if GCC did end up on NonStop, Rust would be =
+able to be
+>ported, too, and you'd also get access to gccgo, which would make Git =
+LFS possible
+>on NonStop as well[0].
+>
+>I'm not capable of porting GCC, but I have done some portability work =
+in the Rust
+>ecosystem, and I'd be willing to provide context and some assistance =
+(within my
+>time and capabilities) to help get Rust working on NonStop if you want.
+>
+>[0] For the record, as a maintainer of Git LFS, I'm happy to accept =
+portability
+>patches for virtually any OS.
 
-I think I misunderstood. What I took from this is that all new =
-functionality would be in Rust, which would require a custom =
-implementation in C for platforms that did not have Rust available - if =
-that is even practical. Did I get that wrong?
+There are a number of issues for porting gcc (and Go). The list is =
+fairly long, but the summary of what I encountered directly (on the last =
+funded effort of 3) is:
+1. There are C syntax constructs required to do anything useful =
+(required for access to the OS API) on NonStop that are not in gcc. I =
+can hand code the parser for that, but it would take time.
+2. The Big Endian x86 architecture is weird to gcc and making that work =
+is not easy.
+3. There is no assembler on NonStop.
+4. The ELF header is very different from standard.
+5. The symbol table structure is radically different, so debugging would =
+be (nearly) impossible or impractical. gdb was ported to account for the =
+platform differences.
+6. The linkage structure is similar but different from standard.
+7. The external fixup structure is radically different.
+8. The loader does not work the same way, so there are required sections =
+of the ELF files on NonStop that are not generated by gcc.
+
+There are more, but I just did not get to the point if hitting them. =
+Part of my own issue is that I have expertise in parsing and semantic =
+passes of compilers, but my code generation skills are not where I want =
+them to be for taking on this effort. Our last funded attempt had a code =
+generation expert and he gave up in frustration.
+
+If I was hired on to do this, it might have a chance, but at an estimate =
+(not mine) of 4-5 person years for a gcc port, best case, my $DAYJOB =
+will not permit it.
+
+If gcc could be ported to NonStop, it would solve so many problems. I =
+have heard of numerous failed efforts beyond what was officially funded =
+by various companies, so this is considered a high-risk project.
 
