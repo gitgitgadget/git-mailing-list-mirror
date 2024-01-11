@@ -1,99 +1,142 @@
-Received: from ring.crustytoothpaste.net (ring.crustytoothpaste.net [172.105.110.227])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yb1-f176.google.com (mail-yb1-f176.google.com [209.85.219.176])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE0BF57870
-	for <git@vger.kernel.org>; Thu, 11 Jan 2024 23:49:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E04A59B78
+	for <git@vger.kernel.org>; Thu, 11 Jan 2024 23:53:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=umich.edu
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=umich.edu
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="CRQjFIoO"
-Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:e59a:3ed0:5f5c:31f3])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (P-256) server-signature RSA-PSS (3072 bits) server-digest SHA256)
-	(No client certificate requested)
-	by ring.crustytoothpaste.net (Postfix) with ESMTPSA id ADF5B5A3B7;
-	Thu, 11 Jan 2024 23:49:01 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1705016941;
-	bh=lgNB1e4wpVfwF/0Jedp7wd/1oVHsaZ+IyGZaWxrfHv0=;
-	h=Date:From:To:Cc:Subject:References:Content-Type:
-	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-	 Content-Type:Content-Disposition;
-	b=CRQjFIoOqxlukn8fAgaK0fhpnzNBFO8TsqLEYfFr8LWYPunPCptU0sN3Tn2I9eWh/
-	 fctx1kTvlkfbb+ITtxVdjzRgoqCfvfpyrM5AbmQ5UIPXrfCxcT613xQP/NMM2+jZ11
-	 sQaYAMiLGv5rp19DzXLxOv7EW9ZgRaX/GUWROifWcsWVfkH6qj3b3yT+9QDv15Kt04
-	 QmY2RtM9lcf7nsIqv1R1lj5oMxiwaEDR8V5YZmWDdTIZe5XQptUKAFrUzTFSEG9rdd
-	 qrC2O0fb9f8tTq9Zv11xjOnJAiRFPeMdGUP3yC28fmEX465sX8xG5GNEzerLDrmj/l
-	 /xkzze3n3EbZwl6EkOTyL7vTE5LG5oMwwaLiwiTjKNyzGi3Cn8S6QC56scic6AVZsc
-	 Ped3mTaQuzU9W1niyZrSNwRk3h0YhRUFSHvHEf/0rODbevnQ+5Uen41WOGbLK2bGzE
-	 b6ksGvdFgbTIFWZ4YJlGrMgBgsGsHPHpUIGyAzCItz65142mPbi
-Date: Thu, 11 Jan 2024 23:48:59 +0000
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: Sam James <sam@gentoo.org>
-Cc: me@ttaylorr.com, git@vger.kernel.org
-Subject: Re: [DISCUSS] Introducing Rust into the Git project
-Message-ID: <ZaB-ayQuGqrS-mL0@tapette.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Sam James <sam@gentoo.org>, me@ttaylorr.com, git@vger.kernel.org
-References: <ZZ77NQkSuiRxRDwt@nand.local>
- <87v880m6r3.fsf@gentoo.org>
+	dkim=pass (2048-bit key) header.d=umich.edu header.i=@umich.edu header.b="SQ8A7CRs"
+Received: by mail-yb1-f176.google.com with SMTP id 3f1490d57ef6-da7ea62e76cso5091922276.3
+        for <git@vger.kernel.org>; Thu, 11 Jan 2024 15:53:15 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=umich.edu; s=google-2016-06-03; t=1705017194; x=1705621994; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=BiPQK21s7VaPGACRLVNKdQ2CEws1ZyBo2AyqReZ6Owk=;
+        b=SQ8A7CRstYuS4YfZo3cDd3wY0G2X7c2NPp+DcDG+cB58b4dJ6gc+RNRQ2LMn/YuRE4
+         /3DNDU0+IyvrpYJvirx37Wt6UnVj9LbVEs7o8c9ibbIQtTsgIgecUDRhcJAqx8JNkBqb
+         hdpvV67gHDe+uTYSUGhefzghL0Cv3IEoffRdXQmEXw9hpybY5ii0QKe2dvTHyBmkp2fI
+         3cw1P682kx65SHK+GsP8hv7kj4XY4+KAq9HeKZjHLxMX0yMRoYhvD/3Si1LdsRs5Q8dO
+         fyiyev14adIVk2XEUyt8ISQl97Q2+AmgmjFw6cBTpAcm0UgIbnv17OePWtoX0Mie5pAa
+         eyZw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1705017194; x=1705621994;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=BiPQK21s7VaPGACRLVNKdQ2CEws1ZyBo2AyqReZ6Owk=;
+        b=kIKaIs9wJElBiMu5br9E00a8F3sgUJPqiKxq1iXs6uTjyC8JHmN2ejEVXy1wdf72+w
+         222+6bto/gfN80QZD1JbpheJzzTp800FtosiGp4O06ddYnpvQxhQPC7qLAWSpeHSE3iB
+         WZlnIoxcCLJ6WsJNIMxnmqnZ438eCdM7O90voWA7KLZv+N+sc54ZJVjl+eJBro/u4LDR
+         jWrcnAxxrazbzhjoZCuSwoWB+KAvu+dgWfFYDzivr/hylZ06z3duTEIyM/yD3EFyDkhP
+         23jwzcTOeoZznxdHdvy9TgrUGkli50wEpV+wS4h9sYwACaIUokMbmpdosBNK/pTnMDVK
+         K6nA==
+X-Gm-Message-State: AOJu0YzfgXeXZ+WluQv6IebK4/DBYCkPwTT8/a8atS5vteELfkGopK+P
+	7OevY7TMkxquNsl2iw4r/1NF15RDyBR0eMmGsVUG/95Cu1g/kA==
+X-Google-Smtp-Source: AGHT+IHetCpHK0WRzAiFZXVFdvY9CpCYoKivd8pBjRgIiFfm9zcLO6kVUwwn7odLeLpiSJH4dGrH5NJuyBZJ2YL0JjM=
+X-Received: by 2002:a05:6902:1888:b0:dbd:9dc3:ea0 with SMTP id
+ cj8-20020a056902188800b00dbd9dc30ea0mr32546ybb.79.1705017194270; Thu, 11 Jan
+ 2024 15:53:14 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="Me6t/6/FPOhDVGFD"
-Content-Disposition: inline
-In-Reply-To: <87v880m6r3.fsf@gentoo.org>
-User-Agent: Mutt/2.2.12 (2023-09-09)
-
-
---Me6t/6/FPOhDVGFD
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+References: <ZZ77NQkSuiRxRDwt@nand.local>
+In-Reply-To: <ZZ77NQkSuiRxRDwt@nand.local>
+From: Trevor Gross <tmgross@umich.edu>
+Date: Thu, 11 Jan 2024 18:53:01 -0500
+Message-ID: <CALNs47s3tUQoOD4ejdoTn6y12ywjL0j5hWU-fUnBLe_o3vV5SQ@mail.gmail.com>
+Subject: Re: [DISCUSS] Introducing Rust into the Git project
+To: Taylor Blau <me@ttaylorr.com>
+Cc: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On 2024-01-11 at 11:45:07, Sam James wrote:
-> Something I'm a bit concerned about is that right now, neither
-> rustc_codegen_gcc nor gccrs are ready for use here.
->=20
-> We've had trouble getting things wired up for rustc_codegen_gcc
-> - which is not to speak against their wonderful efforts - because
-> the Rust community hasn't yet figured out how to handle things which
-> pure rustc supports yet. See
-> e.g. https://github.com/rust-lang/libc/pull/3032.
+On Wed, Jan 10, 2024 at 3:19=E2=80=AFPM Taylor Blau <me@ttaylorr.com> wrote=
+:
+>
+> Over the holiday break at the end of last year I spent some time
+> thinking on what it would take to introduce Rust into the Git project.
+>
+> There is significant work underway to introduce Rust into the Linux
+> kernel (see [1], [2]). Among their stated goals, I think there are a few
+> which could be potentially relevant to the Git project:
+>
+>   - Lower risk of memory safety bugs, data races, memory leaks, etc.
+>     thanks to the language's safety guarantees.
+>
+>   - Easier to gain confidence when refactoring or introducing new code
+>     in Rust (assuming little to no use of the language's `unsafe`
+>     feature).
+>
+>   - Contributing to Git becomes easier and accessible to a broader group
+>     of programmers by relying on a more modern language.
+>
+> Given the allure of these benefits, I think it's at least worth
+> considering and discussing how Rust might make its way into Junio's
+> tree.
+>
+> I imagine that the transition state would involve some parts of the
+> project being built in C and calling into Rust code via FFI (and perhaps
+> vice-versa, with Rust code calling back into the existing C codebase).
+> Luckily for us, Rust's FFI provides a zero-cost abstraction [3], meaning
+> there is no performance impact when calling code from one language in
+> the other.
+>
+> Some open questions from me, at least to get the discussion going are:
+>
+>   1. Platform support. The Rust compiler (rustc) does not enjoy the same
+>      widespread availability that C compilers do. For instance, I
+>      suspect that NonStop, AIX, Solaris, among others may not be
+>      supported.
+>
+>      One possible alternative is to have those platforms use a Rust
+>      front-end for a compiler that they do support. The gccrs [4]
+>      project would allow us to compile Rust anywhere where GCC is
+>      available. The rustc_codegen_gcc [5] project uses GCC's libgccjit
+>      API to target GCC from rustc itself.
+>
+>   2. Migration. What parts of Git are easiest to convert to Rust? My
+>      hunch is that the answer is any stand-alone libraries, like
+>      strbuf.h. I'm not sure how we should identify these, though, and in
+>      what order we would want to move them over.
+>
+>   3. Interaction with the lib-ification effort. There is lots of work
+>      going on in an effort to lib-ify much of the Git codebase done by
+>      Google. I'm not sure how this would interact with that effort, but
+>      we should make sure that one isn't a blocker for the other.
+>
+> I'm curious to hear what others think about this. I think that this
+> would be an exciting and worthwhile direction for the project. Let's
+> see!
+>
+> Thanks,
+> Taylor
+>
+> [1]: https://rust-for-linux.com/
+> [2]: https://lore.kernel.org/rust-for-linux/20210414184604.23473-1-ojeda@=
+kernel.org/
+> [3]: https://blog.rust-lang.org/2015/04/24/Rust-Once-Run-Everywhere.html#=
+c-talking-to-rust
+> [4]: https://github.com/Rust-GCC/gccrs
+> [5]: https://github.com/rust-lang/rustc_codegen_gcc
+>
 
-Is this simply library support in the libc crate?  That's very easy to add.
+Two good reference codebases out there:
 
-> I think care should be taken in citing rustc_codegen_gcc and gccrs
-> as options for alternative platforms for now. They will hopefully
-> be great options in the future, but they aren't today, and they probably
-> won't be in the next 6 months at the least.
+Abstractions over libgit2
+    Repo: https://github.com/rust-lang/git2-rs
+    Docs: https://docs.rs/git2/latest/git2/
 
-What specifically is missing for rust_codegen_gcc?  I know gccrs is not
-ready at the moment, but I was under the impression that
-rust_codegen_gcc was at least usable.  I'm aware it requires some
-patches to GCC, but distros should be able to carry those.
+gix, a WIP reimplementation of git. This is far from complete but does
+a lot of threading / async to apparently get quite fast.
+    Repo: https://github.com/Byron/gitoxide
+    Docs: https://docs.rs/gix/latest/gix/
 
-If rust_codegen_gcc isn't viable, then I agree we should avoid making
-Rust mandatory, but I'd like to learn more.
---=20
-brian m. carlson (he/him or they/them)
-Toronto, Ontario, CA
-
---Me6t/6/FPOhDVGFD
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.4.3 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZaB+agAKCRB8DEliiIei
-gfIiAP9Decw4nUJ8LxFgRccogvdr+OoEX8ZPWQx3GsjbP4KZ4QEA7n7BzXrLzx6u
-nem1WK56uQoDkZXfoRp66CGKtygcPgU=
-=UJ3x
------END PGP SIGNATURE-----
-
---Me6t/6/FPOhDVGFD--
+If the git project does decide to go forward with this, there is
+probably a lot of completed work that can be pulled from either of
+those sources.
