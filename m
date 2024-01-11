@@ -1,68 +1,69 @@
 Received: from wout1-smtp.messagingengine.com (wout1-smtp.messagingengine.com [64.147.123.24])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67A4E14F6A
-	for <git@vger.kernel.org>; Thu, 11 Jan 2024 10:41:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39287156F0
+	for <git@vger.kernel.org>; Thu, 11 Jan 2024 10:41:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="eAR7Mbaq";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="gBwsHgmz"
-Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
-	by mailout.west.internal (Postfix) with ESMTP id 4961C3200AC9;
-	Thu, 11 Jan 2024 05:41:53 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="t/AEu5mU";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="UpMAI+fa"
+Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
+	by mailout.west.internal (Postfix) with ESMTP id 400533200A9C;
+	Thu, 11 Jan 2024 05:41:58 -0500 (EST)
 Received: from mailfrontend2 ([10.202.2.163])
-  by compute6.internal (MEProxy); Thu, 11 Jan 2024 05:41:53 -0500
+  by compute3.internal (MEProxy); Thu, 11 Jan 2024 05:41:58 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
-	:message-id:mime-version:reply-to:subject:subject:to:to; s=fm2;
-	 t=1704969712; x=1705056112; bh=2Ipr07Ah87UQt9lCf1UF32kJbLBHdHoo
-	ofJgzuKwHdI=; b=eAR7MbaqK+ytMXpPGlMstw4WytEUbkikuzBB5P1OlDH4Lrhi
-	hd+MVKTa1BmL3aH4XcrOSxzUQMOpe4i9wQrR+6XzoX08/5r+8fyAaLg9L4u4VfiQ
-	W1s0G/hNtL2Wc/Sa1NpnzzBU4kWeH0NxCokfxPZ0y4qMiU1apUyK+OWG6y1GR5AT
-	0utxs4tDdFGbx3FarHW49D6CiuJTS+KfrJbGEu4bSWmkO5UI+fMDd8ZdrCQz+x63
-	62W4IIOpN6gOJcbLDoPlv11hiyboREfgvtkN/N/r1NhnsOwjTgw1LfHAixu1y+CN
-	7HML3Jq45kKHa20GFQX4YE66lK53VZRucR5J3Q==
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1704969717; x=1705056117; bh=jscV7EmjFS
+	QTAtX0YFaxYJuLZvQfyhm7pN6JweHobwI=; b=t/AEu5mUJDid2Whdm1uUCT0+dQ
+	JV3OoNmJGOi7SSItQybgabJxFO5270y5MG0Cpg+K1rytS/CPVTi1LhAlciVU2vJ2
+	MC07lRkHoLOvNgpIUVRks/QvdEdvpotVlK7VjSVK6cZpCso4YbljJT6BCIz4vhUt
+	RuoC3woNrc4tssNHMtYr9GjaJHVKOTSuglyPxGpHF3tfxrVbByAEeURW+tqK0r6D
+	g48q+AM2QLcCbSyFhH/ybZvNPtZRHeJAOBfttEeq/Bu3k0HXcatmEvnvt9TVWPDe
+	zJB1tYhLSjGS3QV/3NyI1qd+iqiSZ+ATEEteJk6PC2emQUKCLhuvx2fgyrJA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:message-id
-	:mime-version:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1704969712; x=1705056112; bh=2Ipr07Ah87UQt9lCf1UF32kJbLBHdHooofJ
-	gzuKwHdI=; b=gBwsHgmzHLD3g5czP2rKSODbmYqcfSZsTf2ITJcviR5U3dHJgbK
-	RTUdg6rGDj0Kx94VEUsodeXeJw9Zd6C66TRSMvR8BhxCckR+rqkXU+Pv8/6xX36E
-	U80fDIqUastcR0vWh2OpFTqypTcXXY9yqw/6moiSp6BsJpF/Gmo3YA7iU6dt9VUF
-	4Ja6Tr+3wI1xQhlhI5iGmMr4p6/mtdWZQr9i5dunjRxq+xgu7P2KsChK1iyE9fQC
-	Z4HmUxM1HXRnjZONxOSah844RYlXewwwcWoHRbIbhIVEtorQ/5DDTysY5390N22j
-	fhvkXz/o7VKJ5rYdD4RNDtdJDPXL1YYcRww==
-X-ME-Sender: <xms:8MWfZV6H0c6g08ueHIlNCaNkn_ZXX5wh8PRh77ry3UPpJp6MlJ_6PQ>
-    <xme:8MWfZS4zc-WEOCNomlmXcJepA0B_DR32EgDdmUU-7RpWPHOQXQQ-_BVzFHuAkhc3W
-    -HUt-9K1JarPts23w>
-X-ME-Received: <xmr:8MWfZcd20DvDOwNrb0Ju3VHREuLiB_DMskzwWidQtw5BvhumzXgDWGqqfKIq90EkOHM26ujdWW5v7HZbjdBE3v11kOkeSR_4_vdRLS0dux5nDX0DMw>
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm2; t=1704969717; x=1705056117; bh=jscV7EmjFSQTAtX0YFaxYJuLZvQf
+	yhm7pN6JweHobwI=; b=UpMAI+fawMjDTjTvwxRVoFEt5B/B5auR2wgJeVKRLxM+
+	7gVeN2k41IL1fLpd8AifodwppH4jrl+m7kClCU6vTdArd+fW0j1A0d0tg0TA687Y
+	EzgGqk0hGSD0GvwGvaIwvgaRcsQcw1263DNydRTwKYXwPu7nKQEqfjHg0FnHYmvp
+	Z4kGoflg+4oRHR2UTehsNF8ITmnKLfs14MpcZTWCuUH5FFURVEeHDPekxdX0npQM
+	uvrio4k9KO3p+FpNTo3AbHAz1pIjPW/rgQc63A5b6bk0AM0AwqgXJMwe9ROXyjJP
+	+WOiSIQRqtCpt9p0mdw0nWvBXTFV3PVIxpj0xXLvEg==
+X-ME-Sender: <xms:9cWfZeyqL8sIxo373Bl1eJFrjtkzgDxpYFI8KywqIsiG9bvxdhkABg>
+    <xme:9cWfZaTqYdge8Qtwm7kQk_w0XW3VXXmnhULkIVTPJc3l2Am5JKM-_qaYObfTLJVWU
+    WUdPaEnb7FMqYZ4Ig>
+X-ME-Received: <xmr:9cWfZQWYEJlNueIa2KqIdw748e7wunmWg-HlcE5DbuA9i2RHPWyhRR6ikk0eI_M_Gov-67n6iEwEWKSWlLrZK8AQfAgn5Pu8oFXRO33b5Iq0Q3PSqg>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrvdeifedgudekucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
     uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    cujfgurhepfffhvfevuffkgggtugesghdtreertddtvdenucfhrhhomheprfgrthhrihgt
-    khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
-    epuefguedtueeiheetleevgedujeekjeehleejjefhhffghfevgfekueekjedtieejnecu
-    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
-    hsrdhimh
-X-ME-Proxy: <xmx:8MWfZeLI0BjWa-TpuegBu4BvPeAEk9kE4DLJbHVm5LApDpzjpMmIRA>
-    <xmx:8MWfZZJY_I2voxnNd8zT7eLmTZnEOqVNF0e41tSTgSgHqqXNJ0xG4Q>
-    <xmx:8MWfZXx-g-98MG0RINBbUYRMrmtXqS0IaZbfXjGEqPEQRsweToOXog>
-    <xmx:8MWfZbwFtRvLjUgVsZtvGZQvaDV1h0h-C3NUfehmHBjs53z1ZGWlRQ>
+    cujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtvdenucfhrhhomheprfgrthhr
+    ihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvg
+    hrnhepueektdevtdffveeljeetgfehheeigeekleduvdeffeeghefgledttdehjeelffet
+    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
+    hpkhhsrdhimh
+X-ME-Proxy: <xmx:9cWfZUikJNQuQ0hBsQBMSNt8nrMVNcWasjWnHVUt_DOY6bFQMqn_Uw>
+    <xmx:9cWfZQBn1l2uuucS6u10N7c-eEnJNwCkRyIWkH2nXkOEjznMf33-qw>
+    <xmx:9cWfZVJ3ugnTWAfRnSRQ1xVUxg3w2OCMwy0lKSycLaT64SjH5chQ0Q>
+    <xmx:9cWfZbrQlEWiTs1eoX7tn0w0Fv6EZr6stZZlM2V_MTdEO4wleCSJjg>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 11 Jan 2024 05:41:51 -0500 (EST)
+ 11 Jan 2024 05:41:56 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 7b10a458 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 11 Jan 2024 10:39:09 +0000 (UTC)
-Date: Thu, 11 Jan 2024 11:41:49 +0100
+	by vm-mail (OpenSMTPD) with ESMTPSA id 4b3ae6ba (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 11 Jan 2024 10:39:14 +0000 (UTC)
+Date: Thu, 11 Jan 2024 11:41:54 +0100
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
 Cc: Stan Hu <stanhu@gmail.com>
-Subject: [PATCH 0/2] completion: silence pseudo-ref existence check
-Message-ID: <cover.1704969119.git.ps@pks.im>
+Subject: [PATCH 1/2] t9902: verify that completion does not print anything
+Message-ID: <73406ca9c8f38ac2ad8f0e32d6d81f1566a6b4d1.1704969119.git.ps@pks.im>
+References: <cover.1704969119.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -70,53 +71,65 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="rHMeJenf7ob3wZ9N"
+	protocol="application/pgp-signature"; boundary="8u0tNs/vgAIksUjT"
 Content-Disposition: inline
+In-Reply-To: <cover.1704969119.git.ps@pks.im>
 
 
---rHMeJenf7ob3wZ9N
+--8u0tNs/vgAIksUjT
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-Hi,
+The Bash completion script must not print anything to either stdout or
+stderr. Instead, it is only expected to populate certain variables.
+Tighten our `test_completion ()` test helper to verify this requirement.
 
-I recently noticed that the Bash completion script started to output
-object IDs in repositories which use the "reftable" backend when
-completing certain commands. This patch series fixes this issue.
+Signed-off-by: Patrick Steinhardt <ps@pks.im>
+---
+ t/t9902-completion.sh | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-Patrick
-
-Patrick Steinhardt (2):
-  t9902: verify that completion does not print anything
-  completion: silence pseudoref existence check
-
- contrib/completion/git-completion.bash |  2 +-
- t/t9902-completion.sh                  | 14 ++++++++++++--
- 2 files changed, 13 insertions(+), 3 deletions(-)
-
+diff --git a/t/t9902-completion.sh b/t/t9902-completion.sh
+index aa9a614de3..78cb93bea7 100755
+--- a/t/t9902-completion.sh
++++ b/t/t9902-completion.sh
+@@ -87,9 +87,11 @@ test_completion ()
+ 	else
+ 		sed -e 's/Z$//' |sort >expected
+ 	fi &&
+-	run_completion "$1" &&
++	run_completion "$1" >"$TRASH_DIRECTORY"/output 2>&1 &&
+ 	sort out >out_sorted &&
+-	test_cmp expected out_sorted
++	test_cmp expected out_sorted &&
++	test_must_be_empty "$TRASH_DIRECTORY"/output &&
++	rm "$TRASH_DIRECTORY"/output
+ }
+=20
+ # Test __gitcomp.
 --=20
 2.43.GIT
 
 
---rHMeJenf7ob3wZ9N
+--8u0tNs/vgAIksUjT
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmWfxewACgkQVbJhu7ck
-PpRFwQ/+I2AynnPabOtM4cPjOgHaF9gjCd6HMq9HKATOedVLvcAKaYyzwKUUSSZO
-dxEsBCI2B2Hb6CkZ3XH30WJLRzctkgCHG9v/g4RyQ+y3thX9Ha8SbJTHOWFuldT5
-NzOKfH2E8keAkLbc38z7ZEr7f31mEXnV9cEyBBPIJOz+HnKSR8oW68zb8/7IpWQa
-KK1kX/OruaMswCK+XZ4i7cBCragZmMxxGY7GzuCUL0fwk+KjW/zaUGMGQJrKqBR+
-vLUiuj32b0sNJosDnhnyOTxFYtEjQ4F1aZNFJcRDzOnXJ+8r2gQ7HErNA+if1aOO
-TwSuwi+vfJ6zNk6TZGvj2mkUpINp6D5eNWQRa5YSoeKJ6yJIg4VBGeh2QU48bmfK
-82IYhwUQXFaNlYPdUTFfqSeYlocqW8uowig2vX5HgYzVubk+yhr48/HtHGzpwEtd
-JiZSceNM78VxqSeb7A7aT03WwiRZ+hUgtW0Cu4i3Fdi2srclgyeWCRsfrVL8iCui
-1d0AC+cl/wx9zKNjX4GtzO8bRdRLWjGDi1kfl6e6/tKjvKbr6XvVp/ZLWN4ucugx
-N4TWqKKLCrgT6yceILc8GgCgQrwIawCtae2iYgMD4aWYKbhyfhsoNJDY2mxNkhuI
-sX1E/lK7+P0BuH5fNDKHqnBrtfzy2CWHiic9RyW54iLz2Wn7qW4=
-=Dxqs
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmWfxfIACgkQVbJhu7ck
+PpQvDw//VyQ5AF1zxPsFbVkQsG3N8GNxE2h56SB8pKYl43qC87Vhzj0QjC9ntTZv
+UxYlxW2UVOi87m0xIzFPiU6kvo6qCnMAOe+wlGuiJReNvRJRKzg1JjcbD0+eaPEY
+Rhsl1yqU2qh3fCevzxSWXvKtGXnNOiOHs2rxpzdgb+mUq9Jlqi3gukfrmWlFkcqK
+8kE70uIPcRfOfDRN2e9Fg/JFjnU51HMD2CcGiJTTE0ikSul/kzrwHfQ8i5c6izzs
+ErzbwFJZxuHTEubR9VGXQKYYxBwieAY/1pejRqxpl+Iv8859o+l3tkmnm7gLppYC
+K1VUabXUHHOhDUKklTogzYS1M/TWO8T9WlksNDe3hk6pAvRwSZpinsFL8n1dHQxy
+2mzsq1IGlf0GPeY8/l1pOIoFcHz/rXsP0SLzY3bJ+aj5wggvMeIPc6jVsPaMPN7z
+OAwkvcFRDZuqHa15aaWOkZzfHhIgMY2z07VgkTOD2sIcPJrk8Ngzpf533WaA198z
++0PZrK58Lhu3JNGjNRkjdMf0e9ohDza4bsK+A6SYrLVau34DVo2DbS1U+COBTRwA
+yLPNTIi6VyIplvZ3r6ZlEd7iU4dJ3gLbLsAawHuoYhjS98GamjVvuncMVUU7ylLU
+mAm3gwITHLAKk+ZILO0f/wjp8y0Sh4E44caA1EHzLs14QDqjpfU=
+=dWqw
 -----END PGP SIGNATURE-----
 
---rHMeJenf7ob3wZ9N--
+--8u0tNs/vgAIksUjT--
