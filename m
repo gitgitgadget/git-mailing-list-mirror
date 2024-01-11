@@ -1,76 +1,75 @@
-Received: from mail.manjaro.org (mail.manjaro.org [116.203.91.91])
-	(using TLSv1.2 with cipher DHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBE0A46AB
-	for <git@vger.kernel.org>; Thu, 11 Jan 2024 05:39:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=manjaro.org
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b="KYm/0I6F"
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D58E563A0
+	for <git@vger.kernel.org>; Thu, 11 Jan 2024 06:53:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+Received: (qmail 28954 invoked by uid 109); 11 Jan 2024 06:53:40 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 11 Jan 2024 06:53:40 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 3316 invoked by uid 111); 11 Jan 2024 06:53:40 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 11 Jan 2024 01:53:40 -0500
+Authentication-Results: peff.net; auth=none
+Date: Thu, 11 Jan 2024 01:53:38 -0500
+From: Jeff King <peff@peff.net>
+To: Taylor Blau <me@ttaylorr.com>
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Subject: Re: [PATCH] index-pack: spawn threads atomically
+Message-ID: <20240111065338.GA48154@coredump.intra.peff.net>
+References: <20240105085034.GA3078476@coredump.intra.peff.net>
+ <ZZgvUyQK6X/MacDC@nand.local>
+ <20240110114456.GF16674@coredump.intra.peff.net>
+ <ZZ7VEVXSg1T8ZkIK@nand.local>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=manjaro.org; s=2021;
-	t=1704951553;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=23h59niHzI1uAaVYoIyhLFhRGv/nrKbiXWUdstr81O0=;
-	b=KYm/0I6FPnwdGuNj4PURd0Jq2xQp/PYwA7u5YB0oruJ3VSilc7lm6RzmDwuOJonC2AyzIU
-	ntLeUf3hn1alMwI6Z6OKqT3BF2Vj6iuxShNW28fk6cDgvI+u3PA0X7MB/jH4+qQAyiWtsr
-	werktY+4ZsYzy5dHb6R7iT482zj2lPmYG2yKGGl3f9al7tzN23lCLeuwEWS5rqpC6K437H
-	F2qDN4c2d8xWr5dfzpeYANch2dy3Gohssj+9xpEu/IO++vDl2ULS5XX29GPHs3Kn23hNMx
-	mIgnDaUnBy/84hxK18ORaoCbeH1lVQiIKkEsepU2uebXmWBKXjGQsTPPm84qYw==
-Date: Thu, 11 Jan 2024 06:39:13 +0100
-From: Dragan Simic <dsimic@manjaro.org>
-To: Elijah Newren <newren@gmail.com>
-Cc: Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org
-Subject: Re: [DISCUSS] Introducing Rust into the Git project
-In-Reply-To: <CABPp-BH3sva=CNtx8YFGP4Egyau-hR+7njZPFEd-DRTw91BK2w@mail.gmail.com>
-References: <ZZ77NQkSuiRxRDwt@nand.local>
- <b2651b38a4f7edaf1c5ffee72af00e46@manjaro.org>
- <CABPp-BH3sva=CNtx8YFGP4Egyau-hR+7njZPFEd-DRTw91BK2w@mail.gmail.com>
-Message-ID: <f5b9a57b6e2b513f1d79a93c6f0ccf45@manjaro.org>
-X-Sender: dsimic@manjaro.org
-Content-Type: text/plain; charset=UTF-8;
- format=flowed
-Content-Transfer-Encoding: 8bit
-Authentication-Results: ORIGINATING;
-	auth=pass smtp.auth=dsimic@manjaro.org smtp.mailfrom=dsimic@manjaro.org
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <ZZ7VEVXSg1T8ZkIK@nand.local>
 
-On 2024-01-11 01:33, Elijah Newren wrote:
-> On Wed, Jan 10, 2024 at 1:57 PM Dragan Simic <dsimic@manjaro.org> 
-> wrote:
->> 
->> Thus, Git should probably follow the same approach of not converting 
->> the
->> already existing code
-> 
-> I disagree with this.  I saw significant performance improvements
-> through converting some existing Git code to Rust.  Granted, it was
-> only a small amount of code, but the performance benefits I saw
-> suggested we'd see more by also doing similar conversions elsewhere.
-> (Note that I kept the old C code and then conditionally compiled
-> either Rust or C versions of what I was converting.)
+On Wed, Jan 10, 2024 at 12:34:09PM -0500, Taylor Blau wrote:
 
-Well, it's also possible that improving the old C code could also result 
-in some performance improvements.  Thus, quite frankly, I don't see that 
-as a valid argument to rewrite some existing C code in Rust.
+> > If do go with "--threads=1", I suspect several tests in that file need
+> > it.
+> 
+> Yeah, there are a couple of others. I think the ones that need modifying
+> are at the intersection of "expected to fail" and "in a test which is
+> expected to pass leak-free":
+> 
+>     $ grep -l 'TEST_PASSES_SANITIZE_LEAK=true' t????-*.sh |
+>       xargs grep -l 'test_must_fail git index-pack'
+>     t5302-pack-index.sh
+>     t5308-pack-detect-duplicates.sh
+>     t5309-pack-delta-cycles.sh
+>     t5313-pack-bounds-checks.sh
+>     t5325-reverse-index.sh
 
-> Further, I found a really old bug from this effort as well[1], and I
-> find it extremely unlikely that I would have found that bug otherwise.
-> So, converting to Rust can even improve our existing C code.
-> 
->> , but frankly, I don't see what would actually be
->> the "new leafs" written in Rust.
-> 
-> In addition to some of the examples Junio mentioned elsewhere, I think
-> new toplevel commands, like git-replay, would qualify.
-> 
-> 
-> [1] Yeah, I really need to dig the patch out and send it in.  I'll do
-> so shortly.
+I think that is more than we need. It's only a problem when we hit a
+die() inside a thread, which happens only during delta resolution. So
+your patch 2, for example, touches a test which triggers the
+--max-input-size check. But we would find that out on the initial
+unthreaded pass over the pack.
+
+The one in patch 3 seems at first glance like it might be a problem
+(it's another duplicate-object case, like the one of them in 5309). But
+it isn't a problem because the duplicate object isn't a delta, so we
+notice the problem in write_idx_file() from the main thread (which I
+verified by running it under gdb and setting a breakpoint at die()).
+
+I suspect patch 4 is the same, but didn't run gdb on each case. And
+patch 5 is about a corrupt reverse index, so almost certainly the main
+thread. So I suspect that patch 1 is the only one that matters here (and
+probably all of those are needed, because it is all about broken
+deltas).
+
+All that said, I am on the fence between the two approaches. If Junio
+prefers the atomic-spawn direction, I'm fine with that, and there's not
+much point in polishing the --threads=1 approach further.
+
+-Peff
