@@ -1,71 +1,71 @@
 Received: from wout3-smtp.messagingengine.com (wout3-smtp.messagingengine.com [64.147.123.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B21FAD271
-	for <git@vger.kernel.org>; Thu, 11 Jan 2024 07:33:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B677DDDA7
+	for <git@vger.kernel.org>; Thu, 11 Jan 2024 07:41:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="YPhjOGWu";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="bmzLEIM7"
-Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
-	by mailout.west.internal (Postfix) with ESMTP id 7ADEE3200A48;
-	Thu, 11 Jan 2024 02:33:17 -0500 (EST)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute2.internal (MEProxy); Thu, 11 Jan 2024 02:33:17 -0500
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="M4+j1b9E";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="e0mrRRSN"
+Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
+	by mailout.west.internal (Postfix) with ESMTP id 80DFB3200A61;
+	Thu, 11 Jan 2024 02:41:56 -0500 (EST)
+Received: from mailfrontend1 ([10.202.2.162])
+  by compute5.internal (MEProxy); Thu, 11 Jan 2024 02:41:56 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1704958396; x=1705044796; bh=M0/tAtz3l2
-	WvD4t3QCXovyBrsFSbm0fmXP5GcSNQXrk=; b=YPhjOGWuH9spLODg6vzIFb4mFe
-	OFXu51o3mJGC0mnq2+qAHVJc8MtuLonL4WdPtlPiLG+uJCoLtWY8ld1IgkYIhA5B
-	+uZ2UfD+iTizHyjVX1s3vVcII9VIlce0bgn3ihhIo5u+tDLmww4g/Z/3yrR4/73p
-	gfT+zsEBVlKL0/IIb2Dp6W13nDwlUOiXhabfaUMi7IUhYKMTp/TC/6o2tv7VG6mM
-	F6kL1j5Z2KOVogVDitXmE2cXTeQy0uoWwvUYUr/XWA8E8ukVLyIbHeeYwRWZi5Yb
-	H2tif2y08VqftApd16DAbKRdTXu3qx6yIoTK1WC1EIfKOFi4191wphZDQryg==
+	:subject:to:to; s=fm2; t=1704958915; x=1705045315; bh=8KeOtmcRKn
+	4XDDAPHr9xKZ4y2WBE0sOdiLPt8tRe5Xs=; b=M4+j1b9EARWmDMOwizCiioPXEN
+	auktiNtdRKw0yKy1hZMdYS/FRx0M0nSL453SOWyUMPtIKbytJAuNW442DgjMSkU/
+	lFCWSqWKDYybukE7Ud4HXX4/CixmKjczZxGK5ZhHCn8fci27gM8ckdMu7Y3sbTLq
+	fMT1pFzkDiAMKEWozt0YVLM2nkHdw+qBVqMfjXgAD91jzzs7A/sSuUIw8Zt/GCO4
+	xCh5HYDT12LovifwvJPw8pERWNmR9bQQY65GXoi5Qx8VpOFZgxyirLk346mEsdMV
+	0a/lvWd+Xs7x00kqPE0aakc6EuaBYzJp2IEvR5465YkDRy8eQX3jnMIDH4yg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1704958396; x=1705044796; bh=M0/tAtz3l2WvD4t3QCXovyBrsFSb
-	m0fmXP5GcSNQXrk=; b=bmzLEIM7P6P/YGDgqTD5Q9gtVzk2Hv7E5wSXI48AAQ9x
-	u/SygyZQEHEPUegmCDRhLZJ7Gf3lkXT/vEwh7hb4ibv0MmzhUH6wmMB3HhgZaXvR
-	3HdVkNdRBY6+szv3OHhi2JVLQpYJosnc6SWDSOpLoOdsQLvQ4uigOT9vW6KA+G/N
-	iFuhIaItkP+Y+x8cNx/aP0z4qe1+gFj5e6uRmtQkWiHyfixInQDe5PbYRfdaBMJ/
-	uI2qcllnVxOfbLkG8hLfHFOOxCBCtRLj6c0pWN4eh7M5g2Vr0Yp3lo2YIOIzJx32
-	gAVeYUZ8G/STJdBydpzR2GLZFj6WN6OJqA5cdNNCwg==
-X-ME-Sender: <xms:vJmfZdTE_HjcVG9VhQH8ZpKZnY13f8B44nUEBmVi1XSnFFmb6cKxLg>
-    <xme:vJmfZWxi3C-Wu6NcZEPdZFV5JeVXDDjSyYezU9cVxiYj56ZH67AS7u--VzWcGMepR
-    UXarvN_zdKsWx72Xg>
-X-ME-Received: <xmr:vJmfZS1IM7xAyfVjA26dAnanDcKdx3EpDnb13laqNG4cDd-sN8gZ_7QHHC55LhfAta1R9lJfML1B-yUaUnyGxLAuNTmUjn4GYFEeUsYuiHD09tbCBg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrvdeivddguddthecutefuodetggdotefrod
+	fm2; t=1704958915; x=1705045315; bh=8KeOtmcRKn4XDDAPHr9xKZ4y2WBE
+	0sOdiLPt8tRe5Xs=; b=e0mrRRSNjM4FXFd0WwaTyKId0ELpmdIUsV5yfBDg4bFG
+	T0FUUSlUX9/cHslT3NXOkoDNn/x4wFWTIhkkft2Puf/LPx7WNsgh5yfIpUWEMJlf
+	1SDl/3ftY6AA4KlU/BeLMSItal7tar4vigwRgDfSpnpLpIQ/FsoRhNvaIpEM990x
+	o3VdAjW1ezQBmpFpAvDq6+E/A+EyGZ9SdJPeJmhUnc6SJjvERn0uMy9R/jhq2lHd
+	YtHLMoaAkNBKaPsGE+IyHMMCtmQElgshO66c5hP6R3/SEAgJS4WmkybPM4Vt3ljp
+	ksRxEzFCLR7csRDNWrr0Ya80+w/+wcjaIhjFNmIEiQ==
+X-ME-Sender: <xms:w5ufZaJIDJ7VtQxuTdXvbO9zasMHE_jbSuDB7RsMapUVarpBm7492Q>
+    <xme:w5ufZSKVyg0CSsc8yv6lmNb6F1Mak2m7V5BYOliVgUdoDi_GteOpxS7805SKHzBJQ
+    992vtB5Ze8jvBzYvA>
+X-ME-Received: <xmr:w5ufZatj9s80XC_cantcLIvKSz7m-GpXBmeuo0jAH_JaI7Eo7lbJ1ot9UKRXxivZ8RmolWbuYttfxA0suTdgqVrr4OFZbVSw--_1opkgrO2oVlRYSw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrvdeivddguddtjecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
     necuuegrihhlohhuthemuceftddtnecunecujfgurhepfffhvfevuffkfhggtggujgesgh
-    dtreertddtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhs
-    sehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepueektdevtdffveeljeetgfehheeige
-    ekleduvdeffeeghefgledttdehjeelffetnecuvehluhhsthgvrhfuihiivgeptdenucfr
+    dtreertddtudenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhs
+    sehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepfedvleefueetgeeitdekheelffekke
+    fgffduhfduvdefffdtheekiefhkeejkeehnecuvehluhhsthgvrhfuihiivgeptdenucfr
     rghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimh
-X-ME-Proxy: <xmx:vJmfZVCVDQlHersVJ8fcdaMMPo95NOtmfaKh_ztBeokxkSsF-Kkiew>
-    <xmx:vJmfZWg38lBvvNEGlDIhXMrPaU9vyZTvybKyLarPWj8GCt_bxhs_pw>
-    <xmx:vJmfZZqjr9lSGnnZsVwa-qR7x2w4DVw5CcL4jY3hVAgSg8YxYRVD5g>
-    <xmx:vJmfZab6Y_r8jHo8Xdjov_NTPivHu3GM2ciRB1EaviL1IfcPIcfwqw>
+X-ME-Proxy: <xmx:w5ufZfZ9-1nsJoN53KDzkGp02hVRUYC6_7bcwbsvAl9pKhhZnIaf4g>
+    <xmx:w5ufZRZqS_Iu2LnYg1BcMJrlUuiBgRNHOp3r5d7LvpKT7QPWyYTKFQ>
+    <xmx:w5ufZbCLmkztzOFLfXU5z6IUllwjYaytHabFb49Odq79kxrglGqueA>
+    <xmx:w5ufZQwSjObm2e9E7ECBCjzRzbxSgfdItSrDGYPURl_RxFBztMUGYw>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 11 Jan 2024 02:33:15 -0500 (EST)
+ 11 Jan 2024 02:41:54 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 6b035e1c (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 11 Jan 2024 07:30:32 +0000 (UTC)
-Date: Thu, 11 Jan 2024 08:33:12 +0100
+	by vm-mail (OpenSMTPD) with ESMTPSA id f1a2e134 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 11 Jan 2024 07:39:12 +0000 (UTC)
+Date: Thu, 11 Jan 2024 08:41:52 +0100
 From: Patrick Steinhardt <ps@pks.im>
 To: Junio C Hamano <gitster@pobox.com>
 Cc: git@vger.kernel.org, Han-Wen Nienhuys <hanwenn@gmail.com>
-Subject: Re: [PATCH 1/4] reftable/stack: refactor stack reloading to have
- common exit path
-Message-ID: <ZZ-ZuCBevbNot97m@tanuki>
+Subject: Re: [PATCH 3/4] reftable/stack: use stat info to avoid re-reading
+ stack list
+Message-ID: <ZZ-bwC66hDpbm6qm@tanuki>
 References: <cover.1704714575.git.ps@pks.im>
- <01ece2626dd4cb494829e146d99c172fa8428478.1704714575.git.ps@pks.im>
- <xmqqmstdccz8.fsf@gitster.g>
+ <4fabdc3d8016dbc1e20fbe90058ee7320a5f770b.1704714575.git.ps@pks.im>
+ <xmqqo7dt9ckn.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -73,54 +73,93 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="mEQaYjJqj0DLYFc/"
+	protocol="application/pgp-signature"; boundary="YvJks1AJj17dSUoe"
 Content-Disposition: inline
-In-Reply-To: <xmqqmstdccz8.fsf@gitster.g>
+In-Reply-To: <xmqqo7dt9ckn.fsf@gitster.g>
 
 
---mEQaYjJqj0DLYFc/
-Content-Type: text/plain; charset=us-ascii
+--YvJks1AJj17dSUoe
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Wed, Jan 10, 2024 at 09:30:51AM -0800, Junio C Hamano wrote:
+On Wed, Jan 10, 2024 at 12:07:52PM -0800, Junio C Hamano wrote:
 > Patrick Steinhardt <ps@pks.im> writes:
 >=20
-> > The `reftable_stack_reload_maybe_reuse()` function is responsible for
-> > reloading the reftable list from disk. The function is quite hard to
-> > follow though because it has a bunch of different exit paths, many of
-> > which have to free the same set of resources.
-> >
-> > Refactor the function to have a common exit path. While at it, touch up
-> > the style of this function a bit to match our usual coding style better.
-> > ---
-> >  reftable/stack.c | 86 +++++++++++++++++++++++-------------------------
-> >  1 file changed, 42 insertions(+), 44 deletions(-)
+> > We can do better and use the same stat(3P)-based mechanism that the
+> > "packed" backend uses. Instead of reading the file, we will only open
+> > the file descriptor, fstat(3P) it, and then compare the info against the
+> > cached value from the last time we have updated the stack. This should
+> > always work alright because "tables.list" is updated atomically via a
+> > rename, so even if the ctime or mtime wasn't granular enough to identify
+> > a change, at least the inode number should have changed.
 >=20
-> Missing sign-off.
+> Or the file size.  Let's keep in mind that many users get useless
+> inum from their filesystem X-<.
+>=20
+> >   Summary
+> >     update-ref: create many refs (refcount =3D 1, revision =3D HEAD~) r=
+an
+> >       1.01 =B1 0.09 times faster than update-ref: create many refs (ref=
+count =3D 1, revision =3D HEAD)
+> >       2.72 =B1 0.11 times faster than update-ref: create many refs (ref=
+count =3D 100, revision =3D HEAD)
+> >       3.42 =B1 0.13 times faster than update-ref: create many refs (ref=
+count =3D 100, revision =3D HEAD~)
+> >     163.59 =B1 5.62 times faster than update-ref: create many refs (ref=
+count =3D 10000, revision =3D HEAD)
+> >     233.91 =B1 7.92 times faster than update-ref: create many refs (ref=
+count =3D 10000, revision =3D HEAD~)
+> > ---
+>=20
+> Nice.
+>=20
+> > @@ -374,6 +375,8 @@ static int reftable_stack_reload_maybe_reuse(struct=
+ reftable_stack *st,
+> >  		sleep_millisec(delay);
+> >  	}
+> > =20
+> > +	stat_validity_update(&st->list_validity, fd);
+> > +
+> >  out:
+> >  	if (fd >=3D 0)
+> >  		close(fd);
+>=20
+> The stat_validity_update() does not happen in the error codepath.
+>=20
+> Should we be clearing the validity of the list when somebody jumps
+> to "out:" due to an error?  Or by the time this function gets
+> called, the caller would already have cleared the validity and an
+> error that jumps to "out:" keeps the list invalid?
 
-Ah, sorry, I forgot my usual `git rebase --signoff`. Will fix in v2.
+It likely does not matter much. This function only gets called when we
+have previously determined the stack to be out of date already. So
+unless we update the validity cache, we know that the next validity
+check would continue to treat the stack as outdated.
+
+That being said I think it's good hygiene to clear the validity cache
+regardless of that.
 
 Patrick
 
---mEQaYjJqj0DLYFc/
+--YvJks1AJj17dSUoe
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmWfmbcACgkQVbJhu7ck
-PpRNhg/9FiV+6a0w57Z7hDJt3+owB+zfO5WO5evv4wWJuJQbVoRvdsP9ULtFwQnp
-y7MDUkCF0FN7lY9ZoHw3ZEGYYtKrqR4ZbqVSut4pHN7G5eVJmQhEpb6eKwN/ugQ9
-k66tkDrz5WyK2ZtotaYsrclhRF7ZKX2J3p4DNsBwEHxRRLsLGa/iCpVU+N1AR8YD
-IaFNz8AyohVyXO790g4U5Kfrf54LkqVfVdQXMUWimZjwHfh4GB1scDfwDSN7FsrH
-82KVeR40V7TcLPhS/+qW2bxeDAm56Czhz5sO+5bJ6almbO+yjV2gme2JTPGlN/lP
-M/o3naYX+2KzZN95py8JngmluiR6bTvksflcivE2IuEBXBQdFAq7/hf8Np9PsbhF
-bHU7bVmOa/AbPVwuH3GsNmvl89p/rsA6ffHIzZ2U6QEp93WjchblLRWRtocYftbe
-JC7Pt1nbA3aCyCNBV2cEXzyWvdxSiwJbi0zpunrEOVA7n26OieOO9DQk4zYOioMy
-a0nzbaefhlbPG17niDRhM+p3A3loWxBBkY/5BADnXbCVPd604SSQBR0nXwFUG2tZ
-YtZrIDdVDVLaRAzYnmIrUZ4T2ENR7WpXw/+XFQHRg4aHRNB0bqUTm7neHXp7NRUM
-mvNIelLlUkLS9CHgevPeo7tg489Kfg54dcuTwvzOLbXIgEnpTuc=
-=Wike
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmWfm78ACgkQVbJhu7ck
+PpT0rw//cANgmx0Ux+pVAmBP9OESKclc90ZvqStD0GstQCThN664RlZad/GrCJTB
+Ogx8V8u0SpJDxaZKPPRSzgyE3FMvfU91KmUf1VOMlI9B3Pv9vTXXBE0TVH/mxgD7
+LLAUc4POK0L0N1wdh3iq4Dd0Q0uvtKWezO6YvsuFBYtiZtENxi7v8DopQ2elXbp7
+Ez+41cpLIQ/CEPSSWuVcO84jwratGeQC/ekz2yvzMSS1sQIP/eApmFkYwtcbAdle
+mEVHEGjyNXm5No/fDDljK1sCiLDT0Q0UV24nFfv+AWBbdn4G2bpGbp7Ucjw4XjAP
+KNXvDzbVx8SY4AhEMuAo3zwIHD9cmOcyxbipL4Hwmya/6RM5yB840E87a18QlkVe
+viaGyvDSrRC2Pw8UE60uzpWr/5FZdRNINK5uuZkpTvPa4naTKQcq1RTd2sMR/5A6
+VfHAY5cLm712eWmqqnUoKlgAfLhpW2sulIK2sBVG+2VWvbso1VxM4dRjVBAJ/qeB
+5ZyFjdYhm5moGhaY0722rK/y/KY45hZjkt2tLoRJH2slVvM2rfymwfXFAYwD19RM
+rFeiLw71jdCtYpUTqsZXi9O3IYIqtcH/uTLBs31MJGBiPKbgUPnx4zvcOcaCSMuW
+1P9mk3AmYebUOlAACfuZqIU62/qAbDzxuz4ScW/vYAzB/4uhvK8=
+=KMGm
 -----END PGP SIGNATURE-----
 
---mEQaYjJqj0DLYFc/--
+--YvJks1AJj17dSUoe--
