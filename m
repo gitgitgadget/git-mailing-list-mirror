@@ -1,96 +1,134 @@
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f49.google.com (mail-wr1-f49.google.com [209.85.221.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FBC757300
-	for <git@vger.kernel.org>; Thu, 11 Jan 2024 20:30:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26BD75810E
+	for <git@vger.kernel.org>; Thu, 11 Jan 2024 20:47:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="wd6TUufH"
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id A8B961952F;
-	Thu, 11 Jan 2024 15:30:01 -0500 (EST)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=hdoTioTmYDQPx5FBETqdbiJfuc6SO3r8nhqo8T
-	+RNZQ=; b=wd6TUufHUq73IR35/yNtCpflquCPE/7rNGc831QmI7HNsv5CLo8sYF
-	DxJZDCjEgHOsRzqjPQtHxJdwhahNCAgRY/Jm1Ru8kYeDBVmoMFxPZmH0D3HRXftk
-	z9C0f71Tk1ymWqsfk27RS1jrKyIe81MQPIS2GVB0QnX+Li+R7SD0E=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id A0C411952E;
-	Thu, 11 Jan 2024 15:30:01 -0500 (EST)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.200.93])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id C08901952B;
-	Thu, 11 Jan 2024 15:29:57 -0500 (EST)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org,  Stan Hu <stanhu@gmail.com>
-Subject: Re: [PATCH 1/2] t9902: verify that completion does not print anything
-In-Reply-To: <73406ca9c8f38ac2ad8f0e32d6d81f1566a6b4d1.1704969119.git.ps@pks.im>
-	(Patrick Steinhardt's message of "Thu, 11 Jan 2024 11:41:54 +0100")
-References: <cover.1704969119.git.ps@pks.im>
-	<73406ca9c8f38ac2ad8f0e32d6d81f1566a6b4d1.1704969119.git.ps@pks.im>
-Date: Thu, 11 Jan 2024 12:29:56 -0800
-Message-ID: <xmqqil3zfwaj.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nJ+xYzGj"
+Received: by mail-wr1-f49.google.com with SMTP id ffacd0b85a97d-33761e291c1so3411085f8f.0
+        for <git@vger.kernel.org>; Thu, 11 Jan 2024 12:47:57 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1705006076; x=1705610876; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=qQ6ynp6YlOud3VSpbq1yHFP/74q2b9EehPL5WEVtu/8=;
+        b=nJ+xYzGjo9n7np6e7Ij14iG9yRfJ1nzuVTCVXl9b5vbKnJudG7nnUhrH7XUs/vPH6f
+         S6YxLNhbqKHv1YNCFWp5iFIWqodrJMWPEDJ3bCZPyNY2HFBKJvyh7d0sqsCRVP7vZhXe
+         O+wnXJr/ou2pK4wRB39OCigN1dlfJu3qURfBPf6raDA73WDbZUHL+wHnMVq1mFK8RkQw
+         9Y9KgMGWWq/0PcddRBzERf+x+QM6X4a3OOaRJ79oTtaajAPWltsotSjCBz0lFIgBReoD
+         yDef2ndlvP4AfJqICrNVIQjMwRamH7IHGUC2dCJy1q8q1fD5yWtsyM1KU1lSMUbmRYuz
+         L73A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1705006076; x=1705610876;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=qQ6ynp6YlOud3VSpbq1yHFP/74q2b9EehPL5WEVtu/8=;
+        b=Gw0eTwVoknJr1IYBq4CUNt6XRIBymLzWOVvBsVpp8RuH6taZqoTNdHPcfwwHcKTsyg
+         iaLX+MupxwRjS0iY9J0+YzJ/QiloOC4pYfpoKTBhFKZGnWxSNSOBSylxHrsT4swwsB9Q
+         Bwq+MznRgiqXUh++beMz/JlsD5a2ZBq+Ki0Cuxp2EhN1psyxTeRYEtvpNNTWgt3rn3XE
+         PQT3x2inh+sGC6uHeUKfbmYZKHoMAZY1RHzLEnJfVatQx+cFfw9TbHqQu2r60CelxoHv
+         BiJ4Gby83s5/V55cy30bbrNatnOob3eOKp9gfE+9EFiVwGUZH0KisbxXptbNLlbZKzBb
+         1Saw==
+X-Gm-Message-State: AOJu0YxWlc/OAbIEJj9azJb0IjH0fKociI8YLK2TTvgJOF2ve+X5M/Zq
+	hRDM9qyZOsZcrRN03AyslgPLSoa1W2I=
+X-Google-Smtp-Source: AGHT+IEZKbY9VcKrXRBuPgm2TVYGLDavZX0g12mtLoqzsaAICsQgb/Rzp6KMJGBHfc05/hae91CSTg==
+X-Received: by 2002:a05:600c:474c:b0:40e:53ee:bedf with SMTP id w12-20020a05600c474c00b0040e53eebedfmr200486wmo.101.1705006075572;
+        Thu, 11 Jan 2024 12:47:55 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id p16-20020a05600c469000b0040e39cbf2a4sm7212531wmo.42.2024.01.11.12.47.55
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 11 Jan 2024 12:47:55 -0800 (PST)
+Message-ID: <pull.1637.git.1705006074626.gitgitgadget@gmail.com>
+From: "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Thu, 11 Jan 2024 20:47:54 +0000
+Subject: [PATCH] diffcore-delta: avoid ignoring final 'line' of file
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- 2FD8F47E-B0C0-11EE-8933-A19503B9AAD1-77302942!pb-smtp21.pobox.com
+To: git@vger.kernel.org
+Cc: Elijah Newren <newren@gmail.com>,
+    Elijah Newren <newren@gmail.com>
 
-Patrick Steinhardt <ps@pks.im> writes:
+From: Elijah Newren <newren@gmail.com>
 
-> The Bash completion script must not print anything to either stdout or
-> stderr. Instead, it is only expected to populate certain variables.
-> Tighten our `test_completion ()` test helper to verify this requirement.
->
-> Signed-off-by: Patrick Steinhardt <ps@pks.im>
-> ---
->  t/t9902-completion.sh | 6 ++++--
->  1 file changed, 4 insertions(+), 2 deletions(-)
->
-> diff --git a/t/t9902-completion.sh b/t/t9902-completion.sh
-> index aa9a614de3..78cb93bea7 100755
-> --- a/t/t9902-completion.sh
-> +++ b/t/t9902-completion.sh
-> @@ -87,9 +87,11 @@ test_completion ()
->  	else
->  		sed -e 's/Z$//' |sort >expected
->  	fi &&
-> -	run_completion "$1" &&
-> +	run_completion "$1" >"$TRASH_DIRECTORY"/output 2>&1 &&
+hash_chars() would hash lines to integers, and store them in a spanhash,
+but cut lines at 64 characters.  Thus, whenever it reached 64 characters
+or a newline, it would create a new spanhash.  The problem is, the final
+part of the file might not end 64 characters after the previous 'line'
+and might not end with a newline.  This could, for example, cause an
+85-byte file with 12 lines and only the first character in the file
+differing to appear merely 23% similar rather than the expected 97%.
+Ensure the last line is included, and add a testcase that would have
+caught this problem.
 
-OK, there is a call to test_completion after cd and this is a
-reasonable way to make sure we write to a known location.
+Signed-off-by: Elijah Newren <newren@gmail.com>
+---
+    diffcore-delta: avoid ignoring final 'line' of file
+    
+    Found while experimenting with converting portions of diffcore-delta to
+    Rust.
 
-I would have done the "run_completion should be totally silent"
-check immediately after this line, as they logically are more
-related to each other than to the two lines that implement "the
-'out' file when sorted must match the expectation we just prepared",
-but that is not a huge deal.
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1637%2Fnewren%2Ffix-diffcore-final-line-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1637/newren/fix-diffcore-final-line-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/1637
 
-The filename "output" is something that may tempt folks who add more
-tests to this file to use for their own purpose; because we use it
-only three times locally here, it might be safer to give it a bit
-more specific name, e.g., "run-completion-output" or something.
+ diffcore-delta.c       |  4 ++++
+ t/t4001-diff-rename.sh | 19 +++++++++++++++++++
+ 2 files changed, 23 insertions(+)
 
+diff --git a/diffcore-delta.c b/diffcore-delta.c
+index c30b56e983b..7136c3dd203 100644
+--- a/diffcore-delta.c
++++ b/diffcore-delta.c
+@@ -159,6 +159,10 @@ static struct spanhash_top *hash_chars(struct repository *r,
+ 		n = 0;
+ 		accum1 = accum2 = 0;
+ 	}
++	if (n > 0) {
++		hashval = (accum1 + accum2 * 0x61) % HASHBASE;
++		hash = add_spanhash(hash, hashval, n);
++	}
+ 	QSORT(hash->data, (size_t)1ul << hash->alloc_log2, spanhash_cmp);
+ 	return hash;
+ }
+diff --git a/t/t4001-diff-rename.sh b/t/t4001-diff-rename.sh
+index 85be1367de6..29299acbce7 100755
+--- a/t/t4001-diff-rename.sh
++++ b/t/t4001-diff-rename.sh
+@@ -286,4 +286,23 @@ test_expect_success 'basename similarity vs best similarity' '
+ 	test_cmp expected actual
+ '
+ 
++test_expect_success 'last line matters too' '
++	test_write_lines a 0 1 2 3 4 5 6 7 8 9 >nonewline &&
++	printf "git ignores final up to 63 characters if not newline terminated" >>nonewline &&
++	git add nonewline &&
++	git commit -m "original version of file with no final newline" &&
++
++	# Change ONLY the first character of the whole file
++	test_write_lines b 0 1 2 3 4 5 6 7 8 9 >nonewline &&
++	printf "git ignores final up to 63 characters if not newline terminated" >>nonewline &&
++	git add nonewline &&
++	git mv nonewline still-no-newline &&
++	git commit -a -m "rename nonewline -> still-no-newline" &&
++	git diff-tree -r -M01 --name-status HEAD^ HEAD >actual &&
++	cat >expected <<-\EOF &&
++	R097	nonewline	still-no-newline
++	EOF
++	test_cmp expected actual
++'
++
+ test_done
 
-
->  	sort out >out_sorted &&
-> -	test_cmp expected out_sorted
-> +	test_cmp expected out_sorted &&
-> +	test_must_be_empty "$TRASH_DIRECTORY"/output &&
-> +	rm "$TRASH_DIRECTORY"/output
->  }
->  
->  # Test __gitcomp.
+base-commit: 055bb6e9969085777b7fab83e3fee0017654f134
+-- 
+gitgitgadget
