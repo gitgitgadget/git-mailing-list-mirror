@@ -1,104 +1,135 @@
-Received: from secure.elehost.com (secure.elehost.com [185.209.179.11])
+Received: from wout4-smtp.messagingengine.com (wout4-smtp.messagingengine.com [64.147.123.20])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA14A63A0
-	for <git@vger.kernel.org>; Thu, 11 Jan 2024 03:24:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nexbridge.com
-X-Virus-Scanned: Debian amavisd-new at secure.elehost.com
-Received: from Mazikeen (cpebc4dfb928313-cmbc4dfb928310.cpe.net.cable.rogers.com [99.228.251.108] (may be forged))
-	(authenticated bits=0)
-	by secure.elehost.com (8.15.2/8.15.2/Debian-22ubuntu3) with ESMTPSA id 40B3KfbM1734724
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 11 Jan 2024 03:20:42 GMT
-Reply-To: <rsbecker@nexbridge.com>
-From: <rsbecker@nexbridge.com>
-To: "'brian m. carlson'" <sandals@crustytoothpaste.net>
-Cc: "'Taylor Blau'" <me@ttaylorr.com>, "'Junio C Hamano'" <gitster@pobox.com>,
-        "'Dragan Simic'" <dsimic@manjaro.org>, <git@vger.kernel.org>
-References: <ZZ77NQkSuiRxRDwt@nand.local> <b2651b38a4f7edaf1c5ffee72af00e46@manjaro.org> <xmqqjzog96uh.fsf@gitster.g> <006b01da4412$96c6c500$c4544f00$@nexbridge.com> <ZZ8ZlX6bf+hjmhN+@nand.local> <007c01da4420$10a7b700$31f72500$@nexbridge.com> <ZZ9YrYvW_L9A02aI@tapette.crustytoothpaste.net>
-In-Reply-To: <ZZ9YrYvW_L9A02aI@tapette.crustytoothpaste.net>
-Subject: RE: [DISCUSS] Introducing Rust into the Git project
-Date: Wed, 10 Jan 2024 22:24:25 -0500
-Organization: Nexbridge Inc.
-Message-ID: <00a801da443d$b1539670$13fac350$@nexbridge.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 741D76AA1
+	for <git@vger.kernel.org>; Thu, 11 Jan 2024 05:05:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="l5DXvEXF";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ual/VVa/"
+Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
+	by mailout.west.internal (Postfix) with ESMTP id 0166A3200AA2;
+	Thu, 11 Jan 2024 00:05:04 -0500 (EST)
+Received: from mailfrontend1 ([10.202.2.162])
+  by compute2.internal (MEProxy); Thu, 11 Jan 2024 00:05:05 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1704949504; x=1705035904; bh=xTf7blrUNe
+	D/E3S/8pORKsVrTt/QCH1z+bj/YQ6sBIQ=; b=l5DXvEXFK6+bakrdu7pLhrmbq8
+	CEc76qARO18137rkVuYcVDBSdr+PbIrkd8yfp/I4NEistWTEc3DHkXx8DCbEgIQA
+	4h+PXt37WIF/gkWteVc7cPxA1sVM67Hzkf+AQwwogc9SDoT0qzrjcwgeRSJLAk5S
+	fNJbC4n91sKzmpIVsgtpG9bxFkoQpT2u74on/JgVDze+P2PIil8tYOqv1W3l+rRL
+	Vup4PIR5H3XIEw+84qDkeJM7qKhI6gTo8YkGod2reF511ogPDX3ChyoligVeT/2r
+	g4XlcE4AGe4arcakN6bLMQOX5f30VrT3BmKLge6huxkaCtF21vCwHfzRDRGg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm2; t=1704949504; x=1705035904; bh=xTf7blrUNeD/E3S/8pORKsVrTt/Q
+	CH1z+bj/YQ6sBIQ=; b=ual/VVa/Pl5gVmQ31HmXSkV+wbE7XZY6rTFHNQeAk+ud
+	JC5hH5qoAzimjPErEbh8nz7E7W2hzLKKNFkgk842p82ZtEDacIHW5LY7WLQNg6PH
+	df1JKuSJTEOWfXKo7gdGIqaxqJQW/WhMwpLLrjmjZ3TEI+dbr61G16tx7Tqebs4J
+	bIwQSjAcYVrKkHW72beXWfjfP4FfJtcGB6OL2y2ZvXLt/z3Ypreds97EhpHszusz
+	4egWuwIkwt/zDUiaky81yI0kaPNobENYiKkVu4Hm04WyHqRnZovF0f0qrKgkwmu7
+	WcO0ALH7+ThoXX4Wmi0zi9OoQ8zZRaBGKmgF7gI49g==
+X-ME-Sender: <xms:AHefZVbVmyTArk-Z1x7vap52V-57aFbiOymCK0YHY0MFHJloj5eNJQ>
+    <xme:AHefZcY1Qx8RKXhEP_ME1iC9YL0wGIw17l5oyjZ6vk4tuowfol9dKHgsqtJYYQE56
+    lGJ_ezkQWL5Qev0Bw>
+X-ME-Received: <xmr:AHefZX8h1u8qL1ryzWR1CskRN2hZe9JEittABteU8m5hYRScOhwjiJTJHm5CXcXeyoQyPLkB3WkwTmoa4hANTfLbrBzKJczODU6xftRRiu3lZy6oKw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrvdeivddgjeejucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+    cujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtvdenucfhrhhomheprfgrthhr
+    ihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvg
+    hrnhepgeeihfehkeduueeufeejueetfeelleejkedukefhieffjeevjeehfeelleehffev
+    necuffhomhgrihhnpehgohhoghhlvgdrtghomhenucevlhhushhtvghrufhiiigvpedtne
+    curfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhm
+X-ME-Proxy: <xmx:AHefZTrJO8jaS8zb9qC1BFx8vi_kCDEF5epZdcj0cUAOl-TjxI8bkQ>
+    <xmx:AHefZQqO-gFQ3QUzhgH8a85MhUJ7VqvI5ExGKeMzy-MyBWEdzgPCaQ>
+    <xmx:AHefZZQSahGWAQqr3U0QPmC5zV0hZeaQgo1ic74boOWdhLErfb-8Xg>
+    <xmx:AHefZdABaSgDJLmacGd90pF5ZHYJQR7eotOCeRHtAzlD4RDB3B76Xw>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 11 Jan 2024 00:05:03 -0500 (EST)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id c52a78d5 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 11 Jan 2024 05:02:20 +0000 (UTC)
+Date: Thu, 11 Jan 2024 06:05:00 +0100
+From: Patrick Steinhardt <ps@pks.im>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Eric Sunshine <sunshine@sunshineco.com>, git@vger.kernel.org
+Subject: Re: [PATCH 4/6] t1419: mark test suite as files-backend specific
+Message-ID: <ZZ92_PdDwPTgaJ4f@tanuki>
+References: <cover.1704802213.git.ps@pks.im>
+ <d7c6b8b2a7b3b4d776f06ce577bdbdbaff66f225.1704802213.git.ps@pks.im>
+ <CAPig+cTAiEFu9p1nRe9LC3mxyPmfQ9m4r7aQUj_9OC8pSbwbig@mail.gmail.com>
+ <ZZ5HrY76O1x8QABG@tanuki>
+ <xmqqcyu9duha.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain;
-	charset="utf-8"
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="yJHhJw+ZyvWmmRd7"
+Content-Disposition: inline
+In-Reply-To: <xmqqcyu9duha.fsf@gitster.g>
+
+
+--yJHhJw+ZyvWmmRd7
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
-X-Mailer: Microsoft Outlook 16.0
-Content-Language: en-ca
-Thread-Index: AQNL0k5wzhXZATyUnQ76Vxjn4eCV+QKEQ1wBALH7sDwDPprtZwK9Rr3fAtB2bewC03OFJa16Islg
 
-On Wednesday, January 10, 2024 9:56 PM, brian m. carlson wrote:
->On 2024-01-10 at 23:52:21, rsbecker@nexbridge.com wrote:
->> Unfortunately, none of the compiler frontends listed previously can =
-be
->> built for NonStop. These appear to all require gcc either directly or
->> transitively, which cannot be ported to NonStop. I do not expect this
->> to change any time soon - and is outside of my control anyway. An
->> attempt was made to port Rust but it did not succeed primarily =
-because
->> of that dependency.
->
->Can you tell us what the technical limitations are that prevent GCC =
-from being
->ported so we can understand better?  I know LLVM doesn't support ia64, =
-which you
->do support, but GCC is very likely the most portable compiler on the =
-planet and
->supports architectures and OSes I've never otherwise heard of.
->
->I strongly suspect that if GCC did end up on NonStop, Rust would be =
-able to be
->ported, too, and you'd also get access to gccgo, which would make Git =
-LFS possible
->on NonStop as well[0].
->
->I'm not capable of porting GCC, but I have done some portability work =
-in the Rust
->ecosystem, and I'd be willing to provide context and some assistance =
-(within my
->time and capabilities) to help get Rust working on NonStop if you want.
->
->[0] For the record, as a maintainer of Git LFS, I'm happy to accept =
-portability
->patches for virtually any OS.
+On Wed, Jan 10, 2024 at 08:27:29AM -0800, Junio C Hamano wrote:
+> Patrick Steinhardt <ps@pks.im> writes:
+>=20
+> On just this (non-technical) part...
+>=20
+> >> > file, but not for loose references. Consequentially, all callers must
+> >> > still filter emitted refs with those exclude patterns.
+> >>=20
+> >> s/Consequentially/Consequently/
+> >
+> > Hum. I had the last time when you mentioned the in mind while writing
+> > the commit message, but seemingly misremembered the outcome. So I now
+> > looked things up in a dictionary, and both words seem to be used in
+> > equivalent ways. As a non-native speaker, could you maybe elaborate a
+> > bit to help me out? :)
+>=20
+> As a non-native, I often find this
+>=20
+>   https://trends.google.com/trends/explore?q=3Dconsequentially,consequent=
+ly&hl=3Den
+>=20
+> fairly useful.
 
-There are a number of issues for porting gcc (and Go). The list is =
-fairly long, but the summary of what I encountered directly (on the last =
-funded effort of 3) is:
-1. There are C syntax constructs required to do anything useful =
-(required for access to the OS API) on NonStop that are not in gcc. I =
-can hand code the parser for that, but it would take time.
-2. The Big Endian x86 architecture is weird to gcc and making that work =
-is not easy.
-3. There is no assembler on NonStop.
-4. The ELF header is very different from standard.
-5. The symbol table structure is radically different, so debugging would =
-be (nearly) impossible or impractical. gdb was ported to account for the =
-platform differences.
-6. The linkage structure is similar but different from standard.
-7. The external fixup structure is radically different.
-8. The loader does not work the same way, so there are required sections =
-of the ELF files on NonStop that are not generated by gcc.
+Good idea, thanks!
 
-There are more, but I just did not get to the point if hitting them. =
-Part of my own issue is that I have expertise in parsing and semantic =
-passes of compilers, but my code generation skills are not where I want =
-them to be for taking on this effort. Our last funded attempt had a code =
-generation expert and he gave up in frustration.
+Patrick
 
-If I was hired on to do this, it might have a chance, but at an estimate =
-(not mine) of 4-5 person years for a gcc port, best case, my $DAYJOB =
-will not permit it.
+--yJHhJw+ZyvWmmRd7
+Content-Type: application/pgp-signature; name="signature.asc"
 
-If gcc could be ported to NonStop, it would solve so many problems. I =
-have heard of numerous failed efforts beyond what was officially funded =
-by various companies, so this is considered a high-risk project.
+-----BEGIN PGP SIGNATURE-----
 
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmWfdvsACgkQVbJhu7ck
+PpRwwQ/7B1XW8mph0qD+YtuY/eKJTnTAI9LxkPSYecPad1zKafspj51iaslcwyDH
+EjzXZ+tP0DhSVZho70VqmoDAUoTa9324P7AHt8jaEoK45Wr8HveIhZLev1OfGKlm
+tPlH/T5b40LqL2PwGXpf0kAJe/GQuULzBKFbYVfLkMs7t0HryUU7Yk9rc+yGkDjs
+keOsdnCHUZSauFB2INObrhPxU86fTlIQfi8QgGRpSr0wpVo7fjOoeTvCyg9+Dwok
+N/vggIP/k6KpshAf6nDzte1gJ86ojM4gI9tCYJx2won1dYAdHNEiqFKiNvXio5gj
+8lO3VS8jHH1s8Q/qYmKsK+VTOPtUAsLC9TOyEWCGeWLVWBnwOPrSRVFRNnRYBXcB
+ZHKBGGEMEgQEQj7QpVEG9iSIoqXNSZwaAVOqypKkAOTsA/sojsiULFGDKgGRuvN/
+dux6pwoAaS0pwARl+55ybk5hCB7lVvgTmzyuhOln5OdgZdCUv2d2yShThw6ufODu
+lpbAHPS4wCkyYqzzLjQY/pvRwNTGlHs+kbkDMW76IcpJA07kU272h9gYFB9g0DLG
+1Mwk+PwhLhsgoLeYjcyy+xKYWJnLqjsZ8ySZ2dZp+A3xtxucIsN6QggOa26xHYUy
+uvGy16VVIiGqb9XgfydARFaVbkCc0Y57JV1iJWvpss/Wj/hkYm0=
+=qoNx
+-----END PGP SIGNATURE-----
+
+--yJHhJw+ZyvWmmRd7--
