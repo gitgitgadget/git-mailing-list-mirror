@@ -1,186 +1,130 @@
-Received: from mail-wm1-f54.google.com (mail-wm1-f54.google.com [209.85.128.54])
+Received: from mail-lj1-f174.google.com (mail-lj1-f174.google.com [209.85.208.174])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2930524A3
-	for <git@vger.kernel.org>; Thu, 11 Jan 2024 16:57:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD46F524A4
+	for <git@vger.kernel.org>; Thu, 11 Jan 2024 16:57:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Mm3fbgL2"
-Received: by mail-wm1-f54.google.com with SMTP id 5b1f17b1804b1-40e552dfa5dso25560585e9.1
-        for <git@vger.kernel.org>; Thu, 11 Jan 2024 08:57:28 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZOU43ngK"
+Received: by mail-lj1-f174.google.com with SMTP id 38308e7fff4ca-2ccb4adbffbso65405161fa.0
+        for <git@vger.kernel.org>; Thu, 11 Jan 2024 08:57:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1704992247; x=1705597047; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=8NGOwiIZF/z0nPqk5yFV97u/xmuG/5BydTasGdzNaVU=;
-        b=Mm3fbgL26UiHPc6xhvbQ0YfQ9wEf7dv6+YiNtT0IZDnOOckBNA8LE9nm5vZ+g6kWCN
-         VMQy7atWH8geOxr4LPI6nrcCN7M7/j03+oeXOoMXYF2kP2KHswwojgUQonRNiFwl0+9G
-         eHD51pXmhiO85rUfQhX2OE+f1apV0iJNQCEy09hiptLtEzENm5lSYvgKNVpD2C+Oh6bH
-         nuM3IFj7BZ0KyvM84j+RIy2JUdQOB+YRl16Wtu8fN0yv4R1x/+SCakCUdjUX96AD4fga
-         wtFGEcn1xoM3R95UbjAUGkD9Soe7ZG39StjeZH0olyKTzeRFIIDPd1vIsaeZ3rt0+6VZ
-         CL/w==
+        d=gmail.com; s=20230601; t=1704992262; x=1705597062; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=o78n9aI3g8j2ZlhOJs+PJKZClqEQ+eTC5LbSNIzIAzg=;
+        b=ZOU43ngK1YlZ3Zjep0HwacjDSbxLLaOKUuFCw34KUoiwEhJFRcfKiucyyMXVFzrF4E
+         Cgf6TiOCfvLtKI0ipx+SuqH8k+tenoSBNxof7NDu5ffkMUg5TmWMIsi2DBlmMsQO+K35
+         JXeyzDopmKGcJ+ZjfKNP1WOuFxhpewm4NNZgq3H8H+jqv5lehkRB6A5csJrWDphKgFU/
+         ofY3N4HYpY/c2HSuj+wa0zr6ChFIlCf9smbyp61IZo9IVbNWivqvbEXMWCaqu1hl6O0R
+         KL54CTMhh8lNgqrFXgdvx6t2ToaXNGrtdI5Oohw2Y3x+eUgM7r4VS5oxB66Uhxq43sUa
+         uh8g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1704992247; x=1705597047;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:reply-to:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=8NGOwiIZF/z0nPqk5yFV97u/xmuG/5BydTasGdzNaVU=;
-        b=d/617/tTBEusFBcztIU4MZ4ag59HFU3Ys/PXeKnMuBioxre25SMUHg9Xm0YDaSjzl1
-         iI88hEpH6t/hw25XEUsdpg2yECcn0n5sob4jL/esapqzU894ymQ+Q16VyK1wuKTaaDQb
-         4tkLOto+BorJpLm24EugZScZ4WR2LAxka88cpCO81lG356pF99OxxpOphSKrmDjH8i0C
-         vS9HoP/tUkU3MK3RwrB+z+5oqzqtj7bVGbX2KtLU++8nGWmejhU/F3cX3tPx26jBzONx
-         QTh1/0O3yjHkiUTLNX3faCyE9e3W6mVAaFNmmQCDpHcehKF9ZCBHFNGtd5rzpz58UWjx
-         e/TQ==
-X-Gm-Message-State: AOJu0Yx7jfJlILQixGK8MKUvl7B2sCDZJ9A5qwpYt2A+4PjgvsdPwN64
-	+Yb7TolIzN6RY/6JonqfjNw=
-X-Google-Smtp-Source: AGHT+IE5bJIXooIWfFoi48tScTpRVGQEWVktZRfdwa1RSmSmoKvx9sUV2eaZYtVS4sfI4hPe3nVH4g==
-X-Received: by 2002:a05:600c:4893:b0:40e:448a:91ff with SMTP id j19-20020a05600c489300b0040e448a91ffmr61316wmp.168.1704992246984;
-        Thu, 11 Jan 2024 08:57:26 -0800 (PST)
-Received: from [192.168.1.212] ([84.64.64.237])
-        by smtp.gmail.com with ESMTPSA id l22-20020a05600c4f1600b0040d6b91efd9sm6479017wmq.44.2024.01.11.08.57.26
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 11 Jan 2024 08:57:26 -0800 (PST)
-Message-ID: <1ed0e249-dab9-4cf3-9b76-c8797b97c9c5@gmail.com>
-Date: Thu, 11 Jan 2024 16:57:26 +0000
+        d=1e100.net; s=20230601; t=1704992262; x=1705597062;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=o78n9aI3g8j2ZlhOJs+PJKZClqEQ+eTC5LbSNIzIAzg=;
+        b=LJ5T4pIAE0LZ8FfdyXTYEPMiVIQxzjNyVpufObYxzGHWR5S67TQa5O1oC/Z0FC8qs8
+         tqiK/DACSjQyRh27SU6FkLs19WhRVeaQ1QLVu8VYlUYTdABe9ifeDW1w2SBHM6nHoraW
+         ZvkFuNbCmCEc88cuEWzSqapzgs1isNH905Kb3AtBL/+sgf0psg2h2IXacnzooU7AZtiq
+         IMz/87u4VYGxAwyL0GbGXWD3NtWq91B+/iI5eENTJisbN6+NQWYnraPSJDDiPudQFS12
+         4ZaumXtpsH+bnsgV39kwLsRu4O0hedJ91q5IBCuRUsIhtNLBcDdzbdlKBgk0+KzqUaU4
+         5LIw==
+X-Gm-Message-State: AOJu0Yyj64gd4dJq5ZqhJ4WSMvI21YAJcBV0qKMsl2Pevi/ZRJYohnzt
+	AA8GHAXgnJVJn+g+jYqrxC0TUA/trNA48TwASFK6WtnQTUY=
+X-Google-Smtp-Source: AGHT+IHVk8s86JNe5A+qIpxPSIIOSVRhlWCbsln8k/4U6Lqq+hN+mqS2wm3O6gMCOUZOhcBLn1KcUBm9gzj/cKAfzMU=
+X-Received: by 2002:a05:6512:3b14:b0:50e:c7b2:cc7b with SMTP id
+ f20-20020a0565123b1400b0050ec7b2cc7bmr833386lfv.130.1704992261362; Thu, 11
+ Jan 2024 08:57:41 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH] builtin/revert.c: refactor using an enum for cmd-action
-Content-Language: en-US
-To: Michael Lohmann <mi.al.lohmann@gmail.com>, git@vger.kernel.org
-Cc: Wanja Henze <wanja.hentze@bevuta.com>
-References: <20240111080417.59346-1-mi.al.lohmann@gmail.com>
-From: Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <20240111080417.59346-1-mi.al.lohmann@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+References: <ZZ77NQkSuiRxRDwt@nand.local> <b2651b38a4f7edaf1c5ffee72af00e46@manjaro.org>
+ <CABPp-BH3sva=CNtx8YFGP4Egyau-hR+7njZPFEd-DRTw91BK2w@mail.gmail.com> <f5b9a57b6e2b513f1d79a93c6f0ccf45@manjaro.org>
+In-Reply-To: <f5b9a57b6e2b513f1d79a93c6f0ccf45@manjaro.org>
+From: Elijah Newren <newren@gmail.com>
+Date: Thu, 11 Jan 2024 08:57:28 -0800
+Message-ID: <CABPp-BFWsWCGogqQ=haMsS4OhOdSwc3frcAxa6soQR5ORTceOA@mail.gmail.com>
+Subject: Re: [DISCUSS] Introducing Rust into the Git project
+To: Dragan Simic <dsimic@manjaro.org>
+Cc: Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Hi Michael
+Hi Dragan,
 
-On 11/01/2024 08:04, Michael Lohmann wrote:
-> This is done to avoid having to keep the char values in sync in
-> different places and also to get compiler warnings on non-exhaustive
-> switches.
+On Wed, Jan 10, 2024 at 9:39=E2=80=AFPM Dragan Simic <dsimic@manjaro.org> w=
+rote:
+>
+> On 2024-01-11 01:33, Elijah Newren wrote:
+> > On Wed, Jan 10, 2024 at 1:57=E2=80=AFPM Dragan Simic <dsimic@manjaro.or=
+g>
+> > wrote:
+> >>
+> >> Thus, Git should probably follow the same approach of not converting
+> >> the
+> >> already existing code
+> >
+> > I disagree with this.  I saw significant performance improvements
+> > through converting some existing Git code to Rust.  Granted, it was
+> > only a small amount of code, but the performance benefits I saw
+> > suggested we'd see more by also doing similar conversions elsewhere.
+> > (Note that I kept the old C code and then conditionally compiled
+> > either Rust or C versions of what I was converting.)
+>
+> Well, it's also possible that improving the old C code could also result
+> in some performance improvements.  Thus, quite frankly, I don't see that
+> as a valid argument to rewrite some existing C code in Rust.
 
-I think this is a reasonable change, thanks for working on it.
+Yes, and I've made many performance improvements in the C code in git.
+Sometimes I make some of the code 5% or 20% faster.  Sometimes 1-3
+orders of magnitude faster.  Once over 60 orders of magnitude
+faster.[1]  Look around in git's history; I've done a fair amount of
+performance stuff.
 
-> The newly introduced `revert_action`-enum aligns with the
-> builtin/rebase.c `action`-enum though the name `revert_action` is chosen
-> to better differentiate it from `replay_opts->action` with a different
-> function. For rebase the equivalent of the latter is
-> `rebase_options->type` and `rebase_options->action` corresponds to the
-> `cmd` variable in revert.c.
-> 
-> In the rebase `action` enum there is the enumeration constant
-> `ACTION_NONE` which is not particularly descriptive, since it seems to
-> imply that no action should be taken. Instead it signals a start of a
-> revert/cherry-pick process, so here `REVERT_ACTION_START` was chosen.
+And I'm specifically arguing that I feel limited in some of the
+performance work that can be done by remaining in C.  Part of my
+reason for interest in Rust is exactly because I think it can help us
+improve performance in ways that are far more difficult to achieve in
+C.  And this isn't just guesswork, I've done some trials with it.
+Further, I even took the time to document some of these reasons
+elsewhere in this thread[2].  Arguing that some performance
+improvements can be done in C is thus entirely missing the point.
 
-I think ACTION_NONE was intended to covey that the user did not pass one 
-of the OPT_CMDMODE() options like "--continue" as there isn't a 
-"--start" option. I don't have a strong opinion between "_NONE" and 
-"_START".
+If you want to dismiss the performance angle of argument for Rust, you
+should take the time to address the actual reasons raised for why it
+could make it easier to improve performance relative to continuing in
+C.
 
-> +enum revert_action {
-> +	REVERT_ACTION_START = 0,
-> +	REVERT_ACTION_CONTINUE,
-> +	REVERT_ACTION_SKIP,
-> +	REVERT_ACTION_ABORT,
-> +	REVERT_ACTION_QUIT,
-> +};
+Also, as a heads up since you seem to be relatively new to the list:
+your position will probably carry more weight with others if you take
+the time to understand, acknowledge, and/or address counterpoints of
+the other party.  It is certainly fine to simply express some concerns
+without doing so (Randall and Patrick did a good job of this in this
+thread), but when you simply assert that the benefits others point out
+simply don't exist (e.g. your "Quite frankly, that would _only_
+complicate things and cause fragmentation." (emphasis added) from your
+first email in this thread[3], and which this latest email of yours
+somewhat looks like as well), others may well start applying a
+discount to any positions you state.  Granted, it's totally up to you,
+but I'm just giving a hint about how I think you might be able to be
+more persuasive.
 
-The "REVERT_" prefix is a bit unfortunate as this is used by cherry-pick 
-as well but it does match the filename. As this enum is only used in 
-this file I'd be quite happy to drop the "REVERT_" prefix. (I don't 
-think we need to go messing with the "action" member of struct 
-replay_opts to do that)
 
->   	/* Check for incompatible command line arguments */
-> -	if (cmd) {
-> -		char *this_operation;
-> -		if (cmd == 'q')
-> +	{
-> +		char *this_operation = 0;
+Hope that helps,
+Elijah
 
-style note: we use "NULL" rather than "0" when initializing pointers. 
-Ideally this would be a "const char *" as we assign string literals but 
-that is not a new problem with this patch.
-
-> +		switch (cmd) {
-> +		case REVERT_ACTION_START:
-> +			break;
-
-I can see the attraction of using an exhaustive switch() here but as we 
-don't want to do anything in the _START case it gets a bit messy with 
-the extra conditional below. I wonder if we'd be better to replace "if 
-(cmd) {" with "if (cmd != REVERT_ACTION_START) {". Alternatively if you 
-want to stick with the switch then declaring "this_operation" at the 
-beginning of the function would mean you can get rid of the new "{}" block.
-
-> +		case REVERT_ACTION_QUIT:
->   			this_operation = "--quit";
-> -		else if (cmd == 'c')
-> +			break;
-> +		case REVERT_ACTION_CONTINUE:
->   			this_operation = "--continue";
-> -		else if (cmd == 's')
-> +			break;
-> +		case REVERT_ACTION_SKIP:
->   			this_operation = "--skip";
-> -		else {
-> -			assert(cmd == 'a'); > +			break;
-> +		case REVERT_ACTION_ABORT:
->   			this_operation = "--abort";
-> +			break;
->   		}
->   
-> -		verify_opt_compatible(me, this_operation,
-> -				"--no-commit", opts->no_commit,
-> -				"--signoff", opts->signoff,
-> -				"--mainline", opts->mainline,
-> -				"--strategy", opts->strategy ? 1 : 0,
-> -				"--strategy-option", opts->xopts.nr ? 1 : 0,
-> -				"-x", opts->record_origin,
-> -				"--ff", opts->allow_ff,
-> -				"--rerere-autoupdate", opts->allow_rerere_auto == RERERE_AUTOUPDATE,
-> -				"--no-rerere-autoupdate", opts->allow_rerere_auto == RERERE_NOAUTOUPDATE,
-> -				NULL);
-> +		if (this_operation)
-
-The extra indentation here is unfortunate as some of the lines are 
-rather long already. In the current code it is clear that we only call 
-verify_opt_compatible() when cmd is non-nul, I think it would be clearer 
-to use "if (cmd != REVERT_ACTION_START)" here.
-
-> +			verify_opt_compatible(me, this_operation,
-> +					"--no-commit", opts->no_commit,
-> +					"--signoff", opts->signoff,
-> +					"--mainline", opts->mainline,
-> +					"--strategy", opts->strategy ? 1 : 0,
-> +					"--strategy-option", opts->xopts.nr ? 1 : 0,
-> +					"-x", opts->record_origin,
-> +					"--ff", opts->allow_ff,
-> +					"--rerere-autoupdate", opts->allow_rerere_auto == RERERE_AUTOUPDATE,
-> +					"--no-rerere-autoupdate", opts->allow_rerere_auto == RERERE_NOAUTOUPDATE,
-> +					NULL);
->   	}
- > [...]
-> -	if (cmd) {
-> -		opts->revs = NULL;
-> -	} else {
-> +	if (cmd == REVERT_ACTION_START) {
-
-I was momentarily confused by this change but you're reversing the 
-conditional. I agree that the result is an improvement.
-
-Best Wishes
-
-Phillip
+[1] A couple examples: 6a5fb966720 ("Change default merge backend from
+recursive to ort", 2021-08-04) and 8d92fb29270 ("dir: replace
+exponential algorithm with a linear one", 2020-04-01)
+[2] Footnote 6 of
+https://lore.kernel.org/git/CABPp-BFOmwV-xBtjvtenb6RFz9wx2VWVpTeho0k=3DD8ws=
+CCVwqQ@mail.gmail.com/
+[3] https://lore.kernel.org/git/b2651b38a4f7edaf1c5ffee72af00e46@manjaro.or=
+g/
