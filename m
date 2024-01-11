@@ -1,44 +1,43 @@
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2B07DF57
-	for <git@vger.kernel.org>; Thu, 11 Jan 2024 18:48:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50AB753E16
+	for <git@vger.kernel.org>; Thu, 11 Jan 2024 19:37:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="CEyXSfSI"
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id 20400189C5;
-	Thu, 11 Jan 2024 13:48:06 -0500 (EST)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="tlf+6B69"
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 0271D1DC580;
+	Thu, 11 Jan 2024 14:37:39 -0500 (EST)
 	(envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=WuOrz5I++ZgqOfVsMJP/415WOBAf9vdLQK1oBA
-	S8vcs=; b=CEyXSfSIKnEBwCmhu7sSgjNNNKDx71+G6Vh9MbvIGmo3Egxt5/tPoB
-	MXjtM3LzYpSZ++6XOiCwLiPK0KxQhDewGvN+OnWrV+6Q5mQEOrfnraVpBKdkEsua
-	+7oLnA9SOPCOOTzCqF75RC2Tye+wFkWfSSBAK1uXOyiuu3h0ShuSs=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id 1854B189C4;
-	Thu, 11 Jan 2024 13:48:06 -0500 (EST)
+	:content-type; s=sasl; bh=Lkv2ub/fzMrk2GLubY/Lykj02XfiaMwkwBd0N1
+	uftls=; b=tlf+6B69NxpWiLmYXWRrqkFPrh+1Huhknxh3gY68UxflHE01/r57u1
+	Xg6gJ1iG3oVvmBVfmEWnzPDzJ4G6wu+K5ICYqr4m7T3FrnZX6ghG9sJs7p0JPpGq
+	Kctl7PYBc7YczR8UqDZvBcEO4AI/tyyexDcAMMc/Lu2b1Sqt0JF5I=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id EE0D61DC57F;
+	Thu, 11 Jan 2024 14:37:38 -0500 (EST)
 	(envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.125.200.93])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 4AD1D189C1;
-	Thu, 11 Jan 2024 13:48:02 -0500 (EST)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 5827D1DC57D;
+	Thu, 11 Jan 2024 14:37:38 -0500 (EST)
 	(envelope-from junio@pobox.com)
 From: Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
-Cc: Justin Tobler via GitGitGadget <gitgitgadget@gmail.com>,
-  git@vger.kernel.org,  Justin Tobler <jltobler@gmail.com>
-Subject: Re: [PATCH 2/2] t5541: generalize reference locking
-In-Reply-To: <20240111072828.GD48154@coredump.intra.peff.net> (Jeff King's
-	message of "Thu, 11 Jan 2024 02:28:28 -0500")
-References: <pull.1634.git.1704912750.gitgitgadget@gmail.com>
-	<11fd5091d61b54d8862ab2e316bbd25fff63ce0f.1704912750.git.gitgitgadget@gmail.com>
-	<20240111072828.GD48154@coredump.intra.peff.net>
-Date: Thu, 11 Jan 2024 10:47:59 -0800
-Message-ID: <xmqqa5pbhfkw.fsf@gitster.g>
+To: Phillip Wood <phillip.wood123@gmail.com>
+Cc: Michael Lohmann <mi.al.lohmann@gmail.com>,  git@vger.kernel.org,  Wanja
+ Henze <wanja.hentze@bevuta.com>
+Subject: Re: [PATCH] builtin/revert.c: refactor using an enum for cmd-action
+In-Reply-To: <1ed0e249-dab9-4cf3-9b76-c8797b97c9c5@gmail.com> (Phillip Wood's
+	message of "Thu, 11 Jan 2024 16:57:26 +0000")
+References: <20240111080417.59346-1-mi.al.lohmann@gmail.com>
+	<1ed0e249-dab9-4cf3-9b76-c8797b97c9c5@gmail.com>
+Date: Thu, 11 Jan 2024 11:37:37 -0800
+Message-ID: <xmqq5xzzhda6.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -48,21 +47,16 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 X-Pobox-Relay-ID:
- F2BCBAC0-B0B1-11EE-9872-A19503B9AAD1-77302942!pb-smtp21.pobox.com
+ E09A9694-B0B8-11EE-984E-25B3960A682E-77302942!pb-smtp2.pobox.com
 
-Jeff King <peff@peff.net> writes:
+Phillip Wood <phillip.wood123@gmail.com> writes:
 
-> On Wed, Jan 10, 2024 at 06:52:30PM +0000, Justin Tobler via GitGitGadget wrote:
->
->> From: Justin Tobler <jltobler@gmail.com>
->> 
->> Some tests set up reference locks by directly creating the lockfile.
->> While this works for the files reference backend, reftable reference
->> locks operate differently and are incompatible with this approach.
->> Generalize reference locking by preparing a reference transaction.
->
-> As with the first patch, I think we could use d/f conflicts to get the
-> same effect. Perhaps something like this:
+> I think ACTION_NONE was intended to covey that the user did not pass
+> one of the OPT_CMDMODE() options like "--continue" as there isn't a
+> "--start" option. I don't have a strong opinion between "_NONE" and
+> "_START".
 
-Thanks for a great alternative.  I agree that avoiding fifo indeed
-is a better way to go.
+I agree with you why NONE is called as such.  If "revert" does not
+take "--start" (I do not remember offhand), I would think it would
+be better to follow suit.
+
