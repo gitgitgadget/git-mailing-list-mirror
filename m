@@ -1,148 +1,80 @@
-Received: from wout3-smtp.messagingengine.com (wout3-smtp.messagingengine.com [64.147.123.19])
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C1E0D298
-	for <git@vger.kernel.org>; Thu, 11 Jan 2024 07:17:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="r/YONp2R";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="xjmt/LRk"
-Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
-	by mailout.west.internal (Postfix) with ESMTP id 52ADF3200A94;
-	Thu, 11 Jan 2024 02:17:20 -0500 (EST)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute2.internal (MEProxy); Thu, 11 Jan 2024 02:17:20 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1704957439; x=1705043839; bh=itGB+pD4LS
-	M1etMMln9cM5WNQJPGoKbpUyoL6e0FPFw=; b=r/YONp2RnBihypF3cVwRV3DY2d
-	X7iijW86RIzucnbm4x+zAVs3sfO5rikxStN2vV6MQVe88+7aFYT14TToUtytXz+j
-	i8ITykC1g2We3jFx/4fYzKAmMZfrlC49pxuu92Bm0QtkWqrZ7DhSZ5+L/EgYlPlN
-	E4/YVkGnSXbnF9YCYp+L+urSo1myEm5ohtyyhPO/UHerf5mnby+R0W8bYJ4Lf+uO
-	Zkv8JI1Ex7ZqaVmsaAsJirocRcvjerJU6RnZ6sa/fxHxsI1cXsL5kEqidz1rAcjI
-	laXP1GC+UwU81apGRKhxOSxSLfcmj4n1hdLC6wLP1pNWQQhp8HK8l0rQiLzw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1704957439; x=1705043839; bh=itGB+pD4LSM1etMMln9cM5WNQJPG
-	oKbpUyoL6e0FPFw=; b=xjmt/LRkbVZeD7zNnBnt6fmQV08nPIbJSyVZp+hA81y5
-	JaLH0mz0BCZ+zF3xEX/pBu7KZdlfRt3ZrzRVsvUuwXwMHiCPeMjbiwtJwvGYfk8d
-	2Clo7yBEdJoO33s8TEfeNqxU86tt/aFdVGKcXqzJ2wyIC07xIz4af6a2sUB8Em5L
-	K2aECpM6EOiWstfI1LbZDiHpVIgi/MZVEcm4r1ukkGeXozo5uSPOMOatEnfY38WN
-	jwDKcubGyVAjXO7qHu2vJUOz4nAOJiHJUC3ae1DkUnTK4VsjJJX2yGj5U7k8NZA4
-	RMdIehHmF4PeUd+nAbsL3zRWk1pJ/wmPPQgK94R46Q==
-X-ME-Sender: <xms:_5WfZXfmKvqDKHttaG84nmpe6Alx-R7V_7g7raWSdE925Bew-b3f5g>
-    <xme:_5WfZdMm_f4ouibdLwVKzmpK1xQc843F200hffA9jfj_Om9Ritao1YHFZbUY9mpCC
-    z68z3J4UhCv3GGaQw>
-X-ME-Received: <xmr:_5WfZQhyj77_9_dA31PMPNIGXgXyK-FZsXh_PEoEXMY_5Tg0A3z3-c_joLarOxxp6iR700C7JwyMFMyH3VWk_asv9Pli90XsXLYe6-HaDUNYhkcf2Q>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrvdeivddguddtvdcutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
-    necuuegrihhlohhuthemuceftddtnecunecujfgurhepfffhvfevuffkfhggtggujgesgh
-    dtreertddtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhs
-    sehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepueektdevtdffveeljeetgfehheeige
-    ekleduvdeffeeghefgledttdehjeelffetnecuvehluhhsthgvrhfuihiivgeptdenucfr
-    rghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimh
-X-ME-Proxy: <xmx:_5WfZY8pylc_C3c8jpsJ5ZFrytgd8lEKtvVa6twua0DYmLo5RyDaBQ>
-    <xmx:_5WfZTvwgZAE6Atn7p7JWZAdN4hgYadlXFcUHoq3miB3eeKBbx_47g>
-    <xmx:_5WfZXHncmZEygQq91NLmMaAZRTW1BzYoBqr80Qj13HgkAi18i7ceg>
-    <xmx:_5WfZcU34c6XxD1LDhy1pwtAS9GBxqCwa-QVVlxmQZNNevf0wGklrg>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 11 Jan 2024 02:17:18 -0500 (EST)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id cf95a75e (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 11 Jan 2024 07:14:34 +0000 (UTC)
-Date: Thu, 11 Jan 2024 08:17:14 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: Jeff King <peff@peff.net>
-Cc: "brian m. carlson" <sandals@crustytoothpaste.net>, git@vger.kernel.org
-Subject: Re: Limited operations in unsafe repositories
-Message-ID: <ZZ-V-vwnm2hOkrMC@tanuki>
-References: <ZZr-JLxubCvWe0EU@tapette.crustytoothpaste.net>
- <20240110120531.GA25541@coredump.intra.peff.net>
- <ZZ8pbAMNaBDFgf3G@tapette.crustytoothpaste.net>
- <20240111070114.GB48154@coredump.intra.peff.net>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B878CD27A
+	for <git@vger.kernel.org>; Thu, 11 Jan 2024 07:28:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+Received: (qmail 29222 invoked by uid 109); 11 Jan 2024 07:28:28 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 11 Jan 2024 07:28:28 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 3539 invoked by uid 111); 11 Jan 2024 07:28:30 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 11 Jan 2024 02:28:30 -0500
+Authentication-Results: peff.net; auth=none
+Date: Thu, 11 Jan 2024 02:28:28 -0500
+From: Jeff King <peff@peff.net>
+To: Justin Tobler via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, Justin Tobler <jltobler@gmail.com>
+Subject: Re: [PATCH 2/2] t5541: generalize reference locking
+Message-ID: <20240111072828.GD48154@coredump.intra.peff.net>
+References: <pull.1634.git.1704912750.gitgitgadget@gmail.com>
+ <11fd5091d61b54d8862ab2e316bbd25fff63ce0f.1704912750.git.gitgitgadget@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="0Uzt9GYwDeV2oK8C"
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20240111070114.GB48154@coredump.intra.peff.net>
+In-Reply-To: <11fd5091d61b54d8862ab2e316bbd25fff63ce0f.1704912750.git.gitgitgadget@gmail.com>
 
+On Wed, Jan 10, 2024 at 06:52:30PM +0000, Justin Tobler via GitGitGadget wrote:
 
---0Uzt9GYwDeV2oK8C
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> From: Justin Tobler <jltobler@gmail.com>
+> 
+> Some tests set up reference locks by directly creating the lockfile.
+> While this works for the files reference backend, reftable reference
+> locks operate differently and are incompatible with this approach.
+> Generalize reference locking by preparing a reference transaction.
 
-On Thu, Jan 11, 2024 at 02:01:14AM -0500, Jeff King wrote:
-> On Wed, Jan 10, 2024 at 11:34:04PM +0000, brian m. carlson wrote:
->=20
-> > On 2024-01-10 at 12:05:31, Jeff King wrote:
-> > > My thinking is to flip that around: run all code, but put protection =
-in
-> > > the spots that do unsafe things, like loading config or examining
-> > > hooks. I.e., a patch like this:
-> >=20
-> > I think that's much what I had intended to do with not invoking binaries
-> > at all, except that it was limited to rev-parse.  I wonder if perhaps we
-> > could do something similar if we had the `--assume-unsafe` argument you
-> > proposed, except that we would only allow the `git` binary and always
-> > pass that argument to it in such a case.
->=20
-> I'm not sure what you mean by "invoking binaries". I had assumed that
-> meant just running other Git sub-processes. But if "--assume-unsafe" is
-> just setting an environment variable, they'd automatically be protected.
->=20
-> > I don't think reading config is intrinsically unsafe; it's more of what
-> > we do with it, which is spawning external processes, that's the problem.
-> > I suppose an argument could be made for injecting terminal sequences or
-> > such, though.  Hooks, obviously, are definitely unsafe.
->=20
-> Right, it's not config itself that's unsafe; it's that many options are.
-> We could try to annotate them to say "it is OK to parse core.eol but not
-> core.pager", presumably with an allow-known-good approach (since so many
-> ard bad!). But that feels like an ongoing maintenance headache, and an
-> easy way to make a mistake (your mention of terminal sequences makes me
-> assume you're thinking of "color.diff.*", etc). A rule like "we do not
-> read repo-level config at all" seems easier to explain (to me, anyway).
+As with the first patch, I think we could use d/f conflicts to get the
+same effect. Perhaps something like this:
 
-With the exemption of the repository format, I assume? We have to parse
-things like `core.repositoryFormatVersion` and extensions in order to
-figure out how a repository has to be accessed. So I agree that we
-should not partition config based on safeness, which is going to be a
-headache as you rightly point out. But we can partition based on whether
-or not config is required in order to access the repository, where the
-set of relevant config keys is a whole lot smaller.
+diff --git a/t/t5541-http-push-smart.sh b/t/t5541-http-push-smart.sh
+index df758e187d..7eb0e887e1 100755
+--- a/t/t5541-http-push-smart.sh
++++ b/t/t5541-http-push-smart.sh
+@@ -233,7 +233,8 @@ test_expect_success 'push --atomic fails on server-side errors' '
+ 	up="$HTTPD_URL"/smart/atomic-branches.git &&
+ 
+ 	# break ref updates for other on the remote site
+-	mkdir "$d/refs/heads/other.lock" &&
++	git -C "$d" update-ref -d refs/heads/other &&
++	git -C "$d" update-ref refs/heads/other/block-me HEAD &&
+ 
+ 	# add the new commit to other
+ 	git branch -f other collateral &&
+@@ -244,12 +245,8 @@ test_expect_success 'push --atomic fails on server-side errors' '
+ 	# the new branch should not have been created upstream
+ 	test_must_fail git -C "$d" show-ref --verify refs/heads/atomic &&
+ 
+-	# upstream should still reflect atomic2, the last thing we pushed
+-	# successfully
+-	git rev-parse atomic2 >expected &&
+-	# ...to other.
+-	git -C "$d" rev-parse refs/heads/other >actual &&
+-	test_cmp expected actual &&
++	# upstream should not have updated, as it cannot be written at all.
++	test_must_fail git -C "$d" rev-parse --verify refs/heads/other &&
+ 
+ 	# the new branch should not have been created upstream
+ 	test_must_fail git -C "$d" show-ref --verify refs/heads/atomic &&
 
-Patrick
+I do think that the original was slightly more interesting (since we
+could check that "other" still existed but was not updated), but I think
+the main point of the test is that "atomic" was not pushed at all.
 
---0Uzt9GYwDeV2oK8C
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmWflfkACgkQVbJhu7ck
-PpRnsg//cf9KfODmUW5NiEJ4ma5GtgGwydbigfWf4LamR7Tw3MsJ3z26QoB8fdTV
-r+Zeh/LE8qAQktoLCbHSHNsySiUv4iktlRcwZAxlUsvR6CKQZ05qgrqzDIcYSIkp
-4IHUFn96pvyhn7iigQQPC1t6YB2PBEZiuyI8H8+uB15WUaWlb7mVyYL/ZScZ9zE5
-0lVxUzOkoQ0hGrfTXHBRmOwAAgZDjgMhqZzF7QDIjJAweVOiQ9v5eGXcJLfYi0c4
-LHOvmy5OAQgpdr4UIVZtWLvGS2B/A5MgZrcOxFAOCIQmpmNk1papFt8Lensun8fJ
-Hujgg1WNtYkJSSJc7egvA7h6uKdUiM61sQbCKUKgWtsXensdBELY+Ps/2Rswvjmm
-mU4cyksB+eUgEbEXW8Qb4AS/k6O6w6cVJuvKg/URt2e9OGIKlLkYbXLwUqn3PC7E
-LtVEvFWQ5hY8HaGpN8MCr7BQKa2pU9JmLbj/LLKp96BtsyacfZB8U+vmpr5bOc+b
-K8uHgvNtCjVMxZkhE2XLx1Dh/JTNIC1CC3TS4qq8ZHkD4BypZQPWss2D5qgly7nU
-u7Et0tGQAORp83DpEqWekFIy/MrKBXip0i6r67TnmL46NZArhVt2J9jBDPailpPo
-3o7+kJ/SyIekVlIZz+1HCBkhtrQDN9LVI2saR1MJCHczuQy1vtQ=
-=LZxm
------END PGP SIGNATURE-----
-
---0Uzt9GYwDeV2oK8C--
+-Peff
