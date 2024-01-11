@@ -1,50 +1,50 @@
-Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
+Received: from mail-lj1-f177.google.com (mail-lj1-f177.google.com [209.85.208.177])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3ED6C32C6A
-	for <git@vger.kernel.org>; Thu, 11 Jan 2024 16:30:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 507DB50248
+	for <git@vger.kernel.org>; Thu, 11 Jan 2024 16:34:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bxpIPq2S"
-Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-40e5701cbbaso11658075e9.0
-        for <git@vger.kernel.org>; Thu, 11 Jan 2024 08:30:21 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="W00WLReM"
+Received: by mail-lj1-f177.google.com with SMTP id 38308e7fff4ca-2cc9fa5e8e1so63856301fa.3
+        for <git@vger.kernel.org>; Thu, 11 Jan 2024 08:34:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1704990619; x=1705595419; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1704990838; x=1705595638; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:references:cc:to
          :content-language:subject:reply-to:from:user-agent:mime-version:date
          :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=/GhY1D8Ot84ujCWbPTgFQHX5btlmRjPpvMi6AOxLKhM=;
-        b=bxpIPq2STutUvui4/aIZCNU2TTT6Uk4IrAluNXBoYQbnJwMh+1UUj5dV9EsyFNTKbj
-         UejYGzgPsqU9iYEDuH24SHtQec/PlFX3tImR+YFIJfVNPV+XdV/ewGUMJp+/AqQZHw/W
-         IcSVIDbpy6tTVKL8R8Pq0lEEHKgTx45uGuUdtQTYg+DanPDLw/SGbSWyWo99WRrnAgcT
-         u12hjZApACEh9UftPQfdDwlhSONXdnZ2fy0gUX500j1UzZZAfOolawcmV9vyGPdP+7Gh
-         XCQ5euCTIJDIofzgKMmAXC0vg/J0uwOY0bmyW+mRyWvFx3SlhMHBVmAODIw03AuR33bq
-         4KaQ==
+        bh=K7WQ8UTatwJjQDeWcWUVi138g1yqTonG8L2QoM91Xao=;
+        b=W00WLReM0CM+OfOVjFuHoCdo7Cm5zzfpjHc/qUTfIdSv8ToU4vYZRQmN82ZKKqMo3U
+         PnvFIXazSgyp5uupoLD3ADqhCL2BwWA1JfAgsAqQ8W1Wdzye/QoK8P+M5lDLSMMS2D4S
+         m8v4tYydYf7cg/jl8T3SYZY6E/xaEsw2kiGgT1tLx+e3ag8dYRl3ytzKlCoV4sYVctUi
+         syWZ0xnaX9D2+F4Rr5eoXI+8jO1ufOSOe6vGTVfjo+qag8TlPCWqt47IFf0q5fLvHd+m
+         t9XKGzgTfuOJLmZaamVTMBDqA/EKuwRNgJQ8jCosI4J3nCgriT6J3c+Z/ZGHzfFc/n/k
+         MJfQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1704990619; x=1705595419;
+        d=1e100.net; s=20230601; t=1704990838; x=1705595638;
         h=content-transfer-encoding:in-reply-to:references:cc:to
          :content-language:subject:reply-to:from:user-agent:mime-version:date
          :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=/GhY1D8Ot84ujCWbPTgFQHX5btlmRjPpvMi6AOxLKhM=;
-        b=wpdOluItPHfKYO1A137YdSnwNhNSF7c5X51KAfWpihAXDj6x1bLhdSkuVtfRJWs+4C
-         ZyTska98aOZMsUrIPqW0BBNdZkBKoEBDT+Gd+M4djOY/86IeTiSYbWdi9jJm4xCnS+6H
-         pK7p3wDi/qfjf3grQtbXyjv966IYknzuBDPJB7cgDPtSMX71iF5EugF4HOdr1wvArWpv
-         733as6Gp+FQiOZ0ueVc6zpn3u6RHpbm0RAMeRLGyNRfsNf9rI56fKlJ74wJO67u81S4h
-         gp1mgpk9u+VTIHReVrGyvr++0hoyfx6cvoZ7iR3JXB5pe1UUixRjvQqcckVSFPb4ahfd
-         lPBw==
-X-Gm-Message-State: AOJu0YzzW5tS1PpT1jpz3A0w+n/Z5hC8k5pMWWoPnspZg64vQQQLvhxu
-	vM0i8ku5oIltBK3uZsNerMI=
-X-Google-Smtp-Source: AGHT+IH475qNrCMLJyXfhRdgQRgKPv9vYFVgkp4jlJtPkCt3+1WZz/M0gis9kfeGV+zbygoNyhwJig==
-X-Received: by 2002:a05:600c:518d:b0:40d:5f8e:21f3 with SMTP id fa13-20020a05600c518d00b0040d5f8e21f3mr47351wmb.85.1704990619273;
-        Thu, 11 Jan 2024 08:30:19 -0800 (PST)
+        bh=K7WQ8UTatwJjQDeWcWUVi138g1yqTonG8L2QoM91Xao=;
+        b=hWWDg2u8k+l2iA9oP5upUbol5+RPQEmzGmQFFrQAcbMHe1wgVHZZOA1UJje6sLfQ21
+         8sMUatjDOGKuNjUaXtZkhekAoSQGiBbPW5CZ61LPiXVDD5p4kn/1lJiH73hhWfSKt4ep
+         4QkDe6JZr01HgIp16Fe9zYtf87pAOALDEksV6nxMJTGOeYkWIZ8qcA8V1EjzMXSVFcD/
+         mxoqktdCdMYiGiLN3R6NmeU6I8VbMpwM+IEn3d6g5mIc8uIvY7f1NhPP1VhUXmKjfGnP
+         ciKTalrjvXAfn7aEWLS9OLA9fSjTgLvHOgpRD38+UmhRaDIJkVCFimOKC0XijGpKMgol
+         BptA==
+X-Gm-Message-State: AOJu0YxprG6XNj/QQqYaq9cRf5yA+/1ejtL6/Ee+pkuR4+YemMaLFfX3
+	vNikg6ZhfYTdnSsuPUIbhBA=
+X-Google-Smtp-Source: AGHT+IFyODPXPsNCzvfm87cVx1CFm7a2kC82NNPRjhazBmiviqyO8jPuW4e/NH4H5lZSsMDvEZjqGA==
+X-Received: by 2002:a2e:b526:0:b0:2cc:db17:64af with SMTP id z6-20020a2eb526000000b002ccdb1764afmr520562ljm.93.1704990838090;
+        Thu, 11 Jan 2024 08:33:58 -0800 (PST)
 Received: from [192.168.1.212] ([84.64.64.237])
-        by smtp.gmail.com with ESMTPSA id t21-20020a05600c451500b0040e3ac9f4c8sm6318297wmo.28.2024.01.11.08.30.18
+        by smtp.gmail.com with ESMTPSA id f18-20020adffcd2000000b0033642a9a1eesm1585769wrs.21.2024.01.11.08.33.57
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 11 Jan 2024 08:30:19 -0800 (PST)
-Message-ID: <02cf7ef3-6a16-4fe1-a032-ea7c727c9b12@gmail.com>
-Date: Thu, 11 Jan 2024 16:30:18 +0000
+        Thu, 11 Jan 2024 08:33:57 -0800 (PST)
+Message-ID: <ba8824a3-caa9-4de2-bb80-3e592ec62b92@gmail.com>
+Date: Thu, 11 Jan 2024 16:33:57 +0000
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -54,45 +54,34 @@ MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 From: phillip.wood123@gmail.com
 Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v3 2/2] t7501: add tests for --amend --signoff
+Subject: Re: [PATCH v3 1/2] t7501: add tests for --include and --only
 Content-Language: en-US
 To: Ghanshyam Thakkar <shyamthakkar001@gmail.com>, git@vger.kernel.org
 Cc: christian.couder@gmail.com, gitster@pobox.com
 References: <20240109165304.8027-2-shyamthakkar001@gmail.com>
- <20240110163622.51182-6-shyamthakkar001@gmail.com>
-In-Reply-To: <20240110163622.51182-6-shyamthakkar001@gmail.com>
+ <20240110163622.51182-4-shyamthakkar001@gmail.com>
+In-Reply-To: <20240110163622.51182-4-shyamthakkar001@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
 On 10/01/2024 16:35, Ghanshyam Thakkar wrote:
-> Add tests for amending the commit to add Signed-off-by trailer. And
-> also to check if it does not add another trailer if one already exists.
-> 
-> Currently, there are tests for --signoff separately in t7501, however,
-> they are not tested with --amend.
-> 
-> Therefore, these tests belong with other similar tests of --amend in
-> t7501-commit-basic-functionality.
-> 
-> Signed-off-by: Ghanshyam Thakkar <shyamthakkar001@gmail.com>
 
-This version looks good, thanks for re-rolling. I have left one comment 
-below but it is not worth re-rolling just for that.
+I don't have much to add to what Junio said, I've just left one comment 
+below
 
-> +test_expect_success 'amend commit to add signoff' '
+> +test_expect_success '--only excludes staged changes' '
+> +	echo content >file &&
+> +	echo content >baz &&
+> +	git add baz &&
+> +	git commit --only -m "file" file &&
 > +
-> +	test_commit "msg" file content &&
-> +	git commit --amend --signoff &&
-> +	test_commit_message HEAD <<-EOF
-> +	msg
-> +
-> +	Signed-off-by: $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL>
-> +	EOF
-> +
-> +'
+> +	git diff --name-only >actual &&
+> +	test_must_be_empty actual &&
+> +	git diff --name-only --staged >actual &&
+> +	test_grep "baz" actual
 
-If you do happen re-roll I think we could happily lose the empty line 
-before the closing "'" in this test and the next.
+using test_grep feels a bit weak here, I think it would be better to use 
+test_cmp to ensure that there are no other staged changes.
 
 Best Wishes
 
