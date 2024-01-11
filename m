@@ -1,130 +1,85 @@
-Received: from mail-lj1-f174.google.com (mail-lj1-f174.google.com [209.85.208.174])
+Received: from mail-pg1-f180.google.com (mail-pg1-f180.google.com [209.85.215.180])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD46F524A4
-	for <git@vger.kernel.org>; Thu, 11 Jan 2024 16:57:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F8865577F
+	for <git@vger.kernel.org>; Thu, 11 Jan 2024 17:23:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=github.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=github.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZOU43ngK"
-Received: by mail-lj1-f174.google.com with SMTP id 38308e7fff4ca-2ccb4adbffbso65405161fa.0
-        for <git@vger.kernel.org>; Thu, 11 Jan 2024 08:57:43 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=github.com header.i=@github.com header.b="bbrYRLGQ"
+Received: by mail-pg1-f180.google.com with SMTP id 41be03b00d2f7-5cdbc4334edso2745670a12.3
+        for <git@vger.kernel.org>; Thu, 11 Jan 2024 09:23:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1704992262; x=1705597062; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=o78n9aI3g8j2ZlhOJs+PJKZClqEQ+eTC5LbSNIzIAzg=;
-        b=ZOU43ngK1YlZ3Zjep0HwacjDSbxLLaOKUuFCw34KUoiwEhJFRcfKiucyyMXVFzrF4E
-         Cgf6TiOCfvLtKI0ipx+SuqH8k+tenoSBNxof7NDu5ffkMUg5TmWMIsi2DBlmMsQO+K35
-         JXeyzDopmKGcJ+ZjfKNP1WOuFxhpewm4NNZgq3H8H+jqv5lehkRB6A5csJrWDphKgFU/
-         ofY3N4HYpY/c2HSuj+wa0zr6ChFIlCf9smbyp61IZo9IVbNWivqvbEXMWCaqu1hl6O0R
-         KL54CTMhh8lNgqrFXgdvx6t2ToaXNGrtdI5Oohw2Y3x+eUgM7r4VS5oxB66Uhxq43sUa
-         uh8g==
+        d=github.com; s=google; t=1704993787; x=1705598587; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=pN+bt5g40W0ItBQQ/g++J0jPeI0w4/iJnzlSZEQuY/8=;
+        b=bbrYRLGQ6bSzum9KxQijESZPH2OUqjjPuSL5/qMmF7emaMzsadDTEVD7DwQMiW6JNR
+         Nlk+EMgluR7BDO2lku4Ttf9z+Vv6QxygSwa2P93xX+OHH6HNgCdUMNxyrzD22CGxrOW+
+         QPTFXQYIHosXrpij0H4Q8/uVSDVHvF9HxcUyhW81X7jRLhgkfGUo0galnIu8w7DbCLDg
+         6fUwG/h2YUv8Byv3VL4NcuyBqEh5ZEve/iku9xOEwioO1oa24cU53dDIvhRrDUUup+Vk
+         zN+Y34EjBDOHR/Glf2/eSbMMq7rb/0Ab048sk2kh8SXKoiFA6Mc1v+MnSnxhi4KOU5s0
+         5gQw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1704992262; x=1705597062;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=o78n9aI3g8j2ZlhOJs+PJKZClqEQ+eTC5LbSNIzIAzg=;
-        b=LJ5T4pIAE0LZ8FfdyXTYEPMiVIQxzjNyVpufObYxzGHWR5S67TQa5O1oC/Z0FC8qs8
-         tqiK/DACSjQyRh27SU6FkLs19WhRVeaQ1QLVu8VYlUYTdABe9ifeDW1w2SBHM6nHoraW
-         ZvkFuNbCmCEc88cuEWzSqapzgs1isNH905Kb3AtBL/+sgf0psg2h2IXacnzooU7AZtiq
-         IMz/87u4VYGxAwyL0GbGXWD3NtWq91B+/iI5eENTJisbN6+NQWYnraPSJDDiPudQFS12
-         4ZaumXtpsH+bnsgV39kwLsRu4O0hedJ91q5IBCuRUsIhtNLBcDdzbdlKBgk0+KzqUaU4
-         5LIw==
-X-Gm-Message-State: AOJu0Yyj64gd4dJq5ZqhJ4WSMvI21YAJcBV0qKMsl2Pevi/ZRJYohnzt
-	AA8GHAXgnJVJn+g+jYqrxC0TUA/trNA48TwASFK6WtnQTUY=
-X-Google-Smtp-Source: AGHT+IHVk8s86JNe5A+qIpxPSIIOSVRhlWCbsln8k/4U6Lqq+hN+mqS2wm3O6gMCOUZOhcBLn1KcUBm9gzj/cKAfzMU=
-X-Received: by 2002:a05:6512:3b14:b0:50e:c7b2:cc7b with SMTP id
- f20-20020a0565123b1400b0050ec7b2cc7bmr833386lfv.130.1704992261362; Thu, 11
- Jan 2024 08:57:41 -0800 (PST)
+        d=1e100.net; s=20230601; t=1704993787; x=1705598587;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=pN+bt5g40W0ItBQQ/g++J0jPeI0w4/iJnzlSZEQuY/8=;
+        b=tEEHYzm03Qpy6dt9cVoy0+AkxKnpY/xekYJ4y3kd67VhWkb7PJQFIpYFHcklJhyK0+
+         KKjzWiqFAaPFiuXpXh402N5918CDiUk/RTKqM9fH0mPHW9ObPuaq5tDoFDq7uTv7wBHH
+         DeP72uEVsvx+tfllXMCLrmDsJs74WgfMI6LaIAu51Cmhxuqf7USa9r3XKm24KCkhip6W
+         qgvtOpwdp7PxJ2JsLlI1LRn7rCn7iQ/g0csrB0IAJ6UHcLvhdeb7t3SongeZaNaKvB5W
+         BZ7IFeNCkuh9xMVeX6xfeGCUZRJtoa2gSsGP5yW5PKTmIr2ApY0zsZDI4ArbEmXbKvwj
+         +o5A==
+X-Gm-Message-State: AOJu0Yy1AsnY4pm7gB7GyUKSMF2U6CmlDt+4xkfW0ADt9XY55OCQWDY7
+	883NewN6RZ9wXjyhRErhSHIm8AttL7yTTPPcsCEEFVEb
+X-Google-Smtp-Source: AGHT+IH2+p7kZ0+WkLRqJETsdmuCVzMTQ+SSQ8kY4NfblclWWxmAd7ZGnocsUdMwOpyLke2b5NAKeA==
+X-Received: by 2002:a05:6a21:186:b0:199:e1f3:b554 with SMTP id le6-20020a056a21018600b00199e1f3b554mr171405pzb.100.1704993786755;
+        Thu, 11 Jan 2024 09:23:06 -0800 (PST)
+Received: from [192.168.50.41] (172-091-184-234.res.spectrum.com. [172.91.184.234])
+        by smtp.gmail.com with ESMTPSA id pv2-20020a17090b3c8200b0028de818854bsm1693172pjb.28.2024.01.11.09.23.05
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 11 Jan 2024 09:23:06 -0800 (PST)
+Message-ID: <a9afd237-e048-43eb-922a-2734e573a644@github.com>
+Date: Thu, 11 Jan 2024 09:23:04 -0800
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <ZZ77NQkSuiRxRDwt@nand.local> <b2651b38a4f7edaf1c5ffee72af00e46@manjaro.org>
- <CABPp-BH3sva=CNtx8YFGP4Egyau-hR+7njZPFEd-DRTw91BK2w@mail.gmail.com> <f5b9a57b6e2b513f1d79a93c6f0ccf45@manjaro.org>
-In-Reply-To: <f5b9a57b6e2b513f1d79a93c6f0ccf45@manjaro.org>
-From: Elijah Newren <newren@gmail.com>
-Date: Thu, 11 Jan 2024 08:57:28 -0800
-Message-ID: <CABPp-BFWsWCGogqQ=haMsS4OhOdSwc3frcAxa6soQR5ORTceOA@mail.gmail.com>
-Subject: Re: [DISCUSS] Introducing Rust into the Git project
-To: Dragan Simic <dsimic@manjaro.org>
-Cc: Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/3] t7450: test submodule urls
+Content-Language: en-US
+To: Junio C Hamano <gitster@pobox.com>,
+ Victoria Dye via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org
+References: <pull.1635.git.1704822817.gitgitgadget@gmail.com>
+ <cf7848edffca27931aad02c0652adf2715320d35.1704822817.git.gitgitgadget@gmail.com>
+ <xmqqttnmfarm.fsf@gitster.g>
+From: Victoria Dye <vdye@github.com>
+In-Reply-To: <xmqqttnmfarm.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-Hi Dragan,
+Junio C Hamano wrote:
+> "Victoria Dye via GitGitGadget" <gitgitgadget@gmail.com> writes:
+> 
+>> +#define TEST_TOOL_CHECK_URL_USAGE \
+>> +	"test-tool submodule check-url <url>"
+>> +static const char *submodule_check_url_usage[] = {
+>> +	TEST_TOOL_CHECK_URL_USAGE,
+>> +	NULL
+>> +};
+> 
+> Granted, the entry that follows this new one already uses the same
+> pattern, but TEST_TOOL_CHECK_URL_USAGE being used only once here and
+> nowhere else, with its name almost as long as the value it expands to,
+> I found it unnecessarily verbose and confusing.
 
-On Wed, Jan 10, 2024 at 9:39=E2=80=AFPM Dragan Simic <dsimic@manjaro.org> w=
-rote:
->
-> On 2024-01-11 01:33, Elijah Newren wrote:
-> > On Wed, Jan 10, 2024 at 1:57=E2=80=AFPM Dragan Simic <dsimic@manjaro.or=
-g>
-> > wrote:
-> >>
-> >> Thus, Git should probably follow the same approach of not converting
-> >> the
-> >> already existing code
-> >
-> > I disagree with this.  I saw significant performance improvements
-> > through converting some existing Git code to Rust.  Granted, it was
-> > only a small amount of code, but the performance benefits I saw
-> > suggested we'd see more by also doing similar conversions elsewhere.
-> > (Note that I kept the old C code and then conditionally compiled
-> > either Rust or C versions of what I was converting.)
->
-> Well, it's also possible that improving the old C code could also result
-> in some performance improvements.  Thus, quite frankly, I don't see that
-> as a valid argument to rewrite some existing C code in Rust.
+This is only used once because I missed the second place it should be used
+(in 'submodule_usage[]'). It's still somewhat verbose, but once I fix that
+it'll at least have the benefit of avoiding some duplication.
 
-Yes, and I've made many performance improvements in the C code in git.
-Sometimes I make some of the code 5% or 20% faster.  Sometimes 1-3
-orders of magnitude faster.  Once over 60 orders of magnitude
-faster.[1]  Look around in git's history; I've done a fair amount of
-performance stuff.
-
-And I'm specifically arguing that I feel limited in some of the
-performance work that can be done by remaining in C.  Part of my
-reason for interest in Rust is exactly because I think it can help us
-improve performance in ways that are far more difficult to achieve in
-C.  And this isn't just guesswork, I've done some trials with it.
-Further, I even took the time to document some of these reasons
-elsewhere in this thread[2].  Arguing that some performance
-improvements can be done in C is thus entirely missing the point.
-
-If you want to dismiss the performance angle of argument for Rust, you
-should take the time to address the actual reasons raised for why it
-could make it easier to improve performance relative to continuing in
-C.
-
-Also, as a heads up since you seem to be relatively new to the list:
-your position will probably carry more weight with others if you take
-the time to understand, acknowledge, and/or address counterpoints of
-the other party.  It is certainly fine to simply express some concerns
-without doing so (Randall and Patrick did a good job of this in this
-thread), but when you simply assert that the benefits others point out
-simply don't exist (e.g. your "Quite frankly, that would _only_
-complicate things and cause fragmentation." (emphasis added) from your
-first email in this thread[3], and which this latest email of yours
-somewhat looks like as well), others may well start applying a
-discount to any positions you state.  Granted, it's totally up to you,
-but I'm just giving a hint about how I think you might be able to be
-more persuasive.
-
-
-Hope that helps,
-Elijah
-
-[1] A couple examples: 6a5fb966720 ("Change default merge backend from
-recursive to ort", 2021-08-04) and 8d92fb29270 ("dir: replace
-exponential algorithm with a linear one", 2020-04-01)
-[2] Footnote 6 of
-https://lore.kernel.org/git/CABPp-BFOmwV-xBtjvtenb6RFz9wx2VWVpTeho0k=3DD8ws=
-CCVwqQ@mail.gmail.com/
-[3] https://lore.kernel.org/git/b2651b38a4f7edaf1c5ffee72af00e46@manjaro.or=
-g/
