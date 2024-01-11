@@ -1,43 +1,43 @@
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 717354B5A9
-	for <git@vger.kernel.org>; Thu, 11 Jan 2024 21:47:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72AC01C2D
+	for <git@vger.kernel.org>; Thu, 11 Jan 2024 22:33:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="M8KuelaG"
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id 965FA19E80;
-	Thu, 11 Jan 2024 16:47:54 -0500 (EST)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="Pb9ziMNE"
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 14E921D3A80;
+	Thu, 11 Jan 2024 17:33:23 -0500 (EST)
 	(envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=i2x6sWco/3Fdy2ETjyGUqBJp9ymVwdlL05JuIr
-	mrUrk=; b=M8KuelaG+/Npizg7UaR7/qYvSICDfaRTDkmFGHIQAKZ95wpZ2m+sKv
-	ZfOCpHR0uzcarURCUdFmKphoRzUBLHoSpLkNT6jdETbLs8f/eBKxsdD0g/d5v5HT
-	CD+njPmxdwpAaz34HBnoSUHik2ttYC8BXiy18/cl8cBDClnRJsa8g=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id 8FE5519E7F;
-	Thu, 11 Jan 2024 16:47:54 -0500 (EST)
+	:content-type; s=sasl; bh=Yl7wC+HBh3spxMkDoCADMRhQVwYzAqCDRKXxN0
+	3vle8=; b=Pb9ziMNESZkN//Ms01KNbTO2PTR/hDLMGGl47qhsCLipBIJJuvCZv+
+	x9yxzPT/UGK87aGu6uEphdAxvRfBEg4ixCgIv0QenL0pwaNtBNje9tY4hHDJShL2
+	GDQOnIhH5OrqdUm29bg4nR7HkGBrPn3+BQWKrHIILYW0ggF8E8UPQ=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 0D7661D3A7F;
+	Thu, 11 Jan 2024 17:33:23 -0500 (EST)
 	(envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.125.200.93])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 50CFB19E7E;
-	Thu, 11 Jan 2024 16:47:50 -0500 (EST)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 6CAB21D3A7D;
+	Thu, 11 Jan 2024 17:33:22 -0500 (EST)
 	(envelope-from junio@pobox.com)
 From: Junio C Hamano <gitster@pobox.com>
-To: Michael Lohmann <mi.al.lohmann@gmail.com>
-Cc: git@vger.kernel.org,  phillip.wood123@gmail.com,
-  phillip.wood@dunelm.org.uk,  wanja.hentze@bevuta.com
-Subject: Re: [PATCH v3] builtin/revert.c: refactor using an enum for cmd-action
-In-Reply-To: <20240111200627.64199-1-mi.al.lohmann@gmail.com> (Michael
-	Lohmann's message of "Thu, 11 Jan 2024 21:06:27 +0100")
-References: <xmqqsf33fy3t.fsf@gitster.g>
-	<20240111200627.64199-1-mi.al.lohmann@gmail.com>
-Date: Thu, 11 Jan 2024 13:47:48 -0800
-Message-ID: <xmqqzfxbee4b.fsf@gitster.g>
+To: Eric Sunshine <sunshine@sunshineco.com>
+Cc: Benji Kay via GitGitGadget <gitgitgadget@gmail.com>,
+  git@vger.kernel.org,  Benji Kay <okaybenji@gmail.com>
+Subject: Re: [PATCH] push: improve consistency of output when "up to date"
+In-Reply-To: <CAPig+cRr0V2ecnmxk1H_yF24dwSFA6niPxYXGH0MZ+wGP9m9UA@mail.gmail.com>
+	(Eric Sunshine's message of "Thu, 11 Jan 2024 16:43:01 -0500")
+References: <pull.1638.git.1705008449995.gitgitgadget@gmail.com>
+	<CAPig+cRr0V2ecnmxk1H_yF24dwSFA6niPxYXGH0MZ+wGP9m9UA@mail.gmail.com>
+Date: Thu, 11 Jan 2024 14:33:21 -0800
+Message-ID: <xmqqjzofec0e.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -47,40 +47,110 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 X-Pobox-Relay-ID:
- 10E6DA4E-B0CB-11EE-A3D0-A19503B9AAD1-77302942!pb-smtp21.pobox.com
+ 6D5E1638-B0D1-11EE-A2FC-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
 
-Michael Lohmann <mi.al.lohmann@gmail.com> writes:
+Eric Sunshine <sunshine@sunshineco.com> writes:
 
-> This is done to avoid having to keep the char values in sync in
-> different places and also to get compiler warnings on non-exhaustive
-> switches.
+> Thanks. This particular change is proposed periodically...
 >
-> In the rebase `action` enum there is the enumeration constant
-> `ACTION_NONE` which is not particularly descriptive, since it seems to
-> imply that no action should be taken. Instead it signals a start of a
-> revert/cherry-pick process, so here `ACTION_START` was chosen.
+>> diff --git a/transport.c b/transport.c
+>> @@ -1467,7 +1467,7 @@ int transport_push(struct repository *r,
+>>         else if (!quiet && !ret && !transport_refs_pushed(remote_refs))
+>> -               fprintf(stderr, "Everything up-to-date\n");
+>> +               fprintf(stderr, "Everything up to date.\n");
 >
-> Co-authored-by: Wanja Henze <wanja.hentze@bevuta.com>
-> Signed-off-by: Michael Lohmann <mi.al.lohmann@gmail.com>
-> ---
+> ... but has not been considered desirable.
 >
-> On 11. Jan 2024, at 20:37, Junio C Hamano <gitster@pobox.com> wrote:
->> Phillip Wood <phillip.wood123@gmail.com> writes:
->> > I think ACTION_NONE was intended to covey that the user did not pass
->> > one of the OPT_CMDMODE() options like "--continue" as there isn't a
->> > "--start" option. I don't have a strong opinion between "_NONE" and
->> > "_START".
->>
->> I agree with you why NONE is called as such.  If "revert" does not
->> take "--start" (I do not remember offhand), I would think it would
->> be better to follow suit.
-> My point was that yes, it might be in sync with what the user passes in
-> as arguments, but when I followed the code and saw lots of references to
-> ACTION_NONE I was puzzled, since my intuition of that name was that
-> _no action_ should be taken (which did not make sense to me).
+> See, for instance, this email thread explaining the rationale for
+> avoiding such a change:
+> https://lore.kernel.org/git/pull.1298.git.1658908927714.gitgitgadget@gmail.com/T/
 
-I know you wrote that ;-).  But _NONE is "no action was specified",
-and has been so for a long time in the context of "rebase". I do not
-see any confusion expressed there.  I do not expect to see any
-confusion here, either, if we were to introduce these new enum.
+Looking at the "grep" hits:
+
+$ git grep -e 'up-to-date.*"' \*.c
+builtin/rm.c:	OPT__FORCE(&force, N_("override the up-to-date check"), PARSE_OPT_NOCOMPLETE),
+builtin/send-pack.c:		fprintf(stderr, "Everything up-to-date\n");
+http-push.c:				fprintf(stderr, "'%s': up-to-date\n", ref->name);
+http-push.c:				      "Maybe you are not up-to-date and "
+transport.c:		fprintf(stderr, "Everything up-to-date\n");
+
+it is true that these are not marked for translation, which should
+be a clue enough that we want them to be exactly the way they are
+spelled.  However, they are going to the standard error stream.  Is
+it reasonable to expect third-party tools scraping it to find the
+string "up-to-date"?
+
+In any case, a safe first step is to add a short comment to each of
+these that should not be translated.  Perhaps something along this
+line.
+
+
+------- >8 ------------- >8 ------------- >8 -------
+Subject: [PATCH] messages: mark some strings with "up-to-date" not to touch
+
+The treewide clean-up of "up-to-date" strings done in 7560f547
+(treewide: correct several "up-to-date" to "up to date", 2017-08-23)
+deliberately left some out, but unlike the lines that were changed
+by the commit, the lines that were deliberately left untouched by
+the commit is impossible to ask "git blame" to link back to the
+commit that did not touch them.
+
+Let's do the second best thing, leave a short comment near them, to
+make it possible for those who are motivated enough to find out why
+we decided to tell them "do not modify".
+
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+
+ builtin/send-pack.c | 1 +
+ http-push.c         | 2 ++
+ transport.c         | 1 +
+ 3 files changed, 4 insertions(+)
+
+diff --git a/builtin/send-pack.c b/builtin/send-pack.c
+index b7183be970..ac7ec1e643 100644
+--- a/builtin/send-pack.c
++++ b/builtin/send-pack.c
+@@ -333,6 +333,7 @@ int cmd_send_pack(int argc, const char **argv, const char *prefix)
+ 	}
+ 
+ 	if (!ret && !transport_refs_pushed(remote_refs))
++		/* do not modify this string */
+ 		fprintf(stderr, "Everything up-to-date\n");
+ 
+ 	return ret;
+diff --git a/http-push.c b/http-push.c
+index b4d0b2a6aa..e4c6645cc2 100644
+--- a/http-push.c
++++ b/http-push.c
+@@ -1851,6 +1851,7 @@ int cmd_main(int argc, const char **argv)
+ 
+ 		if (oideq(&ref->old_oid, &ref->peer_ref->new_oid)) {
+ 			if (push_verbosely)
++				/* do not modify this string */
+ 				fprintf(stderr, "'%s': up-to-date\n", ref->name);
+ 			if (helper_status)
+ 				printf("ok %s up to date\n", ref->name);
+@@ -1871,6 +1872,7 @@ int cmd_main(int argc, const char **argv)
+ 				 * commits at the remote end and likely
+ 				 * we were not up to date to begin with.
+ 				 */
++				/* do not modify this string */
+ 				error("remote '%s' is not an ancestor of\n"
+ 				      "local '%s'.\n"
+ 				      "Maybe you are not up-to-date and "
+diff --git a/transport.c b/transport.c
+index bd7899e9bf..c9f39d45f1 100644
+--- a/transport.c
++++ b/transport.c
+@@ -1467,6 +1467,7 @@ int transport_push(struct repository *r,
+ 	if (porcelain && !push_ret)
+ 		puts("Done");
+ 	else if (!quiet && !ret && !transport_refs_pushed(remote_refs))
++		/* do not modify this string */
+ 		fprintf(stderr, "Everything up-to-date\n");
+ 
+ done:
+-- 
+2.43.0-283-ga54a84b333
 
