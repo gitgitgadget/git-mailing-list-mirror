@@ -1,103 +1,60 @@
-Received: from secure.elehost.com (secure.elehost.com [185.209.179.11])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from dd36226.kasserver.com (dd36226.kasserver.com [85.13.153.21])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5EE915E88
-	for <git@vger.kernel.org>; Thu, 11 Jan 2024 13:07:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nexbridge.com
-X-Virus-Scanned: Debian amavisd-new at secure.elehost.com
-Received: from Mazikeen (cpebc4dfb928313-cmbc4dfb928310.cpe.net.cable.rogers.com [99.228.251.108] (may be forged))
-	(authenticated bits=0)
-	by secure.elehost.com (8.15.2/8.15.2/Debian-22ubuntu3) with ESMTPSA id 40BD3qfi1797209
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 11 Jan 2024 13:03:52 GMT
-Reply-To: <rsbecker@nexbridge.com>
-From: <rsbecker@nexbridge.com>
-To: "'Elijah Newren'" <newren@gmail.com>
-Cc: "'Taylor Blau'" <me@ttaylorr.com>, "'Junio C Hamano'" <gitster@pobox.com>,
-        "'Dragan Simic'" <dsimic@manjaro.org>, <git@vger.kernel.org>
-References: <ZZ77NQkSuiRxRDwt@nand.local> <b2651b38a4f7edaf1c5ffee72af00e46@manjaro.org> <xmqqjzog96uh.fsf@gitster.g> <006b01da4412$96c6c500$c4544f00$@nexbridge.com> <ZZ8ZlX6bf+hjmhN+@nand.local> <007c01da4420$10a7b700$31f72500$@nexbridge.com> <CABPp-BEw_HFL-9u6WdSEe-qr_JfJyQtfU6PP7izEdPChKooc6g@mail.gmail.com> <008701da442f$b2dfe420$189fac60$@nexbridge.com> <CABPp-BHx=4HPSN4enkHTL7PPnNBsJ1vGWe4Em5imH7HcOcH2PA@mail.gmail.com> <009c01da4439$f70beef0$e523ccd0$@nexbridge.com> <CABPp-BGmXw0NQ8yBaMiVXHiKr0-Y_jkZWmJB1CG_oc4UGxt_gA@mail.gmail.com>
-In-Reply-To: <CABPp-BGmXw0NQ8yBaMiVXHiKr0-Y_jkZWmJB1CG_oc4UGxt_gA@mail.gmail.com>
-Subject: RE: [DISCUSS] Introducing Rust into the Git project
-Date: Thu, 11 Jan 2024 08:07:35 -0500
-Organization: Nexbridge Inc.
-Message-ID: <012801da448f$29434ee0$7bc9eca0$@nexbridge.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B489A15EBC
+	for <git@vger.kernel.org>; Thu, 11 Jan 2024 13:29:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=haller-berlin.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=haller-berlin.de
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=haller-berlin.de header.i=@haller-berlin.de header.b="duv+Q5bT"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=haller-berlin.de;
+	s=kas202308231025; t=1704979732;
+	bh=axdrwLDXT4PqdsTZ+FLOIxfj4AwZ04V963QLD9VCb48=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=duv+Q5bTGQo520ZX9DFzkM/VDqnhsC4bc8MIMP9q5zgSyxY8FzWZS9w/SGDlqTvbs
+	 ssBOrKxUU9XOSvHl/xLA2dGrsXbXjscwjNMDHvHLlhX1Wi0PgKVbOaGqWRcBb5aOMB
+	 xQj/IRV3ColFVVVWvPkOFfr9AqIRsBmew4sj1D02tCEhbBaYxCHKRvq56aX68hDptU
+	 LG4VlkCpvBawj1pf72wLcxcLCEuj61k0qMu3lLwUWHliy60HDaGWVvIJgQOtc2+f9R
+	 0hIupYSMHonHrynxN9jKssWWBblFe+2zNFUZ8AADvNffLyTmKQ+eWDNMHhsaVVQRKq
+	 RjbcXxYX+20ug==
+Received: from [192.168.42.22] (6-48-142-46.pool.kielnet.net [46.142.48.6])
+	by dd36226.kasserver.com (Postfix) with ESMTPSA id 64E323C0448;
+	Thu, 11 Jan 2024 14:28:52 +0100 (CET)
+Message-ID: <c8ad96bc-0180-42f4-b559-20b475098eca@haller-berlin.de>
+Date: Thu, 11 Jan 2024 14:28:51 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain;
-	charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
-X-Mailer: Microsoft Outlook 16.0
-Content-Language: en-ca
-Thread-Index: AQNL0k5wzhXZATyUnQ76Vxjn4eCV+QKEQ1wBALH7sDwDPprtZwK9Rr3fAtB2bewByXD01gDMKZblA0KzuhcCEw2HmQKWnpH2rT1VBEA=
+User-Agent: Mozilla Thunderbird
+Subject: Re: Storing private config files in .git directory?
+Content-Language: de-DE, en-US
+To: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org
+References: <8e344dee-f84e-4a2c-835a-406ee72d129b@haller-berlin.de>
+ <xmqq34v7lmb3.fsf@gitster.g> <20240110110842.GD16674@coredump.intra.peff.net>
+From: Stefan Haller <lists@haller-berlin.de>
+In-Reply-To: <20240110110842.GD16674@coredump.intra.peff.net>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spamd-Bar: /
 
-On Thursday, January 11, 2024 12:06 AM, Elijah Newren wrote:
->On Wed, Jan 10, 2024 at 6:57=E2=80=AFPM <rsbecker@nexbridge.com> wrote:
->>
->> On Wednesday, January 10, 2024 9:21 PM, Elijah Newren wrote:
->> >On Wed, Jan 10, 2024 at 5:44=E2=80=AFPM <rsbecker@nexbridge.com> =
-wrote:
->> >>
->> >> On Wednesday, January 10, 2024 7:59 PM, Elijah Newren wrote:
->> >[...]
->> >> >Would you be okay with the following alternative: requiring that
->> >> >all Rust code be optional for now?
->> >> >
->> >> >(In other words, allow you to build with USE_RUST=3D0, or =
-something
->> >> >like that.  And then we have both a Rust and a C implementation =
-of
->> >> >anything that is required for backward compatibility, while any
->> >> >new Rust-only stuff would not be included in your build.)
->> >>
->> >> To address the immediate above, I assume this means that platform
->> >> maintainers will be responsible for developing non-portable
->> >> implementations that duplicate Rust functionality
->> >
->> >This doesn't at all sound like what I thought I said.  The whole
->> >proposal was so that folks like NonStop could continue using Git =
-with
->> >no more work than setting
->> >USE_RUST=3D0 at build time.
->> >
->> >Why do you feel you'd need to duplicate any functionality?
->>
->> I think I misunderstood. What I took from this is that all new =
-functionality would
->be in Rust, which would require a custom implementation in C for =
-platforms that did
->not have Rust available - if that is even practical. Did I get that =
-wrong?
->
->I think you somehow missed the word optional?
->
->I did say that new functionality should be allowed to be Rust only =
-(unlike existing
->functionality), but I'm not sure how you leaped to assuming that all =
-new
->functionality would be in Rust.  Further, I also don't understand why =
-you jump to
->assuming that all new functionality needs to be supported on all =
-platforms.  The
->point of the word "optional" in my proposal is that it is not required. =
- So, say, if git-
->replay is in Rust, well you've never had git-replay before in any =
-release, so you
->haven't lost any functionality by it being implemented in Rust.  And =
-existing things
->(merge, cherry-pick, rebase, etc.) continue working with C-only code.  =
-But you may
->have one less optional addition.
->
->At least that was _my_ proposal -- that Rust be optional for now.  It =
-does differ from
->what I think Taylor was originally proposing, but that's why I brought =
-it up as an
->alternative proposal.
+On 10.01.24 12:08, Jeff King wrote:
+> On Mon, Jan 08, 2024 at 10:20:00AM -0800, Junio C Hamano wrote:
+> 
+>> An obvious alternative is to have .lazygit directory next to .git directory
+>> which would give you a bigger separation, which can cut both ways.
+> 
+> Just to spell out one of those ways: unlike ".git", we will happily
+> check out ".lazygit" from an untrusted remote repository. That may be a
+> feature if you want to be able to share project-specific config, or it
+> might be a terrible security vulnerability if lazygit config files can
+> trigger arbitrary code execution.
 
-Thank you for the clarification.
+Unless you don't version it and add it to .gitignore instead, which (I
+suppose) is what most people do with their .vscode/settings.json, for
+example.
 
+-Stefan
