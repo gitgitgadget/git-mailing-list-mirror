@@ -1,154 +1,87 @@
-Received: from mail-pf1-f171.google.com (mail-pf1-f171.google.com [209.85.210.171])
+Received: from mail-lf1-f49.google.com (mail-lf1-f49.google.com [209.85.167.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A72A624
-	for <git@vger.kernel.org>; Thu, 11 Jan 2024 02:15:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2439D10E8
+	for <git@vger.kernel.org>; Thu, 11 Jan 2024 02:21:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dF/99qwl"
-Received: by mail-pf1-f171.google.com with SMTP id d2e1a72fcca58-6d9b267007fso2851554b3a.3
-        for <git@vger.kernel.org>; Wed, 10 Jan 2024 18:15:23 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AEpBunj9"
+Received: by mail-lf1-f49.google.com with SMTP id 2adb3069b0e04-50e7e55c0f6so5518943e87.0
+        for <git@vger.kernel.org>; Wed, 10 Jan 2024 18:21:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1704939323; x=1705544123; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1704939701; x=1705544501; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=H3CkrE/LUoI1EPoPLmiiL+g3bsylExpqExww2hoqwKc=;
-        b=dF/99qwlanFLvU8lLpAOQpo/hUjqdrCfXvvyYE0p2h6kzq7+gZaaquuOYEHmnQYOiV
-         ITnjZ/kZBd0LLAE85l4WuErYuQdQKAHAs1AUhL/AL0EGnODeHxVfxe7QxjznUyytKtN5
-         dc/GgwnUZG//C97817/+ccG+jGDHNf/PWCuakls2ZJLjwL2/udARvfD53aRPmiEPlKvl
-         Il9r9BrMGPWfH+NOMRI8TiEsORp9CEn2tRu4RvVsT1CVIOxc7NnCJIsDAM238pw/KWZu
-         KQJLTDd8yKKznVigz4bibwBD+IM+mF/bA71QkifFHgx9CSy6hC2po3KhO4F3EVLvRtPN
-         sVjQ==
+        bh=a24TbCFKSEXOjZ96uBlLSvtPm/U4fikg3dmlOx1jtPk=;
+        b=AEpBunj9WQ5AKHvKhTufJXoZLf6XLtzmPCdqNV+eJwT0S4ybRdCE/aqxxtDaf5KYzu
+         it9Hcy7iFcsOMvPH9dVMzntN/wziZ/IkCyV/HnFLJwxNf169C+x6aYXEb2hN+vdXa9E6
+         0eC5lI7XkZon2ih4wJsyfbbkTnTVVTvxECG2PYlojcT/ml+mU16zNPwooi/FHWQG6nud
+         5VltNTNLtE4n95CcVPZN9ZC5uu7KN/j+8o2TluG7JRUrRiEKNnCwa0KjAxZZqyuLniww
+         Y041/E27RDqI4bvVzGCUEs0fKe3wBhUOwFyUfWxnfd6XT1MpXv8kKkQXZxED+AiioaOJ
+         aDOw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1704939323; x=1705544123;
+        d=1e100.net; s=20230601; t=1704939701; x=1705544501;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=H3CkrE/LUoI1EPoPLmiiL+g3bsylExpqExww2hoqwKc=;
-        b=pCEB1mpL4DGNZR6BuIixFofjOwJrueRYakprJn/lbeRd4X3jUnw8P5mE4IfFfgow3w
-         yfLnGs7DXGOZccgueYLRT7YJs4AhxD5s0gqv/AFaRnQ7wzaSnKwjh5O+UjaCH6HKc06V
-         QNAeAGaA7ex9z/P4SuRDpd/iewxIIenI+H+r3ufxzwC1YIoiQKrfc0DmrWXWQMTGimoE
-         LieJKzAzLvYOnpVPQOtZxb0OLzYDtce7C3TRYNi/7+FP89Pnn5MZGcgYKDoZlFtJyzYn
-         zSyUujZcuFojEz/q/63CRS34qePZ5gCKbTaEUpeyE0y7gkL0OJ5QIbzbbH8flVQqBBQy
-         vEKA==
-X-Gm-Message-State: AOJu0YwPZ0N3teGuXAOn9estuWzuKaPo7h0wG+z8VfDC/rQwQmOmiGQ3
-	pkodNiY7cw2+1QMqb5YbOFUUsc6TIIE7tCGNKmDdgX7UhVM=
-X-Google-Smtp-Source: AGHT+IFNpokj0J6GDNntimvp8kc1rwjpZazHFSnUi5iy9evYpHLLzuwj562oQi7OMHERtwHa1bCMNB0hCCb8foWPAqg=
-X-Received: by 2002:a05:6a21:3398:b0:199:6115:d32f with SMTP id
- yy24-20020a056a21339800b001996115d32fmr377664pzb.74.1704939323153; Wed, 10
- Jan 2024 18:15:23 -0800 (PST)
+        bh=a24TbCFKSEXOjZ96uBlLSvtPm/U4fikg3dmlOx1jtPk=;
+        b=EoXVx/runyZN1MlbGn4O5Eo1bhrTlD1iMDNhrQHBjYjysCd0OOXC2lEQ1N6dugR6rC
+         kzWTIe3wEmT6utdWlN4eMul1ulyaIYIo1wJ42qKHxtUFiysFqhMhWVjTIYi/V4nfhygN
+         atBpvdoFJC/RG8DR8TNu+2bFLzcQQpiYab8fz1b7v6rP9r8LhiZosAkY9WjoqzPyRhNL
+         t1ie3IcjD8N4QGolqYhLQD1auafE9M76PDE/aZRg44h0r59Ogaqu2C0LQ6MoxVQSXHmE
+         C0fy9MscLqXmw1s7bxTOuh0mgB9JpJp24n579nXXAll9Y0B3BreK+NdUq41nSH1g/VoV
+         9fSg==
+X-Gm-Message-State: AOJu0YyWa7HrhFJMX7Byst+w3pWD8glYjoqVPo/GfvI1HWkI10jy/PXK
+	qGVe30MmbcjnUEjf7jKsaeOab9bg+gePcLRSjZQ=
+X-Google-Smtp-Source: AGHT+IEk5QIt8FRdTFPDIojsd2JZl/MUQcCpviPahPprCfLnv8bhnMb7Q8SArYBMZrDRw74BetGYsdUvKF71ldKqtWo=
+X-Received: by 2002:a19:6454:0:b0:50e:d1f9:ebe0 with SMTP id
+ b20-20020a196454000000b0050ed1f9ebe0mr75915lfj.2.1704939700741; Wed, 10 Jan
+ 2024 18:21:40 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CACjc_5pdijCZrrXQWHswsxYrGUzZ7pZq+nj3SzY1z+Xxop64Ww@mail.gmail.com>
- <20240110225709.30168-1-marcelo.jimenez@gmail.com> <xmqqzfxc7mfh.fsf@gitster.g>
-In-Reply-To: <xmqqzfxc7mfh.fsf@gitster.g>
-From: Marcelo Roberto Jimenez <marcelo.jimenez@gmail.com>
-Date: Wed, 10 Jan 2024 23:14:55 -0300
-Message-ID: <CACjc_5rgO5Zcxndawm=3eRUX1Tuqh5LT05LhK+4V45RmUWmQHw@mail.gmail.com>
-Subject: Re: [PATCH v2] gitweb: Fixes error handling when reading configuration
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org
+References: <ZZ77NQkSuiRxRDwt@nand.local> <b2651b38a4f7edaf1c5ffee72af00e46@manjaro.org>
+ <xmqqjzog96uh.fsf@gitster.g> <006b01da4412$96c6c500$c4544f00$@nexbridge.com>
+ <ZZ8ZlX6bf+hjmhN+@nand.local> <007c01da4420$10a7b700$31f72500$@nexbridge.com>
+ <CABPp-BEw_HFL-9u6WdSEe-qr_JfJyQtfU6PP7izEdPChKooc6g@mail.gmail.com> <008701da442f$b2dfe420$189fac60$@nexbridge.com>
+In-Reply-To: <008701da442f$b2dfe420$189fac60$@nexbridge.com>
+From: Elijah Newren <newren@gmail.com>
+Date: Wed, 10 Jan 2024 18:21:28 -0800
+Message-ID: <CABPp-BHx=4HPSN4enkHTL7PPnNBsJ1vGWe4Em5imH7HcOcH2PA@mail.gmail.com>
+Subject: Re: [DISCUSS] Introducing Rust into the Git project
+To: rsbecker@nexbridge.com
+Cc: Taylor Blau <me@ttaylorr.com>, Junio C Hamano <gitster@pobox.com>, 
+	Dragan Simic <dsimic@manjaro.org>, git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-Hi Junio,
-
-Ok, I'll put on my devil's prosecutor's hat then :)
-
-I am not sure you read the first message in this thread (I know, I
-messed up, sorry), but there I describe the real case that happened to
-me, and the current behavior made it much harder to find out what was
-happening.
-
-That is the one:
-https://lore.kernel.org/git/CACjc_5pdijCZrrXQWHswsxYrGUzZ7pZq+nj3SzY1z+Xxop=
-64Ww@mail.gmail.com/T/#u
-
-If the configuration file is there, but it behaves as it is not, one
-will quickly point its fingers to the software that reads it.
-
-In the end, if I had seen the message "Permission denied." that was
-stored in "$!", I would have had a better clue that the problem was
-with AppArmor, and not Gitweb.
-
-There were a few unanswered questions in stack overflow regarding the
-issue of enabling features on Gitweb when using "git instaweb" in a
-persistent way, some of them might have been linked to that.
-
-- gitweb refusing to blame:
-https://serverfault.com/questions/551762/gitweb-refusing-to-blame
-- How do I enable "blame" when using git instaweb?:
-https://stackoverflow.com/questions/66688084/how-do-i-enable-blame-when-usi=
-ng-git-instaweb/77793405
-- My own question: Problem with `git instaweb` on OpenSUSE Tumbleweed:
-/etc/gitweb-common.conf is not being read:
-https://stackoverflow.com/questions/77789216/problem-with-git-instaweb-on-o=
-pensuse-tumbleweed-etc-gitweb-common-conf-is-n
-
-Let's see if someone comes up with a good reason to find the devil not guil=
-ty :)
-
-Regards,
-Marcelo.
-
-On Wed, Jan 10, 2024 at 9:17=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
-wrote:
+On Wed, Jan 10, 2024 at 5:44=E2=80=AFPM <rsbecker@nexbridge.com> wrote:
 >
-> Marcelo Roberto Jimenez <marcelo.jimenez@gmail.com> writes:
->
-> > This patch fixes a possibility of a permission to access error go
-> > unnoticed.
+> On Wednesday, January 10, 2024 7:59 PM, Elijah Newren wrote:
+[...]
+> >Would you be okay with the following alternative: requiring that all Rus=
+t code be
+> >optional for now?
 > >
-> > Perl uses two different variables to manage errors from a do. One
-> > is $@, which is set in this case when do is unable to compile the
-> > file. The other is $!, which is set in case do cannot read the file.
-> > By printing the value of $! I found out that it was set to Permission
-> > denied. Since the script does not currently test for $!, the error
-> > goes unnoticed.
+> >(In other words, allow you to build with USE_RUST=3D0, or something like=
+ that.  And
+> >then we have both a Rust and a C implementation of anything that is requ=
+ired for
+> >backward compatibility, while any new Rust-only stuff would not be inclu=
+ded in
+> >your build.)
 >
-> Well explained how the current code behaves and why.
->
-> With my devil's advocate hat on, I suspect that the current
-> behaviour comes from the wish to see "file exists but unreadable"
-> and "the named file does not exist" behave the same way.  If you
-> pass the name of a configuration file that does not exist, however,
-> the codeblock to die does not trigger at all.  If a file does exist
-> but unreadable, to gitweb, it is just as good as having no file to
-> read configuration data from---either way, it cannot use anything
-> useful from the named file.  So returning silently, which is the
-> "bug" you are fixing, does not sound too bad.
->
-> I dunno.  Let's queue and see what others would say.
->
-> Thanks.
->
-> > Perl do block documentation: https://perldoc.perl.org/functions/do
-> >
-> > Signed-off-by: Marcelo Roberto Jimenez <marcelo.jimenez@gmail.com>
-> > ---
-> >  gitweb/gitweb.perl | 4 +++-
-> >  1 file changed, 3 insertions(+), 1 deletion(-)
-> >
-> > diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-> > index e66eb3d9ba..5d0122020f 100755
-> > --- a/gitweb/gitweb.perl
-> > +++ b/gitweb/gitweb.perl
-> > @@ -728,9 +728,11 @@ sub filter_and_validate_refs {
-> >  sub read_config_file {
-> >       my $filename =3D shift;
-> >       return unless defined $filename;
-> > -     # die if there are errors parsing config file
-> >       if (-e $filename) {
-> >               do $filename;
-> > +             # die if there is a problem accessing the file
-> > +             die $! if $!;
-> > +             # die if there are errors parsing config file
-> >               die $@ if $@;
-> >               return 1;
-> >       }
+> To address the immediate above, I assume this means that platform maintai=
+ners will be responsible for developing non-portable implementations that d=
+uplicate Rust functionality
+
+This doesn't at all sound like what I thought I said.  The whole
+proposal was so that folks like NonStop could continue using Git with
+no more work than setting USE_RUST=3D0 at build time.
+
+Why do you feel you'd need to duplicate any functionality?
