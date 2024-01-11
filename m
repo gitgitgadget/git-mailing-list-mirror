@@ -1,112 +1,79 @@
-Received: from secure.elehost.com (secure.elehost.com [185.209.179.11])
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7539C5812E
-	for <git@vger.kernel.org>; Thu, 11 Jan 2024 21:28:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nexbridge.com
-X-Virus-Scanned: Debian amavisd-new at secure.elehost.com
-Received: from Mazikeen (cpebc4dfb928313-cmbc4dfb928310.cpe.net.cable.rogers.com [99.228.251.108] (may be forged))
-	(authenticated bits=0)
-	by secure.elehost.com (8.15.2/8.15.2/Debian-22ubuntu3) with ESMTPSA id 40BLOQY51894419
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 11 Jan 2024 21:24:27 GMT
-Reply-To: <rsbecker@nexbridge.com>
-From: <rsbecker@nexbridge.com>
-To: "'Trevor Gross'" <tmgross@umich.edu>
-Cc: "'brian m. carlson'" <sandals@crustytoothpaste.net>,
-        "'Taylor Blau'" <me@ttaylorr.com>,
-        "'Junio C Hamano'" <gitster@pobox.com>,
-        "'Dragan Simic'" <dsimic@manjaro.org>, <git@vger.kernel.org>
-References: <ZZ77NQkSuiRxRDwt@nand.local> <b2651b38a4f7edaf1c5ffee72af00e46@manjaro.org> <xmqqjzog96uh.fsf@gitster.g> <006b01da4412$96c6c500$c4544f00$@nexbridge.com> <ZZ8ZlX6bf+hjmhN+@nand.local> <007c01da4420$10a7b700$31f72500$@nexbridge.com> <ZZ9YrYvW_L9A02aI@tapette.crustytoothpaste.net> <00a801da443d$b1539670$13fac350$@nexbridge.com> <CALNs47vfBH9u9B5B3tWRoEkJJiqne5067A4CFnZ3OaMVvz_gSg@mail.gmail.com>
-In-Reply-To: <CALNs47vfBH9u9B5B3tWRoEkJJiqne5067A4CFnZ3OaMVvz_gSg@mail.gmail.com>
-Subject: RE: [DISCUSS] Introducing Rust into the Git project
-Date: Thu, 11 Jan 2024 16:28:10 -0500
-Organization: Nexbridge Inc.
-Message-ID: <01c101da44d5$175f1100$461d3300$@nexbridge.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9021056B7D
+	for <git@vger.kernel.org>; Thu, 11 Jan 2024 21:30:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="PXRp1PSk"
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 1B23E1D330A;
+	Thu, 11 Jan 2024 16:30:57 -0500 (EST)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=EGDnwTcg1lgtnrBEBCRKLteuJ1tR8rqOrMfkGJ
+	VU/5o=; b=PXRp1PSkAR0BghCQn3d+46HlVOb2VRMqfQJJbansJLhB2RBw+OLhXT
+	6+PPI2pEIY6h3/kjdlWSHnF1CqbjKcavHDdQiEsLYA0XW9xhVVhTttw4EMYaZ21o
+	tybKN9DmfuC+GI+qu2MClLv6hNkiQVuguIDbcLrZlftcAUEo+/S7c=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 11D7B1D3307;
+	Thu, 11 Jan 2024 16:30:57 -0500 (EST)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.200.93])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 6D1881D3305;
+	Thu, 11 Jan 2024 16:30:56 -0500 (EST)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Chaitanya Tata <chaitanya.tk17@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: Add support for `git rebase -no-edit`
+In-Reply-To: <CADA7-FOE_81ze8hdaRGLPbipihnvFcEYfp9uwnPxPVxDepG4nA@mail.gmail.com>
+	(Chaitanya Tata's message of "Thu, 11 Jan 2024 22:55:47 +0530")
+References: <CADA7-FOE_81ze8hdaRGLPbipihnvFcEYfp9uwnPxPVxDepG4nA@mail.gmail.com>
+Date: Thu, 11 Jan 2024 13:30:55 -0800
+Message-ID: <xmqq4jfjftgw.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain;
-	charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
-X-Mailer: Microsoft Outlook 16.0
-Content-Language: en-ca
-Thread-Index: AQNL0k5wzhXZATyUnQ76Vxjn4eCV+QKEQ1wBALH7sDwDPprtZwK9Rr3fAtB2bewC03OFJQI1asehASnAJU6tYFrYQA==
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ B49478E8-B0C8-11EE-9FD7-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
 
-On Thursday, January 11, 2024 3:08 PM, Trevor Gross wrote:
->On Wed, Jan 10, 2024 at 10:24=E2=80=AFPM <rsbecker@nexbridge.com> =
-wrote:
->>
->> There are a number of issues for porting gcc (and Go). The list is =
-fairly long, but the
->summary of what I encountered directly (on the last funded effort of 3) =
-is:
->> 1. There are C syntax constructs required to do anything useful =
-(required for
->access to the OS API) on NonStop that are not in gcc. I can hand code =
-the parser for
->that, but it would take time.
->> 2. The Big Endian x86 architecture is weird to gcc and making that =
-work is not
->easy.
->> 3. There is no assembler on NonStop.
->> 4. The ELF header is very different from standard.
->> 5. The symbol table structure is radically different, so debugging =
-would be (nearly)
->impossible or impractical. gdb was ported to account for the platform =
-differences.
->> 6. The linkage structure is similar but different from standard.
->> 7. The external fixup structure is radically different.
->> 8. The loader does not work the same way, so there are required =
-sections of the
->ELF files on NonStop that are not generated by gcc.
->>
->> There are more, but I just did not get to the point if hitting them. =
-Part of my own
->issue is that I have expertise in parsing and semantic passes of =
-compilers, but my
->code generation skills are not where I want them to be for taking on =
-this effort. Our
->last funded attempt had a code generation expert and he gave up in =
-frustration.
->>
->> If I was hired on to do this, it might have a chance, but at an =
-estimate (not mine)
->of 4-5 person years for a gcc port, best case, my $DAYJOB will not =
-permit it.
->>
->> If gcc could be ported to NonStop, it would solve so many problems. I =
-have heard
->of numerous failed efforts beyond what was officially funded by various =
-companies,
->so this is considered a high-risk project.
->
->Out of curiosity - does the Tandem compiler (assuming that is the =
-correct name)
->have a backend that is usable as a library or via an IR?
->
->If so, maybe it would be possible to write a rustc_codegen_tandem =
-backend like the
->three that exist (rustc_codegen_{llvm,gcc,cranelift}
->at [1]. GCC and cranelift are still under development). This way you =
-sidestep a lot of
->the codegen-specific problems listed above.
->
->I am, of course, not suggesting this as a solution for git and am sure =
-you would
->rather have GCC support. But I wonder how feasible this would be if =
-Rust on
->NonStop is desired at some point.
+Chaitanya Tata <chaitanya.tk17@gmail.com> writes:
 
-The usable compilers and interpreters on NonStop are c89, c99 (what we =
-use for git), c11, perl, and python3 (for the x86 only). The perl and =
-python do not have sufficient modules to do what would be needed by git. =
-The compilers are invoked using a CLI and are not callable using a =
-library. gcc is, for all intents and purposes, not possible - so =
-anything requiring gcc (for example, Rust), cannot be built.  There is =
-no back-end pluggable component for any of the compilers.
+> Hi,
+>
+> I have a feature request to add `--no-edit` option to `git rebase`
+> like we do for `git commit`.
+> The workflow I typically follow is:
+>
+> * `git commit -a --fixup=XXX`
+> * `git rebase  -i HEAD~15 --autosquash`
+>
+> But it requires closing the editor without any changes. I can
+> workaround this using the `GIT_EDITOR` option, see [1]. But it would
+> be good to have this built-in.
+>
+> Thoughts?
 
+With what is in the 'master' branch, you do not have to say
+interactive when you do not want to go interactive.  I.e.
+
+    $ git rebase --autosquash HEAD~15
+
+should work fine.  Building Git from the source should not be too
+hard.
+
+By the way, make it a habit to pass non-option argument after dashed
+options.  It is easier for your readers to understand your command
+line that way.
+
+Thanks.
