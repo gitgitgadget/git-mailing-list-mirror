@@ -1,129 +1,110 @@
-Received: from mail-lj1-f171.google.com (mail-lj1-f171.google.com [209.85.208.171])
+Received: from mail-yw1-f179.google.com (mail-yw1-f179.google.com [209.85.128.179])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15A7456759
-	for <git@vger.kernel.org>; Thu, 11 Jan 2024 20:07:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EF5A56759
+	for <git@vger.kernel.org>; Thu, 11 Jan 2024 20:07:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=umich.edu
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=umich.edu
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Uj0htII5"
-Received: by mail-lj1-f171.google.com with SMTP id 38308e7fff4ca-2cd0f4797aaso63007911fa.0
-        for <git@vger.kernel.org>; Thu, 11 Jan 2024 12:07:50 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=umich.edu header.i=@umich.edu header.b="SsJDsBkA"
+Received: by mail-yw1-f179.google.com with SMTP id 00721157ae682-5fa52e173f7so24556297b3.3
+        for <git@vger.kernel.org>; Thu, 11 Jan 2024 12:07:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1705003669; x=1705608469; darn=vger.kernel.org;
+        d=umich.edu; s=google-2016-06-03; t=1705003679; x=1705608479; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=65h/CHY9xQtaGPyT3NgngsMO0Cucc3C85pvgE59Epec=;
-        b=Uj0htII5qnlOdh8yoDSZErV+87bU4sKSbsdDUYjqtCQl7WRHcmcnjHkxqI4mRqWlQQ
-         /erajW23c/x/+wzR7853IAMKza/qQhQTBaJ8ZhH10FQ8KmLzSPmEpNE+KhyyRbiozhrs
-         4S9cUljgkrGjwtEMJ6ag9K09CuLlm5O6D0E1lnlS8qXTOfihhniYSRtgWX9YI1ZO1pQ0
-         iWtGpCtjCkOQA/afjyLYRFqwwi/peSCp7DhOI137V9wZKGyI87jRPNxnrIPNcfKDc2Zj
-         qf44Riq7AeRgel2zKgyzMJjZy6QBvb/RF/8YdG59xcKhmoOIEc+NvdK/KXbowM2S2Q3H
-         2CbA==
+        bh=Ouapm8Bcos/z9vaAfufjB0mIn1WCFZmHezoRcTa3ntw=;
+        b=SsJDsBkAXEaZCLsU4eSrNenBDotUNNuzyKsK44ebMx62dR/EXyD0IWdm5X9SLIxKGS
+         fgDHTqigO6HDOR5QYURkIlxrH0dT99vCU3OukC8ABIpSQK372Yw8c6sdJLuvGEFiy0ah
+         l2cGHPHZ0RgbXp5RPDFprZW0iGSWJGaMX4Id7Oe2c7NgGgg4WYwIRENdX5YqBrm35uu8
+         IgwnMH0GblQGa0N0S78REK2rhZtYbKfRh4nondO+/UToD//D4FdhqXCOKLJabFf7zSZh
+         PBycqR0VYw2MZ9OXKxadfEof1TS9j0h/pexFZcDNQv+qk/tEyoG94+adQe/C/onaxVK6
+         TrYQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1705003669; x=1705608469;
+        d=1e100.net; s=20230601; t=1705003679; x=1705608479;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=65h/CHY9xQtaGPyT3NgngsMO0Cucc3C85pvgE59Epec=;
-        b=XJyNgvk2HX/FNbKQpAbkw6u0cNHUdMEIqszJSOvXXwzC/UCQptTvm7wg07lTGINymm
-         dhnz/Zge5DPIuA0AVSXvsb9zuR500A2K6fJn7pY0a6cNozkBUmbgFaEWyfx3dufzkAMp
-         tNw3TyHV+gp3OwMnz85j6qeL9ul5yon3A5b5nHZCOK+lm0U4mBjauJG7f9UYXHMjJzHF
-         jqmWajVJPiCKIVOznGHg3qR5UwDwqs8RsStJAnVylxM7gxX4p7OTqM/qYpsH7MDTphdV
-         cCSF8qTLUc9lPe4ZqRLb7UUgSH/Hy0w+LCsiy+RRc2e4cC9XR3GV/zUaMOGVFAuvJ+kR
-         Sirw==
-X-Gm-Message-State: AOJu0Yz85TvRY8rEiiqCnEyRVUZhJzWdfdioRN4XoC+BK3TIdCY+YTkZ
-	bqObrBq2pPYy49h0w/NmuMfm0AU6ManagpHh8LPmhJnTD5A=
-X-Google-Smtp-Source: AGHT+IFJMLVW2okUnQ896Rr0h82egmv+0AireTXFTq7FAW2AlgaKEY9eRtky3HdXXAQGNGlt3UQ+k2jB5MzvjdHh6Kk=
-X-Received: by 2002:a2e:b711:0:b0:2cd:1327:c261 with SMTP id
- j17-20020a2eb711000000b002cd1327c261mr127584ljo.33.1705003668773; Thu, 11 Jan
- 2024 12:07:48 -0800 (PST)
+        bh=Ouapm8Bcos/z9vaAfufjB0mIn1WCFZmHezoRcTa3ntw=;
+        b=SfnqQIEfQlO/paRf3wqzhjXqRStDmwYWRgu2gYjr4UDv5NX2+ycm2rioQ5QT2YtcPd
+         giQ6fGYsGysvYGqjvj8UNRi1D0mVGDbinDlPLvVZXDsMo43MXm8IE3j0W8LN/MsG2HU2
+         FRX8cFsaYB0tZTtHeVawl3o2ITF5UPeUpAheAeMZClW+5bSNt75OErizqaLbEqL6UMTK
+         /I62Kr32y45s7iJO2UBkOTLD+04Gyxdohy3aT/t6jFTb/Ucr1UP9R3+lrH5zNmIun/Yc
+         lLgqP86WUBSXT7SWfyBOPzR+lUnPeZ2mN7FU7kQwDP81jMD8vCwn4kP+Oxmghz8BcF07
+         sztQ==
+X-Gm-Message-State: AOJu0Yxks0Um1sJtb6vD6oZjy/HNa515HCMevlYGQe0NnFOBIvJwqqVM
+	6m+o7eTdzmanG/law5Zhcqy6vRvVh7HYAAi6+LBdcWqx7OCJpQ==
+X-Google-Smtp-Source: AGHT+IECo3HhJw/mq1vB8NKH7XgWE2XYDTh2UysPu65/MwkpIbm5mFfc31xSdA2NWvTrRWWkRMHR0zmRfA+1VCcdaNw=
+X-Received: by 2002:a0d:cc0c:0:b0:5d3:adfd:ff7d with SMTP id
+ o12-20020a0dcc0c000000b005d3adfdff7dmr397137ywd.12.1705003678372; Thu, 11 Jan
+ 2024 12:07:58 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CADA7-FOE_81ze8hdaRGLPbipihnvFcEYfp9uwnPxPVxDepG4nA@mail.gmail.com>
- <ZaBHooq6ORZ3TTkL@nand.local>
-In-Reply-To: <ZaBHooq6ORZ3TTkL@nand.local>
-From: Chaitanya Tata <chaitanya.tk17@gmail.com>
-Date: Fri, 12 Jan 2024 01:37:35 +0530
-Message-ID: <CADA7-FNh_7OrFFb7qmYFf4i2t_VsjRSjtVngtRKS6HkADKrGYw@mail.gmail.com>
-Subject: Re: Add support for `git rebase -no-edit`
-To: Taylor Blau <me@ttaylorr.com>
-Cc: git@vger.kernel.org
+References: <ZZ77NQkSuiRxRDwt@nand.local> <b2651b38a4f7edaf1c5ffee72af00e46@manjaro.org>
+ <xmqqjzog96uh.fsf@gitster.g> <006b01da4412$96c6c500$c4544f00$@nexbridge.com>
+ <ZZ8ZlX6bf+hjmhN+@nand.local> <007c01da4420$10a7b700$31f72500$@nexbridge.com>
+ <ZZ9YrYvW_L9A02aI@tapette.crustytoothpaste.net> <00a801da443d$b1539670$13fac350$@nexbridge.com>
+In-Reply-To: <00a801da443d$b1539670$13fac350$@nexbridge.com>
+From: Trevor Gross <tmgross@umich.edu>
+Date: Thu, 11 Jan 2024 15:07:47 -0500
+Message-ID: <CALNs47vfBH9u9B5B3tWRoEkJJiqne5067A4CFnZ3OaMVvz_gSg@mail.gmail.com>
+Subject: Re: [DISCUSS] Introducing Rust into the Git project
+To: rsbecker@nexbridge.com
+Cc: "brian m. carlson" <sandals@crustytoothpaste.net>, Taylor Blau <me@ttaylorr.com>, 
+	Junio C Hamano <gitster@pobox.com>, Dragan Simic <dsimic@manjaro.org>, git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-Cheers,
-Chaitanya.
+On Wed, Jan 10, 2024 at 10:24=E2=80=AFPM <rsbecker@nexbridge.com> wrote:
+>
+> There are a number of issues for porting gcc (and Go). The list is fairly=
+ long, but the summary of what I encountered directly (on the last funded e=
+ffort of 3) is:
+> 1. There are C syntax constructs required to do anything useful (required=
+ for access to the OS API) on NonStop that are not in gcc. I can hand code =
+the parser for that, but it would take time.
+> 2. The Big Endian x86 architecture is weird to gcc and making that work i=
+s not easy.
+> 3. There is no assembler on NonStop.
+> 4. The ELF header is very different from standard.
+> 5. The symbol table structure is radically different, so debugging would =
+be (nearly) impossible or impractical. gdb was ported to account for the pl=
+atform differences.
+> 6. The linkage structure is similar but different from standard.
+> 7. The external fixup structure is radically different.
+> 8. The loader does not work the same way, so there are required sections =
+of the ELF files on NonStop that are not generated by gcc.
+>
+> There are more, but I just did not get to the point if hitting them. Part=
+ of my own issue is that I have expertise in parsing and semantic passes of=
+ compilers, but my code generation skills are not where I want them to be f=
+or taking on this effort. Our last funded attempt had a code generation exp=
+ert and he gave up in frustration.
+>
+> If I was hired on to do this, it might have a chance, but at an estimate =
+(not mine) of 4-5 person years for a gcc port, best case, my $DAYJOB will n=
+ot permit it.
+>
+> If gcc could be ported to NonStop, it would solve so many problems. I hav=
+e heard of numerous failed efforts beyond what was officially funded by var=
+ious companies, so this is considered a high-risk project.
 
-On Fri, Jan 12, 2024 at 1:25=E2=80=AFAM Taylor Blau <me@ttaylorr.com> wrote=
-:
->
-> Hi Chaitanya,
->
-> On Thu, Jan 11, 2024 at 10:55:47PM +0530, Chaitanya Tata wrote:
-> > Hi,
-> >
-> > I have a feature request to add `--no-edit` option to `git rebase`
-> > like we do for `git commit`.
-> > The workflow I typically follow is:
-> >
-> > * `git commit -a --fixup=3DXXX`
-> > * `git rebase  -i HEAD~15 --autosquash`
-> >
-> > But it requires closing the editor without any changes. I can
-> > workaround this using the `GIT_EDITOR` option, see [1]. But it would
-> > be good to have this built-in.
->
-> The easiest workaround would be setting GIT_EDITOR=3Dtrue, which matches
-> the recommendation in [1].
-Thanks for the quick response.
->
-> Short of that, you can't do a non-interactive rebase, since we rely on
-> the todo list generated by interactive rebases in order for
-> `--autosquash` to work.
-IIUC, creating a todo list needs access to the file used in interactive
-rebase?
+Out of curiosity - does the Tandem compiler (assuming that is the
+correct name) have a backend that is usable as a library or via an IR?
 
-> Presumably plumbing in a new `--[no-]edit` option would be fairly
-> straightforward, and once that is done, the change boils down to just:
-I am bit confused by this as this seems to contradict above statement,
-I guess the below patch will only work without `--autosquash`? Sorry, not
-familiar with git internals.
->
-> index 3cc88d8a80..5235a003f2 100644
-> --- a/sequencer.c
-> +++ b/sequencer.c
-> @@ -6169,7 +6169,7 @@ int complete_action(struct repository *r, struct re=
-play_opts *opts, unsigned fla
->         struct todo_list new_todo =3D TODO_LIST_INIT;
->         struct strbuf *buf =3D &todo_list->buf, buf2 =3D STRBUF_INIT;
->         struct object_id oid =3D onto->object.oid;
-> -       int res;
-> +       int res =3D 0;
->
->         repo_find_unique_abbrev_r(r, shortonto, &oid,
->                                   DEFAULT_ABBREV);
-> @@ -6197,8 +6197,9 @@ int complete_action(struct repository *r, struct re=
-play_opts *opts, unsigned fla
->                 return error(_("nothing to do"));
->         }
->
-> -       res =3D edit_todo_list(r, todo_list, &new_todo, shortrevisions,
-> -                            shortonto, flags);
-> +       if (!opts->edit)
-> +               res =3D edit_todo_list(r, todo_list, &new_todo, shortrevi=
-sions,
-> +                                    shortonto, flags);
->         if (res =3D=3D -1)
->                 return -1;
->         else if (res =3D=3D -2) {
->
-> > [1] - https://stackoverflow.com/a/45783848
->
-> Thanks,
-> Taylor
+If so, maybe it would be possible to write a rustc_codegen_tandem
+backend like the three that exist (rustc_codegen_{llvm,gcc,cranelift}
+at [1]. GCC and cranelift are still under development). This way you
+sidestep a lot of the codegen-specific problems listed above.
+
+I am, of course, not suggesting this as a solution for git and am sure
+you would rather have GCC support. But I wonder how feasible this
+would be if Rust on NonStop is desired at some point.
+
+[1]: https://github.com/rust-lang/rust/tree/062e7c6a951c1e4f33c0a6f67617559=
+49cde15ec/compiler
