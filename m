@@ -1,144 +1,99 @@
-Received: from mail-yb1-f182.google.com (mail-yb1-f182.google.com [209.85.219.182])
+Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6564F50242
-	for <git@vger.kernel.org>; Thu, 11 Jan 2024 15:42:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3ED6C32C6A
+	for <git@vger.kernel.org>; Thu, 11 Jan 2024 16:30:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AJF1jo6+"
-Received: by mail-yb1-f182.google.com with SMTP id 3f1490d57ef6-dbeda700015so4499397276.2
-        for <git@vger.kernel.org>; Thu, 11 Jan 2024 07:42:20 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bxpIPq2S"
+Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-40e5701cbbaso11658075e9.0
+        for <git@vger.kernel.org>; Thu, 11 Jan 2024 08:30:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1704987739; x=1705592539; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=O2tQsSyzmRkSzrSimniXFLuvyG6QXb2Rcbx0OgwaCWQ=;
-        b=AJF1jo6+ASEMgKhwTPmy2oFB/seDo8TG4VOR2jlflbMeIJG9papE50fWttaVhL8f5j
-         N60gvHJEs/mjnM6p/nXvvF0VuUKkxpXjqbrZLH9mbtiML5TWQankCUmUfZvc5KENbWQG
-         N4Mwba8JShNYBIZbirrLUowBMijIJP4YPCynxDuEZhWsc4Tq1WFB6V8TWe1TNTPhp3Aa
-         6+gN8LcbN78GiVGIWPyq3cOqhXLkB/FF2M/Yfc2bQrjJIdcQob+Sg1mLcSABFrsYDs44
-         O1fl48xJ82/4J+q5h1VF//4yhibpDF3Tk8xTRlbhSLFbS8QUamkrSIKNj/wdlLiicCiY
-         6k2w==
+        d=gmail.com; s=20230601; t=1704990619; x=1705595419; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:references:cc:to
+         :content-language:subject:reply-to:from:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=/GhY1D8Ot84ujCWbPTgFQHX5btlmRjPpvMi6AOxLKhM=;
+        b=bxpIPq2STutUvui4/aIZCNU2TTT6Uk4IrAluNXBoYQbnJwMh+1UUj5dV9EsyFNTKbj
+         UejYGzgPsqU9iYEDuH24SHtQec/PlFX3tImR+YFIJfVNPV+XdV/ewGUMJp+/AqQZHw/W
+         IcSVIDbpy6tTVKL8R8Pq0lEEHKgTx45uGuUdtQTYg+DanPDLw/SGbSWyWo99WRrnAgcT
+         u12hjZApACEh9UftPQfdDwlhSONXdnZ2fy0gUX500j1UzZZAfOolawcmV9vyGPdP+7Gh
+         XCQ5euCTIJDIofzgKMmAXC0vg/J0uwOY0bmyW+mRyWvFx3SlhMHBVmAODIw03AuR33bq
+         4KaQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1704987739; x=1705592539;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=O2tQsSyzmRkSzrSimniXFLuvyG6QXb2Rcbx0OgwaCWQ=;
-        b=oBQ1f1eb8Q6T9gd9IuCLwhHGCMo0SYlfseNWqBHAC3qDG1efoL3iLomRf5aiqWjTnh
-         x91XgMAcGs1kPRWvnm4uhhz0XxC330wFCnTzh8/mDuc1nykL1dr4eDF2GPsIrOYLJIAC
-         BGhZh3LNWNUP1ewWTs6UXABTt/clWynhFXWhm6PIUmOh41UaV6v/GdmyDpa0FZ63+Fsj
-         ZQGAxgLVd39wbwoGP16dcjs4M//4/KkH7FWC9+twyzokCmHs6UmBDYNgyZonK0F5dKXb
-         njsldN4LMvBe8L8rlyzYXKbZZYFi8kwj1g1HphXM6jXY5LnM4dGTAH6LMCQ10vggSc24
-         O9Ww==
-X-Gm-Message-State: AOJu0YwOh3Y01TX6P4R/t/pd3F+mIih7w6YPcAXBCiBH1S0WdYjA2r8Z
-	g0ofdqr4Jr0bA+uQum3iBuUU1yjs9UD+fpcEioU/bl0hCvFgeVxg
-X-Google-Smtp-Source: AGHT+IHvDEbxSCcDQyPiKxpkxscrzXCCUDEM5gZzIOM8uBG4TOTPKVdM3FihlQFrRg61R9qigXUCJvuusNi5cuB4KFw=
-X-Received: by 2002:a5b:907:0:b0:dbd:4594:51a2 with SMTP id
- a7-20020a5b0907000000b00dbd459451a2mr1176253ybq.23.1704987739310; Thu, 11 Jan
- 2024 07:42:19 -0800 (PST)
+        d=1e100.net; s=20230601; t=1704990619; x=1705595419;
+        h=content-transfer-encoding:in-reply-to:references:cc:to
+         :content-language:subject:reply-to:from:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=/GhY1D8Ot84ujCWbPTgFQHX5btlmRjPpvMi6AOxLKhM=;
+        b=wpdOluItPHfKYO1A137YdSnwNhNSF7c5X51KAfWpihAXDj6x1bLhdSkuVtfRJWs+4C
+         ZyTska98aOZMsUrIPqW0BBNdZkBKoEBDT+Gd+M4djOY/86IeTiSYbWdi9jJm4xCnS+6H
+         pK7p3wDi/qfjf3grQtbXyjv966IYknzuBDPJB7cgDPtSMX71iF5EugF4HOdr1wvArWpv
+         733as6Gp+FQiOZ0ueVc6zpn3u6RHpbm0RAMeRLGyNRfsNf9rI56fKlJ74wJO67u81S4h
+         gp1mgpk9u+VTIHReVrGyvr++0hoyfx6cvoZ7iR3JXB5pe1UUixRjvQqcckVSFPb4ahfd
+         lPBw==
+X-Gm-Message-State: AOJu0YzzW5tS1PpT1jpz3A0w+n/Z5hC8k5pMWWoPnspZg64vQQQLvhxu
+	vM0i8ku5oIltBK3uZsNerMI=
+X-Google-Smtp-Source: AGHT+IH475qNrCMLJyXfhRdgQRgKPv9vYFVgkp4jlJtPkCt3+1WZz/M0gis9kfeGV+zbygoNyhwJig==
+X-Received: by 2002:a05:600c:518d:b0:40d:5f8e:21f3 with SMTP id fa13-20020a05600c518d00b0040d5f8e21f3mr47351wmb.85.1704990619273;
+        Thu, 11 Jan 2024 08:30:19 -0800 (PST)
+Received: from [192.168.1.212] ([84.64.64.237])
+        by smtp.gmail.com with ESMTPSA id t21-20020a05600c451500b0040e3ac9f4c8sm6318297wmo.28.2024.01.11.08.30.18
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 11 Jan 2024 08:30:19 -0800 (PST)
+Message-ID: <02cf7ef3-6a16-4fe1-a032-ea7c727c9b12@gmail.com>
+Date: Thu, 11 Jan 2024 16:30:18 +0000
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CANAnif95ux=vCNCKbVw0q_vYamQRkbFqSa9_-u6xRvK6r+2a+Q@mail.gmail.com>
- <CAP8UFD30h7D7D42Eiq3sk97v_ef8hi=K1qdy2wRczQ18JM++LA@mail.gmail.com>
- <CANAnif90Bqp2pWCn_71t-Fss6wspo+==vMdYsX+Wt5m=4Ocpng@mail.gmail.com>
- <CAP8UFD0ELy2WegVYdxi_O5UpHS4MyOPp4tuAQK+XvvNmABc2ZA@mail.gmail.com>
- <CAP8UFD3e=Zv2wkx5tswCz05Vwn3vD68Vw-TD6SoENWK+norYsw@mail.gmail.com>
- <CANAnif-hWovPnRmSy0pnEJnA274vwiSAkRexstGQdQJ4u-5+pw@mail.gmail.com> <CAP8UFD0YicYXrYgHdvcrWps+cMa=Dp9Ob7SfYLMXQKLp7-B+7w@mail.gmail.com>
-In-Reply-To: <CAP8UFD0YicYXrYgHdvcrWps+cMa=Dp9Ob7SfYLMXQKLp7-B+7w@mail.gmail.com>
-From: Sergius Nyah <sergiusnyah@gmail.com>
-Date: Thu, 11 Jan 2024 16:42:08 +0100
-Message-ID: <CANAnif-OganZLi0Cu_uq=nveC+u5n14c=o_DQHT-wFOqQ9Vs0Q@mail.gmail.com>
-Subject: Re: [GSOC][RFC] Add more builtin patterns for userdiff, as Mircroproject.
-To: Christian Couder <christian.couder@gmail.com>
-Cc: git@vger.kernel.org, gitster@pobox.com, newren@gmail.com, l.s.r@web.de
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+From: phillip.wood123@gmail.com
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v3 2/2] t7501: add tests for --amend --signoff
+Content-Language: en-US
+To: Ghanshyam Thakkar <shyamthakkar001@gmail.com>, git@vger.kernel.org
+Cc: christian.couder@gmail.com, gitster@pobox.com
+References: <20240109165304.8027-2-shyamthakkar001@gmail.com>
+ <20240110163622.51182-6-shyamthakkar001@gmail.com>
+In-Reply-To: <20240110163622.51182-6-shyamthakkar001@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Thu, Jan 11, 2024 at 4:11=E2=80=AFPM Christian Couder
-<christian.couder@gmail.com> wrote:
->
-> On Thu, Jan 11, 2024 at 3:23=E2=80=AFPM Sergius Nyah <sergiusnyah@gmail.c=
-om> wrote:
-> >
-> > ---------- Forwarded message ---------
-> > From: Christian Couder <christian.couder@gmail.com>
-> > Date: Thu, Jan 11, 2024 at 11:51=E2=80=AFAM
-> > Subject: Re: [GSOC][RFC] Add more builtin patterns for userdiff, as
-> > Mircroproject.
-> > To: Sergius Nyah <sergiusnyah@gmail.com>
-> >
-> >
-> > On Thu, Jan 11, 2024 at 11:48=E2=80=AFAM Christian Couder
-> > <christian.couder@gmail.com> wrote:
-> > >
-> > > On Wed, Jan 10, 2024 at 9:10=E2=80=AFPM Sergius Nyah <sergiusnyah@gma=
-il.com> wrote:
-> >
-> > > > > Okay then. I will add support for shell, as it was primarily sugg=
-ested
-> > > > > in the idea itself.
-> > >
-> > > As Bash is a shell and is already supported, I am not sure which kind
-> > > of shell you want to support. There are other shells or kinds of shel=
-l
-> > > with different syntax that might be worth supporting, but then you
-> > > might want to tell us which shell or which new kind of shell.
-> > >
-> > > Thanks!
-> >
-> > I've definitely learned one more thing. Thank you!
-> > Also, after taking another keen look at the Patterns defined in userdif=
-f.c,
-> > In accordance with what you've said, I realized that Kotlin isn't
-> > supported yet.
->
-> It is actually already supported too:
->
-> $ grep -i -n kotlin userdiff.c
-> 186:PATTERNS("kotlin",
->
-> To help you a bit, you can get the list of already supported languages us=
-ing:
->
-> $ perl -ne 'print "$1\n" if m/PATTERNS\(\"(\w+)\"/ or
-> m/IPATTERN\(\"(\w+)\"/' <userdiff.c
+On 10/01/2024 16:35, Ghanshyam Thakkar wrote:
+> Add tests for amending the commit to add Signed-off-by trailer. And
+> also to check if it does not add another trailer if one already exists.
+> 
+> Currently, there are tests for --signoff separately in t7501, however,
+> they are not tested with --amend.
+> 
+> Therefore, these tests belong with other similar tests of --amend in
+> t7501-commit-basic-functionality.
+> 
+> Signed-off-by: Ghanshyam Thakkar <shyamthakkar001@gmail.com>
 
-Thank you for these. $ perl -ne 'print "$1\n" if
-m/IPATTERN\(\"(\w+)\"/' userdiff.c works too.
+This version looks good, thanks for re-rolling. I have left one comment 
+below but it is not worth re-rolling just for that.
 
-> ada
-> bash
-> bibtex
-> cpp
-> csharp
-> css
-> dts
-> elixir
-> fortran
-> fountain
-> golang
-> html
-> java
-> kotlin
-> markdown
-> matlab
-> objc
-> pascal
-> perl
-> php
-> python
-> ruby
-> rust
-> scheme
-> tex
+> +test_expect_success 'amend commit to add signoff' '
+> +
+> +	test_commit "msg" file content &&
+> +	git commit --amend --signoff &&
+> +	test_commit_message HEAD <<-EOF
+> +	msg
+> +
+> +	Signed-off-by: $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL>
+> +	EOF
+> +
+> +'
 
-Great! JavaScript, despite its widespread use, isn't implemented, so I
-will take it.
-Thank you!
+If you do happen re-roll I think we could happily lose the empty line 
+before the closing "'" in this test and the next.
+
+Best Wishes
+
+Phillip
