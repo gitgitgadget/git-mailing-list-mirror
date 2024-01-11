@@ -1,135 +1,113 @@
-Received: from wout4-smtp.messagingengine.com (wout4-smtp.messagingengine.com [64.147.123.20])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f50.google.com (mail-lf1-f50.google.com [209.85.167.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 741D76AA1
-	for <git@vger.kernel.org>; Thu, 11 Jan 2024 05:05:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 082DB184D
+	for <git@vger.kernel.org>; Thu, 11 Jan 2024 05:06:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="l5DXvEXF";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ual/VVa/"
-Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
-	by mailout.west.internal (Postfix) with ESMTP id 0166A3200AA2;
-	Thu, 11 Jan 2024 00:05:04 -0500 (EST)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute2.internal (MEProxy); Thu, 11 Jan 2024 00:05:05 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1704949504; x=1705035904; bh=xTf7blrUNe
-	D/E3S/8pORKsVrTt/QCH1z+bj/YQ6sBIQ=; b=l5DXvEXFK6+bakrdu7pLhrmbq8
-	CEc76qARO18137rkVuYcVDBSdr+PbIrkd8yfp/I4NEistWTEc3DHkXx8DCbEgIQA
-	4h+PXt37WIF/gkWteVc7cPxA1sVM67Hzkf+AQwwogc9SDoT0qzrjcwgeRSJLAk5S
-	fNJbC4n91sKzmpIVsgtpG9bxFkoQpT2u74on/JgVDze+P2PIil8tYOqv1W3l+rRL
-	Vup4PIR5H3XIEw+84qDkeJM7qKhI6gTo8YkGod2reF511ogPDX3ChyoligVeT/2r
-	g4XlcE4AGe4arcakN6bLMQOX5f30VrT3BmKLge6huxkaCtF21vCwHfzRDRGg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1704949504; x=1705035904; bh=xTf7blrUNeD/E3S/8pORKsVrTt/Q
-	CH1z+bj/YQ6sBIQ=; b=ual/VVa/Pl5gVmQ31HmXSkV+wbE7XZY6rTFHNQeAk+ud
-	JC5hH5qoAzimjPErEbh8nz7E7W2hzLKKNFkgk842p82ZtEDacIHW5LY7WLQNg6PH
-	df1JKuSJTEOWfXKo7gdGIqaxqJQW/WhMwpLLrjmjZ3TEI+dbr61G16tx7Tqebs4J
-	bIwQSjAcYVrKkHW72beXWfjfP4FfJtcGB6OL2y2ZvXLt/z3Ypreds97EhpHszusz
-	4egWuwIkwt/zDUiaky81yI0kaPNobENYiKkVu4Hm04WyHqRnZovF0f0qrKgkwmu7
-	WcO0ALH7+ThoXX4Wmi0zi9OoQ8zZRaBGKmgF7gI49g==
-X-ME-Sender: <xms:AHefZVbVmyTArk-Z1x7vap52V-57aFbiOymCK0YHY0MFHJloj5eNJQ>
-    <xme:AHefZcY1Qx8RKXhEP_ME1iC9YL0wGIw17l5oyjZ6vk4tuowfol9dKHgsqtJYYQE56
-    lGJ_ezkQWL5Qev0Bw>
-X-ME-Received: <xmr:AHefZX8h1u8qL1ryzWR1CskRN2hZe9JEittABteU8m5hYRScOhwjiJTJHm5CXcXeyoQyPLkB3WkwTmoa4hANTfLbrBzKJczODU6xftRRiu3lZy6oKw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrvdeivddgjeejucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    cujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtvdenucfhrhhomheprfgrthhr
-    ihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvg
-    hrnhepgeeihfehkeduueeufeejueetfeelleejkedukefhieffjeevjeehfeelleehffev
-    necuffhomhgrihhnpehgohhoghhlvgdrtghomhenucevlhhushhtvghrufhiiigvpedtne
-    curfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhm
-X-ME-Proxy: <xmx:AHefZTrJO8jaS8zb9qC1BFx8vi_kCDEF5epZdcj0cUAOl-TjxI8bkQ>
-    <xmx:AHefZQqO-gFQ3QUzhgH8a85MhUJ7VqvI5ExGKeMzy-MyBWEdzgPCaQ>
-    <xmx:AHefZZQSahGWAQqr3U0QPmC5zV0hZeaQgo1ic74boOWdhLErfb-8Xg>
-    <xmx:AHefZdABaSgDJLmacGd90pF5ZHYJQR7eotOCeRHtAzlD4RDB3B76Xw>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 11 Jan 2024 00:05:03 -0500 (EST)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id c52a78d5 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 11 Jan 2024 05:02:20 +0000 (UTC)
-Date: Thu, 11 Jan 2024 06:05:00 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Eric Sunshine <sunshine@sunshineco.com>, git@vger.kernel.org
-Subject: Re: [PATCH 4/6] t1419: mark test suite as files-backend specific
-Message-ID: <ZZ92_PdDwPTgaJ4f@tanuki>
-References: <cover.1704802213.git.ps@pks.im>
- <d7c6b8b2a7b3b4d776f06ce577bdbdbaff66f225.1704802213.git.ps@pks.im>
- <CAPig+cTAiEFu9p1nRe9LC3mxyPmfQ9m4r7aQUj_9OC8pSbwbig@mail.gmail.com>
- <ZZ5HrY76O1x8QABG@tanuki>
- <xmqqcyu9duha.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="D7V3jqSJ"
+Received: by mail-lf1-f50.google.com with SMTP id 2adb3069b0e04-50edf4f478eso372954e87.3
+        for <git@vger.kernel.org>; Wed, 10 Jan 2024 21:06:37 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1704949596; x=1705554396; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=9Zq9aoJJknInQF3Ap2SePSlp2/JIlLgiEcppaXKtYhQ=;
+        b=D7V3jqSJ6pTUyQ9U2qW3VXMO263IyexB2vF8bzFORuFRYP0fShkoo/7NYScTW753SR
+         gZU0q8JehPlEGpY9i4iJXfjNICNT3PDUtDgy30QfnqRh+6ICJsEAK2T0kcTeIsApdHE2
+         b4ZSRtU5I6VMuP8naUlNr/SMnj+1I7OFsKEMCxcLEeF1eEuW+dCYr98QGfjt1FlUOx8K
+         09fxVkUaoGa65n0UUQ3NvZmUDTLwKkUL/TSPJFkhSBIO+NToue/rdsXPDLQwUdVvCW4F
+         jD8QQHIB8pHKQWawgdP+C1AInFeLtVWGZH6idZRkVyyuKvlXiB7bR/fq01aBpWOjJw2W
+         x4Kg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1704949596; x=1705554396;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=9Zq9aoJJknInQF3Ap2SePSlp2/JIlLgiEcppaXKtYhQ=;
+        b=bNa8r5rSFm8Tdg3D6NQr7LWyDTlBFltq23hODKpHBVl2hwX9ZX1Z6GwwTnD2WW+2O/
+         076iTTH/2GBxJszbseFrDHzi6k1BP+IGeUltCnBJJnnM0IvL56fMrVYEyWOhyBKhSGpN
+         GYO1RVy6QEuwMW9Q2n83TxhHEegPfeECKMQEMbC+j3fP5oLCRyOh53L83jHAyjZkuGOV
+         x6XYgtOkqAL2x5NlYdPWnd1kCunYIrVM3VDWNFhq+x+puk3bV953EtcUO0vg+QJdzd6G
+         pf9CUSUQttnuDABjvt06o28jqT+n8BJP5OikFQ+4Xpmp7W+qE2TUx6eSfs16Lk+P26Yo
+         eoyw==
+X-Gm-Message-State: AOJu0YyIA3p1L/sQrHCb1ge4nszSbpzt4KcPdToV6gRlpEJYTohMoLxM
+	VjFchQirfImgTuQkWs+LJPAkMkO5TPNTVpLoMld6Q34j
+X-Google-Smtp-Source: AGHT+IGH8qnMfNdfLWncUJPh8HcnGpoQl/PI69Qwnretx4hL9bk+0BDTk12m1veIosVdk8XVydaHPLK+FUIxBJSCMpA=
+X-Received: by 2002:ac2:5e9b:0:b0:50e:9c5d:35f5 with SMTP id
+ b27-20020ac25e9b000000b0050e9c5d35f5mr196006lfq.121.1704949595667; Wed, 10
+ Jan 2024 21:06:35 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="yJHhJw+ZyvWmmRd7"
-Content-Disposition: inline
-In-Reply-To: <xmqqcyu9duha.fsf@gitster.g>
-
-
---yJHhJw+ZyvWmmRd7
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+References: <ZZ77NQkSuiRxRDwt@nand.local> <b2651b38a4f7edaf1c5ffee72af00e46@manjaro.org>
+ <xmqqjzog96uh.fsf@gitster.g> <006b01da4412$96c6c500$c4544f00$@nexbridge.com>
+ <ZZ8ZlX6bf+hjmhN+@nand.local> <007c01da4420$10a7b700$31f72500$@nexbridge.com>
+ <CABPp-BEw_HFL-9u6WdSEe-qr_JfJyQtfU6PP7izEdPChKooc6g@mail.gmail.com>
+ <008701da442f$b2dfe420$189fac60$@nexbridge.com> <CABPp-BHx=4HPSN4enkHTL7PPnNBsJ1vGWe4Em5imH7HcOcH2PA@mail.gmail.com>
+ <009c01da4439$f70beef0$e523ccd0$@nexbridge.com>
+In-Reply-To: <009c01da4439$f70beef0$e523ccd0$@nexbridge.com>
+From: Elijah Newren <newren@gmail.com>
+Date: Wed, 10 Jan 2024 21:06:23 -0800
+Message-ID: <CABPp-BGmXw0NQ8yBaMiVXHiKr0-Y_jkZWmJB1CG_oc4UGxt_gA@mail.gmail.com>
+Subject: Re: [DISCUSS] Introducing Rust into the Git project
+To: rsbecker@nexbridge.com
+Cc: Taylor Blau <me@ttaylorr.com>, Junio C Hamano <gitster@pobox.com>, 
+	Dragan Simic <dsimic@manjaro.org>, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Wed, Jan 10, 2024 at 08:27:29AM -0800, Junio C Hamano wrote:
-> Patrick Steinhardt <ps@pks.im> writes:
->=20
-> On just this (non-technical) part...
->=20
-> >> > file, but not for loose references. Consequentially, all callers must
-> >> > still filter emitted refs with those exclude patterns.
-> >>=20
-> >> s/Consequentially/Consequently/
+On Wed, Jan 10, 2024 at 6:57=E2=80=AFPM <rsbecker@nexbridge.com> wrote:
+>
+> On Wednesday, January 10, 2024 9:21 PM, Elijah Newren wrote:
+> >On Wed, Jan 10, 2024 at 5:44=E2=80=AFPM <rsbecker@nexbridge.com> wrote:
+> >>
+> >> On Wednesday, January 10, 2024 7:59 PM, Elijah Newren wrote:
+> >[...]
+> >> >Would you be okay with the following alternative: requiring that all
+> >> >Rust code be optional for now?
+> >> >
+> >> >(In other words, allow you to build with USE_RUST=3D0, or something
+> >> >like that.  And then we have both a Rust and a C implementation of
+> >> >anything that is required for backward compatibility, while any new
+> >> >Rust-only stuff would not be included in your build.)
+> >>
+> >> To address the immediate above, I assume this means that platform
+> >> maintainers will be responsible for developing non-portable
+> >> implementations that duplicate Rust functionality
 > >
-> > Hum. I had the last time when you mentioned the in mind while writing
-> > the commit message, but seemingly misremembered the outcome. So I now
-> > looked things up in a dictionary, and both words seem to be used in
-> > equivalent ways. As a non-native speaker, could you maybe elaborate a
-> > bit to help me out? :)
->=20
-> As a non-native, I often find this
->=20
->   https://trends.google.com/trends/explore?q=3Dconsequentially,consequent=
-ly&hl=3Den
->=20
-> fairly useful.
+> >This doesn't at all sound like what I thought I said.  The whole proposa=
+l was so that
+> >folks like NonStop could continue using Git with no more work than setti=
+ng
+> >USE_RUST=3D0 at build time.
+> >
+> >Why do you feel you'd need to duplicate any functionality?
+>
+> I think I misunderstood. What I took from this is that all new functional=
+ity would be in Rust, which would require a custom implementation in C for =
+platforms that did not have Rust available - if that is even practical. Did=
+ I get that wrong?
 
-Good idea, thanks!
+I think you somehow missed the word optional?
 
-Patrick
+I did say that new functionality should be allowed to be Rust only
+(unlike existing functionality), but I'm not sure how you leaped to
+assuming that all new functionality would be in Rust.  Further, I also
+don't understand why you jump to assuming that all new functionality
+needs to be supported on all platforms.  The point of the word
+"optional" in my proposal is that it is not required.  So, say, if
+git-replay is in Rust, well you've never had git-replay before in any
+release, so you haven't lost any functionality by it being implemented
+in Rust.  And existing things (merge, cherry-pick, rebase, etc.)
+continue working with C-only code.  But you may have one less optional
+addition.
 
---yJHhJw+ZyvWmmRd7
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmWfdvsACgkQVbJhu7ck
-PpRwwQ/7B1XW8mph0qD+YtuY/eKJTnTAI9LxkPSYecPad1zKafspj51iaslcwyDH
-EjzXZ+tP0DhSVZho70VqmoDAUoTa9324P7AHt8jaEoK45Wr8HveIhZLev1OfGKlm
-tPlH/T5b40LqL2PwGXpf0kAJe/GQuULzBKFbYVfLkMs7t0HryUU7Yk9rc+yGkDjs
-keOsdnCHUZSauFB2INObrhPxU86fTlIQfi8QgGRpSr0wpVo7fjOoeTvCyg9+Dwok
-N/vggIP/k6KpshAf6nDzte1gJ86ojM4gI9tCYJx2won1dYAdHNEiqFKiNvXio5gj
-8lO3VS8jHH1s8Q/qYmKsK+VTOPtUAsLC9TOyEWCGeWLVWBnwOPrSRVFRNnRYBXcB
-ZHKBGGEMEgQEQj7QpVEG9iSIoqXNSZwaAVOqypKkAOTsA/sojsiULFGDKgGRuvN/
-dux6pwoAaS0pwARl+55ybk5hCB7lVvgTmzyuhOln5OdgZdCUv2d2yShThw6ufODu
-lpbAHPS4wCkyYqzzLjQY/pvRwNTGlHs+kbkDMW76IcpJA07kU272h9gYFB9g0DLG
-1Mwk+PwhLhsgoLeYjcyy+xKYWJnLqjsZ8ySZ2dZp+A3xtxucIsN6QggOa26xHYUy
-uvGy16VVIiGqb9XgfydARFaVbkCc0Y57JV1iJWvpss/Wj/hkYm0=
-=qoNx
------END PGP SIGNATURE-----
-
---yJHhJw+ZyvWmmRd7--
+At least that was _my_ proposal -- that Rust be optional for now.  It
+does differ from what I think Taylor was originally proposing, but
+that's why I brought it up as an alternative proposal.
