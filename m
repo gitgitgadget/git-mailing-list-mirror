@@ -1,97 +1,86 @@
-Received: from mail-lj1-f172.google.com (mail-lj1-f172.google.com [209.85.208.172])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E20258136
-	for <git@vger.kernel.org>; Thu, 11 Jan 2024 21:46:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 717354B5A9
+	for <git@vger.kernel.org>; Thu, 11 Jan 2024 21:47:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="m9wYcnUw"
-Received: by mail-lj1-f172.google.com with SMTP id 38308e7fff4ca-2cd1a1c5addso67868881fa.1
-        for <git@vger.kernel.org>; Thu, 11 Jan 2024 13:46:44 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1705009603; x=1705614403; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=zkcMpaEK5QTUCzC0Wniu9ugXFLTSPMOLebjx0zVksdQ=;
-        b=m9wYcnUwWKv5NoFiWrIpw/m5htHbsXo+xCCB+vK5517U9DpuA94i+OF7zYN03kwkwM
-         eBf0wjEd2G4oyQ96mEXZ4A9in9tmn2Mt0QW3bwmXadgkmJE7VVbt+zoalYuuRLneaEmX
-         WwkI6pjrShWRnaU9GXCk4fKtICNTMlBhBu/RBA6gFvNAwq1oovo3IOyx96ilITICRG4x
-         SBnlkGjjmBQtxCK9QNqsW/cqbxkKsNs6BAZP5bM+kaEqQTpai5k2AL2TZA1Nmz+sfRuY
-         BGRQZ22N3eD0suTXbm/UKJ3t4mvA7pKIcr7EeVEIb5QB28FGFSH04Y9zSwdDXfWSs5Tk
-         d+PQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1705009603; x=1705614403;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=zkcMpaEK5QTUCzC0Wniu9ugXFLTSPMOLebjx0zVksdQ=;
-        b=pA5uV28HFROy37CAoxtcCbJKQs+9o9hjwU6RJLjbV5AI/yvBFbSpWXTwm3SwcF6GmP
-         fws7Y/3honRUdahgXmAEERT5Aar4032/LaMiWgGFMIvGTcz1k/Cp3PWUe07wGK6KNjEs
-         AXcXZ44mZ6GFOMPbtgkfFyOTtxUTfYXdKv0+V7XJ3qC3BzkGgbr2f7KQZbNtM/Np9RkE
-         B/biDHUN/6Fix6XJWG5cLaM8P1Yftpt/SIc3yigMKPkzdDinlo+BhoOHCGF0F1aghZam
-         7VOeCang0RTQPpyQFEoJZ64y64unmotwttWylFFX88rqkhJVt06ysmcVg8SjDV6Ui8Jo
-         1xTw==
-X-Gm-Message-State: AOJu0YyvX29F0EDM9/0N1lkp5e9TZUokQhr8NskdFIB3Edr+9mxfPfQe
-	/5+6UuGMtEo1a+6yChu3iI1rmFoXPz/hYOkP30A=
-X-Google-Smtp-Source: AGHT+IH2Guja/vHP+7B3NlWfIkE1reua3RSF9+CS8XkzatTXoSPE7MMBH6Euur0lEzMQ/vCkGd8+2IouPAC1PVum050=
-X-Received: by 2002:a2e:7d18:0:b0:2cc:61df:1cca with SMTP id
- y24-20020a2e7d18000000b002cc61df1ccamr193489ljc.57.1705009602997; Thu, 11 Jan
- 2024 13:46:42 -0800 (PST)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="M8KuelaG"
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id 965FA19E80;
+	Thu, 11 Jan 2024 16:47:54 -0500 (EST)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=i2x6sWco/3Fdy2ETjyGUqBJp9ymVwdlL05JuIr
+	mrUrk=; b=M8KuelaG+/Npizg7UaR7/qYvSICDfaRTDkmFGHIQAKZ95wpZ2m+sKv
+	ZfOCpHR0uzcarURCUdFmKphoRzUBLHoSpLkNT6jdETbLs8f/eBKxsdD0g/d5v5HT
+	CD+njPmxdwpAaz34HBnoSUHik2ttYC8BXiy18/cl8cBDClnRJsa8g=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id 8FE5519E7F;
+	Thu, 11 Jan 2024 16:47:54 -0500 (EST)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.200.93])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 50CFB19E7E;
+	Thu, 11 Jan 2024 16:47:50 -0500 (EST)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Michael Lohmann <mi.al.lohmann@gmail.com>
+Cc: git@vger.kernel.org,  phillip.wood123@gmail.com,
+  phillip.wood@dunelm.org.uk,  wanja.hentze@bevuta.com
+Subject: Re: [PATCH v3] builtin/revert.c: refactor using an enum for cmd-action
+In-Reply-To: <20240111200627.64199-1-mi.al.lohmann@gmail.com> (Michael
+	Lohmann's message of "Thu, 11 Jan 2024 21:06:27 +0100")
+References: <xmqqsf33fy3t.fsf@gitster.g>
+	<20240111200627.64199-1-mi.al.lohmann@gmail.com>
+Date: Thu, 11 Jan 2024 13:47:48 -0800
+Message-ID: <xmqqzfxbee4b.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CADA7-FOE_81ze8hdaRGLPbipihnvFcEYfp9uwnPxPVxDepG4nA@mail.gmail.com>
- <xmqq4jfjftgw.fsf@gitster.g> <ZaBgqlR5F1dv9ttg@nand.local>
-In-Reply-To: <ZaBgqlR5F1dv9ttg@nand.local>
-From: Chaitanya Tata <chaitanya.tk17@gmail.com>
-Date: Fri, 12 Jan 2024 03:16:29 +0530
-Message-ID: <CADA7-FPFb5vmcT+9drdo=bYnixisvMiBqC5x8dPvFt61+FjsVw@mail.gmail.com>
-Subject: Re: Add support for `git rebase -no-edit`
-To: Taylor Blau <me@ttaylorr.com>
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 10E6DA4E-B0CB-11EE-A3D0-A19503B9AAD1-77302942!pb-smtp21.pobox.com
 
-On Fri, Jan 12, 2024 at 3:12=E2=80=AFAM Taylor Blau <me@ttaylorr.com> wrote=
-:
->
-> On Thu, Jan 11, 2024 at 01:30:55PM -0800, Junio C Hamano wrote:
-> > Chaitanya Tata <chaitanya.tk17@gmail.com> writes:
-> >
-> > > Hi,
-> > >
-> > > I have a feature request to add `--no-edit` option to `git rebase`
-> > > like we do for `git commit`.
-> > > The workflow I typically follow is:
-> > >
-> > > * `git commit -a --fixup=3DXXX`
-> > > * `git rebase  -i HEAD~15 --autosquash`
-> > >
-> > > But it requires closing the editor without any changes. I can
-> > > workaround this using the `GIT_EDITOR` option, see [1]. But it would
-> > > be good to have this built-in.
-> > >
-> > > Thoughts?
-> >
-> > With what is in the 'master' branch, you do not have to say
-> > interactive when you do not want to go interactive.  I.e.
-> >
-> >     $ git rebase --autosquash HEAD~15
-> >
-> > should work fine.  Building Git from the source should not be too
-> > hard.
-Amazing, exactly what I need. And or arg order, I just typed in the command=
-,
-I typically use aliases that are in the proper order, but thanks.
->
-> Oh, duh. Indeed, 297be59456 (rebase: support --autosquash without -i,
-> 2023-11-14) will do what Chaitanya is looking for. I'll give myself pass
-> on remembering that patch since it is from last year ;-).
-:).
+Michael Lohmann <mi.al.lohmann@gmail.com> writes:
 
-Thanks both for prompt support, I will compile and test this.
+> This is done to avoid having to keep the char values in sync in
+> different places and also to get compiler warnings on non-exhaustive
+> switches.
+>
+> In the rebase `action` enum there is the enumeration constant
+> `ACTION_NONE` which is not particularly descriptive, since it seems to
+> imply that no action should be taken. Instead it signals a start of a
+> revert/cherry-pick process, so here `ACTION_START` was chosen.
+>
+> Co-authored-by: Wanja Henze <wanja.hentze@bevuta.com>
+> Signed-off-by: Michael Lohmann <mi.al.lohmann@gmail.com>
+> ---
+>
+> On 11. Jan 2024, at 20:37, Junio C Hamano <gitster@pobox.com> wrote:
+>> Phillip Wood <phillip.wood123@gmail.com> writes:
+>> > I think ACTION_NONE was intended to covey that the user did not pass
+>> > one of the OPT_CMDMODE() options like "--continue" as there isn't a
+>> > "--start" option. I don't have a strong opinion between "_NONE" and
+>> > "_START".
+>>
+>> I agree with you why NONE is called as such.  If "revert" does not
+>> take "--start" (I do not remember offhand), I would think it would
+>> be better to follow suit.
+> My point was that yes, it might be in sync with what the user passes in
+> as arguments, but when I followed the code and saw lots of references to
+> ACTION_NONE I was puzzled, since my intuition of that name was that
+> _no action_ should be taken (which did not make sense to me).
+
+I know you wrote that ;-).  But _NONE is "no action was specified",
+and has been so for a long time in the context of "rebase". I do not
+see any confusion expressed there.  I do not expect to see any
+confusion here, either, if we were to introduce these new enum.
+
