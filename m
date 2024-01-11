@@ -1,27 +1,26 @@
 Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F55C5683
-	for <git@vger.kernel.org>; Thu, 11 Jan 2024 07:01:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58B94DDA6
+	for <git@vger.kernel.org>; Thu, 11 Jan 2024 07:13:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
-Received: (qmail 29001 invoked by uid 109); 11 Jan 2024 07:01:15 -0000
+Received: (qmail 29087 invoked by uid 109); 11 Jan 2024 07:13:30 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 11 Jan 2024 07:01:15 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 11 Jan 2024 07:13:30 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 3375 invoked by uid 111); 11 Jan 2024 07:01:17 -0000
+Received: (qmail 3437 invoked by uid 111); 11 Jan 2024 07:13:32 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 11 Jan 2024 02:01:17 -0500
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 11 Jan 2024 02:13:32 -0500
 Authentication-Results: peff.net; auth=none
-Date: Thu, 11 Jan 2024 02:01:14 -0500
+Date: Thu, 11 Jan 2024 02:13:29 -0500
 From: Jeff King <peff@peff.net>
-To: "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc: git@vger.kernel.org
-Subject: Re: Limited operations in unsafe repositories
-Message-ID: <20240111070114.GB48154@coredump.intra.peff.net>
-References: <ZZr-JLxubCvWe0EU@tapette.crustytoothpaste.net>
- <20240110120531.GA25541@coredump.intra.peff.net>
- <ZZ8pbAMNaBDFgf3G@tapette.crustytoothpaste.net>
+To: Justin Tobler via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, Justin Tobler <jltobler@gmail.com>
+Subject: Re: [PATCH 1/2] t1401: generalize reference locking
+Message-ID: <20240111071329.GC48154@coredump.intra.peff.net>
+References: <pull.1634.git.1704912750.gitgitgadget@gmail.com>
+ <cb78b549e5e826ffef39c55bd726164e6b7bb755.1704912750.git.gitgitgadget@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -30,36 +29,38 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <ZZ8pbAMNaBDFgf3G@tapette.crustytoothpaste.net>
+In-Reply-To: <cb78b549e5e826ffef39c55bd726164e6b7bb755.1704912750.git.gitgitgadget@gmail.com>
 
-On Wed, Jan 10, 2024 at 11:34:04PM +0000, brian m. carlson wrote:
+On Wed, Jan 10, 2024 at 06:52:29PM +0000, Justin Tobler via GitGitGadget wrote:
 
-> On 2024-01-10 at 12:05:31, Jeff King wrote:
-> > My thinking is to flip that around: run all code, but put protection in
-> > the spots that do unsafe things, like loading config or examining
-> > hooks. I.e., a patch like this:
+> From: Justin Tobler <jltobler@gmail.com>
 > 
-> I think that's much what I had intended to do with not invoking binaries
-> at all, except that it was limited to rev-parse.  I wonder if perhaps we
-> could do something similar if we had the `--assume-unsafe` argument you
-> proposed, except that we would only allow the `git` binary and always
-> pass that argument to it in such a case.
+> Some tests set up reference locks by directly creating the lockfile.
+> While this works for the files reference backend, reftable reference
+> locks operate differently and are incompatible with this approach.
+> Refactor the test to use git-update-ref(1) to lock refs instead so that
+> the test does not need to be aware of how the ref backend locks refs.
 
-I'm not sure what you mean by "invoking binaries". I had assumed that
-meant just running other Git sub-processes. But if "--assume-unsafe" is
-just setting an environment variable, they'd automatically be protected.
+It looks like you re-create this situation in a backend-agnostic way by
+having two simultaneous updates that conflict on the lock (but don't
+care how that lock is implemented).
 
-> I don't think reading config is intrinsically unsafe; it's more of what
-> we do with it, which is spawning external processes, that's the problem.
-> I suppose an argument could be made for injecting terminal sequences or
-> such, though.  Hooks, obviously, are definitely unsafe.
+That works, but I think we could keep it simple. This test doesn't care
+about the exact error condition we create. The point was just to die in
+create_symref() and make sure the exit code was propagated. So something
+like this would work:
 
-Right, it's not config itself that's unsafe; it's that many options are.
-We could try to annotate them to say "it is OK to parse core.eol but not
-core.pager", presumably with an allow-known-good approach (since so many
-ard bad!). But that feels like an ongoing maintenance headache, and an
-easy way to make a mistake (your mention of terminal sequences makes me
-assume you're thinking of "color.diff.*", etc). A rule like "we do not
-read repo-level config at all" seems easier to explain (to me, anyway).
+  $ git symbolic-ref refs/heads refs/heads/foo
+  error: unable to write symref for refs/heads: Is a directory
+
+(note that you get a different error message if the refs are packed,
+since there we can notice the d/f conflict manually).
+
+There may be other ways to stimulate a failure. I thought "symbolic-ref
+HEAD refs/heads/.invalid" might work, but sadly the refname format check
+happens earlier.
+
+I think it is worth avoiding the fifo magic if we can. It's complicated,
+and it means that not all platforms run the test.
 
 -Peff
