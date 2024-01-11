@@ -1,118 +1,150 @@
-Received: from mail-wm1-f41.google.com (mail-wm1-f41.google.com [209.85.128.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from wout5-smtp.messagingengine.com (wout5-smtp.messagingengine.com [64.147.123.21])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FBEA1802D
-	for <git@vger.kernel.org>; Thu, 11 Jan 2024 13:39:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E5533B18A
+	for <git@vger.kernel.org>; Thu, 11 Jan 2024 13:47:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TDiwGdDw"
-Received: by mail-wm1-f41.google.com with SMTP id 5b1f17b1804b1-40e54f233abso22429455e9.0
-        for <git@vger.kernel.org>; Thu, 11 Jan 2024 05:39:54 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1704980393; x=1705585193; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=7eXvKUT6l2XjPeDNX1VcUFqr9WnV1Sjmn5JcuqV8P7o=;
-        b=TDiwGdDwc1xYo6J9OCah7qIvQkQN380W7mxF8wGckUbMXisYVE2UtJk2fKtAlc5u16
-         Rs0UBgaIyHPZ0432+fTty9k1h9biNZtNS9bcShHT25bgV6qh417duZ8qV5+qIxksb02D
-         89n8tTRt8RzdgTt/dOBzXGR13QToMwOpltiFdxT++0Rr6sUHkC+Rvr3LxT0Lod1czsIl
-         xjQi6RpV8z4xlC1WwdTrBnxuTDVizxMRffO3nvoD7z6gFn7JAJUwEmxLTM0Gj4Wkxi+m
-         uHgqOWKh+AaXfATetYUCchf5kp181MPCXAKxIYVOHL0RI2xeniVPPdaAgcaeBa2UChi6
-         GdBg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1704980393; x=1705585193;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=7eXvKUT6l2XjPeDNX1VcUFqr9WnV1Sjmn5JcuqV8P7o=;
-        b=MEghaT4vIEvuvwDX1SMikZM4fIu8Movb2sKZgf9LrltydkKK9r/+eh5RvtfOQrssUN
-         tSSRzCQ+72nEftzRKQdjW+bru1/anYuyGI7h2mBfLpM7Cd5+lvilq6qcerEfL0XAgwUQ
-         oBeVspEkdCBpS7OMP/VZMe2i33GUVbfcCcT3icL6lYhm/miEQTeueXkQZMRTeT2TevsF
-         I0BOzJm7KJL88c8WaJDukwtZ1YIj7A/qJLECn4VRhOkFYaGW/h6cy6hvaYOv/4cLR7sD
-         pdET3hRJd987g0i9rmSxXiG3drE1LhsKuha7u7hGhwGSQe8MfDkvmZAi26l7thmW6mHS
-         Efng==
-X-Gm-Message-State: AOJu0YyuCCshSJiB3Nlj89o9RG6eP+DKu3RZRtQ4uPQBaEOUgG/YmDrZ
-	kvyb6wHmHox1fXF1Flen32g=
-X-Google-Smtp-Source: AGHT+IGgxP7OJkAD6nc1MC59qdUdzFK9xYUDTOZJeC1t+JRgspHC4qc76Oodw0uH/jStdWfo73pRyw==
-X-Received: by 2002:a05:600c:a083:b0:40d:887e:fc88 with SMTP id jh3-20020a05600ca08300b0040d887efc88mr423779wmb.187.1704980393166;
-        Thu, 11 Jan 2024 05:39:53 -0800 (PST)
-Received: from gmail.com (166.red-88-14-44.dynamicip.rima-tde.net. [88.14.44.166])
-        by smtp.gmail.com with ESMTPSA id m22-20020a05600c4f5600b0040d5b849f38sm5978877wmq.0.2024.01.11.05.39.52
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 11 Jan 2024 05:39:52 -0800 (PST)
-Message-ID: <764ff26e-0dd2-4372-9323-a21164e16944@gmail.com>
-Date: Thu, 11 Jan 2024 14:39:48 +0100
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="BVDsdtGk";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="RGl71S6o"
+Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
+	by mailout.west.internal (Postfix) with ESMTP id 2D3BF3200A61
+	for <git@vger.kernel.org>; Thu, 11 Jan 2024 08:47:32 -0500 (EST)
+Received: from mailfrontend2 ([10.202.2.163])
+  by compute2.internal (MEProxy); Thu, 11 Jan 2024 08:47:32 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:message-id:mime-version:reply-to:subject:subject:to:to; s=fm2;
+	 t=1704980851; x=1705067251; bh=N8Cqi4kXhnLnFApt0orR0Bpndf9onKtg
+	jRI/pn5j0+c=; b=BVDsdtGk79ON2eYXGTReWUoHM8/27bjR4SWLJj3IzdOQRoao
+	dCX2wxbtB66d1FL/0l36sGCPc9Tx28HCyhYmeBneXqebEx++vPuhHPiTsEBwJ4+M
+	sIm3lJCy0iKOklb/Gfc6UYoysD8nFjg9twe+DyYb4J4eod5i5K/ggTvH0pE5xwhI
+	Hug2yc63NWyVU8nD0ARwgCsL7kPpBmHL1YGGwuA+uUbi5nvvQtQeiXP+B2f251xa
+	v575HZ5qNilGjbAfg4QBQ0iBlxaILqAWDyxwDWIgofFKZrzZg2VUl4IPal7b3Jwf
+	LogM13bl0TuCwIwdpVSzob6t+GyRS8ZnMGXF8w==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:message-id
+	:mime-version:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1704980851; x=1705067251; bh=N8Cqi4kXhnLnFApt0orR0Bpndf9onKtgjRI
+	/pn5j0+c=; b=RGl71S6oWOwGvqStwfdkWTWqoPBVbVV3SZ85CVHZB5IjosNJIRQ
+	Kf1JA/M42ZYWBMIpXraKSq+QPt+Kr7xg9kqncFaOCvEXu/Jp+3w1TZrRV59NoFkA
+	af3ppA+7S22KIVGoroQJsWeuyHDHNk5yvg2AeNSckBRxSjJ2mJWebFjfwEkvIRDn
+	xuqkJNKTe5tqwmHmxiaeB+hUu+RqcmYjpvv5rFpx++t+unucqIzGS+R8VFLS5zGZ
+	9tSuYWlS+Nbtv3NVcucLUgSu6wm3PD71tOe3zmJcNbwY3E3BqnP2nfHyurS/UeRd
+	lNgSN4vtyip2MgR89bMyHyAvu4hLvvRUsEA==
+X-ME-Sender: <xms:c_GfZeUtsBTMLtfWcWshfu78E7-l2VbZZythnNZImlAFwqeA2VwKww>
+    <xme:c_GfZalkUUWVSoRwQOu8pZwJ0nWZu9r54aTqeaVlxDoQudswz871iIqL70uU0Wk_N
+    7ZNPk-jCiMJi18H9A>
+X-ME-Received: <xmr:c_GfZSYKRPUmDqGOEyoPutTZKF6Av_YxsjpM7StEO3-rNC6gPF3-JVdAilEoRQn4FLuYnKnxBCWvauYQV9LD6x5CiVvNlDZueMz5qySpbP_QJ0YDYg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrvdeifedgheehucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvuffkgggtugesghdtreertd
+    dtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhs
+    rdhimheqnecuggftrfgrthhtvghrnhepjeeifedvueelfffgjeduffdvgefhiefgjefgvd
+    dvfeduvefffeevfffhgfekieffnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghm
+    pehmrghilhhfrhhomhepphhssehpkhhsrdhimh
+X-ME-Proxy: <xmx:c_GfZVXiASOUIzSL1xf0osIFknhKt8wj8LXHhjuWmm33Sw9zNnQneQ>
+    <xmx:c_GfZYmAxTFsDjMvu1k2EnHZVlhWMi2MMea23q5mYyIvGCZwfPXjfg>
+    <xmx:c_GfZadsxW_XJMNWQ8V-xTh4y1156B2Fhl22tkXowvLeXrMioG9ISQ>
+    <xmx:c_GfZaQjNHAXgUEgTfbd4vN77chfrD9B3f1_nuS-cINgwGKsZxW6UQ>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA for
+ <git@vger.kernel.org>; Thu, 11 Jan 2024 08:47:30 -0500 (EST)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id 60514627 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	for <git@vger.kernel.org>;
+	Thu, 11 Jan 2024 13:44:47 +0000 (UTC)
+Date: Thu, 11 Jan 2024 14:47:27 +0100
+From: Patrick Steinhardt <ps@pks.im>
+To: git@vger.kernel.org
+Subject: [PATCH] git-p4: stop reaching into the refdb
+Message-ID: <33d6a062ec56be33ed50a42a420be0b023f6f4cf.1704980814.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] branch: error description when deleting a not fully
- merged branch
-Content-Language: en-US
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Git List <git@vger.kernel.org>
-References: <04c3556f-0242-4ac3-b94a-be824cd2004a@gmail.com>
- <xmqqbk9tcc57.fsf@gitster.g>
-From: =?UTF-8?Q?Rub=C3=A9n_Justo?= <rjusto@gmail.com>
-In-Reply-To: <xmqqbk9tcc57.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="+fk/5XKt6eF2GAmo"
+Content-Disposition: inline
 
-On 10-ene-2024 09:48:52, Junio C Hamano wrote:
-> Rubén Justo <rjusto@gmail.com> writes:
-> 
-> > The error message we show when the user tries to delete a not fully
-> > merged branch describes the error and gives a hint to the user:
-> >
-> > 	error: the branch 'foo' is not fully merged.
-> > 	If you are sure you want to delete it, run 'git branch -D foo'.
-> >
-> > Let's move the hint part so that it takes advantage of the advice
-> > machinery:
-> >
-> > 	error: the branch 'foo' is not fully merged
-> > 	hint: If you are sure you want to delete it, run 'git branch -D foo'
-> > 	hint: Disable this message with "git config advice.forceDeleteBranch false"
-> 
-> This is probably one sensible step forward, so let's queue it as-is.
 
-Thanks.
+--+fk/5XKt6eF2GAmo
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> But with reservations for longer-term future direction.  Stepping
-> back a bit, when 'foo' is not fully merged and the user used "branch
-> -d" on it, is it sensible for us to suggest use of "branch -D"
+The git-p4 tool creates a bunch of temporary branches that share a
+common prefix "refs/git-p4-tmp/". These branches get cleaned up via
+git-update-ref(1) after the import has finished. Once done, we try to
+manually remove the now supposedly-empty ".git/refs/git-p4-tmp/"
+directory.
 
-Maybe the user hits here because he's doing "branch -d" and so I would
-find a more clear suggestion: "branch -d foo -f".
+This last step can fail in case there still are any temporary branches
+around that we failed to delete because `os.rmdir()` refuses to delete a
+non-empty directory. It can thus be seen as kind of a sanity check to
+verify that we really did delete all temporary branches. Another failure
+mode though is when the directory didn't exist in the first place, which
+can be the case when using an alternate ref backend like the upcoming
+"reftable" backend.
 
-Or to be more generic, not suggesting a command line but a description
-that explains how to use "the force" ... :) sorry for the joke
+Convert the code to instead use git-for-each-ref(1) to verify that there
+are no more temporary branches around. This works alright with alternate
+ref backends while retaining the sanity check that we really did prune
+all temporary branches.
 
-Anyway, I think you mean to suggest a less destructive approach.  Which
-is fine by me.
+This is a modification in behaviour for the "files" backend because the
+empty directory does not get deleted anymore. But arguably we should not
+care about such implementation details of the ref backend anyway, and
+this should not cause any user-visible change in behaviour.
 
-> Especially now this is a "hint" to help less experienced folks, it
-> may be helpful to suggest how the user can answer "If you are sure
-> you want to delete" part.  As this knows what unique commits on the
-> branch being deleted are about to be lost, one way to do so may be
-> to tell the user about them ("you are about to lose 'branch: error
-> description when deleting a not fully merged branch' and other 47
-> commits that are not merged the target branch 'main'", for example).
+Signed-off-by: Patrick Steinhardt <ps@pks.im>
+---
+ git-p4.py | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-That's an interesting idea.  Maybe the hint becomes more informative
-than a simple advice ...  maybe a more-verbose error is needed ...  just
-thinking out loud ...
+diff --git a/git-p4.py b/git-p4.py
+index 0eb3bb4c47..3ea1c405e5 100755
+--- a/git-p4.py
++++ b/git-p4.py
+@@ -4251,7 +4251,8 @@ def run(self, args):
+         if self.tempBranches !=3D []:
+             for branch in self.tempBranches:
+                 read_pipe(["git", "update-ref", "-d", branch])
+-            os.rmdir(os.path.join(os.environ.get("GIT_DIR", ".git"), self.=
+tempBranchLocation))
++            if len(read_pipe(["git", "for-each-ref", self.tempBranchLocati=
+on])) > 0:
++                   die("There are unexpected temporary branches")
+=20
+         # Create a symbolic ref p4/HEAD pointing to p4/<branch> to allow
+         # a convenient shortcut refname "p4".
+--=20
+2.43.GIT
 
-> 
-> Another possibility is to suggest merging the branch into the
-> target, instead of suggesting a destructive "deletion", but I
-> suspect that it goes too far second-guessing the end-user intention.
-> 
-> Thanks.
 
-Thank you.
+--+fk/5XKt6eF2GAmo
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmWf8WoACgkQVbJhu7ck
+PpQeHxAAq9/tKswmDKsZ2PNgjxHjrFFX0nIB4exsKniaq4McNQ+htwO0KgVkDbQN
+eea7p5FcjiZmd7godISvPAAlQWVccf9RGy5rTLAr+gekADfiAnZb6Yv1QSXmucSr
+RUiX4qZzAs1m+vdsjB1ZRjEOr1LjFrmg4ezH7BrN/9az3sE+vBCjP2G5Me0lj0qk
+Ch2n20jruufo9LgnAZz7a6WHSV6RP/nZO8dFT77c/CFCENdqwJ1gkyzIqAk9C5/L
+Kf3v+c1IvYZMKOw20n/EqvqhVfXm3ko3KMyjwjZo6wyjOOw09V7Ekih9sCeQ0ViT
+l5kA4l0PGtF/2odHet7YlDSaNtz9MdbbjuYw+nLKayC6q1f8Mpdx6Ug9C1pv+slz
+6ipT4583E83iBSBYCg8yVByFbicRnns1ji0nWJTcXYgsyF1mWm1dFre7qw0JLbGR
+TBZG3sD3o9vaSmroshFIDLTGMDttFokIkmlF79fHBb2/3epR94TWkItHIMU5dYAY
+u8HLdFPs9/P/7CKoJJgKjFrNBb+561i6JtbjzdPPWlvA6nZEbStzvGRB5ZbVcxmn
+HU7b7BayfsE7BU8NueKvdNEVNflZ3IcYjkqNqrOPXBWZuW9e2vfoPE87Ly2TeumD
+paNnT6xVgvtjJbmT9NojwIeuS1H+U1rq0CFXu/q5k4jLTN/mf6g=
+=Mqzw
+-----END PGP SIGNATURE-----
+
+--+fk/5XKt6eF2GAmo--
