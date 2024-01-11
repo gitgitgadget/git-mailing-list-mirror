@@ -1,115 +1,253 @@
-Received: from mail-qk1-f173.google.com (mail-qk1-f173.google.com [209.85.222.173])
+Received: from mail-wr1-f48.google.com (mail-wr1-f48.google.com [209.85.221.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B362014F7A
-	for <git@vger.kernel.org>; Thu, 11 Jan 2024 19:55:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ttaylorr.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31D8C56B79
+	for <git@vger.kernel.org>; Thu, 11 Jan 2024 20:06:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="tSxleAO4"
-Received: by mail-qk1-f173.google.com with SMTP id af79cd13be357-7831386ee01so563227685a.3
-        for <git@vger.kernel.org>; Thu, 11 Jan 2024 11:55:25 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="l0xz+46Z"
+Received: by mail-wr1-f48.google.com with SMTP id ffacd0b85a97d-3368b9bbeb4so5318723f8f.2
+        for <git@vger.kernel.org>; Thu, 11 Jan 2024 12:06:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1705002924; x=1705607724; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=GSheyh076A3gHB7vZ1vhgsrvJ0tdUWLbdfVXSkEFmn0=;
-        b=tSxleAO4+8bTgURmfRDubFJeECK7DzBiXEDj/QPTi2hUFgz353e9y8imwozayxAkjx
-         ue2NZQEdeeOZYGy1mZvJAS8ZWnW5Y5BInlFnTCEeQ2eZWc48ArTtamKI35Bbiun9ni7o
-         MicKZ1bwFriaVntkUEbzB3i9kLLVbUXyjjKTG9HGR6VEBf9s48FWfVpAQhn0MsGg3lV7
-         oT0DnkVbEIK8rN/7b5/v7zqPAffsmkOn0jepaRy7fhHNoshwX6V5kCfJehiNbUKi+CTi
-         KLjYt6Ayoif9Qt4oLPa5bQzCYKmwR+WtkiQePO8yEN0YhUTH5VyvYAjLPAqqFQlqpaoo
-         AuTw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1705002924; x=1705607724;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1705003592; x=1705608392; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:sender:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=GSheyh076A3gHB7vZ1vhgsrvJ0tdUWLbdfVXSkEFmn0=;
-        b=rFfrvgfXs5nwT+B69Q3vK2hQvtGHoMKJgEl5uJhVZpyjUmclLvMo57E52f5NXzW0h9
-         6APvkk0wVM2SGQ6CgCp2dnwwMChGeNcHRvGo5Kg6awEMYKDk3OP9bW9GLpv+ZQGRmTFG
-         n8f9DKFQ7EctaqrgAYJvbmns1gX9DDk3Dej/yNNR/fUIeTbqS0UU4sKWOTPFdmJ4D2P8
-         Jtx/NTaaL220D1xQbxQNx5D9JmfiFtdkP9b/0ac5L04ZloB26zt5Il2qVJrU/NTZjjPn
-         xHrqHpBiTwmnBOoJWcUFOyShwKRV/rdDkDRASxjhhRXv27NWbZgyq+soGQQIXcEVxdP7
-         dUcA==
-X-Gm-Message-State: AOJu0YyeYkbL0H3bHUQDFTUOsfUwcDZE72TgaYRAJiHpvuFtbXc8Pxq6
-	50j1GXeC5Bj44fujn2J5OnhOThsuf9kMV9mvhLv2d0iH6J2X4A==
-X-Google-Smtp-Source: AGHT+IHiBAQ0Sz39A5zOdbpelLiVbDqzc3ZMh6YhnBSK8kXMRU8Qlf3/b2ToyxrNqUiTr0pMYxPfxA==
-X-Received: by 2002:a05:622a:1304:b0:429:c8ae:7c4f with SMTP id v4-20020a05622a130400b00429c8ae7c4fmr281316qtk.4.1705002924545;
-        Thu, 11 Jan 2024 11:55:24 -0800 (PST)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id bx3-20020a05622a090300b004299d262017sm696630qtb.66.2024.01.11.11.55.23
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 11 Jan 2024 11:55:24 -0800 (PST)
-Date: Thu, 11 Jan 2024 14:55:14 -0500
-From: Taylor Blau <me@ttaylorr.com>
-To: Chaitanya Tata <chaitanya.tk17@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: Add support for `git rebase -no-edit`
-Message-ID: <ZaBHooq6ORZ3TTkL@nand.local>
-References: <CADA7-FOE_81ze8hdaRGLPbipihnvFcEYfp9uwnPxPVxDepG4nA@mail.gmail.com>
+        bh=OzUGCqjZjGOxnsxrGSnuaXsivB6Eccs+tgtl6alDu/U=;
+        b=l0xz+46ZntTYORJt8RBeMGFRBfBy75vKLtkPjTh2lBuC77yYoMCQNaTQ/dE+PFOC7X
+         LUVIDBsuDo1h2Rjlwb04VcxOHK1Jx4FDDasjiR2abN5UOzuwvetRS7KKfHqTRbUiW1fa
+         0kgslzP28vH6cyhb03u3ylXwiCoIWisKcy5b7u7d2pT+OOgy4HMIvmdGtKOGoxKm1GAc
+         oXI/yuA32udHEyitHHfu4QLaOfFvd7uLj7Y60lg9Bbb6srKMjrzlkg2w9okhW97iKV30
+         dVzapLsTrxYsgumi4FgjvBGV9N5ZMfitw2yuim8+rQ8KVGmsBDqrKQoEE28+ynbIFnOu
+         /geg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1705003592; x=1705608392;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:sender:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=OzUGCqjZjGOxnsxrGSnuaXsivB6Eccs+tgtl6alDu/U=;
+        b=GIawlACdh1JOKAA3kqiLAxXKzvJMvpUvMlp1Xlv0abaoc/9bvNp5b8Sk75kwRsuLbY
+         szTvktxYlR89+VHENVPI5Sa1VNZmXHGVd3kzA0jAaNjvuWvZgr9Se39w17PRvnS1YSDT
+         xq3NmLnErZN/tR8qcrzrljGjuScKty6Vb3Z4NDOeLP5GApIu2MUKf/tH6nIu3yGboZdX
+         mJUsgKquD+kxapgkzKcfRRFda04jj8de+4JdHPtDITrT3NRnhhveMWhS9BoQ5Pj0pT26
+         sV8ty6cix8+t/rDMqWr/IS3P81I/bw+zzEtOfn+236ew3m9mrDoQOtEBLwz2m8wfOWjx
+         sryg==
+X-Gm-Message-State: AOJu0YwTzRqRAHNvt2l8XPBPigzFVxeM8Ayih4DQgeqx1V3N+4Mfq0Hh
+	YFYDklwc+enFTKBo6uE5OyA=
+X-Google-Smtp-Source: AGHT+IHXS5YbkJev8Rg6n5RMhpDSF+RUczZ1HuRvevju+sySx5Xdm+9wX/UKgkDMcfNraqhw6rxIxQ==
+X-Received: by 2002:adf:fc50:0:b0:337:6a69:e94 with SMTP id e16-20020adffc50000000b003376a690e94mr71875wrs.28.1705003592125;
+        Thu, 11 Jan 2024 12:06:32 -0800 (PST)
+Received: from Michaels-MBP.fritz.box (2001-4dd4-c452-0-6835-a146-250e-421c.ipv6dyn.netcologne.de. [2001:4dd4:c452:0:6835:a146:250e:421c])
+        by smtp.gmail.com with ESMTPSA id e13-20020a056000178d00b0033743c2d17dsm1989247wrg.28.2024.01.11.12.06.31
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Thu, 11 Jan 2024 12:06:31 -0800 (PST)
+Sender: Michael L <mial.lohmann@gmail.com>
+From: Michael Lohmann <mi.al.lohmann@gmail.com>
+To: gitster@pobox.com
+Cc: git@vger.kernel.org,
+	mi.al.lohmann@gmail.com,
+	phillip.wood123@gmail.com,
+	phillip.wood@dunelm.org.uk,
+	wanja.hentze@bevuta.com
+Subject: [PATCH v3] builtin/revert.c: refactor using an enum for cmd-action
+Date: Thu, 11 Jan 2024 21:06:27 +0100
+Message-Id: <20240111200627.64199-1-mi.al.lohmann@gmail.com>
+X-Mailer: git-send-email 2.39.3 (Apple Git-145)
+In-Reply-To: <xmqqsf33fy3t.fsf@gitster.g>
+References: <xmqqsf33fy3t.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CADA7-FOE_81ze8hdaRGLPbipihnvFcEYfp9uwnPxPVxDepG4nA@mail.gmail.com>
+Content-Transfer-Encoding: 8bit
 
-Hi Chaitanya,
+This is done to avoid having to keep the char values in sync in
+different places and also to get compiler warnings on non-exhaustive
+switches.
 
-On Thu, Jan 11, 2024 at 10:55:47PM +0530, Chaitanya Tata wrote:
-> Hi,
+In the rebase `action` enum there is the enumeration constant
+`ACTION_NONE` which is not particularly descriptive, since it seems to
+imply that no action should be taken. Instead it signals a start of a
+revert/cherry-pick process, so here `ACTION_START` was chosen.
+
+Co-authored-by: Wanja Henze <wanja.hentze@bevuta.com>
+Signed-off-by: Michael Lohmann <mi.al.lohmann@gmail.com>
+---
+
+On 11. Jan 2024, at 20:37, Junio C Hamano <gitster@pobox.com> wrote:
+> Phillip Wood <phillip.wood123@gmail.com> writes:
+> > I think ACTION_NONE was intended to covey that the user did not pass
+> > one of the OPT_CMDMODE() options like "--continue" as there isn't a
+> > "--start" option. I don't have a strong opinion between "_NONE" and
+> > "_START".
 >
-> I have a feature request to add `--no-edit` option to `git rebase`
-> like we do for `git commit`.
-> The workflow I typically follow is:
->
-> * `git commit -a --fixup=XXX`
-> * `git rebase  -i HEAD~15 --autosquash`
->
-> But it requires closing the editor without any changes. I can
-> workaround this using the `GIT_EDITOR` option, see [1]. But it would
-> be good to have this built-in.
+> I agree with you why NONE is called as such.  If "revert" does not
+> take "--start" (I do not remember offhand), I would think it would
+> be better to follow suit.
+My point was that yes, it might be in sync with what the user passes in
+as arguments, but when I followed the code and saw lots of references to
+ACTION_NONE I was puzzled, since my intuition of that name was that
+_no action_ should be taken (which did not make sense to me).
 
-The easiest workaround would be setting GIT_EDITOR=true, which matches
-the recommendation in [1].
+So the (provocative) question is: Do we want to keep the variable name
+in sync with some input parameters, or rather with the real action that
+should be taken?
 
-Short of that, you can't do a non-interactive rebase, since we rely on
-the todo list generated by interactive rebases in order for
-`--autosquash` to work.
+(Depending on the outcome of this discussion I would also prepare a
+patch renaming it in builtin/rebase.c)
 
-Presumably plumbing in a new `--[no-]edit` option would be fairly
-straightforward, and once that is done, the change boils down to just:
+What do you think about this version which keeps the
+`if (cmd != ACTION_START)` in favour of the `goto` and instead of the
+constant if/else checks for the `verify_opt_compatible` (with the
+`assert` at the last one) here is one version with a
+`get_cmd_flag`-function (I am not that happy with the name...) that has
+a `switch` and it has a runtime error handling with `BUG`.
 
-index 3cc88d8a80..5235a003f2 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -6169,7 +6169,7 @@ int complete_action(struct repository *r, struct replay_opts *opts, unsigned fla
- 	struct todo_list new_todo = TODO_LIST_INIT;
- 	struct strbuf *buf = &todo_list->buf, buf2 = STRBUF_INIT;
- 	struct object_id oid = onto->object.oid;
--	int res;
-+	int res = 0;
+I think it is the most concise of the options so far.
 
- 	repo_find_unique_abbrev_r(r, shortonto, &oid,
- 				  DEFAULT_ABBREV);
-@@ -6197,8 +6197,9 @@ int complete_action(struct repository *r, struct replay_opts *opts, unsigned fla
- 		return error(_("nothing to do"));
+Ciao
+Michael
+
+ builtin/revert.c | 65 +++++++++++++++++++++++++++---------------------
+ 1 file changed, 37 insertions(+), 28 deletions(-)
+
+diff --git a/builtin/revert.c b/builtin/revert.c
+index 89821bab95..891aa1d720 100644
+--- a/builtin/revert.c
++++ b/builtin/revert.c
+@@ -20,6 +20,14 @@
+  * Copyright (c) 2005 Junio C Hamano
+  */
+ 
++enum action {
++	ACTION_START = 0,
++	ACTION_CONTINUE,
++	ACTION_SKIP,
++	ACTION_ABORT,
++	ACTION_QUIT,
++};
++
+ static const char * const revert_usage[] = {
+ 	N_("git revert [--[no-]edit] [-n] [-m <parent-number>] [-s] [-S[<keyid>]] <commit>..."),
+ 	N_("git revert (--continue | --skip | --abort | --quit)"),
+@@ -33,6 +41,17 @@ static const char * const cherry_pick_usage[] = {
+ 	NULL
+ };
+ 
++static char* get_cmd_optionname(enum action cmd)
++{
++	switch (cmd) {
++	case ACTION_CONTINUE: return "--continue";
++	case ACTION_SKIP: return "--skip";
++	case ACTION_ABORT: return "--abort";
++	case ACTION_QUIT: return "--quit";
++	case ACTION_START: BUG("no commandline flag for ACTION_START");
++	}
++}
++
+ static const char *action_name(const struct replay_opts *opts)
+ {
+ 	return opts->action == REPLAY_REVERT ? "revert" : "cherry-pick";
+@@ -85,12 +104,12 @@ static int run_sequencer(int argc, const char **argv, const char *prefix,
+ 	const char * const * usage_str = revert_or_cherry_pick_usage(opts);
+ 	const char *me = action_name(opts);
+ 	const char *cleanup_arg = NULL;
+-	int cmd = 0;
++	enum action cmd = ACTION_START;
+ 	struct option base_options[] = {
+-		OPT_CMDMODE(0, "quit", &cmd, N_("end revert or cherry-pick sequence"), 'q'),
+-		OPT_CMDMODE(0, "continue", &cmd, N_("resume revert or cherry-pick sequence"), 'c'),
+-		OPT_CMDMODE(0, "abort", &cmd, N_("cancel revert or cherry-pick sequence"), 'a'),
+-		OPT_CMDMODE(0, "skip", &cmd, N_("skip current commit and continue"), 's'),
++		OPT_CMDMODE(0, "quit", &cmd, N_("end revert or cherry-pick sequence"), ACTION_QUIT),
++		OPT_CMDMODE(0, "continue", &cmd, N_("resume revert or cherry-pick sequence"), ACTION_CONTINUE),
++		OPT_CMDMODE(0, "abort", &cmd, N_("cancel revert or cherry-pick sequence"), ACTION_ABORT),
++		OPT_CMDMODE(0, "skip", &cmd, N_("skip current commit and continue"), ACTION_SKIP),
+ 		OPT_CLEANUP(&cleanup_arg),
+ 		OPT_BOOL('n', "no-commit", &opts->no_commit, N_("don't automatically commit")),
+ 		OPT_BOOL('e', "edit", &opts->edit, N_("edit the commit message")),
+@@ -144,20 +163,8 @@ static int run_sequencer(int argc, const char **argv, const char *prefix,
  	}
+ 
+ 	/* Check for incompatible command line arguments */
+-	if (cmd) {
+-		char *this_operation;
+-		if (cmd == 'q')
+-			this_operation = "--quit";
+-		else if (cmd == 'c')
+-			this_operation = "--continue";
+-		else if (cmd == 's')
+-			this_operation = "--skip";
+-		else {
+-			assert(cmd == 'a');
+-			this_operation = "--abort";
+-		}
+-
+-		verify_opt_compatible(me, this_operation,
++	if (cmd != ACTION_START)
++		verify_opt_compatible(me, get_cmd_optionname(cmd),
+ 				"--no-commit", opts->no_commit,
+ 				"--signoff", opts->signoff,
+ 				"--mainline", opts->mainline,
+@@ -168,7 +175,6 @@ static int run_sequencer(int argc, const char **argv, const char *prefix,
+ 				"--rerere-autoupdate", opts->allow_rerere_auto == RERERE_AUTOUPDATE,
+ 				"--no-rerere-autoupdate", opts->allow_rerere_auto == RERERE_NOAUTOUPDATE,
+ 				NULL);
+-	}
+ 
+ 	if (!opts->strategy && opts->default_strategy) {
+ 		opts->strategy = opts->default_strategy;
+@@ -183,9 +189,7 @@ static int run_sequencer(int argc, const char **argv, const char *prefix,
+ 				"--edit", opts->edit > 0,
+ 				NULL);
+ 
+-	if (cmd) {
+-		opts->revs = NULL;
+-	} else {
++	if (cmd == ACTION_START) {
+ 		struct setup_revision_opt s_r_opt;
+ 		opts->revs = xmalloc(sizeof(*opts->revs));
+ 		repo_init_revisions(the_repository, opts->revs, NULL);
+@@ -198,6 +202,8 @@ static int run_sequencer(int argc, const char **argv, const char *prefix,
+ 		memset(&s_r_opt, 0, sizeof(s_r_opt));
+ 		s_r_opt.assume_dashdash = 1;
+ 		argc = setup_revisions(argc, argv, opts->revs, &s_r_opt);
++	} else {
++		opts->revs = NULL;
+ 	}
+ 
+ 	if (argc > 1)
+@@ -210,19 +216,22 @@ static int run_sequencer(int argc, const char **argv, const char *prefix,
+ 		opts->strategy = xstrdup(getenv("GIT_TEST_MERGE_ALGORITHM"));
+ 	free(options);
+ 
+-	if (cmd == 'q') {
++	switch (cmd) {
++	case ACTION_QUIT: {
+ 		int ret = sequencer_remove_state(opts);
+ 		if (!ret)
+ 			remove_branch_state(the_repository, 0);
+ 		return ret;
+ 	}
+-	if (cmd == 'c')
++	case ACTION_CONTINUE:
+ 		return sequencer_continue(the_repository, opts);
+-	if (cmd == 'a')
++	case ACTION_ABORT:
+ 		return sequencer_rollback(the_repository, opts);
+-	if (cmd == 's')
++	case ACTION_SKIP:
+ 		return sequencer_skip(the_repository, opts);
+-	return sequencer_pick_revisions(the_repository, opts);
++	case ACTION_START:
++		return sequencer_pick_revisions(the_repository, opts);
++	}
+ }
+ 
+ int cmd_revert(int argc, const char **argv, const char *prefix)
+-- 
+2.39.3 (Apple Git-145)
 
--	res = edit_todo_list(r, todo_list, &new_todo, shortrevisions,
--			     shortonto, flags);
-+	if (!opts->edit)
-+		res = edit_todo_list(r, todo_list, &new_todo, shortrevisions,
-+				     shortonto, flags);
- 	if (res == -1)
- 		return -1;
- 	else if (res == -2) {
-
-> [1] - https://stackoverflow.com/a/45783848
-
-Thanks,
-Taylor
