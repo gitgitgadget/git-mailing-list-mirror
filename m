@@ -1,56 +1,93 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-f201.google.com (mail-pg1-f201.google.com [209.85.215.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 987E45B5DB
-	for <git@vger.kernel.org>; Fri, 12 Jan 2024 08:03:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
-Received: (qmail 10082 invoked by uid 109); 12 Jan 2024 08:03:19 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 12 Jan 2024 08:03:19 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 15427 invoked by uid 111); 12 Jan 2024 08:03:21 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 12 Jan 2024 03:03:21 -0500
-Authentication-Results: peff.net; auth=none
-Date: Fri, 12 Jan 2024 03:03:18 -0500
-From: Jeff King <peff@peff.net>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: Justin Tobler via GitGitGadget <gitgitgadget@gmail.com>,
-	git@vger.kernel.org, Justin Tobler <jltobler@gmail.com>
-Subject: Re: [PATCH 1/2] t1401: generalize reference locking
-Message-ID: <20240112080318.GA620715@coredump.intra.peff.net>
-References: <pull.1634.git.1704912750.gitgitgadget@gmail.com>
- <cb78b549e5e826ffef39c55bd726164e6b7bb755.1704912750.git.gitgitgadget@gmail.com>
- <20240111071329.GC48154@coredump.intra.peff.net>
- <ZZ_MPK2huH2j6CGd@tanuki>
- <20240112070142.GD618729@coredump.intra.peff.net>
- <ZaDuEufXOnwH7hT4@framework>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E7325D74B
+	for <git@vger.kernel.org>; Fri, 12 Jan 2024 08:12:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--linusa.bounces.google.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="J3t+XJ0W"
+Received: by mail-pg1-f201.google.com with SMTP id 41be03b00d2f7-5ce04c601e5so5098369a12.2
+        for <git@vger.kernel.org>; Fri, 12 Jan 2024 00:12:24 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1705047144; x=1705651944; darn=vger.kernel.org;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:from:to:cc:subject:date:message-id:reply-to;
+        bh=kcXOECkobylFgJaD1y4fK7VmM0FXj3LI1k5bK+0yf2Y=;
+        b=J3t+XJ0W7noUACPx4jRQs4K5Jt9L3Idq7yrP1zr2LpizraUx3HZ7ZwTL/uvQYcfJhb
+         eRMBCY3XUWGpBUEJzpxRtMC9dJ7crg2ddt/TMDdLRayH+J1TF82mQQrUo5LwkOUYMMIh
+         eglmJLewwRgpwyyav40X9PubyOsQX4ipc9goDp2MiXipVd/8lxT7kF5QCUuez6iQ0DJr
+         ZNlNs+RbMFVoXa6Ml0VXX3UBE4vstNe3FytG6ICjVTgB6oRoM9TfRI2bdmN4fUZCJ7G+
+         YVACCiwDvz3JofFuGc+hwb65QzdC+gNI9rxtHDvrofGJLxgMO/MxSEte4RuHI42qt2W9
+         /uDQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1705047144; x=1705651944;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=kcXOECkobylFgJaD1y4fK7VmM0FXj3LI1k5bK+0yf2Y=;
+        b=lMfLFKbjRLX3HAFgJ2X60NeJoZ324E0yJXeuy8dkoOJSfhi3Fg4OsGpYlpWCpyEXQz
+         BgkRLmCUkMpxduz4YmzzahCjD4dkLSArSJyhepM2ArQkKSnO7bkuufrCK39fxKnY0GiW
+         MEjjvxI0uhv4UqLRokhmEyeVE7CwHT3pjM1O64zP80qeN+RREabZtPOp4X36hJhuYSx6
+         yMeGJN4TvEcBDYMVO+1hj1iOeRD4ouHMQu6DqI29uZU/zji+TCilj9mNTNlZA/sD8eTE
+         BWocVuzbD9JL229DpL1mWQqVTz/aHM/MHpoJN8Ya3hyIWdGTnr70EjPYgVv2aVMIUU2f
+         Jc9A==
+X-Gm-Message-State: AOJu0YxlQjMin+tfyH+HZFEbeWDfzUH21QiTsrL2PpHV6IG3psLp/5C1
+	q/z32JDTEZFjW0OLBnDx9RrV5Kg0aYf77kdOVA==
+X-Google-Smtp-Source: AGHT+IEDLbwT4P8+Zv2O3PZ/1ARXM6JKjvWVs8nIC0pG8delqLPz3qLvKlvxwYwDwU64etQPDF+OV+d93ig=
+X-Received: from fine.c.googlers.com ([fda3:e722:ac3:cc00:7f:e700:c0a8:2221])
+ (user=linusa job=sendgmr) by 2002:a63:85c7:0:b0:5cd:f80f:1085 with SMTP id
+ u190-20020a6385c7000000b005cdf80f1085mr3112pgd.3.1705047143893; Fri, 12 Jan
+ 2024 00:12:23 -0800 (PST)
+Date: Fri, 12 Jan 2024 00:12:22 -0800
+In-Reply-To: <18b9a11d3be9d804e8d22d054ea881b8336d170c.1702562879.git.zhiyou.jx@alibaba-inc.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <ZaDuEufXOnwH7hT4@framework>
+Mime-Version: 1.0
+References: <cover.1696432593.git.zhiyou.jx@alibaba-inc.com>
+ <cover.1702562879.git.zhiyou.jx@alibaba-inc.com> <18b9a11d3be9d804e8d22d054ea881b8336d170c.1702562879.git.zhiyou.jx@alibaba-inc.com>
+Message-ID: <owlyr0inhswp.fsf@fine.c.googlers.com>
+Subject: Re: [PATCH v4 4/4] archive: support remote archive from stateless transport
+From: Linus Arver <linusa@google.com>
+To: Jiang Xin <worldhello.net@gmail.com>, Git List <git@vger.kernel.org>, 
+	Junio C Hamano <gitster@pobox.com>
+Cc: Jiang Xin <zhiyou.jx@alibaba-inc.com>, Eric Sunshine <sunshine@sunshineco.com>
+Content-Type: text/plain; charset="UTF-8"
 
-On Fri, Jan 12, 2024 at 08:45:22AM +0100, Patrick Steinhardt wrote:
+Jiang Xin <worldhello.net@gmail.com> writes:
 
-> > The obvious quick fix is to sprinkle more error() into the reftable
-> > code. But in the longer term, I think the right direction is that the
-> > ref code should accept an error strbuf or similar mechanism to propagate
-> > human-readable error test to the caller.
-> 
-> Agreed, I think it's good that the reftable library itself does not
-> print error messages. In this particular case we are already able to
-> provide a proper error message due to the error code that the library
-> returns. But there are certainly going to be other cases where it might
-> make sense to pass in an error strbuf.
+> From: Jiang Xin <zhiyou.jx@alibaba-inc.com>
+>
+> Even though we can establish a stateless connection, we still cannot
+> archive the remote repository using a stateless HTTP protocol. Try the
+> following steps to make it work.
 
-Oh, if there is an error code you can use already, that is even better. :)
+As Yoda once said, "Do or do not, there is no try". Here I think you
+meant "Do".
 
-Thanks for taking care of this case.
+>  1. Add support for "git-upload-archive" service in "http-backend".
+>
+>  2. Use the URL ".../info/refs?service=git-upload-pack" to detect the
+>     protocol version, instead of use the "git-upload-archive" service.
+>
+>  3. "git-archive" does not expect to see protocol version and
+>     capabilities when connecting to remote-helper, so do not send them
+>     in "remote-curl.c" for the "git-upload-archive" service.
 
--Peff
+It would be great if you could break up this patch into 3 smaller
+patches. Or 4 patches if you decide to move the new test cases into their
+own patch.
+
+> @@ -723,7 +729,8 @@ static struct service_cmd {
+>  	{"GET", "/objects/pack/pack-[0-9a-f]{64}\\.idx$", get_idx_file},
+>  
+>  	{"POST", "/git-upload-pack$", service_rpc},
+> -	{"POST", "/git-receive-pack$", service_rpc}
+> +	{"POST", "/git-receive-pack$", service_rpc},
+> +	{"POST", "/git-upload-archive$", service_rpc}
+>  };
+
+Style nit: it might be cleaner to put the new "git-upload-archive" just
+above "git-upload-pack" because the two have a special relationship now.
