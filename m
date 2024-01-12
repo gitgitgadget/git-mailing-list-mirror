@@ -1,29 +1,29 @@
 Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9B9E1A72F
-	for <git@vger.kernel.org>; Fri, 12 Jan 2024 06:57:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0E51381B7
+	for <git@vger.kernel.org>; Fri, 12 Jan 2024 07:01:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
-Received: (qmail 9475 invoked by uid 109); 12 Jan 2024 06:57:32 -0000
+Received: (qmail 9516 invoked by uid 109); 12 Jan 2024 07:01:43 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 12 Jan 2024 06:57:32 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 12 Jan 2024 07:01:43 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 14929 invoked by uid 111); 12 Jan 2024 06:57:34 -0000
+Received: (qmail 14966 invoked by uid 111); 12 Jan 2024 07:01:45 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 12 Jan 2024 01:57:34 -0500
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 12 Jan 2024 02:01:45 -0500
 Authentication-Results: peff.net; auth=none
-Date: Fri, 12 Jan 2024 01:57:32 -0500
+Date: Fri, 12 Jan 2024 02:01:42 -0500
 From: Jeff King <peff@peff.net>
-To: Victoria Dye <vdye@github.com>
-Cc: Victoria Dye via GitGitGadget <gitgitgadget@gmail.com>,
-	git@vger.kernel.org
-Subject: Re: [PATCH 2/3] t7450: test submodule urls
-Message-ID: <20240112065732.GC618729@coredump.intra.peff.net>
-References: <pull.1635.git.1704822817.gitgitgadget@gmail.com>
- <cf7848edffca27931aad02c0652adf2715320d35.1704822817.git.gitgitgadget@gmail.com>
- <20240110103812.GB16674@coredump.intra.peff.net>
- <d852ad72-32c4-4b0f-8f34-e8b38b7f71ad@github.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: Justin Tobler via GitGitGadget <gitgitgadget@gmail.com>,
+	git@vger.kernel.org, Justin Tobler <jltobler@gmail.com>
+Subject: Re: [PATCH 1/2] t1401: generalize reference locking
+Message-ID: <20240112070142.GD618729@coredump.intra.peff.net>
+References: <pull.1634.git.1704912750.gitgitgadget@gmail.com>
+ <cb78b549e5e826ffef39c55bd726164e6b7bb755.1704912750.git.gitgitgadget@gmail.com>
+ <20240111071329.GC48154@coredump.intra.peff.net>
+ <ZZ_MPK2huH2j6CGd@tanuki>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -32,27 +32,43 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <d852ad72-32c4-4b0f-8f34-e8b38b7f71ad@github.com>
+In-Reply-To: <ZZ_MPK2huH2j6CGd@tanuki>
 
-On Thu, Jan 11, 2024 at 08:54:47AM -0800, Victoria Dye wrote:
+On Thu, Jan 11, 2024 at 12:08:44PM +0100, Patrick Steinhardt wrote:
 
-> > All of this is inherited from the existing check_name() code, which I
-> > think has all of the same bugs. The test scripts all just use the stdin
-> > mode, so they don't notice. It's not too hard to fix, but maybe it's
-> > worth just ripping out the unreachable code.
+> > (note that you get a different error message if the refs are packed,
+> > since there we can notice the d/f conflict manually).
 > 
-> Thanks for pointing out those issues, I think removing the command line
-> input mode is the way to go. The description of the 'check_name()' mentions
-> that the stdin mode was "primarily intended for testing". But as 85321a346b5
-> (submodule--helper: move "check-name" to a test-tool, 2022-09-01) pointed
-> out, 'check_name()' was never used outside of tests anyway, so whatever use
-> case was imagined for the command line mode never seemed to have existed. 
+> If all we care for is the exit code then this would work for the
+> reftable backend, too:
 > 
-> Combine that with the fact that the command line mode is so different from
-> the stdin mode (non-zero exit code for invalid names, prints nothing vs.
-> zero exit code, prints valid names), there don't seem to be any real
-> downsides to removing the unused code.
+> ```
+> $ git init --ref-format=reftable repo
+> Initialized empty Git repository in /tmp/repo/.git/
+> $ cd repo/
+> $ git commit --allow-empty --message message
+> [main (root-commit) c2512d3] x
+> $ git symbolic-ref refs/heads refs/heads/foo
+> $ echo $?
+> 1
+> ```
 
-That sounds like a good plan to me. :)
+Yep, exactly. That should work for both and cover what the test was
+originally trying to do.
+
+> A bit unfortunate that there is no proper error message in that case,
+> but that is a different topic.
+
+Yeah, I would call that an outright bug. It does not have to be part of
+this patch, but is worth fixing (and testing). I suspect it's not going
+to be the only place with this problem. Most of the files-backend ref
+code is very happy to spew to stdout using error(), but the reftable
+code, having been written from a more lib-conscious perspective,
+probably doesn't.
+
+The obvious quick fix is to sprinkle more error() into the reftable
+code. But in the longer term, I think the right direction is that the
+ref code should accept an error strbuf or similar mechanism to propagate
+human-readable error test to the caller.
 
 -Peff
