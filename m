@@ -1,74 +1,112 @@
-Received: from mail-yb1-f201.google.com (mail-yb1-f201.google.com [209.85.219.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5CAB17C8D
-	for <git@vger.kernel.org>; Fri, 12 Jan 2024 18:04:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--linusa.bounces.google.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31F8B25602
+	for <git@vger.kernel.org>; Fri, 12 Jan 2024 18:13:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="pzqdvIcg"
-Received: by mail-yb1-f201.google.com with SMTP id 3f1490d57ef6-dbeac1f5045so8250356276.1
-        for <git@vger.kernel.org>; Fri, 12 Jan 2024 10:04:45 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1705082684; x=1705687484; darn=vger.kernel.org;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=7L+nGtSpR1VdWC6tzxL/aVzSpMg7iZZQ2gGs2OmRVcA=;
-        b=pzqdvIcgpImMcejwLoIEF6sV427S9phkD8pOiE3v2HIG+6Q1aUezfWU7bHTtIm/cNq
-         hD+AXIswzRpVLppasOrTLWBjxrnVXUHIB/Aq0x1GJ2XkcUK8hLSzdHITDcGaikbK5WFO
-         GdYdXj00oPJ/9r3K3uD+7zQib5A2u/PAU2Hr4lzLwg/cJz+rAYlxSK0852bg3U+U4Nes
-         7sO4j7E8xb2wA/7CpvGMAwS0W6RNE7YmPOkbNesZaukehHj63EPv1hUgeXYBfvEskz1i
-         7/ruNdC558YmuPQvwDCgC+EMEtdX5n9GrRfP3dw8nvrj8ogPubfnOyoYFILegnrAnfIw
-         pebg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1705082684; x=1705687484;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=7L+nGtSpR1VdWC6tzxL/aVzSpMg7iZZQ2gGs2OmRVcA=;
-        b=TwE7PclTfVXNBWnwcU5UnmCOuejDcbmepT1p42zvh3iQaIy5wX/NIUjbLt3PHR+HRP
-         2NtjO8UpT6XXOw4a2BubrZLxwiHqH81wbwn2sbhdyGsns5dnXm2Sn7eO0R5qAGlc81/y
-         6EP1zm2LIfM3bAcV1dvn5sKrlitVWXYW0KKKuD/UglmaxoTyVGbNDCsX1XiGJmKQvhZd
-         +9q9Yi61I47xOWVbvfARDgt5T75yY9n9measA6cdBnLIK1C9jNzGGubfVsvmCrTsKuFV
-         eWRB3zFTrWIWI7nqZx/P66FfuH3DsAokVmXW1CuvE7Cwr/JD9H5BsRJn5hK9TWuLMpNR
-         v5PA==
-X-Gm-Message-State: AOJu0YzTVDXJM8KvQknFIJJ9keZDaGGjQ1F/yVTayLkgdTVBzK1fxQSz
-	X1z2Cf+dANfEPzXMyRtdZg66yOw9ia5fReXwUg==
-X-Google-Smtp-Source: AGHT+IGW2eQO/LfzQHhUGeMST3vV6U2Ldecc66mL87hHblWGoVhDhKBNlGc4BtOQL5AW+lkHZMQtV7bjYI0=
-X-Received: from fine.c.googlers.com ([fda3:e722:ac3:cc00:7f:e700:c0a8:2221])
- (user=linusa job=sendgmr) by 2002:a05:6902:2681:b0:dbd:ee44:8908 with SMTP id
- dx1-20020a056902268100b00dbdee448908mr510939ybb.0.1705082684642; Fri, 12 Jan
- 2024 10:04:44 -0800 (PST)
-Date: Fri, 12 Jan 2024 10:04:43 -0800
-In-Reply-To: <20240112074138.GH618729@coredump.intra.peff.net>
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="Pe5cHmrH"
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 52C781C3922;
+	Fri, 12 Jan 2024 13:13:08 -0500 (EST)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=04f/H7DzByL06G0aGJ5gF4JbUEmTotDm3WI89O
+	BgzT0=; b=Pe5cHmrH7Lg2K4I98phUReStOaXtW4r75U37X2EGou6H3iQ2Pt4id4
+	DIMzaanzE9v528V4bQBENNhqb/Nr7BR7dqZlE3mltwhI4kN5ud9yP0m1XJZCiIOg
+	KYg9LcqGKMQMd7Sw4xpUVdQ2CKsnaXVJCpFxF+AMRt4bgsAWioRAI=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 0A9BA1C391E;
+	Fri, 12 Jan 2024 13:13:08 -0500 (EST)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.200.93])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id CD7C01C3915;
+	Fri, 12 Jan 2024 13:13:06 -0500 (EST)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Jeff King <peff@peff.net>
+Cc: Michael Lohmann <mi.al.lohmann@gmail.com>,  git@vger.kernel.org,
+  phillip.wood123@gmail.com,  phillip.wood@dunelm.org.uk,
+  wanja.hentze@bevuta.com
+Subject: Re: [PATCH v3] builtin/revert.c: refactor using an enum for cmd-action
+In-Reply-To: <20240112072404.GF618729@coredump.intra.peff.net> (Jeff King's
+	message of "Fri, 12 Jan 2024 02:24:04 -0500")
+References: <xmqqsf33fy3t.fsf@gitster.g>
+	<20240111200627.64199-1-mi.al.lohmann@gmail.com>
+	<20240112072404.GF618729@coredump.intra.peff.net>
+Date: Fri, 12 Jan 2024 10:13:03 -0800
+Message-ID: <xmqqil3ybets.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-References: <pull.1640.git.1705043195997.gitgitgadget@gmail.com> <20240112074138.GH618729@coredump.intra.peff.net>
-Message-ID: <owlyo7dqig1w.fsf@fine.c.googlers.com>
-Subject: Re: [PATCH] strvec: use correct member name in comments
-From: Linus Arver <linusa@google.com>
-To: Jeff King <peff@peff.net>, Linus Arver via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 3C2CB61E-B176-11EE-8F20-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
 
 Jeff King <peff@peff.net> writes:
 
-> The source of the problem is that the patch originally used
-> "items" in the struct, too
+> But your way of seeing it also makes sense to me. I think I just find
+> the "START" name jarring because we do not use that word elsewhere to
+> describe the action.
 
-Ah, that makes sense.
+Thanks.  I forgot to say that I share the same feeling, both about
+"NONE could mean no-op" (but then seriously why would anybody sane
+want that?) and "START is not how we spell these things".  I can see
+how DEFAULT could make sense, but if somebody picked DEFAULT between
+two sensible choices NONE and DEFAULT here, especially if they claim
+that they started this enum to mimick what is done in another place,
+and after they were told that the other place they are imitating
+follows the convention of using NONE for "nothing specified, so use
+default", I would have to say that they are trying to be different
+for the sake of being different, which is not a good sign.  I'd want
+our contributors to be original where being original matters more.
 
-> As you note, we still call use "items" for the vector passed in to
-> pushv. I think that is OK, and there is no real need to use the terse
-> "v" there (it is also purely internal; the declaration in strvec.h does
-> not name it at all).
+>> +{
+>> +	switch (cmd) {
+>> +	case ACTION_CONTINUE: return "--continue";
+>> +	case ACTION_SKIP: return "--skip";
+>> +	case ACTION_ABORT: return "--abort";
+>> +	case ACTION_QUIT: return "--quit";
+>> +	case ACTION_START: BUG("no commandline flag for ACTION_START");
+>> +	}
+>> +}
+>
+> I find this perfectly readable, and is likely the way I'd write it in a
+> personal project. But in this project I find we tend to stick to more
+> conventional formatting, like:
+>
+>   switch (cmd) {
+>   case ACTION_CONTINUE:
+> 	return "--continue";
+>   case ACTION_SKIP:
+> 	return "--skip";
+>   ...and so on...
 
-Indeed. Perhaps I should have included this in my commit message.
+Same.  I try to do the latter while working on this project, but I
+do admit I use the former in small one-page tools I write outside
+the context of this project.
 
-Side note: should we start naming the parameters in strvec.h? I would
-think that it wouldn't hurt at this point (as the API is pretty stable).
-If you think that's worth it, I could reroll to include that in this
-series (and also improve my commit message for this patch).
+>> +	if (cmd != ACTION_START)
+>
+> Likewise here I'd probably leave this as "if (cmd)".
+
+I 100% agree with the suggestion to explicitly define something to
+be 0 when we are going to use it for its Boolean value.  So an
+alternative would be to treat all ACTION_* enum values the same, and
+not define the first one explicitly to 0.  
+
+Especially in the context of a patch that wants to turn if/elseif
+cascades to switch, I would suspect that the latter, as switch/case
+does not special case the falsehood among other possible values of
+integer type, might be easier to maintain in the longer term.
+
+Thanks.
+
