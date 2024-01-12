@@ -1,94 +1,109 @@
-Received: from mail-wr1-f44.google.com (mail-wr1-f44.google.com [209.85.221.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E995416418
-	for <git@vger.kernel.org>; Fri, 12 Jan 2024 21:07:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E364C15AFA
+	for <git@vger.kernel.org>; Fri, 12 Jan 2024 21:14:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QgAl86w8"
-Received: by mail-wr1-f44.google.com with SMTP id ffacd0b85a97d-336788cb261so5463088f8f.3
-        for <git@vger.kernel.org>; Fri, 12 Jan 2024 13:07:10 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1705093629; x=1705698429; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:sender:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=ZWwqDICoOOysd6GX9YX8an6i8gvUrRPZ4JPnZPhpfd0=;
-        b=QgAl86w86AoKG1Fs+HGQ5qQXaz8PZPS2X39tjE4T3C8HTaNaf+BJENoSklbAowxXfl
-         DIK4rYZyjZlK/IZKUIuZFCL8rGXvr6FEpjMJOaxHNSmSuYKiagu0QxKUvU+CNUXnBuWd
-         CKb5kCnF5ec+1an6B4hGWAVvReIjZ7Uq3EjqLw07On3UUnBFj+iwX8OPmeyKbOaPxIrQ
-         8HQOrX8fuXLQTNwqT1qOIEwlvGxym8WoAf6VmVSasagnd8XIlcXLkElFO7v7+0Yxw5cv
-         DAQMEuPlaq9rBTjgbTQLcQ/XKW9HsWsMP9ISDcsLB3DRuX6JpNrcn4AjoBJaqXbr785G
-         X6Hg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1705093629; x=1705698429;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:sender:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=ZWwqDICoOOysd6GX9YX8an6i8gvUrRPZ4JPnZPhpfd0=;
-        b=FxaNM1SYEUIdU0sM3hepFpGGB4k904WJZACjqP4Xxa5t+cEZc7RYraUID/JjL3RTsx
-         Hb1de+o4Ox3qifLIBdKpoCriilSF18KnmPfdIzqb7iQud/UsKJO4jHunUs8TuKxlbyFe
-         rfpqrRbL0swj9WyhfHBv6mRlhVdYYCT0/JNPyPAp8fNdX0muMKSD89ThGt/UUwXwsfHs
-         PbMKlOuF7RxGp+Q6lZ/88bAVVcENntbSjXOsaiGZBklG4Z9ohiIfUrPKEC5NkIv0QbzH
-         JUjZw0A5ffL2Byw3PL8Py1iXCHIh99oakeBzakUQENBHHksC0DecRypCDfnUUiPq1m3d
-         hIIA==
-X-Gm-Message-State: AOJu0YzMYYu0FOdSndIOXta7EUlFzHkBmWwqhPxfYED9tkYf6genPF2u
-	TEy3o2c6n9Gnm81w2OdVel8=
-X-Google-Smtp-Source: AGHT+IHZWl+ds3Qc1YLNouJxYolOpkgcBMuwFPQjnqkRnDgAQCfr0TEz90XeYpb4k+LJAIfkf5bKHw==
-X-Received: by 2002:a05:6000:14d:b0:336:74c5:e597 with SMTP id r13-20020a056000014d00b0033674c5e597mr1040812wrx.97.1705093628942;
-        Fri, 12 Jan 2024 13:07:08 -0800 (PST)
-Received: from Michaels-MBP.fritz.box (2001-4dd4-c452-0-4d85-f76e-9351-ffeb.ipv6dyn.netcologne.de. [2001:4dd4:c452:0:4d85:f76e:9351:ffeb])
-        by smtp.gmail.com with ESMTPSA id d6-20020a056000114600b003366a9cb0d1sm4788809wrx.92.2024.01.12.13.07.08
-        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Fri, 12 Jan 2024 13:07:08 -0800 (PST)
-Sender: Michael L <mial.lohmann@gmail.com>
-From: Michael Lohmann <mi.al.lohmann@gmail.com>
-To: gitster@pobox.com
-Cc: git@vger.kernel.org,
-	mi.al.lohmann@gmail.com,
-	phillip.wood123@gmail.com
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="A1VLBq40"
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id 2B895284AF;
+	Fri, 12 Jan 2024 16:14:11 -0500 (EST)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=uLQsXY3csecM
+	DyYD7haSgRk0ir73b91IGUmV98FeVtQ=; b=A1VLBq40UvEPp0ydM2t882yfzJY2
+	DU9RoB2QD+Z9OjCYQNgc+AS21nY3rsMrtydlnbTSyWkLou87nRKdr/D1HAS+X3dw
+	stFD/qiiccyf1Zp0LMTD7a2cPqIVQmqxiNW9U7Mk9mZLcJoemMnLea1nMWjmj71v
+	7wqeBN/fFtFp63c=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id 240E4284AE;
+	Fri, 12 Jan 2024 16:14:11 -0500 (EST)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.200.93])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 177FD284AD;
+	Fri, 12 Jan 2024 16:14:07 -0500 (EST)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Michael Lohmann <mi.al.lohmann@gmail.com>
+Cc: phillip.wood123@gmail.com,  git@vger.kernel.org,
+  phillip.wood@dunelm.org.uk
 Subject: Re: [RFC PATCH] `log --merge` also for rebase/cherry pick/revert
-Date: Fri, 12 Jan 2024 22:06:50 +0100
-Message-Id: <20240112210650.5455-1-mi.al.lohmann@gmail.com>
-X-Mailer: git-send-email 2.39.3 (Apple Git-145)
-In-Reply-To: <xmqqr0im9ub9.fsf@gitster.g>
-References: <xmqqr0im9ub9.fsf@gitster.g>
+In-Reply-To: <20240112150346.73735-1-mi.al.lohmann@gmail.com> (Michael
+	Lohmann's message of "Fri, 12 Jan 2024 16:03:46 +0100")
+References: <47a4418b-68bf-4850-ba8b-1a5264f923e4@gmail.com>
+	<20240112150346.73735-1-mi.al.lohmann@gmail.com>
+Date: Fri, 12 Jan 2024 13:14:05 -0800
+Message-ID: <xmqqil3y9rvm.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID:
+ 855FAA80-B18F-11EE-A681-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
+Content-Transfer-Encoding: quoted-printable
 
-> > tells us. Indeed there HEAD and CHERRY_PICK_HEAD may not share a
-> > common ancestor. As I say I've not used "git log --merge" so maybe I'm
-> > missing the reason why it would be useful when cherry-picking or
-> > rebasing.
-> 
-> Good question.  It is the whole point of cherry-pick that
-> CHERRY_PICK_HEAD and the current HEAD may not have any meaningful
-> ancestry relationship, so yes, it is questionable to use the same
-> logic for "log --merge" between HEAD...CHERRY_PICK_HEAD, while using
-> HEAD...MERGE_HEAD does make perfect sense.
+Michael Lohmann <mi.al.lohmann@gmail.com> writes:
 
-I tried to say it in [1]: a merge also does not need a common ancestor! Try it:
+> Almost, but not quite: "git log =E2=80=94merge" only shows the commits =
+touching the
+> conflict, so it would be equivalent to (I think):
+>
+>    git log HEAD CHERRY_PICK_HEAD ^$(git merge-base HEAD CHERRY_PICK_HEA=
+D) -- $(git diff --name-only --diff-filter=3DU --relative)
+>
+> (or replace CHERRY_PICK with one of the other actions)
 
-   git init test
-   cd test
-   echo something > README.md
-   git add --all
-   git commit -m "initial commit"
-   git remote add origin_git git://git.kernel.org/pub/scm/git/git.git
-   git fetch origin_git master     # obviously no common ancestor
-   git merge --allow-unrelated-histories origin_git/master
-   # merge conflict
-   git log --merge    # Still loggs all the conflicting commits
+It can certainly _reduce_ the noise, but I am not sure if it works
+over the right history segment.  Let me think aloud a bit.
 
-So indeed the command that Phillip wrote is not equivalent and the existing
-logic already can deal with unrelated histories. Or am I misunderstanding?
+Let's imagine that in a history forked long time ago,
 
-Michael
+ O----O----O----O----X HEAD
+  \
+   Z---Z---Z---Z---A---B CHERRY_PICK_HEAD
 
-[1] https://lore.kernel.org/git/20240112150346.73735-1-mi.al.lohmann@gmail.com/
+where all commits modified the same path in question that you saw
+conflicts in when your "git cherry-pick B" stopped.
+
+I do not know what to think about the changes to that path by the
+commits denoted by 'O', but the changes done to the path by commits
+denoted by 'Z' should have absolutely no relevance, as the whole
+point of cherry-picking B relative to A is because we do not care
+about what Zs did, no?  For that matter, given that how we structure
+the 3-way merge for such a cherry-pick to "move from X the same way
+as you would move from A to B", how you got to X (i.e. Os) should
+not matter, either.
+
+On the other hand, such a conflict may arise from the fact that Os
+and Zs made changes differently to cause the contents of the path at
+X and A differ significantly.  So, OK, I can buy your argument that
+what Os and Zs to the conflicted path did can be interesting when
+understanding the conflict during such a cherry-pick.
+
+>> Indeed there HEAD and CHERRY_PICK_HEAD may not share a common ancestor=
+.
+>
+> True - but same for MERGE_HEAD ("git merge --allow-unrelated-histories"=
+). I
+
+But that is very different, isn't it?  Merging two unrelated
+histories is like merging two histories where the common ancestor
+had an empty tree, i.e.
+
+      o---o---o---X HEAD
+     /
+   (v) an imaginary ancestor with an empty tree
+     \
+      o---o---o---O MERGE_HEAD
+
+so it is a reasonable degenerated behaviour to consider what all
+commits on both sides did to the paths in question.
