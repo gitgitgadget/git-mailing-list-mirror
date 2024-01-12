@@ -1,172 +1,88 @@
-Received: from impout006.msg.chrl.nc.charter.net (impout006aa.msg.chrl.nc.charter.net [47.43.20.30])
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 389C32260C
-	for <git@vger.kernel.org>; Fri, 12 Jan 2024 17:21:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=charter.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=charter.net
-Received: from localhost.localdomain ([97.71.114.58])
-	by cmsmtp with ESMTPA
-	id OLBYrJO8946f3OLCBrXnuR; Fri, 12 Jan 2024 17:19:52 +0000
-Authentication-Results: charter.net; auth=pass (LOGIN)
- smtp.auth=ericsunshine@charter.net
-X-Authority-Analysis: v=2.4 cv=RNOgoqu+ c=1 sm=1 tr=0 ts=65a174b8
- a=4h87Vkt5vDwEBqoyvSX4iA==:117 a=4h87Vkt5vDwEBqoyvSX4iA==:17 a=ybZZDoGAAAAA:8
- a=BCjA09oAAAAA:8 a=VwQbUJbxAAAA:8 a=WzvBV3xypB2YBKiNti4A:9
- a=0RhZnL1DYvcuLYC8JZ5M:22 a=jYKBPJSq9nmHKCndOPe9:22 a=AjGcO6oz07-iQ99wixmX:22
-From: Eric Sunshine <ericsunshine@charter.net>
-To: git@vger.kernel.org
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Benji Kay <okaybenji@gmail.com>,
-	Eric Sunshine <sunshine@sunshineco.com>
-Subject: [PATCH] messages: mark some strings with "up-to-date" not to touch
-Date: Fri, 12 Jan 2024 12:19:10 -0500
-Message-ID: <20240112171910.11131-1-ericsunshine@charter.net>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <xmqqjzofec0e.fsf@gitster.g>
-References: <xmqqjzofec0e.fsf@gitster.g>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABFA722608
+	for <git@vger.kernel.org>; Fri, 12 Jan 2024 17:52:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="ovc6LqB8"
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 3046F1E3D59;
+	Fri, 12 Jan 2024 12:52:10 -0500 (EST)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=+sRRFdsOSy4K
+	Yq1zRwuoww/Sp5Lz/CGDMdJQ/drIKzE=; b=ovc6LqB8LS6hgBcNROrvPKc5quMl
+	ZgZPmYJHugqqLMQMgE9imYJXFMo4hPXCuVmZSpE4KF8LZSJo1Tq/ePEVuZa46q8C
+	lXKGD6bA+VSdwm9mM6NoYs1d59YGqWWL59Mv3xSN4cUvnja9Hp4SNwPx9BLChBGj
+	1DuDVLNAbFeKAVg=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 27ED21E3D58;
+	Fri, 12 Jan 2024 12:52:10 -0500 (EST)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.200.93])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 85F041E3D57;
+	Fri, 12 Jan 2024 12:52:09 -0500 (EST)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: =?utf-8?Q?Rub=C3=A9n?= Justo <rjusto@gmail.com>
+Cc: Git List <git@vger.kernel.org>
+Subject: Re: [PATCH v2 2/3] advice: fix an unexpected leading space
+In-Reply-To: <60a90f4e-b22c-46cb-a79f-a0e01e711732@gmail.com>
+ (=?utf-8?Q?=22Rub=C3=A9n?= Justo"'s
+	message of "Fri, 12 Jan 2024 10:10:01 +0100")
+References: <04c3556f-0242-4ac3-b94a-be824cd2004a@gmail.com>
+	<4aedc15c-4b3f-4f5e-abea-581b501600f8@gmail.com>
+	<d5fbdb05-d16a-4390-946e-22a5a7a1b56a@gmail.com>
+	<xmqqa5pbcpnx.fsf@gitster.g>
+	<60a90f4e-b22c-46cb-a79f-a0e01e711732@gmail.com>
+Date: Fri, 12 Jan 2024 09:52:08 -0800
+Message-ID: <xmqqsf32bfsn.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-CMAE-Envelope: MS4xfEN94/j7eePoDRHeL1VwkAMywCub2TlGz9Z4zerkarSbDn1jtNjTi164DIWDN0PbB9Y6QEfi1f/KhNOnMNuT2/U8UvuAQgSy8ERu+xVqVUWlqQd2tE8F
- Du6U4wvC0CF+AreUzhOpo30lprcXzPh0jAP2whbzjsOBEIfe6ZpSWwm8O6xB/wW9eehfJW6JpVJlqEgFEI4ob/N9SZS02vv9HlqJcnSBkte7ARmRmGRiAKpX
- tOBAdoXU23VIPQJ7vPOpePoOU/Z+fVpT2dGXNjGNRS46jvyZ78Sw2Z47TMeGUvYX
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID:
+ 4EC0769C-B173-11EE-8A23-25B3960A682E-77302942!pb-smtp2.pobox.com
+Content-Transfer-Encoding: quoted-printable
 
-From: Junio C Hamano <gitster@pobox.com>
+Rub=C3=A9n Justo <rjusto@gmail.com> writes:
 
-The treewide clean-up of "up-to-date" strings done in 7560f547
-(treewide: correct several "up-to-date" to "up to date", 2017-08-23)
-deliberately left some out, but unlike the lines that were changed
-by the commit, the lines that were deliberately left untouched by
-the commit is impossible to ask "git blame" to link back to the
-commit that did not touch them.
+> On 11-ene-2024 17:21:22, Junio C Hamano wrote:
+>> Rub=C3=A9n Justo <rjusto@gmail.com> writes:
+>>=20
+>> > [ ... ]
+>> > diff --git a/advice.h b/advice.h
+>> > index 0f584163f5..2affbe1426 100644
+>> > --- a/advice.h
+>> > +++ b/advice.h
+>> > @@ -49,6 +49,7 @@ struct string_list;
+>> >         ADVICE_UPDATE_SPARSE_PATH,
+>> >         ADVICE_WAITING_FOR_EDITOR,
+>> >         ADVICE_SKIPPED_CHERRY_PICKS,
+>> > +       ADVICE_WORKTREE_ADD_ORPHAN,
+>> >  };
+>> >
+>> > Note the hunk header, instead of a much more expected:
+>> >
+>> > @@ -49,6 +49,7 @@ enum advice_type
+>>=20
+>> Next time, don't include "diff" output in the proposed log message
+>> without indenting.  It makes it hard to read and parse.
+>
+> My fault.  Sorry.
+>
+> Is there any way to make git-format-patch issue a warning or refuse to
+> continue when the resulting patch is not going to be accepted by git-am=
+?
 
-Let's do the second best thing, leave a short comment near them
-explaining why those strings should not be modified or localized.
-
-[es: make in-code comment more developer-friendly]
-
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
-Signed-off-by: Eric Sunshine <sunshine@sunshineco.com>
----
-
-This is a reroll of Junio's[1] v1 which adds an in-code comment
-explaining that "up-to-date" messages in plumbing commands should not be
-changed, but doesn't explain _why_, which forces readers to dig through
-project history or the mailing list to understand the motivation. v2
-changes the comment to be more developer-friendly by adding the
-explanation directly to the comment.
-
-[1]: https://lore.kernel.org/git/xmqqjzofec0e.fsf@gitster.g/
-
-Range-diff:
-1:  36596051c9 ! 1:  782169e0b1 messages: mark some strings with "up-to-date" not to touch
-    @@ Commit message
-         the commit is impossible to ask "git blame" to link back to the
-         commit that did not touch them.
-     
-    -    Let's do the second best thing, leave a short comment near them, to
-    -    make it possible for those who are motivated enough to find out why
-    -    we decided to tell them "do not modify".
-    +    Let's do the second best thing, leave a short comment near them
-    +    explaining why those strings should not be modified or localized.
-    +
-    +    [es: make in-code comment more developer-friendly]
-     
-         Signed-off-by: Junio C Hamano <gitster@pobox.com>
-    +    Signed-off-by: Eric Sunshine <sunshine@sunshineco.com>
-     
-      ## builtin/send-pack.c ##
-     @@ builtin/send-pack.c: int cmd_send_pack(int argc, const char **argv, const char *prefix)
-      	}
-      
-      	if (!ret && !transport_refs_pushed(remote_refs))
-    -+		/* do not modify this string */
-    ++		/* stable plumbing output; do not modify or localize */
-      		fprintf(stderr, "Everything up-to-date\n");
-      
-      	return ret;
-    @@ http-push.c: int cmd_main(int argc, const char **argv)
-      
-      		if (oideq(&ref->old_oid, &ref->peer_ref->new_oid)) {
-      			if (push_verbosely)
-    -+				/* do not modify this string */
-    ++				/* stable plumbing output; do not modify or localize */
-      				fprintf(stderr, "'%s': up-to-date\n", ref->name);
-      			if (helper_status)
-      				printf("ok %s up to date\n", ref->name);
-    @@ http-push.c: int cmd_main(int argc, const char **argv)
-      				 * commits at the remote end and likely
-      				 * we were not up to date to begin with.
-      				 */
-    -+				/* do not modify this string */
-    ++				/* stable plumbing output; do not modify or localize */
-      				error("remote '%s' is not an ancestor of\n"
-      				      "local '%s'.\n"
-      				      "Maybe you are not up-to-date and "
-    @@ transport.c: int transport_push(struct repository *r,
-      	if (porcelain && !push_ret)
-      		puts("Done");
-      	else if (!quiet && !ret && !transport_refs_pushed(remote_refs))
-    -+		/* do not modify this string */
-    ++		/* stable plumbing output; do not modify or localize */
-      		fprintf(stderr, "Everything up-to-date\n");
-      
-      done:
-
- builtin/send-pack.c | 1 +
- http-push.c         | 2 ++
- transport.c         | 1 +
- 3 files changed, 4 insertions(+)
-
-diff --git a/builtin/send-pack.c b/builtin/send-pack.c
-index b7183be970..3df9eaad09 100644
---- a/builtin/send-pack.c
-+++ b/builtin/send-pack.c
-@@ -333,6 +333,7 @@ int cmd_send_pack(int argc, const char **argv, const char *prefix)
- 	}
- 
- 	if (!ret && !transport_refs_pushed(remote_refs))
-+		/* stable plumbing output; do not modify or localize */
- 		fprintf(stderr, "Everything up-to-date\n");
- 
- 	return ret;
-diff --git a/http-push.c b/http-push.c
-index b4d0b2a6aa..12d1113741 100644
---- a/http-push.c
-+++ b/http-push.c
-@@ -1851,6 +1851,7 @@ int cmd_main(int argc, const char **argv)
- 
- 		if (oideq(&ref->old_oid, &ref->peer_ref->new_oid)) {
- 			if (push_verbosely)
-+				/* stable plumbing output; do not modify or localize */
- 				fprintf(stderr, "'%s': up-to-date\n", ref->name);
- 			if (helper_status)
- 				printf("ok %s up to date\n", ref->name);
-@@ -1871,6 +1872,7 @@ int cmd_main(int argc, const char **argv)
- 				 * commits at the remote end and likely
- 				 * we were not up to date to begin with.
- 				 */
-+				/* stable plumbing output; do not modify or localize */
- 				error("remote '%s' is not an ancestor of\n"
- 				      "local '%s'.\n"
- 				      "Maybe you are not up-to-date and "
-diff --git a/transport.c b/transport.c
-index bd7899e9bf..df518ead70 100644
---- a/transport.c
-+++ b/transport.c
-@@ -1467,6 +1467,7 @@ int transport_push(struct repository *r,
- 	if (porcelain && !push_ret)
- 		puts("Done");
- 	else if (!quiet && !ret && !transport_refs_pushed(remote_refs))
-+		/* stable plumbing output; do not modify or localize */
- 		fprintf(stderr, "Everything up-to-date\n");
- 
- done:
--- 
-2.43.0
-
+I meant it as primarily to help human readers, but you are right, it
+will break "am".  How about doing it in the pre-commit hook?
