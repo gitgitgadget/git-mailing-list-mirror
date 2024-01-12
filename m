@@ -1,126 +1,74 @@
-Received: from mail-pf1-f176.google.com (mail-pf1-f176.google.com [209.85.210.176])
+Received: from mail-yb1-f201.google.com (mail-yb1-f201.google.com [209.85.219.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E95D71AAA3
-	for <git@vger.kernel.org>; Fri, 12 Jan 2024 18:02:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5CAB17C8D
+	for <git@vger.kernel.org>; Fri, 12 Jan 2024 18:04:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--linusa.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XM2IxNHq"
-Received: by mail-pf1-f176.google.com with SMTP id d2e1a72fcca58-6d9bba6d773so5925395b3a.1
-        for <git@vger.kernel.org>; Fri, 12 Jan 2024 10:02:10 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="pzqdvIcg"
+Received: by mail-yb1-f201.google.com with SMTP id 3f1490d57ef6-dbeac1f5045so8250356276.1
+        for <git@vger.kernel.org>; Fri, 12 Jan 2024 10:04:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1705082530; x=1705687330; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=s/pC8ZrjzvsxdmV5T25mx1y5yFLX99l0Reay6asoxm0=;
-        b=XM2IxNHqa4kbrq5Fs/B4Vk4eDRqVaZagIUdw+1+7jEPT3qaEoy38jpId9rCux5cymi
-         POqkVr4hkHlBZr5zxGw7orG2xsLAuMBuIx+ogmNkOY4HU5dfGJ0ZUK9KHiutXS6LaxUs
-         ubDcIaSS79kx1LPBJcqrhGjlK+LWrqhQd3V+xBjDbyWWl0UrxJUqgDhjjqume47qfIq5
-         gKbMTRccSvyceDGgdw8HOf16T+ACD5ecw2gkXeiQ5g9sc7ZvV76WWhEGvuZMH6MQkJ+s
-         YRR65SV7hNiS72/PTawYy/57zldZMi7BiXfwrURi8KsCn7SvEgw87DedJMYzFpQs9esb
-         GVhw==
+        d=google.com; s=20230601; t=1705082684; x=1705687484; darn=vger.kernel.org;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:from:to:cc:subject:date:message-id:reply-to;
+        bh=7L+nGtSpR1VdWC6tzxL/aVzSpMg7iZZQ2gGs2OmRVcA=;
+        b=pzqdvIcgpImMcejwLoIEF6sV427S9phkD8pOiE3v2HIG+6Q1aUezfWU7bHTtIm/cNq
+         hD+AXIswzRpVLppasOrTLWBjxrnVXUHIB/Aq0x1GJ2XkcUK8hLSzdHITDcGaikbK5WFO
+         GdYdXj00oPJ/9r3K3uD+7zQib5A2u/PAU2Hr4lzLwg/cJz+rAYlxSK0852bg3U+U4Nes
+         7sO4j7E8xb2wA/7CpvGMAwS0W6RNE7YmPOkbNesZaukehHj63EPv1hUgeXYBfvEskz1i
+         7/ruNdC558YmuPQvwDCgC+EMEtdX5n9GrRfP3dw8nvrj8ogPubfnOyoYFILegnrAnfIw
+         pebg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1705082530; x=1705687330;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=s/pC8ZrjzvsxdmV5T25mx1y5yFLX99l0Reay6asoxm0=;
-        b=T+S5iybBt1c+RO3nZl8gvvATYSFf+LTC6rU0froWjLWoQwLIlW6mq8p617C/Y7plMU
-         r4MKGavyyk/XHaXqv7tHgtVNKhUGg4+Wph0VC3NngZn/CnQt+n15lrkiVOCMJslfC6+q
-         pF3CHrqNhB35WRzy+hNnaqKObV42tKWIYkLO+WYNCdtZrQdpIByyRAdU0CZTWJSLfTdK
-         iR5R+j3BQo8sGCTybjAIUhA+SWmVd7/kn0tw0OSBipQaqj8j7P+REz5mBI1G57HlRv3l
-         uOuWIEjAz+PxKkC4xMwLJRn5q1IODHixsBO59WsRCHZ/RKji2MRTrpFAIS1PyDdN4yTv
-         2svw==
-X-Gm-Message-State: AOJu0YxkGjeJTZormnRgIYrvDuDlf2WRyWgapEfvGpIrAmHvghP5XPOv
-	dcIWcefrPWQJinn7stD9qcesO9ygUxrSzChBDQo=
-X-Google-Smtp-Source: AGHT+IFO6X2SfODWA+8OefVi2yOAvPxLSxzSZUWmwOSIywFiZXNSy6u/5yWl+y2NwbrNuK4ZyIivAg==
-X-Received: by 2002:a17:90a:ea01:b0:28e:783:9cd1 with SMTP id w1-20020a17090aea0100b0028e07839cd1mr1168965pjy.40.1705082529714;
-        Fri, 12 Jan 2024 10:02:09 -0800 (PST)
-Received: from localhost.localdomain ([2402:a00:401:a99b:65e8:f5a4:7adb:5726])
-        by smtp.gmail.com with ESMTPSA id ph8-20020a17090b3bc800b0028db69af4a4sm4450352pjb.4.2024.01.12.10.02.07
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 12 Jan 2024 10:02:09 -0800 (PST)
-From: Ghanshyam Thakkar <shyamthakkar001@gmail.com>
-To: git@vger.kernel.org
-Cc: gitster@pobox.com,
-	phillip.wood123@gmail.com,
-	christian.couder@gmail.com,
-	Ghanshyam Thakkar <shyamthakkar001@gmail.com>
-Subject: [PATCH v4 2/2] t7501: add tests for --amend --signoff
-Date: Fri, 12 Jan 2024 23:30:17 +0530
-Message-ID: <20240112180109.59350-3-shyamthakkar001@gmail.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240112180109.59350-1-shyamthakkar001@gmail.com>
-References: <20240110163622.51182-2-shyamthakkar001@gmail.com>
- <20240112180109.59350-1-shyamthakkar001@gmail.com>
+        d=1e100.net; s=20230601; t=1705082684; x=1705687484;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=7L+nGtSpR1VdWC6tzxL/aVzSpMg7iZZQ2gGs2OmRVcA=;
+        b=TwE7PclTfVXNBWnwcU5UnmCOuejDcbmepT1p42zvh3iQaIy5wX/NIUjbLt3PHR+HRP
+         2NtjO8UpT6XXOw4a2BubrZLxwiHqH81wbwn2sbhdyGsns5dnXm2Sn7eO0R5qAGlc81/y
+         6EP1zm2LIfM3bAcV1dvn5sKrlitVWXYW0KKKuD/UglmaxoTyVGbNDCsX1XiGJmKQvhZd
+         +9q9Yi61I47xOWVbvfARDgt5T75yY9n9measA6cdBnLIK1C9jNzGGubfVsvmCrTsKuFV
+         eWRB3zFTrWIWI7nqZx/P66FfuH3DsAokVmXW1CuvE7Cwr/JD9H5BsRJn5hK9TWuLMpNR
+         v5PA==
+X-Gm-Message-State: AOJu0YzTVDXJM8KvQknFIJJ9keZDaGGjQ1F/yVTayLkgdTVBzK1fxQSz
+	X1z2Cf+dANfEPzXMyRtdZg66yOw9ia5fReXwUg==
+X-Google-Smtp-Source: AGHT+IGW2eQO/LfzQHhUGeMST3vV6U2Ldecc66mL87hHblWGoVhDhKBNlGc4BtOQL5AW+lkHZMQtV7bjYI0=
+X-Received: from fine.c.googlers.com ([fda3:e722:ac3:cc00:7f:e700:c0a8:2221])
+ (user=linusa job=sendgmr) by 2002:a05:6902:2681:b0:dbd:ee44:8908 with SMTP id
+ dx1-20020a056902268100b00dbdee448908mr510939ybb.0.1705082684642; Fri, 12 Jan
+ 2024 10:04:44 -0800 (PST)
+Date: Fri, 12 Jan 2024 10:04:43 -0800
+In-Reply-To: <20240112074138.GH618729@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Mime-Version: 1.0
+References: <pull.1640.git.1705043195997.gitgitgadget@gmail.com> <20240112074138.GH618729@coredump.intra.peff.net>
+Message-ID: <owlyo7dqig1w.fsf@fine.c.googlers.com>
+Subject: Re: [PATCH] strvec: use correct member name in comments
+From: Linus Arver <linusa@google.com>
+To: Jeff King <peff@peff.net>, Linus Arver via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-Add tests for amending the commit to add Signed-off-by trailer. And
-also to check if it does not add another trailer if one already exists.
+Jeff King <peff@peff.net> writes:
 
-Currently, there are tests for --signoff separately in t7501, however,
-they are not tested with --amend.
+> The source of the problem is that the patch originally used
+> "items" in the struct, too
 
-Therefore, these tests belong with other similar tests of --amend in
-t7501-commit-basic-functionality.
+Ah, that makes sense.
 
-Signed-off-by: Ghanshyam Thakkar <shyamthakkar001@gmail.com>
----
- t/t7501-commit-basic-functionality.sh | 25 +++++++++++++++++++++++--
- 1 file changed, 23 insertions(+), 2 deletions(-)
+> As you note, we still call use "items" for the vector passed in to
+> pushv. I think that is OK, and there is no real need to use the terse
+> "v" there (it is also purely internal; the declaration in strvec.h does
+> not name it at all).
 
-diff --git a/t/t7501-commit-basic-functionality.sh b/t/t7501-commit-basic-functionality.sh
-index e4633b4af5..33a9895e72 100755
---- a/t/t7501-commit-basic-functionality.sh
-+++ b/t/t7501-commit-basic-functionality.sh
-@@ -3,8 +3,7 @@
- # Copyright (c) 2007 Kristian Høgsberg <krh@redhat.com>
- #
- 
--# FIXME: Test the various index usages, test reflog,
--# signoff
-+# FIXME: Test the various index usages, test reflog
- 
- test_description='git commit'
- GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
-@@ -466,6 +465,28 @@ test_expect_success 'amend commit to fix date' '
- 
- '
- 
-+test_expect_success 'amend commit to add signoff' '
-+
-+	test_commit "msg" file content &&
-+	git commit --amend --signoff &&
-+	test_commit_message HEAD <<-EOF
-+	msg
-+
-+	Signed-off-by: $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL>
-+	EOF
-+'
-+
-+test_expect_success 'amend does not add signoff if it already exists' '
-+
-+	test_commit --signoff "tenor" file newcontent &&
-+	git commit --amend --signoff &&
-+	test_commit_message HEAD <<-EOF
-+	tenor
-+
-+	Signed-off-by: $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL>
-+	EOF
-+'
-+
- test_expect_success 'commit mentions forced date in output' '
- 	git commit --amend --date=2010-01-02T03:04:05 >output &&
- 	grep "Date: *Sat Jan 2 03:04:05 2010" output
--- 
-2.43.0
+Indeed. Perhaps I should have included this in my commit message.
 
+Side note: should we start naming the parameters in strvec.h? I would
+think that it wouldn't hurt at this point (as the API is pretty stable).
+If you think that's worth it, I could reroll to include that in this
+series (and also improve my commit message for this patch).
