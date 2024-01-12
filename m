@@ -1,93 +1,96 @@
-Received: from mail-pg1-f201.google.com (mail-pg1-f201.google.com [209.85.215.201])
+Received: from smtp.gentoo.org (woodpecker.gentoo.org [140.211.166.183])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E7325D74B
-	for <git@vger.kernel.org>; Fri, 12 Jan 2024 08:12:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--linusa.bounces.google.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="J3t+XJ0W"
-Received: by mail-pg1-f201.google.com with SMTP id 41be03b00d2f7-5ce04c601e5so5098369a12.2
-        for <git@vger.kernel.org>; Fri, 12 Jan 2024 00:12:24 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1705047144; x=1705651944; darn=vger.kernel.org;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=kcXOECkobylFgJaD1y4fK7VmM0FXj3LI1k5bK+0yf2Y=;
-        b=J3t+XJ0W7noUACPx4jRQs4K5Jt9L3Idq7yrP1zr2LpizraUx3HZ7ZwTL/uvQYcfJhb
-         eRMBCY3XUWGpBUEJzpxRtMC9dJ7crg2ddt/TMDdLRayH+J1TF82mQQrUo5LwkOUYMMIh
-         eglmJLewwRgpwyyav40X9PubyOsQX4ipc9goDp2MiXipVd/8lxT7kF5QCUuez6iQ0DJr
-         ZNlNs+RbMFVoXa6Ml0VXX3UBE4vstNe3FytG6ICjVTgB6oRoM9TfRI2bdmN4fUZCJ7G+
-         YVACCiwDvz3JofFuGc+hwb65QzdC+gNI9rxtHDvrofGJLxgMO/MxSEte4RuHI42qt2W9
-         /uDQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1705047144; x=1705651944;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=kcXOECkobylFgJaD1y4fK7VmM0FXj3LI1k5bK+0yf2Y=;
-        b=lMfLFKbjRLX3HAFgJ2X60NeJoZ324E0yJXeuy8dkoOJSfhi3Fg4OsGpYlpWCpyEXQz
-         BgkRLmCUkMpxduz4YmzzahCjD4dkLSArSJyhepM2ArQkKSnO7bkuufrCK39fxKnY0GiW
-         MEjjvxI0uhv4UqLRokhmEyeVE7CwHT3pjM1O64zP80qeN+RREabZtPOp4X36hJhuYSx6
-         yMeGJN4TvEcBDYMVO+1hj1iOeRD4ouHMQu6DqI29uZU/zji+TCilj9mNTNlZA/sD8eTE
-         BWocVuzbD9JL229DpL1mWQqVTz/aHM/MHpoJN8Ya3hyIWdGTnr70EjPYgVv2aVMIUU2f
-         Jc9A==
-X-Gm-Message-State: AOJu0YxlQjMin+tfyH+HZFEbeWDfzUH21QiTsrL2PpHV6IG3psLp/5C1
-	q/z32JDTEZFjW0OLBnDx9RrV5Kg0aYf77kdOVA==
-X-Google-Smtp-Source: AGHT+IEDLbwT4P8+Zv2O3PZ/1ARXM6JKjvWVs8nIC0pG8delqLPz3qLvKlvxwYwDwU64etQPDF+OV+d93ig=
-X-Received: from fine.c.googlers.com ([fda3:e722:ac3:cc00:7f:e700:c0a8:2221])
- (user=linusa job=sendgmr) by 2002:a63:85c7:0:b0:5cd:f80f:1085 with SMTP id
- u190-20020a6385c7000000b005cdf80f1085mr3112pgd.3.1705047143893; Fri, 12 Jan
- 2024 00:12:23 -0800 (PST)
-Date: Fri, 12 Jan 2024 00:12:22 -0800
-In-Reply-To: <18b9a11d3be9d804e8d22d054ea881b8336d170c.1702562879.git.zhiyou.jx@alibaba-inc.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24E932EAFF
+	for <git@vger.kernel.org>; Fri, 12 Jan 2024 08:39:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gentoo.org
+References: <ZZ77NQkSuiRxRDwt@nand.local> <87v880m6r3.fsf@gentoo.org>
+ <ZaB-ayQuGqrS-mL0@tapette.crustytoothpaste.net>
+User-agent: mu4e 1.10.8; emacs 30.0.50
+From: Sam James <sam@gentoo.org>
+To: "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc: Sam James <sam@gentoo.org>, me@ttaylorr.com, git@vger.kernel.org, John
+ Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>, Helge Deller
+ <deller@gmx.de>, John David Anglin <dave.anglin@bell.net>,
+ arsen@gentoo.org, Antoni Boucher <bouanto@zoho.com>
+Subject: Re: [DISCUSS] Introducing Rust into the Git project
+Date: Fri, 12 Jan 2024 08:24:46 +0000
+Organization: Gentoo
+In-reply-to: <ZaB-ayQuGqrS-mL0@tapette.crustytoothpaste.net>
+Message-ID: <87jzofrlm4.fsf@gentoo.org>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-References: <cover.1696432593.git.zhiyou.jx@alibaba-inc.com>
- <cover.1702562879.git.zhiyou.jx@alibaba-inc.com> <18b9a11d3be9d804e8d22d054ea881b8336d170c.1702562879.git.zhiyou.jx@alibaba-inc.com>
-Message-ID: <owlyr0inhswp.fsf@fine.c.googlers.com>
-Subject: Re: [PATCH v4 4/4] archive: support remote archive from stateless transport
-From: Linus Arver <linusa@google.com>
-To: Jiang Xin <worldhello.net@gmail.com>, Git List <git@vger.kernel.org>, 
-	Junio C Hamano <gitster@pobox.com>
-Cc: Jiang Xin <zhiyou.jx@alibaba-inc.com>, Eric Sunshine <sunshine@sunshineco.com>
-Content-Type: text/plain; charset="UTF-8"
+MIME-Version: 1.0
+Content-Type: text/plain
 
-Jiang Xin <worldhello.net@gmail.com> writes:
 
-> From: Jiang Xin <zhiyou.jx@alibaba-inc.com>
+"brian m. carlson" <sandals@crustytoothpaste.net> writes:
+
+> [[PGP Signed Part:Undecided]]
+> On 2024-01-11 at 11:45:07, Sam James wrote:
+>> Something I'm a bit concerned about is that right now, neither
+>> rustc_codegen_gcc nor gccrs are ready for use here.
+>> 
+>> We've had trouble getting things wired up for rustc_codegen_gcc
+>> - which is not to speak against their wonderful efforts - because
+>> the Rust community hasn't yet figured out how to handle things which
+>> pure rustc supports yet. See
+>> e.g. https://github.com/rust-lang/libc/pull/3032.
 >
-> Even though we can establish a stateless connection, we still cannot
-> archive the remote repository using a stateless HTTP protocol. Try the
-> following steps to make it work.
+> Is this simply library support in the libc crate?  That's very easy to add.
 
-As Yoda once said, "Do or do not, there is no try". Here I think you
-meant "Do".
+[CC'd the rustc_codegen_gcc maintainer as well as some folks who have
+tried using rustc_codegen_gcc for their distributions.]
 
->  1. Add support for "git-upload-archive" service in "http-backend".
+Evidently not on the last point? ;)
+
+Even just patching it in downstream isn't easy because you then have to
+do it for many many packages. But after that PR stalling because of the
+policy issue, there wasn't really anywhere to go, because of the
+chicken-and-egg situation.
+
+Let alone then, once the libc crate has it, going around and wiring up
+in other crates.
+
+The discussion on the PR seems clear that the intention is to not add
+it until some policy is revised/formulated? I also don't want to have
+to have that debate with every crate just because rustc doesn't support
+it.
+
 >
->  2. Use the URL ".../info/refs?service=git-upload-pack" to detect the
->     protocol version, instead of use the "git-upload-archive" service.
+>> I think care should be taken in citing rustc_codegen_gcc and gccrs
+>> as options for alternative platforms for now. They will hopefully
+>> be great options in the future, but they aren't today, and they probably
+>> won't be in the next 6 months at the least.
 >
->  3. "git-archive" does not expect to see protocol version and
->     capabilities when connecting to remote-helper, so do not send them
->     in "remote-curl.c" for the "git-upload-archive" service.
+> What specifically is missing for rust_codegen_gcc?  I know gccrs is not
+> ready at the moment, but I was under the impression that
+> rust_codegen_gcc was at least usable.  I'm aware it requires some
+> patches to GCC, but distros should be able to carry those.
+>
+> If rust_codegen_gcc isn't viable, then I agree we should avoid making
+> Rust mandatory, but I'd like to learn more.
 
-It would be great if you could break up this patch into 3 smaller
-patches. Or 4 patches if you decide to move the new test cases into their
-own patch.
+It's in a general state of instability. There's still *very* active work
+ongoing in libgccjit (by the rust_codegen_gcc maintainer).
 
-> @@ -723,7 +729,8 @@ static struct service_cmd {
->  	{"GET", "/objects/pack/pack-[0-9a-f]{64}\\.idx$", get_idx_file},
->  
->  	{"POST", "/git-upload-pack$", service_rpc},
-> -	{"POST", "/git-receive-pack$", service_rpc}
-> +	{"POST", "/git-receive-pack$", service_rpc},
-> +	{"POST", "/git-upload-archive$", service_rpc}
->  };
+I'd say "you need to patch your GCC" is probably not a good state of
+affairs for using something critical like git anyway, but even then,
+I'm not aware of anyone having used it to build real-world common
+applications using Rust for a non-rustc-supported platform, at least
+not then using those builds day-to-day.
 
-Style nit: it might be cleaner to put the new "git-upload-archive" just
-above "git-upload-pack" because the two have a special relationship now.
+So, even if we were willing to chase the active flurry of libgccjit
+patches (which is wonderful to see!), it's a significant moving
+target. In Gentoo, we're probably better-placed than most people
+to be able to do that, but it's still a lot of work and it doesn't
+sound very robust for us to be doing for core infrastructure.
+
+We have a lot of packages in Gentoo - partly actually stuff in the
+Python ecosystem - where we're very excited to be able to use
+rust_codegen_gcc (or gccrs, whichever comes first inreadiness, surely
+rust_codegen_gcc) for alt platforms, but it's just not there yet.
