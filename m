@@ -1,41 +1,44 @@
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06B401640F
-	for <git@vger.kernel.org>; Fri, 12 Jan 2024 21:37:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 254521641A
+	for <git@vger.kernel.org>; Fri, 12 Jan 2024 21:47:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="x/aiWDDf"
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id 9C74F21F20;
-	Fri, 12 Jan 2024 16:37:35 -0500 (EST)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="NFXKxKbq"
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id A37531E531A;
+	Fri, 12 Jan 2024 16:47:49 -0500 (EST)
 	(envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=Whlzg7QQJeMwHMhy2c7KoXeEVBgupwhYv/eAXG
-	KXfAU=; b=x/aiWDDfg9GFFP+KpJMO9QWqwAFRXv1VxNIeO+9OqgVJfuVFQjt4oS
-	WdpEWIs5OtU5FAEb47Nn5Y7+cQebqVDFdF6ADOG4kYbKqeMe0jUbJILUNjTyUWQe
-	Is9zBern15NWpF5cm23US2Ojir8ZvDFiGHqNGJPS4PayLVYfAEefo=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id 94CB021F1F;
-	Fri, 12 Jan 2024 16:37:35 -0500 (EST)
+	:content-type; s=sasl; bh=Dfd/HxfFx6ezLUrwvN//w0yebs0E4ye8HODOzp
+	jFhzU=; b=NFXKxKbqAadVHBzzYkeFWKGX6w7QoC7t1IjproFgT9ToZx+mHrOey8
+	n69PAgsE72+T7rJPf4lujsHOZV0kNm1jb7XbT+Mv7LzInBlgNf8sZTbsyN5FLYb7
+	9kCyhA2P8MpkbbQhd1VCdZdaebrbBTLXZDPZCeG+I5WFrnvfzQuY8=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 99B7B1E5319;
+	Fri, 12 Jan 2024 16:47:49 -0500 (EST)
 	(envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.125.200.93])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id DFE3F21F1E;
-	Fri, 12 Jan 2024 16:37:29 -0500 (EST)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id EF4CA1E5318;
+	Fri, 12 Jan 2024 16:47:48 -0500 (EST)
 	(envelope-from junio@pobox.com)
 From: Junio C Hamano <gitster@pobox.com>
-To: Raul Rangel <rrangel@google.com>
-Cc: git@vger.kernel.org
-Subject: Re: Make git ls-files omit deleted files
-In-Reply-To: <CAHQZ30Ad6+YM9qnCOeNNy8e2k-AbYR_bBXTups-7z6=ioyqS5Q@mail.gmail.com>
-	(Raul Rangel's message of "Fri, 12 Jan 2024 14:19:34 -0700")
-References: <CAHQZ30Ad6+YM9qnCOeNNy8e2k-AbYR_bBXTups-7z6=ioyqS5Q@mail.gmail.com>
-Date: Fri, 12 Jan 2024 13:37:28 -0800
-Message-ID: <xmqqply68c87.fsf@gitster.g>
+To: Linus Arver <linusa@google.com>
+Cc: Jeff King <peff@peff.net>,  Linus Arver via GitGitGadget
+ <gitgitgadget@gmail.com>,  git@vger.kernel.org
+Subject: Re: [PATCH] strvec: use correct member name in comments
+In-Reply-To: <owlyo7dqig1w.fsf@fine.c.googlers.com> (Linus Arver's message of
+	"Fri, 12 Jan 2024 10:04:43 -0800")
+References: <pull.1640.git.1705043195997.gitgitgadget@gmail.com>
+	<20240112074138.GH618729@coredump.intra.peff.net>
+	<owlyo7dqig1w.fsf@fine.c.googlers.com>
+Date: Fri, 12 Jan 2024 13:47:47 -0800
+Message-ID: <xmqqjzoe8br0.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -45,18 +48,33 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 X-Pobox-Relay-ID:
- C984DBC4-B192-11EE-92D2-A19503B9AAD1-77302942!pb-smtp21.pobox.com
+ 3A82BD68-B194-11EE-B560-25B3960A682E-77302942!pb-smtp2.pobox.com
 
-Raul Rangel <rrangel@google.com> writes:
+Linus Arver <linusa@google.com> writes:
 
-> I'm trying to copy my current git worktree to a new directory, while
-> including all modified and untracked files, but excluding any ignored
-> files.
+> Side note: should we start naming the parameters in strvec.h? I would
+> think that it wouldn't hurt at this point (as the API is pretty stable).
+> If you think that's worth it, I could reroll to include that in this
+> series (and also improve my commit message for this patch).
 
-Curiously missing from the above is "unmodified".  You only talked
-about modified, untracked, and ignored, but what do you want to do
-with them?
+I am not sure if it adds more value to outweigh the cost of
+churning.  When the meaning of the parameters are obvious only by
+looking at their types, a prototype without parameter names is
+easier to maintain, by allowing the parameters to be renamed only
+once in the implementation.  When the meaning of parameters are not
+obvious from their types, we do want them to be named so that you
+only have to refer to the header files to know the argument order.
 
-As you are grabbing the files from the working tree, I suspect that
-you do not want to base your decision on what is in the index, which
-means that ls-files might be a wrong tool for the job.
+"void *calloc(size_t, size_t)" would not tell us if we should pass
+the size of individual element or the number of elements first, and
+writing "void *calloc(size_t nmemb, size_t size)" to make it more
+obvious is a good idea.
+
+On the other hand, "void *realloc(void *, size_t)" is sufficient to
+tell us that we are passing a pointer as the first parameter and the
+desired size as the second parameter, without them having any name.
+
+Are there functions declared in strvec.h you have in mind that their
+parameters are confusing and hard to guess what they mean?  
+
+Thanks.
