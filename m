@@ -1,256 +1,131 @@
-Received: from mail-wr1-f50.google.com (mail-wr1-f50.google.com [209.85.221.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mout.gmx.net (mout.gmx.net [212.227.15.19])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E163557867
-	for <git@vger.kernel.org>; Fri, 12 Jan 2024 10:05:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2775657877
+	for <git@vger.kernel.org>; Fri, 12 Jan 2024 10:08:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PosZcju5"
-Received: by mail-wr1-f50.google.com with SMTP id ffacd0b85a97d-33694bf8835so4804394f8f.3
-        for <git@vger.kernel.org>; Fri, 12 Jan 2024 02:05:50 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1705053949; x=1705658749; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:references:to:from
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=sr9dQrgRdiL6A9H8kHpVRdPmIHun+r299MWRVqffHeo=;
-        b=PosZcju5onT6WDHcubQj+SDx3U0Nouz5K5PekZPi4OjxwETdMHsJBUJc1tq29d5kVZ
-         XsV8PFsekHt4rkHpLNQUAramuw0OdLQzTrjphhFNBI6VvsHCBpkgXSBehjhQG4gtzQME
-         oxfma77hElc6su3NjlqTyHb7BMEtKp0nbxkrwVJraYRItUEViDNufUkm7rl5SOEcxftl
-         57HKEDo8A0yg+M79lPBlZ/8neVx/BM1zZ8DAL+iyZmaRfHlRht1bDcguoLeLzV8+CZvd
-         UV9FE6oJybCglmCLDJGWUtfIQ0lkXn+ZvlDYen1ZGAGLVgAU+u39wOSDtPhTp/IYRkuL
-         s4/Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1705053949; x=1705658749;
-        h=content-transfer-encoding:in-reply-to:references:to:from
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=sr9dQrgRdiL6A9H8kHpVRdPmIHun+r299MWRVqffHeo=;
-        b=Wr9JhtM297kIXBMWCb3T8zJ2Xh2EC+sM0303U1+MHioVmnFnH9TFKzmQIWuAp/yGQR
-         +YnXeryYM9nxMgBOwVXTZZjC8sa7VzTbBUOrM3bpcOmA/h4Dv2t+UmHnR0JHG+yMXO+H
-         Nb7W4y+vPX+tLTxjjscsuvemuq0p9DrM4dIM5GLM2yL3fj5ClQauArW/QIDHpBqb4dyi
-         fbG/HOc7DIUQx4KRi3V82ge1h9g3ZDsKoXGQs1S73qoGpU4Jj4OhvV6d5tgQiWzdKz4K
-         DwesONl09o/2Lb00LDy8Jw4JbZa7SyTiyeZmaBqRAc0Uyfu3T3JIONHF43YRNYVoxsA0
-         9g8A==
-X-Gm-Message-State: AOJu0YxyDr4SXQL6/CoOtZQ2EF9T/4LToJqFY9m62dyliBGSRDUMTEs+
-	4jOLCCJcrdb8PCS+vM1XChLTep9bOU0=
-X-Google-Smtp-Source: AGHT+IHQPfwxrzS4HC7Rnxo9JzRD0oUOtg1OccSmyXPSg3DJSXPiirTOLdOyBcEAtYPNe7l/o5oHGg==
-X-Received: by 2002:adf:fe92:0:b0:336:704b:cd94 with SMTP id l18-20020adffe92000000b00336704bcd94mr532538wrr.70.1705053948948;
-        Fri, 12 Jan 2024 02:05:48 -0800 (PST)
-Received: from gmail.com (166.red-88-14-44.dynamicip.rima-tde.net. [88.14.44.166])
-        by smtp.gmail.com with ESMTPSA id f1-20020a5d6641000000b0033609584b9dsm3445862wrw.74.2024.01.12.02.05.45
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 12 Jan 2024 02:05:48 -0800 (PST)
-Message-ID: <c870a0b6-9fa8-4d00-a5a6-661ca175805f@gmail.com>
-Date: Fri, 12 Jan 2024 11:05:37 +0100
+	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b="fJu0as02"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.de; s=s31663417;
+	t=1705054103; x=1705658903; i=johannes.schindelin@gmx.de;
+	bh=bTXL8dB2YhXVoCn3lE66w3pfbSsDwXWfg5wniCaTCdw=;
+	h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:
+	 References;
+	b=fJu0as02RnzqBzEwpwCh8v+Jw9b86Bfzfw2F2GdNhzZc7YMQt7RmYrFxjFzoaW/a
+	 Mh8hsZcIw0KV1LsTGLUxmFCHQZbydjwewa/3+R8Kg4soz7cnO2quUdKnpeotZBwNh
+	 nPgprvK3hQLjgHE8S5wYn9F9sm12b+xMhKsHbqSithJ0oUhtNYSpBTmB9R+Urvt/Z
+	 tPlpdEvhbeyGnkzIt3NaqD4UE2qymIG6yvSDuPBYPQYOd+1lqySNGNQzD/TuL/906
+	 UJBjNjMweiOqAZccbeMZHBE/JSCxILg9fJroFGGqRpXAyiPBN+GDiYMVgjuOU55za
+	 GvQ9H44xR8i973TqNQ==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from [172.23.242.68] ([89.1.214.101]) by mail.gmx.net (mrgmx004
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MqaxO-1qkp6t06Iy-00mbz4; Fri, 12
+ Jan 2024 11:08:23 +0100
+Date: Fri, 12 Jan 2024 11:08:21 +0100 (CET)
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Patrick Steinhardt <ps@pks.im>
+cc: git@vger.kernel.org, Stan Hu <stanhu@gmail.com>
+Subject: Re: [PATCH 1/2] t9902: verify that completion does not print
+ anything
+In-Reply-To: <73406ca9c8f38ac2ad8f0e32d6d81f1566a6b4d1.1704969119.git.ps@pks.im>
+Message-ID: <d978494d-6c48-5923-4745-c42a39e1187a@gmx.de>
+References: <cover.1704969119.git.ps@pks.im> <73406ca9c8f38ac2ad8f0e32d6d81f1566a6b4d1.1704969119.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: [PATCH] advice: allow disabling the automatic hint in
- advise_if_enabled()
-Content-Language: en-US
-From: =?UTF-8?Q?Rub=C3=A9n_Justo?= <rjusto@gmail.com>
-To: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
- Taylor Blau <me@ttaylorr.com>, Jeff King <peff@peff.net>,
- Dragan Simic <dsimic@manjaro.org>
-References: <7c68392c-af2f-4999-ae64-63221bf7833a@gmail.com>
-In-Reply-To: <7c68392c-af2f-4999-ae64-63221bf7833a@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:wQYCSoEkMDghtQj9CfrRR97snFhl5soLaWK+a4ulCI+g09CTG9+
+ NOjjktNFr/fDNKUM8OAwyjfGrvHILyDxa3S4nsRDTApXPoIAotFHDizFql0sInVxC+qaOd+
+ tIc7WmeA0pnEq2dj5mv6/sJTSPH4AzvmwQnS01O6Y2NgOtbzDR3UERwmaQ91DMwjUs+QhoD
+ 05kO7/qvf+0fMXJHbKRgA==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:tQpD//+Lbyw=;OE4psU2QrcGlLpDaEZabSEa0Uj1
+ nh+hAT0kZiG8kmjLs6bICo9sIAM7+wMTXuhq6UTaKCxlXBmrmAXtOK4xamdRHlc8rWt6iHE56
+ 6CuHiORWzdz+jg4lVX2TSR0C5/ih3bYH1biN9GzreHsmY0aKX/j2QTj4l10EEySlHyvh25ewZ
+ fBVBRv3q3rnfMv+Lyuo9NXhtxOIZFBLZtli6/tjczeef//95p0lh/TxZdNoUw39P46KeVdHni
+ K6u7ax38OtPqP69ZsgnORG5zyI5+x4E32Digbg2lOnluv2eJNSwOvghEFMwASkvrwJMhEoKfK
+ lI4XDWzGMtWbe3UZQfxZ4MkDvbvUe+nQc6y8MQfuqGrHperzmOlbrchyT+PG6ZEKjwYl2sD2e
+ Rrxij5XE2u9juXDbDzRxOjQQWbEmUiGZq+rzXAHZHGXX/h5u2ZLWBHTZoDSW6QAElHV3DTtoR
+ 6MbTO2owlN4ygHz5HCiY84pehCndxr2Ok3uyLsgtlvJAvSGv1S5MohDorrj0xSFUV59wBYTdl
+ FiQ3PLcvswGMHDXPE58s+ZdR78adEfipTATZEdRYOjIhOS/x2gjm3wYuhbXTWfD6jKsZmzpIw
+ XKdbbwSnyw9qz7iXHTClDhHa312JmhJGsDp8r9TzThPBx+5Q+zoB8yVb/Ee7pWLT+YD2v1qdB
+ Mx4AZAf7WJfNCLvFDMld6/MR54dg/hsIuxsa1tGIlCcCFGqh6xoG7WSCR0VzkU0SugHV42GvM
+ pHE9x8ebAt1c4MWs1npb57g367NaOumme9WoKXae4JWkGilAZcgq3VGsU7UfxHkICf+scTwDE
+ G9gFQecn+xYL9wodxFrkFck6TF6IFd/gj9QR1K3Za3xNX2zRQ6erE35/OSq5CzpHyrvrQ365m
+ 3Zt+AmUpo3d/oKcg5/yjDAvFSEgYlEn0LXzEXuwgfTvBialiM12Dc2xErkSoO4izHAk9zkTmA
+ OK/NQw==
+Content-Transfer-Encoding: quoted-printable
 
-Using advise_if_enabled() to display an advice will automatically
-include instructions on how to disable the advice, alongside the main
-advice:
+Hi Patrick,
 
-	hint: use --reapply-cherry-picks to include skipped commits
-	hint: Disable this message with "git config advice.skippedCherryPicks false"
+On Thu, 11 Jan 2024, Patrick Steinhardt wrote:
 
-To do so, we provide a knob which can be used to disable the advice.
+> The Bash completion script must not print anything to either stdout or
+> stderr. Instead, it is only expected to populate certain variables.
+> Tighten our `test_completion ()` test helper to verify this requirement.
+>
+> Signed-off-by: Patrick Steinhardt <ps@pks.im>
+> ---
+>  t/t9902-completion.sh | 6 ++++--
+>  1 file changed, 4 insertions(+), 2 deletions(-)
+>
+> diff --git a/t/t9902-completion.sh b/t/t9902-completion.sh
+> index aa9a614de3..78cb93bea7 100755
+> --- a/t/t9902-completion.sh
+> +++ b/t/t9902-completion.sh
+> @@ -87,9 +87,11 @@ test_completion ()
+>  	else
+>  		sed -e 's/Z$//' |sort >expected
+>  	fi &&
+> -	run_completion "$1" &&
+> +	run_completion "$1" >"$TRASH_DIRECTORY"/output 2>&1 &&
+>  	sort out >out_sorted &&
+> -	test_cmp expected out_sorted
+> +	test_cmp expected out_sorted &&
+> +	test_must_be_empty "$TRASH_DIRECTORY"/output &&
 
-But also to tell us the opposite: to show the advice.
+It seems that this fails CI on macOS, most likely because we're running
+with `set -x` and that output somehow ends up in `output`, see e.g. here:
+https://github.com/git/git/actions/runs/7496790359/job/20409405194#step:4:=
+1880
 
-Let's not include the deactivation instructions for an advice if the
-user explicitly sets its visibility.
+  [...]
+  ++ test_completion 'git switch '
+  ++ test 1 -gt 1
+  ++ sed -e 's/Z$//'
+  ++ sort
+  ++ run_completion 'git switch '
+  ++ sort out
+  ++ test_cmp expected out_sorted
+  ++ test 2 -ne 2
+  ++ eval 'diff -u' '"$@"'
+  +++ diff -u expected out_sorted
+  ++ test_must_be_empty '/Users/runner/work/git/git/t/trash directory.t990=
+2-completion/output'
+  ++ test 1 -ne 1
+  ++ test_path_is_file '/Users/runner/work/git/git/t/trash directory.t9902=
+-completion/output'
+  ++ test 1 -ne 1
+  ++ test -f '/Users/runner/work/git/git/t/trash directory.t9902-completio=
+n/output'
+  ++ test -s '/Users/runner/work/git/git/t/trash directory.t9902-completio=
+n/output'
+  ++ echo ''\''/Users/runner/work/git/git/t/trash directory.t9902-completi=
+on/output'\'' is not empty, it contains:'
+  '/Users/runner/work/git/git/t/trash directory.t9902-completion/output' i=
+s not empty, it contains:
+  ++ cat '/Users/runner/work/git/git/t/trash directory.t9902-completion/ou=
+tput'
+  ++ local -a COMPREPLY _words
+  ++ local _cword
+  [...]
 
-Signed-off-by: Rubén Justo <rjusto@gmail.com>
----
+Maybe this is running in Dash and therefore `BASH_XTRACEFD=3D4` in
+`test-lib.sh` has not the intended effect?
 
-I hope this patch captures most of the comments from the previous
-iteration, mostly:
-
-- Allow to disable the disabling instructions, per advice.
-- No new test is needed, therefore the first two commits from the
-  previous iteration are not needed here.
-
-Thanks.
-
- advice.c          | 109 +++++++++++++++++++++++++---------------------
- t/t0018-advice.sh |   1 -
- 2 files changed, 59 insertions(+), 51 deletions(-)
-
-diff --git a/advice.c b/advice.c
-index f6e4c2f302..8474966ce1 100644
---- a/advice.c
-+++ b/advice.c
-@@ -33,50 +33,56 @@ static const char *advise_get_color(enum color_advice ix)
- 	return "";
- }
- 
-+enum advice_level {
-+	ADVICE_LEVEL_DEFAULT = 0,
-+	ADVICE_LEVEL_DISABLED,
-+	ADVICE_LEVEL_ENABLED,
-+};
-+
- static struct {
- 	const char *key;
--	int enabled;
-+	enum advice_level level;
- } advice_setting[] = {
--	[ADVICE_ADD_EMBEDDED_REPO]			= { "addEmbeddedRepo", 1 },
--	[ADVICE_ADD_EMPTY_PATHSPEC]			= { "addEmptyPathspec", 1 },
--	[ADVICE_ADD_IGNORED_FILE]			= { "addIgnoredFile", 1 },
--	[ADVICE_AMBIGUOUS_FETCH_REFSPEC]		= { "ambiguousFetchRefspec", 1 },
--	[ADVICE_AM_WORK_DIR] 				= { "amWorkDir", 1 },
--	[ADVICE_CHECKOUT_AMBIGUOUS_REMOTE_BRANCH_NAME] 	= { "checkoutAmbiguousRemoteBranchName", 1 },
--	[ADVICE_COMMIT_BEFORE_MERGE]			= { "commitBeforeMerge", 1 },
--	[ADVICE_DETACHED_HEAD]				= { "detachedHead", 1 },
--	[ADVICE_DIVERGING]				= { "diverging", 1 },
--	[ADVICE_FETCH_SHOW_FORCED_UPDATES]		= { "fetchShowForcedUpdates", 1 },
--	[ADVICE_FORCE_DELETE_BRANCH]			= { "forceDeleteBranch", 1 },
--	[ADVICE_GRAFT_FILE_DEPRECATED]			= { "graftFileDeprecated", 1 },
--	[ADVICE_IGNORED_HOOK]				= { "ignoredHook", 1 },
--	[ADVICE_IMPLICIT_IDENTITY]			= { "implicitIdentity", 1 },
--	[ADVICE_NESTED_TAG]				= { "nestedTag", 1 },
--	[ADVICE_OBJECT_NAME_WARNING]			= { "objectNameWarning", 1 },
--	[ADVICE_PUSH_ALREADY_EXISTS]			= { "pushAlreadyExists", 1 },
--	[ADVICE_PUSH_FETCH_FIRST]			= { "pushFetchFirst", 1 },
--	[ADVICE_PUSH_NEEDS_FORCE]			= { "pushNeedsForce", 1 },
--	[ADVICE_PUSH_NON_FF_CURRENT]			= { "pushNonFFCurrent", 1 },
--	[ADVICE_PUSH_NON_FF_MATCHING]			= { "pushNonFFMatching", 1 },
--	[ADVICE_PUSH_REF_NEEDS_UPDATE]			= { "pushRefNeedsUpdate", 1 },
--	[ADVICE_PUSH_UNQUALIFIED_REF_NAME]		= { "pushUnqualifiedRefName", 1 },
--	[ADVICE_PUSH_UPDATE_REJECTED]			= { "pushUpdateRejected", 1 },
--	[ADVICE_PUSH_UPDATE_REJECTED_ALIAS]		= { "pushNonFastForward", 1 }, /* backwards compatibility */
--	[ADVICE_RESET_NO_REFRESH_WARNING]		= { "resetNoRefresh", 1 },
--	[ADVICE_RESOLVE_CONFLICT]			= { "resolveConflict", 1 },
--	[ADVICE_RM_HINTS]				= { "rmHints", 1 },
--	[ADVICE_SEQUENCER_IN_USE]			= { "sequencerInUse", 1 },
--	[ADVICE_SET_UPSTREAM_FAILURE]			= { "setUpstreamFailure", 1 },
--	[ADVICE_SKIPPED_CHERRY_PICKS]			= { "skippedCherryPicks", 1 },
--	[ADVICE_STATUS_AHEAD_BEHIND_WARNING]		= { "statusAheadBehindWarning", 1 },
--	[ADVICE_STATUS_HINTS]				= { "statusHints", 1 },
--	[ADVICE_STATUS_U_OPTION]			= { "statusUoption", 1 },
--	[ADVICE_SUBMODULES_NOT_UPDATED] 		= { "submodulesNotUpdated", 1 },
--	[ADVICE_SUBMODULE_ALTERNATE_ERROR_STRATEGY_DIE] = { "submoduleAlternateErrorStrategyDie", 1 },
--	[ADVICE_SUGGEST_DETACHING_HEAD]			= { "suggestDetachingHead", 1 },
--	[ADVICE_UPDATE_SPARSE_PATH]			= { "updateSparsePath", 1 },
--	[ADVICE_WAITING_FOR_EDITOR]			= { "waitingForEditor", 1 },
--	[ADVICE_WORKTREE_ADD_ORPHAN]			= { "worktreeAddOrphan", 1 },
-+	[ADVICE_ADD_EMBEDDED_REPO]			= { "addEmbeddedRepo" },
-+	[ADVICE_ADD_EMPTY_PATHSPEC]			= { "addEmptyPathspec" },
-+	[ADVICE_ADD_IGNORED_FILE]			= { "addIgnoredFile" },
-+	[ADVICE_AMBIGUOUS_FETCH_REFSPEC]		= { "ambiguousFetchRefspec" },
-+	[ADVICE_AM_WORK_DIR] 				= { "amWorkDir" },
-+	[ADVICE_CHECKOUT_AMBIGUOUS_REMOTE_BRANCH_NAME] 	= { "checkoutAmbiguousRemoteBranchName" },
-+	[ADVICE_COMMIT_BEFORE_MERGE]			= { "commitBeforeMerge" },
-+	[ADVICE_DETACHED_HEAD]				= { "detachedHead" },
-+	[ADVICE_DIVERGING]				= { "diverging" },
-+	[ADVICE_FETCH_SHOW_FORCED_UPDATES]		= { "fetchShowForcedUpdates" },
-+	[ADVICE_FORCE_DELETE_BRANCH]			= { "forceDeleteBranch" },
-+	[ADVICE_GRAFT_FILE_DEPRECATED]			= { "graftFileDeprecated" },
-+	[ADVICE_IGNORED_HOOK]				= { "ignoredHook" },
-+	[ADVICE_IMPLICIT_IDENTITY]			= { "implicitIdentity" },
-+	[ADVICE_NESTED_TAG]				= { "nestedTag" },
-+	[ADVICE_OBJECT_NAME_WARNING]			= { "objectNameWarning" },
-+	[ADVICE_PUSH_ALREADY_EXISTS]			= { "pushAlreadyExists" },
-+	[ADVICE_PUSH_FETCH_FIRST]			= { "pushFetchFirst" },
-+	[ADVICE_PUSH_NEEDS_FORCE]			= { "pushNeedsForce" },
-+	[ADVICE_PUSH_NON_FF_CURRENT]			= { "pushNonFFCurrent" },
-+	[ADVICE_PUSH_NON_FF_MATCHING]			= { "pushNonFFMatching" },
-+	[ADVICE_PUSH_REF_NEEDS_UPDATE]			= { "pushRefNeedsUpdate" },
-+	[ADVICE_PUSH_UNQUALIFIED_REF_NAME]		= { "pushUnqualifiedRefName" },
-+	[ADVICE_PUSH_UPDATE_REJECTED]			= { "pushUpdateRejected" },
-+	[ADVICE_PUSH_UPDATE_REJECTED_ALIAS]		= { "pushNonFastForward" }, /* backwards compatibility */
-+	[ADVICE_RESET_NO_REFRESH_WARNING]		= { "resetNoRefresh" },
-+	[ADVICE_RESOLVE_CONFLICT]			= { "resolveConflict" },
-+	[ADVICE_RM_HINTS]				= { "rmHints" },
-+	[ADVICE_SEQUENCER_IN_USE]			= { "sequencerInUse" },
-+	[ADVICE_SET_UPSTREAM_FAILURE]			= { "setUpstreamFailure" },
-+	[ADVICE_SKIPPED_CHERRY_PICKS]			= { "skippedCherryPicks" },
-+	[ADVICE_STATUS_AHEAD_BEHIND_WARNING]		= { "statusAheadBehindWarning" },
-+	[ADVICE_STATUS_HINTS]				= { "statusHints" },
-+	[ADVICE_STATUS_U_OPTION]			= { "statusUoption" },
-+	[ADVICE_SUBMODULES_NOT_UPDATED] 		= { "submodulesNotUpdated" },
-+	[ADVICE_SUBMODULE_ALTERNATE_ERROR_STRATEGY_DIE] = { "submoduleAlternateErrorStrategyDie" },
-+	[ADVICE_SUGGEST_DETACHING_HEAD]			= { "suggestDetachingHead" },
-+	[ADVICE_UPDATE_SPARSE_PATH]			= { "updateSparsePath" },
-+	[ADVICE_WAITING_FOR_EDITOR]			= { "waitingForEditor" },
-+	[ADVICE_WORKTREE_ADD_ORPHAN]			= { "worktreeAddOrphan" },
- };
- 
- static const char turn_off_instructions[] =
-@@ -116,13 +122,13 @@ void advise(const char *advice, ...)
- 
- int advice_enabled(enum advice_type type)
- {
--	switch(type) {
--	case ADVICE_PUSH_UPDATE_REJECTED:
--		return advice_setting[ADVICE_PUSH_UPDATE_REJECTED].enabled &&
--		       advice_setting[ADVICE_PUSH_UPDATE_REJECTED_ALIAS].enabled;
--	default:
--		return advice_setting[type].enabled;
--	}
-+	int enabled = advice_setting[type].level != ADVICE_LEVEL_DISABLED;
-+
-+	if (type == ADVICE_PUSH_UPDATE_REJECTED)
-+		return enabled &&
-+		       advice_enabled(ADVICE_PUSH_UPDATE_REJECTED_ALIAS);
-+
-+	return enabled;
- }
- 
- void advise_if_enabled(enum advice_type type, const char *advice, ...)
-@@ -133,7 +139,8 @@ void advise_if_enabled(enum advice_type type, const char *advice, ...)
- 		return;
- 
- 	va_start(params, advice);
--	vadvise(advice, 1, advice_setting[type].key, params);
-+	vadvise(advice, advice_setting[type].level == ADVICE_LEVEL_DEFAULT,
-+		advice_setting[type].key, params);
- 	va_end(params);
- }
- 
-@@ -162,7 +169,9 @@ int git_default_advice_config(const char *var, const char *value)
- 	for (i = 0; i < ARRAY_SIZE(advice_setting); i++) {
- 		if (strcasecmp(k, advice_setting[i].key))
- 			continue;
--		advice_setting[i].enabled = git_config_bool(var, value);
-+		advice_setting[i].level = git_config_bool(var, value)
-+					  ? ADVICE_LEVEL_ENABLED
-+					  : ADVICE_LEVEL_DISABLED;
- 		return 0;
- 	}
- 
-diff --git a/t/t0018-advice.sh b/t/t0018-advice.sh
-index c13057a4ca..0dcfb760a2 100755
---- a/t/t0018-advice.sh
-+++ b/t/t0018-advice.sh
-@@ -17,7 +17,6 @@ test_expect_success 'advice should be printed when config variable is unset' '
- test_expect_success 'advice should be printed when config variable is set to true' '
- 	cat >expect <<-\EOF &&
- 	hint: This is a piece of advice
--	hint: Disable this message with "git config advice.nestedTag false"
- 	EOF
- 	test_config advice.nestedTag true &&
- 	test-tool advise "This is a piece of advice" 2>actual &&
-
-base-commit: bec9bb4b3918d2b3c7b91bbb116a667d5d6d298d
--- 
-2.42.0
-
+Ciao,
+Johannes
