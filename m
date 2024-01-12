@@ -1,197 +1,169 @@
-Received: from wout4-smtp.messagingengine.com (wout4-smtp.messagingengine.com [64.147.123.20])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f53.google.com (mail-wr1-f53.google.com [209.85.221.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DFF95FEF1
-	for <git@vger.kernel.org>; Fri, 12 Jan 2024 10:50:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9F475788A
+	for <git@vger.kernel.org>; Fri, 12 Jan 2024 11:01:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="s9mq65rP";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="IxFyCw2/"
-Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
-	by mailout.west.internal (Postfix) with ESMTP id 506323200A12;
-	Fri, 12 Jan 2024 05:50:24 -0500 (EST)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute3.internal (MEProxy); Fri, 12 Jan 2024 05:50:24 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1705056623; x=1705143023; bh=urDlIITn/F
-	DyKx2lADAap5bRJmOwPm+ndUmYtdnLts0=; b=s9mq65rPpGcFbcZCj1B3aGaYaB
-	kg4vgbZYjm4Q5ZF17zUa4amX3AciqDZegR0tYLfo6v5TlpQ9IkrdP9ds3bOwf0OX
-	RelNFMTYUcaTsu7s16tM29NDPpGhQ7URN6hfv9PIj3AmMyrbm6hNntkgl3f3XA9i
-	nYDVDaTF3ip7YVMG+aeTZaeuu6za6pF0fslur47J1DFxFgYtz9cCkn/5s2r7yPkg
-	vkSb514O35lgq6I8cDkPqtaAWiz71g7Pb4fVg22LXYVr+sF7iijsaL8ZgiY/ymtH
-	fBUNJDxwftMkOWVXFkOxdbaax6LC8vDcETHJSn3Q+8mUfzTGjb01zqPv69eA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1705056623; x=1705143023; bh=urDlIITn/FDyKx2lADAap5bRJmOw
-	Pm+ndUmYtdnLts0=; b=IxFyCw2/4ejSfAP605cJi6CY83/YG7taDRNqAqKVByPJ
-	xl7xqB6hmvv3qZq3k4z3n6ctJTEWmP2R6AOxJJpyWCwON589wk8TaP0pHZdEyJVi
-	xUPM32f18WxukoA1tGh6bTfLv688oyzKm3dlmpdQwPLUtH/pXvFsAjOo0Hg6/BSb
-	AQU/gMf+OUq6nGY45VP5lgduxxt1CJN08kUeNUpUa9rQFVY+9vfq6AgSIS3CzzTy
-	PlsbbWkJfi41ph95ijQf3tcf5d7SOK/lE7VZx0YgDB8ooEmgWoVaKsfrOTgUuHQk
-	2xgsEydhFLwivwO+2Dfm4oKjmTV8Ms+t0++f+T48iQ==
-X-ME-Sender: <xms:bxmhZV8n_jyB8rkp7NkhOa6PVB9FVO0E9kLxjzRDrYpfKLDSKsRcoA>
-    <xme:bxmhZZs5IEUVU-UivFzyLBZ_HQ1UlHkuIUK-nON5K4jYD2a-sUwdxmm1YD2nmUuco
-    NCzRz0bfa0kSOtnOw>
-X-ME-Received: <xmr:bxmhZTAhvt4veUPt2dz2dhTvbIoux9nJovlAlcXbTPidmK2E8DKgQ8NH96I_RoLzC35dxrlm-bQhKKkcS4GWd7_s_33Ej7cc3sk72j6MxT2_VzM>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrvdeihedgvddtucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    cujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtvdenucfhrhhomheprfgrthhr
-    ihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvg
-    hrnhepleejteffveehgeegteekteeiudeiieeigeeigedtffehgeekhfejheefkefhveel
-    necuffhomhgrihhnpehgihhthhhusgdrtghomhenucevlhhushhtvghrufhiiigvpedtne
-    curfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhm
-X-ME-Proxy: <xmx:bxmhZZet6CUQD4_Y5PaVXsVCjv1X45oGOBEoQJ8K4nXby7ILh3N7yA>
-    <xmx:bxmhZaNXf2UQATVjxYjHCMewPuvxpolw-kVvSrHAAa_ZbcMDH_4pBQ>
-    <xmx:bxmhZbleH0WCLYAQbQbaRnbnxlmK8oEPxs1WBtWKHl1cfONSYYIyLA>
-    <xmx:bxmhZc00-WGTdyUaB2cTUHZJisbX5pP8qH5A0LYvBK0q1jiHFek5xA>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 12 Jan 2024 05:50:22 -0500 (EST)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 29d37608 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 12 Jan 2024 10:47:36 +0000 (UTC)
-Date: Fri, 12 Jan 2024 11:50:18 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc: git@vger.kernel.org, Stan Hu <stanhu@gmail.com>
-Subject: Re: [PATCH 1/2] t9902: verify that completion does not print anything
-Message-ID: <ZaEZar9OTVgfkD9r@framework>
-References: <cover.1704969119.git.ps@pks.im>
- <73406ca9c8f38ac2ad8f0e32d6d81f1566a6b4d1.1704969119.git.ps@pks.im>
- <d978494d-6c48-5923-4745-c42a39e1187a@gmx.de>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="khVo36TB"
+Received: by mail-wr1-f53.google.com with SMTP id ffacd0b85a97d-3375a236525so4856753f8f.0
+        for <git@vger.kernel.org>; Fri, 12 Jan 2024 03:01:25 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1705057284; x=1705662084; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:references:to
+         :content-language:subject:reply-to:from:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=MvpGJ8SB3hZ47b+qTRJ9MTJ1XY29GSPXRaemeO2Eovg=;
+        b=khVo36TBe0q4cp7BGwufQDLV+vsfTMs7tV7aUAKZww2D3lfw6i3RnV2Ru4FXcPxBH1
+         WHNL9ZU4/QZuQL11Z49IpxUArDq6/gSllaqf8wyNger8BOyDpYY629QEQ5KimLv5+g0R
+         VWm/K4DxzR9mEJRJNJrdPYG7L9dMRx1aJHETSGZXoYHWjOzmcFY404k9YCOWhUfy6ySh
+         5bVGLsRnuPHuEFBbetywSX0mFDTuI8HMihpApzRAgpqGJFUP3HG8WA1+U8mDDDnVNtbc
+         ik7wBOQQhVUjvP6NU5367Nch1hWq7VI7HYBDI7NEM1BVx1OQvqAviAJvDqsFGd9wPztK
+         j1ig==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1705057284; x=1705662084;
+        h=content-transfer-encoding:in-reply-to:references:to
+         :content-language:subject:reply-to:from:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=MvpGJ8SB3hZ47b+qTRJ9MTJ1XY29GSPXRaemeO2Eovg=;
+        b=vs/cNchw5hvm/wQi5PpnaXb4J+3k9c468rRQhHQAnjHx9WG/vp3goP5SxThHIkziLU
+         J/MglH1XvS2h5dCaFUSeghgDKQTntm+krxZKYt5wyw8KQxEnVGIUBSVVX0/vyuTgrvRg
+         vRzcoL4NPWCKUzcUpor0Xfxw7lRGanoyHSkuy67q7VirAK42L5C++fE/h4NlW8DOjXz2
+         WpdJpJqQYaEJbIYzOXjHe3JB0ZK2SHqFAsZ7wRfmxK0nInmCAtGRY1FZPiJFjx9dnVPU
+         w1kcSxPXj+rD8wdN6mqRJsCoL+y13XinjfeaEoBv6/Rjos5h+n8RWw46Uscq8zT5uOJa
+         5WAQ==
+X-Gm-Message-State: AOJu0YwVjI4w8wzKebwNm/nyWiCcJM1Q9mrKFbdVXKbYJofxuOFe6aHb
+	qhMm1i4d6121wCPMzbJ6HkE=
+X-Google-Smtp-Source: AGHT+IFdYMYFCnc2AWTKiuSrLhSy8WK9e5T56y3poFTMZrheXZ6Jld1vppWbPRz8KLWxgX60Bgcz/w==
+X-Received: by 2002:adf:e881:0:b0:337:7caa:4b27 with SMTP id d1-20020adfe881000000b003377caa4b27mr511571wrm.109.1705057283705;
+        Fri, 12 Jan 2024 03:01:23 -0800 (PST)
+Received: from [192.168.1.212] ([84.64.64.237])
+        by smtp.gmail.com with ESMTPSA id d13-20020adfef8d000000b0033739c1da1dsm3536875wro.67.2024.01.12.03.01.23
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 12 Jan 2024 03:01:23 -0800 (PST)
+Message-ID: <47a4418b-68bf-4850-ba8b-1a5264f923e4@gmail.com>
+Date: Fri, 12 Jan 2024 11:01:21 +0000
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="1lV0xHEmDRiJQcOz"
-Content-Disposition: inline
-In-Reply-To: <d978494d-6c48-5923-4745-c42a39e1187a@gmx.de>
+User-Agent: Mozilla Thunderbird
+From: phillip.wood123@gmail.com
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [RFC PATCH] `log --merge` also for rebase/cherry pick/revert
+Content-Language: en-US
+To: Michael Lohmann <mi.al.lohmann@gmail.com>, git@vger.kernel.org
+References: <20240111233311.64734-1-mi.al.lohmann@gmail.com>
+In-Reply-To: <20240111233311.64734-1-mi.al.lohmann@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
+Hi Michael
 
---1lV0xHEmDRiJQcOz
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+On 11/01/2024 23:33, Michael Lohmann wrote:
+> This extends the functionality of `git log --merge` to also work with
+> conflicts for rebase, cherry pick and revert.
+> 
+> Signed-off-by: Michael Lohmann <mi.al.lohmann@gmail.com>
+> ---
+> Hi everybody!
+> 
+> When Phillip Wood gave me some nice hints on his workflow concerning
+> conflicts [1] (we discussed if `--show-current-patch` would make sense
+> for cherry pick/revert). When I learned about `git log --merge` I was a
+> bit sad to discover that those do not exist for rebase/revert/cherry
+> pick since they look really valuable for getting an understanding on
+> what was changed. It is basically the counterpart to
+> `git show ${ACTION}_HEAD` for understanding the source of the conflict.
+> 
+> I am curious if also other people would be interested in having an easy
+> way to get a log of only the relevant commits touching conflicting files
+> for said actions.
+> 
+> With this patch I think the functionality is there, just hijacking the
+> `--merge` code - maybe an alias like `git log --conflict` or similar
+> might be more descriptive now?
+> 
+> What do you think about this idea? (Or am I maybe missing an easy way to
+> achieve it with the existing code as well?)
 
-On Fri, Jan 12, 2024 at 11:08:21AM +0100, Johannes Schindelin wrote:
-> Hi Patrick,
->=20
-> On Thu, 11 Jan 2024, Patrick Steinhardt wrote:
->=20
-> > The Bash completion script must not print anything to either stdout or
-> > stderr. Instead, it is only expected to populate certain variables.
-> > Tighten our `test_completion ()` test helper to verify this requirement.
-> >
-> > Signed-off-by: Patrick Steinhardt <ps@pks.im>
-> > ---
-> >  t/t9902-completion.sh | 6 ++++--
-> >  1 file changed, 4 insertions(+), 2 deletions(-)
-> >
-> > diff --git a/t/t9902-completion.sh b/t/t9902-completion.sh
-> > index aa9a614de3..78cb93bea7 100755
-> > --- a/t/t9902-completion.sh
-> > +++ b/t/t9902-completion.sh
-> > @@ -87,9 +87,11 @@ test_completion ()
-> >  	else
-> >  		sed -e 's/Z$//' |sort >expected
-> >  	fi &&
-> > -	run_completion "$1" &&
-> > +	run_completion "$1" >"$TRASH_DIRECTORY"/output 2>&1 &&
-> >  	sort out >out_sorted &&
-> > -	test_cmp expected out_sorted
-> > +	test_cmp expected out_sorted &&
-> > +	test_must_be_empty "$TRASH_DIRECTORY"/output &&
->=20
-> It seems that this fails CI on macOS, most likely because we're running
-> with `set -x` and that output somehow ends up in `output`, see e.g. here:
-> https://github.com/git/git/actions/runs/7496790359/job/20409405194#step:4=
-:1880
->=20
->   [...]
->   ++ test_completion 'git switch '
->   ++ test 1 -gt 1
->   ++ sed -e 's/Z$//'
->   ++ sort
->   ++ run_completion 'git switch '
->   ++ sort out
->   ++ test_cmp expected out_sorted
->   ++ test 2 -ne 2
->   ++ eval 'diff -u' '"$@"'
->   +++ diff -u expected out_sorted
->   ++ test_must_be_empty '/Users/runner/work/git/git/t/trash directory.t99=
-02-completion/output'
->   ++ test 1 -ne 1
->   ++ test_path_is_file '/Users/runner/work/git/git/t/trash directory.t990=
-2-completion/output'
->   ++ test 1 -ne 1
->   ++ test -f '/Users/runner/work/git/git/t/trash directory.t9902-completi=
-on/output'
->   ++ test -s '/Users/runner/work/git/git/t/trash directory.t9902-completi=
-on/output'
->   ++ echo ''\''/Users/runner/work/git/git/t/trash directory.t9902-complet=
-ion/output'\'' is not empty, it contains:'
->   '/Users/runner/work/git/git/t/trash directory.t9902-completion/output' =
-is not empty, it contains:
->   ++ cat '/Users/runner/work/git/git/t/trash directory.t9902-completion/o=
-utput'
->   ++ local -a COMPREPLY _words
->   ++ local _cword
->   [...]
->=20
-> Maybe this is running in Dash and therefore `BASH_XTRACEFD=3D4` in
-> `test-lib.sh` has not the intended effect?
+I should start by saying that I didn't know "git log --merge" existed 
+before I saw this message so please correct me if I've misunderstood 
+what this patch is doing. If I understand correctly it shows the commits 
+from each side of the merge and is equivalent to
 
-Meh, thanks for the heads up. Another test gap in GitLab CI which I'm
-going to address soon via a new macOS job.
+     git log HEAD MERGE_HEAD ^$(git merge-base HEAD MERGE_HEAD)
 
-In any case, Dash indeed does not honor the above envvar. I also could
-not find any alternate solutions to redirect the tracing output. So for
-all I can see there are a few ways to handle this:
+When a commit is cherry-picked the merge base used is CHERRY_PICK_HEAD^ 
+[*] so I'm not sure what
 
-  - `set -x` and then restore the previous value after having called
-    `run_completion`.
+     git log HEAD CHERRY_PICK_HEAD ^$(git merge-base HEAD CHERRY_PICK_HEAD)
 
-  - Filter the output so that any line starting with "${PS4}" gets
-    removed.=20
+tells us. Indeed there HEAD and CHERRY_PICK_HEAD may not share a common 
+ancestor. As I say I've not used "git log --merge" so maybe I'm missing 
+the reason why it would be useful when cherry-picking or rebasing.
 
-  - Don't test for this bug.
+Best Wishes
 
-Not sure which way to go, but the first alternative feels a bit more
-sensible to me. It does remove the ability to see what's going on in the
-completion script though in case one wants to debug it.
+Phillip
 
-I'll reroll this patch series early next week.
+[*] assuming we're not picking a merge commit
 
-Patrick
-
---1lV0xHEmDRiJQcOz
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmWhGWUACgkQVbJhu7ck
-PpQRrhAAhxxF8kukTeC1+f7527TyeQdB9eCOERPFtlUXbdeTQeamO2UNdIm0EEx+
-LRgP2ynZmUaKL04wKSEeqNNkF2TajC8+FSwqits3eqImLSrxF7kkroD/6OqPmPFj
-gfLqvSgnW1cLT5goBm/dB+h1GeaC6WCjx1PcxV8aqVWA4fjZaLJbaHepKVvav745
-Z31U6YBuz4tPuTwsMy4IFT/v8bh1pIzmsmWVA26VM1+hGhtw0oPUxOZv1jUJPGOX
-je/LLptKz3IVFbCUtuLTyNSz3FkMtLaqN2CQCdqFC/P5kmnx7Zu9o7K6wsDmXEAv
-4mbtkSm/wigcaXDpuWJ7qDV+9ph3qb3awDnWkVKcw/zr70aSXVPQiJUW2Q+xPECV
-h61VihN6tHUNDZhdoPajoghDV4TTPUUkMp4dcQauYHvixsdPbn7EXGOYm02DTcdl
-Pp0jBBg3NxBt8O7rsYc4HsAUggNKEh+RhNhnwos3CnOwSoEdfKHfb5k33mjTmfLa
-lvirs/Bd94Df59dRf795wNYdwv5JplK2o4pacbzu/C/Yb2YoBYFSSU/Im6Dx1bpn
-JRO7bKxsacbyffVAComUM+jfjNCdeA0tKSfNk/zW7r1cCGYJp0uZsYavCT5QSbZs
-d67Ci2jG/AUhxDjuzruSHJtAG2LXhYL4LZycPMgG3QCsKSXtKto=
-=FrJ+
------END PGP SIGNATURE-----
-
---1lV0xHEmDRiJQcOz--
+> Michael
+> 
+> 
+> [1] https://lore.kernel.org/git/cfba7098-3c23-4a81-933c-b7fefdedec8a@gmail.com/
+> 
+>   revision.c | 22 ++++++++++++++++++----
+>   1 file changed, 18 insertions(+), 4 deletions(-)
+> 
+> diff --git a/revision.c b/revision.c
+> index 2424c9bd67..2e5c00dabd 100644
+> --- a/revision.c
+> +++ b/revision.c
+> @@ -1961,23 +1961,37 @@ static void add_pending_commit_list(struct rev_info *revs,
+>   	}
+>   }
+>   
+> +static char* get_action_head_name(struct object_id* oid)
+> +{
+> +	if (!repo_get_oid(the_repository, "MERGE_HEAD", oid)) {
+> +		return "MERGE_HEAD";
+> +	} else if (!repo_get_oid(the_repository, "REBASE_HEAD", oid)) {
+> +		return "REBASE_HEAD";
+> +	} else if (!repo_get_oid(the_repository, "CHERRY_PICK_HEAD", oid)) {
+> +		return "CHERRY_PICK_HEAD";
+> +	} else if (!repo_get_oid(the_repository, "REVERT_HEAD", oid)) {
+> +		return "REVERT_HEAD";
+> +	} else
+> +		die("--merge without MERGE_HEAD, REBASE_HEAD, CHERRY_PICK_HEAD or REVERT_HEAD?");
+> +}
+> +
+>   static void prepare_show_merge(struct rev_info *revs)
+>   {
+>   	struct commit_list *bases;
+>   	struct commit *head, *other;
+>   	struct object_id oid;
+>   	const char **prune = NULL;
+> +	const char *action_head_name;
+>   	int i, prune_num = 1; /* counting terminating NULL */
+>   	struct index_state *istate = revs->repo->index;
+>   
+>   	if (repo_get_oid(the_repository, "HEAD", &oid))
+>   		die("--merge without HEAD?");
+>   	head = lookup_commit_or_die(&oid, "HEAD");
+> -	if (repo_get_oid(the_repository, "MERGE_HEAD", &oid))
+> -		die("--merge without MERGE_HEAD?");
+> -	other = lookup_commit_or_die(&oid, "MERGE_HEAD");
+> +	action_head_name = get_action_head_name(&oid);
+> +	other = lookup_commit_or_die(&oid, action_head_name);
+>   	add_pending_object(revs, &head->object, "HEAD");
+> -	add_pending_object(revs, &other->object, "MERGE_HEAD");
+> +	add_pending_object(revs, &other->object, action_head_name);
+>   	bases = repo_get_merge_bases(the_repository, head, other);
+>   	add_rev_cmdline_list(revs, bases, REV_CMD_MERGE_BASE, UNINTERESTING | BOTTOM);
+>   	add_pending_commit_list(revs, bases, UNINTERESTING | BOTTOM);
