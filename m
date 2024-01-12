@@ -1,142 +1,131 @@
-Received: from mail-yb1-f176.google.com (mail-yb1-f176.google.com [209.85.219.176])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E04A59B78
-	for <git@vger.kernel.org>; Thu, 11 Jan 2024 23:53:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=umich.edu
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=umich.edu
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55B70361
+	for <git@vger.kernel.org>; Fri, 12 Jan 2024 00:16:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=umich.edu header.i=@umich.edu header.b="SQ8A7CRs"
-Received: by mail-yb1-f176.google.com with SMTP id 3f1490d57ef6-da7ea62e76cso5091922276.3
-        for <git@vger.kernel.org>; Thu, 11 Jan 2024 15:53:15 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=umich.edu; s=google-2016-06-03; t=1705017194; x=1705621994; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=BiPQK21s7VaPGACRLVNKdQ2CEws1ZyBo2AyqReZ6Owk=;
-        b=SQ8A7CRstYuS4YfZo3cDd3wY0G2X7c2NPp+DcDG+cB58b4dJ6gc+RNRQ2LMn/YuRE4
-         /3DNDU0+IyvrpYJvirx37Wt6UnVj9LbVEs7o8c9ibbIQtTsgIgecUDRhcJAqx8JNkBqb
-         hdpvV67gHDe+uTYSUGhefzghL0Cv3IEoffRdXQmEXw9hpybY5ii0QKe2dvTHyBmkp2fI
-         3cw1P682kx65SHK+GsP8hv7kj4XY4+KAq9HeKZjHLxMX0yMRoYhvD/3Si1LdsRs5Q8dO
-         fyiyev14adIVk2XEUyt8ISQl97Q2+AmgmjFw6cBTpAcm0UgIbnv17OePWtoX0Mie5pAa
-         eyZw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1705017194; x=1705621994;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=BiPQK21s7VaPGACRLVNKdQ2CEws1ZyBo2AyqReZ6Owk=;
-        b=kIKaIs9wJElBiMu5br9E00a8F3sgUJPqiKxq1iXs6uTjyC8JHmN2ejEVXy1wdf72+w
-         222+6bto/gfN80QZD1JbpheJzzTp800FtosiGp4O06ddYnpvQxhQPC7qLAWSpeHSE3iB
-         WZlnIoxcCLJ6WsJNIMxnmqnZ438eCdM7O90voWA7KLZv+N+sc54ZJVjl+eJBro/u4LDR
-         jWrcnAxxrazbzhjoZCuSwoWB+KAvu+dgWfFYDzivr/hylZ06z3duTEIyM/yD3EFyDkhP
-         23jwzcTOeoZznxdHdvy9TgrUGkli50wEpV+wS4h9sYwACaIUokMbmpdosBNK/pTnMDVK
-         K6nA==
-X-Gm-Message-State: AOJu0YzfgXeXZ+WluQv6IebK4/DBYCkPwTT8/a8atS5vteELfkGopK+P
-	7OevY7TMkxquNsl2iw4r/1NF15RDyBR0eMmGsVUG/95Cu1g/kA==
-X-Google-Smtp-Source: AGHT+IHetCpHK0WRzAiFZXVFdvY9CpCYoKivd8pBjRgIiFfm9zcLO6kVUwwn7odLeLpiSJH4dGrH5NJuyBZJ2YL0JjM=
-X-Received: by 2002:a05:6902:1888:b0:dbd:9dc3:ea0 with SMTP id
- cj8-20020a056902188800b00dbd9dc30ea0mr32546ybb.79.1705017194270; Thu, 11 Jan
- 2024 15:53:14 -0800 (PST)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="IGGwoFyI"
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id 7D9A5217A6;
+	Thu, 11 Jan 2024 19:15:59 -0500 (EST)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=GKWAH0n1be7TjlxSIJ5X8HeZSxtvBc/HUOX8hT
+	b4Fs8=; b=IGGwoFyIlcHtxpO+ko/SODgCXUVv0FzbQmSJuAYk6x6EmwvoBTyBbZ
+	unFM5YZZ+Rm9uRhtlKoL3vlIOzb6E/8kQ8yRxC+iADE4FkaX9tlDp69Zm4LFg4eL
+	DpcdAKukDd6h9NLqnlXCtkOhH0qAp+M7VzUJ4vIlJck9njKHvq9LE=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id 75B03217A5;
+	Thu, 11 Jan 2024 19:15:59 -0500 (EST)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.200.93])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 627F9217A1;
+	Thu, 11 Jan 2024 19:15:54 -0500 (EST)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Michael Lohmann <mi.al.lohmann@gmail.com>
+Cc: git@vger.kernel.org,  phillip.wood123@gmail.com, Elijah Newren
+ <newren@gmail.com>
+Subject: Re: [RFC PATCH] `log --merge` also for rebase/cherry pick/revert
+In-Reply-To: <20240111233311.64734-1-mi.al.lohmann@gmail.com> (Michael
+	Lohmann's message of "Fri, 12 Jan 2024 00:33:11 +0100")
+References: <20240111233311.64734-1-mi.al.lohmann@gmail.com>
+Date: Thu, 11 Jan 2024 16:15:52 -0800
+Message-ID: <xmqqy1cvcsp3.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <ZZ77NQkSuiRxRDwt@nand.local>
-In-Reply-To: <ZZ77NQkSuiRxRDwt@nand.local>
-From: Trevor Gross <tmgross@umich.edu>
-Date: Thu, 11 Jan 2024 18:53:01 -0500
-Message-ID: <CALNs47s3tUQoOD4ejdoTn6y12ywjL0j5hWU-fUnBLe_o3vV5SQ@mail.gmail.com>
-Subject: Re: [DISCUSS] Introducing Rust into the Git project
-To: Taylor Blau <me@ttaylorr.com>
-Cc: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ C0381CCE-B0DF-11EE-827E-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
 
-On Wed, Jan 10, 2024 at 3:19=E2=80=AFPM Taylor Blau <me@ttaylorr.com> wrote=
-:
->
-> Over the holiday break at the end of last year I spent some time
-> thinking on what it would take to introduce Rust into the Git project.
->
-> There is significant work underway to introduce Rust into the Linux
-> kernel (see [1], [2]). Among their stated goals, I think there are a few
-> which could be potentially relevant to the Git project:
->
->   - Lower risk of memory safety bugs, data races, memory leaks, etc.
->     thanks to the language's safety guarantees.
->
->   - Easier to gain confidence when refactoring or introducing new code
->     in Rust (assuming little to no use of the language's `unsafe`
->     feature).
->
->   - Contributing to Git becomes easier and accessible to a broader group
->     of programmers by relying on a more modern language.
->
-> Given the allure of these benefits, I think it's at least worth
-> considering and discussing how Rust might make its way into Junio's
-> tree.
->
-> I imagine that the transition state would involve some parts of the
-> project being built in C and calling into Rust code via FFI (and perhaps
-> vice-versa, with Rust code calling back into the existing C codebase).
-> Luckily for us, Rust's FFI provides a zero-cost abstraction [3], meaning
-> there is no performance impact when calling code from one language in
-> the other.
->
-> Some open questions from me, at least to get the discussion going are:
->
->   1. Platform support. The Rust compiler (rustc) does not enjoy the same
->      widespread availability that C compilers do. For instance, I
->      suspect that NonStop, AIX, Solaris, among others may not be
->      supported.
->
->      One possible alternative is to have those platforms use a Rust
->      front-end for a compiler that they do support. The gccrs [4]
->      project would allow us to compile Rust anywhere where GCC is
->      available. The rustc_codegen_gcc [5] project uses GCC's libgccjit
->      API to target GCC from rustc itself.
->
->   2. Migration. What parts of Git are easiest to convert to Rust? My
->      hunch is that the answer is any stand-alone libraries, like
->      strbuf.h. I'm not sure how we should identify these, though, and in
->      what order we would want to move them over.
->
->   3. Interaction with the lib-ification effort. There is lots of work
->      going on in an effort to lib-ify much of the Git codebase done by
->      Google. I'm not sure how this would interact with that effort, but
->      we should make sure that one isn't a blocker for the other.
->
-> I'm curious to hear what others think about this. I think that this
-> would be an exciting and worthwhile direction for the project. Let's
-> see!
->
-> Thanks,
-> Taylor
->
-> [1]: https://rust-for-linux.com/
-> [2]: https://lore.kernel.org/rust-for-linux/20210414184604.23473-1-ojeda@=
-kernel.org/
-> [3]: https://blog.rust-lang.org/2015/04/24/Rust-Once-Run-Everywhere.html#=
-c-talking-to-rust
-> [4]: https://github.com/Rust-GCC/gccrs
-> [5]: https://github.com/rust-lang/rustc_codegen_gcc
->
+Michael Lohmann <mi.al.lohmann@gmail.com> writes:
 
-Two good reference codebases out there:
+> This extends the functionality of `git log --merge` to also work with
+> conflicts for rebase, cherry pick and revert.
+>
+> Signed-off-by: Michael Lohmann <mi.al.lohmann@gmail.com>
+> ---
+>  ... It is basically the counterpart to
+> `git show ${ACTION}_HEAD` for understanding the source of the conflict.
 
-Abstractions over libgit2
-    Repo: https://github.com/rust-lang/git2-rs
-    Docs: https://docs.rs/git2/latest/git2/
+I do not know about the validity of that approach to use *_HEAD, but
+we may want to tighten the original's use of repo_get_oid() here ...
 
-gix, a WIP reimplementation of git. This is far from complete but does
-a lot of threading / async to apparently get quite fast.
-    Repo: https://github.com/Byron/gitoxide
-    Docs: https://docs.rs/gix/latest/gix/
+> -	if (repo_get_oid(the_repository, "MERGE_HEAD", &oid))
+> -		die("--merge without MERGE_HEAD?");
+> -	other = lookup_commit_or_die(&oid, "MERGE_HEAD");
 
-If the git project does decide to go forward with this, there is
-probably a lot of completed work that can be pulled from either of
-those sources.
+... so that we won't be confused in a repository that has a tag
+whose name happens to be MERGE_HEAD.  We probably should be using
+refs.c:refs_resolve_ref_unsafe() instead to 
+
+ (1) ensure MERGE_HEAD is a ref, 
+ (2) obtain the oid without any prefixing by refs.c:repo_dwim_ref(),
+     and optionally
+ (3) error out when MERGE_HEAD is a symref.
+
+As your patch makes the problem even worse, if we were to do such a
+tightening (and I do not see a reason not to), it may want to be
+done before, not after, this patch.
+
+I won't comment on the coding style violations in the patch below in
+this message.
+
+Thanks.
+
+> diff --git a/revision.c b/revision.c
+> index 2424c9bd67..2e5c00dabd 100644
+> --- a/revision.c
+> +++ b/revision.c
+> @@ -1961,23 +1961,37 @@ static void add_pending_commit_list(struct rev_info *revs,
+>  	}
+>  }
+>  
+> +static char* get_action_head_name(struct object_id* oid)
+> +{
+> +	if (!repo_get_oid(the_repository, "MERGE_HEAD", oid)) {
+> +		return "MERGE_HEAD";
+> +	} else if (!repo_get_oid(the_repository, "REBASE_HEAD", oid)) {
+> +		return "REBASE_HEAD";
+> +	} else if (!repo_get_oid(the_repository, "CHERRY_PICK_HEAD", oid)) {
+> +		return "CHERRY_PICK_HEAD";
+> +	} else if (!repo_get_oid(the_repository, "REVERT_HEAD", oid)) {
+> +		return "REVERT_HEAD";
+> +	} else
+> +		die("--merge without MERGE_HEAD, REBASE_HEAD, CHERRY_PICK_HEAD or REVERT_HEAD?");
+> +}
+> +
+>  static void prepare_show_merge(struct rev_info *revs)
+>  {
+>  	struct commit_list *bases;
+>  	struct commit *head, *other;
+>  	struct object_id oid;
+>  	const char **prune = NULL;
+> +	const char *action_head_name;
+>  	int i, prune_num = 1; /* counting terminating NULL */
+>  	struct index_state *istate = revs->repo->index;
+>  
+>  	if (repo_get_oid(the_repository, "HEAD", &oid))
+>  		die("--merge without HEAD?");
+>  	head = lookup_commit_or_die(&oid, "HEAD");
+> -	if (repo_get_oid(the_repository, "MERGE_HEAD", &oid))
+> -		die("--merge without MERGE_HEAD?");
+> -	other = lookup_commit_or_die(&oid, "MERGE_HEAD");
+> +	action_head_name = get_action_head_name(&oid);
+> +	other = lookup_commit_or_die(&oid, action_head_name);
+>  	add_pending_object(revs, &head->object, "HEAD");
+> -	add_pending_object(revs, &other->object, "MERGE_HEAD");
+> +	add_pending_object(revs, &other->object, action_head_name);
+>  	bases = repo_get_merge_bases(the_repository, head, other);
+>  	add_rev_cmdline_list(revs, bases, REV_CMD_MERGE_BASE, UNINTERESTING | BOTTOM);
+>  	add_pending_commit_list(revs, bases, UNINTERESTING | BOTTOM);
