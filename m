@@ -1,85 +1,61 @@
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f54.google.com (mail-ed1-f54.google.com [209.85.208.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8039747F
-	for <git@vger.kernel.org>; Fri, 12 Jan 2024 00:40:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B20B657
+	for <git@vger.kernel.org>; Fri, 12 Jan 2024 00:55:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="yUhVznTv"
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 3CFA91D493D;
-	Thu, 11 Jan 2024 19:40:27 -0500 (EST)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=UFYjo4xDTHAQL9HiuNgu+EldPxLm2UtFVPD40m
-	hh5ZQ=; b=yUhVznTvpUz3lwkqv30VehoiI2p1oY/0wjCtFQ05Nied1UWuclUUAn
-	hAyiyC19pzZjZsDcSfxTYxlKwrm8xL2XgKvuLs9zgX2WkbNFhHFerZQFCEmdq2y7
-	i/se7fMchJSC7XNKRTO4ukSIT9n532iy1opahC8uBKv4BJbbdA5cg=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 358081D493C;
-	Thu, 11 Jan 2024 19:40:27 -0500 (EST)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.200.93])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 9B6E61D493A;
-	Thu, 11 Jan 2024 19:40:26 -0500 (EST)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Michael Lohmann <mi.al.lohmann@gmail.com>
-Cc: git@vger.kernel.org,  phillip.wood123@gmail.com,
-  phillip.wood@dunelm.org.uk,  wanja.hentze@bevuta.com
-Subject: Re: [PATCH v3] builtin/revert.c: refactor using an enum for cmd-action
-In-Reply-To: <20240111200627.64199-1-mi.al.lohmann@gmail.com> (Michael
-	Lohmann's message of "Thu, 11 Jan 2024 21:06:27 +0100")
-References: <xmqqsf33fy3t.fsf@gitster.g>
-	<20240111200627.64199-1-mi.al.lohmann@gmail.com>
-Date: Thu, 11 Jan 2024 16:40:25 -0800
-Message-ID: <xmqqttnjcrk6.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BtWopePC"
+Received: by mail-ed1-f54.google.com with SMTP id 4fb4d7f45d1cf-557c188f313so8400279a12.1
+        for <git@vger.kernel.org>; Thu, 11 Jan 2024 16:55:53 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1705020952; x=1705625752; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=cqBLtwwuV7rNdV9LaU9dbeJ0tnSXlmvSWyGbbjo9TRA=;
+        b=BtWopePCjyQNtSkh9i4W2+Mlaay4M8gKenuq08NmPAWSZSVZ9huhPNuqwuqhq6plOc
+         X84kEpkiyKvyJe/iVl++CSC4L9KMKS/vW6cbOuAlHbZQg7xf465fgzl5Zhk4YLt7TQgU
+         eaAhjWGjbdvv4l/5K0UWmcSdQZtep2kLTo6m3l7RBgn0OUT0/pwMEj+zE423Du4lk42I
+         dsiWX5jfz3b/aNx0ATd5b6sk/zAhaZ5IgjzfJYLDPYD/S08aEfKgYAt/4qfvmAZNo1H5
+         4n+l7Y3Lub2etXAdJ9eBy5Yo9Ruw7Ikt4iPtTab/9JzGAM9R89RatWiAd5TNklWzhmar
+         hOlg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1705020952; x=1705625752;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=cqBLtwwuV7rNdV9LaU9dbeJ0tnSXlmvSWyGbbjo9TRA=;
+        b=tue1t+BvQKEOAXheHiPLAfAAsKP8LYsjUhKBEm3XYDX1T7iO1EDXRKp4OZPQPKu5Zi
+         laeOk7jmiMWMMlYd4sHQTgvc86PQtw4y5jCQlrwkZT8mv1wdFRAB21bgIHcyvCc5wIR0
+         7+AeNn5vlpCq5fix4Js5LlDTWHMbNecxW41UKkPHRg5SbK+F0ag3/8NZfgISM5StEn2Z
+         GWDQbyYQuxaXlkrD6cNtpYVqhZg8d+wreU+Bo+CynXIY2u6kpvSWyphHsze927d/ChCX
+         ForPPZSlm2cKWzjS+EJvopy8/NzZtxBlWB0P3B/rO/GfX74Gb13yWMttaVB8sEE1yZcL
+         X8nA==
+X-Gm-Message-State: AOJu0YxLPa4qgvY2VKDiwUHVtpL/U2/SfBUVXqyeck4/T+OBzZo2DCEl
+	1H11ObfvP+0Q9WU317ZIHbNdixaS9h83u1Dj1Q==
+X-Google-Smtp-Source: AGHT+IEC+/L7yCdSELzTYcSe94HWbhkQx4qvxP8cfHaDW2M0oLRcaUPA09f5Lh/yEom4nL98ntnYTdkASwC8E+4yPNQ=
+X-Received: by 2002:aa7:c6ce:0:b0:557:dd03:cd with SMTP id b14-20020aa7c6ce000000b00557dd0300cdmr668802eds.19.1705020951571;
+ Thu, 11 Jan 2024 16:55:51 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- 2DBD88F8-B0E3-11EE-B422-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
+References: <pull.1638.git.1705008449995.gitgitgadget@gmail.com>
+ <CAPig+cRr0V2ecnmxk1H_yF24dwSFA6niPxYXGH0MZ+wGP9m9UA@mail.gmail.com>
+ <xmqqjzofec0e.fsf@gitster.g> <CADavbxcFXpP5EQZ=UEMZt+6KKVtCsTMbgQDHEo0uinm0YfRbZA@mail.gmail.com>
+In-Reply-To: <CADavbxcFXpP5EQZ=UEMZt+6KKVtCsTMbgQDHEo0uinm0YfRbZA@mail.gmail.com>
+From: Benji Kay <okaybenji@gmail.com>
+Date: Thu, 11 Jan 2024 18:55:40 -0600
+Message-ID: <CADavbxdexJ-nzbiicLF7SOJsELKW5J5Zox5MFGdWDHhcE=85VQ@mail.gmail.com>
+Subject: Re: [PATCH] push: improve consistency of output when "up to date"
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Eric Sunshine <sunshine@sunshineco.com>, 
+	Benji Kay via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-Michael Lohmann <mi.al.lohmann@gmail.com> writes:
-
-> -	if (cmd == 'c')
-> +	case ACTION_CONTINUE:
->  		return sequencer_continue(the_repository, opts);
-> -	if (cmd == 'a')
-> +	case ACTION_ABORT:
->  		return sequencer_rollback(the_repository, opts);
-> -	if (cmd == 's')
-> +	case ACTION_SKIP:
->  		return sequencer_skip(the_repository, opts);
-> -	return sequencer_pick_revisions(the_repository, opts);
-> +	case ACTION_START:
-> +		return sequencer_pick_revisions(the_repository, opts);
-> +	}
->  }
-
-This change broke the build when merged to 'seen' like so ...
-
-builtin/revert.c: In function 'run_sequencer':
-builtin/revert.c:242:1: error: control reaches end of non-void function [-Werror=return-typ ]
-  242 | }
-      | ^
- 
-... so I'm discarding
-it out of my tree and redoing today's integration cycle.
-
-Different compilers are smart in different ways, and we shouldn't
-overly rely on the fact that some compilers may be happy by seeing a
-switch that has all the enum values and notice that one of the return
-will be triggered in its case arms.
-
-
-
+If it's important these messages are not changed (under the presumption
+some programs may make decisions based on the output), perhaps a test
+should be written to ensure the output is as expected.
