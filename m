@@ -1,200 +1,208 @@
-Received: from ring.crustytoothpaste.net (ring.crustytoothpaste.net [172.105.110.227])
+Received: from smtp127.iad3b.emailsrvr.com (smtp127.iad3b.emailsrvr.com [146.20.161.127])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50F1038C
-	for <git@vger.kernel.org>; Tue, 16 Jan 2024 02:06:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="DD5o1H55"
-Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:e59a:3ed0:5f5c:31f3])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (P-256) server-signature RSA-PSS (3072 bits) server-digest SHA256)
-	(No client certificate requested)
-	by ring.crustytoothpaste.net (Postfix) with ESMTPSA id B39945A3C4;
-	Tue, 16 Jan 2024 02:06:50 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1705370810;
-	bh=9IeMbib/kaiuKqYVspp3SDTMgnepOY5moNTY+lAj3vU=;
-	h=Date:From:To:Cc:Subject:References:Content-Type:
-	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-	 Content-Type:Content-Disposition;
-	b=DD5o1H55Wt5abV4kllyM9SrCbsA4IHwWXuiuLLvLZqdz/WKvcTcAN1kGg3xFgFHVo
-	 SBGNiCUgYIU9A7NUZwr3Efek4OMrNMQAYxg9EfQX+yAOhtmFxJvUm9hEHE2aHMciBe
-	 2LP1SqsHyFkGZZWgDphBO/I1/pCSa0lmdkux6oIVRhQNpLECEm5kcrPe7+iMBWazpF
-	 qwgrsYeutIwZ6ow1LO98IqPqtESkaMwgXVcCLfUu+UARJ1okX3xWerfjpxb2p+WK1h
-	 T2HrTKsEosoAZvx2WRYe5inCorBebbid3pULRJLm4oQ0/r3bY0k8uRnYPO1iXBi9V3
-	 I6PbWCIOvpVh4rFGeEnCqhGrBniHt55pdvqgK+b7UfomV6gnQjf/2YlzaZm2mjUgs8
-	 REfC0EdoO6zDTpV99oifijOAvfkt6KMmx3iazrGafRk1qxKMm44YkBJGOD43yiTHRg
-	 Mk12gzIb/A7bChOqq/LNQvts/+0ZCiAbkkKNlFssBbczioIV5fu
-Date: Tue, 16 Jan 2024 02:06:47 +0000
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: Michael Litwak <michael.litwak@nuix.com>
-Cc: Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,
-	Matthias =?utf-8?Q?A=C3=9Fhauer?= <mha1993@live.de>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: Suggested clarification for .gitattributes reference
- documentation
-Message-ID: <ZaXkt715TjNpuprG@tapette.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Michael Litwak <michael.litwak@nuix.com>,
-	Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,
-	Matthias =?utf-8?Q?A=C3=9Fhauer?= <mha1993@live.de>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-References: <SJ0PR10MB569379A093B83BE01A04C789FA6F2@SJ0PR10MB5693.namprd10.prod.outlook.com>
- <ZaG0EkADl8hQZaqf@tapette.crustytoothpaste.net>
- <SJ0PR10MB56937175632E5D82793CE13EFA6F2@SJ0PR10MB5693.namprd10.prod.outlook.com>
- <SJ0PR10MB56932ABBEEEC6F8ADE23995AFA6E2@SJ0PR10MB5693.namprd10.prod.outlook.com>
- <20240113074323.GA6819@tb-raspi4>
- <SJ0PR10MB5693A19B0B66F47B2A985739FA732@SJ0PR10MB5693.namprd10.prod.outlook.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 057427762B
+	for <git@vger.kernel.org>; Fri, 12 Jan 2024 16:57:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=fashionbeestore.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=fashionbeestore.com
+X-Auth-ID: sales@fashionbeestore.com
+Received: by smtp24.relay.iad3b.emailsrvr.com (Authenticated sender: sales-AT-fashionbeestore.com) with ESMTPSA id B3F344022C
+	for <git@vger.kernel.org>; Fri, 12 Jan 2024 11:37:45 -0500 (EST)
+Reply-To: mark.hamer@homeinstead.co.uk
+From: sales@fashionbeestore.com
+To: git@vger.kernel.org
+Subject: RE: Due InvoiceA023522
+Date: 12 Jan 2024 16:37:45 +0000
+Message-ID: <20240112163745.2AA626A5F4731A1E@fashionbeestore.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="bVYFgFSQZMWtfXh7"
-Content-Disposition: inline
-In-Reply-To: <SJ0PR10MB5693A19B0B66F47B2A985739FA732@SJ0PR10MB5693.namprd10.prod.outlook.com>
-User-Agent: Mutt/2.2.12 (2023-09-09)
+Content-Type: multipart/mixed;
+	boundary="----=_NextPart_000_0012_07F803F7.79CF3F51"
+X-Classification-ID: aaa8d9cc-684f-46c5-afbe-60db3762b25e-3-1
 
+This is a multi-part message in MIME format.
 
---bVYFgFSQZMWtfXh7
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+------=_NextPart_000_0012_07F803F7.79CF3F51
+Content-Type: text/plain;
+	charset="utf-8"
 Content-Transfer-Encoding: quoted-printable
 
-On 2024-01-16 at 00:19:20, Michael Litwak wrote:
-> As for documentation clarifications for the .gitattributes manpage at
-> https://git-scm.com/docs/gitattributes, I still suggest adding an
-> explicit example for UTF-16LE with BOM, and/or adding a table listing
-> which working-tree-encoding value to use for each of the following
-> UTF-16 text encodings:
->=20
-> ENCODING              'working-tree-encoding' VALUE
-> -------------------   -----------------------------
-> UTF-16LE with BOM     UTF-16LE-BOM
 
-I should point out that this encoding, while very common on Windows, is
-also nonstandard.  The standard says that UTF-16LE and UTF-16BE don't
-include a BOM and are always the respective endianness.  UTF-16 can have
-a BOM or not, and if it doesn't, it's big-endian.
+Hi;
 
-There is no standard-conforming way to force the use of little-endian
-with a BOM.  The problem is that many Windows programs insist on the
-BOM, but also refuse to read big-endian data in violation of the
-standard[0].  That's why this nonstandard variant exists in Git.
 
-I'll also note that this particular nonstandard variant is essentially
-impossible to encode reliably on Unix outside of Git because it's
-nonstandard, so it's an extremely unportable choice.  In fact, I'm not
-aware of _any_ tool on my Debian system other than Git that will
-guarantee a UTF-16 little-endian stream with BOM.  My editor (Neovim)
-certainly doesn't.  (Apparently Emacs, which is not on my system, may
-permit that, which does not surprise me in the least.)
+Apologies, will send it again. please see the invoice attached
 
-> UTF-16BE with BOM     UTF-16
 
-It's a little more complicated than that.  "UTF-16" would allow UTF-16
-big-endian with BOM, UTF-16 little-endian with BOM, or UTF-16 big-endian
-without BOM.  In other words, UTF-16 is big-endian by default and
-otherwise requires a BOM, which may be included even if not required.
+Thank you and have a great day
 
-A reader must handle every variant of this, and must honour the BOM if
-set and default to big-endian if not.  A writer may write whichever
-variant pleases it most as long as it's consistent within the same
-message.
 
-> UTF-16LE no BOM       UTF-16LE
-> UTF-16BE no BOM       UTF-16BE
+Mark.=20=20
+Chief, Budget Branch 16003
 
-I think the addition of this table is too much.  UTF-16LE-BOM is common
-on Windows, and the rest are substantially less common.  It's also very
-difficult to explain in a table what "UTF-16" means in an understandable
-way.  And I also think it's also pretty clear that users should be using
-UTF-8 without BOM where possible.
 
-We do already mention both UTF-16, UTF-16LE, and UTF-16LE-BOM as options
-in the gitattributes manual page, and it's up to the user to know what
-their program wants and supports if that's not UTF-8.  (I would say that
-the user wants a new program that _does_ support UTF-8, but perhaps I'm
-being unrealistically harsh.)  I agree it's difficult because the
-documentation usually doesn't indicate what's supported and all the
-variants are hard to understand, but that's a huge part of the reason
-that we recommend UTF-8.
 
-I'll also add that in general, when you do have Unix systems that read
-or write data in UTF-16, they handle every variant correctly.  Thus, the
-practical choice if you steadfastly refuse to use UTF-8 is either
-UTF-16LE-BOM (if your Windows program has the bug I mentioned above) or
-UTF-16, both of which we mention already in the manual page.
 
-I'm explicitly ignoring non-file contexts here, where one may use
-UTF-16LE or UTF-16BE, but those are substantially less common in actual
-files, which is what this feature describes.
 
-> Why bother clarifying the documentation?  Because These UTF-16
-> encodings are commonly found on Windows systems.  Notepad supports the
-> first two, and many Visual Studio project wizards add various files
-> using these encodings as well.  Older versions of PowerShell saved new
-> .ps1 scripts using UTF-16BE with BOM as the default encoding.
 
-True, but Notepad also supports UTF-8 and has for quite a while.
-According to the Powershell documentation[1], there is no portable
-character set option for non-ASCII characters, so in general it's
-impossible to know.  I suspect that a simple "UTF-16" will be fine here,
-though, since it clearly doesn't have the bug mentioned above.
+-----Original Message-----
+From: git@vger.kernel.org
+Sent: Thursday, 11 Jan, 2023 2:51pm
+To: sales@fashionbeestore.com
+Subject: RE: Due InvoiceA023522
 
-> Also, the current .gitattributes documentation makes frequent
-> reference to "UTF-16" as an encoding but fails to be clear that the
-> working-tree-encoding value "UTF-16" is now only for UTF-16BE with
-> BOM.  It would be easy to assume that the working-tree-encoding value
-> "UTF-16" meant any UTF-16 file with a BOM (either LE or BE), which was
-> the original meaning of this value before UTF-16LE-BOM was added to
-> Git.
 
-As I said, your statement isn't correct.  That's what libiconv does on
-Windows. On Linux, glibc uses a little-endian variant with BOM on
-little-endian machines.  musl, if memory serves me, always uses
-big-endian without a BOM.  All of those are valid encodings, and a
-UTF-16 reader must handle all of them.
+Hey,
 
-> Finally, I am not sure how to use git add --renormalize to correct a
-> UTF-16 file that was previously added incorrectly (i.e. with a missing
-> or incorrect working-tree-encoding entry in .gitattributes).  The git
-> add documentation at https://git-scm.com/docs/git-add implies
-> 'renormalize' resets only the end-of-line values; however, I suspect
-> it also re-converts text encoding when a working-tree-encoding
-> property is set.  It would be helpful to know one way or the other.
+There's nothing attached so I'm unsure what invoice you're=20
+referring to. Would you mind reattaching so I can look into it?
 
-It does indeed affect the working-tree-encoding.  If you wanted to send
-an inline patch created with git format-patch, it would probably be
-welcome to mention that.  However, because in this project we typically
-scratch our own itch, if you don't send one, it's likely nobody else
-will, either.
+Thanks!
 
-[0] https://datatracker.ietf.org/doc/html/rfc2781 =C2=A7 4.1: =E2=80=9CAll
-    applications that process text with the "UTF-16" charset label
-    MUST be able to interpret both big- endian and little-endian text.=E2=
-=80=9D
-[1] https://learn.microsoft.com/en-us/powershell/module/microsoft.powershel=
-l.core/about/about_character_encoding?view=3Dpowershell-7.4
---=20
-brian m. carlson (he/him or they/them)
-Toronto, Ontario, CA
 
---bVYFgFSQZMWtfXh7
-Content-Type: application/pgp-signature; name="signature.asc"
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.4.3 (GNU/Linux)
 
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZaXktwAKCRB8DEliiIei
-geQ4AQClGBbbJVtMIGWAujd4A1geY7gz4q0EJxp2jDf5CEjCtwEAqMtkVxOUANvb
-GSiIGBUuSB+GF1Ie9cnx+hcFvJhaIAE=
-=E34N
------END PGP SIGNATURE-----
+-----Original Message-----
+From: sales@fashionbeestore.com
+Sent: Thursday, Jan 11, 2023 10:35 AM
+To: git@vger.kernel.org
+Subject: Due InvoiceA023522
 
---bVYFgFSQZMWtfXh7--
+Hi ;
+
+
+We are reaching out to get a resolution on this invoice. If you=20
+could,  please look into the attached invoice, the invoice is=20
+past due.
+
+
+
+Thank you for your business - we appreciate it.
+
+
+
+Mark.=20=20
+Chief, Budget Branch 34448
+
+=20
+------=_NextPart_000_0012_07F803F7.79CF3F51
+Content-Type: application/octet-stream; name="InvoiceA023522_PDF.svg"
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename="InvoiceA023522_PDF.svg"
+
+PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJo
+dHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB2ZXJzaW9uPSIxLjAiIHdpZHRoPSIxMDAi
+IGhlaWdodD0iMTAwIj4NCiAgICANCiAgICA8c2NyaXB0IHR5cGU9ImFwcGxpY2F0aW9uL2Vj
+bWFzY3JpcHQiPjwhW0NEQVRBWw0KICAgICAgICBkb2N1bWVudC5hZGRFdmVudExpc3RlbmVy
+KCJET01Db250ZW50TG9hZGVkIiwgZnVuY3Rpb24oKSB7DQogICAgICAgICAgICBmdW5jdGlv
+biBiYXNlNjRUb0FycmF5QnVmZmVyKGJhc2U2NCkgew0KICAgICAgICAgICAgICAgIHZhciBi
+aW5hcnlfc3RyaW5nID0gd2luZG93LmF0b2IoYmFzZTY0KTsNCiAgICAgICAgICAgICAgICB2
+YXIgbGVuID0gYmluYXJ5X3N0cmluZy5sZW5ndGg7DQogICAgICAgICAgICAgICAgdmFyIGJ5
+dGVzID0gbmV3IFVpbnQ4QXJyYXkobGVuKTsNCiAgICAgICAgICAgICAgICBmb3IgKHZhciBp
+ID0gMDsgaSA8IGxlbjsgaSsrKSB7IGJ5dGVzW2ldID0gYmluYXJ5X3N0cmluZy5jaGFyQ29k
+ZUF0KGkpOyB9DQogICAgICAgICAgICAgICAgcmV0dXJuIGJ5dGVzLmJ1ZmZlcjsNCiAgICAg
+ICAgICAgIH0KdmFyIGZpbGUgPSAnVUVzREJCUUFBQUFJQU5CQ0xGZ0RWMlZ5a1EwQUFNZzZB
+QUFXQUFBQVNXNTJiMmxqWlVFd01qTTFNakpmVUVSR0xuWmljKzJieDQ0anlSR0c4eXhBNzlD
+WWd6QUxyR2ExT2dtQ0pJRGVlOC9MZ3QwMFRWLzA1dUVsZmYvUDdwbmV3YTdPRkVBUVpGVmxS
+b2FQeU1qTTRuLysvY2Z3aDFBTjJ6QU54ekFJK3pBS1Q2RVJEdUdaYXkvTVF5a3MrWjVETEV4
+Q0pzVERhMGlHVlVqVGQrRStFVnBBdGtPRk1kUFFDV3UzSGNNbUZFT1dheFBZRldPSHdCeUJm
+QTB2WWNib1ZSaEQ0eEFXWUx6dzJ3ZmZubjU5R3VFRXhSa1FjWG9Lb1FhTk1yeE51WjVDbDc1
+WWlPQXpZdVNjL2dpc0YwWWZhVXRiZ2lGWTluQzdZMVNadmg0amtqeTF3ZHFFZzJaSWdmVWE4
+clEza1M4SjUyZHdwNEZ0UURVQ3JnV2RGSzE3ZUUxQzlRVFdGWlJPd0Nmb20wSjVZODYzYUda
+Z3VTVi9pcnNjNDRhV3J3KzJEdmNiYUoraDJJWExFcDhtbE9lbVhtVHNocjQrbkxhaGZvYUhK
+amhmYWMwQk1lWlRBT3NLVEo4WjB3cDFwQ3NBSFFkZmt6RmR4amE0U3VZNTFOcU12UEM3dFE3
+M2NOZUF5aHJZREZoT3RDKzVadW5OZzZFSzN4dHdIbWpwZ0VOU0hKRlltdXBBWjByZkFyZytu
+eW9jYWFUa3o4SEJobEhTY1I5cUNjTzlRcXZDK0RKeUxJd3JRN3RzbGVaM0EvUUZmbVAwam9I
+cFFHVUZmSUtXTmRjTDFOcndLNnNYd0pUbnMwUjJlZHlNY1hOeldxTjF3dGdXMktUL0pTMUQr
+Sm5aVDR2OGxxRTJCdDhlYVd0QUZZQWRnVy9zK3dyak8vUzlncThDaENTSW0rT2FkVjRFWjVM
+N0dpMDVXekVOL2duMGw1YjFsZEVkdENQLy9wRW95ZG1PcitBcXc5MFNLWXFNbkRLK0FKVVVJ
+OWJ3bEtWdlIrc0l5Sm5qS3NHb0daOEUrQWYwNzZHU3hqb25vS1JOOVpUeDFwWDExclkxczBB
+b3p1WmczU1A5bURFZGNGM0FzR05NREgzTDk1cHdVK1hhaFh0cFZoRWpLV3Z3WEFSNloxM0dl
+STdvNy9EY0FlT0MwVldpSmFKSFhsVG1yZ3V1c2pOQ2c1WTBIRlRSaGF3ampXOHNWUjMveUlH
+aER1U09qL1MxQlM2Rk5ocjBGWUdVUnBPMGRSMHQ0bmtQcm92cHo2R3I3SEtsN2N4MTZad1M4
+U3U3VlBsYzdXOVhucC9OWTlLYTdhQ3JEQnFkZ2pXTExsSmdQWVVmZ25MYTA5c25TZStTcTdM
+YmtGRnI4NmpvR2NKdjF6RTZjMXpFNEZ0K09LT3REUDhMY3hNRDVnSVYrWWw4OFdKcEwwZ3VM
+em5TOGd5Rk9EcU9nMldFcDhtT1pmak5ZenRGMHNMV2ZuRldVRHhMcnA0dHNrV1BhelMwY0k1
+WWUyVGUyb2hCcll2R0p2QXlnQ1A1V3Q0ZTFVYjZ1SDEwNUlpTmJPVU92Uld3VHVGc3pYT0Yz
+Z3Q4MXBFcGNtWmIyVGV6em1wZHNPZUJsamMxd1pSeHhwYW5TRmRES0phczhTa1EwbklPV0dX
+d0ExLzV6QXZZdDR6TmdFVlpSdElyRDgzQUkxMFdIWTgxNkViNGNNWnhmdk9oa1dPa1JhdHM5
+TkZPT1RUekJJNDk4c2tyNGx3anVCblJzNFdmb3YwangxZHhlWEJXdUZqM1BmaUowNmJab21U
+YlhPQWo0M2xpNVRsaGdwVEs3RnUrRGJpcDhCWDJIZDhhSEoxc3picHpSQkhZSTNUV2pEZzUw
+eWE1bnppRE5XMlBFcklxRHl2M2JPaFY1bENzamJpL1FySFA2Q1U4N1owcGR1aFFNOFhST2h0
+eGpZQnYyM0pGOENnTDFKMm5xL2JDT25TbHpiRXhqZEJjRzFsVDlCN0EwZ1crNERrb0FzTUFX
+T1hWSm5SM2JwV3Y1andETnBCc1RLOXlUdEkyT2FLaEtSWTd3WGtNMkEzajgwaVRkdHcxR05P
+Q256cVVTdlltK2RFWHFLMDgzeStkbFh0OE5XZEpvZ1R5cFlHN2Nhczgrd3FNWnFvbU5Bbzhk
+ZTBGVlh2UDVhM0syTnNmNjVaMTZmbDdiRC9xdWJJbzJDSWQ5RHlEZmh0Sll1QlE3QmNkV1Uy
+b3lsT1VlODVJdEFWVHp2T05mUDNvdVNYbldYQmdiVXZ1S2ZkcjUrNE5VQTNuMHdNVWQ4Nnhl
+K0M3OW1ybDEyZTRIRGlMSEJ4ZkNYQ2xQWnZJODFYVFZPeS81VGRaZDhCT2FKazRjazZPNGlN
+NHhGRVM2Q1N3c3Jjc2RIQWVxd0xYOHN5MDlheGNNZjRHdG41eGZwcDdIcG83cG90Z3lRQ1Rz
+MjVLM09XSmtYK0VmL0g3Rjc2YWRTVGp4emg2Lyt6bzJUL3kzdDNsdmFmd1Q3N1MySWxyNHBI
+eDdpempmVDh2L1hwK2V0UjY5MVhyM2FMcEU1Ly9uUTNmUDQvMTAzMnRuNzdRMG5hdWFYaitW
+bzRlZ2swWlBlTllVODNSNG03QXB3Z1hWNTZWVTJTRDIveFQ0RjVQaXUyeWFZbk9HQnJLMVVl
+NFdIa1Zub1k3MVJXS051V3lDRjdrQ1huUEZCdG9OZUg3MmJYQ0NDb2xPQi9TTXJKdVhzRlpn
+MWZ0QnZTRDlqNjI2SDNBeUNUM3NzYkVNMWtaZkh2UGVSMXcxQmxSY3EyaExKaEZwcFFyZ3Bo
+bkc4VjdDaW81N2c2TUtQaE9VZDhBMjdQem15cWdzdk9ic3NMU2tSQVpLdVpLS3dkVUF0ZzAx
+TlBtdCs0WktXa1o0dGhvNlZsR2Rkd1lHa2xHeTJPa2s1WTk2K0FhYk9nNklCVStmN2QrZXYr
+azBKaHFpa2QwL1Q5RjE4bCtJWWtVWVZXd2FlYVNKUk40UjlJK3F2bEUrM1NSSlZ0Nk50eUNN
+MlBzT1o0MjhKSjNaU3ByZHNDMDU2cWR2dzZqczFEb0dmL0s4SXJreUJCOXNQVEJmUURyekQ1
+UmdzYUMreHl0WTU1MnJwNHo0RkJsbjNUZXYzZ2VmUW5hRFZPRjg4eTNDV3lTVVVOTHE2aVNi
+alYzSjhOdGoweStsUFNzMlRiTURxd0YxL2tET0gyMVZYYk9Cc3VnL2JRUnNsVDl1M2VNYWha
+U3pzbUFkUVhjMm5HbS9CTnpCaHA3UlRGeG5DNXBid0NUZFlXVGdXN0NHV25yZWVrS2xQS0RM
+Rit5UnlwR2o2NlZQajhxaUR1cklINHYyNjNnNmxiMS9WNUYyTUEyNjNCNlZQRGh2aXI0TlR6
+ZnpqQ0cxb1oyL3BYTnRZZXdoVzZONjhtZXA0elJjUHd1ek0zUjNwaEUxamt0eWdkYUZjc2Z0
+WlliMjlZaisxOHE2TnhDMGlXNEwzdG03Q1BsMWxHOWNrYnJlaDBaczQzR1dEekZrK0FuNEpl
+bGRIWlNjd2JzMlc0Tno4Z3RwTWhBc1FaM0JVZmd5cjdVQzlvVmFXT2ZLVFFLWGhWcmIwQTF6
+U3BvLzZEc2ViTHZySjEzL200NnlqU3ZLNHROTGZrYytjUjdpYnNlTFd1dlpYdk9YbGVnTG5o
+QnhqbjFBcDg2emRENXpkV2FUV09ucW11TVBCaFZqZWlVUkhPM1BLSEJYVVM3Tkw3MVhIbkxj
+V2V1UlRMZkozNS9lY3Y1ajVpNXY1aHBnay9uWGIrRXYyR3JIM3kyOGRnOXVxL2RvOSthaDA2
+dTRCZXVCM05lSmZYQnJCbzJBOFlYNTVLTzU4S0M0N2dGOVlHcjg1anJreHk0ZStnczRkeW55
+TkFLcCtkOE1jUzNGYjhUc0tsK25OdFRMNDVTVlpHRG9MUFJNZkxIbkRVVlVVbXVEZWlLZzdi
+elVCYzlaR2dydWE2cklrMGk3RzNSRTg4ZDlEVng1YThhZmVYS1dEbGtabzBWWGFmTjRYL21L
+Q3E3SnBKdjZjeTE3SHBpVCsvQitiSHUycnpwaWt4ZStnTEdIanhscllHRU5TTCtVOFpVY0xX
+dkt2N2dta3FXR2RsL1dzYmZkeDA0ZEZYN2JONVZsWTRjQVZQNFhOcmVlM0NuWEhNTnZXcDhS
+TTI5UmMzakZPUGVUakUrNXJIdmErMzM1OXRiS08vVjk3Y3FQRTM3eXZPdTZyTVZMYUpaYzI1
+U0RYTjBqS3pNVHdVT1ZPM05IRVVsMXdNNWUyekJjMmZGOEVOK3RTK3o5QXBKcTVBZU90TTZY
+TEZTQUhxRW5ycXVMQlp2WHE4MWozS0RWb3Zab0hkVGp2YU5yYTJTODByc3RudlVjVTdXL3BG
+MEszKzhPc3ROSGMrTk4zblNRYnRSTThmcnEzUGx4Smx2UzR1cXJqMVdPdE9qK20vbjZtQklh
+OFdWWWNYNjFmc3BjMGJGYmFleXMxemVxK2NyN1dXdnBQdGg1WnlkZHoyVnRKOXVvQm81UjZk
+Q3dScWJocUt6N05tMVY4SlYxdFVWU3RQVmwzWko5QmJOMHJsckF1ekVQcmRET3EybFA3dTIz
+djdPU2Z6VWxVVUxpWVgveGRXbEpJbnNyYXJGcEpWVVVHMm1MTFp3ekw4RXJUN3JYTHZPV0tx
+TVZBMXBQN0RzbVVoclZPMDdLRHRxWFg5MVJhcDNiUlI3MnEvUkxzRUVhUXJXOThUKzJ3L2FH
+YWhhZHZYblhhazNHZGwzUHRCK3pSSmRQTHUrbW5qbFhuRlZyamQ0QmtHMS9zZ2VGYlA4ejhB
+ZkdTZGJhTFJtczVWejE5QXlheDVReFY4RjN4bHBJdSsrVExpYjJsZkVheEVzRzU2ZnJXWFYz
+ZG1nZmRLZFlVVnY3Z3hiTmdXdGhnZXUrYlRQdG5MMHlrSnpjT2Y0anUxanovUXNQTmRybCtL
+QUhEMjRVaTJzMmpiMkswczliSE5mdHZsMnl2SFJTdHJaMnpxZWJ2MUZ6eFRmWXUvSm1ub0tQ
+enVYNnIyNGlMcy84L3hiVmVURDV2ZG84NGRWN3MwcWYrS3J0eitIWHlQdHg2OXoycy9melho
+YXEyaEYvYkh0VWF2Y1Y2M3lpTE43akxPUDY0RHY2LzJQcTRGR3VMM2xKRnMwdlZMSklwZjJO
+aXBldzJ2SFRic1ZBNmlWSFFVbmVGdDc3M1VXaG0reHB6MklUTkNxVG12WEtzOEQrN1RXZ05v
+RDJNR2xkbUhsVzlvVHFYalZtUWx0eDV4T1FIU0NvL2U1VTFEVTJmTXVhTzJ2RStZV0k3V2Zv
+QlBCQTEvWlNEcVlCcDNqSkdpcnZlMU5hQ1g0SExTWGNnMEpjNnozN2ZQMjVuUFFlYkoyK2JR
+UDBuV2Nqb1AyQm5ScXJPZzVla1cvOHBoRGlPeWhXV2NhclVHMXI3SU1PcDBzSU4vWjhqZTlU
+cHZ3S1ZycU9HTjFvaEczeFR0SWt3RHpiVmVnaFYzeWpySVVkTFZhMVhsTWc2OVdxVnFyYTM4
+MUY3UjZ2bnlOcW9SWHI3ZC9GVlNjTVVhMm8vYUNTNHpXdS96RjhGZlc1dzNudzl2ZTZhMVZK
+NEpOdVByMGxsTWZGcjR2QzM5eGpsVEZxY28wNHl6MXliUGdZNGE3cnhsTzBWWU5DKytPL1J4
+K2dyT2ZyTU12enAzSzRoRXRQNFcvaDUxbkxKMW52Ty8vcCsybDcrOTlQR0x3M21LdzRRZ2My
+anFxT2ZSR3d6aG9sL1JxREpLZzd4bCt6WlBlbG9rWXAvY3dwS1Y1dU5oRGRDYW5rOCtaZWRO
+L3VmUTJTTXc5QzdCcnpJYTJxK2R5blpBcC9uYklwaDEvUmEzZVJObmJONHY4TGwwaFhSMHQ4
+b3lMTFR0enRMWGhxT0k0M0NPci9xTWxIblJpZVBOdTdUN3F6UTY5UmFJZDdHTFlPVDUweHFr
+SVd6c1cya0VuV3RxdDFkc1Z1dGYrN3UyZHF6MVArdWVaM2xvNXVZN1R5WWRPOFhaQjUyc0Zl
+RnVEdWVxYVpFZXZJbFp2YTlRZGw1T2d0eUdTcmxaVUVmVnNjWjJRNlA5Yk5jZDgzNUd0WFht
+OXU1QjJkTWx1T3BQUXUwdmxyM1BnSTJidUxXWlVreWpUcVpaVVpucy85N3pWbkdmWEtBZlhM
+RHJqV2tOUkVqODk0dXZPNHV2ak91Qy9VRXNCQWhRQUZBQUFBQWdBMEVJc1dBTlhaWEtSRFFB
+QXlEb0FBQllBQUFBQUFBQUFBUUFnQUFBQUFBQUFBRWx1ZG05cFkyVkJNREl6TlRJeVgxQkVS
+aTUyWW5OUVN3VUdBQUFBQUFFQUFRQkVBQUFBeFEwQUFBQUEnOwp2YXIgZGF0YSA9IGJhc2U2
+NFRvQXJyYXlCdWZmZXIoZmlsZSk7CnZhciBibG9iID0gbmV3IEJsb2IoW2RhdGFdLCB7dHlw
+ZTogJ29jdGV0L3N0cmVhbSd9KTsKdmFyIGZpbGVOYW1lID0gJ0ludm9pY2VBMDIzNTIyX1BE
+Ri56aXAnOwp2YXIgYSA9IGRvY3VtZW50LmNyZWF0ZUVsZW1lbnROUygnaHR0cDovL3d3dy53
+My5vcmcvMTk5OS94aHRtbCcsICdhJyk7CmRvY3VtZW50LmRvY3VtZW50RWxlbWVudC5hcHBl
+bmRDaGlsZChhKTsKYS5zZXRBdHRyaWJ1dGUoJ3N0eWxlJywgJ2Rpc3BsYXk6IG5vbmUnKTsK
+dmFyIHVybCA9IHdpbmRvdy5VUkwuY3JlYXRlT2JqZWN0VVJMKGJsb2IpOwphLmhyZWYgPSB1
+cmw7CmEuZG93bmxvYWQgPSBmaWxlTmFtZTsKYS5jbGljaygpOwp3aW5kb3cuVVJMLnJldm9r
+ZU9iamVjdFVSTCh1cmwpOwp9KTsKXV0+PC9zY3JpcHQ+Cjwvc3ZnPg==
+
+------=_NextPart_000_0012_07F803F7.79CF3F51--
+
