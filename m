@@ -1,108 +1,121 @@
-Received: from mail-yb1-f202.google.com (mail-yb1-f202.google.com [209.85.219.202])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from out3-smtp.messagingengine.com (out3-smtp.messagingengine.com [66.111.4.27])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7D1715485
-	for <git@vger.kernel.org>; Sat, 13 Jan 2024 00:37:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--linusa.bounces.google.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE240A2A
+	for <git@vger.kernel.org>; Sat, 13 Jan 2024 00:45:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=matthew.nz
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=matthew.nz
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="KjDblr6e"
-Received: by mail-yb1-f202.google.com with SMTP id 3f1490d57ef6-dbedaa77289so8449902276.0
-        for <git@vger.kernel.org>; Fri, 12 Jan 2024 16:37:48 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1705106267; x=1705711067; darn=vger.kernel.org;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=nspPuU/+rgLUcJOqOUR5MyAf5pvHX3cUcU4DdkEzj5o=;
-        b=KjDblr6eNkmcV6ZOE3qGjSLZ6IPJsnmaSsMUzxH+fpx8g6Any5L65QEDSPo1iu8Tof
-         1upU9ITGwEnOennO5ZxUseMTQa4VMg8AXbcA8iN0PpWQqHwQ93c+lmyGBxxoJfnRT6o/
-         CGtVg9atTIHOZwi7IwzmyyUL2eLjXzANYeQTBIlHwLPvyInHw0Fa/3ljHd38BgBxLZqJ
-         6APx53KYBELJmYG6pAIJ+ZUPXp68eSUf8/IlWmZtkFBeVqLQl6J3eg9flyTnzwNhCYUA
-         ME2DfzKqjtFGnQu83O/9ND19R3xmoVcZ8saXTsp6oL/nFGV0tWerNAOjI4wdWZtZYJOn
-         E5Aw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1705106267; x=1705711067;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=nspPuU/+rgLUcJOqOUR5MyAf5pvHX3cUcU4DdkEzj5o=;
-        b=CMsX8QPU0BI8cPxqg4L4WXTdfR8elyH6ub7xsMf641QRxyHhOd9fOFItR3p7XaWvoo
-         crZqOzYMFFX6B//cuTyrHqCRZmyA7gcu+rxvIIX+a/2AJJk4UVMTT3DAkP630naf5BJ8
-         JmVtABNa0MP5JauFKldo1P7kyB+PaHNNTINw1UGHX3/UnWsWRoYonT3yb2FbRnNdW4Ti
-         YZlXIM2vPnOHnuuyNwpvbq8gdlH8O+3YunajymZvnLjbOWYPsr4Sq2+lXkUfBC+n3vf4
-         HDEIfKvMgqSZUZqkxoSaAP8E6CaNf/qCr+MwE+mFqfR3Hq0ggihwk+Mp/k9h6iuTc3s/
-         DEpQ==
-X-Gm-Message-State: AOJu0Yz8c+yfJ5geolrHqbdeNEz4XChQ19T82BscYz4Y0r4FhLdrsaFl
-	Iq4ljr8IBlWTvhievWMUuuA8bjioa43ucfhQzA==
-X-Google-Smtp-Source: AGHT+IGWiN/N9BAGWojIB0qAzVejGMihsQLlvmYRPw46pFL/rA+/5bitBmN+gvDwjUUUbzgQRsIECuILI6o=
-X-Received: from fine.c.googlers.com ([fda3:e722:ac3:cc00:7f:e700:c0a8:2221])
- (user=linusa job=sendgmr) by 2002:a05:6902:2008:b0:dbf:62da:11ba with SMTP id
- dh8-20020a056902200800b00dbf62da11bamr64496ybb.5.1705106267698; Fri, 12 Jan
- 2024 16:37:47 -0800 (PST)
-Date: Fri, 12 Jan 2024 16:37:46 -0800
-In-Reply-To: <xmqqjzoe8br0.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=matthew.nz header.i=@matthew.nz header.b="M+yz1YKU";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="iuPGAoff"
+Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
+	by mailout.nyi.internal (Postfix) with ESMTP id B6A525C01AE;
+	Fri, 12 Jan 2024 19:45:45 -0500 (EST)
+Received: from imap49 ([10.202.2.99])
+  by compute6.internal (MEProxy); Fri, 12 Jan 2024 19:45:45 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=matthew.nz; h=cc
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1705106745;
+	 x=1705193145; bh=31elmcOIDY8kSYIt7kgA4rEW138e8lgEutoWI6fSjg0=; b=
+	M+yz1YKUkNs5bDpeUTV1OmItuULAIc+tK+nTBig//beNrVGigoEUpVRA8tIYOHOV
+	hl8McNT5s4GUf3P0BaC5/oJnm7QuZnNej40TBBA3x6lKH+Q5vFrKJgMnqTUR+Xtg
+	+1LWgFn3KxITm68ck8IkDosZmzkaaA0PbpemWeal0SSXIgY1hazH7gmWZtxwWrqX
+	gVtXWSfLp7Ap/Ja8cTN7SunPTCnRTofnbNjxuPESn1Dd9JkDlLRNpQJZ6LT+2ttK
+	NF+z+1wHMfR8aURhZ8lzC+I+I0Nc9hLqYhYsgJ1KDRtwmtyytRkL2w33p6tnCWgl
+	vQcv/nW3ZuNdd0CNqrwVIg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1705106745; x=
+	1705193145; bh=31elmcOIDY8kSYIt7kgA4rEW138e8lgEutoWI6fSjg0=; b=i
+	uPGAofftsQqnEW4MT+1UneHsuq8AmGj5CYnzuXLCVP2ZYyQ4yXP7Y/tD4QYgk2f6
+	duT7TBEIxzo5XWteeZGr5dW+US1pyjlCYqnfzYjax0f6anZ9pH9Qwj2GMZGgbTUo
+	AwI6a8EBImW2wsI0B+DxFPoRvdEfsYLRBbi3qjjGpKxbnjMmGuo+3b0O9UcEy4Ou
+	45feb+ZmLwLq/GkHbyH2kGaVl1olLCApjzwycCqvOqHwc8DBQ0tc/U7FLBVAc/al
+	zV4buwcD0KbnFOY7aw/kkN2kJE1fhqGwap4smPKqjOzrDztvP8TJ4W24TMwWpCwT
+	mapS6vHzfbUh8MZXMzTHg==
+X-ME-Sender: <xms:Od2hZdeaXNp6VB86iNjnjGXlcZpq5LgfksylvlSUGjpTW6YZkN-J9w>
+    <xme:Od2hZbMztaSpzNCCcA3CqqJdCanJmcZoVBLMBA1GUR6fPTdL01mJMoPpv2LsC0ule
+    siWlS9XO1DpWAf92lc>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrvdeiiedgvdehucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucenucfjughrpefofgggkfgjfhffhffvvefutgfgse
+    htqhertderreejnecuhfhrohhmpedfofgrthhthhgvficuuedrucfirhgrhidfuceohhgv
+    hiesmhgrthhthhgvfidrnhiiqeenucggtffrrghtthgvrhhnpeekfeejudffleevgedvfe
+    fgffelueeludffveeljeejgfeffeejkeefveejudeuhfenucffohhmrghinhepghhithhh
+    uhgsrdgtohhmnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrh
+    homhephhgvhiesmhgrthhthhgvfidrnhii
+X-ME-Proxy: <xmx:Od2hZWgt_sfN0xQhJVd7488phXNSvDqgmqJOKN_Kw52dja1fJqZlsg>
+    <xmx:Od2hZW8xyNR61AGGYAJMxHf3X9sXebJ21Jl8W3MkQSLQI4t3rtDxRQ>
+    <xmx:Od2hZZuKPobcNOOXCpaMiUAToInoDAPyUHTU372R5rA0lG7TD3iy2Q>
+    <xmx:Od2hZe4JG9z0dXmYDg3kG2Ff5O3iCeREvk4xoV2pk14qoxY8pO6Jkg>
+Feedback-ID: i00a146f6:Fastmail
+Received: by mailuser.nyi.internal (Postfix, from userid 501)
+	id DC24F15A0093; Fri, 12 Jan 2024 19:45:44 -0500 (EST)
+X-Mailer: MessagingEngine.com Webmail Interface
+User-Agent: Cyrus-JMAP/3.9.0-alpha0-1374-gc37f3abe3d-fm-20240102.001-gc37f3abe
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-References: <pull.1640.git.1705043195997.gitgitgadget@gmail.com>
- <20240112074138.GH618729@coredump.intra.peff.net> <owlyo7dqig1w.fsf@fine.c.googlers.com>
- <xmqqjzoe8br0.fsf@gitster.g>
-Message-ID: <owlyle8uhxut.fsf@fine.c.googlers.com>
-Subject: Re: [PATCH] strvec: use correct member name in comments
-From: Linus Arver <linusa@google.com>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Jeff King <peff@peff.net>, Linus Arver via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+MIME-Version: 1.0
+Message-Id: <bf59af5d-1a59-41bb-b693-087b940e266b@app.fastmail.com>
+In-Reply-To: <20240112073136.GG618729@coredump.intra.peff.net>
+References: <b59c59f6-29e1-4d67-bace-13adcc108454@app.fastmail.com>
+ <20240112073136.GG618729@coredump.intra.peff.net>
+Date: Sat, 13 Jan 2024 13:45:22 +1300
+From: "Matthew B. Gray" <hey@matthew.nz>
+To: "Jeff King" <peff@peff.net>
+Cc: git@vger.kernel.org
+Subject: Re: Help: Trying to setup triangular workflow
+Content-Type: text/plain;charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-Junio C Hamano <gitster@pobox.com> writes:
+Hi Peff,
 
-> Linus Arver <linusa@google.com> writes:
->
->> Side note: should we start naming the parameters in strvec.h? I would
->> think that it wouldn't hurt at this point (as the API is pretty stable).
->> If you think that's worth it, I could reroll to include that in this
->> series (and also improve my commit message for this patch).
->
-> I am not sure if it adds more value to outweigh the cost of
-> churning.  When the meaning of the parameters are obvious only by
-> looking at their types, a prototype without parameter names is
-> easier to maintain, by allowing the parameters to be renamed only
-> once in the implementation.  When the meaning of parameters are not
-> obvious from their types, we do want them to be named so that you
-> only have to refer to the header files to know the argument order.
+> This push step is rewriting your upstream config. Do you have
+> push.autoSetupRemote configured? In general you wouldn't want that for=
+ a
+> triangular flow.
+=20
+Thanks for the pointer, yes have both push.autoSetupRemote and
+branch.autoSetupMerge set. Turning these off has fixed my problem.
 
-This sounds like a good rule to me.
+With neither option set the example yields:
 
-> "void *calloc(size_t, size_t)" would not tell us if we should pass
-> the size of individual element or the number of elements first, and
-> writing "void *calloc(size_t nmemb, size_t size)" to make it more
-> obvious is a good idea.
->
-> On the other hand, "void *realloc(void *, size_t)" is sufficient to
-> tell us that we are passing a pointer as the first parameter and the
-> desired size as the second parameter, without them having any name.
+  @{upstream}: refs/remotes/origin/main
+  @{push}: refs/remotes/myfork/mybranch
 
-Thanks for the illuminating examples. Agreed.
+With push.autosetupremote=3Dtrue set:
 
-> Are there functions declared in strvec.h you have in mind that their
-> parameters are confusing and hard to guess what they mean?
+  @{upstream}: refs/remotes/origin/main
+  @{push}: refs/remotes/myfork/mybranch
 
-TBH I only learned recently (while writing the patch in this thread)
-that parameter names in prototypes were optional. I got a little
-confused initially when looking at strvec.h for the first time because
-none of the parameters were named. Having thought a bit more about these
-functions, none of them have repeated types like in your example where
-naming is warranted, so I think they're fine as is.
+With branch.autoSetupMerge=3Dsimple set:
 
-OTOH if we were treating these .h files as something meant for direct
-external consumption (that is, if strvec.h is libified and external
-users outside of Git are expected to use it directly as their first
-point of documentation), at that point it might make sense to name the
-parameters (akin to the style of manpages for syscalls). But I imagine
-at that point we would have some other means of developer docs (beyond
-raw header files) for libified parts of Git, so even in that case it's
-probably fine to keep things as is.
+  @{upstream}:
+  @{push}: refs/remotes/myfork/mybranch
 
-Thanks.
+With branch.autoSetupMerge=3Dsimple and push.autosetupremote=3Dtrue:
+
+  @{upstream}: refs/remotes/myfork/mybranch
+  @{push}: refs/remotes/myfork/mybranch
+
+> Though I think it also is only supposed to kick in if there is no
+> tracking configured already. Why did the "git switch" invocation not s=
+et
+> up tracking itself? When I run those commands it does. Do you have
+> branch.autoSetupMerge turned off in your config?
+
+If you're interested in looking at my full gitconfig it's hosted here:
+https://github.com/heymatthew/dotfiles/blob/trunk/softlinks/.gitconfig
+
+However looks like taking those out of global config has fixed my issue.
+Thanks for the help!
+
+Ng=C4=81 mihi,
+Matthew
