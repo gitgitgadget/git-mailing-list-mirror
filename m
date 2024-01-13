@@ -1,206 +1,108 @@
-Received: from mail-qk1-f178.google.com (mail-qk1-f178.google.com [209.85.222.178])
+Received: from mail-oo1-f43.google.com (mail-oo1-f43.google.com [209.85.161.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B0B216435
-	for <git@vger.kernel.org>; Sat, 13 Jan 2024 22:06:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ttaylorr.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D78C168A2
+	for <git@vger.kernel.org>; Sat, 13 Jan 2024 22:26:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="Wt8q55x1"
-Received: by mail-qk1-f178.google.com with SMTP id af79cd13be357-78313f4d149so777453285a.1
-        for <git@vger.kernel.org>; Sat, 13 Jan 2024 14:06:13 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZHRNcAhS"
+Received: by mail-oo1-f43.google.com with SMTP id 006d021491bc7-598dfed6535so338858eaf.0
+        for <git@vger.kernel.org>; Sat, 13 Jan 2024 14:26:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1705183573; x=1705788373; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=9ToeVjoVOIJjwQna2bPQU5LeaifHdEi/2q+kvkNzXKs=;
-        b=Wt8q55x1zgdrXw7b/jdpYFqhZJaH0RGSPX8z4d1kPGfvrUSGN1QF4I2e6FABXNyzYM
-         EjXKnSwqaW4sDl/vHljLPgIFH90ds2QeZZS1/Ai0CNXFp/7GeV2Q6tCYSO7o3UzXL1/p
-         f/Hlz/y4gzPRSVO8q0uQla1v+ZwMJpD3yA6y5fgzlXqam4+gVw7ZXEIc/qoTxDVYswZj
-         EGMkSZyrXTPznSgFLEeT8KGUFx3Cg90bMAi6K9pjL4NCQkY0IFXiwpWbkT0VCAmSlqUP
-         O6HmmdBakOWq0R+7j+xR/646vI0ybsttXchi+xYOXCb7ZKxZSfJadU8TGS/C1lVEPZKI
-         Zr4Q==
+        d=gmail.com; s=20230601; t=1705184767; x=1705789567; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=cxhs3pbUq+cVdvwHIhS2nzG5GXRuqeIayjOHmaDcvtw=;
+        b=ZHRNcAhSo6vkbLc+ZnLga8CwxrCKvps4VdDO4/zcI7y+gUCUmK8zhrT2cwQM5krUeE
+         +g2oPLSISIRLUGV5GpOY+JZ7FfQ2NV1ENLocTZuV7Xh269K8KOJiuxws1VStvQwSt5rC
+         ToKHXsKMzTAnXGGXGPnHa2NcVCEqqCOUqth8TYyqtMAkEFMmYNaf01l0+0jXiWMwesrn
+         HyO46HOUjy4+4bjbjB64nZ7vxvn69ivq4JsdcklzBu/2mrjTr7vuddNzOCexeCS3nc81
+         8irlLiMN7PT5LY3qaof+B2VwcttZZWhvOMY/Z8meeT7wPQ5i6yaEekajWUa11k4n4R3B
+         VF8w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1705183573; x=1705788373;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=9ToeVjoVOIJjwQna2bPQU5LeaifHdEi/2q+kvkNzXKs=;
-        b=m1qXjgBvDCz1Of0X0AjBdVrOM0ky8Dpl18uLxJoMpJJR/l8u7FzhAFnYJYql7RomU6
-         4/DF8gC9Xzoon5XEsn5k9z2M5QPIWg9zFHdW0B9bY0lHH2OV7x3qC83cC84tMn6itesT
-         68qyrvyHvDg8u94FNnrN4tWbZgUMtFcuM0WxL1BLHoeSvhRoG/NhdPi51mpfKsqn++Xj
-         gJ8w0mNx/ZJ4FxKvXvZxGCSmU/DDLeofaD4MNMjBKXrF9cPPLPH/OcZLjBJ/gPglTVo0
-         W3d5v3AYy7U1LWPii44aTWHV+0QrlhISRCuHwKhXPiqWJ8VLwugiKK5Zd8tGdekDSHZj
-         YjJw==
-X-Gm-Message-State: AOJu0Yz62XwAjZ8BhALEIGqROVErSkr3fivwMCjM2VdgTvM2r9Tagw8j
-	K5TkC9FHpI0y5ryH9/frDDYjNFr3aPGPEQ==
-X-Google-Smtp-Source: AGHT+IHOMCnzMaUZ4wjSgXGzNDlPJgBASMUnxy/la1ot1mITPbOzA820bTeUcevvCso0jkjt5Q4HEw==
-X-Received: by 2002:a05:620a:22da:b0:778:ba89:2fbd with SMTP id o26-20020a05620a22da00b00778ba892fbdmr3761535qki.36.1705183573019;
-        Sat, 13 Jan 2024 14:06:13 -0800 (PST)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id pc9-20020a05620a840900b007831f65d030sm1961416qkn.36.2024.01.13.14.06.12
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 13 Jan 2024 14:06:12 -0800 (PST)
-Date: Sat, 13 Jan 2024 17:06:11 -0500
-From: Taylor Blau <me@ttaylorr.com>
-To: SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Jan 2024, #01; Tue, 2)
-Message-ID: <ZaMJU6MJ5wZxyLeM@nand.local>
-References: <xmqq5y0bcjpw.fsf@gitster.g>
- <ZZWOtnP2IHNldcy6@nand.local>
- <xmqqa5pm9tnx.fsf@gitster.g>
- <20240113183544.GA3000857@szeder.dev>
+        d=1e100.net; s=20230601; t=1705184767; x=1705789567;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=cxhs3pbUq+cVdvwHIhS2nzG5GXRuqeIayjOHmaDcvtw=;
+        b=otrgOSSIutDmsg1Q5Rmp3OuGWx8pXxWzNjZLz1fATw8qbf9ZaVDQKRKUJxbcLN9gcO
+         TiYMb1wQlGEPdqGXYwO3FDVtcGlhAR2Tx7aqYwm7Ax/bdzao1ljNfJUi/cCz2+uf1zMM
+         CEDaaqUg1GWaaM8qfQFFeHidu6bD/28rlnYX7z25D4D1UuhbsraeuHlDAD5PCRv9F5+e
+         Xk1h3Lf4e9JizXE26VjaiOP+joI2D5SzY5yXgH0sI6wXHASmVKS0KCkwQ3Yd+++Qmemf
+         ZF+zgmq9iBAEmqejwSbsKkYXgD8zw3bPrOt5ASfNJBOn7lDti5HazOmWRTxdb1sNv02D
+         iczQ==
+X-Gm-Message-State: AOJu0YzkLW3HtLOrrYpKx6W2UOUNT77d+lKpbfP3h4nqQOkfLn38Rht8
+	h0uRtiVae/udcdKR6yR3f1X5MOWP9LnCKvuKU2E=
+X-Google-Smtp-Source: AGHT+IEZMr7kSRiFTiqoSz3KLWjIpwYxvKDMI3SJWCWHaJvLbIi/pPqEHLrhFDItu87/Kwh6IVZ6z59sZBQr/ChhU24=
+X-Received: by 2002:a05:6808:1709:b0:3bd:4df7:db85 with SMTP id
+ bc9-20020a056808170900b003bd4df7db85mr4064313oib.69.1705184767307; Sat, 13
+ Jan 2024 14:26:07 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20240113183544.GA3000857@szeder.dev>
+References: <pull.1634.git.1704912750.gitgitgadget@gmail.com>
+ <pull.1634.v2.git.1705004670.gitgitgadget@gmail.com> <f953a668c6a7e0a57adcee77ceee2d578970065e.1705004670.git.gitgitgadget@gmail.com>
+ <20240112070356.GE618729@coredump.intra.peff.net> <xmqqo7dqbfin.fsf@gitster.g>
+In-Reply-To: <xmqqo7dqbfin.fsf@gitster.g>
+From: Justin Tobler <jltobler@gmail.com>
+Date: Sat, 13 Jan 2024 16:25:56 -0600
+Message-ID: <CAGAWz+6yKzFz5bQc6OHbd+=xGsjzgEb7nkpDkht+Y-OGYVyYuw@mail.gmail.com>
+Subject: Re: [PATCH v2 2/2] t5541: remove lockfile creation
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Jeff King <peff@peff.net>, Justin Tobler via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
+	Patrick Steinhardt <ps@pks.im>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Hi Gábor,
+Great! Thanks everyone for the help!
+-Justin
 
-Thanks very much for your patience while I figure all of this out. I'm
-confident that with the fixup! below that your test passes in the next
-round of this series.
-
-On Sat, Jan 13, 2024 at 07:35:44PM +0100, SZEDER Gábor wrote:
-> On Wed, Jan 03, 2024 at 10:08:18AM -0800, Junio C Hamano wrote:
-> > Taylor Blau <me@ttaylorr.com> writes:
+On Fri, Jan 12, 2024 at 11:58=E2=80=AFAM Junio C Hamano <gitster@pobox.com>=
+ wrote:
+>
+> Jeff King <peff@peff.net> writes:
+>
+> > On Thu, Jan 11, 2024 at 08:24:30PM +0000, Justin Tobler via GitGitGadge=
+t wrote:
 > >
-> > >> * tb/path-filter-fix (2023-10-18) 17 commits
-> > >>  - bloom: introduce `deinit_bloom_filters()`
-> > >>  ...
-> > >>  - t/t4216-log-bloom.sh: harden `test_bloom_filters_not_used()`
-> > >>
-> > >>  The Bloom filter used for path limited history traversal was broken
-> > >>  on systems whose "char" is unsigned; update the implementation and
-> > >>  bump the format version to 2.
-> > >>
-> > >>  Expecting a reroll.
-> > >>  cf. <20231023202212.GA5470@szeder.dev>
-> > >>  source: <cover.1697653929.git.me@ttaylorr.com>
-> > >
-> > > I was confused by this one, since I couldn't figure out which tests
-> > > Gábor was referring to here. I responded in [1], but haven't heard back
-> > > since the end of October.
-> > > ...
-> > > [1]: https://lore.kernel.org/git/ZUARCJ1MmqgXfS4i@nand.local/
+> >> -    # the new branch should not have been created upstream
+> >> -    test_must_fail git -C "$d" show-ref --verify refs/heads/atomic &&
+> >> -
+> >> -    # upstream should still reflect atomic2, the last thing we pushed
+> >> -    # successfully
+> >> -    git rev-parse atomic2 >expected &&
+> >> -    # ...to other.
+> >> -    git -C "$d" rev-parse refs/heads/other >actual &&
+> >> -    test_cmp expected actual &&
+> >> -
+> >> -    # the new branch should not have been created upstream
+> >> +    # The atomic and other branches should be created upstream.
+> >>      test_must_fail git -C "$d" show-ref --verify refs/heads/atomic &&
+> >> +    test_must_fail git -C "$d" show-ref --verify refs/heads/other &&
+> >
+> > This last comment should say "should not be created", I think?
+> >
+> > Other than that, both patches look good to me.
 >
-> I keep referring to the test in:
+> Thanks.  Will queue with the following and "Acked-by: peff".
 >
->   https://public-inbox.org/git/20230830200218.GA5147@szeder.dev/
+> diff --git c/t/t5541-http-push-smart.sh w/t/t5541-http-push-smart.sh
+> index 9a8bed6c32..71428f3d5c 100755
+> --- c/t/t5541-http-push-smart.sh
+> +++ w/t/t5541-http-push-smart.sh
+> @@ -242,7 +242,7 @@ test_expect_success 'push --atomic fails on server-si=
+de errors' '
+>         # --atomic should cause entire push to be rejected
+>         test_must_fail git push --atomic "$up" atomic other 2>output  &&
 >
-> which, rather disappointingly, is still the only test out there
-> exercising the interaction between split commit graphs and different
-> modified path Bloom filter versions.  Note that in that message I
-> mentioned that merging layers with differenet Bloom filter versions
-> seemed to work, but that, alas, is no longer the case, because it's
-> now broken in Taylor's recent iterations of the patch series.
-
-Thanks for clarifying. With all of the different versions of this series
-and the couple of tests that you and I were talking about, I think that
-I got confused and thought you were referring to a different test.
-
-Indeed, the current version of this series (v4) does not pass the test
-in <20230830200218.GA5147@szeder.dev>, but the fix in order for it to
-pass is relatively straightforward.
-
-I have this on top of my local branch as a fixup! and I'll squash it
-down on Tuesday[^1] and send a reroll after double-checking that the fix
-is correct and doesn't conflict with any other parts of the series.
-
-Since it's been so long since I've looked at this, I'll re-read the
-series as a whole with fresh eyes to make sure that everything still
-makes sense.
-
-In any case, here's the patch on top (with a lightly modified version of
-the test you wrote in <20230830200218.GA5147@szeder.dev>:
-
-Subject: [PATCH] fixup! commit-graph: ensure Bloom filters are read with
- consistent settings
-
-Signed-off-by: Taylor Blau <me@ttaylorr.com>
----
- commit-graph.c       |  3 ++-
- t/t4216-log-bloom.sh | 29 ++++++++++++++++++++++++++++-
- 2 files changed, 30 insertions(+), 2 deletions(-)
-
-diff --git a/commit-graph.c b/commit-graph.c
-index 60fa64d956..82a4632c4e 100644
---- a/commit-graph.c
-+++ b/commit-graph.c
-@@ -507,7 +507,8 @@ static void validate_mixed_bloom_settings(struct commit_graph *g)
- 		}
-
- 		if (g->bloom_filter_settings->bits_per_entry != settings->bits_per_entry ||
--		    g->bloom_filter_settings->num_hashes != settings->num_hashes) {
-+		    g->bloom_filter_settings->num_hashes != settings->num_hashes ||
-+		    g->bloom_filter_settings->hash_version != settings->hash_version) {
- 			g->chunk_bloom_indexes = NULL;
- 			g->chunk_bloom_data = NULL;
- 			FREE_AND_NULL(g->bloom_filter_settings);
-diff --git a/t/t4216-log-bloom.sh b/t/t4216-log-bloom.sh
-index 569f2b6f8b..d8c42e2e27 100755
---- a/t/t4216-log-bloom.sh
-+++ b/t/t4216-log-bloom.sh
-@@ -438,7 +438,7 @@ test_expect_success 'setup for mixed Bloom setting tests' '
- 	done
- '
-
--test_expect_success 'ensure incompatible Bloom filters are ignored' '
-+test_expect_success 'ensure Bloom filters with incompatible settings are ignored' '
- 	# Compute Bloom filters with "unusual" settings.
- 	git -C $repo rev-parse one >in &&
- 	GIT_TEST_BLOOM_SETTINGS_NUM_HASHES=3 git -C $repo commit-graph write \
-@@ -488,6 +488,33 @@ test_expect_success 'merge graph layers with incompatible Bloom settings' '
- 	test_must_be_empty err
- '
-
-+test_expect_success 'ensure Bloom filter with incompatible versions are ignored' '
-+	rm "$repo/$graph" &&
-+
-+	git -C $repo log --oneline --no-decorate -- $CENT >expect &&
-+
-+	# Compute v1 Bloom filters for commits at the bottom.
-+	git -C $repo rev-parse HEAD^ >in &&
-+	git -C $repo commit-graph write --stdin-commits --changed-paths \
-+		--split <in &&
-+
-+	# Compute v2 Bloomfilters for the rest of the commits at the top.
-+	git -C $repo rev-parse HEAD >in &&
-+	git -C $repo -c commitGraph.changedPathsVersion=2 commit-graph write \
-+		--stdin-commits --changed-paths --split=no-merge <in &&
-+
-+	test_line_count = 2 $repo/$chain &&
-+
-+	git -C $repo log --oneline --no-decorate -- $CENT >actual 2>err &&
-+	test_cmp expect actual &&
-+
-+	layer="$(head -n 1 $repo/$chain)" &&
-+	cat >expect.err <<-EOF &&
-+	warning: disabling Bloom filters for commit-graph layer $SQ$layer$SQ due to incompatible settings
-+	EOF
-+	test_cmp expect.err err
-+'
-+
- get_first_changed_path_filter () {
- 	test-tool read-graph bloom-filters >filters.dat &&
- 	head -n 1 filters.dat
-
---
-2.38.0.16.g393fd4c6db
-
-(Excuse the old version of Git here, I'm in the middle of a long-running
-process which checks out older versions of the tree to count the number
-of unused-parameters over time.)
-
-Thanks,
-Taylor
-
-[^1]: Monday is a US holiday, so I likely won't be at my computer.
+> -       # The atomic and other branches should be created upstream.
+> +       # The atomic and other branches should not be created upstream.
+>         test_must_fail git -C "$d" show-ref --verify refs/heads/atomic &&
+>         test_must_fail git -C "$d" show-ref --verify refs/heads/other &&
+>
+>
