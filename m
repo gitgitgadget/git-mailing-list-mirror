@@ -1,87 +1,68 @@
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35F6FFBEC
-	for <git@vger.kernel.org>; Sat, 13 Jan 2024 06:22:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="Z6CTFF2f"
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 5E7FF2B467;
-	Sat, 13 Jan 2024 01:22:05 -0500 (EST)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=DotqVSgbUtzAtBIyy6HKLCtVPYh48RDk2Yi7Pq
-	WBfL0=; b=Z6CTFF2fMIRbGAcap7+b3BlIXFcdDTEq36QUZkj0GoMTnqjrO8AfGD
-	7ib5D/Te1SjEdHMNtbKrI2nbxj2oOe7mNuhMticZHnlzTRadb5cilvjXHCUbThzb
-	yZEKGypIB1Ho6+vg0pI1ygBpe4PiTIzMcLz/COEX9ZwVEQcC9llxA=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 56A7B2B466;
-	Sat, 13 Jan 2024 01:22:05 -0500 (EST)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.200.93])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 8B73A2B464;
-	Sat, 13 Jan 2024 01:22:01 -0500 (EST)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Elijah Newren <newren@gmail.com>
-Cc: Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
-  git@vger.kernel.org
-Subject: Re: [PATCH] diffcore-delta: avoid ignoring final 'line' of file
-In-Reply-To: <CABPp-BGp0NMQKLYg=OxJgnVxARffNF57B_N2bLmwT2R2EZqhdA@mail.gmail.com>
-	(Elijah Newren's message of "Fri, 12 Jan 2024 17:45:08 -0800")
-References: <pull.1637.git.1705006074626.gitgitgadget@gmail.com>
-	<xmqqedenearc.fsf@gitster.g>
-	<CABPp-BGp0NMQKLYg=OxJgnVxARffNF57B_N2bLmwT2R2EZqhdA@mail.gmail.com>
-Date: Fri, 12 Jan 2024 22:21:59 -0800
-Message-ID: <xmqqil3x69dk.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0038A1A594
+	for <git@vger.kernel.org>; Sat, 13 Jan 2024 07:31:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+Received: (qmail 19487 invoked by uid 109); 13 Jan 2024 07:31:33 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sat, 13 Jan 2024 07:31:33 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 25571 invoked by uid 111); 13 Jan 2024 07:31:34 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sat, 13 Jan 2024 02:31:34 -0500
+Authentication-Results: peff.net; auth=none
+Date: Sat, 13 Jan 2024 02:31:31 -0500
+From: Jeff King <peff@peff.net>
+To: Linus Arver <linusa@google.com>
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Linus Arver via GitGitGadget <gitgitgadget@gmail.com>,
+	git@vger.kernel.org
+Subject: Re: [PATCH] strvec: use correct member name in comments
+Message-ID: <20240113073131.GA657764@coredump.intra.peff.net>
+References: <pull.1640.git.1705043195997.gitgitgadget@gmail.com>
+ <20240112074138.GH618729@coredump.intra.peff.net>
+ <owlyo7dqig1w.fsf@fine.c.googlers.com>
+ <xmqqjzoe8br0.fsf@gitster.g>
+ <owlyle8uhxut.fsf@fine.c.googlers.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- 10162806-B1DC-11EE-82BD-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <owlyle8uhxut.fsf@fine.c.googlers.com>
 
-Elijah Newren <newren@gmail.com> writes:
+On Fri, Jan 12, 2024 at 04:37:46PM -0800, Linus Arver wrote:
 
->> I am not very happy with the hardcoded 97.  You are already using
->> the non-standard 10% threshold.  If the delta detection that
->> forgets about the last line is so broken as your proposed log
->> message noted, shouldn't you be able to construct a sample pair of
->> preimage and postimage for which the broken version gives so low
->> similarity to be judged not worth treating as a rename, while the
->> fixed version gives reasonable similarity to be made into a rename,
->> by the default threshold?  That way, the test only needs to see if
->> we got a rename (with any similarity) or a delete and an add.
->
-> Oops, the threshold is entirely unnecessary here; not sure why I
-> didn't remember to take it out (originally used the threshold while
-> testing without the fix to just how low of a similarity git thought
-> these nearly identical files had).
->
-> Since you don't like the threshold, and since we don't seem to have a
-> summary format that reports on the rename without the percentage, I
-> guess I need to munge the output with sed:
->
->       sed -e "s/^R[0-9]* /R /" actual >actual.munged &&
+> OTOH if we were treating these .h files as something meant for direct
+> external consumption (that is, if strvec.h is libified and external
+> users outside of Git are expected to use it directly as their first
+> point of documentation), at that point it might make sense to name the
+> parameters (akin to the style of manpages for syscalls). But I imagine
+> at that point we would have some other means of developer docs (beyond
+> raw header files) for libified parts of Git, so even in that case it's
+> probably fine to keep things as is.
 
-Heh, I was hoping that we should be able to use "diff --name-only".
+I think this is mostly orthogonal to libification. Whether the audience
+is other parts of Git or users outside of Git, they need to know how to
+call the function. Our main source of documentation there is comments
+above the declaration (we've marked these with "/**" which would allow a
+parser to pull them into a separate doc file, but AFAIK in the 9 years
+since we started that convention, nobody has bothered to write such a
+script).
 
- $ git mv Makefile Breakfile
- $ git diff --name-only -M HEAD
- Breakfile
- $ git reset --hard
- $ git rm Makefile
- $ >Breakfile && git add Breakfile
- $ git diff --name-only -M HEAD
- Breakfile
- Makefile
- $ git reset --hard
+Naming the parameters can help when writing those comments, because you
+can then refer to them (e.g., see the comment above strbuf_addftime).
+Even without that, I think they can be helpful, but I don't think I'd
+bother adding them in unless taking a pass over the whole file, looking
+for comments that do not sufficiently explain their matching functions.
+
+I don't doubt that some of that would be necessary for libification,
+just to increase the quality of the documentation. But I think it's
+largely separate from the patch in this thread.
+
+-Peff
