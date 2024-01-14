@@ -1,180 +1,137 @@
-Received: from mail-qt1-f170.google.com (mail-qt1-f170.google.com [209.85.160.170])
+Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4677B11CA0
-	for <git@vger.kernel.org>; Sun, 14 Jan 2024 19:39:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AE485243
+	for <git@vger.kernel.org>; Sun, 14 Jan 2024 19:50:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HUnBSrvC"
-Received: by mail-qt1-f170.google.com with SMTP id d75a77b69052e-429d7896d35so10279841cf.3
-        for <git@vger.kernel.org>; Sun, 14 Jan 2024 11:39:52 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IuFDPSB/"
+Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-40e60e137aaso34666625e9.0
+        for <git@vger.kernel.org>; Sun, 14 Jan 2024 11:50:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1705261191; x=1705865991; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=oTRxtoOwYxLCHv+kGsozGrqy+Qy+CiwkjTX4mc36AQw=;
-        b=HUnBSrvCRTV3EMSok57CVsyJBbCbrJK6CMT1Rm7EJEugOneERbu9GNzKHJm/PUTmud
-         qKzm3I5N4V+117UWmXldC1GZ5tIad95ompVhxgc+R5d/3GoU6GljLsVwhz/oUddXgBsv
-         gjcdPZXedEEIU4zKDiI0jO447xN7yOuLuKFRv+zwMpvL6AghVqv7gJDr4RAtT1r31gBQ
-         EHdB+0Y1HMjVbZGg/lf5jyAQtm5Vxy4iFZMKCI6BPsUsFxdDoxP6avA7QCsKSqsQtUmK
-         pLlOI+soJiUhkBXIjqHVW6ICMH/eyWOQeNgYyZ6pT+fZqjIcKZr6Pzxr9iTK0N3mGjRF
-         HvOA==
+        d=gmail.com; s=20230601; t=1705261852; x=1705866652; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=wSoYpwPyV96gEb0DGSAZp3LNNvQtvNHcaOk+E4V1xPo=;
+        b=IuFDPSB/xgNn1S9Icze+K23sAbGf79fCi2HKKXsA+ld1pPc9nkmf0rfu6CkAR2lLo9
+         IVvx1I3MHfbpBuRWvlK5hj+IFcG5yS1Z+GQG4zA/ZddZ0CicOfGcpkdZWP17eadpG+5y
+         ffBNYlvWTgJpjRGWSsXFSGEBIVpa/SNYQxYflXraX+CHgk0i/ffo1uXxqMfL2hoRC7/m
+         cE3XI3e1kFdHtKgsNmD/L0Lc8jbYc9wQFGa3F7RA4u9h2D90gXv0CeS92hC/WKmxKpAN
+         JEMB3bqykOfz0i+d83ZfUF5NoWRvKIjEqsjpDFI/pCyDiN07zvB/Qbw9XIdbkgf7ElXG
+         jjVQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1705261191; x=1705865991;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=oTRxtoOwYxLCHv+kGsozGrqy+Qy+CiwkjTX4mc36AQw=;
-        b=gsh6Qd3hSCFNCirfRglO7UjcIQNf/AL9mN+Ec/9nbv6TYScFtWaybetlx67WN1F9D3
-         Dp2hchp1VWwmbgglEMwDVt9Q3EH0OGgVax8UxPK/vxnF0rDcdO46Ay/y6SBWWKjjiCA6
-         7eRBSS0dlymCmNuIGbvKwantwDtBgTc9B6p7UDA2NWNPmrBPU/gaj2gToE6OkKqYlytT
-         CKhhdhvJgxD2HsgYj3xMoBnE225yNVyj/wjQElXYCSTOsCEHwcuwu2BaGayF25m1VHFo
-         7/OhTg63sww4dB++C8noKDSxnm9fbj+ml9bBI/UY/XfSKv2vnWXEFy8vtSA3h+MBGkoJ
-         va0A==
-X-Gm-Message-State: AOJu0Ywr5xJgj8z64pC+UDw2UJY/IBGJNOlRG1A9Il9XE89/2wrqWTvG
-	qOMDVMrKQnSScXsBZS0FifLTSM1M9Z3+LZDPFQE=
-X-Google-Smtp-Source: AGHT+IHsXu0NEe6B6diz9m9TihJ6vlnaMNkCnfl5otFvTOl1wExJUr5YR0QxebAH0rF6ElCRdG4u+0xgRH1gzWe2r4k=
-X-Received: by 2002:ac8:598e:0:b0:429:d29c:1376 with SMTP id
- e14-20020ac8598e000000b00429d29c1376mr6068533qte.49.1705261191040; Sun, 14
- Jan 2024 11:39:51 -0800 (PST)
+        d=1e100.net; s=20230601; t=1705261852; x=1705866652;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=wSoYpwPyV96gEb0DGSAZp3LNNvQtvNHcaOk+E4V1xPo=;
+        b=Y3JijlUjrJbx5ctbi2F/kRrb6RZ9u94E5MoP+pRt9lK2dpTr6i69EKCtnx1KzlBM00
+         s9mGs+/i1lyjBuZYj19sK+j6lZ5/XuZSGpORileluhFgG4RcGCPjD4I6RW0JcRfdcm5+
+         cHVDy3FeJUQ3VftlwPzsMNM/SC/G5chIPXOXfILiTUAPsJZOngs/60c03Qg1BtVbnzH/
+         EPxxNPwxICoKeenbIGRz2aBHEu75TvodUkmczWw8RWMTch3/smxoDhhbbUtsN7x6QIIf
+         B3su9vIelUWKUqz7NYmgA3e9XhKnRdSv11pOqhRwfBbnvON4HMrMl2KIzvK7G9gFuG7c
+         WNlw==
+X-Gm-Message-State: AOJu0Ywdt/lYLijJnkPMBIT6D1EI27XkjtOexRoz8uTB7tDv9cI7Zx7O
+	l0af9zzVt7tDev1cx4E8XoQ3E5IjR8M=
+X-Google-Smtp-Source: AGHT+IFSlRPWFwpwrui7XCnLxbcUYlTK6QT1GfwHU91+9A3vlGB0PfxLVCnpCE9pOvi2fOtRW8yQKg==
+X-Received: by 2002:a05:600c:2a15:b0:40e:7110:b3a0 with SMTP id w21-20020a05600c2a1500b0040e7110b3a0mr858035wme.149.1705261851699;
+        Sun, 14 Jan 2024 11:50:51 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id n18-20020a05600c501200b0040e77ce8768sm1573157wmr.16.2024.01.14.11.50.51
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 14 Jan 2024 11:50:51 -0800 (PST)
+Message-ID: <pull.1645.git.git.1705261850650.gitgitgadget@gmail.com>
+From: "Nikolay Edigaryev via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Sun, 14 Jan 2024 19:50:50 +0000
+Subject: [PATCH] rev-list-options: fix off-by-one in '--filter=blob:limit=<n>'
+ explainer
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.1644.git.git.1705231010118.gitgitgadget@gmail.com> <24b82309-34e9-49a0-983b-7e94dad3d06b@gmail.com>
-In-Reply-To: <24b82309-34e9-49a0-983b-7e94dad3d06b@gmail.com>
+To: git@vger.kernel.org
+Cc: Nikolay Edigaryev <edigaryev@gmail.com>,
+    Nikolay Edigaryev <edigaryev@gmail.com>
+
 From: Nikolay Edigaryev <edigaryev@gmail.com>
-Date: Sun, 14 Jan 2024 23:39:40 +0400
-Message-ID: <CAFX5hXTCPt-rDrWZ-RN8S84o_FooY3Ck2H1kMYdHQGzuetPBSw@mail.gmail.com>
-Subject: Re: [PATCH] clone: support cloning of filtered bundles
-To: phillip.wood@dunelm.org.uk
-Cc: Nikolay Edigaryev via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
-	Derrick Stolee <stolee@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-Hello Phillip,
+'--filter=blob:limit=<n>' was introduced in 25ec7bcac0 (list-objects:
+filter objects in traverse_commit_list, 2017-11-21) and later expanded
+to bitmaps in 84243da129 (pack-bitmap: implement BLOB_LIMIT filtering,
+2020-02-14)
 
-> As I understand it if you're cloning from a bundle file then then there
-> is no remote so how can we set a remote-specific config?
+The logic that was introduced in these commits (and that still persists
+to this day) omits blobs larger than _or equal_ to n bytes or units.
 
-There is a remote, for more details see df61c88979 (clone: also
-configure url for bare clones, 2010-03-29), which has the following
-code:
+However, the documentation (Documentation/rev-list-options.txt) states:
 
-strbuf_addf(&key, "remote.%s.url", remote_name);
-git_config_set(key.buf, repo);
-strbuf_reset(&key);
+>The form '--filter=blob:limit=<n>[kmg]' omits blobs larger than n
+bytes or units. n may be zero.
 
-You can verify this by creating a bundle on Git 2.43.0 with "git create
-bundle bundle.bundle --all" and then cloning it with "git clone
---bare /path/to/bundle.bundle", in my case the following repo-wide
-configuration file was created:
+Moreover, the t6113-rev-list-bitmap-filters.sh tests for exactly this
+logic, so it seems it is the documentation that needs fixing, not the
+code.
 
-[core]
-repositoryformatversion =3D 0
-filemode =3D true
-bare =3D true
-ignorecase =3D true
-precomposeunicode =3D true
-[remote "origin"]
-url =3D /Users/edi/src/cirrus-cli/cli.bundle
+This changes the explanation to be similar to
+Documentation/git-clone.txt, which is correct.
 
-> I'm surprised that the proposed change does not require the user to pass
-> "--filter" to "git clone" as I expected that we'd want to check that the
-> filter on the command line was compatible with the filter used to create
-> the bundle. Allowing "git clone" to create a partial clone without the
-> user asking for it by passing the "--filter" option feels like is going
-> to end up confusing users.
+Signed-off-by: Nikolay Edigaryev <edigaryev@gmail.com>
+---
+    rev-list-options: fix off-by-one in '--filter=blob:limit=' explainer
+    
+    '--filter=blob:limit=' was introduced in 25ec7bcac0 (list-objects:
+    filter objects in traverse_commit_list, 2017-11-21) and later expanded
+    to bitmaps in 84243da129 (pack-bitmap: implement BLOB_LIMIT filtering,
+    2020-02-14)
+    
+    The logic that was introduced in these commits (and that still persists
+    to this day) omits blobs larger than or equal to n bytes or units.
+    
+    However, the documentation (Documentation/rev-list-options.txt) states:
+    
+    > The form '--filter=blob:limit=[kmg]' omits blobs larger than n bytes
+    > or units. n may be zero.
+    
+    Moreover, the t6113-rev-list-bitmap-filters.sh tests for exactly this
+    logic, so it seems it is the documentation that needs fixing, not the
+    code.
+    
+    This changes the explanation to be similar to
+    Documentation/git-clone.txt, which is correct.
 
-Note that currently, when you clone a normal non-filtered bundle with a
-'--filter' argument specified, no filtering will take place and no error
-will be thrown. "promisor =3D true" and "partialclonefilter =3D ..." option=
-s
-will be set in the repo config, but no .promisor file will be created.
-This is even more confusing IMO, but that's how it currently on
-Git 2.43.0.
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1645%2Fedigaryev%2Ffix-blob-limit-off-by-one-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1645/edigaryev/fix-blob-limit-off-by-one-v1
+Pull-Request: https://github.com/git/git/pull/1645
 
-You have a good point, but I feel like completely preventing cloning of
-filtered bundles and requiring a '--filter' argument is very taxing. If
-you've already specified a '--filter' when creating a bundle (and thus
-your intent to use partially cloned data), why do it multiple times?
+ Documentation/rev-list-options.txt | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-What I propose as an alternative here is to act based on the user's
-intent when cloning:
+diff --git a/Documentation/rev-list-options.txt b/Documentation/rev-list-options.txt
+index 2bf239ff030..a583b52c612 100644
+--- a/Documentation/rev-list-options.txt
++++ b/Documentation/rev-list-options.txt
+@@ -947,10 +947,10 @@ ifdef::git-rev-list[]
+ +
+ The form '--filter=blob:none' omits all blobs.
+ +
+-The form '--filter=blob:limit=<n>[kmg]' omits blobs larger than n bytes
+-or units.  n may be zero.  The suffixes k, m, and g can be used to name
+-units in KiB, MiB, or GiB.  For example, 'blob:limit=1k' is the same
+-as 'blob:limit=1024'.
++The form '--filter=blob:limit=<n>[kmg]' omits blobs of size at least n
++bytes or units.  n may be zero.  The suffixes k, m, and g can be used
++to name units in KiB, MiB, or GiB.  For example, 'blob:limit=1k'
++is the same as 'blob:limit=1024'.
+ +
+ The form '--filter=object:type=(tag|commit|tree|blob)' omits all objects
+ which are not of the requested type.
 
-* when the user specifies no '--filter' argument, do nothing special,
-   allow cloning both types of bundles: normal and filtered (with the
-   logic from this patch)
-
-* when the user does specify a '--filter' argument, either:
-  * throw an error explaining that filtering of filtered bundles is not
-    supported
-  * or compare the user's filter specification and the one that is
-    in the bundle and only throw an error if they mismatch
-
-Let me know what you think about this (and perhaps you have a more
-concrete example in mind where this will have negative consequences)
-and I'll be happy to do a next iteration.
-
-
-On Sun, Jan 14, 2024 at 10:00=E2=80=AFPM Phillip Wood <phillip.wood123@gmai=
-l.com> wrote:
->
-> Hi Nikolay
->
-> On 14/01/2024 11:16, Nikolay Edigaryev via GitGitGadget wrote:
-> > From: Nikolay Edigaryev <edigaryev@gmail.com>
-> >
-> > f18b512bbb (bundle: create filtered bundles, 2022-03-09) introduced an
-> > incredibly useful ability to create filtered bundles, which advances
-> > the partial clone/promisor support in Git and allows for archiving
-> > large repositories to object storages like S3 in bundles that are:
-> >
-> > * easy to manage
-> >    * bundle is just a single file, it's easier to guarantee atomic
-> >      replacements in object storages like S3 and they are faster to
-> >      fetch than a bare repository since there's only a single GET
-> >      request involved
-> > * incredibly tiny
-> >    * no indexes (which may be more than 10 MB for some repositories)
-> >      and other fluff, compared to cloning a bare repository
-> >    * bundle can be filtered to only contain the tips of refs neccessary
-> >      for e.g. code-analysis purposes
-> >
-> > However, in 86fdd94d72 (clone: fail gracefully when cloning filtered
-> > bundle, 2022-03-09) the cloning of such bundles was disabled, with a
-> > note that this behavior is not desired, and it the long-term this
-> > should be possible.
-> >
-> > The commit above states that it's not possible to have this at the
-> > moment due to lack of remote and a repository-global config that
-> > specifies an object filter, yet it's unclear why a remote-specific
-> > config can't be used instead, which is what this change does.
->
-> As I understand it if you're cloning from a bundle file then then there
-> is no remote so how can we set a remote-specific config?
->
-> I'm surprised that the proposed change does not require the user to pass
-> "--filter" to "git clone" as I expected that we'd want to check that the
-> filter on the command line was compatible with the filter used to create
-> the bundle. Allowing "git clone" to create a partial clone without the
-> user asking for it by passing the "--filter" option feels like is going
-> to end up confusing users.
->
-> > +test_expect_success 'cloning from filtered bundle works' '
-> > +     git bundle create partial.bdl --all --filter=3Dblob:none &&
-> > +     git clone --bare partial.bdl partial 2>err
->
-> The redirection hides any error message which will make debugging test
-> failures harder. It would be nice to see this test check any config set
-> when cloning and that git commands can run successfully in the repository=
-.
->
-> Best Wishes
->
-> Phillip
+base-commit: 564d0252ca632e0264ed670534a51d18a689ef5d
+-- 
+gitgitgadget
