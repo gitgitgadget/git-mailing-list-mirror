@@ -1,62 +1,61 @@
 Received: from out5-smtp.messagingengine.com (out5-smtp.messagingengine.com [66.111.4.29])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5D7813ACC
-	for <git@vger.kernel.org>; Sun, 14 Jan 2024 21:44:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 064EA14293
+	for <git@vger.kernel.org>; Sun, 14 Jan 2024 21:44:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=khaugsbakk.name
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=khaugsbakk.name
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b="A9FwL8MX";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="qmiDd6SO"
-Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
-	by mailout.nyi.internal (Postfix) with ESMTP id B39FC5C00D9;
-	Sun, 14 Jan 2024 16:44:10 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b="kGjR1zKk";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="C9N2JUZx"
+Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
+	by mailout.nyi.internal (Postfix) with ESMTP id DCA295C0154;
+	Sun, 14 Jan 2024 16:44:12 -0500 (EST)
 Received: from mailfrontend1 ([10.202.2.162])
-  by compute4.internal (MEProxy); Sun, 14 Jan 2024 16:44:10 -0500
+  by compute2.internal (MEProxy); Sun, 14 Jan 2024 16:44:12 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=khaugsbakk.name;
-	 h=cc:cc:content-transfer-encoding:content-type:content-type
-	:date:date:from:from:in-reply-to:in-reply-to:message-id
-	:mime-version:references:reply-to:subject:subject:to:to; s=fm1;
-	 t=1705268650; x=1705355050; bh=zdSnn5z3YMR3vu61CYa9E/zqR4eyt8Sy
-	+BJaOJOFdtM=; b=A9FwL8MXHTHyPszWXzEqr/wcCYwN6bY+JV4GLignd2BpXVJU
-	CuEynSiRfK4yRzQF2wapvSYpsZTDrZrGJLeVSqiRPng+PAhZN0uqxDvBlCXrLF63
-	kDWAP/RF8Qbi8Ja6+iBioelmEnBpIJF6VlMfBR+iAY5d4WLRiTa6JbomYf2NR9za
-	BtZEoND7pQZUSx20f2ffZOn3aY0ivtvXMj0/GIFQR9zngjfRcQvAEEUFXel5M00t
-	7Ol2ndII+iGQNv1EEDf7WDpR2BxZWvTkbubVHPg7xLTqS+DSOqibdD/RcEDxBAVU
-	6SDOl9uBAZ4C2NHjKUZWLnlfCO9YEDBduKQh+A==
+	 h=cc:cc:content-transfer-encoding:content-type:date:date:from
+	:from:in-reply-to:in-reply-to:message-id:mime-version:references
+	:reply-to:subject:subject:to:to; s=fm1; t=1705268652; x=
+	1705355052; bh=3PMwYZ3TK+aS0letAdpJMqPmC2YZhQB8Jz2gw+rBO/A=; b=k
+	GjR1zKkbiKOcmZKryfI3zSGUnBnjkLmKshqDolCuF9nFSKEwZWp4ky8PkkXi4xxI
+	WPME9WdxnIQT+6MJFEUPvWQvor8BmJDeEzFtr8cAcSieEn6ZgXT72xZlT7vzlJuV
+	7P7/Wu92nEZbKbv+AMGD1lIRfwI5G8K+QfrzvcOGOyVlBgVVoUNO/tnEUyR7JVPz
+	rehhEQ3+TdXAjY1gj1gpyA8GD2lbu5zByGFRq6ZOOMsSSSej7FVkKXk7aMCRxXFi
+	tutkm4UUSRPUYPGL5Ta5U4VMQ0NNc7k/6Gl9xoh9+cPlPjZLGikLjdfONJrWeyhQ
+	qI+YQ4R+VH78CJ3i1N0xQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1705268650; x=
-	1705355050; bh=zdSnn5z3YMR3vu61CYa9E/zqR4eyt8Sy+BJaOJOFdtM=; b=q
-	miDd6SOlcfZFZLK5W2H4j9/dI//pO/GzF//BGs7i40NyWcn9m8f/hOai+KOMh26i
-	TFisK049tCbuUJpqjXgVuiVMQE5fHv2t8Wgu/81CJ/nH1K7S9o8OQSVjxp1s5SsI
-	uhRwPPEP4KDSBiNoT/PlU+ZtvCL+tQIjY2HH2S94M3XY9uj4vzaH9vACBnsLRHNs
-	zWIclbfv4ryjF+kzGJ13GH4DjNkiY5oSaxSqGgtsXcGumdHzPGyu3Sf0nis10YHO
-	Gqg0XjHgLOGJ/S43Rh6nmpeeHPVY37l/PBtb2ybntG+cgY2onRMYsbyHgWF23DYQ
-	Yv9uUdzJgVBpURJPJAnzA==
-X-ME-Sender: <xms:qlWkZV9GzQm23MV4Q0yhY9ByIE05noPxceXF7nKn0f2BUmCqQFl20TM>
-    <xme:qlWkZZtsKiNA7L3RpdndEqxJJswdm73s2ExJDfdLWlIJqjqFyg6QeifQ-4g0uTAcX
-    9Oi5H27eoVvBOutdg>
-X-ME-Received: <xmr:qlWkZTDY55Z3BBEycklSU6vc_KuCaQsKbw8EnU1-NGO-0Tz3NsadQk2GcnBxuq7sEGx4fKhXE29mqK2_jcRcJoBAUhlk0nVX-z0W8O0Med165WFtbbRaIn83xQ>
+	:content-type:date:date:feedback-id:feedback-id:from:from
+	:in-reply-to:in-reply-to:message-id:mime-version:references
+	:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1705268652; x=
+	1705355052; bh=3PMwYZ3TK+aS0letAdpJMqPmC2YZhQB8Jz2gw+rBO/A=; b=C
+	9N2JUZxWa8SGq9hZ7wty7k1YKKGAS34aZUFTWWFiB5YJVWSPGc9jRQ0CEJdmcQ2w
+	moO8a2tGgmnI/PdfYwZQDA7H3z70UxtTX0ZoPVDjibAIOsqPh8vk0id4iG1qdK1B
+	SZHwKXtLTHE7GFsYv8OcdAd3XGxR0YMz3uYORyYzyHCZG9sP4wRA/aWYEpTe200b
+	3jYhD57nP+Kezn/n1tO7KovoXdzpT4tvtd/ObTSzJFeuAi9Y0hum9spRZLonXSK6
+	bZBbTVD1Xvmh48Ayn1eAsZ/S2h32ehsuk9pBYcDByBeA10uobanVNnPEVymFmi8v
+	q7VwkQMsJQVmV23RHphag==
+X-ME-Sender: <xms:rFWkZUOnRi12rN-LClW8mIpD3nJ5y2-yIVHeylsFqsF6Z6hR-KEncqo>
+    <xme:rFWkZa-FFVW7qeJtn_ZZFqpbXwNOophhWr2JvlQ9BufMFG2ntwC3QDg1eodNW61fn
+    CQRcuYM5vTWO154aA>
+X-ME-Received: <xmr:rFWkZbR9-YYxPL0Q0ivXv8y-HD3GaR9AP73UeiepMuZqq8xVhCk1VWZ_5DURhgS7hYB9fvLeZXtBOsI7vp13DtTrzMPSIk_NkKrBujf_VU-ldNcgTTs2ha4bBg>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrvdeiledgudehgecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
     necuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
-    enucfjughrpefhvfevufffkffojghfgggtgfesthekredtredtjeenucfhrhhomhepmfhr
-    ihhsthhofhhfvghrucfjrghughhssggrkhhkuceotghouggvsehkhhgruhhgshgsrghkkh
-    drnhgrmhgvqeenucggtffrrghtthgvrhhnpeeuieeuffeuffethffhfeellefhueehteet
-    tdehveegjeethefgveffuefggfelhfenucffohhmrghinhepkhgvrhhnvghlrdhorhhgne
-    cuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomheptghouggv
-    sehkhhgruhhgshgsrghkkhdrnhgrmhgv
-X-ME-Proxy: <xmx:qlWkZZeYFb4nG5FoLPV2mnkey2B-eLQKemTjC-VFpJJweSosdaDD8Q>
-    <xmx:qlWkZaNmwS-JeTG6_h_iKkIE-wE7SuZ_1JLUPBymXTi8kmZ1oMQ7zQ>
-    <xmx:qlWkZbnBuZD0BvTubXN7E01C9yzCScZI49cAC-NXvdrtN524SxfnAQ>
-    <xmx:qlWkZXrQieQTZIJZca5oCi426RiVULGnH5HGPktyXQqZZcMEmfs5ig>
+    enucfjughrpefhvfevufffkffojghfggfgsedtkeertdertddtnecuhfhrohhmpefmrhhi
+    shhtohhffhgvrhcujfgruhhgshgsrghkkhcuoegtohguvgeskhhhrghughhssggrkhhkrd
+    hnrghmvgeqnecuggftrfgrthhtvghrnhepteduieehgedutdfgudevkefhveduieeiteej
+    hfffteeitdegjeeihedthfejgfetnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrg
+    hmpehmrghilhhfrhhomheptghouggvsehkhhgruhhgshgsrghkkhdrnhgrmhgv
+X-ME-Proxy: <xmx:rFWkZcup_d3C1g12mGvHYJzoA_CC0jL8HCkdlU0AwwJzpwXclUM-iA>
+    <xmx:rFWkZcdx9Tg32XK_X7XQrLjfrNYE3qYp9SJOfQhIWJrlMHB97c8fiQ>
+    <xmx:rFWkZQ3YFLuYIgwvd4MblMZtS6zebSN7abvYLrsvaUA3QesR2TqTaA>
+    <xmx:rFWkZb6-RUO0ZzOHE7EEE-ucOXZ6_xbmXjQUYH_bKMZEzEj6ga_dUQ>
 Feedback-ID: i2671468f:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
- 14 Jan 2024 16:44:08 -0500 (EST)
+ 14 Jan 2024 16:44:10 -0500 (EST)
 From: Kristoffer Haugsbakk <code@khaugsbakk.name>
 To: git@vger.kernel.org
 Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>,
@@ -64,121 +63,65 @@ Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>,
 	stolee@gmail.com,
 	Eric Sunshine <sunshine@sunshineco.com>,
 	Taylor Blau <me@ttaylorr.com>
-Subject: [PATCH v2 0/4] maintenance: use XDG config if it exists
-Date: Sun, 14 Jan 2024 22:43:15 +0100
-Message-ID: <cover.1705267839.git.code@khaugsbakk.name>
+Subject: [PATCH v2 1/4] config: format newlines
+Date: Sun, 14 Jan 2024 22:43:16 +0100
+Message-ID: <d5f6c8d62ecc21859bdfbdfa3a601d7778ed444c.1705267839.git.code@khaugsbakk.name>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <cover.1697660181.git.code@khaugsbakk.name>
-References: <cover.1697660181.git.code@khaugsbakk.name>
+In-Reply-To: <cover.1705267839.git.code@khaugsbakk.name>
+References: <cover.1697660181.git.code@khaugsbakk.name> <cover.1705267839.git.code@khaugsbakk.name>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-I use the conventional XDG config path for the global configuration. This
-path is always used except for `git maintenance register` and
-`unregister`.
+Remove unneeded newlines according to `clang-format`.
 
-§ Changes since v1
+Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
+---
 
-• Free `config_file`
-  • https://lore.kernel.org/git/ZTZDsIcrB0zwHlFR@tanuki/
-• Return `NULL` instead of dying
-  • https://lore.kernel.org/git/ZTZDqToqcsDiS5AP@tanuki/
-• Tests
-  • Test unregister
-  • Use subshells
-  • Style
+Notes (series):
+    Honestly the formatter changing these lines over and over again was just
+    annoying. And we're visiting the file anyway.
 
-§ Patches
+ builtin/config.c | 1 -
+ config.c         | 2 --
+ 2 files changed, 3 deletions(-)
 
-• 1–3: Preparatory
-• 4: The desired change
-
-§ CC
-
-• Patrick Steinhardt: `config` changes; v1 feedback
-• Derrick Stolee: `maintenance` changes
-• Eric Sunshine: v1 feedback
-• Taylor Blau: v1 feedback
-
-Kristoffer Haugsbakk (4):
-  config: format newlines
-  config: rename global config function
-  config: factor out global config file retrieval
-  maintenance: use XDG config if it exists
-
- builtin/config.c       | 26 +++---------------------
- builtin/gc.c           | 27 ++++++++++++-------------
- builtin/var.c          |  2 +-
- config.c               | 26 ++++++++++++++++++++----
- config.h               |  6 +++++-
- t/t7900-maintenance.sh | 45 ++++++++++++++++++++++++++++++++++++++++++
- 6 files changed, 89 insertions(+), 43 deletions(-)
-
-Range-diff against v1:
-1:  39934cb7e50 = 1:  d5f6c8d62ec config: format newlines
-2:  48a5357f97c = 2:  cbc5fde0094 config: rename global config function
-3:  147c767443c ! 3:  32e5ec7d866 config: factor out global config file retrieval
-    @@ Commit message
-
-         Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
-
-    +
-    + ## Notes (series) ##
-    +    v2:
-    +    • Don’t die; return `NULL`
-    +
-      ## builtin/config.c ##
-     @@ builtin/config.c: int cmd_config(int argc, const char **argv, const char *prefix)
-      	}
-    @@ builtin/config.c: int cmd_config(int argc, const char **argv, const char *prefix
-     -			 * location; error out even if XDG_CONFIG_HOME
-     -			 * is set and points at a sane location.
-     -			 */
-    --			die(_("$HOME not set"));
-    --
-     +		given_config_source.file = git_global_config();
-    ++		if (!given_config_source.file)
-    + 			die(_("$HOME not set"));
-    +-
-      		given_config_source.scope = CONFIG_SCOPE_GLOBAL;
-     -
-     -		if (access_or_warn(user_config, R_OK, 0) &&
-    @@ config.c: char *git_system_config(void)
-     +	char *user_config, *xdg_config;
-     +
-     +	git_global_config_paths(&user_config, &xdg_config);
-    -+	if (!user_config)
-    -+		/*
-    -+		 * It is unknown if HOME/.gitconfig exists, so
-    -+		 * we do not know if we should write to XDG
-    -+		 * location; error out even if XDG_CONFIG_HOME
-    -+		 * is set and points at a sane location.
-    -+		 */
-    -+		die(_("$HOME not set"));
-    ++	if (!user_config) {
-    ++		free(xdg_config);
-    ++		return NULL;
-    ++	}
-     +
-     +	if (access_or_warn(user_config, R_OK, 0) && xdg_config &&
-     +	    !access_or_warn(xdg_config, R_OK, 0)) {
-    @@ config.h: int config_error_nonbool(const char *);
-      #endif
-
-      char *git_system_config(void);
-    ++/**
-    ++ * Returns `NULL` if is uncertain whether or not `HOME/.gitconfig` exists.
-    ++ */
-     +char *git_global_config(void);
-      void git_global_config_paths(char **user, char **xdg);
-
-4:  1e2376a4b99 < -:  ----------- maintenance: use XDG config if it exists
--:  ----------- > 4:  8bd67c5bf01 maintenance: use XDG config if it exists
---
+diff --git a/builtin/config.c b/builtin/config.c
+index 11a4d4ef141..87d0dc92d99 100644
+--- a/builtin/config.c
++++ b/builtin/config.c
+@@ -760,7 +760,6 @@ int cmd_config(int argc, const char **argv, const char *prefix)
+ 		given_config_source.scope = CONFIG_SCOPE_COMMAND;
+ 	}
+ 
+-
+ 	if (respect_includes_opt == -1)
+ 		config_options.respect_includes = !given_config_source.file;
+ 	else
+diff --git a/config.c b/config.c
+index 9ff6ae1cb90..d26e16e3ce3 100644
+--- a/config.c
++++ b/config.c
+@@ -95,7 +95,6 @@ static long config_file_ftell(struct config_source *conf)
+ 	return ftell(conf->u.file);
+ }
+ 
+-
+ static int config_buf_fgetc(struct config_source *conf)
+ {
+ 	if (conf->u.buf.pos < conf->u.buf.len)
+@@ -3418,7 +3417,6 @@ int git_config_set_multivar_in_file_gently(const char *config_filename,
+ write_err_out:
+ 	ret = write_error(get_lock_file_path(&lock));
+ 	goto out_free;
+-
+ }
+ 
+ void git_config_set_multivar_in_file(const char *config_filename,
+-- 
 2.43.0
+
