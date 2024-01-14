@@ -1,125 +1,180 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f43.google.com (mail-wr1-f43.google.com [209.85.221.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4CD53C0D
-	for <git@vger.kernel.org>; Sun, 14 Jan 2024 10:21:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
-Received: (qmail 2135 invoked by uid 109); 14 Jan 2024 10:14:27 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sun, 14 Jan 2024 10:14:27 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 3625 invoked by uid 111); 14 Jan 2024 10:14:27 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sun, 14 Jan 2024 05:14:27 -0500
-Authentication-Results: peff.net; auth=none
-Date: Sun, 14 Jan 2024 05:14:24 -0500
-From: Jeff King <peff@peff.net>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, Han-Wen Nienhuys <hanwenn@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 2/5] reftable/stack: refactor reloading to use file
- descriptor
-Message-ID: <20240114101424.GA1196682@coredump.intra.peff.net>
-References: <cover.1704714575.git.ps@pks.im>
- <cover.1704966670.git.ps@pks.im>
- <36b9f6b6240686cc5b0a761b889614fc31f01d34.1704966670.git.ps@pks.im>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 260BA7E
+	for <git@vger.kernel.org>; Sun, 14 Jan 2024 11:16:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AOa6iQEM"
+Received: by mail-wr1-f43.google.com with SMTP id ffacd0b85a97d-3376f71fcbbso5724584f8f.1
+        for <git@vger.kernel.org>; Sun, 14 Jan 2024 03:16:53 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1705231012; x=1705835812; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=1HqbWBGo9nQCVvLxp8jSP+bnwCCx3UiEYQ4Y22hMCS8=;
+        b=AOa6iQEM7+QOSHuzx8djalBMxfgUFcjNwRBW2zpeS9h9s+9LdJ0bGoRbTssqE31kHf
+         StJSmz6ViIVlDO592/MX/Lor8bmjbCpOdpvdUd3Qo71YJaTAYLgjsx7+1nCxlPnrbDIT
+         ihToa4KFRy4zCBGyruy0hSEnF+dQyN5PHHbSlDBwzTrSn0JE9o2QWKE5BWantQrNlvZg
+         ZAaGeuGg6oxy4W0b+m3y1B/6LneJBL5DZnafGtr2Klla9rsLN9BoO67tjPhlglFUF3ad
+         lSPSPcF/Mue6SmNSQxkdWe6K/sS9+5td+sryoReL5sTdXc2t5kD9iIwwSK4gCsFmMucO
+         YI4w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1705231012; x=1705835812;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=1HqbWBGo9nQCVvLxp8jSP+bnwCCx3UiEYQ4Y22hMCS8=;
+        b=XwyUyzRY/3EAWvXPQHg7BT9l3zu9y3W8lU0SS8fqaZCflYO1K528w40YywdQKJ9GA9
+         vKFj5IW8vqnKj1HtWunFp4JM56UVmOML0v2+/7rFz5f/Lvun/H559QuqBAq33sqeKHdA
+         qTOS9Bf8gbxpDKP08qWoHG01j1q6a/V9LIOL/jCsEQgHoyAuIYvcRBzBYILTAovXWK7B
+         0DuXaRirUi/oAQ9axp+kJFXyZTCprdzp5Cjlze9kmSgYazKAOCTtyUqeutxEktXV7Y4f
+         c+K5eEPag2yR73RwRDJg+InkilxOzg+DuMTWBc3n/ZfXOPAvTc7JeQDdUNuYmvcj6NGf
+         RAfQ==
+X-Gm-Message-State: AOJu0YxxVU3if5JZms2KIaMuaW+gWRq2tU6eToIDGtK8ytpNjKzpGQUz
+	06lKWeKiXegWQXdTaWCWiDO/FcdF9rQ=
+X-Google-Smtp-Source: AGHT+IGy3wSbbNMEgl67C5Potcy7/BFPaKHuya7nBeEVUorWoy9Sa2NMyIRHr0dqNMFYr3X44qgKew==
+X-Received: by 2002:a05:6000:188d:b0:337:9b5f:95 with SMTP id a13-20020a056000188d00b003379b5f0095mr1242853wri.133.1705231011383;
+        Sun, 14 Jan 2024 03:16:51 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id r12-20020adfca8c000000b0033668b27f8fsm8882267wrh.4.2024.01.14.03.16.50
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 14 Jan 2024 03:16:51 -0800 (PST)
+Message-ID: <pull.1644.git.git.1705231010118.gitgitgadget@gmail.com>
+From: "Nikolay Edigaryev via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Sun, 14 Jan 2024 11:16:49 +0000
+Subject: [PATCH] clone: support cloning of filtered bundles
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <36b9f6b6240686cc5b0a761b889614fc31f01d34.1704966670.git.ps@pks.im>
+To: git@vger.kernel.org
+Cc: Derrick Stolee <stolee@gmail.com>,
+    Nikolay Edigaryev <edigaryev@gmail.com>,
+    Nikolay Edigaryev <edigaryev@gmail.com>
 
-On Thu, Jan 11, 2024 at 11:06:43AM +0100, Patrick Steinhardt wrote:
+From: Nikolay Edigaryev <edigaryev@gmail.com>
 
-> We're about to introduce a stat(3P)-based caching mechanism to reload
-> the list of stacks only when it has changed. In order to avoid race
-> conditions this requires us to have a file descriptor available that we
-> can use to call fstat(3P) on.
-> 
-> Prepare for this by converting the code to use `fd_read_lines()` so that
-> we have the file descriptor readily available.
+f18b512bbb (bundle: create filtered bundles, 2022-03-09) introduced an
+incredibly useful ability to create filtered bundles, which advances
+the partial clone/promisor support in Git and allows for archiving
+large repositories to object storages like S3 in bundles that are:
 
-Coverity noted a case with this series where we might feed a negative
-value to fstat(). I'm not sure if it's a bug or not.
+* easy to manage
+  * bundle is just a single file, it's easier to guarantee atomic
+    replacements in object storages like S3 and they are faster to
+    fetch than a bare repository since there's only a single GET
+    request involved
+* incredibly tiny
+  * no indexes (which may be more than 10 MB for some repositories)
+    and other fluff, compared to cloning a bare repository
+  * bundle can be filtered to only contain the tips of refs neccessary
+    for e.g. code-analysis purposes
 
-The issue is that here:
+However, in 86fdd94d72 (clone: fail gracefully when cloning filtered
+bundle, 2022-03-09) the cloning of such bundles was disabled, with a
+note that this behavior is not desired, and it the long-term this
+should be possible.
 
-> @@ -329,9 +330,19 @@ static int reftable_stack_reload_maybe_reuse(struct reftable_stack *st,
->  		if (tries > 3 && tv_cmp(&now, &deadline) >= 0)
->  			goto out;
->  
-> -		err = read_lines(st->list_file, &names);
-> -		if (err < 0)
-> -			goto out;
-> +		fd = open(st->list_file, O_RDONLY);
-> +		if (fd < 0) {
-> +			if (errno != ENOENT) {
-> +				err = REFTABLE_IO_ERROR;
-> +				goto out;
-> +			}
-> +
-> +			names = reftable_calloc(sizeof(char *));
-> +		} else {
-> +			err = fd_read_lines(fd, &names);
-> +			if (err < 0)
-> +				goto out;
-> +		}
+The commit above states that it's not possible to have this at the
+moment due to lack of remote and a repository-global config that
+specifies an object filter, yet it's unclear why a remote-specific
+config can't be used instead, which is what this change does.
 
-...we might end up with fd as "-1" after calling open() on the list
-file. For most errors we'll jump to "out", which makes sense. But if we
-get ENOENT, we keep going with an empty file-list, which makes sense.
+Signed-off-by: Nikolay Edigaryev <edigaryev@gmail.com>
+---
+    clone: support cloning of filtered bundles
+    
+    f18b512bbb (bundle: create filtered bundles, 2022-03-09) introduced an
+    incredibly useful ability to create filtered bundles, which advances the
+    partial clone/promisor support in Git and allows for archiving large
+    repositories to object storages like S3 in bundles that are:
+    
+     * easy to manage
+       * bundle is just a single file, it's easier to guarantee atomic
+         replacements in object storages like S3 and they are faster to
+         fetch than a bare repository since there's only a single GET
+         request involved
+     * incredibly tiny
+       * no indexes (which may be more than 10 MB for some repositories) and
+         other fluff, compared to cloning a bare repository
+       * bundle can be filtered to only contain the tips of refs neccessary
+         for e.g. code-analysis purposes
+    
+    However, in 86fdd94d72 (clone: fail gracefully when cloning filtered
+    bundle, 2022-03-09) the cloning of such bundles was disabled, with a
+    note that this behavior is not desired, and it the long-term this should
+    be possible.
+    
+    The commit above states that it's not possible to have this at the
+    moment due to lack of remote and a repository-global config that
+    specifies an object filter, yet it's unclear why a remote-specific
+    config can't be used instead, which is what this change does.
 
-But we then do other stuff with "fd". I think this case is OK:
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1644%2Fedigaryev%2Fclone-filtered-bundles-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1644/edigaryev/clone-filtered-bundles-v1
+Pull-Request: https://github.com/git/git/pull/1644
 
-> @@ -356,12 +367,16 @@ static int reftable_stack_reload_maybe_reuse(struct reftable_stack *st,
->  		names = NULL;
->  		free_names(names_after);
->  		names_after = NULL;
-> +		close(fd);
-> +		fd = -1;
+ builtin/clone.c        | 13 +++++++++++--
+ t/t6020-bundle-misc.sh | 13 +++----------
+ 2 files changed, 14 insertions(+), 12 deletions(-)
 
-We only get here if reftable_stack_reload_once() returned an error,
-which it won't do since we feed it a blank set of names (and anyway,
-close(-1) is a harmless noop).
+diff --git a/builtin/clone.c b/builtin/clone.c
+index c6357af9498..4b3fedf78ed 100644
+--- a/builtin/clone.c
++++ b/builtin/clone.c
+@@ -1227,9 +1227,18 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
+ 
+ 		if (fd > 0)
+ 			close(fd);
++
++		if (has_filter) {
++			strbuf_addf(&key, "remote.%s.promisor", remote_name);
++			git_config_set(key.buf, "true");
++			strbuf_reset(&key);
++
++			strbuf_addf(&key, "remote.%s.partialclonefilter", remote_name);
++			git_config_set(key.buf, expand_list_objects_filter_spec(&header.filter));
++			strbuf_reset(&key);
++		}
++
+ 		bundle_header_release(&header);
+-		if (has_filter)
+-			die(_("cannot clone from filtered bundle"));
+ 	}
+ 
+ 	transport_set_option(transport, TRANS_OPT_KEEP, "yes");
+diff --git a/t/t6020-bundle-misc.sh b/t/t6020-bundle-misc.sh
+index 3e6bcbf30cd..f449df00642 100755
+--- a/t/t6020-bundle-misc.sh
++++ b/t/t6020-bundle-misc.sh
+@@ -555,16 +555,9 @@ do
+ 	'
+ done
+ 
+-# NEEDSWORK: 'git clone --bare' should be able to clone from a filtered
+-# bundle, but that requires a change to promisor/filter config options.
+-# For now, we fail gracefully with a helpful error. This behavior can be
+-# changed in the future to succeed as much as possible.
+-test_expect_success 'cloning from filtered bundle has useful error' '
+-	git bundle create partial.bdl \
+-		--all \
+-		--filter=blob:none &&
+-	test_must_fail git clone --bare partial.bdl partial 2>err &&
+-	grep "cannot clone from filtered bundle" err
++test_expect_success 'cloning from filtered bundle works' '
++	git bundle create partial.bdl --all --filter=blob:none &&
++	git clone --bare partial.bdl partial 2>err
+ '
+ 
+ test_expect_success 'verify catches unreachable, broken prerequisites' '
 
-But if we actually get to the end of the function, it's more
-questionable. As of this patch, it's OK:
-
->  		delay = delay + (delay * rand()) / RAND_MAX + 1;
->  		sleep_millisec(delay);
->  	}
->  
->  out:
-> +	if (fd >= 0)
-> +		close(fd);
->  	free_names(names);
->  	free_names(names_after);
->  	return err;
-
-But in the next patch we have this hunk:
-
-> @@ -374,7 +375,11 @@ static int reftable_stack_reload_maybe_reuse(struct reftable_stack *st,
->                 sleep_millisec(delay);
->         }
-> 
-> +       stat_validity_update(&st->list_validity, fd);
-> +
->  out:
-> +       if (err)
-> +               stat_validity_clear(&st->list_validity);
->         if (fd >= 0)
->                 close(fd);
->         free_names(names);
-
-which means we'll feed a negative value to stat_validity_update(). I
-think this may be OK, because I'd imagine the only sensible thing to do
-is call stat_validity_clear() instead. And using a negative fd means
-fstat() will fail, which will cause stat_validity_update() to clear the
-validity struct anyway. But I thought it was worth double-checking.
-
--Peff
+base-commit: 564d0252ca632e0264ed670534a51d18a689ef5d
+-- 
+gitgitgadget
