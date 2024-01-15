@@ -1,147 +1,154 @@
-Received: from wout4-smtp.messagingengine.com (wout4-smtp.messagingengine.com [64.147.123.20])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f41.google.com (mail-wr1-f41.google.com [209.85.221.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C353C18AE1
-	for <git@vger.kernel.org>; Mon, 15 Jan 2024 19:08:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=yadavpratyush.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=yadavpratyush.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6048418E1F
+	for <git@vger.kernel.org>; Mon, 15 Jan 2024 19:25:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=yadavpratyush.com header.i=@yadavpratyush.com header.b="fIxXKxV3";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="QWOfT5ny"
-Received: from compute7.internal (compute7.nyi.internal [10.202.2.48])
-	by mailout.west.internal (Postfix) with ESMTP id A320B3200B13
-	for <git@vger.kernel.org>; Mon, 15 Jan 2024 14:08:15 -0500 (EST)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute7.internal (MEProxy); Mon, 15 Jan 2024 14:08:15 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	yadavpratyush.com; h=cc:content-type:content-type:date:date:from
-	:from:in-reply-to:message-id:mime-version:reply-to:subject
-	:subject:to:to; s=fm3; t=1705345695; x=1705432095; bh=/cIHtvorbt
-	bMbP34R7WMIon6wdsIZtEoDafHshsP0IY=; b=fIxXKxV3PINDaeGqHRVPUTNmTf
-	0SNC5ZbEsMb4IERIGwXH4LS17WFVUmAHezGQzddHa+rlbik5O6K6Qf5vXpEuXOr+
-	st2bZ8vAdicVu2V468OCE9zB3lwEWRp9dL0QJXE+WYkLhaenJTLxEKYehWM3DsfE
-	DWPCYHfpKDcFT/hKx/0anUG8kLBxJkup0GISflGN4WfbRSz1JYahiuGAUGU6wYv6
-	D0Gv4JgRSNBvDt4eOlwTWlpaDBe1tjwGklmeADwhd7DHtyJwoIAflAvwsIen+Qdh
-	N6w2Q4YnmVDSCfUYlYeJX71KJqPknpX1iSebo9nwJoXwbDwBVt8sOgTqG9iQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:message-id
-	:mime-version:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1705345695; x=1705432095; bh=/cIHtvorbtbMbP34R7WMIon6wdsIZtEoDaf
-	HshsP0IY=; b=QWOfT5nyFFNEEVOGGyy7d5aa4HoQiCJ+hqi3xkNS27PUbstvjzq
-	QfwVL6DzexuVjI8TrQDHPu7KdgCeO8bO1PI+039NMlW8McK8CNy1auzMpnz9po3e
-	up7dY6tw4f+Nk3hny5mIqu0Ft98FUpwrqfJ81zBCBUgMjuEfUy/dTxbBCm7fekbQ
-	WuRt+j1TjUYZHuRcTWof95EgzfKg0t3VqfVf5IcYYbpO5FCM1FjAc3sIMOfUNS04
-	fU3ukqM4acSxTNQ8NRjQaaeCL+D0jpM/xFZLzlZd2qgjNu8x6Jxb0kbHjSqIfrHD
-	zQERJ3uaiRrA0bHjKVVhn4LAorRQjuxx3uQ==
-X-ME-Sender: <xms:noKlZQnvYoY11xuXP6XBXunjdAvSmEo-ZHyfUmqpeQOT2_XeGABvCw>
-    <xme:noKlZf34I40WBOW_Vxi8NbkrdgUgf7uN-gb0--szbqKHEJonLdjNhMKnAHgFhaQhg
-    mMSg5qKDwwKZFjIBNA>
-X-ME-Received: <xmr:noKlZeqpoFA1wBB9OEhQ3aHokReAPCXExXuwbx8q6WEPPAKpSEqTn60jMTLSYyR6UrtKS0IaXbDHLb-S7OsxrclFCRnXBg8vlTv43wKDcNq-RFh5HXkIF2R84K21i8zmfHIz90SZ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrvdejuddguddvudcutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
-    necuuegrihhlohhuthemuceftddtnecunecujfgurhephffvufffkfgfgggtsehttdertd
-    dtredtnecuhfhrohhmpefrrhgrthihuhhshhcujggruggrvhcuoehmvgeshigruggrvhhp
-    rhgrthihuhhshhdrtghomheqnecuggftrfgrthhtvghrnhepkeeugedvhefhhefhieegvd
-    efteettdduleefvddvteefvefgtdefteefveduvdffnecuffhomhgrihhnpehgihhthhhu
-    sgdrtghomhdpkhgvrhhnvghlrdhorhhgnecuvehluhhsthgvrhfuihiivgeptdenucfrrg
-    hrrghmpehmrghilhhfrhhomhepmhgvseihrggurghvphhrrghthihushhhrdgtohhm
-X-ME-Proxy: <xmx:n4KlZckArIHRfAgIvP2SlmQKdVszkLnArkrceS48pVUIwKdjvlig7g>
-    <xmx:n4KlZe2vgAJsj9-o8ADB5LWe2_Cb7CtP9qs7RTU0cwI7Ct5RN_ICLQ>
-    <xmx:n4KlZTtyPOSosSiMBzrCNdY9ij3UYt3s7lZ-kKN3j3mmgGNXfswwrQ>
-    <xmx:n4KlZXhunRgAdAwel8ybM-ge0jnXJm6CGlNbKVSCFU95fVyhcm_yVw>
-Feedback-ID: i93f149c1:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Mon, 15 Jan 2024 14:08:14 -0500 (EST)
-From: Pratyush Yadav <me@yadavpratyush.com>
-To: git@vger.kernel.org
-Subject: Strange behaviour when pushing a commit object to remote's refs/HEAD
-Date: Mon, 15 Jan 2024 20:08:13 +0100
-Message-ID: <mafs0fryypg82.fsf@yadavpratyush.com>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HAg3k1NO"
+Received: by mail-wr1-f41.google.com with SMTP id ffacd0b85a97d-3368d1c7b23so7991207f8f.0
+        for <git@vger.kernel.org>; Mon, 15 Jan 2024 11:25:00 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1705346698; x=1705951498; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=wnGNs5e8y/PQg4jturUYZxgzwdYYqfYxeYJhneVsmdQ=;
+        b=HAg3k1NORY+dCr22VyGI6g9nbBMJZS6jRpqCDYSs9nEAcUBMX0b+eNPHdq42bCpIau
+         ulR+busTu4Rb1px+8dOjSXP3nFGy799K3CYyg1nF1D/ieuLmbuoi+ZmYFWBmRtSm8vQB
+         JFvj7yj0qj5eRgcLhgaEKLEcqrvshkO4a/5XOxm2fnMi5gB417Gpxk9I5VCu4uZbXSb0
+         sCRsHbNocvr7EZc2dSaETRDlC3+F/mYdY0JFVMe/i2by0cBGRSfjDbA3SlC5n4n3rgYK
+         7obgwE0oVAEByHtsiUn3cSHqT7iRw2YQw/GBjDtXzkqbSamNLqD9A7BMQ07m6OkJUbpk
+         yqaQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1705346698; x=1705951498;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=wnGNs5e8y/PQg4jturUYZxgzwdYYqfYxeYJhneVsmdQ=;
+        b=ZGDH5/CglUUeTTtTseSpiOIz5zz1BIs07Lq8Wp8YtJ3vJcq3jDd4c9TaGhA5svNcFm
+         rsJDnhRgcglpVaRy/7hyvuwUuIo6be/yWdhT1evmBXfA8RGfZQiPY4x4rOjkbp+NBH45
+         H/SCFP31Dx0nClATRkAeeTSn+4CzJWdV7wv2fDZxs/ikOBtwgJAthLpAzW60cKxTelh5
+         itYrQg9R6Ha+3V8ZQ2sVj6lF+xyodMMQciKD5u1FuAgoKINM4eJRHy+WVocAuOxHttBC
+         IOfYb528geDU4c3pMeTAf1EhnQbZU80gVtMUgUx2+XAes3O+S9nhjRH9er4i7r4YMxNx
+         +kfA==
+X-Gm-Message-State: AOJu0YzNk38Vf4TrD9EtxjJS84VmDJku9oWjtR+kVqTtObCDyjZGB29V
+	wMJ9XEV3cHNUfNKezk+sM3JShM/3Xyw=
+X-Google-Smtp-Source: AGHT+IFgSuq3Vw9cBn3czt4DaIkQPPX7L9on7OjcMkBrT7RN8M3/3TtLbSSKhbDwXvAedflnAOb3+Q==
+X-Received: by 2002:adf:fc50:0:b0:336:1feb:27f6 with SMTP id e16-20020adffc50000000b003361feb27f6mr2910932wrs.100.1705346698357;
+        Mon, 15 Jan 2024 11:24:58 -0800 (PST)
+Received: from gmail.com (195.red-88-14-43.dynamicip.rima-tde.net. [88.14.43.195])
+        by smtp.gmail.com with ESMTPSA id i16-20020a5d5230000000b00337405c06a6sm12552272wra.48.2024.01.15.11.24.55
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 15 Jan 2024 11:24:57 -0800 (PST)
+Message-ID: <6b6b455e-26b8-442e-828e-506f9a152407@gmail.com>
+Date: Mon, 15 Jan 2024 20:24:47 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla Thunderbird
+Subject: Re: [Outreachy][PATCH] Port helper/test-advise.c to
+ unit-tests/t-advise.c
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Achu Luma <ach.lumap@gmail.com>, git@vger.kernel.org,
+ christian.couder@gmail.com, Christian Couder <chriscool@tuxfamily.org>
+References: <20240112102122.1422-1-ach.lumap@gmail.com>
+ <xmqqmsta6uju.fsf@gitster.g> <93468f5c-5f62-4f22-85ce-b60621852430@gmail.com>
+ <xmqqy1cq4ide.fsf@gitster.g>
+Content-Language: en-US
+From: =?UTF-8?Q?Rub=C3=A9n_Justo?= <rjusto@gmail.com>
+In-Reply-To: <xmqqy1cq4ide.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-Hi,
+On 15-ene-2024 09:27:25, Junio C Hamano wrote:
+> Rubén Justo <rjusto@gmail.com> writes:
+> 
+> >> To test the effect of setting one configuration variable, and ensure
+> >> it results in a slightly different advice message output to the
+> >> standard error stream, "test-tool advice" needs only a single line
+> >> of patch, but if we started with this version, how much work does it
+> >> take to run the equivalent test in the other patch if it were to be
+> >> rebased on top of this change?  It won't be just the matter of
+> >> adding a new TEST(check_advise_if_enabled()) call to cmd_main(),
+> >> will it?
+> >
+> > Maybe something like this will do the trick:
+> >
+> > diff --git a/t/unit-tests/t-advise.c b/t/unit-tests/t-advise.c
+> > index 15df29c955..ac7d2620ef 100644
+> > --- a/t/unit-tests/t-advise.c
+> > +++ b/t/unit-tests/t-advise.c
+> > @@ -6,6 +6,7 @@
+> >
+> >  static const char expect_advice_msg[] = "hint: This is a piece of advice\n"
+> >                                         "hint: Disable this message with \"git config advice.nestedTag false\"\n";
+> > +static const char expect_advice_msg_without_disable_hint[] = "hint: This is a piece of advice\n";
+> >  static const char advice_msg[] = "This is a piece of advice";
+> >  static const char out_file[] = "./output.txt";
+> 
+> Yup, but ...
+> 
+> > @@ -44,7 +45,7 @@ int cmd_main(int argc, const char **argv) {
+> >
+> >         TEST(check_advise_if_enabled(advice_msg, NULL, expect_advice_msg),
+> >                 "advice should be printed when config variable is unset");
+> > -       TEST(check_advise_if_enabled(advice_msg, "true", expect_advice_msg),
+> > +       TEST(check_advise_if_enabled(advice_msg, "true", expect_advice_msg_without_disable_hint),
+> >                 "advice should be printed when config variable is set to true");
+> >         TEST(check_advise_if_enabled(advice_msg, "false", ""),
+> >                 "advice should not be printed when config variable is set to false");
+> 
+> ... I cannot shake this feeling that the next person who comes to
+> this code and stares at advice.c would be very tempted to "refactor"
+> the messages, so that there is only one instance of the same string
+> in advice.c that is passed to TEST() above.  After all, you can
+> change only one place to update the message and avoid triggering
+> test failures that way, right?
 
-I ran into a strange Magit bug, where when I ran magit-show-refs on a
-particular repo it threw an error. The details of the Magit bug are not
-very interesting, but when attempting to reproduce it, I also saw git
-misbehaving for such repos.
+I see.  Maybe you're expecting something like:
 
-The strange behaviour happens when you push a commit object to remote's
-refs/HEAD instead of pushing a symbolic ref. Such a repository can be
-found at https://github.com/prati0100/magit-reproducer. I roughly used
-the below steps to create such a repo:
+diff --git a/t/unit-tests/t-advise.c b/t/unit-tests/t-advise.c
+index 15df29c955..15e293fa82 100644
+--- a/t/unit-tests/t-advise.c
++++ b/t/unit-tests/t-advise.c
+@@ -4,14 +4,15 @@
+ #include "setup.h"
+ #include "strbuf.h"
+ 
+-static const char expect_advice_msg[] = "hint: This is a piece of advice\n"
+-					"hint: Disable this message with \"git config advice.nestedTag false\"\n";
++static const char expect_advice_msg[] = "hint: This is a piece of advice\n";
++static const char expect_hint_msg[] = "hint: Disable this message with \"git config advice.nestedTag false\"\n";
+ static const char advice_msg[] = "This is a piece of advice";
+ static const char out_file[] = "./output.txt";
+ 
+ 
+ static void check_advise_if_enabled(const char *argv, const char *conf_val, const char *expect) {
+ 	FILE *file;
++	const char *hint;
+ 	struct strbuf actual = STRBUF_INIT;
+ 
+ 	if (conf_val)
+@@ -32,7 +33,9 @@ static void check_advise_if_enabled(const char *argv, const char *conf_val, cons
+ 		return;
+ 	}
+ 
+-	check_str(actual.buf, expect);
++	check_str_len(actual.buf, expect, strlen(expect));
++	if (!conf_val && skip_prefix(actual.buf, expect, &hint))
++		check_str_len(hint, expect_hint_msg, strlen(expect_hint_msg));
+ 	strbuf_release(&actual);
+ 
+ 	if (!check(remove(out_file) == 0))
 
-    $ git init
-    $ echo 1 > foo && git add foo && git commit
-    $ echo 2 > bar && git add bar && git commit
-    $ git push
-    $ git checkout 79264c3
-    $ echo 2.1 > bar && git add bar && git commit
-    $ git push origin 707a3d5:refs/heads/HEAD
+This implies a new check_str_len() helper, which I'm not including here
+but it's a trivial copy of check_str() but using strncmp().
 
-Now with such a repo, if you do `git log --all --oneline` it would look
-something like:
+Maybe we can turn the screw a little more.
 
-    707a3d5 (origin/HEAD) 2.1
-    86e1c97 (HEAD -> main, origin/main) 2
-    79264c3 1
-
-And running `git for-each-ref --format='%(symref:short),%(refname:short),%(refname),%(subject)' refs/remotes/origin` gives:
-
-    ,origin,refs/remotes/origin/HEAD,2.1
-    ,origin/main,refs/remotes/origin/main,2
-
-All well and good so far. Now delete the repo and attempt to clone it.
-This time `git log --all --oneline` gives:
-
-    86e1c97 (HEAD -> main, origin/main, origin/HEAD) 2
-    79264c3 1
-
-And running `git for-each-ref --format='%(symref:short),%(refname:short),%(refname),%(subject)' refs/remotes/origin` gives:
-
-    origin/main,origin,refs/remotes/origin/HEAD,2
-    ,origin/main,refs/remotes/origin/main,2
-
-So suddenly the remote's HEAD becomes origin/main (symbolic ref) and the
-commit (707a3d5, "2.1") is nowhere to be found. It neither shows up in
-`git rev-list --all` nor in `git log --all`. The files and trees
-associated with it also do not show up in `git rev-list --all --object`.
-Yet if you do `git show 707a3d5` it shows up. So it does exist and did
-get cloned, but git cannot properly see it.
-
-Interestingly enough, even the GitHub UI is confused and it won't show
-you the repo correctly. It will show the commit (86e1c97, "2") for both
-"branches" main and HEAD. cgit's UI [0] seems to work fine with this,
-though cloning from cgit still suffers from this bug.
-
-There _is_ a way to clone the repo correctly. If you do:
-
-    $ git init magit-reproducer
-    $ git remote add origin https://github.com/prati0100/magit-reproducer.git
-    $ git remote update
-
-Now if you do git log --all or git for-each-ref, you see the correct
-result.
-
-I don't really know how to fix this but it certainly is a bug in git
-since it can't clone the repo correctly. And at least one major Git host
-can't display such a repo properly (I haven't tried others).
-
-I used Git v2.40.1 to do most of this but I did compile the latest
-master d4dbce1db5 ("The seventh batch") and attempted to clone using it
-and I see the same problem.
-
-[0] https://git.kernel.org/pub/scm/linux/kernel/git/pratyush/magit-reproducer.git/
-
--- 
-Regards,
-Pratyush Yadav
+I'm still not sure of the value in the changes in this series, though.
