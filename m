@@ -1,50 +1,50 @@
-Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com [209.85.128.45])
+Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D573718E00
-	for <git@vger.kernel.org>; Mon, 15 Jan 2024 10:39:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 051D51DDC1
+	for <git@vger.kernel.org>; Mon, 15 Jan 2024 10:48:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SHQRWlLA"
-Received: by mail-wm1-f45.google.com with SMTP id 5b1f17b1804b1-40e8004628dso1338985e9.0
-        for <git@vger.kernel.org>; Mon, 15 Jan 2024 02:39:19 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CkyYcgNa"
+Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-40e800461b1so1292705e9.1
+        for <git@vger.kernel.org>; Mon, 15 Jan 2024 02:48:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1705315158; x=1705919958; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1705315719; x=1705920519; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:reply-to:user-agent:mime-version:date
          :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=vbOp42ee6i7UZm31Um73K47JsEZr10hBHf5PGcR4CRE=;
-        b=SHQRWlLAy9q3UCzB9lPnHS5OdHZp4Dcom//r9B2rZ9wTK1Rux2zG2htcFHx7EeEQ+i
-         zZbcbXzqfrn1npfLqh/+WxgFJXcCCtsVbrm9ttSg/CigU7xAMbjFSBtZk+kPkSP/dQMI
-         hWvVBdA+QdvBjYXLa77yPvafoobuHwOU+mFaI9iqnZLU8TvQJJBNoCJEWMqWICz/dUNP
-         SP9X6gNbfvyxuRlsXld17ScI6PxgFnHtPd8zq6CAD5ifbVquwASxCo/wTNsgWUoY7Rr6
-         8v3EAjXlgz61YJskOs+bD2xGl9js+HgksguY5XYVzjOKQMUMz831NOjOOKx7sSF6YbtM
-         yOzA==
+        bh=EWzDXIedIJ9KK4z7vBdmiM05InD7nRGIABNZwBu6PeM=;
+        b=CkyYcgNaT6kzh7P/VWKkizka11/MkKdhT4NGlPSe+xMp9BuU4Qc4WIQTpoz47mo1FR
+         L05b87qYbYndVRLndclkW0+xYm3Gebj2sGtzEGdor0iuy0YOh4xBxQbvUwiQlsZrABtG
+         ZZaKMnpAVbyOfu16ZbHDEcRSkIK2JIL5uFQRO+xDseNp0k+dWpub4qpU00WQOMoUcwvf
+         hYo8f8wyog3ldq0Vc8YESHulheUJ3FaF6mrYqGupcw0uu+IUWPX29hIMywJ6BmhrcTtY
+         4oDZjb7/KDnWRhvrp90MTSskLdkOdi7M1J87CvwfK//HlMgL3can4RURsc6aLMRZGjMY
+         EaOA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1705315158; x=1705919958;
+        d=1e100.net; s=20230601; t=1705315719; x=1705920519;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:reply-to:user-agent:mime-version:date
          :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=vbOp42ee6i7UZm31Um73K47JsEZr10hBHf5PGcR4CRE=;
-        b=expV71scFi7A4h3aFL0M3lOaiEfii0UIfSHcaSXn2NIjPc4flTYJMiQdt5glW5CjvD
-         wDSKIO6V4WbANJNA5Xxpp2OJLbCI7iKB4XdmNtX2IPciQQhiWC8l3SCtQ8Mh3J5y6y6K
-         8DtwUFsKnxVq/SjHipzL8TAowxOATJPcwItvbHWUWhygZIAqcwYcWtD+PdJe1V2h1waB
-         JpGiqG08NFKBUmXMowCsVNm+fq4KXCYw5yt4/uZWHA5+P9UwXFagDjTNO/VuMCL2Mmwt
-         0ZPUrgUzY+1abmtcFxRG1PIXj6cKAEYbTSz62zi9npZnPj1aZnOj7UkDqmx9ZwAdqEfk
-         /FgQ==
-X-Gm-Message-State: AOJu0Ywik/gNYwZ2SbEADJJUTgIzh90JVNoG/8yOIPtk1lwlafy43JMN
-	77pe+nCuudhR/v7avCQf4n8=
-X-Google-Smtp-Source: AGHT+IE+IOKjMygTwsDKJC6wgFE4YU0DNj2RWyUF003Alk9C2s0pC7nMnkdUDtRONWnC5mw/8mUF4w==
-X-Received: by 2002:a05:600c:198b:b0:40e:4e65:a6d4 with SMTP id t11-20020a05600c198b00b0040e4e65a6d4mr2609358wmq.196.1705315157809;
-        Mon, 15 Jan 2024 02:39:17 -0800 (PST)
+        bh=EWzDXIedIJ9KK4z7vBdmiM05InD7nRGIABNZwBu6PeM=;
+        b=SL1KMPDStrnJWQP04187tyuFqWQcqNJXGUqvW2HX3J68Me+VO7H8CcGJ+jyoPQ5Ier
+         0xiF+4KnY8gpPRPCVwKTnxbp3gQ0b9WbZ2+ruhPFRJWlvrBImd6vnyqanXUeuF6YIMVw
+         9yW/iYIGRJi0ICELb7YYSjfr8HSdNI36+Un8FBJMynXpp8x6rznWI/lb7ERsDE/qribF
+         AHw6QW11M1zkAWNOD1PMlGDlRFTzENwSuJGK3MOBtIoIoZsvGvKtbNjAOozjEm9pUdwt
+         Omy5QVxDQlnIyyC7aUTMmJR6ewJEJwONaV488uMZKsenHaR9Mr6iRzVCkwjI3vpC34Vt
+         1+ow==
+X-Gm-Message-State: AOJu0YxXq74jUu9cufMkp7eTaxM8rrX6M6irxLa/l54DVeIVJXj6YFFo
+	+tzkNhsUNAHvE/a72xga+5/T+VhP7gc=
+X-Google-Smtp-Source: AGHT+IEOduxLDdlnUXfIt0btUZwGaJ5t5I1ZP4cSmeFMkcijeDj1N3ZKvo+nHHQojnvZJqZIOCB2iQ==
+X-Received: by 2002:a05:600c:1649:b0:40e:555f:12ca with SMTP id o9-20020a05600c164900b0040e555f12camr2339580wmn.135.1705315718778;
+        Mon, 15 Jan 2024 02:48:38 -0800 (PST)
 Received: from [192.168.1.212] ([84.64.64.237])
-        by smtp.gmail.com with ESMTPSA id t18-20020a05600c199200b0040e5951f199sm15273809wmq.34.2024.01.15.02.39.17
+        by smtp.gmail.com with ESMTPSA id g7-20020a7bc4c7000000b0040d5c58c41dsm15094324wmk.24.2024.01.15.02.48.38
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 15 Jan 2024 02:39:17 -0800 (PST)
-Message-ID: <0d18a95a-543a-41de-8441-c8894d46d380@gmail.com>
-Date: Mon, 15 Jan 2024 10:39:16 +0000
+        Mon, 15 Jan 2024 02:48:38 -0800 (PST)
+Message-ID: <648774b5-5208-42d3-95c7-e0cba4d6a159@gmail.com>
+Date: Mon, 15 Jan 2024 10:48:38 +0000
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -53,294 +53,66 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [Outreachy][PATCH v5] Port helper/test-ctype.c to
- unit-tests/t-ctype.c
+Subject: Re: [RFC PATCH] `log --merge` also for rebase/cherry pick/revert
 Content-Language: en-US
-To: Achu Luma <ach.lumap@gmail.com>, git@vger.kernel.org
-Cc: chriscool@tuxfamily.org, christian.couder@gmail.com, gitster@pobox.com,
- l.s.r@web.de, me@ttaylorr.com, phillip.wood@dunelm.org.uk,
- steadmon@google.com
-References: <20240105161413.10422-1-ach.lumap@gmail.com>
- <20240112102743.1440-1-ach.lumap@gmail.com>
+To: Michael Lohmann <mi.al.lohmann@gmail.com>
+Cc: git@vger.kernel.org, phillip.wood@dunelm.org.uk,
+ Junio C Hamano <gitster@pobox.com>
+References: <47a4418b-68bf-4850-ba8b-1a5264f923e4@gmail.com>
+ <20240112150346.73735-1-mi.al.lohmann@gmail.com>
 From: Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <20240112102743.1440-1-ach.lumap@gmail.com>
+In-Reply-To: <20240112150346.73735-1-mi.al.lohmann@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 
-Hi Achu
+Hi Michael
 
-On 12/01/2024 10:27, Achu Luma wrote:
-> In the recent codebase update (8bf6fbd00d (Merge branch
-> 'js/doc-unit-tests', 2023-12-09)), a new unit testing framework was
-> merged, providing a standardized approach for testing C code. Prior to
-> this update, some unit tests relied on the test helper mechanism,
-> lacking a dedicated unit testing framework. It's more natural to perform
-> these unit tests using the new unit test framework.
+On 12/01/2024 15:03, Michael Lohmann wrote:
+> Hi Phillip,
 > 
-> This commit migrates the unit tests for C character classification
-> functions (isdigit(), isspace(), etc) from the legacy approach
-> using the test-tool command `test-tool ctype` in t/helper/test-ctype.c
-> to the new unit testing framework (t/unit-tests/test-lib.h).
+> On 12. Jan 2024, at 12:01, phillip.wood123@gmail.com wrote:
+>> I should start by saying that I didn't know "git log --merge" existed before
+>> I saw this message
+> I also just found it and it looked very useful...
 > 
-> The migration involves refactoring the tests to utilize the testing
-> macros provided by the framework (TEST() and check_*()).
+>> so please correct me if I've misunderstood what this patch is doing. If I
+>> understand correctly it shows the commits from each side of the merge and is
+>> equivalent to
+>>
+>>     git log HEAD MERGE_HEAD ^$(git merge-base HEAD MERGE_HEAD)
+>>
+>> When a commit is cherry-picked the merge base used is CHERRY_PICK_HEAD^ [*]
+>> so I'm not sure what
+>>
+>>     git log HEAD CHERRY_PICK_HEAD ^$(git merge-base HEAD CHERRY_PICK_HEAD)
 > 
-> Mentored-by: Christian Couder <chriscool@tuxfamily.org>
-> Helped-by: René Scharfe <l.s.r@web.de>
-> Helped-by: Phillip Wood <phillip.wood123@gmail.com>
-> Helped-by: Taylor Blau <me@ttaylorr.com>
-> Signed-off-by: Achu Luma <ach.lumap@gmail.com>
-> ---
->   The change between version 4 and version 5 is:
->   - Added tests to handle EOF.
+> Almost, but not quite: "git log —merge" only shows the commits touching the
+> conflict, so it would be equivalent to (I think):
 > 
->   Thanks to Phillip for noticing the missing tests..
->   Here is a diff between v4 and v5:
+>     git log HEAD CHERRY_PICK_HEAD ^$(git merge-base HEAD CHERRY_PICK_HEAD) -- $(git diff --name-only --diff-filter=U --relative)
 > 
->   +       if (!check(!func(EOF))) \
->   +                       test_msg("      i: 0x%02x (EOF)", EOF); \
+> (or replace CHERRY_PICK with one of the other actions)
 
-Thanks for adding back the test for EOF, this version looks good to me.
+Thanks for clarifying that.
+
+>> Indeed there HEAD and CHERRY_PICK_HEAD may not share a common ancestor.
+> 
+> True - but same for MERGE_HEAD ("git merge --allow-unrelated-histories"). I
+> have to confess I did not check how it would behave under those circumstances.
+> It could either error, or (more helpful) show the log touching the file until
+> the root commit.
+
+What I was trying to get at was that with "git merge" "git log --merge" 
+will show commits that are part of the merge. With "git cherry-pick" 
+that's not the case because we're selecting the commits to show using 
+the merge base of HEAD and CHERRY_PICK_HEAD while cherry-pick uses 
+CHERRY_PICK_HEAD^ as the base of the merge. I think Junio explains why 
+it is still useful to show those commits in [1] i.e. they help the user 
+understand the conflicts even though they are not part of the merge. It 
+might be worth expanding the commit message to explain that.
 
 Best Wishes
 
 Phillip
 
->   Thanks also to René, Phillip, Junio and Taylor who helped with
->   previous versions.
-> 
->   Makefile               |  2 +-
->   t/helper/test-ctype.c  | 70 ------------------------------------
->   t/helper/test-tool.c   |  1 -
->   t/helper/test-tool.h   |  1 -
->   t/t0070-fundamental.sh |  4 ---
->   t/unit-tests/t-ctype.c | 80 ++++++++++++++++++++++++++++++++++++++++++
->   6 files changed, 81 insertions(+), 77 deletions(-)
->   delete mode 100644 t/helper/test-ctype.c
->   create mode 100644 t/unit-tests/t-ctype.c
-> 
-> diff --git a/Makefile b/Makefile
-> index 15990ff312..1a62e48759 100644
-> --- a/Makefile
-> +++ b/Makefile
-> @@ -792,7 +792,6 @@ TEST_BUILTINS_OBJS += test-chmtime.o
->   TEST_BUILTINS_OBJS += test-config.o
->   TEST_BUILTINS_OBJS += test-crontab.o
->   TEST_BUILTINS_OBJS += test-csprng.o
-> -TEST_BUILTINS_OBJS += test-ctype.o
->   TEST_BUILTINS_OBJS += test-date.o
->   TEST_BUILTINS_OBJS += test-delta.o
->   TEST_BUILTINS_OBJS += test-dir-iterator.o
-> @@ -1342,6 +1341,7 @@ THIRD_PARTY_SOURCES += sha1dc/%
->   UNIT_TEST_PROGRAMS += t-basic
->   UNIT_TEST_PROGRAMS += t-mem-pool
->   UNIT_TEST_PROGRAMS += t-strbuf
-> +UNIT_TEST_PROGRAMS += t-ctype
->   UNIT_TEST_PROGS = $(patsubst %,$(UNIT_TEST_BIN)/%$X,$(UNIT_TEST_PROGRAMS))
->   UNIT_TEST_OBJS = $(patsubst %,$(UNIT_TEST_DIR)/%.o,$(UNIT_TEST_PROGRAMS))
->   UNIT_TEST_OBJS += $(UNIT_TEST_DIR)/test-lib.o
-> diff --git a/t/helper/test-ctype.c b/t/helper/test-ctype.c
-> deleted file mode 100644
-> index e5659df40b..0000000000
-> --- a/t/helper/test-ctype.c
-> +++ /dev/null
-> @@ -1,70 +0,0 @@
-> -#include "test-tool.h"
-> -
-> -static int rc;
-> -
-> -static void report_error(const char *class, int ch)
-> -{
-> -	printf("%s classifies char %d (0x%02x) wrongly\n", class, ch, ch);
-> -	rc = 1;
-> -}
-> -
-> -static int is_in(const char *s, int ch)
-> -{
-> -	/*
-> -	 * We can't find NUL using strchr. Accept it as the first
-> -	 * character in the spec -- there are no empty classes.
-> -	 */
-> -	if (ch == '\0')
-> -		return ch == *s;
-> -	if (*s == '\0')
-> -		s++;
-> -	return !!strchr(s, ch);
-> -}
-> -
-> -#define TEST_CLASS(t,s) {			\
-> -	int i;					\
-> -	for (i = 0; i < 256; i++) {		\
-> -		if (is_in(s, i) != t(i))	\
-> -			report_error(#t, i);	\
-> -	}					\
-> -	if (t(EOF))				\
-> -		report_error(#t, EOF);		\
-> -}
-> -
-> -#define DIGIT "0123456789"
-> -#define LOWER "abcdefghijklmnopqrstuvwxyz"
-> -#define UPPER "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-> -#define PUNCT "!\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~"
-> -#define ASCII \
-> -	"\x00\x01\x02\x03\x04\x05\x06\x07\x08\x09\x0a\x0b\x0c\x0d\x0e\x0f" \
-> -	"\x10\x11\x12\x13\x14\x15\x16\x17\x18\x19\x1a\x1b\x1c\x1d\x1e\x1f" \
-> -	"\x20\x21\x22\x23\x24\x25\x26\x27\x28\x29\x2a\x2b\x2c\x2d\x2e\x2f" \
-> -	"\x30\x31\x32\x33\x34\x35\x36\x37\x38\x39\x3a\x3b\x3c\x3d\x3e\x3f" \
-> -	"\x40\x41\x42\x43\x44\x45\x46\x47\x48\x49\x4a\x4b\x4c\x4d\x4e\x4f" \
-> -	"\x50\x51\x52\x53\x54\x55\x56\x57\x58\x59\x5a\x5b\x5c\x5d\x5e\x5f" \
-> -	"\x60\x61\x62\x63\x64\x65\x66\x67\x68\x69\x6a\x6b\x6c\x6d\x6e\x6f" \
-> -	"\x70\x71\x72\x73\x74\x75\x76\x77\x78\x79\x7a\x7b\x7c\x7d\x7e\x7f"
-> -#define CNTRL \
-> -	"\x00\x01\x02\x03\x04\x05\x06\x07\x08\x09\x0a\x0b\x0c\x0d\x0e\x0f" \
-> -	"\x10\x11\x12\x13\x14\x15\x16\x17\x18\x19\x1a\x1b\x1c\x1d\x1e\x1f" \
-> -	"\x7f"
-> -
-> -int cmd__ctype(int argc UNUSED, const char **argv UNUSED)
-> -{
-> -	TEST_CLASS(isdigit, DIGIT);
-> -	TEST_CLASS(isspace, " \n\r\t");
-> -	TEST_CLASS(isalpha, LOWER UPPER);
-> -	TEST_CLASS(isalnum, LOWER UPPER DIGIT);
-> -	TEST_CLASS(is_glob_special, "*?[\\");
-> -	TEST_CLASS(is_regex_special, "$()*+.?[\\^{|");
-> -	TEST_CLASS(is_pathspec_magic, "!\"#%&',-/:;<=>@_`~");
-> -	TEST_CLASS(isascii, ASCII);
-> -	TEST_CLASS(islower, LOWER);
-> -	TEST_CLASS(isupper, UPPER);
-> -	TEST_CLASS(iscntrl, CNTRL);
-> -	TEST_CLASS(ispunct, PUNCT);
-> -	TEST_CLASS(isxdigit, DIGIT "abcdefABCDEF");
-> -	TEST_CLASS(isprint, LOWER UPPER DIGIT PUNCT " ");
-> -
-> -	return rc;
-> -}
-> diff --git a/t/helper/test-tool.c b/t/helper/test-tool.c
-> index 37ba996539..33b9501c21 100644
-> --- a/t/helper/test-tool.c
-> +++ b/t/helper/test-tool.c
-> @@ -19,7 +19,6 @@ static struct test_cmd cmds[] = {
->   	{ "config", cmd__config },
->   	{ "crontab", cmd__crontab },
->   	{ "csprng", cmd__csprng },
-> -	{ "ctype", cmd__ctype },
->   	{ "date", cmd__date },
->   	{ "delta", cmd__delta },
->   	{ "dir-iterator", cmd__dir_iterator },
-> diff --git a/t/helper/test-tool.h b/t/helper/test-tool.h
-> index 8a1a7c63da..b72f07ded9 100644
-> --- a/t/helper/test-tool.h
-> +++ b/t/helper/test-tool.h
-> @@ -12,7 +12,6 @@ int cmd__chmtime(int argc, const char **argv);
->   int cmd__config(int argc, const char **argv);
->   int cmd__crontab(int argc, const char **argv);
->   int cmd__csprng(int argc, const char **argv);
-> -int cmd__ctype(int argc, const char **argv);
->   int cmd__date(int argc, const char **argv);
->   int cmd__delta(int argc, const char **argv);
->   int cmd__dir_iterator(int argc, const char **argv);
-> diff --git a/t/t0070-fundamental.sh b/t/t0070-fundamental.sh
-> index 487bc8d905..a4756fbab9 100755
-> --- a/t/t0070-fundamental.sh
-> +++ b/t/t0070-fundamental.sh
-> @@ -9,10 +9,6 @@ Verify wrappers and compatibility functions.
->   TEST_PASSES_SANITIZE_LEAK=true
->   . ./test-lib.sh
-> 
-> -test_expect_success 'character classes (isspace, isalpha etc.)' '
-> -	test-tool ctype
-> -'
-> -
->   test_expect_success 'mktemp to nonexistent directory prints filename' '
->   	test_must_fail test-tool mktemp doesnotexist/testXXXXXX 2>err &&
->   	grep "doesnotexist/test" err
-> diff --git a/t/unit-tests/t-ctype.c b/t/unit-tests/t-ctype.c
-> new file mode 100644
-> index 0000000000..f315489984
-> --- /dev/null
-> +++ b/t/unit-tests/t-ctype.c
-> @@ -0,0 +1,80 @@
-> +#include "test-lib.h"
-> +
-> +static int is_in(const char *s, int ch)
-> +{
-> +	/*
-> +	 * We can't find NUL using strchr. Accept it as the first
-> +	 * character in the spec -- there are no empty classes.
-> +	 */
-> +	if (ch == '\0')
-> +		return ch == *s;
-> +	if (*s == '\0')
-> +		s++;
-> +	return !!strchr(s, ch);
-> +}
-> +
-> +/* Macro to test a character type */
-> +#define TEST_CTYPE_FUNC(func, string) \
-> +static void test_ctype_##func(void) { \
-> +	for (int i = 0; i < 256; i++) { \
-> +		if (!check_int(func(i), ==, is_in(string, i))) \
-> +			test_msg("       i: 0x%02x", i); \
-> +	} \
-> +	if (!check(!func(EOF))) \
-> +			test_msg("      i: 0x%02x (EOF)", EOF); \
-> +}
-> +
-> +#define TEST_CHAR_CLASS(class) TEST(test_ctype_##class(), #class " works")
-> +
-> +#define DIGIT "0123456789"
-> +#define LOWER "abcdefghijklmnopqrstuvwxyz"
-> +#define UPPER "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-> +#define PUNCT "!\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~"
-> +#define ASCII \
-> +	"\x00\x01\x02\x03\x04\x05\x06\x07\x08\x09\x0a\x0b\x0c\x0d\x0e\x0f" \
-> +	"\x10\x11\x12\x13\x14\x15\x16\x17\x18\x19\x1a\x1b\x1c\x1d\x1e\x1f" \
-> +	"\x20\x21\x22\x23\x24\x25\x26\x27\x28\x29\x2a\x2b\x2c\x2d\x2e\x2f" \
-> +	"\x30\x31\x32\x33\x34\x35\x36\x37\x38\x39\x3a\x3b\x3c\x3d\x3e\x3f" \
-> +	"\x40\x41\x42\x43\x44\x45\x46\x47\x48\x49\x4a\x4b\x4c\x4d\x4e\x4f" \
-> +	"\x50\x51\x52\x53\x54\x55\x56\x57\x58\x59\x5a\x5b\x5c\x5d\x5e\x5f" \
-> +	"\x60\x61\x62\x63\x64\x65\x66\x67\x68\x69\x6a\x6b\x6c\x6d\x6e\x6f" \
-> +	"\x70\x71\x72\x73\x74\x75\x76\x77\x78\x79\x7a\x7b\x7c\x7d\x7e\x7f"
-> +#define CNTRL \
-> +	"\x00\x01\x02\x03\x04\x05\x06\x07\x08\x09\x0a\x0b\x0c\x0d\x0e\x0f" \
-> +	"\x10\x11\x12\x13\x14\x15\x16\x17\x18\x19\x1a\x1b\x1c\x1d\x1e\x1f" \
-> +	"\x7f"
-> +
-> +TEST_CTYPE_FUNC(isdigit, DIGIT)
-> +TEST_CTYPE_FUNC(isspace, " \n\r\t")
-> +TEST_CTYPE_FUNC(isalpha, LOWER UPPER)
-> +TEST_CTYPE_FUNC(isalnum, LOWER UPPER DIGIT)
-> +TEST_CTYPE_FUNC(is_glob_special, "*?[\\")
-> +TEST_CTYPE_FUNC(is_regex_special, "$()*+.?[\\^{|")
-> +TEST_CTYPE_FUNC(is_pathspec_magic, "!\"#%&',-/:;<=>@_`~")
-> +TEST_CTYPE_FUNC(isascii, ASCII)
-> +TEST_CTYPE_FUNC(islower, LOWER)
-> +TEST_CTYPE_FUNC(isupper, UPPER)
-> +TEST_CTYPE_FUNC(iscntrl, CNTRL)
-> +TEST_CTYPE_FUNC(ispunct, PUNCT)
-> +TEST_CTYPE_FUNC(isxdigit, DIGIT "abcdefABCDEF")
-> +TEST_CTYPE_FUNC(isprint, LOWER UPPER DIGIT PUNCT " ")
-> +
-> +int cmd_main(int argc, const char **argv) {
-> +	/* Run all character type tests */
-> +	TEST_CHAR_CLASS(isspace);
-> +	TEST_CHAR_CLASS(isdigit);
-> +	TEST_CHAR_CLASS(isalpha);
-> +	TEST_CHAR_CLASS(isalnum);
-> +	TEST_CHAR_CLASS(is_glob_special);
-> +	TEST_CHAR_CLASS(is_regex_special);
-> +	TEST_CHAR_CLASS(is_pathspec_magic);
-> +	TEST_CHAR_CLASS(isascii);
-> +	TEST_CHAR_CLASS(islower);
-> +	TEST_CHAR_CLASS(isupper);
-> +	TEST_CHAR_CLASS(iscntrl);
-> +	TEST_CHAR_CLASS(ispunct);
-> +	TEST_CHAR_CLASS(isxdigit);
-> +	TEST_CHAR_CLASS(isprint);
-> +
-> +	return test_done();
-> +}
-> --
-> 2.42.0.windows.2
-> 
-> 
+[1] https://lore.kernel.org/git/xmqqil3y9rvm.fsf@gitster.g/
