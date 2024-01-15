@@ -1,63 +1,63 @@
 Received: from out5-smtp.messagingengine.com (out5-smtp.messagingengine.com [66.111.4.29])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C8EB2C698
-	for <git@vger.kernel.org>; Mon, 15 Jan 2024 10:36:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC13F1E865
+	for <git@vger.kernel.org>; Mon, 15 Jan 2024 10:36:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Jm/p8VLF";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="xBT96D3T"
-Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
-	by mailout.nyi.internal (Postfix) with ESMTP id A70B55C0116;
-	Mon, 15 Jan 2024 05:36:14 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="IxJK/ET8";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Nr7RJVMQ"
+Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
+	by mailout.nyi.internal (Postfix) with ESMTP id 0282C5C00ED;
+	Mon, 15 Jan 2024 05:36:19 -0500 (EST)
 Received: from mailfrontend1 ([10.202.2.162])
-  by compute2.internal (MEProxy); Mon, 15 Jan 2024 05:36:14 -0500
+  by compute3.internal (MEProxy); Mon, 15 Jan 2024 05:36:19 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1705314974; x=1705401374; bh=GLgfuGvyXf
-	cNMjT/sr7AAB5ySabc4XXRsE4uYSqDCgo=; b=Jm/p8VLFlZxm0QouRyDryfPrwx
-	fHfAuBJV1OSpcQsdl2GfkTyoZnNPyAyJ5g1CE5N3GNXGVMQv/cvyTyCAWyuWlY6u
-	fEr5T+KnQiue8+YrsRaOrxldEorRPrvkMi8i+XmMCD8OOvjnkANbV66ovXkwRJL7
-	yOzvQtJjEOil7xpnMu5g2E7FkXWvjYEfBmJeUZdeANXcBEGiRY4qjOrC5BIGK0ct
-	0id65xEegKmy2qehUeNYUXzInCAl0Z9TFWtPPSQ4CdFq1sQsDvKN0PzKO7KyVgY8
-	zAaz7K/1+9w9IyRv4128otMZJLTiYYSamzlvo3V5uCtA0eT6jC8T+mLm2cJw==
+	:subject:to:to; s=fm3; t=1705314978; x=1705401378; bh=wCCU/d1kLL
+	TS0GW0fA+45QZMekQzArGY+W8T/+Wk0V0=; b=IxJK/ET8ByMUe6D35Gm4NMq6QW
+	s/xQU/noSTykl6c7WvJtIF7MOPsVK2MB7tA9SobBvkTqpjizhHc1pp33VYvKjLt9
+	HE4/jNaePNihSm62s27uT89A8gHh5QXlE9qChpPHq7CoVrb9wNr5V2rimID9aNqy
+	DJ+vBzE/eee+yrgXeWrZnmPBxXxd3X+cDm8xH240n5155FYeuPMK4/cogZTH9RgD
+	xmEMOb9C9WHk0n/iNr3plmrK5DUHE6eMkL9dAOtLQooJYFep4g8p2d8Z6SvLUL8C
+	FWvicpcPD5qUW1xtPHU0kxod4ol1FX/QTq7aIELYV/FVLy1nwIJHtfDqJp/A==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1705314974; x=1705401374; bh=GLgfuGvyXfcNMjT/sr7AAB5ySabc
-	4XXRsE4uYSqDCgo=; b=xBT96D3TlLEn3/ra+W7a0p5JMKfvncnk4wpOt4PfIG+A
-	KJ9O9eWvd8vGhI4x9TanXdbcq5ThQbLhN1W/F5p72pPCxkIv7sgdwku7z3RDtVWF
-	S9PGWURWMAlxm06uYb7xx4XRTUQ0rv3E31MLH7IlLQlqf4KW7e7wQNi+nzXO1X41
-	1j+MxcUI+qRVrwsb0yols3w3pZKY2mB5Ke582+4KhUilQ5ZWRPCN+7RpS3b86cIG
-	/zgs7ArSpZGw62x+cCBhBw9PaMHB7ts73xYhQcA5LNJxEB5Oc/rMQBfDIIJ13C8m
-	BwH6yO354SsJySlrYUhAjhNzOrcXLOoBGHlyGw0tug==
-X-ME-Sender: <xms:ngqlZe4-vREr2fuVkyFbSGiGS5TIdEI-d8Qm-3OllDxBu0YWSg1Low>
-    <xme:ngqlZX67e0M_Ng6aEmt5FXbfVClrkJJSi5NX__s0q1UfES7y6LnsVmAFpvWgh6W8U
-    zNb2kHkRw2k7cVMSA>
-X-ME-Received: <xmr:ngqlZddgqvk6bY53ZmqiJHccsJ1ixXRPLrEGM0qnUla42DTUXM_zsSX9Zl9vGHaAHAAirSRb5nqJiHAqmhLTu67F68lp9qQKjZau8l5IeIy2dg>
+	fm3; t=1705314978; x=1705401378; bh=wCCU/d1kLLTS0GW0fA+45QZMekQz
+	ArGY+W8T/+Wk0V0=; b=Nr7RJVMQQBFTJUEVAmBzVlohmi4ofaP++Gp39DSQLloq
+	ArEOd/DZAtndVAYpoKCEZxojb2/OrwJaGWg8vxXpA4xLi5keqOOIY52oBh8Qmvrp
+	LlbZZ37ILobnzCe/CuBkhNvcj/BOy1TGKa23zulBhWRRKRGv4PAA4L/UXM1ZeUFA
+	BlQE6XH/Ul9VFYHhqYF/erUcCt8RYCkbX6ibrpfheDv0n5E3P3V1r2CNZdq2+Wqi
+	UWd8ReI+Po3bckfBBw9L42JE25wylYLILqzp6K/gENz/GiAcW/1w8wDxAKmDDK/C
+	veNeyapGBCeXcCbTIBeA0ir0DqiExDHMNohFU+/EDw==
+X-ME-Sender: <xms:ogqlZfQff5q9UVo_0NAzASzA67agtds30pcIzu-JTS6iIU4LxFVwwA>
+    <xme:ogqlZQzvu1NpsLOwQ_Tm6_7d20Q6Pd_6N0JQ2l5BZq6hraAP-jwoDZyzsUFcp6iLu
+    sX16X9D1XXKSX9MSg>
+X-ME-Received: <xmr:ogqlZU3oOT7W99fzJWPtYPpJum7NQrXv3dMuboUaYl3ao3io1pVOcx7TYFmR4jNr96cOm0_lbysEgFXslLr3zp4Ld7c4R3ZabzThhF0Nw2oV0Q>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrvdejuddgudekucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
     uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
     cujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtvdenucfhrhhomheprfgrthhr
     ihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvg
     hrnhepueektdevtdffveeljeetgfehheeigeekleduvdeffeeghefgledttdehjeelffet
-    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
+    necuvehluhhsthgvrhfuihiivgepudenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
     hpkhhsrdhimh
-X-ME-Proxy: <xmx:ngqlZbLRo111coDcgP_DvrXBLKKnbTlSVMdUhu2ds2gz-8JfyvXAPw>
-    <xmx:ngqlZSL5gfUHbT5W68itHmykeddU_FdcIdxxL0N8e5qm7xMBzbkVjQ>
-    <xmx:ngqlZcw7avbam81H8xG43Lgtu8lXaXv-yiRmlntUTQzS2FXT41SaCQ>
-    <xmx:ngqlZXGoVUfmtGAmWQW3Qgtud5hzjZaxn6GVOZksYV_upOMOZVGAOw>
+X-ME-Proxy: <xmx:ogqlZfCCPLeuJokJ988kM9-W4curuwMucd_Q1NwSae_XPOBgccoGng>
+    <xmx:ogqlZYgk63PwmQxEzAHdH3ihkauZyUWWmXe3zqUk3OuqVN63IrLvoQ>
+    <xmx:ogqlZTpaN7z_hhA00DGYY5yMzLUA30eW37gt_PHMEtC8u45L667EGw>
+    <xmx:ogqlZQd2rnYjUERXgczfenZn1Ot1zu54UCeNypxP-Yva-CiSJkajEA>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 15 Jan 2024 05:36:13 -0500 (EST)
+ 15 Jan 2024 05:36:17 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 1fd6cda6 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 15 Jan 2024 10:33:23 +0000 (UTC)
-Date: Mon, 15 Jan 2024 11:36:11 +0100
+	by vm-mail (OpenSMTPD) with ESMTPSA id 78e833b9 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 15 Jan 2024 10:33:27 +0000 (UTC)
+Date: Mon, 15 Jan 2024 11:36:15 +0100
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
 Cc: Stan Hu <stanhu@gmail.com>,
@@ -65,8 +65,9 @@ Cc: Stan Hu <stanhu@gmail.com>,
 	Jeff King <peff@peff.net>,
 	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
 	Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v2 4/5] completion: silence pseudoref existence check
-Message-ID: <4de00121b24f31d21e54738a4645eefa3d283374.1705314554.git.ps@pks.im>
+Subject: [PATCH v2 5/5] completion: treat dangling symrefs as existing
+ pseudorefs
+Message-ID: <22269af050fc9379c1049afb8ae51cbfec2a3670.1705314554.git.ps@pks.im>
 References: <cover.1704969119.git.ps@pks.im>
  <cover.1705314554.git.ps@pks.im>
 Precedence: bulk
@@ -76,121 +77,85 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="id6UsyWv82FOc4Nh"
+	protocol="application/pgp-signature"; boundary="XIJpZ+kAA5vNY0bm"
 Content-Disposition: inline
 In-Reply-To: <cover.1705314554.git.ps@pks.im>
 
 
---id6UsyWv82FOc4Nh
+--XIJpZ+kAA5vNY0bm
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-In 44dbb3bf29 (completion: support pseudoref existence checks for
-reftables, 2023-12-19), we have extended the Bash completion script to
-support future ref backends better by using git-rev-parse(1) to check
-for pseudo-ref existence. This conversion has introduced a bug, because
-even though we pass `--quiet` to git-rev-parse(1) it would still output
-the resolved object ID of the ref in question if it exists.
+The `__git_pseudoref_exists ()` helper function back to git-rev-parse(1)
+in case the reftable backend is in use. This is not in the same spirit
+as the simple existence check that the "files" backend does though,
+because there we only check for the pseudo-ref to exist with `test -f`.
+With git-rev-parse(1) we not only check for existence, but also verify
+that the pseudo-ref resolves to an object, which may not be the case
+when the pseudo-ref points to an unborn branch.
 
-Fix this by redirecting its stdout to `/dev/null` and add a test that
-catches this behaviour. Note that the test passes even without the fix
-for the "files" backend because we parse pseudo refs via the filesystem
-directly in that case. But the test will fail with the "reftable"
-backend.
+Fix this issue by using `git show-ref --exists` instead. Note that we do
+not have to silence stdout anymore as git-show-ref(1) will not print
+anything.
 
-Helped-by: Jeff King <peff@peff.net>
-Helped-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- contrib/completion/git-completion.bash |  2 +-
- t/t9902-completion.sh                  | 31 ++++++++++++++++++++++++++
- 2 files changed, 32 insertions(+), 1 deletion(-)
+ contrib/completion/git-completion.bash | 2 +-
+ t/t9902-completion.sh                  | 4 ++++
+ 2 files changed, 5 insertions(+), 1 deletion(-)
 
 diff --git a/contrib/completion/git-completion.bash b/contrib/completion/gi=
 t-completion.bash
-index d703e3e64f..54ce58f73d 100644
+index 54ce58f73d..6662db221d 100644
 --- a/contrib/completion/git-completion.bash
 +++ b/contrib/completion/git-completion.bash
 @@ -148,7 +148,7 @@ __git_pseudoref_exists ()
  	# platforms.
  	if __git_eread "$__git_repo_path/HEAD" head; then
  		if [ "$head" =3D=3D "ref: refs/heads/.invalid" ]; then
--			__git rev-parse --verify --quiet "$ref"
-+			__git rev-parse --verify --quiet "$ref" >/dev/null
+-			__git rev-parse --verify --quiet "$ref" >/dev/null
++			__git show-ref --exists "$ref"
  			return $?
  		fi
  	fi
 diff --git a/t/t9902-completion.sh b/t/t9902-completion.sh
-index 95ec762a74..56dc7343a2 100755
+index 56dc7343a2..35eb534fdd 100755
 --- a/t/t9902-completion.sh
 +++ b/t/t9902-completion.sh
-@@ -1933,6 +1933,14 @@ test_expect_success 'git checkout - --orphan with br=
-anch already provided comple
- 	EOF
- '
+@@ -2743,6 +2743,10 @@ test_expect_success '__git_pseudoref_exists' '
+ 		cd repo &&
+ 		sane_unset __git_repo_path &&
 =20
-+test_expect_success 'git restore completes modified files' '
-+	test_commit A a.file &&
-+	echo B >a.file &&
-+	test_completion "git restore a." <<-\EOF
-+	a.file
-+	EOF
-+'
-+
- test_expect_success 'teardown after ref completion' '
- 	git branch -d matching-branch &&
- 	git tag -d matching-tag &&
-@@ -2728,4 +2736,27 @@ test_expect_success '__git_complete' '
- 	test_must_fail __git_complete ga missing
- '
-=20
-+test_expect_success '__git_pseudoref_exists' '
-+	test_when_finished "rm -rf repo" &&
-+	git init repo &&
-+	(
-+		cd repo &&
-+		sane_unset __git_repo_path &&
-+
-+		# HEAD points to an existing branch, so it should exist.
-+		test_commit A &&
++		# HEAD should exist, even if it points to an unborn branch.
 +		__git_pseudoref_exists HEAD >output 2>&1 &&
 +		test_must_be_empty output &&
 +
-+		# CHERRY_PICK_HEAD does not exist, so the existence check should fail.
-+		! __git_pseudoref_exists CHERRY_PICK_HEAD >output 2>&1 &&
-+		test_must_be_empty output &&
-+
-+		# CHERRY_PICK_HEAD points to a commit, so it should exist.
-+		git update-ref CHERRY_PICK_HEAD A &&
-+		__git_pseudoref_exists CHERRY_PICK_HEAD >output 2>&1 &&
-+		test_must_be_empty output
-+	)
-+'
-+
- test_done
+ 		# HEAD points to an existing branch, so it should exist.
+ 		test_commit A &&
+ 		__git_pseudoref_exists HEAD >output 2>&1 &&
 --=20
 2.43.GIT
 
 
---id6UsyWv82FOc4Nh
+--XIJpZ+kAA5vNY0bm
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmWlCpoACgkQVbJhu7ck
-PpREthAAjeRldARH2PqSj1antbDy8FBAf7U7ekVJ0iUw/q+fgPYLV6r6FlxQcBke
-uR5prxJza+N3qR7L9q9GfLAzJnQqr+xPHUKziX749lJA5X3yeeBm4JShgXhh3dQf
-nsh+ewJlehGZVYUqeltpOZ5iZtESUz4eHJ6EDznC8U8jbaWa7emt5FrZsfYHHuFl
-m+rWwZwW5mpsVWbaRdpkTvZs6h/v4JvyOkHuKDmhLfchMbFiqUjkWz5QrgvhEXOY
-bNyz5u77V5kEwsqSLjkEvXq7dNXBpryAOIyfj1pMnm5VHOs5tSw4cXOnh4yC3CEC
-Qzl/LhDsEl7pr77M1OXbnpSVqvdsrtnMu+uFUgXr4wEyG2xQP4cQZ06oTVBjLdSg
-tlc8PoNEhNPeNJk1Bwazdt0pyTXWE6bIUnmA2XOEU6kLsO2pAgdIQOmU+dqKyTF8
-f3iag37XeuvkJX5REBxsa3RINCOp89IkrDj5j+TK223JwnMVMdBfGxxd5/nvM3Yt
-cKIHssn5DqLYI1trBTTgxhV6tjPqZrlERop4oMbWV4wT4oT1Hniv5x/yA2GW2g6V
-O2UzHUYUAMWeCN/nkoBJcgG7lhpzf2+roZazQr9jU02suZbIXajA4+wvg4ZZMJqQ
-VAa38Goo6hxj557c/vxJRca8aegHqODDKfGCFS8tn0ppBk/dJrU=
-=21nh
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmWlCp4ACgkQVbJhu7ck
+PpRfCg//a5Ezx8bMkVVl4iqJWUDb1pmev3UZpfZbcH7rhJnSmoL1GScNo9rmuvt3
+zK47Tl1vxd9L1Sn2uJl79hSrxr/BXi2phTjH4LXIaGDzOjs9RQBSnD5nJ0wWc4Ld
+uj/SPoTOuwtXhMqkUZw1xhmARD09UZXn9aVOMWftAw8Njl+paOs2hUNVDtpjgYNI
+29f29b35CIHQrxwOVSvjmgdGFdatOQ/JceRjeapUeSE3RpCtY69qB1oLVtzYwxBz
++rcP6wVVtC1Tro/ezlSS3UN+tP81oSnjbnGTPkth/yO+s10DaH+10Lh3mWb6M6vq
+5LYBJPInTPa7G8EOSwQRg1OqIEejD1SWRCtnOjIWyD4I9XEyWIK/yXi0p8NuIoEM
+7Y9NuE9nneQ1d5b5jxXwxo6kH7IpwNWnuD0d9nm3isuP4Vh2WqYwehRLf6mwlQbv
+ric3da13j9nccYK4tXk/TZfEyL/J3XtmPvRieN8aiKmFFrdQ1ztGXeA0eHkDJ9wM
+UrdlfcmZX9HIcgIZB5MPgVgiSKTd0dtNFuktv+yFlTCL+wxwj09eLClVKROe1wBk
+3gFR8oFtK7Q0EbpgPqVoE7GxXlV+mCRz66yDy0D5PcXDyA0liSMYQkZICW8tZuZB
+V1gEgTtUK2AN2qbtwfYS54yBqEf2RHQWE9yGZ+8ZhYqoCRrE4Po=
+=HMMx
 -----END PGP SIGNATURE-----
 
---id6UsyWv82FOc4Nh--
+--XIJpZ+kAA5vNY0bm--
