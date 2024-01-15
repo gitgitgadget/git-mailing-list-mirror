@@ -1,47 +1,64 @@
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+Received: from wout4-smtp.messagingengine.com (wout4-smtp.messagingengine.com [64.147.123.20])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70B8817546
-	for <git@vger.kernel.org>; Mon, 15 Jan 2024 17:27:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C353C18AE1
+	for <git@vger.kernel.org>; Mon, 15 Jan 2024 19:08:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=yadavpratyush.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=yadavpratyush.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="XYtoam+a"
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id EC2421D47C;
-	Mon, 15 Jan 2024 12:27:30 -0500 (EST)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=9vuLjBtA39Kd
-	p04Fy3IMBxPHSz6iwPP8ynFuOdP0lEM=; b=XYtoam+aqZB7XSpryNHmfTQjuKWp
-	B+7ky1nSHyORbe35RupU6SAM8M6oi5kuR/+NDUOBfRz+M0JJP7toQFUNUFk/6r3X
-	IXEceykA0XqmVdeTjWDvmQQP1z33OX4SEpIB26FH/JYhgVPhJ0G8/jAcVOiVqdvV
-	E5CbRWFjnHv5kks=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id E48951D47B;
-	Mon, 15 Jan 2024 12:27:30 -0500 (EST)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.200.93])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 63A431D47A;
-	Mon, 15 Jan 2024 12:27:27 -0500 (EST)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: =?utf-8?Q?Rub=C3=A9n?= Justo <rjusto@gmail.com>
-Cc: Achu Luma <ach.lumap@gmail.com>,  git@vger.kernel.org,
-  christian.couder@gmail.com,  Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [Outreachy][PATCH] Port helper/test-advise.c to
- unit-tests/t-advise.c
-In-Reply-To: <93468f5c-5f62-4f22-85ce-b60621852430@gmail.com>
- (=?utf-8?Q?=22Rub=C3=A9n?= Justo"'s
-	message of "Mon, 15 Jan 2024 12:37:36 +0100")
-References: <20240112102122.1422-1-ach.lumap@gmail.com>
-	<xmqqmsta6uju.fsf@gitster.g>
-	<93468f5c-5f62-4f22-85ce-b60621852430@gmail.com>
-Date: Mon, 15 Jan 2024 09:27:25 -0800
-Message-ID: <xmqqy1cq4ide.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=yadavpratyush.com header.i=@yadavpratyush.com header.b="fIxXKxV3";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="QWOfT5ny"
+Received: from compute7.internal (compute7.nyi.internal [10.202.2.48])
+	by mailout.west.internal (Postfix) with ESMTP id A320B3200B13
+	for <git@vger.kernel.org>; Mon, 15 Jan 2024 14:08:15 -0500 (EST)
+Received: from mailfrontend2 ([10.202.2.163])
+  by compute7.internal (MEProxy); Mon, 15 Jan 2024 14:08:15 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	yadavpratyush.com; h=cc:content-type:content-type:date:date:from
+	:from:in-reply-to:message-id:mime-version:reply-to:subject
+	:subject:to:to; s=fm3; t=1705345695; x=1705432095; bh=/cIHtvorbt
+	bMbP34R7WMIon6wdsIZtEoDafHshsP0IY=; b=fIxXKxV3PINDaeGqHRVPUTNmTf
+	0SNC5ZbEsMb4IERIGwXH4LS17WFVUmAHezGQzddHa+rlbik5O6K6Qf5vXpEuXOr+
+	st2bZ8vAdicVu2V468OCE9zB3lwEWRp9dL0QJXE+WYkLhaenJTLxEKYehWM3DsfE
+	DWPCYHfpKDcFT/hKx/0anUG8kLBxJkup0GISflGN4WfbRSz1JYahiuGAUGU6wYv6
+	D0Gv4JgRSNBvDt4eOlwTWlpaDBe1tjwGklmeADwhd7DHtyJwoIAflAvwsIen+Qdh
+	N6w2Q4YnmVDSCfUYlYeJX71KJqPknpX1iSebo9nwJoXwbDwBVt8sOgTqG9iQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:message-id
+	:mime-version:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1705345695; x=1705432095; bh=/cIHtvorbtbMbP34R7WMIon6wdsIZtEoDaf
+	HshsP0IY=; b=QWOfT5nyFFNEEVOGGyy7d5aa4HoQiCJ+hqi3xkNS27PUbstvjzq
+	QfwVL6DzexuVjI8TrQDHPu7KdgCeO8bO1PI+039NMlW8McK8CNy1auzMpnz9po3e
+	up7dY6tw4f+Nk3hny5mIqu0Ft98FUpwrqfJ81zBCBUgMjuEfUy/dTxbBCm7fekbQ
+	WuRt+j1TjUYZHuRcTWof95EgzfKg0t3VqfVf5IcYYbpO5FCM1FjAc3sIMOfUNS04
+	fU3ukqM4acSxTNQ8NRjQaaeCL+D0jpM/xFZLzlZd2qgjNu8x6Jxb0kbHjSqIfrHD
+	zQERJ3uaiRrA0bHjKVVhn4LAorRQjuxx3uQ==
+X-ME-Sender: <xms:noKlZQnvYoY11xuXP6XBXunjdAvSmEo-ZHyfUmqpeQOT2_XeGABvCw>
+    <xme:noKlZf34I40WBOW_Vxi8NbkrdgUgf7uN-gb0--szbqKHEJonLdjNhMKnAHgFhaQhg
+    mMSg5qKDwwKZFjIBNA>
+X-ME-Received: <xmr:noKlZeqpoFA1wBB9OEhQ3aHokReAPCXExXuwbx8q6WEPPAKpSEqTn60jMTLSYyR6UrtKS0IaXbDHLb-S7OsxrclFCRnXBg8vlTv43wKDcNq-RFh5HXkIF2R84K21i8zmfHIz90SZ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrvdejuddguddvudcutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
+    necuuegrihhlohhuthemuceftddtnecunecujfgurhephffvufffkfgfgggtsehttdertd
+    dtredtnecuhfhrohhmpefrrhgrthihuhhshhcujggruggrvhcuoehmvgeshigruggrvhhp
+    rhgrthihuhhshhdrtghomheqnecuggftrfgrthhtvghrnhepkeeugedvhefhhefhieegvd
+    efteettdduleefvddvteefvefgtdefteefveduvdffnecuffhomhgrihhnpehgihhthhhu
+    sgdrtghomhdpkhgvrhhnvghlrdhorhhgnecuvehluhhsthgvrhfuihiivgeptdenucfrrg
+    hrrghmpehmrghilhhfrhhomhepmhgvseihrggurghvphhrrghthihushhhrdgtohhm
+X-ME-Proxy: <xmx:n4KlZckArIHRfAgIvP2SlmQKdVszkLnArkrceS48pVUIwKdjvlig7g>
+    <xmx:n4KlZe2vgAJsj9-o8ADB5LWe2_Cb7CtP9qs7RTU0cwI7Ct5RN_ICLQ>
+    <xmx:n4KlZTtyPOSosSiMBzrCNdY9ij3UYt3s7lZ-kKN3j3mmgGNXfswwrQ>
+    <xmx:n4KlZXhunRgAdAwel8ybM-ge0jnXJm6CGlNbKVSCFU95fVyhcm_yVw>
+Feedback-ID: i93f149c1:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA for
+ <git@vger.kernel.org>; Mon, 15 Jan 2024 14:08:14 -0500 (EST)
+From: Pratyush Yadav <me@yadavpratyush.com>
+To: git@vger.kernel.org
+Subject: Strange behaviour when pushing a commit object to remote's refs/HEAD
+Date: Mon, 15 Jan 2024 20:08:13 +0100
+Message-ID: <mafs0fryypg82.fsf@yadavpratyush.com>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -49,80 +66,82 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID:
- 5A90F2DA-B3CB-11EE-96FB-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-Rub=C3=A9n Justo <rjusto@gmail.com> writes:
+Hi,
 
->> To test the effect of setting one configuration variable, and ensure
->> it results in a slightly different advice message output to the
->> standard error stream, "test-tool advice" needs only a single line
->> of patch, but if we started with this version, how much work does it
->> take to run the equivalent test in the other patch if it were to be
->> rebased on top of this change?  It won't be just the matter of
->> adding a new TEST(check_advise_if_enabled()) call to cmd_main(),
->> will it?
->
-> Maybe something like this will do the trick:
->
-> diff --git a/t/unit-tests/t-advise.c b/t/unit-tests/t-advise.c
-> index 15df29c955..ac7d2620ef 100644
-> --- a/t/unit-tests/t-advise.c
-> +++ b/t/unit-tests/t-advise.c
-> @@ -6,6 +6,7 @@
->
->  static const char expect_advice_msg[] =3D "hint: This is a piece of ad=
-vice\n"
->                                         "hint: Disable this message wit=
-h \"git config advice.nestedTag false\"\n";
-> +static const char expect_advice_msg_without_disable_hint[] =3D "hint: =
-This is a piece of advice\n";
->  static const char advice_msg[] =3D "This is a piece of advice";
->  static const char out_file[] =3D "./output.txt";
+I ran into a strange Magit bug, where when I ran magit-show-refs on a
+particular repo it threw an error. The details of the Magit bug are not
+very interesting, but when attempting to reproduce it, I also saw git
+misbehaving for such repos.
 
-Yup, but ...
+The strange behaviour happens when you push a commit object to remote's
+refs/HEAD instead of pushing a symbolic ref. Such a repository can be
+found at https://github.com/prati0100/magit-reproducer. I roughly used
+the below steps to create such a repo:
 
-> @@ -44,7 +45,7 @@ int cmd_main(int argc, const char **argv) {
->
->         TEST(check_advise_if_enabled(advice_msg, NULL, expect_advice_ms=
-g),
->                 "advice should be printed when config variable is unset=
-");
-> -       TEST(check_advise_if_enabled(advice_msg, "true", expect_advice_=
-msg),
-> +       TEST(check_advise_if_enabled(advice_msg, "true", expect_advice_=
-msg_without_disable_hint),
->                 "advice should be printed when config variable is set t=
-o true");
->         TEST(check_advise_if_enabled(advice_msg, "false", ""),
->                 "advice should not be printed when config variable is s=
-et to false");
+    $ git init
+    $ echo 1 > foo && git add foo && git commit
+    $ echo 2 > bar && git add bar && git commit
+    $ git push
+    $ git checkout 79264c3
+    $ echo 2.1 > bar && git add bar && git commit
+    $ git push origin 707a3d5:refs/heads/HEAD
 
-... I cannot shake this feeling that the next person who comes to
-this code and stares at advice.c would be very tempted to "refactor"
-the messages, so that there is only one instance of the same string
-in advice.c that is passed to TEST() above.  After all, you can
-change only one place to update the message and avoid triggering
-test failures that way, right?  But that line of thinking obviously
-reduces the value of having tests.
+Now with such a repo, if you do `git log --all --oneline` it would look
+something like:
 
-What if messages from plumbing that should not be modified are being
-tested with unit tests?  These messages are part of contract with
-users, and it is very much worth our time to write and maintain the
-tests to ensure they will not be modified by accident.  Obviously
-such a refactoring of test messages to reuse the production strings
-would destroy the value of having such a test in the first place.
+    707a3d5 (origin/HEAD) 2.1
+    86e1c97 (HEAD -> main, origin/main) 2
+    79264c3 1
 
-So, I dunno.
+And running `git for-each-ref --format='%(symref:short),%(refname:short),%(refname),%(subject)' refs/remotes/origin` gives:
 
->> I doubt the issue is not about "picking the right moment" to
->> transition from the test-tool to unit testing framework in this
->> particular case.  Is "check-advice-if-enabled" a bit too high level
->> a feature to be a good match to "unit" testing, I have to wonder?
->
-> I don't have a formed opinion on the change, but I don't see it making
-> things worse.  I share your doubts, though.
->
-> Thanks.
+    ,origin,refs/remotes/origin/HEAD,2.1
+    ,origin/main,refs/remotes/origin/main,2
+
+All well and good so far. Now delete the repo and attempt to clone it.
+This time `git log --all --oneline` gives:
+
+    86e1c97 (HEAD -> main, origin/main, origin/HEAD) 2
+    79264c3 1
+
+And running `git for-each-ref --format='%(symref:short),%(refname:short),%(refname),%(subject)' refs/remotes/origin` gives:
+
+    origin/main,origin,refs/remotes/origin/HEAD,2
+    ,origin/main,refs/remotes/origin/main,2
+
+So suddenly the remote's HEAD becomes origin/main (symbolic ref) and the
+commit (707a3d5, "2.1") is nowhere to be found. It neither shows up in
+`git rev-list --all` nor in `git log --all`. The files and trees
+associated with it also do not show up in `git rev-list --all --object`.
+Yet if you do `git show 707a3d5` it shows up. So it does exist and did
+get cloned, but git cannot properly see it.
+
+Interestingly enough, even the GitHub UI is confused and it won't show
+you the repo correctly. It will show the commit (86e1c97, "2") for both
+"branches" main and HEAD. cgit's UI [0] seems to work fine with this,
+though cloning from cgit still suffers from this bug.
+
+There _is_ a way to clone the repo correctly. If you do:
+
+    $ git init magit-reproducer
+    $ git remote add origin https://github.com/prati0100/magit-reproducer.git
+    $ git remote update
+
+Now if you do git log --all or git for-each-ref, you see the correct
+result.
+
+I don't really know how to fix this but it certainly is a bug in git
+since it can't clone the repo correctly. And at least one major Git host
+can't display such a repo properly (I haven't tried others).
+
+I used Git v2.40.1 to do most of this but I did compile the latest
+master d4dbce1db5 ("The seventh batch") and attempted to clone using it
+and I see the same problem.
+
+[0] https://git.kernel.org/pub/scm/linux/kernel/git/pratyush/magit-reproducer.git/
+
+-- 
+Regards,
+Pratyush Yadav
