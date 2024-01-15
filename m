@@ -1,134 +1,132 @@
-Received: from mail-wm1-f54.google.com (mail-wm1-f54.google.com [209.85.128.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from out5-smtp.messagingengine.com (out5-smtp.messagingengine.com [66.111.4.29])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA1C42C683
-	for <git@vger.kernel.org>; Mon, 15 Jan 2024 11:37:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B56B92C68A
+	for <git@vger.kernel.org>; Mon, 15 Jan 2024 11:44:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AnZGAWCj"
-Received: by mail-wm1-f54.google.com with SMTP id 5b1f17b1804b1-40e779f0273so8288175e9.2
-        for <git@vger.kernel.org>; Mon, 15 Jan 2024 03:37:45 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1705318664; x=1705923464; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=4EE+yY2QV/0/ifopMb5Kg6JXHBl6rIW/rQ5EZu9cQFY=;
-        b=AnZGAWCj+WN2H070KPAvO0LSxBKIXPQikm0m1+IgzL9r47EzL+Q9PlwNHJjP+/JEck
-         cqKItFjHPUKdga0kiA5o7CUajHIxUdn0FrcDtV6rYsBjcnA5Dr0HfadfmCJxm1hrExWK
-         JJWGRL0PbTrZMdi4kOngeSlPzrXzKK7vErJ99Ppjv+UnnUvXMZAs0D5bd8vcTUFZga9k
-         ybrCKIn2Wc2W+2VfOHdSoh70zbarub43J4PEolPPdBOMDxuNS8ebKmPfw3y/kjA9FhfH
-         u0OxMHLMOi5zUsvaDy5Q3ggHeKVri6ZT2tal/WqfaaLh1ug3m3M0ZKMm+efg0zZ3wuvs
-         gxbw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1705318664; x=1705923464;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=4EE+yY2QV/0/ifopMb5Kg6JXHBl6rIW/rQ5EZu9cQFY=;
-        b=fx5tusU7ekjNrFbd3qBWFF3qzRSg5Tsxkp1DrWwFo+fTfjlqn5EhD95I6sIX4MnCJZ
-         Fnqm5cM7OgYESyh6VpBcoGCxUwUWsdzlrd+vggIa8L5hbYQQdkZd59QWuHcMPp9DtuDY
-         hJjuxKuCkY773TZ/VyoGMBqgdHdx9SIrgXfh07oV9Mf3sVTSq6t583/PO9wqo6SnIAWj
-         lV6/N+UaVqafvaUUV1zBFIe+K1IbvBBBbExcAkeC2htyIg4yNV8tqs9gFReP81vJMI63
-         AwrRmYifDdCViazJHbwGXJ0AysgNnbk8+LcwB803hXRtEsRV8SbGa9mjF3qPWYlo57VF
-         0qzQ==
-X-Gm-Message-State: AOJu0YxoMAOP1ktMsJjDX0feTdm9e4KQhUHk258pPN9E4oaLvzC2XMAJ
-	cncpfCTznMKUghzZJ2C7D2M=
-X-Google-Smtp-Source: AGHT+IE27hnMbnyLjGOLLMQCcbF39WMvjThRNA8qhwtZIKSSrd1WrBiPycVGfb4d2a/fBq3J1bmrCw==
-X-Received: by 2002:a05:600c:a381:b0:40e:4654:7d1e with SMTP id hn1-20020a05600ca38100b0040e46547d1emr2816328wmb.68.1705318664042;
-        Mon, 15 Jan 2024 03:37:44 -0800 (PST)
-Received: from gmail.com (195.red-88-14-43.dynamicip.rima-tde.net. [88.14.43.195])
-        by smtp.gmail.com with ESMTPSA id c11-20020a05600c0a4b00b0040d53588d94sm19640838wmq.46.2024.01.15.03.37.43
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 15 Jan 2024 03:37:43 -0800 (PST)
-Message-ID: <93468f5c-5f62-4f22-85ce-b60621852430@gmail.com>
-Date: Mon, 15 Jan 2024 12:37:36 +0100
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="ffB9dqFH";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="XYcbK04c"
+Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
+	by mailout.nyi.internal (Postfix) with ESMTP id C5FD65C0152
+	for <git@vger.kernel.org>; Mon, 15 Jan 2024 06:44:56 -0500 (EST)
+Received: from mailfrontend2 ([10.202.2.163])
+  by compute6.internal (MEProxy); Mon, 15 Jan 2024 06:44:56 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:message-id:mime-version:reply-to:subject:subject:to:to; s=fm3;
+	 t=1705319096; x=1705405496; bh=hNaUc8IqCt2XyzRkf61/nInJv9RHlHdj
+	2fa161gB32o=; b=ffB9dqFH/iItxwRXgD8fyNyOj6U1X5cm5iNznDE7SHBTAII3
+	apeQ4WEEfAmlMazYlaOue/L/r6/wIKhTc7JUULbpONl5/sfZXHZgAD6CcWo2ZoUW
+	oItozmyqWblly694XSeLPUqFEZL/yr+3YyF5HFox1qbJtHWr9jf193J/8mDEHnFo
+	5dDO3IEeOpNthsbYw+1BOyOeALhusbjVTFkvTvHbaZLNYIzr52UJvL8C5APTFUwT
+	wRqaHwjeJd5xUwkwMPg1Dc2Q2W4d00CKQg/S2NtC/UDsqf3L0Xmfo3LS16Ze1mCi
+	Qhw7IN1cws3Ue5lXv2GlsbdySDgpfEmvimDifg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:message-id
+	:mime-version:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1705319096; x=1705405496; bh=hNaUc8IqCt2XyzRkf61/nInJv9RHlHdj2fa
+	161gB32o=; b=XYcbK04cqZql38iGKoPx/m0B82xA29cFLtzACCTonsJcymoKFtQ
+	JFuXcw270rfDhq6ukcL52mlaiFh2Xey7gtUV8I3ZpsQYEKKb79gmA2627rARi+OL
+	KsRPl8Nk5BXq7Io31uw0oMO7VbRvduNflbEf/MihjwwvU1bO0/9adifQbDPhKXfp
+	qy1eEemtmscYbSkhHTqeCYQE5Wwe+mE34PuYzOuqgbZ8J3pqhadk+k2Cqw107MrH
+	h/YLapArXy/dX2gC1sa5uACeqPaMwOsV2PTEtxkI3+JUIgCwuU8lzWz2PvJHzbj8
+	++TqbSA0sR6FM0Zo85HFXyRVdPhyGFStq7Q==
+X-ME-Sender: <xms:uBqlZRsly_AW9-3dNdZ6hYxGXc2SV0C28BF89lN5PNco7-SR6UfePg>
+    <xme:uBqlZacqr_Cm0aJgUEMjZS56vpSJ2cU_Z1jPUsYoFkfvKIEQIwXEZXzb9BKjxJALe
+    5mBJS-Q_JSMuw6o3g>
+X-ME-Received: <xmr:uBqlZUyLO_ZloVMCi5MMGfSRFESU4b4-fmJeljeK5wqXrg0d1PsOsZ_W5JnqmAZ-UXzvmdx4nzmtwS6jGw8NNy8j08LrzD0_sHHSE5eTCUa9KA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrvdejuddgfeefucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvuffkgggtugesghdtreertd
+    dtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhs
+    rdhimheqnecuggftrfgrthhtvghrnhepjeeifedvueelfffgjeduffdvgefhiefgjefgvd
+    dvfeduvefffeevfffhgfekieffnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghm
+    pehmrghilhhfrhhomhepphhssehpkhhsrdhimh
+X-ME-Proxy: <xmx:uBqlZYMDdO3vWqwV4PQYdsbVjqOFDEnJHoVGIdPSfJkmi5KYT19pyQ>
+    <xmx:uBqlZR_1lGj_LNOvNaA33XvpFcPNzYN_aX79YPlRWECKwEyxpb38KA>
+    <xmx:uBqlZYXUILfK6LyagUZ9sQfFtDTOuCTwQR2vGrysf-kP6ZFz9y9RHQ>
+    <xmx:uBqlZWJr-SQH3Ru9ytpXZycJCmOQZgOdgpJ8TxwDkBVyEcm7T-Ya6g>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA for
+ <git@vger.kernel.org>; Mon, 15 Jan 2024 06:44:56 -0500 (EST)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id 323e298a (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	for <git@vger.kernel.org>;
+	Mon, 15 Jan 2024 11:42:04 +0000 (UTC)
+Date: Mon, 15 Jan 2024 12:44:52 +0100
+From: Patrick Steinhardt <ps@pks.im>
+To: git@vger.kernel.org
+Subject: [PATCH 0/3] ci: add support for macOS to GitLab CI
+Message-ID: <cover.1705318985.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [Outreachy][PATCH] Port helper/test-advise.c to
- unit-tests/t-advise.c
-Content-Language: en-US
-To: Junio C Hamano <gitster@pobox.com>, Achu Luma <ach.lumap@gmail.com>
-Cc: git@vger.kernel.org, christian.couder@gmail.com,
- Christian Couder <chriscool@tuxfamily.org>
-References: <20240112102122.1422-1-ach.lumap@gmail.com>
- <xmqqmsta6uju.fsf@gitster.g>
-From: =?UTF-8?Q?Rub=C3=A9n_Justo?= <rjusto@gmail.com>
-In-Reply-To: <xmqqmsta6uju.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="PdhtGmriwDzyPMaV"
+Content-Disposition: inline
 
-On 12-ene-2024 14:44:37, Junio C Hamano wrote:
-> Achu Luma <ach.lumap@gmail.com> writes:
-> 
-> > In the recent codebase update (8bf6fbd00d (Merge branch
-> > 'js/doc-unit-tests', 2023-12-09)), a new unit testing framework was
-> > merged, providing a standardized approach for testing C code. Prior to
-> > this update, some unit tests relied on the test helper mechanism,
-> > lacking a dedicated unit testing framework. It's more natural to perform
-> > these unit tests using the new unit test framework.
-> >
-> > This commit migrates the unit tests for advise_if_enabled functionality
-> > from the legacy approach using the test-tool command `test-tool advise`
-> > in t/helper/test-advise.c to the new unit testing framework
-> > (t/unit-tests/test-lib.h).
-> >
-> > The migration involves refactoring the tests to utilize the testing
-> > macros provided by the framework (TEST() and check_*()).
-> 
-> In the light of the presense of work like this one
-> 
->   https://lore.kernel.org/git/c870a0b6-9fa8-4d00-a5a6-661ca175805f@gmail.com/
-> 
-> I am not sure if moving this to unit-test framework is a good thing,
-> at least right at this moment.
-> 
-> To test the effect of setting one configuration variable, and ensure
-> it results in a slightly different advice message output to the
-> standard error stream, "test-tool advice" needs only a single line
-> of patch, but if we started with this version, how much work does it
-> take to run the equivalent test in the other patch if it were to be
-> rebased on top of this change?  It won't be just the matter of
-> adding a new TEST(check_advise_if_enabled()) call to cmd_main(),
-> will it?
 
-Maybe something like this will do the trick:
+--PdhtGmriwDzyPMaV
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-diff --git a/t/unit-tests/t-advise.c b/t/unit-tests/t-advise.c
-index 15df29c955..ac7d2620ef 100644
---- a/t/unit-tests/t-advise.c
-+++ b/t/unit-tests/t-advise.c
-@@ -6,6 +6,7 @@
+Hi,
 
- static const char expect_advice_msg[] = "hint: This is a piece of advice\n"
-                                        "hint: Disable this message with \"git config advice.nestedTag false\"\n";
-+static const char expect_advice_msg_without_disable_hint[] = "hint: This is a piece of advice\n";
- static const char advice_msg[] = "This is a piece of advice";
- static const char out_file[] = "./output.txt";
+this patch series extends GitLab CI to also support macOS. Besides
+extending test coverage for GitLab users, this change also has the added
+benefit that the macOS runners at GitLab are based on Apple silicon,
+which to the best of my knowledge is not something we're currently
+testing on.
 
-@@ -44,7 +45,7 @@ int cmd_main(int argc, const char **argv) {
+This patch series builds on top of ps/gitlab-ci-static-analysis
+(currently at cd69c635a1 (ci: add job performing static analysis on
+GitLab CI, 2023-12-28)) to avoid a conflict.
 
-        TEST(check_advise_if_enabled(advice_msg, NULL, expect_advice_msg),
-                "advice should be printed when config variable is unset");
--       TEST(check_advise_if_enabled(advice_msg, "true", expect_advice_msg),
-+       TEST(check_advise_if_enabled(advice_msg, "true", expect_advice_msg_without_disable_hint),
-                "advice should be printed when config variable is set to true");
-        TEST(check_advise_if_enabled(advice_msg, "false", ""),
-                "advice should not be printed when config variable is set to false");
+Patrick
 
-> 
-> I doubt the issue is not about "picking the right moment" to
-> transition from the test-tool to unit testing framework in this
-> particular case.  Is "check-advice-if-enabled" a bit too high level
-> a feature to be a good match to "unit" testing, I have to wonder?
+Patrick Steinhardt (3):
+  ci: make p4 setup on macOS more robust
+  Makefile: detect new Homebrew location for ARM-based Macs
+  ci: add macOS jobs to GitLab CI
 
-I don't have a formed opinion on the change, but I don't see it making
-things worse.  I share your doubts, though.
+ .gitlab-ci.yml             | 26 +++++++++++++++++++++++++-
+ ci/install-dependencies.sh | 10 ++++------
+ ci/lib.sh                  | 12 +++++++++++-
+ config.mak.uname           | 13 +++++++++++++
+ 4 files changed, 53 insertions(+), 8 deletions(-)
 
-Thanks.
+
+base-commit: cd69c635a1a62b0c8bfdbf221778be8a512ad048
+--=20
+2.43.GIT
+
+
+--PdhtGmriwDzyPMaV
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmWlGrQACgkQVbJhu7ck
+PpQlbQ//emF3uB7WgQmREgcU+ajPU5X7tmhRIweAFjpqjRESxYlqQq382HDZIAkF
+8GjRmZLNG7K09xaqugb+1PKBgN5h9SOz6HDKn6xOresacu2yDiUz+21qrZ49Udeo
+g6nmMRzToomz9Otlw69gjnEnbRXZJWWlYEQ8lgpSFsf1pTG1PDAF9m90uBNLb6Kd
+UoxYVd7ryFJalt09vrWtV2EX6zTcJZGvuSOySkeAEPjbns/wGuKrGaDYqXimh9xX
+h9+2h9ES7XqM9TegvEPVfavWM5O5OClEYdjS5W3k6R4b5QJO9pPvyDzrX1jS6aJU
+1lO9lHKlhxvb4nLvlYveG/5NiWJRTgyHoZ/tJHJFvpMfMDKmG63e0qE4QtCu4z/t
+HSJVbdaZbRhOnA0a8cPFvpFotDnwqtYGVB/pb6nhi/A7vu6gy43MoEZBmKZyhYST
+dFylCMlic7aWRxiabOkoNmMT1B2BqIsVEDFV1P1TF3e2wx9BQVmyAOGVT6+vkTde
+6Nu4NZd//BBWK5bekEpNATW/q6Zo+VXL+jrOoE2sII0If0v/2WLo3C3DQJFvGaJ9
+uKkfi+3+p7f/5Td0W3NkZQ1ne0BenoYISIUCy8nV+JE0wpcdes9S6hPhmotq9K0P
+ktaJvuxDBrcLCvkQ2OwHSYml1TS0+OQtVeyWBFeXMCTUqhRcJjs=
+=0ou0
+-----END PGP SIGNATURE-----
+
+--PdhtGmriwDzyPMaV--
