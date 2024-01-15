@@ -1,44 +1,44 @@
 Received: from out5-smtp.messagingengine.com (out5-smtp.messagingengine.com [66.111.4.29])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 975C72C698
-	for <git@vger.kernel.org>; Mon, 15 Jan 2024 11:45:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C24AA2C695
+	for <git@vger.kernel.org>; Mon, 15 Jan 2024 11:45:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="TdD0fdEs";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Oarm5FsY"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="elFfxDwO";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ygLN1t0Z"
 Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
-	by mailout.nyi.internal (Postfix) with ESMTP id AD4E55C00DD
-	for <git@vger.kernel.org>; Mon, 15 Jan 2024 06:44:59 -0500 (EST)
+	by mailout.nyi.internal (Postfix) with ESMTP id 9BBAE5C0163
+	for <git@vger.kernel.org>; Mon, 15 Jan 2024 06:45:03 -0500 (EST)
 Received: from mailfrontend2 ([10.202.2.163])
-  by compute3.internal (MEProxy); Mon, 15 Jan 2024 06:44:59 -0500
+  by compute3.internal (MEProxy); Mon, 15 Jan 2024 06:45:03 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1705319099; x=1705405499; bh=HxU7sdx17Z
-	WXgdEvTFQh2ur8rZsvfgJoOjg9krhuAMU=; b=TdD0fdEsl9fz2x/8DZEocX0t27
-	vV24L1Ag4exELBrh/u5m1nsIlVOvs5InVn2Rl6d7thr9/Kyqcd91kRyWvQEl+PQJ
-	suBPXBVZV+42M0/S9QIVkGQ5V4vBZd8Bb8NzDdVddWWh1JCpwMgrxGucrLCMPURo
-	0wiK0G1r1/0IVXXfeM3KBR5tNkvuGj21j9RRBPkhwz1zVpYonHDFESFpjn4o5CUn
-	p0FUvnPm2V4Bvq/uiQ3cxRoqCNLxJvIU5P68ykQE47XNyghATxKwkpuPZRx7SdgW
-	63oNakUeM4Vx/d79BlFBw7YFiY7UAC35vO3wejVlUKnTmhc4qNi88pG+AUtA==
+	:subject:to:to; s=fm3; t=1705319103; x=1705405503; bh=/ior2w79dq
+	HYSgt9h5+1mjcLCOA2/RfB5jq6Dn2oDQY=; b=elFfxDwOZw1y+7B6g4Raq8awKM
+	i0OBZ5LeiT7uEKi7PgGCgWjnbNCu6aVMPc3YysJYaxIcalQsbWzOJzkK7CkcO1sm
+	GXPtX9lFzVXXxs/jdaKuH0R9XPzTJ63Q1iuwfe8XlwUh7F0uL5mvQkbwh/EzIcBh
+	ZO/xK6lRGYshiPb8ZGOPeIsBt/s4g2MfEzxn3b3D1KB39fGyYk/Xxe8t+yOPchRU
+	NvvXV/1yix/eK8T/Ng0dlU9Kc/tIY932K4BmWZfrQ+L4NTSqNpTUUwxckYLqSnf+
+	QoE8gFXwW4qolX5idoPSCkFXbQIDLWIu34LJ69x7LmN1AyeSWtuYXihpdKoA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1705319099; x=1705405499; bh=HxU7sdx17ZWXgdEvTFQh2ur8rZsv
-	fgJoOjg9krhuAMU=; b=Oarm5FsYnQQyADmS9qGNNGXdsAFr2S5kjSidK9d3gajO
-	wtaCrLBzvE3KO2tuPBVTr7STDbGG/f5Fdum7DFdK7VFBnSCxPdCQsPs1QxR1p0VL
-	Xd75lvLAMfvzu6UJnvYjFuFOoLEWFDgGOUriHm6m/iuTWDDuzYy15rzgoKZWELfG
-	j2zuXaTOWLFH2wM8HXyFllX+u2Vo8KPacVGg8cqxWfkcwsyRDz3SzuqettnBSmqd
-	JscCgxmKCXCytBRPWJ4/fn2OTQOd/mNuOGjisOveBUSpHC8/O6wU5SYclFdNd3ud
-	7J68eTlP8N11lXuelPEcqVFYVZvFTK4N67uHChiXDA==
-X-ME-Sender: <xms:uxqlZRRxMQJ2fwYaL9m0SpB4y8tLGWCzSD5LlgHaaQR7diLvWSWZGw>
-    <xme:uxqlZaw5CzmDInO4p2VJyttENoRREyTfAzUO-IRItlWhkxCSG1gulkAvvaADgD2Lp
-    PpPLjBiXJxdgHcfjw>
-X-ME-Received: <xmr:uxqlZW1uiKnGqsc1Kb-dPO4zVlciKCQ9yrIRaV1jYIHKV_YU_3ks8sqHJIb87_QYHI05TDGoi-odeV5vfRqVMBloadYknGaD-lDY1KeNDVc_Dg>
+	fm3; t=1705319103; x=1705405503; bh=/ior2w79dqHYSgt9h5+1mjcLCOA2
+	/RfB5jq6Dn2oDQY=; b=ygLN1t0ZDBKhezyaYh0IHaJ3QxD6yB4HGAKHwVMzN225
+	pPPQ03DLXBtucGDDdiCN/GNU9MAdFzgoSj9x0IeqpztJ3gbF8oWoxt4r0M9tT51F
+	vJYtCM0jvpfS4+5MuJokaN04SggWIKdkO5Zn5QsGfxcv/msjXKX7yplOZUgAyZhU
+	uwEB15GkQH3DeEIQXSGoQuAwMGToXt+kR+CkrT6aXMe6ue5WxQnHFLVHbOwmwxa5
+	9xACYr7DQFX5plp/wDHdiHQNXD8lrg3EHaZieJ5etPNFQbE5OgASocotQ8gvc0Zk
+	uOuGh/GeZK9JqtFI/e4T6QN+3uZd2xGETdSJU3ZhxA==
+X-ME-Sender: <xms:vxqlZTolILZrJD2UU8xqpskeE8w1Zl2nTnnJBP_ePJ3VEQAmlAhXvw>
+    <xme:vxqlZdoRkFJ4zdh2Uye6JKyP_9gK-rFV3YrG21RsOufXh9PtRkS59nWOzr7OJaEPz
+    XeA-EcO1bBXvNPWOA>
+X-ME-Received: <xmr:vxqlZQPOuQ_Td8ccwmXuGqSUXQEL268GDOk3G2k2Cz_jfrMvrLNigc52y9CpAPz3EmVSIme3-cH7JkF9eHOlJwTf0VWzxFHk4j8u_vqFmZF9fQ>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrvdejuddgfeefucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
     uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvuffkfhggtggujgesghdtre
@@ -46,22 +46,22 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrvdejuddgfeefucetufdoteggod
     khhsrdhimheqnecuggftrfgrthhtvghrnhepheeghfdtfeeuffehkefgffduleffjedthf
     dvjeektdfhhedvlefgtefgvdettdfhnecuvehluhhsthgvrhfuihiivgeptdenucfrrghr
     rghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimh
-X-ME-Proxy: <xmx:uxqlZZBerFlGKDDn0AJMATjy3D8YtUJecSpk6V4wOY-pgcdrDyqVdA>
-    <xmx:uxqlZahnXVSCL7y1FYfIWe3rJx81Br-TzvjAn8SOPck2NsnJPmVAdg>
-    <xmx:uxqlZdqurJYII9vMpUP4vRgA-FMtfNLN5GXVixeS8vxqDOcAJ4f8Hg>
-    <xmx:uxqlZQd25OyWQun3JseCfHAr9G4a6tofH9sSa86KG82xv_ZKzGQeng>
+X-ME-Proxy: <xmx:vxqlZW7V2mppKbv5Jt1tyRKlHN66VtpcgPIceaxOFThXJdU9Cm_zlg>
+    <xmx:vxqlZS54mXwKSqEiI-XRif8f9cqDJj7USdaXuiOSTzRiirBD4h3PPQ>
+    <xmx:vxqlZegboB5EDQo-jNG1-61XZHDOjEWYwy48Nn1G25_W5zqSPhEZHQ>
+    <xmx:vxqlZfXl7okVGEB8h-Nw4WeRRV7c0sYr4J2UgytdlpKXTQjC1tiXaQ>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Mon, 15 Jan 2024 06:44:58 -0500 (EST)
+ <git@vger.kernel.org>; Mon, 15 Jan 2024 06:45:02 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id a9e09227 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	by vm-mail (OpenSMTPD) with ESMTPSA id 075793df (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
 	for <git@vger.kernel.org>;
-	Mon, 15 Jan 2024 11:42:08 +0000 (UTC)
-Date: Mon, 15 Jan 2024 12:44:57 +0100
+	Mon, 15 Jan 2024 11:42:12 +0000 (UTC)
+Date: Mon, 15 Jan 2024 12:45:01 +0100
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
-Subject: [PATCH 1/3] ci: make p4 setup on macOS more robust
-Message-ID: <a5d725bea7b2cc2b8f66682920dbba016e89da9e.1705318985.git.ps@pks.im>
+Subject: [PATCH 2/3] Makefile: detect new Homebrew location for ARM-based Macs
+Message-ID: <3adb0b7ae888db40949f788f9582569617c20c2b.1705318985.git.ps@pks.im>
 References: <cover.1705318985.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -70,93 +70,77 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="XWHvA9MJg4jQoHRN"
+	protocol="application/pgp-signature"; boundary="YnOwBsomyHgbfryQ"
 Content-Disposition: inline
 In-Reply-To: <cover.1705318985.git.ps@pks.im>
 
 
---XWHvA9MJg4jQoHRN
+--YnOwBsomyHgbfryQ
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-When setting up Perforce on macOS we put both `p4` and `p4d` into
-"$HOME/bin". On GitHub CI this directory is indeed contained in the PATH
-environment variable and thus there is no need for additional setup than
-to put the binaries there. But GitLab CI does not do this, and thus our
-Perforce-based tests would be skipped there even though we download the
-binaries.
+With the introduction of the ARM-based Macs the default location for
+Homebrew has changed from "/usr/local" to "/opt/homebrew". We only
+handle the former location though, which means that unless the user has
+manually configured required search paths we won't be able to locate it.
 
-Refactor the setup code to become more robust by downloading binaries
-into a separate directory which we then manually append to our PATH.
-This matches what we do on Linux-based jobs.
+Improve upon this by adding relevant paths to our CFLAGS and LDFLAGS as
+well as detecting the location of msgfmt(1).
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- ci/install-dependencies.sh | 10 ++++------
- ci/lib.sh                  |  3 +++
- 2 files changed, 7 insertions(+), 6 deletions(-)
+ config.mak.uname | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
-diff --git a/ci/install-dependencies.sh b/ci/install-dependencies.sh
-index 4f407530d3..b4e22de3cb 100755
---- a/ci/install-dependencies.sh
-+++ b/ci/install-dependencies.sh
-@@ -37,15 +37,13 @@ macos-*)
- 	test -z "$BREW_INSTALL_PACKAGES" ||
- 	brew install $BREW_INSTALL_PACKAGES
- 	brew link --force gettext
--	mkdir -p $HOME/bin
--	(
--		cd $HOME/bin
-+
-+	mkdir -p "$P4_PATH"
-+	pushd "$P4_PATH"
- 		wget -q "$P4WHENCE/bin.macosx1015x86_64/helix-core-server.tgz" &&
- 		tar -xf helix-core-server.tgz &&
- 		sudo xattr -d com.apple.quarantine p4 p4d 2>/dev/null || true
--	)
--	PATH=3D"$PATH:${HOME}/bin"
--	export PATH
-+	popd
+diff --git a/config.mak.uname b/config.mak.uname
+index 3bb03f423a..dacc95172d 100644
+--- a/config.mak.uname
++++ b/config.mak.uname
+@@ -158,6 +158,19 @@ ifeq ($(uname_S),Darwin)
+ 		ifeq ($(shell test -x /usr/local/opt/gettext/bin/msgfmt && echo y),y)
+ 			MSGFMT =3D /usr/local/opt/gettext/bin/msgfmt
+ 		endif
++	# On newer ARM-based machines the default installation path has changed to
++	# /opt/homebrew. Include it in our search paths so that the user does not
++	# have to configure this manually.
++	#
++	# Note that we do not employ the same workaround as above where we manual=
+ly
++	# add gettext. The issue was fixed more than three years ago by now, and =
+at
++	# that point there haven't been any ARM-based Macs yet.
++	else ifeq ($(shell test -d /opt/homebrew/ && echo y),y)
++		BASIC_CFLAGS +=3D -I/opt/homebrew/include
++		BASIC_LDFLAGS +=3D -L/opt/homebrew/lib
++		ifeq ($(shell test -x /opt/homebrew/bin/msgfmt && echo y),y)
++			MSGFMT =3D /opt/homebrew/bin/msgfmt
++		endif
+ 	endif
 =20
- 	if test -n "$CC_PACKAGE"
- 	then
-diff --git a/ci/lib.sh b/ci/lib.sh
-index c749b21366..f631206a44 100755
---- a/ci/lib.sh
-+++ b/ci/lib.sh
-@@ -344,6 +344,9 @@ macos-*)
- 	then
- 		MAKEFLAGS=3D"$MAKEFLAGS APPLE_COMMON_CRYPTO_SHA1=3DYes"
- 	fi
-+
-+	P4_PATH=3D"$HOME/custom/p4"
-+	export PATH=3D"$P4_PATH:$PATH"
- 	;;
- esac
-=20
+ 	# The builtin FSMonitor on MacOS builds upon Simple-IPC.  Both require
 --=20
 2.43.GIT
 
 
---XWHvA9MJg4jQoHRN
+--YnOwBsomyHgbfryQ
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmWlGrgACgkQVbJhu7ck
-PpTFyQ/8C4k3RvgHhc1839Lw+klGcf3MIcHgdh6dTaecZsgQ+tV9Dbmzs/RUijDg
-/4TzOpmC8MTKW2ZVo7POWrXEfnnoHmvLr7E7xYv2rpE+xvGoxexPVH90Bnl8G9bE
-Yx1Z7i5ti+gp4cnyjKIk6VpwjNr0Fz34eMBvmPYr0PG2EPeO3Kh/eIXkbA/FxIZo
-6cBTT2PmIZmRHMViKOehDJG+dCALUj8HfDQoXT+PIO6/hVM/zqkTFJgpa0aGyIdi
-urXaLbdQCR/HET/p3yXWT0SLt5NcDFI15OTSly4BJFYCkYqwB/y93qeNUraONHlc
-xYofj4LJmeuaAmR6gQAMgONVLZl3YgiVykc8sd1pf16wfSUYSA0gX/A0YZvF5USO
-1siz7alD5ybgErDT0Gih1Tt9op2su0cPrO4NT7RV8hDstoe4t3md4S8SD2im0AQ7
-b3lG5FEYntkR5dt6g8DcfAHwrAgC1wz9QpUOi9jSLaN8fXDIc2nHh/e71uFj/ZRT
-l+1wvTyCh9OZPN8wZ2FiinjlD7LG7br0zjPVzePcsErcgv62dWiLH3TQVkn2WiZA
-Bvh9knt7gddMSh+GUQ/StzD8YejF7geNf0BT8IEg/47u6vEQ1tttIX+cNn16W6YX
-MH84jkMI2t3EW2jIA2nwhMYHppWuxz80GqDkmJubi3jGsdG6OAc=
-=aE4x
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmWlGrwACgkQVbJhu7ck
+PpTgsw/+J1Sh694iTaaRqqgBvbC/kGpcgVqfepHWJLyTjzKCTtWjeFbut9/+w7IR
+ZU/VWZLHFTJ0HKnMuyHfQ12riE3ejws3m/9XhIW5NOHr9xecUFwT9s7uEVk1GZzP
+uu+xRym+cnkB+POfjVJh159XLez+R20u3DMeNchI9YjmXC1pI8PTmQc8UbZXXqaa
+MaJRVYv3KDO6Q6og3yXppzzWvA6YyuT6ai4TLm62ZqTAvaiFvg6w0S5NiBYc7Jig
+r0jo4QHmx0jqxVjL1F7EPXqfUAI8GOL4qJU973QTkhYQSopNkAiXsoKL23/jOtNl
+g6ROk2qCLrwhGzZetdD6VXKkCrpiZVjBzyQAsmFQRux2f8SiuFC8QXz210GCTbzS
+Pg6YIPmcCalmCMu+3gHfuEWxTyyknxYU48UsL8z6xWEm83cUsTouiF+LsBBPZanK
+RexMBM3ORtsYjE6Bw5aSDYVWUuGHM4V/11ZqEWzkl5EsRyZAkHc0ti/2azvwuRlT
+FKobxQFwhvrIGbY3PsXrChpqqGsMil46nCtjJgo3nTCLTStoNYyCrgn9z4h6MaZW
+rsYrhy+zbK1gHLkQEVP7bo8jfrv/XjlgDEHvDPW1EZZvKEstY7pCl6YNU0RZPFnL
+VK2W9yh3qGxhRn/4LiHtfACmdFUC/5/likALAZywQ6sHqf60NZg=
+=PX/C
 -----END PGP SIGNATURE-----
 
---XWHvA9MJg4jQoHRN--
+--YnOwBsomyHgbfryQ--
