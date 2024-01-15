@@ -1,161 +1,346 @@
-Received: from out5-smtp.messagingengine.com (out5-smtp.messagingengine.com [66.111.4.29])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com [209.85.128.45])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC13F1E865
-	for <git@vger.kernel.org>; Mon, 15 Jan 2024 10:36:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D573718E00
+	for <git@vger.kernel.org>; Mon, 15 Jan 2024 10:39:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="IxJK/ET8";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Nr7RJVMQ"
-Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
-	by mailout.nyi.internal (Postfix) with ESMTP id 0282C5C00ED;
-	Mon, 15 Jan 2024 05:36:19 -0500 (EST)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute3.internal (MEProxy); Mon, 15 Jan 2024 05:36:19 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1705314978; x=1705401378; bh=wCCU/d1kLL
-	TS0GW0fA+45QZMekQzArGY+W8T/+Wk0V0=; b=IxJK/ET8ByMUe6D35Gm4NMq6QW
-	s/xQU/noSTykl6c7WvJtIF7MOPsVK2MB7tA9SobBvkTqpjizhHc1pp33VYvKjLt9
-	HE4/jNaePNihSm62s27uT89A8gHh5QXlE9qChpPHq7CoVrb9wNr5V2rimID9aNqy
-	DJ+vBzE/eee+yrgXeWrZnmPBxXxd3X+cDm8xH240n5155FYeuPMK4/cogZTH9RgD
-	xmEMOb9C9WHk0n/iNr3plmrK5DUHE6eMkL9dAOtLQooJYFep4g8p2d8Z6SvLUL8C
-	FWvicpcPD5qUW1xtPHU0kxod4ol1FX/QTq7aIELYV/FVLy1nwIJHtfDqJp/A==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1705314978; x=1705401378; bh=wCCU/d1kLLTS0GW0fA+45QZMekQz
-	ArGY+W8T/+Wk0V0=; b=Nr7RJVMQQBFTJUEVAmBzVlohmi4ofaP++Gp39DSQLloq
-	ArEOd/DZAtndVAYpoKCEZxojb2/OrwJaGWg8vxXpA4xLi5keqOOIY52oBh8Qmvrp
-	LlbZZ37ILobnzCe/CuBkhNvcj/BOy1TGKa23zulBhWRRKRGv4PAA4L/UXM1ZeUFA
-	BlQE6XH/Ul9VFYHhqYF/erUcCt8RYCkbX6ibrpfheDv0n5E3P3V1r2CNZdq2+Wqi
-	UWd8ReI+Po3bckfBBw9L42JE25wylYLILqzp6K/gENz/GiAcW/1w8wDxAKmDDK/C
-	veNeyapGBCeXcCbTIBeA0ir0DqiExDHMNohFU+/EDw==
-X-ME-Sender: <xms:ogqlZfQff5q9UVo_0NAzASzA67agtds30pcIzu-JTS6iIU4LxFVwwA>
-    <xme:ogqlZQzvu1NpsLOwQ_Tm6_7d20Q6Pd_6N0JQ2l5BZq6hraAP-jwoDZyzsUFcp6iLu
-    sX16X9D1XXKSX9MSg>
-X-ME-Received: <xmr:ogqlZU3oOT7W99fzJWPtYPpJum7NQrXv3dMuboUaYl3ao3io1pVOcx7TYFmR4jNr96cOm0_lbysEgFXslLr3zp4Ld7c4R3ZabzThhF0Nw2oV0Q>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrvdejuddgudekucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    cujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtvdenucfhrhhomheprfgrthhr
-    ihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvg
-    hrnhepueektdevtdffveeljeetgfehheeigeekleduvdeffeeghefgledttdehjeelffet
-    necuvehluhhsthgvrhfuihiivgepudenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
-    hpkhhsrdhimh
-X-ME-Proxy: <xmx:ogqlZfCCPLeuJokJ988kM9-W4curuwMucd_Q1NwSae_XPOBgccoGng>
-    <xmx:ogqlZYgk63PwmQxEzAHdH3ihkauZyUWWmXe3zqUk3OuqVN63IrLvoQ>
-    <xmx:ogqlZTpaN7z_hhA00DGYY5yMzLUA30eW37gt_PHMEtC8u45L667EGw>
-    <xmx:ogqlZQd2rnYjUERXgczfenZn1Ot1zu54UCeNypxP-Yva-CiSJkajEA>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 15 Jan 2024 05:36:17 -0500 (EST)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 78e833b9 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 15 Jan 2024 10:33:27 +0000 (UTC)
-Date: Mon, 15 Jan 2024 11:36:15 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: git@vger.kernel.org
-Cc: Stan Hu <stanhu@gmail.com>,
-	SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder.dev@gmail.com>,
-	Jeff King <peff@peff.net>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v2 5/5] completion: treat dangling symrefs as existing
- pseudorefs
-Message-ID: <22269af050fc9379c1049afb8ae51cbfec2a3670.1705314554.git.ps@pks.im>
-References: <cover.1704969119.git.ps@pks.im>
- <cover.1705314554.git.ps@pks.im>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SHQRWlLA"
+Received: by mail-wm1-f45.google.com with SMTP id 5b1f17b1804b1-40e8004628dso1338985e9.0
+        for <git@vger.kernel.org>; Mon, 15 Jan 2024 02:39:19 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1705315158; x=1705919958; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=vbOp42ee6i7UZm31Um73K47JsEZr10hBHf5PGcR4CRE=;
+        b=SHQRWlLAy9q3UCzB9lPnHS5OdHZp4Dcom//r9B2rZ9wTK1Rux2zG2htcFHx7EeEQ+i
+         zZbcbXzqfrn1npfLqh/+WxgFJXcCCtsVbrm9ttSg/CigU7xAMbjFSBtZk+kPkSP/dQMI
+         hWvVBdA+QdvBjYXLa77yPvafoobuHwOU+mFaI9iqnZLU8TvQJJBNoCJEWMqWICz/dUNP
+         SP9X6gNbfvyxuRlsXld17ScI6PxgFnHtPd8zq6CAD5ifbVquwASxCo/wTNsgWUoY7Rr6
+         8v3EAjXlgz61YJskOs+bD2xGl9js+HgksguY5XYVzjOKQMUMz831NOjOOKx7sSF6YbtM
+         yOzA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1705315158; x=1705919958;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:reply-to:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=vbOp42ee6i7UZm31Um73K47JsEZr10hBHf5PGcR4CRE=;
+        b=expV71scFi7A4h3aFL0M3lOaiEfii0UIfSHcaSXn2NIjPc4flTYJMiQdt5glW5CjvD
+         wDSKIO6V4WbANJNA5Xxpp2OJLbCI7iKB4XdmNtX2IPciQQhiWC8l3SCtQ8Mh3J5y6y6K
+         8DtwUFsKnxVq/SjHipzL8TAowxOATJPcwItvbHWUWhygZIAqcwYcWtD+PdJe1V2h1waB
+         JpGiqG08NFKBUmXMowCsVNm+fq4KXCYw5yt4/uZWHA5+P9UwXFagDjTNO/VuMCL2Mmwt
+         0ZPUrgUzY+1abmtcFxRG1PIXj6cKAEYbTSz62zi9npZnPj1aZnOj7UkDqmx9ZwAdqEfk
+         /FgQ==
+X-Gm-Message-State: AOJu0Ywik/gNYwZ2SbEADJJUTgIzh90JVNoG/8yOIPtk1lwlafy43JMN
+	77pe+nCuudhR/v7avCQf4n8=
+X-Google-Smtp-Source: AGHT+IE+IOKjMygTwsDKJC6wgFE4YU0DNj2RWyUF003Alk9C2s0pC7nMnkdUDtRONWnC5mw/8mUF4w==
+X-Received: by 2002:a05:600c:198b:b0:40e:4e65:a6d4 with SMTP id t11-20020a05600c198b00b0040e4e65a6d4mr2609358wmq.196.1705315157809;
+        Mon, 15 Jan 2024 02:39:17 -0800 (PST)
+Received: from [192.168.1.212] ([84.64.64.237])
+        by smtp.gmail.com with ESMTPSA id t18-20020a05600c199200b0040e5951f199sm15273809wmq.34.2024.01.15.02.39.17
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 15 Jan 2024 02:39:17 -0800 (PST)
+Message-ID: <0d18a95a-543a-41de-8441-c8894d46d380@gmail.com>
+Date: Mon, 15 Jan 2024 10:39:16 +0000
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="XIJpZ+kAA5vNY0bm"
-Content-Disposition: inline
-In-Reply-To: <cover.1705314554.git.ps@pks.im>
+User-Agent: Mozilla Thunderbird
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [Outreachy][PATCH v5] Port helper/test-ctype.c to
+ unit-tests/t-ctype.c
+Content-Language: en-US
+To: Achu Luma <ach.lumap@gmail.com>, git@vger.kernel.org
+Cc: chriscool@tuxfamily.org, christian.couder@gmail.com, gitster@pobox.com,
+ l.s.r@web.de, me@ttaylorr.com, phillip.wood@dunelm.org.uk,
+ steadmon@google.com
+References: <20240105161413.10422-1-ach.lumap@gmail.com>
+ <20240112102743.1440-1-ach.lumap@gmail.com>
+From: Phillip Wood <phillip.wood123@gmail.com>
+In-Reply-To: <20240112102743.1440-1-ach.lumap@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
+Hi Achu
 
---XIJpZ+kAA5vNY0bm
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+On 12/01/2024 10:27, Achu Luma wrote:
+> In the recent codebase update (8bf6fbd00d (Merge branch
+> 'js/doc-unit-tests', 2023-12-09)), a new unit testing framework was
+> merged, providing a standardized approach for testing C code. Prior to
+> this update, some unit tests relied on the test helper mechanism,
+> lacking a dedicated unit testing framework. It's more natural to perform
+> these unit tests using the new unit test framework.
+> 
+> This commit migrates the unit tests for C character classification
+> functions (isdigit(), isspace(), etc) from the legacy approach
+> using the test-tool command `test-tool ctype` in t/helper/test-ctype.c
+> to the new unit testing framework (t/unit-tests/test-lib.h).
+> 
+> The migration involves refactoring the tests to utilize the testing
+> macros provided by the framework (TEST() and check_*()).
+> 
+> Mentored-by: Christian Couder <chriscool@tuxfamily.org>
+> Helped-by: René Scharfe <l.s.r@web.de>
+> Helped-by: Phillip Wood <phillip.wood123@gmail.com>
+> Helped-by: Taylor Blau <me@ttaylorr.com>
+> Signed-off-by: Achu Luma <ach.lumap@gmail.com>
+> ---
+>   The change between version 4 and version 5 is:
+>   - Added tests to handle EOF.
+> 
+>   Thanks to Phillip for noticing the missing tests..
+>   Here is a diff between v4 and v5:
+> 
+>   +       if (!check(!func(EOF))) \
+>   +                       test_msg("      i: 0x%02x (EOF)", EOF); \
 
-The `__git_pseudoref_exists ()` helper function back to git-rev-parse(1)
-in case the reftable backend is in use. This is not in the same spirit
-as the simple existence check that the "files" backend does though,
-because there we only check for the pseudo-ref to exist with `test -f`.
-With git-rev-parse(1) we not only check for existence, but also verify
-that the pseudo-ref resolves to an object, which may not be the case
-when the pseudo-ref points to an unborn branch.
+Thanks for adding back the test for EOF, this version looks good to me.
 
-Fix this issue by using `git show-ref --exists` instead. Note that we do
-not have to silence stdout anymore as git-show-ref(1) will not print
-anything.
+Best Wishes
 
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
----
- contrib/completion/git-completion.bash | 2 +-
- t/t9902-completion.sh                  | 4 ++++
- 2 files changed, 5 insertions(+), 1 deletion(-)
+Phillip
 
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/gi=
-t-completion.bash
-index 54ce58f73d..6662db221d 100644
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -148,7 +148,7 @@ __git_pseudoref_exists ()
- 	# platforms.
- 	if __git_eread "$__git_repo_path/HEAD" head; then
- 		if [ "$head" =3D=3D "ref: refs/heads/.invalid" ]; then
--			__git rev-parse --verify --quiet "$ref" >/dev/null
-+			__git show-ref --exists "$ref"
- 			return $?
- 		fi
- 	fi
-diff --git a/t/t9902-completion.sh b/t/t9902-completion.sh
-index 56dc7343a2..35eb534fdd 100755
---- a/t/t9902-completion.sh
-+++ b/t/t9902-completion.sh
-@@ -2743,6 +2743,10 @@ test_expect_success '__git_pseudoref_exists' '
- 		cd repo &&
- 		sane_unset __git_repo_path &&
-=20
-+		# HEAD should exist, even if it points to an unborn branch.
-+		__git_pseudoref_exists HEAD >output 2>&1 &&
-+		test_must_be_empty output &&
-+
- 		# HEAD points to an existing branch, so it should exist.
- 		test_commit A &&
- 		__git_pseudoref_exists HEAD >output 2>&1 &&
---=20
-2.43.GIT
-
-
---XIJpZ+kAA5vNY0bm
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmWlCp4ACgkQVbJhu7ck
-PpRfCg//a5Ezx8bMkVVl4iqJWUDb1pmev3UZpfZbcH7rhJnSmoL1GScNo9rmuvt3
-zK47Tl1vxd9L1Sn2uJl79hSrxr/BXi2phTjH4LXIaGDzOjs9RQBSnD5nJ0wWc4Ld
-uj/SPoTOuwtXhMqkUZw1xhmARD09UZXn9aVOMWftAw8Njl+paOs2hUNVDtpjgYNI
-29f29b35CIHQrxwOVSvjmgdGFdatOQ/JceRjeapUeSE3RpCtY69qB1oLVtzYwxBz
-+rcP6wVVtC1Tro/ezlSS3UN+tP81oSnjbnGTPkth/yO+s10DaH+10Lh3mWb6M6vq
-5LYBJPInTPa7G8EOSwQRg1OqIEejD1SWRCtnOjIWyD4I9XEyWIK/yXi0p8NuIoEM
-7Y9NuE9nneQ1d5b5jxXwxo6kH7IpwNWnuD0d9nm3isuP4Vh2WqYwehRLf6mwlQbv
-ric3da13j9nccYK4tXk/TZfEyL/J3XtmPvRieN8aiKmFFrdQ1ztGXeA0eHkDJ9wM
-UrdlfcmZX9HIcgIZB5MPgVgiSKTd0dtNFuktv+yFlTCL+wxwj09eLClVKROe1wBk
-3gFR8oFtK7Q0EbpgPqVoE7GxXlV+mCRz66yDy0D5PcXDyA0liSMYQkZICW8tZuZB
-V1gEgTtUK2AN2qbtwfYS54yBqEf2RHQWE9yGZ+8ZhYqoCRrE4Po=
-=HMMx
------END PGP SIGNATURE-----
-
---XIJpZ+kAA5vNY0bm--
+>   Thanks also to René, Phillip, Junio and Taylor who helped with
+>   previous versions.
+> 
+>   Makefile               |  2 +-
+>   t/helper/test-ctype.c  | 70 ------------------------------------
+>   t/helper/test-tool.c   |  1 -
+>   t/helper/test-tool.h   |  1 -
+>   t/t0070-fundamental.sh |  4 ---
+>   t/unit-tests/t-ctype.c | 80 ++++++++++++++++++++++++++++++++++++++++++
+>   6 files changed, 81 insertions(+), 77 deletions(-)
+>   delete mode 100644 t/helper/test-ctype.c
+>   create mode 100644 t/unit-tests/t-ctype.c
+> 
+> diff --git a/Makefile b/Makefile
+> index 15990ff312..1a62e48759 100644
+> --- a/Makefile
+> +++ b/Makefile
+> @@ -792,7 +792,6 @@ TEST_BUILTINS_OBJS += test-chmtime.o
+>   TEST_BUILTINS_OBJS += test-config.o
+>   TEST_BUILTINS_OBJS += test-crontab.o
+>   TEST_BUILTINS_OBJS += test-csprng.o
+> -TEST_BUILTINS_OBJS += test-ctype.o
+>   TEST_BUILTINS_OBJS += test-date.o
+>   TEST_BUILTINS_OBJS += test-delta.o
+>   TEST_BUILTINS_OBJS += test-dir-iterator.o
+> @@ -1342,6 +1341,7 @@ THIRD_PARTY_SOURCES += sha1dc/%
+>   UNIT_TEST_PROGRAMS += t-basic
+>   UNIT_TEST_PROGRAMS += t-mem-pool
+>   UNIT_TEST_PROGRAMS += t-strbuf
+> +UNIT_TEST_PROGRAMS += t-ctype
+>   UNIT_TEST_PROGS = $(patsubst %,$(UNIT_TEST_BIN)/%$X,$(UNIT_TEST_PROGRAMS))
+>   UNIT_TEST_OBJS = $(patsubst %,$(UNIT_TEST_DIR)/%.o,$(UNIT_TEST_PROGRAMS))
+>   UNIT_TEST_OBJS += $(UNIT_TEST_DIR)/test-lib.o
+> diff --git a/t/helper/test-ctype.c b/t/helper/test-ctype.c
+> deleted file mode 100644
+> index e5659df40b..0000000000
+> --- a/t/helper/test-ctype.c
+> +++ /dev/null
+> @@ -1,70 +0,0 @@
+> -#include "test-tool.h"
+> -
+> -static int rc;
+> -
+> -static void report_error(const char *class, int ch)
+> -{
+> -	printf("%s classifies char %d (0x%02x) wrongly\n", class, ch, ch);
+> -	rc = 1;
+> -}
+> -
+> -static int is_in(const char *s, int ch)
+> -{
+> -	/*
+> -	 * We can't find NUL using strchr. Accept it as the first
+> -	 * character in the spec -- there are no empty classes.
+> -	 */
+> -	if (ch == '\0')
+> -		return ch == *s;
+> -	if (*s == '\0')
+> -		s++;
+> -	return !!strchr(s, ch);
+> -}
+> -
+> -#define TEST_CLASS(t,s) {			\
+> -	int i;					\
+> -	for (i = 0; i < 256; i++) {		\
+> -		if (is_in(s, i) != t(i))	\
+> -			report_error(#t, i);	\
+> -	}					\
+> -	if (t(EOF))				\
+> -		report_error(#t, EOF);		\
+> -}
+> -
+> -#define DIGIT "0123456789"
+> -#define LOWER "abcdefghijklmnopqrstuvwxyz"
+> -#define UPPER "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+> -#define PUNCT "!\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~"
+> -#define ASCII \
+> -	"\x00\x01\x02\x03\x04\x05\x06\x07\x08\x09\x0a\x0b\x0c\x0d\x0e\x0f" \
+> -	"\x10\x11\x12\x13\x14\x15\x16\x17\x18\x19\x1a\x1b\x1c\x1d\x1e\x1f" \
+> -	"\x20\x21\x22\x23\x24\x25\x26\x27\x28\x29\x2a\x2b\x2c\x2d\x2e\x2f" \
+> -	"\x30\x31\x32\x33\x34\x35\x36\x37\x38\x39\x3a\x3b\x3c\x3d\x3e\x3f" \
+> -	"\x40\x41\x42\x43\x44\x45\x46\x47\x48\x49\x4a\x4b\x4c\x4d\x4e\x4f" \
+> -	"\x50\x51\x52\x53\x54\x55\x56\x57\x58\x59\x5a\x5b\x5c\x5d\x5e\x5f" \
+> -	"\x60\x61\x62\x63\x64\x65\x66\x67\x68\x69\x6a\x6b\x6c\x6d\x6e\x6f" \
+> -	"\x70\x71\x72\x73\x74\x75\x76\x77\x78\x79\x7a\x7b\x7c\x7d\x7e\x7f"
+> -#define CNTRL \
+> -	"\x00\x01\x02\x03\x04\x05\x06\x07\x08\x09\x0a\x0b\x0c\x0d\x0e\x0f" \
+> -	"\x10\x11\x12\x13\x14\x15\x16\x17\x18\x19\x1a\x1b\x1c\x1d\x1e\x1f" \
+> -	"\x7f"
+> -
+> -int cmd__ctype(int argc UNUSED, const char **argv UNUSED)
+> -{
+> -	TEST_CLASS(isdigit, DIGIT);
+> -	TEST_CLASS(isspace, " \n\r\t");
+> -	TEST_CLASS(isalpha, LOWER UPPER);
+> -	TEST_CLASS(isalnum, LOWER UPPER DIGIT);
+> -	TEST_CLASS(is_glob_special, "*?[\\");
+> -	TEST_CLASS(is_regex_special, "$()*+.?[\\^{|");
+> -	TEST_CLASS(is_pathspec_magic, "!\"#%&',-/:;<=>@_`~");
+> -	TEST_CLASS(isascii, ASCII);
+> -	TEST_CLASS(islower, LOWER);
+> -	TEST_CLASS(isupper, UPPER);
+> -	TEST_CLASS(iscntrl, CNTRL);
+> -	TEST_CLASS(ispunct, PUNCT);
+> -	TEST_CLASS(isxdigit, DIGIT "abcdefABCDEF");
+> -	TEST_CLASS(isprint, LOWER UPPER DIGIT PUNCT " ");
+> -
+> -	return rc;
+> -}
+> diff --git a/t/helper/test-tool.c b/t/helper/test-tool.c
+> index 37ba996539..33b9501c21 100644
+> --- a/t/helper/test-tool.c
+> +++ b/t/helper/test-tool.c
+> @@ -19,7 +19,6 @@ static struct test_cmd cmds[] = {
+>   	{ "config", cmd__config },
+>   	{ "crontab", cmd__crontab },
+>   	{ "csprng", cmd__csprng },
+> -	{ "ctype", cmd__ctype },
+>   	{ "date", cmd__date },
+>   	{ "delta", cmd__delta },
+>   	{ "dir-iterator", cmd__dir_iterator },
+> diff --git a/t/helper/test-tool.h b/t/helper/test-tool.h
+> index 8a1a7c63da..b72f07ded9 100644
+> --- a/t/helper/test-tool.h
+> +++ b/t/helper/test-tool.h
+> @@ -12,7 +12,6 @@ int cmd__chmtime(int argc, const char **argv);
+>   int cmd__config(int argc, const char **argv);
+>   int cmd__crontab(int argc, const char **argv);
+>   int cmd__csprng(int argc, const char **argv);
+> -int cmd__ctype(int argc, const char **argv);
+>   int cmd__date(int argc, const char **argv);
+>   int cmd__delta(int argc, const char **argv);
+>   int cmd__dir_iterator(int argc, const char **argv);
+> diff --git a/t/t0070-fundamental.sh b/t/t0070-fundamental.sh
+> index 487bc8d905..a4756fbab9 100755
+> --- a/t/t0070-fundamental.sh
+> +++ b/t/t0070-fundamental.sh
+> @@ -9,10 +9,6 @@ Verify wrappers and compatibility functions.
+>   TEST_PASSES_SANITIZE_LEAK=true
+>   . ./test-lib.sh
+> 
+> -test_expect_success 'character classes (isspace, isalpha etc.)' '
+> -	test-tool ctype
+> -'
+> -
+>   test_expect_success 'mktemp to nonexistent directory prints filename' '
+>   	test_must_fail test-tool mktemp doesnotexist/testXXXXXX 2>err &&
+>   	grep "doesnotexist/test" err
+> diff --git a/t/unit-tests/t-ctype.c b/t/unit-tests/t-ctype.c
+> new file mode 100644
+> index 0000000000..f315489984
+> --- /dev/null
+> +++ b/t/unit-tests/t-ctype.c
+> @@ -0,0 +1,80 @@
+> +#include "test-lib.h"
+> +
+> +static int is_in(const char *s, int ch)
+> +{
+> +	/*
+> +	 * We can't find NUL using strchr. Accept it as the first
+> +	 * character in the spec -- there are no empty classes.
+> +	 */
+> +	if (ch == '\0')
+> +		return ch == *s;
+> +	if (*s == '\0')
+> +		s++;
+> +	return !!strchr(s, ch);
+> +}
+> +
+> +/* Macro to test a character type */
+> +#define TEST_CTYPE_FUNC(func, string) \
+> +static void test_ctype_##func(void) { \
+> +	for (int i = 0; i < 256; i++) { \
+> +		if (!check_int(func(i), ==, is_in(string, i))) \
+> +			test_msg("       i: 0x%02x", i); \
+> +	} \
+> +	if (!check(!func(EOF))) \
+> +			test_msg("      i: 0x%02x (EOF)", EOF); \
+> +}
+> +
+> +#define TEST_CHAR_CLASS(class) TEST(test_ctype_##class(), #class " works")
+> +
+> +#define DIGIT "0123456789"
+> +#define LOWER "abcdefghijklmnopqrstuvwxyz"
+> +#define UPPER "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+> +#define PUNCT "!\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~"
+> +#define ASCII \
+> +	"\x00\x01\x02\x03\x04\x05\x06\x07\x08\x09\x0a\x0b\x0c\x0d\x0e\x0f" \
+> +	"\x10\x11\x12\x13\x14\x15\x16\x17\x18\x19\x1a\x1b\x1c\x1d\x1e\x1f" \
+> +	"\x20\x21\x22\x23\x24\x25\x26\x27\x28\x29\x2a\x2b\x2c\x2d\x2e\x2f" \
+> +	"\x30\x31\x32\x33\x34\x35\x36\x37\x38\x39\x3a\x3b\x3c\x3d\x3e\x3f" \
+> +	"\x40\x41\x42\x43\x44\x45\x46\x47\x48\x49\x4a\x4b\x4c\x4d\x4e\x4f" \
+> +	"\x50\x51\x52\x53\x54\x55\x56\x57\x58\x59\x5a\x5b\x5c\x5d\x5e\x5f" \
+> +	"\x60\x61\x62\x63\x64\x65\x66\x67\x68\x69\x6a\x6b\x6c\x6d\x6e\x6f" \
+> +	"\x70\x71\x72\x73\x74\x75\x76\x77\x78\x79\x7a\x7b\x7c\x7d\x7e\x7f"
+> +#define CNTRL \
+> +	"\x00\x01\x02\x03\x04\x05\x06\x07\x08\x09\x0a\x0b\x0c\x0d\x0e\x0f" \
+> +	"\x10\x11\x12\x13\x14\x15\x16\x17\x18\x19\x1a\x1b\x1c\x1d\x1e\x1f" \
+> +	"\x7f"
+> +
+> +TEST_CTYPE_FUNC(isdigit, DIGIT)
+> +TEST_CTYPE_FUNC(isspace, " \n\r\t")
+> +TEST_CTYPE_FUNC(isalpha, LOWER UPPER)
+> +TEST_CTYPE_FUNC(isalnum, LOWER UPPER DIGIT)
+> +TEST_CTYPE_FUNC(is_glob_special, "*?[\\")
+> +TEST_CTYPE_FUNC(is_regex_special, "$()*+.?[\\^{|")
+> +TEST_CTYPE_FUNC(is_pathspec_magic, "!\"#%&',-/:;<=>@_`~")
+> +TEST_CTYPE_FUNC(isascii, ASCII)
+> +TEST_CTYPE_FUNC(islower, LOWER)
+> +TEST_CTYPE_FUNC(isupper, UPPER)
+> +TEST_CTYPE_FUNC(iscntrl, CNTRL)
+> +TEST_CTYPE_FUNC(ispunct, PUNCT)
+> +TEST_CTYPE_FUNC(isxdigit, DIGIT "abcdefABCDEF")
+> +TEST_CTYPE_FUNC(isprint, LOWER UPPER DIGIT PUNCT " ")
+> +
+> +int cmd_main(int argc, const char **argv) {
+> +	/* Run all character type tests */
+> +	TEST_CHAR_CLASS(isspace);
+> +	TEST_CHAR_CLASS(isdigit);
+> +	TEST_CHAR_CLASS(isalpha);
+> +	TEST_CHAR_CLASS(isalnum);
+> +	TEST_CHAR_CLASS(is_glob_special);
+> +	TEST_CHAR_CLASS(is_regex_special);
+> +	TEST_CHAR_CLASS(is_pathspec_magic);
+> +	TEST_CHAR_CLASS(isascii);
+> +	TEST_CHAR_CLASS(islower);
+> +	TEST_CHAR_CLASS(isupper);
+> +	TEST_CHAR_CLASS(iscntrl);
+> +	TEST_CHAR_CLASS(ispunct);
+> +	TEST_CHAR_CLASS(isxdigit);
+> +	TEST_CHAR_CLASS(isprint);
+> +
+> +	return test_done();
+> +}
+> --
+> 2.42.0.windows.2
+> 
+> 
