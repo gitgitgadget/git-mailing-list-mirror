@@ -1,129 +1,132 @@
-Received: from mail-yb1-f201.google.com (mail-yb1-f201.google.com [209.85.219.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC75322F08
-	for <git@vger.kernel.org>; Tue, 16 Jan 2024 22:23:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EDBE20319
+	for <git@vger.kernel.org>; Tue, 16 Jan 2024 22:30:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705443793; cv=none; b=IsPuAubUQcucOGM37yO3L49DpON6DmmtbcDmAWkEYRoBw6ZhymwRQx9T0Rp0Cd/5v45n0NMHQejuHbyXR38sPBkvnZfFh9SxM+LY6cwLfIeuPM/2ijnV7kn04tfwKhP05KvWakZ85ZrvQO/BvumPNfMZbQbAsM3CWzVdcXIr3eE=
+	t=1705444237; cv=none; b=Sn3htGt36knH/HgTGdG2tqn5CkIn9RGDjVZIGoZKJPoh8ZhmMgZfiaj+ArLnEzRhoZK7XD7KiSIWD5mrknKv0epVCIuOzK/7vhsdhEdDvzLtXA9ePi7TMw6fEDh7ztsuDSZs3sdyxvqg5zr/eTy0Q7h4Vwb+ncvRWqIVrdDtWXI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705443793; c=relaxed/simple;
-	bh=ImnuNHrbsrT107T+Bd7ds0uNe7oxOlaRuZlomJ9sIz4=;
-	h=Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Google-Smtp-Source:X-Received:Date:
-	 In-Reply-To:Mime-Version:References:X-Mailer:Message-ID:Subject:
-	 From:To:Cc:Content-Type; b=a8WB+Mva220qXxIBhtHr5GS4Z7EI+0HFs6YmZa+pBSEtf2RQDotnZP1jZWz4DSxRLAEMAqgHlvzUnmWKpCQrrUJdvLLZSgytZRuwOORQF5I5FeoJXamcPPaUhJ15e7NncRXOY6Lmfzt8hXE9zKQBf2SBDfozX61NwaV3oV3NQ6w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--steadmon.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=fH0BjVJF; arc=none smtp.client-ip=209.85.219.201
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--steadmon.bounces.google.com
+	s=arc-20240116; t=1705444237; c=relaxed/simple;
+	bh=daVjCPeUfkk0F3bxwOj98/4JnRmObUhYnYBHla+hg5M=;
+	h=Received:DKIM-Signature:Received:Received:From:To:Cc:Subject:
+	 In-Reply-To:References:Date:Message-ID:User-Agent:MIME-Version:
+	 Content-Type:X-Pobox-Relay-ID; b=m/8rz+R1JL4WggFA5AdDuQl3b1CPnxB2PYp9pOMuwBTjY9nAuuKvCHHrWlQgKfDd7Z6Sh7XHMaKY3jZdS/NCVVPzDshGHj+WQzpEC672qbp0Rj1sbxR0yPAqHCYK2A9eh8sFe/q1TuGAGuYZIwX/hqV6sTtbYRnEN+S2Iesnrtc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=TAJIabzb; arc=none smtp.client-ip=173.228.157.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="fH0BjVJF"
-Received: by mail-yb1-f201.google.com with SMTP id 3f1490d57ef6-dc22fb24e69so1392621276.1
-        for <git@vger.kernel.org>; Tue, 16 Jan 2024 14:23:11 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1705443791; x=1706048591; darn=vger.kernel.org;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=suYFF98iTNG53g1o8dOdQiTVszv6PhwfTv3JUSySOr4=;
-        b=fH0BjVJFMfVXKXSg2ACdJlnmDDM++59gA1N7LjkVkaS/SzZNKACz4Nqzqv2A1h6jqL
-         YWLG6ubT51f0c4e2EaiM0NkZKFzgr4JGsrfyJloxx8mqP/TSboE1OAilAa7mQ9/CKaek
-         gd9fPhzZo10cZPJzTyfX3eaIZDvwB3kJHLUFZu5gzypf+un4qvn8dKiJtmbSgKpTGZMP
-         utb6grcueaMd2FoF69zE5Ij7H8i+uEGNYOz/rDBVqiS7wQdDnMd8ZdYxcjKrYSoxOtrA
-         tm5zpybB553Fy3AJMmsA3x4LMo4iO7nH7jR+FJUEcn1M6rBI7f/McviqgnCPzmOxBpam
-         axSg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1705443791; x=1706048591;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=suYFF98iTNG53g1o8dOdQiTVszv6PhwfTv3JUSySOr4=;
-        b=e8zWweD2/WPtKPPcNo6G0uZqb5USJBourRf2zDBPptU6a6Ah4GVSnD0VjGgB9x7CY9
-         XXNVO0YJdKtllRZEWGfIubq3PPH2xweCUUrH1chVxLubJH9Nk4lStsIYNA8eIpSCrqvQ
-         hc2Gl/r88Nt6VzemDDQ50oFx3+SPu1dOdivm3ukDurCftspmgZxnAmWF1LbBDt+Iw3jz
-         CHjTFP/sqH8JoVr5vGh1SQGmUaTvSqh4lxvNzB4OJPK6H1JZE9aMNw3qCHna2wGwNlT2
-         VQ/yjR2S3d81S4/WGMM3Shuc525tKTG7kzQ27snuYTYi930LdYTZgGCoVUOOWARA13nE
-         UYJA==
-X-Gm-Message-State: AOJu0YzArLaDtMdCCSmaBGYdN5OjBKPEPZsjErczVse7DdbFctlbtCM+
-	L+5fNuuDUjpv5ChAzGXAnhD505AngHIMg1NREpA1xicU9fCdDBcEhAJpPnOpyU0mVp//MzCx24p
-	ddhbA8qcPXDFH6kuYqIcBEf9v9B/z1XT1qi4VvVCDTT2CI36qbyPVEVnNe6305L/L5AF2Fw==
-X-Google-Smtp-Source: AGHT+IGnmk90OHk/y6A/GxBIzi11gmf2HhFMum+ql/p1cu/Y0w/KLfXKRl+VtRDR/de21B5aHD2JkI5fhIKohA==
-X-Received: from lunarfall.svl.corp.google.com ([2620:15c:2d3:204:a6f6:5624:1895:86a4])
- (user=steadmon job=sendgmr) by 2002:a25:688e:0:b0:dc2:2ab6:699f with SMTP id
- d136-20020a25688e000000b00dc22ab6699fmr543560ybc.9.1705443790947; Tue, 16 Jan
- 2024 14:23:10 -0800 (PST)
-Date: Tue, 16 Jan 2024 14:23:01 -0800
-In-Reply-To: <cover.1705443632.git.steadmon@google.com>
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="TAJIabzb"
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id E57DB1A331;
+	Tue, 16 Jan 2024 17:30:35 -0500 (EST)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=daVjCPeUfkk0F3bxwOj98/4JnRmObUhYnYBHla
+	+hg5M=; b=TAJIabzbgzQPidiCHtUfO36you2mbEnmeoPlHqQixg+UI57TZWl0Rk
+	sMvu0weshaTRliJeF4LyD4Et4wlxN/Ilvf4qhBV3xQZLPNWO/217yiRo0HHWndRk
+	Clpdf3Fr1MCrtk0wHM8tSdJlehuiPOKX4C/Wwho7aESCFFxpmqaTU=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id DE92D1A330;
+	Tue, 16 Jan 2024 17:30:35 -0500 (EST)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.200.93])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id ABFDD1A32F;
+	Tue, 16 Jan 2024 17:30:31 -0500 (EST)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Kevin Wang via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Kevin Wang <kevmo314@gmail.com>
+Subject: Re: [PATCH] bisect: add --force flag to force checkout
+In-Reply-To: <pull.1641.git.git.1705302307639.gitgitgadget@gmail.com> (Kevin
+	Wang via GitGitGadget's message of "Mon, 15 Jan 2024 07:05:07 +0000")
+References: <pull.1641.git.git.1705302307639.gitgitgadget@gmail.com>
+Date: Tue, 16 Jan 2024 14:30:30 -0800
+Message-ID: <xmqqmst4ykqh.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-References: <cover.1705443632.git.steadmon@google.com>
-X-Mailer: git-send-email 2.43.0.381.gb435a96ce8-goog
-Message-ID: <c823265f0d6710f99668268ba9ae7092740efbab.1705443632.git.steadmon@google.com>
-Subject: [RFC PATCH 4/4] t/Makefile: run unit tests alongside shell tests
-From: Josh Steadmon <steadmon@google.com>
-To: git@vger.kernel.org
-Cc: johannes.schindelin@gmx.de, peff@peff.net, phillip.wood@dunelm.org.uk
-Content-Type: text/plain; charset="UTF-8"
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ DBA9EA5E-B4BE-11EE-9475-A19503B9AAD1-77302942!pb-smtp21.pobox.com
 
-From: Jeff King <peff@peff.net>
+"Kevin Wang via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-Add a wrapper script to allow `prove` to run both shell tests and unit
-tests from a single invocation. This avoids issues around running prove
-twice in CI, as discussed in [1].
+> From: Kevin Wang <kevmo314@gmail.com>
+>
+> Adds a `--force`/`-f` flag to `git bisect good/bad` and `git bisect run` to
+> force a checkout. Currently, if the repository state adds any local changes
+> the user must manually reset the repository state before moving to the next
+> bisection step. This can happen with package lock files or log output data,
+> for example. With this change, a developer can run `git bisect run --force`
+> to automatically reset the repository state after each evaluation. The flag
+> is also supported as `git bisect (good|bad) --force` as well.
 
-Additionally, this moves the unit tests into the main dev workflow, so
-that errors can be spotted more quickly.
+The usual way to compose a log message is to
 
-NEEDS WORK: as discussed in previous commits in this series, there's a
-desire to avoid `prove` specifically and (IIUC) unnecessary
-fork()/exec()ing in general on Windows. This change adds an extra exec()
-for each shell and unit test execution, will that be a problem for
-Windows?
+ - Give an observation on how the current system work in the present
+   tense (so no need to say "Currently X is Y", just "X is Y"), and
+   discuss what you perceive as a problem in it.
 
-[1] https://lore.kernel.org/git/pull.1613.git.1699894837844.gitgitgadget@gmail.com/
+ - Propose a solution (optional---often, problem description
+   trivially leads to an obvious solution in reader's minds).
 
-Signed-off-by: Jeff King <peff@peff.net>
-Signed-off-by: Josh Steadmon <steadmon@google.com>
----
- t/Makefile    |  2 +-
- t/run-test.sh | 13 +++++++++++++
- 2 files changed, 14 insertions(+), 1 deletion(-)
- create mode 100755 t/run-test.sh
+ - Give commands to the make codebase "like so".
 
-diff --git a/t/Makefile b/t/Makefile
-index ad57ec0a41..0038a25e33 100644
---- a/t/Makefile
-+++ b/t/Makefile
-@@ -61,7 +61,7 @@ failed:
- 	test -z "$$failed" || $(MAKE) $$failed
- 
- prove: pre-clean check-chainlint $(TEST_LINT)
--	@echo "*** prove ***"; $(CHAINLINTSUPPRESS) $(PROVE) --exec '$(TEST_SHELL_PATH_SQ)' $(GIT_PROVE_OPTS) $(T) :: $(GIT_TEST_OPTS)
-+	@echo "*** prove (shell & unit tests) ***"; $(CHAINLINTSUPPRESS) $(PROVE) --exec ./run-test.sh $(GIT_PROVE_OPTS) $(T) $(UNIT_TESTS) :: $(GIT_TEST_OPTS)
- 	$(MAKE) clean-except-prove-cache
- 
- $(T):
-diff --git a/t/run-test.sh b/t/run-test.sh
-new file mode 100755
-index 0000000000..c29fef48dc
---- /dev/null
-+++ b/t/run-test.sh
-@@ -0,0 +1,13 @@
-+#!/bin/sh
-+
-+# A simple wrapper to run shell tests via TEST_SHELL_PATH,
-+# or exec unit tests directly.
-+
-+case "$1" in
-+*.sh)
-+	exec ${TEST_SHELL_PATH:-/bin/sh} "$@"
-+	;;
-+*)
-+	exec "$@"
-+	;;
-+esac
--- 
-2.43.0.381.gb435a96ce8-goog
+in this order.
 
+To those who have been intimately following the discussion, it often
+is understandable without both, but we are not writing for those who
+review the patches.  We are writing for future readers who are not
+aware of the review discussion we have on list, so we should give
+something to prepare them by setting the stage and stating the
+objective first, before going into how the patch solved it.
+
+Having said all that.
+
+I highly doubt that this patch is a good idea.  If your "bisect run"
+script needs to update something in the working tree before it runs
+some test, the script is in a much better place than Git, which is
+unaware of what your run script is doing, to prepare the working
+tree into pristine state.  The best Git would be able to do would be
+to "reset --hard", but that will lose local modifications that are
+deliberately there and has nothing to do with what your run script
+did.
+
+Adding some description to the documentation of "bisect run" and
+teaching readers a common trick of structuring their run script
+better might be a more productive approach, I would have to say.
+For example, when I bisect some old code, I may have to apply a
+temporary patch to some of the sources to get them compile with more
+recent compilers (I usually do this with a cherry-picking of a local
+fixup).  So my "bisect run" script might go like so:
+
+    #!/bin/sh
+    # bisect run
+
+    git apply local-fixup || exit 125
+    make test
+    status=$?
+    make distclean
+    git apply -R local-fixup || exit 125
+    exit $status
+
+That is, I'd apply some local fix-up to the working tree files
+before running tests, and once done, I revert the local fix-up
+and exit from the run script with the exit status of the test
+I wanted to perform.
+    
+This way, I can keep other local changes (things like changes to
+documentation files that I am working on, which has nothing to do
+with the problem I am bisecting but I know they do not interfere)
+without wiping them away with a sledgehammer "reset --hard".  Your
+"bisect good/bad -f" sounds like the sledgehammer approach to me.
+
+Thanks.
