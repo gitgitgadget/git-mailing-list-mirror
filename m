@@ -1,151 +1,99 @@
-Received: from mail-yw1-f172.google.com (mail-yw1-f172.google.com [209.85.128.172])
+Received: from mail-oa1-f43.google.com (mail-oa1-f43.google.com [209.85.160.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4557010782
-	for <git@vger.kernel.org>; Tue, 16 Jan 2024 09:04:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAF3C12B60
+	for <git@vger.kernel.org>; Tue, 16 Jan 2024 09:17:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Qu3ROOrg"
-Received: by mail-yw1-f172.google.com with SMTP id 00721157ae682-5ff4b02a187so6909787b3.1
-        for <git@vger.kernel.org>; Tue, 16 Jan 2024 01:04:40 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fEsZullM"
+Received: by mail-oa1-f43.google.com with SMTP id 586e51a60fabf-2041c292da8so5736511fac.3
+        for <git@vger.kernel.org>; Tue, 16 Jan 2024 01:17:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1705395880; x=1706000680; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=UerO2q2xIHp2MhMygj4XekZDcmQRIlXdz98LiSYi/yY=;
-        b=Qu3ROOrgTIQyyFAljN8yqoh5mzsXEbsDJNn/2rzZPY73ZzWypcPvXhB4/OnECDX1BJ
-         zQUfAQx9ty/48cdcEP8mVpfv+G8buNBMY0cMpqW6cuW/KLqBUKeaRlqHWWAm44UEkxQH
-         5pDZJ4Jf+F2pxqMHhD1d1TolAmcP48o6x8gVBlk/2e6BdQFshmXIbwalFYDCVcU8uqPr
-         7TpMn9CDVd4htTwrNuPB54pWRDhH8mmWkbJVa4/gvf2jpAJmmwq36GIm9hN2PYOAa+BV
-         WyYfLaaOFSYi90hEXEvchioiDgwRWrCtZmMERNBelvgyZ3p6oCeWapblvSZKPD2Gfldp
-         iaDA==
+        d=gmail.com; s=20230601; t=1705396661; x=1706001461; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=TJ0d3QRiqbhdXGv4V+PZGpdbyPpPhSyvqM0JsrEaOFA=;
+        b=fEsZullMKkeZuYzALMHN+zge9GStPrg0k/9E8Sa1Yk15RiSbbSnNnpz2VbcSTtPOPC
+         G+Gh6hqkC+PC6PxkxGrMW4UzIaMsRFgKCC53cf/WBFBmDLQ78gkGQnYCUDZNGAO2kx1h
+         CAVL4myRJ1ydwngz4iAaiyXl2G8XE+dQDSi8FkbE7fCxOUbJ2AKlJpchS0UDbTShI4wJ
+         GMtQQeD8yFhamyJ917KF3LKdAZfJ+cZwXPDnbbH9KdCRfd0i4GPwZUM3MVlDNn9R29kJ
+         nkXYoVKvALdKMZQg3rGHewjfqysd4uWQpBjjvjO/fzVLMmUgN31nuW/XOsHAotHGbvxP
+         01Pw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1705395880; x=1706000680;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=UerO2q2xIHp2MhMygj4XekZDcmQRIlXdz98LiSYi/yY=;
-        b=uOY4optzAYV0c3dWCKeZG8n7vwDhKWB7TND+uPDnG9AdcBME8qTz/ekiRieoSv9WHp
-         uiSfr0AKUtys7AoUBrDbHtqXeP/lAP1qHi19ctNAmVKNGTKPMqWv2Mo/IiX/WyTK3mbH
-         U8pcTIRtB66qh7tgo72VwmaoTeG1HH/NZMKTaVraDczRjhHlpMtvJf99h+CZ7FLtgIqr
-         LiSHPwOFzcSvJ1Sdj+wCjM1zp/HUwKjBkdLYerkrX4NRtvIu40eM3J0kd2nTlYNFk9NF
-         1iXOWl5LwKEA7gfWfBUFuZaxsBueCeU+LzOayNo7h0q/NQwi3PnuP1PdP8Zr1UJQ2mBn
-         FtQw==
-X-Gm-Message-State: AOJu0YzvP5xfiR6Wf6uHntFKApKZNys6mCQ464vgoalwpVH6Ownk+Auq
-	FwBIhvhFRc2rRIxJwWB5LQ/+asG3aoqbmfY9Yaw=
-X-Google-Smtp-Source: AGHT+IF6faiigBpD+hjm3KrooHaie0HjJGuksuP/UOfxCwpc693CYlsqi5ifPRZsaCS63woXD9QWWIal7TSRUSz9Pac=
-X-Received: by 2002:a0d:cc56:0:b0:5ff:4755:3711 with SMTP id
- o83-20020a0dcc56000000b005ff47553711mr1369626ywd.11.1705395880060; Tue, 16
- Jan 2024 01:04:40 -0800 (PST)
+        d=1e100.net; s=20230601; t=1705396661; x=1706001461;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=TJ0d3QRiqbhdXGv4V+PZGpdbyPpPhSyvqM0JsrEaOFA=;
+        b=KTRpJs+kpCnfbp96WICg74g3haMBlWc7xERHGTLYC7JMEqKmLXYUPReKZCoO5cVRLo
+         HDKWkJbErdKEKq4CO8u3ItGfKmtlLCkEdwmPrnoNWM124fiCFdfbrLDAqKmQdTakTMUl
+         cWbIr2zxY/8AH/p8pQlMsPqHa47ddad5qmPH0HW/9lQmtHMvkn3o7MkB/M5ZkiRztfBl
+         v+sjaEQ1FBF9FwEbXQR4a0ACWFvhEQePcuKPA9Qg/deUUmGVeJS/pHj2oU+mrflqGPSQ
+         Xt43U7JAxbm2rKj7yLHlyH+itswfap+ByHt1/PBnpZZmccyUcB35zA/SyzN7m3LVQlne
+         JC3Q==
+X-Gm-Message-State: AOJu0YzHM/Qu6S4a6Paj7EuGJ8RxxpxgSYXoR/9yxxicrQmTOdofdIFs
+	2aYSehAbPoo1ncq01nd3FvOx8o/C/Qvchfjj6eX9xcWvJKZdSQ==
+X-Google-Smtp-Source: AGHT+IHBLahLrXXsiX6VHKWezIo4oKVp2E41Kdj9966aP6nqZcHt2xFmmphX84uoN9xdLu7qn7chbvjmLQtMhTzjBIk=
+X-Received: by 2002:a05:6870:7a0:b0:206:b45c:194 with SMTP id
+ en32-20020a05687007a000b00206b45c0194mr8065478oab.44.1705396661572; Tue, 16
+ Jan 2024 01:17:41 -0800 (PST)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Tue, 16 Jan 2024 04:17:40 -0500
+From: Karthik Nayak <karthik.188@gmail.com>
+In-Reply-To: <cover.1704705733.git.ps@pks.im>
+References: <cover.1703754513.git.ps@pks.im> <cover.1704705733.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <cover.1696432593.git.zhiyou.jx@alibaba-inc.com>
- <cover.1702562879.git.zhiyou.jx@alibaba-inc.com> <d343585cb5e696f521c2ee1dd6c0f0c2d86de113.1702562879.git.zhiyou.jx@alibaba-inc.com>
- <owlyy1cvhua5.fsf@fine.c.googlers.com>
-In-Reply-To: <owlyy1cvhua5.fsf@fine.c.googlers.com>
-From: Jiang Xin <worldhello.net@gmail.com>
-Date: Tue, 16 Jan 2024 17:04:28 +0800
-Message-ID: <CANYiYbFOa-E8Pivhgn_nmy982fn7VPtb803bewnC_UV7qY3xcw@mail.gmail.com>
-Subject: Re: [PATCH v4 1/4] transport-helper: no connection restriction in connect_helper
-To: Linus Arver <linusa@google.com>
-Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>, 
-	Jiang Xin <zhiyou.jx@alibaba-inc.com>
+Date: Tue, 16 Jan 2024 04:17:40 -0500
+Message-ID: <CAOLa=ZS3aVP=h9iC2i_4Hbx_-OSdqJ8S6xYT65CPyXd+9_=4Nw@mail.gmail.com>
+Subject: Re: [PATCH v2 0/6] worktree: initialize refdb via ref backends
+To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
+Cc: Junio C Hamano <gitster@pobox.com>, Eric Sunshine <sunshine@sunshineco.com>
+Content-Type: multipart/mixed; boundary="000000000000370639060f0c9aa8"
+
+--000000000000370639060f0c9aa8
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-On Fri, Jan 12, 2024 at 3:42=E2=80=AFPM Linus Arver <linusa@google.com> wro=
-te:
->
-> Jiang Xin <worldhello.net@gmail.com> writes:
->
-> > From: Jiang Xin <zhiyou.jx@alibaba-inc.com>
-> >
-> > When commit b236752a (Support remote archive from all smart transports,
-> > 2009-12-09) added "remote archive" support for "smart transports", it
-> > was for transport that supports the ".connect" method. The
-> > "connect_helper()" function protected itself from getting called for a
-> > transport without the method before calling process_connect_service(),
->
-> OK.
->
-> > which did not work with such a transport.
->
-> How about 'which only worked with the ".connect" method.' ?
->
-> >
-> > Later, commit edc9caf7 (transport-helper: introduce stateless-connect,
-> > 2018-03-15) added a way for a transport without the ".connect" method
-> > to establish a "stateless" connection in protocol-v2, which
->
-> s/which/where
->
-> > process_connect_service() was taught to handle the "stateless"
-> > connection,
->
-> I think using 'the ".stateless_connect" method' is more consistent with
-> the rest of this text.
->
-> > making the old safety valve in its caller that insisted
-> > that ".connect" method must be defined too strict, and forgot to loosen
-> > it.
->
-> I think just "...making the old protection too strict. But edc9caf7
-> forgot to adjust this protection accordingly." is simpler to read.
+Patrick Steinhardt <ps@pks.im> writes:
 
-Thanks for the above suggestions, and will update in next reroll.
-
-> > Remove the restriction in the "connect_helper()" function and give the
-> > function "process_connect_service()" the opportunity to establish a
-> > connection using ".connect" or ".stateless_connect" for protocol v2. So
-> > we can connect with a stateless-rpc and do something useful. E.g., in a
-> > later commit, implements remote archive for a repository over HTTP
-> > protocol.
-> >
-> > Helped-by: Junio C Hamano <gitster@pobox.com>
-> > Signed-off-by: Jiang Xin <zhiyou.jx@alibaba-inc.com>
-> > ---
-> >  transport-helper.c | 2 --
-> >  1 file changed, 2 deletions(-)
-> >
-> > diff --git a/transport-helper.c b/transport-helper.c
-> > index 49811ef176..2e127d24a5 100644
-> > --- a/transport-helper.c
-> > +++ b/transport-helper.c
-> > @@ -662,8 +662,6 @@ static int connect_helper(struct transport *transpo=
-rt, const char *name,
-> >
-> >       /* Get_helper so connect is inited. */
-> >       get_helper(transport);
-> > -     if (!data->connect)
-> > -             die(_("operation not supported by protocol"));
+> Hi,
 >
-> Should we still terminate early here if both data->connect and
-> data->stateless_connect are not truthy? It would save a few CPU cycles,
-> but even better, remain true to the the original intent of the code.
-> Maybe there was a really good reason to terminate early here that we're
-> not aware of?
+> this is the second version of my patch series that refactors the
+> initialization of worktree refdbs to use the refs API.
+>
+> Changes compared to v1:
+>
+>   - Improved commit messages.
+>
+>   - This series is now based on `ps/refstorage-extension`, 1b2234079b
+>     (t9500: write "extensions.refstorage" into config, 2023-12-29).
+>     While there is no functional dependency between those series,
+>     merging both topics causes a merge conflict.
 >
 
-It's not necessary to check data->connect here, because it will
-terminate if fail to connect by calling the function
-"process_connect_service()".
+This looks good to me now. Thanks Patrick!
 
-> But also, what about the case where both are enabled? Should we print an
-> error message? (Maybe this concern is outside the scope of this series?)
+--000000000000370639060f0c9aa8
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: d163857e828bdcf_0.1
 
-In the function "process_connect_service()", we can see that "connect"
-has a higher priority than "stateless-connect".
-
->
-> >       if (!process_connect_service(transport, name, exec))
-> >               die(_("can't connect to subservice %s"), name);
-
-Regardless of whether "connect" or "stateless-connect" is used, the
-function process_connect_service() will return 1 if the connection is
-successful. If the connection fails, it will terminate here.
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1XbVNhOFdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mMDhOQy85ZUlCbm1BWTcwS0ZtekF1emdONVhBekc4cgpFblExcm1nbzdz
+d3U5aFArNGlBMHhDL0x3N0hlNmZWS3M4akswcmFiOThVQkw1WTk1RmdKTC9waWE5elEwbllMCnl2
+aXA5VStoaHB4SW5xVThyam5NWW9wZG5FOWhkc2lyOXZIbmpIamNuZzJWclZINExFOXNtdk5yc09E
+VWVuYkUKTWg0ODNXZUZudWc2UVhJdnppeU9CSDFvWFh0MlhYd001SmNseDNhOEJsb3EwSGhuWDNr
+Y29NbThxczBEU0MwQwp0akJqeU5LMEZCa2M1SCtLN3hFcUtvbVR0eWZlSE83MkpWalZ1UG5HYlRV
+bzJYY05ueDFRam9nbGJNbms1b3laCkN2cmc5LzBXaUVnWXJvcS8vTmFKUC9TcVJuZVl5azJFWmEv
+K1ZFcDhiTHNTYW5za2JwMTl5SnJCbE9JMjhrS2wKemZOOEFScGpoOERnZzY4R2xkRjd2TXNXMFNZ
+ZFA0VmZnMFRMSkI0cUNKbzVjWUpkakpFVFAyRUc2eU1weUhsTQpYSG9ZTTQwc0VxMHlWcUV0NEpB
+RTNCZ0UvUTBNYWNoL2x5TktiOHhURzFITkdmVVFZem9KM3FpNVNwZ1pMVGY1ClozaTh1bXZyUXRy
+c2RMNzdBb1ZxbGljVmpOK1dBODdhSHJKYkErOD0KPVhRZXUKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--000000000000370639060f0c9aa8--
