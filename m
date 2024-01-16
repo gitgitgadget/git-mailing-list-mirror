@@ -1,108 +1,151 @@
-Received: from mout.kundenserver.de (mout.kundenserver.de [212.227.17.10])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f172.google.com (mail-yw1-f172.google.com [209.85.128.172])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0121812B66
-	for <git@vger.kernel.org>; Tue, 16 Jan 2024 08:49:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=delpeuch.eu
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=delpeuch.eu
-Received: from [192.168.178.189] ([93.206.2.182]) by mrelayeu.kundenserver.de
- (mreue106 [212.227.15.183]) with ESMTPSA (Nemesis) id
- 1MV5G4-1rWmaD0Iju-00S91w for <git@vger.kernel.org>; Tue, 16 Jan 2024 09:44:03
- +0100
-Message-ID: <8bb5e41e-4db9-4527-8492-3aca6a0f40bf@delpeuch.eu>
-Date: Tue, 16 Jan 2024 09:44:02 +0100
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4557010782
+	for <git@vger.kernel.org>; Tue, 16 Jan 2024 09:04:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Qu3ROOrg"
+Received: by mail-yw1-f172.google.com with SMTP id 00721157ae682-5ff4b02a187so6909787b3.1
+        for <git@vger.kernel.org>; Tue, 16 Jan 2024 01:04:40 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1705395880; x=1706000680; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=UerO2q2xIHp2MhMygj4XekZDcmQRIlXdz98LiSYi/yY=;
+        b=Qu3ROOrgTIQyyFAljN8yqoh5mzsXEbsDJNn/2rzZPY73ZzWypcPvXhB4/OnECDX1BJ
+         zQUfAQx9ty/48cdcEP8mVpfv+G8buNBMY0cMpqW6cuW/KLqBUKeaRlqHWWAm44UEkxQH
+         5pDZJ4Jf+F2pxqMHhD1d1TolAmcP48o6x8gVBlk/2e6BdQFshmXIbwalFYDCVcU8uqPr
+         7TpMn9CDVd4htTwrNuPB54pWRDhH8mmWkbJVa4/gvf2jpAJmmwq36GIm9hN2PYOAa+BV
+         WyYfLaaOFSYi90hEXEvchioiDgwRWrCtZmMERNBelvgyZ3p6oCeWapblvSZKPD2Gfldp
+         iaDA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1705395880; x=1706000680;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=UerO2q2xIHp2MhMygj4XekZDcmQRIlXdz98LiSYi/yY=;
+        b=uOY4optzAYV0c3dWCKeZG8n7vwDhKWB7TND+uPDnG9AdcBME8qTz/ekiRieoSv9WHp
+         uiSfr0AKUtys7AoUBrDbHtqXeP/lAP1qHi19ctNAmVKNGTKPMqWv2Mo/IiX/WyTK3mbH
+         U8pcTIRtB66qh7tgo72VwmaoTeG1HH/NZMKTaVraDczRjhHlpMtvJf99h+CZ7FLtgIqr
+         LiSHPwOFzcSvJ1Sdj+wCjM1zp/HUwKjBkdLYerkrX4NRtvIu40eM3J0kd2nTlYNFk9NF
+         1iXOWl5LwKEA7gfWfBUFuZaxsBueCeU+LzOayNo7h0q/NQwi3PnuP1PdP8Zr1UJQ2mBn
+         FtQw==
+X-Gm-Message-State: AOJu0YzvP5xfiR6Wf6uHntFKApKZNys6mCQ464vgoalwpVH6Ownk+Auq
+	FwBIhvhFRc2rRIxJwWB5LQ/+asG3aoqbmfY9Yaw=
+X-Google-Smtp-Source: AGHT+IF6faiigBpD+hjm3KrooHaie0HjJGuksuP/UOfxCwpc693CYlsqi5ifPRZsaCS63woXD9QWWIal7TSRUSz9Pac=
+X-Received: by 2002:a0d:cc56:0:b0:5ff:4755:3711 with SMTP id
+ o83-20020a0dcc56000000b005ff47553711mr1369626ywd.11.1705395880060; Tue, 16
+ Jan 2024 01:04:40 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Content-Language: en-US
-From: Antonin Delpeuch <antonin@delpeuch.eu>
-Subject: Custom merge drivers: accessing the pathnames and revisions of the
- files being merged
-To: git@vger.kernel.org
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Provags-ID: V03:K1:jkQ7VCN57c0OWfAKWveNOPZBSjn+EBzuUoR48zSdpFMhbbdzsSd
- MSzIclQQrcMZaKy/1zHV8irHlHX1CXnvBdQOH8RnlLqFJkTg5nvG2ujTMxeJKc7fwIeFS2P
- gifcQA/2mKGTRvzP19xdqauvDDLwsfoRd1Aai4NPe/iDAAqwsC6Sxb+rzLbbEDsUImZp2CY
- g7/E3d8TKE+TvfLFRzSEg==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:oTDy59UjNhc=;DeHnPzNL4PeHD97OD6A+uek1iZ1
- CA9FJIQFgAOl8gERmbkmrsnIVS+I9kPCpmPc6Fcnyh1syhZSJpJNV1Fz6EvMFpN9nLc4c78gp
- ekY9okNTH9co2gOV7+29KEsnwd75il7ZzWINpqCOTXmBBcrJQk0bDbTAvyQhhJNJ4ebOv0003
- 5XkVq7w6yfSKOhTnGkK18lYNlY1EyDwhw+FKMRYGvB4L6xRKS+XMa4RxYiLtiIGBqr0sP2H8Z
- u2R75Nuqtr7am/phhOE13ICgj7bOYZ0po8HE4qA8evR2n/ckMAQsFzCIPSeAMCs590eAFf90G
- Ge6yrau5QAvELj4CVdA8I9oyf++S1Cp/JajrLMN023mC+bufGAuD3iUY4f4vAl+2aGg5switM
- IYkA4yQaaT+AOV5Q71V6jc89a7h3bqtgFmF53c5E9maukd1d8ehkk4DC57SWHpJsyPVD61owh
- 6/xb/vpYdHf9sb1GY8OQD1GQJ55i1xCdY4HhdXKcXaiMJeZk8yj9OZYhJq5GGmfiCvbcUDY1I
- HtwYTwgPbhEqhrLUhXol8VhSYJEYDq9szdiEfAMwVj4cRiTLPT6AIR3R9RHy4QnIucYZTRSvM
- RwMFyWghYrHbVfgJpRVe4BTjWyi8ucXa70dQPNp9MEKglRiXc3vb8JvPAkWDJgSlDeBKXaVjZ
- 0oRu1qGsydYvCerWMq8AKx6oxQaqzKjnlx5lz4Wr1QZSE549XYKo2PkqAZEv8ioTYwWfrX/fW
- rH6LK9C8qOYLhumBAIsVDkmVDRc5ke5WheXPxJJ3gOD2lu2dvXP7HXnoj3uLdHBaG8HL8Bp4E
- +poX0bSNtbdjbhbIfXY4HwzRajZJuneaUeU3MbgYmZ05h4PzGWfnjyS7OK7B8e/JFugETGLCz
- Q6jz0EsI1o6ifRQ==
+References: <cover.1696432593.git.zhiyou.jx@alibaba-inc.com>
+ <cover.1702562879.git.zhiyou.jx@alibaba-inc.com> <d343585cb5e696f521c2ee1dd6c0f0c2d86de113.1702562879.git.zhiyou.jx@alibaba-inc.com>
+ <owlyy1cvhua5.fsf@fine.c.googlers.com>
+In-Reply-To: <owlyy1cvhua5.fsf@fine.c.googlers.com>
+From: Jiang Xin <worldhello.net@gmail.com>
+Date: Tue, 16 Jan 2024 17:04:28 +0800
+Message-ID: <CANYiYbFOa-E8Pivhgn_nmy982fn7VPtb803bewnC_UV7qY3xcw@mail.gmail.com>
+Subject: Re: [PATCH v4 1/4] transport-helper: no connection restriction in connect_helper
+To: Linus Arver <linusa@google.com>
+Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>, 
+	Jiang Xin <zhiyou.jx@alibaba-inc.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Hello,
+On Fri, Jan 12, 2024 at 3:42=E2=80=AFPM Linus Arver <linusa@google.com> wro=
+te:
+>
+> Jiang Xin <worldhello.net@gmail.com> writes:
+>
+> > From: Jiang Xin <zhiyou.jx@alibaba-inc.com>
+> >
+> > When commit b236752a (Support remote archive from all smart transports,
+> > 2009-12-09) added "remote archive" support for "smart transports", it
+> > was for transport that supports the ".connect" method. The
+> > "connect_helper()" function protected itself from getting called for a
+> > transport without the method before calling process_connect_service(),
+>
+> OK.
+>
+> > which did not work with such a transport.
+>
+> How about 'which only worked with the ".connect" method.' ?
+>
+> >
+> > Later, commit edc9caf7 (transport-helper: introduce stateless-connect,
+> > 2018-03-15) added a way for a transport without the ".connect" method
+> > to establish a "stateless" connection in protocol-v2, which
+>
+> s/which/where
+>
+> > process_connect_service() was taught to handle the "stateless"
+> > connection,
+>
+> I think using 'the ".stateless_connect" method' is more consistent with
+> the rest of this text.
+>
+> > making the old safety valve in its caller that insisted
+> > that ".connect" method must be defined too strict, and forgot to loosen
+> > it.
+>
+> I think just "...making the old protection too strict. But edc9caf7
+> forgot to adjust this protection accordingly." is simpler to read.
 
-Custom merge drivers [1] provide a convenient way to extend Git's merge 
-algorithms. But as far as I can tell, there is no way to access the 
-pathnames and revisions of the files to merge. Those would be very 
-useful to generate informative conflict markers, like the built-in merge 
-strategies do.
+Thanks for the above suggestions, and will update in next reroll.
 
-For instance, when merging with the ort strategy and diff3 conflict 
-style, I get markers such as:
+> > Remove the restriction in the "connect_helper()" function and give the
+> > function "process_connect_service()" the opportunity to establish a
+> > connection using ".connect" or ".stateless_connect" for protocol v2. So
+> > we can connect with a stateless-rpc and do something useful. E.g., in a
+> > later commit, implements remote archive for a repository over HTTP
+> > protocol.
+> >
+> > Helped-by: Junio C Hamano <gitster@pobox.com>
+> > Signed-off-by: Jiang Xin <zhiyou.jx@alibaba-inc.com>
+> > ---
+> >  transport-helper.c | 2 --
+> >  1 file changed, 2 deletions(-)
+> >
+> > diff --git a/transport-helper.c b/transport-helper.c
+> > index 49811ef176..2e127d24a5 100644
+> > --- a/transport-helper.c
+> > +++ b/transport-helper.c
+> > @@ -662,8 +662,6 @@ static int connect_helper(struct transport *transpo=
+rt, const char *name,
+> >
+> >       /* Get_helper so connect is inited. */
+> >       get_helper(transport);
+> > -     if (!data->connect)
+> > -             die(_("operation not supported by protocol"));
+>
+> Should we still terminate early here if both data->connect and
+> data->stateless_connect are not truthy? It would save a few CPU cycles,
+> but even better, remain true to the the original intent of the code.
+> Maybe there was a really good reason to terminate early here that we're
+> not aware of?
+>
 
-<<<<<<< HEAD:main/my_file.txt
-…
-||||||| 194c4190b:main/my_file.txt
-…
-=======
-…
- >>>>>>> origin/branch:main/my_renamed_file.txt
+It's not necessary to check data->connect here, because it will
+terminate if fail to connect by calling the function
+"process_connect_service()".
 
-Those strings at the end of conflict markers, with the revision and the 
-pathname, are very useful to understand which parts are coming from where.
+> But also, what about the case where both are enabled? Should we print an
+> error message? (Maybe this concern is outside the scope of this series?)
 
-When implementing a custom merge driver, I don't see how to access this 
-information to include it in the conflict markers. Custom merge drivers 
-are typically invoked on temporary files generated by Git with 
-uninformative paths, such as ".merge_file_NgiKjJ".
+In the function "process_connect_service()", we can see that "connect"
+has a higher priority than "stateless-connect".
 
-Therefore, my merge driver is only able to generate conflicts which look 
-like this:
+>
+> >       if (!process_connect_service(transport, name, exec))
+> >               die(_("can't connect to subservice %s"), name);
 
-<<<<<<< .merge_file_NgiKjJ
-…
-||||||| .merge_file_D1XtCW
-…
-=======
-…
- >>>>>>> .merge_file_WbmrBA
-
-Of course, in a given rebase/merge session, the order in which the 
-conflicting parts will be presented will remain consistent, so I will 
-generally be able to remember which revision each part corresponds to,
-but it's still a mental load I would ideally try to avoid. Also, if the 
-rename detection heuristics have false positives, then I can get merge 
-conflicts which come from unrelated files: in that case it is very 
-useful to see the pathnames, to understand this situation better.
-
-So, I wonder: would people be open to exposing additional parameters to 
-merge drivers? For instance we could add parameters "%X", "%Y" "%Z" to 
-expose those "revision:pathname" strings for each part. (I think colons 
-cannot be part of revision names, so this can be parsed unambiguously by 
-the custom merge driver to recover the revision and pathname 
-independently, if needed.)
-
-I would be happy to submit a patch for this if you think this makes 
-sense. If it is already possible to access this information in another 
-way, I would like to work on documenting that.
-
-Best wishes,
-Antonin
-
-[1]: https://git-scm.com/docs/gitattributes#_defining_a_custom_merge_driver
+Regardless of whether "connect" or "stateless-connect" is used, the
+function process_connect_service() will return 1 if the connection is
+successful. If the connection fails, it will terminate here.
