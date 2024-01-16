@@ -1,58 +1,58 @@
-Received: from mail-oi1-f172.google.com (mail-oi1-f172.google.com [209.85.167.172])
+Received: from mail-ot1-f50.google.com (mail-ot1-f50.google.com [209.85.210.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3024C55C03
-	for <git@vger.kernel.org>; Tue, 16 Jan 2024 22:09:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF8F656B7F
+	for <git@vger.kernel.org>; Tue, 16 Jan 2024 22:09:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705442966; cv=none; b=RTGRM3aXDGb29ujYtp89xOAyAjItGcJHR/fGgFK+kPTlv6rRPTEH1c+jvh38tBmBPSAE67noHY3QIGbK87zgQjq4ZIGp2DPZzwj2I4u7gaQQ0iyHziPS0X+trYoCNw6WBn45FpMDiYtpJ4Wt8mY5ImEKl4AOdr4WcSv/jl1HO/8=
+	t=1705442969; cv=none; b=RpJd3oiGzQuIk+RuTF77IeYWIOUQCzFG3NQ/IaxMuVyx0Ybe6q3i0oYc/eZat5sg1JNhjqwzhbce9gBPfPpetanznE2FYFEz5+nDI61Ix/TjEmB6j5hnLtDR0oWB9L8vMt//1FIv6M1f85kUDWmWCiGGoAusMKC5QfUcCHCjdMI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705442966; c=relaxed/simple;
-	bh=0IJrdJHY/qP58apoD2ow6blfL8xVKOwffsUEWgjiEn0=;
+	s=arc-20240116; t=1705442969; c=relaxed/simple;
+	bh=v9fi1NZIhp1xi1G7evsRiRRy0PGycUDBhZ7s0X9mq6w=;
 	h=Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Gm-Message-State:X-Google-Smtp-Source:X-Received:Received:Date:
 	 From:To:Cc:Subject:Message-ID:References:MIME-Version:Content-Type:
-	 Content-Disposition:In-Reply-To; b=jcFnqK71f/Ok8CJDtU+Lzsa0p/Uy7JlVLO6JUcAcDhq0FQOhBlGTbqfvrzTCVci9lzTugpR/vGeDbRbilZYdHugiluCEUZK81CZkJMG4AtqLDLz2gXBZuMyZ8qZDgzYNPFJZJlAFK7ZYb0GN/8cwNiEHAVfx0nOyXQENsLakOYM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=none smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=XNYtvG9n; arc=none smtp.client-ip=209.85.167.172
+	 Content-Disposition:In-Reply-To; b=JAtt0MY36FgnUFyOCzqZckJWz035sp7XEF9J6qK21/ehoUy3qF+BR8GryEXL2GdjMv/sbfhUAPsVXDyCmB4c1Ddd98AzxfFb12aZRGQPrrjkYH77N/tnOMFkoy7CPXdqg3nC7S8ClQ3+5eCrBI9aJ5qcKghoYqcANuAemWV9gqo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=none smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=UVPyZCKG; arc=none smtp.client-ip=209.85.210.50
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="XNYtvG9n"
-Received: by mail-oi1-f172.google.com with SMTP id 5614622812f47-3bd7477d7a3so1485903b6e.2
-        for <git@vger.kernel.org>; Tue, 16 Jan 2024 14:09:24 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="UVPyZCKG"
+Received: by mail-ot1-f50.google.com with SMTP id 46e09a7af769-6ddee0aa208so4900751a34.3
+        for <git@vger.kernel.org>; Tue, 16 Jan 2024 14:09:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1705442964; x=1706047764; darn=vger.kernel.org;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1705442966; x=1706047766; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=XBZBG0DIHtLbgIsZDa4P8j7yucGn6D6BmXj75W+N4Kc=;
-        b=XNYtvG9nROQIaIdtQkzYb1CXlEuoyc7NqLs1qaw4dHf3xeUbuDYyRisCubu2Pg50Jw
-         RqdXMVbREC80vWizlAkRM2DvNB5NoXkUs1uuiNK0lVLo0ukdVkbGBuyqYX3gfQK0u7xE
-         bef6lkIFLrUmq4uA7a+RauS/txQ2i2Zg3kkn2wuvGxQ19e3TC+0HZe54AnQPqjCoYJqy
-         KA5uVZqQU9YuGWL6Y5YnE4ZPWbEP6LjbDWTuaEWKnBH9QnrwpylsrABlgWpHUUMTvbli
-         dB0IAwzm1Rg1K61BwI0OEWmnzm7okDqpYEVjpJFd6m8sM3bcOmPKTs/aF8+Vwr6bTrYw
-         JP2g==
+        bh=+XPN8KT3cfPkEbL9Y2+Wb2qHbLtIeC9qIuXubwQUSec=;
+        b=UVPyZCKG/fzlz4x4KExOohctgNqylAkcZUpPXnc93SWZrVKfzCKtl38uxvKLKzg5RL
+         OEp8FGP0NIgFf6CSVJn8g387rs2MoUOdPyqF19j7wI3d1YkfAQDfmD8+pAmdrB5Cy6rw
+         2h54HEAncJI65MLBdPH0Dsr7w6xGLw31eS4zXuWudUeo5OxhWi7tE83vtFg8iXxFBshW
+         plkFHwBZGL9TviOLGDxaALW0cT7s12ZCZn1Y5+v+mZG6Qliz6h/r6aldMJbrV9zRK8En
+         lHY/KpvRzt0Om0m9yCB+g1eUwVw3cH3zJ8+Td+P8T2IDPMdg9IEQq6nmUl6oTIKNcUTD
+         K+Dg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1705442964; x=1706047764;
+        d=1e100.net; s=20230601; t=1705442966; x=1706047766;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=XBZBG0DIHtLbgIsZDa4P8j7yucGn6D6BmXj75W+N4Kc=;
-        b=XCk5UpP0COZBfOnIjqqllAHFa+uiKN+xKu7YseVaUDvS3qsgIjRYuEw/pmJgJbL2ws
-         BndhgfrySm4MybGNsrrejl7vmZ20z4LeXfKdy7mUGMLhO5MziL6IIC4CCj15/OK/rPp7
-         Wusvr3eX7D9gYpFadl2JOUavGmPM9y138cfVrxDatBx7Gg32UUcHb+xkQloHPC/rXusJ
-         suKmfAFRKVaFQvBdoR+4ZqXw1Xu7zNZSmOaATfkd24NZVUiMHf1L0vUNdOe3DceI2Wdw
-         ILYpWFL+oJYEHMelMcLYr4eV7hFT2EowxLqtLjGP3ZSJt4eKurPr2y+lHXewvQGOH9s5
-         IIAw==
-X-Gm-Message-State: AOJu0YzyVotqBaFMzin+viPJ/oYMwzbkCbRI1Xxa0LqFVpFRARMXNd2/
-	M5eZazcfOrzIgSZROTsVspXxAFcgBEr7Pmwi/6OWnJRBMT8KLQ==
-X-Google-Smtp-Source: AGHT+IE0iIIcyj4WcuvQ2tpzuFO2/tz+/Fz/zLcFxsJmQmtFiKg7FJet/fOEiZu/6U4eqIWeYsR2jQ==
-X-Received: by 2002:a05:6808:654a:b0:3bd:727f:1031 with SMTP id fn10-20020a056808654a00b003bd727f1031mr3812879oib.119.1705442964035;
-        Tue, 16 Jan 2024 14:09:24 -0800 (PST)
+        bh=+XPN8KT3cfPkEbL9Y2+Wb2qHbLtIeC9qIuXubwQUSec=;
+        b=EHkEneMr+8M/pIQuwudj07VlU63a2l6CuSQ0ojuFGQ/ecteSz3z5WMJ3za55UakpaT
+         WaY0AG+WeJGWDhhnAqeh5v2kvgFciINmD+IzsoJFkdv7yA/Ohkfo9VdgWB3Jum3nehvb
+         uWM9Fikfrjfu7GeRgzrE+ip/s7PDP5m5+vcNgymUFsZrOWS+Xq5Om1wKzAlC6CNuo4Gk
+         THMaoonEqeTZWT8F9AOh69IQAwWLeS0Ok+3TNznemMc5x3TouRON4jmjEHeaxRFpWDAq
+         GnRhqDPdKWWU7Vj9+zgt+76CPCNT6YIP4zzBKvpv0lzptT43VJp2NMVWg9h4/FWsNf3a
+         V93w==
+X-Gm-Message-State: AOJu0YypDTHFLOyZCGL1JPK83qDDQuoMyH3MKeSwYpZ4ecu6baxKJ7Hy
+	Gx9w8lVj8MtVZxiCZuTwAjGGvzQLP42HM56OdhuwYhHachOzig==
+X-Google-Smtp-Source: AGHT+IH7o974iCc1FrobWUaxvTu0gn9G0LhfcU8KfoHVjCU++U1qS3l7luB5JEgreTVv01KBUDp6wQ==
+X-Received: by 2002:a05:6830:b:b0:6df:b685:978 with SMTP id c11-20020a056830000b00b006dfb6850978mr8494331otp.35.1705442966772;
+        Tue, 16 Jan 2024 14:09:26 -0800 (PST)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id de28-20020a05620a371c00b00783395ce1d5sm3971188qkb.136.2024.01.16.14.09.23
+        by smtp.gmail.com with ESMTPSA id b19-20020a05620a119300b007832575779esm4013031qkk.52.2024.01.16.14.09.26
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 16 Jan 2024 14:09:23 -0800 (PST)
-Date: Tue, 16 Jan 2024 17:09:22 -0500
+        Tue, 16 Jan 2024 14:09:26 -0800 (PST)
+Date: Tue, 16 Jan 2024 17:09:25 -0500
 From: Taylor Blau <me@ttaylorr.com>
 To: git@vger.kernel.org
 Cc: Elijah Newren <newren@gmail.com>,
@@ -60,9 +60,8 @@ Cc: Elijah Newren <newren@gmail.com>,
 	Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>,
 	Jonathan Tan <jonathantanmy@google.com>,
 	SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-Subject: [PATCH v5 07/17] t/helper/test-read-graph: implement `bloom-filters`
- mode
-Message-ID: <dd9193e404ef7e896d5a7e40788a47d76872b3b9.1705442923.git.me@ttaylorr.com>
+Subject: [PATCH v5 08/17] t4216: test changed path filters with high bit paths
+Message-ID: <aa2416795da980cf5ef1000a3dfc1bc04fa7710f.1705442923.git.me@ttaylorr.com>
 References: <cover.1697653929.git.me@ttaylorr.com>
  <cover.1705442923.git.me@ttaylorr.com>
 Precedence: bulk
@@ -75,84 +74,82 @@ Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 In-Reply-To: <cover.1705442923.git.me@ttaylorr.com>
 
-Implement a mode of the "read-graph" test helper to dump out the
-hexadecimal contents of the Bloom filter(s) contained in a commit-graph.
+Subsequent commits will teach Git another version of changed path
+filter that has different behavior with paths that contain at least
+one character with its high bit set, so test the existing behavior as
+a baseline.
 
-Signed-off-by: Taylor Blau <me@ttaylorr.com>
 Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- t/helper/test-read-graph.c | 44 +++++++++++++++++++++++++++++++++-----
- 1 file changed, 39 insertions(+), 5 deletions(-)
+ t/t4216-log-bloom.sh | 51 ++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 51 insertions(+)
 
-diff --git a/t/helper/test-read-graph.c b/t/helper/test-read-graph.c
-index 3375392f6c..da9ac8584d 100644
---- a/t/helper/test-read-graph.c
-+++ b/t/helper/test-read-graph.c
-@@ -47,10 +47,32 @@ static void dump_graph_info(struct commit_graph *graph)
- 	printf("\n");
- }
+diff --git a/t/t4216-log-bloom.sh b/t/t4216-log-bloom.sh
+index 20b0cf0c0e..484dd093cd 100755
+--- a/t/t4216-log-bloom.sh
++++ b/t/t4216-log-bloom.sh
+@@ -485,6 +485,57 @@ test_expect_success 'merge graph layers with incompatible Bloom settings' '
+ 	test_must_be_empty err
+ '
  
--int cmd__read_graph(int argc UNUSED, const char **argv UNUSED)
-+static void dump_graph_bloom_filters(struct commit_graph *graph)
-+{
-+	uint32_t i;
-+
-+	for (i = 0; i < graph->num_commits + graph->num_commits_in_base; i++) {
-+		struct bloom_filter filter = { 0 };
-+		size_t j;
-+
-+		if (load_bloom_filter_from_graph(graph, &filter, i) < 0) {
-+			fprintf(stderr, "missing Bloom filter for graph "
-+				"position %"PRIu32"\n", i);
-+			continue;
-+		}
-+
-+		for (j = 0; j < filter.len; j++)
-+			printf("%02x", filter.data[j]);
-+		if (filter.len)
-+			printf("\n");
-+	}
++get_first_changed_path_filter () {
++	test-tool read-graph bloom-filters >filters.dat &&
++	head -n 1 filters.dat
 +}
 +
-+int cmd__read_graph(int argc, const char **argv)
- {
- 	struct commit_graph *graph = NULL;
- 	struct object_directory *odb;
-+	int ret = 0;
- 
- 	setup_git_directory();
- 	odb = the_repository->objects->odb;
-@@ -58,12 +80,24 @@ int cmd__read_graph(int argc UNUSED, const char **argv UNUSED)
- 	prepare_repo_settings(the_repository);
- 
- 	graph = read_commit_graph_one(the_repository, odb);
--	if (!graph)
--		return 1;
-+	if (!graph) {
-+		ret = 1;
-+		goto done;
-+	}
- 
--	dump_graph_info(graph);
-+	if (argc <= 1)
-+		dump_graph_info(graph);
-+	else if (!strcmp(argv[1], "bloom-filters"))
-+		dump_graph_bloom_filters(graph);
-+	else {
-+		fprintf(stderr, "unknown sub-command: '%s'\n", argv[1]);
-+		ret = 1;
-+	}
- 
-+done:
- 	UNLEAK(graph);
- 
--	return 0;
-+	return ret;
- }
++# chosen to be the same under all Unicode normalization forms
++CENT=$(printf "\302\242")
 +
++test_expect_success 'set up repo with high bit path, version 1 changed-path' '
++	git init highbit1 &&
++	test_commit -C highbit1 c1 "$CENT" &&
++	git -C highbit1 commit-graph write --reachable --changed-paths
++'
 +
++test_expect_success 'setup check value of version 1 changed-path' '
++	(
++		cd highbit1 &&
++		echo "52a9" >expect &&
++		get_first_changed_path_filter >actual
++	)
++'
++
++# expect will not match actual if char is unsigned by default. Write the test
++# in this way, so that a user running this test script can still see if the two
++# files match. (It will appear as an ordinary success if they match, and a skip
++# if not.)
++if test_cmp highbit1/expect highbit1/actual
++then
++	test_set_prereq SIGNED_CHAR_BY_DEFAULT
++fi
++test_expect_success SIGNED_CHAR_BY_DEFAULT 'check value of version 1 changed-path' '
++	# Only the prereq matters for this test.
++	true
++'
++
++test_expect_success 'setup make another commit' '
++	# "git log" does not use Bloom filters for root commits - see how, in
++	# revision.c, rev_compare_tree() (the only code path that eventually calls
++	# get_bloom_filter()) is only called by try_to_simplify_commit() when the commit
++	# has one parent. Therefore, make another commit so that we perform the tests on
++	# a non-root commit.
++	test_commit -C highbit1 anotherc1 "another$CENT"
++'
++
++test_expect_success 'version 1 changed-path used when version 1 requested' '
++	(
++		cd highbit1 &&
++		test_bloom_filters_used "-- another$CENT"
++	)
++'
++
+ corrupt_graph () {
+ 	test_when_finished "rm -rf $graph" &&
+ 	git commit-graph write --reachable --changed-paths &&
 -- 
 2.43.0.334.gd4dbce1db5.dirty
 
