@@ -1,45 +1,45 @@
-Received: from mail-pl1-f176.google.com (mail-pl1-f176.google.com [209.85.214.176])
+Received: from mail-pl1-f170.google.com (mail-pl1-f170.google.com [209.85.214.170])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B6FA1BDED
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C5311BDFD
 	for <git@vger.kernel.org>; Tue, 16 Jan 2024 13:39:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="POA2rJt3"
-Received: by mail-pl1-f176.google.com with SMTP id d9443c01a7336-1d51ba18e1bso82908285ad.0
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ALr+pH9e"
+Received: by mail-pl1-f170.google.com with SMTP id d9443c01a7336-1d427518d52so71476035ad.0
         for <git@vger.kernel.org>; Tue, 16 Jan 2024 05:39:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1705412377; x=1706017177; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1705412378; x=1706017178; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=nX+1DBLKTnyVMt/iObLdOwJH8HehaYVHlLjcOyCJsKA=;
-        b=POA2rJt3qww4HyTKMav3H2yMRStKBMdrsHK7rXwyY0nEx6Sd6D0gRm/BrJN9avhwIg
-         s8SwF3tAZwcPTrQ0h3JV2O/xzykc9EiCUBt3pqVjHfjHBVMKJqp3RRU5FDAq9+uMBbuq
-         Xf0/b+nbOwDH68XUDozfPQP5h22VrQOrT1x1JpLIY9VhhhnmwcnFUfp14Ragnn3nQtlo
-         w6qCwWths8K4XimQn/va6uHG/Z67NUqVPHVyurBJTUXcu+1F1LMLl4kfzIuGnzjtvIx1
-         8ejbktMTxxWmWOAZ2PEsNVxSkHOORE+T1sBHLFBi7g5GWxveBHGby5ZyFO70Zv4lSv2u
-         wj6Q==
+        bh=CozsLbOmwkgZRdoKGjxxiV76kRVAqRlsUpx1KPOtBJg=;
+        b=ALr+pH9e2XZ9NPW6HhO24x911codgs8kffhNMBNA/wpzxtdIHER1nGMIJBgX6N+edS
+         imdWj92pe+Gx6aAPDYGhzwrPlM1qut/xUqfa2Re1sqLp1Ll6NVXfsN3N6nRg2AbB1VsW
+         J1rA2Dx1CpO37VLVpepsqM6twIlpSyCSFwdPAy6O9fpDHAnCqLOakyNg0ap6GgSCYrgr
+         bDtJhsJ8JWbPWbB3jNwGPRy/QiAzObV2Apc/M5yEG18d9VfrXU8I0QxZ7MUrd1N/qkWB
+         a9PA9g7us+NSCci56Q8RKUo28Sxlm1tVraDwsMqKpTTtd8ondIsE64/mJrzWph7VMR4x
+         ebzw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1705412377; x=1706017177;
+        d=1e100.net; s=20230601; t=1705412378; x=1706017178;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=nX+1DBLKTnyVMt/iObLdOwJH8HehaYVHlLjcOyCJsKA=;
-        b=r7Klr0VoXaL70zn9/LiA9D5Y8/6kUETSUBRGtueJqmKgWjMnTlUNd7gFmA5JUYMGIx
-         5m92/Tnm6FVgf+uZkSCbNFWiM6Tc8+HB9Ntl/Nurezdg8dGENakZap6ZI4wip6nm/NBa
-         2O+23nFx+EtIWOGocwBlqKeX/Ol8UIhwf4yKkiudmvIiUGlj3k0l1JnzYUdFT9Azwczs
-         1I/4Q+QEDBTi4B6YnJMbBQeIogrjdYkCRG4h51/N+cwVwgz0emhoDJbAbjuFt8fEachq
-         j5nKxV5OO3yAMg4eE7/Akv9Jwcd9SB49k93IfM3pFfcztlj9n+vRJGbhRW+WrF4wfdTo
-         OFbg==
-X-Gm-Message-State: AOJu0Yx3Bxd8z8agPmivHtfp+/6l6opf+Ne/T24eCLP9+HY/Hcffd/a1
-	59851cziiqmL7B74OjomwR1oMYvc+7OTvg==
-X-Google-Smtp-Source: AGHT+IHrc7/sjCSPbGthBeTzbNQ/qn1AEQWjZlflAU86HENfJ4skABwnDEztRNKKZVdjYPeBYUpLyg==
-X-Received: by 2002:a17:903:32cf:b0:1d5:aed4:b4c2 with SMTP id i15-20020a17090332cf00b001d5aed4b4c2mr9516404plr.35.1705412377335;
-        Tue, 16 Jan 2024 05:39:37 -0800 (PST)
+        bh=CozsLbOmwkgZRdoKGjxxiV76kRVAqRlsUpx1KPOtBJg=;
+        b=Qvky0mFpXz4B7BdUpbfWBdKQCgBFt7EdZRgCqqEyGSAC1oOABs6wIm3jbiw+wnKZxr
+         A8aExlvKq18KdzuNXU48PaDiMuZcv7QaKwQ+edPq+Jfy2Y4hP+I57G4f8XbXC+urWmmQ
+         TxcjIgP/G+OUHsRwytc4kcONbgtWuDgEC4BzAedyN/HsmCrszdm7Kual0BWuDiqMJks+
+         bAZ3tQKPZ+Da+ptWhWPqnqLPnYzzE9N0LbOntS5UW6r6qG5H3EO+2PPsH+6wjYlLlKKX
+         Q7yvQ+CIPcDNbcYkCrSdI2yq4RecWC38V9DQzdzoE6HhrPLzbKK/rCPTISHnch51/XAg
+         t/pQ==
+X-Gm-Message-State: AOJu0YwIbkHXkyK5TYPyyGgvIDjVI/SzFX5RQBIVG3Q4CKm7X7RiRLPC
+	z+eCRxICA2eg081YERxCV1ADdkNaxqALmQ==
+X-Google-Smtp-Source: AGHT+IH/hiN2plMLZpOHAQoqW3J+w2Cl0TqdVgsi+qPyeJyV9AG+wq3UXZtKYE1oQNyaazjoqFGFlw==
+X-Received: by 2002:a17:902:ed04:b0:1d5:4df5:df9b with SMTP id b4-20020a170902ed0400b001d54df5df9bmr8710108pld.4.1705412378106;
+        Tue, 16 Jan 2024 05:39:38 -0800 (PST)
 Received: from tigtog-proxy.localdomain.localdomain (144.34.163.219.16clouds.com. [144.34.163.219])
-        by smtp.gmail.com with ESMTPSA id l8-20020a170902f68800b001d5c38bfa33sm4303351plg.307.2024.01.16.05.39.36
+        by smtp.gmail.com with ESMTPSA id l8-20020a170902f68800b001d5c38bfa33sm4303351plg.307.2024.01.16.05.39.37
         (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
         Tue, 16 Jan 2024 05:39:37 -0800 (PST)
 From: Jiang Xin <worldhello.net@gmail.com>
@@ -47,9 +47,9 @@ To: Git List <git@vger.kernel.org>,
 	Junio C Hamano <gitster@pobox.com>,
 	Linus Arver <linusa@google.com>
 Cc: Jiang Xin <zhiyou.jx@alibaba-inc.com>
-Subject: [PATCH v5 5/6] transport-helper: call do_take_over() in connect_helper
-Date: Tue, 16 Jan 2024 21:39:29 +0800
-Message-Id: <6ac0c8e105febe526dc64182845832297656a8a5.1705411391.git.zhiyou.jx@alibaba-inc.com>
+Subject: [PATCH v5 6/6] transport-helper: call do_take_over() in process_connect
+Date: Tue, 16 Jan 2024 21:39:30 +0800
+Message-Id: <423a89c59306e9c33851b7d36c685ddfce45736c.1705411391.git.zhiyou.jx@alibaba-inc.com>
 X-Mailer: git-send-email 2.32.0.rc3
 In-Reply-To: <cover.1705411391.git.zhiyou.jx@alibaba-inc.com>
 References: <cover.1702562879.git.zhiyou.jx@alibaba-inc.com> <cover.1705411391.git.zhiyou.jx@alibaba-inc.com>
@@ -63,56 +63,100 @@ Content-Transfer-Encoding: 8bit
 
 From: Jiang Xin <zhiyou.jx@alibaba-inc.com>
 
-After successfully connecting to the smart transport by calling
-process_connect_service() in connect_helper(), run do_take_over() to
-replace the old vtable with a new one which has methods ready for the
-smart transport connection. This will fix the exit code of git-archive
-in test case "archive remote http repository" of t5003.
+The existing pattern among all callers of process_connect() seems to be
 
-The connect_helper() function is used as the connect method of the
-vtable in "transport-helper.c", and it is called by transport_connect()
-in "transport.c" to setup a connection. The only place that we call
-transport_connect() so far is in "builtin/archive.c". Without running
-do_take_over(), it may fail to call transport_disconnect() in
-run_remote_archiver() of "builtin/archive.c". This is because for a
-stateless connection and a service like "git-upload-archive", the
-remote helper may receive a SIGPIPE signal and exit early. To have a
-graceful disconnect method by calling do_take_over() will solve this
-issue.
+        if (process_connect(...)) {
+                do_take_over();
+                ... dispatch to the underlying method ...
+        }
+        ... otherwise implement the fallback ...
 
-Helped-by: Linus Arver <linusa@google.com>
+where the return value from process_connect() is the return value of the
+call it makes to process_connect_service().
+
+Move the call of do_take_over() inside process_connect(), so that
+calling the process_connect() function is more concise and will not
+miss do_take_over().
+
+Suggested-by: Junio C Hamano <gitster@pobox.com>
 Signed-off-by: Jiang Xin <zhiyou.jx@alibaba-inc.com>
 ---
- t/t5003-archive-zip.sh | 2 +-
- transport-helper.c     | 2 ++
- 2 files changed, 3 insertions(+), 1 deletion(-)
+ transport-helper.c | 22 +++++++++-------------
+ 1 file changed, 9 insertions(+), 13 deletions(-)
 
-diff --git a/t/t5003-archive-zip.sh b/t/t5003-archive-zip.sh
-index 6f85bd3463..961c6aac25 100755
---- a/t/t5003-archive-zip.sh
-+++ b/t/t5003-archive-zip.sh
-@@ -268,7 +268,7 @@ test_expect_success 'remote archive does not work with protocol v1' '
- '
- 
- test_expect_success 'archive remote http repository' '
--	test_must_fail git archive --remote="$HTTPD_URL/auth/smart/bare.git" \
-+	git archive --remote="$HTTPD_URL/auth/smart/bare.git" \
- 		--output=remote-http.zip HEAD &&
- 	test_cmp_bin d.zip remote-http.zip
- '
 diff --git a/transport-helper.c b/transport-helper.c
-index 6fe9f4f208..91381be622 100644
+index 91381be622..566f7473df 100644
 --- a/transport-helper.c
 +++ b/transport-helper.c
-@@ -669,6 +669,8 @@ static int connect_helper(struct transport *transport, const char *name,
+@@ -646,6 +646,7 @@ static int process_connect(struct transport *transport,
+ 	struct helper_data *data = transport->data;
+ 	const char *name;
+ 	const char *exec;
++	int ret;
  
- 	fd[0] = data->helper->out;
- 	fd[1] = data->helper->in;
-+
-+	do_take_over(transport);
- 	return 0;
+ 	name = for_push ? "git-receive-pack" : "git-upload-pack";
+ 	if (for_push)
+@@ -653,7 +654,10 @@ static int process_connect(struct transport *transport,
+ 	else
+ 		exec = data->transport_options.uploadpack;
+ 
+-	return process_connect_service(transport, name, exec);
++	ret = process_connect_service(transport, name, exec);
++	if (ret)
++		do_take_over(transport);
++	return ret;
  }
  
+ static int connect_helper(struct transport *transport, const char *name,
+@@ -685,10 +689,8 @@ static int fetch_refs(struct transport *transport,
+ 
+ 	get_helper(transport);
+ 
+-	if (process_connect(transport, 0)) {
+-		do_take_over(transport);
++	if (process_connect(transport, 0))
+ 		return transport->vtable->fetch_refs(transport, nr_heads, to_fetch);
+-	}
+ 
+ 	/*
+ 	 * If we reach here, then the server, the client, and/or the transport
+@@ -1145,10 +1147,8 @@ static int push_refs(struct transport *transport,
+ {
+ 	struct helper_data *data = transport->data;
+ 
+-	if (process_connect(transport, 1)) {
+-		do_take_over(transport);
++	if (process_connect(transport, 1))
+ 		return transport->vtable->push_refs(transport, remote_refs, flags);
+-	}
+ 
+ 	if (!remote_refs) {
+ 		fprintf(stderr,
+@@ -1189,11 +1189,9 @@ static struct ref *get_refs_list(struct transport *transport, int for_push,
+ {
+ 	get_helper(transport);
+ 
+-	if (process_connect(transport, for_push)) {
+-		do_take_over(transport);
++	if (process_connect(transport, for_push))
+ 		return transport->vtable->get_refs_list(transport, for_push,
+ 							transport_options);
+-	}
+ 
+ 	return get_refs_list_using_list(transport, for_push);
+ }
+@@ -1277,10 +1275,8 @@ static int get_bundle_uri(struct transport *transport)
+ {
+ 	get_helper(transport);
+ 
+-	if (process_connect(transport, 0)) {
+-		do_take_over(transport);
++	if (process_connect(transport, 0))
+ 		return transport->vtable->get_bundle_uri(transport);
+-	}
+ 
+ 	return -1;
+ }
 -- 
 2.43.0
 
