@@ -1,114 +1,113 @@
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+Received: from wout2-smtp.messagingengine.com (wout2-smtp.messagingengine.com [64.147.123.25])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E377560255
-	for <git@vger.kernel.org>; Tue, 16 Jan 2024 21:39:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD2D120337
+	for <git@vger.kernel.org>; Tue, 16 Jan 2024 21:46:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.25
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705441186; cv=none; b=m8Nv7lltR5lwLqYJ0/tTEMgnrlJdHGfaO5zdvgGVprh5bgNNKRVyZRJCWq6j3fD+MPeS5763mu1UGw9Zu0hRn/vFADbFHK3wo7pENLlxjGhQGUTU1pGDxMkbzvDz3mEVFDfYVOT2fPygZ+CAYvkCdWT5LyYBq3J0GIrxeFauOds=
+	t=1705441621; cv=none; b=cNJYFd+gRm49MKtdlppwcaVnLq70HQCV7qWkoT6umzATsXBDe17VAHVMmn6bC6LLbC1OiRXflCPwewTbQcNIVC5K6uESpRCsJDJ/hKpD3/81ltFIRQIMgW0bSIv3UBiEmgTkfz0GdKAYJ+bTYijVINAuMXljEhCDqRrF/4F6x+4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705441186; c=relaxed/simple;
-	bh=oHj/xrG7CcZmSkP+dHVPJOsAa4fg/+KA6VKBAw6H2VE=;
-	h=Received:DKIM-Signature:Received:Received:From:To:Cc:Subject:
-	 In-Reply-To:References:Date:Message-ID:User-Agent:MIME-Version:
-	 Content-Type:X-Pobox-Relay-ID; b=N6a2rlNTew+RZvg1bWlgrxSd9VkPP824G0zNRGWsbDLQ3XUfahR9HxV6t3hxK+aWaNIhotIZwoKTn7YMeNZmz5ha1xVLTlmuaCFctJY3mAzxD8vXpXOS3bX81P1bX7x7GNJ+fn2CgC73jkl1YFa78ag/0FtwwDGrYN3udPdHxHg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=b8V+gf0e; arc=none smtp.client-ip=64.147.108.70
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1705441621; c=relaxed/simple;
+	bh=WOgbSNClKgvtslFVzMIoidzbLM95RIjTBOGz4cr9nV0=;
+	h=Received:Received:DKIM-Signature:DKIM-Signature:X-ME-Sender:
+	 X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:Received:X-Mailer:
+	 User-Agent:MIME-Version:Message-Id:In-Reply-To:References:Date:
+	 From:To:Cc:Subject:Content-Type; b=EzTnyZj62083PUALq62yxnpmEiIUz/ZkBJx37zbJU4X2al1NoJ9jbrrAPnreqhQOw1Iz51kuudDI3jgQkFEOcpAJd4SnjukG0SnzEQy+XA9Rxzo8HTDBWnXRiDtH0h3MyMOrQyloMXLZRzvCekv9fdHIGPNSsemkmq8dS1Bayx4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=khaugsbakk.name; spf=pass smtp.mailfrom=khaugsbakk.name; dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b=LLG0GVtE; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Gb2uMai+; arc=none smtp.client-ip=64.147.123.25
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=khaugsbakk.name
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=khaugsbakk.name
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="b8V+gf0e"
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 836A51E7AB0;
-	Tue, 16 Jan 2024 16:39:43 -0500 (EST)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=oHj/xrG7CcZmSkP+dHVPJOsAa4fg/+KA6VKBAw
-	6H2VE=; b=b8V+gf0ed6bqUeUATiOwXrWLX3RrzNSbBih562S9o4nCYT1K7SeqEd
-	KVtxjPphmeCt/JcyQPCO+h/TfceW0Ewnsait2Iq8NaEt/zgtcOT1UwIuh/T1ufhR
-	N8frDTpO2crNKMWB1fyderbB8IgcRDcqO5LfKIbuBgZ5/pIjx+qps=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 7A23F1E7AAF;
-	Tue, 16 Jan 2024 16:39:43 -0500 (EST)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.200.93])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id DD2781E7AAE;
-	Tue, 16 Jan 2024 16:39:42 -0500 (EST)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Kristoffer Haugsbakk <code@khaugsbakk.name>
-Cc: git@vger.kernel.org,  ps@pks.im,  stolee@gmail.com,  Eric Sunshine
- <sunshine@sunshineco.com>,  Taylor Blau <me@ttaylorr.com>
-Subject: Re: [PATCH v2 3/4] config: factor out global config file retrieval
-In-Reply-To: <32e5ec7d866ff8fd26554b325812c6e19cb65126.1705267839.git.code@khaugsbakk.name>
-	(Kristoffer Haugsbakk's message of "Sun, 14 Jan 2024 22:43:18 +0100")
-References: <cover.1697660181.git.code@khaugsbakk.name>
-	<cover.1705267839.git.code@khaugsbakk.name>
-	<32e5ec7d866ff8fd26554b325812c6e19cb65126.1705267839.git.code@khaugsbakk.name>
-Date: Tue, 16 Jan 2024 13:39:41 -0800
-Message-ID: <xmqqcyu1yn36.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b="LLG0GVtE";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Gb2uMai+"
+Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
+	by mailout.west.internal (Postfix) with ESMTP id 7489E3200AC6;
+	Tue, 16 Jan 2024 16:46:56 -0500 (EST)
+Received: from imap49 ([10.202.2.99])
+  by compute1.internal (MEProxy); Tue, 16 Jan 2024 16:46:57 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=khaugsbakk.name;
+	 h=cc:cc:content-type:content-type:date:date:from:from
+	:in-reply-to:in-reply-to:message-id:mime-version:references
+	:reply-to:subject:subject:to:to; s=fm2; t=1705441615; x=
+	1705528015; bh=RdoPUmOxxsb9ZIYOweIGrlAkONsUOZsAKoAlfDxx7NA=; b=L
+	LG0GVtEwSEbTY/NO+GtpuFv/DHfaFKbXoFLITbZTVG8+Gy06cvH87Y56xYls4oo5
+	pJKIjOsteWIwJd6a7LjtsMpS1WRdH/uF8hr6SWruUFfSkcoFG0Rjt8feBYY0Lp1X
+	Clo40whM6LPtV/WMCjyUatXDPw90Iamx4YEWlnDPSGaHF23m5IW5zEHUCnz+v3vf
+	kxdspJlRE5MwDag2y6SKRi3rDWMcmFlsFwsQcx9XiTeQmgfynJHPVVHYjSbE5qui
+	Y0ErnKzyYDbvQnHkguT5CaAQIPxoo7JT2BGTV90bT5ydG4jB+fIRye7al3vYthhB
+	tl7vuxr1VhmoWln/PmRRg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm3; t=1705441615; x=1705528015; bh=RdoPUmOxxsb9ZIYOweIGrlAkONsU
+	OZsAKoAlfDxx7NA=; b=Gb2uMai+IBQwKXD1XEarAaxA81FGvuohNHB1p0/AN0Uq
+	/L/qWCg2GdsXMGlMGfWhYEMMf2KaxjEF/ycYDsC5bkXokVVjNPNUYrcShIMn/KwI
+	nT890t/P/A4/tluycJ8m2rx3xYoB0AZN3kNPMapiJgEkKxJT9XowbEAeysLPD4Je
+	m222f6nItW2gz3oPlSO/JS8ATfMizzIxxGrD57Dj0//MQit9zShppRZwiqUIYYPM
+	SLgSvxPP9/QHIgvTV6o/Co0uDdUU38yVydD/gPIu2poSFBdjPz1iw3AKQX62kRc4
+	3Ql3DDkt9uSFBbDoch1Qx5Sa3+b0YbMW3wXXYg9FQA==
+X-ME-Sender: <xms:T_mmZfA9kK31JCzSUnVDoT8I_DjoybtfBeSpPLgyUh0TtUMzGl8HS_M>
+    <xme:T_mmZVgbRv9nTuRAo3sKPWfeaWQzSKY6tS6j5ag-nOR-QPmzwNLh28hQaF_cJ9dlt
+    yVdxNxO05O9m2FurA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrvdejfedgudehfecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
+    necuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
+    enucfjughrpefofgggkfgjfhffhffvvefutgesthdtredtreertdenucfhrhhomhepfdfm
+    rhhishhtohhffhgvrhcujfgruhhgshgsrghkkhdfuceotghouggvsehkhhgruhhgshgsrg
+    hkkhdrnhgrmhgvqeenucggtffrrghtthgvrhhnpedtkedtjeeiffelteffheeiheeufffg
+    heelueeftdejkeeufffgiefhgeekffffueenucevlhhushhtvghrufhiiigvpedtnecurf
+    grrhgrmhepmhgrihhlfhhrohhmpegtohguvgeskhhhrghughhssggrkhhkrdhnrghmvg
+X-ME-Proxy: <xmx:T_mmZakM6yl7eWpeo07s8Ja-4ft-BBxn_jUYHewvLWa0vCIhsroC0g>
+    <xmx:T_mmZRymI4VyGhjrw7RbuJRNwIyfXNq7TRMFurjtS-uJ2aL8kvPh1A>
+    <xmx:T_mmZUSmfl3zE1nv0hdD3VfJ4j_8vlv5TeXWICd8JpPK7SXfLVXX9Q>
+    <xmx:T_mmZadHRwQDklqmkuwFD_IY_0yE_vzf2Xqaj1_gBamCf7GzKpPhSw>
+Feedback-ID: i2671468f:Fastmail
+Received: by mailuser.nyi.internal (Postfix, from userid 501)
+	id 9BA9F15A0092; Tue, 16 Jan 2024 16:46:55 -0500 (EST)
+X-Mailer: MessagingEngine.com Webmail Interface
+User-Agent: Cyrus-JMAP/3.9.0-alpha0-1374-gc37f3abe3d-fm-20240102.001-gc37f3abe
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Message-Id: <c87b3d93-74db-4377-a57c-80f766d46e7f@app.fastmail.com>
+In-Reply-To: <xmqqcyu1yn36.fsf@gitster.g>
+References: <cover.1697660181.git.code@khaugsbakk.name>
+ <cover.1705267839.git.code@khaugsbakk.name>
+ <32e5ec7d866ff8fd26554b325812c6e19cb65126.1705267839.git.code@khaugsbakk.name>
+ <xmqqcyu1yn36.fsf@gitster.g>
+Date: Tue, 16 Jan 2024 22:46:33 +0100
+From: "Kristoffer Haugsbakk" <code@khaugsbakk.name>
+To: "Junio C Hamano" <gitster@pobox.com>
+Cc: git@vger.kernel.org, "Patrick Steinhardt" <ps@pks.im>, stolee@gmail.com,
+ "Eric Sunshine" <sunshine@sunshineco.com>, "Taylor Blau" <me@ttaylorr.com>
+Subject: Re: [PATCH v2 3/4] config: factor out global config file retrieval
 Content-Type: text/plain
-X-Pobox-Relay-ID:
- C27030B8-B4B7-11EE-BDAB-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
 
-Kristoffer Haugsbakk <code@khaugsbakk.name> writes:
+On Tue, Jan 16, 2024, at 22:39, Junio C Hamano wrote:
+> Kristoffer Haugsbakk <code@khaugsbakk.name> writes:
+>>  char *git_system_config(void);
+>> +/**
+>> + * Returns `NULL` if is uncertain whether or not `HOME/.gitconfig` exists.
+>> + */
+>
+> Sorry, but I am not sure what this comment wants to say.
+>
+> When $HOME is not set, we do get NULL out of this function.  But
+> interpolate_path() that makes git_global_config_paths() to return
+> NULL in user_config does not do any existence check with stat() or
+> access(), so even when we return a string that is "~/.gitconfig"
+> expanded to '/home/user/.gitconfig", we are not certain if the file
+> exists.  So,... it is unclear what "uncertain"ty we are talking
+> about in this case.
 
->  	if (use_global_config) {
-> -		char *user_config, *xdg_config;
-> ...
-> -	else if (use_system_config) {
-> +	} else if (use_system_config) {
->  		given_config_source.file = git_system_config();
->  		given_config_source.scope = CONFIG_SCOPE_SYSTEM;
->  	} else if (use_local_config) {
-> diff --git a/config.c b/config.c
-> index ebc6a57e1c3..3cfeb3d8bd9 100644
-> --- a/config.c
-> +++ b/config.c
-> @@ -1987,6 +1987,26 @@ char *git_system_config(void)
->  	return system_config;
->  }
->  
-> +char *git_global_config(void)
-> +{
-> +...
-> +}
-> +
->  void git_global_config_paths(char **user_out, char **xdg_out)
->  {
->  	char *user_config = xstrdup_or_null(getenv("GIT_CONFIG_GLOBAL"));
+I'll delete it. It was an attempt to refer to the comments about
+"It is unknown if HOME/.gitconfig exists".
 
-The conversion above
+Cheers
 
-> diff --git a/config.h b/config.h
-> index e5e523553cc..625e932b993 100644
-> --- a/config.h
-> +++ b/config.h
-> @@ -382,6 +382,10 @@ int config_error_nonbool(const char *);
->  #endif
->  
->  char *git_system_config(void);
-> +/**
-> + * Returns `NULL` if is uncertain whether or not `HOME/.gitconfig` exists.
-> + */
-
-Sorry, but I am not sure what this comment wants to say.
-
-When $HOME is not set, we do get NULL out of this function.  But
-interpolate_path() that makes git_global_config_paths() to return
-NULL in user_config does not do any existence check with stat() or
-access(), so even when we return a string that is "~/.gitconfig"
-expanded to '/home/user/.gitconfig", we are not certain if the file
-exists.  So,... it is unclear what "uncertain"ty we are talking
-about in this case.
-
-> +char *git_global_config(void);
+-- 
+Kristoffer Haugsbakk
