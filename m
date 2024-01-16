@@ -1,94 +1,89 @@
-Received: from mail-ej1-f49.google.com (mail-ej1-f49.google.com [209.85.218.49])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55B1A3FB39
-	for <git@vger.kernel.org>; Tue, 16 Jan 2024 19:45:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7C351386AE
+	for <git@vger.kernel.org>; Tue, 16 Jan 2024 19:52:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705434324; cv=none; b=KxgU6grkd53ZnZ3owa1Y1rhIkSuZgRgZYB0a3xyeYTQcJUXKyptyuBWTIqDNIgez1v0wXfUA2/8xP0DJT1ZP/EqED1E+y1w1CuMKJQjJIKGZe2QnLMYPelqQKRWHHv7+wpfA6AI3SW1D4TAeY+ckdma/QMxIhQ5JPKXOssLLxN0=
+	t=1705434777; cv=none; b=PNmnfSwz/cJcYb/umZyEgYwCr4j0P7em5jOpabesbTNkIH3z/0niXCdMSg1Nq6YnZ/BpJFjrriiuIdIAp1nLigQ5kHTriLkzBGE0KaCawtcrfwJrjVXo/tUdBDa1c9StZT6kReUe8kTZPLEs4gPYtUUXDNiGloXoErljWV7DXw4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705434324; c=relaxed/simple;
-	bh=WVxwjbde4apSu5vPc3hteyMsi5ob9SBaN7QaS9Bu+S0=;
-	h=Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Google-Smtp-Source:X-Received:MIME-Version:
-	 References:In-Reply-To:From:Date:Message-ID:Subject:To:Cc:
-	 Content-Type:Content-Transfer-Encoding; b=I9Pr5YQbMQsht9/dfQ/2uMZ2zkBMIpdQ9SVzjCIZhP/33Oz/nQgUy910aEIP+obOUtBBHxWdeAUWZN5OSUReCABjsHCPshEUVsRapGqK3iTR7ygYTYAx2rjnVGK0RLmmFCJXFcV1uKjIU/iqJxZfmQOi1fVK1pKA2ZQsi+AhnKM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=g0Juvdd/; arc=none smtp.client-ip=209.85.218.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1705434777; c=relaxed/simple;
+	bh=MnuV9284ACKW/8ye8Trk55T6OdgJJ4H5fm54tqUakjo=;
+	h=Received:DKIM-Signature:Received:Received:From:To:Cc:Subject:
+	 In-Reply-To:References:Date:Message-ID:User-Agent:MIME-Version:
+	 Content-Type:X-Pobox-Relay-ID:Content-Transfer-Encoding; b=Y6jHTqEoEADVi5yYZ6V8hy4CXEX/WDD0mpU1hIgddW61QJ/Z/bzeNUMSQ4YTbJQ2n9BlNzTk0T2ItXA4qZvgzW9ORMn+AlYO4HXW1epmhSVDwHNUUCL8TYeSWrLCJ/3Gn1Vi3npSRzu5ZujXKpS19eVb76Ig50uYdm3D3UhL/wc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=fbLOg+vT; arc=none smtp.client-ip=64.147.108.70
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="g0Juvdd/"
-Received: by mail-ej1-f49.google.com with SMTP id a640c23a62f3a-a28a997f3dfso777782166b.0
-        for <git@vger.kernel.org>; Tue, 16 Jan 2024 11:45:23 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1705434321; x=1706039121; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=iXBSyhRwEW7AyP47ooTrqh1aGHMxLrPF9LKrn9emy9g=;
-        b=g0Juvdd/ATOX2s4DurkLLUE3U73m0Vc4NXfNA0KuC/RvbKXPO1K4E0WE8nb3OM511J
-         zmL2Wx7QbkG1Aeg/HcuxlRU40Sfczw6C+Fhh/nHD24LxQL34G/tCWUOBveUXmnUalOZV
-         28W65nNNtmUuJ+tys/MgiuotYbNr3GIwUEpcaRUBrJNeqy3RkNVBFiX6ZvxgwoOaLtsU
-         Vi1bYBhU1/b4KbtcjnaPNthJJEzJWGnPCvuwkIaAlt87Z8jY0pgUxFvwhjUiRgQc5vOe
-         4+tpeENJV8DL5niJ8nbpFR525qf8h+qdx5iTLe8EwXqhqy/JMSPDkSToFAiYu1xjhBFK
-         A97A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1705434321; x=1706039121;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=iXBSyhRwEW7AyP47ooTrqh1aGHMxLrPF9LKrn9emy9g=;
-        b=ULTXb5IXnGP4UqZScJUV1ENa1uciEsW1DtsdJUt4buI8t8DNDT9F85fKFE6O/MjEzJ
-         eG5M5GNPyJRNrHvBo40X5FZf7xc4pKMn7ErLEWJgu5BZEKweiMME0CWKtQVI/cWcgCTK
-         vSdOkSv5Td5db8wHjey/oQHFr2SZZiW4wQ2/tnV7f4SfCTWUS2ks8ZY3e64asFdC+1xK
-         VouaEa2mu6bheVUECoRYWU4C/HgTdL/vDr9onyvVNP+fFuoX9YPK5LJPE76yW3Ppsawx
-         yXIfltVluO1rXXBP8sTy/4BHOeJBHS7h7g90Ke9kSOd+Hfb0DgqKwYRydmvDZiHI+FYA
-         HQnQ==
-X-Gm-Message-State: AOJu0YxkK91uMoLClfHRRJ70i0mLvD/3aJFSxtC1EWQ1xHqZ8OCWUGjA
-	HRAFD6DHpBaJmIaBYUs9FT2DPUM84azlIWJm1/U=
-X-Google-Smtp-Source: AGHT+IHuc7p44rWTk5WGOjJebSWW7tOmpD9oWSQdrrGeVJEEm4whwRc2gL2YSOo8EyOAY6biSoaSmlaQbMAVQWY3tok=
-X-Received: by 2002:a17:907:8022:b0:a28:f8a3:5b61 with SMTP id
- ft34-20020a170907802200b00a28f8a35b61mr3407828ejc.57.1705434321471; Tue, 16
- Jan 2024 11:45:21 -0800 (PST)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="fbLOg+vT"
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 47F1D1E708F;
+	Tue, 16 Jan 2024 14:52:54 -0500 (EST)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=MnuV9284ACKW
+	/8ye8Trk55T6OdgJJ4H5fm54tqUakjo=; b=fbLOg+vTN8901jwEK8yPIIoGVr2H
+	dX2Sl9DR85J2yG7Ffik2k+AvrRBQUuiJizbE6hgb3pwabC53rzj4pYzJA1dh1XUD
+	1UeZatO7PC/JtmlMk5X29wOKtA5s3hNYmcfH2ytw4FKJwknn79daHkLEC0ep0k76
+	r85D0AsOT13mQT8=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 3BC021E708E;
+	Tue, 16 Jan 2024 14:52:54 -0500 (EST)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.200.93])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 9C44D1E708B;
+	Tue, 16 Jan 2024 14:52:53 -0500 (EST)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
+Cc: Phillip Wood <phillip.wood123@gmail.com>,  Achu Luma
+ <ach.lumap@gmail.com>,  git@vger.kernel.org,  chriscool@tuxfamily.org,
+  christian.couder@gmail.com,  me@ttaylorr.com,
+  phillip.wood@dunelm.org.uk,  steadmon@google.com
+Subject: Re: [Outreachy][PATCH v5] Port helper/test-ctype.c to
+ unit-tests/t-ctype.c
+In-Reply-To: <41cf1944-2456-4115-a934-aff2306a26e5@web.de> (=?utf-8?Q?=22R?=
+ =?utf-8?Q?en=C3=A9?= Scharfe"'s
+	message of "Tue, 16 Jan 2024 20:27:13 +0100")
+References: <20240105161413.10422-1-ach.lumap@gmail.com>
+	<20240112102743.1440-1-ach.lumap@gmail.com>
+	<0d18a95a-543a-41de-8441-c8894d46d380@gmail.com>
+	<xmqqply147bj.fsf@gitster.g>
+	<41cf1944-2456-4115-a934-aff2306a26e5@web.de>
+Date: Tue, 16 Jan 2024 11:52:52 -0800
+Message-ID: <xmqq1qah12ej.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240105161413.10422-1-ach.lumap@gmail.com> <20240112102743.1440-1-ach.lumap@gmail.com>
- <0d18a95a-543a-41de-8441-c8894d46d380@gmail.com> <xmqqply147bj.fsf@gitster.g> <41cf1944-2456-4115-a934-aff2306a26e5@web.de>
-In-Reply-To: <41cf1944-2456-4115-a934-aff2306a26e5@web.de>
-From: Christian Couder <christian.couder@gmail.com>
-Date: Tue, 16 Jan 2024 20:45:09 +0100
-Message-ID: <CAP8UFD3=Jf3XAK1kZVNi0iR_9iE-rha-SZb2H2z4UeL51YPekA@mail.gmail.com>
-Subject: Re: [Outreachy][PATCH v5] Port helper/test-ctype.c to unit-tests/t-ctype.c
-To: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
-Cc: Junio C Hamano <gitster@pobox.com>, Phillip Wood <phillip.wood123@gmail.com>, 
-	Achu Luma <ach.lumap@gmail.com>, git@vger.kernel.org, chriscool@tuxfamily.org, 
-	me@ttaylorr.com, phillip.wood@dunelm.org.uk, steadmon@google.com
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID:
+ D638713C-B4A8-11EE-A1BB-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
 Content-Transfer-Encoding: quoted-printable
 
-On Tue, Jan 16, 2024 at 8:27=E2=80=AFPM Ren=C3=A9 Scharfe <l.s.r@web.de> wr=
-ote:
->
+Ren=C3=A9 Scharfe <l.s.r@web.de> writes:
+
 > Am 16.01.24 um 16:38 schrieb Junio C Hamano:
-> > Phillip Wood <phillip.wood123@gmail.com> writes:
-> >
-> >> Thanks for adding back the test for EOF, this version looks good to me=
-.
-> >
-> > Thanks.  Let's merge it to 'next'.
+>> Phillip Wood <phillip.wood123@gmail.com> writes:
+>>
+>>> Thanks for adding back the test for EOF, this version looks good to m=
+e.
+>>
+>> Thanks.  Let's merge it to 'next'.
 >
 > OK.  I'm still interested in replies to my question in
-> https://lore.kernel.org/git/a087f57c-ce72-45c7-8182-f38d0aca9030@web.de/,
+> https://lore.kernel.org/git/a087f57c-ce72-45c7-8182-f38d0aca9030@web.de=
+/,
 > i.e. whether we should have one TEST per class or one per class and
 > character -- or in a broader sense: What's the ideal scope of a TEST?
 > But I can ask it again in the form of a follow-up patch.
 
-I think one test per character per class would result in too much
-detail in the output. Other than that I think it's better to address
-your questions to the designers of the unit test framework rather than
-to the authors of this patch. And yeah, sending a follow up patch
-would perhaps be the best. Thanks.
+I personally do not have a good answer, but those who are interested
+in unit-tests more than I do should have their opinions to share ;-)
