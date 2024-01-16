@@ -1,117 +1,147 @@
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+Received: from mout.web.de (mout.web.de [212.227.15.4])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E5B21C6AB
-	for <git@vger.kernel.org>; Tue, 16 Jan 2024 16:54:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8029A1CAB2
+	for <git@vger.kernel.org>; Tue, 16 Jan 2024 17:44:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.4
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1705427057; cv=none; b=Tgr0uq3o/gib9TJgTQlIijpReP/tv5Mn5Iug41LDJr+mYHNTV9VS2EzYlcxK/u+XXQ92Fy8PL/nocK55FmvUNGcZUitw+lDU3dZA3RwHJRrgtfZEm9UE7LdNds5tRCMM/fk9DUoqYhPif1gYO9DhGhzl7AGI7niQRGn/pkRu5P8=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1705427057; c=relaxed/simple;
+	bh=oVUnRUCpHXwP4bN4nO3JQwq/FInQLj4ff8XeVJ+w/LE=;
+	h=DKIM-Signature:X-UI-Sender-Class:Received:Date:From:To:Subject:
+	 Message-ID:References:MIME-Version:Content-Type:
+	 Content-Disposition:In-Reply-To:User-Agent:X-Provags-ID:
+	 X-Spam-Flag:UI-OutboundReport:Content-Transfer-Encoding; b=GF2M9pSakpBK6mppWaZbYcO9rBfF2zUq+UG57DRiMH63AoIYiiUvIBfOPGU4DIHatmWHPQlnV6Tg/e3I/665u31rbFRIS83wn8tpCZI/Nox9soR/gOpAb8oElKBRv/iVVi3r4zq6auqHfA97/w+92cVt8O4GoPxpKskXvoH2REc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=web.de header.i=tboegi@web.de header.b=gY97TocR; arc=none smtp.client-ip=212.227.15.4
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="J8AY7792"
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id AB26D1E5E61;
-	Tue, 16 Jan 2024 11:54:25 -0500 (EST)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=W33Wv4URotbG+o1/WoW1EOKXVvi5daFjP5Swvy
-	d56Lg=; b=J8AY77927QA++xhWs2nrB+O0IIB/rZmnbjKbOJ7pnzDcMVxYlVbQ5i
-	CCjLxybAqiKXI20wY44SyfZmRZcRaK98a8uKjFfU7HkbN+hsFdztvB3UFcK9d2xG
-	XJsPSM2EBoPUgUkQyUATpP8jZ8x7eq1TB0xF2cqV4kOMNuK7wkCRw=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id A2EA61E5E60;
-	Tue, 16 Jan 2024 11:54:25 -0500 (EST)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.200.93])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id F0D341E5E5F;
-	Tue, 16 Jan 2024 11:54:24 -0500 (EST)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Nikolay Edigaryev via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Nikolay Edigaryev <edigaryev@gmail.com>
-Subject: Re: [PATCH] rev-list-options: fix off-by-one in
- '--filter=blob:limit=<n>' explainer
-In-Reply-To: <pull.1645.git.git.1705261850650.gitgitgadget@gmail.com> (Nikolay
-	Edigaryev via GitGitGadget's message of "Sun, 14 Jan 2024 19:50:50
-	+0000")
-References: <pull.1645.git.git.1705261850650.gitgitgadget@gmail.com>
-Date: Tue, 16 Jan 2024 08:54:23 -0800
-Message-ID: <xmqqo7dl1ao0.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=web.de header.i=tboegi@web.de header.b="gY97TocR"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de; s=s29768273;
+	t=1705427041; x=1706031841; i=tboegi@web.de;
+	bh=oVUnRUCpHXwP4bN4nO3JQwq/FInQLj4ff8XeVJ+w/LE=;
+	h=X-UI-Sender-Class:Date:From:To:Subject:References:In-Reply-To;
+	b=gY97TocRMC+8AihQR3ywCQ+5XUsMA3Y3Oa7Dtfa3LXgZqe5KfOfBKhpyMfWmmrRH
+	 yaz10oHwS1k87+zwu6g7zaXC19A6GAfIm/yW3phXkf/IgZLYcdLgjHbZ5RPSSMFSP
+	 M8Afbie5o37+WCUIBo0kYnYadoaRXKSO+VIDrZa9z0mnTeie3Fbz6W91+FzfLg9ND
+	 4oe2Zyr/ZCod131HOmHOEe1s2iDasqywcLuD0mmawir1PM3qs/dfVEEwMR/+3OrCy
+	 GyOgZCM/JznlFVZJX/IPn+5ZowjdnU3wAd1spldtyQxbcDEsBAiZvCTGgN1Lpls0Q
+	 iKqdZyNH6FTVnK6UEg==
+X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
+Received: from localhost ([195.198.253.159]) by smtp.web.de (mrweb005
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 1MElZP-1rNNxy2cRf-00G13t; Tue, 16
+ Jan 2024 18:44:01 +0100
+Date: Tue, 16 Jan 2024 18:44:00 +0100
+From: Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
+To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Michael Litwak <michael.litwak@nuix.com>,
+	Matthias =?iso-8859-1?Q?A=DFhauer?= <mha1993@live.de>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: Suggested clarification for .gitattributes reference
+ documentation
+Message-ID: <20240116174400.GA2353@tb-raspi4>
+References: <SJ0PR10MB569379A093B83BE01A04C789FA6F2@SJ0PR10MB5693.namprd10.prod.outlook.com>
+ <ZaG0EkADl8hQZaqf@tapette.crustytoothpaste.net>
+ <SJ0PR10MB56937175632E5D82793CE13EFA6F2@SJ0PR10MB5693.namprd10.prod.outlook.com>
+ <SJ0PR10MB56932ABBEEEC6F8ADE23995AFA6E2@SJ0PR10MB5693.namprd10.prod.outlook.com>
+ <20240113074323.GA6819@tb-raspi4>
+ <SJ0PR10MB5693A19B0B66F47B2A985739FA732@SJ0PR10MB5693.namprd10.prod.outlook.com>
+ <ZaXkt715TjNpuprG@tapette.crustytoothpaste.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- E75E00F8-B48F-11EE-BB92-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <ZaXkt715TjNpuprG@tapette.crustytoothpaste.net>
+User-Agent: Mutt/1.10.1 (2018-07-13)
+X-Provags-ID: V03:K1:T8WxnKcgasFbnImscvevqGr1sE/OUAUmo6eAVtDCitOgNTdMyq/
+ s+9nf/taiFm4fp9da8vDU1BT0w7rL4T2qMxpKbN/H9+z+9YVujAG9MiaiBaVkezQOTkTOLp
+ XHXoYE6P3uJ6bLu0zzcUr9m6GhioVLmKFkwulP8HlIvxqTUb1FAvAlAOQuU35esxEydIWZv
+ V28N4AwKQRrSQKrBjFUMw==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:YnihdeRPLD0=;tEihi3mJcxxK3LoF5AnuKPFNapz
+ CVW6ZqgzJhr4vkOMMOaoEOJUnHtx/OcvDAzG7TX9XD+fQQTF47hjl+Pa35L94GIIwtoTu0vDh
+ 21XYdwLgU5pBXgzS+gwT8EWAGLd9zHoiDXRaqJ/O9m5Y9SI+2hfZ8+0PQKIDgQwjWCRtid7pS
+ zoKx+574aZmavGq6n+L7sIP2A1heEuunb/Ozg1OpxLIlnbXwsqIC+FzqwFJMjqvnXyq0xQteE
+ p42yinzZA5ZPmol5JzWt5CuO1CgC8v5BaTK40JDPkJnsvBLctwTiUm7gieZJWodTpRyr32CVt
+ F7U/8+4rhxJzjw72i9gfuSQr7kBNNayTGy0wrdDSZvtN2w1Ndf93oDtdD1Su2PyewKFIGTLXO
+ sqUHPr7DVXw8I4UxZuYdQXFeBIcItX3SxSWoHaVy2blumCNMZO9SBXUPLBztRk9iqiRk1badH
+ NrZLWoqjUP+fyCZzjOrUsi4H45zASh+2VMfuma0eHCXJDSt2vItBQWNilWzzrxcJUk4DfrR5a
+ oHXvXzIuHr0DOq+e+sct7svSe+CQc+AoPrxEgUguqmMtAwNKV5j55a1QYEdYg1Fh1vZAEWkIy
+ 36CyA3uiEBPBbBieXIcrmeYW5mEwaGLfx2t476adRXRM+LvGcXkN+EtXG2GIWA4QOGlaDWjmA
+ fx90iO5Wq5BzZ6wvsymX6DV7X54YFmMLKbOCkb97r2eYTi7ncKB89x0VqynNj4Ed6UIXGJj0e
+ r8RIdstIpTgP15Aj/T6K0aA6VN6bbtBulQJlEhPq/T0hNoOhlH5raQYaISGvgo6yzbpezuQFr
+ EF6TGDgGhDTP0ooJLv7yuMlEa9ByBunQUDcMMCHj91ZQlMQU+978eB8i6kW/LxKndDCX47RVR
+ mLc7t0gqLot9KDr15FsEBlwf8h4UNEloMukbVGgEz1aTYayIJjrS9tzgMru89Ymp+WuMOeFb2
+ QSci0SMwarKyX9qhMvtIIa6V3SI=
+Content-Transfer-Encoding: quoted-printable
 
-"Nikolay Edigaryev via GitGitGadget" <gitgitgadget@gmail.com>
-writes:
-
-> From: Nikolay Edigaryev <edigaryev@gmail.com>
+On Tue, Jan 16, 2024 at 02:06:47AM +0000, brian m. carlson wrote:
+> On 2024-01-16 at 00:19:20, Michael Litwak wrote:
+> > As for documentation clarifications for the .gitattributes manpage at
+> > https://git-scm.com/docs/gitattributes, I still suggest adding an
+> > explicit example for UTF-16LE with BOM, and/or adding a table listing
+> > which working-tree-encoding value to use for each of the following
+> > UTF-16 text encodings:
+> >
+> > ENCODING              'working-tree-encoding' VALUE
+> > -------------------   -----------------------------
+> > UTF-16LE with BOM     UTF-16LE-BOM
 >
-> '--filter=blob:limit=<n>' was introduced in 25ec7bcac0 (list-objects:
-> filter objects in traverse_commit_list, 2017-11-21) and later expanded
-> to bitmaps in 84243da129 (pack-bitmap: implement BLOB_LIMIT filtering,
-> 2020-02-14)
+> I should point out that this encoding, while very common on Windows, is
+> also nonstandard.
+
+In general, I agree with everything that is snipped, thanks for the ong wo=
+rdings.
+[]
+
+> (Apparently Emacs, which is not on my system, may
+> permit that, which does not surprise me in the least.)
+emacs seems to handle UTF-16LE-BOM just fine.
+
 >
-> The logic that was introduced in these commits (and that still persists
-> to this day) omits blobs larger than _or equal_ to n bytes or units.
-
-Good eyes.  The former does this
-
-		if (object_length < filter_data->max_bytes)
-			goto include_it;
-
-and the latter does this
-
-
-                if (!bitmap_get(tips, pos) &&
-                    get_size_by_pos(bitmap_git, pos) >= limit)
-                        bitmap_unset(to_filter, pos);
-
-> However, the documentation (Documentation/rev-list-options.txt) states:
+> > UTF-16BE with BOM     UTF-16
 >
->>The form '--filter=blob:limit=<n>[kmg]' omits blobs larger than n
-> bytes or units. n may be zero.
+
+[]
+
+> I think the addition of this table is too much.  UTF-16LE-BOM is common
+> on Windows, and the rest are substantially less common.  It's also very
+> difficult to explain in a table what "UTF-16" means in an understandable
+> way.  And I also think it's also pretty clear that users should be using
+> UTF-8 without BOM where possible.
 >
-> Moreover, the t6113-rev-list-bitmap-filters.sh tests for exactly this
-> logic, so it seems it is the documentation that needs fixing, not the
-> code.
+> We do already mention both UTF-16, UTF-16LE, and UTF-16LE-BOM as options
+> in the gitattributes manual page, and it's up to the user to know what
+> their program wants and supports if that's not UTF-8.
 
-Yup.  The mechanism is used for things like "we do not want a large
-blob, like 100MB", and a byte on the boundary does not matter all
-that much in such a countext, but it does not hurt to be more
-correct ;-)
+What exactly is missing in the documentation ?
+Could you please try to send us a diff (or even better a patch), so
+that we can get an idea, of what can be improved ?
+=46rom my reading UTF-16LE-BOM is already mentioned.
+It would be nice to see (from a user), what is probably missing.
 
->  The form '--filter=blob:none' omits all blobs.
->  +
-> -The form '--filter=blob:limit=<n>[kmg]' omits blobs larger than n bytes
-> -or units.  n may be zero.  The suffixes k, m, and g can be used to name
-> -units in KiB, MiB, or GiB.  For example, 'blob:limit=1k' is the same
-> -as 'blob:limit=1024'.
-> +The form '--filter=blob:limit=<n>[kmg]' omits blobs of size at least n
-> +bytes or units.  n may be zero.  The suffixes k, m, and g can be used
-> +to name units in KiB, MiB, or GiB.  For example, 'blob:limit=1k'
-> +is the same as 'blob:limit=1024'.
 
-With unnecessary paragraph wrapping, it is a bit hard to compare the
-preimage and the postimage, but I manually checked that this only
-does
-
-	"larger than" -> "of size at least"
-
-and nothing else, which is expected and in line with what the
-proposed commit message claimed to do.  Good job.
-
-Will queue.  Thanks.
-
->  +
->  The form '--filter=object:type=(tag|commit|tree|blob)' omits all objects
->  which are not of the requested type.
+> > Finally, I am not sure how to use git add --renormalize to correct a
+> > UTF-16 file that was previously added incorrectly (i.e. with a missing
+> > or incorrect working-tree-encoding entry in .gitattributes).  The git
+> > add documentation at https://git-scm.com/docs/git-add implies
+> > 'renormalize' resets only the end-of-line values; however, I suspect
+> > it also re-converts text encoding when a working-tree-encoding
+> > property is set.  It would be helpful to know one way or the other.
 >
-> base-commit: 564d0252ca632e0264ed670534a51d18a689ef5d
+> It does indeed affect the working-tree-encoding.  If you wanted to send
+> an inline patch created with git format-patch, it would probably be
+> welcome to mention that.  However, because in this project we typically
+> scratch our own itch, if you don't send one, it's likely nobody else
+> will, either.
+
+For the record: It will even run the "clean" filter, if it has changed,
+or being freshly enabled.
+So yes, a patch would be appreciated.
+
+Thanks for bringing this up.
