@@ -1,67 +1,108 @@
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+Received: from mout.kundenserver.de (mout.kundenserver.de [212.227.17.10])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16A8479F9
-	for <git@vger.kernel.org>; Tue, 16 Jan 2024 04:56:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="kFDRaqvb"
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 9B59E1D3B16;
-	Mon, 15 Jan 2024 23:56:22 -0500 (EST)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=/do+DIpQ3kZQqRqf/AkcXITkQUsXtn0XRDIeEP
-	SmVKI=; b=kFDRaqvbrk3mlHazSCk2NRpnI6gUzWhDOTFZRCZlhKi4tT5zSegw1z
-	yvXmVI/FRzpCbdxEVPlulaYwd52/+e5aVKsXsWqSx2Rc3I9IlzOtKb/GzMxFtozJ
-	m30vxsvnnrkKcxwoRiv+DIsf7WUDU3zJDojk5kFQs8OWDQI8rmHmY=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 938B61D3B15;
-	Mon, 15 Jan 2024 23:56:22 -0500 (EST)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.200.93])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 0CC2A1D3B14;
-	Mon, 15 Jan 2024 23:56:21 -0500 (EST)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
-Cc: =?utf-8?Q?Rub=C3=A9n?= Justo <rjusto@gmail.com>,  Git List
- <git@vger.kernel.org>,  Taylor
- Blau <me@ttaylorr.com>,  Dragan Simic <dsimic@manjaro.org>
-Subject: Re: [PATCH] advice: allow disabling the automatic hint in
- advise_if_enabled()
-In-Reply-To: <20240113073828.GB657764@coredump.intra.peff.net> (Jeff King's
-	message of "Sat, 13 Jan 2024 02:38:28 -0500")
-References: <7c68392c-af2f-4999-ae64-63221bf7833a@gmail.com>
-	<c870a0b6-9fa8-4d00-a5a6-661ca175805f@gmail.com>
-	<xmqqsf326vpn.fsf@gitster.g>
-	<20240113073828.GB657764@coredump.intra.peff.net>
-Date: Mon, 15 Jan 2024 20:56:20 -0800
-Message-ID: <xmqqttnd511n.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0121812B66
+	for <git@vger.kernel.org>; Tue, 16 Jan 2024 08:49:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=delpeuch.eu
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=delpeuch.eu
+Received: from [192.168.178.189] ([93.206.2.182]) by mrelayeu.kundenserver.de
+ (mreue106 [212.227.15.183]) with ESMTPSA (Nemesis) id
+ 1MV5G4-1rWmaD0Iju-00S91w for <git@vger.kernel.org>; Tue, 16 Jan 2024 09:44:03
+ +0100
+Message-ID: <8bb5e41e-4db9-4527-8492-3aca6a0f40bf@delpeuch.eu>
+Date: Tue, 16 Jan 2024 09:44:02 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- 97EFD1AE-B42B-11EE-AEA8-25B3960A682E-77302942!pb-smtp2.pobox.com
+User-Agent: Mozilla Thunderbird
+Content-Language: en-US
+From: Antonin Delpeuch <antonin@delpeuch.eu>
+Subject: Custom merge drivers: accessing the pathnames and revisions of the
+ files being merged
+To: git@vger.kernel.org
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Provags-ID: V03:K1:jkQ7VCN57c0OWfAKWveNOPZBSjn+EBzuUoR48zSdpFMhbbdzsSd
+ MSzIclQQrcMZaKy/1zHV8irHlHX1CXnvBdQOH8RnlLqFJkTg5nvG2ujTMxeJKc7fwIeFS2P
+ gifcQA/2mKGTRvzP19xdqauvDDLwsfoRd1Aai4NPe/iDAAqwsC6Sxb+rzLbbEDsUImZp2CY
+ g7/E3d8TKE+TvfLFRzSEg==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:oTDy59UjNhc=;DeHnPzNL4PeHD97OD6A+uek1iZ1
+ CA9FJIQFgAOl8gERmbkmrsnIVS+I9kPCpmPc6Fcnyh1syhZSJpJNV1Fz6EvMFpN9nLc4c78gp
+ ekY9okNTH9co2gOV7+29KEsnwd75il7ZzWINpqCOTXmBBcrJQk0bDbTAvyQhhJNJ4ebOv0003
+ 5XkVq7w6yfSKOhTnGkK18lYNlY1EyDwhw+FKMRYGvB4L6xRKS+XMa4RxYiLtiIGBqr0sP2H8Z
+ u2R75Nuqtr7am/phhOE13ICgj7bOYZ0po8HE4qA8evR2n/ckMAQsFzCIPSeAMCs590eAFf90G
+ Ge6yrau5QAvELj4CVdA8I9oyf++S1Cp/JajrLMN023mC+bufGAuD3iUY4f4vAl+2aGg5switM
+ IYkA4yQaaT+AOV5Q71V6jc89a7h3bqtgFmF53c5E9maukd1d8ehkk4DC57SWHpJsyPVD61owh
+ 6/xb/vpYdHf9sb1GY8OQD1GQJ55i1xCdY4HhdXKcXaiMJeZk8yj9OZYhJq5GGmfiCvbcUDY1I
+ HtwYTwgPbhEqhrLUhXol8VhSYJEYDq9szdiEfAMwVj4cRiTLPT6AIR3R9RHy4QnIucYZTRSvM
+ RwMFyWghYrHbVfgJpRVe4BTjWyi8ucXa70dQPNp9MEKglRiXc3vb8JvPAkWDJgSlDeBKXaVjZ
+ 0oRu1qGsydYvCerWMq8AKx6oxQaqzKjnlx5lz4Wr1QZSE549XYKo2PkqAZEv8ioTYwWfrX/fW
+ rH6LK9C8qOYLhumBAIsVDkmVDRc5ke5WheXPxJJ3gOD2lu2dvXP7HXnoj3uLdHBaG8HL8Bp4E
+ +poX0bSNtbdjbhbIfXY4HwzRajZJuneaUeU3MbgYmZ05h4PzGWfnjyS7OK7B8e/JFugETGLCz
+ Q6jz0EsI1o6ifRQ==
 
-Jeff King <peff@peff.net> writes:
+Hello,
 
-> For a tri-state we often use "-1" for "not specified". That has the nice
-> side effect in this case that "if (level)" shows the advice (that works
-> because "unspecified" and "explicitly true" both show the advice. And
-> then "if (level < 0)" is used for just the hint. But maybe that is too
-> clever/fragile.
->
-> Of course that means that all of the initializers have to use "-1"
-> explicitly. So zero-initialization is sometimes nice, too.
+Custom merge drivers [1] provide a convenient way to extend Git's merge 
+algorithms. But as far as I can tell, there is no way to access the 
+pathnames and revisions of the files to merge. Those would be very 
+useful to generate informative conflict markers, like the built-in merge 
+strategies do.
 
-;-)  100% agreed.
+For instance, when merging with the ort strategy and diff3 conflict 
+style, I get markers such as:
+
+<<<<<<< HEAD:main/my_file.txt
+…
+||||||| 194c4190b:main/my_file.txt
+…
+=======
+…
+ >>>>>>> origin/branch:main/my_renamed_file.txt
+
+Those strings at the end of conflict markers, with the revision and the 
+pathname, are very useful to understand which parts are coming from where.
+
+When implementing a custom merge driver, I don't see how to access this 
+information to include it in the conflict markers. Custom merge drivers 
+are typically invoked on temporary files generated by Git with 
+uninformative paths, such as ".merge_file_NgiKjJ".
+
+Therefore, my merge driver is only able to generate conflicts which look 
+like this:
+
+<<<<<<< .merge_file_NgiKjJ
+…
+||||||| .merge_file_D1XtCW
+…
+=======
+…
+ >>>>>>> .merge_file_WbmrBA
+
+Of course, in a given rebase/merge session, the order in which the 
+conflicting parts will be presented will remain consistent, so I will 
+generally be able to remember which revision each part corresponds to,
+but it's still a mental load I would ideally try to avoid. Also, if the 
+rename detection heuristics have false positives, then I can get merge 
+conflicts which come from unrelated files: in that case it is very 
+useful to see the pathnames, to understand this situation better.
+
+So, I wonder: would people be open to exposing additional parameters to 
+merge drivers? For instance we could add parameters "%X", "%Y" "%Z" to 
+expose those "revision:pathname" strings for each part. (I think colons 
+cannot be part of revision names, so this can be parsed unambiguously by 
+the custom merge driver to recover the revision and pathname 
+independently, if needed.)
+
+I would be happy to submit a patch for this if you think this makes 
+sense. If it is already possible to access this information in another 
+way, I would like to work on documenting that.
+
+Best wishes,
+Antonin
+
+[1]: https://git-scm.com/docs/gitattributes#_defining_a_custom_merge_driver
