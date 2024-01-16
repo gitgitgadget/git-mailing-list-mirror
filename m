@@ -1,44 +1,45 @@
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9EA51BDE0
-	for <git@vger.kernel.org>; Tue, 16 Jan 2024 15:56:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F2711C698
+	for <git@vger.kernel.org>; Tue, 16 Jan 2024 16:36:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="KuBWiqeV"
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 519781D779D;
-	Tue, 16 Jan 2024 10:56:09 -0500 (EST)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="HO86J/K+"
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id A326E3FE8D;
+	Tue, 16 Jan 2024 11:36:50 -0500 (EST)
 	(envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=MZncvnby6P1ttUMsds8bRTaWEWaE7mvClysC8S
-	e6aMM=; b=KuBWiqeVJLfylZpYHDstCc8OZiCgptdomG+bYnp6EzvEnHnRfboqXE
-	4pVDsUfPfWWVKQx6bRWrPuzhUJqq5nxUkuwSkwHhdI7B/Ye+bokwjXSjQw776pYz
-	HkzglswHYmMCg+vD09fIWYQ7UmC+qvfz1DIWLASEgbY12EmWewojQ=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 483B01D779C;
-	Tue, 16 Jan 2024 10:56:09 -0500 (EST)
+	:content-type; s=sasl; bh=x82OwkyD5meO3NvBqOh9xN+EcPcRcTR/3gFZ62
+	9huMY=; b=HO86J/K+/Lg9pyKn8r9ayRd3fv+VenJz6vAGsMM4NZUL+CcREEin/k
+	QRe+lVleEZrczD7mmBiYg4ajkKiqyQkcuHEkQ6J/b6wDdugezL3wZwHhGg97E3+n
+	GhPM/xWzddjoNdwDbsmmwtt9P4pj0T+XsIsAGgvesRN66Roz4WSvM=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id 9C2713FE8C;
+	Tue, 16 Jan 2024 11:36:50 -0500 (EST)
 	(envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.125.200.93])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 9AC661D779B;
-	Tue, 16 Jan 2024 10:56:08 -0500 (EST)
+	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 28D113FE88;
+	Tue, 16 Jan 2024 11:36:46 -0500 (EST)
 	(envelope-from junio@pobox.com)
 From: Junio C Hamano <gitster@pobox.com>
-To: Ghanshyam Thakkar <shyamthakkar001@gmail.com>
-Cc: git@vger.kernel.org,  phillip.wood123@gmail.com,
-  christian.couder@gmail.com
-Subject: Re: [PATCH v5 1/2] t7501: add tests for --include and --only
-In-Reply-To: <20240113042254.38602-2-shyamthakkar001@gmail.com> (Ghanshyam
-	Thakkar's message of "Sat, 13 Jan 2024 09:51:54 +0530")
-References: <20240112180109.59350-1-shyamthakkar001@gmail.com>
-	<20240113042254.38602-1-shyamthakkar001@gmail.com>
-	<20240113042254.38602-2-shyamthakkar001@gmail.com>
-Date: Tue, 16 Jan 2024 07:56:07 -0800
-Message-ID: <xmqq1qah46i0.fsf@gitster.g>
+To: "Chandra Pratap via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Chandra Pratap <chandrapratap376@gmail.com>,
+  Chandra Pratap <chandrapratap3519@gmail.com>
+Subject: Re: [PATCH v2] tests: move t0009-prio-queue.sh to the new unit
+ testing framework
+In-Reply-To: <pull.1642.v2.git.1705220304781.gitgitgadget@gmail.com> (Chandra
+	Pratap via GitGitGadget's message of "Sun, 14 Jan 2024 08:18:24
+	+0000")
+References: <pull.1642.git.1705219829965.gitgitgadget@gmail.com>
+	<pull.1642.v2.git.1705220304781.gitgitgadget@gmail.com>
+Date: Tue, 16 Jan 2024 08:36:44 -0800
+Message-ID: <xmqqzfx51bhf.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -48,123 +49,172 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 X-Pobox-Relay-ID:
- C360EFC4-B487-11EE-9872-25B3960A682E-77302942!pb-smtp2.pobox.com
+ 7042610A-B48D-11EE-9701-A19503B9AAD1-77302942!pb-smtp21.pobox.com
 
-Ghanshyam Thakkar <shyamthakkar001@gmail.com> writes:
+"Chandra Pratap via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> +test_expect_success 'fail to commit untracked pathspec (even with --include/--only)' '
-
-"untracked pathspec" is a nonsense word.  We do not track pathspec;
-you may use pathspec to specify which path(s) to work on.  I think
-this is more about untracked files being ignored for the purpose of
-"-i" and "-o".
-
-You used to call this "untracked file", which probably makes more
-sense.
-
-> +	# TODO: as for --include, the below command will fail because nothing is
-> +	# staged. If something was staged, it would not fail even if the
-> +	# pathspec was untracked (however, pathspec will remain untracked and
-> +	# staged changes would be committed.) In either cases, no error is
-
-Both uses of "pathspec" here are nonsense.  Saying "even though the
-pathspec does not match any tracked path" is OK.  "(however, the
-untracked path that match the pathspec are not added and only the
-changes in the index gets commit)" is also OK.
-
-> +	# returned to stderr like in (-o and without -o/-i) cases. In a
-> +	# similar manner, "git add -u baz" also does not error out.
-> +	# 
-> +	# Therefore, the below test is just to document the current behavior
-> +	# and is not an endorsement to the current behavior, and we may 
-> +	# want to fix this. And when that happens, this test should be
-> +	# updated accordingly.
-
-OK.
-
-> @@ -117,6 +143,55 @@ test_expect_success '--long with stuff to commit returns ok' '
->  	git commit -m next -a --long
->  '
->  
-> +for opt in "" "-o" "--only"
-> +do 
-> +	test_expect_success 'exclude additional staged changes when given pathspec' '
-> +		echo content >>file &&
-> +		echo content >>baz &&
-> +		git add baz &&
-> +		git commit $opt -m "file" file &&
+> diff --git a/t/unit-tests/t-prio-queue.c b/t/unit-tests/t-prio-queue.c
+> new file mode 100644
+> index 00000000000..07b112f5894
+> --- /dev/null
+> +++ b/t/unit-tests/t-prio-queue.c
+> @@ -0,0 +1,99 @@
+> +#include "test-lib.h"
+> +#include "prio-queue.h"
 > +
-> +		git diff --name-only >actual &&
-> +		test_must_be_empty actual &&
+> +static int intcmp(const void *va, const void *vb, void *data UNUSED)
+> +{
+> +	const int *a = va, *b = vb;
+> +	return *a - *b;
+> +}
+
+This came from the original and looks obviously OK.
+
+> +static int show(int *v)
+> +{
+> +	int ret = -1;
+> +	if (v)
+> +		ret = *v;
+> +	free(v);
+> +	return ret;
+> +}
+
+The original allowed us to differentiate "prio queue did not yield
+anything" case and "the integer obtained from the queue happened to
+be negative" cases, but with this, -1 is taken.
+
+It is not a huge loss, as the tests can limit themselves to a subset
+of "int" (say, positive integers only).  But this realization can
+lead to further simplfication.
+
+> +static int test_prio_queue(const char **input, int *result)
+
+This takes an array of strings, but it does not have to.  Make it
+take an array of "int" and then with something like
+
+	#define MISSING	-1
+        #define GET	-2
+        #define DUMP	-3
+	#define STACK	-4
+
+you can get rid of strcmp(), atoi(), and xmalloc(), like so:
+
+	while (*input) {
+		int val = *input++;
+
+		switch (val) {
+		case GET:
+			void *peek = prio_queue_peek(&pq);
+			...
+			result[i++] = peek ? (*(int*)peek) : MISSING;
+			break;
+		... other "commands" here ...
+		default:
+			prio_queue_put(&pq, val);
+			break;			
+		}
+	}
+
+I inlined the show() in the above illustration, but you can keep it
+as a separate small helper function.  The point is that it makes it
+far easier to follow by using the MISSING symbolic constant either
+way.
+
+> +{
+> +	struct prio_queue pq = { intcmp };
+> +	int i = 0;
 > +
-> +		git diff --name-only --staged >actual &&
-> +		test_cmp - actual <<-EOF &&
-> +		baz
-> +		EOF
-
-It is probably more common to say
-
-		test_write_lines baz >expect &&
-		git diff --name-only --cached >actual &&
-		test_cmp expect actual
-
-especially when the expected pattern is a file with short lines,
-instead of here-text.  It makes it easier to debug tests, too,
-because after "sh t7501-*.sh -i" fails, you can go to the trash
-directory and the expectation as well as the actual output are
-there in files.
-
-> +		git diff --name-only HEAD^ HEAD >actual &&
-> +		test_cmp - actual <<-EOF
-> +		file
-> +		EOF
-
-Ditto.
-
-This tests the most important aspect of "-o"; even when the index
-has other changes relative to HEAD already, they are skipped over
-and only the changes to paths that match the given pathspec are
-committed, and this test demonstrates it.  Well done.
-
-> +test_expect_success '-i/--include includes staged changes' '
-> +	echo content >>file &&
-> +	echo content >>baz &&
-> +	git add file &&
-> +	
-> +	# baz is in the index, therefore, it will be committed
-> +	git commit --include -m "file and baz" baz  &&
+> +	while (*input) {
+> +		if (!strcmp(*input, "get")) {
+> +			void *peek = prio_queue_peek(&pq);
+> +			void *get = prio_queue_get(&pq);
+> +			if (peek != get)
+> +				BUG("peek and get results do not match");
+> +			result[i++] = show(get);
+> +		} else if (!strcmp(*input, "dump")) {
+> +			void *peek;
+> +			void *get;
+> +			while ((peek = prio_queue_peek(&pq))) {
+> +				get = prio_queue_get(&pq);
+> +				if (peek != get)
+> +					BUG("peek and get results do not match");
+> +				result[i++] = show(get);
+> +			}
+> +		} else if (!strcmp(*input, "stack")) {
+> +			pq.compare = NULL;
+> +		} else if (!strcmp(*input, "reverse")) {
+> +			prio_queue_reverse(&pq);
+> +		} else {
+> +			int *v = xmalloc(sizeof(*v));
+> +			*v = atoi(*input);
+> +			prio_queue_put(&pq, v);
+> +		}
+> +		input++;
+> +	}
 > +
-> +	git diff --name-only HEAD >remaining &&
-> +	test_must_be_empty remaining &&
+> +	clear_prio_queue(&pq);
 > +
-> +	git diff --name-only HEAD^ HEAD >changes &&
-> +	test_cmp - changes <<-EOF
-> +	baz
-> +	file
-> +	EOF
-
-Again with "test_write_lines baz file >expect", this test becomes a
-bit shorter.
-
-This tests the most important aspect of "-i"; changes to the paths
-that match the given pathspec are added to the index, and recorded
-together with changes added to the index already to the commit.
-Well done.
-
-> +'
+> +	return 0;
+> +}
 > +
-> +test_expect_success '--include and --only do not mix' '
-> +	test_when_finished "git reset --hard" &&
-> +	echo content >>file &&
-> +	echo content >>baz &&
-> +	test_must_fail git commit --include --only -m "file baz" file baz 2>actual &&
-> +	test_grep -e "fatal: options .-i/--include. and .-o/--only. cannot be used together" actual
-> +'
+> +#define INPUT_SIZE 6
+
+You do not need this (see below)
+
+> +#define BASIC_INPUT "1", "2", "3", "4", "5", "5", "dump"
+> +#define BASIC_EXPECTED 1, 2, 3, 4, 5, 5
 > +
->  test_expect_success 'commit message from non-existing file' '
->  	echo more bongo: bongo bongo bongo bongo >file &&
->  	test_must_fail git commit -F gah -a
+> +#define MIXED_PUT_GET_INPUT "6", "2", "4", "get", "5", "3", "get", "get", "1", "dump"
+> +#define MIXED_PUT_GET_EXPECTED 2, 3, 4, 1, 5, 6
+> +
+> +#define EMPTY_QUEUE_INPUT "1", "2", "get", "get", "get", "1", "2", "get", "get", "get"
+> +#define EMPTY_QUEUE_EXPECTED 1, 2, -1, 1, 2, -1
 
-Very nicely done.
+And these input and expectation can become all integers, i.e.
 
-Thanks.
+	#define EMPTY_QUEUE_INPUT 1, 2, GET, GET, GET, 1, 2, GET, GET, GET
+	#define EMPTY_QUEUE_EXPECTED 1, 2, MISSING, 1, 2, MISSING
+
+> +
+> +#define STACK_INPUT "stack", "1", "5", "4", "6", "2", "3", "dump"
+> +#define STACK_EXPECTED 3, 2, 6, 4, 5, 1
+> +
+> +#define REVERSE_STACK_INPUT "stack", "1", "2", "3", "4", "5", "6", "reverse", "dump"
+> +#define REVERSE_STACK_EXPECTED 1, 2, 3, 4, 5, 6
+> +
+> +#define TEST_INPUT(INPUT, EXPECTED, name)			\
+> +  static void test_##name(void)					\
+> +{								\
+> +	const char *input[] = {INPUT};				\
+> +	int expected[] = {EXPECTED};				\
+> +	int result[INPUT_SIZE];					\
+
+This can be written more like
+
+	int result[ARRAY_SIZE(expected)]
+
+so that you can freely extend each test without having to worry
+about increasing the hardcoded limit.
+
+> +	test_prio_queue(input, result);				\
+> +	check(!memcmp(expected, result, sizeof(expected)));	\
+> +}
+> +
+> +TEST_INPUT(BASIC_INPUT, BASIC_EXPECTED, basic)
+> +TEST_INPUT(MIXED_PUT_GET_INPUT, MIXED_PUT_GET_EXPECTED, mixed)
+> +TEST_INPUT(EMPTY_QUEUE_INPUT, EMPTY_QUEUE_EXPECTED, empty)
+> +TEST_INPUT(STACK_INPUT, STACK_EXPECTED, stack)
+> +TEST_INPUT(REVERSE_STACK_INPUT, REVERSE_STACK_EXPECTED, reverse)
+> +
+> +int cmd_main(int argc, const char **argv)
+> +{
+> +	TEST(test_basic(), "prio-queue works for basic input");
+> +	TEST(test_mixed(), "prio-queue works for mixed put & get commands");
+> +	TEST(test_empty(), "prio-queue works when queue is empty");
+> +	TEST(test_stack(), "prio-queue works when used as a LIFO stack");
+> +	TEST(test_reverse(), "prio-queue works when LIFO stack is reversed");
+> +
+> +	return test_done();
+> +}
+>
+> base-commit: 1a87c842ece327d03d08096395969aca5e0a6996
