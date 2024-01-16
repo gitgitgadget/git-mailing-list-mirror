@@ -1,223 +1,200 @@
-Received: from mail-oa1-f51.google.com (mail-oa1-f51.google.com [209.85.160.51])
+Received: from mail-pl1-f181.google.com (mail-pl1-f181.google.com [209.85.214.181])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C0C21BDC4
-	for <git@vger.kernel.org>; Tue, 16 Jan 2024 13:24:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A4181BC4E
+	for <git@vger.kernel.org>; Tue, 16 Jan 2024 13:39:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="T/AFujC9"
-Received: by mail-oa1-f51.google.com with SMTP id 586e51a60fabf-203ae9903a6so5203795fac.0
-        for <git@vger.kernel.org>; Tue, 16 Jan 2024 05:24:08 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LFjo5pvk"
+Received: by mail-pl1-f181.google.com with SMTP id d9443c01a7336-1d3ec3db764so35962175ad.2
+        for <git@vger.kernel.org>; Tue, 16 Jan 2024 05:39:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1705411447; x=1706016247; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=+iA7LC0pHypt+p+nR4jsVp5pdTjykL5nTy4323P4bSg=;
-        b=T/AFujC9INObH+WOtezgjq+yMH87eshopsHXg6eyqTzm0vLQm5fdmfj5YX1bjbJ3Nh
-         TAQeGQMIOqZ1IniIfv6ckLu/3ISkU7ML9FmpT+WBvEp+2HV0FBWCbc7g6j91VU/KitO8
-         oJyePNZpVkMDvZ8vNGPOz/S9WyF8wSshUDMPA9MBBkrGVx+uemKqIuni8fmYFvy9lPCf
-         bwZCvZpzY3IO1NO+14VRuUP/jmCOVdfm+9T6K38tpuCYR0ftuNcTLTP5bMni0jLudYhW
-         Ab08v8qvx/+nFgmfIJkcabdU9ypaiQsplgIyiyOnxUxUfpFYNtcE/Ou8gyVLbcs4zzYw
-         ym1g==
+        d=gmail.com; s=20230601; t=1705412373; x=1706017173; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Iiqx6TqESCyo+GQy/8dzXRf9neOwXTC5P0LQDss7moE=;
+        b=LFjo5pvkz8pl6MDz8qzO0FH1mEQJdsyUmCqRrCwlVuoflt2PcVpTK5kSvAkzi/1f/O
+         yN8cezMOTTn4oqZ5k45PIp65EG3b2kswGbEXPE1d2gFWEBw6+xY2gqLevwRSOjmJSTth
+         g/U6boGIF7fjhP84nGULaUbT9Djbgi70+y0F1pzvMsI0CjMP8EoW0sxUUfva5vKXYl2O
+         Klk2rCoqVedMjEVgP5gDOOzCsYznbVV3GsEPlrEVQuEMpOOXI6ALW4o5xrAqcTJnq8YN
+         wFDJQWgMjv/CnGnhbL1ALvGoDfo8X3HwM3NtmlEudJ/FOmgjV2OOy/+ajoPiB5LujcVm
+         8N3w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1705411447; x=1706016247;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=+iA7LC0pHypt+p+nR4jsVp5pdTjykL5nTy4323P4bSg=;
-        b=oxd/WL4cuGd2ROxIYagcwHg/AP1m1fuJNr6VRbAJtp8oMfiMUWedPXo+UvK1CMEkLl
-         zVkPJEQPmSI6z6b0bDY1QCbDvMdMyxZq20MgaLxNgq1P23H6UAvjNtUFfXnvnRXFaPZF
-         TkxaKjGcws0OBE1NLpPStlQxTmP2YO8+TrjebXlwYpo5BVOyzHPq8liY4nosJNw+KZd5
-         q1adhRioVg83Ttg46MvXz9K8Z+lbgn8115AFpBgASU/muyXwg5m5uKBNBZmpy4Okw1Ab
-         ovJanIiV/86CgtSh3DuQnDAHtYrLtZym/FjRtKbLBpiTDEF3VJh57amoeJkP6/q6HhXi
-         Cxvg==
-X-Gm-Message-State: AOJu0Yww8G9NW0ZruC8QNwIb5jTxj0ql40KV3zlOk6BWYhvFpu5O/DgA
-	DAHYmG+p/ydLLEWxO/zM7A1idO5iUOffaUAq/glMcesPTQY=
-X-Google-Smtp-Source: AGHT+IHXqSACm6XaQqSzgjzTZS7owxK31ttufra8p0M8dagcG8hC9KhF+cdaxIAvS6ebzALEdhFEjlEhu6Oc6BW+XJU=
-X-Received: by 2002:a05:6870:55d1:b0:204:42c5:8cb8 with SMTP id
- qk17-20020a05687055d100b0020442c58cb8mr8398039oac.15.1705411447416; Tue, 16
- Jan 2024 05:24:07 -0800 (PST)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Tue, 16 Jan 2024 08:24:04 -0500
-From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <mafs0a5p5pl6y.fsf@yadavpratyush.com>
-References: <mafs0fryypg82.fsf@yadavpratyush.com> <CAOLa=ZS8YBhzaYx=9016KxErsMsazsF09rcuPs=-WpEGjV+ruw@mail.gmail.com>
- <mafs0a5p5pl6y.fsf@yadavpratyush.com>
+        d=1e100.net; s=20230601; t=1705412373; x=1706017173;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=Iiqx6TqESCyo+GQy/8dzXRf9neOwXTC5P0LQDss7moE=;
+        b=Lso25AdODr1y9xkha4Qzr/tyN/MvmOrjPii4LqUxp6lAPfPsYiHqQPhGQO/xxlGIMw
+         FrNV5uyep+uDnH5RpOLfPrCVeolusX4G78IoTM09uPAsu4+e7mVNpnSQIviALP+rJ/NJ
+         WEQz1w6l2mVqMSSrljREYkRNCIKwXALawy3DBLyZjxSBGXw6pcN8+MNgcZoL8PLNuK/+
+         KPKeH3WdxoO085L+BmHmxfJUdDz19xqWzH8Y6Md8t0dh5LKn3jl373ukz22mLwP4mk6K
+         3jY2e2yinhkqd/7LWn0116SBjNqFZxsEx9OA8Qn/bNW2tN0Kfo5ZLcxuTfgeSOm6kMPj
+         Pnmw==
+X-Gm-Message-State: AOJu0YzQDkouuxBk0Yf5VcocLH3+Qr5XxAnYxMyBG60SLWOsaTRl276x
+	meDnsPPFfSEebRNrHoD52FlA7sIjho7chw==
+X-Google-Smtp-Source: AGHT+IF+X6FPZTq3Cos+2CA0pj22U7jSG+q7SzOBiU5fbaU+zX4aE5ktrPSVm62Rs5U8OcOP79iZ9w==
+X-Received: by 2002:a17:902:7c01:b0:1d4:faae:885d with SMTP id x1-20020a1709027c0100b001d4faae885dmr3308796pll.123.1705412373530;
+        Tue, 16 Jan 2024 05:39:33 -0800 (PST)
+Received: from tigtog-proxy.localdomain.localdomain (144.34.163.219.16clouds.com. [144.34.163.219])
+        by smtp.gmail.com with ESMTPSA id l8-20020a170902f68800b001d5c38bfa33sm4303351plg.307.2024.01.16.05.39.32
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 16 Jan 2024 05:39:33 -0800 (PST)
+From: Jiang Xin <worldhello.net@gmail.com>
+To: Git List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Linus Arver <linusa@google.com>
+Cc: Jiang Xin <zhiyou.jx@alibaba-inc.com>
+Subject: [PATCH v5 0/6] support remote archive via stateless transport
+Date: Tue, 16 Jan 2024 21:39:24 +0800
+Message-Id: <cover.1705411391.git.zhiyou.jx@alibaba-inc.com>
+X-Mailer: git-send-email 2.32.0.rc3
+In-Reply-To: <cover.1702562879.git.zhiyou.jx@alibaba-inc.com>
+References: <cover.1702562879.git.zhiyou.jx@alibaba-inc.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Tue, 16 Jan 2024 08:24:04 -0500
-Message-ID: <CAOLa=ZRfr+oEKCo8AfFSAFtS8pbDgmG_EeBSwm7GwukzVcqSrg@mail.gmail.com>
-Subject: Re: Strange behaviour when pushing a commit object to remote's refs/HEAD
-To: Pratyush Yadav <me@yadavpratyush.com>
-Cc: git@vger.kernel.org
-Content-Type: multipart/mixed; boundary="0000000000008518ab060f100b27"
+Content-Transfer-Encoding: 8bit
 
---0000000000008518ab060f100b27
-Content-Type: text/plain; charset="UTF-8"
+From: Jiang Xin <zhiyou.jx@alibaba-inc.com>
 
-Pratyush Yadav <me@yadavpratyush.com> writes:
+"git archive --remote=<remote>" learned to talk over the smart
+http (aka stateless) transport.
+
+# Changes since v4
+
+1. Change commit messages and order of commits.
+2. Split the last commit of v4 into three seperate commits.
 
 
->> Just to note here that pushing to "refs/heads/HEAD" is not actually
->> updating the remote repositories $GIT_DIR/HEAD file, rather it creates a
->> new reference $GIT_DIR/refs/heads/HEAD.
->
-> Yes, that is what I would also expect. I checked one of the Git servers
-> we have and this is exactly what happens. $GIT_DIR/HEAD is a symref
-> pointing to refs/heads/main and $GIT_DIR/refs/heads/HEAD points to the
-> commit. But behaviour from client side is not consistent.
->
+# range-diff v4...v5
 
-What is the non _consistent_ part?
+1:  da80391037 ! 1:  f3fef46c05 transport-helper: no connection restriction in connect_helper
+    @@ Commit message
+         was for transport that supports the ".connect" method. The
+         "connect_helper()" function protected itself from getting called for a
+         transport without the method before calling process_connect_service(),
+    -    which did not work with such a transport.
+    +    which only worked with the ".connect" method.
+     
+         Later, commit edc9caf7 (transport-helper: introduce stateless-connect,
+         2018-03-15) added a way for a transport without the ".connect" method
+    -    to establish a "stateless" connection in protocol-v2, which
+    -    process_connect_service() was taught to handle the "stateless"
+    -    connection, making the old safety valve in its caller that insisted
+    -    that ".connect" method must be defined too strict, and forgot to loosen
+    -    it.
+    +    to establish a "stateless" connection in protocol-v2, where
+    +    process_connect_service() was taught to handle the ".stateless_connect"
+    +    method, making the old protection too strict. But commit edc9caf7 forgot
+    +    to adjust this protection accordingly.
+     
+         Remove the restriction in the "connect_helper()" function and give the
+         function "process_connect_service()" the opportunity to establish a
+    @@ Commit message
+         protocol.
+     
+         Helped-by: Junio C Hamano <gitster@pobox.com>
+    +    Helped-by: Linus Arver <linusa@google.com>
+         Signed-off-by: Jiang Xin <zhiyou.jx@alibaba-inc.com>
+     
+      ## transport-helper.c ##
+-:  ---------- > 2:  6be331b22d remote-curl: supports git-upload-archive service
+-:  ---------- > 3:  aabc8e1a2a transport-helper: protocol-v2 supports upload-archive
+4:  a21a80dae9 ! 4:  fdab4abb43 archive: support remote archive from stateless transport
+    @@ Metadata
+     Author: Jiang Xin <zhiyou.jx@alibaba-inc.com>
+     
+      ## Commit message ##
+    -    archive: support remote archive from stateless transport
+    +    http-backend: new rpc-service for git-upload-archive
+     
+    -    Even though we can establish a stateless connection, we still cannot
+    -    archive the remote repository using a stateless HTTP protocol. Try the
+    -    following steps to make it work.
+    +    Add new rpc-service "upload-archive" in http-backend to add server side
+    +    support for remote archive over HTTP/HTTPS protocols.
+     
+    -     1. Add support for "git-upload-archive" service in "http-backend".
+    -
+    -     2. Use the URL ".../info/refs?service=git-upload-pack" to detect the
+    -        protocol version, instead of use the "git-upload-archive" service.
+    -
+    -     3. "git-archive" does not expect to see protocol version and
+    -        capabilities when connecting to remote-helper, so do not send them
+    -        in "remote-curl.c" for the "git-upload-archive" service.
+    +    Also add new test cases in t5003. In the test case "archive remote http
+    +    repository", git-archive exits with a non-0 exit code even though we
+    +    create the archive correctly. It will be fixed in a later commit.
+     
+         Helped-by: Eric Sunshine <sunshine@sunshineco.com>
+         Signed-off-by: Jiang Xin <zhiyou.jx@alibaba-inc.com>
+ 		if (ret)
 
->>
->> With this understanding you'll see that this is not a bug, because the
->> remote HEAD was never updated, but only a new branch called HEAD was
->> created [0].
->
-> GitHub thinks so but try opening the branch. It won't show you the
-> commit (707a3d5, "2.1") but instead shows you 86e1c97 ("2"). So
-> something is wrong _at least_ with Github.
->
+    ... (omitted) ...
 
-I don't know how GitHub operates, but I'm guessing because there is
-ambiguity between a branch called HEAD and the actual HEAD. So this is
-probably the reason.
+3:  870dc5fd21 ! 5:  6ac0c8e105 transport-helper: call do_take_over() in connect_helper
+    @@ Commit message
+         After successfully connecting to the smart transport by calling
+         process_connect_service() in connect_helper(), run do_take_over() to
+         replace the old vtable with a new one which has methods ready for the
+    -    smart transport connection.
+    +    smart transport connection. This will fix the exit code of git-archive
+    +    in test case "archive remote http repository" of t5003.
+     
+         The connect_helper() function is used as the connect method of the
+         vtable in "transport-helper.c", and it is called by transport_connect()
+    @@ Commit message
+         transport_connect() so far is in "builtin/archive.c". Without running
+         do_take_over(), it may fail to call transport_disconnect() in
+         run_remote_archiver() of "builtin/archive.c". This is because for a
+    -    stateless connection or a service like "git-upload-pack-archive", the
+    +    stateless connection and a service like "git-upload-archive", the
+         remote helper may receive a SIGPIPE signal and exit early. To have a
+         graceful disconnect method by calling do_take_over() will solve this
+         issue.
+     
+    -    The subsequent commit will introduce remote archive over a stateless-rpc
+    -    connection.
+    -
+    +    Helped-by: Linus Arver <linusa@google.com>
+         Signed-off-by: Jiang Xin <zhiyou.jx@alibaba-inc.com>
+     
+    + ## t/t5003-archive-zip.sh ##
+    +@@ t/t5003-archive-zip.sh: test_expect_success 'remote archive does not work with protocol v1' '
+    + '
+    + 
+    + test_expect_success 'archive remote http repository' '
+    +-	test_must_fail git archive --remote="$HTTPD_URL/auth/smart/bare.git" \
+    ++	git archive --remote="$HTTPD_URL/auth/smart/bare.git" \
+    + 		--output=remote-http.zip HEAD &&
+    + 	test_cmp_bin d.zip remote-http.zip
+    + '
+    +
+      ## transport-helper.c ##
+     @@ transport-helper.c: static int connect_helper(struct transport *transport, const char *name,
+      
+2:  2f7060f7c5 = 6:  423a89c593 transport-helper: call do_take_over() in process_connect
 
->>
->>> Now with such a repo, if you do `git log --all --oneline` it would look
->>> something like:
->>>
->>>     707a3d5 (origin/HEAD) 2.1
->>>     86e1c97 (HEAD -> main, origin/main) 2
->>>     79264c3 1
->>>
->>> And running `git for-each-ref --format='%(symref:short),%(refname:short),%(refname),%(subject)' refs/remotes/origin` gives:
->>>
->>>     ,origin,refs/remotes/origin/HEAD,2.1
->>>     ,origin/main,refs/remotes/origin/main,2
->>>
->>> All well and good so far. Now delete the repo and attempt to clone it.
->>> This time `git log --all --oneline` gives:
->>>
->>>     86e1c97 (HEAD -> main, origin/main, origin/HEAD) 2
->>>     79264c3 1
->>>
->>
->> This is expected since you cloned the repository and you got the default
->> branch 'main'.
->
-> No.
->
-> First, if I clone a repo with multiple branches (say
-> https://github.com/prati0100/git-gui) I get _all_ the remote branches.
-> Yet here I clearly don't get the so called "HEAD" branch. This is not
-> expected behaviour.
->
+Jiang Xin (6):
+  transport-helper: no connection restriction in connect_helper
+  remote-curl: supports git-upload-archive service
+  transport-helper: protocol-v2 supports upload-archive
+  http-backend: new rpc-service for git-upload-archive
+  transport-helper: call do_take_over() in connect_helper
+  transport-helper: call do_take_over() in process_connect
 
-You're right, I meant to say that the remote branches don't have the
-corresponding local branches. But that does not matter here.
+ http-backend.c         | 13 ++++++++++---
+ remote-curl.c          | 14 +++++++++++---
+ t/t5003-archive-zip.sh | 34 ++++++++++++++++++++++++++++++++++
+ transport-helper.c     | 29 +++++++++++++----------------
+ 4 files changed, 68 insertions(+), 22 deletions(-)
 
-I'm not saying that there is a path for git to work properly when
-creating a branch called "HEAD". It's just that "HEAD" is more of a
-reserved word for git and creating a branch with the same name has
-unintended effects.
+-- 
+2.43.0
 
-> Second, git really does misunderstand refs/remotes/origin/HEAD. For
-> example, when running git for-each-ref command with the clone method, I
-> get:
->
->     origin/main,origin,refs/remotes/origin/HEAD,2
->
-> So it clearly thinks refs/remotes/origin/HEAD is at 86e1c97 ("2"). Or,
-> to be more specific, it thinks the ref points to origin/main which is at
-> 86e1c97 ("2"). But we set it at (707a3d5, "2.1"). So it tells me the
-> wrong thing. Now if I do the git remote add && git remote update method,
-> git for-each-ref says:
->
->     ,origin,refs/remotes/origin/HEAD,2.1
->
-
-This is one of those ambiguities, we store HEAD for remotes as
-     $GIT_DIR/refs/remotes/<remote>/HEAD
-and remote branches as
-     $GIT_DIR/refs/remotes/<remote>/<branch>
-
-So what happens if there is a branch named HEAD? This is the problem
-you're facing...
-
-> So now it thinks refs/remotes/origin/HEAD points at (707a3d5, "2.1"). I
-> do not see it as expected behaviour.
->
-> We can also see this when inspecting the contents of
-> .git/refs/remotes/origin/HEAD. With clone it says:
->
->     ref: refs/remotes/origin/main
->
-> With git remote add && git remote update it says:
->
->     707a3d587c61c089710e3924eb63a51763b5a4c8
->
-> The same ref points to different places based on how you pull the repo.
->
-> Looking deeper, if you clone a repo that does not have a branch called
-> "HEAD" (like git-gui), git creates a file in
-> .git/refs/remotes/origin/HEAD that says:
->
->     ref: refs/remotes/origin/master
->
-> So it certainly seems to use refs/remotes/origin/HEAD to point to the
-> remote's HEAD, and not as a regular branch.
->
-> I find this to be inconsistent behaviour on git's part and do not think
-> it is (or should be) expected behaviour.
->
-
-Maybe we should explicitly mention that using HEAD as the branch name
-has unintended effects and should be avoided.
-
->>
->>> And running `git for-each-ref --format='%(symref:short),%(refname:short),%(refname),%(subject)' refs/remotes/origin` gives:
->>>
->>>     origin/main,origin,refs/remotes/origin/HEAD,2
->>>     ,origin/main,refs/remotes/origin/main,2
->>>
->>> So suddenly the remote's HEAD becomes origin/main (symbolic ref) and the
->>> commit (707a3d5, "2.1") is nowhere to be found. It neither shows up in
->>> `git rev-list --all` nor in `git log --all`. The files and trees
->>> associated with it also do not show up in `git rev-list --all --object`.
->>
->>
->> Because rev-list's `--all`, iterates over all refs. Since you only
->> cloned, the HEAD branch is not pulled.
->
-> Why not? When you clone all branches should get pulled.
->
-
-I think I jumped too quick here, it is because the branch HEAD is never
-realized locally as I explained above.
-
---0000000000008518ab060f100b27
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: ff529231f6f4b65e_0.1
-
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1XbWczSVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mN05vQy8wVnRsK1h6Q0VrVmlLQnpBdk1HaWJUUFMrOAordFdQM1pDNXdP
-bngwbktFRmplSzdZREM1ZHBMaENxK2E0OGRZdjlnNk1QT096Qk1iWERyQ2xkSFZCZmxXOE5SCnRI
-cWc1VHpvekxIM2dLM2FJcmVDekZ5NTNmVlY4V1kvRzFPbkNkMktXcktuV0RJQU11czJOV2I3emY2
-V3lNQkwKeDJ2aG85NzlJN2hJaXpYZFpyUHk3VDl5bE5jTFladUgyQkh4Sk9TaUJXSVQzMmowc1ls
-dXMrTisyUExTV1A5VwptR3FDTmRPQk1EYmovbzBndk1aSDJCeXEzUE1ialhTUmV4NFlzNFhxMmx2
-WmYzRThoNHdpVGk4aDUzNWxMeGsrCklldzhWRDMyTHVSWlNjWUpRMldPZ1VjMmRvK3FpTlVUTXJR
-TTduSlFZVU5QWXgzTytTdEpFckptcUdVZW8wNHgKaU5Ta2IwOU9hclNLVllVdWYrK0xMVlkyS01v
-VDdsK3VSZThKQXNwUW5TREZnTmY5NWg2MWlsd3hoSGZrblhFRwp3eHg1RDNNUDN1emRaZmFaekIx
-UllKK2NBelV3U04ydVNxQkp4RWh2dEk4dnpzMHdoVXVFNUx4cXR1dGlKTHlRCkJqWndqYlAyelFh
-Und2WE81cXppY3VLcjVHcEhlTkF6UlBCV2hDWT0KPWZMQ3EKLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---0000000000008518ab060f100b27--
