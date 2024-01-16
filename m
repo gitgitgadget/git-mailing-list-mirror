@@ -1,59 +1,58 @@
-Received: from mail-qv1-f53.google.com (mail-qv1-f53.google.com [209.85.219.53])
+Received: from mail-qv1-f42.google.com (mail-qv1-f42.google.com [209.85.219.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06B552136A
-	for <git@vger.kernel.org>; Tue, 16 Jan 2024 22:09:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 839CD57302
+	for <git@vger.kernel.org>; Tue, 16 Jan 2024 22:09:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705442994; cv=none; b=KTSKZkgiJ4f3VK8VvyJSigfJ3Gq3ihIWFuB1+klUX6c1s9JemTz1x3C8KBBFCJgJOvZ4mbQbXvVVF/NpwlnPHsHNOWkzoF7y45YRGFUlAYCUKPuy8B3LY6jPsPNm5nUNeMWwbKtV48ZRF58/fa8chWcYutGG0us8CoeVrrLiEVc=
+	t=1705442996; cv=none; b=J9cG1kmDirBCEG+37dlK+MFRCsayNllXrsWToMJvbm4IPDRrBVb1ibh8Bql4TwD/Q3k7OyWH8g6EEpOJDn5K/SamYg32pkGnL+khJvcnpUt7nY7586ecVgYdEJ6Awh1O3r0N/5px6usFzvQ47OlLUGdcg+UwOl1vaq23DEBfCoE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705442994; c=relaxed/simple;
-	bh=czkZiKcnqdH+xamLI0LQh9hDOJCz2frhG5RMKz3Lh2I=;
+	s=arc-20240116; t=1705442996; c=relaxed/simple;
+	bh=jXv0e7vl7xxRbLuml1Ep0eWejDjf4awpXIOYEIfYS9A=;
 	h=Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Gm-Message-State:X-Google-Smtp-Source:X-Received:Received:Date:
 	 From:To:Cc:Subject:Message-ID:References:MIME-Version:Content-Type:
-	 Content-Disposition:Content-Transfer-Encoding:In-Reply-To; b=cVzXq8mrtCCsHFwQojPAoX3UaGgJeyitmJgevHx1ebb69QGM3nDLKVWZ9oRYt6xTlFdJzNENzUdhUyD8YXiNPMhoVYtrd3KM5d1+eD5Ljba26/8KZMHzs3WQb5PBgNQXPHRu6EZbSMhhJGuL5JGjU+DPfecPh5QSWZGFF2MEtZM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=none smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=rf3diiEx; arc=none smtp.client-ip=209.85.219.53
+	 Content-Disposition:In-Reply-To; b=POfcjfNDLg/57vD6cP8sr6PX7CpQHljDN5E6hlqkB9+aiwBTJwYSzaXikY1zm9NoLXpOpbQK/roHXJm+qDkDkKsPrNY47iLjyasNnLcSRrFoGHSzcmebfryS2e+yvkfaS1rdhxG53cqPwioyrHat8j8QrXk51A0SQRV0JIpvj4w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=none smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=QfDdPVTC; arc=none smtp.client-ip=209.85.219.42
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="rf3diiEx"
-Received: by mail-qv1-f53.google.com with SMTP id 6a1803df08f44-68137fd70b4so30272246d6.2
-        for <git@vger.kernel.org>; Tue, 16 Jan 2024 14:09:52 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="QfDdPVTC"
+Received: by mail-qv1-f42.google.com with SMTP id 6a1803df08f44-68175861f3eso4618516d6.3
+        for <git@vger.kernel.org>; Tue, 16 Jan 2024 14:09:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1705442991; x=1706047791; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=6Vw0DofzGiQ8Me7Dn5JbN0yEve9RLY4MvKA+x24gCto=;
-        b=rf3diiExWAuMAiUrNPFtrjnO7KWPpxajhhDXhoAc390iVrzg6sDbuYfJYFcidclBb5
-         qlJ/UcJEcydGcr1TzO10dagPxQQ76YgeQSD+/5BZbfOb4pJZQ6oiWYvP4fFixIRePbVw
-         MiEpDOztAPWdz/A+js2j/QCvZe4Xcq7A2ZRw0GZjmUQDgBMLg/98BawUVhAvKPalytyt
-         sy61QPWLgsXW95GC46kOI8LIThF2i6AWLysMkgNlWBmKBwj1+N78eVwQOAuqVYY2m3bY
-         gejMcXFBlFKoJfdfnKY1wzB292PFFpn7Hk6GSHB4cwQhGCpR1BEBmskXs3jFI7y7TyM2
-         JZDQ==
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1705442994; x=1706047794; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=20F2pHVGsJi0lMQBok531KeHnqA3E6H/Lw1Uc5J8/FI=;
+        b=QfDdPVTCXUsFNgu9bIShZvOJyc0mD+R8t1EXFibdW8KRXaswPSeBH8Eannfev9wE6j
+         hikQnC4cn5PutQBVm0QKIudJW55xz9Dtg/PNgNuzQKvy1UHYcUKdxyBQH1iieBxGzqr5
+         H+bLwie+9Z6KXE92mmtXZyrshsnEZw+nhSfPLcewZ8IG77vM1En8+2fxZ9c6AsfvpuIh
+         VF/9igc8/vmgbKjt3UvYzDIP5dKPm91pBiI4nZ07r6N37EzznpqFPHRuTmBI0RmjLWQY
+         PoksoSPpXuCEHdZhqfeDpwsM3d1kt5EvSzfHdUYj7ynHF7S3dXXsVCJGjipMJ/teWUKv
+         q2Lw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1705442991; x=1706047791;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=6Vw0DofzGiQ8Me7Dn5JbN0yEve9RLY4MvKA+x24gCto=;
-        b=K64QZcZanod5F6xccpzmxg9HiKHG5Oy09PHzC4vdR+S/lFBagGPfkL2Nql6PQOaBzz
-         T5wkg0Z3oaGBciM8HQlL+ViRFmiyrPOAbyjGKbsKquFKh8dDvgmo2tMpqMNHuJZN9kGI
-         Fb2jTWW/3/MjGIKn5iGJEjNKaoEuZfckgJpCMl8MNlymJyEVETD/Ip0qchlxL3Sp0oMs
-         FiwMhWQrrD1XacE2bxuilFOUPJjmYIBuuBy+7Cyk39t+g97rpHjW/TKaOR1C08+4yY/Y
-         Pg6aMsipWiwVOiiTpJJ/AWPryGmMD1yLjqS5uRDoiYK6GyOjCDvhP3Z9JxdRCRvI0GrY
-         Wabw==
-X-Gm-Message-State: AOJu0YyA9IvuBR5aSP8ztQuZ0b7z7FiRm0r08zWr4WIyxxT4dxAQA7SV
-	MbroX9RmqqD3PIno0VdeM8HLjBmbKY3uVcBroh8L7EqBerlUOg==
-X-Google-Smtp-Source: AGHT+IHQ1nySocbwCWvzWqVLwycSHuOyGllkbrQQr80XjxPBv5G0QiQMnmUf2H8uv+mKTv/RfZX7Wg==
-X-Received: by 2002:a05:6214:1245:b0:681:24af:49b7 with SMTP id r5-20020a056214124500b0068124af49b7mr8812156qvv.27.1705442991504;
-        Tue, 16 Jan 2024 14:09:51 -0800 (PST)
+        d=1e100.net; s=20230601; t=1705442994; x=1706047794;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=20F2pHVGsJi0lMQBok531KeHnqA3E6H/Lw1Uc5J8/FI=;
+        b=PTTInTUMWbU9KmlePqXC3QJQeBHoPKHEFVIk3hFBa5ft5RhmB/LjEAQhit1QUTJ+bf
+         cW6KrmguEpvribQ80SDMOFTCMRk0e89TupPg8aenC5V566fwU8ilEjDe7cO2olQAbA8U
+         yqWLln4mNZApEtJ1UEgmLZTLYpidqAfiqv4yXvutgKA2G1JyW1boGenUFkPz9+cTPo73
+         yXx6TEGfYIQVQD/AIL/WNcdSBJQBiiE9t06k08o3Yo460QdsY+TuhuM4wDg2uYq5wXYl
+         /T7zYE/aOVXjrIJsrFg8G15R/lXm5X2ZPJOjlpFYLxKiJfqoTY4nRTWpKjxQBMWjMnc2
+         uuHg==
+X-Gm-Message-State: AOJu0YxEur+m8KEo1hZCJkaG+yZClWqLCzAm7l3kicUBjXrRFiu/rnBC
+	KaZg1Sy40xoOZQyYzBOZqncLj9s7feiWHQlw8moXodf+TI5eeQ==
+X-Google-Smtp-Source: AGHT+IEu6p1jhLUcGuyahQTDE4Gppk+YdyTkgPSidovfsoSSUa4V1NdKyk4a+0rLhSbdCtu2qi8g6w==
+X-Received: by 2002:a05:6214:c4b:b0:681:77e8:be93 with SMTP id r11-20020a0562140c4b00b0068177e8be93mr951991qvj.67.1705442994258;
+        Tue, 16 Jan 2024 14:09:54 -0800 (PST)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id ee20-20020a0562140a5400b0067f3a71ad96sm4499566qvb.72.2024.01.16.14.09.51
+        by smtp.gmail.com with ESMTPSA id ee20-20020a0562140a5400b0067f3a71ad96sm4499601qvb.72.2024.01.16.14.09.53
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 16 Jan 2024 14:09:51 -0800 (PST)
-Date: Tue, 16 Jan 2024 17:09:50 -0500
+        Tue, 16 Jan 2024 14:09:54 -0800 (PST)
+Date: Tue, 16 Jan 2024 17:09:53 -0500
 From: Taylor Blau <me@ttaylorr.com>
 To: git@vger.kernel.org
 Cc: Elijah Newren <newren@gmail.com>,
@@ -61,9 +60,8 @@ Cc: Elijah Newren <newren@gmail.com>,
 	Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>,
 	Jonathan Tan <jonathantanmy@google.com>,
 	SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-Subject: [PATCH v5 16/17] commit-graph: reuse existing Bloom filters where
- possible
-Message-ID: <4bf043be9aff322279854ce96afe697f362ac60b.1705442923.git.me@ttaylorr.com>
+Subject: [PATCH v5 17/17] bloom: introduce `deinit_bloom_filters()`
+Message-ID: <7daa0d8833ebe9aba0de90f43f279dd6d87d634f.1705442923.git.me@ttaylorr.com>
 References: <cover.1697653929.git.me@ttaylorr.com>
  <cover.1705442923.git.me@ttaylorr.com>
 Precedence: bulk
@@ -74,347 +72,127 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
 In-Reply-To: <cover.1705442923.git.me@ttaylorr.com>
 
-In an earlier commit, a bug was described where it's possible for Git to
-produce non-murmur3 hashes when the platform's "char" type is signed,
-and there are paths with characters whose highest bit is set (i.e. all
-characters >= 0x80).
+After we are done using Bloom filters, we do not currently clean up any
+memory allocated by the commit slab used to store those filters in the
+first place.
 
-That patch allows the caller to control which version of Bloom filters
-are read and written. However, even on platforms with a signed "char"
-type, it is possible to reuse existing Bloom filters if and only if
-there are no changed paths in any commit's first parent tree-diff whose
-characters have their highest bit set.
+Besides the bloom_filter structures themselves, there is mostly nothing
+to free() in the first place, since in the read-only path all Bloom
+filter's `data` members point to a memory mapped region in the
+commit-graph file itself.
 
-When this is the case, we can reuse the existing filter without having
-to compute a new one. This is done by marking trees which are known to
-have (or not have) any such paths. When a commit's root tree is verified
-to not have any such paths, we mark it as such and declare that the
-commit's Bloom filter is reusable.
+But when generating Bloom filters from scratch (or initializing
+truncated filters) we allocate additional memory to store the filter's
+data.
 
-Note that this heuristic only goes in one direction. If neither a commit
-nor its first parent have any paths in their trees with non-ASCII
-characters, then we know for certain that a path with non-ASCII
-characters will not appear in a tree-diff against that commit's first
-parent. The reverse isn't necessarily true: just because the tree-diff
-doesn't contain any such paths does not imply that no such paths exist
-in either tree.
+Keep track of when we need to free() this additional chunk of memory by
+using an extra pointer `to_free`. Most of the time this will be NULL
+(indicating that we are representing an existing Bloom filter stored in
+a memory mapped region). When it is non-NULL, free it before discarding
+the Bloom filters slab.
 
-So we end up recomputing some Bloom filters that we don't strictly have
-to (i.e. their bits are the same no matter which version of murmur3 we
-use). But culling these out is impossible, since we'd have to perform
-the full tree-diff, which is the same effort as computing the Bloom
-filter from scratch.
-
-But because we can cache our results in each tree's flag bits, we can
-often avoid recomputing many filters, thereby reducing the time it takes
-to run
-
-    $ git commit-graph write --changed-paths --reachable
-
-when upgrading from v1 to v2 Bloom filters.
-
-To benchmark this, let's generate a commit-graph in linux.git with v1
-changed-paths in generation order[^1]:
-
-    $ git clone git@github.com:torvalds/linux.git
-    $ cd linux
-    $ git commit-graph write --reachable --changed-paths
-    $ graph=".git/objects/info/commit-graph"
-    $ mv $graph{,.bak}
-
-Then let's time how long it takes to go from v1 to v2 filters (with and
-without the upgrade path enabled), resetting the state of the
-commit-graph each time:
-
-    $ git config commitGraph.changedPathsVersion 2
-    $ hyperfine -p 'cp -f $graph.bak $graph' -L v 0,1 \
-        'GIT_TEST_UPGRADE_BLOOM_FILTERS={v} git.compile commit-graph write --reachable --changed-paths'
-
-On linux.git (where there aren't any non-ASCII paths), the timings
-indicate that this patch represents a speed-up over recomputing all
-Bloom filters from scratch:
-
-    Benchmark 1: GIT_TEST_UPGRADE_BLOOM_FILTERS=0 git.compile commit-graph write --reachable --changed-paths
-      Time (mean ± σ):     124.873 s ±  0.316 s    [User: 124.081 s, System: 0.643 s]
-      Range (min … max):   124.621 s … 125.227 s    3 runs
-
-    Benchmark 2: GIT_TEST_UPGRADE_BLOOM_FILTERS=1 git.compile commit-graph write --reachable --changed-paths
-      Time (mean ± σ):     79.271 s ±  0.163 s    [User: 74.611 s, System: 4.521 s]
-      Range (min … max):   79.112 s … 79.437 s    3 runs
-
-    Summary
-      'GIT_TEST_UPGRADE_BLOOM_FILTERS=1 git.compile commit-graph write --reachable --changed-paths' ran
-        1.58 ± 0.01 times faster than 'GIT_TEST_UPGRADE_BLOOM_FILTERS=0 git.compile commit-graph write --reachable --changed-paths'
-
-On git.git, we do have some non-ASCII paths, giving us a more modest
-improvement from 4.163 seconds to 3.348 seconds, for a 1.24x speed-up.
-On my machine, the stats for git.git are:
-
-  - 8,285 Bloom filters computed from scratch
-  - 10 Bloom filters generated as empty
-  - 4 Bloom filters generated as truncated due to too many changed paths
-  - 65,114 Bloom filters were reused when transitioning from v1 to v2.
-
-[^1]: Note that this is is important, since `--stdin-packs` or
-  `--stdin-commits` orders commits in the commit-graph by their pack
-  position (with `--stdin-packs`) or in the raw input (with
-  `--stdin-commits`).
-
-  Since we compute Bloom filters in the same order that commits appear
-  in the graph, we must see a commit's (first) parent before we process
-  the commit itself. This is only guaranteed to happen when sorting
-  commits by their generation number.
-
+Suggested-by: Jonathan Tan <jonathantanmy@google.com>
+Signed-off-by: Taylor Blau <me@ttaylorr.com>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- bloom.c              | 90 ++++++++++++++++++++++++++++++++++++++++++--
- bloom.h              |  1 +
- commit-graph.c       |  5 +++
- object.h             |  1 +
- t/t4216-log-bloom.sh | 35 ++++++++++++++++-
- 5 files changed, 128 insertions(+), 4 deletions(-)
+ bloom.c        | 16 +++++++++++++++-
+ bloom.h        |  3 +++
+ commit-graph.c |  4 ++++
+ 3 files changed, 22 insertions(+), 1 deletion(-)
 
 diff --git a/bloom.c b/bloom.c
-index 323d8012b8..a1c616bc71 100644
+index a1c616bc71..dbcc0f4f50 100644
 --- a/bloom.c
 +++ b/bloom.c
-@@ -6,6 +6,9 @@
- #include "commit-graph.h"
- #include "commit.h"
- #include "commit-slab.h"
-+#include "tree.h"
-+#include "tree-walk.h"
-+#include "config.h"
+@@ -92,6 +92,7 @@ int load_bloom_filter_from_graph(struct commit_graph *g,
+ 					sizeof(unsigned char) * start_index +
+ 					BLOOMDATA_CHUNK_HEADER_SIZE);
+ 	filter->version = g->bloom_filter_settings->hash_version;
++	filter->to_free = NULL;
  
- define_commit_slab(bloom_filter_slab, struct bloom_filter);
- 
-@@ -283,6 +286,73 @@ static void init_truncated_large_filter(struct bloom_filter *filter,
- 	filter->version = version;
+ 	return 1;
+ }
+@@ -264,6 +265,18 @@ void init_bloom_filters(void)
+ 	init_bloom_filter_slab(&bloom_filters);
  }
  
-+#define VISITED   (1u<<21)
-+#define HIGH_BITS (1u<<22)
-+
-+static int has_entries_with_high_bit(struct repository *r, struct tree *t)
++static void free_one_bloom_filter(struct bloom_filter *filter)
 +{
-+	if (parse_tree(t))
-+		return 1;
-+
-+	if (!(t->object.flags & VISITED)) {
-+		struct tree_desc desc;
-+		struct name_entry entry;
-+
-+		init_tree_desc(&desc, t->buffer, t->size);
-+		while (tree_entry(&desc, &entry)) {
-+			size_t i;
-+			for (i = 0; i < entry.pathlen; i++) {
-+				if (entry.path[i] & 0x80) {
-+					t->object.flags |= HIGH_BITS;
-+					goto done;
-+				}
-+			}
-+
-+			if (S_ISDIR(entry.mode)) {
-+				struct tree *sub = lookup_tree(r, &entry.oid);
-+				if (sub && has_entries_with_high_bit(r, sub)) {
-+					t->object.flags |= HIGH_BITS;
-+					goto done;
-+				}
-+			}
-+
-+		}
-+
-+done:
-+		t->object.flags |= VISITED;
-+	}
-+
-+	return !!(t->object.flags & HIGH_BITS);
++	if (!filter)
++		return;
++	free(filter->to_free);
 +}
 +
-+static int commit_tree_has_high_bit_paths(struct repository *r,
-+					  struct commit *c)
++void deinit_bloom_filters(void)
 +{
-+	struct tree *t;
-+	if (repo_parse_commit(r, c))
-+		return 1;
-+	t = repo_get_commit_tree(r, c);
-+	if (!t)
-+		return 1;
-+	return has_entries_with_high_bit(r, t);
++	deep_clear_bloom_filter_slab(&bloom_filters, free_one_bloom_filter);
 +}
 +
-+static struct bloom_filter *upgrade_filter(struct repository *r, struct commit *c,
-+					   struct bloom_filter *filter,
-+					   int hash_version)
-+{
-+	struct commit_list *p = c->parents;
-+	if (commit_tree_has_high_bit_paths(r, c))
-+		return NULL;
-+
-+	if (p && commit_tree_has_high_bit_paths(r, p->item))
-+		return NULL;
-+
-+	filter->version = hash_version;
-+
-+	return filter;
-+}
-+
- struct bloom_filter *get_bloom_filter(struct repository *r, struct commit *c)
+ static int pathmap_cmp(const void *hashmap_cmp_fn_data UNUSED,
+ 		       const struct hashmap_entry *eptr,
+ 		       const struct hashmap_entry *entry_or_key,
+@@ -280,7 +293,7 @@ static int pathmap_cmp(const void *hashmap_cmp_fn_data UNUSED,
+ static void init_truncated_large_filter(struct bloom_filter *filter,
+ 					int version)
  {
- 	struct bloom_filter *filter;
-@@ -325,9 +395,23 @@ struct bloom_filter *get_or_compute_bloom_filter(struct repository *r,
- 						     filter, graph_pos);
- 	}
+-	filter->data = xmalloc(1);
++	filter->data = filter->to_free = xmalloc(1);
+ 	filter->data[0] = 0xFF;
+ 	filter->len = 1;
+ 	filter->version = version;
+@@ -482,6 +495,7 @@ struct bloom_filter *get_or_compute_bloom_filter(struct repository *r,
+ 			filter->len = 1;
+ 		}
+ 		CALLOC_ARRAY(filter->data, filter->len);
++		filter->to_free = filter->data;
  
--	if ((filter->data && filter->len) &&
--	    (!settings || settings->hash_version == filter->version))
--		return filter;
-+	if (filter->data && filter->len) {
-+		struct bloom_filter *upgrade;
-+		if (!settings || settings->hash_version == filter->version)
-+			return filter;
-+
-+		/* version mismatch, see if we can upgrade */
-+		if (compute_if_not_present &&
-+		    git_env_bool("GIT_TEST_UPGRADE_BLOOM_FILTERS", 1)) {
-+			upgrade = upgrade_filter(r, c, filter,
-+						 settings->hash_version);
-+			if (upgrade) {
-+				if (computed)
-+					*computed |= BLOOM_UPGRADED;
-+				return upgrade;
-+			}
-+		}
-+	}
- 	if (!compute_if_not_present)
- 		return NULL;
- 
+ 		hashmap_for_each_entry(&pathmap, &iter, e, entry) {
+ 			struct bloom_key key;
 diff --git a/bloom.h b/bloom.h
-index bfe389e29c..e3a9b68905 100644
+index e3a9b68905..d20e64bfbb 100644
 --- a/bloom.h
 +++ b/bloom.h
-@@ -102,6 +102,7 @@ enum bloom_filter_computed {
- 	BLOOM_COMPUTED     = (1 << 1),
- 	BLOOM_TRUNC_LARGE  = (1 << 2),
- 	BLOOM_TRUNC_EMPTY  = (1 << 3),
-+	BLOOM_UPGRADED     = (1 << 4),
+@@ -56,6 +56,8 @@ struct bloom_filter {
+ 	unsigned char *data;
+ 	size_t len;
+ 	int version;
++
++	void *to_free;
  };
  
- struct bloom_filter *get_or_compute_bloom_filter(struct repository *r,
+ /*
+@@ -96,6 +98,7 @@ void add_key_to_filter(const struct bloom_key *key,
+ 		       const struct bloom_filter_settings *settings);
+ 
+ void init_bloom_filters(void);
++void deinit_bloom_filters(void);
+ 
+ enum bloom_filter_computed {
+ 	BLOOM_NOT_COMPUTED = (1 << 0),
 diff --git a/commit-graph.c b/commit-graph.c
-index a02556716d..b285e32043 100644
+index b285e32043..1841638801 100644
 --- a/commit-graph.c
 +++ b/commit-graph.c
-@@ -1167,6 +1167,7 @@ struct write_commit_graph_context {
- 	int count_bloom_filter_not_computed;
- 	int count_bloom_filter_trunc_empty;
- 	int count_bloom_filter_trunc_large;
-+	int count_bloom_filter_upgraded;
- };
- 
- static int write_graph_chunk_fanout(struct hashfile *f,
-@@ -1774,6 +1775,8 @@ static void trace2_bloom_filter_write_statistics(struct write_commit_graph_conte
- 			   ctx->count_bloom_filter_trunc_empty);
- 	trace2_data_intmax("commit-graph", ctx->r, "filter-trunc-large",
- 			   ctx->count_bloom_filter_trunc_large);
-+	trace2_data_intmax("commit-graph", ctx->r, "filter-upgraded",
-+			   ctx->count_bloom_filter_upgraded);
+@@ -830,6 +830,7 @@ struct bloom_filter_settings *get_bloom_filter_settings(struct repository *r)
+ void close_commit_graph(struct raw_object_store *o)
+ {
+ 	clear_commit_graph_data_slab(&commit_graph_data_slab);
++	deinit_bloom_filters();
+ 	free_commit_graph(o->commit_graph);
+ 	o->commit_graph = NULL;
  }
+@@ -2648,6 +2649,9 @@ int write_commit_graph(struct object_directory *odb,
  
- static void compute_bloom_filters(struct write_commit_graph_context *ctx)
-@@ -1815,6 +1818,8 @@ static void compute_bloom_filters(struct write_commit_graph_context *ctx)
- 				ctx->count_bloom_filter_trunc_empty++;
- 			if (computed & BLOOM_TRUNC_LARGE)
- 				ctx->count_bloom_filter_trunc_large++;
-+		} else if (computed & BLOOM_UPGRADED) {
-+			ctx->count_bloom_filter_upgraded++;
- 		} else if (computed & BLOOM_NOT_COMPUTED)
- 			ctx->count_bloom_filter_not_computed++;
- 		ctx->total_bloom_filter_data_size += filter
-diff --git a/object.h b/object.h
-index db25714b4e..2e5e08725f 100644
---- a/object.h
-+++ b/object.h
-@@ -75,6 +75,7 @@ void object_array_init(struct object_array *array);
-  * commit-reach.c:                                  16-----19
-  * sha1-name.c:                                              20
-  * list-objects-filter.c:                                      21
-+ * bloom.c:                                                    2122
-  * builtin/fsck.c:           0--3
-  * builtin/gc.c:             0
-  * builtin/index-pack.c:                                     2021
-diff --git a/t/t4216-log-bloom.sh b/t/t4216-log-bloom.sh
-index a7bf3a7dca..823d1cf773 100755
---- a/t/t4216-log-bloom.sh
-+++ b/t/t4216-log-bloom.sh
-@@ -222,6 +222,10 @@ test_filter_trunc_large () {
- 	grep "\"key\":\"filter-trunc-large\",\"value\":\"$1\"" $2
- }
+ 	res = write_commit_graph_file(ctx);
  
-+test_filter_upgraded () {
-+	grep "\"key\":\"filter-upgraded\",\"value\":\"$1\"" $2
-+}
++	if (ctx->changed_paths)
++		deinit_bloom_filters();
 +
- test_expect_success 'correctly report changes over limit' '
- 	git init limits &&
- 	(
-@@ -656,7 +660,13 @@ test_expect_success 'when writing another commit graph, preserve existing versio
- test_expect_success 'when writing commit graph, do not reuse changed-path of another version' '
- 	git init doublewrite &&
- 	test_commit -C doublewrite c "$CENT" &&
-+
- 	git -C doublewrite config --add commitgraph.changedPathsVersion 1 &&
-+	GIT_TRACE2_EVENT="$(pwd)/trace2.txt" \
-+		git -C doublewrite commit-graph write --reachable --changed-paths &&
-+	test_filter_computed 1 trace2.txt &&
-+	test_filter_upgraded 0 trace2.txt &&
-+
- 	git -C doublewrite commit-graph write --reachable --changed-paths &&
- 	for v in -2 3
- 	do
-@@ -667,8 +677,13 @@ test_expect_success 'when writing commit graph, do not reuse changed-path of ano
- 		EOF
- 		test_cmp expect err || return 1
- 	done &&
-+
- 	git -C doublewrite config --add commitgraph.changedPathsVersion 2 &&
--	git -C doublewrite commit-graph write --reachable --changed-paths &&
-+	GIT_TRACE2_EVENT="$(pwd)/trace2.txt" \
-+		git -C doublewrite commit-graph write --reachable --changed-paths &&
-+	test_filter_computed 1 trace2.txt &&
-+	test_filter_upgraded 0 trace2.txt &&
-+
- 	(
- 		cd doublewrite &&
- 		echo "c01f" >expect &&
-@@ -677,6 +692,24 @@ test_expect_success 'when writing commit graph, do not reuse changed-path of ano
- 	)
- '
+ 	if (ctx->split)
+ 		mark_commit_graphs(ctx);
  
-+test_expect_success 'when writing commit graph, reuse changed-path of another version where possible' '
-+	git init upgrade &&
-+
-+	test_commit -C upgrade base no-high-bits &&
-+
-+	git -C upgrade config --add commitgraph.changedPathsVersion 1 &&
-+	GIT_TRACE2_EVENT="$(pwd)/trace2.txt" \
-+		git -C upgrade commit-graph write --reachable --changed-paths &&
-+	test_filter_computed 1 trace2.txt &&
-+	test_filter_upgraded 0 trace2.txt &&
-+
-+	git -C upgrade config --add commitgraph.changedPathsVersion 2 &&
-+	GIT_TRACE2_EVENT="$(pwd)/trace2.txt" \
-+		git -C upgrade commit-graph write --reachable --changed-paths &&
-+	test_filter_computed 0 trace2.txt &&
-+	test_filter_upgraded 1 trace2.txt
-+'
-+
- corrupt_graph () {
- 	test_when_finished "rm -rf $graph" &&
- 	git commit-graph write --reachable --changed-paths &&
 -- 
 2.43.0.334.gd4dbce1db5.dirty
-
