@@ -1,56 +1,56 @@
-Received: from mail-yb1-f202.google.com (mail-yb1-f202.google.com [209.85.219.202])
+Received: from mail-yb1-f201.google.com (mail-yb1-f201.google.com [209.85.219.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3856822EE5
-	for <git@vger.kernel.org>; Tue, 16 Jan 2024 22:23:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.202
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 075C822EE0
+	for <git@vger.kernel.org>; Tue, 16 Jan 2024 22:23:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705443789; cv=none; b=sKHh+uWaLielSnvmBY1ZLojmLfMIFBRz2CAiaih9Cu1y07FmE1mc5kFrUj+U9WelehiPX5TL4yRsDRgVGYY45TU3UMWsyFxySRyacSHXx8Ibh+WqImzOe0Ie26M4BsIMgod+VlYfc1SAqX0ygZ7p7e/OVBB0bw9ldhhxw2sA4aI=
+	t=1705443791; cv=none; b=hQdOEGLP9z2bWeX+sP56o7TVq37wU2tfyTDPYk3txaSseda9VEA7jIe8/0T3Wxmo3QBEP7IRi0j4WEUQBgCGY9nNFaZ0NKK33GxE0VBG4a6ATDqeOgZUuIwMQZNhg+Q4EIfit1I1zSbE+l/A8gC2KFPUPBdAfihhz459a7RVYv4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705443789; c=relaxed/simple;
-	bh=7oeVZJc8qew6+ah6xGGuIXjJr4SDWrl2BFYh/6kjx9Y=;
+	s=arc-20240116; t=1705443791; c=relaxed/simple;
+	bh=GQTRefyPjES8n371fwE1Gxb6aGaDP7Gc3VM1ltqi2oc=;
 	h=Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Gm-Message-State:X-Google-Smtp-Source:X-Received:Date:
 	 In-Reply-To:Mime-Version:References:X-Mailer:Message-ID:Subject:
-	 From:To:Cc:Content-Type; b=Ci2/ZfIJ+1HnwNfFMRLCThIfc3EXrtVZiySmUnOKyjymRqLSdhzpP5MxiUsDFGXb3tz54uUDEbV5hVw9yIWE0ZJ4Dl6cPVrlRC09QjkkW+JpigCEvDYwUerC6BTKu2CKZ9RMeGXE51bX+3L/TUV7eXpPE+KVYPq13PqZji3dM/4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--steadmon.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=PpFUFpl5; arc=none smtp.client-ip=209.85.219.202
+	 From:To:Cc:Content-Type; b=gIQTku8nZ1aYZsV8penrxElj0Z09uJMPZgNqXppXMB9stYzIO14NMahf6tNOZYIeudhJN5s3ulEgJQl17+BGfumhrD94FnwopUtHs8UDDDuZt2c352KjuMpzJWOJ2pU3o79Y4qRfOfuC/ohgGlKchi53zcwvgQ+2FcLw4CNB0hY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--steadmon.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=K/ucDt9P; arc=none smtp.client-ip=209.85.219.201
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--steadmon.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="PpFUFpl5"
-Received: by mail-yb1-f202.google.com with SMTP id 3f1490d57ef6-d9a541b720aso14749354276.0
-        for <git@vger.kernel.org>; Tue, 16 Jan 2024 14:23:07 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="K/ucDt9P"
+Received: by mail-yb1-f201.google.com with SMTP id 3f1490d57ef6-dbf618042daso3769810276.0
+        for <git@vger.kernel.org>; Tue, 16 Jan 2024 14:23:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1705443787; x=1706048587; darn=vger.kernel.org;
+        d=google.com; s=20230601; t=1705443789; x=1706048589; darn=vger.kernel.org;
         h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
          :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=h4fDScwI/7M7veleiZScsf1GnA+jVVDAXJVD2ybzUQI=;
-        b=PpFUFpl5mtedQuv9aYZ+YsIX7eBjYbaKobbXVO5ktAahFRDbRn1ZEgQ62ebU1FAOwq
-         EHdiM2XCsXCX+j76+l1lvokSNp7NcNvkWyWG56jukcB7v2rytTYhMa2LfufIcP725/mI
-         vfV3OcO5ClS3gST5tIo3+OE8wTzUTjipPjj1UnUCqbfc9Fpbam6CToYsNQl07mVOIAZ2
-         KHoEe3fk+sMIXAWDSHXKf2aiwL0TUW1uk4Q/D0D7cTAtpQDr4xNn50Yqo9TF0ztClmCt
-         HgyXhd+xM6rvXFmUtOIvH7hlRJdZXsUP0HsRO7jL/ZCVbSrwmyYyxjSZoacsMZ64RcLa
-         BIOA==
+        bh=UYW1NbBD3CBw5tYdWW7N+SPMKc2vXBTmZ8E1zRgTAuE=;
+        b=K/ucDt9PLbEZfxILwCok/jLemMVE2F1voz4iBrld2Pcb4XJO4ahmexyRkyWjaYKZjG
+         wvbSuBtxvoPXgsLOJDsBBSRfWXbnELf9KOroARJ4uCscmYjrtkGdr3XmohRHfk8iTpoM
+         ZW346xU9ceHWEz/c1ibMpcparIQWVJQqqCvw8zqLsZQWGsWWvBIEFUCM5+U9i4eHXEth
+         cZd/TF3O6bIkpGKiVEGmGgOXMEXA8lMg2ldMyZpfkaJ35jz2HW/b1ibzDH21ef0E/Vro
+         0kX/+AlhmBM+JJv+cPBEdxE10sLOAgqF8iPh2vqnHkQfF9saL53G3/zTv4CAon33pLFX
+         LG6A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1705443787; x=1706048587;
+        d=1e100.net; s=20230601; t=1705443789; x=1706048589;
         h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
          :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=h4fDScwI/7M7veleiZScsf1GnA+jVVDAXJVD2ybzUQI=;
-        b=UeJUeMOzpEMq5CJnpocZwQj8WbJKDn+f7KyGIi0YW4c0LXhaMYK316fzS7B8gf+8lH
-         J+4IlM3uWfi9Pi5GCdttr7aWEytQ3HMM9GGtEsMxvymR9eD7fLyTmJNeCya2N+VS3cLp
-         RrVzOETru1Io7bz5jxzY27zm64rU95xshHEsIVP4B5rx8E+DFkN774uz/rstIS18VSG+
-         foqieH6v5k8Y41Fp62ycRcOTpFPK2WsFbsybIAvhUf4uZsKEWFkYZ/rD3dRkyALlLpyw
-         8CJ9CoUOy0IY7EiWiDLoghG5LPO8h0hVRmZb9smO6a4rFJvc509KDbFhQyrGOQeu6Uln
-         jTJA==
-X-Gm-Message-State: AOJu0Yz1GlYKooQlOsc4tPZ1OJRkQLzp/frxUVePEG+BX36iTtaxIw0M
-	l6aZkzc+aPRbb0achQPGIaej3a4gSXgrvmGqR0zqc25kLBZJbU9nE8IYv72xQoitIWVPc43QhhG
-	HjAJkgBsDpL6vzgW3P7EElZIRjD2aWdVNAOMFuKf9aSriSnWaqBch2BnCQKXzDhNhpUtF/w==
-X-Google-Smtp-Source: AGHT+IHsuy/KHL+Q20hcBKsKLXPlnqxi2655z9i77q7L+ZEwVwfvLWz/aEN0XBalOhPVJB0j/fpjMiaxUGOLxA==
+        bh=UYW1NbBD3CBw5tYdWW7N+SPMKc2vXBTmZ8E1zRgTAuE=;
+        b=CjMGMtecirwb+rzRToW2jGUGWjzClcB4UKf7LU5naQRWzx6febtiJkqsm9C1SHY829
+         vML9n1fmF1icw6w0YypYp6Ck0GuapL+eD8AmPi8lqbLsmm7tDIZTN4C7VhDWME60qrDO
+         6ZNwQpxcGOLHPyEBCCTc1IHfFVynHtijEisnL53HGnFyHS204e50ZRjdCfrWzMIoL/ao
+         hEvDgg0NoPGgHH6DkQOWgHMJ9WM+4jIqGLN3Bovh5/V0I2S6PhG9ysWbshXtmlEedzD9
+         b6QHQPm7llr3ZDdnHNy56culQu0QUUHmojOYgWjf3ctiQTglj9xjxDDeKFhvsORuz83U
+         edMg==
+X-Gm-Message-State: AOJu0YwSoL4rCmEbrwuwvm7qWtGPIbMmcLHFGCVqiweptIWVu+tRmQjk
+	UnzTHeVrmOnCYBeNUuthci+9czJGKR8KlvYsGCQlpzzBIcQ8FK59IuV7GnLtO0k9JkztoP7NCDD
+	3fDed/bdrU+oSOQpQGJ0eXQuOWJMsVMCnr2Z5p233bV0HCbxUSCuQJAaHqNkGb/FT/1fGaQ==
+X-Google-Smtp-Source: AGHT+IFAPQqoQOsTQ1jzzVbHABBBUyPmX/XPnRq0q+E9BDoJiV1EGKu2kRlwUF/L7PSufMJSp8661UQhbN5f3A==
 X-Received: from lunarfall.svl.corp.google.com ([2620:15c:2d3:204:a6f6:5624:1895:86a4])
- (user=steadmon job=sendgmr) by 2002:a25:abcc:0:b0:dc2:2596:52ef with SMTP id
- v70-20020a25abcc000000b00dc2259652efmr682963ybi.12.1705443787094; Tue, 16 Jan
- 2024 14:23:07 -0800 (PST)
-Date: Tue, 16 Jan 2024 14:22:59 -0800
+ (user=steadmon job=sendgmr) by 2002:a5b:c51:0:b0:dc2:191c:5410 with SMTP id
+ d17-20020a5b0c51000000b00dc2191c5410mr171850ybr.8.1705443788952; Tue, 16 Jan
+ 2024 14:23:08 -0800 (PST)
+Date: Tue, 16 Jan 2024 14:23:00 -0800
 In-Reply-To: <cover.1705443632.git.steadmon@google.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -60,152 +60,69 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 Mime-Version: 1.0
 References: <cover.1705443632.git.steadmon@google.com>
 X-Mailer: git-send-email 2.43.0.381.gb435a96ce8-goog
-Message-ID: <5ecbc976e6216b941e760e096e166ab432ee7784.1705443632.git.steadmon@google.com>
-Subject: [RFC PATCH 2/4] test-tool run-command testsuite: support unit tests
+Message-ID: <5b34c851cdcf97e52a4df0e4bf4724d388c350ce.1705443632.git.steadmon@google.com>
+Subject: [RFC PATCH 3/4] unit tests: add rule for running with test-tool
 From: Josh Steadmon <steadmon@google.com>
 To: git@vger.kernel.org
 Cc: johannes.schindelin@gmx.de, peff@peff.net, phillip.wood@dunelm.org.uk
 Content-Type: text/plain; charset="UTF-8"
 
-Teach the testsuite runner in `test-tool run-command testsuite` how to
-run unit tests, by adding two new flags:
+In the previous commit, we added support in test-tool for running
+collections of unit tests. Now, add rules in t/Makefile for running in
+this way.
 
-First, "--(no-)run-in-shell" allows the test-tool to exec the unit-test
-binaries directly, rather than trying to interpret them as shell
-scripts.
+This new rule can be executed from the top-level Makefile via
+`make DEFAULT_UNIT_TEST_TARGET=unit-tests-test-tool unit-tests`, or by
+setting DEFAULT_UNIT_TEST_TARGET in config.mak.
 
-Second "--(no-)require-shell-test-pattern" bypasses the check that the
-test filenames match the expected t####-*.sh pattern.
-
-With these changes, you can now use test-tool to run the unit tests:
-$ make
-$ cd t/unit-tests/bin
-$ ../../helper/test-tool run-command testsuite --no-run-in-shell \
-    --no-require-shell-test-pattern
-
-This should be helpful on Windows to allow running tests without
-requiring Perl (for `prove`), as discussed in [1] and [2].
-
-[1] https://lore.kernel.org/git/nycvar.QRO.7.76.6.2109091323150.59@tvgsbejvaqbjf.bet/
-[2] https://lore.kernel.org/git/850ea42c-f103-68d5-896b-9120e2628686@gmx.de/
+NEEDS WORK: we need to exclude .pdb files generated by cmake [see
+0df903d402 (unit-tests: do not mistake `.pdb` files for being
+executable, 2023-09-25)]
 
 Signed-off-by: Josh Steadmon <steadmon@google.com>
 ---
- t/helper/test-run-command.c | 40 +++++++++++++++++++++++++++++--------
- 1 file changed, 32 insertions(+), 8 deletions(-)
+ Makefile   | 2 +-
+ t/Makefile | 9 ++++++++-
+ 2 files changed, 9 insertions(+), 2 deletions(-)
 
-diff --git a/t/helper/test-run-command.c b/t/helper/test-run-command.c
-index c0ed8722c8..2db7e1ef03 100644
---- a/t/helper/test-run-command.c
-+++ b/t/helper/test-run-command.c
-@@ -64,11 +64,12 @@ static int task_finished(int result UNUSED,
- struct testsuite {
- 	struct string_list tests, failed;
- 	int next;
--	int quiet, immediate, verbose, verbose_log, trace, write_junit_xml;
-+	int quiet, immediate, verbose, verbose_log, trace, write_junit_xml, run_in_shell;
- };
- #define TESTSUITE_INIT { \
- 	.tests = STRING_LIST_INIT_DUP, \
- 	.failed = STRING_LIST_INIT_DUP, \
-+	.run_in_shell = 1, \
- }
+diff --git a/Makefile b/Makefile
+index ab32ec1101..ce43ad2ae8 100644
+--- a/Makefile
++++ b/Makefile
+@@ -3880,5 +3880,5 @@ $(UNIT_TEST_HELPER_PROGS): %$X: %.o $(UNIT_TEST_DIR)/test-lib.o $(GITLIBS) GIT-L
  
- static int next_test(struct child_process *cp, struct strbuf *err, void *cb,
-@@ -80,7 +81,9 @@ static int next_test(struct child_process *cp, struct strbuf *err, void *cb,
- 		return 0;
+ .PHONY: build-unit-tests unit-tests
+ build-unit-tests: $(UNIT_TEST_PROGS)
+-unit-tests: $(UNIT_TEST_PROGS)
++unit-tests: $(UNIT_TEST_PROGS) t/helper/test-tool$X
+ 	$(MAKE) -C t/ unit-tests
+diff --git a/t/Makefile b/t/Makefile
+index 0bee7bc6ea..ad57ec0a41 100644
+--- a/t/Makefile
++++ b/t/Makefile
+@@ -70,7 +70,7 @@ $(T):
+ $(UNIT_TESTS):
+ 	@echo "*** $@ ***"; $@
  
- 	test = suite->tests.items[suite->next++].string;
--	strvec_pushl(&cp->args, "sh", test, NULL);
-+	if (suite->run_in_shell)
-+		strvec_push(&cp->args, "sh");
-+	strvec_push(&cp->args, test);
- 	if (suite->quiet)
- 		strvec_push(&cp->args, "--quiet");
- 	if (suite->immediate)
-@@ -133,7 +136,7 @@ static const char * const testsuite_usage[] = {
- static int testsuite(int argc, const char **argv)
- {
- 	struct testsuite suite = TESTSUITE_INIT;
--	int max_jobs = 1, i, ret = 0;
-+	int max_jobs = 1, i, ret = 0, require_shell_test_pattern = 1;
- 	DIR *dir;
- 	struct dirent *d;
- 	struct option options[] = {
-@@ -147,6 +150,10 @@ static int testsuite(int argc, const char **argv)
- 		OPT_BOOL('x', "trace", &suite.trace, "trace shell commands"),
- 		OPT_BOOL(0, "write-junit-xml", &suite.write_junit_xml,
- 			 "write JUnit-style XML files"),
-+		OPT_BOOL(0, "run-in-shell", &suite.run_in_shell,
-+			 "run programs in the suite via `sh`"),
-+		OPT_BOOL(0, "require-shell-test-pattern", &require_shell_test_pattern,
-+			 "require programs to match 't####-*.sh'"),
- 		OPT_END()
- 	};
- 	struct run_process_parallel_opts opts = {
-@@ -155,12 +162,21 @@ static int testsuite(int argc, const char **argv)
- 		.task_finished = test_finished,
- 		.data = &suite,
- 	};
-+	struct strbuf progpath = STRBUF_INIT;
-+	size_t path_prefix_len;
+-.PHONY: unit-tests unit-tests-raw unit-tests-prove
++.PHONY: unit-tests unit-tests-raw unit-tests-prove unit-tests-test-tool
+ unit-tests: $(DEFAULT_UNIT_TEST_TARGET)
  
- 	argc = parse_options(argc, argv, NULL, options,
- 			testsuite_usage, PARSE_OPT_STOP_AT_NON_OPTION);
+ unit-tests-raw: $(UNIT_TESTS)
+@@ -78,6 +78,13 @@ unit-tests-raw: $(UNIT_TESTS)
+ unit-tests-prove:
+ 	@echo "*** prove - unit tests ***"; $(PROVE) $(GIT_PROVE_OPTS) $(UNIT_TESTS)
  
- 	if (max_jobs <= 0)
- 		max_jobs = online_cpus();
-+	/*
-+	 * If we run without a shell, we have to provide the relative path to
-+	 * the executables.
-+	 */
-+	if (!suite.run_in_shell)
-+		strbuf_addstr(&progpath, "./");
-+	path_prefix_len = progpath.len;
++unit-tests-test-tool:
++	@echo "*** test-tool - unit tests **"
++	( \
++		cd unit-tests/bin && \
++		../../helper/test-tool run-command testsuite --no-run-in-shell --no-require-shell-test-pattern \
++	)
++
+ pre-clean:
+ 	$(RM) -r '$(TEST_RESULTS_DIRECTORY_SQ)'
  
- 	dir = opendir(".");
- 	if (!dir)
-@@ -168,20 +184,27 @@ static int testsuite(int argc, const char **argv)
- 	while ((d = readdir(dir))) {
- 		const char *p = d->d_name;
- 
--		if (*p != 't' || !isdigit(p[1]) || !isdigit(p[2]) ||
--		    !isdigit(p[3]) || !isdigit(p[4]) || p[5] != '-' ||
--		    !ends_with(p, ".sh"))
-+		if (!strcmp(p, ".") || !strcmp(p, ".."))
- 			continue;
-+		if (require_shell_test_pattern)
-+			if (*p != 't' || !isdigit(p[1]) || !isdigit(p[2]) ||
-+			    !isdigit(p[3]) || !isdigit(p[4]) || p[5] != '-' ||
-+			    !ends_with(p, ".sh"))
-+				continue;
- 
- 		/* No pattern: match all */
- 		if (!argc) {
--			string_list_append(&suite.tests, p);
-+			strbuf_setlen(&progpath, path_prefix_len);
-+			strbuf_addstr(&progpath, p);
-+			string_list_append(&suite.tests, progpath.buf);
- 			continue;
- 		}
- 
- 		for (i = 0; i < argc; i++)
- 			if (!wildmatch(argv[i], p, 0)) {
--				string_list_append(&suite.tests, p);
-+				strbuf_setlen(&progpath, path_prefix_len);
-+				strbuf_addstr(&progpath, p);
-+				string_list_append(&suite.tests, progpath.buf);
- 				break;
- 			}
- 	}
-@@ -208,6 +231,7 @@ static int testsuite(int argc, const char **argv)
- 
- 	string_list_clear(&suite.tests, 0);
- 	string_list_clear(&suite.failed, 0);
-+	strbuf_release(&progpath);
- 
- 	return ret;
- }
 -- 
 2.43.0.381.gb435a96ce8-goog
 
