@@ -1,58 +1,50 @@
-Received: from mail-pl1-f170.google.com (mail-pl1-f170.google.com [209.85.214.170])
+Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.223.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C5311BDFD
-	for <git@vger.kernel.org>; Tue, 16 Jan 2024 13:39:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 548AF1BF3E
+	for <git@vger.kernel.org>; Tue, 16 Jan 2024 14:18:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=suse.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ALr+pH9e"
-Received: by mail-pl1-f170.google.com with SMTP id d9443c01a7336-1d427518d52so71476035ad.0
-        for <git@vger.kernel.org>; Tue, 16 Jan 2024 05:39:38 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1705412378; x=1706017178; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=CozsLbOmwkgZRdoKGjxxiV76kRVAqRlsUpx1KPOtBJg=;
-        b=ALr+pH9e2XZ9NPW6HhO24x911codgs8kffhNMBNA/wpzxtdIHER1nGMIJBgX6N+edS
-         imdWj92pe+Gx6aAPDYGhzwrPlM1qut/xUqfa2Re1sqLp1Ll6NVXfsN3N6nRg2AbB1VsW
-         J1rA2Dx1CpO37VLVpepsqM6twIlpSyCSFwdPAy6O9fpDHAnCqLOakyNg0ap6GgSCYrgr
-         bDtJhsJ8JWbPWbB3jNwGPRy/QiAzObV2Apc/M5yEG18d9VfrXU8I0QxZ7MUrd1N/qkWB
-         a9PA9g7us+NSCci56Q8RKUo28Sxlm1tVraDwsMqKpTTtd8ondIsE64/mJrzWph7VMR4x
-         ebzw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1705412378; x=1706017178;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=CozsLbOmwkgZRdoKGjxxiV76kRVAqRlsUpx1KPOtBJg=;
-        b=Qvky0mFpXz4B7BdUpbfWBdKQCgBFt7EdZRgCqqEyGSAC1oOABs6wIm3jbiw+wnKZxr
-         A8aExlvKq18KdzuNXU48PaDiMuZcv7QaKwQ+edPq+Jfy2Y4hP+I57G4f8XbXC+urWmmQ
-         TxcjIgP/G+OUHsRwytc4kcONbgtWuDgEC4BzAedyN/HsmCrszdm7Kual0BWuDiqMJks+
-         bAZ3tQKPZ+Da+ptWhWPqnqLPnYzzE9N0LbOntS5UW6r6qG5H3EO+2PPsH+6wjYlLlKKX
-         Q7yvQ+CIPcDNbcYkCrSdI2yq4RecWC38V9DQzdzoE6HhrPLzbKK/rCPTISHnch51/XAg
-         t/pQ==
-X-Gm-Message-State: AOJu0YwIbkHXkyK5TYPyyGgvIDjVI/SzFX5RQBIVG3Q4CKm7X7RiRLPC
-	z+eCRxICA2eg081YERxCV1ADdkNaxqALmQ==
-X-Google-Smtp-Source: AGHT+IH/hiN2plMLZpOHAQoqW3J+w2Cl0TqdVgsi+qPyeJyV9AG+wq3UXZtKYE1oQNyaazjoqFGFlw==
-X-Received: by 2002:a17:902:ed04:b0:1d5:4df5:df9b with SMTP id b4-20020a170902ed0400b001d54df5df9bmr8710108pld.4.1705412378106;
-        Tue, 16 Jan 2024 05:39:38 -0800 (PST)
-Received: from tigtog-proxy.localdomain.localdomain (144.34.163.219.16clouds.com. [144.34.163.219])
-        by smtp.gmail.com with ESMTPSA id l8-20020a170902f68800b001d5c38bfa33sm4303351plg.307.2024.01.16.05.39.37
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 16 Jan 2024 05:39:37 -0800 (PST)
-From: Jiang Xin <worldhello.net@gmail.com>
-To: Git List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Linus Arver <linusa@google.com>
-Cc: Jiang Xin <zhiyou.jx@alibaba-inc.com>
-Subject: [PATCH v5 6/6] transport-helper: call do_take_over() in process_connect
-Date: Tue, 16 Jan 2024 21:39:30 +0800
-Message-Id: <423a89c59306e9c33851b7d36c685ddfce45736c.1705411391.git.zhiyou.jx@alibaba-inc.com>
-X-Mailer: git-send-email 2.32.0.rc3
-In-Reply-To: <cover.1705411391.git.zhiyou.jx@alibaba-inc.com>
-References: <cover.1702562879.git.zhiyou.jx@alibaba-inc.com> <cover.1705411391.git.zhiyou.jx@alibaba-inc.com>
+	dkim=pass (1024-bit key) header.d=suse.com header.i=@suse.com header.b="GrYfU+Hm";
+	dkim=pass (1024-bit key) header.d=suse.com header.i=@suse.com header.b="GrYfU+Hm"
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [10.150.64.97])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by smtp-out2.suse.de (Postfix) with ESMTPS id 5B87E1FBA6;
+	Tue, 16 Jan 2024 14:18:44 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.com; s=susede1;
+	t=1705414724; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:  content-transfer-encoding:content-transfer-encoding;
+	bh=vFaVfw6Btpv+8uoulQVAwhntHawfyHiOUvB9s1T4xdc=;
+	b=GrYfU+Hmzon+kGGFJEnbAatrX/5dpkcCBs9u8LPKHgppntWbL/P/cidMMuEuKItX1Eos3L
+	aYVPzuWm9N5rBDEgWNohSsjPn236e8ufk7MlHX230e4cBPR0aXmuqahMf5woWiApenpA4s
+	o284b35J6TYM/AgTmsHB7YXZkHCfLZw=
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.com; s=susede1;
+	t=1705414724; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:  content-transfer-encoding:content-transfer-encoding;
+	bh=vFaVfw6Btpv+8uoulQVAwhntHawfyHiOUvB9s1T4xdc=;
+	b=GrYfU+Hmzon+kGGFJEnbAatrX/5dpkcCBs9u8LPKHgppntWbL/P/cidMMuEuKItX1Eos3L
+	aYVPzuWm9N5rBDEgWNohSsjPn236e8ufk7MlHX230e4cBPR0aXmuqahMf5woWiApenpA4s
+	o284b35J6TYM/AgTmsHB7YXZkHCfLZw=
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 27C01132FA;
+	Tue, 16 Jan 2024 14:18:44 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([10.150.64.162])
+	by imap1.dmz-prg2.suse.org with ESMTPSA
+	id hE6LBkSQpmVsbQAAD6G6ig
+	(envelope-from <nik.borisov@suse.com>); Tue, 16 Jan 2024 14:18:44 +0000
+From: Nikolay Borisov <nik.borisov@suse.com>
+To: git@vger.kernel.org
+Cc: Nikolay Borisov <nik.borisov@suse.com>
+Subject: [PATCH] rebase: Fix documentation about used shell in -x
+Date: Tue, 16 Jan 2024 16:18:42 +0200
+Message-Id: <20240116141842.193151-1-nik.borisov@suse.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -60,103 +52,55 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
+Authentication-Results: smtp-out2.suse.de;
+	none
+X-Spamd-Result: default: False [4.90 / 50.00];
+	 ARC_NA(0.00)[];
+	 RCVD_VIA_SMTP_AUTH(0.00)[];
+	 FROM_HAS_DN(0.00)[];
+	 TO_DN_SOME(0.00)[];
+	 R_MISSING_CHARSET(2.50)[];
+	 TO_MATCH_ENVRCPT_ALL(0.00)[];
+	 MIME_GOOD(-0.10)[text/plain];
+	 BROKEN_CONTENT_TYPE(1.50)[];
+	 RCVD_COUNT_THREE(0.00)[3];
+	 DKIM_SIGNED(0.00)[suse.com:s=susede1];
+	 RCPT_COUNT_TWO(0.00)[2];
+	 MID_CONTAINS_FROM(1.00)[];
+	 DBL_BLOCKED_OPENRESOLVER(0.00)[suse.com:email];
+	 FUZZY_BLOCKED(0.00)[rspamd.com];
+	 FROM_EQ_ENVFROM(0.00)[];
+	 MIME_TRACE(0.00)[0:+];
+	 RCVD_TLS_ALL(0.00)[];
+	 BAYES_HAM(-0.00)[39.35%]
+X-Spam-Level: ****
+X-Spam-Score: 4.90
+X-Spam-Flag: NO
 
-From: Jiang Xin <zhiyou.jx@alibaba-inc.com>
+The shell used when using the -x option is the one pointed to by the
+SHELL_PATH constant at build time. This erroneous statement in the
+documentation sent me on a 10 minute wild goose chase wondering why my
+$SHELL was pointing to /bin/bash and my /bin/sh to dash and git was
+using dash and not bash.
 
-The existing pattern among all callers of process_connect() seems to be
-
-        if (process_connect(...)) {
-                do_take_over();
-                ... dispatch to the underlying method ...
-        }
-        ... otherwise implement the fallback ...
-
-where the return value from process_connect() is the return value of the
-call it makes to process_connect_service().
-
-Move the call of do_take_over() inside process_connect(), so that
-calling the process_connect() function is more concise and will not
-miss do_take_over().
-
-Suggested-by: Junio C Hamano <gitster@pobox.com>
-Signed-off-by: Jiang Xin <zhiyou.jx@alibaba-inc.com>
+Signed-off-by: Nikolay Borisov <nik.borisov@suse.com>
 ---
- transport-helper.c | 22 +++++++++-------------
- 1 file changed, 9 insertions(+), 13 deletions(-)
+ Documentation/git-rebase.txt | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/transport-helper.c b/transport-helper.c
-index 91381be622..566f7473df 100644
---- a/transport-helper.c
-+++ b/transport-helper.c
-@@ -646,6 +646,7 @@ static int process_connect(struct transport *transport,
- 	struct helper_data *data = transport->data;
- 	const char *name;
- 	const char *exec;
-+	int ret;
+diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
+index 25516c45d8b8..08cf52daf39e 100644
+--- a/Documentation/git-rebase.txt
++++ b/Documentation/git-rebase.txt
+@@ -964,7 +964,7 @@ non-0 status) to give you an opportunity to fix the problem. You can
+ continue with `git rebase --continue`.
  
- 	name = for_push ? "git-receive-pack" : "git-upload-pack";
- 	if (for_push)
-@@ -653,7 +654,10 @@ static int process_connect(struct transport *transport,
- 	else
- 		exec = data->transport_options.uploadpack;
+ The "exec" command launches the command in a shell (the one specified
+-in `$SHELL`, or the default shell if `$SHELL` is not set), so you can
++by the build-time SHELL_PATH variable, usually /bin/sh), so you can
+ use shell features (like "cd", ">", ";" ...). The command is run from
+ the root of the working tree.
  
--	return process_connect_service(transport, name, exec);
-+	ret = process_connect_service(transport, name, exec);
-+	if (ret)
-+		do_take_over(transport);
-+	return ret;
- }
- 
- static int connect_helper(struct transport *transport, const char *name,
-@@ -685,10 +689,8 @@ static int fetch_refs(struct transport *transport,
- 
- 	get_helper(transport);
- 
--	if (process_connect(transport, 0)) {
--		do_take_over(transport);
-+	if (process_connect(transport, 0))
- 		return transport->vtable->fetch_refs(transport, nr_heads, to_fetch);
--	}
- 
- 	/*
- 	 * If we reach here, then the server, the client, and/or the transport
-@@ -1145,10 +1147,8 @@ static int push_refs(struct transport *transport,
- {
- 	struct helper_data *data = transport->data;
- 
--	if (process_connect(transport, 1)) {
--		do_take_over(transport);
-+	if (process_connect(transport, 1))
- 		return transport->vtable->push_refs(transport, remote_refs, flags);
--	}
- 
- 	if (!remote_refs) {
- 		fprintf(stderr,
-@@ -1189,11 +1189,9 @@ static struct ref *get_refs_list(struct transport *transport, int for_push,
- {
- 	get_helper(transport);
- 
--	if (process_connect(transport, for_push)) {
--		do_take_over(transport);
-+	if (process_connect(transport, for_push))
- 		return transport->vtable->get_refs_list(transport, for_push,
- 							transport_options);
--	}
- 
- 	return get_refs_list_using_list(transport, for_push);
- }
-@@ -1277,10 +1275,8 @@ static int get_bundle_uri(struct transport *transport)
- {
- 	get_helper(transport);
- 
--	if (process_connect(transport, 0)) {
--		do_take_over(transport);
-+	if (process_connect(transport, 0))
- 		return transport->vtable->get_bundle_uri(transport);
--	}
- 
- 	return -1;
- }
 -- 
-2.43.0
+2.34.1
 
