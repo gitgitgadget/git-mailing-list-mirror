@@ -1,55 +1,55 @@
-Received: from mail-pl1-f177.google.com (mail-pl1-f177.google.com [209.85.214.177])
+Received: from mail-pl1-f182.google.com (mail-pl1-f182.google.com [209.85.214.182])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4F501BC5C
-	for <git@vger.kernel.org>; Tue, 16 Jan 2024 13:39:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D075C1BDCB
+	for <git@vger.kernel.org>; Tue, 16 Jan 2024 13:39:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WxIsoNMN"
-Received: by mail-pl1-f177.google.com with SMTP id d9443c01a7336-1d5efddb33dso2925515ad.1
-        for <git@vger.kernel.org>; Tue, 16 Jan 2024 05:39:35 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Ob41tJL6"
+Received: by mail-pl1-f182.google.com with SMTP id d9443c01a7336-1d5f5a2e828so657405ad.3
+        for <git@vger.kernel.org>; Tue, 16 Jan 2024 05:39:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1705412375; x=1706017175; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1705412376; x=1706017176; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=cAUGC2z588o0P2pXwul4EzAT8d2kTMFHkZMpn6Ua8qs=;
-        b=WxIsoNMN3q3neu4fhlTzKxYNMnPP+eeJKQdGKxn2y3AOefwSumscrgf27Zn58ixcPT
-         DkduOn57eY8nXWJrbx+HTStBYaSN8P9iW1un4LIrHxx1+xevI9KXEESfSfzGNHHLidcg
-         eGxAQ4AR4SKC95PWDXOOINbx8mHmkhpp7rmJLHtNzX2tOw+A/2PwkBQUixL6OVxOc7pf
-         IM677sc27as1GJcfjW+9dCAVbeVobJJVEskNCIUdPtLnxxlCEL5nwfhTLNIQMFmfKAdm
-         InuapjCPAHeOWIYBolTXwSSEV2ESoKUl4QJI1xvYFnHIewXcHqE/u7ehY8+Zqr0tG0uY
-         uVZg==
+        bh=AhTtqH48/C86XL/TwWluZBelSMih1M4GmOBqLA2IEew=;
+        b=Ob41tJL6DJ+dnf/IqUAv1RC0DYJzIgsb3BB2wDQ7QJgywEFIwPqyYmeVKHZbwLi4yG
+         X8cTdlZTWOj3PNUSCP1uTyyEDwioaT+WiP3WVlHmzfqX7yWmn8E89CYuxQoeCnu4l9Jt
+         g5B+hNHHP7ZSj4R0kC3gUBd0kLMmPeFMglXkxwgOaefCYaziSKrDRf48yAk6K2kGzS03
+         Q/pO0chwMEeDikBSoQhWV4pYyNQUZ8f7I7FW8ZHPjdd0LeWyR6wr76q8DK2cZHftBHC8
+         WgEgF5ph7E4zTif3jxti4+keyIHck7Ux42eeEPU/2By5CnQ1Sw0syhpWWnBq2XZ4xXV5
+         5wDw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1705412375; x=1706017175;
+        d=1e100.net; s=20230601; t=1705412376; x=1706017176;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=cAUGC2z588o0P2pXwul4EzAT8d2kTMFHkZMpn6Ua8qs=;
-        b=sChVZCKUqX5LyL1BqlYNNqB73ib6fh7lRiZhCxAiLRM1tvQecgUyJGcBynUoLlWBTm
-         W4vx2FloVssWuUwG/q2aXV6eGHGETLcVCqLqb4eIw5HIR0psHlhJL867R0K7Lv7JbjwL
-         +4HG/z5dI+0Lcw8pNnJVCBrlQYsXDhKjICYnaYta12lWAxgbn8Zz35CgczpUbcZHM4Si
-         Cb0ey4NrxCc7MdCbOeUVlhOvIRXGhRlgoyg5Xeq4tDJSuExY7KmgXTYfXqqWihQGztd4
-         o78PFJF5i3qr71y0xyWqreFMR8O1tkvaBFp4K+nOdtm+XhzND0uyDICE9662Lc5Y6llA
-         GaYQ==
-X-Gm-Message-State: AOJu0Yxr8gU75THkOhyRLVVtQ9H1Sc4FEOgZLYvaQ67d+hl0lr7HOf2P
-	4hf5HT8hr/D0WUs/X6A0JvEUqQo6I3Q6zg==
-X-Google-Smtp-Source: AGHT+IFYgKtMdmiDFLIt4v8MHor8bgHgHuF4FGqvS/qlfJveDobZweGViWxU3950ZEtS05YDgtNAIA==
-X-Received: by 2002:a17:902:d485:b0:1d4:d5bb:5d7e with SMTP id c5-20020a170902d48500b001d4d5bb5d7emr4569322plg.58.1705412375099;
+        bh=AhTtqH48/C86XL/TwWluZBelSMih1M4GmOBqLA2IEew=;
+        b=K1pi/q5icWWaA2kHIPIvsh1e5gAQgKL3W6iwo7661EaDhfvksG1bSKTt9InkfraDvf
+         TGBQMtdaaqLCd5nRSme+m/fZvvnYUulaIzZLzD9NwrvKmtLN6ercVOPN51lZ4W7cI409
+         f+LO44BNXEbffbyvZk+f/58d+/6BvURj/7pDb7PrZey1uS6sv6IN7aFXOYDPUGe8kKqB
+         nPiWOmdKywHATXSpGzSFjMljFnzRGORFqQY+/vX1UzR3hYh6IuKY83tglrm361GpswpD
+         9SBteqrH9g1zV2DLNCEGadrWUqOFqZF4G019U615XHw2rXtB4YWtgYm286SSLcJa0fu4
+         IO/w==
+X-Gm-Message-State: AOJu0YyHpS3Z5bMpe49MdCy2n11MPW85k+MFXLYfOAW7R8ymk4MuiQGf
+	yTpZLdgh9nCa+IiJMkB3acPN7QXtTQSnFw==
+X-Google-Smtp-Source: AGHT+IGmos3/7eBWVW5F7ZQ2WX7bFSaGe5HUeeIrUfTTxU4074E9N/aW2LzBUORWs5GgGpRDgK2VWQ==
+X-Received: by 2002:a17:902:d4d2:b0:1d3:77c4:59db with SMTP id o18-20020a170902d4d200b001d377c459dbmr4601365plg.139.1705412375841;
         Tue, 16 Jan 2024 05:39:35 -0800 (PST)
 Received: from tigtog-proxy.localdomain.localdomain (144.34.163.219.16clouds.com. [144.34.163.219])
-        by smtp.gmail.com with ESMTPSA id l8-20020a170902f68800b001d5c38bfa33sm4303351plg.307.2024.01.16.05.39.34
+        by smtp.gmail.com with ESMTPSA id l8-20020a170902f68800b001d5c38bfa33sm4303351plg.307.2024.01.16.05.39.35
         (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 16 Jan 2024 05:39:34 -0800 (PST)
+        Tue, 16 Jan 2024 05:39:35 -0800 (PST)
 From: Jiang Xin <worldhello.net@gmail.com>
 To: Git List <git@vger.kernel.org>,
 	Junio C Hamano <gitster@pobox.com>,
 	Linus Arver <linusa@google.com>
 Cc: Jiang Xin <zhiyou.jx@alibaba-inc.com>
-Subject: [PATCH v5 2/6] remote-curl: supports git-upload-archive service
-Date: Tue, 16 Jan 2024 21:39:26 +0800
-Message-Id: <6be331b22d51e1f6f96cb0035d99db5b8cede676.1705411391.git.zhiyou.jx@alibaba-inc.com>
+Subject: [PATCH v5 3/6] transport-helper: protocol-v2 supports upload-archive
+Date: Tue, 16 Jan 2024 21:39:27 +0800
+Message-Id: <aabc8e1a2a191059b88b439d53bc7b3735b979ca.1705411391.git.zhiyou.jx@alibaba-inc.com>
 X-Mailer: git-send-email 2.32.0.rc3
 In-Reply-To: <cover.1705411391.git.zhiyou.jx@alibaba-inc.com>
 References: <cover.1702562879.git.zhiyou.jx@alibaba-inc.com> <cover.1705411391.git.zhiyou.jx@alibaba-inc.com>
@@ -63,58 +63,29 @@ Content-Transfer-Encoding: 8bit
 
 From: Jiang Xin <zhiyou.jx@alibaba-inc.com>
 
-Add new service (git-upload-archive) support in remote-curl, so we can
-support remote archive over HTTP/HTTPS protocols. Differences between
-git-upload-archive and other serices:
-
- 1. The git-archive command does not expect to see protocol version and
-    capabilities when connecting to remote-helper, so do not send them
-    in remote-curl for the git-upload-archive service.
-
- 2. We need to detect protocol version by calling discover_refs(),
-    Fallback to use the git-upload-pack service (which, like
-    git-upload-archive, is a read-only operation) to discover protocol
-    version.
+We used to support only git-upload-pack service for protocol-v2. In
+order to support remote archive over HTTP/HTTPS protocols, add new
+service support for git-upload-archive in protocol-v2.
 
 Signed-off-by: Jiang Xin <zhiyou.jx@alibaba-inc.com>
 ---
- remote-curl.c | 14 +++++++++++---
- 1 file changed, 11 insertions(+), 3 deletions(-)
+ transport-helper.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/remote-curl.c b/remote-curl.c
-index ef05752ca5..ce6cb8ac05 100644
---- a/remote-curl.c
-+++ b/remote-curl.c
-@@ -1447,8 +1447,14 @@ static int stateless_connect(const char *service_name)
- 	 * establish a stateless connection, otherwise we need to tell the
- 	 * client to fallback to using other transport helper functions to
- 	 * complete their request.
-+	 *
-+	 * The "git-upload-archive" service is a read-only operation. Fallback
-+	 * to use "git-upload-pack" service to discover protocol version.
- 	 */
--	discover = discover_refs(service_name, 0);
-+	if (!strcmp(service_name, "git-upload-archive"))
-+		discover = discover_refs("git-upload-pack", 0);
-+	else
-+		discover = discover_refs(service_name, 0);
- 	if (discover->version != protocol_v2) {
- 		printf("fallback\n");
- 		fflush(stdout);
-@@ -1486,9 +1492,11 @@ static int stateless_connect(const char *service_name)
- 
- 	/*
- 	 * Dump the capability listing that we got from the server earlier
--	 * during the info/refs request.
-+	 * during the info/refs request. This does not work with the
-+	 * "git-upload-archive" service.
- 	 */
--	write_or_die(rpc.in, discover->buf, discover->len);
-+	if (strcmp(service_name, "git-upload-archive"))
-+		write_or_die(rpc.in, discover->buf, discover->len);
- 
- 	/* Until we see EOF keep sending POSTs */
- 	while (1) {
+diff --git a/transport-helper.c b/transport-helper.c
+index 2e127d24a5..6fe9f4f208 100644
+--- a/transport-helper.c
++++ b/transport-helper.c
+@@ -628,7 +628,8 @@ static int process_connect_service(struct transport *transport,
+ 		ret = run_connect(transport, &cmdbuf);
+ 	} else if (data->stateless_connect &&
+ 		   (get_protocol_version_config() == protocol_v2) &&
+-		   !strcmp("git-upload-pack", name)) {
++		   (!strcmp("git-upload-pack", name) ||
++		    !strcmp("git-upload-archive", name))) {
+ 		strbuf_addf(&cmdbuf, "stateless-connect %s\n", name);
+ 		ret = run_connect(transport, &cmdbuf);
+ 		if (ret)
 -- 
 2.43.0
 
