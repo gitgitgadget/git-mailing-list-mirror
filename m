@@ -1,136 +1,132 @@
-Received: from mail-pl1-f169.google.com (mail-pl1-f169.google.com [209.85.214.169])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mail.manjaro.org (mail.manjaro.org [116.203.91.91])
+	(using TLSv1.2 with cipher DHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0F7025560
-	for <git@vger.kernel.org>; Wed, 17 Jan 2024 21:19:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 822AE25624
+	for <git@vger.kernel.org>; Wed, 17 Jan 2024 21:30:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=116.203.91.91
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705526374; cv=none; b=EvCsbqS9k/53BmO4uZRCXEV/A+b1k9U+zjzVKOa7c1Okuy85AcUAxKS8o/LtGcfkdt47ujsTUN6oBhUw8Oz+lJguO9BJoqlhyKFjH+cGfoJcvehh6nNunkEotShO36WV+aRRJawbUAOgiH5GnBKvP9Lqz0o38mj1wg479pwsum4=
+	t=1705527057; cv=none; b=Bl2lbT68KWXpNnqFgq/WMRF4aj4ZUcZ7CtaI7n97iC5gnIrFMfV++D+wEZGACCALLvK1pHQmNCdVyixg8+8dm2Nj0FISrpVFk+XWqjMT2vo4NlFm3DH3EdptV43WoOAqzP182grpe1WbBWsxuWJbg849P6/Tr5l58FcN63utNqI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705526374; c=relaxed/simple;
-	bh=/meaglQ7umyLzjg1hnLBnnrVNYDyZaJ6u6wYXyIngPA=;
-	h=Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Google-Smtp-Source:X-Received:Received:
-	 Message-ID:Date:MIME-Version:User-Agent:Subject:Content-Language:
-	 To:Cc:References:From:In-Reply-To:Content-Type:
-	 Content-Transfer-Encoding; b=WwCZHPzwEbfgvEMGKBkEzlU35jVrk220+l0FV6yEx5sFSSb7OXfhykOPOVCEP2DQ5lF4rLf5hjDJ5mqx+5/98Q3lHv9jr9eRkioU3j4GU5WWd3gNoVErOwZCkokF6fm2ZKxMLK3BgaGNQqMVP1ijQzUMm2YMaqJfPkOJTPT38xw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=github.com; spf=pass smtp.mailfrom=github.com; dkim=pass (2048-bit key) header.d=github.com header.i=@github.com header.b=OiHLPL/3; arc=none smtp.client-ip=209.85.214.169
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=github.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=github.com
+	s=arc-20240116; t=1705527057; c=relaxed/simple;
+	bh=2nFt2gRzuV9vpMol351N6GAxyT02Hgq6VO1uNi3Ak6s=;
+	h=MIME-Version:DKIM-Signature:Date:From:To:Cc:Subject:In-Reply-To:
+	 References:Message-ID:X-Sender:Content-Type:
+	 Content-Transfer-Encoding; b=CRpYNdFxwOiwSQDi20NWGRZET+4DZXl+bpMEWHdcipPBhqGqWV1QhP82UzUtbbe9WqIL6oYNvvwfrA7EI6HVud+L6bJUoofgY1V6JEVss+7LnonsQ0rD7P28RLJEhKMq+DcvbGEDzd2kqO6s+hRXhVwmfhKO8GeTAlMKevJ3NaQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org; spf=pass smtp.mailfrom=manjaro.org; dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b=KRr+Ydsb; arc=none smtp.client-ip=116.203.91.91
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=manjaro.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=github.com header.i=@github.com header.b="OiHLPL/3"
-Received: by mail-pl1-f169.google.com with SMTP id d9443c01a7336-1d5f1e0e32eso13680435ad.3
-        for <git@vger.kernel.org>; Wed, 17 Jan 2024 13:19:32 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=github.com; s=google; t=1705526372; x=1706131172; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=72m9B1OT83bJgmZlFyIm74zs879syuiFsSOa3LiLR8g=;
-        b=OiHLPL/3Ywaj2+x+TVa8udGGiU8O5ww4I1zyfLLRpdGZVsMzijhCHiXPBYsSvomUMJ
-         KGlhbohVdsZ3FsAfdzekDHTX5JUCupJUVWek2dJR+II41+HwaB2D3TXXlfT2KOznPC7t
-         h1lZdjoJQwKR2dC2WYZGNOxs8Dm5dtMcWZBy4ZifvH6qrRO1fqEoVt1/+FFH0Drts7KN
-         mILNP/tKc9PYmbqH1AciMhhHQ4TpU3QVYOn0W9MP2KvJSo2VRFrM4O2G6UD56okOSk0W
-         jZXOyG6M0+t143+qp1u5okXgOMZK/XAALYwK2qTG+UuiTY/vuq421jJoXN/PbrZvQ7Jn
-         MNfg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1705526372; x=1706131172;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=72m9B1OT83bJgmZlFyIm74zs879syuiFsSOa3LiLR8g=;
-        b=rNiEyOWvta3HOvR5jS018KIRph+IH/EUzRTgDt5LEY3KIstU63oDLAbmm85lZDJKZg
-         dmrusq4qLNta2p16HimKlWE7sMfaLM22nTlLdz1DxOGMI40Zlh0yrF5x1I0EWbDMdUmO
-         CeSZyN8pcMPxVaAmqggQ0Tj4/dKd3oH0lMPW3cTIUUAmBITbM4xXoSq0/VkkZWNu+8ZB
-         hV78/zFUEZgvMbrZ5srife/MoJG2Qh26xAjokyTMoYW8nyo8JJBmn+zBnr1CyqTaDjY6
-         Ntbc4I8Ajb2BA3ImqcJ7Js6wX9WlGGa9MZAuCUiZsv8hhmoBN9sLHtZJVljvsBvSvEgz
-         1M9Q==
-X-Gm-Message-State: AOJu0YyJ3pMIgZYhWLAyJyPjzt2IOlvGwwr04QfZnxGZKb6KnYI7ItYK
-	TUcISecPV5FXFEqntf7y1g/ew/nHRma2t2fbP2icZ+pp
-X-Google-Smtp-Source: AGHT+IH4Tk/Alj51VQV8MZ9UB+Rv2p6Oq+8quqZc9OjoQYMB64qM8bjB2fWXdlcoHRd/rMpCATUExw==
-X-Received: by 2002:a17:903:2651:b0:1d5:4e05:a66a with SMTP id je17-20020a170903265100b001d54e05a66amr5176799plb.9.1705526372140;
-        Wed, 17 Jan 2024 13:19:32 -0800 (PST)
-Received: from [192.168.50.41] (172-091-184-234.res.spectrum.com. [172.91.184.234])
-        by smtp.gmail.com with ESMTPSA id r18-20020a170903411200b001d58ed4c58asm101456pld.63.2024.01.17.13.19.31
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 17 Jan 2024 13:19:31 -0800 (PST)
-Message-ID: <08276422-3af8-40df-85dd-65ec4e891507@github.com>
-Date: Wed, 17 Jan 2024 13:19:30 -0800
+	dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b="KRr+Ydsb"
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/3] submodule-config.c: strengthen URL fsck check
-Content-Language: en-US
-To: Patrick Steinhardt <ps@pks.im>,
- Victoria Dye via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org
-References: <pull.1635.git.1704822817.gitgitgadget@gmail.com>
- <893071530d3b77d6b72b7f69a6dfb9947579865e.1704822817.git.gitgitgadget@gmail.com>
- <ZZ46MrjSocJl-kpU@tanuki>
-From: Victoria Dye <vdye@github.com>
-In-Reply-To: <ZZ46MrjSocJl-kpU@tanuki>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=manjaro.org; s=2021;
+	t=1705527046;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=aLPqB4ybs/Ve5w+3ZIa/z5KxVfHX7SHx3SBG3o7xEgw=;
+	b=KRr+Ydsb9dFcOUJ0ymqu56jpIAoACGrrOunb/5VcKIBeYBmlrdRFWgF3gshuiHq/PqCVS0
+	fGtgiX8ZNfryQ5uVv5FX6tbGBXQ/7lV9cty0kZx/LQQuN46u+wqR4UL2+Tuho+4HQ2rqAP
+	Qw7yQD9hvIVeaJLgXd9QcjxjWaeXVWbn+KPslK5TKJUsu6M/BFo1ujkjeGvPt7ZMGJUOSG
+	0yotlC6NOi/i4b81myHNZZQA/pttm7S8flgPxR8BsfFoH9TyuyH28eelQZ7fh/Wk+Hz9B1
+	ydmxmAsw6HiEXFKGhdb2zqu2SKoA8MX/M6zx4LlPWF1YRaglW0YUAJVuzRV+bg==
+Date: Wed, 17 Jan 2024 22:30:45 +0100
+From: Dragan Simic <dsimic@manjaro.org>
+To: Elijah Newren <newren@gmail.com>
+Cc: Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org
+Subject: Re: [DISCUSS] Introducing Rust into the Git project
+In-Reply-To: <CABPp-BFWsWCGogqQ=haMsS4OhOdSwc3frcAxa6soQR5ORTceOA@mail.gmail.com>
+References: <ZZ77NQkSuiRxRDwt@nand.local>
+ <b2651b38a4f7edaf1c5ffee72af00e46@manjaro.org>
+ <CABPp-BH3sva=CNtx8YFGP4Egyau-hR+7njZPFEd-DRTw91BK2w@mail.gmail.com>
+ <f5b9a57b6e2b513f1d79a93c6f0ccf45@manjaro.org>
+ <CABPp-BFWsWCGogqQ=haMsS4OhOdSwc3frcAxa6soQR5ORTceOA@mail.gmail.com>
+Message-ID: <45bfda3a350b4040a28a25993a2b22e0@manjaro.org>
+X-Sender: dsimic@manjaro.org
+Content-Type: text/plain; charset=UTF-8;
+ format=flowed
+Content-Transfer-Encoding: 8bit
+Authentication-Results: ORIGINATING;
+	auth=pass smtp.auth=dsimic@manjaro.org smtp.mailfrom=dsimic@manjaro.org
 
-Patrick Steinhardt wrote:
-> On Tue, Jan 09, 2024 at 05:53:37PM +0000, Victoria Dye via GitGitGadget wrote:
->> From: Victoria Dye <vdye@github.com>
->>
->> Update the validation of "curl URL" submodule URLs (i.e. those that specify
->> an "http[s]" or "ftp[s]" protocol) in 'check_submodule_url()' to catch more
->> invalid URLs. The existing validation using 'credential_from_url_gently()'
->> parses certain URLs incorrectly, leading to invalid submodule URLs passing
->> 'git fsck' checks. Conversely, 'url_normalize()' - used to validate remote
->> URLs in 'remote_get()' - correctly identifies the invalid URLs missed by
->> 'credential_from_url_gently()'.
+On 2024-01-11 17:57, Elijah Newren wrote:
+> Hi Dragan,
+
+I apologize for my delayed response.
+
+> On Wed, Jan 10, 2024 at 9:39 PM Dragan Simic <dsimic@manjaro.org> 
+> wrote:
+>> 
+>> On 2024-01-11 01:33, Elijah Newren wrote:
+>> > On Wed, Jan 10, 2024 at 1:57 PM Dragan Simic <dsimic@manjaro.org>
+>> > wrote:
+>> >>
+>> >> Thus, Git should probably follow the same approach of not converting
+>> >> the
+>> >> already existing code
+>> >
+>> > I disagree with this.  I saw significant performance improvements
+>> > through converting some existing Git code to Rust.  Granted, it was
+>> > only a small amount of code, but the performance benefits I saw
+>> > suggested we'd see more by also doing similar conversions elsewhere.
+>> > (Note that I kept the old C code and then conditionally compiled
+>> > either Rust or C versions of what I was converting.)
+>> 
+>> Well, it's also possible that improving the old C code could also 
+>> result
+>> in some performance improvements.  Thus, quite frankly, I don't see 
+>> that
+>> as a valid argument to rewrite some existing C code in Rust.
 > 
-> Okay, so we retain the wrong behavior of `credential_from_url_gently()`,
-> right? I wonder whether this can be abused in any way, doubly so because
-> the function gets invoked with untrusted input from the remote server
-> when we handle redirects in `http_request_reauth()`. But the redirect
-> URL we end up passing to `credential_from_url_gently()` would have to
-> contain a non-numeric port, and curl seemingly does not know to handle
-> those either.
+> Yes, and I've made many performance improvements in the C code in git.
+> Sometimes I make some of the code 5% or 20% faster.  Sometimes 1-3
+> orders of magnitude faster.  Once over 60 orders of magnitude
+> faster.[1]  Look around in git's history; I've done a fair amount of
+> performance stuff.
 
-Correct, nothing about 'credential_from_url_gently()' changes here. As for
-whether it could be abused - I don't *think* so, but I'm definitely not a
-security expert. If it helps, here's a more detailed breakdown of the issue:
+Thank you very much for your work!
 
-In 'credential_from_url_1()', suppose we have URL
-"http://example.com:test/repo.git". Stepping through the variables:
-
-- 'cp' is "example.com:test/repo.git"
-- 'at' is NULL
-- 'colon' is ":test/repo.git"
-- 'slash' is "/repo.git"
-
-Because 'at' is NULL, we set 'host = cp'. Later, because 'slash - host > 0',
-we call 'url_decode_mem()' on "example.com:test" (which, in this case,
-doesn't change anything) and the result 'host' to "example.com:test".
-
-The issue for the fsck check is that 'credential_from_url_gently()' doesn't
-validate the hostname it extracts (e.g. whether ':' precedes a valid port,
-or if the hostname contains a '%'-escaped sequence). I don't *think* that
-could be abused since, like you said, cURL should just reject the invalid
-URL altogether.
-
+> And I'm specifically arguing that I feel limited in some of the
+> performance work that can be done by remaining in C.  Part of my
+> reason for interest in Rust is exactly because I think it can help us
+> improve performance in ways that are far more difficult to achieve in
+> C.  And this isn't just guesswork, I've done some trials with it.
+> Further, I even took the time to document some of these reasons
+> elsewhere in this thread[2].  Arguing that some performance
+> improvements can be done in C is thus entirely missing the point.
 > 
-> Other callsites include fsck (which you're fixing) and the credential
-> store (which is entirely user-controlled). It would be great regardless
-> to fix the underlying bug in `credential_from_url_gently()` eventually
-> though. But I do not think that this has to be part this patch series
-> here, which is a strict improvement.
-
-Agreed! I think normalizing the URL before trying to extract the credentials
-may be all that's needed to avoid surprise URL errors, but that probably
-warrants a separate patch submission (with appropriately thorough testing).
-
+> If you want to dismiss the performance angle of argument for Rust, you
+> should take the time to address the actual reasons raised for why it
+> could make it easier to improve performance relative to continuing in
+> C.
 > 
-> Thanks!
-> 
-> Patrick
+> Also, as a heads up since you seem to be relatively new to the list:
+> your position will probably carry more weight with others if you take
+> the time to understand, acknowledge, and/or address counterpoints of
+> the other party.  It is certainly fine to simply express some concerns
+> without doing so (Randall and Patrick did a good job of this in this
+> thread), but when you simply assert that the benefits others point out
+> simply don't exist (e.g. your "Quite frankly, that would _only_
+> complicate things and cause fragmentation." (emphasis added) from your
+> first email in this thread[3], and which this latest email of yours
+> somewhat looks like as well), others may well start applying a
+> discount to any positions you state.  Granted, it's totally up to you,
+> but I'm just giving a hint about how I think you might be able to be
+> more persuasive.
 
+I totally agree with your suggestions, and I'm thankful for the time it 
+took you to write it all down.  I'll take your advice and refrain myself 
+from expressing my opinions in this thread.
+
+> [1] A couple examples: 6a5fb966720 ("Change default merge backend from
+> recursive to ort", 2021-08-04) and 8d92fb29270 ("dir: replace
+> exponential algorithm with a linear one", 2020-04-01)
+> [2] Footnote 6 of
+> https://lore.kernel.org/git/CABPp-BFOmwV-xBtjvtenb6RFz9wx2VWVpTeho0k=D8wsCCVwqQ@mail.gmail.com/
+> [3] 
+> https://lore.kernel.org/git/b2651b38a4f7edaf1c5ffee72af00e46@manjaro.org/
