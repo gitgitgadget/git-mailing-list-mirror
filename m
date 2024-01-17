@@ -1,55 +1,54 @@
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F5442561B
-	for <git@vger.kernel.org>; Wed, 17 Jan 2024 22:16:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 715DA1E515
+	for <git@vger.kernel.org>; Wed, 17 Jan 2024 22:35:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705529768; cv=none; b=itdho0ZzixE0HzR3n2adqXojDEi8xUFJ3VeIpOSmO0rtKdqLUndsTBO6Uxd28OwcVdkGo/049enViQPmMqvMfCAGCActjPs9oS3/KKJenYnkHirE0irMDselczj2q3jdwxs56vVRn4QpOk0+7BBev3b/seDnsEbAi5JvYWLfnEY=
+	t=1705530914; cv=none; b=IHnS6eVY4Ev1p6IDs8hSMa7Ysm1gNNWjIOox97kJAMd7P0bSK+xPiIg9pXLPXUAJouhOZSUgHOy9P0o8hr3RbIjIh/Yfv315L2nFsiXTsdV6NgUqqyxdUNsGzREyJ+LwYfphSJznwfBerQi8WzJCd0gSuwbbVGwrKTyOhBTPE2Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705529768; c=relaxed/simple;
-	bh=ukaP3pTCswo7FBcTc0bch7aZp/ZOG7k9EPD6+iE86bk=;
+	s=arc-20240116; t=1705530914; c=relaxed/simple;
+	bh=9s9tb0G2yBAF3GJmUSmutFWued0AwPWbXkzhsF3UH/g=;
 	h=Received:DKIM-Signature:Received:Received:From:To:Cc:Subject:
 	 In-Reply-To:References:Date:Message-ID:User-Agent:MIME-Version:
-	 Content-Type:X-Pobox-Relay-ID; b=o0PblweK70TZl4r6hDaenS01de9bhYEbI66cXtURk/+pqJn/ihFmGlHAKPZJs9V0YIkTG6X3qyhkhfcORo/o8cGGITpTo0hwloe3pQydKBmvvIzP2ivl+duXgYoJ9iYYCN6TGySMpDpoEQnXVp0slRggU1PTcRHeVmEDZGdrTUk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=GcA/j5ev; arc=none smtp.client-ip=173.228.157.52
+	 Content-Type:X-Pobox-Relay-ID:Content-Transfer-Encoding; b=eBEP/qOgjlABjQx/JFFoqamXicNnONkWfGvWes4psn5gxAYVjaLrIP4TelN55YvxtGDbMMNJLTNZgaVMCJo8iO4UPZYrx9Nwts04wyLjDplnT3Gr9aCPLEfxlERPOhmgvAKgIIpfjDCPFOiUBeRM6OZzYNB0C/NEdNE7X1TWk1E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=jjFnU25b; arc=none smtp.client-ip=173.228.157.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="GcA/j5ev"
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 992CA30078;
-	Wed, 17 Jan 2024 17:16:05 -0500 (EST)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="jjFnU25b"
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id C69EB226D7;
+	Wed, 17 Jan 2024 17:35:06 -0500 (EST)
 	(envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=ukaP3pTCswo7FBcTc0bch7aZp/ZOG7k9EPD6+i
-	E86bk=; b=GcA/j5ev7Q1VtyzQ1/9Nzm4Lfp8FYSxZNG5Zzw7lLSSZZ1c+HiCkRq
-	0ynbd7c7/ksX7fTmjuo60bb14mZ/V6uOBjLgBdkh16IfxhhVuq4lklH8gMBxwXk/
-	M4D3Z/rHiphXlbl8xNnnUJAFoyKvocInXRQpYqYyYXWRNGti5yzFo=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 9143530077;
-	Wed, 17 Jan 2024 17:16:05 -0500 (EST)
+	:content-type:content-transfer-encoding; s=sasl; bh=9s9tb0G2yBAF
+	3GJmUSmutFWued0AwPWbXkzhsF3UH/g=; b=jjFnU25b/jV21J+GDTv38wmcqz2S
+	dPmc8yH0yocG+hlq2MGpkiAVEiaiYD1qqT/M82cV14Dk+uhkBYPTKqNXJF4yppjL
+	QhQ2oJ3kaemYBmZKeK6Sls0h+WU0TLMVAWKsrrovrjCfOzUH0TtBnUWQVHcUZTOL
+	vSRUThIpimpz6do=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id ABDDA226D6;
+	Wed, 17 Jan 2024 17:35:06 -0500 (EST)
 	(envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.125.200.93])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id F3A1D30074;
-	Wed, 17 Jan 2024 17:16:00 -0500 (EST)
+	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id B9FC7226D5;
+	Wed, 17 Jan 2024 17:35:02 -0500 (EST)
 	(envelope-from junio@pobox.com)
 From: Junio C Hamano <gitster@pobox.com>
-To: "Chandra Pratap via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Chandra Pratap <chandrapratap3519@gmail.com>,
-  Chandra Pratap <chandrapratap376@gmail.com>
-Subject: Re: [PATCH v3] tests: move t0009-prio-queue.sh to the new unit
- testing framework
-In-Reply-To: <xmqqa5p3vczi.fsf@gitster.g> (Junio C. Hamano's message of "Wed,
-	17 Jan 2024 13:58:25 -0800")
-References: <pull.1642.v2.git.1705220304781.gitgitgadget@gmail.com>
-	<pull.1642.v3.git.1705502304219.gitgitgadget@gmail.com>
-	<xmqqa5p3vczi.fsf@gitster.g>
-Date: Wed, 17 Jan 2024 14:15:57 -0800
-Message-ID: <xmqq34uvvc6a.fsf@gitster.g>
+To: "Kristoffer Haugsbakk" <code@khaugsbakk.name>, "Nikolay Borisov"
+ <nik.borisov@suse.com>,  Jeff King <peff@peff.net>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH] rebase: Fix documentation about used shell in -x
+In-Reply-To: <b491d954-b1a4-4000-95fb-fc83bf815edc@app.fastmail.com>
+	(Kristoffer Haugsbakk's message of "Tue, 16 Jan 2024 17:50:56 +0100")
+References: <20240116141842.193151-1-nik.borisov@suse.com>
+	<b491d954-b1a4-4000-95fb-fc83bf815edc@app.fastmail.com>
+Date: Wed, 17 Jan 2024 14:35:01 -0800
+Message-ID: <xmqqv87rtwq2.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -57,124 +56,94 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
 X-Pobox-Relay-ID:
- FF1A1BEA-B585-11EE-A782-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
+ A7A3C35E-B588-11EE-8D88-A19503B9AAD1-77302942!pb-smtp21.pobox.com
+Content-Transfer-Encoding: quoted-printable
 
-Junio C Hamano <gitster@pobox.com> writes:
+"Kristoffer Haugsbakk" <code@khaugsbakk.name> writes:
 
-> I forgot to examine the contents of the tests themselves.
+> Hi
+>
+> Some nitpicks since it seems like there will be another round (v2):
+>
+>> rebase: Fix documentation about used shell in -x
+>
+> Lower-case =E2=80=9Cfix=E2=80=9D is more conventional.[1]
+>
+>> SHELL_PATH constant at build time. This erroneous statement in the
+>> documentation sent me on a 10 minute wild goose chase wondering why my
+>> $SHELL was pointing to /bin/bash and my /bin/sh to dash and git was
+>> using dash and not bash.
+>
+> I think anecdotes are not kept in the commit message, usually? Often th=
+ey
+> are put after the three-hyphen/three-dash line.
 > ...
+>     The shell used when using the -x option is the one pointed to by th=
+e
+>     SHELL_PATH constant at build time.
+>
+>     Signed-off-by: Nikolay Borisov <nik.borisov@suse.com>
+>     ---
+>       This erroneous statement in the documentation sent me on a 10 min=
+ute
+>       wild goose chase wondering why my $SHELL was pointing to /bin/bas=
+h and
+>       my /bin/sh to dash and git was using dash and not bash.
+>
+>      Documentation/git-rebase.txt | 2 +-
+>      1 file changed, 1 insertion(+), 1 deletion(-)
 
-FYI: taking them all together, here is what I tentatively queued on
-top of what was posted as v3 before I start doing today's
-integration cycle.
-
-Thanks.
+Yup, that looks better.  Here is what I will queue tentatively, with
+the improvement suggested by Peff.
 
 ----- >8 -----
-Subject: [PATCH] SQUASH???
+Subject: [PATCH] rebase: fix documentation about used shell in -x
 
+The shell used when using the -x option is the one pointed to by the
+SHELL_PATH constant at build time, not $SHELL environment variable.
+
+We could leave the parenthetical explanation about what shell is
+used, but it depends on the build and platform (Windows do not even
+use SHELL_PATH build-time knob).  Because Git executes lots of
+things using a shell, and it always uses the default shell, it
+probably is better to just stop at saying "launches the command in a
+shell" without going into more details.
+
+Signed-off-by: Nikolay Borisov <nik.borisov@suse.com>
+Helped-by: Jeff King <peff@peff.net>
+Helped-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- t/unit-tests/t-prio-queue.c | 57 ++++++++++++++++++-------------------
- 1 file changed, 28 insertions(+), 29 deletions(-)
 
-diff --git a/t/unit-tests/t-prio-queue.c b/t/unit-tests/t-prio-queue.c
-index 0b826b463e..3014a67ac2 100644
---- a/t/unit-tests/t-prio-queue.c
-+++ b/t/unit-tests/t-prio-queue.c
-@@ -22,44 +22,43 @@ static int show(int *v)
- static int test_prio_queue(int *input, int *result)
- {
- 	struct prio_queue pq = { intcmp };
--	int i = 0;
-+	int i, val;
- 
--	while (*input) {
--		int *val = input++;
-+	for (i = 0; (val = *input); input++) {
- 		void *peek, *get;
--		switch(*val) {
--			case GET:
--				peek = prio_queue_peek(&pq);
-+		switch (val) {
-+		case GET:
-+			peek = prio_queue_peek(&pq);
-+			get = prio_queue_get(&pq);
-+			if (peek != get)
-+				BUG("peek and get results don't match");
-+			result[i++] = show(get);
-+			break;
-+		case DUMP:
-+			while ((peek = prio_queue_peek(&pq))) {
- 				get = prio_queue_get(&pq);
- 				if (peek != get)
- 					BUG("peek and get results don't match");
- 				result[i++] = show(get);
--				break;
--			case DUMP:
--				while ((peek = prio_queue_peek(&pq))) {
--					get = prio_queue_get(&pq);
--					if (peek != get)
--						BUG("peek and get results don't match");
--					result[i++] = show(get);
--				}
--				break;
--			case STACK:
--				pq.compare = NULL;
--				break;
--			case REVERSE:
--				prio_queue_reverse(&pq);
--				break;
--			default:
--				prio_queue_put(&pq, val);
--				break;
-+			}
-+			break;
-+		case STACK:
-+			pq.compare = NULL;
-+			break;
-+		case REVERSE:
-+			prio_queue_reverse(&pq);
-+			break;
-+		default:
-+			prio_queue_put(&pq, input);
-+			break;
- 		}
- 	}
- 	clear_prio_queue(&pq);
- 	return 0;
- }
- 
--#define BASIC_INPUT 1, 2, 3, 4, 5, 5, DUMP
--#define BASIC_EXPECTED 1, 2, 3, 4, 5, 5
-+#define BASIC_INPUT 2, 6, 3, 10, 9, 5, 7, 4, 5, 8, 1, DUMP
-+#define BASIC_EXPECTED 1, 2, 3, 4, 5, 5, 6, 7, 8, 9, 10
- 
- #define MIXED_PUT_GET_INPUT 6, 2, 4, GET, 5, 3, GET, GET, 1, DUMP
- #define MIXED_PUT_GET_EXPECTED 2, 3, 4, 1, 5, 6
-@@ -67,8 +66,8 @@ static int test_prio_queue(int *input, int *result)
- #define EMPTY_QUEUE_INPUT 1, 2, GET, GET, GET, 1, 2, GET, GET, GET
- #define EMPTY_QUEUE_EXPECTED 1, 2, MISSING, 1, 2, MISSING
- 
--#define STACK_INPUT STACK, 1, 5, 4, 6, 2, 3, DUMP
--#define STACK_EXPECTED 3, 2, 6, 4, 5, 1
-+#define STACK_INPUT STACK, 8, 1, 5, 4, 6, 2, 3, DUMP
-+#define STACK_EXPECTED 3, 2, 6, 4, 5, 1, 8
- 
- #define REVERSE_STACK_INPUT STACK, 1, 2, 3, 4, 5, 6, REVERSE, DUMP
- #define REVERSE_STACK_EXPECTED 1, 2, 3, 4, 5, 6
-@@ -76,7 +75,7 @@ static int test_prio_queue(int *input, int *result)
- #define TEST_INPUT(INPUT, EXPECTED, name)			\
-   static void test_##name(void)				\
- {								\
--	int input[] = {INPUT};					\
-+	int input[] = {INPUT, 0};				\
- 	int expected[] = {EXPECTED};				\
- 	int result[ARRAY_SIZE(expected)];			\
- 	test_prio_queue(input, result);				\
--- 
-2.43.0-367-g186b115d30
+ * We could say things like
 
+    - it is a possibility for the future to add how the default
+      shell is decided (including the use of SHELL_PATH) in a more
+      central part of the doucmentation like git(1)
 
+    - at least not giving a wrong information would prevent the
+      future developers wasting time on experimenting various
+      settings of the $SHELL variable
 
+   in the log message, if we want.
+
+ Documentation/git-rebase.txt | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
+
+diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
+index b4526ca246..51489ea686 100644
+--- a/Documentation/git-rebase.txt
++++ b/Documentation/git-rebase.txt
+@@ -957,8 +957,7 @@ The interactive rebase will stop when a command fails=
+ (i.e. exits with
+ non-0 status) to give you an opportunity to fix the problem. You can
+ continue with `git rebase --continue`.
+=20
+-The "exec" command launches the command in a shell (the one specified
+-in `$SHELL`, or the default shell if `$SHELL` is not set), so you can
++The "exec" command launches the command in a shell, so you can
+ use shell features (like "cd", ">", ";" ...). The command is run from
+ the root of the working tree.
+=20
