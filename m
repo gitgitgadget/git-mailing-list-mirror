@@ -1,73 +1,61 @@
-Received: from mail-ed1-f54.google.com (mail-ed1-f54.google.com [209.85.208.54])
+Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.223.130])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F442D517
-	for <git@vger.kernel.org>; Wed, 17 Jan 2024 08:14:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77AF112B6F
+	for <git@vger.kernel.org>; Wed, 17 Jan 2024 08:54:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.130
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705479260; cv=none; b=eOE0loSmFqypMR+RSzlPGpWsQmKbJWsne/DNm0bD7gHrA4OPp9uGbooOhouF3Ggr5lgjblWDuTb9/MrEAqwDl54NSEdE0/ERiCfeQc491ATcD8Sx5LKD4dljMeWIltgwGVlJKMPzX9GV0hpuBfAnB78oW78bTQnR/VNcIJVRALE=
+	t=1705481700; cv=none; b=fe7w0n2tI5fRkYnrxgaShZd3W1xxs3vYhARfoDOINRMFo+16wOOZ8tEmrwvi9wlBZ2xSYmnWeyrDrOAL6Paqch5UcW+W8m2S753MewrzqNg70UFxRqlv7GtDJuAlU18kLh1BfSOdjgoGJbISRqn0PzaWrAWngDlRj4xdJCWVCqM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705479260; c=relaxed/simple;
-	bh=PcKoL2aDnLbeXDne87yhyRey4WbL8nNJzOysrG9n5w4=;
-	h=Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Google-Smtp-Source:X-Received:Received:Sender:
-	 From:To:Cc:Subject:Date:Message-Id:X-Mailer:In-Reply-To:References:
-	 MIME-Version:Content-Transfer-Encoding; b=tQrwSeIIMKWlY/aLLtNSmeZVR8ZPeZ4KllIXWAm0dhEUxOEL0qRiZ80sjqIVJjaaf098aulRo5B93HzvxmdFOi0bSg3oHaciPxYaaOEE+mvYkVL0N17FJViVWIuXGk3OpfjhfYiWttT9209h1L43Gs62ZyQKmP4X7elBRDjkcjE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=kGkI/We2; arc=none smtp.client-ip=209.85.208.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1705481700; c=relaxed/simple;
+	bh=tCc2D06pc7yYvQNlp/jJVWjO+bZfpfl1n6gQDpufCm8=;
+	h=Received:DKIM-Signature:DKIM-Signature:Received:Received:From:To:
+	 Cc:Subject:Date:Message-Id:X-Mailer:MIME-Version:
+	 Content-Transfer-Encoding:X-Spamd-Result:X-Spam-Level:X-Spam-Score:
+	 X-Spam-Flag; b=tZaSCLzRFjl0+ySi3uhlz7Pgg34KaM73Wn9+xP45jsLKnzfSyfUVjxcjcdKuCSABexsGEXGDkRYubT+22w6McJD5cjBWfE2eivE/+YCdqGgzbiqHqdeldMciIxhmoR8nE5u4zxdcTW2hM5xX6r4M2mV7I5SJTXNjtAJrYb4HNEs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=suse.com; spf=pass smtp.mailfrom=suse.com; dkim=pass (1024-bit key) header.d=suse.com header.i=@suse.com header.b=NOKETyk5; dkim=pass (1024-bit key) header.d=suse.com header.i=@suse.com header.b=NOKETyk5; arc=none smtp.client-ip=195.135.223.130
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=suse.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kGkI/We2"
-Received: by mail-ed1-f54.google.com with SMTP id 4fb4d7f45d1cf-559b3ee02adso1683507a12.3
-        for <git@vger.kernel.org>; Wed, 17 Jan 2024 00:14:18 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1705479257; x=1706084057; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:sender:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=rIimWQvACma+my2nVnHH5WMYddN7CLQWyOnm1muLZF4=;
-        b=kGkI/We2ipJxLaIErVSnHlISNCtpahndz2PmElOOQfoEeZJIL2nvOLctOXxAA+UYk7
-         wT62oBgwz1J+YnYUIbnva/m7ROpvFM3ZPPAu77JqqBXXYLibYaZxyi1pJbSAhXs2XGt6
-         dRUM38/idePbsVcKZCqJ8o5RHM6Uj2NCw7+vm4pXvkhy6g7jf9Cr0AvS+Amv3hKPHUOB
-         pNlsyECkMrcXsk4TWz6S3wji/5ZV+/NoOjoChEl/4zS3fVh+VyqgmcohJevFQtyO5JVT
-         Jp5FhQk5QRUUNB2u6Xl9t1Kf8YEHnCHoiLdCpobDNkIognyavEK2uLCPUrvIpEb+Xqhk
-         Xv4Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1705479257; x=1706084057;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:sender:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=rIimWQvACma+my2nVnHH5WMYddN7CLQWyOnm1muLZF4=;
-        b=t5rqWQ9BGjxagKM+chqSCrhn1WTMTrxoPYsao9p1OEu7GZBx3mN3ovIV5E9iw0Woc5
-         taIqrFe91P3fg19/L+k8k9GaDhA2+2VKdVxJrgik0NmN2TjQr8oQozmht2mQWPCg03zN
-         P9AIyTvwgsAqWb6ToMbRKQsaewob1N43pdvuDkiSegmFuwJYA6D2RL1FVNVV1RZ8zw5N
-         ulX5fhYhC+iPMWm/ZvJmPMEV3MJQ/tmk+blFa1zv1kwUwkWSolsz24lp7dmOjgisFMOa
-         UYfoANF2zwjXF+00zpTbW9VOcBLUrcPcgXVB5qPc1ZN2tnnuI+8zqq8h2/+19JtR3FNA
-         Zflw==
-X-Gm-Message-State: AOJu0Yx9oJMBVoXJYCrMMSk/mefOBu3NA/3FTFssYGYJn7iTDsXUej36
-	ikbrk9pJHIwSz2dRo+e324s=
-X-Google-Smtp-Source: AGHT+IG+23ZKdpn7JVJuf7+ZrGr8D8hKGZ81HTrfemSNJZp6RMOBqIWQniAcX2+YUzbCnATF+OZEwQ==
-X-Received: by 2002:a05:6402:3095:b0:559:b72d:92ce with SMTP id de21-20020a056402309500b00559b72d92cemr655956edb.15.1705479257200;
-        Wed, 17 Jan 2024 00:14:17 -0800 (PST)
-Received: from Michaels-MBP.fritz.box (2001-4dd4-dfc5-0-e407-3f73-62bc-9c57.ipv6dyn.netcologne.de. [2001:4dd4:dfc5:0:e407:3f73:62bc:9c57])
-        by smtp.gmail.com with ESMTPSA id 7-20020a0564021f4700b00557de30e1f1sm7671803edz.74.2024.01.17.00.14.16
-        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Wed, 17 Jan 2024 00:14:16 -0800 (PST)
-Sender: Michael L <mial.lohmann@gmail.com>
-From: Michael Lohmann <mi.al.lohmann@gmail.com>
-To: gitster@pobox.com
-Cc: git@vger.kernel.org,
-	mi.al.lohmann@gmail.com,
-	newren@gmail.com,
-	phillip.wood123@gmail.com,
-	Johannes Sixt <j6t@kdbg.org>
-Subject: [PATCH v3 2/2] revision: Implement `git log --merge` also for rebase/cherry_pick/revert
-Date: Wed, 17 Jan 2024 09:14:05 +0100
-Message-Id: <20240117081405.14012-2-mi.al.lohmann@gmail.com>
-X-Mailer: git-send-email 2.39.3 (Apple Git-145)
-In-Reply-To: <20240117081405.14012-1-mi.al.lohmann@gmail.com>
-References: <xmqqzfxa9usx.fsf@gitster.g>
- <20240117081405.14012-1-mi.al.lohmann@gmail.com>
+	dkim=pass (1024-bit key) header.d=suse.com header.i=@suse.com header.b="NOKETyk5";
+	dkim=pass (1024-bit key) header.d=suse.com header.i=@suse.com header.b="NOKETyk5"
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [10.150.64.97])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by smtp-out1.suse.de (Postfix) with ESMTPS id 91BF022236;
+	Wed, 17 Jan 2024 08:54:53 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.com; s=susede1;
+	t=1705481693; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:  content-transfer-encoding:content-transfer-encoding;
+	bh=tCc2D06pc7yYvQNlp/jJVWjO+bZfpfl1n6gQDpufCm8=;
+	b=NOKETyk59la/yF+9Yo037yNMwJc7W4KWAh1RwSSxdFAFd49UVcDugYINaQAtqUI68m/qsb
+	yq5tLg/002xR2upPnG6+hwluw/OSYlIRioMriTCx7V2et8ZUBHofCeYK3TowzGeyhkv+Sm
+	G5Epy08dJ5s/zTcicf3U3bm0zGXKNLM=
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.com; s=susede1;
+	t=1705481693; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:  content-transfer-encoding:content-transfer-encoding;
+	bh=tCc2D06pc7yYvQNlp/jJVWjO+bZfpfl1n6gQDpufCm8=;
+	b=NOKETyk59la/yF+9Yo037yNMwJc7W4KWAh1RwSSxdFAFd49UVcDugYINaQAtqUI68m/qsb
+	yq5tLg/002xR2upPnG6+hwluw/OSYlIRioMriTCx7V2et8ZUBHofCeYK3TowzGeyhkv+Sm
+	G5Epy08dJ5s/zTcicf3U3bm0zGXKNLM=
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 631CF13751;
+	Wed, 17 Jan 2024 08:54:53 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([10.150.64.162])
+	by imap1.dmz-prg2.suse.org with ESMTPSA
+	id QrnPFd2Vp2UVEAAAD6G6ig
+	(envelope-from <nik.borisov@suse.com>); Wed, 17 Jan 2024 08:54:53 +0000
+From: Nikolay Borisov <nik.borisov@suse.com>
+To: git@vger.kernel.org
+Cc: Nikolay Borisov <nik.borisov@suse.com>
+Subject: [PATCH v2] rebase: Fix documentation about used shell in -x
+Date: Wed, 17 Jan 2024 10:53:47 +0200
+Message-Id: <20240117085347.948960-1-nik.borisov@suse.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -75,83 +63,59 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
+Authentication-Results: smtp-out1.suse.de;
+	none
+X-Spamd-Result: default: False [4.88 / 50.00];
+	 ARC_NA(0.00)[];
+	 RCVD_VIA_SMTP_AUTH(0.00)[];
+	 FROM_HAS_DN(0.00)[];
+	 TO_DN_SOME(0.00)[];
+	 R_MISSING_CHARSET(2.50)[];
+	 TO_MATCH_ENVRCPT_ALL(0.00)[];
+	 MIME_GOOD(-0.10)[text/plain];
+	 BROKEN_CONTENT_TYPE(1.50)[];
+	 RCVD_COUNT_THREE(0.00)[3];
+	 DKIM_SIGNED(0.00)[suse.com:s=susede1];
+	 RCPT_COUNT_TWO(0.00)[2];
+	 MID_CONTAINS_FROM(1.00)[];
+	 DBL_BLOCKED_OPENRESOLVER(0.00)[suse.com:email];
+	 FUZZY_BLOCKED(0.00)[rspamd.com];
+	 FROM_EQ_ENVFROM(0.00)[];
+	 MIME_TRACE(0.00)[0:+];
+	 RCVD_TLS_ALL(0.00)[];
+	 BAYES_HAM(-0.02)[53.47%]
+X-Spam-Level: ****
+X-Spam-Score: 4.88
+X-Spam-Flag: NO
 
-Co-authored-by: Johannes Sixt <j6t@kdbg.org>
-Signed-off-by: Michael Lohmann <mi.al.lohmann@gmail.com>
+The shell used when using the -x option is erroneously documented to be
+the one pointed to by the $SHELL environmental variable. This was true
+when rebase was implemented as a shell script but this is no longer
+true.
+
+Signed-off-by: Nikolay Borisov <nik.borisov@suse.com>
 ---
+ Documentation/git-rebase.txt | 7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
 
-On 12. Jan 2024, at 21:18, Junio C Hamano <gitster@pobox.com> wrote:
-> I like the way your other_merge_candidate() loops over an array of
-> possible candidates, which makes it a lot easier to extend, though,
-> admittedly the "die()" message needs auto-generating if we really
-> wanted to make it maintenance free ;-)
+diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
+index 25516c45d8b8..2cd55aedc0f9 100644
+--- a/Documentation/git-rebase.txt
++++ b/Documentation/git-rebase.txt
+@@ -963,10 +963,9 @@ The interactive rebase will stop when a command fails (i.e. exits with
+ non-0 status) to give you an opportunity to fix the problem. You can
+ continue with `git rebase --continue`.
 
-I would certainly like that but I did not find an easy way of achieving
-this in C. Help wanted.
+-The "exec" command launches the command in a shell (the one specified
+-in `$SHELL`, or the default shell if `$SHELL` is not set), so you can
+-use shell features (like "cd", ">", ";" ...). The command is run from
+-the root of the working tree.
++The "exec" command launches the command in a shell (the default one, usually
++/bin/sh), so you can use shell features (like "cd", ">", ";" ...). The command
++is run from the root of the working tree.
 
-Changes with respect to v2:
-- use read_ref_full instead of refs_resolve_ref_unsafe
-- check for symbolic ref
-- extract "other_name" in this patch, instead of patch 1
-
- revision.c | 31 +++++++++++++++++++++++--------
- 1 file changed, 23 insertions(+), 8 deletions(-)
-
-diff --git a/revision.c b/revision.c
-index aa4c4dc778..c778413c7d 100644
---- a/revision.c
-+++ b/revision.c
-@@ -1961,11 +1961,31 @@ static void add_pending_commit_list(struct rev_info *revs,
- 	}
- }
- 
-+static const char *lookup_other_head(struct object_id *oid)
-+{
-+	int i;
-+	static const char *const other_head[] = {
-+		"MERGE_HEAD", "REBASE_HEAD", "CHERRY_PICK_HEAD", "REVERT_HEAD"
-+	};
-+
-+	for (i = 0; i < ARRAY_SIZE(other_head); i++)
-+		if (!read_ref_full(other_head[i],
-+				RESOLVE_REF_READING | RESOLVE_REF_NO_RECURSE,
-+				oid, NULL)) {
-+			if (is_null_oid(oid))
-+				die("%s is a symbolic ref???", other_head[i]);
-+			return other_head[i];
-+		}
-+
-+	die("--merge without MERGE_HEAD, REBASE_HEAD, CHERRY_PICK_HEAD or REVERT_HEAD?");
-+}
-+
- static void prepare_show_merge(struct rev_info *revs)
- {
- 	struct commit_list *bases;
- 	struct commit *head, *other;
- 	struct object_id oid;
-+	const char *other_name;
- 	const char **prune = NULL;
- 	int i, prune_num = 1; /* counting terminating NULL */
- 	struct index_state *istate = revs->repo->index;
-@@ -1973,15 +1993,10 @@ static void prepare_show_merge(struct rev_info *revs)
- 	if (repo_get_oid(the_repository, "HEAD", &oid))
- 		die("--merge without HEAD?");
- 	head = lookup_commit_or_die(&oid, "HEAD");
--	if (read_ref_full("MERGE_HEAD",
--			RESOLVE_REF_READING | RESOLVE_REF_NO_RECURSE,
--			&oid, NULL))
--		die("--merge without MERGE_HEAD?");
--	if (is_null_oid(&oid))
--		die("MERGE_HEAD is a symbolic ref???");
--	other = lookup_commit_or_die(&oid, "MERGE_HEAD");
-+	other_name = lookup_other_head(&oid);
-+	other = lookup_commit_or_die(&oid, other_name);
- 	add_pending_object(revs, &head->object, "HEAD");
--	add_pending_object(revs, &other->object, "MERGE_HEAD");
-+	add_pending_object(revs, &other->object, other_name);
- 	bases = repo_get_merge_bases(the_repository, head, other);
- 	add_rev_cmdline_list(revs, bases, REV_CMD_MERGE_BASE, UNINTERESTING | BOTTOM);
- 	add_pending_commit_list(revs, bases, UNINTERESTING | BOTTOM);
--- 
-2.39.3 (Apple Git-145)
+ ----------------------------------
+ $ git rebase -i --exec "make test"
+--
+2.34.1
 
