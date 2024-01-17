@@ -1,139 +1,103 @@
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail.manjaro.org (mail.manjaro.org [116.203.91.91])
+	(using TLSv1.2 with cipher DHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4E1B1C691
-	for <git@vger.kernel.org>; Wed, 17 Jan 2024 21:58:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19BA825626
+	for <git@vger.kernel.org>; Wed, 17 Jan 2024 22:02:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=116.203.91.91
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705528710; cv=none; b=s1TMiCw/KohVyA9rqsHB6Qtnr8yPXXDJor8bdIYIEfF9fzazffmrKGYWngy935iHDEEPv1LxuNFIhRvGWnBQEU87Ivjo6RfrppM8h5eSoA71ayCgASVEqRCaPTBdG4ljajnak/p/wf/vlm/0kr8H0IRp0er09NtxCYf+yOGeMbY=
+	t=1705528925; cv=none; b=KLtkjDvUFVswPHABew3UdUarA1ysyaUeGZB1ZgtZ2j9Cwm9zPUR89dlwgmlX3sg5sCeymI6kjz2iROTbjMT+Bk6ZLG5FYYFsAuSmCXnFnmaOv4xCQoTr4E5eYCwtGfmXmqFtQC0yoC6uXkLf28Efkb3dXLOrn8WEaFZ1cNpp5sk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705528710; c=relaxed/simple;
-	bh=g9UaQ22SoEWM3r4Xlg54ZjNgFqenb8XiLEdHWIMwZO8=;
-	h=Received:DKIM-Signature:Received:Received:From:To:Cc:Subject:
-	 In-Reply-To:References:Date:Message-ID:User-Agent:MIME-Version:
-	 Content-Type:X-Pobox-Relay-ID; b=qqkAPcOyJl5gOLp+T5B+NBIlPjZR43IkhddouJx+ODi9ybkojTiXYdRhvJm+Am2CR7OlTca5p1bq/n/0YlPkVS2/zkJR1ntRE221Y1DnUOQe8nHC4rUzGJ4SvjfWSn7YcY17sa9mHgXCRv+q0EicPlNnCg6HnO39XVIzoN4kWrY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=HgcFB5G4; arc=none smtp.client-ip=64.147.108.70
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1705528925; c=relaxed/simple;
+	bh=g2YMyQJFY/WF3bksuHshWLcF8W62HP0RViUFcFHYTbo=;
+	h=MIME-Version:DKIM-Signature:Date:From:To:Cc:Subject:In-Reply-To:
+	 References:Message-ID:X-Sender:Content-Type:
+	 Content-Transfer-Encoding; b=HtSz6kICTpxgKC+Kgd617bPtYwO5KDQQjawYPjtJGXsV8FJOIAFQm51/3O7u0KFZlh8eYRBUWhLEPJXCU9ktl5/kKekeXPC9fwPA3os9dk+pgdgVlEK6RWgkL9Cuf+UJn530bv4ckx2P/pCQAIuWGI5Sx4OR0HOkUULqgxw6wFs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org; spf=pass smtp.mailfrom=manjaro.org; dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b=lmTPtrL6; arc=none smtp.client-ip=116.203.91.91
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=manjaro.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="HgcFB5G4"
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 883061C253B;
-	Wed, 17 Jan 2024 16:58:27 -0500 (EST)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=g9UaQ22SoEWM3r4Xlg54ZjNgFqenb8XiLEdHWI
-	MwZO8=; b=HgcFB5G41fQuHP7IVq7PPT8hW4IJ2XnHn4iVG8FYL+4cblMzOlLzDx
-	D8hm2c1YgjsYvlA4Jo2qCj5NDEFydCJLbRtCYyvaUejSatl3PoHGkdYqVYhHmqlg
-	iQXk3rERbpirH2hCW45T6MsBBRYD4CayP/Ek197wsraHovX+ZTi20=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 7DCC91C253A;
-	Wed, 17 Jan 2024 16:58:27 -0500 (EST)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.200.93])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id DE0061C2534;
-	Wed, 17 Jan 2024 16:58:26 -0500 (EST)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Chandra Pratap via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Chandra Pratap <chandrapratap3519@gmail.com>,
-  Chandra Pratap <chandrapratap376@gmail.com>
-Subject: Re: [PATCH v3] tests: move t0009-prio-queue.sh to the new unit
- testing framework
-In-Reply-To: <pull.1642.v3.git.1705502304219.gitgitgadget@gmail.com> (Chandra
-	Pratap via GitGitGadget's message of "Wed, 17 Jan 2024 14:38:23
-	+0000")
-References: <pull.1642.v2.git.1705220304781.gitgitgadget@gmail.com>
-	<pull.1642.v3.git.1705502304219.gitgitgadget@gmail.com>
-Date: Wed, 17 Jan 2024 13:58:25 -0800
-Message-ID: <xmqqa5p3vczi.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b="lmTPtrL6"
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- 8ACFF7D4-B583-11EE-9CCA-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=manjaro.org; s=2021;
+	t=1705528920;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=5ZdxNan7ekeRCsPEkyUIlpvV5WYgidjs4HXI2bIfrMw=;
+	b=lmTPtrL6a2t27a7LJuX1eh+vA5LuYFui3cNIw/nxPQ54gKnN3xPbPEGlygO0VBGwr6nGwd
+	NtyOzSKajS67p1mP9/+E6uCJEx4AfEHCPXIIm/rXCexCrKI0LahYhh7oy2xNy0NrevVBqP
+	G1qKX8CFlGCO8VMapW42DJdLxqtPoCkRjKHY+KxoBIsp86k/P30g0g/mADfux/gd7Cq9No
+	j98nUu40YvbIEJd/2ahkz3pio8ukkrp5aSNiF0yb0TguPTM2MYv3r8VGjGKAtkIbcbiGRe
+	duvkrOZnKutOm2uLh7qvERJ84d5ATiZagfZp6JJFhywPFcU5K/uEgHNd79zZBQ==
+Date: Wed, 17 Jan 2024 23:02:00 +0100
+From: Dragan Simic <dsimic@manjaro.org>
+To: Taylor Blau <me@ttaylorr.com>
+Cc: Benji Kay via GitGitGadget <gitgitgadget@gmail.com>,
+ git@vger.kernel.org, Benji Kay <okaybenji@gmail.com>
+Subject: Re: [PATCH] push: improve consistency of output when "up to date"
+In-Reply-To: <ZaBhHSCT7EOgTo/N@nand.local>
+References: <pull.1638.git.1705008449995.gitgitgadget@gmail.com>
+ <ZaBhHSCT7EOgTo/N@nand.local>
+Message-ID: <d6161449aa19aebeb4c3bea1a751e8b5@manjaro.org>
+X-Sender: dsimic@manjaro.org
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Authentication-Results: ORIGINATING;
+	auth=pass smtp.auth=dsimic@manjaro.org smtp.mailfrom=dsimic@manjaro.org
 
-I forgot to examine the contents of the tests themselves.
+On 2024-01-11 22:43, Taylor Blau wrote:
+> On Thu, Jan 11, 2024 at 09:27:29PM +0000, Benji Kay via GitGitGadget 
+> wrote:
+>> From: okaybenji <okaybenji@gmail.com>
+>> 
+>> When one issues the pull command, one may see "Already up to date."
+>> When issuing the push command, one may have seen "Everything 
+>> up-to-date".
+>> To improve consistency, "Everything up to date." is printed instead.
+>> (The hyphens have been removed, and a period has been added.)
+>> 
+>> Signed-off-by: okaybenji <okaybenji@gmail.com>
+>> ---
+>>     push: improve consistency of output when "up to date"
+>> 
+>> Published-As: 
+>> https://github.com/gitgitgadget/git/releases/tag/pr-1638%2Fokaybenji%2Fup-to-date-v1
+>> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git 
+>> pr-1638/okaybenji/up-to-date-v1
+>> Pull-Request: https://github.com/gitgitgadget/git/pull/1638
+>> 
+>>  transport.c | 2 +-
+>>  1 file changed, 1 insertion(+), 1 deletion(-)
+>> 
+>> diff --git a/transport.c b/transport.c
+>> index bd7899e9bf5..c42cb4e58b4 100644
+>> --- a/transport.c
+>> +++ b/transport.c
+>> @@ -1467,7 +1467,7 @@ int transport_push(struct repository *r,
+>>  	if (porcelain && !push_ret)
+>>  		puts("Done");
+>>  	else if (!quiet && !ret && !transport_refs_pushed(remote_refs))
+>> -		fprintf(stderr, "Everything up-to-date\n");
+>> +		fprintf(stderr, "Everything up to date.\n");
+> 
+> Between the two, I have a vague preference towards "up-to-date", which
+> would suggest changing the pull command's output to read "Already
+> up-to-date". Personally I think that neither of them should include a
+> period in their output, but whichever we decide should be done so
+> consistently between the two.
 
-> -cat >expect <<'EOF'
-> -1
-> -2
-> -3
-> -4
-> -5
-> -5
-> -6
-> -7
-> -8
-> -9
-> -10
-> -EOF
-> -test_expect_success 'basic ordering' '
-> -	test-tool prio-queue 2 6 3 10 9 5 7 4 5 8 1 dump >actual &&
-> -	test_cmp expect actual
-> -'
+I'm not a native English speaker, but I spent years contributing to 
+English Wikipedia.  According to the manual of style employed by 
+Wikipedia, which is based mainly on The Chicago Manual of Style, 
+hyphenated forms should not be used at the ends of sentences, or at the 
+ends of sentence-like forms.  In this case, we don't have complete 
+sentences.
 
-This seems to have been lost from the converted test.  Your basic
-input test feeds an already sorted array of 6 items and dump to see
-they are the same already sorted array, which is a lot less
-interesting than the above.
-
-> -cat >expect <<'EOF'
-> -2
-> -3
-> -4
-> -1
-> -5
-> -6
-> -EOF
-> -test_expect_success 'mixed put and get' '
-> -	test-tool prio-queue 6 2 4 get 5 3 get get 1 dump >actual &&
-> -	test_cmp expect actual
-> -'
-
-This is a faithful conversion.
-
-> -cat >expect <<'EOF'
-> -1
-> -2
-> -NULL
-> -1
-> -2
-> -NULL
-> -EOF
-> -test_expect_success 'notice empty queue' '
-> -	test-tool prio-queue 1 2 get get get 1 2 get get get >actual &&
-> -	test_cmp expect actual
-> -'
-
-This too.
-
-> -cat >expect <<'EOF'
-> -3
-> -2
-> -6
-> -4
-> -5
-> -1
-> -8
-> -EOF
-> -test_expect_success 'stack order' '
-> -	test-tool prio-queue stack 8 1 5 4 6 2 3 dump >actual &&
-> -	test_cmp expect actual
-> -'
-
-This test got truncated in your version, which is not horribly
-wrong, but if we claim "move t0009 to unit testing", people would
-expect to see a conversion faithful to the original.  And with the
-use of result[ARRAY_SIZE(expected)], there is no reason to truncate
-the original test with this version, no?
-
-Thanks.
+[1] https://www.chicagomanualofstyle.org/home.html
