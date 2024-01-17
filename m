@@ -1,64 +1,65 @@
-Received: from mail-wr1-f50.google.com (mail-wr1-f50.google.com [209.85.221.50])
+Received: from mail-wr1-f53.google.com (mail-wr1-f53.google.com [209.85.221.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6018A24A09
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23BA124A11
 	for <git@vger.kernel.org>; Wed, 17 Jan 2024 19:52:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.50
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705521161; cv=none; b=VbKuqRGcAgj9xNIFhUddJxeoEULYvCxKpBDGLNLbDUsOamkoPTwHwPMbw8obYRm5o8or907nyJeXn9JyLUKSzujwMqiCdJmLzfh9okr89JxgXiYe6t4fwhxVhHuEEPxEKeL7uZmgUS2RHQCcLqp83vbqTxeKGcQqw9eHkfX0CiI=
+	t=1705521162; cv=none; b=AUYKXl9orsEvLLsvEBnn8cdjfEHO9HRZyt7QQavkQ2m1hlMMD6y4TqYWw17sLmVNFK9VBwSChr42fyxbtle6vRsvB4T1fbyWcO1TcPMdkh1e79bxMdvNVzf/13kIcldJfd65vVatrLSORX/HltIUHoWtVROb7OX/zk6sHeZMHs4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705521161; c=relaxed/simple;
-	bh=qqeW7FfDVUj0Y3gcEWk/8RFiUXNet/jy8hCdyPo5DHM=;
+	s=arc-20240116; t=1705521162; c=relaxed/simple;
+	bh=ZzbY28CwqaZwaMZqIUhgA9LhakYqhQq628R6/hmEOnQ=;
 	h=Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Gm-Message-State:X-Google-Smtp-Source:X-Received:Received:
 	 Message-ID:In-Reply-To:References:From:Date:Subject:Fcc:
-	 Content-Type:Content-Transfer-Encoding:MIME-Version:To:Cc; b=rG0JZSkSDsmjoA/q8ABuFCczgYJ3N/IalahvdFaeSp2JAyZMLDZxGZppwvbBBhZ0MndND7msasRlWrqzWaTDW/2v/LqeteAFhREmeZ9a0Kyq1xy4/RDsnV04Q0mvXwGM5WFKhPiDne7IevUflLUc8a4wSwfNko/wooMP0LovjIo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Z3gSjz4D; arc=none smtp.client-ip=209.85.221.50
+	 Content-Type:Content-Transfer-Encoding:MIME-Version:To:Cc; b=Sk8YjliCOSrw69zs+ufgamAjZ5a6znA4soBkUUUGyZAkUmiJL7vVLYSHBzvFNVMubFNuYRuhAgSGN5/s484E/xO1vgMf/A8WnGgy4h0r6QG6pUCDWChkLavAwzSawCq1koSY7cEdOTUJUdiFUmtXhM8ADIADbdWRrwyrcV2M4OU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XcMQgY5H; arc=none smtp.client-ip=209.85.221.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Z3gSjz4D"
-Received: by mail-wr1-f50.google.com with SMTP id ffacd0b85a97d-337ae00f39dso2749839f8f.2
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XcMQgY5H"
+Received: by mail-wr1-f53.google.com with SMTP id ffacd0b85a97d-3376d424a79so9219481f8f.1
         for <git@vger.kernel.org>; Wed, 17 Jan 2024 11:52:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1705521158; x=1706125958; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1705521159; x=1706125959; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=q4M4p1N9Ou2dX7NzeOr283F7e11ubLppf5hvcSTlVWY=;
-        b=Z3gSjz4DDbTaVp0tZPNSC3Hw9TB5JDWeckzkQ97esUpnS7/D94utOe383g5dbCDt9I
-         fjaKd/a1442VuTNXR1qE04z+3yiVGFsqlCjNO0zVW3mPl+JqzO2PoU1rT03qoPO/rabN
-         jToljY/95Dz2ecNPmMZrbHpii8NNviIQmAi/jiLUB7JDEv+BR52bHOiG1suKsg+dJZbR
-         3WMvH8KLQBs8UFD17ANG6iZOk93UXPaLx3KPQiWCx+M0sBm6KOmGhyzfFhwtFftJN2X0
-         2EHDxWTQmJ3SZwyWs3wx9lmjqnfCVgSohc/GY9P+90zO+ulyV0uvI7QDXui1cV/7iG9Z
-         r8mA==
+        bh=xLJOK4Mu4tFYInlshWjwiKh3Bm4HtBZmFXowJuGacKY=;
+        b=XcMQgY5HflOrMbbxlPoifjbivuifKkhbz7MMLb0iRM1knU6jD4jYgpPR9X9/nT/WE2
+         9/WK1z1ITUkZSSkHNQxYS8Kgq4cHlB6VvhAnhL4wSna6ajxaIfhPwyIwi3WjcGrLXQcr
+         6bng4+TPvkDqEjvnhmJtb4i1iw1rkGYJEJd05jeqE7Z9kTjNmIcDT4LE8rg2rkwt8lAi
+         T7AijMtvPcJydgus2IyI/LBX712jTqFi+z2IgrBetfw30ycRS5hRZU6s97EZWzPY3lCX
+         hROWyVLl8WLWyYN2Pb4txKtjgC7XMMPrhmE2Q/SL2lZBEGwcqJkazjx3iK1LNx90AtiW
+         HJaw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1705521158; x=1706125958;
+        d=1e100.net; s=20230601; t=1705521159; x=1706125959;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=q4M4p1N9Ou2dX7NzeOr283F7e11ubLppf5hvcSTlVWY=;
-        b=icJuU4b/cMQuzNkuYmGo8qAWFwsatnv9pAGFlMqvBb2rEfiZtk5zoJR3hpDMMzN5bJ
-         75oEcglE0jA+8xldGDSpN+4ZjdAnOVy5O6jIAOZYEMoIViRRjA//7AcGegSQ1dVBczvn
-         ycn3GKQlXZyL6ud6m/yUTwRuRNpFlRLSQlOXwledxn72lng7s43/x4CAQbZMqZt7aDBU
-         Jaz2okgcqSKH8XOOyrSPIY3MPPiNB5p4aS0CFaqqESv7VWW4GT3KhHPcGOtpRGNbMBrw
-         V/B9MQ7Pw3EYm6FarhmDAn/vhnSpHLmd/RS59iWhr1m6gYjoMu502maoaWUxPNVMnAZV
-         2KWQ==
-X-Gm-Message-State: AOJu0YzVntjWVycnoo7uw0PrDL/r4pg2vgYK9Osp9hsedEga2R569WpO
-	3sll0H4lTtoTu98aJ/uOUKAqNRr64KA=
-X-Google-Smtp-Source: AGHT+IFS8gL4ksSdNsKnYym+CQixkUGT4wFViT2Q13E6oQePzeFww1wPpkBSrcfCg21c8Mh9ILQGsA==
-X-Received: by 2002:adf:f745:0:b0:337:b636:8e3 with SMTP id z5-20020adff745000000b00337b63608e3mr1735777wrp.47.1705521158138;
+        bh=xLJOK4Mu4tFYInlshWjwiKh3Bm4HtBZmFXowJuGacKY=;
+        b=Q2DM8zuLqRoMBWe7n8ZlsQOR5ocPeekBoOtU0+Ll355tolOrAMGWe6dSdDog8f6hpJ
+         /mnKDGPkDdl7+WRuIFCmebGFGgIMwj0AF30F8/6GO9sUVUvkvYlkdc03P3PLVBRKAkW0
+         rT9bVne6EoWwHcTcvocCnT8EIfblvLlq40e0/SsnC+SNwH/XSJjAayWGuHHJeMT6LxCC
+         Q4J31H5JZ1pLhSn5wfHjpVeOQG2xZXcCdkeN1yTop3S7uxmsL5i713q31kvXYWwNdl/a
+         9UN+gv+51hiB2nRfmFHVWK7Ukbqk8FGXrhBgQj9u5Q5/s7+l0qEQzlMLq+MYq1JgaGbi
+         B34Q==
+X-Gm-Message-State: AOJu0Yzprx2vqaZlmWXEM3CbmAR23Ef/0fKs7647xFmQxTBKWX8MZZaR
+	1DhtucdncqDDhhyIvZqwOAbM9b4Dd9g=
+X-Google-Smtp-Source: AGHT+IFKynMBoAAgrYewiH9UiAan63ib93mTMX4xZsORtdnq+IUdaSj7BISMjQu/fnkjSEtAPPikMA==
+X-Received: by 2002:a5d:530c:0:b0:337:bcdf:2dd5 with SMTP id e12-20020a5d530c000000b00337bcdf2dd5mr1697690wrv.16.1705521158716;
         Wed, 17 Jan 2024 11:52:38 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id dw15-20020a0560000dcf00b00337beb77c86sm2329172wrb.67.2024.01.17.11.52.37
+        by smtp.gmail.com with ESMTPSA id q8-20020adff788000000b003367a51217csm2336334wrp.34.2024.01.17.11.52.38
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 17 Jan 2024 11:52:37 -0800 (PST)
-Message-ID: <624ad202305138c312e9db7d9cc590baf4e576ab.1705521155.git.gitgitgadget@gmail.com>
+        Wed, 17 Jan 2024 11:52:38 -0800 (PST)
+Message-ID: <19233aa0d4496b66d67fbee82fb8d9b6b35a03cb.1705521155.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1647.git.git.1705521155.gitgitgadget@gmail.com>
 References: <pull.1647.git.git.1705521155.gitgitgadget@gmail.com>
 From: "John Cai via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Wed, 17 Jan 2024 19:52:25 +0000
-Subject: [PATCH 02/12] remove REFFILES prerequisite
+Date: Wed, 17 Jan 2024 19:52:26 +0000
+Subject: [PATCH 03/12] t1414: convert test to use Git commands instead of
+ writing refs manually
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -74,41 +75,39 @@ Cc: John Cai <johncai86@gmail.com>,
 
 From: John Cai <johncai86@gmail.com>
 
-These tests are compatible with the reftable backend and thus do not
-need the REFFILES prerequisite.
+This test can be re-written to use Git commands rather than writing a
+manual ref in the reflog. This way this test no longer needs the
+REFFILES prerequisite.
 
 Signed-off-by: John Cai <johncai86@gmail.com>
 ---
- t/t1405-main-ref-store.sh  | 2 +-
- t/t2017-checkout-orphan.sh | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ t/t1414-reflog-walk.sh | 11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
 
-diff --git a/t/t1405-main-ref-store.sh b/t/t1405-main-ref-store.sh
-index e4627cf1b61..62c1eadb190 100755
---- a/t/t1405-main-ref-store.sh
-+++ b/t/t1405-main-ref-store.sh
-@@ -112,7 +112,7 @@ test_expect_success 'delete_reflog(HEAD)' '
- 	test_must_fail git reflog exists HEAD
- '
+diff --git a/t/t1414-reflog-walk.sh b/t/t1414-reflog-walk.sh
+index ea64cecf47b..c7b3817d3bd 100755
+--- a/t/t1414-reflog-walk.sh
++++ b/t/t1414-reflog-walk.sh
+@@ -121,13 +121,14 @@ test_expect_success 'min/max age uses entry date to limit' '
  
--test_expect_success REFFILES 'create-reflog(HEAD)' '
-+test_expect_success 'create-reflog(HEAD)' '
- 	$RUN create-reflog HEAD &&
- 	git reflog exists HEAD
- '
-diff --git a/t/t2017-checkout-orphan.sh b/t/t2017-checkout-orphan.sh
-index 947d1587ac8..a5c7358eeab 100755
---- a/t/t2017-checkout-orphan.sh
-+++ b/t/t2017-checkout-orphan.sh
-@@ -86,7 +86,7 @@ test_expect_success '--orphan makes reflog by default' '
- 	git rev-parse --verify delta@{0}
- '
+ # Create a situation where the reflog and ref database disagree about the latest
+ # state of HEAD.
+-test_expect_success REFFILES 'walk prefers reflog to ref tip' '
++test_expect_success 'walk prefers reflog to ref tip' '
++	test_commit A &&
++	test_commit B &&
++	git reflog delete HEAD@{0} &&
+ 	head=$(git rev-parse HEAD) &&
+-	one=$(git rev-parse one) &&
+-	ident="$GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_DATE" &&
+-	echo "$head $one $ident	broken reflog entry" >>.git/logs/HEAD &&
++	A=$(git rev-parse A) &&
  
--test_expect_success REFFILES '--orphan does not make reflog when core.logAllRefUpdates = false' '
-+test_expect_success '--orphan does not make reflog when core.logAllRefUpdates = false' '
- 	git checkout main &&
- 	git config core.logAllRefUpdates false &&
- 	git checkout --orphan epsilon &&
+-	echo $one >expect &&
++	echo $A >expect &&
+ 	git log -g --format=%H -1 >actual &&
+ 	test_cmp expect actual
+ '
 -- 
 gitgitgadget
 
