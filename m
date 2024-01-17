@@ -1,67 +1,67 @@
-Received: from mail-pf1-f176.google.com (mail-pf1-f176.google.com [209.85.210.176])
+Received: from mail-pg1-f178.google.com (mail-pg1-f178.google.com [209.85.215.178])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0794224E4
-	for <git@vger.kernel.org>; Wed, 17 Jan 2024 16:15:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C815D2231C
+	for <git@vger.kernel.org>; Wed, 17 Jan 2024 16:15:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705508139; cv=none; b=BzwUKnefyQqM6EE4exxemcuXIPuqom4bRp+LZ+/lgbxV6Gr8/N8I5M3b4ie0ApiX5F+yiZR2mii7MhKMAo9XvFYZ1+ewKdtHtD6tZujgdQV76dphYzKKvhxYqjB9BeqsAa7AFb2//UVjotHSLWi4z1ksXTg7rIUMqLnsgjCiMsc=
+	t=1705508147; cv=none; b=cRM5DmoTm+3OUiFvf2Gd6VF8vza5i0WxuQvS/haxzIF53Te+NVyxRT33PN/aI5PhghbvJa3/omjovir9GWidNGoR1uFNeiPLqv1014kgVDozm5skKsH9WxOKMCLnp/bxNKYOBVIJoqjt+l2ssktYVqiHjRQtop4E3n0sI9gY9Ow=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705508139; c=relaxed/simple;
-	bh=/15dKvKus3Y/HzSE2QevkAnLzuNiUdnOtMpQetxFEqU=;
+	s=arc-20240116; t=1705508147; c=relaxed/simple;
+	bh=+wIGYoK5c2oqFGXTNeLcwuejukM50VCwg9kjoJQNzO8=;
 	h=Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Gm-Message-State:X-Google-Smtp-Source:X-Received:Received:From:
 	 To:Cc:Subject:Date:Message-ID:X-Mailer:In-Reply-To:References:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding; b=gsNRwL1/mMa1FOttCUCpYtUG4rTkx6zjm/r5DFchcTJ5b4OVfnyHsFJ8JxqUNTVLSbUOkbl54TGrVrGEuQcyWKIUMTQSn3O5g9isazRp/c8i9UFTAiWGy0gRt1KnA+HGf8PR9H2kxx1LELrWG5jQinyW7JLBOaC1AhyG8+8uY5Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=GySgSznQ; arc=none smtp.client-ip=209.85.210.176
+	 MIME-Version:Content-Type:Content-Transfer-Encoding; b=BWJv76631w6vFaxehwlV+4KD8tkIekwkIzqAv0rkYBH37SL4ZqdzpYh8wS0x8RdZFMFGI6ZT+84wh+uDNmc7YtiyhBugk9yD/ku26sQLXxYUCF51JCsoNf1ytv17S1b5rY0WQBhXJAhCr7RCsIXfvDn4QswqsCYDoyOg5yblQEk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Sf4Z0JbW; arc=none smtp.client-ip=209.85.215.178
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GySgSznQ"
-Received: by mail-pf1-f176.google.com with SMTP id d2e1a72fcca58-6d98ce84e18so9820961b3a.3
-        for <git@vger.kernel.org>; Wed, 17 Jan 2024 08:15:37 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Sf4Z0JbW"
+Received: by mail-pg1-f178.google.com with SMTP id 41be03b00d2f7-5cdfed46372so9112195a12.3
+        for <git@vger.kernel.org>; Wed, 17 Jan 2024 08:15:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1705508137; x=1706112937; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1705508144; x=1706112944; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=vYWkCcs3G+NscD9/yJoRAxN7h6q+7wxmS3x+caxSEiY=;
-        b=GySgSznQkDVAREb51cDlpi0TYDLtJR2XdFy//jyZwUwkkKV/bDQ8xgIB57cB48OgOr
-         rnlv9xztlGnV7NVZH0KOUA4rA9UVQpv28j5ir+trMBJtbkhYLULuh2aZUsrPmKMch9SD
-         EIV1xaq6tRN/1IFX65f5lXX/6NkzyMtDFiF8EiDw/y5hIfMzvDouHMfEkz9wVJYLXQ/u
-         ykvcBX/i+EDIEeZXJHTAni11c9xQxm0gdXLFykPSr1IijFcXpBZphpG4KUxReqSWJAu9
-         R6Uzt/frsr1QMJP3DbGKIkrPpuFmMurggAxlGRLvsUdh4wJDHzzhtZYWkeiMppa1k69t
-         ncVw==
+        bh=vaHsbh7RCmkp9yLbEbqYzsWOHeK8TLMlRdkA6MRQeaM=;
+        b=Sf4Z0JbWyXGBprpN5OevWINSHRYiixcDAcKi5XQ43FAI63J0VjDMLdaa8tt9Sa+RVB
+         iRpUHORiFJMDXphcoRiErIEpMjgVqk6Qwx45V0SbIPSnBvF/VgTqQmtqb/SvpW3V2iq4
+         8uP1N1Mo9BMXhwGspFYt9OmNuVB6PzLXK4bRzq2b9jeuRFlYa9yKa6E5J6lmSvXh7f0/
+         dDxU1GRcQRAr9JZB5Ar5CjIOlK1u5M328kPzfu+alVlLAaJnH4JiNdJn3Ev61IyrKr0l
+         JSW07yOjM6X9lCYe0dwl11zVfo+mNPJ0ZYbedaLCn3eg0mc34acM+PiEyKdazkrGpxAb
+         aX4A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1705508137; x=1706112937;
+        d=1e100.net; s=20230601; t=1705508144; x=1706112944;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=vYWkCcs3G+NscD9/yJoRAxN7h6q+7wxmS3x+caxSEiY=;
-        b=jc6TX573FYMa/6/oxIqAq9f7XaKvlrr4GPbsWw+49tx1dB4pvFLfkNWn+Hoq2OCE67
-         rPFe/pxh4CyOCb0nr/2pPLctBAS7npKLb7zf33x0Qwav4PfHOxrTubyxwQUcEgHNAYoc
-         6/M3fx0ZWw+a3HnvOttEsUlDh71IbLUf9ussMvqkue7kdE3tN9Tb+IExB+TUooPBpWxV
-         8/vWOvGUKLxIjehtPA5caL/xctFU9SsgFHZ4IhnSCjQUvaR17D+6VdZFoH+g0X3fAJC9
-         s9J3Q60rPwMpHrxwBz1qNdrZYEjb3s75YglImXl+Uurg1Kca0Pnf+BdkFdX5tTH1b/Y5
-         SS3A==
-X-Gm-Message-State: AOJu0Yxq0vvAm/s8A9vtdFjq2SZqqkfsGcJMuPEY/sWs8VovR6nCI8Ur
-	xEmMOHMZPbnGwTbIxW+v3zNkaIdc1wZ6TeKH
-X-Google-Smtp-Source: AGHT+IFT9utQBgtKDV60rrZ8XvKuGSz9v+PI5ck+uQ6ifMVGR765lG3a0XUVNmcjEFGN49OgrBZctQ==
-X-Received: by 2002:a05:6a21:a583:b0:199:afd6:2338 with SMTP id gd3-20020a056a21a58300b00199afd62338mr9895581pzc.43.1705508136681;
-        Wed, 17 Jan 2024 08:15:36 -0800 (PST)
+        bh=vaHsbh7RCmkp9yLbEbqYzsWOHeK8TLMlRdkA6MRQeaM=;
+        b=ZCU7ZeYto/Y9Vpb+67UioLde4/aZpCScrzP5dkyODb9zqbYzTtcfg3uBk39xR0rYGL
+         tNnetRs8Cun78twq5uHOFsEj5pywXXiLr1BY6XV0zZtdUTXKd1t6tmwK14xLmW+Lps3r
+         cZ9W5l/ZbJsBNP7R8JgTW2mAvTF4qiDyVOW0dcYkXa1Hm4F6b/pXMe8EfXqNK0J/oKqX
+         ov7bSIbIScZ0o7zFwSTHfFfgdS8nWdWrzcR7FWpliVTnzfDCaQ14fUCoCXnvS414VOIf
+         Z/SwuZFRNE7xvluojBrLD5cBXcSF+/FQqwZPvnBTRNkhVg/X3ARbhBk/HpjbtqZKVXT4
+         +Dsg==
+X-Gm-Message-State: AOJu0Ywm36gQLMF1RJjkrw3wCSQWnUk49lYbAdfo3X38DK0FdDeMnODR
+	fkETsGd55TaFrwuGUt++ES/bMAAYGdAlL0lV
+X-Google-Smtp-Source: AGHT+IFi6DBWYkbuqj6r7DgSsKVnlynCOg0nmxgcoWhXzp+VcVd1x5+UvfEiauoFonkXUriMmi8ecg==
+X-Received: by 2002:a17:90a:34c1:b0:28e:7d59:b103 with SMTP id m1-20020a17090a34c100b0028e7d59b103mr2086563pjf.91.1705508144516;
+        Wed, 17 Jan 2024 08:15:44 -0800 (PST)
 Received: from localhost.localdomain ([2402:a00:401:a99b:f188:2dd3:d960:a8ab])
-        by smtp.gmail.com with ESMTPSA id sh2-20020a17090b524200b0028dfdfc9a8esm12634126pjb.37.2024.01.17.08.15.34
+        by smtp.gmail.com with ESMTPSA id sh2-20020a17090b524200b0028dfdfc9a8esm12634126pjb.37.2024.01.17.08.15.41
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 17 Jan 2024 08:15:36 -0800 (PST)
+        Wed, 17 Jan 2024 08:15:44 -0800 (PST)
 From: Ghanshyam Thakkar <shyamthakkar001@gmail.com>
 To: git@vger.kernel.org
 Cc: gitster@pobox.com,
 	phillip.wood123@gmail.com,
 	christian.couder@gmail.com,
 	Ghanshyam Thakkar <shyamthakkar001@gmail.com>
-Subject: [PATCH v6 1/2] t7501: add tests for --include and --only
-Date: Wed, 17 Jan 2024 21:43:54 +0530
-Message-ID: <20240117161421.17333-2-shyamthakkar001@gmail.com>
+Subject: [PATCH v6 2/2] t7501: add tests for --amend --signoff
+Date: Wed, 17 Jan 2024 21:43:55 +0530
+Message-ID: <20240117161421.17333-3-shyamthakkar001@gmail.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240117161421.17333-1-shyamthakkar001@gmail.com>
 References: <20240113042254.38602-1-shyamthakkar001@gmail.com>
@@ -75,141 +75,64 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-Add tests for --only (-o) and --include (-i). This include testing
-with or without staged changes for both -i and -o. Also to test
-for committing untracked files with -i, -o and without -i/-o.
+Add tests for amending the commit to add Signed-off-by trailer. And
+also to check if it does not add another trailer if one already exists.
 
-Some tests already exist in t7501 for testing --only, however,
-it is only tested in combination with --amend and --allow-empty
-and on to-be-born branch. The addition of these tests check, when
-the pathspec is provided without using -only, that only the files
-matching the pathspec get committed. This behavior is same when
-we provide --only and it is checked by the tests.
-(as --only is the default mode of operation when pathspec is
-provided.)
+Currently, there are tests for --signoff separately in t7501, however,
+they are not tested with --amend.
 
-As for --include, there is no prior test for checking if --include
-also commits staged changes, thus add test for that. Along with
-the tests also document a potential bug, in which, when provided
-with -i and a pathspec that does not match any tracked path,
-commit does not fail if there are staged changes. And when there
-are no staged changes commit fails. However, no error is returned
-to stderr in either of the cases. This is described in the TODO
-comment before the relevent testcase.
+Therefore, these tests belong with other similar tests of --amend in
+t7501-commit-basic-functionality.
 
-And also add a test for checking incompatibilty when using -o and
--i together.
-
-Thus, these tests belong in t7501 with other similar existing tests,
-as described in the case of --only.
-
-Helped-by: Junio C Hamano <gitster@pobox.com>
-Helped-by: Christian Couder <christian.couder@gmail.com>
+Helped-by: Phillip Wood <phillip.wood123@gmail.com>
 Signed-off-by: Ghanshyam Thakkar <shyamthakkar001@gmail.com>
 ---
- t/t7501-commit-basic-functionality.sh | 75 ++++++++++++++++++++++++++-
- 1 file changed, 74 insertions(+), 1 deletion(-)
+ t/t7501-commit-basic-functionality.sh | 25 +++++++++++++++++++++++--
+ 1 file changed, 23 insertions(+), 2 deletions(-)
 
 diff --git a/t/t7501-commit-basic-functionality.sh b/t/t7501-commit-basic-functionality.sh
-index 3d8500a52e..c169f10458 100755
+index c169f10458..bced44a0fc 100755
 --- a/t/t7501-commit-basic-functionality.sh
 +++ b/t/t7501-commit-basic-functionality.sh
-@@ -3,7 +3,7 @@
+@@ -3,8 +3,7 @@
  # Copyright (c) 2007 Kristian Høgsberg <krh@redhat.com>
  #
  
--# FIXME: Test the various index usages, -i and -o, test reflog,
-+# FIXME: Test the various index usages, test reflog,
- # signoff
+-# FIXME: Test the various index usages, test reflog,
+-# signoff
++# FIXME: Test the various index usages, test reflog
  
  test_description='git commit'
-@@ -92,6 +92,34 @@ test_expect_success '--long fails with nothing to commit' '
- 	test_must_fail git commit -m initial --long
+ GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
+@@ -462,6 +461,28 @@ test_expect_success 'amend commit to fix date' '
+ 
  '
  
-+test_expect_success 'fail to commit untracked file (even with --include/--only)' '
-+	echo content >baz &&
-+	error="error: pathspec .baz. did not match any file(s) known to git" &&
++test_expect_success 'amend commit to add signoff' '
 +
-+	test_must_fail git commit -m "baz" baz 2>err &&
-+	test_grep -e "$error" err &&
++	test_commit "msg" file content &&
++	git commit --amend --signoff &&
++	test_commit_message HEAD <<-EOF
++	msg
 +
-+	test_must_fail git commit --only -m "baz" baz 2>err &&
-+	test_grep -e "$error" err &&
-+
-+	# TODO: as for --include, the below command will fail because
-+	# nothing is staged. If something was staged, it would not fail
-+	# even though the provided pathspec does not match any tracked
-+	# path. (However, the untracked paths that match the pathspec are
-+	# not committed and only the staged changes get committed.)
-+	# In either cases, no error is returned to stderr like in (--only
-+	# and without --only/--include) cases. In a similar manner,
-+	# "git add -u baz" also does not error out.
-+	#
-+	# Therefore, the below test is just to document the current behavior
-+	# and is not an endorsement to the current behavior, and we may
-+	# want to fix this. And when that happens, this test should be
-+	# updated accordingly.
-+
-+	test_must_fail git commit --include -m "baz" baz 2>err &&
-+	test_must_be_empty err
++	Signed-off-by: $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL>
++	EOF
 +'
 +
- test_expect_success 'setup: non-initial commit' '
- 	echo bongo bongo bongo >file &&
- 	git commit -m next -a
-@@ -117,6 +145,51 @@ test_expect_success '--long with stuff to commit returns ok' '
- 	git commit -m next -a --long
- '
- 
-+for opt in "" "-o" "--only"
-+do
-+	test_expect_success 'exclude additional staged changes when given pathspec' '
-+		echo content >>file &&
-+		echo content >>baz &&
-+		git add baz &&
-+		git commit $opt -m "file" file &&
++test_expect_success 'amend does not add signoff if it already exists' '
 +
-+		git diff --name-only >actual &&
-+		test_must_be_empty actual &&
++	test_commit --signoff "tenor" file newcontent &&
++	git commit --amend --signoff &&
++	test_commit_message HEAD <<-EOF
++	tenor
 +
-+		test_write_lines baz >expect &&
-+		git diff --name-only --cached >actual &&
-+		test_cmp expect actual &&
-+
-+		test_write_lines file >expect &&
-+		git diff --name-only HEAD^ HEAD >actual &&
-+		test_cmp expect actual
-+	'
-+done
-+
-+test_expect_success '-i/--include includes staged changes' '
-+	echo content >>file &&
-+	echo content >>baz &&
-+	git add file &&
-+
-+	# baz is in the index, therefore, it will be committed
-+	git commit --include -m "file and baz" baz  &&
-+
-+	git diff --name-only HEAD >remaining &&
-+	test_must_be_empty remaining &&
-+
-+	test_write_lines baz file >expect &&
-+	git diff --name-only HEAD^ HEAD >actual &&
-+	test_cmp expect actual
++	Signed-off-by: $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL>
++	EOF
 +'
 +
-+test_expect_success '--include and --only do not mix' '
-+	test_when_finished "git reset --hard" &&
-+	echo content >>file &&
-+	echo content >>baz &&
-+	test_must_fail git commit --include --only -m "file baz" file baz 2>actual &&
-+	test_grep -e "fatal: options .-i/--include. and .-o/--only. cannot be used together" actual
-+'
-+
- test_expect_success 'commit message from non-existing file' '
- 	echo more bongo: bongo bongo bongo bongo >file &&
- 	test_must_fail git commit -F gah -a
+ test_expect_success 'commit mentions forced date in output' '
+ 	git commit --amend --date=2010-01-02T03:04:05 >output &&
+ 	grep "Date: *Sat Jan 2 03:04:05 2010" output
 -- 
 2.43.0
 
