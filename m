@@ -1,83 +1,82 @@
 Received: from wout1-smtp.messagingengine.com (wout1-smtp.messagingengine.com [64.147.123.24])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED4B1BA2D
-	for <git@vger.kernel.org>; Wed, 17 Jan 2024 06:37:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6626DB662
+	for <git@vger.kernel.org>; Wed, 17 Jan 2024 07:33:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.24
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705473438; cv=none; b=KmdbTq3OXvyQx06XXF6Gq55ost+7mZSfhO2CsDTWPGB3u8T76Y1NDvCG5RycstCydinr2qKXZejwHDNDGZtAugsPW0XOtrBzMMGEfyw0nXKn28Aqqmwdt1MJJ3HR21iSewhyTWtd+eE1Gtk2R4mxmDqFKQemTtj/j7EwqwjkJr0=
+	t=1705476813; cv=none; b=fYBNT5DXbipn/kuLAhRw/KK8hDfha9FsK+lHaELdAFQ019dsUk0bcs8suJ9JUs6MwrFIXS3zCTb0UpQkF3EBz2e2ii7KSJcbJscbPkKC0Pe4huX46viDjExidfT/G0Oyy3w0iE3l+zdnWj8sdQKTF+9rZsINCEzcGaZysvhWSTQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705473438; c=relaxed/simple;
-	bh=HBDm8IjOB1o86GL8MB+3zUbi5ONYTGH/YBnaNdFy53w=;
+	s=arc-20240116; t=1705476813; c=relaxed/simple;
+	bh=XrEG18/76nuvMDdDZjg2jtvZkkQbZclqi1fEuCiAA+s=;
 	h=Received:Received:DKIM-Signature:DKIM-Signature:X-ME-Sender:
 	 X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:Received:
 	 Received:Date:From:To:Cc:Subject:Message-ID:References:
-	 MIME-Version:Content-Type:Content-Disposition:In-Reply-To; b=O2ocAe3QXfhVXB8PcM0YhAxaS3ujcJvBnIEkNsBFvgjlUG1l0bXfuVHOzzP+olBR6fnGMjTy/xIFZmjhrLEKNQc9HSAka61kkKGkrf8QaLwcuokTDQGSla3v4ozvqATncgB9N39ybkcBqgfT1iALM6YLdb1oFJCXhUT7LLtV3Ak=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=l+P4qELI; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ZECnw+MP; arc=none smtp.client-ip=64.147.123.24
+	 MIME-Version:Content-Type:Content-Disposition:In-Reply-To; b=AHu7zYz34Veg2Zys1J6gNwER1aogBdMBudPGp5G6+L+mw2YvQr1UHIjNAU8bGPxnegBRHT8BCYfCojJcposp/EyKdQpsq8zOr6UuSCtFMdohRNURvpVyu19Cr0hY+J4omgWWTgEX7NcrsEp50fT+YVhbOGMwGAGdjnMobkxnRYE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=sb5zDmxf; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=pze8eMJv; arc=none smtp.client-ip=64.147.123.24
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="l+P4qELI";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ZECnw+MP"
-Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
-	by mailout.west.internal (Postfix) with ESMTP id CB01D3200A62;
-	Wed, 17 Jan 2024 01:37:15 -0500 (EST)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute6.internal (MEProxy); Wed, 17 Jan 2024 01:37:16 -0500
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="sb5zDmxf";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="pze8eMJv"
+Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
+	by mailout.west.internal (Postfix) with ESMTP id E4EC83200AD5;
+	Wed, 17 Jan 2024 02:33:29 -0500 (EST)
+Received: from mailfrontend1 ([10.202.2.162])
+  by compute2.internal (MEProxy); Wed, 17 Jan 2024 02:33:30 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1705473435; x=1705559835; bh=HBDm8IjOB1
-	o86GL8MB+3zUbi5ONYTGH/YBnaNdFy53w=; b=l+P4qELI7Gbe8RSQgtvM/xfZLF
-	Fy/i3GIRkQ8oFz0jilOxd39qJuP8QQUYLgtPFNurwTVGqWe6wgKjD+IAqqO+B3fA
-	bD0GUDXVdWf0MsvUrDmPMQo6N0PmDVGWS7esBojk7CmQpt6aFCF1WKQcUiY7Qsut
-	myV6agjL1NhvNFj3Z6Fnxp1sar4nrpXi91PKk43jDY3M0JZwLyvQ+m0kk4d/sU/Y
-	RV1HZbJnPCLiZbD1nb7435TZiMkVPuSlI8Wpdsd5RNoFaKh2/nWcjX8NrQqEA3CU
-	Hb1DapXz0aVanskyr6Y/rWhgSX2bnbW+gnhjUnHMvK+0XKATSiADehPXN4Yg==
+	:subject:to:to; s=fm3; t=1705476809; x=1705563209; bh=46wfAyEiKg
+	MzGWf9DhzLolResjgizElYhiLb4PpJWGk=; b=sb5zDmxfGbqx5MQymrth83CTOh
+	OoHMHyVmef2GVe5vBDjqRFMhsVDZyShzoLtBTi0elEhVIXm4rUS6jjTNH63Wf0KX
+	fD3Xhy1RvDsQFxMA1RaT7Fie8+9+5HQgCXn5mPbUlESjbMxQnfmKHBmSXah9tzep
+	RSQVPcuETO/nQ0Ekc5i3VqzmdRIWh/ZfsP6R84vysvaVQDJ6s4qLYVQWphrPpDI0
+	CIigrCkfPhHEinIV1syow4yMNIi2dgfXfj6a11tAFZAnyoGys40lxMLVn/KvrMy9
+	lto4w3hBJjSibMT+G20IsnQGhEOWhQBSwuBwvatB9LvA2rgCWCw6j7g2lpvQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1705473435; x=1705559835; bh=HBDm8IjOB1o86GL8MB+3zUbi5ONY
-	TGH/YBnaNdFy53w=; b=ZECnw+MPX+6JvR7ygJw4dUiD6opKVgWVtdo6Xs7RLwy1
-	R4CJhld9kBGeVRdghsuzDJY53dPVRgcqD/4k2AWiiZOYSfMkqAWLU7aNJzo0ZyLY
-	hAD/MVJmRHcMCKmNlmf1GswPAlfYv5tevvwFOIJLuSEXE5x9rmjF/yYn8yGmgL4R
-	m2ftiFgpwqplStZs1g3oDQudA/NNHzvypYUaeusNgFY+0j0h/KOPqUhvLBZ23Ykg
-	eWBLI+fxaqj0eR/e4jyWFu0dhxul4rHzC4rUwB1jvm4sy6fLoZaQ1R9EY01+XhYW
-	jkPYgkyBoWbBJIwobGrfSLEXk5eUAYQC3Aj9/mN0jQ==
-X-ME-Sender: <xms:mnWnZRFj6qFKuiGS_REksNS_-lYHqsbeR6jgGFabjULkZOi9RdnW5w>
-    <xme:mnWnZWWQb98HR17zytjOTQitKQ1nXHDoiwytI-4Jp83Yil1RTEHu5uBsbbLgm-qC2
-    4W7hDc0oj-P9BrddA>
-X-ME-Received: <xmr:mnWnZTKRtwj-0ocF_b0CpyGf_B06UfwGdvH8OdOSsFV89PQPaorLQVf08zaxqAeic3bPqds-sc5t3EE34q3fvAJyAt4LKCpziUKqAUKkAx7awJS-nQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrvdejgedgleejucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvvefukfhfgggtuggjsehgtd
-    erredttddunecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshes
-    phhkshdrihhmqeenucggtffrrghtthgvrhhnpedvtdfhffekkeffteehtddvhfffgfdtle
-    fhvdelffeiuefghffhleevhfeltdekkeenucffohhmrghinhepghhithhlrggsrdgtohhm
-    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
-    hpkhhsrdhimh
-X-ME-Proxy: <xmx:mnWnZXEqlx2mNdodl28CWCCtKfRDIbfLXzGhIjaAMvnRH2mkzKWaAA>
-    <xmx:mnWnZXVc7sOM52KYhgFGrPGRKKhEm4RIPbhMzkh0QSInMWSkvugfaw>
-    <xmx:mnWnZSMYUcZ-GWjd_9Lo_Kqj6jZmQq4-kOzUgc-PeDwR9cL-YBZ5IQ>
-    <xmx:m3WnZSQ_KQ6JJXqs8moTUpGDJXxi4VJZoMQ5YwBJvSumKNZ-o5eYzQ>
+	fm3; t=1705476809; x=1705563209; bh=46wfAyEiKgMzGWf9DhzLolResjgi
+	zElYhiLb4PpJWGk=; b=pze8eMJvImb6j6fQfIM+AC0zB7jGU6bPZNs7XZ+BYCfg
+	kKQwqhG2Xf7P21uZR1Eal55vycO5H0C+p7Diyogk6CVRzQSNR/G5tZBMQsp9G6DC
+	IbhJ44XI5QnVcNSNFdVskAl50FdaFtUgkV6ODkUEnnVsvOsS9PV2tpxAgSTOhI6M
+	BdFXRQXf1RHaI1brnoompj8C1tWbvN+G2kusEruUBHYjA4bYmcX3AWeAOXXXsVV4
+	2HpGDxzageL2nwgBnI5SWC9+UXBGaujUh4J8XkjT8Un5iP6gHCypGlQFbcS86tUx
+	4HMIN77aVpbz6aGEirm3Eg3/6rB0SrStZyaXVSvymQ==
+X-ME-Sender: <xms:yYKnZVXa2ybGXcKKDAbEFvkN4oB7Xc-CeDhkQKCxGkUBqjaSJBUVLg>
+    <xme:yYKnZVlwFlbe72-sGdG8d131Oi_8Scnm96zlugnc5MXwAT-mzq08O3hLQxVufIWQm
+    1GBQ3Np7hFE5ev9wQ>
+X-ME-Received: <xmr:yYKnZRYk6oeDEryX60GYaYAVobSrH-Fz11ZkLBoM6AG8zpMvyJG7NPlakLcKIFacrxA8RLceXWqO0V3ZE0EY4vhWNashtE7Qwl4ClCjtIDLJxA26zw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrvdejgedguddtlecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
+    necuuegrihhlohhuthemuceftddtnecunecujfgurhepfffhvfevuffkfhggtggujgesgh
+    dtreertddtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhs
+    sehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepueektdevtdffveeljeetgfehheeige
+    ekleduvdeffeeghefgledttdehjeelffetnecuvehluhhsthgvrhfuihiivgeptdenucfr
+    rghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimh
+X-ME-Proxy: <xmx:yYKnZYWNSNgJIoy8shHLCbJthpq36FcFcxu0fB1nWnFOziJ1kHEKcg>
+    <xmx:yYKnZfmD6U6Cvl-MI0ClY2uFuIJenGhOLxySYxg99O4DcseX7VAhEA>
+    <xmx:yYKnZVeDcX6hlNOG91j4KmE7b9I8hIXOYJfnlBNLAb_pkC5qtXnhgw>
+    <xmx:yYKnZUy32askv_7fvIeLxGCXZhIpUQVZn8JidOq3yfGbV7ZwCWB4bA>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 17 Jan 2024 01:37:13 -0500 (EST)
+ 17 Jan 2024 02:33:28 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 3e312e64 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 17 Jan 2024 06:33:04 +0000 (UTC)
-Date: Wed, 17 Jan 2024 07:35:55 +0100
+	by vm-mail (OpenSMTPD) with ESMTPSA id 793609a4 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 17 Jan 2024 07:29:18 +0000 (UTC)
+Date: Wed, 17 Jan 2024 08:32:09 +0100
 From: Patrick Steinhardt <ps@pks.im>
-To: Olliver Schinagl <oliver@schinagl.nl>
-Cc: git@vger.kernel.org, gitster@pobox.com,
-	=?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
-	psteinhardt@gitlab.com
-Subject: Re: Git mirror at gitlab
-Message-ID: <Zad1S3vCuv4KYIzx@tanuki>
-References: <2a833bfc-a075-4e78-ae6c-270f5198d498@schinagl.nl>
- <ZYQl_G-S4vQibHWn@framework>
+To: Taylor Blau <me@ttaylorr.com>
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
+	Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/2] t5332-multi-pack-reuse.sh: extract pack-objects
+ helper functions
+Message-ID: <ZaeCeY-9AIR-zt7u@tanuki>
+References: <cover.1705431816.git.me@ttaylorr.com>
+ <94dd41e1afdd6d926a106ab387295cf5fce624cf.1705431816.git.me@ttaylorr.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -85,95 +84,112 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="9plyvpmJjKzTEUT/"
+	protocol="application/pgp-signature"; boundary="igrthtNRuRCjX7DE"
 Content-Disposition: inline
-In-Reply-To: <ZYQl_G-S4vQibHWn@framework>
+In-Reply-To: <94dd41e1afdd6d926a106ab387295cf5fce624cf.1705431816.git.me@ttaylorr.com>
 
 
---9plyvpmJjKzTEUT/
-Content-Type: text/plain; charset=iso-8859-1
+--igrthtNRuRCjX7DE
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Thu, Dec 21, 2023 at 12:48:12PM +0100, Patrick Steinhardt wrote:
-> On Thu, Dec 21, 2023 at 12:30:02PM +0100, Olliver Schinagl wrote:
-> > Hey list,
-> >=20
-> > For years, I wanted (tried, but time) to run the mirror for git on gitl=
-ab.
-> > Actually, the original idea was to run a docker container ([0] 10k+ pul=
-ls
-> > :p)
-> >=20
-> > I initially set this up via docker build containers, where docker hub w=
-ould
-> > pull my mirror of the git repo. My mirror, because I added a Dockerfile
-> > which was enough for docker to do its trick. I was planning (time ..) on
-> > submitting this upstream to the list, but never did. Because of me not =
-doing
-> > that, I had to manually (I was even too lazy to script it) rebase the
-> > branch. Docker then did some changes to their business, where the docker
-> > builds where not possible anymore.
-> >=20
-> > So then I figured, I'll do the same on gitlab and push it to the docker=
- hub.
-> > Thus I setup a mirror on gitlab [1], with the idea to work there on it.
-> >=20
-> > Again, I never got around to finalize this work, mostly because the doc=
-ker
-> > container 'just worked' for pretty much everything. After all, git is v=
-ery
-> > stable overal.
-> >=20
-> > So very interestingly, last month commit 0e3b67e2aa25edb ("ci: add supp=
-ort
-> > for GitLab CI") landed, which started to trigger pipeline jobs!
-> >=20
-> > Sadly, this only worked for 3 builds, as that's when the minutes ran ou=
-t :)
-> >=20
-> > So one, I would very much like to offer the registered names (cause the=
-y are
-> > pretty nice in name) to here, so people can use and find it.
+On Tue, Jan 16, 2024 at 02:03:44PM -0500, Taylor Blau wrote:
+> Most of the tests in t5332 perform some setup before repeating a common
+> refrain that looks like:
 >=20
-> Not to throw a wrench into this, but are you aware of the official
-> GitLab mirror at https://gitlab.com/git-vcs/git? I myself wasn't aware
-> of this mirror for a rather long time.
+>     : >trace2.txt &&
+>     GIT_TRACE2_EVENT=3D"$PWD/trace2.txt" \
+>       git pack-objects --stdout --revs --all >/dev/null &&
 >=20
-> I also wondered whether we want to have https://gitlab.com/git/git as we
-> do on GitHub. I don't think anybody registered it, but it is blocked
-> from being registered as far as I can tell. Maybe we block the namespace
-> out of caution, I dunno. I can certainly check in with our SREs in case
-> it is something the Git project would like to own.
+>     test_pack_reused $objects_nr <trace2.txt &&
+>     test_packs_reused $packs_nr <trace2.txt
+>=20
+> The next commit will add more tests which repeat the above refrain.
+> Avoid duplicating this invocation even further and prepare for the
+> following commit by wrapping the above in a helper function called
+> `test_pack_objects_reused_all()`.
+>=20
+> Introduce another similar function `test_pack_objects_reused`, which
+> expects to read a list of revisions over stdin for tests which need more
+> fine-grained control of the contents of the pack they generate.
+>=20
+> Signed-off-by: Taylor Blau <me@ttaylorr.com>
+> ---
+>  t/t5332-multi-pack-reuse.sh | 70 +++++++++++++++----------------------
+>  1 file changed, 28 insertions(+), 42 deletions(-)
+>=20
+> diff --git a/t/t5332-multi-pack-reuse.sh b/t/t5332-multi-pack-reuse.sh
+> index 2ba788b042..b53e821bc0 100755
+> --- a/t/t5332-multi-pack-reuse.sh
+> +++ b/t/t5332-multi-pack-reuse.sh
+> @@ -23,6 +23,26 @@ pack_position () {
+>  	grep "$1" objects | cut -d" " -f1
+>  }
+> =20
+> +# test_pack_objects_reused_all <pack-reused> <packs-reused>
+> +test_pack_objects_reused_all () {
+> +	: >trace2.txt &&
+> +	GIT_TRACE2_EVENT=3D"$PWD/trace2.txt" \
+> +		git pack-objects --stdout --revs --all >/dev/null &&
+> +
+> +	test_pack_reused "$1" <trace2.txt &&
+> +	test_packs_reused "$2" <trace2.txt
+> +}
+> +
+> +# test_pack_objects_reused <pack-reused> <packs-reused>
+> +test_pack_objects_reused () {
+> +	: >trace2.txt &&
+> +	GIT_TRACE2_EVENT=3D"$PWD/trace2.txt" \
+> +		git pack-objects --stdout --revs >/dev/null &&
+> +
+> +	test_pack_reused "$1" <trace2.txt &&
+> +	test_packs_reused "$2" <trace2.txt
+> +}
+> +
+>  test_expect_success 'preferred pack is reused for single-pack reuse' '
+>  	test_config pack.allowPackReuse single &&
+> =20
+[snip]
+> @@ -104,12 +110,7 @@ test_expect_success 'reuse objects from first pack w=
+ith middle gap' '
+>  	^$(git rev-parse D)
+>  	EOF
+> =20
+> -	: >trace2.txt &&
+> -	GIT_TRACE2_EVENT=3D"$PWD/trace2.txt" \
+> -		git pack-objects --stdout --delta-base-offset --revs <in >/dev/null &&
+> -
+> -	test_pack_reused 3 <trace2.txt &&
+> -	test_packs_reused 1 <trace2.txt
+> +	test_pack_objects_reused 3 1 <in
 
-Circling back on this topic: https://gitlab.com/git is unfortunately
-taken, so it's out of question. I'd say the most pragmatic thing to do
-would thus be to retain the already-existing location of the official
-mirror at GitLab.
+This conversion causes us to drop the `--delta-base-offset` flag. It
+would be great to have an explanation in the commit message why it is
+fine to drop it.
 
-I'm still trying to reach =C6var so that we can collaborate and set up CI
-for that mirror.
+Other than that this looks like a nice simplification to me.
 
 Patrick
 
---9plyvpmJjKzTEUT/
+--igrthtNRuRCjX7DE
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmWndUoACgkQVbJhu7ck
-PpR5ew/9FI6juAfdtAjUQsbbWvH5UtK0ZOokB1M6m6APqizc+HP7dyWnEF8jgR/S
-rvhwnxFqIMsv5Ko+0X/yfzzyHIlmK4yldITiEvXUYP9IBthnw5pqLotCueUdwnfv
-Wb0Aj6LDobSts7KgIxHpKbJtkAZ6jPIwHk/mG/hMHN/9SVDYuwdIn5NUB3XQjWPH
-KMc1kui7Umc3PzojtlgbYgsVCuf+iOuljnUxV2UZVjiDznNee6nDy7Cj13mqDsCV
-Xm9obIKuGPhAvNLQqj+cpiL0ygKo+DdbgO3T/RNPFqE5lieBHsetH7aWskYl6WFS
-2KIYqwjwtIbfCvZUipEX/vjlNXW+8vDAcMUJkFuZKYVqXYx2zwn+UTf6aNe7j3to
-jRVSDYyj8/qLwpDwPhzHUZ+nVSC3ilal3RONQUoxcZKVKikujc0Pp3M1NdSuWkoN
-wae4aSOdDMB1ZsR1K2+R2Pe++sVW2kGWjUR3kq6ytuIYwTA7HEQhuSaEbhryuV71
-3pSh2DTy9eEEUUDNunjtlx3ayEbnA/3RggS8tf5NO498V5M8DkSonKMLTXGClK7x
-zkhZ5MJs+L9xcNELAuByXFbB42jplV0Wa0fZ/u+n9U5ct8KgBFKLmNIQcUtTJVP/
-cih93cJDFERj6BbA4skZOuv/m8oFE73zyL9q7RN1JJV4Iw20teQ=
-=P4nB
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmWngngACgkQVbJhu7ck
+PpS5Vg/+KO31CnBXlsHPQtzrhrgWIQFRlee4fGfjug8vXkUzuFjVqCYCIXe2NSNp
+eXy88MvN3tS3XagKvEr+6cddiOFuc8W78wM19yd2b2dzGpg41tC8H4oe0HIStQqA
+9c7kCCoCq17ZixHF9agJs0FZ2yqRQACDC1H9Glg/pjj8BSIwMeWzJVmjnLheZF7C
+5v12rH6JBU87djwfTauRQs36u+ltzyc8KsYMSq8BX89/cTvsgYnRG2pDF7t0yDoe
+Em/oUcZDLVvTQrvazSI/jCjMvoNmzt5j8++UsDtb/TJOGdV9nZ1IdYEo77QBkqYw
+8icIEZ/k83IUeughHVnNqwnBStIBYpNdfRHty2ISNzy0ukX84CbggRNGcxFz3btD
+bc6BfNn5nc6J/z7Xh3uB+jQIcDin9PQFzyK5wlJfped1UaOXWmVvGdp/HnHuh3G4
+hTU08Kd7Vg7EBd8+0Zt9YgX9lQjlqmeHZAgCK/tK4pt1MhpOxRuwTD/HYjMZLAb7
+Y0QUsBDEQjhoq9SOXjHSBlRVFULqP6/eFrFnP60+gjHEy/j/AeSzMupk3wlK4QCY
+/cF8k8l0gnf6MSZ1svbPj8uQnLrdTp2KgewEqeqOq0v6gc+oZphjn8IbE9izvcvN
+jilIVgDhhOLfrgaQPINIkrRX+YIWPc7/vW7LjAndg9QCa31AMpo=
+=MLx3
 -----END PGP SIGNATURE-----
 
---9plyvpmJjKzTEUT/--
+--igrthtNRuRCjX7DE--
