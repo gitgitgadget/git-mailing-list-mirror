@@ -1,103 +1,180 @@
-Received: from mail.manjaro.org (mail.manjaro.org [116.203.91.91])
-	(using TLSv1.2 with cipher DHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19BA825626
-	for <git@vger.kernel.org>; Wed, 17 Jan 2024 22:02:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=116.203.91.91
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F5442561B
+	for <git@vger.kernel.org>; Wed, 17 Jan 2024 22:16:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705528925; cv=none; b=KLtkjDvUFVswPHABew3UdUarA1ysyaUeGZB1ZgtZ2j9Cwm9zPUR89dlwgmlX3sg5sCeymI6kjz2iROTbjMT+Bk6ZLG5FYYFsAuSmCXnFnmaOv4xCQoTr4E5eYCwtGfmXmqFtQC0yoC6uXkLf28Efkb3dXLOrn8WEaFZ1cNpp5sk=
+	t=1705529768; cv=none; b=itdho0ZzixE0HzR3n2adqXojDEi8xUFJ3VeIpOSmO0rtKdqLUndsTBO6Uxd28OwcVdkGo/049enViQPmMqvMfCAGCActjPs9oS3/KKJenYnkHirE0irMDselczj2q3jdwxs56vVRn4QpOk0+7BBev3b/seDnsEbAi5JvYWLfnEY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705528925; c=relaxed/simple;
-	bh=g2YMyQJFY/WF3bksuHshWLcF8W62HP0RViUFcFHYTbo=;
-	h=MIME-Version:DKIM-Signature:Date:From:To:Cc:Subject:In-Reply-To:
-	 References:Message-ID:X-Sender:Content-Type:
-	 Content-Transfer-Encoding; b=HtSz6kICTpxgKC+Kgd617bPtYwO5KDQQjawYPjtJGXsV8FJOIAFQm51/3O7u0KFZlh8eYRBUWhLEPJXCU9ktl5/kKekeXPC9fwPA3os9dk+pgdgVlEK6RWgkL9Cuf+UJn530bv4ckx2P/pCQAIuWGI5Sx4OR0HOkUULqgxw6wFs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org; spf=pass smtp.mailfrom=manjaro.org; dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b=lmTPtrL6; arc=none smtp.client-ip=116.203.91.91
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=manjaro.org
+	s=arc-20240116; t=1705529768; c=relaxed/simple;
+	bh=ukaP3pTCswo7FBcTc0bch7aZp/ZOG7k9EPD6+iE86bk=;
+	h=Received:DKIM-Signature:Received:Received:From:To:Cc:Subject:
+	 In-Reply-To:References:Date:Message-ID:User-Agent:MIME-Version:
+	 Content-Type:X-Pobox-Relay-ID; b=o0PblweK70TZl4r6hDaenS01de9bhYEbI66cXtURk/+pqJn/ihFmGlHAKPZJs9V0YIkTG6X3qyhkhfcORo/o8cGGITpTo0hwloe3pQydKBmvvIzP2ivl+duXgYoJ9iYYCN6TGySMpDpoEQnXVp0slRggU1PTcRHeVmEDZGdrTUk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=GcA/j5ev; arc=none smtp.client-ip=173.228.157.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b="lmTPtrL6"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="GcA/j5ev"
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id 992CA30078;
+	Wed, 17 Jan 2024 17:16:05 -0500 (EST)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=ukaP3pTCswo7FBcTc0bch7aZp/ZOG7k9EPD6+i
+	E86bk=; b=GcA/j5ev7Q1VtyzQ1/9Nzm4Lfp8FYSxZNG5Zzw7lLSSZZ1c+HiCkRq
+	0ynbd7c7/ksX7fTmjuo60bb14mZ/V6uOBjLgBdkh16IfxhhVuq4lklH8gMBxwXk/
+	M4D3Z/rHiphXlbl8xNnnUJAFoyKvocInXRQpYqYyYXWRNGti5yzFo=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id 9143530077;
+	Wed, 17 Jan 2024 17:16:05 -0500 (EST)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.200.93])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id F3A1D30074;
+	Wed, 17 Jan 2024 17:16:00 -0500 (EST)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Chandra Pratap via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Chandra Pratap <chandrapratap3519@gmail.com>,
+  Chandra Pratap <chandrapratap376@gmail.com>
+Subject: Re: [PATCH v3] tests: move t0009-prio-queue.sh to the new unit
+ testing framework
+In-Reply-To: <xmqqa5p3vczi.fsf@gitster.g> (Junio C. Hamano's message of "Wed,
+	17 Jan 2024 13:58:25 -0800")
+References: <pull.1642.v2.git.1705220304781.gitgitgadget@gmail.com>
+	<pull.1642.v3.git.1705502304219.gitgitgadget@gmail.com>
+	<xmqqa5p3vczi.fsf@gitster.g>
+Date: Wed, 17 Jan 2024 14:15:57 -0800
+Message-ID: <xmqq34uvvc6a.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=manjaro.org; s=2021;
-	t=1705528920;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=5ZdxNan7ekeRCsPEkyUIlpvV5WYgidjs4HXI2bIfrMw=;
-	b=lmTPtrL6a2t27a7LJuX1eh+vA5LuYFui3cNIw/nxPQ54gKnN3xPbPEGlygO0VBGwr6nGwd
-	NtyOzSKajS67p1mP9/+E6uCJEx4AfEHCPXIIm/rXCexCrKI0LahYhh7oy2xNy0NrevVBqP
-	G1qKX8CFlGCO8VMapW42DJdLxqtPoCkRjKHY+KxoBIsp86k/P30g0g/mADfux/gd7Cq9No
-	j98nUu40YvbIEJd/2ahkz3pio8ukkrp5aSNiF0yb0TguPTM2MYv3r8VGjGKAtkIbcbiGRe
-	duvkrOZnKutOm2uLh7qvERJ84d5ATiZagfZp6JJFhywPFcU5K/uEgHNd79zZBQ==
-Date: Wed, 17 Jan 2024 23:02:00 +0100
-From: Dragan Simic <dsimic@manjaro.org>
-To: Taylor Blau <me@ttaylorr.com>
-Cc: Benji Kay via GitGitGadget <gitgitgadget@gmail.com>,
- git@vger.kernel.org, Benji Kay <okaybenji@gmail.com>
-Subject: Re: [PATCH] push: improve consistency of output when "up to date"
-In-Reply-To: <ZaBhHSCT7EOgTo/N@nand.local>
-References: <pull.1638.git.1705008449995.gitgitgadget@gmail.com>
- <ZaBhHSCT7EOgTo/N@nand.local>
-Message-ID: <d6161449aa19aebeb4c3bea1a751e8b5@manjaro.org>
-X-Sender: dsimic@manjaro.org
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Authentication-Results: ORIGINATING;
-	auth=pass smtp.auth=dsimic@manjaro.org smtp.mailfrom=dsimic@manjaro.org
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ FF1A1BEA-B585-11EE-A782-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
 
-On 2024-01-11 22:43, Taylor Blau wrote:
-> On Thu, Jan 11, 2024 at 09:27:29PM +0000, Benji Kay via GitGitGadget 
-> wrote:
->> From: okaybenji <okaybenji@gmail.com>
->> 
->> When one issues the pull command, one may see "Already up to date."
->> When issuing the push command, one may have seen "Everything 
->> up-to-date".
->> To improve consistency, "Everything up to date." is printed instead.
->> (The hyphens have been removed, and a period has been added.)
->> 
->> Signed-off-by: okaybenji <okaybenji@gmail.com>
->> ---
->>     push: improve consistency of output when "up to date"
->> 
->> Published-As: 
->> https://github.com/gitgitgadget/git/releases/tag/pr-1638%2Fokaybenji%2Fup-to-date-v1
->> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git 
->> pr-1638/okaybenji/up-to-date-v1
->> Pull-Request: https://github.com/gitgitgadget/git/pull/1638
->> 
->>  transport.c | 2 +-
->>  1 file changed, 1 insertion(+), 1 deletion(-)
->> 
->> diff --git a/transport.c b/transport.c
->> index bd7899e9bf5..c42cb4e58b4 100644
->> --- a/transport.c
->> +++ b/transport.c
->> @@ -1467,7 +1467,7 @@ int transport_push(struct repository *r,
->>  	if (porcelain && !push_ret)
->>  		puts("Done");
->>  	else if (!quiet && !ret && !transport_refs_pushed(remote_refs))
->> -		fprintf(stderr, "Everything up-to-date\n");
->> +		fprintf(stderr, "Everything up to date.\n");
-> 
-> Between the two, I have a vague preference towards "up-to-date", which
-> would suggest changing the pull command's output to read "Already
-> up-to-date". Personally I think that neither of them should include a
-> period in their output, but whichever we decide should be done so
-> consistently between the two.
+Junio C Hamano <gitster@pobox.com> writes:
 
-I'm not a native English speaker, but I spent years contributing to 
-English Wikipedia.  According to the manual of style employed by 
-Wikipedia, which is based mainly on The Chicago Manual of Style, 
-hyphenated forms should not be used at the ends of sentences, or at the 
-ends of sentence-like forms.  In this case, we don't have complete 
-sentences.
+> I forgot to examine the contents of the tests themselves.
+> ...
 
-[1] https://www.chicagomanualofstyle.org/home.html
+FYI: taking them all together, here is what I tentatively queued on
+top of what was posted as v3 before I start doing today's
+integration cycle.
+
+Thanks.
+
+----- >8 -----
+Subject: [PATCH] SQUASH???
+
+---
+ t/unit-tests/t-prio-queue.c | 57 ++++++++++++++++++-------------------
+ 1 file changed, 28 insertions(+), 29 deletions(-)
+
+diff --git a/t/unit-tests/t-prio-queue.c b/t/unit-tests/t-prio-queue.c
+index 0b826b463e..3014a67ac2 100644
+--- a/t/unit-tests/t-prio-queue.c
++++ b/t/unit-tests/t-prio-queue.c
+@@ -22,44 +22,43 @@ static int show(int *v)
+ static int test_prio_queue(int *input, int *result)
+ {
+ 	struct prio_queue pq = { intcmp };
+-	int i = 0;
++	int i, val;
+ 
+-	while (*input) {
+-		int *val = input++;
++	for (i = 0; (val = *input); input++) {
+ 		void *peek, *get;
+-		switch(*val) {
+-			case GET:
+-				peek = prio_queue_peek(&pq);
++		switch (val) {
++		case GET:
++			peek = prio_queue_peek(&pq);
++			get = prio_queue_get(&pq);
++			if (peek != get)
++				BUG("peek and get results don't match");
++			result[i++] = show(get);
++			break;
++		case DUMP:
++			while ((peek = prio_queue_peek(&pq))) {
+ 				get = prio_queue_get(&pq);
+ 				if (peek != get)
+ 					BUG("peek and get results don't match");
+ 				result[i++] = show(get);
+-				break;
+-			case DUMP:
+-				while ((peek = prio_queue_peek(&pq))) {
+-					get = prio_queue_get(&pq);
+-					if (peek != get)
+-						BUG("peek and get results don't match");
+-					result[i++] = show(get);
+-				}
+-				break;
+-			case STACK:
+-				pq.compare = NULL;
+-				break;
+-			case REVERSE:
+-				prio_queue_reverse(&pq);
+-				break;
+-			default:
+-				prio_queue_put(&pq, val);
+-				break;
++			}
++			break;
++		case STACK:
++			pq.compare = NULL;
++			break;
++		case REVERSE:
++			prio_queue_reverse(&pq);
++			break;
++		default:
++			prio_queue_put(&pq, input);
++			break;
+ 		}
+ 	}
+ 	clear_prio_queue(&pq);
+ 	return 0;
+ }
+ 
+-#define BASIC_INPUT 1, 2, 3, 4, 5, 5, DUMP
+-#define BASIC_EXPECTED 1, 2, 3, 4, 5, 5
++#define BASIC_INPUT 2, 6, 3, 10, 9, 5, 7, 4, 5, 8, 1, DUMP
++#define BASIC_EXPECTED 1, 2, 3, 4, 5, 5, 6, 7, 8, 9, 10
+ 
+ #define MIXED_PUT_GET_INPUT 6, 2, 4, GET, 5, 3, GET, GET, 1, DUMP
+ #define MIXED_PUT_GET_EXPECTED 2, 3, 4, 1, 5, 6
+@@ -67,8 +66,8 @@ static int test_prio_queue(int *input, int *result)
+ #define EMPTY_QUEUE_INPUT 1, 2, GET, GET, GET, 1, 2, GET, GET, GET
+ #define EMPTY_QUEUE_EXPECTED 1, 2, MISSING, 1, 2, MISSING
+ 
+-#define STACK_INPUT STACK, 1, 5, 4, 6, 2, 3, DUMP
+-#define STACK_EXPECTED 3, 2, 6, 4, 5, 1
++#define STACK_INPUT STACK, 8, 1, 5, 4, 6, 2, 3, DUMP
++#define STACK_EXPECTED 3, 2, 6, 4, 5, 1, 8
+ 
+ #define REVERSE_STACK_INPUT STACK, 1, 2, 3, 4, 5, 6, REVERSE, DUMP
+ #define REVERSE_STACK_EXPECTED 1, 2, 3, 4, 5, 6
+@@ -76,7 +75,7 @@ static int test_prio_queue(int *input, int *result)
+ #define TEST_INPUT(INPUT, EXPECTED, name)			\
+   static void test_##name(void)				\
+ {								\
+-	int input[] = {INPUT};					\
++	int input[] = {INPUT, 0};				\
+ 	int expected[] = {EXPECTED};				\
+ 	int result[ARRAY_SIZE(expected)];			\
+ 	test_prio_queue(input, result);				\
+-- 
+2.43.0-367-g186b115d30
+
+
+
