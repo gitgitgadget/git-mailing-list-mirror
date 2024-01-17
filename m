@@ -1,161 +1,136 @@
-Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com [209.85.128.49])
+Received: from mail-pl1-f169.google.com (mail-pl1-f169.google.com [209.85.214.169])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 332022554F
-	for <git@vger.kernel.org>; Wed, 17 Jan 2024 19:52:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0F7025560
+	for <git@vger.kernel.org>; Wed, 17 Jan 2024 21:19:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705521169; cv=none; b=oPnloa3KtNHSHccWdYypSJuaYi5123W7tF8sJn+SvwZhlKfbeVUNajInsKf8sC3ew5/nKizrQrEtmzKHz0ScvtSsa/HQ4+HKnG4+gbMd2pt5ro9xTrP/o6lHwYTtL9ZX+By3uEAXcGWNULQkEwyStFsha4fO9k+FeOYkz6bCpks=
+	t=1705526374; cv=none; b=EvCsbqS9k/53BmO4uZRCXEV/A+b1k9U+zjzVKOa7c1Okuy85AcUAxKS8o/LtGcfkdt47ujsTUN6oBhUw8Oz+lJguO9BJoqlhyKFjH+cGfoJcvehh6nNunkEotShO36WV+aRRJawbUAOgiH5GnBKvP9Lqz0o38mj1wg479pwsum4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705521169; c=relaxed/simple;
-	bh=lYbOF+XQYbZ0gkhsGc1XFVu0O6FgMVM+GK4CJm8T4cM=;
+	s=arc-20240116; t=1705526374; c=relaxed/simple;
+	bh=/meaglQ7umyLzjg1hnLBnnrVNYDyZaJ6u6wYXyIngPA=;
 	h=Received:DKIM-Signature:X-Google-DKIM-Signature:
 	 X-Gm-Message-State:X-Google-Smtp-Source:X-Received:Received:
-	 Message-ID:In-Reply-To:References:From:Date:Subject:Fcc:
-	 Content-Type:Content-Transfer-Encoding:MIME-Version:To:Cc; b=uktMCpqXC+2UOtAseJbcHw/3hviDHm5/FUOYR8AXB5dox3rIXFjaVmhQbnKHhEyKSlVSk4pRsxbPZpveWMq1oTUHgeoXJsz4c3aWJv/cjoiJcx1mLgsNkk5TKIMj6EZXgcp7YPD7OlZ9pZWXrKk0Xc6ys2kZeYVEHHhpK/OxIII=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=aEIoI3WI; arc=none smtp.client-ip=209.85.128.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	 Message-ID:Date:MIME-Version:User-Agent:Subject:Content-Language:
+	 To:Cc:References:From:In-Reply-To:Content-Type:
+	 Content-Transfer-Encoding; b=WwCZHPzwEbfgvEMGKBkEzlU35jVrk220+l0FV6yEx5sFSSb7OXfhykOPOVCEP2DQ5lF4rLf5hjDJ5mqx+5/98Q3lHv9jr9eRkioU3j4GU5WWd3gNoVErOwZCkokF6fm2ZKxMLK3BgaGNQqMVP1ijQzUMm2YMaqJfPkOJTPT38xw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=github.com; spf=pass smtp.mailfrom=github.com; dkim=pass (2048-bit key) header.d=github.com header.i=@github.com header.b=OiHLPL/3; arc=none smtp.client-ip=209.85.214.169
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=github.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=github.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="aEIoI3WI"
-Received: by mail-wm1-f49.google.com with SMTP id 5b1f17b1804b1-40e86a9fbd9so17863775e9.1
-        for <git@vger.kernel.org>; Wed, 17 Jan 2024 11:52:47 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=github.com header.i=@github.com header.b="OiHLPL/3"
+Received: by mail-pl1-f169.google.com with SMTP id d9443c01a7336-1d5f1e0e32eso13680435ad.3
+        for <git@vger.kernel.org>; Wed, 17 Jan 2024 13:19:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1705521166; x=1706125966; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=yIbwUXZ7G89WTCGS+QskcTfeUNnIdBAGc/HhL+OpOug=;
-        b=aEIoI3WI4rede6VyENoKPEVml5Lw/AtIsAS/5bajEojncl21SSyldTbVwKnJ7wgBEN
-         EZ+3jZGsrEEZ50Fhdn3T1R+Le0AkUhfjcX3QgZIFGNzpCrdxk+KfuO0hsbwxPJMdqO1G
-         ht4fvG8+zO1d5BhHHm08253B8HggfcRuEkfgbvcUduGwsiekdAXdAvPLKf0xCe/VJMrD
-         MgSqdSU1pK+0Vk8rWiUsmKrZr1c1qovCXt3epYQgo44RyMDIWSSSQ3K+D0KSR16KKhU2
-         4LkcAVxIeeAiOFho/6HBFTNLI1mPMeO8+H9RbpeTswJcl5f5qd8jZmnpf91whaBTEjHA
-         fwCw==
+        d=github.com; s=google; t=1705526372; x=1706131172; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=72m9B1OT83bJgmZlFyIm74zs879syuiFsSOa3LiLR8g=;
+        b=OiHLPL/3Ywaj2+x+TVa8udGGiU8O5ww4I1zyfLLRpdGZVsMzijhCHiXPBYsSvomUMJ
+         KGlhbohVdsZ3FsAfdzekDHTX5JUCupJUVWek2dJR+II41+HwaB2D3TXXlfT2KOznPC7t
+         h1lZdjoJQwKR2dC2WYZGNOxs8Dm5dtMcWZBy4ZifvH6qrRO1fqEoVt1/+FFH0Drts7KN
+         mILNP/tKc9PYmbqH1AciMhhHQ4TpU3QVYOn0W9MP2KvJSo2VRFrM4O2G6UD56okOSk0W
+         jZXOyG6M0+t143+qp1u5okXgOMZK/XAALYwK2qTG+UuiTY/vuq421jJoXN/PbrZvQ7Jn
+         MNfg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1705521166; x=1706125966;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=yIbwUXZ7G89WTCGS+QskcTfeUNnIdBAGc/HhL+OpOug=;
-        b=ebb6IlvzZ56VuSrBJFs8TbBicEbggwEbTDDlIYXCAorTwfNRDNAc6CPxVdvGV9ksSh
-         sO+7j++pqicj4UmOo9zogMVUzZgyI4OJLxnNuVaBMmqxryoBJl4R9VHYVavtR8+QwqrD
-         Ec+lvD8YU14YyyuWx2BO6+78bLzWoJ7qiazfkPCGVibWkFYheZDmBlkQRj/l5uwoQHI9
-         V89iB9Cf95AjaLhThEocSs/9odSE887+FfVdPuKIan8vU0kzc+DWbIiGk7EOqYyiZ2Ri
-         voJLbf5Ln5SvBIsB/GFWNwLTotM9Nw5YXgh1nK2t+vbWk3DPsjenuhpi02sq3OXIIgUX
-         cnhA==
-X-Gm-Message-State: AOJu0YzFlQLgLjtF3h4/XynhdCf9PrvMmZfDDXmT6CZGBRFxcG4AFBH6
-	C3iepIq/Lu6Dk7vddrTwZPp5TYYtuAg=
-X-Google-Smtp-Source: AGHT+IFjQ+2Co4uKUAcLM9wSTOCkRyIghQk8djAc4x/yCFV1kV72aVy2CzHcs4x15uPO940/Di+FKw==
-X-Received: by 2002:a05:600c:4715:b0:40e:5759:bcbe with SMTP id v21-20020a05600c471500b0040e5759bcbemr5016891wmo.113.1705521166314;
-        Wed, 17 Jan 2024 11:52:46 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id h20-20020a05600c315400b0040e63226f6dsm5602226wmo.1.2024.01.17.11.52.46
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 17 Jan 2024 11:52:46 -0800 (PST)
-Message-ID: <316a20ed17950e4e45d7ea13d8f6e8d4e064821e.1705521155.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1647.git.git.1705521155.gitgitgadget@gmail.com>
-References: <pull.1647.git.git.1705521155.gitgitgadget@gmail.com>
-From: "John Cai via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Wed, 17 Jan 2024 19:52:35 +0000
-Subject: [PATCH 12/12] t5312: move reffiles specific tests to t0600
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        d=1e100.net; s=20230601; t=1705526372; x=1706131172;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=72m9B1OT83bJgmZlFyIm74zs879syuiFsSOa3LiLR8g=;
+        b=rNiEyOWvta3HOvR5jS018KIRph+IH/EUzRTgDt5LEY3KIstU63oDLAbmm85lZDJKZg
+         dmrusq4qLNta2p16HimKlWE7sMfaLM22nTlLdz1DxOGMI40Zlh0yrF5x1I0EWbDMdUmO
+         CeSZyN8pcMPxVaAmqggQ0Tj4/dKd3oH0lMPW3cTIUUAmBITbM4xXoSq0/VkkZWNu+8ZB
+         hV78/zFUEZgvMbrZ5srife/MoJG2Qh26xAjokyTMoYW8nyo8JJBmn+zBnr1CyqTaDjY6
+         Ntbc4I8Ajb2BA3ImqcJ7Js6wX9WlGGa9MZAuCUiZsv8hhmoBN9sLHtZJVljvsBvSvEgz
+         1M9Q==
+X-Gm-Message-State: AOJu0YyJ3pMIgZYhWLAyJyPjzt2IOlvGwwr04QfZnxGZKb6KnYI7ItYK
+	TUcISecPV5FXFEqntf7y1g/ew/nHRma2t2fbP2icZ+pp
+X-Google-Smtp-Source: AGHT+IH4Tk/Alj51VQV8MZ9UB+Rv2p6Oq+8quqZc9OjoQYMB64qM8bjB2fWXdlcoHRd/rMpCATUExw==
+X-Received: by 2002:a17:903:2651:b0:1d5:4e05:a66a with SMTP id je17-20020a170903265100b001d54e05a66amr5176799plb.9.1705526372140;
+        Wed, 17 Jan 2024 13:19:32 -0800 (PST)
+Received: from [192.168.50.41] (172-091-184-234.res.spectrum.com. [172.91.184.234])
+        by smtp.gmail.com with ESMTPSA id r18-20020a170903411200b001d58ed4c58asm101456pld.63.2024.01.17.13.19.31
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 17 Jan 2024 13:19:31 -0800 (PST)
+Message-ID: <08276422-3af8-40df-85dd-65ec4e891507@github.com>
+Date: Wed, 17 Jan 2024 13:19:30 -0800
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: John Cai <johncai86@gmail.com>,
-    John Cai <johncai86@gmail.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 3/3] submodule-config.c: strengthen URL fsck check
+Content-Language: en-US
+To: Patrick Steinhardt <ps@pks.im>,
+ Victoria Dye via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org
+References: <pull.1635.git.1704822817.gitgitgadget@gmail.com>
+ <893071530d3b77d6b72b7f69a6dfb9947579865e.1704822817.git.gitgitgadget@gmail.com>
+ <ZZ46MrjSocJl-kpU@tanuki>
+From: Victoria Dye <vdye@github.com>
+In-Reply-To: <ZZ46MrjSocJl-kpU@tanuki>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-From: John Cai <johncai86@gmail.com>
+Patrick Steinhardt wrote:
+> On Tue, Jan 09, 2024 at 05:53:37PM +0000, Victoria Dye via GitGitGadget wrote:
+>> From: Victoria Dye <vdye@github.com>
+>>
+>> Update the validation of "curl URL" submodule URLs (i.e. those that specify
+>> an "http[s]" or "ftp[s]" protocol) in 'check_submodule_url()' to catch more
+>> invalid URLs. The existing validation using 'credential_from_url_gently()'
+>> parses certain URLs incorrectly, leading to invalid submodule URLs passing
+>> 'git fsck' checks. Conversely, 'url_normalize()' - used to validate remote
+>> URLs in 'remote_get()' - correctly identifies the invalid URLs missed by
+>> 'credential_from_url_gently()'.
+> 
+> Okay, so we retain the wrong behavior of `credential_from_url_gently()`,
+> right? I wonder whether this can be abused in any way, doubly so because
+> the function gets invoked with untrusted input from the remote server
+> when we handle redirects in `http_request_reauth()`. But the redirect
+> URL we end up passing to `credential_from_url_gently()` would have to
+> contain a non-numeric port, and curl seemingly does not know to handle
+> those either.
 
-Move a few tests into t0600 since they specifically test the packed-refs
-file and thus are specific to the reffiles backend.
+Correct, nothing about 'credential_from_url_gently()' changes here. As for
+whether it could be abused - I don't *think* so, but I'm definitely not a
+security expert. If it helps, here's a more detailed breakdown of the issue:
 
-Signed-off-by: John Cai <johncai86@gmail.com>
----
- t/t0600-reffiles-backend.sh | 30 ++++++++++++++++++++++++++++++
- t/t5312-prune-corruption.sh | 26 --------------------------
- 2 files changed, 30 insertions(+), 26 deletions(-)
+In 'credential_from_url_1()', suppose we have URL
+"http://example.com:test/repo.git". Stepping through the variables:
 
-diff --git a/t/t0600-reffiles-backend.sh b/t/t0600-reffiles-backend.sh
-index c88576dfea5..190155f592d 100755
---- a/t/t0600-reffiles-backend.sh
-+++ b/t/t0600-reffiles-backend.sh
-@@ -571,4 +571,34 @@ test_expect_success 'log diagnoses bogus HEAD symref' '
- 	test_grep broken stderr
- '
- 
-+# we do not want to count on running pack-refs to
-+# actually pack it, as it is perfectly reasonable to
-+# skip processing a broken ref
-+test_expect_success 'create packed-refs file with broken ref' '
-+	test_tick && git commit --allow-empty -m one &&
-+	recoverable=$(git rev-parse HEAD) &&
-+	test_tick && git commit --allow-empty -m two &&
-+	missing=$(git rev-parse HEAD) &&
-+	rm -f .git/refs/heads/main &&
-+	cat >.git/packed-refs <<-EOF &&
-+	$missing refs/heads/main
-+	$recoverable refs/heads/other
-+	EOF
-+	echo $missing >expect &&
-+	git rev-parse refs/heads/main >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'pack-refs does not silently delete broken packed ref' '
-+	git pack-refs --all --prune &&
-+	git rev-parse refs/heads/main >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success  'pack-refs does not drop broken refs during deletion' '
-+	git update-ref -d refs/heads/other &&
-+	git rev-parse refs/heads/main >actual &&
-+	test_cmp expect actual
-+'
-+
- test_done
-diff --git a/t/t5312-prune-corruption.sh b/t/t5312-prune-corruption.sh
-index 230cb387122..d8d2e304687 100755
---- a/t/t5312-prune-corruption.sh
-+++ b/t/t5312-prune-corruption.sh
-@@ -111,30 +111,4 @@ test_expect_success 'pack-refs does not silently delete broken loose ref' '
- 	test_cmp expect actual
- '
- 
--# we do not want to count on running pack-refs to
--# actually pack it, as it is perfectly reasonable to
--# skip processing a broken ref
--test_expect_success REFFILES 'create packed-refs file with broken ref' '
--	rm -f .git/refs/heads/main &&
--	cat >.git/packed-refs <<-EOF &&
--	$missing refs/heads/main
--	$recoverable refs/heads/other
--	EOF
--	echo $missing >expect &&
--	git rev-parse refs/heads/main >actual &&
--	test_cmp expect actual
--'
--
--test_expect_success REFFILES 'pack-refs does not silently delete broken packed ref' '
--	git pack-refs --all --prune &&
--	git rev-parse refs/heads/main >actual &&
--	test_cmp expect actual
--'
--
--test_expect_success REFFILES  'pack-refs does not drop broken refs during deletion' '
--	git update-ref -d refs/heads/other &&
--	git rev-parse refs/heads/main >actual &&
--	test_cmp expect actual
--'
--
- test_done
--- 
-gitgitgadget
+- 'cp' is "example.com:test/repo.git"
+- 'at' is NULL
+- 'colon' is ":test/repo.git"
+- 'slash' is "/repo.git"
+
+Because 'at' is NULL, we set 'host = cp'. Later, because 'slash - host > 0',
+we call 'url_decode_mem()' on "example.com:test" (which, in this case,
+doesn't change anything) and the result 'host' to "example.com:test".
+
+The issue for the fsck check is that 'credential_from_url_gently()' doesn't
+validate the hostname it extracts (e.g. whether ':' precedes a valid port,
+or if the hostname contains a '%'-escaped sequence). I don't *think* that
+could be abused since, like you said, cURL should just reject the invalid
+URL altogether.
+
+> 
+> Other callsites include fsck (which you're fixing) and the credential
+> store (which is entirely user-controlled). It would be great regardless
+> to fix the underlying bug in `credential_from_url_gently()` eventually
+> though. But I do not think that this has to be part this patch series
+> here, which is a strict improvement.
+
+Agreed! I think normalizing the URL before trying to extract the credentials
+may be all that's needed to avoid surprise URL errors, but that probably
+warrants a separate patch submission (with appropriately thorough testing).
+
+> 
+> Thanks!
+> 
+> Patrick
+
