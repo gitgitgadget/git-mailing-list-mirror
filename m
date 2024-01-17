@@ -1,95 +1,58 @@
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+Received: from mail-4324.protonmail.ch (mail-4324.protonmail.ch [185.70.43.24])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A912D1D523
-	for <git@vger.kernel.org>; Tue, 16 Jan 2024 23:42:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADCB2611A
+	for <git@vger.kernel.org>; Wed, 17 Jan 2024 05:29:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.70.43.24
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705448563; cv=none; b=IIfCKqIo4O8sEx1coIWKGARDI9w7JJ/BNEirVheFgqu4nrzReS+xRxTFDndU1vnnX+eVib9bAwW//KmG46+odb98e065eoq11lMmQcIQu9WA2bCH3Iw8K3gqkIHLRGJhD9nRsv0l3vcZhAgAD2gXY7F/mbgvB1KttoPmyyHmrmc=
+	t=1705469351; cv=none; b=Gzdf9KtUXjKdawmpbV/3VbPiQgleLjKi+hsCXt8AfpRiouopalQqVhXZz0ia83+siXrUw3uWU5eP6s9ITeUSFb5UfEeIp/Dpw4ZQF3yrkA7b5UzZ+GmK/t4V6BYRm6zB4q+lDVV1FuH6Qbgysi+HPluyImpeLr8IHXSccVpEeuk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705448563; c=relaxed/simple;
-	bh=C9IsWCryPs8CmEXFuSEQceKiM4ZGx5yYJLDH0+NgD18=;
-	h=Received:DKIM-Signature:Received:Received:From:To:Cc:Subject:
-	 In-Reply-To:References:Date:Message-ID:User-Agent:MIME-Version:
-	 Content-Type:X-Pobox-Relay-ID; b=SkEjPbdKpFAlKYb7KtBxsY1Re8KZxs18ZVnmRBD75qnsavHwsq/z1x1ZJIKkg01a13UiSPPdnZRIkjXpIFDp3LNAhaOnlNNoixQSSE2id5Z/AJ6BRXLCJF1yRxjGf8bmekAnryR9yUd8t76krnLMHqqe8/QxwRqQZKKk4xRDI1o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=XuzsJHOC; arc=none smtp.client-ip=64.147.108.70
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1705469351; c=relaxed/simple;
+	bh=16oMicNDUcgNH4Er7l1eMAuA2iOoIBkYDFeKk7xISUA=;
+	h=DKIM-Signature:Date:To:From:Cc:Subject:Message-ID:In-Reply-To:
+	 References:Feedback-ID:MIME-Version:Content-Type:
+	 Content-Transfer-Encoding; b=tbdkQ56Z/MsPvEy2BD4S1mm7AKvyw+TgAmfHz1LpuALjLLSYkM9c8anXVClj4Ejj7/kloctV2obclEieiCFsAvxAoMf/5RN6y6GQO1N0WTh7GGylokpZLQyH6U08Sc4OShhMQ9V/ywzE4ykKTwGXT1AAchbA9OMObfhO+CB5VXA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=proton.me; spf=pass smtp.mailfrom=proton.me; dkim=pass (2048-bit key) header.d=proton.me header.i=@proton.me header.b=i5ZU5VCR; arc=none smtp.client-ip=185.70.43.24
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=proton.me
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=proton.me
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="XuzsJHOC"
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 71DCA1B8890;
-	Tue, 16 Jan 2024 18:42:40 -0500 (EST)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=C9IsWCryPs8CmEXFuSEQceKiM4ZGx5yYJLDH0+
-	NgD18=; b=XuzsJHOC0pp0Pdzmqxs8NtJ+gewQOv5s8smRzkPfGlvvHmRTtSgbSU
-	QV+ZlAXYSijnXV0IOeCDy5Ia785K2B1Qtqs2VF5Vk01M/GFYh5aC0xYZB9wZgRWA
-	xY4XuJ9ktNeYZQ1gub5pwtB85w6k30pAMVjZ/ecnGGZijfbkCGXLI=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 69EC01B888F;
-	Tue, 16 Jan 2024 18:42:40 -0500 (EST)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.200.93])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id D4D811B888D;
-	Tue, 16 Jan 2024 18:42:39 -0500 (EST)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Taylor Blau <me@ttaylorr.com>
-Cc: SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
-  git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Jan 2024, #01; Tue, 2)
-In-Reply-To: <ZacRx1rbESvYiVgN@nand.local> (Taylor Blau's message of "Tue, 16
-	Jan 2024 18:31:19 -0500")
-References: <xmqq5y0bcjpw.fsf@gitster.g> <ZZWOtnP2IHNldcy6@nand.local>
-	<xmqqa5pm9tnx.fsf@gitster.g> <20240113183544.GA3000857@szeder.dev>
-	<20240113225157.GD3000857@szeder.dev> <Zabr1Glljjgl/UUB@nand.local>
-	<xmqqfrywyk16.fsf@gitster.g> <ZacRx1rbESvYiVgN@nand.local>
-Date: Tue, 16 Jan 2024 15:42:38 -0800
-Message-ID: <xmqqedegx2tt.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=proton.me header.i=@proton.me header.b="i5ZU5VCR"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=proton.me;
+	s=dlgxheby7bc4deio3gvpmju2vq.protonmail; t=1705469340; x=1705728540;
+	bh=16oMicNDUcgNH4Er7l1eMAuA2iOoIBkYDFeKk7xISUA=;
+	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
+	 Message-ID:BIMI-Selector;
+	b=i5ZU5VCRVG0DUnnlp3qEs9wGUgDAlkrBZ6w6dd+IZAGmtRaEyYbl6RhokHkl2nlXT
+	 YzhUJ2wRcj2driMLqE3N9gwfpehMLRlFcFHKXLtNcdLXRozlb1PtqXfL8jsgkptvUl
+	 M9Cr4M8UAqEVK3JxznZ47X4LH4DaT1YJP0JnIK1pRH2iYJSR8aSETBbBJu0jF2Ht3X
+	 I7h+BbzkDeheqG9TH9D6CEmMtIvEkHaMLZuHOa8c2T3an0vxIGsooj87YnVo4BCpbM
+	 I6ysJZaS3Eedo9HgIsrdD8A4jPcqak3E3f4CTPZm2UeM7TJRRuYnM3o8epgBXFpffR
+	 wFmbl/VJdzgQw==
+Date: Wed, 17 Jan 2024 05:28:36 +0000
+To: Junio C Hamano <gitster@pobox.com>
+From: Mohit Marathe <mohitmarathe@proton.me>
+Cc: Christian Couder <christian.couder@gmail.com>, "git@vger.kernel.org" <git@vger.kernel.org>, "britton.kerin@gmail.com" <britton.kerin@gmail.com>, "peff@peff.net" <peff@peff.net>
+Subject: Re: [GSoC][RFC] Replace use of atoi() with strtol_i(), as a microproject
+Message-ID: <Ec-xbd5ISDrcz8ybM8oJkVEhX7hgEmENoeek1n4K5M9buOfQ1SwOgGqAZRyMnYGYY1AFG1ppUKwXi3V63dndTzAjnJj7Cs0cVrtqwROg6oc=@proton.me>
+In-Reply-To: <xmqqa5pdav04.fsf@gitster.g>
+References: <OqD4xQ_p-jcftCbAw0ovvrBztfiuoMGcTonCc0i6x7Ziy-hx3uA-Hoz4-3tfRI39KMj-V5OZIGgOe66b1eyX3YrKZNThMYjjMkn6g4-Ww8c=@proton.me> <CAP8UFD1d7FSa=mUzzUA5e3eSEcCVfaymxWewo5GjdDBi4GyE-g@mail.gmail.com> <F6ejgAfr2IMRNR3Tq0CDTHeT9xMWzJ9ley8M_fnSX97ayRNRp_CEgA62WdtOooi9bha1WJPGB53ptJYQFII2lCbIflwgNvbIaefw7nK8w7M=@proton.me> <xmqqa5pdav04.fsf@gitster.g>
+Feedback-ID: 95862732:user:proton
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- EF73C9B0-B4C8-11EE-A2DF-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-Taylor Blau <me@ttaylorr.com> writes:
+> A corrupt patch may be getting a nonsense patch-ID with the current
+> code and hopefully is not matching other patches that are not
+> corrupt, but with such a change, a corrupt patch may not be getting
+> any patch-ID and a loop that computes patch-ID for many files and
+> try to match them up might need to be rewritten to take the new
+> failure case into account.
 
->> A big red button solution to avoid this would be to uprev the
->> repository format version once you start writing v2 Bloom filters
->> anywhere in the layers.  That way, existing Git clients would not be
->> able to touch it.  I do not know if the cure is more severe than the
->> disease in that case, though.
->
-> I tend to think that in this case the cure is probably worse than the
-> disease. I expect it to be extremely rare that a user would upgrade to a
-> modern version of Git, write commit-graphs, then downgrade, and try to
-> write more commit-graphs.
-
-But then the big red button solution would rarely misfire for users
-because they will not downgrade (and see "gee, I now need to stick
-to the newer version"), no?
-
-I am not seriously suggesting to do this, but I am not sure if
-documenting "don't do this because you'll break your repository"
-is sufficient.
-
->> In any case, at least, we should be able to prepare the code that we
->> teach to grok v2 today so that they do not trigger the same segfault
->> when they see a commit graph layer containing v3 Bloom filters (or
->> later).  Then we won't have to have the same conversation when we
->> somehow need to update Bloom filters again.
->
-> This series should accomplish that by loading the Bloom chunk
-> unconditionally, and only reading its filters when they match the
-> given hash_version.
-
-Good.
+Are you talking about the loop in `get_one_patchid()`? And how should
+the failure case be handled? Should it give a warning or an error?
