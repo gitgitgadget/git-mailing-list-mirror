@@ -1,90 +1,100 @@
 Received: from mail-ej1-f52.google.com (mail-ej1-f52.google.com [209.85.218.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5160C14A83
-	for <git@vger.kernel.org>; Wed, 17 Jan 2024 09:19:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E80714A83
+	for <git@vger.kernel.org>; Wed, 17 Jan 2024 09:58:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705483152; cv=none; b=EsYQvGIjwEoQQx39dijQAO0xXSKM40FMhRjdWq61wEAtxqTrflw+Xa2SEzBXm5Nr4/IH2dhXn3QezZrOG1+nIcXO+KF1Awzwl1MQoGoLoVz6uqWkfQq/cD8a/1BVPEnIjLQ23/MX7tytJfrpViVGxSOKr1moiy10mViKn46eMAQ=
+	t=1705485526; cv=none; b=NM+zANv65e0XksuhxkioSX6zpbHoG1CAEN9OHMZDgL72hS/ci2BJEFkg5WIySDyVrFRHaGRvYzYsn71XDZJo4S76WKdWIDEX52Ko2v5/SuVgodbB5LmWsXMHEZKngoOcL0ci9jvYjghUW0ZIxryKqknCoWznW0Qf4r7CcNNcZ2Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705483152; c=relaxed/simple;
-	bh=AT1BaBraPS+fExmuxVRbTjNdw39uCdKRW9k/DhBbSv4=;
+	s=arc-20240116; t=1705485526; c=relaxed/simple;
+	bh=1K6ka75otplHcEVT5gUe/BACRxjfdcFVSncHW6H0s4s=;
 	h=Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Google-Smtp-Source:X-Received:Received:Sender:
-	 From:To:Cc:Subject:Date:Message-Id:X-Mailer:In-Reply-To:References:
-	 MIME-Version:Content-Transfer-Encoding; b=uvJYCNkpFvSuoLaSFHr7pPzjEHiy0j5Z9v5GmuByo37veFcNjETuifttv2HkPSvdjRzWVY2c+YJ+CYeP63DUDTrBymt3u98oRsNuLOd3fdgAxpP8G1CN+57zTug/R7/AjT74zU3uYZJ0M0DL8LebdChXYCHqCnh6LieZnuxyjpM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=QFhFNTAU; arc=none smtp.client-ip=209.85.218.52
+	 X-Gm-Message-State:X-Google-Smtp-Source:X-Received:MIME-Version:
+	 References:In-Reply-To:From:Date:Message-ID:Subject:To:Cc:
+	 Content-Type:Content-Transfer-Encoding; b=XP/mHGh8W31sUlUbO0sI4PITeuy5Rs2kylUDP48uIORg79QcSaMbblP/pcARyZgWWgmWWwD1c9xw0cBt/nYjkehUjE3/lNVXjPUPYUFADynxCR5mVDcRDNpd3n/cl33p4fcn3b1ElK7yzSsPmzx3lAjBeJ7lSg8YKWsCAIVz+Jk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Jg2wK/8h; arc=none smtp.client-ip=209.85.218.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QFhFNTAU"
-Received: by mail-ej1-f52.google.com with SMTP id a640c23a62f3a-a2ac304e526so1059990966b.0
-        for <git@vger.kernel.org>; Wed, 17 Jan 2024 01:19:10 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Jg2wK/8h"
+Received: by mail-ej1-f52.google.com with SMTP id a640c23a62f3a-a2eb5c4dad6so48917066b.1
+        for <git@vger.kernel.org>; Wed, 17 Jan 2024 01:58:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1705483149; x=1706087949; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:sender:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1705485523; x=1706090323; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=AT1BaBraPS+fExmuxVRbTjNdw39uCdKRW9k/DhBbSv4=;
-        b=QFhFNTAUypzz4mroaTFYjvwMufBl/tYmRxNgIhLgMHnpEF6XRxHon2GwYRNFITh2Ir
-         5vhkTD+/TUO4wbj9YodIzCX3xnrV1J119DfpumiP8XNBDJMHk9DMIs6utirbPMDCXhMS
-         p4Di42px1fqNoWC0FMV8yZpQzgEatSF2A9/sGi9c7c62POwN1uvsY6z8u6UxhVBsAHCF
-         up3tGmoEEwtePgFnPOW1OsHl9Uc8Lgflt2GgVaW/vE4/dXvG9xNaBz7vwzhHSU8Lo3M4
-         eYa917fsgTFGWFZVXoB6/VNhKoPR74ovxnakXPw3xFlIrPLiCMVU3xp9q1azoE/wWRHX
-         yPbw==
+        bh=1K6ka75otplHcEVT5gUe/BACRxjfdcFVSncHW6H0s4s=;
+        b=Jg2wK/8hO8X8ijNsAAezivhwrCWq1SccVg997wk+6lKkxZKxtDtaH7Ng3HUAlyC46y
+         uBPbBZm2ql80wHpLYuf/QPQ9dGKMRjoNPu2CeaeEvW3tvCwP7HPA+IA7WegyjLeTKZ4z
+         AfOky0RJe1/xAokrkIoS65OZSTKlTx/z2bf9oA193eHBENczuT6L1cchJpm9fOXwN7dB
+         Qpui+3yixY4e0E5Hli2Ol2Qbl93xB+gNXQ+gDVwm/dcnKiyouADNNYHPXoVMI3mDcutr
+         ktMkzikDX57Sy5ZL9L8jAlll65iNq/leA5U/XGXwaTBTZ60UdZlQJ6WgOWV20Ib2ddUQ
+         J5mw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1705483149; x=1706087949;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:sender:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=AT1BaBraPS+fExmuxVRbTjNdw39uCdKRW9k/DhBbSv4=;
-        b=AFAY9K/lnULg+5aK21vaaz90l0xUT+3Nha/1EMHcuxBs+FOfcZwgINCsV4BDAQ+Poa
-         CC7vGtDQ3nL1lmOU7ZDXYfLvKFL0bsB6+N98pJNSEU1W2Z/TZM1z7WYHzhfDWO/XBJlJ
-         6Sit/UegvWpWcPYplSbQ1F5MEp8MQbZRhBdKbEBpAVwLbpRH/1XWLPMBMY4Ga7YISrrf
-         4a8DJddh9aNuJCAWCc8oX5yhP99tEUkfp3RFfChgZdZmjDiwHCWeqmY3lyvPoyddcjYf
-         Z1WpRdcMSm5YISv5ie+U7HIzLHm9kGfI6MqIR/whdhEUBtcgP//LfJAWmFsma0ex2y5L
-         G82A==
-X-Gm-Message-State: AOJu0YzfCLNFBZejRzoXQACqKMcTYaUnInN28v6FpmBaUeoVZR6A7F78
-	EkZqXSLvy/OcCR2DH2mnFUE=
-X-Google-Smtp-Source: AGHT+IHD+EuHJNKjLUxZCQp1ToXlkjoZRAneg8PJWrpRWmqEt7VebWKyydmg9klKuQTcrgFLOLWzpg==
-X-Received: by 2002:a17:906:ff53:b0:a2c:7293:af58 with SMTP id zo19-20020a170906ff5300b00a2c7293af58mr4128032ejb.79.1705483149142;
-        Wed, 17 Jan 2024 01:19:09 -0800 (PST)
-Received: from Michaels-MBP.fritz.box (2001-4dd4-dfc5-0-e407-3f73-62bc-9c57.ipv6dyn.netcologne.de. [2001:4dd4:dfc5:0:e407:3f73:62bc:9c57])
-        by smtp.gmail.com with ESMTPSA id h20-20020a170906261400b00a28d438a1b0sm7504400ejc.83.2024.01.17.01.19.08
-        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Wed, 17 Jan 2024 01:19:08 -0800 (PST)
-Sender: Michael L <mial.lohmann@gmail.com>
-From: Michael Lohmann <mi.al.lohmann@gmail.com>
-To: mi.al.lohmann@gmail.com
-Cc: git@vger.kernel.org,
-	gitster@pobox.com,
-	j6t@kdbg.org,
-	newren@gmail.com,
-	phillip.wood123@gmail.com
-Subject: Full disclosure
-Date: Wed, 17 Jan 2024 10:19:05 +0100
-Message-Id: <20240117091905.14354-1-mi.al.lohmann@gmail.com>
-X-Mailer: git-send-email 2.39.3 (Apple Git-145)
-In-Reply-To: <20240117081405.14012-2-mi.al.lohmann@gmail.com>
-References: <20240117081405.14012-2-mi.al.lohmann@gmail.com>
+        d=1e100.net; s=20230601; t=1705485523; x=1706090323;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=1K6ka75otplHcEVT5gUe/BACRxjfdcFVSncHW6H0s4s=;
+        b=vYLVcCaj0kj+Qmu34F4dUNO3uLx/BG0RyzyI8qOPUibvXRuShM4ngH5/DdAQ7fl5O2
+         nOGhbpDv0jel5LAHJQWZCGPAQY8J0nkOiCsLiaRS+RVzYkLbJ4Fad0BJJOJnV3WQyaeK
+         hHcJRFq6o7aXH/KqpSwikF1Z8LCEIi1OgIRBXXPPyVFOoXnnlVHBwjolaLWUVi+pHpzD
+         IFdj2Q3SXS3ejIi5UMjWOgxjlKB92dctZl0GTZlmXE9bB/ZVDVUXfr3JulmCg5C2G9if
+         9lcuH9sQGxsRpX2dHdfiTGGxGvu5Mmc5kAxQjTD8P7qQvKIJ5RQhb3bp2P1EEBr1NZ64
+         GHxg==
+X-Gm-Message-State: AOJu0YwuqaOE1aQglxsv6L22Ze4OR1dEMq3gojAvEhZxHed20NHBlsf5
+	ozSFnvySRfq7atyM9+ym+1h+jCK9Pynhh7wAUdA=
+X-Google-Smtp-Source: AGHT+IFuhY4uHZTwCsOuvx/Z6hwNLIj+73Nkx0ve4rTBxrjzsXoS+6s/rB5u/IrGTA+NZ1EK/K8eIiuK0gd4VeKNNQU=
+X-Received: by 2002:a17:906:274a:b0:a2c:6bea:58a8 with SMTP id
+ a10-20020a170906274a00b00a2c6bea58a8mr4740378ejd.37.1705485523001; Wed, 17
+ Jan 2024 01:58:43 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20240117081405.14012-2-mi.al.lohmann@gmail.com> <20240117091905.14354-1-mi.al.lohmann@gmail.com>
+In-Reply-To: <20240117091905.14354-1-mi.al.lohmann@gmail.com>
+From: Christian Couder <christian.couder@gmail.com>
+Date: Wed, 17 Jan 2024 10:58:31 +0100
+Message-ID: <CAP8UFD3g_N+JJ_cdas2ZdsBPxuQFBXW8yY+1nC6AKvQppOYaDw@mail.gmail.com>
+Subject: Re: Full disclosure
+To: Michael Lohmann <mi.al.lohmann@gmail.com>
+Cc: git@vger.kernel.org, gitster@pobox.com, j6t@kdbg.org, newren@gmail.com, 
+	phillip.wood123@gmail.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Just as a disclosure: I was told that my contributions are not welcome [1]
-(even though I have to say that I don't fully agree with the reasoning), but I
-did not want to leave these patches alone.
+On Wed, Jan 17, 2024 at 10:20=E2=80=AFAM Michael Lohmann
+<mi.al.lohmann@gmail.com> wrote:
+>
+> Just as a disclosure: I was told that my contributions are not welcome [1=
+]
+> (even though I have to say that I don't fully agree with the reasoning), =
+but I
+> did not want to leave these patches alone.
 
-@Junio C Hamano: Please take this into account when deciding if you want to
-accept the patches. This is just for transparancy and I will not do any more
-contributions than potentially finishing this one. If you do not want these
-patches from me, but it was still deemed to be an interesting feature: could
-someone else take over?
+I might have missed something, but as far as I see in the email you
+mention, you weren't told that your contributions are not welcome.
+Junio reviewed your patch and agreed with some of Peff's comments
+about your patch. It just means that they both think your patch could
+be further improved. They didn't reject your patch, nor your
+contributions in general.
 
-Michael
-
-[1]: https://lore.kernel.org/git/xmqqil3ybets.fsf@gitster.g/
+> @Junio C Hamano: Please take this into account when deciding if you want =
+to
+> accept the patches. This is just for transparancy and I will not do any m=
+ore
+> contributions than potentially finishing this one. If you do not want the=
+se
+> patches from me, but it was still deemed to be an interesting feature: co=
+uld
+> someone else take over?
+>
+> Michael
+>
+> [1]: https://lore.kernel.org/git/xmqqil3ybets.fsf@gitster.g/
+>
