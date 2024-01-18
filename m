@@ -1,72 +1,161 @@
-Received: from mout.kundenserver.de (mout.kundenserver.de [212.227.126.133])
+Received: from out5-smtp.messagingengine.com (out5-smtp.messagingengine.com [66.111.4.29])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C1CD288DC
-	for <git@vger.kernel.org>; Thu, 18 Jan 2024 15:43:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.126.133
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5B362D63D
+	for <git@vger.kernel.org>; Thu, 18 Jan 2024 16:13:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=66.111.4.29
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705592588; cv=none; b=KzAp6AacVM20eNxEBI2ndBnVWSG6iDY6pw7mVafRouZtIMJLKoYzXvAzIc5dm40RGiIiR4BGQOasJqlLMZq6XIB+iyPxFagI3EYhsk/BzySkfprJu8Rm1W4zTB1US0YwtHFdZPkliiypUwAcezqptLEAzf6D8f4VA5nj3NCsL8A=
+	t=1705594425; cv=none; b=sWq/3u1s/p3/Zqb935nvzUYNhzSI2G6cs7ObPfW72aJpRNSzj67LkL58FsunIvT1euOXUuHTd9/vtJ/zrkxDAFa9HAh6giTAnhuPid5eyh9XIiqTy/eglpCXFXgv69ga2ej1ZMrOEyZsMCsa7o1V8sJBEYopiZ4W8ktmThABF+A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705592588; c=relaxed/simple;
-	bh=VBFOTAYxHkWfyXfmiLqdD/eJ1oQAZ0CWdr78FSxC4e0=;
-	h=Received:Message-ID:Date:MIME-Version:User-Agent:Subject:
-	 Content-Language:To:Cc:References:From:In-Reply-To:Content-Type:
-	 Content-Transfer-Encoding:X-Provags-ID:X-Spam-Flag:
-	 UI-OutboundReport; b=YxyO5SoVcXqPYnHAEteiKASczFL/96Obc1pACofJgh8+zTaTv4se5NLqWydNi324dD3j7inx0VkhIHOpvx3S44tmmqcue2/jqUXuExuYdZ7RZyNwWiADFH8GuMYY43p1FmC2MInju0J3Si0nouOFPvlxniaND5jyn0b+b1kgJeE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=delpeuch.eu; spf=pass smtp.mailfrom=delpeuch.eu; arc=none smtp.client-ip=212.227.126.133
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=delpeuch.eu
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=delpeuch.eu
-Received: from [192.168.178.189] ([93.206.14.11]) by mrelayeu.kundenserver.de
- (mreue012 [212.227.15.167]) with ESMTPSA (Nemesis) id
- 1N8VkX-1r4L2L0QZF-014RAj; Thu, 18 Jan 2024 16:43:00 +0100
-Message-ID: <e9ecb4c9-0854-4b8e-87a7-ba66b64b5b1a@delpeuch.eu>
-Date: Thu, 18 Jan 2024 16:42:59 +0100
+	s=arc-20240116; t=1705594425; c=relaxed/simple;
+	bh=c8LyekRW1lztoz0LtyPoxDsUKA/IpzbK2Qbcv3aqIXA=;
+	h=Received:Received:DKIM-Signature:DKIM-Signature:X-ME-Sender:
+	 X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:Received:
+	 From:To:Cc:Subject:Date:Message-ID:X-Mailer:In-Reply-To:References:
+	 MIME-Version:Content-Type:Content-Transfer-Encoding; b=ajyKlU1fE0j1WHq0HL5ONv/fd4cxfeAPeV11n1IM+49HzggFoQl4M6OPli5lnGXXMFf9KmCc2WhHnF/AXbjDNbe7L4JOzHkXJFAPBg0hUAbdUFtNOhFlC+qe3qkDgN5b8tJk5WSf7Ilxi2+v1oRIYhcIW2vMrDsXg6hyjQUOsds=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=khaugsbakk.name; spf=pass smtp.mailfrom=khaugsbakk.name; dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b=jNAJjOj9; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=MXChUdTS; arc=none smtp.client-ip=66.111.4.29
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=khaugsbakk.name
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=khaugsbakk.name
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b="jNAJjOj9";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="MXChUdTS"
+Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
+	by mailout.nyi.internal (Postfix) with ESMTP id C76045C00D7;
+	Thu, 18 Jan 2024 11:13:41 -0500 (EST)
+Received: from mailfrontend1 ([10.202.2.162])
+  by compute5.internal (MEProxy); Thu, 18 Jan 2024 11:13:41 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=khaugsbakk.name;
+	 h=cc:cc:content-transfer-encoding:content-type:content-type
+	:date:date:from:from:in-reply-to:in-reply-to:message-id
+	:mime-version:references:reply-to:subject:subject:to:to; s=fm2;
+	 t=1705594421; x=1705680821; bh=9/1YwS5WG0/dSywoX2SESY6du46paZxM
+	byVmce56AYQ=; b=jNAJjOj9wO5UsQcSHvlovdLIYqClzfT3iiot8Z7YHngk8Cp4
+	Lqop/2Si81B+nmmgflsxztJfKRminIKysF/zSNHbF4KXumWcy9p6c+bRFptPIKY0
+	Pxwag7apclbiwxpK6QA+WUR5BgrQoZO31M+szfFAYQGllwNlRRjnfov4SBoud0XO
+	/Fk4NO+uyJq7oOP5kCW7MvcSypPxDP88WQL9UsXSyleYo67OWNhlsd7Qx5tWCOgx
+	m1nx85Cp856Hp8R2beSbGwW/Mo8mgbFaIFZyz1XL7J0mIzKVV2uFKZ6Orpwx7p7l
+	QSduBCfGJYZfx/krkHSInisMT0ib1auDcFHiOg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1705594421; x=
+	1705680821; bh=9/1YwS5WG0/dSywoX2SESY6du46paZxMbyVmce56AYQ=; b=M
+	XChUdTS7Tsol/i15JHH9GaHgBcVg3Ur4uOz9ajfMGXBY5d6rubqkCyh6og3Q1vTB
+	It9EmXWY0hMbuczEC7M/6OZuzWizblOuh9rqe8+9z+9vSUZSrVHMMzF9jMB9KfUe
+	qS800+ukCMLj3IaVWgmpUgFrcA2M92ogI4H/ic5B6W0cdYSB/gUlQdNuETtAm6tk
+	tEtN47hJ6B1bUnxAfhiUr33srbK6IVTystrqI9BLThHRz/0wb5sEWdeyHlTPLHl2
+	HhsLGGlCzUNT7xHoztnfLZGgszAnIO+NOhcma+zGUEduRzphQ+hA6bIpLDd+tnuc
+	tHkyOmtqrJKRHcfdz6JjA==
+X-ME-Sender: <xms:NU6pZTuZG5vIxOkvi63t7Szfdm0fPlQaYfqxCDjfCai9lkafKkpkzcg>
+    <xme:NU6pZUdcxYoBu-LjweSqMfGgEVx3ZJoLsRcfhjm0lH194vN5wM4PnISrtAOe6OMMO
+    1DEN1iGf6rFpauMyg>
+X-ME-Received: <xmr:NU6pZWxsxAG4Ua8_zTKhkPudoAyuprdQAnPhHHz2FF37ylr_WdanHf8emU-kcCXgFUBmGSZfY3oGy5JOlJD8CFbqOwabizaa4IJHnXF59Q>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrvdejkedgieduucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+    cujfgurhephffvvefufffkofgjfhggtgfgsehtkeertdertdejnecuhfhrohhmpefmrhhi
+    shhtohhffhgvrhcujfgruhhgshgsrghkkhcuoegtohguvgeskhhhrghughhssggrkhhkrd
+    hnrghmvgeqnecuggftrfgrthhtvghrnhepfffhgfdutddttdfhieelvdetudefgfejleef
+    ueeikeeugfeftdduiedvhfevgfetnecuffhomhgrihhnpehkvghrnhgvlhdrohhrghdpgh
+    hithhhuhgsrdgtohhmnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghi
+    lhhfrhhomheptghouggvsehkhhgruhhgshgsrghkkhdrnhgrmhgv
+X-ME-Proxy: <xmx:NU6pZSOefhokYLQyMWgp9jnx4YfJXcJFR7aANZ5EEv2UMdu36aFGsg>
+    <xmx:NU6pZT-LhGihA3jpPeLeElePpYYs_pbMQFLzjSmqttg9F65E8U67mA>
+    <xmx:NU6pZSWAhBYN_tF1D6VnejEq31_N0oKC_jx7nyyeGriJM8nyOKwKTA>
+    <xmx:NU6pZekl-CsJ_WfBDPzsKbtPHONbi5WBhdBdJ-xgJ1D8T8RolQdOuA>
+Feedback-ID: i2671468f:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 18 Jan 2024 11:13:39 -0500 (EST)
+From: Kristoffer Haugsbakk <code@khaugsbakk.name>
+To: git@vger.kernel.org
+Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>,
+	ps@pks.im,
+	stolee@gmail.com,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	Taylor Blau <me@ttaylorr.com>,
+	Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH v3 0/4] maintenance: use XDG config if it exists
+Date: Thu, 18 Jan 2024 17:12:48 +0100
+Message-ID: <cover.1705593810.git.code@khaugsbakk.name>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <cover.1697660181.git.code@khaugsbakk.name>
+References: <cover.1697660181.git.code@khaugsbakk.name>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] merge-ll: expose revision names to custom drivers
-Content-Language: en-US
-To: Kristoffer Haugsbakk <code@khaugsbakk.name>,
- Josh Soref <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org
-References: <pull.1648.git.git.1705587974840.gitgitgadget@gmail.com>
- <549875d6-b9a8-4b0d-8eaf-e12b72a20e16@app.fastmail.com>
-From: Antonin Delpeuch <antonin@delpeuch.eu>
-In-Reply-To: <549875d6-b9a8-4b0d-8eaf-e12b72a20e16@app.fastmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Provags-ID: V03:K1:AhfELDK+8vAWBurcMtG6hj27vj2UgHjkP51089ygrPEPY3TN4Vg
- prLrEFIzPp48Ia0tAIAxJ2Am+Mw3PQasfXWK8WjoIBEjvn1FxBNKB3RjPcpPwuBw2QUbFlg
- qRcU03+PBjku5KkHRjmjp+6BWnYFUuQvbmnPBc9ATDVbDwRfyoBfJ+PELilZYigHCb1U/VP
- SmHL/KVJVOiDx4DsuKcZQ==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:WiRntztaQWw=;p37FZXauhjECuNc66F3BDuUI2nh
- w9Ox+ZRGSRzgs5kzft+3oSbnr6val26uBYu1Z1xlSLKlpDdbKEptCPdDz3wO2S1VFO1Vq4aKs
- bMJozaAAu29L0sjSyXOn1wvHwKIPWWRS+auLvt1sVT2Hdj01Z018WvOUwUGlJ4EOU6Hq/doqK
- fjhGT25KBNT7Zl1nnfnawrldEEsmtjqXD3DSDfZFW5k5oMDGJkFi2gtFhp9/CUfUcc88kG+3/
- 9duNyOLCHRRe+1k3C8QByb7Eg7b65Vm6WLyaclQ3SM4Kt5tgwJueN11s6OJvuK07Tr0ifUFqa
- kMZSerST/E+rGAYN63D4OLfI3q/gaapE1UEM9W2AwiPAd+a9na5ElJHfBaaTNU0TtsnRP8B0q
- eSZKB6NZXii9uxUgtcGTkvPJ/cTmdFULvgLdnCmCCPs/AGeN6vmbYU/JnZQg1YK8YPbzcqeZp
- Z8xy3RU4GRrNhW/IJgOheQjKNpohhMXyposhiPyZlDFE5Ri49xwgel3gQcH2LR+etlY9d+0Xr
- +bL6Lavtake5Xpe+Trg37/H9v6Yg4SyDcNavwU516OhmFEZyeGAcD9oqWpBi/FIaNjam+hYBB
- mHGTZUQ5vvOMzVW8k/Qr4D8/EJThE8UeOLq0qagpT11YXjVbuk/299U0wKucbCpGYwc05z/A2
- 6dunZAKnsoZq4fvNeIzRTE1Q5VB/KtGrZVdcIWc7Fvv/YWAHmWMDbWD6XmQ5vr0it3qFKqMlo
- E3rzuJ3EdbXOeI8kFS2oF8+2IGqFgy/k/mcxZkfPH5zwFcYpGuRvv+a///DGxVG4+WY53G2Wp
- IQYdgOfHp/UE6mtsVabdWvM3ZhqA+kTCGpAEn8FDoPQhYgM1xhXJmD/F5Ea+DeRyxfc01rQWE
- E35GerCdPEgWTog==
 
-On 18/01/2024 16:25, Kristoffer Haugsbakk wrote:
-> This is gitgitgadget but `git send-email` would probably not pick up the
-> CC here since it is not part of the trailer section (because there is a
-> blank line between the CC line and the signed-off-by line). Maybe
-> gitgitgadget works the same way. Also the space between `CC:` and the
-> value is a no-break space but I don’t know if that matters.[1]
+I use the conventional XDG config path for the global configuration. This
+path is always used except for `git maintenance register` and
+`unregister`.
 
-Thanks a lot for catching that! Let me fix and re-submit.
+§ Changes since v2 (by patch)
 
-Antonin
+• config: factor out global config file retrieval
+  • Remove doc on `git_global_config`
+  • https://lore.kernel.org/git/c87b3d93-74db-4377-a57c-80f766d46e7f@app.fastmail.com/
 
+§ Patches
+
+• 1–3: Preparatory
+• 4: The desired change
+
+§ CC
+
+• Patrick Steinhardt: `config` changes; v1 feedback
+• Derrick Stolee: `maintenance` changes
+• Eric Sunshine: v1 feedback
+• Taylor Blau: v1 feedback
+• Junio C Hamano: v2 feedback
+
+§ CI
+
+https://github.com/LemmingAvalanche/git/actions/runs/7521230119
+
+Kristoffer Haugsbakk (4):
+  config: format newlines
+  config: rename global config function
+  config: factor out global config file retrieval
+  maintenance: use XDG config if it exists
+
+ builtin/config.c       | 26 +++---------------------
+ builtin/gc.c           | 27 ++++++++++++-------------
+ builtin/var.c          |  2 +-
+ config.c               | 26 ++++++++++++++++++++----
+ config.h               |  3 ++-
+ t/t7900-maintenance.sh | 45 ++++++++++++++++++++++++++++++++++++++++++
+ 6 files changed, 86 insertions(+), 43 deletions(-)
+
+Range-diff against v2:
+1:  d5f6c8d62ec = 1:  1c92b772ef4 config: format newlines
+2:  cbc5fde0094 = 2:  269490794bc config: rename global config function
+3:  32e5ec7d866 ! 3:  0643a85892c config: factor out global config file retrieval
+    @@ Commit message
+
+
+      ## Notes (series) ##
+    +    v3:
+    +    • Remove doc on `git_global_config`
+    +    • https://lore.kernel.org/git/c87b3d93-74db-4377-a57c-80f766d46e7f@app.fastmail.com/
+         v2:
+         • Don’t die; return `NULL`
+
+    @@ config.h: int config_error_nonbool(const char *);
+      #endif
+
+      char *git_system_config(void);
+    -+/**
+    -+ * Returns `NULL` if is uncertain whether or not `HOME/.gitconfig` exists.
+    -+ */
+     +char *git_global_config(void);
+      void git_global_config_paths(char **user, char **xdg);
+
+4:  8bd67c5bf01 = 4:  e0880af0a31 maintenance: use XDG config if it exists
+--
+2.43.0
