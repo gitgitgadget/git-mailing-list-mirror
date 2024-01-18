@@ -1,51 +1,53 @@
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7074C2E636
-	for <git@vger.kernel.org>; Thu, 18 Jan 2024 20:07:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D95592D03C
+	for <git@vger.kernel.org>; Thu, 18 Jan 2024 20:16:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705608437; cv=none; b=gLFyo9b6uP3NIOEGdaf9MLrzksbmRnBKwH5cQBh7xO5N8yy4WBX09+qfihZLZ6AW9FXp8zFAyuGMTrlAOzZG4gyLTfWzMlcLS9TinEp6kkuq3Kl/Hmpy+h/UOLI6xCamLJ38QkwHtuv9jqUSw+XA6YCMG5302spwD8Fw0CEjEDk=
+	t=1705609005; cv=none; b=GIWToBRDKxp6fTYXRboG+pzFjPrVQRFCkL9okaJh9vJ24AHLzJOv+nf3EzrkGFkupcxyqaMtXSrCZ9suQEz4qzMjWD15X7DYr8C7udRCtdn1e5l3GEU9sO+dP2/r0B5ID4R0rUqWJxDFgDiWB0M2Jis2eoKZ2m0OD68cxa4+QOo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705608437; c=relaxed/simple;
-	bh=xMWIrw2gBq81Uwi1G9Nua7J3yATXNefqBtTQssIRUo8=;
+	s=arc-20240116; t=1705609005; c=relaxed/simple;
+	bh=9PhS9g73cS3DgL/ju7fm58h1JjJcy0eBIJ5/MYsS7/Q=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=K5DMkImCQ6DUL6pw7zJYOl0B1ojAgyYjQAy0XdQXAWRwcInA4fO2NLty6qKOUeTtqX3VWe1gLrqrdydqRjvqkuz/3Jkvabmdjm3v1Mar8onD7WrgGExJc9gX72OALXIzwPlio3Ky0ldjucA2llBjmdzHt7N+EPBc1ZdEGYZuKlk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=sHwiRBvQ; arc=none smtp.client-ip=173.228.157.52
+	 MIME-Version:Content-Type; b=t4Ri0Iu5x2XCX6X7rJtXDw5LK4n1Z4XBP3XXRRp2kQQLDsIVlE+kXmU/miSj4oum6YZEEnwqnV/rMLF49j53nFkx45PDHhcz1coHwqK0LexHE9VgazuVhQjdg3ZhWekk8p4TdheTpmUuNlxg7sh6LTX809H9A5HlMWOlUb/U/MU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=SyxjrZrO; arc=none smtp.client-ip=64.147.108.71
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="sHwiRBvQ"
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id E2CD437EFD;
-	Thu, 18 Jan 2024 15:07:11 -0500 (EST)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="SyxjrZrO"
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 321CC1CC655;
+	Thu, 18 Jan 2024 15:16:42 -0500 (EST)
 	(envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=xMWIrw2gBq81Uwi1G9Nua7J3yATXNefqBtTQss
-	IRUo8=; b=sHwiRBvQXk+rbm4zkZ6WvX0IneckPFp3IxtHhhkDH0AjX9W9K+r+2v
-	rYenUybltPj0w+fwwZjIdojAF38DtHUT1rf2rc5qgQjytXL2p0yiyUo775rjeY/Q
-	uUGv2y2zqsMnH5d9fmWeA0n1sNOiFlRTHUGi/Bih24GVuxOKlR1iA=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id DB84237EFC;
-	Thu, 18 Jan 2024 15:07:11 -0500 (EST)
+	:content-type; s=sasl; bh=9PhS9g73cS3DgL/ju7fm58h1JjJcy0eBIJ5/MY
+	sS7/Q=; b=SyxjrZrOg47h93eGJfDze1feG7a0FdpBKkSxguwEXdnA6qEpazdI4E
+	vhccQew6X+iSziEwrBmLyXWTiC//TC1+xzDz4ra0WwYeYAEWkmtJyP/vOU5LE3aZ
+	tbUXOlGHBVDYiF4hZ5PdKS+d0mK0j8Q39aC1zUykzLChHo9IiKsOc=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 27FD31CC654;
+	Thu, 18 Jan 2024 15:16:42 -0500 (EST)
 	(envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.125.200.93])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 7293837EFA;
-	Thu, 18 Jan 2024 15:07:08 -0500 (EST)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 754741CC653;
+	Thu, 18 Jan 2024 15:16:41 -0500 (EST)
 	(envelope-from junio@pobox.com)
 From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 2/2] reftable/stack: fix race in up-to-date check
-In-Reply-To: <713e51a25c1c4cfa830db97f71cd7c39e85864d4.1705585037.git.ps@pks.im>
-	(Patrick Steinhardt's message of "Thu, 18 Jan 2024 14:41:56 +0100")
-References: <cover.1705585037.git.ps@pks.im>
-	<713e51a25c1c4cfa830db97f71cd7c39e85864d4.1705585037.git.ps@pks.im>
-Date: Thu, 18 Jan 2024 12:07:06 -0800
-Message-ID: <xmqqcytyquc5.fsf@gitster.g>
+To: "Antonin Delpeuch via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Kristoffer Haugsbakk <code@khaugsbakk.name>,
+  Antonin Delpeuch <antonin@delpeuch.eu>
+Subject: Re: [PATCH v2] merge-ll: expose revision names to custom drivers
+In-Reply-To: <pull.1648.v2.git.git.1705592581272.gitgitgadget@gmail.com>
+	(Antonin Delpeuch via GitGitGadget's message of "Thu, 18 Jan 2024
+	15:43:01 +0000")
+References: <pull.1648.git.git.1705587974840.gitgitgadget@gmail.com>
+	<pull.1648.v2.git.git.1705592581272.gitgitgadget@gmail.com>
+Date: Thu, 18 Jan 2024 12:16:40 -0800
+Message-ID: <xmqq1qaeqtw7.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -55,61 +57,166 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 X-Pobox-Relay-ID:
- 288F94C0-B63D-11EE-B93D-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
+ 7E1AF988-B63E-11EE-B5EC-25B3960A682E-77302942!pb-smtp2.pobox.com
 
-Patrick Steinhardt <ps@pks.im> writes:
+"Antonin Delpeuch via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> This should address the race in a POSIX-compliant way. The only real
-> downside is that this mechanism cannot be used on non-POSIX-compliant
-> systems like Windows. But we at least have the second-level caching
-> mechanism in place that compares contents of "files.list" with the
-> currently loaded list of tables.
+> From: Antonin Delpeuch <antonin@delpeuch.eu>
+>
+> Custom merge drivers need access to the names of the revisions they
+> are working on, so that the merge conflict markers they introduce
+> can refer to those revisions. The placeholders '%S', '%X' and '%Y'
+> are introduced to this end.
+>
+> Signed-off-by: Antonin Delpeuch <antonin@delpeuch.eu>
+> ---
+>     merge-ll: expose revision names to custom drivers
+>
+>  Documentation/gitattributes.txt | 10 +++++++---
+>  merge-ll.c                      | 17 ++++++++++++++---
+>  t/t6406-merge-attr.sh           | 16 +++++++++++-----
+>  3 files changed, 32 insertions(+), 11 deletions(-)
+>
+> diff --git a/Documentation/gitattributes.txt b/Documentation/gitattributes.txt
+> index 201bdf5edbd..108c2e23baa 100644
+> --- a/Documentation/gitattributes.txt
+> +++ b/Documentation/gitattributes.txt
+> @@ -1141,7 +1141,7 @@ command to run to merge ancestor's version (`%O`), current
+>  version (`%A`) and the other branches' version (`%B`).  These
+>  three tokens are replaced with the names of temporary files that
+>  hold the contents of these versions when the command line is
+> -built. Additionally, %L will be replaced with the conflict marker
+> +built. Additionally, `%L` will be replaced with the conflict marker
+>  size (see below).
+
+Good eyes.  Nice to fix it while we are in the vicinity.
+
+> @@ -1159,8 +1159,12 @@ When left unspecified, the driver itself is used for both
+>  internal merge and the final merge.
+>  
+>  The merge driver can learn the pathname in which the merged result
+> -will be stored via placeholder `%P`.
+> -
+> +will be stored via placeholder `%P`. Additionally, the names of the
+> +merge ancestor revision (`%S`), of the current revision (`%X`) and
+
+The phrase already existsin the description of '%O', but the correct
+word for that is "the common ancestor", not "the merge ancestor".
+At least this one is consistent with the existing error, so we can
+fix them together in a clean-up patch after the dust settles.  
+
+Or you could fix %O's description "while at it" and use the right
+term from the get-go for %S.
+
+> diff --git a/merge-ll.c b/merge-ll.c
+> index 1df58ebaac0..ae9eb69be14 100644
+> --- a/merge-ll.c
+> +++ b/merge-ll.c
+> @@ -185,9 +185,9 @@ static void create_temp(mmfile_t *src, char *path, size_t len)
+>  static enum ll_merge_result ll_ext_merge(const struct ll_merge_driver *fn,
+>  			mmbuffer_t *result,
+>  			const char *path,
+> -			mmfile_t *orig, const char *orig_name UNUSED,
+> -			mmfile_t *src1, const char *name1 UNUSED,
+> -			mmfile_t *src2, const char *name2 UNUSED,
+> +			mmfile_t *orig, const char *orig_name,
+> +			mmfile_t *src1, const char *name1,
+> +			mmfile_t *src2, const char *name2,
+>  			const struct ll_merge_options *opts,
+>  			int marker_size)
+>  {
+> @@ -222,6 +222,12 @@ static enum ll_merge_result ll_ext_merge(const struct ll_merge_driver *fn,
+>  			strbuf_addf(&cmd, "%d", marker_size);
+>  		else if (skip_prefix(format, "P", &format))
+>  			sq_quote_buf(&cmd, path);
+> +		else if (skip_prefix(format, "S", &format))
+> +		    sq_quote_buf(&cmd, orig_name);
+> +		else if (skip_prefix(format, "X", &format))
+> +			sq_quote_buf(&cmd, name1);
+> +		else if (skip_prefix(format, "Y", &format))
+> +			sq_quote_buf(&cmd, name2);
+>  		else
+>  			strbuf_addch(&cmd, '%');
+>  	}
+
+I see some funny indentation for "S" here.
+
+> diff --git a/t/t6406-merge-attr.sh b/t/t6406-merge-attr.sh
+> index 72f8c1722ff..156a1efacfe 100755
+> --- a/t/t6406-merge-attr.sh
+> +++ b/t/t6406-merge-attr.sh
+> @@ -42,11 +42,15 @@ test_expect_success setup '
+>  	#!/bin/sh
+>  
+>  	orig="$1" ours="$2" theirs="$3" exit="$4" path=$5
+> +	orig_name="$6" our_name="$7" their_name="$8"
+>  	(
+>  		echo "orig is $orig"
+>  		echo "ours is $ours"
+>  		echo "theirs is $theirs"
+>  		echo "path is $path"
+> +		echo "orig_name is $orig_name"
+> +		echo "our_name is $our_name"
+> +		echo "their_name is $their_name"
+>  		echo "=== orig ==="
+>  		cat "$orig"
+>  		echo "=== ours ==="
+> @@ -121,7 +125,7 @@ test_expect_success 'custom merge backend' '
+>  
+>  	git reset --hard anchor &&
+>  	git config --replace-all \
+> -	merge.custom.driver "./custom-merge %O %A %B 0 %P" &&
+> +	merge.custom.driver "./custom-merge %O %A %B 0 %P %S %X %Y" &&
+>  	git config --replace-all \
+>  	merge.custom.name "custom merge driver for testing" &&
+>  
+> @@ -132,7 +136,8 @@ test_expect_success 'custom merge backend' '
+>  	o=$(git unpack-file main^:text) &&
+>  	a=$(git unpack-file side^:text) &&
+>  	b=$(git unpack-file main:text) &&
+> -	sh -c "./custom-merge $o $a $b 0 text" &&
+> +	base_revid=$(git rev-parse --short main^) &&
+> +	sh -c "./custom-merge $o $a $b 0 text $base_revid HEAD main" &&
+>  	sed -e 1,3d $a >check-2 &&
+>  	cmp check-1 check-2 &&
+>  	rm -f $o $a $b
 
 OK.
 
-
-> +	/*
-> +	 * Cache stat information in case it provides a useful signal to us.
-> +	 * According to POSIX, "The st_ino and st_dev fields taken together
-> +	 * uniquely identify the file within the system." That being said,
-> +	 * Windows is not POSIX compliant and we do not have these fields
-> +	 * available. So the information we have there is insufficient to
-> +	 * determine whether two file descriptors point to the same file.
-> +	 *
-> +	 * While we could fall back to using other signals like the file's
-> +	 * mtime, those are not sufficient to avoid races. We thus refrain from
-> +	 * using the stat cache on such systems and fall back to the secondary
-> +	 * caching mechanism, which is to check whether contents of the file
-> +	 * have changed.
+> @@ -142,7 +147,7 @@ test_expect_success 'custom merge backend' '
+>  
+>  	git reset --hard anchor &&
+>  	git config --replace-all \
+> -	merge.custom.driver "./custom-merge %O %A %B 1 %P" &&
+> +	merge.custom.driver "./custom-merge %O %A %B 1 %P %S %X %Y" &&
+>  	git config --replace-all \
+>  	merge.custom.name "custom merge driver for testing" &&
+>  
+> @@ -159,7 +164,8 @@ test_expect_success 'custom merge backend' '
+>  	o=$(git unpack-file main^:text) &&
+>  	a=$(git unpack-file anchor:text) &&
+>  	b=$(git unpack-file main:text) &&
+> -	sh -c "./custom-merge $o $a $b 0 text" &&
+> +	base_revid=$(git rev-parse --short main^) &&
+> +	sh -c "./custom-merge $o $a $b 0 text $base_revid HEAD main" &&
+>  	sed -e 1,3d $a >check-2 &&
+>  	cmp check-1 check-2 &&
+>  	sed -e 1,3d -e 4q $a >check-3 &&
 
 OK.
 
-> +	 *
-> +	 * On other systems which are POSIX compliant we must keep the file
-> +	 * descriptor open. This is to avoid a race condition where two
-> +	 * processes access the reftable stack at the same point in time:
-> +	 *
-> +	 *   1. A reads the reftable stack and caches its stat info.
-> +	 *
-> +	 *   2. B updates the stack, appending a new table to "tables.list".
-> +	 *      This will both use a new inode and result in a different file
-> +	 *      size, thus invalidating A's cache in theory.
-> +	 *
-> +	 *   3. B decides to auto-compact the stack and merges two tables. The
-> +	 *      file size now matches what A has cached again. Furthermore, the
-> +	 *      filesystem may decide to recycle the inode number of the file
-> +	 *      we have replaced in (2) because it is not in use anymore.
-> +	 *
-> +	 *   4. A reloads the reftable stack. Neither the inode number nor the
-> +	 *      file size changed. If the timestamps did not change either then
-> +	 *      we think the cached copy of our stack is up-to-date.
-> +	 *
-> +	 * By keeping the file descriptor open the inode number cannot be
-> +	 * recycled, mitigating the race.
-> +	 */
+> @@ -173,7 +179,7 @@ test_expect_success !WINDOWS 'custom merge driver that is killed with a signal'
+>  
+>  	git reset --hard anchor &&
+>  	git config --replace-all \
+> -	merge.custom.driver "./custom-merge %O %A %B 0 %P" &&
+> +	merge.custom.driver "./custom-merge %O %A %B 0 %P %S %X %Y" &&
+>  	git config --replace-all \
+>  	merge.custom.name "custom merge driver for testing" &&
 
-This is nasty.  Well diagnosed and fixed.
+;-)
 
-Will queue.
+This one is expected to die and not produce meaningful output;
+I was wondering why this does not need to make corresponding changes
+to the expected output pattern like the earlier tests.
 
-Thanks.
