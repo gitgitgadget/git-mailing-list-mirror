@@ -1,52 +1,51 @@
 Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D713D3172D
-	for <git@vger.kernel.org>; Thu, 18 Jan 2024 20:00:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7074C2E636
+	for <git@vger.kernel.org>; Thu, 18 Jan 2024 20:07:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705608033; cv=none; b=VJi5Ozwj2+OwqZanHKbqH+8g70zWK231qYocUQqeruYGGnkqC9A0D6pM4wk1Q+/4dK565rcG3fMY4Cwk4F5X2qeJ1ItpW4SIr+s02IWWqO04QIEDw7NADLoNWAduzZ2V8Mxy+0JtUG2F2cDWsY8NYu3y4ZJrq9PuE4y2HuQXcBs=
+	t=1705608437; cv=none; b=gLFyo9b6uP3NIOEGdaf9MLrzksbmRnBKwH5cQBh7xO5N8yy4WBX09+qfihZLZ6AW9FXp8zFAyuGMTrlAOzZG4gyLTfWzMlcLS9TinEp6kkuq3Kl/Hmpy+h/UOLI6xCamLJ38QkwHtuv9jqUSw+XA6YCMG5302spwD8Fw0CEjEDk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705608033; c=relaxed/simple;
-	bh=ldlFQoARfZdYF+x7u59kUExjKbCq0hxKyjrY2gnom8o=;
+	s=arc-20240116; t=1705608437; c=relaxed/simple;
+	bh=xMWIrw2gBq81Uwi1G9Nua7J3yATXNefqBtTQssIRUo8=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=m8k0+O1iLhY7kKylRLtxr/mJtYTQl5dCS4yTAa4nbMkAaRupYdfgJO9iSdpZ39AFmVMJUsgZ3jbjU2IFcWItFujYYwZKAUn36FHZe+FEEGTHDQWvlsgsKlKrxz/5Z9tB4jVDIeM+7h4aoQMuAuraG1qr+UzoljY+16QHDSweu9I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=j0G7L9p/; arc=none smtp.client-ip=173.228.157.52
+	 MIME-Version:Content-Type; b=K5DMkImCQ6DUL6pw7zJYOl0B1ojAgyYjQAy0XdQXAWRwcInA4fO2NLty6qKOUeTtqX3VWe1gLrqrdydqRjvqkuz/3Jkvabmdjm3v1Mar8onD7WrgGExJc9gX72OALXIzwPlio3Ky0ldjucA2llBjmdzHt7N+EPBc1ZdEGYZuKlk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=sHwiRBvQ; arc=none smtp.client-ip=173.228.157.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="j0G7L9p/"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="sHwiRBvQ"
 Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 35C1037EA8;
-	Thu, 18 Jan 2024 15:00:31 -0500 (EST)
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id E2CD437EFD;
+	Thu, 18 Jan 2024 15:07:11 -0500 (EST)
 	(envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=ldlFQoARfZdYF+x7u59kUExjKbCq0hxKyjrY2g
-	nom8o=; b=j0G7L9p/m36vYvZv+nC7NHbXerABIVdSkqToSun36qrUDuxSu4eFNc
-	aO6QjafRny1XV1tdwsgbT+ExccHZtXY3nRMufvGErtIje4w5AaoczRUP1Zhblw0x
-	L2on2l2nMXcN7K3MKUd+Uw7sNQxze29HUOO2goVyVNsgF24T8EROo=
+	:content-type; s=sasl; bh=xMWIrw2gBq81Uwi1G9Nua7J3yATXNefqBtTQss
+	IRUo8=; b=sHwiRBvQXk+rbm4zkZ6WvX0IneckPFp3IxtHhhkDH0AjX9W9K+r+2v
+	rYenUybltPj0w+fwwZjIdojAF38DtHUT1rf2rc5qgQjytXL2p0yiyUo775rjeY/Q
+	uUGv2y2zqsMnH5d9fmWeA0n1sNOiFlRTHUGi/Bih24GVuxOKlR1iA=
 Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 2E07E37EA7;
-	Thu, 18 Jan 2024 15:00:31 -0500 (EST)
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id DB84237EFC;
+	Thu, 18 Jan 2024 15:07:11 -0500 (EST)
 	(envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.125.200.93])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id AC5E937EA6;
-	Thu, 18 Jan 2024 15:00:27 -0500 (EST)
+	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 7293837EFA;
+	Thu, 18 Jan 2024 15:07:08 -0500 (EST)
 	(envelope-from junio@pobox.com)
 From: Junio C Hamano <gitster@pobox.com>
 To: Patrick Steinhardt <ps@pks.im>
-Cc: John Cai via GitGitGadget <gitgitgadget@gmail.com>,
-  git@vger.kernel.org,  John Cai <johncai86@gmail.com>
-Subject: Re: [PATCH 00/12] Group reffiles tests
-In-Reply-To: <ZakNqm0zyw8IiIhB@tanuki> (Patrick Steinhardt's message of "Thu,
-	18 Jan 2024 12:38:18 +0100")
-References: <pull.1647.git.git.1705521155.gitgitgadget@gmail.com>
-	<xmqqv87rsan6.fsf@gitster.g> <ZakNqm0zyw8IiIhB@tanuki>
-Date: Thu, 18 Jan 2024 12:00:26 -0800
-Message-ID: <xmqqmst2qun9.fsf@gitster.g>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 2/2] reftable/stack: fix race in up-to-date check
+In-Reply-To: <713e51a25c1c4cfa830db97f71cd7c39e85864d4.1705585037.git.ps@pks.im>
+	(Patrick Steinhardt's message of "Thu, 18 Jan 2024 14:41:56 +0100")
+References: <cover.1705585037.git.ps@pks.im>
+	<713e51a25c1c4cfa830db97f71cd7c39e85864d4.1705585037.git.ps@pks.im>
+Date: Thu, 18 Jan 2024 12:07:06 -0800
+Message-ID: <xmqqcytyquc5.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -56,30 +55,61 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 X-Pobox-Relay-ID:
- 39B03080-B63C-11EE-9BB9-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
+ 288F94C0-B63D-11EE-B93D-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
 
 Patrick Steinhardt <ps@pks.im> writes:
 
-> I think it depends. If we use the REFFILES prereq for the files-specific
-> tests, then we should likely also use the REFTABLE prereq for the
-> reftable-specific tests.
+> This should address the race in a POSIX-compliant way. The only real
+> downside is that this mechanism cannot be used on non-POSIX-compliant
+> systems like Windows. But we at least have the second-level caching
+> mechanism in place that compares contents of "files.list" with the
+> currently loaded list of tables.
 
-Correct.  I've assumed that as a given; while introducing any new
-implementation of a subsystem that has widespread impact, we would
-test things with the original and new implementations.  It happened
-while we were moving "ort" to replace "recursive" as an internal
-tree merge machinery, for example.  linux-TEST-vars job that is
-available both in GitHub and GitLab CI is an example of a separate
-job that runs everything with non-default configurations, and "use
-reftable as the default backend" GIT_TEST_REFTABLE knob may be an
-appropriate thing to set there.
+OK.
 
-> But that raises the question of whether we want to add a CI job that
-> exercises code with the reftable backend for every major platform
-> (Linux, macOS, Windows). If so then your proposal would be fine with me
-> as we make sure that things work alright on all of them. But if we think
-> that this would be too expensive then I'd like to at least have very
-> basic test coverage on all platforms by always running these
-> backend-specific tests.
->
-> Patrick
+
+> +	/*
+> +	 * Cache stat information in case it provides a useful signal to us.
+> +	 * According to POSIX, "The st_ino and st_dev fields taken together
+> +	 * uniquely identify the file within the system." That being said,
+> +	 * Windows is not POSIX compliant and we do not have these fields
+> +	 * available. So the information we have there is insufficient to
+> +	 * determine whether two file descriptors point to the same file.
+> +	 *
+> +	 * While we could fall back to using other signals like the file's
+> +	 * mtime, those are not sufficient to avoid races. We thus refrain from
+> +	 * using the stat cache on such systems and fall back to the secondary
+> +	 * caching mechanism, which is to check whether contents of the file
+> +	 * have changed.
+
+OK.
+
+> +	 *
+> +	 * On other systems which are POSIX compliant we must keep the file
+> +	 * descriptor open. This is to avoid a race condition where two
+> +	 * processes access the reftable stack at the same point in time:
+> +	 *
+> +	 *   1. A reads the reftable stack and caches its stat info.
+> +	 *
+> +	 *   2. B updates the stack, appending a new table to "tables.list".
+> +	 *      This will both use a new inode and result in a different file
+> +	 *      size, thus invalidating A's cache in theory.
+> +	 *
+> +	 *   3. B decides to auto-compact the stack and merges two tables. The
+> +	 *      file size now matches what A has cached again. Furthermore, the
+> +	 *      filesystem may decide to recycle the inode number of the file
+> +	 *      we have replaced in (2) because it is not in use anymore.
+> +	 *
+> +	 *   4. A reloads the reftable stack. Neither the inode number nor the
+> +	 *      file size changed. If the timestamps did not change either then
+> +	 *      we think the cached copy of our stack is up-to-date.
+> +	 *
+> +	 * By keeping the file descriptor open the inode number cannot be
+> +	 * recycled, mitigating the race.
+> +	 */
+
+This is nasty.  Well diagnosed and fixed.
+
+Will queue.
+
+Thanks.
