@@ -1,80 +1,80 @@
 Received: from wout3-smtp.messagingengine.com (wout3-smtp.messagingengine.com [64.147.123.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2F1B224CD
-	for <git@vger.kernel.org>; Thu, 18 Jan 2024 10:23:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAD1D22613
+	for <git@vger.kernel.org>; Thu, 18 Jan 2024 10:23:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.19
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705573384; cv=none; b=j3aXfKxfMxCGZpWrGbnv2M1i7VZTG4j5LEbVTRy73lSlY6+oC2Vvd8kFu1gDlK0TTfw+AO39F6iQl+EEzs1yGml71Cg6pMcgp7QOwX+U+HP9MWlCfLRvAetifCsk7TokP3yzI20UVYTkn8sWPCoTaDORg6Vy5IfjYNDUK6ZRZ5s=
+	t=1705573388; cv=none; b=rUdgwp2t3nOVkrf0Y1CBEJPAyivv12LNZqzwtIo59rSkuNKTbt1fkoKrKYlVLRmys2xU7GCv5FMOSKwvHSZJPxHyZbYupjXXXZaWEJvZ5AvShZUfBe1KIVUFw8GdXM+ciHNf96ZKMoG5tpvONfvnHTUxgIZJCXkuLlP5ve2QZ3o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705573384; c=relaxed/simple;
-	bh=jtEApcyCy4gWkc+H9OkINLjkLZiRO7wXKiK/9lZOL8s=;
+	s=arc-20240116; t=1705573388; c=relaxed/simple;
+	bh=7pHbbzZg7kX0m8nc//BearcYPIaFRhYE7wVpc4vvtqE=;
 	h=Received:Received:DKIM-Signature:DKIM-Signature:X-ME-Sender:
 	 X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:Received:
 	 Received:Date:From:To:Cc:Subject:Message-ID:References:
-	 MIME-Version:Content-Type:Content-Disposition:In-Reply-To; b=ncL7L2TgiCpRtMdetOBue4T5iY3PdLCP9nbWiCpTp22TzLpV/Qpb8YgZmSXcrI/yU8J80TA9evmtZ9njWGoLHalbJHdfh81pezaHAK9yPS9H7G+yuzrETJsrPjST5vtsNmpn2/ylJS7CUWSvEbnixIFa31boGJJniZSHCBRnzTw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=CXbEk5/9; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=kAIN898d; arc=none smtp.client-ip=64.147.123.19
+	 MIME-Version:Content-Type:Content-Disposition:In-Reply-To; b=qp1m/OAL02LtIa66K2LtcLXgTd9E+VDBRBQ1xLQP0QzZL2n+G7W2zys48z/MXE7+uueXVHkOVON6GTHaYHqTSQItadFPYKoR8wj7gwnoT3OCkqrff7ZObMpmAprv3K3k+Kvvwig22Tc30NofmlwDpmN81Yn1uAP4pfKxsFDfw6g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=H6oESb6i; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=H/csWmiH; arc=none smtp.client-ip=64.147.123.19
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="CXbEk5/9";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="kAIN898d"
-Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
-	by mailout.west.internal (Postfix) with ESMTP id B6DBD3200BDB;
-	Thu, 18 Jan 2024 05:23:01 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="H6oESb6i";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="H/csWmiH"
+Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
+	by mailout.west.internal (Postfix) with ESMTP id B76913200BE1;
+	Thu, 18 Jan 2024 05:23:05 -0500 (EST)
 Received: from mailfrontend1 ([10.202.2.162])
-  by compute2.internal (MEProxy); Thu, 18 Jan 2024 05:23:02 -0500
+  by compute3.internal (MEProxy); Thu, 18 Jan 2024 05:23:06 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1705573381; x=1705659781; bh=0AazXY0eKQ
-	7iE2j861NOgMBgbQCXbsFGrcf/v5ZaITA=; b=CXbEk5/9B558Fw541pylCpXYne
-	6yqlVqqXX27Gbsyny0a8cLEnhfWGXT9NjXuu/zuAU3UzTDKZUQswHTd3e04TNUbC
-	ik4+lXKEe11rBxQbewJNnSK7tBTLuREYMsE3A5ZV/WZSv1uu0SOPXho6dqiOJY0g
-	8y3uoby1DYragdhE/i1Cssoj7TIqxESeJpH2KBpR5krPu4gWmApcNsNRnEDlKB8e
-	+lueRxaO7BxFWQOFCot019imviabSb9quuuZGN4C74bo2T2++r9QliO2C5nX1flP
-	IM782Kdp0U8WgL6rIHebFjqx/wMEmVRSLYvpnVkwI/Ol0BQ+wpX2VejZmNpg==
+	:subject:to:to; s=fm3; t=1705573385; x=1705659785; bh=pgWnYFYJkZ
+	8tUzjYD0ERLTOraaVhZcWJp0mKKtPgsUU=; b=H6oESb6iSg+t0nh2fHObZmNhuS
+	ucCfCJOkGiwv7zK8O2mrUwrICA+RGhsx6xPdYdM06khH6V2wSeVocKo7oQAglZ5r
+	jmIl3gRs6h97Ha1Y+XA6JnQgqylbNlvboVso9kFa+JNA/LNz33Y52Q1d0z6VAbku
+	5lU0GjYHGtDJgp+hJc3OTxX13CblBnYx42f72I+yjMK7i1J6TbebX9hbQSag34V6
+	6cjHjFWET0yf+c4bqt+X+4WLe4YNFFGpQ/pZwZL9qmj8Ta6YMNF/1VPbFWkT05Gr
+	c0gIOVKKJDPlOB1Dz8wnIsJJhS+m/a2bzZamh3wfVEi5klAJ4C//Rl2NwGmQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1705573381; x=1705659781; bh=0AazXY0eKQ7iE2j861NOgMBgbQCX
-	bsFGrcf/v5ZaITA=; b=kAIN898dFQT+jE8OWcaXo/Jk/tqkKH+CUOIGzLvCTuXV
-	l1Ib5zXT9dSb/PAyTKsu2LIy/a5Hv42xkGOmbhG1y4xslUQlgG+IrQJk+9TokIVK
-	dUrIKBNIOuj/aDdYcUYaJefZfNu4BHmzc//jc1AnlivcMpgBA37QdyNaK2SMOhUq
-	SRXQoH3Lnub5oFAtaY/ytrgVLCodQgJdnrJwjhIDwiPtTtJzBfyGq/T3246oYgZT
-	1TLluE3CdCu818/V/gWTKt9i3JmMs/JwtcPE6e6+y6Yz0SmUNsAEnfrRJZeJd1uZ
-	H3bBXRzAi7o0WF0h4QdyOZ6QvSZg8Izh2kcZX5au6w==
-X-ME-Sender: <xms:BfyoZbpgXn4u71iD9ta5VQ4yv06UAHiyVbMVnE8sb9eCVig-LuxYNQ>
-    <xme:BfyoZVpnhFhPtzeTVFpQxVAsBKWtgxA-YswDPlziCgSakG0QClCELMHg7xO1jjLpD
-    9hPZiYaI1V-qx7JWw>
-X-ME-Received: <xmr:BfyoZYM1k-92EzFEHqvIjahwq3Iz-U2igPW_tcqZLXybMjqkMhIyUMWfeEr7lVYJt5CBKplfXD4tB9z5LtfoKFa4UhOnAb0JTyshiOyGpl_mDho>
+	fm3; t=1705573385; x=1705659785; bh=pgWnYFYJkZ8tUzjYD0ERLTOraaVh
+	ZcWJp0mKKtPgsUU=; b=H/csWmiH9dTocSfz59ofDcpuOdTaddlO47J7od54mNYh
+	jw4nIJKzz7Vc/aCZhaD9T1NpskV7AsM3jkT8OdolSq7eDuHHT5/rZeupHTSdym6u
+	TEhY0jZaDuhKLxIrEIk7gJTTgVHx9DGqAx6iexTZ6omvUf1UYLXfWqpuSsEUx40u
+	oyf6gz2COyJYwd2NdxWHt9NrPfyZwZkBQN2lDEw/pRORdvvRShZTn8HCk18NQlMP
+	tZBv+RLmwdgxogFsCHPuG8skueJ49kFq29TguECS1cTvygNjtIpc6bd2pmJsVLAH
+	gfPcMJhOva4MIeWLnXgmmv+isACwR7bguItzGgsi3Q==
+X-ME-Sender: <xms:CfyoZVNEdNfBv-tpwYT7Z_Iynrlj50RbBzWO861Q9mywrC-G5rFQPA>
+    <xme:CfyoZX_FXXCbb2uCD2NUOhDp-cfUk0SyO4RqEGUD79aId8dHYTfmKDg1mcoJ5jY7-
+    P7qlKb2cjxl0_V6TA>
+X-ME-Received: <xmr:CfyoZUSJ0UGvATE9APR3JIGqhzlQPoV-DGwZ8s9TJdgXmSF8EFdm1glzFFjyxRXGfhaSvt5rp1cZFNstsg7VtikqlV1ZYAOZguQYIw_GdUHNOC8>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrvdejjedgudehucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
     uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
     cujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtvdenucfhrhhomheprfgrthhr
     ihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvg
     hrnhepueektdevtdffveeljeetgfehheeigeekleduvdeffeeghefgledttdehjeelffet
-    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
+    necuvehluhhsthgvrhfuihiivgepudenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
     hpkhhsrdhimh
-X-ME-Proxy: <xmx:BfyoZe7maHcwV5FS_c7dgs-2SHPX6j-tsB3BjUc9nwTCe8EJYLlVvg>
-    <xmx:BfyoZa7rz5qfi5V_UmM2AJa_oiw3NfcsTKaRbCeSVFO-auUhwozz3Q>
-    <xmx:BfyoZWhJlGE0vvBziGJwo5iTESK9CjL_shACaL5yQed8yCzLMa1xEw>
-    <xmx:BfyoZQSisNnZ95jQu3RJyOKK73tB6X4XgmEEMLy5dkoXRFDcp9-yjw>
+X-ME-Proxy: <xmx:CfyoZRv2HQ9paeewuIkg5Cnc4FYWAMtVUsE85THdx0hLsNC2k7KMZg>
+    <xmx:CfyoZdfPBeLEHrluNrVIW1nY3VaOnkpmCHUQUTpnMb5nsW8XeXjWaQ>
+    <xmx:CfyoZd1ETwJuIZnWKJ9eYS1MxZ-M8c_-G4LRqTfTOvg8bMD2mUBKpA>
+    <xmx:CfyoZdGJ9QDflOz6UiNHpuwv6wxZqfoRDCG2v7pyOJ5ikRYlULPC5Q>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 18 Jan 2024 05:23:00 -0500 (EST)
+ 18 Jan 2024 05:23:04 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 3bd009d4 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 18 Jan 2024 10:20:04 +0000 (UTC)
-Date: Thu, 18 Jan 2024 11:22:58 +0100
+	by vm-mail (OpenSMTPD) with ESMTPSA id a5be2654 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 18 Jan 2024 10:20:08 +0000 (UTC)
+Date: Thu, 18 Jan 2024 11:23:02 +0100
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
 Cc: Phillip Wood <phillip.wood123@gmail.com>,
 	Matthias =?iso-8859-1?Q?A=DFhauer?= <mha1993@live.de>
-Subject: [PATCH v2 4/5] ci: make p4 setup on macOS more robust
-Message-ID: <1ed6e6865014b5f24aeadd14505b06a15ed20eb2.1705573336.git.ps@pks.im>
+Subject: [PATCH v2 5/5] ci: add macOS jobs to GitLab CI
+Message-ID: <c5ed38f0a6378297bde8a63bfe8ff8428cc4c966.1705573336.git.ps@pks.im>
 References: <cover.1705318985.git.ps@pks.im>
  <cover.1705573336.git.ps@pks.im>
 Precedence: bulk
@@ -84,100 +84,137 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="+J1gk/Ooe/IqZOJD"
+	protocol="application/pgp-signature"; boundary="ZcsW+2GCxD/ASQj+"
 Content-Disposition: inline
 In-Reply-To: <cover.1705573336.git.ps@pks.im>
 
 
---+J1gk/Ooe/IqZOJD
+--ZcsW+2GCxD/ASQj+
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-When setting up Perforce on macOS we put both `p4` and `p4d` into
-"$HOME/bin". On GitHub CI this directory is indeed contained in the PATH
-environment variable and thus there is no need for additional setup than
-to put the binaries there. But GitLab CI does not do this, and thus our
-Perforce-based tests would be skipped there even though we download the
-binaries.
+Add a job to GitLab CI which runs tests on macOS, which matches the
+equivalent "osx-clang" job that we have for GitHub Workflows. One
+significant difference though is that this new job runs on Apple M1
+machines and thus uses the "arm64" architecture. As GCC does not yet
+support this comparatively new architecture we cannot easily include an
+equivalent for the "osx-gcc" job that exists in GitHub Workflows.
 
-Refactor the setup code to become more robust by downloading binaries
-into a separate directory which we then manually append to our PATH.
-This matches what we do on Linux-based jobs.
+Note that one test marked as `test_must_fail` is surprisingly passing:
 
-Note that it may seem like we already did append "$HOME/bin" to PATH
-because we're actually removing the lines that adapt PATH. But we only
-ever adapted the PATH variable in "ci/install-dependencies.sh", and
-didn't adapt it when running "ci/run-build-and-test.sh". Consequently,
-the required binaries wouldn't be found during the test run unless the
-CI platform already had the "$HOME/bin" in PATH right from the start.
+  t7815-grep-binary.sh                             (Wstat: 0 Tests: 22 Fail=
+ed: 0)
+    TODO passed:   12
+
+This seems to boil down to an unexpected difference in how regcomp(3P)
+works when matching NUL bytes. Cross-checking with the respective GitHub
+job shows that this is not an issue unique to the GitLab CI job as it
+passes in the same way there.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- ci/install-dependencies.sh | 10 ++++------
- ci/lib.sh                  |  3 +++
- 2 files changed, 7 insertions(+), 6 deletions(-)
+ .gitlab-ci.yml | 34 +++++++++++++++++++++++++++++++++-
+ ci/lib.sh      |  9 ++++++++-
+ 2 files changed, 41 insertions(+), 2 deletions(-)
 
-diff --git a/ci/install-dependencies.sh b/ci/install-dependencies.sh
-index 4f407530d3..b4e22de3cb 100755
---- a/ci/install-dependencies.sh
-+++ b/ci/install-dependencies.sh
-@@ -37,15 +37,13 @@ macos-*)
- 	test -z "$BREW_INSTALL_PACKAGES" ||
- 	brew install $BREW_INSTALL_PACKAGES
- 	brew link --force gettext
--	mkdir -p $HOME/bin
--	(
--		cd $HOME/bin
-+
-+	mkdir -p "$P4_PATH"
-+	pushd "$P4_PATH"
- 		wget -q "$P4WHENCE/bin.macosx1015x86_64/helix-core-server.tgz" &&
- 		tar -xf helix-core-server.tgz &&
- 		sudo xattr -d com.apple.quarantine p4 p4d 2>/dev/null || true
--	)
--	PATH=3D"$PATH:${HOME}/bin"
--	export PATH
-+	popd
+diff --git a/.gitlab-ci.yml b/.gitlab-ci.yml
+index 793243421c..43bfbd8834 100644
+--- a/.gitlab-ci.yml
++++ b/.gitlab-ci.yml
+@@ -7,7 +7,7 @@ workflow:
+     - if: $CI_COMMIT_TAG
+     - if: $CI_COMMIT_REF_PROTECTED =3D=3D "true"
 =20
- 	if test -n "$CC_PACKAGE"
- 	then
+-test:
++test:linux:
+   image: $image
+   before_script:
+     - ./ci/install-docker-dependencies.sh
+@@ -52,6 +52,38 @@ test:
+       - t/failed-test-artifacts
+     when: on_failure
+=20
++test:osx:
++  image: $image
++  tags:
++    - saas-macos-medium-m1
++  variables:
++    TEST_OUTPUT_DIRECTORY: "/Volumes/RAMDisk"
++  before_script:
++    # Create a 4GB RAM disk that we use to store test output on. This smal=
+l hack
++    # significantly speeds up tests by more than a factor of 2 because the
++    # macOS runners use network-attached storage as disks, which is _reall=
+y_
++    # slow with the many small writes that our tests do.
++    - sudo diskutil apfs create $(hdiutil attach -nomount ram://8192000) R=
+AMDisk
++    - ./ci/install-dependencies.sh
++  script:
++    - ./ci/run-build-and-tests.sh
++  after_script:
++    - |
++      if test "$CI_JOB_STATUS" !=3D 'success'
++      then
++        ./ci/print-test-failures.sh
++        mv "$TEST_OUTPUT_DIRECTORY"/failed-test-artifacts t/
++      fi
++  parallel:
++    matrix:
++      - jobname: osx-clang
++        image: macos-13-xcode-14
++        CC: clang
++  artifacts:
++    paths:
++      - t/failed-test-artifacts
++    when: on_failure
++
+ static-analysis:
+   image: ubuntu:22.04
+   variables:
 diff --git a/ci/lib.sh b/ci/lib.sh
-index c749b21366..f631206a44 100755
+index f631206a44..d5dd2f2697 100755
 --- a/ci/lib.sh
 +++ b/ci/lib.sh
-@@ -344,6 +344,9 @@ macos-*)
- 	then
- 		MAKEFLAGS=3D"$MAKEFLAGS APPLE_COMMON_CRYPTO_SHA1=3DYes"
- 	fi
+@@ -252,7 +252,14 @@ then
+ 	CI_COMMIT=3D"$CI_COMMIT_SHA"
+ 	case "$CI_JOB_IMAGE" in
+ 	macos-*)
+-		CI_OS_NAME=3Dosx;;
++		# GitLab CI has Python installed via multiple package managers,
++		# most notably via asdf and Homebrew. Ensure that our builds
++		# pick up the Homebrew one by prepending it to our PATH as the
++		# asdf one breaks tests.
++		export PATH=3D"$(brew --prefix)/bin:$PATH"
 +
-+	P4_PATH=3D"$HOME/custom/p4"
-+	export PATH=3D"$P4_PATH:$PATH"
- 	;;
- esac
-=20
++		CI_OS_NAME=3Dosx
++		;;
+ 	alpine:*|fedora:*|ubuntu:*)
+ 		CI_OS_NAME=3Dlinux;;
+ 	*)
 --=20
 2.43.GIT
 
 
---+J1gk/Ooe/IqZOJD
+--ZcsW+2GCxD/ASQj+
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmWo/AEACgkQVbJhu7ck
-PpSjAA//Q73F7ighq+fUzWDdioolDBXCA06eCNbC6yG9SR8BAECCVEtWaILPmzRr
-awsGmTlpU42alS/I1cf+h3pwrC/UEFLhCgNalq2+D+OwVvWpRiJwtkSfiICQ3IZE
-o9wFu+xV+3rajLQiQRaJcG7t2KQp4yjkxWab1+QVyo1jK4PtTmLsu3EllrUahHTz
-PT13EYWe/v9m1BBoCtIrOerS6j7dwfajjhwWdJ93r1060jEhdOmkh3LftW4zKMon
-TYzSVvgEWheKdHY/Qr+ZyNBe5O3ybv/PS2IXyTB2cen8eQWi05PuJvMcy1r4ogqo
-ggJI8DdS+l7XYl2idBp0taxps3k+I9Wk7u/t5hsahCgBBVjbYLCTnVXUsmk4aiO5
-dueBLBHVRO86dfJ30PC+0yAJbWL+KfKrL/wl1w4s4yPUWQ9U5svQFNSA0sKYyA7N
-kQ1pF1v85U9pcdEVx7HQ3QXu1DOweWvP7e8oiVrQNz8kvRwinK8l7M3aVozi89JI
-ITKIsDZqe8wXbabC/w8bnZ8dzK2tCSsBSni4NLYmro16G2f9rdHKKtVWd0BdsSGS
-nDHKgbHoqkzeS7GbOSAJLZQriV66uKw6UXTNcXubz0MaGDlMwNQjjWOr7/QUFj9U
-IOMSNVuZw4usxgCQAjTjLYGUdlQbGKcsvZvnCVDQWD6l90NMfKc=
-=mCHq
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmWo/AUACgkQVbJhu7ck
+PpTtpQ//ZOJGyZ5Yd1eP+jdrqo+bwAc4Q/NLKws4sXt+MVtcamBIfHLqyza0vZtR
+GMpZHOvjV82mNOS6pIMRfYrT1lZBcv8u4rvq13MFFz23Q64x25WD2Zqz3nM9blDU
+MKK7Jr1TU/dp/PyXd/QlNny9uyk0/YU6mKHjh8COQO5klRyY2XY3vo1ELBblHopf
+Q6HgUAHqvaQ2JVV74BXJXQKQ4UkGuuAyd3EPR6UJJEq53+d0sCT9R4LrvQUdFflJ
+BO/39t1+F5+bf6BTrY+nH0MOOe/RxzpLP83eMO2k7plB6pdCgjmQQOufwWfh2Z7Z
+w+65u4x3iEOJsUufWfLiX9LbjKaAuhqp1P37hBowoS38kubbLogFZ90JC5k+3reF
+JRfGpJVcAIqOjaItzQCRtUcslgysSV4jnPAnGTCsyMLuOeJ38YnwVzAaAd29tGdQ
+sbeDpzh2Rd/coNm6gaWzkvMk0BGlh6rp988l2y+YGBfaHhGwKiWI+x89TbJYRkt4
+0wJcuDyZZIcMkJrgYtzGSUx/xaTW/S3KnJYmv1S/eTUSw9OskeA9xDjpXSZCe1vh
+dNURh9MSKcMecPlbvu+l2vgylH+uyEMEdzaLFA2hb2CpmqRhykBe6RU9+7YhqRml
+z0pfTugtRJNTIdGmOlImOkIJdRxtY6eITH0WS1wl2ZCbtdq2nRk=
+=6BBv
 -----END PGP SIGNATURE-----
 
---+J1gk/Ooe/IqZOJD--
+--ZcsW+2GCxD/ASQj+--
