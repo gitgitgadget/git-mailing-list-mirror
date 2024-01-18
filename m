@@ -1,368 +1,235 @@
-Received: from wout1-smtp.messagingengine.com (wout1-smtp.messagingengine.com [64.147.123.24])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EA3925753
-	for <git@vger.kernel.org>; Thu, 18 Jan 2024 13:41:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.24
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 426E624B49
+	for <git@vger.kernel.org>; Thu, 18 Jan 2024 14:26:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705585321; cv=none; b=Wh2ecL3nNzE7hxNVwImdoYIMKKw0hJVmdioStLRyCUIEOeeGNM6E7jksNbtetN69ujTovRdjF/UMmpWZEiJpyz22Cfef9Y7N6w0sWDX+HUhcmH3Z2EHj4l4p7++9RcPII7ZsRjOPlKLlHvV4rnjX0oE+ML8mcrwoO331MOWdIqc=
+	t=1705587980; cv=none; b=ZhZC+dJEUIztR+8whLZKY5qAcnYnEYP0LEo6euniySrcaWTlVeDTlPYvlkULommagXsVhdGKF0gzIQToKDNm4TmykzxXTSfos9Ikhf/yvc7Lp/jkuLazUrHsVXh1clfghMSzY4P7dM0JdUKwPwNC45DmZPG/ayzgMv9QzdTb9ZM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705585321; c=relaxed/simple;
-	bh=R0YJSgKQjOWMjKdJ+gSo79AksWdLR2mMIG1LSFfKz/E=;
-	h=Received:Received:DKIM-Signature:DKIM-Signature:X-ME-Sender:
-	 X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:Received:
-	 Received:Date:From:To:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=aaeyyUudix7ly4PiEhyFL8potm1i498KO+gQGqIcBJxt3iDS2ZYdAWn6qnNsi0fedDf5dhPBlb2737SrE4wroZO0wiNdRN/WXu4v0ab4B2EOCBPk1QXHY7ZZ8kOQppF3CaFai60ibr0jpYMDNSLUdcE2EyLRlkkouzbBU8PMecU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=EMvxE1Tw; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=X3qdIXbu; arc=none smtp.client-ip=64.147.123.24
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1705587980; c=relaxed/simple;
+	bh=NryrQTmwgdGRNyIhM6MTf3smHTPf9UR2OAfAczftvbs=;
+	h=Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Google-Smtp-Source:X-Received:Received:
+	 Message-ID:From:Date:Subject:MIME-Version:Content-Type:
+	 Content-Transfer-Encoding:Fcc:To:Cc; b=b20RuyRIQe87mzLBxPa6HBI1JHTV+6fb2ujfFmeonXPG3kEQsdJbtkLKrQfy3DFb8Dnm/qZMLHSuZ1+BuAfxSg/60EUSbfj3FYtcBDssFCzy9MZVCvrRX1MvJuhUKjjUeLrL0ZTkEdWk2ErqkdZcoTP7bDgLhbqjYXRPuiiIk0Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Y3zM7LfD; arc=none smtp.client-ip=209.85.128.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="EMvxE1Tw";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="X3qdIXbu"
-Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
-	by mailout.west.internal (Postfix) with ESMTP id A673A3200A95
-	for <git@vger.kernel.org>; Thu, 18 Jan 2024 08:41:58 -0500 (EST)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute2.internal (MEProxy); Thu, 18 Jan 2024 08:41:58 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1705585318; x=1705671718; bh=ZSj8fEqa0I
-	uytDY9u6FghVdvkp0PjF+iAJcr3xOal4w=; b=EMvxE1Twn4GdlY/dcXLL+mY+GQ
-	6Tj0VI1kxWxTRxePGWIqGg2jt/2WjmSz+sJ5MK63w5udQsMD8vjnzLZlzE9RRNh6
-	nWxbN93tyUHh7Rq5l9pUCv3K/YjgdDILqWA7llek7mFnO/9UvGJ+VObzt+dSLXnk
-	jdalkOjB7P3ioSVD+CJ6ZhA8k5UBpFfFamb+/lzIRkfFYI3lTePWH5UMn3/FM9DF
-	2gWyc49IXvFwsY6lF+nkbIgENmnHLGowlRiKck3/1nN85pv2GAvDj+x9/A2rZcvc
-	uL6zebkQToh/uFcTGOu+cyrwQyL+Na4a8PcD1wpxM3VguWsnNq/MsuwVv9XA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1705585318; x=1705671718; bh=ZSj8fEqa0IuytDY9u6FghVdvkp0P
-	jF+iAJcr3xOal4w=; b=X3qdIXburLBIxCp2Yb1HiXpfy3t9VoZr63XoUlnc8Hue
-	yWzurplJCH3Kx5JyIcYAMIjBNGpwy6wX3ZAuqlfsxDt4cEYMMFtEyvAEBBEcKSuz
-	fZDMhaubtxkXvy+ULdEq+6Cl9c98FMfvLrW2KNtWHRvjHx4IZL9Ng/qveA5a6Fjf
-	5mNQZmHrQ3yqf6J4fFFoLopdulqZG3PgMS4fHYupVHfR4rop0TsHiIyLmG6SBncC
-	NqO+nwfcxQE2XUiXMEEpAm4j6Ut4Ibcz/n9GV9QQ0TCPDNj/kvzze4/yBZQU1Suj
-	TTswO3OK0qi6R8ywKjeMvrX3xrcJN6AGkCsn34fqcQ==
-X-ME-Sender: <xms:piqpZQ1WEXvhwqkTpbKov_dfXw4YN5dEn48e7fAm661BzTKmin5Gdw>
-    <xme:piqpZbFto9scN-dDayANc2PeSbLMyDof_NbcHlLXxWQQZYpCGOb7tlmQXeeNjKAaL
-    moH9uYaKTPVXIEkPw>
-X-ME-Received: <xmr:piqpZY4Sr-2-n5Rcjhc2HnS0_WepBcYosPVg8w21sdBgBuAw5melUvJd-j6Hyl5u8ALDHHNou1A3FMiZbxbRhZrLB1KCzvInl4aU2h7GacGt0uU>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrvdejkedgfeduucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvuffkfhggtggujgesghdtre
-    ertddtjeenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehp
-    khhsrdhimheqnecuggftrfgrthhtvghrnhephefgjeeuveejteduhefgffefffdvjeefje
-    eivdekfffgkeeugfehveetueefleeknecuvehluhhsthgvrhfuihiivgeptdenucfrrghr
-    rghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimh
-X-ME-Proxy: <xmx:piqpZZ3mAQJCVisOurnBcU3yXnTYdokDHgqnWc2WnvuM4es0QReVig>
-    <xmx:piqpZTEDAItwzY2gVWzGDtkr3s2vsFPYyi6XJL5zKVh8Eu9Gh5mGjg>
-    <xmx:piqpZS_-8SF6s4dMdNxpCUAyPgypKAHfpfefLQzadsdwCeHthX3HMA>
-    <xmx:piqpZaxFiwo862HbhKGG5_h9_2xxDYp8yFt1BWETU2Mdjee329PG7A>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Thu, 18 Jan 2024 08:41:57 -0500 (EST)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 4a6ca3f0 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
-	for <git@vger.kernel.org>;
-	Thu, 18 Jan 2024 13:39:02 +0000 (UTC)
-Date: Thu, 18 Jan 2024 14:41:56 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: git@vger.kernel.org
-Subject: [PATCH 2/2] reftable/stack: fix race in up-to-date check
-Message-ID: <713e51a25c1c4cfa830db97f71cd7c39e85864d4.1705585037.git.ps@pks.im>
-References: <cover.1705585037.git.ps@pks.im>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Y3zM7LfD"
+Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-40e88012233so22160055e9.0
+        for <git@vger.kernel.org>; Thu, 18 Jan 2024 06:26:17 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1705587976; x=1706192776; darn=vger.kernel.org;
+        h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=xbCkZrH9/ke/gYr45zoSI453Lc06UqtjxKzNEV1T3Hw=;
+        b=Y3zM7LfDYsEIHLNTU7Tdcg53fFvG9qq05o697T6M3t8o8TwmgfK2+qwf/9AAPBwuDQ
+         21fNPTd7tDmZjil4wtdFrZXSJvKAOUU311D3JaUVcNJCwN+qRAAG9j9Rugpr1oUQm/ph
+         YnKcHAWw+CcmQ2N+/k3WNZzjhc5UhPfUl/ny1NRJpVe0YOVOR9TrGRyXSWvEU5YgPZ20
+         84rgMP9vtzPoYjbLGNvTSt8dRWx5Xv3cEKdXDEQiAjL8zt2V2ubGmxesrQyhn2155QVk
+         xpTQ/OOYIkQ576uCSN38KWtFna2/qs1bfp8ltRiQTQwJ5yZT4tJqsAjLybi4397AZcDM
+         S5Zg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1705587976; x=1706192776;
+        h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=xbCkZrH9/ke/gYr45zoSI453Lc06UqtjxKzNEV1T3Hw=;
+        b=JTzI3eRI57miv4RZWYrQPeSHsf6L7pPpPxA7o7dXNSFarCwB+GjdLaLTnUv0hyC+KV
+         6Bwy3e/t6MQjACaqauclvRtoylukgtQso+8liJshE1P5mqeNc3VB2aA+ccAAB8rxLENn
+         ZO+s9P352ZoDm8U1KkZfm1nB0uAFHv3RcOpyj4Fnll5vghNGzV11MyfWrBB97I18mLy/
+         4Wfa4G9v+5JX2QRxSMP/KGQ9B1FGBfgGrGgmqxPaTZ2YI26+0nuJcRcJfTf7aLK9DOgq
+         nkVgfPGbVezFsGONmyLRDQ7Uu/maeFUtR2iJ3SLKVJ+IDaT9jDMJClgu2cyA9vDnnxPj
+         iVzw==
+X-Gm-Message-State: AOJu0YzjX7x4F6KAdoZnfyl8Ed53UTTPpRvck/YeUUjDxzEjumzI5Cin
+	hY4uLLT4fvRblq/GjbqsaRhBxh9iKgygPgK8p9oATxpNqjXd8kLV+eIhn8a2
+X-Google-Smtp-Source: AGHT+IHRuSpAmET1bO/RNTrUI/ee1+nhlCptkXzDcefp8uyFMiCnyWaCsEHqdl5V/Xle1ICHRtbuzg==
+X-Received: by 2002:a05:600c:340a:b0:40d:9377:d97c with SMTP id y10-20020a05600c340a00b0040d9377d97cmr560823wmp.65.1705587975945;
+        Thu, 18 Jan 2024 06:26:15 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id j17-20020a05600c1c1100b0040c46719966sm29826611wms.25.2024.01.18.06.26.15
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 18 Jan 2024 06:26:15 -0800 (PST)
+Message-ID: <pull.1648.git.git.1705587974840.gitgitgadget@gmail.com>
+From: "Antonin Delpeuch via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Thu, 18 Jan 2024 14:26:14 +0000
+Subject: [PATCH] merge-ll: expose revision names to custom drivers
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="Ot13mJyWNx081rmH"
-Content-Disposition: inline
-In-Reply-To: <cover.1705585037.git.ps@pks.im>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Fcc: Sent
+To: git@vger.kernel.org
+Cc: Antonin Delpeuch <antonin@delpeuch.eu>,
+    Antonin Delpeuch <antonin@delpeuch.eu>
 
+From: Antonin Delpeuch <antonin@delpeuch.eu>
 
---Ot13mJyWNx081rmH
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Custom merge drivers need access to the names of the revisions they
+are working on, so that the merge conflict markers they introduce
+can refer to those revisions. The placeholders '%S', '%X' and '%Y'
+are introduced to this end.
 
-In 6fdfaf15a0 (reftable/stack: use stat info to avoid re-reading stack
-list, 2024-01-11) we have introduced a new mechanism to avoid re-reading
-the table list in case stat(3P) figures out that the stack didn't change
-since the last time we read it.
+CC: Junio C Hamano <gitster@pobox.com>
 
-While this change significantly improved performance when writing many
-refs, it can unfortunately lead to false negatives in very specific
-scenarios. Given two processes A and B, there is a feasible sequence of
-events that cause us to accidentally treat the table list as up-to-date
-even though it changed:
-
-  1. A reads the reftable stack and caches its stat info.
-
-  2. B updates the stack, appending a new table to "tables.list". This
-     will both use a new inode and result in a different file size, thus
-     invalidating A's cache in theory.
-
-  3. B decides to auto-compact the stack and merges two tables. The file
-     size now matches what A has cached again. Furthermore, the
-     filesystem may decide to recycle the inode number of the file we
-     have replaced in (2) because it is not in use anymore.
-
-  4. A reloads the reftable stack. Neither the inode number nor the
-     file size changed. If the timestamps did not change either then we
-     think the cached copy of our stack is up-to-date.
-
-In fact, the commit introduced three related issues:
-
-  - Non-POSIX compliant systems may not report proper `st_dev` and
-    `st_ino` values in stat(3P), which made us rely solely on the
-    file's potentially coarse-grained mtime and ctime.
-
-  - `stat_validity_check()` and friends may end up not comparing
-    `st_dev` and `st_ino` depending on the "core.checkstat" config,
-    again reducing the signal to the mtime and ctime.
-
-  - `st_ino` can be recycled, rendering the check moot even on
-    POSIX-compliant systems.
-
-Given that POSIX defines that "The st_ino and st_dev fields taken
-together uniquely identify the file within the system", these issues led
-to the most important signal to establish file identity to be ignored or
-become useless in some cases.
-
-Refactor the code to stop using `stat_validity_check()`. Instead, we
-manually stat(3P) the file descriptors to make relevant information
-available. On Windows and MSYS2 the result will have both `st_dev` and
-`st_ino` set to 0, which allows us to address the first issue by not
-using the stat-based cache in that case. It also allows us to make sure
-that we always compare `st_dev` and `st_ino`, addressing the second
-issue.
-
-The third issue of inode recycling can be addressed by keeping the file
-descriptor of "files.list" open during the lifetime of the reftable
-stack. As the file will still exist on disk even though it has been
-unlinked it is impossible for its inode to be recycled as long as the
-file descriptor is still open.
-
-This should address the race in a POSIX-compliant way. The only real
-downside is that this mechanism cannot be used on non-POSIX-compliant
-systems like Windows. But we at least have the second-level caching
-mechanism in place that compares contents of "files.list" with the
-currently loaded list of tables.
-
-This new mechanism performs roughly the same as the previous one that
-relied on `stat_validity_check()`:
-
-  Benchmark 1: update-ref: create many refs (HEAD~)
-    Time (mean =C2=B1 =CF=83):      4.754 s =C2=B1  0.026 s    [User: 2.204=
- s, System: 2.549 s]
-    Range (min =E2=80=A6 max):    4.694 s =E2=80=A6  4.802 s    20 runs
-
-  Benchmark 2: update-ref: create many refs (HEAD)
-    Time (mean =C2=B1 =CF=83):      4.721 s =C2=B1  0.020 s    [User: 2.194=
- s, System: 2.527 s]
-    Range (min =E2=80=A6 max):    4.691 s =E2=80=A6  4.753 s    20 runs
-
-  Summary
-    update-ref: create many refs (HEAD~) ran
-      1.01 =C2=B1 0.01 times faster than update-ref: create many refs (HEAD)
-
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
+Signed-off-by: Antonin Delpeuch <antonin@delpeuch.eu>
 ---
- reftable/stack.c  | 99 +++++++++++++++++++++++++++++++++++++++++++----
- reftable/stack.h  |  4 +-
- reftable/system.h |  1 -
- 3 files changed, 95 insertions(+), 9 deletions(-)
+    merge-ll: expose revision names to custom drivers
 
-diff --git a/reftable/stack.c b/reftable/stack.c
-index 705cfb6caa..77a387a86c 100644
---- a/reftable/stack.c
-+++ b/reftable/stack.c
-@@ -66,6 +66,7 @@ int reftable_new_stack(struct reftable_stack **dest, cons=
-t char *dir,
- 	strbuf_addstr(&list_file_name, "/tables.list");
-=20
- 	p->list_file =3D strbuf_detach(&list_file_name, NULL);
-+	p->list_fd =3D -1;
- 	p->reftable_dir =3D xstrdup(dir);
- 	p->config =3D config;
-=20
-@@ -175,7 +176,12 @@ void reftable_stack_destroy(struct reftable_stack *st)
- 		st->readers_len =3D 0;
- 		FREE_AND_NULL(st->readers);
- 	}
--	stat_validity_clear(&st->list_validity);
-+
-+	if (st->list_fd >=3D 0) {
-+		close(st->list_fd);
-+		st->list_fd =3D -1;
-+	}
-+
- 	FREE_AND_NULL(st->list_file);
- 	FREE_AND_NULL(st->reftable_dir);
- 	reftable_free(st);
-@@ -375,11 +381,59 @@ static int reftable_stack_reload_maybe_reuse(struct r=
-eftable_stack *st,
- 		sleep_millisec(delay);
- 	}
-=20
--	stat_validity_update(&st->list_validity, fd);
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1648%2Fwetneb%2Fmerge_driver_pathnames-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1648/wetneb/merge_driver_pathnames-v1
+Pull-Request: https://github.com/git/git/pull/1648
+
+ Documentation/gitattributes.txt | 10 +++++++---
+ merge-ll.c                      | 17 ++++++++++++++---
+ t/t6406-merge-attr.sh           | 16 +++++++++++-----
+ 3 files changed, 32 insertions(+), 11 deletions(-)
+
+diff --git a/Documentation/gitattributes.txt b/Documentation/gitattributes.txt
+index 201bdf5edbd..108c2e23baa 100644
+--- a/Documentation/gitattributes.txt
++++ b/Documentation/gitattributes.txt
+@@ -1141,7 +1141,7 @@ command to run to merge ancestor's version (`%O`), current
+ version (`%A`) and the other branches' version (`%B`).  These
+ three tokens are replaced with the names of temporary files that
+ hold the contents of these versions when the command line is
+-built. Additionally, %L will be replaced with the conflict marker
++built. Additionally, `%L` will be replaced with the conflict marker
+ size (see below).
+ 
+ The merge driver is expected to leave the result of the merge in
+@@ -1159,8 +1159,12 @@ When left unspecified, the driver itself is used for both
+ internal merge and the final merge.
+ 
+ The merge driver can learn the pathname in which the merged result
+-will be stored via placeholder `%P`.
 -
- out:
--	if (err)
--		stat_validity_clear(&st->list_validity);
-+	/*
-+	 * Invalidate the stat cache. It is sufficient to only close the file
-+	 * descriptor and keep the cached stat info because we never use the
-+	 * latter when the former is negative.
-+	 */
-+	if (st->list_fd >=3D 0) {
-+		close(st->list_fd);
-+		st->list_fd =3D -1;
-+	}
-+
-+	/*
-+	 * Cache stat information in case it provides a useful signal to us.
-+	 * According to POSIX, "The st_ino and st_dev fields taken together
-+	 * uniquely identify the file within the system." That being said,
-+	 * Windows is not POSIX compliant and we do not have these fields
-+	 * available. So the information we have there is insufficient to
-+	 * determine whether two file descriptors point to the same file.
-+	 *
-+	 * While we could fall back to using other signals like the file's
-+	 * mtime, those are not sufficient to avoid races. We thus refrain from
-+	 * using the stat cache on such systems and fall back to the secondary
-+	 * caching mechanism, which is to check whether contents of the file
-+	 * have changed.
-+	 *
-+	 * On other systems which are POSIX compliant we must keep the file
-+	 * descriptor open. This is to avoid a race condition where two
-+	 * processes access the reftable stack at the same point in time:
-+	 *
-+	 *   1. A reads the reftable stack and caches its stat info.
-+	 *
-+	 *   2. B updates the stack, appending a new table to "tables.list".
-+	 *      This will both use a new inode and result in a different file
-+	 *      size, thus invalidating A's cache in theory.
-+	 *
-+	 *   3. B decides to auto-compact the stack and merges two tables. The
-+	 *      file size now matches what A has cached again. Furthermore, the
-+	 *      filesystem may decide to recycle the inode number of the file
-+	 *      we have replaced in (2) because it is not in use anymore.
-+	 *
-+	 *   4. A reloads the reftable stack. Neither the inode number nor the
-+	 *      file size changed. If the timestamps did not change either then
-+	 *      we think the cached copy of our stack is up-to-date.
-+	 *
-+	 * By keeping the file descriptor open the inode number cannot be
-+	 * recycled, mitigating the race.
-+	 */
-+	if (!err && fd >=3D 0 && !fstat(fd, &st->list_st) &&
-+	    st->list_st.st_dev && st->list_st.st_ino) {
-+		st->list_fd =3D fd;
-+		fd =3D -1;
-+	}
-+
- 	if (fd >=3D 0)
- 		close(fd);
- 	free_names(names);
-@@ -396,8 +450,39 @@ static int stack_uptodate(struct reftable_stack *st)
- 	int err;
- 	int i =3D 0;
-=20
--	if (stat_validity_check(&st->list_validity, st->list_file))
--		return 0;
-+	/*
-+	 * When we have cached stat information available then we use it to
-+	 * verify whether the file has been rewritten.
-+	 *
-+	 * Note that we explicitly do not want to use `stat_validity_check()`
-+	 * and friends here because they may end up not comparing the `st_dev`
-+	 * and `st_ino` fields. These functions thus cannot guarantee that we
-+	 * indeed still have the same file.
-+	 */
-+	if (st->list_fd >=3D 0) {
-+		struct stat list_st;
-+
-+		if (stat(st->list_file, &list_st) < 0) {
-+			/*
-+			 * It's fine for "tables.list" to not exist. In that
-+			 * case, we have to refresh when the loaded stack has
-+			 * any readers.
-+			 */
-+			if (errno =3D=3D ENOENT)
-+				return !!st->readers_len;
-+			return REFTABLE_IO_ERROR;
-+		}
-+
-+		/*
-+		 * When "tables.list" refers to the same file we can assume
-+		 * that it didn't change. This is because we always use
-+		 * rename(3P) to update the file and never write to it
-+		 * directly.
-+		 */
-+		if (st->list_st.st_dev =3D=3D list_st.st_dev &&
-+		    st->list_st.st_ino =3D=3D list_st.st_ino)
-+			return 0;
-+	}
-=20
- 	err =3D read_lines(st->list_file, &names);
- 	if (err < 0)
-diff --git a/reftable/stack.h b/reftable/stack.h
-index 3f80cc598a..c1e3efa899 100644
---- a/reftable/stack.h
-+++ b/reftable/stack.h
-@@ -14,8 +14,10 @@ license that can be found in the LICENSE file or at
- #include "reftable-stack.h"
-=20
- struct reftable_stack {
--	struct stat_validity list_validity;
-+	struct stat list_st;
- 	char *list_file;
-+	int list_fd;
-+
- 	char *reftable_dir;
- 	int disable_auto_compact;
-=20
-diff --git a/reftable/system.h b/reftable/system.h
-index 2cc7adf271..6b74a81514 100644
---- a/reftable/system.h
-+++ b/reftable/system.h
-@@ -12,7 +12,6 @@ license that can be found in the LICENSE file or at
- /* This header glues the reftable library to the rest of Git */
-=20
- #include "git-compat-util.h"
--#include "statinfo.h"
- #include "strbuf.h"
- #include "hash-ll.h" /* hash ID, sizes.*/
- #include "dir.h" /* remove_dir_recursively, for tests.*/
---=20
-2.43.GIT
++will be stored via placeholder `%P`. Additionally, the names of the
++merge ancestor revision (`%S`), of the current revision (`%X`) and
++of the other branch (`%Y`) can also be supplied. Those are short
++revision names, optionally joined with the paths of the file in each
++revision. Those paths are only present if they differ and are separated
++from the revision by a colon.
+ 
+ `conflict-marker-size`
+ ^^^^^^^^^^^^^^^^^^^^^^
+diff --git a/merge-ll.c b/merge-ll.c
+index 1df58ebaac0..ae9eb69be14 100644
+--- a/merge-ll.c
++++ b/merge-ll.c
+@@ -185,9 +185,9 @@ static void create_temp(mmfile_t *src, char *path, size_t len)
+ static enum ll_merge_result ll_ext_merge(const struct ll_merge_driver *fn,
+ 			mmbuffer_t *result,
+ 			const char *path,
+-			mmfile_t *orig, const char *orig_name UNUSED,
+-			mmfile_t *src1, const char *name1 UNUSED,
+-			mmfile_t *src2, const char *name2 UNUSED,
++			mmfile_t *orig, const char *orig_name,
++			mmfile_t *src1, const char *name1,
++			mmfile_t *src2, const char *name2,
+ 			const struct ll_merge_options *opts,
+ 			int marker_size)
+ {
+@@ -222,6 +222,12 @@ static enum ll_merge_result ll_ext_merge(const struct ll_merge_driver *fn,
+ 			strbuf_addf(&cmd, "%d", marker_size);
+ 		else if (skip_prefix(format, "P", &format))
+ 			sq_quote_buf(&cmd, path);
++		else if (skip_prefix(format, "S", &format))
++		    sq_quote_buf(&cmd, orig_name);
++		else if (skip_prefix(format, "X", &format))
++			sq_quote_buf(&cmd, name1);
++		else if (skip_prefix(format, "Y", &format))
++			sq_quote_buf(&cmd, name2);
+ 		else
+ 			strbuf_addch(&cmd, '%');
+ 	}
+@@ -315,7 +321,12 @@ static int read_merge_config(const char *var, const char *value,
+ 		 *    %B - temporary file name for the other branches' version.
+ 		 *    %L - conflict marker length
+ 		 *    %P - the original path (safely quoted for the shell)
++		 *    %S - the revision for the merge base
++		 *    %X - the revision for our version
++		 *    %Y - the revision for their version
+ 		 *
++		 * If the file is not named indentically in all versions, then each
++		 * revision is joined with the corresponding path, separated by a colon.
+ 		 * The external merge driver should write the results in the
+ 		 * file named by %A, and signal that it has done with zero exit
+ 		 * status.
+diff --git a/t/t6406-merge-attr.sh b/t/t6406-merge-attr.sh
+index 72f8c1722ff..156a1efacfe 100755
+--- a/t/t6406-merge-attr.sh
++++ b/t/t6406-merge-attr.sh
+@@ -42,11 +42,15 @@ test_expect_success setup '
+ 	#!/bin/sh
+ 
+ 	orig="$1" ours="$2" theirs="$3" exit="$4" path=$5
++	orig_name="$6" our_name="$7" their_name="$8"
+ 	(
+ 		echo "orig is $orig"
+ 		echo "ours is $ours"
+ 		echo "theirs is $theirs"
+ 		echo "path is $path"
++		echo "orig_name is $orig_name"
++		echo "our_name is $our_name"
++		echo "their_name is $their_name"
+ 		echo "=== orig ==="
+ 		cat "$orig"
+ 		echo "=== ours ==="
+@@ -121,7 +125,7 @@ test_expect_success 'custom merge backend' '
+ 
+ 	git reset --hard anchor &&
+ 	git config --replace-all \
+-	merge.custom.driver "./custom-merge %O %A %B 0 %P" &&
++	merge.custom.driver "./custom-merge %O %A %B 0 %P %S %X %Y" &&
+ 	git config --replace-all \
+ 	merge.custom.name "custom merge driver for testing" &&
+ 
+@@ -132,7 +136,8 @@ test_expect_success 'custom merge backend' '
+ 	o=$(git unpack-file main^:text) &&
+ 	a=$(git unpack-file side^:text) &&
+ 	b=$(git unpack-file main:text) &&
+-	sh -c "./custom-merge $o $a $b 0 text" &&
++	base_revid=$(git rev-parse --short main^) &&
++	sh -c "./custom-merge $o $a $b 0 text $base_revid HEAD main" &&
+ 	sed -e 1,3d $a >check-2 &&
+ 	cmp check-1 check-2 &&
+ 	rm -f $o $a $b
+@@ -142,7 +147,7 @@ test_expect_success 'custom merge backend' '
+ 
+ 	git reset --hard anchor &&
+ 	git config --replace-all \
+-	merge.custom.driver "./custom-merge %O %A %B 1 %P" &&
++	merge.custom.driver "./custom-merge %O %A %B 1 %P %S %X %Y" &&
+ 	git config --replace-all \
+ 	merge.custom.name "custom merge driver for testing" &&
+ 
+@@ -159,7 +164,8 @@ test_expect_success 'custom merge backend' '
+ 	o=$(git unpack-file main^:text) &&
+ 	a=$(git unpack-file anchor:text) &&
+ 	b=$(git unpack-file main:text) &&
+-	sh -c "./custom-merge $o $a $b 0 text" &&
++	base_revid=$(git rev-parse --short main^) &&
++	sh -c "./custom-merge $o $a $b 0 text $base_revid HEAD main" &&
+ 	sed -e 1,3d $a >check-2 &&
+ 	cmp check-1 check-2 &&
+ 	sed -e 1,3d -e 4q $a >check-3 &&
+@@ -173,7 +179,7 @@ test_expect_success !WINDOWS 'custom merge driver that is killed with a signal'
+ 
+ 	git reset --hard anchor &&
+ 	git config --replace-all \
+-	merge.custom.driver "./custom-merge %O %A %B 0 %P" &&
++	merge.custom.driver "./custom-merge %O %A %B 0 %P %S %X %Y" &&
+ 	git config --replace-all \
+ 	merge.custom.name "custom merge driver for testing" &&
+ 
 
-
---Ot13mJyWNx081rmH
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmWpKqMACgkQVbJhu7ck
-PpS5qQ/+PIQQGSNgHTtaLVrYsPtl+83/QJW3bhK97mev5Hp1k6xAXPl3adcybMSb
-2YVwvPtumjkz9E6RmvFUyJxsgZQslKi6t6kC3bvEpCmQMWThtHVHcm0mui/N33fj
-cxF/JgKGgrF+tADqkmt2XpfX8y4eBczAMooHjMsW84ZPc1QdIjgDXUu9ujF8CdbU
-SZ+RvSJmHneya3ldVTRlwDWbw9N0OLTE9UjM9srruXGXWApo8lyP/JyfHm8xnC8c
-rlfLiA9XsmxcjnAZTHYf91xolBihMvIghBzF9JlNd0DTrEYJ03GgLyW8mcJBv3Os
-YP8E28EhbFR0pM0JfPAh4YssiLUNHTs/stYt7SDiLpQxM3I6COR+LgYX2UK91oSc
-HUs6jUUuGZFynh+E6wX9BWQKQTF70hbrQ2rGqmg2z6gfVXQYZLvDle2GabUgCToT
-8W+MYaKyJA1WHaY7mMtax3DJrYOtWZ7pfbGryhRtk5rvQoEWUIzohp3xfz2qRObH
-5kKcWkmcYCpsZBzMZcrQHJvqo+1T832LQEoT2V3rJdcWSyJ0D/xE4ygOwbv2kI//
-9FFtCX2vwl2lp0IcsMORt47nOOVDb9UHPIO4EC7BEJXcQHuNWwAtvbxl5DkL4Dmc
-z8Y/9ZooT8KkCvoLwQ5LjavO8cguAwutxHOt+lc9F7VwFMXuM5c=
-=y6SX
------END PGP SIGNATURE-----
-
---Ot13mJyWNx081rmH--
+base-commit: 186b115d3062e6230ee296d1ddaa0c4b72a464b5
+-- 
+gitgitgadget
