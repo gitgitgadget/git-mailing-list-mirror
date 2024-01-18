@@ -1,113 +1,83 @@
-Received: from st43p00im-ztfb10061701.me.com (st43p00im-ztfb10061701.me.com [17.58.63.172])
+Received: from relay.yourmailgateway.de (relay.yourmailgateway.de [188.68.63.98])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A8ABBE47
-	for <git@vger.kernel.org>; Thu, 18 Jan 2024 07:51:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=17.58.63.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C5A8208A6
+	for <git@vger.kernel.org>; Thu, 18 Jan 2024 08:02:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=188.68.63.98
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705564281; cv=none; b=NUPxwvoawKK+fZYEaTKV5o0gItifd2+gZahihY5OJX8QHSPInV8w/8S8tGexBO83pQ/sbwJAtjp8CS9jz7bLS5/xwAjRNm1DkJ2BQKzyrCq/K9OK1MCVpT0zCtqKp39l602jVOr02PmY2SlbximnYA5xHtAz+T9gfebSlvEgNNU=
+	t=1705564974; cv=none; b=s2f1CUZHnOj2QoGsSizwv8IbFLyzGJwT0sAV0fYoV/Y9Y0XT/uKCnMKlJci0NFqAZZCHPqzkBD/CbfQmIfGpi3ekwQegh+oQM+SrWZk1Mhmasjol7eqOnHifDLXo/zM9zBmQTuRN/U3D4BIkMtKN+W/Gv98wiEntZe3ViczRtX8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705564281; c=relaxed/simple;
-	bh=Xy/5fU93UkOJQ0C/AXZEIn+X4jFSyYI3c/SxNIzLMjo=;
-	h=DKIM-Signature:Received:From:To:Cc:Subject:Date:X-Mailer:
-	 Message-ID:In-Reply-To:References:MIME-Version:Content-Type:
-	 X-Proofpoint-GUID:X-Proofpoint-ORIG-GUID:
-	 X-Proofpoint-Virus-Version:X-Proofpoint-Spam-Details; b=ld7r8XGkcPXSlzx6+oCB7jTFjzx4aUFSYpR2bIniU7sQsfZylx4XCmrngSS8q8f3ZHBqwGZGbKNZOXvCReiH3KmP1GrF9VdRY/N1o7xJn7pDfOFNfDBLpqgpZuNRx1sRkluW0Dj7UaG3VjT2iJ8ZlK6omUmr3rtkYgThb7IUgSk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=icloud.com; spf=pass smtp.mailfrom=icloud.com; dkim=pass (2048-bit key) header.d=icloud.com header.i=@icloud.com header.b=wOEVI4TC; arc=none smtp.client-ip=17.58.63.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=icloud.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=icloud.com
+	s=arc-20240116; t=1705564974; c=relaxed/simple;
+	bh=07qIZiD7zRorqtCaKD/sULqNYXZg2bRzYa4Zsq5xwpI=;
+	h=Received:DKIM-Signature:Received:Received:Received:Received-SPF:
+	 Message-ID:Date:MIME-Version:User-Agent:To:Content-Language:From:
+	 Subject:Content-Type:Content-Transfer-Encoding:X-PPP-Message-ID:
+	 X-Rspamd-Queue-Id:X-Rspamd-Server:X-NC-CID; b=QZZl+fH8F1aiBRjN0224CPp/uzifE9ajUqMOUR2v0tcvM/N9icKlyquYLW+BHysV0oEAofaT5bYkI6KSwwL8g0xzrWjTNiOZxe4qQIQuWNzh+te3wufGlKuuFNQ6yiSUJpZVA/PFhnLWwkmfvQbSogXNPxDS8gojV6KF5cc44ck=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=rd10.de; spf=pass smtp.mailfrom=rd10.de; dkim=pass (2048-bit key) header.d=rd10.de header.i=@rd10.de header.b=MBT00N1T; arc=none smtp.client-ip=188.68.63.98
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=rd10.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=rd10.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=icloud.com header.i=@icloud.com header.b="wOEVI4TC"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=icloud.com;
-	s=1a1hai; t=1705564279;
-	bh=9ad+wsJBjiN4xm6fj5iWqXjkWELEWYN4dAhdVKGjHiI=;
-	h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type;
-	b=wOEVI4TClXXhBTjiZIKXmoIbEv/knX9PauSB7pXkelNXyG/QQQ+un9UwfTFWHueqD
-	 l/o0NTivrsIpe6Cv7jHF6E8d2T88YtqCKpmh3HQeEvzGPr89L7NfnBX3iCkaz6WkxE
-	 J8lCzK5DzrgVQjNOHI7/oeIMph71JEOle/l7H9PYXljG2s8J2L2g77xJtOyIuw6FH1
-	 BnRrW6SdaKd/PK8uzm3WfJbYhW24w9/gCamhi9P3GwBM2iHXZd/5CNJUe8i+pnoB/V
-	 6ppVu1ujbJnGiE9wfJYsiCO6U5Bayx8pifV9p/F9Fj/Ze0EvH/cWzbz2MC0KfHRDjA
-	 UBYD5Xai242YQ==
-Received: from [169.254.204.93] (st43p00im-dlb-asmtp-mailmevip.me.com [17.42.251.41])
-	by st43p00im-ztfb10061701.me.com (Postfix) with ESMTPSA id 2AAF32E0170;
-	Thu, 18 Jan 2024 07:51:18 +0000 (UTC)
-From: Sebastian Thiel <sebastian.thiel@icloud.com>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Elijah Newren <newren@gmail.com>,
- Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org,
- Josh Triplett <josh@joshtriplett.org>,
- Phillip Wood <phillip.wood123@gmail.com>
-Subject: Re: [PATCH] precious-files.txt: new document proposing new precious
- file type
-Date: Thu, 18 Jan 2024 08:51:16 +0100
-X-Mailer: MailMate (1.14r5937)
-Message-ID: <298F7067-D572-433F-A7DD-5256B43B97D7@icloud.com>
-In-Reply-To: <xmqqsf3nl2b3.fsf@gitster.g>
-References: <pull.1627.git.1703643931314.gitgitgadget@gmail.com>
- <xmqq8r5gfc3j.fsf@gitster.g>
- <CABPp-BGSTYDUR1oYYXkCSh-1i2zwxBM=-gnoe-ezNbtPi5CV2A@mail.gmail.com>
- <xmqqsf3nl2b3.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=rd10.de header.i=@rd10.de header.b="MBT00N1T"
+Received: from mors-relay-2501.netcup.net (localhost [127.0.0.1])
+	by mors-relay-2501.netcup.net (Postfix) with ESMTPS id 4TFwG92xNwz61nr
+	for <git@vger.kernel.org>; Thu, 18 Jan 2024 09:02:41 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=rd10.de; s=key2;
+	t=1705564961; bh=07qIZiD7zRorqtCaKD/sULqNYXZg2bRzYa4Zsq5xwpI=;
+	h=Date:To:From:Subject:From;
+	b=MBT00N1Tc2OTn2N26wWvhjvbPwOLusdXsRHAp7cBt/Qu0hsbWCStL6X8C2CKZ22lm
+	 Hu8Tv4Vv33Ca2sA2jXgCTBnM/jtfZbmlb/oxIiEnqWSvuIf3yR4YsvvZrOwSI0f56W
+	 QuDl8R774nW7gOiarTo2Gx5CNB/qXvb4OkW/rbDxVdBsBiB5tGsDANRvwFCa8BpJMf
+	 l/MpeT/ggqUu98Rpp+agIBe+ofY+rIAIZ3r1I8a1yCrZWvdFTc1DA8f8iVeej1JSAF
+	 KaEtv3Fk2u2HUI0wKHYp/Eq3dq0vHeB+sKaNjbBMQfjdhiNZtQ8GivBvLowhdPWgP0
+	 ec77tGMTGfBtw==
+Received: from policy02-mors.netcup.net (unknown [46.38.225.35])
+	by mors-relay-2501.netcup.net (Postfix) with ESMTPS id 4TFwG92FJQz4xNs
+	for <git@vger.kernel.org>; Thu, 18 Jan 2024 09:02:41 +0100 (CET)
+Received: from mx2eb1.netcup.net (unknown [10.243.12.53])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	by policy02-mors.netcup.net (Postfix) with ESMTPS id 4TFwG90Wr2z8sh1
+	for <git@vger.kernel.org>; Thu, 18 Jan 2024 09:02:41 +0100 (CET)
+Received: from [IPV6:2003:cf:cf12:700:c0b7:a2c4:a056:7bf6] (p200300cfcf120700c0b7a2c4a0567bf6.dip0.t-ipconnect.de [IPv6:2003:cf:cf12:700:c0b7:a2c4:a056:7bf6])
+	by mx2eb1.netcup.net (Postfix) with ESMTPSA id B9102100861
+	for <git@vger.kernel.org>; Thu, 18 Jan 2024 09:02:35 +0100 (CET)
+Authentication-Results: mx2eb1;
+        spf=pass (sender IP is 2003:cf:cf12:700:c0b7:a2c4:a056:7bf6) smtp.mailfrom=rdiez-temp3@rd10.de smtp.helo=[IPV6:2003:cf:cf12:700:c0b7:a2c4:a056:7bf6]
+Received-SPF: pass (mx2eb1: connection is authenticated)
+Message-ID: <6cfee0e4-3285-4f18-91ff-d097da9de737@rd10.de>
+Date: Thu, 18 Jan 2024 09:02:30 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Proofpoint-GUID: 0yEcshn_PwxXZfXjnskK89sFG22SSxvI
-X-Proofpoint-ORIG-GUID: 0yEcshn_PwxXZfXjnskK89sFG22SSxvI
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-01-18_04,2024-01-17_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 suspectscore=0 phishscore=0 mlxscore=0
- spamscore=0 mlxlogscore=991 clxscore=1011 malwarescore=0 adultscore=0
- bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2308100000 definitions=main-2401180055
+User-Agent: Mozilla Thunderbird
+To: git@vger.kernel.org
+Content-Language: en-GB
+From: "R. Diez" <rdiez-temp3@rd10.de>
+Subject: git fsck does not check the packed-refs file
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-PPP-Message-ID: <170556495682.3940.13502137905897943463@mx2eb1.netcup.net>
+X-Rspamd-Queue-Id: B9102100861
+X-Rspamd-Server: rspamd-worker-8404
+X-NC-CID: L4iJljwBGXLqOrOOaiXFckud11WUTYQE5r8WpHHx
 
-I thought it would be helpful to see the syntax being referred to here,
-as first brought up by Phillip Wood:
+Hi all:
 
-#(keep)
-/my-precious-file
+I have been hit by an unfortunate system problem, and as a result, a few files in my Git repository got corrupted on my last git push. Some random blocks of bytes were overwritten with binary zeros, so I started getting weird unpacking errors etc.
 
-The main benefit I see for it is that it's extensible, despite having
-trouble imagining what such extension would be 10 years from now.
-On the flip side, since it's already using a comment, people will
-be even more inclined to document the reason for the preciousness
-of the file.
+It took a while to realise what the problem was. During my investigation, I ran "git fsck", which reported no problems, and then "git push" failed.
 
-# The kernel configuration, typically created by running a TUI program
-#(keep)
-.config
+One of the very few corrupted files was packed-refs. This is a text file, so it was easy to compare it and see the corrupting binary zeros. But that made me wonder what "git fsck" checks.
 
-As a side-effect of the syntax, it's obvious this is an 'upgrade', with
-perfect backwards compatibility as old git does the same as always.
+I am guessing that "git fsck" does not check file packed-refs at all. I mean, it does not even attempt to parse it, in order to check whether at least the format makes any sense. Only "git push" does it.
 
-I'd love to take first steps into the implementation, and if the above
-should be the syntax to use, I'd be happy to submit a patch for parsing
-it, along with initial support for precious files in `git clean` and
-`git status`.
+What other parts of the repository does "git fsck" not check then?
 
-Does that sound like a reasonable next step?
+The repository check is suspiciously fast. Is there a slow way to check that a repository is fine? I mean, something along the lines of checking whether every commit can be checked out without problems.
 
-
-On 27 Dec 2023, at 23:15, Junio C Hamano wrote:
-
-> Elijah Newren <newren@gmail.com> writes:
->
->> There are
->> precisely two choices in our design for how older Git versions can
->> treat precious files:
->>   * ignored-and-expendable
->>   * untracked-and-precious
->> If we pick syntax that causes older Git versions to treat precious
->> files as ignored-and-expendable, we risk deleting important files.
->
-> Yes but not really.  I'd expect the adoption of precious feature and
-> the adoption of versions of Git that supports that feature will go
-> more or less hand in hand.  Projects that, for any reason, need to
-> keep their participants at pre-precious versions of Git would
-> naturally refrain from marking the "precious" paths in their "ignore"
-> mechanism before their participants are ready, so even if we chose
-> syntax that will make the precious ones mistaken as merely ignored,
-> the damage would be fairly small.
+Best regards,
+   rdiez
