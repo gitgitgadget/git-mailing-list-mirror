@@ -1,73 +1,72 @@
 Received: from out5-smtp.messagingengine.com (out5-smtp.messagingengine.com [66.111.4.29])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 984172D7B2
-	for <git@vger.kernel.org>; Thu, 18 Jan 2024 16:13:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 912C52DF65
+	for <git@vger.kernel.org>; Thu, 18 Jan 2024 16:13:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=66.111.4.29
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705594431; cv=none; b=RaW02pHQFqu4R+h6PeGlDRTVnnyHkZpBrCjov7r1P61O0xFVypT5FS7T+rX4sadu/1yIhkIWeNk9ZdGg4PPna3GqYDfJ3aYvtJ7Co4fvo2c3FZHp5GV47os5ft5hK1Yd6pz739aCxT3KdcptfwdNmywuQ6McYEocuDZnJk5ZiLA=
+	t=1705594433; cv=none; b=IUrlW9P4Q3IH9+2Iw/WjAtrHaA9wDQqdn8BnngoHjUwMi1E5VhUCapeEKwModwqm3ghgXOvBtuwUPO7EVWofeTUpKkjiARGnEqqdIh9SucB5PEF3ZIVWH/IvZ3bwnvOJO86u8XCMPOfgdFXO3CCjpMaL0hGMoTxgBGOGI3zRA/M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705594431; c=relaxed/simple;
-	bh=If5MDstJm6UXUQVFy+yGlRKP6w/PB5yaW4LYC51sIyo=;
+	s=arc-20240116; t=1705594433; c=relaxed/simple;
+	bh=cpL6lIRIMWPvwhiVkeP7FuNVvovLlGwbSB80JcUDnug=;
 	h=Received:Received:DKIM-Signature:DKIM-Signature:X-ME-Sender:
 	 X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:Received:
 	 From:To:Cc:Subject:Date:Message-ID:X-Mailer:In-Reply-To:References:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding; b=Fl+WTeh6pDueebOKer6ZpQWOErSckxOjo2U+aLBjWKv8d0YyuWQ+WjdGoTwGxZ/DF8sCNRTlb25SMyAyqGkFXCBSwuX3+AaMdrX1VvLYadhaM/7WmbYYPrX70nHFPtzGEvPdKmNgnYNNwHNXUPKzA1eL7sm8Kek2CAqwBp626YA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=khaugsbakk.name; spf=pass smtp.mailfrom=khaugsbakk.name; dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b=Y9D8NRcw; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=MYL/tcWO; arc=none smtp.client-ip=66.111.4.29
+	 MIME-Version:Content-Type:Content-Transfer-Encoding; b=NC+o4jYAcLujf+lDAztR+VVJh5lylPUTtsWnI1aveKneKlioArcJWPcSS0El4U2DAJatCL7Ey3daOr7o8JmpL8L9mKu9lhGXwIiwyiXt0EjORbj5qy/T04Prq4lCb2cqAzWoW3CjYSyWLOD5EAn/LGyJ1/N7aKrheW0OYv5zr1E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=khaugsbakk.name; spf=pass smtp.mailfrom=khaugsbakk.name; dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b=N+H4OpMN; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=JsbYyC+i; arc=none smtp.client-ip=66.111.4.29
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=khaugsbakk.name
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=khaugsbakk.name
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b="Y9D8NRcw";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="MYL/tcWO"
-Received: from compute7.internal (compute7.nyi.internal [10.202.2.48])
-	by mailout.nyi.internal (Postfix) with ESMTP id 7FCBD5C00D7;
-	Thu, 18 Jan 2024 11:13:48 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b="N+H4OpMN";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="JsbYyC+i"
+Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
+	by mailout.nyi.internal (Postfix) with ESMTP id 9CFC25C00DE;
+	Thu, 18 Jan 2024 11:13:50 -0500 (EST)
 Received: from mailfrontend1 ([10.202.2.162])
-  by compute7.internal (MEProxy); Thu, 18 Jan 2024 11:13:48 -0500
+  by compute1.internal (MEProxy); Thu, 18 Jan 2024 11:13:50 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=khaugsbakk.name;
 	 h=cc:cc:content-transfer-encoding:content-type:content-type
 	:date:date:from:from:in-reply-to:in-reply-to:message-id
 	:mime-version:references:reply-to:subject:subject:to:to; s=fm2;
-	 t=1705594428; x=1705680828; bh=2OghQhbmWpHOC/sVwSElZqCL2q8M21Kb
-	+JxGTfqgIMk=; b=Y9D8NRcwm6ZSgew1CoZldK+qsjPrBc1CxcmEwWGN2mcx1Zbi
-	q/mdz/AL18b1X0EQoBvHGsVtPP9CMJq6aqcCIrOc1UDKW/mr+Riq+cTEVE0Dj8XZ
-	SMPFvAxIVdQq/geVWIRmt9fGx+voKmTQgzW9KYLfhvFdmO68pzy+jf+p6piSoUak
-	vi2dhcerupPFjoHaeXyq91tuoHHLuDt3T+zW1W5FnzHBUBjXjUloA2YIhqdVujMx
-	CTrLPeXS5IP5J39F6sdW9O3bo3ZZJOh1BeCFDcfCXsEHhh5jfZEtQKSlqIFJeolw
-	lgNsQ9pR875BOy/8WTF8Q7w5V0NZv+vcUQeXQA==
+	 t=1705594430; x=1705680830; bh=DW7CRPU9dPo0SDRpw3mxElfp0Xq0I0hG
+	ctA/vo834Tk=; b=N+H4OpMNLa0cZ9Z4jPgMJT38LDe1AAi7ryioXCeu1w6RAVl5
+	ZqrmDFoM2oMHGUxuqrqRvaqOYtwHpfZnbNrQY6L4MzRfmumJ57zbtURg1ARcfcwZ
+	pJ7w/nhThyWMcl3pmC15ZRQwKU9CNSadjNAnDx626HUHPqWaIciOxynXbGOgbZQg
+	E+ux0Jk9byTFyIhJAn2KZe7UgMXQB4GyK/NtsjhrFRaymWEsOqey8jH2Ga2NqhjU
+	hsguORPiL6vQet5FFe3RfIAKG9DN6sUsuOxqGKCgTte/rT7QCNP6KNRy6VljCq2C
+	XOA5igEmt1A7C1YVEy6WWhj5+FYjsRFImeFBTw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1705594428; x=
-	1705680828; bh=2OghQhbmWpHOC/sVwSElZqCL2q8M21Kb+JxGTfqgIMk=; b=M
-	YL/tcWO5seKjuVYVjrHoIhRPL37xJXNJUbNKfnKooSGKepnAkK7WpYbrPqtQVuKp
-	ZeujyfehgU3I6nfIW548550V6T00++amDOkcZo8xSaNBKLrNpWwL3kIoK+xu1wf2
-	ySYyAT9861Z3/7Y7Rp2++f64VSyvZ9AkUL5iEWsdhKXoHrODz4z2STNf4CvA7dbS
-	EN2OafUqawXmiB20exa91VhpaWFhXkq1GGrtRE9Y5r+EBtnrbA6DaXp43cnSR5sy
-	zDzjR/mG32vS1SvvIjszh5Dz7vznJw2golDnmHzSxozUFs9URyicZNfcmnAop1Jo
-	yu34QVpaH6GlWXMYHQGtg==
-X-ME-Sender: <xms:PE6pZcbdh0yyO0lOpph59bwcoNnRDXMvFmvYj6FyQjTmKKCgdyYrobA>
-    <xme:PE6pZXZtlxXyeyuHb4eKAMxiaEeztStj8RRzTdOlR8GeIxgxlmtzJhiViDBny0E0s
-    PQV9w6LG7__mRvLFQ>
-X-ME-Received: <xmr:PE6pZW_3-XHpXdwG63JmkSctj_0Sq3BBk-bvQ9XedoU0ktXT0N0EpDfLo5Lth48txlAOrt8abZ2_SVMyPHsyWSm0DbemTNFKGNlrq_UMGw>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1705594430; x=
+	1705680830; bh=DW7CRPU9dPo0SDRpw3mxElfp0Xq0I0hGctA/vo834Tk=; b=J
+	sbYyC+itxEJp3aUGPdLO2Qb7ACrfyDDXoSKAk0KP9egD83ILjZmKgfe9OG3SHysd
+	cAhEDNMflHj3nSZ0+1iXQoU/+mN23B9Uvc4654B82reViNodJ33e9TZyvtD6ab/D
+	W2T67WlUImJmxXYEFsyUGjHDm4Ku+8LQvNGOfhUeAOBxjH2kW2MZknl5uUYUCstq
+	iUjsO2B4roKYHiaQiG0vPzxLzJEy0sSwQchYJdnxWEBuikkz+/FQEjjXPcYV8NEN
+	EHkPIAh4YobRdOGdGAdB91RrMzoZR7s8C7tsMFiZEHKV7eP6Yllnu8C2J+BIX26A
+	udAIVCQlDGOunAeNTwvwg==
+X-ME-Sender: <xms:Pk6pZeg2I4g7D5XfnC8I9F2y0GPI_g77Uz-HwFM7clsxKTj3Kd4Laiw>
+    <xme:Pk6pZfDsKLCgd7nuMYsdOJVPI_LGPXSUTq0sZWj__GwBCERr3s9a3xFAmdOQDpuZZ
+    ehV_FFLzzfG6dVz6w>
+X-ME-Received: <xmr:Pk6pZWHa7EqwYIKo92CY0fr5_5IOUlBk3bPvP6RrnV-gvocKkOvkeBTtv-q1pzdG-ZZxhVY5KNKLiJm0yygbO-zjGy7TKF8wZuld3QjtCg>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrvdejkedgieduucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
     uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
     cujfgurhephffvvefufffkofgjfhggtgfgsehtkeertdertdejnecuhfhrohhmpefmrhhi
     shhtohhffhgvrhcujfgruhhgshgsrghkkhcuoegtohguvgeskhhhrghughhssggrkhhkrd
-    hnrghmvgeqnecuggftrfgrthhtvghrnhepueeiueffuefftefhhfefleelhfeuheettedt
-    heevgeejteehgfevffeugffglefhnecuffhomhgrihhnpehkvghrnhgvlhdrohhrghenuc
-    evlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpegtohguvges
-    khhhrghughhssggrkhhkrdhnrghmvg
-X-ME-Proxy: <xmx:PE6pZWqA87w-aCxWLy8G5rgt-aePbbyScycaRtKX6VGJ1-p8iNJmTQ>
-    <xmx:PE6pZXqtCMPFYjhVII9u6DLkN7dZF_tBMrY_-KaFHaHvHwebj2O1DA>
-    <xmx:PE6pZUQV7A_Pa-M2jj1KLDPNV5R6CV6FDht0sgDTLlxQxoXUKvF8pg>
-    <xmx:PE6pZYAluUOlHuAixWw9TYD8zNHGwojxVwTtFFcC-T1MUPwJuWxYdA>
+    hnrghmvgeqnecuggftrfgrthhtvghrnhepvefgleevieekgeejieekueevhfelieduvdel
+    geefkeejtdekvedttefgffevtedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrg
+    hmpehmrghilhhfrhhomheptghouggvsehkhhgruhhgshgsrghkkhdrnhgrmhgv
+X-ME-Proxy: <xmx:Pk6pZXSNW2cw-Ap2c6tV04QcvC3Sh-kMsEPB5qDQ-qRmKL9pCi-14A>
+    <xmx:Pk6pZbw2RX426jozn0zZfxtmckCCvCbKXeeNa8Gb7GefknOwBl2unA>
+    <xmx:Pk6pZV7S2_BSF5p25QUfvXpE2lt9-cuErGxiJjBhbui_FQeZ6fMC0A>
+    <xmx:Pk6pZWrEa3bNNcxzCPXi2_mWcFIKs2h3RoT_ZDt9bO0eFdWqQqQyAA>
 Feedback-ID: i2671468f:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 18 Jan 2024 11:13:46 -0500 (EST)
+ 18 Jan 2024 11:13:48 -0500 (EST)
 From: Kristoffer Haugsbakk <code@khaugsbakk.name>
 To: git@vger.kernel.org
 Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>,
@@ -76,9 +75,9 @@ Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>,
 	Eric Sunshine <sunshine@sunshineco.com>,
 	Taylor Blau <me@ttaylorr.com>,
 	Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v3 3/4] config: factor out global config file retrieval
-Date: Thu, 18 Jan 2024 17:12:51 +0100
-Message-ID: <0643a85892cf8a7732593646f1e8a4d0e37d38b7.1705593810.git.code@khaugsbakk.name>
+Subject: [PATCH v3 4/4] maintenance: use XDG config if it exists
+Date: Thu, 18 Jan 2024 17:12:52 +0100
+Message-ID: <e0880af0a31aff06ce1d3da97aea568d3e2641b4.1705593810.git.code@khaugsbakk.name>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <cover.1705593810.git.code@khaugsbakk.name>
 References: <cover.1697660181.git.code@khaugsbakk.name> <cover.1705593810.git.code@khaugsbakk.name>
@@ -91,108 +90,144 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-Factor out code that retrieves the global config file so that we can use
-it in `gc.c` as well.
+`git maintenance register` registers the repository in the user's global
+config. `$XDG_CONFIG_HOME/git/config` is supposed to be used if
+`~/.gitconfig` does not exist. However, this command creates a
+`~/.gitconfig` file and writes to that one even though the XDG variant
+exists.
 
-Use the old name from the previous commit since this function acts
-functionally the same as `git_system_config` but for “global”.
+This used to work correctly until 50a044f1e4 (gc: replace config
+subprocesses with API calls, 2022-09-27), when the command started calling
+the config API instead of git-config(1).
+
+Also change `unregister` accordingly.
 
 Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
 ---
 
 Notes (series):
-    v3:
-    • Remove doc on `git_global_config`
-    • https://lore.kernel.org/git/c87b3d93-74db-4377-a57c-80f766d46e7f@app.fastmail.com/
     v2:
-    • Don’t die; return `NULL`
+    • Add `unregister` tests
+    • Use subshell when exporting an env. variable
+    • Style in tests
+    • Free variables properly
 
- builtin/config.c | 25 +++----------------------
- config.c         | 20 ++++++++++++++++++++
- config.h         |  1 +
- 3 files changed, 24 insertions(+), 22 deletions(-)
+ builtin/gc.c           | 27 ++++++++++++-------------
+ t/t7900-maintenance.sh | 45 ++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 58 insertions(+), 14 deletions(-)
 
-diff --git a/builtin/config.c b/builtin/config.c
-index 6fff2655816..08fe36d4997 100644
---- a/builtin/config.c
-+++ b/builtin/config.c
-@@ -708,30 +708,11 @@ int cmd_config(int argc, const char **argv, const char *prefix)
- 	}
+diff --git a/builtin/gc.c b/builtin/gc.c
+index c078751824c..cb80ced6cb5 100644
+--- a/builtin/gc.c
++++ b/builtin/gc.c
+@@ -1543,19 +1543,18 @@ static int maintenance_register(int argc, const char **argv, const char *prefix)
  
- 	if (use_global_config) {
--		char *user_config, *xdg_config;
--
--		git_global_config_paths(&user_config, &xdg_config);
--		if (!user_config)
--			/*
--			 * It is unknown if HOME/.gitconfig exists, so
--			 * we do not know if we should write to XDG
--			 * location; error out even if XDG_CONFIG_HOME
--			 * is set and points at a sane location.
--			 */
-+		given_config_source.file = git_global_config();
-+		if (!given_config_source.file)
- 			die(_("$HOME not set"));
--
- 		given_config_source.scope = CONFIG_SCOPE_GLOBAL;
--
--		if (access_or_warn(user_config, R_OK, 0) &&
--		    xdg_config && !access_or_warn(xdg_config, R_OK, 0)) {
--			given_config_source.file = xdg_config;
--			free(user_config);
--		} else {
--			given_config_source.file = user_config;
--			free(xdg_config);
--		}
--	}
--	else if (use_system_config) {
-+	} else if (use_system_config) {
- 		given_config_source.file = git_system_config();
- 		given_config_source.scope = CONFIG_SCOPE_SYSTEM;
- 	} else if (use_local_config) {
-diff --git a/config.c b/config.c
-index ebc6a57e1c3..3cfeb3d8bd9 100644
---- a/config.c
-+++ b/config.c
-@@ -1987,6 +1987,26 @@ char *git_system_config(void)
- 	return system_config;
- }
+ 	if (!found) {
+ 		int rc;
+-		char *user_config = NULL, *xdg_config = NULL;
++		char *global_config_file = NULL;
  
-+char *git_global_config(void)
-+{
-+	char *user_config, *xdg_config;
+ 		if (!config_file) {
+-			git_global_config_paths(&user_config, &xdg_config);
+-			config_file = user_config;
+-			if (!user_config)
+-				die(_("$HOME not set"));
++			global_config_file = git_global_config();
++			config_file = global_config_file;
+ 		}
++		if (!config_file)
++			die(_("$HOME not set"));
+ 		rc = git_config_set_multivar_in_file_gently(
+ 			config_file, "maintenance.repo", maintpath,
+ 			CONFIG_REGEX_NONE, 0);
+-		free(user_config);
+-		free(xdg_config);
++		free(global_config_file);
+ 
+ 		if (rc)
+ 			die(_("unable to add '%s' value of '%s'"),
+@@ -1612,18 +1611,18 @@ static int maintenance_unregister(int argc, const char **argv, const char *prefi
+ 
+ 	if (found) {
+ 		int rc;
+-		char *user_config = NULL, *xdg_config = NULL;
++		char *global_config_file = NULL;
 +
-+	git_global_config_paths(&user_config, &xdg_config);
-+	if (!user_config) {
-+		free(xdg_config);
-+		return NULL;
-+	}
-+
-+	if (access_or_warn(user_config, R_OK, 0) && xdg_config &&
-+	    !access_or_warn(xdg_config, R_OK, 0)) {
-+		free(user_config);
-+		return xdg_config;
-+	} else {
-+		free(xdg_config);
-+		return user_config;
-+	}
-+}
-+
- void git_global_config_paths(char **user_out, char **xdg_out)
- {
- 	char *user_config = xstrdup_or_null(getenv("GIT_CONFIG_GLOBAL"));
-diff --git a/config.h b/config.h
-index e5e523553cc..5dba984f770 100644
---- a/config.h
-+++ b/config.h
-@@ -382,6 +382,7 @@ int config_error_nonbool(const char *);
- #endif
+ 		if (!config_file) {
+-			git_global_config_paths(&user_config, &xdg_config);
+-			config_file = user_config;
+-			if (!user_config)
+-				die(_("$HOME not set"));
++			global_config_file = git_global_config();
++			config_file = global_config_file;
+ 		}
++		if (!config_file)
++			die(_("$HOME not set"));
+ 		rc = git_config_set_multivar_in_file_gently(
+ 			config_file, key, NULL, maintpath,
+ 			CONFIG_FLAGS_MULTI_REPLACE | CONFIG_FLAGS_FIXED_VALUE);
+-		free(user_config);
+-		free(xdg_config);
++		free(global_config_file);
  
- char *git_system_config(void);
-+char *git_global_config(void);
- void git_global_config_paths(char **user, char **xdg);
+ 		if (rc &&
+ 		    (!force || rc == CONFIG_NOTHING_SET))
+diff --git a/t/t7900-maintenance.sh b/t/t7900-maintenance.sh
+index 00d29871e65..0943dfa18a3 100755
+--- a/t/t7900-maintenance.sh
++++ b/t/t7900-maintenance.sh
+@@ -67,6 +67,51 @@ test_expect_success 'maintenance.auto config option' '
+ 	test_subcommand ! git maintenance run --auto --quiet  <false
+ '
  
- int git_config_parse_parameter(const char *, config_fn_t fn, void *data);
++test_expect_success 'register uses XDG_CONFIG_HOME config if it exists' '
++	test_when_finished rm -r .config/git/config &&
++	(
++		XDG_CONFIG_HOME=.config &&
++		export XDG_CONFIG_HOME &&
++		mkdir -p $XDG_CONFIG_HOME/git &&
++		>$XDG_CONFIG_HOME/git/config &&
++		git maintenance register &&
++		git config --file=$XDG_CONFIG_HOME/git/config --get maintenance.repo >actual &&
++		pwd >expect &&
++		test_cmp expect actual
++	)
++'
++
++test_expect_success 'register does not need XDG_CONFIG_HOME config to exist' '
++	test_when_finished git maintenance unregister &&
++	test_path_is_missing $XDG_CONFIG_HOME/git/config &&
++	git maintenance register &&
++	git config --global --get maintenance.repo >actual &&
++	pwd >expect &&
++	test_cmp expect actual
++'
++
++test_expect_success 'unregister uses XDG_CONFIG_HOME config if it exists' '
++	test_when_finished rm -r .config/git/config &&
++	(
++		XDG_CONFIG_HOME=.config &&
++		export XDG_CONFIG_HOME &&
++		mkdir -p $XDG_CONFIG_HOME/git &&
++		>$XDG_CONFIG_HOME/git/config &&
++		git maintenance register &&
++		git maintenance unregister &&
++		test_must_fail git config --file=$XDG_CONFIG_HOME/git/config --get maintenance.repo >actual &&
++		test_must_be_empty actual
++	)
++'
++
++test_expect_success 'unregister does not need XDG_CONFIG_HOME config to exist' '
++	test_path_is_missing $XDG_CONFIG_HOME/git/config &&
++	git maintenance register &&
++	git maintenance unregister &&
++	test_must_fail git config --global --get maintenance.repo >actual &&
++	test_must_be_empty actual
++'
++
+ test_expect_success 'maintenance.<task>.enabled' '
+ 	git config maintenance.gc.enabled false &&
+ 	git config maintenance.commit-graph.enabled true &&
 -- 
 2.43.0
 
