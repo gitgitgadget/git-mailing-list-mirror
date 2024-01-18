@@ -1,122 +1,283 @@
-Received: from mail-pl1-f175.google.com (mail-pl1-f175.google.com [209.85.214.175])
+Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 822DB31A60
-	for <git@vger.kernel.org>; Thu, 18 Jan 2024 21:54:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9211F31A97
+	for <git@vger.kernel.org>; Thu, 18 Jan 2024 22:09:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705614875; cv=none; b=A2zVnYxe6CNURNL7rQA5gp3V7grKcMJqJqdh237zl1tV9VLwClutF3ehJrutalkYIX0YCIibC0KwcpeXjk8FRf0icVzEuomXlON9q8yptsropTiU4IC8/Qb4ptlG6shnvDvxbVMBIe9b8tFq6+q1JizYZ7aF6vyCQpskrd/nS7M=
+	t=1705615799; cv=none; b=BRsx6jnd98LAkybVKZh/FHpQ+XcBd3uPOx3tbnTIhr/mXNZR/0Q4z2FWfDk+S0fBfV/DX2/ggKvmP2mNUZV1pcUNaEQY0hKUZeAGbLHN0QTJGLuizFJf1gDRDFEfuOq44wIilc4Q5EZfqFdTy4hrl/OOS+NVC3tR/uD6vq8ubTg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705614875; c=relaxed/simple;
-	bh=+Mm6m/QDujw3UFenl/J1XXqqwXu6AZYO3mMoyV1rSok=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uhnaU23cJMc/ysS1gYn+8SN75Fg9IxAEkY0htfvN2jkNsEUAwWvoT2C57cdO27mI6MHOGcVdfdfVRrfA/g7oyrl6a5V8mlhEH+N6uPGA0QXSvuwpqIoNWdkyaMF9nsD6p6h/aaMewz2AzMA+TpVel8q2wcSu2C6IcpYJb2dlU+4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=H6DRsIwk; arc=none smtp.client-ip=209.85.214.175
+	s=arc-20240116; t=1705615799; c=relaxed/simple;
+	bh=qbTHPBjJXyt+PmpDLa7IfZ21FFrJ9+apYlEFExBTiPU=;
+	h=Message-ID:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=ZoNSmfJUKUqZOnnq6J7raJx8geEjtHfGJBpW614SfdgrhibB6Q7FK9zv/I4xuk80Hu3OQ6+dLE70SEil7FN9/DRJ8pbyjh4uUzInBzpkU6dQm1xCi6PVEBLaYv0QXVbZjC8TC3VmXF3CbP45QDSqNint97vqeoUx6l/7EQS99jQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VpHzIHgO; arc=none smtp.client-ip=209.85.128.51
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="H6DRsIwk"
-Received: by mail-pl1-f175.google.com with SMTP id d9443c01a7336-1d542701796so802675ad.1
-        for <git@vger.kernel.org>; Thu, 18 Jan 2024 13:54:34 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VpHzIHgO"
+Received: by mail-wm1-f51.google.com with SMTP id 5b1f17b1804b1-40e9d4ab5f3so909715e9.2
+        for <git@vger.kernel.org>; Thu, 18 Jan 2024 14:09:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1705614873; x=1706219673; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1705615795; x=1706220595; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=s8Vme/6xRiBTWjC95wVEI7O4W4wxV+RqRgvULU6HnPI=;
-        b=H6DRsIwkDGXwLmXa0AAQKtEl3CcfaPs8w55rwWTcoc+9D8fzAgj1rmqM0S3WOxeKk6
-         wemBioQzGF+8QkIwqrZUOGVLp4i44wttCqBb/+ltzWewJ0FliP4qgOZ6C9vydHy771Du
-         62QxO9LwQEMXlS00kkZkl1O1+5mbvSMTlePsj1KCucNyKGpNKJkUxpha78xJO6i021e3
-         E7YY1V+8iEtJMarhhFojSypv9J+8gJSRxtoUM5Blqrz9Z1yI3PtlB6zSnwnaxDqbfeWi
-         vkoRm4FoinzI/1mgGSXxuBn5zfRra2BJrQgdoYeHp9e5ejnsaunuKA/5HEmK6AQcehx9
-         MOMg==
+        bh=xgwCesFR90ub79Pp1cP/Q5nps9BTn9IwdgrSBcM3P0Y=;
+        b=VpHzIHgOtF68iWAkCfznrlHXqPphtOm+uAtS9LwVHS48vdxP7rFGa3GOiRf0b7NZRT
+         57ioajvCyqavll9X9Se3DUkfWTXKq69r2i0+NFXUf4l3FldRjxgIwfMM9n1vlIB0g59B
+         j175FNX+Y3DEI+sZxeTZXhOawYGvp89XcLSw4eNOcfL9d/luoWpinhYWXnexdtqU541D
+         xpaFxy4dKFzpb+9vdJhkJ5h0K5stKwG6MTd+OEvu4jpmqrxtL0j1J9EIyoa1tK5cbxXV
+         4VZXyr3La7g50T32KP5MFfu3c6QskNJ02CIPSXQjzLeju995MiibenZUD2emFj0bBTP3
+         Zspg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1705614873; x=1706219673;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+        d=1e100.net; s=20230601; t=1705615795; x=1706220595;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=s8Vme/6xRiBTWjC95wVEI7O4W4wxV+RqRgvULU6HnPI=;
-        b=L3Bh0/9r0Bl/k0poOr5wDDjW+5tyVfOCpk8wKUu1UeBoaZeE/0zbkhmu/VQwXjyOOQ
-         4DUFsTRThlpWNPGu7CwEFMDWzd6ItEcu2Cd1dzTjTwwDIEEGWFhhZhauidAezxUguWjP
-         KQUIx38QFvMELj1Cx+9jp+sPhlUGFowNQ6Zz9/Mq0DjTDI5FGFFn8MHdxb13s5js8TDK
-         1de7MHCcrT3DUmJ0x+MV2Fl3PD/tZTvdBT65cuT37HfCPyDwHvtn8a7fQ/mgaJtfMiJv
-         KDEZqdqAftH50mfu/DjNb+BqEhLBUu5DDjtClgy/fN7T9EVgh9iKqTZ22vwnO6QqrXvN
-         5LHQ==
-X-Gm-Message-State: AOJu0YxXzqEpnI8xxHH27w4ndH/Q03BUmR6WPTq5bqilibmurhZ41OyN
-	ihDhL8VH6CXl3S5W2Dz4XTjECqo+LlhMNaXwiAuEYhzlyBGBD1JlEI5/UHq8V/E=
-X-Google-Smtp-Source: AGHT+IGIol/m9pphk0Xaubhk1CqWEEMU3mm3KMinarqj4b9qNzAoFdO+7S5Pscy8OamFBv6s3JwGpw==
-X-Received: by 2002:a17:902:ea01:b0:1d6:f8d5:25fe with SMTP id s1-20020a170902ea0100b001d6f8d525femr1782437plg.12.1705614873333;
-        Thu, 18 Jan 2024 13:54:33 -0800 (PST)
-Received: from localhost.localdomain ([2402:a00:401:a99b:65e8:f5a4:7adb:5726])
-        by smtp.gmail.com with ESMTPSA id mp14-20020a170902fd0e00b001d5e6f008bdsm1827767plb.132.2024.01.18.13.54.31
+        bh=xgwCesFR90ub79Pp1cP/Q5nps9BTn9IwdgrSBcM3P0Y=;
+        b=IWwDfKl33N3KUyAAalYdxmgxbS5TYnCN/Ha8OFmg94bIBZrtR2pg3KuySITYJtfbbZ
+         n6PN7peBhSFY06PFpuPAH2xh7Wz5djWfeeqrXbj7DlCUE31z7WC6Tl3LMIeUFg29yq9w
+         w+9N5qlYwNeoaRtEW5rxzvHKo4COtfRJC15OaDnSQdjESiKqf2WhOb88UOBDVo/UD4l1
+         5xfXu/BxsL3CPRC6+60/64GtYCSxiyeCDPZtJBJEGjiCRicWfX0lVmTiUFCVJ5uU7jyr
+         PxAhOYW5EVe6kK0jiqjaZMHEZi5C5qbyG1lMNmfvqAUb/VTZR2xB8GPLwZbrIyQNMNHy
+         URzw==
+X-Gm-Message-State: AOJu0YybeaXWAU2OUMugwY10+RgYYIuimLVOee6Tb/LHoM26YX9/4BYe
+	r68pePScqkyDubpjRP+Mp4O+p1vq93vaXeClReQyorrdDhvJwfqAVoEwQwwx
+X-Google-Smtp-Source: AGHT+IFbUI5UGlhnObGBjoahY/kqhO1dD6Il3Ihgyk9IOwkDzDaMpRf4SmcCy0yFKXplFVmDcIuiwA==
+X-Received: by 2002:a05:600c:4191:b0:40d:3b88:4516 with SMTP id p17-20020a05600c419100b0040d3b884516mr1035843wmh.95.1705615795322;
+        Thu, 18 Jan 2024 14:09:55 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id iw7-20020a05600c54c700b0040d604dea3bsm26528233wmb.4.2024.01.18.14.09.55
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 18 Jan 2024 13:54:33 -0800 (PST)
-From: Ghanshyam Thakkar <shyamthakkar001@gmail.com>
-To: git@vger.kernel.org
-Cc: Ghanshyam Thakkar <shyamthakkar001@gmail.com>
-Subject: [PATCH 2/2] t0024: refactor to have single command per line
-Date: Fri, 19 Jan 2024 03:23:40 +0530
-Message-ID: <20240118215407.8609-2-shyamthakkar001@gmail.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240118215407.8609-1-shyamthakkar001@gmail.com>
-References: <20240118215407.8609-1-shyamthakkar001@gmail.com>
+        Thu, 18 Jan 2024 14:09:55 -0800 (PST)
+Message-ID: <pull.1648.v3.git.git.1705615794307.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1648.v2.git.git.1705592581272.gitgitgadget@gmail.com>
+References: <pull.1648.v2.git.git.1705592581272.gitgitgadget@gmail.com>
+From: "Antonin Delpeuch via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Thu, 18 Jan 2024 22:09:54 +0000
+Subject: [PATCH v3] merge-ll: expose revision names to custom drivers
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+To: git@vger.kernel.org
+Cc: Junio C Hamano <gitster@pobox.com>,
+    Antonin Delpeuch <antonin@delpeuch.eu>,
+    Antonin Delpeuch <antonin@delpeuch.eu>
 
-Refactor t0024 to avoid having multiple chaining commands on a single
-line, according to current styling norms.
+From: Antonin Delpeuch <antonin@delpeuch.eu>
 
-e.g turn
-    ( mkdir testdir && cd testdir && echo "in testdir" )
-into:
-    mkdir testdir &&
-    (
-        cd testdir &&
-        echo "in testdir"
-    )
+Custom merge drivers need access to the names of the revisions they
+are working on, so that the merge conflict markers they introduce
+can refer to those revisions. The placeholders '%S', '%X' and '%Y'
+are introduced to this end.
 
-This is also described in the Documentation/CodingGuidelines file.
-
-Signed-off-by: Ghanshyam Thakkar <shyamthakkar001@gmail.com>
+Signed-off-by: Antonin Delpeuch <antonin@delpeuch.eu>
 ---
- t/t0024-crlf-archive.sh | 12 ++++++++++--
- 1 file changed, 10 insertions(+), 2 deletions(-)
+    merge-ll: expose revision names to custom drivers
+    
+    Changes since v2:
+    
+     * change the documentation to use "common ancestor" rather than "merge
+       ancestor"
+     * fix indentation issue
 
-diff --git a/t/t0024-crlf-archive.sh b/t/t0024-crlf-archive.sh
-index fa4da7c2b3..ff4efeaaee 100755
---- a/t/t0024-crlf-archive.sh
-+++ b/t/t0024-crlf-archive.sh
-@@ -20,7 +20,11 @@ test_expect_success setup '
- test_expect_success 'tar archive' '
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1648%2Fwetneb%2Fmerge_driver_pathnames-v3
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1648/wetneb/merge_driver_pathnames-v3
+Pull-Request: https://github.com/git/git/pull/1648
+
+Range-diff vs v2:
+
+ 1:  6dec70529c0 ! 1:  aebd26711fe merge-ll: expose revision names to custom drivers
+     @@ Commit message
+          Signed-off-by: Antonin Delpeuch <antonin@delpeuch.eu>
+      
+       ## Documentation/gitattributes.txt ##
+     -@@ Documentation/gitattributes.txt: command to run to merge ancestor's version (`%O`), current
+     +@@ Documentation/gitattributes.txt: The `merge.*.name` variable gives the driver a human-readable
+     + name.
+     + 
+     + The `merge.*.driver` variable's value is used to construct a
+     +-command to run to merge ancestor's version (`%O`), current
+     ++command to run to common ancestor's version (`%O`), current
+       version (`%A`) and the other branches' version (`%B`).  These
+       three tokens are replaced with the names of temporary files that
+       hold the contents of these versions when the command line is
+     @@ Documentation/gitattributes.txt: When left unspecified, the driver itself is use
+      -will be stored via placeholder `%P`.
+      -
+      +will be stored via placeholder `%P`. Additionally, the names of the
+     -+merge ancestor revision (`%S`), of the current revision (`%X`) and
+     ++common ancestor revision (`%S`), of the current revision (`%X`) and
+      +of the other branch (`%Y`) can also be supplied. Those are short
+      +revision names, optionally joined with the paths of the file in each
+      +revision. Those paths are only present if they differ and are separated
+     @@ merge-ll.c: static enum ll_merge_result ll_ext_merge(const struct ll_merge_drive
+       		else if (skip_prefix(format, "P", &format))
+       			sq_quote_buf(&cmd, path);
+      +		else if (skip_prefix(format, "S", &format))
+     -+		    sq_quote_buf(&cmd, orig_name);
+     ++			sq_quote_buf(&cmd, orig_name);
+      +		else if (skip_prefix(format, "X", &format))
+      +			sq_quote_buf(&cmd, name1);
+      +		else if (skip_prefix(format, "Y", &format))
+
+
+ Documentation/gitattributes.txt | 12 ++++++++----
+ merge-ll.c                      | 17 ++++++++++++++---
+ t/t6406-merge-attr.sh           | 16 +++++++++++-----
+ 3 files changed, 33 insertions(+), 12 deletions(-)
+
+diff --git a/Documentation/gitattributes.txt b/Documentation/gitattributes.txt
+index 201bdf5edbd..86a0946bb9e 100644
+--- a/Documentation/gitattributes.txt
++++ b/Documentation/gitattributes.txt
+@@ -1137,11 +1137,11 @@ The `merge.*.name` variable gives the driver a human-readable
+ name.
  
- 	git archive --format=tar HEAD >test.tar &&
--	( mkdir untarred && cd untarred && "$TAR" -xf ../test.tar ) &&
-+	mkdir untarred &&
-+	(
-+		cd untarred &&
-+		"$TAR" -xf ../test.tar
-+	) &&
+ The `merge.*.driver` variable's value is used to construct a
+-command to run to merge ancestor's version (`%O`), current
++command to run to common ancestor's version (`%O`), current
+ version (`%A`) and the other branches' version (`%B`).  These
+ three tokens are replaced with the names of temporary files that
+ hold the contents of these versions when the command line is
+-built. Additionally, %L will be replaced with the conflict marker
++built. Additionally, `%L` will be replaced with the conflict marker
+ size (see below).
  
- 	test_cmp sample untarred/sample
+ The merge driver is expected to leave the result of the merge in
+@@ -1159,8 +1159,12 @@ When left unspecified, the driver itself is used for both
+ internal merge and the final merge.
  
-@@ -30,7 +34,11 @@ test_expect_success UNZIP 'zip archive' '
+ The merge driver can learn the pathname in which the merged result
+-will be stored via placeholder `%P`.
+-
++will be stored via placeholder `%P`. Additionally, the names of the
++common ancestor revision (`%S`), of the current revision (`%X`) and
++of the other branch (`%Y`) can also be supplied. Those are short
++revision names, optionally joined with the paths of the file in each
++revision. Those paths are only present if they differ and are separated
++from the revision by a colon.
  
- 	git archive --format=zip HEAD >test.zip &&
+ `conflict-marker-size`
+ ^^^^^^^^^^^^^^^^^^^^^^
+diff --git a/merge-ll.c b/merge-ll.c
+index 1df58ebaac0..13e0713fe82 100644
+--- a/merge-ll.c
++++ b/merge-ll.c
+@@ -185,9 +185,9 @@ static void create_temp(mmfile_t *src, char *path, size_t len)
+ static enum ll_merge_result ll_ext_merge(const struct ll_merge_driver *fn,
+ 			mmbuffer_t *result,
+ 			const char *path,
+-			mmfile_t *orig, const char *orig_name UNUSED,
+-			mmfile_t *src1, const char *name1 UNUSED,
+-			mmfile_t *src2, const char *name2 UNUSED,
++			mmfile_t *orig, const char *orig_name,
++			mmfile_t *src1, const char *name1,
++			mmfile_t *src2, const char *name2,
+ 			const struct ll_merge_options *opts,
+ 			int marker_size)
+ {
+@@ -222,6 +222,12 @@ static enum ll_merge_result ll_ext_merge(const struct ll_merge_driver *fn,
+ 			strbuf_addf(&cmd, "%d", marker_size);
+ 		else if (skip_prefix(format, "P", &format))
+ 			sq_quote_buf(&cmd, path);
++		else if (skip_prefix(format, "S", &format))
++			sq_quote_buf(&cmd, orig_name);
++		else if (skip_prefix(format, "X", &format))
++			sq_quote_buf(&cmd, name1);
++		else if (skip_prefix(format, "Y", &format))
++			sq_quote_buf(&cmd, name2);
+ 		else
+ 			strbuf_addch(&cmd, '%');
+ 	}
+@@ -315,7 +321,12 @@ static int read_merge_config(const char *var, const char *value,
+ 		 *    %B - temporary file name for the other branches' version.
+ 		 *    %L - conflict marker length
+ 		 *    %P - the original path (safely quoted for the shell)
++		 *    %S - the revision for the merge base
++		 *    %X - the revision for our version
++		 *    %Y - the revision for their version
+ 		 *
++		 * If the file is not named indentically in all versions, then each
++		 * revision is joined with the corresponding path, separated by a colon.
+ 		 * The external merge driver should write the results in the
+ 		 * file named by %A, and signal that it has done with zero exit
+ 		 * status.
+diff --git a/t/t6406-merge-attr.sh b/t/t6406-merge-attr.sh
+index 72f8c1722ff..156a1efacfe 100755
+--- a/t/t6406-merge-attr.sh
++++ b/t/t6406-merge-attr.sh
+@@ -42,11 +42,15 @@ test_expect_success setup '
+ 	#!/bin/sh
  
--	( mkdir unzipped && cd unzipped && "$GIT_UNZIP" ../test.zip ) &&
-+	mkdir unzipped &&
-+	(
-+		cd unzipped &&
-+		"$GIT_UNZIP" ../test.zip
-+	) &&
+ 	orig="$1" ours="$2" theirs="$3" exit="$4" path=$5
++	orig_name="$6" our_name="$7" their_name="$8"
+ 	(
+ 		echo "orig is $orig"
+ 		echo "ours is $ours"
+ 		echo "theirs is $theirs"
+ 		echo "path is $path"
++		echo "orig_name is $orig_name"
++		echo "our_name is $our_name"
++		echo "their_name is $their_name"
+ 		echo "=== orig ==="
+ 		cat "$orig"
+ 		echo "=== ours ==="
+@@ -121,7 +125,7 @@ test_expect_success 'custom merge backend' '
  
- 	test_cmp sample unzipped/sample
+ 	git reset --hard anchor &&
+ 	git config --replace-all \
+-	merge.custom.driver "./custom-merge %O %A %B 0 %P" &&
++	merge.custom.driver "./custom-merge %O %A %B 0 %P %S %X %Y" &&
+ 	git config --replace-all \
+ 	merge.custom.name "custom merge driver for testing" &&
  
+@@ -132,7 +136,8 @@ test_expect_success 'custom merge backend' '
+ 	o=$(git unpack-file main^:text) &&
+ 	a=$(git unpack-file side^:text) &&
+ 	b=$(git unpack-file main:text) &&
+-	sh -c "./custom-merge $o $a $b 0 text" &&
++	base_revid=$(git rev-parse --short main^) &&
++	sh -c "./custom-merge $o $a $b 0 text $base_revid HEAD main" &&
+ 	sed -e 1,3d $a >check-2 &&
+ 	cmp check-1 check-2 &&
+ 	rm -f $o $a $b
+@@ -142,7 +147,7 @@ test_expect_success 'custom merge backend' '
+ 
+ 	git reset --hard anchor &&
+ 	git config --replace-all \
+-	merge.custom.driver "./custom-merge %O %A %B 1 %P" &&
++	merge.custom.driver "./custom-merge %O %A %B 1 %P %S %X %Y" &&
+ 	git config --replace-all \
+ 	merge.custom.name "custom merge driver for testing" &&
+ 
+@@ -159,7 +164,8 @@ test_expect_success 'custom merge backend' '
+ 	o=$(git unpack-file main^:text) &&
+ 	a=$(git unpack-file anchor:text) &&
+ 	b=$(git unpack-file main:text) &&
+-	sh -c "./custom-merge $o $a $b 0 text" &&
++	base_revid=$(git rev-parse --short main^) &&
++	sh -c "./custom-merge $o $a $b 0 text $base_revid HEAD main" &&
+ 	sed -e 1,3d $a >check-2 &&
+ 	cmp check-1 check-2 &&
+ 	sed -e 1,3d -e 4q $a >check-3 &&
+@@ -173,7 +179,7 @@ test_expect_success !WINDOWS 'custom merge driver that is killed with a signal'
+ 
+ 	git reset --hard anchor &&
+ 	git config --replace-all \
+-	merge.custom.driver "./custom-merge %O %A %B 0 %P" &&
++	merge.custom.driver "./custom-merge %O %A %B 0 %P %S %X %Y" &&
+ 	git config --replace-all \
+ 	merge.custom.name "custom merge driver for testing" &&
+ 
+
+base-commit: 186b115d3062e6230ee296d1ddaa0c4b72a464b5
 -- 
-2.43.0
-
+gitgitgadget
