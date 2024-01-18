@@ -1,83 +1,120 @@
-Received: from relay.yourmailgateway.de (relay.yourmailgateway.de [188.68.63.98])
+Received: from out-188.mta1.migadu.com (out-188.mta1.migadu.com [95.215.58.188])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C5A8208A6
-	for <git@vger.kernel.org>; Thu, 18 Jan 2024 08:02:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=188.68.63.98
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BC60219EC
+	for <git@vger.kernel.org>; Thu, 18 Jan 2024 08:26:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.188
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705564974; cv=none; b=s2f1CUZHnOj2QoGsSizwv8IbFLyzGJwT0sAV0fYoV/Y9Y0XT/uKCnMKlJci0NFqAZZCHPqzkBD/CbfQmIfGpi3ekwQegh+oQM+SrWZk1Mhmasjol7eqOnHifDLXo/zM9zBmQTuRN/U3D4BIkMtKN+W/Gv98wiEntZe3ViczRtX8=
+	t=1705566415; cv=none; b=jD+58z0sI7dVdT2Cl83UU4DWvsPsyeNxhZH4jkFEq0/m1DfvSMhx6rSuiDe8saym/uvlH3C8dIl0MQaCb2kLppDkOANcnjd23n/nY0+XA79S6xnWVR927k73i3f4HzXPpf95EVZHn35hQ50LpOrAMC8yyP4UFudpHzJaL/AeYAo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705564974; c=relaxed/simple;
-	bh=07qIZiD7zRorqtCaKD/sULqNYXZg2bRzYa4Zsq5xwpI=;
-	h=Received:DKIM-Signature:Received:Received:Received:Received-SPF:
-	 Message-ID:Date:MIME-Version:User-Agent:To:Content-Language:From:
-	 Subject:Content-Type:Content-Transfer-Encoding:X-PPP-Message-ID:
-	 X-Rspamd-Queue-Id:X-Rspamd-Server:X-NC-CID; b=QZZl+fH8F1aiBRjN0224CPp/uzifE9ajUqMOUR2v0tcvM/N9icKlyquYLW+BHysV0oEAofaT5bYkI6KSwwL8g0xzrWjTNiOZxe4qQIQuWNzh+te3wufGlKuuFNQ6yiSUJpZVA/PFhnLWwkmfvQbSogXNPxDS8gojV6KF5cc44ck=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=rd10.de; spf=pass smtp.mailfrom=rd10.de; dkim=pass (2048-bit key) header.d=rd10.de header.i=@rd10.de header.b=MBT00N1T; arc=none smtp.client-ip=188.68.63.98
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=rd10.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=rd10.de
+	s=arc-20240116; t=1705566415; c=relaxed/simple;
+	bh=qNusZbZGQAFIyahrWXZNhiY7RAk6Cy9sYj+NcJufa5g=;
+	h=References:DKIM-Signature:X-Report-Abuse:From:To:Cc:Subject:Date:
+	 In-reply-to:Message-ID:MIME-Version:Content-Type:X-Migadu-Flow; b=icrRDyofyWa/vi+up9bKjOQsnNYsNoB7vvsnVqLaTXnlbmEvEmxZdYqu3Xw2Uk7zB6uRC9UAiV1rKN6emerVvFjBtrmUU/vmzl1gphCZ9tlNQomSq6GXGq8y76yneq7CnC2dOO8CGQp8ugfo1WI0D4zujMye39GqMl2A3toWNn4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com; spf=fail smtp.mailfrom=iotcl.com; dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b=xDJIfXRd; arc=none smtp.client-ip=95.215.58.188
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=iotcl.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=rd10.de header.i=@rd10.de header.b="MBT00N1T"
-Received: from mors-relay-2501.netcup.net (localhost [127.0.0.1])
-	by mors-relay-2501.netcup.net (Postfix) with ESMTPS id 4TFwG92xNwz61nr
-	for <git@vger.kernel.org>; Thu, 18 Jan 2024 09:02:41 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=rd10.de; s=key2;
-	t=1705564961; bh=07qIZiD7zRorqtCaKD/sULqNYXZg2bRzYa4Zsq5xwpI=;
-	h=Date:To:From:Subject:From;
-	b=MBT00N1Tc2OTn2N26wWvhjvbPwOLusdXsRHAp7cBt/Qu0hsbWCStL6X8C2CKZ22lm
-	 Hu8Tv4Vv33Ca2sA2jXgCTBnM/jtfZbmlb/oxIiEnqWSvuIf3yR4YsvvZrOwSI0f56W
-	 QuDl8R774nW7gOiarTo2Gx5CNB/qXvb4OkW/rbDxVdBsBiB5tGsDANRvwFCa8BpJMf
-	 l/MpeT/ggqUu98Rpp+agIBe+ofY+rIAIZ3r1I8a1yCrZWvdFTc1DA8f8iVeej1JSAF
-	 KaEtv3Fk2u2HUI0wKHYp/Eq3dq0vHeB+sKaNjbBMQfjdhiNZtQ8GivBvLowhdPWgP0
-	 ec77tGMTGfBtw==
-Received: from policy02-mors.netcup.net (unknown [46.38.225.35])
-	by mors-relay-2501.netcup.net (Postfix) with ESMTPS id 4TFwG92FJQz4xNs
-	for <git@vger.kernel.org>; Thu, 18 Jan 2024 09:02:41 +0100 (CET)
-Received: from mx2eb1.netcup.net (unknown [10.243.12.53])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	by policy02-mors.netcup.net (Postfix) with ESMTPS id 4TFwG90Wr2z8sh1
-	for <git@vger.kernel.org>; Thu, 18 Jan 2024 09:02:41 +0100 (CET)
-Received: from [IPV6:2003:cf:cf12:700:c0b7:a2c4:a056:7bf6] (p200300cfcf120700c0b7a2c4a0567bf6.dip0.t-ipconnect.de [IPv6:2003:cf:cf12:700:c0b7:a2c4:a056:7bf6])
-	by mx2eb1.netcup.net (Postfix) with ESMTPSA id B9102100861
-	for <git@vger.kernel.org>; Thu, 18 Jan 2024 09:02:35 +0100 (CET)
-Authentication-Results: mx2eb1;
-        spf=pass (sender IP is 2003:cf:cf12:700:c0b7:a2c4:a056:7bf6) smtp.mailfrom=rdiez-temp3@rd10.de smtp.helo=[IPV6:2003:cf:cf12:700:c0b7:a2c4:a056:7bf6]
-Received-SPF: pass (mx2eb1: connection is authenticated)
-Message-ID: <6cfee0e4-3285-4f18-91ff-d097da9de737@rd10.de>
-Date: Thu, 18 Jan 2024 09:02:30 +0100
+	dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b="xDJIfXRd"
+References: <20240110141559.387815-1-toon@iotcl.com>
+ <20240110141559.387815-2-toon@iotcl.com>
+ <CAPig+cTRHHJ3pzWJtVJf8rKhvAJFYqrO0JsyTRTi6T5s+gznDg@mail.gmail.com>
+ <874jflfc26.fsf@iotcl.com> <ZadzwA6vNnRPbKYh@tanuki>
+ <xmqqmst3tv7j.fsf@gitster.g>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iotcl.com; s=key1;
+	t=1705566409;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=r/yHAaEYn9fToD/nb1Sb0yt5oQ4+Bl+CJq0SNHQKjPc=;
+	b=xDJIfXRdZ39D9rAn8khwGsRmZqe1ss/M+3qYq+gx3k7XXj57cUxYHS2i+febUWKRdTfGFK
+	Tdn6tMIxzDC14bynf+/e6cwzDbjIvqA6+7/iHk5bCompZqe3+ck/Ycl4mmuGYICUg6OSal
+	ehuXg6NYKeoxhRsrk4ZaKoIBpjPqQqw=
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+From: Toon Claes <toon@iotcl.com>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Patrick Steinhardt <ps@pks.im>, Eric Sunshine <sunshine@sunshineco.com>,
+ git@vger.kernel.org
+Subject: Re: [PATCH 1/1] builtin/show-ref: treat directory directory as
+ non-existing in --exists
+Date: Thu, 18 Jan 2024 09:24:56 +0100
+In-reply-to: <xmqqmst3tv7j.fsf@gitster.g>
+Message-ID: <87le8nqc73.fsf@iotcl.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-To: git@vger.kernel.org
-Content-Language: en-GB
-From: "R. Diez" <rdiez-temp3@rd10.de>
-Subject: git fsck does not check the packed-refs file
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-PPP-Message-ID: <170556495682.3940.13502137905897943463@mx2eb1.netcup.net>
-X-Rspamd-Queue-Id: B9102100861
-X-Rspamd-Server: rspamd-worker-8404
-X-NC-CID: L4iJljwBGXLqOrOOaiXFckud11WUTYQE5r8WpHHx
+Content-Type: text/plain
+X-Migadu-Flow: FLOW_OUT
 
-Hi all:
 
-I have been hit by an unfortunate system problem, and as a result, a few files in my Git repository got corrupted on my last git push. Some random blocks of bytes were overwritten with binary zeros, so I started getting weird unpacking errors etc.
+Junio C Hamano <gitster@pobox.com> writes:
 
-It took a while to realise what the problem was. During my investigation, I ran "git fsck", which reported no problems, and then "git push" failed.
+> Yup.  The patch looks good.  Here is what I tentatively queued.
+>
+> ----- >8 -----
+> From: Toon Claes <toon@iotcl.com>
+> Date: Wed, 10 Jan 2024 15:15:59 +0100
+> Subject: [PATCH] builtin/show-ref: treat directory directory as non-existing
+>  in --exists
 
-One of the very few corrupted files was packed-refs. This is a text file, so it was easy to compare it and see the corrupting binary zeros. But that made me wonder what "git fsck" checks.
+You have a duplicate "directory" here.
 
-I am guessing that "git fsck" does not check file packed-refs at all. I mean, it does not even attempt to parse it, in order to check whether at least the format makes any sense. Only "git push" does it.
+> 9080a7f178 (builtin/show-ref: add new mode to check for reference
+> existence, 2023-10-31) added the option --exists to git-show-ref(1).
+>
+> When you use this option against a ref that doesn't exist, but it is
+> a parent directory of an existing ref, you get the following error:
+>
+>     $ git show-ref --exists refs/heads
+>     error: failed to look up reference: Is a directory
+>
+> when the ref-files backend is in use.  To be more clear to user,
+> hide the error about having found a directory.  What matters to the
+> user is that the named ref does not exist.  Instead, print the same
+> error as when the ref was not found:
+>
+>     error: reference does not exist
+>
+> Signed-off-by: Toon Claes <toon@iotcl.com>
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> ---
+>  builtin/show-ref.c  | 2 +-
+>  t/t1403-show-ref.sh | 4 ++--
+>  2 files changed, 3 insertions(+), 3 deletions(-)
+>
+> diff --git a/builtin/show-ref.c b/builtin/show-ref.c
+> index 7aac525a87..6025ce223d 100644
+> --- a/builtin/show-ref.c
+> +++ b/builtin/show-ref.c
+> @@ -239,7 +239,7 @@ static int cmd_show_ref__exists(const char **refs)
+>  	if (refs_read_raw_ref(get_main_ref_store(the_repository), ref,
+>  			      &unused_oid, &unused_referent, &unused_type,
+>  			      &failure_errno)) {
+> -		if (failure_errno == ENOENT) {
+> +		if (failure_errno == ENOENT || failure_errno == EISDIR) {
+>  			error(_("reference does not exist"));
+>  			ret = 2;
+>  		} else {
+> diff --git a/t/t1403-show-ref.sh b/t/t1403-show-ref.sh
+> index b50ae6fcf1..a8055f7fe1 100755
+> --- a/t/t1403-show-ref.sh
+> +++ b/t/t1403-show-ref.sh
+> @@ -260,9 +260,9 @@ test_expect_success '--exists with non-commit object' '
+>
+>  test_expect_success '--exists with directory fails with generic error' '
+>  	cat >expect <<-EOF &&
+> -	error: failed to look up reference: Is a directory
+> +	error: reference does not exist
+>  	EOF
+> -	test_expect_code 1 git show-ref --exists refs/heads 2>err &&
+> +	test_expect_code 2 git show-ref --exists refs/heads 2>err &&
+>  	test_cmp expect err
+>  '
 
-What other parts of the repository does "git fsck" not check then?
+The rest looks all good to me.
 
-The repository check is suspiciously fast. Is there a slow way to check that a repository is fine? I mean, something along the lines of checking whether every commit can be checked out without problems.
-
-Best regards,
-   rdiez
+--
+Toon
