@@ -1,73 +1,152 @@
-Received: from mail.manjaro.org (mail.manjaro.org [116.203.91.91])
-	(using TLSv1.2 with cipher DHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75CCD1F60B
-	for <git@vger.kernel.org>; Thu, 18 Jan 2024 18:53:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=116.203.91.91
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2E96A53
+	for <git@vger.kernel.org>; Thu, 18 Jan 2024 19:15:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705604019; cv=none; b=o7FMtGnTPMa6WkzPfxSPpNBbA4nitkOAellwio6ZnBE5cHRYRj8WHwXLx2S7TAJcNYbqoCCRk6FDy/Iufa2BuDarjtq0ds/WjhKRO5CZiT/VMv/kbPiD5J/XRsNFF3JNAXL76EkfoEoXqhCIa2kxZRorvQ3A4t32b5cd/EQ04jU=
+	t=1705605302; cv=none; b=seqquK44xy2UGb49q03CXWioAWJteo0JMMxh0smlyiqtXbRNNpSZsE2Wy8xC0t8myuaITckfKNGOqAqd6v26jClz/Z+AgjMpj3/eKVW+lOpf+t8I2xvQdbrx9ncRJ/MEjqNGm4My7qM3PXuZPqRfupdYRZmpPumgZAXX6D7Syu0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705604019; c=relaxed/simple;
-	bh=hstnUgGYoAGf00Yr8N/tZijnpYo9xkOOr4f2hIOYp9Y=;
-	h=MIME-Version:Date:From:To:Cc:Subject:In-Reply-To:References:
-	 Message-ID:Content-Type; b=GFTXtX4USPeaj7o4tZE0X7cLVbYhRSYtrEDWwC/QwVST3zZ6EV52iwuHr+lqsIjVgZp1nsHVvvCg7bb9V+hYOD+jd0QRNqP+stSuxm4AjbuSa7+PHtZ5EbMddu3ko9Qw5Tbh3DFie/PyDPE2oLuud/+VX4ki9IcImBcPqwIeZ8A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org; spf=pass smtp.mailfrom=manjaro.org; dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b=KCXXuKVP; arc=none smtp.client-ip=116.203.91.91
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=manjaro.org
+	s=arc-20240116; t=1705605302; c=relaxed/simple;
+	bh=GSYAflL56vic4lSetyFggRmIPTyDMUdGrTbHKkntb0g=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=HOimE6mndGibn1bu+N7eJa4OZtWV1+L9YPFKx+b92ItMp10EvDQcFH0fdvvoxRrX3DvtYTgJECwUlbBkRZko4isljJsxdfAckUH60a2ph4V15nWoTiA0P5k0iYGeZKfMMauW40ert66kQyN2vuPAoMrYqMXVx1CslAnve8tqrZw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=x9/NF+9E; arc=none smtp.client-ip=64.147.108.71
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b="KCXXuKVP"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="x9/NF+9E"
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 5340B1CBF57;
+	Thu, 18 Jan 2024 14:14:58 -0500 (EST)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=GSYAflL56vic4lSetyFggRmIPTyDMUdGrTbHKk
+	ntb0g=; b=x9/NF+9ErpU6nJpm393xt+OZ+vBcnu8jmR6sLU9ZBVt17ud7NQA1Ol
+	O4CgnYn1sOhlL/0L2yKnge1ElMXCQ/jqNPpjIUbClB7t5Gdl8s4Fo/EloTRniyZh
+	Ckou+UUscrSH0w9zeFTs9cXNe2jsOvES0eth9Lki4c+ENVQsLhvMU=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 4AF2F1CBF56;
+	Thu, 18 Jan 2024 14:14:58 -0500 (EST)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.200.93])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id AA3EF1CBF55;
+	Thu, 18 Jan 2024 14:14:57 -0500 (EST)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Sebastian Thiel <sebastian.thiel@icloud.com>
+Cc: Elijah Newren <newren@gmail.com>,  Elijah Newren via GitGitGadget
+ <gitgitgadget@gmail.com>,  git@vger.kernel.org,  Josh Triplett
+ <josh@joshtriplett.org>,  Phillip Wood <phillip.wood123@gmail.com>
+Subject: Re: [PATCH] precious-files.txt: new document proposing new precious
+ file type
+In-Reply-To: <298F7067-D572-433F-A7DD-5256B43B97D7@icloud.com> (Sebastian
+	Thiel's message of "Thu, 18 Jan 2024 08:51:16 +0100")
+References: <pull.1627.git.1703643931314.gitgitgadget@gmail.com>
+	<xmqq8r5gfc3j.fsf@gitster.g>
+	<CABPp-BGSTYDUR1oYYXkCSh-1i2zwxBM=-gnoe-ezNbtPi5CV2A@mail.gmail.com>
+	<xmqqsf3nl2b3.fsf@gitster.g>
+	<298F7067-D572-433F-A7DD-5256B43B97D7@icloud.com>
+Date: Thu, 18 Jan 2024 11:14:56 -0800
+Message-ID: <xmqqwms6qwr3.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=manjaro.org; s=2021;
-	t=1705604015;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=Mmv65b/5J544gKSpMj0S+PyGf0jpz2KGD9LWhiGZ3Lk=;
-	b=KCXXuKVPwMRg3gKsStiAM7Za2++cTFP/6Hm38Jt0Qg6htr3nvwIsadWCMuPwIVQ/LomZDY
-	iMdZEkGsmcWg/8wqtf36mthAd+p5VpKTjeEglWH3XIaM0WNP2z2LomfNEkW2WKnBIWj3Um
-	fSnYnhJzcP6GkV8nMbsGNXpmN7XpY30pUSjtXib9gh6f21vuFZzP7s7ezISCoDkL4GO9Aw
-	9RQBncMxLrN4bJoNqVG4Ytlx4QAzH18jW3X5eeROHHQGNEqzNo8wo9kvwu22I20vIbFq5a
-	LKnvsvxrrILdfIqmLuPkskbdRy8s9UXwfkFFltHnv4et/ZUhNoaBY4j9NxremA==
-Date: Thu, 18 Jan 2024 19:53:34 +0100
-From: Dragan Simic <dsimic@manjaro.org>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Jeff King <peff@peff.net>, =?UTF-8?Q?Rub=C3=A9n_Justo?=
- <rjusto@gmail.com>, Git List <git@vger.kernel.org>
-Subject: Re: [PATCH 3/3] advice: allow disabling the automatic hint in
- advise_if_enabled()
-In-Reply-To: <xmqqil3qsdkv.fsf@gitster.g>
-References: <7c68392c-af2f-4999-ae64-63221bf7833a@gmail.com>
- <d6099d78-43c6-4709-9121-11f84228cf91@gmail.com>
- <20240110110226.GC16674@coredump.intra.peff.net>
- <aaf59fc82ef3132ece8e1f70623570a2@manjaro.org>
- <97fdf6d4-1403-4fe9-b912-a85342a9fa56@gmail.com>
- <a97b03a305a7b8b95341b63af1de0271@manjaro.org> <xmqqil41duov.fsf@gitster.g>
- <d6d72ec5431ad1ca775e6e4e9921f94c@manjaro.org>
- <20240111080429.GG48154@coredump.intra.peff.net>
- <5f322b3e6053c27dda58ef1c1f025d11@manjaro.org> <xmqqil3qsdkv.fsf@gitster.g>
-Message-ID: <bfded0571f133ffc1612fcbca1811a43@manjaro.org>
-X-Sender: dsimic@manjaro.org
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Authentication-Results: ORIGINATING;
-	auth=pass smtp.auth=dsimic@manjaro.org smtp.mailfrom=dsimic@manjaro.org
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ DE7A3054-B635-11EE-9C62-25B3960A682E-77302942!pb-smtp2.pobox.com
 
-On 2024-01-18 19:26, Junio C Hamano wrote:
-> Dragan Simic <dsimic@manjaro.org> writes:
-> 
->> Perhaps having both options available could be a good thing.  Though,
->> adding quite a few knobs may end up confusing the users, so we should
->> make sure to document it well.
-> 
-> I agree there is a need for documentation, but we are not increasing
-> the number of knobs, are we?
+Sebastian Thiel <sebastian.thiel@icloud.com> writes:
 
-Perhaps there would be one more knob if we end up deciding to implement
-support for both approaches, as previously discussed.
+> #(keep)
+> .config
+>
+> As a side-effect of the syntax, it's obvious this is an 'upgrade', with
+> perfect backwards compatibility as old git does the same as always.
+
+Yes but ...
+
+The point Elijah makes is worth considering.  To existing versions
+of git, having this entry for ".config" means that it is ignored
+(i.e. "git add ." will not include it), but expendable (i.e. "git
+clean" considers ".config" as a candidate for removal; "git checkout
+other", if the "other" branch has it as a tracked path, will clobber
+it).  Compared to the case where ".config" is not mentioned in
+".gitignore", where it may be added by use of "git add .", it won't
+be clobbered by "git clean".
+
+So this syntax having "perfect backward compatibility" is not quite
+true.  It does have downsides when used by existing versions of Git.
+
+If we use Elijah's syntax to say
+
+	$.config
+
+then the entry to existing versions of git is a no-op wrt a file
+named ".config".  It simply does not match the pattern, so an
+accidental "git add ." *will* add ".config" to the index, while "git
+clean" may not touch it, simply because it is treated as "untracked
+and precious".  In other words, its downside is the same as not
+marking the path ".config" in any way in ".gitignore", as far as
+existing versions of Git are concerned.
+
+We of course discount the possibility that people keep a file whose
+name literally is dollar-dot followed by "config" and older versions
+of Git would start treating them as ignored-and-expendable.  While
+it *is* an additional downside compared to Phillip's "#(keep)"
+approach, I do not think that particular downside is worth worrying
+about.  Yet another downside compared to Phillip's is that it is
+less extensible.  Over the years, however, the ignored-but-precious
+is the only one we heard from users that lack of which is hurting
+them, so lack of extensibility may not be too huge a deal.
+
+For projects that are currently listing these files in ".gitignore"
+as "ignored-and-expendable" already and want to categorize them as
+"ignored-and-precious" by changing ".config" to "$.config" (or
+adding "#(keep)" comment before the existing entry), the
+pros-and-cons equation may differ.  Their current participants are
+protected from accidentally adding them with "git add ." but risking
+to lose them with "git clean -f".  They may even be trained to be
+careful to see "git clean -n" output before actually running the
+command with "-f".  Now, if their project ships a new version of
+".gitignore" that marks these paths as "ignored-and-precious", both
+approaches will have intended effect to participants who upgraded to
+the version of Git.
+
+To participants using the current version of Git:
+
+ * Phillip's approach to add "#(keep)" will not change anything.
+   They will be protected from accidental "git add ." as before, and
+   they will still have to be careful about "git clean -f".
+
+ * Elijah's approach to rewrite existing'.config' to '$.config',
+   however, will stop protecting them from "git add .", even though
+   it will start protecting them from "git clean -f".
+
+The devil you already know may be the lessor of two evils in such a
+situation.
+
+So, all it boils down to is these two questions.
+
+ * Which one between "'git add .' adds '.config' that users did not
+   want to add" and "'git clean -f' removes '.config' together with
+   other files" a larger problem to the users, who participate in a
+   project that already decided to use the new .gitignore feature to
+   mark ".config" as "precious", of older versions of Git that
+   predate "precious"?
+
+ * What are projects doing to paths that they want to make
+   "precious" with the current system?  Do they leave them out of
+   ".gitignore" and have them subject to accidental "git add ." to
+   protect them from "git clean -f"?  Or do they list them in
+   ".gitignore" to prevent "git add ." from touching, but leave them
+   susceptible to accidental removal by "git clean -f"?
+
+Thanks.
