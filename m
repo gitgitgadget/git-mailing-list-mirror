@@ -1,68 +1,53 @@
-Received: from mail-oo1-f50.google.com (mail-oo1-f50.google.com [209.85.161.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 949BD25639
-	for <git@vger.kernel.org>; Thu, 18 Jan 2024 16:25:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 059842D603
+	for <git@vger.kernel.org>; Thu, 18 Jan 2024 18:24:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705595117; cv=none; b=iwQtgGEeETukwKZYxPc4v9qaiuMEefEzLQhpDtKqR7Usbm3oOSHF9NNdUgM3aL2Ae9mCp53oJ9UaY909ixAJicrOSUHpSJAFYvbW7TDPBZtu5dAmO57QMwnDVyiNlVT2IgDc9ItZvxWXVhUE5AaF0zAi2xiXzI9EQsOJFxBBu98=
+	t=1705602300; cv=none; b=a1DlPmdYLWJVEm/+bzT9MYIpCjNHrx4EYyAood3bb5IybwDxF6mLdWaP4orhrDqJk6grzyziEdTckzuLH0Iqjr4s5O1QjENKFqyzEaoVcZ4tYngkVH3D75p2rhxN9UnpyAwborfA/7zzCo5HjzTSK6+eujsh6hcQ2FBh/hrO1Ak=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705595117; c=relaxed/simple;
-	bh=SM00jN6nrhElcoXuyOW4fmRpBrvZ6IhRMTab0l3mprw=;
-	h=Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Google-Smtp-Source:X-Received:Received:From:
-	 To:Cc:Subject:Date:X-Mailer:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=aSbLzzyruMpmDSdq29+TMft32CYbXR6ypsgAPem1Jdo67kAwc8C2BYVfOT+6p9aQ1bdLEEYmcrqC9GX2kcz93jJfw74iBKToxreMbnzMHLPqN72U99FCb7lCvZ5qzVd9rgzvmYMSJIETW6EUD2e4C6fdPhEX5ROaBD3I5n3t/As=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=YrJB7eBi; arc=none smtp.client-ip=209.85.161.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1705602300; c=relaxed/simple;
+	bh=jlVreeOG2RyHPpN7tmidghigySkXwu0U/xnP8J4awKw=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=EH9R3UJLvdLe9uaJfdy6f4/ApQcCaZXBMkWoC6/Gkw3K1xhurzkWv81bFS3u556cvdLMr3nwPGtRE1qvoROHwmvWfgNct6/fK5RNnePslX30h4biWJEOTfRz1UfBWM/rHNo/oTpmZJeIlRuavM8lk2uYXD5t4cZ8X2tqUdlsbyM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=oW/amP7s; arc=none smtp.client-ip=173.228.157.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YrJB7eBi"
-Received: by mail-oo1-f50.google.com with SMTP id 006d021491bc7-598a2136259so650025eaf.1
-        for <git@vger.kernel.org>; Thu, 18 Jan 2024 08:25:16 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1705595115; x=1706199915; darn=vger.kernel.org;
-        h=mime-version:references:in-reply-to:message-id:date:subject:cc:to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=ffbeHi9DsMjMa0sWVd3/cwBtTMHKNN+3OpnlpHFidS4=;
-        b=YrJB7eBi1ChO1W5JakKJNanueYgfuA6Gk4bZRS9nD0lAcFcCA5dNcPVsvvBnXSwNk0
-         u0tjEYoQ5Xid26WCmS0ve7eemj0Gy0jFjRMhN7W5cQoN2WOEK0jUwUN4XM4LWj8KFyLt
-         0G353E1HpgNWq9NTjHXfg9z8ug//YpXhDnJrigSeTRACiBjVsHMNtTiz3ZlOV2SVYDBt
-         ocNwkG7hRJ3JV/IM8AqyxZUKzW9Wa0SwBEBY5hxyPpPA1e8niYMYr2Dr/DCXY5xK5Sdv
-         Ie6N0THDl6F1kG+bhlBW2yvwsBxAvHEgyGDO8tton0ut15VG2+eh/I4ilhgs3DfRyaiB
-         IV6Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1705595115; x=1706199915;
-        h=mime-version:references:in-reply-to:message-id:date:subject:cc:to
-         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=ffbeHi9DsMjMa0sWVd3/cwBtTMHKNN+3OpnlpHFidS4=;
-        b=HOCJRAvNDui42rhQLKUbdl/AUhykK3q+0mUcrBcPaoB3Yu+uPm5ZRJ1QUKi54J0CRP
-         M1ZVjbnTgf2zMrjsdTKZg9ozuHalBjJ68eUw4p10oaCG+/bRfIv6Z4gLds7b5jUmILDS
-         ol/+VYrT5jVRKXQy8Gvt3tLtn63Utr8Nh/BB9RN5HhDBt5zWHbRkIUUzenG54gWKAK0O
-         kKlZldhBxTdEXNdtUg9T1YiZSgqORSBWK5CXELrQGAydGdCs0JOxBA+u6SSYDhN4jysR
-         39F52h3yrw+3A9pQIg8gUdBHzseaNX5pmGQP+0k9g2N1eUHWiY8TiH8OxPln7bbivwIn
-         e8CA==
-X-Gm-Message-State: AOJu0Yxvj4AIRRkucKEMogYc8nVQE7nAl30W73BfEimIUTssUXxTk3B0
-	9GKQL5ptMw4Fzh5Ifp6ckmnZQeMaY6UZe2OOTFvP4zCPWDU9ffC1C9LtnBl7
-X-Google-Smtp-Source: AGHT+IHkMR+0oXH2LJQDvMfqd+k6cSnPU57jfQB1A0GNDlP47N3riXujBGMaGDRGz+c76aagTr4rig==
-X-Received: by 2002:a05:6820:2b13:b0:598:c118:30d1 with SMTP id dt19-20020a0568202b1300b00598c11830d1mr2136546oob.0.1705595115517;
-        Thu, 18 Jan 2024 08:25:15 -0800 (PST)
-Received: from [192.168.1.160] (pool-74-105-67-34.nwrknj.fios.verizon.net. [74.105.67.34])
-        by smtp.gmail.com with ESMTPSA id l1-20020a05620a28c100b00783484abba5sm4862516qkp.90.2024.01.18.08.25.14
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 18 Jan 2024 08:25:14 -0800 (PST)
-From: John Cai <johncai86@gmail.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: Junio C Hamano <gitster@pobox.com>,
- John Cai via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
-Subject: Re: [PATCH 01/12] t3210: move to t0602
-Date: Thu, 18 Jan 2024 11:25:13 -0500
-X-Mailer: MailMate (1.14r5937)
-Message-ID: <31D22360-5F20-43BD-B8FC-0BA2BC3A2EA9@gmail.com>
-In-Reply-To: <ZakMQP3r44eVc5Dh@tanuki>
-References: <pull.1647.git.git.1705521155.gitgitgadget@gmail.com>
- <0e2b6e197ab2fbfc81a42fd601b6aaf41e38929f.1705521155.git.gitgitgadget@gmail.com>
- <xmqqil3rtqxh.fsf@gitster.g> <ZakMQP3r44eVc5Dh@tanuki>
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="oW/amP7s"
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id 5516E373CA;
+	Thu, 18 Jan 2024 13:24:56 -0500 (EST)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=jlVreeOG2RyHPpN7tmidghigySkXwu0U/xnP8J
+	4awKw=; b=oW/amP7sLUIXGrdJR4Ryr9KPYmL8Kwuf+tyDPM8HSMUTWthpvS/U0i
+	7toUurE1xbH8LGldZu97TrVLpgjX5/uCBsfUFUmYuH6VvakuWh5u5fZKIadE+lyn
+	Lm1FkutTSqjkDdF/KSniwSIjE1JKzAY9wK5gZgvRRVaGl3mhUhzx4=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id 4C811373C9;
+	Thu, 18 Jan 2024 13:24:56 -0500 (EST)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.200.93])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id DB87D373C7;
+	Thu, 18 Jan 2024 13:24:52 -0500 (EST)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Victoria Dye via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>,  Jeff King
+ <peff@peff.net>,  Victoria Dye <vdye@github.com>
+Subject: Re: [PATCH v2 0/4] Strengthen fsck checks for submodule URLs
+In-Reply-To: <pull.1635.v2.git.1705542918.gitgitgadget@gmail.com> (Victoria
+	Dye via GitGitGadget's message of "Thu, 18 Jan 2024 01:55:14 +0000")
+References: <pull.1635.git.1704822817.gitgitgadget@gmail.com>
+	<pull.1635.v2.git.1705542918.gitgitgadget@gmail.com>
+Date: Thu, 18 Jan 2024 10:24:51 -0800
+Message-ID: <xmqqmst2sdn0.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -70,52 +55,37 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
+X-Pobox-Relay-ID:
+ DF7A66F6-B62E-11EE-ABBF-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
 
-Hi Patrick,
+"Victoria Dye via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-On 18 Jan 2024, at 6:32, Patrick Steinhardt wrote:
-
-> On Wed, Jan 17, 2024 at 04:40:10PM -0800, Junio C Hamano wrote:
->> "John Cai via GitGitGadget" <gitgitgadget@gmail.com> writes:
->>
->>> From: John Cai <johncai86@gmail.com>
->>>
->>> Move t3210 to t0602, since these tests are reffiles specific in that
->>> they modify loose refs manually. This is part of the effort to
->>> categorize these tests together based on the ref backend they test. When
->>> we upstream the reftable backend, we can add more tests to t06xx. This
->>> way, all tests that test specific ref backend behavior will be grouped
->>> together.
->>
->> So, ... is the idea to have (1) majority of ref tests, against which
->> all backends ought to behave the same way, will be written in
->> backend agnostic way (e.g., we have seen some patches to stop
->> touching the filesystem .git/refs/ hierarchy manually), and (2) some
->> backend specific tests will be grouped in a small number of test
->> script files for each backend and they all will use t6xx numbrs?
->>
->> OK.  Sounds like a good plan to me.
+> While testing 'git fsck' checks on .gitmodules URLs, I noticed that some
+> invalid URLs were passing the checks. Digging into it a bit more, the issue
+> turned out to be that 'credential_from_url_gently()' parses certain URLs
+> (like "http://example.com:something/deeper/path") incorrectly, in a way that
+> appeared to return a valid result.
 >
-> Yes, that's the plan. The backend specific tests will be free to also
-> exercise filesystem-level behaviour in order to pin down that things
-> work as expected. But once their behaviour is nailed down all other
-> generic tests should refrain from doing that to the best extent possible
-> and instead use Git commands to do their thing.
+> Fortunately, these URLs are rejected in fetches/clones/pushes anyway because
+> 'url_normalize()' (called in 'validate_remote_url()') correctly identifies
+> them as invalid. So, to bring 'git fsck' in line with other (stronger)
+> validation done on remote URLs, this series replaces the
+> 'credential_from_url_gently()' check with one that uses 'url_normalize()'.
 >
->>> Signed-off-by: John Cai <johncai86@gmail.com>
->>> ---
->>>  t/{t3210-pack-refs.sh => t0602-reffiles-pack-refs.sh} | 0
->>>  1 file changed, 0 insertions(+), 0 deletions(-)
->>>  rename t/{t3210-pack-refs.sh => t0602-reffiles-pack-refs.sh} (100%)
->
-> Is there a reason why you picked t0602 instead of the not-yet-taken
-> t0601? If it's only because I use t0601 in my reftable integration
-> branch then I'd like us to pick t0601 here instead to avoid a weird gap.
-> I'll adapt accordingly and rename the reftable tests to have a t061x
-> prefix in that case so that they are nicely grouped together.
+>  * Patch 1 moves 'check_submodule_url()' to a public location so that it can
+>    be used outside of 'fsck.c'.
+>  * Patch 2 removes the obsolete/never-used code in 'test-tool submodule
+>    check-name' handling names provided on the command line.
+>  * Patch 3 adds a 'check-url' mode to 'test-tool submodule', calling the
+>    now-public 'check_submodule_url()' method on a given URL, and adds new
+>    tests checking valid and invalid submodule URLs.
+>  * Patch 4 replaces the 'credential_from_url_gently()' check with
+>    'url_normalize()' followed by 'url_decode()' and an explicit check for
+>    newlines (to preserve the newline handling added in 07259e74ec1 (fsck:
+>    detect gitmodules URLs with embedded newlines, 2020-03-11)).
 
-Yes if I remember correctly, that's the reason. I can move this to t0601 then,
-thanks.
+Nicely done.  I'll wait for a few days to see if anybody else has
+reaction but after reading the patches myself, my inclination is to
+suggest merging it to 'next'.
 
->
-> Patrick
+Thanks.
