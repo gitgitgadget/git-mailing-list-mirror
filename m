@@ -1,61 +1,65 @@
-Received: from mail-pl1-f178.google.com (mail-pl1-f178.google.com [209.85.214.178])
+Received: from mail-pl1-f175.google.com (mail-pl1-f175.google.com [209.85.214.175])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A035F31A60
-	for <git@vger.kernel.org>; Thu, 18 Jan 2024 21:54:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 822DB31A60
+	for <git@vger.kernel.org>; Thu, 18 Jan 2024 21:54:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705614866; cv=none; b=PuEgfnZGFZ3/ZK/HtCR08aOAbReK9OXpxjXnLXWNgEl9Iy7xPNhIjI9vuqLlTvM+ZsTNpL6dBF6ORqOsG9t9WqiknrLY8OgiMdtaTJftXTSkKM8LqtwUzwDm21PrUr3scPsLyOnyeLcvE9kKWEcLReAB3d7HpXQvy7YqepW+jvc=
+	t=1705614875; cv=none; b=A2zVnYxe6CNURNL7rQA5gp3V7grKcMJqJqdh237zl1tV9VLwClutF3ehJrutalkYIX0YCIibC0KwcpeXjk8FRf0icVzEuomXlON9q8yptsropTiU4IC8/Qb4ptlG6shnvDvxbVMBIe9b8tFq6+q1JizYZ7aF6vyCQpskrd/nS7M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705614866; c=relaxed/simple;
-	bh=jo5FnlUjuZneufLRJ1Mxqan0lFBv4fd3o21nVGtzLhU=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=APcUWZmMiBQReVRpPUrkI7V3unmCZaS9tdiyHu7UV05e4QWC/LdExUmIOAslxW9eeDXsP1C7WB+j8Soc0sg8ZhqpWq4DsMWmdpdpIG5aEQaUrRXicbg28dx8LzVHXI10VXCAIq7s3yTejoavoHeJXMnYaoZGCJXet2oRs93cUp0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=BPlE4DfH; arc=none smtp.client-ip=209.85.214.178
+	s=arc-20240116; t=1705614875; c=relaxed/simple;
+	bh=+Mm6m/QDujw3UFenl/J1XXqqwXu6AZYO3mMoyV1rSok=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=uhnaU23cJMc/ysS1gYn+8SN75Fg9IxAEkY0htfvN2jkNsEUAwWvoT2C57cdO27mI6MHOGcVdfdfVRrfA/g7oyrl6a5V8mlhEH+N6uPGA0QXSvuwpqIoNWdkyaMF9nsD6p6h/aaMewz2AzMA+TpVel8q2wcSu2C6IcpYJb2dlU+4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=H6DRsIwk; arc=none smtp.client-ip=209.85.214.175
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BPlE4DfH"
-Received: by mail-pl1-f178.google.com with SMTP id d9443c01a7336-1d70c3c2212so1251685ad.1
-        for <git@vger.kernel.org>; Thu, 18 Jan 2024 13:54:25 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="H6DRsIwk"
+Received: by mail-pl1-f175.google.com with SMTP id d9443c01a7336-1d542701796so802675ad.1
+        for <git@vger.kernel.org>; Thu, 18 Jan 2024 13:54:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1705614864; x=1706219664; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=icEuU/I6p5zQzSRXbLp+TrUGomeO+5w6HV77xYPs6SQ=;
-        b=BPlE4DfHDbiDvgOT3YYMfKcN8IdHtWO/u07G+H8+anEBdrSMtQQaK+SC84V3XPy1HW
-         jVsA1SQiSNMMhAeyIC77WaPhQbgvibL1lTdr6clVboal6NfjnqlwQLin999D2Kh3FjIz
-         pBG8H8dLMZn/HfexCbMNXdFGCLHhz4w5RV7Mn06eGwlpczcuvJ/ICgByr9f/tpleAFpL
-         jnTSeEL4ixXru1NG3gTJXytSi+IrtBsGig3vfrSedZIwVGwN57sZOpNuSJofiJP0s0qD
-         Pl+2cVoiNRgOf9Th6pFjPRPPGWHkSwO81SUStaJ/cK+/pDiG2P/tO61E8KTcjipES9sk
-         +uFw==
+        d=gmail.com; s=20230601; t=1705614873; x=1706219673; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=s8Vme/6xRiBTWjC95wVEI7O4W4wxV+RqRgvULU6HnPI=;
+        b=H6DRsIwkDGXwLmXa0AAQKtEl3CcfaPs8w55rwWTcoc+9D8fzAgj1rmqM0S3WOxeKk6
+         wemBioQzGF+8QkIwqrZUOGVLp4i44wttCqBb/+ltzWewJ0FliP4qgOZ6C9vydHy771Du
+         62QxO9LwQEMXlS00kkZkl1O1+5mbvSMTlePsj1KCucNyKGpNKJkUxpha78xJO6i021e3
+         E7YY1V+8iEtJMarhhFojSypv9J+8gJSRxtoUM5Blqrz9Z1yI3PtlB6zSnwnaxDqbfeWi
+         vkoRm4FoinzI/1mgGSXxuBn5zfRra2BJrQgdoYeHp9e5ejnsaunuKA/5HEmK6AQcehx9
+         MOMg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1705614864; x=1706219664;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=icEuU/I6p5zQzSRXbLp+TrUGomeO+5w6HV77xYPs6SQ=;
-        b=JUZNk6G5raUhvz2vv2hU3Qyr97q+AesnECUWZe9CEesV8AeY40SL85VK4vtqAOavmx
-         2tQDS59vsXoLppn986T1na7mTGbFU4h1DY6hTZwsSL40pfwzgMqf00bJ20wRte8wVl5q
-         QYXjOMbDhjk5eq1eQYdDGsbiTTC7qn/IYc2jZrDK2f3bqi2zZq6yGNGSXCOSGbAuQSfG
-         hp2F9qA2hzoyLJrnytdJux+VvI5LmZDx/2H/ndSTBrgjloA2B6mMOXntECSMSjDJMsZV
-         RF1t0t6dBuTlvsz85d5w622b0jekX6uEomo14pVg55LIsSW5TQnowfAP+RSj+vdIOcwp
-         tj7A==
-X-Gm-Message-State: AOJu0Yy2xA9CIl4E7QjfqVTM1qpI25mK1cVzc/nuOQoMLea6aGP1fbCn
-	26pYeUan45u2GTfVH9M85hWxXdeXeUg4M47ynq33EuQO1jZjtHocq4Z53VL506s=
-X-Google-Smtp-Source: AGHT+IHDBTY8+jDs/E+AeJIWm1OQ910ikfCdS+iBxUP6hJuG9wOmkjOM5NyqgtKkajkXi8qcw4QQQA==
-X-Received: by 2002:a17:902:f806:b0:1d5:be4d:1afb with SMTP id ix6-20020a170902f80600b001d5be4d1afbmr1897791plb.14.1705614864517;
-        Thu, 18 Jan 2024 13:54:24 -0800 (PST)
+        d=1e100.net; s=20230601; t=1705614873; x=1706219673;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=s8Vme/6xRiBTWjC95wVEI7O4W4wxV+RqRgvULU6HnPI=;
+        b=L3Bh0/9r0Bl/k0poOr5wDDjW+5tyVfOCpk8wKUu1UeBoaZeE/0zbkhmu/VQwXjyOOQ
+         4DUFsTRThlpWNPGu7CwEFMDWzd6ItEcu2Cd1dzTjTwwDIEEGWFhhZhauidAezxUguWjP
+         KQUIx38QFvMELj1Cx+9jp+sPhlUGFowNQ6Zz9/Mq0DjTDI5FGFFn8MHdxb13s5js8TDK
+         1de7MHCcrT3DUmJ0x+MV2Fl3PD/tZTvdBT65cuT37HfCPyDwHvtn8a7fQ/mgaJtfMiJv
+         KDEZqdqAftH50mfu/DjNb+BqEhLBUu5DDjtClgy/fN7T9EVgh9iKqTZ22vwnO6QqrXvN
+         5LHQ==
+X-Gm-Message-State: AOJu0YxXzqEpnI8xxHH27w4ndH/Q03BUmR6WPTq5bqilibmurhZ41OyN
+	ihDhL8VH6CXl3S5W2Dz4XTjECqo+LlhMNaXwiAuEYhzlyBGBD1JlEI5/UHq8V/E=
+X-Google-Smtp-Source: AGHT+IGIol/m9pphk0Xaubhk1CqWEEMU3mm3KMinarqj4b9qNzAoFdO+7S5Pscy8OamFBv6s3JwGpw==
+X-Received: by 2002:a17:902:ea01:b0:1d6:f8d5:25fe with SMTP id s1-20020a170902ea0100b001d6f8d525femr1782437plg.12.1705614873333;
+        Thu, 18 Jan 2024 13:54:33 -0800 (PST)
 Received: from localhost.localdomain ([2402:a00:401:a99b:65e8:f5a4:7adb:5726])
-        by smtp.gmail.com with ESMTPSA id mp14-20020a170902fd0e00b001d5e6f008bdsm1827767plb.132.2024.01.18.13.54.22
+        by smtp.gmail.com with ESMTPSA id mp14-20020a170902fd0e00b001d5e6f008bdsm1827767plb.132.2024.01.18.13.54.31
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 18 Jan 2024 13:54:24 -0800 (PST)
+        Thu, 18 Jan 2024 13:54:33 -0800 (PST)
 From: Ghanshyam Thakkar <shyamthakkar001@gmail.com>
 To: git@vger.kernel.org
 Cc: Ghanshyam Thakkar <shyamthakkar001@gmail.com>
-Subject: [PATCH 1/2] t0024: avoid losing exit status to pipes
-Date: Fri, 19 Jan 2024 03:23:39 +0530
-Message-ID: <20240118215407.8609-1-shyamthakkar001@gmail.com>
+Subject: [PATCH 2/2] t0024: refactor to have single command per line
+Date: Fri, 19 Jan 2024 03:23:40 +0530
+Message-ID: <20240118215407.8609-2-shyamthakkar001@gmail.com>
 X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20240118215407.8609-1-shyamthakkar001@gmail.com>
+References: <20240118215407.8609-1-shyamthakkar001@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -64,42 +68,54 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Replace pipe with redirection operator '>' to store the output
-to a temporary file after 'git archive' command since the pipe
-will swallow the command's exit code and a crash won't
-necessarily be noticed.
+Refactor t0024 to avoid having multiple chaining commands on a single
+line, according to current styling norms.
 
-Also refactor an existing use of '>' to avoid having a space after
-'>', according to Documentation/CodingGuidelines.
+e.g turn
+    ( mkdir testdir && cd testdir && echo "in testdir" )
+into:
+    mkdir testdir &&
+    (
+        cd testdir &&
+        echo "in testdir"
+    )
+
+This is also described in the Documentation/CodingGuidelines file.
 
 Signed-off-by: Ghanshyam Thakkar <shyamthakkar001@gmail.com>
 ---
- t/t0024-crlf-archive.sh | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ t/t0024-crlf-archive.sh | 12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
 
 diff --git a/t/t0024-crlf-archive.sh b/t/t0024-crlf-archive.sh
-index a34de56420..fa4da7c2b3 100755
+index fa4da7c2b3..ff4efeaaee 100755
 --- a/t/t0024-crlf-archive.sh
 +++ b/t/t0024-crlf-archive.sh
-@@ -9,7 +9,7 @@ test_expect_success setup '
- 
- 	git config core.autocrlf true &&
- 
--	printf "CRLF line ending\r\nAnd another\r\n" > sample &&
-+	printf "CRLF line ending\r\nAnd another\r\n" >sample &&
- 	git add sample &&
- 
- 	test_tick &&
-@@ -19,8 +19,8 @@ test_expect_success setup '
- 
+@@ -20,7 +20,11 @@ test_expect_success setup '
  test_expect_success 'tar archive' '
  
--	git archive --format=tar HEAD |
--	( mkdir untarred && cd untarred && "$TAR" -xf - ) &&
-+	git archive --format=tar HEAD >test.tar &&
-+	( mkdir untarred && cd untarred && "$TAR" -xf ../test.tar ) &&
+ 	git archive --format=tar HEAD >test.tar &&
+-	( mkdir untarred && cd untarred && "$TAR" -xf ../test.tar ) &&
++	mkdir untarred &&
++	(
++		cd untarred &&
++		"$TAR" -xf ../test.tar
++	) &&
  
  	test_cmp sample untarred/sample
+ 
+@@ -30,7 +34,11 @@ test_expect_success UNZIP 'zip archive' '
+ 
+ 	git archive --format=zip HEAD >test.zip &&
+ 
+-	( mkdir unzipped && cd unzipped && "$GIT_UNZIP" ../test.zip ) &&
++	mkdir unzipped &&
++	(
++		cd unzipped &&
++		"$GIT_UNZIP" ../test.zip
++	) &&
+ 
+ 	test_cmp sample unzipped/sample
  
 -- 
 2.43.0
