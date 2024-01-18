@@ -1,73 +1,72 @@
 Received: from out5-smtp.messagingengine.com (out5-smtp.messagingengine.com [66.111.4.29])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5B362D63D
-	for <git@vger.kernel.org>; Thu, 18 Jan 2024 16:13:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFF522D63F
+	for <git@vger.kernel.org>; Thu, 18 Jan 2024 16:13:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=66.111.4.29
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705594425; cv=none; b=sWq/3u1s/p3/Zqb935nvzUYNhzSI2G6cs7ObPfW72aJpRNSzj67LkL58FsunIvT1euOXUuHTd9/vtJ/zrkxDAFa9HAh6giTAnhuPid5eyh9XIiqTy/eglpCXFXgv69ga2ej1ZMrOEyZsMCsa7o1V8sJBEYopiZ4W8ktmThABF+A=
+	t=1705594426; cv=none; b=EpQETu97V30hj5WJCwZDWT9iZ2wIfg80UwY4W4b16ASl6zChBI7SjI9Alwhc4UaJJDDWmvYnDI1H1KKHequf7dFU5WQ4JmnxrCJhdrBpB90xscIkEDRynaARt5z/3v6ZP7Bu4eg2nSPdMX1EJZdg9MMGfsVYWvoOmcPJpnGwrBo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705594425; c=relaxed/simple;
-	bh=c8LyekRW1lztoz0LtyPoxDsUKA/IpzbK2Qbcv3aqIXA=;
+	s=arc-20240116; t=1705594426; c=relaxed/simple;
+	bh=j61b5x9RQ4liFjnavtOQOkRll34uKeCQ+O6dBUFkoQc=;
 	h=Received:Received:DKIM-Signature:DKIM-Signature:X-ME-Sender:
 	 X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:Received:
 	 From:To:Cc:Subject:Date:Message-ID:X-Mailer:In-Reply-To:References:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding; b=ajyKlU1fE0j1WHq0HL5ONv/fd4cxfeAPeV11n1IM+49HzggFoQl4M6OPli5lnGXXMFf9KmCc2WhHnF/AXbjDNbe7L4JOzHkXJFAPBg0hUAbdUFtNOhFlC+qe3qkDgN5b8tJk5WSf7Ilxi2+v1oRIYhcIW2vMrDsXg6hyjQUOsds=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=khaugsbakk.name; spf=pass smtp.mailfrom=khaugsbakk.name; dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b=jNAJjOj9; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=MXChUdTS; arc=none smtp.client-ip=66.111.4.29
+	 MIME-Version:Content-Transfer-Encoding; b=Q1JNTTnyPErLoX99LiA2xgPG/kZhY/CzTGr02MeTu9dNwJot4U2ODKTwkyf1zyb7pU2rPd6IhQnOZ5ITFkIHculSnYANnEn22p9VmWKGUTl5wsrBoV5L13TPe4Sh9e1vQKspuNNTZGxdDpzDWTGwFw8RY4o5wKBr5Mu+ZlvtmAo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=khaugsbakk.name; spf=pass smtp.mailfrom=khaugsbakk.name; dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b=C9WFemTP; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=t7w0JlUo; arc=none smtp.client-ip=66.111.4.29
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=khaugsbakk.name
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=khaugsbakk.name
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b="jNAJjOj9";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="MXChUdTS"
-Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
-	by mailout.nyi.internal (Postfix) with ESMTP id C76045C00D7;
-	Thu, 18 Jan 2024 11:13:41 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b="C9WFemTP";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="t7w0JlUo"
+Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
+	by mailout.nyi.internal (Postfix) with ESMTP id CDA515C00D5;
+	Thu, 18 Jan 2024 11:13:43 -0500 (EST)
 Received: from mailfrontend1 ([10.202.2.162])
-  by compute5.internal (MEProxy); Thu, 18 Jan 2024 11:13:41 -0500
+  by compute3.internal (MEProxy); Thu, 18 Jan 2024 11:13:43 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=khaugsbakk.name;
-	 h=cc:cc:content-transfer-encoding:content-type:content-type
-	:date:date:from:from:in-reply-to:in-reply-to:message-id
-	:mime-version:references:reply-to:subject:subject:to:to; s=fm2;
-	 t=1705594421; x=1705680821; bh=9/1YwS5WG0/dSywoX2SESY6du46paZxM
-	byVmce56AYQ=; b=jNAJjOj9wO5UsQcSHvlovdLIYqClzfT3iiot8Z7YHngk8Cp4
-	Lqop/2Si81B+nmmgflsxztJfKRminIKysF/zSNHbF4KXumWcy9p6c+bRFptPIKY0
-	Pxwag7apclbiwxpK6QA+WUR5BgrQoZO31M+szfFAYQGllwNlRRjnfov4SBoud0XO
-	/Fk4NO+uyJq7oOP5kCW7MvcSypPxDP88WQL9UsXSyleYo67OWNhlsd7Qx5tWCOgx
-	m1nx85Cp856Hp8R2beSbGwW/Mo8mgbFaIFZyz1XL7J0mIzKVV2uFKZ6Orpwx7p7l
-	QSduBCfGJYZfx/krkHSInisMT0ib1auDcFHiOg==
+	 h=cc:cc:content-transfer-encoding:content-type:date:date:from
+	:from:in-reply-to:in-reply-to:message-id:mime-version:references
+	:reply-to:subject:subject:to:to; s=fm2; t=1705594423; x=
+	1705680823; bh=3PMwYZ3TK+aS0letAdpJMqPmC2YZhQB8Jz2gw+rBO/A=; b=C
+	9WFemTPfGlkazwS+h4Ud12UKOZo4h6fztq8YahIe+nvwdWuDrzikI8/WkgxPcsBi
+	AXIy1f9deEtDKxOn+xc4xVHkAytpRdoflV8NH4k/f8AYF6AiQA3EhcZlBrk8X3lg
+	7telRqKKRy0CtqY+kmIpoM3onwi5mbSF4cP7jH8ZZyZghAT+FtGXBce84VIvY50X
+	1/y6FtbCvJFc/EfbCtKxQNmFhpsvjmFsZlp79kL/p9QCrdGpkT9eQxTZPkIQmunL
+	28+N50Sl7yCzgB7VThczqRrn+LESemqQYyto8YAi8FoiyIPF+ITQCctWlrcc40/p
+	OnTb6Es+X0z7eFiInZAhQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1705594421; x=
-	1705680821; bh=9/1YwS5WG0/dSywoX2SESY6du46paZxMbyVmce56AYQ=; b=M
-	XChUdTS7Tsol/i15JHH9GaHgBcVg3Ur4uOz9ajfMGXBY5d6rubqkCyh6og3Q1vTB
-	It9EmXWY0hMbuczEC7M/6OZuzWizblOuh9rqe8+9z+9vSUZSrVHMMzF9jMB9KfUe
-	qS800+ukCMLj3IaVWgmpUgFrcA2M92ogI4H/ic5B6W0cdYSB/gUlQdNuETtAm6tk
-	tEtN47hJ6B1bUnxAfhiUr33srbK6IVTystrqI9BLThHRz/0wb5sEWdeyHlTPLHl2
-	HhsLGGlCzUNT7xHoztnfLZGgszAnIO+NOhcma+zGUEduRzphQ+hA6bIpLDd+tnuc
-	tHkyOmtqrJKRHcfdz6JjA==
-X-ME-Sender: <xms:NU6pZTuZG5vIxOkvi63t7Szfdm0fPlQaYfqxCDjfCai9lkafKkpkzcg>
-    <xme:NU6pZUdcxYoBu-LjweSqMfGgEVx3ZJoLsRcfhjm0lH194vN5wM4PnISrtAOe6OMMO
-    1DEN1iGf6rFpauMyg>
-X-ME-Received: <xmr:NU6pZWxsxAG4Ua8_zTKhkPudoAyuprdQAnPhHHz2FF37ylr_WdanHf8emU-kcCXgFUBmGSZfY3oGy5JOlJD8CFbqOwabizaa4IJHnXF59Q>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrvdejkedgieduucetufdoteggodetrfdotf
+	:content-type:date:date:feedback-id:feedback-id:from:from
+	:in-reply-to:in-reply-to:message-id:mime-version:references
+	:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1705594423; x=
+	1705680823; bh=3PMwYZ3TK+aS0letAdpJMqPmC2YZhQB8Jz2gw+rBO/A=; b=t
+	7w0JlUoSykK+HKrOEs4Cl/gA4UdREXnv2JOG9OAOrIaqKnWrUtK9s+qmeNZ7yDFJ
+	7UryKnPOgrsac3LBH9CqugVxE7xoB15DTL+kyYPfcGJnDSHCboGl1FaC6/SHe2LD
+	t52bwat1vO16BmfqBT22d3HVKBX2CgKtaTKYWfdMZYxTMaB4Qo8UOnGqmWHoA931
+	Ev0NQgGsBC8IUe6BPPQnyGDL1LGzUWqpg40Z7XimtYy127AoVrxug1tRaptDVMa5
+	nMeH5DEi207B92v8AwTZlqhfTRfqwwhHVvVP/FEp4fATVmF/27VKGX5OVhhq/5Tw
+	fg8sIyBw4qDWu3Yp4WyHw==
+X-ME-Sender: <xms:N06pZa-dCRV_QwcNrbO-gz28RUQnXlmhU53WDITx3y7ZdCSHvWgYViE>
+    <xme:N06pZat5DQBaBh0xjvbG_4VycUQrNe5b9p0Odw4ZxGbRr9wiRVjWVqY_PyI0tT52Q
+    VodbdsFDBrfa0BStw>
+X-ME-Received: <xmr:N06pZQDIEIwDAlvR-7LzkNcVHX3ayroConNNBFl2c88pZuhXy1iTEvZ8Yed-vVtD8z6Bn7xTg-zfn_TWwT9hLsIZG2rjietq1QUhneB0Jg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrvdejkedgiedvucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
     uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    cujfgurhephffvvefufffkofgjfhggtgfgsehtkeertdertdejnecuhfhrohhmpefmrhhi
-    shhtohhffhgvrhcujfgruhhgshgsrghkkhcuoegtohguvgeskhhhrghughhssggrkhhkrd
-    hnrghmvgeqnecuggftrfgrthhtvghrnhepfffhgfdutddttdfhieelvdetudefgfejleef
-    ueeikeeugfeftdduiedvhfevgfetnecuffhomhgrihhnpehkvghrnhgvlhdrohhrghdpgh
-    hithhhuhgsrdgtohhmnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghi
-    lhhfrhhomheptghouggvsehkhhgruhhgshgsrghkkhdrnhgrmhgv
-X-ME-Proxy: <xmx:NU6pZSOefhokYLQyMWgp9jnx4YfJXcJFR7aANZ5EEv2UMdu36aFGsg>
-    <xmx:NU6pZT-LhGihA3jpPeLeElePpYYs_pbMQFLzjSmqttg9F65E8U67mA>
-    <xmx:NU6pZSWAhBYN_tF1D6VnejEq31_N0oKC_jx7nyyeGriJM8nyOKwKTA>
-    <xmx:NU6pZekl-CsJ_WfBDPzsKbtPHONbi5WBhdBdJ-xgJ1D8T8RolQdOuA>
+    cujfgurhephffvvefufffkofgjfhgggfestdekredtredttdenucfhrhhomhepmfhrihhs
+    thhofhhfvghrucfjrghughhssggrkhhkuceotghouggvsehkhhgruhhgshgsrghkkhdrnh
+    grmhgvqeenucggtffrrghtthgvrhhnpeetudeiheeguddtgfduveekhfevudeiieetjefh
+    ffetiedtgeejieehtdfhjefgteenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmh
+    epmhgrihhlfhhrohhmpegtohguvgeskhhhrghughhssggrkhhkrdhnrghmvg
+X-ME-Proxy: <xmx:N06pZSeUuFsfpnqBN_qDuQA00mMBe2b2Bq5YkZgLVyb34fYqsb6VNA>
+    <xmx:N06pZfPi6YT9cTezT1rCVTZEIKlS5CdPNYgSQS6p2oTWaD0PmardHA>
+    <xmx:N06pZcmPZixllwPtIYzZ_Nvtb_Lc-cZoBZlGk-Gv2BOgvlj7KOghRQ>
+    <xmx:N06pZa1803A_y-JQ3qiTnOKBBCNz5-OMG5jjjJfmEv46zB7eoMcBUw>
 Feedback-ID: i2671468f:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 18 Jan 2024 11:13:39 -0500 (EST)
+ 18 Jan 2024 11:13:42 -0500 (EST)
 From: Kristoffer Haugsbakk <code@khaugsbakk.name>
 To: git@vger.kernel.org
 Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>,
@@ -76,86 +75,65 @@ Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>,
 	Eric Sunshine <sunshine@sunshineco.com>,
 	Taylor Blau <me@ttaylorr.com>,
 	Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v3 0/4] maintenance: use XDG config if it exists
-Date: Thu, 18 Jan 2024 17:12:48 +0100
-Message-ID: <cover.1705593810.git.code@khaugsbakk.name>
+Subject: [PATCH v3 1/4] config: format newlines
+Date: Thu, 18 Jan 2024 17:12:49 +0100
+Message-ID: <1c92b772ef48a91e76b51fd58d941cfdcad93aec.1705593810.git.code@khaugsbakk.name>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <cover.1697660181.git.code@khaugsbakk.name>
-References: <cover.1697660181.git.code@khaugsbakk.name>
+In-Reply-To: <cover.1705593810.git.code@khaugsbakk.name>
+References: <cover.1697660181.git.code@khaugsbakk.name> <cover.1705593810.git.code@khaugsbakk.name>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-I use the conventional XDG config path for the global configuration. This
-path is always used except for `git maintenance register` and
-`unregister`.
+Remove unneeded newlines according to `clang-format`.
 
-§ Changes since v2 (by patch)
+Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
+---
 
-• config: factor out global config file retrieval
-  • Remove doc on `git_global_config`
-  • https://lore.kernel.org/git/c87b3d93-74db-4377-a57c-80f766d46e7f@app.fastmail.com/
+Notes (series):
+    Honestly the formatter changing these lines over and over again was just
+    annoying. And we're visiting the file anyway.
 
-§ Patches
+ builtin/config.c | 1 -
+ config.c         | 2 --
+ 2 files changed, 3 deletions(-)
 
-• 1–3: Preparatory
-• 4: The desired change
-
-§ CC
-
-• Patrick Steinhardt: `config` changes; v1 feedback
-• Derrick Stolee: `maintenance` changes
-• Eric Sunshine: v1 feedback
-• Taylor Blau: v1 feedback
-• Junio C Hamano: v2 feedback
-
-§ CI
-
-https://github.com/LemmingAvalanche/git/actions/runs/7521230119
-
-Kristoffer Haugsbakk (4):
-  config: format newlines
-  config: rename global config function
-  config: factor out global config file retrieval
-  maintenance: use XDG config if it exists
-
- builtin/config.c       | 26 +++---------------------
- builtin/gc.c           | 27 ++++++++++++-------------
- builtin/var.c          |  2 +-
- config.c               | 26 ++++++++++++++++++++----
- config.h               |  3 ++-
- t/t7900-maintenance.sh | 45 ++++++++++++++++++++++++++++++++++++++++++
- 6 files changed, 86 insertions(+), 43 deletions(-)
-
-Range-diff against v2:
-1:  d5f6c8d62ec = 1:  1c92b772ef4 config: format newlines
-2:  cbc5fde0094 = 2:  269490794bc config: rename global config function
-3:  32e5ec7d866 ! 3:  0643a85892c config: factor out global config file retrieval
-    @@ Commit message
-
-
-      ## Notes (series) ##
-    +    v3:
-    +    • Remove doc on `git_global_config`
-    +    • https://lore.kernel.org/git/c87b3d93-74db-4377-a57c-80f766d46e7f@app.fastmail.com/
-         v2:
-         • Don’t die; return `NULL`
-
-    @@ config.h: int config_error_nonbool(const char *);
-      #endif
-
-      char *git_system_config(void);
-    -+/**
-    -+ * Returns `NULL` if is uncertain whether or not `HOME/.gitconfig` exists.
-    -+ */
-     +char *git_global_config(void);
-      void git_global_config_paths(char **user, char **xdg);
-
-4:  8bd67c5bf01 = 4:  e0880af0a31 maintenance: use XDG config if it exists
---
+diff --git a/builtin/config.c b/builtin/config.c
+index 11a4d4ef141..87d0dc92d99 100644
+--- a/builtin/config.c
++++ b/builtin/config.c
+@@ -760,7 +760,6 @@ int cmd_config(int argc, const char **argv, const char *prefix)
+ 		given_config_source.scope = CONFIG_SCOPE_COMMAND;
+ 	}
+ 
+-
+ 	if (respect_includes_opt == -1)
+ 		config_options.respect_includes = !given_config_source.file;
+ 	else
+diff --git a/config.c b/config.c
+index 9ff6ae1cb90..d26e16e3ce3 100644
+--- a/config.c
++++ b/config.c
+@@ -95,7 +95,6 @@ static long config_file_ftell(struct config_source *conf)
+ 	return ftell(conf->u.file);
+ }
+ 
+-
+ static int config_buf_fgetc(struct config_source *conf)
+ {
+ 	if (conf->u.buf.pos < conf->u.buf.len)
+@@ -3418,7 +3417,6 @@ int git_config_set_multivar_in_file_gently(const char *config_filename,
+ write_err_out:
+ 	ret = write_error(get_lock_file_path(&lock));
+ 	goto out_free;
+-
+ }
+ 
+ void git_config_set_multivar_in_file(const char *config_filename,
+-- 
 2.43.0
+
