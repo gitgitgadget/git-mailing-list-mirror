@@ -1,88 +1,118 @@
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f174.google.com (mail-pf1-f174.google.com [209.85.210.174])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD6102E838
-	for <git@vger.kernel.org>; Thu, 18 Jan 2024 20:19:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 281842E64E
+	for <git@vger.kernel.org>; Thu, 18 Jan 2024 20:43:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705609174; cv=none; b=kIwpWyHz7V/4yH0QOwz0BOrhu5cT5ToD9Yv6v1jxd7NmeRaIg+5plLspMz5ETfW2J5b8+2p/oFpZoHCpWCXOoH3cR2rJe5rPB8UkB8CvA9C7NQxJJ4+mdNizhhKVEictxFmwrjj2LFBs0cgkJO2tIvMve1zLJrX/kyNN1JSQ0iE=
+	t=1705610617; cv=none; b=lHbxD6Is6tpXpYHLq4k0m40rSnjdwS/AFiFbr6OCDb3oD4D440mJW++7Rx/ZkvxqsLR3CvW4KiUm4klIIIESa3oIgKDjc9gs4CoA+J0FLe5J7tjrHE3LLm82Q0m/UDPrViWIDll5LjmJvM/7LAIUFK3wW9ThL2/Iizr/7qMnuvk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705609174; c=relaxed/simple;
-	bh=Utsnbu/R9nvwtTtnw8jhOzvYDatE+woauTuX4dhbu6I=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=gXy9pKZ0iOITAeydGLFsMlMOy1PW4UxiMwLzcyLw0VDd2jRbxxv+111Lm+Cv6wUGnzKlZQKNmHGwg3VxCnNPliJrj36ZcfkJTJ5cvXYrH+nEH0llRg1W0HmGZeM7BxXlAw7vASavGb0B9C3/OePz+3YjRGeBBBigXMUzrTV+wTE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=rL48GL+C; arc=none smtp.client-ip=64.147.108.71
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1705610617; c=relaxed/simple;
+	bh=TkljkeX5gvBAa5EBLeysst6vTyqLeXh82bvsaZ3M2Oo=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=V03wPZ4klLIh5Jnw0Eo8g70eA1ECohRVJO2u9c9WNq+jL1aoOMJccm+6Gdy9XPbQfQLIP3LaYkvr3IAxuAZpwyNgVOMYqO/D+25jGKGsRENdIDSlzu8osqHsemT3K66/r7iX4aWA5zC1mCdI/cKfFR08cASSRy7jwc7Mnjk1aMU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=b6dYGgM5; arc=none smtp.client-ip=209.85.210.174
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="rL48GL+C"
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 6821F1CC7EE;
-	Thu, 18 Jan 2024 15:19:31 -0500 (EST)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=Utsnbu/R9nvwtTtnw8jhOzvYDatE+woauTuX4d
-	hbu6I=; b=rL48GL+CZWkXBe4Nj/4GqCdSUD0w8/8eX8dZPK7vfljyQkl9SWJ/SY
-	2sqtW0hXfFvWzlp2ViLodNdPOecRYiMvNRlrserINyaXdWBelhlR+RnuIQZkEsNx
-	mP2P01hzxb1+rQ334qShS/0OM6CtAZfyAR5OaY6WGCcL/65ikyarg=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 5F4111CC7ED;
-	Thu, 18 Jan 2024 15:19:31 -0500 (EST)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.200.93])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id BD9A41CC7EC;
-	Thu, 18 Jan 2024 15:19:30 -0500 (EST)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Dragan Simic <dsimic@manjaro.org>
-Cc: Jeff King <peff@peff.net>,  =?utf-8?Q?Rub=C3=A9n?= Justo
- <rjusto@gmail.com>,  Git List
- <git@vger.kernel.org>
-Subject: Re: [PATCH 3/3] advice: allow disabling the automatic hint in
- advise_if_enabled()
-In-Reply-To: <bfded0571f133ffc1612fcbca1811a43@manjaro.org> (Dragan Simic's
-	message of "Thu, 18 Jan 2024 19:53:34 +0100")
-References: <7c68392c-af2f-4999-ae64-63221bf7833a@gmail.com>
-	<d6099d78-43c6-4709-9121-11f84228cf91@gmail.com>
-	<20240110110226.GC16674@coredump.intra.peff.net>
-	<aaf59fc82ef3132ece8e1f70623570a2@manjaro.org>
-	<97fdf6d4-1403-4fe9-b912-a85342a9fa56@gmail.com>
-	<a97b03a305a7b8b95341b63af1de0271@manjaro.org>
-	<xmqqil41duov.fsf@gitster.g>
-	<d6d72ec5431ad1ca775e6e4e9921f94c@manjaro.org>
-	<20240111080429.GG48154@coredump.intra.peff.net>
-	<5f322b3e6053c27dda58ef1c1f025d11@manjaro.org>
-	<xmqqil3qsdkv.fsf@gitster.g>
-	<bfded0571f133ffc1612fcbca1811a43@manjaro.org>
-Date: Thu, 18 Jan 2024 12:19:29 -0800
-Message-ID: <xmqqwms6pf72.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="b6dYGgM5"
+Received: by mail-pf1-f174.google.com with SMTP id d2e1a72fcca58-6dbb003be79so582845b3a.0
+        for <git@vger.kernel.org>; Thu, 18 Jan 2024 12:43:35 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1705610615; x=1706215415; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=B/fsjq47fPOg1lo5imWWwoMa7Pbx9vS/S4xcfjnkppk=;
+        b=b6dYGgM5b1wkxKiNjQySXVwxHwlkWMt5uu8HTohJnS5B8vcR/Qsf9hmUCsd/EwgIUz
+         LbgZv5NeKlYWKHBDZDRW5glhX6mWqlwm1jwlYKNJvsOkNTQhuUSMvNtDSxLjJjtNGKpJ
+         k24WKq3l3MsJz5aa/ZPh7cUen2ZqGFYDFnEdsbmKbaqwtSJAKNd2ZejK7MSoFcoSYfVk
+         9ky0UgIj94T1fQcNSkao+xF4QrePxGRETZUlar1jdFbqfClulTfujFwg7Bp0OYVxI/Ya
+         she0TnA5aph9jKVDXb9DbiXXqNVptAigcWoZJSPnq05yW5ULfnf+VkbKBEe6JXEJgB6+
+         2sPg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1705610615; x=1706215415;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=B/fsjq47fPOg1lo5imWWwoMa7Pbx9vS/S4xcfjnkppk=;
+        b=izRgsPqNpaRT3WGu4vxoXEEj1GM84Yc7qOR2YRSbqNBVrI1r1xjp3/uylpuzqblaqc
+         ITzFJYdklkd4lxK76hj7UBHRlRFcYVCElHUmJaYyVP7X4f+eqqYcwnMPiYzcTBo1RgVP
+         lWiChurk0qmek1FwlPk4M9U7TyrMOvE8qT5nRPT4jj8eWFb/1ENmnaCoksGWhS7lMSdL
+         nJdm/YX9xh5eK9iyVIwN2Lero7hPmIj2wdZ+o/AeCDh+Vx/z7Tjm8Jw1q5EhRPJ5NF38
+         reWU70f86Kl+MZ7qLA/rkSeFwEFeooV2dduTj7cc2nQeff9jxHaTp1sLSXuPGjq1P00T
+         yTVw==
+X-Gm-Message-State: AOJu0Yx5Oeq2TjTsX4Kc0X/LtxnsxuFZZFVre41nTdljOPBL+ltzyee/
+	onHjp05db+BsaYuzseCeXtHx4ArzV4eiMK72aw2bsJfP6R/gqEFEk9xzLpQsatM=
+X-Google-Smtp-Source: AGHT+IGJSVi6yd2AUdpq8NXxwv9JhxKWWo1fITFRiAzDXPKWgX8t8/Auu3q7jxXUtpwq1N5fLsH74w==
+X-Received: by 2002:a05:6a21:164a:b0:199:da11:8efa with SMTP id no10-20020a056a21164a00b00199da118efamr4020970pzb.27.1705610615482;
+        Thu, 18 Jan 2024 12:43:35 -0800 (PST)
+Received: from brittons-large-Vivobook (mobile-166-176-186-78.mycingular.net. [166.176.186.78])
+        by smtp.gmail.com with ESMTPSA id j38-20020a635526000000b005cf7c4bb938sm1995759pgb.94.2024.01.18.12.43.34
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 18 Jan 2024 12:43:34 -0800 (PST)
+Received: by brittons-large-Vivobook (Postfix, from userid 1000)
+	id 1776D52026F; Thu, 18 Jan 2024 11:43:33 -0900 (AKST)
+From: Britton Leo Kerin <britton.kerin@gmail.com>
+To: git@vger.kernel.org
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Patrick Steinhardt <ps@pks.im>,
+	Britton Leo Kerin <britton.kerin@gmail.com>
+Subject: [PATCH v3 1/5] completion: complete new old actions, start opts
+Date: Thu, 18 Jan 2024 11:43:19 -0900
+Message-ID: <20240118204323.1113859-2-britton.kerin@gmail.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20240118204323.1113859-1-britton.kerin@gmail.com>
+References: <03fe3371-2b0f-4590-90ad-166b8fa4cbbb@smtp-relay.sendinblue.com>
+ <20240118204323.1113859-1-britton.kerin@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- E3038B62-B63E-11EE-A8D4-25B3960A682E-77302942!pb-smtp2.pobox.com
+Content-Transfer-Encoding: 8bit
 
-Dragan Simic <dsimic@manjaro.org> writes:
+Signed-off-by: Britton Leo Kerin <britton.kerin@gmail.com>
+---
+ contrib/completion/git-completion.bash | 17 +++++++++++++++--
+ 1 file changed, 15 insertions(+), 2 deletions(-)
 
-> On 2024-01-18 19:26, Junio C Hamano wrote:
->> Dragan Simic <dsimic@manjaro.org> writes:
->> 
->>> Perhaps having both options available could be a good thing.  Though,
->>> adding quite a few knobs may end up confusing the users, so we should
->>> make sure to document it well.
->> I agree there is a need for documentation, but we are not increasing
->> the number of knobs, are we?
->
-> Perhaps there would be one more knob if we end up deciding to implement
-> support for both approaches, as previously discussed.
+diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+index 185b47d802..15d22ff7d9 100644
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -1449,7 +1449,7 @@ _git_bisect ()
+ {
+ 	__git_has_doubledash && return
+ 
+-	local subcommands="start bad good skip reset visualize replay log run"
++	local subcommands="start bad new good old terms skip reset visualize replay log run help"
+ 	local subcommand="$(__git_find_on_cmdline "$subcommands")"
+ 	if [ -z "$subcommand" ]; then
+ 		__git_find_repo_path
+@@ -1462,7 +1462,20 @@ _git_bisect ()
+ 	fi
+ 
+ 	case "$subcommand" in
+-	bad|good|reset|skip|start)
++	start)
++		case "$cur" in
++		--*)
++			__gitcomp "--term-new --term-bad --term-old --term-good --first-parent --no-checkout"
++			return
++			;;
++		*)
++			;;
++		esac
++		;;
++	esac
++
++	case "$subcommand" in
++	bad|new|good|old|reset|skip|start)
+ 		__git_complete_refs
+ 		;;
+ 	*)
+-- 
+2.43.0
 
-But that would be just one knob (which I personally do not quite see
-the need for), not "quite a few knobs" as you said, no?
