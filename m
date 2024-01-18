@@ -1,78 +1,79 @@
 Received: from wout1-smtp.messagingengine.com (wout1-smtp.messagingengine.com [64.147.123.24])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F3992555C
-	for <git@vger.kernel.org>; Thu, 18 Jan 2024 13:41:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24A2C25611
+	for <git@vger.kernel.org>; Thu, 18 Jan 2024 13:41:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.24
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705585313; cv=none; b=kBUfHWODiJHLP5+sdZx7JTcZYfnzJa/pDJfLHP9wueJUDXpyWN4/QJrBzIOXOBfRr4yC2qzkR1W5djAzxOx2QsAtYK4q10EPUEYe6KiHFj64AAlDJhhQF4XDzwKzGCf0DnOGFDoF+6TyXGK8ZSRE/uoA/nOjRudZEK17B8zWUpU=
+	t=1705585316; cv=none; b=DDBAqePAmTG23ZqCrW3dvkOPQcDxuvyAssmPiHbzG2tEslDinRbzQBGoxttcJRK29rcmpomJo6j5xrbZrJ1Ku+rUHtsMzIbq86er+1joXeef/SyZzPCsseHRLrOj6pIpzCgFjhwtt3NsbLMaqHG/POp/kMv+ibwSYMgccYopIa0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705585313; c=relaxed/simple;
-	bh=i2/BISPmXju6k1/woeGE/iaBvlLObTW6qA3u/jypkyc=;
+	s=arc-20240116; t=1705585316; c=relaxed/simple;
+	bh=vPej4AZ5USo0T6dCPx5yUMtSDMQY2IEnG9sh6MLiwdA=;
 	h=Received:Received:DKIM-Signature:DKIM-Signature:X-ME-Sender:
 	 X-ME-Received:X-ME-Proxy-Cause:X-ME-Proxy:Feedback-ID:Received:
-	 Received:Date:From:To:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition; b=lARSm7xG/EtN1wT0uBQhBRPTkvhUC92P73WfWqyFjUHSPbtaRyf/F1sV8fZKyKqK7/RCMJlHeh7zcWbNTYUNuZvBPr63C7MbUm3VI3fJDW8wjD8rXPmfco/vjvnACMzqs1wrPWHTKYwoR6no/nDhi4ll7vD+M9vX/PnrNcMjlT0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=BuYCDuK1; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=AydqQqL8; arc=none smtp.client-ip=64.147.123.24
+	 Received:Date:From:To:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=hP5uw52s9DW8srpbSkuQ5Ydvg/K32C7MFLvjSD6d0f9IusSoqkD9MHU5ICwM8lUbrxjPnPCekTCijxUfrO34RgsFREcpZkUu1r32MEusJl4M5vC6t3kJuLQaLONhIh+LGosIB25hNP9ygqldMGSic29tKtVl3B+gvEnaT0xL6/s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=gGD05LeD; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=gNJaj/Qk; arc=none smtp.client-ip=64.147.123.24
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="BuYCDuK1";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="AydqQqL8"
-Received: from compute7.internal (compute7.nyi.internal [10.202.2.48])
-	by mailout.west.internal (Postfix) with ESMTP id 8868C3200A89
-	for <git@vger.kernel.org>; Thu, 18 Jan 2024 08:41:50 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="gGD05LeD";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="gNJaj/Qk"
+Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
+	by mailout.west.internal (Postfix) with ESMTP id 2ECCD3200B51
+	for <git@vger.kernel.org>; Thu, 18 Jan 2024 08:41:54 -0500 (EST)
 Received: from mailfrontend2 ([10.202.2.163])
-  by compute7.internal (MEProxy); Thu, 18 Jan 2024 08:41:50 -0500
+  by compute2.internal (MEProxy); Thu, 18 Jan 2024 08:41:54 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc
 	:content-type:content-type:date:date:from:from:in-reply-to
-	:message-id:mime-version:reply-to:subject:subject:to:to; s=fm3;
-	 t=1705585310; x=1705671710; bh=qXZLIegpfrEq324H8XmE3R4RlqMTmE1t
-	ZngpoJDzWXA=; b=BuYCDuK1MKEEBWpZmPqszVEvdyPuX4sygM68t4nCTbxN8Yct
-	vzCxHlk3GSWitbgVcbiGcpeaw1Zsi4cnUh8AqEwVkvtylchAYjk7ss0HqlGt+ZKQ
-	n+0U0sYwBd4DHgkGHgY2K/6XUaxLPw04whELpZua5lZsjirlpICbtOHCJth0vu4a
-	+2TIqT40x15gHPFJ/eQz2w7wIdK9ghBoUiUELqgIjvPNmhN8wXRm4zojpiJ3llbq
-	DhldoeJKiu6pPMu8/NouC9KbvcuQAP/kvNnYPemFTqymNn3ucsEnfzSB3EHXOS6c
-	4gb2sbNh/vcLf0SrXrBgET/nbu00JmOP8/iydQ==
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1705585313; x=1705671713; bh=LrHNTzQZid
+	OJCJ3w2c8gA98Br1k5ijy4MEdDyS2icHQ=; b=gGD05LeDYRTdakshYNVRMbgqCi
+	51z/J4EJ4Ad4d/R8TwhbrYc5Mu8bze23wh1KTJq+0dOr5F8kst2okbpfKEWXJKrv
+	vorLGJ3IttH7uQ/1oJMeWGb5dK9ash2w7DZQPgwW9njG6NRh5VRKLMK6eAD4JK9Q
+	ymx9CeFgHyFC1HVAhfbP2sK6bjon0qXBb8oZFEqERoeO/ped9DFRMi1A/29+8fdF
+	uJ2mGJTf4bqUYakieEiozEh0AI3sWFcYfdG2fvZzdTRnzzTPVAcRpvKf2cCFw9Ij
+	J1x/aONGA6YBXOPuJI8zeqIbPMswJ6xbDvBiUASqpYGMZLZhpdDn3/56NhZA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:message-id
-	:mime-version:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1705585310; x=1705671710; bh=qXZLIegpfrEq324H8XmE3R4RlqMTmE1tZng
-	poJDzWXA=; b=AydqQqL8SzAFvYDquL6Oi1L41xdP8U+Yyc5g6lQfosy0AV19HDp
-	RieLt6ez5xCza+xU3HcYFzNEji05rxcNITKZuLnBJfnhcXUAgS0fjdnDVJeK4Der
-	FcsHI7FOEFZ2WdP8yVaOtOTM2KqOb7ZuC8qF+sFoZyVCklGi8lNyZedvf+C5IwDd
-	GsxM6wj8TNMSEis5jTOelBPMAEG6iG3oCuqSi5CxG7Ge5OPklmR1YOtchKV//dWs
-	s2BV9IS8gt30W8FvYUXqxPNgwCooIyqGXwhMv0e8c7PmTxEgZebKdc0/OSIPjMc8
-	E1mCQRJOjGk8e3QvFuABbXF5AVtPd+yk+wg==
-X-ME-Sender: <xms:nSqpZa9jpV2E_7CcdLL1UrnArTg3euzuFHiWQCTuD_2oRcXtDbW_7g>
-    <xme:nSqpZavHRGYnu0sTIjKCOAMnWsFXSfsvlvt0VUQbuAG7_TgvY5_96gfZv5bzDQIKR
-    9SJOstmo1OW8coJng>
-X-ME-Received: <xmr:nSqpZQD-sKlKBaZ69ypEcz0xI-nUZsrMRuS9NB4WYl3dMYUto1Y5bgaRa2VM8GzPNk-RY9Jc-zR8klNoEhtaWUZyuWfD0q0vQ9h4zKLvEYJF60A>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrvdejkedgfedtucetufdoteggodetrfdotf
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm3; t=1705585313; x=1705671713; bh=LrHNTzQZidOJCJ3w2c8gA98Br1k5
+	ijy4MEdDyS2icHQ=; b=gNJaj/Qkd+tx4XeusE8JTVCEZ5CDb1ztWYwcGCMXuqdp
+	Q9OkP7TWl/uk5TOp2g+GAr8GQjffi/SM5biRz0LmRSaop003N4iOmIhbKFubPmWQ
+	FazaKbWcIgnDzB8dVdyenNt+9RFTWCFNS8/3dY1KBTIBb8ptT7Evnq10sMuiivMf
+	HxncTf1YBlI2gCwUiJkHzXfmNxFkzdWSUVITj4AQYT0RZav4DFeRwQhh6n3JYPob
+	2tXejtLRoIwx6xCi5iV9XndGOJIT72Sm12Ug8t9PabZn5FwEpXzG+jaUF0DqVjyn
+	l4WMG1bKgpafY5putkFbQZmOhJB0O335rSN/xGKj8A==
+X-ME-Sender: <xms:oSqpZb0Qkf6Dyw7swN5NdBzUz9jbifQx2SJMMC9ig5S1eiq-hQmljA>
+    <xme:oSqpZaEKAFWiW0zDhA8aUO-PX_Lrx6RWmydmmBmu6ie1uZqdp94F9bJK9lmnwY_U5
+    tcD2gbBmT6kIlsvBQ>
+X-ME-Received: <xmr:oSqpZb6EXZwIuSA2GcKb_P0h_eRWrzve-H4NjEvjeLdvtqzZWBFvEpwc9Lis-pxCoWAGFitGiaeIEnwT9N-C3F6XQFAMgG-2uTZ3dtz3t4DCnDk>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrvdejkedgfeduucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvuffkgggtugesghdtreertd
-    dtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhs
-    rdhimheqnecuggftrfgrthhtvghrnhepjeeifedvueelfffgjeduffdvgefhiefgjefgvd
-    dvfeduvefffeevfffhgfekieffnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghm
-    pehmrghilhhfrhhomhepphhssehpkhhsrdhimh
-X-ME-Proxy: <xmx:nSqpZSeSc7FdYKCK_SwqujAn-APBwxnCcSNAZo7PpI3nLDdkEmytmg>
-    <xmx:nSqpZfMIvC1PG5TM9rCsPjZ23NlD50YknClWPEEqOlaVBG0glTkojA>
-    <xmx:nSqpZcm9BOQyB03ITajxhTGpFtHt8TN1-aLeQ56gsZzzA46ZGrZVkg>
-    <xmx:niqpZeYkXGfRoVHGxee7ZQrXuufwNKvd-xXOVJUZ-v_2WoD0QxUiig>
+    uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvuffkfhggtggujgesghdtre
+    ertddtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehp
+    khhsrdhimheqnecuggftrfgrthhtvghrnhepheeghfdtfeeuffehkefgffduleffjedthf
+    dvjeektdfhhedvlefgtefgvdettdfhnecuvehluhhsthgvrhfuihiivgeptdenucfrrghr
+    rghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimh
+X-ME-Proxy: <xmx:oSqpZQ2lHwEuh7e_-cK4ykne4CnC1lxrKWvI8D6hdjiFUNCUAda_1Q>
+    <xmx:oSqpZeG4ApNVFgIIvzHNH9vRfy3wBOeC9eeR-oWLag2_rY-68zDWHA>
+    <xmx:oSqpZR96lRjZJE_5X3TDs7lTUk3ycHtOqATwNGq0HId0CYiFhKpnAg>
+    <xmx:oSqpZZyQpPP5r7BKrjH_cYjVJuihOqb8Ax_XdvASCGGVyvTxK_RqvQ>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Thu, 18 Jan 2024 08:41:49 -0500 (EST)
+ <git@vger.kernel.org>; Thu, 18 Jan 2024 08:41:52 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 1e351bc1 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	by vm-mail (OpenSMTPD) with ESMTPSA id 5a6aec30 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
 	for <git@vger.kernel.org>;
-	Thu, 18 Jan 2024 13:38:52 +0000 (UTC)
-Date: Thu, 18 Jan 2024 14:41:46 +0100
+	Thu, 18 Jan 2024 13:38:57 +0000 (UTC)
+Date: Thu, 18 Jan 2024 14:41:51 +0100
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
-Subject: [PATCH 0/2] reftable/stack: fix race in up-to-date check
-Message-ID: <cover.1705585037.git.ps@pks.im>
+Subject: [PATCH 1/2] reftable/stack: unconditionally reload stack after commit
+Message-ID: <568aa5b808013ca782fac45d03e01bbf9323bb38.1705585037.git.ps@pks.im>
+References: <cover.1705585037.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -80,68 +81,68 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="OiitEmoLqVwjAwxQ"
+	protocol="application/pgp-signature"; boundary="ILy+iS3odFDK+G+/"
 Content-Disposition: inline
+In-Reply-To: <cover.1705585037.git.ps@pks.im>
 
 
---OiitEmoLqVwjAwxQ
+--ILy+iS3odFDK+G+/
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-Hi,
+After we have committed an addition to the reftable stack we call
+`reftable_stack_reload()` to reload the stack and thus reflect the
+changes that were just added. This function will only conditionally
+reload the stack in case `stack_uptodate()` tells us that the stack
+needs reloading. This check is wasteful though because we already know
+that the stack needs reloading.
 
-In 6fdfaf15 (reftable/stack: use stat info to avoid re-reading stack
-list, 2024-01-11) we have introduced a new mechanism to avoid re-reading
-the table list in case stat(3P) figures out that the stack didn't change
-since the last time we read it.
+Call `reftable_stack_reload_maybe_reuse()` instead, which will
+unconditionally reload the stack. This is merely a conceptual fix, the
+code in question was not found to cause any problems in practice.
 
-Unfortunately, I've been able to hit a bug there that can happen under
-very specific circumstances when a reading and writing process race with
-each other. When the writer appends to the stack and then compacts it,
-it may happen that we recycle the previously-used inode of "tables.list"
-so that the resulting `struct stat` exactly matches the cached value of
-the reading process.
+Signed-off-by: Patrick Steinhardt <ps@pks.im>
+---
+ reftable/stack.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-The first patch is merely cosmetic, whereas the second patch fixes the
-described race. The topic depends on ps/reftable-optimize-io, which has
-introduced the issue.
-
-Patrick
-
-Patrick Steinhardt (2):
-  reftable/stack: unconditionally reload stack after commit
-  reftable/stack: fix race in up-to-date check
-
- reftable/stack.c  | 101 ++++++++++++++++++++++++++++++++++++++++++----
- reftable/stack.h  |   4 +-
- reftable/system.h |   1 -
- 3 files changed, 96 insertions(+), 10 deletions(-)
-
-
-base-commit: 718a93ecc06ed59dda4e6a5d91b1c2169275694f
+diff --git a/reftable/stack.c b/reftable/stack.c
+index c28d82299d..705cfb6caa 100644
+--- a/reftable/stack.c
++++ b/reftable/stack.c
+@@ -585,7 +585,7 @@ int reftable_addition_commit(struct reftable_addition *=
+add)
+ 	add->new_tables =3D NULL;
+ 	add->new_tables_len =3D 0;
+=20
+-	err =3D reftable_stack_reload(add->stack);
++	err =3D reftable_stack_reload_maybe_reuse(add->stack, 1);
+ 	if (err)
+ 		goto done;
+=20
 --=20
 2.43.GIT
 
 
---OiitEmoLqVwjAwxQ
+--ILy+iS3odFDK+G+/
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmWpKpkACgkQVbJhu7ck
-PpTQwQ/+M0za5CKErN2BuyqM34axTFnzZoS5+cU7gszwOlarE9eAekpaVAnPdlSk
-VzzTw1jsbaIZF1GNZ7YDgpkm8ebULIgD7A1r5L3Fp/bVXr/Hslec0PVweZIURfSM
-pjX+i/6WKleDVRrha3rsyVFBTz73cUPV9fha5ZUrvTsrN+Rdon7IxT15r3PHigON
-xB4+S1rAzF1Nje3SHC/BT0MVjPeFWD6lvyWil8Fezi4bwKUV/ghTRU33QrdftibW
-zmxFXwMxJd+Yz5Ivc+O3Z8WwDUWtg2YPZznhG/ssEGaba7XU3YfZ2f6lqwFKDmJn
-ULIhpw1Gc1uFsEXwkBA/2zDJpd+X0wc7VSVKCUu+g8yj6dztDtmIHdJE9guxEDwd
-fNbg65Hqo66j/zdZ7VMshjs8F3u3SYVT67/NBNN2VqtR8aqEY9HvlSibPrv/J7YD
-IFgARf+mD9gt8pR63jffJ0pxbZKQor9s8zP0iUHpfxWAUHl0jQRrXq1eUqUClQCy
-mvwD5P04yBFI8mwVqKCwn/cXpPKRqBSnWKWNFulrxgecsLrvbyRY9eyTaHbagnaW
-D0r9zZ7hjPORvDOWJxJ9pnC+QERTkvBf8eBVlpLJAVE4vSylAMIEf/Vbh3G5GcqJ
-SUaX6auPLP+kHBiGaEpip0ssqR3T2IDScLysarODss2igYKJtMg=
-=V2DK
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmWpKp4ACgkQVbJhu7ck
+PpQEjA/7BGnoeqmF0HMITTSFEWWRvu2eG7vz8aTjQZT3eAR/QE3XlTTxvN1WdudE
+P2OxaHGY9tiU/aNpEWgEIykNgXTKTVuSC98qDuJBwHtn9yJdZMKWp7KEsuWxkPCy
+7jg1OE6CRXJAN0ZP7hoYLhNvsZe86WebLaJyKoQPtJCBb1Z/OVceaigW3jrD+kM2
+9J3fK/cGCuXlGvdnygwddk2IdfKD6yBqGdKy8X4FzF5prA8W1UDw1gNsV0wU/624
+fXLAAw0+n8KTpWh53GiSGHKrO4moz0wrefnU9htccKLmV5BuUipMh12hv5yEEjic
+qFnl7DNZXs1WTUy9IaZs1GAoMlKfx7JviCs/83ItkmvFE3ywFfhzVAyTPO3fh3Nc
+NH8uYeLt3Oee63Vndeirec/bztcK4efkR/j38cGxxl3gT7Boak7fJq2HcdajDu/Q
+yKfBVrbxKQd3LZeWa7Ba7wE/a4VWhJw02E+BiFzXGyYfhmGk0Ugus223E/EfgbkW
+AoLcfyrePFig5ElgtYhvQM15bRyZxc55Bt/B1hLR35cwStW6DOYdOTlk2tuJ4EQF
+H/Gv4JMJdO56D5QRqC6YLVODC7ahDlffgbHNEGkB6pNV+C7VgL9hVVI3YueDMRC1
+S8ripo5YRw9efDHUpwaPCI0V6wJcEaVteVOWbLIbmXGyc2eaiow=
+=7uoR
 -----END PGP SIGNATURE-----
 
---OiitEmoLqVwjAwxQ--
+--ILy+iS3odFDK+G+/--
