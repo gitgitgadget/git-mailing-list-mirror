@@ -1,52 +1,62 @@
 Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 059842D603
-	for <git@vger.kernel.org>; Thu, 18 Jan 2024 18:24:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B54242D615
+	for <git@vger.kernel.org>; Thu, 18 Jan 2024 18:26:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705602300; cv=none; b=a1DlPmdYLWJVEm/+bzT9MYIpCjNHrx4EYyAood3bb5IybwDxF6mLdWaP4orhrDqJk6grzyziEdTckzuLH0Iqjr4s5O1QjENKFqyzEaoVcZ4tYngkVH3D75p2rhxN9UnpyAwborfA/7zzCo5HjzTSK6+eujsh6hcQ2FBh/hrO1Ak=
+	t=1705602374; cv=none; b=b7KvO9+gjgUpzz6+nsREK5vNYjrTyqGPuiZGo8g6KSbq+QQJA/AhTjbWr9jT1J2R1GJYv0+DgM7ZM4psjKrG+6eTRkzgA91jOx/l57PChsOe3zBo9eUBdcQz+TyGZaNdAuLPlAapwXoPWe1bG0yFV2QmqPPHEHO7RpRavby02G8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705602300; c=relaxed/simple;
-	bh=jlVreeOG2RyHPpN7tmidghigySkXwu0U/xnP8J4awKw=;
+	s=arc-20240116; t=1705602374; c=relaxed/simple;
+	bh=2pZkEVlDyvUKbOUivjqta2IllkURPmW25k9vG3EKXDw=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=EH9R3UJLvdLe9uaJfdy6f4/ApQcCaZXBMkWoC6/Gkw3K1xhurzkWv81bFS3u556cvdLMr3nwPGtRE1qvoROHwmvWfgNct6/fK5RNnePslX30h4biWJEOTfRz1UfBWM/rHNo/oTpmZJeIlRuavM8lk2uYXD5t4cZ8X2tqUdlsbyM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=oW/amP7s; arc=none smtp.client-ip=173.228.157.52
+	 MIME-Version:Content-Type; b=dybyEnkSYHRH9GtBv/AkfegmcqXRDyrfPJHf9MYAjxvXH+hUN/wFfEpFmj/dgoAbqQ0TRfeSsyOiHJBovnU9eE0MkOmQggZjP3gW2szFH2iCJGiLTZyEqbQyVff24E5Sc00CNAA01ltP7tivPSj+pPcvQGXpvvSHi1cLHpsvBXM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=LEimOF73; arc=none smtp.client-ip=173.228.157.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="oW/amP7s"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="LEimOF73"
 Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 5516E373CA;
-	Thu, 18 Jan 2024 13:24:56 -0500 (EST)
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id 13182373D9;
+	Thu, 18 Jan 2024 13:26:13 -0500 (EST)
 	(envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=jlVreeOG2RyHPpN7tmidghigySkXwu0U/xnP8J
-	4awKw=; b=oW/amP7sLUIXGrdJR4Ryr9KPYmL8Kwuf+tyDPM8HSMUTWthpvS/U0i
-	7toUurE1xbH8LGldZu97TrVLpgjX5/uCBsfUFUmYuH6VvakuWh5u5fZKIadE+lyn
-	Lm1FkutTSqjkDdF/KSniwSIjE1JKzAY9wK5gZgvRRVaGl3mhUhzx4=
+	:content-type; s=sasl; bh=2pZkEVlDyvUKbOUivjqta2IllkURPmW25k9vG3
+	EKXDw=; b=LEimOF73epJJ2o7zKIFAldlLVEkvrxJjn4SMmD+4Lsha7zYCMmIo66
+	UBHef/7F7QXNUYJsHNMHk2Bn9seo9viDMXwGZRn45KtGLu7u45dR8uPcRipyUBAs
+	pcHvRYA2odCEoHtZHmBiV7U+Z0gQddaX+m+3qDKCDSUpWa4VkgAs4=
 Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 4C811373C9;
-	Thu, 18 Jan 2024 13:24:56 -0500 (EST)
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id 0B5C0373D8;
+	Thu, 18 Jan 2024 13:26:13 -0500 (EST)
 	(envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.125.200.93])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id DB87D373C7;
-	Thu, 18 Jan 2024 13:24:52 -0500 (EST)
+	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 9B367373D7;
+	Thu, 18 Jan 2024 13:26:09 -0500 (EST)
 	(envelope-from junio@pobox.com)
 From: Junio C Hamano <gitster@pobox.com>
-To: "Victoria Dye via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>,  Jeff King
- <peff@peff.net>,  Victoria Dye <vdye@github.com>
-Subject: Re: [PATCH v2 0/4] Strengthen fsck checks for submodule URLs
-In-Reply-To: <pull.1635.v2.git.1705542918.gitgitgadget@gmail.com> (Victoria
-	Dye via GitGitGadget's message of "Thu, 18 Jan 2024 01:55:14 +0000")
-References: <pull.1635.git.1704822817.gitgitgadget@gmail.com>
-	<pull.1635.v2.git.1705542918.gitgitgadget@gmail.com>
-Date: Thu, 18 Jan 2024 10:24:51 -0800
-Message-ID: <xmqqmst2sdn0.fsf@gitster.g>
+To: Dragan Simic <dsimic@manjaro.org>
+Cc: Jeff King <peff@peff.net>,  =?utf-8?Q?Rub=C3=A9n?= Justo
+ <rjusto@gmail.com>,  Git List
+ <git@vger.kernel.org>
+Subject: Re: [PATCH 3/3] advice: allow disabling the automatic hint in
+ advise_if_enabled()
+In-Reply-To: <5f322b3e6053c27dda58ef1c1f025d11@manjaro.org> (Dragan Simic's
+	message of "Thu, 18 Jan 2024 07:15:32 +0100")
+References: <7c68392c-af2f-4999-ae64-63221bf7833a@gmail.com>
+	<d6099d78-43c6-4709-9121-11f84228cf91@gmail.com>
+	<20240110110226.GC16674@coredump.intra.peff.net>
+	<aaf59fc82ef3132ece8e1f70623570a2@manjaro.org>
+	<97fdf6d4-1403-4fe9-b912-a85342a9fa56@gmail.com>
+	<a97b03a305a7b8b95341b63af1de0271@manjaro.org>
+	<xmqqil41duov.fsf@gitster.g>
+	<d6d72ec5431ad1ca775e6e4e9921f94c@manjaro.org>
+	<20240111080429.GG48154@coredump.intra.peff.net>
+	<5f322b3e6053c27dda58ef1c1f025d11@manjaro.org>
+Date: Thu, 18 Jan 2024 10:26:08 -0800
+Message-ID: <xmqqil3qsdkv.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -56,36 +66,13 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 X-Pobox-Relay-ID:
- DF7A66F6-B62E-11EE-ABBF-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
+ 0D37708E-B62F-11EE-891A-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
 
-"Victoria Dye via GitGitGadget" <gitgitgadget@gmail.com> writes:
+Dragan Simic <dsimic@manjaro.org> writes:
 
-> While testing 'git fsck' checks on .gitmodules URLs, I noticed that some
-> invalid URLs were passing the checks. Digging into it a bit more, the issue
-> turned out to be that 'credential_from_url_gently()' parses certain URLs
-> (like "http://example.com:something/deeper/path") incorrectly, in a way that
-> appeared to return a valid result.
->
-> Fortunately, these URLs are rejected in fetches/clones/pushes anyway because
-> 'url_normalize()' (called in 'validate_remote_url()') correctly identifies
-> them as invalid. So, to bring 'git fsck' in line with other (stronger)
-> validation done on remote URLs, this series replaces the
-> 'credential_from_url_gently()' check with one that uses 'url_normalize()'.
->
->  * Patch 1 moves 'check_submodule_url()' to a public location so that it can
->    be used outside of 'fsck.c'.
->  * Patch 2 removes the obsolete/never-used code in 'test-tool submodule
->    check-name' handling names provided on the command line.
->  * Patch 3 adds a 'check-url' mode to 'test-tool submodule', calling the
->    now-public 'check_submodule_url()' method on a given URL, and adds new
->    tests checking valid and invalid submodule URLs.
->  * Patch 4 replaces the 'credential_from_url_gently()' check with
->    'url_normalize()' followed by 'url_decode()' and an explicit check for
->    newlines (to preserve the newline handling added in 07259e74ec1 (fsck:
->    detect gitmodules URLs with embedded newlines, 2020-03-11)).
+> Perhaps having both options available could be a good thing.  Though,
+> adding quite a few knobs may end up confusing the users, so we should
+> make sure to document it well.
 
-Nicely done.  I'll wait for a few days to see if anybody else has
-reaction but after reading the patches myself, my inclination is to
-suggest merging it to 'next'.
-
-Thanks.
+I agree there is a need for documentation, but we are not increasing
+the number of knobs, are we?
