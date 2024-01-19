@@ -1,96 +1,88 @@
-Received: from mout.kundenserver.de (mout.kundenserver.de [212.227.126.187])
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C638556B6A
-	for <git@vger.kernel.org>; Fri, 19 Jan 2024 20:02:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.126.187
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76EB641C98
+	for <git@vger.kernel.org>; Fri, 19 Jan 2024 20:09:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705694573; cv=none; b=ggW3Al3c/hgizWDBlDagI/6AxRBySPIn274pH2X099DA2EfFzvILKy2R6XCHXr7ohlEg9LzdTvB6BFTJwRFZIPAuwRGQoWHK8kmMcZ9msCn1SEN2LpQaVw4dXYqAqrV8CoR5nVGUXg6X+9kA2e1IfvLcLknD0M0dpoQhMvjKRX8=
+	t=1705694972; cv=none; b=CaSQn9W6zYErTIAgLvbED9Sw7oUr3RhPX4sLuOWzdzzSpljfN3A5YLku7ZTu3MT1q3iukGmyBLuiqspy2u/hYCRrt3r2xKgsVyLnzZezI3zl1qALrZ3SiK1qv9Wvn8uLFgGhBPDuxUh65pwx1ek6ySPSGrTcRiTbXSd4qXuS6Uc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705694573; c=relaxed/simple;
-	bh=Hgfah+T8gvVWy8ty9celRgLufycB+Pr3YEtqAbDMGT8=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Mi7vQ9gkX30e7LP2noMMiq+ZL+GTF+y8v79mQP7T/6P0RHEin/35guHggVCL07C4ndpZGx9rFs4ZeeU1Hehwqnu92+hXmJcrAJE/wEGRgUKrw47+78tWoEnq2jKwsQwEfY+2Z3FsbdcCc5yZrxhQsoU2E/mUHMJ421FBUUev33c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=delpeuch.eu; spf=pass smtp.mailfrom=delpeuch.eu; arc=none smtp.client-ip=212.227.126.187
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=delpeuch.eu
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=delpeuch.eu
-Received: from [192.168.178.189] ([79.246.90.92]) by mrelayeu.kundenserver.de
- (mreue012 [212.227.15.167]) with ESMTPSA (Nemesis) id
- 1McIYO-1qqUO80LkK-00ckPI; Fri, 19 Jan 2024 21:02:36 +0100
-Message-ID: <386c0318-0138-47c9-9e7f-d1004277226c@delpeuch.eu>
-Date: Fri, 19 Jan 2024 21:02:35 +0100
+	s=arc-20240116; t=1705694972; c=relaxed/simple;
+	bh=OAfA6/7ATyMiSwamHLtK1AQxMQpX0xGJQ7iETf8Sr/w=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=RVyJwSyH5kAWVIf3VaOvVjlLEs65+p5Nn6sBppWPwXen0Du6kcw91EgHNryTf4hf1DwKEB5Zkv+CLUuV8YhwjN+Vty+IWickVvrQDEDk9jrqkqlZEdGfTF4/IqIT1I4369hyKl53ZMvHSwvItI0FFkDKscN1Prjms58Xw8/PhX4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=ji+JPDYX; arc=none smtp.client-ip=173.228.157.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="ji+JPDYX"
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id B830A329C9;
+	Fri, 19 Jan 2024 15:09:30 -0500 (EST)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=OAfA6/7ATyMiSwamHLtK1AQxMQpX0xGJQ7iETf
+	8Sr/w=; b=ji+JPDYXbdB/HC5U2fpH/nFxKteWkC7x6qxD/J9VJUlHG4K3/DZt4n
+	lE1cIl/hWaY6HFKMPxPIdiFs7pY6gYowc0IdGofKblwR0EJmhjmKgXG0MqAklLoH
+	i9wMlEhwI1cWofkIx4uO74O6vd2aMImh5pBJ6bxsyTwVsSPyT9Gng=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id B0033329C8;
+	Fri, 19 Jan 2024 15:09:30 -0500 (EST)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.200.93])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 4BB913298B;
+	Fri, 19 Jan 2024 15:09:27 -0500 (EST)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 4/7] sequencer: introduce functions to handle
+ autostashes via refs
+In-Reply-To: <abcf1f5cf428072d19639dc4209e0c1554f3eb53.1705659748.git.ps@pks.im>
+	(Patrick Steinhardt's message of "Fri, 19 Jan 2024 11:40:15 +0100")
+References: <cover.1705659748.git.ps@pks.im>
+	<abcf1f5cf428072d19639dc4209e0c1554f3eb53.1705659748.git.ps@pks.im>
+Date: Fri, 19 Jan 2024 12:09:25 -0800
+Message-ID: <xmqqbk9hjdai.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3] merge-ll: expose revision names to custom drivers
-Content-Language: en-US
-To: Antonin Delpeuch via GitGitGadget <gitgitgadget@gmail.com>,
- git@vger.kernel.org
-Cc: Junio C Hamano <gitster@pobox.com>
-References: <pull.1648.v2.git.git.1705592581272.gitgitgadget@gmail.com>
- <pull.1648.v3.git.git.1705615794307.gitgitgadget@gmail.com>
-From: Antonin Delpeuch <antonin@delpeuch.eu>
-In-Reply-To: <pull.1648.v3.git.git.1705615794307.gitgitgadget@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Provags-ID: V03:K1:SusTAYsjCzvEbV4i5AIoQy2hUIY3r0mFrwLIC7nIHWzG69WpYAd
- a8Ko/yyJSfHfwXOCN7dyt3Nv4oRihXaRodCBZpDIUpqPZ6Ovw7ZbIU0USup7lJfkG1p5ejJ
- aNuRRtGqzopYtBo+d182bxgu0XhGvvxZzsJPgcT9G0ZZJi0qQu0ghp/ZGqv4Sct75+lhuOJ
- c/vU34UarcXRgB4dHIlhw==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:Doc1/Mn4KWo=;CaZfspSNsqTnPxDcSpq7RGOg6FB
- 86uI2I2+kOVcykRcYym/CmgCKzcIxO9HkWOgqJwvfJQaSwLf89ysyRA2fj5++MsNE+f7PJdo5
- 3VNO0BHvR3XhrSbVMcJYA/itUkdag1A5jSZtZget/Lh+EgERAyL3PJc8jKXcrmJBR71gnlFzt
- 84vYEBJv5hS63qlh1BPds2/dJK8BZ/NQaQUoftIs1k1q43s5JN/f8PGdiIyhGwD5UVWVUmJ+8
- Ftjo48zTPR02u9g/+jJzEG9e8iEUUa83KBd0q5kEmxD4qr3ndkv5G34BvBf7GkhH/CL0kua7e
- z+w8u+fMMoLUdhNMQrjjrULOcwGWdnGl6h4bvFaaILqkjIvloQsBy1RDDYNuf7d4Zow6DKdBy
- 9QDT7nOEUnDYVUIB8DRTsev7PktMtQk0SqtT4zLisQ55QO0h7dqaVBzWr3SfUpfkqyY/iEGID
- VZ3oaClipx5sU2x8/UsK1ILOXFXqkoXhRFHZ/U52nEaF8oWijKas/foEChph49X6t/9XB+l7+
- 1TJLkA3LaQrG8tnYPljh5FVCZvmExxMbHJZXFGGvzGMwv+nHPM1rT0vCU1V2Lx9x7FLR5jE9x
- cE5f3Eqf4t/KqbZeuMSoMNM8y/INyV4jmZ8hK46/0DDcuDpKW/A3PTGUZmCjAQFuDqJnCAioE
- zP2N9PfRtJZ6TIXbcCXhdJii76mD4MDalPYxxUVDiuYR3uaVciPzaAdrVPl4BU3jfxPY3KPLU
- ZXssiuPC0iJ1z8IwY47IQ6DYxILUXaMtX2MCz+LbeP6a2Qx61NZQLisFlQyXa2bgP2ZqvU2hw
- rH5Cu20+fOcU82/mxB/HFyfhBeniqErq3QvpTb1KpIKwfGHvfydBD4v5Do0PYB8/8d/ylz9KK
- IbExLk1WdSdl/kQ==
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ A5BB3CDC-B706-11EE-A54E-A19503B9AAD1-77302942!pb-smtp21.pobox.com
 
-Hi Junio,
+Patrick Steinhardt <ps@pks.im> writes:
 
-After more testing (combining custom merge drivers with rerere) I 
-realized that my patch can lead to a segmentation error. Many apologies 
-for not having caught that earlier!
+> We're about to convert the MERGE_AUTOSTASH ref to become non-special,
+> using the refs API instead of direct filesystem access to both read and
+> write the ref. The current interfaces to write autostashes is entirely
+> path-based though, so we need to extend them to also support writes via
+> the refs API instead.
+>
+> Ideally, we would be able to fully replace the old set of path-based
+> interfaces. But the sequencer will continue to write state into
+> "rebase-merge/autostash". This path is not considered to be a ref at all
+> and will thus stay is-is for now, which requires us to keep both path-
 
-On 18/01/2024 23:09, Antonin Delpeuch via GitGitGadget wrote:
-> @@ -222,6 +222,12 @@ static enum ll_merge_result ll_ext_merge(const struct ll_merge_driver *fn,
->   			strbuf_addf(&cmd, "%d", marker_size);
->   		else if (skip_prefix(format, "P", &format))
->   			sq_quote_buf(&cmd, path);
-> +		else if (skip_prefix(format, "S", &format))
-> +			sq_quote_buf(&cmd, orig_name);
-> +		else if (skip_prefix(format, "X", &format))
-> +			sq_quote_buf(&cmd, name1);
-> +		else if (skip_prefix(format, "Y", &format))
-> +			sq_quote_buf(&cmd, name2);
+"is-is"???
 
-The "orig_name", "name1" and "name2" pointers can be NULL at this stage. 
-This can happen when the merge is invoked from rerere, to resolve a 
-conflict using a previous resolution.
+> and refs-based interfaces to handle autostashes.
+>
+> Signed-off-by: Patrick Steinhardt <ps@pks.im>
+> ---
+>  sequencer.c | 66 +++++++++++++++++++++++++++++++++++++++++++++++++----
+>  sequencer.h |  3 +++
+>  2 files changed, 64 insertions(+), 5 deletions(-)
 
-I wonder what the appropriate fallback would be in such a case. I am 
-tempted to use the temporary filenames of the files to merge instead, so 
-that the merge driver can rely on those names being non-empty and being 
-the best string to use to identify the files. Passing an empty string 
-seems dangerous to me, as it is likely to change the index of arguments 
-passed to the merge driver. Passing fixed strings such as "base", "ours" 
-and "theirs" could perhaps work too.
+The conversion (rather, the introduction to allow refs API to be
+used to access them) look correct, but offhand I do not know what
+the implication of leaving the file based interface would be.
 
-Let me know if you have any preference about this.
-
-Best,
-
-Antonin
-
-
+Thanks.
