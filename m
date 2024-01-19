@@ -1,83 +1,86 @@
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f43.google.com (mail-ej1-f43.google.com [209.85.218.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66C331E48B
-	for <git@vger.kernel.org>; Fri, 19 Jan 2024 22:46:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A44256456
+	for <git@vger.kernel.org>; Fri, 19 Jan 2024 22:46:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705704378; cv=none; b=XiuE9TzIRL8V3CV98K/XwCnPYRawx//cUwRpaqQlkbnyHT9LU1VAqek1KCCquiVAZZChEOiGeytn2xfNH8d7lH3eieSXINb+OgtGsjL/FT1mm0FZyxSaDdxhGpWeneTIMJnN38jLD02gxH4MRjkCIHAXxiRNCQNy3MM2oYwbUpg=
+	t=1705704411; cv=none; b=aetZ0Ffv8+9LwL3RMAdeyjQTtWUWU3f7Woj481i4PYQZ4axwpGa4iCo4LlA4DpvKyLpU8ph8Ob2Lts3XMM+nEpoafEqdGZT1FChuxHJVXwB5ZzcBl0RbOCijphn+jucT6G1WW0DQCOv9OTVGyug6M8brv08166rsSHd9g9U8PDw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705704378; c=relaxed/simple;
-	bh=s8Xv3F0ZJLu6X25OPzEcWOB8t2NsBSKSLm4tMleDoxo=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=sDpsd1sXi9FxPDMTR0Wu4K8L7AQuDhVgSbmeS4UsFC+f6pLsjOh0S8byoU080UwTXbvYu9bDixRcZKcOzfseSxL+7i90EVTn4+vPpYD4qnSBKhJxXWbexVKIipeKJjPx+96rVHuQlsj5dJXqoF5+B9m18DQy400yngF5m5RivQY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=rxJmt4sD; arc=none smtp.client-ip=173.228.157.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1705704411; c=relaxed/simple;
+	bh=wYlyPy7pK+jt0hCIB0DBEyvvnUSST+utUme0ZIXD2J8=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=df12l+PGmWUC2OnNSUjMKqtVDwWdDijcYhBvjFbN6+Z3NnCHnP4+BJKjOlDGSdKp/zqKh189IwbKL9msvZ8zrTU1xym/5nTZhRe22R2uY/23EjkSk65GLjy8rJTUABQr2o71PRIwyb7tx43gABNSWrM+xNCCVtYmRI4eYLsUbuM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=SJkuAF+S; arc=none smtp.client-ip=209.85.218.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="rxJmt4sD"
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id AFCD433986;
-	Fri, 19 Jan 2024 17:46:16 -0500 (EST)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=s8Xv3F0ZJLu6X25OPzEcWOB8t2NsBSKSLm4tMl
-	eDoxo=; b=rxJmt4sDzmy4KUyi/nh3OjJV70tjqLMwI72fmYFsoYLqdRHlkH/dR6
-	YXvNt0rMlezsravmqr/3PPqIacUdA5FkJasu6FOBC4vFlzDmB77jf/hbeWoT03G4
-	xvJ+yyvSJLwO8zwqC3ji/fAuRzjxbj//PeAnY8ThgFBkuOIzK7ghw=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id A8A0733985;
-	Fri, 19 Jan 2024 17:46:16 -0500 (EST)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.200.93])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 3922133984;
-	Fri, 19 Jan 2024 17:46:13 -0500 (EST)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Josh Steadmon <steadmon@google.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 1/2] fuzz: fix fuzz test build rules
-In-Reply-To: <9332e225e44b29be25d10229b05f0b9775b85568.1705700054.git.steadmon@google.com>
-	(Josh Steadmon's message of "Fri, 19 Jan 2024 13:38:12 -0800")
-References: <cover.1705700054.git.steadmon@google.com>
-	<9332e225e44b29be25d10229b05f0b9775b85568.1705700054.git.steadmon@google.com>
-Date: Fri, 19 Jan 2024 14:46:11 -0800
-Message-ID: <xmqqcytxhrgs.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="SJkuAF+S"
+Received: by mail-ej1-f43.google.com with SMTP id a640c23a62f3a-a28da6285c1so244694766b.0
+        for <git@vger.kernel.org>; Fri, 19 Jan 2024 14:46:49 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1705704408; x=1706309208; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=ZgcLk6KiNoccE9zSTkyk80ngl3VZpdWeXlxOQ8XYUIA=;
+        b=SJkuAF+SFexBdEMmlksoSnwxg2JWcsux70whHh0ww79nWq3DtYjltghJg1t5NJHx83
+         e+staOSySgVzVB08hyBOI9qrDJWqi+lRM7S4WYPKtFit0cDSgkRgESQmBEnLS2vBOnO4
+         K4XyDXZpLeOzb84teeAIbTPEcGqshDk041Lsg93zR/qJPqyHRAAA0Z2melzfbXyLPN+s
+         QcHADS5S0oa/7rAk74r+CSQDZywMLz4bCFLo1mMP1+Nz41wjnAh0LD1CJ3PUAcqwh8Kb
+         SfAguPQKEVxZoN/2UNh/hy19nMa8KzdEdkCkxcnuqGA+vBSJNIZxEHxVAbHyRihj3VKV
+         jsEg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1705704408; x=1706309208;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=ZgcLk6KiNoccE9zSTkyk80ngl3VZpdWeXlxOQ8XYUIA=;
+        b=aDsFv5HkURfT3KKPzgLue6hIuV0Ptn8xVf6PJBIyS2sPpMNDrLWkYzUcm5SAUtD9oY
+         KP55tkXdEo6nKCNAQ2HdqU8FndSWzZv30r/Zojsgnm14I7fsSjn0JWPfBF44SmyWt3A7
+         toqXNZI5UGJnFWq7mSbTPNha+yf32ZGZvN29bn8602US5F0By5y4mEgpT/sbL7ABrnq1
+         Ln6BIferdUxGgy3C1xFX2LccxzPEp1W5754JqRxTUYqI6nBSKv0DQHla0v6WjDVXERQk
+         46JhqbheVoJ8HlyA1rbiQoQhZYPzwHPHh9QSgHfaixx0we3aX4C4Ib4s+1ITVPkGdUed
+         PTMw==
+X-Gm-Message-State: AOJu0Ywjo3dRaP4797r6aMb9E3wk+yP7D63TbPibwKaA7q3CeL0WoNHe
+	rV7IC4A/iBtWmjlg6dLZDLuaRNKMXjQp9k2k+thyxteJ6jqso55vA+E24VY/pi+0pu6iZG8DA15
+	McbkivPKZXbZ2Hdk2hH1FOuqh+XxTUOQR0tL1
+X-Google-Smtp-Source: AGHT+IGEXZ0cGgONFduVt1k/wUj4E5PLSKUqXNLv6XGq6B2I6/ybjFa46Pswm6y1lCKDBBziyW//VGdbcL1rw2QsTXw=
+X-Received: by 2002:a17:906:1da1:b0:a2b:f7d:5b5d with SMTP id
+ u1-20020a1709061da100b00a2b0f7d5b5dmr1556082ejh.32.1705704408257; Fri, 19 Jan
+ 2024 14:46:48 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- 8C191BF8-B71C-11EE-A776-A19503B9AAD1-77302942!pb-smtp21.pobox.com
+References: <pull.1644.git.1705697955144.gitgitgadget@gmail.com>
+ <20240119-flat-jellyfish-of-drizzle-b31abe@lemur> <xmqqmst1hsd6.fsf@gitster.g>
+In-Reply-To: <xmqqmst1hsd6.fsf@gitster.g>
+From: Kyle Lippincott <spectral@google.com>
+Date: Fri, 19 Jan 2024 14:46:34 -0800
+Message-ID: <CAO_smViQLmvPiLHn_Tjtp=Yfug+xDDdK5u7uh51FyJ4DFbP71w@mail.gmail.com>
+Subject: Re: [PATCH] MyFirstContribution: update mailing list sub steps
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Konstantin Ryabitsev <konstantin@linuxfoundation.org>, 
+	spectral via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Josh Steadmon <steadmon@google.com> writes:
+On Fri, Jan 19, 2024 at 2:26=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
+wrote:
+> Subject: Docs: majordomo@vger.kernel.org has been decomissioned
+>
+> Update the instruction for subscribing to the Git mailing list
+> we have on a few documentation pages.
+>
+> Noticed-by: Kyle Lippincott <spectral@google.com>
+> Helped-by: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> ---
+>  Documentation/MyFirstContribution.txt | 5 +++--
+>  README.md                             | 4 ++--
+>  2 files changed, 5 insertions(+), 4 deletions(-)
 
-> @@ -762,7 +763,7 @@ fuzz-objs: $(FUZZ_OBJS)
->  # Always build fuzz objects even if not testing, to prevent bit-rot.
->  all:: $(FUZZ_OBJS)
-
-So, this is what you referred to in your proposed log message.  We
-do build objects to prevent bit-rot, but we do not link, so it is
-merely half a protection.
-
-> ...
->  fuzz-all: $(FUZZ_PROGRAMS)
-
-But there is this target.  I wonder if it makes it even better to
-update the "always build fuzz objects" one?  Given that some folks
-may not have the necessary clang toochain for linking, it may
-probably be a bit too much, perhaps?
-
-It definitely is an improvement to build them in the CI environment,
-like you have in [2/2].
-
-Thanks.  Will queue.
-
-
+This version looks good, thanks for catching README.md's reference as well.
