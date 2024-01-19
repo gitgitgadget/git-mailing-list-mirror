@@ -1,114 +1,108 @@
-Received: from mail-ot1-f47.google.com (mail-ot1-f47.google.com [209.85.210.47])
+Received: from mail-lf1-f43.google.com (mail-lf1-f43.google.com [209.85.167.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0CA51362
-	for <git@vger.kernel.org>; Fri, 19 Jan 2024 01:39:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECF7320FD
+	for <git@vger.kernel.org>; Fri, 19 Jan 2024 01:43:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705628352; cv=none; b=Z6jryC1NC5jnohuBb0wSKHy/H0gvoSm8JWAUu4D1U5hJfNDUdZZzmSR18SZ5a7zxBKh8t6l4y6ojNiACF55u56A53qLT8k1BbvTAgzYQRh+cIBhfmM5JDuvW7eASrP511SpK4oxJKFEthSQ2ZiGD89QwFL3P1g6Ojkm0L+UevDQ=
+	t=1705628612; cv=none; b=aPjoY3Z8x9yCwl8KCkHJN4CG3CFy2/2RNKc9w7eAc1GfgbzurQySsUudebwTPPuTksq/I7PcEpcEuQe0pbyNuxOz+QFVSuFqbY34Tn0Q3cT2c+Zd6o17EKPFCGR5/viWGWTjIShpGH0AsXu8GMY18umQAyDdQ8warOYlReqd/zg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705628352; c=relaxed/simple;
-	bh=R0Eg9KFUaMy5upvRnKYwY0wB/0XZ3peKspnsmlLn5Cg=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mTwrN0szXexzPczXySgCi0U520Aj69nnb9WOhwO2yiKaF1R4fM8NMouxDMopgyYpr4rX6t32fuc5UG9rDAPzXz2FwCnk0uoJmrn/jKb9HHcvk/PwZsTqAz2uoy2+qkV9HHuC2Mrp13ssf/5pbj/OD/AG6xeIlemhUZ67XQTUjAI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JsvID1Tz; arc=none smtp.client-ip=209.85.210.47
+	s=arc-20240116; t=1705628612; c=relaxed/simple;
+	bh=wg57gSf3wgnjdjIPL56dCv8QIFv/7/+j+nSgUogC6uQ=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=XD/Rw1dMtuGKJJrZyarPFo5BSnpxVo1XKgIBj5/ruGzOvyw7nxJ/gg9sbnNDjUlbXeN9PmFGNYWNbeKUs7cfFGkcxmrVHxQVB/tcW7Xvs8BzVsaSIfPCKCixJ5U3o0/bpEl8zJQhgg4bEbtFkXbG3bo0qED8QjYX11n+G9IbpY8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=f1FFU/qV; arc=none smtp.client-ip=209.85.167.43
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JsvID1Tz"
-Received: by mail-ot1-f47.google.com with SMTP id 46e09a7af769-6dddf7ea893so152043a34.1
-        for <git@vger.kernel.org>; Thu, 18 Jan 2024 17:39:10 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="f1FFU/qV"
+Received: by mail-lf1-f43.google.com with SMTP id 2adb3069b0e04-50ea8fbf261so279065e87.2
+        for <git@vger.kernel.org>; Thu, 18 Jan 2024 17:43:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1705628349; x=1706233149; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1705628609; x=1706233409; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=+FhpJA4NO6o88Z/+2KzRbYdKKdvPbYMuUavaFGLkLmM=;
-        b=JsvID1TzwgSaWiwy36yeGUs7KhiEztQM5cOc8gHz5I8WKzozW0CBSLQY6qvoogsK8Y
-         lu6ZMH2WQnN0lkZCBwL6b8pQjmRudxnuaVlgNA4hlUYD32K4keRDTg4kIUK7CewNGkCt
-         WhamRnZ2UPg2HYi8adnNGg6S9Z51+zbvF4fVcBDebHY97AwC6YsBwLdJhZnShOGv6GX+
-         0bIcg01mkPlnUruPl5qY/WrfIRZG4lr1R3aYIcMRXMnW3dep6XSSX0vub/5WibRAVjYt
-         Mnsx06h9oQDbfI+gP/8H+ZhBchlaQqPXl5tMHY6ccPY/Pnk/XP/ZzMZHsNouWXMJmNCm
-         Wa9Q==
+        bh=Xumxo/vDM0D+nTRMI7Bwfl0XbSFAiypFLl0PL+8D8D4=;
+        b=f1FFU/qVO6sPoYAUgC8CHiX2LLVGYxJ8n2sWHYkpqRLg3Rf3neBwEgrNzeqteWaDWy
+         cT/ZVpHAk/hLQd1HICBiEnLd7bgUmJtdYJLQxFefKgEV0e9HdphHNPDyP1VA6yNzlBwt
+         Qy9tFVXHwURfMmZtw0BpCJ3XzeZgMTLkFr2jr79dJ2jkMM1VgQ1AWqBEUg1g8HjD72YP
+         PEM+Q+Epn5S/rfZWlQgCI5oeTMIlkROz3yxG9XE3Ieg9skn0f7Mk+ZjKNQZMeUEpHu/o
+         qAbVnsAlVKsS6xlPPnD6RlXHIni9n/uKa61WtmzJRIXKOUgH4y7kJS3le+fFBQcd/Dko
+         +yHg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1705628349; x=1706233149;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+        d=1e100.net; s=20230601; t=1705628609; x=1706233409;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=+FhpJA4NO6o88Z/+2KzRbYdKKdvPbYMuUavaFGLkLmM=;
-        b=n1+KkAwtbwhC6ut/UMYw3uCV6tHn2MMtoQ8AQFDaazTE0Y5hbCUF/CZGiNYu/gHbDA
-         Ul+6m2WjTstdPHWe3dygQzEljGTZXLOVILtAFaASEFa3hK385Lp64UOa/J5U0aC0ydi0
-         RcPaM4RIMC5F4ZCmTWEBW/HkitikNe84jz+8aMlSZGj1nCJLYgWWIMiIx/f0XSk8+WG2
-         EZDKn0kVY8LV9VUhIn5QewiOL3/H1m90M07Vitna8S8vX0TiALnmjQwfkM1dv5LY++s8
-         rLblNftIk0yq5oVsgmtqQKr1v/QC9Y/eMY2rHwTu36ME9/Td+X0BT4aUwMQZT9HBfjRO
-         cvNQ==
-X-Gm-Message-State: AOJu0YxgxWrB/jQugOECaLYgYAoOq1UHuAtWcOfeS+CdXjC0c9yxHeRn
-	uWRguUfih0G0dtzGopPdcMUlsnZXTU2AWJY/m2GoRJLOaxQfYdpfqHwfYy6H3g4=
-X-Google-Smtp-Source: AGHT+IG/ZhIlRo3aLIDh7zKXUDNMDUr9sC5C8BFNGryqbIjCTxfOFHN3oDoN9q7NAoOQfFn2EV6RuA==
-X-Received: by 2002:a05:6830:20cf:b0:6dd:dd86:ad9c with SMTP id z15-20020a05683020cf00b006dddd86ad9cmr1533354otq.76.1705628349375;
-        Thu, 18 Jan 2024 17:39:09 -0800 (PST)
-Received: from localhost.localdomain ([2402:a00:401:a99b:65e8:f5a4:7adb:5726])
-        by smtp.gmail.com with ESMTPSA id 200-20020a6302d1000000b005bdbe9a597fsm2242965pgc.57.2024.01.18.17.39.07
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 18 Jan 2024 17:39:08 -0800 (PST)
-From: Ghanshyam Thakkar <shyamthakkar001@gmail.com>
-To: git@vger.kernel.org
-Cc: gitster@pobox.com,
-	Ghanshyam Thakkar <shyamthakkar001@gmail.com>
-Subject: [PATCH v2 2/2] t0024: style fix
-Date: Fri, 19 Jan 2024 07:06:32 +0530
-Message-ID: <20240119013745.2476045-2-shyamthakkar001@gmail.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240119013745.2476045-1-shyamthakkar001@gmail.com>
-References: <20240118215407.8609-1-shyamthakkar001@gmail.com>
- <20240119013745.2476045-1-shyamthakkar001@gmail.com>
+        bh=Xumxo/vDM0D+nTRMI7Bwfl0XbSFAiypFLl0PL+8D8D4=;
+        b=XoYN/E2rfx0oX4c0ex2grCP+vNlducjl9WU18fW+Y6P3+l4sq+IIBdLLfBz4fsQkPZ
+         mQoFKjNHSuwH8ctvDAvwPNezwemUiCeNAnZtdgxozkpbSvhTpnCWsPYwC55BMzxzIVqB
+         ffOfG0Qoh0q3Euu/y0CR3P0Jkssqak4CMp6Q0nJwNKvFAwzEVba1fHaCKqFwPdfR9r5k
+         WdTtVFMET1/M3YTVKqOYkasNJIr02mSofVweJ06DDswtIlVa9+7RJ1zn+6pG/2XKPF8x
+         MXp4szu5PB9ivAet1H+Ewnq6N/c9pCJBGJWfE3WIeLdSdtawdI+pvW9c2vptB7lToFuk
+         sZCA==
+X-Gm-Message-State: AOJu0YwFLERJPI059BfIOjcAhIJb5Cqjnf3Np/BNSUOuMgxYyTIfKrWu
+	j/IkNb5dQ+31IAROF+XRg1000OV7YImRrFl+g7CnjthyaJyAA0mrJBdTy3USCKzNSZ16yMagsd1
+	VJYOSUUzjb7DaYerYhMlDhba80T4=
+X-Google-Smtp-Source: AGHT+IEjFJ6nHdiIRwFLVsTAxyTU4bsg/lHEO5ALu3SPhUVbV0TYivD4FLlvVVRcrsaEKHPwbMQKLe10QZp3ui0RJDU=
+X-Received: by 2002:a19:6447:0:b0:50b:f7bb:4545 with SMTP id
+ b7-20020a196447000000b0050bf7bb4545mr212198lfj.68.1705628608659; Thu, 18 Jan
+ 2024 17:43:28 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <85d4e83c-b6c4-4308-ac8c-a65c911c8a95@gmail.com>
+ <CAP8UFD1wMJMY6G4SaPTPwq6b9HbeXG1kB97-RRrL-KGN1wE0rg@mail.gmail.com>
+ <CABPp-BH+cPdfsctquE60tw_nD6_LCaWf0JwGusuZ0tvQQuWy4w@mail.gmail.com>
+ <xmqqjzonpy9l.fsf@gitster.g> <CY7M09XT547N.2OOTI5APX9RIX@gmail.com> <xmqqo7dvloiu.fsf@gitster.g>
+In-Reply-To: <xmqqo7dvloiu.fsf@gitster.g>
+From: Elijah Newren <newren@gmail.com>
+Date: Thu, 18 Jan 2024 17:43:16 -0800
+Message-ID: <CABPp-BFSTpe=wT6JM1CCYJCkYptTB_OZSpqOa0Syq3puxNxEPA@mail.gmail.com>
+Subject: Re: [GSOC][RFC] Heed core.bare from template config file when no
+ command line override given, as a microproject.
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Ghanshyam Thakkar <shyamthakkar001@gmail.com>, 
+	Christian Couder <christian.couder@gmail.com>, git@vger.kernel.org, 
+	johannes.schindelin@gmx.de
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-t0024 has multiple command invocations on a single line, which
-goes against the style described in CodingGuidelines, thus fix
-that.
+On Mon, Jan 8, 2024 at 9:32=E2=80=AFAM Junio C Hamano <gitster@pobox.com> w=
+rote:
+>
+> "Ghanshyam Thakkar" <shyamthakkar001@gmail.com> writes:
+>
+> >> Specifically, the commit that introduced the comment never wanted to
+> >> honor core.bare in the template.  I do not think I has core.bare in
+> >> mind when I wrote the comment, but I would have described it as the
+> >> same category as the repository format version, i.e. something you
+> >> would not want to copy, if I were pressed to clarify back then.
+> >
+> > Then I suppose this warrants updating the TODO comment in
+> > create_default_files(), which currently can be interpreted as this
+> > being a unwanted behavior. And also amending the testcases which
+> > currently display this as knwon breakage.
+>
+> I obviously agree with that, after saying that I suspect 0f7443bd
+> comes from a misunderstanding ;-).
 
-Also, use the -C flag to give the destination when using $TAR,
-therefore, not requiring a subshell.
-
-Signed-off-by: Ghanshyam Thakkar <shyamthakkar001@gmail.com>
----
- t/t0024-crlf-archive.sh | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
-
-diff --git a/t/t0024-crlf-archive.sh b/t/t0024-crlf-archive.sh
-index fa4da7c2b3..9967a646d1 100755
---- a/t/t0024-crlf-archive.sh
-+++ b/t/t0024-crlf-archive.sh
-@@ -20,7 +20,8 @@ test_expect_success setup '
- test_expect_success 'tar archive' '
- 
- 	git archive --format=tar HEAD >test.tar &&
--	( mkdir untarred && cd untarred && "$TAR" -xf ../test.tar ) &&
-+	mkdir untarred &&
-+	"$TAR" Cxf untarred test.tar &&
- 
- 	test_cmp sample untarred/sample
- 
-@@ -30,7 +31,11 @@ test_expect_success UNZIP 'zip archive' '
- 
- 	git archive --format=zip HEAD >test.zip &&
- 
--	( mkdir unzipped && cd unzipped && "$GIT_UNZIP" ../test.zip ) &&
-+	mkdir unzipped &&
-+	(
-+		cd unzipped &&
-+		"$GIT_UNZIP" ../test.zip
-+	) &&
- 
- 	test_cmp sample unzipped/sample
- 
--- 
-2.43.0
-
+Sounds fine to me.  I have no particular interest in supporting
+core.bare from the template; it's just that in order to do other
+cleanup, I needed to remove the init_is_bare_repository global
+variable (see c2f76965d02 ("init-db: remove unnecessary global
+variable", 2023-05-16)).  Attempting to remove that global variable
+made it _look_ like I was changing the code behavior and breaking it
+in the case when core.bare was true in the template.  I knew possible
+code breakage was what code reviewers would ask about.  And my best
+reading of the fact that the variable existed plus how the code was
+written suggested to me that indeed someone else thought this might be
+important to support.  So, I left the TODO behind to document that I
+wasn't breaking the code with my changes (or even changing behavior at
+all), and left some hints for the next reader who came along about
+where they might start looking if they thought it was important to
+fix.
