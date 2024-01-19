@@ -1,248 +1,191 @@
-Received: from mail-ej1-f45.google.com (mail-ej1-f45.google.com [209.85.218.45])
+Received: from mail-qt1-f181.google.com (mail-qt1-f181.google.com [209.85.160.181])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23EF854649
-	for <git@vger.kernel.org>; Fri, 19 Jan 2024 14:27:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F318054BC5
+	for <git@vger.kernel.org>; Fri, 19 Jan 2024 15:47:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705674435; cv=none; b=RvTHdgDR0SurTdmwGNLAGsKwDdxJlqLtcDrRMT02SmUVGvvVikj8Tv0dCrAoTUV/IgHGmpRPYAGgtQhXJcUygnvdnqzZeSxIHyDrZ7dG7pwtUcaMGCtfRSLONAeiP2peWVEbZcWPKsv9CNDo9z780Zkobe9y0nrov2WjAHB1yms=
+	t=1705679229; cv=none; b=pfoO1jbVp1ps0Z7Jw8+gzvQZNvu05e6jB2Zsh67C36453fLw/NX8Y8ZjfdZg0xNTToj7aGa/5ED6jmJD1B8TsmztBtZI3y/Kh0uNFjJhXdpctmp5UuNqljPDUbItSATJhukoX7mrNt8Iw6xMJ4xZbuKs4ptw5gcUrSQELTmD2LU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705674435; c=relaxed/simple;
-	bh=C7vDmXLEbXtY3oiqVbuMkZJlKMjB4TZLmmsS529QZQY=;
+	s=arc-20240116; t=1705679229; c=relaxed/simple;
+	bh=FpaBsNeCp2KEvuif1T3/4B4RDQHCR89kvDxghrJE6Og=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UM/Kd+gfgOff6ezY12mdHussbDLetZL8KN8xALYRbbUZpEJEGvRgAlBIe7eeG2vwrpQTDlPT0I1IlOvrY6kia7UnxwZqozySj8aN2cs1RmZAw402y3jlj0iLKUCY5sdHagw8UaOgHo/zU/JnmYV0dFLtAMo1nSffWan10OXd2F0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PxQpqk+X; arc=none smtp.client-ip=209.85.218.45
+	 MIME-Version:Content-Type; b=Lo1SWYHrgkg1MEhAKjpyZK8Bq2s/RHAfBTGBv5RQXSo6TVLUWLF4dFmMa/ypfg3ncKQZVz+NK44gzXfFy5HNmECSRIVl9IngLZ1Bepu5tbdGP3Q9/0yICqU3qY+hMPQFCBQjzs9un3e8bSmb4SLyXtFSVwHRM9vlesqeYEapCOo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jng5VZb0; arc=none smtp.client-ip=209.85.160.181
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PxQpqk+X"
-Received: by mail-ej1-f45.google.com with SMTP id a640c23a62f3a-a28a6cef709so81037066b.1
-        for <git@vger.kernel.org>; Fri, 19 Jan 2024 06:27:13 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jng5VZb0"
+Received: by mail-qt1-f181.google.com with SMTP id d75a77b69052e-42a29882fdeso406581cf.1
+        for <git@vger.kernel.org>; Fri, 19 Jan 2024 07:47:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1705674432; x=1706279232; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1705679227; x=1706284027; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=mZfgvTKUs0RX0aUMcHBIQZV5urECTbu3T6yTamxXDFk=;
-        b=PxQpqk+XdCcX6MD2RrCaJOAI+h1GsKevWin2Me1UYZxRWbBacSSmpzF2FJbkhCrIbI
-         iWVSNVKFDEwxDYv8D4McG3Cs82W1/SAgCuZQu2WyT7OyBJdmzCCglR3iTRf3T4vjBU2f
-         hx2mC3st+r21wufVfhr8k7Du4B8fCfLdr8bD23jzFoA8jrR+unkUZ3MD2SDZrJ33pwGp
-         Su4N0fkH7jqey2UFucfttzBAtI/KyEpgsB9b0ki35jnsIUDlGd8JWTpOJdot62oulmdp
-         VppQZevkAaZ01jliG25umhl90bihR9nqRAJKFAHD5Huf3cH6CJ2/SoPEKm2gBDsTORY8
-         3Sgg==
+        bh=x2ExA1/0cavZK7KQaJ5LuJ53EwGo/u7xARW+e6YrR84=;
+        b=jng5VZb0EH7WJm0tuHsA4XwhJmuQhceMp5LynqO2qXSQcsfSgp9VI54s/hn6Vdqgsm
+         osRFD7PvSUtIXBqYWGYCIGHqjzbgCzydRwasYGaKwvyRQN4ysPywxJjDX0Xjjg19hKEu
+         +x3DNxIoyJiWyAcX8892knmcfvveX+hSHC/if56WEsou2U2kuhTkDOF554VtG2rgFVWt
+         cdQUbAWd6IzQB9eMS7Et/MyurBFz+i0dfHIVABL47JHsOSZjqwB1yHePdJ+gR2YG7fyJ
+         h5bttfFjXSIaXuDfVE2IPPptVf6FBzbTSMSgUo9UOX76Bn6i39M5gwulyq20qrwGDczu
+         syng==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1705674432; x=1706279232;
+        d=1e100.net; s=20230601; t=1705679227; x=1706284027;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=mZfgvTKUs0RX0aUMcHBIQZV5urECTbu3T6yTamxXDFk=;
-        b=HEpzdQhKb/+h3u+hgpuFsrPLell3OXpEQqICau2nPEEq0TN2pyzA14weSkOLNJbOve
-         t54e/vYAnTllFsMwJdbV0y/xN/NjR/HHUcxQI4dvel6huRGCW2E2VDTv6YwfNUMS6vNw
-         4eGbPgqXhCH4AnXinkgGETxNMiGOiI+hjYjJ4J5hLZWbh5F3L+n3vJEE0cIw4voIU0Ej
-         aKVO72LBkaaiNET2waPiuZJyGKrAUyj1FabamOg9h4FUNXQN9WPR+htTTUORSaUEcr+f
-         4dG0hjuwjJG/1IaO60wQojV0ioHYhmnJ48mVSIlph6H3m/HRH3fIID7fFf0PJ4O6shUM
-         78qQ==
-X-Gm-Message-State: AOJu0YyjfG1jYMxa/TgJ+u1glWBMSb9wLs2zuqNbN2Jgon/LbXPRMzwT
-	0zKu6bx2yShjx6O+ONjVAV6xTEHhHJwvwQeCwNiVH3LDFT7kRr5I0oJpeajQ
-X-Google-Smtp-Source: AGHT+IGyh4PCYSBUQMdKdweXZLUu8Io7lQbuif18UHh6BUUlgK2oT48Mb6jM/P53/olppTgFTAxMOQ==
-X-Received: by 2002:a17:906:fa98:b0:a2e:d71f:bd4c with SMTP id lt24-20020a170906fa9800b00a2ed71fbd4cmr1532770ejb.68.1705674431750;
-        Fri, 19 Jan 2024 06:27:11 -0800 (PST)
-Received: from localhost.localdomain (h-213.61.124.196.host.de.colt.net. [213.61.124.196])
-        by smtp.gmail.com with ESMTPSA id t13-20020a17090616cd00b00a2ea45637desm3843494ejd.112.2024.01.19.06.27.11
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 19 Jan 2024 06:27:11 -0800 (PST)
-From: Karthik Nayak <karthik.188@gmail.com>
-To: git@vger.kernel.org
-Cc: Karthik Nayak <karthik.188@gmail.com>
-Subject: [PATCH 5/5] for-each-ref: avoid filtering on empty pattern
-Date: Fri, 19 Jan 2024 15:27:05 +0100
-Message-ID: <20240119142705.139374-6-karthik.188@gmail.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240119142705.139374-1-karthik.188@gmail.com>
-References: <20240119142705.139374-1-karthik.188@gmail.com>
+        bh=x2ExA1/0cavZK7KQaJ5LuJ53EwGo/u7xARW+e6YrR84=;
+        b=bqs25+3LY2KMf6tBRxZ25TxOyqpKfycyYm70Qt0AfoyPu7e3vsvcALIT8rCM9PuWqK
+         1HYGlH2GhW7Q3i/HWmeF02at9Llien/9vh//mockC0neGBxHraztB8ckaOz7Qwc5wbSF
+         V6w5wH4ivSTtZ1Jhksi57mwyL8rzI9EHAPWJGw282X9xdtRuO5Jc1VV6BvgdI/tyXCIQ
+         goRi5I+ApJKe/ZOIIclPT/a/r33TC1hiqxfTTrkPf5Lz2l0DLwjT6HJxNoR6Ec1tH+iA
+         vBu5G5+yCrqO0Ox0dD/1JmzyS2J7zM3DZnhrjbeKVtE6BYFK6Djvu4T9q//f7oNGd2B0
+         cDcg==
+X-Gm-Message-State: AOJu0YxgAC1qJY/pCTRYHv7eZQVfpdYiT1gxjZ0xLzRkq9hac6VHDuc3
+	MqKFEecOup2mNr8e88SnvIXyFf6bYcfNuLH2Voxx4ue+8QgkIgpR0grqZsXl
+X-Google-Smtp-Source: AGHT+IHACpI2wy8dWS+hEaF99NwINUdwfjeLQFAyL8VT6sCpbL7ybLavXZG1xBR4dr8hxrCfBNRugg==
+X-Received: by 2002:ac8:5e4c:0:b0:42a:29b5:557 with SMTP id i12-20020ac85e4c000000b0042a29b50557mr1146871qtx.4.1705679226684;
+        Fri, 19 Jan 2024 07:47:06 -0800 (PST)
+Received: from [192.168.1.160] (pool-74-105-67-34.nwrknj.fios.verizon.net. [74.105.67.34])
+        by smtp.gmail.com with ESMTPSA id fd10-20020a05622a4d0a00b00429d3257dd6sm6678057qtb.45.2024.01.19.07.47.05
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 19 Jan 2024 07:47:05 -0800 (PST)
+From: John Cai <johncai86@gmail.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: John Cai via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
+Subject: Re: [PATCH 10/12] t3903: move reffiles specific tests to t0600
+Date: Fri, 19 Jan 2024 10:47:05 -0500
+X-Mailer: MailMate (1.14r5937)
+Message-ID: <06EEFC6C-5ACE-49D7-AF24-C0D950241E86@gmail.com>
+In-Reply-To: <Zap7jfZlwlm-UZ1X@tanuki>
+References: <pull.1647.git.git.1705521155.gitgitgadget@gmail.com>
+ <56a9c8f20dd7c8f3e9401b2bd3929fb9c53c7d27.1705521155.git.gitgitgadget@gmail.com>
+ <Zap7jfZlwlm-UZ1X@tanuki>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+Content-Transfer-Encoding: quoted-printable
 
-When the user uses an empty string pattern (""), we don't match any refs
-in git-for-each-ref(1). This is because in git-for-each-ref(1), we use
-path based matching and an empty string doesn't match any path.
+Hi Patrick,
 
-In this commit we change this behavior by making empty string pattern
-match all references. This is done by introducing a new flag
-`FILTER_REFS_NO_FILTER` in `ref-filter.c`, which uses the newly
-introduced `refs_for_each_all_refs()` function to iterate over all the
-refs in the repository.
+On 19 Jan 2024, at 8:39, Patrick Steinhardt wrote:
 
-Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
----
- Documentation/git-for-each-ref.txt |  3 ++-
- builtin/for-each-ref.c             | 21 +++++++++++++++++-
- ref-filter.c                       | 13 ++++++++++--
- ref-filter.h                       |  4 +++-
- t/t6302-for-each-ref-filter.sh     | 34 ++++++++++++++++++++++++++++++
- 5 files changed, 70 insertions(+), 5 deletions(-)
+> On Wed, Jan 17, 2024 at 07:52:33PM +0000, John Cai via GitGitGadget wro=
+te:
+>> From: John Cai <johncai86@gmail.com>
+>>
+>> Move this test into t0600 with other reffiles specific tests since it
+>> modifies reflog refs manually and thus is specific to the reffiles
+>> backend.
+>>
+>> This change also consolidates setup_stash() into test-lib-functions.sh=
 
-diff --git a/Documentation/git-for-each-ref.txt b/Documentation/git-for-each-ref.txt
-index be9543f684..b1cb482bf5 100644
---- a/Documentation/git-for-each-ref.txt
-+++ b/Documentation/git-for-each-ref.txt
-@@ -32,7 +32,8 @@ OPTIONS
- 	If one or more patterns are given, only refs are shown that
- 	match against at least one pattern, either using fnmatch(3) or
- 	literally, in the latter case matching completely or from the
--	beginning up to a slash.
-+	beginning up to a slash. If an empty string is provided all refs
-+	are printed, including HEAD and pseudorefs.
- 
- --stdin::
- 	If `--stdin` is supplied, then the list of patterns is read from
-diff --git a/builtin/for-each-ref.c b/builtin/for-each-ref.c
-index 3885a9c28e..5aa879e8be 100644
---- a/builtin/for-each-ref.c
-+++ b/builtin/for-each-ref.c
-@@ -25,6 +25,7 @@ int cmd_for_each_ref(int argc, const char **argv, const char *prefix)
- 	struct ref_format format = REF_FORMAT_INIT;
- 	int from_stdin = 0;
- 	struct strvec vec = STRVEC_INIT;
-+	unsigned int flags = FILTER_REFS_ALL;
- 
- 	struct option opts[] = {
- 		OPT_BIT('s', "shell", &format.quote_style,
-@@ -93,11 +94,29 @@ int cmd_for_each_ref(int argc, const char **argv, const char *prefix)
- 		/* vec.v is NULL-terminated, just like 'argv'. */
- 		filter.name_patterns = vec.v;
- 	} else {
-+		size_t i;
-+
- 		filter.name_patterns = argv;
-+
-+		/*
-+		 * Search for any empty string pattern, if it exists then we
-+		 * print all refs without any filtering.
-+		 */
-+		i = 0;
-+		while (argv[i]) {
-+			if (!argv[i][0]) {
-+				flags = FILTER_REFS_NO_FILTER;
-+				/* doing this removes any pattern from being matched */
-+				filter.name_patterns[0] = NULL;
-+				break;
-+			}
-+
-+			i++;
-+		}
- 	}
- 
- 	filter.match_as_path = 1;
--	filter_and_format_refs(&filter, FILTER_REFS_ALL, sorting, &format);
-+	filter_and_format_refs(&filter, flags, sorting, &format);
- 
- 	ref_filter_clear(&filter);
- 	ref_sorting_release(sorting);
-diff --git a/ref-filter.c b/ref-filter.c
-index 35b989e1df..6dac133b87 100644
---- a/ref-filter.c
-+++ b/ref-filter.c
-@@ -2622,6 +2622,11 @@ static int for_each_fullref_in_pattern(struct ref_filter *filter,
- 				       each_ref_fn cb,
- 				       void *cb_data)
- {
-+	if (filter->kind & FILTER_REFS_NO_FILTER) {
-+		return refs_for_each_all_refs(
-+			get_main_ref_store(the_repository), cb, cb_data);
-+	}
-+
- 	if (!filter->match_as_path) {
- 		/*
- 		 * in this case, the patterns are applied after
-@@ -2775,8 +2780,12 @@ static struct ref_array_item *apply_ref_filter(const char *refname, const struct
- 
- 	/* Obtain the current ref kind from filter_ref_kind() and ignore unwanted refs. */
- 	kind = filter_ref_kind(filter, refname);
--	if (!(kind & filter->kind))
-+	if (filter->kind & FILTER_REFS_NO_FILTER) {
-+		if (kind == FILTER_REFS_DETACHED_HEAD)
-+			kind = FILTER_REFS_OTHERS;
-+	} else if (!(kind & filter->kind)) {
- 		return NULL;
-+	}
- 
- 	if (!filter_pattern_match(filter, refname))
- 		return NULL;
-@@ -3041,7 +3050,7 @@ static int do_filter_refs(struct ref_filter *filter, unsigned int type, each_ref
- 			ret = for_each_fullref_in("refs/remotes/", fn, cb_data);
- 		else if (filter->kind == FILTER_REFS_TAGS)
- 			ret = for_each_fullref_in("refs/tags/", fn, cb_data);
--		else if (filter->kind & FILTER_REFS_ALL)
-+		else if (filter->kind & FILTER_REFS_ALL || filter->kind & FILTER_REFS_NO_FILTER)
- 			ret = for_each_fullref_in_pattern(filter, fn, cb_data);
- 		if (!ret && (filter->kind & FILTER_REFS_DETACHED_HEAD))
- 			head_ref(fn, cb_data);
-diff --git a/ref-filter.h b/ref-filter.h
-index 07cd6f6da3..1eab325ce0 100644
---- a/ref-filter.h
-+++ b/ref-filter.h
-@@ -22,7 +22,9 @@
- #define FILTER_REFS_ALL            (FILTER_REFS_TAGS | FILTER_REFS_BRANCHES | \
- 				    FILTER_REFS_REMOTES | FILTER_REFS_OTHERS)
- #define FILTER_REFS_DETACHED_HEAD  0x0020
--#define FILTER_REFS_KIND_MASK      (FILTER_REFS_ALL | FILTER_REFS_DETACHED_HEAD)
-+#define FILTER_REFS_NO_FILTER      0x0040
-+#define FILTER_REFS_KIND_MASK      (FILTER_REFS_ALL | FILTER_REFS_DETACHED_HEAD | \
-+				    FILTER_REFS_NO_FILTER)
- 
- struct atom_value;
- struct ref_sorting;
-diff --git a/t/t6302-for-each-ref-filter.sh b/t/t6302-for-each-ref-filter.sh
-index 82f3d1ea0f..3922326cab 100755
---- a/t/t6302-for-each-ref-filter.sh
-+++ b/t/t6302-for-each-ref-filter.sh
-@@ -31,6 +31,40 @@ test_expect_success 'setup some history and refs' '
- 	git update-ref refs/odd/spot main
- '
- 
-+cat >expect <<-\EOF
-+	HEAD
-+	ORIG_HEAD
-+	refs/heads/main
-+	refs/heads/side
-+	refs/odd/spot
-+	refs/tags/annotated-tag
-+	refs/tags/doubly-annotated-tag
-+	refs/tags/doubly-signed-tag
-+	refs/tags/four
-+	refs/tags/one
-+	refs/tags/signed-tag
-+	refs/tags/three
-+	refs/tags/two
-+EOF
-+
-+test_expect_success 'empty pattern prints pseudorefs' '
-+	git update-ref ORIG_HEAD main &&
-+	git for-each-ref --format="%(refname)" "" >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'empty pattern with other patterns' '
-+	git update-ref ORIG_HEAD main &&
-+	git for-each-ref --format="%(refname)" "" "refs/" >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'empty pattern towards the end' '
-+	git update-ref ORIG_HEAD main &&
-+	git for-each-ref --format="%(refname)" "refs/" "" >actual &&
-+	test_cmp expect actual
-+'
-+
- test_expect_success 'filtering with --points-at' '
- 	cat >expect <<-\EOF &&
- 	refs/heads/main
--- 
-2.43.GIT
+>>
+>> Signed-off-by: John Cai <johncai86@gmail.com>
+>> ---
+>>  t/t0600-reffiles-backend.sh | 27 +++++++++++++++++++++++
+>>  t/t3903-stash.sh            | 43 ------------------------------------=
+-
+>>  t/test-lib-functions.sh     | 16 ++++++++++++++
+>>  3 files changed, 43 insertions(+), 43 deletions(-)
+>>
+>> diff --git a/t/t0600-reffiles-backend.sh b/t/t0600-reffiles-backend.sh=
 
+>> index 704b73fdc54..bee61b2d19d 100755
+>> --- a/t/t0600-reffiles-backend.sh
+>> +++ b/t/t0600-reffiles-backend.sh
+>> @@ -527,4 +527,31 @@ test_expect_success SYMLINKS 'ref resolution not =
+confused by broken symlinks' '
+>>         test_must_fail git rev-parse --verify broken
+>>  '
+>>
+>> +test_expect_success 'drop stash reflog updates refs/stash with rewrit=
+e' '
+>> +	git init repo &&
+>> +	(
+>> +		cd repo &&
+>> +		setup_stash
+>> +	) &&
+>> +	echo 9 >repo/file &&
+>> +
+>> +	old_oid=3D"$(git -C repo rev-parse stash@{0})" &&
+>> +	git -C repo stash &&
+>> +	new_oid=3D"$(git -C repo rev-parse stash@{0})" &&
+>> +
+>> +	cat >expect <<-EOF &&
+>> +	$(test_oid zero) $old_oid
+>> +	$old_oid $new_oid
+>> +	EOF
+>> +	cut -d" " -f1-2 repo/.git/logs/refs/stash >actual &&
+>> +	test_cmp expect actual &&
+>> +
+>> +	git -C repo stash drop stash@{1} &&
+>> +	cut -d" " -f1-2 repo/.git/logs/refs/stash >actual &&
+>> +	cat >expect <<-EOF &&
+>> +	$(test_oid zero) $new_oid
+>> +	EOF
+>> +	test_cmp expect actual
+>> +'
+>
+> I think that there is no need to make this backend-specific. What we're=
+
+> testing here is that `git stash drop` is able to drop the latest reflog=
+
+> entry. The calls to cut(1) are only used to verify that the contents of=
+
+> the reflog entry look as expected while only verifying the old and new
+> object IDs.
+>
+> So how about below patch to make it generic instead?
+
+Nice catch. This sounds perfect to me.
+
+>
+> Patrick
+>
+> -- >8 --
+>
+> diff --git a/t/t3903-stash.sh b/t/t3903-stash.sh
+> index 34faeac3f1..3319240515 100755
+> --- a/t/t3903-stash.sh
+> +++ b/t/t3903-stash.sh
+> @@ -200,7 +200,7 @@ test_expect_success 'drop stash reflog updates refs=
+/stash' '
+>  	test_cmp expect actual
+>  '
+>
+> -test_expect_success REFFILES 'drop stash reflog updates refs/stash wit=
+h rewrite' '
+> +test_expect_success 'drop stash reflog updates refs/stash with rewrite=
+' '
+>  	git init repo &&
+>  	(
+>  		cd repo &&
+> @@ -213,16 +213,16 @@ test_expect_success REFFILES 'drop stash reflog u=
+pdates refs/stash with rewrite'
+>  	new_oid=3D"$(git -C repo rev-parse stash@{0})" &&
+>
+>  	cat >expect <<-EOF &&
+> -	$(test_oid zero) $old_oid
+> -	$old_oid $new_oid
+> +	$new_oid
+> +	$old_oid
+>  	EOF
+> -	cut -d" " -f1-2 repo/.git/logs/refs/stash >actual &&
+> +	git -C repo reflog show refs/stash --format=3D%H >actual &&
+>  	test_cmp expect actual &&
+>
+>  	git -C repo stash drop stash@{1} &&
+> -	cut -d" " -f1-2 repo/.git/logs/refs/stash >actual &&
+> +	git -C repo reflog show refs/stash --format=3D%H >actual &&
+>  	cat >expect <<-EOF &&
+> -	$(test_oid zero) $new_oid
+> +	$new_oid
+>  	EOF
+>  	test_cmp expect actual
+>  '
