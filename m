@@ -1,161 +1,123 @@
-Received: from mail-wr1-f42.google.com (mail-wr1-f42.google.com [209.85.221.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28B2158AA8
-	for <git@vger.kernel.org>; Fri, 19 Jan 2024 20:19:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FB1F5380D
+	for <git@vger.kernel.org>; Fri, 19 Jan 2024 20:28:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705695555; cv=none; b=KcOVLdG5PvaHzeLBzSkkIPJv8L1H5/jVM5cyfL9N0XhjIPRYoKuWgYycX9gvy9Srawc2gWxxy7+7GE7BBTkN9SHTfkHNSL1GyeWMGyA1RZkxF9Ipiob69OphCbOmGImdJZ718IqVim5g9j14glKED8O49H9gVnZk2zUz1biPsXs=
+	t=1705696117; cv=none; b=mbF8fU0T27Q6EgQ7Kuckjl0YLBW6ZUBUMmWEKyZBFVeMEfjGvvQJtctpDLLqDywb+VKNreAZG2+iAYpsOFBlzWAA+dJyf+L5fkd2vYOUO6MpzLOiic9pduJsBNVljDE5dQDOmF6uJuvDMmu5KM7BwEKIB/F1NpVP3R4O/4Ge3D0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705695555; c=relaxed/simple;
-	bh=ejqNHH5KjAGEhLO2wXgrqJb7tXVf68mEg1yp5eJbapk=;
-	h=Message-ID:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=rlg95Ijcjw1Keto7xxsxvRzCFhZXPC2xgpHAmaGeEl4aaGOK6fgj2YHLe+wgtKUfD2hS2OnAdrQPQd8bEpoXk7WtzKF5UrZbjTwBHwUloYQdAidc2J3xHXRwj92F7VQ+BTzppVPy1kTkFnYOYDklVeS70zJpQUHCHdhklJzwsJE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PQ2irkrd; arc=none smtp.client-ip=209.85.221.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1705696117; c=relaxed/simple;
+	bh=iDQ2Y3vulZBdh+toXfSW95CE4Dl4UBPIdYJNLM9TZN8=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=Z+6YUMdrQe03stve/RC7b1pbHuNcfJ1wyJCRiz7LzUEQManGdUJhr8V2+WGUIniUcBhw7A4o+JXqHFp/CBNdrxexPgjQj+ipTqpjazMY41yts0Akyzi39iqpKWaShSvhmzfxHKSdEjCjd8fAr8Ds+eIwKJ6sX0HFcvtKlXynSmw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=r4sXqqf/; arc=none smtp.client-ip=173.228.157.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PQ2irkrd"
-Received: by mail-wr1-f42.google.com with SMTP id ffacd0b85a97d-338aca547d9so847163f8f.0
-        for <git@vger.kernel.org>; Fri, 19 Jan 2024 12:19:13 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1705695552; x=1706300352; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=EvaBrntQ+N1TnDrJtNuUCqAW79T8hXzXkq3CXl/qwHQ=;
-        b=PQ2irkrdcgGVE8ZuNoJbERYwdGirWfHp1wpcOb9vnte/cglzBH780Ra7PjuyWmQZSw
-         hqZKy7d8mx+LCaGPgwldYPo6R0qq31qbFLU+/tc8mZGDoJw8dbSvVDfSKq/h8fOxL7d1
-         iQFcO8pSLiokdZ9v9aRCnsDWS/yFZaVdSO+KGkMgYA8mVWKCyLHiYUHYT5+kbgQIkif2
-         +bo1KuyiLOsHqOWQeqAUN/Qt7MPiP4WqYOt1Qx3pT36y472JJGqErGC+gaPa3tBKwa4q
-         d9p67FQSWkCVssmAJFZhC6JnJGNf1huBIJ8aDI1J49jPNZF5H10cdQhXxYdpurqaXsT6
-         QeSw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1705695552; x=1706300352;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=EvaBrntQ+N1TnDrJtNuUCqAW79T8hXzXkq3CXl/qwHQ=;
-        b=kt2k6NKK+13SUxXNQk3NiuLJE64OeE70pJ+H9YUJVeV5BzSSdj1ywfYFXs3hjWZ2qB
-         RselpqSwCoUsPGpHcr+2YS8pNy7KTWX3/Zc3M3RRk8ArvRMlxexw7WPKuscpCjU5RB2j
-         6GQ93km5nlycpe2tsaloAzeIrsUKOMNay4QLniiDb+z8suYjL0BjbAdWi9+43L0RMerQ
-         pM6XKfwQ3s/Cl7+xYdHdrxdx8LdigmBCrzPWzILvsF4hkrejcKK3F2SaIDJd2rF58EIa
-         z1VF4zY83jOtir2xAtH80jtQzBBJ3pofX+2jHjuwCT84YZ/Cf0FagzMnm78zkGgjINTk
-         BeDw==
-X-Gm-Message-State: AOJu0Yx+/NlfKfysyCHVcewlX3L9zgRKS2pQHeGZXgdgTQiUKMRGTyJS
-	Wlbf84OAgF27GRnA3TTyQ991MbrNQzEFVwo67srF40FFqxJmxepM4umQG8A+
-X-Google-Smtp-Source: AGHT+IH5Yi6eX88Oaabf9zv+t1EtG8H3aNLuxRr+rTVKHiqrPsFRDAsNocpCHTPJYN27FeEWfDke7A==
-X-Received: by 2002:a5d:5f8b:0:b0:337:eec:62e3 with SMTP id dr11-20020a5d5f8b000000b003370eec62e3mr88947wrb.17.1705695552147;
-        Fri, 19 Jan 2024 12:19:12 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id w6-20020adfee46000000b00337cf4a20c6sm4661425wro.31.2024.01.19.12.19.11
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 19 Jan 2024 12:19:11 -0800 (PST)
-Message-ID: <7329e87148a7f8d4f8bd1b0fd3a0b1e0bc9e9e69.1705695540.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1647.v2.git.git.1705695540.gitgitgadget@gmail.com>
-References: <pull.1647.git.git.1705521155.gitgitgadget@gmail.com>
-	<pull.1647.v2.git.git.1705695540.gitgitgadget@gmail.com>
-From: "John Cai via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Fri, 19 Jan 2024 20:19:00 +0000
-Subject: [PATCH v2 12/12] t5312: move reffiles specific tests to t0601
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="r4sXqqf/"
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id EE47120921;
+	Fri, 19 Jan 2024 15:28:34 -0500 (EST)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=iDQ2Y3vulZBdh+toXfSW95CE4Dl4UBPIdYJNLM
+	9TZN8=; b=r4sXqqf/8Ya+J+dqCe3A6T9pmxGqdvChGTPIAtTQsGGXLnFXmAGncm
+	u//AKnxriXQIkuFV+13YyGyDmsvsuKsSCxDmL6+UJl2HRsKrMDt2xhz3MegaqKE4
+	e3gGDL1s5bO+AYBWndfKCQHfg2nC2dz2gdu7BX0u2E3Wx/NOC8jfU=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id E568120920;
+	Fri, 19 Jan 2024 15:28:34 -0500 (EST)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.200.93])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 801822091F;
+	Fri, 19 Jan 2024 15:28:31 -0500 (EST)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 6/7] refs: redefine special refs
+In-Reply-To: <a4b4dd51f81fdf65f79b9afc3bd85109817ea128.1705659748.git.ps@pks.im>
+	(Patrick Steinhardt's message of "Fri, 19 Jan 2024 11:40:24 +0100")
+References: <cover.1705659748.git.ps@pks.im>
+	<a4b4dd51f81fdf65f79b9afc3bd85109817ea128.1705659748.git.ps@pks.im>
+Date: Fri, 19 Jan 2024 12:28:29 -0800
+Message-ID: <xmqq7ck5jceq.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Patrick Steinhardt <ps@pks.im>,
-    John Cai <johncai86@gmail.com>,
-    John Cai <johncai86@gmail.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 4FBC6EAC-B709-11EE-AFA9-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
 
-From: John Cai <johncai86@gmail.com>
+Patrick Steinhardt <ps@pks.im> writes:
 
-Move a few tests into t0601 since they specifically test the packed-refs
-file and thus are specific to the reffiles backend.
+> Now that our list of special refs really only contains refs which have
+> actually-special semantics, let's redefine what makes a special ref.
 
-Signed-off-by: John Cai <johncai86@gmail.com>
----
- t/t0601-reffiles-pack-refs.sh | 30 ++++++++++++++++++++++++++++++
- t/t5312-prune-corruption.sh   | 26 --------------------------
- 2 files changed, 30 insertions(+), 26 deletions(-)
+Yay.
 
-diff --git a/t/t0601-reffiles-pack-refs.sh b/t/t0601-reffiles-pack-refs.sh
-index c2c19befacc..263e99cd84b 100755
---- a/t/t0601-reffiles-pack-refs.sh
-+++ b/t/t0601-reffiles-pack-refs.sh
-@@ -328,4 +328,34 @@ test_expect_success 'refs/worktree must not be packed' '
- 	test_path_is_file .git/worktrees/wt2/refs/worktree/foo
- '
- 
-+# we do not want to count on running pack-refs to
-+# actually pack it, as it is perfectly reasonable to
-+# skip processing a broken ref
-+test_expect_success 'create packed-refs file with broken ref' '
-+	test_tick && git commit --allow-empty -m one &&
-+	recoverable=$(git rev-parse HEAD) &&
-+	test_tick && git commit --allow-empty -m two &&
-+	missing=$(git rev-parse HEAD) &&
-+	rm -f .git/refs/heads/main &&
-+	cat >.git/packed-refs <<-EOF &&
-+	$missing refs/heads/main
-+	$recoverable refs/heads/other
-+	EOF
-+	echo $missing >expect &&
-+	git rev-parse refs/heads/main >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'pack-refs does not silently delete broken packed ref' '
-+	git pack-refs --all --prune &&
-+	git rev-parse refs/heads/main >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'pack-refs does not drop broken refs during deletion' '
-+	git update-ref -d refs/heads/other &&
-+	git rev-parse refs/heads/main >actual &&
-+	test_cmp expect actual
-+'
-+
- test_done
-diff --git a/t/t5312-prune-corruption.sh b/t/t5312-prune-corruption.sh
-index 230cb387122..d8d2e304687 100755
---- a/t/t5312-prune-corruption.sh
-+++ b/t/t5312-prune-corruption.sh
-@@ -111,30 +111,4 @@ test_expect_success 'pack-refs does not silently delete broken loose ref' '
- 	test_cmp expect actual
- '
- 
--# we do not want to count on running pack-refs to
--# actually pack it, as it is perfectly reasonable to
--# skip processing a broken ref
--test_expect_success REFFILES 'create packed-refs file with broken ref' '
--	rm -f .git/refs/heads/main &&
--	cat >.git/packed-refs <<-EOF &&
--	$missing refs/heads/main
--	$recoverable refs/heads/other
--	EOF
--	echo $missing >expect &&
--	git rev-parse refs/heads/main >actual &&
--	test_cmp expect actual
--'
--
--test_expect_success REFFILES 'pack-refs does not silently delete broken packed ref' '
--	git pack-refs --all --prune &&
--	git rev-parse refs/heads/main >actual &&
--	test_cmp expect actual
--'
--
--test_expect_success REFFILES  'pack-refs does not drop broken refs during deletion' '
--	git update-ref -d refs/heads/other &&
--	git rev-parse refs/heads/main >actual &&
--	test_cmp expect actual
--'
--
- test_done
--- 
-gitgitgadget
+>
+> Signed-off-by: Patrick Steinhardt <ps@pks.im>
+> ---
+>  refs.c | 33 +++++++--------------------------
+>  1 file changed, 7 insertions(+), 26 deletions(-)
+>
+> diff --git a/refs.c b/refs.c
+> index 047c81b1c1..08a900a047 100644
+> --- a/refs.c
+> +++ b/refs.c
+> @@ -1839,13 +1839,10 @@ static int refs_read_special_head(struct ref_store *ref_store,
+>  static int is_special_ref(const char *refname)
+>  {
+>  	/*
+> -	 * Special references get written and read directly via the filesystem
+> -	 * by the subsystems that create them. Thus, they must not go through
+> -	 * the reference backend but must instead be read directly. It is
+> -	 * arguable whether this behaviour is sensible, or whether it's simply
+> -	 * a leaky abstraction enabled by us only having a single reference
+> -	 * backend implementation. But at least for a subset of references it
+> -	 * indeed does make sense to treat them specially:
+> +	 * Special references are refs that have different semantics compared
+> +	 * to "normal" refs. These refs can thus not be stored in the ref
+> +	 * backend, but must always be accessed via the filesystem. The
+> +	 * following refs are special:
+>  	 *
+>  	 * - FETCH_HEAD may contain multiple object IDs, and each one of them
+>  	 *   carries additional metadata like where it came from.
+> @@ -1853,25 +1850,9 @@ static int is_special_ref(const char *refname)
+>  	 * - MERGE_HEAD may contain multiple object IDs when merging multiple
+>  	 *   heads.
+>  	 *
+> -	 * There are some exceptions that you might expect to see on this list
+> -	 * but which are handled exclusively via the reference backend:
+> -	 *
+> -	 * - BISECT_EXPECTED_REV
+> -	 *
+> -	 * - CHERRY_PICK_HEAD
+> -	 *
+> -	 * - HEAD
+> -	 *
+> -	 * - ORIG_HEAD
+> -	 *
+> -	 * - "rebase-apply/" and "rebase-merge/" contain all of the state for
+> -	 *   rebases, including some reference-like files. These are
+> -	 *   exclusively read and written via the filesystem and never go
+> -	 *   through the refdb.
+> -	 *
+> -	 * Writing or deleting references must consistently go either through
+> -	 * the filesystem (special refs) or through the reference backend
+> -	 * (normal ones).
+> +	 * Reading, writing or deleting references must consistently go either
+> +	 * through the filesystem (special refs) or through the reference
+> +	 * backend (normal ones).
+>  	 */
+>  	static const char * const special_refs[] = {
+>  		"FETCH_HEAD",
