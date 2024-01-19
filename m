@@ -1,54 +1,54 @@
 Received: from wout1-smtp.messagingengine.com (wout1-smtp.messagingengine.com [64.147.123.24])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E93CB46AF
-	for <git@vger.kernel.org>; Fri, 19 Jan 2024 07:04:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2EF1AD54
+	for <git@vger.kernel.org>; Fri, 19 Jan 2024 07:04:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.24
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705647895; cv=none; b=bbRvk1AVlY088WP9gO4sYC7VSUtIaqS6tEo2F95hkK4BffeUecSsMWHgARywGafVN819padYwsCcoFuK/OuGkesyKFEhPMowJ18PCKSeyVp2hH3E3XnzSjunQ1pns/xynUYWYG5KaJg/SJ6yPnah8htYlw+u5rhG5cpMPz9ncRc=
+	t=1705647900; cv=none; b=g5ogmJQFm6Dhvp3rDUwqlC+Iwb1RMislFvdcUyB5Tj3bohyPzt5oycIZ5POlmR68ICQ7twt1Tt9hbzYvGPiJ2eNm8RWY9eI12QyQEo18xeEafEe7oaz7WeHII7rgRjTyyq2jy+1mduoofQxqw66IXB2+Lvfqi178JpDRnDTOCo0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705647895; c=relaxed/simple;
-	bh=AXfKWMxunPcHMxQfBMk39Xz/xwCP6kCE1MD7SLwnrEU=;
+	s=arc-20240116; t=1705647900; c=relaxed/simple;
+	bh=EV0wBl5g9OZzWDD9mfDj91cxz2zxP7zIHx4bIVDPWzg=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=jY1mcXcQ6oRXfcduj1aIWJTTJ+HlgKJ7O2yR1ugY+7AdjrzLNFc6FbzeZXyivNnrQ0h049GH36poqfI9Y1wGyfREMmuZf46fpUNlzEjSP5ylI7Uk+JOM63myJQz/i1dORG7An4tD7wgarqFtlpZYuGbtTJuNEgsv/UUbTFXd6/Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=ahzTe2hl; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=NJmPtZEE; arc=none smtp.client-ip=64.147.123.24
+	 Content-Type:Content-Disposition:In-Reply-To; b=b24BXCE2LxkiRpz/AWyM7VS6D3HWi7QZbKTitgA8P7E2qnrtvIEVeomSY3K6RI4FTqwTEe0VUm7L/+rnHIhT+KcMVBjFfw3kniFE7p4vHZUne8CLlU1vC0azqCU71cEtWaKGaaq1MrRWOQ9Jkt6iW2FFlEqdbyvjkqmznPGwFn0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=HPLvv/B1; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=tJch/OZ9; arc=none smtp.client-ip=64.147.123.24
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="ahzTe2hl";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="NJmPtZEE"
-Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
-	by mailout.west.internal (Postfix) with ESMTP id 183333200AD6;
-	Fri, 19 Jan 2024 02:04:53 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="HPLvv/B1";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="tJch/OZ9"
+Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
+	by mailout.west.internal (Postfix) with ESMTP id 00D423200A5B;
+	Fri, 19 Jan 2024 02:04:57 -0500 (EST)
 Received: from mailfrontend2 ([10.202.2.163])
-  by compute3.internal (MEProxy); Fri, 19 Jan 2024 02:04:53 -0500
+  by compute6.internal (MEProxy); Fri, 19 Jan 2024 02:04:58 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1705647892; x=1705734292; bh=PQlFgjurEq
-	ai+cUbfg08TntR+fssY0P2rLQxqdykNuU=; b=ahzTe2hltYKFA4AANtaaTVuLLb
-	Jm7oa/5ydyn/3RdYgCP3/yFuMAUUtqcN7or/2jdlqbklCz7x8pdTmF26N1LNM6po
-	44PvX2L4qCUsHnPYoHzWA6/Cfc7Y7M4O8fmQ2HRjOryhGNO39FqRunmEZ2LjPLkN
-	yLb2G5xdQSn1fypaNeGBUEVxuM4icxhnu0NWCnBcQ++qmwDVTPGyHSfYPNb7lmut
-	FSbOlu9AEG+x+6Mxpq3ubPm/iiVfWfje16JGJw7E8rzy+lfaHJUuWTwUh54rafY4
-	j7YMXautnwZu+H0bExp1+HTx5suBxU88tiyd2LYIIYuR3UUMfIkdjvhFUSDQ==
+	:subject:to:to; s=fm3; t=1705647897; x=1705734297; bh=AUknOe51dR
+	gBLEjv0nEWB2Qij3meFlu4l9fDcwDz6ag=; b=HPLvv/B1gnXtV9JVBGUpeDYr/i
+	6S57ZOPMpSd7UNWK8RlMxsrNsfFpJgVIa+/oVDoqSg5jNsZZ10XOpEr2wrGfIfVT
+	w94NBEcwbtbda36Mq9U0KKs6XJFiNZ3t+d3gx31WFJdatbftnEHxn8M1bhq+4wXw
+	I9fhmhqoQKC7nXNhdtIFZpDWq/tn0N/QaLlKqS/LxQVwl2Mf3hzxq8HR2wL2dqhY
+	h1HqkPuA+8RzcIpfZIR7kI7hasekUxi6NeQDmO92FLyeQZ8Yh6SuVL0coJzBJ7UY
+	33ubVngDwBcvq6FlzzPMskaGnOwpwMIorBmzG70H0KdOiNVDvlWW4AQLi/5g==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1705647892; x=1705734292; bh=PQlFgjurEqai+cUbfg08TntR+fss
-	Y0P2rLQxqdykNuU=; b=NJmPtZEEpjCGjXNlS+Y8qzMSPvkCwUX/ecui+JcetvfH
-	/bq1k7iS9EbUsyt6Fc7QhSI/YDXVbsJLHOrYRNfOeABspOJOiXMTMUX0BEq5m3gB
-	JpJc9CVadnjihlwUomiTYE9Dtkq4vnhimK5zTIer65NnhJA/yhLPIFqQBC2iTo7b
-	4VUvl7N2ex+B4J1ZBFKj0fgwgh71L7DczHlxig+9JkFGV7DdysXjppxPahBIB/kx
-	WmGtYSI0ttkloUfpULtl+brJvxxO5W4HTRmIXujflOF4yMtGR8fwo7GNWx8ZbPTo
-	UfcDquuSp4c76IpyA5rtTQnBk2y3Kikwolz3KY+K7g==
-X-ME-Sender: <xms:FB-qZVLu-PKLI4HaroNq0jL4jM4x76MAe8Iw1quI8hDyiPC4SiXaQw>
-    <xme:FB-qZRJBqTE2C_U7JkneFDU9QWZZwPoqUDtxQlQFS_j3hZdjCLG38iA7gdHbrTLvA
-    91-s8J3PB90AysZvA>
-X-ME-Received: <xmr:FB-qZds4f8X4nRewkpGBVdbwBgtyTo9x_LHWwjPlyJ0T-mqeqIzW0bl4OiYQvJBcsUUCigz4ylMTmub2rtY0UQiOJsgQtxDwpHMAqRb0wAJaxghmbw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrvdejledguddtgecutefuodetggdotefrod
+	fm3; t=1705647897; x=1705734297; bh=AUknOe51dRgBLEjv0nEWB2Qij3me
+	Flu4l9fDcwDz6ag=; b=tJch/OZ9F+LFEuKiykl1pAv94+0hDITi/CMSBdLWKLs0
+	ygqgMnTsXw4Ks8+GQx1Q9HKr1be3q6DwH8snA+DcYBo5tPVom0saL2OVGs3eQsv7
+	2I+aG9BVUIUXg30MJmjNxKlWGrzx1HygfGJekNICsTYHM/nuoWfja8cXzv5PfMeH
+	d9iDMaurxuPZHvjpMtXhcu2ZAWKOAVNb3LX0dZe2U2OV3Eyppdn4fRK2riTGaEDC
+	5c6e3U6Zq5STukds4Gy6nmAbQ4YoGLJN/efEdXXB5ynIXM0A/MyCh7fQBWrKFW7a
+	3oHmgItIZdvUkA/IoviW+Euo2/BU0d6OQ/nR2B+ufA==
+X-ME-Sender: <xms:GR-qZTUIcipDMNe3nThUQV3vhHSauOzKtY97KrndXZZlTzpBpaYEzQ>
+    <xme:GR-qZbk4v1TTFFyoTf_WtyLm0aT-3zsQiZ9EJtPzwXRDkvnubVpAiYLFVBSXfOcSB
+    gzLxhSp4sIZsEUTJQ>
+X-ME-Received: <xmr:GR-qZfa0TZJ_kepZEZt1QFTB1pkKon4O-fJH3esDYC0N2PPb8byZwKoIzKneWeFiji20M02LGLTNHmJfhMUmXida4qbHyTo_hXLghHk0dPtE5w9anA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrvdejledguddtfecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
     necuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
     enucfjughrpeffhffvvefukfhfgggtuggjsehgtderredttddvnecuhfhrohhmpefrrght
@@ -56,25 +56,25 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrvdejledguddtgecutefuodetgg
     gvrhhnpeeukedtvedtffevleejtefgheehieegkeeluddvfeefgeehgfeltddtheejleff
     teenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpsh
     esphhkshdrihhm
-X-ME-Proxy: <xmx:FB-qZWZjB_2P6plyuHnIt7m8ieFVAIt8R2tuE7chqM0PxYR24Xcc9g>
-    <xmx:FB-qZca6vrGW_Or7T-1OTe0Qe7OBcDN66NdDixP9yk5sieiEI2IUwg>
-    <xmx:FB-qZaAGcm0yoJbbLJ9N87kdQk0rMPLytOXIfij70S7g1rrFr4uHsQ>
-    <xmx:FB-qZXw1xQcrF7wCcc4Oq2IhjnN2gq8ENcBeTFlcqssOzEPwO05B4A>
+X-ME-Proxy: <xmx:GR-qZeV8Voeaxd41tgkDLXYXHwqN_de_PN3Y0zc46-g0DUL82qfLHA>
+    <xmx:GR-qZdmvaEmqC11jYpDPDei3O9BkBbXByiosAWl2uFB5WP2IW0YZSg>
+    <xmx:GR-qZbdxghpTwAiAo4qwvDRMKJzfk01pszJCTAuV9_aoHZbDA24rkQ>
+    <xmx:GR-qZdtfKI192T-yV7kKe1ZLNLzHN3yAL2P3P6JuStoHqYmVxpnIhQ>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 19 Jan 2024 02:04:51 -0500 (EST)
+ 19 Jan 2024 02:04:56 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 9fe2715e (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 19 Jan 2024 07:01:55 +0000 (UTC)
-Date: Fri, 19 Jan 2024 08:04:50 +0100
+	by vm-mail (OpenSMTPD) with ESMTPSA id cfb223d8 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 19 Jan 2024 07:02:00 +0000 (UTC)
+Date: Fri, 19 Jan 2024 08:04:55 +0100
 From: Patrick Steinhardt <ps@pks.im>
 To: Britton Leo Kerin <britton.kerin@gmail.com>
 Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3 2/5] completion: git-log opts to bisect visualize
-Message-ID: <ZaofEq0tqMj3kjdb@tanuki>
+Subject: Re: [PATCH v3 3/5] completion: move to maintain define-before-use
+Message-ID: <ZaofFwDaNrjmbxk_@tanuki>
 References: <03fe3371-2b0f-4590-90ad-166b8fa4cbbb@smtp-relay.sendinblue.com>
  <20240118204323.1113859-1-britton.kerin@gmail.com>
- <20240118204323.1113859-3-britton.kerin@gmail.com>
+ <20240118204323.1113859-4-britton.kerin@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -82,148 +82,354 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="HN2Z9MmnNEKla1A+"
+	protocol="application/pgp-signature"; boundary="qC1EftNcHV//voZC"
 Content-Disposition: inline
-In-Reply-To: <20240118204323.1113859-3-britton.kerin@gmail.com>
+In-Reply-To: <20240118204323.1113859-4-britton.kerin@gmail.com>
 
 
---HN2Z9MmnNEKla1A+
+--qC1EftNcHV//voZC
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Thu, Jan 18, 2024 at 11:43:20AM -0900, Britton Leo Kerin wrote:
+On Thu, Jan 18, 2024 at 11:43:21AM -0900, Britton Leo Kerin wrote:
 
-Proposal for the commit subject: "completion: complete log opts for
-git-bisect visualize".
+Same here: please explain what the problem is that this patch is trying
+to solve in the commit message.
 
-> To do this the majority of _git_log has been factored out into the new
-> __git_complete_log_opts.
+Also, as far as I can see, this patch is actually a prerequisite for the
+preceding patch where we already call `__git_complete_log_opts ()`. So a
+better way to structure this would be to introduce and move
+`__git_complete_log_opts ()` in a preparatory patch, and only then start
+calling the function for "visualize" in a subsequent patch.
 
-We typically do not continue the commit message as if the commit subject
-was the first line of the message. An introduction like the following
-would help to set the stage:
+Patrick
 
-    Arguments passed to the "visualize" subcommand of git-bisect(1) get
-    forwarded to git-log(1). It thus supports the same options as
-    git-log(1) would, but our Bash completion script does not know to
-    handle this.
-
-> This is needed because the visualize command
-> accepts git-log options but not rev arguments (they are fixed to the
-> commits under bisection).
->=20
-> __git_complete_log_opts has a precondition that COMPREPLY be empty.  In
-> a completion context it doesn't seem advisable to implement
-> preconditions as noisy or hard failures, so instead it becomes a no-op
-> on violation.  This should be detectable and quick to debug for devels,
-> without ever aggravating a user (besides completion failure).
->=20
 > Signed-off-by: Britton Leo Kerin <britton.kerin@gmail.com>
 > ---
->  contrib/completion/git-completion.bash | 30 +++++++++++++++++++++++---
->  1 file changed, 27 insertions(+), 3 deletions(-)
+>  contrib/completion/git-completion.bash | 269 ++++++++++++-------------
+>  1 file changed, 134 insertions(+), 135 deletions(-)
 >=20
 > diff --git a/contrib/completion/git-completion.bash b/contrib/completion/=
 git-completion.bash
-> index 15d22ff7d9..c16aded36c 100644
+> index c16aded36c..63ca8082a4 100644
 > --- a/contrib/completion/git-completion.bash
 > +++ b/contrib/completion/git-completion.bash
-> @@ -1472,6 +1472,16 @@ _git_bisect ()
->  			;;
->  		esac
->  		;;
-> +	visualize)
-> +		case "$cur" in
-> +		-*)
-> +			__git_complete_log_opts
-> +			return
-> +			;;
-> +		*)
-> +			;;
-> +		esac
-> +		;;
-
-Is this switch even needed? Can't we call `__git_complete_log_opts`
-directly?
-
->  	esac
+> @@ -1445,6 +1445,140 @@ _git_archive ()
+>  	__git_complete_file
+>  }
 > =20
->  	case "$subcommand" in
-> @@ -2074,10 +2084,14 @@ __git_diff_merges_opts=3D"off none on first-paren=
-t 1 separate m combined c dense-c
->  __git_log_pretty_formats=3D"oneline short medium full fuller reference e=
+> +# Options that go well for log, shortlog and gitk
+> +__git_log_common_options=3D"
+> +	--not --all
+> +	--branches --tags --remotes
+> +	--first-parent --merges --no-merges
+> +	--max-count=3D
+> +	--max-age=3D --since=3D --after=3D
+> +	--min-age=3D --until=3D --before=3D
+> +	--min-parents=3D --max-parents=3D
+> +	--no-min-parents --no-max-parents
+> +"
+> +# Options that go well for log and gitk (not shortlog)
+> +__git_log_gitk_options=3D"
+> +	--dense --sparse --full-history
+> +	--simplify-merges --simplify-by-decoration
+> +	--left-right --notes --no-notes
+> +"
+> +# Options that go well for log and shortlog (not gitk)
+> +__git_log_shortlog_options=3D"
+> +	--author=3D --committer=3D --grep=3D
+> +	--all-match --invert-grep
+> +"
+> +# Options accepted by log and show
+> +__git_log_show_options=3D"
+> +	--diff-merges --diff-merges=3D --no-diff-merges --dd --remerge-diff
+> +"
+> +
+> +__git_diff_merges_opts=3D"off none on first-parent 1 separate m combined=
+ c dense-combined cc remerge r"
+> +
+> +__git_log_pretty_formats=3D"oneline short medium full fuller reference e=
 mail raw format: tformat: mboxrd"
->  __git_log_date_formats=3D"relative iso8601 iso8601-strict rfc2822 short =
+> +__git_log_date_formats=3D"relative iso8601 iso8601-strict rfc2822 short =
 local default human raw unix auto: format:"
-> =20
-> -_git_log ()
 > +
 > +# Check for only porcelain (i.e. not git-rev-list) option (not argument)
 > +# and selected option argument completions for git-log options and if any
 > +# are found put them in COMPREPLY.  COMPREPLY must be empty at the start,
 > +# and will be empty on return if no candidates are found.
-
-Why do we need to enforce that COMPREPLY is empty? None of the other
-`__git_complete_*` helpers do this, so I think it's fair to expect that
-the variable woulld get clobbered when calling the new function. Thus, I
-don't think there's a need for this precondition.
-
 > +__git_complete_log_opts ()
->  {
-> -	__git_has_doubledash && return
-> -	__git_find_repo_path
+> +{
 > +	[ -z "$COMPREPLY" ] || return 1   # Precondition
-> =20
->  	local merge=3D""
->  	if [ -f "$__git_repo_path/MERGE_HEAD" ]; then
-> @@ -2171,6 +2185,16 @@ _git_log ()
->  		return
->  		;;
->  	esac
+> +
+> +	local merge=3D""
+> +	if [ -f "$__git_repo_path/MERGE_HEAD" ]; then
+> +		merge=3D"--merge"
+> +	fi
+> +	case "$prev,$cur" in
+> +	-L,:*:*)
+> +		return	# fall back to Bash filename completion
+> +		;;
+> +	-L,:*)
+> +		__git_complete_symbol --cur=3D"${cur#:}" --sfx=3D":"
+> +		return
+> +		;;
+> +	-G,*|-S,*)
+> +		__git_complete_symbol
+> +		return
+> +		;;
+> +	esac
+> +	case "$cur" in
+> +	--pretty=3D*|--format=3D*)
+> +		__gitcomp "$__git_log_pretty_formats $(__git_pretty_aliases)
+> +			" "" "${cur#*=3D}"
+> +		return
+> +		;;
+> +	--date=3D*)
+> +		__gitcomp "$__git_log_date_formats" "" "${cur##--date=3D}"
+> +		return
+> +		;;
+> +	--decorate=3D*)
+> +		__gitcomp "full short no" "" "${cur##--decorate=3D}"
+> +		return
+> +		;;
+> +	--diff-algorithm=3D*)
+> +		__gitcomp "$__git_diff_algorithms" "" "${cur##--diff-algorithm=3D}"
+> +		return
+> +		;;
+> +	--submodule=3D*)
+> +		__gitcomp "$__git_diff_submodule_formats" "" "${cur##--submodule=3D}"
+> +		return
+> +		;;
+> +	--ws-error-highlight=3D*)
+> +		__gitcomp "$__git_ws_error_highlight_opts" "" "${cur##--ws-error-highl=
+ight=3D}"
+> +		return
+> +		;;
+> +	--no-walk=3D*)
+> +		__gitcomp "sorted unsorted" "" "${cur##--no-walk=3D}"
+> +		return
+> +		;;
+> +	--diff-merges=3D*)
+> +                __gitcomp "$__git_diff_merges_opts" "" "${cur##--diff-me=
+rges=3D}"
+> +                return
+> +                ;;
+> +	--*)
+> +		__gitcomp "
+> +			$__git_log_common_options
+> +			$__git_log_shortlog_options
+> +			$__git_log_gitk_options
+> +			$__git_log_show_options
+> +			--root --topo-order --date-order --reverse
+> +			--follow --full-diff
+> +			--abbrev-commit --no-abbrev-commit --abbrev=3D
+> +			--relative-date --date=3D
+> +			--pretty=3D --format=3D --oneline
+> +			--show-signature
+> +			--cherry-mark
+> +			--cherry-pick
+> +			--graph
+> +			--decorate --decorate=3D --no-decorate
+> +			--walk-reflogs
+> +			--no-walk --no-walk=3D --do-walk
+> +			--parents --children
+> +			--expand-tabs --expand-tabs=3D --no-expand-tabs
+> +			$merge
+> +			$__git_diff_common_options
+> +			"
+> +		return
+> +		;;
+> +	-L:*:*)
+> +		return	# fall back to Bash filename completion
+> +		;;
+> +	-L:*)
+> +		__git_complete_symbol --cur=3D"${cur#-L:}" --sfx=3D":"
+> +		return
+> +		;;
+> +	-G*)
+> +		__git_complete_symbol --pfx=3D"-G" --cur=3D"${cur#-G}"
+> +		return
+> +		;;
+> +	-S*)
+> +		__git_complete_symbol --pfx=3D"-S" --cur=3D"${cur#-S}"
+> +		return
+> +		;;
+> +	esac
 > +}
 > +
-> +_git_log ()
-> +{
-> +	__git_has_doubledash && return
-> +	__git_find_repo_path
-
-I was about to say that it would make more sense to call
-`__git_find_repo_path` in `__git_complete_log_opts` so that all prereqs
-are fulfilled whenever the latter is called. But `__git_complete_relist`
-doesn't know to find the repo path in all cases, so that wouldn't quite
-work alright.
-
-Patrick
-
-> +        __git_complete_log_opts
-> +        [ -z "$COMPREPLY" ] || return
-> +
->  	__git_complete_revlist
+>  _git_bisect ()
+>  {
+>  	__git_has_doubledash && return
+> @@ -2052,141 +2186,6 @@ _git_ls_tree ()
+>  	__git_complete_file
 >  }
 > =20
+> -# Options that go well for log, shortlog and gitk
+> -__git_log_common_options=3D"
+> -	--not --all
+> -	--branches --tags --remotes
+> -	--first-parent --merges --no-merges
+> -	--max-count=3D
+> -	--max-age=3D --since=3D --after=3D
+> -	--min-age=3D --until=3D --before=3D
+> -	--min-parents=3D --max-parents=3D
+> -	--no-min-parents --no-max-parents
+> -"
+> -# Options that go well for log and gitk (not shortlog)
+> -__git_log_gitk_options=3D"
+> -	--dense --sparse --full-history
+> -	--simplify-merges --simplify-by-decoration
+> -	--left-right --notes --no-notes
+> -"
+> -# Options that go well for log and shortlog (not gitk)
+> -__git_log_shortlog_options=3D"
+> -	--author=3D --committer=3D --grep=3D
+> -	--all-match --invert-grep
+> -"
+> -# Options accepted by log and show
+> -__git_log_show_options=3D"
+> -	--diff-merges --diff-merges=3D --no-diff-merges --dd --remerge-diff
+> -"
+> -
+> -__git_diff_merges_opts=3D"off none on first-parent 1 separate m combined=
+ c dense-combined cc remerge r"
+> -
+> -__git_log_pretty_formats=3D"oneline short medium full fuller reference e=
+mail raw format: tformat: mboxrd"
+> -__git_log_date_formats=3D"relative iso8601 iso8601-strict rfc2822 short =
+local default human raw unix auto: format:"
+> -
+> -
+> -# Check for only porcelain (i.e. not git-rev-list) option (not argument)
+> -# and selected option argument completions for git-log options and if any
+> -# are found put them in COMPREPLY.  COMPREPLY must be empty at the start,
+> -# and will be empty on return if no candidates are found.
+> -__git_complete_log_opts ()
+> -{
+> -	[ -z "$COMPREPLY" ] || return 1   # Precondition
+> -
+> -	local merge=3D""
+> -	if [ -f "$__git_repo_path/MERGE_HEAD" ]; then
+> -		merge=3D"--merge"
+> -	fi
+> -	case "$prev,$cur" in
+> -	-L,:*:*)
+> -		return	# fall back to Bash filename completion
+> -		;;
+> -	-L,:*)
+> -		__git_complete_symbol --cur=3D"${cur#:}" --sfx=3D":"
+> -		return
+> -		;;
+> -	-G,*|-S,*)
+> -		__git_complete_symbol
+> -		return
+> -		;;
+> -	esac
+> -	case "$cur" in
+> -	--pretty=3D*|--format=3D*)
+> -		__gitcomp "$__git_log_pretty_formats $(__git_pretty_aliases)
+> -			" "" "${cur#*=3D}"
+> -		return
+> -		;;
+> -	--date=3D*)
+> -		__gitcomp "$__git_log_date_formats" "" "${cur##--date=3D}"
+> -		return
+> -		;;
+> -	--decorate=3D*)
+> -		__gitcomp "full short no" "" "${cur##--decorate=3D}"
+> -		return
+> -		;;
+> -	--diff-algorithm=3D*)
+> -		__gitcomp "$__git_diff_algorithms" "" "${cur##--diff-algorithm=3D}"
+> -		return
+> -		;;
+> -	--submodule=3D*)
+> -		__gitcomp "$__git_diff_submodule_formats" "" "${cur##--submodule=3D}"
+> -		return
+> -		;;
+> -	--ws-error-highlight=3D*)
+> -		__gitcomp "$__git_ws_error_highlight_opts" "" "${cur##--ws-error-highl=
+ight=3D}"
+> -		return
+> -		;;
+> -	--no-walk=3D*)
+> -		__gitcomp "sorted unsorted" "" "${cur##--no-walk=3D}"
+> -		return
+> -		;;
+> -	--diff-merges=3D*)
+> -                __gitcomp "$__git_diff_merges_opts" "" "${cur##--diff-me=
+rges=3D}"
+> -                return
+> -                ;;
+> -	--*)
+> -		__gitcomp "
+> -			$__git_log_common_options
+> -			$__git_log_shortlog_options
+> -			$__git_log_gitk_options
+> -			$__git_log_show_options
+> -			--root --topo-order --date-order --reverse
+> -			--follow --full-diff
+> -			--abbrev-commit --no-abbrev-commit --abbrev=3D
+> -			--relative-date --date=3D
+> -			--pretty=3D --format=3D --oneline
+> -			--show-signature
+> -			--cherry-mark
+> -			--cherry-pick
+> -			--graph
+> -			--decorate --decorate=3D --no-decorate
+> -			--walk-reflogs
+> -			--no-walk --no-walk=3D --do-walk
+> -			--parents --children
+> -			--expand-tabs --expand-tabs=3D --no-expand-tabs
+> -			$merge
+> -			$__git_diff_common_options
+> -			"
+> -		return
+> -		;;
+> -	-L:*:*)
+> -		return	# fall back to Bash filename completion
+> -		;;
+> -	-L:*)
+> -		__git_complete_symbol --cur=3D"${cur#-L:}" --sfx=3D":"
+> -		return
+> -		;;
+> -	-G*)
+> -		__git_complete_symbol --pfx=3D"-G" --cur=3D"${cur#-G}"
+> -		return
+> -		;;
+> -	-S*)
+> -		__git_complete_symbol --pfx=3D"-S" --cur=3D"${cur#-S}"
+> -		return
+> -		;;
+> -	esac
+> -}
+> -
+>  _git_log ()
+>  {
+>  	__git_has_doubledash && return
 > --=20
 > 2.43.0
 >=20
 
---HN2Z9MmnNEKla1A+
+--qC1EftNcHV//voZC
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmWqHxEACgkQVbJhu7ck
-PpRDmRAAqIxvxVEJMxrYFWkXTuzUJmo3QnVhQAGRVo54SCSiaUjG3BLsiIm6AE/o
-bUY0O6+9h9BOwkjKiTHTXZKjU6yGxbRxl/SoXQ65TB/OqxBDt4BvZSNdYEw/1Vrq
-XQ10szr2qRY49VUl12LUY8tzIidGB0DuDqYyaWeMIhfrdmz+nhormtC1/sB59Gqj
-xWwhmSfNFnPRpLW8wOxO58AbaY32I8Sh57Zf3eWM9fykmMZ6AR0PV7r5TNoA5Osl
-XzHWnnBBdTFHLuh02DQK9yPxIq2fHIJnZQOIf2On7Gwte2c9K7b96YDofDNxXjSO
-KiaLl87QvGRD6dlLfePBLE+I+FLFzKCBJoA4qlt6E/a2GX4NkKLNn1HIGkT8gpGb
-hqxL7NQW/YVwtWe34/geM/q63Jse1UR5ZC/OGRlnwlZXV3+p3Ie7EbsUdAnjTFgR
-b4bU6c/6LMILir5s2qNWpTVWL5s8NXwI1Z7/i3wHLBth6Ljom9UYT+rbs7dHJcl+
-nWrrBduzTRypNo8+0JKu0o5LReu5JLuYurwy7pXgcINMgpJuxvdrL+0xQtK68kAb
-zBLeiBDNpKIrdA24ZH3jaAzq0myp6D+EKenvBmBwtmC4kNAL2ld1Cv1GZe6WzIa7
-o5GItSNmV1Ag2L5WXDve3+78BTMx2SYHKmx6miGcSPmaCRP/ffw=
-=1o1i
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmWqHxYACgkQVbJhu7ck
+PpRZmA/9F31mTEdnFWdTx9B6mNh+xrMeWVeYf8LquZrYecbtQznLcA+9meVUjGQc
+JZcIP2teoFcI1qZd2sjzFAsOD+Y+jh7QIvq30eKqmD2fOwEUrGrKtyPSC5Upj2rT
+KqzYFlQZdkirkGlkklhKVpyAV2W/U/9CSlebP9BCINiFjxTSJuI31T4TAKOOGJWF
+Ny4HEQZUaBPph6bp1uav+6iigsUlg0MUJLKnXlHXaDJSO23whf8Qfo2FAS3spRu9
+wnOVYSaU51tnV94FmpkaKCcECi8vnJjw0hqjvQjnoy+A4C0tFcdXYr5nNGWCVCLe
+QfutP36punsO9/JusdRX1oexT9nasZ1d59VLGGKqdU3XEtLcX6uZzl7AX0QtPTsn
+ZEhfTG2vb+2rYhHlPlL2vcsnfomJIIRpZGjvkZcocg/7Rswx5HliLdq25nX2boB3
+0gTjWpc3ttFT9an5Qd2axqgmbH2ShABzpxVx7CMDPQ6cy79OYjbdECL8FLi7Y6Mq
+SkgVBBEac5GDCS9Ef2hdCUm1mlW4KIjBUZbd9cPuE5R5rkqY53+ticSe4yB7Xh4h
+dOctkDIalAaPkJ48Ef7k/gJDAEJNUf1VxD478w3TEYIFwNFNWN05du4Sl3h/MXue
+LhD4FX7a3/7iOJ8GqTghGSK4nXm9lDjhTmdxp6m6bHYz6WSi3r0=
+=k6ar
 -----END PGP SIGNATURE-----
 
---HN2Z9MmnNEKla1A+--
+--qC1EftNcHV//voZC--
