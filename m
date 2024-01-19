@@ -1,110 +1,76 @@
-Received: from mail-pl1-f171.google.com (mail-pl1-f171.google.com [209.85.214.171])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F6542CA7
-	for <git@vger.kernel.org>; Fri, 19 Jan 2024 00:57:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA323184E
+	for <git@vger.kernel.org>; Fri, 19 Jan 2024 00:59:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705625852; cv=none; b=iIZvbo02HugASEDCpPIroLKSfLsD5sbjO8csw3cmBIJbzaUqqZNjsKNqYZ/jhpY5GMU2MeuC36RnwevjnX0PXltODuV48SNm8geouQ7oUO5PID6bg9ljs0I9OpssrfvyLjRQKOeMrkedauXGn8Xm8vY9Sn4Yp4BHSVapo+E3KjI=
+	t=1705625943; cv=none; b=Jq3dUa215mNjtcSiLwW/aFiQwSJIQESSBCehT9bvSfTgoK2P7XrRPHLqLjLpkiN4FWbyZjarW70z5HnsQCYhIkBGe0ZGPQGLsZhOVUbxchAK2udDgSfAHj/FPvzC/kXidNgYKbQD0wzEB7ZmW3bD91WVYczJLyHQPZ2aCHoLEyg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705625852; c=relaxed/simple;
-	bh=bzWkMD8A4ODRlPVdluYgZ4Gn0XaPy2oSxrBx0E8/7fE=;
-	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
-	 References:In-Reply-To; b=RZJL7d+33S4rykjxgmTi+7ZXxxpSLEQUhtkUjMssAVaXy2P2ZBR/Zxi29707qd4aYsO5zmCbe27kTppNCPR3UUL8dz/Uc5W/M6jPuy6JGCBe4bJOV8rk8widf8d8G9EgEwrVOoMUBL7XpbZvI+3mSDBkwAKXnplwiL/glJAGc1c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NyrXvD52; arc=none smtp.client-ip=209.85.214.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1705625943; c=relaxed/simple;
+	bh=t0LPMV+t2ooLER0nCO3Nn5WD4UmVC4LiMyZvpDmJwYw=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=cSngml/EX1uH+t02HHJ01J6NBwVG+oxousJCbalWU0HePZWCOpIpjaxa3YGqP7jBFYysyVfkkOxKUD+eM9FURWXJijp6LsKEqpyiyMoHIlh/EA5/3/W4q2TVY0w9Nd01ANjdsWrcugREBgC0112723vz+NW7QN27dcYbx68fFGk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=LolnAP+D; arc=none smtp.client-ip=173.228.157.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NyrXvD52"
-Received: by mail-pl1-f171.google.com with SMTP id d9443c01a7336-1d70c150632so1942785ad.0
-        for <git@vger.kernel.org>; Thu, 18 Jan 2024 16:57:31 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1705625850; x=1706230650; darn=vger.kernel.org;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-transfer-encoding:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=GWpI70PMb0D6Q1dgGUqxLDm0iK1RF6oPIervxLjPfx8=;
-        b=NyrXvD52yjH1jtKQDUepDey92fN4Ti4ISNV17vwDv4h9Ipk6e1++z6gHlELugS4z/5
-         wLmmRaZIWre2apsIhBWPw+NWbQUgeZ1ZxDlMJVp8t7QiaGyHQ0PsPePD4mjbBoyjGeti
-         jMTA1jz/j18Zg+WTalyECElKbcl2E+g3X+k3WdZbyrxE5f+96oDj4LfcaAgDrb2NrBPJ
-         L7g4PQ9V66h8l4OZcZ9+pYg373gBaIhO9C+6khy0Po1vny8aQw1bKaePlyEQpyGAwsNn
-         dXNHBvnE0NIZ91J0oNykCSFLl2/aLG7/jPK3Mjel/tPJF29JjwNrlBdnn2Jf5ShkKuHy
-         zdbA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1705625850; x=1706230650;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=GWpI70PMb0D6Q1dgGUqxLDm0iK1RF6oPIervxLjPfx8=;
-        b=euzChMHxtGIWSIbfZw5k8OqrpkBYhFnHgN38O96Vyer4Jazcp1HT41Yj18E8pFG7/X
-         I3SYZgRSDPdBhuSzmTO//7I0REwoGZWGh14Ed6sZ0HJVEe1P/tSTrOzy8Mr7qY1J/roa
-         Lctl1Gz5dG9Ro0eG0gjH2Bzp/0yNnv+h2TspEOdu/jipGU6ckTu4C2BIVRwRRtJAzslv
-         1E6dXzbnmDntA8pI1qACbS1hH8L93RqBA0fxInUI4Mf1CmhCfWo+aB64ql9cW86COhBa
-         xhTA/zVqIZPuc7C9ktniTB6pwshwX53905DFyPXusSMGVDDtXLH7a/orEROwZbmwFEKq
-         Jqkg==
-X-Gm-Message-State: AOJu0YzVdyPUyxRSyE/7Jj0a6z+NwifSn7zSEe4AWQaJSHP9182Lj4Lw
-	50xrkwGbF7TBtYF8l/ox7x6DCsTQcvR9utE1qcVEmMztV2NQYpyw
-X-Google-Smtp-Source: AGHT+IHufrCdSyMEJo1rZCVaG5mlLH6tBwLtTGQlhXgZtzpdbw+DfQnoTGW0m/xlpdDCNxpiZ7tlUA==
-X-Received: by 2002:a17:903:608:b0:1d5:8ce6:e4b1 with SMTP id kg8-20020a170903060800b001d58ce6e4b1mr1674426plb.43.1705625850613;
-        Thu, 18 Jan 2024 16:57:30 -0800 (PST)
-Received: from localhost ([2402:a00:401:a99b:65e8:f5a4:7adb:5726])
-        by smtp.gmail.com with ESMTPSA id s21-20020a17090330d500b001d6edfe948asm1950053plc.76.2024.01.18.16.57.29
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 18 Jan 2024 16:57:30 -0800 (PST)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="LolnAP+D"
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id 4817919F37;
+	Thu, 18 Jan 2024 19:59:01 -0500 (EST)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=t0LPMV+t2ooLER0nCO3Nn5WD4UmVC4LiMyZvpD
+	mJwYw=; b=LolnAP+D9v1UoKE8ftgQaDlGplXlIttsiF9/92Jt9IZ45m1lxgvkIY
+	SFsOjunECxU4i/kIiU8CuD5cayXh07k/hN8bapwFUjsvYgRJ1ks3mBo0McDeLaCC
+	VW0M70Enmf2slwODMDgn5dFLUIcsZ+SbmglA2dS/aShEceETfsTaM=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id 4106E19F36;
+	Thu, 18 Jan 2024 19:59:01 -0500 (EST)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.200.93])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 053A819F34;
+	Thu, 18 Jan 2024 19:58:55 -0500 (EST)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Linus Arver via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Emily Shaffer <nasamuffin@google.com>,  Christian
+ Couder <chriscool@tuxfamily.org>,  Linus Arver <linusa@google.com>
+Subject: Re: [PATCH 06/10] trailer: make trailer_info struct private
+In-Reply-To: <0cbe96421c7bf573e8ddc97b2a0aecc894095399.1704869487.git.gitgitgadget@gmail.com>
+	(Linus Arver via GitGitGadget's message of "Wed, 10 Jan 2024 06:51:22
+	+0000")
+References: <pull.1632.git.1704869487.gitgitgadget@gmail.com>
+	<0cbe96421c7bf573e8ddc97b2a0aecc894095399.1704869487.git.gitgitgadget@gmail.com>
+Date: Thu, 18 Jan 2024 16:58:54 -0800
+Message-ID: <xmqqy1cmm94h.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Fri, 19 Jan 2024 06:27:27 +0530
-Message-Id: <CYI9WH7UZ58F.GO37VZJHL7QD@gmail.com>
-Cc: <git@vger.kernel.org>
-Subject: Re: [PATCH 2/2] t0024: refactor to have single command per line
-From: "Ghanshyam Thakkar" <shyamthakkar001@gmail.com>
-To: "Junio C Hamano" <gitster@pobox.com>
-X-Mailer: aerc 0.15.2
-References: <20240118215407.8609-1-shyamthakkar001@gmail.com>
- <20240118215407.8609-2-shyamthakkar001@gmail.com>
- <xmqqfryunsd1.fsf@gitster.g>
-In-Reply-To: <xmqqfryunsd1.fsf@gitster.g>
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ EBE0A68A-B665-11EE-A954-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
 
-On Fri Jan 19, 2024 at 4:48 AM IST, Junio C Hamano wrote:
-> > -	( mkdir untarred && cd untarred && "$TAR" -xf ../test.tar ) &&
-> > +	mkdir untarred &&
-> > +	(
-> > +		cd untarred &&
-> > +		"$TAR" -xf ../test.tar
-> > +	) &&
->
-> I think we assume "$TAR" is modern enough to know about the "C"
-> option (see t/t5004-archive-corner-cases.sh), so
->
-> 	mkdir untarred &&
-> 	"$TAR" Cxf untarred test.tar
->
-> without even a subshell may be sufficient.
+"Linus Arver via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-Will update it in v2.
+> From: Linus Arver <linusa@google.com>
 >
-> > @@ -30,7 +34,11 @@ test_expect_success UNZIP 'zip archive' '
-> > =20
-> >  	git archive --format=3Dzip HEAD >test.zip &&
-> > =20
-> > -	( mkdir unzipped && cd unzipped && "$GIT_UNZIP" ../test.zip ) &&
-> > +	mkdir unzipped &&
-> > +	(
-> > +		cd unzipped &&
-> > +		"$GIT_UNZIP" ../test.zip
-> > +	) &&
->
-> I do not think we assume "$GIT_UNZIP" to always know about the
-> equivalent of "C" (is that "-d exdir"?), so what you wrote is the
-> best we can do.
+> In 13211ae23f (trailer: separate public from internal portion of
+> trailer_iterator, 2023-09-09) we moved trailer_info behind an anonymous
+> struct to discourage use by trailer.h API users. However it still left
+> open the possibility of external use of trailer_info itself. Now that
+> there are no external users of trailer_info, we can make this struct
+> private.
 
-Yeah, "-d exdir" would be the equivalent, but there's no mention of it
-in the testcases in t5003 or t5004. So, keeping it as is in v2.
+Surely, and looking good from a cursory glance.  I'll defer to
+Christian to comment on this step as an area expert, though.
 
 Thanks.
