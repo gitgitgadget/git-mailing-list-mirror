@@ -1,101 +1,96 @@
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+Received: from mout.kundenserver.de (mout.kundenserver.de [212.227.126.187])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55AD51E520
-	for <git@vger.kernel.org>; Fri, 19 Jan 2024 19:28:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C638556B6A
+	for <git@vger.kernel.org>; Fri, 19 Jan 2024 20:02:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.126.187
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705692495; cv=none; b=pwFdhScP3lLjZUdP9RKAbzyIDSSCxD6efJRBxnXIw9QE7rvncOh3PLVmdWJKFB0VKt7zTqfyB3ScWRxVK51eg7p/Dhn5fJRm0znS1iYufvXVgJESdy/nli2QQAS+jXLzwhvsgIFN5Ge9uaAd8YKjWxPyGAiLM+nYD6tskrjfvLU=
+	t=1705694573; cv=none; b=ggW3Al3c/hgizWDBlDagI/6AxRBySPIn274pH2X099DA2EfFzvILKy2R6XCHXr7ohlEg9LzdTvB6BFTJwRFZIPAuwRGQoWHK8kmMcZ9msCn1SEN2LpQaVw4dXYqAqrV8CoR5nVGUXg6X+9kA2e1IfvLcLknD0M0dpoQhMvjKRX8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705692495; c=relaxed/simple;
-	bh=0fv7+teUIlLydfxtN169XvVCkXNTN7rMKW7YqHcnAk8=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=H5CfuYGYo0M22NOt6bE6B/ccSAQtW5l1cZPzJ50UzvsMJueV2oDbOs1uc4TGoVb/piFYVWE1+baZ6eWAWr/YR7fL8ZoOa+qphQeFk7DVU1d/G83zWdYBC0vOmEtfviYIKf6+L+QC6cmR3LFuZmChJUDVYnbd//gpV2rRCk/Pcbo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=OkrTr1aj; arc=none smtp.client-ip=64.147.108.71
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="OkrTr1aj"
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id DB2B31D5627;
-	Fri, 19 Jan 2024 14:28:12 -0500 (EST)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=0fv7+teUIlLydfxtN169XvVCkXNTN7rMKW7YqH
-	cnAk8=; b=OkrTr1ajd+VuLTCgtf6dt72xduB15xs+TimkP8/iLohXBDIsd/JrKy
-	adgqD8178C9OlQoYbE1+l5swVpAeOXe/wILj5ECloYsbqECNO0w5M1zVf8mJmtBh
-	xI1cfpTs9BCN/iDw7bHPrPd0wyHto0zPOcZvWnrSNISIyiQ1TSwJM=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id D14C31D5626;
-	Fri, 19 Jan 2024 14:28:12 -0500 (EST)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.200.93])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 4266C1D5625;
-	Fri, 19 Jan 2024 14:28:12 -0500 (EST)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, Elijah Newren <newren@gmail.com>
-Subject: Re: [PATCH 3/7] refs: convert AUTO_MERGE to become a normal pseudo-ref
-In-Reply-To: <ae2df6316f79e372c51d59666d685e59981d2f98.1705659748.git.ps@pks.im>
-	(Patrick Steinhardt's message of "Fri, 19 Jan 2024 11:40:09 +0100")
-References: <cover.1705659748.git.ps@pks.im>
-	<ae2df6316f79e372c51d59666d685e59981d2f98.1705659748.git.ps@pks.im>
-Date: Fri, 19 Jan 2024 11:28:10 -0800
-Message-ID: <xmqqjzo5jf79.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	s=arc-20240116; t=1705694573; c=relaxed/simple;
+	bh=Hgfah+T8gvVWy8ty9celRgLufycB+Pr3YEtqAbDMGT8=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=Mi7vQ9gkX30e7LP2noMMiq+ZL+GTF+y8v79mQP7T/6P0RHEin/35guHggVCL07C4ndpZGx9rFs4ZeeU1Hehwqnu92+hXmJcrAJE/wEGRgUKrw47+78tWoEnq2jKwsQwEfY+2Z3FsbdcCc5yZrxhQsoU2E/mUHMJ421FBUUev33c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=delpeuch.eu; spf=pass smtp.mailfrom=delpeuch.eu; arc=none smtp.client-ip=212.227.126.187
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=delpeuch.eu
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=delpeuch.eu
+Received: from [192.168.178.189] ([79.246.90.92]) by mrelayeu.kundenserver.de
+ (mreue012 [212.227.15.167]) with ESMTPSA (Nemesis) id
+ 1McIYO-1qqUO80LkK-00ckPI; Fri, 19 Jan 2024 21:02:36 +0100
+Message-ID: <386c0318-0138-47c9-9e7f-d1004277226c@delpeuch.eu>
+Date: Fri, 19 Jan 2024 21:02:35 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- E27E4E9E-B700-11EE-B3B8-25B3960A682E-77302942!pb-smtp2.pobox.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3] merge-ll: expose revision names to custom drivers
+Content-Language: en-US
+To: Antonin Delpeuch via GitGitGadget <gitgitgadget@gmail.com>,
+ git@vger.kernel.org
+Cc: Junio C Hamano <gitster@pobox.com>
+References: <pull.1648.v2.git.git.1705592581272.gitgitgadget@gmail.com>
+ <pull.1648.v3.git.git.1705615794307.gitgitgadget@gmail.com>
+From: Antonin Delpeuch <antonin@delpeuch.eu>
+In-Reply-To: <pull.1648.v3.git.git.1705615794307.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Provags-ID: V03:K1:SusTAYsjCzvEbV4i5AIoQy2hUIY3r0mFrwLIC7nIHWzG69WpYAd
+ a8Ko/yyJSfHfwXOCN7dyt3Nv4oRihXaRodCBZpDIUpqPZ6Ovw7ZbIU0USup7lJfkG1p5ejJ
+ aNuRRtGqzopYtBo+d182bxgu0XhGvvxZzsJPgcT9G0ZZJi0qQu0ghp/ZGqv4Sct75+lhuOJ
+ c/vU34UarcXRgB4dHIlhw==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:Doc1/Mn4KWo=;CaZfspSNsqTnPxDcSpq7RGOg6FB
+ 86uI2I2+kOVcykRcYym/CmgCKzcIxO9HkWOgqJwvfJQaSwLf89ysyRA2fj5++MsNE+f7PJdo5
+ 3VNO0BHvR3XhrSbVMcJYA/itUkdag1A5jSZtZget/Lh+EgERAyL3PJc8jKXcrmJBR71gnlFzt
+ 84vYEBJv5hS63qlh1BPds2/dJK8BZ/NQaQUoftIs1k1q43s5JN/f8PGdiIyhGwD5UVWVUmJ+8
+ Ftjo48zTPR02u9g/+jJzEG9e8iEUUa83KBd0q5kEmxD4qr3ndkv5G34BvBf7GkhH/CL0kua7e
+ z+w8u+fMMoLUdhNMQrjjrULOcwGWdnGl6h4bvFaaILqkjIvloQsBy1RDDYNuf7d4Zow6DKdBy
+ 9QDT7nOEUnDYVUIB8DRTsev7PktMtQk0SqtT4zLisQ55QO0h7dqaVBzWr3SfUpfkqyY/iEGID
+ VZ3oaClipx5sU2x8/UsK1ILOXFXqkoXhRFHZ/U52nEaF8oWijKas/foEChph49X6t/9XB+l7+
+ 1TJLkA3LaQrG8tnYPljh5FVCZvmExxMbHJZXFGGvzGMwv+nHPM1rT0vCU1V2Lx9x7FLR5jE9x
+ cE5f3Eqf4t/KqbZeuMSoMNM8y/INyV4jmZ8hK46/0DDcuDpKW/A3PTGUZmCjAQFuDqJnCAioE
+ zP2N9PfRtJZ6TIXbcCXhdJii76mD4MDalPYxxUVDiuYR3uaVciPzaAdrVPl4BU3jfxPY3KPLU
+ ZXssiuPC0iJ1z8IwY47IQ6DYxILUXaMtX2MCz+LbeP6a2Qx61NZQLisFlQyXa2bgP2ZqvU2hw
+ rH5Cu20+fOcU82/mxB/HFyfhBeniqErq3QvpTb1KpIKwfGHvfydBD4v5Do0PYB8/8d/ylz9KK
+ IbExLk1WdSdl/kQ==
 
-Patrick Steinhardt <ps@pks.im> writes:
+Hi Junio,
 
-> In 70c70de616 (refs: complete list of special refs, 2023-12-14) we have
-> inrtoduced a new `is_special_ref()` function that classifies some refs
+After more testing (combining custom merge drivers with rerere) I 
+realized that my patch can lead to a segmentation error. Many apologies 
+for not having caught that earlier!
 
-"introduced"
+On 18/01/2024 23:09, Antonin Delpeuch via GitGitGadget wrote:
+> @@ -222,6 +222,12 @@ static enum ll_merge_result ll_ext_merge(const struct ll_merge_driver *fn,
+>   			strbuf_addf(&cmd, "%d", marker_size);
+>   		else if (skip_prefix(format, "P", &format))
+>   			sq_quote_buf(&cmd, path);
+> +		else if (skip_prefix(format, "S", &format))
+> +			sq_quote_buf(&cmd, orig_name);
+> +		else if (skip_prefix(format, "X", &format))
+> +			sq_quote_buf(&cmd, name1);
+> +		else if (skip_prefix(format, "Y", &format))
+> +			sq_quote_buf(&cmd, name2);
 
-> @@ -4687,10 +4685,17 @@ void merge_switch_to_result(struct merge_options *opt,
->  		trace2_region_leave("merge", "record_conflicted", opt->repo);
->  
->  		trace2_region_enter("merge", "write_auto_merge", opt->repo);
-> -		filename = git_path_auto_merge(opt->repo);
-> -		fp = xfopen(filename, "w");
-> -		fprintf(fp, "%s\n", oid_to_hex(&result->tree->object.oid));
-> -		fclose(fp);
-> +		if (refs_update_ref(get_main_ref_store(opt->repo), "", "AUTO_MERGE",
-> +				    &result->tree->object.oid, NULL, REF_NO_DEREF,
-> +				    UPDATE_REFS_MSG_ON_ERR)) {
-> +			/* failure to function */
-> +			opt->priv = NULL;
-> +			result->clean = -1;
-> +			merge_finalize(opt, result);
-> +			trace2_region_leave("merge", "write_auto_merge",
-> +					    opt->repo);
-> +			return;
-> +		}
->  		trace2_region_leave("merge", "write_auto_merge", opt->repo);
->  	}
->  	if (display_update_msgs)
+The "orig_name", "name1" and "name2" pointers can be NULL at this stage. 
+This can happen when the merge is invoked from rerere, to resolve a 
+conflict using a previous resolution.
 
-We used to ignore errors while updating AUTO_MERGE, implying that it
-is an optional nicety that does not have to block the merge.  Now we
-explicitly mark the resulting index unclean.  While my gut feeling
-says that it should not matter all that much (as such a failure
-would be rare enough that the user may want to inspect and double
-check the situation before going forward), I am not 100% sure if the
-change is behaviour is acceptable by everybody (cc'ed Elijah for
-second opinion).
+I wonder what the appropriate fallback would be in such a case. I am 
+tempted to use the temporary filenames of the files to merge instead, so 
+that the merge driver can rely on those names being non-empty and being 
+the best string to use to identify the files. Passing an empty string 
+seems dangerous to me, as it is likely to change the index of arguments 
+passed to the merge driver. Passing fixed strings such as "base", "ours" 
+and "theirs" could perhaps work too.
 
-Everything else in this patch looked good.
+Let me know if you have any preference about this.
 
-Thanks.
+Best,
+
+Antonin
+
+
