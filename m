@@ -1,57 +1,61 @@
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C6DF1D53A
-	for <git@vger.kernel.org>; Fri, 19 Jan 2024 18:36:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27E291D53A
+	for <git@vger.kernel.org>; Fri, 19 Jan 2024 18:45:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705689371; cv=none; b=CSWqL2ohhUx7CvFYktMSmIQk9ne/3SzvvBlRjXi0vPWBjJkxdZ4gIu0DZ0BwMCkR5HDNE2bVZBrzCbfXGclqLkBfTKyqDentXlqyOSRIBQuXSJlTDRopDD4hGm+djS5vc87oITHgORW6rk9OWHBX9liyi/kgKdCiTlQNyuAGqjw=
+	t=1705689957; cv=none; b=T1jGXyw9pt3hauYI569pHMYqFs96J3nZj2yJh5CZQoEvzmDfvu3Dl1X/PYIfNRGu20jgOwMsUNA0er3eQgd7vzOb45U/yLLbvn45hReelhrlEhyGMTEf3hVudU08kaHtRMVyUMrtXmLFjCy2eJa9I8NtV2e2kVvQv/P5Ra24m5c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705689371; c=relaxed/simple;
-	bh=JOENo4AEdTSUidSpSMHMfVjxCgjKjO9G4DR0BZtG3xA=;
+	s=arc-20240116; t=1705689957; c=relaxed/simple;
+	bh=i6Lo+VrG1AmVS5kEaK5Srkoi/tfOtDeGl4F31dhHCvQ=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=kfeYoaP4J4KbTklRxFwChFMfHAUOemqbnkOWKWPdgoJ6IL3SABLw7px2xSYAuD3gyMsyiUANHDNxydgFGA1AEPpz4nDfRLMX+9uVwQnMk78YeCOaygcSOxgI1+7b4xw7bW8+8LmIvtHL5Ufxgj0IEoAVrgE26vUoCrABybCnbUk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=m95hhfO0; arc=none smtp.client-ip=64.147.108.70
+	 MIME-Version:Content-Type; b=Cz+K3pt+GoL7AW8zNgxn4w1wocrWpoNrFt5SSil4629aPjoOdAS9adkTfqLqYmx/Whix7wd+CMvhHxzrobqwcUVShkvRZDyoVSMliKWtSZOcnkJcKNG75zsmGT+D1Eoh2FwTfd1hvLU6dIZukGkhkcX18a4JPC4F8iSIlaAAA0M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=NDi2yjRK; arc=none smtp.client-ip=173.228.157.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="m95hhfO0"
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 5C81B1D5519;
-	Fri, 19 Jan 2024 13:36:07 -0500 (EST)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="NDi2yjRK"
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id 85FAA32117;
+	Fri, 19 Jan 2024 13:45:55 -0500 (EST)
 	(envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=JOENo4AEdTSU
-	idSpSMHMfVjxCgjKjO9G4DR0BZtG3xA=; b=m95hhfO0tRMjbzajU+A3QSy6mAjo
-	Z39Mu8I06lUJ46DAWl3cHrjQw01PYmj5Gbn2SMGFHq8xqPyvmG308nkWtPV03e3W
-	U97KhHrL6rpagr3/gOu6MLK7t8t1Z7b+PKnyizRZ3MVeN1Ef6l27/pEGI3anYB+1
-	cYV/4EKaT62y7YA=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 502311D5517;
-	Fri, 19 Jan 2024 13:36:07 -0500 (EST)
+	:content-type; s=sasl; bh=i6Lo+VrG1AmVS5kEaK5Srkoi/tfOtDeGl4F31d
+	hHCvQ=; b=NDi2yjRK+uQLBUs0pfrWjNA2uLQxIU8SdAHRTvjydSX6GJr5ApVNYI
+	Mb8Xt5DnldFvFD8gWJ0tH6UlF9ch8a+ZHmLf/1iS10zEmIFGkBqQdnQZ4DpoT8LQ
+	EysdrsgG94c7RS+y0Z2pOsgZXtgQkblEUZeL8HwVqW3eXCZ6CSuHA=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id 7DDB432116;
+	Fri, 19 Jan 2024 13:45:55 -0500 (EST)
 	(envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.125.200.93])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 9C0121D5516;
-	Fri, 19 Jan 2024 13:36:06 -0500 (EST)
+	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 18B4332115;
+	Fri, 19 Jan 2024 13:45:52 -0500 (EST)
 	(envelope-from junio@pobox.com)
 From: Junio C Hamano <gitster@pobox.com>
-To: "Kristoffer Haugsbakk" <code@khaugsbakk.name>
-Cc: "Patrick Steinhardt" <ps@pks.im>,  git@vger.kernel.org,
-  stolee@gmail.com,  "Eric Sunshine" <sunshine@sunshineco.com>,  "Taylor
- Blau" <me@ttaylorr.com>
-Subject: Re: [PATCH v2 3/4] config: factor out global config file retrieval
-In-Reply-To: <7f0864ad-c846-42a6-8ddc-85d6be58a4ee@app.fastmail.com>
-	(Kristoffer Haugsbakk's message of "Fri, 19 Jan 2024 08:40:51 +0100")
-References: <cover.1697660181.git.code@khaugsbakk.name>
-	<cover.1705267839.git.code@khaugsbakk.name>
-	<32e5ec7d866ff8fd26554b325812c6e19cb65126.1705267839.git.code@khaugsbakk.name>
-	<ZaoUOPsze7rhtT2M@tanuki>
-	<7f0864ad-c846-42a6-8ddc-85d6be58a4ee@app.fastmail.com>
-Date: Fri, 19 Jan 2024 10:36:05 -0800
-Message-ID: <xmqq34utkw6i.fsf@gitster.g>
+To: Sebastian Thiel <sebastian.thiel@icloud.com>
+Cc: Elijah Newren <newren@gmail.com>,  Elijah Newren via GitGitGadget
+ <gitgitgadget@gmail.com>,  git@vger.kernel.org,  Josh Triplett
+ <josh@joshtriplett.org>,  Phillip Wood <phillip.wood123@gmail.com>
+Subject: Re: [PATCH] precious-files.txt: new document proposing new precious
+ file type
+In-Reply-To: <4421D442-1BB2-4C89-834F-9E70F4CF360B@icloud.com> (Sebastian
+	Thiel's message of "Fri, 19 Jan 2024 08:51:26 +0100")
+References: <pull.1627.git.1703643931314.gitgitgadget@gmail.com>
+	<xmqq8r5gfc3j.fsf@gitster.g>
+	<CABPp-BGSTYDUR1oYYXkCSh-1i2zwxBM=-gnoe-ezNbtPi5CV2A@mail.gmail.com>
+	<xmqqsf3nl2b3.fsf@gitster.g>
+	<298F7067-D572-433F-A7DD-5256B43B97D7@icloud.com>
+	<xmqqwms6qwr3.fsf@gitster.g>
+	<F214D88E-6837-4EAB-896E-DF8CFC315EE7@icloud.com>
+	<CABPp-BF4Bfr3Hfy7atehHvbQds63+GXO9XPJAW3Mb7dvMcCkDg@mail.gmail.com>
+	<4421D442-1BB2-4C89-834F-9E70F4CF360B@icloud.com>
+Date: Fri, 19 Jan 2024 10:45:50 -0800
+Message-ID: <xmqqy1cljh5t.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -59,49 +63,26 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain
 X-Pobox-Relay-ID:
- 9B78F28A-B6F9-11EE-B74C-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
-Content-Transfer-Encoding: quoted-printable
+ F86F0226-B6FA-11EE-B9BE-A19503B9AAD1-77302942!pb-smtp21.pobox.com
 
-"Kristoffer Haugsbakk" <code@khaugsbakk.name> writes:
+Sebastian Thiel <sebastian.thiel@icloud.com> writes:
 
-> On Fri, Jan 19, 2024, at 07:18, Patrick Steinhardt wrote:
->> But second, I think that the new function you introduce here has the
->> same issue as the old function that you refactored in the preceding
->> patch: `git_config_global()` isn't very descriptive, and it is also
->> inconsistent the new `git_config_global_paths()`. I'd propose to name
->> the new function something like `git_config_global_preferred_path()` o=
-r
->> `git_config_global_path()`.
+> I am glad I can pull my initial proposition of 'having both syntaxes' off
+> the table to side with this version - it's gorgeous.
 >
-> The choice of `git_config_global` is mostly motivated by it working the
-> same way as `git_config_system`:
->
-> ```
-> given_config_source.file =3D git_system_config();
-> [=E2=80=A6]
-> given_config_source.file =3D git_global_config();
-> ```
+> It's easy to forget that the search-order when matching ignore patterns
+> is back to front, which makes this 'trick' work.
 
-I shared the above understanding with you, so I didn't find the name
-"not very descriptive" during my review.  If only we had two more
-functions that can replace our uses of repo_git_path(r, "config")
-and repo_git_path(r, "config.worktree") [*] in the code, to obtain
-the path to the repository local and worktree local configuration
-files, the convention may have been more obvious.
+The true gem is not the search-order, though.  It is the "last one
+wins" rule.  Back to front search is merely an implementation detail
+to optimize the search so that we can stop at the first hit ;-)
 
-    Side note: the worktree specific one is messier; there are code
-    paths that use "%s/config.worktree" on gitdir as well---if we
-    were to introduce helpers, we should catch and convert them, too.
+> If the insights gained with the last couple of emails would see their digest
+> in the user-facing documentation, I think precious files wouldn't only become
+> usable but would also allow projects to make the their choice during
+> the transition period during which some users will inevitably access the repository
+> with a Git that doesn't know about precious files yet.
 
-> Your suggestion makes sense. But should `git_system_config` be renamed =
-as
-> well?
-
-I do not mind including "path" in the names of these functions, but
-I do agree that such renaming should be done consistently across the
-family of functions (which we currently have only two members, but
-still).
-
-Thanks.
+OK.
