@@ -1,51 +1,51 @@
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38EAB374E0
-	for <git@vger.kernel.org>; Fri, 19 Jan 2024 20:37:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD09656B7E
+	for <git@vger.kernel.org>; Fri, 19 Jan 2024 20:44:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705696673; cv=none; b=C6TlsyYAqPSyecD1aSpoyC+bvXOWSlWgnhJa10N9noP1gmaB3ijTw0LfmAUKgymoNf8u3M46WeIXceiytlPiTquSAHFCIBJtO+oPkNp2i2BG++aiRkMi/di9UHBSY8vQDoR3+BZG2Kjq3zL00RJ93tJSLCTF0IPxAH9H6FuR3fw=
+	t=1705697077; cv=none; b=ZtjbMZ9A7/YakZoVexWesXvWxaQOTbMnSWOsEIl5iRSLhd/ncaKtBRlOXtFqtbvXfyXVaOoy8SLiYptiH1iddWRGzcT4SKvsPvqB20HbV4ety3uBrXnqRPfQo9nQIcg92KGxmhKWZeVrzNpKqmYJ96gcYNFRnhpDw5yTlIQ0FzA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705696673; c=relaxed/simple;
-	bh=Bm1veuYvMFuL5ExTdn0fS1jvToH9/2H7r9Tjo1tm1iE=;
+	s=arc-20240116; t=1705697077; c=relaxed/simple;
+	bh=cjWCe4yQHKA/ASAlxH1tRN9MeUAJCNWiK4Vf3e7g568=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=HHnzfycxY7yMX0vgW+Vd3gfqzqVq0SAjy6aXbCRTx21CkLeAY/8yfkXj7Vh50Fv0oRdhYkF5kcAUebcPnze+xSmEblviO8VkTQ2sA7Zdo0V20wnmT/44PFu+Opo+gZ6zhU4lgk/gKvfu4Wf4U7h/1LfXjjkkxPvd2riHi9MBPXk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=v4JyAPhv; arc=none smtp.client-ip=173.228.157.52
+	 MIME-Version:Content-Type; b=uYHTo7rvJSblOoiIBir+6F/fuOIhgoqrw7nEwrbph00ezl3Agljb2fSBj16I39fQm1yqZLlG/mb16j4v+dfzmO6ui1eSBNXSxMybtoy1Lr9mrSSB+awF9B7bOu/lw8oeUdixvHaiTypr7sM1+/HqNe0qFR1So8P1BECK8yyTBoc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=VZK6Rd/Y; arc=none smtp.client-ip=64.147.108.71
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="v4JyAPhv"
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id AAFA9209BD;
-	Fri, 19 Jan 2024 15:37:51 -0500 (EST)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="VZK6Rd/Y"
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id C18551D5DF6;
+	Fri, 19 Jan 2024 15:44:34 -0500 (EST)
 	(envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=Bm1veuYvMFuL5ExTdn0fS1jvToH9/2H7r9Tjo1
-	tm1iE=; b=v4JyAPhvm1MVOmDL9aMnIeWeiIVlO477d8iroKXVmcHzvs6sE2tj2o
-	feljwz2eNOSHGoYDPeRAwZXg5gtiHi28m+Gn7Em21EajiSCqtqTjKQq7f/dd0aSX
-	ljLZ61LoVExUHepZvxD7LcNw25ViArhnppHDcCW/d6cAVyZ8MMx/c=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id A3028209BC;
-	Fri, 19 Jan 2024 15:37:51 -0500 (EST)
+	:content-type; s=sasl; bh=cjWCe4yQHKA/ASAlxH1tRN9MeUAJCNWiK4Vf3e
+	7g568=; b=VZK6Rd/YzZIewUqwWQePC37WUiV9+rjCAxdO+HkRwPhjVQA7D/nf98
+	PFEh1/HyOKbLYtkMUOfPgdbS/qdkJx3482MrgntYLHqfaUiBT50cO982wvCJmYNo
+	vpsdBgUCqJXNrTAfkxsNonGncYwU0m3aBXJX0wMAh3giO7hEF/lqY=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id B97361D5DF5;
+	Fri, 19 Jan 2024 15:44:34 -0500 (EST)
 	(envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.125.200.93])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 3113B209BA;
-	Fri, 19 Jan 2024 15:37:48 -0500 (EST)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 2F35E1D5DF3;
+	Fri, 19 Jan 2024 15:44:34 -0500 (EST)
 	(envelope-from junio@pobox.com)
 From: Junio C Hamano <gitster@pobox.com>
 To: Karthik Nayak <karthik.188@gmail.com>
 Cc: git@vger.kernel.org
-Subject: Re: [PATCH 1/5] refs: expose `is_pseudoref_syntax()`
-In-Reply-To: <20240119142705.139374-2-karthik.188@gmail.com> (Karthik Nayak's
-	message of "Fri, 19 Jan 2024 15:27:01 +0100")
+Subject: Re: [PATCH 2/5] refs: make `is_pseudoref_syntax()` stricter
+In-Reply-To: <20240119142705.139374-3-karthik.188@gmail.com> (Karthik Nayak's
+	message of "Fri, 19 Jan 2024 15:27:02 +0100")
 References: <20240119142705.139374-1-karthik.188@gmail.com>
-	<20240119142705.139374-2-karthik.188@gmail.com>
-Date: Fri, 19 Jan 2024 12:37:46 -0800
-Message-ID: <xmqq34utjbz9.fsf@gitster.g>
+	<20240119142705.139374-3-karthik.188@gmail.com>
+Date: Fri, 19 Jan 2024 12:44:32 -0800
+Message-ID: <xmqqwms5hx3j.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -55,63 +55,61 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 X-Pobox-Relay-ID:
- 9B8A7ADA-B70A-11EE-9248-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
+ 8D87E188-B70B-11EE-9F76-25B3960A682E-77302942!pb-smtp2.pobox.com
 
 Karthik Nayak <karthik.188@gmail.com> writes:
 
-> The `is_pseudoref_syntax()` function is static, since it is only used
-> within `refs.c`. In the following commit, we will use this function to
-> provide an utility to add pseudorefs to the loose refs cache. So let's
-> expose this function via `refs.h`.
->
-> Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
-> ---
->  refs.c | 2 +-
->  refs.h | 6 ++++++
->  2 files changed, 7 insertions(+), 1 deletion(-)
->
-> diff --git a/refs.c b/refs.c
-> index 2f58a3460a..5999605230 100644
-> --- a/refs.c
-> +++ b/refs.c
-> @@ -827,7 +827,7 @@ int is_per_worktree_ref(const char *refname)
->  	       starts_with(refname, "refs/rewritten/");
->  }
->  
-> -static int is_pseudoref_syntax(const char *refname)
-> +int is_pseudoref_syntax(const char *refname)
+> Using this information we make the `is_pseudoref_syntax()` function
+> stricter, by adding the check for "HEAD" suffix and for refs which don't
+> end with the HEAD suffix, matching them with a predetermined list.
+
+OK, so this partly answers my question on the previous step.  Before
+making it more strict, the function worked only on the "syntax", so
+a random string that can be a pseudo ref passed the check.
+
+But stepping back a bit, if we call this function is_pseudoref_syntax(),
+wouldn't it be what we want to have anyway?  You seem to want a
+separate function called is_pseudoref() that rejects bogus uppercase
+string "FOO_BAR" while accepting the known-good pseudoref you add
+tests for, plus the ${FOO}_HEAD for any value of ${FOO} we currently
+have and we may want to add in the future.
+
+>  int is_pseudoref_syntax(const char *refname)
 >  {
+> +	/* TODO: move these pseudorefs to have _HEAD suffix */
+> +	static const char *const irregular_pseudorefs[] = {
+> +		"BISECT_EXPECTED_REV",
+> +		"NOTES_MERGE_PARTIAL",
+> +		"NOTES_MERGE_REF",
+> +		"AUTO_MERGE"
+> +	};
+> +	size_t i;
 >  	const char *c;
 >  
-> diff --git a/refs.h b/refs.h
-> index ff113bb12a..f1bbad83fb 100644
-> --- a/refs.h
-> +++ b/refs.h
-> @@ -846,6 +846,12 @@ const char **hidden_refs_to_excludes(const struct strvec *hide_refs);
->  /* Is this a per-worktree ref living in the refs/ namespace? */
->  int is_per_worktree_ref(const char *refname);
+>  	for (c = refname; *c; c++) {
+> @@ -837,10 +845,17 @@ int is_pseudoref_syntax(const char *refname)
+>  	}
 >  
-> +/*
-> + * Check whether a refname matches the pseudoref syntax. This is a surface
-> + * level check and can present false positives.
-> + */
+>  	/*
+> -	 * HEAD is not a pseudoref, but it certainly uses the
+> -	 * pseudoref syntax.
+> +	 * Most pseudorefs end with _HEAD. HEAD itself is not a
+> +	 * pseudoref, but it certainly uses the pseudoref syntax.
+>  	 */
+> -	return 1;
+> +	if (ends_with(refname, "HEAD"))
+> +		return 1;
 
-What does "false positive" mean in this context?
+I would imagine that at the final stage in which something like this
+will be named is_pseudoref(), asking is_pseudoref("HEAD") would
+return "No" (even though "is_pseudoref_syntax()", if the helper
+function remains, may say "Yes" to "HEAD").  And this ends_with()
+will use "_HEAD", instead of "HEAD".  But I am reading ahead of
+myself, so let's keep going.
 
-is_pseudoref_syntax("FOO_HEAD") says "true", and then if it is
-"false positive", that would mean "FOO_HEAD" is not a pseudo ref,
-right?  What can a caller of this function do to deal with a false
-positive?
-
-Or do you mean "FOO_HEAD" is still a pseudo ref, but it may not
-currently exist?  That is different from "false positive".
-
-As the check is about "does it match the pseudoref syntax?", I would
-understand if what you wanted to say was something like: This only
-checks the syntax, and such a pseudoref may not currently exist in
-the repository---for that you'd need to call read_ref_full() or
-other ref API functions.
-
-Puzzled...
-
-Thanks.
+> +	for (i = 0; i < ARRAY_SIZE(irregular_pseudorefs); i++)
+> +		if (!strcmp(refname, irregular_pseudorefs[i]))
+> +			return 1;
+> +
+> +	return 0;
+>  }
