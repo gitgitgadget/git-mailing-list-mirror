@@ -1,106 +1,158 @@
-Received: from st43p00im-ztbu10073601.me.com (st43p00im-ztbu10073601.me.com [17.58.63.184])
+Received: from wout5-smtp.messagingengine.com (wout5-smtp.messagingengine.com [64.147.123.21])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8CE88F6E
-	for <git@vger.kernel.org>; Fri, 19 Jan 2024 07:51:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=17.58.63.184
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C62B4D529
+	for <git@vger.kernel.org>; Fri, 19 Jan 2024 07:59:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.21
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705650692; cv=none; b=iEDXykHpOOqoqZO9l8PkBrWSe84GB7Bm5Vd+hT2lqFH844K4ov4Zxm/5V3DlMVhlKkudw3+yGcNdRa239IzB0Gu+ANT073dBwKUFRZh9Ec7BO1qHLwNTwmftaMnMSyVJsJKqyoJssEk/p+WkcY4YX6paakKP0nx+LwL/boHyhpE=
+	t=1705651183; cv=none; b=toGckscX7XBpOeKZIlVMejN5jL7/LHjtjFCBs/ERcuKVoHH+hkS7q9uKnopb707HoTRc7vHicJ09HTJBaMg9cs2QWh9ru2n2ULvGHUwR5HeBf9ZYouHprty/VR+j7LZatEI4bWAy8z45VBSQXDvw3TIEZ7+sKSVUBG5/2+6m2sA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705650692; c=relaxed/simple;
-	bh=g+95XzZQtGAR6mOSDstouRCmlgLaneAJNhJrfmUsoig=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=I3BeA/gb2CgKC8r5d8LM1GJxpBjugvjDgVWZj6AXhiQm9oasNi6oe4ZYSdAM9cZkJuMAPZKtRgfGG+i8de7xJLEB2KzJu6bHRIpn3wJJ0beXoOTnvsRgMbCi1sOsx3sajHo78JcnERUlvQdvU2drn74+ZxNezgwwvzjky9SoKvw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=icloud.com; spf=pass smtp.mailfrom=icloud.com; dkim=pass (2048-bit key) header.d=icloud.com header.i=@icloud.com header.b=L4TamP/7; arc=none smtp.client-ip=17.58.63.184
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=icloud.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=icloud.com
+	s=arc-20240116; t=1705651183; c=relaxed/simple;
+	bh=xuSvKA8GFKk8X9UqUGRn2f0I5UvD9kayRCsSp7i2nDY=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=UNJF02gkaDcrxdhOs97pULTENW269xtzEMoAMjAgZUZJ8Q2Lja4kpQiDjKZzEYSV4VaQKX2JgnlFN6Wz7kmkK+SO3w59mEK6hg0uw7WI2fozMzwuCPZCPOJVZKoa+VnoIzODv3b7ylBLZqnM8qXLYaUAWIXVRK1AjlEc99fOnWE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=TAKkhUqp; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=U+JfGkcn; arc=none smtp.client-ip=64.147.123.21
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=icloud.com header.i=@icloud.com header.b="L4TamP/7"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=icloud.com;
-	s=1a1hai; t=1705650689;
-	bh=Cd5Z0KoZqUC92erLkvJJslu7BEe+HDaewBdpGFjHWtA=;
-	h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type;
-	b=L4TamP/7NnVTk8w908W5zfgvZZGZG4XltvDra1EoaO32Mxcp+6U1Btix9PN0RzAkp
-	 MJmTUMwKXFnGAhQ5IAEqqpUHvB1hW9SKI6FPoym9swJ0UIQ5DHDggHSTuuHOH3IUAr
-	 x/1Mk+MMtT6d7gKTUAR9SXDDl0foWNQK9amjtsIG1xdUJT2v7DmsRC9m4Jcx5cz8AE
-	 ry3xfl88NokiCTyyxpE/Go9fEYupM2ACkDOtH7gwSybbMyILg1lQ9LBPRPSORTlNec
-	 IT2yVrn1bKbEoD79pv9rIH6Haad7Y+m4PJ3XQdv6I/ngLqnkukAO+TGtgr7Ecefdgb
-	 7py7kET5Cr9Tw==
-Received: from [169.254.185.66] (st43p00im-dlb-asmtp-mailmevip.me.com [17.42.251.41])
-	by st43p00im-ztbu10073601.me.com (Postfix) with ESMTPSA id A639E18011F;
-	Fri, 19 Jan 2024 07:51:28 +0000 (UTC)
-From: Sebastian Thiel <sebastian.thiel@icloud.com>
-To: Elijah Newren <newren@gmail.com>
-Cc: Junio C Hamano <gitster@pobox.com>,
- Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org,
- Josh Triplett <josh@joshtriplett.org>,
- Phillip Wood <phillip.wood123@gmail.com>
-Subject: Re: [PATCH] precious-files.txt: new document proposing new precious
- file type
-Date: Fri, 19 Jan 2024 08:51:26 +0100
-X-Mailer: MailMate (1.14r5937)
-Message-ID: <4421D442-1BB2-4C89-834F-9E70F4CF360B@icloud.com>
-In-Reply-To: <CABPp-BF4Bfr3Hfy7atehHvbQds63+GXO9XPJAW3Mb7dvMcCkDg@mail.gmail.com>
-References: <pull.1627.git.1703643931314.gitgitgadget@gmail.com>
- <xmqq8r5gfc3j.fsf@gitster.g>
- <CABPp-BGSTYDUR1oYYXkCSh-1i2zwxBM=-gnoe-ezNbtPi5CV2A@mail.gmail.com>
- <xmqqsf3nl2b3.fsf@gitster.g>
- <298F7067-D572-433F-A7DD-5256B43B97D7@icloud.com>
- <xmqqwms6qwr3.fsf@gitster.g>
- <F214D88E-6837-4EAB-896E-DF8CFC315EE7@icloud.com>
- <CABPp-BF4Bfr3Hfy7atehHvbQds63+GXO9XPJAW3Mb7dvMcCkDg@mail.gmail.com>
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="TAKkhUqp";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="U+JfGkcn"
+Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
+	by mailout.west.internal (Postfix) with ESMTP id 682473200AF9;
+	Fri, 19 Jan 2024 02:59:40 -0500 (EST)
+Received: from mailfrontend2 ([10.202.2.163])
+  by compute2.internal (MEProxy); Fri, 19 Jan 2024 02:59:40 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1705651180; x=1705737580; bh=xuSvKA8GFK
+	k8X9UqUGRn2f0I5UvD9kayRCsSp7i2nDY=; b=TAKkhUqpBq/uuEzB509rn9t1Ci
+	yk5T3Qg7PBip4MJpVL0y8+0tfume18rrsqyIXftinE1+CgL0YIiwW7tpgEnuyEbl
+	f1+AZAK7vwf5MgMkOlxgFErGUDSDYMxuvTg/vv6BnqaobTyGuxjw1sh9DSvEs6Yz
+	3aOWvoY4Pxw1Scy8aSCsYT/a/SX/pr3vMtDQBe9muyjK0KgajpSRfUNH+dmMLvHw
+	4LCi4yImhNOBv2My05TLjP3kmoU005Zlr095VrjfB1aBDZVfAzMENKjEjKkMkrF5
+	bgFFC6wrLnShnBKUZ3eWpZ3XfMl5e8T6nQxx4ojvnjBS4LQdq3KWMetTHflA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm3; t=1705651180; x=1705737580; bh=xuSvKA8GFKk8X9UqUGRn2f0I5UvD
+	9kayRCsSp7i2nDY=; b=U+JfGkcnJCuTeH0qkeynkYpvzDtPdGPktUiVCDwepyRD
+	A3N0W7JwAEf4CH5zoI7HCW+1ed24kN7HDq3MU0wUXCEmKzsiw/bg82wkO6f371+Q
+	Tq5JGihJyzgxhUDFs8F+jfjR6g58BiFRZb4M9XThFw16A1SNw6GbGP5mu+6CHi6n
+	/dPEWyQRMCXmpisvBEIarMU87cnV0sXUs/SBZhD2Oy8HHy7sZgDAsrNGQQJ7rWcO
+	VSl/51fweG03Aw+gg+ChSCH4jGGUwa5HErUlM0p4Z4wy743UoQMtIjg2cJX5lQec
+	9lhVOxbPgRcxwCGRxSVCZdj1jxBt6POGQSV9l9Hu4A==
+X-ME-Sender: <xms:6yuqZW0AmlHzAP4DBntCsCnGq12aDDOoJh5nFQ-JeUyxnAOJr-7crA>
+    <xme:6yuqZZE4Zk1PSOdHw-78I_nHqMS2Q3RH78FGg-ui-1qmrAg3eQklQQm-zbUGOj0d5
+    tMWTo0gU-CzAlcbSA>
+X-ME-Received: <xmr:6yuqZe6zZKZnbUs9TeltH140LaHVHaoQT9qe0WPzaSTRuRCFwByhDLqH_Qt8TPbszg4HRndPEGfZ_qQgu_Gw_reADcRW6vrZZqP3oU4RvouEBgIMyw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrvdejledguddugecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
+    necuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
+    enucfjughrpeffhffvvefukfhfgggtuggjsehgtderredttdejnecuhfhrohhmpefrrght
+    rhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtth
+    gvrhhnpeetueevhffhudefvdegieeuieelgedthfegfedtueevjeejtdfgjeehudejuedt
+    udenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpsh
+    esphhkshdrihhm
+X-ME-Proxy: <xmx:6yuqZX3c09qqMGk17yNmiIxdMF60IpnKZGfhLwBwNsi1fpo1Si1gKw>
+    <xmx:6yuqZZHzzGkvPA7Ti2yJheM_vSexSC40GhInHR159XA30Takqh9lgg>
+    <xmx:6yuqZQ-XqveYLYYWQC57hQxsT7SMdUELu9Mta4-8iu6bB27-rZTyHA>
+    <xmx:7CuqZdg_iu9Nl_Gf4PeS1V39JWoKX0PdTEE1KJ2M4g1o3zf37E9sEA>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 19 Jan 2024 02:59:38 -0500 (EST)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id 5fb435fd (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 19 Jan 2024 07:56:40 +0000 (UTC)
+Date: Fri, 19 Jan 2024 08:59:35 +0100
+From: Patrick Steinhardt <ps@pks.im>
+To: Kristoffer Haugsbakk <code@khaugsbakk.name>
+Cc: git@vger.kernel.org, stolee@gmail.com,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	Taylor Blau <me@ttaylorr.com>, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 3/4] config: factor out global config file retrieval
+Message-ID: <Zaor5zNLKE3UXhHM@tanuki>
+References: <cover.1697660181.git.code@khaugsbakk.name>
+ <cover.1705267839.git.code@khaugsbakk.name>
+ <32e5ec7d866ff8fd26554b325812c6e19cb65126.1705267839.git.code@khaugsbakk.name>
+ <ZaoUOPsze7rhtT2M@tanuki>
+ <7f0864ad-c846-42a6-8ddc-85d6be58a4ee@app.fastmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-GUID: lW2Y2alIw2g6tqzfUmUeM7Jdi60cjgmd
-X-Proofpoint-ORIG-GUID: lW2Y2alIw2g6tqzfUmUeM7Jdi60cjgmd
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.997,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-01-19_04,2024-01-17_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 phishscore=0 bulkscore=0 clxscore=1015
- malwarescore=0 suspectscore=0 mlxlogscore=883 adultscore=0 mlxscore=0
- spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2308100000 definitions=main-2401190027
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="Pac5pRDPz1+UGKOL"
+Content-Disposition: inline
+In-Reply-To: <7f0864ad-c846-42a6-8ddc-85d6be58a4ee@app.fastmail.com>
 
-Yes, indeed I was a little confused when making the "git commit..." based examples,
-thanks for correcting them.
 
->
-> Reminds me of https://www.emacswiki.org/pics/static/TabsSpacesBoth.png
->
-> ;-)
->
+--Pac5pRDPz1+UGKOL
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-😅
+On Fri, Jan 19, 2024 at 08:40:51AM +0100, Kristoffer Haugsbakk wrote:
+> On Fri, Jan 19, 2024, at 07:18, Patrick Steinhardt wrote:
+> > But second, I think that the new function you introduce here has the
+> > same issue as the old function that you refactored in the preceding
+> > patch: `git_config_global()` isn't very descriptive, and it is also
+> > inconsistent the new `git_config_global_paths()`. I'd propose to name
+> > the new function something like `git_config_global_preferred_path()` or
+> > `git_config_global_path()`.
+>=20
+> The choice of `git_config_global` is mostly motivated by it working the
+> same way as `git_config_system`:
+>=20
+> ```
+> given_config_source.file =3D git_system_config();
+> [=E2=80=A6]
+> given_config_source.file =3D git_global_config();
+> ```
+>=20
+> (The extra logic imposed by XDG for =E2=80=9Cglobal=E2=80=9D is implied b=
+y `man git
+> config`. I don=E2=80=99t know what the guidelines are for spelling that o=
+ut or not
+> in the internal functions.)
+>=20
+> Your suggestion makes sense. But should `git_system_config` be renamed as
+> well?
 
-> Besides, if for a specific file or filetype, accidental additions are
-> more important to protect against than accidental nuking, then can't
-> folks achieve that by simply using
->
->     # Don't let older git versions add the file
->     .env.secret
->
->     # For newer git versions, override the above; treat it as precious
-> (i.e. don't add AND don't accidentally nuke)
->     $.env.secret
->
-> In contrast, if protection against accidental nuking is more important
-> for certain files, one can use just the second line without the first.
->
+Yeah, you're right that `git_system_config()` is bad in the same way. In
+fact I think it's worse here because we have both `git_config_system()`
+and `git_system_config()`, which has certainly confused me multiple
+times in the past. So I'd be happy to see it renamed, as well, either
+now or in a follow-up patch series.
 
-I am glad I can pull my initial proposition of 'having both syntaxes' off
-the table to side with this version - it's gorgeous.
+But as I said, I don't think it's a prereq for this patch series to land
+and others may have differing opinions. So please, go ahead as you deem
+fit (or wait for other opinions).
 
-It's easy to forget that the search-order when matching ignore patterns
-is back to front, which makes this 'trick' work.
+Patrick
 
-If the insights gained with the last couple of emails would see their digest
-in the user-facing documentation, I think precious files wouldn't only become
-usable but would also allow projects to make the their choice during
-the transition period during which some users will inevitably access the repository
-with a Git that doesn't know about precious files yet.
+--Pac5pRDPz1+UGKOL
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmWqK+YACgkQVbJhu7ck
+PpQKag//QcfQuavNuvzgzW67jTb4NLdhfSRHoOftYmk6zZhi146fwXu2A0Btn6Zh
+mF/x5LdB6xHK4OmF8AZj050PiptICqu2mNlmcMsUujkYWXzf4kS4I2Y1Dr9W+vAj
+OYv+qRIJaUMz3pONlaQ/X4x1pi9d3KGBn/4wBId4besk9tr4Cu4Gpug//soIVdV/
+j1lPSb/KKtmeO94bOmOgafAzYbDTnqnnvV5NECuHzePfFSl8wd9mqjgWtyvYYiFx
+rdL96VZsyI+FwnyvbtUN03V/Pi5INpchBmK0Lvz6qItMW+/87S+rFrCOPwd6EPrw
+HZPLs1Ek9/9Nug8yj/IKhMfPxe+dbx6hx3T+jvImjIe3WFVDGseC/xZc7i5vqttg
+GouN2KD1kSrc9VR47KlY6BtOeFdvjX+gVBhmiLnbmC/7CeFcz1UM9ZKUuJe5WbK+
+ceuNMPi1g9Q0JqIxEB2TcN84xzsFPO8vGuhPlAlff5Zp0EG2Cj4B8vBo16EVTrg/
+ZLCRJ6Ye5LsXrCWVLBLM7Iqzn1oOchpa0qGNCxBkKpQa6CVfczQ9W60SLTohXVPN
+T2/WLlj8IPMFuUnTFVKv91aTptljylANqMG28ZoPG4G0GDKuc2TG96Lei9i4QPJS
+EV2UII7CXVqP4Tca2krvNKRr5psQzaj95k2tXV+7CiLjmZDgJAI=
+=OcBd
+-----END PGP SIGNATURE-----
+
+--Pac5pRDPz1+UGKOL--
