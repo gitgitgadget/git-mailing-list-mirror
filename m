@@ -1,96 +1,140 @@
-Received: from mail-pl1-f177.google.com (mail-pl1-f177.google.com [209.85.214.177])
+Received: from mail-lj1-f174.google.com (mail-lj1-f174.google.com [209.85.208.174])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B3D5186F
-	for <git@vger.kernel.org>; Fri, 19 Jan 2024 03:40:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F5C03C28
+	for <git@vger.kernel.org>; Fri, 19 Jan 2024 05:06:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705635610; cv=none; b=O+qf897DZj+VndpskMNQLFSvziOQYpe0LrNfEyL8HW05/vag537J9r49MPYh0v563+8UNGNKnxuQckpp8Gdk/g6waY726oCLxZUywAdx+KnksL41uMHB1Xqw+h+lIT9dNdwUgRKwlUU+ajxMuAIUR827l+bqBzcaTvpakaZgxrI=
+	t=1705640775; cv=none; b=UlmxEy5WkNbObHg738RArsUY2WSccneOIWMpH2Zsu7eoKKqO6fzMVozjWFiNUvlgEXOCfY5nkh/l1fzca35Bgse1sDEhGBbC2n8P+gLeRBtBgogwfz4AnS8dxJ06hXjKRu5NHriCVQvYH9mE5GBw8xsO/6FnoGgIQ52lm2MSADg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705635610; c=relaxed/simple;
-	bh=OwOZztkDpHmNUyUqyy3BfL7EJ/K02Dk1EBKTW6VADfk=;
-	h=Content-Type:Date:Message-Id:Cc:Subject:From:To:Mime-Version:
-	 References:In-Reply-To; b=iwIKadjdTHpORUb8qljT0PUSQ6hGkqkvIQ8mkScPRdnDBTqRl2WhqlgYzQLYL37YI9kjWGUIQDHWZ9Vru14K98uYH7FdWlPjrlT/1GCjhaIfw1wypGDOBj57t6TgPUwSgMku6ZEO8bBcABjpLungXa74CwBac4GBudyZX2lPpNo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fTyiFRH6; arc=none smtp.client-ip=209.85.214.177
+	s=arc-20240116; t=1705640775; c=relaxed/simple;
+	bh=isCFCAbJ/tuzBE83j5rktMC55NxdrtROsa9w7M+IsX8=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=pjwBKb5qYG4JG1C0b6IKceHKqVIjrHYTvZ5OtcmeKmk3TQwW5T34oqkKrai12WBQUg/NIJVMUcL1+C5g1/P4ImXfbO03mfqdzlyfm7UX0zY2Iuzx89HfKSqxQReEwl51lz7SP1ifxi5psfq4ttugzfwQNumJMM8zhPY0IqEu1jc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=nCqf1ACR; arc=none smtp.client-ip=209.85.208.174
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fTyiFRH6"
-Received: by mail-pl1-f177.google.com with SMTP id d9443c01a7336-1d71b62fa87so3069825ad.0
-        for <git@vger.kernel.org>; Thu, 18 Jan 2024 19:40:08 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nCqf1ACR"
+Received: by mail-lj1-f174.google.com with SMTP id 38308e7fff4ca-2cdebb968feso4795811fa.1
+        for <git@vger.kernel.org>; Thu, 18 Jan 2024 21:06:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1705635608; x=1706240408; darn=vger.kernel.org;
-        h=in-reply-to:references:content-transfer-encoding:mime-version:to
-         :from:subject:cc:message-id:date:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=otZiv98SURSo3TnqfiTuSD3BcMFwm3tXUNpBJZxoBio=;
-        b=fTyiFRH67X9KKEFMS5kZN5xihPsipYfX7N7vWJJQgrXy0hIO9cKzdcikn3P0OUCpBc
-         DU5vzXbh/UW865eIqEDe80j3mAfMpxXUYASJUyHM38CGM4ZPs88cmU/BWl6i6bHmFVGw
-         RyXrIwKFyeMLmcnPWzwDu/DeRPmcp9frx5aIvFvuPFk7BSG6wE3wbyyJhDnwgbnwRB34
-         ebL9lKXd2/2TbCnKXbiG12g90NDkugfMERwM1islJfwlHFbjv3xk4qBWHktqHCkajMuh
-         Nm5V4OLqdm/416Mtimi6zNVZnf9yVWkICX0cXkNTM2syn52/2UFwZiVak8i49X12ggO7
-         jAQw==
+        d=gmail.com; s=20230601; t=1705640772; x=1706245572; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=jmJ1Q2ZsKeEd9v77WvEEsUg0IynbwMAhEeDFpRSZXOQ=;
+        b=nCqf1ACRMDbHDie1ewSxUBpAzzivYKphwa+iBgndl9LfzUxSAJqDaK6pTyLsSX7TmV
+         wUYYMoBQJHzVlMUEmy3YJ2eXl6XaFZeTQbDFy2i2c6qj1tMU4BgM9e+qyYfFf2Uu5ROq
+         h+q0Vx+OxUOTGFyqsuitu29pQGxKV5AkrWZBgXBhdUsgle+hLTj4F+dA7S9jp0gREnY2
+         EgFVElieQ+YfnMhgn0PSt6w9Sw4OzmMs5g2UHUDdXrFXmYJUyicsw2KshyrZM4GcOabT
+         5vd/BNrLW0CvsyK8WsG5Fdkhkbk9TbNQ5Pi7b1BwjNIp2g2FP+JCeeZ2wwpWm6TZhIej
+         1lxg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1705635608; x=1706240408;
-        h=in-reply-to:references:content-transfer-encoding:mime-version:to
-         :from:subject:cc:message-id:date:x-gm-message-state:from:to:cc
+        d=1e100.net; s=20230601; t=1705640772; x=1706245572;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=otZiv98SURSo3TnqfiTuSD3BcMFwm3tXUNpBJZxoBio=;
-        b=hYWbkRIpIVdDA9RwpJ0e3RDUreO6TgYneYpNQCTGhJQpq1MVylrJsXSonsb8B26rUm
-         CW2jb+WpTDMaQY+GgNe0Pot2tO7wgbrLaR0Ra8+KIVVQA7gPR1pI/iDJLcNg80+KuofJ
-         ZybWxgfIpN6XxLWKjWwAePUZZbCmTp0FxXvnQRKQ3w5402nL8JTzm3KUDnFQETTNomwB
-         3UZ16lkD5POp7JWsGPSW+FlKlp8md+tA/CgTfaNAzYwd2zk1thU/EVU37HDVcUy4p09P
-         ZG79zSlvLjep5rk4L9yCkx50bRPvYcrstjlHb+7ANaZX5vD1twwy2+Za6I9TCZPtLlC8
-         EQSw==
-X-Gm-Message-State: AOJu0YyRhgqCe5VyLzU/mJfmqjQojbDJBPKd6T9/boxAgbs0A8vanbJf
-	wbi/3YUyVwUh/bF0BkMlbBz/fYiRu3FEjZkJP+k04KaMuvcdaY+AFszWbliLPN8=
-X-Google-Smtp-Source: AGHT+IFjc6sr2tXWel+Rl8a9V04QOMhtP+vu+5iHD2qbZlV8Asb5mbqBEfhwKIY61KM4tDh5v115sg==
-X-Received: by 2002:a17:902:e886:b0:1d7:19ec:2eaf with SMTP id w6-20020a170902e88600b001d719ec2eafmr526561plg.6.1705635608238;
-        Thu, 18 Jan 2024 19:40:08 -0800 (PST)
-Received: from localhost ([2402:a00:401:a99b:65e8:f5a4:7adb:5726])
-        by smtp.gmail.com with ESMTPSA id w20-20020a170902d11400b001d717e64f0esm677639plw.87.2024.01.18.19.40.06
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 18 Jan 2024 19:40:07 -0800 (PST)
-Content-Type: text/plain; charset=UTF-8
-Date: Fri, 19 Jan 2024 09:10:04 +0530
-Message-Id: <CYIDCZPQN2H1.1ET0CTP07NMYR@gmail.com>
-Cc: <git@vger.kernel.org>
-Subject: Re: [PATCH 2/2] t0024: refactor to have single command per line
-From: "Ghanshyam Thakkar" <shyamthakkar001@gmail.com>
-To: "Junio C Hamano" <gitster@pobox.com>
+        bh=jmJ1Q2ZsKeEd9v77WvEEsUg0IynbwMAhEeDFpRSZXOQ=;
+        b=AP9uFng2fq8Xu92TYEaI/6q1Ya6KuRtkwYhzQGE4uEv+Aa/jj8GsrM9nDuGVKNfjKt
+         zRIQOT6AWDwbAwSoJgnrIsZaXbmW35DX010zCiDgIQZm/m2k4ENyAgKCku4D56qVLTWq
+         Is2MWwM6Kj2xnlIplyR02F6MedEP2yJauiq51sAxXPfeNRHC3goJT3AtlGRi6CtILhDI
+         ZDEo1eeKaV+2KKf2hInvzSabpemgouZf9dPSd58uJbvGnB7843BCUHHNB9H0uFyLIBFg
+         BUKSvp/ycjjL6buWf+56RrocyyfvliLJRa4X4J9B/v4zutK2KZ/tbop+moa/7AaMN2rA
+         /Stw==
+X-Gm-Message-State: AOJu0Yy3oj1i0gSs1kjNBKGIdzzNmt+t8XXZcMm1fDdaFOwUiDOJ+qPY
+	jcKc5wq0+uFzFTi31Eq3ugScmubZkIzdQEdkoynB1rVnnKWVO7z2pdnn4aZSJlAl2uD8J3Z15rg
+	1r9wi/r61vIhwufTQZuweDdDICXqB2+tq
+X-Google-Smtp-Source: AGHT+IFrawa+Nre3OqdDYhS0/JrlYiRX6nUooy7i3wJjjB/f2eYjKQu7TlJ5MpW/DMNZFEDk0hQ+XevfIAvT+SeimbM=
+X-Received: by 2002:a2e:9dda:0:b0:2cd:ac63:feeb with SMTP id
+ x26-20020a2e9dda000000b002cdac63feebmr991892ljj.35.1705640771746; Thu, 18 Jan
+ 2024 21:06:11 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
+MIME-Version: 1.0
+References: <pull.1637.git.1705006074626.gitgitgadget@gmail.com>
+ <xmqqedenearc.fsf@gitster.g> <CABPp-BGp0NMQKLYg=OxJgnVxARffNF57B_N2bLmwT2R2EZqhdA@mail.gmail.com>
+ <xmqqil3x69dk.fsf@gitster.g> <CABPp-BEaYkAPphh06R1HrfD03WTv5uy-2q-T0ZMZaxo9hfXv-g@mail.gmail.com>
+ <xmqqjzo6m37n.fsf@gitster.g>
+In-Reply-To: <xmqqjzo6m37n.fsf@gitster.g>
+From: Elijah Newren <newren@gmail.com>
+Date: Thu, 18 Jan 2024 21:05:47 -0800
+Message-ID: <CABPp-BHybPEg_+649fL6QrKjRQcJXxbYMFiQn0KxAgbr2Nz0Gg@mail.gmail.com>
+Subject: Re: [PATCH] diffcore-delta: avoid ignoring final 'line' of file
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-X-Mailer: aerc 0.15.2
-References: <20240118215407.8609-1-shyamthakkar001@gmail.com>
- <20240118215407.8609-2-shyamthakkar001@gmail.com>
- <xmqqfryunsd1.fsf@gitster.g>
-In-Reply-To: <xmqqfryunsd1.fsf@gitster.g>
 
-On Fri Jan 19, 2024 at 4:48 AM IST, Junio C Hamano wrote:
-> Ghanshyam Thakkar <shyamthakkar001@gmail.com> writes:
-> > -	( mkdir untarred && cd untarred && "$TAR" -xf ../test.tar ) &&
-> > +	mkdir untarred &&
-> > +	(
-> > +		cd untarred &&
-> > +		"$TAR" -xf ../test.tar
-> > +	) &&
+On Thu, Jan 18, 2024 at 7:06=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
+wrote:
 >
-> I think we assume "$TAR" is modern enough to know about the "C"
-> option (see t/t5004-archive-corner-cases.sh), so
+> Elijah Newren <newren@gmail.com> writes:
 >
-> 	mkdir untarred &&
-> 	"$TAR" Cxf untarred test.tar
+> >> Heh, I was hoping that we should be able to use "diff --name-only".
+> >>
+> >>  $ git mv Makefile Breakfile
+> >>  $ git diff --name-only -M HEAD
+> >>  Breakfile
+> >>  $ git reset --hard
+> >>  $ git rm Makefile
+> >>  $ >Breakfile && git add Breakfile
+> >>  $ git diff --name-only -M HEAD
+> >>  Breakfile
+> >>  Makefile
+> >>  $ git reset --hard
+> >
+> > I guess we could, since the only thing in this repository is a file
+> > which is being renamed, and we can then deduce based on the setup that
+> > the change we expected must have happened.
+> >
+> > However, I didn't like the deduce bit; since --name-only only lists
+> > one of the two filenames and doesn't provide any hint that the change
+> > involved is a rename, it felt to me like using --name-only would make
+> > the test not really be a rename test.
 >
-> without even a subshell may be sufficient.
+> Hmph, I am not quite seeing what you are saying.  If the "mv" from
+> Makefile to Breakfile in the above example is between preimage and
+> postimage that are similar enough, then we will see "one" paths,
+> i.e. the file in the "after" side of the diff.  But if the "mv" from
+> Makefile to Breakfile involves too large a content change (like,
+> say, going from 3800+ lines to an empty file, in the second example
+> above), then because such a change from Makefile to Breakfile is too
+> dissimilar, we do not judge it as "renamed" and show "two" paths.  I
+> do not quite see where we need to "deduce".
 
-I suppose '"$TAR" Cxf untarred test.tar' is not a valid syntax on
-alpine, since it was breaking CI.
+You just wrote a very well worded paragraph going through the
+reasoning involved to prove that a rename is involved.  You reasoned,
+or deduced, the necessary conclusion quite well.  Sure, it might be a
+simple deduction given the knowledge of the test setup, but it's still
+a deduction.
 
-Instead changed it to '"$TAR" xf test.tar -C untarred' in v3, which
-is how it's written in t/t5004-archive-corner-cases.sh, which passes
-CI.
+But perhaps I can put it another way:  You can't just look at the
+output of `diff --name-only` and say a rename was involved -- unless
+you know the test setup and the previous operations.  In fact, how
+about a possibly contrived alternate scenario: What if `git mv $1 $2`
+had a bug where, after doing the expected work, it did the equivalent
+of running `git checkout HEAD -- $1` at the end of its operation.
+Then we'd see:
+
+   $ <tweak Makefile slightly>
+   $ git mv Makefile Breakfile
+   $ git diff --name-only -M HEAD
+   Breakfile
+
+i.e. we get the same output as without the git-mv bug (note that
+Makefile will not be listed since it is unmodified), but with the bug
+in git-mv there definitely is no rename involved (since there's no
+delete to pair with the addition of Breakfile).  As such, we'd still
+pass the test despite there being no rename.  Sure, the example is
+somewhat contrived, but I'm just saying that the --name-only output
+doesn't actually test or prove that a rename occurred.  And since this
+test, and all other tests in this particular testfile, are
+specifically about renames, the fact that we aren't specifically
+testing for something being renamed feels odd to me.
+
+If you still like `diff --name-only` better anyway, that's fine and
+I'll switch it.  I'm just stating why it seems suboptimal to me.
