@@ -1,180 +1,132 @@
-Received: from mail-yb1-f171.google.com (mail-yb1-f171.google.com [209.85.219.171])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from wout2-smtp.messagingengine.com (wout2-smtp.messagingengine.com [64.147.123.25])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7368E4C602
-	for <git@vger.kernel.org>; Fri, 19 Jan 2024 10:56:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5B5854649
+	for <git@vger.kernel.org>; Fri, 19 Jan 2024 13:27:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.25
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705661792; cv=none; b=kMtZo294IT9yap9vjEZ+Zd8JyDOWqT/5R3SCIbtL8+JaLY37CP7ICxEsKlsPtV1iZdTOGoImAcAbGUbarDMS+TPd3OHuUc9pGEkp3mZpkdcCl0IE/bhtgwJ6Q9q8T6DhgnMOLUpxhXsTSircTZg/hl+wZLEi9Bc0H6g5WGCnEYE=
+	t=1705670831; cv=none; b=lQE1ez7ZpT/QGjiIldLAgjRro6cFRBgQJyck7vYiigHGhmYYYk3XJpC5qF97y3PyuBAsS5aJLXLLC7j7YrQhl7a1hH+Vxp4nuRjrb7FCoSPbvMaTk9ztKlmhF1OpOrfVx5ByngbinQLmPKWRJJb8zHLjgcjxTaBiU8ZagJRBqNM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705661792; c=relaxed/simple;
-	bh=8NnbdJZI76H3onmh1RuzZmycgI6GufVe9LyBSQ7LuPE=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Ohzw07WN8zsVj7CcChgN+eaOFd348hpvWcJrJHbQsywSQ5FbOOc9megxkBpzaDTCyCPcoVXgJ1D67Gm1nGhxfjb1mxSTlpFNR3OmByB++tDWSU9OypIRu9ZggTQNte5x2/q45BcqSAZsFZ/Iq4mN3cRyFc5apZlXPwRVLKX7kpI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=nSfPdx6J; arc=none smtp.client-ip=209.85.219.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1705670831; c=relaxed/simple;
+	bh=dBhw99AtQfnM8y52olXWlDttMyox9tcZ9yiQEIB2MQk=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=B9L86E/7WL7CATN0t3eN60dN3D9oYdq0ZqXxmURmPyaahfXMlnQOW3eDY+BqFz1LRVkMGuwd3YYg5FZbJNHmYOa5uDkw8PKQsAs95Mt8ojEDlfKygaYIkAgQ3hdBId5sq1ZziC29lm0AKvhqqmo+SBf2aQ/NoebLKgT/YNGgbiY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Udn4dc6i; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Crg702JW; arc=none smtp.client-ip=64.147.123.25
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nSfPdx6J"
-Received: by mail-yb1-f171.google.com with SMTP id 3f1490d57ef6-dc2540a4c26so501289276.2
-        for <git@vger.kernel.org>; Fri, 19 Jan 2024 02:56:31 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1705661790; x=1706266590; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=6Pow81wnVJpGaMN2X5nC5ouFPiMdz3bTSnEtWAmybYU=;
-        b=nSfPdx6JO/dRsdZPoYc42GeFtaEEYduBYdi5EVNyCJoV4XVRo553mgTmwKLXuD5Vqa
-         +DrOTKQ7RP2fepgP93Fe3o4/ZYb2Kx8Ov23sxFcPqWzdWj4nXZQYHeiA2xR1KqXDPCts
-         1V8XFYgXe5dpOj91TLAsL2AB+dObBF9JKL/0xQZK1PfhFDowxea2lJmhF8YQll+1h8Hs
-         lwM0fJkqqLFU8OjDItCPf1jINaPY6HAJqUbLPrSNI0H+MqPs+F3NIFcaqpyXtRUlxB0Z
-         UIQCg+NAXPnMPcYiy/JXUUfBvjPsXb2+wV0N65+xuW8/F0VA8hj9x4aMg0YLBslM/syF
-         LFMQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1705661790; x=1706266590;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=6Pow81wnVJpGaMN2X5nC5ouFPiMdz3bTSnEtWAmybYU=;
-        b=RLvQSLYBBhGdGFTFioEe3o5qCfPyW/EOeihUXpCE8BnUZADQRKiDg5kpg+aTJv4khx
-         vU1lWKXrxRrGWjmpBHIcxiWgQcwRvrMwzOfRHwcx1yNHxPRHCTNgLJLl0CqTffmBwx3P
-         NltBRmsesEmsN5BXglgHqu8o1CLWacHJULuc4j1gCGXPjSwQ3V76RNp4lbKRbqwp0hbQ
-         4T+2k+cZHuv+S/gAPVzKcIxeA5wkf4i+NmdmdV5TjALe1h2WzoWymn73QuYqvqjoTFuq
-         8HqtHEaMEZqaEmBpXgVEkNh/HtYSn5glz0+NFHFi5k3ybXHF+atbK3MOTfgQNEH8+lSS
-         H3mA==
-X-Gm-Message-State: AOJu0Yz1xIMhIAxYk/ojL4368ROHAikI4+seLk86q7YVYTTPkS62mJ3p
-	pLio0DhtN0eq7lBaAHXuf+766Ni+gpW+/X3P+udiUIkBO9n1q3dNhJTEmVs0v69oY6enGJi8OjJ
-	Hj7FvhhPxJokri56lHI7Cg0+0Mx0=
-X-Google-Smtp-Source: AGHT+IFknDCgdUeienzFccWkeMMxYmRdXDzp0ttKCAKzW1WgMcxkaws8xOuKuCwj4D+eQCx6SgqPUm+QWwcytvCTqKE=
-X-Received: by 2002:a25:187:0:b0:dc2:4cf0:e7c6 with SMTP id
- 129-20020a250187000000b00dc24cf0e7c6mr1745211ybb.124.1705661790356; Fri, 19
- Jan 2024 02:56:30 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Udn4dc6i";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Crg702JW"
+Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
+	by mailout.west.internal (Postfix) with ESMTP id 8D9F8320099B;
+	Fri, 19 Jan 2024 08:27:05 -0500 (EST)
+Received: from mailfrontend1 ([10.202.2.162])
+  by compute2.internal (MEProxy); Fri, 19 Jan 2024 08:27:05 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1705670825; x=1705757225; bh=yB4vlhtH19
+	jL+llbmAJRhg/2B63sTaTAA84Z8Nwqhk8=; b=Udn4dc6iiLZFZqh+61By1zmTDv
+	9f5LDOy4f4Q/jk1lZUncBAWhEg1Na4xBsu7l5RwbKFf27hUVUI+grQK6tm2hrxbC
+	18dmI2k4RJjGsLH1UMHakZXwWypG3M/O4Jww9m8p4sNn6lV3mOVRIXtjHvzWwign
+	/XUL6X5ICzXkskx4Pi0TSxCkOoYd4tIy9T33fkryVbYYr2qwVcvameVEMr0JIkMy
+	Kvgk2CwJeNmg724v1hR4/vI1hIFzQq29k5szmXMq40S9937vUtzgvI6hvSGz2UWk
+	Pe5KCkPrZ4Wshl1n3/ZtqF87zOc7hM7SlNXsYwpSV3iucIEOeFu0fWg6gnag==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm3; t=1705670825; x=1705757225; bh=yB4vlhtH19jL+llbmAJRhg/2B63s
+	TaTAA84Z8Nwqhk8=; b=Crg702JWZpmdh406EYGP5sayreVLfl9aNIxI9yJoOb3E
+	YJuql3grY8BFofZixZynXKS+9J+mwCpENYr5pME6zViJB5FYFsxNLXNk/MAo9DaE
+	JoFrqW/kh392NgcsUQTwghcBKoRtIYtUeKIyB+6Kr5iiy+n4T90dEbPqNEIOr8Lx
+	Ik65Arx8nz/AaYlWGy+nImS8Kap5RR11flpYQRFMafo3gnfR8LzuUhxHF8R9f03C
+	F4/TPm3nshdsPfzl2QK+ZrqUCJ0i+L8Ep1F5AnK9FUHp9TTFSY15y6Xx33mGxwZO
+	88/qyL5+/PF0eZ7+zakNNozNSWDTEe2s4cUHNpb5YQ==
+X-ME-Sender: <xms:qHiqZdoHzv6H4M-98a8wyxFEP1Tf3UoJ27wwyoxu6rMTIr7AoFbVMQ>
+    <xme:qHiqZfpPtSkMQpyuv8XKGVs_YxUv2LypksYHcKnJHtDSbI-JhnZs9RisbuQtgTRaQ
+    kIwU15QvER2vVaq2Q>
+X-ME-Received: <xmr:qHiqZaMB5iW3kiPU-dMYpCN8eVXiNBJtUfvVvcXRuI3J-lDzqY6K4Ad7r9joT7Suo1m-B_Rll0F8lvUH-qlvSmY6_l00bBaaOMk5gTnrf6t8Pjrgsw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrvdektddgheduucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+    cujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtvdenucfhrhhomheprfgrthhr
+    ihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvg
+    hrnhepueektdevtdffveeljeetgfehheeigeekleduvdeffeeghefgledttdehjeelffet
+    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
+    hpkhhsrdhimh
+X-ME-Proxy: <xmx:qHiqZY6Qjul80MzNheUuZTD_pX7zDwPZEu_CMmzr0zUS7oj2qQolPw>
+    <xmx:qHiqZc7kviqtB1yi3GcFq_lX9AC1hGRdQ2lNfs2YV4I_eMTl1rpqvw>
+    <xmx:qHiqZQgcp8cilQYyIpTeQbMl91l_daunhjW7-fY23laeibgS4ANNYw>
+    <xmx:qXiqZaTfBdkcIWfGHFkNrrFjGQAmOhWkEnhaBnqNDJ-TcV8oY1xnjg>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 19 Jan 2024 08:27:04 -0500 (EST)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id ed030403 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 19 Jan 2024 13:24:04 +0000 (UTC)
+Date: Fri, 19 Jan 2024 14:27:00 +0100
+From: Patrick Steinhardt <ps@pks.im>
+To: John Cai via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, John Cai <johncai86@gmail.com>
+Subject: Re: [PATCH 04/12] t1404: move reffiles specific tests to t0600
+Message-ID: <Zap4pGuoC6G9DCHa@tanuki>
+References: <pull.1647.git.git.1705521155.gitgitgadget@gmail.com>
+ <0f6fea6d32d242db772fbee0b4aaec044087f53d.1705521155.git.gitgitgadget@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <cover.1696432593.git.zhiyou.jx@alibaba-inc.com>
- <cover.1702562879.git.zhiyou.jx@alibaba-inc.com> <d343585cb5e696f521c2ee1dd6c0f0c2d86de113.1702562879.git.zhiyou.jx@alibaba-inc.com>
- <owlyy1cvhua5.fsf@fine.c.googlers.com> <CANYiYbFOa-E8Pivhgn_nmy982fn7VPtb803bewnC_UV7qY3xcw@mail.gmail.com>
- <owly1qaei8hw.fsf@fine.c.googlers.com>
-In-Reply-To: <owly1qaei8hw.fsf@fine.c.googlers.com>
-From: Jiang Xin <worldhello.net@gmail.com>
-Date: Fri, 19 Jan 2024 18:56:19 +0800
-Message-ID: <CANYiYbGy-APMD7Cw=m-=8dkMcXCp9c+x_6OCoBhWBfvUUWm2ow@mail.gmail.com>
-Subject: Re: [PATCH v4 1/4] transport-helper: no connection restriction in connect_helper
-To: Linus Arver <linusa@google.com>
-Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>, 
-	Jiang Xin <zhiyou.jx@alibaba-inc.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="poIZFYMknz0jtGD2"
+Content-Disposition: inline
+In-Reply-To: <0f6fea6d32d242db772fbee0b4aaec044087f53d.1705521155.git.gitgitgadget@gmail.com>
 
-On Fri, Jan 19, 2024 at 6:26=E2=80=AFAM Linus Arver <linusa@google.com> wro=
-te:
->
-> Jiang Xin <worldhello.net@gmail.com> writes:
->
-> >> > Remove the restriction in the "connect_helper()" function and give t=
-he
-> >> > function "process_connect_service()" the opportunity to establish a
-> >> > connection using ".connect" or ".stateless_connect" for protocol v2.=
- So
-> >> > we can connect with a stateless-rpc and do something useful. E.g., i=
-n a
-> >> > later commit, implements remote archive for a repository over HTTP
-> >> > protocol.
-> >> >
-> >> > Helped-by: Junio C Hamano <gitster@pobox.com>
-> >> > Signed-off-by: Jiang Xin <zhiyou.jx@alibaba-inc.com>
-> >> > ---
-> >> >  transport-helper.c | 2 --
-> >> >  1 file changed, 2 deletions(-)
-> >> >
-> >> > diff --git a/transport-helper.c b/transport-helper.c
-> >> > index 49811ef176..2e127d24a5 100644
-> >> > --- a/transport-helper.c
-> >> > +++ b/transport-helper.c
-> >> > @@ -662,8 +662,6 @@ static int connect_helper(struct transport *tran=
-sport, const char *name,
-> >> >
-> >> >       /* Get_helper so connect is inited. */
-> >> >       get_helper(transport);
-> >> > -     if (!data->connect)
-> >> > -             die(_("operation not supported by protocol"));
-> >>
-> >> Should we still terminate early here if both data->connect and
-> >> data->stateless_connect are not truthy? It would save a few CPU cycles=
-,
-> >> but even better, remain true to the the original intent of the code.
-> >> Maybe there was a really good reason to terminate early here that we'r=
-e
-> >> not aware of?
-> >>
-> >
-> > It's not necessary to check data->connect here, because it will
-> > terminate if fail to connect by calling the function
-> > "process_connect_service()".
->
-> In the process_connect_service() we have
->
->     if (data->connect) {
->        ...
->     } else if (data->stateless_connect && ...) {
->        ...
->     }
->
->     strbuf_release(&cmdbuf);
->     return ret;
->
-> and so if both data->connect and data->stateless_connect are false, that
-> function could silently do nothing. IOW that function expects the
-> connection type to be guaranteed to be set, so it makes sense to check
-> for the correctness of this in the connect_helper().
 
-If both data->connect and data->stateless_connect are false,
-process_connect_service() will return 0 instead of making a connection
-and returning 1. The return value will be checked in the function
-connect_helper() as follows:
+--poIZFYMknz0jtGD2
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-        if (!process_connect_service(transport, name, exec))
-                die(_("can't connect to subservice %s"), name);
+On Wed, Jan 17, 2024 at 07:52:27PM +0000, John Cai via GitGitGadget wrote:
+> From: John Cai <johncai86@gmail.com>
+[snip]
+> +test_expect_success 'D/F conflict prevents add long + delete short' '
+> +	df_test refs/df-al-ds --add-del foo/bar foo
+> +'
 
-So I think it's not necessary to make double check in connect_helper().
+All of the tests using `df_test ()` pass with the reftable backend, the
+only thing that's incompatible is that there is an additional prefix in
+the "files" backend's error message. So I'd like to drop moving those
+D/F conflict tests so that we can instead make them generic in another
+iteration.
 
->
-> >> But also, what about the case where both are enabled? Should we print =
-an
-> >> error message? (Maybe this concern is outside the scope of this series=
-?)
-> >
-> > In the function "process_connect_service()", we can see that "connect"
-> > has a higher priority than "stateless-connect".
->
-> What I mean is, does it make sense for connect_helper() to recognize
-> invalid or possibly buggy states? IOW, is having both data->connect and
-> data->stateless_connect enabled a bug? If we only ever set one or the
-> other (we treat them as mutually exclusive) elsewhere in the codebase,
-> and if we are doing the sort of "correctness" check in the
-> connect_helper(), then it makes sense to detect that both are set and
-> print an error or warning (as a programmer bug).
+All the other tests where we verify how the "files" backend behaves when
+there are empty directories in the way do make sense to become backend
+specific though.
 
-The best position to address the bug that both data->connect and
-data->stateless_connect are enabled is in the function get_helper() as
-below:
+Patrick
 
-        } else if (!strcmp(capname, "connect")) {
-                data->connect =3D 1;
-        } else if (!strcmp(capname, "stateless-connect")) {
-                data->stateless_connect =3D 1;
-        }
-        ... ...
-        if (data->connect && data->stateless_connect)
-                die("cannot have both connect and stateless_connect enabled=
-");
+--poIZFYMknz0jtGD2
+Content-Type: application/pgp-signature; name="signature.asc"
 
-I consider this change to be off-topic and it will not be introduced
-in this series.
+-----BEGIN PGP SIGNATURE-----
 
---
-Jiang Xin
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmWqeKMACgkQVbJhu7ck
+PpS+gg/9FNWVySwltV7z0g4qbVSIohAQ/JSxplq0NHfVWoERV+q9iUvKegYHWYPj
+TSDL5aVEz0W0cYFRcYlTNOVgrPHliMC7ihYrMzDdGZmuZRHq7gYQ/2j/aWv5x3CY
+0w4SA3l6/xSQRuIbi2GexNv3N0HK3BH9TsnhKm/sPPzzApuHY8UIlL+c/QFHpXQJ
+Az3jRyfTLNnLDmTuDiqHqSwtJ8ayHA7KBUcdDx6I4MsUuVhPBrf3kzl3auu+DPXA
+1MctFZZ6gCpVxfQhalUlZkiVPPPzAx50ESDZQVAl5Gyhv+EtPLK2GXkXOiKF6YlM
+y1+EOB5FGJUwkJ/RQymozGGP6cOqnV7oiSZBtbAFsJSm655W3vovwE3oNJPDHe4f
+ba0Tcft/yjXLPz56p8jVsMXpgLMIY5mfILookJSQjYvS46WRZL8pBxPxh30P9/i9
+kZXio0BMqQfS5/HHGfGbmlybv1vb8PYHEMJnrWjYTd9UiNyFf1C6uT93fkgD9jIg
+rjZetpeqZsL9eEd/buWYcBu17z8ZRIhkRyug0q3X1ReSj6tQh5+hlOhcSSWIj/wv
+V8vnpoPP/KMskiAjvRlsb7L6Gg3Xnw7rKZPBElE5Ispp2OrVAE5epdP2LHFGgG8H
+IGZimL2LastAx/JFaowx3aScYCP6UQwyBCj5X58Bo1kI33y8vV8=
+=WEZ2
+-----END PGP SIGNATURE-----
+
+--poIZFYMknz0jtGD2--
