@@ -1,50 +1,51 @@
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D56A95465E
-	for <git@vger.kernel.org>; Fri, 19 Jan 2024 22:28:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66C331E48B
+	for <git@vger.kernel.org>; Fri, 19 Jan 2024 22:46:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705703335; cv=none; b=QJrCO3QxMK4/qwMAFT2zTj/h/mhCNh2JQ1J2lQ1PShLMpzfnVENkd2b+5LCj56gG2DdvwdCmoo/NaLY9pD2I3iSI5R/BoBYJh4FXZHC2rw6yv6OfcG9JlAvuULjQJZwOyzFzwz0+vEn/omjQJSipBw9gVszanPOaiMab9vgb44Y=
+	t=1705704378; cv=none; b=XiuE9TzIRL8V3CV98K/XwCnPYRawx//cUwRpaqQlkbnyHT9LU1VAqek1KCCquiVAZZChEOiGeytn2xfNH8d7lH3eieSXINb+OgtGsjL/FT1mm0FZyxSaDdxhGpWeneTIMJnN38jLD02gxH4MRjkCIHAXxiRNCQNy3MM2oYwbUpg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705703335; c=relaxed/simple;
-	bh=j1U4fpSxprPItUQusVEmuvP/cpQODFypGD9TKXgxLFE=;
+	s=arc-20240116; t=1705704378; c=relaxed/simple;
+	bh=s8Xv3F0ZJLu6X25OPzEcWOB8t2NsBSKSLm4tMleDoxo=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=VaKzJdluDXueW0G7tF7pc8OcN9umqgMbnQ/skNDSCyipHlGV6FsACnFSFGoHs2ucZFRm4HEqJ7D7YNvNCSacQAwSU9Fob7i+6HlP0ikWqIaB2XGAgdZTYNeqgy6+ayEGRde7fF7Alde6bqTQAODZvDp0OqYAUgseXQ6MlyztG9E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=qTLg33JS; arc=none smtp.client-ip=64.147.108.70
+	 MIME-Version:Content-Type; b=sDpsd1sXi9FxPDMTR0Wu4K8L7AQuDhVgSbmeS4UsFC+f6pLsjOh0S8byoU080UwTXbvYu9bDixRcZKcOzfseSxL+7i90EVTn4+vPpYD4qnSBKhJxXWbexVKIipeKJjPx+96rVHuQlsj5dJXqoF5+B9m18DQy400yngF5m5RivQY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=rxJmt4sD; arc=none smtp.client-ip=173.228.157.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="qTLg33JS"
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 714EC1D7183;
-	Fri, 19 Jan 2024 17:28:52 -0500 (EST)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="rxJmt4sD"
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id AFCD433986;
+	Fri, 19 Jan 2024 17:46:16 -0500 (EST)
 	(envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=j1U4fpSxprPItUQusVEmuvP/cpQODFypGD9TKX
-	gxLFE=; b=qTLg33JSO1e1kgJku1WJ0z2Ok8SGD12HFEiRGV1FzzKgCH2BLM1DMj
-	CLBQVm2XLQ4FlZFcVCMOSPQKaEGrJoU2CzcH65rRrBcac4keWuBpALBSEknsGo/h
-	fE4vZAzp6sKodMxWavAa30L6vwTYWzRzTIKjr/0AHfVICmBqD3Sbg=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 6817C1D7182;
-	Fri, 19 Jan 2024 17:28:52 -0500 (EST)
+	:content-type; s=sasl; bh=s8Xv3F0ZJLu6X25OPzEcWOB8t2NsBSKSLm4tMl
+	eDoxo=; b=rxJmt4sDzmy4KUyi/nh3OjJV70tjqLMwI72fmYFsoYLqdRHlkH/dR6
+	YXvNt0rMlezsravmqr/3PPqIacUdA5FkJasu6FOBC4vFlzDmB77jf/hbeWoT03G4
+	xvJ+yyvSJLwO8zwqC3ji/fAuRzjxbj//PeAnY8ThgFBkuOIzK7ghw=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id A8A0733985;
+	Fri, 19 Jan 2024 17:46:16 -0500 (EST)
 	(envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.125.200.93])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id CCF121D7181;
-	Fri, 19 Jan 2024 17:28:51 -0500 (EST)
+	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 3922133984;
+	Fri, 19 Jan 2024 17:46:13 -0500 (EST)
 	(envelope-from junio@pobox.com)
 From: Junio C Hamano <gitster@pobox.com>
 To: Josh Steadmon <steadmon@google.com>
 Cc: git@vger.kernel.org
-Subject: Re: [PATCH 0/2] Run limited fuzz tests in GitHub CI
-In-Reply-To: <cover.1705700054.git.steadmon@google.com> (Josh Steadmon's
-	message of "Fri, 19 Jan 2024 13:38:11 -0800")
+Subject: Re: [PATCH 1/2] fuzz: fix fuzz test build rules
+In-Reply-To: <9332e225e44b29be25d10229b05f0b9775b85568.1705700054.git.steadmon@google.com>
+	(Josh Steadmon's message of "Fri, 19 Jan 2024 13:38:12 -0800")
 References: <cover.1705700054.git.steadmon@google.com>
-Date: Fri, 19 Jan 2024 14:28:50 -0800
-Message-ID: <xmqqil3phs9p.fsf@gitster.g>
+	<9332e225e44b29be25d10229b05f0b9775b85568.1705700054.git.steadmon@google.com>
+Date: Fri, 19 Jan 2024 14:46:11 -0800
+Message-ID: <xmqqcytxhrgs.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -54,33 +55,29 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 X-Pobox-Relay-ID:
- 1F60BAC2-B71A-11EE-95E4-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
+ 8C191BF8-B71C-11EE-A776-A19503B9AAD1-77302942!pb-smtp21.pobox.com
 
 Josh Steadmon <steadmon@google.com> writes:
 
-> Add a simple smoke test in CI to make sure that the fuzz tests can build
-> and execute properly. While we already compile the fuzz-test objects in
-> the default make target, we don't link the executables due to these
-> requiring clang-specific support. However, this means that the fuzz
-> tests have been vulnerable to unnoticed build breakages as the code that
-> they link against has changed over time.
->
-> Adding this CI test should make such build breakages more visible more
-> quickly.
+> @@ -762,7 +763,7 @@ fuzz-objs: $(FUZZ_OBJS)
+>  # Always build fuzz objects even if not testing, to prevent bit-rot.
+>  all:: $(FUZZ_OBJS)
 
-Nice.
+So, this is what you referred to in your proposed log message.  We
+do build objects to prevent bit-rot, but we do not link, so it is
+merely half a protection.
 
-> Josh Steadmon (2):
->   fuzz: fix fuzz test build rules
->   ci: build and run minimal fuzzers in GitHub CI
->
->  .github/workflows/main.yml          | 11 +++++++++++
->  Makefile                            | 17 +++++++++++------
->  ci/run-build-and-minimal-fuzzers.sh | 19 +++++++++++++++++++
->  oss-fuzz/dummy-cmd-main.c           | 14 ++++++++++++++
->  4 files changed, 55 insertions(+), 6 deletions(-)
->  create mode 100755 ci/run-build-and-minimal-fuzzers.sh
->  create mode 100644 oss-fuzz/dummy-cmd-main.c
->
->
-> base-commit: 186b115d3062e6230ee296d1ddaa0c4b72a464b5
+> ...
+>  fuzz-all: $(FUZZ_PROGRAMS)
+
+But there is this target.  I wonder if it makes it even better to
+update the "always build fuzz objects" one?  Given that some folks
+may not have the necessary clang toochain for linking, it may
+probably be a bit too much, perhaps?
+
+It definitely is an improvement to build them in the CI environment,
+like you have in [2/2].
+
+Thanks.  Will queue.
+
+
