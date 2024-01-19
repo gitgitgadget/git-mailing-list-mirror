@@ -1,158 +1,82 @@
-Received: from wout5-smtp.messagingengine.com (wout5-smtp.messagingengine.com [64.147.123.21])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f50.google.com (mail-lf1-f50.google.com [209.85.167.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C62B4D529
-	for <git@vger.kernel.org>; Fri, 19 Jan 2024 07:59:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.21
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E60E824B47
+	for <git@vger.kernel.org>; Fri, 19 Jan 2024 08:01:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705651183; cv=none; b=toGckscX7XBpOeKZIlVMejN5jL7/LHjtjFCBs/ERcuKVoHH+hkS7q9uKnopb707HoTRc7vHicJ09HTJBaMg9cs2QWh9ru2n2ULvGHUwR5HeBf9ZYouHprty/VR+j7LZatEI4bWAy8z45VBSQXDvw3TIEZ7+sKSVUBG5/2+6m2sA=
+	t=1705651276; cv=none; b=p+SG288LxKEVZ5eyNX7VhounM5kMJ+IPTZaJApcdtQ+KwDFauRaZSWarqr0MW1szp9MnMwcZE5q6LWY8+u0BaEqRjYpRUKnqF+HAHr6hl6uIxp0tZUWxInxSusXdPWAlS19OFyFxYxDAmvSSQdFvmqkY2IC7HRvPjOyNkgAwVyA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705651183; c=relaxed/simple;
-	bh=xuSvKA8GFKk8X9UqUGRn2f0I5UvD9kayRCsSp7i2nDY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=UNJF02gkaDcrxdhOs97pULTENW269xtzEMoAMjAgZUZJ8Q2Lja4kpQiDjKZzEYSV4VaQKX2JgnlFN6Wz7kmkK+SO3w59mEK6hg0uw7WI2fozMzwuCPZCPOJVZKoa+VnoIzODv3b7ylBLZqnM8qXLYaUAWIXVRK1AjlEc99fOnWE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=TAKkhUqp; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=U+JfGkcn; arc=none smtp.client-ip=64.147.123.21
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1705651276; c=relaxed/simple;
+	bh=QItCdOmZnK3esGU8A81hEiuvgxXu01xMpGb7Wm3ND4E=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=q3UUnqsjlF22eJWMUQnMtR5AjFmqoEiVMkjR5c2KQ3Xn0phgBZijhXwm8HVXH3u7LIvowkYzaNG4spg8ELQK/Eg5ovtr04KGnP5ot903XY0Eufcu04Ki5d36TwGCCPN11crTCUkINW2LPK6ujHZ0H7wjE1lBBLiD9ZjrZDuO9LI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=EDEmWm0p; arc=none smtp.client-ip=209.85.167.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="TAKkhUqp";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="U+JfGkcn"
-Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
-	by mailout.west.internal (Postfix) with ESMTP id 682473200AF9;
-	Fri, 19 Jan 2024 02:59:40 -0500 (EST)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute2.internal (MEProxy); Fri, 19 Jan 2024 02:59:40 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1705651180; x=1705737580; bh=xuSvKA8GFK
-	k8X9UqUGRn2f0I5UvD9kayRCsSp7i2nDY=; b=TAKkhUqpBq/uuEzB509rn9t1Ci
-	yk5T3Qg7PBip4MJpVL0y8+0tfume18rrsqyIXftinE1+CgL0YIiwW7tpgEnuyEbl
-	f1+AZAK7vwf5MgMkOlxgFErGUDSDYMxuvTg/vv6BnqaobTyGuxjw1sh9DSvEs6Yz
-	3aOWvoY4Pxw1Scy8aSCsYT/a/SX/pr3vMtDQBe9muyjK0KgajpSRfUNH+dmMLvHw
-	4LCi4yImhNOBv2My05TLjP3kmoU005Zlr095VrjfB1aBDZVfAzMENKjEjKkMkrF5
-	bgFFC6wrLnShnBKUZ3eWpZ3XfMl5e8T6nQxx4ojvnjBS4LQdq3KWMetTHflA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1705651180; x=1705737580; bh=xuSvKA8GFKk8X9UqUGRn2f0I5UvD
-	9kayRCsSp7i2nDY=; b=U+JfGkcnJCuTeH0qkeynkYpvzDtPdGPktUiVCDwepyRD
-	A3N0W7JwAEf4CH5zoI7HCW+1ed24kN7HDq3MU0wUXCEmKzsiw/bg82wkO6f371+Q
-	Tq5JGihJyzgxhUDFs8F+jfjR6g58BiFRZb4M9XThFw16A1SNw6GbGP5mu+6CHi6n
-	/dPEWyQRMCXmpisvBEIarMU87cnV0sXUs/SBZhD2Oy8HHy7sZgDAsrNGQQJ7rWcO
-	VSl/51fweG03Aw+gg+ChSCH4jGGUwa5HErUlM0p4Z4wy743UoQMtIjg2cJX5lQec
-	9lhVOxbPgRcxwCGRxSVCZdj1jxBt6POGQSV9l9Hu4A==
-X-ME-Sender: <xms:6yuqZW0AmlHzAP4DBntCsCnGq12aDDOoJh5nFQ-JeUyxnAOJr-7crA>
-    <xme:6yuqZZE4Zk1PSOdHw-78I_nHqMS2Q3RH78FGg-ui-1qmrAg3eQklQQm-zbUGOj0d5
-    tMWTo0gU-CzAlcbSA>
-X-ME-Received: <xmr:6yuqZe6zZKZnbUs9TeltH140LaHVHaoQT9qe0WPzaSTRuRCFwByhDLqH_Qt8TPbszg4HRndPEGfZ_qQgu_Gw_reADcRW6vrZZqP3oU4RvouEBgIMyw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrvdejledguddugecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
-    necuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
-    enucfjughrpeffhffvvefukfhfgggtuggjsehgtderredttdejnecuhfhrohhmpefrrght
-    rhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtth
-    gvrhhnpeetueevhffhudefvdegieeuieelgedthfegfedtueevjeejtdfgjeehudejuedt
-    udenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpsh
-    esphhkshdrihhm
-X-ME-Proxy: <xmx:6yuqZX3c09qqMGk17yNmiIxdMF60IpnKZGfhLwBwNsi1fpo1Si1gKw>
-    <xmx:6yuqZZHzzGkvPA7Ti2yJheM_vSexSC40GhInHR159XA30Takqh9lgg>
-    <xmx:6yuqZQ-XqveYLYYWQC57hQxsT7SMdUELu9Mta4-8iu6bB27-rZTyHA>
-    <xmx:7CuqZdg_iu9Nl_Gf4PeS1V39JWoKX0PdTEE1KJ2M4g1o3zf37E9sEA>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 19 Jan 2024 02:59:38 -0500 (EST)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 5fb435fd (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 19 Jan 2024 07:56:40 +0000 (UTC)
-Date: Fri, 19 Jan 2024 08:59:35 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: Kristoffer Haugsbakk <code@khaugsbakk.name>
-Cc: git@vger.kernel.org, stolee@gmail.com,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	Taylor Blau <me@ttaylorr.com>, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 3/4] config: factor out global config file retrieval
-Message-ID: <Zaor5zNLKE3UXhHM@tanuki>
-References: <cover.1697660181.git.code@khaugsbakk.name>
- <cover.1705267839.git.code@khaugsbakk.name>
- <32e5ec7d866ff8fd26554b325812c6e19cb65126.1705267839.git.code@khaugsbakk.name>
- <ZaoUOPsze7rhtT2M@tanuki>
- <7f0864ad-c846-42a6-8ddc-85d6be58a4ee@app.fastmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EDEmWm0p"
+Received: by mail-lf1-f50.google.com with SMTP id 2adb3069b0e04-50e7f58c5fbso582053e87.1
+        for <git@vger.kernel.org>; Fri, 19 Jan 2024 00:01:14 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1705651272; x=1706256072; darn=vger.kernel.org;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=o0bp56/Y9we4cxbIpWnHEnqlvHjyxUZwjKLP0r73MrI=;
+        b=EDEmWm0pyDjEFDR3Yn0i1YNKPxvSKV2alSYSD64OUMS3LxtfgoHV3c1ptH2UC72Ua5
+         PIMmbZz1wRDHW10h5H0zjp/x7a3rQVdw+0VMNqzB/GKpfdEHSBGN2G+iXKZdK9rUwvEI
+         ZxWnyUvS80nL8FhzEkEplPOEsUBf6CZ3PYQwhAfpq3Txv+S/CR5P9jdNOkjA9mHi8CHz
+         Za5dGBahnpaaN5jwaxTuE92ZYw6rWjy7u9K7yUCdF4akvReG/fgYOKR0uJh+HPa1fshn
+         WtxJIWwc+Yhxg0W/v1x+yrnnS22/s1JW/lwDGrFvwFclFsYmyQGXknuWv8elcOop1t0K
+         jLVA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1705651272; x=1706256072;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=o0bp56/Y9we4cxbIpWnHEnqlvHjyxUZwjKLP0r73MrI=;
+        b=o0kl6nSfGDGHYduB1GonPM150G9dCCelp2R2gY4Nr3uD+fOI7zuZm9M74XqfgyyLjq
+         9JyeVE++/vlwWqvigH4qp6pI3EAfokxxdkI2szb/fAE9AckiJV/bF4l4vXDS/rb27r4I
+         cRgwEW+lkpCzmJjrLh6EVTM6npJ5Zt77XdJ0Lwj4eVd+za8vZ5r9KRI1uwOZqt5HluFj
+         zDDZosPYCjiN2VFW7HJhAWkjFjew7pvCAK8dc4sMnpDajyqCWn3pFoM9RYLFzwge8FD1
+         iegbc43yg8IlhuISR2pKdzbKgFafi0s8RAfoNfQeUvfEU24vU2EhUuQ0dIOsYumDPCsa
+         Pk/Q==
+X-Gm-Message-State: AOJu0YxebVDISJRmmi4EqgK3wNLcnfpxzaZNMvkKr2f1BYcWvsLSABUu
+	NsTWNOHgsoI8Pj/WlJzWKiVlP9ZGM8a4QFKQqVk6lRjnUqTyHgQpLubgQ4eE1Ne6vz70fUzgzWv
+	CrRE+U8Xo5WE8lbOIE72+h3G6+J5mp/hhA2iJgDc6
+X-Google-Smtp-Source: AGHT+IFU0TXaig/CkK39yCTsARhf6IYmZDl1KhbDOUOsGTayZZkbMQkqol5+Me+CkJn9Jnrenp7mfCvQIcv+S1Fogu4=
+X-Received: by 2002:a19:f507:0:b0:50f:d65:895c with SMTP id
+ j7-20020a19f507000000b0050f0d65895cmr421674lfb.69.1705651272262; Fri, 19 Jan
+ 2024 00:01:12 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="Pac5pRDPz1+UGKOL"
-Content-Disposition: inline
-In-Reply-To: <7f0864ad-c846-42a6-8ddc-85d6be58a4ee@app.fastmail.com>
+From: M Hickford <mirth.hickford@gmail.com>
+Date: Fri, 19 Jan 2024 08:00:00 +0000
+Message-ID: <CAGJzqsmd0mEjH-iB2RZLTkGw37W6y_vVvS1vDKgObofAfprBnw@mail.gmail.com>
+Subject: [Help wanted] git-credential-osxkeychain support for attributes
+ password_expiry_utc and oauth_refresh_token
+To: Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 
+Hi. Git 2.41 introduced credential attributes password_expiry_utc and
+oauth_refresh_token [1]. Credential helper git-credential-osxkeychain
+currently silently discards these attributes. Is any keen macOS
+developer interested in adding support? This would greatly help
+git-credential-oauth users on macOS [2].
 
---Pac5pRDPz1+UGKOL
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Details: the design could follow git-credential-libsecret [3]. There
+are already tests in t030-credential-external [4].
 
-On Fri, Jan 19, 2024 at 08:40:51AM +0100, Kristoffer Haugsbakk wrote:
-> On Fri, Jan 19, 2024, at 07:18, Patrick Steinhardt wrote:
-> > But second, I think that the new function you introduce here has the
-> > same issue as the old function that you refactored in the preceding
-> > patch: `git_config_global()` isn't very descriptive, and it is also
-> > inconsistent the new `git_config_global_paths()`. I'd propose to name
-> > the new function something like `git_config_global_preferred_path()` or
-> > `git_config_global_path()`.
->=20
-> The choice of `git_config_global` is mostly motivated by it working the
-> same way as `git_config_system`:
->=20
-> ```
-> given_config_source.file =3D git_system_config();
-> [=E2=80=A6]
-> given_config_source.file =3D git_global_config();
-> ```
->=20
-> (The extra logic imposed by XDG for =E2=80=9Cglobal=E2=80=9D is implied b=
-y `man git
-> config`. I don=E2=80=99t know what the guidelines are for spelling that o=
-ut or not
-> in the internal functions.)
->=20
-> Your suggestion makes sense. But should `git_system_config` be renamed as
-> well?
+The work is small enough it might count as a microproject, though it's
+atypical because it's platform specific to macOS.
+https://git.github.io/General-Microproject-Information/
 
-Yeah, you're right that `git_system_config()` is bad in the same way. In
-fact I think it's worse here because we have both `git_config_system()`
-and `git_system_config()`, which has certainly confused me multiple
-times in the past. So I'd be happy to see it renamed, as well, either
-now or in a follow-up patch series.
+Kind regards
+-M
 
-But as I said, I don't think it's a prereq for this patch series to land
-and others may have differing opinions. So please, go ahead as you deem
-fit (or wait for other opinions).
-
-Patrick
-
---Pac5pRDPz1+UGKOL
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmWqK+YACgkQVbJhu7ck
-PpQKag//QcfQuavNuvzgzW67jTb4NLdhfSRHoOftYmk6zZhi146fwXu2A0Btn6Zh
-mF/x5LdB6xHK4OmF8AZj050PiptICqu2mNlmcMsUujkYWXzf4kS4I2Y1Dr9W+vAj
-OYv+qRIJaUMz3pONlaQ/X4x1pi9d3KGBn/4wBId4besk9tr4Cu4Gpug//soIVdV/
-j1lPSb/KKtmeO94bOmOgafAzYbDTnqnnvV5NECuHzePfFSl8wd9mqjgWtyvYYiFx
-rdL96VZsyI+FwnyvbtUN03V/Pi5INpchBmK0Lvz6qItMW+/87S+rFrCOPwd6EPrw
-HZPLs1Ek9/9Nug8yj/IKhMfPxe+dbx6hx3T+jvImjIe3WFVDGseC/xZc7i5vqttg
-GouN2KD1kSrc9VR47KlY6BtOeFdvjX+gVBhmiLnbmC/7CeFcz1UM9ZKUuJe5WbK+
-ceuNMPi1g9Q0JqIxEB2TcN84xzsFPO8vGuhPlAlff5Zp0EG2Cj4B8vBo16EVTrg/
-ZLCRJ6Ye5LsXrCWVLBLM7Iqzn1oOchpa0qGNCxBkKpQa6CVfczQ9W60SLTohXVPN
-T2/WLlj8IPMFuUnTFVKv91aTptljylANqMG28ZoPG4G0GDKuc2TG96Lei9i4QPJS
-EV2UII7CXVqP4Tca2krvNKRr5psQzaj95k2tXV+7CiLjmZDgJAI=
-=OcBd
------END PGP SIGNATURE-----
-
---Pac5pRDPz1+UGKOL--
+[1]  https://git-scm.com/docs/git-credential/#IOFMT
+[2] https://github.com/hickford/git-credential-oauth/issues/42
+[3] https://github.com/git/git/blob/a54a84b333adbecf7bc4483c0e36ed5878cac17b/contrib/credential/libsecret/git-credential-libsecret.c#L157-L177
+[4] https://github.com/git/git/blob/a54a84b333adbecf7bc4483c0e36ed5878cac17b/t/lib-credential.sh#L436-L538
