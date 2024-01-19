@@ -1,63 +1,63 @@
-Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
+Received: from mail-wr1-f47.google.com (mail-wr1-f47.google.com [209.85.221.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD3095787F
-	for <git@vger.kernel.org>; Fri, 19 Jan 2024 20:19:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0C2558100
+	for <git@vger.kernel.org>; Fri, 19 Jan 2024 20:19:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705695551; cv=none; b=leZTc0JBiS7haBp47yiK37dhzVs+HoR2EIjw6dXsYEjttoufVRPn5e0JyLxe4P9i59Ibihr9zGqZtoKXnFTcfS8jX7+HCUoCkKgnFNcwSfE3Swb7n142JZdIkKSiyfGCb2G+IJ8iSEoaKxyMkRIBbBZekec+ibyZ2Tg/RvUHHb0=
+	t=1705695552; cv=none; b=WBOaYMIsYuSghSBBu816mFHRggllk0sy3z11juCWtpavCvRM4ejbEVjAy2omaMDnMNkxQaVIJ/bV0/ICBVCs2ghGajty99yW/EN1dR4mudGD71ukSIBVCGehWX4/CoUXTgpk8XvP68BBsqbdV5RJaUi2R81iN0tJy6mDdxNBXF4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705695551; c=relaxed/simple;
-	bh=qlFuWhD1SPvWR5O7I18X5TxShWssvOZe3cDLWitA/RI=;
+	s=arc-20240116; t=1705695552; c=relaxed/simple;
+	bh=QQtvQWkGfG3/B29JvIlcWEHKml9Gd187QvYOiA4Byfs=;
 	h=Message-ID:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=P+caurcQIVHeQDhM8eatCKlu+Y9RF25bf65PFWtR74i9f7kRm61A94kXRVd1uYkgxbGB/vD/YLklBgvklj0TCoK+IU+AX9yKqqTRZd6HZV8O/CsOK650mQsZGPfwZhReLQTztv+I/0BwvAZ3rECTufW3WFxyBUiAEfgCvqA+jjU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ed9ggALf; arc=none smtp.client-ip=209.85.128.42
+	 MIME-Version:To:Cc; b=QPynYO2AWUY2ssQNvjLeSn0479q7x/YxyfUFHZ6kOgSlMjIICUqxM4WWJRKApG79Ql9R1YCMIOMowAYSXa4RDsjj2E/kEGK4gI4QjyDpni8H02tx1VYafIWgEuee4/dVFK3WB5ddvMbYFq+k/KJZR7Fn88hDZXmcSXctq1dD0A4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ArSeLgyY; arc=none smtp.client-ip=209.85.221.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ed9ggALf"
-Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-40e913e3f03so13435155e9.3
-        for <git@vger.kernel.org>; Fri, 19 Jan 2024 12:19:09 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ArSeLgyY"
+Received: by mail-wr1-f47.google.com with SMTP id ffacd0b85a97d-337d99f9cdfso860095f8f.0
+        for <git@vger.kernel.org>; Fri, 19 Jan 2024 12:19:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1705695547; x=1706300347; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1705695548; x=1706300348; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=5LAoa+8TpL70822AWNODhae4tBNU6PkVIKDUKMrj2Ok=;
-        b=ed9ggALfwJymycnRfTQftYewVeBa/6fVV2b7SXyNtzzlM3ybftUGI9Qg+3Gociv4hw
-         +CebcLs1PMOfAGIYMTaTBxBI9fN1gdMVd5D99l7ZVb4cKe03ZwuBNSlEK8aju8p9HvSb
-         3meTTwKbGWxi6YNwXRNyrwgx2gKFptAZgNsOYd+CJPYmSIZVPLx91uw6IdFQGeKEtXzl
-         fcsnR5As2c7MleqzyOF9iTdAZWS+cFmhrADeQhhW0RmC3jTYMIjfpu2YfA+KAT0mBSaP
-         wNQTU3CukO8g0tUkKdX7vNKbQzMPfDByfDSRQe8ap0woA26Jo9AdOGUV8gjHiwYiFHMg
-         /Sew==
+        bh=IBxrCrz0iGHVRBxhanLHfqFpONMEFYr7FfOvbcRa0u4=;
+        b=ArSeLgyYkOFbpziVL7rXjDeBU2gzhBEj9lvivHDQtMr/tlssqPpW1B9F2gRTpYYjUF
+         fwbA42FjeDixDSbNcGkUfn4AjiDKHtYUjZvx49PgPeaikBJoA63wG1EVvmMJIbHBVqgH
+         HXN7M5zykpmeCFpgeOAY15V38xJ95zmlyYGg7v2q6ahaKEex2gs9buNapJf8uRBHgS4C
+         6c/GirWxgTpBQ0E00vA4/bYZ3ykVTCtsbUbskthexgEwJgHUa0+dc8xaKjkrtf/oRScS
+         UwCMIGa9anuhyZnT9mlhk8GJ848zXTaOGuTMPrHgeWRUwy7+sg8Aq6M5lzk90wcZoLNj
+         gP9Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1705695547; x=1706300347;
+        d=1e100.net; s=20230601; t=1705695548; x=1706300348;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=5LAoa+8TpL70822AWNODhae4tBNU6PkVIKDUKMrj2Ok=;
-        b=bBxgRGsu4rLX0XTOqV9CP6H/fnXF0BLRLETZc7YKVin06x5BQBkvGxmA3AfQnZ1LY2
-         /7nee3WCUp0sMrfJjwTNl8f/ibmlZNVQsc8wfSw2WWkg/KWqK9VKjwe+X2F4T3dKst7U
-         5FoZSDy3na/NnQXShFn9yhQasx/KMaTQ2HvdhQ0GZzGYhnWWWrYupD+RZqUYFNUKPsk1
-         ncyfStZD5Xb8YLNaIJeE0dcBX+83Msjvep3IF5T/nr2hF4UNPUlj2To/jhHz1Vq78vpt
-         KicrM4qckvoxI0bm1vXBFR/BZG4lIrKvzHcPfIKwUHBrJy83bDUEtmTCQ18jPBCJiQZS
-         0jPg==
-X-Gm-Message-State: AOJu0Yxp+1OQcRZtzzw5idlqKqKWny8BOHokqjOdKtwiIcRmBqOWwRly
-	l3CNLtrVts+aQo2z6MBcF9NqysfRcsbM+ann71dkhRt+Tkrr4wG4bwfShqkc
-X-Google-Smtp-Source: AGHT+IGHqquNSUF5H7EDncPhc/KWbcSPuSfAPTPL5i/nX8guTNuNHRaukrH434P1Bi39/QrSE45xQw==
-X-Received: by 2002:a05:600c:4747:b0:40e:a334:146a with SMTP id w7-20020a05600c474700b0040ea334146amr55865wmo.14.1705695547283;
-        Fri, 19 Jan 2024 12:19:07 -0800 (PST)
+        bh=IBxrCrz0iGHVRBxhanLHfqFpONMEFYr7FfOvbcRa0u4=;
+        b=f7Xj944IbnL23xTo24f3RLc6ThMlg2s77F4bT78oNseT7TFiX5g4uXGxmwCZqfur7v
+         DsQskN/+jUbVEmZb4S1T+ZyJqw0qymsCbLvXVAHSU74PcvCfa3xSvJko9I5s+rdrAlwm
+         3MV1PwXedyPqEVGh0zUd7jM/saxORNjcI2tc1a0siTqEv0yx1HOB7Mmd8dIQ7ooR+xC/
+         ipq7f2PYd2tHqDlJaCCiXtsUYWrPjltCVO04mbFLFQrjNTeI6SxVFjLHFqypPUo3ddge
+         a/Tr2VNixal0Vxh1ui5i85peAR8cc+/jAMp9q3VfPYOkmxWPap2mbsmFKFpj3hDmIZJo
+         nEbg==
+X-Gm-Message-State: AOJu0YxEG5k4oa6vMSVWRzAFqBjhzGZGZr4gfbJA+R6eFnM0CC29++Zm
+	XbVdW+LhzenlOP5nx9EHcx2FLt15PhwJj7IPSJZOWMWQ8BwgHvRMHXmjh+d1
+X-Google-Smtp-Source: AGHT+IGopO8YzhF+BXv1CXv1GTByzTwizExDUOBH6L8DzXdVKekAxEi/DP9Fq/l1nJKuaIUpw9CX8A==
+X-Received: by 2002:a5d:6383:0:b0:337:c702:98ef with SMTP id p3-20020a5d6383000000b00337c70298efmr116628wru.13.1705695548516;
+        Fri, 19 Jan 2024 12:19:08 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id n15-20020a5d4c4f000000b00337d6f0013esm3552683wrt.107.2024.01.19.12.19.06
+        by smtp.gmail.com with ESMTPSA id x8-20020a5d4448000000b0033925e94c89sm249393wrr.12.2024.01.19.12.19.07
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 19 Jan 2024 12:19:06 -0800 (PST)
-Message-ID: <d93c9c410b995b0c72958b1e9edc27c785857c55.1705695540.git.gitgitgadget@gmail.com>
+        Fri, 19 Jan 2024 12:19:07 -0800 (PST)
+Message-ID: <8327b12a313b00d1ca392f446e13f9c1018f1d84.1705695540.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1647.v2.git.git.1705695540.gitgitgadget@gmail.com>
 References: <pull.1647.git.git.1705521155.gitgitgadget@gmail.com>
 	<pull.1647.v2.git.git.1705695540.gitgitgadget@gmail.com>
 From: "John Cai via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Fri, 19 Jan 2024 20:18:55 +0000
-Subject: [PATCH v2 07/12] t1410: move reffiles specific tests to t0600
+Date: Fri, 19 Jan 2024 20:18:56 +0000
+Subject: [PATCH v2 08/12] t1415: move reffiles specific tests to t0601
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -74,136 +74,67 @@ Cc: Patrick Steinhardt <ps@pks.im>,
 
 From: John Cai <johncai86@gmail.com>
 
-Move these tests to t0600 with other reffiles specific tests since they
-do things like take a lock on an individual ref, and write directly into
-the reflog refs
+Move this test into t0601 with other reffiles pack-refs specific tests
+since it checks for individua loose refs and thus is specific to the
+reffiles backend.
 
 Signed-off-by: John Cai <johncai86@gmail.com>
 ---
- t/t0600-reffiles-backend.sh | 51 +++++++++++++++++++++++++++++++++++++
- t/t1410-reflog.sh           | 42 ------------------------------
- 2 files changed, 51 insertions(+), 42 deletions(-)
+ t/t0601-reffiles-pack-refs.sh | 20 ++++++++++++++++++++
+ t/t1415-worktree-refs.sh      | 11 -----------
+ 2 files changed, 20 insertions(+), 11 deletions(-)
 
-diff --git a/t/t0600-reffiles-backend.sh b/t/t0600-reffiles-backend.sh
-index 3bd28699d53..44571033fac 100755
---- a/t/t0600-reffiles-backend.sh
-+++ b/t/t0600-reffiles-backend.sh
-@@ -308,4 +308,55 @@ test_expect_success 'for_each_reflog()' '
- 	test_cmp expected actual
+diff --git a/t/t0601-reffiles-pack-refs.sh b/t/t0601-reffiles-pack-refs.sh
+index 2e457c4f2df..c2c19befacc 100755
+--- a/t/t0601-reffiles-pack-refs.sh
++++ b/t/t0601-reffiles-pack-refs.sh
+@@ -308,4 +308,24 @@ test_expect_success SYMLINKS 'pack symlinked packed-refs' '
+ 	test "$(test_readlink .git/packed-refs)" = "my-deviant-packed-refs"
  '
  
-+# Triggering the bug detected by this test requires a newline to fall
-+# exactly BUFSIZ-1 bytes from the end of the file. We don't know
-+# what that value is, since it's platform dependent. However, if
-+# we choose some value N, we also catch any D which divides N evenly
-+# (since we will read backwards in chunks of D). So we choose 8K,
-+# which catches glibc (with an 8K BUFSIZ) and *BSD (1K).
-+#
-+# Each line is 114 characters, so we need 75 to still have a few before the
-+# last 8K. The 89-character padding on the final entry lines up our
-+# newline exactly.
-+test_expect_success SHA1 'parsing reverse reflogs at BUFSIZ boundaries' '
-+	git checkout -b reflogskip &&
-+	zf=$(test_oid zero_2) &&
-+	ident="abc <xyz> 0000000001 +0000" &&
-+	for i in $(test_seq 1 75); do
-+		printf "$zf%02d $zf%02d %s\t" $i $(($i+1)) "$ident" &&
-+		if test $i = 75; then
-+			for j in $(test_seq 1 89); do
-+				printf X || return 1
-+			done
-+		else
-+			printf X
-+		fi &&
-+		printf "\n" || return 1
-+	done >.git/logs/refs/heads/reflogskip &&
-+	git rev-parse reflogskip@{73} >actual &&
-+	echo ${zf}03 >expect &&
-+	test_cmp expect actual
-+'
-+
-+# This test takes a lock on an individual ref; this is not supported in
-+# reftable.
-+test_expect_success 'reflog expire operates on symref not referrent' '
-+	git branch --create-reflog the_symref &&
-+	git branch --create-reflog referrent &&
-+	git update-ref referrent HEAD &&
-+	git symbolic-ref refs/heads/the_symref refs/heads/referrent &&
-+	test_when_finished "rm -f .git/refs/heads/referrent.lock" &&
-+	touch .git/refs/heads/referrent.lock &&
-+	git reflog expire --expire=all the_symref
-+'
-+
-+test_expect_success 'empty reflog' '
-+	test_when_finished "rm -rf empty" &&
-+	git init empty &&
-+	test_commit -C empty A &&
-+	>empty/.git/logs/refs/heads/foo &&
-+	git -C empty reflog expire --all 2>err &&
-+	test_must_be_empty err
++# The 'packed-refs' file is stored directly in .git/. This means it is global
++# to the repository, and can only contain refs that are shared across all
++# worktrees.
++test_expect_success 'refs/worktree must not be packed' '
++	test_commit initial &&
++	test_commit wt1 &&
++	test_commit wt2 &&
++	git worktree add wt1 wt1 &&
++	git worktree add wt2 wt2 &&
++	git checkout initial &&
++	git update-ref refs/worktree/foo HEAD &&
++	git -C wt1 update-ref refs/worktree/foo HEAD &&
++	git -C wt2 update-ref refs/worktree/foo HEAD &&
++	git pack-refs --all &&
++	test_path_is_missing .git/refs/tags/wt1 &&
++	test_path_is_file .git/refs/worktree/foo &&
++	test_path_is_file .git/worktrees/wt1/refs/worktree/foo &&
++	test_path_is_file .git/worktrees/wt2/refs/worktree/foo
 +'
 +
  test_done
-diff --git a/t/t1410-reflog.sh b/t/t1410-reflog.sh
-index a0ff8d51f04..d2f5f42e674 100755
---- a/t/t1410-reflog.sh
-+++ b/t/t1410-reflog.sh
-@@ -354,36 +354,6 @@ test_expect_success 'stale dirs do not cause d/f conflicts (reflogs off)' '
- 	test_must_be_empty actual
+diff --git a/t/t1415-worktree-refs.sh b/t/t1415-worktree-refs.sh
+index 3b531842dd4..eb4eec8becb 100755
+--- a/t/t1415-worktree-refs.sh
++++ b/t/t1415-worktree-refs.sh
+@@ -17,17 +17,6 @@ test_expect_success 'setup' '
+ 	git -C wt2 update-ref refs/worktree/foo HEAD
  '
  
--# Triggering the bug detected by this test requires a newline to fall
--# exactly BUFSIZ-1 bytes from the end of the file. We don't know
--# what that value is, since it's platform dependent. However, if
--# we choose some value N, we also catch any D which divides N evenly
--# (since we will read backwards in chunks of D). So we choose 8K,
--# which catches glibc (with an 8K BUFSIZ) and *BSD (1K).
--#
--# Each line is 114 characters, so we need 75 to still have a few before the
--# last 8K. The 89-character padding on the final entry lines up our
--# newline exactly.
--test_expect_success REFFILES,SHA1 'parsing reverse reflogs at BUFSIZ boundaries' '
--	git checkout -b reflogskip &&
--	zf=$(test_oid zero_2) &&
--	ident="abc <xyz> 0000000001 +0000" &&
--	for i in $(test_seq 1 75); do
--		printf "$zf%02d $zf%02d %s\t" $i $(($i+1)) "$ident" &&
--		if test $i = 75; then
--			for j in $(test_seq 1 89); do
--				printf X || return 1
--			done
--		else
--			printf X
--		fi &&
--		printf "\n" || return 1
--	done >.git/logs/refs/heads/reflogskip &&
--	git rev-parse reflogskip@{73} >actual &&
--	echo ${zf}03 >expect &&
--	test_cmp expect actual
+-# The 'packed-refs' file is stored directly in .git/. This means it is global
+-# to the repository, and can only contain refs that are shared across all
+-# worktrees.
+-test_expect_success REFFILES 'refs/worktree must not be packed' '
+-	git pack-refs --all &&
+-	test_path_is_missing .git/refs/tags/wt1 &&
+-	test_path_is_file .git/refs/worktree/foo &&
+-	test_path_is_file .git/worktrees/wt1/refs/worktree/foo &&
+-	test_path_is_file .git/worktrees/wt2/refs/worktree/foo
 -'
 -
- test_expect_success 'no segfaults for reflog containing non-commit sha1s' '
- 	git update-ref --create-reflog -m "Creating ref" \
- 		refs/tests/tree-in-reflog HEAD &&
-@@ -397,18 +367,6 @@ test_expect_failure 'reflog with non-commit entries displays all entries' '
- 	test_line_count = 3 actual
- '
- 
--# This test takes a lock on an individual ref; this is not supported in
--# reftable.
--test_expect_success REFFILES 'reflog expire operates on symref not referrent' '
--	git branch --create-reflog the_symref &&
--	git branch --create-reflog referrent &&
--	git update-ref referrent HEAD &&
--	git symbolic-ref refs/heads/the_symref refs/heads/referrent &&
--	test_when_finished "rm -f .git/refs/heads/referrent.lock" &&
--	touch .git/refs/heads/referrent.lock &&
--	git reflog expire --expire=all the_symref
--'
--
- test_expect_success 'continue walking past root commits' '
- 	git init orphanage &&
- 	(
+ test_expect_success 'refs/worktree are per-worktree' '
+ 	test_cmp_rev worktree/foo initial &&
+ 	( cd wt1 && test_cmp_rev worktree/foo wt1 ) &&
 -- 
 gitgitgadget
 
