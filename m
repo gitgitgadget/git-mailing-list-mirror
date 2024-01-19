@@ -1,64 +1,63 @@
-Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com [209.85.128.46])
+Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99E255675D
-	for <git@vger.kernel.org>; Fri, 19 Jan 2024 20:19:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E067357302
+	for <git@vger.kernel.org>; Fri, 19 Jan 2024 20:19:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705695548; cv=none; b=QF1GnhwnwdUXH1ERld2thuBrViw77fEdGtIbZdCy7/chXCl0vcLRhc2X6SnT4TLW6JnChT4Fp8Slqa2s2U5x2V8qdwP897SyyhHO7nkSkzTb8KaBcW4unOin3CmPjp2ON8ooV9NeiA1jzB2yjRn0qRg/TUif5LJi/ulPd832vls=
+	t=1705695549; cv=none; b=p9ZbpTRKFqZ/bkKGyuoHLABtdzdDJ75fq+poSghPJAEl3n+3j0MO5993bCUCMogFA7rDyeSZtX3xhRO56MCnJn8CbpSbe6Hib+H67WIIhFKiGoyte3CyP08aM1O1eGhlTEO+aToDTQDu6ktri3WowU3aobBNrj+tJZ/+ZqGV2PQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705695548; c=relaxed/simple;
-	bh=+fAmqXeyTI0TgooGuGV5VjcyJfLYQKyJJJYBXwmeKT8=;
+	s=arc-20240116; t=1705695549; c=relaxed/simple;
+	bh=PEtimUn1GkX8AtQ4KhIU36esVMi/OOXPr5jpcmr65zY=;
 	h=Message-ID:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=DN0QvCKpio7oU5cRB6NK6pygLXaha4KVNMOQtPMoXYWb79ZnWEoaaZrslmHb9GWhmXrIkxJw1w7phEiPonJ2MF5eDI1pj1g2dxS43JFzaaoyIJI1SONX36pIKUUOI6IvCzor2aqI3S+mvPxNHLieqXiFvEhs7S+9O+AqEDV90zg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=X5UaH+j0; arc=none smtp.client-ip=209.85.128.46
+	 MIME-Version:To:Cc; b=pPooR8EKtpw11XO5rve1CknoweCwe7FAbFDYc1Cl0nLUKGVtx/RTR/bNGRKaVwPtLbveGyUCsUWP60Lt1FFOs+dgxpWxddJ/8fLPZ7ZUdIJtl1jDUoIq0v3STvnM3HgKjcMSOLIqT9KbpWnnq/+4NEai/3JDahtmMrRKJfQnRmM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=QXJMYMgV; arc=none smtp.client-ip=209.85.128.51
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="X5UaH+j0"
-Received: by mail-wm1-f46.google.com with SMTP id 5b1f17b1804b1-40e9d288f45so12277225e9.2
-        for <git@vger.kernel.org>; Fri, 19 Jan 2024 12:19:06 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QXJMYMgV"
+Received: by mail-wm1-f51.google.com with SMTP id 5b1f17b1804b1-40e87d07c07so13528985e9.1
+        for <git@vger.kernel.org>; Fri, 19 Jan 2024 12:19:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1705695544; x=1706300344; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1705695545; x=1706300345; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=8sqab6Uhq1OPsAJMlNnyFACdeKriyuW8E+82dC3/oI8=;
-        b=X5UaH+j0FJjm5rY3C6PQnqR5UXc38MHb+RePco0O5fujTWSAoN3YjVQA7iDKGCYHgT
-         0jkWe2X2yj3ekQDTc9GUkv8MSFMUpIF7VwMeI5pxj1e3E7TdkCj6JwxARjdtRacfoQ42
-         Z9UDr0/BL6e1q2fz9sc4aILJHz63s49+1QTI33shImrPjSslQkm38KWTesbdKY+yTpdU
-         c7eFjSrtKQZaMV/Zib6k1h7MVLT5KOqGdBlhJ5d5j9jkqSexAdlKI6Vpxx8ulsqLzCxn
-         jIre7Yh7dPypWA/cBhgUmXbw/+TRBfCVOYQwowzZSWVGmAJsIPCRy9jws8OGtj2FView
-         QbNg==
+        bh=wvAeKPQ8C29opYWma/beMRAr4IQAGUukuoXbFY7UYso=;
+        b=QXJMYMgVcUkxB9Rcb7PvSI3tOw15uUrQXF9p3Q0m5vM899jA43us/SOVjd4/1unLrZ
+         PXaEbks2BfhE19h+PjmL6tJ8sYy2vZm0KCtDoZ18nc2cAob2lv3tfkTYQ0vdlcjY3+oK
+         CGzSbkSu8AQ5IQXhp0Jvcp/vWUEizv1Ji81kVhcVW3S6coT4UB4TeJ2mujdBvgWT7c98
+         fnRJdRdyiPwNnTtLoECmzCfkBuJEZetEpaJK/z33W7pmum690rrzsPFUb/b6XRThwCWm
+         u9GeYWFhzY0ZF/1BGFd/oCW4GXud0jXYICjNwv28qeqzlJSuJt4vwXd4jWkQP/NGiV2I
+         8zpQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1705695544; x=1706300344;
+        d=1e100.net; s=20230601; t=1705695545; x=1706300345;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=8sqab6Uhq1OPsAJMlNnyFACdeKriyuW8E+82dC3/oI8=;
-        b=mjrpzT39kiMkudhURD0vonx49dMNtWXi6X7xIgjwglOaqLP6LJicj96/6yz0LU0BtJ
-         JLzgqAlz3XdzROmDnHLfjXfEg0lRh30SMru96j8LyiQPviYOJ7nTcVcMnX2oOlUAkTvL
-         XgnIMXOV7QHUTxm6hILmIIeQSRyTy+6++3yuq1QtKuLKcDJcl6vW9HiQ4B0l6DMjtUgp
-         1fgu2bHybiAyBS/ANVqrbt5hx0MfB7vaV0Kd4TSZQjUCuC9ld1EBzVueQO83qF4P/L9+
-         uWWb0i2ns1L8SdYdokmryTO8lht35vQRrlMotyw1UHpZhAhL7lPsC5KcQIFxTTGFsK4b
-         iX/g==
-X-Gm-Message-State: AOJu0Yxgg60MKwHVSduri+bv/LvnnyT04c+0OCrSCMnyix8oaWdOXuYc
-	bB9LGOzgtelQz88FULFTKyJ4Yi8wonURb4EmcsINLe1YZp6R/L98W7PFmJk2
-X-Google-Smtp-Source: AGHT+IHf5VUfDu5vhx5pgOzsOYbFvKH4RuWOmBPh4/COxp7WApdNmXbUO4Zj2l3dtOb8dZnXPcdfVQ==
-X-Received: by 2002:a05:600c:22c3:b0:40e:4abf:61c3 with SMTP id 3-20020a05600c22c300b0040e4abf61c3mr118061wmg.85.1705695544365;
-        Fri, 19 Jan 2024 12:19:04 -0800 (PST)
+        bh=wvAeKPQ8C29opYWma/beMRAr4IQAGUukuoXbFY7UYso=;
+        b=q+cu5kuz00daQrG39CTSKFp1tijoR61azaUHtlCoxtdHRaSoMh7PUM4QQu8AZCJ1iG
+         ziUQfrJbyp+C21LJvRSJrOHWeNtk6cGENWDm9vBXXbM7OxggUsUCh0xat5jyJqZ9/D1l
+         HcxbREY4S/Qno57c1g/jOJ6gg+xrh8ky3isRku3Z1Z9wFLhJd8Cf4ckk509W4LXc/VL/
+         MH3iZmTovDJeOuitqURW/Rp53+55xL0V+7nMXXexBRh2SG7CcekRAX8GyPTHmjyqYNql
+         2+juYeG4cxKdnhq9hsRWWQVtcJoP4XjsnY/anfGKYNurdFg/dm3nmnhilcOFsIoS1fxx
+         F+uw==
+X-Gm-Message-State: AOJu0Yw6C2lp3fLLL7ortQeTLRXKTSqXblDWHpSxpp2PV8EJIWUkHhiY
+	UPEjkc6Gv+hsgeSCldUea2N5DIvmoDiTE5uhtGiQ7Vf7C/7digm60GyL14bo
+X-Google-Smtp-Source: AGHT+IEhKdcLjGMyd/3Q/Us7ibxl4CfZETwIU0i5T7o+8lpDuvcrmOOk8XzTLbd3IrW3al6iEImSYw==
+X-Received: by 2002:a05:600c:35d3:b0:40e:4df9:8996 with SMTP id r19-20020a05600c35d300b0040e4df98996mr162381wmq.23.1705695545468;
+        Fri, 19 Jan 2024 12:19:05 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id q14-20020a05600c46ce00b0040e7306f655sm19813570wmo.22.2024.01.19.12.19.03
+        by smtp.gmail.com with ESMTPSA id n7-20020adff087000000b00337bb0f370dsm7268459wro.40.2024.01.19.12.19.05
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 19 Jan 2024 12:19:03 -0800 (PST)
-Message-ID: <122d19a909536b570d4e1fd28228279616604ece.1705695540.git.gitgitgadget@gmail.com>
+        Fri, 19 Jan 2024 12:19:05 -0800 (PST)
+Message-ID: <42dc9948aa5000e94d63701ef61c9d93a6744b51.1705695540.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1647.v2.git.git.1705695540.gitgitgadget@gmail.com>
 References: <pull.1647.git.git.1705521155.gitgitgadget@gmail.com>
 	<pull.1647.v2.git.git.1705695540.gitgitgadget@gmail.com>
 From: "John Cai via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Fri, 19 Jan 2024 20:18:51 +0000
-Subject: [PATCH v2 03/12] t1414: convert test to use Git commands instead of
- writing refs manually
+Date: Fri, 19 Jan 2024 20:18:53 +0000
+Subject: [PATCH v2 05/12] t1405: move reffiles specific tests to t0601
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -75,38 +74,54 @@ Cc: Patrick Steinhardt <ps@pks.im>,
 
 From: John Cai <johncai86@gmail.com>
 
-This test can be re-written to use Git commands rather than writing a
-manual ref in the reflog. This way this test no longer needs the
-REFFILES prerequisite.
+Move this test to t0601 with other reffiles specific pack-refs tests
+since it is reffiles specific in that it looks into the loose refs
+directory for an assertion.
 
 Signed-off-by: John Cai <johncai86@gmail.com>
 ---
- t/t1414-reflog-walk.sh | 11 +++++------
- 1 file changed, 5 insertions(+), 6 deletions(-)
+ t/t0601-reffiles-pack-refs.sh | 8 ++++++++
+ t/t1405-main-ref-store.sh     | 8 --------
+ 2 files changed, 8 insertions(+), 8 deletions(-)
 
-diff --git a/t/t1414-reflog-walk.sh b/t/t1414-reflog-walk.sh
-index ea64cecf47b..be6c3f472c1 100755
---- a/t/t1414-reflog-walk.sh
-+++ b/t/t1414-reflog-walk.sh
-@@ -121,13 +121,12 @@ test_expect_success 'min/max age uses entry date to limit' '
- 
- # Create a situation where the reflog and ref database disagree about the latest
- # state of HEAD.
--test_expect_success REFFILES 'walk prefers reflog to ref tip' '
-+test_expect_success 'walk prefers reflog to ref tip' '
-+	test_commit A &&
-+	test_commit B &&
-+	git reflog delete HEAD@{0} &&
- 	head=$(git rev-parse HEAD) &&
--	one=$(git rev-parse one) &&
--	ident="$GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_DATE" &&
--	echo "$head $one $ident	broken reflog entry" >>.git/logs/HEAD &&
--
--	echo $one >expect &&
-+	git rev-parse A >expect &&
- 	git log -g --format=%H -1 >actual &&
- 	test_cmp expect actual
+diff --git a/t/t0601-reffiles-pack-refs.sh b/t/t0601-reffiles-pack-refs.sh
+index f7a3f693901..2e457c4f2df 100755
+--- a/t/t0601-reffiles-pack-refs.sh
++++ b/t/t0601-reffiles-pack-refs.sh
+@@ -32,6 +32,14 @@ test_expect_success 'prepare a trivial repository' '
+ 	HEAD=$(git rev-parse --verify HEAD)
  '
+ 
++test_expect_success 'pack_refs(PACK_REFS_ALL | PACK_REFS_PRUNE)' '
++	N=`find .git/refs -type f | wc -l` &&
++	test "$N" != 0 &&
++	test-tool ref-store main pack-refs PACK_REFS_PRUNE,PACK_REFS_ALL &&
++	N=`find .git/refs -type f` &&
++	test -z "$N"
++'
++
+ SHA1=
+ 
+ test_expect_success 'see if git show-ref works as expected' '
+diff --git a/t/t1405-main-ref-store.sh b/t/t1405-main-ref-store.sh
+index 62c1eadb190..976bd71efb5 100755
+--- a/t/t1405-main-ref-store.sh
++++ b/t/t1405-main-ref-store.sh
+@@ -15,14 +15,6 @@ test_expect_success 'setup' '
+ 	test_commit one
+ '
+ 
+-test_expect_success REFFILES 'pack_refs(PACK_REFS_ALL | PACK_REFS_PRUNE)' '
+-	N=`find .git/refs -type f | wc -l` &&
+-	test "$N" != 0 &&
+-	$RUN pack-refs PACK_REFS_PRUNE,PACK_REFS_ALL &&
+-	N=`find .git/refs -type f` &&
+-	test -z "$N"
+-'
+-
+ test_expect_success 'create_symref(FOO, refs/heads/main)' '
+ 	$RUN create-symref FOO refs/heads/main nothing &&
+ 	echo refs/heads/main >expected &&
 -- 
 gitgitgadget
 
