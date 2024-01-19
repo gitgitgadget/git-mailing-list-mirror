@@ -1,52 +1,52 @@
-Received: from mail-ed1-f52.google.com (mail-ed1-f52.google.com [209.85.208.52])
+Received: from mail-ed1-f50.google.com (mail-ed1-f50.google.com [209.85.208.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCD3C53E13
-	for <git@vger.kernel.org>; Fri, 19 Jan 2024 14:27:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E71C453818
+	for <git@vger.kernel.org>; Fri, 19 Jan 2024 14:27:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705674434; cv=none; b=Hwsui+UhBiGGFmXEkwlqm7MQiYaK1tDJoWwBCUu5ml89/jb3JIg4mRDvhWsWrO+9yqU5BEyeaHTil8HNeWZ7IunTtAaIGkeiKuuFCh2TaNeChh04cZ0tOryaom2MSyyS/L8d3W8Ms0SzOjj4slex8oifS3yQbToY41Ha6XApWFE=
+	t=1705674434; cv=none; b=aZ1KPQ0uQ+yKAUhL/3L1YomIYknquRIK1UMiMwsYcjJw6s8MosK7u6elZnbVv+U8BIgunFZsatRxY7b7ZjLVua9LLki7PqhnRX93qo9iqKtEOat8u2f7hC/TjoAPPCzFfJeNsJ4dJlX91em5RB2a3OP+o+6TIuJMthE9fnVMGyI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1705674434; c=relaxed/simple;
-	bh=BX5x9sx5pZRWtjp0L38xZ/Jkmz3JEO6DYYr8suwZj1Q=;
+	bh=VBuUIZj4MXSaR6BJrvBC8JFRnGuB2YlgjIo9azYdXXs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=P3c82kENBvMZUe6ow/egoB5cMbznWwYYFVVbHI5mOt1BuxBAe9lkcLocr/005p5mD7iFIoQaHLpLNArPpaHtqREKUYDQJp/0vYCEho0JTuoy9bJRg2DnKsvaezLBMdKlCI99++FlVL2nf+jsQdj/97kW2yzR0AvEwRkZ0pURa1U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ikBNo9Nm; arc=none smtp.client-ip=209.85.208.52
+	 MIME-Version; b=XzkagyZRpAK+9W4AICsPVEK068qulJ7AdAhhC31z6uKac7JpfkHJUk4wSblrrQ7vb/xBNMraKI9iGOEX7t0RuCqa7g01xKmliH1G+zKCyV4MMNMNrnbpeckFCRk56nSrS9bFzypeWEkBx5gofANM82sfNQ2+emX4FSIetTeNwHQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=BOqTQlga; arc=none smtp.client-ip=209.85.208.50
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ikBNo9Nm"
-Received: by mail-ed1-f52.google.com with SMTP id 4fb4d7f45d1cf-55a539d205aso979111a12.3
-        for <git@vger.kernel.org>; Fri, 19 Jan 2024 06:27:12 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BOqTQlga"
+Received: by mail-ed1-f50.google.com with SMTP id 4fb4d7f45d1cf-55a38fb45c1so968327a12.1
+        for <git@vger.kernel.org>; Fri, 19 Jan 2024 06:27:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1705674431; x=1706279231; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1705674430; x=1706279230; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=A45/rUp3Q9sY0XBiQ4II+DhCohIPNRG9FdMcFBVL7UY=;
-        b=ikBNo9NmyH741DdAEZm0HRKz7IIRTXu4ADt2zchkY3iMKUbZEdQBYoy9xlE2Jp7j5B
-         BWmB2vIIGCAU2iJSfU3Q0TUc3a1juUhu3jx2VLZj4CiV0LsqtQ+KMlsWRZ7yWfsCNJVO
-         4wwP/Lkt8/U+Lg+cOXDE1NrwOz8in3lVT2yNpk2MnNuo0IVIVGw9QfDebwtv/BCqZrBD
-         s1C/RJhzy7niy0vWp4WtunX0fjrY/hfrsEAfp/RXo0qobOZ3H5GwAzqKjzuDAlgNcXJa
-         S/VjgG3z5+T6KjGQhchbwmhO85T74jMouc7DGeKJVI4uSK//M5eq6UTBo6SzfqXNJ1LQ
-         W1gw==
+        bh=XFRFr0UHXnxVbfHpXYLEn59tpdZE0hdmL6wUKuGLr/U=;
+        b=BOqTQlgaVq0cBWDHB/3YdD5H89Y2MMMG+gBsYJtEQ1f05HeMSTIGzzID2zTbmG+tfx
+         xi4H3aziuEKXgcRIZjyNY8yUk24wRtlxc7DLnVITF74o3tY/+i2h+hEgG1IXxzP6QZig
+         Mv6xuA2xtkbRDnTtMJwItJzU+iZv2yPd5Hmpurns0ioHx3vc3ddcfiRzfnIIh9Owd8r+
+         8cIgaJr2er1fWdO0ZlUk5wSZBvJDa0c5KupEYQuuXwZMIHODkQwJXI9p0HmQJ4N9GIeX
+         Fx+p9BSdpSIp/uR0HKRizhrKU2LDdQ/W8VvhP2x1qNGcdgU9qYU4IUb30xJk+en8JA/2
+         dI7w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1705674431; x=1706279231;
+        d=1e100.net; s=20230601; t=1705674430; x=1706279230;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=A45/rUp3Q9sY0XBiQ4II+DhCohIPNRG9FdMcFBVL7UY=;
-        b=VIrwOo7zXWMh53Ps9ykc5wuhzfoWnFaqIMmi7HV7/bYrw1mfRuIN0TImn1cQICjKrX
-         hbr8Fhone7mNAimn/lPh5Aqbr+5ALZwL5GEIG7PuEVxG+syEa8P2A+vH6BqKoG/R29Mo
-         xyxZ7QpqcEqiAjkDnAfjINrgM1bLpybKHL6lCcg6Zej8vb9816yRZeBW9dWfUw9chWER
-         vzERr5JE0J1eqY4V1XlyT7tywahqi58LIfMjdnfPvEHf4rpVltcI5PZ1TPnL+DF8tTT1
-         JilcBwGXmfTHnxUtUiTLhCr4yWGo5hGTNwTuM3juedp7PvFHeQl+Z3HVuDljoP4yUcJ7
-         kalw==
-X-Gm-Message-State: AOJu0YyM/XOGucglbCEjQa3NuXwL8Unlao4OWKjHogdACPGsryk3bFcd
-	u0CvMIT+1rT1cWD7wj8UMq6Y3nsAfnVtnTt6afDfw7Wvm79O/7cmq+tGUBPd
-X-Google-Smtp-Source: AGHT+IHdtphesWx99mKgLTffnux1PQly44Vm97rEMdozJYAJa12sjEcpJ0JSBwBLL8j+uGXghxpqew==
-X-Received: by 2002:a17:906:d78a:b0:a2c:4a17:1d66 with SMTP id pj10-20020a170906d78a00b00a2c4a171d66mr1675872ejb.47.1705674430420;
-        Fri, 19 Jan 2024 06:27:10 -0800 (PST)
+        bh=XFRFr0UHXnxVbfHpXYLEn59tpdZE0hdmL6wUKuGLr/U=;
+        b=neFQZkZ7yMalbeqh955xQCxOB2jLRBzFV+bhGgFV0AdtCnJbJfDSDa4T0Y8e4qjXr8
+         mWBEeKDwWACD06zVrKtz184QRGnpFLlLmrXuzFrU6RdgWygwVEL2nBKMf5pQSEo+DqWH
+         yTHNGsrSqVz9UvDFsrD/vtyEBuDhGcsIca4AhWoSP4b3UvKQkTGkdzVMH0j+ao5+VuJV
+         5yXObNxX7vUatesAzHBssyezupwDloCLDEflP/eZ1KFUmv2IrEsSMca7yjgrI//Z6upN
+         fKqtoIl8RPELaL6xLpPOSQ0lGASAK6Jtqldgqg/GFnGbTf3jdpnUp1+TBpXtFWNgXSJ/
+         pKkA==
+X-Gm-Message-State: AOJu0YznMQbsQSc6wlLIXzQuHbov5EqG8R6rjofkSFPBOSBUPS9+JaGY
+	Vkd8quuZDEgmh3Rm3FYsfcqhWntf1ayvKqf09f1pg6wBJjOhjio6Hdkj10qy
+X-Google-Smtp-Source: AGHT+IFYOpaEfJ28uQlnnfP7UHsJ28LWUYdtlcrb2nbHTJl3lsX8IxazuC35InyZOLJgdlEXihhxZA==
+X-Received: by 2002:a17:907:a606:b0:a28:c5dc:4802 with SMTP id vt6-20020a170907a60600b00a28c5dc4802mr1571173ejc.31.1705674429578;
+        Fri, 19 Jan 2024 06:27:09 -0800 (PST)
 Received: from localhost.localdomain (h-213.61.124.196.host.de.colt.net. [213.61.124.196])
         by smtp.gmail.com with ESMTPSA id t13-20020a17090616cd00b00a2ea45637desm3843494ejd.112.2024.01.19.06.27.09
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
@@ -54,9 +54,9 @@ Received: from localhost.localdomain (h-213.61.124.196.host.de.colt.net. [213.61
 From: Karthik Nayak <karthik.188@gmail.com>
 To: git@vger.kernel.org
 Cc: Karthik Nayak <karthik.188@gmail.com>
-Subject: [PATCH 3/5] refs: extract out `loose_fill_ref_dir_regular_file()`
-Date: Fri, 19 Jan 2024 15:27:03 +0100
-Message-ID: <20240119142705.139374-4-karthik.188@gmail.com>
+Subject: [PATCH 2/5] refs: make `is_pseudoref_syntax()` stricter
+Date: Fri, 19 Jan 2024 15:27:02 +0100
+Message-ID: <20240119142705.139374-3-karthik.188@gmail.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240119142705.139374-1-karthik.188@gmail.com>
 References: <20240119142705.139374-1-karthik.188@gmail.com>
@@ -68,105 +68,101 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Extract out the code for adding a single file to the loose ref dir as
-`loose_fill_ref_dir_regular_file()` from `loose_fill_ref_dir()` in
-`refs/files-backend.c`.
+The `is_pseudoref_syntax()` function is used to determine if a
+particular refname follows the pseudoref syntax. The pseudoref syntax is
+loosely defined at this instance as all refs which are in caps and use
+underscores. Most of the pseudorefs also have the "HEAD" suffix.
 
-This allows us to use this function independently in the following
-commits where we add code to also add pseudorefs to the ref dir.
+Using this information we make the `is_pseudoref_syntax()` function
+stricter, by adding the check for "HEAD" suffix and for refs which don't
+end with the HEAD suffix, matching them with a predetermined list.
+
+This requires fixing up t1407 to use the "HEAD" suffix for creation of
+pseudorefs.
 
 Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
 ---
- refs/files-backend.c | 62 +++++++++++++++++++++++---------------------
- 1 file changed, 33 insertions(+), 29 deletions(-)
+ refs.c                        | 21 ++++++++++++++++++---
+ t/t1407-worktree-ref-store.sh | 12 ++++++------
+ 2 files changed, 24 insertions(+), 9 deletions(-)
 
-diff --git a/refs/files-backend.c b/refs/files-backend.c
-index 6734f2a309..a4884f557d 100644
---- a/refs/files-backend.c
-+++ b/refs/files-backend.c
-@@ -229,6 +229,38 @@ static void add_per_worktree_entries_to_dir(struct ref_dir *dir, const char *dir
+diff --git a/refs.c b/refs.c
+index 5999605230..b84e173762 100644
+--- a/refs.c
++++ b/refs.c
+@@ -829,6 +829,14 @@ int is_per_worktree_ref(const char *refname)
+ 
+ int is_pseudoref_syntax(const char *refname)
+ {
++	/* TODO: move these pseudorefs to have _HEAD suffix */
++	static const char *const irregular_pseudorefs[] = {
++		"BISECT_EXPECTED_REV",
++		"NOTES_MERGE_PARTIAL",
++		"NOTES_MERGE_REF",
++		"AUTO_MERGE"
++	};
++	size_t i;
+ 	const char *c;
+ 
+ 	for (c = refname; *c; c++) {
+@@ -837,10 +845,17 @@ int is_pseudoref_syntax(const char *refname)
  	}
+ 
+ 	/*
+-	 * HEAD is not a pseudoref, but it certainly uses the
+-	 * pseudoref syntax.
++	 * Most pseudorefs end with _HEAD. HEAD itself is not a
++	 * pseudoref, but it certainly uses the pseudoref syntax.
+ 	 */
+-	return 1;
++	if (ends_with(refname, "HEAD"))
++		return 1;
++
++	for (i = 0; i < ARRAY_SIZE(irregular_pseudorefs); i++)
++		if (!strcmp(refname, irregular_pseudorefs[i]))
++			return 1;
++
++	return 0;
  }
  
-+static void loose_fill_ref_dir_regular_file(struct files_ref_store *refs,
-+					    const char *refname,
-+					    struct ref_dir *dir)
-+{
-+	struct object_id oid;
-+	int flag;
-+
-+	if (!refs_resolve_ref_unsafe(&refs->base, refname, RESOLVE_REF_READING,
-+				     &oid, &flag)) {
-+		oidclr(&oid);
-+		flag |= REF_ISBROKEN;
-+	} else if (is_null_oid(&oid)) {
-+		/*
-+		 * It is so astronomically unlikely
-+		 * that null_oid is the OID of an
-+		 * actual object that we consider its
-+		 * appearance in a loose reference
-+		 * file to be repo corruption
-+		 * (probably due to a software bug).
-+		 */
-+		flag |= REF_ISBROKEN;
-+	}
-+
-+	if (check_refname_format(refname, REFNAME_ALLOW_ONELEVEL)) {
-+		if (!refname_is_safe(refname))
-+			die("loose refname is dangerous: %s", refname);
-+		oidclr(&oid);
-+		flag |= REF_BAD_NAME | REF_ISBROKEN;
-+	}
-+	add_entry_to_dir(dir, create_ref_entry(refname, &oid, flag));
-+}
-+
- /*
-  * Read the loose references from the namespace dirname into dir
-  * (without recursing).  dirname must end with '/'.  dir must be the
-@@ -257,8 +289,6 @@ static void loose_fill_ref_dir(struct ref_store *ref_store,
- 	strbuf_add(&refname, dirname, dirnamelen);
+ static int is_current_worktree_ref(const char *ref) {
+diff --git a/t/t1407-worktree-ref-store.sh b/t/t1407-worktree-ref-store.sh
+index 05b1881c59..53592c95f3 100755
+--- a/t/t1407-worktree-ref-store.sh
++++ b/t/t1407-worktree-ref-store.sh
+@@ -61,18 +61,18 @@ test_expect_success 'create_symref(FOO, refs/heads/main)' '
+ # PSEUDO-WT and refs/bisect/random do not create reflogs by default, so it is
+ # not testing a realistic scenario.
+ test_expect_success REFFILES 'for_each_reflog()' '
+-	echo $ZERO_OID > .git/logs/PSEUDO-MAIN &&
++	echo $ZERO_OID >.git/logs/PSEUDO_MAIN_HEAD &&
+ 	mkdir -p     .git/logs/refs/bisect &&
+-	echo $ZERO_OID > .git/logs/refs/bisect/random &&
++	echo $ZERO_OID >.git/logs/refs/bisect/random &&
  
- 	while ((de = readdir(d)) != NULL) {
--		struct object_id oid;
--		int flag;
- 		unsigned char dtype;
+-	echo $ZERO_OID > .git/worktrees/wt/logs/PSEUDO-WT &&
++	echo $ZERO_OID >.git/worktrees/wt/logs/PSEUDO_WT_HEAD &&
+ 	mkdir -p     .git/worktrees/wt/logs/refs/bisect &&
+-	echo $ZERO_OID > .git/worktrees/wt/logs/refs/bisect/wt-random &&
++	echo $ZERO_OID >.git/worktrees/wt/logs/refs/bisect/wt-random &&
  
- 		if (de->d_name[0] == '.')
-@@ -274,33 +304,7 @@ static void loose_fill_ref_dir(struct ref_store *ref_store,
- 					 create_dir_entry(dir->cache, refname.buf,
- 							  refname.len));
- 		} else if (dtype == DT_REG) {
--			if (!refs_resolve_ref_unsafe(&refs->base,
--						     refname.buf,
--						     RESOLVE_REF_READING,
--						     &oid, &flag)) {
--				oidclr(&oid);
--				flag |= REF_ISBROKEN;
--			} else if (is_null_oid(&oid)) {
--				/*
--				 * It is so astronomically unlikely
--				 * that null_oid is the OID of an
--				 * actual object that we consider its
--				 * appearance in a loose reference
--				 * file to be repo corruption
--				 * (probably due to a software bug).
--				 */
--				flag |= REF_ISBROKEN;
--			}
--
--			if (check_refname_format(refname.buf,
--						 REFNAME_ALLOW_ONELEVEL)) {
--				if (!refname_is_safe(refname.buf))
--					die("loose refname is dangerous: %s", refname.buf);
--				oidclr(&oid);
--				flag |= REF_BAD_NAME | REF_ISBROKEN;
--			}
--			add_entry_to_dir(dir,
--					 create_ref_entry(refname.buf, &oid, flag));
-+			loose_fill_ref_dir_regular_file(refs, refname.buf, dir);
- 		}
- 		strbuf_setlen(&refname, dirnamelen);
- 	}
+ 	$RWT for-each-reflog | cut -d" " -f 2- | sort >actual &&
+ 	cat >expected <<-\EOF &&
+ 	HEAD 0x1
+-	PSEUDO-WT 0x0
++	PSEUDO_WT_HEAD 0x0
+ 	refs/bisect/wt-random 0x0
+ 	refs/heads/main 0x0
+ 	refs/heads/wt-main 0x0
+@@ -82,7 +82,7 @@ test_expect_success REFFILES 'for_each_reflog()' '
+ 	$RMAIN for-each-reflog | cut -d" " -f 2- | sort >actual &&
+ 	cat >expected <<-\EOF &&
+ 	HEAD 0x1
+-	PSEUDO-MAIN 0x0
++	PSEUDO_MAIN_HEAD 0x0
+ 	refs/bisect/random 0x0
+ 	refs/heads/main 0x0
+ 	refs/heads/wt-main 0x0
 -- 
 2.43.GIT
 
