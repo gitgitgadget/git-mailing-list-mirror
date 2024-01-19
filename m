@@ -1,157 +1,130 @@
-Received: from mail-yb1-f202.google.com (mail-yb1-f202.google.com [209.85.219.202])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75B925822A
-	for <git@vger.kernel.org>; Fri, 19 Jan 2024 21:38:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.202
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF1A858217
+	for <git@vger.kernel.org>; Fri, 19 Jan 2024 22:26:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705700301; cv=none; b=VgStsD+zaYVCo1Wq8E3OHBZkkbe/mDZdKH+cqM0yCv1pUCYDS5PnD2uCpVAHRIV6i1de8XJ8+Nc5SnFsjU0PYxoJcTJiXzV9GTllepr/6A5EJ9xYnoa8e89Ao1IOvi1KHzDSa6OvxaWzvIemFKA0M6q2KQyrOKyC15plq4KrqPc=
+	t=1705703216; cv=none; b=XRHXwpNxYaK1BFF0OMAf/mVEyekp0eFwLDojdOXabyZxAvrhV43e4tCh9hru6e+7OUqxiuKbcGunSvs46OeIrM78aH6L1zCHmHhd5rEkFKPTteud6KsvgVx5E4GQrxhGw+Gx15UkvNRnS9lnWFzjaLA8qFQeT5MRGGGQxyYRt/g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705700301; c=relaxed/simple;
-	bh=nVmyaKZynHzo/ToTeVVyJrhUNPjCWGMmIP6rlcz3pbg=;
-	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
-	 To:Content-Type; b=kwuh8/JLs2YWKDs0Lj+QHl+cu5lOMnYLgHbM38r6DcWrrGpihdWYANFH+w8khW71/0ZafZX4pHjm4++alMy1RgRE8Zm4C8QGK+Fzbflv+uP6wcCSgnQt5sL9WL6HtFUOfbYo6w6SBp96W+NQoTgit6YMPbDZm4ZUd1BTsRODtro=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--steadmon.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=MokJHVcC; arc=none smtp.client-ip=209.85.219.202
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--steadmon.bounces.google.com
+	s=arc-20240116; t=1705703216; c=relaxed/simple;
+	bh=Q/Won7j97oj5YMi5SDFtEfpJW5tq2NZ03ubjC5Pp9b8=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=UqrwtsTyMPGUp5rppVEdFP4TFHiGI3voZS4jPN86eP4FqMe5zEqKtMKB9YOx6po+8clwrXI7fbPDlYAOIvYVLUF7B9v6TsMhlQ7aeqHnnlLahFVmUrrD0Cw9326bmWH5ZLnBYpbwA8a49Wp10gfA3WwXDXUpd1jEkEbuwQNPTps=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=xf6o0d7p; arc=none smtp.client-ip=64.147.108.70
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="MokJHVcC"
-Received: by mail-yb1-f202.google.com with SMTP id 3f1490d57ef6-dbeac1f5045so1619199276.1
-        for <git@vger.kernel.org>; Fri, 19 Jan 2024 13:38:19 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1705700298; x=1706305098; darn=vger.kernel.org;
-        h=to:from:subject:message-id:references:mime-version:in-reply-to:date
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=t9LUE2QthDNMgJrv6JCYlADg9RVBvQz/tYSx0Mvcszw=;
-        b=MokJHVcCyIevaOtKeWray5g8S4zvP8lkIvFQN89RrxBcSPB5CB8lopUDtQ0sjYMuWE
-         vAhaZg6OFT6tPG9BsHYv8k3xlivVKjpKmOOvPlEXWTJPerBTF999fE2z8dtdw3oolAgW
-         TXFMi+i4jF5uPEPFxwtelB5QG7eorUM6qMD4jjq184feygIZVJuL5V7S7rDS/sOGwWsD
-         FLeLnV2xGB+veHcxIHl2AmvKqRKoaKdYXrQtq0ZFgEoo3+nqTdEdvKzPScmMQRiN8Ndm
-         BCwRinKow3zNk7bN7JAkZ8juUIHTIepSLV1ulv0YQjvAtyh5CWXJeIqvHmv8c4LefcKM
-         pUkQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1705700298; x=1706305098;
-        h=to:from:subject:message-id:references:mime-version:in-reply-to:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=t9LUE2QthDNMgJrv6JCYlADg9RVBvQz/tYSx0Mvcszw=;
-        b=duF1WL8/oyHASFvq5zj6f+afp/hYGNN8ljwOujD6fMG71BZg69kQgmOMNvsi9rwcFP
-         SAhf18pfgLh7FV9/jao3WrLKpvLdQm90lWx+sa0qG/0ahfpeTDoWXup5fDSRr25upTU6
-         v7rqjxZK2+gWRXOEQgsYpJ0WM/aE7j4nt+igw8ZuF65FYxeBflF7FD7zDhlPozBvUUyI
-         1mkD/BDCj11d66ZnBj0Y3aok6uvB2j5KolXzfKO363JsKjcQ+anYxrH/BlJQrlD19KbR
-         8rMR6fAYdrAQ2xp5rV0Qh1lrDq9ytI39IKQEGhScTq4Fa5ZVe54uZxz2WYs3xbTrWZqr
-         DGsQ==
-X-Gm-Message-State: AOJu0YwbPh2mQKN9DAfw5QqKzXNAT5t9Rh+pvHfsg10BfthPGOnnuClp
-	GqpPbgB2Egm05pajhl02yknkoFH9Sqv1voZd79IfMo5gen9yCJ5gRoAEyp9zsLKbhIz97YsBEuE
-	1pu0HAri26zW+MPuMv9AtMb7UZsE+/uLPiT3xm/YBwGG31TYGmVieGxzMZuvAhC7AxF1QQmgJua
-	kYHyoo2iyq1/r9dnqaJPs31DAyXu65JRYbCO9Bd6U=
-X-Google-Smtp-Source: AGHT+IGjKqDezO1KBHCL63Fd5Bun+kmPXoVm9zHWZ2RG9jOY0E1h5CYd45ublccvIV/u8Cf/dnoRRgMjuHEb5A==
-X-Received: from lunarfall.svl.corp.google.com ([2620:15c:2d3:204:3aa6:e329:52e1:bd8c])
- (user=steadmon job=sendgmr) by 2002:a25:abec:0:b0:dbf:4359:326a with SMTP id
- v99-20020a25abec000000b00dbf4359326amr264111ybi.1.1705700298371; Fri, 19 Jan
- 2024 13:38:18 -0800 (PST)
-Date: Fri, 19 Jan 2024 13:38:13 -0800
-In-Reply-To: <cover.1705700054.git.steadmon@google.com>
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="xf6o0d7p"
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id B0E881D7114;
+	Fri, 19 Jan 2024 17:26:47 -0500 (EST)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=Q/Won7j97oj5YMi5SDFtEfpJW5tq2NZ03ubjC5
+	Pp9b8=; b=xf6o0d7pMKtT6LSrBbX8naVB4XgXEDsIgUJLN1Yb/cdf6GJ7vlqJP/
+	IswmJSE62QG1HVueqj5wpagI5LYA7kSGpxbWCpgkLtbyx0n3wvjP7QaHXJV+EwCv
+	i7gkxsOorUaiTJxbHCIXprRF+aKxB5PQn8LXQ55NTcW66p85mwMPg=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id A77821D7113;
+	Fri, 19 Jan 2024 17:26:47 -0500 (EST)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.200.93])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 166701D7110;
+	Fri, 19 Jan 2024 17:26:47 -0500 (EST)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+Cc: spectral via GitGitGadget <gitgitgadget@gmail.com>,
+  git@vger.kernel.org,  spectral <spectral@google.com>
+Subject: Re: [PATCH] MyFirstContribution: update mailing list sub steps
+In-Reply-To: <20240119-flat-jellyfish-of-drizzle-b31abe@lemur> (Konstantin
+	Ryabitsev's message of "Fri, 19 Jan 2024 16:06:52 -0500")
+References: <pull.1644.git.1705697955144.gitgitgadget@gmail.com>
+	<20240119-flat-jellyfish-of-drizzle-b31abe@lemur>
+Date: Fri, 19 Jan 2024 14:26:45 -0800
+Message-ID: <xmqqmst1hsd6.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-References: <cover.1705700054.git.steadmon@google.com>
-X-Mailer: git-send-email 2.43.0.429.g432eaa2c6b-goog
-Message-ID: <eb38274459cde83a22745172a1ed1d20aebc58a7.1705700054.git.steadmon@google.com>
-Subject: [PATCH 2/2] ci: build and run minimal fuzzers in GitHub CI
-From: Josh Steadmon <steadmon@google.com>
-To: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ D506293A-B719-11EE-98CB-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
 
-To prevent bitrot, we would like to regularly exercise the fuzz tests in
-order to make sure they still link & run properly. We already compile
-the fuzz test objects as part of the default `make` target, but we do
-not link the executables due to the fuzz tests needing specific
-compilers and compiler features. This has lead to frequent build
-breakages for the fuzz tests.
+Konstantin Ryabitsev <konstantin@linuxfoundation.org> writes:
 
-To remedy this, we can add a CI step to actually link the fuzz
-executables, and run them (with finite input rather than the default
-infinite random input mode) to verify that they execute properly.
+> On Fri, Jan 19, 2024 at 08:59:15PM +0000, spectral via GitGitGadget wrote:
+>>  contributing are welcome to post questions here. The Git list requires
+>>  plain-text-only emails and prefers inline and bottom-posting when replying to
+>>  mail; you will be CC'd in all replies to you. Optionally, you can subscribe to
+>> -the list by sending an email to majordomo@vger.kernel.org with "subscribe git"
+>> -in the body. The https://lore.kernel.org/git[archive] of this mailing list is
+>> -available to view in a browser.
+>> +the list by visiting https://subspace.kernel.org/vger.kernel.org.html and using
+>> +the `sub` link next to the `git` list (this is a mailto link; you can leave
+>> +subject and body blank, but you still have to send the email). The
+>
+> I recommend just telling people to send a message to
+> git+subscribe@vger.kernel.org and linking to
+> https://subspace.kernel.org/subscribing.html for more details. While
+> "sub/unsub" links will do the job for some people, webmail users may not
+> have things properly configured to correctly process the mailto: links.
 
-Since the main use of the fuzz tests is via OSS-Fuzz [1], and OSS-Fuzz
-only runs tests on Linux [2], we only set up a CI test for the fuzzers
-on Linux.
+Yeah, good suggestion.
 
-[1] https://github.com/google/oss-fuzz
-[2] https://google.github.io/oss-fuzz/further-reading/fuzzer-environment/
+Kyle, thanks for noticing the majordomo deprecation.
 
-Signed-off-by: Josh Steadmon <steadmon@google.com>
+Perhaps something like this is agreeable to everybody?
+
+------------ >8 ----------------------- >8 ----------------------- >8 ------------
+Subject: Docs: majordomo@vger.kernel.org has been decomissioned
+
+Update the instruction for subscribing to the Git mailing list
+we have on a few documentation pages.
+
+Noticed-by: Kyle Lippincott <spectral@google.com>
+Helped-by: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- .github/workflows/main.yml          | 11 +++++++++++
- Makefile                            |  3 +++
- ci/run-build-and-minimal-fuzzers.sh | 19 +++++++++++++++++++
- 3 files changed, 33 insertions(+)
- create mode 100755 ci/run-build-and-minimal-fuzzers.sh
+ Documentation/MyFirstContribution.txt | 5 +++--
+ README.md                             | 4 ++--
+ 2 files changed, 5 insertions(+), 4 deletions(-)
 
-diff --git a/.github/workflows/main.yml b/.github/workflows/main.yml
-index 9fdbd54028..4d97da57ec 100644
---- a/.github/workflows/main.yml
-+++ b/.github/workflows/main.yml
-@@ -309,6 +309,17 @@ jobs:
-       with:
-         name: failed-tests-${{matrix.vector.jobname}}
-         path: ${{env.FAILED_TEST_ARTIFACTS}}
-+  fuzz-smoke-test:
-+    name: fuzz smoke test
-+    needs: ci-config
-+    if: needs.ci-config.outputs.enabled == 'yes'
-+    env:
-+      CC: clang
-+    runs-on: ubuntu-latest
-+    steps:
-+    - uses: actions/checkout@v3
-+    - run: ci/install-dependencies.sh
-+    - run: ci/run-build-and-minimal-fuzzers.sh
-   dockerized:
-     name: ${{matrix.vector.jobname}} (${{matrix.vector.image}})
-     needs: ci-config
-diff --git a/Makefile b/Makefile
-index 1e9bd6430f..2e94c566e0 100644
---- a/Makefile
-+++ b/Makefile
-@@ -752,6 +752,9 @@ SCRIPTS = $(SCRIPT_SH_GEN) \
+diff --git c/Documentation/MyFirstContribution.txt w/Documentation/MyFirstContribution.txt
+index 279f6a3e7c..f06563e981 100644
+--- c/Documentation/MyFirstContribution.txt
++++ w/Documentation/MyFirstContribution.txt
+@@ -35,8 +35,9 @@ announcements, design discussions, and more take place. Those interested in
+ contributing are welcome to post questions here. The Git list requires
+ plain-text-only emails and prefers inline and bottom-posting when replying to
+ mail; you will be CC'd in all replies to you. Optionally, you can subscribe to
+-the list by sending an email to majordomo@vger.kernel.org with "subscribe git"
+-in the body. The https://lore.kernel.org/git[archive] of this mailing list is
++the list by sending an email to <git+subscribe@vger.kernel.org>
++(see https://subspace.kernel.org/subscribing.html for details).
++The https://lore.kernel.org/git[archive] of this mailing list is
+ available to view in a browser.
  
- ETAGS_TARGET = TAGS
+ ==== https://groups.google.com/forum/#!forum/git-mentoring[git-mentoring@googlegroups.com]
+diff --git c/README.md w/README.md
+index 2c3de2f9c8..665ce5f5a8 100644
+--- c/README.md
++++ w/README.md
+@@ -39,8 +39,8 @@ Those wishing to help with error message, usage and informational message
+ string translations (localization l10) should see [po/README.md][]
+ (a `po` file is a Portable Object file that holds the translations).
  
-+# If you add a new fuzzer, please also make sure to run it in
-+# ci/run-build-and-minimal-fuzzers.sh so that we make sure it still links and
-+# runs in the future.
- FUZZ_OBJS += oss-fuzz/dummy-cmd-main.o
- FUZZ_OBJS += oss-fuzz/fuzz-commit-graph.o
- FUZZ_OBJS += oss-fuzz/fuzz-date.o
-diff --git a/ci/run-build-and-minimal-fuzzers.sh b/ci/run-build-and-minimal-fuzzers.sh
-new file mode 100755
-index 0000000000..8ba486f659
---- /dev/null
-+++ b/ci/run-build-and-minimal-fuzzers.sh
-@@ -0,0 +1,19 @@
-+#!/bin/sh
-+#
-+# Build and test Git's fuzzers
-+#
-+
-+. ${0%/*}/lib.sh
-+
-+group "Build fuzzers" make \
-+	CC=clang \
-+	CXX=clang++ \
-+	CFLAGS="-fsanitize=fuzzer-no-link,address" \
-+	LIB_FUZZING_ENGINE="-fsanitize=fuzzer,address" \
-+	fuzz-all
-+
-+for fuzzer in commit-graph date pack-headers pack-idx ; do
-+	begin_group "fuzz-$fuzzer"
-+	./oss-fuzz/fuzz-$fuzzer -verbosity=0 -runs=1 || exit 1
-+	end_group "fuzz-$fuzzer"
-+done
--- 
-2.43.0.429.g432eaa2c6b-goog
-
+-To subscribe to the list, send an email with just "subscribe git" in
+-the body to majordomo@vger.kernel.org (not the Git list). The mailing
++To subscribe to the list, send an email to <git+subscribe@vger.kernel.org>
++(see https://subspace.kernel.org/subscribing.html for details). The mailing
+ list archives are available at <https://lore.kernel.org/git/>,
+ <https://marc.info/?l=git> and other archival sites.
+ 
