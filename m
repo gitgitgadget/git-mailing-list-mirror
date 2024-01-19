@@ -1,140 +1,142 @@
-Received: from mail-lj1-f174.google.com (mail-lj1-f174.google.com [209.85.208.174])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from wout1-smtp.messagingengine.com (wout1-smtp.messagingengine.com [64.147.123.24])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F5C03C28
-	for <git@vger.kernel.org>; Fri, 19 Jan 2024 05:06:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8EB6469E
+	for <git@vger.kernel.org>; Fri, 19 Jan 2024 06:05:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.24
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705640775; cv=none; b=UlmxEy5WkNbObHg738RArsUY2WSccneOIWMpH2Zsu7eoKKqO6fzMVozjWFiNUvlgEXOCfY5nkh/l1fzca35Bgse1sDEhGBbC2n8P+gLeRBtBgogwfz4AnS8dxJ06hXjKRu5NHriCVQvYH9mE5GBw8xsO/6FnoGgIQ52lm2MSADg=
+	t=1705644312; cv=none; b=pXzRt959NjPmLfbwluHGLlV76+FZJmATSDRqiSYm362SIdWjpX0OJXN+ILdLNLl9TlPh+q8Sl0aYJIsvFbk0BHGYOpTzOCEuOpa3mJRwCWNwtQoD08FLVnHCue4GcIn1gLmGpFzY0dknboZ2Yuh17/6RnbESDg6BodrPbEeX3Rs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705640775; c=relaxed/simple;
-	bh=isCFCAbJ/tuzBE83j5rktMC55NxdrtROsa9w7M+IsX8=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=pjwBKb5qYG4JG1C0b6IKceHKqVIjrHYTvZ5OtcmeKmk3TQwW5T34oqkKrai12WBQUg/NIJVMUcL1+C5g1/P4ImXfbO03mfqdzlyfm7UX0zY2Iuzx89HfKSqxQReEwl51lz7SP1ifxi5psfq4ttugzfwQNumJMM8zhPY0IqEu1jc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=nCqf1ACR; arc=none smtp.client-ip=209.85.208.174
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1705644312; c=relaxed/simple;
+	bh=DHRpqHL5f3rUhlK+gyjwBRHqllYZINUlj/fIW/ztxzA=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=l1DuhoLSuxLkl+QNhS754E2ssrnyx1d2oOQ3Ev5+3HWuOTpkmb3mj2YXYrRV1NyE62V0HzVX0V1szahCbzCAHXMxpw31RtGzssBo6vJGNrzhgBOYInPYLvO3Z/FVeE09Y6wgQXutSfNdB3he3E6OEF1kRBjClsykcxfvoWviNN0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=fO/pFbyf; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Z4RxNitv; arc=none smtp.client-ip=64.147.123.24
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nCqf1ACR"
-Received: by mail-lj1-f174.google.com with SMTP id 38308e7fff4ca-2cdebb968feso4795811fa.1
-        for <git@vger.kernel.org>; Thu, 18 Jan 2024 21:06:13 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1705640772; x=1706245572; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=jmJ1Q2ZsKeEd9v77WvEEsUg0IynbwMAhEeDFpRSZXOQ=;
-        b=nCqf1ACRMDbHDie1ewSxUBpAzzivYKphwa+iBgndl9LfzUxSAJqDaK6pTyLsSX7TmV
-         wUYYMoBQJHzVlMUEmy3YJ2eXl6XaFZeTQbDFy2i2c6qj1tMU4BgM9e+qyYfFf2Uu5ROq
-         h+q0Vx+OxUOTGFyqsuitu29pQGxKV5AkrWZBgXBhdUsgle+hLTj4F+dA7S9jp0gREnY2
-         EgFVElieQ+YfnMhgn0PSt6w9Sw4OzmMs5g2UHUDdXrFXmYJUyicsw2KshyrZM4GcOabT
-         5vd/BNrLW0CvsyK8WsG5Fdkhkbk9TbNQ5Pi7b1BwjNIp2g2FP+JCeeZ2wwpWm6TZhIej
-         1lxg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1705640772; x=1706245572;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=jmJ1Q2ZsKeEd9v77WvEEsUg0IynbwMAhEeDFpRSZXOQ=;
-        b=AP9uFng2fq8Xu92TYEaI/6q1Ya6KuRtkwYhzQGE4uEv+Aa/jj8GsrM9nDuGVKNfjKt
-         zRIQOT6AWDwbAwSoJgnrIsZaXbmW35DX010zCiDgIQZm/m2k4ENyAgKCku4D56qVLTWq
-         Is2MWwM6Kj2xnlIplyR02F6MedEP2yJauiq51sAxXPfeNRHC3goJT3AtlGRi6CtILhDI
-         ZDEo1eeKaV+2KKf2hInvzSabpemgouZf9dPSd58uJbvGnB7843BCUHHNB9H0uFyLIBFg
-         BUKSvp/ycjjL6buWf+56RrocyyfvliLJRa4X4J9B/v4zutK2KZ/tbop+moa/7AaMN2rA
-         /Stw==
-X-Gm-Message-State: AOJu0Yy3oj1i0gSs1kjNBKGIdzzNmt+t8XXZcMm1fDdaFOwUiDOJ+qPY
-	jcKc5wq0+uFzFTi31Eq3ugScmubZkIzdQEdkoynB1rVnnKWVO7z2pdnn4aZSJlAl2uD8J3Z15rg
-	1r9wi/r61vIhwufTQZuweDdDICXqB2+tq
-X-Google-Smtp-Source: AGHT+IFrawa+Nre3OqdDYhS0/JrlYiRX6nUooy7i3wJjjB/f2eYjKQu7TlJ5MpW/DMNZFEDk0hQ+XevfIAvT+SeimbM=
-X-Received: by 2002:a2e:9dda:0:b0:2cd:ac63:feeb with SMTP id
- x26-20020a2e9dda000000b002cdac63feebmr991892ljj.35.1705640771746; Thu, 18 Jan
- 2024 21:06:11 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="fO/pFbyf";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Z4RxNitv"
+Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
+	by mailout.west.internal (Postfix) with ESMTP id A4CED3200AA5;
+	Fri, 19 Jan 2024 01:05:08 -0500 (EST)
+Received: from mailfrontend1 ([10.202.2.162])
+  by compute3.internal (MEProxy); Fri, 19 Jan 2024 01:05:08 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1705644308; x=1705730708; bh=DHRpqHL5f3
+	rUhlK+gyjwBRHqllYZINUlj/fIW/ztxzA=; b=fO/pFbyfF0/2mC3OwF3uYu/+Y8
+	TJU7OlEhQ26HfSuc1gUvE7H9y5Tykdx/1BkE8flJzcgmuVzUylhoy45J59u9r1Rt
+	ui3ybeCX04zQJRd7/pczTi0deT063E/TPTJyiSz7749FfsjtjqasnAuvHjKXR0pQ
+	SvoaRrAQOwjkk1QhnMPTSD6mekGqTT+LVQ+IDKMS4QJpcdmQhXLc5vi6R7j4EUZj
+	V2hy33anj5cYAAalqt4gjQFQNOX7PyD9Nfon2Xl+2S/x1dnicCHadF+WqleHb51h
+	i8z4RJNFv/CipI4dTmV21SEN/fzjO9lOUDqpJVQQwajix53yVwvD6wDLgMhw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm3; t=1705644308; x=1705730708; bh=DHRpqHL5f3rUhlK+gyjwBRHqllYZ
+	INUlj/fIW/ztxzA=; b=Z4RxNitvK1EYpe+CGLtpDKBmWpww/7d5sxBzDFk2gP/P
+	8zC/9z0OuIligUfH3vqWqgnHhqzQyPi1ObvZcPAfU2lj93CotWcVGLZ0OaC9DtAI
+	fCDHI7W5XzWQFPnlbbyuUhb3+a67t2J/oZIclbXZ9HYebjnj73TMSZinoe4Xoqw8
+	HRgHv6P8GMGHRDWZKTANTgmAHxmNuC/jrtVnPVblErqZ+Z9d1VEFvfToXOnUe5Fh
+	3/g29oaeDrnxHoNCOEbDFx+FLVYlJpg+iHqvlzE4r/Gu0S18UpBKVjA8zVm7H1uh
+	AKir8IMxMA4enAr9rGYF6W77AVRsiCiln7wo/7NzSg==
+X-ME-Sender: <xms:ExGqZUw9hxUenzJ6axfH_jWoxB9Ab0GgIxjLulL-eSH5-vuZB0IUJA>
+    <xme:ExGqZYR9rV30PH_AcymANV2beAAhu42Dm74JFWMufDmTfAE4KEBYzVvdbf2CbrtZ4
+    KXnKQ4EX3TN_ijqWA>
+X-ME-Received: <xmr:ExGqZWVhs-bdzG3V0v-jQvFMNeUQ7ugnaPfWeo3rz3M7XjZUwBouWcckTB6i_AXi4bMYrSKEPA5i1Rfp21I7OwXKK1IofWxvgo1IHSRgjCy0hVg7rg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrvdejledgleduucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+    cujfgurhepfffhvfevuffkfhggtggujgesghdtroertddtvdenucfhrhhomheprfgrthhr
+    ihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvg
+    hrnhepheefhfeutdevtdefieetueeggfefleegleevheffueekleefhfeikeetveduhfff
+    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
+    hpkhhsrdhimh
+X-ME-Proxy: <xmx:FBGqZSii4AdFWRyYVDjRX7g7Zdj75MLrNb75oE3KEpY_YDuOvZ7Svg>
+    <xmx:FBGqZWC_eJUTF6n-ZJ5MyiF78iU8ncbeN0hUTaneRJ7WHM8biG3GTA>
+    <xmx:FBGqZTJYwE18T9CEZsfShZpTVGfT9t2CsyLGY_nTCajCOdpnwDiPcw>
+    <xmx:FBGqZZNYGEkAXCB8y1tS7ai92mc0NWIk2zdyjskAxhmz0gFxVF1-kA>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 19 Jan 2024 01:05:07 -0500 (EST)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id 5919aa83 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 19 Jan 2024 06:02:07 +0000 (UTC)
+Date: Fri, 19 Jan 2024 07:05:02 +0100
+From: Patrick Steinhardt <ps@pks.im>
+To: Victoria Dye via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
+	Victoria Dye <vdye@github.com>
+Subject: Re: [PATCH v2 3/4] t7450: test submodule urls
+Message-ID: <ZaoRDniGoIBXmjVx@tanuki>
+References: <pull.1635.git.1704822817.gitgitgadget@gmail.com>
+ <pull.1635.v2.git.1705542918.gitgitgadget@gmail.com>
+ <b6843a58389170a45b5ef7809e0335a6425eadaa.1705542918.git.gitgitgadget@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.1637.git.1705006074626.gitgitgadget@gmail.com>
- <xmqqedenearc.fsf@gitster.g> <CABPp-BGp0NMQKLYg=OxJgnVxARffNF57B_N2bLmwT2R2EZqhdA@mail.gmail.com>
- <xmqqil3x69dk.fsf@gitster.g> <CABPp-BEaYkAPphh06R1HrfD03WTv5uy-2q-T0ZMZaxo9hfXv-g@mail.gmail.com>
- <xmqqjzo6m37n.fsf@gitster.g>
-In-Reply-To: <xmqqjzo6m37n.fsf@gitster.g>
-From: Elijah Newren <newren@gmail.com>
-Date: Thu, 18 Jan 2024 21:05:47 -0800
-Message-ID: <CABPp-BHybPEg_+649fL6QrKjRQcJXxbYMFiQn0KxAgbr2Nz0Gg@mail.gmail.com>
-Subject: Re: [PATCH] diffcore-delta: avoid ignoring final 'line' of file
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="iwuSr1tr/ID3nO6/"
+Content-Disposition: inline
+In-Reply-To: <b6843a58389170a45b5ef7809e0335a6425eadaa.1705542918.git.gitgitgadget@gmail.com>
+
+
+--iwuSr1tr/ID3nO6/
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Thu, Jan 18, 2024 at 7:06=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
-wrote:
->
-> Elijah Newren <newren@gmail.com> writes:
->
-> >> Heh, I was hoping that we should be able to use "diff --name-only".
-> >>
-> >>  $ git mv Makefile Breakfile
-> >>  $ git diff --name-only -M HEAD
-> >>  Breakfile
-> >>  $ git reset --hard
-> >>  $ git rm Makefile
-> >>  $ >Breakfile && git add Breakfile
-> >>  $ git diff --name-only -M HEAD
-> >>  Breakfile
-> >>  Makefile
-> >>  $ git reset --hard
-> >
-> > I guess we could, since the only thing in this repository is a file
-> > which is being renamed, and we can then deduce based on the setup that
-> > the change we expected must have happened.
-> >
-> > However, I didn't like the deduce bit; since --name-only only lists
-> > one of the two filenames and doesn't provide any hint that the change
-> > involved is a rename, it felt to me like using --name-only would make
-> > the test not really be a rename test.
->
-> Hmph, I am not quite seeing what you are saying.  If the "mv" from
-> Makefile to Breakfile in the above example is between preimage and
-> postimage that are similar enough, then we will see "one" paths,
-> i.e. the file in the "after" side of the diff.  But if the "mv" from
-> Makefile to Breakfile involves too large a content change (like,
-> say, going from 3800+ lines to an empty file, in the second example
-> above), then because such a change from Makefile to Breakfile is too
-> dissimilar, we do not judge it as "renamed" and show "two" paths.  I
-> do not quite see where we need to "deduce".
+On Thu, Jan 18, 2024 at 01:55:17AM +0000, Victoria Dye via GitGitGadget wro=
+te:
+> From: Victoria Dye <vdye@github.com>
+>=20
+> Add tests to 't7450-bad-git-dotfiles.sh' to check the validity of differe=
+nt
+> submodule URLs. To verify this directly (without setting up test
+> repositories & submodules), add a 'check-url' subcommand to 'test-tool
+> submodule' that calls 'check_submodule_url' in the same way that
+> 'check-name' calls 'check_submodule_name'.
+>=20
+> Add two tests to separately address cases where the URL check correctly
+> filters out invalid URLs and cases where the check misses invalid URLs. M=
+ark
+> the latter ("url check misses invalid cases") with 'test_expect_failure' =
+to
+> indicate that this not the undesired behavior.
 
-You just wrote a very well worded paragraph going through the
-reasoning involved to prove that a rename is involved.  You reasoned,
-or deduced, the necessary conclusion quite well.  Sure, it might be a
-simple deduction given the knowledge of the test setup, but it's still
-a deduction.
+Nit: this should probably say "to indicate that this is not the desired
+behaviour." But given that the other patches in this series look good to
+me I don't think this warrants a reroll.
 
-But perhaps I can put it another way:  You can't just look at the
-output of `diff --name-only` and say a rename was involved -- unless
-you know the test setup and the previous operations.  In fact, how
-about a possibly contrived alternate scenario: What if `git mv $1 $2`
-had a bug where, after doing the expected work, it did the equivalent
-of running `git checkout HEAD -- $1` at the end of its operation.
-Then we'd see:
+Thanks!
 
-   $ <tweak Makefile slightly>
-   $ git mv Makefile Breakfile
-   $ git diff --name-only -M HEAD
-   Breakfile
+Patrick
 
-i.e. we get the same output as without the git-mv bug (note that
-Makefile will not be listed since it is unmodified), but with the bug
-in git-mv there definitely is no rename involved (since there's no
-delete to pair with the addition of Breakfile).  As such, we'd still
-pass the test despite there being no rename.  Sure, the example is
-somewhat contrived, but I'm just saying that the --name-only output
-doesn't actually test or prove that a rename occurred.  And since this
-test, and all other tests in this particular testfile, are
-specifically about renames, the fact that we aren't specifically
-testing for something being renamed feels odd to me.
+--iwuSr1tr/ID3nO6/
+Content-Type: application/pgp-signature; name="signature.asc"
 
-If you still like `diff --name-only` better anyway, that's fine and
-I'll switch it.  I'm just stating why it seems suboptimal to me.
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmWqEQkACgkQVbJhu7ck
+PpQcHA//USUbeQ9yBzsZW3ePqxHmDqqlfe6wjX6Tf3Y2TSFOqCuCyLdSUnNPBT9M
+4KE/GcY6Ve15c/tOIKsr+Ht0IBas5/vE74cWgHzdS1/o3hg4L4Lm6oa+n5Ia6+xV
+lCau5UKHSp1S6Y922eZx7EF1BJDMu3vHGlYkKeWWeFwSsPgQ0HfDnaLFcEel29uu
+fF/3C7fglpdv1RGvbwHHzifCg2y7wERX3s47wV8IjdKxubjbjMOyuDviQIz37DBc
+ENiOrKd37x5L5l/cEMdUdbZewC3fhA6pxiR6a98ihsycIP9L9RAMbkh/SDsGRqTu
+Y/e/v2uplJ12MW50k6GU//pDccPMQCbNUbI59kShJFzEs0A3ASkSma2sLEe2686F
+OsE9CLol2isxqMmFzux1x6+iPGtCYf2kDlOPOlB5IlCvabC4qLuWSrh71PO+0qcY
+gFbWlQPrQJbCVEuxIRaE/PItYOLxXJqHSxHE+HuQ95WfTaG1qk5wDUF/fKVOYIUf
+hzucw3OxEIA4Ztf/wvK7j4lbl+Rfr7C2Vmj4vdntD5lQT7wjXZBPQcXwFvVzuf24
+6jcaFy+uJCYXUV7KEpnjPq7QbWb3kayFNoLJG8zosY2c7GIGJe+0/qdiOnyRwkHr
+jtKO/K3T2DQI5WzoZ5XfwMykoH7vftD/4jzaWZQtYuwYqZ5gUQc=
+=9SRi
+-----END PGP SIGNATURE-----
+
+--iwuSr1tr/ID3nO6/--
