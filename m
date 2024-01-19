@@ -1,106 +1,115 @@
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f43.google.com (mail-wm1-f43.google.com [209.85.128.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18DE757302
-	for <git@vger.kernel.org>; Fri, 19 Jan 2024 20:57:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE22E57302
+	for <git@vger.kernel.org>; Fri, 19 Jan 2024 20:59:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705697871; cv=none; b=oNKn0txuUyIhK6LVndngrIWkKa/wbNoWwG/5Cu80aDSlxT8QTWHJUHhxGrjbHn52E+oMV5bjQqaPLf1cP87BU4YB9+F49zYvuVMhfaEQ4B2he2L8dZ/XmtPeYBf30RbKrbDUUI3YCHSmVtenf1HsmSfctN/SGdcc6uF5L1J/DvQ=
+	t=1705697959; cv=none; b=MH0HrUS+SsVNDv1aXl5vcmtikBjcEXIHo8Wi99+XrSIj7Reg+62JrU0dqJXOGD/gasOwE2vgYyG7KAT1q3xbRemOINaA+n2xrUZTosqkWCpLZlEeT7QfdFoLCwoppdeCTB/gszwr5/Cq4rlEXOTju+T5gR7qValJa7l3b+bTJxk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705697871; c=relaxed/simple;
-	bh=YtaxTZqpAUK1zjbG+sc2eAabgv5fUVCLxgr7iITe1uo=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=E+2BiGgl30LRrEeEck0GL3GML+TXlKX00Lssdk17s9I7JPNm6hIXFeR2q2x8p16sJ0Pc8HDJZK5eHHc1NuOxbk0IZz7ysC7iTkNpFiQ/IJNBiuOsn5vk+9iFC2MeAOl471L9c2zoD5tU7cF07odMQU8A4h43rW6UG4ekG/nU9Pw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=ocLoq2Aq; arc=none smtp.client-ip=173.228.157.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1705697959; c=relaxed/simple;
+	bh=U1Vk69A3LSlj/+N1ZUpzZYIwLegTNtLG4vT2rPZ6yrQ=;
+	h=Message-ID:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=GtDu7t7JRHY0VnA53KTZZSgOf2K2yZW6MlPbgUG4Nbli83H2Xw2q2FTEKZotjRs8xjbdWacx2aGHinM6PdnbZEPt9L4n1yP1dU6aU0RPGs4P8Vo+5ZTUpSQntogFlDVU9yf318LjVhF1Uk1HNI+ro09C9HNsLWNmzvvfGNy5uD8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=W/8/FDt8; arc=none smtp.client-ip=209.85.128.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="ocLoq2Aq"
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 5F6E320C44;
-	Fri, 19 Jan 2024 15:57:49 -0500 (EST)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=YtaxTZqpAUK1zjbG+sc2eAabgv5fUVCLxgr7iI
-	Te1uo=; b=ocLoq2AqsXILjL/PNlEYLiMtIX6VLyPBt4rBe6f5E/Q3dq3NM43YHN
-	XdqzcCMPiwjdQW8MriFUNdQkA0CZun/rO0b6YyGSxuxsolFwKKIrA54Kc7FoUsNU
-	vM/xFNuXJBqTUf0X7h87TBRy8XXwDsvxqEcZfjk52mr7LunQF1TjQ=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 580AF20C42;
-	Fri, 19 Jan 2024 15:57:49 -0500 (EST)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.200.93])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id E9A7C20C41;
-	Fri, 19 Jan 2024 15:57:45 -0500 (EST)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Karthik Nayak <karthik.188@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 4/5] refs: introduce `refs_for_each_all_refs()`
-In-Reply-To: <20240119142705.139374-5-karthik.188@gmail.com> (Karthik Nayak's
-	message of "Fri, 19 Jan 2024 15:27:04 +0100")
-References: <20240119142705.139374-1-karthik.188@gmail.com>
-	<20240119142705.139374-5-karthik.188@gmail.com>
-Date: Fri, 19 Jan 2024 12:57:44 -0800
-Message-ID: <xmqqsf2thwhj.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="W/8/FDt8"
+Received: by mail-wm1-f43.google.com with SMTP id 5b1f17b1804b1-40e76109cdeso12924465e9.0
+        for <git@vger.kernel.org>; Fri, 19 Jan 2024 12:59:17 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1705697956; x=1706302756; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=pEe0y+a8oEFxuwy1r30r2zFShvqnmflZNrtvRal+42o=;
+        b=W/8/FDt81JZa0gHKQHFgsMZCSRaRZ2Wi/CKkn0l7pbBlc87FxT1ZlamYdXiUqozEDG
+         M2aJ2Qh30w3sibbqPsbLiGFefKqthBh9Vd5F2fCoLpRQ+4spa8PzowF/XYf3PlrX3KP/
+         GW53JqNDG0m/exPpYp7l44bHzCy8IQlcJtIGutV9Wkn1EMbYazgRNoz4GInM+g90j5PA
+         BX1bUzVJM6pT2W25L6necpunxyDJeo+fMtytxvVqML9eSZExjffaCGCtsNE0dq1jmznL
+         nvbLvrknKGwNfRbBoK6Od/oxJJNuj1Ip2gzXdpjslfYj8VwJpemsLF+6lawPaLVAGvUb
+         EiCg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1705697956; x=1706302756;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=pEe0y+a8oEFxuwy1r30r2zFShvqnmflZNrtvRal+42o=;
+        b=KxlHhDKIcKkEbPMLmpZmCNxhdOjMapmV4OozH/A0iBTPWQRVtWozJ+IUzA3v02VJ/I
+         ob1DAnFjlY0TFK+Fjfc7gaQ0UT07hOIr4BQk/rIkKtIrmuMfT3+mfG+QCzy7aEKB2IRR
+         QYsJ95d4RoeYmepYC1/QWp5aFyMH/ddcAcOhyEBP30KBfHe11l9TWvtkKkqaXZXVyLWl
+         FWG7ErFQMOlHu+tHbhDis/Cr3YFyJnPSTgjb5InE/uTvXqEbMgYgL3oWbUW4HYjei+rK
+         8YLxwLOO0Fw2n0J7Scvla8WS5VJWotOx+AYKQ9frtpetjgKWMqwwNNWZyQHTTr4j/tkA
+         LJNA==
+X-Gm-Message-State: AOJu0YzXEBMNPRzmvDqsdCAjJTGWnG89UpOTgY61APm0h2fB7WJfOez1
+	0weMzT5/9EEph+1pQcXBZaI4Dxh3m0+5kN6a/9eb/yilwcEkxPj5IOpzvEqB
+X-Google-Smtp-Source: AGHT+IEm1gYBRdur5+P/ulXfk4vvasuLGwJjTugj7kzZy2XNzCtZV127L93Gl+7xzP09wC922MjOcw==
+X-Received: by 2002:a7b:c4c6:0:b0:40e:6ca1:b0d0 with SMTP id g6-20020a7bc4c6000000b0040e6ca1b0d0mr223879wmk.53.1705697955854;
+        Fri, 19 Jan 2024 12:59:15 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id t6-20020a05600c198600b0040e48abec33sm34022061wmq.45.2024.01.19.12.59.15
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 19 Jan 2024 12:59:15 -0800 (PST)
+Message-ID: <pull.1644.git.1705697955144.gitgitgadget@gmail.com>
+From: "spectral via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Fri, 19 Jan 2024 20:59:15 +0000
+Subject: [PATCH] MyFirstContribution: update mailing list sub steps
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- 65757E92-B70D-11EE-A7FF-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
+To: git@vger.kernel.org
+Cc: Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
+    spectral <spectral@google.com>,
+    Kyle Lippincott <spectral@google.com>
 
-Karthik Nayak <karthik.188@gmail.com> writes:
+From: Kyle Lippincott <spectral@google.com>
 
-> +static void add_pseudoref_like_entries(struct ref_store *ref_store,
-> +					 struct ref_dir *dir,
-> +					 const char *dirname)
-> +{
-> +	struct files_ref_store *refs =
-> +		files_downcast(ref_store, REF_STORE_READ, "fill_ref_dir");
-> +	struct strbuf path = STRBUF_INIT, refname = STRBUF_INIT;
-> +	struct dirent *de;
-> +	size_t dirnamelen;
-> +	DIR *d;
-> +
-> +	files_ref_path(refs, &path, dirname);
-> +
-> +	d = opendir(path.buf);
-> +	if (!d) {
-> +		strbuf_release(&path);
-> +		return;
-> +	}
-> +
-> +	strbuf_addstr(&refname, dirname);
-> +	dirnamelen = refname.len;
-> +
-> +	while ((de = readdir(d)) != NULL) {
-> +		unsigned char dtype;
-> +
-> +		if (de->d_name[0] == '.')
-> +			continue;
-> +		if (ends_with(de->d_name, ".lock"))
-> +			continue;
-> +		strbuf_addstr(&refname, de->d_name);
-> +
-> +		dtype = get_dtype(de, &path, 1);
-> +		if (dtype == DT_REG && is_pseudoref_syntax(de->d_name))
-> +			loose_fill_ref_dir_regular_file(refs, refname.buf, dir);
+The documentation says to send an email to majordomo. Doing so gets you
+an auto response saying majordomo has been turned down, and to instead
+visit https://subspace.kernel.org/vger.kernel.org.html and use the
+sub/unsub links.
 
-This looks more like add_pseudoref_entries() given that the general
-direction is to have an "allow" list of pseudo refs (at this point
-after the previous step of the series, is_pseudoref_syntax() is the
-is_pseudoref() function, and uses ends_with("_HEAD") as a mere
-optimization to avoid listing all the possible pseudo refs that
-exists or will be added in the future whose name ends with "_HEAD").
+Update the instructions to reference the supported mechanism for
+subscribing to the git mailing list. Include details like these being
+mailto links but the subject/body aren't necessary, since it's not
+obvious what to put in those fields.
 
-Other than the naming, I think these two steps make sense.
+Signed-off-by: Kyle Lippincott <spectral@google.com>
+---
+    MyFirstContribution: update mailing list sub steps
 
-Thanks.
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1644%2Fspectral54%2Fmy-first-contribution-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1644/spectral54/my-first-contribution-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/1644
+
+ Documentation/MyFirstContribution.txt | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
+
+diff --git a/Documentation/MyFirstContribution.txt b/Documentation/MyFirstContribution.txt
+index 279f6a3e7ca..2361fe27e97 100644
+--- a/Documentation/MyFirstContribution.txt
++++ b/Documentation/MyFirstContribution.txt
+@@ -35,9 +35,11 @@ announcements, design discussions, and more take place. Those interested in
+ contributing are welcome to post questions here. The Git list requires
+ plain-text-only emails and prefers inline and bottom-posting when replying to
+ mail; you will be CC'd in all replies to you. Optionally, you can subscribe to
+-the list by sending an email to majordomo@vger.kernel.org with "subscribe git"
+-in the body. The https://lore.kernel.org/git[archive] of this mailing list is
+-available to view in a browser.
++the list by visiting https://subspace.kernel.org/vger.kernel.org.html and using
++the `sub` link next to the `git` list (this is a mailto link; you can leave
++subject and body blank, but you still have to send the email). The
++https://lore.kernel.org/git[archive] of this mailing list is available to view
++in a browser.
+ 
+ ==== https://groups.google.com/forum/#!forum/git-mentoring[git-mentoring@googlegroups.com]
+ 
+
+base-commit: a54a84b333adbecf7bc4483c0e36ed5878cac17b
+-- 
+gitgitgadget
