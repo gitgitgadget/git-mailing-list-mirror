@@ -1,90 +1,144 @@
-Received: from mail-lj1-f178.google.com (mail-lj1-f178.google.com [209.85.208.178])
+Received: from mail-lj1-f173.google.com (mail-lj1-f173.google.com [209.85.208.173])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6CC7AD4E
-	for <git@vger.kernel.org>; Fri, 19 Jan 2024 02:07:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E4E51111
+	for <git@vger.kernel.org>; Fri, 19 Jan 2024 02:38:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705630053; cv=none; b=FRYCLI6RE2U2J4c9+xWg6vgaUC3uzCQHudqldBlaKwBGC/kfHiJN33bZqE4DH2WbhQLrfyk5kiD93CtstNXqx8/I6q5MxCfBVkDJax456ARgsFF76HNJIwvB5jgjMoVRJCp3LHAN+6KpQuIjfHiKg4TpJMcRg14gwZkm8qeJIRA=
+	t=1705631903; cv=none; b=A+yNKua4oi/WzbDzHo8yGMx3yAK4P037PwZ+eUKVn86eRKqMaEcLWYJf/0WrDEjjKa5hd+jozzpuR0NnhJTBl+MhZqqhBUp1DpoiKiIf1yk/ie5v8wXbdQg1W/+YeySDufBa38lCJy1lhHtvUlK11MFQboscKBxSDg+Fg51Wus8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705630053; c=relaxed/simple;
-	bh=na5PxnWSTehaJ7lgxmScnikunKZLI29q9f0L810xPNk=;
+	s=arc-20240116; t=1705631903; c=relaxed/simple;
+	bh=Sp4NZyLP1Ns7P0w8snGhpS07LeB7WAvZAGj24pL/XOE=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=p7DCF8lz/Qa4plxCaVPxqu5Pq72uF7beZIvuqCYNtoMvSRNCQfa41Gqz9qNbxAD+RW00c+RPgVlWJoDi2dbOrn7hh1VRZtdnEuOjdMDSNBDXaOf1wPHz6LsyadhlBoUDqHxccrRI3QxdE/AliMz9Fs8t92m+l+wZPq1VVm8mBB8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ihFsh2Oz; arc=none smtp.client-ip=209.85.208.178
+	 To:Cc:Content-Type; b=khIvjFifMVebWmGer3NK3zt++RqvpXE34HwgZlXugE+K7bTSFh9gr4JSa9yMDQoQc9x2RZAAUn4V5kOF8mHf/CBdkwCSQi/24ajBM2aC0zBi4ONnA0cS3bGv9P10j+SVP93HaLA4kxOb8uB/owYn15gC+SPuyvyQKSqL57JaG2E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mAyTPg+S; arc=none smtp.client-ip=209.85.208.173
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ihFsh2Oz"
-Received: by mail-lj1-f178.google.com with SMTP id 38308e7fff4ca-2cdb50d8982so3447051fa.2
-        for <git@vger.kernel.org>; Thu, 18 Jan 2024 18:07:31 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mAyTPg+S"
+Received: by mail-lj1-f173.google.com with SMTP id 38308e7fff4ca-2cd8b64a52dso3739181fa.2
+        for <git@vger.kernel.org>; Thu, 18 Jan 2024 18:38:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1705630050; x=1706234850; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1705631900; x=1706236700; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=TkWCCGEH8Qev+zbz5Js4NQWzr0FDB96eKyhVu1kI3nQ=;
-        b=ihFsh2OzuGwJ6+EVV+vDljOhkPqVuvmhqqdm0x5dPhdqWLb5tZkCKZr6KkhDfKwQkg
-         +AFg0v9V9zd5cXQaU+0i4zlQkBvU45Yx6zqmci3VQjxRbeH4ruPLA0YvSBjqfq5blvKW
-         igaIwYLVgyQC4RhJA/Ekeqe86sxdie8NtC3zeRp+g7tUnKqp7Kh0AY3FkYaHW0JQttzj
-         295lPF6rQZt12PBbC888jsem1yO4baQ6tq+d+pPzw8wQrghytiWv2m1zfnjYrfiyghnr
-         8BOVNRc4+7lLbgOGyOHf36QJZlFb9Dllf7w1ySpm49KC+xHQeJhRBGzcX4OVVJpfxGG5
-         RypA==
+        bh=LbGHIm42O7swOsBLtSGV1Oh1HFGBzqdznWsMK2wMNaI=;
+        b=mAyTPg+SH4LjZw6RP1X4lVoqWOoneayGCcCxKLjPqZS/94MU+aFNyRkf/dk0UpyjkF
+         4TEeD07rILsQAS5pvBJsXiLz2HnGRLe+Xz8r/T7ZJOh6Aw377ClI5K74yfbgmaQNoG6Z
+         a1PYqvDYxuuM7+BGtKtOySDMd9hXCOJXsiJrV6E6f1wiBEXrTqxolIbdIBFAW4nyGxS5
+         P4yf5Qyb/dOoWJoEoOWxEsob54wCPX/Z+0gF1TsRw90annl66wtPLLNTJ6v4t1oeuZfn
+         I+IEEPk+cFTpV6sb6U0qopoKuT/uRYW2OMD5BCPk6JteatMGHNCCHnu0lO+OZYa6dR94
+         5WXw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1705630050; x=1706234850;
+        d=1e100.net; s=20230601; t=1705631900; x=1706236700;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=TkWCCGEH8Qev+zbz5Js4NQWzr0FDB96eKyhVu1kI3nQ=;
-        b=DgV7tKcf74WVEI9Hmp+h/JLKIGQsHJSA1nmZI3Fz4SOlRN8hqZr4Oeo8RJ4qkYb/sX
-         Yt2FXVrinBFp6XMhFuUOPozakaQu5TM7c7ttWGS59Rzk+iE2S4iOpxMaK0CYGM+lD59p
-         yFC9GyXrKGtASPsQ7a9SS0xuyR3y6L1VGztXPfTvIDgKyxbxBDHuhe237ILdVW+HlURN
-         qI1sR/SfMoUgB8bDtR6qbAT7lI4CGowBCDyC7OG0Cz+CKo8gOIYpNu0dmstLC3weupDA
-         H+jmj8sEBgEVO31ta5EvYFl9e1wnhS8xkv5KhncnNh/FB2/lHxiEDOdspHQHz0KOx9NH
-         6xLg==
-X-Gm-Message-State: AOJu0YwCFhCiaklvcpYOUV8/+0D/N9vYWuP6TpHgRpscaS6wiFtVDoj2
-	I6mRqYISOGwQSIxe7aRCSB5ZfuLCIcr1nCCYmOQiB8RDuZqB1v/4vRQu2sDrPu3eTK8ivddSRVR
-	BmFxApz3cIQmbmsSQBBs61N0TrcI=
-X-Google-Smtp-Source: AGHT+IGip7oFJ2DB1PzJNMyqpc2sqJfAD7K/1SZljKaZvy0eGWX3KzRH5deVkv7fUWlLjh4uPX4Zj8WnwC51r5YBAzM=
-X-Received: by 2002:a2e:8297:0:b0:2cd:7048:8852 with SMTP id
- y23-20020a2e8297000000b002cd70488852mr856279ljg.82.1705630049717; Thu, 18 Jan
- 2024 18:07:29 -0800 (PST)
+        bh=LbGHIm42O7swOsBLtSGV1Oh1HFGBzqdznWsMK2wMNaI=;
+        b=OCQUpKJaeykV3QjaEWrjqtxLJwE45Ifdyr7Obwfdey9CEYBOuKCWh3QU33nJXfrnlq
+         RcwV+DxJ3VKHikRP/sN1k8bKShMZwv7mVgpdU5FRg/3lQDtMMOm+EMGY9lLrL2ihptK4
+         AKLV/PO/3vQqyZ8arzPn/mhV1gjoI03yS/eb0oRKsl8PGtlad2a0cO5ZUYmJMMitl5RU
+         udBtBgTGuYOHl9JjvCuRZZI6rlFNmYo/yMoD/HO4M+c19KswGXpIFuhCzedtvbiyoFeC
+         A5+6Ofxev3MQ3tvAQooiE+T8ZTWmfxrxf2ZatO8fi5Y0SH0/dSpsMvv+iOjtbwqp9skb
+         2nbQ==
+X-Gm-Message-State: AOJu0YzuulRxrqZvHYf/WXf6GGZOLz4PPonLwDm5bamgdAZbgXiHP0tC
+	Zcszj0qA3qU1bZvjXHZvX1onEPsBMMMRySIPHzM5IecHbHaA9Hb1KZ6/seo1HAw5oce7InKHTAi
+	wlYv1qDcu5KuObtT939vvG+QEXW4=
+X-Google-Smtp-Source: AGHT+IEClo1FkFoI6pATM+6P7/364ur1h7MrsPN42+CX1un4wxSZvMaAdSEHnYoYWUGjEPF+rZ9BW1pKyu5EH1NOfbs=
+X-Received: by 2002:a2e:b1c7:0:b0:2cd:c1e6:58a1 with SMTP id
+ e7-20020a2eb1c7000000b002cdc1e658a1mr1005654lja.64.1705631899985; Thu, 18 Jan
+ 2024 18:38:19 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <xmqq34v6gswv.fsf@gitster.g>
-In-Reply-To: <xmqq34v6gswv.fsf@gitster.g>
+References: <pull.1627.git.1703643931314.gitgitgadget@gmail.com>
+ <xmqq8r5gfc3j.fsf@gitster.g> <CABPp-BGSTYDUR1oYYXkCSh-1i2zwxBM=-gnoe-ezNbtPi5CV2A@mail.gmail.com>
+ <xmqqsf3nl2b3.fsf@gitster.g> <298F7067-D572-433F-A7DD-5256B43B97D7@icloud.com>
+ <xmqqwms6qwr3.fsf@gitster.g> <F214D88E-6837-4EAB-896E-DF8CFC315EE7@icloud.com>
+In-Reply-To: <F214D88E-6837-4EAB-896E-DF8CFC315EE7@icloud.com>
 From: Elijah Newren <newren@gmail.com>
-Date: Thu, 18 Jan 2024 18:07:17 -0800
-Message-ID: <CABPp-BHUVLS4vB5maZzU5gS33ve6LkKgij+rc1bBZges6Xej-g@mail.gmail.com>
-Subject: Re: what should "git clean -n -f [-d] [-x] <pattern>" do?
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org
+Date: Thu, 18 Jan 2024 18:37:00 -0800
+Message-ID: <CABPp-BF4Bfr3Hfy7atehHvbQds63+GXO9XPJAW3Mb7dvMcCkDg@mail.gmail.com>
+Subject: Re: [PATCH] precious-files.txt: new document proposing new precious
+ file type
+To: Sebastian Thiel <sebastian.thiel@icloud.com>
+Cc: Junio C Hamano <gitster@pobox.com>, 
+	Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
+	Josh Triplett <josh@joshtriplett.org>, Phillip Wood <phillip.wood123@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Tue, Jan 9, 2024 at 12:21=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
-wrote:
+On Thu, Jan 18, 2024 at 1:33=E2=80=AFPM Sebastian Thiel
+<sebastian.thiel@icloud.com> wrote:
 >
-> I think the current code makes "-n" take precedence, and ignores
-> "-f".
-
-:-(
-
->  Shouldn't it either
+> Thanks so much for the analysis, as seeing the problem of choosing
+> a syntax from the perspective of its effects when using common commands
+> like "git add" and "git clean -f" seems very promising!
 >
->  (1) error out with "-n and -f cannot be used together", or
->  (2) let "-n" and "-f" follow the usual "last one wins" rule?
+> When thinking about "git add ." vs "git clean -f" one difference comes to
+> mind: "git clean -f" is much less desirable it's fatal. "git add ." on th=
+e
+> other hand leaves room for correction, even when used with `git commit -a=
+"
+> (and with the exception of "git commit -am 'too late'").
 
-I believe so.
+"git commit -a" and "git commit -am 'too late'", by themselves, will
+only commit changes to already-tracked files.  So they wouldn't be
+problematic alone.
 
-> The latter may be logically cleaner but it is a change that breaks
-> backward compatibility big time in a more dangerous direction, so it
-> may not be desirable in practice, with too big a downside for a too
-> little gain.
+But perhaps the -a was distracting and you were thinking of "git add .
+&& git commit -m whatever".  That does remove the chance to correct
+before creating a commit, but I don't think it's too bad either.  Even
+though it skips the chance to catch the problem pre-commit, there's
+still time to review & correct before publishing for patch review (or
+PR review or MR review or whatever you want to call it).  And, even if
+published for patch review, it can still be caught & corrected by
+those doing patch review as well.
 
-Yeah, I think (1) is the safer option, for now.  We could potentially
-do (1), then wait a long time, then switch to (2).
+So, I just don't see the "accidental add" problem as being very
+severe; there are so many chances to catch and correct it.
+
+> To my mind, in order to support projects with both ".config" and
+> ".env.secret" they would have to be given a choice of which syntax
+> to use, e.g.
+>
+>     # This file shouldn't accidentally be deleted by `git clean`
+>     $.config
+>
+>     # These files should never be accidentally tracked
+>     #(keep)
+>     .env*
+
+Reminds me of https://www.emacswiki.org/pics/static/TabsSpacesBoth.png
+
+;-)
+
+Besides, if for a specific file or filetype, accidental additions are
+more important to protect against than accidental nuking, then can't
+folks achieve that by simply using
+
+    # Don't let older git versions add the file
+    .env.secret
+
+    # For newer git versions, override the above; treat it as precious
+(i.e. don't add AND don't accidentally nuke)
+    $.env.secret
+
+In contrast, if protection against accidental nuking is more important
+for certain files, one can use just the second line without the first.
+
+And, whether you have a file with both lines or just the second line,
+newer git versions will protect against both accidental nuking and
+accidental adding.
+
+In contrast...
+
+Phillip's syntax provides no way to achieve treating accidental nuking
+as more important than accidental adding; it can only handle
+protection against accidental adding in older Git versions.  And, as I
+discussed above, the accidental add problem seems much less severe and
+is thus the less important problem to protect against.
