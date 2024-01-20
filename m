@@ -1,53 +1,51 @@
 Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A435212E47
-	for <git@vger.kernel.org>; Sat, 20 Jan 2024 21:54:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88AB0210B
+	for <git@vger.kernel.org>; Sat, 20 Jan 2024 22:26:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705787686; cv=none; b=UdzvjXL5dp1Sw1cV28k5PlpR1X1aHiKhaBkdTsarQ9ve7vXpErVN+gfIL5tzapBiWzT5sO6hE8AS64W3ev/UO9j/ZgWmhPXsLLLucsCGOi7Jtm+FFTOkROFbtiPurctVm56FkzQp6L0+roL8i0vKtlVdWOYzR4yTLiPeUd1p4GM=
+	t=1705789571; cv=none; b=r1nA3ZNqKvUQiGSEH0EWHh5wu0RlJ9Vb7TOcCZO1foVuV/cMg1BRH/ys+YduNV+EUCXYPNhSGMeaNtM5AsnYgNzIK7TReM6ud9D9igf0RnYyIWWeR1vamXZn6+281eCHrcyEvhnsC+HMMJ2vwmxS6SX2Jbe38caKkhiaFdnYrK0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705787686; c=relaxed/simple;
-	bh=X/IowKTcGd4R3UaAwf7Tz72DQaSyo7yB6pc+5J/4YH8=;
+	s=arc-20240116; t=1705789571; c=relaxed/simple;
+	bh=fi5wAKZ8/oKG/7GD5L+/Pt7qsKhZoYTdoqtgpjXU/Gc=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=KFhsBZ5YP4C96bpxEKjjumQXvnaFbv4qrnHoB6tDXshOyQ54zE1PI/g2k8mt1NvjgRJPzVr7EHOfwbBx94HlDQiyFBAWCdtV7H318IyD49APPHeEDBVB1pDFm8Gqt5Y6lYtGzVfhlSu0KJo7HTVkvnVytMiqWjqAgObfnvlmAFc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=rz1JxLFx; arc=none smtp.client-ip=173.228.157.53
+	 MIME-Version:Content-Type; b=oDmjoGS77WJydxBEUZXJkt8VZu4j74otjd9nZGeV1v2nW5gspvitotqEc+900qO3ZXMbag5PrKyKyVx9OpnFYutdFBGzdsBQJ3NU9MVNCX3KEbAeSH9A9JitsBnKt5SPcBvKHdvV47egRFmNN0t/ofgInHgnK6FCwzGg4U/7Tjk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=BkBA9OAw; arc=none smtp.client-ip=173.228.157.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="rz1JxLFx"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="BkBA9OAw"
 Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id CE7861B12E;
-	Sat, 20 Jan 2024 16:54:43 -0500 (EST)
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id C0CAE1B40B;
+	Sat, 20 Jan 2024 17:26:08 -0500 (EST)
 	(envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=X/IowKTcGd4R3UaAwf7Tz72DQaSyo7yB6pc+5J
-	/4YH8=; b=rz1JxLFxts9Nnhg+CeNcA4NtdAOmCKPVAXNfFK8blh50WWj6XFmGBa
-	uF5pcyl61Zlt0jzm7l39zsNFG3nihZ0K7MaH2rju4/8qfsP6UwHF0wHr8H2xVAGH
-	oPu91mzLuvxw0ltM2ma8yOC5/TZV3trlLiIcp5xGfAsFtDWZj5p8A=
+	:content-type; s=sasl; bh=fi5wAKZ8/oKG/7GD5L+/Pt7qsKhZoYTdoqtgpj
+	XU/Gc=; b=BkBA9OAwKOwmNsLLzad5UuT/ltOmeAFYa5Bb/Dk4Wf8wLDEULjSgw0
+	a8LBQFCqLmqSsmvc/rvymqiHfPAF4hRtr7lT+x8l91jVocfAOmavpQEyIpmCEZF2
+	Yv4J7TFIcpQYtPmMJDCQpBz+IVL495LbIj5SJwZ2I59MlZYUvhzSM=
 Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id C6B4A1B127;
-	Sat, 20 Jan 2024 16:54:43 -0500 (EST)
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id B8F2B1B40A;
+	Sat, 20 Jan 2024 17:26:08 -0500 (EST)
 	(envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.125.200.93])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 5FFDD1B126;
-	Sat, 20 Jan 2024 16:54:40 -0500 (EST)
+	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 540121B409;
+	Sat, 20 Jan 2024 17:26:05 -0500 (EST)
 	(envelope-from junio@pobox.com)
 From: Junio C Hamano <gitster@pobox.com>
-To: James Touton <bekenn@gmail.com>
-Cc: James Touton via GitGitGadget <gitgitgadget@gmail.com>,
-  git@vger.kernel.org
-Subject: Re: [PATCH] git-p4: use raw string literals for regular expressions
-In-Reply-To: <CAA3pzWRRrwLN16RsNEJjdQg7vnSM_p_MtLqCU2ZXg5L=WPc-RA@mail.gmail.com>
-	(James Touton's message of "Sat, 20 Jan 2024 11:34:37 -0800")
-References: <pull.1639.git.1705775149642.gitgitgadget@gmail.com>
-	<xmqqr0ibetap.fsf@gitster.g>
-	<CAA3pzWRRrwLN16RsNEJjdQg7vnSM_p_MtLqCU2ZXg5L=WPc-RA@mail.gmail.com>
-Date: Sat, 20 Jan 2024 13:54:38 -0800
-Message-ID: <xmqqmsszekm9.fsf@gitster.g>
+To: "Kyle Lippincott via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Kyle Lippincott <spectral@google.com>
+Subject: Re: [PATCH] setup: allow cwd=.git w/ bareRepository=explicit
+In-Reply-To: <pull.1645.git.1705709303098.gitgitgadget@gmail.com> (Kyle
+	Lippincott via GitGitGadget's message of "Sat, 20 Jan 2024 00:08:22
+	+0000")
+References: <pull.1645.git.1705709303098.gitgitgadget@gmail.com>
+Date: Sat, 20 Jan 2024 14:26:03 -0800
+Message-ID: <xmqqh6j7ej5w.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -57,11 +55,61 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 X-Pobox-Relay-ID:
- 8308F5E8-B7DE-11EE-BD59-A19503B9AAD1-77302942!pb-smtp21.pobox.com
+ E68D94E4-B7E2-11EE-B9DE-A19503B9AAD1-77302942!pb-smtp21.pobox.com
 
-James Touton <bekenn@gmail.com> writes:
+"Kyle Lippincott via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> ... is it enough to mention that they're
-> already in use?
+> From: Kyle Lippincott <spectral@google.com>
+>
+> The safe.bareRepository setting can be set to 'explicit' to disallow
+> implicit uses of bare repositories, preventing an attack [1] where an
+> artificial and malicious bare repository is embedded in another git
+> repository. Unfortunately, some tooling uses myrepo/.git/ as the cwd
+> when executing commands, and this is blocked when
+> safe.bareRepository=explicit. Blocking is unnecessary, as git already
+> prevents nested .git directories.
 
-Sure.  Thanks.
+In other words, if the directory $D that is the top level of the
+working tree of a non-bare repository, you should be able to chdir
+to "$D/.git" and run your git command without explicitly saying that
+you are inside $GIT_DIR (e.g. "git --git-dir=$(pwd) cmd")?
+
+It makes very good sense.
+
+I briefly wondered if this would give us a great usability
+improvement especially for hook scripts, but they are given GIT_DIR
+when called already so that is not a big upside, I guess.
+
+> Teach git to not reject uses of git inside of the .git directory: check
+> if cwd is .git (or a subdirectory of it) and allow it even if
+> safe.bareRepository=explicit.
+
+
+>     My primary concern with this patch is that I'm unsure if we need to
+>     worry about case-insensitive filesystems (ex: cwd=my_repo/.GIT instead
+>     of my_repo/.git, it might not trigger this logic and end up allowed).
+
+You are additionally allowing ".git" so even if somebody has ".GIT"
+that won't be allowed by this change, no?
+
+>     I'm assuming this isn't a significant concern, for two reasons:
+>     
+>      * most filesystems/OSes in use today (by number of users) are at least
+>        case-preserving, so users/tools will have had to type out .GIT
+>        instead of getting it from readdir/wherever.
+>      * this is primarily a "quality of life" change to the feature, and if
+>        we get it wrong we still fail closed.
+
+Yup.
+
+If we really cared (which I doubt), we could resort to checking with
+is_ntfs_dotgit() and is_hfs_dotgit(), but that would work in the
+direction of loosening the check even further, which I do not know
+is needed.
+
+> -			if (get_allowed_bare_repo() == ALLOWED_BARE_REPO_EXPLICIT)
+> +			if (get_allowed_bare_repo() == ALLOWED_BARE_REPO_EXPLICIT &&
+> +			    !ends_with_path_components(dir->buf, ".git"))
+>  				return GIT_DIR_DISALLOWED_BARE;
+
+Thanks.
