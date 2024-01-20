@@ -1,123 +1,104 @@
-Received: from mail-yb1-f175.google.com (mail-yb1-f175.google.com [209.85.219.175])
+Received: from mail-yb1-f201.google.com (mail-yb1-f201.google.com [209.85.219.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A27910940
-	for <git@vger.kernel.org>; Sat, 20 Jan 2024 19:34:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 606002F56
+	for <git@vger.kernel.org>; Sat, 20 Jan 2024 20:04:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705779295; cv=none; b=AOl0JIc9eI2LTr63g/t2V0hKcxtRIPux1atSXcEWBISSYLNdEg0pCW0zKtD0hXh9uZHpwM9BRTSCbC/vzbs8LziN/myixD/5ExEU9Y6TqcLScvU/JxPM/piimhP3zKqjAzZxDSccagUgfy1iFHsY5hq5ig8GOaMdW0cVfWn29+w=
+	t=1705781060; cv=none; b=STpMT2zSglMAcKZzLGesxS2efrdb3H8H59A41bpc3+1EBPYzdv2endHr5wrJ6AKus4mjsm1AlvmtA2F/vsmIbao6a1NQRaxxZElrte0IwkOr0HfRYK82plrmoVg0CACajsYtkPML19F1HfKnQMe7NJWV/3stsGxvyfnmaheGG6E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705779295; c=relaxed/simple;
-	bh=Vc0pLV9c/Ewim17WLrOZ6kyMMecx7kbT4fx+Fe5hnJQ=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=nqc+JKPrKUXlfnJxvuQOMCtgZwkkORkFgoKPvGNvAZZ+ElyxbVNSrdEyC2a0tW/s19e1bcUXrGu9irKYQXW81A3CqrwABP2e+VyXsKKCIZvlrXKvCoRSuvovoikItzetkgKKfNnGCyR/CxMSKTAR8J0iwvNL7HlIbbSICBuP44c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=WjKRTRsc; arc=none smtp.client-ip=209.85.219.175
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1705781060; c=relaxed/simple;
+	bh=5Vlpd9b4Hma3CbIjI1RN+SppNOMTdwVUp9vRqP5yu8w=;
+	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
+	 To:Cc:Content-Type; b=SqKCk1x/O48hvHTmgTCEjeZSkzww6E4gigrPgHdVE/wvgsh9Vb6n3Pwg0msI2JRMdIuJXu5RFOwgGR+psW4hBL5ITbUA6XWWbnzZ7PCLOLdGKS2kpMD2ugaufh2vEHCn/mmdh5jts8BQGdXOndJe1U6XhcQCjDOjLDdmJqslQjg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--linusa.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=UKXDElhI; arc=none smtp.client-ip=209.85.219.201
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--linusa.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WjKRTRsc"
-Received: by mail-yb1-f175.google.com with SMTP id 3f1490d57ef6-dc22ade26d8so1385016276.1
-        for <git@vger.kernel.org>; Sat, 20 Jan 2024 11:34:54 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="UKXDElhI"
+Received: by mail-yb1-f201.google.com with SMTP id 3f1490d57ef6-dc2358dce6bso2136985276.3
+        for <git@vger.kernel.org>; Sat, 20 Jan 2024 12:04:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1705779293; x=1706384093; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=rALoSHXa4rY0hY6bnBDVxBbm0U351Fcc+UCi07CnQC8=;
-        b=WjKRTRscINrB1XW9FSiMmuGq+iLEeNIrlYfbiXQCdtK1OqWCD4Fvb9TpfrTFCtoiZl
-         SGKTgYZ9z/UShAfuZZSjaw+dCvaYoUB5zYDSu3k4nkwpf8COCZcf7kkU96M9vTMypa/R
-         fpwlhE/hNsyr+Rt+i+WsZCAoKHeTzO6K7K/7IshlmXKQac+y9xDT2Z4tv44szL9bbasm
-         +Dxf3Pttr/Hn2BORlbnHLw4K2CLQda8Oqe9GBqWYpP5Ugu9ER8LofIEfctH/k2eUQD0n
-         HdTJVfFIZpqHzb4H06jWspAarPCwE8oky+leJ7UxY48+nquVfFwC/rPrBeZgiYbQRXSf
-         dXtw==
+        d=google.com; s=20230601; t=1705781058; x=1706385858; darn=vger.kernel.org;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:from:to:cc:subject:date:message-id:reply-to;
+        bh=BfV2fKTlzHSBtTRnIQ9jdvGIvkXz+NqzgjbzfPMNbeM=;
+        b=UKXDElhIKP8XPUxloL9gAHzlfz9Fs/b9Br0g1Q3qQb546JeI0SAfRl1QOh6n5xLNI0
+         nDtybE/CLv0GasHR1G487nIgCXGazmGjGhU+uIII/VswR10mpKG97KPLSVU7Xh5FkLRY
+         jCHVZnBWHVq/RGj5+4YJR4NqicbJvb9kYb2POwgnnuvZaxPcAq6xyFJAkUPH34U651ua
+         lN+n5fVK1xanaSJuO3WbsOK0RQx/xQo0BdsVa8gXGVW4KVxDokSOeCbob+J8icOdXm8i
+         H9cdpiT8JjilEtFOaHhcB47wiDDr1XJ0LRGhUt2pcToGV/u0tO8E2ScxT4Rcz5TqhtHY
+         Xklg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1705779293; x=1706384093;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=rALoSHXa4rY0hY6bnBDVxBbm0U351Fcc+UCi07CnQC8=;
-        b=fstkLLdcts2bAARm+j04la1YxMXJBXRLZydNVeTLO+oyROxdRThNNjNp5UPueb4E4Y
-         002GpsJNBNej5g5B85nOTD2mZfSk4NxTg3MzTc3Gi4RCapTw+398/BYoXqDXu/DlOtya
-         sc2wjFexE9S7wzhMzLv4osG+2AXZcGDAZH31GnRcPNyJiuV7JsO1p6hJkZllG8oEBMkb
-         NJh8FiSg2IFm5K7tY0vnjRqoq1WZITXm71V7nE+uLizM01VZhnZzRgQtxMC/f5Fsp7uR
-         fBAzV41BUJj5JEISvxYaPSpUTbvUoUiY/3OTnwNM2odsQm8Bg0wrsHlf7bLeqkdvWlp9
-         Qq6g==
-X-Gm-Message-State: AOJu0YyjQyGDycFYaWy11B2n1FkAOepSgtPPEwd9Svxr9plTJXk1qeR7
-	1hkQLPlCH+8r1MQJrGoyRPWJIUH+tO2AZtHQUPEnj/mQAM8jLeJmc0XYYBLyIZkBuGK+Pm1NL3A
-	cbLYagfhWyVPqZE6aFA0H+so27Lk=
-X-Google-Smtp-Source: AGHT+IFyk8dFnJBBSKscn1tOd0v0XgB7zE3wb0KPASkMKUzVhDE2VugPtcSevutYfQwWB97tyLw3MP8HrgQPvYV3ThM=
-X-Received: by 2002:a25:254:0:b0:dc2:20c8:75e9 with SMTP id
- 81-20020a250254000000b00dc220c875e9mr1000552ybc.33.1705779293202; Sat, 20 Jan
- 2024 11:34:53 -0800 (PST)
+        d=1e100.net; s=20230601; t=1705781058; x=1706385858;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=BfV2fKTlzHSBtTRnIQ9jdvGIvkXz+NqzgjbzfPMNbeM=;
+        b=GwHgQ+FH/RywwKYsk1XiCk1YOpSCMtvVL6EjQOgd2qxCJcrpHvaM/31IQCJ2iWc0Pc
+         YwyQMBSy2wUvfAJC30QVmduARyRsiD86YCxBXW5gWtZVSiZZRK2fInUxKJALMONxAuKQ
+         3uPyyHD52LN1fu8GIetCFcmpeYElVMDhXsRqD0/bXsAQWWsTddQNZ3z+vslZgRtNw0dN
+         i8OQWzGyTMGpSy6DUqyY7DT22MelzvMZwK/kxZJdRx7d9owtYSRjwgHOzEt+2Y4EwSh6
+         Vcxh0XTgmbPy7UOK+x1EWR0pn2ouz6UroVyEq72AyVA1Lidiw2zWBW5A8IOsYo2edFvb
+         th6w==
+X-Gm-Message-State: AOJu0YxQn3mlHnqIYWhbCbr+4+JGYjjrYscnN/AjVhNsfoXk6YLblVjg
+	D+HvHoe374OVy3TNS9Ws9SZ7DBw8ywZV9yqfDyvDqsXkzUitNXzNMrMBN8EoxuMxZnuJAUePBaw
+	QmA==
+X-Google-Smtp-Source: AGHT+IEsYJCJPqGSVAJtUnyY+lY36Uu8EPXbBf6fu6dELj0XcoHpRkCl1tF5vMp8HZjaBlaxQdfwEQKVJeQ=
+X-Received: from fine.c.googlers.com ([fda3:e722:ac3:cc00:7f:e700:c0a8:2221])
+ (user=linusa job=sendgmr) by 2002:a5b:90b:0:b0:dc2:3619:e94e with SMTP id
+ a11-20020a5b090b000000b00dc23619e94emr157127ybq.6.1705781058395; Sat, 20 Jan
+ 2024 12:04:18 -0800 (PST)
+Date: Sat, 20 Jan 2024 12:04:16 -0800
+In-Reply-To: <xmqq34uunoag.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-References: <pull.1639.git.1705775149642.gitgitgadget@gmail.com> <xmqqr0ibetap.fsf@gitster.g>
-In-Reply-To: <xmqqr0ibetap.fsf@gitster.g>
-From: James Touton <bekenn@gmail.com>
-Date: Sat, 20 Jan 2024 11:34:37 -0800
-Message-ID: <CAA3pzWRRrwLN16RsNEJjdQg7vnSM_p_MtLqCU2ZXg5L=WPc-RA@mail.gmail.com>
-Subject: Re: [PATCH] git-p4: use raw string literals for regular expressions
-To: Junio C Hamano <gitster@pobox.com>
-Cc: James Touton via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
+Mime-Version: 1.0
+References: <pull.1632.git.1704869487.gitgitgadget@gmail.com>
+ <fd4a9d54d9522973a4c22e43cb1d7964033d4837.1704869487.git.gitgitgadget@gmail.com>
+ <xmqq34uunoag.fsf@gitster.g>
+Message-ID: <owlyle8jhiv3.fsf@fine.c.googlers.com>
+Subject: Re: [PATCH 05/10] sequencer: use the trailer iterator
+From: Linus Arver <linusa@google.com>
+To: Junio C Hamano <gitster@pobox.com>, 
+	Linus Arver via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, Emily Shaffer <nasamuffin@google.com>, 
+	Christian Couder <chriscool@tuxfamily.org>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-On Sat, Jan 20, 2024 at 10:47=E2=80=AFAM Junio C Hamano <gitster@pobox.com>=
- wrote:
->
-> "James Touton via GitGitGadget" <gitgitgadget@gmail.com> writes:
->
-> > From: James Touton <bekenn@gmail.com>
-> >
-> > Fixes several Python diagnostics about invalid escape sequences.
->
-> Thanks for noticing, but we want a bit more backstory explained here
-> in the proposed commit log message, outlining:
->
-> 1. With what version of Python the deprecation warning started.
->
-> This will help us judge the urgency of the fix.  If I am reading the
-> docs.python.org/$version/howto/regex.html right, we do not see this
->
->     In addition, special escape sequences that are valid in regular
->     expressions, but not valid as Python string literals, now result
->     in a DeprecationWarning and will eventually become a
->     SyntaxError, which means the sequences will be invalid if raw
->     string notation or escaping the backslashes isn=E2=80=99t used.
->
-> in Python 3.5's document, but Python 3.6's document starts talking
-> about the warning.  Python 3.6 was released at the end of 2016 so it
-> is 7 years old---users have lived with the warning for this many
-> years, so if the above reasoning is correct, this is not all that
-> urgent to require a maintenance release.
->
-> 2. How well the new construct, used by the code after applying this
->    patch, is supported by older version of Python.
->
-> This will assure us that the change will not be robbing from users
-> of older versions of Python to pay users of newer versions of
-> Python.  Again, if I am reading the documentation right, feeding r''
-> raw strings to regexp engine was supported even by Python 2.7, which
-> is what git-p4.py already requires, so we should be OK.
->
-> But we want the developers who propose a change to explain why it is
-> a good idea, and why it is a safe change to make, in their proposed
-> commit log message, instead of forcing the reviewers to do that for
-> them.
->
-> For other syntactic and linguistic hints on writing a proposed log
-> message, please check Documentation/SubmittingPatches document.
->
-> Thanks, again.
+Junio C Hamano <gitster@pobox.com> writes:
 
-Thanks for the notes, I will update this when I have the opportunity.
+>> From: Linus Arver <linusa@google.com>
+>> Also, teach the iterator about non-trailer lines, by adding a new field
+>> called "raw" to hold both trailer and non-trailer lines. This is
+>> necessary because a "trailer block" is a list of trailer lines of at
+>> least 25% trailers (see 146245063e (trailer: allow non-trailers in
+>> trailer block, 2016-10-21)), such that it may hold non-trailer lines.
+>
+> OK.  This would change behaviour, wouldn't it, in the sense that we
+> used to yield a non-trailer line from the old iterator but the new
+> one skips them?
 
-Raw strings were already present in the file, just not in these
-particular locations.  Given that, I wouldn't expect them to need any
-particular explanation; do you still want some mention of
-compatibility constraints, or is it enough to mention that they're
-already in use?
+I think it's the other way; the old iterator only iterated over trailer
+lines, skipping over non-trailer lines (see the "not a real trailer"
+deleted bit for trailer_iterator_advance()). The new one iterates over
+all lines found in the trailer block, whether they are trailer or
+non-trailer lines.
+
+The function insert_records_from_trailers() from shortlog.c uses the new
+iterator, but has to be careful because the new iterator goes over
+non-trailer lines too. That's why it now does
+
+    if (!iter.is_trailer)
+            continue;
+
+to do the skipping itself.
+
+> Is that something we can demonstrate and protect in
+> tests (presumably once we conclude these refactoring, we would be
+> able to call into this machinery from unit-testing framework)?
+
+Yup, that is exactly what I want to do once the dust around the trailer
+API settles down after this series (and also the larger series). :)
