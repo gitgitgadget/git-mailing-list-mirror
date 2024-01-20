@@ -1,114 +1,82 @@
-Received: from mail-wr1-f65.google.com (mail-wr1-f65.google.com [209.85.221.65])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6090BA4D
-	for <git@vger.kernel.org>; Sat, 20 Jan 2024 02:16:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.65
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66C2E19B
+	for <git@vger.kernel.org>; Sat, 20 Jan 2024 02:31:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705716981; cv=none; b=imKBJHUS4JesAXRt0Bb6FPWSWaDZhDKxs43Ffb8YJWPa3H22z114/VmaZOVJlydHQWwaVd10UiRcgJyMU/LJNgdyyKm4K3mUV2A8FGgZrJH2ton/RDdXAY8Vs0DIC8iqN30LaX8rezpzyII1Eld1JM59lt0pwc45nf4hT+d75xo=
+	t=1705717905; cv=none; b=ji7PmgKBCNDRA6Sj1Y9EJiMiSHW3pCbWYMw+cLVbrtQQ03N6a5XrM360dw63L5oHpJFqezj83iDFC3qmeJTctjLy5kKYR/khr5jEEE2A6ImeuMQOlhE1Vd4jxfVXXrkdheO+Q9L951RYe45UX42cS28KmlidCjnxKYcRDzzHXko=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705716981; c=relaxed/simple;
-	bh=zJgNYbIG2Z2hPLFEnYC1IjQsT76SOdMn8pRli5LRpP0=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QWjOnfUMJyMPYKQ1KOQCWb484C6H9X2TH2DCjD2VGUFSxnoQ5BIGPpdi4pdT3EKEcPLxvmLoEH+FlKgRp8z07OcrM2j7FARH7tc3h5ks7d+jq1h1sZDcQPTm35Mx69yqZ9lWTtTraxDGuNlOQcusRIuIYkb21juqCC5/0C7tECA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=bgkhOcDG; arc=none smtp.client-ip=209.85.221.65
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bgkhOcDG"
-Received: by mail-wr1-f65.google.com with SMTP id ffacd0b85a97d-337c5bcf79fso1287466f8f.2
-        for <git@vger.kernel.org>; Fri, 19 Jan 2024 18:16:20 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1705716978; x=1706321778; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=eW7NBKAf0oylc50OTLSJlhlPelzL81+QLOSsuIiTCZg=;
-        b=bgkhOcDGfwKTN0N0SJijm315MYNV2Kb+E25zDebwo9AA0Dhfa5siswOK0lZdHk77U3
-         GpfQxlKI7rsYxfNbq3Z2xOTK7FZUPIjRK2Dk6l7sL3cMB/ki1p1H/zNO+eke0KGOrWGg
-         uy4vGKaVSrM4heNBnlrS4+MyE+9B33a6fEMFJurnuSsdV9LYFVI4PnaXvc9DL60vSO9X
-         T0x3QogBlP8+yWaewbCX4pJYSk1XkQJG+OPgZNCN5qSXs0FmlgRwMLgcqGluCwCcEywn
-         EnsCmf9Ub0eaRFYXakXWMfx6tljYvMGRPE45A//sQ5SMe5RzVIZmA2sTw2gAJ1oISnem
-         GhxA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1705716978; x=1706321778;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=eW7NBKAf0oylc50OTLSJlhlPelzL81+QLOSsuIiTCZg=;
-        b=iYhdn9ZZ3PytGOjaZQkaB0xKGxGkcvf5RnbmLLjRHUAPNfdEPHAcG7f5jf54+W+DtO
-         aIedOMferz3FqPUQ0PxipKyWbD6RkD8E6uQxc+0+I1GlpDvz9ovZcPapb9P6hhMyCM6S
-         5h/R3xSZpeItBG05gCO9HB99nwoikYDfv9sn4nCtBLKZGBf7Lx/TntKbg274FcjHWkCM
-         0g8XQQazENey2PWkWSJFY7YHzd3nTdkMsrZ6c6aEqkPweU1gl0lK9ShOGLOpTbJaG0Uj
-         5mKUg4HMXHG5mZDgksujBFP5/R+HU956HWEFMnuDmpP1Fr8FWocdCl+h8wIDVhs8rCX/
-         H0yg==
-X-Gm-Message-State: AOJu0Yyv1UZ3Qc+Sk1ViE+vP86wT3UBAwxSpHeq/wu/CJmg+sDIcJdl+
-	8hKIiJDhitizoimFJ3Y6zViAmGVnFPu6I1ayxno0qB5qLPtywqIyrvG+iOJrs+k=
-X-Google-Smtp-Source: AGHT+IEBZmu4wSHtbqTupJVb3vlZWKRneYeRZax+AADtYjMkFf5udeaasZ+jxXtL/U8QlrDj9rGwOA==
-X-Received: by 2002:adf:a2d5:0:b0:337:c91d:e80b with SMTP id t21-20020adfa2d5000000b00337c91de80bmr312741wra.13.1705716977803;
-        Fri, 19 Jan 2024 18:16:17 -0800 (PST)
-Received: from localhost.localdomain ([41.202.207.146])
-        by smtp.gmail.com with ESMTPSA id a1-20020a5d5081000000b00337d9b772c6sm3258412wrt.37.2024.01.19.18.16.15
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 19 Jan 2024 18:16:17 -0800 (PST)
-From: Achu Luma <ach.lumap@gmail.com>
-To: git@vger.kernel.org
-Cc: christian.couder@gmail.com,
-	gitster@pobox.com,
-	Achu Luma <ach.lumap@gmail.com>
-Subject: [Outreachy][PATCH v4] t2400: avoid losing exit status to pipes
-Date: Sat, 20 Jan 2024 03:15:47 +0100
-Message-ID: <20240120021547.199-1-ach.lumap@gmail.com>
-X-Mailer: git-send-email 2.43.0.windows.1
-In-Reply-To: <20231204153740.2992-1-ach.lumap@gmail.com>
-References: <20231204153740.2992-1-ach.lumap@gmail.com>
+	s=arc-20240116; t=1705717905; c=relaxed/simple;
+	bh=2BDdn1U2DJCCkMxpSwhQUkqkwgf1iHXsdAp67hAiWIE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=e+3fbx+Oi2CNSNy6gYzHp2B/g3tyTPtUQtqzufbVNow5CXoFFVvVfWbXWyfobZG1g923MyPktn4MgTPqsQqLczhe3q81KCQUex+8RGRVKuhQFm1RnUzELMOiAB8OQre2bJkpHz902EsWFCnrYfB6C97QBjVBimTCxvtdBUpWjGw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+Received: (qmail 1184 invoked by uid 109); 20 Jan 2024 02:31:42 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sat, 20 Jan 2024 02:31:42 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 7576 invoked by uid 111); 20 Jan 2024 02:31:43 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 19 Jan 2024 21:31:43 -0500
+Authentication-Results: peff.net; auth=none
+Date: Fri, 19 Jan 2024 21:31:41 -0500
+From: Jeff King <peff@peff.net>
+To: Chandra Pratap via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, Chandra Pratap <chandrapratap3519@gmail.com>,
+	Chandra Pratap <chandrapratap376@gmail.com>
+Subject: Re: [PATCH v3] tests: move t0009-prio-queue.sh to the new unit
+ testing framework
+Message-ID: <20240120023141.GA610247@coredump.intra.peff.net>
+References: <pull.1642.v2.git.1705220304781.gitgitgadget@gmail.com>
+ <pull.1642.v3.git.1705502304219.gitgitgadget@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <pull.1642.v3.git.1705502304219.gitgitgadget@gmail.com>
 
-The exit code of the preceding command in a pipe is disregarded. So
-if that preceding command is a Git command that fails, the test would
-not fail. Instead, by saving the output of that Git command to a file,
-and removing the pipe, we make sure the test will fail if that Git
-command fails.
+On Wed, Jan 17, 2024 at 02:38:23PM +0000, Chandra Pratap via GitGitGadget wrote:
 
-Signed-off-by: Achu Luma <ach.lumap@gmail.com>
----
- The difference between v3 and v4 is:
- - Changed subject to better reflect what the patch is doing.
- - Updated the commit message.
+> +#define TEST_INPUT(INPUT, EXPECTED, name)			\
+> +  static void test_##name(void)				\
+> +{								\
+> +	int input[] = {INPUT};					\
+> +	int expected[] = {EXPECTED};				\
+> +	int result[ARRAY_SIZE(expected)];			\
+> +	test_prio_queue(input, result);				\
+> +	check(!memcmp(expected, result, sizeof(expected)));	\
+> +}
 
- t/t2400-worktree-add.sh | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+It is somewhat unfortunate that a failing test here gives a fairly
+uninformative message like:
 
-diff --git a/t/t2400-worktree-add.sh b/t/t2400-worktree-add.sh
-index 3742971105..b597004adb 100755
---- a/t/t2400-worktree-add.sh
-+++ b/t/t2400-worktree-add.sh
-@@ -490,7 +490,8 @@ test_expect_success 'put a worktree under rebase' '
- 		cd under-rebase &&
- 		set_fake_editor &&
- 		FAKE_LINES="edit 1" git rebase -i HEAD^ &&
--		git worktree list | grep "under-rebase.*detached HEAD"
-+		git worktree list >actual &&
-+		grep "under-rebase.*detached HEAD" actual
- 	)
- '
+  # check "!memcmp(expected, result, sizeof(expected))" failed at t/unit-tests/t-prio-queue.c:89
+  not ok 5 - prio-queue works when LIFO stack is reversed
 
-@@ -531,7 +532,8 @@ test_expect_success 'checkout a branch under bisect' '
- 		git bisect start &&
- 		git bisect bad &&
- 		git bisect good HEAD~2 &&
--		git worktree list | grep "under-bisect.*detached HEAD" &&
-+		git worktree list >actual &&
-+		grep "under-bisect.*detached HEAD" actual &&
- 		test_must_fail git worktree add new-bisect under-bisect &&
- 		! test -d new-bisect
- 	)
---
-2.43.0.windows.1
+whereas the original t0009 you get a nice diff between expected and
+actual output. I guess this is a place where the test framework could
+help us more with a specialized check_memequal() or something that
+showed the differing bytes on failure (of course being C, it has no type
+info so it wouldn't even know these are ints!).
 
+Another solution would be to have the test function check the result as
+it is computed rather than storing it in an array. That would also solve
+another potential problem: undefined behavior if the result is not the
+expected size. If there is a bug that causes too much output we'd
+overflow our buffer. If too few, we'll end up comparing uninitialized
+memory (which could even accidentally have the correct values,
+especially if it's recycled from a previous test!). Neither of those
+should happen in practice, but then the whole point of this exercise is
+to test the code.
+
+I admit I find myself a little skeptical in general of this whole "let's
+do tests in C" framework.
+
+-Peff
