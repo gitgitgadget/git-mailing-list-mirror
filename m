@@ -1,123 +1,94 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 877387F7
-	for <git@vger.kernel.org>; Sat, 20 Jan 2024 01:18:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49248A3C
+	for <git@vger.kernel.org>; Sat, 20 Jan 2024 01:22:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705713484; cv=none; b=KjGMui9qrhJyy+ZBG+z8oUu/I+qUl1+b2llR2yUQ9Pu2Th+qI4GXhKFSSz4U7T8J7Ul9l888XSAwaNFknl4Se7rCPYauvR8k/Ip8PZ06bgqld4S3pTsgU9Gmk6KWHBr4oMx+Vhz82aGJjv6gO+r+NtYTu0zAVxasaBCxBb/qiA8=
+	t=1705713752; cv=none; b=Cmfcsq0g9mk38zeyaAVoT96+MAg9SrryMVGeJG5DCiK61Qn5dqc8eQyKKiSHYw909OUu90ZAcdyg2Y5LBsb1L4X4HpezoLISWi3F3PzdcZK4WVUlk7gwqzQZ972cBCFhdzw4EjI0ooM214SUk//4RIptyspkX98UeQLeiBLNAAM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705713484; c=relaxed/simple;
-	bh=GTorcxBt3RCFhxi3ZusGMQn7+e1890FkKJfRJxmql6w=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=M5xbpcAujEwWVN0rJddylmbKah1/jPVm7zz6ClAQbjDFA17MDOGeBQeDlXvRTjOpHBfINb9UjZGexo/z/Ey6fFA1vXUiDw4Fl3o31BkiZdfjcjlbFftjTZY6UYGOg/PG+Q/bIHlAmi0RKulWFw+mGWhXnaBfwyFCJ67Yj+8WL24=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
-Received: (qmail 622 invoked by uid 109); 20 Jan 2024 01:18:02 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sat, 20 Jan 2024 01:18:02 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 6936 invoked by uid 111); 20 Jan 2024 01:18:02 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 19 Jan 2024 20:18:02 -0500
-Authentication-Results: peff.net; auth=none
-Date: Fri, 19 Jan 2024 20:18:00 -0500
-From: Jeff King <peff@peff.net>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org
-Subject: Re: [Bug?] "git diff --no-rename A B"
-Message-ID: <20240120011800.GF117170@coredump.intra.peff.net>
-References: <xmqq34uvtpob.fsf@gitster.g>
+	s=arc-20240116; t=1705713752; c=relaxed/simple;
+	bh=Y1kL6X8dBOVXDizDBOlWiolorteXfFBM3zXQfZxJRJE=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=uoZOIu2pf/EYeY+EyQ9tUbnAvE5tiqj2jgQd2Wc1jbq2DkU7Waf0z0b9GmRZx/diSDY0Iuh6jDBFRAhd/7FcckVF0QMKW5PAeXZPYHAjXLSKkrCW5eCTscakx+nfEm4d6W5mO6luJ6B5VMplfSk6mSyJXzE9E2aYWM63/Ys+ZB0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=HysAA2Lt; arc=none smtp.client-ip=173.228.157.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="HysAA2Lt"
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id 70FFC2269E;
+	Fri, 19 Jan 2024 20:22:24 -0500 (EST)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=Y1kL6X8dBOVXDizDBOlWiolorteXfFBM3zXQfZ
+	xJRJE=; b=HysAA2LtcqbDjihYFjxnEjTgNb4GzZuc1MkQvIdFMUQetkCeUpLqul
+	8a3HOUwxxdgpfK558s3rqXkjDmzZDJiA8xsioDWibybMh4/kAmZdmbjjkQLZjzFc
+	vjNNCpXIrIrUj7QsRGMFhzxfYsGhLybkpUu3aW0ximd7VKTksMIrU=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id 5A88F2269D;
+	Fri, 19 Jan 2024 20:22:24 -0500 (EST)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.200.93])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id D82D72269C;
+	Fri, 19 Jan 2024 20:22:20 -0500 (EST)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Jeff King <peff@peff.net>
+Cc: "brian m. carlson" <sandals@crustytoothpaste.net>,  Frank Schwidom
+ <schwidom@gmx.net>,  git@vger.kernel.org
+Subject: Re: partial commit of file-to-directory change, was Re: Bugreport
+In-Reply-To: <20240120004628.GA117170@coredump.intra.peff.net> (Jeff King's
+	message of "Fri, 19 Jan 2024 19:46:28 -0500")
+References: <20240119132551.GA31532@debian64>
+	<ZasCZ0YetzmlBFvw@tapette.crustytoothpaste.net>
+	<20240120004628.GA117170@coredump.intra.peff.net>
+Date: Fri, 19 Jan 2024 17:22:19 -0800
+Message-ID: <xmqqmst0hk8k.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqq34uvtpob.fsf@gitster.g>
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 5BA764E6-B732-11EE-B673-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
 
-On Wed, Jan 17, 2024 at 05:07:16PM -0800, Junio C Hamano wrote:
+Jeff King <peff@peff.net> writes:
 
-> When the user misspells "--no-renames" as "--no-rename", it seems
-> that the rename detection (which is ont by default these days) still
-> kicks in, which means the misspelt option is silently ignored.
-> Should we show an error message instead?
+> It might also be that the bug is earlier in list_paths(), where we
+> should notice that "d" is gone and now we have entries under "d/".
 
-I wondered if "--no-foo" complained, and it does. I think this is a
-subtle corner case in parse-options.
+We had a related discussion on "commit -i/-o tests" review thread,
+where we noticed that "git commit -i foobar", when "foobar" does not
+match any path in the index, silently ignore that unmatching
+pathspec (but "commit -o foobar" does error out, saying "did not
+match any file(s) known to git").  The important design decision we
+made long time ago when we introduced partial commit ("commit -o
+pathspec") is that we do not _add_ paths (that match the pathspec)
+that are not tracked.  We require explicit "git add" for them before
+you run "git commit".
 
-The issue is that we have "--rename-empty", which of course also
-provides "--no-rename-empty". And parse-options is happy to let you
-abbreviate names as long as they are unambiguous. But "--no-rename" _is_
-ambiguous with "--no-renames". Why don't we catch it?
+So, I suspect that list_paths() that gives "d" as a thing to add is
+broken.  "commit -m + ." at that point is saying "we should get the
+latest contents from the working tree for all the paths in the real
+index, add[*] them to the temporary index freshly read from HEAD,
+and the resulting temporary index should be written out as a tree"
+to create a commit, and then "the same set of contents for the paths
+then should be added to the real index, so that the differences
+between the tree we wrote out of the temporary index to update the
+HEAD and the real index would still be the changes already in the
+index before this partial commit".
 
-I'd guess it is because we do not have "--renames" as an option, but
-explicitly generate an entry for "--no-renames" (since the non-negative
-version is actually "--find-renames"). I know there is some special code
-to handle these pre-negated cases, but I would not be surprised if the
-ambiguity checker does not.
+    Side note: here, "add" would include removing (if the working
+    tree file for the path is gone) or killing 'd' while adding
+    'd/b.txt'.
 
-So I think it's likely just a bug in parse-options which should be
-fixed.
-
-We could also work around it by providing --renames. ;) E.g., if we let
-the find-renames callback handle negation, then --renames becomes a
-synonym, like so:
-
-diff --git a/diff.c b/diff.c
-index a89a6a6128..cdec9bfbd9 100644
---- a/diff.c
-+++ b/diff.c
-@@ -5292,7 +5292,11 @@ static int diff_opt_find_renames(const struct option *opt,
- {
- 	struct diff_options *options = opt->value;
- 
--	BUG_ON_OPT_NEG(unset);
-+	if (unset) {
-+		options->detect_rename = 0;
-+		return 0;
-+	}
-+
- 	if (!arg)
- 		arg = "";
- 	options->rename_score = parse_rename_score(&arg);
-@@ -5686,7 +5690,7 @@ struct option *add_diff_options(const struct option *opts,
- 			       diff_opt_break_rewrites),
- 		OPT_CALLBACK_F('M', "find-renames", options, N_("<n>"),
- 			       N_("detect renames"),
--			       PARSE_OPT_NONEG | PARSE_OPT_OPTARG,
-+			       PARSE_OPT_OPTARG,
- 			       diff_opt_find_renames),
- 		OPT_SET_INT_F('D', "irreversible-delete", &options->irreversible_delete,
- 			      N_("omit the preimage for deletes"),
-@@ -5697,9 +5701,10 @@ struct option *add_diff_options(const struct option *opts,
- 			       diff_opt_find_copies),
- 		OPT_BOOL(0, "find-copies-harder", &options->flags.find_copies_harder,
- 			 N_("use unmodified files as source to find copies")),
--		OPT_SET_INT_F(0, "no-renames", &options->detect_rename,
--			      N_("disable rename detection"),
--			      0, PARSE_OPT_NONEG),
-+		OPT_CALLBACK_F(0, "renames", options, N_("<n>"),
-+			       N_("synonym for --find-renames"),
-+			       PARSE_OPT_OPTARG,
-+			       diff_opt_find_renames),
- 		OPT_BOOL(0, "rename-empty", &options->flags.rename_empty,
- 			 N_("use empty blobs as rename source")),
- 		OPT_CALLBACK_F(0, "follow", options, NULL,
-
-And you get the expected output:
-
-  $ git show f920b0289b --oneline --raw --no-rename
-  error: ambiguous option: no-rename (could be --no-renames or --no-rename-empty)
-
-And as a bonus, now "--renames" works. :) It might pollute the output of
-"-h" more, but I am not sure if we ever actually show these diff options
-via "-h" (they are parsed quite indirectly, and "-h" is handled by the
-main command's parse-options list).
-
-Still, it seems like it's worth fixing the parse-options bug.
-
--Peff
+So I would understand if 'd/b.txt' is listed (because in the real
+index there already is d/b.txt known), but if the directory 'd'
+itself is listed, that does sound like a bug.
