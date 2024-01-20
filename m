@@ -1,55 +1,55 @@
-Received: from mail-yb1-f201.google.com (mail-yb1-f201.google.com [209.85.219.201])
+Received: from mail-yw1-f201.google.com (mail-yw1-f201.google.com [209.85.128.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 606002F56
-	for <git@vger.kernel.org>; Sat, 20 Jan 2024 20:04:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9330D2F56
+	for <git@vger.kernel.org>; Sat, 20 Jan 2024 20:09:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705781060; cv=none; b=STpMT2zSglMAcKZzLGesxS2efrdb3H8H59A41bpc3+1EBPYzdv2endHr5wrJ6AKus4mjsm1AlvmtA2F/vsmIbao6a1NQRaxxZElrte0IwkOr0HfRYK82plrmoVg0CACajsYtkPML19F1HfKnQMe7NJWV/3stsGxvyfnmaheGG6E=
+	t=1705781378; cv=none; b=o6tg2l4VO0ffRHvR4HGoI0z+P39hOpi4FKqT/9lxd2AVIFEbPxuzE7Kvh+wNKRy/HVdWdt+rD8Q2jBh4/D1HgNSjzRojBYOoX5LUbt4bMGXLfViUNHHPVW9zYCR8O5gwhOQKR6DP7Rmp1Rxy/qUh0grDmjiaOgoMQa9Pxs1p/cs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705781060; c=relaxed/simple;
-	bh=5Vlpd9b4Hma3CbIjI1RN+SppNOMTdwVUp9vRqP5yu8w=;
+	s=arc-20240116; t=1705781378; c=relaxed/simple;
+	bh=a5SUQCiye3Kjnjp9bvDikdbGLKFcXGOL+d7Ernovtuw=;
 	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
-	 To:Cc:Content-Type; b=SqKCk1x/O48hvHTmgTCEjeZSkzww6E4gigrPgHdVE/wvgsh9Vb6n3Pwg0msI2JRMdIuJXu5RFOwgGR+psW4hBL5ITbUA6XWWbnzZ7PCLOLdGKS2kpMD2ugaufh2vEHCn/mmdh5jts8BQGdXOndJe1U6XhcQCjDOjLDdmJqslQjg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--linusa.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=UKXDElhI; arc=none smtp.client-ip=209.85.219.201
+	 To:Cc:Content-Type; b=AUG9mKgE4pR/KspqaXETn0GwmXURox49fDn/HdnjVcvQQgpToolKGEGAORGG9t5986FD77uwsVTulCCuQ/KYJInJLuPerBcIu7QcEBu3Z/v1wJlgilhSv9nRpOvkf7bINRZ5U/0UD8bZHyNJb5BPjVo8JYnn6AodbmWl2Hn3TRM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--linusa.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=30AUWKgr; arc=none smtp.client-ip=209.85.128.201
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--linusa.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="UKXDElhI"
-Received: by mail-yb1-f201.google.com with SMTP id 3f1490d57ef6-dc2358dce6bso2136985276.3
-        for <git@vger.kernel.org>; Sat, 20 Jan 2024 12:04:19 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="30AUWKgr"
+Received: by mail-yw1-f201.google.com with SMTP id 00721157ae682-5f250d8f876so33932657b3.3
+        for <git@vger.kernel.org>; Sat, 20 Jan 2024 12:09:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1705781058; x=1706385858; darn=vger.kernel.org;
+        d=google.com; s=20230601; t=1705781376; x=1706386176; darn=vger.kernel.org;
         h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
          :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=BfV2fKTlzHSBtTRnIQ9jdvGIvkXz+NqzgjbzfPMNbeM=;
-        b=UKXDElhIKP8XPUxloL9gAHzlfz9Fs/b9Br0g1Q3qQb546JeI0SAfRl1QOh6n5xLNI0
-         nDtybE/CLv0GasHR1G487nIgCXGazmGjGhU+uIII/VswR10mpKG97KPLSVU7Xh5FkLRY
-         jCHVZnBWHVq/RGj5+4YJR4NqicbJvb9kYb2POwgnnuvZaxPcAq6xyFJAkUPH34U651ua
-         lN+n5fVK1xanaSJuO3WbsOK0RQx/xQo0BdsVa8gXGVW4KVxDokSOeCbob+J8icOdXm8i
-         H9cdpiT8JjilEtFOaHhcB47wiDDr1XJ0LRGhUt2pcToGV/u0tO8E2ScxT4Rcz5TqhtHY
-         Xklg==
+        bh=2A3ZUuTvCOQk38P44Xg0M8WXs+4nQkJmQB+4cMKA5wI=;
+        b=30AUWKgrLdrmXM9hQlSDWf8OjRyBv7y3H68oE/vcjM5j/mVt7pghwutoH/TJC39Xy0
+         TempxMDaXwBQbuW8L5CPXQZNWfYekgbJYUoHq51WayHmnDs93QYJp/nXMxVmUdA94Cum
+         kOPJbUJAELOfL1NwBIfTtbckwd1IagCQa8WuUVlVfGN7MgtaFYSS+mx1ELHGI6wvgath
+         qrUujhJ65wyChOcw80jksRC6H2UaGL68kgAUTXfT0Faavnc0Ui6QIahYwPZO372sX3jA
+         BixqWNXbswlkBmnmd72czCnYC4jQIqrNXIiO97gOwJnS5DZq1iHGkqoEfdAKuQsKShSw
+         D8PQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1705781058; x=1706385858;
+        d=1e100.net; s=20230601; t=1705781376; x=1706386176;
         h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
          :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=BfV2fKTlzHSBtTRnIQ9jdvGIvkXz+NqzgjbzfPMNbeM=;
-        b=GwHgQ+FH/RywwKYsk1XiCk1YOpSCMtvVL6EjQOgd2qxCJcrpHvaM/31IQCJ2iWc0Pc
-         YwyQMBSy2wUvfAJC30QVmduARyRsiD86YCxBXW5gWtZVSiZZRK2fInUxKJALMONxAuKQ
-         3uPyyHD52LN1fu8GIetCFcmpeYElVMDhXsRqD0/bXsAQWWsTddQNZ3z+vslZgRtNw0dN
-         i8OQWzGyTMGpSy6DUqyY7DT22MelzvMZwK/kxZJdRx7d9owtYSRjwgHOzEt+2Y4EwSh6
-         Vcxh0XTgmbPy7UOK+x1EWR0pn2ouz6UroVyEq72AyVA1Lidiw2zWBW5A8IOsYo2edFvb
-         th6w==
-X-Gm-Message-State: AOJu0YxQn3mlHnqIYWhbCbr+4+JGYjjrYscnN/AjVhNsfoXk6YLblVjg
-	D+HvHoe374OVy3TNS9Ws9SZ7DBw8ywZV9yqfDyvDqsXkzUitNXzNMrMBN8EoxuMxZnuJAUePBaw
-	QmA==
-X-Google-Smtp-Source: AGHT+IEsYJCJPqGSVAJtUnyY+lY36Uu8EPXbBf6fu6dELj0XcoHpRkCl1tF5vMp8HZjaBlaxQdfwEQKVJeQ=
+        bh=2A3ZUuTvCOQk38P44Xg0M8WXs+4nQkJmQB+4cMKA5wI=;
+        b=tG8/2fqU8KiD6hBtcRUhfmE3SLH5yLpwVS/yOtOgqlVI85Kykp3zwJyRauFAmHUgGE
+         4HBvTMJ5HyYk7RAKVL88DftM51vT5uKvw+UU+uUkF6r1tga7nPcesZI+uhu38ucL8A+z
+         dSePwf/rRAi1eicSyD5SlgOpBTYD3HYT8WRxCC4ImUd2mbvjGiHplal/vjGMW4V8orR1
+         HAQglAD23x/WB8VY7g62sFkzQiuw2fu1JORxGgTretFDnu6TkpWz0vrAJPRelhGtX7Vq
+         fi34eTBU4PLFqhuups/F+QCzX9xMIwZEZUX/amUn8ZK4siL4FkDStfCUK54zDSCS2WFp
+         nWEQ==
+X-Gm-Message-State: AOJu0YztPQMkJEofYKB/JFoElsvsJ4hLKEV4gTYjZWLPa3vCQZfbXorr
+	WtlyLmISygJZv1KlMmFF0pAZGY8QH1HCOuurRXNeKO2uVU05JRp5g1hK31QyWBPUzQ1TqjD+1yM
+	U8A==
+X-Google-Smtp-Source: AGHT+IGF4g7GVRDBrPrPRc/bTkvtJN4onXtlzsI1PdOoM9yA8wJfvHaM12CF0kHa30tykH8NTq2RJLd7070=
 X-Received: from fine.c.googlers.com ([fda3:e722:ac3:cc00:7f:e700:c0a8:2221])
- (user=linusa job=sendgmr) by 2002:a5b:90b:0:b0:dc2:3619:e94e with SMTP id
- a11-20020a5b090b000000b00dc23619e94emr157127ybq.6.1705781058395; Sat, 20 Jan
- 2024 12:04:18 -0800 (PST)
-Date: Sat, 20 Jan 2024 12:04:16 -0800
-In-Reply-To: <xmqq34uunoag.fsf@gitster.g>
+ (user=linusa job=sendgmr) by 2002:a81:9808:0:b0:5d3:a348:b0c0 with SMTP id
+ p8-20020a819808000000b005d3a348b0c0mr911257ywg.5.1705781376465; Sat, 20 Jan
+ 2024 12:09:36 -0800 (PST)
+Date: Sat, 20 Jan 2024 12:09:34 -0800
+In-Reply-To: <xmqqttnam8wd.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -57,10 +57,10 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 Mime-Version: 1.0
 References: <pull.1632.git.1704869487.gitgitgadget@gmail.com>
- <fd4a9d54d9522973a4c22e43cb1d7964033d4837.1704869487.git.gitgitgadget@gmail.com>
- <xmqq34uunoag.fsf@gitster.g>
-Message-ID: <owlyle8jhiv3.fsf@fine.c.googlers.com>
-Subject: Re: [PATCH 05/10] sequencer: use the trailer iterator
+ <9183990583f9a591c79301a20fa327462bb50cf9.1704869487.git.gitgitgadget@gmail.com>
+ <xmqqttnam8wd.fsf@gitster.g>
+Message-ID: <owlyil3nhim9.fsf@fine.c.googlers.com>
+Subject: Re: [PATCH 07/10] trailer: spread usage of "trailer_block" language
 From: Linus Arver <linusa@google.com>
 To: Junio C Hamano <gitster@pobox.com>, 
 	Linus Arver via GitGitGadget <gitgitgadget@gmail.com>
@@ -70,35 +70,11 @@ Content-Type: text/plain; charset="UTF-8"
 
 Junio C Hamano <gitster@pobox.com> writes:
 
->> From: Linus Arver <linusa@google.com>
->> Also, teach the iterator about non-trailer lines, by adding a new field
->> called "raw" to hold both trailer and non-trailer lines. This is
->> necessary because a "trailer block" is a list of trailer lines of at
->> least 25% trailers (see 146245063e (trailer: allow non-trailers in
->> trailer block, 2016-10-21)), such that it may hold non-trailer lines.
->
-> OK.  This would change behaviour, wouldn't it, in the sense that we
-> used to yield a non-trailer line from the old iterator but the new
-> one skips them?
+> "info" is a word with so low information contents.  At least "block"
+> would hint that we are talking about a block of text that makes up
+> the trailer attached to a single commit.
 
-I think it's the other way; the old iterator only iterated over trailer
-lines, skipping over non-trailer lines (see the "not a real trailer"
-deleted bit for trailer_iterator_advance()). The new one iterates over
-all lines found in the trailer block, whether they are trailer or
-non-trailer lines.
-
-The function insert_records_from_trailers() from shortlog.c uses the new
-iterator, but has to be careful because the new iterator goes over
-non-trailer lines too. That's why it now does
-
-    if (!iter.is_trailer)
-            continue;
-
-to do the skipping itself.
-
-> Is that something we can demonstrate and protect in
-> tests (presumably once we conclude these refactoring, we would be
-> able to call into this machinery from unit-testing framework)?
-
-Yup, that is exactly what I want to do once the dust around the trailer
-API settles down after this series (and also the larger series). :)
+There is also "conf_info" and the whole "key"/"key alias" vs "token"
+lingo which (if we are going to rename things for consistency) needs to
+be updated to match documentation. In the larger series I've cleaned
+this up as well.
