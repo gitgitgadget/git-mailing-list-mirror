@@ -1,51 +1,53 @@
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88AB0210B
-	for <git@vger.kernel.org>; Sat, 20 Jan 2024 22:26:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2FF515D0
+	for <git@vger.kernel.org>; Sat, 20 Jan 2024 22:49:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705789571; cv=none; b=r1nA3ZNqKvUQiGSEH0EWHh5wu0RlJ9Vb7TOcCZO1foVuV/cMg1BRH/ys+YduNV+EUCXYPNhSGMeaNtM5AsnYgNzIK7TReM6ud9D9igf0RnYyIWWeR1vamXZn6+281eCHrcyEvhnsC+HMMJ2vwmxS6SX2Jbe38caKkhiaFdnYrK0=
+	t=1705790962; cv=none; b=EfYpUsUEVuS7yIYEKyH500cXNeaXfv6aoW0gym9PBhCV5QOmc3Zo/VXry1nPGkH9Wz75nBjbOPEM3nOIFrTQxOD6TXxXaz1iw/WK80UR/5k25ut/TIkoJOn0l5JZMLYjrALLLrT2w3QuuDhfQjqxEAbcXhDpLPl/KICro8hpONU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705789571; c=relaxed/simple;
-	bh=fi5wAKZ8/oKG/7GD5L+/Pt7qsKhZoYTdoqtgpjXU/Gc=;
+	s=arc-20240116; t=1705790962; c=relaxed/simple;
+	bh=+EKolObrAtl+VOZr9YIwGgBCsMtWyj/BVhyo5wAmIA4=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=oDmjoGS77WJydxBEUZXJkt8VZu4j74otjd9nZGeV1v2nW5gspvitotqEc+900qO3ZXMbag5PrKyKyVx9OpnFYutdFBGzdsBQJ3NU9MVNCX3KEbAeSH9A9JitsBnKt5SPcBvKHdvV47egRFmNN0t/ofgInHgnK6FCwzGg4U/7Tjk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=BkBA9OAw; arc=none smtp.client-ip=173.228.157.53
+	 MIME-Version:Content-Type; b=PakkyY+vhaCszKDbcTmrjkD8myVukphOkER/e9jBaAOzYMSzXMOqUQe78dvfCFQ8D3vYz/A5B9ekZZjCTHWlOPrKFL/MVOSfstfyQ8BIgjEUuLSjQfydiJkh5S8medYE7oaZN34Z0higDBAxEzOyeuBVZjUUX5UDZ8hPocTPtYc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=wL3TtseN; arc=none smtp.client-ip=64.147.108.70
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="BkBA9OAw"
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id C0CAE1B40B;
-	Sat, 20 Jan 2024 17:26:08 -0500 (EST)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="wL3TtseN"
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 8E7F21DFAD7;
+	Sat, 20 Jan 2024 17:49:13 -0500 (EST)
 	(envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=fi5wAKZ8/oKG/7GD5L+/Pt7qsKhZoYTdoqtgpj
-	XU/Gc=; b=BkBA9OAwKOwmNsLLzad5UuT/ltOmeAFYa5Bb/Dk4Wf8wLDEULjSgw0
-	a8LBQFCqLmqSsmvc/rvymqiHfPAF4hRtr7lT+x8l91jVocfAOmavpQEyIpmCEZF2
-	Yv4J7TFIcpQYtPmMJDCQpBz+IVL495LbIj5SJwZ2I59MlZYUvhzSM=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id B8F2B1B40A;
-	Sat, 20 Jan 2024 17:26:08 -0500 (EST)
+	:content-type; s=sasl; bh=+EKolObrAtl+VOZr9YIwGgBCsMtWyj/BVhyo5w
+	AmIA4=; b=wL3TtseNHS30AHS0ScAe9du0f2CGGDQC/tUcCJV9726ajGDUa2AsFR
+	RwOU3FgeAU71GmTWTvI0pEjQXHcbkYT0CstXoNM66RomDxGRKhIDd1p4PXXv6Nzx
+	0sJeN0MiZOMy+cJPpqiwzu4heotJCXCTb8iPLyQ20posZ+VvkX6sw=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 859171DFAD6;
+	Sat, 20 Jan 2024 17:49:13 -0500 (EST)
 	(envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.125.200.93])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 540121B409;
-	Sat, 20 Jan 2024 17:26:05 -0500 (EST)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id EB8DC1DFAD5;
+	Sat, 20 Jan 2024 17:49:12 -0500 (EST)
 	(envelope-from junio@pobox.com)
 From: Junio C Hamano <gitster@pobox.com>
-To: "Kyle Lippincott via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Kyle Lippincott <spectral@google.com>
-Subject: Re: [PATCH] setup: allow cwd=.git w/ bareRepository=explicit
-In-Reply-To: <pull.1645.git.1705709303098.gitgitgadget@gmail.com> (Kyle
-	Lippincott via GitGitGadget's message of "Sat, 20 Jan 2024 00:08:22
-	+0000")
-References: <pull.1645.git.1705709303098.gitgitgadget@gmail.com>
-Date: Sat, 20 Jan 2024 14:26:03 -0800
-Message-ID: <xmqqh6j7ej5w.fsf@gitster.g>
+To: Phillip Wood <phillip.wood123@gmail.com>
+Cc: Antonin Delpeuch via GitGitGadget <gitgitgadget@gmail.com>,
+  git@vger.kernel.org,  Antonin Delpeuch <antonin@delpeuch.eu>
+Subject: Re: [PATCH v3] merge-ll: expose revision names to custom drivers
+In-Reply-To: <82624802-aa7f-4856-b819-9a2990b25a69@gmail.com> (Phillip Wood's
+	message of "Sat, 20 Jan 2024 14:13:50 +0000")
+References: <pull.1648.v2.git.git.1705592581272.gitgitgadget@gmail.com>
+	<pull.1648.v3.git.git.1705615794307.gitgitgadget@gmail.com>
+	<82624802-aa7f-4856-b819-9a2990b25a69@gmail.com>
+Date: Sat, 20 Jan 2024 14:49:11 -0800
+Message-ID: <xmqqcytvei3c.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -55,61 +57,60 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 X-Pobox-Relay-ID:
- E68D94E4-B7E2-11EE-B9DE-A19503B9AAD1-77302942!pb-smtp21.pobox.com
+ 21A42CAC-B7E6-11EE-8702-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
 
-"Kyle Lippincott via GitGitGadget" <gitgitgadget@gmail.com> writes:
+Phillip Wood <phillip.wood123@gmail.com> writes:
 
-> From: Kyle Lippincott <spectral@google.com>
+> Thanks for working on this, I think it is a useful improvement. I
+> guess '%X' and '%Y' are no worse than the existing '%A' and '%B' but I
+> do wonder if we want to take the opportunity to switch to more
+> descriptive names for the various parameters passed to the custom
+> merge strategy. We do do this by supporting %(label:ours) modeled
+> after the format specifiers used by other commands such as "git log"
+> and "git for-each-ref".
+
+Perhaps.  Unlike the --format option these commands take, the
+placeholders are never typed from the command line (they always are
+taken from the configuration file), so mnemonic value longer version
+gives over the current single-letter ones is not as valuable, while
+making the total line length longer.  So I dunno.
+
+>> [...]
+>> +will be stored via placeholder `%P`. Additionally, the names of the
+>> +common ancestor revision (`%S`), of the current revision (`%X`) and
+>> +of the other branch (`%Y`) can also be supplied. Those are short > +revision names, optionally joined with the paths of the file in each
+>> +revision. Those paths are only present if they differ and are separated
+>> +from the revision by a colon.
 >
-> The safe.bareRepository setting can be set to 'explicit' to disallow
-> implicit uses of bare repositories, preventing an attack [1] where an
-> artificial and malicious bare repository is embedded in another git
-> repository. Unfortunately, some tooling uses myrepo/.git/ as the cwd
-> when executing commands, and this is blocked when
-> safe.bareRepository=explicit. Blocking is unnecessary, as git already
-> prevents nested .git directories.
+> It might be simpler to just call these the "conflict marker labels"
+> without tying ourselves to a particular format. Something like
+>
+>     The conflict labels to be used for the common ancestor, local head
+>     and other head can be passed by using '%(label:base)',
+>     '%(label:ours)' and '%(label:theirs) respectively.
 
-In other words, if the directory $D that is the top level of the
-working tree of a non-bare repository, you should be able to chdir
-to "$D/.git" and run your git command without explicitly saying that
-you are inside $GIT_DIR (e.g. "git --git-dir=$(pwd) cmd")?
+Yeah, that sounds like a good improvement, even if we did not use
+the longhand placeholders and replaced %(label:{base,ours,theirs})
+with %S, %X, and %Y.
 
-It makes very good sense.
+>> @@ -222,6 +222,12 @@ static enum ll_merge_result ll_ext_merge(const struct ll_merge_driver *fn,
+>
+> Not part of this patch but I noticed that we're passing the filenames
+> for '%A' etc. unquoted which is a bit scary.
+>
+>>   			strbuf_addf(&cmd, "%d", marker_size);
+>>   		else if (skip_prefix(format, "P", &format))
+>>   			sq_quote_buf(&cmd, path);
+>> +		else if (skip_prefix(format, "S", &format))
+>> +			sq_quote_buf(&cmd, orig_name);
+>
+> I think you can avoid the SIGSEV problem you mentioned in your other
+> email by changing this to
+>
+> 	sq_quote_buf(&cmd, orig_name ? orig_name, "");
+>
+> That would make sure the labels we pass match the ones used by the
+> internal merge.
 
-I briefly wondered if this would give us a great usability
-improvement especially for hook scripts, but they are given GIT_DIR
-when called already so that is not a big upside, I guess.
-
-> Teach git to not reject uses of git inside of the .git directory: check
-> if cwd is .git (or a subdirectory of it) and allow it even if
-> safe.bareRepository=explicit.
-
-
->     My primary concern with this patch is that I'm unsure if we need to
->     worry about case-insensitive filesystems (ex: cwd=my_repo/.GIT instead
->     of my_repo/.git, it might not trigger this logic and end up allowed).
-
-You are additionally allowing ".git" so even if somebody has ".GIT"
-that won't be allowed by this change, no?
-
->     I'm assuming this isn't a significant concern, for two reasons:
->     
->      * most filesystems/OSes in use today (by number of users) are at least
->        case-preserving, so users/tools will have had to type out .GIT
->        instead of getting it from readdir/wherever.
->      * this is primarily a "quality of life" change to the feature, and if
->        we get it wrong we still fail closed.
-
-Yup.
-
-If we really cared (which I doubt), we could resort to checking with
-is_ntfs_dotgit() and is_hfs_dotgit(), but that would work in the
-direction of loosening the check even further, which I do not know
-is needed.
-
-> -			if (get_allowed_bare_repo() == ALLOWED_BARE_REPO_EXPLICIT)
-> +			if (get_allowed_bare_repo() == ALLOWED_BARE_REPO_EXPLICIT &&
-> +			    !ends_with_path_components(dir->buf, ".git"))
->  				return GIT_DIR_DISALLOWED_BARE;
-
-Thanks.
+Makes sense.  That would be much better than using hardcoded string
+"ours", "theirs", etc.
