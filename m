@@ -1,168 +1,76 @@
-Received: from mail.manjaro.org (mail.manjaro.org [116.203.91.91])
-	(using TLSv1.2 with cipher DHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16C2410785
-	for <git@vger.kernel.org>; Sat, 20 Jan 2024 15:32:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=116.203.91.91
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA9181094E
+	for <git@vger.kernel.org>; Sat, 20 Jan 2024 17:19:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705764729; cv=none; b=c/MlARClUMShAona1cz1Fg9Cp/oKRC5Pej1tAiNO2uAxP78TrrTF6hUV+00vniPgr52W8ghUfzUl4aDerBLFUtzqMkB8sBr39SC1CdjZyxsRvTsr+pnGAFmUJQYtSynels5jyMTtCfQJOYCDpqvjPF0ygGIIkPOq2807TbDB8wU=
+	t=1705771187; cv=none; b=OZkKb6Qgkmi0lDDXsowGh8ElsDxZYhm76HPYdhJNFdRxrdkWCAg+UarI0/qImwzH25rKYIKLyK4oFvkAxFsMcyMnjpzxxPPs2QO0Qg3zGiSvzhlW8ezfROvFDWGvTHy48yujTGUKngTl8frvaBgAvf4wtzfvRP9KxYo8S11kX3M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705764729; c=relaxed/simple;
-	bh=KPzU3mBfH+1SNiS7LA/XeymrQFuhTKN2Dci+WmI0jWE=;
-	h=MIME-Version:Date:From:To:Cc:Subject:In-Reply-To:References:
-	 Message-ID:Content-Type; b=kL+x4BxF9ggIqF8MJMyu3467giyU0XcG+ssbUZHuIIwz7TCrpVfvAVuUHZzXsZXtb38Jb0I5t6Pyce9OVLX3sKVRVkqXjyFZYo5WjZdRvZ/fURJfCCcwsJSbKe8RJ7Uqzns+ksKQm/Xr3iZUHn2SOMh9LWgLXkTy9LUo+TmUTBw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org; spf=pass smtp.mailfrom=manjaro.org; dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b=szE94Ikw; arc=none smtp.client-ip=116.203.91.91
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=manjaro.org
+	s=arc-20240116; t=1705771187; c=relaxed/simple;
+	bh=DpBTWDBwanKN6y1iS+pztmzi6kzNVxgFsb9y6rvUQsM=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=YaETLLl/Ofhaqn1qo1Gon7HP247B98tbJyZv3THR4Mj+34yJN5EOb2t8e7xh9EoCE5W+lbkx3+Bb1HTWKy7LdPQLoThpnWxLgwj98qA9fs28NSGcINFJKcTXlZjjacrFnXPEoCHzATzfIZsVxjl074gBI1rRNf/SxUzdFk9JcHQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=DqvqbTET; arc=none smtp.client-ip=173.228.157.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b="szE94Ikw"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="DqvqbTET"
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id E59502570E;
+	Sat, 20 Jan 2024 12:19:44 -0500 (EST)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=DpBTWDBwanKN6y1iS+pztmzi6kzNVxgFsb9y6r
+	vUQsM=; b=DqvqbTETwvmDmPCYLYlCM9uRzpbQFKxrk6Zicrp6tZOzynTvUEwsWW
+	P+ieAyTplG6S02FCPzDLj2HgPWvD/5eUwtaqnA2G+A9sm1uS5y+casHS97kxhrw3
+	wiHY3IY8DokCn4IbVT42GuYUKKQC2DNoDVCnbjIbVxp6jhIFAV+oY=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id DDDAD2570D;
+	Sat, 20 Jan 2024 12:19:44 -0500 (EST)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.200.93])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 7A91A2570C;
+	Sat, 20 Jan 2024 12:19:41 -0500 (EST)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Ghanshyam Thakkar" <shyamthakkar001@gmail.com>
+Cc: <git@vger.kernel.org>
+Subject: Re: What's cooking in git.git (Jan 2024, #06; Fri, 19)
+In-Reply-To: <CYJ62QPHPHCA.2WLKYX1AIZ50T@gmail.com> (Ghanshyam Thakkar's
+	message of "Sat, 20 Jan 2024 07:40:13 +0530")
+References: <xmqqbk9ghio5.fsf@gitster.g>
+	<CYJ62QPHPHCA.2WLKYX1AIZ50T@gmail.com>
+Date: Sat, 20 Jan 2024 09:19:39 -0800
+Message-ID: <xmqq7ck3hqhg.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=manjaro.org; s=2021;
-	t=1705764717;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=ACpGs/slwSoXklwdfu1fwGJDYdGZ6xnYJWIfsqguhAQ=;
-	b=szE94IkwW5hrdPTUAjdK2eB/XuZrg+Mkhc/MqDuNdI93gZwAofm2EUihScEu9xuTFJL6nE
-	g8MkVBjtXEz3Us982b7LJVWqQbPgEk2NGJadLbxMKmaheCChjRAV31i1wDM/hsnIqAZynE
-	scLqw4vNjAb76QwMoFq+m66mXslNMpuLbqN3jxYm5sGqVr4c36toKInF98LL9tOKGRNrpb
-	4ChK7Tc+Ae7XslBG+CUKeWTbakwldKuU3Xz7vCLJsTRJgip1igBpJJqTFrKHMatytzLf2D
-	HMxJ5XAQoB6/7jJVXdAZoyWyG3Rzr9yN7KvG08J7rU8crdEWMLgt6tL8SKhBqQ==
-Date: Sat, 20 Jan 2024 16:31:56 +0100
-From: Dragan Simic <dsimic@manjaro.org>
-To: =?UTF-8?Q?Rub=C3=A9n_Justo?= <rjusto@gmail.com>
-Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>, Git List
- <git@vger.kernel.org>
-Subject: Re: [PATCH 3/3] advice: allow disabling the automatic hint in
- advise_if_enabled()
-In-Reply-To: <6a27be56-9d52-46bf-8136-5f1c42379fd1@gmail.com>
-References: <7c68392c-af2f-4999-ae64-63221bf7833a@gmail.com>
- <d6099d78-43c6-4709-9121-11f84228cf91@gmail.com>
- <20240110110226.GC16674@coredump.intra.peff.net>
- <aaf59fc82ef3132ece8e1f70623570a2@manjaro.org>
- <97fdf6d4-1403-4fe9-b912-a85342a9fa56@gmail.com>
- <a97b03a305a7b8b95341b63af1de0271@manjaro.org> <xmqqil41duov.fsf@gitster.g>
- <d6d72ec5431ad1ca775e6e4e9921f94c@manjaro.org>
- <20240111080429.GG48154@coredump.intra.peff.net>
- <5f322b3e6053c27dda58ef1c1f025d11@manjaro.org> <xmqqil3qsdkv.fsf@gitster.g>
- <bfded0571f133ffc1612fcbca1811a43@manjaro.org> <xmqqwms6pf72.fsf@gitster.g>
- <dd82bef87fd82f7c4bf7cbff5f873141@manjaro.org>
- <6a27be56-9d52-46bf-8136-5f1c42379fd1@gmail.com>
-Message-ID: <88e5dd52ad959577fdc522b6f0f72509@manjaro.org>
-X-Sender: dsimic@manjaro.org
-Content-Type: text/plain; charset=UTF-8;
- format=flowed
-Content-Transfer-Encoding: 8bit
-Authentication-Results: ORIGINATING;
-	auth=pass smtp.auth=dsimic@manjaro.org smtp.mailfrom=dsimic@manjaro.org
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 18EDC416-B7B8-11EE-8694-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
 
-On 2024-01-20 12:31, Rubén Justo wrote:
-> On 18-ene-2024 21:50:23, Dragan Simic wrote:
->> On 2024-01-18 21:19, Junio C Hamano wrote:
->> > Dragan Simic <dsimic@manjaro.org> writes:
->> > > On 2024-01-18 19:26, Junio C Hamano wrote:
->> > > > Dragan Simic <dsimic@manjaro.org> writes:
->> > > >
->> > > > > Perhaps having both options available could be a good thing.
->> > > > > Though,
->> > > > > adding quite a few knobs may end up confusing the users, so
->> > > > > we should
->> > > > > make sure to document it well.
->> > > >
->> > > > I agree there is a need for documentation, but we are not increasing
->> > > > the number of knobs, are we?
->> > >
->> > > Perhaps there would be one more knob if we end up deciding to
->> > > implement
->> > > support for both approaches, as previously discussed.
->> >
->> > But that would be just one knob (which I personally do not quite see
->> > the need for), not "quite a few knobs" as you said, no?
->> 
->> I'm sorry for being imprecise.
-> 
-> Hi Dragan
+"Ghanshyam Thakkar" <shyamthakkar001@gmail.com> writes:
 
-Hello Rubén!
+> On Sat Jan 20, 2024 at 7:26 AM IST, Junio C Hamano wrote:
+>> * gt/t0024-style-fixes (2024-01-18) 2 commits
+>>  - t0024: style fix
+>>  - t0024: avoid losing exit status to pipes
+>>
+>>  source: <20240118215407.8609-1-shyamthakkar001@gmail.com>
+>
+> I have rerolled this series, cause it was breaking CI on alpine due to
+> a syntax issue which is described here:
+> https://lore.kernel.org/git/CYIDCZPQN2H1.1ET0CTP07NMYR@gmail.com/
+>
+> Thanks.
 
-> My original motivation for starting this series has been fulfilled:
-> Give the user an option to tell us not to include the disabling
-> instructions alongside the advice.
-
-I like the whole idea, because if someone finds some hint usable and
-decides to keep it displayed, displaying the additional hint about
-disabling the primary hint (i.e. the advice) simply becomes redundant.
-
-> The current consensus is: if the user explicitly enables visibility for
-> an advice, we can stop including the instructions on how to disable its
-> visibility.
-
-Totally agreed, simple and effective.
-
-> As reference, in this thread two "global" options have been reviewed:
-> 
->  - To take the disabling instructions as an advice in itself and as
->    such, as with the rest, we can have a knob to disable it.  Affecting
->    all advice messages.
-> 
->  - A new knob to allow the user to set the default visibility for those
->    advice messages without an explicit visibility set.  And so we can
->    take on globally what we now take on locally;  if there is not an
->    explicit visibility value but there is an explicit "default" value,
->    we can stop showing the instruction on how to disable it.
-> 
->> Regarding the need for that additional "global" knob, I think it can't
->> hurt.  Some people might even find it quite useful
-> 
-> I don't quite understand what "global" knob you are referring to.  But 
-> I
-> share with you the feeling that a "global" knob might be useful.
-
-The additional "global knob", at least the way I see it, would enable 
-all
-advice messages, overriding all other configuration options that may be
-present.  It would be like a "big switch" that makes all advices 
-displayed,
-for the case in which someone decides to get rid of the hint that used 
-to
-be useful to them so the advice was disabled, but the hint is no longer
-found to be useful to them.  In such cases, having no advice displayed
-would mean that the user is unable to know easily what knob disables the
-no-longer-favored hint.
-
-The reason for "forcing" all advices to be displayed would be to allow
-the advices to be displayed without the need to "fish" for the right 
-knob
-to be turned in the configuration file.  Though, it wouldn't be perfect
-from the usability standpoint, because recreating the right conditions
-for displaying some hint and the associated advice may rather easily be
-practically infeasible, as already discussed in this thread.
-
-Of course, going through the man pages to find the right knob is always
-the best option for those who have the time, but having a "global knob",
-to help the users a bit, if possible, in general shouldn't hurt.
-
-I hope it all makes more sense now.  Please, let me know if further
-clarification is required.
-
-Additionally, the way I envisioned it could also be combined with the
-first option for the "global knob" that you listed above, as an 
-additional
-option for it to "force" the advices to be displayed, in addition to the
-ability to disable all advices.
-
-> The current iteration for this series looks like it will be merged to
-> 'next' soon.  In my opinion, it is a good stop for this series, and
-> maybe we can explore that 'global' knob in a new one.
-
-I agree, the "global knob" can be added later, if we decide so.
-
-> Thank you for your interest in making this series better.
-
-Thank you for your work on the patches!
+Thanks for pinging.  Yeah, there was that buggy implementation of
+tar that requires dash in "-C".  Will replace.
