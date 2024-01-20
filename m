@@ -1,105 +1,188 @@
-Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
+Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A2EB12E4C
-	for <git@vger.kernel.org>; Sat, 20 Jan 2024 18:23:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E5771172D
+	for <git@vger.kernel.org>; Sat, 20 Jan 2024 18:25:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705775000; cv=none; b=MqiUY2NHQ1d7kH4KAD/esd2/Otk4k/ZuwB5+cRU0R5iJcvILZggUU567TgxxRQ1sz9CjSQSDWDyHofadcL7WBcpM4tdglg5QCSAYLPQ6cOYombMXMfFl6iny7Gn7kFZ5qFfjzFuqcrqenFVcMJ/rk850ftfcJLweEVy3PA1pye8=
+	t=1705775155; cv=none; b=Lbij4v9S+JwV6rfstI4+lxI/WgBjHsEOHiVTMTx3xlkKu0ztn5+xElDGx71ejPcX+45IDn8izK34TaMMDJtltTaYHoZ9yXSroY55fYVUjS1mmXhkfocVBRxRZLjaMzSm7tMJaBfv9cGUMSZFgxeY5noT0tkPQKHdKndhXlFxm+Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705775000; c=relaxed/simple;
-	bh=RFaNmWs5VlRmeXMdBTmf77hjZBEI6QZHSriWflQCnmo=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=j+sRWyhObFcNnYQwUioDVzf07WjmFQTcJ7ggiVX/bfiGNGVAZkHYlrnZeA5HJX3xQi0A/vEgAsUFB6cfLuOMeQBimdD8hfaEzdGYxqrEVAGm3qaDZ26VSztGrwWVIcgEcRVd/KigklYcEs+Mvopj8FPr8xJhxDvnlc4Do9/2P6Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=kEiZ+g0z; arc=none smtp.client-ip=209.85.128.44
+	s=arc-20240116; t=1705775155; c=relaxed/simple;
+	bh=gaiXBLn3VpI958R88QSBTG0wQjbUslToU2eaIac16mc=;
+	h=Message-ID:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=lNZnYueUenOyIsj89Lb8Vfo1FxSVpO7lxQUMVMWHij8pRx1OMBDsBIqE9YWfA7sYPGIsrnVs8kSvvCjY73dh9DK8q3umn7gihtf2vB6HdSH3MUsARZBBOfXdn54K2SQIDo/AfpoNnBSlaa+ZpWJrNmHDCbr1x3/jsacKAqaYQiM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Xe/+sG0s; arc=none smtp.client-ip=209.85.128.42
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kEiZ+g0z"
-Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-40e76626170so20984425e9.2
-        for <git@vger.kernel.org>; Sat, 20 Jan 2024 10:23:19 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Xe/+sG0s"
+Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-40e5afc18f5so20473805e9.3
+        for <git@vger.kernel.org>; Sat, 20 Jan 2024 10:25:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1705774997; x=1706379797; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:reply-to:user-agent:mime-version:date
+        d=gmail.com; s=20230601; t=1705775151; x=1706379951; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=igVtz1kDSVsaD4npxkx1FzfDbYAzBy6wufyS1iUwwfo=;
-        b=kEiZ+g0z6Y2sdxlcfdNVFRnuHEHktCBn1RK/i67Q5Rwylhr8WrN0ksR353WnFHz2/P
-         AKJ6ZkcC9VH+/MNsJez70DOBLR/NdRw+Ldavny/5yjQhr3+hrVqWWENAHtW9usMdWtpK
-         5E+eqPevDE9slH3J66tyFnf85Q1VTifpI4XnxiIx4yCai8r4sLjrFsTIs8TYHC2tZh42
-         TqZpnkIQWlzsOdS7IK5RG45Vk7cD3M4/HY77OLPmgQ4akd4aUcT76TVc4yVtv7mbA8y8
-         Hhkj8X6PNLU7cTJk5Q7D9fNCQ9rDGYxBWFNrHqlL6SW1WqVhHFdk+rgKobr8TQ7VAoOw
-         ELnQ==
+        bh=Fd/BvZWrlj92u0bynMA5DwtkOVSlNbRr7wHO9gh5ba8=;
+        b=Xe/+sG0swvFoy7kEZB51HyIRm3gpAzSXx+62UPP9xDy7E4k68z5eOVk4mQxtG92ZyO
+         LauB3wjEKYpzEqMbCHn2pTnVJ8R4zO+G3Ri+kynrXWVjKjkQsPZKq/c5Tc3J4j1vb/aK
+         5191wfKj+vZpdmc1p03V9y0Erm0U1Z4G74kVrQamVccPoOWL4TdxJVSt1t0cFYt38KsY
+         STpbZS5rXQomfG/Z1UwWy1wfZwwDGHBOM9YDlTHsLSk1MHB68c3/4KHL72Qo6/8x3uuI
+         at8OLiKrHpYXJqbyBgzD+vGXBkxAl47iDsDtx3zlgdPxLixbJSQI8esPMUUUPBVDM5ug
+         BFyQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1705774997; x=1706379797;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:reply-to:user-agent:mime-version:date
+        d=1e100.net; s=20230601; t=1705775151; x=1706379951;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=igVtz1kDSVsaD4npxkx1FzfDbYAzBy6wufyS1iUwwfo=;
-        b=U66PP4cX9cxdvsO9sYdsmwWXS1lAJZjWQgH7sci2yXa2JZMPlnXJRKzqAjGzw+UdtF
-         rl9WQ3yDqtAly8J8iarl75fVlnQt8vs0qA0gSLRBGCrKG9dX/Mxr7sL/yKE0LuqclJXH
-         t9K04bc8Rujef9b1x9ABOcFlvz5gEaPrh8xqIgIVF36/WXYyTEKmhmL7+9dr5Ejjb2Qi
-         2s/qCrWQhp7qUrJP/QEv3ss/qbXDkNyLUsvlN6du7gy3s2LYtVExQlqziH/4kd1eKphS
-         TytBihV9hicnM5Q5A/K4itHYONl/E0yMxgnySvE2QhjyoHn5L8CmsiBtUtKSjo8ISetd
-         cBhA==
-X-Gm-Message-State: AOJu0YyhQnSL1gBz2ieqeFHjc3npaASl5AocbpignyQ5TBK3CCETv2x6
-	P0b/ld/bIUpJ5C4f4UpDVe4CWj7x7cMZ1cjLTHbTZVxgGrPovgAM
-X-Google-Smtp-Source: AGHT+IFDdc2J7SYcK/EmzH85a2+S3x3L+AcaU0AcW+PDGu3Ih8M89PD14XyDoHFZSb4scNS/1MUixA==
-X-Received: by 2002:a05:600c:4eca:b0:40e:5b2a:e50c with SMTP id g10-20020a05600c4eca00b0040e5b2ae50cmr870920wmq.27.1705774997370;
-        Sat, 20 Jan 2024 10:23:17 -0800 (PST)
-Received: from [192.168.1.101] ([84.64.64.237])
-        by smtp.googlemail.com with ESMTPSA id k23-20020a05600c0b5700b0040e596320bfsm2432457wmr.0.2024.01.20.10.23.16
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 20 Jan 2024 10:23:17 -0800 (PST)
-Message-ID: <7dbe4006-bfc2-402e-8073-870d7ec38319@gmail.com>
-Date: Sat, 20 Jan 2024 18:23:16 +0000
+        bh=Fd/BvZWrlj92u0bynMA5DwtkOVSlNbRr7wHO9gh5ba8=;
+        b=j/TzKSwqEtQUaazC0JU3ewlNOZoR4pSiocN4q0yWaF7CO81rTExcl32tq2vLnGb2fd
+         74wM7uw3K4Pesd8JZYP+QzFyhe6v/SMRT/WFkPyIbUbQ72ddILYIeRTGO1BhoSjbM7XS
+         zCOgCqXRb3509p4G00SfN8CK019w1XHdhsdKVyQ8p0YYWlgpHTadO9A3EZI6OSg8evz2
+         KI4RWCroErUiGK1+/dljG1UuO09bXLiDICW2y75IbMzraMhGFcN8Wpmwc0HcwYzgL/I0
+         jRhnlo5oc1AQTCh4wdzUH52g1ZUCwIf0OfOQRsUbMhmrhhVqdlr9RBKzQUiFFjOhVM+t
+         8o3Q==
+X-Gm-Message-State: AOJu0YyUhghNsPbbOcungay5/ad2z1HD22VkYMdY0sS24zYBCPyMWg0S
+	dcxIUJd/5JUiQYeSy/tCO9LV4X4iNkLJKDFFaFqIYOs81kiaB3vKyflxiUAK
+X-Google-Smtp-Source: AGHT+IF4wpowv8KcsmhRG0lLEdRkyVQkm/ab0fyz2Zbdt9/zRuT6MrfIr1XC67Jt0ds+Uo7dsM0s/w==
+X-Received: by 2002:a7b:ce18:0:b0:40e:4ca6:1017 with SMTP id m24-20020a7bce18000000b0040e4ca61017mr1047735wmc.57.1705775150827;
+        Sat, 20 Jan 2024 10:25:50 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id m35-20020a05600c3b2300b0040e541ddcb1sm33488265wms.33.2024.01.20.10.25.50
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 20 Jan 2024 10:25:50 -0800 (PST)
+Message-ID: <pull.1639.git.1705775149642.gitgitgadget@gmail.com>
+From: "James Touton via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Sat, 20 Jan 2024 18:25:49 +0000
+Subject: [PATCH] git-p4: use raw string literals for regular expressions
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v3] merge-ll: expose revision names to custom drivers
-Content-Language: en-US
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Antonin Delpeuch via GitGitGadget <gitgitgadget@gmail.com>,
- git@vger.kernel.org, Antonin Delpeuch <antonin@delpeuch.eu>
-References: <pull.1648.v2.git.git.1705592581272.gitgitgadget@gmail.com>
- <pull.1648.v3.git.git.1705615794307.gitgitgadget@gmail.com>
- <82624802-aa7f-4856-b819-9a2990b25a69@gmail.com> <xmqqsf2rgb39.fsf@gitster.g>
-From: Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <xmqqsf2rgb39.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+Cc: James Touton <bekenn@gmail.com>,
+    James Touton <bekenn@gmail.com>
 
-Hi Junio
+From: James Touton <bekenn@gmail.com>
 
-On 20/01/2024 17:37, Junio C Hamano wrote:
-> Phillip Wood <phillip.wood123@gmail.com> writes:
-> 
->> Not part of this patch but I noticed that we're passing the filenames
->> for '%A' etc. unquoted which is a bit scary.
-> 
-> May be scary but safe, as long as create_temp() gives a reasonable
-> temporary filename.  We pass ".merge_file_XXXXXX" to xmkstemp(),
-> which calls into mkstemp(), which should give us a shell safe name?
+Fixes several Python diagnostics about invalid escape sequences.
 
-Yes. I'd mis-read create_temp() and thought we were appending 
-".merge_file_XXXXX" to the path being merged but looking at it again it 
-is safe.
+Signed-off-by: James Touton <bekenn@gmail.com>
+---
+    git-p4: use raw string literals for regular expressions
 
-> It also should be a safe conversion to change strbuf_addstr() used
-> for these three to sq_quote_buf(), as the string with these %[OAB]
-> placeholders are passed to the shell that eats the quoting before
-> invoking the end-user supplied external merge driver, which means
-> the merge driver would not notice any difference.
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1639%2FBekenn%2Fp4-raw-strings-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1639/Bekenn/p4-raw-strings-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/1639
 
-I agree that would be a safe conversion , but I'm not sure it is worth it.
+ git-p4.py | 26 +++++++++++++-------------
+ 1 file changed, 13 insertions(+), 13 deletions(-)
 
-Best Wishes
+diff --git a/git-p4.py b/git-p4.py
+index 0eb3bb4c47d..156597adb59 100755
+--- a/git-p4.py
++++ b/git-p4.py
+@@ -689,8 +689,8 @@ def setP4ExecBit(file, mode):
+ 
+     if not isModeExec(mode):
+         p4Type = getP4OpenedType(file)
+-        p4Type = re.sub('^([cku]?)x(.*)', '\\1\\2', p4Type)
+-        p4Type = re.sub('(.*?\+.*?)x(.*?)', '\\1\\2', p4Type)
++        p4Type = re.sub(r'^([cku]?)x(.*)', r'\1\2', p4Type)
++        p4Type = re.sub(r'(.*?\+.*?)x(.*?)', r'\1\2', p4Type)
+         if p4Type[-1] == "+":
+             p4Type = p4Type[0:-1]
+ 
+@@ -701,7 +701,7 @@ def getP4OpenedType(file):
+     """Returns the perforce file type for the given file."""
+ 
+     result = p4_read_pipe(["opened", wildcard_encode(file)])
+-    match = re.match(".*\((.+)\)( \*exclusive\*)?\r?$", result)
++    match = re.match(r".*\((.+)\)( \*exclusive\*)?\r?$", result)
+     if match:
+         return match.group(1)
+     else:
+@@ -757,7 +757,7 @@ def parseDiffTreeEntry(entry):
+ 
+     global _diff_tree_pattern
+     if not _diff_tree_pattern:
+-        _diff_tree_pattern = re.compile(':(\d+) (\d+) (\w+) (\w+) ([A-Z])(\d+)?\t(.*?)((\t(.*))|$)')
++        _diff_tree_pattern = re.compile(r':(\d+) (\d+) (\w+) (\w+) ([A-Z])(\d+)?\t(.*?)((\t(.*))|$)')
+ 
+     match = _diff_tree_pattern.match(entry)
+     if match:
+@@ -918,9 +918,9 @@ def p4CmdList(cmd, stdin=None, stdin_mode='w+b', cb=None, skip_info=False,
+             if len(result) > 0:
+                 data = result[0].get('data')
+                 if data:
+-                    m = re.search('Too many rows scanned \(over (\d+)\)', data)
++                    m = re.search(r'Too many rows scanned \(over (\d+)\)', data)
+                     if not m:
+-                        m = re.search('Request too large \(over (\d+)\)', data)
++                        m = re.search(r'Request too large \(over (\d+)\)', data)
+ 
+                     if m:
+                         limit = int(m.group(1))
+@@ -1452,7 +1452,7 @@ def wildcard_encode(path):
+ 
+ 
+ def wildcard_present(path):
+-    m = re.search("[*#@%]", path)
++    m = re.search(r"[*#@%]", path)
+     return m is not None
+ 
+ 
+@@ -3048,7 +3048,7 @@ def stripRepoPath(self, path, prefixes):
+             # Preserve everything in relative path name except leading
+             # //depot/; just look at first prefix as they all should
+             # be in the same depot.
+-            depot = re.sub("^(//[^/]+/).*", r'\1', prefixes[0])
++            depot = re.sub(r"^(//[^/]+/).*", r'\1', prefixes[0])
+             if p4PathStartsWith(path, depot):
+                 path = path[len(depot):]
+ 
+@@ -3603,7 +3603,7 @@ def importP4Labels(self, stream, p4Labels):
+                     commitFound = True
+                 else:
+                     gitCommit = read_pipe(["git", "rev-list", "--max-count=1",
+-                        "--reverse", ":/\[git-p4:.*change = %d\]" % changelist], ignore_error=True)
++                        "--reverse", r":/\[git-p4:.*change = %d\]" % changelist], ignore_error=True)
+                     if len(gitCommit) == 0:
+                         print("importing label %s: could not find git commit for changelist %d" % (name, changelist))
+                     else:
+@@ -4182,7 +4182,7 @@ def run(self, args):
+                 if len(self.changesFile) == 0:
+                     revision = "#head"
+ 
+-            p = re.sub("\.\.\.$", "", p)
++            p = re.sub(r"\.\.\.$", "", p)
+             if not p.endswith("/"):
+                 p += "/"
+ 
+@@ -4291,7 +4291,7 @@ def rebase(self):
+             die("Cannot find upstream branchpoint for rebase")
+ 
+         # the branchpoint may be p4/foo~3, so strip off the parent
+-        upstream = re.sub("~[0-9]+$", "", upstream)
++        upstream = re.sub(r"~[0-9]+$", "", upstream)
+ 
+         print("Rebasing the current branch onto %s" % upstream)
+         oldHead = read_pipe(["git", "rev-parse", "HEAD"]).strip()
+@@ -4320,8 +4320,8 @@ def __init__(self):
+     def defaultDestination(self, args):
+         # TODO: use common prefix of args?
+         depotPath = args[0]
+-        depotDir = re.sub("(@[^@]*)$", "", depotPath)
+-        depotDir = re.sub("(#[^#]*)$", "", depotDir)
++        depotDir = re.sub(r"(@[^@]*)$", "", depotPath)
++        depotDir = re.sub(r"(#[^#]*)$", "", depotDir)
+         depotDir = re.sub(r"\.\.\.$", "", depotDir)
+         depotDir = re.sub(r"/$", "", depotDir)
+         return os.path.split(depotDir)[1]
 
-Phillip
-
+base-commit: 564d0252ca632e0264ed670534a51d18a689ef5d
+-- 
+gitgitgadget
