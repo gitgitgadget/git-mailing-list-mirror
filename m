@@ -1,65 +1,69 @@
-Received: from out3-smtp.messagingengine.com (out3-smtp.messagingengine.com [66.111.4.27])
+Received: from out4-smtp.messagingengine.com (out4-smtp.messagingengine.com [66.111.4.28])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 226D9110C
-	for <git@vger.kernel.org>; Sat, 20 Jan 2024 04:28:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=66.111.4.27
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73EDDDF68
+	for <git@vger.kernel.org>; Sat, 20 Jan 2024 10:49:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=66.111.4.28
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705724909; cv=none; b=UZFDZX1J+nphR77dfau+tS1+z8beqfOjVyQKcdfqCG/zMHOhOkYInAW2Rvc8QB2+IZjZLV6zmzsfP0u1bWuorEkqqiJvAbHvjvEFWewkVJCfKNq8WuuwmXKlF2gUkL17DZnH4yz5llS82MbkfylxZiGYbGdFdgy+8FKv4wJ1+pc=
+	t=1705747742; cv=none; b=EA73MMcO+b6Pz6EhKAuX757PpJUr2OlmqRyruYxiQxrlP1xUxGGQ5RHRUbxL9N4c32kFEKw6qtPP2g/Uqy/p68cy/84eG47X21H2bqhspkJ0dgq1WEc1tSfmfHugs1mzlOng340zHwUyQVOK0j6o25Q1GD7i6xYli0dCKroC55A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705724909; c=relaxed/simple;
-	bh=88HoqHQBY1GMq5il5m9TTzItmb5lIqc9BBj4057/j3M=;
-	h=MIME-Version:Message-Id:Date:From:To:Subject:Content-Type; b=V9Lt80+96OOJKqKZZ77fLjbjKh5UJ9eyjYMLDU1LZtTRK4UHb6VJpgJAtKA0sygnolvdA6isQ2Wm49b2mOjVUpb/GJzgPsxfXIP/bHS+HdVCA8DbhIvx8uyL+dUYyjqIGHedQTSXwPs3vJzRt9m2s8R95NWkZb7A6zgfup0qkB4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=farhan.codes; spf=pass smtp.mailfrom=farhan.codes; dkim=pass (2048-bit key) header.d=farhan.codes header.i=@farhan.codes header.b=dwYJfYNR; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=FGT2WfLt; arc=none smtp.client-ip=66.111.4.27
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=farhan.codes
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=farhan.codes
+	s=arc-20240116; t=1705747742; c=relaxed/simple;
+	bh=OyJCtPN6P5Qlkun3spXq+OlkL7s7evkW6NC40V867WE=;
+	h=MIME-Version:Message-Id:In-Reply-To:References:Date:From:To:Cc:
+	 Subject:Content-Type; b=LU7YhBHHaHzyWeUXRDz4euVrw/PJ8jbYNLxzxA/bAePy6a1BV2lKVizHslis9OLaKMER2xVCeUGIfuzIiqEWHH8Z7nIOILPAG0hh80KSSujuAzKt6k1TDk5+iSFjqKpu9dMGDJRVv2m9PheI5RtH11jadHusWq1J7zT/tjy/oMs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=khaugsbakk.name; spf=pass smtp.mailfrom=khaugsbakk.name; dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b=WVTTDJAX; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=aQgXW41m; arc=none smtp.client-ip=66.111.4.28
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=khaugsbakk.name
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=khaugsbakk.name
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=farhan.codes header.i=@farhan.codes header.b="dwYJfYNR";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="FGT2WfLt"
-Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
-	by mailout.nyi.internal (Postfix) with ESMTP id EED7F5C014F
-	for <git@vger.kernel.org>; Fri, 19 Jan 2024 23:28:25 -0500 (EST)
-Received: from imap45 ([10.202.2.95])
-  by compute5.internal (MEProxy); Fri, 19 Jan 2024 23:28:25 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=farhan.codes; h=
-	cc:content-type:content-type:date:date:from:from:in-reply-to
-	:message-id:mime-version:reply-to:subject:subject:to:to; s=fm2;
-	 t=1705724905; x=1705811305; bh=YXZfxIhZ7HR/h26nFmMPRvDOGC8u86TY
-	gCgbB6JAWjQ=; b=dwYJfYNRA+fs8hP6oia1cx9bhj3bl2N25nEZDeBn84Oto3na
-	H+CpI9zIw2fvLQedjsVHNDb1xuB9uYM5NG7q/vW3h2wvhDp4q+wpEo/45nM0ugro
-	B4PO20r+VUgqd3Ur2J8zjoXO2gUOY5NuLY17sIZC/m3gf7RufQ7/1To2SjL4l7He
-	bfXPIo5SvcTrSsqXzvGrrDRc2OSRMP+bBCweBvh+G0EC7AHM8+5av8YTW1uYu0Oj
-	rebluPn2x4LcFWAWAKQxponbLt7o1Zv/Js9ssZENmPPwO0lLggHP1G7QxPJ9y6+S
-	lHlFE/qUvQsTM4wYezq7JmMpA+oDgZ1ZZLn6hg==
+	dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b="WVTTDJAX";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="aQgXW41m"
+Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
+	by mailout.nyi.internal (Postfix) with ESMTP id 4ECC35C00C9;
+	Sat, 20 Jan 2024 05:48:59 -0500 (EST)
+Received: from imap49 ([10.202.2.99])
+  by compute1.internal (MEProxy); Sat, 20 Jan 2024 05:48:59 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=khaugsbakk.name;
+	 h=cc:cc:content-transfer-encoding:content-type:content-type
+	:date:date:from:from:in-reply-to:in-reply-to:message-id
+	:mime-version:references:reply-to:subject:subject:to:to; s=fm2;
+	 t=1705747739; x=1705834139; bh=OyJCtPN6P5Qlkun3spXq+OlkL7s7evkW
+	6NC40V867WE=; b=WVTTDJAXMNdkhtxlowA64ZQmw9ipZuPMSWJT3Hj4Y5KX8Tvb
+	PnwhSU1fLCL/DbpUX9h/illT/WGOFLsiSLLLfrELjABSZlOzE3wlgILurPUVonMB
+	FnwUhamkNqGbfonBlHDojHsuLV6L51wRgNzqAAOqebLDCqwSLXPd91rZhZdXBwmh
+	qvvG6PLVouUu8byQ6LjBm77qQ+O7m7cMnl4KFRdyGnh9JWYAU7WTrr61gPTapHaD
+	OAhGR/RYKj5U2XF8e10caZJuTDT7eqE4D9lx9KGZeqzcUrQcx+U4r5spmnug0u9V
+	eqj/S4Xs/zyBZhlotJKUUJETHON34Lv2XUTTdg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:message-id
-	:mime-version:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1705724905; x=1705811305; bh=YXZfxIhZ7HR/h26nFmMPRvDOGC8u86TYgCg
-	bB6JAWjQ=; b=FGT2WfLtH2lPKee8TKIpZRMS4lU39VaXL0oXr5YZ1v3rSaY0ipl
-	zDzlI3CtcyGLDhdv2xhz3uCos25ptjeEYYJWvP5ATKkHfRfACe0NGTWZZSz08AKh
-	w6lQ1I2I/pVEqrHM8PMYZ0AzR9Tq7td92NHhlZ3lxhdw+yOjL00TooXUkH2I2Pyp
-	yE9/aRbfQW04z6S/aujI8YkaN3fg6KXKr7snV/QdlR49ZEdq3S49wQOKu1eCsOOe
-	Rxnv+4kSYMnUR8nmIXCBI+A3dHiYWTIKcfm/ih8AlSf42zXsrv53rlkwbM5hYGRk
-	FnTc2ACT/ZHpNE4G5WKnEfUIrvTYFMcL+8g==
-X-ME-Sender: <xms:6UurZS6KEafb2FPpIYAD-xwRaw6yTkGL0twskllxBwbTfXOv6Tn3aA>
-    <xme:6UurZb5F-3L78BCWqhGmib7BhtPX7gEoi0lc11zd5SDz7g6PUbeSYC6By6qTQbbWv
-    __N_N7CH7ZOYQhej7A>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrvdekuddgjeduucetufdoteggodetrfdotf
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1705747739; x=
+	1705834139; bh=OyJCtPN6P5Qlkun3spXq+OlkL7s7evkW6NC40V867WE=; b=a
+	QgXW41m/tOL8o+gyO5PXKDqagUXGIamOkhdif4CpLh4sP20B9EZujE2aHldp4O6F
+	4ioNIkK/1oXFAlkGMiH5biQ+fwqBFDXRLbQhItmBbGTU8SZkjGC4NzJtji9kn3QI
+	c++2QY/gzvFTMQ3TOIU0AB9qJosocT8fh6SenrxiPYDgzpmVD6YhX6VQFAQmuuN+
+	hPv4y2QXiljGcCDVSSK8tvavRJOvF+ID9vPHYiQ5maaH+cTz2EVd41+gtlL7cdC8
+	zyH1iRFkO5DwuNyPaA3rcua0nRRN/dae5HKiPcJ9GGOj95VGT4GTaYl7d9WNLyJf
+	SdKud35EKSwoYVPXLkGoQ==
+X-ME-Sender: <xms:G6WrZVjfE_ER1yz8Pr1-z2kQ1vfpHGEdVSu1eiDUoJh9DzDE7Lg8P4k>
+    <xme:G6WrZaBENf3YRDONxQmY1E3225DtbFdp7mw90zWAp7eMxYOIKEHVU6d3VoscnT3wh
+    VUC-81VdSsL4BWsXg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrvdekvddgvddtucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucenucfjughrpefofgggkfffhffvufgtsehttdertd
-    erredtnecuhfhrohhmpedfhfgrrhhhrghnucfmhhgrnhdfuceofhgrrhhhrghnsehfrghr
-    hhgrnhdrtghouggvsheqnecuggftrfgrthhtvghrnhepieejtdegteevhfegvdefieeghe
-    ethfduudffkeevffejueegudevfeffuddvheegnecuvehluhhsthgvrhfuihiivgeptden
-    ucfrrghrrghmpehmrghilhhfrhhomhepfhgrrhhhrghnsehfrghrhhgrnhdrtghouggvsh
-X-ME-Proxy: <xmx:6UurZRe-LbxYQG5XjfqzpyoDV-2JS8Ct1svlKj9Az1vS6TGjzLdHUA>
-    <xmx:6UurZfIFWqyCh28zRvrDJwU0EoGhP1iB1Q7r3uCp9DXNHWs6QfENxw>
-    <xmx:6UurZWK4B9cZX1sp75lOUIrRphomFY5tBAWP4Rmb2uKF3X5Rx2oTqw>
-    <xmx:6UurZbXMC4XrWYaC88uW-nO57b36EX5bcfPXqsM7c2RaEE19QdqUeA>
-Feedback-ID: i61914458:Fastmail
+    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+    cujfgurhepofgfggfkjghffffhvfevufgtgfesthhqredtreerjeenucfhrhhomhepfdfm
+    rhhishhtohhffhgvrhcujfgruhhgshgsrghkkhdfuceotghouggvsehkhhgruhhgshgsrg
+    hkkhdrnhgrmhgvqeenucggtffrrghtthgvrhhnpedvveehiedufeehffdvteeuveekhefh
+    leeigfektdeifeduteeuheeufeetffefudenucevlhhushhtvghrufhiiigvpedtnecurf
+    grrhgrmhepmhgrihhlfhhrohhmpegtohguvgeskhhhrghughhssggrkhhkrdhnrghmvg
+X-ME-Proxy: <xmx:G6WrZVFQNqa6WLcSnn0E3vn4UuVUrBB5PEwHHl-FmJ5E0fNYi_XLiQ>
+    <xmx:G6WrZaRk2B4P60FrrQenak-igCL2Q4RJbs-fnVNC13K_xjJSX43Qfw>
+    <xmx:G6WrZSz2Aci1Vm6zptWHXRGP5HKI7iXDcAc1b_Nw-UbYbdvMhKNHHg>
+    <xmx:G6WrZd8cTaXdToslgTPeRa6vlMfj84cml4pV8ft5pVJDu7TNw-EYJA>
+Feedback-ID: i2671468f:Fastmail
 Received: by mailuser.nyi.internal (Postfix, from userid 501)
-	id 941E1272007C; Fri, 19 Jan 2024 23:28:25 -0500 (EST)
+	id 0DCD015A0092; Sat, 20 Jan 2024 05:48:58 -0500 (EST)
 X-Mailer: MessagingEngine.com Webmail Interface
 User-Agent: Cyrus-JMAP/3.9.0-alpha0-1374-gc37f3abe3d-fm-20240102.001-gc37f3abe
 Precedence: bulk
@@ -68,34 +72,33 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Message-Id: <afea6dc9-e557-4730-abe6-00947f77be06@app.fastmail.com>
-Date: Fri, 19 Jan 2024 23:28:05 -0500
-From: "Farhan Khan" <farhan@farhan.codes>
-To: git@vger.kernel.org
-Subject: How OBJ_REF_DELTA pack file size calculated
-Content-Type: text/plain
+Message-Id: <527ae359-32e7-4c49-b733-614f17876f14@app.fastmail.com>
+In-Reply-To: <xmqqmst1hsd6.fsf@gitster.g>
+References: <pull.1644.git.1705697955144.gitgitgadget@gmail.com>
+ <20240119-flat-jellyfish-of-drizzle-b31abe@lemur>
+ <xmqqmst1hsd6.fsf@gitster.g>
+Date: Sat, 20 Jan 2024 11:48:38 +0100
+From: "Kristoffer Haugsbakk" <code@khaugsbakk.name>
+To: "Junio C Hamano" <gitster@pobox.com>
+Cc: "Josh Soref" <gitgitgadget@gmail.com>, git@vger.kernel.org,
+ spectral <spectral@google.com>,
+ "Konstantin Ryabitsev" <konstantin@linuxfoundation.org>
+Subject: Re: [PATCH] MyFirstContribution: update mailing list sub steps
+Content-Type: text/plain;charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-Hi,
+On Fri, Jan 19, 2024, at 23:26, Junio C Hamano wrote:
+> Noticed-by: Kyle Lippincott <spectral@google.com>
+> Helped-by: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
 
-I am trying to implement REF_OBJ_DELTA, but having some trouble with offsets (sizes in the pack file) that do not align, specifically the size of the whole object does not seem to add up.
+Just curious. What=E2=80=99s the difference between `Reported-by` and
+`Noticed-by`? `Reported-by` is documented in `SubmittingPatches` but not
+the other one. Is perhaps `Reported-by` specifically meant for bug
+reports?
 
-For example, consider this run:
+Thanks
 
-git verify-pack -v .git/objects/pack/pack-48269bdfe1d28d20f603c6b23eed5717b7474e76.pack  | grep 82daab01f43e34b9f7c8e0db81a9951933b04f1b
-
-82daab01f43e34b9f7c8e0db81a9951933b04f1b commit 94 101 82749 1 ecd0e8c88ed8891da372f5630d542150b0a0531e
-
-The size of the object is 94 bytes
-The size of the entry is 101 bytes.
-
-My patching/reconstruction of the object works, the compressed size is 97 bytes. However, I cannot figure out where the 101 comes from. The size of the object header is 2 bytes, the OBJ_REF_DELTA is 20 bytes (the SHA1), but that does not add up to 101 bytes.
-
-I am trying to understand where the 101 bytes comes from.
-
-If not, can you please point me to where in the code the offset size for OBJ_REF_DELTA is calculated. I tried myself from buildin/verify-pack.c, but there seems to be some multi-threating/processing going on and I was not able to determine where the calculation happens.
-
-Thanks!
---
-Farhan Khan
-PGP Fingerprint: 1312 89CE 663E 1EB2 179C 1C83 C41D 2281 F8DA C0DE
+--=20
+Kristoffer Haugsbakk
 
