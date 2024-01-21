@@ -1,214 +1,138 @@
-Received: from mout.web.de (mout.web.de [212.227.15.3])
+Received: from ring.crustytoothpaste.net (ring.crustytoothpaste.net [172.105.110.227])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC97B364A4
-	for <git@vger.kernel.org>; Sun, 21 Jan 2024 17:56:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.3
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFBE53771A
+	for <git@vger.kernel.org>; Sun, 21 Jan 2024 18:06:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.110.227
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705859820; cv=none; b=cNHPEd3d+ZwipxJpUoGuyIPSo9jcnyjQHWtW8QeVYlxRXzTcwWd/IGTNQ12QZyicydHKn3xlelTy0o8hI20hVdyiS7VfTdMzH1MpxbEBrStzlDzeXNzD9YqUTKA+EttvZZk+FdRK4gie1suCRf3U8b4mvAGQxJuEzBH1qxphGF4=
+	t=1705860366; cv=none; b=Ky5clbbmEQDhWiqhOkzcEPFzGCC+pZEpXecWg5SBPWBBcn+gGS0TgbWAxm/YN+Q+slA4sCUG+rFSNnQ9h8TNxEDAgGeGvgrsR19KniwnLvQf8EU2tVccwMgqEyCyQGq0e11i1b9pv0c5/tNanhibkOtgcoDuHJz9olN60Nfr9W0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705859820; c=relaxed/simple;
-	bh=MFzYtf9NG9tF5IPQOaRppSZFlZWgus8QLHT1Hc1phpE=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=qQsySrYsBKVYXjuneN0CSpHs2gUPEWL4M491M7xWYoOxI63+bKw1cUsvoA0RI9uen9MdjoJjsemDlDJMhUpV6Yrmz9JNUGHT/WyGznucBIwydbtY0Taqf9OrCcFY+DMZIc9CSc3GxdLO2EqWcwFJAX8AhIrAspvOjQVk++keEr4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b=nyUlonly; arc=none smtp.client-ip=212.227.15.3
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
+	s=arc-20240116; t=1705860366; c=relaxed/simple;
+	bh=edlldvYVmm0uqcstDYgTNzYLBNDpfUNatH747OFpOdw=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=AuK53eY6vumNKiB8yz+DbPUpJ+te1BLC40pMIxMOc06Cin5Hac9L9pi108lVO+rdG9M+BnCHHXQDeBlA82FXJ5htzbOL5XlwNUUptDJtvdqHQPOLKf/67wBgQhn6afLMW3QOfCBTqe90pOEtoWcOg5nqVypKl6uKJIc6b6ttr+A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=UAzHlMR1; arc=none smtp.client-ip=172.105.110.227
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b="nyUlonly"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de; s=s29768273;
-	t=1705859800; x=1706464600; i=l.s.r@web.de;
-	bh=MFzYtf9NG9tF5IPQOaRppSZFlZWgus8QLHT1Hc1phpE=;
-	h=X-UI-Sender-Class:Date:Subject:To:Cc:References:From:
-	 In-Reply-To;
-	b=nyUlonlyvgxLdwcTO6yCfRjIbQe7ASXZDqzA8qptJ3ol+Itmb966BWWRE1HaQINr
-	 8ga2ZfalAoacUmQWuEEqevwhJdZ87Dhz+Vreez+XS3zb0dyGmVJdv2lXnYEfPL+3B
-	 bZkpkvrPQGEma1jk6i+x0hUQIT1MAHl3NGDSUtQroAcPycFKbtCc+aggZtTg0FA2y
-	 uQeGccIqA787tnGawnQQu5sNe3Rk31LqIQVxR59pCKNH326FsA7g9p78cxcYT87zw
-	 Gb5UWMYd6h6lTSacbdJVgdNWzKMAogN6tX3zYWuBwhd/BlJfLgsIT24tUhnhao+VA
-	 ZmBPBudaD/vXgdxrDg==
-X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
-Received: from [192.168.178.29] ([91.47.159.25]) by smtp.web.de (mrweb006
- [213.165.67.108]) with ESMTPSA (Nemesis) id 1M7ux4-1rWXjm07zm-00517S; Sun, 21
- Jan 2024 18:56:40 +0100
-Message-ID: <fb3c679a-5f00-4934-b028-6b2d081cd5b2@web.de>
-Date: Sun, 21 Jan 2024 18:56:39 +0100
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="UAzHlMR1"
+Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:e59a:3ed0:5f5c:31f3])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (P-256) server-signature RSA-PSS (3072 bits) server-digest SHA256)
+	(No client certificate requested)
+	by ring.crustytoothpaste.net (Postfix) with ESMTPSA id 00B135A3CC;
+	Sun, 21 Jan 2024 18:05:56 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1705860357;
+	bh=edlldvYVmm0uqcstDYgTNzYLBNDpfUNatH747OFpOdw=;
+	h=Date:From:To:Cc:Subject:References:Content-Type:
+	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+	 Content-Type:Content-Disposition;
+	b=UAzHlMR1YpcTN6T93hFA5ODK8TcEDWRSBcLaswcw9ynK3y0/MVLRcNQSDhVZ+Jpej
+	 RqkMhqko4eQv1CkJyHc+I3Dk6OnYYcY9gP32hO3UA8tCpK6DsdBFMakTxpng3cOHv2
+	 BWxulGCd+wM40DWIdUI0e1y8XUkvnlc4YygqALt8jPKB2AYvFDotku/9KV/0/gprUi
+	 iXxLguYZfZFq5AkEkmewhJIB+NhAWRkyL00srTqFrerTF7eOV5h9adBfsk5kiTTyPF
+	 HYQ5/Wj1/VC7rUFoP70Zaj7HsUgzbXlxsduMS4bOW+5ZeAaAST5elTgIUBB+IP8m2t
+	 cm7zWwO/nQzYpp2YhsyV8VQvRVVMMTM9B9rTnnIVl37aJT4jeSExNnsr/SGkzNHTJJ
+	 6tvDpLMVsDu2UKqx7QAkZd/3DiBdvZuXu0XkPibmUrWLjNcNQtO+4Ap+c5PzcLRIWp
+	 FwBG+7cxFNcSnSc0W1PB+RvZ3mnxTAbSdqdaxowKYordbEKuA5Z
+Date: Sun, 21 Jan 2024 18:05:53 +0000
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+To: Marc C <marc@mccd.space>
+Cc: git@vger.kernel.org
+Subject: Re: Git pre-received hook not failing with exit code 1 correcly
+Message-ID: <Za1dAaKO_IlT3nuM@tapette.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Marc C <marc@mccd.space>, git@vger.kernel.org
+References: <CYK0FIQPVI22.2RHKOY4L00FZS@mccd.space>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [Bug?] "git diff --no-rename A B"
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
-References: <xmqq34uvtpob.fsf@gitster.g>
- <20240120011800.GF117170@coredump.intra.peff.net>
- <579fd5bc-3bfd-427f-b22d-dab5e7e56eb2@web.de> <xmqqmsszga9m.fsf@gitster.g>
-Content-Language: en-US
-From: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
-In-Reply-To: <xmqqmsszga9m.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="4vWZOgS4u5LfMs5B"
+Content-Disposition: inline
+In-Reply-To: <CYK0FIQPVI22.2RHKOY4L00FZS@mccd.space>
+User-Agent: Mutt/2.2.12 (2023-09-09)
+
+
+--4vWZOgS4u5LfMs5B
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:au2OJ9ZfO/u9CEBMoaQHM5UXTJXydvZSs79n94hjruJpTMkoRJ1
- aVX5XAanY8mazAPwyltsqd8hQHIOa8iaYPX8QOH+rlv00b6LjwurKc08FrdiWRpaphtv48S
- BnIUQbsNq15lJ8rKwO3nOqr8eKj+RGlZIaxal3R1laWmnG7MTIxZIPVOrds6hDChk3t9yt1
- /z/eVQr9NpwmWhg80t4TA==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:iCz9RO8gkc8=;WZHD2z2uXP3k0/eoMmOSxFwu0S2
- 9rq60dPCPS1MTyjcrGGoAoxOQNGG+TdCug/yk1XdYP3VEokHyF21jbK6Om6qvs5tFdpmTRhIx
- xh+QwjC2ChfHcUL8pFrehp8NU2slRtDSzu2fKT/Y3jzmk542P5psUJJ7lsiq/Atw8eHFLmOrU
- rXJ5x3+nZQ8ZmIRuZ0hB1ijdYyyrtPJugBwWk249M9JAGOOQSBFP4j+orGD23I9NHVMbAxLt/
- k5QSHZihadQhCZl5KLEV9miXt3FmEpnux/V26n/e15tMWeMxASzYZ6qu+V54IlwmleqVJvHBr
- xsTKwrwmoYBLIZHMdgU0ezH1a7vlwvaB8UfBG6yw90ojZoBn+axS7TgHWv5OBWbWH1CmJn7WJ
- KrxixPHqzwbtisstIGoM0BUAnUNJIwbKWW5ug2MQljWUx6TEoCF3HqdM6xEgc5NJof2yzWDL0
- Wew2fpk0Afom5RW+GU7++MQGOz5WDrvDJZKnyrTc24Zb6Yoril3rhRdcoZduNcTaWOHudX0Gh
- n0/hSNmbRW4o2Q773jWCKNVm6HmlLnwy0lF6WkkQAIntkYW3jjnyZBo07vpZNqJ7Om3ymMOys
- VC8bbMwTXUAFaArqhBzDSQyEyRUE5PidFurzpG2+pWqrEpcG3aVQXd+WU+nU4q7VwYICHMAt2
- WZxF4072fSkkpMnHj8j0R3eSgAi/3/CTeq9XC1yROiSCec8da1ZbPxFQwOrcZxlsw6xjpSYrI
- S1HVkMFDvd9aY5L4zFsR2dHl8SiaALZUfAmRV2jZvIN7Ucj5lbzeJ59v4TIg7jY9102kMi+Lo
- FMkxF5yqL/b8aq2Jw456cRZqt97/j/udw7Y5LWokGXH8U6hxc8xUPpY/V92lTiwzHbaIj//kK
- 4k9tNi40Z4a1VbkR0+X7dKbTzTnMBt2rIISDP132UikREhRpQFSflMcBeX7SCUVKDvjR7PfbB
- c4wzlA==
 
-Am 20.01.24 um 18:55 schrieb Junio C Hamano:
->
-> I agree with you that the structure of that loop and the processing
-> in it does look confusing.
+On 2024-01-21 at 01:57:28, Marc C wrote:
+> Heya!
 
-Here's a small simplification.
+Hey,
 
-=2D-- >8 ---
-Subject: [PATCH 2/1] parse-options: simplify positivation handling
+> I am trying to understand why my pre-publish hook does not exit with the
+> correct status code.=20
+>=20
+> I have a pre-publish script
+>=20
+> ```
+> #!/bin/sh
+> set -euo pipefail
 
-We accept the positive version of options whose long name starts with
-"no-" and are defined without the flag PARSE_OPT_NONEG.  E.g. git clone
-has an explicitly defined --no-checkout option and also implicitly
-accepts --checkout to override it.
+One note about this is that `-o pipefail` is a bash- and zsh-specific
+option.  (It's also present in some ksh variants.)  It isn't specified
+by POSIX, so you'd probably want to use `#!/bin/bash` as your shebang
+instead.
 
-parse_long_opt() handles that by restarting the option matching with the
-positive version when it finds that only the current option definition
-starts with "no-", but not the user-supplied argument.  This code is
-located almost at the end of the matching logic.
+Even OSes such as Debian which specify certain extensions required for
+`/bin/sh` (notably `local`) don't require this of it.
 
-Avoid the need for a restart by moving the code up.  We don't have to
-check the positive arg against the negative long_name at all -- the
-"no-" prefix of the latter makes a match impossible.  Skip it and toggle
-OPT_UNSET right away to simplify the control flow.
+> However, when running the script as a pre-receive hook, it is not
+> running the commands correctly and returns the wrong exit code. I get
+> the following:
+>=20
+> ```
+> remote: Testing nixos config
+> remote: building the system configuration...
+> remote: Success <-- ????
+> remote: error:
+> remote:        =E2=80=A6 while calling the 'seq' builtin
+> ...
+> To myserver:/myrepo
+>    bffa94e..a14b3f6  main -> main
+> ```
+>=20
+> Any clue what I am missing? When running it as a pre-receive hook, the
+> failing command returns exit code 0. Running it in the CLI, it returns
+> exit code 1. It is Schrodinger's exit code.
 
-Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
-=2D--
-Patch formatted with --function-context for easier review.
+I know nothing about nixOS, but I'm wondering if maybe `nixos-rebuild
+dry-build` forks in some cases, specifically when it's detached from the
+terminal.  If that happened, then you'd see the above, where the child
+process continued but the parent process exited, and then the error
+message would get printed at the end.
 
- parse-options.c | 13 ++++++-------
- 1 file changed, 6 insertions(+), 7 deletions(-)
+You'd also see this if you had an `&` at the end of `nixos-rebuild
+dry-build`, but you don't seem to have that here.
 
-diff --git a/parse-options.c b/parse-options.c
-index 92e96ca6cd..63a99dea6e 100644
-=2D-- a/parse-options.c
-+++ b/parse-options.c
-@@ -353,95 +353,94 @@ static int is_alias(struct parse_opt_ctx_t *ctx,
- static enum parse_opt_result parse_long_opt(
- 	struct parse_opt_ctx_t *p, const char *arg,
- 	const struct option *options)
- {
- 	const char *arg_end =3D strchrnul(arg, '=3D');
- 	const struct option *abbrev_option =3D NULL, *ambiguous_option =3D NULL;
- 	enum opt_parsed abbrev_flags =3D OPT_LONG, ambiguous_flags =3D OPT_LONG;
- 	int allow_abbrev =3D !(p->flags & PARSE_OPT_KEEP_UNKNOWN_OPT);
+You could try something like `(cat | ./.git/hooks/pre-receive 2>&1 | cat)`
+to see if the problem is the lack of terminal.
 
- 	for (; options->type !=3D OPTION_END; options++) {
- 		const char *rest, *long_name =3D options->long_name;
- 		enum opt_parsed flags =3D OPT_LONG, opt_flags =3D OPT_LONG;
+Hopefully that gives you a helpful head start on the problem.  I
+apologize for not being able to help more.
+--=20
+brian m. carlson (he/him or they/them)
+Toronto, Ontario, CA
 
- 		if (options->type =3D=3D OPTION_SUBCOMMAND)
- 			continue;
- 		if (!long_name)
- 			continue;
+--4vWZOgS4u5LfMs5B
+Content-Type: application/pgp-signature; name="signature.asc"
 
--again:
-+		if (!starts_with(arg, "no-") &&
-+		    !(options->flags & PARSE_OPT_NONEG) &&
-+		    skip_prefix(long_name, "no-", &long_name))
-+			opt_flags |=3D OPT_UNSET;
-+
- 		if (!skip_prefix(arg, long_name, &rest))
- 			rest =3D NULL;
- 		if (!rest) {
- 			/* abbreviated? */
- 			if (allow_abbrev &&
- 			    !strncmp(long_name, arg, arg_end - arg)) {
- is_abbreviated:
- 				if (abbrev_option &&
- 				    !is_alias(p, abbrev_option, options)) {
- 					/*
- 					 * If this is abbreviated, it is
- 					 * ambiguous. So when there is no
- 					 * exact match later, we need to
- 					 * error out.
- 					 */
- 					ambiguous_option =3D abbrev_option;
- 					ambiguous_flags =3D abbrev_flags;
- 				}
- 				if (!(flags & OPT_UNSET) && *arg_end)
- 					p->opt =3D arg_end + 1;
- 				abbrev_option =3D options;
- 				abbrev_flags =3D flags ^ opt_flags;
- 				continue;
- 			}
- 			/* negation allowed? */
- 			if (options->flags & PARSE_OPT_NONEG)
- 				continue;
- 			/* negated and abbreviated very much? */
- 			if (allow_abbrev && starts_with("no-", arg)) {
- 				flags |=3D OPT_UNSET;
- 				goto is_abbreviated;
- 			}
- 			/* negated? */
--			if (!starts_with(arg, "no-")) {
--				if (skip_prefix(long_name, "no-", &long_name)) {
--					opt_flags |=3D OPT_UNSET;
--					goto again;
--				}
-+			if (!starts_with(arg, "no-"))
- 				continue;
--			}
- 			flags |=3D OPT_UNSET;
- 			if (!skip_prefix(arg + 3, long_name, &rest)) {
- 				/* abbreviated and negated? */
- 				if (allow_abbrev &&
- 				    starts_with(long_name, arg + 3))
- 					goto is_abbreviated;
- 				else
- 					continue;
- 			}
- 		}
- 		if (*rest) {
- 			if (*rest !=3D '=3D')
- 				continue;
- 			p->opt =3D rest + 1;
- 		}
- 		return get_value(p, options, flags ^ opt_flags);
- 	}
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.4.3 (GNU/Linux)
 
- 	if (disallow_abbreviated_options && (ambiguous_option || abbrev_option))
- 		die("disallowed abbreviated or ambiguous option '%.*s'",
- 		    (int)(arg_end - arg), arg);
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZa1dAQAKCRB8DEliiIei
+gS5BAP9/+uL8UnY3b9qwOi1Cl88GwGsulk3zsdjOGUtRfleMJwEAx6Rhw3Awr2mL
+pLxG7UyeWR/KmVjuuuQxJGhKWjm1+Qs=
+=+/gd
+-----END PGP SIGNATURE-----
 
- 	if (ambiguous_option) {
- 		error(_("ambiguous option: %s "
- 			"(could be --%s%s or --%s%s)"),
- 			arg,
- 			(ambiguous_flags & OPT_UNSET) ?  "no-" : "",
- 			ambiguous_option->long_name,
- 			(abbrev_flags & OPT_UNSET) ?  "no-" : "",
- 			abbrev_option->long_name);
- 		return PARSE_OPT_HELP;
- 	}
- 	if (abbrev_option)
- 		return get_value(p, abbrev_option, abbrev_flags);
- 	return PARSE_OPT_UNKNOWN;
- }
-=2D-
-2.43.0
+--4vWZOgS4u5LfMs5B--
