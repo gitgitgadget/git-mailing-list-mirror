@@ -1,97 +1,88 @@
-Received: from mail-wr1-f46.google.com (mail-wr1-f46.google.com [209.85.221.46])
+Received: from mail-yw1-f176.google.com (mail-yw1-f176.google.com [209.85.128.176])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FF3836135
-	for <git@vger.kernel.org>; Sun, 21 Jan 2024 04:07:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29D2F3611B
+	for <git@vger.kernel.org>; Sun, 21 Jan 2024 04:09:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705810079; cv=none; b=oh4Al14gHs1Vf5KJSaIe7eOOj0Dh/2GErOVae/k3TeR9R9pE47Ma1DDCSKBux79KPK26YEWdHeixJboB7MKy/FayNuwrhr+fjOrWFZhfXj+oIjqKGiBmC5NXOnfcbvrsjngcWywYn2F29+bc2WIm59G/jbW0eGnjgnF9xQ+/Fr8=
+	t=1705810154; cv=none; b=hAtGZyU8d2xHBLRGOqkdsW976+WJ2Hz7GCinHc36C9Z+u2YRaMYakMN1I7ttQ5y5J34tZQn78xjBAVy+dh7iDXv4Q7ePRT9dPuTqT64KFpLpVkoZl/U/f4etVvelzlnQVtfJM4FYInnyKURpmFKv3LyoTPLZIPPIVQrvBhoZnFc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705810079; c=relaxed/simple;
-	bh=ykZnB+rLRdzE4Gms4J7aWNmERok45jWOsCYCFyWAlPg=;
-	h=Message-ID:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=OOto9zbuMQ6F0cB1f6XKFW7cNLTnYA0cS7yrtU4qZeNz1Dxhr4qPektM2jlTFNUlblQrykfiPeQVmBLiwfAogtC2LZ0aemjdAYL3BCBl+6bKcwwKEoVdzarIRQ9UAg4ecfWWxRfCfAxgSSlEHqVMDKU7Nbw2PbuYXH4Z9bm/JZ8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NyjJm5rx; arc=none smtp.client-ip=209.85.221.46
+	s=arc-20240116; t=1705810154; c=relaxed/simple;
+	bh=Jv87m7e/BT+lYBvI0C7tGcm98+sc+l2mp9n5XZSK/Sc=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=h2373WEVWEbOleDQN+dwAQyelvYA6ZPSMc3wV71e+zTd7CA9+7tdRujjjW4qiu96lutY+QXOmmohEyu7urbeCCAcED59pHTaa2zHd//6Me3XUVLQH6h6+jkQt0jSz6MLcfx9EWnWgFojBkIbmLIaOVZmsNb5ztVZj26kmA/mCmE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=cFfhe0BZ; arc=none smtp.client-ip=209.85.128.176
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NyjJm5rx"
-Received: by mail-wr1-f46.google.com with SMTP id ffacd0b85a97d-339289fead2so936192f8f.3
-        for <git@vger.kernel.org>; Sat, 20 Jan 2024 20:07:57 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cFfhe0BZ"
+Received: by mail-yw1-f176.google.com with SMTP id 00721157ae682-5ff828b93f0so16092397b3.3
+        for <git@vger.kernel.org>; Sat, 20 Jan 2024 20:09:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1705810076; x=1706414876; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1705810152; x=1706414952; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=Za5F1RY1A6lgmGl2PxagnObnp5gp3HUK6EBKLBB7jc0=;
-        b=NyjJm5rxTfC7ZmWHuYhXHicxXQ5slH0Tk5DG8rFWK/86Te1pLmiURlmg9mcfrx5IfR
-         WlCUXQLvZZOGafuyci1wjK4Dao72CUPJGV9lNJPiBunabtD/gR1PW6biEGeNyLnCYs0Y
-         qYx8zH9T2FXX90Mv+RykrodpIbj746rkDRk67TyMAj0bYZw3OiCdXeqk2BEqaUgq7mGk
-         T64QTF2ofhtllW8/I8AC2P6QPS3JzpfQjxM25NIj4Tp1nunuiB3xLaB+al7+J8uFs9nZ
-         m8jPdmph0dAGkgC5zM4fR+mwXlhBwQXt5jTjzhsersiGK96uqt4p/NuFY6DxrnxTOAEt
-         nx8A==
+        bh=Jv87m7e/BT+lYBvI0C7tGcm98+sc+l2mp9n5XZSK/Sc=;
+        b=cFfhe0BZop/ai/Mh1bTO0aoAiyQB04CGPn0X2YAfn8Yds6U8un/rThQIMWH8AWG29H
+         4sxQbWsDySSSuQmH7dXusWDGO4G78aX8UjgepIFgvyN+WPSmSLS8M3WmDPkrj4gTlhZp
+         ihF+T9UQK5yfJr2gKqYPDHDKnKSMkKjKsDmlkfu6/zPbWaGQKNp6KMjNNSkNFCGE0SBK
+         x51j3qf0sfnH9AGbYrZeeuve06i9QfOJFf67OlTnMIslSvBO2XS738WWazmUn5rb274L
+         ikO2v0AQS4A0T+rb+R6O2aY9cT6XcUG90fZmy5btRxNfmImpgFgoW4QZExGecG7yTZXX
+         ZSpA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1705810076; x=1706414876;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
+        d=1e100.net; s=20230601; t=1705810152; x=1706414952;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=Za5F1RY1A6lgmGl2PxagnObnp5gp3HUK6EBKLBB7jc0=;
-        b=H2gpLGR/S9SqXjnlcj4IICSInP/x8vQvv4nnMvLf4RhcL4JKEXO6N6ToFA+KlYIMqZ
-         bMd/Co+6WMZXdocF0pWNSlneKOux1hfAR8cm3GWjNnV9Zph1CxobB/QOeHBGknUKGAmG
-         mf2RdijeshD4PwCLPtHGjPgbBNFvkI94/klrt1REymNgJWqg0WXV7R0qX3Om0lAWcpTb
-         SPNGxzOipCFxvhdGU2PQyJt+vsKgdPQvdmMDKEX+9ecgTedB0dTaOUfsB40SepO79vyK
-         tp84oHLF5EdEQe0b6HWrLHCiaulHq9cBmiz1kl/9bCQUdYMPr6CwOWF3c+wBzSTDI7Z+
-         rv8A==
-X-Gm-Message-State: AOJu0Yw7t+tU1aP92wXSw4YjPRp3LJP8DbqDscCk23BW6mNM8s40OSkc
-	Ek5g3rjq2u890KteIlMvRirN1P8Q778a0RZqQCNRKzTG4AEe/fsrVCNvB158
-X-Google-Smtp-Source: AGHT+IGR5td/NzCo587MPO/5V6KvAqJLiHQ790B04H6AbVMYtFA83tfkvBwQfD8zl9rJPAHhFG+saQ==
-X-Received: by 2002:a5d:49cb:0:b0:332:eaa7:56b0 with SMTP id t11-20020a5d49cb000000b00332eaa756b0mr1132335wrs.14.1705810076384;
-        Sat, 20 Jan 2024 20:07:56 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id m4-20020a5d64a4000000b003392e05fb3esm961333wrp.24.2024.01.20.20.07.55
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 20 Jan 2024 20:07:55 -0800 (PST)
-Message-ID: <9991dd4bfa6747dccc12c8a5d9fe8d6ed95fdb52.1705810072.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1650.git.git.1705810071.gitgitgadget@gmail.com>
-References: <pull.1650.git.git.1705810071.gitgitgadget@gmail.com>
-From: "Philippe Blain via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Sun, 21 Jan 2024 04:07:51 +0000
-Subject: [PATCH 4/4] completion: complete missing 'git log' options
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        bh=Jv87m7e/BT+lYBvI0C7tGcm98+sc+l2mp9n5XZSK/Sc=;
+        b=UnYFGWRV2ijdsSuusbA6J2kqU6XluZgYjNGRwamWboNsKcEBUby7ecQ7IDf0QP25iY
+         6BHYP3OSEFsOr3NQZjgn/meQDYWzylJKW/GRCsk751kSE1F/BX9oJKxGFBwtQJEAsxxO
+         xTXK5ZxiduNi5nTVK+pbex44rQexupWMUNvpdlX1EwDTirMBPK1Fiq+SEymrs0yC8sb0
+         I9NSAoYPUXZpRFN6WI7rc9/eFw8DWIhFRjTMQP6StlOZo0HLDj/ADecbgZ3acZy0Rl9a
+         8LslgZFinN9j+fhcBgJni4qG35rQiC4HXS6jx2KuSao/fQnRUf23YxroZxy4sFqF+hwd
+         Ze2g==
+X-Gm-Message-State: AOJu0YxfY0KpCaQkKT3LX2Urp1kaO+lTGeKrUHu/hZX+C7TbLe23I4wU
+	jCN9ny68cY+amqjJZ4ayzNx6dgU/HcGN6z/NH3lRAOSfCd9M+6uVlGUfkNF5lAptHM5MrZ4dv1D
+	Gy6hK2hr4JZaCZA5InbQ0CcMLedk=
+X-Google-Smtp-Source: AGHT+IGdI3bsG7MRP77zd4tHev7sdpFTfREgvwN4bCHAxIBd4GCX1IfkqjdR5S9rWTsZHJzm9+RGavygb2nRUs2VMLU=
+X-Received: by 2002:a0d:ea93:0:b0:5ff:e1fe:d083 with SMTP id
+ t141-20020a0dea93000000b005ffe1fed083mr64321ywe.81.1705810152201; Sat, 20 Jan
+ 2024 20:09:12 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Philippe Blain <levraiphilippeblain@gmail.com>,
-    Philippe Blain <levraiphilippeblain@gmail.com>
+References: <cover.1702562879.git.zhiyou.jx@alibaba-inc.com>
+ <cover.1705411391.git.zhiyou.jx@alibaba-inc.com> <owly1qabhh19.fsf@fine.c.googlers.com>
+In-Reply-To: <owly1qabhh19.fsf@fine.c.googlers.com>
+From: Jiang Xin <worldhello.net@gmail.com>
+Date: Sun, 21 Jan 2024 12:09:00 +0800
+Message-ID: <CANYiYbF63Nc=ehHmp0c3K=Xa9qrzzV+K-5u5KR50pDy3AuDS3A@mail.gmail.com>
+Subject: Re: [PATCH v5 0/6] support remote archive via stateless transport
+To: Linus Arver <linusa@google.com>
+Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>, 
+	Jiang Xin <zhiyou.jx@alibaba-inc.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-From: Philippe Blain <levraiphilippeblain@gmail.com>
+On Sun, Jan 21, 2024 at 4:43=E2=80=AFAM Linus Arver <linusa@google.com> wro=
+te:
+>
+> Jiang Xin <worldhello.net@gmail.com> writes:
+>
+> This v5 looks good code-wise. I've made small suggestions to make the
+> commit messages better, but they are just nits and you are free to
+> ignore them.
 
-Some options specific to 'git log' are missing from the Bash completion
-script. Add them to _git_log.
+Thanks for helping me refine commit messages. I will update them based
+on your suggestions in next reroll.
 
-Signed-off-by: Philippe Blain <levraiphilippeblain@gmail.com>
----
- contrib/completion/git-completion.bash | 2 ++
- 1 file changed, 2 insertions(+)
+> If you choose to reroll one more time, one additional thing you could do
+> is to use the word "protocol_v2" in all commit messages because that's
+> how that term looks like in the code (unless the "protocol-v2" string is
+> already the standard term used elsewhere).
 
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index a7ae2cbe55b..2f1412d85ea 100644
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -2180,6 +2180,8 @@ _git_log ()
- 			--no-walk --no-walk= --do-walk
- 			--parents --children
- 			--expand-tabs --expand-tabs= --no-expand-tabs
-+			--clear-decorations --decorate-refs=
-+			--decorate-refs-exclude=
- 			$merge
- 			$__git_diff_common_options
- 			"
--- 
-gitgitgadget
+Will s/protocol_v2/protocol v2/
