@@ -1,84 +1,121 @@
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+Received: from out1-smtp.messagingengine.com (out1-smtp.messagingengine.com [66.111.4.25])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE1EE47F44
-	for <git@vger.kernel.org>; Mon, 22 Jan 2024 20:52:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B25842CA8
+	for <git@vger.kernel.org>; Mon, 22 Jan 2024 20:55:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=66.111.4.25
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705956771; cv=none; b=Mqoq9mJZuHTxTyMAd5IfxBgkRU7oqwpjSgTufKm2MtqU1KheAY/nMYuJ2xkjUAp0giXZp7S6BXd6Yhx+fYX0R5qrfJyL+HxRtNpI+akJxITCBhOCRgdEMBG4zpT/5viIHqRmF2rjZUlWwoFg6EbOC7w+AjKTeL6BHHQ6z4Gh6ao=
+	t=1705956937; cv=none; b=ALYj/dbcJwu31BnmjkwvuGTyzk4tpE1qnI8Qh9CEUBRVak4hX0hr9hQ41i2FRCAV/N7yYfzqO6PtRRjw/e5iVKMHEh7UtPGbtd4A8k5/6h/pJdOGuC0le/pxoIh1bahsGqT1VTaejFwhld90mxGZxkm7VDXRuTZHvo0ceWc+IpM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705956771; c=relaxed/simple;
-	bh=av7XYR26Gvg5oAj6Gy4YN7B1wwbLkhKri3lCbsVz2xQ=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=X1SOjgAbxpEaf98+fRlDbkvJJTBjfCjig67IuypP4L5GjGudlsmU0l6syTEzy/ZmtKSlxSvBOIXnTMh67HtEImmpUZESngGYxh/mJpE2pZkngM9I/P/paxjCm+0mNEZVRcG7P8OL3sgKKDXPgzoi4rq+O1zKYgxEYnd86dNnvOU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=nUmLkS3h; arc=none smtp.client-ip=64.147.108.70
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1705956937; c=relaxed/simple;
+	bh=KvDkGDHh9ubGE/mnX5WDe0OvgNgibcGei/nT4LiZPSM=;
+	h=MIME-Version:Message-Id:In-Reply-To:References:Date:From:To:Cc:
+	 Subject:Content-Type; b=oU/daFP38T7SrD4XvjuBldLAVEymNUE5ydp//+LjXe0Mo4A9Fcuf2fJ9qJ3klX7qEWVbYwdcB/1G8Ot0hQ/m8CrcqCk3kIXuZwppfGh+n/axSs1iwkzrCYS6uV/IiR2trRUkzNipXT/+sJrUSPsrOZVY6xExkewcDJm4s8rn7Cc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=khaugsbakk.name; spf=pass smtp.mailfrom=khaugsbakk.name; dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b=QajxF2Bu; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=lxe5XIF4; arc=none smtp.client-ip=66.111.4.25
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=khaugsbakk.name
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=khaugsbakk.name
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="nUmLkS3h"
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 529071D2F77;
-	Mon, 22 Jan 2024 15:52:48 -0500 (EST)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=av7XYR26Gvg5
-	oAj6Gy4YN7B1wwbLkhKri3lCbsVz2xQ=; b=nUmLkS3hM2okMiBnX+lOd3aSZsiT
-	IXy3uX/K0JOjB9LLcti5qbsUvaYMFKE/Ar8Z+H6BXNessKIvu+JHC27M3JDenIGQ
-	fOpOUdLJkSflA1/+PaTyA10byigGVGzRTAApTOo6mWWMcV/q+ct4OdA2rd3l3DfA
-	HbKgFXQe0r8lDRw=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 4A9E31D2F76;
-	Mon, 22 Jan 2024 15:52:48 -0500 (EST)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.200.93])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id B36521D2F75;
-	Mon, 22 Jan 2024 15:52:47 -0500 (EST)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: =?utf-8?B?UmHDumwgTsO6w7Fleg==?= de Arenas Coronado <raulnac@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: Fwd: Unexpected behavior of ls-files command when using
- --others --exclude-from, and a .gitignore file which resides in a
- subdirectory
-In-Reply-To: <CAGF1KhWiYX=3R01Odj2yCNgvx=f5+HRCjRJogWf5eBikuATCcg@mail.gmail.com>
-	(=?utf-8?B?IlJhw7psIE7DusOxZXo=?= de Arenas Coronado"'s message of "Mon, 22
- Jan 2024
-	21:45:46 +0100")
-References: <CAGF1KhWNaO_TUuCPo2L_HzNnR+FnB1Q4H6_xQ2owoH+SnynzEg@mail.gmail.com>
-	<CAGF1KhWiYX=3R01Odj2yCNgvx=f5+HRCjRJogWf5eBikuATCcg@mail.gmail.com>
-Date: Mon, 22 Jan 2024 12:52:46 -0800
-Message-ID: <xmqqfryprsyp.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b="QajxF2Bu";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="lxe5XIF4"
+Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
+	by mailout.nyi.internal (Postfix) with ESMTP id A6D1B5C0130;
+	Mon, 22 Jan 2024 15:55:34 -0500 (EST)
+Received: from imap49 ([10.202.2.99])
+  by compute1.internal (MEProxy); Mon, 22 Jan 2024 15:55:34 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=khaugsbakk.name;
+	 h=cc:cc:content-transfer-encoding:content-type:content-type
+	:date:date:from:from:in-reply-to:in-reply-to:message-id
+	:mime-version:references:reply-to:subject:subject:to:to; s=fm2;
+	 t=1705956934; x=1706043334; bh=KvDkGDHh9ubGE/mnX5WDe0OvgNgibcGe
+	i/nT4LiZPSM=; b=QajxF2Bu+DxpfCnhFrnQ8JoL/CBB0Q/24JqOuFiUi69iSSq+
+	dX/Z7UeJFcW45Ys/HWSpZWvQDFHN0yECd8KCHT9asiof4ehJqOBsiOD6QMdbuTus
+	5XF7zj/aLi7dvrVhROSOB5IzIf7KBWjj0otF8hUgSwolirPKEKaZ+CQt8OryU5Kr
+	knx0BUd4rDpE2hikMPwi33eAIMpBv6291JqpwpTQA41WK1UJg8qny3ckm3kwgAis
+	TyKZZznID2ZS8D/vbRn9Dc+E4XqrK/S3QuoeeoGnxpO0intCv7T78zb0t4QJqicX
+	XOToOAmkfR78jq/dDVwbqXJfTw8pL+u4tjONmA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1705956934; x=
+	1706043334; bh=KvDkGDHh9ubGE/mnX5WDe0OvgNgibcGei/nT4LiZPSM=; b=l
+	xe5XIF4lrEoriC2tBzHrhAGwkIhYhE/A43sTY6SZeL8Slkcmd7d1NFHTwne8ZohW
+	WdPYbijMLi46Xfudd9aLFxG2T2t9csOgl+obxCBCI1NW0r57eZGcv5cPPvVhz5+G
+	wDsEbDeWkPai7KLntB4fLlj9bGSwxyUW75JU3ogMmPXbh278ScVXyB9LnNTEtou3
+	JMj9+TUfoKuJdLgF8JHoDtWWoUlnwVfyDozCH1L+H1GpqeUThV2H9J67e9VTNEu8
+	xOTrTX3q80F5hWklb1ziYJad7hKtaIJb6kHyBgQfuA32uc5ipFU21GJrRf1Cs9Yk
+	+tHu5aoHNb1xRY9dDQpYQ==
+X-ME-Sender: <xms:RtauZTjE7g_aPVcoBrFf6zw2mePnGcep9vdPREaLnVAaDhQ-x3PHBG8>
+    <xme:RtauZQD4iQjggg4hBCsKwgwNLtPUHYX_Yc0hOr-H3v6GtNfZymbgkGqcLpfjQgp3v
+    MqBn0_UuLXVca9A5w>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrvdekiedgudegtdcutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
+    necuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
+    enucfjughrpefofgggkfgjfhffhffvvefutgfgsehtqhertderreejnecuhfhrohhmpedf
+    mfhrihhsthhofhhfvghrucfjrghughhssggrkhhkfdcuoegtohguvgeskhhhrghughhssg
+    grkhhkrdhnrghmvgeqnecuggftrfgrthhtvghrnhepffduveegtdevvddtudeggfekgeef
+    gfffhffhgefgtdefhfegfeeviedufeefffdvnecuffhomhgrihhnpehkvghrnhgvlhdroh
+    hrghdpvgguihhtohhrtghonhhfihhgrdhorhhgnecuvehluhhsthgvrhfuihiivgeptden
+    ucfrrghrrghmpehmrghilhhfrhhomheptghouggvsehkhhgruhhgshgsrghkkhdrnhgrmh
+    gv
+X-ME-Proxy: <xmx:RtauZTHw7i59QObrJyUUsbEbHFyzYSwITguxtNVToB0nR2arBytGVg>
+    <xmx:RtauZQS3l9dAAy0a6uF_YtGrugKnsuZYpLCw7Tmcs91UYiA13oCDnQ>
+    <xmx:RtauZQxJ-oViRawYkD9G0tB-jagkp5ctzT576MbHykvkqZQ1AT7T9w>
+    <xmx:RtauZdoeJRB-p4wpZbdPySDJmLv_zasc_ZrNRyXZ1TjEfGpe92rZSw>
+Feedback-ID: i2671468f:Fastmail
+Received: by mailuser.nyi.internal (Postfix, from userid 501)
+	id 6319115A0092; Mon, 22 Jan 2024 15:55:34 -0500 (EST)
+X-Mailer: MessagingEngine.com Webmail Interface
+User-Agent: Cyrus-JMAP/3.11.0-alpha0-119-ga8b98d1bd8-fm-20240108.001-ga8b98d1b
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID:
- 32F185DA-B968-11EE-956C-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
+Message-Id: <10838549-c364-429b-a086-68a41b7369de@app.fastmail.com>
+In-Reply-To: 
+ <CAHPHrSddqTEjtfhgVJ=vmRhbtuwXcGEiE1KFZqR1QhKw-HDtSg@mail.gmail.com>
+References: <20240119060721.3734775-2-brianmlyles@gmail.com>
+ <20240119060721.3734775-5-brianmlyles@gmail.com>
+ <06eb93d7-7113-4583-9860-28a6a6d528a2@app.fastmail.com>
+ <CAHPHrSddqTEjtfhgVJ=vmRhbtuwXcGEiE1KFZqR1QhKw-HDtSg@mail.gmail.com>
+Date: Mon, 22 Jan 2024 21:55:13 +0100
+From: "Kristoffer Haugsbakk" <code@khaugsbakk.name>
+To: brianmlyles <brianmlyles@gmail.com>
+Cc: "Taylor Blau" <me@ttaylorr.com>, "Elijah Newren" <newren@gmail.com>,
+ git@vger.kernel.org
+Subject: Re: [PATCH 4/4] cherry-pick: Add `--empty` for more robust redundant commit
+ handling
+Content-Type: text/plain;charset=utf-8
 Content-Transfer-Encoding: quoted-printable
 
-Ra=C3=BAl N=C3=BA=C3=B1ez de Arenas Coronado <raulnac@gmail.com> writes:
+On Sun, Jan 21, 2024, at 19:28, Brian Lyles wrote:
+> Thank you -- This will be corrected with v2.
+>
+> Is the sample pre-commit hook the ideal way to prevent this in the
+> future? Or is there some config I could set globally to enforce this
+> across repositories? I was having a little trouble finding a good way =
+to
+> accomplish this globally.
+>
+> Thanks,
+> Brian Lyles
 
-> In short: using 'git ls-files --others
-> --exclude-from=3Dsubdir/.gitignore' results in an empty listing if
-> subdir/.gitignore contains '*". IMHO that pattern should be applied to
-> the subdir contents ...
+Oh, and this thread reminded me https://lore.kernel.org/git/xmqqle8hrtcs=
+.fsf@gitster.g/T/#t
 
-I do not think so.
+that editorconfig[1] has this option:
 
-Imagine what would happen then if you did
+```
+trim_trailing_whitespace =3D true
+```
 
-    $ cp subdir/.gitignore /var/tmp/1
-    $ git ls-files --others --exclude-from=3D/var/tmp/1
+So I guess that should be enough for all editors that respect this
+config (although I haven=E2=80=99t tested it).
 
-in such a repository?  The "--exclude-from" option is used to name
-the contents (set of patterns) that should be used and the path of
-the file that happens to contain the contents does not matter.  So
-you should get the same output as the ls-files command that was told
-to use "--exclude-from=3Dsubdir/.gitignore".
+=F0=9F=94=97 1: https://editorconfig.org/
+
+--=20
+Kristoffer Haugsbakk
