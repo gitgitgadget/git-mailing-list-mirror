@@ -1,103 +1,105 @@
-Received: from mail-yb1-f172.google.com (mail-yb1-f172.google.com [209.85.219.172])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CF0C481D1
-	for <git@vger.kernel.org>; Mon, 22 Jan 2024 21:07:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C4A3481D0
+	for <git@vger.kernel.org>; Mon, 22 Jan 2024 21:34:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705957662; cv=none; b=QQyPEtwDl6BCUXnLee+xCGstiNlxgkYgunYHLk0EXINKCu8l3uyJMhvARp7V+x4QKJ4l1FHLqvkrJFLKtNB5wqTQu78eJnFl8idA6TRpKe5YNruDFcCXcFTrtitPaIJpc6O9t/8uSTN6yGzw7Kv9bQGRrrApzIiwX3osYlqB9M0=
+	t=1705959260; cv=none; b=OPAZqhkns5db6Xm/icOrxQoCOMu+ToZ6M4JNTsekwlK1lSYdb32u6P7GAkl19M802QqzcRR6zRsGL7fxbtCbplwI4o/3MaPa3S2i1u2tn41SJGJKNZGjf4xbsi+X4Qn7wodRU1y9wnJ4+gP5oHdxn/2ny/Usw80fh4K73z6EZgE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705957662; c=relaxed/simple;
-	bh=RBy2vt/Sh25HZyjyc3VS6ZUkmUB0PbT5T90B92QxMfI=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=NB7kMKwtXKwd9zyA4mK6W8Orb/hkFAXcFUnVMbXWi/SEN4L8vNGzhyVSmT6azyZadBQIFrWyph/F2FPtflA2biC4p7keaGAtPzMcrtCUCoTKu52nIeWyzsqZ0bLFbYatYQmObAFPEZnnMWKJf+BAhnBJPq7U0coT0B5/alVCe2Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=h4V/beHB; arc=none smtp.client-ip=209.85.219.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="h4V/beHB"
-Received: by mail-yb1-f172.google.com with SMTP id 3f1490d57ef6-dc22597dbfeso3939216276.3
-        for <git@vger.kernel.org>; Mon, 22 Jan 2024 13:07:41 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1705957660; x=1706562460; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=D8MjZXR+43HvihO8tYYGfrgFhD8eq9T+k9T7HeeUhP4=;
-        b=h4V/beHBPUeuN6hjCiJ49RVEqOe5FYjElhAaIeejySoQLgXTfMPTkCNtP/ihivDI9d
-         D7IO8YXJ/tzU3OzyP3t9dAPY+fiVr7FizKGnqgWcLdyvQqS+DtnJfRbodc9bGqanMect
-         +ee9NT2JdUXJiQDG+dpbzCKbYqRCvCDrSj1xapdK4IL8SiPp3Nd9xp8eI82XMNWUeAtK
-         u+hHCzjeJlvMX+E9EHv4kj4l/lnFo6JUG2H3NZD5HBrlA+mmWWgmw6jNr51/f9W4R44G
-         MiLl0g0h9JLP8+qAjEkAcuoV3EzzX0IyLHVZrE3Yu+4IiKQEFaIBqKBSvVNqLHNbZ8j6
-         HkZA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1705957660; x=1706562460;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=D8MjZXR+43HvihO8tYYGfrgFhD8eq9T+k9T7HeeUhP4=;
-        b=a7I7+KVsc5R09/9kHCS92jgnK0dUJ6EOrZID6FzGDrnIbSJTiBk3OK/LwFjhPmSUxE
-         yoiyW/yH1K7VgN5ejELEGAy1NAOEA4d6rmRbQwm5TsTtDj0r6MmNJkgfHF5ruwHKcg2l
-         V8VJNXI35QsQyX+iB3FjTdR+ZwITv5ZhjA+9jB10lvgo2uvcFM3zjNEdyhzJiJ9/otbt
-         bSO4q2+bGjznnV2wqeVq4uJAc+Rm+BG6PI1RLtcEFY5vt87Phvq6PypwAHN2NHLaHsve
-         LmuKbJBtRW2D6oWy0O0LS8JqUZHMG0wxSBwuCgaIYsAA0sfEMM5mu8W1XUtLknPC9+Ab
-         q6ew==
-X-Gm-Message-State: AOJu0YyDDDsyTMJIqsh97RpD5tiU9vLEkwnqwTy7PRztqfXAGOFJKXPX
-	Vs3X4uS1jUJCIQ5JWbsfnAnve4Jz8UDXYNgxSGipUkNC3kA6JGvoTpIFDiR+04YU1JUo21wxV+S
-	8o2igX3mkkO90eGwH99nCMLjgjfkgiZ6/
-X-Google-Smtp-Source: AGHT+IEr7uMyMS8tYH8awgT06EEOsLH49VGDGurvtJBQC+wj67Ur6haxc9M13N+g70Wi66RanG4UnepOB1O7c0cBXjk=
-X-Received: by 2002:a5b:64d:0:b0:dc2:1b80:3166 with SMTP id
- o13-20020a5b064d000000b00dc21b803166mr3072967ybq.129.1705957660407; Mon, 22
- Jan 2024 13:07:40 -0800 (PST)
+	s=arc-20240116; t=1705959260; c=relaxed/simple;
+	bh=HtmWJwOVrZAVKrSRF9S4pSwXLAMkdHNznt1s3KyztaA=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=rFcpRPL3ljsb9tRKrk4ySSWUplQf5NY1CTl6r5pObVUoaHH72S80JS6UOMUk7mBHY17RWuyy0oFKWki5LvtmQr6ZSlKCktbB2u9B9h9HtcH5l1WDupQ7SG8J5kiPSOxcejmvkO1bXy/IUeDLjVEg64/94T9Nu0xQNpbztU0Ngfc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+Received: (qmail 11332 invoked by uid 109); 22 Jan 2024 21:34:11 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 22 Jan 2024 21:34:11 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 9433 invoked by uid 111); 22 Jan 2024 21:34:12 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 22 Jan 2024 16:34:12 -0500
+Authentication-Results: peff.net; auth=none
+Date: Mon, 22 Jan 2024 16:34:10 -0500
+From: Jeff King <peff@peff.net>
+To: =?utf-8?B?UmHDumwgTsO6w7Fleg==?= de Arenas Coronado <raulnac@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: Fwd: Unexpected behavior of ls-files command when using --others
+ --exclude-from, and a .gitignore file which resides in a subdirectory
+Message-ID: <20240122213410.GA811766@coredump.intra.peff.net>
+References: <CAGF1KhWNaO_TUuCPo2L_HzNnR+FnB1Q4H6_xQ2owoH+SnynzEg@mail.gmail.com>
+ <CAGF1KhWiYX=3R01Odj2yCNgvx=f5+HRCjRJogWf5eBikuATCcg@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CAGF1KhWNaO_TUuCPo2L_HzNnR+FnB1Q4H6_xQ2owoH+SnynzEg@mail.gmail.com>
- <CAGF1KhWiYX=3R01Odj2yCNgvx=f5+HRCjRJogWf5eBikuATCcg@mail.gmail.com> <xmqqfryprsyp.fsf@gitster.g>
-In-Reply-To: <xmqqfryprsyp.fsf@gitster.g>
-From: =?UTF-8?B?UmHDumwgTsO6w7FleiBkZSBBcmVuYXMgQ29yb25hZG8=?= <raulnac@gmail.com>
-Date: Mon, 22 Jan 2024 22:07:03 +0100
-Message-ID: <CAGF1KhU=o2rb-tCjZAG278kgoW50NYymsJakUwiMxWTQ33gQYA@mail.gmail.com>
-Subject: Re: Fwd: Unexpected behavior of ls-files command when using --others
- --exclude-from, and a .gitignore file which resides in a subdirectory
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAGF1KhWiYX=3R01Odj2yCNgvx=f5+HRCjRJogWf5eBikuATCcg@mail.gmail.com>
 
-Hi Junio, and thanks a lot for your reply :)
+On Mon, Jan 22, 2024 at 09:45:46PM +0100, Raúl Núñez de Arenas Coronado wrote:
 
-El lun, 22 ene 2024 a las 21:52, Junio C Hamano (<gitster@pobox.com>) escri=
-bi=C3=B3:
-> Ra=C3=BAl N=C3=BA=C3=B1ez de Arenas Coronado <raulnac@gmail.com> writes:
+> But when using 'git ls-files --others --exclude-from=<file>', when
+> <file> is one of those .gitignore files present in a subdir, makes the
+> command use the patterns in that .gitgnore (in this case, the "*")
+> against ALL files that would otherwise be listed by using '--others'.
 >
-> > In short: using 'git ls-files --others
-> > --exclude-from=3Dsubdir/.gitignore' results in an empty listing if
-> > subdir/.gitignore contains '*". IMHO that pattern should be applied to
-> > the subdir contents ...
->
-> I do not think so.
->
-> Imagine what would happen then if you did
->
->     $ cp subdir/.gitignore /var/tmp/1
->     $ git ls-files --others --exclude-from=3D/var/tmp/1
+> In short: using 'git ls-files --others
+> --exclude-from=subdir/.gitignore' results in an empty listing if
+> subdir/.gitignore contains '*". IMHO that pattern should be applied to
+> the subdir contents and not to the contents of the current directory.
+> That would be consistent with how git uses .gitignore files in
+> subfolders.
 
-I understand this use case, yes. I was thinking about what git itself
-does when ignoring files, especially when dealing with .gitgnore files
-in subdirectories, but clearly this needs a different policy, yes.
+I think Junio covered this with his example, and everything is behaving
+as intended (my mental model is that "--exclude-from" is something like
+.git/info/exclude or the core.excludesFile option).
 
-What I needed from this command is a way of backing up some ignored
-files. These files should not go into the repository, but I'm using
-them temporarily for development so it is a good idea to back them up.
-I'll just backup the entire repository instead, is not a big deal :))
+But...
 
-Again, thanks for your reply and your explanation! It's a huge honor
-to be replied to by no less than the Git team leather!
+> The obvious solution is to use --exclude-per-directory but it is
+> deprecated in favor of --exclude-standard and --exclude-standard shows
+> the same behaviour of --exclude-from=subdir/.gitignore!!!
 
---=20
-Ra=C3=BAl N=C3=BA=C3=B1ez de Arenas Coronado
-.
+...I'm not sure what's going on here. I would think that both
+--exclude-standard and --exclude-per-directory would do what you want.
+
+For example, I get:
+
+  [setup]
+  $ git init
+  $ mkdir subdir
+  $ echo '*' >subdir/.gitignore
+  $ git add -f subdir/.gitignore && git commit -m "add gitignore"
+  $ touch subdir/file file
+
+  [no exclusions]
+  $ git ls-files -o
+  file
+  subdir/file
+
+  [use .gitignore]
+  $ git ls-files --exclude-per-directory=.gitignore -o
+  file
+
+  [using standard excludes]
+  $ git ls-files --exclude-standard -o
+  file
+
+Do you get different results from that toy repo? If not, then what is
+different about your main repo? Do you perhaps have a stray "*" match
+somewhere in .git/info/exclude, etc? Or are you still providing
+--exclude-from in addition to --exclude-standard?
+
+-Peff
+
+PS I hadn't realized that --exclude-per-directory had been marked as
+   deprecated. I do agree with e750951e74 (ls-files: guide folks to
+   --exclude-standard over other --exclude* options, 2023-01-13) in its
+   goal of guiding people to the easiest option, but I don't know that
+   there has been any discussion about removing the other ones.
