@@ -1,141 +1,102 @@
-Received: from wout1-smtp.messagingengine.com (wout1-smtp.messagingengine.com [64.147.123.24])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ot1-f52.google.com (mail-ot1-f52.google.com [209.85.210.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC32E3B2BF
-	for <git@vger.kernel.org>; Mon, 22 Jan 2024 12:28:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.24
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 942A93D0C9
+	for <git@vger.kernel.org>; Mon, 22 Jan 2024 14:12:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705926494; cv=none; b=KQf5k9XiODqEGInwFMuaR5FBiqsWW3gVxw0Fkx6+9R4ShVgSMjvrHlULWd6sQay4/oc1uEKii6hKtemIPmpOjxZPjUf1xHPZrSGN5pvtaTJyq7IvxUJQ1XArK3bGgEMEWjRP2FXj+bawpwShT4R9EtK85RZFX3xrwK2nfyc/Og4=
+	t=1705932752; cv=none; b=dj2QR3YFOAOfKsRPhFabF/khenE2lhb4sv46Pfwh/o+UUUMxbbBRhpwBvx23FotyytFXV3gZ8BGfYUYtiMuUPyCHA72DBEo22JlNQQkCTApMk8mnJwmYQLgAmVQ2wkxn9DWgfwQEBE7LiHnvXIbyqzMSFxpUwHrlkd5VagUcrt4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705926494; c=relaxed/simple;
-	bh=kJw5jE5eKIiqiK+VngDEDurwZ8lJLeUJ6+ZYqAqfeF0=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=RHcM+VfcsRYV1uejzSqta+K32AcRiMqq5CvEjQOWA6ruheYt0mjU3Krah3fiZlCgjGkswt9Oad68+zoAH7CtKp3yq+3krh7IW+w5mcfQrTKs4HcIn9zP5ts8zkrKx6PEOa+bGSHTt7d1FuUy7TegSHsi8bCgoBezNcoV5Jp+Vdw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=gYWSydYa; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=pYZCIv3T; arc=none smtp.client-ip=64.147.123.24
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1705932752; c=relaxed/simple;
+	bh=BXerluUPsIrgM4SCM7LYkOhrIMILEiNYktHWWX+rw9A=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=Th1VWs4F/UgpFfPbzLUCV2R82yNaf0IaXfofOIul06jELmbwlJ9SiCYX6qeD9HvNlzhn+E3jTq0glcIoAXDpAxxGUPV3uOReLVOVB5fL0wBlYhojjEN4hLWjvGtVxC5GpTQo1oe3VglECyh5hWVPy9L2KzRSU8SU3pEAQkdwP0I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=YqoaZ+Ht; arc=none smtp.client-ip=209.85.210.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="gYWSydYa";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="pYZCIv3T"
-Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
-	by mailout.west.internal (Postfix) with ESMTP id AE35232002D8;
-	Mon, 22 Jan 2024 07:28:10 -0500 (EST)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute3.internal (MEProxy); Mon, 22 Jan 2024 07:28:10 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1705926490; x=1706012890; bh=kJw5jE5eKI
-	iqiK+VngDEDurwZ8lJLeUJ6+ZYqAqfeF0=; b=gYWSydYaXXeq6FLkB1s1iUBgYB
-	4h8lsEHDpXc0NUG34NtMw5Had68nmlFj81JhnOuzvztbdMLp+i/1XU9jcHzP1UxY
-	KCIhLx3xo9rxLt+G68K6pMze/zBjicu+V4tjrBThKpDZy5/vY7Le1Vc649zwzZvc
-	WGWqSG0PtmovFB79sQ7eYcaOpQYSzmPGXXVCP/1sK5lCAcqaqIzJnQa/UTVcLMNY
-	YJrGW13BMmSyBLTAvUWoVcw57l+0+XEHCP20b58owWsIAHzTcclWVlIeFHDAaLhr
-	pNesR3yprcNiuSvfXuWTUO9+8nk7AGBHWbyp6ac+52o2v3qzYtD8Aj81oaXw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1705926490; x=1706012890; bh=kJw5jE5eKIiqiK+VngDEDurwZ8lJ
-	LeUJ6+ZYqAqfeF0=; b=pYZCIv3TnZDPg3iugbISLK9Nv+r4YxtUf8E+cwYQxE16
-	RKB7LRWt2+pIT6PzlPhF4FKGZltJp0yhvGy6b3x3rF/pfaQar3bvkUWHD9vy46hx
-	VQ49/Ic+rvI7L5pKFN/jfReqDKs1rLSN2ldZoThC4ZUzfGnWpZW/4rm3uiBpUgox
-	UnJz/mLx2ubH1ZSImolF+U9VKAsH9WPnponrQzbhF/ikTVGja7o83zgj92loTlUJ
-	MecSYEhv4LFax3PuVhmOuNtR04gNAFyOLlfgBcrQTCjLFlqfdtUiZmksLKdXCu7o
-	wlXAFTO4Nw4NK4MAMXf7jVvXkyhHU2FYHgi4LSJneA==
-X-ME-Sender: <xms:Wl-uZUamFZPVMnXvyx9npP8NZ-cDrEfG2mUTKMJN8X9rSgVD4ReWcw>
-    <xme:Wl-uZfbLGFgIIIBNCyMCrmBnAAA1Cgd4yfEjMEXoeJ9osFtzOrlNml3iHNUJrzc47
-    mXmkH1dIo8xXwWauw>
-X-ME-Received: <xmr:Wl-uZe8z9hvZLQPlPn3vWZmKAhX35m96I6I3Idwk9nYAZEIxio9U2UDy0maZt9ZFoy9BC9n-Qc3F_FyaRgKd4EdVJnojTkAEJ3725lJrynxMVCU>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrvdekiedgfeekucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    cujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtvdenucfhrhhomheprfgrthhr
-    ihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvg
-    hrnhepueektdevtdffveeljeetgfehheeigeekleduvdeffeeghefgledttdehjeelffet
-    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
-    hpkhhsrdhimh
-X-ME-Proxy: <xmx:Wl-uZepCtIHY76SH1UY4wAeEflABeUOIVJBBOPMAXN62vh_Eet26OA>
-    <xmx:Wl-uZfp92gVTLzfcT7LVGNdPgKFOAVG1mJo691yJZdYUkWxxBLOq7Q>
-    <xmx:Wl-uZcTblDp_zhhWk3MDwOptPmhRjDThPZnq69IiJ-soyKYIZ5GJXw>
-    <xmx:Wl-uZeQ_1p_tBDo93Wu9CJm0U4vtu7anYBKFQxhmYJf4N65kjGQkuA>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 22 Jan 2024 07:28:09 -0500 (EST)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id f00e2a8d (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 22 Jan 2024 12:25:04 +0000 (UTC)
-Date: Mon, 22 Jan 2024 13:28:05 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: Karthik Nayak <karthik.188@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 1/7] sequencer: clean up pseudo refs with REF_NO_DEREF
-Message-ID: <Za5fVWZ8oUEpA04F@tanuki>
-References: <cover.1705659748.git.ps@pks.im>
- <48b95fe954c1dbdd080ce7a0cc871f4850bddeae.1705659748.git.ps@pks.im>
- <CAOLa=ZQakWpRgFZdLnALq9f+acAR3hBwgO_kxJ6gb_yv+vrX=g@mail.gmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YqoaZ+Ht"
+Received: by mail-ot1-f52.google.com with SMTP id 46e09a7af769-6e0df9aa43dso2521254a34.0
+        for <git@vger.kernel.org>; Mon, 22 Jan 2024 06:12:31 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1705932750; x=1706537550; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=BXerluUPsIrgM4SCM7LYkOhrIMILEiNYktHWWX+rw9A=;
+        b=YqoaZ+HtGHRA8lgVD91okRT/dFheKzdQhlgl3K0WXp/4rOB7gJO8w0P/1ur+0CPn5q
+         ZAgFS6ooENVrtgvREiMtI462yG8bM+vdE55PwfWnVKYp0o8zLXKY5eYCKJDWOFj1Nfu/
+         I1pG5MMF0StFujf6NNWWpe5f/ZUzWt7QrSkOfQeuqmfPI09UACUv+A8J0QQ5OMJbK6Ap
+         N6PQYtWa/1kohU+k0Z/UZWRekDGduI9GK6eEUGaNNZ6CgPwdCz+4nqYg+CuHzgzLq7Gz
+         JuVKHvC0aVxmobNY3OVw8hHXrbSEhjQAMby1gTO/rx5LOpkmpZIKIfh1vuVE2toyY78y
+         qUdw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1705932750; x=1706537550;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=BXerluUPsIrgM4SCM7LYkOhrIMILEiNYktHWWX+rw9A=;
+        b=ItdW/V42GTpoFjaAd6LDWPItLIXapd8Ogrvb4QS3FMULfRdz3U+7ZZ5CiIWw3RIyBA
+         JIjdn8BNMqK2izQjM2STsIHcp38y12ng4e5Xd5viUyvy+BsmmQ7y27BCvLtOsp28Abl3
+         yWeuOXACYvPz0G00cgHF8k3nzPlV52J27ZhhJKsRWcRWF2DI6AxwSf4YGpDh3grEKnl/
+         +Jg8BFDn6xEfEQ7dF/qYqymQ6CxyDMIe33NRMjWUJWJe/u56WSrK/6Cz78LH/b1a4lQO
+         U4QHQVvrxTdsLz0e2oG5WRyvXWl0TpEB0mcS38qACv7l0z8OFcZCCTz++t+XBUlsP4k5
+         SMAw==
+X-Gm-Message-State: AOJu0Yx5oKzBampQlZdMucBn87QBtd4Iy/9mk7VShKqycG3pPGmHjC+C
+	onbOrfDLljgciXvH9wnC1kS3AKlb9SaOmWxrG9Z8Y7pAzw2iZMs+3zNFtOzvw1F/Men1hl4tj1z
+	GdUPDwDkKCK0jfksLE6QSbjrq+Po=
+X-Google-Smtp-Source: AGHT+IHPsMemzA8benXSR5CU8RBr90k8hTdePVSPImxijf3w5gGfkuxyaLyS7pmuNCETImQPKqHTx1qurY0cNKibbwY=
+X-Received: by 2002:a05:6870:179b:b0:206:daf8:4ac7 with SMTP id
+ r27-20020a056870179b00b00206daf84ac7mr5177375oae.6.1705932750455; Mon, 22 Jan
+ 2024 06:12:30 -0800 (PST)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Mon, 22 Jan 2024 06:12:29 -0800
+From: Karthik Nayak <karthik.188@gmail.com>
+In-Reply-To: <d93c9c410b995b0c72958b1e9edc27c785857c55.1705695540.git.gitgitgadget@gmail.com>
+References: <pull.1647.git.git.1705521155.gitgitgadget@gmail.com>
+ <pull.1647.v2.git.git.1705695540.gitgitgadget@gmail.com> <d93c9c410b995b0c72958b1e9edc27c785857c55.1705695540.git.gitgitgadget@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="znZVhXPzhYpgqROf"
-Content-Disposition: inline
-In-Reply-To: <CAOLa=ZQakWpRgFZdLnALq9f+acAR3hBwgO_kxJ6gb_yv+vrX=g@mail.gmail.com>
+Date: Mon, 22 Jan 2024 06:12:29 -0800
+Message-ID: <CAOLa=ZRS4TLVVYhVxkjmtFyQQNWb=qXGMW_dQC2HUBq+eErFUw@mail.gmail.com>
+Subject: Re: [PATCH v2 07/12] t1410: move reffiles specific tests to t0600
+To: John Cai via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
+Cc: Patrick Steinhardt <ps@pks.im>, John Cai <johncai86@gmail.com>
+Content-Type: multipart/mixed; boundary="0000000000009a1b91060f896b87"
 
+--0000000000009a1b91060f896b87
+Content-Type: text/plain; charset="UTF-8"
 
---znZVhXPzhYpgqROf
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+"John Cai via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-On Mon, Jan 22, 2024 at 03:49:37AM -0800, Karthik Nayak wrote:
-> Patrick Steinhardt <ps@pks.im> writes:
->=20
-> > When cleaning up the state-tracking pseudorefs CHERRY_PICK_HEAD or
-> > REVERT_HEAD we do not set REF_NO_DEREF. In the unlikely case where those
-> > refs are a symref we would thus end up deleting the symref targets, and
-> > not the symrefs themselves.
-> >
-> > Harden the code to use REF_NO_DEREF to fix this.
-> >
->=20
-> Just a question for my understanding. Is that that currently
-> CHERRY_PICK_HEAD or REVERT_HEAD are never symrefs, so we don't really
-> worry about this, but adding this change makes it safer?
+> From: John Cai <johncai86@gmail.com>
+>
+> Move these tests to t0600 with other reffiles specific tests since they
+> do things like take a lock on an individual ref, and write directly into
+> the reflog refs
+>
 
-They shouldn't ever be, at least Git would never end up writing symrefs
-there. So for those refs to be symrefs the user would need to manually
-create them as such, and in that case it would certainly be unexpected
-if we deleted the symref targets when cleaning up state after a revert
-or cherry-pick.
+Nit: missing period.
 
-So yes, it's about hardening the code for edge cases that shouldn't
-really happen in the first place.
-
-Patrick
-
---znZVhXPzhYpgqROf
+--0000000000009a1b91060f896b87
 Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: 9b778b74c6d8efa7_0.1
 
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmWuX1QACgkQVbJhu7ck
-PpSgpQ//f9gLr3TsrQukl026XhRtZkbNsugR/o95QfDrduUG1e0bBKUJdGp0BZ4G
-t9Tg4sHBt8+xPsL1V7QSP2FlpDou0+7dSN+RMXFEY8iwgDsNTiBnEmLOoWPrm1FR
-8EK6/B+WhNYlwTW0U+EvkJXBH4r6ci08M1FXbwqF7bD5pUN4ma0wHva2SiyTWBF8
-p4oMsRoQHjt29JO9ZGHwlbjSMK0Ma6MFckTVgLVdv/FQK7RuKgsCpea+OKVif3aM
-Mk7wwZuakjDBOSay72F2ObHOKu+LZqt55GOzmrUTsXxGK8ymot//ffCvKiPNflLq
-YRNAO7CaPPsNyLns7fF34F5Ztw6ygOPByxXvQR+1fBLBMDI4XR/v2CsNqaX+x2aI
-RXe20lkI9MAc7popmnPBiabURoVKbKaaHQ+66juKM1kyye+hwpnTPuxD/bB8Caiv
-DVErwQvxWFZPMt0JfPQPzOoioprxCxbv7Z19Hbgf6kb9XMl3iUhPwS8l3CcSJ0uF
-/pmb/6RzBcnRlf/T6caghwf5h5lJce+SGTRinWA05RbsRBezFTekCbV0pz9R1zvA
-OHKAJub2IIH7PA+UBCPgYrFrnGwmOGX/7G/qn/zPFyf/HMgl7gGLvr6TA0p+9AXx
-L0HBW78cbAUlMwTOdZNCGeDfWcmFup8xA0aDIBcWDhfBMiwAHFw=
-=oOqM
------END PGP SIGNATURE-----
-
---znZVhXPzhYpgqROf--
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1XdWQ4d1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mNXNlQy9vQzQxMmtFMTlPVGNkdmd6b3huWFhlMGtRcQpPK215NmNQc291
+M2IvQVdMYzNqVHVWSEN0OWJxbi8rcjZ3Y2ZXaHpPVnVwYW5RTXlxQVc4R291VGRCNlZDRG1hCk9H
+T2lyYy9PeURJcVR6YTlaRit2ejZ6MEpFS0VBcklPZXA1RWc1LzdSbGNzRjNlV2t4eWdaNzg2NXg5
+UEhVaFEKbE12U0w4S0JiTWNEaW1KMXVHOXlYMFFUbENvWmRwSC9RTFlHRnAvSG0yQjhoQ0ppU0tz
+MnoxdHZNTndkMWpsNAoxblBVRDJ2VEMyZ0NsNUtrdWdKOHNWRktFR2tTUVFHbkxrTDBGY2M2TEhB
+enRkRjBJYjMyUTRRK01RNllUeUp6ClhVdlNFL3hINE1MSmdveTlEWk92QXR3ZFl3aDRZcnRqUXJp
+SzJZVktaMzUvaXBqTE1MMko2aUpNVTN4QS9laXkKODQxQ0hESk1aT1RjTnhGSlpONXRPRTUwd29s
+b2VidEszdENac0NQOWEyWEdXVUxTNzhKY29NQk95TWxCYmNqMwpTWmFUc3NVRC9FZGJKYXpoV0lB
+YW53OWRtY1psRmE1cGJ1T0hsT1d1aXVGbjYvZ3FHRE1sdTZGU2o4MHJwdEFJClJwVXdmU2VmZ1cy
+L3N4a25tSjUzdlZoSUJhWTBpT3E0eklVYjA0OD0KPXhnWWYKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--0000000000009a1b91060f896b87--
