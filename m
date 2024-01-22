@@ -1,73 +1,96 @@
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oa1-f45.google.com (mail-oa1-f45.google.com [209.85.160.45])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3272C3D98A
-	for <git@vger.kernel.org>; Mon, 22 Jan 2024 15:44:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84C3748CC5
+	for <git@vger.kernel.org>; Mon, 22 Jan 2024 15:49:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705938280; cv=none; b=k/pZaWT14+ojQ1P3Y3mo/cvURHaYt59Vj8aY8UI7r81IOHBXtDsrgw70F+e/4KNc64OTP313jGBz7IV1hIST+aY7qEHcdUMFChNYQncFTuwPHwYvFZ4MR8qvQ25WJVEC00zdp4e7W2LlBpxeqrgbvqdmwRmO/pQPwWaLBOnPM2g=
+	t=1705938559; cv=none; b=ij1NKvcaNYp9ZV/nTkjlxWE1uHY0cwo3sHMwBnKb2tPpzZaz9dIumy7AwCVAdxYaA48k/Y3H3OQOHQ9xqLmqw/K/AwhA2VbFFTiiQTrAM967juc9IQZsuYMdrY/w0KyfD1sLcK0MF2bBOI2nF6Is7J82SMcr5wAwKzM9aNR51/k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705938280; c=relaxed/simple;
-	bh=GdUacYrmxdig6sUFoAT+ogucwbqx4Ug6goTTvCG0+O0=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=TQXZ4zEDWetluL7bRwrJ9uU2dURySIJb1khGmGE3tDLWVkiuAYd5/Vetc1qWttdtS9tprnuhRWwXUyEjZd7CtvkIiyffGOzPa3JkBZEbgG9SNX0McY7HJYZKKIKdiOeUfr5XqehIwUNQPa0yLC+PaVABAPuaSw7SabgAYTGgVTA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=V+6cGjYf; arc=none smtp.client-ip=173.228.157.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1705938559; c=relaxed/simple;
+	bh=yKL0lEnW3nHaXcPuXsVC6Z2LufoFmYAJ0Xi1HVra5wI=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=hxujZkqpXVEr1PwGRxFq3VVv/fd115VhaqLGRPfsD7GtZVC5Dfa0eYHzRAG5dp4NxxjODaXiM2LYfWvovLVar1HNT2ow6k0H5ydFzmcHvnigfV/FJCd4Sc0b0HbPuaQkdpbZQc190uvtCLmW1zzXmDKW8Nd5AQsCa/7XjkFy28U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Wro70sCy; arc=none smtp.client-ip=209.85.160.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="V+6cGjYf"
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id 7AFB628E24;
-	Mon, 22 Jan 2024 10:44:38 -0500 (EST)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=GdUacYrmxdig6sUFoAT+ogucwbqx4Ug6goTTvC
-	G0+O0=; b=V+6cGjYfl1t0Ojsb5+ioQ98EmEBOepI/9hv0hXrvfj9wNYjYFcdLEW
-	TIoMU4P/n9+BuT7Tu3rQ8V2huUXML+di5jd4MAnZwN0T0f1UM5TUzbO0mFBrbqUN
-	VmzWjgpblnu+EkRS3OJV9zE9keikRsm0Hn8niUyCYLUKa1/UTBJxQ=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id 7346528E23;
-	Mon, 22 Jan 2024 10:44:38 -0500 (EST)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.200.93])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id DEEBD28E22;
-	Mon, 22 Jan 2024 10:44:33 -0500 (EST)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Phillip Wood <phillip.wood123@gmail.com>
-Cc: Patrick Steinhardt <ps@pks.im>,  git@vger.kernel.org,  Matthias
- =?utf-8?Q?A=C3=9Fhauer?=
- <mha1993@live.de>
-Subject: Re: [PATCH v2 0/5] ci: add support for macOS to GitLab CI
-In-Reply-To: <6e190a32-ee45-451b-b841-25cc6eb2c5ab@gmail.com> (Phillip Wood's
-	message of "Sun, 21 Jan 2024 14:50:05 +0000")
-References: <cover.1705318985.git.ps@pks.im> <cover.1705573336.git.ps@pks.im>
-	<6e190a32-ee45-451b-b841-25cc6eb2c5ab@gmail.com>
-Date: Mon, 22 Jan 2024 07:44:32 -0800
-Message-ID: <xmqq1qa9e5jz.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Wro70sCy"
+Received: by mail-oa1-f45.google.com with SMTP id 586e51a60fabf-2144c37f3d3so310599fac.0
+        for <git@vger.kernel.org>; Mon, 22 Jan 2024 07:49:18 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1705938557; x=1706543357; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=yKL0lEnW3nHaXcPuXsVC6Z2LufoFmYAJ0Xi1HVra5wI=;
+        b=Wro70sCyzjidVc9Obn7u3OJBwQnnVM5HtR2oDxtiYVv8pjRtAdFq3piTaKV33lecYq
+         Cb5/xpNcM16hQg8dPIbNjRnzuMW8oix+/qc/ISWCHc4jFzi11wB+yVnAmxfQgUUWLhNc
+         i2A8pc6CGchNyrDkA+RS17mo5oNKavBGInowQ54xCFaIvngkO8P65ZOj1mI8tLm/Qh7X
+         0b92wR+r3rzS3/MiuTo6/sI+peLbLjrClqawo7d3xuVNpxXTHcOXkS95Yfey5IoYWg8o
+         kDP7ef/p1vONhK7vhDob5Qptyhq66BINoa0raIYB6VZsV9Sp4/Jvz+8jvB4FdYiYobhI
+         jP2A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1705938557; x=1706543357;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=yKL0lEnW3nHaXcPuXsVC6Z2LufoFmYAJ0Xi1HVra5wI=;
+        b=Y6JE3DR22mxAPwOuQeujVy5Vc3ULc0ICb0vd0ddxEnphGJwRe9QL0R+m5jZtWcYgJg
+         Gfd6djxjcPTDSS021r6Uwos3o/+u8fU+UvIrIHUv+D4iyPr4CqUfKAyfRDEmqIpF0qnK
+         VKFCiOVe41zVsKiaH3T2MPov2gHkkjWos/MX81hyMM/NKIx2suVjDb69XNdjgN+XrXyh
+         kRUd0aXN86Yr7jqlQQDZS+wwQkfPOhFcsVtVNgae2Bum0u5SSw/eB8Yg0rIzOu8lpgm7
+         DLEpJ/ah8bYzXqzgIlWjQa9EkbN7xgJay6i4GcooyuOn3PzTlanehnzxRqQcrHeJ1MAo
+         kXZw==
+X-Gm-Message-State: AOJu0YyE5YK3LozUfB0EfIod6EC4vnhOegI2LINNZNqvpPeHlevWRDcc
+	6N5v7dH7aWQ1R08D2TfMnqBPhOmrok0l0JOLLqMntBAMH+gVIvC1LVK3wxllpHGisHEXBJu/UAW
+	k13t90SAffY12pqF2hdE3yvGlMY2Uq1hGrNs=
+X-Google-Smtp-Source: AGHT+IG24RDarH76fs2CsS7Xh/H+LMdzOluu/bpMaHZqzT1+e0vEIf3Fmc70C4X6mZWcexkNx6q2waGUVX3l1W6sKrE=
+X-Received: by 2002:a05:6870:1581:b0:1fb:75b:2b93 with SMTP id
+ j1-20020a056870158100b001fb075b2b93mr101758oab.79.1705938557531; Mon, 22 Jan
+ 2024 07:49:17 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- 23C4AB8A-B93D-11EE-822F-A19503B9AAD1-77302942!pb-smtp21.pobox.com
+References: <20240119142705.139374-1-karthik.188@gmail.com>
+ <20240119142705.139374-5-karthik.188@gmail.com> <xmqqsf2thwhj.fsf@gitster.g>
+In-Reply-To: <xmqqsf2thwhj.fsf@gitster.g>
+From: Karthik Nayak <karthik.188@gmail.com>
+Date: Mon, 22 Jan 2024 16:48:51 +0100
+Message-ID: <CAOLa=ZTbtqvejpvNVY5MHU=Adx3tWQ=FqVJdRLG1gaxYu4BG7A@mail.gmail.com>
+Subject: Re: [PATCH 4/5] refs: introduce `refs_for_each_all_refs()`
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Phillip Wood <phillip.wood123@gmail.com> writes:
+On Fri, Jan 19, 2024 at 9:57=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
+wrote:
+>
+> This looks more like add_pseudoref_entries() given that the general
+> direction is to have an "allow" list of pseudo refs (at this point
+> after the previous step of the series, is_pseudoref_syntax() is the
+> is_pseudoref() function, and uses ends_with("_HEAD") as a mere
+> optimization to avoid listing all the possible pseudo refs that
+> exists or will be added in the future whose name ends with "_HEAD").
+>
+> Other than the naming, I think these two steps make sense.
 
-> Hi Patrick
-> ...
-> I've read though all the patches and they seem sensible to me though
-> I'm hardly a macOS expert. I did wonder about the use of pushd/popd in
-> the fourth patch as they are bashisms but that matches what we're
-> doing on Ubuntu already. It's nice to see the GitLab CI running on
-> macOS as well as Linux now.
+I think overall the naming is correct, I would change the comments in
+`is_pseudoref_syntax()`.
 
-Thanks, both.
+Because, apart from pseudorefs, we also want to print HEAD. This is also
+why the pattern matches "HEAD" instead of "_HEAD". I'll add some more
+comments to clarify this.
 
+So to summarize:
+1. `is_pseudoref_syntax()` checks for pseudoref like syntax, this also matc=
+hes
+HEAD. Will add comments here to clarify that we do not actually check
+ref contents.
+2. `add_pseudoref_like_entries()` adds pseudorefs and HEAD to the loose ref=
+s
+cache.
