@@ -1,40 +1,36 @@
 Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F72248783
-	for <git@vger.kernel.org>; Mon, 22 Jan 2024 21:59:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BA06482E3
+	for <git@vger.kernel.org>; Mon, 22 Jan 2024 22:04:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705960798; cv=none; b=eLqBddG+duuKkfDPKZ1mNDl9H4N/LccIfKcJ7wtYATKXogVcbfxq64Kxx4XwujQDeKC7jdVqr0gOuFkGQnEB/pZazXQuFL+SkuN+dYVBecjEM63u0VoaE79Q8Yfex2peGYv7h1N1GMo9J9OY4BeYdWf0QVP+piGjAgOeLDzzofo=
+	t=1705961084; cv=none; b=AY90mf+BwAfD6u1AJhN9jC0nUEnC9oBcN6TLbxoGNuNmgldL6cuzlmCD9xz+3JNTKrpVRoCP/XEuZ28MfRRmfwqG5IXilDyD4OPhUOZ3jp8jqB9ersYrla5Jc3QJOxNi5fskPZ2v1XlOM85+VwbJNpLZNpbTdS/0oSz54a2+LsQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705960798; c=relaxed/simple;
-	bh=ck7Rff5IRhQ5E5artzQjAFR8J6tFD8gcee2EPuf//lo=;
+	s=arc-20240116; t=1705961084; c=relaxed/simple;
+	bh=Q1SjjN1rtg7ZGhvSLrA+Cmc3i4PWp3IWs1aZtfVs3S0=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=EW0XcmAhU05V2YJGYfQCXGyQwcQq326FwimNkBfbdj7qVqeQu0g4BCf3a+d+KrRy0oFmEkm6hNE2U99BXzGzGe5ci65NC1OU6ahpgGI6O2s94g02waFpRu6r+HaS+9dc1U0nZOllGj6E7D0WGSZwGjgEv/JTG5NkKKCInfZHu9s=
+	 Content-Type:Content-Disposition:In-Reply-To; b=TCeSSZrz169U1//xIlHxFxH6ryzsU0qvWdnb6vLJgBJvKH82kIK0VhRL3gUzcLPMU4maRbdXiXBfe/qqo+vq6LQ55bqLQKn4WrOrB3vgVAOyO2a7LudCLZKsSCbS8WTcA8KMbseErXloch+wyJpG9IV6fHTFi8YXRYN4wvW5m20=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
-Received: (qmail 11389 invoked by uid 109); 22 Jan 2024 21:59:55 -0000
+Received: (qmail 11404 invoked by uid 109); 22 Jan 2024 22:04:42 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 22 Jan 2024 21:59:55 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 22 Jan 2024 22:04:41 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 9797 invoked by uid 111); 22 Jan 2024 21:59:56 -0000
+Received: (qmail 9824 invoked by uid 111); 22 Jan 2024 22:04:42 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 22 Jan 2024 16:59:56 -0500
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 22 Jan 2024 17:04:42 -0500
 Authentication-Results: peff.net; auth=none
-Date: Mon, 22 Jan 2024 16:59:54 -0500
+Date: Mon, 22 Jan 2024 17:04:40 -0500
 From: Jeff King <peff@peff.net>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Elijah Newren <newren@gmail.com>,
-	=?utf-8?B?UmHDumwgTsO6w7Fleg==?= de Arenas Coronado <raulnac@gmail.com>,
-	git@vger.kernel.org
-Subject: Re: Fwd: Unexpected behavior of ls-files command when using --others
- --exclude-from, and a .gitignore file which resides in a subdirectory
-Message-ID: <20240122215954.GA813833@coredump.intra.peff.net>
-References: <CAGF1KhWNaO_TUuCPo2L_HzNnR+FnB1Q4H6_xQ2owoH+SnynzEg@mail.gmail.com>
- <CAGF1KhWiYX=3R01Odj2yCNgvx=f5+HRCjRJogWf5eBikuATCcg@mail.gmail.com>
- <20240122213410.GA811766@coredump.intra.peff.net>
- <xmqq1qa9rqji.fsf@gitster.g>
+To: Zsolt Imre <imrexzsolt@gmail.com>
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Subject: Re: Git Push Always uses Protocol Version 0
+Message-ID: <20240122220440.GB811766@coredump.intra.peff.net>
+References: <FD545E92-18EF-44B5-A7D5-61ECADD880E6@gmail.com>
+ <xmqqa5oxurnj.fsf@gitster.g>
+ <E121C312-5771-47EF-9099-BEC8EFC2B9BD@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -43,24 +39,46 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <xmqq1qa9rqji.fsf@gitster.g>
+In-Reply-To: <E121C312-5771-47EF-9099-BEC8EFC2B9BD@gmail.com>
 
-On Mon, Jan 22, 2024 at 01:45:05PM -0800, Junio C Hamano wrote:
+On Mon, Jan 22, 2024 at 07:24:53PM +0000, Zsolt Imre wrote:
 
-> Jeff King <peff@peff.net> writes:
-> 
-> > PS I hadn't realized that --exclude-per-directory had been marked as
-> >    deprecated. I do agree with e750951e74 (ls-files: guide folks to
-> >    --exclude-standard over other --exclude* options, 2023-01-13) in its
-> >    goal of guiding people to the easiest option, but I don't know that
-> >    there has been any discussion about removing the other ones.
-> 
-> I do not think there is any value in _removing_ the perfectly well
-> working --exclude* options, even though I think --exclude-standard
-> should be what users and scriptors should be using if they want to
-> emulate what Git does internally.
+> And to answer your question of what I cannot do with the "current
+> versions" of the protocol: I could do everything, of course. But, if
+> there's protocol 0, 1 and 2 and I wanted to implement only version 2,
+> I thought I should be able to. If protocol V2 was complete, I would
+> not have to worry about implementing V0 and V1 (saving some time and
+> headache), especially because I do not care about supporting old
+> clients. I may have misunderstood the word "version" and version 2 is
+> more of an "extension" to V1?
 
-Yeah, mostly I was surprised that e750951e74 used as strong a word as
-"deprecated".
+I think the main confusion is that there simply isn't a "v2" push
+protocol. It has not yet been written.
+
+There was discussion when v2 was being worked on there that might be a
+single "git serve" endpoint that would handle both fetch and push. But
+in practice the backwards-compatibility technique we use requires asking
+for the usual "upload-pack" or "receive-pack". And hence there isn't
+really a single protocol, but still a fetch protocol which can be v0 or
+v2, and a push protocol which is always v0.
+
+It's possible we'd shift direction there, but IMHO there's value in
+having separate per-operation endpoints. There's some more discussion
+in this sub-thread:
+
+  https://lore.kernel.org/git/20181213195305.249059-1-jonathantanmy@google.com/
+
+Now of course a v2 push protocol, if it is ever written, will probably
+look a lot like the v2 fetch protocol, and they can probably share a lot
+of the implementation. But v0 and v2 are not that different either. In a
+hypothetical world where v2 push existed and you could get away with
+skipping v0 push entirely, I'd expect that "v2 push and v2 fetch" would
+be about the same amount of work as the current "v0 push and v2 fetch".
 
 -Peff
+
+PS I saw some mention of "v1" in this thread; I wasn't sure if this was
+   meant to refer to "v0" (a mistake I have made lots of times myself).
+   But if not, "v1" is not really of any interest. It was a brief
+   experimental phase for the client-upgrade mechanisms, and it behaves
+   exactly like v0. No version of Git has ever used it by default.
