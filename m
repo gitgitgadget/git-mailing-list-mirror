@@ -1,81 +1,80 @@
 Received: from wout3-smtp.messagingengine.com (wout3-smtp.messagingengine.com [64.147.123.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58A973A8C3
-	for <git@vger.kernel.org>; Mon, 22 Jan 2024 10:45:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10EC03B182
+	for <git@vger.kernel.org>; Mon, 22 Jan 2024 10:51:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.19
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705920322; cv=none; b=lrbBnJcaUMTNbSVrzX0GMZDh3tQ0UovO5KK5PssNAmf0DzQGbvJ0DftZoPwaJWC2edcO/9hxY/XmYu+WvrXIs0QX+pa+FllIg5Nkpj5bkeYXSJZctUUe0jk+gG2Z+C0N/4A3kKaKxAuasWbF2B7dVWA6Aoyu6QlvCOhFI7a2YEg=
+	t=1705920678; cv=none; b=N44UItZcxh3XSVZlnky2mJvlP/krwHaRqL6hB7TG4BRCj5VJLOypl8TlgCOfq3ML0f1wxH0XpOxGAlsLvNg3mj5Xm0nA7ve2AFyz+4+OA/BpEKXYgSptOfGNKl3d1CG+XE5pDdhBldksJAuC13gWH3p4A9TUHrIwdtBojHHPjU8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705920322; c=relaxed/simple;
-	bh=d9oG9YNEQFK9OF9mEEfELSm6fV6mJlJ8h0+S94dvt1I=;
+	s=arc-20240116; t=1705920678; c=relaxed/simple;
+	bh=Or9Y9bW0bog+rH+/nI10aMNnsr3zMsNmEZLKoL7gQ+c=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=FTmfY7RHDs7WA+G3MJNny7lu+IvmZjY2V2olsrtIRUQfxIkurVZE11vI7YSyctkZEes6kc/n9NPQ23mzsm4xjC9xiYobh+/ilTFq2L2Ey4aaVZtQzdFfnivw04tKr9fuaRpUDrQTs4PjkRytnwUDjsZD2tXMZU9/Tb54YGiCiNo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=AusI2Q1F; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=vjrBdvny; arc=none smtp.client-ip=64.147.123.19
+	 Content-Type:Content-Disposition:In-Reply-To; b=DUaEMvUprwRpqFYYg3Zeg6O0A4SCV5yprl0VgAXPapsHHr5wkpnSyOVRkjIIpTPAl4pNtWnIbPDqpL9X63we1XmWtzQGWB8PzSmTxRzWUnSpnVCR5CmueN0zPGVmEGoqRoxAu9EcNmgcOVXsPkTTbX8VH2cHaKlTL2OuJPLmqBY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=DGrPGmjF; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=bvdTpwNO; arc=none smtp.client-ip=64.147.123.19
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="AusI2Q1F";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="vjrBdvny"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="DGrPGmjF";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="bvdTpwNO"
 Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
-	by mailout.west.internal (Postfix) with ESMTP id 66B463200A78;
-	Mon, 22 Jan 2024 05:45:19 -0500 (EST)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute5.internal (MEProxy); Mon, 22 Jan 2024 05:45:19 -0500
+	by mailout.west.internal (Postfix) with ESMTP id 3012F3200A54;
+	Mon, 22 Jan 2024 05:51:16 -0500 (EST)
+Received: from mailfrontend2 ([10.202.2.163])
+  by compute5.internal (MEProxy); Mon, 22 Jan 2024 05:51:16 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1705920318; x=1706006718; bh=RKWzFu3msH
-	pYJppeozrqIdpW4IUVJfxYSEBe1C47qb8=; b=AusI2Q1Fd/yBVpRRCvdQD5XlE9
-	Vf37C+eqFKGY2iEhAROhwZh2dZLS5NVS/5J1UDRKPcLpoQnOo5/CajNWPkZc/iAk
-	/IrUCLxir9RlWFBcmDab0b5/Xx76GVxsZ0Zd6MRgFt7RFfb0oiTGCuDoCZ1qcYPz
-	4S0UHSUAImH77gGZxWc+n+ms8savZZzZVOYfWIBvy/izfBUt1NtG32RNXFS+8S4G
-	ihTd/zAfyU7NH1e/iXiGP5AX8ttHxWMlTOzllBAzCoSsxNaC97zXTdgStReuxeGy
-	7N4gtnm5u89k2u/4o7TgitaA0UvG4fJiUgcNWAU7D1t6pXHsP9wuqLVl/18g==
+	:subject:to:to; s=fm3; t=1705920675; x=1706007075; bh=UYNP0dg2J0
+	ixdaOM2c/UqRoQMuzrdTjyiMFME3EvAw4=; b=DGrPGmjFBwSFidfLFLpd5B2oXs
+	VSsNCNk8RQgAnQd5aDr2rKl9SqDaLKiXl+bxlCAllKVbMcd8TuVS3Gnnud1lGPKD
+	uOv+ZgNLxJp+H76NCOCifGe0rknO6q80RfkYTdoUUz8F8vLHn8tbUrlG9gCXTfSv
+	XgL67fz7MfVMi5bbTUuKDtuSK6iBDDOpePmXwT1wZrQdpZ1XsPBH5fAjCjZp0l6r
+	gVL35DAxdDEKk6kSiatVTuqPKqsTIq2qnSxZGzKSHTzkOm4NG13MSD9kOamCdlIG
+	cr+YonnawNR2KTOXClekzJ4R2HavaUIWh5f3IQzJ5rcO5aJNKSFhUIQt6SLA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1705920318; x=1706006718; bh=RKWzFu3msHpYJppeozrqIdpW4IUV
-	JfxYSEBe1C47qb8=; b=vjrBdvnyROnHfCDdJK9vOipBHy1ZcicAA3qZiKZ9OTmY
-	D2uyEZgQ26ltfU4KJ3NljFJ2dcAkVNKpFVlhbB8C6G+Ok8NrsWnpLWKoTaZmk+7G
-	wFep6DFG+1HX2eNuOmCYh9SZpmDnCeaxXuARrgGwt3FzEz2vv0aIh0otKHsERx4z
-	zqRikKqr0AGhWI7Zmv1+gZ+YyR/VQWwNonkuHaoOSZtCLeZ6rEY59yDMpocKfOMC
-	wtWCvCAHU+cRMLNBW9JfkcLnOdJEUNNcbCaFKQ1VMSZTq5PW2Mxmw/cqgYFsfIlS
-	QbJ3sYZOlmvWtsDpMI8wu/bVDu+mWbkStYbhyFyiYQ==
-X-ME-Sender: <xms:PkeuZWSCj3F7ZdvMOaoSv1yXaTllsJoJ1M6vWMVNMzRRUg6dZmBJuw>
-    <xme:PkeuZbx4Zn1TNDnXFqbKmmtGNK1r4iWG7IMHrXn6zOVQNto6WMv8YuoGiaPGpUusT
-    yMv-r0AShLeWAdvOg>
-X-ME-Received: <xmr:PkeuZT2oysHFRHpiZNJCd0dE50xpCMnuvcu89GHlMzegxfHaROejusxaFJA1PxI_NWMuZeAG-fFdBsIsYu2UhKJ3PZN8_H1bb6YICgr_Jyd06TA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrvdekiedgudelucetufdoteggodetrfdotf
+	fm3; t=1705920675; x=1706007075; bh=UYNP0dg2J0ixdaOM2c/UqRoQMuzr
+	dTjyiMFME3EvAw4=; b=bvdTpwNO6Er6v7v9wEaPxYm60bfW6fbUcyzZqgLLsVMq
+	QMt9jlBVM+CNslZRHw4SjeylqM6DPyqREwRmgk4wDNeLintk0Gvd/Ntpywa5GeUs
+	Evcl/ScjNjnnbascHXCqnh6i8l7L/pJtYTjTSPlVcvTvm34syZfR0SH/ERTzk/q5
+	cLm7qu6ejD8Dg1MCjILml6/62bc0b/Duj/IdBU4W379T8mFx7UCZcoRkgaupkg6m
+	7sWsnmfA64Z1J9IZJkTP3rpBJTPAnGOi+ubtyL5tWERNkZ3GJzXNi1QQjtohp7IY
+	hv4aj/YyR9xiwvC+gpKDUEOaEldE4XSnQqKtPX39mA==
+X-ME-Sender: <xms:o0iuZYjfMMDileRgSJX3Kl0oWY1p7Z0Km10mWmyceQRDyZ8IryctOA>
+    <xme:o0iuZRB5-QY-xhIh0jDbK40zBZbxBi5SMq2Z0-04SyFq773UT93WD-ukNFGElu2N4
+    XuwjODwtIwszusQeA>
+X-ME-Received: <xmr:o0iuZQFEHY0CFl09wUbbD-BqKI_J7N6ne4_REC6d2V2z2L0E21A0zc1DAHR6ClwK-ByCntejISMQ9Sffu0cFKtB49mA-b1wR9ll1APoHGFCqwME>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrvdekiedgvddtucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    cujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtvdenucfhrhhomheprfgrthhr
-    ihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvg
-    hrnhepueektdevtdffveeljeetgfehheeigeekleduvdeffeeghefgledttdehjeelffet
-    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
-    hpkhhsrdhimh
-X-ME-Proxy: <xmx:PkeuZSDcj9mEcR1h0LBfIg26CxZUg-6h-eXOYxQxqNWyGf18Ri9Vfg>
-    <xmx:PkeuZfg9ycv8fdIvXYhsEs0KAOMK0nUHb1q6SGoIMHW0I2DsPJnFQg>
-    <xmx:PkeuZerO4kO4JsGM1fQXXbfTGooQ4eyTL7HXYgNESG1rwyz18wu-aA>
-    <xmx:PkeuZXZLOjExfI4roU6UOGu5zxz37qVbNU0gr_Cl6TltTOjZvXlTfw>
+    uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvvefukfhfgggtuggjsehgtd
+    erredttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshes
+    phhkshdrihhmqeenucggtffrrghtthgvrhhnpeeukedtvedtffevleejtefgheehieegke
+    eluddvfeefgeehgfeltddtheejleffteenucevlhhushhtvghrufhiiigvpedtnecurfgr
+    rhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhm
+X-ME-Proxy: <xmx:o0iuZZRGXjQojigAw3q0zWSCU1z78JEGtnYYpT7MQiRFOfiZPDlW3Q>
+    <xmx:o0iuZVzJQKRi3P-sWj2G2FWtwTx2iYPWBIZdRlT9ErrgjkDpCXhX3g>
+    <xmx:o0iuZX4ANQ7oPFgB1oWchb-ZnqPsRrVoP36MhVmmmyemGtklrTrWqQ>
+    <xmx:o0iuZTaAdPlaSwC7k-vE_3CO5OZGfa3qfjGM2PnNk26_1Bb0UODBGA>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 22 Jan 2024 05:45:17 -0500 (EST)
+ 22 Jan 2024 05:51:14 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 8b2fe394 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 22 Jan 2024 10:42:13 +0000 (UTC)
-Date: Mon, 22 Jan 2024 11:45:14 +0100
+	by vm-mail (OpenSMTPD) with ESMTPSA id d16a7b1f (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 22 Jan 2024 10:48:11 +0000 (UTC)
+Date: Mon, 22 Jan 2024 11:51:12 +0100
 From: Patrick Steinhardt <ps@pks.im>
 To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, Elijah Newren <newren@gmail.com>
-Subject: Re: [PATCH 3/7] refs: convert AUTO_MERGE to become a normal
- pseudo-ref
-Message-ID: <Za5HOkWM3IQIiKDJ@tanuki>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 4/7] sequencer: introduce functions to handle autostashes
+ via refs
+Message-ID: <Za5IoEjs0q7cf354@tanuki>
 References: <cover.1705659748.git.ps@pks.im>
- <ae2df6316f79e372c51d59666d685e59981d2f98.1705659748.git.ps@pks.im>
- <xmqqjzo5jf79.fsf@gitster.g>
+ <abcf1f5cf428072d19639dc4209e0c1554f3eb53.1705659748.git.ps@pks.im>
+ <xmqqbk9hjdai.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -83,85 +82,82 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="+n3pX7n2ubhIq8rt"
+	protocol="application/pgp-signature"; boundary="O3yKeh2Sfa2LN2rP"
 Content-Disposition: inline
-In-Reply-To: <xmqqjzo5jf79.fsf@gitster.g>
+In-Reply-To: <xmqqbk9hjdai.fsf@gitster.g>
 
 
---+n3pX7n2ubhIq8rt
+--O3yKeh2Sfa2LN2rP
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Fri, Jan 19, 2024 at 11:28:10AM -0800, Junio C Hamano wrote:
+On Fri, Jan 19, 2024 at 12:09:25PM -0800, Junio C Hamano wrote:
 > Patrick Steinhardt <ps@pks.im> writes:
 >=20
-> > In 70c70de616 (refs: complete list of special refs, 2023-12-14) we have
-> > inrtoduced a new `is_special_ref()` function that classifies some refs
+> > We're about to convert the MERGE_AUTOSTASH ref to become non-special,
+> > using the refs API instead of direct filesystem access to both read and
+> > write the ref. The current interfaces to write autostashes is entirely
+> > path-based though, so we need to extend them to also support writes via
+> > the refs API instead.
+> >
+> > Ideally, we would be able to fully replace the old set of path-based
+> > interfaces. But the sequencer will continue to write state into
+> > "rebase-merge/autostash". This path is not considered to be a ref at all
+> > and will thus stay is-is for now, which requires us to keep both path-
 >=20
-> "introduced"
->=20
-> > @@ -4687,10 +4685,17 @@ void merge_switch_to_result(struct merge_option=
-s *opt,
-> >  		trace2_region_leave("merge", "record_conflicted", opt->repo);
-> > =20
-> >  		trace2_region_enter("merge", "write_auto_merge", opt->repo);
-> > -		filename =3D git_path_auto_merge(opt->repo);
-> > -		fp =3D xfopen(filename, "w");
-> > -		fprintf(fp, "%s\n", oid_to_hex(&result->tree->object.oid));
-> > -		fclose(fp);
-> > +		if (refs_update_ref(get_main_ref_store(opt->repo), "", "AUTO_MERGE",
-> > +				    &result->tree->object.oid, NULL, REF_NO_DEREF,
-> > +				    UPDATE_REFS_MSG_ON_ERR)) {
-> > +			/* failure to function */
-> > +			opt->priv =3D NULL;
-> > +			result->clean =3D -1;
-> > +			merge_finalize(opt, result);
-> > +			trace2_region_leave("merge", "write_auto_merge",
-> > +					    opt->repo);
-> > +			return;
-> > +		}
-> >  		trace2_region_leave("merge", "write_auto_merge", opt->repo);
-> >  	}
-> >  	if (display_update_msgs)
->=20
-> We used to ignore errors while updating AUTO_MERGE, implying that it
-> is an optional nicety that does not have to block the merge.  Now we
-> explicitly mark the resulting index unclean.  While my gut feeling
-> says that it should not matter all that much (as such a failure
-> would be rare enough that the user may want to inspect and double
-> check the situation before going forward), I am not 100% sure if the
-> change is behaviour is acceptable by everybody (cc'ed Elijah for
-> second opinion).
+> "is-is"???
 
-We only ignored _some_ errors when updating AUTO_MERGE. Most notably we
-die when we fail to create the file, but we succeed in case its contents
-aren't written. This does not make much sense to me -- my expectation
-would be that we should verify either the complete operation or nothing
-of it and ignore all failures. Gracefully leaving an empty file behind
-is a weird in-between state, so I'd claim it's more or less an oversight
-that we did not perform proper error checking here.
+Oops, "as-is" :)
+
+> > and refs-based interfaces to handle autostashes.
+> >
+> > Signed-off-by: Patrick Steinhardt <ps@pks.im>
+> > ---
+> >  sequencer.c | 66 +++++++++++++++++++++++++++++++++++++++++++++++++----
+> >  sequencer.h |  3 +++
+> >  2 files changed, 64 insertions(+), 5 deletions(-)
+>=20
+> The conversion (rather, the introduction to allow refs API to be
+> used to access them) look correct, but offhand I do not know what
+> the implication of leaving the file based interface would be.
+
+We have said in past discussions that the sequencer state should remain
+self contained, and that requires us to keep the files-based interface.
+Refactoring it would likely be a larger undertaking, as we have also
+said that refs must either have pseudo-ref syntax or start with "refs/".
+
+The sequencer with its "rebase-merge/autostash" files doesn't conform to
+either of those requirements, so we would also have to rename those
+reflike files. I doubt that this is really worth it, so I would keep
+those around as internal implementation details of how the sequencer
+works. These refs are not supposed to be accessed by the user in the
+first place, and we do not document their existence to the best of my
+knowledge. Also, `git rev-parse rebase-merge/autostash` would fail.
+
+So overall I think it's fine to leave this internal sequencer state as
+self-contained as it is.
 
 Patrick
 
---+n3pX7n2ubhIq8rt
+--O3yKeh2Sfa2LN2rP
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmWuRzkACgkQVbJhu7ck
-PpSItg//ZkMfkrzpPzmB/1peNje+YrwaimyeofjmuMprxQrlpIOZUWraOPgs1D5H
-rOWa4hn+npbKGw12rF+UAbmmn9hq333TRXpdzwYdc2yMGqmgsEQuxjGLUD2WHe1P
-Cge2LWPWbYr4a00jsF5wMOJqC88Y+Wb5wveR1wnC2rmlj7HvDfL45pppzk5Ga/aA
-yC9g0cN6wTaLl7HQWEX7vrsHltOivhXNHpxzBbV+3QozOkkn/PlgUKNOYibyZ5g8
-Y3twWi75EFHoWF+TEn0aXSTGN5E2xAfeNPCc0cf41qNSx18vTusSqa+EqSMULopJ
-m4omecgYvJXHBbIw2x0U3wxc5ulnJx5COdqIol61q2wb9EbiHvr7Ze3fZFxPU7tw
-6sRqJbZWLZJUHXa4sQn/MNr7ucfxakEk0S3/rf5ua+6JPbmZNmYdOqBcfC+X3YGW
-M7EDx6X08gnrjw2LaENDpITWYbA6+NT3jycRG1XppOLjbqA1d9MaKxLwGlgp5h4p
-Sn2YhFuSuVHbhffkkqAA5sjw0tced5cwWoH3UWCVx7op0E0E1nwmpOjeUzqNWadS
-kfPVWk1zIjRS134ECQTqQPm5jZ5d27K+PAfM3mZ+nL2+XwySMbOeVAzR8ZK7DNde
-XwQvNKnPWXZ7LdvOYwjcJhg9VsjI/XyJJsSHCnrrjXMw7FZdsuA=
-=4qm/
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmWuSJ8ACgkQVbJhu7ck
+PpTMrg//WpChi9TIPM3TebNN5jNanB12elQKifsyDbYPTWvvlqaGITXGDoRIeTpd
+k5b0YesvDPtr8fkL/S/kQnuyatdj9FqTQ1qcvEVmM7Onzf+gAh4nLsFRhbUb91xi
+gIeDDvrbfXfgTVduESJ1Ynmqy4Hf91xN10DQoJ+KNvyWvujjjTadKAKhc5GOFsm3
+oLA3XFDHJuJXRK5g0BMhbAlvbH1ZX7rEHym8uhx1zSM6GL1/4d4eTujdKQZGwJDQ
+ITSiVTKbmZ0uPUkBW6WpDto3IE/OurFgiQOwY+8H3r5erlmk/G0B3BY6djPO+cJX
+7GQKZh15PPorp1FDEW8pFo7x8GJNJ4frl3Tm3O7KWUNTVKke1qzRj2INULc/ootT
+qQpfiKvmTED40uR0hSzocnWrnjIqWaO6CyISpHLDIUq+Vs3JV1YAHHsg8iJBHNuM
+e24esd8nZZvSDVxaAKcILPDTwCzFHNcUh2a63BUrWgfeuqqGebtftqdY251AHGvU
+2UabVRQHBIJ+scHajw1zSOnvD+oju6AhUeTIlPlRwRcrccIZgX8PNeLhLPBDbdTZ
+yfsNpHeCffUrvoORBwPeVWanVOL/LvurgDjk1MLAnH0FKkpYt7odbYPjKSD9iLaZ
+w2IBnZgUv9uuD8Q6sYkpxKrtJ6nvLbuMRA10CNOFrIR+2kmQCoE=
+=oceF
 -----END PGP SIGNATURE-----
 
---+n3pX7n2ubhIq8rt--
+--O3yKeh2Sfa2LN2rP--
