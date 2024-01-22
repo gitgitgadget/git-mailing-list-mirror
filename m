@@ -1,199 +1,230 @@
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFFBF4BAA0
-	for <git@vger.kernel.org>; Mon, 22 Jan 2024 19:09:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A727C3E46B
+	for <git@vger.kernel.org>; Mon, 22 Jan 2024 19:25:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705950586; cv=none; b=o5aqKdN3lMQKnHHFpv8bd1s1HXoHknIy2WX6NEH6ndixBkInWAUpPanoc+cGAtKhG4Uw1oUkXtH0ndwrWQ79vF0IhMyE5PBwNZXUP/EQ3FZOfePrHmlmX+mdHZWFjDkjJImwTgQQyfLv94xnG4TFW5IPTSRPNrjfpFffnSidhzU=
+	t=1705951507; cv=none; b=tWzgzd5XDz1v8D0uQHZ8fZVyvoa6vp5zbkuziwgg76PiJ4XHdqZh4bmUJWzNJ5y8TpJCYls3Wa1sPZ86fwShqPpxjI5B8mkTD21zruG7foR98aWXYmoqtJiD0RRoXep6/LrSPAPILjGati0gM6wKKx2jvFN1RNUeVao9W11jTSE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705950586; c=relaxed/simple;
-	bh=FafFUV9G5JPX51f/uJZl2upOXO0UIidobmQOcsxyX3U=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=Vkr7RPBGdm2Za67so04sevQuqt1XZiXR4gfNAzjDu2W+/YDKJsIj5n4KLbM11xIy1EtodLXUtsWWMLoIniBWEoEVEBErwY/oFnAMrJQ+pfwT+HjMr0WjDN244khHl+qhEp92dUvcAr2AYXqMcq3Egxc0HCGkqb6zUGPcDS1RAwc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=TSyQsWXy; arc=none smtp.client-ip=173.228.157.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1705951507; c=relaxed/simple;
+	bh=aT2y6Zl1X7gcALaBK4iloIHUmv27HrVAk+a3hpkltHM=;
+	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Date:Cc:
+	 Message-Id:References:To; b=PFlpr14sqX07BFdz2bGDMdszL1m7MMVXhITTTJx4m4al0xEJFKi5K7rRMOwuBHv7u+Eq0T2rUqcbZWsUQwFQjf4RigOooZgm632uOCEFeeJ4RE1eZr10/EW7A+os9PrzoaL6DinSB5kfToFHOCXoD15KUJQtzQd0OhrnOOryB4E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=TB6JBvDS; arc=none smtp.client-ip=209.85.128.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="TSyQsWXy"
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id 5B22B2A398;
-	Mon, 22 Jan 2024 14:09:44 -0500 (EST)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=FafFUV9G5JPX51f/uJZl2upOXO0UIidobmQOcs
-	xyX3U=; b=TSyQsWXyFiGpqxglzg3T1RfAOTyp/gkRWWMYtZshLFZ0MDmjEANAKP
-	vNQ3FY4WC9VWan8yGvUfOiCoJ9mf2zWWkjRJ6M7qRRINLX6lE0Ml813BnV8QRa4o
-	8aHPGhm8fItVxjXPMkGRBMm+DFUbkAJw7kLQXQSHQdukrtsN/bUVw=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id 542E92A397;
-	Mon, 22 Jan 2024 14:09:44 -0500 (EST)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.200.93])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id E08442A396;
-	Mon, 22 Jan 2024 14:09:40 -0500 (EST)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Chandra Pratap via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Chandra Pratap <chandrapratap3519@gmail.com>,
-  Jeff King <peff@peff.net>,  Phillip Wood <phillip.wood123@gmail.com>,
-  Chandra Pratap <chandrapratap376@gmail.com>
-Subject: Re: [PATCH v4] tests: move t0009-prio-queue.sh to the new unit
- testing framework
-In-Reply-To: <pull.1642.v4.git.1705865326185.gitgitgadget@gmail.com> (Chandra
-	Pratap via GitGitGadget's message of "Sun, 21 Jan 2024 19:28:45
-	+0000")
-References: <pull.1642.v3.git.1705502304219.gitgitgadget@gmail.com>
-	<pull.1642.v4.git.1705865326185.gitgitgadget@gmail.com>
-Date: Mon, 22 Jan 2024 11:09:39 -0800
-Message-ID: <xmqqwms1tcb0.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TB6JBvDS"
+Received: by mail-wm1-f51.google.com with SMTP id 5b1f17b1804b1-40eab3912d5so15981715e9.2
+        for <git@vger.kernel.org>; Mon, 22 Jan 2024 11:25:05 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1705951504; x=1706556304; darn=vger.kernel.org;
+        h=to:references:message-id:content-transfer-encoding:cc:date
+         :in-reply-to:from:subject:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=OKPq5hatUhLb2uX+4nPQwNP9XpNYLs09BvPPjMfcAqA=;
+        b=TB6JBvDSF0FTfRgVj55/I29r6t88YsKSIQPTI45ri1dovJVgs+2ab3EJ5lfpzCWEHw
+         C1eLWW2A0BklysfPct7o29eNSJuI1/QRHCawMtXDqBmAfWGQCe/dcnwJ/NVNlRr5HKtj
+         tHzeoiXi8bLGyyicZ4f8Xr7NKFp28+IaMhWD1XdEnwoSUE0oZq4T6X9Vt4inPawAhbBa
+         3Ki7vVSeJ3jZAwjIODmjo/BGXpfGMH/YpUq5g7CorbcXrEJAaS5LGAoeI4eyA2xRZM9O
+         VhP+Od9pNQ8dBoJ5ZyoWhJvybDVpVeurJKMjNpmh0pjpyWycNUTRodCroBrs2+WsmY0C
+         ORbw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1705951504; x=1706556304;
+        h=to:references:message-id:content-transfer-encoding:cc:date
+         :in-reply-to:from:subject:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=OKPq5hatUhLb2uX+4nPQwNP9XpNYLs09BvPPjMfcAqA=;
+        b=rw5G2LvbUnJKaZtUVHeCg2fRwr5R7CDBTTmdGtHE4Cj1A2zi5ISfm2fh8G/GZXXt1J
+         DNoHFrUM+EuPOEMRpvvnH78eWCbVbiwXFGHXMWXDBIOC3rMPZ69yjlKzFs2eFeOR0ecZ
+         G3qziTAyIXp0v9WKYwaDoPL+EvPeYxu94p6lvBlUbMlMIYKKe18rIritRjp93HCYzBJG
+         mKhig+PnAwG13ynTeJVZEaLYWdTA0UZIUqnc4m6dxjXBaP/ANu2l5oFso+C9R+ejVckn
+         eRU0aCcBfcDR64E8srZSFTOX4xJaMHcOr9PXwXPcLRS/ZESLvVgIIcXUHGhMOKM6Dxjg
+         p44w==
+X-Gm-Message-State: AOJu0YyCBhHvvZ1AXiE8CgAPzsodmFAFca5x4cK714LMpoId2fNwz1uZ
+	je9q6QLmH9Z0rqt4bYL2+XCWuO9S6d/8pX+byS12X0sjHrLOI+7w
+X-Google-Smtp-Source: AGHT+IFPPs27Tx3y9SK1BHgpoHCZFOd0kDzmr4VmdxDndT8yogEdzfewKvQWYMfx3t/NvLNCSgq0xA==
+X-Received: by 2002:a05:600c:3847:b0:40e:66cf:81a9 with SMTP id s7-20020a05600c384700b0040e66cf81a9mr2984167wmr.111.1705951503623;
+        Mon, 22 Jan 2024 11:25:03 -0800 (PST)
+Received: from smtpclient.apple ([2a02:c7c:534b:4500:3561:21f4:29f0:53e4])
+        by smtp.gmail.com with ESMTPSA id x8-20020adfdd88000000b003392ae3aee8sm6650904wrl.97.2024.01.22.11.25.03
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 22 Jan 2024 11:25:03 -0800 (PST)
+Content-Type: text/plain;
+	charset=us-ascii
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- CB510CE2-B959-11EE-BEBD-A19503B9AAD1-77302942!pb-smtp21.pobox.com
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3774.200.91.1.1\))
+Subject: Re: Git Push Always uses Protocol Version 0
+From: Zsolt Imre <imrexzsolt@gmail.com>
+In-Reply-To: <xmqqa5oxurnj.fsf@gitster.g>
+Date: Mon, 22 Jan 2024 19:24:53 +0000
+Cc: git@vger.kernel.org
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <E121C312-5771-47EF-9099-BEC8EFC2B9BD@gmail.com>
+References: <FD545E92-18EF-44B5-A7D5-61ECADD880E6@gmail.com>
+ <xmqqa5oxurnj.fsf@gitster.g>
+To: Junio C Hamano <gitster@pobox.com>
+X-Mailer: Apple Mail (2.3774.200.91.1.1)
 
-> diff --git a/t/unit-tests/t-prio-queue.c b/t/unit-tests/t-prio-queue.c
-> new file mode 100644
-> index 00000000000..d78b002f9ea
-> --- /dev/null
-> +++ b/t/unit-tests/t-prio-queue.c
-> @@ -0,0 +1,98 @@
-> +#include "test-lib.h"
-> +#include "prio-queue.h"
-> +
-> +static int intcmp(const void *va, const void *vb, void *data UNUSED)
-> +{
-> +	const int *a = va, *b = vb;
-> +	return *a - *b;
-> +}
-> +
-> +
-> +#define MISSING  -1
-> +#define DUMP	 -2
-> +#define STACK	 -3
-> +#define GET	 -4
-> +#define REVERSE  -5
-> +
-> +static int show(int *v)
-> +{
-> +	return v ? *v : MISSING;
-> +}
-> +
-> +static void test_prio_queue(int *input, int *result, size_t input_size)
-> +{
-> +	struct prio_queue pq = { intcmp };
-> +
-> +	for (int i = 0, j = 0; i < input_size; i++) {
-> +		void *peek, *get;
-> +		switch(input[i]) {
+Hi. Thanks for your response. Yes, I saw those switch statements, but =
+probably misunderstood the intent behind them.
 
-Style: in this codebase, a flow control keyword followed by a
-parenthesized stuff always get a single SP before the parenthesis.
+Checking `determine_protocol_version_server` the in-code documentation =
+says:
 
-		switch (input[i]) {
+* Used by a server to determine which protocol version should be used =
+based on
+* a client's request, communicated via the 'GIT_PROTOCOL' environment =
+variable
 
-There are similar style violations in this patch with if().
+I explicitly set the `GIT_PROTOCOL` environment variable to `version=3D2`.=
+ (Will share more at the end of this email why, as you asked anyways)
 
-> +		case GET:
-> +			peek = prio_queue_peek(&pq);
-> +			get = prio_queue_get(&pq);
-> +			if (!check(peek == get))
-> +				return;
-> +			if(!check_int(result[j++], ==, show(get)))
-> +				test_msg("failed at result[] index %d", j-1);
-> +			break;
-> +		case DUMP:
-> +			while ((peek = prio_queue_peek(&pq))) {
-> +				get = prio_queue_get(&pq);
-> +				if (!check(peek == get))
-> +					return;
-> +				if(!check_int(result[j++], ==, show(get)))
-> +					test_msg("failed at result[] index %d", j-1);
-> +			}
-> +			break;
+The client-side calls `discover_version` to check the version supported =
+by the server. Which ultimately ends up being done as:
 
-OK.  So this one checks as we go.  I am not sure how easy to grok a
-breakage diagnosis with these giving the same message, without
-giving any context of the failure (e.g. when we are fed
 
-	INPUT  = 6 2 4 GET 5 3 GET GET 1 DUMP
-	EXPECT = 2 3 4 1 5 6
+enum protocol_version determine_protocol_version_client(const char =
+*server_response)
+{
+enum protocol_version version =3D protocol_v0;
 
-and for some reason if the first GET did not yield expected 2 but
-gave us, say, 6, we only see "left: 2, right: 6" followed by "failed
-at result[] index 0", and nothing else.  
+if (skip_prefix(server_response, "version ", &server_response)) {
+version =3D parse_protocol_version(server_response);
 
-If it said something like "We pushed 6, 2, 4 and then did GET" to
-give the reader a bit more context, it would make it easier to see
-why we were complaining, i.e. expecting to see 2, instead getting 6.
-But perhaps that is too much to ask to this code?
+if (version =3D=3D protocol_unknown_version)
+die("server is speaking an unknown protocol");
+if (version =3D=3D protocol_v0)
+die("protocol error: server explicitly said version 0");
+}
 
-I dunno.  Those who wanted to see an easier-to-diagnose output may
-have better ideas.
+return version;
+}
 
-Thanks.
+The server, according to my understanding of the documentations so far, =
+will not return a version identifier if the client is not talking the =
+version 2 (or maybe even version 1) of the protocol.=20
+The git clone I mentioned in my previous email was clearly using =
+protocol version 2 and it set the appropriate header to indicate this =
+when discovering capabilities. See full request headers below.
 
-> +		case STACK:
-> +			pq.compare = NULL;
-> +			break;
-> +		case REVERSE:
-> +			prio_queue_reverse(&pq);
-> +			break;
-> +		default:
-> +			prio_queue_put(&pq, &input[i]);
-> +			break;
-> +		}
-> +	}
-> +	clear_prio_queue(&pq);
-> +}
-> +
-> +#define BASIC_INPUT 2, 6, 3, 10, 9, 5, 7, 4, 5, 8, 1, DUMP
-> +#define BASIC_RESULT 1, 2, 3, 4, 5, 5, 6, 7, 8, 9, 10
-> +
-> +#define MIXED_PUT_GET_INPUT 6, 2, 4, GET, 5, 3, GET, GET, 1, DUMP
-> +#define MIXED_PUT_GET_RESULT 2, 3, 4, 1, 5, 6
-> +
-> +#define EMPTY_QUEUE_INPUT 1, 2, GET, GET, GET, 1, 2, GET, GET, GET
-> +#define EMPTY_QUEUE_RESULT 1, 2, MISSING, 1, 2, MISSING
-> +
-> +#define STACK_INPUT STACK, 8, 1, 5, 4, 6, 2, 3, DUMP
-> +#define STACK_RESULT 3, 2, 6, 4, 5, 1, 8
-> +
-> +#define REVERSE_STACK_INPUT STACK, 1, 2, 3, 4, 5, 6, REVERSE, DUMP
-> +#define REVERSE_STACK_RESULT 1, 2, 3, 4, 5, 6
-> +
-> +#define TEST_INPUT(INPUT, RESULT, name)			\
-> +  static void test_##name(void)				\
-> +{								\
-> +	int input[] = {INPUT};					\
-> +	int result[] = {RESULT};				\
-> +	test_prio_queue(input, result, ARRAY_SIZE(input));	\
-> +}
-> +
-> +TEST_INPUT(BASIC_INPUT, BASIC_RESULT, basic)
-> +TEST_INPUT(MIXED_PUT_GET_INPUT, MIXED_PUT_GET_RESULT, mixed)
-> +TEST_INPUT(EMPTY_QUEUE_INPUT, EMPTY_QUEUE_RESULT, empty)
-> +TEST_INPUT(STACK_INPUT, STACK_RESULT, stack)
-> +TEST_INPUT(REVERSE_STACK_INPUT, REVERSE_STACK_RESULT, reverse)
-> +
-> +int cmd_main(int argc, const char **argv)
-> +{
-> +	TEST(test_basic(), "prio-queue works for basic input");
-> +	TEST(test_mixed(), "prio-queue works for mixed put & get commands");
-> +	TEST(test_empty(), "prio-queue works when queue is empty");
-> +	TEST(test_stack(), "prio-queue works when used as a LIFO stack");
-> +	TEST(test_reverse(), "prio-queue works when LIFO stack is reversed");
-> +
-> +	return test_done();
-> +}
->
-> base-commit: 1a87c842ece327d03d08096395969aca5e0a6996
+POST /testing.git/git-upload-pack HTTP/1.1
+Host: 127.0.0.1:9000
+Accept: application/x-git-upload-pack-result
+Accept-Encoding: deflate, gzip
+Accept-Language: en-GB, *;q=3D0.9
+Content-Length: 122
+Content-Type: application/x-git-upload-pack-request
+Git-Protocol: version=3D2
+User-Agent: git/2.43.0
+
+The server, in this case did not return a version identifier as the =
+first PKT-LINE either, but responded otherwise according to the V2 =
+protocol. Everything was working well.
+
+Then, the above request was followed by by a proper fetch command in =
+which the client again specified the use of V2 protocol:
+
+POST /testing.git/git-upload-pack HTTP/1.1
+Host: 127.0.0.1:9000
+Accept: application/x-git-upload-pack-result
+Accept-Encoding: deflate, gzip
+Accept-Language: en-GB, *;q=3D0.9
+Content-Length: 160
+Content-Type: application/x-git-upload-pack-request
+Git-Protocol: version=3D2
+User-Agent: git/2.43.0
+
+Accordingly, the cloning worked perfectly fine.
+
+But then, when I want to push to the repo, the client does not do any =
+capabilities or version discovery, just goes with V0 of the protocol to =
+get the refs:
+
+GET /testing.git/info/refs?service=3Dgit-receive-pack HTTP/1.1
+Host: 127.0.0.1:9000
+Accept: */*
+Accept-Encoding: deflate, gzip
+Accept-Language: en-GB, *;q=3D0.9
+Cache-Control: no-cache
+Pragma: no-cache
+User-Agent: git/2.43.0
+
+What I was expecting, given things are going stateless, that on push the =
+client first discovers the protocol supported by the server and picks =
+the most recent - in this case, that would be version 2.
+
+And to answer your question of what I cannot do with the "current =
+versions" of the protocol: I could do everything, of course. But, if =
+there's protocol 0, 1 and 2 and I wanted to implement only version 2, I =
+thought I should be able to. If protocol V2 was complete, I would not =
+have to worry about implementing V0 and V1 (saving some time and =
+headache), especially because I do not care about supporting old =
+clients. I may have misunderstood the word "version" and version 2 is =
+more of an "extension" to V1?
+
+
+> On 22 Jan 2024, at 18:52, Junio C Hamano <gitster@pobox.com> wrote:
+>=20
+> Zsolt Imre <imrexzsolt@gmail.com> writes:
+>=20
+>> I'm not entirely sure if this is a bug or I am missing something,
+>> but I thought I would share in the hope someone can help out. I'm
+>> playing around with Git and trying to implement a git server that
+>> communicates over HTTP and supports Git protocol version 2 *only*.
+>>=20
+>> When I `clone` a repository, the Git client (version 2.43.0),
+>> after fetching the capabilities using protocol version 2, it
+>> proceeds to fetch the refs, again, via protocol version 2 using
+>> the `ls-refs` command.  However, when I try to `push` my changes
+>> to the repo, the Git client refuses to use protocol version 2 and
+>> tries to obtain the ref list using protocol version 0, even if I
+>> pass in the `-c protocol.version=3D2` command line argument.
+>=20
+> Given that v0 and v1 in the push direction behave exactly the same,
+> and there has been no need to add features that were not supportable
+> in v1 in the push direction, it is not surprising to see this code
+>=20
+>        int cmd_send_pack(int argc, const char **argv, const char =
+*prefix)
+>        {
+> ...
+>                switch (discover_version(&reader)) {
+>                case protocol_v2:
+>                        die("support for protocol v2 not implemented =
+yet");
+>                        break;
+>=20
+> in https://github.com/git/git/blob/master/builtin/send-pack.c#L282
+> and also
+>=20
+>        int cmd_receive_pack(int argc, const char **argv, const char =
+*prefix)
+>        {
+> ...
+>                switch (determine_protocol_version_server()) {
+>                case protocol_v2:
+>                        /*
+>                         * push support for protocol v2 has not been =
+implemented yet,
+>                         * so ignore the request to use v2 and fallback =
+to using v0.
+>                         */
+>                        break;
+>=20
+> in https://github.com/git/git/blob/master/builtin/receive-pack.c#L2538
+>=20
+> that tells the receiving end to demote "v2" request down to "v0",
+> and have the pushing end honor that choice.
+>=20
+> What specifically did you want to gain by using protocol version 2
+> in the "push" direction that you cannot do with the current
+> versions?
+>=20
+>=20
+
