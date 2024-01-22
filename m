@@ -1,147 +1,84 @@
-Received: from mail-lf1-f54.google.com (mail-lf1-f54.google.com [209.85.167.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7231447A47
-	for <git@vger.kernel.org>; Mon, 22 Jan 2024 20:51:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE1EE47F44
+	for <git@vger.kernel.org>; Mon, 22 Jan 2024 20:52:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705956678; cv=none; b=odCn4vL/y7v8GVB5q2vV7TZg4Bde0kR9NWGWrSxDK38pNu8K+HM6bVuzcmYtNDogIDMuC+TGmQbF60e8gIitEb2N0ahzAXDoEvY5NNykVIvkWEvrbPwY0792W79DmnggVDvq+W4DYe90b/Ch2/VKuRpyIwiM8ZlUIGbVLSuDyQk=
+	t=1705956771; cv=none; b=Mqoq9mJZuHTxTyMAd5IfxBgkRU7oqwpjSgTufKm2MtqU1KheAY/nMYuJ2xkjUAp0giXZp7S6BXd6Yhx+fYX0R5qrfJyL+HxRtNpI+akJxITCBhOCRgdEMBG4zpT/5viIHqRmF2rjZUlWwoFg6EbOC7w+AjKTeL6BHHQ6z4Gh6ao=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705956678; c=relaxed/simple;
-	bh=S9rlbKiVbXk7Nd1BkKo4DwczB9bPLFOO2JhTGCvbx6o=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=MZxQDZQhGij7xBu6239aTk2qzz0RrruFgY5EkwjOiVVseugSo4WjsZ0brMgy2B2A+q8RLf7+MXtFMJOoajOGUmgRw7TNWOWqhPiWFvfzokZMSQQHjvG1ZNoAioOHkYb/q6RCWsOsIjq8ppcAlsfz2eeKRIlAnTzUIKlifsGFS4Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=3MPtc4ew; arc=none smtp.client-ip=209.85.167.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	s=arc-20240116; t=1705956771; c=relaxed/simple;
+	bh=av7XYR26Gvg5oAj6Gy4YN7B1wwbLkhKri3lCbsVz2xQ=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=X1SOjgAbxpEaf98+fRlDbkvJJTBjfCjig67IuypP4L5GjGudlsmU0l6syTEzy/ZmtKSlxSvBOIXnTMh67HtEImmpUZESngGYxh/mJpE2pZkngM9I/P/paxjCm+0mNEZVRcG7P8OL3sgKKDXPgzoi4rq+O1zKYgxEYnd86dNnvOU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=nUmLkS3h; arc=none smtp.client-ip=64.147.108.70
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="3MPtc4ew"
-Received: by mail-lf1-f54.google.com with SMTP id 2adb3069b0e04-50e7e55c0f6so3990225e87.0
-        for <git@vger.kernel.org>; Mon, 22 Jan 2024 12:51:16 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1705956674; x=1706561474; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=uMwlMh5Fz/SEmzGVC/OcgRxQvnYTfgGtKt5N+QzmJC4=;
-        b=3MPtc4ew8n9DG/2QdlNdLV7mwYKREFLsaIPnBBBX7GElpUbuhDvJZTIFnV1KJBm0Ut
-         cEkvsOQZ2GTPQzD677o3mjyFXxtcYCVMQnS1RJWyNYhg/ThKr5PD1GBg9/cXD6hOKrY0
-         Si8i8iVs/+KTZHDxVeXbgr0WbIvm+pUrXwrtNGnzRchRlZWER4uLEky4/Bu/q02cUxU4
-         BdvqtcobCe9CqIMXXjhIsMI2nzf1w0MqIKsUia9xtWiYDbXtrEkXf4QqQ1nVPh/O03nA
-         9Y+7G5nYrEVQPDpfniRB83q7u57bUbssUNsF7EiL93rkGFKFl+okbfKAzDUNtm3ne8HF
-         EZrw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1705956674; x=1706561474;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=uMwlMh5Fz/SEmzGVC/OcgRxQvnYTfgGtKt5N+QzmJC4=;
-        b=IeiDYxCJemlH/IlBHL0ZGoZ7HbKtwwUX3swnCpdZdKOTJuT8fiv/jXRdwEZHZLQBYx
-         NtZIYCIVHz6vzYyEkmOPXSeb0nu5hu5ypB+rOjvyKTTApmvB77ntIvaVZGLGTcBlBLH2
-         JzuI/3tRoaJy0ebrGfYuS7Kok3PlSfWp3pMnDAIOtZUn8mAitNS6qcfpVS6w9ZI+no2C
-         Ry0uC4QE0xUGiLu5T6OtxKZfc/MpLSgwheqJJcz6oYAo7EIyYfo9AQcZh0yD4DDXCcwM
-         hPs+ykFD0EE0HyB/8w4Nw20BhTllmoDRhzBS8f6sGW0Tej7Y6m06CftkOzVe0RKHREOJ
-         RJYw==
-X-Gm-Message-State: AOJu0YxKUaEETboDkFrSvnrbfYzp3rq9c8ZeAnaGbDq9cxS44Y76H1TI
-	KEeNS5U7xK4irejWJ4vFLY+DUq0c0kdMvxtqqeSj82hE6DTRuejhgm+uelNTBsXkU4qV6n6JwzS
-	iYfY4a7ic/HMUyz8dKegikuLoRH62P4KJarL2
-X-Google-Smtp-Source: AGHT+IHoLwP176nglpc8X9EnZbfRFNsyfReN/Q3WvxrUygqh/+fXnOnse7cO/TICtN2aZrFeWgLJzfO5Q99B8ZyEbsU=
-X-Received: by 2002:a05:6512:12d1:b0:50e:7b5e:5064 with SMTP id
- p17-20020a05651212d100b0050e7b5e5064mr1006440lfg.138.1705956674200; Mon, 22
- Jan 2024 12:51:14 -0800 (PST)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="nUmLkS3h"
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 529071D2F77;
+	Mon, 22 Jan 2024 15:52:48 -0500 (EST)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=av7XYR26Gvg5
+	oAj6Gy4YN7B1wwbLkhKri3lCbsVz2xQ=; b=nUmLkS3hM2okMiBnX+lOd3aSZsiT
+	IXy3uX/K0JOjB9LLcti5qbsUvaYMFKE/Ar8Z+H6BXNessKIvu+JHC27M3JDenIGQ
+	fOpOUdLJkSflA1/+PaTyA10byigGVGzRTAApTOo6mWWMcV/q+ct4OdA2rd3l3DfA
+	HbKgFXQe0r8lDRw=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 4A9E31D2F76;
+	Mon, 22 Jan 2024 15:52:48 -0500 (EST)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.200.93])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id B36521D2F75;
+	Mon, 22 Jan 2024 15:52:47 -0500 (EST)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: =?utf-8?B?UmHDumwgTsO6w7Fleg==?= de Arenas Coronado <raulnac@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: Fwd: Unexpected behavior of ls-files command when using
+ --others --exclude-from, and a .gitignore file which resides in a
+ subdirectory
+In-Reply-To: <CAGF1KhWiYX=3R01Odj2yCNgvx=f5+HRCjRJogWf5eBikuATCcg@mail.gmail.com>
+	(=?utf-8?B?IlJhw7psIE7DusOxZXo=?= de Arenas Coronado"'s message of "Mon, 22
+ Jan 2024
+	21:45:46 +0100")
+References: <CAGF1KhWNaO_TUuCPo2L_HzNnR+FnB1Q4H6_xQ2owoH+SnynzEg@mail.gmail.com>
+	<CAGF1KhWiYX=3R01Odj2yCNgvx=f5+HRCjRJogWf5eBikuATCcg@mail.gmail.com>
+Date: Mon, 22 Jan 2024 12:52:46 -0800
+Message-ID: <xmqqfryprsyp.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.1645.git.1705709303098.gitgitgadget@gmail.com> <xmqqh6j7ej5w.fsf@gitster.g>
-In-Reply-To: <xmqqh6j7ej5w.fsf@gitster.g>
-From: Kyle Lippincott <spectral@google.com>
-Date: Mon, 22 Jan 2024 12:50:57 -0800
-Message-ID: <CAO_smViDR-JKRiKO-8-6mCGBpCR8Y1gLS9Y9DkoCFw=kHm5Mdw@mail.gmail.com>
-Subject: Re: [PATCH] setup: allow cwd=.git w/ bareRepository=explicit
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Kyle Lippincott via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID:
+ 32F185DA-B968-11EE-956C-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
 Content-Transfer-Encoding: quoted-printable
 
-On Sat, Jan 20, 2024 at 2:26=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
-wrote:
->
-> "Kyle Lippincott via GitGitGadget" <gitgitgadget@gmail.com> writes:
->
-> > From: Kyle Lippincott <spectral@google.com>
-> >
-> > The safe.bareRepository setting can be set to 'explicit' to disallow
-> > implicit uses of bare repositories, preventing an attack [1] where an
-> > artificial and malicious bare repository is embedded in another git
-> > repository. Unfortunately, some tooling uses myrepo/.git/ as the cwd
-> > when executing commands, and this is blocked when
-> > safe.bareRepository=3Dexplicit. Blocking is unnecessary, as git already
-> > prevents nested .git directories.
->
-> In other words, if the directory $D that is the top level of the
-> working tree of a non-bare repository, you should be able to chdir
-> to "$D/.git" and run your git command without explicitly saying that
-> you are inside $GIT_DIR (e.g. "git --git-dir=3D$(pwd) cmd")?
+Ra=C3=BAl N=C3=BA=C3=B1ez de Arenas Coronado <raulnac@gmail.com> writes:
 
-Correct.
+> In short: using 'git ls-files --others
+> --exclude-from=3Dsubdir/.gitignore' results in an empty listing if
+> subdir/.gitignore contains '*". IMHO that pattern should be applied to
+> the subdir contents ...
 
->
-> It makes very good sense.
->
-> I briefly wondered if this would give us a great usability
-> improvement especially for hook scripts, but they are given GIT_DIR
-> when called already so that is not a big upside, I guess.
->
-> > Teach git to not reject uses of git inside of the .git directory: check
-> > if cwd is .git (or a subdirectory of it) and allow it even if
-> > safe.bareRepository=3Dexplicit.
->
->
-> >     My primary concern with this patch is that I'm unsure if we need to
-> >     worry about case-insensitive filesystems (ex: cwd=3Dmy_repo/.GIT in=
-stead
-> >     of my_repo/.git, it might not trigger this logic and end up allowed=
-).
->
-> You are additionally allowing ".git" so even if somebody has ".GIT"
-> that won't be allowed by this change, no?
+I do not think so.
 
-My concern was what happens if someone on a case-insensitive
-filesystem does `cd .GIT` and then attempts to use it. If the cwd path
-isn't case-normalized at some point, we'll have a string like
-/path/to/my-repo/.GIT from getcwd() and it won't be allowed by this
-code, since this code is checking for `.git` in a case sensitive
-fashion.
+Imagine what would happen then if you did
 
->
-> >     I'm assuming this isn't a significant concern, for two reasons:
-> >
-> >      * most filesystems/OSes in use today (by number of users) are at l=
-east
-> >        case-preserving, so users/tools will have had to type out .GIT
-> >        instead of getting it from readdir/wherever.
-> >      * this is primarily a "quality of life" change to the feature, and=
- if
-> >        we get it wrong we still fail closed.
->
-> Yup.
->
-> If we really cared (which I doubt), we could resort to checking with
-> is_ntfs_dotgit() and is_hfs_dotgit(), but that would work in the
-> direction of loosening the check even further, which I do not know
-> is needed.
+    $ cp subdir/.gitignore /var/tmp/1
+    $ git ls-files --others --exclude-from=3D/var/tmp/1
 
-Agreed, it's not worth the additional complexity.
-
->
-> > -                     if (get_allowed_bare_repo() =3D=3D ALLOWED_BARE_R=
-EPO_EXPLICIT)
-> > +                     if (get_allowed_bare_repo() =3D=3D ALLOWED_BARE_R=
-EPO_EXPLICIT &&
-> > +                         !ends_with_path_components(dir->buf, ".git"))
-> >                               return GIT_DIR_DISALLOWED_BARE;
->
-> Thanks.
+in such a repository?  The "--exclude-from" option is used to name
+the contents (set of patterns) that should be used and the path of
+the file that happens to contain the contents does not matter.  So
+you should get the same output as the ls-files command that was told
+to use "--exclude-from=3Dsubdir/.gitignore".
