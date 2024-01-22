@@ -1,139 +1,87 @@
-Received: from mail-wr1-f45.google.com (mail-wr1-f45.google.com [209.85.221.45])
+Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3260C39ACD
-	for <git@vger.kernel.org>; Mon, 22 Jan 2024 08:52:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51F6339AEC
+	for <git@vger.kernel.org>; Mon, 22 Jan 2024 08:59:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705913526; cv=none; b=Ck74cIzG6LmvuWDzIFCTmg/6k5VfKszU5xj4J0BJtOdKZLaONZgFeuE+FcEDlIjkqZNMduE+SczIwmGXkB39m7rpVvo1hiNIrfoZShA7tKLXb36GSigYPjM4SxBcIXnVue9N4W3lPWoXezyaygiG0PWsfz5qsQlFCO8tsRfyoU0=
+	t=1705913989; cv=none; b=F7/DKP0cBwXeIzDlSztd2oTh0vD6Vqx6rrhgPz9ekm0RJUBi84f2R7nE81PdSLHG4C7T63HGHQ+cmWcgIT4HYDDoj3+yCLuVnOX1WLXVy0Dh+wCiV50uHrUcKfBgj8egRpC9BhYIFS67hA3DhcZgDLwH40E1TGxZsYvLxy4yygo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705913526; c=relaxed/simple;
-	bh=RDlXLgjmyDk4H8dtoV/gITDi7dwzQh4uY4wPHNM4HUQ=;
-	h=Message-ID:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=POg4zJRVmYO9p8dCvU30ClJ0BKkFmQaH7GgZi7j2D7YZHfhb0rJw+4ogs8rOg20sOyABMUeR/f48VUsCa8LBgjwPXr91i2gxossTfedMUYzM47yddEvf/+2IVkFoWaam9/LQ2C2ogZ3kv1IHMd2mM3lQndnG9/+diywyk7DVxzw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=YHeg8/Hq; arc=none smtp.client-ip=209.85.221.45
+	s=arc-20240116; t=1705913989; c=relaxed/simple;
+	bh=a1Nax+OcgRF1h7eqq3Sc3ccVTy0CW6n1FzeBThwY2B8=;
+	h=From:Content-Type:Mime-Version:Subject:Message-Id:Date:To; b=im7JvASjENgqLnfla1LUalHmQz4AjseTAMsONBlyXqLts8CapaPbCKLtIWj3rEFYhTcxtyu1f4PVW2wlpFnAbUiCpaVKW9IO4pwXkzes9P82wibuBN0oSdCypWF/IGC7nMpyCheIZ6o3aAEeDFP17to1hkXi4yzi6diaD0HpZsM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ddGqoYyZ; arc=none smtp.client-ip=209.85.128.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YHeg8/Hq"
-Received: by mail-wr1-f45.google.com with SMTP id ffacd0b85a97d-33934567777so937227f8f.1
-        for <git@vger.kernel.org>; Mon, 22 Jan 2024 00:52:04 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ddGqoYyZ"
+Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-40e60e137aaso32854565e9.0
+        for <git@vger.kernel.org>; Mon, 22 Jan 2024 00:59:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1705913523; x=1706518323; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=mkozd3Lgt1REvxVaC0GAXuLlZuqltdDy5Eq8HXf/kfg=;
-        b=YHeg8/HqgIK0XcdtHbYdTUXmgWl8Z4+BVw5Y+39Whprx/TRfBZlj6AbQ+hJar9PtKQ
-         G1whHUUFyf0d2UfSN9Ilvg2Rwo2Y0vPJY4DozJDt+L60Dnr6XlfEA1/ddG+/Y/kPlEkI
-         svmrxtmFbHzvv/fgyTHn72mtJ0A2sqQNHpekT0POlTqd9+lqJlXE85ztoceh8MTKcwQt
-         njtY907vwfSQPjvZdWzuoBqgZFG7gkN6TLNpphlHEAt/jzdS1jCvlVWRTkEKa9s+Jlzu
-         2arzJ8NF7MaAj3t64lpJrYA3pzDdI8GYewGIGqeddNBPRZyPKYI1qdt80rKPXrMoOVrL
-         y8vw==
+        d=gmail.com; s=20230601; t=1705913986; x=1706518786; darn=vger.kernel.org;
+        h=to:date:message-id:subject:mime-version:content-transfer-encoding
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=xTv8aGlM95ZnYsecOgzO693dxyeJhkCE71lONo9bWIQ=;
+        b=ddGqoYyZMAPLgqMsO3WLQlWd1NDQJufu/7KFGWrcQB2qm/UytNFqxzOAqf9n2w7Dly
+         uqDERz9PokMoLv9OMVHvW6jYXmvI22nHNnXNs3SVtZldAIUcv5FgXqkSKcaPiyM3XC8j
+         agDH3CgPDFhzdFi8b0z4KOs1bfSpoBI0yA6uP7vJfDB9Q8jWANNxvePHiPQs4s717aNR
+         P8WctLk+44x0Aah5Ys3Dfb8SP7qw1XWjpJF/f1zcP3ZrXaEuENLHO2XQk5NICz5e8BtD
+         emoay81TBqx1Y0iVB7JGJKHAepr2jNdSJdOYkacEKDV7tZ+zIL251CKnwBAoZJDdN3OU
+         UJyQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1705913523; x=1706518323;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=mkozd3Lgt1REvxVaC0GAXuLlZuqltdDy5Eq8HXf/kfg=;
-        b=GNTYXPbwZrX3rREQhFiP0fVfIUsadCVfDgKBUmxR25tq7EJWLWsE7IVIK8FH95lzyT
-         YYIRGGGQ+NFc/PEfsXV32ivCjEpA4aTy8FUXBtmqEzUMWYR9b4evZl9DShD6ReKSYLLS
-         d97gMB+CmO3wMxb/r60HRkX/sHh88SaB6jNkwFWIZMGafzTT3afDo9C4stznvPgaBdnf
-         l/Bs1reRxRNu4qWK0LCGkyRoEnnvMoR69nDdrs0Q1I5yJv7ojz6iFVTVwZ/APPTbalSt
-         hup+JX7L2LuoX40gEs3f4p06aXxfJLaazHoRMpR7hqfQUPzioc4jdbZDxCJ8TtO1ITCr
-         +mKQ==
-X-Gm-Message-State: AOJu0Yz3O811BIl7q3vcW5gF7Hh0riRXxq5xG4y+YazjfIKicPT9l5ll
-	GdVyD1ds/RnKO/D2STVao6z/tA5neC9CzAsYSy6jhbcrSVukUAAyE2VFOzZU
-X-Google-Smtp-Source: AGHT+IFxIpSy/V3L4ZyEgG9gg+K7ycPg4vtOmyaWjnTI3W7c2eS6auk5lc2ftq4SpkvbCaHB8NQGug==
-X-Received: by 2002:a05:6000:184c:b0:339:20de:b0f2 with SMTP id c12-20020a056000184c00b0033920deb0f2mr3151716wri.93.1705913522299;
-        Mon, 22 Jan 2024 00:52:02 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id a2-20020a5d5702000000b0033928aadde1sm5795169wrv.48.2024.01.22.00.52.01
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 22 Jan 2024 00:52:01 -0800 (PST)
-Message-ID: <1ece724b1ca7f71542bfef42795fce798563ecde.1705913519.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1646.git.1705913519.gitgitgadget@gmail.com>
-References: <pull.1646.git.1705913519.gitgitgadget@gmail.com>
-From: "Mohit Marathe via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Mon, 22 Jan 2024 08:51:59 +0000
-Subject: [PATCH 2/2] patch-id: replace `atoi()` with `strtol_i2()`
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        d=1e100.net; s=20230601; t=1705913986; x=1706518786;
+        h=to:date:message-id:subject:mime-version:content-transfer-encoding
+         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=xTv8aGlM95ZnYsecOgzO693dxyeJhkCE71lONo9bWIQ=;
+        b=OM7udhPqAyrjtC+5jpxdA9CMRKznAP9MfbXsZFvzH3GwhUGLZG4fOfi8/JchkdXbaC
+         KZrftHjkPmcyTxlet/23SHxFHwI0z9Dsi+q4oIZ19wpPxoFh3FFnghW8vAaEl79Jc8Mh
+         z0xHLAnBPDFmrt5O8KymNVkHA2rdRLvc7VhFqIElwFfulmnNK/cTV49Q1QwXc337geE7
+         EgjFsnWSxEOIPrMpdTJbBGMVJtNMycVnRp7bEpPTyKIbbwD+3DlRcP0CZKW2RlDtoXl5
+         DW3DWg4T115JkhHW/FGQ8ukgMlR+6BU6OJ2p9aKrU81cBG2AgksOnRFTCjnfTFy/ZXMJ
+         1AyQ==
+X-Gm-Message-State: AOJu0YwCOnNQ6ynPlaVaQ8nxw0E3a11QMUJUuHB+awmYU9zEyU5oiVMa
+	fVweL8EiK5vbyk0Egh+cKL5eUsbdw/qtaZRNZaW/gwBuAuB8C7TFU7vB6pK5
+X-Google-Smtp-Source: AGHT+IE1UwJxis7Q5+wAKZyr37g+sjbK6BINf/zBYunngek9lCIdt5AAIAloj6abABDeVxiz002DYA==
+X-Received: by 2002:a05:600c:19cf:b0:40e:50e9:9b0c with SMTP id u15-20020a05600c19cf00b0040e50e99b0cmr2056916wmq.181.1705913986238;
+        Mon, 22 Jan 2024 00:59:46 -0800 (PST)
+Received: from smtpclient.apple ([2a02:c7c:534b:4500:3561:21f4:29f0:53e4])
+        by smtp.gmail.com with ESMTPSA id n22-20020a05600c4f9600b0040e53f24ceasm38234468wmq.16.2024.01.22.00.59.45
+        for <git@vger.kernel.org>
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 22 Jan 2024 00:59:46 -0800 (PST)
+From: Zsolt Imre <imrexzsolt@gmail.com>
+Content-Type: text/plain;
+	charset=us-ascii
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3774.200.91.1.1\))
+Subject: Git Push Always uses Protocol Version 0
+Message-Id: <FD545E92-18EF-44B5-A7D5-61ECADD880E6@gmail.com>
+Date: Mon, 22 Jan 2024 08:59:35 +0000
 To: git@vger.kernel.org
-Cc: Mohit Marathe <mohitmarathe@proton.me>,
-    Mohit Marathe <mohitmarathe23@gmail.com>
+X-Mailer: Apple Mail (2.3774.200.91.1.1)
 
-From: Mohit Marathe <mohitmarathe23@gmail.com>
+Hi there,
 
-The change is made to improve the error-handling capabilities
-during the conversion of string representations to integers.
-The `strtol_i2(` function offers a more robust mechanism for
-converting strings to integers by providing enhanced error
-detection. Unlike `atoi(`, `strtol_i2(` allows the code to
-differentiate between a valid conversion and an invalid one,
-offering better resilience against potential issues such as
-reading hunk header of a corrupted patch.
+I'm not entirely sure if this is a bug or I am missing something, but I =
+thought I would share in the hope someone can help out. I'm playing =
+around with Git and trying to implement a git server that communicates =
+over HTTP and supports Git protocol version 2 *only*.
 
-Signed-off-by: Mohit Marathe <mohitmarathe@proton.me>
----
- builtin/patch-id.c | 14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+When I `clone` a repository, the Git client (version 2.43.0), after =
+fetching the capabilities using protocol version 2, it proceeds to fetch =
+the refs, again, via protocol version 2 using the `ls-refs` command.  =
+However, when I try to `push` my changes to the repo, the Git client =
+refuses to use protocol version 2 and tries to obtain the ref list using =
+protocol version 0, even if I pass in the `-c protocol.version=3D2` =
+command line argument.
 
-diff --git a/builtin/patch-id.c b/builtin/patch-id.c
-index 3894d2b9706..6bfb263de5e 100644
---- a/builtin/patch-id.c
-+++ b/builtin/patch-id.c
-@@ -1,3 +1,4 @@
-+#include "git-compat-util.h"
- #include "builtin.h"
- #include "config.h"
- #include "diff.h"
-@@ -29,33 +30,32 @@ static int scan_hunk_header(const char *p, int *p_before, int *p_after)
- {
- 	static const char digits[] = "0123456789";
- 	const char *q, *r;
-+	char *endp;
- 	int n;
- 
- 	q = p + 4;
- 	n = strspn(q, digits);
- 	if (q[n] == ',') {
- 		q += n + 1;
--		*p_before = atoi(q);
-+		if (strtol_i2(q, 10, p_before, &endp) != 0)
-+			return 0;
- 		n = strspn(q, digits);
- 	} else {
- 		*p_before = 1;
- 	}
- 
--	if (n == 0 || q[n] != ' ' || q[n+1] != '+')
-+	if (q[n] != ' ' || q[n+1] != '+')
- 		return 0;
- 
- 	r = q + n + 2;
- 	n = strspn(r, digits);
- 	if (r[n] == ',') {
- 		r += n + 1;
--		*p_after = atoi(r);
--		n = strspn(r, digits);
-+		if (strtol_i2(r, 10, p_after, &endp) != 0)
-+			return 0;
- 	} else {
- 		*p_after = 1;
- 	}
--	if (n == 0)
--		return 0;
--
- 	return 1;
- }
- 
--- 
-gitgitgadget
+Is there a way to make the client use only protocol version 2 instead of =
+mixing the different protocols?
+
+Thanks in advance for any help/guidance.
+
