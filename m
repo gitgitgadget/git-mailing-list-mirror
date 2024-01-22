@@ -1,59 +1,59 @@
-Received: from mail-wm1-f54.google.com (mail-wm1-f54.google.com [209.85.128.54])
+Received: from mail-wr1-f49.google.com (mail-wr1-f49.google.com [209.85.221.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37CDD40BE1
-	for <git@vger.kernel.org>; Mon, 22 Jan 2024 19:55:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9F183DB86
+	for <git@vger.kernel.org>; Mon, 22 Jan 2024 20:13:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705953303; cv=none; b=ABpdYDPpCSOizpUU4a8fZwVQnzGAnvEs+L70iVot9RBzd+6wQfwt4+ED3E15DDo2XN1OVRKaeg2tyJEJvuBR2PuVigAVLCv99jzTPSEp80URKnR0wd+AlU49fweUmNICtL6/96R3HeXZYVDawSWKRkwnrA4p3FNCV7MPKvQNRq0=
+	t=1705954407; cv=none; b=lkb/9bYkMdJgZgz8nBWWYI0xKjcaGDVfE6cPHgphm9MG7Vde1Uuiylr9Z8eXTqPJvR1qA63IayHnkojRb51VgeavyZnb9Ztd7Gakftt8QqJ93VNSj5mpDJgO9Sg6FnTSIuH4cbuLCGcMZJREu00hUwYjqwawOdhG6c42Pwz8DlU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705953303; c=relaxed/simple;
-	bh=gHZVHLtA7G9ClGZkFsc2MCwZkq0EnkX9ShpMEiORKfs=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=dGipHWHP2r1jsaROQKZUyvxFtlvQ6f4QfWRQYeM4Z30oBzcvWuxmSQKrCfINwzdR9HKjmnt2dAIPYIf2fPAw/jfFsTYUGfv3B3HUMR4zBK2NsoBk6+CwcfGnUhd6yAXs0NMhQvnKrW1Dd2JDTt39xYVo0zJYmK/QwFUg6Zkl3Xo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dv1U3jTo; arc=none smtp.client-ip=209.85.128.54
+	s=arc-20240116; t=1705954407; c=relaxed/simple;
+	bh=O2zoiszKAu6c+n4Nu5g4q7KJS35rLE8QGfrwZESYwDA=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:Cc:
+	 In-Reply-To:Content-Type; b=QLWHTOLm8nhjTmj139zeoyz9ddi21nuXG0N6Ps4auNcnNyngalVOJdQmQPFCOJIvaYeGAlEmfVAFMp7bKS3ALjayqxcF67IHup70ATOO66+eT5tjHAqZmbkQdYsu/TCRJkPgP5sD4rzLHextqcVOfLoocfKCTpLB9p6+J9Le4ZI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=H8ldAe4o; arc=none smtp.client-ip=209.85.221.49
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dv1U3jTo"
-Received: by mail-wm1-f54.google.com with SMTP id 5b1f17b1804b1-40e76109cdeso40647985e9.0
-        for <git@vger.kernel.org>; Mon, 22 Jan 2024 11:55:00 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="H8ldAe4o"
+Received: by mail-wr1-f49.google.com with SMTP id ffacd0b85a97d-339208f5105so3118203f8f.1
+        for <git@vger.kernel.org>; Mon, 22 Jan 2024 12:13:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1705953299; x=1706558099; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+        d=gmail.com; s=20230601; t=1705954404; x=1706559204; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:cc:from:references:to
          :content-language:subject:reply-to:user-agent:mime-version:date
          :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=8Fe1nDdOVHbSQyuRf8d3Lnj6s77HB6LFcWcGlxGc/R4=;
-        b=dv1U3jTopFNYzqbYYXy+LXbCGRF/kTOByW1s69syaHPZbg/8jvZHJ5DRRMiiv4hFeA
-         ItY3LTvAOY8JGbEFIQTD/pxRs3AovpVCiS06DtyqDdAEsfWFA6TjNjZ5Tn0tJMdUbETq
-         IHL+a5y827xS5WF2zvP47+cZ+Vaxoo389iejg3V2NWkGndr1EU0dGRcqQvyvdWxDCkfy
-         Vxma6gesYF8/zdRSGajuH54OYJhmtTI1dAMJX2CuR2Fts2vicrrj50++eiSgwKjnP+aJ
-         KtbK2UinBv4uFW5N/qKf2JnsKo3XMRUlEskr3+9eNXEvAeGbwiJUV8VE9e2igTO7Bh5x
-         QDDw==
+        bh=8AzHPA+4yPx7LyXG3RgofzLIgOv93IRz8DjT/NHZPD0=;
+        b=H8ldAe4ojJ2CNQveQErO70xNg/j0GdE9piqePy44OsN/X6/urm4IAMgJQIdBhNzhok
+         EX1c4oxOhK8TLBxF+HdgRHctQrOjf1OTT+MiV0793fuT+AXw7Stdw7sSP9D62UStqFv7
+         kHWK6Q3Smk9J3b0pVlE3nvSPLM7FwA/pXIw8Y2o4qG0yQw+Cpx5ClqXBRSmYYJd/Bgtj
+         M0U+PAG95eEVK6cSnctApvZc1tzXSq33aQKs5nmQXudTZoEp5abmpHHsgp8a/dT9ZuFV
+         9dc+eghaTDfnK+0OA8w336lz1u5MNBzBxH7Y3dsqqsDBku0H3WmmXgWEJOaZCHgnTcoW
+         eW7w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1705953299; x=1706558099;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+        d=1e100.net; s=20230601; t=1705954404; x=1706559204;
+        h=content-transfer-encoding:in-reply-to:cc:from:references:to
          :content-language:subject:reply-to:user-agent:mime-version:date
          :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=8Fe1nDdOVHbSQyuRf8d3Lnj6s77HB6LFcWcGlxGc/R4=;
-        b=UKTdWSY45X+nHCSsW4eJ1ALMqzinzK+KJIga7EiZZzMHTpCmIDXlrWRJikcCXKVy1O
-         0fuUrf+4pqm5fTAKIpvMZnc4f0gLwmUlgvZ/qOloBS+oSV0hTbyWFDBr8xGN5RS0oOrm
-         6+9AXTHa42RVPKlgiWwbfLzAAewGafQNrc03/oSy1KRb60YE5VlREgjsqDeKz+TASFgK
-         lY+u6wkOGCZC2LXJc6YIWSrW7A4HTjfqZ0T/SMGSQ/T09jGx+Go4JYtCe4y/SHkPhReb
-         PbQW9roeSRRULpoCcrEkwjzK38nyG+s4fpUTc1QPf1FbEjybeltJQCeWper37cXFQFew
-         LmQg==
-X-Gm-Message-State: AOJu0Yz0wjg8MPiwceir6Npa1P5/XR+fKeecrhdNOu8zngj4PLUPQozc
-	kEE8Wd9TK66BN4AtcM2Hut5XCCLuPV7uJlPrlbBSQTZ3aDIaImhU6134/4Nq
-X-Google-Smtp-Source: AGHT+IFXCGt9JcUwa6ZXAUnvbNtTrqNJdGdNLjdY/BN19qc9UNhq0RvOJQpCd0pz2SnKUXLmQEZsNw==
-X-Received: by 2002:a1c:7711:0:b0:40e:5cb5:916c with SMTP id t17-20020a1c7711000000b0040e5cb5916cmr2728463wmi.129.1705953299070;
-        Mon, 22 Jan 2024 11:54:59 -0800 (PST)
+        bh=8AzHPA+4yPx7LyXG3RgofzLIgOv93IRz8DjT/NHZPD0=;
+        b=v0V/ZsdvQdt0uKLKYHrYL8rtEhmP3Fewqt4rDWUu/tOaEoPqyc54rdhwkJljG+fBKD
+         51jB+ZtNFo7eEnKmk/OcTAcQOIa/Xtt2bkMdSVWqzPd9kiY0sgm+wSnW8rtuxfeEb/nV
+         5Ip5+XEs5IQ8hNg5qIK93R4gtTB0ElUFRd9dig8uy00CWMII4VyJrU7z6wYdMUf3Y0s+
+         rpZknwJo8UyXkT/BBUrm4BPrGBoY4lYcIEPIn9BXMMO6o/PlqVm+2cJ4/rq/bAoAUq8+
+         D0k3eKAdan7RFYdcSWKwncpIMAzD3KuoD+8c/y/wyzmKTwzgsYX/Yn8p4htNnknij/UI
+         yfFQ==
+X-Gm-Message-State: AOJu0YyWiF5xfGUuS4VaZOng98kDo9bcCCdQY+qDtNjs2LNU3qDQ+Mp7
+	K39uM19CWCa7uqMqFYjxJlWZLvHz2XvX/JsLj+5srA256Zi+gqVQ
+X-Google-Smtp-Source: AGHT+IE06wH975vmK3G396ZrTSixfDb9plX13baY2qLZyD9KmLBzEdMcY147axOgkMvpeUBBsJU8yw==
+X-Received: by 2002:adf:f405:0:b0:337:6128:7574 with SMTP id g5-20020adff405000000b0033761287574mr1666752wro.55.1705954403800;
+        Mon, 22 Jan 2024 12:13:23 -0800 (PST)
 Received: from [192.168.1.212] ([84.64.64.237])
-        by smtp.gmail.com with ESMTPSA id bh11-20020a05600c3d0b00b0040eabc7cfacsm5793087wmb.16.2024.01.22.11.54.58
+        by smtp.gmail.com with ESMTPSA id v29-20020adfa1dd000000b0033929310ae4sm7037840wrv.73.2024.01.22.12.13.23
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 22 Jan 2024 11:54:58 -0800 (PST)
-Message-ID: <a7712d26-7c63-4c77-b339-126d05be6b0d@gmail.com>
-Date: Mon, 22 Jan 2024 19:54:58 +0000
+        Mon, 22 Jan 2024 12:13:23 -0800 (PST)
+Message-ID: <ee977173-bc6d-48f6-9bc8-e1d84fe3d95d@gmail.com>
+Date: Mon, 22 Jan 2024 20:13:22 +0000
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -62,47 +62,133 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH 4/7] sequencer: introduce functions to handle autostashes
- via refs
+Subject: Re: [PATCH 2/5] refs: make `is_pseudoref_syntax()` stricter
 Content-Language: en-US
-To: Patrick Steinhardt <ps@pks.im>, Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org
-References: <cover.1705659748.git.ps@pks.im>
- <abcf1f5cf428072d19639dc4209e0c1554f3eb53.1705659748.git.ps@pks.im>
- <xmqqbk9hjdai.fsf@gitster.g> <Za5IoEjs0q7cf354@tanuki>
+To: Karthik Nayak <karthik.188@gmail.com>, git@vger.kernel.org
+References: <20240119142705.139374-1-karthik.188@gmail.com>
+ <20240119142705.139374-3-karthik.188@gmail.com>
 From: Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <Za5IoEjs0q7cf354@tanuki>
+Cc: Junio C Hamano <gitster@pobox.com>
+In-Reply-To: <20240119142705.139374-3-karthik.188@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 22/01/2024 10:51, Patrick Steinhardt wrote:
-> On Fri, Jan 19, 2024 at 12:09:25PM -0800, Junio C Hamano wrote:
->> Patrick Steinhardt <ps@pks.im> writes:
->> The conversion (rather, the introduction to allow refs API to be
->> used to access them) look correct, but offhand I do not know what
->> the implication of leaving the file based interface would be.
+Hi Karthik
+
+On 19/01/2024 14:27, Karthik Nayak wrote:
+> The `is_pseudoref_syntax()` function is used to determine if a
+> particular refname follows the pseudoref syntax. The pseudoref syntax is
+> loosely defined at this instance as all refs which are in caps and use
+> underscores. Most of the pseudorefs also have the "HEAD" suffix.
 > 
-> We have said in past discussions that the sequencer state should remain
-> self contained, and that requires us to keep the files-based interface.
-> Refactoring it would likely be a larger undertaking, as we have also
-> said that refs must either have pseudo-ref syntax or start with "refs/".
+> Using this information we make the `is_pseudoref_syntax()` function
+> stricter, by adding the check for "HEAD" suffix and for refs which don't
+> end with the HEAD suffix, matching them with a predetermined list.
 > 
-> The sequencer with its "rebase-merge/autostash" files doesn't conform to
-> either of those requirements, so we would also have to rename those
-> reflike files. I doubt that this is really worth it, so I would keep
-> those around as internal implementation details of how the sequencer
-> works. These refs are not supposed to be accessed by the user in the
-> first place, and we do not document their existence to the best of my
-> knowledge. Also, `git rev-parse rebase-merge/autostash` would fail.
+> This requires fixing up t1407 to use the "HEAD" suffix for creation of
+> pseudorefs.
 
-Exactly "rebase-merge/autostash" is a detail of the rebase 
-implementation, it is not a ref that users should be using.
+I'm concerned that this change is a regression. is_pseudoref_syntax() is 
+used by is_current_worktree_ref() and so scripts that create pseudorefs 
+that do not conform to your new rules will break as git will no-longer 
+consider the pseudorefs they create to be worktree specific. The list of 
+hard coded exceptions also looks quite short, I can see MERGE_AUTOSTASH 
+and BISECT_START are missing and there are probably others I've not 
+thought of.
 
-> So overall I think it's fine to leave this internal sequencer state as
-> self-contained as it is.
-
-That's my feeling too
+The commit message would be a good place to discuss why you're making 
+this change, the implications of the change and any alternative 
+approaches that you considered. As I understand it you're tying to get 
+round the problem that the files backend stores pseudorefs mixed up with 
+other non-ref files in $GIT_DIR. Another approach would be to read all 
+the files whose name matches the pseudoref syntax and see if its 
+contents looks like a valid ref skipping names like COMMIT_EDITMSG that 
+we know are not pseudorefs.
 
 Best Wishes
 
 Phillip
+
+> Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
+> ---
+>   refs.c                        | 21 ++++++++++++++++++---
+>   t/t1407-worktree-ref-store.sh | 12 ++++++------
+>   2 files changed, 24 insertions(+), 9 deletions(-)
+> 
+> diff --git a/refs.c b/refs.c
+> index 5999605230..b84e173762 100644
+> --- a/refs.c
+> +++ b/refs.c
+> @@ -829,6 +829,14 @@ int is_per_worktree_ref(const char *refname)
+>   
+>   int is_pseudoref_syntax(const char *refname)
+>   {
+> +	/* TODO: move these pseudorefs to have _HEAD suffix */
+> +	static const char *const irregular_pseudorefs[] = {
+> +		"BISECT_EXPECTED_REV",
+> +		"NOTES_MERGE_PARTIAL",
+> +		"NOTES_MERGE_REF",
+> +		"AUTO_MERGE"
+> +	};
+> +	size_t i;
+>   	const char *c;
+>   
+>   	for (c = refname; *c; c++) {
+> @@ -837,10 +845,17 @@ int is_pseudoref_syntax(const char *refname)
+>   	}
+>   
+>   	/*
+> -	 * HEAD is not a pseudoref, but it certainly uses the
+> -	 * pseudoref syntax.
+> +	 * Most pseudorefs end with _HEAD. HEAD itself is not a
+> +	 * pseudoref, but it certainly uses the pseudoref syntax.
+>   	 */
+> -	return 1;
+> +	if (ends_with(refname, "HEAD"))
+> +		return 1;
+> +
+> +	for (i = 0; i < ARRAY_SIZE(irregular_pseudorefs); i++)
+> +		if (!strcmp(refname, irregular_pseudorefs[i]))
+> +			return 1;
+> +
+> +	return 0;
+>   }
+>   
+>   static int is_current_worktree_ref(const char *ref) {
+> diff --git a/t/t1407-worktree-ref-store.sh b/t/t1407-worktree-ref-store.sh
+> index 05b1881c59..53592c95f3 100755
+> --- a/t/t1407-worktree-ref-store.sh
+> +++ b/t/t1407-worktree-ref-store.sh
+> @@ -61,18 +61,18 @@ test_expect_success 'create_symref(FOO, refs/heads/main)' '
+>   # PSEUDO-WT and refs/bisect/random do not create reflogs by default, so it is
+>   # not testing a realistic scenario.
+>   test_expect_success REFFILES 'for_each_reflog()' '
+> -	echo $ZERO_OID > .git/logs/PSEUDO-MAIN &&
+> +	echo $ZERO_OID >.git/logs/PSEUDO_MAIN_HEAD &&
+>   	mkdir -p     .git/logs/refs/bisect &&
+> -	echo $ZERO_OID > .git/logs/refs/bisect/random &&
+> +	echo $ZERO_OID >.git/logs/refs/bisect/random &&
+>   
+> -	echo $ZERO_OID > .git/worktrees/wt/logs/PSEUDO-WT &&
+> +	echo $ZERO_OID >.git/worktrees/wt/logs/PSEUDO_WT_HEAD &&
+>   	mkdir -p     .git/worktrees/wt/logs/refs/bisect &&
+> -	echo $ZERO_OID > .git/worktrees/wt/logs/refs/bisect/wt-random &&
+> +	echo $ZERO_OID >.git/worktrees/wt/logs/refs/bisect/wt-random &&
+>   
+>   	$RWT for-each-reflog | cut -d" " -f 2- | sort >actual &&
+>   	cat >expected <<-\EOF &&
+>   	HEAD 0x1
+> -	PSEUDO-WT 0x0
+> +	PSEUDO_WT_HEAD 0x0
+>   	refs/bisect/wt-random 0x0
+>   	refs/heads/main 0x0
+>   	refs/heads/wt-main 0x0
+> @@ -82,7 +82,7 @@ test_expect_success REFFILES 'for_each_reflog()' '
+>   	$RMAIN for-each-reflog | cut -d" " -f 2- | sort >actual &&
+>   	cat >expected <<-\EOF &&
+>   	HEAD 0x1
+> -	PSEUDO-MAIN 0x0
+> +	PSEUDO_MAIN_HEAD 0x0
+>   	refs/bisect/random 0x0
+>   	refs/heads/main 0x0
+>   	refs/heads/wt-main 0x0
