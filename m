@@ -1,77 +1,108 @@
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yb1-f176.google.com (mail-yb1-f176.google.com [209.85.219.176])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFE9347F72
-	for <git@vger.kernel.org>; Mon, 22 Jan 2024 20:44:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45159405C1
+	for <git@vger.kernel.org>; Mon, 22 Jan 2024 20:46:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705956264; cv=none; b=eWXuYJrlHSNAZDA26eXvs8VhqPitscvCDsk7jC6UJPrDEi7JamcBbF+zv1g8eq9KWg3Ud2dNWBzcgQ9Inm3nyuMfqc3x4r/lCSgBeiCyHj/7Ib/ZGzsnUBtIaX5lcqdz3Tl3tpEEUWScDt7pxSxGDozJhiXwGOR9313TB1A7LbI=
+	t=1705956386; cv=none; b=loJ7gwcvSbcGuLFSPAyWC+87DrEy9kSWUuYstgZI4/F/Ec9r8NdA4d99IFC7aZueRTNZz/+sIIE8SWmqq+JMg9VTpy0ol/YFaFsO1RamyXb0rNOWayRmw9IrAqjv2dm2SAbL/H0MsmCc8xEtUWhsZ1F03zoAhStzn6MIXVJTUfU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705956264; c=relaxed/simple;
-	bh=UGiJL9iduO7oK7tj0JNKcU3dV55N4OvcvFR0MMilhH4=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=FXzRiHQpwj9QNG9Al2TiBDW131fnHvk9QcwI26BCjvKNo/3a/wSatGYhCtN3zeah/H1shd3xuVepUvu4WHwMmVOLg0MQ1771NAaBNIGweJM+qT0PY5oY+T+Jwj63gIhNSthkiMAVUnrLxEVmAL4PiiftwmvOS0t/AZSQHp1EwcE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=LZnlYHB2; arc=none smtp.client-ip=64.147.108.70
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1705956386; c=relaxed/simple;
+	bh=QaJ6i3+3je7q7wdeApOBUhziYkNpxUtAaoc0hFagRT4=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Content-Type; b=AKsplDtWn8v3e+DG7ieQvpzsLN2ptBllbmZ4g9mo3dacfifpKfGXdFCINxdw6s/FA6aQS6/I7Fm+TVbTUofFdveZkXkGQApCwsMpQTHiOP7mvIpVX3ddbVuTv2iuaZkZ8Cd09wfvE+fFbheOk9bTo10eg85jMGcoNJLpmdWcyjE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Ncg0+ba4; arc=none smtp.client-ip=209.85.219.176
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="LZnlYHB2"
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 6F6491D2D5D;
-	Mon, 22 Jan 2024 15:44:21 -0500 (EST)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=UGiJL9iduO7o
-	K7tj0JNKcU3dV55N4OvcvFR0MMilhH4=; b=LZnlYHB2GSa0S3r962qGXAyy4NLU
-	GfwvLSxu7M1L++f7EVLAoAZAiBKf2ryNuQ9UJVLbMan/VDxvS25Qxj6Ow8ETR6Ds
-	6FVdiCh4bJRncxwLJCOB9hLVLzXa8KNO8od5muPq5N2IuI87X6Zf7TcIy2vL0BG6
-	e3tsfIeqXbJrkrk=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 66DBA1D2D5C;
-	Mon, 22 Jan 2024 15:44:21 -0500 (EST)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.200.93])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id C8ED51D2D5A;
-	Mon, 22 Jan 2024 15:44:20 -0500 (EST)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Carlo Marcelo Arenas =?utf-8?Q?Bel=C3=B3n?= <carenas@gmail.com>
-Cc: git@vger.kernel.org,  sandals@crustytoothpaste.net
-Subject: Re: [RFC PATCH] editorconfig: limit code lines to 80 characters
-In-Reply-To: <20240122201420.72802-1-carenas@gmail.com> ("Carlo Marcelo
- Arenas
-	=?utf-8?Q?Bel=C3=B3n=22's?= message of "Mon, 22 Jan 2024 12:14:20 -0800")
-References: <20240122201420.72802-1-carenas@gmail.com>
-Date: Mon, 22 Jan 2024 12:44:19 -0800
-Message-ID: <xmqqle8hrtcs.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Ncg0+ba4"
+Received: by mail-yb1-f176.google.com with SMTP id 3f1490d57ef6-dc226bad48cso2185147276.3
+        for <git@vger.kernel.org>; Mon, 22 Jan 2024 12:46:25 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1705956384; x=1706561184; darn=vger.kernel.org;
+        h=content-transfer-encoding:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=QaJ6i3+3je7q7wdeApOBUhziYkNpxUtAaoc0hFagRT4=;
+        b=Ncg0+ba4+/s++VZAnhCqvb8a9fRHvaeee3rh2AMvVS6IQOS8xFElc+G2Aitq1U1WfR
+         bfz/V1HuZ/eq7LjFaY+Ym40LgNYP0EWoRnwS3DAoRhqyNwkBcFtL6SjzPT0wKsfQCSmt
+         Lrnbt+CVNccgWLArld2m9QR1DVyAW/AZyfFXCFLpxNhkDc2dzSgklBF3HzDz1hO8RtaG
+         aKt/uWjD2lZs3RalGzcis+FUvyqqvrSmyPRpj/thQDhNep4FKrHToa11PWn6H0zvW/9w
+         ygKUT3EanwVLBcPaNhbbN5OyyBSkr2SA4PtplUTlBP8kpDWYUndoW4qBmV+W50/puskX
+         PEjg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1705956384; x=1706561184;
+        h=content-transfer-encoding:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=QaJ6i3+3je7q7wdeApOBUhziYkNpxUtAaoc0hFagRT4=;
+        b=BzGXW6LMk4GTmcMQnqLs8d0OOZgzYpLQeW6xmOBIlpR3K8qZgTfie2OBjDRl419sRo
+         9F5U7EMuVI/EHSs/4Mz725D3aMiH7qMww1ckcAZqlNnMkA7nvPA16OICfp9gkEHnzk5y
+         XGco22mP4h+/zySCDGhNUW5SJavvS834pphXckWGgSaumdERpWGdOGMZbMCDvu1U23MU
+         DwbXGVWt2a2lM7ULif7kesDAQHWCWWhlKGvHvVSxT6SMYrW1CwsfiOnZKdaI2emTu/bX
+         ML1Y87SYiKXbQjP5m7PZwbzVd8nn5KWEvxXHvbd8DEd99VeT9gESsBD50p9kiK3/U1WY
+         1IoA==
+X-Gm-Message-State: AOJu0Yz6lgIjbvI5X3Gix/pohw6CcfL07TTiu6Hxeu8zS7GNzP1ouck5
+	VdfHKKdpeJP+lRtnwLLgqyYP7FaoLCMo0ms3/tlxW04U1oQDwickMFeCGCXJ7Vw2pc9F6gQO1B6
+	FpN2Wu9FTuOGtBXqIdZ/NvF6WsNHZML20
+X-Google-Smtp-Source: AGHT+IEcpUgKvmXsvGeD/7g6pouEgdJCW7+2zvz6tkl9Odk7AhDv1QcgqU1qQZGkzG2a+iFFgNsV38pHeTI2SJ79Uzo=
+X-Received: by 2002:a25:8708:0:b0:dc2:195c:9c8d with SMTP id
+ a8-20020a258708000000b00dc2195c9c8dmr1866273ybl.78.1705956383738; Mon, 22 Jan
+ 2024 12:46:23 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID:
- 04CD1238-B967-11EE-AA7F-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
+References: <CAGF1KhWNaO_TUuCPo2L_HzNnR+FnB1Q4H6_xQ2owoH+SnynzEg@mail.gmail.com>
+In-Reply-To: <CAGF1KhWNaO_TUuCPo2L_HzNnR+FnB1Q4H6_xQ2owoH+SnynzEg@mail.gmail.com>
+From: =?UTF-8?B?UmHDumwgTsO6w7FleiBkZSBBcmVuYXMgQ29yb25hZG8=?= <raulnac@gmail.com>
+Date: Mon, 22 Jan 2024 21:45:46 +0100
+Message-ID: <CAGF1KhWiYX=3R01Odj2yCNgvx=f5+HRCjRJogWf5eBikuATCcg@mail.gmail.com>
+Subject: Fwd: Unexpected behavior of ls-files command when using --others
+ --exclude-from, and a .gitignore file which resides in a subdirectory
+To: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-Carlo Marcelo Arenas Bel=C3=B3n <carenas@gmail.com> writes:
+Hi there!
 
-> Since 6f9beef335 (editorconfig: provide editor settings for Git develop=
-ers,
-> 2018-10-08) a multi editor/IDE configuration file has been provided to =
-help
-> developers follow Documentation/CodingGuidelines.
->
-> The settings are also supposed to mirror what is found in .clang-format=
-, but
-> the "ColumnLimit: 80" setting wasn't included, so correct that.
-> ---
->  .editorconfig | 1 +
->  1 file changed, 1 insertion(+)
+I'm not subscribed to the list, sorry, so I would be more than
+grateful if I'm CC'd, but I'll check the mailing list archive from
+time to time for replies. Thanks in advance.
 
-Sounds quite straight-forward to me.
+It is a common practice for Python virtual environments, pytest and
+other tools (not always Python related) to add a '.gitignore' file in
+directories these tools create on a repository that should NOT be
+committed or tracked. By adding a .gitignore file containing a single
+"*", the entire directory is ignored by git. So far, so good.
+
+But when using 'git ls-files --others --exclude-from=3D<file>', when
+<file> is one of those .gitignore files present in a subdir, makes the
+command use the patterns in that .gitgnore (in this case, the "*")
+against ALL files that would otherwise be listed by using '--others'.
+
+In short: using 'git ls-files --others
+--exclude-from=3Dsubdir/.gitignore' results in an empty listing if
+subdir/.gitignore contains '*". IMHO that pattern should be applied to
+the subdir contents and not to the contents of the current directory.
+That would be consistent with how git uses .gitignore files in
+subfolders.
+
+The obvious solution is to use --exclude-per-directory but it is
+deprecated in favor of --exclude-standard and --exclude-standard shows
+the same behaviour of --exclude-from=3Dsubdir/.gitignore!!!
+
+Is there any way, not using --exclude-per-directory, of listing all
+untracked files in the current repository, but ignoring those matching
+.gitignore files with the patterns matching the corresponding
+subdirectory?
+
+Is this a bug or intended behaviour?
+
+Thanks a lot in advance :)
+
+--=20
+Ra=C3=BAl N=C3=BA=C3=B1ez de Arenas Coronado
+.
