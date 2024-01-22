@@ -1,137 +1,112 @@
-Received: from mail-pf1-f169.google.com (mail-pf1-f169.google.com [209.85.210.169])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B366FC10
-	for <git@vger.kernel.org>; Mon, 22 Jan 2024 22:41:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADE98F9F0
+	for <git@vger.kernel.org>; Mon, 22 Jan 2024 22:42:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705963304; cv=none; b=UuXiJul/JNvQEO2VYjWzvPXybeSCxrV1mGcGQKxFt8l3Eo1eAhWZN+9ZFa1wAV6uDtEhgq4kEnqHWanT9eFb4SbWydHyoNAuAxz4ZYWRnEoxDyvZ8MFUuq6BWI26pRDG7ZxPwaNb8z7/FMhbwy+OBtVGNRtazRa2Kd4R6h45erw=
+	t=1705963349; cv=none; b=Ny4lX24jENrXO+4VQsG5hdf2hbi98UTj7yTjj3jYj+96+YZRnbhq2JiBVzUiiY622TgJaViIogpuls9evNRZcueayXHPYsTXJGaKkakwr0yLvyRQwg8LVBX1k+uVX+sF9M6rKSlKdpwTjJQb90U5OX8yTAjetgr5WwawlOBhBHU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705963304; c=relaxed/simple;
-	bh=v8xIxyt8nwxMjRvj1DlV0XUEFexFwp3aKeKHuU37zUI=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=IOU3H8pMt95Ma2Tuf7UOYQeIcIx9OHIFMb0rZvOzseqype5wG1E8STk5AATb0lWeCktqs1GLcO5RkL8/SXR9XnBpIImpZHVRS2IIZKe96zS/s4elekx/qNd+wYlr6oWPKyg4s8EUylJJGGj0xpMnZZKbRjWa9+zRMQGG3Oi26g4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=github.com; spf=pass smtp.mailfrom=github.com; dkim=pass (2048-bit key) header.d=github.com header.i=@github.com header.b=h981KwYi; arc=none smtp.client-ip=209.85.210.169
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=github.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=github.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=github.com header.i=@github.com header.b="h981KwYi"
-Received: by mail-pf1-f169.google.com with SMTP id d2e1a72fcca58-6db599d5cb8so2771847b3a.0
-        for <git@vger.kernel.org>; Mon, 22 Jan 2024 14:41:43 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=github.com; s=google; t=1705963303; x=1706568103; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=tMXjR0CD8itiNn5n6NRosY61WhCtg4VR5oKQRpRu8z8=;
-        b=h981KwYilpzYYIftheHJX/On3DldCOAJbrVNneyOsb+UtHZE3qKs3sGddJorIf5/hA
-         rJSAyjeWh9JzmVKwFMUPLw7bROXepg/N+4GHVjuk3SsfhSwO+DWaFS5gfV4nMifIcYw4
-         cqo2oWMWhRxD0kl8hNvM34MGKFS/sKYwme8l9AzrEjNR+Op2A1k5nEajbaRpz7ScAmjj
-         cM5QBHoaSKImTJhNw4sUV0f6Sm72UsxIfTJVzl0Fmm1xq/FhMYjRw1i9XDUznCQ4+XPm
-         P+gzDjhVARZv/kKR1xotT7Pb/07TRv8j3/hLAKDFTSv+baAyPqzbtn1qiC8QYjUKQg3v
-         Ithw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1705963303; x=1706568103;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=tMXjR0CD8itiNn5n6NRosY61WhCtg4VR5oKQRpRu8z8=;
-        b=Jg1KQD+RCvYHJCAWuR4PNRuqvLXU20AuzSa1Xr9bOTJ77C+t03O4ZP2uBpABtNQOG3
-         +tRjihFi1lFuKKi5IfCubMapxotkq4+EVOqCjVYfk9w2ABkIecr8wpakY75Dg8G53Q7b
-         8rknMEB40joBWsvQHCmezkQl7MxUf3XGHP6ZkAPh6eMh2bjNSVOnlWbI6E81Y4ZncFU1
-         pVGBaIFUg9/rpnqF52YZZw8ii8HKyB45srl7DGTBuFxbTMt/T1+yE2LnAEKFDQ8z1wEC
-         DGqqFfWKmBH4KHu5+wnMBwUgZe997DlI29Z2CQI2nQZ4iiFyBaHDudjTiEVDc9HqYy+5
-         bS0A==
-X-Gm-Message-State: AOJu0YxbLWtc3Q0KtP6d9OHf5YlIoqO7YlCzOws9/2X4ZWpu3ms2grRK
-	hZ8IZXkd9J4Qi/SbJ0oQWJJkxxb9WaRSBycaSoy9KAYVh210aNrq5rEgeBW8
-X-Google-Smtp-Source: AGHT+IGSXjz72VetCFeYEUBEXzA8NZ6w8l49hJLkb8pTs/HPWg6TdoEo9ObhzS50HDNBrgim9nnz/w==
-X-Received: by 2002:a05:6a00:22cb:b0:6db:db99:565e with SMTP id f11-20020a056a0022cb00b006dbdb99565emr1975000pfj.52.1705963302932;
-        Mon, 22 Jan 2024 14:41:42 -0800 (PST)
-Received: from [192.168.50.41] (172-091-184-234.res.spectrum.com. [172.91.184.234])
-        by smtp.gmail.com with ESMTPSA id g5-20020a636b05000000b005bd980cca56sm8889821pgc.29.2024.01.22.14.41.42
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 22 Jan 2024 14:41:42 -0800 (PST)
-Message-ID: <dbe25fff-e1d4-41f2-8f8f-c538e8c2a77e@github.com>
-Date: Mon, 22 Jan 2024 14:41:41 -0800
+	s=arc-20240116; t=1705963349; c=relaxed/simple;
+	bh=CYTXxuz7pwHnXKuzGxZVNU0FL8lA0OlAkd2H3kpfklw=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=J7+tkIFkwHSUqpm16+JJ47DQIV0CA0f9rYTL/kyun4QVgHfTnQ+QyxtGylgNzDOhNVhXF/4c3+wVzGGVRI0o3uxR4j00vPrJ3JZMAPR8fNE8Ld/2RZbLToRcawb1gNl+4WgLwjCNHKwKbmjI64bNhP8YidDW9JF4eUPPflsznEc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+Received: (qmail 11961 invoked by uid 109); 22 Jan 2024 22:42:26 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 22 Jan 2024 22:42:26 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 10106 invoked by uid 111); 22 Jan 2024 22:42:25 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 22 Jan 2024 17:42:25 -0500
+Authentication-Results: peff.net; auth=none
+Date: Mon, 22 Jan 2024 17:42:23 -0500
+From: Jeff King <peff@peff.net>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Chandra Pratap via GitGitGadget <gitgitgadget@gmail.com>,
+	git@vger.kernel.org, Chandra Pratap <chandrapratap3519@gmail.com>,
+	Phillip Wood <phillip.wood123@gmail.com>,
+	Chandra Pratap <chandrapratap376@gmail.com>
+Subject: Re: [PATCH v4] tests: move t0009-prio-queue.sh to the new unit
+ testing framework
+Message-ID: <20240122224223.GA814674@coredump.intra.peff.net>
+References: <pull.1642.v3.git.1705502304219.gitgitgadget@gmail.com>
+ <pull.1642.v4.git.1705865326185.gitgitgadget@gmail.com>
+ <xmqqwms1tcb0.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] ci(github): also skip logs of broken test cases
-Content-Language: en-US
-To: Philippe Blain via GitGitGadget <gitgitgadget@gmail.com>,
- git@vger.kernel.org
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
- Philippe Blain <levraiphilippeblain@gmail.com>
-References: <pull.1649.git.git.1705808313306.gitgitgadget@gmail.com>
-From: Victoria Dye <vdye@github.com>
-In-Reply-To: <pull.1649.git.git.1705808313306.gitgitgadget@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqwms1tcb0.fsf@gitster.g>
 
-Philippe Blain via GitGitGadget wrote:
-> From: Philippe Blain <levraiphilippeblain@gmail.com>
-> 
-> When a test fails in the GitHub Actions CI pipeline, we mark it up using
-> special GitHub syntax so it stands out when looking at the run log. We
-> also mark up "fixed" test cases, and skip passing tests since we want to
-> concentrate on the failures.
-> 
-> The finalize_test_case_output function in
-> test-lib-github-workflow-markup.sh which performs this markup is however
-> missing a fourth case: "broken" tests, i.e. tests using
-> 'test_expect_failure' to document a known bug. This leads to these
-> "broken" tests appearing along with any failed tests, potentially
-> confusing the reader who might not be aware that "broken" is the status
-> for 'test_expect_failure' tests that indeed failed, and wondering what
-> their commits "broke".
-> 
-> Also skip these "broken" tests so that only failures and fixed tests
-> stand out.
-> 
-> Signed-off-by: Philippe Blain <levraiphilippeblain@gmail.com>
-> ---
->     ci(github): also skip logs of broken test cases
->     
->      * An example of a run with failed tests appearing along with several
->        "broken" tests:
->        https://github.com/phil-blain/git/actions/runs/7589303055/job/20673657755
->      * An example of a run with the same failures, but with this patch on
->        top (no "broken" tests listed):
->      * https://github.com/phil-blain/git/actions/runs/7598605434/job/20694762480
+On Mon, Jan 22, 2024 at 11:09:39AM -0800, Junio C Hamano wrote:
 
-Thanks for making this change, the more focused logs are much nicer to read
-(and ostensibly a bit more performant as well).
-
+> > +		case DUMP:
+> > +			while ((peek = prio_queue_peek(&pq))) {
+> > +				get = prio_queue_get(&pq);
+> > +				if (!check(peek == get))
+> > +					return;
+> > +				if(!check_int(result[j++], ==, show(get)))
+> > +					test_msg("failed at result[] index %d", j-1);
+> > +			}
+> > +			break;
 > 
-> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1649%2Fphil-blain%2Fgithub-ci-skip-broken-v1
-> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1649/phil-blain/github-ci-skip-broken-v1
-> Pull-Request: https://github.com/git/git/pull/1649
+> OK.  So this one checks as we go.  I am not sure how easy to grok a
+> breakage diagnosis with these giving the same message, without
+> giving any context of the failure (e.g. when we are fed
 > 
->  t/test-lib-github-workflow-markup.sh | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
+> 	INPUT  = 6 2 4 GET 5 3 GET GET 1 DUMP
+> 	EXPECT = 2 3 4 1 5 6
 > 
-> diff --git a/t/test-lib-github-workflow-markup.sh b/t/test-lib-github-workflow-markup.sh
-> index 970c6538cba..33405c90d74 100644
-> --- a/t/test-lib-github-workflow-markup.sh
-> +++ b/t/test-lib-github-workflow-markup.sh
-> @@ -42,8 +42,8 @@ finalize_test_case_output () {
->  	fixed)
->  		echo >>$github_markup_output "::notice::fixed: $this_test.$test_count $1"
->  		;;
-> -	ok)
-> -		# Exit without printing the "ok" tests
-> +	ok|broken)
-> +		# Exit without printing the "ok" or ""broken" tests
-
-And the implementation itself is nice and simple. Looks good to me!
-
->  		return
->  		;;
->  	esac
+> and for some reason if the first GET did not yield expected 2 but
+> gave us, say, 6, we only see "left: 2, right: 6" followed by "failed
+> at result[] index 0", and nothing else.  
 > 
-> base-commit: e02ecfcc534e2021aae29077a958dd11c3897e4c
+> If it said something like "We pushed 6, 2, 4 and then did GET" to
+> give the reader a bit more context, it would make it easier to see
+> why we were complaining, i.e. expecting to see 2, instead getting 6.
+> But perhaps that is too much to ask to this code?
+> 
+> I dunno.  Those who wanted to see an easier-to-diagnose output may
+> have better ideas.
 
+I don't have any bright ideas, but here are some dumb ones.
+
+The big issue is that storing and manipulating data in C is tricky and
+requires code to do correctly. And the whole idea of these tests is to
+avoid having a ton of special code. That's why I actually think that the
+existing strategy used in t0009 and elsewhere is pretty good. It pawns
+off output handling and such to existing programs.
+
+But if we really want to keep it all in C, some options are:
+
+  1. We could log what is happening verbosely to stderr (or maybe stdout
+     with a TAP "#" prefix?). That lets it go nowhere most of the time,
+     but you can see it if you are investigating a failure (like the way
+     our current "-v" works).
+
+     Obviously by that same argument you can fire up a debugger to look
+     at the problem more closely when you have a failure. But failures
+     aren't always easy to reproduce. Sometimes they're racy, sometimes
+     CI fails but local runs don't (I've found CI's use of "-v -x"
+     especially helpful there), etc.
+
+  2. We can rely on a dynamic-growth array of ints to store the result,
+     and then a check_int_array() to compare/output them. That's custom
+     code for the test harness, but in theory it's reusable across many
+     tests.
+
+  3. In the same direction, we could simply output to a strbuf or
+     similar, and then compare the strbufs. We could even show a diff
+     when they are not the same. ;) That is reimplementing what scripts
+     like t0009 are doing already, but maybe people think there is other
+     value in shoving it all into a single C program (as I've said, I
+     remain a bit skeptical).
+
+-Peff
