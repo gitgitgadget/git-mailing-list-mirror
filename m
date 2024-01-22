@@ -1,150 +1,103 @@
-Received: from wout1-smtp.messagingengine.com (wout1-smtp.messagingengine.com [64.147.123.24])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oi1-f175.google.com (mail-oi1-f175.google.com [209.85.167.175])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1178E3D0A1
-	for <git@vger.kernel.org>; Mon, 22 Jan 2024 11:37:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.24
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 643173D572
+	for <git@vger.kernel.org>; Mon, 22 Jan 2024 11:49:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705923427; cv=none; b=AZc8a5v1y4xAVdNDyWYgA9TP6TYPrtRvXHC8wPveJBjaqrKQHlTtXJjAMUAMjVIEHxXBdvfB2XKxSPYYUAjJt1LK1DGdoYD/aCYns+jTtKyGjULfVxjG0lXDEXnjDIVqLjvsJygn/kRiw41ytBXCU6PeDK+OJv70iYCObs4CHCc=
+	t=1705924180; cv=none; b=Y0WJu/FQB3ZPVqU458f/ORf9Qh1MsbZd9Tk/Y/lvhpU2/Ys6DRv8qtjlvvRYMJaakQ3MXh4HfHdxVdgaUHtf06AoFf0FvBBF61nWiRB2ECQZ9552YMqnFTbBwI7jqtrm57w/hTI2HSmjiN1+76n0d3nkHMB77ZqqA70oYpyczp0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705923427; c=relaxed/simple;
-	bh=qkwySoCntBRL5RvsIx8PmD/negvShavn67qrymum4wU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=jMAz+0Gxcwvd4Wk2uBVY5t2fDXsn7ACqVlPYSPxja+cMl3nkEd8rO1T8HAztjXouZCw2VlDYFtrATOh55gXlc9uhKu7R+shapQ0ljp3cWIsOop7/0exPE6ENvKm872PK314gXuelsTtcgdlTZP4xAGm9lWlET4DtzBY5GjZDRo8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=DGCvRCrL; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=j8qWz5rQ; arc=none smtp.client-ip=64.147.123.24
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1705924180; c=relaxed/simple;
+	bh=1Fw9Snt8syY9gaH9lrvxrPph3AiPQWI9u3kaBy4x+5g=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Content-Type; b=E54+4V7JZz9qC8vXn0+4s/0Z+Ei8AjxKerlLtQbWVYtc/k/Q0wP07VPKJx8NUc9d5S9DqeiKoUZSi6cZE1HHINrZkjsYdiFCc5aH1vLeLCxqMUq2P0jMBf1L8cjOUMMdCQd+aRZTSK+8Ox70U9v2hN4haeQufGkS4hgYuU0zYA4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ZxW51+JJ; arc=none smtp.client-ip=209.85.167.175
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="DGCvRCrL";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="j8qWz5rQ"
-Received: from compute7.internal (compute7.nyi.internal [10.202.2.48])
-	by mailout.west.internal (Postfix) with ESMTP id 06FC73200A8F;
-	Mon, 22 Jan 2024 06:37:04 -0500 (EST)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute7.internal (MEProxy); Mon, 22 Jan 2024 06:37:05 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1705923424; x=1706009824; bh=3tLFDwRg1a
-	47QFSiHwmGBNFynNHLbh75BARXuFYzfdE=; b=DGCvRCrL7r8M58aVKZPY1e8EJ5
-	k0EN+uaPhhWeyol/9Yu6+RC1fcFhT1vBDyu9z0HnfCKNmJrOp6CLgxdjHmUywmQT
-	lUxjl7fHQ/oknlGroZZvt+/SXsc+Ay21NCkatfkXC9vbSLKkMZc7bDBNKEuQ10yh
-	J9mICg1ZjGO8ifBl7XyweWdkyipFu8ks1e/wHxb0M+2J0tyt9pDseAppIU42VYY8
-	IOhcPfhnPpLuc2+xdnnLAKH4XdTrP4oA7gj5zOCQumY/05N/ncvKEBkSkrRjWlAl
-	f8ndnk+K7VYnQM9fTKolQ/SN85IW7kZr/bLgqJXyOYJtSHxOORPyMHHIXHDw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1705923424; x=1706009824; bh=3tLFDwRg1a47QFSiHwmGBNFynNHL
-	bh75BARXuFYzfdE=; b=j8qWz5rQ0gVTxQkhb7pB1nsEjINSPwwaKaLR8CpmnrDi
-	yEhyRq7bB6i94LR5RNVDrRzJG8DixziXUaMsZpELeYZ1CRrUG1Zr5jyihUuKivsQ
-	kEoeYwZTOK1wJqwREJ05UoMhTVcJ3Gi7os88jdbeFPHWQ/FKjlR/N+VvP1Smp0NH
-	51fd3ePuUxx+s6x7oLwFBTG5mEUMTNZznn6W8BiB/otwKf/XffgzgfjJvFy3FhCV
-	OjavO+WckbNZnQc7F+RiaG11IokpEgiwfdDmDDtmZGipdUIPgdP7PX6g3UGdP0GN
-	KNV/ITCFQKbGN+n6ydYkqzGWxRXfFoDDnQfCh4JZYw==
-X-ME-Sender: <xms:YFOuZQUDCbRQ9rblRAttt3Y7bNoJLXgzzYEDXr1BCZTbdnI0HHSqgw>
-    <xme:YFOuZUnjHicSALDu8f-f5hEi5WIGhrWIrCn1efWUd8GNFaaNw_kOeULV4sLMWB2yX
-    4evqLwp7-oZZ0ukWA>
-X-ME-Received: <xmr:YFOuZUa0BjXZezcuXbQ56OXbc0NLuEIRvvMw0GUbWHLylMwbng36ScXEAyst3Y3jB4H0v_X0gKlURfeMfAxc76PURik_mZBOd5RfAGQyFqbHPw4>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrvdekiedgvdekucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    cujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtvdenucfhrhhomheprfgrthhr
-    ihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvg
-    hrnhepueektdevtdffveeljeetgfehheeigeekleduvdeffeeghefgledttdehjeelffet
-    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
-    hpkhhsrdhimh
-X-ME-Proxy: <xmx:YFOuZfURPcPONdlMgIa5s9mFE-E6KYHXnbHq0oXMxjUpsV3sNX3Ngw>
-    <xmx:YFOuZamHQj8A4nEeGMUNdOGW29ueN0sDTjpG9KIxDQAnCm87dA8ylg>
-    <xmx:YFOuZUc16NPez3P5wRe_SzEeIwB950kUJkinaKwJ0wv7e23SMbfcxQ>
-    <xmx:YFOuZeuGxveV5BjU9GCygyUgTmt3JmFTUUeipRnHqZiLIi4PnltLtQ>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 22 Jan 2024 06:37:03 -0500 (EST)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id a6857624 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 22 Jan 2024 11:33:58 +0000 (UTC)
-Date: Mon, 22 Jan 2024 12:36:59 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: John Cai via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, John Cai <johncai86@gmail.com>
-Subject: Re: [PATCH v2 00/12] Group reffiles tests
-Message-ID: <Za5TW-q4cKS8pNNc@tanuki>
-References: <pull.1647.git.git.1705521155.gitgitgadget@gmail.com>
- <pull.1647.v2.git.git.1705695540.gitgitgadget@gmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZxW51+JJ"
+Received: by mail-oi1-f175.google.com with SMTP id 5614622812f47-3bd6581bc66so2483338b6e.1
+        for <git@vger.kernel.org>; Mon, 22 Jan 2024 03:49:39 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1705924178; x=1706528978; darn=vger.kernel.org;
+        h=to:subject:message-id:date:mime-version:references:in-reply-to:from
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=1Fw9Snt8syY9gaH9lrvxrPph3AiPQWI9u3kaBy4x+5g=;
+        b=ZxW51+JJF8xafEdaSGT48rlobGT4vGKv/BzC2BSRCqPnpRLS3KgJCwrBLfjA6KCB8Q
+         Mm1Nkul4Gma17+avLoxdFIy2FWu57MPYWsRte1atK5JCoGaqWzq8sdv+lObpIEpeJOF8
+         jHoVgzbSHwi1mHtrLvtkCYJKHSkg2yI+t0mB+HRDz2wIUGJ6JH684/sfUVxmTxdv6P20
+         SvGz2OUkkwl1ulIIBMARW11LajQ587A1yurnFHltkESpZpn9MB1q5QuSgqKtUbGD/NBA
+         m7iByrRC4KAIJL1NudSFLqYbsH+Gj6SmXkB934sMXDozHi3eFEh16Y9FiVjTskPWFcfV
+         UKow==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1705924178; x=1706528978;
+        h=to:subject:message-id:date:mime-version:references:in-reply-to:from
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=1Fw9Snt8syY9gaH9lrvxrPph3AiPQWI9u3kaBy4x+5g=;
+        b=tWsn7t7P2juoN7LHDb+Qe+CUYwe5eKIIAOkVq94HU7DmW8cfnD4suRAfPYQ2f8fJjZ
+         2hZ7XJvNi8lYZelmrV3yrDjZsfxjA7M4NOxt4RKkTCc8ZfGequ3DdZLM4Tiw4id13de1
+         Ti0iHzp/yZy2bbPHf+dfOY7PUmtqevLY++VGES0LbHBYCxYRgnbCGZ/hVmlCJydZ10mP
+         lFjaCRT9d2xTe26Df8RW4vagrqffpmUB8bhCUD0Cnuz+ZLvgg6me21Wwe6RvmewvhI9u
+         WwJW1bhcIYVHgQpSLPGyRCSkymeDaN1R4BoDfc8nMWNb+W1WJKXV/0R8rRSq4VKNflNm
+         OgiQ==
+X-Gm-Message-State: AOJu0YxXjcb7T3m/RApPjAnRCnTG9WabRXjODN4BRgk/HVEQcX6WCFU8
+	ySkr5bg0o/2HpoMjFvMIgW/rGelDWjWvMtOrGtmedKk8yHRqM9ICFrwePiJ/o5S3hnNvDjz1E0T
+	tALVWEH0Lk6nrdGWY+En3M69GJsRpv+AT+tA=
+X-Google-Smtp-Source: AGHT+IHwCV+ObQxKMp5/hsgE7zGAV46KIAjW4dEQWgVGjwRk71CJw5maQ2NjOe/5jES/BRcPxJW9Za/DV5VdliZrVaQ=
+X-Received: by 2002:a05:6870:7b53:b0:214:44cf:a81c with SMTP id
+ ji19-20020a0568707b5300b0021444cfa81cmr2636175oab.96.1705924178313; Mon, 22
+ Jan 2024 03:49:38 -0800 (PST)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Mon, 22 Jan 2024 03:49:37 -0800
+From: Karthik Nayak <karthik.188@gmail.com>
+In-Reply-To: <48b95fe954c1dbdd080ce7a0cc871f4850bddeae.1705659748.git.ps@pks.im>
+References: <cover.1705659748.git.ps@pks.im> <48b95fe954c1dbdd080ce7a0cc871f4850bddeae.1705659748.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="oZ51qLCH/i7zvkDZ"
-Content-Disposition: inline
-In-Reply-To: <pull.1647.v2.git.git.1705695540.gitgitgadget@gmail.com>
+Date: Mon, 22 Jan 2024 03:49:37 -0800
+Message-ID: <CAOLa=ZQakWpRgFZdLnALq9f+acAR3hBwgO_kxJ6gb_yv+vrX=g@mail.gmail.com>
+Subject: Re: [PATCH 1/7] sequencer: clean up pseudo refs with REF_NO_DEREF
+To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
+Content-Type: multipart/mixed; boundary="000000000000a99a8f060f876ccd"
 
+--000000000000a99a8f060f876ccd
+Content-Type: text/plain; charset="UTF-8"
 
---oZ51qLCH/i7zvkDZ
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Patrick Steinhardt <ps@pks.im> writes:
 
-On Fri, Jan 19, 2024 at 08:18:48PM +0000, John Cai via GitGitGadget wrote:
-> This series groups REFFILES specific tests together. These tests are
-> currently grouped together across the test suite based on functionality.
-> However, since they exercise low-level behavior specific to the refs back=
-end
-> being used (in these cases, the ref-files backend), group them together
-> based on which refs backend they test. This way, in the near future when =
-the
-> reftables backend gets upstreamed we can add tests that exercise the
-> reftables backend close by in the t06xx area.
->=20
-> These patches also remove the REFFILES prerequisite, since all the tests =
-in
-> t06xx are reffiles specific. In the near future, once the reftable backend
-> is upstreamed, all the tests in t06xx will be forced to run with the
-> reffiles backend.
->=20
-> Changes since V1:
->=20
->  * Moved some pack-refs tests to t0601 instead of t0600
->  * Clarified some commit messages
->  * Converted a test to be refs-backend agnostic
->  * Other minor rearranging of tests
+> When cleaning up the state-tracking pseudorefs CHERRY_PICK_HEAD or
+> REVERT_HEAD we do not set REF_NO_DEREF. In the unlikely case where those
+> refs are a symref we would thus end up deleting the symref targets, and
+> not the symrefs themselves.
+>
+> Harden the code to use REF_NO_DEREF to fix this.
+>
 
-I've got two minor nits, but other than that this looks good to me. I've
-also verified that all tests continue to pass with the current version
-of the reftable backend.
+Just a question for my understanding. Is that that currently
+CHERRY_PICK_HEAD or REVERT_HEAD are never symrefs, so we don't really
+worry about this, but adding this change makes it safer?
 
-There's a minor merge conflict with db4192c364 (t: mark tests regarding
-git-pack-refs(1) to be backend specific, 2024-01-10). This conflict
-comes from the fact that both patch series add the REFFILES prereq to
-t3210, semantically the changes are the same. So it doesn't quite matter
-which of both versions we retain as they both do the same.
-
-Patrick
-
---oZ51qLCH/i7zvkDZ
+--000000000000a99a8f060f876ccd
 Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: a89a1106b137d67d_0.1
 
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmWuU1oACgkQVbJhu7ck
-PpS0xg/9FbDbSHiK47a56Sg4Db2RYa0Ky5z8zrhUvwvB29z/YaxbnCSv9XhU6pW2
-603+UaemeZlajhIqw9TSJ8i4O+hncjUzq6TT336GcREg8P0g1jEihr/LdK5XUJvL
-r1i1Kgw1Fu1IXVTUitm7vN+t1tl8fIbjf7VgRIL6HGW/vbscgO6vLFVrU5oNsFwH
-sCQ86F71pRVpfigS30mnqY3FSMp60bstyKK5Mzag3NuV6aZZ3zOM77adJWiJn0vp
-OeFJLdN7u/NEJoQUMaCT5ukK934E6kUT4C0t8qoTC2NaUpnvJVJm+KXnH8dTT/cD
-5c4z/OlHj7xmGTrByqnU6Wd1ooYh1UBYTvhnTQfTGZwvt75SXIIKqLBhCT8QSAag
-fwQtVyVqven9QUxOMcIpf97CS4htMJgzQPeDKbtaNj0rnY/cAWbub91VNcNzQYCf
-d53dq4CcgvaFdX2hvRKl0858bIXIoMyQZaoQyQXvMrhS4UHWI92xM8ch7FfruTmg
-yxQcwNmaWx2xlBmUhSrcLSuhYdYmdOqz/Uc2Z3tmJKYT2aymiyNOgHD6Lz1+59tA
-6KzWbKDHxaZaEdKi1lrRo6FkevHICDcv67f8LsV00SCObTRHebjwfXytjP5PcTkx
-9x66D1NWcckeSRXmu4cQWnLxhGePNx0shkd2H2V3B1jfSqyQZ04=
-=yHTL
------END PGP SIGNATURE-----
-
---oZ51qLCH/i7zvkDZ--
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1XdVZrMFdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mNTZIREFDZ1oweFJUUklzWDhwazFZc2F3bTFweUwwZwpGeTdmYnlZZDZI
+Q3FDd1Jyei9ORXBmWk9aZDZqYmhpUkVHMUJpRFdLejZ6NWJmYTJpRnZQb0UzaE00bzU5ZXFKCjRB
+VksxYXBSbFJ1cFdlc3B6a2V0dTdKdkNEVnVsb2s3NjRSenpNMlByalFDQWg3ZTF4SW45L0hUZGlm
+SHBidU0KbVJydGFEeE8xUUdnbFN5Yzh4aWUxVStrUzdwbU94WGVlcjZKOUxNNitEQnhjcXRNUVVl
+K3ZmVXMzWW9GZEhhVwp1ZTFQamFtZFkwdEZiOHF5YWg2WVorb1F2cWYxQTlPWDNJajhoandGUGdB
+S01XYW9sQUlUL2U4N0ZMVzJFR0tNCndmc3JCYWxuczFCM09TSDErVDIvbHB5Y2Q5TG1vZytpd01w
+WDVCUjhjRWFPSTRQVVFwVi9pUStaWUxkdFFyNDQKc1V6WjVQdHBBU3IzNEc2QUd3aFlGc3NUb1lp
+dHFORUJMV04veDdpQXdXSlJ4ZTBvMU02S0ZGaXZrNDRPbGc3UQpBVlNrRDFYaEp1NFhWUU9FdGYr
+M0UxVTZES1phNjgvY2dIQU5uRnZjbWw0QXc4Q2RMbjVhYjBuMDh4SHdPdU50CmtMRm1RdFlXazFo
+dVRwZ1pDV3VnaW5zZFdpYWY5WWU1cHZnd21ndz0KPXZDa2MKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--000000000000a99a8f060f876ccd--
