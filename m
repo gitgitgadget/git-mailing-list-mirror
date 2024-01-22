@@ -1,36 +1,62 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C4A3481D0
-	for <git@vger.kernel.org>; Mon, 22 Jan 2024 21:34:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A67233EA73
+	for <git@vger.kernel.org>; Mon, 22 Jan 2024 21:42:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705959260; cv=none; b=OPAZqhkns5db6Xm/icOrxQoCOMu+ToZ6M4JNTsekwlK1lSYdb32u6P7GAkl19M802QqzcRR6zRsGL7fxbtCbplwI4o/3MaPa3S2i1u2tn41SJGJKNZGjf4xbsi+X4Qn7wodRU1y9wnJ4+gP5oHdxn/2ny/Usw80fh4K73z6EZgE=
+	t=1705959733; cv=none; b=CB+TfBBFGEkZn9EdKJhGhFdvKxfDYD5YSbzS8zSvXTUCslzSTaAX6OUeaG4wqe7syEeqGcAY4htosNLKvss0Q9av8LokqjxeLohf9nU32pihkSu1PBpABSniULYFFIAnz30WgEyIWrVP2LKXaiBhjNhFmx9b85pcO6zyEfAV+J4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705959260; c=relaxed/simple;
-	bh=HtmWJwOVrZAVKrSRF9S4pSwXLAMkdHNznt1s3KyztaA=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=rFcpRPL3ljsb9tRKrk4ySSWUplQf5NY1CTl6r5pObVUoaHH72S80JS6UOMUk7mBHY17RWuyy0oFKWki5LvtmQr6ZSlKCktbB2u9B9h9HtcH5l1WDupQ7SG8J5kiPSOxcejmvkO1bXy/IUeDLjVEg64/94T9Nu0xQNpbztU0Ngfc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
-Received: (qmail 11332 invoked by uid 109); 22 Jan 2024 21:34:11 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 22 Jan 2024 21:34:11 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 9433 invoked by uid 111); 22 Jan 2024 21:34:12 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 22 Jan 2024 16:34:12 -0500
-Authentication-Results: peff.net; auth=none
-Date: Mon, 22 Jan 2024 16:34:10 -0500
-From: Jeff King <peff@peff.net>
+	s=arc-20240116; t=1705959733; c=relaxed/simple;
+	bh=Cs9hTyq5QbBHTiuRjV+mtZAFR9vLWIopCMnRDN8WGGw=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=P0ZSxKqYfvspnB7rfLT2Fgl7AXxsfIn1tGQ1Ewj0eeQqr5Y689tcJ5wBfaqfWOUqQv1qOO8yzEAeTv/z1okLfqW2OCSot8W/IV+lai0VHg8AcaOeM8y6dY6W6dwiAcOOlZHSHPGYnUntuU1DLtDMe/zR8Q+kueKZdNRcU3fxeh4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=wReYzeIi; arc=none smtp.client-ip=173.228.157.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="wReYzeIi"
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id 69DF133DF6;
+	Mon, 22 Jan 2024 16:42:10 -0500 (EST)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=Cs9hTyq5QbBH
+	TiuRjV+mtZAFR9vLWIopCMnRDN8WGGw=; b=wReYzeIinVWQRibyIFqJczPJEnkG
+	4M2mSaw2aPQeLiORhiCT9rCvMbZ1x7zmihzYdToYYptCxwXmNPVLxeFaztXgYxtk
+	4mc7mZzDNuqjxrblv7w0otYDLbCksnAqwAzd+ssQrohKW72sBWGoJ2PPAeZkH3Vd
+	WofhXBS6tKbPjrg=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id 6200133DF5;
+	Mon, 22 Jan 2024 16:42:10 -0500 (EST)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.200.93])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id EAC1333DF4;
+	Mon, 22 Jan 2024 16:42:06 -0500 (EST)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
 To: =?utf-8?B?UmHDumwgTsO6w7Fleg==?= de Arenas Coronado <raulnac@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: Fwd: Unexpected behavior of ls-files command when using --others
- --exclude-from, and a .gitignore file which resides in a subdirectory
-Message-ID: <20240122213410.GA811766@coredump.intra.peff.net>
+Cc: git@vger.kernel.org, 
+    Elijah Newren <newren@gmail.com>,
+    Phillip Wood <phillip.wood@dunelm.org.uk>,
+    Sebastian Thiel <sebastian.thiel@icloud.com>
+Subject: Re: Fwd: Unexpected behavior of ls-files command when using
+ --others --exclude-from, and a .gitignore file which resides in a
+ subdirectory
+In-Reply-To: <CAGF1KhU=o2rb-tCjZAG278kgoW50NYymsJakUwiMxWTQ33gQYA@mail.gmail.com>
+	(=?utf-8?B?IlJhw7psIE7DusOxZXo=?= de Arenas Coronado"'s message of "Mon, 22
+ Jan 2024
+	22:07:03 +0100")
 References: <CAGF1KhWNaO_TUuCPo2L_HzNnR+FnB1Q4H6_xQ2owoH+SnynzEg@mail.gmail.com>
- <CAGF1KhWiYX=3R01Odj2yCNgvx=f5+HRCjRJogWf5eBikuATCcg@mail.gmail.com>
+	<CAGF1KhWiYX=3R01Odj2yCNgvx=f5+HRCjRJogWf5eBikuATCcg@mail.gmail.com>
+	<xmqqfryprsyp.fsf@gitster.g>
+	<CAGF1KhU=o2rb-tCjZAG278kgoW50NYymsJakUwiMxWTQ33gQYA@mail.gmail.com>
+Date: Mon, 22 Jan 2024 13:42:05 -0800
+Message-ID: <xmqq5xzlrqoi.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -38,68 +64,55 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAGF1KhWiYX=3R01Odj2yCNgvx=f5+HRCjRJogWf5eBikuATCcg@mail.gmail.com>
+X-Pobox-Relay-ID:
+ 16C802B0-B96F-11EE-813E-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
+Content-Transfer-Encoding: quoted-printable
 
-On Mon, Jan 22, 2024 at 09:45:46PM +0100, Raúl Núñez de Arenas Coronado wrote:
+Ra=C3=BAl N=C3=BA=C3=B1ez de Arenas Coronado <raulnac@gmail.com> writes:
 
-> But when using 'git ls-files --others --exclude-from=<file>', when
-> <file> is one of those .gitignore files present in a subdir, makes the
-> command use the patterns in that .gitgnore (in this case, the "*")
-> against ALL files that would otherwise be listed by using '--others'.
->
-> In short: using 'git ls-files --others
-> --exclude-from=subdir/.gitignore' results in an empty listing if
-> subdir/.gitignore contains '*". IMHO that pattern should be applied to
-> the subdir contents and not to the contents of the current directory.
-> That would be consistent with how git uses .gitignore files in
-> subfolders.
+> ... I was thinking about what git itself
+> does when ignoring files, especially when dealing with .gitgnore files
+> in subdirectories, but clearly this needs a different policy, yes.
 
-I think Junio covered this with his example, and everything is behaving
-as intended (my mental model is that "--exclude-from" is something like
-.git/info/exclude or the core.excludesFile option).
+What "git" internally does is the equivalent of using the
+"--exclude-per-directory" option to honor ".gitignore" in the
+subdirectories, and in addition use ".git/info/exclude" as another
+source, pretty much the same way as "--exclude-from" reads it.
 
-But...
+> What I needed from this command is a way of backing up some ignored
+> files. These files should not go into the repository, but I'm using
+> them temporarily for development so it is a good idea to back them up.
+> I'll just backup the entire repository instead, is not a big deal :))
 
-> The obvious solution is to use --exclude-per-directory but it is
-> deprecated in favor of --exclude-standard and --exclude-standard shows
-> the same behaviour of --exclude-from=subdir/.gitignore!!!
+The current mechanism can be used to list "ignored" files that must
+be left out of the project (e.g. the most obvious one being object
+files "*.o") but these "ignored" files are considered "expendable"
+(i.e. Git is allowed to remove it as needed, e.g., when switching
+branches and need to make room---if you have an untracked file F
+that is ignored, checking out a branch that has a file F/G requires
+the file F to disappear so that a directory can be created there).
 
-...I'm not sure what's going on here. I would think that both
---exclude-standard and --exclude-per-directory would do what you want.
+We have been discussing to extend the mechanism so that we can have
+"precious" files, which also will be left out of the project (e.g.,
+"git add ." will not add to the index, just like an ignored file)
+but are not considered "expendable".  If file F is "precious":
 
-For example, I get:
+ - "git add ." will not add F to the index
 
-  [setup]
-  $ git init
-  $ mkdir subdir
-  $ echo '*' >subdir/.gitignore
-  $ git add -f subdir/.gitignore && git commit -m "add gitignore"
-  $ touch subdir/file file
+ - "git status" will not say F is left untracked and can be added
 
-  [no exclusions]
-  $ git ls-files -o
-  file
-  subdir/file
+ - "git clean -f" will not remove it.
 
-  [use .gitignore]
-  $ git ls-files --exclude-per-directory=.gitignore -o
-  file
+ - checking out a branch with a tracked file F/G will *fail*, to
+   prevent the loss of file.
 
-  [using standard excludes]
-  $ git ls-files --exclude-standard -o
-  file
+No code yet, but the design consensus is almost there.  Once it
+appears, you should be able to say "give me the list of tracked and
+precious paths---I do not care about ignored ones that are expendable,
+because they can be recreated mechanically and that is why they are
+marked ignored", and from such a list of files, you should be able
+to drive your back-up solution.
 
-Do you get different results from that toy repo? If not, then what is
-different about your main repo? Do you perhaps have a stray "*" match
-somewhere in .git/info/exclude, etc? Or are you still providing
---exclude-from in addition to --exclude-standard?
+[jc: cc'ed those who are involved in the "precious" discussion].
 
--Peff
 
-PS I hadn't realized that --exclude-per-directory had been marked as
-   deprecated. I do agree with e750951e74 (ls-files: guide folks to
-   --exclude-standard over other --exclude* options, 2023-01-13) in its
-   goal of guiding people to the easiest option, but I don't know that
-   there has been any discussion about removing the other ones.
