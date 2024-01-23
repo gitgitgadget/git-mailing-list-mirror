@@ -1,105 +1,118 @@
-Received: from mail-yb1-f172.google.com (mail-yb1-f172.google.com [209.85.219.172])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from wout5-smtp.messagingengine.com (wout5-smtp.messagingengine.com [64.147.123.21])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0BDF4EB44
-	for <git@vger.kernel.org>; Tue, 23 Jan 2024 06:09:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 428D33E491
+	for <git@vger.kernel.org>; Tue, 23 Jan 2024 07:11:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.21
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705990151; cv=none; b=Kcc0YLUD1lv/AP+YglbJt28Gb0T3plRjegdp71FlUH23NN1YPskt6MjVRRpUF7z80Tx5blKYgN+fkQJzStUSv0EF0kChVNnU2uhwFD517auR1gYUHMXnZtNmKrcBRSVjmWDenIGQKYqcWBEydyKxiJSC4vXM5SWQRPx6o/b1lbI=
+	t=1705993896; cv=none; b=dtYUkC97snw6zY9IviakjHWH8cSEtBr7Fakr3bEprbQ6mIL8Iqp5GUiduTUQJNOyACGlzDs+pK0V7bpYKXqSR0qFYFD64/xTQ13HedHLsOSk1BuGzdEUUp4kim1E4lggPZPUSQ5bCmpk/sS6P8wbpQ5vltE2WJIrJEFS3Zwcnvg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705990151; c=relaxed/simple;
-	bh=fz4BDqMgk0Suf/tDgHOWOeAb3cUOczmWXmLuqN1rHEY=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=SeZ2v8nWj3MibWTIG+YRI6wvUfXKQ5ctSYc6MNpe+kE39a+gWzq6fOyQCYpRsApHeXcHrgs/dh51rdwLXWoOGOFSCmIp9r42+FAYMGmoRFrR/uFjrIY2SAnj8BbsCOV/9fS2Y560oB6tAFZJwarDvEX8a9jXU4B56CJqjRGNuTk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=MBKzUTPZ; arc=none smtp.client-ip=209.85.219.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1705993896; c=relaxed/simple;
+	bh=ef3rJFqnZeabqgPkZ0znJ/VBitb1PbWatzowhX8Nilk=;
+	h=MIME-Version:Message-Id:In-Reply-To:References:Date:From:To:Cc:
+	 Subject:Content-Type; b=ZfWeIpst0AtuvfDiQQli/ZM0rFezuXU+BnXdhV3iIjHe3OfajXZKMG/iTjM85rCCp14+1zhiIXsR8p0DH+c4tJa5xz9TUEG9i4/qriJsL6sqxHbVJPyoueUK/UILsoRHC8Q3+k8tV2Q9UGK0RFUHvI7r6jRAoWbRjlL27BLIY1s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=khaugsbakk.name; spf=pass smtp.mailfrom=khaugsbakk.name; dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b=mjWYov7h; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=humBFZ5u; arc=none smtp.client-ip=64.147.123.21
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=khaugsbakk.name
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=khaugsbakk.name
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MBKzUTPZ"
-Received: by mail-yb1-f172.google.com with SMTP id 3f1490d57ef6-da7ea62e76cso3082589276.3
-        for <git@vger.kernel.org>; Mon, 22 Jan 2024 22:09:09 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1705990148; x=1706594948; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=IUKYTTHnGoB9Qzlg6Q323MH0FomcmMHF0dO6F3jluQE=;
-        b=MBKzUTPZXYfkDiQ6kT4C3nu2BmXa/Fy2rxtRpS1tT+EezVNXWpTsASuPBI0wORQhv4
-         e9wLUaTyMfuPfqfdaEuBlXATjSXIlaM5yFBMC9x60NW98AZCmfqc4cbDS4SGUa5Q9LQb
-         c2+uvdZTzNG7nJiLOly22b4vKFzM+2EK00amyffyThwEQxIf62WKufRjVd8VokrM4Dwr
-         aoiNaODthURr5mDey3DIf80l6sCPbAcI5945S+yFiUGapZT7NIG7o0x+qkmduRIT2V2j
-         mbqzaOygCNduJOGYc9+n1Z4b79q8nPN2gAdrbKGfFVA/vGG/zZ2uLY3CybxdTARURxVl
-         bG0A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1705990148; x=1706594948;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=IUKYTTHnGoB9Qzlg6Q323MH0FomcmMHF0dO6F3jluQE=;
-        b=pasaNwZA2+wBkdevyT4cjLjFidRhxelMW7XDWL7EH6AvCs0nE1nWjwdQVBLd4/Ido/
-         G+HnMuimL1JKToUTS4VZAufa5iQPXil6D+6RJcBULzVfsKzOaRUN2FBMpSr3TNzCqnNl
-         OPLBUmixNIS1sHrg8FH1R4sfjdLC3e+bBd1sGsso6Ysnm0Auptu8E4APjOpkVQ2iBF1G
-         07l0rC4FS17XAn8pnsLGlLXPgsZ34THFE1Deb9fR3mqxg6E1v2qxSJRvIOL+vKvDMRA2
-         tT9SP4GebM9ya+CMX+WXOkik85f1qet55PyKGMZulsGmxHfWtZ5Bqnt3Rp5m/TBMv/ut
-         FBsg==
-X-Gm-Message-State: AOJu0YxiGQGbvoRcHOHhkjUfH6EziIeykw9qlEoP5G3KC0AoGq1axWUl
-	/YVDNJOSBmRWv64IsLLF8QT47hQbp1VcRFOd5xtmEz309USFup77STrsSehHSzUYouDkqGLtB0X
-	iITOw7w1i/qrfJ4TWiNab3Cp+83o=
-X-Google-Smtp-Source: AGHT+IHatJhx9X7+o8vo66TRtQuNR9OdPjZSn4mwV0DxUhjQJ5HI+MxqkkMJ+m53aNgMRsnTsPM8b7NtCtk3YumTsLs=
-X-Received: by 2002:a25:3505:0:b0:dbd:b69f:33aa with SMTP id
- c5-20020a253505000000b00dbdb69f33aamr2805957yba.2.1705990148607; Mon, 22 Jan
- 2024 22:09:08 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b="mjWYov7h";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="humBFZ5u"
+Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
+	by mailout.west.internal (Postfix) with ESMTP id 1F0BE3200A74;
+	Tue, 23 Jan 2024 02:11:33 -0500 (EST)
+Received: from imap49 ([10.202.2.99])
+  by compute1.internal (MEProxy); Tue, 23 Jan 2024 02:11:33 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=khaugsbakk.name;
+	 h=cc:cc:content-transfer-encoding:content-type:content-type
+	:date:date:from:from:in-reply-to:in-reply-to:message-id
+	:mime-version:references:reply-to:subject:subject:to:to; s=fm2;
+	 t=1705993892; x=1706080292; bh=ef3rJFqnZeabqgPkZ0znJ/VBitb1PbWa
+	tzowhX8Nilk=; b=mjWYov7hPYHsK0MvXX8iNGA0CZSOXM3ijTLtyNUd6i21gNl/
+	4rkU1De1c+CjtvQ2w1S754jKbfKJLKOCf3gZGNjNArjNzEjAFwwhZgWTUbkgyina
+	R08/alyBcIFBcsUWYwGH1Kz2fo0q7m8baEzCqa3w0AtocJ81VO/QuO2z0QouhGp6
+	64IsZJ5VKdEgSzcnJ0dDEMXF8cxqRooE1mof0kxbZjK4aQ1FyxhBqNMeMf+wj9en
+	1V/v7355GwIYPGs5bKkNmk/zcJGJrimOrLPiZyR2Bd6/KYMykur3LXJNMe1LaC43
+	rq6N1/8sIQ4E+/I8LLZcCtlJl+Vuo5CWFR03xQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1705993892; x=
+	1706080292; bh=ef3rJFqnZeabqgPkZ0znJ/VBitb1PbWatzowhX8Nilk=; b=h
+	umBFZ5uVhgEpTNAB6MUj9jcjiD13mV5q3j1OzDHP0KrMWb0Q/xNAT8g6GNsxqCoc
+	cs2GGfbrw2l5PoKlK2ud6d66jyCWGrTOnvJAbLAIyWZJ7fStkh9ltnvnyYGDPCCC
+	Cmo1q+egiLWwu0j4UxNpfjLaXQ7zxTInOFfqanD/+rygXBwNIrlIHC0tUpcEykC1
+	MD7EIIhd5YTZ1pxqJfT/oW5f+sF0B8TU5Umf3xezWZsdmCp0cf0S6JrhoeBDTEpw
+	yG87DX7147la1DhoM7qrswTskF0px2hnOswL1xHuq5Ii7Um4FdXSnQzdJhkuTgfB
+	lan2yMJzHafrAES9anE9g==
+X-ME-Sender: <xms:pGavZVe8wHv-UfFZ0wzO_B4d2tF38VDzu0d9eHO4sIOHuxcc8WptmzI>
+    <xme:pGavZTN3cDSChZsF8N4NF2IU4KCMMXO9tG37GPqyCjfpXiC0MQ0WfEiejQDaA6KJr
+    mIKo92xbXgQUqBYTg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrvdekjedguddtudcutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
+    necuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
+    enucfjughrpefofgggkfgjfhffhffvvefutgfgsehtqhertderreejnecuhfhrohhmpedf
+    mfhrihhsthhofhhfvghrucfjrghughhssggrkhhkfdcuoegtohguvgeskhhhrghughhssg
+    grkhhkrdhnrghmvgeqnecuggftrfgrthhtvghrnheptdekudevtdfhleeuveehffehvdev
+    ieeuieehheduheevgeeuteetuddutdefleeunecuffhomhgrihhnpehkvghrnhgvlhdroh
+    hrghenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpegt
+    ohguvgeskhhhrghughhssggrkhhkrdhnrghmvg
+X-ME-Proxy: <xmx:pGavZejqXnORWGh0Tz6Yimx52suDtyD66p8VmaBDOMOIgw2lU6w77g>
+    <xmx:pGavZe_gOWlGtEZDCMP204hUKf1hX7tOXTTqWz3SjKxB2IJj2XsiHw>
+    <xmx:pGavZRtEU6ga5nnPre4VTb0NF-J_VE1wLxvXkGM9f0BtXJ_p31BJhg>
+    <xmx:pGavZSV7DJILCr_Iu2IeQPeCMz1_qx2W6ztUzIFMV1UI4XvlmKKA6w>
+Feedback-ID: i2671468f:Fastmail
+Received: by mailuser.nyi.internal (Postfix, from userid 501)
+	id 3EE4F15A0092; Tue, 23 Jan 2024 02:11:32 -0500 (EST)
+X-Mailer: MessagingEngine.com Webmail Interface
+User-Agent: Cyrus-JMAP/3.11.0-alpha0-119-ga8b98d1bd8-fm-20240108.001-ga8b98d1b
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CAGF1KhWNaO_TUuCPo2L_HzNnR+FnB1Q4H6_xQ2owoH+SnynzEg@mail.gmail.com>
- <CAGF1KhWiYX=3R01Odj2yCNgvx=f5+HRCjRJogWf5eBikuATCcg@mail.gmail.com>
- <xmqqfryprsyp.fsf@gitster.g> <CAGF1KhU=o2rb-tCjZAG278kgoW50NYymsJakUwiMxWTQ33gQYA@mail.gmail.com>
- <xmqq5xzlrqoi.fsf@gitster.g>
-In-Reply-To: <xmqq5xzlrqoi.fsf@gitster.g>
-From: =?UTF-8?B?UmHDumwgTsO6w7FleiBkZSBBcmVuYXMgQ29yb25hZG8=?= <raulnac@gmail.com>
-Date: Tue, 23 Jan 2024 07:08:32 +0100
-Message-ID: <CAGF1KhWEnbOy1DQhv4xbov5Fg+hQdihWcwcT9A0f1b4Fc1gR-w@mail.gmail.com>
-Subject: Re: Fwd: Unexpected behavior of ls-files command when using --others
- --exclude-from, and a .gitignore file which resides in a subdirectory
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, Elijah Newren <newren@gmail.com>, 
-	Phillip Wood <phillip.wood@dunelm.org.uk>, Sebastian Thiel <sebastian.thiel@icloud.com>
-Content-Type: text/plain; charset="UTF-8"
+Message-Id: <6475ad33-423e-43ef-aa75-3ff5539a04d1@app.fastmail.com>
+In-Reply-To: 
+ <CAHPHrSd8rLj_TDE11dYQW+51--8YC4rumnfT+v2bYr+K7AMQrQ@mail.gmail.com>
+References: <20240119060721.3734775-2-brianmlyles@gmail.com>
+ <20240119060721.3734775-5-brianmlyles@gmail.com>
+ <06eb93d7-7113-4583-9860-28a6a6d528a2@app.fastmail.com>
+ <CAHPHrSddqTEjtfhgVJ=vmRhbtuwXcGEiE1KFZqR1QhKw-HDtSg@mail.gmail.com>
+ <10838549-c364-429b-a086-68a41b7369de@app.fastmail.com>
+ <CAHPHrSd8rLj_TDE11dYQW+51--8YC4rumnfT+v2bYr+K7AMQrQ@mail.gmail.com>
+Date: Tue, 23 Jan 2024 08:11:12 +0100
+From: "Kristoffer Haugsbakk" <code@khaugsbakk.name>
+To: brianmlyles <brianmlyles@gmail.com>
+Cc: "Taylor Blau" <me@ttaylorr.com>, "Elijah Newren" <newren@gmail.com>,
+ git@vger.kernel.org
+Subject: Re: [PATCH 4/4] cherry-pick: Add `--empty` for more robust redundant commit
+ handling
+Content-Type: text/plain;charset=utf-8
 Content-Transfer-Encoding: quoted-printable
 
-Hi Junio!
-
-El lun, 22 ene 2024 a las 22:42, Junio C Hamano (<gitster@pobox.com>) escri=
-bi=C3=B3:
-> We have been discussing to extend the mechanism so that we can have
-> "precious" files, which also will be left out of the project (e.g.,
-> "git add ." will not add to the index, just like an ignored file)
-> but are not considered "expendable".  If file F is "precious":
+On Tue, Jan 23, 2024, at 06:23, Brian Lyles wrote:
+>> Oh, and this thread reminded me https://lore.kernel.org/git/xmqqle8hr=
+tcs.fsf@gitster.g/T/#t
+>>
+>> that editorconfig[1] has this option:
+>>
+>> ```
+>> trim_trailing_whitespace =3D true
+>> ```
+>> [=E2=80=A6]
 >
->  - "git add ." will not add F to the index
->
->  - "git status" will not say F is left untracked and can be added
->
->  - "git clean -f" will not remove it.
->
->  - checking out a branch with a tracked file F/G will *fail*, to
->    prevent the loss of file.
+> Is there a good reason that this should not just be added to the
+> `.editorconfig` in this repository? Would a patch for this be welcome?
 
-And that is exactly the concept I'm handling here: files that should
-not be tracked BUT that are not expendable. You explained it concisely
-and perfectly :)))
+I was thinking the same thing when I saw that other thread. It doesn=E2=80=
+=99t
+hurt to try.
 
-I'll wait until that is implemented, and in the meantime I have a
-couple solutions I want to try, like using .gitprecious files and 'git
-ls-files --other --ignored --exclude-from=3D.gitprecious'. I have more
-ideas.
-
-Thanks a lot for the help and the explanation!
+I was also curious about some subtleties like: does it dictate enforcing
+this for all the lines of a touched files or only the modified ones?
+Because the latter is much more useful.
 
 --=20
-Ra=C3=BAl N=C3=BA=C3=B1ez de Arenas Coronado
-.
+Kristoffer Haugsbakk
