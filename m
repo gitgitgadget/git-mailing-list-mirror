@@ -1,87 +1,99 @@
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+Received: from out2-smtp.messagingengine.com (out2-smtp.messagingengine.com [66.111.4.26])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E67A481215
-	for <git@vger.kernel.org>; Tue, 23 Jan 2024 19:31:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7BBC53AB
+	for <git@vger.kernel.org>; Tue, 23 Jan 2024 21:07:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=66.111.4.26
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706038302; cv=none; b=GR6wozudNPhm0q+GTCm9CYZDrLfOY8LBZ0ZysImUJvsAG57Pf+uy5RZx5SvUIPyxn5kMCmdM+fViwMFoSvs4+dUhDD9eJQXMnfuH87NBxLUH/2KUc5M5m/4CdgRr+6bS4Kb5/KzAlq/XkKkPLhxNbveR3g8cGYbK5cRbBAJgC9Y=
+	t=1706044045; cv=none; b=TEgLCsUv6ItVtPX/ZSgOHEWtMg8hXKLOv4PjB3YUsXuZFLbznaD7zU97u3EYbwYOi19FjJF3ulOhpQ5tuVtUJMEgJvxWXwR1yiuU/43oxr/4U37/xPgYcUqC4lO6HJ694sLkxJF9YQ4yI42MMWKzrbeSbprktg7WoQYKzHcSZLs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706038302; c=relaxed/simple;
-	bh=e/lnipFyqy6Nh2YDlaVoDswx67ScE4c2o/a+rm4/nPg=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=sunutrr8oy/Isi+yXkjHxL94XkFZmY9aO2/MfnKnThULESX3R6/bVkl/3c9K1WYMSZf4PwcJwy6TGuNScJyB0/uJjuaFrEui/UXFHM4JdcBfrB6aIxGakvUTfUKJ4WdmLokrRGzs1wlMg+6ocsh2xeHh6jW83c5VALhKbs79mG8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=XBWhCQmX; arc=none smtp.client-ip=173.228.157.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1706044045; c=relaxed/simple;
+	bh=4JkvJA1mdwmde2Dq82+/3QyAy8Fc/BqtDm0uO/hJzBU=;
+	h=MIME-Version:Message-Id:In-Reply-To:References:Date:From:To:Cc:
+	 Subject:Content-Type; b=ZZt3PU0wKRtMM1UIzzmVCvtPaHtK0A1CkJrMtZcWZ7J8NX0q3fbHO28cnZV3dkZ2lhhKYYs057q5BK7j+xedTTtD52DjCpIPBMjMbfi6SAuGiH0xIBie+MaEzBn5uxNvOaPFlMi/ICKWLnmJKP4Rs/Lh9+D2pKPnZ3KxbY/I/Yw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=khaugsbakk.name; spf=pass smtp.mailfrom=khaugsbakk.name; dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b=EVZNY8ux; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=x39mGjPK; arc=none smtp.client-ip=66.111.4.26
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=khaugsbakk.name
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=khaugsbakk.name
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="XBWhCQmX"
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id 71F093315D;
-	Tue, 23 Jan 2024 14:31:40 -0500 (EST)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=e/lnipFyqy6Nh2YDlaVoDswx67ScE4c2o/a+rm
-	4/nPg=; b=XBWhCQmXuurSdDPJNw9Jer1e+l4Lg0OrZ6ZKwYs/xunRBpk7pQdB1V
-	GEBrlPclhyRyCzXuItCgJXzrz9s31l2yaQBYMJ8VHglicr1W0Ln4JfogQ+KTK2VN
-	obcQYuOa4p0iSJyPjBfyCPLcPGLHnr1WGU8dMIKgK9ub7rAS3PDLA=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id 69F893315C;
-	Tue, 23 Jan 2024 14:31:40 -0500 (EST)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.200.93])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 045643315B;
-	Tue, 23 Jan 2024 14:31:36 -0500 (EST)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: "John Cai via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  John Cai <johncai86@gmail.com>
-Subject: Re: [PATCH] reftable: honor core.fsync
-In-Reply-To: <pull.1654.git.git.1706035870956.gitgitgadget@gmail.com> (John
-	Cai via GitGitGadget's message of "Tue, 23 Jan 2024 18:51:10 +0000")
-References: <pull.1654.git.git.1706035870956.gitgitgadget@gmail.com>
-Date: Tue, 23 Jan 2024 11:31:35 -0800
-Message-ID: <xmqq34unn8x4.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b="EVZNY8ux";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="x39mGjPK"
+Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
+	by mailout.nyi.internal (Postfix) with ESMTP id BEA8B5C022B;
+	Tue, 23 Jan 2024 16:07:21 -0500 (EST)
+Received: from imap49 ([10.202.2.99])
+  by compute1.internal (MEProxy); Tue, 23 Jan 2024 16:07:21 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=khaugsbakk.name;
+	 h=cc:cc:content-transfer-encoding:content-type:content-type
+	:date:date:from:from:in-reply-to:in-reply-to:message-id
+	:mime-version:references:reply-to:subject:subject:to:to; s=fm2;
+	 t=1706044041; x=1706130441; bh=4JkvJA1mdwmde2Dq82+/3QyAy8Fc/Bqt
+	Dm0uO/hJzBU=; b=EVZNY8uxIUuDv9MwPPL+VqDGeM21Tqb4e6JpOBbazQhzfIYC
+	Ajn+XWdlHEYt7MwK36MXTRbpMVwArekMrHVJuoWHFj1U8zI39vx767uRZLi1uubO
+	RzXUEcAAtqhr+yqlvK7mhVazwoV6v+ktITFGHGkQo8BkmVGr39H/F6OrSBPkmD2V
+	if2eXr4aFXPyb3eKcCWX4EG16oZ5eL50PaKTU40a9C2n/JoucY+KuEcJBrqS5pFC
+	jQ9IRZP5ox4SmwiRsBvRInEpzVumbWeAgPx2qK2tBkAAsAhjYFlBgjQtbkX8rR4K
+	xabLYxvvErVVfvFRXXIhTk5m2mPBeGS5cG7Qiw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1706044041; x=
+	1706130441; bh=4JkvJA1mdwmde2Dq82+/3QyAy8Fc/BqtDm0uO/hJzBU=; b=x
+	39mGjPKG8tOEQ1EoHnh6KlUj8NDM1bS3BulC6LPLRhtU7jIjuqCB3OgBxgYJYIiO
+	LiZTHBU4AwEqXjEwHyAloN+cygrZgbGkkVRrG1qH0bkUhEP/RsCREiBJBXDRb+hO
+	R8EXWJIS5fMa+V1gK9ohU9ObffuQcNGTg8HFDnOFp573UdR3QVQI1qTbXzMJ/1/v
+	MGp/1eZbVUzUnRQWvpU8FwmCpIKHYkuZ+D7NAfmgpMcY3/ZhY35HzdqdJm0aEoCl
+	P8YHWfMwBWh19Mf5nxfRQyFM/ng+jCQiUR2MsWa3PD/gJMaRmBq3aqKZU/u4K5t/
+	NDmsGHfHzmlbfJDUIQm+g==
+X-ME-Sender: <xms:iSqwZef9TV12j6OYhRWQxQckk4QXlNc12HZcdy0qAuQLmlSu1vM6k-M>
+    <xme:iSqwZYPBPHeu92krLz8oycQvt-0UHLapx8G7nxsUjpwDH_UljOA43es2zG39dKoD4
+    tzWtbPKHLyI2p0N8w>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrvdekkedgudegfecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
+    necuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
+    enucfjughrpefofgggkfgjfhffhffvvefutgfgsehtqhertderreejnecuhfhrohhmpedf
+    mfhrihhsthhofhhfvghrucfjrghughhssggrkhhkfdcuoegtohguvgeskhhhrghughhssg
+    grkhhkrdhnrghmvgeqnecuggftrfgrthhtvghrnhepvdevheeiudefheffvdetueevkeeh
+    hfeliefgkedtieefudetueehueeftefffedunecuvehluhhsthgvrhfuihiivgeptdenuc
+    frrghrrghmpehmrghilhhfrhhomheptghouggvsehkhhgruhhgshgsrghkkhdrnhgrmhgv
+X-ME-Proxy: <xmx:iSqwZfhu3lAc3qnM7uaE2-JKKzNeAtTgp_yzvSSnXdsjI_hb3brImA>
+    <xmx:iSqwZb976-ceWRUo25xJzQrRIIE1q3KVpeqDtJjylpBxuKQAxxLHnA>
+    <xmx:iSqwZasOyUKWU_0-JVVU6374BW10KSBK1ua6RfV25IrKBsm5hi3UCg>
+    <xmx:iSqwZQ1zvc0ryg1bA8ekd-32Dj32-ffx3B9YnBYsbhWZAxkgjoeZxg>
+Feedback-ID: i2671468f:Fastmail
+Received: by mailuser.nyi.internal (Postfix, from userid 501)
+	id 797C515A0092; Tue, 23 Jan 2024 16:07:21 -0500 (EST)
+X-Mailer: MessagingEngine.com Webmail Interface
+User-Agent: Cyrus-JMAP/3.11.0-alpha0-119-ga8b98d1bd8-fm-20240108.001-ga8b98d1b
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- 062F293A-BA26-11EE-B4EA-A19503B9AAD1-77302942!pb-smtp21.pobox.com
+Message-Id: <200cff64-cf53-4f91-bdf4-5afae2d2a127@app.fastmail.com>
+In-Reply-To: <pull.1654.git.git.1706035870956.gitgitgadget@gmail.com>
+References: <pull.1654.git.git.1706035870956.gitgitgadget@gmail.com>
+Date: Tue, 23 Jan 2024 22:06:18 +0100
+From: "Kristoffer Haugsbakk" <code@khaugsbakk.name>
+To: "Josh Soref" <gitgitgadget@gmail.com>
+Cc: "John Cai" <johncai86@gmail.com>, git@vger.kernel.org
+Subject: Re: [PATCH] reftable: honor core.fsync
+Content-Type: text/plain;charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-"John Cai via GitGitGadget" <gitgitgadget@gmail.com> writes:
+On Tue, Jan 23, 2024, at 19:51, John Cai via GitGitGadget wrote:
+> This commits adds a flush function pointer as a new member of
+
+I guess you meant singular =E2=80=9CThis commit=E2=80=9D?
 
 > This commits adds a flush function pointer as a new member of
-> reftable_writer because we are not sure that the first argument to the
-> *write function pointer always contains a file descriptor. In the case of
-> strbuf_add_void, the first argument is a buffer. This way, we can pass
-> in a corresponding flush function that knows how to flush depending on
-> which writer is being used.
+> [=E2=80=A6]
+> This patch does not contain tests as they will need to wait for another
 
-A comment and a half.
+Out of these two =E2=80=9CThis commit=E2=80=9D is more true for the futu=
+re `git log`.
 
- * Can't the new "how to flush" go to the write-option structure?
-   If you represent "no flush" as a NULL pointer in the flush member,
-   most of the changes to the _test files can go, no?
-
- * For a function
-
-	int func(int ac, char **av);
-
-   a literal pointer to it can legally be written as either
-
-	int (*funcp)(int, char **) = &func;
-	int (*funcp)(int, char **) = func;
-
-   but it is my understanding that this codebase prefers the latter,
-   a tradition which goes back to 2005 when Linus was still writing
-   a lot of code, i.e. the identifier that is the name of the
-   function, without & in front.
-
+--=20
+Kristoffer Haugsbakk
