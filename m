@@ -1,197 +1,132 @@
-Received: from mail-ej1-f42.google.com (mail-ej1-f42.google.com [209.85.218.42])
+Received: from mail-ed1-f49.google.com (mail-ed1-f49.google.com [209.85.208.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CEC561674
-	for <git@vger.kernel.org>; Tue, 23 Jan 2024 16:16:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9A3E66B24
+	for <git@vger.kernel.org>; Tue, 23 Jan 2024 16:16:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706026565; cv=none; b=LUnBtsBpR237l5PLeD7CtQEBvy3WjfEhkrwdfWlMY4q3Tu8u6KGDVcp7nS1hLgPucJxDSImQiLaClu2xZWqJjVw5Y1OC7p7V3FX7jwTfsAEB18TO21ZZcNYP77/xTo6r0IsegVKff2nYK1RWwAYZL/MiYjpTpihRxqtifdYUBzw=
+	t=1706026572; cv=none; b=StZxX83DMmKpnUxzyZZ7zR4DxivbbUfNG5PKD8CWLu4RkiSvmpw/joxEyp9vxztIGCGAtmvh3H9e7y+ATLbHFqMkEo+72MsQZAy5VYZ7B40Djyw8JQO0V1vZxiHNe8YC0Jq1nHN4U7yZM4yzEqBbbbovEcPDafEBLGU2or9IAF8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706026565; c=relaxed/simple;
-	bh=jmptYB/xjUysAaYIV+gm8utVqRr/GjGKW01VUDU1AUw=;
+	s=arc-20240116; t=1706026572; c=relaxed/simple;
+	bh=e4JbvCQ1pDrQC1cEEg1IIM7+wK9U7zlZd6wK/1hT4Zs=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=DHVvBX2Ldi9QyKJEs6cSeGSHe7iRpbmO2zStDGDgs6MJiVBElK74Iroesoyvgnag2EbcaDk7RkOl+A3FNEHxE/mykrDGBhofo78SssNpp3HdM1mgjxX3FFLo8YQwWdrL3UtUkjmDw1p+7LvaYqSrwgXhoRDVg6z2gBsxwQ3/fPI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=KHWhaM6b; arc=none smtp.client-ip=209.85.218.42
+	 To:Cc:Content-Type; b=mVvV0rHOQ9aGyGrGS9mj/c8yMcNQ3HsQmj0H/uI5u7uygnqKjUBIynlMFAv42QRG2syiSRxDijjXmVjRgrewEhYAhZg4h40r5p+If/D5syr09OgtS39mFcmFM6PDcHUBscdZhpnicdfOv6Mx/SwljEY1SFtjPEy4Uj/Lc3plErM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=P/THsDMn; arc=none smtp.client-ip=209.85.208.49
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KHWhaM6b"
-Received: by mail-ej1-f42.google.com with SMTP id a640c23a62f3a-a26fa294e56so450781066b.0
-        for <git@vger.kernel.org>; Tue, 23 Jan 2024 08:16:03 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="P/THsDMn"
+Received: by mail-ed1-f49.google.com with SMTP id 4fb4d7f45d1cf-557dcb0f870so5326882a12.2
+        for <git@vger.kernel.org>; Tue, 23 Jan 2024 08:16:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1706026562; x=1706631362; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1706026569; x=1706631369; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=7UiMBJ6gMVYJ4cCKjQsg6vkWkszW02w9jxTtD6Jd6YY=;
-        b=KHWhaM6bZRHptwods1WVI490+TjVZKMmhgEYQXyAmt732atiumiDEmW76kRt3tyDKi
-         qgS3tdR6HvahipPM4aAaB5Oi2dXB5wEkULlf1RMXC37O0ou/wQ6cSNE94/WqQJUdpSJd
-         qIquaSjLarJmFgrzBfNwNG8luw79YJJc40nC9za0khdq67/EnOMijuHXnOFwCOyHlMF6
-         JjsMVHEU1tJmOi35sOAVkY3MSEQ2/Fy3TNsM7Ff2QdygRXMclRGzyOsJl+fFT8n+Zf5t
-         0Pi7iqKxrNbaQnq+LCrYlUADieE/RuT1Unbqnps2d0Xca5bOtcVx8iCbJwB4XQc1GhOM
-         GX0A==
+        bh=4HiTDKIwUGyy4zZCJfP09wkmEEFuzKVBUI3uh9tNh1A=;
+        b=P/THsDMn8RC7NFDgi+RVJL+KmKeYI6au+LKfnlQdVfqpYtyMKUYLhXdTosWmUx0OcW
+         AgDCCKCj3tSkDZXS0pjSg1zr/eHcaTp7adKjLj/ctoQR+0SzuJek/2E8D0Yo+lpyXiXK
+         fY1+4kIVZLE3YZxoZVWMzD68lNKpI4efYJcutbtoThG+rVa4G6Xfn5lxEcKwIn9FdMQy
+         vH9wJ76Lp2EezF4pf75VrrlV/oUhRdmDgkEvWkf+X87sMTKq27E1cKIa6znQOeyLYXi4
+         wauQwbs+csGm4RJq3SgrF2ENDapmcC4xaBxDfp7inJcAvkgx3DU10f+zmtQ6NHX516yy
+         Vlaw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1706026562; x=1706631362;
+        d=1e100.net; s=20230601; t=1706026569; x=1706631369;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=7UiMBJ6gMVYJ4cCKjQsg6vkWkszW02w9jxTtD6Jd6YY=;
-        b=X5+4d5veDbjTD7kKxIV9Rs1S6/8AWJTZulYnNsAwEX2BT9qL4BixmLxve1G/P6gOH4
-         xpoJMPLpTlf6Ghf913IlbugNhTeennVBAsIo/tbXoGJkB016almxac1fyJxYYQb7nXK1
-         5JZqU5naxUSECalG75Nk9eoQ3ml1kFw73feKCu1n+NlPMse45bzJ/kfdQHVElCPE5CKl
-         J2vY0Hwl2mNnZ9wJrr+6Z8YVMBGer4dCrckWVC1lzAmdjzBqvE5MLvvasZEW6/bJ/UsM
-         kHC4Kf+eEL+pChLQGiuP+RXzlxQeWJVH8SiELcIHKrv7Q37iv4eu2ouAYWlmilH8+CMb
-         SPxg==
-X-Gm-Message-State: AOJu0YwR58XdMDg5t17FV7YrGK+OXCPFAg8nYqHv6Mt50ahvZ/Hm7dXA
-	pz7+I8c/ckzkZF64b9PwV2ZVuUHgRRgxXTrCe4vLGyiwN3e8juSx1mSd9Kvhy/qNIY4ZrU35Tip
-	BftrSU7bta6pqQI6oXHICNh+xgGU=
-X-Google-Smtp-Source: AGHT+IGlH3Z4xthMgHG9wa5/ciqWs0Y81RVCt7ytBBehXfwZsW+g3RrWpTlaLOiA0bZnwrqGy1DcYUe8mRCHQvD8ZbU=
-X-Received: by 2002:a17:907:d312:b0:a30:9c52:a3c3 with SMTP id
- vg18-20020a170907d31200b00a309c52a3c3mr78681ejc.107.1706026561385; Tue, 23
- Jan 2024 08:16:01 -0800 (PST)
+        bh=4HiTDKIwUGyy4zZCJfP09wkmEEFuzKVBUI3uh9tNh1A=;
+        b=d/yMMwhCSuQiKGyCnrs/wj0fFMNYCoX6KkuzdMvjb87+e4wgPkQ+ed+NdTbNzBt4oT
+         bLQ5XSQixRAh9+fmbr9RV+gKs8PVeg1Lki+zu9d4KyT9V+9eV2dSH4BG7HTPd0CLUq9v
+         gklJOxequJmCNYIsrLfrlsgukHoRDyeGj2VCwV6aMVvseqbPpSzg6HoNRd2YuM44nsGC
+         IqQTVyDoNYJmql4oVPV1b/SLppOYDsUHIkyr/nVZ+ger9nsJxC1DDfAnCrt1UNOlptw5
+         rDfJnXR2oWjnpoahAL6ZyiMTo6VlxfHPEZzXHlY+gkTXYao7oP939A5rxafqj7vHGLT1
+         w/Zg==
+X-Gm-Message-State: AOJu0YzdF3XYLR8iBmgdAtNGI4NmO3QhgfomVZUQEoCebNxUmXcPpvbb
+	OR+VIxqd63zoP3Lf8vct69R9BkArO1GAee2n9pv6bD6u+SepEW4EIKM27hJi5hs0Cc+JFEw1xjB
+	DPbZsd5dSB9UpcNyJyaJQysqoiFUEFU+T
+X-Google-Smtp-Source: AGHT+IEsv+7EHqdJUK9OdQitUn0NntZpXRYu5ld8sMkJts4gA5VfBuq+zOE1w3W3Kr/IyZP798MuI1ugVoJOCMRvyCA=
+X-Received: by 2002:a17:906:36c2:b0:a30:4618:80a0 with SMTP id
+ b2-20020a17090636c200b00a30461880a0mr52847ejc.33.1706026568390; Tue, 23 Jan
+ 2024 08:16:08 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <cover.1704802213.git.ps@pks.im> <cover.1704877233.git.ps@pks.im> <0552123fa30243d6d8d6b378991651dd6ade7de3.1704877233.git.ps@pks.im>
-In-Reply-To: <0552123fa30243d6d8d6b378991651dd6ade7de3.1704877233.git.ps@pks.im>
+References: <cover.1704802213.git.ps@pks.im> <cover.1704877233.git.ps@pks.im> <1284b70fab6dd85114cb24fc5c7b6c49e35eb135.1704877233.git.ps@pks.im>
+In-Reply-To: <1284b70fab6dd85114cb24fc5c7b6c49e35eb135.1704877233.git.ps@pks.im>
 From: Christian Couder <christian.couder@gmail.com>
-Date: Tue, 23 Jan 2024 17:15:48 +0100
-Message-ID: <CAP8UFD0p-OqYuTrB5m2uq7BRFko887bKszOLtP5peP-A79g=BA@mail.gmail.com>
-Subject: Re: [PATCH v2 1/6] t1300: make tests more robust with non-default ref backends
+Date: Tue, 23 Jan 2024 17:15:56 +0100
+Message-ID: <CAP8UFD0yh4k4p7zcM+ZF90oWWTUMoGVpd3ajWWOV5pk++YKerw@mail.gmail.com>
+Subject: Re: [PATCH v2 3/6] t1302: make tests more robust with new extensions
 To: Patrick Steinhardt <ps@pks.im>
 Cc: git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>, 
 	Eric Sunshine <sunshine@sunshineco.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Wed, Jan 10, 2024 at 10:01=E2=80=AFAM Patrick Steinhardt <ps@pks.im> wro=
+On Wed, Jan 10, 2024 at 10:02=E2=80=AFAM Patrick Steinhardt <ps@pks.im> wro=
 te:
 >
-> The t1300 test suite exercises the git-config(1) tool. To do so we
-> overwrite ".git/config" to contain custom contents.
+> In t1302 we exercise logic around "core.repositoryFormatVersion" and
+> extensions. These tests are not particularly robust against extensions
+> like the newly introduced "refStorage" extension.
 
-Here "we" means "tests in t1300" I guess.
+Here also it's not very clear what robust means. Some examples of how
+things could fail would perhaps help.
 
-> While this is easy
-> enough to do, it may create problems when using a non-default repository
-> format because we also overwrite the repository format version as well
-> as any potential extensions.
+> Refactor the tests to be more robust:
+>
+>   - Check the DEFAULT_REPO_FORMAT prereq to determine the expected
+>     repository format version. This helps to ensure that we only need to
+>     update the prereq in a central place when new extensions are added.
+>
+>   - Use a separate repository to rewrite ".git/config" to test
+>     combinations of the repository format version and extensions. This
+>     ensures that we don't break the main test repository.
+>
+>   - Do not rewrite ".git/config" when exercising the "preciousObjects"
+>     extension.
 
-But I am not sure that "we" in the above sentence is also "tests in
-t1300". I think overwriting the repo format version and potential
-extensions is done by other tests, right? Anyway it would be nice to
-clarify this.
-
-> With the upcoming "reftable" ref backend
-> the result is that we may try to access refs via the "files" backend
-> even though the repository has been initialized with the "reftable"
-> backend.
-
-Not sure here also what "we" is. When could refs be accessed via the
-"files" backend even though the repo was initialized with the
-"reftable" backend? Does this mean that some of the tests in t1300 try
-to access refs via the "files" backend while we may want to run all
-the tests using the reftable backend?
-
-> Refactor tests which access the refdb to be more robust by using their
-> own separate repositories, which allows us to be more careful and not
-> discard required extensions.
-
-Not sure what exactly is discarding extensions. Also robust is not
-very clear. It would be better to give at least an example of how
-things could fail.
+It would be nice to talk a bit about the failures that each of the
+above changes could prevent.
 
 > Signed-off-by: Patrick Steinhardt <ps@pks.im>
 > ---
->  t/t1300-config.sh | 74 ++++++++++++++++++++++++++++++-----------------
->  1 file changed, 48 insertions(+), 26 deletions(-)
+>  t/t1302-repo-version.sh | 19 +++++++++++++++----
+>  1 file changed, 15 insertions(+), 4 deletions(-)
 >
-> diff --git a/t/t1300-config.sh b/t/t1300-config.sh
-> index f4e2752134..53c3d65823 100755
-> --- a/t/t1300-config.sh
-> +++ b/t/t1300-config.sh
-> @@ -1099,13 +1099,18 @@ test_expect_success SYMLINKS 'symlink to nonexist=
-ent configuration' '
->  '
->
->  test_expect_success 'check split_cmdline return' "
-> -       git config alias.split-cmdline-fix 'echo \"' &&
-> -       test_must_fail git split-cmdline-fix &&
-> -       echo foo > foo &&
-> -       git add foo &&
-> -       git commit -m 'initial commit' &&
-> -       git config branch.main.mergeoptions 'echo \"' &&
-> -       test_must_fail git merge main
-> +       test_when_finished 'rm -rf repo' &&
-> +       git init repo &&
-> +       (
-> +               cd repo &&
-> +               git config alias.split-cmdline-fix 'echo \"' &&
-> +               test_must_fail git split-cmdline-fix &&
-> +               echo foo >foo &&
-> +               git add foo &&
-> +               git commit -m 'initial commit' &&
-> +               git config branch.main.mergeoptions 'echo \"' &&
-> +               test_must_fail git merge main
-> +       )
->  "
-
-Maybe, while at it, this test could be modernized to use single quotes
-around the test code like:
-
-test_expect_success 'check split_cmdline return' '
-...
-'
-
-or is using double quotes still Ok?
-
->  test_expect_success 'git -c "key=3Dvalue" support' '
-> @@ -1157,10 +1162,16 @@ test_expect_success 'git -c works with aliases of=
- builtins' '
+> diff --git a/t/t1302-repo-version.sh b/t/t1302-repo-version.sh
+> index 179474fa65..7c680c91c4 100755
+> --- a/t/t1302-repo-version.sh
+> +++ b/t/t1302-repo-version.sh
+> @@ -28,7 +28,12 @@ test_expect_success 'setup' '
 >  '
 >
->  test_expect_success 'aliases can be CamelCased' '
-> -       test_config alias.CamelCased "rev-parse HEAD" &&
-> -       git CamelCased >out &&
-> -       git rev-parse HEAD >expect &&
-> -       test_cmp expect out
-> +       test_when_finished "rm -rf repo" &&
-> +       git init repo &&
-> +       (
-> +               cd repo &&
-> +               test_commit A &&
-> +               git config alias.CamelCased "rev-parse HEAD" &&
-> +               git CamelCased >out &&
-> +               git rev-parse HEAD >expect &&
-> +               test_cmp expect out
-> +       )
->  '
+>  test_expect_success 'gitdir selection on normal repos' '
+> -       test_oid version >expect &&
+> +       if test_have_prereq DEFAULT_REPO_FORMAT
+> +       then
+> +               echo 0
+> +       else
+> +               echo 1
+> +       fi >expect &&
+>         git config core.repositoryformatversion >actual &&
+>         git -C test config core.repositoryformatversion >actual2 &&
+>         test_cmp expect actual &&
+> @@ -79,8 +84,13 @@ mkconfig () {
 
-Here single quotes are used for example.
+Before that hunk there is:
 
->  test_expect_success 'git -c does not split values on equals' '
-> @@ -2009,11 +2020,11 @@ test_expect_success '--show-origin getting a sing=
-le key' '
->  '
->
->  test_expect_success 'set up custom config file' '
-> -       CUSTOM_CONFIG_FILE=3D"custom.conf" &&
-> -       cat >"$CUSTOM_CONFIG_FILE" <<-\EOF
-> +       cat >"custom.conf" <<-\EOF &&
->         [user]
->                 custom =3D true
->         EOF
-> +       CUSTOM_CONFIG_FILE=3D"$(test-tool path-utils real_path custom.con=
-f)"
->  '
+test_expect_success 'setup' '
+    test_oid_cache <<-\EOF &&
+    version sha1:0
+    version sha256:1
+    EOF
 
-This looks like a test modernization, but maybe it's part of making
-the tests more robust. Anyway it might be a good idea to either talk a
-bit about that in the commit message or to move it to a preparatory
-commit if it's a modernization and other modernizations could be made
-in that preparatory commit.
+and it seems to me that the above test_oid_cache call is not needed
+anymore, if `test_oid version` is not used anymore.
 
-Otherwise this patch looks good to me.
+Otherwise this looks good to me.
