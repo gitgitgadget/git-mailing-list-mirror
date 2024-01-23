@@ -1,106 +1,173 @@
-Received: from mail-lj1-f180.google.com (mail-lj1-f180.google.com [209.85.208.180])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from out4-smtp.messagingengine.com (out4-smtp.messagingengine.com [66.111.4.28])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F07B45FB8C
-	for <git@vger.kernel.org>; Tue, 23 Jan 2024 15:10:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82DF0604B7
+	for <git@vger.kernel.org>; Tue, 23 Jan 2024 15:18:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=66.111.4.28
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706022661; cv=none; b=fbSFys6P99WtiBg7EZUYwJ7mH9Mom4HtAOkxP7O7EoUNYS7i3aMu+xE0nyzJ9wJM5vPWqCGGXMon0rddWLFhPOrpJ7NYMcj2K4PXgGxNwTSauCDY61j/pp0xWd6dddS7UxkT0q8uAlb7QFPNgR2UK0UAbTbTmoHwXTXRR4Q+fk8=
+	t=1706023136; cv=none; b=ZPWrnEut4s+s7HZZmLsOJxJB+stmj4fZsYICoIakv8vn7X7COdSnhqejPPFaHRc4wpbL9rakRAkdZIIcJtrt5mYR8W6/duzY4brd8o439TJ0GLxKVyOWbUKto4SlNylCosAlSxibMUzmXxm8UHtGcTKGtG/wEKrhHTNZe5KQ69g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706022661; c=relaxed/simple;
-	bh=7KzfCnNemCRE+NE/uGFYwnjPuIYDDkxJ+57xDoEWpgs=;
-	h=From:To:Cc:Subject:References:Date:In-Reply-To:Message-ID:
-	 MIME-Version:Content-Type; b=UlmdkGRvo5SxQaz/ueFMG1bDi0LF3v8k6fCId5WANHm5K7PGJGfEgBGODQy1cEi6gYIwuX9fCclXGG4eUb4adapkQKH1WeLpYR2b/vYrmUS641/eCabT5SDGvqwHQLGNnlsFWsv0uN/P8ntfm44WE2Li0JQg6F7CPJqbUa5PXVU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fexIHTW/; arc=none smtp.client-ip=209.85.208.180
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1706023136; c=relaxed/simple;
+	bh=FeV7aMSkTWMjNmpPJKyHXOnhZNU0aJQ1s5WAPhR3Zr4=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=L9qn1hXgFG/+52rbXHx3B6+0dIYkB156mh5NbdXLfcm74FGs2dJPjV+Q4v0CHHq/TGitszZ8onXPAs8FP2hqjOKhDw9PfWTGn6RLztpFMHzqLqXPbs2gXusjdt7cscdd/exLEXYCs1o0rkgTuOGqPD5SIZlYAkO6gfzPhXz9CDQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=H1+LHvGV; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=naO4jIZk; arc=none smtp.client-ip=66.111.4.28
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fexIHTW/"
-Received: by mail-lj1-f180.google.com with SMTP id 38308e7fff4ca-2cc9fa5e8e1so47508621fa.3
-        for <git@vger.kernel.org>; Tue, 23 Jan 2024 07:10:59 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1706022657; x=1706627457; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:user-agent:message-id
-         :in-reply-to:date:references:subject:cc:to:from:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=C+ep7nxGK05LjJUtr24YmOpO3zsVpi5/peYoRULSu2A=;
-        b=fexIHTW/FCesgzbyCGGbiNgpigMvneDWZOcvDDKgYBAq9P8ZPll+tSj80N9dfSIzMt
-         YwZ6FQ4RTvM1/MfRUUjpzeew7ErP1zq1eB1uvP5eIpOmWdYSnj09b0E0DVA/XYLM8wyf
-         /PBAcyLldqFLGhj7tpPNZmpWqE5yM3B5omWHH+jZlPcGKv6Tr8jwspiJiJYS3I6Ow2if
-         DFNiXClGVNf96tIghfOpFhXRChokkcTxWOUy51J8yo1JRdgnBEcpd6QVLzsKU4tfzhWZ
-         arbdCo0ZLPCpQLLBZAfs9KL8nR3fjXYeSRY30FPwS1YpBebHN5ubJ5B1P9IqJyaOtrYc
-         kI3g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1706022657; x=1706627457;
-        h=content-transfer-encoding:mime-version:user-agent:message-id
-         :in-reply-to:date:references:subject:cc:to:from:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=C+ep7nxGK05LjJUtr24YmOpO3zsVpi5/peYoRULSu2A=;
-        b=D6/slkOSNJUVaBXVG/8bpnZ2JTgvN9sABXvgCw/hGdJbEmuEYbxXZb9Z7GMJ6LVX0W
-         MgQkeIyWgZRYEH1ishYL6VxIZGplJyfRnAyhWwAsmFvtEs16v0/LZzN/CKftp6RHxbVU
-         AizkfuX8UNqSCjCiF/9/CF9+aLA6SuLSKBdjQu4D2IVjZcfH0q17/YOm279tlgj9gc3A
-         0GxJZlkLisT9N1VMRSdzdrQEB8WMNJnj55FgWGXP1ceTp3IN8G3TfCjXNHE7GGD8Q9lP
-         z7ajSuEFUSibHH8Iho/vwfR2W7T5lTQ0QmP5KXX9Fkb/11wfYmB9lQBQbqjgT/qV4ICy
-         5qwg==
-X-Gm-Message-State: AOJu0YzQ3Pk90+CdbKptgXXCuXprxkDL2sy3vUOKCvCCZR/qx60qnx8h
-	NGH2AeG5wdpmKIy2dFhU3tsc442R/Ug9E+rZm8lSDYEH7mqR0qhwlV2y73Y6
-X-Google-Smtp-Source: AGHT+IGvWeW+aUHs2J5KZXhI6IcJfVevVj8fswg7Z4nlQRtRvTx2xhzPaOZpBIaFTZaOkzZytzj9Ug==
-X-Received: by 2002:a05:651c:10af:b0:2cc:e976:5915 with SMTP id k15-20020a05651c10af00b002cce9765915mr2445949ljn.49.1706022657145;
-        Tue, 23 Jan 2024 07:10:57 -0800 (PST)
-Received: from osv.localdomain ([89.175.180.246])
-        by smtp.gmail.com with ESMTPSA id y19-20020a2e9d53000000b002cd054fbb34sm3713159ljj.9.2024.01.23.07.10.56
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 23 Jan 2024 07:10:56 -0800 (PST)
-From: Sergey Organov <sorganov@gmail.com>
-To: Elijah Newren <newren@gmail.com>
-Cc: Junio C Hamano <gitster@pobox.com>,  git@vger.kernel.org
-Subject: Re: what should "git clean -n -f [-d] [-x] <pattern>" do?
-References: <xmqq34v6gswv.fsf@gitster.g>
-	<CABPp-BHUVLS4vB5maZzU5gS33ve6LkKgij+rc1bBZges6Xej-g@mail.gmail.com>
-Date: Tue, 23 Jan 2024 18:10:55 +0300
-In-Reply-To: <CABPp-BHUVLS4vB5maZzU5gS33ve6LkKgij+rc1bBZges6Xej-g@mail.gmail.com>
-	(Elijah Newren's message of "Thu, 18 Jan 2024 18:07:17 -0800")
-Message-ID: <87a5ow9jb4.fsf@osv.gnss.ru>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="H1+LHvGV";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="naO4jIZk"
+Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
+	by mailout.nyi.internal (Postfix) with ESMTP id 36F005C012C;
+	Tue, 23 Jan 2024 10:18:52 -0500 (EST)
+Received: from mailfrontend2 ([10.202.2.163])
+  by compute4.internal (MEProxy); Tue, 23 Jan 2024 10:18:52 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1706023132; x=1706109532; bh=QMoxl6ei/z
+	E4bfVdnX5xSXIOA/E4btjyvJ1Ri+w9Grc=; b=H1+LHvGVsi7LBtKnNxOVn/l7aj
+	Px4BlcWas3xbhoyGuqdhyZehyI9M7BUELfxZ32JLhFoxgJVQaHKcklRb6rxhSdKz
+	UfwyD5j/RS7Z6v3PA+sOllSpLWc+kxT22ve5HcjT18NMiPM81JrUTZXLOW4VL0E6
+	TECWHHgbm7JGUOU/UakLCNurAXTqbmqnMQ9ZIrxpavpo8oUBoMTiONjCTymNiwUo
+	gHVeKP3NkCHzzzJ5r/Y87qRAGTMcZsleFUBjmIy6u/y87MrNp0Uvj7LB1dn55h3E
+	Z4IIvdqIFKRYvTBvK053oY21SerV1knnhNilITWEwZCnrAYi2qvx/dDrK/TQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm3; t=1706023132; x=1706109532; bh=QMoxl6ei/zE4bfVdnX5xSXIOA/E4
+	btjyvJ1Ri+w9Grc=; b=naO4jIZkLl2GykXa94xA6G9FaxzEs7XNUU3zZqb03Jtk
+	kWZW2/YohHChW+6Pmk/NbG7zj+nqj+XLq7EQg0i8WjrS0uRGbNX0/yT6zXzYaNjU
+	VkH8lhbeftLTJwBnKt3StVqOkc9hCIKGLToekY5KnbRUVk6wJerSBBDTyCiMETI7
+	gsHJaiz7jm4eVI0oihdScEC4HQbIjWgRWWGg1WQcH01c6gn1dDjbxShhXm3PmQ9e
+	FBOFCOwQtRr2EZ/FocdQ7gHLncuCb/EDdGqSM1rwFgMs3XHGTNG02TUNu1937fCY
+	M9PVFNLkF8ttAVTZ1vCnbktP53sXgFUhBLtLHxhE9w==
+X-ME-Sender: <xms:29ivZe_Khr61cMpb1m2rwbduoV2LY9DZG8hTP1H0w4kq-0kAOZ_bYg>
+    <xme:29ivZes9Adi06C29qzuujOT_Grv9rklSttGPVySfxLXp0Z7FEfVYdI712XdeXu2hm
+    r-_O_G_prM3b_frOQ>
+X-ME-Received: <xmr:29ivZUDXLOwl-N01zM63U1QZaakXHgE-jZSmLOJR8XwCflUtP7qkKvYE0jmA1AXvFWtoMHK5WLwVSI9oBk_PpXewEcZJTsSGMLszBl-yJ2FvlA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrvdekkedgjeefucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+    cujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtvdenucfhrhhomheprfgrthhr
+    ihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvg
+    hrnhepueektdevtdffveeljeetgfehheeigeekleduvdeffeeghefgledttdehjeelffet
+    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
+    hpkhhsrdhimh
+X-ME-Proxy: <xmx:29ivZWeSXgxrxt2n2wBYOK9It_EnNMwfnAgUDQuIXx3wiKK36itI3w>
+    <xmx:29ivZTOkBMFJvpa0Z4__R9-wbSLZTp0v2Q3aPp38Cqo1YKndFpJMiw>
+    <xmx:29ivZQlYanTrIjBp_ll5V9T917kOyu0eVH3NjUzXKk2TuZy79pBV1w>
+    <xmx:3NivZcbkvug-E3gTVg2Mkx-x7g4yYG1krbaBvs430ydPILpGIrSL2A>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 23 Jan 2024 10:18:50 -0500 (EST)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id 8e01efe0 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 23 Jan 2024 15:15:43 +0000 (UTC)
+Date: Tue, 23 Jan 2024 16:18:46 +0100
+From: Patrick Steinhardt <ps@pks.im>
+To: Toon Claes <toon@iotcl.com>
+Cc: git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>,
+	Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v2 3/6] t1302: make tests more robust with new extensions
+Message-ID: <Za_Y1tP8-LEiNjrD@tanuki>
+References: <cover.1704802213.git.ps@pks.im>
+ <cover.1704877233.git.ps@pks.im>
+ <1284b70fab6dd85114cb24fc5c7b6c49e35eb135.1704877233.git.ps@pks.im>
+ <87a5owqgzi.fsf@iotcl.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="UZu7H+ZCM1WRBXah"
+Content-Disposition: inline
+In-Reply-To: <87a5owqgzi.fsf@iotcl.com>
 
-Elijah Newren <newren@gmail.com> writes:
 
-> On Tue, Jan 9, 2024 at 12:21 PM Junio C Hamano <gitster@pobox.com> wrote:
->>
->> I think the current code makes "-n" take precedence, and ignores
->> "-f".
->
-> :-(
->
->>  Shouldn't it either
->>
->>  (1) error out with "-n and -f cannot be used together", or
->>  (2) let "-n" and "-f" follow the usual "last one wins" rule?
->
-> I believe so.
+--UZu7H+ZCM1WRBXah
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Then how does one figure what "git clean -f -f" will do without actually
-doing it?
+On Tue, Jan 23, 2024 at 03:08:00PM +0100, Toon Claes wrote:
+>=20
+> Patrick Steinhardt <ps@pks.im> writes:
+>=20
+> > [[PGP Signed Part:Undecided]]
+> > [1. text/plain]
+> > In t1302 we exercise logic around "core.repositoryFormatVersion" and
+> > extensions. These tests are not particularly robust against extensions
+> > like the newly introduced "refStorage" extension.
+> >
+> > Refactor the tests to be more robust:
+> >
+> >   - Check the DEFAULT_REPO_FORMAT prereq to determine the expected
+> >     repository format version. This helps to ensure that we only need to
+> >     update the prereq in a central place when new extensions are added.
+> >
+> >   - Use a separate repository to rewrite ".git/config" to test
+> >     combinations of the repository format version and extensions. This
+> >     ensures that we don't break the main test repository.
+> >
+> >   - Do not rewrite ".git/config" when exercising the "preciousObjects"
+> >     extension.
+> >
+> > Signed-off-by: Patrick Steinhardt <ps@pks.im>
+> > ---
+> >  t/t1302-repo-version.sh | 19 +++++++++++++++----
+> >  1 file changed, 15 insertions(+), 4 deletions(-)
+> >
+> > diff --git a/t/t1302-repo-version.sh b/t/t1302-repo-version.sh
+> > index 179474fa65..7c680c91c4 100755
+> > --- a/t/t1302-repo-version.sh
+> > +++ b/t/t1302-repo-version.sh
+> > @@ -79,8 +84,13 @@ mkconfig () {
+> >
+> >  while read outcome version extensions; do
+> >  	test_expect_success "$outcome version=3D$version $extensions" "
+> > -		mkconfig $version $extensions >.git/config &&
+> > -		check_${outcome}
+> > +		test_when_finished 'rm -rf extensions' &&
+> > +		git init extensions &&
+> > +		(
+> > +			cd extensions &&
+> > +			mkconfig $version $extensions >.git/config &&
+>=20
+> Why did you not remove the use of `mkconfig` here?
 
-Please notice that -f -f is special according to the manual:
+I guess you mean stop using `mkconfig` and instead use git-config(1) to
+manually write only the repository format version as well as extensions?
+The problem here is that the resulting configuration would be dependent
+on some environment variables, like `GIT_TEST_DEFAULT_HASH` and the
+refdb equivalent `GIT_TEST_DEFAULT_REF_FORMAT` which do end up in the
+repo's configuration. So I think it's actually preferable to overwrite
+the complete ".git/config" so that is exactly in the expected state.
 
-  "Git will refuse to modify untracked nested git repositories
-   (directories with a .git subdirectory) unless a second -f is given."
+Patrick
 
-I looks like neither (0), nor (1) nor (2) gives us any useful behavior
-in this case.
+--UZu7H+ZCM1WRBXah
+Content-Type: application/pgp-signature; name="signature.asc"
 
-I figure the best solution is to rather make -n orthogonal to -f, that
-will solve the puzzle, and that is what actually expected from a "dry
-run" option: don't change any behavior, except print actions instead of
-performing them.
+-----BEGIN PGP SIGNATURE-----
 
--- Sergey Organov
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmWv2NUACgkQVbJhu7ck
+PpQh5Q/+LwDw3KIWNjXdUl+LmwgvSIb762B23TuRyGOPP0t2LLX84mTuChWaTyIY
+Me/8PeiRlDGwxsnP1WBhIpGoZ1Vqt7aMJnAMK0k0+wxwuPNqvGSa54KodLmNA7Kd
+k6EaFAS/fya5JYOlYCFCWX/8R9MsEKtRpgeEInp487TAbF0s8Y1OvXgawKjEdHpD
+eByZt0agEZFm4zRh0f9hKV9gakkSdyNt8pqM/ZbbXKZdnstIRKyky07D9d89I5FW
+LF3Nq6CfH1g5HB+FdjKmpQY/NCBQ145XIM816/iVmCSrgGyWC5YanZ05Sxk/nCJc
+AFidppsUV7BgmpmFsIleugKciIdVFbeihZyIIhtumFjPZK4cSIY75HlZtbWhOLzy
+GH59+GmoSI1LCtxhFbOs9lwYEuWXauGyJe0V4ZRgF7et5SfPySycpCYex0hfJPwO
+V2wAhTYLEkj/xNSVb9lShE0imk7mSAFKYKqdwXLWGpWDW7aYbpm2FgHvomNM+iq/
+ClVJUyLK+Cn1F6RBdVd6GuYnD2RYZ8tJdH+pwky33D+1ambB+poswnMjt9dHABT4
+/5wI8GMstN5ADYNzWTmSrRyxYZHHwngqCnh7oGQoMrGYobb1BqE1adozBgCFg/mS
+R7rqAfpx7kjluHy5Ut7ZJC7GdAvMWKEoJ3chPu2ndUlVmEs+DBU=
+=N6PW
+-----END PGP SIGNATURE-----
+
+--UZu7H+ZCM1WRBXah--
