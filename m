@@ -1,92 +1,197 @@
-Received: from wp156.webpack.hosteurope.de (wp156.webpack.hosteurope.de [80.237.132.163])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f42.google.com (mail-ej1-f42.google.com [209.85.218.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5040C50A72
-	for <git@vger.kernel.org>; Tue, 23 Jan 2024 15:27:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=80.237.132.163
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CEC561674
+	for <git@vger.kernel.org>; Tue, 23 Jan 2024 16:16:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706023654; cv=none; b=YwaQ91O3ga/hdLvIWvYfXOKBZwnkku4BFKc2l6AHXHV5s8VXnXPf1Jh5pXXaEmTLxM1EtU12+y8maBp8ZLq5XfsWrwfnyO+Z9w2jj/PY6SoiLndJ4FJ/hXSLYiG1OTx+BXoSTG/taZipnCLkDky8b3x1Xf0dihDTs2gTNIQnkHs=
+	t=1706026565; cv=none; b=LUnBtsBpR237l5PLeD7CtQEBvy3WjfEhkrwdfWlMY4q3Tu8u6KGDVcp7nS1hLgPucJxDSImQiLaClu2xZWqJjVw5Y1OC7p7V3FX7jwTfsAEB18TO21ZZcNYP77/xTo6r0IsegVKff2nYK1RWwAYZL/MiYjpTpihRxqtifdYUBzw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706023654; c=relaxed/simple;
-	bh=IIwShkPKyrZr0UeDQIYlOj/kNuro4mMmUvnEuR03SWQ=;
-	h=Date:From:To:Message-ID:Subject:MIME-Version:Content-Type; b=P+eVd6n/CaeYKT3gkxQkiOgsOLgC/sbEGDKUMkjEnQPSYjH7AfDhyDA1ptEERUPH5TEe/B/s8pC6ds7Dh+O5SEYO6DdE/Dbs6aDc1g0FG94heCeJhwBWZ8JMfx90t6p9fn1m5mSSwX0XJGU0tkeevE2JM8Zlzd9hAYV8ttAkUv4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=virtuell-zuhause.de; spf=pass smtp.mailfrom=virtuell-zuhause.de; arc=none smtp.client-ip=80.237.132.163
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=virtuell-zuhause.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=virtuell-zuhause.de
-Received: from app01-neu.ox.hosteurope.de ([92.51.170.135]); authenticated
-	by wp156.webpack.hosteurope.de running ExIM with esmtpsa (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
-	id 1rSIH1-00068H-81; Tue, 23 Jan 2024 16:01:11 +0100
-Date: Tue, 23 Jan 2024 16:01:11 +0100 (CET)
-From: Thomas Braun <thomas.braun@virtuell-zuhause.de>
-To: "git@vger.kernel.org" <git@vger.kernel.org>
-Message-ID: <1015793055.437265.1706022071164@ox.hosteurope.de>
-Subject: Fatal error: commit-graph-chain.lock': File exists.
+	s=arc-20240116; t=1706026565; c=relaxed/simple;
+	bh=jmptYB/xjUysAaYIV+gm8utVqRr/GjGKW01VUDU1AUw=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=DHVvBX2Ldi9QyKJEs6cSeGSHe7iRpbmO2zStDGDgs6MJiVBElK74Iroesoyvgnag2EbcaDk7RkOl+A3FNEHxE/mykrDGBhofo78SssNpp3HdM1mgjxX3FFLo8YQwWdrL3UtUkjmDw1p+7LvaYqSrwgXhoRDVg6z2gBsxwQ3/fPI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=KHWhaM6b; arc=none smtp.client-ip=209.85.218.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KHWhaM6b"
+Received: by mail-ej1-f42.google.com with SMTP id a640c23a62f3a-a26fa294e56so450781066b.0
+        for <git@vger.kernel.org>; Tue, 23 Jan 2024 08:16:03 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1706026562; x=1706631362; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=7UiMBJ6gMVYJ4cCKjQsg6vkWkszW02w9jxTtD6Jd6YY=;
+        b=KHWhaM6bZRHptwods1WVI490+TjVZKMmhgEYQXyAmt732atiumiDEmW76kRt3tyDKi
+         qgS3tdR6HvahipPM4aAaB5Oi2dXB5wEkULlf1RMXC37O0ou/wQ6cSNE94/WqQJUdpSJd
+         qIquaSjLarJmFgrzBfNwNG8luw79YJJc40nC9za0khdq67/EnOMijuHXnOFwCOyHlMF6
+         JjsMVHEU1tJmOi35sOAVkY3MSEQ2/Fy3TNsM7Ff2QdygRXMclRGzyOsJl+fFT8n+Zf5t
+         0Pi7iqKxrNbaQnq+LCrYlUADieE/RuT1Unbqnps2d0Xca5bOtcVx8iCbJwB4XQc1GhOM
+         GX0A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1706026562; x=1706631362;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=7UiMBJ6gMVYJ4cCKjQsg6vkWkszW02w9jxTtD6Jd6YY=;
+        b=X5+4d5veDbjTD7kKxIV9Rs1S6/8AWJTZulYnNsAwEX2BT9qL4BixmLxve1G/P6gOH4
+         xpoJMPLpTlf6Ghf913IlbugNhTeennVBAsIo/tbXoGJkB016almxac1fyJxYYQb7nXK1
+         5JZqU5naxUSECalG75Nk9eoQ3ml1kFw73feKCu1n+NlPMse45bzJ/kfdQHVElCPE5CKl
+         J2vY0Hwl2mNnZ9wJrr+6Z8YVMBGer4dCrckWVC1lzAmdjzBqvE5MLvvasZEW6/bJ/UsM
+         kHC4Kf+eEL+pChLQGiuP+RXzlxQeWJVH8SiELcIHKrv7Q37iv4eu2ouAYWlmilH8+CMb
+         SPxg==
+X-Gm-Message-State: AOJu0YwR58XdMDg5t17FV7YrGK+OXCPFAg8nYqHv6Mt50ahvZ/Hm7dXA
+	pz7+I8c/ckzkZF64b9PwV2ZVuUHgRRgxXTrCe4vLGyiwN3e8juSx1mSd9Kvhy/qNIY4ZrU35Tip
+	BftrSU7bta6pqQI6oXHICNh+xgGU=
+X-Google-Smtp-Source: AGHT+IGlH3Z4xthMgHG9wa5/ciqWs0Y81RVCt7ytBBehXfwZsW+g3RrWpTlaLOiA0bZnwrqGy1DcYUe8mRCHQvD8ZbU=
+X-Received: by 2002:a17:907:d312:b0:a30:9c52:a3c3 with SMTP id
+ vg18-20020a170907d31200b00a309c52a3c3mr78681ejc.107.1706026561385; Tue, 23
+ Jan 2024 08:16:01 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Priority: 3
-Importance: Normal
-X-Mailer: Open-Xchange Mailer v7.10.6-Rev57
-X-Originating-Client: open-xchange-appsuite
-X-Originating-Sender: thomas@akwgegner.de
-X-bounce-key: webpack.hosteurope.de;thomas.braun@virtuell-zuhause.de;1706023652;e551b31e;
-X-HE-SMSGID: 1rSIH1-00068H-81
+References: <cover.1704802213.git.ps@pks.im> <cover.1704877233.git.ps@pks.im> <0552123fa30243d6d8d6b378991651dd6ade7de3.1704877233.git.ps@pks.im>
+In-Reply-To: <0552123fa30243d6d8d6b378991651dd6ade7de3.1704877233.git.ps@pks.im>
+From: Christian Couder <christian.couder@gmail.com>
+Date: Tue, 23 Jan 2024 17:15:48 +0100
+Message-ID: <CAP8UFD0p-OqYuTrB5m2uq7BRFko887bKszOLtP5peP-A79g=BA@mail.gmail.com>
+Subject: Re: [PATCH v2 1/6] t1300: make tests more robust with non-default ref backends
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>, 
+	Eric Sunshine <sunshine@sunshineco.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Hi,
+On Wed, Jan 10, 2024 at 10:01=E2=80=AFAM Patrick Steinhardt <ps@pks.im> wro=
+te:
+>
+> The t1300 test suite exercises the git-config(1) tool. To do so we
+> overwrite ".git/config" to contain custom contents.
 
-Since 2.43.0 I'm seeing the following error message when I fetch from a remote:
+Here "we" means "tests in t1300" I guess.
 
-$LC_ALL=C git fetch --all
-remote: Enumerating objects: 446, done.
-remote: Counting objects: 100% (446/446), done.
-remote: Compressing objects: 100% (135/135), done.
-remote: Total 446 (delta 328), reused 415 (delta 311), pack-reused 0
-Receiving objects: 100% (446/446), 432.84 KiB | 1.01 MiB/s, done.
-Resolving deltas: 100% (328/328), completed with 29 local objects.
-From EEE:XXX/YYY
- * [new branch]          bugfix/ZZZ -> origin/ZZZ
- * [new branch]          bugfix/ZZZ -> origin/bugfix/ZZZ
- + 7244c9b68...6dad36582 feature/AAA -> origin/feature/AAA  (forced update)
- + 7ce96b207...7bee890d6 feature/BBB -> origin/feature/BBB  (forced update)
- * [new branch]          feature/CCC -> origin/feature/CCC
-   fd8c36a84..2ab4db03d  main                                            -> origin/main
-fatal: Unable to create '/DDD/.git/objects/info/commit-graphs/commit-graph-chain.lock': File exists.
+> While this is easy
+> enough to do, it may create problems when using a non-default repository
+> format because we also overwrite the repository format version as well
+> as any potential extensions.
 
-Another git process seems to be running in this repository, e.g.
-an editor opened by 'git commit'. Please make sure all processes
-are terminated then try again. If it still fails, a git process
-may have crashed in this repository earlier:
-remove the file manually to continue.
+But I am not sure that "we" in the above sentence is also "tests in
+t1300". I think overwriting the repo format version and potential
+extensions is done by other tests, right? Anyway it would be nice to
+clarify this.
 
-Observations:
-- repo and gitforge independent
-- only happens when fetch.writeCommitGraph is turned on
-- git gc cleans up the stale lock file
-- I think this is only happening when multiple branches on the remote have changed
+> With the upcoming "reftable" ref backend
+> the result is that we may try to access refs via the "files" backend
+> even though the repository has been initialized with the "reftable"
+> backend.
 
-I do have protocol.version set to 2.
+Not sure here also what "we" is. When could refs be accessed via the
+"files" backend even though the repo was initialized with the
+"reftable" backend? Does this mean that some of the tests in t1300 try
+to access refs via the "files" backend while we may want to run all
+the tests using the reftable backend?
 
-I tried replicating the issue with an example but failed so far.
+> Refactor tests which access the refdb to be more robust by using their
+> own separate repositories, which allows us to be more careful and not
+> discard required extensions.
 
-Does that ring a bell somewhere? Where should I start poking?
+Not sure what exactly is discarding extensions. Also robust is not
+very clear. It would be better to give at least an example of how
+things could fail.
 
-Thanks,
-Thomas
+> Signed-off-by: Patrick Steinhardt <ps@pks.im>
+> ---
+>  t/t1300-config.sh | 74 ++++++++++++++++++++++++++++++-----------------
+>  1 file changed, 48 insertions(+), 26 deletions(-)
+>
+> diff --git a/t/t1300-config.sh b/t/t1300-config.sh
+> index f4e2752134..53c3d65823 100755
+> --- a/t/t1300-config.sh
+> +++ b/t/t1300-config.sh
+> @@ -1099,13 +1099,18 @@ test_expect_success SYMLINKS 'symlink to nonexist=
+ent configuration' '
+>  '
+>
+>  test_expect_success 'check split_cmdline return' "
+> -       git config alias.split-cmdline-fix 'echo \"' &&
+> -       test_must_fail git split-cmdline-fix &&
+> -       echo foo > foo &&
+> -       git add foo &&
+> -       git commit -m 'initial commit' &&
+> -       git config branch.main.mergeoptions 'echo \"' &&
+> -       test_must_fail git merge main
+> +       test_when_finished 'rm -rf repo' &&
+> +       git init repo &&
+> +       (
+> +               cd repo &&
+> +               git config alias.split-cmdline-fix 'echo \"' &&
+> +               test_must_fail git split-cmdline-fix &&
+> +               echo foo >foo &&
+> +               git add foo &&
+> +               git commit -m 'initial commit' &&
+> +               git config branch.main.mergeoptions 'echo \"' &&
+> +               test_must_fail git merge main
+> +       )
+>  "
 
-[System Info]
-git Version:
-git version 2.43.0
-cpu: x86_64
-built from commit: 564d0252ca632e0264ed670534a51d18a689ef5d
-sizeof-long: 8
-sizeof-size_t: 8
-shell-path: /bin/sh
-uname: Linux 6.1.0-13-amd64 #1 SMP PREEMPT_DYNAMIC Debian 6.1.55-1 (2023-09-29) x86_64
-Compiler Info: gnuc: 12.2
-libc Info: glibc: 2.36
-$SHELL (typically, interactive shell): /bin/bash
+Maybe, while at it, this test could be modernized to use single quotes
+around the test code like:
+
+test_expect_success 'check split_cmdline return' '
+...
+'
+
+or is using double quotes still Ok?
+
+>  test_expect_success 'git -c "key=3Dvalue" support' '
+> @@ -1157,10 +1162,16 @@ test_expect_success 'git -c works with aliases of=
+ builtins' '
+>  '
+>
+>  test_expect_success 'aliases can be CamelCased' '
+> -       test_config alias.CamelCased "rev-parse HEAD" &&
+> -       git CamelCased >out &&
+> -       git rev-parse HEAD >expect &&
+> -       test_cmp expect out
+> +       test_when_finished "rm -rf repo" &&
+> +       git init repo &&
+> +       (
+> +               cd repo &&
+> +               test_commit A &&
+> +               git config alias.CamelCased "rev-parse HEAD" &&
+> +               git CamelCased >out &&
+> +               git rev-parse HEAD >expect &&
+> +               test_cmp expect out
+> +       )
+>  '
+
+Here single quotes are used for example.
+
+>  test_expect_success 'git -c does not split values on equals' '
+> @@ -2009,11 +2020,11 @@ test_expect_success '--show-origin getting a sing=
+le key' '
+>  '
+>
+>  test_expect_success 'set up custom config file' '
+> -       CUSTOM_CONFIG_FILE=3D"custom.conf" &&
+> -       cat >"$CUSTOM_CONFIG_FILE" <<-\EOF
+> +       cat >"custom.conf" <<-\EOF &&
+>         [user]
+>                 custom =3D true
+>         EOF
+> +       CUSTOM_CONFIG_FILE=3D"$(test-tool path-utils real_path custom.con=
+f)"
+>  '
+
+This looks like a test modernization, but maybe it's part of making
+the tests more robust. Anyway it might be a good idea to either talk a
+bit about that in the commit message or to move it to a preparatory
+commit if it's a modernization and other modernizations could be made
+in that preparatory commit.
+
+Otherwise this patch looks good to me.
