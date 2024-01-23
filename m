@@ -1,88 +1,76 @@
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B29D95916A
-	for <git@vger.kernel.org>; Tue, 23 Jan 2024 00:31:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D0CF4E1D8
+	for <git@vger.kernel.org>; Tue, 23 Jan 2024 00:32:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705969882; cv=none; b=OPWlF6gq1B1uQI6x00yCoZO2vis04l0Aoe+0trPJX2soviBAi6rjDNiZ+R/745Jtg2Udn4AMFdvRGRrZDCOvgdrwpq2z3dFlwZGfdt4TharY4YbUfnmQyQVTlQQOD7fKGpmcmC2l5Lbr7BHxtU4Rwz16z+FjmzKmbU3vETndEc0=
+	t=1705969968; cv=none; b=XUD0JBEnYD/OUbQ6DvwKs4nfDNgJnFzS7WPZleiPzxS7Nn6r+5NCirKXJj/EUGe11fp8/xtVBhWj5MKcFQfEwCYstNMLvXcVOwtEiKb4cQC3mT8ognPa24BLrurv7vfVL+qSxKbOQhuM6vbI0fKB1vd3tYxfcVtbxOQAr2uPEcQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705969882; c=relaxed/simple;
-	bh=R1CGU7Vu/zXd1/Egk1PiGDPrI7AZFttCvrk9zesQgrU=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=lxc8suSqcme45+RGaXqixHuwXvEuJFbXVOFHQSN8g51ZmCmJglUyyRjTRrCLMhmT3Mw5GFLdrJOHHH6vsO1OGCS3OGlzBd6gem14paWvt4ZJzaKoW/uJAsAsv8I4tQ/pnIE/iTVm9wpsrdMFln0cgK1Iol9HyiJ2j6zIT4gQA4w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=MnDe1B4t; arc=none smtp.client-ip=173.228.157.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="MnDe1B4t"
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id 018B52C7AE;
-	Mon, 22 Jan 2024 19:31:20 -0500 (EST)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=R1CGU7Vu/zXd1/Egk1PiGDPrI7AZFttCvrk9ze
-	sQgrU=; b=MnDe1B4tS9DSxHCVQ8WOhSn2geD1ws5HcK+uUvV6kiv3DnZ3XQCzH1
-	VtLppAoZFxK2B/0ELbRVU9cgn8nft58p8p0fMBqOZbEQ2xj2xNx0qffcKoiu26cL
-	9Hu4temiBcZZg58gQ20x2jZ79/meioDz5vGFUXB0bmXO+Z+pwH7vw=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id ED4BD2C7AD;
-	Mon, 22 Jan 2024 19:31:19 -0500 (EST)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.200.93])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 84F9B2C7AA;
-	Mon, 22 Jan 2024 19:31:16 -0500 (EST)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Emily Shaffer <nasamuffin@google.com>
-Cc: "Randall S. Becker" <rsbecker@nexbridge.com>,  Taylor Blau
- <me@ttaylorr.com>,  Dragan Simic <dsimic@manjaro.org>,  Git List
- <git@vger.kernel.org>,  Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Defining a platform support policy
-In-Reply-To: <CAJoAoZnHGTFhfR6e6r=GMSfVbSNgLoHF-opaWYLbHppiuzi+Rg@mail.gmail.com>
-	(Emily Shaffer's message of "Mon, 22 Jan 2024 15:17:50 -0800")
-References: <ZZ77NQkSuiRxRDwt@nand.local>
-	<b2651b38a4f7edaf1c5ffee72af00e46@manjaro.org>
-	<xmqqjzog96uh.fsf@gitster.g>
-	<006b01da4412$96c6c500$c4544f00$@nexbridge.com>
-	<ZZ8ZlX6bf+hjmhN+@nand.local>
-	<007c01da4420$10a7b700$31f72500$@nexbridge.com>
-	<CAJoAoZnHGTFhfR6e6r=GMSfVbSNgLoHF-opaWYLbHppiuzi+Rg@mail.gmail.com>
-Date: Mon, 22 Jan 2024 16:31:14 -0800
-Message-ID: <xmqqil3kriul.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	s=arc-20240116; t=1705969968; c=relaxed/simple;
+	bh=p31wzEDjNv5lQj9ibba0s7gE7z4giUH7lZJndAmSO3s=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=ZTpnDoIXXTnzQwUrZOgoFAGoPM4rcu/ZYDmmBpLphySnwHCtNMfhNAj0beXUQ3MJx3huA2wglhYUxlkfTZ4iyMTQqFC7uwUe7D6/f1O30gJ5TgDz6yw77swohbBc/uiQv/BKph2y5lDU20CTAVZa3Wf6jECF8pRL9LYvqDofC3Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+Received: (qmail 12581 invoked by uid 109); 23 Jan 2024 00:32:45 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 23 Jan 2024 00:32:45 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 10903 invoked by uid 111); 23 Jan 2024 00:32:46 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 22 Jan 2024 19:32:46 -0500
+Authentication-Results: peff.net; auth=none
+Date: Mon, 22 Jan 2024 19:32:44 -0500
+From: Jeff King <peff@peff.net>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 2/2] reftable/stack: fix race in up-to-date check
+Message-ID: <20240123003244.GB827890@coredump.intra.peff.net>
+References: <cover.1705585037.git.ps@pks.im>
+ <713e51a25c1c4cfa830db97f71cd7c39e85864d4.1705585037.git.ps@pks.im>
+ <20240120010559.GE117170@coredump.intra.peff.net>
+ <Za5ELqZps0DLbb5q@tanuki>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- B867D688-B986-11EE-A699-A19503B9AAD1-77302942!pb-smtp21.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <Za5ELqZps0DLbb5q@tanuki>
 
-Emily Shaffer <nasamuffin@google.com> writes:
+On Mon, Jan 22, 2024 at 11:32:14AM +0100, Patrick Steinhardt wrote:
 
-> But, Randall's remarks bring up something pretty compelling: I don't
-> think Git has a clearly defined platform support policy. As far as I
-> can tell, the support policy now is "if you run `make test` on it and
-> breaks, and you let us know, we'll try to fix it"
+> > I didn't think too hard about the details, but does this mean that
+> > every user of stat_validity_check() has the same issue? The other big
+> > one is packed-refs (for which the code was originally written). Should
+> > this fix go into that API?
+> 
+> In theory, the issue is the same for the `packed-refs` file. But in
+> practice it's much less likely to be an issue:
 
-I doubt this part.  If there is somebody motivated enough among us
-who has access to such a platform, then that person may try to fix
-it and if the fix is not too ugly, I may accept such a patch as the
-upstream maintainer.  So your "you let us know we'll try" does not
-reflect reality at all.  The major platforms luckily have such
-motivated somebody almost always available for them.  Niche ones,
-perhaps not.
+Thanks for laying this all out. It does concern me a little that there's
+still a possible race, because they can be so hard to catch and debug in
+practice. But I think you make a compelling argument that it's probably
+not happening a lot in practice, and especially...
 
-> ..., but nowhere do I see "how to know if your platform is
-> supported" or even "here are platforms we have heard Git works OK on".
+> Also, applying the same fix for the packed-refs would essentially mean
+> that the caching mechanism is now ineffective on Windows systems where
+> we do not have proper `st_dev` and `st_ino` values available. I think
+> this is a no-go in the context of packed-refs because we don't have a
+> second-level caching mechanism like we do in the reftable backend. It's
+> not great that we have to reread the "tables.list" file on Windows
+> systems for now, but at least it's better than having to reread the
+> complete "packed-refs" file like we'd have to do with the files backend.
 
-Yup.  Patches, with commitments to keep such lists up-to-date, are
-very much welcome.
+...here that the performance profile is so different. If the "fix"
+means re-reading the whole packed-refs file constantly, that's going
+to be quite noticeable.
 
-Thanks.
+Given that this race has been here forever-ish, I agree with you that we
+should leave it be.
+
+-Peff
