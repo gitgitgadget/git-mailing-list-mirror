@@ -1,122 +1,134 @@
-Received: from mail-wr1-f45.google.com (mail-wr1-f45.google.com [209.85.221.45])
+Received: from mail-pj1-f48.google.com (mail-pj1-f48.google.com [209.85.216.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5FBA7FBAC
-	for <git@vger.kernel.org>; Tue, 23 Jan 2024 16:40:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33D901272CB
+	for <git@vger.kernel.org>; Tue, 23 Jan 2024 16:43:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706028046; cv=none; b=dyQ7MGiTlzrd0WZjzqquQliYDl8axtAjg7NkOivLaYnfDnyRzHbalFVeWviJ+hZAXXNRoNJD3U9lC/fyYHOaFvQS1occsddlCozYogRKSMFQkyN1I7nuCdCXxC410hIu2lOUkGxahFEE0keMWyINND+p6ErxK4P3Fkp+5CHUASs=
+	t=1706028205; cv=none; b=gFYnIQ1nXtiPp3xp/41pQiNgeiv3NzEpUsDg+ewzYQmkwtiH8HnjioMMg/gBbH3ePZu9dHHR/zV1bhiIPGMy6jgzu/wrOsI7J0ildGkJjfsVGlxER8W3Dz94BwaxcqzhasJUlHWp/56+HATJOLaNivtsb9PRrPAYAq3fiIJe7VY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706028046; c=relaxed/simple;
-	bh=CUp9L3SNACWUXj5gvfJ/q8X3a7A3bvNnI5dZH+3xnLM=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=F1aY6YX+dJIa9C4hkBQ8XwWf/lrMl6n75ANbJKHV2HD1IYE2uUMLW8hTXLNPuuus6fgIqjajY34xEbMcIPw3z7uDQfuXd8X6jgJNi7azUQpKM6ShSqcG3cro0or6BJTGfu3ORDstm8q/jmOApjwQbK56m8UvnG/nwgeDuP7sasI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XBy0qpX9; arc=none smtp.client-ip=209.85.221.45
+	s=arc-20240116; t=1706028205; c=relaxed/simple;
+	bh=GbY+KANuOTyOPqvjNaMxKy1PaPmI6wp/ODvOnL1dOzU=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=j28hOhaUDytQUmDNlFzbik6hoQySRFzktxdqyljDWFRq15bGQILAJOtQANN164eoYhA8E+XiX9D1F5squUgPrmtdwJ0jN/kco9TmfPz9XECRL8CNpRAkzo8NfqYJXM1vQ7WXuF57hlCeFFhmiD4T2+xBMIs1K0QytG46L26xmlE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OcWCeb2c; arc=none smtp.client-ip=209.85.216.48
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XBy0qpX9"
-Received: by mail-wr1-f45.google.com with SMTP id ffacd0b85a97d-337d6d7fbd5so3303810f8f.0
-        for <git@vger.kernel.org>; Tue, 23 Jan 2024 08:40:44 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OcWCeb2c"
+Received: by mail-pj1-f48.google.com with SMTP id 98e67ed59e1d1-290b9f83037so1288744a91.1
+        for <git@vger.kernel.org>; Tue, 23 Jan 2024 08:43:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1706028043; x=1706632843; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:references:cc:to
-         :content-language:subject:reply-to:from:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=inbe/sntK4G7sP8MB84nOUo3m6RvLYcx/2M+K1EQ4DU=;
-        b=XBy0qpX9yqGBmIuv04NWm5drlxrWNPEMXJDkoolDXIxKqzGacERNyyHZHYg7iNwpWt
-         +DxaobLLy7qeL7eWDMPeMW/NEmUz++xo9K2P4niQMAoIUkQQgIzbfx243oUFqiWkHxjl
-         dpjVnVB44a+iVe4y5IH7t+dCp3ROcKj+R8MaJMi+Jn//B16NAMqMVWRPneiNwkwjDZze
-         5ziZvWx3GBXwXeONPjCSRSuyKbYuQ12UMNXNDa5vZ6lsx7IxtEW3m4lCbaeWw1LHDc3a
-         ki+bsPOnpOgihHQ34PSOBlMp2uHPe6YuUwKPdI8GJ3biYCFiLYgfTH1lB7wkodWBX9Pl
-         hORg==
+        d=gmail.com; s=20230601; t=1706028203; x=1706633003; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=m1qpKwUBogPzDEth5b9F7EuRxq+N/Tz4hseVyc35qlM=;
+        b=OcWCeb2cWi1WvfBmBS5J1wDNlWJxsCds7Q1nSm8CIAOL6SFRpxlxwad9h8dLUHFMgb
+         /edgupz+ndj05JUCQsnJAKGmXp14GbKJEHuU3J8wOwbWnACu7CuG/TE1OXtSYKlUmGyT
+         1LYR6Ufk3iL6loldGTSdGLjkVdFoUxfZAXbC3mzdiEATPahqLKVYSUe17skv6AaVP8JX
+         mwuO/w+sTjAVjZzE7xJbAZJXVonHmkWdd5Ra9jrwaoJj4R8eoZinNFLDfW+qE60Sb/YS
+         HiNRZ88qMfCp7KgTX7gRqR+MohntkyMZdTa+7iWuygv5aqsFAtd/G72pWXb00PCfE6J7
+         VhCg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1706028043; x=1706632843;
-        h=content-transfer-encoding:in-reply-to:references:cc:to
-         :content-language:subject:reply-to:from:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=inbe/sntK4G7sP8MB84nOUo3m6RvLYcx/2M+K1EQ4DU=;
-        b=gQJYKHV3OXAPggNq8O2epmzNydNrz5O8ZcsolPfwpWQyjPByy00LTnLTNv3bisDkO8
-         WTGy7ppBn7dEa5JHEWm4eGA/gTUz3KL4WQ3UFzWqMA74fvO+rqy79RDX0/opD0DaaYa5
-         3cKlqcfOoSb/vC9ztvCKwMKeX/wxyBMHRun7l9dN8zsgypK1JdBZoFTQR42SnZiTuvB6
-         ELkbyto8SKuIjUzIUBfOrSHzqxCAZQS3WQv9g2BqHH7A+kfD4aF9NJe/z52T74oiZJL1
-         TMNV2CX9O7nKSXUZRgj6Dxf7nkkTIvUFbtLS4sydLon7sIud5DfA7FeWRRDy9Veongau
-         5pkA==
-X-Gm-Message-State: AOJu0Yyzg7MA2jIk8lnmlOKfKcGOpzyb+/XWc+5cALMPNgU6QUNOedbv
-	0yowL08tEpw0uKFd/Qjkp0/HNBhoqFFDfJhWdufgl+nxXSc04bZE
-X-Google-Smtp-Source: AGHT+IH4Qu62YgRJ8JUUYM8A/kIkzugpauMw8ExaUyhNWjWnzd/x64qG12Rl42vgiI8ontF81JZqiQ==
-X-Received: by 2002:a5d:65d0:0:b0:339:396c:5839 with SMTP id e16-20020a5d65d0000000b00339396c5839mr1860177wrw.16.1706028042761;
-        Tue, 23 Jan 2024 08:40:42 -0800 (PST)
-Received: from [192.168.1.212] ([84.64.64.237])
-        by smtp.gmail.com with ESMTPSA id a17-20020a5d5091000000b003392d3dcf6dsm7612360wrt.0.2024.01.23.08.40.42
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 23 Jan 2024 08:40:42 -0800 (PST)
-Message-ID: <ffb41e0f-f787-439a-9afe-8dcda5da21a3@gmail.com>
-Date: Tue, 23 Jan 2024 16:40:42 +0000
+        d=1e100.net; s=20230601; t=1706028203; x=1706633003;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=m1qpKwUBogPzDEth5b9F7EuRxq+N/Tz4hseVyc35qlM=;
+        b=ggSn3S1K/p2oo7Iz5IYrfmb9E7EuDoIP9dLcSq2eETc7GFNM9Bd+BowAmRvoFb37Km
+         9Te/K9l0MtiQedSghv3SBac5qmw8dyRFz5Wb9Bfc4qUmu4r9o6KVRVnvu1dgp/Q9vvio
+         ceqrzrX7OjO9ie1G2ZPQV1vkuDcjUDt0UW5ZJq0BppyRDeHKa2DNz+N/mS+2QefTV6Bo
+         9ht2UVQs7kP2jEAlVnc1FFeMAShW/izI0imv3I8Lh+8Qne/oGaqdfH8dI/APlTyYDY7a
+         rvUnyK0ITqMddtkrEHO5ULAmvjcf3q6OKq4VILOAQuWCyoEvw5/xu2kLUcwvxUoUS1ch
+         QpRQ==
+X-Gm-Message-State: AOJu0YyKxH+XInzPbkV2Sg+CmDPpTaF39OF9TqkjlonPoAYrrzPR+x0H
+	Dv/hcTJcKRu4ca66j8nsbHoiUzqoKEawcNte3d1DmwyKRZJOMqlXTfH8NUW0X9982DjJinCOMVl
+	WsZfTAw+mhQExBkM5Y+vex3ON/TleJbi01nI=
+X-Google-Smtp-Source: AGHT+IENZRRHTMoUVPE6tEaczKQ1UBxu14K5sRmnVJ3q2HobYRCoxsNMny2qBznJhCGH72qcSN0d67M0DlPvn5p8sQI=
+X-Received: by 2002:a17:90a:12ce:b0:28e:77e9:a2c6 with SMTP id
+ b14-20020a17090a12ce00b0028e77e9a2c6mr9088487pjg.8.1706028203419; Tue, 23 Jan
+ 2024 08:43:23 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: phillip.wood123@gmail.com
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH 2/5] refs: make `is_pseudoref_syntax()` stricter
-Content-Language: en-US
-To: Karthik Nayak <karthik.188@gmail.com>, phillip.wood@dunelm.org.uk,
- Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org
-References: <20240119142705.139374-1-karthik.188@gmail.com>
- <20240119142705.139374-3-karthik.188@gmail.com>
- <ee977173-bc6d-48f6-9bc8-e1d84fe3d95d@gmail.com> <xmqqplxtrucm.fsf@gitster.g>
- <ba721840-7b67-4822-8046-c0da4d3b9bde@gmail.com>
- <CAOLa=ZQOcqGBJOSehok4BYGUE8RKtnE9eiJYogeT8E6NWZ25xw@mail.gmail.com>
-In-Reply-To: <CAOLa=ZQOcqGBJOSehok4BYGUE8RKtnE9eiJYogeT8E6NWZ25xw@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+References: <cover.1704802213.git.ps@pks.im> <cover.1704877233.git.ps@pks.im>
+ <0552123fa30243d6d8d6b378991651dd6ade7de3.1704877233.git.ps@pks.im>
+ <87ede8qhw9.fsf@iotcl.com> <Za_ZrtRMEmVHu_o5@tanuki>
+In-Reply-To: <Za_ZrtRMEmVHu_o5@tanuki>
+From: Justin Tobler <jltobler@gmail.com>
+Date: Tue, 23 Jan 2024 10:43:10 -0600
+Message-ID: <CAGAWz+43bjotkJ3UxGgsageYuWt4g=95uBM-sy4dqyBVCJLToA@mail.gmail.com>
+Subject: Re: [PATCH v2 1/6] t1300: make tests more robust with non-default ref backends
+To: Patrick Steinhardt <ps@pks.im>
+Cc: Toon Claes <toon@iotcl.com>, git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>, 
+	Eric Sunshine <sunshine@sunshineco.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Hi Karthik
+On Tue, Jan 23, 2024 at 9:22=E2=80=AFAM Patrick Steinhardt <ps@pks.im> wrot=
+e:
+>
+> On Tue, Jan 23, 2024 at 02:41:17PM +0100, Toon Claes wrote:
+> >
+> > Patrick Steinhardt <ps@pks.im> writes:
+> >
+> > > [[PGP Signed Part:Undecided]]
+> > > [1. text/plain]
+> > > The t1300 test suite exercises the git-config(1) tool. To do so we
+> > > overwrite ".git/config" to contain custom contents. While this is eas=
+y
+> > > enough to do, it may create problems when using a non-default reposit=
+ory
+> > > format because we also overwrite the repository format version as wel=
+l
+> > > as any potential extensions. With the upcoming "reftable" ref backend
+> > > the result is that we may try to access refs via the "files" backend
+> > > even though the repository has been initialized with the "reftable"
+> > > backend.
+> > >
+> > > Refactor tests which access the refdb to be more robust by using thei=
+r
+> > > own separate repositories, which allows us to be more careful and not
+> > > discard required extensions.
+> > >
+> > > Signed-off-by: Patrick Steinhardt <ps@pks.im>
+> > > ---
+> >
+> > > @@ -2009,11 +2020,11 @@ test_expect_success '--show-origin getting a =
+single key' '
+> > >  '
+> > >
+> > >  test_expect_success 'set up custom config file' '
+> > > -   CUSTOM_CONFIG_FILE=3D"custom.conf" &&
+> > > -   cat >"$CUSTOM_CONFIG_FILE" <<-\EOF
+> > > +   cat >"custom.conf" <<-\EOF &&
+> > >     [user]
+> > >             custom =3D true
+> > >     EOF
+> > > +   CUSTOM_CONFIG_FILE=3D"$(test-tool path-utils real_path
+> > >  custom.conf)"
+> > >  '
+> >
+> > From the commit message it was not clear to me this change was needed.
+> > Do you think it's worth it to add something to the commit message
+> > explaining you now need to copy the custom.conf into each seperate
+> > repository?
+>
+> Good point in fact. The problem here is that before, CUSTOM_CONFIG_FILE
+> was using a relative path that wouldn't be found when cd'ing into the
+> respective subrepositories. By using `path-utils real_path` we resolve
+> the relative path to the full path, and thus we can find the file
+> regardless of our shell's current working directory.
+>
+> Not sure whether this is worth a reroll, but in case you or others think
+> that it is then I'm happy to add this explanation.
 
-On 23/01/2024 12:49, Karthik Nayak wrote:
-> Hello Phillip,
-> 
-> Phillip Wood <phillip.wood123@gmail.com> writes:
-> [...]
-> So there is no way to make `is_pseudoref_syntax()` stricter without
-> breaking backward compatibility. While we do want to reach that goal, we
-> have to go about in the other way around, that i.e.
-> 1. Fix all pseudorefs to have the '_HEAD' suffix.
+I also found it unclear why the CUSTOM_CONFIG_FILE change was needed.
+I had assumed it was a refactor to make the tests more robust. It might be
+nice to explain it in the commit message. :)
 
-I'm wary of renaming user facing pseudorefs like AUTO_MERGE. In the 
-future we should try and avoid adding any without a "_HEAD" suffix
-
-> 2. Move bisect files to '$GIT_DIR/bisect-state' (see [1] for more
-> details).
-> After this, we can safely make `is_pseudoref_syntax()` stricter.
-> 
-> Given this, I think for the next version, I'll do the following changes:
-> 1. keep `is_pseudoref_syntax()` as is.
-> 2. introduce `is_pseudoref()` which calls `is_pseudoref_syntax()` and
-> also checks the content of the file.
-
-We could perhaps make is_pseudoref() stricter from the start as we're 
-adding a new function, it could have a list of exceptions to the "a 
-pseudoref must end with '_HEAD'" rule like this patch. Being strict 
-about the pseudorefs we list with "git for-each-ref" might encourage 
-users to update any scripts they have that create "pseudorefs" that do 
-not match the new rules without us making any changes that actually 
-break those scripts.
-
-> 3. replace use of `is_pseudoref_syntax()` with `is_pseudoref()` in this
-> patch series.
-
-That sounds like a good way forward to me, lets see if Junio agrees.
-
-Best Wishes
-
-Phillip
-
-
-> [1]: https://public-inbox.org/git/20240119142705.139374-1-karthik.188@gmail.com/T/#m6e3790e30613fd68349708faaf5f4d9c704ba677
+-Justin
