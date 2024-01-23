@@ -1,90 +1,80 @@
-Received: from mail-yb1-f202.google.com (mail-yb1-f202.google.com [209.85.219.202])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CB0C4CDEF
-	for <git@vger.kernel.org>; Mon, 22 Jan 2024 23:22:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.202
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79C7F12FF88
+	for <git@vger.kernel.org>; Tue, 23 Jan 2024 00:01:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1705965743; cv=none; b=Dx97i24MXvgYButijoeFb55z9Ae++mZshbB3tJvFXJSI4XGIX8QiS9acTNa00CvqVFUy1DK2P/8srRVo0Uva5tEqwphNj+jcXAGGwd1ksaxz/0NNvSY7W94ZMZgHh10fGG8iojIsmQSIhExSlIXwrd4oo8dGQGUQeCEp5sEfb/Q=
+	t=1705968080; cv=none; b=TsBccC37AgOjpa5mS9Q+i0mHsolwgdZUtJ2sI6hxasYLeX9iujFCU0lAjNhJUZI0b3NqiVjrhWxQXiPJWON+HI6PA0fHJ5hY0fK+HUIm9q6JlQcHUp91o6ZZJcK6Fj1CBqM40rI+M4a6kJPVE6J824F6GvG1CqYNO1eUyvudJaA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1705965743; c=relaxed/simple;
-	bh=scoFoh8tIuHdMGIEIKDM/CSc0UnXNqM5IGOz0lpahpw=;
-	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
-	 To:Cc:Content-Type; b=EPO5as2YeDxEzoiqhtwdZvEr+1rJ3EE5BdBAHGG5PXcrDFaOfWHLTDqa70VOSlrQiEIoIwDkpzoVWVcHnb85ZmNG6Qiy9R/fWCT2HDgAmkY4IZOXkmC30285612YwyTgsw1PgAnVxtm0f9p9m8fiwxk7efv1l2B4s6TVWgbw1kk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--linusa.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=Zv/vUBIN; arc=none smtp.client-ip=209.85.219.202
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--linusa.bounces.google.com
+	s=arc-20240116; t=1705968080; c=relaxed/simple;
+	bh=Xs6VbLeAEG47reF/Kur2FpCTbIPbdoZQgPRwBa5NqSc=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=c7JFQZ39EtY6BtO8Nm4jxu8IqIWBWYH6aRoX9EZEN821ifilamXWIF7MMQYSRTsZyvCCPlOktfj2aF0XrUtUgS0EtD1+iluxFE7oKp+U4hhLP5dR+RdWdwQpaA4RsQn9kBisR1d+Mkaqj/NoCvgo0/Us96z+ZtfsJXmlI1fiXcM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=M0rmPhmw; arc=none smtp.client-ip=173.228.157.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="Zv/vUBIN"
-Received: by mail-yb1-f202.google.com with SMTP id 3f1490d57ef6-dc26605c273so5595661276.0
-        for <git@vger.kernel.org>; Mon, 22 Jan 2024 15:22:22 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1705965741; x=1706570541; darn=vger.kernel.org;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=bl39y9KQE4nFX+mwYxXU2rUxuftXX7rTC8CUbmmcGi8=;
-        b=Zv/vUBINSawNc2bGgaCsoNqpOsmCSiaKc7mEqIADHXE6QZT6qUqpRcdVdrJtg7aP0Q
-         /G9Qff16xNRtmews/oIB3wZiwDdrwbAbMEIxmRsYsQC72+voZOjayUh2XdrV5cSq/ply
-         MAySOv4s5PIRLYkrqmWIMB3NITuMyO2hOYHYb3jphQsMmiGwHIHc3M0NBlRNqfyXpyc9
-         eX5xzYeCLJ3wEZvQqJAj3bLFf2ymKZb+zkNyeWNdIPi7/EqGsrfzuQ5d8KjqgNpD6qSc
-         bU3RJoen72dbxMkKsKn2I4TysyR3IFKZcV1wbIVCa4UoGsQ1wl0Yd9yrRUB7dSxODQRb
-         E13w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1705965741; x=1706570541;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=bl39y9KQE4nFX+mwYxXU2rUxuftXX7rTC8CUbmmcGi8=;
-        b=ZlFeaqzTOJvc0bza3gYG2T+1jvSKbcwc/1Mnq24JU0TSLeyPDkijaBjvM1mrgxhf7W
-         z3WNGcffuYrHvMtY1+3VaIEfNCcS7Ym0SEny1zbr4bAIAwITA3LuJSH88TgnRwcS7cUw
-         T5zbx58/Yk6AQukQigJMBBr+ceNHkviNcmLRCEpA2VdKxq0rv0ftHMEiw2pDazPEuAgr
-         6m9GWhsdOu6/VqbzOFHTPWdtCKxDhWn/9UUwH3URVxxBdyGP6qqjuS0dRyt8tXr7uuxG
-         XIgwzJ0pWErjLzgH1EETfHxfReSitIIWpBYm7xuu3DJ+wm9U7X7tuO/M1U4b47xlHNob
-         PvNA==
-X-Gm-Message-State: AOJu0YxqVj1/iKNm6Gx+murYECGnClsKkOZepxg+4ut7GJTVulSVBBtZ
-	gtwWTAjLFKtyi7JVxvFwY6BYNDbeogrm/3offpibsp0cdtdw6tJM42tELScUYzqjCZdctA8S3cf
-	ymQ==
-X-Google-Smtp-Source: AGHT+IEgovSiinawjo3nU81G3kERjuBlQBCV782ziG7HP7ERy5lUxthpTDahO+N9AOTHs1IyQH4l5228nbc=
-X-Received: from fine.c.googlers.com ([fda3:e722:ac3:cc00:7f:e700:c0a8:2221])
- (user=linusa job=sendgmr) by 2002:a5b:1cc:0:b0:dbe:3e36:17db with SMTP id
- f12-20020a5b01cc000000b00dbe3e3617dbmr2319928ybp.1.1705965741513; Mon, 22 Jan
- 2024 15:22:21 -0800 (PST)
-Date: Mon, 22 Jan 2024 15:22:19 -0800
-In-Reply-To: <fd4a9d54d9522973a4c22e43cb1d7964033d4837.1704869487.git.gitgitgadget@gmail.com>
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="M0rmPhmw"
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id BDD902C512;
+	Mon, 22 Jan 2024 19:01:17 -0500 (EST)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=Xs6VbLeAEG47reF/Kur2FpCTbIPbdoZQgPRwBa
+	5NqSc=; b=M0rmPhmwogh4nQuF9zY73R2aoyqeruLEIj76qOF0wsGJhJtS+PnThu
+	KYS005J0zdXithKqFz+hqWnvC0ycjPPNE1ktVHv9a+WxZqAdP1Tqo32duuLp15zr
+	c7AhP1I8n4HH3pf3iY+xK1SZl7MuDlZiNH1Ee4PihqZA74hwpzhIk=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id B5D172C511;
+	Mon, 22 Jan 2024 19:01:17 -0500 (EST)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.200.93])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id E2E062C50F;
+	Mon, 22 Jan 2024 19:01:13 -0500 (EST)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: John Cai via GitGitGadget <gitgitgadget@gmail.com>,
+  git@vger.kernel.org,  John Cai <johncai86@gmail.com>
+Subject: Re: [PATCH v2 00/12] Group reffiles tests
+In-Reply-To: <Za5TW-q4cKS8pNNc@tanuki> (Patrick Steinhardt's message of "Mon,
+	22 Jan 2024 12:36:59 +0100")
+References: <pull.1647.git.git.1705521155.gitgitgadget@gmail.com>
+	<pull.1647.v2.git.git.1705695540.gitgitgadget@gmail.com>
+	<Za5TW-q4cKS8pNNc@tanuki>
+Date: Mon, 22 Jan 2024 16:01:12 -0800
+Message-ID: <xmqqplxsrk8n.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-References: <pull.1632.git.1704869487.gitgitgadget@gmail.com> <fd4a9d54d9522973a4c22e43cb1d7964033d4837.1704869487.git.gitgitgadget@gmail.com>
-Message-ID: <owlyjzo1vtqs.fsf@fine.c.googlers.com>
-Subject: Re: [PATCH 05/10] sequencer: use the trailer iterator
-From: Linus Arver <linusa@google.com>
-To: Linus Arver via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
-Cc: Emily Shaffer <nasamuffin@google.com>, Junio C Hamano <gitster@pobox.com>, 
-	Christian Couder <chriscool@tuxfamily.org>
-Content-Type: text/plain; charset="UTF-8"
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 85F65782-B982-11EE-BBC4-A19503B9AAD1-77302942!pb-smtp21.pobox.com
 
-"Linus Arver via GitGitGadget" <gitgitgadget@gmail.com> writes:
+Patrick Steinhardt <ps@pks.im> writes:
 
-> diff --git a/trailer.h b/trailer.h
-> index 50f70556302..d50c9fd79b2 100644
-> --- a/trailer.h
-> +++ b/trailer.h
-> @@ -127,6 +127,19 @@ struct trailer_iterator {
->  	struct strbuf key;
->  	struct strbuf val;
->  
-> +	/*
-> +	 * Raw line (e.g., "foo: bar baz") before being parsed as a trailer
-> +	 * key/val pair. This field can contain non-trailer lines because it's
-> +	 * valid for a trailer block to contain such lines (i.e., we only
-> +	 * require 25% of the lines in a trailer block to be trailer lines).
-> +	 */
-> +	struct strbuf raw;
+> I've got two minor nits, but other than that this looks good to me. I've
+> also verified that all tests continue to pass with the current version
+> of the reftable backend.
 
-Originally I used a strbuf here for consistency with the other strbufs
-used in the iterator for the key and val members. But now I've realized
-that there's no need to make "raw" a strbuf at all, because iterator
-users will never need to manipulate the string that this points to. Will
-change to just "const char *" in the reroll.
+OK.  I've squashed all the nits from you and Karthik into the copy
+in my tree.  If there is nothing else, let's declare a victory and
+merge the topic down to 'next' soonish.
+
+> There's a minor merge conflict with db4192c364 (t: mark tests regarding
+> git-pack-refs(1) to be backend specific, 2024-01-10). This conflict
+> comes from the fact that both patch series add the REFFILES prereq to
+> t3210, semantically the changes are the same. So it doesn't quite matter
+> which of both versions we retain as they both do the same.
+
+Yup, that is what I've been resolving them.
+
+Thanks.
