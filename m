@@ -1,133 +1,169 @@
-Received: from mail-wm1-f52.google.com (mail-wm1-f52.google.com [209.85.128.52])
+Received: from mail-lj1-f181.google.com (mail-lj1-f181.google.com [209.85.208.181])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C1B91643A
-	for <git@vger.kernel.org>; Wed, 24 Jan 2024 06:55:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A00BA12E63
+	for <git@vger.kernel.org>; Wed, 24 Jan 2024 07:06:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706079311; cv=none; b=V0i0eURzcZBjO3xYTyycUIoSFKfXthA+1rhPTDn3dBPYBU8Ktzhdwvv3a8grEJOCfLQy2X2Y4ozhWGWEXZeSjDwNK92MVYCrcKKgESspWvCRBZ89nslXT1YJz7CoX3YLSm2ggOrvZ9MJ7UpgKhiMLvQhCMEXY5Q3U+094L5YdTY=
+	t=1706079984; cv=none; b=o83ieU+Gku0GOrWH8SwYL8ihMTdKw149oy6agoFSxUABsAktubMKijp9KN0LoA2VH7m5UsfCYh2fDGrTvxW3PT62uTFTNglT7UQp+vNWm9PC/jTD2s5fpsaGhzzI9qbSh4VKrXd+83+MG8f8JdtgBMlHLBPPtOsbeGKkjqdfn00=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706079311; c=relaxed/simple;
-	bh=wFqnypwvu7JwUKxBJeE8hsJKjQheP3szGhpdUxNGD6g=;
-	h=Message-ID:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=iN7krj3Rn9AxJ7voRjsAXsnDsPr6yHk/vB+DWGd+OGTX5jO9yWL3XOXLEjxV3VfDz0z4SoH2PavANQDjsFFEtWmnL8CmsAhKrkjscKis2XPIHNXDFZglyjjNjy3iOF9CU5CpRpipZMl4Amof+ysABrUOM5Q2KJ16zCi1rs1QUi8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=FslE9ps/; arc=none smtp.client-ip=209.85.128.52
+	s=arc-20240116; t=1706079984; c=relaxed/simple;
+	bh=qkEjDqbDlqQtFKFK8oBcxJBV4GDMKC5fJ/vtFmX7D/s=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=f3ziW/1oApyAWpMbtlPoXFYzDCuhE78FbRFpmO1ZTqgB6xph7TZIR01JQ14NV34h0vVbu9A0T8x3WiQA2uqvsB2MnFUGQzFEjXbPZFJwJ4AXW31eUwacQk8teSXbNbeHGSRNjgvVq1y/BY9iPH5Q04yMuSVn9AC//+0DbT2ArHU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=DAUaFKOD; arc=none smtp.client-ip=209.85.208.181
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FslE9ps/"
-Received: by mail-wm1-f52.google.com with SMTP id 5b1f17b1804b1-40e76109cdeso56829385e9.0
-        for <git@vger.kernel.org>; Tue, 23 Jan 2024 22:55:09 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DAUaFKOD"
+Received: by mail-lj1-f181.google.com with SMTP id 38308e7fff4ca-2cf1fd1cc5bso3697671fa.3
+        for <git@vger.kernel.org>; Tue, 23 Jan 2024 23:06:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1706079307; x=1706684107; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1706079980; x=1706684780; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=hQ8nN93BjzrXAhTOlt++q7zDpixQGOdFTMnqvbtbopM=;
-        b=FslE9ps/PZpJdi1fJWlX9vby+jgTvhCdP+p7terZ1KgOVjG0A5yoAWohGdxlMcTb2A
-         8pihs3ceN/7QohVeLPHnC5CDUy4Gz8qL/CrfZFhmfr2Mic1rxqeYCkF+zUjp3xkgpl7V
-         q1A8YwSTxYiUtFiAuhqoCqBMJvGb4FX9dW+fk7I0N4j4G8kTECrCWPIoRYMp6lu/J5gb
-         SBVOeHJ7teAuxev23Df5G0XjYEga8Q1ZDDalv+9Wliw4wb+GQOz7x4S6/upiN5PadMGQ
-         DIdBUyajPaUnWAFZ1F5KEtSOgtXvovBcRPEpi1dbYXacVG+JFwT/sY1wq7Zg61crsT3X
-         cOhQ==
+        bh=m4U/STmp7HDG7HYSjE85bhCiI1nHwgXCUibBEaA4miw=;
+        b=DAUaFKOD12K7gmXIQwcg9GPcbvVuYAQNdC002m12vgJidlBIhoEQKML7o+z6ARutqa
+         twxH988dYHJ+2sDaNDyMCSnFI8aoSrzRbnhi06iyBurKq88feK+7WOSJSvh6hDWAYJ8W
+         0hCwH2dwdoIIak5AFNiLxvZa9lzx2hJW0RY5ZUeYkk4SYkXilcZfO+zYJVewJgKFpuIj
+         GcxmpEzffJWju4TeKEF+CkK+ehCe2BxW83AEWFl4pizK6pl6SUqZQMU9kXSIgimQ+x24
+         HNdyLMHgRCcj9Nm6ao8HvsSN4zwdSgHjlCPYNY5RZnIpn+O1CGOqCzHt+1knSkYid0QO
+         JtHA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1706079308; x=1706684108;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
+        d=1e100.net; s=20230601; t=1706079980; x=1706684780;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=hQ8nN93BjzrXAhTOlt++q7zDpixQGOdFTMnqvbtbopM=;
-        b=V1InONMNd1gGOE/3Tyl4MLxFgrQnh/Gga01cGfn2JsSe1HV7phYcV3KjyQqtfUVCsy
-         ZH2yaKWczCsAvIbdu6IvQ4Ui4oHMdR+0qWiRhKw5hGOGPwVXsTwj96M7jDVT7lgeEf7A
-         V0zxaqeIe++yhYPdqY/DUoNd+Otdz/K4RDe3FoXpCrkGNW0lioNMukWN0+mTb9ioQB4n
-         l5fAfYsi5Ewa56UomKzR9hSsESjjuHStEtOCcBQKkuAgymZ5N8qGdK/XARAo3YViAlSt
-         bo/Y5U+OuANOTlCARdhcZTdwLD0LTrts+k77M+VSMN/1Ps/lJaG+uhVsN/MIvyksDJzm
-         57cw==
-X-Gm-Message-State: AOJu0YxhT1vIPD2T4pWoumEA7DAXjp8sTO4fclV9hMs0DFOQ2PSgqZqd
-	jRtB9kIjpBQAnUxomr/h0qls3HVhMKn+KK1ybTU+UFK0v4z3QB0xXhlcsWWd
-X-Google-Smtp-Source: AGHT+IEPPd73NewdcBIu672efQUdMvD0Vm+gj/kuJRZ1R7yrDGZUzkkjKSOZzbXs4sUtzPx++3lh6w==
-X-Received: by 2002:a05:600c:4f0e:b0:40e:c31b:388e with SMTP id l14-20020a05600c4f0e00b0040ec31b388emr731941wmq.31.1706079307546;
-        Tue, 23 Jan 2024 22:55:07 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id p12-20020a05600c468c00b0040e56830a35sm44658316wmo.18.2024.01.23.22.55.06
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 23 Jan 2024 22:55:06 -0800 (PST)
-Message-ID: <17f2dda4907ec03b0783160c53c4896fd76cb053.1706079304.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1646.v4.git.1706079304.gitgitgadget@gmail.com>
-References: <pull.1646.v3.git.1706078885.gitgitgadget@gmail.com>
-	<pull.1646.v4.git.1706079304.gitgitgadget@gmail.com>
-From: "Mohit Marathe via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Wed, 24 Jan 2024 06:55:04 +0000
-Subject: [PATCH v4 2/2] patch-id: replace `atoi()` with `strtol_i_updated()`
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        bh=m4U/STmp7HDG7HYSjE85bhCiI1nHwgXCUibBEaA4miw=;
+        b=JdqDcdXhwmDBIBW3JVdCFE+NZ4C+1o02GD06bpsUKhz08er9A3gsIHp3HFgbS+SPlN
+         QYoRw44YGxREypXmDVCGNyBw4QgVn6zge5HZhIfIwz1smABzrgS7zi8fe8iz6wErBCmW
+         ZlZ4IWNKbwmR3vVM1L4g1ERbXmngenmDh0r6g9iNUb2TTI1zf5aBFvv1ZybXf4F8BbwV
+         f4pxqohpnrwau0I6ZgGXrf6RWR0xBUhBVYvmnxozpKahRZmgfGgGQl5piezsKxo6huCW
+         UdBuwdjjY4C9zv5rOblyG3NVB/vpTJpDHoXf4e977BWwLJUDqNuSn12gBTItQzzQFBhv
+         t1kA==
+X-Gm-Message-State: AOJu0YyYKKwndCnI8peMIDmT/YlWR46rqzPHEtnLfY/tRIra6SiDJ5iq
+	ureEDFa5G9GmHzMx0uTbPSa8dECgGqEBYx2RG8+8y09lOWzhVSK1GHFZrd2Ln50T33yQ/w/wK2k
+	fuL3h+w7zmIbVpbmUU1X8U5XI8D0=
+X-Google-Smtp-Source: AGHT+IF20Nppc/4syDD2nzoLOc36li8cJuj7h4uE6vfatOndA3Cdtl2vy4yCCnwFOfkIDzUhhfMNiPwBOmljJ4P4SG4=
+X-Received: by 2002:a2e:860a:0:b0:2cd:936:8b68 with SMTP id
+ a10-20020a2e860a000000b002cd09368b68mr556757lji.56.1706079980355; Tue, 23 Jan
+ 2024 23:06:20 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Mohit Marathe <mohitmarathe@proton.me>,
-    Mohit Marathe <mohitmarathe23@gmail.com>
+References: <xmqqzfxa9usx.fsf@gitster.g> <20240117081405.14012-1-mi.al.lohmann@gmail.com>
+ <20240117081405.14012-2-mi.al.lohmann@gmail.com>
+In-Reply-To: <20240117081405.14012-2-mi.al.lohmann@gmail.com>
+From: Elijah Newren <newren@gmail.com>
+Date: Tue, 23 Jan 2024 23:06:08 -0800
+Message-ID: <CABPp-BE4zqRX=wd5EBj96hzCS8V73QpdN-2pCpv7qMdkpkX93w@mail.gmail.com>
+Subject: Re: [PATCH v3 2/2] revision: Implement `git log --merge` also for rebase/cherry_pick/revert
+To: Michael Lohmann <mi.al.lohmann@gmail.com>
+Cc: gitster@pobox.com, git@vger.kernel.org, phillip.wood123@gmail.com, 
+	Johannes Sixt <j6t@kdbg.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-From: Mohit Marathe <mohitmarathe23@gmail.com>
+On Wed, Jan 17, 2024 at 12:14=E2=80=AFAM Michael Lohmann
+<mi.al.lohmann@gmail.com> wrote:
+>
+> Co-authored-by: Johannes Sixt <j6t@kdbg.org>
+> Signed-off-by: Michael Lohmann <mi.al.lohmann@gmail.com>
+> ---
+>
+> On 12. Jan 2024, at 21:18, Junio C Hamano <gitster@pobox.com> wrote:
+> > I like the way your other_merge_candidate() loops over an array of
+> > possible candidates, which makes it a lot easier to extend, though,
+> > admittedly the "die()" message needs auto-generating if we really
+> > wanted to make it maintenance free ;-)
+>
+> I would certainly like that but I did not find an easy way of achieving
+> this in C. Help wanted.
+>
+> Changes with respect to v2:
+> - use read_ref_full instead of refs_resolve_ref_unsafe
+> - check for symbolic ref
+> - extract "other_name" in this patch, instead of patch 1
+>
+>  revision.c | 31 +++++++++++++++++++++++--------
+>  1 file changed, 23 insertions(+), 8 deletions(-)
+>
+> diff --git a/revision.c b/revision.c
+> index aa4c4dc778..c778413c7d 100644
+> --- a/revision.c
+> +++ b/revision.c
+> @@ -1961,11 +1961,31 @@ static void add_pending_commit_list(struct rev_in=
+fo *revs,
+>         }
+>  }
+>
+> +static const char *lookup_other_head(struct object_id *oid)
+> +{
+> +       int i;
+> +       static const char *const other_head[] =3D {
+> +               "MERGE_HEAD", "REBASE_HEAD", "CHERRY_PICK_HEAD", "REVERT_=
+HEAD"
+> +       };
+> +
+> +       for (i =3D 0; i < ARRAY_SIZE(other_head); i++)
+> +               if (!read_ref_full(other_head[i],
+> +                               RESOLVE_REF_READING | RESOLVE_REF_NO_RECU=
+RSE,
+> +                               oid, NULL)) {
+> +                       if (is_null_oid(oid))
+> +                               die("%s is a symbolic ref???", other_head=
+[i]);
+> +                       return other_head[i];
+> +               }
+> +
+> +       die("--merge without MERGE_HEAD, REBASE_HEAD, CHERRY_PICK_HEAD or=
+ REVERT_HEAD?");
+> +}
+> +
+>  static void prepare_show_merge(struct rev_info *revs)
+>  {
+>         struct commit_list *bases;
+>         struct commit *head, *other;
+>         struct object_id oid;
+> +       const char *other_name;
+>         const char **prune =3D NULL;
+>         int i, prune_num =3D 1; /* counting terminating NULL */
+>         struct index_state *istate =3D revs->repo->index;
+> @@ -1973,15 +1993,10 @@ static void prepare_show_merge(struct rev_info *r=
+evs)
+>         if (repo_get_oid(the_repository, "HEAD", &oid))
+>                 die("--merge without HEAD?");
+>         head =3D lookup_commit_or_die(&oid, "HEAD");
+> -       if (read_ref_full("MERGE_HEAD",
+> -                       RESOLVE_REF_READING | RESOLVE_REF_NO_RECURSE,
+> -                       &oid, NULL))
+> -               die("--merge without MERGE_HEAD?");
+> -       if (is_null_oid(&oid))
+> -               die("MERGE_HEAD is a symbolic ref???");
+> -       other =3D lookup_commit_or_die(&oid, "MERGE_HEAD");
+> +       other_name =3D lookup_other_head(&oid);
+> +       other =3D lookup_commit_or_die(&oid, other_name);
+>         add_pending_object(revs, &head->object, "HEAD");
+> -       add_pending_object(revs, &other->object, "MERGE_HEAD");
+> +       add_pending_object(revs, &other->object, other_name);
+>         bases =3D repo_get_merge_bases(the_repository, head, other);
+>         add_rev_cmdline_list(revs, bases, REV_CMD_MERGE_BASE, UNINTERESTI=
+NG | BOTTOM);
+>         add_pending_commit_list(revs, bases, UNINTERESTING | BOTTOM);
+> --
+> 2.39.3 (Apple Git-145)
 
-The change is made to improve the error-handling capabilities
-during the conversion of string representations to integers.
-The `strtol_i_updated(` function offers a more robust mechanism for
-converting strings to integers by providing enhanced error
-detection. Unlike `atoi(`, `strtol_i_updated(` allows the code to
-differentiate between a valid conversion and an invalid one,
-offering better resilience against potential issues such as
-reading hunk header of a corrupted patch.
+I had to go look up previous versions to see the discussion of why
+this was useful for things other than merge.  I agree with Phillip
+from https://lore.kernel.org/git/648774b5-5208-42d3-95c7-e0cba4d6a159@gmail=
+.com/,
+that the commit message _needs_ to explain this, likely using some of
+Junio's explanation.
 
-Signed-off-by: Mohit Marathe <mohitmarathe@proton.me>
----
- builtin/patch-id.c | 12 ++++++++++--
- 1 file changed, 10 insertions(+), 2 deletions(-)
-
-diff --git a/builtin/patch-id.c b/builtin/patch-id.c
-index 3894d2b9706..88db178c905 100644
---- a/builtin/patch-id.c
-+++ b/builtin/patch-id.c
-@@ -1,3 +1,4 @@
-+#include "git-compat-util.h"
- #include "builtin.h"
- #include "config.h"
- #include "diff.h"
-@@ -29,14 +30,18 @@ static int scan_hunk_header(const char *p, int *p_before, int *p_after)
- {
- 	static const char digits[] = "0123456789";
- 	const char *q, *r;
-+	char *endp;
- 	int n;
- 
- 	q = p + 4;
- 	n = strspn(q, digits);
- 	if (q[n] == ',') {
- 		q += n + 1;
--		*p_before = atoi(q);
-+		if (strtol_i_updated(q, 10, p_before, &endp) != 0)
-+			return 0;
- 		n = strspn(q, digits);
-+		if (endp != q + n)
-+			return 0;
- 	} else {
- 		*p_before = 1;
- 	}
-@@ -48,8 +53,11 @@ static int scan_hunk_header(const char *p, int *p_before, int *p_after)
- 	n = strspn(r, digits);
- 	if (r[n] == ',') {
- 		r += n + 1;
--		*p_after = atoi(r);
-+		if (strtol_i_updated(r, 10, p_after, &endp) != 0)
-+			return 0;
- 		n = strspn(r, digits);
-+		if (endp != r + n)
-+			return 0;
- 	} else {
- 		*p_after = 1;
- 	}
--- 
-gitgitgadget
+Also, what about cases where users do a cherry-pick in the middle of a
+rebase, so that both REBASE_HEAD and CHERRY_PICK_HEAD exist?  What
+then?
