@@ -1,131 +1,173 @@
-Received: from mail-lj1-f169.google.com (mail-lj1-f169.google.com [209.85.208.169])
+Received: from mail-lf1-f47.google.com (mail-lf1-f47.google.com [209.85.167.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57B0B46B4
-	for <git@vger.kernel.org>; Wed, 24 Jan 2024 03:20:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 870F02919
+	for <git@vger.kernel.org>; Wed, 24 Jan 2024 04:15:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706066429; cv=none; b=bMEdPK5uj+0wVYTvWQIplLRe9v9CmqppHvkV/dHrUnpZRLCeGnNHuGHBC+LqWU+V2iRo/cdMR6s4cmC7PxaGOK+soM1Ckx8prJysuyN2Vrw5+Sulz1JwyL37kzA61RRPRxD7Z7xj+8cC3QteFdkMH6j2F2ZPpB1wEapFFdIhRAc=
+	t=1706069754; cv=none; b=R7yuRdGJuNat1++8Ya59qrVQbDMxH+xusKHML50qRn54lU7og1IyX2bIb5D2L14g4eEfzE/nQ4GK74aLPS20FatDXu1p0rX6w0pJT8L3WsbpKQrtFmSwKHc6kq8XXqScJI/kcF25Ctb+KrpfOExCq2pEkCracGRVAHz9wjd8Sgg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706066429; c=relaxed/simple;
-	bh=9cA0CjIrWnVAMHF1E+JRA3wQtnC1XT6/1nrrhnw5gjE=;
+	s=arc-20240116; t=1706069754; c=relaxed/simple;
+	bh=NGR0ZlcASu7arCthntmsvj0qQrdLfDL0bh0CvdeGjgE=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Xq9aIvQ5hxA3SoqcgQbzYRH+OtNs8r78LFsSJ0XSeJI+MydqZ56ZY2j1lFKPsSLt1zQFA4+PUNjLuvSrdhjyGDD+mq6ZlK29Bq5l50LLKKgnhHQIzNneTTIlaNFYW9tSidloiHkvHcVFBpfCYuqHfuTH1HmET7803SfBmfKLBVc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=A6QAT7oq; arc=none smtp.client-ip=209.85.208.169
+	 To:Cc:Content-Type; b=lzMAAwl8HBQS7WTiTMMhqoGb0bij60YRdSC5KtLLor+mS3l/JNuMLFb/aXjmW3XN43NTHit3+Gc9fwo+k2QnCgn+3kp+jnEhRmutsk65vXGVcVI1/shVRBqfG7gXMrUV+5emb9as6pkkOkRREqod7PXU3JRBavrhfprpX/GMxtw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=BrymU9Co; arc=none smtp.client-ip=209.85.167.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="A6QAT7oq"
-Received: by mail-lj1-f169.google.com with SMTP id 38308e7fff4ca-2cf206e4d56so1558171fa.3
-        for <git@vger.kernel.org>; Tue, 23 Jan 2024 19:20:27 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BrymU9Co"
+Received: by mail-lf1-f47.google.com with SMTP id 2adb3069b0e04-50eabfac2b7so6421793e87.0
+        for <git@vger.kernel.org>; Tue, 23 Jan 2024 20:15:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1706066425; x=1706671225; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1706069750; x=1706674550; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=o7xGeZ2b1tDn9x9XkU94+dERsnfjQ2OXVqveyow5bLo=;
-        b=A6QAT7oqYJwZKRkPn/okxKSzAwq/N15sUIuNRQknj0240on8KFOQJaWgKcVLvYr1jO
-         r8iZFcQFvX4A0AqRC+f4FtDYkDLTFyBNYQwP4OgygJ0+Xq1pXOU5MuW075vCitj3fXgC
-         cN7r1vMTnRon2bANh/Oh7i710iyyfuXnw2ZT/Ire8lpPYzHUpriaROV+Ml6eK5rWmO6e
-         NDmMwmtVQFy5TppvHkAce9coxjq7vOqdqV00GwAimAVEYYC+FLlP6kiPej6uNwK9lSic
-         e3fC+rKtM22t+nRWukVmn0q+aVwR9RoidR3642Ucu6rhhH3Ojo+deI0ItV+s6WMdKsOW
-         K3Fg==
+        bh=wjp0wlcmq9x1Rw6vO+h/o+YMhQ/eFmdGgeCfrDHixMI=;
+        b=BrymU9CoMeSWeqaPO+ona1fcsKvhCuP8WSjL0XmoUAQqxdP2ksQBPMfUcCum/JMvLQ
+         KuCe9JgAOAGVVHIp8KjoSwgGIP5FZKdUkAkCpr6YSbdKpcr+FSeipaWUQYkyqDRMSysA
+         8y9LRhxSdx6jqe5i16rLuZ7UWOyfqL+Rf8RPdxYpot5RtAHpC3TbWw0IrL0ELgO36eq1
+         MvfJRlU3ECg4ERiUidPeg9XPf59ffDKO2xYEPX/QtVT4dkKz/ouM6KsR/gWHmjeWYGtC
+         Q1ABwu5n3OlaXHbe0UEgWwqeseAuWYk3Gs9mMoUJqNEiXRX9Jvt8D6WeeGJ7ZFRThEfy
+         Mhrg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1706066425; x=1706671225;
+        d=1e100.net; s=20230601; t=1706069750; x=1706674550;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=o7xGeZ2b1tDn9x9XkU94+dERsnfjQ2OXVqveyow5bLo=;
-        b=XLJ8t7nLlq2fgfrTWZzh2Uk9B95Rxnm0bGLjaNudp/vMI5Hzqx2IvU8jA4gFKlZLjA
-         dRWn9Sz7ZcS2YgueOe48FuPe/kET7RQ+OmDRjlmuYYDPfLg/zplzD1twh3RQURP9Xz9q
-         ATsja8WdxvvKID9duYiCnYRwKBsZjevXSHfHqUzgNCONL282rmWWgdJKPonk0BBtPFiz
-         aMfUvip1xnW6BrBqSuomgG5dMDuh3PYOIIky5EPaD8qykjqkgFwiO1XJ+T0U1S6O0yJk
-         Q3d4aE+KmcNy/TZ1nYrUhAiDejjm/XQOmRji92FbCTqXyesdkhzEacZh+HhXFajBW+lX
-         6B5g==
-X-Gm-Message-State: AOJu0YzTCbreX4K2qHOW0ZnlxVnF47Q0oL0fZ/0ANAlmlknidTvFTM0c
-	aoZ/7ofhk1p/JAa0LLz5kN7AeZ9CmlxrfIaw7E98DdzZq85EEujy173Wu4D/kj1xRehI6gnwFdC
-	ln7rl0vxs47cZWMuUTVE4Kg3mACA=
-X-Google-Smtp-Source: AGHT+IFAKGfAm9WaN/9IlyCyUzA1Up8NLh7MeO1ndyWec4Z3LgWOrMfzRiWJ1v8TK4RVWBm1mO57cJMBTC/H7+0fO2w=
-X-Received: by 2002:ac2:5e83:0:b0:510:5b0:6cc6 with SMTP id
- b3-20020ac25e83000000b0051005b06cc6mr596068lfq.94.1706066425044; Tue, 23 Jan
- 2024 19:20:25 -0800 (PST)
+        bh=wjp0wlcmq9x1Rw6vO+h/o+YMhQ/eFmdGgeCfrDHixMI=;
+        b=WgUnUf3OG0Dn6EOg2VYiS9NeyV91Qqw4II5NHP7m+i4QSAb+VSuE1zwIyxbbP/8HVM
+         CkN+Nf47Phe/fRRbcmCmSHZPo8BshpiBSW+7BZ8Kt7Em1WghdHLUjnQ5CG371ljgDNYj
+         bqn3Y6RxOKQyWIE7RRk/9ztlJ7GIdGQUiVBHsLLIyKeZ6tRB5+1xjSVNPsDsTKKIpzng
+         beofkJQP36VKyntmQyqEiIQs+Htsr7ylY5Gb7iF2vpNcMfDDdoHO10GUFfZxfJ0zuVkV
+         YDBwwlpcManIlWyyaWS8rdRQvJEcAq0woQSgDWdMaEA6npY073RLaq6YBSOcX2yaM7zz
+         NoCg==
+X-Gm-Message-State: AOJu0Yx4JKHG9SPhR9WVgBl8d/s8xxF/ChaETmpZb1fC1nEo1AhfgNVP
+	IX/4xz4IR0U932SRg3XmzZ6W71s5oCkGz0L64sWwEMuGjoi775QoQ6Nn0CcVCSbtVSwN4SDNpyg
+	89VcAZ/OErsJfgclcGzF+MpHD850=
+X-Google-Smtp-Source: AGHT+IG0XRv5IWhOYsCO7bp0VVa20VBaWHm4zCk6r4WfMsLuYeOk7gVsMSw2gIlA3e+J4DyRpRNdxpaPH9OrLG1Nzc4=
+X-Received: by 2002:a05:6512:2387:b0:510:1195:e68e with SMTP id
+ c7-20020a056512238700b005101195e68emr98764lfv.135.1706069750244; Tue, 23 Jan
+ 2024 20:15:50 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <cover.1705659748.git.ps@pks.im> <ae2df6316f79e372c51d59666d685e59981d2f98.1705659748.git.ps@pks.im>
- <xmqqjzo5jf79.fsf@gitster.g> <Za5HOkWM3IQIiKDJ@tanuki>
-In-Reply-To: <Za5HOkWM3IQIiKDJ@tanuki>
+References: <ZZ77NQkSuiRxRDwt@nand.local> <b2651b38a4f7edaf1c5ffee72af00e46@manjaro.org>
+ <CABPp-BH3sva=CNtx8YFGP4Egyau-hR+7njZPFEd-DRTw91BK2w@mail.gmail.com>
+ <f5b9a57b6e2b513f1d79a93c6f0ccf45@manjaro.org> <CABPp-BFWsWCGogqQ=haMsS4OhOdSwc3frcAxa6soQR5ORTceOA@mail.gmail.com>
+ <45bfda3a350b4040a28a25993a2b22e0@manjaro.org>
+In-Reply-To: <45bfda3a350b4040a28a25993a2b22e0@manjaro.org>
 From: Elijah Newren <newren@gmail.com>
-Date: Tue, 23 Jan 2024 19:19:00 -0800
-Message-ID: <CABPp-BG1vA7B9iqLMAq8HnwgA_J6XsbSCa0dEH0PAkWQajP3Uw@mail.gmail.com>
-Subject: Re: [PATCH 3/7] refs: convert AUTO_MERGE to become a normal pseudo-ref
-To: Patrick Steinhardt <ps@pks.im>
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Date: Tue, 23 Jan 2024 20:15:37 -0800
+Message-ID: <CABPp-BGfPXKtdHaz0u5273AwUfBnYRKfMa2VHPFohv5fOtwJtg@mail.gmail.com>
+Subject: Re: [DISCUSS] Introducing Rust into the Git project
+To: Dragan Simic <dsimic@manjaro.org>
+Cc: Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Mon, Jan 22, 2024 at 2:45=E2=80=AFAM Patrick Steinhardt <ps@pks.im> wrot=
-e:
->
-> On Fri, Jan 19, 2024 at 11:28:10AM -0800, Junio C Hamano wrote:
-> > Patrick Steinhardt <ps@pks.im> writes:
-> >
-> > > In 70c70de616 (refs: complete list of special refs, 2023-12-14) we ha=
-ve
-> > > inrtoduced a new `is_special_ref()` function that classifies some ref=
-s
-> >
-> > "introduced"
-> >
-> > > @@ -4687,10 +4685,17 @@ void merge_switch_to_result(struct merge_opti=
-ons *opt,
-> > >             trace2_region_leave("merge", "record_conflicted", opt->re=
-po);
-> > >
-> > >             trace2_region_enter("merge", "write_auto_merge", opt->rep=
-o);
-> > > -           filename =3D git_path_auto_merge(opt->repo);
-> > > -           fp =3D xfopen(filename, "w");
-> > > -           fprintf(fp, "%s\n", oid_to_hex(&result->tree->object.oid)=
-);
-> > > -           fclose(fp);
-> > > +           if (refs_update_ref(get_main_ref_store(opt->repo), "", "A=
-UTO_MERGE",
-> > > +                               &result->tree->object.oid, NULL, REF_=
-NO_DEREF,
-> > > +                               UPDATE_REFS_MSG_ON_ERR)) {
-> > > +                   /* failure to function */
-> > > +                   opt->priv =3D NULL;
-> > > +                   result->clean =3D -1;
-> > > +                   merge_finalize(opt, result);
-> > > +                   trace2_region_leave("merge", "write_auto_merge",
-> > > +                                       opt->repo);
-> > > +                   return;
-> > > +           }
-> > >             trace2_region_leave("merge", "write_auto_merge", opt->rep=
-o);
-> > >     }
-> > >     if (display_update_msgs)
-> >
-> > We used to ignore errors while updating AUTO_MERGE, implying that it
-> > is an optional nicety that does not have to block the merge.  Now we
-> > explicitly mark the resulting index unclean.  While my gut feeling
-> > says that it should not matter all that much (as such a failure
-> > would be rare enough that the user may want to inspect and double
-> > check the situation before going forward), I am not 100% sure if the
-> > change is behaviour is acceptable by everybody (cc'ed Elijah for
-> > second opinion).
->
-> We only ignored _some_ errors when updating AUTO_MERGE. Most notably we
-> die when we fail to create the file, but we succeed in case its contents
-> aren't written. This does not make much sense to me -- my expectation
-> would be that we should verify either the complete operation or nothing
-> of it and ignore all failures. Gracefully leaving an empty file behind
-> is a weird in-between state, so I'd claim it's more or less an oversight
-> that we did not perform proper error checking here.
+Hi Dragan,
 
-I can confirm it was indeed just an oversight.  I like your change to
-make this code more careful.
+On Wed, Jan 17, 2024 at 1:30=E2=80=AFPM Dragan Simic <dsimic@manjaro.org> w=
+rote:
+>
+> On 2024-01-11 17:57, Elijah Newren wrote:
+> > Hi Dragan,
+>
+> I apologize for my delayed response.
+
+No worries; I'm often hit or miss on my responses these days as well.
+
+> > On Wed, Jan 10, 2024 at 9:39=E2=80=AFPM Dragan Simic <dsimic@manjaro.or=
+g>
+> > wrote:
+> >>
+> >> On 2024-01-11 01:33, Elijah Newren wrote:
+> >> > On Wed, Jan 10, 2024 at 1:57=E2=80=AFPM Dragan Simic <dsimic@manjaro=
+.org>
+> >> > wrote:
+> >> >>
+> >> >> Thus, Git should probably follow the same approach of not convertin=
+g
+> >> >> the
+> >> >> already existing code
+> >> >
+> >> > I disagree with this.  I saw significant performance improvements
+> >> > through converting some existing Git code to Rust.  Granted, it was
+> >> > only a small amount of code, but the performance benefits I saw
+> >> > suggested we'd see more by also doing similar conversions elsewhere.
+> >> > (Note that I kept the old C code and then conditionally compiled
+> >> > either Rust or C versions of what I was converting.)
+> >>
+> >> Well, it's also possible that improving the old C code could also
+> >> result
+> >> in some performance improvements.  Thus, quite frankly, I don't see
+> >> that
+> >> as a valid argument to rewrite some existing C code in Rust.
+> >
+> > Yes, and I've made many performance improvements in the C code in git.
+> > Sometimes I make some of the code 5% or 20% faster.  Sometimes 1-3
+> > orders of magnitude faster.  Once over 60 orders of magnitude
+> > faster.[1]  Look around in git's history; I've done a fair amount of
+> > performance stuff.
+>
+> Thank you very much for your work!
+>
+> > And I'm specifically arguing that I feel limited in some of the
+> > performance work that can be done by remaining in C.  Part of my
+> > reason for interest in Rust is exactly because I think it can help us
+> > improve performance in ways that are far more difficult to achieve in
+> > C.  And this isn't just guesswork, I've done some trials with it.
+> > Further, I even took the time to document some of these reasons
+> > elsewhere in this thread[2].  Arguing that some performance
+> > improvements can be done in C is thus entirely missing the point.
+> >
+> > If you want to dismiss the performance angle of argument for Rust, you
+> > should take the time to address the actual reasons raised for why it
+> > could make it easier to improve performance relative to continuing in
+> > C.
+> >
+> > Also, as a heads up since you seem to be relatively new to the list:
+> > your position will probably carry more weight with others if you take
+> > the time to understand, acknowledge, and/or address counterpoints of
+> > the other party.  It is certainly fine to simply express some concerns
+> > without doing so (Randall and Patrick did a good job of this in this
+> > thread), but when you simply assert that the benefits others point out
+> > simply don't exist (e.g. your "Quite frankly, that would _only_
+> > complicate things and cause fragmentation." (emphasis added) from your
+> > first email in this thread[3], and which this latest email of yours
+> > somewhat looks like as well), others may well start applying a
+> > discount to any positions you state.  Granted, it's totally up to you,
+> > but I'm just giving a hint about how I think you might be able to be
+> > more persuasive.
+>
+> I totally agree with your suggestions, and I'm thankful for the time it
+> took you to write it all down.  I'll take your advice
+
+Great!
+
+> and refrain myself
+> from expressing my opinions in this thread.
+
+...but that's not what my advice was.  My advice was that you'd be
+more persuasive if you expressed your opinions differently.  Some
+possible examples:
+
+  * Stating that you are worried about the codebase becoming more
+complicated or more fragmented (without dismissing the points Taylor
+raised)
+  * Arguing that you believe various points others raised aren't as
+much of an advantage as they perceive, or even potentially aren't even
+an advantage at all, not by mere assertion but by providing additional
+details on the topic (statistics, anecdotes, war stories,
+counter-examples, old commit messages, etc.) that back up your point
+  * Stating that you don't understand why others think that advantages
+they state are as significant as they pose and ask for clarification.
+
+I think there's potentially some good points behind your positions,
+and I don't want to discourage them.  I want to encourage lively,
+friendly debate so that we can have the best information possible when
+decisions are made.
