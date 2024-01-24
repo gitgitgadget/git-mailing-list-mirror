@@ -1,59 +1,53 @@
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 453777E79E
-	for <git@vger.kernel.org>; Wed, 24 Jan 2024 17:06:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BA6512A15B
+	for <git@vger.kernel.org>; Wed, 24 Jan 2024 17:21:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706116018; cv=none; b=mwiBU3vr7IErFVasDgaG+KOIayZ2cupCiUDwjQ+T6ZA3lWZlUatCJ3BKlDZ9W+qjudPYXza2tchBFhEuFsirhxF41XAuSkIW+k+8wZoWBokLQgOko8G+/NWk3N89SW8SpBxdrgdsGs/bkuOqwDHqFL4rdHlrAo3gHdSomDKib8k=
+	t=1706116901; cv=none; b=gMwIetsk5rKJwH3hLjenG0BxL4k4le9/j0gxE/l5vUsDKRvOpeYWXbrjpz5d/KM5+go8oqnu5CuH9GQ+A4dx21OKyrhmWzT24yst20Xxv985sKlBn6wFWfGq6Xcdpx4zuJ5UQBr16dMyjOOzW3XOxi78piAXVX9hHl6tgNA4oeU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706116018; c=relaxed/simple;
-	bh=buzP2BuiNMiBNAX5r5t332Ag/kg+9ssPr/s3BmflccA=;
+	s=arc-20240116; t=1706116901; c=relaxed/simple;
+	bh=IioAFM+C+Y324wT+leWSE/PREXtviccOitBWHkKrxSg=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=ZqxrAiRichNJHugR+pHeEcy/ZGycDF/l46g7StexWycYNthWHhqw63x7ktauFGIISzX5FsRwNSmdhwb7P24lLIHVAPzK+iYFGdUBtmp30QsUDSeXa2oSB9OjYIQrKF5ITP9f8M1PnRz9PWjTKI7np0tawDZkRAqa3oYAMO0cozY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=C89e+uod; arc=none smtp.client-ip=64.147.108.71
+	 MIME-Version:Content-Type; b=AJ/9rIb0mcT8wLxplce/ywLRCkAJ90CP5rX4Tm4k28Ksb2wqgRM5hqHtRJ8Ul2L34szN0yzVD9Fnirq/pIHFk2tPaNdsZ++2Q/bda3jrblubnNlbmybID3v4oU7gEfvHErJBUGILUu9zbWAMG4oWxU04gw6JasuLTL7dc1PTnqU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=vlIF5bCm; arc=none smtp.client-ip=173.228.157.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="C89e+uod"
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id AAC9F1D9C37;
-	Wed, 24 Jan 2024 12:06:53 -0500 (EST)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="vlIF5bCm"
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id C649A23D4C;
+	Wed, 24 Jan 2024 12:21:38 -0500 (EST)
 	(envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=buzP2BuiNMiBNAX5r5t332Ag/kg+9ssPr/s3Bm
-	flccA=; b=C89e+uodRM205sOHy0GAWuEQYOcNJpyx5E+9X7Vu6T99gYK6hVy/iS
-	/yEDOSGG5VKk1HO2MPhVIhNauqR3uIz0wtWzMmsiwDv6cQbc8dlTMtCYR9bGDulA
-	6iAi0IvO44ucFpV4NVoKwWii+CdFO8I/3lvann/j2FIw9hw6UEJiE=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id A22711D9C36;
-	Wed, 24 Jan 2024 12:06:53 -0500 (EST)
+	:content-type; s=sasl; bh=IioAFM+C+Y324wT+leWSE/PREXtviccOitBWHk
+	KrxSg=; b=vlIF5bCmcYCWNM/L81bpsGoZFoicX7sCPmsholitwnyoIGtiwA1v8I
+	yePvFI2MhC167VfoA//BcXEHb4lJ71VTuHIdMFqhBtvDRqIkRiCG8oUDGkDIb014
+	zMZ3ujbvo03JfLXkPBsB/Y1Dha7WqQtbRh/suhlqIAR0nu1rivgjE=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id BEE7A23D4B;
+	Wed, 24 Jan 2024 12:21:38 -0500 (EST)
 	(envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.125.200.93])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 0C6C11D9C35;
-	Wed, 24 Jan 2024 12:06:52 -0500 (EST)
+	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 84F3023D43;
+	Wed, 24 Jan 2024 12:21:33 -0500 (EST)
 	(envelope-from junio@pobox.com)
 From: Junio C Hamano <gitster@pobox.com>
-To: Elijah Newren <newren@gmail.com>
-Cc: Jeff King <peff@peff.net>,  =?utf-8?B?UmHDumwgTsO6w7Fleg==?= de Arenas
- Coronado
- <raulnac@gmail.com>,  git@vger.kernel.org
-Subject: Re: Fwd: Unexpected behavior of ls-files command when using
- --others --exclude-from, and a .gitignore file which resides in a
- subdirectory
-In-Reply-To: <CABPp-BHcdn3+mbPJk8LZvMjPWZ4s-xdUyevrMbgbT4yQpJ_umA@mail.gmail.com>
-	(Elijah Newren's message of "Tue, 23 Jan 2024 18:58:51 -0800")
-References: <CAGF1KhWNaO_TUuCPo2L_HzNnR+FnB1Q4H6_xQ2owoH+SnynzEg@mail.gmail.com>
-	<CAGF1KhWiYX=3R01Odj2yCNgvx=f5+HRCjRJogWf5eBikuATCcg@mail.gmail.com>
-	<20240122213410.GA811766@coredump.intra.peff.net>
-	<xmqq1qa9rqji.fsf@gitster.g>
-	<20240122215954.GA813833@coredump.intra.peff.net>
-	<CABPp-BHcdn3+mbPJk8LZvMjPWZ4s-xdUyevrMbgbT4yQpJ_umA@mail.gmail.com>
-Date: Wed, 24 Jan 2024 09:06:51 -0800
-Message-ID: <xmqqjznyhd90.fsf@gitster.g>
+To: Sergey Organov <sorganov@gmail.com>
+Cc: Elijah Newren <newren@gmail.com>,  git@vger.kernel.org
+Subject: Re: what should "git clean -n -f [-d] [-x] <pattern>" do?
+In-Reply-To: <87plxr3zsr.fsf@osv.gnss.ru> (Sergey Organov's message of "Wed,
+	24 Jan 2024 11:23:32 +0300")
+References: <xmqq34v6gswv.fsf@gitster.g>
+	<CABPp-BHUVLS4vB5maZzU5gS33ve6LkKgij+rc1bBZges6Xej-g@mail.gmail.com>
+	<87a5ow9jb4.fsf@osv.gnss.ru> <xmqqsf2nnbkj.fsf@gitster.g>
+	<87plxr3zsr.fsf@osv.gnss.ru>
+Date: Wed, 24 Jan 2024 09:21:32 -0800
+Message-ID: <xmqqa5ouhckj.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -63,102 +57,49 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 X-Pobox-Relay-ID:
- F88C9F50-BADA-11EE-90FB-25B3960A682E-77302942!pb-smtp2.pobox.com
+ 055D37CE-BADD-11EE-B7AC-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
 
-Elijah Newren <newren@gmail.com> writes:
+Sergey Organov <sorganov@gmail.com> writes:
 
-> It can also imply that a feature, design, or practice will be removed
-> or discontinued entirely in the future.
-> ```
->
-> Since "can also imply" != "does also imply", and based on the commit
-> message of 491a7575f (particularly the part that quotes dcf0c16ef1,
-> both of which were prior work that informed the under discussion
-> e750951e74), I thought the use of deprecated was perfectly applicable
-> here.
+> Whereas obsoleting second -f in favor of new --nested-repo might be a
+> good idea indeed, I believe it's still a mistake for "dry run" to
+> somehow interfere with -f, sorry.
 
-I think we've seen confusions before, more than just once in the
-past, caused by the verb "deprecate" in our docs.  People, after
-reading "X is deprecated; use Y instead", always assumed that X will
-eventually be removed, even in contexts where we did not mean it.
+No need to be sorry ;-)
 
------- >8 ----------- >8 ----------- >8 ----------- >8 ------
-Subject: ls-files: avoid the verb "deprecate" for individual options
+I actually think the true culprit of making this an odd-man-out is
+that the use of "-f" in "git clean", especially with its use of the
+configuration variable clean.requireForce that defaults to true, is
+utterly non-standard.
 
-When e750951e74f updated the documentation to give greater
-visibility to the --exclude-standard option, it marked the
-`--exclude-per-directory` option as "deprecated".  While it
-technically is correct that being deprecated does not necessarily
-mean it is planned to be removed later, it seems to cause confusion
-to readers, especially when we merely mean
+The usual pattern of defining what "-f" does is that the "git foo"
+command without any options does its common thing but refuses to
+perform undesirable operations (e.g. "git add ."  adds everything
+but refrains from adding ignored paths). And "git foo -f" is a way
+to also perform what it commonly skips.
 
-    The option Y can be used to achieve the same thing as the option
-    X, so to those of you who aren't familiar with either X or Y, we
-    would recommend to use Y.
+In contrast, with clean.requireForce that defaults to true, "git
+clean" does not do anything useful by default.  Without such a
+safety, "git clean" would be a way to clean expendable paths, and
+"git clean -f" might be to also clean precious paths.  But it does
+not work that way.  It always requires "-f" to do anything.  Worse
+yet, it is not even "by default it acts as if -n is given and -f is
+a way to countermand that implicit -n".  It is "you must give me
+either -f (i.e. please do work) or -n (i.e. please show what you
+would do) before I do anything".
 
-This is especially true for `--exclude-standard` vs the combination
-of more granular `--exclude-from` and `--exclude-per-directory`
-options.  It is true that one common combination of the granular
-options can be obtained by just giving the former, but that does not
-necessarily mean a more granular control is not necessary.
+  $ git clean
+  fatal: clean.requireForce defaults to true and neither -i, -n, nor -f given; refusing to clean
 
-State why we recommend looking at `--exclude-standard` when we do so
-in the description of `--exclude-per-directory`, instead of saying
-that the option is deprecated.  Also, spell out the recipe to emulate
-what `--exclude-standard` does, so that the users can give it minute
-tweaks (like "not reading the global exclusion file from core.excludes").
+Given that, it is hard to argue that it would be a natural end-user
+expectation that the command does something useful (i.e. show what
+would be done) when it is given "-f" and "-n" at the same time.
+What makes this a rather nonsense UI is the fact that "-f" does not
+work the way we would expect for this command.
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- Documentation/git-ls-files.txt | 24 +++++++++++++++++++-----
- 1 file changed, 19 insertions(+), 5 deletions(-)
 
-diff --git c/Documentation/git-ls-files.txt w/Documentation/git-ls-files.txt
-index f65a8cd91d..93a0111cfb 100644
---- c/Documentation/git-ls-files.txt
-+++ w/Documentation/git-ls-files.txt
-@@ -119,8 +119,10 @@ OPTIONS
- 
- --exclude-per-directory=<file>::
- 	Read additional exclude patterns that apply only to the
--	directory and its subdirectories in <file>.  Deprecated; use
--	--exclude-standard instead.
-+	directory and its subdirectories in <file>.  If you are
-+	trying to emulate the way how Porcelain commands work,
-+	using the `--exclude-standard` instead is easier and more
-+	thorough.
- 
- --exclude-standard::
- 	Add the standard Git exclusions: .git/info/exclude, .gitignore
-@@ -298,9 +300,8 @@ traversing the directory tree and finding files to show when the
- flags --others or --ignored are specified.  linkgit:gitignore[5]
- specifies the format of exclude patterns.
- 
--Generally, you should just use --exclude-standard, but for historical
--reasons the exclude patterns can be specified from the following
--places, in order:
-+These exclude patterns can be specified from the following places,
-+in order:
- 
-   1. The command-line flag --exclude=<pattern> specifies a
-      single pattern.  Patterns are ordered in the same order
-@@ -322,6 +323,19 @@ top of the directory tree.  A pattern read from a file specified
- by --exclude-per-directory is relative to the directory that the
- pattern file appears in.
- 
-+Generally, you should be able to use `--exclude-standard` when you
-+want the exclude rules applied the same way as what Porcelain
-+commands do.  To emulate what `--exclude-standard` specifies, you
-+can give `--exclude-per-directory=.gitignore`, and then specify:
-+
-+  1. The file specified by the `core.excludesfile` configuration
-+     variable, if exists, or the `$XDG_CONFIG_HOME/git/ignore` file.
-+
-+  2. The `$GIT_DIR/info/exclude` file 
-+
-+via the `--exclude-from=` option.
-+
-+
- SEE ALSO
- --------
- linkgit:git-read-tree[1], linkgit:gitignore[5]
+
+
+
+
+
