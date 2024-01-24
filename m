@@ -1,62 +1,63 @@
-Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
+Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84A3DC8E1
-	for <git@vger.kernel.org>; Wed, 24 Jan 2024 06:33:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E1B710795
+	for <git@vger.kernel.org>; Wed, 24 Jan 2024 06:33:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706077983; cv=none; b=Mj2Dkhtk5nIPMu9sxO8q6qqdmmhYnUv9Herbo2+4+0ijv7XfBYFTx2FGdwc2chLO7TlGoC22CzOs5ueOFLvOeoa9/7N/oXw78xtO69TcTjR/tn6xqBqQBb1hPdHbt31v5xRKQ9nHIoRjazIGbZQA+1FwabQGHzQD7Nrw2d8z8mU=
+	t=1706077986; cv=none; b=MG5CkZwNVYsK87PfphVGHapgTRsWf+ShwWKm103rHq5myKqCk/LR0N7edDon/3iQqvmxhjVDIKbzlUDGXycWcDsTw+hygjYY2/UaAiCwAwhx36wT8D07RJ2Ys50p6YyvOiuhknUrzqg8SaZZRBUlXnpNxbcPWss40m5EuxCZC6k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706077983; c=relaxed/simple;
-	bh=HgdDaBEGDMg+h730T7dIPYkKeQckJuihzQ+Vqn82Gjc=;
+	s=arc-20240116; t=1706077986; c=relaxed/simple;
+	bh=QyBVBpGqzEkdyBD+m60M6mCx/+Hijtz0b0aUjkTX6vg=;
 	h=Message-ID:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=QLvJJ8NdoFKhFto99k60KtCWzSNSqBJEJgL2c3MQj4enfNa0oGFaaB07dFZxENF6k+9PxzJ9QY44MdKx2LMLmotJOC5iy6/3eW7RNh6Rjjq1mDsI0GXDDF0tOqKcuJgnp1rWHiM3ZMDh3DufeurixngZi9Fze6zeDN4nf4QA6mQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=YIT5ewZV; arc=none smtp.client-ip=209.85.128.42
+	 MIME-Version:To:Cc; b=Ee4AmopuSnhnQWdUhNkGsA3HrLN/8ZvPoQYDasQTv7OkrDq6ucCc57s4MGQHBaMPKTR2iIOwQzk4ovlwNfgolMITahALu6/XgBRkrqwjy5ZlYuJGA7686p1Ad0uieL/2znTqlP6dKfrCPrhlTPHdVm2A3dJ6S9Y0kL/AJOkPCFI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=AY78U6VM; arc=none smtp.client-ip=209.85.128.51
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YIT5ewZV"
-Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-40e80046264so64412005e9.0
-        for <git@vger.kernel.org>; Tue, 23 Jan 2024 22:33:01 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AY78U6VM"
+Received: by mail-wm1-f51.google.com with SMTP id 5b1f17b1804b1-40eb95bd2c6so18845065e9.0
+        for <git@vger.kernel.org>; Tue, 23 Jan 2024 22:33:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1706077979; x=1706682779; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1706077982; x=1706682782; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=Ue4Plk4+CsJoWYb/Ovdvig/w2895bnZ9uqLzqafafrs=;
-        b=YIT5ewZVdSPxxIzyfOaL7dPTTr9D6eIty++m1Lp531hqUQm1O1WWWcHCgD5/A5E/bT
-         4Cepc3qRkaF5U1gHtraz2/OX5IF1/aWWCOdCfVnjN0SeDlkbh30fSJfvbGfgQOzWBk81
-         FYFSEmn6x98ZoKWwasjPPygaM+3HqW9tuDYh6A7FUcGDhJbARSrP5rIF0ka7mVECayyE
-         F6V9JZPyt3QRv+eD/I5G713n9DkG0nPE4qgwQnkYi8ZW+RzXs8hNJWQoWAkX07cAvOUj
-         OgsR4eKxhIPSwWFOuq4VjiBMDkfq+Dpk1bpHEF5icJ4hkbiXhyJ8uf9OsPhSndqeD9MQ
-         Xerg==
+        bh=yFUuDRMK6lRJgQHWjMHJxA9NKvU8uge5I2xEFNb+Ub8=;
+        b=AY78U6VMUFQLp1+q6ok/rbcX411x1T1IvLUL2amecBr0BWutoTqMgh0JX47Gsblmif
+         0sj/2Mkqy8yRDQ7LBM9XNSyDUp7aF/WKXM806mj8QTC0LMClz84AcZbSva6seR0LsU0j
+         dj+X5bC1LbmvRdAzW5JR9E5SeKhY2oM2LBih+FmKXN8FJWGqJyLiU7YEBQbrlcnHMes+
+         V8pVDdDtMr7vrNPZRahGpgAi7F99jXU/zPIaW5piKihQQrmchAc+f4xEacm/itthXnpr
+         0wJqRcBGLPuA/IkVWd1g+A6hw1qEK9YvdTEiKmSpsS/0cWIf4cef8D4Y02czEzD47WQO
+         u/kw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1706077979; x=1706682779;
+        d=1e100.net; s=20230601; t=1706077982; x=1706682782;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=Ue4Plk4+CsJoWYb/Ovdvig/w2895bnZ9uqLzqafafrs=;
-        b=Kkl8ZbeHLe8x2fw0U0NCGTnG3Bz1+xIhiYbyvK/FxHCrRwFGbJXJtTQNyngpuWSduk
-         AMjXjAy9s/8IErcr9VfKO4N9vBirniHObRgnNQLnjexMfTvViXg3AE8pVy+bdadVv8Nb
-         SExTY2JJMAiOwIHGmcvQE2rRClJDCFSrS/KHzZDa4BD4NNb6vdRmYks3ldDr4q3Z/okQ
-         UYcR8mXFG7Tc7HTZP/Yufg9E8ovFg3B2IeuJPKzLgqywwBSwn+ePE2W8Ww9ETnEygQXK
-         NdqkD0FWyWMy320WJJsaRX3VPRALToczoxo8Yh+74WwYasIBmyoIN0J3DkT44y33Buwz
-         /+Ag==
-X-Gm-Message-State: AOJu0YwmSEIZ2Mav42+Tqma0kX7/KiAFeV65BocIGOtb6d8BF3/gDTGJ
-	w5F5R73QzJjrKiWZMCM04AUNax70TTgY6hk2hyaNH6hn7Tcb2Cc8qNU2bvlE
-X-Google-Smtp-Source: AGHT+IFLymgtzAcSVOmHnoT3v5eF1NzBSCIRBYH+U0iP5AkmsXAR+Ug5InlRT8mYoBExlPYJQ6FzSw==
-X-Received: by 2002:a05:600c:310f:b0:40d:861a:257c with SMTP id g15-20020a05600c310f00b0040d861a257cmr826822wmo.108.1706077978864;
-        Tue, 23 Jan 2024 22:32:58 -0800 (PST)
+        bh=yFUuDRMK6lRJgQHWjMHJxA9NKvU8uge5I2xEFNb+Ub8=;
+        b=k0r1Rqm5GhzN1WiM/K9YwS2zlf4gqYuXI7lReDjPwakJz/pDmBAhMcYcD72emI8b1x
+         0AGy68RcYmlWCszIM3XyaPJG/MECNIN7uyPxoFfi7UDBUy1EXxV16Y0W1niHuS1ImNPV
+         fkzy9GGt5Df0aADh++WvPjdBUR3kl6ksBO5SXXLR78SZVJnfnB8y274Vn9vmAn9lGKnV
+         DIgV9NfpxrTuDx3QM8SSAi9dOfb2qSSoU2PvNqqTo1WVpOJNdWfetEjPVM7G8rnjRuBp
+         Ts8ijKUPXVZGAlSMVijxJf/Ub63brWs8STn8RCjagWRZqm5ni4QVjF2hLTqyf2uURSR4
+         XLZQ==
+X-Gm-Message-State: AOJu0YxrWqKIpSdFv912th7IwMV0r52zQG1Q89wbEu06oLGu/ZreOBte
+	LBnsmrGisFeilI7A206RXFDd93Wlt2/tbdyQK2MU6ZA3aMvP0VKSMmgZuxzL
+X-Google-Smtp-Source: AGHT+IEMgCiC1uAUJu4w291h6STgQ9GYxmIldjKwwmrdkJs6W4uQ/MFqo3Ex5183HMqz4NXp3j8jPw==
+X-Received: by 2002:a05:600c:4f96:b0:40e:a2e8:4a15 with SMTP id n22-20020a05600c4f9600b0040ea2e84a15mr827636wmq.6.1706077980247;
+        Tue, 23 Jan 2024 22:33:00 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id a16-20020a056000101000b00337cd6b1890sm15431600wrx.80.2024.01.23.22.32.58
+        by smtp.gmail.com with ESMTPSA id j5-20020a05600c1c0500b0040e9f7dadc6sm16898788wms.25.2024.01.23.22.32.59
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 23 Jan 2024 22:32:58 -0800 (PST)
-Message-ID: <pull.1646.v2.git.1706077977.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1646.git.1705913519.gitgitgadget@gmail.com>
+        Tue, 23 Jan 2024 22:32:59 -0800 (PST)
+Message-ID: <f3a03d68211bc79b41562762c8ca63889b9218b2.1706077977.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1646.v2.git.1706077977.gitgitgadget@gmail.com>
 References: <pull.1646.git.1705913519.gitgitgadget@gmail.com>
+	<pull.1646.v2.git.1706077977.gitgitgadget@gmail.com>
 From: "Mohit Marathe via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Wed, 24 Jan 2024 06:32:55 +0000
-Subject: [PATCH v2 0/2] Replace atoi() with strtol_i_updated()
+Date: Wed, 24 Jan 2024 06:32:57 +0000
+Subject: [PATCH v2 2/2] patch-id: replace `atoi()` with `strtol_i_updated()`
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -67,121 +68,60 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 To: git@vger.kernel.org
-Cc: Mohit Marathe <mohitmarathe@proton.me>
+Cc: Mohit Marathe <mohitmarathe@proton.me>,
+    Mohit Marathe <mohitmarathe23@gmail.com>
 
-Hello,
+From: Mohit Marathe <mohitmarathe23@gmail.com>
 
-This patch series replaces atoi() with an updated version of strtol_i()
-called strtol_i_updated (Credits: Junio C Hamano). The reasoning behind this
-is to improve error handling by not allowing non-numerical characters in the
-hunk header (which might happen in case of a corrupt patch, although
-rarely).
+The change is made to improve the error-handling capabilities
+during the conversion of string representations to integers.
+The `strtol_i_updated(` function offers a more robust mechanism for
+converting strings to integers by providing enhanced error
+detection. Unlike `atoi(`, `strtol_i_updated(` allows the code to
+differentiate between a valid conversion and an invalid one,
+offering better resilience against potential issues such as
+reading hunk header of a corrupted patch.
 
-There is still a change to be made, as Junio says: "A corrupt patch may be
-getting a nonsense patch-ID with the current code and hopefully is not
-matching other patches that are not corrupt, but with such a change, a
-corrupt patch may not be getting any patch-ID and a loop that computes
-patch-ID for many files and try to match them up might need to be rewritten
-to take the new failure case into account." I'm not sure where this change
-needs to me made (maybe get_one_patchid()?). It would be great if anyone
-could point me to the correct place.
+Signed-off-by: Mohit Marathe <mohitmarathe@proton.me>
+---
+ builtin/patch-id.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-Thanks, Mohit Marathe
-
-Mohit Marathe (2):
-  git-compat-util: add strtol_i_updated()
-  patch-id: replace `atoi()` with `strtol_i_updated()`
-
- builtin/patch-id.c |  8 ++++++--
- git-compat-util.h  | 23 +++++++++++++++++++++++
- 2 files changed, 29 insertions(+), 2 deletions(-)
-
-
-base-commit: e02ecfcc534e2021aae29077a958dd11c3897e4c
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1646%2Fmohit-marathe%2Fupdate-strtol_i-v2
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1646/mohit-marathe/update-strtol_i-v2
-Pull-Request: https://github.com/gitgitgadget/git/pull/1646
-
-Range-diff vs v1:
-
- 1:  4e2b03cdd4f ! 1:  60ea85a701a git-compat-util: add strtol_i2
-     @@ Metadata
-      Author: Mohit Marathe <mohitmarathe23@gmail.com>
-      
-       ## Commit message ##
-     -    git-compat-util: add strtol_i2
-     +    git-compat-util: add strtol_i_updated()
-      
-     -    This function is an updated version of strtol_i function. It will
-     +    This function is an updated version of strtol_i() function. It will
-          give more control to handle parsing of the characters after the
-          integer and better error handling while parsing numbers.
-      
-     @@ git-compat-util.h: static inline int strtol_i(char const *s, int base, int *resu
-       	return 0;
-       }
-       
-     -+#define strtol_i(s,b,r) strtol_i2((s), (b), (r), NULL)
-     -+static inline int strtol_i2(char const *s, int base, int *result, char **endp)
-     ++#define strtol_i(s,b,r) strtol_i_updated((s), (b), (r), NULL)
-     ++static inline int strtol_i_updated(char const *s, int base, int *result, char **endp)
-      +{
-      +	long ul;
-      +	char *dummy = NULL;
- 2:  1ece724b1ca ! 2:  f3a03d68211 patch-id: replace `atoi()` with `strtol_i2()`
-     @@ Metadata
-      Author: Mohit Marathe <mohitmarathe23@gmail.com>
-      
-       ## Commit message ##
-     -    patch-id: replace `atoi()` with `strtol_i2()`
-     +    patch-id: replace `atoi()` with `strtol_i_updated()`
-      
-          The change is made to improve the error-handling capabilities
-          during the conversion of string representations to integers.
-     -    The `strtol_i2(` function offers a more robust mechanism for
-     +    The `strtol_i_updated(` function offers a more robust mechanism for
-          converting strings to integers by providing enhanced error
-     -    detection. Unlike `atoi(`, `strtol_i2(` allows the code to
-     +    detection. Unlike `atoi(`, `strtol_i_updated(` allows the code to
-          differentiate between a valid conversion and an invalid one,
-          offering better resilience against potential issues such as
-          reading hunk header of a corrupted patch.
-     @@ builtin/patch-id.c: static int scan_hunk_header(const char *p, int *p_before, in
-       	if (q[n] == ',') {
-       		q += n + 1;
-      -		*p_before = atoi(q);
-     -+		if (strtol_i2(q, 10, p_before, &endp) != 0)
-     ++		if (strtol_i_updated(q, 10, p_before, &endp) != 0)
-      +			return 0;
-       		n = strspn(q, digits);
-       	} else {
-       		*p_before = 1;
-     - 	}
-     - 
-     --	if (n == 0 || q[n] != ' ' || q[n+1] != '+')
-     -+	if (q[n] != ' ' || q[n+1] != '+')
-     - 		return 0;
-     - 
-     - 	r = q + n + 2;
-     +@@ builtin/patch-id.c: static int scan_hunk_header(const char *p, int *p_before, int *p_after)
-       	n = strspn(r, digits);
-       	if (r[n] == ',') {
-       		r += n + 1;
-      -		*p_after = atoi(r);
-     --		n = strspn(r, digits);
-     -+		if (strtol_i2(r, 10, p_after, &endp) != 0)
-     ++		if (strtol_i_updated(r, 10, p_after, &endp) != 0)
-      +			return 0;
-     + 		n = strspn(r, digits);
-       	} else {
-       		*p_after = 1;
-     - 	}
-     --	if (n == 0)
-     --		return 0;
-     --
-     - 	return 1;
-     - }
-     - 
-
+diff --git a/builtin/patch-id.c b/builtin/patch-id.c
+index 3894d2b9706..e513b6aed3f 100644
+--- a/builtin/patch-id.c
++++ b/builtin/patch-id.c
+@@ -1,3 +1,4 @@
++#include "git-compat-util.h"
+ #include "builtin.h"
+ #include "config.h"
+ #include "diff.h"
+@@ -29,13 +30,15 @@ static int scan_hunk_header(const char *p, int *p_before, int *p_after)
+ {
+ 	static const char digits[] = "0123456789";
+ 	const char *q, *r;
++	char *endp;
+ 	int n;
+ 
+ 	q = p + 4;
+ 	n = strspn(q, digits);
+ 	if (q[n] == ',') {
+ 		q += n + 1;
+-		*p_before = atoi(q);
++		if (strtol_i_updated(q, 10, p_before, &endp) != 0)
++			return 0;
+ 		n = strspn(q, digits);
+ 	} else {
+ 		*p_before = 1;
+@@ -48,7 +51,8 @@ static int scan_hunk_header(const char *p, int *p_before, int *p_after)
+ 	n = strspn(r, digits);
+ 	if (r[n] == ',') {
+ 		r += n + 1;
+-		*p_after = atoi(r);
++		if (strtol_i_updated(r, 10, p_after, &endp) != 0)
++			return 0;
+ 		n = strspn(r, digits);
+ 	} else {
+ 		*p_after = 1;
 -- 
 gitgitgadget
