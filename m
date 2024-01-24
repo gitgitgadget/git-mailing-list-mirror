@@ -1,63 +1,62 @@
-Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
+Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E1B710795
-	for <git@vger.kernel.org>; Wed, 24 Jan 2024 06:33:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3ADAE168A4
+	for <git@vger.kernel.org>; Wed, 24 Jan 2024 06:48:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706077986; cv=none; b=MG5CkZwNVYsK87PfphVGHapgTRsWf+ShwWKm103rHq5myKqCk/LR0N7edDon/3iQqvmxhjVDIKbzlUDGXycWcDsTw+hygjYY2/UaAiCwAwhx36wT8D07RJ2Ys50p6YyvOiuhknUrzqg8SaZZRBUlXnpNxbcPWss40m5EuxCZC6k=
+	t=1706078889; cv=none; b=OmojAYNWBr3K5x7l7QPiEl8Yufazq436+didlV6KcUBCxAc3OA8mujyWMCE1Nt0D06yYP1P6QiA9pwj5eCWTzltQm2UhR5Mm9eiHPlgpzMFB/sxJXH+KAzy3vRHMNXFFZhJhyStQgcFR4MJaOQRDqXEQBoqAWX6zukXSHgyg23o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706077986; c=relaxed/simple;
-	bh=QyBVBpGqzEkdyBD+m60M6mCx/+Hijtz0b0aUjkTX6vg=;
+	s=arc-20240116; t=1706078889; c=relaxed/simple;
+	bh=VxT6xKoLFM1CawOApdaDjPMG1OkIv37popJrQPAXeMA=;
 	h=Message-ID:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=Ee4AmopuSnhnQWdUhNkGsA3HrLN/8ZvPoQYDasQTv7OkrDq6ucCc57s4MGQHBaMPKTR2iIOwQzk4ovlwNfgolMITahALu6/XgBRkrqwjy5ZlYuJGA7686p1Ad0uieL/2znTqlP6dKfrCPrhlTPHdVm2A3dJ6S9Y0kL/AJOkPCFI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=AY78U6VM; arc=none smtp.client-ip=209.85.128.51
+	 MIME-Version:To:Cc; b=R801Cm3FF16hrytzWBVxl5mZFmlAWYTZoam9G/Dw99vafZ90Fe7Kp2vnOkWDkMMpJjU3sLe+k6kZcql7vJYYVSfhtWnXhGnR8L+i4mgi7C74dfzdCjxDRdBxSRekW5G5k0Q5O5pCEOwS8GQNO/4rzJXS/5GYzlw5kME9p68I2v4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SUlZMEva; arc=none smtp.client-ip=209.85.128.48
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AY78U6VM"
-Received: by mail-wm1-f51.google.com with SMTP id 5b1f17b1804b1-40eb95bd2c6so18845065e9.0
-        for <git@vger.kernel.org>; Tue, 23 Jan 2024 22:33:04 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SUlZMEva"
+Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-40ebf373130so13697965e9.3
+        for <git@vger.kernel.org>; Tue, 23 Jan 2024 22:48:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1706077982; x=1706682782; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1706078886; x=1706683686; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=yFUuDRMK6lRJgQHWjMHJxA9NKvU8uge5I2xEFNb+Ub8=;
-        b=AY78U6VMUFQLp1+q6ok/rbcX411x1T1IvLUL2amecBr0BWutoTqMgh0JX47Gsblmif
-         0sj/2Mkqy8yRDQ7LBM9XNSyDUp7aF/WKXM806mj8QTC0LMClz84AcZbSva6seR0LsU0j
-         dj+X5bC1LbmvRdAzW5JR9E5SeKhY2oM2LBih+FmKXN8FJWGqJyLiU7YEBQbrlcnHMes+
-         V8pVDdDtMr7vrNPZRahGpgAi7F99jXU/zPIaW5piKihQQrmchAc+f4xEacm/itthXnpr
-         0wJqRcBGLPuA/IkVWd1g+A6hw1qEK9YvdTEiKmSpsS/0cWIf4cef8D4Y02czEzD47WQO
-         u/kw==
+        bh=ZSKd7DFYRy43B6JgMm1SOpQmb7awY6pFlzz8w6SfxPY=;
+        b=SUlZMEvaXqwtj6CkJ1gIq7Aj7Wh2OFoAJOp7iQHIemlt9Kd36eUySXhv9Rzg/T4yBg
+         utBqEGWN+XfU0NUfUEbBHzNh8IGxF1BkkBBVWjPY03JcxoTyyOO1ucnKX8b5Gd3tdp7E
+         TzZswF7q/mC7Dyy3tpfhX10lfnA5TdzXdEeFQnwPgPW3x0ow8eXJsYUHM/iEqcXBAh53
+         MVEL57ZVH+V2FjlWQeFfZ1WlBA3V6eg15iMcycOcV5J+z1iXCZJfrFr1mEuoGiAIS/CG
+         ovc3gL9uYNLSE59oCmxdOfXFvrvss2XXTkGBJ4f7alqOkTgY4VlxHwA7ZfiiqRgFj9sD
+         svWg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1706077982; x=1706682782;
+        d=1e100.net; s=20230601; t=1706078886; x=1706683686;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=yFUuDRMK6lRJgQHWjMHJxA9NKvU8uge5I2xEFNb+Ub8=;
-        b=k0r1Rqm5GhzN1WiM/K9YwS2zlf4gqYuXI7lReDjPwakJz/pDmBAhMcYcD72emI8b1x
-         0AGy68RcYmlWCszIM3XyaPJG/MECNIN7uyPxoFfi7UDBUy1EXxV16Y0W1niHuS1ImNPV
-         fkzy9GGt5Df0aADh++WvPjdBUR3kl6ksBO5SXXLR78SZVJnfnB8y274Vn9vmAn9lGKnV
-         DIgV9NfpxrTuDx3QM8SSAi9dOfb2qSSoU2PvNqqTo1WVpOJNdWfetEjPVM7G8rnjRuBp
-         Ts8ijKUPXVZGAlSMVijxJf/Ub63brWs8STn8RCjagWRZqm5ni4QVjF2hLTqyf2uURSR4
-         XLZQ==
-X-Gm-Message-State: AOJu0YxrWqKIpSdFv912th7IwMV0r52zQG1Q89wbEu06oLGu/ZreOBte
-	LBnsmrGisFeilI7A206RXFDd93Wlt2/tbdyQK2MU6ZA3aMvP0VKSMmgZuxzL
-X-Google-Smtp-Source: AGHT+IEMgCiC1uAUJu4w291h6STgQ9GYxmIldjKwwmrdkJs6W4uQ/MFqo3Ex5183HMqz4NXp3j8jPw==
-X-Received: by 2002:a05:600c:4f96:b0:40e:a2e8:4a15 with SMTP id n22-20020a05600c4f9600b0040ea2e84a15mr827636wmq.6.1706077980247;
-        Tue, 23 Jan 2024 22:33:00 -0800 (PST)
+        bh=ZSKd7DFYRy43B6JgMm1SOpQmb7awY6pFlzz8w6SfxPY=;
+        b=v3CALSZeWodoM8uX0MTdxiXcjbBQK9nW/VrMpPHRIKl+WHY4g6RIpG6eh4xARsXVgL
+         0HVVmd66WojiLPQetui7k3RtpKbmHl2c86CcrmQjI37JHIX2TxoEQt3rAZEJrZBOVfdd
+         E+o0BZ5MjY7KAKpvLH9ZFP3Xbbp89VZjS9y0TTizwXlKy73PpiK5DfySOVl860LIUwAy
+         cXHtQEop3DM7xBtQLS3cVGr3esP0BjPNOPsKN0/ShBj3aA/aWlieTFWbSag5hJHWQtqb
+         1DVQzJAqxRxkJj3fLIC0kPs4Vq7OZDRZn1K3cAYm78L15SCuG+ASWt0k8jufWKR4RZwM
+         sQnQ==
+X-Gm-Message-State: AOJu0YzNf3xNTmucNVXXepd8zAURUHC55S+HppgexnFqSie/aI6RYX2D
+	g8C80x7AODJJrHy3O5gEhRqjAMS/ZSZFN6Fla6gK980UsnQ0A+bbWBJWzbXO
+X-Google-Smtp-Source: AGHT+IEj1d1RDgN1bJuM1woN0QDaHNsXqwP/YIgbk++mgkhL+oxrJKDIhAFf0Ya+02sFYWM8x0zKAQ==
+X-Received: by 2002:a05:600c:3d89:b0:40e:7560:ed44 with SMTP id bi9-20020a05600c3d8900b0040e7560ed44mr1131773wmb.92.1706078886157;
+        Tue, 23 Jan 2024 22:48:06 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id j5-20020a05600c1c0500b0040e9f7dadc6sm16898788wms.25.2024.01.23.22.32.59
+        by smtp.gmail.com with ESMTPSA id iv17-20020a05600c549100b0040e5034d8e0sm48903651wmb.43.2024.01.23.22.48.05
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 23 Jan 2024 22:32:59 -0800 (PST)
-Message-ID: <f3a03d68211bc79b41562762c8ca63889b9218b2.1706077977.git.gitgitgadget@gmail.com>
+        Tue, 23 Jan 2024 22:48:05 -0800 (PST)
+Message-ID: <pull.1646.v3.git.1706078885.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1646.v2.git.1706077977.gitgitgadget@gmail.com>
-References: <pull.1646.git.1705913519.gitgitgadget@gmail.com>
-	<pull.1646.v2.git.1706077977.gitgitgadget@gmail.com>
+References: <pull.1646.v2.git.1706077977.gitgitgadget@gmail.com>
 From: "Mohit Marathe via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Wed, 24 Jan 2024 06:32:57 +0000
-Subject: [PATCH v2 2/2] patch-id: replace `atoi()` with `strtol_i_updated()`
+Date: Wed, 24 Jan 2024 06:48:03 +0000
+Subject: [PATCH v3 0/2] Replace atoi() with strtol_i_updated()
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -68,60 +67,66 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 To: git@vger.kernel.org
-Cc: Mohit Marathe <mohitmarathe@proton.me>,
-    Mohit Marathe <mohitmarathe23@gmail.com>
+Cc: Mohit Marathe <mohitmarathe@proton.me>
 
-From: Mohit Marathe <mohitmarathe23@gmail.com>
+Hello,
 
-The change is made to improve the error-handling capabilities
-during the conversion of string representations to integers.
-The `strtol_i_updated(` function offers a more robust mechanism for
-converting strings to integers by providing enhanced error
-detection. Unlike `atoi(`, `strtol_i_updated(` allows the code to
-differentiate between a valid conversion and an invalid one,
-offering better resilience against potential issues such as
-reading hunk header of a corrupted patch.
+This patch series replaces atoi() with an updated version of strtol_i()
+called strtol_i_updated (Credits: Junio C Hamano). The reasoning behind this
+is to improve error handling by not allowing non-numerical characters in the
+hunk header (which might happen in case of a corrupt patch, although
+rarely).
 
-Signed-off-by: Mohit Marathe <mohitmarathe@proton.me>
----
- builtin/patch-id.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+There is still a change to be made, as Junio says: "A corrupt patch may be
+getting a nonsense patch-ID with the current code and hopefully is not
+matching other patches that are not corrupt, but with such a change, a
+corrupt patch may not be getting any patch-ID and a loop that computes
+patch-ID for many files and try to match them up might need to be rewritten
+to take the new failure case into account." I'm not sure where this change
+needs to me made (maybe get_one_patchid()?). It would be great if anyone
+could point me to the correct place.
 
-diff --git a/builtin/patch-id.c b/builtin/patch-id.c
-index 3894d2b9706..e513b6aed3f 100644
---- a/builtin/patch-id.c
-+++ b/builtin/patch-id.c
-@@ -1,3 +1,4 @@
-+#include "git-compat-util.h"
- #include "builtin.h"
- #include "config.h"
- #include "diff.h"
-@@ -29,13 +30,15 @@ static int scan_hunk_header(const char *p, int *p_before, int *p_after)
- {
- 	static const char digits[] = "0123456789";
- 	const char *q, *r;
-+	char *endp;
- 	int n;
- 
- 	q = p + 4;
- 	n = strspn(q, digits);
- 	if (q[n] == ',') {
- 		q += n + 1;
--		*p_before = atoi(q);
-+		if (strtol_i_updated(q, 10, p_before, &endp) != 0)
-+			return 0;
- 		n = strspn(q, digits);
- 	} else {
- 		*p_before = 1;
-@@ -48,7 +51,8 @@ static int scan_hunk_header(const char *p, int *p_before, int *p_after)
- 	n = strspn(r, digits);
- 	if (r[n] == ',') {
- 		r += n + 1;
--		*p_after = atoi(r);
-+		if (strtol_i_updated(r, 10, p_after, &endp) != 0)
-+			return 0;
- 		n = strspn(r, digits);
- 	} else {
- 		*p_after = 1;
+Thanks, Mohit Marathe
+
+Mohit Marathe (2):
+  git-compat-util: add strtol_i_updated()
+  patch-id: replace `atoi()` with `strtol_i_updated()`
+
+ builtin/patch-id.c | 12 ++++++++++--
+ git-compat-util.h  | 23 +++++++++++++++++++++++
+ 2 files changed, 33 insertions(+), 2 deletions(-)
+
+
+base-commit: e02ecfcc534e2021aae29077a958dd11c3897e4c
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1646%2Fmohit-marathe%2Fupdate-strtol_i-v3
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1646/mohit-marathe/update-strtol_i-v3
+Pull-Request: https://github.com/gitgitgadget/git/pull/1646
+
+Range-diff vs v2:
+
+ 1:  60ea85a701a = 1:  60ea85a701a git-compat-util: add strtol_i_updated()
+ 2:  f3a03d68211 ! 2:  0e117198d01 patch-id: replace `atoi()` with `strtol_i_updated()`
+     @@ builtin/patch-id.c: static int scan_hunk_header(const char *p, int *p_before, in
+      +		if (strtol_i_updated(q, 10, p_before, &endp) != 0)
+      +			return 0;
+       		n = strspn(q, digits);
+     ++		if (endp != q + n)
+     ++			return 0;
+       	} else {
+       		*p_before = 1;
+     + 	}
+      @@ builtin/patch-id.c: static int scan_hunk_header(const char *p, int *p_before, int *p_after)
+       	n = strspn(r, digits);
+       	if (r[n] == ',') {
+     @@ builtin/patch-id.c: static int scan_hunk_header(const char *p, int *p_before, in
+      +		if (strtol_i_updated(r, 10, p_after, &endp) != 0)
+      +			return 0;
+       		n = strspn(r, digits);
+     ++		if (endp != q + n)
+     ++			return 0;
+       	} else {
+       		*p_after = 1;
+     + 	}
+
 -- 
 gitgitgadget
