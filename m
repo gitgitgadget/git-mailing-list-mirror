@@ -1,54 +1,54 @@
 Received: from wout3-smtp.messagingengine.com (wout3-smtp.messagingengine.com [64.147.123.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E10617980
-	for <git@vger.kernel.org>; Wed, 24 Jan 2024 08:45:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EEFB17980
+	for <git@vger.kernel.org>; Wed, 24 Jan 2024 08:45:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.19
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706085912; cv=none; b=sm+tzmCUsBoJmGx4JK8wMr5GlVBXezqV6MLfhg8O5b0Vussb8g+CDUjnuFVEgrw3+/h4OeRU6xfaIG/TaJOrIlaPyIf/fgE+sHfidA2zKBMCY9vuesLEoxU1sK7A5v8kl94QLYa9f2b+1TtN/t1Gl4aeJqZjl8ECAtJ9pBcgla4=
+	t=1706085916; cv=none; b=J5sQyuFd37dBg07Z0OrKXDrDpdrGUlfPhX/AA1eSR5COL51GrRSnubELXIKM8VHtzYLlCgmL5AgJIQ0+uIrQKkG5JGxhJY90/bEAaaIL2GML96zdpu58WtkwnCdRW67nLm3k4C75fEovWL15n+SGoqyABpXC/UKgQKAlsIpsQNU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706085912; c=relaxed/simple;
-	bh=yY8sAq93md3ovEdK199ktE9uN37cL7Xpzn9itEZ1sQk=;
+	s=arc-20240116; t=1706085916; c=relaxed/simple;
+	bh=LtW13U2VmlTsHGQsnt7YR3Ruzm2U7f1dOnU+x5CLoQ8=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=haQFug5l4Q8AJwnIhZ66VrK3dcvCJ2jSjIe1mojVSFIEUh3TAOhuQoaqhuDjV2ghYXeVWaMzEYs2KdVNT5yJyPLOiAlk4Wrjh3R3bu1ZKaAtmip3VQ6hvKeTMtwjMm3oF3qDlVnfyleaGTg6iTIJcSnxqU2WzX0F2s8JcfOA2k8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=a7j/DcgK; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=HGWQbPzH; arc=none smtp.client-ip=64.147.123.19
+	 Content-Type:Content-Disposition:In-Reply-To; b=ouvA3TltE4Kh+LupMFJb/6ZjI8M8AamRDo5yWw1LWUpr6KvYD+uDL45FqNhkTs1iCQMBz2hqe7heRhA9w+sL/UItHbS9G0jH1aA4JYqypE6IWczz79g/0ft296CFYmH0hytih7ja050HbJTim2SzIFSzsjCwKR2Bzh4TcJwl2TY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=iS5WJ/6T; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=OI32yg0z; arc=none smtp.client-ip=64.147.123.19
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="a7j/DcgK";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="HGWQbPzH"
-Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
-	by mailout.west.internal (Postfix) with ESMTP id 2C29A3200AED;
-	Wed, 24 Jan 2024 03:45:09 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="iS5WJ/6T";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="OI32yg0z"
+Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
+	by mailout.west.internal (Postfix) with ESMTP id 179063200AFB;
+	Wed, 24 Jan 2024 03:45:14 -0500 (EST)
 Received: from mailfrontend1 ([10.202.2.162])
-  by compute2.internal (MEProxy); Wed, 24 Jan 2024 03:45:09 -0500
+  by compute3.internal (MEProxy); Wed, 24 Jan 2024 03:45:14 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1706085908; x=1706172308; bh=CQtudOrNcu
-	QNHGXuMzSQwV4QGeDoCOOxLXNQjCpsha0=; b=a7j/DcgKizyFJ3qXCkv6s6XNYv
-	nhBOR1bl8ip1g+ByODFOh+xU7Sa/F6xON1a62S2mfyQSzNi/AcwoB2KvhKwKhAzm
-	APagPAWCmKJCzU1mWz082uOod47uFSF/bUb/PJODs+06viNemJiE1KUGolDM0o8W
-	FERVfl4AUh5bUiI+1VV2vhFyjTm8QpAj+X1oZh6dgkNND4kBobCGGHD3NinXXMRY
-	dWM/6QX8ALsY1UHW7HBdZDQkkNKKVfYPeuXziedszUU3v+xE/pehoIGkDJJkwiYx
-	Ip3iUqgGu9jT5lVodcZWp567EP85KGLTaGKrjnpjWPawjEmeCLmjUmXRpzgg==
+	:subject:to:to; s=fm3; t=1706085913; x=1706172313; bh=EZ8jZgIsKV
+	7VNtvWnvVvY5QB5O4qCYBdwhN0u3d2+7Y=; b=iS5WJ/6TJM6efHQYsyt2LPIPgp
+	CZmPXdDaws0vhrJt0iLDdr+I/bdrNF9zaQbVka0OZjOAB2XQ1rnBCK7yJ0FcG5/I
+	95YRRr6sWOwLkeFdmGc90gjq+J54bXhhkvPE+mFLqv9JrhWYhSok+1jS2rA+TUMz
+	JKcAOL/HYYU3Pgb5LRoiI0NT4GfEt9LuUDycUUO9zDhZbEFZHcQ3Omd9QadNCs55
+	32BrKGLaRcDhFD6UrZ9EeDlMT/Q5+NusrcVqRfVuLxS177DkxQRtR+OHesL0xr46
+	7/NPL/L9gx3i2Wq3VDW+vczjsL0FUmicWGQ9fzgqir3CZm/I4h0wWuiXX8dA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1706085908; x=1706172308; bh=CQtudOrNcuQNHGXuMzSQwV4QGeDo
-	COOxLXNQjCpsha0=; b=HGWQbPzHToNYHCbVbWeAyHEShtEneuWAqdFg5PoEUUiv
-	U1zGiGdI4XjinQQT+dKVNHN5FzakQISRSESrR9oQ8ja0sy6mtzejT2G0p4/cL6Uz
-	qcMpqGBDVTk7ZLbYWfUf/qwcuhEqjY2YuvXFaYRU9ONepgNp2jLbQhHbTsW3GEI1
-	yyjngaXnRF17mW4Dmsl6jqTGZQlL7gehQvje4NjxGeDqF9/auTGROO516FGOvuza
-	aKzgaCZ22zXNEFQs0Ka9kMJ9ZQQm2hh1vid3YxKyrPH9JDggQcxrD02ouFJyTw5f
-	Vl5GyJIQNKxlKvQnyt4TDy1EoQ/fcn7L/FnnTV3bnw==
-X-ME-Sender: <xms:FM6wZYMIRyuYpWYVW3nG-vyFdTX1s3M6j1mNf8V_OTqqpGTTNE655A>
-    <xme:FM6wZe9tnvn5OtQCknPb6UTsJE0gSYBvtfYGoRympRcN9XRd1ibXKLtSvAOfOyVc8
-    O564mTnuX_wbRvx1Q>
-X-ME-Received: <xmr:FM6wZfTg7TCwsrN1BERZvKv6IYy5CcHAF6WbC1EJJezk9U2L5sXSjvWeDzaUwGCqMlfjM9qvKYOZx1HjzW33mRd4iP_zlLNFtPfvimm4ErxOtg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrvdeltddgleduucetufdoteggodetrfdotf
+	fm3; t=1706085913; x=1706172313; bh=EZ8jZgIsKV7VNtvWnvVvY5QB5O4q
+	CYBdwhN0u3d2+7Y=; b=OI32yg0zgnM+ruOhIvOPNhE1zGVbhwB4uXynlfQjx3cO
+	CwzsTGP6J4Ihb22ivOG5ganDD+arl9aaNNO8aAl4NszyevaZ50Cba1U+EudcT+lh
+	hz5t5LMZ1wIctfzNcdcT9BjN7XkHzXXEGeA4cMqVU1/wENt4UJmJTlmMSdJSpoul
+	p4ATWyrd1HtOktEPdesqz+J9WpgV580GdQ6A9UFchGyLqfUZWms1lFNXN+7argKI
+	0ZLBBYigK9sJ2Hkx5CzTW+xzkvUzUKX7Al3uh8HWd2uScfhG6we3JgdBM8jzeT9m
+	m1NOrnlP/6DS8kHwiKn4EhEs8PJ5yZ5KkuvTCtWyCw==
+X-ME-Sender: <xms:Gc6wZesz7w_wz-OOyHHUhXVuUkp2rbWe8YSxOWqOSKX3DNHGoVP76g>
+    <xme:Gc6wZTdZGKCd1qMWkL_S--8o0fcZ1iwMVw6CNtSNsxbh0pnvN5Au9lajY5U5_ydRA
+    KjlU7RFObv83M5UVg>
+X-ME-Received: <xmr:Gc6wZZy-mfKeyjFBtTKzIL4ylPps2EsVrimVFmWS-Gz3NAkDRo7LhgkwjRNg6gHb5rQHhsQMfPun31jE5lfX-0-dtOP0CBjRHtl4tmfrxEDNew>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrvdeltddgledtucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
     uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
     cujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtvdenucfhrhhomheprfgrthhr
@@ -56,26 +56,26 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrvdeltddgleduucetufdoteggod
     hrnhepueektdevtdffveeljeetgfehheeigeekleduvdeffeeghefgledttdehjeelffet
     necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
     hpkhhsrdhimh
-X-ME-Proxy: <xmx:FM6wZQtsN8udopAnKji5tKkQQrAeyzMLZjnpRT2nt7HFMNUWZc-iHA>
-    <xmx:FM6wZQenErKE8sb-lhPs3-3uEs-GXF2ZJeWr3AUQMwRBziu22C8vbA>
-    <xmx:FM6wZU0EXCFyoqtrMR8klXmzLMJg2a9C_vIaBPbNQKc_YLfw5XgLTQ>
-    <xmx:FM6wZf69sBHXni7aPu2s07_Rml0Kc5ipzec_5TDCgbP5XRg8xdVIPA>
+X-ME-Proxy: <xmx:Gc6wZZO8abHZYn05fIg4Lj06QO_j0AEwNg4P222uXSVoQCA3beg0ew>
+    <xmx:Gc6wZe8gORdE7rv-aLZaVpkqnjIuMoFgsotC2Ak_94QiUfk-uUoKFw>
+    <xmx:Gc6wZRVcJFb3eyMnVFYlL8ere0036n53rBsPwoijRu1btV61hm9xzA>
+    <xmx:Gc6wZSarbgQ6jE_rzSkEYF9vJ5ZZKTQWxNu9v7zBBivDt9acRxCakA>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 24 Jan 2024 03:45:07 -0500 (EST)
+ 24 Jan 2024 03:45:12 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 23b38d73 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 24 Jan 2024 08:42:01 +0000 (UTC)
-Date: Wed, 24 Jan 2024 09:45:05 +0100
+	by vm-mail (OpenSMTPD) with ESMTPSA id 5ccedd32 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 24 Jan 2024 08:42:05 +0000 (UTC)
+Date: Wed, 24 Jan 2024 09:45:09 +0100
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
 Cc: Taylor Blau <me@ttaylorr.com>, Eric Sunshine <sunshine@sunshineco.com>,
 	Toon Claes <toon@iotcl.com>,
 	Christian Couder <christian.couder@gmail.com>,
 	Justin Tobler <jltobler@gmail.com>
-Subject: [PATCH v3 1/6] t1300: make tests more robust with non-default ref
- backends
-Message-ID: <a57e57a7c33ff3b2664ccfe305af4d7208a74901.1706085756.git.ps@pks.im>
+Subject: [PATCH v3 2/6] t1301: mark test for `core.sharedRepository` as
+ reffiles specific
+Message-ID: <fd6dd92c23dddb47bafd81d063c0d00b91f43204.1706085756.git.ps@pks.im>
 References: <cover.1704802213.git.ps@pks.im>
  <cover.1706085756.git.ps@pks.im>
 Precedence: bulk
@@ -85,186 +85,66 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="gbmG25keGpAr1Hpq"
+	protocol="application/pgp-signature"; boundary="nd2jSgRWFkxgXhux"
 Content-Disposition: inline
 In-Reply-To: <cover.1706085756.git.ps@pks.im>
 
 
---gbmG25keGpAr1Hpq
+--nd2jSgRWFkxgXhux
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-The t1300 test suite exercises the git-config(1) tool. To do so, the
-test overwrites ".git/config" to contain custom contents. While this is
-easy enough to do, it may create problems when using a non-default
-repository format because this causes us to overwrite the repository
-format version as well as any potential extensions. With the upcoming
-"reftable" ref backend the result is that Git would try to access refs
-via the "files" backend even though the repository has been initialized
-with the "reftable" backend, which will cause failures when trying to
-access any refs.
+In t1301 we verify whether reflog files written by the "files" ref
+backend correctly honor permissions when "core.sharedRepository" is set.
+The test logic is thus specific to the reffiles backend and will not
+work with any other backends.
 
-Refactor tests which access the refdb to be more robust by using their
-own separate repositories, which allows us to be more careful and not
-discard required extensions.
-
-Note that we also have to touch up how the CUSTOM_CONFIG_FILE gets
-accessed. This environment variable contains the relative path to a
-custom config file which we're setting up. But because we are now using
-subrepositories, this relative path will not be found anymore because
-our working directory changes. This issue is addressed by storing the
-absolute path to the file in CUSTOM_CONFIG_FILE instead.
+Mark the test accordingly with the REFFILES prereq.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- t/t1300-config.sh | 78 ++++++++++++++++++++++++++++++-----------------
- 1 file changed, 50 insertions(+), 28 deletions(-)
+ t/t1301-shared-repo.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/t/t1300-config.sh b/t/t1300-config.sh
-index f4e2752134..31c3878687 100755
---- a/t/t1300-config.sh
-+++ b/t/t1300-config.sh
-@@ -1098,15 +1098,20 @@ test_expect_success SYMLINKS 'symlink to nonexisten=
-t configuration' '
- 	test_must_fail git config --file=3Dlinktolinktonada --list
+diff --git a/t/t1301-shared-repo.sh b/t/t1301-shared-repo.sh
+index e5a0d65caa..8e2c01e760 100755
+--- a/t/t1301-shared-repo.sh
++++ b/t/t1301-shared-repo.sh
+@@ -137,7 +137,7 @@ test_expect_success POSIXPERM 'info/refs respects umask=
+ in unshared repo' '
+ 	test_cmp expect actual
  '
 =20
--test_expect_success 'check split_cmdline return' "
--	git config alias.split-cmdline-fix 'echo \"' &&
--	test_must_fail git split-cmdline-fix &&
--	echo foo > foo &&
--	git add foo &&
--	git commit -m 'initial commit' &&
--	git config branch.main.mergeoptions 'echo \"' &&
--	test_must_fail git merge main
--"
-+test_expect_success 'check split_cmdline return' '
-+	test_when_finished "rm -rf repo" &&
-+	git init repo &&
-+	(
-+		cd repo &&
-+		git config alias.split-cmdline-fix "echo \"" &&
-+		test_must_fail git split-cmdline-fix &&
-+		echo foo >foo &&
-+		git add foo &&
-+		git commit -m "initial commit" &&
-+		git config branch.main.mergeoptions "echo \"" &&
-+		test_must_fail git merge main
-+	)
-+'
-=20
- test_expect_success 'git -c "key=3Dvalue" support' '
- 	cat >expect <<-\EOF &&
-@@ -1157,10 +1162,16 @@ test_expect_success 'git -c works with aliases of b=
-uiltins' '
- '
-=20
- test_expect_success 'aliases can be CamelCased' '
--	test_config alias.CamelCased "rev-parse HEAD" &&
--	git CamelCased >out &&
--	git rev-parse HEAD >expect &&
--	test_cmp expect out
-+	test_when_finished "rm -rf repo" &&
-+	git init repo &&
-+	(
-+		cd repo &&
-+		test_commit A &&
-+		git config alias.CamelCased "rev-parse HEAD" &&
-+		git CamelCased >out &&
-+		git rev-parse HEAD >expect &&
-+		test_cmp expect out
-+	)
- '
-=20
- test_expect_success 'git -c does not split values on equals' '
-@@ -2009,11 +2020,11 @@ test_expect_success '--show-origin getting a single=
- key' '
- '
-=20
- test_expect_success 'set up custom config file' '
--	CUSTOM_CONFIG_FILE=3D"custom.conf" &&
--	cat >"$CUSTOM_CONFIG_FILE" <<-\EOF
-+	cat >"custom.conf" <<-\EOF &&
- 	[user]
- 		custom =3D true
- 	EOF
-+	CUSTOM_CONFIG_FILE=3D"$(test-tool path-utils real_path custom.conf)"
- '
-=20
- test_expect_success !MINGW 'set up custom config file with special name ch=
-aracters' '
-@@ -2052,22 +2063,33 @@ test_expect_success '--show-origin stdin with file =
-include' '
- '
-=20
- test_expect_success '--show-origin blob' '
--	blob=3D$(git hash-object -w "$CUSTOM_CONFIG_FILE") &&
--	cat >expect <<-EOF &&
--	blob:$blob	user.custom=3Dtrue
--	EOF
--	git config --blob=3D$blob --show-origin --list >output &&
--	test_cmp expect output
-+	test_when_finished "rm -rf repo" &&
-+	git init repo &&
-+	(
-+		cd repo &&
-+		blob=3D$(git hash-object -w "$CUSTOM_CONFIG_FILE") &&
-+		cat >expect <<-EOF &&
-+		blob:$blob	user.custom=3Dtrue
-+		EOF
-+		git config --blob=3D$blob --show-origin --list >output &&
-+		test_cmp expect output
-+	)
- '
-=20
- test_expect_success '--show-origin blob ref' '
--	cat >expect <<-\EOF &&
--	blob:main:custom.conf	user.custom=3Dtrue
--	EOF
--	git add "$CUSTOM_CONFIG_FILE" &&
--	git commit -m "new config file" &&
--	git config --blob=3Dmain:"$CUSTOM_CONFIG_FILE" --show-origin --list >outp=
-ut &&
--	test_cmp expect output
-+	test_when_finished "rm -rf repo" &&
-+	git init repo &&
-+	(
-+		cd repo &&
-+		cat >expect <<-\EOF &&
-+		blob:main:custom.conf	user.custom=3Dtrue
-+		EOF
-+		cp "$CUSTOM_CONFIG_FILE" custom.conf &&
-+		git add custom.conf &&
-+		git commit -m "new config file" &&
-+		git config --blob=3Dmain:custom.conf --show-origin --list >output &&
-+		test_cmp expect output
-+	)
- '
-=20
- test_expect_success '--show-origin with --default' '
+-test_expect_success POSIXPERM 'git reflog expire honors core.sharedReposit=
+ory' '
++test_expect_success REFFILES,POSIXPERM 'git reflog expire honors core.shar=
+edRepository' '
+ 	umask 077 &&
+ 	git config core.sharedRepository group &&
+ 	git reflog expire --all &&
 --=20
 2.43.GIT
 
 
---gbmG25keGpAr1Hpq
+--nd2jSgRWFkxgXhux
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmWwzhAACgkQVbJhu7ck
-PpRiMA/+K9eshSgc1qppv8+6X/N0kUuQiRPMgTloj+E9QT+q5pEIq6CEQPFIndL9
-v3u8eHLcnRBzimN8k1CTu4XEtzhq6a4b66381aqRpmCzbPkC8nCYA493+/0qDkd0
-x7NqzE3MIC5KFDb+RAHHWvk6goSnZZa+gBYO5IFxqRGno0g3K+jmHfVZOfFx5nI1
-H0D0VW/JpciXBV4u+cHrut9GdE9GCJsJsS61zjGIPr9wkZzob6c6612UrZee7lTl
-LJtLvBf50Bb4C98hCb6JdB/oioiofTSr5WI3g1fvcSSgy+D+WXHw/eGQxZkxEp5w
-ejgsR3V8JBbxd2ic/gxQWfbk213QcpJuytOZ12Gc483nV3dNwuGYG7hQI7MuRS4m
-LurS+qgnMnZtBFhULQAGbOsXhjh6VBNR8e5ZpWvntmPFK8AJ1QfuxJwUdX7VHF3M
-9NO/PDIbHelKki6quL9ku901X7OW08oCS/TNagdc0s23Fw6Wwc81AbvnnbpXiGfR
-O/541/nFItXP1+tQuD2lmqUFSzV5BJiR7DVXTY64NClOc8mXl1rbJaqy2gcUHhLA
-RknMRYCMmDgwiZUfYP2MzFE6RAjM7HcunPaFcKP4e9aWhxUzwLnFI6MZdr63+zr/
-PaOTARUlrn75NeUhbcq2tDO+CyKHMjOYj2CDibwvVpLiZgNuNzY=
-=Vcrx
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmWwzhQACgkQVbJhu7ck
+PpSUtw//aO3cMH5BXjiu8pHrmT5NA2pbPm8wen1AWYCiwNQsxwaiH3s4diaASBkH
+Gep1uEui3+w4jy+hX/YUTVvA3YhhC/4pE3bP4MgzBKVuSiFlhRqmNq9bY0GTMa95
+rbkJgXaOUmog95kcfE0ul2an8Xz4aUqfRXUCceHN+FqszDLOQhm0mUzG/KedkLmp
++gTxkZlPoSUldzeZsLSXS/pCXZIsH/JQAiXq68CgciMNxTprvZYRdMuM3a6W/yoO
+OtlO/WXavt3cQ0XEEcvryDsZz8e7wK1UqtzPnX0kw8QZto0fDjMpYvutPFFVva58
+TsLxBncFPMU2ZHv67lZ6vGPM77BQl9qWqI28H/9HsY1Dm2Qt2JXdVeub49Dp94Zj
+vfHnPJAB6mhbkyn2FkFUHZcj/8rxwuxgi+Jmeok6foy3CYrZoBvbSEHb+SO1yw6d
+UKPxn3VG4AQ0vyTziCzbneS/rTUbOh1mS+Y7GAt98efbWN+/s1Kgma+RDqdgRPfH
+ScJfDhxUgJ/RK6hYI9E+5U4Ot8CslzaY7i6wIzZijpJeA4PRJjlS5tlbF7eFk3sO
+8tqrC3/HDZ3IZ5UbEKPa1r4AMN3KavTAxTJCF1goMyCpJbeJsnfiDet8DDQscQT5
+oVsFoXkh7jxeY3ZDUY3fQI8o+pBsGsjiW6bGBow7ZQ38p7JMlyY=
+=nRRK
 -----END PGP SIGNATURE-----
 
---gbmG25keGpAr1Hpq--
+--nd2jSgRWFkxgXhux--
