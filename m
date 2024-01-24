@@ -1,98 +1,132 @@
-Received: from mail-yb1-f179.google.com (mail-yb1-f179.google.com [209.85.219.179])
+Received: from mail-ej1-f44.google.com (mail-ej1-f44.google.com [209.85.218.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35BE17A705
-	for <git@vger.kernel.org>; Wed, 24 Jan 2024 14:23:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AB057A714
+	for <git@vger.kernel.org>; Wed, 24 Jan 2024 15:27:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706106205; cv=none; b=fM4rko4+ehMG7Zw/WLNO51m1TjCorG2UKFrgXcedKmCGySgusIth6zbn8mWyPppda/ic7qTsO4DyfCRC6e0Xw3e6NW0iG8BgxWqROtWNt+kQEEllRwvWn0MoQ6dXOistt+x1YdFcqUbUlCkW7kmThqvD+c9AOiKzrF5PsGTdXM8=
+	t=1706110056; cv=none; b=V39NVB0AbHNAwDpsPdq8DILEN7Mg3Fi6b3DFcEYrVmrsjawQ0pmbp/pqN4krsN0Wp9kR0oEUKEIpoAHUOvHqqAyNvKsvdHyzHbBTKLjkQpxohWe9tc1icuEE5HV9TCRdnWUsXJVbPV8K6yPLvFqfgDs4PF+TNFUuo/sawkPFtoI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706106205; c=relaxed/simple;
-	bh=GjW8HdYLS2wQWGyGTTOG76NB7F9l7f0hbmcu23juW+I=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Rhm7Lp9b0+Gxltb9OeRvzwD7EmjwiuPi2XNcrlMSoK/sAQQfpTm4Qg8Xl0oY5edbHmueJ7aHhUSGYT/ToT3P7nfVXgFd+CFfkcj1y5FpZkhw7gEYX4ysny7BufQf89atarvvZomAFzHQXf6W33eIsE534wMMm/kQxqSBaWRsNV4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Jx7fm4s/; arc=none smtp.client-ip=209.85.219.179
+	s=arc-20240116; t=1706110056; c=relaxed/simple;
+	bh=tLkBAWT4AQMIvV+3sQ1PaXuyUdgUksSqFpgD9d4CHsw=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=glgCK3C4GSVHRcEfiLToNkxXOllfPcp+sX3JZc7O8eLskIU1jxqZXT7UcYFBCVmacajnetTwCDXsQDF1OR1SV7U4Xto9xBVxqz/SN4mL38R6/XVok5m/9iwxdRlm58zPzvUVioO6QmDqVyb4KcUpHQqnxN92ER8mQiPnaKuMxx4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ZDH+iGRr; arc=none smtp.client-ip=209.85.218.44
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Jx7fm4s/"
-Received: by mail-yb1-f179.google.com with SMTP id 3f1490d57ef6-dbed179f0faso4985575276.1
-        for <git@vger.kernel.org>; Wed, 24 Jan 2024 06:23:22 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZDH+iGRr"
+Received: by mail-ej1-f44.google.com with SMTP id a640c23a62f3a-a2dc7827a97so622616566b.2
+        for <git@vger.kernel.org>; Wed, 24 Jan 2024 07:27:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1706106202; x=1706711002; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1706110052; x=1706714852; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=/ze0ZQygXI31w0ZsCMxxbvnZunMrE7NV0AWB80njbPY=;
-        b=Jx7fm4s//65IKLIGmmicBBSAnJEBug5cxOgaKXBezBLkj4rGbpVnpCN7pNZNcj5iF8
-         fHXfsSyCWdXaTk9NKyxo+ZgoiT+Y770LxsznywIFUhrlJ2qgHJCUI5DMxI3KbHFUSGGm
-         PIp0uTFHpTqX0YmVCm1COe/lolf5WGVtr0MSeZu2wGAHwyoVsW27rV48uAOITB17XIPB
-         QN945NBrDcGVwJ/SDGVGsORA+dg/N6yBIEm75rqAcQwgMP96rTzK1QGfRtHABchabo1O
-         nVAE9A5oBCcMz0+nlpd7r+qn2WGUFmHajGlHw6IMWfpP2NUI9nadgwaQLkhKvfI1e72K
-         rHQQ==
+        bh=WqeSamTUcXwtR1W191ulvpVQ1FHhzYCkcNfqb+776qo=;
+        b=ZDH+iGRr/ZPHDoCQer/giVGYuigLduYKLbYO8gkckvySJfug+WGbPSnvCxAafdgfVx
+         XZQ1VIMWTqTafW8N6ZLYLQ4dBzdbpDzy22ABU3knXdrQJ1zoXJcTnz0fCQiBLHESZQnq
+         n2lImjF9RjO132ndjeqK6JM3NbWUTnLJ9D6JU4hpms5k+z4J0McOzaRQSqdMc3GTQjJo
+         QQPupn0JG2SLp3ASvesSuuQeGI67WoSj14lI9ATRSwtIkDdMb5SKAssdbsAvsCR12hjv
+         y5NpNnlIFGUKba4p9L4ZZOO7ovcPdTKoWM9V02T0A3L23A/Ezm1OoBZn4C5kyymF30cp
+         jKaA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1706106202; x=1706711002;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+        d=1e100.net; s=20230601; t=1706110052; x=1706714852;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=/ze0ZQygXI31w0ZsCMxxbvnZunMrE7NV0AWB80njbPY=;
-        b=YN2lqC0PkbISvBgQZoYbZRBWqnLg/iDgG5NOyoq1wTmew330/OOM0vJE2I3dy/9noY
-         JzdCrcvBSjdfzk6cnabNHWrkJE7cwYXZfr27UCqO+Q4POAjJz/dxduUcYRRyT+24Dm5C
-         0CVP+clDwnKyhZzbMzVJvNgQf64Qr0UPn5/mt0rq5oAu3gJ02smfKoGLdR3bKJJ03koo
-         gI0X4UGaDX9IAUAbbHBfWxTr+dNIrHTzTTUTBvBcIdlam689cL16DCPPb5+JJidL/gFP
-         xDtyRc/zjdKcqv44d+PqK7NOhZ7Gs7ZuA2LBY6adUNv9PaRR5i0gtaNr5FFp79uCjreR
-         /Beg==
-X-Gm-Message-State: AOJu0YzXZHXEtTN+iZNgfFXDSDbWZJzRAwRyTvgWkpYfSB5nc+3GxD2y
-	d/l3YieRIpRbrrcpU1x7qyJLiEjwhPtMbnhSyItrgD0Xb6aIEdrT9jK9GH9+76mfPGmFNx6mPSj
-	73i+oHUW1fWaOOSY+T+dpfXz6Un50j97G
-X-Google-Smtp-Source: AGHT+IEGMSFzu3bW+RIW/EMLQYvwxKR0Qy2yEXhyfdXDkTgufsPwTM4DV4zZiy7slIdbvh+54VJsAXkQZEdv9JtGN2c=
-X-Received: by 2002:a5b:482:0:b0:dc2:2edf:ffcd with SMTP id
- n2-20020a5b0482000000b00dc22edfffcdmr527356ybp.42.1706106201987; Wed, 24 Jan
- 2024 06:23:21 -0800 (PST)
+        bh=WqeSamTUcXwtR1W191ulvpVQ1FHhzYCkcNfqb+776qo=;
+        b=ucsxoqjtSirVYOdOjcdWx+NdoKYgUtuzNGzxpeDSblm77j7mYAXvYpbBMeTlvkpY0o
+         70yCpepLOqF+qiSk4coOxhD2mgYgjidITDpavfsWZnEBIwC8GcTi2r0fxBF7XOHbtQjN
+         rhOq8mDC7opCH+ZMmv4c4ZdwvHmrN1URUEQ1A7mrB+KvTZVn3nAEsnMo8vuaK/fnjrQ5
+         CmRLurBCo3zjkD8rUxh2/pOITkn+qgSgi81ttyiz9nWI3u2xnNBmJz1cI1WwpW3SaqwJ
+         D8xMq0OrIv5EUXcN5PDviCnrp5ZR+hxPwuP0EmFSkYZPh40sFV1iuR/vJOyu+67qeYls
+         Bf2g==
+X-Gm-Message-State: AOJu0YyOyEvT7ZQQuS3rg3TjwWXMkT7dPbpRBWAhn810gPfM2CzaswYl
+	8V5ze331+WH0emtPgml8RekPUVtnb8fwORhzcXXi3KS+/AuuRJnw6H1bpPlI
+X-Google-Smtp-Source: AGHT+IFO4nEBMZHwrCFvqaCREYEnZlM5vxcTF3oD1JoZmqgVLWZahjDHK2XlEWZHZ5NpsXUbO/papg==
+X-Received: by 2002:a17:906:3888:b0:a27:7c2e:420a with SMTP id q8-20020a170906388800b00a277c2e420amr996408ejd.8.1706110051841;
+        Wed, 24 Jan 2024 07:27:31 -0800 (PST)
+Received: from localhost.localdomain (h-213.61.124.196.host.de.colt.net. [213.61.124.196])
+        by smtp.gmail.com with ESMTPSA id vh12-20020a170907d38c00b00a2eb648cdc5sm8765225ejc.156.2024.01.24.07.27.31
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 24 Jan 2024 07:27:31 -0800 (PST)
+From: Karthik Nayak <karthik.188@gmail.com>
+To: git@vger.kernel.org
+Cc: gitster@pobox.com,
+	ps@pks.im,
+	phillip.wood123@gmail.com,
+	Karthik Nayak <karthik.188@gmail.com>
+Subject: [PATCH v2 0/4] for-each-ref: print all refs on empty string pattern
+Date: Wed, 24 Jan 2024 16:27:22 +0100
+Message-ID: <20240124152726.124873-1-karthik.188@gmail.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20240119142705.139374-1-karthik.188@gmail.com>
+References: <20240119142705.139374-1-karthik.188@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CAGF1KhWNaO_TUuCPo2L_HzNnR+FnB1Q4H6_xQ2owoH+SnynzEg@mail.gmail.com>
- <CAGF1KhWiYX=3R01Odj2yCNgvx=f5+HRCjRJogWf5eBikuATCcg@mail.gmail.com>
- <20240122213410.GA811766@coredump.intra.peff.net> <CAGF1KhWaOrnV8d2f_vajOT0hFK2N_8m7-p_vnZhw92ZdhXfsag@mail.gmail.com>
- <20240124010924.GB2603087@coredump.intra.peff.net>
-In-Reply-To: <20240124010924.GB2603087@coredump.intra.peff.net>
-From: =?UTF-8?B?UmHDumwgTsO6w7FleiBkZSBBcmVuYXMgQ29yb25hZG8=?= <raulnac@gmail.com>
-Date: Wed, 24 Jan 2024 15:22:46 +0100
-Message-ID: <CAGF1KhV1Gh6WPG7XiQFfEC+G6VY_9AyH3XVoO6VVhMA6za_y3Q@mail.gmail.com>
-Subject: Re: Fwd: Unexpected behavior of ls-files command when using --others
- --exclude-from, and a .gitignore file which resides in a subdirectory
-To: Jeff King <peff@peff.net>
-Cc: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 
-Hi Jeff!
+This is the second version of my patch series to print refs
+when and empty string pattern is used with git-for-each-ref(1).
 
-El mi=C3=A9, 24 ene 2024 a las 2:09, Jeff King (<peff@peff.net>) escribi=C3=
-=B3:
-> (I think this also gives an interesting use case arguing for continuing
-> to support those more-specific exclusion options for ls-files).
->
-> If you are mostly just using core.excludesFile (and not
-> .git/info/exclude), then I suspect:
->
->   git -c core.excludesFile /dev/null ls-files -o --exclude-standard
->
-> would work for you, too (but it sounds like you might also be using
-> .git/info/exclude).
+With the upcoming introduction of the reftable backend, it becomes ever
+so important to provide the necessary tooling for printing all refs
+associated with a repository.
 
-In my case, since I'm also using .git/info/exclude in some repos, this
-won't work as-is, but you gave me an idea, and I think I can get what
-I need until the "precious" mechanism is implemented. It requires a
-bit of hacking in the backup script but is not a big deal and it will
-work for all my current repos.
+While regular refs stored within the "refs/" namespace are currently
+supported by multiple commands like git-for-each-ref(1),
+git-show-ref(1). Neither support printing all the operational refs
+within the repository.
 
-Thanks for the help!
+This is crucial because with the reftable backend, all these refs will
+also move to reftable. It would be necessary to identify all the refs
+that are stored within the reftable since there is no easy way to do so
+otherwise. This is because the reftable itself is a binary format and
+all access will be via git. Unlike the filesystem backend, which allows
+access directly via the filesystem.
 
---=20
-Ra=C3=BAl N=C3=BA=C3=B1ez de Arenas Coronado
-.
+This patch series is a follow up to the RFC/discussion we had earlier on
+the list [1].
+
+The first 4 commits add the required functionality to ensure we can print
+all refs (regular, pseudo, HEAD). The 5th commit modifies the
+git-for-each-ref(1) command to print all refs when an empty string pattern
+is used. This is a deviation from the current situation wherein the empty
+string pattern currently matches and prints no refs.
+
+[1]: https://lore.kernel.org/git/20231221170715.110565-1-karthik.188@gmail.com/#t
+
+Changes since v1:
+
+- Introduce `is_pseudoref()` and `is_headref()` and use them instead of
+directly using `is_pseudoref_syntax`.
+- Rename `add_pseudoref_like_entries()` to `add_pseudoref_and_head_entries()`
+since it also adds the HEAD ref.
+- Also check for the pseudoref's contents to ensure it conforms to the ref
+format. 
+
+Karthik Nayak (4):
+  refs: introduce `is_pseudoref()` and `is_headref()`
+  refs: extract out `loose_fill_ref_dir_regular_file()`
+  refs: introduce `refs_for_each_all_refs()`
+  for-each-ref: avoid filtering on empty pattern
+
+ Documentation/git-for-each-ref.txt |   3 +-
+ builtin/for-each-ref.c             |  21 ++++-
+ ref-filter.c                       |  13 ++-
+ ref-filter.h                       |   4 +-
+ refs.c                             |  39 +++++++++
+ refs.h                             |   9 ++
+ refs/files-backend.c               | 127 +++++++++++++++++++++--------
+ refs/refs-internal.h               |   7 ++
+ t/t6302-for-each-ref-filter.sh     |  34 ++++++++
+ 9 files changed, 218 insertions(+), 39 deletions(-)
+
+-- 
+2.43.GIT
+
