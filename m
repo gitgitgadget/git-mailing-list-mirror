@@ -1,54 +1,54 @@
 Received: from wout3-smtp.messagingengine.com (wout3-smtp.messagingengine.com [64.147.123.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3046A17BA0
-	for <git@vger.kernel.org>; Wed, 24 Jan 2024 08:45:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D473D171D2
+	for <git@vger.kernel.org>; Wed, 24 Jan 2024 08:51:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.19
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706085933; cv=none; b=Fcmj3xQLRmmwkn51UwZdJwcp2jUgn6hpbecM+j+a5ktGgiCsId16uQCdSzF1E4k91j/5wLckM27FIW/ePQWz3HhtU5BalZrm9TVE1LSxbgOwlSHRgB7TWwI+HGOaOxzusIyMxYabPn78eRsL7I9WaivbVltt/Y1Vyi/jIzKtEPo=
+	t=1706086319; cv=none; b=g6dnxoomkz7GPo8SOMhpZUT8K4KBcEaqn9E0rYEe6VlCOVcDLqwgDKwg3TW0ZRm2fnsxI4vHKhnuzAStNtI83otN87G/NRR8TToqbnAQzlndmUdxXtLksS477a9JXAAcmVLtGVpvSqcdlOefYYogpwYxKsC+tUxkC+t0TS9goYU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706085933; c=relaxed/simple;
-	bh=5A/vlKQ12yBgyfhhHzl4d/9BhTLycgXv5TBsAWLKr/s=;
+	s=arc-20240116; t=1706086319; c=relaxed/simple;
+	bh=vUN78YYF+ewEJA3su59pbOXvBJmFjPlat5on/EjtLiI=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=HCFPyoIHcSodzlo4OO36hd9GwN7cYKfhueLntPs5p6woe6iBtR1vwTttp2sXt8RcD9y6c5rCfpfbJo3L+XWkAOkTzOWe2x9GT/jamTjGl999x59HpefELGvWHiK5u2YQSCDWq2OQV4unqPlwSwzzsrqxBBdZoVkJHtx3OJpfmlc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=KdVRAzSN; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=VfiCDRQ7; arc=none smtp.client-ip=64.147.123.19
+	 Content-Type:Content-Disposition:In-Reply-To; b=KNGmCEO2LOLjglIZOxtMOXup/UyT/Hfd8Yg+vzB4aJdEkKa6lWSjfaKIWG9F97g9DeeINthCQpHTP+26j3zBIieg1dapDOjFSQLCbBibuPQ7eyJhoj7FHbgQZu4z8ZsVItK4Yjl4Uh5YyJuaRzIze5e9SSSdhkdTnzZqrbd9fD0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Z/Ado3Do; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=QRd20wVp; arc=none smtp.client-ip=64.147.123.19
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="KdVRAzSN";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="VfiCDRQ7"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Z/Ado3Do";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="QRd20wVp"
 Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
-	by mailout.west.internal (Postfix) with ESMTP id CB6D332003F4;
-	Wed, 24 Jan 2024 03:45:30 -0500 (EST)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute4.internal (MEProxy); Wed, 24 Jan 2024 03:45:31 -0500
+	by mailout.west.internal (Postfix) with ESMTP id C94E23200AE0;
+	Wed, 24 Jan 2024 03:51:56 -0500 (EST)
+Received: from mailfrontend2 ([10.202.2.163])
+  by compute4.internal (MEProxy); Wed, 24 Jan 2024 03:51:57 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1706085930; x=1706172330; bh=7S+DcTF15S
-	zTSYbMSG8VEOEKvM58vGeiUjkx/0Y63zE=; b=KdVRAzSN7QypFVMDCheApuO5Ns
-	X5ptEZWhQsftGMYboGEHuu69SVQOtkbTCAl8CLWEGx1M1elRx8e6hH2UWTh+m+j9
-	hY1VLpcj2H1oaonquFDHpg56KPDjw92k3RTfBpiy9q3Aw16W138ldfvX/UDbDLQ4
-	FPaWs3cNYSjzqZVw7uqZWIM49RKo40mt8hDuZFNHJFmD3vUvZ8ESrOq3y4LJlpv2
-	VapDSthoEfn/q4HN6ofCxVBi722D1F4bhV/bSJmsWoZtFnKpkSPQztqcMxY3LDkl
-	xMG3DB6hm41c8VmWDN2bMNhdLgP3oCl+W4xJBlnaIxwagJZxktDBhx/qUpag==
+	:subject:to:to; s=fm3; t=1706086316; x=1706172716; bh=9Hp9zZutG0
+	f4++9NtNZxs4h0e9H8m1P04nj21Ac26UQ=; b=Z/Ado3DoSRzLCiCyGq1LIDZHoB
+	of5YsI7ukU9/ROFtvzxva5gDH/EVewVKDaYvcs/EoYfm8iuZbzLT4WIeZJ79woyc
+	AbaNWWTIo3uZhDnoNM9rd6Y5UfgUmm7+Fl4xU+cZkIaQm6aq97Vnb7gkXLC/VszU
+	CunHbsYxY0kPGDCLBDxAr8+a0BHbKL2eh0cM/jfeDSw7Yl8Dxg0X9AjtUxQXYM3B
+	7QWv02+uqSB3ygHu1K6y9wTmuSLFsgKI7OK3jnwX0EA1oyNCx99jlBTNQeZr8ng4
+	p2XXGbYFlD1yKo4xuwhPpLXtHLkqfMhzWtzMDnE9vTH01pCPlY3VufLQG09A==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1706085930; x=1706172330; bh=7S+DcTF15SzTSYbMSG8VEOEKvM58
-	vGeiUjkx/0Y63zE=; b=VfiCDRQ7uoWcitN3ORx+WNph4w7kpgQfGGfOaLGM2IHz
-	wz/PUh4DJaNmv0tvXGO4VzxxWLGwGs461tl6mhQijShnqLALNYin6QV+gb/9b090
-	Zgr6OrSAQ5AwB70SXsXCsXU1Bv89r4ZlRd76MSRUpG5h6yvgGu8epfJqWoahKYnw
-	nEiV1X7HtQHuZrRpin+kpbhusDcExL2wCuyFybuE7FmJmoEkGmgr/vqkrJAi7rkP
-	o9IdRfBFWdtVS6Cp9fDMoIyQLylWkymU8K/7whw38RUQlrqMyD2Ixlxw2/W9aqJ7
-	0iyMCQU+PcJRwE0r2k4S4rUHHQXJWS6e77UAsKFR6w==
-X-ME-Sender: <xms:Ks6wZZOatT1iIATaCeInzAExAk6vKnzWTUVa7VKW-fPxoTwODjjllw>
-    <xme:Ks6wZb_-rLCv2kt47mu3hzHTJ9x1EsHLhMUQ0afJ_dAP8uCrBbLL2aWL0NpMuzOuX
-    wSTtq0oCn9HQD40WQ>
-X-ME-Received: <xmr:Ks6wZYRp_Be8Lf_sTegp3PYnKsN4733_TDO3LWzVIfe57uLfKdVwRd26NqtUehZQCEdtcPzuuO90_7bSHYY58UMJX7A66wHJxAan_BpyYRq1yQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrvdeltddgledtucetufdoteggodetrfdotf
+	fm3; t=1706086316; x=1706172716; bh=9Hp9zZutG0f4++9NtNZxs4h0e9H8
+	m1P04nj21Ac26UQ=; b=QRd20wVpfefsDfeYzuQHtrXl207cpavDzKVoDOvEETQD
+	ih+RLWspHl761YXCpxBU+Dle+h6IwLhGvwLPFCPBNKi/h1aWC3uhfTmUS8wlpKxv
+	G1mpSDpRnZLjjW8KKGgFlPcBJN0b4vv7LYXxYYSMI5DgOZiaMZV4H95qFYsHoY9h
+	zZz4otpv6SaQVEP5BoJf1Xokem3ezmzcpmaPKofBHnB9AstsqC6CIZ5f0VeIeVdz
+	j+bSXRC07JFeE/XLfsTgJXYtsWSuwetEQSuiEFxXpiCAPv8WkSHY4XnZM81A1AXo
+	UNeBeeyqxZfkOfTCWOzQ7qaXUTzUnO0WeuVt45XKxQ==
+X-ME-Sender: <xms:rM-wZcsOCKlcjfQ08ts0s2TeuBRldSFSdNS12Y3LeKIB7ULgFVpg6g>
+    <xme:rM-wZZfK0ipMFDfjAVUJPSPt9iskyCXDFP9FO_WFmrmgjZbY9Va7buPMvkjzmQSmw
+    AzJmSdguqvG_p5rSg>
+X-ME-Received: <xmr:rM-wZXxEWEqbqNOfCjPw7vV2ba0rClgmpcLCy2Lvo-KsNSqj9UQfVIgIWWSOUXb_-sFd0MRNSEA89gwrS9k2kGam3OeL0DOyvSGUcJFO8EwkQQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrvdeltddgleduucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
     uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
     cujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtvdenucfhrhhomheprfgrthhr
@@ -56,28 +56,29 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrvdeltddgledtucetufdoteggod
     hrnhepueektdevtdffveeljeetgfehheeigeekleduvdeffeeghefgledttdehjeelffet
     necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
     hpkhhsrdhimh
-X-ME-Proxy: <xmx:Ks6wZVvx2P83Vo-ciVZdLYQYTdthGQrvGO9Oj6m45ee3U5NJmPlZmQ>
-    <xmx:Ks6wZRdKXn4zLc0R_6mlPBEBs7m6Nfxd5gXwVAPssYWtB7qdNRTO7Q>
-    <xmx:Ks6wZR3S0ESPKgTsF6OO0I0NqatP8xUUvs8PzpNy5W269_47vlLSEQ>
-    <xmx:Ks6wZY7h7Xl55sqTC5Ibe1aqc2gFIlK3VIS6OeuLRaTCLrkEnfkwVQ>
+X-ME-Proxy: <xmx:rM-wZfP8T-TtE25VDGUNfHvCAc5WstRsUdrKTPWkAhC8TgsGZrmvVg>
+    <xmx:rM-wZc_JmDk8qmsmj-Q7Xo_Sbvsp_-2UP5TmWC4vNczegPO6xv-j6g>
+    <xmx:rM-wZXWDGNlEPUp-AF7JDz8ETvzjEx6Sw176TS5BcNPXn_ScQoysqw>
+    <xmx:rM-wZeKhv8rxeGQDYycbNpC2r_ZiPo0KcOTWr9ODqJL7mEmEUDq-eQ>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 24 Jan 2024 03:45:28 -0500 (EST)
+ 24 Jan 2024 03:51:55 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id d511aff8 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 24 Jan 2024 08:42:22 +0000 (UTC)
-Date: Wed, 24 Jan 2024 09:45:26 +0100
+	by vm-mail (OpenSMTPD) with ESMTPSA id 53c1acf7 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 24 Jan 2024 08:48:48 +0000 (UTC)
+Date: Wed, 24 Jan 2024 09:51:52 +0100
 From: Patrick Steinhardt <ps@pks.im>
-To: git@vger.kernel.org
-Cc: Taylor Blau <me@ttaylorr.com>, Eric Sunshine <sunshine@sunshineco.com>,
-	Toon Claes <toon@iotcl.com>,
-	Christian Couder <christian.couder@gmail.com>,
-	Justin Tobler <jltobler@gmail.com>
-Subject: [PATCH v3 6/6] t: mark tests regarding git-pack-refs(1) to be
- backend specific
-Message-ID: <7b8921817b14df7fe3346f89c84369df7403ddb0.1706085756.git.ps@pks.im>
-References: <cover.1704802213.git.ps@pks.im>
- <cover.1706085756.git.ps@pks.im>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Phillip Wood <phillip.wood123@gmail.com>,
+	Karthik Nayak <karthik.188@gmail.com>, git@vger.kernel.org
+Subject: Re: [PATCH 2/5] refs: make `is_pseudoref_syntax()` stricter
+Message-ID: <ZbDPqOnyLw4yhu--@tanuki>
+References: <20240119142705.139374-1-karthik.188@gmail.com>
+ <20240119142705.139374-3-karthik.188@gmail.com>
+ <ee977173-bc6d-48f6-9bc8-e1d84fe3d95d@gmail.com>
+ <xmqqplxtrucm.fsf@gitster.g>
+ <Za-gF_Hp_lXViGWw@tanuki>
+ <xmqqwms0ndvu.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -85,86 +86,87 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="DzvgSgKzIPXHErQd"
+	protocol="application/pgp-signature"; boundary="ks39HFS5rQ83rKg9"
 Content-Disposition: inline
-In-Reply-To: <cover.1706085756.git.ps@pks.im>
+In-Reply-To: <xmqqwms0ndvu.fsf@gitster.g>
 
 
---DzvgSgKzIPXHErQd
+--ks39HFS5rQ83rKg9
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-Both t1409 and t3210 exercise parts of git-pack-refs(1). Given that we
-must check the on-disk files to verify whether the backend has indeed
-packed refs as expected those test suites are deeply tied to the actual
-backend that is in use.
+On Tue, Jan 23, 2024 at 09:44:21AM -0800, Junio C Hamano wrote:
+> Patrick Steinhardt <ps@pks.im> writes:
+>=20
+> > My first hunch was to convert it so that it indeed always is a proper
+> > ref. But thinking about it a bit more I'm less convinced that this is
+> > sensible as it is deeply tied to the behaviour of git-bisect(1) and only
+> > represents its internal state. I thus came to the conclusion that it is
+> > more similar to the sequencer state that we have in ".git/rebase-merge"
+> > and ".git/rebase-apply" than anything else.
+>=20
+> Fair enough.
+>=20
+> > So if we wanted to rectify this, I think the most sensible way to
+> > address this would be to introduce a new ".git/bisect-state" directory
+> > that contains all of git-bisect(1)'s state:
+> >
+> >     - BISECT_TERMS -> bisect-state/terms
+> >     - BISECT_LOG -> bisect-state/log
+> >     - BISECT_START -> bisect-state/start
+> >     - BISECT_RUN -> bisect-state/run
+> >     - BISECT_FIRST_PARENT -> bisect-state/first-parent
+> >     - BISECT_ANCESTORS_OK -> bisect-state/ancestors-ok
+> >
+> > I think this would make for a much cleaner solution overall as things
+> > are neatly contained. Cleaning up after a bisect would thus only require
+> > a delete of ".git/bisect-state/" and we're done.
+>=20
+> And bisect-state/ needs to be marked as per-worktree hierarchy, I suppose.
 
-Mark the test suites to depend on the REFFILES backend.
+Yes, "bisect-state/" would need to be stored in GIT_DIR, not COMMON_DIR.
 
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
----
- t/t1409-avoid-packing-refs.sh | 6 ++++++
- t/t3210-pack-refs.sh          | 6 ++++++
- 2 files changed, 12 insertions(+)
+> > Of course, this would be a backwards-incompatible change.
+>=20
+> As long as we ignore folks who switches versions of Git in the
+> middle of their "git bisect" session, we should be OK.
+>=20
+> If we really cared the backward compatibility, the new version of
+> Git that knows and uses this new layout could notice these old-style
+> filenames and move them over to the new place under new names.  From
+> there, everything should work (including things like "git bisect log").
 
-diff --git a/t/t1409-avoid-packing-refs.sh b/t/t1409-avoid-packing-refs.sh
-index f23c0152a8..7748973733 100755
---- a/t/t1409-avoid-packing-refs.sh
-+++ b/t/t1409-avoid-packing-refs.sh
-@@ -5,6 +5,12 @@ test_description=3D'avoid rewriting packed-refs unnecessar=
-ily'
- TEST_PASSES_SANITIZE_LEAK=3Dtrue
- . ./test-lib.sh
-=20
-+if test_have_prereq !REFFILES
-+then
-+  skip_all=3D'skipping files-backend specific pack-refs tests'
-+  test_done
-+fi
-+
- # Add an identifying mark to the packed-refs file header line. This
- # shouldn't upset readers, and it should be omitted if the file is
- # ever rewritten.
-diff --git a/t/t3210-pack-refs.sh b/t/t3210-pack-refs.sh
-index 7f4e98db7d..c0f1f9cfb7 100755
---- a/t/t3210-pack-refs.sh
-+++ b/t/t3210-pack-refs.sh
-@@ -15,6 +15,12 @@ export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
- TEST_PASSES_SANITIZE_LEAK=3Dtrue
- . ./test-lib.sh
-=20
-+if test_have_prereq !REFFILES
-+then
-+  skip_all=3D'skipping files-backend specific pack-refs tests'
-+  test_done
-+fi
-+
- test_expect_success 'enable reflogs' '
- 	git config core.logallrefupdates true
- '
---=20
-2.43.GIT
+We also have consider that there may be alternate implementations of Git
+that would only know to handle the old layout. Those tools would be
+broken in case we did such a migration, but they would be broken anyway
+if the bisect was started via Git and not via the tool.
 
+Anyway, I'll add this to our growing backlog of issues that we might
+want to investigate once the reftable backend has been upstreamed. Which
+of course shouldn't preclude anybody else from picking up this topic in
+case they are interested.
 
---DzvgSgKzIPXHErQd
+Patrick
+
+--ks39HFS5rQ83rKg9
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmWwziYACgkQVbJhu7ck
-PpSZbBAAqn3/KGPvJIHvBu9lrKZkpYgNjUF9OgUIaYDMOfrTbsP3RqmiowswfB9c
-FnX1gwCk0UDP1lyjvXrPtY+uPXwT+eOGsvYOWjE6zQyooYbBgeGtnnQ5hGJZuR+6
-2mtH4ekmbjk4jlTFaSspYjB5JzjrPGF3waZvmMEcbrSZfXZiIB2tOe83G89YvB2G
-tzjP/9MXtd6ks1PV9XH0osDc+VwcaoGs68AXJFk2juODB3O78rG22IdBn5zndJ1P
-wNycOsFENZnn27J73a+5U//Gojd5BvhY7O4AjeZNBC4gM3kZbRW72+2/h1q45HMx
-PuVC6XwHM6EeSxYhgAcURgbqkWqFZwLKif7fLNq50sBmyZf8ANmNT2uL0bvZ/6H8
-hncnQt29y6H/4I5+5eUBpkE5zEyhIQDpCGFmR8KbhSlHTepjboUSw1TsMIeIR9/8
-zIryMHUHrwSilQIlG3ZkWhXYZu6jYvr78Dz1rxw2maApMWhvunY6h5yVzjNQXIw1
-DGDE9CvKtgT9ZFgiEA4ooEWZAJzYvk6lXX6qjDKJM6nxAhofIrkzLUvSheF9SrLT
-Ttx5j9YJaX7aEN9ciGmKRE4eav5Ops+MJ98d5j+vQSE9sDNJk0dAi3g/ibemi5fz
-yy6HCjJvFs72ImoED7bduNwaq70MPGoQ/DS6EWjH4HQ9GezgpqE=
-=DiY7
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmWwz6cACgkQVbJhu7ck
+PpRCpxAAoyR95GmFEc7Qh2wcAtmFTEzJO2imD5DzH18+H7RhRfWnckNb3qI9NqnO
+7Mrr9iGD+BK2OAuEzigUZ5x9slyPMIpxqUqwV3j18KXceLY/okb19y+/USunAaXk
+9+Q8LL2UOEYV52M6Su/WM6WkQ2b7mfKw8+V4OxixnTujn4CSci0CdeTmIvVJeatd
+gULzIbzXxN3nAYfn2mI4HKaMj1fj/pcZ+oyvpHPquSBQoE4deKsPbjR5gGtYLkBt
+W/4CIw2WBZRQvmQI+wC9NFe4QLgpVWCJ+FAtR8DqeVOd7IL2eGr7NCF8OlbV+839
+YA3fh857/z6HKe7is3kh1fBBOvWtylFwobaIQzUS0ZvzLZmp3NsiLmneBDxfKI3w
+PipX5o68qRLgBDy75i4N0XdHkG8kKXHiqR6V5AfeYFtxYREhsUMTrLLKnvLWoBTU
+Jsri9FYCOr4mEE1m7hudORxLaFANxMmIpaEG2P4BGQV+FD7n24pEKJOXeIiHD5eT
++XEq/KtQsLBQ/mY7bxk8wTrphTTCh3dmenR7Ru5VL5wHyDca4ytU73Fmf6U0exok
+StCRFuujqzUX6JVzrDBgkljp0VVZqfXLB50ojGdr4UztPfd6rrqLTgMPeolwBX3b
+TOVok5iLMCTam4XzybqUiZr3WgzJnqiQD1LIWxLtW8923nAp8+A=
+=N0JZ
 -----END PGP SIGNATURE-----
 
---DzvgSgKzIPXHErQd--
+--ks39HFS5rQ83rKg9--
