@@ -1,52 +1,52 @@
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54F916A004
-	for <git@vger.kernel.org>; Wed, 24 Jan 2024 19:09:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C06A7132C24
+	for <git@vger.kernel.org>; Wed, 24 Jan 2024 19:31:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706123359; cv=none; b=Ezd+gusKJtMUQJkeIYLXfXq1Mb+5UxO1zvjDZNzFrTtN6UaW9DFX0Odn+NeGFZLoJduujQzEBb12OOgdyOmTPQQA2kjrFH/geUXCnLO6WankjajhXqafxynBfjSGGejyD+2RrezqXiFcYqDBNUGWNSjxniD4JF5tnJPaMJ72JBg=
+	t=1706124682; cv=none; b=PWPhiB92hW++4XpFheHFAGNGagnwJ/cvSS1tfYNVjsF3rJ9THqA8Z1HFRu6wOv6QGc2SSdSsnq7doebmSIh/5kJQdfTlhG6DuQ53ZEcBUkbDhnIgJSrBijm+yHPwweY1RTj9yLdKup9QZRHPsygtgc4O2f74WTf03PvsRV1VofM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706123359; c=relaxed/simple;
-	bh=14X+z0iojGkqaOt1Fa8o67gQ6vAzCJDill7638QPvhM=;
+	s=arc-20240116; t=1706124682; c=relaxed/simple;
+	bh=cjowRMCho7XUsOnxU65neNPyvUvxEvlaBUN1+XZ1gZw=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=J6C/lCieFB34Oqa0aK6ROs2acpG5n8G4iOphA92M4E2FRaNNI1xrOXlbaVcQ7FKwdUO6DIkG4t/CCZiU07kI/i6rysdXenobIUgojwmuxcoiPdjlAIKOVy/sdFKKN2/8RGM/1ttaSW3Uf8cDGl1m/wcpnJneD53bvApsALMAdDY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=hG4pzSjq; arc=none smtp.client-ip=64.147.108.70
+	 MIME-Version:Content-Type; b=pifvkRlULMvSBy7eACDMKxf3kTuurMNKpSpXBKJZr1lZ8z9hj7EQ8g6gkCx+hNAntpSRH4Mc0C3eNxG1qUDI5O7GVIum8ljkA9Udqy31cRPYyV331afgETQfK6ibI+tnbSVr19db6kqAprkPPJlACsao7B8oyp+xtzOM4O1fg+Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=M69CaoYU; arc=none smtp.client-ip=173.228.157.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="hG4pzSjq"
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 2EDFC1E5269;
-	Wed, 24 Jan 2024 14:09:11 -0500 (EST)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="M69CaoYU"
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id 87EDE1BB0E;
+	Wed, 24 Jan 2024 14:31:14 -0500 (EST)
 	(envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=14X+z0iojGkqaOt1Fa8o67gQ6vAzCJDill7638
-	QPvhM=; b=hG4pzSjqplIon4dtDRj6KY+og4jfYqC4Pwecpi17Aq3Dlh4njMvABH
-	CDBTuG7R0QC3EDRO0q1DZ/l/36z9GmG+4WT73ZFtxThvGcBdgSkbU80l57z1K2YF
-	HBSsmotwox3vPI5k1f4kQSrR3asSwVfcwIOFoibP4F2TZA92yOLVg=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 268AA1E5268;
-	Wed, 24 Jan 2024 14:09:11 -0500 (EST)
+	:content-type; s=sasl; bh=cjowRMCho7XUsOnxU65neNPyvUvxEvlaBUN1+X
+	Z1gZw=; b=M69CaoYUkhuapm0YM0+5Wosz+T2JRlq8lx1ncJhZiDnMhKjXck+5ZM
+	7nAx5GC5kUXJwtz09811x3eIlrpiVDXljArI6CpO6rrg4zZ9F4hAQJGAZRlb/4TB
+	o9N17gJcHnVut8vQvQESSegSBzoZusdpfaOPupZaEC2mB8qW6Og5w=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id 7849E1BB0D;
+	Wed, 24 Jan 2024 14:31:14 -0500 (EST)
 	(envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.125.200.93])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 7FD571E5267;
-	Wed, 24 Jan 2024 14:09:10 -0500 (EST)
+	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id EF8541BB0C;
+	Wed, 24 Jan 2024 14:31:10 -0500 (EST)
 	(envelope-from junio@pobox.com)
 From: Junio C Hamano <gitster@pobox.com>
-To: Karthik Nayak <karthik.188@gmail.com>
-Cc: git@vger.kernel.org,  ps@pks.im,  phillip.wood123@gmail.com
-Subject: Re: [PATCH v2 1/4] refs: introduce `is_pseudoref()` and `is_headref()`
-In-Reply-To: <20240124152726.124873-2-karthik.188@gmail.com> (Karthik Nayak's
-	message of "Wed, 24 Jan 2024 16:27:23 +0100")
-References: <20240119142705.139374-1-karthik.188@gmail.com>
-	<20240124152726.124873-1-karthik.188@gmail.com>
-	<20240124152726.124873-2-karthik.188@gmail.com>
-Date: Wed, 24 Jan 2024 11:09:09 -0800
-Message-ID: <xmqqfrymeega.fsf@gitster.g>
+To: Jeff King <peff@peff.net>
+Cc: Josh Steadmon <steadmon@google.com>,  git@vger.kernel.org,
+  bcmills@google.com
+Subject: Re: [PATCH] transport-helper: re-examine object dir after fetching
+In-Reply-To: <20240124010056.GA2603087@coredump.intra.peff.net> (Jeff King's
+	message of "Tue, 23 Jan 2024 20:00:56 -0500")
+References: <ZbAqsf-2DWaXbN7K@google.com>
+	<20240124010056.GA2603087@coredump.intra.peff.net>
+Date: Wed, 24 Jan 2024 11:31:09 -0800
+Message-ID: <xmqq5xziedfm.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -56,78 +56,84 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 X-Pobox-Relay-ID:
- 0E06BBE8-BAEC-11EE-B4A3-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
+ 2114081E-BAEF-11EE-9C63-A19503B9AAD1-77302942!pb-smtp21.pobox.com
 
-Karthik Nayak <karthik.188@gmail.com> writes:
+Jeff King <peff@peff.net> writes:
 
-> We cannot directly add the new syntax checks to `is_pseudoref_syntax()`
-> because the function is also used by `is_current_worktree_ref()` and
-> making it stricter to match only known pseudorefs might have unintended
-> consequences due to files like 'BISECT_START' which isn't a pseudoref
-> but sometimes contains object ID.
+> Thanks, I was able to reproduce it. Besides using the v0 protocol, two
+> key elements are that the server is http and the use of --depth.
+>
+> The patch below explains what's going on and should fix it. I prepared
+> the patch on top of 'master', but it can also be applied directly on
+> 61c7711cfe or on v2.21.0, modulo some minor textual conflicts in the
+> test script (modern t5551 has some more tests, and no longer calls
+> stop_httpd manually).
 
-Well described.
+Thanks.
 
-> diff --git a/refs.c b/refs.c
-> index 20e8f1ff1f..4b6bfc66fb 100644
-> --- a/refs.c
-> +++ b/refs.c
-> @@ -859,6 +859,38 @@ static int is_pseudoref_syntax(const char *refname)
->  	return 1;
->  }
+The usual "one liner fix that requires two-page explanation"
+that only you can produce ;-).
+
+> ...
+>      So everything works, but mostly due to luck. Whereas in a fetch
+>      with --depth, we skip step 2 entirely, and thus the out-of-date
+>      cache is still in place for step 3, giving us the wrong answer.
+>
+> So the test works with a small "--depth 1" fetch, which makes sure that
+> we don't store the pack from the other side, and that we don't trigger
+> the accidental cache invalidation. And of course it forces the use of
+> v0 along with using the http protocol.
+>
+> Signed-off-by: Jeff King <peff@peff.net>
+> ---
+>  t/t5551-http-fetch-smart.sh | 18 ++++++++++++++++++
+>  transport-helper.c          |  3 +++
+>  2 files changed, 21 insertions(+)
+>
+> diff --git a/t/t5551-http-fetch-smart.sh b/t/t5551-http-fetch-smart.sh
+> index e069737b80..a623a1058c 100755
+> --- a/t/t5551-http-fetch-smart.sh
+> +++ b/t/t5551-http-fetch-smart.sh
+> @@ -733,4 +733,22 @@ test_expect_success 'no empty path components' '
+>  	! grep "//" log
+>  '
 >  
-> +int is_pseudoref(struct ref_store *refs, const char *refname)
-> +{
-> +	static const char *const irregular_pseudorefs[] = {
-> +		"AUTO_MERGE",
-> +		"BISECT_EXPECTED_REV",
-> +		"NOTES_MERGE_PARTIAL",
-> +		"NOTES_MERGE_REF",
-> +		"MERGE_AUTOSTASH"
-
-Let's end an array's initializer with a trailing comma, to help
-future patches to add entries to this array without unnecessary
-patch noise. 
-
-> +	};
-> +	size_t i;
+> +test_expect_success 'tag following always works over v0 http' '
+> +	upstream=$HTTPD_DOCUMENT_ROOT_PATH/tags &&
+> +	git init "$upstream" &&
+> +	(
+> +		cd "$upstream" &&
+> +		git commit --allow-empty -m base &&
+> +		git tag not-annotated &&
+> +		git tag -m foo annotated
+> +	) &&
+> +	git init tags &&
+> +	git -C tags -c protocol.version=0 \
+> +		fetch --depth 1 $HTTPD_URL/smart/tags \
+> +		refs/tags/annotated:refs/tags/annotated &&
+> +	git -C "$upstream" for-each-ref refs/tags >expect &&
+> +	git -C tags for-each-ref >actual &&
+> +	test_cmp expect actual
+> +'
 > +
-> +	if (!is_pseudoref_syntax(refname))
-> +		return 0;
+>  test_done
+> diff --git a/transport-helper.c b/transport-helper.c
+> index e34a8f47cf..07e42e239a 100644
+> --- a/transport-helper.c
+> +++ b/transport-helper.c
+> @@ -17,6 +17,7 @@
+>  #include "refspec.h"
+>  #include "transport-internal.h"
+>  #include "protocol.h"
+> +#include "packfile.h"
+>  
+>  static int debug;
+>  
+> @@ -432,6 +433,8 @@ static int fetch_with_fetch(struct transport *transport,
+>  			warning(_("%s unexpectedly said: '%s'"), data->name, buf.buf);
+>  	}
+>  	strbuf_release(&buf);
 > +
-> +	if (ends_with(refname, "_HEAD"))
-> +		return refs_ref_exists(refs, refname);
-> +
-> +	for (i = 0; i < ARRAY_SIZE(irregular_pseudorefs); i++)
-> +		 if (!strcmp(refname, irregular_pseudorefs[i]))
-> +			 return refs_ref_exists(refs, refname);
-> +
-> +	return 0;
-> +}
-
-The above uses refs_ref_exists() because we want these to
-successfully resolve for reading.
-
-> +int is_headref(struct ref_store *refs, const char *refname)
-> +{
-> +	if (!strcmp(refname, "HEAD"))
-> +		return refs_ref_exists(refs, refname);
-
-Given that "git for-each-ref refs/remotes" does not show
-"refs/remotes/origin/HEAD" in the output when we do not have the
-remote-tracking branch that symref points at, we probably do want
-to omit "HEAD" from the output when the HEAD symref points at an
-unborn branch.  If refs_ref_exists() says "no, it does not exist"
-in such a case, we are perfectly fine with this code.
-
-We do not have to worry about the unborn state for pseudorefs
-because they would never be symbolic.  But that in turn makes me
-suspect that the check done with refs_ref_exists() in the
-is_pseudoref() helper is a bit too lenient by allowing it to be a
-symbolic ref.  Shouldn't we be using a check based on
-read_ref_full(), like we did in another topic recently [*]?
-
-
-[Reference]
-
- * https://lore.kernel.org/git/xmqqzfxa9usx.fsf@gitster.g/
+> +	reprepare_packed_git(the_repository);
+>  	return 0;
+>  }
