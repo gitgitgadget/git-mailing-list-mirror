@@ -1,76 +1,76 @@
 Received: from wout1-smtp.messagingengine.com (wout1-smtp.messagingengine.com [64.147.123.24])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46A316E2C9
-	for <git@vger.kernel.org>; Wed, 24 Jan 2024 12:31:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 996062BB03
+	for <git@vger.kernel.org>; Wed, 24 Jan 2024 12:53:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.24
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706099506; cv=none; b=hoMKFyvHlS3behZOhPhCfrraBRavjln5R5/LAT4uqoYE8J6Lu9fTJ4+9+tV3cN3VUPIUFxYwFgE0MS41mpIpQR5BjBurp1vfIqgvAXMJXr26y7AWmvXtG8T+hRIpRMm42qFYBolO2nf6VKo7gwwvREyVxITbw5su1MCWNjWrWjQ=
+	t=1706100838; cv=none; b=uu2vLugfxyEyLpFU/fk2YpSq4YznLTK0QGa0bchbqRg4BOkODeje2SELH51RrHGYBHW/dE4RluR9cEJfZN34KLi6q3tERs0wmN8hDjopd1bKxwg5rmlySZk8LdKLSoDdveuxzJ+PjIoUWTrhfE2lSQ7V6H+XmuYKTw25mGOBo+A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706099506; c=relaxed/simple;
-	bh=ZYl6rOFwiyVcXmVHa/WPtRFnbzM7EwkPFgLkutKDqWg=;
+	s=arc-20240116; t=1706100838; c=relaxed/simple;
+	bh=uSk89YxiM6bc5/mEA5e1kij5TxQRcdvThDuZP2hx6LM=;
 	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=vAyNXclhwgjZr9T1/bc4GVeHIMRaTL/9wptpaN9maZ+nfDuql296AKW7bKbVZjTc7Kxm/LVu1PZnV/yGP7kkUgh85F7DOS5uhoT3TOqD0GOyFqonI9KDsmtJIjsC60IhpMXLv7HZVJufpJshQnyA9kdyMG5HE8/A5t1g+eI5vZU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=fbsk871Q; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=PEBHEy1C; arc=none smtp.client-ip=64.147.123.24
+	 Content-Type:Content-Disposition:In-Reply-To; b=YA7I2QGSf5hizYOaN6mp0K/bCPIhHL06FmQ5TpVd9oc/0y1GGbjs3ggWMqmIqLYVYCnuvqBVmrsPGom6bsWk1pmC+XY6mA1VPLTGb16fXPN8r/+EHQakUrysplBgC9XT7AD9Y5xYIVQoz36h2cIuKgi6cvgETLWOYcxhfHkQg0M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=CO2TdqtR; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=GFkBEo3i; arc=none smtp.client-ip=64.147.123.24
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="fbsk871Q";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="PEBHEy1C"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="CO2TdqtR";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="GFkBEo3i"
 Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
-	by mailout.west.internal (Postfix) with ESMTP id 035323200B05
-	for <git@vger.kernel.org>; Wed, 24 Jan 2024 07:31:43 -0500 (EST)
+	by mailout.west.internal (Postfix) with ESMTP id DCC2C3200AA0
+	for <git@vger.kernel.org>; Wed, 24 Jan 2024 07:53:55 -0500 (EST)
 Received: from mailfrontend1 ([10.202.2.162])
-  by compute3.internal (MEProxy); Wed, 24 Jan 2024 07:31:44 -0500
+  by compute3.internal (MEProxy); Wed, 24 Jan 2024 07:53:56 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1706099503; x=1706185903; bh=pA2GQV2EXS
-	8oDUKryKfkR99t59ozY1mdz5CBDDCUsxs=; b=fbsk871Qlca+xESw7qG0pOMD67
-	d/1As9ENiDLtHbTC1BNBCbE1/nmI5MEujBlhspj045KrKrTMaDb12IAtQwJK0j4l
-	UUtuwYJW5XxDLssUQKfCbLmEqDW1sLz5qjpCTOLTCd2Mt1MwkiA88XoFKgSH6dkh
-	wplJ8W5PVlDy2sOoa9YumRPd0dcqpLbGtHjNbNq5z788n2UP1SYa7T9CyyU67DcZ
-	64coiWKuKbatp1kjyBvIcfGByZVCE8palHNmZkcuzjgHPbuODWnXCfJWW8r+vmKP
-	TP8FAEoBq4/ebX5z33hKWnyOQrlIk3e/Zpirw2vAk3eZprWZQoGefbUQNpZg==
+	:subject:to:to; s=fm3; t=1706100835; x=1706187235; bh=iE3RZ68w2V
+	6oT2wIHta/qhSnGf0sBHJKXEgCe6jy5WA=; b=CO2TdqtR3+0m1LO5RO4UpO1RzV
+	EelIEfSz1CzSWTHcOLAl4GRPn6QHmh4pqGB9Z7uzo9c3UesQcpAA/EUG3Xx1f70z
+	N7U9qZbJiUowfx9nMaugeNJVkOCEvLmSfuMZknXCuR16wKsC9+CFYz7x5pSyVsF8
+	CodcEKDzaEABgQAx3DjJSuEfbk410l4qlsVUEaKzn31kCwlVgMfbXrv5py8BpJFT
+	dbwLebRcFmVqKeDWsAVP1DYWucHeqnCOt/wpLKa0x6xmsjTDTbYRVZyZIB1DJRkW
+	WjiXZVjxPPq7tbxTW9xv5oq6mxoG6XPeNI63pC3fqFlYH8LaujJMTFacmQcw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1706099503; x=1706185903; bh=pA2GQV2EXS8oDUKryKfkR99t59oz
-	Y1mdz5CBDDCUsxs=; b=PEBHEy1ChL06XvzqkliIW8srDHgAQzarhs3HMf7NmkVz
-	vIoHopwFwhMZ4lnSpMZI6EJAzJc+AA+q+xrhlprA2PvHbettF7DoMSvb9PFwuBrH
-	6kG6q6B8rF9dZx8F/cnjFr3UZelyZCY/ZilYN0pcsKCff2Q+XZ+U0p01WDwAJ1Yb
-	sZrazdLenqoxmD9Iwl8BSonKWwPCleTDI7plNtlS4J+O4wlbUs7Ke+GZQuaw8ZJh
-	gkPaNQGA771K4lacIz6diEUXGb4+tCPxhEbEMfu/Q/GWHG5bkuNmvdZFRWNalfSh
-	ONCGKjNm2g9OMyfAXYi8epnE6l/Vtb7I7CQfTTLUcA==
-X-ME-Sender: <xms:LwOxZTfOTXwi0zFGLTjCRb3dmc688Jfjt4t45OE7_YoZk6I-Dxo1OA>
-    <xme:LwOxZZNTEOkJ2FbzyPrUnQt1pnSItZzUeIBDPtTtQt9ts8QsCpZRFcfwZEnRc5voO
-    RhJgLbzinSYfq0KjA>
-X-ME-Received: <xmr:LwOxZcj_7WMWXfTTcJ3vgRoFmR7jtDAY3ttwgdKCQL_bTUEPFB--BaCx4Xf5Tv1PpAzczrXNwg5_c0G-_86UHBrkfYWNHDBVXTIZQ3PcVCgUzw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrvdeluddgfeekucetufdoteggodetrfdotf
+	fm3; t=1706100835; x=1706187235; bh=iE3RZ68w2V6oT2wIHta/qhSnGf0s
+	BHJKXEgCe6jy5WA=; b=GFkBEo3ijjjBBmFjNgSYfsGUYgUdCGO/f8sqqXfgFOXy
+	xKVmwegdRWyiOXDvERHHwO0rz5PpJAjNGjooBvVCeeGOYFLNS/wKVWIfwGy5oLDM
+	fF+Y+jVnUtQedQN1NV1sHrMuvvNR3a4Qifpu5QPI3GDfTlN5ZyGJhcHIwUlMj2Km
+	TAMZt7CC66XQDKJTcnCUvFUWL6VbFB8SRkVCSErH4IXdhXMvHC1tlnKJXWuJNtxh
+	9e6AKyL5vTFNvzSIYZ96ZK/isx1z9jp3jpKhdZvMNLhMnyuTG4ENq2dGMCa+bsdO
+	fWt3VE389/F4RjchLg9HLxAoZZeOrVHtuJsGCPPGgQ==
+X-ME-Sender: <xms:YwixZVqUgHTYej2miqBGlbJcIwX4jIXIl0abS2g7CQOgBrtKlkjBHg>
+    <xme:YwixZXoi9jbGU9HdCJhRHvWETH2ucb48SXaqvuXrEywLkVqFBpl_-7eOEOf-Vu8TX
+    WKEjqm0hGporVQ1Dw>
+X-ME-Received: <xmr:YwixZSOinhUVDSeVGK56KOpnZcDHsMk2bz-3UXXI0oPIRlCGCChXnM_FNhyjLm8XtFSdEm0-ANd_J8__07pPdjyPRN9y9L8OiEq31UTM0eHD2w>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrvdeluddggeefucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
     uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvuffkfhggtggujgesghdtre
     ertddtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehp
     khhsrdhimheqnecuggftrfgrthhtvghrnhepheeghfdtfeeuffehkefgffduleffjedthf
     dvjeektdfhhedvlefgtefgvdettdfhnecuvehluhhsthgvrhfuihiivgeptdenucfrrghr
     rghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimh
-X-ME-Proxy: <xmx:LwOxZU8EZ-HAnF39fmIu9INFyIOnbYEhZ4Yi6qNSkhxdbqQtcPNCPA>
-    <xmx:LwOxZfuT0z34jQWRPAXsTg4R1842m-AtbUxNpW_SWrrGjXqHmfckYg>
-    <xmx:LwOxZTEgVABVC6TExkcuUSWOEueWD5nvcbKct2TU7N-CSX3QAW5t-w>
-    <xmx:LwOxZc5FBgAe-yJHUeookveDRk3JWHqAWL9S7sDkSHj_ADsHej_VDQ>
+X-ME-Proxy: <xmx:YwixZQ7nXdGYmZElabA0N_Kc7epOs8Zqbe61ci8-UZ0bgJ1abZxUKA>
+    <xmx:YwixZU65veOj6wafkaTVcObEUK51xYcWEP8qosoT162vuuWkDeFkLg>
+    <xmx:YwixZYiWEmX5ql_89YmCSun-GcVrrZWSHsp_Nu2Q95zqTzHCW9mS7w>
+    <xmx:YwixZZVqiiby1pBhhYzdN4PKFQVaHb9WNvj14eTVUJpS06exhEFX5w>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Wed, 24 Jan 2024 07:31:42 -0500 (EST)
+ <git@vger.kernel.org>; Wed, 24 Jan 2024 07:53:54 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 9844f6e6 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	by vm-mail (OpenSMTPD) with ESMTPSA id c0a6630e (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
 	for <git@vger.kernel.org>;
-	Wed, 24 Jan 2024 12:28:36 +0000 (UTC)
-Date: Wed, 24 Jan 2024 13:31:41 +0100
+	Wed, 24 Jan 2024 12:50:46 +0000 (UTC)
+Date: Wed, 24 Jan 2024 13:53:50 +0100
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
-Subject: [PATCH 2/2] reftable/stack: adjust permissions of compacted tables
-Message-ID: <cd5172193660a334ae6ec022dd0b54457d06f25c.1706099090.git.ps@pks.im>
+Subject: [PATCH v2] reftable/stack: adjust permissions of compacted tables
+Message-ID: <b2fb6f5ad0c558527341bd8040544d6b0ae5d8a2.1706100744.git.ps@pks.im>
 References: <cover.1706099090.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -79,12 +79,12 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="QbcUEkJmzcmNnBJm"
+	protocol="application/pgp-signature"; boundary="28idhwkAzXzFhe2z"
 Content-Disposition: inline
 In-Reply-To: <cover.1706099090.git.ps@pks.im>
 
 
---QbcUEkJmzcmNnBJm
+--28idhwkAzXzFhe2z
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
@@ -98,12 +98,17 @@ Fix this bug and add a test to catch this issue.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
+
+Ugh, I totally forgot about the fact that fchmod(3P) isn't actually
+available on Windows. I've thus evicted the first patch and changed the
+second patch to use chmod(3P) instead. Too bad.
+
  reftable/stack.c      |  6 ++++++
  reftable/stack_test.c | 25 +++++++++++++++++++++++--
  2 files changed, 29 insertions(+), 2 deletions(-)
 
 diff --git a/reftable/stack.c b/reftable/stack.c
-index c6e4dc4b2b..27cc586460 100644
+index 7ffeb3ee10..38e784a8ab 100644
 --- a/reftable/stack.c
 +++ b/reftable/stack.c
 @@ -731,6 +731,12 @@ static int stack_compact_locked(struct reftable_stack =
@@ -112,7 +117,7 @@ index c6e4dc4b2b..27cc586460 100644
 =20
  	tab_fd =3D mkstemp(temp_tab->buf);
 +	if (st->config.default_permissions &&
-+	    fchmod(tab_fd, st->config.default_permissions) < 0) {
++	    chmod(temp_tab->buf, st->config.default_permissions) < 0) {
 +		err =3D REFTABLE_IO_ERROR;
 +		goto done;
 +	}
@@ -176,28 +181,30 @@ index 289e902146..2e7d1768b7 100644
  	clear_dir(dir);
  }
 =20
+
+base-commit: e02ecfcc534e2021aae29077a958dd11c3897e4c
 --=20
 2.43.GIT
 
 
---QbcUEkJmzcmNnBJm
+--28idhwkAzXzFhe2z
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmWxAywACgkQVbJhu7ck
-PpQHEBAAhoIIZDgTM2tZ/Qo2uFHL9um4oaIujDZ/5qj2EQxT3p+Er4LPU8s/TZKo
-KrEHVsf9fPbDgjWf9qV2EivYohtxr2JdVs/EKq75rkn/msJ34LNBhFF3q/hwF0LY
-2Z9vCOzudhdezii6lsUQGCWNOrXFfsFUq8b0HRfp4Qk/J87nvhRl4c5aWp4lryTP
-cuRnuBtzf2p0rHSHq8yZE5OIpL5UDPvxiVq+E+oDTWnJ9oiu8XlP09qFd9yAIgF2
-JgrY7eWxqW0YquBZMNOptoHCpcjMEWqt7lx83+WchKN2y230D3udt96RLl+iiqXU
-XpWPRqk81iknWku32yH4et7UwfpnYgsk9FRgo90M1UsKArPjVvUIPXXyVXQ1i1JW
-bPFp89e8+KLRBHzkcFRdn0QIQaru83dbO2NIMZH5wKD0tDb1KGFzFHcLHQawEgYt
-CkGiI58mFn5z/KnWaADeSYnaRXjKV0r9zSob/1VbUHjguPqd+M7jIcvmS+n6NPBZ
-NUyj1diqGxfIg/sHCfHQ0/pLzMD1G+N1Au1bMq7iz36eLU9zgkSaJ8JTpSiF+W4T
-RvVoPiDOLl10YSzZuDtAaX03UGJiU5tKIv4Tnefzz+3/ppMY+G/QJ72nRV0WmHL8
-/lKe+yuvLHoFNB881aHQk7tB8u44ukOMLIARkWARDxgO5JRwT18=
-=K+p4
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmWxCF0ACgkQVbJhu7ck
+PpROog/+J8EztpJTWH/Ekhn7PoRi50N/V0bMK47uW4h6CSoYDl9IzeyOJPrUl7Sl
+KiaZl1MCNrc5Gj5vmstGoZns1wVH5tkV6/okop4D1z59kuEgg4UYIZbFPO6XJcCy
+xJGRdyhzDgo46CRyFJ7t9jzThKExm5W9C3HCeR/Km21LLoj13zxnWBVrl8mwX0hJ
+j9msnhBd2PGEeNiLHVMgJfnThUTi4qqjClpYJ1RV+Q5I3DGwdB6wBVNwCgOjxPeU
+gwX5XhL3E3VEImda4wiOFfVcJJ7WEGo7rB2YYQFC5/kFOK+eBZGCr1MtqraXi+0N
+adiShRnbpxuPVxD5xLv6FSgPLN1Mhum8Abam5MQX8TbR+MIWVj5B8O9dWIDzVn9S
+waZtz10rGEr7KVsb8IwZhiFttzUwfpsJS+xCIKCJUO4Kkaokzjez5oshOTLzvkSP
+4moPBLtKBLeXBb1XXhXLer6/WqqBaC638Uq5p66SUjOkeoGxfyncvNATP4DD1aO7
+2/cO7MC4zimdKZJS+jx4iENzS/7vRMut1Gcl9r1wwERx1wzRSq50FJuetVJG9p77
+3XW9l9L5e8wNjyTbOTjJEH/MZW+JNwJhApQ99b6oDLQ1AW46h7nplL95YE7mnYpB
+nLrpD7uY1ZVVNo4TP+R9KQrV5Ncdwo5VCXb+B/rMSJ0mlcpJADs=
+=DsA7
 -----END PGP SIGNATURE-----
 
---QbcUEkJmzcmNnBJm--
+--28idhwkAzXzFhe2z--
