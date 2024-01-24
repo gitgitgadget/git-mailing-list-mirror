@@ -1,58 +1,62 @@
-Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
+Received: from mail-lj1-f173.google.com (mail-lj1-f173.google.com [209.85.208.173])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59FD877F3A
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C42C7A700
 	for <git@vger.kernel.org>; Wed, 24 Jan 2024 14:04:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.51
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706105068; cv=none; b=XESRZOELgb5k4tXl3rmy+b+sem3vsgY00Hl1xIxinr5Swn1zpUPptHVH71g2Yt9YDl/vKoEOeQxyQaMBsLKozqcJUzad0bgjq3ws/4+Kz5L1ghdGy9KQRPJ1JMzRXz8A+xWsTcVpLzO8YjhFl8+ZPwfXZOAQHbSiwoV/TlRr/aA=
+	t=1706105069; cv=none; b=cNpi8PdV9JWWN9kPkX41feO/VWeEY0efejiRO377uuAKzPIqtqzptvr3ImZCvtnq4hj7/SJqnFkOxT2jYkHaOzsXjzwkyhPqM0NVp0PWxqFIw0hpHN3wtC9jazO58OLFLFSGs19om494b1401yV9PV2Ywx/KqCNiyAq2QGFZZOc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706105068; c=relaxed/simple;
-	bh=0OR7ZzRWwmews3BsDt3xYh/2C1pctUzwquCpH6ir+M8=;
-	h=Message-ID:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=r9+8oRKmTjaaag2Cua6OCnGtQv1tO/gVxd8XagkVWMO3Odv7NZw1OjPGgCFFgxwSXX+gcN4OZqOyv3KPdeh1FzAU1CvNooF9aMt7uazgedKMCRq3fSAddWfa4QgYaJZ5cut+VJ+hUA2ujQHBg2bVJknfa8GSCWkaz/EuNDsDgK4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=a6vODgT7; arc=none smtp.client-ip=209.85.128.51
+	s=arc-20240116; t=1706105069; c=relaxed/simple;
+	bh=NnjPseudsxuTpCa3rMBJtovpJKshzvPs2fQG9G4C/7o=;
+	h=Message-ID:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=r3FJbCv6j1gKJJ+BJfkv+tQ0z3s992kbYl6RppYjS0FqLqLLWFesVdbIDb5G5qrLxMUvD6N8pJ8MTkY0ts9HMjpVbpHTII+qDgh1u1T6QrkwlXvS60GiukmaZxLq+yleGI+t+m2p582chuTPmWT96Jf7lUcR45iEDsUbx6RW7UU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=GIczYO0N; arc=none smtp.client-ip=209.85.208.173
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="a6vODgT7"
-Received: by mail-wm1-f51.google.com with SMTP id 5b1f17b1804b1-40e8d3b29f2so65282685e9.1
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GIczYO0N"
+Received: by mail-lj1-f173.google.com with SMTP id 38308e7fff4ca-2cf2b218c62so5368631fa.2
         for <git@vger.kernel.org>; Wed, 24 Jan 2024 06:04:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1706105065; x=1706709865; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1706105066; x=1706709866; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=4FNxjTUj2X9qBm6LvQ6lXfEE6tzBT/MK1IGsaGXjC8Q=;
-        b=a6vODgT7fxMUxe/AAPkYfO1kS4G4cfS7Jianb+6ZMHrmA2/N9uvAgl/GXutp2ybzAR
-         UGek4VYoEXccSmkNFqin4gGk2wM4yvSPLM2K6zZ3+MUKhV+9AJ3ZY/L836faFFCLdBdx
-         QeVVMghoWiWGeGFarrqoSy+KAbAyrXXm1c0JV6mZLiQtZd0ZPcbmm847w8WP97T0ZLT8
-         ZAYdM/mD+x8b7j2QUnkYWPHB8EpUPDHmrpbtgoiFS221zgCXVBIkLa79tIiud1tOIb2Y
-         mTU3W9+cBu7ZLl95svyU48YSWDyLfHYSrN1aXiIIY0QV2s07XWYC8hnYAfjh6nsezRuA
-         U7qg==
+         :references:in-reply-to:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=6lvrQqRlkcHzr/7pyhs7C9kKChCUQLWAd/BPsEXvsgs=;
+        b=GIczYO0NCjTKANN6OjFQ02XwZfYKw2ic5uLMspT1mr1qHFAUTcGhbtlNz4dy5BfnCp
+         vDnqqQAuYyhjaWDfWU+ljUUai7bFwcEwbM4k00AW8wiY3r2/fVzwCLvzhwBjBMukEyU7
+         vF7BRZ56n0bEAzor0hJoa2gwH/TH5gvU+nWZGZ4qppF/9pUDHfer46zhFS6hGTA8UzlR
+         umJEdAj0AiNHXY/oGs8sAZi8XAUXoZvlv7jrDvitLQ2z/tseGcRP0g12xU1FlpBa8Ud1
+         6i4RoAT7rsnqtBnVw2LwfJiyRkgss+cJMp2k8q56kYNJYaed1jZDEuiKq48B1KqIS8Fs
+         gfoA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1706105065; x=1706709865;
+        d=1e100.net; s=20230601; t=1706105066; x=1706709866;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=4FNxjTUj2X9qBm6LvQ6lXfEE6tzBT/MK1IGsaGXjC8Q=;
-        b=ER8UFlnV7eDSbzi0kySQ7Y6se54T9HQLO0RacySLqjMK227EeL5dqiPsAwwa9OHzhb
-         8l0203UoNrxAbwtUm2z6PpSeNo/Nn0HClUOUm4FqogmCMjWgkz2YJfd6kJG35qmtfErt
-         zJ9CJ4pgL4RGxpg/7EDIEQyIgKGqzEHQpX/mHqXDbnlfoWgUtzEJkOeq0z/fuEaTV4+o
-         pbFt/KeM28t7RmGhA2PYPjANVUiav/fWZTUzD3RmbgYTCSKnHZC4+rEu/EogBndyHaNB
-         tDuVkJ/E4L7XSWuiofhyJ+b4SyEqfivqsthkV/BmN9FzJhbJQFyP4HXyl4qwxfH5BBWv
-         ajIw==
-X-Gm-Message-State: AOJu0YxWp04vd0l8keDJNcgwlFBLsAOcQ0tIskX+XZHF1/aTK8kTWKiK
-	WAeMGVzB4QWRsJhq/79fc6v+ChNVNEI+57vqQvRtw8A2t425ODOzys94f+MM
-X-Google-Smtp-Source: AGHT+IGovJhiJQXOkByteMl5kGc23LunWgRpfIIDvprHSayWDzxGytprSSVvMZAsytA9OSJeneQpJg==
-X-Received: by 2002:a05:600c:299:b0:40e:43ab:d83c with SMTP id 25-20020a05600c029900b0040e43abd83cmr784705wmk.108.1706105065079;
+         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=6lvrQqRlkcHzr/7pyhs7C9kKChCUQLWAd/BPsEXvsgs=;
+        b=QQXGIs72ryVTIPU3Y0sAyLkVLdBE9F9cWbI06J7JJnWDSlkchCeFajangnaUElDlLM
+         2rsQiG8E0+i6LgW68jspC4YP2dmubIQ64unkLdt1paqViFkToW1ZlagrHy0E6eankjsi
+         GxLx0frnPHm/5xdYlRkacdstRpqRnT9FW3v+y00YteFjAF4SWJgcCqBnaHlUpsebsScw
+         D/1LprcIjaO3oImBwbKEYnFlVtfhRQDdzQOgmz4N1GCqs439srDjsulpAhIWNOzy0E7L
+         CEMKDD6JcvsOS67GchHfeCP+ELVg9FBgqDuTjlsmb1tpU28Ed6u4N6EPQ4gSdpbMxA/w
+         k+zw==
+X-Gm-Message-State: AOJu0Yxge547mDL+gYr/RMlKHxONUS7GDTc2Phueahz4fvp2CF8BNShN
+	TrmOD4s8Xz+GB4NisOk7UNew3PGTFqRA62WOusXGcgOf7RUflII3fq7B7jAs
+X-Google-Smtp-Source: AGHT+IGT0PPFKluropaOpo66wFyNWJwBR4t7D224FOZceQVxtgYiMakAMiAR4IP8vVUBv/Z7rwUVtg==
+X-Received: by 2002:a05:651c:4d4:b0:2cf:1b65:bfc1 with SMTP id e20-20020a05651c04d400b002cf1b65bfc1mr591326lji.127.1706105065568;
         Wed, 24 Jan 2024 06:04:25 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id q14-20020a05600c46ce00b0040e7306f655sm35490919wmo.22.2024.01.24.06.04.24
+        by smtp.gmail.com with ESMTPSA id t4-20020a5d42c4000000b003392c3141absm10324203wrr.1.2024.01.24.06.04.25
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 24 Jan 2024 06:04:24 -0800 (PST)
-Message-ID: <pull.1653.git.git.1706105064.gitgitgadget@gmail.com>
+        Wed, 24 Jan 2024 06:04:25 -0800 (PST)
+Message-ID: <ac9338533c9096c090d1463c1b29505bde019731.1706105064.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1653.git.git.1706105064.gitgitgadget@gmail.com>
+References: <pull.1653.git.git.1706105064.gitgitgadget@gmail.com>
 From: "Md Isfarul Haque via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Wed, 24 Jan 2024 14:04:22 +0000
-Subject: [PATCH 0/2] [GSoC][RFC/Patch] FIX: use utf8_strnwidth for line_prefix in diff.c
+Date: Wed, 24 Jan 2024 14:04:23 +0000
+Subject: [PATCH 1/2] FIX: use utf8_strnwidth for line_prefix in diff.c
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -63,22 +67,74 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 To: git@vger.kernel.org
-Cc: Md Isfarul Haque <isfarul.876@gmail.com>
+Cc: Md Isfarul Haque <isfarul.876@gmail.com>,
+    Md Isfarul Haque <isfarul.876@gmail.com>
+
+From: Md Isfarul Haque <isfarul.876@gmail.com>
 
 This patch adresses diff.c:2721 and proposes the fix using a new function.
 
-Md Isfarul Haque (2):
-  FIX: use utf8_strnwidth for line_prefix in diff.c
-  FIX memory leak in one branch
-
- diff.c | 19 +++++++++++++++++--
+Signed-off-by: Md Isfarul Haque <isfarul.876@gmail.com>
+---
+ diff.c | 18 ++++++++++++++++--
  diff.h |  1 +
- 2 files changed, 18 insertions(+), 2 deletions(-)
+ 2 files changed, 17 insertions(+), 2 deletions(-)
 
-
-base-commit: e02ecfcc534e2021aae29077a958dd11c3897e4c
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1653%2FInnocentZero%2Fdiff_needswork-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1653/InnocentZero/diff_needswork-v1
-Pull-Request: https://github.com/git/git/pull/1653
+diff --git a/diff.c b/diff.c
+index a89a6a6128a..e3223b8ce5b 100644
+--- a/diff.c
++++ b/diff.c
+@@ -2300,6 +2300,20 @@ const char *diff_line_prefix(struct diff_options *opt)
+ 	return msgbuf->buf;
+ }
+ 
++const struct strbuf *diff_line_prefix_buf(struct diff_options *opt)
++{
++	struct strbuf *msgbuf = (struct strbuf *)malloc(sizeof(*msgbuf));
++	if (!opt->output_prefix){
++		msgbuf->buf = "";
++		msgbuf->len = 0;
++		msgbuf->alloc = 1;
++	}
++	else {
++		msgbuf = opt->output_prefix(opt, opt->output_prefix_data);
++	}
++	return msgbuf;
++}
++
+ static unsigned long sane_truncate_line(char *line, unsigned long len)
+ {
+ 	const char *cp;
+@@ -2635,7 +2649,7 @@ static void show_stats(struct diffstat_t *data, struct diff_options *options)
+ 	int width, name_width, graph_width, number_width = 0, bin_width = 0;
+ 	const char *reset, *add_c, *del_c;
+ 	int extra_shown = 0;
+-	const char *line_prefix = diff_line_prefix(options);
++	const struct strbuf *line_prefix = diff_line_prefix_buf(options);
+ 	struct strbuf out = STRBUF_INIT;
+ 
+ 	if (data->nr == 0)
+@@ -2718,7 +2732,7 @@ static void show_stats(struct diffstat_t *data, struct diff_options *options)
+ 	 * used to correctly count the display width instead of strlen().
+ 	 */
+ 	if (options->stat_width == -1)
+-		width = term_columns() - strlen(line_prefix);
++		width = term_columns() - utf8_strnwidth(line_prefix->buf, line_prefix->len, 1);
+ 	else
+ 		width = options->stat_width ? options->stat_width : 80;
+ 	number_width = decimal_width(max_change) > number_width ?
+diff --git a/diff.h b/diff.h
+index 66bd8aeb293..6eb8dc9a97e 100644
+--- a/diff.h
++++ b/diff.h
+@@ -460,6 +460,7 @@ const char *diff_get_color(int diff_use_color, enum color_diff ix);
+ 
+ const char *diff_line_prefix(struct diff_options *);
+ 
++const struct strbuf *diff_line_prefix_buf(struct diff_options *);
+ 
+ extern const char mime_boundary_leader[];
+ 
 -- 
 gitgitgadget
+
