@@ -1,145 +1,204 @@
-Received: from wout3-smtp.messagingengine.com (wout3-smtp.messagingengine.com [64.147.123.19])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f50.google.com (mail-wr1-f50.google.com [209.85.221.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC83717BB5
-	for <git@vger.kernel.org>; Wed, 24 Jan 2024 09:05:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.19
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBE711B275
+	for <git@vger.kernel.org>; Wed, 24 Jan 2024 11:01:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706087155; cv=none; b=nn32OnrJanxwnpoE88y2EhmR1S+btU0X3xXZiBn080CFytRCqPn2koR856SetfCmYi/qnDp10FCGSSgbQxvet2TChlNNvYf1JYWPl+gCKSDmDvJDm9wxpCUlPRjwLZBvhY/vPuYui3KeB5U73T3F9e73eNnYxw3cKgHPljNkY4g=
+	t=1706094088; cv=none; b=VeIlb31YTwGG7DyxKFkgVYc1tSXQ37KUZN5QqWx5HhaRW9etVct4YkdYpXV/foI7oy0LvmppcOwmV6ucrDUSmIP7UCHCeZINOm0XGbWycT/NtOxW+ePJS+wMT1dTo+nCyac8tQr8EdOWXcDmVee07ZDgoQwz9vEJHJdexdgDEAE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706087155; c=relaxed/simple;
-	bh=Uohrgi9WGeF6HLAX+6CdzAMQa1GHzxfAEZZ0tul1y+s=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=NywcPOkSk2uEp0n7CQDT8S8VMKJrQIMngmEpPZzllb3d+S9hWWzVzJSBlqs60RAN5OTh6ANs3/40Uk4bsknauJQTScxmZTjhEZxF7EfTYLTTS9i1HLoq02cL6z2x78xpKN2/R4JFt9ovLlnrxHuFmbDbGRZ7nFjo9svNYtY4AUk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=G+F4I9op; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=plyxdfQT; arc=none smtp.client-ip=64.147.123.19
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1706094088; c=relaxed/simple;
+	bh=rnj1qRuylxJWmD8SkQEj7FiRUy72xwISNZEduUWNCY4=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=dMa4YdPXrQhwDT4XLF5rhmfdiw3sw1BOa6Oq1T8p9Nt2pwp4TzLJuQ4u7jO+Wq3AIRshlngM41pnuGq7RQepJZ49ZR9DOTO5N2PGPBfbhQJLF67FbpnG8FtjnshNI8ZVEec6Wx2SBOmvi/BmNpGvEUvzawefGHcaMrk6WEfPxzo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=KxoaU77t; arc=none smtp.client-ip=209.85.221.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="G+F4I9op";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="plyxdfQT"
-Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
-	by mailout.west.internal (Postfix) with ESMTP id E32063200A4E;
-	Wed, 24 Jan 2024 04:05:52 -0500 (EST)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute3.internal (MEProxy); Wed, 24 Jan 2024 04:05:53 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1706087152; x=1706173552; bh=PH2/GMTf9n
-	4qfDYcyhVeUTXbSKiO31hkHmPvEHXfhns=; b=G+F4I9oprZ3tEQtBYaQFnNGqgO
-	h+4DqkVIv8SKjT90QrB8LCAtU9JXn+noeVwdTAzixqoTdqDQR83+v2nWUh5dbKeD
-	OCNnJSOTVn1v+mTnAso8VrrCIp3xxQgZq+yc3iuJdaEBLTyTGTmVSUKZobr++sWF
-	IaDg+B2alA+kMjaI3AWrns8x1amWWeaf30IpnRiaEtUSHrOow26kZxZTURNa6o1v
-	oRkUaNe3bHtQjGxqO31CWIoFO/sWcD5S7o9freAQAqhFXFOacBtyNe3ctb+R3eYn
-	y8HJkNHuZw4wJmJzA+K6/jRjd/VvvHboakFNvk0ZCu2Jhgdjz5shnOP3VL9A==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1706087152; x=1706173552; bh=PH2/GMTf9n4qfDYcyhVeUTXbSKiO
-	31hkHmPvEHXfhns=; b=plyxdfQTsqS057zPJP4SweRd9l5FnEOyRWh4KGosNbUM
-	c6MuTXMJt7IyzC/FxkfmGYeBZDijz2pxYhrzGwBr3xjY4RHjNCPaz3GNmxpzrxjh
-	biLgv0oSo+6ThBjjaxRcP70TVFvjnaoKXGwRGuyRYJVGNGS1QqH77J7xh913h7WB
-	f3wPSBxxsfOl/MEzDDyMfWcS6mD6p/Y7n+yb6SKN7198kofLwFBa9RP+6g3yJE5P
-	UeGmdo0gUmDxKLyfq7kc4hM3Gsrg0DxggnkYkUjukJrWuy/p8OiUt9OBxEfGLcGL
-	e4iJ3ss3gvWJijZBt39gHk69nUHCdZvpK2x2S39Qtg==
-X-ME-Sender: <xms:7NKwZVuGLpaJuNbEwscjEb65WqkzdAVDVQGZIWlOTcTp-Q9h1r6A6Q>
-    <xme:7NKwZecSX8wMja3JjFBLYhQHYXCOj45j2ZzkscgMmTqUoz9esQNct-5c5KwT6YpDz
-    m6hIPatHJ33RidmTg>
-X-ME-Received: <xmr:7NKwZYzuyiVc3vOyp82aclBneGuCVkZkqaFrRx0q0Al0H2mOkKoXwQky5l6s26LSED8xDn9-4lJS3akenbk1fK9D2vO2Zlp5mrgKVGrsC5WhzA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrvdeltddgleegucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvvefukfhfgggtuggjsehgtd
-    erredttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshes
-    phhkshdrihhmqeenucggtffrrghtthgvrhhnpeeukedtvedtffevleejtefgheehieegke
-    eluddvfeefgeehgfeltddtheejleffteenucevlhhushhtvghrufhiiigvpedtnecurfgr
-    rhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhm
-X-ME-Proxy: <xmx:7NKwZcPFrP9Hyv4y9Bzso1fSFSQ5CaICq4zm_QCQDd5OFxLahHUyfA>
-    <xmx:7NKwZV8qRbxcODcqKWepeOfl8szIRaxEoG_omDRiPy9orkaaGAPgeQ>
-    <xmx:7NKwZcUA_z_-fzU4nkpJfeRlc7kuEJNUupbw5e_toFs-_SYuya7rgw>
-    <xmx:8NKwZSHR2n-X2k-wOGUGwJDuJ7AV8ZPIoKX5i-W3U9BI7fDEs8d5fA>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 24 Jan 2024 04:05:48 -0500 (EST)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 64a9b6f2 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 24 Jan 2024 09:02:40 +0000 (UTC)
-Date: Wed, 24 Jan 2024 10:05:44 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: phillip.wood@dunelm.org.uk
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 7/7] Documentation: add "special refs" to the glossary
-Message-ID: <ZbDS6B5mjLeQ8pIy@tanuki>
-References: <cover.1705659748.git.ps@pks.im>
- <2a0943a78d0db0f489962520536594845970e0b0.1705659748.git.ps@pks.im>
- <4f60dd83-913d-4c66-989d-282ec1845f4b@gmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KxoaU77t"
+Received: by mail-wr1-f50.google.com with SMTP id ffacd0b85a97d-337b8da1f49so4729909f8f.0
+        for <git@vger.kernel.org>; Wed, 24 Jan 2024 03:01:26 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1706094085; x=1706698885; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=EJzqs/CoDq5WfYLMGCJRzMtukGeCI3P0SWvTd0OgoVo=;
+        b=KxoaU77t+pFxsTzHgPO170HQSbK9nUUygl/dftv3ys5JMCjtBT1xUAGpO1KKnQLz4m
+         wd/8bjP+RBG6j2zNk62hZ43nL4VgSeJG0TXfA0TZJrRapveMteieVI+rWPTYzPvaS2QX
+         wZGWW5VGJ7WXVEBpQZ7Vef0yMABZYcQ7L/82kheOKtes3YNDVRQUGD5+XmsQM1ZWFbQw
+         rH0ZP45Rw5q2ZjxXuse50wFsnIlH6nWjSlOQajluVlnFiMAH5HqDmvVSMDGsQyj4zZPM
+         BCLu8UFkQWs6XR6v4MDDHVbIgjYUC6ePHXTSgwWoyZxtggYHwKvpvDHslDerRnlhHtB0
+         uPSw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1706094085; x=1706698885;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:reply-to:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=EJzqs/CoDq5WfYLMGCJRzMtukGeCI3P0SWvTd0OgoVo=;
+        b=YBIYAmKqRcFJloS9sip+663ryU6Jr34dDovs+X80+zec+HrQVpf5m+L+WIu8v8dCoj
+         HW/Ev4fJwkmVGEzopTOQZ0MUotV1JIdTxArFW6GyOyTq29Gkz0gkhbYXFWJ56BAocWfJ
+         DVNhLBlkcqseu2uiPsQ0hO6IZ4EYqWXuIcRhVxrpdJtXcNJiuzW5ilUy7jInaOkt6ivp
+         QQfoxPynoZFjxfDnaP9TzMe8QCDD53RFi48ekE0h88HLp2r7YMyrtpbQHjzkywQHac2z
+         2XE0UciDUxT2ngfio3CN36/yaipALvFuTiwg3gps1wgnDF9O7l2o/sTZGpWTwOOx6eJE
+         iugg==
+X-Gm-Message-State: AOJu0YzBrQZ0LRucPuIQbT5HkOLrmsLRu9QpqZwGYEOb7lUHXbWvrIJg
+	k46pp7MZw+4dVhc75z+oeUnASA2TRBBlGrmSR6Mff5KnjmS2TknK
+X-Google-Smtp-Source: AGHT+IF5uUBvUtto5YKdWYnPzBmIeekq1vbtTwQFI9noG6ymM8ZGGvFnWKl9duF5KraRYz9aT3pIDw==
+X-Received: by 2002:a5d:5310:0:b0:337:c6d7:32d9 with SMTP id e16-20020a5d5310000000b00337c6d732d9mr334718wrv.206.1706094084699;
+        Wed, 24 Jan 2024 03:01:24 -0800 (PST)
+Received: from [192.168.1.101] ([84.64.64.237])
+        by smtp.googlemail.com with ESMTPSA id e11-20020a5d594b000000b003392bbeeed3sm10076232wri.47.2024.01.24.03.01.23
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 24 Jan 2024 03:01:24 -0800 (PST)
+Message-ID: <7229fe62-cf9b-4829-80ec-c6b44c52163e@gmail.com>
+Date: Wed, 24 Jan 2024 11:01:23 +0000
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="9GD7XM4s5Vx7ql5D"
-Content-Disposition: inline
-In-Reply-To: <4f60dd83-913d-4c66-989d-282ec1845f4b@gmail.com>
+User-Agent: Mozilla Thunderbird
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH 1/4] sequencer: Do not require `allow_empty` for redundant
+ commit options
+Content-Language: en-US
+To: brianmlyles@gmail.com, git@vger.kernel.org
+Cc: me@ttaylorr.com, newren@gmail.com
+References: <20240119060721.3734775-2-brianmlyles@gmail.com>
+From: Phillip Wood <phillip.wood123@gmail.com>
+In-Reply-To: <20240119060721.3734775-2-brianmlyles@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
+Hi Brian
 
---9GD7XM4s5Vx7ql5D
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Here are some code comments now I've realized why we need to change it
 
-On Tue, Jan 23, 2024 at 04:27:20PM +0000, Phillip Wood wrote:
-> Hi Patrick
->=20
-> On 19/01/2024 10:40, Patrick Steinhardt wrote:
-> > Add the "special refs" term to our glossary.
->=20
-> Related to this the glossary entry for pseudorefs says
->=20
->         Pseudorefs are a class of files under `$GIT_DIR` which behave
->         like refs for the purposes of rev-parse, but which are treated
->         specially by git.  Pseudorefs both have names that are all-caps,
->         and always start with a line consisting of a
->         <<def_SHA1,SHA-1>> followed by whitespace.  So, HEAD is not a
->         pseudoref, because it is sometimes a symbolic ref.  They might
->         optionally contain some additional data.  `MERGE_HEAD` and
->         `CHERRY_PICK_HEAD` are examples.  Unlike
->         <<def_per_worktree_ref,per-worktree refs>>, these files cannot
->         be symbolic refs, and never have reflogs.  They also cannot be
->         updated through the normal ref update machinery.  Instead,
->         they are updated by directly writing to the files.  However,
->         they can be read as if they were refs, so `git rev-parse
->         MERGE_HEAD` will work.
->=20
-> which is very file-centric. We should probably update that as we're moving
-> away from filesystem access except for special refs.
+On 19/01/2024 05:59, brianmlyles@gmail.com wrote:
+> From: Brian Lyles <brianmlyles@gmail.com>
+ >   Documentation/git-cherry-pick.txt | 10 +++++++---
+ >   builtin/revert.c                  |  4 ----
+ >   sequencer.c                       | 18 ++++++++++--------
+ >   t/t3505-cherry-pick-empty.sh      |  5 +++++
+ >   4 files changed, 22 insertions(+), 15 deletions(-)
+ >
+ > diff --git a/Documentation/git-cherry-pick.txt 
+b/Documentation/git-cherry-pick.txt
+ > index fdcad3d200..806295a730 100644
+ > --- a/Documentation/git-cherry-pick.txt
+ > +++ b/Documentation/git-cherry-pick.txt
+ > @@ -131,8 +131,8 @@ effect to your index in a row.
+ >       even without this option.  Note also, that use of this option only
+ >       keeps commits that were initially empty (i.e. the commit 
+recorded the
+ >       same tree as its parent).  Commits which are made empty due to a
+ > -    previous commit are dropped.  To force the inclusion of those 
+commits
+ > -    use `--keep-redundant-commits`.
+ > +    previous commit will cause the cherry-pick to fail.  To force the
+ > +    inclusion of those commits use `--keep-redundant-commits`.
+ >
+ >   --allow-empty-message::
+ >       By default, cherry-picking a commit with an empty message will 
+fail.
+ > @@ -144,7 +144,11 @@ effect to your index in a row.
+ >       current history, it will become empty.  By default these
+ >       redundant commits cause `cherry-pick` to stop so the user can
+ >       examine the commit. This option overrides that behavior and
+ > -    creates an empty commit object.  Implies `--allow-empty`.
+ > +    creates an empty commit object. Note that use of this option only
+ > +    results in an empty commit when the commit was not initially empty,
+ > +    but rather became empty due to a previous commit. Commits that were
+ > +    initially empty will cause the cherry-pick to fail. To force the
+ > +    inclusion of those commits use `--allow-empty`.
+ >
+ >   --strategy=<strategy>::
+ >       Use the given merge strategy.  Should only be used once.
+ > diff --git a/builtin/revert.c b/builtin/revert.c
+ > index e6f9a1ad26..b2cfde7a87 100644
+ > --- a/builtin/revert.c
+ > +++ b/builtin/revert.c
+ > @@ -136,10 +136,6 @@ static int run_sequencer(int argc, const char 
+**argv, const char *prefix,
+ >       prepare_repo_settings(the_repository);
+ >       the_repository->settings.command_requires_full_index = 0;
+ >
+ > -    /* implies allow_empty */
+ > -    if (opts->keep_redundant_commits)
+ > -        opts->allow_empty = 1;
 
-Good point indeed, thanks for the hint! Will update in a future patch
-series.
+I'm wary of this, especially after Juino's comments in 
+https://lore.kernel.org/git/xmqqy1cfnca7.fsf@gitster.g/
 
-Patrick
+The documentation changes look if we do decide to change the default.
 
---9GD7XM4s5Vx7ql5D
-Content-Type: application/pgp-signature; name="signature.asc"
+ >       if (cleanup_arg) {
+ >           opts->default_msg_cleanup = get_cleanup_mode(cleanup_arg, 1);
+ >           opts->explicit_cleanup = 1;
+ > diff --git a/sequencer.c b/sequencer.c
+ > index d584cac8ed..582bde8d46 100644
+ > --- a/sequencer.c
+ > +++ b/sequencer.c
+ > @@ -1739,22 +1739,24 @@ static int allow_empty(struct repository *r,
+ >        *
+ >        * (4) we allow both.
+ >        */
 
------BEGIN PGP SIGNATURE-----
+The comment above should be updated if we change the behavior of this 
+function.
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmWw0ucACgkQVbJhu7ck
-PpQnkhAArlR05WOq+JlJCVJ0GVu40pXVLORKwF7jDC1SfYLtSADUvmF64RRZUnHJ
-c8spmunrOgpMcBoLkM2ZWCacn0NN5VlpjSRGXARRLDcw2vF/QEUZt22Jv10GpC5f
-LuQUjAO0o2r05AOuQp7bZ1ggMgmvfOdWUtqPq6UpOthxW/z0mCw5M1lgcLWcL+HX
-384/nDENXSGE6Szy4M9kXk2XIKMr0i11F3yl/T6Msauptax/y+l+DqMYYlEPHDPG
-BIAUEolQgCgMIrqwuiW5Dcfy6QjJle5PDOptPvBEdtAYouHT1eySOVQfFKXskgCu
-kOKrjLTO3Hhn/Zy2xkjLiupjqoGztZy9C6ruhpaEpJ7OqwR1n0hdJX6UI78+Wwyp
-W8AOrLGip0vHL0Gm2kb6thcKL5ZAycWCqbsS1etXi2PJKW3eRz6Yojfmz3mnGM6e
-Y1olGLMbhyu7KIt8xOdbVxBE9jD95ZyvJGUJey50+qLGzHH57h0YPSD2XYrOsh1J
-h0UvadFctuUqAl8wL1D2ivAOjMA4BblSZla23Tvc5XsailMHDXqNioE6Te0d7daK
-L7+V10uaG6xg4RaPT7hEPkRVlzNUH0ZDh/bjH8yoNdxGkPiNo2bu+egCqqQ9UMRm
-9BTJf0qjFkE5MpJIMDmkxnHijkoU3OyB0WdlJseXfsawLZBmh6w=
-=gDna
------END PGP SIGNATURE-----
+ > -    if (!opts->allow_empty)
+ > -        return 0; /* let "git commit" barf as necessary */
+ > -
 
---9GD7XM4s5Vx7ql5D--
+Here we stop returning early if allow_empty is not set - this allows us 
+to apply allow_empty only to commits that start empty below.
+
+ >       index_unchanged = is_index_unchanged(r);
+ > -    if (index_unchanged < 0)
+ > +    if (index_unchanged < 0) {
+ > +        if (!opts->allow_empty)
+ > +            return 0;
+ >           return index_unchanged;
+ > +    }
+
+I don't think we want to hide the error here or below from 
+originally_empty()
+
+ >       if (!index_unchanged)
+ >           return 0; /* we do not have to say --allow-empty */
+ >
+ > -    if (opts->keep_redundant_commits)
+ > -        return 1;
+ > -
+
+We move this check so that we do not unconditionally keep commits that 
+are initially empty when opts->keep_redundant_commits is set.
+
+ >       originally_empty = is_original_commit_empty(commit);
+ > -    if (originally_empty < 0)
+ > +    if (originally_empty < 0) {
+ > +        if (!opts->allow_empty)
+ > +            return 0;
+ >           return originally_empty;
+ > +    }
+ >       if (originally_empty)
+ > +        return opts->allow_empty;
+
+Now opts->allow_empty only applies to commits that were originally empty
+
+ > +    else if (opts->keep_redundant_commits)
+ >           return 1;
+
+This ensures we keep commits that become empty when 
+opts->redundant_commits is set.
+
+The changes to allow_empty() all looks good apart from hiding errors 
+from index_unchanged() and originally_empty()
+
+Best Wishes
+
+Phillip
