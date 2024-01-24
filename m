@@ -1,145 +1,120 @@
-Received: from mail-lf1-f49.google.com (mail-lf1-f49.google.com [209.85.167.49])
+Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B33C3FBFC
-	for <git@vger.kernel.org>; Wed, 24 Jan 2024 06:51:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5A961640B
+	for <git@vger.kernel.org>; Wed, 24 Jan 2024 06:55:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706079065; cv=none; b=RvyiLJ2wElZ03Rhw/jqj+J9yk1706R10fvvSe26A6bk6ta40laV27vARpAbuCUZZyfbGUmhSsOZh+LomwxMer08IGzMg37s8zpk/DLfbWLPG2cPKdWTozuvjodWxgf7Q+3DzGlHxUVrI9nGvkEMZA8f4pX3jXAfeR/T56ZwkqwA=
+	t=1706079309; cv=none; b=rRhM4EVLm6BxG1+KVa6+Yeyyuv+aSBSir5smf2tuqPyk3noMSEe/NscxrzpJK+1ulZUoV+n2Io9PxDnsfEeFLH1yOpVWG0bcZiPn8tjoeIL2Q0oe2/13cih+ysHAcLcf6R4RPOzXBba3ShkXnPpsFXBiaL0puHRpiDeVk3wJ8pk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706079065; c=relaxed/simple;
-	bh=27pwyTnMvbRwjGICghF/CRguHWbfZS/gmYIds3lCezA=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=eSpR9BQJ0GdNttLH1DRpMl/qqMnDES0kaj33jqdtbScq/3gtosOE3cjKA/YWPVhQ0DHs/ZJ9vnembsdb7i72gNCjHxew5KqXH8RAnFO+6cKFZ+p1Ue+kuSGA3BlMGtjg42YP5NTocVF+1cKn4mttZdnbRMv/Dw+kDP/VOD14pWg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=gCuKWRGN; arc=none smtp.client-ip=209.85.167.49
+	s=arc-20240116; t=1706079309; c=relaxed/simple;
+	bh=HNdNQRDTFsDsDqyC1DGwAgRTr4ABm1QY1g99fmnrJsM=;
+	h=Message-ID:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=ur450Bh+B+A+NmBZLzhnzRI5+iQM+tlIUh8woYxcS/9mqn/Iy3VziYqoJOQAsCuMsMFU6mTPEGSft8BWA/Y1NZwJa0bHqquWdcb7PbNm17tKe99IwFd0kiOMRPNjFDTHSrWM2zIPnfesL6DHdJOfHVIChlcQMLTmADlc/FMQWx4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=KNDL6KcR; arc=none smtp.client-ip=209.85.128.44
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gCuKWRGN"
-Received: by mail-lf1-f49.google.com with SMTP id 2adb3069b0e04-50eabbc3dccso6378787e87.2
-        for <git@vger.kernel.org>; Tue, 23 Jan 2024 22:51:03 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KNDL6KcR"
+Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-40ea5653f6bso49634055e9.3
+        for <git@vger.kernel.org>; Tue, 23 Jan 2024 22:55:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1706079062; x=1706683862; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1706079305; x=1706684105; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=EiXlBAY01JdJ2qkSWxd7triz1qeIHF28iJql8oMFaDc=;
-        b=gCuKWRGNpRvb+HB2uW9BzwJ2TyxWveqIRO0ENFV/tUvbCdsKfGTIPlrhk6nGWB7vn6
-         0Dt7iX/NhICzw6cWdyHdklgoFTzEvYvLYllFjAHqV1Utnv6kslfg0LGlWyXOAUY/ZSja
-         sd/s3uMU+ItsucVGuaZDBIA5xpO2lW1wBRlePrm+tdQgbjJRgs5tD8jDI8Hwn01okvga
-         IqnWBtphkCHvMXNRD/VNcQRAGnkU0y4QZneqS4dqmRHAMH0RgRameZVk1tGszgordl8z
-         QwPwLmCJUTUvv3VrqA3Ue7bE84NcQeFOyq5gzxl1At+4rsI92S6DZSQO34Yb0QSSjGDn
-         5PJA==
+        bh=DoVbkQ1DgW9kWL00S0Y1q8MzWHcZx7gfXVM/JMe+ccc=;
+        b=KNDL6KcRUWXTmsxQOXAWcH0Nn0ifqzgem8wiTHrp54o1faE136D5tMl1mLCP4H+5ne
+         FXKVUHYU/vjbteS9QunK0z2vA3gfSnaoU/usCkCK+/S4t53xzLkErXTSLtcWz7Wb6E4F
+         MWje8tXekXArL17txyLmK6AmfujJ5QAgRA7ZUGs4tHfEYhrFNONHpNDCBAnNQcaJ/gLK
+         CZKYY1LUCXjuo5172I2/bhzs4cg8F0/XXUi70UgSBfON8ikRNCojnmYQVWJAmulzKSt+
+         RAmSvavi7HZwOopM8YZo93wAN129gLCz3deRbR5AL52Qh0YR8qwn3T9VlCt9rAlSK/zv
+         iPkQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1706079062; x=1706683862;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+        d=1e100.net; s=20230601; t=1706079305; x=1706684105;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=EiXlBAY01JdJ2qkSWxd7triz1qeIHF28iJql8oMFaDc=;
-        b=liW39QrirwFg7Vbj4iGuwqLoupjrczlMHdcIIett5RzNtsH7AbcLV4o0lvwgnfWhOt
-         2DgNGSoas8tzPxa4Wo7hDjQmRCSAd1DfrUk3MyaHohbMehfYeS5HasApAxaFF3/5lFJa
-         0Feq9Pb+RsiUgWzOF9rAUOjmnF4rWlNYIsiPT0ovc+sSRKdiN1mFQmnTSwR92ubFNerZ
-         22p911byzVJ4QxRlQmuMgi19EMBnog8Nx9TP+z/lWLOx3veoBJb6GOktjlYAb8rTd0hm
-         a/oA1fqhaop8WBhJrUP2zhfcRB7koGnHuacZ5900h/mrEEiIJQEEU6FK2PRUxjcPZlzE
-         0+Zw==
-X-Gm-Message-State: AOJu0Yx+lIb9Igwy4c7y/wFH4eR72TUDvCyJ9tDBhacV35nwe11RpEEm
-	TneDYv7OyrYc6wL7P2tnBtjxqbemCGDOEc3k5pjzrsBQZfd7DeIG58MLw5Lic7lDFfwBPvmNWkf
-	JZ6M8Ocs936PWzgii6MWaxxsbdTcytsGm8Lc=
-X-Google-Smtp-Source: AGHT+IF76F/WHLQ2bOogH2JAGP+hAGd82HPDtZ9py9nN9BXWYRQZEFnQR36WwxainzsFyYU91ZwMariBACRUQxTzoXs=
-X-Received: by 2002:ac2:4d87:0:b0:50e:22df:6b51 with SMTP id
- g7-20020ac24d87000000b0050e22df6b51mr1447564lfe.265.1706079061424; Tue, 23
- Jan 2024 22:51:01 -0800 (PST)
+        bh=DoVbkQ1DgW9kWL00S0Y1q8MzWHcZx7gfXVM/JMe+ccc=;
+        b=fnZh57iEVh1K9MylVKlNrIC/+Y+LhxQHP3FH60wzaT6gD64j8cB5UHA3z01h9bPdhb
+         8f/HBcKIXwPa+I/Q9n+iKBS1C3mpEgawhSDlnUzvXPWcTbhzR0pluhOGMopotPyz73Xv
+         jvrzP/j/L+uFeJTbxy8zA3gdGv450/zhnJzYA+zERP0REWD+thqAB7Hy78wBL6WjUykI
+         Vypx6ka4klsmXG8WdguHjO/cSzgFcsw3vB0oCvXgLpm+R6tG59RwAiTted/o/SZfhd/y
+         uVDtnPG4o59Nl1nm9+5Ex4s0ot/gdc8E5ARZmFCHArtv3zC56Af7n7gqoQR5UfgRnfiW
+         fKvA==
+X-Gm-Message-State: AOJu0YzDZ2Zn367Ndoc6TDBCrt16pyUR80V4ltBFX6hiSU/B1PAwLZhn
+	X0e6+xY6MWc5A0V5oz4WmtT+ZL1m/HzFODhd5ddgp31e8deBfTXI87VlDyT7
+X-Google-Smtp-Source: AGHT+IF9eZLB8olNkFODmWwXCZ0yDx+WGlrQXPDNoOqli3K5CJmN+16NXRAC25ynyWseTOShX2K5yA==
+X-Received: by 2002:a05:600c:3b82:b0:40e:89ad:8ba9 with SMTP id n2-20020a05600c3b8200b0040e89ad8ba9mr808075wms.17.1706079305314;
+        Tue, 23 Jan 2024 22:55:05 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id fc15-20020a05600c524f00b0040e6b4925b8sm37817601wmb.20.2024.01.23.22.55.05
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 23 Jan 2024 22:55:05 -0800 (PST)
+Message-ID: <pull.1646.v4.git.1706079304.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1646.v3.git.1706078885.gitgitgadget@gmail.com>
+References: <pull.1646.v3.git.1706078885.gitgitgadget@gmail.com>
+From: "Mohit Marathe via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Wed, 24 Jan 2024 06:55:02 +0000
+Subject: [PATCH v4 0/2] Replace atoi() with strtol_i_updated()
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.1627.git.1703643931314.gitgitgadget@gmail.com>
- <xmqq8r5gfc3j.fsf@gitster.g> <CABPp-BGSTYDUR1oYYXkCSh-1i2zwxBM=-gnoe-ezNbtPi5CV2A@mail.gmail.com>
- <xmqqsf3nl2b3.fsf@gitster.g> <298F7067-D572-433F-A7DD-5256B43B97D7@icloud.com>
- <xmqqwms6qwr3.fsf@gitster.g> <CABPp-BHaUDdtH6igDmOx_wv8xYh-uA=4L9zDDycrZLaa9c9KLQ@mail.gmail.com>
- <7fc35078-a165-4b3c-96e2-37fbe55e109d@gmail.com>
-In-Reply-To: <7fc35078-a165-4b3c-96e2-37fbe55e109d@gmail.com>
-From: Elijah Newren <newren@gmail.com>
-Date: Tue, 23 Jan 2024 22:50:48 -0800
-Message-ID: <CABPp-BE1D+ap_0bw-U9353+7hTU4Ybo_BUDQ94wpASkpAcgyRw@mail.gmail.com>
-Subject: Re: [PATCH] precious-files.txt: new document proposing new precious
- file type
-To: phillip.wood@dunelm.org.uk
-Cc: Junio C Hamano <gitster@pobox.com>, Sebastian Thiel <sebastian.thiel@icloud.com>, 
-	Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
-	Josh Triplett <josh@joshtriplett.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+To: git@vger.kernel.org
+Cc: Mohit Marathe <mohitmarathe@proton.me>
 
-Hi Phillip,
+Hello,
 
-On Fri, Jan 19, 2024 at 8:53=E2=80=AFAM Phillip Wood <phillip.wood123@gmail=
-.com> wrote:
-[...]
-> >>   * Which one between "'git add .' adds '.config' that users did not
-> >>     want to add" and "'git clean -f' removes '.config' together with
-> >>     other files" a larger problem to the users, who participate in a
-> >>     project that already decided to use the new .gitignore feature to
-> >>     mark ".config" as "precious", of older versions of Git that
-> >>     predate "precious"?
-> >
-> > Accidental "git add ." comes with 3 opportunities to correct the
-> > problem before it becomes permanent: before commiting, after
-> > committing but before pushing, and after publishing for patch review
-> > (where it can even be caught by third parties) but before the
-> > patch/PR/MR is accepted and included.  At each stage there's a chance
-> > to go back and correct the problem.
->
-> If you've added a secret then catching it after you've published the
-> patch for review is likely to be too late. I agree there are a couple of
-> chances to catch it before that though.
+This patch series replaces atoi() with an updated version of strtol_i()
+called strtol_i_updated (Credits: Junio C Hamano). The reasoning behind this
+is to improve error handling by not allowing non-numerical characters in the
+hunk header (which might happen in case of a corrupt patch, although
+rarely).
 
-Ah, good point.
+There is still a change to be made, as Junio says: "A corrupt patch may be
+getting a nonsense patch-ID with the current code and hopefully is not
+matching other patches that are not corrupt, but with such a change, a
+corrupt patch may not be getting any patch-ID and a loop that computes
+patch-ID for many files and try to match them up might need to be rewritten
+to take the new failure case into account." I'm not sure where this change
+needs to me made (maybe get_one_patchid()?). It would be great if anyone
+could point me to the correct place.
 
-> > Accidental nuking of a file (via either git clean or git checkout or
-> > git merge or whatever), cannot be reviewed or corrected; it's
-> > immediately too late.
->
-> Indeed, though "git clean" requires the user to pass a flag before it
-> will delete anything does have a dry-run mode to check what's going to
-> happen so there is an opportunity for users to avoid accidental deletions=
-.
+Thanks, Mohit Marathe
 
-Yes, good point again for "git clean"; it does have one level of check
-before the operation users can take advantage of.  The same cannot be
-said for the files nuked by checkout/merge/rebase/cherry-pick, though.
+Mohit Marathe (2):
+  git-compat-util: add strtol_i_updated()
+  patch-id: replace `atoi()` with `strtol_i_updated()`
 
-> > [...]
-> > However, on a closely related note, in my response to Sebastian I
-> > point out that the '$' syntax permits individual teams to prioritize
-> > avoiding either accidental deletions or accidental adds on a filename
-> > or glob granularity, so if folks are concerned with handling by older
-> > Git versions or are just extra concerned with certain files, they can
-> > optimize accordingly.
->
-> That is an advantage. I do worry that the '$' syntax is unintuitive and
-> will further add to the impression that git is hard to use. I think the
-> choice comes down how much we are worried about the way older versions
-> of git treat ".gitignore" files with the new syntax.
+ builtin/patch-id.c | 12 ++++++++++--
+ git-compat-util.h  | 23 +++++++++++++++++++++++
+ 2 files changed, 33 insertions(+), 2 deletions(-)
 
-Interesting, I thought the mixture of '!' as a prefix and '#(keep)' as
-a previous-line directive would be somewhat inconsistent and add
-further to the impression that git is hard to use, though I can also
-see your point that '$' as a prefix can as well.
 
-> While I can see it would be helpful to settle the syntax question I
-> think parsing the new syntax is a relatively small part of the work that
-> needs to be done to implement precious files.
+base-commit: e02ecfcc534e2021aae29077a958dd11c3897e4c
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1646%2Fmohit-marathe%2Fupdate-strtol_i-v4
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1646/mohit-marathe/update-strtol_i-v4
+Pull-Request: https://github.com/gitgitgadget/git/pull/1646
 
-Oh, I agree it's a small part of the work, but as stated previously,
-I'm not doing that work (Sebastian is).  I'm just trying to help avoid
-getting unintended consequences in the design, and to me this is an
-important edge case to consider, get an agreement on, and document in
-some fashion.
+Range-diff vs v3:
 
-Anyway, Junio seems to have weighed in with a tentative path forward,
-and everyone has been very good about bringing up additional
-considerations around this issue that are worth documenting in the
-design document, so I'll try to put together an update soon-ish.
+ 1:  60ea85a701a = 1:  60ea85a701a git-compat-util: add strtol_i_updated()
+ 2:  0e117198d01 ! 2:  17f2dda4907 patch-id: replace `atoi()` with `strtol_i_updated()`
+     @@ builtin/patch-id.c: static int scan_hunk_header(const char *p, int *p_before, in
+      +		if (strtol_i_updated(r, 10, p_after, &endp) != 0)
+      +			return 0;
+       		n = strspn(r, digits);
+     -+		if (endp != q + n)
+     ++		if (endp != r + n)
+      +			return 0;
+       	} else {
+       		*p_after = 1;
+
+-- 
+gitgitgadget
