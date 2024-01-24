@@ -1,59 +1,59 @@
-Received: from mail-wr1-f50.google.com (mail-wr1-f50.google.com [209.85.221.50])
+Received: from mail-wr1-f53.google.com (mail-wr1-f53.google.com [209.85.221.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBE711B275
-	for <git@vger.kernel.org>; Wed, 24 Jan 2024 11:01:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E59220DF6
+	for <git@vger.kernel.org>; Wed, 24 Jan 2024 11:01:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706094088; cv=none; b=VeIlb31YTwGG7DyxKFkgVYc1tSXQ37KUZN5QqWx5HhaRW9etVct4YkdYpXV/foI7oy0LvmppcOwmV6ucrDUSmIP7UCHCeZINOm0XGbWycT/NtOxW+ePJS+wMT1dTo+nCyac8tQr8EdOWXcDmVee07ZDgoQwz9vEJHJdexdgDEAE=
+	t=1706094099; cv=none; b=ezn2oVAXsvcWsDAkEWSbtqZI4OaTVpQLNAJ7T7DVIx07PjqtG3QdXKmgnhhB9YcGf9QMbDKwu1Ipid0r03pcmNhuwSa8tPB0OKSmp3YKbNiftLoUilPzGoDWCdYChxE6cr3xwP/KAMJ0GS6EwGV5z2zywOz1/0KqsOzA3ZZQTxs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706094088; c=relaxed/simple;
-	bh=rnj1qRuylxJWmD8SkQEj7FiRUy72xwISNZEduUWNCY4=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=dMa4YdPXrQhwDT4XLF5rhmfdiw3sw1BOa6Oq1T8p9Nt2pwp4TzLJuQ4u7jO+Wq3AIRshlngM41pnuGq7RQepJZ49ZR9DOTO5N2PGPBfbhQJLF67FbpnG8FtjnshNI8ZVEec6Wx2SBOmvi/BmNpGvEUvzawefGHcaMrk6WEfPxzo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=KxoaU77t; arc=none smtp.client-ip=209.85.221.50
+	s=arc-20240116; t=1706094099; c=relaxed/simple;
+	bh=dmRXW6ByM6OhuCGMoKbnWXPKJYPL33bs2+KMDUa82zA=;
+	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
+	 In-Reply-To:Content-Type; b=c/hFxLjVrdB0ZV5kUfBpYP0qjU2ntXMm9cnsJ4Z0AYti6SY9k3R9olQri3HFSTriO/I7MIyCS+TA2EZ/mCyE+2vvqSdhE1ykyQ4bVxf1xu6ou0Okj5g1JnQG/10Lkx0v2WlCTuXQxSiqAvU/c/iU2dPvEEzEaoRa87VVlmDY4uU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mCgq5qLk; arc=none smtp.client-ip=209.85.221.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KxoaU77t"
-Received: by mail-wr1-f50.google.com with SMTP id ffacd0b85a97d-337b8da1f49so4729909f8f.0
-        for <git@vger.kernel.org>; Wed, 24 Jan 2024 03:01:26 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mCgq5qLk"
+Received: by mail-wr1-f53.google.com with SMTP id ffacd0b85a97d-3394446205dso1408220f8f.1
+        for <git@vger.kernel.org>; Wed, 24 Jan 2024 03:01:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1706094085; x=1706698885; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+        d=gmail.com; s=20230601; t=1706094096; x=1706698896; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:references:cc:to:from
          :content-language:subject:reply-to:user-agent:mime-version:date
          :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=EJzqs/CoDq5WfYLMGCJRzMtukGeCI3P0SWvTd0OgoVo=;
-        b=KxoaU77t+pFxsTzHgPO170HQSbK9nUUygl/dftv3ys5JMCjtBT1xUAGpO1KKnQLz4m
-         wd/8bjP+RBG6j2zNk62hZ43nL4VgSeJG0TXfA0TZJrRapveMteieVI+rWPTYzPvaS2QX
-         wZGWW5VGJ7WXVEBpQZ7Vef0yMABZYcQ7L/82kheOKtes3YNDVRQUGD5+XmsQM1ZWFbQw
-         rH0ZP45Rw5q2ZjxXuse50wFsnIlH6nWjSlOQajluVlnFiMAH5HqDmvVSMDGsQyj4zZPM
-         BCLu8UFkQWs6XR6v4MDDHVbIgjYUC6ePHXTSgwWoyZxtggYHwKvpvDHslDerRnlhHtB0
-         uPSw==
+        bh=XEm9OwD6L8B1rrMwjwUG8we8Het9yj6ZPrWbfrl6cz4=;
+        b=mCgq5qLk3GW6WElx04uHNdeNB7WwvobqPffKwddjqxR8DXsqln8z4KDRxAe6nx5TPM
+         4q2fxs3KFj65I5zzJ1HUGCRsk26lSU6llp9zdK4hlx/UPrWwKKb0y69hUepJ6TD5M1lT
+         gLjPO6mK7+tIobXZA0yWg+YShtNkrDDEX//knU91021BLOX+vaJoDXHmXct56f6C1F6q
+         hk6b4cRG0hHvx+Civh1Nmiqp8ejwRNvH2vpd2dFLxNYHtKocnZlYorO4+aoEb+PRNGPV
+         w4SPCdObq+rInGmyBfR+ydBGTUXIokWiQoaLI24ZhM9eaUnSijg8hLTSB7uU7yrcuMpG
+         8W7w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1706094085; x=1706698885;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+        d=1e100.net; s=20230601; t=1706094096; x=1706698896;
+        h=content-transfer-encoding:in-reply-to:references:cc:to:from
          :content-language:subject:reply-to:user-agent:mime-version:date
          :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=EJzqs/CoDq5WfYLMGCJRzMtukGeCI3P0SWvTd0OgoVo=;
-        b=YBIYAmKqRcFJloS9sip+663ryU6Jr34dDovs+X80+zec+HrQVpf5m+L+WIu8v8dCoj
-         HW/Ev4fJwkmVGEzopTOQZ0MUotV1JIdTxArFW6GyOyTq29Gkz0gkhbYXFWJ56BAocWfJ
-         DVNhLBlkcqseu2uiPsQ0hO6IZ4EYqWXuIcRhVxrpdJtXcNJiuzW5ilUy7jInaOkt6ivp
-         QQfoxPynoZFjxfDnaP9TzMe8QCDD53RFi48ekE0h88HLp2r7YMyrtpbQHjzkywQHac2z
-         2XE0UciDUxT2ngfio3CN36/yaipALvFuTiwg3gps1wgnDF9O7l2o/sTZGpWTwOOx6eJE
-         iugg==
-X-Gm-Message-State: AOJu0YzBrQZ0LRucPuIQbT5HkOLrmsLRu9QpqZwGYEOb7lUHXbWvrIJg
-	k46pp7MZw+4dVhc75z+oeUnASA2TRBBlGrmSR6Mff5KnjmS2TknK
-X-Google-Smtp-Source: AGHT+IF5uUBvUtto5YKdWYnPzBmIeekq1vbtTwQFI9noG6ymM8ZGGvFnWKl9duF5KraRYz9aT3pIDw==
-X-Received: by 2002:a5d:5310:0:b0:337:c6d7:32d9 with SMTP id e16-20020a5d5310000000b00337c6d732d9mr334718wrv.206.1706094084699;
-        Wed, 24 Jan 2024 03:01:24 -0800 (PST)
+        bh=XEm9OwD6L8B1rrMwjwUG8we8Het9yj6ZPrWbfrl6cz4=;
+        b=lTOCvs2b/j25XBLAPJp3GDZchJVU1H1tWSxyACB6hlj+407T+F0deEfRNIaAuA1wP1
+         hhiX70IuO60E+HYANJL/reEgDHbsGT1MU5S4MTQLYxlVFF1X1+Gfa9c9+iNNuz5dWoAr
+         jeRjc9RKPCBM0Rl9bJSMpyz/7KdQK7vFGo2jrbc30sC58qxEyfvfOETLVDOrw7ZI/rLz
+         7Dwa01tzq3jM3FGk1ybco/jEiOBlUdGrS5+h6LEDHV3C8hxnqUqqP5Xs+Gp+NFznpJcV
+         hiBYgrtHyUR4RY/0Eu14Yq3qLkaz6TSiRpqUf0c2qEIUmKTdRdYtzNc3jW6P7m8MbB7B
+         Ydsg==
+X-Gm-Message-State: AOJu0Yz9MP7LSckZYA1bleD60HO7F0dCVyY250szyetN/XOjYeIJDIDK
+	dcb/3r63NXnW9IsNvt/1YtOI9DHkejOvO/hak6cp9e9JXqRLHGwh
+X-Google-Smtp-Source: AGHT+IFwkt0xC+Zz++yomBUT73/GmKgZN8DiW4ZU3y4Xt7ffrS2HAg0FVVZqmF19t2Z17l3GoH325Q==
+X-Received: by 2002:a5d:6a10:0:b0:337:d6c9:19ce with SMTP id m16-20020a5d6a10000000b00337d6c919cemr408560wru.131.1706094095526;
+        Wed, 24 Jan 2024 03:01:35 -0800 (PST)
 Received: from [192.168.1.101] ([84.64.64.237])
-        by smtp.googlemail.com with ESMTPSA id e11-20020a5d594b000000b003392bbeeed3sm10076232wri.47.2024.01.24.03.01.23
+        by smtp.googlemail.com with ESMTPSA id e11-20020a5d594b000000b003392bbeeed3sm10076232wri.47.2024.01.24.03.01.35
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 24 Jan 2024 03:01:24 -0800 (PST)
-Message-ID: <7229fe62-cf9b-4829-80ec-c6b44c52163e@gmail.com>
-Date: Wed, 24 Jan 2024 11:01:23 +0000
+        Wed, 24 Jan 2024 03:01:35 -0800 (PST)
+Message-ID: <ec05c0e9-20ad-42ab-8858-cc4ae0847d5a@gmail.com>
+Date: Wed, 24 Jan 2024 11:01:35 +0000
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -65,140 +65,37 @@ Reply-To: phillip.wood@dunelm.org.uk
 Subject: Re: [PATCH 1/4] sequencer: Do not require `allow_empty` for redundant
  commit options
 Content-Language: en-US
+From: Phillip Wood <phillip.wood123@gmail.com>
 To: brianmlyles@gmail.com, git@vger.kernel.org
 Cc: me@ttaylorr.com, newren@gmail.com
 References: <20240119060721.3734775-2-brianmlyles@gmail.com>
-From: Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <20240119060721.3734775-2-brianmlyles@gmail.com>
+ <7bf5036b-9f55-4451-a13c-8a2c815dfbb7@gmail.com>
+In-Reply-To: <7bf5036b-9f55-4451-a13c-8a2c815dfbb7@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
 Hi Brian
 
-Here are some code comments now I've realized why we need to change it
+On 23/01/2024 14:23, Phillip Wood wrote:
 
-On 19/01/2024 05:59, brianmlyles@gmail.com wrote:
-> From: Brian Lyles <brianmlyles@gmail.com>
- >   Documentation/git-cherry-pick.txt | 10 +++++++---
- >   builtin/revert.c                  |  4 ----
- >   sequencer.c                       | 18 ++++++++++--------
- >   t/t3505-cherry-pick-empty.sh      |  5 +++++
- >   4 files changed, 22 insertions(+), 15 deletions(-)
- >
- > diff --git a/Documentation/git-cherry-pick.txt 
-b/Documentation/git-cherry-pick.txt
- > index fdcad3d200..806295a730 100644
- > --- a/Documentation/git-cherry-pick.txt
- > +++ b/Documentation/git-cherry-pick.txt
- > @@ -131,8 +131,8 @@ effect to your index in a row.
- >       even without this option.  Note also, that use of this option only
- >       keeps commits that were initially empty (i.e. the commit 
-recorded the
- >       same tree as its parent).  Commits which are made empty due to a
- > -    previous commit are dropped.  To force the inclusion of those 
-commits
- > -    use `--keep-redundant-commits`.
- > +    previous commit will cause the cherry-pick to fail.  To force the
- > +    inclusion of those commits use `--keep-redundant-commits`.
- >
- >   --allow-empty-message::
- >       By default, cherry-picking a commit with an empty message will 
-fail.
- > @@ -144,7 +144,11 @@ effect to your index in a row.
- >       current history, it will become empty.  By default these
- >       redundant commits cause `cherry-pick` to stop so the user can
- >       examine the commit. This option overrides that behavior and
- > -    creates an empty commit object.  Implies `--allow-empty`.
- > +    creates an empty commit object. Note that use of this option only
- > +    results in an empty commit when the commit was not initially empty,
- > +    but rather became empty due to a previous commit. Commits that were
- > +    initially empty will cause the cherry-pick to fail. To force the
- > +    inclusion of those commits use `--allow-empty`.
- >
- >   --strategy=<strategy>::
- >       Use the given merge strategy.  Should only be used once.
- > diff --git a/builtin/revert.c b/builtin/revert.c
- > index e6f9a1ad26..b2cfde7a87 100644
- > --- a/builtin/revert.c
- > +++ b/builtin/revert.c
- > @@ -136,10 +136,6 @@ static int run_sequencer(int argc, const char 
-**argv, const char *prefix,
- >       prepare_repo_settings(the_repository);
- >       the_repository->settings.command_requires_full_index = 0;
- >
- > -    /* implies allow_empty */
- > -    if (opts->keep_redundant_commits)
- > -        opts->allow_empty = 1;
+> rebase always sets "opts->allow_empty = 1" in 
+> builtin/rebase.c:get_replay_opts() and if the user passes 
+> --no-keep-empty drops commits that start empty from the list of commits 
+> to be picked. This is slightly confusing but is more efficient as we 
+> don't do waste time trying to pick a commit we're going to drop. Can we 
+> do something similar for "git cherry-pick"? When cherry-picking a 
+> sequence of commits I think it should just work because the code is 
+> shared with rebase, for a single commit we'd need to add a test to see 
+> if it is empty in single_pick() before calling pick_commits().
 
-I'm wary of this, especially after Juino's comments in 
-https://lore.kernel.org/git/xmqqy1cfnca7.fsf@gitster.g/
+Having thought about this again I don't think we can reuse the same 
+approach as rebase because cherry-pick and rebase have different 
+behaviors. "git rebase --no-keep-empty" drops empty commits whereas "git 
+cherry-pick" wants to error out if it sees an empty commit. So I think 
+your approach of reworking allow_empty() in the sequencer is the right 
+approach.
 
-The documentation changes look if we do decide to change the default.
-
- >       if (cleanup_arg) {
- >           opts->default_msg_cleanup = get_cleanup_mode(cleanup_arg, 1);
- >           opts->explicit_cleanup = 1;
- > diff --git a/sequencer.c b/sequencer.c
- > index d584cac8ed..582bde8d46 100644
- > --- a/sequencer.c
- > +++ b/sequencer.c
- > @@ -1739,22 +1739,24 @@ static int allow_empty(struct repository *r,
- >        *
- >        * (4) we allow both.
- >        */
-
-The comment above should be updated if we change the behavior of this 
-function.
-
- > -    if (!opts->allow_empty)
- > -        return 0; /* let "git commit" barf as necessary */
- > -
-
-Here we stop returning early if allow_empty is not set - this allows us 
-to apply allow_empty only to commits that start empty below.
-
- >       index_unchanged = is_index_unchanged(r);
- > -    if (index_unchanged < 0)
- > +    if (index_unchanged < 0) {
- > +        if (!opts->allow_empty)
- > +            return 0;
- >           return index_unchanged;
- > +    }
-
-I don't think we want to hide the error here or below from 
-originally_empty()
-
- >       if (!index_unchanged)
- >           return 0; /* we do not have to say --allow-empty */
- >
- > -    if (opts->keep_redundant_commits)
- > -        return 1;
- > -
-
-We move this check so that we do not unconditionally keep commits that 
-are initially empty when opts->keep_redundant_commits is set.
-
- >       originally_empty = is_original_commit_empty(commit);
- > -    if (originally_empty < 0)
- > +    if (originally_empty < 0) {
- > +        if (!opts->allow_empty)
- > +            return 0;
- >           return originally_empty;
- > +    }
- >       if (originally_empty)
- > +        return opts->allow_empty;
-
-Now opts->allow_empty only applies to commits that were originally empty
-
- > +    else if (opts->keep_redundant_commits)
- >           return 1;
-
-This ensures we keep commits that become empty when 
-opts->redundant_commits is set.
-
-The changes to allow_empty() all looks good apart from hiding errors 
-from index_unchanged() and originally_empty()
-
-Best Wishes
+Sorry for the confusion
 
 Phillip
+
