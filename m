@@ -1,104 +1,133 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85901131E23
-	for <git@vger.kernel.org>; Wed, 24 Jan 2024 18:58:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54F916A004
+	for <git@vger.kernel.org>; Wed, 24 Jan 2024 19:09:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706122682; cv=none; b=JQl6qB3ow4PRYGxzdUFB/67KTFDsL3JUDLsKK7fIqJ1yakhqXkB2ia5InxjBfi8D1hBBoptqXzEytsjrLiT3QzKsBmk1TaJPve4xFHuKoNC7+jGELrWEkIWwf0cJTZFAEdtmi3V1ivr7ISZ8irM6KhUp+s6EvLtfBKUo3sB9lJc=
+	t=1706123359; cv=none; b=Ezd+gusKJtMUQJkeIYLXfXq1Mb+5UxO1zvjDZNzFrTtN6UaW9DFX0Odn+NeGFZLoJduujQzEBb12OOgdyOmTPQQA2kjrFH/geUXCnLO6WankjajhXqafxynBfjSGGejyD+2RrezqXiFcYqDBNUGWNSjxniD4JF5tnJPaMJ72JBg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706122682; c=relaxed/simple;
-	bh=BOtUQAZKsY3SXnrXid7bETLnGN+3FP0mG+6mZ+kwO2c=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=a6vJVDKVu0/6a0h5Xy9Q0MAa9y6du7TJNItOGHZmg7xmQMHYPn0FzjN+AEO22QryhFseD8E0jJ5zHsWNLymXZo2fNaN5cJaLZocBUW7K1cbcaW0RQJQ33H6/t91QqOknFNglGGMOZy9HhWfUmzBX/nRBXSOpE6lwH3kOgrZ9Q88=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
-Received: (qmail 7302 invoked by uid 109); 24 Jan 2024 18:57:58 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 24 Jan 2024 18:57:58 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 29634 invoked by uid 111); 24 Jan 2024 18:57:55 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 24 Jan 2024 13:57:55 -0500
-Authentication-Results: peff.net; auth=none
-Date: Wed, 24 Jan 2024 13:57:54 -0500
-From: Jeff King <peff@peff.net>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Elijah Newren <newren@gmail.com>,
-	=?utf-8?B?UmHDumwgTsO6w7Fleg==?= de Arenas Coronado <raulnac@gmail.com>,
-	git@vger.kernel.org
-Subject: Re: Fwd: Unexpected behavior of ls-files command when using --others
- --exclude-from, and a .gitignore file which resides in a subdirectory
-Message-ID: <20240124185754.GA21980@coredump.intra.peff.net>
-References: <CAGF1KhWNaO_TUuCPo2L_HzNnR+FnB1Q4H6_xQ2owoH+SnynzEg@mail.gmail.com>
- <CAGF1KhWiYX=3R01Odj2yCNgvx=f5+HRCjRJogWf5eBikuATCcg@mail.gmail.com>
- <20240122213410.GA811766@coredump.intra.peff.net>
- <xmqq1qa9rqji.fsf@gitster.g>
- <20240122215954.GA813833@coredump.intra.peff.net>
- <CABPp-BHcdn3+mbPJk8LZvMjPWZ4s-xdUyevrMbgbT4yQpJ_umA@mail.gmail.com>
- <xmqqjznyhd90.fsf@gitster.g>
+	s=arc-20240116; t=1706123359; c=relaxed/simple;
+	bh=14X+z0iojGkqaOt1Fa8o67gQ6vAzCJDill7638QPvhM=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=J6C/lCieFB34Oqa0aK6ROs2acpG5n8G4iOphA92M4E2FRaNNI1xrOXlbaVcQ7FKwdUO6DIkG4t/CCZiU07kI/i6rysdXenobIUgojwmuxcoiPdjlAIKOVy/sdFKKN2/8RGM/1ttaSW3Uf8cDGl1m/wcpnJneD53bvApsALMAdDY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=hG4pzSjq; arc=none smtp.client-ip=64.147.108.70
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="hG4pzSjq"
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 2EDFC1E5269;
+	Wed, 24 Jan 2024 14:09:11 -0500 (EST)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=14X+z0iojGkqaOt1Fa8o67gQ6vAzCJDill7638
+	QPvhM=; b=hG4pzSjqplIon4dtDRj6KY+og4jfYqC4Pwecpi17Aq3Dlh4njMvABH
+	CDBTuG7R0QC3EDRO0q1DZ/l/36z9GmG+4WT73ZFtxThvGcBdgSkbU80l57z1K2YF
+	HBSsmotwox3vPI5k1f4kQSrR3asSwVfcwIOFoibP4F2TZA92yOLVg=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 268AA1E5268;
+	Wed, 24 Jan 2024 14:09:11 -0500 (EST)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.200.93])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 7FD571E5267;
+	Wed, 24 Jan 2024 14:09:10 -0500 (EST)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Karthik Nayak <karthik.188@gmail.com>
+Cc: git@vger.kernel.org,  ps@pks.im,  phillip.wood123@gmail.com
+Subject: Re: [PATCH v2 1/4] refs: introduce `is_pseudoref()` and `is_headref()`
+In-Reply-To: <20240124152726.124873-2-karthik.188@gmail.com> (Karthik Nayak's
+	message of "Wed, 24 Jan 2024 16:27:23 +0100")
+References: <20240119142705.139374-1-karthik.188@gmail.com>
+	<20240124152726.124873-1-karthik.188@gmail.com>
+	<20240124152726.124873-2-karthik.188@gmail.com>
+Date: Wed, 24 Jan 2024 11:09:09 -0800
+Message-ID: <xmqqfrymeega.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqjznyhd90.fsf@gitster.g>
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 0E06BBE8-BAEC-11EE-B4A3-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
 
-On Wed, Jan 24, 2024 at 09:06:51AM -0800, Junio C Hamano wrote:
+Karthik Nayak <karthik.188@gmail.com> writes:
 
-> ------ >8 ----------- >8 ----------- >8 ----------- >8 ------
-> Subject: ls-files: avoid the verb "deprecate" for individual options
-> 
-> When e750951e74f updated the documentation to give greater
-> visibility to the --exclude-standard option, it marked the
-> `--exclude-per-directory` option as "deprecated".  While it
-> technically is correct that being deprecated does not necessarily
-> mean it is planned to be removed later, it seems to cause confusion
-> to readers, especially when we merely mean
-> 
->     The option Y can be used to achieve the same thing as the option
->     X, so to those of you who aren't familiar with either X or Y, we
->     would recommend to use Y.
-> 
-> This is especially true for `--exclude-standard` vs the combination
-> of more granular `--exclude-from` and `--exclude-per-directory`
-> options.  It is true that one common combination of the granular
-> options can be obtained by just giving the former, but that does not
-> necessarily mean a more granular control is not necessary.
-> 
-> State why we recommend looking at `--exclude-standard` when we do so
-> in the description of `--exclude-per-directory`, instead of saying
-> that the option is deprecated.  Also, spell out the recipe to emulate
-> what `--exclude-standard` does, so that the users can give it minute
-> tweaks (like "not reading the global exclusion file from core.excludes").
+> We cannot directly add the new syntax checks to `is_pseudoref_syntax()`
+> because the function is also used by `is_current_worktree_ref()` and
+> making it stricter to match only known pseudorefs might have unintended
+> consequences due to files like 'BISECT_START' which isn't a pseudoref
+> but sometimes contains object ID.
 
-This perfectly sums up the situation from my viewpoint. And I think the
-changes you suggest not only remove the confusion over the term, they
-lay out the possible options for the user much better.
+Well described.
 
-The patch looks good to me, modulo one minor comment:
-
-> diff --git c/Documentation/git-ls-files.txt w/Documentation/git-ls-files.txt
-> index f65a8cd91d..93a0111cfb 100644
-> --- c/Documentation/git-ls-files.txt
-> +++ w/Documentation/git-ls-files.txt
-> @@ -119,8 +119,10 @@ OPTIONS
+> diff --git a/refs.c b/refs.c
+> index 20e8f1ff1f..4b6bfc66fb 100644
+> --- a/refs.c
+> +++ b/refs.c
+> @@ -859,6 +859,38 @@ static int is_pseudoref_syntax(const char *refname)
+>  	return 1;
+>  }
 >  
->  --exclude-per-directory=<file>::
->  	Read additional exclude patterns that apply only to the
-> -	directory and its subdirectories in <file>.  Deprecated; use
-> -	--exclude-standard instead.
-> +	directory and its subdirectories in <file>.  If you are
-> +	trying to emulate the way how Porcelain commands work,
-> +	using the `--exclude-standard` instead is easier and more
-> +	thorough.
+> +int is_pseudoref(struct ref_store *refs, const char *refname)
+> +{
+> +	static const char *const irregular_pseudorefs[] = {
+> +		"AUTO_MERGE",
+> +		"BISECT_EXPECTED_REV",
+> +		"NOTES_MERGE_PARTIAL",
+> +		"NOTES_MERGE_REF",
+> +		"MERGE_AUTOSTASH"
 
-As a native English speaker, the phrasing here is awkward to me. I'd
-probably say "...emulate the way that Porcelain commands work". Or
-alternatively, "emulate how Porcelain commands work".
+Let's end an array's initializer with a trailing comma, to help
+future patches to add entries to this array without unnecessary
+patch noise. 
 
--Peff
+> +	};
+> +	size_t i;
+> +
+> +	if (!is_pseudoref_syntax(refname))
+> +		return 0;
+> +
+> +	if (ends_with(refname, "_HEAD"))
+> +		return refs_ref_exists(refs, refname);
+> +
+> +	for (i = 0; i < ARRAY_SIZE(irregular_pseudorefs); i++)
+> +		 if (!strcmp(refname, irregular_pseudorefs[i]))
+> +			 return refs_ref_exists(refs, refname);
+> +
+> +	return 0;
+> +}
+
+The above uses refs_ref_exists() because we want these to
+successfully resolve for reading.
+
+> +int is_headref(struct ref_store *refs, const char *refname)
+> +{
+> +	if (!strcmp(refname, "HEAD"))
+> +		return refs_ref_exists(refs, refname);
+
+Given that "git for-each-ref refs/remotes" does not show
+"refs/remotes/origin/HEAD" in the output when we do not have the
+remote-tracking branch that symref points at, we probably do want
+to omit "HEAD" from the output when the HEAD symref points at an
+unborn branch.  If refs_ref_exists() says "no, it does not exist"
+in such a case, we are perfectly fine with this code.
+
+We do not have to worry about the unborn state for pseudorefs
+because they would never be symbolic.  But that in turn makes me
+suspect that the check done with refs_ref_exists() in the
+is_pseudoref() helper is a bit too lenient by allowing it to be a
+symbolic ref.  Shouldn't we be using a check based on
+read_ref_full(), like we did in another topic recently [*]?
+
+
+[Reference]
+
+ * https://lore.kernel.org/git/xmqqzfxa9usx.fsf@gitster.g/
