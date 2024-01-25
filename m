@@ -1,62 +1,74 @@
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f42.google.com (mail-pj1-f42.google.com [209.85.216.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A83F1339A9
-	for <git@vger.kernel.org>; Thu, 25 Jan 2024 18:56:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9A8D137C2B
+	for <git@vger.kernel.org>; Thu, 25 Jan 2024 19:35:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706208973; cv=none; b=QmEGryd6a9/8v4ii90lFtLGOWRWZYaVC1+XYixx129S4+NsDSOigcSNBMBnAVXdvC6WHyVY8vE6aHChMzaI9Re3rOV7KKB+BMxTiXQk08nOTv1x0L9VeRpg5Fu2r7N/0tjQA9guKIY/EoYCpUsYeWJVa3s7cvJlbWXDqIpQy2as=
+	t=1706211341; cv=none; b=lVZ004agN5azHb69TdwahklOB41YzgtRhAbxjWFSLoElkV6gYPIj64D8fN6Pq07JanF5Z2jVP3UGypkZFHs7ovD/PjRghRExKY/17lBYGKItoPJ63bc8YqMWr7WnvLv6RUvcmMotZQCOfhsai9ouXpOqCq7jGinSh/mYkNytIuM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706208973; c=relaxed/simple;
-	bh=mwaccdeL3cqPrmXcsNPOW1b9HvLUfW3SqeEl9QCgPp4=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=C/Iq7eJRvkBPwoAFfIeHqJl7ubYicxgQHGIyglK60H2vjbyw4rYqcOWOTJRd5EDxfL1613kN1dv8FiQcIyoPYi+Q1MWINTz2PXfl5wrudpQbMLw01S7OgCzz7tXvVwqUjiy/hBbxVitKLybzh8LCGt1EU1k8GIHc8CZbIBZrseg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=OUjygqFp; arc=none smtp.client-ip=64.147.108.70
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1706211341; c=relaxed/simple;
+	bh=fw7yn3dyGAsgTfl9KN8iUBdleDp/1XPSzw/CnB34/r4=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=okwK/Pv6u7RHDE1sZ4JUFVjFhOQgyceoqTP/zgXx27TVsLBOJ9WCxUAEMDx5Uzl0Pkq+PiQqy5IxLJHF0qbvxefPM7LqgsAZfLP0SRjAT9obCv/tiNvo8BTbrig4Gm1F7k2w0AibfCJ6YAud8cgJGv6nnbEz2UcBo7LYACUVfYc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=3TdMSBQd; arc=none smtp.client-ip=209.85.216.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="OUjygqFp"
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id DC4891BF269;
-	Thu, 25 Jan 2024 13:56:10 -0500 (EST)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=mwaccdeL3cqP
-	rmXcsNPOW1b9HvLUfW3SqeEl9QCgPp4=; b=OUjygqFpmbTJfOfGyu62i5BSmQVT
-	zQAyMMWDtLJ7EGl5SBqDCR4VG3J+m597OKkj+KwpLi35Oxkbjqe5Y9yKe2tp1zZ0
-	nuQeixxbugB8HhIHLo/1c+li2/MSzZaK+utlTnygujV9a0lJ6c8UChRFATrS0LPr
-	wnlo5o3+cUx7uXs=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id D496A1BF268;
-	Thu, 25 Jan 2024 13:56:10 -0500 (EST)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.200.93])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 3D06E1BF267;
-	Thu, 25 Jan 2024 13:56:10 -0500 (EST)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Christian Couder <christian.couder@gmail.com>
-Cc: Zach FettersMoore <zach.fetters@apollographql.com>,  Zach FettersMoore
- via GitGitGadget <gitgitgadget@gmail.com>,  git@vger.kernel.org
-Subject: Re: [PATCH v6] subtree: fix split processing with multiple subtrees
- present
-In-Reply-To: <CAP8UFD2Oo8v8Qn0JPYURZA_s7ynZmk6v30b9zR==MxWBTXk9Ng@mail.gmail.com>
-	(Christian Couder's message of "Thu, 25 Jan 2024 19:52:22 +0100")
-References: <pull.1587.v5.git.1701206267300.gitgitgadget@gmail.com>
-	<pull.1587.v6.git.1701442494319.gitgitgadget@gmail.com>
-	<CAP8UFD3FzP6QW4dJ9yiG1BAytLcsk+zGE+CBeArRJBJ8gsaDMQ@mail.gmail.com>
-	<CAEWN6q3RTbVuMb0VyCYz196ZL+OGAAHbJLZ2-MnW1RVVabg7Mw@mail.gmail.com>
-	<CAP8UFD19phFz54d8fDM=MBRMSD9Rz4R0_463KgptN8eeFs7MnQ@mail.gmail.com>
-	<CAP8UFD3b2y+55j3NMDm89hpVRNxX2TA-AdQS=zsboD30pZ1c4Q@mail.gmail.com>
-	<CAP8UFD0M_KeUTHthQ6n_a1KbEvuA1gAsE2jKkAqd-4twjbpNWw@mail.gmail.com>
-	<xmqq5xzhxta3.fsf@gitster.g>
-	<CAP8UFD2Oo8v8Qn0JPYURZA_s7ynZmk6v30b9zR==MxWBTXk9Ng@mail.gmail.com>
-Date: Thu, 25 Jan 2024 10:56:09 -0800
-Message-ID: <xmqqbk99w8c6.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="3TdMSBQd"
+Received: by mail-pj1-f42.google.com with SMTP id 98e67ed59e1d1-2906855ac5fso3341401a91.3
+        for <git@vger.kernel.org>; Thu, 25 Jan 2024 11:35:39 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1706211339; x=1706816139; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:mail-followup-to:message-id:subject:cc:to
+         :from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=dCuoeeo4+MA9z+5sy4BnFvdmy5yJdcwsj/HXsWNOjAU=;
+        b=3TdMSBQdpzPblcUeQypSuMWhVjQOtdZbkZoMlaas11bSdHvHzTmny/8Y93eve50613
+         sgmVEE1CiyXGzWfzyrzfGE97vgORp6onOAAEqF6o924FrS/BDGFXW1O7t9WIP/7Dnyja
+         lIlDSLlgvnj7LD/IUNPH610nhAvllSHrCR7NGHkStdeDJuBU8fmCJNHoaVZS5PFveX2i
+         qru0f1x6keJEoioAg8rkNNevSxdei1+0ne8XlUsdkeOJSpc8U/XCSoNLiUcMKGSxHYbR
+         D/E+gTggggqe2pDK8EK7Ji2CqbJRd+2h8f/PJFX2QCmnZXX0Cj5y6x+9agbIzQR6eC5C
+         3LWQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1706211339; x=1706816139;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:mail-followup-to:message-id:subject:cc:to
+         :from:date:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=dCuoeeo4+MA9z+5sy4BnFvdmy5yJdcwsj/HXsWNOjAU=;
+        b=l4StyvpacMY141Qc/CrjyLbuU9Z0The99vEbJZ5nSMNR+z3u8m7+JQHwgmiIksyZC6
+         TigdouyiPL+DkRGsbC5OtO2v42r/c4Yz/bETZur5gaxLlz4vspepkCItwA4nz4/gDolI
+         0bW5w8t39F+M1KGGhtwKm5NJ29zZaisKH4tleYaXDuT69UHOOZM4gWJM+LjoJl04eeN4
+         HPkQ1Y+U0jdzhaMpm5k7JLW9TkrBCJXSS5T0Gq7n2SkKMIozrdP79khfmWgGjt818irM
+         NeB4PtIukW118+83eWZyF+19CWAPPQ+2JQMbfsMFWyyxoqKzs03jLbp6eNdT6QedQoVb
+         ARNw==
+X-Gm-Message-State: AOJu0YwEYzu7Kn3mBFh4EXXX/wHlarNTESanneS51F0FmIhFEt2JQxFi
+	88YeW6SyrS0zUklb+zbldXvi0XvKQdxDm4XGL+R543vyh+Gzc/MGRcpo7YKCEQ==
+X-Google-Smtp-Source: AGHT+IG/wIF9nc2NT6p7n3Os4VUxghDvFUfvorAVzCbjd6rARVwRWlDLQLT/tIgWnmJ8zCcjpkilmg==
+X-Received: by 2002:a17:90a:1108:b0:290:329a:a666 with SMTP id d8-20020a17090a110800b00290329aa666mr93717pja.83.1706211338803;
+        Thu, 25 Jan 2024 11:35:38 -0800 (PST)
+Received: from google.com ([2620:15c:2d3:204:3af9:4e62:3075:ae82])
+        by smtp.gmail.com with ESMTPSA id gn20-20020a17090ac79400b0028cef021d45sm1964068pjb.17.2024.01.25.11.35.37
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 25 Jan 2024 11:35:38 -0800 (PST)
+Date: Thu, 25 Jan 2024 11:35:33 -0800
+From: Josh Steadmon <steadmon@google.com>
+To: Linus Arver via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, Emily Shaffer <nasamuffin@google.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Christian Couder <chriscool@tuxfamily.org>,
+	Linus Arver <linusa@google.com>
+Subject: Re: [PATCH 06/10] trailer: make trailer_info struct private
+Message-ID: <ZbK4BcESMfljw7Ym@google.com>
+Mail-Followup-To: Josh Steadmon <steadmon@google.com>,
+	Linus Arver via GitGitGadget <gitgitgadget@gmail.com>,
+	git@vger.kernel.org, Emily Shaffer <nasamuffin@google.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Christian Couder <chriscool@tuxfamily.org>,
+	Linus Arver <linusa@google.com>
+References: <pull.1632.git.1704869487.gitgitgadget@gmail.com>
+ <0cbe96421c7bf573e8ddc97b2a0aecc894095399.1704869487.git.gitgitgadget@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -64,30 +76,75 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID:
- 675BCF9A-BBB3-11EE-991C-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <0cbe96421c7bf573e8ddc97b2a0aecc894095399.1704869487.git.gitgitgadget@gmail.com>
 
-Christian Couder <christian.couder@gmail.com> writes:
+On 2024.01.10 06:51, Linus Arver via GitGitGadget wrote:
+> From: Linus Arver <linusa@google.com>
+> 
+> In 13211ae23f (trailer: separate public from internal portion of
+> trailer_iterator, 2023-09-09) we moved trailer_info behind an anonymous
+> struct to discourage use by trailer.h API users. However it still left
+> open the possibility of external use of trailer_info itself. Now that
+> there are no external users of trailer_info, we can make this struct
+> private.
+> 
+> Make this struct private by putting its definition inside trailer.c.
+> This has two benefits:
+> 
+> (1) it makes the surface area of the public facing interface (trailer.h)
+>     smaller, and
+> 
+> (2) external API users are unable to peer inside this struct (because it
+>     is only ever exposed as an opaque pointer).
+> 
+> This change exposes some deficiencies in the API, mainly with regard to
+> information about the location of the trailer block that was parsed.
+> Expose new API functions to access this information (needed by
+> builtin/interpret-trailers.c).
+> 
+> The idea in this patch to hide implementation details behind an "opaque
+> pointer" is also known as the "pimpl" (pointer to implementation) idiom
+> in C++ and is a common pattern in that language (where, for example,
+> abstract classes only have pointers to concrete classes).
+> 
+> However, the original inspiration to use this idiom does not come from
+> C++, but instead the book "C Interfaces and Implementations: Techniques
+> for Creating Reusable Software" [1]. This book recommends opaque
+> pointers as a good design principle for designing C libraries, using the
+> term "interface" as the functions defined in *.h (header) files and
+> "implementation" as the corresponding *.c file which define the
+> interfaces.
+> 
+> The book says this about opaque pointers:
+> 
+>     ... clients can manipulate such pointers freely, but they can’t
+>     dereference them; that is, they can’t look at the innards of the
+>     structure pointed to by them. Only the implementation has that
+>     privilege. Opaque pointers hide representation details and help
+>     catch errors.
+> 
+> In our case, "struct trailer_info" is now hidden from clients, and the
+> ways in which this opaque pointer can be used is limited to the richness
+> of the trailer.h file. In other words, trailer.h exclusively controls
+> exactly how "trailer_info" pointers are to be used.
+> 
+> [1] Hanson, David R. "C Interfaces and Implementations: Techniques for
+>     Creating Reusable Software". Addison Wesley, 1997. p. 22
+> 
+> Signed-off-by: Linus Arver <linusa@google.com>
+> ---
+>  builtin/interpret-trailers.c |  13 +--
+>  trailer.c                    | 154 +++++++++++++++++++++++------------
+>  trailer.h                    |  37 ++-------
+>  3 files changed, 117 insertions(+), 87 deletions(-)
 
-> On Thu, Jan 25, 2024 at 5:38=E2=80=AFPM Junio C Hamano <gitster@pobox.c=
-om> wrote:
->>
->> Christian Couder <christian.couder@gmail.com> writes:
->>
->> > It seems that this topic has fallen into the cracks or something,
->> > while the associated pch looks good to me.
->>
->> Yeah, it wasn't clear to me that your message you are responding to
->> was your Reviewed-by:.  If I recall my impression correctly from the
->> time I skimmed its proposed log message the last time, it focused on
->> describing a single failure case the author encountered in the real
->> world and said that the patch changed the behaviour to correct that
->> single case, and was not very clear if it was meant as a general
->> fix.  Is the patch text, including its proposed patch description,
->> satisfactory to you?  In other words, is the above your Reviewed-by:?
->
-> Yes, it's satisfactory for me, and I am Ok to give my Reviewed-by:, tha=
-nks!
-
-Thanks.  Will queue.
+Looks like a pretty straightforward change. I think the only point worth
+discussing is using the "pimpl" idiom. I think it's harder to see the
+value because the trailer_info struct is fairly simple, but I can
+definitely see this pattern being useful as we libify more complex parts
+of Git where the struct internals have more complicated logic involved.
+The pimpl pattern also seems like it will force us to think harder about
+providing a useful interface, so I am in favor of using it here as
+practice for future libification.
