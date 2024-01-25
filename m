@@ -1,52 +1,53 @@
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F58211185
-	for <git@vger.kernel.org>; Thu, 25 Jan 2024 22:46:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6970D12E4F
+	for <git@vger.kernel.org>; Thu, 25 Jan 2024 23:13:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706222768; cv=none; b=hFieyCqQnsAkXOPerpmdaHTZJvEw7h8gevp8CbIW7AQRSxYUFefLaxZqtJ+T9siH26y64TFZlc4KMmZXgMGAzIin4YrJDPyw2TjCYTisepqDfC90AFw7IvwZye2iRkwGRVVSdiotv4LIr/U2EoIR+kxAteQeqniGDp72okOa/0s=
+	t=1706224433; cv=none; b=Wme7WMUW16FhTcHqF1v7d5jYEERWGPDVv31lUcP2nP8cgaCq479MqbeaRYHbt8D2HFI79HE7x0ZZrcpjXEZGey/cHwqd7YZb5CBhJopfXxv0bX1t69AkPdS6BDJMll6acuydW3U84HS5kN7o1lajVa/WYPDcjALl4ADF7qerjjg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706222768; c=relaxed/simple;
-	bh=YnbQ2C/D3gnsvUNTdkzTfcCGj4RFKI8mLqUIlsF7kgk=;
+	s=arc-20240116; t=1706224433; c=relaxed/simple;
+	bh=sktM5xkKN62N59nLA3GktOh9n2qAzj6cg8oI3xl0Nf8=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=a2iiKMtZJ9AyWj92YmCD+oI6UL4a7xsXTlp3cxoon92lqmF3q4YTzLH2qaZOYu2b766knYNMHU+tzF9PhFeMtVMpxCNIPPqSEoa9JBIWK/2SdO6DeMMqnUScXlcepeALhYfq1wS1SyQ0QRfBbLWA9LuVEgq/8Xcsk1NjsSpTJ84=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=eKDDhD4u; arc=none smtp.client-ip=64.147.108.71
+	 MIME-Version:Content-Type; b=Mjb52/zyw+UewA8g9WkhUS4OymlpSTDlM25ze54xqmPGtkZXj+u0E/8P1UJmXwwdW5zvgZePK46R3Xpk7xiyQ0p8WaHrO2q9B5pSNafH3h8L0I6AXEOa/xvd18aqj8yfrxFLVq3v4osoLErkLpGBfEbuFIY8ggxVEXotU/UO0Gk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=jxGj8MGX; arc=none smtp.client-ip=64.147.108.70
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="eKDDhD4u"
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id B10E91C62A6;
-	Thu, 25 Jan 2024 17:46:04 -0500 (EST)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="jxGj8MGX"
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 221951C12C7;
+	Thu, 25 Jan 2024 18:13:50 -0500 (EST)
 	(envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=YnbQ2C/D3gnsvUNTdkzTfcCGj4RFKI8mLqUIls
-	F7kgk=; b=eKDDhD4uk957VcGlgpt0Hi/+bCUY4a8tOZBxGlWQwbosh9ITKcZL7b
-	K2D73Kur6TCcBf1/ZgSNRkoVcDphBTfo1i6jTmU7X/SB3wDPQqGcd8RK0BN2rrwX
-	NrVaCiZyGv1MIh9fc92R9bbv9hpAKHZ35pUYD6mrsCovJXmUbcnvY=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id A6A2E1C62A2;
-	Thu, 25 Jan 2024 17:46:04 -0500 (EST)
+	:content-type; s=sasl; bh=sktM5xkKN62N59nLA3GktOh9n2qAzj6cg8oI3x
+	l0Nf8=; b=jxGj8MGXHHsYnZBzzK858q6EgoJn6iYKWInH1CJqxzT2PcJvwi0mbM
+	144JmWxL3SQkQv6VrqN3N7iSFNMPONr+tDNeEQWt2DhsUlAPHiVNM+5OzD2NYZgC
+	8PFN/hBhRR9u5EAkpP5KHjbwG9e0qtgd5MiPLvJfTlYcJF8rV03EI=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 18E361C12C5;
+	Thu, 25 Jan 2024 18:13:50 -0500 (EST)
 	(envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.125.200.93])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id EEA291C62A1;
-	Thu, 25 Jan 2024 17:46:03 -0500 (EST)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 611CA1C12C4;
+	Thu, 25 Jan 2024 18:13:49 -0500 (EST)
 	(envelope-from junio@pobox.com)
 From: Junio C Hamano <gitster@pobox.com>
 To: "John Cai via GitGitGadget" <gitgitgadget@gmail.com>
 Cc: git@vger.kernel.org,  John Cai <johncai86@gmail.com>
-Subject: Re: [PATCH 1/2] index-pack: test and document --strict=<msg>
-In-Reply-To: <9b353aff73d6351b86cc7b55982f1565e76d08e9.1706215884.git.gitgitgadget@gmail.com>
-	(John Cai via GitGitGadget's message of "Thu, 25 Jan 2024 20:51:23
+Subject: Re: [PATCH 2/2] index-pack: --fsck-objects to take an optional
+ argument for fsck msgs
+In-Reply-To: <074e0c7ab923777c66516ced18b4fd1dadf7677f.1706215884.git.gitgitgadget@gmail.com>
+	(John Cai via GitGitGadget's message of "Thu, 25 Jan 2024 20:51:24
 	+0000")
 References: <pull.1658.git.git.1706215884.gitgitgadget@gmail.com>
-	<9b353aff73d6351b86cc7b55982f1565e76d08e9.1706215884.git.gitgitgadget@gmail.com>
-Date: Thu, 25 Jan 2024 14:46:02 -0800
-Message-ID: <xmqq8r4dt4k5.fsf@gitster.g>
+	<074e0c7ab923777c66516ced18b4fd1dadf7677f.1706215884.git.gitgitgadget@gmail.com>
+Date: Thu, 25 Jan 2024 15:13:48 -0800
+Message-ID: <xmqqplxpropf.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -56,89 +57,73 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 X-Pobox-Relay-ID:
- 850F7A12-BBD3-11EE-B9B7-25B3960A682E-77302942!pb-smtp2.pobox.com
+ 65BA3162-BBD7-11EE-8C2A-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
 
 "John Cai via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
 > From: John Cai <johncai86@gmail.com>
 >
-> 5d477a334a (fsck (receive-pack): allow demoting errors to warnings,
-> 2015-06-22) allowed a list of fsck msg to downgrade to be passed to
-> --strict. However this is a hidden argument that was not documented nor
-> tested. Though true that most users would not call this option
-> direction, (nor use index-pack for that matter) it is still useful to
+> git-index-pack has a --strict mode that can take an optional argument to
 
-Though it is true that ... call this option directly (nor use
-index-pack, for that matter), it is still ...
+"mode" -> "option", probably.
 
-or something like that, probably.
+> provide a list of fsck issues to change their severity. --fsck-objects
+> does not have such a utility, which would be useful if one would like to
+> be more lenient or strict on data integrity in a repository.
+>
+> Like --strict, Allow --fsck-objects to also take a list of fsck msgs to
+> change the severity.
 
-> document and test this feature.
+"Allow" -> "allow".
 
-And I agree with that.  Thanks for adding the necessary doc.
+> This commit also removes the "For internal use only" note for
+> --fsck-objects, and documents the option. This won't often be used by
+> the normal end user, but it turns out it is useful for Git forges like
+> GitLab.
 
-> +--strict[=<msg-ids>]::
+"This commit also removes", "documents" -> "Remove", "document".
 
-<msg-id> in the context of "git fsck --help" seems to refer to the
-left hand side of <msg-id>=<severity>.  <msg-ids> sounds as if it is
-just the list of <msg-id> without saying anything about their severity,
-which is not what we want to imply.
+> ---fsck-objects::
+> -	For internal use only.
+> +--fsck-objects[=<msg-ids>]::
+> +	Instructs index-pack to check for broken objects instead of broken
+> +	links. If `<msg-ids>` is passed, it should be  a comma-separated list of
 
-Either use a made-up word that is clearly different and can not be
-mistaken as a list of <msg-id>, or spell it out a bit more
-explicitly, may make it easier to follow?
+Very much pleased to see an additional description that is written
+to clarify the difference between this option and the other --strict
+option.  The original was totally unclear on this point, and it is
+very much appreciated.
 
-	--strict[=<fsck-config>]
-	--strict[=<msg-id>=<severity>...]
+The other option notices and dies upon seeing either a broken object
+or a dangling link.  This one only diagnoses broken objects and does
+not care if the objects are connected.  However, saying "instead of"
+here tempts readers to mistakenly think that the other one only
+checks links and this one only checks contents, which is not what we
+want to say.  Perhaps "to check for broken objects, but unlike
+`--strict`, do not choke on broken links" or something?
 
-I dunno.
+Same comment on <msg-ids> as the previous step.
 
-Use of <msg-id> and <severity> below looks good in the body of the
-paragraph here.
+> +	`<msg-id>=<severity>` where `<msg-id>` and `<severity>` are used to
+> +	change the severity of `fsck` errors, eg: `--strict="missingEmail=ignore,badTagName=ignore"`.
 
-> +	Die, if the pack contains broken objects or links. If `<msg-ids>` is passed,
-> +	it should be a comma-separated list of `<msg-id>=<severity>` elements where
-> +	`<msg-id>` and `<severity>` are used to change the severity of some possible
-> +	issues, eg: `--strict="missingEmail=ignore,badTagName=error"`. See the entry
-> +	for the `fsck.<msg-id>` configuration options in `linkgit:git-fsck[1] for
-> +	more information on the possible values of `<msg-id>` and `<severity>`.
+Same comment for "eg:" as before.
 
-"eg:" -> "e.g.," probably.
+> @@ -1785,8 +1785,9 @@ int cmd_index_pack(int argc, const char **argv, const char *prefix)
+>  			} else if (!strcmp(arg, "--check-self-contained-and-connected")) {
+>  				strict = 1;
+>  				check_self_contained_and_connected = 1;
+> -			} else if (!strcmp(arg, "--fsck-objects")) {
+> +			} else if (skip_to_optional_arg(arg, "--fsck-objects", &arg)) {
+>  				do_fsck_object = 1;
+> +				fsck_set_msg_types(&fsck_options, arg);
+>  			} else if (!strcmp(arg, "--verify")) {
+>  				verify = 1;
+>  			} else if (!strcmp(arg, "--verify-stat")) {
 
-> diff --git a/t/t5300-pack-object.sh b/t/t5300-pack-object.sh
-> index d402ec18b79..9563372ae27 100755
-> --- a/t/t5300-pack-object.sh
-> +++ b/t/t5300-pack-object.sh
-> @@ -441,6 +441,28 @@ test_expect_success 'index-pack with --strict' '
->  	)
->  '
->  
-> +test_expect_success 'index-pack with --strict downgrading fsck msgs' '
-> +	test_when_finished rm -rf strict &&
-> +	git init strict &&
-> +	(
-> +		cd strict &&
-> +		test_commit first hello &&
-> +		cat >commit <<-EOF &&
-> +		tree $(git rev-parse HEAD^{tree})
-> +		parent $(git rev-parse HEAD)
-> +		author A U Thor
-> +		committer A U Thor
-> +
-> +		commit: this is a commit wit bad emails
+The implementation of this part looks quite obvious, once you see
+how "--strict[=<msgid>=<level>]" is implemented.
 
-"wit" -> "with"; as this typo does not contribute anything to
-the badness we expect index-pack to notice, it would pay to
-make sure we do not have it, to avoid distracting readers.
+Looking good.
 
-> +		EOF
-> +		git hash-object --literally -t commit -w --stdin <commit >commit_list &&
-> +		PACK=$(git pack-objects test <commit_list) &&
-> +		test_must_fail git index-pack --strict "test-$PACK.pack" &&
-> +		git index-pack --strict="missingEmail=ignore" "test-$PACK.pack"
-> +	)
-> +'
-> +
->  test_expect_success 'honor pack.packSizeLimit' '
->  	git config pack.packSizeLimit 3m &&
->  	packname_10=$(git pack-objects test-10 <obj-list) &&
+Thanks.
