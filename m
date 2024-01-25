@@ -1,100 +1,82 @@
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-il1-f169.google.com (mail-il1-f169.google.com [209.85.166.169])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E1B573177
-	for <git@vger.kernel.org>; Thu, 25 Jan 2024 16:28:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C6117CF13
+	for <git@vger.kernel.org>; Thu, 25 Jan 2024 16:37:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706200108; cv=none; b=iCjOhn4GSOgaWjr+ImhM6Vo6OhBT4G1qK30Tyuuyx2WGPVWi1+ziSulutiIDbwfVfGDM20izR9FOFUruwtdkzyIgEsNf8AO2wpBhQYbZUD0FoTgAvdvlLuTuDK+G5ju9aZpZxRBJkCmWNe1Qp5K/MQOHheLey+unPtUeWd9SJaU=
+	t=1706200648; cv=none; b=QsQPqHP/J0/ln3GT65YmN+VF9JRfI07WSEwSfvs5iro+MFeTtphn3IBL6lQeQJ5rHrWY4bslyXEi7wVvvufwdBdh212kAJdZ2bLqbr+Ki1xD8fURmik752UN/hRxJLLpz6vVPQu0et48RsNiJxzzBHi25Hou1Zl7prtpUa52EYI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706200108; c=relaxed/simple;
-	bh=oKtA7mtxy3op/9dFRrVppRb0iNw3ZPE9ABjmLFJKV1k=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=IIYRRpoSPcfvXxhoE3np+QxGv+5pTejZf4uRb3iTcmDCdMvr8sVvbQvcgd6hKjZfE92FUUtuwFX2NjqFqH/t4XMni4yZLh86Ubi7cK+I1pouzbSf2zpalH1OPM4JTo0qdvPzfxuZh4nTx+jpOJaLNm6DrTb9kZX/mOKMUjW2nHs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=VnW8ZQ3N; arc=none smtp.client-ip=173.228.157.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1706200648; c=relaxed/simple;
+	bh=Niu/wIyVzmt2CT8gSNjUXekhDhUZYwOT44Nt0Xrb8hs=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=gczeYwayeJlUy+4ZwCmvop0CVoOTMg49ycb5i4Cj214qKUaeCpzatLmhoxAExEM8NQz04Acr/1/AsgR1JrrdyhBFU90LVL0MlgCdUvXOzX32yrpUZWUdphYz524vBxuoyngruQFgXUtOfRxNHWlWEqJkfzlvB0EuJyrmvuNZM90=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NEKgu75X; arc=none smtp.client-ip=209.85.166.169
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="VnW8ZQ3N"
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id 8A13A23343;
-	Thu, 25 Jan 2024 11:28:26 -0500 (EST)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=oKtA7mtxy3op/9dFRrVppRb0iNw3ZPE9ABjmLF
-	JKV1k=; b=VnW8ZQ3NhV809xreksGkMo/5+SZJ1BIyG6iG2KQtYzOvt7Bm+vceQ/
-	nai0AFXTVbxLYvckBuKYu/iFoYDlY5rzAEzcEW9bhnDdigdsd3BUVn2XkO+DXIMy
-	EBs2H1GZGXrvQJYOAGLIBf/cLhO+srFptttZtZf2W9fe0k76AKnKs=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id 8024F23342;
-	Thu, 25 Jan 2024 11:28:26 -0500 (EST)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.200.93])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 066F923341;
-	Thu, 25 Jan 2024 11:28:22 -0500 (EST)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Karthik Nayak <karthik.188@gmail.com>
-Cc: git@vger.kernel.org,  ps@pks.im,  phillip.wood123@gmail.com
-Subject: Re: [PATCH v2 1/4] refs: introduce `is_pseudoref()` and `is_headref()`
-In-Reply-To: <CAOLa=ZQxMZo2Y6x6GmVw=df_xS4tkF4D1_tZOeLb7jL5d5bKXA@mail.gmail.com>
-	(Karthik Nayak's message of "Thu, 25 Jan 2024 16:20:15 +0000")
-References: <20240119142705.139374-1-karthik.188@gmail.com>
-	<20240124152726.124873-1-karthik.188@gmail.com>
-	<20240124152726.124873-2-karthik.188@gmail.com>
-	<xmqqfrymeega.fsf@gitster.g>
-	<CAOLa=ZQxMZo2Y6x6GmVw=df_xS4tkF4D1_tZOeLb7jL5d5bKXA@mail.gmail.com>
-Date: Thu, 25 Jan 2024 08:28:21 -0800
-Message-ID: <xmqqa5otxtqy.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NEKgu75X"
+Received: by mail-il1-f169.google.com with SMTP id e9e14a558f8ab-362a0b95874so4061915ab.0
+        for <git@vger.kernel.org>; Thu, 25 Jan 2024 08:37:27 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1706200646; x=1706805446; darn=vger.kernel.org;
+        h=content-transfer-encoding:to:subject:message-id:date:from
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=Niu/wIyVzmt2CT8gSNjUXekhDhUZYwOT44Nt0Xrb8hs=;
+        b=NEKgu75Xsmjp6Vo7KlgaJbcpQZiqgLDKtBgN4vhZx7PXZIIv4PTcdJwLxScRJkrmyb
+         kt1lpf+dKW0lx/ga0D/y/98JWXc9tVtshKpKvHiVCbAc9TFLSx23XgbHLznA9RR9CIIP
+         b7OWtK/y3/vSVf5BLyywSgG06g6ypKZ9HDZEe4/0a//CNjs0KnISe4L6H/L1QHgMoVHm
+         JEEkzTAIXtRKDnKS22QGgV5rmSYmBlb5dAoWcVzvFZhc0iSpL3kqWFTwB1YepUtiKDDV
+         WGO8hf3lZ09y67rY4PThgYf7/F+LPwfLkCdbyhsyzMUXf+gtiEnMIl1ZO6qSL/vfh0Dj
+         FVww==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1706200646; x=1706805446;
+        h=content-transfer-encoding:to:subject:message-id:date:from
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Niu/wIyVzmt2CT8gSNjUXekhDhUZYwOT44Nt0Xrb8hs=;
+        b=fzWGXcoHXOyW/vI70VBmCw+2xfHsVKI/IaYy2bN1FteeT6x3HRpaVqZdSKtY6Fz5Vm
+         72j9UYGimxMRXaFHA/CUhNOf8gMJUKpOAMoH6MofpRkRcwLLFK1K9tGDG4iTw42VdQlv
+         efycyXtOGCLZSC97saRgM2B5P5f5SLX7jASb8obyeSUp18USkX4UiDRweAERO3qcW0vy
+         QLZ7C0s4Po356u2b9VzuzYOC9fm+/sDXnZvTI0fnZL3BaVnSM9TiG7tOWR9LL1IRm2Mc
+         e7v6e92Z3Ro27nJCbRIzxwugVDwuhGlFVvZR/Wflrvy7HYtHzRDC0THHrXTQZNlTboJr
+         /hDQ==
+X-Gm-Message-State: AOJu0Yw8unY4E8ZPgiaHwSwJ5FCBeVqF+oeXHax9zZdAk4qwti1VDuko
+	hQlxmsiSv71E2MBjmP+YuJIqvuAG3MtePEAUa4WsXr/yt/KplNKXHPqYiuJ4SiCxDkOBuhrronp
+	35/vMSEq6FiLEHcW/UZAklYi5v0okLaXAO4KXww==
+X-Google-Smtp-Source: AGHT+IHLT5WItIQnJdD9DgCODma7HyWCschi/UEhm37iQjTdQGCBLAr5ei4Itdqch1xooUMLp8A7iRp5ePmqiJ3Fkag=
+X-Received: by 2002:a92:de0f:0:b0:361:9446:dd03 with SMTP id
+ x15-20020a92de0f000000b003619446dd03mr1429025ilm.13.1706200646115; Thu, 25
+ Jan 2024 08:37:26 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- C214408A-BB9E-11EE-98EE-A19503B9AAD1-77302942!pb-smtp21.pobox.com
+From: Peter da Silva <resuna@gmail.com>
+Date: Thu, 25 Jan 2024 10:37:15 -0600
+Message-ID: <CAMbH6s90tNo1Kz3xuv741LoUkN=Y3Bcw2=7yGQhEe=xrgBgQcw@mail.gmail.com>
+Subject: Slightly embarassing bug in error message when RSA key doesn't match.
+To: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Karthik Nayak <karthik.188@gmail.com> writes:
+git version 2.20.1
 
->>> +int is_headref(struct ref_store *refs, const char *refname)
->>> +{
->>> +	if (!strcmp(refname, "HEAD"))
->>> +		return refs_ref_exists(refs, refname);
->>
->> Given that "git for-each-ref refs/remotes" does not show
->> "refs/remotes/origin/HEAD" in the output when we do not have the
->> remote-tracking branch that symref points at, we probably do want
->> to omit "HEAD" from the output when the HEAD symref points at an
->> unborn branch.  If refs_ref_exists() says "no, it does not exist"
->> in such a case, we are perfectly fine with this code.
->>
->> We do not have to worry about the unborn state for pseudorefs
->> because they would never be symbolic.  But that in turn makes me
->> suspect that the check done with refs_ref_exists() in the
->> is_pseudoref() helper is a bit too lenient by allowing it to be a
->> symbolic ref.  Shouldn't we be using a check based on
->> read_ref_full(), like we did in another topic recently [*]?
->>
->>
->> [Reference]
->>
->>  * https://lore.kernel.org/git/xmqqzfxa9usx.fsf@gitster.g/
->>
->
-> Thanks, this makes sense and the link is helpful. I'll do something
-> similar, but since HEAD can be a symref, I'll drop the
-> `RESOLVE_REF_NO_RECURSE` flag and only use `RESOLVE_REF_READING`.
+I just went to clone a repo on github on a dev server that I hadn't
+used since March 1 2023.
 
-Just to make sure there is no misunderstanding, I think how
-is_headref() does what it does in the patch is perfectly fine,
-including its use of refs_ref_exists().  The side I was referring to
-with "in turn makes me suspect" is the other helper function that
-will never have to deal with a symref.  Use of refs_ref_exists() in
-that function is too loose.
+Github updated their RSA key on March 24th.
 
+So I got this message.
+
+Warning: the ECDSA host key for 'github.com' differs from the key for
+the IP address '140.82.113.3'
+Offending key for IP in /[...]/.ssh/known_hosts:8
+Matching host key in /[...]/.ssh/known_hosts:18
+
+Of course it was the RSA key that had changed, and known_hosts:8 was
+an RSA key, but the error said the ECDSA key was wrong. After removing
+the bogus RSA key from the file it worked fine with the matching ECDSA
+key. This error should probably report the correct type for the key
+that is wrong rather than the key it=E2=80=99s trying to use. :)
