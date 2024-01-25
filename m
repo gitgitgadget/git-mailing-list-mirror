@@ -1,89 +1,132 @@
-Received: from mout.gmx.net (mout.gmx.net [212.227.15.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f44.google.com (mail-pj1-f44.google.com [209.85.216.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5876745DC
-	for <git@vger.kernel.org>; Thu, 25 Jan 2024 15:46:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AD391C6A5
+	for <git@vger.kernel.org>; Thu, 25 Jan 2024 16:02:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706197581; cv=none; b=moWzPrr5Aks9VPVS7hSg0korYbzPsmfsDahMYV2Y68GXtwbhgUZzG/HyfZRHluCDc8RAcZyHzflEGUFof0fOysEGkgCnfhmqtvYKe8+EJTz26plZRPAeHD+7NHksWRAXxW67Aw+xUqGTW+Pjg8uJTjitODAWoMmOb6XYW+Aryhc=
+	t=1706198551; cv=none; b=nu9F2hQkvTNESfMlmPo0cqH3es3YAMBnCzeRBFrFW5xZF6dRi/G6t+MHaZLx3/ZQdRDMTynFxKcQNJX7H5DmJDdkJMoNrSsrhZxv1nOdnEXpD9xY4PTvOmAxdsOAfUs0RWxQbIou6yj38eFwmIR25c5tsckLRsYFYisGvrrvKP0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706197581; c=relaxed/simple;
-	bh=dz4+WichKmqAPCtZC4GLEgYuxOIhGgyhUrD5Hfcr6xw=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:References:
-	 In-Reply-To:Content-Type; b=uBpcdp4FMmzca97ekcOX9Tng9m5yCOQAan9NYB+oOmRwQBTZIe803kUrSutQ/uz+QpEcNKNBBTimtA4HUVSAJaUGgNHjhRi/h+uVSxb2LuSg4puddQdGAhelesYwrnehcUZ84h9q3zsFzFeSaxfUWC34uQ/At7WTa6Zmnmlmha8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=GMX.De; spf=pass smtp.mailfrom=GMX.De; dkim=pass (2048-bit key) header.d=GMX.De header.i=ruege@gmx.de header.b=rs3iSl1E; arc=none smtp.client-ip=212.227.15.18
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=GMX.De
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=GMX.De
+	s=arc-20240116; t=1706198551; c=relaxed/simple;
+	bh=9HcyPSUQxozkGaBg8Je6i75BlsnsTyJFs64Z2haOQok=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=av083uh6SCM5tjVBrhoosRuJ7/ZqdS4RHABqaYWSuhQxogC/vVVnvpMuvlGG+sWeZSRsCExA70HwHOZV1C3gHrhJFPp7EvvsLvIGppxekwWXVFmfR9ljyBTN03dyDudwDi4NYhA2Z35dbFmyRaD2hlTg4CqmPQ7f//HDCMKFTVs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=M41TXVAB; arc=none smtp.client-ip=209.85.216.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=GMX.De header.i=ruege@gmx.de header.b="rs3iSl1E"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=GMX.De; s=s31663417;
-	t=1706197576; x=1706802376; i=ruege@gmx.de;
-	bh=dz4+WichKmqAPCtZC4GLEgYuxOIhGgyhUrD5Hfcr6xw=;
-	h=X-UI-Sender-Class:Date:Subject:From:To:References:In-Reply-To;
-	b=rs3iSl1EXJyfAZoElPDGqKXnNjCJcJvNEaUXAlPcQ4y2RwafL8XnaoZdHqoZZ47d
-	 LwR2LohtYqgYATbpPZsdTvztGeF61OH3G/Ng+2EC6adt9XVUqw64IRSLKI62cBDV4
-	 v8VN3tqj9oetMiDCVbSDjrhqdi+Sv0zKKixrzCX8cBSmcoORS9LBTMiuBQkS9iWCX
-	 3ayA5PlGD0IkyCDYMa4scKHgFZQwiZqxZXmggtrka61jG7u+6TtRgHEOwNVmqyWVf
-	 /Upx6qqExIjKPRT3mtBElIw3dzaDloyunYLqj/HcQZ5F4LLfrd3YYGi6QdhxvR0hg
-	 VMfBYUs06N4pGb2lxw==
-X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from [10.240.1.107] ([77.189.146.233]) by mail.gmx.net (mrgmx004
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MPokD-1rg2Tj3UKR-00Mrut for
- <git@vger.kernel.org>; Thu, 25 Jan 2024 16:46:16 +0100
-Message-ID: <05dbb2da-203b-4e12-ba8f-a46e1fd3f622@GMX.De>
-Date: Thu, 25 Jan 2024 16:46:16 +0100
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="M41TXVAB"
+Received: by mail-pj1-f44.google.com with SMTP id 98e67ed59e1d1-2906b859560so3051404a91.1
+        for <git@vger.kernel.org>; Thu, 25 Jan 2024 08:02:29 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1706198549; x=1706803349; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=WLsTFvNouVdy9ERxRGmuCPTXKcjEP0sJceejwJSfRxg=;
+        b=M41TXVABsI/7k3TfUz9sgyCUFHIUbV/7C8hBNqzoLZjd2oEfqFTxxo9EQIZj82+c59
+         1pqj1BH7AuntrSrbGvTlt7h0ywij79YclYTrAL2UF9SFGkx2naXjsyEDUhrooHukvFQf
+         wfWJIWHU2L5m77jhxO/BkyOL2fp2r6SSM7bG2sxAMFLUJfFEew2Gtv88va3NT9vphTea
+         viIDv9XUNKPPkUSUIAqDZ9FIcP9xbuvZovkjJ4AUx0TU5fHuq/Agmsd+aEzwSGLWc6hg
+         8BjvnEyoUXTPyaVpey5YQlKuC9JKt20XKLN1INU0X5JPV+9ee+al1TfBaSvxcXtIWsoB
+         xOIg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1706198549; x=1706803349;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=WLsTFvNouVdy9ERxRGmuCPTXKcjEP0sJceejwJSfRxg=;
+        b=nQ4gwzr2yatxxpmQBOsboCmDcf12oRmS4xg0y9qv3r/EewpGhWmB1GHRxfZNxXrp4U
+         XV81HVGXRNtB7GdAj546m+5yUN3A0raPH8KO4uinwQI2t2z2ueksWQKZJ2VSNBQBPpR7
+         fUgS5YJhBhoiPpk6SQF/p3nwO8RH0Y8XLCSXkSV4guBfR3F86PmGwIhm7II6RDie7Mdi
+         PHsTnFCz2S6eWs3MNbHcDU1ptPeSPvVKZbWkEej++I8J6hfhGLXeSMwXsk4/RSMrZbe7
+         ZqFU4nHbgAuvDG5FEwIkzHaJXjLrzWcYEfOOJmqyCBj8VNPgXL2z8wGEhP0aCjT1hnhD
+         G+fg==
+X-Gm-Message-State: AOJu0YzB9aCvO6MOvGtDm2y03o/QuLZR5bb6nhMnIkcfmw3hMzKwAgvo
+	VWVuv9DqP/t2DIFcPlPYrHneD4yA260e8GMNYBgcCH0+9tieM0oP0b+RvWjJKegDsc13zrzIubT
+	aFBF97bZRJSqU8use+YqK8LdqJh2Nygq/
+X-Google-Smtp-Source: AGHT+IGnT2EPnjIcbM7f5/9ADJcMoN07kC51kbuS2MInWO3BmJs0gzbO9ia7rpqs7fWnSE30BCXld06QX33Wui0TqRU=
+X-Received: by 2002:a17:90a:ee96:b0:290:3be1:9c1 with SMTP id
+ i22-20020a17090aee9600b002903be109c1mr860440pjz.26.1706198548695; Thu, 25 Jan
+ 2024 08:02:28 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: P. S. Virus detected
-From: =?UTF-8?B?SHIuIFLDvGdl?= <Ruege@GMX.De>
-To: git@vger.kernel.org
-References: <a96e6744-c0bb-4f6e-9066-646ca15a353d@GMX.De>
-In-Reply-To: <a96e6744-c0bb-4f6e-9066-646ca15a353d@GMX.De>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+References: <cover.1706099090.git.ps@pks.im> <b2fb6f5ad0c558527341bd8040544d6b0ae5d8a2.1706100744.git.ps@pks.im>
+In-Reply-To: <b2fb6f5ad0c558527341bd8040544d6b0ae5d8a2.1706100744.git.ps@pks.im>
+From: Justin Tobler <jltobler@gmail.com>
+Date: Thu, 25 Jan 2024 10:02:15 -0600
+Message-ID: <CAGAWz+7hQGMbnc8c9iCzyWQgS=wkaEXXbC7-Biqw2i7oc6rneQ@mail.gmail.com>
+Subject: Re: [PATCH v2] reftable/stack: adjust permissions of compacted tables
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:g+TCsdyoxQfDDlnMenlTT7YIiYZC95YCArd4R/vL2Hc8NFS3Dcm
- 7+Taj2hf+JZjgtB0WmpRg08VUs1x1c3kWOd1Qb4yPkyXH7HP/Cdq7wxXldj8VAe4idzjYZH
- QqCgS1XBqNH06tM3HIKpCuvczeJjgSlwqK3BKed7jNPnTBewuO3xYdUtmdWPoZmz/tOT2Wv
- Dhb6CSCj3Kn6xx3PPN53g==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:lcl0s6xoCdg=;WNtEDwwd6GiTWtzPFYonGNum5pd
- tp1KAdrLjtdMKOCsD/Lpxk/BlI9CUcWQKUNk/rReozITRVp/HRlN8bkrZRwQI3539e/scQX15
- xZfMTYm1ow40puOVSqpl9r7/557XCAo3WS13x0a7YWK/7bvf1gs50Zpb1yJ3n8FKMGkkZHf1/
- dJD+ZYI+Rh98KqhXiYg1W0m7FdwpAGKE/Gem7v1C3Es0dvROTlk9Lkt8FbzfcvI89xTy7jDD/
- W5H8wcZnhztGsgGgt+DYHx/V/wkNQpc7OfToOjCk4mQTZ7pZjUT16HvHwlBCnAxWqlh0KORo2
- 9Dkvrllm62LGz63bXg+OTX3hSbCnTSOEu5aQAp3cYQNMg2KlYMzkTM2+BId77YejG2sLKdKmT
- gvoogEgqMnynU9yMtQF+sZSZRgG370SEGdxzl7kT5P5rsaobaywRQ2ldUjBAj1mOOIyB6BZxL
- 4uunCx1DrFh/G29B6uhC4eLPs1Bgbpwx3D7oTkj5mJ7ub4KKzm4tC5Bm0h3S5GGrPvZm01TOd
- mngjXmkDslD7QZr24bOQz9HyuyJ+x3CWhADKXlDaVUOB/IqTgmiOrHf8zGunosqAIG4tyY9rX
- Hq0unN6S/qLkYKPJZa9PiHcZtcnPnuxfiLneVX5DIxe1s2NiI2nkw9W8Lsv1Jo+dRGfSg/1dg
- p8DzwtUTIW9zZdyOMQ9SVkWCsCT18MSVQGrW43FBarJhCsb2FbFx5knRH0beEpC0TNsYsHk+O
- h7HzJKvLLZ1euOoiVwpka3t34yo8ltquqIhv7KdF5c/v4EYAi2lFjvd83oQgvfDDRPC4ScC61
- 4g9iu+W0iwazGCBbGc1yp0o6If6cBkR5ywmNBfPLISRK0b78mM9s6p0XaAmfoonTQX+TeTyXA
- 6H1hXpZnInhrfDPkKmWUs85vVQKeB8bRB2nLHtNQfAqHjPMDa9xa94OAxruTV5FfhcQceQIk9
- NPhCMn2AeFmwYBAlvlVq3Ht5DL8=
 
-Tried a few versions:
-
-First version WITHOUT detected virus (avira.com) is version 2.41.0.3.
-All newer versions lead to virus detections.
-
-Best regards,
-Martin
-
-
-Am 25.01.2024 um 16:23 schrieb Hr. R=C3=BCge:
-> Hello,
+On Wed, Jan 24, 2024 at 7:21=E2=80=AFAM Patrick Steinhardt <ps@pks.im> wrot=
+e:
 >
-> trying to use windows version 2.43.0 from https://git-scm.com/downloads
-> my antivirus software detects it as a virus.
-> In parallel something wanted to change my hosts-entries.
+> diff --git a/reftable/stack_test.c b/reftable/stack_test.c
+> index 289e902146..2e7d1768b7 100644
+> --- a/reftable/stack_test.c
+> +++ b/reftable/stack_test.c
+> @@ -443,15 +443,16 @@ static void test_reftable_stack_add(void)
+>         int err =3D 0;
+>         struct reftable_write_options cfg =3D {
+>                 .exact_log_message =3D 1,
+> +               .default_permissions =3D 0660,
+>         };
+>         struct reftable_stack *st =3D NULL;
+>         char *dir =3D get_tmp_dir(__LINE__);
+> -
+>         struct reftable_ref_record refs[2] =3D { { NULL } };
+>         struct reftable_log_record logs[2] =3D { { NULL } };
+> +       struct strbuf scratch =3D STRBUF_INIT;
+
+The variable name `scratch` seems rather vague to me as opposed to somethin=
+g
+like `path`. After a quick search though, `scratch` appears to be a fairly
+common name used in similar scenarios. So probably not a big deal, but
+something
+I thought I'd mention.
+
+> +       struct stat stat_result;
+>         int N =3D ARRAY_SIZE(refs);
 >
-> Ist that normal?
+> -
+>         err =3D reftable_new_stack(&st, dir, cfg);
+>         EXPECT_ERR(err);
+>         st->disable_auto_compact =3D 1;
+> @@ -509,12 +510,32 @@ static void test_reftable_stack_add(void)
+>                 reftable_log_record_release(&dest);
+>         }
 >
-> Best regards,
-> Martin
+> +#ifndef GIT_WINDOWS_NATIVE
+> +       strbuf_addstr(&scratch, dir);
+> +       strbuf_addstr(&scratch, "/tables.list");
+> +       err =3D stat(scratch.buf, &stat_result);
+> +       EXPECT(!err);
+> +       EXPECT((stat_result.st_mode & 0777) =3D=3D cfg.default_permission=
+s);
+> +
+> +       strbuf_reset(&scratch);
+> +       strbuf_addstr(&scratch, dir);
+> +       strbuf_addstr(&scratch, "/");
+> +       /* do not try at home; not an external API for reftable. */
+> +       strbuf_addstr(&scratch, st->readers[0]->name);
+> +       err =3D stat(scratch.buf, &stat_result);
+> +       EXPECT(!err);
+> +       EXPECT((stat_result.st_mode & 0777) =3D=3D cfg.default_permission=
+s);
+> +#else
+> +       (void) stat_result;
+> +#endif
+
+Why do we ignore Windows here? And would it warrant explaining in the commi=
+t
+message?
+
+-Justin
