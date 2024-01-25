@@ -1,70 +1,91 @@
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f41.google.com (mail-wm1-f41.google.com [209.85.128.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 020E7257A
-	for <git@vger.kernel.org>; Thu, 25 Jan 2024 20:32:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDC21137C2E
+	for <git@vger.kernel.org>; Thu, 25 Jan 2024 20:51:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706214735; cv=none; b=Z0MdvIRb/Eo9EwZquIqbS5GKM9p6SM096fZy+ZJCM7qM7HEtSxmCEo9BWvS4+l/RtEQCQKjtAHY4OQrOzVLr+mdjCCB/2eD6OUmBhQ/HE/Ujs/20ZN4LiKTs+ZCJRfuosy1xZUZv6JbBORrDSUobCQzBvuKaMvIKZJN9tvKFd9M=
+	t=1706215889; cv=none; b=AVKSV1G12xEPuf+wQSGpSdVM+fWIHwBzjItSXNsUB02G15Q+iCkjY1jRyTdc6xvwNqwsFV+VXJE4DbnL+WRb0BVbBFZXo6cchhoSTpm53ryITXL6TSA5OYOaH/N/cNGaaPJowQicAJ4HDR86uumE1mKMCTrrgVnQcbjU0+QLxlI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706214735; c=relaxed/simple;
-	bh=auzlgP8eKMqodU+zEaluawCxOvgtH37hMjBCcsdyIIc=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=A6lNPPoi84KhhwiN50ViaPMq4/bnkDDVHeF75hyTVyUc5ItrbKnYyyHC6AxwLPuqliQTFIP+uSklvg1P8YJPHeo6Jks8Ygj7T5zCKh+zELE00dHUHVbW64J9uv7XDPPJYTm/5yJAG+Yt/An63ZkysRrl5kAhCOBJab6GZ+S3VQk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=JZCzq1nH; arc=none smtp.client-ip=64.147.108.70
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1706215889; c=relaxed/simple;
+	bh=BTTRQSuEfUTilgkDhPM8juh3Abvt9a/w1DaLJ8PoRoA=;
+	h=Message-ID:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=bDduXdKT32DbPt/JOkzwXHSWTqU0bio/y800ZhVY77v70AhQqH0xvjywXN1qPdZr6lSU2nGv8H8fx46/sY7ADzm9ust9QRvMu4EUGGRGuXufoMSPro2lkeEuCyHS3RMfA8QeFeZGO2f6Q3CNHSuyJS1so0qTrNhrS5J5BIV2egc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=AdCz9MfD; arc=none smtp.client-ip=209.85.128.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="JZCzq1nH"
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 892DD1BFF39;
-	Thu, 25 Jan 2024 15:32:06 -0500 (EST)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=auzlgP8eKMqodU+zEaluawCxOvgtH37hMjBCcs
-	dyIIc=; b=JZCzq1nHsH9vpqP09+Y35B3W883B0kLqAL0TQHd/nKr2Rz1Lt5pyVT
-	38w2SikbF8OSQog02qJhcP5+LXQyotnyqZ1ZB7Yu4jMVamEY0SbVYYh5zch5PlpT
-	y49x4Jrxcozmf2XmpNwp91MwQweypoIe8A3H5bNM1Fx6qyCPMQpi0=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 5F7B31BFF38;
-	Thu, 25 Jan 2024 15:32:06 -0500 (EST)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.200.93])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 925461BFF37;
-	Thu, 25 Jan 2024 15:32:05 -0500 (EST)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Josh Steadmon <steadmon@google.com>
-Cc: Linus Arver via GitGitGadget <gitgitgadget@gmail.com>,
-  git@vger.kernel.org,  Emily Shaffer <nasamuffin@google.com>,  Christian
- Couder <chriscool@tuxfamily.org>,  Linus Arver <linusa@google.com>
-Subject: Re: [PATCH 06/10] trailer: make trailer_info struct private
-In-Reply-To: <ZbK4BcESMfljw7Ym@google.com> (Josh Steadmon's message of "Thu,
-	25 Jan 2024 11:35:33 -0800")
-References: <pull.1632.git.1704869487.gitgitgadget@gmail.com>
-	<0cbe96421c7bf573e8ddc97b2a0aecc894095399.1704869487.git.gitgitgadget@gmail.com>
-	<ZbK4BcESMfljw7Ym@google.com>
-Date: Thu, 25 Jan 2024 12:32:04 -0800
-Message-ID: <xmqq7cjxw3wb.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AdCz9MfD"
+Received: by mail-wm1-f41.google.com with SMTP id 5b1f17b1804b1-40e72a567eeso85567485e9.0
+        for <git@vger.kernel.org>; Thu, 25 Jan 2024 12:51:27 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1706215886; x=1706820686; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=WuSqF4TaIRoNxAz1JBd1E7Ix2TJGDnjoO4lYSEdap5Y=;
+        b=AdCz9MfDNzYbPDDjX5Ic8gn0SNpAveUjs1ETxYi+0jTBOdOuvzIYSlu1neBQKh/qJc
+         iEirdWudfN6rtk/6Bs/VmhpBfWeB57oJIWylBzDHa9gZvAVMO4p76XA6xAMPgBgyNuLB
+         WuCCGeExJDxw1NrLrnMzUb3xonAo+NCLBmPM5+I/c+QHSMuyBy0nVrjupPsLUFCJCbPk
+         fi+tZHggsYtyhf2rTvI4x/6RAzE7TMBonaDjUtCNZvJQFKATd0gIyhDauBFqXF52ax1h
+         2H/eckPsrTg6qYbcnkOP6YKRLCrfrsQ1N5yQkLAuqtGgD9YDHWZ7o3q6YpACtZkd0oNa
+         lJRA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1706215886; x=1706820686;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=WuSqF4TaIRoNxAz1JBd1E7Ix2TJGDnjoO4lYSEdap5Y=;
+        b=Am8IVNPBYH9qAiWx6UJl98pYQMs35xoSVLk/WA/iB3ipW6QeS9F+vG7Ws/b+9mBo+K
+         qhXWx1fiZn2+v+UOUKJEXRHb8UxMJwkZj9FCC0IODgAf3ssCJHB8aeNdjMC96RMMMGyu
+         sQfn76bUKRP11VG15SKj3ZauHYSFhWJhk1meWFem0Km37B4fINzSmVn/0d9TT+XxcX0w
+         Pnjr78RTWrZ72s7mPSSizDHtxMkjXOeyAl71dPxUr88aDw2KpReHT681TOeW/3TVfpAX
+         tqWozVahJvjHoGVo87ffzWVAGemdcZ3asoRcDYrHb/8J2hrAKMtUVcXiixakQMfWPRiC
+         Ebew==
+X-Gm-Message-State: AOJu0YyaEl6sYlQM/GtSqtdTAW8s5mZVGtKSasNTAOnrkkW0TPaWiB9g
+	Vqh/08McYAcnR2szcDZek1SON/ItjHRrQA4QuPy78hoJcNJnYpDc99jpeDwU
+X-Google-Smtp-Source: AGHT+IGVBv7E2kb4CAt7hs6m+/eXEUg+6HysXCi5YZRsQly8UDuzFjcEgYa0Lev7uMv0JxtmgQFEnA==
+X-Received: by 2002:a05:600c:2103:b0:40e:75d5:c24f with SMTP id u3-20020a05600c210300b0040e75d5c24fmr99922wml.372.1706215885913;
+        Thu, 25 Jan 2024 12:51:25 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id ay41-20020a05600c1e2900b0040ed4efcc24sm580146wmb.23.2024.01.25.12.51.25
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 25 Jan 2024 12:51:25 -0800 (PST)
+Message-ID: <pull.1658.git.git.1706215884.gitgitgadget@gmail.com>
+From: "John Cai via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Thu, 25 Jan 2024 20:51:22 +0000
+Subject: [PATCH 0/2] index-pack: fsck honor checks
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- CDD0CA02-BBC0-11EE-8327-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
+To: git@vger.kernel.org
+Cc: John Cai <johncai86@gmail.com>
 
-Josh Steadmon <steadmon@google.com> writes:
+git-index-pack has a --strict mode that can take an optional argument to
+provide a list of fsck issues to change their severity. --fsck-objects does
+not have such a utility, which would be useful if one would like to be more
+lenient or strict on data integrity in a repository.
 
-> The pimpl pattern also seems like it will force us to think harder about
-> providing a useful interface, so I am in favor of using it here as
-> practice for future libification.
+Like --strict, Allow --fsck-objects to also take a list of fsck msgs to
+change the severity.
 
-Sounds good.
+John Cai (2):
+  index-pack: test and document --strict=<msg>
+  index-pack: --fsck-objects to take an optional argument for fsck msgs
 
+ Documentation/git-index-pack.txt | 19 +++++++++++----
+ builtin/index-pack.c             |  5 ++--
+ t/t5300-pack-object.sh           | 41 ++++++++++++++++++++++++++++++++
+ 3 files changed, 59 insertions(+), 6 deletions(-)
+
+
+base-commit: 186b115d3062e6230ee296d1ddaa0c4b72a464b5
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1658%2Fjohn-cai%2Fjc%2Findex-pack-fsck-honor-checks-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1658/john-cai/jc/index-pack-fsck-honor-checks-v1
+Pull-Request: https://github.com/git/git/pull/1658
+-- 
+gitgitgadget
