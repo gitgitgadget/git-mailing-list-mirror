@@ -1,173 +1,142 @@
-Received: from mail-pf1-f179.google.com (mail-pf1-f179.google.com [209.85.210.179])
+Received: from mail-lf1-f53.google.com (mail-lf1-f53.google.com [209.85.167.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8A0E10971
-	for <git@vger.kernel.org>; Thu, 25 Jan 2024 05:52:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54D4C1C69A
+	for <git@vger.kernel.org>; Thu, 25 Jan 2024 10:09:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706161972; cv=none; b=g5O2RnsJcQRv5ibW07eexLRKPjwxTO4sGdv5EZ4HELK+B7NXtVvqpzBejOCHztWMSTXaMpz/B8itrlnT4fs4J00g6OO8TClgU30C9R1JFqhBh2zforFlvgXeQOIDcb1r9bk/oWmOe7RUBNj26wYEh70KETo9Cb0tp8sZfpYbLOc=
+	t=1706177398; cv=none; b=bUow7uINKNgZuQLTpQw4oc3InXQKnB4Bk75JHFiUxM9MYtp3chZstS6JLEf7ofYNJFuUpTzUQoexWzT6eGAU9HUz0xik77Lwb/J8Rw/M3wM28Wa0ODfNf4Vrnr5aS1PvAtB00i6dhdJp/+b0Rq/VSrRm9SmXweaa3OwCSFRf5S4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706161972; c=relaxed/simple;
-	bh=NzSQPbAHkF/wU/IRbZKjhalPV32pRNQ45VTV+DPlcus=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=pSOH8Bj9MCVuoOvtTxJ55uqyiDElTnAPb7Q98jVVNy5CbQz4WPjZtJ2JRYb0mIB+Fvfrec7NcVFv5Cy7DtRzRjemQRqQyIQMh1s9Wsmi4YamzRBJLu97NOiqeoq3cq3ZViYiIgVGMGvHmKtv0ZW3O7rjmfH1+cCQhtuzxaSg1uc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=C4WI3G+t; arc=none smtp.client-ip=209.85.210.179
+	s=arc-20240116; t=1706177398; c=relaxed/simple;
+	bh=MxZ7zK5J4gVcSqyGbOeUbc16nYSDiuWiyws87kJpgww=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=THyg/cfaR/+Y7sipBYc111R5pX+931CQuxh4cXnpgTLkGgOTCs83G6buq/kJCx/jCrRLZhBg0IXe/HdKsSChY0tz+X+FIaeFu+BpRZeXf+LCBUxDIFWQjRUXz3HEvDkK460Fi92i3tPLGSzRX7Jqsn/heNvXSmvdSUSRn5+gQUo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ch+aDjgc; arc=none smtp.client-ip=209.85.167.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="C4WI3G+t"
-Received: by mail-pf1-f179.google.com with SMTP id d2e1a72fcca58-6ddb129350cso960995b3a.3
-        for <git@vger.kernel.org>; Wed, 24 Jan 2024 21:52:50 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ch+aDjgc"
+Received: by mail-lf1-f53.google.com with SMTP id 2adb3069b0e04-5100cb238bcso3703178e87.3
+        for <git@vger.kernel.org>; Thu, 25 Jan 2024 02:09:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1706161970; x=1706766770; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=WOeTObOZE+XJIjKsRCTVWv9bgchUEsrb46Hw4vH3xww=;
-        b=C4WI3G+tK3Pp0+sJ4pzcDUfER5TLA28mf6fBAX9uIP0F7jMEqNAvss23wagocKWs5e
-         dk/r/Q3e/39QS7zeWw5Cp27n5eu7tLO7uMogwvMsEBZRnVwDazZWRzOsDpq/DqLt760u
-         8hFeEMJhBXH5LwYXfMhcnbY6BBphw+s12UD0qoPe7NShRmaj/FIImamgJM5sUTIf/848
-         FW0e0OO7JTUSWhj/B3OgQRDss0NDMX9BXVNR3B+h1sIQEpabSAmK/48CnudyC8ePJ6k3
-         ARoeoD2m1s4TxjIG0WPf5Gi4AdCs1uTzrd0sinEGfuSZiFqAkAhD83xGZr/cLgkHQZJ4
-         fkwA==
+        d=gmail.com; s=20230601; t=1706177394; x=1706782194; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=3PQAO+c7i6hn8beYDZ8IAgA0bcZQF1mQ4F1SHsI1Wuc=;
+        b=ch+aDjgcVCxfJUbZkmBj+0swFvAI4If6WMZ/M6j1iMqAB2K5Rmfq2xWJE7vfv88A/c
+         VFD8UgLqxtBhTo94QnmxKAQa4XYseqVMeVSLDzwpDGxB5auszZp5vbuV0GI5lkiD9VTa
+         q1v2tQu2tAgDLoDrr0AseUGToIwIA/C+IpBLLlzMRYYcD5iItKOQFadjaV8sxZiZgUVI
+         VSnR3I7yA2ucw9twwquzpA+r8v0Mecgl38ZUJGXNv5Dfhm2MnW9NTLY3psqUvIsgzrME
+         D+Y/2IeTMzTjPYkEDMBLihEC4hHScPV3QzUlfanDJB8LddhPVuYAfriNipl0fSI6Hhu4
+         f68Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1706161970; x=1706766770;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=WOeTObOZE+XJIjKsRCTVWv9bgchUEsrb46Hw4vH3xww=;
-        b=bFym8zNOt7dJ0MlD7t9EhcVs+NgnrLDzJjJD8OXeAJXTKxN0lwYaYw4QNIrzE6jbeD
-         XvDamHQQjprqFNV2nUO/+xyqYEICD9BMBMqr6VH25Dn9YIQOELGb2LmC/Rtg9rREeYjI
-         Ijr/5RWEFLO85Yg6CyrJ4+5xPcOvz2s4MutZBR+irylXpwC0I0paObFpWl+f5VJdl7wj
-         zRZCzOREzfmlW1ys7HGQohf2/rDyuTcOC0tJOtVxA6yWMmxg1+IlGWuOAMeB03hSYPqN
-         /umpC+fzZp2w6501ZKrMjQt6t01xsmONE9cbjiTDVxVrSbUZa5a1Hspw3dbe8CCU8ye2
-         A0SQ==
-X-Gm-Message-State: AOJu0YxP6kPt09mngJZ1DVtmhBbOqKLQIo070VKiZMZxgdoZOy9a0mNi
-	Qn1BR/cxGdKs910tpZD/5+5mNTifbPNfUxB3I9HS562r6EO4z7M7
-X-Google-Smtp-Source: AGHT+IHrM4uCb/CDHwIHrVKVWnH+lJvxQohBnblLQv+/A75p+1tNkyEYV81RdqNu77NaAVgLJFm6DA==
-X-Received: by 2002:a05:6a20:3d06:b0:19c:3264:ab14 with SMTP id y6-20020a056a203d0600b0019c3264ab14mr472583pzi.88.1706161969877;
-        Wed, 24 Jan 2024 21:52:49 -0800 (PST)
-Received: from [10.42.165.185] ([103.158.43.18])
-        by smtp.gmail.com with ESMTPSA id v19-20020a170902d09300b001d6ee62787bsm11278544plv.42.2024.01.24.21.52.48
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 24 Jan 2024 21:52:49 -0800 (PST)
-Message-ID: <d1569248-ce56-4e19-9244-c60c7617ca28@gmail.com>
-Date: Thu, 25 Jan 2024 11:22:46 +0530
+        d=1e100.net; s=20230601; t=1706177394; x=1706782194;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=3PQAO+c7i6hn8beYDZ8IAgA0bcZQF1mQ4F1SHsI1Wuc=;
+        b=Q53V6seu7ihNL4IRcSKMhcOQeEn/7DuSi9BBxPaiAfxkJSyoiyb0qYSCW0wkir6yIw
+         GoFA28i7OdLuAot7bDOgrO7MEsctI/nl0LUMe8I2eLahy7rm/bCi652D0g0+eyY1OOrx
+         ZilBVuXiL35jv5JtVzmOA9MTz+B8VyLJlKL1RdIt3pmm7KHxc84e9ozAC4v2RUo/a1Zm
+         ZrMV/du3R7lI3154qfWweNBcr2kZB0xxXpmcDwJur/hTWnWDQv+ao0uPzNxHaKkSglOr
+         ZyvmiRHTjvNzY+lBZ1YJZejke/HcPaum940hbaR7d7Sjzh3CDtRyPOgs/aOe6tJHikcU
+         o8aw==
+X-Gm-Message-State: AOJu0YxpEoaCflBdjjI1RGQ/Y/mYCLvyokvOPgJmLLZ+gLgw+86ZufXq
+	+Rpl9GL2lWZ65njTPucMwBrznIo13PYGwDxIOY3xVCrIpcKfB2lVBmQUi0rYVv0n1J/cCYw4mly
+	F/Cf5n2R1OC0Rj14NN+ynBS/zYno=
+X-Google-Smtp-Source: AGHT+IEHEi15HV0o+HlAKKRORr8tSN8A8SGtQDXh30gWeinq/8WtHaOCJqfT6tyLYvq5yZ0XuSS/4c78fEcGX4h4ea0=
+X-Received: by 2002:a05:6512:158d:b0:50e:2c05:5773 with SMTP id
+ bp13-20020a056512158d00b0050e2c055773mr454978lfb.27.1706177394042; Thu, 25
+ Jan 2024 02:09:54 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] FIX: use utf8_strnwidth for line_prefix in diff.c
-Content-Language: en-US
-To: Junio C Hamano <gitster@pobox.com>,
- Md Isfarul Haque via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org
-References: <pull.1653.git.git.1706105064.gitgitgadget@gmail.com>
- <ac9338533c9096c090d1463c1b29505bde019731.1706105064.git.gitgitgadget@gmail.com>
- <xmqqplxqcx5p.fsf@gitster.g>
-From: Md Isfarul Haque <isfarul.876@gmail.com>
-In-Reply-To: <xmqqplxqcx5p.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+References: <pull.1587.v5.git.1701206267300.gitgitgadget@gmail.com>
+ <pull.1587.v6.git.1701442494319.gitgitgadget@gmail.com> <CAP8UFD3FzP6QW4dJ9yiG1BAytLcsk+zGE+CBeArRJBJ8gsaDMQ@mail.gmail.com>
+ <CAEWN6q3RTbVuMb0VyCYz196ZL+OGAAHbJLZ2-MnW1RVVabg7Mw@mail.gmail.com>
+ <CAP8UFD19phFz54d8fDM=MBRMSD9Rz4R0_463KgptN8eeFs7MnQ@mail.gmail.com> <CAP8UFD3b2y+55j3NMDm89hpVRNxX2TA-AdQS=zsboD30pZ1c4Q@mail.gmail.com>
+In-Reply-To: <CAP8UFD3b2y+55j3NMDm89hpVRNxX2TA-AdQS=zsboD30pZ1c4Q@mail.gmail.com>
+From: Christian Couder <christian.couder@gmail.com>
+Date: Thu, 25 Jan 2024 11:09:41 +0100
+Message-ID: <CAP8UFD0M_KeUTHthQ6n_a1KbEvuA1gAsE2jKkAqd-4twjbpNWw@mail.gmail.com>
+Subject: Re: [PATCH v6] subtree: fix split processing with multiple subtrees present
+To: Zach FettersMoore <zach.fetters@apollographql.com>, Junio C Hamano <gitster@pobox.com>
+Cc: Zach FettersMoore via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 1/25/24 01:38, Junio C Hamano wrote:
-> "Md Isfarul Haque via GitGitGadget" <gitgitgadget@gmail.com> writes:
-> 
->> From: Md Isfarul Haque <isfarul.876@gmail.com>
->>
->> This patch adresses diff.c:2721 and proposes the fix using a new function.
-> 
-> Once the issue has fully been addressed, it is expected that the
-> NEEDSWORK comment there would be removed, making this proposed log
-> message useless.  Make it a habit to write a log message that is
-> self-contained enough to help readers (including yourself in the
-> future when you have forgotten the details of what you did in this
-> commit).
-> 
+It seems that this topic has fallen into the cracks or something,
+while the associated pch looks good to me.
 
-I understand. Sorry for the mess-up. I will keep it in mind the next time.
-
->> +const struct strbuf *diff_line_prefix_buf(struct diff_options *opt)
->> +{
-> 
-> Given that there is only one caller of this function in the same
-> file, I do not see a reason why this needs to be extern and exported
-> in diff.h (actually I do not see a need for this helper at all).
-> 
-> When dealing with a string buffer, it is much more common in this
-> codebase for the caller to prepare a strbuf (often on its stack) and
-> pass a pointer to it to helper functions.  I.e.
-> 
-> 	static void prepare_diff_line_prefix_buf(struct strbuf *buf,
-> 						struct diff_options *opt)
-> 	{
-> 		... stuff whatever you need into the string buffer ...
->                 strbuf_add(buf, ...);
-> 	}
-> 
-> 	/* in show_stats() */
-> 	struct strbuf line_prefix = STRBUF_INIT;
-> 	...
-> 	prepare_diff_line_prefix_buf(&line_prefix, options);
-> 	... use line_prefix and ...
-> 	... release the resource before returning ...
-> 	strbuf_release(&line_prefix);
-> 	
-> is more common and less prone to resource leak over time.
-> 
-
-Ah, this is indeed very neat. Didn't strike me. I'm not extremely familiar
-with the codebase and was unaware of this practice. I will follow this 
-pattern in the future.
-
->> @@ -2635,7 +2649,7 @@ static void show_stats(struct diffstat_t *data, struct diff_options *options)
->>  	int width, name_width, graph_width, number_width = 0, bin_width = 0;
->>  	const char *reset, *add_c, *del_c;
->>  	int extra_shown = 0;
->> -	const char *line_prefix = diff_line_prefix(options);
->> +	const struct strbuf *line_prefix = diff_line_prefix_buf(options);
->>  	struct strbuf out = STRBUF_INIT;
->>  
->>  	if (data->nr == 0)
->> @@ -2718,7 +2732,7 @@ static void show_stats(struct diffstat_t *data, struct diff_options *options)
->>  	 * used to correctly count the display width instead of strlen().
->>  	 */
->>  	if (options->stat_width == -1)
->> -		width = term_columns() - strlen(line_prefix);
->> +		width = term_columns() - utf8_strnwidth(line_prefix->buf, line_prefix->len, 1);
-> 
-> I do not see the need for any of the diff_line_prefix_buf() related
-> changes, only to do this change.  You have a const char *line_prefix
-> at this point, and utf8_strnwidth() wants to know its length, so
-> what you need is to massage the parameter to match what it wants.
-> Perhaps even something simple and dumb like
-> 
-> 	utf8_strnwidth(line_prefix, strlen(line_prefix), 1);
-> 
-> might be sufficient to replace strlen(line_prefix) in the original?
-
-It was more of a force of habit on my end, since I usually do not use
-functions that do not have a limit on the length they are reading.
-However, considering that the string is generated by another function
-and is most likely safe as it was used earlier, I will implement 
-this suggestion.
-
-> 
-> This patch hopefully will change the behaviour of the command.  A
-> patch needs to also protect the change from future breakages by
-> adding a test or two to demonstrate the desired behaviour.  Such a
-> test should pass with the code change in the patch, and should fail
-> when the code change in the patch gets reverted.
-> 
-
-Alright. Where should I add the test? A new/existing test in t/t4013 
-or t4124-log-graph-octopus.sh?
-
--- 
-
-Thanks and regards,
-Md Isfarul Haque
-
+On Wed, Dec 20, 2023 at 4:25=E2=80=AFPM Christian Couder
+<christian.couder@gmail.com> wrote:
+>
+> On Tue, Dec 12, 2023 at 5:06=E2=80=AFPM Christian Couder
+> <christian.couder@gmail.com> wrote:
+> >
+> > On Mon, Dec 11, 2023 at 4:39=E2=80=AFPM Zach FettersMoore
+> > <zach.fetters@apollographql.com> wrote:
+> > >
+> > > >>
+> > > >> From: Zach FettersMoore <zach.fetters@apollographql.com>
+> >
+> > > >> To see this in practice you can use the open source GitHub repo
+> > > >> 'apollo-ios-dev' and do the following in order:
+> > > >>
+> > > >> -Make a changes to a file in 'apollo-ios' and 'apollo-ios-codegen'
+> > > >> directories
+> > > >> -Create a commit containing these changes
+> > > >> -Do a split on apollo-ios-codegen
+> > > >> - Do a fetch on the subtree repo
+> > > >> - git fetch git@github.com:apollographql/apollo-ios-codegen.git
+> > > >> - git subtree split --prefix=3Dapollo-ios-codegen --squash --rejoi=
+n
+> > >
+> > > > Now I get the following without your patch at this step:
+> > > >
+> > > > $ git subtree split --prefix=3Dapollo-ios-codegen --squash --rejoin
+> > > > [...]/libexec/git-core/git-subtree: 318: Maximum function recursion
+> > > > depth (1000) reached
+> > > >
+> > > > Line 318 in git-subtree.sh contains the following:
+> > > >
+> > > > missed=3D$(cache_miss "$@") || exit $?
+> > > >
+> > > > With your patch it seems to work:
+> > > >
+> > > > $ git subtree split --prefix=3Dapollo-ios-codegen --squash --rejoin
+> > > > Merge made by the 'ort' strategy.
+> > > > e274aed3ba6d0659fb4cc014587cf31c1e8df7f4
+> > >
+> > > Looking into this some it looks like it could be a bash config
+> > > difference? My machine always runs it all the way through vs
+> > > failing for recursion depth. Although that would also be an issue
+> > > which is solved by this fix.
+> >
+> > I use Ubuntu where /bin/sh is dash so my current guess is that dash
+> > might have a smaller recursion limit than bash.
+> >
+> > I just found https://stackoverflow.com/questions/69493528/git-subtree-m=
+aximum-function-recursion-depth
+> > which seems to agree.
+> >
+> > I will try to test using bash soon.
+>
+> Sorry, to not have tried earlier before with bash.
+>
+> Now I have tried it and yeah it works fine with you patch, while
+> without it the last step of the reproduction recipe takes a lot of
+> time and results in a core dump:
+>
+> /home/christian/libexec/git-core/git-subtree: line 924: 857920 Done
+>                 eval "$grl"
+>     857921 Segmentation fault      (core dumped) | while read rev parents=
+; do
+>    process_split_commit "$rev" "$parents";
+> done
+>
+> So overall I think your patch is great! Thanks!
