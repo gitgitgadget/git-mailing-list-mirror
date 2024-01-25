@@ -1,192 +1,114 @@
-Received: from mail-wm1-f41.google.com (mail-wm1-f41.google.com [209.85.128.41])
+Received: from mail-oa1-f54.google.com (mail-oa1-f54.google.com [209.85.160.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 775B9433B6
-	for <git@vger.kernel.org>; Thu, 25 Jan 2024 20:53:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCC002AD21
+	for <git@vger.kernel.org>; Thu, 25 Jan 2024 21:48:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706215987; cv=none; b=nIt0GZ7tb80NP1ZR/SV6ZgRlqlBY7YUhTjW4AYpFk3FZSX4jtGcZIGJJ5Ph0vt5RZQYwI6HuHebI5iiLwlLH7Bwv8HExP3Q2zTqOiyxBNHQe/+qIpUHJKFQpA5x3qt9h63urRrNZubBPJfI8h25x5A+j/XVClAky26Ifwoo98AQ=
+	t=1706219336; cv=none; b=Otyi9SgWqtmNKek9LK+TaZ9RXonp1X9IeZ6IoYXZ88CqD30P1O0o6ID/uq1XZIKjPJd1/wiGMUtBBh3XEF3y972YECNfae7Y68dafKm/MORB7cNVxemEmwlw5a43XGQo4y6aZImHtRGiw7FgO3zCmBLF+f0d3tO+eFdt73Isfao=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706215987; c=relaxed/simple;
-	bh=8TljTEm5P7t2tuS/Ysv1XqLa5dGorSgiKBIbtzl76Bw=;
-	h=Message-ID:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=CX3OyLzPemwN6kjF50JzXaC3tNl2f0ZGhr308kFW4PxRn6hClGFfCa4qOKOeFOFV+XbBMF/uU43Xkk33nvD9+n9RsUULZLa3BtBjkgSWPAHmYoTkJ7l4hCk8yscifjLRTyQdA1Ce7HAHxomSBEZuiE2FDM32bJPOfPSLOAm0EQ0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=l0S4fSa5; arc=none smtp.client-ip=209.85.128.41
+	s=arc-20240116; t=1706219336; c=relaxed/simple;
+	bh=ziZJxrV0V1j1xVmUIn+vlYSnNJEj441l4gnX5dShj/w=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=XsY15wFce/ftVmiBWnAN/HRj+KadwiQjARFwaXWvyDQjbfkO/8o3zhp0Sn/6SW1PxqzMQb/WFOJ/OszIUObNDzBArb+3qAZakuH9Mf9t0GMl+ugHB2ly80p0d3qbOhQpti/Kv+uYDZJVEFGBb0IVfkUZlm3JoVQwViDNRK2tWuE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=WgpxjBP1; arc=none smtp.client-ip=209.85.160.54
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="l0S4fSa5"
-Received: by mail-wm1-f41.google.com with SMTP id 5b1f17b1804b1-40e800461baso85371215e9.3
-        for <git@vger.kernel.org>; Thu, 25 Jan 2024 12:53:05 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WgpxjBP1"
+Received: by mail-oa1-f54.google.com with SMTP id 586e51a60fabf-214d30f1889so557808fac.1
+        for <git@vger.kernel.org>; Thu, 25 Jan 2024 13:48:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1706215983; x=1706820783; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1706219334; x=1706824134; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=JFe766aODKoSFWZY7g4Y6ejLcPRGjlu7n9BZ03Atxbc=;
-        b=l0S4fSa5si+xlL1adjzkf1lqkEhzcrom6dpTonpCe1dpeoibg8/0vlt7VvGRFZyNo1
-         4J6UhO0C4dlAnyqw91J3r4Rl73vUN0bzmZr2eC1sJSES4cAy3WYgEAcuCTogT24L2zE1
-         LKPXntdamlmP1Rq6bIfDaL6ADlgTXLvATrSSIVLnCQgWG2QYysHPN50SBRI+d5ZWOTy1
-         BPuUtyV5B93RiI9myxGd4MJkV+6LD+J6EkMMkuToG2WdRggSmQ3vBxuNzO5ivhjPaFpq
-         VxoNvyZLRf4SUl24yCNH/LolY7RwLLT3axOk+Jgpunk+4Npo4K83hQUcZz/myD3H3C4l
-         U9ag==
+        bh=ytUgPLmeIuB5Sp6P4uyDedAImcD/GHUR8CUsc5KEv6c=;
+        b=WgpxjBP1YRdFF9qtjbpLh4ATl5pIcbk0ZNT2UPtjxcj212fYjTTcj8b5JOohZGXCbJ
+         b9pknRL4JppqI+jD5l28VueAPeSe0CHxnEITE1CPz73Q0e0/twK7GnYVw3gHg9ZRJFb/
+         k9hMEYMqCp3kadwapAW+KmgZptRX+Gv1H/P/vyApFMgwcDn2kDBBHsrnf1aMyxWFucu9
+         KknQJ/UJ7Inr4SfVIT6CxSHqVbsD/7RXvJsGWA8P3Hjfj6zRhbiPwQVobe/6Hc3/WHi1
+         zkznDer57RgDDkd+ilbJCW6q1RxnYRnUsC2Tn7oQxJKVQjHBlbx/VdNZSOnOdjBbaZts
+         4cQQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1706215983; x=1706820783;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
+        d=1e100.net; s=20230601; t=1706219334; x=1706824134;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=JFe766aODKoSFWZY7g4Y6ejLcPRGjlu7n9BZ03Atxbc=;
-        b=urYx1Lf5OzuKDSgn1fxmWUXcOdIoPjJ2v2TtCO18ZcPdlm1WYibO92T9+Mi43Ujikq
-         7DGCVIBtIjGccAdwKXaRVAQxWYpt6s2hOOM/dEFCP9shjyKZQXGpO3qSCzlluE2fkZ6Q
-         gZW/nLylUq5I6P4Jl2ena57cQ7r2xdfrvxbYV+0JDJ/Qv/6SKS1zDn28st1ygdrun8jd
-         tEPteERwB5cp9wnfoL5fZ7jzIDtkwhxYq2xsvzTu499mtiIyE78etZZ0EfkGL5BFDn2u
-         34TGJfB79XJTMgKRv5Ft3LEkUfhuSVUWBF8ONtiJxwtOs6NOXo4mfjkXpFYwE53tlTBU
-         D2Yg==
-X-Gm-Message-State: AOJu0Ywt/AZSGzhSXfzla8O2sLH2HDOZz9FjPx9SzO3vYmMJ680gzxYy
-	yXcC/SOeVP3VA3+KRTMokNJlX0rX9gkXHdl6RxdcJXZnKA/5Fy0/9pi6FWY0
-X-Google-Smtp-Source: AGHT+IGOJjiGJO2Ga1ulv22b8e/LztWhmm5vDFTnqCRHdykvz1T1HnIbnusFc9GtDW2LJY8fOTadXQ==
-X-Received: by 2002:a05:600c:2244:b0:40e:b947:4be5 with SMTP id a4-20020a05600c224400b0040eb9474be5mr91018wmm.244.1706215983026;
-        Thu, 25 Jan 2024 12:53:03 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id fs18-20020a05600c3f9200b0040e7306f655sm3596925wmb.22.2024.01.25.12.53.01
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 25 Jan 2024 12:53:01 -0800 (PST)
-Message-ID: <074e0c7ab923777c66516ced18b4fd1dadf7677f.1706215884.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1658.git.git.1706215884.gitgitgadget@gmail.com>
-References: <pull.1658.git.git.1706215884.gitgitgadget@gmail.com>
-From: "John Cai via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Thu, 25 Jan 2024 20:51:24 +0000
-Subject: [PATCH 2/2] index-pack: --fsck-objects to take an optional argument
- for fsck msgs
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        bh=ytUgPLmeIuB5Sp6P4uyDedAImcD/GHUR8CUsc5KEv6c=;
+        b=Ac5XroWnt1+IyDTHamxG2luruH5gRIF+zpITEmNM3NFjJZAtfTq5o0YPxnRt1ToKqP
+         e1pGxuQBBbv/nW/OQSR/R5hJJV1TIB2uGG9Zrt5P91rl1SNG7Cgn7sBdprevSRt0qcsv
+         6uTzG0y0HM/vuuP0v/uw047ECpiO6OqD63IaNL9S81ExVBBtX4MOzjlzXt6kWP3xc7Nx
+         kq4yoLuOfx2mmqP4O8xI0iEf+KRDraDcUUv7YWB2hrhrQ3JNdSsdcG6UGMKAziaLZIPL
+         NgsfNF11kdZBZnClOUbmWga1vp/ETQ8Rrby833aUZKt+v7ItxNRpIfJQTLFSrb+EgvpM
+         sk1g==
+X-Gm-Message-State: AOJu0YxQ5mUkOYRJuTjxaXFboF5M0cQ0dPQEfkglwjPtWrGikIVxXIUZ
+	iy8kTJ0cvGXkDDQp7WNJPGt94ncJPgpEFOmKE2TNXdxKX5uozaPaxhEzOslau+0f7uALaP1FvoJ
+	Zj1D8Z/tf9JKvb1PRiCCSwDRCuDHH6cVi
+X-Google-Smtp-Source: AGHT+IG75cxGbsgXwrXQhmPeHKOkj2y3cPR280NJTxzxLyLO/Pi4XlomFPqGwfO5rYYk8XQZ/SWKHnlX9Edh/MGR5jA=
+X-Received: by 2002:a05:6871:4143:b0:214:8734:1345 with SMTP id
+ lb3-20020a056871414300b0021487341345mr94160oab.7.1706219333863; Thu, 25 Jan
+ 2024 13:48:53 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: John Cai <johncai86@gmail.com>,
-    John Cai <johncai86@gmail.com>
+References: <20240119142705.139374-1-karthik.188@gmail.com>
+ <20240124152726.124873-1-karthik.188@gmail.com> <20240124152726.124873-2-karthik.188@gmail.com>
+ <xmqqfrymeega.fsf@gitster.g> <CAOLa=ZQxMZo2Y6x6GmVw=df_xS4tkF4D1_tZOeLb7jL5d5bKXA@mail.gmail.com>
+ <xmqqa5otxtqy.fsf@gitster.g>
+In-Reply-To: <xmqqa5otxtqy.fsf@gitster.g>
+From: Karthik Nayak <karthik.188@gmail.com>
+Date: Thu, 25 Jan 2024 22:48:27 +0100
+Message-ID: <CAOLa=ZSTY+YQ1a5U6Q=RQNg5VMjP0wOLS4t5obua8_==BfbdhA@mail.gmail.com>
+Subject: Re: [PATCH v2 1/4] refs: introduce `is_pseudoref()` and `is_headref()`
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, ps@pks.im, phillip.wood123@gmail.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-From: John Cai <johncai86@gmail.com>
+On Thu, Jan 25, 2024 at 5:28=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
+wrote:
+>
+> Karthik Nayak <karthik.188@gmail.com> writes:
+>
+> >>> +int is_headref(struct ref_store *refs, const char *refname)
+> >>> +{
+> >>> +   if (!strcmp(refname, "HEAD"))
+> >>> +           return refs_ref_exists(refs, refname);
+> >>
+> >> Given that "git for-each-ref refs/remotes" does not show
+> >> "refs/remotes/origin/HEAD" in the output when we do not have the
+> >> remote-tracking branch that symref points at, we probably do want
+> >> to omit "HEAD" from the output when the HEAD symref points at an
+> >> unborn branch.  If refs_ref_exists() says "no, it does not exist"
+> >> in such a case, we are perfectly fine with this code.
+> >>
+> >> We do not have to worry about the unborn state for pseudorefs
+> >> because they would never be symbolic.  But that in turn makes me
+> >> suspect that the check done with refs_ref_exists() in the
+> >> is_pseudoref() helper is a bit too lenient by allowing it to be a
+> >> symbolic ref.  Shouldn't we be using a check based on
+> >> read_ref_full(), like we did in another topic recently [*]?
+> >>
+> >>
+> >> [Reference]
+> >>
+> >>  * https://lore.kernel.org/git/xmqqzfxa9usx.fsf@gitster.g/
+> >>
+> >
+> > Thanks, this makes sense and the link is helpful. I'll do something
+> > similar, but since HEAD can be a symref, I'll drop the
+> > `RESOLVE_REF_NO_RECURSE` flag and only use `RESOLVE_REF_READING`.
+>
+> Just to make sure there is no misunderstanding, I think how
+> is_headref() does what it does in the patch is perfectly fine,
+> including its use of refs_ref_exists().  The side I was referring to
+> with "in turn makes me suspect" is the other helper function that
+> will never have to deal with a symref.  Use of refs_ref_exists() in
+> that function is too loose.
+>
 
-git-index-pack has a --strict mode that can take an optional argument to
-provide a list of fsck issues to change their severity. --fsck-objects
-does not have such a utility, which would be useful if one would like to
-be more lenient or strict on data integrity in a repository.
-
-Like --strict, Allow --fsck-objects to also take a list of fsck msgs to
-change the severity.
-
-This commit also removes the "For internal use only" note for
---fsck-objects, and documents the option. This won't often be used by
-the normal end user, but it turns out it is useful for Git forges like
-GitLab.
-
-Signed-off-by: John Cai <johncai86@gmail.com>
----
- Documentation/git-index-pack.txt | 10 ++++++++--
- builtin/index-pack.c             |  5 +++--
- t/t5300-pack-object.sh           | 29 ++++++++++++++++++++++++-----
- 3 files changed, 35 insertions(+), 9 deletions(-)
-
-diff --git a/Documentation/git-index-pack.txt b/Documentation/git-index-pack.txt
-index 14f806d07d1..37709b13c88 100644
---- a/Documentation/git-index-pack.txt
-+++ b/Documentation/git-index-pack.txt
-@@ -96,8 +96,14 @@ default and "Indexing objects" when `--stdin` is specified.
- --check-self-contained-and-connected::
- 	Die if the pack contains broken links. For internal use only.
- 
----fsck-objects::
--	For internal use only.
-+--fsck-objects[=<msg-ids>]::
-+	Instructs index-pack to check for broken objects instead of broken
-+	links. If `<msg-ids>` is passed, it should be  a comma-separated list of
-+	`<msg-id>=<severity>` where `<msg-id>` and `<severity>` are used to
-+	change the severity of `fsck` errors, eg: `--strict="missingEmail=ignore,badTagName=ignore"`.
-+	See the entry for the `fsck.<msg-id>` configuration options in
-+	`linkgit:git-fsck[1] for more information on the possible values of
-+	`<msg-id>` and `<severity>`.
- +
- Die if the pack contains broken objects. If the pack contains a tree
- pointing to a .gitmodules blob that does not exist, prints the hash of
-diff --git a/builtin/index-pack.c b/builtin/index-pack.c
-index 1e53ca23775..519162f5b91 100644
---- a/builtin/index-pack.c
-+++ b/builtin/index-pack.c
-@@ -24,7 +24,7 @@
- #include "setup.h"
- 
- static const char index_pack_usage[] =
--"git index-pack [-v] [-o <index-file>] [--keep | --keep=<msg>] [--[no-]rev-index] [--verify] [--strict[=<msg-ids>]] (<pack-file> | --stdin [--fix-thin] [<pack-file>])";
-+"git index-pack [-v] [-o <index-file>] [--keep | --keep=<msg>] [--[no-]rev-index] [--verify] [--strict[=<msg-ids>]] [--fsck-objects[=<msg-ids>]] (<pack-file> | --stdin [--fix-thin] [<pack-file>])";
- 
- struct object_entry {
- 	struct pack_idx_entry idx;
-@@ -1785,8 +1785,9 @@ int cmd_index_pack(int argc, const char **argv, const char *prefix)
- 			} else if (!strcmp(arg, "--check-self-contained-and-connected")) {
- 				strict = 1;
- 				check_self_contained_and_connected = 1;
--			} else if (!strcmp(arg, "--fsck-objects")) {
-+			} else if (skip_to_optional_arg(arg, "--fsck-objects", &arg)) {
- 				do_fsck_object = 1;
-+				fsck_set_msg_types(&fsck_options, arg);
- 			} else if (!strcmp(arg, "--verify")) {
- 				verify = 1;
- 			} else if (!strcmp(arg, "--verify-stat")) {
-diff --git a/t/t5300-pack-object.sh b/t/t5300-pack-object.sh
-index 9563372ae27..916cf939beb 100755
---- a/t/t5300-pack-object.sh
-+++ b/t/t5300-pack-object.sh
-@@ -441,8 +441,7 @@ test_expect_success 'index-pack with --strict' '
- 	)
- '
- 
--test_expect_success 'index-pack with --strict downgrading fsck msgs' '
--	test_when_finished rm -rf strict &&
-+test_expect_success 'setup for --strict and --fsck-objects downgrading fsck msgs' '
- 	git init strict &&
- 	(
- 		cd strict &&
-@@ -457,12 +456,32 @@ test_expect_success 'index-pack with --strict downgrading fsck msgs' '
- 
- 		EOF
- 		git hash-object --literally -t commit -w --stdin <commit >commit_list &&
--		PACK=$(git pack-objects test <commit_list) &&
--		test_must_fail git index-pack --strict "test-$PACK.pack" &&
--		git index-pack --strict="missingEmail=ignore" "test-$PACK.pack"
-+		git pack-objects test <commit_list >pack-name
- 	)
- '
- 
-+test_with_bad_commit () {
-+	must_fail_arg="$1" &&
-+	must_pass_arg="$2" &&
-+	(
-+		cd strict &&
-+		test_expect_fail git index-pack "$must_fail_arg" "test-$(cat pack-name).pack"
-+		git index-pack "$must_pass_arg" "test-$(cat pack-name).pack"
-+	)
-+}
-+
-+test_expect_success 'index-pack with --strict downgrading fsck msgs' '
-+	test_with_bad_commit --strict --strict="missingEmail=ignore"
-+'
-+
-+test_expect_success 'index-pack with --fsck-objects downgrading fsck msgs' '
-+	test_with_bad_commit --fsck-objects --fsck-objects="missingEmail=ignore"
-+'
-+
-+test_expect_success 'cleanup for --strict and --fsck-objects downgrading fsck msgs' '
-+	rm -rf strict
-+'
-+
- test_expect_success 'honor pack.packSizeLimit' '
- 	git config pack.packSizeLimit 3m &&
- 	packname_10=$(git pack-objects test-10 <obj-list) &&
--- 
-gitgitgadget
+AH! Totally misunderstood, thanks for reiterating.
