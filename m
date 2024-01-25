@@ -1,92 +1,137 @@
-Received: from mail-lf1-f45.google.com (mail-lf1-f45.google.com [209.85.167.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D69CD1339A3
-	for <git@vger.kernel.org>; Thu, 25 Jan 2024 18:52:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03EF96341A
+	for <git@vger.kernel.org>; Thu, 25 Jan 2024 18:54:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706208760; cv=none; b=JVRqWqlUgcw6jssUH9iqT+RPcTBcmqS9HJdkt3fv0Kfm2JYMYh/4Ix681IttKJgWUPHzln5iSp/PrHhQH30DMTrthaM9d/OHVGhpIickM6t0qdGDckZDQrSKf5nOAGAR7Hsh37ulPdt9Tqz6RpkhOFhZo0dvjVPAAkndD+q6aGg=
+	t=1706208877; cv=none; b=oj6U9WL7W1I1BEi44+VsAu5OWJqfWjpJlwscKY3gXwTXa+3qNQqx+zoEo3RHPwkCh6jeni8S090V3YNPo7xQ8lvEwlZ7CNsnchg2y5HONW/KbdgoMW0WUmG8JhEUf5yzBBftNRashu1AI6nl/FWnRMjL/QnK9PLK/pjnMzXe8CI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706208760; c=relaxed/simple;
-	bh=FQl/WEz7Az8oeDf/MS25WyfWu/OPZyB9LbgwEy/9H6Y=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=C4lM079ne8ucx695Y2q47+AUavUuYm2srRYKiRbYajb9rZUNGFQe6425A0QYXiR/F5kG1hzIHmjlsUrtaDZjc3PePS/5ajRLCj1DE4ngMFc8Bc1pb4twChFWHtf3uarL4YEFNpLGLgeKGLQQ1qrxKa0DgZE2LSipqUlY5DTjQmE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=WaV1jfcH; arc=none smtp.client-ip=209.85.167.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1706208877; c=relaxed/simple;
+	bh=kPiXhe19mMEJxt8J/7QxRFQ2PeRmiJLZeYfOL8i/UMs=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=jt8gu0TJjKbGqbnsRiw/R2DzcgUvKZZmpJlQz6c3gui6h607WL259dlkhqzdKbryP20CuLpeWVnqIK/wijx4MzBDlAGI9WU0Q7o15sWy9fy3ISzCLsSv2VnH7TANMvybQ03TccUWwX9qPmlRrsncP0anPjvxURsrrSdUD+Ya2UM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=QSUzcp8y; arc=none smtp.client-ip=64.147.108.71
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WaV1jfcH"
-Received: by mail-lf1-f45.google.com with SMTP id 2adb3069b0e04-510218ab26fso841022e87.2
-        for <git@vger.kernel.org>; Thu, 25 Jan 2024 10:52:36 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1706208755; x=1706813555; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=J3QDy0iQtZFqBqpD/+j4BsSbkv7mx4EUn2/vrPwJKzE=;
-        b=WaV1jfcHdNrfpMg71sbzCS6xh2KkiDPFsXIoGBFLQOJaywEnjAM7ZW5C3KCQQDrapE
-         tzmv0RhVedaNu9QDiXc+DLjnwVaff8s2AgJWsA7p78Oefm4sWq8Bl8F02AvrCquggVS9
-         tIfAHdg1eavlV0HiWji7r+0CoCAG/jf6uLDfwuZmWo2lIhnOYR3kPX1xwsH7Sul2E+Q7
-         mw2QUX0ZThdIkh1576CJ+zgOsX+zROpZcfJft2jf0JZs2WDlBw5J66HofSFxMsof8QcL
-         muh4PDVuQau0ZhIbikz8v0zPfEFSZRthhhkPZLcyPd+RmwayiQO4hyKZts9866ZbAQlb
-         I9Rw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1706208755; x=1706813555;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=J3QDy0iQtZFqBqpD/+j4BsSbkv7mx4EUn2/vrPwJKzE=;
-        b=QfB4ScUSxnuj+Tz/UpW5cAivhatu7ny5/hQt/m5g5eyF8pofKbatKXSan0MBmkXp5C
-         oXW5LxiwrKoYZXR6ZyX05ZBTGEPZPIuHwdwO4wu0ltARXC6lHGUjlHfurvqhUPjYfgkp
-         goox1kc9I212TRXzjyVEbx7pAlG0e6XBWqPtlcmk9NOx8K0uC2PFRlGmTNKH++qjvGAq
-         vD0seO8MWLbmtXwo9FqHuWGrgZPpuVApOw5zVYWhsCD2m3vjFbOsKGH23lVZm9YeZT+4
-         KanLymjEQQwGsRox8TPitDdyTYIlR51pbNBzsVa9yPh+Hhq/aC/P68tBOJuPut/cS/IP
-         hWag==
-X-Gm-Message-State: AOJu0Yx1d9OeKUc4ck6GHJlVh3fko6DWnzehG1DjkI1FTmk+nT4HF4+i
-	lO9N+y+mcabzdc+JABt2jMGM1lxRe2r6hkiYOdIZSOAMVHJvZDitZu1cKTLS4kKsSDQxx5etw/R
-	18xXMNrjNIH1St5KfHnrR4MgxosviPEQvAEU=
-X-Google-Smtp-Source: AGHT+IH0+HDqSBkPuEoYqc9WGxxGM+UxXrmcXQ7tozi2snPNAy1MZ9uk+a5eXneU1IpE1LyIsUYkbTrxa+vRS+os210=
-X-Received: by 2002:a19:ad02:0:b0:510:189c:2d74 with SMTP id
- t2-20020a19ad02000000b00510189c2d74mr238724lfc.66.1706208754555; Thu, 25 Jan
- 2024 10:52:34 -0800 (PST)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="QSUzcp8y"
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 459F61C4440;
+	Thu, 25 Jan 2024 13:54:34 -0500 (EST)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=kPiXhe19mMEJxt8J/7QxRFQ2PeRmiJLZeYfOL8
+	i/UMs=; b=QSUzcp8y8xaQu9kdaw012W7TYD0/OFgvhJgGrClGyHKVRte9pHLjg4
+	/9uKDd8xfQXt3P8YGeNNWksbuSLShzug4aG9+08sGjP74DPLTaFgDeHJLFHg727N
+	yhU2ucnwk06LiUnoHkYx193mHf3pzBCEjgdxhdW3WU1QzKWuHyah8=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 3E25F1C443F;
+	Thu, 25 Jan 2024 13:54:34 -0500 (EST)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.200.93])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 99B561C443E;
+	Thu, 25 Jan 2024 13:54:33 -0500 (EST)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Jeff King <peff@peff.net>
+Cc: "brian m. carlson" <sandals@crustytoothpaste.net>,  Frank Schwidom
+ <schwidom@gmx.net>,  git@vger.kernel.org
+Subject: Re: partial commit of file-to-directory change, was Re: Bugreport
+In-Reply-To: <20240120004628.GA117170@coredump.intra.peff.net> (Jeff King's
+	message of "Fri, 19 Jan 2024 19:46:28 -0500")
+References: <20240119132551.GA31532@debian64>
+	<ZasCZ0YetzmlBFvw@tapette.crustytoothpaste.net>
+	<20240120004628.GA117170@coredump.intra.peff.net>
+Date: Thu, 25 Jan 2024 10:54:32 -0800
+Message-ID: <xmqqjznxw8ev.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.1587.v5.git.1701206267300.gitgitgadget@gmail.com>
- <pull.1587.v6.git.1701442494319.gitgitgadget@gmail.com> <CAP8UFD3FzP6QW4dJ9yiG1BAytLcsk+zGE+CBeArRJBJ8gsaDMQ@mail.gmail.com>
- <CAEWN6q3RTbVuMb0VyCYz196ZL+OGAAHbJLZ2-MnW1RVVabg7Mw@mail.gmail.com>
- <CAP8UFD19phFz54d8fDM=MBRMSD9Rz4R0_463KgptN8eeFs7MnQ@mail.gmail.com>
- <CAP8UFD3b2y+55j3NMDm89hpVRNxX2TA-AdQS=zsboD30pZ1c4Q@mail.gmail.com>
- <CAP8UFD0M_KeUTHthQ6n_a1KbEvuA1gAsE2jKkAqd-4twjbpNWw@mail.gmail.com> <xmqq5xzhxta3.fsf@gitster.g>
-In-Reply-To: <xmqq5xzhxta3.fsf@gitster.g>
-From: Christian Couder <christian.couder@gmail.com>
-Date: Thu, 25 Jan 2024 19:52:22 +0100
-Message-ID: <CAP8UFD2Oo8v8Qn0JPYURZA_s7ynZmk6v30b9zR==MxWBTXk9Ng@mail.gmail.com>
-Subject: Re: [PATCH v6] subtree: fix split processing with multiple subtrees present
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Zach FettersMoore <zach.fetters@apollographql.com>, 
-	Zach FettersMoore via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 2DC4AE1E-BBB3-11EE-9786-25B3960A682E-77302942!pb-smtp2.pobox.com
 
-On Thu, Jan 25, 2024 at 5:38=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
-wrote:
->
-> Christian Couder <christian.couder@gmail.com> writes:
->
-> > It seems that this topic has fallen into the cracks or something,
-> > while the associated pch looks good to me.
->
-> Yeah, it wasn't clear to me that your message you are responding to
-> was your Reviewed-by:.  If I recall my impression correctly from the
-> time I skimmed its proposed log message the last time, it focused on
-> describing a single failure case the author encountered in the real
-> world and said that the patch changed the behaviour to correct that
-> single case, and was not very clear if it was meant as a general
-> fix.  Is the patch text, including its proposed patch description,
-> satisfactory to you?  In other words, is the above your Reviewed-by:?
+Jeff King <peff@peff.net> writes:
 
-Yes, it's satisfactory for me, and I am Ok to give my Reviewed-by:, thanks!
+> On Fri, Jan 19, 2024 at 11:14:47PM +0000, brian m. carlson wrote:
+>
+>> > $ git commit . -m +
+>> > error: 'd' does not have a commit checked out
+>> > fatal: updating files failed
+>> 
+>> I can confirm this behaviour[0], and it's definitely wrong that it
+>> thinks `d` is a submodule.  It does, however, work if you do `git commit
+>> -m +` (that is, without the .), which makes sense since the relevant
+>> change is already staged in the index.
+>> 
+>> I'm not going to get to a patch or more thorough investigation, but
+>> perhaps someone else will.
+>
+> I peeked at this a bit earlier; I didn't come up with a solution, but
+> here are a few more details.
+
+I didn't either X-<, and the thing is somewhat nasty, as there are two
+states (HEAD and the index) involved.
+
+ * For paths that do not match the pathspec, we want to take the
+   version from the HEAD.  For paths that do match the pathspec, we
+   want to take the version from the working tree.  And after making
+   the partial commit with such changes, we want to make the same
+   change to the index to prepare for the next commit.
+
+ * With the way the code is currently structured, we find paths that
+   appear either in the index or in the HEAD to match against the
+   pathspec.  This is so that we can honor an earlier "git rm" since
+   we read HEAD.
+
+ * Then we check each of these paths that are either in the index or
+   in HEAD that matched the pathspec.  If it is missing from the
+   working tree, we would remove it from both the temporary ndex
+   used for the partial commit, and the real index that we'll
+   continue to use after the partial commit.  If it exists in the
+   working tree, we would take the contents of it to update.
+
+   For the purpose of this operation, a path D that was a blob in
+   the index should be _removed_ when it is a directory in the
+   working tree (i.e. made room to create D/F).  And we should not
+   add D/F when running "git commit D" or "git commit D/F", because
+   the partial commit does not "git add" (it only does "git add -u")
+
+In the example in the discussion, we had D that was a blob and got
+replaced with a directory.  If we did "git add -u D", we would just
+have removed D from the index, so the partial commit should do the
+same.  Which means we need to know the type of the thing we expect.
+But list_paths() only returns a list of path names, and does not
+give us the type of the thing we expect.  We use the same list
+twice, once to update the temporary index (which we create by
+reading HEAD) and update the paths listed there from the working
+tree.  And the same list is used again to update the real index
+(which is what the user had before starting the command) and update
+the paths listed there from the working tree.  The tricky part is
+that the type of (or even existence of) D may have changed between
+the HEAD and the index, but we want to perform the same operation to
+the real index with respect to the paths we touched to create the
+partial commit.
+
+Naively, add_remove_files() looks like an obvious place to see if
+the path is in the working tree (which we already do) *and* compare
+it with "the type of the thing we expect", but the thing is that
+this function is called twice with different index (once with the
+temporary index that started from HEAD, i.e. oblivious to what the
+user did to the index since HEAD; then again with the real index
+with the changes the user made since HEAD), so we cannot just say
+"let's see what this path D is in the index".
+
+I _think_ we would need to update list_paths() so that it records a
+bit more than just pathnames that match the pathspec, namely, what
+should be done to the path, by doing lstat() on the working tree
+paths.
+
