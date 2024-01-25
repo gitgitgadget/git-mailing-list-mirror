@@ -1,225 +1,125 @@
-Received: from mail-oa1-f53.google.com (mail-oa1-f53.google.com [209.85.160.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fallback1.i.mail.ru (fallback1.i.mail.ru [79.137.243.67])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60E926EB4A
-	for <git@vger.kernel.org>; Thu, 25 Jan 2024 16:20:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DD6F129A97
+	for <git@vger.kernel.org>; Thu, 25 Jan 2024 16:21:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=79.137.243.67
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706199618; cv=none; b=aHfwkdGVGCbesXbavFUKhWAcQIPfbVqb56qB/vsg8qXKDfxGh8T2YOBX6isfapLKtL+FREFjQmhmrMXn2nmOSh+nYswCLCP01REKt5mfK1l586YNDIjBGcU0JnB1/Vk83wjun7l7OZo84dWnZ+cQ3VVxWK3iozqWbM/ubNR+Fbw=
+	t=1706199699; cv=none; b=fMGwfgm/5Ug8jks9kF71Nsauhvk1q+W4tfHd/cBvgO0vbhS0+UjH6dPCWtvsaOpohFOoAYnsO/5ywpsUxpstwXK1j6VEo4hkCpqkyq0hJMN/yJEt/cBOkcUF7insIOWXV0oYeNmqfIC2VA35jeM8A+lBIKB7abq8y2uGRFYe3PE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706199618; c=relaxed/simple;
-	bh=njCooK6Z0+H1WrHjBD/UDU6MFvShLNv161rIjZSwjNw=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=REUgsIO4zDIka+c71/5zvFsZwQo/6myUzRJVLGbfijmSsH+kE1oBRsHcDWKo+l3tg5YT3FAHZaNc5k9JaeYRob9w5J+Fl6fJ+xcd/8wynvmqv3fIqs///FfAWFuAw07UXtDOyKqCs+FudMXvxz91hcRjq0I/BBnw/ccW8jB8KL0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Fe13BCeP; arc=none smtp.client-ip=209.85.160.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1706199699; c=relaxed/simple;
+	bh=7w8+Kri7u0+/xilVqkuEJYQesxtuDU95+P0nZNu3cjg=;
+	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=qPeZftsIC+x0SWyv6sKczSYGZGqYvy9r/3Ye4VG1ZxXw/rDSrfjtgPWhS7DJE/0r79lBFg92Bf44FT2bFoVVmuV8Q+1y5RfVfHATR8+rTeKEr9eSTPTJlNJUUQKCVn1haiWOKXzY5PED3MtSR7NZbSC4PnVjlnPOcXjBRXR2GxU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bswap.ru; spf=pass smtp.mailfrom=bswap.ru; dkim=pass (1024-bit key) header.d=bswap.ru header.i=@bswap.ru header.b=XM7y14Nz; dkim=pass (1024-bit key) header.d=bswap.ru header.i=@bswap.ru header.b=xTd6tXU8; arc=none smtp.client-ip=79.137.243.67
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bswap.ru
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bswap.ru
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Fe13BCeP"
-Received: by mail-oa1-f53.google.com with SMTP id 586e51a60fabf-21481a3de56so1758069fac.2
-        for <git@vger.kernel.org>; Thu, 25 Jan 2024 08:20:17 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1706199616; x=1706804416; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=P2Y2SX3OAfYXoJStpI7p4Ek1ctWlVWi892frEzlzYrc=;
-        b=Fe13BCePHAVNk5z73/gTcTCXN5C1njcYXItT2wfbItKE6AioTmyCoijTUKV4hW5KZQ
-         4vLLCpLYpIeDCMmhkJCpGe3M9NFtjS1dzaoounCwJ/jtdAYaUE+UWfUd/fZ8aBnh72IU
-         M2iaOZ3ePiarCJrUMnJHvy8eSN4KOTHdVn3ZV15DRXJ6Xs+ut1OSRi/9laRCo1mvO0Lg
-         zjEqiXtmjeq13BoAKIJgW/VrRHwsr2HYas1TRJvSGtNXIfRNxtg7U5dL9sAFT+dsRExZ
-         XFOVje8I8VKuRspVEWCY6aaPOeJj1fxYpc7kpQqzTahQf+i3fliVDZeDeBX+G9asW+2j
-         rH5g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1706199616; x=1706804416;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=P2Y2SX3OAfYXoJStpI7p4Ek1ctWlVWi892frEzlzYrc=;
-        b=s5bCglD3IMk+3omiLoYp/n8jCcsj/Y157CWUwoWCokgNEPvk54PiZOY6rZNXXWNwSK
-         udtFFK3vIV4de0iiTDEIa/sUrJFBQnnfay636LpUb7cccKbaJGV9f1xL5dX+a9MbSVgo
-         MXE84l4HX/G1kG8SMryT6p9aEECAhHsVR00RFQWB2ZoKCdSMHmH8Ipwcq5quAXmmlYCY
-         RYBU/do6YzqQ2xQL+8gF45/mdNA6+HSLHqprobYwhza/M7vwKbAGy5EtQAJrRLFynS4t
-         pFhrNxWQZjRIY8yc1CqTN43KgSzc5ciG2CzkWWuYtqZqipxsbLHFyWfds7Hy7Uh2t7Z4
-         3UfQ==
-X-Gm-Message-State: AOJu0Yw8sGWX+iORJtMOwIrbcPEI9ARzhYjEiQoPYE9Q7A/eVLbWfvOl
-	4xk9F17DzLmkM22nfy9KN1u97nh4cpjsyVl69ECBSrFaY8vjQuNQoL57HxA8NBNIXvkLbS0ld0O
-	RiicEIEVc6Mj4FAhkClvT1MEtlRo=
-X-Google-Smtp-Source: AGHT+IFpKamwueuRBey3MjtDWVcOiztpBYwVLwyf68GPcSgfY4JUdIllJZSwsJ5yFGjVXPqbugXTysIVYNdThEj0fv8=
-X-Received: by 2002:a05:6871:29a:b0:214:cd1c:bb88 with SMTP id
- i26-20020a056871029a00b00214cd1cbb88mr1180968oae.112.1706199616332; Thu, 25
- Jan 2024 08:20:16 -0800 (PST)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Thu, 25 Jan 2024 16:20:15 +0000
-From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <xmqqfrymeega.fsf@gitster.g>
-References: <20240119142705.139374-1-karthik.188@gmail.com>
- <20240124152726.124873-1-karthik.188@gmail.com> <20240124152726.124873-2-karthik.188@gmail.com>
- <xmqqfrymeega.fsf@gitster.g>
+	dkim=pass (1024-bit key) header.d=bswap.ru header.i=@bswap.ru header.b="XM7y14Nz";
+	dkim=pass (1024-bit key) header.d=bswap.ru header.i=@bswap.ru header.b="xTd6tXU8"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=bswap.ru; s=mailru;
+	h=In-Reply-To:Content-Transfer-Encoding:Content-Type:MIME-Version:References:Message-ID:Subject:To:From:Date:From:Subject:Content-Type:Content-Transfer-Encoding:To:Cc; bh=9UXzBKfYa0r4/16X5V996i5xIud3Iw7UN394tgrxjoY=;
+	t=1706199694;x=1706289694; 
+	b=XM7y14NzmN4Hm95K3sG6q65QmESKSdyYk/Otj1e7JIVijnFqCpeQvwp9gXxhx0YkpDbQAESxNJ8/YjReAGde+B9yrq1+e8QsjJeqoa8gty7Iy8FMxNe/3nnPkHxCc/owASgNhN53e5aRnQVUCoSwJ4eZWvnj1Z2tfUoUwwqKVSc=;
+Received: from [10.12.4.37] (port=43794 helo=smtp61.i.mail.ru)
+	by fallback1.i.mail.ru with esmtp (envelope-from <kostix@bswap.ru>)
+	id 1rT2Tl-00AJGh-Vm
+	for git@vger.kernel.org; Thu, 25 Jan 2024 19:21:26 +0300
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=bswap.ru;
+	s=mailru; h=In-Reply-To:Content-Transfer-Encoding:Content-Type:MIME-Version:
+	References:Message-ID:Subject:To:From:Date:From:Sender:Reply-To:To:Cc:
+	Content-Type:Content-Transfer-Encoding:Content-ID:Content-Description:
+	Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:
+	List-Id:List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:
+	List-Archive:X-Cloud-Ids:Disposition-Notification-To;
+	bh=9UXzBKfYa0r4/16X5V996i5xIud3Iw7UN394tgrxjoY=; t=1706199685; x=1706289685; 
+	b=xTd6tXU8R3e4SECXsXgxxSJcGpgZ2vCgWuJUXovJbpFTz7AIcL7or0wwO0dw75dWc/DfgqakPVe
+	9fik73WExf9SBi6hq6MpLk30bAs2tFk/bGLnooNjTFZlVYe27kmah6nyb875JQPB0bAZctpWi1tPP
+	rk80UKr7bN0IrL19imA=;
+Received: by smtp61.i.mail.ru with esmtpa (envelope-from <kostix@bswap.ru>)
+	id 1rT2Td-00A0Wp-2O
+	for git@vger.kernel.org; Thu, 25 Jan 2024 19:21:18 +0300
+Date: Thu, 25 Jan 2024 19:21:17 +0300
+From: Konstantin Khomoutov <kostix@bswap.ru>
+To: git@vger.kernel.org
+Subject: Re: Virus detected
+Message-ID: <20240125162117.ajysmqwrqc4emybn@carbon>
+Mail-Followup-To: git@vger.kernel.org
+References: <a96e6744-c0bb-4f6e-9066-646ca15a353d@GMX.De>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Thu, 25 Jan 2024 16:20:15 +0000
-Message-ID: <CAOLa=ZQxMZo2Y6x6GmVw=df_xS4tkF4D1_tZOeLb7jL5d5bKXA@mail.gmail.com>
-Subject: Re: [PATCH v2 1/4] refs: introduce `is_pseudoref()` and `is_headref()`
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, ps@pks.im, phillip.wood123@gmail.com
-Content-Type: multipart/mixed; boundary="0000000000000c47b2060fc78e3e"
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <a96e6744-c0bb-4f6e-9066-646ca15a353d@GMX.De>
+X-Mailru-Src: smtp
+X-7564579A: EEAE043A70213CC8
+X-77F55803: 4F1203BC0FB41BD9260BB214B72A2377C675F4246A67C6F5AA380AA4D6243ED0182A05F5380850404C228DA9ACA6FE271DAF10D12A4E9C658E14D4BD82808AFD207A37792EB9F1551EE8441B401B548A
+X-7FA49CB5: FF5795518A3D127A4AD6D5ED66289B5278DA827A17800CE7A3295C83650092F9EA1F7E6F0F101C67BD4B6F7A4D31EC0BCC500DACC3FED6E28638F802B75D45FF8AA50765F79006379BF04B24BEB7B2D58638F802B75D45FF36EB9D2243A4F8B5A6FCA7DBDB1FC311F39EFFDF887939037866D6147AF826D8BAE523405E7C6EEFAB82799917ED40FA117882F4460429724CE54428C33FAD305F5C1EE8F4F765FC00AB816903775DDCA471835C12D1D9774AD6D5ED66289B52BA9C0B312567BB23117882F446042972877693876707352026055571C92BF10FE5D25F19253116ADD2E47CDBA5A96583BA9C0B312567BB2376E601842F6C81A19E625A9149C048EEB1593CA6EC85F86DC3123C4324A5CF10D8FC6C240DEA76429C9F4D5AE37F343AA9539A8B242431040A6AB1C7CE11FEE3FE4D9CDE3FF759CF6E0066C2D8992A16C4224003CC836476E2F48590F00D11D6E2021AF6380DFAD1A18204E546F3947C062BEEFFB5F8EA3E2E808ACE2090B5E1725E5C173C3A84C317B107DEF921CE79089D37D7C0E48F6C8AA50765F79006373BC478629CBEC79DEFF80C71ABB335746BA297DBC24807EABDAD6C7F3747799A
+X-C1DE0DAB: 0D63561A33F958A556E3117CD1F6F2C1B7E8E45A74912DAEEC975A2F77FDD626F87CCE6106E1FC07E67D4AC08A07B9B0D23BF7408B3F9022CB5012B2E24CD356
+X-C8649E89: 1C3962B70DF3F0ADBF74143AD284FC7177DD89D51EBB7742DC8270968E61249B1004E42C50DC4CA955A7F0CF078B5EC49A30900B95165D34524B2D44961BF9C668C49BCEF089420CE626F5D10E1151C0EF5C13F3B71E3FDFF9B11BF9BD8B39EF1D7E09C32AA3244CF4C2604BD23D22BD190F2C41E201902064EE5813BBCA3A9DBC4AF6B5DE6957CB5DA084F8E80FEBD3B644FBF139BB3089A015563ECF9503F943082AE146A756F3
+X-D57D3AED: 3ZO7eAau8CL7WIMRKs4sN3D3tLDjz0dLbV79QFUyzQ2Ujvy7cMT6pYYqY16iZVKkSc3dCLJ7zSJH7+u4VD18S7Vl4ZUrpaVfd2+vE6kuoey4m4VkSEu530nj6fImhcD4MUrOEAnl0W826KZ9Q+tr5ycPtXkTV4k65bRjmOUUP8cvGozZ33TWg5HZplvhhXbhDGzqmQDTd6OAevLeAnq3Ra9uf7zvY2zzsIhlcp/Y7m53TZgf2aB4JOg4gkr2biojjPo90oGNxwJ/sv+BrqRo3g==
+X-Mailru-Sender: 139A7956A63CACCF7216901AE3D43F14092F8F3C01EFE7995E16E72460DA147924C8257F11D4E8342F0A6AF357119A4D04176AAE5055CC72595A8557D9C981F4633CE835492D9647D182D770C8C7E642B4A721A3011E896F
+X-Mras: Ok
+X-7564579A: 646B95376F6C166E
+X-77F55803: 6242723A09DB00B48822B69B0C414C66EDC162D7C4575373C2E3B28971F8A0E068F3CF0E9FE49B699C9ECA75E078EC22747CA43DF492EEF9B2615B9283501C1EA5BBC969385B4329
+X-7FA49CB5: 0D63561A33F958A59EDF17321DDE478B65BD132CE62BB01590DD7BE50DD0A6B78941B15DA834481FA18204E546F3947C1DAA61796BF5227BF6B57BC7E64490618DEB871D839B7333395957E7521B51C2DFABB839C843B9C08941B15DA834481F8AA50765F790063770DAEE4257ABEBB3389733CBF5DBD5E9B5C8C57E37DE458BD96E472CDF7238E0725E5C173C3A84C3FB9365559B687AC835872C767BF85DA2F004C90652538430E4A6367B16DE6309
+X-87b9d050: 1
+X-D57D3AED: 3ZO7eAau8CL7WIMRKs4sN3D3tLDjz0dLbV79QFUyzQ2Ujvy7cMT6pYYqY16iZVKkSc3dCLJ7zSJH7+u4VD18S7Vl4ZUrpaVfd2+vE6kuoey4m4VkSEu530nj6fImhcD4MUrOEAnl0W826KZ9Q+tr5ycPtXkTV4k65bRjmOUUP8cvGozZ33TWg5HZplvhhXbhDGzqmQDTd6OAevLeAnq3Ra9uf7zvY2zzsIhlcp/Y7m53TZgf2aB4JOg4gkr2biojjPo90oGNxwICGTMxNfyccQ==
+X-Mailru-MI: 8000000000000800
+X-Mras: Ok
 
---0000000000000c47b2060fc78e3e
-Content-Type: text/plain; charset="UTF-8"
+Hi!
 
-Hello Junio,
+On Thu, Jan 25, 2024 at 04:23:25PM +0100, Hr. Rüge wrote:
 
-Junio C Hamano <gitster@pobox.com> writes:
+> trying to use windows version 2.43.0 from https://git-scm.com/downloads
+> my antivirus software detects it as a virus.
+I assume you're talking about Windows.
 
-> Karthik Nayak <karthik.188@gmail.com> writes:
->
->> We cannot directly add the new syntax checks to `is_pseudoref_syntax()`
->> because the function is also used by `is_current_worktree_ref()` and
->> making it stricter to match only known pseudorefs might have unintended
->> consequences due to files like 'BISECT_START' which isn't a pseudoref
->> but sometimes contains object ID.
->
-> Well described.
->
->> diff --git a/refs.c b/refs.c
->> index 20e8f1ff1f..4b6bfc66fb 100644
->> --- a/refs.c
->> +++ b/refs.c
->> @@ -859,6 +859,38 @@ static int is_pseudoref_syntax(const char *refname)
->>  	return 1;
->>  }
->>
->> +int is_pseudoref(struct ref_store *refs, const char *refname)
->> +{
->> +	static const char *const irregular_pseudorefs[] = {
->> +		"AUTO_MERGE",
->> +		"BISECT_EXPECTED_REV",
->> +		"NOTES_MERGE_PARTIAL",
->> +		"NOTES_MERGE_REF",
->> +		"MERGE_AUTOSTASH"
->
-> Let's end an array's initializer with a trailing comma, to help
-> future patches to add entries to this array without unnecessary
-> patch noise.
+This problem is not new and has been reported and discussed numerous times
+on the 'net. It has even been reported to the Git-for-Windows bug tracker -
+see [1, 2, 3, 4].
 
-Sure, will add!
+The problem with A\V software is that it does not operate solely by scanning
+the executable image files for having byte sequences identifying particular
+infections - this approach worked in 90s but not for too long. These days,
+pieces of A/V software try to _guess_ whether a particular executable is a
+malware, and to do that, they "score" what they inspect; for instance, lack of
+signing of some binaries lowers the score, not being presented in some
+"whitelist" lowers the score and so on.
 
->> +	};
->> +	size_t i;
->> +
->> +	if (!is_pseudoref_syntax(refname))
->> +		return 0;
->> +
->> +	if (ends_with(refname, "_HEAD"))
->> +		return refs_ref_exists(refs, refname);
->> +
->> +	for (i = 0; i < ARRAY_SIZE(irregular_pseudorefs); i++)
->> +		 if (!strcmp(refname, irregular_pseudorefs[i]))
->> +			 return refs_ref_exists(refs, refname);
->> +
->> +	return 0;
->> +}
->
-> The above uses refs_ref_exists() because we want these to
-> successfully resolve for reading.
->
->> +int is_headref(struct ref_store *refs, const char *refname)
->> +{
->> +	if (!strcmp(refname, "HEAD"))
->> +		return refs_ref_exists(refs, refname);
->
-> Given that "git for-each-ref refs/remotes" does not show
-> "refs/remotes/origin/HEAD" in the output when we do not have the
-> remote-tracking branch that symref points at, we probably do want
-> to omit "HEAD" from the output when the HEAD symref points at an
-> unborn branch.  If refs_ref_exists() says "no, it does not exist"
-> in such a case, we are perfectly fine with this code.
->
-> We do not have to worry about the unborn state for pseudorefs
-> because they would never be symbolic.  But that in turn makes me
-> suspect that the check done with refs_ref_exists() in the
-> is_pseudoref() helper is a bit too lenient by allowing it to be a
-> symbolic ref.  Shouldn't we be using a check based on
-> read_ref_full(), like we did in another topic recently [*]?
->
->
-> [Reference]
->
->  * https://lore.kernel.org/git/xmqqzfxa9usx.fsf@gitster.g/
->
+What you can do is to navigate directly to the GfW's project downloads [5]
+(you might have noticed that the link to download the Windows binaries over
+there at git-scm.com actually already leads there, just to some more
+user-friendly web page), pick the version and make (32-bit vs 64-bit) you
+need, download it and then verify its checksum [6] matches that one listed at
+the download page. If the checksum is OK, you can be sure no software running
+on your machine has tampered with the downloaded installer, and then the
+question of whether or not the installer contains any malware is the trust in
+the Git-for-Windows maintainers and the integrity of the GfW's Github project.
 
-Thanks, this makes sense and the link is helpful. I'll do something
-similar, but since HEAD can be a symref, I'll drop the
-`RESOLVE_REF_NO_RECURSE` flag and only use `RESOLVE_REF_READING`.
+> In parallel something wanted to change my hosts-entries.
+> 
+> Ist that normal?
 
-I'll wait a day or two, before sending in the new version with the
-fixes. The current diff is
+I would say it's not normal but as usually, coinsidence of this activity with
+an attempt to install GfW might not indicate any connection between the two -
+other than temporal. Of course, this only stands if you have no malware
+running on your host which patches the downloaded files on-the-fly.
 
-diff --git a/refs.c b/refs.c
-index b5e63f133a..4a1fd30ef2 100644
---- a/refs.c
-+++ b/refs.c
-@@ -866,7 +866,7 @@ int is_pseudoref(struct ref_store *refs, const
-char *refname)
- 		"BISECT_EXPECTED_REV",
- 		"NOTES_MERGE_PARTIAL",
- 		"NOTES_MERGE_REF",
--		"MERGE_AUTOSTASH"
-+		"MERGE_AUTOSTASH",
- 	};
- 	size_t i;
+Still, if you're not sure about this one, please ask on the dedicated GfW
+mailing list [7].
 
-@@ -885,10 +885,23 @@ int is_pseudoref(struct ref_store *refs, const
-char *refname)
+ 1. https://github.com/git-for-windows/git/issues?q=is%3Aissue+in%3Atitle+virus
+ 2. https://github.com/git-for-windows/git/issues?q=is%3Aissue+in%3Atitle+malware
+ 3. https://groups.google.com/g/git-for-windows/search?q=malware
+ 4. https://groups.google.com/g/git-for-windows/search?q=virus
+ 5. https://github.com/git-for-windows/git/releases/
+ 6. https://www.google.com/search?q=windows+calculate+hash+of+file
+ 7. https://groups.google.com/g/git-for-windows/
 
- int is_headref(struct ref_store *refs, const char *refname)
- {
--	if (!strcmp(refname, "HEAD"))
--		return refs_ref_exists(refs, refname);
-+	struct object_id oid;
-+	int flag;
-
--	return 0;
-+	if (strcmp(refname, "HEAD"))
-+		return 0;
-+
-+	/*
-+	 * If HEAD doesn't exist, we don't have to die, but rather,
-+	 * we simply return 0.
-+	 */
-+	if (read_ref_full("HEAD", RESOLVE_REF_READING, &oid, &flag))
-+		return 0;
-+
-+	if (is_null_oid(&oid))
-+		return 0;
-+
-+	return 1;
- }
-
- static int is_current_worktree_ref(const char *ref) {
-
-- Karthik
-
---0000000000000c47b2060fc78e3e
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: 131ec4d058c396d1_0.1
-
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1XeWlqMFdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1menU1Qy80clFHYUFMV1lYQXRrWTFpMGFmQUdvTmtkYQowWkdjS1k3OTUr
-STVVZi9NNnNEQ2o0Zkw5enpEbE5vNi9ncUdmWDdXVkFBUUEwY3pzNzUrKzMzV1RTRW1reEpICjg2
-cTJacXpzdGJOMGlpcFRENUtUeHRrSmk3TlJnWWdqc2JJekJJdXNmODhQRVYxdnQwUVJZNkVjcUhC
-THBodTkKQXhvTWpoMElCRXMrYWg5N3RINzk1RkN5ay9yVmpXeDdjNGRYbm1hV2V4WXZ0QWR3djVD
-bDVxLy9nWDNraWJGZgpuZDluYnR3SVdKMmM1SHliMVpqa0pQN0Z1SGtsTFJYM0VwWEdnYmh4ZTVI
-RmE3OG5Nc1czalI5ZzFLYU5OaGY2ClQvYUduL0FnWmZvdE12ZHliRis4MUFGTmJ0VFgrQmR5QVAz
-dm91RERTa01zNzBnVmZJQlZyM1EwQk9Fak04OFcKamZCY0c2bTZDTTdzd25lNGZnZjFJVHJrdDFE
-WWNoM1dZK2ZBYjZtMk5lOVdvZExXU2xKeW1hUGl1dUZKekxldgpweTd1TENZZjFiLzVkTCtRajhW
-UEM0MDhNdy8yMEx6aC9GeCs4S0lmMXZneUVmRHVvMGhJUEwzRkFVZENFTDk4CmYxdzB1R0oxUXRQ
-Sjk0VlQ5RDRoNy9pT0NGS01DUkFPR2UzUC9CZz0KPThyRTIKLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---0000000000000c47b2060fc78e3e--
