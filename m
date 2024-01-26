@@ -1,125 +1,196 @@
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+Received: from out2-smtp.messagingengine.com (out2-smtp.messagingengine.com [66.111.4.26])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7731C12E7F
-	for <git@vger.kernel.org>; Fri, 26 Jan 2024 07:45:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9764D12B87
+	for <git@vger.kernel.org>; Fri, 26 Jan 2024 10:05:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=66.111.4.26
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706255106; cv=none; b=bABx9/1M7GtNIDKiFDdE3HPHjlEBEbBGn7qwdx/wo9FuAtCA1PYk3U8C9dO/kF8ZHz62G3d06sGK8JX7NgR0BXL0XsFW30kdrmuYptip6MZbLsLtrwJYk3i/eOLujFt25p0XOW+gAFtJfvxMgI6nqVW14BHByB9qhaQxXifnDng=
+	t=1706263511; cv=none; b=kl0za2PdTBde/FaRPcA0LlRZz5FtHLbYIK4mLXDfKymOCCotlBLAeA0bUS0PchF4hl8wu9JQzO5iuGOkqg0lTTZ9HSnWmEU2yNhdEWWiniGWXcCp/T7DmLy9OaF1P0EvpXzqQDduoBaL8eqW9K3CViN6dIGU1mhpNQTzZQ1/CCY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706255106; c=relaxed/simple;
-	bh=DktENqTWC3SGxSX4BODMI5FsUEeTqY7vmhBPKtJNEMg=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=N6VyZ01g1w4RK5r5BhzwpqX6DPkpIeyPEmfqXDvyr2y8igRGi/rJtY6EWgcFqeqw6MMjsHryBXdDTIA1rDhLyE2syXJS8bd31Bpafsq5Wd+adaoERur+AcCez2CxnW+l27E5+Fcl/BEF+1YFtfkNoKWRvsVzrRBAIgcBaPTp48c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=oI6EUOe/; arc=none smtp.client-ip=64.147.108.70
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1706263511; c=relaxed/simple;
+	bh=czAtMdHHKf3Co43YV7+kiYiFIlQ1GK4ur1dR06DqVT0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=jmBCfJQTJJC30zEsC1Tmka6rha1q2hLy6F1nGS9lyCYjiKOyAeveN1AhpsfT/4QTtnTs1Mqk0QSjhYao4CJxFA5MttHdSj09CauNAYmMs/tLx2/wPwE2rhG7DemvL5n3ne3h+lSjcJ8XDxt62FPPMLPxtfWEUoDuRi2MLBWWdEE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=llwPYSr/; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=GX6fWdRE; arc=none smtp.client-ip=66.111.4.26
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="oI6EUOe/"
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 7F15C1C4B25;
-	Fri, 26 Jan 2024 02:45:02 -0500 (EST)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=DktENqTWC3SGxSX4BODMI5FsUEeTqY7vmhBPKt
-	JNEMg=; b=oI6EUOe/xkzb225supoiKpzqoX8ialzizYtV9Oh0FTJGS9P5gRw1lx
-	0ptIF9Dd214UNoQpQQt0KgK+CO7PRduOkm9P86fM/3U6S2zT6zvBpdzQhtAfSt7H
-	x8NzruhUe3P7u1sdrPbHKpzEm27pNDTEoiGPIXPags8jHBnvkixMo=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 2EFF51C4B23;
-	Fri, 26 Jan 2024 02:45:02 -0500 (EST)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.200.93])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id DA63F1C4B1F;
-	Fri, 26 Jan 2024 02:45:00 -0500 (EST)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Sergey Organov <sorganov@gmail.com>
-Cc: Elijah Newren <newren@gmail.com>,  git@vger.kernel.org
-Subject: Re: what should "git clean -n -f [-d] [-x] <pattern>" do?
-In-Reply-To: <87a5ot6tos.fsf@osv.gnss.ru> (Sergey Organov's message of "Thu,
-	25 Jan 2024 23:31:47 +0300")
-References: <xmqq34v6gswv.fsf@gitster.g>
-	<CABPp-BHUVLS4vB5maZzU5gS33ve6LkKgij+rc1bBZges6Xej-g@mail.gmail.com>
-	<87a5ow9jb4.fsf@osv.gnss.ru> <xmqqsf2nnbkj.fsf@gitster.g>
-	<87plxr3zsr.fsf@osv.gnss.ru> <xmqqa5ouhckj.fsf@gitster.g>
-	<87il3h72ym.fsf@osv.gnss.ru> <xmqq1qa5xq4n.fsf@gitster.g>
-	<87ede56tva.fsf@osv.gnss.ru> <87a5ot6tos.fsf@osv.gnss.ru>
-Date: Thu, 25 Jan 2024 23:44:59 -0800
-Message-ID: <xmqqzfwspmh0.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="llwPYSr/";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="GX6fWdRE"
+Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
+	by mailout.nyi.internal (Postfix) with ESMTP id 6AAA85C019F;
+	Fri, 26 Jan 2024 05:05:07 -0500 (EST)
+Received: from mailfrontend1 ([10.202.2.162])
+  by compute3.internal (MEProxy); Fri, 26 Jan 2024 05:05:07 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1706263507; x=1706349907; bh=UNuXAmoBgO
+	IEx2agczlbSVoTMGhpPNHW+NQ/Jk2z3qw=; b=llwPYSr/tEE6bwOCSBoKtsNiJN
+	ChDUSyyiSsw0OVNDNUGs92Ru80Bwz/e1iQ/0Uo8HSCUKkhAJsCojsqcXh2iEpQJ4
+	Xekh+/U0m3du7cWbULRLtTdgvu59OyncuuTU1LNHAAasdi1HIPM3LsXO7tC23+mE
+	NrVp20R5QZi3fGmURGpVOGe5KWu11Ep7bSiPL7WCwrX4tD5I+5dqBr4TNRcshjLV
+	4co61djJ3dDdOBUaUUAOiqDXFKvlE3wX3wTt5wfN8su8iuaEQ+yoPUKrqn7L2fQR
+	1vb0uBvHTTs4z0pOX3pWvzPQsdSZOmBfzNjyQ/u78S/rAg9Q04HNDEG6N0Xg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm3; t=1706263507; x=1706349907; bh=UNuXAmoBgOIEx2agczlbSVoTMGhp
+	PNHW+NQ/Jk2z3qw=; b=GX6fWdREo8CbiPhd5nZr4j7OmkMAEBlH3V3WQTs2mgh/
+	T+NQG8a/KcwzGPn+vKICJQOF4KMycdD6Rqi5kKOEoeujDGmxB2KtyyyKh2x7AdkG
+	w6sj7z4HT+ve1V210XA/Pwi4D/8xEZN0uM3S5+Dq+cJeues4y5kROh34gIObo/md
+	09UO6x/RWNdaLlMU3vF/6NH9Mgyz39Vrh8MoXMDPuoEBafggCYt13mLUvBsPYhKH
+	irE/qd7s+Gqs5DcztI0M/GDpykbZAX5q850ltH746YFt9zdkX3w+lrl4BFzscnq8
+	VGMbjD7cCaws6uq5Vz0z1L1773WSqZxiFLX5FkfS2g==
+X-ME-Sender: <xms:04OzZXGzQGLSqWn7b0toDcBT_6jxeMkRmhKEFQDALQaeQxac9XgjUw>
+    <xme:04OzZUUJ5qhd0diJifpsXyz0IdVO-lJzceLC9qL7G0oytrE-vFKJLCFz13QZsAsmQ
+    fUOEJv9yKYD3wwx5g>
+X-ME-Received: <xmr:04OzZZJIQu-YKq-dG6VJXCIhfLDo6RyHkC-LpAHgdnPFiIjwyRThJfL3ZRuOvpgINe12OrLN2aCTsefkwdp3XcvRgiyRqzIeSxv2j-VRIKj6ugz7Lw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrvdeljedguddtucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+    cujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtjeenucfhrhhomheprfgrthhr
+    ihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvg
+    hrnhepteeuvefhhfdufedvgeeiueeileegtdfhgeeftdeuveejjedtgfejhedujeeutddu
+    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
+    hpkhhsrdhimh
+X-ME-Proxy: <xmx:04OzZVF-5zOOu-xRM3JEABsQqVrcZvmmaKeX3DC80TBrqrH522IXnQ>
+    <xmx:04OzZdVS_QEuKpb8VLgxvJr4NUAjEx0de3dSAjKXSzoDpDLE460ESg>
+    <xmx:04OzZQM_igT9J6P5gV6MdkkH5BSIDa3q4s9GchtGzgDPzIGN9SUfMA>
+    <xmx:04OzZeclBVZvZiksISJAlRWxN4Rbzdpv_JkTk7cVRw42yb4rHWytYA>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 26 Jan 2024 05:05:06 -0500 (EST)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id 3b8bdf05 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 26 Jan 2024 10:01:54 +0000 (UTC)
+Date: Fri, 26 Jan 2024 11:05:03 +0100
+From: Patrick Steinhardt <ps@pks.im>
+To: Justin Tobler <jltobler@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH v2] reftable/stack: adjust permissions of compacted tables
+Message-ID: <ZbODzwjpMjdYpOh3@tanuki>
+References: <cover.1706099090.git.ps@pks.im>
+ <b2fb6f5ad0c558527341bd8040544d6b0ae5d8a2.1706100744.git.ps@pks.im>
+ <CAGAWz+7hQGMbnc8c9iCzyWQgS=wkaEXXbC7-Biqw2i7oc6rneQ@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- CF69D850-BC1E-11EE-89A2-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="VezmMCg0AwJZxLWP"
+Content-Disposition: inline
+In-Reply-To: <CAGAWz+7hQGMbnc8c9iCzyWQgS=wkaEXXbC7-Biqw2i7oc6rneQ@mail.gmail.com>
 
-Sergey Organov <sorganov@gmail.com> writes:
 
-> Sergey Organov <sorganov@gmail.com> writes:
->
->> Junio C Hamano <gitster@pobox.com> writes:
->> ..
->>> ...  If the original semantics
->>> were "you must force with -f to do anything useful", instead of "you
->>> must choose either forcing with -f or not doing with -n", then it
->>> would have led to the above behaviour.
->> ...
->> If we agree on the behavior above for sane "dry run"...
+--VezmMCg0AwJZxLWP
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Not so fast.  I said "if the original semantics were ... then it
-would have led to the above behaviour".  As the original semantics
-were not, that conclusion does not stand.
+On Thu, Jan 25, 2024 at 10:02:15AM -0600, Justin Tobler wrote:
+> On Wed, Jan 24, 2024 at 7:21=E2=80=AFAM Patrick Steinhardt <ps@pks.im> wr=
+ote:
+> >
+> > diff --git a/reftable/stack_test.c b/reftable/stack_test.c
+> > index 289e902146..2e7d1768b7 100644
+> > --- a/reftable/stack_test.c
+> > +++ b/reftable/stack_test.c
+> > @@ -443,15 +443,16 @@ static void test_reftable_stack_add(void)
+> >         int err =3D 0;
+> >         struct reftable_write_options cfg =3D {
+> >                 .exact_log_message =3D 1,
+> > +               .default_permissions =3D 0660,
+> >         };
+> >         struct reftable_stack *st =3D NULL;
+> >         char *dir =3D get_tmp_dir(__LINE__);
+> > -
+> >         struct reftable_ref_record refs[2] =3D { { NULL } };
+> >         struct reftable_log_record logs[2] =3D { { NULL } };
+> > +       struct strbuf scratch =3D STRBUF_INIT;
+>=20
+> The variable name `scratch` seems rather vague to me as opposed to someth=
+ing
+> like `path`. After a quick search though, `scratch` appears to be a fairly
+> common name used in similar scenarios. So probably not a big deal, but
+> something
+> I thought I'd mention.
 
-The "-n" option here were not added primarily as a dry-run option,
-and haven't been treated as such forever.  As can be seen by the
-"you must give either -f or -n option, and it is an error to give
-neither" rule, from the end-user's point of view, it is a way to say
-"between do-it (-f) and do-not-do-it (-n), I choose the latter for
-this invocation".  And in that context, an attempt to make "-f -f"
-mean a stronger form of forcing than "-f" was a mistake, because it
-makes your "I want to see what happens if I tried that opration that
-requires the stronger force" request impossible.
+Yeah. I basically copied the below checks from another test where we
+already had the permission checks, and also adopted the name of the
+`scratch` variable. I agree though that `path` would be a better name,
+so let me change it.
 
-And there are two equally valid ways to deal with this misfeature.
+> > +       struct stat stat_result;
+> >         int N =3D ARRAY_SIZE(refs);
+> >
+> > -
+> >         err =3D reftable_new_stack(&st, dir, cfg);
+> >         EXPECT_ERR(err);
+> >         st->disable_auto_compact =3D 1;
+> > @@ -509,12 +510,32 @@ static void test_reftable_stack_add(void)
+> >                 reftable_log_record_release(&dest);
+> >         }
+> >
+> > +#ifndef GIT_WINDOWS_NATIVE
+> > +       strbuf_addstr(&scratch, dir);
+> > +       strbuf_addstr(&scratch, "/tables.list");
+> > +       err =3D stat(scratch.buf, &stat_result);
+> > +       EXPECT(!err);
+> > +       EXPECT((stat_result.st_mode & 0777) =3D=3D cfg.default_permissi=
+ons);
+> > +
+> > +       strbuf_reset(&scratch);
+> > +       strbuf_addstr(&scratch, dir);
+> > +       strbuf_addstr(&scratch, "/");
+> > +       /* do not try at home; not an external API for reftable. */
+> > +       strbuf_addstr(&scratch, st->readers[0]->name);
+> > +       err =3D stat(scratch.buf, &stat_result);
+> > +       EXPECT(!err);
+> > +       EXPECT((stat_result.st_mode & 0777) =3D=3D cfg.default_permissi=
+ons);
+> > +#else
+> > +       (void) stat_result;
+> > +#endif
+>=20
+> Why do we ignore Windows here? And would it warrant explaining in the com=
+mit
+> message?
 
-One is to admit that "-f -f" was a mistake (which I already said),
-and a natural consequence of that admission is to introduce a more
-specific "in addition to what you do usually, this riskier operation
-is allowed" option (e.g., --nested-repo).  This leads to a design
-that matches real world usage better, even if we did not have the
-"how to ask dry-run?" issue, because in the real world, when there
-are multiple "risky" things you may have to explicitly ask to
-enable, these things do not necessarily form a nice linear
-"riskiness levels" that you can express your risk tolerance with the
-number of "-f" options.  When you need to add special protection for
-a new case other than "nested repo", for example, the "riskiness
-levels" design may need to place it above the "nested repo" level of
-riskiness and may require the user to give three "-f" options, but
-that would make it impossible to protect against nuking of nested
-repos while allowing only that newly added case.  By having more
-specific "this particular risky operation is allowed", "-f" can
-still be "between do-it and do-not-do-it, I choose the former", and
-the "--nested-repo" (and other options to allow specific risky
-operations we add in the future) would not have to have funny
-interactions with "-n".
+Because Windows has a different acccess control model for files and
+doesn't natively use POSIX permissions. I'm not a 100% sure whether we
+do emulate the permission bits or not, but I cannot test on Windows and
+the other test where this was ripped out of also makes the code
+conditional.
 
-The other valid way is to treat the use of the "riskiness levels" to
-specify what is forced still as a good idea.  If one comes from that
-position, the resulting UI would be consistent with what you have
-been advocating for.  One or more "-f" will specify what kind of
-risky stuff are allowed, and "-n" will say whether the operation
-gets carried out or merely shown what would happen if "-n" weren't
-there.
+Will explain in the commit message.
 
-It is just that I think "riskiness levels" I did in a0f4afbe (clean:
-require double -f options to nuke nested git repository and work
-tree, 2009-06-30) was an utter mistake, and that is why I feel very
-hesitant to agree with the design that still promotes it.
+Thanks!
+
+Patrick
+
+--VezmMCg0AwJZxLWP
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmWzg84ACgkQVbJhu7ck
+PpQQ+A//cV+YEaFsG+3mQpYcBLEgO7eN/epcdVGEiylD5Jfaod7tkgCSyla6UtY9
+cbt6EoPYU+0FeKPlL1NLSHPtT49jfxOL6P3/hYvwip/WBNT4y3E33RFGnyYelqww
+K/te7b8HknYSq/BhmzmpGFJBY+3a6s9JgkpVdSk1i4EoL1n9vLiHsxmT9nl8NsAv
+zn7mWpc1R5OWhvW9p5d5YGgUW1CxD4/zdAmMvRuj2pIiEhToVm82Qd143MNz21x+
+0gVYjFtOnXecbABvY+ggVRy2Of3nfMt197B0MZu9TyN8TtttBciWZClFtnIxaE5/
+YjdM0CH/PD8l5usWFwmOz3Ka4ci5dxJ1izSbPuwA/60TBOEn9MreCCer2qm2Ymer
+g0qzFZAOOum1KZbQ+Ndfkl/47mrREvD2RebVsPphedHnsX3HJo6KJc3huvj9c32u
+47sX9Ojzf/z7hyCSnIL9CxdBi2wlO4pApOVfHbl/3sTbMb+NEPUCUY48sL1xD7Tw
+7lBLUAQ/wW99QaksNht7qZDOFI58euNozjfMuNlOgOrIfJDwsKwvFZX+01ON9jxy
+dmuNsVWZX3iT89uW+HzBKT+t+8lN6sFTucpJ+jfh33ZFxgQEKbWlC4brKnQbOyKE
+gUzHc5FvoqwwMbZstEXrH27aSQz2rfnUuPlw2/yPtCdPCCNnBa0=
+=t2yS
+-----END PGP SIGNATURE-----
+
+--VezmMCg0AwJZxLWP--
