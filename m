@@ -1,170 +1,94 @@
-Received: from mail-oa1-f42.google.com (mail-oa1-f42.google.com [209.85.160.42])
+Received: from mail-qk1-f182.google.com (mail-qk1-f182.google.com [209.85.222.182])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16D6323743
-	for <git@vger.kernel.org>; Fri, 26 Jan 2024 20:17:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFEF122EF4
+	for <git@vger.kernel.org>; Fri, 26 Jan 2024 20:18:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706300271; cv=none; b=uuKPZ8IguurDcIegmyB3Adz3Au0b/ezWX1aEDCUZ9m94p97PEsjxSULYM9lSTOKNAJfFUsrbVssb7CsOxKYSx/xMg1sYedgPuUg78oRuHsQ/26+LDiPm7QvdqQwnZofZa8qm5EbriKJKDWxhekta773k197yG5fmuGQk6z+G/Os=
+	t=1706300326; cv=none; b=hd22bBFxUsar1oQnixZ08Ov4yPIovpEAsT27hJkPqeApn0wnj5XchPIyMUGwCz2oKInwQWwg0VigVG+PvBNPQCOI0vwTFlPleatGQ/UH5Vwag3ruzeaTnGHeXv5nTLBIEW9PLjd0DeotxCbr4v4paEiKsvObeGd1ozIycmz1K8M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706300271; c=relaxed/simple;
-	bh=k4DcT56HXJY36qEd6+anFIgl3uRstdjJqJcZyByGpRQ=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=rChQHJ2h3TGKCIDOIKewn3RlFKs0LRj+WXYoFEv6viai0KANHxAHvhuonE0XCuQJD6FtIHSYqXjEDvlPg7o61sxhHXRYby0ejgKy+HMc9Z4B+q2dDT0afAscawumpgEWW5XVSoeC/E8ApjRbDWK5Tei6a4KqCROtJYtveAZhcCc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=TPgkf/52; arc=none smtp.client-ip=209.85.160.42
+	s=arc-20240116; t=1706300326; c=relaxed/simple;
+	bh=3/XwTSZYROQTUZp5JQQlMeXq8Un07UenlCxIEzZMnXM=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=tq5AJi4NsqSOfe+NaXElng0eJzu6hf30Fr019K85bpDpmgOyQSN4FyKCCWII0LfJgzkp1HaoaytqwghNxHSPa97G5HXCbJ7DGi2SY5l9a7hgrqR0uICY75XoI3fvOluUPQ3w6NOAt7EmkCQAkYPNHh34648Thf7MK/l7JoIQgSY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LHmGAGxC; arc=none smtp.client-ip=209.85.222.182
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TPgkf/52"
-Received: by mail-oa1-f42.google.com with SMTP id 586e51a60fabf-21481a3de56so407946fac.2
-        for <git@vger.kernel.org>; Fri, 26 Jan 2024 12:17:49 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LHmGAGxC"
+Received: by mail-qk1-f182.google.com with SMTP id af79cd13be357-783def2092eso3672985a.1
+        for <git@vger.kernel.org>; Fri, 26 Jan 2024 12:18:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1706300269; x=1706905069; darn=vger.kernel.org;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=+kOAQpvNhv+PPDYOY0hVuY9nEUn9f8HCBfzw3FxsUbw=;
-        b=TPgkf/52XMUDlUREJWh6GR3D/5dCKdBxfOzlQGyzlAnov9zvf65KI68e72bVgr9e9G
-         a0TQN4zvBPSiXJECCwroncO2bEX3ZIbqX9U4hI1KrMckhX/YF0X/CVkyjKwu16/LKJvl
-         fnfaiWsdTAspFxw3qzoQ9Pr/Vfiu3kbPA4e+bjdQV1JjMw3dWa5fVHqhoXcVlZmDbtll
-         IRPAaiNszWXYAkAiJIlH8Nc+70GZju1+TqC9uAdDrdMRnpPBDvqrqTWTA49WhOXt1f1I
-         3M+ZLrQrSyzwHXGYoiAxtU/d5XwzTj7Nj1hb41QywuQg4+B+dYyHr+jRc/70HXDoUIVD
-         gvwQ==
+        d=gmail.com; s=20230601; t=1706300323; x=1706905123; darn=vger.kernel.org;
+        h=mime-version:references:in-reply-to:message-id:date:subject:cc:to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=g3HJaDM09fbTjK/4jsOsOa7gb7Jt0qkZYZSUzTgffZI=;
+        b=LHmGAGxCCKSMkUBIJmmKgE0+qpcyOuRLWt2DEHBHU/sy8naQcR3n9LceAvC8mQTcMZ
+         Zgl8j42hI5cxo0N4OKEolv4aEvQJcfwfkamRJMJHGx9tm7LdiE51u7b+rYkQ0sL2XvmT
+         CpsutvcI6Jc9h141Don1paS+CXfjsGoLfEloMF6hISZG5rfU+EsloArvSPPRZfCo3RAH
+         +8+bpIGOr67eMt0V/UrgZnEXTWB+oFmhHOTEVfU5ndTqGF7nstMKgzkkCRKnwjU8Pxc5
+         mLYGsCLsHdGAx2UMRuMDKWzH02LIgPp8aCYFmg3tzfW9/I1suMiUmJMIANQXH+c10as6
+         egug==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1706300269; x=1706905069;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=+kOAQpvNhv+PPDYOY0hVuY9nEUn9f8HCBfzw3FxsUbw=;
-        b=upPMIFPMQTicTTxIsvTf0iaMoLSoah3k/pTJo2sOU7ojPDgFJ/GlmQfVgxIgRgeDlI
-         /Sk/hLaPjf7Ejkzs4K8RpgcRV9KsowvLgRgcAwqlNrwvsZm3N9yNj37DFCkJPvPS6f9S
-         9vCEgv2AxBD3Ss5fxwkrmH5O99ueMlsoo7qoZQEhRrF/mLUGjKrrCGs7kYic/rk4iXIF
-         t26o3sTjFIV6mKuxO3LqOuJmGhMmgF0r8NcFW/F5nUx/VpD12bCFy3xVIQIkhEUyg8B0
-         vEbQdX72x1/7oPqEWQjD0ucVN/8bybc80gYZhgs7aTCgg0OD9rTjAxDahSRSNdNZcqhF
-         RrNw==
-X-Gm-Message-State: AOJu0YzC1O0GHPrJ7konAbrsIVGsDSfwAq2vURBis3/gvzdO96xpunaD
-	8ljmE9xYS0Oxw/bu7APoy+BSzvuMFUxxiVAG3sf0sXNsGVj/qG/1wzaVrHyqfum0jqSf7+ZcKRg
-	phnaQVWoMKpvEPH6gcvaUfPV7L5k5SUhCpV4=
-X-Google-Smtp-Source: AGHT+IGQdw657fE3Uz33VR2HOqBgmoIxSn7UbBXPj/W9iUus+2F6vqHJhiRT0AlOEL/HcX4STDCw7hYhoHQ8wbkKNww=
-X-Received: by 2002:a05:6870:d287:b0:214:d4ce:2f26 with SMTP id
- d7-20020a056870d28700b00214d4ce2f26mr205815oae.49.1706300268893; Fri, 26 Jan
- 2024 12:17:48 -0800 (PST)
+        d=1e100.net; s=20230601; t=1706300323; x=1706905123;
+        h=mime-version:references:in-reply-to:message-id:date:subject:cc:to
+         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=g3HJaDM09fbTjK/4jsOsOa7gb7Jt0qkZYZSUzTgffZI=;
+        b=kd2OGau6VHYLqUehjPY+3NC31hVp5PoooNk8J89xRf8HyntVV6GklTNvp1DT4XnCfg
+         8PuoewoY9MEbkzjsPb+xjX2BaGoQYE5Os3wPglqXw7R3UI1exa8cGCdsolBY2yxHtck+
+         4XRfUcXzC/pT8YtdxZbL1RqY4T1Y64fXdPQ385wnLghh75CANG6o3mV+D6C0Yn0UdtqJ
+         ZaugxzFtB6ClfFeD0+XbGJDEyVh/Z5CM/lvbal02w69L437q2TGEqfnJ06FMrjh0O/1z
+         REKdbvYYGfC8Z2hVPGA8m/xj8SNnb5QUAtqphGbhU7NdMB/NR5JFTt94Y/irA2M91ixc
+         /mPA==
+X-Gm-Message-State: AOJu0Yw+LTKLmou+MzAIfCX7VEGwntKy6EsHGX5qMHmxKlE6+30wH2pV
+	yPqhGW55dDU0OtIuPDXha9fUZIK1iIQBZ83rPG04QMvAEWkdjU48
+X-Google-Smtp-Source: AGHT+IGHJpO5/eGKF/XtPDBOc2DGEQiADM29kdwEZFgNI+HHHd/+AAgIGKmDUyCwxylFF+aNIZc2Pw==
+X-Received: by 2002:a05:620a:4081:b0:783:980d:257 with SMTP id f1-20020a05620a408100b00783980d0257mr613012qko.2.1706300323493;
+        Fri, 26 Jan 2024 12:18:43 -0800 (PST)
+Received: from [10.37.129.2] (pool-74-105-67-34.nwrknj.fios.verizon.net. [74.105.67.34])
+        by smtp.gmail.com with ESMTPSA id vu2-20020a05620a560200b00783142f946bsm848154qkn.99.2024.01.26.12.18.42
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 26 Jan 2024 12:18:42 -0800 (PST)
+From: John Cai <johncai86@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: John Cai via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
+Subject: Re: [PATCH v2 2/2] index-pack: --fsck-objects to take an optional
+ argument for fsck msgs
+Date: Fri, 26 Jan 2024 15:18:42 -0500
+X-Mailer: MailMate (1.14r5937)
+Message-ID: <47AE747C-69E0-467F-9EC6-860E7791C346@gmail.com>
+In-Reply-To: <xmqqwmrwm08t.fsf@gitster.g>
+References: <pull.1658.git.git.1706215884.gitgitgadget@gmail.com>
+ <pull.1658.v2.git.git.1706289180.gitgitgadget@gmail.com>
+ <cce63c6465fb1e29252d7e0918e03ff0f08d37f4.1706289180.git.gitgitgadget@gmail.com>
+ <xmqqwmrwm08t.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: Stan Stanislaus <islaus@gmail.com>
-Date: Fri, 26 Jan 2024 14:17:39 -0600
-Message-ID: <CAOa6pvGV6Uu+N8tt73vaWgx7trgppFB6Hb_W-Wo8e39MMbJ6Og@mail.gmail.com>
-Subject: git-for-windows: Rarely, checking out a branch will fast-forward that
- branch to the branch that was just switched from
-To: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-- [x] I was not able to find an open or closed issue matching what I'm seei=
-ng
+Hi Junio,
 
-Setup
+On 26 Jan 2024, at 13:13, Junio C Hamano wrote:
 
-Which version of Git for Windows are you using? Is it 32-bit or 64-bit?
+> "John Cai via GitGitGadget" <gitgitgadget@gmail.com> writes:
+>
+>> +--fsck-objects[=<msg-ids>=<severity>...]::
+>> +	Instructs index-pack to check for broken objects, but unlike `--strict`,
+>> +	does not choke on broken links. If `<msg-ids>` is passed, it should be
+>> +	a comma-separated list of `<msg-id>=<severity>` where `<msg-id>` and
+>> +	`<severity>` are used to change the severity of `fsck` errors e.g.,
+>> +	`--strict="missingEmail=ignore,badTagName=ignore"`. See the entry for
+>
+> In addition to the comment I made in my reply to 1/2, this should
+> be `--fsck-objects="missingEmail=ignore,badTagName=ignore"`, I
+> think.  Will treak locally.
 
-$ git --version --build-options
+Good catch. I might as well re-roll this since I forgot to add a Reviewed-by:
+Christian Couder <christian.couder@gmail.com> trailer to the commits.
 
-git version 2.40.0.windows.1
-C:\Users\StanStanislaus> git --version --build-options
-git version 2.40.0.windows.1
-cpu: x86_64
-built from commit: 1d90ca2906dd4b7ddaf0669a13c173ec579d794a
-sizeof-long: 4
-sizeof-size_t: 8
-shell-path: /bin/sh
-feature: fsmonitor--daemon
-
-Which version of Windows are you running? Vista, 7, 8, 10? Is it
-32-bit or 64-bit?
-git version 2.40.0.windows.1 Since it's in the Program Files folder
-and not the Program Files (x86) folder I'm going to say 64-bit.
-
-$ cmd.exe /c ver
-
-** Microsoft Windows [Version 10.0.22631.2861] **
-
-What options did you set as part of the installation? Or did you choose the
-defaults?
-
-# One of the following:
-> type "C:\Program Files\Git\etc\install-options.txt"
-> type "C:\Program Files (x86)\Git\etc\install-options.txt"
-> type "%USERPROFILE%\AppData\Local\Programs\Git\etc\install-options.txt"
-> type "$env:USERPROFILE\AppData\Local\Programs\Git\etc\install-options.txt=
-"
-$ cat /etc/install-options.txt
-
-** Editor Option: VIM
-Custom Editor Path:
-Default Branch Option:
-Path Option: Cmd
-SSH Option: OpenSSH
-Tortoise Option: false
-CURL Option: OpenSSL
-CRLF Option: CRLFAlways
-Bash Terminal Option: MinTTY
-Git Pull Behavior Option: Merge
-Use Credential Manager: Enabled
-Performance Tweaks FSCache: Enabled
-Enable Symlinks: Disabled
-Enable Pseudo Console Support: Disabled
-Enable FSMonitor: Disabled
- **
-
-Any other interesting things about your environment that might be related
-to the issue you're seeing?
-
-** Using poshgit for PS **
-
-Details
-
-Which terminal/shell are you running Git from? e.g Bash/CMD/PowerShell/othe=
-r
-
-** PS **
-
-What commands did you run to trigger this issue? If you can provide a
-Minimal, Complete, and Verifiable example
-this will help us understand the issue.
-
-# m =3D> git stash; git checkout main; git pull
-function Invoke-Git-Stash-Pull-Main {
-    $ErrorActionPreference =3D "Stop"
-    & git stash
-    & git checkout main
-    & git pull
-    Write-Host Ran $MyInvocation.MyCommand from `$profile
-}
-New-Alias -Name m -Value Invoke-Git-Stash-Pull-Main
-
-I'm on: git version 2.40.0.windows.1**
-
-What did you expect to occur after running these commands?
-
-** I expected the main branch to be checked out in the same state I left it=
-.**
-
-What actually happened instead?
-
-Very intermittently and not consistently reproducibly, main is checked
-out but fast-forwarded to the state of the branch I just left by
-checking main out. This issue seems to be the main issue here, too:
-mhutchie/vscode-git-graph#284
-
-I also posted this on the github.com/git-for-windows repo:
-https://github.com/git-for-windows/git/issues/4778
-
-=E2=95=90=E2=95=90=E2=95=90=E2=95=90=E2=95=90=E2=95=90=E2=95=90=E2=95=90=E2=
-=95=90=E2=95=90=E2=95=90=E2=95=90=E2=95=90=E2=95=90=E2=95=90=E2=95=90=E2=95=
-=90=E2=95=90=E2=95=90
-  Stan (David) G. Stanislaus
-=E2=95=90=E2=95=90=E2=95=90=E2=95=90=E2=95=90=E2=95=90=E2=95=90=E2=95=90=E2=
-=95=90=E2=95=90=E2=95=90=E2=95=90=E2=95=90=E2=95=90=E2=95=90=E2=95=90=E2=95=
-=90=E2=95=90=E2=95=90
+>
+> Thanks.
