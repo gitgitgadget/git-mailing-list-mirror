@@ -1,63 +1,63 @@
-Received: from mail-lf1-f41.google.com (mail-lf1-f41.google.com [209.85.167.41])
+Received: from mail-wr1-f41.google.com (mail-wr1-f41.google.com [209.85.221.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60D765A7B8
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91C3F5B1E6
 	for <git@vger.kernel.org>; Fri, 26 Jan 2024 22:39:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.41
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706308748; cv=none; b=dJcdpwE8OVCRNTr2zfMoBSYuYYqJu4IYPmywJgY7HS/n06VMnlKP20IR6Awqw1OuVgApse3BuR2AWNyYVgk+kiLNMKcjmYxM5II901ngyltEf966VzvbemDNv02eKlOMcJzDCFKWgZhawZDTcRIb3qzYlk+Rw9xa1ASdfqQOkbQ=
+	t=1706308748; cv=none; b=JrSbtCxU5pLfnVNd0eHneS0uBCNUAzXtXw8S0kHCQ6fac1WMNuh2PhYEWQy+Vi1uYQCR/u965Ws+nZwRPIRKraT2glsyfp0klgh9JhSEG53j/iTlr6Qg3h4UmZIRWtiIpX7QytmVXQ0vMbQkfXjvVI36u5SMECRW5OhafJbl5IA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1706308748; c=relaxed/simple;
-	bh=BeCA9NimrzHxV5yv+yfyAVz592dcO/1kGWixHYKqjv8=;
+	bh=NrqDl9jO7w0p1uWSKnU1dungX5O33wIeWGNlllaJ/uY=;
 	h=Message-ID:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=d6165uRULHI/Ehjawl2h4auJKcuY2hC4r6aGdTJlKaLHK0yz/VMOY1Y6yVyOiTjHE5hDbdk8alWLgaT+Z7IY2bwrX7uIaOQByrtz0OmrybJ7PRnZ2B2PmfmFqyf7a0UYSnImUSCtAoRWOtF5jZUDtzYENMiwKmx17DUMUlxj7Ak=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XsG+XJK8; arc=none smtp.client-ip=209.85.167.41
+	 MIME-Version:To:Cc; b=el/30B3Ap8bhSifCvk1MwmOWk5HTJn2DzUtYqHw5kP3E0+bJbvYn7AXl70oYPjKAWSh/ROXwdSIXa03j1j5hqoOz1KXTqNQU9iTM5f1oV6RG2karMyfKwJZwEShh9kzFwM59NepBxSiIDiIBasXS1L/q4YvP6bDxeSQ6cn/7240=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=TVW9azS+; arc=none smtp.client-ip=209.85.221.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XsG+XJK8"
-Received: by mail-lf1-f41.google.com with SMTP id 2adb3069b0e04-51022133a84so1213194e87.3
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TVW9azS+"
+Received: by mail-wr1-f41.google.com with SMTP id ffacd0b85a97d-33924df7245so1182316f8f.0
         for <git@vger.kernel.org>; Fri, 26 Jan 2024 14:39:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1706308743; x=1706913543; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1706308744; x=1706913544; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=cWcfZGdnOoF8T+7DEPxIEnkTNfcTKabTkpAgfF5BPdI=;
-        b=XsG+XJK8irGtMQyzxeU0HS02O/xsKeC2HQNI+b9nvdKNGWT4qqUEa7Q6PcrAOs4d5a
-         Lre8kwJ3R9MDGw1NHDwDX5I6q91C37sQ8x6OemebWL3ZLQHG/5Zy9BPbpEW3PmAhjtf+
-         nsu9EX+UFGJJ3wiG3o6DhpnV7BEt2y6NM0P9z2jzsqgEvOIkwER64z/iFHOz75p9Zh2g
-         zfQg+TG7gwdh87QkP2vMo9g6N9JD7fkY/2OOpxGtYtHwhg0lPGAWummX8utbNBPBWEBJ
-         XqCUKT/injvcXFQ1j58VsvmM6poD9k9kznT5cRBvc7FNcQeNeEJVE5Zpaxwes4j9cjny
-         sGyQ==
+        bh=k3OQPNBRoI4s9xk+w81XwIFGbiMy8piXg1fxcmhx8Hc=;
+        b=TVW9azS+ubVB4DmWvQ71BZjE3Gah3XGHMyBwlLKBb2Ifd3qxHgsMqBmxyz1zPMfidq
+         qm7tVHqQR5SuRl5fKXCtTi1EwqNdLIrb/oiVN0bOK0wa4czfQXX1t2DNhSC4O5zIpqoU
+         LWnqTgQewaGNeEc661zOjxWHCecEes+IOvZ7GHQTwk/ZDAuzCIu0tj7GHu7jPIMgxiTu
+         JNP3qR4Dp7bsuMhD6U17aKb72+CTSIYvCL50BmHgX3A315/mJDlV63sxrQYfC4FU2PXI
+         R31g2AjLb0JragkHMg0IYRNfoOSfE61MoIfl9gyCSfpvmxns/Cla2TW7fM1TbC6JDBzg
+         bdrg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1706308743; x=1706913543;
+        d=1e100.net; s=20230601; t=1706308744; x=1706913544;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=cWcfZGdnOoF8T+7DEPxIEnkTNfcTKabTkpAgfF5BPdI=;
-        b=EYgJp8kZE8S93HTBtQSpiW7lDCmd0W7H6iA3vNWvLr+aVGALtFfZf3rdjgbA8mPylK
-         YAguRtdtkM4wxZy9OrXTwqgFg1QFTiFTYPgF16MWwYVwFF3Y4fRyWxBZWDIMnRtvx99F
-         yrXev5nlm+jRFCmZ94XNxjr+f+P/49eeETBF5J3Fq4DbdHUSpH1l9+8CWzg1k/YfPOiV
-         t1PPDKVq52OwKJUWn0Wfg5EQNPCS0gO87ogvRowPKjPJ3dlbTGA1pLKBqJM7RFwuNT1j
-         Iwq5RqT8CdKxI0zaZBtodI7nzu43kgxTTExj1TUdfchG4CKx7As9AdrWxGW6Q6HdpcDh
-         555A==
-X-Gm-Message-State: AOJu0Yx6PRsxDCcauqYlgWBQBgUsDyTC8chmnxdOotfBRltZDXqfdE+q
-	wxP9ZO4Gv9vRfI3s5fI84ZNn6Dx8Wfx5LmUvjNYcX63xb0M5AAaaV6/vTJiP
-X-Google-Smtp-Source: AGHT+IHlMQu3zHXG8vf0dfXpE3wXcz99bxmcb0ANiRr9/BJWpFCP49UKXeWNi24t7TrMEbFaBM9uJA==
-X-Received: by 2002:a05:6512:3147:b0:50e:7749:7b99 with SMTP id s7-20020a056512314700b0050e77497b99mr605284lfi.37.1706308743305;
+        bh=k3OQPNBRoI4s9xk+w81XwIFGbiMy8piXg1fxcmhx8Hc=;
+        b=Z8DZ7KtkdoBbZsyiFdxgpxw8QfLedTuxYr5xuCECf2ZCZqFGOr2wmAJLboVM4vUTp3
+         75iT71yFHT4YWpdjCq7sCCpLpPXRuJ8fGBUUS+N1Mo/yQaVa1q/5C1swwmE8YKO5FYa1
+         QCpOQiGbyb5Kl0XdnlluwNTZWMTylAZwxqP27yrcOQbs+9SSrKyKCoUF/8h9R9WXeBYZ
+         6e9u4lH7NdJ8Ryp07KHWJ6jdzd64tBOUGm9hr+JirbplM2Aja6H4TCCKg5awIJifZduH
+         43kI3ODpz5WilWl1zglDqUDXNRlr4XjlYai7QcCRvv41m2i6HcgyEFJUXfq72PoN4DT+
+         i5LA==
+X-Gm-Message-State: AOJu0YxG9foenjb+lsU7S+xApj5S+pRBGN9sdNCddsHKsyfxJA8jtW3s
+	MSPU/X6fl6yXmdvQLmLO28DkBY1gMVTVp8kbHJPcISTMAaMsVaV/wdcaP2Lk
+X-Google-Smtp-Source: AGHT+IHtiRWHqvuiA4HKqBRkSgAiD6UB9BTy1YhOSv6LXXRsqN9H8ggj53SO1v1xEq+yfcPL9KJ7VQ==
+X-Received: by 2002:adf:e544:0:b0:339:5570:59e7 with SMTP id z4-20020adfe544000000b00339557059e7mr287989wrm.49.1706308743912;
         Fri, 26 Jan 2024 14:39:03 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id t6-20020a0560001a4600b00337be1c7d2fsm2112463wry.58.2024.01.26.14.39.02
+        by smtp.gmail.com with ESMTPSA id z5-20020adff745000000b003395642bc9bsm2104951wrp.117.2024.01.26.14.39.03
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 26 Jan 2024 14:39:02 -0800 (PST)
-Message-ID: <f1171f5202f576fdc73719d0ab184b0557733ec2.1706308737.git.gitgitgadget@gmail.com>
+        Fri, 26 Jan 2024 14:39:03 -0800 (PST)
+Message-ID: <5ba842b5005ce2099a4de2884d48bfc894ce4c2c.1706308737.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1632.v2.git.1706308737.gitgitgadget@gmail.com>
 References: <pull.1632.git.1704869487.gitgitgadget@gmail.com>
 	<pull.1632.v2.git.1706308737.gitgitgadget@gmail.com>
 From: "Linus Arver via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Fri, 26 Jan 2024 22:38:51 +0000
-Subject: [PATCH v2 04/10] trailer: delete obsolete formatting functions
+Date: Fri, 26 Jan 2024 22:38:52 +0000
+Subject: [PATCH v2 05/10] sequencer: use the trailer iterator
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -78,108 +78,172 @@ Cc: Christian Couder <chriscool@tuxfamily.org>,
 
 From: Linus Arver <linusa@google.com>
 
+This patch allows for the removal of "trailer_info_get()" from the
+trailer.h API, which will be in the next patch.
+
+Instead of calling "trailer_info_get()", which is a low-level function
+in the trailers implementation (trailer.c), call
+trailer_iterator_advance(), which was specifically designed for public
+consumption in f0939a0eb1 (trailer: add interface for iterating over
+commit trailers, 2020-09-27).
+
+Avoiding "trailer_info_get()" means we don't have to worry about options
+like "no_divider" (relevant for parsing trailers). We also don't have to
+check for things like "info.trailer_start == info.trailer_end" to see
+whether there were any trailers (instead we can just check to see
+whether the iterator advanced at all).
+
+Also, teach the iterator about non-trailer lines, by adding a new field
+called "raw" to hold both trailer and non-trailer lines. This is
+necessary because a "trailer block" is a list of trailer lines of at
+least 25% trailers (see 146245063e (trailer: allow non-trailers in
+trailer block, 2016-10-21)), such that it may hold non-trailer lines.
+
 Signed-off-by: Linus Arver <linusa@google.com>
 ---
- trailer.c | 79 -------------------------------------------------------
- 1 file changed, 79 deletions(-)
+ builtin/shortlog.c |  7 +++++--
+ sequencer.c        | 35 +++++++++++++++--------------------
+ trailer.c          | 17 +++++++++--------
+ trailer.h          | 13 +++++++++++++
+ 4 files changed, 42 insertions(+), 30 deletions(-)
 
+diff --git a/builtin/shortlog.c b/builtin/shortlog.c
+index 1307ed2b88a..dc8fd5a5532 100644
+--- a/builtin/shortlog.c
++++ b/builtin/shortlog.c
+@@ -172,7 +172,7 @@ static void insert_records_from_trailers(struct shortlog *log,
+ 					 const char *oneline)
+ {
+ 	struct trailer_iterator iter;
+-	const char *commit_buffer, *body;
++	const char *commit_buffer, *body, *value;
+ 	struct strbuf ident = STRBUF_INIT;
+ 
+ 	if (!log->trailers.nr)
+@@ -190,7 +190,10 @@ static void insert_records_from_trailers(struct shortlog *log,
+ 
+ 	trailer_iterator_init(&iter, body);
+ 	while (trailer_iterator_advance(&iter)) {
+-		const char *value = iter.val.buf;
++		if (!iter.is_trailer)
++			continue;
++
++		value = iter.val.buf;
+ 
+ 		if (!string_list_has_string(&log->trailers, iter.key.buf))
+ 			continue;
+diff --git a/sequencer.c b/sequencer.c
+index 3cc88d8a800..bc7c82c5271 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -319,37 +319,32 @@ static const char *get_todo_path(const struct replay_opts *opts)
+ static int has_conforming_footer(struct strbuf *sb, struct strbuf *sob,
+ 	size_t ignore_footer)
+ {
+-	struct process_trailer_options opts = PROCESS_TRAILER_OPTIONS_INIT;
+-	struct trailer_info info;
+-	size_t i;
+-	int found_sob = 0, found_sob_last = 0;
+-	char saved_char;
+-
+-	opts.no_divider = 1;
++	struct trailer_iterator iter;
++	size_t i = 0, found_sob = 0;
++	char saved_char = sb->buf[sb->len - ignore_footer];
+ 
+ 	if (ignore_footer) {
+-		saved_char = sb->buf[sb->len - ignore_footer];
+ 		sb->buf[sb->len - ignore_footer] = '\0';
+ 	}
+ 
+-	trailer_info_get(&info, sb->buf, &opts);
++	trailer_iterator_init(&iter, sb->buf);
++	while (trailer_iterator_advance(&iter)) {
++		i++;
++		if (sob &&
++		    iter.is_trailer &&
++		    !strncmp(iter.raw, sob->buf, sob->len)) {
++			found_sob = i;
++		}
++	}
++	trailer_iterator_release(&iter);
+ 
+ 	if (ignore_footer)
+ 		sb->buf[sb->len - ignore_footer] = saved_char;
+ 
+-	if (info.trailer_block_start == info.trailer_block_end)
++	if (!i)
+ 		return 0;
+ 
+-	for (i = 0; i < info.trailer_nr; i++)
+-		if (sob && !strncmp(info.trailers[i], sob->buf, sob->len)) {
+-			found_sob = 1;
+-			if (i == info.trailer_nr - 1)
+-				found_sob_last = 1;
+-		}
+-
+-	trailer_info_release(&info);
+-
+-	if (found_sob_last)
++	if (found_sob == i)
+ 		return 3;
+ 	if (found_sob)
+ 		return 2;
 diff --git a/trailer.c b/trailer.c
-index 7692bf9eb40..71ea2bb67f8 100644
+index 71ea2bb67f8..5bcc9b0006c 100644
 --- a/trailer.c
 +++ b/trailer.c
-@@ -144,24 +144,6 @@ static char last_non_space_char(const char *s)
- 	return '\0';
- }
+@@ -1158,17 +1158,18 @@ void trailer_iterator_init(struct trailer_iterator *iter, const char *msg)
  
--static void print_tok_val(FILE *outfile, const char *tok, const char *val)
--{
--	char c;
--
--	if (!tok) {
--		fprintf(outfile, "%s\n", val);
--		return;
--	}
--
--	c = last_non_space_char(tok);
--	if (!c)
--		return;
--	if (strchr(separators, c))
--		fprintf(outfile, "%s%s\n", tok, val);
--	else
--		fprintf(outfile, "%s%c %s\n", tok, separators[0], val);
--}
--
- static struct trailer_item *trailer_from_arg(struct arg_item *arg_tok)
+ int trailer_iterator_advance(struct trailer_iterator *iter)
  {
- 	struct trailer_item *new_item = xcalloc(1, sizeof(*new_item));
-@@ -1142,67 +1124,6 @@ void trailer_info_release(struct trailer_info *info)
- 	free(info->trailers);
- }
+-	while (iter->internal.cur < iter->internal.info.trailer_nr) {
+-		char *trailer = iter->internal.info.trailers[iter->internal.cur++];
+-		int separator_pos = find_separator(trailer, separators);
+-
+-		if (separator_pos < 1)
+-			continue; /* not a real trailer */
+-
++	char *line;
++	int separator_pos;
++	if (iter->internal.cur < iter->internal.info.trailer_nr) {
++		line = iter->internal.info.trailers[iter->internal.cur++];
++		separator_pos = find_separator(line, separators);
++		iter->is_trailer = (separator_pos > 0);
++
++		iter->raw = line;
+ 		strbuf_reset(&iter->key);
+ 		strbuf_reset(&iter->val);
+ 		parse_trailer(&iter->key, &iter->val, NULL,
+-			      trailer, separator_pos);
++			      line, separator_pos);
+ 		unfold_value(&iter->val);
+ 		return 1;
+ 	}
+diff --git a/trailer.h b/trailer.h
+index c309b01323d..a47f18b1525 100644
+--- a/trailer.h
++++ b/trailer.h
+@@ -127,6 +127,19 @@ struct trailer_iterator {
+ 	struct strbuf key;
+ 	struct strbuf val;
  
--static void format_trailer_info(struct strbuf *out,
--				const struct trailer_info *info,
--				const char *msg,
--				const struct process_trailer_options *opts)
--{
--	size_t origlen = out->len;
--	size_t i;
--
--	/* If we want the whole block untouched, we can take the fast path. */
--	if (!opts->only_trailers && !opts->unfold && !opts->filter &&
--	    !opts->separator && !opts->key_only && !opts->value_only &&
--	    !opts->key_value_separator) {
--		strbuf_add(out, msg + info->trailer_block_start,
--			   info->trailer_block_end - info->trailer_block_start);
--		return;
--	}
--
--	for (i = 0; i < info->trailer_nr; i++) {
--		char *trailer = info->trailers[i];
--		ssize_t separator_pos = find_separator(trailer, separators);
--
--		if (separator_pos >= 1) {
--			struct strbuf tok = STRBUF_INIT;
--			struct strbuf val = STRBUF_INIT;
--
--			parse_trailer(&tok, &val, NULL, trailer, separator_pos);
--			if (!opts->filter || opts->filter(&tok, opts->filter_data)) {
--				if (opts->unfold)
--					unfold_value(&val);
--
--				if (opts->separator && out->len != origlen)
--					strbuf_addbuf(out, opts->separator);
--				if (!opts->value_only)
--					strbuf_addbuf(out, &tok);
--				if (!opts->key_only && !opts->value_only) {
--					if (opts->key_value_separator)
--						strbuf_addbuf(out, opts->key_value_separator);
--					else
--						strbuf_addstr(out, ": ");
--				}
--				if (!opts->key_only)
--					strbuf_addbuf(out, &val);
--				if (!opts->separator)
--					strbuf_addch(out, '\n');
--			}
--			strbuf_release(&tok);
--			strbuf_release(&val);
--
--		} else if (!opts->only_trailers) {
--			if (opts->separator && out->len != origlen) {
--				strbuf_addbuf(out, opts->separator);
--			}
--			strbuf_addstr(out, trailer);
--			if (opts->separator) {
--				strbuf_rtrim(out);
--			}
--		}
--	}
--
--}
--
- void format_trailers_from_commit(const struct process_trailer_options *opts,
- 				 const char *msg,
- 				 struct strbuf *out)
++	/*
++	 * Raw line (e.g., "foo: bar baz") before being parsed as a trailer
++	 * key/val pair as part of a trailer block. A trailer block can be
++	 * either 100% trailer lines, or mixed in with non-trailer lines (in
++	 * which case at least 25% must be trailer lines).
++	 */
++	const char *raw;
++
++	/*
++	 * 1 if the raw line was parsed as a trailer line (key/val pair).
++	 */
++	int is_trailer;
++
+ 	/* private */
+ 	struct {
+ 		struct trailer_info info;
 -- 
 gitgitgadget
 
