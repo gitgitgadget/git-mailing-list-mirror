@@ -1,64 +1,64 @@
-Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
+Received: from mail-wr1-f50.google.com (mail-wr1-f50.google.com [209.85.221.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19E1A22F0D
-	for <git@vger.kernel.org>; Fri, 26 Jan 2024 20:59:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6234322F0E
+	for <git@vger.kernel.org>; Fri, 26 Jan 2024 20:59:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706302755; cv=none; b=Ycu0ZmvZpzq0NxfO5yK0zVNYCnsgysLzjNv2qdcOtcsUevjeiYKkIsMfrvgF8PbKvCY2LV3FxaZQs74YDxJCWtTv+2+IbWqiiB3sBAwqCin41zv9c9CmvdvuGThCxozKzDbg2y//n77KPMBkinyHrtLEnxTs8F4xDDvuwzw/ZGg=
+	t=1706302757; cv=none; b=Jdu7i0oxUJa+5lA+xrt52sd6Bjwdx6ayHd2Xjx1gJw7fRl9/lE7bpZ+qxPj+LMKf6wTJn99onphoIK0Us3qiVvDedaxUR5K2FanM9DOxGrvhMwO4Om72RRzSiHEuW/gUpVz9NQDqQQ57OmvbBj3n34Pnci6F7dipBLd0SeBWnN4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706302755; c=relaxed/simple;
-	bh=z73mdDzNaFG/F8/QUj7UaGTODOLyVEmawvUWo+PlGU0=;
+	s=arc-20240116; t=1706302757; c=relaxed/simple;
+	bh=lnh/YOrT7wA1kF+3AlMSzwgqPiJP2NLkduTyRV5DyN0=;
 	h=Message-ID:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=IXr8I20tDJ37p4PqpfX3Gfpk0tPF7TWu/DW6Sagftxpzc+XEUtZY0MLljZ6enmJFJo4ugkzeaLc3fz4fWcKLEns5icc7ub5Ctk0sXcvL1fqBm9LNY6ZarbRBHrlTAWpLaTfl3qU51PTKc3tIhvYj9+rCwXhOXklbSD4lHhCGhK0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RxpHOK+3; arc=none smtp.client-ip=209.85.128.48
+	 MIME-Version:To:Cc; b=MAmMFneOOvxDJzHFpIpO6ycNhyXy2DDtRMHLOFyloyLVp01NFgsGykEI6JbS09Csnuf18UDlizr7cntO3NpWaahP2yvnrTZINrrzlPddsDO2Uk35kWYGlr0JFon1oGuD8c0VmaphaAzVc9tGCFD5O6VJu2LoolzySrciprbG4NQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=DyzmFw/5; arc=none smtp.client-ip=209.85.221.50
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RxpHOK+3"
-Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-40e7065b7bdso16245355e9.3
-        for <git@vger.kernel.org>; Fri, 26 Jan 2024 12:59:13 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DyzmFw/5"
+Received: by mail-wr1-f50.google.com with SMTP id ffacd0b85a97d-3392291b21bso1113631f8f.1
+        for <git@vger.kernel.org>; Fri, 26 Jan 2024 12:59:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1706302751; x=1706907551; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1706302753; x=1706907553; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=UOOZa5dwNDVldGL3UVEGbXFAIPT2xntKxgTVQVWIFGQ=;
-        b=RxpHOK+3T3s97ioERBLIl8f91ZMl5ptZ95K5injDT83UCANekhOZ+2h4OLgke0uY91
-         2DghA4B29DajnjqwWIt5FuWBQD4V0ainZuPqdRx2fXV0t5KzjJ2lym68MvJKPXLVuZx5
-         /ObeTcPF+j1+MYTcsBotuxzkDeTti64Si/Z+zPI368vAp++tv9m4DUu7Gtt2uCXVycVK
-         Ug7uQvvPNwtG6z/+2qwgBKwsCZMnlRrS296ChSLHRbO7NdFDbTRMc6AI7wS/ycNXeB2p
-         g/4kH/VTRUDx0jkmm2IfDPsMu4XlVIUIbFvmuhrrGJwi15K4UDNKvUTGWvaCOx7yJ4ZN
-         jQcg==
+        bh=/7NKk6TD50k4Nb2NhK/PPxDQh3iGT4oBhRr2M3b5fwg=;
+        b=DyzmFw/5s6zTGpu707PsRC/fUz5pCIKAQ/z+atWok70qNE/esx3E99HfRXpeDyebPg
+         tVaZk+u+wIXhWyyCYcApNRUdgPgFJdQhz56Ci0Xp/pkwmADXJwmTen/zPblqAWNamOQH
+         tVHxKBKY4IPfiFpGdKIYPNnEo9KZ3MTSOK6WHL/Hev6BwySWy6SdteYWAw+MrUSdM2Uq
+         ancs19DxiN78S/Pz/+K2a0dGvbMctW+Qj6UvFxxvGcrZTKjIN/1XUSWTFUATMzTzVOsX
+         6iMI3lBEfsb2Fd75gafQBfTuaElX2PtgX6PbiiYmvxHx09ZTfqIkZ8LpIcZsj8kjd6Yl
+         Rvcg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1706302751; x=1706907551;
+        d=1e100.net; s=20230601; t=1706302753; x=1706907553;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=UOOZa5dwNDVldGL3UVEGbXFAIPT2xntKxgTVQVWIFGQ=;
-        b=VQVAFxVbuztd/GTc63FFVbxEoVDBijkwId7clOOwHjSb993eIiEpV5VnJJCRHe2l7C
-         66pOPOte+YRtGYmmxpLMTy2B1EpnYmPNR3EsechDSoX9S1fcwU0gkxkq1EP1Xu7DCzbO
-         7vIMlU04NY2NH+ZgvNVtbkksYGs8MqXGMA25ETueYFdSKEOg7dHvBtgpMG96avVeluMl
-         Q29QyNcg0zadsIE9zCzHznsvTjRDjoyWkESZISsdJ6viZ5ou5cs5oWk1/sa1teEVYAdg
-         perS3/kxh1BiIGz/s3PW613jlHHIY2jOMA7r1jjVC+iKlJV8nQ158RowB6hLLNdIzlMn
-         tgQw==
-X-Gm-Message-State: AOJu0YwPdwLTH4o1Sd//S2uc58aRu8vbzWThLgqghde16F+VxSdTPEHC
-	Ay09JITNlLdgznsFNZ5hF5RPEPpVsefdXtGM+WQ5lSHdO39E+loujjYe1f5s
-X-Google-Smtp-Source: AGHT+IEHMPelmEVQS19CaAzXdjlAK8oAkesXbyJC1HwUW6+j4+F5KwjTjLzH5/IA4YWECinXeg6cWQ==
-X-Received: by 2002:a05:600c:4683:b0:40e:b2f4:79d3 with SMTP id p3-20020a05600c468300b0040eb2f479d3mr219829wmo.28.1706302751326;
-        Fri, 26 Jan 2024 12:59:11 -0800 (PST)
+        bh=/7NKk6TD50k4Nb2NhK/PPxDQh3iGT4oBhRr2M3b5fwg=;
+        b=PLPNCeqRI9EszXgkWFr1ntCAnJXCKQ6/3MjN3gL/8ZsC436Ay7DHhpOooq2tYM1owB
+         G0tXelRW4zG/77wJGQW0OgrhyexiKOI8nNPKJckDDrRnDKe7djvQ5Pfp4M5ttiQTyN6z
+         8EAc2f+FxT8lggI6k61I6D15isYsbXNWW7Bkd9F2TnNyBOh/RZZeQyNpLsGADmoh+Zax
+         v7XW+E0y5nWOYNWfjdUWtx33YuaseWEqwF/uxuuvljL4lBKvu8sFaR56uU72P5ScDHVq
+         kArVKX87MbIPZqckE/Sq4oSI4hV39ObbrDnrhdXVDttk8ZCdW1qajeCtjghU5GutwDCW
+         d99Q==
+X-Gm-Message-State: AOJu0Ywp7TEwpPxEiZKiLpkc08uk1KdubC3NaiAJqixufLolSC6ssm+J
+	Ahz9sV7xoUJewkVKz3eTRmN4zph8IuJBUQ1PlLcDmnJmKcWCVufiXuq4fbev
+X-Google-Smtp-Source: AGHT+IFM8Fb+U263almshsgcTRns021tSi3yVy5KmCMCjfeyZpAPRMC8KMuua8zTRpWRWamB6giIVQ==
+X-Received: by 2002:a5d:6109:0:b0:337:c2fa:c710 with SMTP id v9-20020a5d6109000000b00337c2fac710mr177889wrt.133.1706302752682;
+        Fri, 26 Jan 2024 12:59:12 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id j9-20020a05600c190900b0040ecdd672fasm2856238wmq.13.2024.01.26.12.59.11
+        by smtp.gmail.com with ESMTPSA id u18-20020adfed52000000b00337d92e8b9csm1967559wro.109.2024.01.26.12.59.11
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Fri, 26 Jan 2024 12:59:11 -0800 (PST)
-Message-ID: <cdf7fc7fe8a9d5664c9fdfb85f8c9293aa446c13.1706302749.git.gitgitgadget@gmail.com>
+Message-ID: <a2b9adb93d8b515532662e65e4878fb2bee650e3.1706302749.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1658.v3.git.git.1706302749.gitgitgadget@gmail.com>
 References: <pull.1658.v2.git.git.1706289180.gitgitgadget@gmail.com>
 	<pull.1658.v3.git.git.1706302749.gitgitgadget@gmail.com>
 From: "John Cai via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Fri, 26 Jan 2024 20:59:08 +0000
-Subject: [PATCH v3 1/2] index-pack: test and document
- --strict=<msg-id>=<severity>...
+Date: Fri, 26 Jan 2024 20:59:09 +0000
+Subject: [PATCH v3 2/2] index-pack: --fsck-objects to take an optional
+ argument for fsck msgs
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -74,82 +74,125 @@ Cc: John Cai <johncai86@gmail.com>,
 
 From: John Cai <johncai86@gmail.com>
 
-5d477a334a (fsck (receive-pack): allow demoting errors to warnings,
-2015-06-22) allowed a list of fsck msg to downgrade to be passed to
---strict. However this is a hidden argument that was not documented nor
-tested. Though it is true that most users would not call this option
-directly, (nor use index-pack for that matter) it is still useful to
-document and test this feature.
+git-index-pack has a --strict option that can take an optional argument
+to provide a list of fsck issues to change their severity.
+--fsck-objects does not have such a utility, which would be useful if
+one would like to be more lenient or strict on data integrity in a
+repository.
+
+Like --strict, allow --fsck-objects to also take a list of fsck msgs to
+change the severity.
+
+Remove the "For internal use only" note for --fsck-objects, and document
+the option. This won't often be used by the normal end user, but it
+turns out it is useful for Git forges like GitLab.
 
 Reviewed-by: Christian Couder <christian.couder@gmail.com>
 Signed-off-by: John Cai <johncai86@gmail.com>
 ---
- Documentation/git-index-pack.txt |  9 +++++++--
- builtin/index-pack.c             |  2 +-
- t/t5300-pack-object.sh           | 22 ++++++++++++++++++++++
- 3 files changed, 30 insertions(+), 3 deletions(-)
+ Documentation/git-index-pack.txt | 17 +++++++++++------
+ builtin/index-pack.c             |  5 +++--
+ t/t5300-pack-object.sh           | 29 ++++++++++++++++++++++++-----
+ 3 files changed, 38 insertions(+), 13 deletions(-)
 
 diff --git a/Documentation/git-index-pack.txt b/Documentation/git-index-pack.txt
-index 6486620c3d8..694bb9409bf 100644
+index 694bb9409bf..3db1062d1e4 100644
 --- a/Documentation/git-index-pack.txt
 +++ b/Documentation/git-index-pack.txt
-@@ -79,8 +79,13 @@ OPTIONS
- 	to force the version for the generated pack index, and to force
- 	64-bit index entries on objects located above the given offset.
+@@ -96,13 +96,18 @@ default and "Indexing objects" when `--stdin` is specified.
+ --check-self-contained-and-connected::
+ 	Die if the pack contains broken links. For internal use only.
  
----strict::
--	Die, if the pack contains broken objects or links.
-+--strict[=<msg-id>=<severity>...]::
-+	Die, if the pack contains broken objects or links. An optional
-+	comma-separated list of `<msg-id>=<severity>` can be passed to change
-+	the severity of some possible issues, e.g.,
-+	 `--strict="missingEmail=ignore,badTagName=error"`. See the entry for the
-+	`fsck.<msg-id>` configuration options in linkgit:git-fsck[1] for more
-+	information on the possible values of `<msg-id>` and `<severity>`.
+---fsck-objects::
+-	For internal use only.
++--fsck-objects[=<msg-id>=<severity>...]::
++	Die if the pack contains broken objects. If the pack contains a tree
++	pointing to a .gitmodules blob that does not exist, prints the hash of
++	that blob (for the caller to check) after the hash that goes into the
++	name of the pack/idx file (see "Notes").
+ +
+-Die if the pack contains broken objects. If the pack contains a tree
+-pointing to a .gitmodules blob that does not exist, prints the hash of
+-that blob (for the caller to check) after the hash that goes into the
+-name of the pack/idx file (see "Notes").
++Unlike `--strict` however, don't choke on broken links. An optional
++comma-separated list of `<msg-id>=<severity>` can be passed to change the
++severity of some possible issues, e.g.,
++`--fsck-objects="missingEmail=ignore,badTagName=ignore"`. See the entry for the
++`fsck.<msg-id>` configuration options in linkgit:git-fsck[1] for more
++information on the possible values of `<msg-id>` and `<severity>`.
  
- --progress-title::
- 	For internal use only.
+ --threads=<n>::
+ 	Specifies the number of threads to spawn when resolving
 diff --git a/builtin/index-pack.c b/builtin/index-pack.c
-index 1ea87e01f29..240c7021168 100644
+index 240c7021168..a3a37bd215d 100644
 --- a/builtin/index-pack.c
 +++ b/builtin/index-pack.c
 @@ -24,7 +24,7 @@
  #include "setup.h"
  
  static const char index_pack_usage[] =
--"git index-pack [-v] [-o <index-file>] [--keep | --keep=<msg>] [--[no-]rev-index] [--verify] [--strict] (<pack-file> | --stdin [--fix-thin] [<pack-file>])";
-+"git index-pack [-v] [-o <index-file>] [--keep | --keep=<msg>] [--[no-]rev-index] [--verify] [--strict[=<msg-id>=<severity>...]] (<pack-file> | --stdin [--fix-thin] [<pack-file>])";
+-"git index-pack [-v] [-o <index-file>] [--keep | --keep=<msg>] [--[no-]rev-index] [--verify] [--strict[=<msg-id>=<severity>...]] (<pack-file> | --stdin [--fix-thin] [<pack-file>])";
++"git index-pack [-v] [-o <index-file>] [--keep | --keep=<msg>] [--[no-]rev-index] [--verify] [--strict[=<msg-id>=<severity>...]] [--fsck-objects[=<msg-id>=<severity>...]] (<pack-file> | --stdin [--fix-thin] [<pack-file>])";
  
  struct object_entry {
  	struct pack_idx_entry idx;
+@@ -1785,8 +1785,9 @@ int cmd_index_pack(int argc, const char **argv, const char *prefix)
+ 			} else if (!strcmp(arg, "--check-self-contained-and-connected")) {
+ 				strict = 1;
+ 				check_self_contained_and_connected = 1;
+-			} else if (!strcmp(arg, "--fsck-objects")) {
++			} else if (skip_to_optional_arg(arg, "--fsck-objects", &arg)) {
+ 				do_fsck_object = 1;
++				fsck_set_msg_types(&fsck_options, arg);
+ 			} else if (!strcmp(arg, "--verify")) {
+ 				verify = 1;
+ 			} else if (!strcmp(arg, "--verify-stat")) {
 diff --git a/t/t5300-pack-object.sh b/t/t5300-pack-object.sh
-index d402ec18b79..496fffa0f8a 100755
+index 496fffa0f8a..a58f91035d1 100755
 --- a/t/t5300-pack-object.sh
 +++ b/t/t5300-pack-object.sh
-@@ -441,6 +441,28 @@ test_expect_success 'index-pack with --strict' '
+@@ -441,8 +441,7 @@ test_expect_success 'index-pack with --strict' '
  	)
  '
  
-+test_expect_success 'index-pack with --strict downgrading fsck msgs' '
-+	test_when_finished rm -rf strict &&
-+	git init strict &&
+-test_expect_success 'index-pack with --strict downgrading fsck msgs' '
+-	test_when_finished rm -rf strict &&
++test_expect_success 'setup for --strict and --fsck-objects downgrading fsck msgs' '
+ 	git init strict &&
+ 	(
+ 		cd strict &&
+@@ -457,12 +456,32 @@ test_expect_success 'index-pack with --strict downgrading fsck msgs' '
+ 
+ 		EOF
+ 		git hash-object --literally -t commit -w --stdin <commit >commit_list &&
+-		PACK=$(git pack-objects test <commit_list) &&
+-		test_must_fail git index-pack --strict "test-$PACK.pack" &&
+-		git index-pack --strict="missingEmail=ignore" "test-$PACK.pack"
++		git pack-objects test <commit_list >pack-name
+ 	)
+ '
+ 
++test_with_bad_commit () {
++	must_fail_arg="$1" &&
++	must_pass_arg="$2" &&
 +	(
 +		cd strict &&
-+		test_commit first hello &&
-+		cat >commit <<-EOF &&
-+		tree $(git rev-parse HEAD^{tree})
-+		parent $(git rev-parse HEAD)
-+		author A U Thor
-+		committer A U Thor
-+
-+		commit: this is a commit with bad emails
-+
-+		EOF
-+		git hash-object --literally -t commit -w --stdin <commit >commit_list &&
-+		PACK=$(git pack-objects test <commit_list) &&
-+		test_must_fail git index-pack --strict "test-$PACK.pack" &&
-+		git index-pack --strict="missingEmail=ignore" "test-$PACK.pack"
++		test_expect_fail git index-pack "$must_fail_arg" "test-$(cat pack-name).pack"
++		git index-pack "$must_pass_arg" "test-$(cat pack-name).pack"
 +	)
++}
++
++test_expect_success 'index-pack with --strict downgrading fsck msgs' '
++	test_with_bad_commit --strict --strict="missingEmail=ignore"
++'
++
++test_expect_success 'index-pack with --fsck-objects downgrading fsck msgs' '
++	test_with_bad_commit --fsck-objects --fsck-objects="missingEmail=ignore"
++'
++
++test_expect_success 'cleanup for --strict and --fsck-objects downgrading fsck msgs' '
++	rm -rf strict
 +'
 +
  test_expect_success 'honor pack.packSizeLimit' '
@@ -157,4 +200,3 @@ index d402ec18b79..496fffa0f8a 100755
  	packname_10=$(git pack-objects test-10 <obj-list) &&
 -- 
 gitgitgadget
-
