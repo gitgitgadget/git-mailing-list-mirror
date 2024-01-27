@@ -1,47 +1,105 @@
-Received: from cicero10.metanet.ch (cicero10.metanet.ch [80.74.152.177])
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6672018E00
-	for <git@vger.kernel.org>; Sat, 27 Jan 2024 09:51:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=80.74.152.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41A4A13AF8
+	for <git@vger.kernel.org>; Sat, 27 Jan 2024 10:00:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706349122; cv=none; b=drBYrX0CV18kzqvwmKmHSFh2aIYL/x2dZ4OR+AKepXw6/0ShN1ZQsA8Sy/a/mt05BSB27Wqm9lG60nUURxdqJJJCo9JLHZSiseowW1TqrZjNnvshxb+VXOj2/NF880cHBOv4te+B+FRlwuSwi2JWslaHiywpe89MQezhUb1DVxY=
+	t=1706349611; cv=none; b=IEO+1H7oTFYsgZXq3dbsDg+Cd17m66b/+ODV14lgKKeJ6XiyqPooP2nHbQxDZSUeHD5pfqdd5mIyFs7E7SlBJbEbsACs9u7fnQMPCFqrNrdMEdvHt2H+0hmxnsfgHqrbwWcUvje6DRKXmao0URXlxE6CNM5HIoWODxaV8m95mVI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706349122; c=relaxed/simple;
-	bh=X++s468mVsEuUMVE+lJZ77QTXgkoYWAavuTVZLID1ec=;
-	h=Message-ID:Date:MIME-Version:To:From:Subject:Content-Type; b=kCBqsiN+ipioHCicugqcFTjnnoJa/H7AODz/o18s27+VuocUsYZEsCLd9BINzuevf5zIwSlOZ/kDkJ1/WRxNdUUPVFldFuJIhSqTUbSXOTImL2ZPs/lBPeHgt/rXynUatSc7VYiOykayNKLfYrVKXt0QlNSUW/PntYlIjxZJzoc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=king.ma; spf=pass smtp.mailfrom=king.ma; dkim=pass (1024-bit key) header.d=king.ma header.i=@king.ma header.b=mNLHttPj; arc=none smtp.client-ip=80.74.152.177
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=king.ma
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=king.ma
+	s=arc-20240116; t=1706349611; c=relaxed/simple;
+	bh=NiuJ/igQlDrf4uFsVRWQpaLr1nRIvWA8B+PhAoAV9Dg=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=oRCrx64F6kCCT+a7KUK5GnH8GPE2+JJMnWKiSxk2SDuW/bGfgL3SEASAW6eyaGIJY8Um2E0TC6I8/eiom935PiqvjFCc2/2KiGvqQTSUmRNemn/aMa1/a7ihAQy63WnfpdEi68yEGUIL6jB5LFJw39gO+RLMDabLkFp1RxyZUTc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=oKCHaYn2; arc=none smtp.client-ip=64.147.108.70
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=king.ma header.i=@king.ma header.b="mNLHttPj"
-Received: from [192.168.111.16] (localhost [127.0.0.1]) by cicero10.metanet.ch (Postfix) with ESMTPSA id 1027D74904C6
-	for <git@vger.kernel.org>; Sat, 27 Jan 2024 10:43:40 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=king.ma; s=default;
-	t=1706348620; bh=hcKjhkB20xvAFjmSTuwllANTwLrYqfu+x+hzpVr4Ed8=;
-	h=To:From:Subject;
-	b=mNLHttPjMZjuDj4XF9wjiaqLiKitH020/QoJ7jLIHMAo60euT4hP3IoOJXe4gzJOd
-	 GfqiZqMhZUt0jSVPLV+L8S86HBgcUjDJ1hxE06k4uLt97LypkIT7usHnny0z+L1PCc
-	 z8z47u8e1p+lXiEhI5PSxAGWrgBTk7JuYNTUEdk0=
-Authentication-Results: cicero.metanet.ch;
-        spf=pass (sender IP is 83.97.87.43) smtp.mailfrom=johannes@king.ma smtp.helo=[192.168.111.16]
-Received-SPF: pass (cicero.metanet.ch: connection is authenticated)
-Message-ID: <66e4baf4-439a-4a1b-ba95-1f9ed222d42a@king.ma>
-Date: Sat, 27 Jan 2024 10:43:37 +0100
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="oKCHaYn2"
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 91A8B1CFA68;
+	Sat, 27 Jan 2024 05:00:06 -0500 (EST)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=NiuJ/igQlDrf4uFsVRWQpaLr1nRIvWA8B+PhAo
+	AV9Dg=; b=oKCHaYn2Z3sIbwyZznD8AuWUcGRESrzZCca+X92+e0en8Ri3IweQb4
+	Mks1H9oby+1hp0z5GJsdVwPIhdwwpD4scdsCqrN9FVIr2/9KgNhPgX6xzS9ykeb6
+	K3jDx9tu9FCklqWFdtCLfF78hYlCeL1/LlSDT3020l3QcSsK4LATs=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 5B4A41CFA63;
+	Sat, 27 Jan 2024 05:00:06 -0500 (EST)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.200.93])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 024711CFA55;
+	Sat, 27 Jan 2024 05:00:03 -0500 (EST)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Sergey Organov <sorganov@gmail.com>
+Cc: Elijah Newren <newren@gmail.com>,  git@vger.kernel.org
+Subject: Re: what should "git clean -n -f [-d] [-x] <pattern>" do?
+In-Reply-To: <87ede4fg8s.fsf@osv.gnss.ru> (Sergey Organov's message of "Fri,
+	26 Jan 2024 15:09:39 +0300")
+References: <xmqq34v6gswv.fsf@gitster.g>
+	<CABPp-BHUVLS4vB5maZzU5gS33ve6LkKgij+rc1bBZges6Xej-g@mail.gmail.com>
+	<87a5ow9jb4.fsf@osv.gnss.ru> <xmqqsf2nnbkj.fsf@gitster.g>
+	<87plxr3zsr.fsf@osv.gnss.ru> <xmqqa5ouhckj.fsf@gitster.g>
+	<87il3h72ym.fsf@osv.gnss.ru> <xmqq1qa5xq4n.fsf@gitster.g>
+	<87ede56tva.fsf@osv.gnss.ru> <87a5ot6tos.fsf@osv.gnss.ru>
+	<xmqqzfwspmh0.fsf@gitster.g> <87ede4fg8s.fsf@osv.gnss.ru>
+Date: Sat, 27 Jan 2024 02:00:02 -0800
+Message-ID: <xmqqzfwrjdul.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-To: git@vger.kernel.org
-Content-Language: en-US
-From: Johannes Kingma <johannes@king.ma>
-Subject: add two steps
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ D79D2B76-BCFA-11EE-873F-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
 
-For git to work at least a user.name and user.email globals are needed. 
-would it make sense to include this in the installation process?
+Sergey Organov <sorganov@gmail.com> writes:
 
+> I'm still arguing in favor of fixing "-n", and I believe a fix is needed
+> independently from decision about "-f -f".
+
+Even though I do not personally like it, I do not think "which
+between do-it (f) and do-not-do-it (n) do you want to use?" is
+broken.  It sometimes irritates me to find "git clean" (without "-f"
+or "-n", and with clean.requireForce not disabled) complain, and I
+personally think "git clean" when clean.requireForce is in effect
+and no "-n" or "-f" were given should pretend as if "-n" were given.
+I wish if it were "without -n or -f, we pretend as if -n were given,
+possibly with a warning that says 'you need -f if you actually want
+to carry out these operations'".
+
+But that is a separate usability issue.
+
+What I find broken is that giving one 'f' and one 'n' in different
+order, i.e. "-f -n" and "-n -f", does not do what I expect.  If you
+are choosing between do-it (f) and do-not-do-it (n), you ought to be
+able to rely on the usual last-one-wins rule.  That I find broken.
+
+The mistake[*] of "-f -f" is rather obvious, given that the other
+"normal" ways to tweak what is affected by the command are done as
+"what else do we clean? directories (d)? ignored (x)?..." options.
+When we add the upcoming "precious" bit support, we should make sure
+that the way to trigger "oh, by the way, please clobber those paths
+that are marked precious, too" is not by giving three '-f'.  It
+would make it impossible to ask for that without also removing
+nested repositories, which takes two '-f'.
+
+
+[Footnote]
+
+ * To a lessor extent, the -v (verbose) option shares the same
+   problem as "-f -f" here, in that its worldview is to assume that
+   a single "verbosity level" is sufficient.  Unlike the severity
+   level thing, however, the user who wanted to see only messages
+   about X but have to also see messages about Y and Z that are at
+   the same or lessor verbosity level as X can filter out unwanted
+   messages without causing a real harm.
