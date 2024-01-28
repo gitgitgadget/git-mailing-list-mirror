@@ -1,264 +1,141 @@
-Received: from mail-wr1-f41.google.com (mail-wr1-f41.google.com [209.85.221.41])
+Received: from mail-oo1-f41.google.com (mail-oo1-f41.google.com [209.85.161.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 175B33C068
-	for <git@vger.kernel.org>; Sun, 28 Jan 2024 21:25:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2821446C3
+	for <git@vger.kernel.org>; Sun, 28 Jan 2024 22:34:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706477108; cv=none; b=N/MvwCgVuYV11Mmdb5R9igA8NNkfkOu1w9RSRSdttw8uS6eoeqOZUO3YyyZuPUsLbIkvNq1941kSudCwmFJdmEN6Yo/am8SKSIiDhZKmyR5HqXfzZHROATcMct9sLu2Bku8d6rL0Zcba4UVcKsfXu45xkfjPFZQNepHRw1qPUk4=
+	t=1706481295; cv=none; b=Cvv9Qr04AFg5a8JAkGy8btcN1LSn75ooLtiEX6YbGKMqlau8I8oXgknWd0Z6nk3OootOikVtDmsd4fR+yrcXgOqj2HxJgrDzlzDeD2X2AWBvqF8Mi31qX02duxbz8Tjwh0xtOdYgMHGbDuhRmSczzp3bddhAU6+/1seYheZgdhk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706477108; c=relaxed/simple;
-	bh=41sArTpUqH45OaFhbnWt5yyfhJadB+cWIk3vvhKSsSw=;
-	h=Message-ID:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=XXlQ4YFd8T233APB0riGfP3FNEeUMknUEN1aTd9CAsFrNt4lW4QqEis432BSL8kuzlTLvgmjoCqh+W/UB+cXG2xrJLCUFwytP8UzKE/KFXvPT93daXocE3L1XXMoY+csrkHkuuVphbnyd/RRTWjmByVu2xU6Bk+88nlKwbKJfzc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=If/jjW5E; arc=none smtp.client-ip=209.85.221.41
+	s=arc-20240116; t=1706481295; c=relaxed/simple;
+	bh=AiVe7XYbFn176gBtgBBvJ8zVjrsqpNydpAm8IZoC27k=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=VzfnVb7q1c7LwCg6xIPfHNClVk5scDpp5PbalgFuLTOfbU6Z6Y3DX7RDBde9jybeyE8GDg0HOAVS3zEnYJrr1VzzHJRoQ+4CFQD5fTgBY/KEfue5gmD+rZxtrwVp7rrWNxOoQwwgdIEpOw23BoxjCk6oBjPqrEDoKPFmeuTokDc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Qb6xfy95; arc=none smtp.client-ip=209.85.161.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="If/jjW5E"
-Received: by mail-wr1-f41.google.com with SMTP id ffacd0b85a97d-33ae6dfa923so577382f8f.1
-        for <git@vger.kernel.org>; Sun, 28 Jan 2024 13:25:06 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Qb6xfy95"
+Received: by mail-oo1-f41.google.com with SMTP id 006d021491bc7-595aa5b1fe0so1493228eaf.2
+        for <git@vger.kernel.org>; Sun, 28 Jan 2024 14:34:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1706477104; x=1707081904; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1706481293; x=1707086093; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=NVW7HBWhzmXo81UDrRq7/xb6bOm4LCywYwk2hq6jsWs=;
-        b=If/jjW5EAxLs3hCgTXRqPjBXAHctgv6sG17IrkI35tUF9lnObpibdFdQGEtRsZlV+w
-         5vl5m7DZKwDoLoGT5QTlAgt0MW+90y6QelHPXlUYAHLaPpW1H/GkJlqL0GpVXf8gHlWK
-         DdiSgJy6lwl0gNeXsw/7lgRicLJgECI5mf3o7gAxAoITV3kDxCjbMtsJudSHWjTbZtMY
-         Z6LZnYhp/fwEEiOuqL8rM/TTsEOtKa3y+LoXR94dZ8qKg75svXg3gVcwu6ImMSZc4DBv
-         aAfQeEQsSBGkU5G/fV+ONK6aKlCCT8FK7qx1GJyHocI+i1V9dkGSab4ZpUgD1uHPymvT
-         dNeA==
+        bh=oNULBkTf8dpbUhhPjhIKAtXvrswxNBtLwua0PFRGYq0=;
+        b=Qb6xfy950nEjN63bvdszVVzo0Dt5pfaroSupFOJ54nABX3bxivRH9DV0ezgOV9wVlf
+         U6MbsIFxlFKbrs3H+B/SzKG/pt0FfsKX9lpn5heZmPzrdCnzg3m4NOWetpOhPlRRU+I5
+         tUuJ55tg3ePNx06TRrZPb4UbTNWG/JcSsSy2kLstgWCXv7KO/PfaysC09OofxNe4+slf
+         WX0Hv+mb5FzkwvCwSj0uhIyJmss+Rjfv8rwXBA24CvhiOcl/x8OBf31vQBtP+8068miL
+         Ix5Crz8hZltZjXg9X64+L1NnIERtf5GkrdBFRBqdjZNjwR4PiP+Px10mVIWzOgd+Mu9z
+         suNw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1706477104; x=1707081904;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
+        d=1e100.net; s=20230601; t=1706481293; x=1707086093;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=NVW7HBWhzmXo81UDrRq7/xb6bOm4LCywYwk2hq6jsWs=;
-        b=s22Tzxgt41e6LJqOOFs7B3EHiJgU9KQRHKbkcSqZUWBhYMrT3c5EuRBP23cGfJPIi+
-         1xBVW8M+1j41IRqULONKQLc3ks7XAzHdQo7mALjI9NipN43ZoCudRZF+Sd48vUoQp0yx
-         ZGydvSLf+3me/1d8aguE3xRUuvGTMxjy3m+AhOyhaBytzaLpgyaMp4bnRXSjyv9zfhSX
-         1XSuBHvbLhihtBwlUh4IbwRCv0i9O/9inCgfgQuLKc2k9CN1Ahov2BfXaGXLEn6wBpVq
-         NyvOIyp1/Y7eV2VDdbAW/m2M1P4lU4k9CdfLr8Y3i+XNrF7T4ApBFxUeSv8282a6wgVy
-         bABQ==
-X-Gm-Message-State: AOJu0Yx6sqx1ekKPylGmipJJfq9aSGvUCp9ZDknxryNeatiI1mJfkUmO
-	nQzEGqUmgmLScmUUSzwVJk1qWpY/vLe7dE0SgVtmig0vJcjFccIxXrknoVnC
-X-Google-Smtp-Source: AGHT+IHn6ZvAgHjRAX0Gd4gL5ZMMvlaA6+hVslVvZHuVovbPXywLW3On1X4ecTF5103qMHZmOPPHVg==
-X-Received: by 2002:adf:f644:0:b0:33a:e67f:cf8 with SMTP id x4-20020adff644000000b0033ae67f0cf8mr1967605wrp.20.1706477104341;
-        Sun, 28 Jan 2024 13:25:04 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id bj26-20020a0560001e1a00b0033ae6530969sm3563252wrb.85.2024.01.28.13.25.03
+        bh=oNULBkTf8dpbUhhPjhIKAtXvrswxNBtLwua0PFRGYq0=;
+        b=mXYSmUniVpZVvOHwizgTYUPtF3DfQk0vou0fYdSJ4VWkQT2pF2cZZb3/j5cP4pRuza
+         /t2ecsQW1W3xUkloiD2SsV5PV8ILBPLzCj6PfjZauRwgHFWmScYGdsReF78sQGhrPzZp
+         He4VMpRHXF0Yrd84cjtFNprhXHn/ndfss8wDkB11lXM6dmrfxOurCxP72wW/EoWhSBm/
+         80bqZSYQh3vXAVMr8zUq+FdD5/P+aX3BehhfMI9eyCQ4QNtF1+m4gBANnNFIF3ySrONS
+         iaEBp4iSZqfT6K85l6ecxcKRFLvW3nWoDqJN0eTmTGQbH83fqC+MYrEbGk3Z/P3i7sHZ
+         eAKw==
+X-Gm-Message-State: AOJu0Yy6igABJfELAk1vjuR2s6zBStqvWljtq73qdIGxhw4ki0M+vl5F
+	ugnDJD03afxeRR81P/pt8Nh1Bs2GCloG38ZP8gEMwmSm1DXUMFdY
+X-Google-Smtp-Source: AGHT+IHtfv21T0Z6N+zKzw08DTgU8hkWitGEYq/bByFwqhKhr+q1NL4kIMNspDhaUHx+ffl8X9X4Og==
+X-Received: by 2002:a05:6359:459c:b0:176:d0a8:8df with SMTP id no28-20020a056359459c00b00176d0a808dfmr6131819rwb.8.1706481292788;
+        Sun, 28 Jan 2024 14:34:52 -0800 (PST)
+Received: from brittons-large-Vivobook ([209.112.166.194])
+        by smtp.gmail.com with ESMTPSA id nm13-20020a17090b19cd00b0029061498a18sm6896825pjb.24.2024.01.28.14.34.51
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 28 Jan 2024 13:25:03 -0800 (PST)
-Message-ID: <pull.1534.v3.git.1706477103039.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1534.v2.git.1699251395093.gitgitgadget@gmail.com>
-References: <pull.1534.v2.git.1699251395093.gitgitgadget@gmail.com>
-From: "M Hickford via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Sun, 28 Jan 2024 21:25:02 +0000
-Subject: [PATCH v3] credential/wincred: store oauth_refresh_token
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        Sun, 28 Jan 2024 14:34:52 -0800 (PST)
+Received: by brittons-large-Vivobook (Postfix, from userid 1000)
+	id 6A5F052027C; Sun, 28 Jan 2024 13:34:50 -0900 (AKST)
+From: Britton Leo Kerin <britton.kerin@gmail.com>
+To: git@vger.kernel.org
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Patrick Steinhardt <ps@pks.im>,
+	Britton Leo Kerin <britton.kerin@gmail.com>
+Subject: [PATCH v4 2/8] completion: bisect: complete custom terms and related options
+Date: Sun, 28 Jan 2024 13:34:41 -0900
+Message-ID: <20240128223447.342493-3-britton.kerin@gmail.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20240128223447.342493-1-britton.kerin@gmail.com>
+References: <20240118204323.1113859-1-britton.kerin@gmail.com>
+ <20240128223447.342493-1-britton.kerin@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Jeff King <peff@peff.net>,
-    Taylor Blau <me@ttaylorr.com>,
-    Matthew John Cheetham <mjcheetham@outlook.com>,
-    git-for-windows@googlegroups.com,
-    Jakub =?UTF-8?Q?Bere=C5=BCa=C5=84ski?= <kuba@berezanscy.pl>,
-    patthoyts@gmail.com,
-    M Hickford <mirth.hickford@gmail.com>,
-    M Hickford <mirth.hickford@gmail.com>
+Content-Transfer-Encoding: 8bit
 
-From: M Hickford <mirth.hickford@gmail.com>
+git bisect supports the use of custom terms via the --term-(new|bad) and
+--term-(old|good) options, but the completion code doesn't know about
+these options or the new subcommands they define.
 
-a5c7656 (credential: new attribute oauth_refresh_token) introduced
-a new confidential credential attribute and added support to
-credential-cache. Later 0ce02e2f (credential/libsecret: store new
-attributes, 2023-06-16) added support in credential-libsecret.
+Add support for these options and the custom subcommands by checking for
+them if a bisection is in progress and adding them to the list of
+subcommands.
 
-To add support in credential-wincred, we encode the new attribute in the
-CredentialBlob, separated by newline:
-
-    hunter2
-    oauth_refresh_token=xyzzy
-
-This is extensible and backwards compatible. The credential protocol
-already assumes that attribute values do not contain newlines.
-
-This fixes test "helper (wincred) gets oauth_refresh_token" when
-t0303-credential-external.sh is run with
-GIT_TEST_CREDENTIAL_HELPER=wincred. This test was added in a5c76569e7
-(credential: new attribute oauth_refresh_token, 2023-04-21).
-
-Alternatives considered: store oauth_refresh_token in a wincred
-attribute. This would be insecure because wincred assumes attribute
-values to be non-confidential.
-
-Signed-off-by: M Hickford <mirth.hickford@gmail.com>
+Signed-off-by: Britton Leo Kerin <britton.kerin@gmail.com>
 ---
-    credential/wincred: store oauth_refresh_token
-    
-    Patch v3 fixes a maybe-uninitialized warning.
+ contrib/completion/git-completion.bash | 32 ++++++++++++++++++++++++--
+ 1 file changed, 30 insertions(+), 2 deletions(-)
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1534%2Fhickford%2Fwincred-refresh-v3
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1534/hickford/wincred-refresh-v3
-Pull-Request: https://github.com/gitgitgadget/git/pull/1534
-
-Range-diff vs v2:
-
- 1:  12f092f45b1 ! 1:  a324c3aac41 credential/wincred: store oauth_refresh_token
-     @@ Commit message
-          credential/wincred: store oauth_refresh_token
-      
-          a5c7656 (credential: new attribute oauth_refresh_token) introduced
-     -    a new confidential credential attribute for helpers to store.
-     +    a new confidential credential attribute and added support to
-     +    credential-cache. Later 0ce02e2f (credential/libsecret: store new
-     +    attributes, 2023-06-16) added support in credential-libsecret.
-      
-     -    We encode the new attribute in the CredentialBlob, separated by
-     -    newline:
-     +    To add support in credential-wincred, we encode the new attribute in the
-     +    CredentialBlob, separated by newline:
-      
-              hunter2
-              oauth_refresh_token=xyzzy
-     @@ contrib/credential/wincred/git-credential-wincred.c: static void get_credential(
-      +					}
-      +					line = wcstok_s(NULL, L"\r\n", &remaining_lines);
-      +				}
-     ++				free(secret);
-      +			} else {
-      +				write_item("password",
-      +						(LPCWSTR)creds[i]->CredentialBlob,
-     @@ contrib/credential/wincred/git-credential-wincred.c: static void get_credential(
-       			for (int j = 0; j < creds[i]->AttributeCount; j++) {
-       				attr = creds[i]->Attributes + j;
-       				if (!wcscmp(attr->Keyword, L"git_password_expiry_utc")) {
-     -@@ contrib/credential/wincred/git-credential-wincred.c: static void get_credential(void)
-     - 					break;
-     - 				}
-     - 			}
-     -+			free(secret);
-     - 			break;
-     - 		}
-     - 
-      @@ contrib/credential/wincred/git-credential-wincred.c: static void store_credential(void)
-       {
-       	CREDENTIALW cred;
-
-
- .../wincred/git-credential-wincred.c          | 46 ++++++++++++++++---
- 1 file changed, 40 insertions(+), 6 deletions(-)
-
-diff --git a/contrib/credential/wincred/git-credential-wincred.c b/contrib/credential/wincred/git-credential-wincred.c
-index 4cd56c42e24..4be0d58cd89 100644
---- a/contrib/credential/wincred/git-credential-wincred.c
-+++ b/contrib/credential/wincred/git-credential-wincred.c
-@@ -35,7 +35,7 @@ static void *xmalloc(size_t size)
- }
- 
- static WCHAR *wusername, *password, *protocol, *host, *path, target[1024],
--	*password_expiry_utc;
-+	*password_expiry_utc, *oauth_refresh_token;
- 
- static void write_item(const char *what, LPCWSTR wbuf, int wlen)
+diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+index 06d0b156e7..8baf330824 100644
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -1449,7 +1449,20 @@ _git_bisect ()
  {
-@@ -140,6 +140,11 @@ static void get_credential(void)
- 	DWORD num_creds;
- 	int i;
- 	CREDENTIAL_ATTRIBUTEW *attr;
-+	WCHAR *secret;
-+	WCHAR *line;
-+	WCHAR *remaining_lines;
-+	WCHAR *part;
-+	WCHAR *remaining_parts;
+ 	__git_has_doubledash && return
  
- 	if (!CredEnumerateW(L"git:*", 0, &num_creds, &creds))
- 		return;
-@@ -149,9 +154,24 @@ static void get_credential(void)
- 		if (match_cred(creds[i], 0)) {
- 			write_item("username", creds[i]->UserName,
- 				creds[i]->UserName ? wcslen(creds[i]->UserName) : 0);
--			write_item("password",
--				(LPCWSTR)creds[i]->CredentialBlob,
--				creds[i]->CredentialBlobSize / sizeof(WCHAR));
-+			if (creds[i]->CredentialBlobSize > 0) {
-+				secret = xmalloc(creds[i]->CredentialBlobSize);
-+				wcsncpy_s(secret, creds[i]->CredentialBlobSize, (LPCWSTR)creds[i]->CredentialBlob, creds[i]->CredentialBlobSize / sizeof(WCHAR));
-+				line = wcstok_s(secret, L"\r\n", &remaining_lines);
-+				write_item("password", line, line ? wcslen(line) : 0);
-+				while(line != NULL) {
-+					part = wcstok_s(line, L"=", &remaining_parts);
-+					if (!wcscmp(part, L"oauth_refresh_token")) {
-+						write_item("oauth_refresh_token", remaining_parts, remaining_parts ? wcslen(remaining_parts) : 0);
-+					}
-+					line = wcstok_s(NULL, L"\r\n", &remaining_lines);
-+				}
-+				free(secret);
-+			} else {
-+				write_item("password",
-+						(LPCWSTR)creds[i]->CredentialBlob,
-+						creds[i]->CredentialBlobSize / sizeof(WCHAR));
-+			}
- 			for (int j = 0; j < creds[i]->AttributeCount; j++) {
- 				attr = creds[i]->Attributes + j;
- 				if (!wcscmp(attr->Keyword, L"git_password_expiry_utc")) {
-@@ -170,16 +190,26 @@ static void store_credential(void)
- {
- 	CREDENTIALW cred;
- 	CREDENTIAL_ATTRIBUTEW expiry_attr;
-+	WCHAR *secret;
-+	int wlen;
- 
- 	if (!wusername || !password)
- 		return;
- 
-+	if (oauth_refresh_token) {
-+		wlen = _scwprintf(L"%s\r\noauth_refresh_token=%s", password, oauth_refresh_token);
-+		secret = xmalloc(sizeof(WCHAR) * wlen);
-+		_snwprintf_s(secret, sizeof(WCHAR) * wlen, wlen, L"%s\r\noauth_refresh_token=%s", password, oauth_refresh_token);
-+	} else {
-+		secret = _wcsdup(password);
-+	}
+-	local subcommands="start bad new good old skip reset visualize replay log run help"
++	__git_find_repo_path
 +
- 	cred.Flags = 0;
- 	cred.Type = CRED_TYPE_GENERIC;
- 	cred.TargetName = target;
- 	cred.Comment = L"saved by git-credential-wincred";
--	cred.CredentialBlobSize = (wcslen(password)) * sizeof(WCHAR);
--	cred.CredentialBlob = (LPVOID)password;
-+	cred.CredentialBlobSize = wcslen(secret) * sizeof(WCHAR);
-+	cred.CredentialBlob = (LPVOID)_wcsdup(secret);
- 	cred.Persist = CRED_PERSIST_LOCAL_MACHINE;
- 	cred.AttributeCount = 0;
- 	cred.Attributes = NULL;
-@@ -194,6 +224,8 @@ static void store_credential(void)
- 	cred.TargetAlias = NULL;
- 	cred.UserName = wusername;
- 
-+	free(secret);
++	# If a bisection is in progress get the terms being used.
++	local term_bad term_good
++	if [ -f "$__git_repo_path"/BISECT_START ]; then
++		term_bad=$(__git bisect terms --term-bad)
++		term_good=$(__git bisect terms --term-good)
++	fi
 +
- 	if (!CredWriteW(&cred, 0))
- 		die("CredWrite failed");
- }
-@@ -265,6 +297,8 @@ static void read_credential(void)
- 			password = utf8_to_utf16_dup(v);
- 		else if (!strcmp(buf, "password_expiry_utc"))
- 			password_expiry_utc = utf8_to_utf16_dup(v);
-+		else if (!strcmp(buf, "oauth_refresh_token"))
-+			oauth_refresh_token = utf8_to_utf16_dup(v);
- 		/*
- 		 * Ignore other lines; we don't know what they mean, but
- 		 * this future-proofs us when later versions of git do
-
-base-commit: b50a608ba20348cb3dfc16a696816d51780e3f0f
++	# We will complete any custom terms, but still always complete the
++	# more usual bad/new/good/old because git bisect gives a good error
++	# message if these are given when not in use, and that's better than
++	# silent refusal to complete if the user is confused.
++	local subcommands="start bad new $term_bad good old $term_good terms skip reset visualize replay log run help"
+ 	local subcommand="$(__git_find_on_cmdline "$subcommands")"
+ 	if [ -z "$subcommand" ]; then
+ 		__git_find_repo_path
+@@ -1462,7 +1475,22 @@ _git_bisect ()
+ 	fi
+ 
+ 	case "$subcommand" in
+-	bad|new|good|old|reset|skip|start)
++	start)
++		case "$cur" in
++		--*)
++			__gitcomp "--term-new --term-bad --term-old --term-good"
++			return
++			;;
++		*)
++			__git_complete_refs
++			;;
++		esac
++		;;
++	terms)
++		__gitcomp "--term-good --term-old --term-bad --term-new"
++		return
++		;;
++	bad|new|"$term_bad"|good|old|"$term_good"|reset|skip)
+ 		__git_complete_refs
+ 		;;
+ 	*)
 -- 
-gitgitgadget
+2.43.0
+
