@@ -1,107 +1,163 @@
-Received: from mail-yb1-f201.google.com (mail-yb1-f201.google.com [209.85.219.201])
+Received: from mail-lj1-f176.google.com (mail-lj1-f176.google.com [209.85.208.176])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4FCC6FA9
-	for <git@vger.kernel.org>; Sun, 28 Jan 2024 06:39:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 880342D03C
+	for <git@vger.kernel.org>; Sun, 28 Jan 2024 16:37:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706423958; cv=none; b=YQ5itBtZI5w8OCgG00sFYX+FvAcSMv50h0BjT6U6M9w3bEg7Rr/SAh69bndjezpS6+WSchH2lW9vWP+wXTuKFNUms31vz7G20IYokbe5ntpZzUODS+EKUmjPvbpH98Zy2vC87iRUkpTn1IuvdykEGmu9dHZmePvnUxZCnb81ISU=
+	t=1706459843; cv=none; b=rbzGCUqu5h4yXvZnA98288PXxpIsngAueb/k+dz31mnG+fJfmLYUA68or5JtNNN0Dg3+eDoP6l3a4ilKdnC7NctwL416Wk4MQkAex+GESnOqZuabJXoeuieSxw/aikw0TuZ970zUc91Ogwj/esp1SKAA91ebmfpi3VyzMu/GkBc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706423958; c=relaxed/simple;
-	bh=2Y8DB8c1Lm8GQ/0LZoj6QsFWmvcWYh1OuCOzRnZ/xRQ=;
-	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
-	 To:Cc:Content-Type; b=CpOVPuXz+ZVl+NF+9WUwzJrASkzSdwlMYMccfNqALFzA/5npnooWOD06zeTabEaGFLcvrUXT1NEXuOn35BNj881F/Tiu3yMLXNQW3/dugapec226hI7SQz4zuhUYcxDV/07UV0S6CWPt1sa/Q12L8PkXfB3fuP4XQ3XwFSNb/ks=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--linusa.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=fuphfcXQ; arc=none smtp.client-ip=209.85.219.201
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--linusa.bounces.google.com
+	s=arc-20240116; t=1706459843; c=relaxed/simple;
+	bh=sMR57gT0XJZUlCTvHOPzJPqIpr7mpMySTXoa4BdgvCk=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=CJ0s0mJ9d4qfsVxxCSyZiZskeOuloAa3sKQgnauyOYnfAVDZ1BBO2VvOM0IlLcJXPp5N1emxMUzxvUu9WmkSd2/BgSmGkoGdn/EuEuaIEHv8bfJ276nQzZKyMEeYUOfC8oErxtFMeGUT79031lzEpEicv19YQyjgfh449LVFGeo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=KuMTrk1a; arc=none smtp.client-ip=209.85.208.176
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="fuphfcXQ"
-Received: by mail-yb1-f201.google.com with SMTP id 3f1490d57ef6-dc221ed88d9so2827088276.3
-        for <git@vger.kernel.org>; Sat, 27 Jan 2024 22:39:16 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KuMTrk1a"
+Received: by mail-lj1-f176.google.com with SMTP id 38308e7fff4ca-2cf47acf8f8so19908031fa.1
+        for <git@vger.kernel.org>; Sun, 28 Jan 2024 08:37:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1706423955; x=1707028755; darn=vger.kernel.org;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=ZLhymtD4Dlr7RYiYfqd+mKd1vAu5bYaffR/JpwwFuhk=;
-        b=fuphfcXQuBTzVfbsZGJoh7BrofjYWebq6axszmvst8S8p0WANQ7ua3jxXMQ32Y9p0Z
-         K87uHpNJNX99kvfme0KfGtXt3dN3AJm3KSwvxoq7TYaoF6S3z5f/FmEaOYtcNH8Exuub
-         pAoDUOAzt+LcEz2mXO5St3UV+yh8lJWdzJZ2EcI7Im0AtY6xIpkk4mEhdvjTW88v9+C9
-         QEdOMjy6XgZVtsmDzOJNNTetLfPUEPSi5gQx/Rm88K1veH3ujv23P1thg56p1muGOg1G
-         q2W7Zin2+V7cEpZgaQ41C4ESlvFrg3Ja4WjzRRha6uudo1osQbde4Xj4qGzjq12SlUJP
-         mm2Q==
+        d=gmail.com; s=20230601; t=1706459839; x=1707064639; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=0X4mVrSge2VOyxNdLqPDSud8ms9voYbecuIT+VBQoB8=;
+        b=KuMTrk1acPUAKoinwPc7Z7pXipAtMYDJAL4VZKw4f/iLWlggBq8UaYPmjvmNQrnxO3
+         elw0AHOBB8QQ1oBO7j7oKHIAlBn982u/xmraeLR+tpfcCvTsNhrOg/v+PBkIpgHWkONz
+         saL8eI3WiNZfLjz5ZsKbEnTFcQrj2sP/BD1krxHq9IPLVbBcpE46+34fq0zoQyjN70c+
+         JThVPJHLJ+4ebNqziJmJ1T2dLNY+8ek/Ke6YIG7tNU7c16cBMW3oJrlBnnoP7N6rxN73
+         Z/tQzB9ULHOHE+h2Pbzmyvp32GA+UGTlYft5FQGrSbV+nJKdc0nwv+OcV8yAlb5ly2rO
+         ju/A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1706423955; x=1707028755;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=ZLhymtD4Dlr7RYiYfqd+mKd1vAu5bYaffR/JpwwFuhk=;
-        b=Z3PWRH3ZssA+Ij/SU71Hme3eyffe0N7U0Laje5AKIb7eNV57R9XNhnPWR9EDY2WUfp
-         3e3ZgOjuRKBcEusyc0jKOjb45XfMAkp+wFGySavwohByZHK0cqvbcKkUbqxOEIG+z/fD
-         PTAH61P83r5tvXEQUU2Lb8wXooV1vOA1z5NSaRGdYuh6/lyP7jhKLsjrUx3bKUH6urAj
-         d5CuZQjpmfPhoxAmxlJDMhStIJOyWi/bSCwunVyscCvrQd7CV/bO+mrOY4LDPKsXzJDt
-         9d0/fcjmBxuSAZnhsGyj03Z1VpxXxEA2Ifvq9tYbebboYXohywKuk83pSBl228ryS5XI
-         Hn/Q==
-X-Gm-Message-State: AOJu0Yxkuutb3BrP9FVkemiduEjcv2pmXItsSVj4d0Sckh04qKKjtbBe
-	Xiu804t93XNq/ReYqW3bjGMb/l97Ho/pdtEAoHOs316pLMbWvKNdiGzepjUNQq4h+9rC2+DRKqQ
-	1+A==
-X-Google-Smtp-Source: AGHT+IE3TLHD7EurYGbFmsg6ZE1aaNeMj74TOOpf798nL45AU7t7zpLqB0RMHHI0pGtn9LhWC2h+i1/3kKY=
-X-Received: from fine.c.googlers.com ([fda3:e722:ac3:cc00:7f:e700:c0a8:2221])
- (user=linusa job=sendgmr) by 2002:a05:6902:1a47:b0:dbd:73bd:e55a with SMTP id
- cy7-20020a0569021a4700b00dbd73bde55amr223704ybb.4.1706423955540; Sat, 27 Jan
- 2024 22:39:15 -0800 (PST)
-Date: Sat, 27 Jan 2024 22:39:13 -0800
-In-Reply-To: <1b4bdde65bcb375ce9ef2345814330df92e6d932.1706308737.git.gitgitgadget@gmail.com>
+        d=1e100.net; s=20230601; t=1706459839; x=1707064639;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=0X4mVrSge2VOyxNdLqPDSud8ms9voYbecuIT+VBQoB8=;
+        b=v84faqkcZ7yF/WVtN4SZKDcw9v6Ug5PGvbhgspU3ROo7L6QOrnXKMnxOy03oS6J2f9
+         FmJRiVjMIq0RiK/Q6fxQhg/TZ8KaDXMHD5sOLaDVDZTltYdCmbo8huswQk1dueWSZ2Wy
+         CE3aPjQCxv08qbAC6PeVxAE8Ft8vzAxSIdcuPs8cSY2eLJYFOZh9FGIu/ApKA/t6ihi1
+         MhUaT/LZ5A9EE/+4RsIr7iETfhMlVMCNxrWQGPxt0XirRt0dL2/NiJUuX+JeqXLu2QXs
+         KlZA0DysWs7my6gE0xmj9aKN2SYZqGqd1qnM6EQ3S7lRr/V2kifmVbTgBYc+LNrT5BQc
+         RmvQ==
+X-Gm-Message-State: AOJu0YyQBLuhukKuTclEY14hPPiXiezt70niQd3PDUCDeMFHGdCOKycj
+	l5MF8OWLy5VoSSCwHK9qyy1vgGdk1wFeaftXfbJK/4m6khZ+z0H9pJ1PO8v0gFnZmScCvZcNQio
+	z3Ubz/YNrXY01S51P/WyVeN6bIZ0=
+X-Google-Smtp-Source: AGHT+IFZ1THSoC6a7xnk2OTSPkpZQeIXRXt1Ycm5Mt7aILSAQCaK5KWwAuIp81THO1+anYDr8MxwGgkyTqe230xQovw=
+X-Received: by 2002:a2e:b178:0:b0:2cf:1764:891d with SMTP id
+ a24-20020a2eb178000000b002cf1764891dmr2251146ljm.1.1706459839153; Sun, 28 Jan
+ 2024 08:37:19 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-References: <pull.1632.git.1704869487.gitgitgadget@gmail.com>
- <pull.1632.v2.git.1706308737.gitgitgadget@gmail.com> <1b4bdde65bcb375ce9ef2345814330df92e6d932.1706308737.git.gitgitgadget@gmail.com>
-Message-ID: <owlyede22c8e.fsf@fine.c.googlers.com>
-Subject: Re: [PATCH v2 09/10] trailer: move arg handling to interpret-trailers.c
-From: Linus Arver <linusa@google.com>
-To: Linus Arver via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
-Cc: Christian Couder <chriscool@tuxfamily.org>, Junio C Hamano <gitster@pobox.com>, 
-	Emily Shaffer <nasamuffin@google.com>, Josh Steadmon <steadmon@google.com>, 
-	"Randall S. Becker" <rsbecker@nexbridge.com>
+MIME-Version: 1.0
+References: <20240119060721.3734775-2-brianmlyles@gmail.com>
+ <7229fe62-cf9b-4829-80ec-c6b44c52163e@gmail.com> <CAHPHrSeKY2Ou9VCq6rtADTOwycc0KCTPaCCwtqf94yLi0wj0OQ@mail.gmail.com>
+In-Reply-To: <CAHPHrSeKY2Ou9VCq6rtADTOwycc0KCTPaCCwtqf94yLi0wj0OQ@mail.gmail.com>
+From: Brian Lyles <brianmlyles@gmail.com>
+Date: Sun, 28 Jan 2024 10:36:42 -0600
+Message-ID: <CAHPHrSf=UkR9+hMfb7pp5Y6uHqa2pBrEf+cTLJv=z=BOFdL3rw@mail.gmail.com>
+Subject: Re: [PATCH 1/4] sequencer: Do not require `allow_empty` for redundant
+ commit options
+To: phillip.wood@dunelm.org.uk
+Cc: git@vger.kernel.org, me@ttaylorr.com, newren@gmail.com, gitster@pobox.com
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-"Linus Arver via GitGitGadget" <gitgitgadget@gmail.com> writes:
+[+cc Junio]
 
-> From: Linus Arver <linusa@google.com>
+On Sat, Jan 27, 2024 at 5:30=E2=80=AFPM Brian Lyles <brianmlyles@gmail.com>=
+ wrote:
+
+> > > For some amount of backwards compatibility with the existing code and
+> > > tests, I have opted to preserve the behavior of returning 0 when:
+> > >
+> > > - `allow_empty` is specified, and
+> > > - either `is_index_unchanged` or `is_original_commit_empty` indicates=
+ an
+> > >    error
+> >
+> > I'm not sure that is a good idea as it is hiding an error that we didn'=
+t
+> > hit before because we returned early.
 >
-> We don't move the "arg_item" struct to interpret-trailers.c, because it
-> is now a struct that contains information about trailers that should be
-> injected into the input text's own trailers. We will rename this
-> language as such in a follow-up patch to keep the diff here small.
+> I think you're right -- Previously the error could not have been hit,
+> but now it can. An error is still an error, and we should handle it
+> regardless of how `allow_empty` was set. I'll address this in v2 by
+> simply returning the error.
 
-I forgot to add this follow-up patch in this series. That will be patch
-11 in v3, which renames "arg_item" to "trailer_template" (the idea being
-that trailer templates are used to create new trailers, using the
-template as a guide).
+As I dig into this more, I'm noticing that this may have unintended side
+effects that I'm unsure of. After making this change, I noticed a couple
+of failures in the cherry-pick test suite. The others may be a knock-on
+of this initial failure:
 
-> diff --git a/builtin/interpret-trailers.c b/builtin/interpret-trailers.c
-> index 9e41fa20b5f..ad9b9a9f9ef 100644
-> --- a/builtin/interpret-trailers.c
-> +++ b/builtin/interpret-trailers.c
-> @@ -45,23 +45,17 @@ static int option_parse_if_missing(const struct option *opt,
->  	return trailer_set_if_missing(opt->value, arg);
->  }
->  
-> -static void new_trailers_clear(struct list_head *trailers)
-> -{
-> -	struct list_head *pos, *tmp;
-> -	struct new_trailer_item *item;
-> -
-> -	list_for_each_safe(pos, tmp, trailers) {
-> -		item = list_entry(pos, struct new_trailer_item, list);
-> -		list_del(pos);
-> -		free(item);
-> -	}
-> -}
+    expecting success of 3501.8 'cherry-pick on unborn branch':
+            git checkout --orphan unborn &&
+            git rm --cached -r . &&
+            rm -rf * &&
+            git cherry-pick initial &&
+            git diff --quiet initial &&
+            test_cmp_rev ! initial HEAD
 
-This function will also get promoted to the API, and will be renamed to
-"free_new_trailers()" initially in patch 9, but renamed to
-"free_trailer_templates()" in patch 11 (we wait until patch 11 to
-introduce the term "template").
+    A       extra_file
+    Switched to a new branch 'unborn'
+    rm 'extra_file'
+    rm 'spoo'
+    error: could not resolve HEAD commit
+    fatal: cherry-pick failed
+    not ok 8 - cherry-pick on unborn branch
+    #
+    #               git checkout --orphan unborn &&
+    #               git rm --cached -r . &&
+    #               rm -rf * &&
+    #               git cherry-pick initial &&
+    #               git diff --quiet initial &&
+    #               test_cmp_rev ! initial HEAD
+    #
+
+It looks like this is caused specifically by not hiding the error from
+`index_unchanged`
+
+    index_unchanged =3D is_index_unchanged(r);
+    if (index_unchanged < 0) {
+        return index_unchanged;
+    }
+
+At this point, my inexperience with the git codebase and these more edge
+case scenarios starts to show. I'm unsure how to best approach this. It
+seems that exposing these errors when `allow_empty` is not set causes
+the entire cherry-pick to fail in situations where it would not
+previously. Here is what that same test looks like prior to any of my
+changes from this series:
+
+    expecting success of 3501.8 'cherry-pick on unborn branch':
+            git checkout --orphan unborn &&
+            git rm --cached -r . &&
+            rm -rf * &&
+            git cherry-pick initial &&
+            git diff --quiet initial &&
+            test_cmp_rev ! initial HEAD
+
+    A       extra_file
+    Switched to a new branch 'unborn'
+    rm 'extra_file'
+    rm 'spoo'
+    [unborn 38e6d75] initial
+     Author: A U Thor <author@example.com>
+     Date: Thu Apr 7 15:13:13 2005 -0700
+     1 file changed, 15 insertions(+)
+     create mode 100644 oops
+    ok 8 - cherry-pick on unborn branch
+
+Conceptually I definitely agree that it seems odd to hide these errors
+just because `allow_empty` was not set, but I fear this to be a breaking
+change for which I don't have a good understanding of the impact.
+
+Any guidance here would be appreciated.
+
+Thank you,
+Brian Lyles
