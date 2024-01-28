@@ -1,255 +1,104 @@
-Received: from mail-wr1-f54.google.com (mail-wr1-f54.google.com [209.85.221.54])
+Received: from mail-lf1-f46.google.com (mail-lf1-f46.google.com [209.85.167.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAF843C471
-	for <git@vger.kernel.org>; Sun, 28 Jan 2024 20:03:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95D4A31A79
+	for <git@vger.kernel.org>; Sun, 28 Jan 2024 20:24:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706472183; cv=none; b=PGDhUp6kuoTqG9nal0gWBhd7U+PkWnPlL047j3T7KlYSc7ELsdl5pubidln7NvXwb790F50E26va8+AeEzWN3CROulwb50wyWZ1I/3S5i3pAvBDGAinhiImjl93u5kdb9tAc25du0DJRRwxjbBtDTBMUzbSOqLa2vJ84gfOpI7U=
+	t=1706473495; cv=none; b=eL971K6EtoOeQg+zBYPD96tBY0UfGmqVqJ+0Fo2ExWTnHwZ6xaEQh9urdX86j9Sfz1chm6Jj4MsWOBhivl89JkZl/TqafpJMuN5lKqQpY5w7tZZFVs1ILQ/yaX0LtgyRg7dDah/+9xRZdneVNdHl4oX0GeZEIX81rZ8D89e/Vtg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706472183; c=relaxed/simple;
-	bh=qs2JfaacomBYZSJbBIC0nQLE5azEC+6LeTMFhMZ7orA=;
-	h=Message-ID:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=nWsA9I6daTcV3VxXoiz9EEQTOQKx9BsqKtQikg4hDeb6rR5fWhiX4152QXVBKTb9o7+1S19EMjABIEtT/kjhqOTmF9wq2vOCRRIN5pYV3ZPpE77iNsBEhMdHn+7QwZ3PxM6Z8fJIaZaTUo+4LgJgYTHnlJs6VXTm3i6ndculrCI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=eeJttMQa; arc=none smtp.client-ip=209.85.221.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1706473495; c=relaxed/simple;
+	bh=okkraYjDUc+y7YYiqa/I4jBONf18fviKueTwwMtKCSU=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=jmdnlR0Gj0sGCeMHQrmUiuTzdpK/3EPnPZnls5e/PbSW1LBrCep5w05c9I+OljHafrTKjIpMGI8nRz5F5kPF2htAFycW7Ae2SXEiQw+G5HvLHTPU5yGRbDCn1vwoTI2F5E5WKvFNCj7Izq/Q56Unqse7OAvLWRcqys4KfgDWotU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=wilfred.me.uk; spf=pass smtp.mailfrom=wilfred.me.uk; dkim=pass (2048-bit key) header.d=wilfred-me-uk.20230601.gappssmtp.com header.i=@wilfred-me-uk.20230601.gappssmtp.com header.b=FwlXgIWa; arc=none smtp.client-ip=209.85.167.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=wilfred.me.uk
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=wilfred.me.uk
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="eeJttMQa"
-Received: by mail-wr1-f54.google.com with SMTP id ffacd0b85a97d-3392b045e0aso1904980f8f.2
-        for <git@vger.kernel.org>; Sun, 28 Jan 2024 12:03:01 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=wilfred-me-uk.20230601.gappssmtp.com header.i=@wilfred-me-uk.20230601.gappssmtp.com header.b="FwlXgIWa"
+Received: by mail-lf1-f46.google.com with SMTP id 2adb3069b0e04-51030667cedso1652998e87.3
+        for <git@vger.kernel.org>; Sun, 28 Jan 2024 12:24:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1706472179; x=1707076979; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=pI8Axo9a8gsIKHPMBImKiuAar+merz8URnLTsQpVhl4=;
-        b=eeJttMQaR3ie7i0NNAev3TV5OgoL5Oj0GKrafth8N3FLLIkPeM8E6JQO00Jz0JgiMb
-         xVb8ZE/+Jo6Q4AdZnaHDwrpYTG8DzTDMuvdQCmozNAy5nCNB/AT+QJY/QNviVRvNQmPJ
-         HTpXeo4EqdLNWHYkteHn3vKBYv0yM7D+ILqlh0uaGZi5UkODBN6L6J5yhw2HjMHRfcu0
-         /os/RZsv0As/cCSr/SahuNhNVWWvNpMprSFGgymOQ8hQUdkSaXtWQgyP1Cp/p8NAEuhl
-         5entDW7inHX67DAb5j3aYJMX3jVLwJSWntmj4S9tm0CnAVzD2V/574tFVM7Qf+WBUiGE
-         wQKg==
+        d=wilfred-me-uk.20230601.gappssmtp.com; s=20230601; t=1706473490; x=1707078290; darn=vger.kernel.org;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=wbXrb5CpDt08qK56SehFn+29lbezdbe/FOjgi/QucF4=;
+        b=FwlXgIWawhn+ov91VqGrcp0UTwSIRq9NorENFAacApx9f/acQqG44HlVntxP+1Xeiy
+         nHNpIowokMa8/mk3HALc4ay3L4izNz56lPHxZEtTJFQHs+g9LAZgJD8nmJmCRK6r+kpo
+         B8Dw1wUItN5YMDKOsIHKRRLXLkHo0i5vF461U7hRgf2WX6tYA3AUWAQVnIj0cf0moAfK
+         WHgVVwpxHN2/EyFQJZ/uZwZBzaanNCazm21zGUPRjss7CyucTIsBb22Dh1Ot6atzh9f7
+         ffxZcCH+c8DQE+nVhRrY4RBF+qrHBQpNg20ZtCYNm1ySR7alVnh9aHwfrczxlZw03QHp
+         T5Qg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1706472179; x=1707076979;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=pI8Axo9a8gsIKHPMBImKiuAar+merz8URnLTsQpVhl4=;
-        b=cEvCn6+Kvu0wvJ6wwyYvURW+xcTF1lXxdPWmd5fTOsIIpmXNYJOsHQXjh0u+6lSRfn
-         icAkTcSB8lIyD5J6JYwde+SJG8qc3rtRF9FXUSyewerEAM9yz2W91zJ+29fElZwuO+vC
-         0DF9l0ZjMiPRQU2tMgBMsJjbypSNi5gb/ELLLvEc0ajj7e2upL60/neqHLqmsFZS1dNr
-         r5DEckma/ac8fMSds5YxR/eKyNlxK4q3U+ZgixYfFVbp2h0h56W1Zx970Xd1Hk8e83C4
-         BGV/qvCtdnGUPE4XCCFEAeSPxh4/m0z7ZG6nX1xWsZ3v9AGIoBs2ahsJIhb3AkggnDRO
-         LF2Q==
-X-Gm-Message-State: AOJu0Yzxuo/60CnRr/j8X9p+WAkSLGhw5X74/XoL244AAv2SX/QQswkk
-	AIrvA2/b91LnvCTpiI2y9mC1wQjdYrvwKoVQoGwVascXR7Bb9xlkrfCDpYiT
-X-Google-Smtp-Source: AGHT+IEzRBRbvjVQ0FSBv/lg31Xku2CLjdzKfodWFaLfEsolNUCnF10eM6poTX7DmcLrbxDQOHfqkA==
-X-Received: by 2002:adf:f145:0:b0:33a:df29:eba2 with SMTP id y5-20020adff145000000b0033adf29eba2mr2867515wro.65.1706472179325;
-        Sun, 28 Jan 2024 12:02:59 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id v2-20020adfa1c2000000b0033921f48044sm6305822wrv.55.2024.01.28.12.02.59
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 28 Jan 2024 12:02:59 -0800 (PST)
-Message-ID: <b41844cd86e74a7d4af84487d4a6f9cb72655e47.1706472173.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1660.git.git.1706472173.gitgitgadget@gmail.com>
-References: <pull.1660.git.git.1706472173.gitgitgadget@gmail.com>
-From: "Philippe Blain via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Sun, 28 Jan 2024 20:02:53 +0000
-Subject: [PATCH 5/5] completion: add an use
- __git_compute_second_level_config_vars_for_section
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        d=1e100.net; s=20230601; t=1706473490; x=1707078290;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=wbXrb5CpDt08qK56SehFn+29lbezdbe/FOjgi/QucF4=;
+        b=XTFCqPC5iYH4wvI8WFR1FXEDGUykqmsrP/scXVNeFtmchgrNj1n3t9JqrYbUuUh/JC
+         d6jf4RxDMAps0JIRERxjA7q5npd9wK4zF+B3O6RBmKUGZtQm3Ncb0ywcnHE90YMp9AxQ
+         amANKXJh3jU3M/wEvenz2zKoy2p+vWD9HcKA/75wfkjMiVPHVSpW06UdWJCkNxtcA44P
+         DLxgGlHD5RJ3NhO5yTE0lpIMBbIsJ4gAjO8plYNf3NdEFrf9BPvrNvAAIIHR9BnKcG4U
+         ptH0n9kXmyMR57LM1iOIw09uqiuByns8/DCkN2R/EiyAv6K/UwO0aT2fjI4QK5LJ1Jrc
+         5Y/A==
+X-Gm-Message-State: AOJu0YxPwmawyzU4+lPpB/dS81/k0gk38IXWPgaIzlo36m1AZf5Hq6F4
+	J7zEetuulQBD0Ob4rKFnoa69REohcI2Q4kW5kWE57LTa3hT6x+ULkBbkQa8LaB0NSCrGOudK6MJ
+	0eA+qUp69UCLK57KDbHkHAmTW/G+zUIsu5nX+aGcpRyP/2LtB69o=
+X-Google-Smtp-Source: AGHT+IFP6D9ifEzwtD5Lxjstp8EO2DxaSrq1s/3iDU2m6gy69MiGTn0ql0CK5skn+yrRaATy0+uXwMv4Q9pUrdkJk8w=
+X-Received: by 2002:a05:6512:4010:b0:510:2e35:5e with SMTP id
+ br16-20020a056512401000b005102e35005emr2256047lfb.49.1706473490392; Sun, 28
+ Jan 2024 12:24:50 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+From: Wilfred Hughes <me@wilfred.me.uk>
+Date: Sun, 28 Jan 2024 12:24:39 -0800
+Message-ID: <CAFXAjY7XcL1APhLRXU8TO96z=f7957f2ieK56dHVsXUay55vpg@mail.gmail.com>
+Subject: Git segfaults with diff.external and comparing files with different permissions
 To: git@vger.kernel.org
-Cc: Philippe Blain <levraiphilippeblain@gmail.com>,
-    Philippe Blain <levraiphilippeblain@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 
-From: Philippe Blain <levraiphilippeblain@gmail.com>
+Hi folks
 
-In a previous commit we removed some hardcoded config variable names from
-function __git_complete_config_variable_name in the completion script by
-introducing a new function,
-__git_compute_first_level_config_vars_for_section.
+It looks like git crashes if diff.external is set and the user
+compares files that have different permissions. Here's a repro:
 
-The remaining hardcoded config variables are "second level"
-configuration variables, meaning 'branch.<name>.upstream',
-'remote.<name>.url', etc. where <name> is a user-defined name.
+$ mkdir demo
+$ cd demo
+$ git init .
+Initialized empty Git repository in /tmp/demo/.git/
 
-Making use of the new --config-all-for-completion flag to 'git help'
-introduced in the previous commit, add a new function,
-__git_compute_second_level_config_vars_for_section. This function takes
-as argument a config section name and computes the corresponding
-second-level config variables, i.e. those that contain a '<' which
-indicates the start of a placeholder. Note that as in
-__git_compute_first_level_config_vars_for_section added previsouly, we
-use indirect expansion instead of associative arrays to stay compatible
-with Bash 3 on which macOS is stuck for licensing reasons.
+$ git config diff.external /bin/echo
+$ touch foo bar
+$ chmod 755 foo
+$ git diff --no-ext-diff --no-index foo bar
+diff --git 1/foo 2/bar
+old mode 100755
+new mode 100644
 
-Use this new function and the variables it defines in
-__git_complete_config_variable_name to remove hardcoded config
-variables, and add a test to verify the new function.  Use a single
-'case' for all sections with second-level variables names, since the
-code for each of them is now exactly the same.
+$ git diff --no-index foo bar
+zsh: segmentation fault (core dumped)  git diff --no-index foo bar
 
-Signed-off-by: Philippe Blain <levraiphilippeblain@gmail.com>
----
- contrib/completion/git-completion.bash | 71 ++++++++------------------
- t/t9902-completion.sh                  | 10 ++++
- 2 files changed, 31 insertions(+), 50 deletions(-)
+This was originally reported as a difftastic bug[1] but it seems to
+occur regardless of the value of diff.external, hence my repro with
+/bin/echo.
 
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index 2934ceb7637..0e8fd63bfdb 100644
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -2596,6 +2596,13 @@ __git_compute_config_vars ()
- 	__git_config_vars="$(git help --config-for-completion)"
- }
- 
-+__git_config_vars_all=
-+__git_compute_config_vars_all ()
-+{
-+	test -n "$__git_config_vars_all" ||
-+	__git_config_vars_all="$(git help --config-all-for-completion)"
-+}
-+
- __git_compute_first_level_config_vars_for_section ()
- {
- 	section="$1"
-@@ -2605,6 +2612,15 @@ __git_compute_first_level_config_vars_for_section ()
- 	printf -v "__git_first_level_config_vars_for_section_${section}" %s "$(echo "$__git_config_vars" | grep -E "^${section}\.[a-z]" | awk -F. '{print $2}')"
- }
- 
-+__git_compute_second_level_config_vars_for_section ()
-+{
-+	section="$1"
-+	__git_compute_config_vars_all
-+	local this_section="__git_second_level_config_vars_for_section_${section}"
-+	test -n "${!this_section}" ||
-+	printf -v "__git_second_level_config_vars_for_section_${section}" %s "$(echo "$__git_config_vars_all" | grep -E "^${section}\.<" | awk -F. '{print $3}')"
-+}
-+
- __git_config_sections=
- __git_compute_config_sections ()
- {
-@@ -2749,10 +2765,13 @@ __git_complete_config_variable_name ()
- 	done
- 
- 	case "$cur_" in
--	branch.*.*)
-+	branch.*.*|guitool.*.*|difftool.*.*|man.*.*|mergetool.*.*|remote.*.*|submodule.*.*|url.*.*)
- 		local pfx="${cur_%.*}."
- 		cur_="${cur_##*.}"
--		__gitcomp "remote pushRemote merge mergeOptions rebase" "$pfx" "$cur_" "$sfx"
-+		local section="${pfx%.*.}"
-+		__git_compute_second_level_config_vars_for_section "${section}"
-+		local this_section="__git_second_level_config_vars_for_section_${section}"
-+		__gitcomp "${!this_section}" "$pfx" "$cur_" "$sfx"
- 		return
- 		;;
- 	branch.*)
-@@ -2765,33 +2784,6 @@ __git_complete_config_variable_name ()
- 		__gitcomp_nl_append "${!this_section}" "$pfx" "$cur_" "${sfx:- }"
- 		return
- 		;;
--	guitool.*.*)
--		local pfx="${cur_%.*}."
--		cur_="${cur_##*.}"
--		__gitcomp "
--			argPrompt cmd confirm needsFile noConsole noRescan
--			prompt revPrompt revUnmerged title
--			" "$pfx" "$cur_" "$sfx"
--		return
--		;;
--	difftool.*.*)
--		local pfx="${cur_%.*}."
--		cur_="${cur_##*.}"
--		__gitcomp "cmd path" "$pfx" "$cur_" "$sfx"
--		return
--		;;
--	man.*.*)
--		local pfx="${cur_%.*}."
--		cur_="${cur_##*.}"
--		__gitcomp "cmd path" "$pfx" "$cur_" "$sfx"
--		return
--		;;
--	mergetool.*.*)
--		local pfx="${cur_%.*}."
--		cur_="${cur_##*.}"
--		__gitcomp "cmd path trustExitCode" "$pfx" "$cur_" "$sfx"
--		return
--		;;
- 	pager.*)
- 		local pfx="${cur_%.*}."
- 		cur_="${cur_#*.}"
-@@ -2799,15 +2791,6 @@ __git_complete_config_variable_name ()
- 		__gitcomp_nl "$__git_all_commands" "$pfx" "$cur_" "${sfx:- }"
- 		return
- 		;;
--	remote.*.*)
--		local pfx="${cur_%.*}."
--		cur_="${cur_##*.}"
--		__gitcomp "
--			url proxy fetch push mirror skipDefaultUpdate
--			receivepack uploadpack tagOpt pushurl
--			" "$pfx" "$cur_" "$sfx"
--		return
--		;;
- 	remote.*)
- 		local pfx="${cur_%.*}."
- 		cur_="${cur_#*.}"
-@@ -2818,12 +2801,6 @@ __git_complete_config_variable_name ()
- 		__gitcomp_nl_append "${!this_section}" "$pfx" "$cur_" "${sfx:- }"
- 		return
- 		;;
--	submodule.*.*)
--		local pfx="${cur_%.*}."
--		cur_="${cur_##*.}"
--		__gitcomp "url update branch fetchRecurseSubmodules ignore active" "$pfx" "$cur_" "$sfx"
--		return
--		;;
- 	submodule.*)
- 		local pfx="${cur_%.*}."
- 		cur_="${cur_#*.}"
-@@ -2834,12 +2811,6 @@ __git_complete_config_variable_name ()
- 		__gitcomp_nl_append "${!this_section}" "$pfx" "$cur_" "${sfx:- }"
- 		return
- 		;;
--	url.*.*)
--		local pfx="${cur_%.*}."
--		cur_="${cur_##*.}"
--		__gitcomp "insteadOf pushInsteadOf" "$pfx" "$cur_" "$sfx"
--		return
--		;;
- 	*.*)
- 		__git_compute_config_vars
- 		__gitcomp "$__git_config_vars" "" "$cur_" "$sfx"
-diff --git a/t/t9902-completion.sh b/t/t9902-completion.sh
-index f28d8f531b7..24ff786b273 100755
---- a/t/t9902-completion.sh
-+++ b/t/t9902-completion.sh
-@@ -2593,6 +2593,16 @@ test_expect_success 'git config - variable name - __git_compute_first_level_conf
- 	submodule.recurse Z
- 	EOF
- '
-+test_expect_success 'git config - variable name - __git_compute_second_level_config_vars_for_section' '
-+	test_completion "git config branch.main." <<-\EOF
-+	branch.main.description Z
-+	branch.main.remote Z
-+	branch.main.pushRemote Z
-+	branch.main.merge Z
-+	branch.main.mergeOptions Z
-+	branch.main.rebase Z
-+	EOF
-+'
- 
- test_expect_success 'git config - value' '
- 	test_completion "git config color.pager " <<-\EOF
--- 
-gitgitgadget
+[1] https://github.com/Wilfred/difftastic/issues/615
+
+[System Info]
+git version:
+git version 2.43.0
+cpu: x86_64
+no commit associated with this build
+sizeof-long: 8
+sizeof-size_t: 8
+shell-path: /bin/sh
+uname: Linux 6.7.0-zen3-1-zen #1 ZEN SMP PREEMPT_DYNAMIC Sat, 13 Jan
+2024 14:36:54 +0000 x86_64
+compiler info: gnuc: 13.2
+libc info: glibc: 2.38
+$SHELL (typically, interactive shell): /bin/zsh
+
+Thanks
+Wilfred
