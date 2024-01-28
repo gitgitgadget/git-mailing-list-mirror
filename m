@@ -1,103 +1,201 @@
-Received: from mail-pl1-f177.google.com (mail-pl1-f177.google.com [209.85.214.177])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from wout4-smtp.messagingengine.com (wout4-smtp.messagingengine.com [64.147.123.20])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44AB12E859
-	for <git@vger.kernel.org>; Sun, 28 Jan 2024 18:19:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0205F23767
+	for <git@vger.kernel.org>; Sun, 28 Jan 2024 18:32:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.20
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706465957; cv=none; b=miHtYgUkQdFzjh5na7NRUu4FyUMnssvFdg2FZc9CGB8Um6z5loliZ2N2Sm2xpM5ROKEuucMvqgfYQHnHFP4AAokl64bI4B1sX+6ES8tLHPYFmd4NzYvI1IzVF/vcDXM6KHZbJCKEiUOTTei40DcPP9MrHHvnhYqvF9LA3kcb5OA=
+	t=1706466773; cv=none; b=GUfzz0+tGIDFNiMop6kaFJh8fU8pdHruI1ynvatT/JvNI6e0Y6tKsOzeF688lBccwNSHyGSA7UGoiiNIfXiv1t0inY1Xu7XYhh+iSUGu/vCOaDitQcX3lAsKY1Mzw63CdsrpUTf5wrUrYYfWTmnvYJDZ1sPuyjuL9MwaGHNHuNg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706465957; c=relaxed/simple;
-	bh=xZ+8G/UN4vZHAZTQeUsf//jS8k6s4xOC30qrZ92YpIk=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iHvDua1rqPYbUdVn1yGMcWuvkFCbl5ox/hqxXFaT954SjXONdJMCmZ3UHbc2FjcG/2OVREXOPrIGicIwD8JqSMExo/Of1MMNi4seVECizJfkS//CjCtKpCu9IYQ1sTVadBnZRc+ZU4JA6vEAgM8/CdjKV572nYDJvJOZ8kDQkeU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jlw8QM+O; arc=none smtp.client-ip=209.85.214.177
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1706466773; c=relaxed/simple;
+	bh=1sWsrooQ8Xu0bQm5NafgZmUOkmWPBPltN4iOZZaYO5I=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=Idc9QwEpmYVwxH/h6+FoiqMIqlr7335Kl9PIU6ci3fHfo1Lmx3vJZ6V2uK2aw+NNy3Jj7CxU58Vz1pqjJ0Boe+z6FIH5lb5FYb/Vg7bPLKUMF44SlaePMVtpcBbS12v9MCznA/mo48yRihCAWUBxvk0UKTYztPXKuTxxtKg0nqI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=khaugsbakk.name; spf=pass smtp.mailfrom=khaugsbakk.name; dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b=IBE9CWoP; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=bU0wbbe5; arc=none smtp.client-ip=64.147.123.20
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=khaugsbakk.name
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=khaugsbakk.name
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jlw8QM+O"
-Received: by mail-pl1-f177.google.com with SMTP id d9443c01a7336-1d730b6943bso7799695ad.2
-        for <git@vger.kernel.org>; Sun, 28 Jan 2024 10:19:16 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1706465955; x=1707070755; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=VR0J9lh1WNj4xCjPkLaZHEXIiHVOkhCe22xt6lcEHj4=;
-        b=jlw8QM+OkBU3ZDO82nfkXlGFqVE1u1K+M3JFw6/Qybs6auWXQIPhBr/dJAaUdYHmgO
-         k6r1qCvykOTM55AKbPUxY52NSRqFh4UavC9KlGNM4ii+zLv5uPUNckzwDSu2DVPfjwFk
-         uXepWWvWJ17ZGBg1O3ZwtoPqyOsFQFPn1xZtxxbp1/hYRXbm2hbYqRhtwVvlsS1Dktmr
-         mP+1kyzmQu9hh5h79D++CZFJMMDuNYB4Q6eSY/PMa+5PT/fKt18ISkvbKcMgUauth5l7
-         azLGIRbIgrmRH5xgHhjtjfWmuICmo2yaAw5jJ9x/w9wvfUwoEvByiuhHD0g9wrYsa7LL
-         Rg3g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1706465955; x=1707070755;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=VR0J9lh1WNj4xCjPkLaZHEXIiHVOkhCe22xt6lcEHj4=;
-        b=nHd3Hm1C51J1CA+SgNwlPd8j8i4HS3AjVMdMS0oNR/rN7QJb8ap4fHkhM9qcsoigID
-         C8bq4kH8e3cM6OmV9ot+K7r0G5D83/Kf9b91/Z8FIVlgY7BuPVtxKk3hmhILAnYvsRqr
-         uOSeMm2ped3IJq+Jbbc4nzPKJXei6GVFLaBWcnQ/tb3uCodn+O0smxzIC9ogRJlbCA8c
-         kcWVuDCPsHDLSkrDHvZMgG1iaWsq+VZ39o88DqoCM4rR05jHmgQk8ZmyegV4lLM7ea4M
-         iPHOkqnEknzERxVALwx0NKbUEp1O+MVlmYebweb3FEWh5MKpBw7WdcepdVR2zN++Cpv5
-         519A==
-X-Gm-Message-State: AOJu0YxY1qj6s+pEn4YCTtRJajB8uK2PqhDyMeg1PPEe4Gwf3hIVhXRt
-	CfZMbxmNFNZejeq9CNjx2nI9vfIAOEP6UPDkkkfRrD5tvxUZB53TKJ7g41eXQZ4JRg==
-X-Google-Smtp-Source: AGHT+IFhu4f5D86z3RzFxznAFkovjz36uMsEQN/LmH1O940pO18Jur2H/zXCi0D961VHdXnPp58Ljw==
-X-Received: by 2002:a17:902:b10e:b0:1d4:4482:83c7 with SMTP id q14-20020a170902b10e00b001d4448283c7mr1351154plr.117.1706465955174;
-        Sun, 28 Jan 2024 10:19:15 -0800 (PST)
-Received: from localhost.localdomain ([2402:a00:401:a99b:f188:2dd3:d960:a8ab])
-        by smtp.gmail.com with ESMTPSA id kh5-20020a170903064500b001d8b574c9f1sm2447026plb.305.2024.01.28.10.19.13
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 28 Jan 2024 10:19:14 -0800 (PST)
-From: Ghanshyam Thakkar <shyamthakkar001@gmail.com>
+	dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b="IBE9CWoP";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="bU0wbbe5"
+Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
+	by mailout.west.internal (Postfix) with ESMTP id D47C63200ADC;
+	Sun, 28 Jan 2024 13:32:49 -0500 (EST)
+Received: from mailfrontend1 ([10.202.2.162])
+  by compute6.internal (MEProxy); Sun, 28 Jan 2024 13:32:50 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=khaugsbakk.name;
+	 h=cc:cc:content-transfer-encoding:content-type:content-type
+	:date:date:from:from:in-reply-to:message-id:mime-version
+	:reply-to:subject:subject:to:to; s=fm2; t=1706466769; x=
+	1706553169; bh=L7sDlXn0j72ARKaWZd+TpjVKBfmGWKqFbc6PqwUPwn0=; b=I
+	BE9CWoP8QFkb7FPSKf7CeIfogHJVw35EB5/ioyodT0G9g0p6ipggyX2jpD+ofRGU
+	1WDvqjYC7AolMRSyR2utdHRMsi4XSwTMUXcWC4p0Iaxa8fpNe+C89ch3GprS3uAG
+	24tZkLM99e+5RnsRdO8k9KtQe/L38SPISHMUgRw4y3y0OkaW2AE43A2ZeEDL05J6
+	4ch0u1QvHuPHlerkVSzRA357X1pfiPBHDt2qByt93j5CKiuQZHviClHPD6NP3Rgb
+	bdyVbMQkrB4fGwIsDyI7IzVoCJl2P9kZte1vgO5jaIN0YxwrQ2hyZP/eN4/t7foZ
+	oCWHH7H8y7N9ODbhqoHyw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
+	:subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
+	:x-sasl-enc; s=fm3; t=1706466769; x=1706553169; bh=L7sDlXn0j72AR
+	KaWZd+TpjVKBfmGWKqFbc6PqwUPwn0=; b=bU0wbbe5DfHyzqIIy6RxPT06sCThL
+	4qXg1JYTEGKI3R0DXuZA+twI2J9puz/uuOqg1CZzSK+QSkt1rR+412XXEzO+RlDZ
+	gV31MfhCXo/qMuOapehIQWv7P5WtSrhkVFhNjjiQmuQXxjJEizUbiatKH4GAfLxm
+	6LzMlXwBnt1TTan+woSJkXlQYT6KqQmtKuH6HG021hXSQ5QGqjIdgPuDVLDF84LG
+	DMfTTRMDk15AnkgW4Qg1fgWkgOYJeZBI7R7y3cEQJj/4oK+ceYcD2lDCCEG6EyX+
+	+w3d2EdRKuMyyn797/LtI/fMWJvPmfZkqpHKQXurE6vCzy8/gsaMoKR8g==
+X-ME-Sender: <xms:0Z22ZZ1OCtUjrGBhGml9tXvzUXQeYO2CmOAHCLe_AiINuCBtL3E53iw>
+    <xme:0Z22ZQGjtt7MmOWBzvzEAhXSniQN_iXpEYS0rCEnqVGkRlxLngp7UlaHL9AG8kNA_
+    qDPDlWeAmJLaTRRug>
+X-ME-Received: <xmr:0Z22ZZ6lggQx4xRrtEMHQVp1z6MRvQ9nRCB_PF5BzUbZYyaEdIvsVF0ywJnncttev_17GmlIyvyYDtPcQKQVxFsDaWq4n_lobadHgc_VEyk-zJ-0yAletctKqg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrfedtvddguddufecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
+    necuuegrihhlohhuthemuceftddtnecunecujfgurhephffvvefufffkofggtgfgsehtke
+    ertdertdejnecuhfhrohhmpefmrhhishhtohhffhgvrhcujfgruhhgshgsrghkkhcuoegt
+    ohguvgeskhhhrghughhssggrkhhkrdhnrghmvgeqnecuggftrfgrthhtvghrnhepteegtd
+    egheeiheefjedtlefhueeuieettdetgfethfevveeutdelvdefjeehveejnecuffhomhgr
+    ihhnpehkvghrnhgvlhdrohhrghenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmh
+    epmhgrihhlfhhrohhmpegtohguvgeskhhhrghughhssggrkhhkrdhnrghmvg
+X-ME-Proxy: <xmx:0Z22ZW3k90LMnI_IKXBiSH8MltNO4u5uidO5MjmyV4q45-WWehZlXA>
+    <xmx:0Z22ZcH0hZHR_wLzY9zr65ZS5Ajbv5lWs556TBr6ePbXmPMk9Yyuog>
+    <xmx:0Z22ZX84wdAFb7dfELW1BlBMdpBSbBjxvG4o_tcPtBB2oYv3clDI1Q>
+    <xmx:0Z22ZWMw7GpGAW-xoUvsMlp-fJCndTR20Jw5H1_noaEk9vVWmyzLLw>
+Feedback-ID: i2671468f:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
+ 28 Jan 2024 13:32:47 -0500 (EST)
+From: Kristoffer Haugsbakk <code@khaugsbakk.name>
 To: git@vger.kernel.org
-Cc: Ghanshyam Thakkar <shyamthakkar001@gmail.com>
-Subject: [RFC PATCH 2/2] checkout: remove HEAD special case
-Date: Sun, 28 Jan 2024 23:41:23 +0530
-Message-ID: <20240128181202.986753-4-shyamthakkar001@gmail.com>
+Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>,
+	ps@pks.im
+Subject: [PATCH 0/1] config: add back code comment
+Date: Sun, 28 Jan 2024 19:31:39 +0100
+Message-ID: <cover.1706466321.git.code@khaugsbakk.name>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240128181202.986753-2-shyamthakkar001@gmail.com>
-References: <20240128181202.986753-2-shyamthakkar001@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-run_add_p() is capable of handling HEAD in any form (e.g. hex, 'HEAD',
-'@' etc.), not just string 'HEAD'. Therefore, special casing of HEAD
-does not have any effect.
+This is a follow-up to the kh/maintenance-use-xdg-when-it-should
+[series] which was merged in 12ee4ed506 (Merge branch
+'kh/maintenance-use-xdg-when-it-sho.., 2024-01-26).
 
-Signed-off-by: Ghanshyam Thakkar <shyamthakkar001@gmail.com>
----
- builtin/checkout.c | 9 ++++-----
- 1 file changed, 4 insertions(+), 5 deletions(-)
+I dropped a code comment while iterating on a refactor. It still makes
+as much sense in this context as before the refactor (it’s a _refactor_
+in the sense of “don’t change code behavior”).
 
-diff --git a/builtin/checkout.c b/builtin/checkout.c
-index a6e30931b5..6b74e5fa4e 100644
---- a/builtin/checkout.c
-+++ b/builtin/checkout.c
-@@ -539,12 +539,11 @@ static int checkout_paths(const struct checkout_opts *opts,
- 		 * recognized by diff-index), we will always replace the name
- 		 * with the hex of the commit (whether it's in `...` form or
- 		 * not) for the run_add_interactive() machinery to work
--		 * properly. However, there is special logic for the HEAD case
--		 * so we mustn't replace that.  Also, when we were given a
--		 * tree-object, new_branch_info->commit would be NULL, but we
--		 * do not have to do any replacement, either.
-+		 * properly. Also, when we were given a tree-object,
-+		 * new_branch_info->commit would be NULL, but we do not
-+		 * have to do any replacement.
- 		 */
--		if (rev && new_branch_info->commit && strcmp(rev, "HEAD"))
-+		if (rev && new_branch_info->commit)
- 			rev = oid_to_hex_r(rev_oid, &new_branch_info->commit->object.oid);
- 
- 		if (opts->checkout_index && opts->checkout_worktree)
+The code comment was moved to `config.c` in patch v1 3/4.[1] But review
+feedback said that this comment didn’t fit in this new place and that we
+shouldn’t `die()` in `git_global_config`. So in v2 3/4[2] I removed the
+comment in `git_global_config`. But I forgot to put the comment back to
+its original place, where it still makes as much sense as before my
+series.
+
+[Here] is the diff when I squash this patch into c15129b699 (config:
+factor out global config file retrieval, 2024-01-18).
+
+Sorry about the churn.
+
+Cc: ps@pks.im
+
+🔗 series: https://lore.kernel.org/git/cover.1697660181.git.code@khaugsbakk.name/
+🔗 1: https://lore.kernel.org/git/147c767443c35b3b4a5516bf40557f41bb201078.1697660181.git.code@khaugsbakk.name/
+🔗 2: https://lore.kernel.org/git/32e5ec7d866ff8fd26554b325812c6e19cb65126.1705267839.git.code@khaugsbakk.name/
+† Here:
+
+    diff --git a/builtin/config.c b/builtin/config.c
+    index 6fff265581..b55bfae7d6 100644
+    --- a/builtin/config.c
+    +++ b/builtin/config.c
+    @@ -708,10 +708,8 @@ int cmd_config(int argc, const char **argv, const char *prefix)
+            }
+
+            if (use_global_config) {
+    -		char *user_config, *xdg_config;
+    -
+    -		git_global_config_paths(&user_config, &xdg_config);
+    -		if (!user_config)
+    +		given_config_source.file = git_global_config();
+    +		if (!given_config_source.file)
+                            /*
+                             * It is unknown if HOME/.gitconfig exists, so
+                             * we do not know if we should write to XDG
+    @@ -719,19 +717,8 @@ int cmd_config(int argc, const char **argv, const char *prefix)
+                             * is set and points at a sane location.
+                             */
+                            die(_("$HOME not set"));
+    -
+                    given_config_source.scope = CONFIG_SCOPE_GLOBAL;
+    -
+    -		if (access_or_warn(user_config, R_OK, 0) &&
+    -		    xdg_config && !access_or_warn(xdg_config, R_OK, 0)) {
+    -			given_config_source.file = xdg_config;
+    -			free(user_config);
+    -		} else {
+    -			given_config_source.file = user_config;
+    -			free(xdg_config);
+    -		}
+    -	}
+    -	else if (use_system_config) {
+    +	} else if (use_system_config) {
+                    given_config_source.file = git_system_config();
+                    given_config_source.scope = CONFIG_SCOPE_SYSTEM;
+            } else if (use_local_config) {
+    diff --git a/config.c b/config.c
+    index ebc6a57e1c..3cfeb3d8bd 100644
+    --- a/config.c
+    +++ b/config.c
+    @@ -1987,6 +1987,26 @@ char *git_system_config(void)
+            return system_config;
+     }
+
+    +char *git_global_config(void)
+    +{
+    +	char *user_config, *xdg_config;
+    +
+    +	git_global_config_paths(&user_config, &xdg_config);
+    +	if (!user_config) {
+    +		free(xdg_config);
+    +		return NULL;
+    +	}
+    +
+    +	if (access_or_warn(user_config, R_OK, 0) && xdg_config &&
+    +	    !access_or_warn(xdg_config, R_OK, 0)) {
+    +		free(user_config);
+    +		return xdg_config;
+    +	} else {
+    +		free(xdg_config);
+    +		return user_config;
+    +	}
+    +}
+    +
+     void git_global_config_paths(char **user_out, char **xdg_out)
+     {
+            char *user_config = xstrdup_or_null(getenv("GIT_CONFIG_GLOBAL"));
+    diff --git a/config.h b/config.h
+    index e5e523553c..5dba984f77 100644
+    --- a/config.h
+    +++ b/config.h
+    @@ -382,6 +382,7 @@ int config_error_nonbool(const char *);
+     #endif
+
+     char *git_system_config(void);
+    +char *git_global_config(void);
+     void git_global_config_paths(char **user, char **xdg);
+
+     int git_config_parse_parameter(const char *, config_fn_t fn, void *data);
+
+
+Kristoffer Haugsbakk (1):
+  config: add back code comment
+
+ builtin/config.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
+
 -- 
 2.43.0
 
