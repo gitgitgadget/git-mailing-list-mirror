@@ -1,54 +1,54 @@
-Received: from mail-lf1-f43.google.com (mail-lf1-f43.google.com [209.85.167.43])
+Received: from mail-lf1-f52.google.com (mail-lf1-f52.google.com [209.85.167.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D16A323759
-	for <git@vger.kernel.org>; Sat, 27 Jan 2024 23:57:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEE3A7EF
+	for <git@vger.kernel.org>; Sun, 28 Jan 2024 00:08:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706399832; cv=none; b=ZskZEwNgoBMZLdE7hT7v2mFUY/Wtq7130h2t5Z2f97sRPgbosOjuU6q3ia98C6042jR1hwn49UefM4cJglzpizuB/JdZBTAEuuKFsLxSZsRyRKvZ32W3YJ9W4EnwEIIoJl4jzHyZ+1+9raoPhzENC77h0ktdK/PcccKGurJm6ek=
+	t=1706400496; cv=none; b=TvINxs+0v6m28QUtfBS3TCjMbnRq9gBjcgERmQ1/tyi3xv2HbDZnzanzgxKKPWPC8cA1HOoKq35FU9B/YhNnjmvPc7YA1j+qLu8/HsjLOGKjxdcK8wOz/Sz8TpGFK+ez1eDMTGCMhspdSQXPMOG5BOZTTw9eAiHoSysesbgonaM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706399832; c=relaxed/simple;
-	bh=Z+b16mc9QN/CjFCTigEyPnVv3c6hkghCR80wKnNL+9k=;
+	s=arc-20240116; t=1706400496; c=relaxed/simple;
+	bh=WIujRr+2H/RQuioLqnsW3p5CYJZQFbu9rjnf19py/eM=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=OzQTv5eJgsScUh57vhHUTxIhpmp/BnY6pPk+z2QdxzoSAseJvYlDml5e0sDp4bUOQNIyTCIfhm/7NpR/mbX4A0WEtXL+cB5XZO2A381Rt+9d3T+bdhn6hgzLn7dfXn1z7y6iUejCRI0hoXjPKbtWQu9bNSFJ6ryOOZzh6pKkLeo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=FDIax0Qb; arc=none smtp.client-ip=209.85.167.43
+	 To:Cc:Content-Type; b=LQWTH1r/MWCPheotSiQEJsaYOp0NMjDImfpvCb7j4Te+Basat09fs8ZwXEVfU9Q3EyfCTK1EIddssN6WdIeJ6Jl0/6QJmLkvVuujKdqBSIZI/TROg0YxelEvJys+aJyT2y3Tomrc77JUfuuEN4MSoqtHzSRpnLW49JEoUq77qPY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=T1l/R/NF; arc=none smtp.client-ip=209.85.167.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FDIax0Qb"
-Received: by mail-lf1-f43.google.com with SMTP id 2adb3069b0e04-510133ed214so2392194e87.1
-        for <git@vger.kernel.org>; Sat, 27 Jan 2024 15:57:10 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="T1l/R/NF"
+Received: by mail-lf1-f52.google.com with SMTP id 2adb3069b0e04-5100cb238bcso2754790e87.3
+        for <git@vger.kernel.org>; Sat, 27 Jan 2024 16:08:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1706399829; x=1707004629; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1706400493; x=1707005293; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=84yGq5mEkPZaubACDTjWQ/BEDqq1+ijWQfCABjeWqGI=;
-        b=FDIax0QbJccwrWuJiNpfLT/hq5oRPy9Dm4BwDzSWwfPu8YL055TTk6+vlLl61HFH7n
-         8sktbPbOAH9dOpqsTtIaszh1YuvfaSA5JSSFUC5dbyTE9rNkd4bPgIhlIpqGLgoNGfDV
-         1twImSj1uEsniUoP1a6H6ijN7bLz+PoR3jv7JmLPzk9f9ZMoE+0pgYQFJK5HYF7bwZ/3
-         pTgf7eR7/feiuyH6Ctqd4c0ferMWd6txl4qzvz0B86GzXJL+hs01bwTMfjHD247rfK/j
-         yDPo/2R77UHt6nYiQWY29USdbLOH7iTD2IUQcitSQ2EjSiTiKFscAZrAgicAy7bgVMUv
-         KMZA==
+        bh=eBkGf/FFz5oy4qbkLkg4YYpKKZD3xBwBXm0S1oYHn3U=;
+        b=T1l/R/NFvzrxd7XZhGJLOPlaps2bdSgAA+E5ymmAEPQZGUC959nZo7NXi95vEvVZJC
+         rKewiu1Qf6kVGXR6Q2dgF3wU1Mx55XuxyJ15oLfYrxWDfpib+c/p1TWrilFCK+lgdNOW
+         x4FUjQO3vw07rsYLIyWyvsJqK/kuVjMnpiTRk+fInepAoFtTC0CbNSd2Yot2fOsVzu/6
+         JPqxshNZhCTYPUYPLFlsqX2CKPtMYJWFVVVVqI94c1/QRw5bkOGfVIkT+Qoa3ns4m46p
+         02RVr8VHDhiWtNF0A6h64mzj2t7CWENgLDanJ0HCSZIpFNRGIB7gV7dBsqAHsJUQF9gV
+         NspQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1706399829; x=1707004629;
+        d=1e100.net; s=20230601; t=1706400493; x=1707005293;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=84yGq5mEkPZaubACDTjWQ/BEDqq1+ijWQfCABjeWqGI=;
-        b=JOvkw4ky2gE5J/YsFJdMgmeiJNAxMv1o44hmwaMYbxMN7HRyUzIgLDcq/fo8TdswuI
-         9F9v4ThlhyzCdcG1UoMPwGLINQtp76xMPEG9yh4xqHLkIgAzwePenG93U1SxhiN896TV
-         fFsezaxNQhrRWtMIL01TjLDfbctjHJNxYW2X+7jzBPWLHl2N0KYY2JmVvDMjbIFAsmMl
-         DZEdkZDhMwexe8cs5HsfSZdpRrQC8FWiqhhtAi6Ii4CFjHhAyS6p1mPu6W1jzKmbyorB
-         w4bcfs1JUVYcj3K6al2QKfq6ffG/RYLv3+MPfvyk1EiwyaLX6j/t+2F25ePC/O4yDrFQ
-         W/ZA==
-X-Gm-Message-State: AOJu0YwqTgkGpng+6EbVBsiOmPNx/5XLKusHrwg/u2bV6tozkIExrqUe
-	+6x1FdFviYhoJqT8tEWw5ewrFcQuv6zZFhJ9cxgqRIs3nLPQ4Ar296rI4U0Fn0O3178kfIj8aRw
-	cWoKcwtPUoOYdDzFBIg9Ai+5KrEU=
-X-Google-Smtp-Source: AGHT+IGTEnhdIKiGKw5wDmZE2f0Qbtguy+x/TVsrqlEhLytqwLjzMqVYkKehRaynmsSI8G6pUN0rlXQUlK35lI9iGk4=
-X-Received: by 2002:a05:6512:ea6:b0:50f:de3:d042 with SMTP id
- bi38-20020a0565120ea600b0050f0de3d042mr1467521lfb.19.1706399828541; Sat, 27
- Jan 2024 15:57:08 -0800 (PST)
+        bh=eBkGf/FFz5oy4qbkLkg4YYpKKZD3xBwBXm0S1oYHn3U=;
+        b=oY7U0HMuHrVaL6ekOlQxaT056N0Kdguo/dRc6NdwCTF31C+N3CqsjAcnL3k9yQYMqI
+         wf7eJwC77kYWscskixj55fjpRL45/OQyPkEDakLemfmEukeDxXg4M1oNdO97w0JrmS3u
+         2uf0i8nRWTTADID4870x2N4tvVnwipV7e2lcXyYRXOuH2j6HfyWCWjAlMHNopfWuqDjK
+         gygHPAOl89V/AI5dnIh4WgI3Sqyb9NtN00gQ9cwHNSVliQVAuzS9wVKcIjONvh3afeh9
+         M7Xn81RU/5eVZ3sCV+NToy3CnIqpkjmZlx/Y1tAeFvTmTtpvP6W/iJX3M0hcMLni69hT
+         mt2g==
+X-Gm-Message-State: AOJu0YyxzNPs0WsI7TefoiMCcnRtoI+6u60z4VRKr/zKfJMhj9Tj1FrM
+	/sU7yLFNL4fa1TxbEbsr3nH0Bhsk2vdnweSYQ+616vob5w9zhBm21cYupaKvRpnG3b4uXoUGs5U
+	cd7uyBjK7JvMoj/HmrgqGbkYnpfE=
+X-Google-Smtp-Source: AGHT+IGDgXDsIYf0WeC4NxMEv19Qcn9nvlHv64H2fvA1+Jb6vJ48PYf0Z++LZiXBVoBVJ1k0jr+xug3DdKXMMQ2DZAM=
+X-Received: by 2002:ac2:4bc9:0:b0:510:893:f8c3 with SMTP id
+ o9-20020ac24bc9000000b005100893f8c3mr1878553lfq.20.1706400492643; Sat, 27 Jan
+ 2024 16:08:12 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -57,172 +57,96 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 References: <20240119060721.3734775-2-brianmlyles@gmail.com>
  <20240119060721.3734775-5-brianmlyles@gmail.com> <b897771e-c60e-4e41-bfae-3bcfdd832be1@gmail.com>
-In-Reply-To: <b897771e-c60e-4e41-bfae-3bcfdd832be1@gmail.com>
+ <xmqq8r4gnd3c.fsf@gitster.g>
+In-Reply-To: <xmqq8r4gnd3c.fsf@gitster.g>
 From: Brian Lyles <brianmlyles@gmail.com>
-Date: Sat, 27 Jan 2024 17:56:31 -0600
-Message-ID: <CAHPHrSf+joHe6ikErHLgWrk-_qjSROS-dXCHagxWGDAF=2deDg@mail.gmail.com>
+Date: Sat, 27 Jan 2024 18:07:36 -0600
+Message-ID: <CAHPHrScPSSCLC4FjUWoboOV_FX4c7huJSFsGWeYk+O21+AYE7w@mail.gmail.com>
 Subject: Re: [PATCH 4/4] cherry-pick: Add `--empty` for more robust redundant
  commit handling
-To: phillip.wood@dunelm.org.uk
-Cc: git@vger.kernel.org, me@ttaylorr.com, newren@gmail.com, gitster@pobox.com
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Phillip Wood <phillip.wood123@gmail.com>, git@vger.kernel.org, me@ttaylorr.com, 
+	newren@gmail.com
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-[+cc Junio]
+Hi Junio
 
-On Tue, Jan 23, 2024 at 8:25=E2=80=AFAM Phillip Wood <phillip.wood123@gmail=
-.com> wrote:
+On Tue, Jan 23, 2024 at 12:01=E2=80=AFPM Junio C Hamano <gitster@pobox.com>=
+ wrote:
+> Phillip Wood <phillip.wood123@gmail.com> writes:
 >
-> Hi Brian
+> > Thanks for the well explained commit message
 >
+> ;-)
 >
-> On 19/01/2024 05:59, brianmlyles@gmail.com wrote:
->
-> > The `--keep-redundant-commits` option will be documented as a deprecate=
-d
-> > synonym of `--empty=3Dkeep`, and will be supported for backwards
-> > compatibility for the time being.
->
-> I'm not sure if we need to deprecate it as in "it will be removed in the
-> future" or just reduce it prominence in favor of --empty
-
-This is also related to Junio's comment:
-
-> On Tue, Jan 23, 2024 at 12:01=E2=80=AFPM Junio C Hamano <gitster@pobox.co=
-m>
-wrote:
+> >> The `--keep-redundant-commits` option will be documented as a deprecat=
+ed
+> >> synonym of `--empty=3Dkeep`, and will be supported for backwards
+> >> compatibility for the time being.
+> >
+> > I'm not sure if we need to deprecate it as in "it will be removed in
+> > the future" or just reduce it prominence in favor of --empty
 >
 > True, especially since --empty=3Dkeep is much less descriptive and the
 > part after "note that ..." below will take a long time before
 > sticking in readers' brain.
 
-My primary motivation here was simply for consistency with `--empty` for
-both git-rebase(1) and git-am(1). In theory, I am not opposed to
-updating this patch to instead simply add a `--drop-redundant-commits`
-option if we feel that provides better usability. However, I think that
-the consistency would be better.
+I responded to this in my reply to Phillip, and CC'd you there.
 
-I will happily defer to the group consensus here, with the options I see
-being:
-
-1. No deprecation: just make `--keep-redundant-commits` a synonym of
-  `--empty=3Dkeep`
-2. Soft deprecation: Give a warning when `--keep-redundant-commits` is
-  used
-3. Add `--drop-redundant-commits` instead of `--empty`
-
-My preference would be 2, followed by 1 and then 3.
-
-> I'm still on the fence about "stop" vs "ask". I see in your tests you've
-> accidentally used "ask" which makes me wonder if that is the more
-> familiar term for users who probably use "git rebase" more often than
-> "git am".
-
-Oh, thank you for catching that. The cause here was actually because I
-had initially written these tests prior to adding the "ask -> stop"
-change rather than familiarity. I simply failed to update the tests
-after moving things around.
-
-> The code changes look good but I think we want to update
-> verify_opt_compatible() to check for "--empty" being combined with
-> "--continue" etc. as well.
-
-It looks like `--keep-redundant-commits` was not being included in these
-checks previously. I suspect that to be an oversight though.
-
-I can add this for v2.
-
+> >> +--empty=3D(stop|drop|keep)::
+> >> +    How to handle commits being cherry-picked that are redundant with
+> >> +    changes already in the current history.
 >
-> >       if (cleanup_arg) {
-> >               opts->default_msg_cleanup =3D get_cleanup_mode(cleanup_ar=
-g, 1);
-> >               opts->explicit_cleanup =3D 1;
-> > diff --git a/sequencer.c b/sequencer.c
-> > index 582bde8d46..c49c27c795 100644
-> > --- a/sequencer.c
-> > +++ b/sequencer.c
-> > @@ -2934,6 +2934,9 @@ static int populate_opts_cb(const char *key, cons=
-t char *value,
-> >       else if (!strcmp(key, "options.allow-empty-message"))
-> >               opts->allow_empty_message =3D
-> >                       git_config_bool_or_int(key, value, ctx->kvi, &err=
-or_flag);
-> > +     else if (!strcmp(key, "options.drop-redundant-commits"))
-> > +             opts->drop_redundant_commits =3D
-> > +                     git_config_bool_or_int(key, value, ctx->kvi, &err=
-or_flag);
-> >       else if (!strcmp(key, "options.keep-redundant-commits"))
-> >               opts->keep_redundant_commits =3D
-> >                       git_config_bool_or_int(key, value, ctx->kvi, &err=
-or_flag);
-> > @@ -3478,6 +3481,9 @@ static int save_opts(struct replay_opts *opts)
-> >       if (opts->allow_empty_message)
-> >               res |=3D git_config_set_in_file_gently(opts_file,
-> >                               "options.allow-empty-message", "true");
-> > +     if (opts->drop_redundant_commits)
-> > +             res |=3D git_config_set_in_file_gently(opts_file,
-> > +                             "options.drop-redundant-commits", "true")=
-;
+> It might make it easier to understand if we moved the description in
+> 'keep' that says something about --allow-empty here, as it should
+> apply to other two choices if I understand correctly.  Let me try:
 >
-> It is good that we're saving the option - it would be good to add a test
-> to check that we remember --empty after stopping for a conflict resolutio=
-n.
-
-I can add a test for this in v2
-
-> >       if (opts->keep_redundant_commits)
-> >               res |=3D git_config_set_in_file_gently(opts_file,
-> >                               "options.keep-redundant-commits", "true")=
-;
-> > diff --git a/t/t3505-cherry-pick-empty.sh b/t/t3505-cherry-pick-empty.s=
-h
-> > index 6adfd25351..ae0cf7886a 100755
-> > --- a/t/t3505-cherry-pick-empty.sh
-> > +++ b/t/t3505-cherry-pick-empty.sh
-> > @@ -89,7 +89,7 @@ test_expect_success 'cherry-pick a commit that become=
-s no-op (prep)' '
-> >       git commit -m "add file2 on the side"
-> >   '
-> >
-> > -test_expect_success 'cherry-pick a no-op without --keep-redundant' '
-> > +test_expect_success 'cherry-pick a no-op with neither --keep-redundant=
- nor --empty' '
-> >       git reset --hard &&
-> >       git checkout fork^0 &&
-> >       test_must_fail git cherry-pick main
-> > @@ -104,4 +104,28 @@ test_expect_success 'cherry-pick a no-op with --ke=
-ep-redundant' '
-> >       test_cmp expect actual
-> >   '
-> >
-> > +test_expect_success 'cherry-pick a no-op with --empty=3Dask' '
-> > +     git reset --hard &&
-> > +     git checkout fork^0 &&
-> > +     test_must_fail git cherry-pick --empty=3Dask main
+>     This option specifies how a commit that is not originally empty
+>     but becomes a no-op when cherry-picked due to earlier changes
+>     already applied or already in the current history.  Regardless
+>     of this this option, `cherry-pick` will fail on a commit that is
+>     empty in the original history---see `--allow-empty` to pass them
+>     intact.
 >
-> This is an example of why it is a good idea to check the error message
-> when using "test_must_fail" as here the test will fail due to a bad
-> value passed to "--empty" rather than for the reason we want the test to
-> check. It would be good to add a separate test to check that we reject
-> invalid "--empty" values.
+> or something.  Then the description of `keep` can become just as
+> short as other two, e.g. a single sentence "The commit that becomes
+> empty will be kept".
 
-An excellent catch, thank you. Will be addressed in v2
+Thank you for this suggestion. You are correct that the difference
+between `--empty` and `allow-empty` is relevant regardless of the option
+selected by the user.
 
-> > +'
-> > +
-> > +test_expect_success 'cherry-pick a no-op with --empty=3Ddrop' '
-> > +     git reset --hard &&
-> > +     git checkout fork^0 &&
-> > +     git cherry-pick --empty=3Ddrop main &&
-> > +     git show -s --format=3D%s >actual &&
-> > +     echo "add file2 on the side" >expect &&
-> > +     test_cmp expect actual
->
-> I think you could simplify this by using test_commit_message
+In fact, this entire tidbit is somewhat duplicative with the note I
+already added after the options:
 
-Thanks for pointing that function out -- you're absolutely right. Will
-be addressed in v2.
+> Note that commits which start empty will cause the cherry-pick to fail
+> (unless `--allow-empty` is specified).
 
+I'll clean this up in v2. Here's what I am thinking currently:
 
-Thanks for the review,
+> --empty=3D(stop|drop|keep)::
+>     How to handle commits being cherry-picked that are redundant with
+>     changes already in the current history.
+> +
+> --
+> `stop`;;
+>     The cherry-pick will stop when the commit is applied, allowing
+>     you to examine the commit. This is the default behavior.
+> `drop`;;
+>     The commit will be dropped.
+> `keep`;;
+>     The commit will be kept.
+> --
+> +
+> Note that this option species how to handle a commit that was not initial=
+ly
+> empty, but rather became empty due to a previous commit. Commits that wer=
+e
+> initially empty will cause the cherry-pick to fail. To force the inclusio=
+n of
+> those commits, use `--allow-empty`.
+> +
+
+Thank you,
 Brian Lyles
