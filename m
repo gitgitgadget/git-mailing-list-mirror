@@ -1,114 +1,102 @@
-Received: from wout4-smtp.messagingengine.com (wout4-smtp.messagingengine.com [64.147.123.20])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f54.google.com (mail-wm1-f54.google.com [209.85.128.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A1FF2030D
-	for <git@vger.kernel.org>; Sun, 28 Jan 2024 18:32:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.20
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BB062EB14
+	for <git@vger.kernel.org>; Sun, 28 Jan 2024 20:02:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706466776; cv=none; b=MuxtWvFRc9sq+JRLnlG2n8dTCy0NhNy9XRqFTjhL93yFXvtHfyfGg/QH2+meINAzhgg5VMYD2cyZhPM4+vPVrzu/NMXfh5UBSM2z55VNi9M648LwCcsjauStygKdopTZK4l8wfCUC/KduLkeqn6P8yiUfDBlpt7u8XCtgk9+iaY=
+	t=1706472179; cv=none; b=Bp1JtHdcPd5J9VVZflR2TXo3c1WbYe+0pNZU/aquNNEYlWQ38shNxf/eOvDQlhVa9cDo4zBiqZS4/8lJg23BGa8Z7PxzKTf2j2TGG7WiDIwYb530xvPg/TluCFp050GfahdD7OTw1pZiVSh8xOJTiywJh/R3Nl6H9o7vza4E1w0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706466776; c=relaxed/simple;
-	bh=owUooDrKe4egMeU1v8CIwnY20XOvTaYuHF/rShncpEY=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WkV65pxVLnLow07Ffhq0PtZXUms71yDCvq4IFuTuTNbgaAJCidFrhbwwFGc8D4wBqtBitJ4o2a15Hy6EQrp/S5EQe10gb83hhng1XdXPgOcJSulhhevpoU+L9UckAHhkbAlOOS3IHnPHWUaUmilBNzPZ909TVaqy/UZNoCCUgtM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=khaugsbakk.name; spf=pass smtp.mailfrom=khaugsbakk.name; dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b=UFjZFjzJ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Lcg8mE8Y; arc=none smtp.client-ip=64.147.123.20
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=khaugsbakk.name
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=khaugsbakk.name
+	s=arc-20240116; t=1706472179; c=relaxed/simple;
+	bh=y5LQgRovUqo2GZNBDwoXA5VBaE4Vfofm08ND3592y1k=;
+	h=Message-ID:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=aM5F/2smw8jc7P1aQmKR2quMzEjeYhuF3C0v1RVceRz1UOu98zTOhT4fIfOd7HBEyJXBD7aKK0MnC273jeMkjTXE58W2gOV4KXpviqHteba9r+iojwbL46APgkhBpiBxIQwgipA9SugLqry/c6CMVLBTmtnKYs61B9dBgxeMscU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OL3C16hG; arc=none smtp.client-ip=209.85.128.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b="UFjZFjzJ";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Lcg8mE8Y"
-Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
-	by mailout.west.internal (Postfix) with ESMTP id 3CCFD3200AE1;
-	Sun, 28 Jan 2024 13:32:53 -0500 (EST)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute5.internal (MEProxy); Sun, 28 Jan 2024 13:32:53 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=khaugsbakk.name;
-	 h=cc:cc:content-transfer-encoding:content-type:date:date:from
-	:from:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:subject:subject:to:to; s=fm2; t=1706466772; x=
-	1706553172; bh=3sCSs32YvrrvOXV12kNsBcmcBCj5lINPtZE8iTNMEbs=; b=U
-	FjZFjzJCLCrjQEVbrhRDz9vvG9jfxVM0C7sR1kELKY1aSt2mYUH0YChRC20YkFwA
-	a9YHE+skidV4LAKG3+ALStFuG/KF/BrQG+GWXBrKwt9dSiw9keKY/lSquoQqzXB+
-	wwrlmPVrgLeNnKI3H2bKEnAo4TUTw680FMhpA23i9NjQUbKYxf6nCWq0F27GH065
-	3OsWvSpvqEGOBsrsfpksOwMd9A6/q7panFr1oJ709XX3L4+TW94PsswvcHf5j25I
-	nvLfgshay2JFiR2F57PdRyc0a0nOQUMC/Rk5jtb8LZ81Kh1aOwjiU/8yDKsMzxXa
-	1PvqlOOnJ7idWUgFk9chg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:date:date:feedback-id:feedback-id:from:from
-	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1706466772; x=
-	1706553172; bh=3sCSs32YvrrvOXV12kNsBcmcBCj5lINPtZE8iTNMEbs=; b=L
-	cg8mE8Y7/MskhCgTRJpM63vm2u5YU/hguezYgcn0vOzf4Pkg13Wg8BL9OvuJR3WW
-	ktWKzkDbi1mU+H9m/g2F9WHaVLbdSEXzpG+TMKCam6OJxMouaDnDnx3MdfxCY/cO
-	H98Nw4JfU6D0DxM93GhhML4puiJTPdMMCcXfvQqQJm5uxgxFvwfzBoNqQtx2eNTO
-	LEH/J3aj0pe72jC7k96N/JefmCZw/mbDMSzX6OjhN+TwCQFqQuFZCXGwf5ftsjTk
-	N+IqQTLZbgeN0r0HBrxmCYlGUnIP8ICxOAGX4GNNvSN87uUjFB7647TYqui5XSmK
-	36CcX+8IVJSsRyGkcYZdw==
-X-ME-Sender: <xms:1J22ZTHJ7d2FPD3YUtD9177fOhecWVCypGZnGap0-FUSRFSevjM1dJ8>
-    <xme:1J22ZQXMImAeScnXCZ_upXGBjC9S8uRlEkEIkQQq2-pMPrlaWD_KDWnZ709yHepiI
-    QuZpwEHUszBxlN-Dg>
-X-ME-Received: <xmr:1J22ZVK0GZTvgZ-55Lrb0D_C3VDmiWcM8-_0n7etLRHX7OaT2Il6iVetK-n0fqk5MyXIFpVvk6BvITevBWkx-7QpFowjahrzr3-94vksF6PyvSRhVjAlZiXUxQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrfedtvddguddufecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
-    necuuegrihhlohhuthemuceftddtnecunecujfgurhephffvvefufffkofgjfhgggfestd
-    ekredtredttdenucfhrhhomhepmfhrihhsthhofhhfvghrucfjrghughhssggrkhhkuceo
-    tghouggvsehkhhgruhhgshgsrghkkhdrnhgrmhgvqeenucggtffrrghtthgvrhhnpeetud
-    eiheeguddtgfduveekhfevudeiieetjefhffetiedtgeejieehtdfhjefgteenucevlhhu
-    shhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpegtohguvgeskhhhrg
-    hughhssggrkhhkrdhnrghmvg
-X-ME-Proxy: <xmx:1J22ZRHfbsOhskL1GKfRmwcVnpcRw7xQLeP_2G-4DxZubOMziEktZw>
-    <xmx:1J22ZZUEjnBf0uXtSr3wvClhawRc9NJoMUswWaKZUk89VLGNJTycsw>
-    <xmx:1J22ZcNt2HRrD4czvuBl_-amzp19tOj1M-4DJMCM8_pVyw4T35_Xrg>
-    <xmx:1J22ZadJdjQFQ9DYHYyhxyY465W-dT4tnTJo2g8mjheEPpQmIt1spw>
-Feedback-ID: i2671468f:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
- 28 Jan 2024 13:32:51 -0500 (EST)
-From: Kristoffer Haugsbakk <code@khaugsbakk.name>
-To: git@vger.kernel.org
-Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>
-Subject: [PATCH 1/1] config: add back code comment
-Date: Sun, 28 Jan 2024 19:31:40 +0100
-Message-ID: <48d66e94ece3b763acbe933561d82157c02a5f58.1706466321.git.code@khaugsbakk.name>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <cover.1706466321.git.code@khaugsbakk.name>
-References: <cover.1706466321.git.code@khaugsbakk.name>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OL3C16hG"
+Received: by mail-wm1-f54.google.com with SMTP id 5b1f17b1804b1-40e76109cdeso32753945e9.0
+        for <git@vger.kernel.org>; Sun, 28 Jan 2024 12:02:57 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1706472175; x=1707076975; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=O0RbnxWmwwrKP4Qd1cXvfXgDfT/wMIFUG9zQB+KPX0U=;
+        b=OL3C16hGUmDipI0AftVv9mMHPWXdlXrHorFKtyxddhwOkOfagDkQUyRvWV9HeD6cKR
+         qf2hGVfPsAACGj//eR9zn8zs80QscJuIjE3VZiocP4Fz4IylVWY0dXX729YqL4o2mP0j
+         sqP7vTauZclRT/I8esaqGB0GposAQbLUdgcToJwPu7ehtZLDpR7DStlqR14EJsgEZhR0
+         sMUK2S1L/mk9Bid5lgJC8fmGehmhvfs9vR8jFZgxLxGiQ+hVWhmC6jD8qteZn9C93LN0
+         ze76JQqBASLy+1Gx8DtHI1wUTDWNXsXUT2usLfAKt9HgUfQ/RU6/WT6zeNL22XC8pXbn
+         rYvg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1706472175; x=1707076975;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=O0RbnxWmwwrKP4Qd1cXvfXgDfT/wMIFUG9zQB+KPX0U=;
+        b=G4HFW7wAaGUunObWOykob6NCrySFSCSELA2sazdSx14/zyMLNMvGdvc5e1+FRFAcPb
+         vehlC1OY1pvNfX9Dyl0wJ6mZ0o/ZKghJ0Y6SsywHZHokJLMOPzDipdi9gr2OkU4bvo7F
+         AueWElPzRBkPaDfkxti9wVjR4YCqa6wOcj06bBZKYvVKQz9c2n0LRV1HFjcLc9kByzQK
+         OMypSrQd4Of/pqUTrndQ8+q2GHKzBBlvDy2avcPodvzUgp/71bI/FyphKcdZFLRkdALA
+         zOHcjvAjptOnrxurNk1ySek9tJ/3KCJtS2hmA3wvqrjAhreBocpzJDy+OXpyZTNaDWEY
+         R61w==
+X-Gm-Message-State: AOJu0YxM8jdXwbxHEku/H2AZMhHjy7lDhKNUy0a0a2/lIdLebwAYlU9+
+	OYKB0xuHPW7k6DQCNSB1pTVPQjkPaPOL6WlWRf6Z0ZcokcKIozUHhevUfeaU
+X-Google-Smtp-Source: AGHT+IG5dL2TvUPL/nSW1Abumyi3ZUyYiKh3dvaKjEcDSGaSjsjGL2hw+TpbDo2UumUvfOd1euIynA==
+X-Received: by 2002:a05:600c:310d:b0:40e:c564:6ef7 with SMTP id g13-20020a05600c310d00b0040ec5646ef7mr3674116wmo.25.1706472174808;
+        Sun, 28 Jan 2024 12:02:54 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id d7-20020a05600c34c700b0040ef67f1f52sm1396359wmq.7.2024.01.28.12.02.54
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 28 Jan 2024 12:02:54 -0800 (PST)
+Message-ID: <pull.1660.git.git.1706472173.gitgitgadget@gmail.com>
+From: "Philippe Blain via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Sun, 28 Jan 2024 20:02:48 +0000
+Subject: [PATCH 0/5] completion: remove hardcoded config variable names
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+To: git@vger.kernel.org
+Cc: Philippe Blain <levraiphilippeblain@gmail.com>
 
-c15129b699 (config: factor out global config file retrieval, 2024-01-18)
-was a refactor that moved some of the code in this function to
-`config.c`. However, in the process I managed to drop this code comment
-which explains `$HOME not set`.
+This series removes hardcoded config variable names in the
+__git_complete_config_variable_name function, partly by adding a new mode to
+'git help'. It also adds completion for 'submodule.*' config variables,
+which were previously missing.
 
-Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
----
- builtin/config.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+I think it makes sense to do that in the same series since it's closely
+related, and splitting it would result in textual conflicts between both
+series if one does not build on top of the other, but I'm open to other
+suggestions.
 
-diff --git a/builtin/config.c b/builtin/config.c
-index 08fe36d499..b55bfae7d6 100644
---- a/builtin/config.c
-+++ b/builtin/config.c
-@@ -710,6 +710,12 @@ int cmd_config(int argc, const char **argv, const char *prefix)
- 	if (use_global_config) {
- 		given_config_source.file = git_global_config();
- 		if (!given_config_source.file)
-+			/*
-+			 * It is unknown if HOME/.gitconfig exists, so
-+			 * we do not know if we should write to XDG
-+			 * location; error out even if XDG_CONFIG_HOME
-+			 * is set and points at a sane location.
-+			 */
- 			die(_("$HOME not set"));
- 		given_config_source.scope = CONFIG_SCOPE_GLOBAL;
- 	} else if (use_system_config) {
+Thanks,
+
+Philippe.
+
+Philippe Blain (5):
+  completion: add space after config variable names also in Bash 3
+  completion: complete 'submodule.*' config variables
+  completion: add and use
+    __git_compute_first_level_config_vars_for_section
+  builtin/help: add --config-all-for-completion
+  completion: add an use
+    __git_compute_second_level_config_vars_for_section
+
+ builtin/help.c                         |  7 ++
+ contrib/completion/git-completion.bash | 90 +++++++++++++-------------
+ t/t9902-completion.sh                  | 21 ++++++
+ 3 files changed, 74 insertions(+), 44 deletions(-)
+
+
+base-commit: b50a608ba20348cb3dfc16a696816d51780e3f0f
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1660%2Fphil-blain%2Fcompletion-submodule-config-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1660/phil-blain/completion-submodule-config-v1
+Pull-Request: https://github.com/git/git/pull/1660
 -- 
-2.43.0
-
+gitgitgadget
