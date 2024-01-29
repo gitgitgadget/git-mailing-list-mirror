@@ -1,147 +1,167 @@
-Received: from out1-smtp.messagingengine.com (out1-smtp.messagingengine.com [66.111.4.25])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f54.google.com (mail-ej1-f54.google.com [209.85.218.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5A715B5C9
-	for <git@vger.kernel.org>; Mon, 29 Jan 2024 11:32:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=66.111.4.25
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F7CE5BACE
+	for <git@vger.kernel.org>; Mon, 29 Jan 2024 11:35:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706527946; cv=none; b=q0+HkWqeFd3iSMJN1FbnlierSIX/l78yWcFJXiorChGZIpibuXy37mbOUtkQEAGEp7fcjlTxH+VWGXMDMBHK96GMUnsUbCawk87SsUn6u9DQVSMZJTFQywCIa0+6CbRlB6tjzRMrKMvoy9A20fCM9ALApjGVdFKQL+0a1W6+PvE=
+	t=1706528136; cv=none; b=s5rjPieqH92gx3A7VRWqeo5sptWH2TqQB6yDqalZO2RYjG5+mqXdjpmtc0rL/RTUAmMS0cPg3eM92rAgMiXdHuQ/+cWXXGjza9Rj5wtdM0pIGjNjzSLyzK0UuuD3fflszHtWteHQ6e5lzHI51C8s2iiAzAkG4/VB3kMEUtNCRgY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706527946; c=relaxed/simple;
-	bh=sSNaC4xcVAFeOwZo77i8POOPLsjNS1abFPnLgMtbY0g=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=tJEiR4mpBhWQ42FWKm2PPV+h1aIl/7V0DjIZIayTul+2iBZADYWNCODeAewZ1teR0a6C2XAPZZ8qSL9tkmcsZLNumokuc9L6PSrO9wo9cSJHboSO9KnIqQcI978XLWIHzxLBrtQcvxh4CcaNouNq5fdpga9lpAVywlHAm4etPTg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=qrHF6EmV; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=B0cLtuTB; arc=none smtp.client-ip=66.111.4.25
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1706528136; c=relaxed/simple;
+	bh=u45Z3Ri8Y4mAPUg+TlckLMZ+de+4ghUD7ekSr4VJ76Q=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=duq5SXG9rJ4b+Fx/IYa8xiRznJXJwKOWqwLzkPU1sNmfeEfSSDCeN1p1hsWvTWPRLj/RO9W85UG5HodUr2ifPKYrkHa80bmXcHVSHhx31CrSncgnrI8eZ/6l9iAmk5lx4hO6mWIttbBNkso/IvW3NaT6uanaR7w+1IQwv2FVyXA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=P5mxd2Vt; arc=none smtp.client-ip=209.85.218.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="qrHF6EmV";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="B0cLtuTB"
-Received: from compute7.internal (compute7.nyi.internal [10.202.2.48])
-	by mailout.nyi.internal (Postfix) with ESMTP id E7CE95C0089;
-	Mon, 29 Jan 2024 06:32:23 -0500 (EST)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute7.internal (MEProxy); Mon, 29 Jan 2024 06:32:23 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1706527943; x=1706614343; bh=xKyJbX19dh
-	pRvKIiIx6YxXip1CaKrrUoGiQeT2rT9Ds=; b=qrHF6EmVHPPndIj3GnfVpxzHxN
-	SRChF9BTv+JIDTH2ARI/UVsSLi7qxD14PHiHvgj7SzcBVRwXJ7oPv5vxpkRL3y0E
-	tnTJUzE3p8tQDJKiEcW3IVE50XATm8SQFaW7bCEMPdQ2Vj/HKDDAsotEkxsjNYOF
-	oBktXqv+mPWzx5anUk7As5wIwOWX8o50MHQUaIVXarnkiAA1DRocOf6sSIuojQyR
-	N/WewmvcNHze64KQjG5XbLMmNdO0Br9Pk/h3YLAPkdEIrVY5yROUn9j+Dv5ITa2K
-	7LujvRRYRwY7AzbUCzQeoOjfXmrTmToBDp5txvEL6j9yjKv950UByrubBJxQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1706527943; x=1706614343; bh=xKyJbX19dhpRvKIiIx6YxXip1CaK
-	rrUoGiQeT2rT9Ds=; b=B0cLtuTBvwEHSfAriigeQVUuSkEXS/tZ1D5ER1et/vu7
-	SMppMSumv7Z0pKsQ5AqwGRHopcz2ldxR28IY0a/BykFaCUyGa4EoVahCg3ElMHQt
-	qboBoLkfsg7WMUYF48flJEYry2s64jg0VlTqCEA9JEYggMMRHwDAWcrpriApanzh
-	DFpIFA2l4qM7fcf8YPbkdiK2ROCBIGixNaKhTDYzFkNmjP12NZ3V2KL1AhcEHPHp
-	d3C3/NKjm4GkWAhLX9vXtsQThn6VzfiACU6RuSUtuDnvr2W91BKqdrxiIC1OLHd1
-	FtMl2XWte+8Nnjukd0MsJyoWbCX1tM8yK1sYKHpE4A==
-X-ME-Sender: <xms:x4y3ZcBhiirjJxJ_1QobRVrMBcssmJFo0FnAOgJ1LM7FcqFVXimfOw>
-    <xme:x4y3Zeg6tFVT7yUEkDqhDQ46PVRnT1qqTC_2Xox5bJNdi0EU3vHT-LRL8RvOM53hI
-    uY1XyZBTGqaPz1v1A>
-X-ME-Received: <xmr:x4y3Zfnc6d-PmLLHwBHqQbKQgh9taWJIOGaL8y9FaEs5WCpRS7SHZs3SDVCfW5YHS-ZHU8g8aHoqZ1j4GGd9qX0Dyk9YqsXAxKv0oZZG0AD24Mo7YA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrfedtgedgvdejucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvvefukfhfgggtuggjsehgtd
-    erredttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshes
-    phhkshdrihhmqeenucggtffrrghtthgvrhhnpeeukedtvedtffevleejtefgheehieegke
-    eluddvfeefgeehgfeltddtheejleffteenucevlhhushhtvghrufhiiigvpedtnecurfgr
-    rhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhm
-X-ME-Proxy: <xmx:x4y3ZSw4ilt90Q5GslZiGqPvmEIDcKXRRKCGbnErm6_tLSSsX2aARw>
-    <xmx:x4y3ZRQ3JVXGGg9QM-IutWs7S5mXnp7-CubmF-UhIImmB7_voaVBlQ>
-    <xmx:x4y3ZdYHq0_ILOjtVH1ePUCWeEVhD4yct3nfsMyuhyG_6MDbTIGn5Q>
-    <xmx:x4y3ZQKdZzNL_T8T8W9wmotKUqZ0rkQtcrfJj84ljjQO3aUkYR7fDQ>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 29 Jan 2024 06:32:23 -0500 (EST)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id e70b525a (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 29 Jan 2024 11:29:05 +0000 (UTC)
-Date: Mon, 29 Jan 2024 12:32:19 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: Kristoffer Haugsbakk <code@khaugsbakk.name>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 1/1] config: add back code comment
-Message-ID: <ZbeMw5tgY9S6k6y6@tanuki>
-References: <cover.1706466321.git.code@khaugsbakk.name>
- <48d66e94ece3b763acbe933561d82157c02a5f58.1706466321.git.code@khaugsbakk.name>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="P5mxd2Vt"
+Received: by mail-ej1-f54.google.com with SMTP id a640c23a62f3a-a3566c0309fso161184166b.1
+        for <git@vger.kernel.org>; Mon, 29 Jan 2024 03:35:33 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1706528132; x=1707132932; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=5PPaBWCFuFc7taOIm6qw4vtRT3uzdm7wj0WTRvg7pE4=;
+        b=P5mxd2VtE/F/LjO3UU7sokZ+snwYVJGUza0n7OiOFRCQRkJV3UkcVJMcc6LLH9lB9X
+         VvgHGgF3XtTUEgvP0bVF5tNd49v1yZC0dR6QT0JdJyPbC/acWh2U30KlzLkst+P59PK2
+         bCzsRUUJBz5iHKJgYUwYMBogeNVIbOo06xCZMZ5Tu6dQt9/PBdkrCxoaYJ/ZRfgDP4mK
+         +uetmXU4lj1t0/EBxzQx1Tbnp3ajAo7iwCl9HxJL5WvYU5QMnowLuC3ukxqeMfGDaIJ7
+         I1U/mKsNhU6vCzb1KigiEz0v5vuapA71YpJ7RNDGOWuF+2VwBnEXdVHbNiL4e6KQZPSI
+         s61g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1706528132; x=1707132932;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=5PPaBWCFuFc7taOIm6qw4vtRT3uzdm7wj0WTRvg7pE4=;
+        b=VyYe5rae1KoIgM6a84B5zVWthBbQFcZYs1Z3WogvOY+zx9QH39OjAF7cMKNYQNluQl
+         7Y/Bk/pqppk/luYP0G/7XbeW0XUg5j5fSBJ7Npd7+PMtR6rUoElv5WMiK5Yc/fFKQjPU
+         CL8ud+cgGliq6iPi3zKF7Grxc1zuFS1+2fWqIei1e1zDXazun00APw7EkKihyTl5VUS2
+         KcAFhr9WGbCgwyNfOBqSYGKAQFdWyEt3xLn8CKFtm43G3Zb7mctZPhqfZowC4uYGMST7
+         Q3ltWcWE6O2hojkHd/i3+4S+aI/EAXPbDh3UDASbyFiXEpH4za0QG34SYDvzSa+NDLaX
+         GHFg==
+X-Gm-Message-State: AOJu0YylJrg15xVTL3X/0txlIPK+KSZL0KrKbno1jVEaNhcd0OImZpO1
+	I9UDKs6+YOEol908mvtzfXN3rGV2EP1COorA9ztOqs0VzeR3rPaHhjYwbPVc
+X-Google-Smtp-Source: AGHT+IFidci1FEWKfKDGm1SUjYZlrnS+ZEUYoWX4sdZJa7+yAVRLs/sM8k26MdYuYBHy1ytfc7xUwg==
+X-Received: by 2002:a17:906:b0d:b0:a35:dafa:a5d8 with SMTP id u13-20020a1709060b0d00b00a35dafaa5d8mr920652ejg.73.1706528131617;
+        Mon, 29 Jan 2024 03:35:31 -0800 (PST)
+Received: from laptop.fritz.box ([2a02:2455:826e:4900:74c1:f49b:306a:744b])
+        by smtp.gmail.com with ESMTPSA id y9-20020a170906070900b00a35a3e2b90asm1370325ejb.149.2024.01.29.03.35.30
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 29 Jan 2024 03:35:31 -0800 (PST)
+From: Karthik Nayak <karthik.188@gmail.com>
+To: git@vger.kernel.org
+Cc: gitster@pobox.com,
+	ps@pks.im,
+	phillip.wood123@gmail.com,
+	Karthik Nayak <karthik.188@gmail.com>
+Subject: [PATCH v3 0/4] for-each-ref: print all refs on empty string pattern
+Date: Mon, 29 Jan 2024 12:35:23 +0100
+Message-ID: <20240129113527.607022-1-karthik.188@gmail.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20240119142705.139374-1-karthik.188@gmail.com>
+References: <20240119142705.139374-1-karthik.188@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="Iibwz/nqm5B/qeeH"
-Content-Disposition: inline
-In-Reply-To: <48d66e94ece3b763acbe933561d82157c02a5f58.1706466321.git.code@khaugsbakk.name>
+Content-Transfer-Encoding: 8bit
+
+This is the second version of my patch series to print refs
+when and empty string pattern is used with git-for-each-ref(1).
+
+With the upcoming introduction of the reftable backend, it becomes ever
+so important to provide the necessary tooling for printing all refs
+associated with a repository.
+
+While regular refs stored within the "refs/" namespace are currently
+supported by multiple commands like git-for-each-ref(1),
+git-show-ref(1). Neither support printing all the operational refs
+within the repository.
+
+This is crucial because with the reftable backend, all these refs will
+also move to reftable. It would be necessary to identify all the refs
+that are stored within the reftable since there is no easy way to do so
+otherwise. This is because the reftable itself is a binary format and
+all access will be via git. Unlike the filesystem backend, which allows
+access directly via the filesystem.
+
+This patch series is a follow up to the RFC/discussion we had earlier on
+the list [1].
+
+The first 4 commits add the required functionality to ensure we can print
+all refs (regular, pseudo, HEAD). The 5th commit modifies the
+git-for-each-ref(1) command to print all refs when an empty string pattern
+is used. This is a deviation from the current situation wherein the empty
+string pattern currently matches and prints no refs.
+
+[1]: https://lore.kernel.org/git/20231221170715.110565-1-karthik.188@gmail.com/#t
+
+Changes since v1:
+- Added missing comma to the end of the `irregular_pseudorefs` array.
+- Modified `is_pseudoref` to only work with non symrefs.  
+
+Range-diff against v2:
+
+1:  116d4c0e6d ! 1:  2141a2a62b refs: introduce `is_pseudoref()` and `is_headref()`
+    @@ refs.c: static int is_pseudoref_syntax(const char *refname)
+     +		"BISECT_EXPECTED_REV",
+     +		"NOTES_MERGE_PARTIAL",
+     +		"NOTES_MERGE_REF",
+    -+		"MERGE_AUTOSTASH"
+    ++		"MERGE_AUTOSTASH",
+     +	};
+    ++	struct object_id oid;
+     +	size_t i;
+     +
+     +	if (!is_pseudoref_syntax(refname))
+     +		return 0;
+     +
+    -+	if (ends_with(refname, "_HEAD"))
+    -+		return refs_ref_exists(refs, refname);
+    ++	if (ends_with(refname, "_HEAD")) {
+    ++		 read_ref_full(refname, RESOLVE_REF_READING | RESOLVE_REF_NO_RECURSE,
+    ++		      &oid, NULL);
+    ++		 return !is_null_oid(&oid);
+    ++	}
+     +
+     +	for (i = 0; i < ARRAY_SIZE(irregular_pseudorefs); i++)
+    -+		 if (!strcmp(refname, irregular_pseudorefs[i]))
+    -+			 return refs_ref_exists(refs, refname);
+    ++		if (!strcmp(refname, irregular_pseudorefs[i])) {
+    ++			read_ref_full(refname, RESOLVE_REF_READING | RESOLVE_REF_NO_RECURSE,
+    ++						  &oid, NULL);
+    ++			return !is_null_oid(&oid);
+    ++		}
+     +
+     +	return 0;
+     +}
+2:  4d4ca1cb26 = 2:  c96f0a9c83 refs: extract out `loose_fill_ref_dir_regular_file()`
+3:  a5c0c4bf31 = 3:  d165358b83 refs: introduce `refs_for_each_all_refs()`
+4:  a1c6537815 = 4:  a17983d0ba for-each-ref: avoid filtering on empty pattern
 
 
---Iibwz/nqm5B/qeeH
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Karthik Nayak (4):
+  refs: introduce `is_pseudoref()` and `is_headref()`
+  refs: extract out `loose_fill_ref_dir_regular_file()`
+  refs: introduce `refs_for_each_all_refs()`
+  for-each-ref: avoid filtering on empty pattern
 
-On Sun, Jan 28, 2024 at 07:31:40PM +0100, Kristoffer Haugsbakk wrote:
-> c15129b699 (config: factor out global config file retrieval, 2024-01-18)
-> was a refactor that moved some of the code in this function to
-> `config.c`. However, in the process I managed to drop this code comment
-> which explains `$HOME not set`.
->=20
-> Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
-> ---
->  builtin/config.c | 6 ++++++
->  1 file changed, 6 insertions(+)
->=20
-> diff --git a/builtin/config.c b/builtin/config.c
-> index 08fe36d499..b55bfae7d6 100644
-> --- a/builtin/config.c
-> +++ b/builtin/config.c
-> @@ -710,6 +710,12 @@ int cmd_config(int argc, const char **argv, const ch=
-ar *prefix)
->  	if (use_global_config) {
->  		given_config_source.file =3D git_global_config();
->  		if (!given_config_source.file)
-> +			/*
-> +			 * It is unknown if HOME/.gitconfig exists, so
-> +			 * we do not know if we should write to XDG
-> +			 * location; error out even if XDG_CONFIG_HOME
-> +			 * is set and points at a sane location.
-> +			 */
->  			die(_("$HOME not set"));
->  		given_config_source.scope =3D CONFIG_SCOPE_GLOBAL;
->  	} else if (use_system_config) {
+ Documentation/git-for-each-ref.txt |   3 +-
+ builtin/for-each-ref.c             |  21 ++++-
+ ref-filter.c                       |  13 ++-
+ ref-filter.h                       |   4 +-
+ refs.c                             |  46 +++++++++++
+ refs.h                             |   9 ++
+ refs/files-backend.c               | 127 +++++++++++++++++++++--------
+ refs/refs-internal.h               |   7 ++
+ t/t6302-for-each-ref-filter.sh     |  34 ++++++++
+ 9 files changed, 225 insertions(+), 39 deletions(-)
 
-Thanks for adding the comment back in! The patch looks good to me.
+-- 
+2.43.GIT
 
-Patrick
-
---Iibwz/nqm5B/qeeH
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmW3jMMACgkQVbJhu7ck
-PpRxyRAAjf63aV+axUJys4qvwc/VkM6tZbHosz6r6+kykTYQBFtUPzt/db7kZ7mv
-l+RA/q9EwMsSaGGQvHeHO0PxG3Sbagz+cjMfVEvaeDu5K88KkSt6LoZRXQZm6Qfr
-TPU5GWFQutim9VRKhnJs3xexLNr1H4Dyt2H6M75IcguW5fKDaAFdKSgBSZNCA+pB
-sciZKbchAzlautkGV9Kt41rtVIAB5ulPwQgpSrC+Lv6u0JB1rrKV4VluKH7S/TCQ
-/bp7X5tFxLvTXzy0phyj5oyQvFgnAjxx8S8GJQVwDd0lYgIcZljtIurHbA2YE50d
-xTWVWNyuFJ2L0YWqcel0+UQuST+OsH9ql2DWX63fTQY+TylcEKTOy5C2EDsAeBiI
-7Uizr4J1HDJL6T1lUmd0pDkxvEoqmRa/n7kIhjxtJE1zMlpz6bOiW2/q3ZCUCI3D
-fBrRzj8FDkCYQSlgqLNcYKRxqbUEYHBHym1oEUKocPOo+GYW7nsUVHmRDm42Zgg4
-Hf7ufqnFzF4SnaC4OA3IHYaWz4iGrBGMBjgvxttmMLu6nKvmlV2CLZLF/MeD3MpP
-syPnzNGbY8XS6vjcoRuwLitHo5VWoOPm49M2fEmK6ODdzOtSpzn/xyMnaMtrESOQ
-ZHsX/k6Y7vLJCaYBQHFtxfemllJ4EaNZ1ofHdFvY0GI8R+nJxu8=
-=oFOj
------END PGP SIGNATURE-----
-
---Iibwz/nqm5B/qeeH--
