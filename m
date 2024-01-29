@@ -1,64 +1,63 @@
-Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
+Received: from mail-lj1-f181.google.com (mail-lj1-f181.google.com [209.85.208.181])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D953964CFB
-	for <git@vger.kernel.org>; Mon, 29 Jan 2024 13:28:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58D52657A3
+	for <git@vger.kernel.org>; Mon, 29 Jan 2024 13:28:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706534890; cv=none; b=A5LyDIgVXtt/WNsXyCDOlSc3UcURZaTOdbm0E8f8G/E4sxDal67xvhZhFhXvikhWvxejUc2UlAAiYZgNhqqp14p4z6AeqW+mzF7fYcRN+91BcsKXofHr6nt5nlrj6KTqUHmqwBu5KkrU6M+RajgXKCZwL68/INo/CdrgWpNNt8c=
+	t=1706534892; cv=none; b=HXQAhfAsRPFlroQBfp8WeQT8BCRkNTpMD8Kgmcm0bgGFWHsfIw3gboES/sBF0Z4jSCMpLAy3/c3qq/CKSuhPsXl54m+nOQ8RNLM+t+eH6eLcb83eITO1EGPkRsMi/qr9bOA1NprUxk1RlY2Xw/MWqc9E9Dql6C3N+gOzrHke2eE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706534890; c=relaxed/simple;
-	bh=TwyeDdsOxKgszuWZL01yj8xfJwSkG3yb6d4+Z65WPgI=;
+	s=arc-20240116; t=1706534892; c=relaxed/simple;
+	bh=2vtrJHbRnX+npVfLN922a7kuIY3hHTq3L1bsZuVpGTg=;
 	h=Message-ID:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=rpTzyX0iNFwaXRBdtopxLNEGS3h4vwwJ7hwrb6HSsolUuDk81MEFtzdC5hFIwjx3Pr0PgEZBerl2JztN26Crtfgd5U08RvqwF9T5qzsEH5Mj9xg/FIlVnbeZaBNsoJpQKEVEVRVskaDsjIo5YaI8w9cfpDAUEeHuhvXj0Ybb7Q0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=iax+fXk7; arc=none smtp.client-ip=209.85.128.51
+	 MIME-Version:To:Cc; b=hVDrd09fNt1fpJF0409mPNwNQEuw1F0NBGZvUYOS5+a5FbH7xKRilV8zR9IrnBGJ3L2D3thJtD1hGTcRn2Sbx6WeZL9vtngj9gP9x1/mLv9xA57A3do3956mq39KhwMhzRkIVkzPDtTWY7/Xgqx5ihIIjQTNbWJSAbUFb5JwPU0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=EfKS/Uiu; arc=none smtp.client-ip=209.85.208.181
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="iax+fXk7"
-Received: by mail-wm1-f51.google.com with SMTP id 5b1f17b1804b1-40ef64d8955so8987975e9.3
-        for <git@vger.kernel.org>; Mon, 29 Jan 2024 05:28:08 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EfKS/Uiu"
+Received: by mail-lj1-f181.google.com with SMTP id 38308e7fff4ca-2d04c0b1cacso10602221fa.0
+        for <git@vger.kernel.org>; Mon, 29 Jan 2024 05:28:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1706534887; x=1707139687; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1706534888; x=1707139688; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=5byi4K+FqXpCK1PjPxawgqP73bKSooFEtJ77nWOXb4w=;
-        b=iax+fXk7Qb+JN0Fu6sNF08ChAHASK5y/6gRlz0p/FCLerT/IoqMnqCbaYswWntQjv2
-         DS3w82KQbhNea/RVm8DV6k7Y0wo96iqX4L5flO4dGIuf8IBEgxy7LBbtolKKlQQlCLSd
-         qZii9c27cDs03cah7jmtY3JEJeVKAo37HPu1F/3itHMFVjUEMS1tBxY1Cp9vpW2CtgYV
-         Xpm+9Mr0x/127xrqEqBQaLd29GHniUxTTv5TRRkXKVwhjmQ0cQtYmEIYuLNP6/OoJY73
-         MaWzZ4IctRcnOJUSB6rut6n6oOXjPny/uXRUhtxyc/9VN/bVbIe4/L0i16Q/K7ArSUhn
-         Q+Bw==
+        bh=5dEGWprWWUyitE72gJhxPCNtNyO5AFJdA4Ck7/jeXsY=;
+        b=EfKS/UiuYuyBwaeCfwxfN9R/E0VH8CXvjFd5eKReVY5KLSvdiGhaNJvIn7X6cJFEra
+         UVfvUaIUIS3MMAUBzyspSuAELHGaLEm/CiV+0jgNwG9fybmOPl+NT5zlt1rBUPjXgJYh
+         nX6BD4RyVUYaG/TJyNHxSU7mh8GI3t2R7P7aJaa7j8fmPIoy6LfgxHBDlZX9SgNas4MI
+         G2jWqjAL3mT3EaM7NWcDMshFscp/fo4Ij3heUs/7jpx1O0tvifOKGA2Ptd8kTPZANdzh
+         3ch3dlM0iF79U3NbBTNCBKTq9TIcJe+tEMv22ylP0DTV1czBExt4x8xhDLdF6IZC4942
+         UpCw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1706534887; x=1707139687;
+        d=1e100.net; s=20230601; t=1706534888; x=1707139688;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=5byi4K+FqXpCK1PjPxawgqP73bKSooFEtJ77nWOXb4w=;
-        b=LTtYSrkapXHSRQh4NOh7JUhXrGS9pbeweYAzm3sTAJj9NTX7dSO3r2cme82gcZ/9DD
-         I+v1DcZkQdAkqHNsnXANWNgewCav4lUiwcPXUe+VBQYzKvVCZvSgg2UZsgkPTfSwyv6p
-         RrS500CWeU1Tf4dGpRCOsqW1GqzZi/QpsXgNDLAla/V8naV+5TjAFwqxwZ4zvh6QPLhG
-         YSIVxiZqeIt3hFmI6mwOfcctBxWbEYhD2STL8tXLUM/14Yp6lHXiPfPYI+U0rW6oMKtc
-         eXyl2Lbv8hgyb+7qceYxvu8IwGsYvi+RxlYFi7WPWO9Zui3m23c+SjLuhraPVrfJSZ+q
-         WG2Q==
-X-Gm-Message-State: AOJu0YzOql+LqYF3fK4qTEB5WsMtdDbda5ejBWcnW6jVrkq+Tzqkm3vA
-	9Q6Tj94d96LgBCVjwvJy/mZSeoQcb3R45gGqhb1q4G57vePDRkmvg7rvKPZU
-X-Google-Smtp-Source: AGHT+IFQrRBDfKt/xxBvnSSYKOufFqvzmfOs61535oxoDnZP/m1242Khg+2jo3IztVBGT5ZiOLuIiQ==
-X-Received: by 2002:a5d:4312:0:b0:337:c91d:e80b with SMTP id h18-20020a5d4312000000b00337c91de80bmr4244056wrq.13.1706534886445;
-        Mon, 29 Jan 2024 05:28:06 -0800 (PST)
+        bh=5dEGWprWWUyitE72gJhxPCNtNyO5AFJdA4Ck7/jeXsY=;
+        b=Ipkkv7RNyaDDIhGc2mRRQhN63Y6KchzIQ7VtVeNHtzfE1S6wjTme3JgF/pqIK0PFz8
+         v7KKa5J/S303LHDPMfYHq54Oi/V6RGkYGeLKlV6WDofHS8mlsu1/IwUdBK6z8EnL/1Bs
+         w3Q+Z+6AMWPhRT2/h6/R+YXyPoMUNkIX3VQHedkqv8WtCTD6sFvWSZMWj/0q+7zJ70AP
+         gsrESl40YM4MpPMeRz2TpKISQeQy3fXoByk57DBQ93Tl75/Juo1KIC4Vcn4uBaORrH8z
+         ET7D/UM5lsT8xbkxA4SssZsifo0cRCCpLQR/FFTnqKtmMm8p9+ZGskCse8SWwWnO0P9l
+         zYYg==
+X-Gm-Message-State: AOJu0YwS5FPl/vBba6QvRbhtqvlRIh9SzlDFnGp/1DprLmWFH5OnDnKt
+	XwJmLslGNoElT50lxrWuYOfo3JxjOgzRIIp8UTCvrQpy0ia6DkUfYTLVervz
+X-Google-Smtp-Source: AGHT+IE0uWEnInhIqkGE/yk/nTbNuofcHxqcqYboVtWbp/R8fSkiJ27mCXOl7PFJWQirOwlWNRgwPw==
+X-Received: by 2002:a2e:8896:0:b0:2cf:2fc9:9a08 with SMTP id k22-20020a2e8896000000b002cf2fc99a08mr3727969lji.24.1706534887493;
+        Mon, 29 Jan 2024 05:28:07 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id h5-20020adfe985000000b00337d67a85c1sm8078525wrm.62.2024.01.29.05.28.04
+        by smtp.gmail.com with ESMTPSA id bp19-20020a5d5a93000000b003394495566dsm8219605wrb.22.2024.01.29.05.28.06
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 29 Jan 2024 05:28:04 -0800 (PST)
-Message-ID: <838aabf2858b73361be8e8579bc80826e1cfd4c3.1706534882.git.gitgitgadget@gmail.com>
+        Mon, 29 Jan 2024 05:28:07 -0800 (PST)
+Message-ID: <d442a039b27820dbd44e604df75ec026b8243d47.1706534882.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1660.v2.git.git.1706534881.gitgitgadget@gmail.com>
 References: <pull.1660.git.git.1706472173.gitgitgadget@gmail.com>
 	<pull.1660.v2.git.git.1706534881.gitgitgadget@gmail.com>
 From: "Philippe Blain via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Mon, 29 Jan 2024 13:27:59 +0000
-Subject: [PATCH v2 3/5] completion: add and use
- __git_compute_first_level_config_vars_for_section
+Date: Mon, 29 Jan 2024 13:28:00 +0000
+Subject: [PATCH v2 4/5] builtin/help: add --config-all-for-completion
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -74,121 +73,56 @@ Cc: Philippe Blain <levraiphilippeblain@gmail.com>,
 
 From: Philippe Blain <levraiphilippeblain@gmail.com>
 
-The function __git_complete_config_variable_name in the Bash completion
-script hardcodes several config variable names. These variables are
-those in config section where user-defined names can appear, such as
-"branch.<name>". These sections are treated first by the case statement,
-and the two last "catch all" cases are used for other sections, making
-use of the __git_compute_config_vars and __git_compute_config_sections
-function, which omit listing any variables containing wildcards or
-placeholders. Having hardcoded config variables introduces the risk of
-the completion code becoming out of sync with the actual config
-variables accepted by Git.
+There is currently no machine-friendly way to show _all_ configuration
+variables from the command line. 'git help --config' does show them all,
+but it also sets up the pager. 'git help --config-for-completion' omits
+some variables (those containing wildcards, for example) and 'git help
+--config-section-for-completion' shows only top-level section names.
 
-To avoid these hardcoded config variables, introduce a new function,
-__git_compute_first_level_config_vars_for_section, making use of the
-existing __git_config_vars variable. This function takes as argument a
-config section name and computes the matching "first level" config
-variables for that section, i.e. those _not_ containing any placeholder,
-like 'branch.autoSetupMerge, 'remote.pushDefault', etc.  Use this
-function and the variables it defines in the 'branch.*', 'remote.*' and
-'submodule.*' switches of the case statement instead of hardcoding the
-corresponding config variables.  Note that we use indirect expansion
-instead of associative arrays because those are not supported in Bash 3,
-on which macOS is stuck for licensing reasons.
-
-Add a test to make sure the new function works correctly by verfying it
-lists all 'submodule' config variables. This has the downside that this
-test must be updated when new 'submodule' configuration are added, but
-this should be a small burden since it happens infrequently.
+In a following commit we will want to have access to a list of all
+configuration variables from the Bash completion script. As such, add a
+new mode for the command, HELP_ACTION_CONFIG_ALL_FOR_COMPLETION,
+triggered by the new option '--config-all-for-completion'. In this mode,
+show all variables, just as HELP_ACTION_CONFIG, but do not set up the
+pager.
 
 Signed-off-by: Philippe Blain <levraiphilippeblain@gmail.com>
 ---
- contrib/completion/git-completion.bash | 24 +++++++++++++++++++++---
- t/t9902-completion.sh                  | 11 +++++++++++
- 2 files changed, 32 insertions(+), 3 deletions(-)
+ builtin/help.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index 8af9bc3f4e1..2934ceb7637 100644
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -2596,6 +2596,15 @@ __git_compute_config_vars ()
- 	__git_config_vars="$(git help --config-for-completion)"
- }
+diff --git a/builtin/help.c b/builtin/help.c
+index dc1fbe2b986..dacaeb10bf4 100644
+--- a/builtin/help.c
++++ b/builtin/help.c
+@@ -50,6 +50,7 @@ static enum help_action {
+ 	HELP_ACTION_DEVELOPER_INTERFACES,
+ 	HELP_ACTION_CONFIG_FOR_COMPLETION,
+ 	HELP_ACTION_CONFIG_SECTIONS_FOR_COMPLETION,
++	HELP_ACTION_CONFIG_ALL_FOR_COMPLETION,
+ } cmd_mode;
  
-+__git_compute_first_level_config_vars_for_section ()
-+{
-+	section="$1"
-+	__git_compute_config_vars
-+	local this_section="__git_first_level_config_vars_for_section_${section}"
-+	test -n "${!this_section}" ||
-+	printf -v "__git_first_level_config_vars_for_section_${section}" %s "$(echo "$__git_config_vars" | grep -E "^${section}\.[a-z]" | awk -F. '{print $2}')"
-+}
-+
- __git_config_sections=
- __git_compute_config_sections ()
- {
-@@ -2749,8 +2758,11 @@ __git_complete_config_variable_name ()
- 	branch.*)
- 		local pfx="${cur_%.*}."
- 		cur_="${cur_#*.}"
-+		local section="${pfx%.}"
- 		__gitcomp_direct "$(__git_heads "$pfx" "$cur_" ".")"
--		__gitcomp_nl_append $'autoSetupMerge\nautoSetupRebase\n' "$pfx" "$cur_" "${sfx:- }"
-+		__git_compute_first_level_config_vars_for_section "${section}"
-+		local this_section="__git_first_level_config_vars_for_section_${section}"
-+		__gitcomp_nl_append "${!this_section}" "$pfx" "$cur_" "${sfx:- }"
- 		return
- 		;;
- 	guitool.*.*)
-@@ -2799,8 +2811,11 @@ __git_complete_config_variable_name ()
- 	remote.*)
- 		local pfx="${cur_%.*}."
- 		cur_="${cur_#*.}"
-+		local section="${pfx%.}"
- 		__gitcomp_nl "$(__git_remotes)" "$pfx" "$cur_" "."
--		__gitcomp_nl_append "pushDefault" "$pfx" "$cur_" "${sfx:- }"
-+		__git_compute_first_level_config_vars_for_section "${section}"
-+		local this_section="__git_first_level_config_vars_for_section_${section}"
-+		__gitcomp_nl_append "${!this_section}" "$pfx" "$cur_" "${sfx:- }"
- 		return
- 		;;
- 	submodule.*.*)
-@@ -2812,8 +2827,11 @@ __git_complete_config_variable_name ()
- 	submodule.*)
- 		local pfx="${cur_%.*}."
- 		cur_="${cur_#*.}"
-+		local section="${pfx%.}"
- 		__gitcomp_nl "$(__git config -f "$(__git rev-parse --show-toplevel)/.gitmodules" --get-regexp 'submodule.*.path' | awk -F. '{print $2}')" "$pfx" "$cur_" "."
--		__gitcomp_nl_append $'alternateErrorStrategy\nfetchJobs\nactive\nalternateLocation\nrecurse\npropagateBranches' "$pfx" "$cur_" "${sfx:- }"
-+		__git_compute_first_level_config_vars_for_section "${section}"
-+		local this_section="__git_first_level_config_vars_for_section_${section}"
-+		__gitcomp_nl_append "${!this_section}" "$pfx" "$cur_" "${sfx:- }"
- 		return
- 		;;
- 	url.*.*)
-diff --git a/t/t9902-completion.sh b/t/t9902-completion.sh
-index 35eb534fdda..f28d8f531b7 100755
---- a/t/t9902-completion.sh
-+++ b/t/t9902-completion.sh
-@@ -2583,6 +2583,17 @@ test_expect_success 'git config - variable name include' '
- 	EOF
- '
+ static const char *html_path;
+@@ -86,6 +87,8 @@ static struct option builtin_help_options[] = {
+ 		    HELP_ACTION_CONFIG_FOR_COMPLETION, PARSE_OPT_HIDDEN),
+ 	OPT_CMDMODE_F(0, "config-sections-for-completion", &cmd_mode, "",
+ 		    HELP_ACTION_CONFIG_SECTIONS_FOR_COMPLETION, PARSE_OPT_HIDDEN),
++	OPT_CMDMODE_F(0, "config-all-for-completion", &cmd_mode, "",
++		    HELP_ACTION_CONFIG_ALL_FOR_COMPLETION, PARSE_OPT_HIDDEN),
  
-+test_expect_success 'git config - variable name - __git_compute_first_level_config_vars_for_section' '
-+	test_completion "git config submodule." <<-\EOF
-+	submodule.active Z
-+	submodule.alternateErrorStrategy Z
-+	submodule.alternateLocation Z
-+	submodule.fetchJobs Z
-+	submodule.propagateBranches Z
-+	submodule.recurse Z
-+	EOF
-+'
-+
- test_expect_success 'git config - value' '
- 	test_completion "git config color.pager " <<-\EOF
- 	false Z
+ 	OPT_END(),
+ };
+@@ -670,6 +673,10 @@ int cmd_help(int argc, const char **argv, const char *prefix)
+ 		opt_mode_usage(argc, "--config-for-completion", help_format);
+ 		list_config_help(SHOW_CONFIG_VARS);
+ 		return 0;
++	case HELP_ACTION_CONFIG_ALL_FOR_COMPLETION:
++		opt_mode_usage(argc, "--config-all-for-completion", help_format);
++		list_config_help(SHOW_CONFIG_HUMAN);
++		return 0;
+ 	case HELP_ACTION_USER_INTERFACES:
+ 		opt_mode_usage(argc, "--user-interfaces", help_format);
+ 		list_user_interfaces_help();
 -- 
 gitgitgadget
 
