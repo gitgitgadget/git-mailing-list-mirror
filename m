@@ -1,156 +1,112 @@
-Received: from out1-smtp.messagingengine.com (out1-smtp.messagingengine.com [66.111.4.25])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f45.google.com (mail-ed1-f45.google.com [209.85.208.45])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BC6E605D7
-	for <git@vger.kernel.org>; Mon, 29 Jan 2024 11:48:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=66.111.4.25
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30E39604A2
+	for <git@vger.kernel.org>; Mon, 29 Jan 2024 12:00:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706528934; cv=none; b=lYoF5qpJdleoOuyVsZc2G5LTkyL+PLfoadx242xQp0CGx7QHqbLz3hvisEArnqsrWzENiiODzQi5Dc8Ccn2BamOZv7u0xkQTV+RqR5tmewB2kU/1RdBljlPYTnTm2JhfqJ/Ps5x3bhosB1Nk7VNxcuLgI46PDXBa+LXGsUEMLAI=
+	t=1706529647; cv=none; b=VYOV1k60IG3wwi6DRp2nqOWEMB5kE+vU9/479ChaI8byfRlm+47ppC/G+OpEC+kebRc/4QEEn71oH9fjy4sjy//W0v6n1UI+65eTIsPWZI3gSW+glpr77HOilNB7ycDH+Um9Spm5h1ycx1Os84EVri0k+tqeBQ8pX03C7SMqryE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706528934; c=relaxed/simple;
-	bh=DW8EOiiF6SLDWbjlfYnvG9dydNHCLyvD/DZMqrRFYOc=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=mO+l+twuMItN3nWKE3nXZARzIiLeXnZgFL6d7sKsFv5nnDwy0TdxRbhZxYZ69ED65+D7SA78pBrVod/6s5LDY4qC2D1O6xovJWqZv4F+0YJKiHVaCDdedO53nHNooEy134L40y7NNR8sAUf2vkZ1rOE83iXc21nzKf5WiJVq6os=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=EWB4bS3x; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=y3BMO7wU; arc=none smtp.client-ip=66.111.4.25
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1706529647; c=relaxed/simple;
+	bh=unEq89xVZDcf5hWZQZ8mTUnA3y0wuYHgZ2+reybOV+Y=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=DyLGjnvQALIp1cNtMl+hK1dqeWSdkVgGcoVuKUFCuZSHQya5IjsyqSg+pC8mIOGhIk+X3RS1ag8R8xobdNonMkGhYn/ewnJ7wA37ST3jGEqIjw9jiMzJr5aKtFPRSDB5iOWToae3fpdfW1gqwhIVthglGOuvoENWdN/ZGTRZL7U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=EMH22Wso; arc=none smtp.client-ip=209.85.208.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="EWB4bS3x";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="y3BMO7wU"
-Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
-	by mailout.nyi.internal (Postfix) with ESMTP id 6564B5C00CE;
-	Mon, 29 Jan 2024 06:48:51 -0500 (EST)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute2.internal (MEProxy); Mon, 29 Jan 2024 06:48:51 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1706528931; x=1706615331; bh=sw3j2QKmNh
-	BP2V+qOTLOS/flLZ4atp+xPLy+o6zzLFI=; b=EWB4bS3xX4LO1z987OMctzziiA
-	N1TIYVFNiNNtLTpbUjpONcwUTAf/XGea0ATk0C+1dztHJQpaQlmJYXBTPBWCoGEP
-	V6tpcsqEzmeJEVa//1O0qmmzbBIr5pJheZeAZtci8/FDDohsXarUA4OKPkPAF5xt
-	RyMR5r5Ofp/Uy+KK4gMka0sDlTEbUeB/ATsC/3NWkzhBtN3BPH7JwQAQqgRYB+IR
-	EG67ug5cjqUn/EY/MnPUuSYWQ71DbWqFr8UKhLppbZLdeHuxhCqP/Tx3naWrb+Gl
-	re/KQQ0Xz+0jq/yxzFGKppImDJWQTeNKGUkapk66/n+G6KyiPhjSXK/lew+A==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1706528931; x=1706615331; bh=sw3j2QKmNhBP2V+qOTLOS/flLZ4a
-	tp+xPLy+o6zzLFI=; b=y3BMO7wUwMpmwIj9X+72XjvPEIOTk5A9rr89wv+HSY5+
-	7nxuGNPLFxxuJmG7RwIlBJ4L76wXZzISsXvAzotjjJfMxj8aAvCBiugnT5jRJX3C
-	e9yjN68SNGdKv5UJw1BcybhWPBHiP+kgQgVXWd36T/Uh2Muu7jefVnOzbIoPD559
-	h2HTN/7sXewxI6pVrN9+roCMuzzPcOQzdq1rqFiP7oiHW+Lx7qfbyNohf77iBScs
-	CiyigpX3Q3GdoNaGqLHtoD0VcBGlFPH4vx4rx80RHJ/4nr6PKHi1/isY+Tzt+Ih9
-	rme4UYD6pps3hWNrjpcBCAKV0qlzxJe7fdz7GgnzJQ==
-X-ME-Sender: <xms:o5C3ZfQFqHGJh2TukGFEpv3E9XcqFPmaSu4aeP6R0D_eKAYs7R1p9A>
-    <xme:o5C3ZQzdybZWi3lIkaGyQuuR4qBXZuFB7hxjMJHSApjDfeD2FF6I7FRxOJ9BaMy5H
-    0i4rzPE4oMFpd7KXw>
-X-ME-Received: <xmr:o5C3ZU0-_FbmcuLPwzNbbX9ym6YHuzG6tuXq4kMrJfTOOIE4XF4Lh99XKu6i-IGUPkvB5yvfkxY5RS0BUzGmk-1QiyfzRJy7hPb4mo-oD6vNCiVlWw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrfedtgedgfedtucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    cujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtvdenucfhrhhomheprfgrthhr
-    ihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvg
-    hrnhepueektdevtdffveeljeetgfehheeigeekleduvdeffeeghefgledttdehjeelffet
-    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
-    hpkhhsrdhimh
-X-ME-Proxy: <xmx:o5C3ZfAgPyPSKhiHAIYXPGu4AWo6cWP36V3sCiDI5T5QFFI1tTUEUg>
-    <xmx:o5C3ZYhq_HIbEk5DxK4X2ksHmIKGmMQtjmaDbZ_G_Tf2EQUT37r6Kw>
-    <xmx:o5C3ZToodmMSywtnTEQMhHnWycbOXe9WIb2iyVL6K8PIiuEpbNs2hw>
-    <xmx:o5C3ZUZan67_ULokX6xNmoOrOWd5TlGf9XBk5v2ns4UDOKhsMOF0zw>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 29 Jan 2024 06:48:50 -0500 (EST)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 541ef646 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 29 Jan 2024 11:45:33 +0000 (UTC)
-Date: Mon, 29 Jan 2024 12:48:48 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: Ghanshyam Thakkar <shyamthakkar001@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: [RFC PATCH 2/2] checkout: remove HEAD special case
-Message-ID: <ZbeQoDh_MPDDufk3@tanuki>
-References: <20240128181202.986753-2-shyamthakkar001@gmail.com>
- <20240128181202.986753-4-shyamthakkar001@gmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EMH22Wso"
+Received: by mail-ed1-f45.google.com with SMTP id 4fb4d7f45d1cf-55817a12ad8so2458173a12.2
+        for <git@vger.kernel.org>; Mon, 29 Jan 2024 04:00:45 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1706529644; x=1707134444; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=unEq89xVZDcf5hWZQZ8mTUnA3y0wuYHgZ2+reybOV+Y=;
+        b=EMH22WsoUxc/io0IODPN5UsIh72yFgIOYT3zD8z3tbIT0hsk5OMkAmgc07w/lPSJqR
+         JM2EeBxn79D5zqnDxROAqosnwd1jai5SQv82MQCURX7lXABcRl0ihgoA7NNkvK5k4l+S
+         PUmGD0afT/pf7TEtSNAm6D29MfLHwCPbcIPvQs2rr0eLgnZ+IujioYe42zqwSXfZxsaO
+         KNy7s98lCD6cOzyMMpIGybeLOxP8X4+aLpkZ21wJepW336JKoZfPDnhi0U0piqtXEsIv
+         on8+M0X1ro5JqSrg3zNtOQmticsrlDA3nGdL5jBR2AlHHOrrGvRQ/r3lY4VuiZe4bGMe
+         AkBg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1706529644; x=1707134444;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=unEq89xVZDcf5hWZQZ8mTUnA3y0wuYHgZ2+reybOV+Y=;
+        b=GiMUJVT2NeoCtW++2z9CH+8ew2sjO2SfI7ZX8zzbwLzJcGkIHFzff+z35mdwzK2FQ9
+         n3PcUHo2+BA3p7cRu2wUrUQXtQzxSp/GamA77awfg2jrNswMKfEFt/EGl9n6lM1Mpdqq
+         v9W9Hcg82IgJ34+IwcoO7hNpbBd3l4anG8mt0DB934f/uxESeAsbdWNG058peqI+CcuP
+         LdixAzLT3J++V9RlIbYrmoShJfS8WlruWB8rcmZwmY16LOHEj1VHaiP3Rs7JfEMq0JFQ
+         u2g5GBhErw27DdkeshCDLKkN79cjBs6qrlF/qN69krn1rKJ+K69wXIyrTlbfnt0oJmD8
+         gTIw==
+X-Gm-Message-State: AOJu0YzdAgmoEks+S/mMjNRNSAfWS59ejxLxHGLJq09g+CkfkM1NR0Hk
+	Cf25ES/kb+3gOGzsUkh6oyvOLDGOiUNbRG2gobAySy7vEjNDEVNG5A72FIUilptA6dGsGxx3l+c
+	Zk151J+A25swzdm0AOE2n2ovHZedfbkouWT4=
+X-Google-Smtp-Source: AGHT+IFbsDLi4nD7cB91t4Y3WcTbnkhxro9yYQzZaTfQgcaqLM6UxNVfTC0aN8Wp+kszIHhF35sAdCREIOyu5Hxuh2U=
+X-Received: by 2002:a17:907:1709:b0:a35:d076:9920 with SMTP id
+ le9-20020a170907170900b00a35d0769920mr1035374ejc.71.1706529643440; Mon, 29
+ Jan 2024 04:00:43 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="MdzXLGLTc43+ZyYs"
-Content-Disposition: inline
-In-Reply-To: <20240128181202.986753-4-shyamthakkar001@gmail.com>
-
-
---MdzXLGLTc43+ZyYs
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+References: <cover.1704802213.git.ps@pks.im> <cover.1706525813.git.ps@pks.im> <80a74bbb567de165a8dadf0664167140e4bf0504.1706525813.git.ps@pks.im>
+In-Reply-To: <80a74bbb567de165a8dadf0664167140e4bf0504.1706525813.git.ps@pks.im>
+From: Christian Couder <christian.couder@gmail.com>
+Date: Mon, 29 Jan 2024 13:00:31 +0100
+Message-ID: <CAP8UFD1=yAhv5QKDCYPfTu0=qLCyRUGt3W9y1D9XGjvJbv8wLQ@mail.gmail.com>
+Subject: Re: [PATCH v4 1/6] t1300: make tests more robust with non-default ref backends
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>, 
+	Eric Sunshine <sunshine@sunshineco.com>, Toon Claes <toon@iotcl.com>, 
+	Justin Tobler <jltobler@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Sun, Jan 28, 2024 at 11:41:23PM +0530, Ghanshyam Thakkar wrote:
-> run_add_p() is capable of handling HEAD in any form (e.g. hex, 'HEAD',
-> '@' etc.), not just string 'HEAD'. Therefore, special casing of HEAD
-> does not have any effect.
+On Mon, Jan 29, 2024 at 12:07=E2=80=AFPM Patrick Steinhardt <ps@pks.im> wro=
+te:
+>
+> The t1300 test suite exercises the git-config(1) tool. To do so, the
+> test overwrites ".git/config" to contain custom contents in several
+> places with code like the following:
+>
+> ```
+> cat > .git/config <<\EOF
+> ...
+> EOF
+> ```
 
-Are there any tests that cover this behaviour? If so, it would be nice
-to point them out in the commit message. Otherwise, we should add them.
+I thought about using a function that would overwrite a config file
+safely as it would still copy the repository format version and other
+extension information to the new config file, but a number of tests
+even do `rm .git/config`, so it wouldn't be enough.
 
-Patrick
+> While this is easy enough to do, it may create problems when using a
+> non-default repository format because this causes us to overwrite the
+> repository format version as well as any potential extensions. With the
+> upcoming "reftable" ref backend the result is that Git would try to
+> access refs via the "files" backend even though the repository has been
+> initialized with the "reftable" backend, which will cause failures when
+> trying to access any refs.
+>
+> Ideally, we would rewrite the whole test suite to not depend on state
+> written by previous tests, but that would result in a lot of changes in
+> this test suite.
 
-> Signed-off-by: Ghanshyam Thakkar <shyamthakkar001@gmail.com>
-> ---
->  builtin/checkout.c | 9 ++++-----
->  1 file changed, 4 insertions(+), 5 deletions(-)
->=20
-> diff --git a/builtin/checkout.c b/builtin/checkout.c
-> index a6e30931b5..6b74e5fa4e 100644
-> --- a/builtin/checkout.c
-> +++ b/builtin/checkout.c
-> @@ -539,12 +539,11 @@ static int checkout_paths(const struct checkout_opt=
-s *opts,
->  		 * recognized by diff-index), we will always replace the name
->  		 * with the hex of the commit (whether it's in `...` form or
->  		 * not) for the run_add_interactive() machinery to work
-> -		 * properly. However, there is special logic for the HEAD case
-> -		 * so we mustn't replace that.  Also, when we were given a
-> -		 * tree-object, new_branch_info->commit would be NULL, but we
-> -		 * do not have to do any replacement, either.
-> +		 * properly. Also, when we were given a tree-object,
-> +		 * new_branch_info->commit would be NULL, but we do not
-> +		 * have to do any replacement.
->  		 */
-> -		if (rev && new_branch_info->commit && strcmp(rev, "HEAD"))
-> +		if (rev && new_branch_info->commit)
->  			rev =3D oid_to_hex_r(rev_oid, &new_branch_info->commit->object.oid);
-> =20
->  		if (opts->checkout_index && opts->checkout_worktree)
-> --=20
-> 2.43.0
->=20
->=20
+I agree that the whole test script would need significant work.
 
---MdzXLGLTc43+ZyYs
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmW3kJ8ACgkQVbJhu7ck
-PpRwKhAAq+mDDja2FvDDfM0zpHaIRNcyCwLcG4d1PYDgwIiWFy1G3QY0w8oXBkFJ
-WpKo6/4+l32++Xm9kkCm+5UJKxBHz8wIHOoim9kgP8VE/cNX5d6iNr1g0oZQrHKI
-dIxwM3BntxCGqN6yVzah3vVqtwa5t9NDsTB9Mdy1vJbqN/jfzDo/pqXmEl3vHYnB
-Gtz/r0iCwQKCyGYBXVTVkTu/StfoCjy1nnWDuh7w9NLWx7LHI59c+JuNOgqDGf4X
-qtxjNq8xmOrsVtqodVwO+teRmhq3OYNmhOgbuhMrqxJsQx+UF8HtoOlB0XKR+sIS
-TuSV1NFQ34gyvD+x7Z2oWuth5rBjJ+eP9Ny3HTszdxhYHn/4QKbOxkIj4SNEskLA
-qIjodbTY9Y5wzmf7imQZmpq7AD7Q8VOUF18pEAw9wlvOpMS/Ssc34y3WNzDgfz2T
-NX9djQyyWfuF77ZenoXoAizAcYz9pu40ATFyJ8X0ap7EzAgZXqxDejFU0rtkjYoR
-7uHoZ9WpRY2s6G+gvFotHxpRiNwJvaMYS9CJDokbbiaRS4PmBpVaIjC5BA51mUoK
-jVyirFd78AmY28E45tSi2g+QUbra+I553izZeX5HC/p91RkfsEyaHWJk9CMP0eHS
-aCjOL5RYCDyvrzyTbrGfcrf5rCUxmn9G2WlOVke8nciFjElU4Ms=
-=ce9e
------END PGP SIGNATURE-----
-
---MdzXLGLTc43+ZyYs--
+> Instead, we only refactor tests which access the refdb
+> to be more robust by using their own separate repositories, which allows
+> us to be more careful and not discard required extensions.
+>
+> Note that we also have to touch up how the CUSTOM_CONFIG_FILE gets
+> accessed. This environment variable contains the relative path to a
+> custom config file which we're setting up. But because we are now using
+> subrepositories, this relative path will not be found anymore because
+> our working directory changes. This issue is addressed by storing the
+> absolute path to the file in CUSTOM_CONFIG_FILE instead.
