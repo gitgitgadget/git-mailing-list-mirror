@@ -1,52 +1,54 @@
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76EB6241E9
-	for <git@vger.kernel.org>; Mon, 29 Jan 2024 20:37:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D74B2E834
+	for <git@vger.kernel.org>; Mon, 29 Jan 2024 20:38:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706560664; cv=none; b=kpqfh7iQFRiAaInZkvhQmFw46GhJk3nstCl6UIrzG4jRWhPXda8HsK/qk6w8xE9gE8tXNl0F4pOT1NqwliiIA/EEGXQCMANEaCpddMvDMIeUWaT+Z+gcShl0fUhrUWz8Zb107IU8MU3I3ANSI1CXs+S+XV16tzvq/0c8zJI8HWA=
+	t=1706560686; cv=none; b=nRL+HAbCTWlf77jTlShn1742QTFIpEQPezDZE6yebQq7tK4Vra6+RK5dOwrih2RGD5N7Ej9D2+9N3wLlrkokly6rNKn5OsrbmDv+B+xF2ZMcWYwqTfsDF4dQy1AKH6IPea5n4YB0ji3PG+1za8g3V+qzb2mVLjhIJ+mf9dlwebs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706560664; c=relaxed/simple;
-	bh=SWzqZVVH2IweeCTNfEJSgwC2hyDiuGSaICRG3O1bqng=;
+	s=arc-20240116; t=1706560686; c=relaxed/simple;
+	bh=qjvM71SjlkFPNiad94Dj3ySgHqnC/54FmTQj6IvT3Xk=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=qjgfeNM6PTdczM5seZCgABRx5+sRdrGLQNQy58AMLT9oSCrDzgJsLIVTTs31w33gWDGJ4+PPjlFhM3988zTS6YOYiOG7WywW50mJ8tI2gWnMwA/Z8cU3hJUh6UhsjE4dzPv5AXNFYnZnWB1qlWwABuoCBnE/huFgceUuDxfVIao=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=RbcDE+0T; arc=none smtp.client-ip=173.228.157.53
+	 MIME-Version:Content-Type; b=WGqqZJXyRRIRV1BxV6NqUT9T2KMc4vd7TnqXY1zMrZ8AKhwc2LTMAl0VN/MvtdaBL8x5DXb9uroswWn/hh1/FWwQK3hNSiL9GE89kszSwdPc0fDB+jFZ8PQRqnsyxr8jPi/KeWDWaoHfsvqDveMULtVrGrKpb6vyLGwUbjR6dFo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=O7U3jE2F; arc=none smtp.client-ip=64.147.108.70
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="RbcDE+0T"
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id CC25E214D8;
-	Mon, 29 Jan 2024 15:37:42 -0500 (EST)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="O7U3jE2F"
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 8F32E1D8638;
+	Mon, 29 Jan 2024 15:38:03 -0500 (EST)
 	(envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=SWzqZVVH2IweeCTNfEJSgwC2hyDiuGSaICRG3O
-	1bqng=; b=RbcDE+0TbUNRXoeOJcAoTlgNtMdHLmp2mMhNWbh/Piich2rp738Hho
-	gwu7s+h70ZNWFlKgZ+iKK/Iw52RRCNHCFO+o/kyyNt1FZShvkyD9J6UfzAV7XllD
-	un5iGSEjnCDh4f1AY20MjgmDXqw8f5h851ozLUVHOz4jnygPIcV0o=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id C3E68214D7;
-	Mon, 29 Jan 2024 15:37:42 -0500 (EST)
+	:content-type:content-transfer-encoding; s=sasl; bh=qjvM71SjlkFP
+	Niad94Dj3ySgHqnC/54FmTQj6IvT3Xk=; b=O7U3jE2FKTlJRgA3OXNGwve4ng1V
+	HLBhf9CJI3SuQhQ/f1DK+zZh1P8CykbC2tsymLcUNj37GRYYxoIk2csert93V+2B
+	TLRh7rWkLQm5LEqGPvXCtyJAGd6GDxqGvKL+IRP05qW9hqT8CuyMUNgjE8zRZLOk
+	zrb/7TYfMFVIMUI=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 7BD6F1D8637;
+	Mon, 29 Jan 2024 15:38:03 -0500 (EST)
 	(envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.125.200.93])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 56ED0214D6;
-	Mon, 29 Jan 2024 15:37:39 -0500 (EST)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id B72001D8636;
+	Mon, 29 Jan 2024 15:38:02 -0500 (EST)
 	(envelope-from junio@pobox.com)
 From: Junio C Hamano <gitster@pobox.com>
-To: Karthik Nayak <karthik.188@gmail.com>
-Cc: git@vger.kernel.org,  ps@pks.im,  phillip.wood123@gmail.com
-Subject: Re: [PATCH v3 0/4] for-each-ref: print all refs on empty string
- pattern
-In-Reply-To: <20240129113527.607022-1-karthik.188@gmail.com> (Karthik Nayak's
-	message of "Mon, 29 Jan 2024 12:35:23 +0100")
-References: <20240119142705.139374-1-karthik.188@gmail.com>
-	<20240129113527.607022-1-karthik.188@gmail.com>
-Date: Mon, 29 Jan 2024 12:37:37 -0800
-Message-ID: <xmqqy1c7ho4u.fsf@gitster.g>
+To: Christian Couder <christian.couder@gmail.com>
+Cc: Patrick Steinhardt <ps@pks.im>,  git@vger.kernel.org,  Taylor Blau
+ <me@ttaylorr.com>,  Eric Sunshine <sunshine@sunshineco.com>,  Toon Claes
+ <toon@iotcl.com>,  Justin Tobler <jltobler@gmail.com>
+Subject: Re: [PATCH v4 0/6] t: mark "files"-backend specific tests
+In-Reply-To: <CAP8UFD3xWW-WvLPnHNVyJbbXDvs85TTq-wVVZ-qnJLSdqtR4bg@mail.gmail.com>
+	(Christian Couder's message of "Mon, 29 Jan 2024 13:03:13 +0100")
+References: <cover.1704802213.git.ps@pks.im> <cover.1706525813.git.ps@pks.im>
+	<CAP8UFD3xWW-WvLPnHNVyJbbXDvs85TTq-wVVZ-qnJLSdqtR4bg@mail.gmail.com>
+Date: Mon, 29 Jan 2024 12:38:01 -0800
+Message-ID: <xmqqttmvho46.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -54,17 +56,25 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
 X-Pobox-Relay-ID:
- 3E66B902-BEE6-11EE-A6E5-A19503B9AAD1-77302942!pb-smtp21.pobox.com
+ 4C588A04-BEE6-11EE-B734-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
+Content-Transfer-Encoding: quoted-printable
 
-Karthik Nayak <karthik.188@gmail.com> writes:
+Christian Couder <christian.couder@gmail.com> writes:
 
-> This is the second version of my patch series to print refs
-> when and empty string pattern is used with git-for-each-ref(1).
+> On Mon, Jan 29, 2024 at 12:07=E2=80=AFPM Patrick Steinhardt <ps@pks.im>=
+ wrote:
+>>
+>> Hi,
+>>
+>> this is the fourth version of my patch series that addresses tests whi=
+ch
+>> are specific to the "files" backend. There is only a single change
+>> compared to v3, which is an improved commit message for the first patc=
+h.
+>
+> I took another look at the patches in this and it looks good to me
+> now. Feel free to add my "Reviewed-by:"
 
-Thanks.  This is probably the third if I am counting correctly, and
-the changes relative to the previous round match what I was
-expecting to see.
-
-Will queue.
+Thanks.
