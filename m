@@ -1,104 +1,79 @@
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 315BD3F9C5
-	for <git@vger.kernel.org>; Mon, 29 Jan 2024 17:26:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE6AC76C85
+	for <git@vger.kernel.org>; Mon, 29 Jan 2024 17:49:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706549164; cv=none; b=h/lObgT8cAg9sjTTXEtOIJHwu4aPkGimrKdMGfGFwqi5RjL9ZnpL+rBIA1H/NQESjIvhETJ8YPOW4FjCFgntYNfg1tIe5WwDkPjAIqh9TzfMdDHxCBCSS9AhzKfBtvO4fbcIPOAFgBGf3WINdwNxbqs9HEVh9yXlZAt5uJdXHQQ=
+	t=1706550563; cv=none; b=d3orUyyFtCWMB/gMJskIFpF37jp/4z7Apg6FoxWt1VKWT/8x06ilD44DmMzb92SQSgyQB1IuqEpj6bUKMmZw479kOQehrQurxxbaRKI0w+UdtYgM62cUrylKXbKssOuYj5hdXAzwQXcOBkCsmPbmTF+6Jso0kaDtE1T/+0aCaJE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706549164; c=relaxed/simple;
-	bh=acxo/BU4fa1Pgg3YjpDMEe4aKvVFh0rZL3hD2gh2Cqo=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=aq4npF81SKZw/F2v1ubmL5uqVYkRh8yZ7u+UuVD/jnbpOnPTPKCSYEhGeunLbybDoy0YhHteJzNErcYscu0qNFztc2OjQCBEU6P28D6YX4uMK+6JcQhUT+8po923AwoFrPN0VEbwEndadctEebBZ6b0K/EFiYUhOFKxqCdBt6KY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=K+UPJjb5; arc=none smtp.client-ip=64.147.108.70
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="K+UPJjb5"
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 395EF1D6C2B;
-	Mon, 29 Jan 2024 12:25:56 -0500 (EST)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=acxo/BU4fa1Pgg3YjpDMEe4aKvVFh0rZL3hD2g
-	h2Cqo=; b=K+UPJjb5LWDyUQhhgFbaZKfD2E8rzFrEftCnFY/B70NbYlZjLOrH2B
-	gkKqh8CT/S7xbtdYXN+rHKnPCRm63mKZ21ZPuKJkbT9gz/5Oa+HcRBROe3I59fce
-	M0yRGsUsPV0uvAwons3BBzBzc+hdm4CQ1Nhp/xmjJWzk28oKTSl44=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 30AD61D6C2A;
-	Mon, 29 Jan 2024 12:25:56 -0500 (EST)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.200.93])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 9862D1D6C29;
-	Mon, 29 Jan 2024 12:25:55 -0500 (EST)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: "James Touton via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  James Touton <bekenn@gmail.com>
-Subject: Re: [PATCH v2] git-p4: use raw string literals for regular expressions
-In-Reply-To: <pull.1639.v2.git.1706312496608.gitgitgadget@gmail.com> (James
-	Touton via GitGitGadget's message of "Fri, 26 Jan 2024 23:41:36
-	+0000")
-References: <pull.1639.git.1705775149642.gitgitgadget@gmail.com>
-	<pull.1639.v2.git.1706312496608.gitgitgadget@gmail.com>
-Date: Mon, 29 Jan 2024 09:25:54 -0800
-Message-ID: <xmqqle88jbkt.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	s=arc-20240116; t=1706550563; c=relaxed/simple;
+	bh=FGwujbpNLJpbXo+1gaST8P67ddTJSxJ5JNZe5EZUlt0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=GjCISw+Ur+ggdq9xad7xYgcyB+/0v2MLen1KNOdt1PJvMAwasKbxQa2RdPn7IFW1+xbxK/I+knvke2LjaBX51WZNA1O2dOssDwYnrAW282QlELPZyj12qP0LGC+4zLP+GlYAAYrgml7hxVt64RBzSjfY9USZsk4Y3HvC8oHpSJc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+Received: (qmail 32689 invoked by uid 109); 29 Jan 2024 17:49:19 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 29 Jan 2024 17:49:19 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 23462 invoked by uid 111); 29 Jan 2024 17:49:19 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 29 Jan 2024 12:49:19 -0500
+Authentication-Results: peff.net; auth=none
+Date: Mon, 29 Jan 2024 12:49:18 -0500
+From: Jeff King <peff@peff.net>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, Phillip Wood <phillip.wood@dunelm.org.uk>
+Subject: Re: [PATCH 2/2] t/Makefile: get UNIT_TESTS list from C sources
+Message-ID: <20240129174918.GA3765717@coredump.intra.peff.net>
+References: <20240129031540.GA2433764@coredump.intra.peff.net>
+ <20240129031933.GB2433899@coredump.intra.peff.net>
+ <ZbeLcrjIYd4d7PaB@tanuki>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- 75A458AE-BECB-11EE-B7EB-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <ZbeLcrjIYd4d7PaB@tanuki>
 
-"James Touton via GitGitGadget" <gitgitgadget@gmail.com> writes:
+On Mon, Jan 29, 2024 at 12:26:42PM +0100, Patrick Steinhardt wrote:
 
-> From: James Touton <bekenn@gmail.com>
->
-> Fixes several Python diagnostics about invalid escape sequences. The
-> diagnostics appear for me in Python 3.12, and may appear in earlier
-> versions. The fix is to use raw string literals so that backslashes are
-> not interpreted as introducing escape sequences. Raw string literals
-> are already in use in this file, so adding more does not impact
-> toolchain compatibility.
->
-> Signed-off-by: James Touton <bekenn@gmail.com>
-> ---
->     git-p4: use raw string literals for regular expressions
->     
->     Changes since v1:
->     
->      * Updated commit message to include the Python version where the
->        diagnostics were observed.
->
-> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1639%2FBekenn%2Fp4-raw-strings-v2
-> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1639/Bekenn/p4-raw-strings-v2
-> Pull-Request: https://github.com/gitgitgadget/git/pull/1639
->
-> Range-diff vs v1:
->
->  1:  1ea38dc4643 ! 1:  122ff28ffbd git-p4: use raw string literals for regular expressions
->      @@ Metadata
->        ## Commit message ##
->           git-p4: use raw string literals for regular expressions
->       
->      -    Fixes several Python diagnostics about invalid escape sequences.
->      +    Fixes several Python diagnostics about invalid escape sequences. The
->      +    diagnostics appear for me in Python 3.12, and may appear in earlier
->      +    versions. The fix is to use raw string literals so that backslashes are
->      +    not interpreted as introducing escape sequences. Raw string literals
->      +    are already in use in this file, so adding more does not impact
->      +    toolchain compatibility.
->       
->           Signed-off-by: James Touton <bekenn@gmail.com>
->       
+> > -UNIT_TESTS = $(sort $(filter-out %.pdb unit-tests/bin/t-basic%,$(wildcard unit-tests/bin/t-*)))
+> > +UNIT_TEST_SOURCES = $(wildcard unit-tests/t-*.c)
+> > +UNIT_TEST_PROGRAMS = $(patsubst unit-tests/%.c,unit-tests/bin/%,$(UNIT_TEST_SOURCES))
+> > +UNIT_TESTS = $(sort $(filter-out unit-tests/bin/t-basic%,$(UNIT_TEST_PROGRAMS)))
+> 
+> Wouldn't we have to honor `$X` on Windows systems so that the unit tests
+> have the expected ".exe" suffix here?
 
-Thanks.  Let's merge it down to 'next'.
+Hmm, good point. It seems like the answer should obviously be "yes", but
+Windows CI seemed to pass all the same (and I checked that it indeed ran
+the unit tests). Do we only get the $X suffix for MSVC builds or
+something? Looks like maybe cygwin, as well.
 
+I imagine the solution is just:
+
+diff --git a/t/Makefile b/t/Makefile
+index c5c6e2ef6b..9b9b30f559 100644
+--- a/t/Makefile
++++ b/t/Makefile
+@@ -43,7 +43,7 @@ TINTEROP = $(sort $(wildcard interop/i[0-9][0-9][0-9][0-9]-*.sh))
+ CHAINLINTTESTS = $(sort $(patsubst chainlint/%.test,%,$(wildcard chainlint/*.test)))
+ CHAINLINT = '$(PERL_PATH_SQ)' chainlint.pl
+ UNIT_TEST_SOURCES = $(wildcard unit-tests/t-*.c)
+-UNIT_TEST_PROGRAMS = $(patsubst unit-tests/%.c,unit-tests/bin/%,$(UNIT_TEST_SOURCES))
++UNIT_TEST_PROGRAMS = $(patsubst unit-tests/%.c,unit-tests/bin/%$(X),$(UNIT_TEST_SOURCES))
+ UNIT_TESTS = $(sort $(filter-out unit-tests/bin/t-basic%,$(UNIT_TEST_PROGRAMS)))
+ 
+ # `test-chainlint` (which is a dependency of `test-lint`, `test` and `prove`)
+
+but it looks like we might need to include config.mak.uname, as well. It
+would be nice to identify a build that actually needs it so I can
+confirm that the fix works.
+
+-Peff
