@@ -1,55 +1,53 @@
 Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 585213C463
-	for <git@vger.kernel.org>; Mon, 29 Jan 2024 22:06:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51FE815A49C
+	for <git@vger.kernel.org>; Mon, 29 Jan 2024 22:15:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706565982; cv=none; b=Bqdcqa8DNHgAJhO+KXx4RBgLowDmQB73U/SYDFOyYNNMB1mIlmmCIawJTQQoioFZyUrInhjZ+aKPhQgK5Zo4oFwaNHE2X8B+Hf9PfqP7AhhOZg8lK756+rnfL6lkw7eiSJetYxQfcyGxTiohzK/m6o47PJ+7my9wqYJf3wT5oIg=
+	t=1706566522; cv=none; b=dRrTjgvsSasP2givosNPbFHCs7wr7WmHmy5Zobqd3wX8EJvP3YUHCYWAPGy6MQjlJTHmfhFJx2uiuSkj+GcEVrY74xJNVyVcLKJrkrPWwtKRF6fXhEUrVHK00EBmF0JL4OAptNkXPGTYnrC54JXNHlPAO4NzArpD77SM6wDLy1o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706565982; c=relaxed/simple;
-	bh=3uyibJAkf32mPuZCu24SFM0FjHoJYfxoB5fvpTQRkQk=;
+	s=arc-20240116; t=1706566522; c=relaxed/simple;
+	bh=X2vm+Xt2R7Pvmvox20eu3s1lGnTUoV6o8/iAXtViOJ0=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=LhZfHvkQ56URRy9T5tP+Cz5Nhgb9I2G+LUMw19LcXDBf/N3noKeUVi567GY4sO/S0QDRAZdscCHOjGgElRiWTPD1cI2ZoLA7KoV7qh3NHmuZQGPynW7VvlTGgujALSbgfyx9WLi+0csaNat1ZmzHyWl0jt/2OTzBRgs56ajNP18=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=TCEHF1LL; arc=none smtp.client-ip=173.228.157.52
+	 MIME-Version:Content-Type; b=rMyJoTulRAs6fymdFPE0PiUAbiB0a92xWAPF61jGL61mW73h7Su0MVgCCLPa6XEZ8GtZBmK05v08DzNWIYD7U+pYM27bIX/6MlgqGJ/WwbyfH70x8CZyC8dpvHxCG79mn3sZUbOc4WWcNTYbNW1UK+OexkP1cewT4bywNEYlVhc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=PgH9u8TV; arc=none smtp.client-ip=173.228.157.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="TCEHF1LL"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="PgH9u8TV"
 Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 842162279C;
-	Mon, 29 Jan 2024 17:06:20 -0500 (EST)
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id C7C2922843;
+	Mon, 29 Jan 2024 17:15:20 -0500 (EST)
 	(envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=3uyibJAkf32m
-	PuZCu24SFM0FjHoJYfxoB5fvpTQRkQk=; b=TCEHF1LLkHqB0nRP3ex/HKRLJq1V
-	T2OyqVKAOa0p5uhNS6yRt0Qo2xM/GRjG95qNShEY9+gZzNQeKZM+NOI9VIcphies
-	yLminW97s+7OsbB0gSoSbps83ZL6zr05TE033UsK0QlxGrpQpmCHQR80XzFAMMKz
-	SS6q4A36mpcQPeo=
+	:content-type:content-transfer-encoding; s=sasl; bh=X2vm+Xt2R7Pv
+	mvox20eu3s1lGnTUoV6o8/iAXtViOJ0=; b=PgH9u8TVgHGtaLeYuyNa6xsGZ/46
+	BN8p6SuIZtJl7JeTgn+qhG4EniKm1JBq9w2dGy0TJ5QuSKhAH0YwnZ8swTlhyIrh
+	jzK8+HjajuWj0XJyqxiX2Ycsu5vCKF05jULLm1xcNxCwhniRdvIwyjLwn+eVXGV7
+	EzG+3zvzxbxnKso=
 Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 7C8072279B;
-	Mon, 29 Jan 2024 17:06:20 -0500 (EST)
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id C09D322842;
+	Mon, 29 Jan 2024 17:15:20 -0500 (EST)
 	(envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.125.200.93])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 11C1F2279A;
-	Mon, 29 Jan 2024 17:06:17 -0500 (EST)
+	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 484C322840;
+	Mon, 29 Jan 2024 17:15:17 -0500 (EST)
 	(envelope-from junio@pobox.com)
 From: Junio C Hamano <gitster@pobox.com>
-To: SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
-Cc: Jeff King <peff@peff.net>,  git@vger.kernel.org,  Phillip Wood
- <phillip.wood@dunelm.org.uk>
-Subject: Re: [PATCH 1/2] Makefile: use order-only prereq for UNIT_TEST_BIN
-In-Reply-To: <20240129202201.GA9612@szeder.dev> ("SZEDER =?utf-8?Q?G=C3=A1?=
- =?utf-8?Q?bor=22's?= message of
-	"Mon, 29 Jan 2024 21:22:01 +0100")
-References: <20240129031540.GA2433764@coredump.intra.peff.net>
-	<20240129031816.GA2433899@coredump.intra.peff.net>
-	<20240129202201.GA9612@szeder.dev>
-Date: Mon, 29 Jan 2024 14:06:15 -0800
-Message-ID: <xmqqjznrhk14.fsf@gitster.g>
+To: =?utf-8?Q?Rub=C3=A9n?= Justo <rjusto@gmail.com>
+Cc: Git List <git@vger.kernel.org>
+Subject: Re: [PATCH 1/4] t0080: mark as leak-free
+In-Reply-To: <4adfcba4-0f2b-44f5-a312-97f00f979435@gmail.com>
+ (=?utf-8?Q?=22Rub=C3=A9n?= Justo"'s
+	message of "Mon, 29 Jan 2024 22:08:23 +0100")
+References: <45eb0748-6415-4e52-a54f-8d4e5ad57dde@gmail.com>
+	<4adfcba4-0f2b-44f5-a312-97f00f979435@gmail.com>
+Date: Mon, 29 Jan 2024 14:15:15 -0800
+Message-ID: <xmqqa5onhjm4.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -59,52 +57,47 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 X-Pobox-Relay-ID:
- A001ED7E-BEF2-11EE-836F-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
+ E200B042-BEF3-11EE-9CF7-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
 Content-Transfer-Encoding: quoted-printable
 
-SZEDER G=C3=A1bor <szeder.dev@gmail.com> writes:
+Rub=C3=A9n Justo <rjusto@gmail.com> writes:
 
-> A third alternative is to use $(call mkdir_p_parent_template) in the
-> recipe and get rid of the thus unnecessary UNIT_TEST_BIN dependency
-> and target.
+> This test is leak-free since it was added in e137fe3b29 (unit tests: ad=
+d
+> TAP unit test framework, 2023-11-09)
+>
+> Let's mark it as leak-free to make sure it stays that way (and to reduc=
+e
+> noise when looking for other leak-free scripts after we fix some leaks)=
+.
 
-Yeah, that sounds like a good approach in this case.
+For other tests in this series, that rationale is a very sensible
+thing, but does it apply to this one?
 
-> On a related note, 'make clean' doesn't remove this 't/unit-tests/bin'
-> directory.
+The point of the t-basic tests is to ensure the lightweight unit
+test framework that requires nothing from Git behaves (and keeps
+behaving) sensibly.  The point of running t[0-9][0-9][0-9][0-9]
+tests under leak sanitizer is to exercise production Git code to
+catch leaks in Git code.
 
-Not a new problem, but I did notice this, too.
+So it is not quite clear if we even want to run this t0080 under
+leak sanitizer to begin with.  t0080 is a relatively tiny test, but
+do we even want to spend leak sanitizer cycles on it?  I dunno.
 
-Thanks.
-
- Makefile | 8 +++-----
- 1 file changed, 3 insertions(+), 5 deletions(-)
-
-diff --git c/Makefile w/Makefile
-index 958f4cd0bf..7f035a1c9f 100644
---- c/Makefile
-+++ w/Makefile
-@@ -3676,7 +3676,7 @@ cocciclean:
- 	$(RM) contrib/coccinelle/*.cocci.patch
-=20
- clean: profile-clean coverage-clean cocciclean
--	$(RM) -r .build
-+	$(RM) -r .build $(UNIT_TEST_BIN)
- 	$(RM) po/git.pot po/git-core.pot
- 	$(RM) git.res
- 	$(RM) $(OBJECTS)
-@@ -3863,10 +3863,8 @@ $(FUZZ_PROGRAMS): all
-=20
- fuzz-all: $(FUZZ_PROGRAMS)
-=20
--$(UNIT_TEST_BIN):
--	@mkdir -p $(UNIT_TEST_BIN)
--
--$(UNIT_TEST_PROGS): $(UNIT_TEST_BIN)/%$X: $(UNIT_TEST_DIR)/%.o $(UNIT_TE=
-ST_DIR)/test-lib.o $(GITLIBS) GIT-LDFLAGS | $(UNIT_TEST_BIN)
-+$(UNIT_TEST_PROGS): $(UNIT_TEST_BIN)/%$X: $(UNIT_TEST_DIR)/%.o $(UNIT_TE=
-ST_DIR)/test-lib.o $(GITLIBS) GIT-LDFLAGS
-+	$(call mkdir_p_parent_template)
- 	$(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) \
- 		$(filter %.o,$^) $(filter %.a,$^) $(LIBS)
-=20
+> Signed-off-by: Rub=C3=A9n Justo <rjusto@gmail.com>
+> ---
+>  t/t0080-unit-test-output.sh | 1 +
+>  1 file changed, 1 insertion(+)
+>
+> diff --git a/t/t0080-unit-test-output.sh b/t/t0080-unit-test-output.sh
+> index 961b54b06c..6657c114a3 100755
+> --- a/t/t0080-unit-test-output.sh
+> +++ b/t/t0080-unit-test-output.sh
+> @@ -2,6 +2,7 @@
+> =20
+>  test_description=3D'Test the output of the unit test framework'
+> =20
+> +TEST_PASSES_SANITIZE_LEAK=3Dtrue
+>  . ./test-lib.sh
+> =20
+>  test_expect_success 'TAP output from unit tests' '
