@@ -1,56 +1,178 @@
-Received: from mr85p00im-ztdg06021701.me.com (mr85p00im-ztdg06021701.me.com [17.58.23.196])
+Received: from fhigh3-smtp.messagingengine.com (fhigh3-smtp.messagingengine.com [103.168.172.154])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A65D54E1B5
-	for <git@vger.kernel.org>; Mon, 29 Jan 2024 19:28:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=17.58.23.196
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF86E76054
+	for <git@vger.kernel.org>; Mon, 29 Jan 2024 19:41:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706556529; cv=none; b=GUzsZ+pjoGYPlOIdi9Gphflhhze/RIpc/4jA7XRCJer2guq4A239hvGYKUe1lAjKJAs5U1ktQPTxT1wJLdFv4lvv7HOSlM3rvYjnpeA2Ag3kUUHHXNoIJZ1cBcLsWyOM6m31PwpfmWiM4I8ZQwe4/WvEfJWFet4Tx96qvaPanMQ=
+	t=1706557273; cv=none; b=VeA0Ud+1nVxAoUOA9/vbqzcPPn4LH45hUTX4JpqduBJ6OO4DFVdu6ENDsUJ2Kdl9DyhjdXAoTUlxVOulZv6Srjw3CHRZ0jldkLozRkRjEmzsI+PAOqKFLGXonVugdr47wg+BH6kDgWsOr8oLGWaBIl7IMK8JFr/ZJfD2YZLBCqE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706556529; c=relaxed/simple;
-	bh=oQVrm4JM1X0wDCMXvmOHv4D9tQl39pOLC72bTquZ9bE=;
-	h=Content-Type:From:Mime-Version:Date:Subject:Message-Id:To; b=D34TFaOePhcA10FF+B/l3MHBTa8+A+LesvK9Nuguawt/ojOen6EVdYyTU2RB9wx35rpCfoBkBBv09TdHT2AFMbdKf9sGnDAzoJG0MElnWwazDAN8wVQ28opO9hOLEYixURqvmG8KQzmkU0DVWvHM+jhtynoWQl+bkxYwRThIqg8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=icloud.com; spf=pass smtp.mailfrom=icloud.com; dkim=pass (2048-bit key) header.d=icloud.com header.i=@icloud.com header.b=cGZB3tCG; arc=none smtp.client-ip=17.58.23.196
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=icloud.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=icloud.com
+	s=arc-20240116; t=1706557273; c=relaxed/simple;
+	bh=fiYZXK61tdHid4COfCtfo0VmZNJ5ns05Er1/WMokcWQ=;
+	h=MIME-Version:Message-Id:In-Reply-To:References:Date:From:To:Cc:
+	 Subject:Content-Type; b=U+f/5tcxJxns8T5kvKyMYwH5jJ/ZU8xyqndkTl1KgaKd0PftHIxtYRddUu9WC9ds1fJBnGKMNAo1p6SAg3DxKCjWINzW2SJ3j+aJBr9BcK76NRibB6Fq7csrlFgNIqcec1Id1A+6UOS/H6ss8GMuiThUEEhVnA6yPCXDiNX21Xc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=khaugsbakk.name; spf=pass smtp.mailfrom=khaugsbakk.name; dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b=VIFw12JQ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=NDzz8d55; arc=none smtp.client-ip=103.168.172.154
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=khaugsbakk.name
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=khaugsbakk.name
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=icloud.com header.i=@icloud.com header.b="cGZB3tCG"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=icloud.com;
-	s=1a1hai; t=1706556528;
-	bh=oQVrm4JM1X0wDCMXvmOHv4D9tQl39pOLC72bTquZ9bE=;
-	h=Content-Type:From:Mime-Version:Date:Subject:Message-Id:To;
-	b=cGZB3tCG8UCaX/RBeLa5RgUwNcx/1MnyJRrLSPT4AfGA8sf1Jce+M8XMtAfh1NBgb
-	 dWbXVFwx6OIoxgbGZY1OiwdNpeJ0KG+JFiSuC+cRuZCtBcpmyFRBxTpoMnZIiIW+6C
-	 Ozu+OV88qNEqaYdvcT91BdXL2j7bBiD+eqi/XnlbsFKF69yAbw9SlpTyhSmjyWg1Dc
-	 Lm5bnIjNjkge5q7rZX04mIvygzsPqgkeowy58nHTNdFC/agvt2nB9UUydp3K1ARAJ4
-	 9/OJgdAUGUvcqVUAUy+tbhk7pMLbN1VkaMjiL9gQ0Xa6OJrzHzLRtOztfYq0EAUo6P
-	 4aTHyWeyR1Rfw==
-Received: from smtpclient.apple (mr38p00im-dlb-asmtp-mailmevip.me.com [17.57.152.18])
-	by mr85p00im-ztdg06021701.me.com (Postfix) with ESMTPSA id AF8A62633486
-	for <git@vger.kernel.org>; Mon, 29 Jan 2024 19:28:46 +0000 (UTC)
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-From: G G <fayazgujjar555@icloud.com>
+	dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b="VIFw12JQ";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="NDzz8d55"
+Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
+	by mailfhigh.nyi.internal (Postfix) with ESMTP id BD98211400BB;
+	Mon, 29 Jan 2024 14:41:02 -0500 (EST)
+Received: from imap49 ([10.202.2.99])
+  by compute1.internal (MEProxy); Mon, 29 Jan 2024 14:41:02 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=khaugsbakk.name;
+	 h=cc:cc:content-transfer-encoding:content-type:content-type
+	:date:date:from:from:in-reply-to:in-reply-to:message-id
+	:mime-version:references:reply-to:subject:subject:to:to; s=fm2;
+	 t=1706557262; x=1706643662; bh=h0M/j4CyLnGd180W+hMPMCdkQ8aPiGG9
+	zSpXQhSALAs=; b=VIFw12JQsfDeO2rMXuqODzO6Fc987mwho1S4DvwZDZCI3xMz
+	PRU2Z/TV7comw3F0qPL9DSYPSN1qqyXRCA14PzztTKfWJacTjJQMKuhMu6BK7GHE
+	fzct2AxeUkLFNXuIY46SfA/mIZieZI9LinW7l8pEqnrBL+m8wUr1/yst7dLGgP1B
+	1yyECaQXw5VxVh410rcY/87JaUQOMeYz+VSnoEHkgPL+/u/76fMwFKyJdc+Yy+GN
+	xWESeDFMinNZrjPN0r+Yxa0uXEjY/zdrBqbtA7/otMJOA1UIvHM8Xx631PN1o9E6
+	QUspDNl92kXqeVDmj3eTEIIX7jEI6AC+rosEXA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1706557262; x=
+	1706643662; bh=h0M/j4CyLnGd180W+hMPMCdkQ8aPiGG9zSpXQhSALAs=; b=N
+	Dzz8d55j4i+PTOxaEkjqfH4flH2zxAJr3Nk1VDZirwaWyfIXXB1Hvgvmcxtc+Kyw
+	kAEFaonOSii/iYaLm83jSQRi/r0f0i7gn+SzTOmN01hZIyyeMtO3KSSeUsLqceJC
+	PSv6Y2PDxYPlJANuLryqCYm954uQxTpNqXDBwcKTE7mMFckCYLVRA2TcJVv1EGZJ
+	yR/g+JWCry68w54ueSO53rHvNcGpnnaPXra6BuKveURfST1UoHJ1CdVQFZvF6ZVg
+	lTlX0DgoCKe6sx0/3nhRP8B8jpMw8eWWwXiRwqz1bTOBhu3jR6rVEba1jUVJ3eiN
+	rIJlddpNm3AP47ieesOiQ==
+X-ME-Sender: <xms:Tv-3Ze-jrE16lNS7n8jA3IlmT4DPIskX_XZOClFhdwpqilrO0pdSgsU>
+    <xme:Tv-3ZeuiFNhv7yufakmvElVGKt3Qe9fivP1R5H0z6ZojVY45e9wgeJw7wHEo57zZw
+    dbaOzQH-IxtGjuz4Q>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrfedtgedgudduiecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
+    necuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
+    enucfjughrpefofgggkfgjfhffhffvvefutgfgsehtqhertderreejnecuhfhrohhmpedf
+    mfhrihhsthhofhhfvghrucfjrghughhssggrkhhkfdcuoegtohguvgeskhhhrghughhssg
+    grkhhkrdhnrghmvgeqnecuggftrfgrthhtvghrnhepvdevheeiudefheffvdetueevkeeh
+    hfeliefgkedtieefudetueehueeftefffedunecuvehluhhsthgvrhfuihiivgeptdenuc
+    frrghrrghmpehmrghilhhfrhhomheptghouggvsehkhhgruhhgshgsrghkkhdrnhgrmhgv
+X-ME-Proxy: <xmx:Tv-3ZUDYLH18_QP-JzJShpwmP-i1WYc5_zPU-5EG_BuUVf0kPjrz2w>
+    <xmx:Tv-3ZWf_RLZCED93p0_dEyF2q6NT7M47-JthQ3fod5bxxiIjjmP0HQ>
+    <xmx:Tv-3ZTMND5qtkAz2PhjQHVXy5rIBTZMFqW2um8B2M9SejkUU79BRjQ>
+    <xmx:Tv-3ZcqqHiJEqgeUh6tH9y35hti3tJzTy5HRGGQjD_ztkgo-UHle5w>
+Feedback-ID: i2671468f:Fastmail
+Received: by mailuser.nyi.internal (Postfix, from userid 501)
+	id 70F7E15A0092; Mon, 29 Jan 2024 14:41:02 -0500 (EST)
+X-Mailer: MessagingEngine.com Webmail Interface
+User-Agent: Cyrus-JMAP/3.11.0-alpha0-144-ge5821d614e-fm-20240125.002-ge5821d61
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0 (1.0)
-Date: Tue, 30 Jan 2024 00:28:41 +0500
-Subject: Y
-Message-Id: <52DF893F-8DFF-4BC9-9DD3-CB4321C59935@icloud.com>
-To: git@vger.kernel.org
-X-Mailer: iPhone Mail (21C66)
-X-Proofpoint-ORIG-GUID: uiCbvSb36Kj-Ru4PDKQ6SZlWzPZnoe-l
-X-Proofpoint-GUID: uiCbvSb36Kj-Ru4PDKQ6SZlWzPZnoe-l
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-01-29_12,2024-01-29_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxlogscore=472 bulkscore=0
- clxscore=1011 suspectscore=0 malwarescore=0 phishscore=0 spamscore=0
- adultscore=0 mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2308100000 definitions=main-2401290145
+MIME-Version: 1.0
+Message-Id: <7f97e5e4-c394-4403-94f1-6163fbd02e88@app.fastmail.com>
+In-Reply-To: <87il3enc1i.fsf@osv.gnss.ru>
+References: <xmqq34v6gswv.fsf@gitster.g>
+ <CABPp-BHUVLS4vB5maZzU5gS33ve6LkKgij+rc1bBZges6Xej-g@mail.gmail.com>
+ <87a5ow9jb4.fsf@osv.gnss.ru> <xmqqsf2nnbkj.fsf@gitster.g>
+ <87plxr3zsr.fsf@osv.gnss.ru> <xmqqa5ouhckj.fsf@gitster.g>
+ <87il3h72ym.fsf@osv.gnss.ru> <xmqq1qa5xq4n.fsf@gitster.g>
+ <87ede56tva.fsf@osv.gnss.ru> <87a5ot6tos.fsf@osv.gnss.ru>
+ <xmqqzfwspmh0.fsf@gitster.g> <87ede4fg8s.fsf@osv.gnss.ru>
+ <xmqqzfwrjdul.fsf@gitster.g> <87il3enc1i.fsf@osv.gnss.ru>
+Date: Mon, 29 Jan 2024 20:40:42 +0100
+From: "Kristoffer Haugsbakk" <code@khaugsbakk.name>
+To: "Sergey Organov" <sorganov@gmail.com>
+Cc: "Elijah Newren" <newren@gmail.com>, git@vger.kernel.org,
+ "Junio C Hamano" <gitster@pobox.com>
+Subject: Re: what should "git clean -n -f [-d] [-x] <pattern>" do?
+Content-Type: text/plain;charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
+On Sat, Jan 27, 2024, at 14:25, Sergey Organov wrote:
+> Junio C Hamano <gitster@pobox.com> writes:
+>
+>> Sergey Organov <sorganov@gmail.com> writes:
 
-Sent from my iPhone
+I agree with Sergey.
+
+Let=E2=80=99s suppose I=E2=80=99ve never used git-clean(1) (and I almost=
+ never use
+it). I read the man page to find out what it=E2=80=99s about. Oh, it rem=
+oves
+files that I haven=E2=80=99t tracked. That sounds dangerous. But I see u=
+nder
+`-n, --dry-run` that I can simulate what it would do:
+
+   =E2=80=9C Don=E2=80=99t actually remove anything, just show what woul=
+d be done.
+
+Great, this is what I want. So this seems to mean to run `git clean` and
+just tell me what would happen. But now I=E2=80=99ve already read that it
+requires `--force` in order to do anything. Which means that I don=E2=80=
+=99t
+want to just run:
+
+```
+git clean --dry-run
+```
+
+Since I presume that would give me the =E2=80=9Cno `--force` provided=E2=
+=80=9D
+error. Which means that I want to tack on `--force`:
+
+```
+git clean --dry-run --force
+```
+
+Now I figure that this will run `git clean --force` but switch real
+deletion with printing the filenames.[1]
+
+Junio wrote:
+
+> What I find broken is that giving one 'f' and one 'n' in different
+> order, i.e. "-f -n" and "-n -f", does not do what I expect.  If you
+> are choosing between do-it (f) and do-not-do-it (n), you ought to be
+> able to rely on the usual last-one-wins rule.  That I find broken.
+
+Now suppose I have noticed that some git(1) commands have these
+`--[no-]do-it` options. I know that I can leverage this to override a
+previous option. And that is useful when I for example have an alias
+with `--do-it` but for this invocation I want `--no-do-it`. I read about
+`--force` here but see that there is no `--no-force`. I then assume that
+the only things that have to do with `--force` or not is that option and
+the `requireForce` configuration variable.
+
+I=E2=80=99ve also seen `--force` in other git(1) commands. And they usua=
+lly are
+about some specific scenario rather than the whole command itself, since
+e.g. committing one too many times doesn=E2=80=99t really hurt. But I un=
+derstand
+how `--force` applies to all the useful work that git-clean(1) does
+because all the useful work is also destructive work. So this is what I
+expect from these options in general:
+
+1. `--force`: require for the subset of actions that are potentially
+   dangerous or may be unwanted in some way
+2. `--dry-run`: simulate the action (specifically print everything that
+   would happen but don=E2=80=99t do anything to `.git`, to untracked fi=
+les, or
+   anything else)
+
+And I expect these two to be orthogonal. Because I might want=E2=80=94if=
+ the
+option is there=E2=80=94to simulate some `--force` (e.g. `git push --for=
+ce`)
+with a `--dry-run`. As in: what would be printed? I wouldn=E2=80=99t exp=
+ect
+`--force` to override `--dry-run`.
+
+=E2=80=A0 1: I=E2=80=99m never this careful in real life. But this is ab=
+out deleting
+   files without any (from Git) recovery so I guess some prudence is
+   required in this case.
+
+--=20
+Kristoffer Haugsbakk
