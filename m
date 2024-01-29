@@ -1,159 +1,146 @@
-Received: from fhigh6-smtp.messagingengine.com (fhigh6-smtp.messagingengine.com [103.168.172.157])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f46.google.com (mail-ej1-f46.google.com [209.85.218.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D7B656469
-	for <git@vger.kernel.org>; Mon, 29 Jan 2024 10:49:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA6115A791
+	for <git@vger.kernel.org>; Mon, 29 Jan 2024 10:55:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706525390; cv=none; b=EvqLA7j3OmiGn1USMCnlJ/9Wuo2dfHFYadxSAoEbspXJ1ykWqIrFiIwvzcouXF+pFQAEO6WyBJxiqohC87eBir8VBojuolEUQVI4BugHH0322J6NeqDlXpm98/fj4d6w/JTLGVAty6R67zRxBA99IdMYw+0+OIsWA0cE4OFq3WA=
+	t=1706525731; cv=none; b=Ya2XLhEsAxBwzYo6ByvWZKmauXXelclfAs8XaEbjsKttcRB8wxJd2YavQ0ja6b6zelEQwaQpRHpMX+cUuIrpOPJ5YiU7gJ4COCms1av8WCRYyaVPV+YlN8jB+CRENjCLAJIE7mgDbecg+jAxoE7oGtp3/n2S4YmCrhIwdvuUUlY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706525390; c=relaxed/simple;
-	bh=xvVro9CHn/2h7VUgN0UirtZrkM0K2m5nheie/nZxdDM=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=oIA+SBf6Dbb6WMaIvSwlxvW/RBe85J6qN+hyY4AtitWnCOjW1YYANHUzaK2HEU4/Jn44aqd6w3A2j6bIOSChmF0aaGd4XMtGXP8MZRzS2G+uryVwBwLa4VXjIxTr5MhvT4rSnZDgH5mz2+7t58FykU1Ntjl4fIUz1TwrvQrG2oI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=lSsH7Wyf; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=tpK/3CJ5; arc=none smtp.client-ip=103.168.172.157
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1706525731; c=relaxed/simple;
+	bh=bu4XGKqmiD2IQEbHocwD2cvqiofMLXV0463ZiNksUDw=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=e70yNOxF6Gzgd+HbBq6qXUXKT3YeFv2QPZVSxNJcRdd3vH7Ernb5jW7sHf2V8ZvV/clbDYzkH09Ag0z4KLLFCNuBKFx75lVnPU4YWiQP1sAEmHRx9+dA7s43Zp3oXedBSMMvf8nb2jjT+9jResCTleevIukEk4OpeRoDbUmnQAM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HL3JjelF; arc=none smtp.client-ip=209.85.218.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="lSsH7Wyf";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="tpK/3CJ5"
-Received: from compute7.internal (compute7.nyi.internal [10.202.2.48])
-	by mailfhigh.nyi.internal (Postfix) with ESMTP id EF8C41140093;
-	Mon, 29 Jan 2024 05:49:45 -0500 (EST)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute7.internal (MEProxy); Mon, 29 Jan 2024 05:49:45 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1706525385; x=1706611785; bh=8WTz3YnQ+V
-	Pl3zkwht42KRdOrZVCdZSU/zrFYlYUSWE=; b=lSsH7WyfTgIeVzBdTja73WlW9y
-	QzPI5F6SChP15PaSTKAB/RVyD3UyBSioCpmN7SHAPTpgWkCKkaiLjTBHI4EsV8wF
-	o7sBmjhblFm84TM5T1NvJ8q+xee8gF16tQsbYbMG/SlEPLRLS8VIRUonqWeF479s
-	xcswCOVQnD2N7axXwbvLRsPm5uDPzcrywlPBKOCgoZzy+zrrHK40eEvSPJTFKLZ4
-	g62gSCGOaSkRZ0yP2t/2KxfjPlp09MYlWxNIobQzssDMe9ARstPHAR0LecWpEnP5
-	c2b3omzCjU1D7aps6iWCNPCyr3hRzRcjtph+wqlF/WOkIVX8B2/1MVPN02og==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1706525385; x=1706611785; bh=8WTz3YnQ+VPl3zkwht42KRdOrZVC
-	dZSU/zrFYlYUSWE=; b=tpK/3CJ5BsKI1ulg9+eqKfzNkIxDzA+U0CVSN5YLDMog
-	KZG5m8z7qaY7ql/RMVVFA5Paz14Y8n1BROnXlPWMmOb8hDdfBnGjrOSkqiWumADN
-	EAtLDkhBvhYmU3YRfAGWUtYEA5Y0+lybzSYvm66cg/coLKUz45oEGssdtyMYW1Ks
-	HX9K3NgQCqRIQfHNM6NYd2cGq/jd6bxZc63RxLSnWhFfwdItBMQftNW2L6FvcUJh
-	AzXWOwkmtaL5JiFsu0nSshKs92qA+suR046xu5DQIZb3TStSnDZY+AFTJ/8rcLQC
-	it4f8uf/V1tNAvBL7EX505Nwn/1y/o5MH8DE8b2CXg==
-X-ME-Sender: <xms:yYK3ZXfaXjA-wYpBg-Vsss0TczDoJCOHTJnH-idgpZBULBilinboKw>
-    <xme:yYK3ZdMKVLAyuHeDpbbdYk6tZ07DQbcLT6t_LltxqNWqx10ehdOeV1L7bfJQFb4us
-    7kgOv88b4O-eYf4cQ>
-X-ME-Received: <xmr:yYK3ZQiGZoGkCyqX3QFFRaR9dd4C764pKqvm1b6wSnb8Qag3XwMXeiM4RWhOFYFnl_h2GuddvlWtB2D1948LPQtOO2YJJFHZVOMNz89cBBeQJ-ogzw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrfedtgedgudelucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    cujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtjeenucfhrhhomheprfgrthhr
-    ihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvg
-    hrnhepteeuvefhhfdufedvgeeiueeileegtdfhgeeftdeuveejjedtgfejhedujeeutddu
-    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
-    hpkhhsrdhimh
-X-ME-Proxy: <xmx:yYK3ZY-tVfmbuHrvT0svTfEDzGT8P_fM04Hg89fRShnVUbupyYIOFA>
-    <xmx:yYK3ZTskgWG7cJFLLmCmFsIIiqpngjmga8DCGr00sJp0ulkTENOupQ>
-    <xmx:yYK3ZXEL1JsXAoP0-BVy3Q_DKv3ndM36uXTF0RYuY4r_QJ3PU4sGtw>
-    <xmx:yYK3ZdKWSPssFhyKC_ITCMknOBtkRrQTnKoAUsdet6HMJPFDczVCqA>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 29 Jan 2024 05:49:44 -0500 (EST)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 154ae122 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 29 Jan 2024 10:46:25 +0000 (UTC)
-Date: Mon, 29 Jan 2024 11:49:39 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: Christian Couder <christian.couder@gmail.com>
-Cc: git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>,
-	Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v2 1/6] t1300: make tests more robust with non-default
- ref backends
-Message-ID: <ZbeCw6DgIp3h5gMN@tanuki>
-References: <cover.1704802213.git.ps@pks.im>
- <cover.1704877233.git.ps@pks.im>
- <0552123fa30243d6d8d6b378991651dd6ade7de3.1704877233.git.ps@pks.im>
- <CAP8UFD0p-OqYuTrB5m2uq7BRFko887bKszOLtP5peP-A79g=BA@mail.gmail.com>
- <ZbDP4ntRqrxX08yk@tanuki>
- <CAP8UFD2ZoV74jx3B_adwYENGtp9fCH_oVjW4QJXTZQJ0=_aeEA@mail.gmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HL3JjelF"
+Received: by mail-ej1-f46.google.com with SMTP id a640c23a62f3a-a35385da5bbso248744166b.3
+        for <git@vger.kernel.org>; Mon, 29 Jan 2024 02:55:29 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1706525728; x=1707130528; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=Wugp6QSRtXQq+NTxbkMRzeUjQIxzwRiEhExkjjLFJJY=;
+        b=HL3JjelFfT3cyfElLhFluVHz1cUMw1MhdlTRNi/fxjGPPxqcCiPjZOuYHFa5I+QSAK
+         AklT9P6Ev3MyH0L8/j92jV7wurO3psnNRQvJJKBC5C3txbsPWLQJEtFe/LfXfV1f7oW4
+         DFV9QB7sp34w4Br64ByDVub1ztHP1GcN+3XyJbHe/w+mo5vVSkWh1gTPmyWf4I50nZZP
+         pf3pHCTSRacWSL+Kq8eA1WBG9wV/sNCEvEuZl0TUubXGWcCKM7q0yU9I3Yr5oSwBAxrG
+         MSXCzwd2GU+OK82x0fUVML0WN+V0c0kVuuoCOIiPJ64/ytPZKG+LWOVz2XKgcUzGG1ta
+         WOaA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1706525728; x=1707130528;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Wugp6QSRtXQq+NTxbkMRzeUjQIxzwRiEhExkjjLFJJY=;
+        b=gOy+54cWLCbkddyi2lHOapQKlMJvqnRH1KtWa3RoQG+ViJ4my/YkiddYX41zZUEfs9
+         +y0Huv//UOT4BiKdKGhO84XC3pnylEN2AFKvajZFk+y3yXEN+oGSuAbyn276xAXOfPhj
+         oNEPXCri28FhYC6+CTDfWzo2c+t9j2wWaJWqXqyImgGWLfFTRctglaiCac3tn0v3agtT
+         p1FsWkoGybmBseXdfhXEL6OCfA18axSbgro8pUILx7rsOgNZU4BRAQHYTZoIEKuh+eNY
+         8KbhUqh9bLcJKj6MnI1a5MtcoDb/Dqs8khTVyz67gGi0I5VkB+8TOwqDlcp1sGEqeODb
+         ioiw==
+X-Gm-Message-State: AOJu0YzBTuIW/1c/mkGciEF5mvucEqTdzYGa6xh3o3rqWldQQJ5UQo/2
+	HqIyTok7NpTLVTNiwv4JJ90SUQEFFr0mbYRoCGuav0Lr3/ommLHcI28jgF/6
+X-Google-Smtp-Source: AGHT+IFlphrPTb1RGu3Gz6pTPlAD9eENlOyKj5Hy6BHqBNyKjJjfCTRJtuP5wTV5ufaE4DQduJ/VEQ==
+X-Received: by 2002:a17:906:4719:b0:a31:4c0a:dafe with SMTP id y25-20020a170906471900b00a314c0adafemr3687841ejq.72.1706525727509;
+        Mon, 29 Jan 2024 02:55:27 -0800 (PST)
+Received: from [192.168.1.101] ([84.64.64.237])
+        by smtp.googlemail.com with ESMTPSA id hu22-20020a170907a09600b00a31641972c4sm3778522ejc.21.2024.01.29.02.55.26
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 29 Jan 2024 02:55:27 -0800 (PST)
+Message-ID: <b5213705-4cd6-40ef-8c5f-32b214534b8b@gmail.com>
+Date: Mon, 29 Jan 2024 10:55:26 +0000
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="2G6E7HkfnmgXShJZ"
-Content-Disposition: inline
-In-Reply-To: <CAP8UFD2ZoV74jx3B_adwYENGtp9fCH_oVjW4QJXTZQJ0=_aeEA@mail.gmail.com>
+User-Agent: Mozilla Thunderbird
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH 1/4] sequencer: Do not require `allow_empty` for redundant
+ commit options
+To: Brian Lyles <brianmlyles@gmail.com>, phillip.wood@dunelm.org.uk
+Cc: git@vger.kernel.org, me@ttaylorr.com, newren@gmail.com, gitster@pobox.com
+References: <20240119060721.3734775-2-brianmlyles@gmail.com>
+ <7229fe62-cf9b-4829-80ec-c6b44c52163e@gmail.com>
+ <CAHPHrSeKY2Ou9VCq6rtADTOwycc0KCTPaCCwtqf94yLi0wj0OQ@mail.gmail.com>
+ <CAHPHrSf=UkR9+hMfb7pp5Y6uHqa2pBrEf+cTLJv=z=BOFdL3rw@mail.gmail.com>
+Content-Language: en-US
+From: Phillip Wood <phillip.wood123@gmail.com>
+In-Reply-To: <CAHPHrSf=UkR9+hMfb7pp5Y6uHqa2pBrEf+cTLJv=z=BOFdL3rw@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
+Hi Brian
 
---2G6E7HkfnmgXShJZ
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+On 28/01/2024 16:36, Brian Lyles wrote:
+> [+cc Junio]
+> 
+> On Sat, Jan 27, 2024 at 5:30 PM Brian Lyles <brianmlyles@gmail.com> wrote:
+> 
+>>>> For some amount of backwards compatibility with the existing code and
+>>>> tests, I have opted to preserve the behavior of returning 0 when:
+>>>>
+>>>> - `allow_empty` is specified, and
+>>>> - either `is_index_unchanged` or `is_original_commit_empty` indicates an
+>>>>     error
+>>>
+>>> I'm not sure that is a good idea as it is hiding an error that we didn't
+>>> hit before because we returned early.
+>>
+>> I think you're right -- Previously the error could not have been hit,
+>> but now it can. An error is still an error, and we should handle it
+>> regardless of how `allow_empty` was set. I'll address this in v2 by
+>> simply returning the error.
+> 
+> As I dig into this more, I'm noticing that this may have unintended side
+> effects that I'm unsure of. After making this change, I noticed a couple
+> of failures in the cherry-pick test suite. The others may be a knock-on
+> of this initial failure:
+> 
+>      expecting success of 3501.8 'cherry-pick on unborn branch':
+>              git checkout --orphan unborn &&
+>              git rm --cached -r . &&
+>              rm -rf * &&
+>              git cherry-pick initial &&
+>              git diff --quiet initial &&
+>              test_cmp_rev ! initial HEAD
+> 
+>      A       extra_file
+>      Switched to a new branch 'unborn'
+>      rm 'extra_file'
+>      rm 'spoo'
+>      error: could not resolve HEAD commit
+>      fatal: cherry-pick failed
+>      not ok 8 - cherry-pick on unborn branch
+>      #
+>      #               git checkout --orphan unborn &&
+>      #               git rm --cached -r . &&
+>      #               rm -rf * &&
+>      #               git cherry-pick initial &&
+>      #               git diff --quiet initial &&
+>      #               test_cmp_rev ! initial HEAD
+>      #
+> 
+> It looks like this is caused specifically by not hiding the error from
+> `index_unchanged`
 
-On Mon, Jan 29, 2024 at 11:32:53AM +0100, Christian Couder wrote:
-> On Wed, Jan 24, 2024 at 9:52=E2=80=AFAM Patrick Steinhardt <ps@pks.im> wr=
-ote:
-> > On Tue, Jan 23, 2024 at 05:15:48PM +0100, Christian Couder wrote:
-> > > On Wed, Jan 10, 2024 at 10:01=E2=80=AFAM Patrick Steinhardt <ps@pks.i=
-m> wrote:
-[snip]
-> > Hm. I don't really know how to phrase this better. The preceding
-> > paragraph already explains why we're discarding the extension and what
-> > the consequence is. I added a sentence saying ", which will cause
-> > failures when trying to access any refs."
->=20
-> To me the preceding paragraph said that we are overwriting the config
-> file, but I just don't see how for example the above test overwrites
-> anything. So maybe I am missing something obvious, or maybe you don't
-> quite mean "overwrite", but I don't see how the extension would be
-> discarded by the test which only seems to add stuff.
+Oh dear, that's a pain. I haven't checked but suspect we already hit 
+this when running
 
-It happens before already, outside of any tests. See line 1036:
+     git cherry-pick --allow-empty
 
-```
-cat > .git/config <<\EOF
-[section "sub=3Dsection"]
-	val1 =3D foo=3Dbar
-	val2 =3D foo\nbar
-	val3 =3D \n\n
-	val4 =3D
-	val5
-EOF
-```
+on an orphan checkout. In do_pick_commit() we treat an error reading 
+HEAD as an unborn branch so I think we could do the same here. If the 
+branch is unborn then we can use the_hash_algo->empty_tree as the tree 
+to compare to.
 
-Overall, I agree that this is rather hard to discover and that the tests
-really could require a bigger refactoring to make them more independent
-of each other.
+Best Wishes
 
-I'll send another version that mentions this explicitly.
+Phillip
 
-Patrick
-
---2G6E7HkfnmgXShJZ
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmW3gsMACgkQVbJhu7ck
-PpSYkxAAkAvA/Q4O/Q9IqksVXP59a9oXU3z7NhFysjvrqJ+OSB98BHUOu5RLu8sv
-TQC99CH95MinHLqMEN//UyBZzO1C84SNERlEpYp7l/a56JEiZNuNtq29ZTkVs6cy
-3ZpqCCYrcJ6wd4bIJBWzvIVgZ2yB0e5n9AddLF+ekcXj3nyl5xhxklHP+9nvWNj+
-ahA6ItsWa5c7lxjXdcMul4zO1rxX4FIrs0n8dvIfBJW4sov9wQJShDvWxdKCE4Vw
-f2sIwfF2c+4nrsTk0PGKOV0INrGF5QAeorwB/+jiyLJbvMF+t98gCezt6uPe5zpt
-J18bSLaxWkkHLCAr9A0tAVPEeBZVCQccpo8VfHfsboxeu7kewvtj7B+szLzILaao
-Dr1BVlPthejE1ovIWC3AJTS/EZuqxGf1vnhhQvW0rSeCVQZB1jzrmywHpsKgKDXQ
-aH8vLUpX3uv1w/yht8pDg9kLNdTHDRyF5WWzLqHUzDS5rWN2A03TzNuWEML8yMBu
-OCox48jONA+NZuAfoiuk0w6Wd9m26Nof7iEJ4skXYq4WGO8Dnqb9LWH0ikFSZgS2
-1J7Dd6AZxN9wQz5zsWqfuIFInl9xlIjv8KSuBEHXBViW/D4owcLqU2/L7+dH+WZr
-LdF908nXK/4chePC5/dcyaPXSwU9NgCawPBY99GPJ2KY/zvpQTg=
-=JCJ1
------END PGP SIGNATURE-----
-
---2G6E7HkfnmgXShJZ--
