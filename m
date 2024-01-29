@@ -1,178 +1,179 @@
-Received: from fhigh3-smtp.messagingengine.com (fhigh3-smtp.messagingengine.com [103.168.172.154])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f51.google.com (mail-ej1-f51.google.com [209.85.218.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF86E76054
-	for <git@vger.kernel.org>; Mon, 29 Jan 2024 19:41:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 985D876040
+	for <git@vger.kernel.org>; Mon, 29 Jan 2024 20:22:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706557273; cv=none; b=VeA0Ud+1nVxAoUOA9/vbqzcPPn4LH45hUTX4JpqduBJ6OO4DFVdu6ENDsUJ2Kdl9DyhjdXAoTUlxVOulZv6Srjw3CHRZ0jldkLozRkRjEmzsI+PAOqKFLGXonVugdr47wg+BH6kDgWsOr8oLGWaBIl7IMK8JFr/ZJfD2YZLBCqE=
+	t=1706559727; cv=none; b=XlveN4rfAq6W0i2Q9xtAXn7JHEebt9O+m2JDhwL6aG+IubHG/xHs+Xg2gYZkyKNIVhwPqLLJvAgLCbLmMh/JDMuCJeHiNX6ZkKu5yumYhdRrcHvKuqcX02xP2gRJnip7kfxS/JBpSB5zlSkmC8SNGCG6H0GUVqSn/HFEv96IdCo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706557273; c=relaxed/simple;
-	bh=fiYZXK61tdHid4COfCtfo0VmZNJ5ns05Er1/WMokcWQ=;
-	h=MIME-Version:Message-Id:In-Reply-To:References:Date:From:To:Cc:
-	 Subject:Content-Type; b=U+f/5tcxJxns8T5kvKyMYwH5jJ/ZU8xyqndkTl1KgaKd0PftHIxtYRddUu9WC9ds1fJBnGKMNAo1p6SAg3DxKCjWINzW2SJ3j+aJBr9BcK76NRibB6Fq7csrlFgNIqcec1Id1A+6UOS/H6ss8GMuiThUEEhVnA6yPCXDiNX21Xc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=khaugsbakk.name; spf=pass smtp.mailfrom=khaugsbakk.name; dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b=VIFw12JQ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=NDzz8d55; arc=none smtp.client-ip=103.168.172.154
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=khaugsbakk.name
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=khaugsbakk.name
+	s=arc-20240116; t=1706559727; c=relaxed/simple;
+	bh=7G+YxWEJa4/Dzz90ldQaZPVmRIHLXqW+lpuhvmkzRR8=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=HsK5UWga7soL961YuWh27ly1JEciYjA27HQXX8SIiJb94o3zqfoiqrGkgFNIH5N96sqq/ayydd2MET3DOuKyYmSRchccrhDuIXEsT04dOb04tWUorOO5nS8tXX6Ji9SLrgSeiHkODioGMbix/fzYDQ0kvNvIWpuFFqJmZHWNWFM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=nBbR0Re0; arc=none smtp.client-ip=209.85.218.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b="VIFw12JQ";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="NDzz8d55"
-Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
-	by mailfhigh.nyi.internal (Postfix) with ESMTP id BD98211400BB;
-	Mon, 29 Jan 2024 14:41:02 -0500 (EST)
-Received: from imap49 ([10.202.2.99])
-  by compute1.internal (MEProxy); Mon, 29 Jan 2024 14:41:02 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=khaugsbakk.name;
-	 h=cc:cc:content-transfer-encoding:content-type:content-type
-	:date:date:from:from:in-reply-to:in-reply-to:message-id
-	:mime-version:references:reply-to:subject:subject:to:to; s=fm2;
-	 t=1706557262; x=1706643662; bh=h0M/j4CyLnGd180W+hMPMCdkQ8aPiGG9
-	zSpXQhSALAs=; b=VIFw12JQsfDeO2rMXuqODzO6Fc987mwho1S4DvwZDZCI3xMz
-	PRU2Z/TV7comw3F0qPL9DSYPSN1qqyXRCA14PzztTKfWJacTjJQMKuhMu6BK7GHE
-	fzct2AxeUkLFNXuIY46SfA/mIZieZI9LinW7l8pEqnrBL+m8wUr1/yst7dLGgP1B
-	1yyECaQXw5VxVh410rcY/87JaUQOMeYz+VSnoEHkgPL+/u/76fMwFKyJdc+Yy+GN
-	xWESeDFMinNZrjPN0r+Yxa0uXEjY/zdrBqbtA7/otMJOA1UIvHM8Xx631PN1o9E6
-	QUspDNl92kXqeVDmj3eTEIIX7jEI6AC+rosEXA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1706557262; x=
-	1706643662; bh=h0M/j4CyLnGd180W+hMPMCdkQ8aPiGG9zSpXQhSALAs=; b=N
-	Dzz8d55j4i+PTOxaEkjqfH4flH2zxAJr3Nk1VDZirwaWyfIXXB1Hvgvmcxtc+Kyw
-	kAEFaonOSii/iYaLm83jSQRi/r0f0i7gn+SzTOmN01hZIyyeMtO3KSSeUsLqceJC
-	PSv6Y2PDxYPlJANuLryqCYm954uQxTpNqXDBwcKTE7mMFckCYLVRA2TcJVv1EGZJ
-	yR/g+JWCry68w54ueSO53rHvNcGpnnaPXra6BuKveURfST1UoHJ1CdVQFZvF6ZVg
-	lTlX0DgoCKe6sx0/3nhRP8B8jpMw8eWWwXiRwqz1bTOBhu3jR6rVEba1jUVJ3eiN
-	rIJlddpNm3AP47ieesOiQ==
-X-ME-Sender: <xms:Tv-3Ze-jrE16lNS7n8jA3IlmT4DPIskX_XZOClFhdwpqilrO0pdSgsU>
-    <xme:Tv-3ZeuiFNhv7yufakmvElVGKt3Qe9fivP1R5H0z6ZojVY45e9wgeJw7wHEo57zZw
-    dbaOzQH-IxtGjuz4Q>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrfedtgedgudduiecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
-    necuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
-    enucfjughrpefofgggkfgjfhffhffvvefutgfgsehtqhertderreejnecuhfhrohhmpedf
-    mfhrihhsthhofhhfvghrucfjrghughhssggrkhhkfdcuoegtohguvgeskhhhrghughhssg
-    grkhhkrdhnrghmvgeqnecuggftrfgrthhtvghrnhepvdevheeiudefheffvdetueevkeeh
-    hfeliefgkedtieefudetueehueeftefffedunecuvehluhhsthgvrhfuihiivgeptdenuc
-    frrghrrghmpehmrghilhhfrhhomheptghouggvsehkhhgruhhgshgsrghkkhdrnhgrmhgv
-X-ME-Proxy: <xmx:Tv-3ZUDYLH18_QP-JzJShpwmP-i1WYc5_zPU-5EG_BuUVf0kPjrz2w>
-    <xmx:Tv-3ZWf_RLZCED93p0_dEyF2q6NT7M47-JthQ3fod5bxxiIjjmP0HQ>
-    <xmx:Tv-3ZTMND5qtkAz2PhjQHVXy5rIBTZMFqW2um8B2M9SejkUU79BRjQ>
-    <xmx:Tv-3ZcqqHiJEqgeUh6tH9y35hti3tJzTy5HRGGQjD_ztkgo-UHle5w>
-Feedback-ID: i2671468f:Fastmail
-Received: by mailuser.nyi.internal (Postfix, from userid 501)
-	id 70F7E15A0092; Mon, 29 Jan 2024 14:41:02 -0500 (EST)
-X-Mailer: MessagingEngine.com Webmail Interface
-User-Agent: Cyrus-JMAP/3.11.0-alpha0-144-ge5821d614e-fm-20240125.002-ge5821d61
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nBbR0Re0"
+Received: by mail-ej1-f51.google.com with SMTP id a640c23a62f3a-a35e9161b8cso139193466b.3
+        for <git@vger.kernel.org>; Mon, 29 Jan 2024 12:22:04 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1706559723; x=1707164523; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=jezDbWY957VWqJdeWN6l2cVkrX/C3iUCNlTBSQesf00=;
+        b=nBbR0Re0T8XFNdvZnfnc0U3Lr4SHP+T2X2s7pGttxVuZNYK4sD1zTookfe0Ftq4mfi
+         zeUd4BRE/BfiodoMJWuiXKNfPrj2GU4ojUpr6rx5WAAhIyJ6gbCEeaBidulL2gZpBa4y
+         tBMBbGt/VzGeR5m+0ksFnlTZGu/bqyLxFfVS9ODZC2XsHzmRA1e4Ja1D8J0FyJvQolxq
+         KECC+jtIE9j0uyfuoeLqDsv0kGV3sgF6aOmr/R969jG2GNqt9nVzHb6qUI7lRoxr1dUy
+         8tStiv+dQorkdqbLQgTrhgE4y+q/mcE8nvXZOJg22kUvRjeE7zZke1Ow8H8rIolEBF8G
+         R9PQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1706559723; x=1707164523;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=jezDbWY957VWqJdeWN6l2cVkrX/C3iUCNlTBSQesf00=;
+        b=JacYAdsJ1zFKuEn+r30V8hRgl/JcteqOYHJs3G38BnsaA7bKsioWddxr2Ag0iGQj1u
+         rfnJ0seqeKFvrdYkJsA4HLCCoMAtXSN4CYIk2HaLM8ZF24tDgXlpeyVegKUZ/jgYyyWT
+         jtpBTAAT3W0jjouDhTYb82/5ixCpeNnDxEABLjGjftVQd3jo1/Koefwi1is33LTc/byA
+         /m5uUKjZs0PBP6KfF2sOY91VkpMs5IpqHh0qFBvMEdiVlU82jAiPG1AQEhW1j0dKEMF3
+         lXTkIpLAJmTFOX9XlJFvuRGwb68lgPrYLRgY+oS6z+Wderj/VkL7yUXdF4MajskEIriB
+         xdDA==
+X-Gm-Message-State: AOJu0Ywwt/F2pbMFrFVyj9kfQEhaDjJQvEd4/mZlBE7nx7zRADLJIl6U
+	FgYAF+bjSxp1ksca1vp3/U3CQ5XpdEPzxHsUh5A8sMij3X+/DIKF
+X-Google-Smtp-Source: AGHT+IE9wY5hm8Z6RQS07YT5bECBnNknhWeSF/j99xuFtUdvcP0li+qteCTEUcCa687GecvBMP8YRg==
+X-Received: by 2002:a17:906:494a:b0:a35:a4c9:fcb2 with SMTP id f10-20020a170906494a00b00a35a4c9fcb2mr2764542ejt.6.1706559722466;
+        Mon, 29 Jan 2024 12:22:02 -0800 (PST)
+Received: from localhost (84-236-109-111.pool.digikabel.hu. [84.236.109.111])
+        by smtp.gmail.com with ESMTPSA id a5-20020a17090680c500b00a35d2dfc77esm1046395ejx.205.2024.01.29.12.22.01
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 29 Jan 2024 12:22:02 -0800 (PST)
+Date: Mon, 29 Jan 2024 21:22:01 +0100
+From: SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To: Jeff King <peff@peff.net>
+Cc: git@vger.kernel.org, Phillip Wood <phillip.wood@dunelm.org.uk>
+Subject: Re: [PATCH 1/2] Makefile: use order-only prereq for UNIT_TEST_BIN
+Message-ID: <20240129202201.GA9612@szeder.dev>
+References: <20240129031540.GA2433764@coredump.intra.peff.net>
+ <20240129031816.GA2433899@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Message-Id: <7f97e5e4-c394-4403-94f1-6163fbd02e88@app.fastmail.com>
-In-Reply-To: <87il3enc1i.fsf@osv.gnss.ru>
-References: <xmqq34v6gswv.fsf@gitster.g>
- <CABPp-BHUVLS4vB5maZzU5gS33ve6LkKgij+rc1bBZges6Xej-g@mail.gmail.com>
- <87a5ow9jb4.fsf@osv.gnss.ru> <xmqqsf2nnbkj.fsf@gitster.g>
- <87plxr3zsr.fsf@osv.gnss.ru> <xmqqa5ouhckj.fsf@gitster.g>
- <87il3h72ym.fsf@osv.gnss.ru> <xmqq1qa5xq4n.fsf@gitster.g>
- <87ede56tva.fsf@osv.gnss.ru> <87a5ot6tos.fsf@osv.gnss.ru>
- <xmqqzfwspmh0.fsf@gitster.g> <87ede4fg8s.fsf@osv.gnss.ru>
- <xmqqzfwrjdul.fsf@gitster.g> <87il3enc1i.fsf@osv.gnss.ru>
-Date: Mon, 29 Jan 2024 20:40:42 +0100
-From: "Kristoffer Haugsbakk" <code@khaugsbakk.name>
-To: "Sergey Organov" <sorganov@gmail.com>
-Cc: "Elijah Newren" <newren@gmail.com>, git@vger.kernel.org,
- "Junio C Hamano" <gitster@pobox.com>
-Subject: Re: what should "git clean -n -f [-d] [-x] <pattern>" do?
-Content-Type: text/plain;charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20240129031816.GA2433899@coredump.intra.peff.net>
 
-On Sat, Jan 27, 2024, at 14:25, Sergey Organov wrote:
-> Junio C Hamano <gitster@pobox.com> writes:
->
->> Sergey Organov <sorganov@gmail.com> writes:
+On Sun, Jan 28, 2024 at 10:18:16PM -0500, Jeff King wrote:
+> We build the UNIT_TEST_BIN directory (t/unit-tests/bin) on the fly with
+> "mkdir -p". And so the recipe for UNIT_TEST_PROGS, which put their
+> output in that directory, depend on UNIT_TEST_BIN to make sure it's
+> there.
+> 
+> But using a normal dependency leads to weird outcomes, because the
+> timestamp of the directory is important. For example, try this:
+> 
+>   $ make
+>   [...builds everything...]
+> 
+>   [now re-build one unit test]
+>   $ touch t/unit-tests/t-ctype.c
+>   $ make
+>       SUBDIR templates
+>       CC t/unit-tests/t-ctype.o
+>       LINK t/unit-tests/bin/t-ctype
+> 
+> So far so good. Now running make again should build nothing. But it
+> doesn't!
+> 
+>   $ make
+>       SUBDIR templates
+>       LINK t/unit-tests/bin/t-basic
+>       LINK t/unit-tests/bin/t-mem-pool
+>       LINK t/unit-tests/bin/t-strbuf
+> 
+> Er, what? Let's rebuild again:
+> 
+>   $ make
+>       SUBDIR templates
+>       LINK t/unit-tests/bin/t-ctype
+> 
+> Weird. And now we ping-pong back and forth forever:
+> 
+>   $ make
+>       SUBDIR templates
+>       LINK t/unit-tests/bin/t-basic
+>       LINK t/unit-tests/bin/t-mem-pool
+>       LINK t/unit-tests/bin/t-strbuf
+>   $ make
+>       SUBDIR templates
+>       LINK t/unit-tests/bin/t-ctype
+> 
+> What happens is that writing t/unit-tests/bin/t-ctype updates the mtime
+> of the directory t/unit-tests/bin. And then on the next invocation of
+> make, all of those other tests are now older and so get rebuilt. And
+> back and forth forever.
+> 
+> We can fix this by using an order-only prereq. This is a GNU-ism that
+> tells make to only care that the dependency exists at all, and to ignore
+> its mtime. It was designed for exactly this sort of situation (the
+> documentation example even uses "mkdir").
+> 
+> We already rely on GNU make, so that's not a problem. This particular
+> feature was added in GNU make 3.80, released in October 2002. This is
+> obviously quite old by date, but it's also worth thinking about macOS,
+> as Apple stopped updating packages that switched to GPLv3 tools. In this
+> their dev tools ship GNU make 3.81, which is recent enough.
+> 
+> If it is a problem, there are two alternatives:
+> 
+>   - we can just "mkdir -p" in the recipe to build the individual
+>     binaries. This will mean some redundant "mkdir" calls, but only when
+>     actually invoking the compiler.
+> 
+>   - we could stop making the directory on the fly, and just add it with
+>     a .gitignore of "*". This would work fine, but might be awkward when
+>     moving back and forth in history.
 
-I agree with Sergey.
+A third alternative is to use $(call mkdir_p_parent_template) in the
+recipe and get rid of the thus unnecessary UNIT_TEST_BIN dependency
+and target.  It will only run mkdir when needed, and it's a well
+established pattern in our Makefile, so you won't have to spend a
+paragraph or two arguing about potential problems with GNU-isms :)
 
-Let=E2=80=99s suppose I=E2=80=99ve never used git-clean(1) (and I almost=
- never use
-it). I read the man page to find out what it=E2=80=99s about. Oh, it rem=
-oves
-files that I haven=E2=80=99t tracked. That sounds dangerous. But I see u=
-nder
-`-n, --dry-run` that I can simulate what it would do:
+On a related note, 'make clean' doesn't remove this 't/unit-tests/bin'
+directory.
 
-   =E2=80=9C Don=E2=80=99t actually remove anything, just show what woul=
-d be done.
-
-Great, this is what I want. So this seems to mean to run `git clean` and
-just tell me what would happen. But now I=E2=80=99ve already read that it
-requires `--force` in order to do anything. Which means that I don=E2=80=
-=99t
-want to just run:
-
-```
-git clean --dry-run
-```
-
-Since I presume that would give me the =E2=80=9Cno `--force` provided=E2=
-=80=9D
-error. Which means that I want to tack on `--force`:
-
-```
-git clean --dry-run --force
-```
-
-Now I figure that this will run `git clean --force` but switch real
-deletion with printing the filenames.[1]
-
-Junio wrote:
-
-> What I find broken is that giving one 'f' and one 'n' in different
-> order, i.e. "-f -n" and "-n -f", does not do what I expect.  If you
-> are choosing between do-it (f) and do-not-do-it (n), you ought to be
-> able to rely on the usual last-one-wins rule.  That I find broken.
-
-Now suppose I have noticed that some git(1) commands have these
-`--[no-]do-it` options. I know that I can leverage this to override a
-previous option. And that is useful when I for example have an alias
-with `--do-it` but for this invocation I want `--no-do-it`. I read about
-`--force` here but see that there is no `--no-force`. I then assume that
-the only things that have to do with `--force` or not is that option and
-the `requireForce` configuration variable.
-
-I=E2=80=99ve also seen `--force` in other git(1) commands. And they usua=
-lly are
-about some specific scenario rather than the whole command itself, since
-e.g. committing one too many times doesn=E2=80=99t really hurt. But I un=
-derstand
-how `--force` applies to all the useful work that git-clean(1) does
-because all the useful work is also destructive work. So this is what I
-expect from these options in general:
-
-1. `--force`: require for the subset of actions that are potentially
-   dangerous or may be unwanted in some way
-2. `--dry-run`: simulate the action (specifically print everything that
-   would happen but don=E2=80=99t do anything to `.git`, to untracked fi=
-les, or
-   anything else)
-
-And I expect these two to be orthogonal. Because I might want=E2=80=94if=
- the
-option is there=E2=80=94to simulate some `--force` (e.g. `git push --for=
-ce`)
-with a `--dry-run`. As in: what would be printed? I wouldn=E2=80=99t exp=
-ect
-`--force` to override `--dry-run`.
-
-=E2=80=A0 1: I=E2=80=99m never this careful in real life. But this is ab=
-out deleting
-   files without any (from Git) recovery so I guess some prudence is
-   required in this case.
-
---=20
-Kristoffer Haugsbakk
+> Signed-off-by: Jeff King <peff@peff.net>
+> ---
+> I may be overly paranoid about the ".gitignore" strategy. I feel like
+> I've been bitten by this in the past by things switching from source to
+> build (I think with git-remote-testgit). But that's an actual built
+> file. Git would probably be OK with the "bin/" directory coming and
+> going as a tracked entity, because the index really only cares about
+> the file "bin/.gitignore". Still, this make fix was easy enough.
+> 
+>  Makefile | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/Makefile b/Makefile
+> index 1a62e48759..958f4cd0bf 100644
+> --- a/Makefile
+> +++ b/Makefile
+> @@ -3866,7 +3866,7 @@ fuzz-all: $(FUZZ_PROGRAMS)
+>  $(UNIT_TEST_BIN):
+>  	@mkdir -p $(UNIT_TEST_BIN)
+>  
+> -$(UNIT_TEST_PROGS): $(UNIT_TEST_BIN)/%$X: $(UNIT_TEST_DIR)/%.o $(UNIT_TEST_DIR)/test-lib.o $(GITLIBS) GIT-LDFLAGS $(UNIT_TEST_BIN)
+> +$(UNIT_TEST_PROGS): $(UNIT_TEST_BIN)/%$X: $(UNIT_TEST_DIR)/%.o $(UNIT_TEST_DIR)/test-lib.o $(GITLIBS) GIT-LDFLAGS | $(UNIT_TEST_BIN)
+>  	$(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) \
+>  		$(filter %.o,$^) $(filter %.a,$^) $(LIBS)
+>  
+> -- 
+> 2.43.0.797.g29b680fc68
+> 
+> 
