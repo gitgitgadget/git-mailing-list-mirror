@@ -1,33 +1,33 @@
 Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F6E4EEA6
-	for <git@vger.kernel.org>; Mon, 29 Jan 2024 03:18:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6660A101CF
+	for <git@vger.kernel.org>; Mon, 29 Jan 2024 03:19:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706498300; cv=none; b=Aj6qf+NZpr5Zc1Wv6n7qEH4IVT+Wz8sjqNg04X6K6Vr26GVLw38z3sE6QtmwpSOB5fU5Uw1/1KI0GUnxi+9J07WRxzXMYyP5O4mYwrVzOxy5cSIQpILC+bTR7tD57svqS1xZbctFQG1ovDW0C+13y+X0F5WpkR5V5EKqRZAWL2E=
+	t=1706498377; cv=none; b=LKofpxIPUIE5QWYuNGLy97BteFplpdjNj+kDQnGJIGEokCZpCLCfzFdyhyO0bgIyQrQOThh+J5/qgcZUtwzae9YEWBUkAqFZV6pVJPFF41OKlEhCrok0FPN3tNiAL9o1ndK/EJrprPQh7PmqmIM/SO6n2Tf0wr6KAkqIEAxeeYA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706498300; c=relaxed/simple;
-	bh=vsgxabWRb3QSP3uppd6LuYTB5qRiZxUS6y5f+pfKFYc=;
+	s=arc-20240116; t=1706498377; c=relaxed/simple;
+	bh=A7UmsnUaqFEc1QcZm4Ro9LwJ1LsqedM8NSGF3gDGD5A=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=GfcH5h1ngd2n71PTwxzsOGsYCBukYqarsIBP+lGPUpwMJ9SkdS4IbNu8B7ULRlhgSuL4oecIkdANtTTNRwDzaFE51xe7ZnZ7169ZEbih/3pUXA/uXjBIubQkfOL6Kfyqt80ygfouEbnd/pRL0NoHB9ZO73apA+bs9urjsmsfw/U=
+	 Content-Type:Content-Disposition:In-Reply-To; b=WJAt46qGA9P0oFloTT5ebW7iSbmXYMVO5VJ8XxGIalCXLalrNlXTeQKWRSmObjxXdGnKNpxdnYiv1PvHbvUzEGbgs4/gV0jhLdxt/7Cxk+2OPdNHOdXwBku/iygTltXZco5eY/Sva6HCJj4NnDmf28yTYqo7JJPhIxJNycPr7aU=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
-Received: (qmail 27627 invoked by uid 109); 29 Jan 2024 03:18:17 -0000
+Received: (qmail 27639 invoked by uid 109); 29 Jan 2024 03:19:34 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 29 Jan 2024 03:18:17 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 29 Jan 2024 03:19:34 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 18045 invoked by uid 111); 29 Jan 2024 03:18:19 -0000
+Received: (qmail 18059 invoked by uid 111); 29 Jan 2024 03:19:36 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sun, 28 Jan 2024 22:18:19 -0500
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sun, 28 Jan 2024 22:19:36 -0500
 Authentication-Results: peff.net; auth=none
-Date: Sun, 28 Jan 2024 22:18:16 -0500
+Date: Sun, 28 Jan 2024 22:19:33 -0500
 From: Jeff King <peff@peff.net>
 To: git@vger.kernel.org
 Cc: Phillip Wood <phillip.wood@dunelm.org.uk>
-Subject: [PATCH 1/2] Makefile: use order-only prereq for UNIT_TEST_BIN
-Message-ID: <20240129031816.GA2433899@coredump.intra.peff.net>
+Subject: [PATCH 2/2] t/Makefile: get UNIT_TESTS list from C sources
+Message-ID: <20240129031933.GB2433899@coredump.intra.peff.net>
 References: <20240129031540.GA2433764@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -39,101 +39,64 @@ Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 In-Reply-To: <20240129031540.GA2433764@coredump.intra.peff.net>
 
-We build the UNIT_TEST_BIN directory (t/unit-tests/bin) on the fly with
-"mkdir -p". And so the recipe for UNIT_TEST_PROGS, which put their
-output in that directory, depend on UNIT_TEST_BIN to make sure it's
-there.
+We decide on the set of unit tests to run by asking make to expand the
+wildcard "t/unit-tests/bin/*". One unfortunate outcome of this is that
+we'll run anything in that directory, even if it is leftover cruft from
+a previous build. This isn't _quite_ as bad as it sounds, since in
+theory the unit test executables are self-contained (so if they passed
+before, they'll pass even though they now have nothing to do with the
+checked out version of Git). But at the very least it's wasteful, and if
+they _do_ fail it can be quite confusing to understand why they are
+being run at all.
 
-But using a normal dependency leads to weird outcomes, because the
-timestamp of the directory is important. For example, try this:
+This wildcarding presumably came from our handling of the regular
+shell-script tests, which match "t[0-9][0-9][0-9][0-9]-*.sh".  But the
+difference there is that those are actual tracked files. So if you
+checkout a different commit, they'll go away. Whereas the contents of
+unit-tests/bin are ignored (so not only do they stick around, but you
+are not even warned of the stale files via "git status").
 
-  $ make
-  [...builds everything...]
+This patch fixes the situation by looking for the actual unit-test
+source files and then massaging those names into the final executable
+names. This has two additional benefits:
 
-  [now re-build one unit test]
-  $ touch t/unit-tests/t-ctype.c
-  $ make
-      SUBDIR templates
-      CC t/unit-tests/t-ctype.o
-      LINK t/unit-tests/bin/t-ctype
+  1. It will notice if we failed to build one or more unit-tests for
+     some reason (wheras the current code just runs whatever made it to
+     the bin/ directory).
 
-So far so good. Now running make again should build nothing. But it
-doesn't!
+  2. The wildcard should avoid other build cruft, like the pdb files we
+     worked around in 0df903d402 (unit-tests: do not mistake `.pdb`
+     files for being executable, 2023-09-25).
 
-  $ make
-      SUBDIR templates
-      LINK t/unit-tests/bin/t-basic
-      LINK t/unit-tests/bin/t-mem-pool
-      LINK t/unit-tests/bin/t-strbuf
-
-Er, what? Let's rebuild again:
-
-  $ make
-      SUBDIR templates
-      LINK t/unit-tests/bin/t-ctype
-
-Weird. And now we ping-pong back and forth forever:
-
-  $ make
-      SUBDIR templates
-      LINK t/unit-tests/bin/t-basic
-      LINK t/unit-tests/bin/t-mem-pool
-      LINK t/unit-tests/bin/t-strbuf
-  $ make
-      SUBDIR templates
-      LINK t/unit-tests/bin/t-ctype
-
-What happens is that writing t/unit-tests/bin/t-ctype updates the mtime
-of the directory t/unit-tests/bin. And then on the next invocation of
-make, all of those other tests are now older and so get rebuilt. And
-back and forth forever.
-
-We can fix this by using an order-only prereq. This is a GNU-ism that
-tells make to only care that the dependency exists at all, and to ignore
-its mtime. It was designed for exactly this sort of situation (the
-documentation example even uses "mkdir").
-
-We already rely on GNU make, so that's not a problem. This particular
-feature was added in GNU make 3.80, released in October 2002. This is
-obviously quite old by date, but it's also worth thinking about macOS,
-as Apple stopped updating packages that switched to GPLv3 tools. In this
-their dev tools ship GNU make 3.81, which is recent enough.
-
-If it is a problem, there are two alternatives:
-
-  - we can just "mkdir -p" in the recipe to build the individual
-    binaries. This will mean some redundant "mkdir" calls, but only when
-    actually invoking the compiler.
-
-  - we could stop making the directory on the fly, and just add it with
-    a .gitignore of "*". This would work fine, but might be awkward when
-    moving back and forth in history.
+Our new wildcard does make an assumption that unit tests are build from
+C sources. It would be a bit cleaner if we consulted UNIT_TEST_PROGRAMS
+from the top-level Makefile. But doing so is tricky unless we reorganize
+that Makefile to split the source file lists into include-able subfiles.
+That might be worth doing in general, but in the meantime, the
+assumptions made by the wildcard here seems reasonable.
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
-I may be overly paranoid about the ".gitignore" strategy. I feel like
-I've been bitten by this in the past by things switching from source to
-build (I think with git-remote-testgit). But that's an actual built
-file. Git would probably be OK with the "bin/" directory coming and
-going as a tracked entity, because the index really only cares about
-the file "bin/.gitignore". Still, this make fix was easy enough.
+I of course hit this when moving between "next" and "master" for an
+up-and-coming unit-test file which sometimes failed.
 
- Makefile | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ t/Makefile | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/Makefile b/Makefile
-index 1a62e48759..958f4cd0bf 100644
---- a/Makefile
-+++ b/Makefile
-@@ -3866,7 +3866,7 @@ fuzz-all: $(FUZZ_PROGRAMS)
- $(UNIT_TEST_BIN):
- 	@mkdir -p $(UNIT_TEST_BIN)
+diff --git a/t/Makefile b/t/Makefile
+index b7a6fefe28..c5c6e2ef6b 100644
+--- a/t/Makefile
++++ b/t/Makefile
+@@ -42,7 +42,9 @@ TPERF = $(sort $(wildcard perf/p[0-9][0-9][0-9][0-9]-*.sh))
+ TINTEROP = $(sort $(wildcard interop/i[0-9][0-9][0-9][0-9]-*.sh))
+ CHAINLINTTESTS = $(sort $(patsubst chainlint/%.test,%,$(wildcard chainlint/*.test)))
+ CHAINLINT = '$(PERL_PATH_SQ)' chainlint.pl
+-UNIT_TESTS = $(sort $(filter-out %.pdb unit-tests/bin/t-basic%,$(wildcard unit-tests/bin/t-*)))
++UNIT_TEST_SOURCES = $(wildcard unit-tests/t-*.c)
++UNIT_TEST_PROGRAMS = $(patsubst unit-tests/%.c,unit-tests/bin/%,$(UNIT_TEST_SOURCES))
++UNIT_TESTS = $(sort $(filter-out unit-tests/bin/t-basic%,$(UNIT_TEST_PROGRAMS)))
  
--$(UNIT_TEST_PROGS): $(UNIT_TEST_BIN)/%$X: $(UNIT_TEST_DIR)/%.o $(UNIT_TEST_DIR)/test-lib.o $(GITLIBS) GIT-LDFLAGS $(UNIT_TEST_BIN)
-+$(UNIT_TEST_PROGS): $(UNIT_TEST_BIN)/%$X: $(UNIT_TEST_DIR)/%.o $(UNIT_TEST_DIR)/test-lib.o $(GITLIBS) GIT-LDFLAGS | $(UNIT_TEST_BIN)
- 	$(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) \
- 		$(filter %.o,$^) $(filter %.a,$^) $(LIBS)
- 
+ # `test-chainlint` (which is a dependency of `test-lint`, `test` and `prove`)
+ # checks all tests in all scripts via a single invocation, so tell individual
 -- 
 2.43.0.797.g29b680fc68
-
