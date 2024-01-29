@@ -1,71 +1,52 @@
-Received: from mail-lf1-f48.google.com (mail-lf1-f48.google.com [209.85.167.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E88B41586CF
-	for <git@vger.kernel.org>; Mon, 29 Jan 2024 21:49:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B560153BC1
+	for <git@vger.kernel.org>; Mon, 29 Jan 2024 21:51:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706564954; cv=none; b=hz9BM8v4xjxGELGU4X8DgqothKtxUA5ajG8PyiRMeUH5ANqnmnw3Lc+w32jcyA+Hf4cdZaBt1t0Hk4hGvkX3TaAHv9njg3SI5kBz3PuFKyDbrBPHygks9z5t2URv7WW/D+b4yFcB2C/8V//sMZ3NkBek7gi9808mjned4PjRAiw=
+	t=1706565068; cv=none; b=Mk7zd7O6AUhBHzGVGCTKk/pTF6BrG8mJwf3SrbnlVFdYcb6w3AYqBmwlO3pD98+Peicf4I4HTDBKScSjFrqzHnMGFh+cgW2xhOgRwgAh22O90yJU1jR5tUUnmmVLhel/HiDkqCjULBgh/mC4FtoUqv4bqRLf6UkI5KJD7x633zU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706564954; c=relaxed/simple;
-	bh=heSebRn9vcnebFAx4+2gmiMDgRju8nvwxg5pO0Mr9FI=;
-	h=From:To:Cc:Subject:References:Date:In-Reply-To:Message-ID:
-	 MIME-Version:Content-Type; b=KqWobp/wBETlSPSMIzTcoJn5FsiZgctLelB6BalWCJCTnqqV12zqBC/xC9NKewOYYHUG7GORxuGIYgj7lNL6NLNNbXezsSHkj1nfLlPz92Br6trK3ha7xbDiPIwrneeGfBFdqdTZt8PfgUn59Xm9FSDKB8omqiWfEPbos2KLjxM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=YzAT1AMi; arc=none smtp.client-ip=209.85.167.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1706565068; c=relaxed/simple;
+	bh=HRR25mSGqhj5+zK+OYJlhBzLiQPfAzOJaYfQgbVdxn0=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=CGXMSq99AzF2NM3N8eQZtYD7yo+VxNFseNmHuv6tnJlUajwmHOAX78W+Rnc1qDYSvQmApIX1qbYysYdm82UvLbnhYdSqLyysvUfHWf5Apd7fj77kKugQQoVthGFwOXm6jt22U3JMZE1hwnJ9nN5gDkV1sAL3OEGVF7BwMlsq750=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=K5mYZKcn; arc=none smtp.client-ip=64.147.108.70
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YzAT1AMi"
-Received: by mail-lf1-f48.google.com with SMTP id 2adb3069b0e04-51117c00a69so602008e87.3
-        for <git@vger.kernel.org>; Mon, 29 Jan 2024 13:49:12 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1706564951; x=1707169751; darn=vger.kernel.org;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=PR7KDN1TEiOmuaRmE7vEYWBGEQiUHT3+POzBzv5z87A=;
-        b=YzAT1AMi1uvnZw4D1+3mxF6qu4ovq8nObkHv5WyUjN5OBMdxwpgTCPzqenMj+OpA9l
-         R/jg0dMXFTYkFD2eblCpD68KfxCA17tJHFuM4+skRSUpFwk7YrQSGZbljefKgfU4ys7n
-         XShlt+IP0JpjONGRGZTHoaeRa5M2BR1ufNVtoiKmMtYSCNG2o6zWPBZnpwLOqaSfw5GK
-         FExYzOyX14XYi69gb7CEgnP/5c9y9cGKKWcDNzpafmNjeSBKP1q4Eg51VXB7Mgy77PMz
-         shoCF/aXCuD1gBH9jkOFVAAV6o+SBkr+s+gbSn8xA8t0daKpaP8Zxp18rznrGEOo1lPr
-         Isfw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1706564951; x=1707169751;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=PR7KDN1TEiOmuaRmE7vEYWBGEQiUHT3+POzBzv5z87A=;
-        b=k7o1FmwQK49rmf9Xz7JD6FggoFQKi0ozkoVWBr4ZSPDhhFkWw4k3nt8QBQsha34+f/
-         V3fTFWAk8R3KWxqoJRENP3vx+W7Xj7TqGiHOVZ0NDM6aUDxbcmIHHj0DiIl47+XZMODh
-         ha88K2GXPDKVIzfSPsodZrKGklurWtchZqFJ1BukLIkJtg2z4nMvn74pqHvUp5n5J9X6
-         H70TFOpUMuTpY76oYwCAjemdfw6ojci1K/oP6BqjZS5JqxF45NFF3i0aSlWnPBXuxTK3
-         /tjfVw2zmMnmLNrguu83J5llMTapK5v3e+wHdNneoXE/NAb26Czxplfhr3IBDhYiv+rl
-         RFkQ==
-X-Gm-Message-State: AOJu0Yw7AwEI6cfMQLJu0UWnrcYELYzs+rIWEtYOqg6qtaanr7L8anOa
-	WgfYsNH0RvGWZ250TW7CqzGSjMAe+vATRzukegEodDI6g9h45Kk5IF6JaRXZ448=
-X-Google-Smtp-Source: AGHT+IHJNpczNe740uNB3vVsnb6WgqS/HSUNVn/7VEHkBN9XZnWbwJBOgfKX02Rdn+Qv85va8qnm5A==
-X-Received: by 2002:a05:6512:3050:b0:50e:50ee:f378 with SMTP id b16-20020a056512305000b0050e50eef378mr5057301lfb.65.1706564950436;
-        Mon, 29 Jan 2024 13:49:10 -0800 (PST)
-Received: from osv.localdomain ([89.175.180.246])
-        by smtp.gmail.com with ESMTPSA id s9-20020a197709000000b00510ee2d0ce5sm757752lfc.81.2024.01.29.13.49.09
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 29 Jan 2024 13:49:09 -0800 (PST)
-From: Sergey Organov <sorganov@gmail.com>
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="K5mYZKcn"
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 0701A1D8FEE;
+	Mon, 29 Jan 2024 16:51:04 -0500 (EST)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=HRR25mSGqhj5+zK+OYJlhBzLiQPfAzOJaYfQgb
+	Vdxn0=; b=K5mYZKcno2wlL/Ki6neF30vj1MtYfW0x2RFMCOq8zM/84fqDv4DHbk
+	DRoD1Z5S/vo74xQlRo8Me+TBAsLP+qJV6LPhaPx6TEo/dR/Y4gCCOihy1RdXBrH0
+	Uu780W4UZ86sdVa3gGQmBRgBWmoNC9XlVgSXBaDKy+gn2uteE6PzI=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id D7EEF1D8FED;
+	Mon, 29 Jan 2024 16:51:03 -0500 (EST)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.200.93])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id CB2DB1D8FEC;
+	Mon, 29 Jan 2024 16:51:02 -0500 (EST)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
 To: Jeff King <peff@peff.net>
-Cc: Junio C Hamano <gitster@pobox.com>,  Elijah Newren <newren@gmail.com>,
-  git@vger.kernel.org
-Subject: Re: what should "git clean -n -f [-d] [-x] <pattern>" do?
-References: <87plxr3zsr.fsf@osv.gnss.ru> <xmqqa5ouhckj.fsf@gitster.g>
-	<87il3h72ym.fsf@osv.gnss.ru> <xmqq1qa5xq4n.fsf@gitster.g>
-	<87ede56tva.fsf@osv.gnss.ru> <87a5ot6tos.fsf@osv.gnss.ru>
-	<xmqqzfwspmh0.fsf@gitster.g> <87ede4fg8s.fsf@osv.gnss.ru>
-	<xmqqzfwrjdul.fsf@gitster.g> <87jzns7a8a.fsf@osv.gnss.ru>
-	<20240129182006.GC3765717@coredump.intra.peff.net>
-Date: Tue, 30 Jan 2024 00:49:08 +0300
-In-Reply-To: <20240129182006.GC3765717@coredump.intra.peff.net> (Jeff King's
-	message of "Mon, 29 Jan 2024 13:20:06 -0500")
-Message-ID: <87v87bx12j.fsf@osv.gnss.ru>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
+Cc: git@vger.kernel.org,  Phillip Wood <phillip.wood@dunelm.org.uk>
+Subject: Re: [PATCH 2/2] t/Makefile: get UNIT_TESTS list from C sources
+In-Reply-To: <20240129031933.GB2433899@coredump.intra.peff.net> (Jeff King's
+	message of "Sun, 28 Jan 2024 22:19:33 -0500")
+References: <20240129031540.GA2433764@coredump.intra.peff.net>
+	<20240129031933.GB2433899@coredump.intra.peff.net>
+Date: Mon, 29 Jan 2024 13:51:01 -0800
+Message-ID: <xmqqplxjhkqi.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -73,41 +54,44 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 7F1396F0-BEF0-11EE-8309-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
 
 Jeff King <peff@peff.net> writes:
 
-> On Mon, Jan 29, 2024 at 12:35:49PM +0300, Sergey Organov wrote:
+> Our new wildcard does make an assumption that unit tests are build from
+
+"build" -> "built", probably.
+
+> C sources. It would be a bit cleaner if we consulted UNIT_TEST_PROGRAMS
+> from the top-level Makefile. But doing so is tricky unless we reorganize
+> that Makefile to split the source file lists into include-able subfiles.
+> That might be worth doing in general, but in the meantime, the
+> assumptions made by the wildcard here seems reasonable.
 >
->> >> I'm still arguing in favor of fixing "-n", and I believe a fix is needed
->> >> independently from decision about "-f -f".
->> >
->> > Even though I do not personally like it, I do not think "which
->> > between do-it (f) and do-not-do-it (n) do you want to use?" is
->> > broken.  It sometimes irritates me to find "git clean" (without "-f"
->> > or "-n", and with clean.requireForce not disabled) complain, and I
->> > personally think "git clean" when clean.requireForce is in effect
->> > and no "-n" or "-f" were given should pretend as if "-n" were given.
->> 
->> As a note, I'd consider to get rid of 'clean.requireForce' anyway, as
->> its default value provides safe reasonably behaving environment, and I
->> fail to see why anybody would need to set it to 'false'.
+> Signed-off-by: Jeff King <peff@peff.net>
+> ---
+> I of course hit this when moving between "next" and "master" for an
+> up-and-coming unit-test file which sometimes failed.
+
+Thanks.  globbing the build products is indeed sloppy for all the
+reasons you mentioned.  Will queue.
+
+>  t/Makefile | 4 +++-
+>  1 file changed, 3 insertions(+), 1 deletion(-)
 >
-> Please don't. I set it to "false", because I find the default behavior a
-> pointless roadblock if you are already aware that "git clean" can be
-> destructive. Surely I can't be the only one.
-
-Well, provided there is at least one person who finds it useful to set
-it to 'false', I withdraw my suggestion.
-
-That said, did you consider to:
-
-  $ git config --global alias.cl 'clean -f'
-
-instead of
-
-  $ git config --global clean.requireForce false
-
-I wonder?
-
-Thanks,
--- Sergey Organov
+> diff --git a/t/Makefile b/t/Makefile
+> index b7a6fefe28..c5c6e2ef6b 100644
+> --- a/t/Makefile
+> +++ b/t/Makefile
+> @@ -42,7 +42,9 @@ TPERF = $(sort $(wildcard perf/p[0-9][0-9][0-9][0-9]-*.sh))
+>  TINTEROP = $(sort $(wildcard interop/i[0-9][0-9][0-9][0-9]-*.sh))
+>  CHAINLINTTESTS = $(sort $(patsubst chainlint/%.test,%,$(wildcard chainlint/*.test)))
+>  CHAINLINT = '$(PERL_PATH_SQ)' chainlint.pl
+> -UNIT_TESTS = $(sort $(filter-out %.pdb unit-tests/bin/t-basic%,$(wildcard unit-tests/bin/t-*)))
+> +UNIT_TEST_SOURCES = $(wildcard unit-tests/t-*.c)
+> +UNIT_TEST_PROGRAMS = $(patsubst unit-tests/%.c,unit-tests/bin/%,$(UNIT_TEST_SOURCES))
+> +UNIT_TESTS = $(sort $(filter-out unit-tests/bin/t-basic%,$(UNIT_TEST_PROGRAMS)))
+>  
+>  # `test-chainlint` (which is a dependency of `test-lint`, `test` and `prove`)
+>  # checks all tests in all scripts via a single invocation, so tell individual
