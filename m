@@ -1,56 +1,71 @@
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qv1-f45.google.com (mail-qv1-f45.google.com [209.85.219.45])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7878D53802
-	for <git@vger.kernel.org>; Mon, 29 Jan 2024 23:51:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AEDC54656
+	for <git@vger.kernel.org>; Mon, 29 Jan 2024 23:58:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706572299; cv=none; b=tlxUljx7h8V/PEo46exoIA5C/r3bcnAPZ0JKOa4V6SbWvoRLNDjtUWD2nOQfuD+du8OZQ3HKhWNKym8mzYTUVGU/3WxqeLv6qhw3wHK42B9H42ZMnpRta4f2NxWMUBvIBYN2H9gRsPN62OEuecK7uTUOwO8Al1aPpSSnVfpPhZA=
+	t=1706572726; cv=none; b=DGOvmgTk8vteswH/sufEAS/icqRyKbYIdqzOiN3gOL29Eexf3tXeK4bcdXGLqgk6OXlM5ZI3ySqbWEoZbSM2w6V/CnbY/pPJRVDo1ttiLCNFFVOfn3SDfHge2OQtKd3iEDsVtlScBpAVSI9+RUjLkJhMGZJzQdBMNB+CPWR4Zt4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706572299; c=relaxed/simple;
-	bh=YbWJiVJMp0UWuzRCjt+wdAcm0EOTejlQ3qWovut1+GY=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=OgfffC7Enbxc6DjHtvr7dqdGKa9w3bPZBJLOr5mqh5bGBg1lqetYVVgv74BQLWFraSoiW86llRLIhNfUBG4IwGYQZJvdzDdSqoqrcoKzeJIaiYy5ulIOjKmVZsu/J1wlM4RABY9mpdpzhUjmroEqJOr5G4bBiHZJkWoPqiQ5PEo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=oCEOOw1f; arc=none smtp.client-ip=64.147.108.70
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1706572726; c=relaxed/simple;
+	bh=fqdrcxS1yc8norHRtORpvJn4+OPAvjIbtDzKZVsnMMU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=CyK0VGCxnKgoIoV0UGn178Rff5urMEqBA1qSnTie5YT7dmpK/iUHO1U0o8YGYLmvKjogjg5wXEo4KtbMCyAMNJDSa6HGuQe9avG6oej+sNjLuxilref+yHW6FCv323uWasBGRgTpJfHPG0pLg2Zvasw2NoVfQyIFwJtrAuV+16c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=none smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=spYgVwlk; arc=none smtp.client-ip=209.85.219.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="oCEOOw1f"
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 1D9AF1D9C98;
-	Mon, 29 Jan 2024 18:51:36 -0500 (EST)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=YbWJiVJMp0UW
-	uzRCjt+wdAcm0EOTejlQ3qWovut1+GY=; b=oCEOOw1fm4wFU77MNFylQSBurwQP
-	pX5Bjr8tFgR+ICrrZL2mic7Arh0lExZl6QHxL1VS5otV8DMJNUYMatJVVMBLk5Yj
-	YA+e5gedIBPI8bbAfdJYol7eIwNzUeA67sLv2uGzxTsvJWXW8fTxOa8BAvvjEabr
-	RcePmZ1Sba8xolM=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 139B71D9C97;
-	Mon, 29 Jan 2024 18:51:36 -0500 (EST)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.200.93])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 5D34F1D9C96;
-	Mon, 29 Jan 2024 18:51:34 -0500 (EST)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: =?utf-8?Q?Rub=C3=A9n?= Justo <rjusto@gmail.com>
-Cc: Git List <git@vger.kernel.org>
-Subject: Re: [PATCH 1/4] t0080: mark as leak-free
-In-Reply-To: <c932fbfc-f14f-4403-bfc5-cf1d616b22de@gmail.com>
- (=?utf-8?Q?=22Rub=C3=A9n?= Justo"'s
-	message of "Tue, 30 Jan 2024 00:20:22 +0100")
-References: <45eb0748-6415-4e52-a54f-8d4e5ad57dde@gmail.com>
-	<4adfcba4-0f2b-44f5-a312-97f00f979435@gmail.com>
-	<xmqqa5onhjm4.fsf@gitster.g>
-	<c932fbfc-f14f-4403-bfc5-cf1d616b22de@gmail.com>
-Date: Mon, 29 Jan 2024 15:51:33 -0800
-Message-ID: <xmqqwmrrg0l6.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="spYgVwlk"
+Received: by mail-qv1-f45.google.com with SMTP id 6a1803df08f44-6818a9fe380so26166756d6.2
+        for <git@vger.kernel.org>; Mon, 29 Jan 2024 15:58:44 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1706572723; x=1707177523; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=F/E6kW0WuIj3ODp1XnQ2lYO5zLc5L7Fy+ZMQq/TBzbU=;
+        b=spYgVwlk9msiOAyAFLo+9ecFMBe56IZOSZle7j6IopRqZ9qUIhOfecpEK+7eQCgi+X
+         nwxVcR3LbSTvR6rxK0uUwsm+jkAZBLvs6ZS/84W698vDRXSuJFvZEFxUrB9uuG9eFylS
+         Bq00pwxMGvgnWV7IRfDTZM49e0E9wtdCiDnmZyh3vn6U9H3znShiABcYaxWpHpQJv+6T
+         45OV/tIjsAlK4opH655QWpBfrAkVDcHFqdFUnH3bssUXOMqYdJ9R+QXdWdDR3h96yTc5
+         u4q71jm51jDzLtTonO5CzhvGqp0DAtr0zM4XvvcvzQz48xbNYjjBbAOVdexb+HtOyEJO
+         93dw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1706572723; x=1707177523;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=F/E6kW0WuIj3ODp1XnQ2lYO5zLc5L7Fy+ZMQq/TBzbU=;
+        b=GNrrZKnOTqg0Y5wXNxX9nG32CGAGeI1kJId2GSUT/FG0Tm7U1iljr9MHZRYM3TyM0e
+         V2El7JkUUcEJptmsBwWDv86XO+jMBwPlgyqkw1WsNM8yas5uJfJO/vjGAibL5FKalxd0
+         S5DywT/eZ8wOZBXusAjAPiFjvm6l51Foh52hIJTJd1r9/kJtxQNigmsNLP9vLUsfG/37
+         USyuo94iTOh55BP9GlyVz559kxEiEM6BGuUArTGyQWSCSb/968fMdoaG1b2nN7Fve9TD
+         OUmufY2lthTJfbM69DHI7D23omImvPhX8t9Ru0lflGujfu32p4L2v6+bT8RaY5xCA2YA
+         HRaw==
+X-Gm-Message-State: AOJu0YzT0MYgU0AkzpR2h/ciK7RzC/Fkn4AIutHzu44FvBpPKEDlhAee
+	j4V1PJ3Pr2h8J3yEJ0ZI5wymc0J5FGInjsAwxrPXWP4pxP0/ss/N8WilS8AHaHI=
+X-Google-Smtp-Source: AGHT+IFgarSvu2pETVV1R2/1CoPQc5ZPrpfAkjzDe3MYmS1Zub+tKjr3M7ux99OZPQC9cA9BQcC0uA==
+X-Received: by 2002:a05:6214:4104:b0:68c:5f08:9c46 with SMTP id kc4-20020a056214410400b0068c5f089c46mr317475qvb.110.1706572723358;
+        Mon, 29 Jan 2024 15:58:43 -0800 (PST)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id ph15-20020a0562144a4f00b0068c50dec857sm1203339qvb.128.2024.01.29.15.58.43
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 29 Jan 2024 15:58:43 -0800 (PST)
+Date: Mon, 29 Jan 2024 18:58:42 -0500
+From: Taylor Blau <me@ttaylorr.com>
+To: SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, Elijah Newren <newren@gmail.com>,
+	"Eric W. Biederman" <ebiederm@gmail.com>, Jeff King <peff@peff.net>,
+	Patrick Steinhardt <ps@pks.im>,
+	Jonathan Tan <jonathantanmy@google.com>
+Subject: Re: [PATCH v5 09/17] repo-settings: introduce
+ commitgraph.changedPathsVersion
+Message-ID: <Zbg7so2b4puSEWNK@nand.local>
+References: <cover.1697653929.git.me@ttaylorr.com>
+ <cover.1705442923.git.me@ttaylorr.com>
+ <a77dcc99b4eb0a19dc6c09a40a84785413502126.1705442923.git.me@ttaylorr.com>
+ <20240129212614.GB9612@szeder.dev>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -58,54 +73,30 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID:
- 556AA8F0-BF01-11EE-A32C-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20240129212614.GB9612@szeder.dev>
 
-Rub=C3=A9n Justo <rjusto@gmail.com> writes:
-
->> The point of the t-basic tests is to ensure the lightweight unit
->> test framework that requires nothing from Git behaves (and keeps
->> behaving) sensibly.  The point of running t[0-9][0-9][0-9][0-9]
->> tests under leak sanitizer is to exercise production Git code to
->> catch leaks in Git code.
->>=20
->> So it is not quite clear if we even want to run this t0080 under
->> leak sanitizer to begin with.  t0080 is a relatively tiny test, but
->> do we even want to spend leak sanitizer cycles on it?  I dunno.
+On Mon, Jan 29, 2024 at 10:26:14PM +0100, SZEDER Gábor wrote:
+> At this point in the series this test fails with:
 >
-> IIUC, that would imply building test-tool with a different set of flags
-> than Git, new artifacts ...  or running test-tool with some LSAN_OPTION=
-S
-> options, to disable it ...  or both ... or ...
->
-> And that is assuming that with test-tool we won't catch a leak in Git
-> that we're not seeing in the other tests ...
+>   + test_cmp expect.err err
+>   + test 2 -ne 2
+>   + eval diff -u "$@"
+>   + diff -u expect.err err
+>   --- expect.err  2024-01-29 21:02:57.927462620 +0000
+>   +++ err 2024-01-29 21:02:57.923462642 +0000
+>   @@ -1 +0,0 @@
+>   -warning: disabling Bloom filters for commit-graph layer 'e338a7a1b4cfa5f6bcd31aea3e027df67d06442a' due to incompatible settings
+>   error: last command exited with $?=1
 
-But t0080 does not even run test-tool, does it?  The t-basic unit
-test is about testing the unit test framework and does not even
-trigger any of the half-libified Git code.  So I am not sure why
-you are bringing up test-tool into the picture.
+Very good catch, thanks, I'm not sure how this one slipped through.
 
-> Maybe this is tangential to this series but,  while a decision is being
-> made, annotating the test makes GIT_TEST_PASSING_SANITIZE_LEAK=3Dcheck
-> pass, which is the objective in this series.=20
+The fix should be mostly trivial, but I'll have to reroll the series
+since it has some minor fallout outside of just this patch.
 
-One major reason why we want to set TEST_PASSES_SANITIZE_LEAK to
-true is because that way the marked test will be run under the leak
-sanitizer in the CI.
+Junio, please hold off on merging this to 'next' until I've had a chance
+to send out a new round.
 
-What do we expect to gain by running t0080, which is to run the
-t-basic unit test, under the leak sanitizer?  Unlike other
-t[0-9][0-9][0-9][0-9] tests that exercise Git production code, would
-we care about a new leak found in t-basic run from t0080 in the
-first place?
-
-Annotating with TEST_PASSES_SANITIZE_LEAK is not a goal by itself.
-Annotating the tests that we want to run under the sanitizer and see
-them passing with it is.  And obviously these tests that exercise
-Git production code are very good candidates for us to do so.  It is
-unclear if t0080 falls into the same category.  That is why I asked
-what we expect to gain by running it.
-
-Thanks.
+Thanks,
+Taylor
