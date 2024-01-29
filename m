@@ -1,56 +1,52 @@
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2798158D99
-	for <git@vger.kernel.org>; Mon, 29 Jan 2024 17:19:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 315BD3F9C5
+	for <git@vger.kernel.org>; Mon, 29 Jan 2024 17:26:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706548744; cv=none; b=lSPnL7W82OU++YaBGxInMQY6GTmTz8NH8I0koV+bqgGofBlXqvocRrj1BDnda38olOvXkKlv6mWmOeHJNG4A/8ks9LuNMc8/0d/qbGphIr8qdNL/FWx9qoD4WsFL3VTJAwVt1xOxzeE394A87eEPEEbShm2VXubwP7r28+cl2oA=
+	t=1706549164; cv=none; b=h/lObgT8cAg9sjTTXEtOIJHwu4aPkGimrKdMGfGFwqi5RjL9ZnpL+rBIA1H/NQESjIvhETJ8YPOW4FjCFgntYNfg1tIe5WwDkPjAIqh9TzfMdDHxCBCSS9AhzKfBtvO4fbcIPOAFgBGf3WINdwNxbqs9HEVh9yXlZAt5uJdXHQQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706548744; c=relaxed/simple;
-	bh=Ll+Gh7BSFtsPbh1LglAvtjDhgWKPZojO+VTCgz0sHaE=;
+	s=arc-20240116; t=1706549164; c=relaxed/simple;
+	bh=acxo/BU4fa1Pgg3YjpDMEe4aKvVFh0rZL3hD2gh2Cqo=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=T1P4BwyuUX/9QppXWF781LIzvfuaRFUx7lPEIdMon4OfT60DEMQEscaQ/JXoLYAuhtsI9SmljrZyWHteeSfPbJpNTRcrrJFGbMiAaFSEspohi4C5bd6lTL/lOljlZ/9c9bDkPbG6YyACh9yCfh/3qMLfZt9/i32J+zMPPh0kgGo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=GMr4OJ7a; arc=none smtp.client-ip=173.228.157.52
+	 MIME-Version:Content-Type; b=aq4npF81SKZw/F2v1ubmL5uqVYkRh8yZ7u+UuVD/jnbpOnPTPKCSYEhGeunLbybDoy0YhHteJzNErcYscu0qNFztc2OjQCBEU6P28D6YX4uMK+6JcQhUT+8po923AwoFrPN0VEbwEndadctEebBZ6b0K/EFiYUhOFKxqCdBt6KY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=K+UPJjb5; arc=none smtp.client-ip=64.147.108.70
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="GMr4OJ7a"
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id AFB3D20947;
-	Mon, 29 Jan 2024 12:19:01 -0500 (EST)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="K+UPJjb5"
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 395EF1D6C2B;
+	Mon, 29 Jan 2024 12:25:56 -0500 (EST)
 	(envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=Ll+Gh7BSFtsPbh1LglAvtjDhgWKPZojO+VTCgz
-	0sHaE=; b=GMr4OJ7aI7JLKPablUcH59CD0RNL6m7OIVGs8Ex4uPdT1ZomeTZHIi
-	idKHtIBv4O0ehOuxlZVIAEKEOspCAbcyOVexdQxtjXm+V1DBBh7KML8zTANkICF4
-	Kei57RgOQDbhJjPe7uU6dcdn3kCh6Py5uG+XE/MvVCY34EAColRpc=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id A85E520946;
-	Mon, 29 Jan 2024 12:19:01 -0500 (EST)
+	:content-type; s=sasl; bh=acxo/BU4fa1Pgg3YjpDMEe4aKvVFh0rZL3hD2g
+	h2Cqo=; b=K+UPJjb5LWDyUQhhgFbaZKfD2E8rzFrEftCnFY/B70NbYlZjLOrH2B
+	gkKqh8CT/S7xbtdYXN+rHKnPCRm63mKZ21ZPuKJkbT9gz/5Oa+HcRBROe3I59fce
+	M0yRGsUsPV0uvAwons3BBzBzc+hdm4CQ1Nhp/xmjJWzk28oKTSl44=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 30AD61D6C2A;
+	Mon, 29 Jan 2024 12:25:56 -0500 (EST)
 	(envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.125.200.93])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 3FE0720943;
-	Mon, 29 Jan 2024 12:18:58 -0500 (EST)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 9862D1D6C29;
+	Mon, 29 Jan 2024 12:25:55 -0500 (EST)
 	(envelope-from junio@pobox.com)
 From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: John Cai <johncai86@gmail.com>,  John Cai via GitGitGadget
- <gitgitgadget@gmail.com>,  Jonathan Tan <jonathantanmy@google.com>,
-  git@vger.kernel.org
-Subject: Re: [PATCH v3 0/2] index-pack: fsck honor checks
-In-Reply-To: <ZbeI0ksoUQEkbt90@tanuki> (Patrick Steinhardt's message of "Mon,
-	29 Jan 2024 12:15:30 +0100")
-References: <pull.1658.v2.git.git.1706289180.gitgitgadget@gmail.com>
-	<pull.1658.v3.git.git.1706302749.gitgitgadget@gmail.com>
-	<xmqqfryjn686.fsf@gitster.g>
-	<BF772E83-2BFE-4652-A742-67FADF3D8FE2@gmail.com>
-	<ZbeI0ksoUQEkbt90@tanuki>
-Date: Mon, 29 Jan 2024 09:18:56 -0800
-Message-ID: <xmqqplxkjbwf.fsf@gitster.g>
+To: "James Touton via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  James Touton <bekenn@gmail.com>
+Subject: Re: [PATCH v2] git-p4: use raw string literals for regular expressions
+In-Reply-To: <pull.1639.v2.git.1706312496608.gitgitgadget@gmail.com> (James
+	Touton via GitGitGadget's message of "Fri, 26 Jan 2024 23:41:36
+	+0000")
+References: <pull.1639.git.1705775149642.gitgitgadget@gmail.com>
+	<pull.1639.v2.git.1706312496608.gitgitgadget@gmail.com>
+Date: Mon, 29 Jan 2024 09:25:54 -0800
+Message-ID: <xmqqle88jbkt.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -60,25 +56,49 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 X-Pobox-Relay-ID:
- 7CDF776C-BECA-11EE-A94A-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
+ 75A458AE-BECB-11EE-B7EB-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
 
-Patrick Steinhardt <ps@pks.im> writes:
+"James Touton via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> I'm always a bit hesitant to add trailers referring to off-list reviews
-> to commits. It's impossible for a future reader to discover how that
-> trailer came to be by just using the mailing list archive, and expecting
-> them to use third-party services to verify them feels wrong to me.
+> From: James Touton <bekenn@gmail.com>
 >
-> It's part of the reason why I'm pushing more into the direction of
-> on-list reviews at GitLab. It makes it a lot more obvious how such a
-> Reviewed-by came to be and keeps things self-contained on the mailing
-> list. It also grows new contributors who are becoming more familiar with
-> how the Git mailing list works. If such a review already happened
-> internally due to whatever reason then I think it ought to be fine for
-> that reviewer to chime in saying that they have already reviewed the
-> patch series and that things look good to them.
+> Fixes several Python diagnostics about invalid escape sequences. The
+> diagnostics appear for me in Python 3.12, and may appear in earlier
+> versions. The fix is to use raw string literals so that backslashes are
+> not interpreted as introducing escape sequences. Raw string literals
+> are already in use in this file, so adding more does not impact
+> toolchain compatibility.
+>
+> Signed-off-by: James Touton <bekenn@gmail.com>
+> ---
+>     git-p4: use raw string literals for regular expressions
+>     
+>     Changes since v1:
+>     
+>      * Updated commit message to include the Python version where the
+>        diagnostics were observed.
+>
+> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1639%2FBekenn%2Fp4-raw-strings-v2
+> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1639/Bekenn/p4-raw-strings-v2
+> Pull-Request: https://github.com/gitgitgadget/git/pull/1639
+>
+> Range-diff vs v1:
+>
+>  1:  1ea38dc4643 ! 1:  122ff28ffbd git-p4: use raw string literals for regular expressions
+>      @@ Metadata
+>        ## Commit message ##
+>           git-p4: use raw string literals for regular expressions
+>       
+>      -    Fixes several Python diagnostics about invalid escape sequences.
+>      +    Fixes several Python diagnostics about invalid escape sequences. The
+>      +    diagnostics appear for me in Python 3.12, and may appear in earlier
+>      +    versions. The fix is to use raw string literals so that backslashes are
+>      +    not interpreted as introducing escape sequences. Raw string literals
+>      +    are already in use in this file, so adding more does not impact
+>      +    toolchain compatibility.
+>       
+>           Signed-off-by: James Touton <bekenn@gmail.com>
+>       
 
-Thanks.  That would improve clarifying a situation like this one
-(eh, actually, once it is done this particular situation wouldn't
-need any clarification).
+Thanks.  Let's merge it down to 'next'.
 
