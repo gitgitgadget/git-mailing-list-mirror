@@ -1,64 +1,63 @@
-Received: from mail-lf1-f44.google.com (mail-lf1-f44.google.com [209.85.167.44])
+Received: from mail-wr1-f54.google.com (mail-wr1-f54.google.com [209.85.221.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CF5B64CE4
-	for <git@vger.kernel.org>; Mon, 29 Jan 2024 13:28:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FE6064CF5
+	for <git@vger.kernel.org>; Mon, 29 Jan 2024 13:28:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706534888; cv=none; b=O8AXwpwrZHee1X70SkKa/7Wr+xKl9y3Ec79zd6TAXXiiE1ou/GTwwJRld+8bd+nyHFUAgzrpxwUI3i8WPIltBMAfwZ25rl1ymBjNl92RpaDeQep8RZ8P3tMFCG+gIhPt7yo2a9ei8L4YaZ7W7vAOM2O+dGLj+ZHTktb1O482cqQ=
+	t=1706534889; cv=none; b=nSBynh/g1YJWndKf1bmDRK4vdB0FLllwR2iCAq/cJJBUqgBglFPZ5b98HFGhxPnpSWBkTUlYJ8xEoP5EcjTj6EjQP4fadbrkdvuJ6hdUd/Cs1pQbFKpb7WEELeqzftc1WcJx6IGQZUunii6yQANKQLJckh8iWSFjMkAIoVnOXrE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706534888; c=relaxed/simple;
-	bh=lvMxwpu5SITz45OThYK9Sw30XiLRRcYvW3f6jY6Cpqc=;
+	s=arc-20240116; t=1706534889; c=relaxed/simple;
+	bh=NJ7EfKMPw7p7pie7Luy2Gunpy4YTA3WctlBUTJwjwB4=;
 	h=Message-ID:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=N0F8C+qcziNDs+vVIW7S7wr3/849XgxmaxcvHcwMCLLUcMXLSnIvZ5OrgCyF6csDf3HjNCtjU677SHff6nt0ktu2RIXp6je/AVu46K8vxJmLw8gWpp2xQ9h68qgTXrrKklLLkEkAk4j7XZk0oVN2vDnokoSHYhwPaj7MUSdYw1w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Y3sAD4fw; arc=none smtp.client-ip=209.85.167.44
+	 MIME-Version:To:Cc; b=e6IVuIFaa7z71z5t2U6VXFIfXXbHyP3rmc+8f2CqCV6XKTaA2GffGbhgLIeOt743swN6YRZ1bWU5buakZ3MT8ws2rdt92G83KyJUXLRU6m9N0eBlyQ67lkNcoKelAkoClQkHLdDs0+BoBqXRGns6D5AE+rCaVfprE4q9V7liA3U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HltqOJbb; arc=none smtp.client-ip=209.85.221.54
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Y3sAD4fw"
-Received: by mail-lf1-f44.google.com with SMTP id 2adb3069b0e04-51032058f17so1633442e87.3
-        for <git@vger.kernel.org>; Mon, 29 Jan 2024 05:28:06 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HltqOJbb"
+Received: by mail-wr1-f54.google.com with SMTP id ffacd0b85a97d-33af4b34e2cso277050f8f.1
+        for <git@vger.kernel.org>; Mon, 29 Jan 2024 05:28:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20230601; t=1706534884; x=1707139684; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=XXyWyvBibm9hTSLDiYgyRvra4RZZ/TOhpEDNI9Sq/xo=;
-        b=Y3sAD4fw8zHJR/fEAQrFypTUBn3jY4kWyye+zXrYUyZB/ByUUMxR/Bp45jicpsnYhq
-         4kBQGR88lJTL3zP9Ll1UuqnY/IRZX8p2toRj37OsB9epKXndypdSE3UDuayyM6MeVfBe
-         gqKoIC+7QcvGcb0RDh2XLGfTKU94kt4ZqXPtOVWKAq0bTc2Pww+L7ub5PRSwATHGb3+f
-         SiG4jqYIWULkO34cjVxoRxEbHSM3la8pOwUAFcjpy5uZ91j3YiSc3lr0ToEnRDA0tWFV
-         x03kCf5H7vOsoGzWrFFqNOvT6zXVChJBpBbFrv66Z4IEt+c4GW8HngrkZ7YL51a3r4im
-         RNbQ==
+        bh=LEW5FFJmSym+dBGzrMen0xCyW3bGwpQfsoLaATumYJE=;
+        b=HltqOJbbhUckCadawzMW+k9co2wf9lV/12UXkApcp11UwtZ1Z+6C11lyhW0Hyp6KHs
+         6AFcnugfHKFH6Rw25/4R+BHEzNCdKRGZU6Nio/mNw7aNkVEjXOOT0X7sR1jk5J/xR9CI
+         aF4O9H1NSgP0Eo/kKqQxmklVPWj+Ul5W2ksRQKiE3SCsAbs9L6qLKH4fKQCczkIbce2q
+         f/7mABJ+qGiYcfmQ522oWnhAl65RIyyNsuY6DFWTQO10ykaRez7lR9RkikwnnvcOiNdF
+         z7d/rWPy53/CN15FUTvPTPkalyIveoZk7ir8xEyAXyTxpI9tLJPwEw6x5/5wAfiT2y3X
+         rDag==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20230601; t=1706534884; x=1707139684;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=XXyWyvBibm9hTSLDiYgyRvra4RZZ/TOhpEDNI9Sq/xo=;
-        b=Gh/7qC40u0o9e4nT48bVWmIZJqxlFKXV4hoz2rhStJ2+kYM7i1UYP5zMZRoTe+tuPl
-         VwiR0XjclYD/9li8jFBMHzlpgHGu7CHjJQwZIgOpHGgUzQwhnzoE9sykveI0NZ8e3M4z
-         FucUFhRWJnGU3NyYNHh+8qZTaZGQiY+dDhVWNEtcvDm2BdCF5MWy8RX1MkHS5ZV8S1sy
-         PDupPWHVt9jWCWc0QntgG3O2fgzL64YOOB0T+XYOBqtTTzsyXPbYPPnYkL1dUr6Mr9sq
-         qSXtJFHAGeU9c6kUs22lUlEJ6cybVCIgPlzI7o9DL4+t7dd7UvmVmKhggCb7+s5OIf2+
-         4bRQ==
-X-Gm-Message-State: AOJu0YzgMJkTPYXirhUOLDlytM/fe2zid63oENSjZYI652SO4y9z/xg7
-	H1Rz1rDPNTxs2+ru0ZxBJVfs871e8KhKL0nb6SGwsGIsTpwtPJKps2bf513v
-X-Google-Smtp-Source: AGHT+IF9li1dss0YchDlMl6u1PCNDHR3+bxWKH0CoGNPz0SndnGr0Qe7xD06BR/xS2GxkOKfPZ33RQ==
-X-Received: by 2002:a05:6512:3192:b0:510:1878:9f00 with SMTP id i18-20020a056512319200b0051018789f00mr3990935lfe.64.1706534884041;
+        bh=LEW5FFJmSym+dBGzrMen0xCyW3bGwpQfsoLaATumYJE=;
+        b=DKH/4bwCezIVhlbOzLO+wByGOdqA4QCY+Exns+gRtBUJo9VjR9dj39VSfj+ABfQ5R/
+         ArP20eqNgmPEx5/xOyAwM3j2ohCGCKrsweDPC4tG/27QP7Z3heBQEBs4pZsPHICKuJ7J
+         AkfSnNg7xfd3dcxSa5DGlrRA74S2yUIclGKumaYL0b/KrVz3Qzi7x/AzYt8R1RhWY061
+         /IfcFGBqmLf8+c04JfMRw8YRraZ8m0D4vwF3V8KAEf3Em05G9DQn1InGsgpYTN5Ne6Cd
+         C7r5UpbM7abjwPO08VAmN5PKIIf9ssXRroPXT49hk/WCsm18hnJAag+Yh3zz7WaxgA5V
+         xYqA==
+X-Gm-Message-State: AOJu0YwZyac5pRmWO5YcVWaNdCT3RARbPzxr0Gg/6Nd/LwLyQlY5hEm2
+	s1Douww1PDhbVv/LUQ8OeSru5NQqA9ThxrCIWEJBOkcEhPCIi/KvOl9R1e+5
+X-Google-Smtp-Source: AGHT+IHQVDolaz+ffC6XiNrT4BeaNr88NXOtb3duEA/A+VZYN26KAYDkaRoAxW8iptbY8Bz1wmyxow==
+X-Received: by 2002:adf:ef90:0:b0:33a:ded0:c309 with SMTP id d16-20020adfef90000000b0033aded0c309mr4390143wro.13.1706534884624;
         Mon, 29 Jan 2024 05:28:04 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id fa7-20020a05600c518700b0040ec6d7420csm13956920wmb.14.2024.01.29.05.28.03
+        by smtp.gmail.com with ESMTPSA id n4-20020a5d4c44000000b0033aeda49732sm2734130wrt.33.2024.01.29.05.28.04
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 29 Jan 2024 05:28:03 -0800 (PST)
-Message-ID: <837d92a6c277015fc8633ca84557124465390548.1706534882.git.gitgitgadget@gmail.com>
+        Mon, 29 Jan 2024 05:28:04 -0800 (PST)
+Message-ID: <426374ff9b3820512f73ef094f9533e6a1ea5cad.1706534882.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1660.v2.git.git.1706534881.gitgitgadget@gmail.com>
 References: <pull.1660.git.git.1706472173.gitgitgadget@gmail.com>
 	<pull.1660.v2.git.git.1706534881.gitgitgadget@gmail.com>
 From: "Philippe Blain via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Mon, 29 Jan 2024 13:27:57 +0000
-Subject: [PATCH v2 1/5] completion: add space after config variable names also
- in Bash 3
+Date: Mon, 29 Jan 2024 13:27:58 +0000
+Subject: [PATCH v2 2/5] completion: complete 'submodule.*' config variables
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -74,60 +73,44 @@ Cc: Philippe Blain <levraiphilippeblain@gmail.com>,
 
 From: Philippe Blain <levraiphilippeblain@gmail.com>
 
-In be6444d1ca (completion: bash: add correct suffix in variables,
-2021-08-16), __git_complete_config_variable_name was changed to use
-"${sfx- }" instead of "$sfx" as the fourth argument of _gitcomp_nl and
-_gitcomp_nl_append, such that this argument evaluates to a space if sfx
-is unset. This was to ensure that e.g.
+In the Bash completion script, function
+__git_complete_config_variable_name completes config variables and has
+special logic to deal with config variables involving user-defined
+names, like branch.<name>.* and remote.<name>.*.
 
-	git config branch.autoSetupMe[TAB]
-
-correctly completes to 'branch.autoSetupMerge ' with the trailing space.
-This commits notes that the fix only works in Bash 4 because in Bash 3
-the 'local sfx' construct at the beginning of
-__git_complete_config_variable_name creates an empty string.
-
-Make the fix also work for Bash 3 by using the "unset or null' parameter
-expansion syntax ("${sfx:- }"), such that the parameter is also expanded
-to a space if it is set but null, as is the behaviour of 'local sfx' in
-Bash 3.
+This special logic is missing for submodule-related config variables.
+Add the appropriate branches to the case statement, making use of the
+in-tree '.gitmodules' to list relevant submodules.
 
 Signed-off-by: Philippe Blain <levraiphilippeblain@gmail.com>
 ---
- contrib/completion/git-completion.bash | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ contrib/completion/git-completion.bash | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
 diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index 6662db221df..159a4fd8add 100644
+index 159a4fd8add..8af9bc3f4e1 100644
 --- a/contrib/completion/git-completion.bash
 +++ b/contrib/completion/git-completion.bash
-@@ -2750,7 +2750,7 @@ __git_complete_config_variable_name ()
- 		local pfx="${cur_%.*}."
- 		cur_="${cur_#*.}"
- 		__gitcomp_direct "$(__git_heads "$pfx" "$cur_" ".")"
--		__gitcomp_nl_append $'autoSetupMerge\nautoSetupRebase\n' "$pfx" "$cur_" "${sfx- }"
-+		__gitcomp_nl_append $'autoSetupMerge\nautoSetupRebase\n' "$pfx" "$cur_" "${sfx:- }"
+@@ -2803,6 +2803,19 @@ __git_complete_config_variable_name ()
+ 		__gitcomp_nl_append "pushDefault" "$pfx" "$cur_" "${sfx:- }"
  		return
  		;;
- 	guitool.*.*)
-@@ -2784,7 +2784,7 @@ __git_complete_config_variable_name ()
- 		local pfx="${cur_%.*}."
- 		cur_="${cur_#*.}"
- 		__git_compute_all_commands
--		__gitcomp_nl "$__git_all_commands" "$pfx" "$cur_" "${sfx- }"
-+		__gitcomp_nl "$__git_all_commands" "$pfx" "$cur_" "${sfx:- }"
- 		return
- 		;;
- 	remote.*.*)
-@@ -2800,7 +2800,7 @@ __git_complete_config_variable_name ()
- 		local pfx="${cur_%.*}."
- 		cur_="${cur_#*.}"
- 		__gitcomp_nl "$(__git_remotes)" "$pfx" "$cur_" "."
--		__gitcomp_nl_append "pushDefault" "$pfx" "$cur_" "${sfx- }"
-+		__gitcomp_nl_append "pushDefault" "$pfx" "$cur_" "${sfx:- }"
- 		return
- 		;;
++	submodule.*.*)
++		local pfx="${cur_%.*}."
++		cur_="${cur_##*.}"
++		__gitcomp "url update branch fetchRecurseSubmodules ignore active" "$pfx" "$cur_" "$sfx"
++		return
++		;;
++	submodule.*)
++		local pfx="${cur_%.*}."
++		cur_="${cur_#*.}"
++		__gitcomp_nl "$(__git config -f "$(__git rev-parse --show-toplevel)/.gitmodules" --get-regexp 'submodule.*.path' | awk -F. '{print $2}')" "$pfx" "$cur_" "."
++		__gitcomp_nl_append $'alternateErrorStrategy\nfetchJobs\nactive\nalternateLocation\nrecurse\npropagateBranches' "$pfx" "$cur_" "${sfx:- }"
++		return
++		;;
  	url.*.*)
+ 		local pfx="${cur_%.*}."
+ 		cur_="${cur_##*.}"
 -- 
 gitgitgadget
 
