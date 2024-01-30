@@ -1,112 +1,771 @@
-Received: from mail-pg1-f172.google.com (mail-pg1-f172.google.com [209.85.215.172])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B287533CCF
-	for <git@vger.kernel.org>; Tue, 30 Jan 2024 00:44:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CF23347A2
+	for <git@vger.kernel.org>; Tue, 30 Jan 2024 01:10:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706575449; cv=none; b=t/hzPS8uX62bvOia92D49ij5oWBCTxbOM4jVOOwqsr6kRw0p8Y/ehOmtIWE5s9aGef4cJfZFM2CLQyhCmYd58ywLYzbB+/Tt/lHmmxkXqyv77HVBMDAuHfXaL9EIGTgMWIeotmi+xehpXjAel1dQUSvs0Ah/85kOn3tuhnW52lk=
+	t=1706577011; cv=none; b=qI/A2RIbuQtl+/joP3N7JMaMSfLK77nCfrtZLawHk2gR0lIAiiNcmOgF4ocruDa8TABjDjl4hIMZRAfDGiPH7UsjYseLA76bVTvdcACgBztPrLsQ1Fjq5LG2TuFE0CobGNA2oPKzBsp6IYOEprpUaRopIpy8wnIec9bxqmvc51U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706575449; c=relaxed/simple;
-	bh=j/vZNYjRbgndIfO6+ce85Hd3DIYyCMBRtjkDzFF2QBU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=prWwnxQrMj+wagvy/Ci2zUom+PiacDajPidv5PuAxCwr1EhESl0e6UWkFD/6Mtqk9ujAd7pAk6TX3iLlb69dwPZ5DjKS+LArm1h4fKlLfXbuQGbOZBPAwiWl6G+Lv37C35K95m3Ox/HKxWuZOpUaYvG5+teoxLqscxbTXzCQL+8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=A7A4sZ4v; arc=none smtp.client-ip=209.85.215.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	s=arc-20240116; t=1706577011; c=relaxed/simple;
+	bh=pxwQC5FkrV9avTnd2vdhcjpJ1FIG5jmu+rCuc81JW7g=;
+	h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type; b=FRLwqFr78HkJWxr3Lr46JY88qMKdyaFRj4uCqdfVqM5ADShkokFuUZENdDNdagAAsFurIDfmBRi0Ny16gu4/NWEpSqNEfL0crdsLRyT2o8ivqDRunS0e0urjoA8N+Dcsc9+WJgDlXlvWEzC91dadeZlM6B580H+7lLns740PLW0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=s/ZM85br; arc=none smtp.client-ip=64.147.108.70
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="A7A4sZ4v"
-Received: by mail-pg1-f172.google.com with SMTP id 41be03b00d2f7-5cfd95130c6so1855591a12.1
-        for <git@vger.kernel.org>; Mon, 29 Jan 2024 16:44:07 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1706575447; x=1707180247; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references
-         :mail-followup-to:message-id:subject:cc:to:from:date:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=vfl/qcIWlOhv307WJ0kX44C8+eXsC0qFOpXRSDIW9To=;
-        b=A7A4sZ4vTY4byP5vi7+B2C46UiJGhAI70817mf+Ny9WX6XJkQ9bsk0fk2N3nB6hzeh
-         XyH0Ix1F6hlcizwNzDOMyYMshRWOfcH1WBkxS6CLrIR1sKu0uhIEk4Jdq36ngEntGNBv
-         A5oRl4Ch3BWLiI87OgLSx2iI/PTRtuiOJNBcwmF0Z7Ao7M3ZRcEaVEKPCPGQ9PznJSsk
-         SPiq/crCiGVomCn1mrSybgayCmWeDjCM7GMzGt4MCsAMIbz0/UzWRIPmiQh9Qjuw/J5o
-         cQwsVgwChHRdCpJ99YUcG8Djs9H96olNsz5qkzLyCHs0hbY9+Z0In5oFVItRnxTgTw3p
-         sLRQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1706575447; x=1707180247;
-        h=in-reply-to:content-disposition:mime-version:references
-         :mail-followup-to:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=vfl/qcIWlOhv307WJ0kX44C8+eXsC0qFOpXRSDIW9To=;
-        b=RQAiA3pY2DAeoMvKszURcVybxcsXl5a7mfAV15oypqo2R1tIhzZn9xgRW0A20/chzC
-         uDDBpQttUH9i30YR85xVuMA4pNYmZaJfa4fyBtPj9b/4a8rG4GZzbiDAM5jzsTkNpSVq
-         yfEYm/laPZJq1XCqr3wDp8rNz84t+le4raxkVHtpq8XNWIHc0VkbF78BI35xy+5Xar4g
-         xmCBAQaqxcc8xvCVLXTS1LsSSr9V0MswRmYyBjKlDFJ2IRaKm4UxwKQ5mLi1f/XU4aKO
-         TbXXHyRbJ5JxiPpiljvDM8Zz4UkTMeYy02lOT0kR2ehMc3Tx3UsHoAYettivHLPt2Ahj
-         E2xw==
-X-Gm-Message-State: AOJu0YxucUkbyAuck47EoBh0dkxVelNOlPprO1GpX0KnYKqaGup7QMSv
-	blmIkFpxLWqz7Rx7VOZIdm4vCRO7HtHJifQVJ7CjNcWD/XFjqmxAO8wEbTwFoQ==
-X-Google-Smtp-Source: AGHT+IGP2v5GvKhowtre3N7sSyVPoVBBs7ngEznN6bKUx5Vd0JGE8QiQKSmW+LgYLyTGykF4+59M3A==
-X-Received: by 2002:a17:902:f542:b0:1d8:ffb2:8bcd with SMTP id h2-20020a170902f54200b001d8ffb28bcdmr1605447plf.66.1706575446834;
-        Mon, 29 Jan 2024 16:44:06 -0800 (PST)
-Received: from google.com ([2620:15c:2d3:204:4527:c1dd:9b37:d3a0])
-        by smtp.gmail.com with ESMTPSA id ke15-20020a170903340f00b001d8e04de78asm2533793plb.132.2024.01.29.16.44.05
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 29 Jan 2024 16:44:06 -0800 (PST)
-Date: Mon, 29 Jan 2024 16:44:01 -0800
-From: Josh Steadmon <steadmon@google.com>
-To: Linus Arver via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, Christian Couder <chriscool@tuxfamily.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Emily Shaffer <nasamuffin@google.com>,
-	"Randall S. Becker" <rsbecker@nexbridge.com>,
-	Linus Arver <linusa@google.com>
-Subject: Re: [PATCH v2 01/10] trailer: prepare to expose functions as part of
- API
-Message-ID: <ZbhGUYcxEaeOXPAi@google.com>
-Mail-Followup-To: Josh Steadmon <steadmon@google.com>,
-	Linus Arver via GitGitGadget <gitgitgadget@gmail.com>,
-	git@vger.kernel.org, Christian Couder <chriscool@tuxfamily.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Emily Shaffer <nasamuffin@google.com>,
-	"Randall S. Becker" <rsbecker@nexbridge.com>,
-	Linus Arver <linusa@google.com>
-References: <pull.1632.git.1704869487.gitgitgadget@gmail.com>
- <pull.1632.v2.git.1706308737.gitgitgadget@gmail.com>
- <e2d3ed9b5b6d67273c22671374daf7695c67709f.1706308737.git.gitgitgadget@gmail.com>
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="s/ZM85br"
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id C3F7D1DA700;
+	Mon, 29 Jan 2024 20:10:05 -0500 (EST)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to
+	:subject:date:message-id:mime-version:content-type; s=sasl; bh=p
+	xwQC5FkrV9avTnd2vdhcjpJ1FIG5jmu+rCuc81JW7g=; b=s/ZM85brRmEUf/c7x
+	OxIZpFr+Z+14RnefqecFLD5O8Qu9eZaSQ94IuOjXSUrnJ9NHRJRxpBroFXjSCVAt
+	QX7gonEupPo9R9p5asH0tKD1JVKqG+6+RYxo2n3R8/al3SBzuBLI8N4GNUYIsLie
+	c4FcRwfsD7ghg+Jdh5peTY50s4=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 9E3131DA6FF;
+	Mon, 29 Jan 2024 20:10:05 -0500 (EST)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.200.93])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id B7E8E1DA6FE;
+	Mon, 29 Jan 2024 20:10:04 -0500 (EST)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+Subject: What's cooking in git.git (Jan 2024, #09; Mon, 29)
+X-master-at: c5b454771e6b086f60c7f1f139025f174bcedac9
+X-next-at: fb1a86299d91ca856248ba2018147aff99ef91fd
+Date: Mon, 29 Jan 2024 17:10:02 -0800
+Message-ID: <xmqqr0hzeidx.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <e2d3ed9b5b6d67273c22671374daf7695c67709f.1706308737.git.gitgitgadget@gmail.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 4D049A3A-BF0C-11EE-B9FB-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
 
-On 2024.01.26 22:38, Linus Arver via GitGitGadget wrote:
-> From: Linus Arver <linusa@google.com>
-> 
-> In the next patch, we will move "process_trailers" from trailer.c to
-> builtin/interpret-trailers.c. That move will necessitate the growth of
-> the trailer.h API, forcing us to expose some additional functions in
-> trailer.h.
-> 
-> Rename relevant functions so that they include the term "trailer" in
-> their name, so that clients of the API will be able to easily identify
-> them by their "trailer" moniker, just like all the other functions
-> already exposed by trailer.h.
-> 
-> The the opportunity to start putting trailer processions options (opts)
+Here are the topics that have been cooking in my tree.  Commits
+prefixed with '+' are in 'next' (being in 'next' is a sign that a
+topic is stable enough to be used and are candidate to be in a
+future release).  Commits prefixed with '-' are only in 'seen', and
+aren't considered "accepted" at all and may be annotated with an URL
+to a message that raises issues but they are no means exhaustive.  A
+topic without enough support may be discarded after a long period of
+no activity (of course they can be resubmit when new interests
+arise).
 
-Nitpick: typo in the commit message.
-s/The the opportunity/Take the opportunity/ ?
+Copies of the source code to Git live in many repositories, and the
+following is a list of the ones I push into or their mirrors.  Some
+repositories have only a subset of branches.
 
-> as the first parameter. This will be the pattern going forward in this
-> series.
-> 
-> Helped-by: Junio C Hamano <gitster@pobox.com>
-> Signed-off-by: Linus Arver <linusa@google.com>
-> ---
->  builtin/interpret-trailers.c |  4 ++--
->  trailer.c                    | 26 +++++++++++++-------------
->  trailer.h                    |  6 +++---
->  3 files changed, 18 insertions(+), 18 deletions(-)
+With maint, master, next, seen, todo:
+
+	git://git.kernel.org/pub/scm/git/git.git/
+	git://repo.or.cz/alt-git.git/
+	https://kernel.googlesource.com/pub/scm/git/git/
+	https://github.com/git/git/
+	https://gitlab.com/git-vcs/git/
+
+With all the integration branches and topics broken out:
+
+	https://github.com/gitster/git/
+
+Even though the preformatted documentation in HTML and man format
+are not sources, they are published in these repositories for
+convenience (replace "htmldocs" with "manpages" for the manual
+pages):
+
+	git://git.kernel.org/pub/scm/git/git-htmldocs.git/
+	https://github.com/gitster/git-htmldocs.git/
+
+Release tarballs are available at:
+
+	https://www.kernel.org/pub/software/scm/git/
+
+--------------------------------------------------
+[Graduated to 'master']
+
+* al/t2400-depipe (2024-01-20) 1 commit
+  (merged to 'next' on 2024-01-22 at a20d4a9a7f)
+ + t2400: avoid losing exit status to pipes
+
+ Coding style fix.
+ source: <20240120021547.199-1-ach.lumap@gmail.com>
+
+
+* en/diffcore-delta-final-line-fix (2024-01-18) 1 commit
+  (merged to 'next' on 2024-01-22 at 7141d202cb)
+ + diffcore-delta: avoid ignoring final 'line' of file
+
+ Rename detection logic ignored the final line of a file if it is an
+ incomplete line.
+ source: <pull.1637.v2.git.1705119973690.gitgitgadget@gmail.com>
+
+
+* gt/t0024-style-fixes (2024-01-20) 2 commits
+  (merged to 'next' on 2024-01-22 at 36b46efbd0)
+ + t0024: style fix
+ + t0024: avoid losing exit status to pipes
+
+ Coding style fix.
+ source: <20240118215407.8609-1-shyamthakkar001@gmail.com>
+
+
+* jc/majordomo-to-subspace (2024-01-20) 1 commit
+  (merged to 'next' on 2024-01-22 at 6a95f43de4)
+ + Docs: majordomo@vger.kernel.org has been decomissioned
+
+ Doc update.
+ source: <xmqqmst1hsd6.fsf@gitster.g>
+
+
+* js/oss-fuzz-build-in-ci (2024-01-19) 2 commits
+  (merged to 'next' on 2024-01-22 at 2954da5a39)
+ + ci: build and run minimal fuzzers in GitHub CI
+ + fuzz: fix fuzz test build rules
+
+ oss-fuzz tests are built and run in CI.
+ source: <cover.1705700054.git.steadmon@google.com>
+
+
+* nb/rebase-x-shell-docfix (2024-01-17) 1 commit
+  (merged to 'next' on 2024-01-22 at db49e10354)
+ + rebase: fix documentation about used shell in -x
+
+ Doc update.
+ source: <20240117085347.948960-1-nik.borisov@suse.com>
+
+
+* ps/not-so-many-refs-are-special (2024-01-19) 7 commits
+  (merged to 'next' on 2024-01-22 at f70f463847)
+ + Documentation: add "special refs" to the glossary
+ + refs: redefine special refs
+ + refs: convert MERGE_AUTOSTASH to become a normal pseudo-ref
+ + sequencer: introduce functions to handle autostashes via refs
+ + refs: convert AUTO_MERGE to become a normal pseudo-ref
+ + sequencer: delete REBASE_HEAD in correct repo when picking commits
+ + sequencer: clean up pseudo refs with REF_NO_DEREF
+
+ Define "special ref" as a very narrow set that consists of
+ FETCH_HEAD and MERGE_HEAD, and clarify everything else that used to
+ be classified as such are actually just pseudorefs.
+ source: <cover.1705659748.git.ps@pks.im>
+
+
+* ps/reftable-optimize-io (2024-01-18) 7 commits
+  (merged to 'next' on 2024-01-22 at b867e8b9a8)
+ + reftable/stack: fix race in up-to-date check
+ + reftable/stack: unconditionally reload stack after commit
+  (merged to 'next' on 2024-01-12 at 4096e880e0)
+ + reftable/blocksource: use mmap to read tables
+ + reftable/blocksource: refactor code to match our coding style
+ + reftable/stack: use stat info to avoid re-reading stack list
+ + reftable/stack: refactor reloading to use file descriptor
+ + reftable/stack: refactor stack reloading to have common exit path
+
+ Low-level I/O optimization for reftable.
+ source: <cover.1704966670.git.ps@pks.im>
+ source: <cover.1705585037.git.ps@pks.im>
+
+
+* tc/show-ref-exists-fix (2024-01-18) 1 commit
+  (merged to 'next' on 2024-01-22 at 831452f2dd)
+ + builtin/show-ref: treat directory as non-existing in --exists
+
+ Update to a new feature recently added, "git show-ref --exists".
+ source: <20240110141559.387815-2-toon@iotcl.com>
+
+--------------------------------------------------
+[New Topics]
+
+* jc/comment-style-fixes (2024-01-29) 3 commits
+ - reftable/pq_test: comment style fix
+ - merge-ort.c: comment style fix
+ - builtin/worktree: comment style fixes
+
+ Rewrite //-comments to /* comments */ in files whose comments
+ prevalently use the latter.
+
+ Will merge to 'next'.
+ source: <20240129202839.2234084-1-gitster@pobox.com>
+
+
+* jk/diff-external-with-no-index (2024-01-29) 1 commit
+ - diff: handle NULL meta-info when spawning external diff
+
+ "git diff --no-index file1 file2" segfaulted while invoking the
+ external diff driver, which has been corrected.
+
+ Will merge to 'next'.
+ source: <20240129015708.GA1762343@coredump.intra.peff.net>
+
+
+* jk/unit-tests-buildfix (2024-01-29) 2 commits
+ - t/Makefile: get UNIT_TESTS list from C sources
+ - Makefile: use order-only prereq for UNIT_TEST_BIN
+
+ Build dependency fix around unit tests.
+
+ Expecting a reroll.
+ cf. <20240129202201.GA9612@szeder.dev>
+ source: <20240129031540.GA2433764@coredump.intra.peff.net>
+
+
+* js/merge-tree-3-trees (2024-01-29) 1 commit
+ - merge-tree: accept 3 trees as arguments
+
+ "git merge-tree" has learned that the three trees involved in the
+ 3-way merge only need to be trees, not necessarily commits.
+
+ Will merge to 'next'.
+ source: <pull.1647.v2.git.1706474063109.gitgitgadget@gmail.com>
+
+
+* jt/p4-spell-re-with-raw-string (2024-01-29) 1 commit
+ - git-p4: use raw string literals for regular expressions
+
+ "git p4" update to squelch warnings from Python.
+
+ Will merge to 'next'.
+ source: <pull.1639.v2.git.1706312496608.gitgitgadget@gmail.com>
+
+
+* kh/maintenance-use-xdg-when-it-should (2024-01-29) 1 commit
+ - config: add back code comment
+
+ Comment fix.
+
+ Will merge to 'next'.
+ source: <48d66e94ece3b763acbe933561d82157c02a5f58.1706466321.git.code@khaugsbakk.name>
+
+
+* mh/credential-oauth-refresh-token-with-wincred (2024-01-29) 1 commit
+ - credential/wincred: store oauth_refresh_token
+
+ Teach wincred credential backend to support oauth refresh token the
+ same way as credential-cache and credential-libsecret backends.
+
+ Needs review.
+ source: <pull.1534.v3.git.1706477103039.gitgitgadget@gmail.com>
+
+
+* pb/complete-config (2024-01-29) 5 commits
+ - completion: add an use _ _git_compute_second_level_config_vars_for_section
+ - builtin/help: add --config-all-for-completion
+ - completion: add and use _ _git_compute_first_level_config_vars_for_section
+ - completion: complete 'submodule.*' config variables
+ - completion: add space after config variable names also in Bash 3
+
+ The command line completion script (in contrib/) learned to
+ complete configuration variable names better.
+
+ Needs review.
+ source: <pull.1660.v2.git.git.1706534881.gitgitgadget@gmail.com>
+
+
+* rj/complete-reflog (2024-01-26) 4 commits
+ - completion: reflog show <log-options>
+ - completion: reflog with implicit "show"
+ - completion: introduce __git_find_subcommand
+ - completion: introduce __gitcomp_subcommand
+
+ The command line completion script (in contrib/) learned to
+ complete "git reflog" better.
+
+ Needs review.
+ source: <98daf977-dbad-4d3b-a293-6a769895088f@gmail.com>
+
+
+* rj/test-with-leak-check (2024-01-29) 4 commits
+ - t0080: mark as leak-free
+ - test-lib: check for TEST_PASSES_SANITIZE_LEAK
+ - t6113: mark as leak-free
+ - t5332: mark as leak-free
+
+ Mark tests that are supposed to pass leak sanitizer as such.
+
+ Will merge to 'next'?
+ source: <45eb0748-6415-4e52-a54f-8d4e5ad57dde@gmail.com>
+
+
+* tb/pack-bitmap-drop-unused-struct-member (2024-01-29) 1 commit
+ - pack-bitmap: drop unused `reuse_objects`
+
+ Code clean-up.
+
+ Will merge to 'next'.
+ source: <0bbaf9a3591765161872fb71383263edb0c7ef83.1706328008.git.me@ttaylorr.com>
+
+--------------------------------------------------
+[Cooking]
+
+* jc/coc-whitespace-fix (2024-01-23) 1 commit
+  (merged to 'next' on 2024-01-26 at 6fb290ad59)
+ + CoC: whitespace fix
+
+ Docfix.
+
+ Will merge to 'master'.
+ source: <xmqqmssvnb8d.fsf_-_@gitster.g>
+
+
+* jc/ls-files-doc-update (2024-01-25) 1 commit
+  (merged to 'next' on 2024-01-26 at a71aeec3d3)
+ + ls-files: avoid the verb "deprecate" for individual options
+
+ The documentation for the --exclude-per-directory option marked it
+ as deprecated, which confused readers into thinking there may be a
+ plan to remove it in the future, which was not our intention.
+
+ Will merge to 'master'.
+ source: <xmqqjznybfp4.fsf@gitster.g>
+
+
+* jk/fetch-auto-tag-following-fix (2024-01-24) 1 commit
+  (merged to 'next' on 2024-01-26 at d058f1511b)
+ + transport-helper: re-examine object dir after fetching
+
+ Fetching via protocol v0 over Smart HTTP transport sometimes failed
+ to correctly auto-follow tags.
+
+ Will merge to 'master'.
+ source: <20240124010056.GA2603087@coredump.intra.peff.net>
+
+
+* ps/reftable-compacted-tables-permission-fix (2024-01-26) 1 commit
+  (merged to 'next' on 2024-01-29 at dbb06e1571)
+ + reftable/stack: adjust permissions of compacted tables
+
+ Reftable bugfix.
+
+ Will merge to 'master'.
+ source: <a211818108053754aca002726d0206623a347952.1706263589.git.ps@pks.im>
+
+
+* jc/index-pack-fsck-levels (2024-01-26) 2 commits
+ - index-pack: --fsck-objects to take an optional argument for fsck msgs
+ - index-pack: test and document --strict=<msg-id>=<severity>...
+
+ The "--fsck-objects" option of "git index-pack" now can take the
+ optional parameter to tweak severity of different fsck errors.
+
+ Expecting a reroll.
+ cf. <BF772E83-2BFE-4652-A742-67FADF3D8FE2@gmail.com>
+ source: <pull.1658.v3.git.git.1706302749.gitgitgadget@gmail.com>
+
+
+* zf/subtree-split-fix (2024-01-25) 1 commit
+  (merged to 'next' on 2024-01-26 at a09e02f208)
+ + subtree: fix split processing with multiple subtrees present
+
+ "git subtree" (in contrib/) update.
+
+ Will merge to 'master'.
+ source: <pull.1587.v6.git.1701442494319.gitgitgadget@gmail.com>
+
+
+* ps/reftable-multi-level-indices-fix (2024-01-26) 6 commits
+ - reftable: document reading and writing indices
+ - reftable/writer: fix writing multi-level indices
+ - reftable/writer: simplify writing index records
+ - reftable/writer: use correct type to iterate through index entries
+ - reftable/reader: be more careful about errors in indexed seeks
+ - Merge branch 'jc/reftable-core-fsync' into ps/reftable-multi-level-indices-fix
+ (this branch uses jc/reftable-core-fsync.)
+
+ Write multi-level indices for reftable has been corrected.
+ source: <cover.1706263918.git.ps@pks.im>
+
+
+* kl/allow-working-in-dot-git-in-non-bare-repository (2024-01-20) 1 commit
+  (merged to 'next' on 2024-01-24 at e77b796e11)
+ + setup: allow cwd=.git w/ bareRepository=explicit
+
+ Loosen "disable repository discovery of a bare repository" check,
+ triggered by setting safe.bareRepository configuration variable to
+ 'explicit', to exclude the ".git/" directory inside a non-bare
+ repository from the check.
+
+ Will merge to 'master'.
+ source: <pull.1645.git.1705709303098.gitgitgadget@gmail.com>
+
+
+* rs/parse-options-with-keep-unknown-abbrev-fix (2024-01-22) 2 commits
+  (merged to 'next' on 2024-01-23 at a216b482cd)
+ + parse-options: simplify positivation handling
+ + parse-options: fully disable option abbreviation with PARSE_OPT_KEEP_UNKNOWN
+
+ "git diff --no-rename A B" did not disable rename detection but did
+ not trigger an error from the command line parser.
+
+ Will merge to 'master'.
+ source: <579fd5bc-3bfd-427f-b22d-dab5e7e56eb2@web.de>
+ source: <fb3c679a-5f00-4934-b028-6b2d081cd5b2@web.de>
+
+
+* pb/ci-github-skip-logs-for-broken-tests (2024-01-22) 1 commit
+  (merged to 'next' on 2024-01-23 at f5e3ab2092)
+ + ci(github): also skip logs of broken test cases
+
+ GitHub CI update.
+
+ Will merge to 'master'.
+ cf. <dbe25fff-e1d4-41f2-8f8f-c538e8c2a77e@github.com>
+ source: <pull.1649.git.git.1705808313306.gitgitgadget@gmail.com>
+
+
+* pb/complete-log-more (2024-01-22) 4 commits
+  (merged to 'next' on 2024-01-24 at 081d2a92fa)
+ + completion: complete missing 'git log' options
+ + completion: complete --encoding
+ + completion: complete --patch-with-raw
+ + completion: complete missing rev-list options
+
+ The completion script (in contrib/) learned more options that can
+ be used with "git log".
+
+ Will merge to 'master'.
+ source: <pull.1650.git.git.1705810071.gitgitgadget@gmail.com>
+
+
+* jc/reftable-core-fsync (2024-01-23) 1 commit
+  (merged to 'next' on 2024-01-24 at cea12beddb)
+ + reftable: honor core.fsync
+ (this branch is used by ps/reftable-multi-level-indices-fix.)
+
+ The write codepath for the reftable data learned to honor
+ core.fsync configuration.
+
+ Will merge to 'master'.
+ source: <pull.1654.git.git.1706035870956.gitgitgadget@gmail.com>
+
+
+* ad/custom-merge-placeholder-for-symbolic-pathnames (2024-01-24) 1 commit
+  (merged to 'next' on 2024-01-24 at d9cf4e227d)
+ + merge-ll: expose revision names to custom drivers
+
+ The labels on conflict markers for the common ancestor, our version,
+ and the other version are available to custom 3-way merge driver
+ via %S, %X, and %Y placeholders.
+
+ Will merge to 'master'.
+ source: <pull.1648.v4.git.git.1706126951879.gitgitgadget@gmail.com>
+
+
+* cp/unit-test-prio-queue (2024-01-22) 1 commit
+ - tests: move t0009-prio-queue.sh to the new unit testing framework
+
+ Migrate priority queue test to unit testing framework.
+ source: <pull.1642.v4.git.1705865326185.gitgitgadget@gmail.com>
+
+
+* jc/reffiles-tests (2024-01-22) 12 commits
+  (merged to 'next' on 2024-01-24 at 0d1aaa6807)
+ + t5312: move reffiles specific tests to t0601
+ + t4202: move reffiles specific tests to t0600
+ + t3903: make drop stash test ref backend agnostic
+ + t1503: move reffiles specific tests to t0600
+ + t1415: move reffiles specific tests to t0601
+ + t1410: move reffiles specific tests to t0600
+ + t1406: move reffiles specific tests to t0600
+ + t1405: move reffiles specific tests to t0601
+ + t1404: move reffiles specific tests to t0600
+ + t1414: convert test to use Git commands instead of writing refs manually
+ + remove REFFILES prerequisite for some tests in t1405 and t2017
+ + t3210: move to t0601
+
+ Tests on ref API are moved around to prepare for reftable.
+
+ Will merge to 'master'.
+ cf. <Za5TW-q4cKS8pNNc@tanuki>
+ source: <pull.1647.v2.git.git.1705695540.gitgitgadget@gmail.com>
+
+
+* ml/log-merge-with-cherry-pick-and-other-pseudo-heads (2024-01-17) 2 commits
+ - revision: implement `git log --merge` also for rebase/cherry_pick/revert
+ - revision: ensure MERGE_HEAD is a ref in prepare_show_merge
+
+ "git log --merge" learned to pay attention to CHERRY_PICK_HEAD and
+ other kinds of *_HEAD pseudorefs.
+
+ Comments?
+ source: <xmqqzfxa9usx.fsf@gitster.g>
+
+
+* kn/for-all-refs (2024-01-29) 4 commits
+ - for-each-ref: avoid filtering on empty pattern
+ - refs: introduce `refs_for_each_all_refs()`
+ - refs: extract out `loose_fill_ref_dir_regular_file()`
+ - refs: introduce `is_pseudoref()` and `is_headref()`
+
+ "git for-each-ref" filters its output with prefixes given from the
+ command line, but it did not honor an empty string to mean "pass
+ everything", which has been corrected.
+
+ Will merge to 'next'.
+ source: <20240129113527.607022-1-karthik.188@gmail.com>
+
+
+* bk/complete-bisect (2024-01-29) 8 commits
+ - completion: add tests for git-bisect
+ - completion: bisect: recognize but do not complete view subcommand
+ - completion: bisect: complete log opts for visualize subcommand
+ - completion: log: use __git_complete_log_opts
+ - completion: new function __git_complete_log_opts
+ - completion: bisect: complete missing --first-parent and --no-checkout options
+ - completion: bisect: complete custom terms and related options
+ - completion: bisect: complete bad, new, old, and help subcommands
+
+ Command line completion support (in contrib/) has been
+ updated for "git bisect".
+
+ Comments?
+ cf. <ZaofJhHsFjRxx7a3@tanuki>
+ source: <20240128223447.342493-1-britton.kerin@gmail.com>
+
+
+* bk/complete-dirname-for-am-and-format-patch (2024-01-12) 1 commit
+ - completion: dir-type optargs for am, format-patch
+
+ Command line completion support (in contrib/) has been
+ updated for a few commands to complete directory names where a
+ directory name is expected.
+
+ Needs review.
+ source: <d37781c3-6af2-409b-95a8-660a9b92d20b@smtp-relay.sendinblue.com>
+
+
+* bk/complete-send-email (2024-01-12) 1 commit
+ - completion: don't complete revs when --no-format-patch
+
+ Command line completion support (in contrib/) has been taught to
+ avoid offering revision names as candidates to "git send-email" when
+ the command is used to send pre-generated files.
+
+ Needs review.
+ source: <a718b5ee-afb0-44bd-a299-3208fac43506@smtp-relay.sendinblue.com>
+
+
+* la/trailer-api (2024-01-26) 10 commits
+ - trailer: delete obsolete argument handling code from API
+ - trailer: move arg handling to interpret-trailers.c
+ - trailer: prepare to move parse_trailers_from_command_line_args () to builtin
+ - trailer: spread usage of "trailer_block" language
+ - trailer: make trailer_info struct private
+ - sequencer: use the trailer iterator
+ - trailer: delete obsolete formatting functions
+ - trailer: unify trailer formatting machinery
+ - trailer: move interpret_trailers() to interpret-trailers.c
+ - trailer: prepare to expose functions as part of API
+
+ Code clean-up.
+
+ Expecting a (hopefully final and small) reroll.
+ cf. <owlyh6iy2grk.fsf@fine.c.googlers.com>
+ source: <pull.1632.v2.git.1706308737.gitgitgadget@gmail.com>
+
+
+* ps/tests-with-ref-files-backend (2024-01-29) 6 commits
+ - t: mark tests regarding git-pack-refs(1) to be backend specific
+ - t5526: break test submodule differently
+ - t1419: mark test suite as files-backend specific
+ - t1302: make tests more robust with new extensions
+ - t1301: mark test for `core.sharedRepository` as reffiles specific
+ - t1300: make tests more robust with non-default ref backends
+
+ Prepare existing tests on refs to work better with non-default
+ backends.
+
+ Will merge to 'next'.
+ source: <cover.1706525813.git.ps@pks.im>
+
+
+* rj/advice-disable-how-to-disable (2024-01-16) 2 commits
+  (merged to 'next' on 2024-01-23 at f456f4937d)
+ + advice: allow disabling the automatic hint in advise_if_enabled()
+ + Merge branch 'rj/advice-delete-branch-not-fully-merged' into rj/advice-disable-how-to-disable
+
+ All conditional "advice" messages show how to turn them off, which
+ becomes repetitive.  Add a configuration variable to omit the
+ instruction.
+
+ Will merge to 'master'.
+ source: <6a842ef8-b390-4739-9eef-e867d55ed5ea@gmail.com>
+
+
+* sd/negotiate-trace-fix (2024-01-03) 1 commit
+  (merged to 'next' on 2024-01-24 at 6305853ab2)
+ + push: region_leave trace for negotiate_using_fetch
+
+ Tracing fix.
+
+ Will merge to 'master'.
+ source: <20240103224054.1940209-1-delmerico@google.com>
+
+
+* cp/apply-core-filemode (2023-12-26) 3 commits
+ - apply: code simplification
+ - apply: correctly reverse patch's pre- and post-image mode bits
+ - apply: ignore working tree filemode when !core.filemode
+
+ "git apply" on a filesystem without filemode support have learned
+ to take a hint from what is in the index for the path, even when
+ not working with the "--index" or "--cached" option, when checking
+ the executable bit match what is required by the preimage in the
+ patch.
+
+ Needs review.
+ source: <20231226233218.472054-1-gitster@pobox.com>
+
+
+* ja/doc-placeholders-fix (2023-12-26) 2 commits
+ - doc: enforce placeholders in documentation
+ - doc: enforce dashes in placeholders
+
+ Docfix.
+
+ Needs review.
+ source: <pull.1626.git.1703539287.gitgitgadget@gmail.com>
+
+
+* jc/bisect-doc (2023-12-09) 1 commit
+ - bisect: document "terms" subcommand more fully
+
+ Doc update.
+
+ Needs review.
+ source: <xmqqzfyjmk02.fsf@gitster.g>
+
+
+* tb/pair-chunk-expect (2023-11-10) 8 commits
+ - midx: read `OOFF` chunk with `pair_chunk_expect()`
+ - midx: read `OIDL` chunk with `pair_chunk_expect()`
+ - commit-graph: read `BIDX` chunk with `pair_chunk_expect()`
+ - commit-graph: read `GDAT` chunk with `pair_chunk_expect()`
+ - commit-graph: read `CDAT` chunk with `pair_chunk_expect()`
+ - commit-graph: read `OIDL` chunk with `pair_chunk_expect()`
+ - chunk-format: introduce `pair_chunk_expect()` helper
+ - Merge branch 'jk/chunk-bounds-more' into HEAD
+
+ Further code clean-up.
+
+ Needs review.
+ source: <cover.1699569246.git.me@ttaylorr.com>
+
+
+* tb/path-filter-fix (2024-01-16) 17 commits
+ - bloom: introduce `deinit_bloom_filters()`
+ - commit-graph: reuse existing Bloom filters where possible
+ - object.h: fix mis-aligned flag bits table
+ - commit-graph: drop unnecessary `graph_read_bloom_data_context`
+ - commit-graph.c: unconditionally load Bloom filters
+ - bloom: prepare to discard incompatible Bloom filters
+ - bloom: annotate filters with hash version
+ - commit-graph: new Bloom filter version that fixes murmur3
+ - repo-settings: introduce commitgraph.changedPathsVersion
+ - t4216: test changed path filters with high bit paths
+ - t/helper/test-read-graph: implement `bloom-filters` mode
+ - bloom.h: make `load_bloom_filter_from_graph()` public
+ - t/helper/test-read-graph.c: extract `dump_graph_info()`
+ - gitformat-commit-graph: describe version 2 of BDAT
+ - commit-graph: ensure Bloom filters are read with consistent settings
+ - revision.c: consult Bloom filters for root commits
+ - t/t4216-log-bloom.sh: harden `test_bloom_filters_not_used()`
+
+ The Bloom filter used for path limited history traversal was broken
+ on systems whose "char" is unsigned; update the implementation and
+ bump the format version to 2.
+
+ Expecting a reroll.
+ cf. <20240129212614.GB9612@szeder.dev>
+ source: <cover.1705442923.git.me@ttaylorr.com>
+
+
+* ak/color-decorate-symbols (2023-10-23) 7 commits
+ - log: add color.decorate.pseudoref config variable
+ - refs: exempt pseudorefs from pattern prefixing
+ - refs: add pseudorefs array and iteration functions
+ - log: add color.decorate.ref config variable
+ - log: add color.decorate.symbol config variable
+ - log: use designated inits for decoration_colors
+ - config: restructure color.decorate documentation
+
+ A new config for coloring.
+
+ Needs review.
+ source: <20231023221143.72489-1-andy.koppe@gmail.com>
+
+
+* eb/hash-transition (2023-10-02) 30 commits
+ - t1016-compatObjectFormat: add tests to verify the conversion between objects
+ - t1006: test oid compatibility with cat-file
+ - t1006: rename sha1 to oid
+ - test-lib: compute the compatibility hash so tests may use it
+ - builtin/ls-tree: let the oid determine the output algorithm
+ - object-file: handle compat objects in check_object_signature
+ - tree-walk: init_tree_desc take an oid to get the hash algorithm
+ - builtin/cat-file: let the oid determine the output algorithm
+ - rev-parse: add an --output-object-format parameter
+ - repository: implement extensions.compatObjectFormat
+ - object-file: update object_info_extended to reencode objects
+ - object-file-convert: convert commits that embed signed tags
+ - object-file-convert: convert commit objects when writing
+ - object-file-convert: don't leak when converting tag objects
+ - object-file-convert: convert tag objects when writing
+ - object-file-convert: add a function to convert trees between algorithms
+ - object: factor out parse_mode out of fast-import and tree-walk into in object.h
+ - cache: add a function to read an OID of a specific algorithm
+ - tag: sign both hashes
+ - commit: export add_header_signature to support handling signatures on tags
+ - commit: convert mergetag before computing the signature of a commit
+ - commit: write commits for both hashes
+ - object-file: add a compat_oid_in parameter to write_object_file_flags
+ - object-file: update the loose object map when writing loose objects
+ - loose: compatibilty short name support
+ - loose: add a mapping between SHA-1 and SHA-256 for loose objects
+ - repository: add a compatibility hash algorithm
+ - object-names: support input of oids in any supported hash
+ - oid-array: teach oid-array to handle multiple kinds of oids
+ - object-file-convert: stubs for converting from one object format to another
+
+ Teach a repository to work with both SHA-1 and SHA-256 hash algorithms.
+
+ Needs review.
+ source: <878r8l929e.fsf@gmail.froward.int.ebiederm.org>
+
+
+* jx/remote-archive-over-smart-http (2024-01-22) 6 commits
+  (merged to 'next' on 2024-01-23 at 5fa4633015)
+ + transport-helper: call do_take_over() in process_connect
+ + transport-helper: call do_take_over() in connect_helper
+ + http-backend: new rpc-service for git-upload-archive
+ + transport-helper: protocol v2 supports upload-archive
+ + remote-curl: supports git-upload-archive service
+ + transport-helper: no connection restriction in connect_helper
+
+ "git archive --remote=<remote>" learned to talk over the smart
+ http (aka stateless) transport.
+
+ Will merge to 'master'.
+ source: <cover.1705841443.git.zhiyou.jx@alibaba-inc.com>
+
+
+* jc/rerere-cleanup (2023-08-25) 4 commits
+ - rerere: modernize use of empty strbuf
+ - rerere: try_merge() should use LL_MERGE_ERROR when it means an error
+ - rerere: fix comment on handle_file() helper
+ - rerere: simplify check_one_conflict() helper function
+
+ Code clean-up.
+
+ Not ready to be reviewed yet.
+ source: <20230824205456.1231371-1-gitster@pobox.com>
