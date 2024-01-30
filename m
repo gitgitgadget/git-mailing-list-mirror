@@ -1,197 +1,112 @@
-Received: from mail-pf1-f178.google.com (mail-pf1-f178.google.com [209.85.210.178])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47D24374EF
-	for <git@vger.kernel.org>; Tue, 30 Jan 2024 03:47:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCB3733CC4
+	for <git@vger.kernel.org>; Tue, 30 Jan 2024 04:40:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706586461; cv=none; b=DhmgcTxslR+CLvZ7/ZJs9auQnGlPUeB9FB4DCPSBvZc0iow6nYVtdnXTLHNTMQz9iiqTWYerHXbyiqO4f04zjgH32gNIVpxVZ28R9p2MdI7qoK/MDuXjYnb0E3fwE7MWrNO0M8/4qo4Zev3VK244ddJf/gwL9g/wRPJRljh82X8=
+	t=1706589608; cv=none; b=Ap9WoxFAV0Nu+5/feqM7zVpk21CncRUlJZ9XP0Gven4nt45rPm5JQqu/pZGSYHUwm/O24jM4dWXkBi2MC7+dVPSh/+cfXrV80ko9dsRyic2c2bDbhj9KtvyW/ec+EU/dWSoGBs9Cl8QSPHSLygxV+hFHNFwW/bytfzZZVxeCSs4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706586461; c=relaxed/simple;
-	bh=De38W/cGvnoineRLkAJVxq5wvGHStrQ67epU/OHld8A=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=UtTc58Ca0meE9XNDbg11O4fRcHn5U5Oc13NwOkWvGH7GZjUXPLPYPOmQ8bBvsS6YMh6h+OC7ZM0ThnNtAU7oPZajK6aBv1SmSKGBt099vqbQLLYvlfavyCmyCTtCkr2aAw+xEb1qWjidCwX2atd9hB0BK4dDq59XuRy6LAGZVs0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=i9lHy9d1; arc=none smtp.client-ip=209.85.210.178
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1706589608; c=relaxed/simple;
+	bh=ipA+48nqndO55uqQgt8b5Sn6gtUILCSGrKXT7ZIML2Y=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=fGnfFNYy0SBhgBpL8Ffk6qA6DycdGs15A+we/ilMHReII5CqlCptM3+H9kH6P3Jt9+54d+43syLCX6VEMY0FByFrGssGq69nGRib4BPiG5GgbvNCEhuyp50GDRPLuOZZkghss40Kan8Ez4jyvkGdk1OngkUIJptui0ZmpLCcwOs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=fjhlDRsj; arc=none smtp.client-ip=64.147.108.70
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="i9lHy9d1"
-Received: by mail-pf1-f178.google.com with SMTP id d2e1a72fcca58-6ddd19552e6so1662996b3a.1
-        for <git@vger.kernel.org>; Mon, 29 Jan 2024 19:47:40 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1706586459; x=1707191259; darn=vger.kernel.org;
-        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=aPAJnq2Oy2ce8IkF4RMBwbPzjGdTqObVHli6GVkcgek=;
-        b=i9lHy9d1I15w3sE+WPBEtb8X5vj72f80WmOrIjwFbTDZiu21adXBBCvJ4S7qOXPCnv
-         B7++CrvErtgjD4gzSHMK37koGUyjfhdCOR60DBtdE4NyBopy/K2IMfOk8UqoCnko0qte
-         as6kC57Y/TBIpstnWMblbedmrZIBleoaQJ1XwsPlolapjjIkZIXGb/WxfoUox6CE3xVf
-         XPomk7+Y3/G2QrMnB7sNjNElMpjTXuAm6Sxz74c0HJNCOFsGXiDA8aa7aoz2LIrTL96A
-         cqELQOp61U2aZUww3VgDUE6b29W/EumHIITnmgDOdbTjVSitlv/hpaJbkSW2EDSu9tp6
-         pl/w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1706586459; x=1707191259;
-        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=aPAJnq2Oy2ce8IkF4RMBwbPzjGdTqObVHli6GVkcgek=;
-        b=a6zGi42na/Nqc5K/FDGGrZAEJ++CwP9I3+q4camDmGSGq8t6H/QzvpZFC7j+gW0R0Y
-         ISaDjg7JArp/PI+iENGUbbJu3FTOFVLMFTmVxDJtQlRrh2AiMOur03kllUenvPNh52yO
-         4cJlRtngR0fwtRurecRzpMStfuCI4gl7NwvtE0c0yVO3rtuvYGVnXfoJjR4W3scmTAe1
-         Kp5c/jFkE+C0a6BaycsFbc4g1NomKwEhZ7bwj+/OTN/J1gmvBl11qmEFA83dyJknap72
-         rNDpe7aankegxRpTibAEiBDpHl+EIQzoJMq/u86yWgtzY1XXKgLIIoqbasXjODv6TFdd
-         wrIw==
-X-Gm-Message-State: AOJu0YyvLuuJgEDHcu/EYTVV+VwwVfHdjSDfLHoRrQburcP7nb7Q7LTt
-	isBRRwdzDWI0K36/HeBrHUmrFnWxLxW6jxytX3bJG4bCNCRc1RyZudXkopE+DO5ddppTFC/0x34
-	5rgRqumfSjaJWVyri0E6fXFsmys7KhIGw5gg=
-X-Google-Smtp-Source: AGHT+IHumygVeWnZycwQ3JMQZ5vNLF5JWsrE/WHC9xTRRYVHimcG2giiaPcASxMSAVr5y7Tqf5HvB49vHYFuvmCC1OY=
-X-Received: by 2002:a05:6a00:138f:b0:6dd:dbb2:8ee9 with SMTP id
- t15-20020a056a00138f00b006dddbb28ee9mr6084152pfg.6.1706586459106; Mon, 29 Jan
- 2024 19:47:39 -0800 (PST)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="fjhlDRsj"
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 3A29A1DBD88;
+	Mon, 29 Jan 2024 23:40:05 -0500 (EST)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=ipA+48nqndO55uqQgt8b5Sn6gtUILCSGrKXT7Z
+	IML2Y=; b=fjhlDRsj46Hloo59DNc6zQtLNNEhm6UlKibDN+bh0GkSf3DKi1ZUCB
+	aeGOUcG/mf1snzpwFlZKSW7XoMX0S+iJDMhzujRXU5RxDIddFeryDQospmKIWFle
+	58PLvwULImZT7VCp7D/IQDoOFKDUVpeZuXQGJ+73Kn/lS624lPx6E=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 159BC1DBD86;
+	Mon, 29 Jan 2024 23:40:05 -0500 (EST)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.200.93])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 0FD481DBD84;
+	Mon, 29 Jan 2024 23:40:03 -0500 (EST)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Mohit Marathe via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Mohit Marathe <mohitmarathe@proton.me>,  Mohit
+ Marathe <mohitmarathe23@gmail.com>
+Subject: Re: [PATCH v5 1/2] git-compat-util: add strtoi_with_tail()
+In-Reply-To: <f09b0838f049de3e4b8cc6adc6cd4492bac7e967.1706416952.git.gitgitgadget@gmail.com>
+	(Mohit Marathe via GitGitGadget's message of "Sun, 28 Jan 2024
+	04:42:31 +0000")
+References: <pull.1646.v4.git.1706079304.gitgitgadget@gmail.com>
+	<pull.1646.v5.git.1706416952.gitgitgadget@gmail.com>
+	<f09b0838f049de3e4b8cc6adc6cd4492bac7e967.1706416952.git.gitgitgadget@gmail.com>
+Date: Mon, 29 Jan 2024 20:40:02 -0800
+Message-ID: <xmqqle87e8nx.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: Jacek Lipiec <jacek.lipiec.bc@gmail.com>
-Date: Tue, 30 Jan 2024 04:47:27 +0100
-Message-ID: <CAPGWkwcqbkanFP4h1P0umJAFzmiQYTvSm1KeD0=yY0n2K=KS7g@mail.gmail.com>
-Subject: Multiple indices / staging areas
-To: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ A2D71646-BF29-11EE-AD80-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
 
-Hello,
-I am thinking about extending the current index mechanism, and I wish
-to ask for feedback if this would be something that you would be
-interested in. Please note, I have no prior git development
-experience.
+"Mohit Marathe via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-The main idea is to mirror the "changelist" functionality found in
-IntelliJ IDE's (https://www.jetbrains.com/help/idea/managing-changelists.html).
-Namely, at each given moment you can create a "changelist"/separate
-index to which you can move hunks to. Such changelists are named, and
-optionally have a (default) commit message.
-This allows for an easy way to split current changes into separate
-commits, to have clean and atomic work units committed; while seeing
-the combined changes in the worktree; as well as having a
-conceptual/logical separation for changes
+> From: Mohit Marathe <mohitmarathe23@gmail.com>
+>
+> This function is an updated version of strtol_i() function. It will
+> give more control to handle parsing of the characters after the
+> numbers and better error handling while parsing numbers.
+>
+> Signed-off-by: Mohit Marathe <mohitmarathe@proton.me>
+> ---
+>  git-compat-util.h | 23 +++++++++++++++++++++++
+>  1 file changed, 23 insertions(+)
+>
+> diff --git a/git-compat-util.h b/git-compat-util.h
+> index 7c2a6538e5a..c576b1b104f 100644
+> --- a/git-compat-util.h
+> +++ b/git-compat-util.h
+> @@ -1309,6 +1309,29 @@ static inline int strtol_i(char const *s, int base, int *result)
+>  	return 0;
+>  }
 
-Scenario: I am introducing a new functionality. Changes are
-conceptually separate, but work together. i.e. new version of package
-& using the new functionality from the package.
-Scenario 2: I am not yet sure about what needs to be done, so I am
-sketching in code. Some changes will be of linting nature, some will
-introduce code, some will be an "ad-hoc fix".
+Are we leaving the original one above?  Shouldn't this step instead
+remove it, as strtol_i() is now a C preprocessor macro as seen below?
 
-What we can do with the current flow:
-* Commit/amend/fixup. This works best when one has prior knowledge of
-what needs to be done, i.e. bumping versions then using the
-functionality. Problems arise when the code is "living", as such you
-need to fixup commits in the local branch, which can lead to
-conflicts. Another issue is that if you wish to commit small change
-(i.e. a fix for a linter) you need to juggle the staging area. (This
-is my current flow in the vanilla git. It can become clunky if you,
-like me, sketch the solution in the code)
-* git worktree. While this functionality is the closest to what I am
-proposing, it does not allow for easy transfer of hunks, nor it allows
-for working with all the changes in the same worktree at the same
-time.
-* branches. This again does not allow us to see all the changes at the
-same time.
-
-The idea for the implementation would be as follows, and should
-hopefully introduce no change to the existing flow.
-
-1) Design
-
-1.1) New indices file
-We add a new file in the $GIT_DIR, called `indices`. This is a map
-file that will MUST have at least one entry. Index entry MUST have a
-name. Index entries COULD have default commit message
-Example:
-```.git/indices
-selected=1 # maps to .git/index.1
-#  translates to .git/index.0
-index[0].name=Default
-#  translates to .git/index.1
-index[1].name=Add named index
-#  translates to .git/index.2
-index[2].name=Wip
-index[2].message=Add named index\n\nThis is a longer description
-```
-The "selected" index is in two places - one is `index` and the other
-is based on the selected entry; so following example, `index.1`. The
-best way to keep them synced would be to symlink them, though this
-would introduce FS dependency. Synchronized copy would work as well.
-Renames could work, but there would be IMO high risk of losing changes
-from the index due to a mistake.
-
-This way, the existing index file format remains unchanged; and all
-new functionality can be handled via the new `indices` file; due to
-that all existing code should work without an issue.
-I see a potential problem of two indices overlapping (i.e. index
-changed via older git, or other tool) - in this case I would
-transparently correct other indices, treating selected index as the
-source of truth. This would imply that software not aware of the
-indices would see the changes in the not-selected index as unstaged.
-The second issue is the split index, as I know nothing about it, yet
-it might require changes.
-
-1.2) Commands
-A git index create <name> [-m|--message <message>]
-A git index delete <name>
-A git index switch <name>
-A git index update <name> [-m|--message <message>] [-n|--name <new name>]
-M git add [-I|--index <index name>]
-M git diff [-I|--index <index name>]
-
-2) Example workflows
-2.1) Working with indices/non interactive add
-git index create "wip" --message="This is a default commit message" #
-We have a new index, but the default one is selected
-touch {example|example2|example3}
-git add example # Added to the "current"/"default" index, by default 0
-git index switch "wip"
-git add example2 # Added to the "wip"/ index, with id of 1
-git add example3 --index=default # Added to the "current"/"default" index,
-git commit # commit message="This is a default commit message"
-# At this point, index.1 (wip) is empty, but selected. We can commit
-another index
-git commit --index=default -m "This is a commit message for the default index"
-
-2.2) Status
-> git status
-On branch main
-Selected index: wip
-Changes to be committed (wip):
-  (use "git restore --staged <file>..." to unstage)
-        modified:   example
-
-Changes staged for commit (default)
-  (use "git restore --index=default --staged <file>..." to unstage)
-        modified:   example
-
-Changes not staged for commit:
-  (use "git add <file>..." to update what will be committed)
-  (use "git restore <file>..." to discard changes in working directory)
-        modified:   example
-
-2.3) Git add (interactive)
-> git add --interactive # details omitted for brevity
--Example change
-+Example change 2
-(1/1) Stage this hunk to wip [y,n,q,a,d,e,i,?]?
-> ?
-i - change the current index
-
-2.4) Remove index
-> git index remove # removes current, all staged goes to the "default" branch/index 0
-> git index remove wip # removes wip, all staged goes to the default branch/index 0
-> git index switch default
-> git index remove # Does nothing...
-> git index rename default "WIP" # index[0].name=WIP
-> git index remove # renames default -> index[0].name=Default
-...
-
-I am open for the feedback/questions, or early go/nogo.
-
-Jacek Lipiec
+> +#define strtol_i(s,b,r) strtoi_with_tail((s), (b), (r), NULL)
+> +static inline int strtoi_with_tail(char const *s, int base, int *result, char **endp)
+> +{
+> +	long ul;
+> +	char *dummy = NULL;
+> +
+> +	if (!endp)
+> +		endp = &dummy;
+> +	errno = 0;
+> +	ul = strtol(s, endp, base);
+> +	if (errno ||
+> +	    /*
+> +	     * if we are told to parse to the end of the string by
+> +	     * passing NULL to endp, it is an error to have any
+> +	     * remaining character after the digits.
+> +	     */
+> +	   (dummy && *dummy) ||
+> +	    *endp == s || (int) ul != ul)
+> +		return -1;
+> +	*result = ul;
+> +	return 0;
+> +}
+> +
+>  void git_stable_qsort(void *base, size_t nmemb, size_t size,
+>  		      int(*compar)(const void *, const void *));
+>  #ifdef INTERNAL_QSORT
