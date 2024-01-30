@@ -1,138 +1,145 @@
-Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com [209.85.128.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from wout1-smtp.messagingengine.com (wout1-smtp.messagingengine.com [64.147.123.24])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDB805914F
-	for <git@vger.kernel.org>; Tue, 30 Jan 2024 08:53:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81D795DF1E
+	for <git@vger.kernel.org>; Tue, 30 Jan 2024 09:09:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.24
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706604803; cv=none; b=D0l0bQDtHc7gCia63x+H8cC9eZ+vuM37xrcTlu+Zhwh1VuPFsGMv84MemptxHOpHtKSZQeVvI1Vt4H/ZUJhg5gmZC6peSKyZvC3G3irQ16sr6+ywpityo+g2uyPIAwNfoz8gRC22PIkHV/p8J5wP8VBQnXKENEMez7NYv+Ff7kQ=
+	t=1706605744; cv=none; b=OTV93uPH9mvuMofOZ/ceMLaUM1z2TeKBsNFdXqLJbvQR1cc+4n0M8zOWzE+PaxTBOXa/Im3kamNzE41mpYn0Y1W2SLheqp2gzwChBs6lLC971LTmmbzKoxfoqjBCx9MoN6whqrStZrOqnQZWEtwntYm++PeD05ZcpVBIGrGNAr0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706604803; c=relaxed/simple;
-	bh=SalBpUFKv5uEkaletforTEJJ6NbCBcST4grHagE3llU=;
-	h=From:To:Subject:Date:Message-ID:MIME-Version; b=YjK7tXjd29oqpVE7QCBymI0b9UutoB1TZPwBLUrkfmWmCeB7MxQsN9Olo3F+PSMFTCDVxnj7+jS6H1g//HSyziXSRNmxOm+kmNZ8A8uV0/lCjqAse3c0dOKmOEJyg97+zzCujnSY2NS6wIC/9CCtoDAukIpTu2OY4amEHi7fCjs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ANrVD2Wt; arc=none smtp.client-ip=209.85.128.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1706605744; c=relaxed/simple;
+	bh=h/pw1/l5pWreWytYTuj1Ro1yvyza59SqtXgCeaRk7XQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=cxtPE1xxhfNjzMUKK4C2E/2CvCnW0YD7QycreZw1y6x7SKCKuvEjU54/p4Wgxl+ZMpp9kWTwFAAT7gw4svRcsFR31vGzfx+4dzsahaRyFT5dgA1mxSALDMyUToWCK46LcPexXrpbqanfMZ9xAtC+pgBspYcvdnE+EMgI6vo9FVg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=FMDrAXOs; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=RSDY12/h; arc=none smtp.client-ip=64.147.123.24
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ANrVD2Wt"
-Received: by mail-wm1-f45.google.com with SMTP id 5b1f17b1804b1-40eacb6067dso50675745e9.1
-        for <git@vger.kernel.org>; Tue, 30 Jan 2024 00:53:21 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1706604800; x=1707209600; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=DbXMWkn0db7t+n4oJKUqtgIyP6Eh13OW81Zv9cagBtU=;
-        b=ANrVD2WtGmXUoBjo8i7TB7+kyC3Nc+7ZBxer1ksa6c2KXfoCra1dKF0+E4r0OVCgV/
-         CUkr7pzj0Vv08cOsLEsXUJB+LdAKTfRODwjg2EAqao4z+iL7q6NCcZP1W0WTcE8VuR9o
-         aGMXVEwk8pFfNF+oW73iIeNGTusnN5hHaHXPtrok0fG8RFXn/KjdV1zSiG2f2sGeV47h
-         17ZIJidQiN0clcQk//hfQqNq+u5u3Ta5+gifM79GOUFcSkTZUfrF5T2kz3ax0ewOzNwX
-         YX/PD9sdlX+NlVHMwTow28rztfRN4VRiUPEwItcRnSQGXKYtjK0BIif+IZ/VZr8IlB+9
-         /Deg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1706604800; x=1707209600;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:to
-         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=DbXMWkn0db7t+n4oJKUqtgIyP6Eh13OW81Zv9cagBtU=;
-        b=C41Z2+LtQ4Y0S3nqZ7eXyC5PZ3aBhyu+6HH4DhaVVr+PTkbWhzMG+Axr8dLLlpPFEk
-         GIWbKXE0hsBSArVlxmjocUpuKAYUyo61DOOh3bsXNRZc3UnJuksV2M/Dv+YBRpDcrQCx
-         eIFZP46s8YD4yK1VwWdmbAaFvp0mIrcpIPDxol/9uV58TmSk7O94ZdoIag/0K8kTICKF
-         cT0Y7utyTD/8ZwkbwfCTcvCxBj8Rkl8bSL5IsECQgTCXHrBFvzx5AeHucICtxHvDeB4F
-         iTtq+NxVB/VxUso8Bvc+fxYT528Fr6Z2QR1AsMr2QyxhfgTy1dKAF2GcScmVl73D2Wj+
-         N5wQ==
-X-Gm-Message-State: AOJu0Yzz99fC8iNz/4l+Bn7mJ6jdtMZDZB9cAuT1iSK8HyfrybgOwMoH
-	hYYxFOoddsnHNprhNx4PwFLSf8RuQjkYFQAp5h8G63mZAQoe6/umPoAQIf/5
-X-Google-Smtp-Source: AGHT+IH7zH++dQ5yf9ANG/b2beRo/ebyP9P59+ZKzASNMZKBZ9fk7xQ4oWF6BV8mZ1dFcvSzBlXZHw==
-X-Received: by 2002:a05:600c:1987:b0:40e:f536:cff2 with SMTP id t7-20020a05600c198700b0040ef536cff2mr5879505wmq.2.1706604799935;
-        Tue, 30 Jan 2024 00:53:19 -0800 (PST)
-Received: from localhost ([2001:861:3385:e20:6384:4cf:52c5:3194])
-        by smtp.gmail.com with ESMTPSA id x14-20020a1c7c0e000000b0040efcd70cc2sm1573759wmc.45.2024.01.30.00.53.19
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 30 Jan 2024 00:53:19 -0800 (PST)
-From: Raphael Gallais-Pou <rgallaispou@gmail.com>
-To: git@vger.kernel.org,
-	David Aguilar <davvid@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Denton Liu <liu.denton@gmail.com>,
-	Paul Mackerras <paulus@ozlabs.org>,
-	Beat Bolli <dev+git@drbeat.li>
-Subject: [PATCH] gitk: add "Hightlight commit name" menu entry
-Date: Tue, 30 Jan 2024 09:53:08 +0100
-Message-ID: <20240130085308.5440-1-rgallaispou@gmail.com>
-X-Mailer: git-send-email 2.43.0
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="FMDrAXOs";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="RSDY12/h"
+Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
+	by mailout.west.internal (Postfix) with ESMTP id E390B3200AAA;
+	Tue, 30 Jan 2024 04:08:59 -0500 (EST)
+Received: from mailfrontend2 ([10.202.2.163])
+  by compute3.internal (MEProxy); Tue, 30 Jan 2024 04:09:00 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1706605739; x=1706692139; bh=h/pw1/l5pW
+	reWytYTuj1Ro1yvyza59SqtXgCeaRk7XQ=; b=FMDrAXOsTx7PGCEP8cuorgbUGl
+	SwhCPZHykCWwrPDbLJpA65OBVphvqgAUjBHCtASII7o9HjFyHM6RIg//1+C8HOVS
+	EzYaTN9XnxFybXcovqQgMbADGFRvSFYRJIyk5Sn8AS7Pyt9Dg6WuRYyiRFswGHlE
+	/FfHKBSmNYbDUHxPLaA4dqs14UfGaGYmGxUr+mAjjTTyN2rhg1+85xXcxZD2dLAv
+	zOEpHdQOCPzuQs6CyKTGectRmzlPI1m8vOYDmCUQWDdrTWziQ1La6TizUoo7haII
+	Q6zNU26y7L4BZW0FGRBv/7qcjyphWUOnlzGo0LAHZiO6nXLb6D3/CzDE5C4A==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm3; t=1706605739; x=1706692139; bh=h/pw1/l5pWreWytYTuj1Ro1yvyza
+	59SqtXgCeaRk7XQ=; b=RSDY12/hQhVmFua2z9uGiSlHZVBbSbzr/xsSyqkvElJ4
+	YXEeKnm5GhDeaW6JPFT/P+h9j6Ea2WYSGl2ehvO5/dXvOY+V9RJ2zbdlq9G9dPFT
+	iVUhtecZJ+wZ9KYwkpvDpYXdxT0xWg1p203B3cbfFMkM7jP4ZXZOMhk6On6oEBmi
+	e89iT618t70q6ng1eqkhqjRzcKkslYEutDEcRaXiH5KxRZuecg8rVoDqdA3CAZbp
+	Lqxl9Ooj2sqFP22rPbVmP4mU3AFIcGrAiP5IxZ0s/UnbGKmOZZPB4x3dCmpomj+e
+	xkAOyKB3OdW5ABm11yeH7mI7RJXtkr0MGuPGyDv3KQ==
+X-ME-Sender: <xms:q7y4ZcwwWoftX3aIquGcl3EZVczhQFcnE79GRcgAwjxcIVW4Rm21uw>
+    <xme:q7y4ZQQrRNUT35pW3fYxEplLu7SpwT6UZW88gtFvDKfJN4pPiI_PMLJP6vCj_1rAG
+    r0OPMR7ZpP1jahWFA>
+X-ME-Received: <xmr:q7y4ZeVAvCP6NSGRp3XtXtHB4aADiRTG0USWBeaPO4YIzfKu93AFHD6geeSb3ZAPE23abP3ivSy8U1igc8a66LUjcCRBbImFwcjm7Q1UJFTUIa4>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrfedtiecutefuodetggdotefrodftvfcurf
+    hrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenogfuuh
+    hsphgvtghtffhomhgrihhnucdlgeelmdenucfjughrpeffhffvvefukfhfgggtuggjsehg
+    tderredttdejnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpsh
+    esphhkshdrihhmqeenucggtffrrghtthgvrhhnpedtfeelvdekleeufeevffejieejfeeh
+    ieejkeeftdeljefhteevudfgfeejgfejheenucffohhmrghinhepghhithhhuhgsrdhioh
+    enucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshes
+    phhkshdrihhm
+X-ME-Proxy: <xmx:q7y4ZajLdAfj76MopZ9PTnY0REDJTQAqKXJmBG73faTzR354Mhxm-Q>
+    <xmx:q7y4ZeBq18bylTFWRb0QZKaOFOXkHjAn9VOHErsgHL2pkl-fVOuP6Q>
+    <xmx:q7y4ZbJdJHuKNrTpOW_vRmayv0kmd9JsN2FaXwtdLpTpRXN5YnMXSA>
+    <xmx:q7y4ZV7sKplibmfzBw6riX4w2GKGvnBzTdI0i3wIWtvyLtGv91YO-g>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 30 Jan 2024 04:08:57 -0500 (EST)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id 0f510941 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 30 Jan 2024 09:05:37 +0000 (UTC)
+Date: Tue, 30 Jan 2024 10:08:53 +0100
+From: Patrick Steinhardt <ps@pks.im>
+To: Christian Couder <christian.couder@gmail.com>
+Cc: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
+	git <git@vger.kernel.org>, Taylor Blau <me@ttaylorr.com>,
+	Junio C Hamano <gitster@pobox.com>, Victoria Dye <vdye@github.com>
+Subject: Re: Git in GSoC 2024
+Message-ID: <Zbi8pfvGpYrlZXAu@tanuki>
+References: <1de82b27-116a-450e-98c0-52eb65a8f608@gmail.com>
+ <CAP8UFD1VAvnkM6afZvtpdXhA4csDBDwMnF9yUzSx_ut-Ypf+eA@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="uVz2gc6BX/qmEklP"
+Content-Disposition: inline
+In-Reply-To: <CAP8UFD1VAvnkM6afZvtpdXhA4csDBDwMnF9yUzSx_ut-Ypf+eA@mail.gmail.com>
 
-When working with diverged branches, some patches can appear several times
-on different branches without having the need to merge those branches.
-On the other hand you may have to port a specific patch on another
-branch you are working on. The search with a SHA1 cannot be applied here
-since they would differ.
 
-This patch adds an entry in the main context menu to highlight every
-instance of a commit.
+--uVz2gc6BX/qmEklP
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Signed-off-by: Raphael Gallais-Pou <rgallaispou@gmail.com>
----
- gitk-git/gitk | 23 ++++++++++++++++++++---
- 1 file changed, 20 insertions(+), 3 deletions(-)
+On Tue, Jan 30, 2024 at 09:38:48AM +0100, Christian Couder wrote:
+> On Mon, Jan 29, 2024 at 7:16=E2=80=AFPM Kaartic Sivaraam
+> <kaartic.sivaraam@gmail.com> wrote:
+[snip]
+> > The GSoC contributor application deadline is April 2 - 18:00 UTC, so
+> > (co-)mentors and org admins are already welcome to volunteer. As usual,
+> > we also need project ideas to refresh our idea page from last year
+> > (https://git.github.io/SoC-2023-Ideas/). Feel free to share your
+> > thoughts and discuss.
+>=20
+> I am volunteering as both an Org Admin and a mentor too.
+>=20
+> I am not sure how many tests there are left to be ported to the new
+> unit test framework. Patrick told me about porting some reftable unit
+> tests to the new unit test framework though. So it might still work as
+> a GSoC project.
 
-diff --git a/gitk-git/gitk b/gitk-git/gitk
-index 7a087f123d..4b15230a16 100755
---- a/gitk-git/gitk
-+++ b/gitk-git/gitk
-@@ -2672,6 +2672,7 @@ proc makewindow {} {
-         {mc "Make patch" command mkpatch}
-         {mc "Create tag" command mktag}
-         {mc "Copy commit reference" command copyreference}
-+	{mc "Highlight commit name" command highlightcommitname}
-         {mc "Write commit to file" command writecommit}
-         {mc "Create new branch" command mkbranch}
-         {mc "Cherry-pick this commit" command cherrypick}
-@@ -9002,13 +9003,13 @@ proc rowmenu {x y id} {
-     if {$id ne $nullid && $id ne $nullid2} {
-         set menu $rowctxmenu
-         if {$mainhead ne {}} {
--            $menu entryconfigure 8 -label [mc "Reset %s branch to here" $mainhead] -state normal
-+            $menu entryconfigure 9 -label [mc "Reset %s branch to here" $mainhead] -state normal
-         } else {
--            $menu entryconfigure 8 -label [mc "Detached head: can't reset" $mainhead] -state disabled
-+            $menu entryconfigure 9 -label [mc "Detached head: can't reset" $mainhead] -state disabled
-         }
--        $menu entryconfigure 10 -state $mstate
-         $menu entryconfigure 11 -state $mstate
-         $menu entryconfigure 12 -state $mstate
-+        $menu entryconfigure 13 -state $mstate
-     } else {
-         set menu $fakerowmenu
-     }
-@@ -9481,6 +9482,22 @@ proc copyreference {} {
-     clipboard append $reference
- }
- 
-+proc highlightcommitname {} {
-+    global rowmenuid autosellen findstring gdttype
-+
-+    set format "%s"
-+    set cmd [list git show -s --pretty=format:$format --date=short]
-+    if {$autosellen < 40} {
-+        lappend cmd --abbrev=$autosellen
-+    }
-+    set reference [eval exec $cmd $rowmenuid]
-+    set findstring $reference
-+    set gdttype [mc "containing:"]
-+
-+    clipboard clear
-+    clipboard append $reference
-+}
-+
- proc writecommit {} {
-     global rowmenuid wrcomtop commitinfo wrcomcmd NS
- 
--- 
-2.43.0
+Yes, the tests in t0032-reftable-unittest.sh should be ported over to
+the new unit test framework eventually, and I think that this might be a
+good GSoC project indeed.
 
+If there is interest I'd also be happy to draft up some more topics in
+the context of refs and the reftable backend. I'm sure there should be
+some topics here that would be a good fit for the GSoC project, and I'd
+be happy to mentor any such project in this context.
+
+Patrick
+
+--uVz2gc6BX/qmEklP
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmW4vKQACgkQVbJhu7ck
+PpRhlg//bZB9og3AuQhAdLYZvVRxczPRio5g2yvRqKsUlRjMTuapz2VFowpLi61p
+TtPjT8OeaP5h3f3P+1JuERaKIdnGJbvOjG9X+BCXMgFszIZ3FDQ5M8Fw/BHxI4Jh
+b9LyvSfzAjQNdfj9Fi2Rs0CPwL87hachEFbHdWgRDNW9g0MKI5ib0Z/r/P3fvK2k
+0vNo9hRsSPvEKMYT0ZrrAE1qWNPy5zu4IXEgrBPibH11xyvu5iZ/PgzbfNaJb1J4
+jGzxsM36eCrlzKGLx0kugw609m+6a8E4eVxu5b9QkSG6hGcqqR8DUqNxuZ8wv8nh
+Gy4M0gwJsxWviYSsUzFXkZnUjte6h9xDk7GgmjGCTU9vedkqs1+Lt0WIAzGQScdb
+dLozSvfsPhTYukI3Sez69yoh7KLVNV9FGfcKcTuekadHmAAZqo1qk+pkdjb6RLck
+yEi8fTwTUY0qNI5fhTbbaKUiM1QytlD4KFMfU9+n0/2vkmaZ+60mmWaJNYjOhUP/
+sqpmwbjPKis0zYdkMUsQObYFEGH3kGdc2T4zMyBQITywSkTM30ox6TXR6ujO07u8
+uAFSKbAVuqPggBjcUFQFjeHxe7u7iE03nGJZDbY8BmQIK83Io406jlaRiq+ggWFO
+GfGK/a1746TOGay8StUFIKnuoU9dMrby6zoL+dLgX2tBzdOGfSs=
+=7v3P
+-----END PGP SIGNATURE-----
+
+--uVz2gc6BX/qmEklP--
