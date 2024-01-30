@@ -1,112 +1,83 @@
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCB3733CC4
-	for <git@vger.kernel.org>; Tue, 30 Jan 2024 04:40:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00294381AA
+	for <git@vger.kernel.org>; Tue, 30 Jan 2024 05:21:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706589608; cv=none; b=Ap9WoxFAV0Nu+5/feqM7zVpk21CncRUlJZ9XP0Gven4nt45rPm5JQqu/pZGSYHUwm/O24jM4dWXkBi2MC7+dVPSh/+cfXrV80ko9dsRyic2c2bDbhj9KtvyW/ec+EU/dWSoGBs9Cl8QSPHSLygxV+hFHNFwW/bytfzZZVxeCSs4=
+	t=1706592074; cv=none; b=DpkjL7Y76kH5g5kJIgDcpLmQzmUs4NoyQY4Ye1/aboVxa4VGZrGA3eja08bf2wnPvkzZln8vtIH6oiFN1PmiGWks5PMS6e/PYSaxImgUDiKVt6HLtO8Ac0j+aMJ9pg2HqDf6zTp9qkQjZ3s6LoiQarEwohAV68xbOKoyUTQczYk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706589608; c=relaxed/simple;
-	bh=ipA+48nqndO55uqQgt8b5Sn6gtUILCSGrKXT7ZIML2Y=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=fGnfFNYy0SBhgBpL8Ffk6qA6DycdGs15A+we/ilMHReII5CqlCptM3+H9kH6P3Jt9+54d+43syLCX6VEMY0FByFrGssGq69nGRib4BPiG5GgbvNCEhuyp50GDRPLuOZZkghss40Kan8Ez4jyvkGdk1OngkUIJptui0ZmpLCcwOs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=fjhlDRsj; arc=none smtp.client-ip=64.147.108.70
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="fjhlDRsj"
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 3A29A1DBD88;
-	Mon, 29 Jan 2024 23:40:05 -0500 (EST)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=ipA+48nqndO55uqQgt8b5Sn6gtUILCSGrKXT7Z
-	IML2Y=; b=fjhlDRsj46Hloo59DNc6zQtLNNEhm6UlKibDN+bh0GkSf3DKi1ZUCB
-	aeGOUcG/mf1snzpwFlZKSW7XoMX0S+iJDMhzujRXU5RxDIddFeryDQospmKIWFle
-	58PLvwULImZT7VCp7D/IQDoOFKDUVpeZuXQGJ+73Kn/lS624lPx6E=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 159BC1DBD86;
-	Mon, 29 Jan 2024 23:40:05 -0500 (EST)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.200.93])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 0FD481DBD84;
-	Mon, 29 Jan 2024 23:40:03 -0500 (EST)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Mohit Marathe via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Mohit Marathe <mohitmarathe@proton.me>,  Mohit
- Marathe <mohitmarathe23@gmail.com>
-Subject: Re: [PATCH v5 1/2] git-compat-util: add strtoi_with_tail()
-In-Reply-To: <f09b0838f049de3e4b8cc6adc6cd4492bac7e967.1706416952.git.gitgitgadget@gmail.com>
-	(Mohit Marathe via GitGitGadget's message of "Sun, 28 Jan 2024
-	04:42:31 +0000")
-References: <pull.1646.v4.git.1706079304.gitgitgadget@gmail.com>
-	<pull.1646.v5.git.1706416952.gitgitgadget@gmail.com>
-	<f09b0838f049de3e4b8cc6adc6cd4492bac7e967.1706416952.git.gitgitgadget@gmail.com>
-Date: Mon, 29 Jan 2024 20:40:02 -0800
-Message-ID: <xmqqle87e8nx.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	s=arc-20240116; t=1706592074; c=relaxed/simple;
+	bh=1ysakf5Dl6ZlZzRmvd2ZEAmDaM7rB01cL6Yuo3AKxeU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=jjalYwhKjTodkEZtNa9Van5gltxgsmkCHwZzVon4qOvjqQmSzdZdBaNRdDilfqbAFcamFl/5o4HtqJGbIABkgPBMPCS8GSiGE3NYOp2w7bBLbd2inGB4+Y7sBT9/93Uzot9FUJnP3uhnnE2dNbieALCctO9pCvBQpCNktODW/9U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+Received: (qmail 8533 invoked by uid 109); 30 Jan 2024 05:21:05 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 30 Jan 2024 05:21:05 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 28951 invoked by uid 111); 30 Jan 2024 05:21:06 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 30 Jan 2024 00:21:06 -0500
+Authentication-Results: peff.net; auth=none
+Date: Tue, 30 Jan 2024 00:21:04 -0500
+From: Jeff King <peff@peff.net>
+To: SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+Cc: git@vger.kernel.org, Phillip Wood <phillip.wood@dunelm.org.uk>
+Subject: Re: [PATCH 1/2] Makefile: use order-only prereq for UNIT_TEST_BIN
+Message-ID: <20240130052104.GA154684@coredump.intra.peff.net>
+References: <20240129031540.GA2433764@coredump.intra.peff.net>
+ <20240129031816.GA2433899@coredump.intra.peff.net>
+ <20240129202201.GA9612@szeder.dev>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- A2D71646-BF29-11EE-AD80-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20240129202201.GA9612@szeder.dev>
 
-"Mohit Marathe via GitGitGadget" <gitgitgadget@gmail.com> writes:
+On Mon, Jan 29, 2024 at 09:22:01PM +0100, SZEDER Gábor wrote:
 
-> From: Mohit Marathe <mohitmarathe23@gmail.com>
->
-> This function is an updated version of strtol_i() function. It will
-> give more control to handle parsing of the characters after the
-> numbers and better error handling while parsing numbers.
->
-> Signed-off-by: Mohit Marathe <mohitmarathe@proton.me>
-> ---
->  git-compat-util.h | 23 +++++++++++++++++++++++
->  1 file changed, 23 insertions(+)
->
-> diff --git a/git-compat-util.h b/git-compat-util.h
-> index 7c2a6538e5a..c576b1b104f 100644
-> --- a/git-compat-util.h
-> +++ b/git-compat-util.h
-> @@ -1309,6 +1309,29 @@ static inline int strtol_i(char const *s, int base, int *result)
->  	return 0;
->  }
+> > If it is a problem, there are two alternatives:
+> > 
+> >   - we can just "mkdir -p" in the recipe to build the individual
+> >     binaries. This will mean some redundant "mkdir" calls, but only when
+> >     actually invoking the compiler.
+> > 
+> >   - we could stop making the directory on the fly, and just add it with
+> >     a .gitignore of "*". This would work fine, but might be awkward when
+> >     moving back and forth in history.
+> 
+> A third alternative is to use $(call mkdir_p_parent_template) in the
+> recipe and get rid of the thus unnecessary UNIT_TEST_BIN dependency
+> and target.  It will only run mkdir when needed, and it's a well
+> established pattern in our Makefile, so you won't have to spend a
+> paragraph or two arguing about potential problems with GNU-isms :)
 
-Are we leaving the original one above?  Shouldn't this step instead
-remove it, as strtol_i() is now a C preprocessor macro as seen below?
+Thanks, I somehow didn't know about that (and didn't find it when
+grepping around for similar cases, probably because "mkdir -p" no longer
+appears in those cases ;) ).
 
-> +#define strtol_i(s,b,r) strtoi_with_tail((s), (b), (r), NULL)
-> +static inline int strtoi_with_tail(char const *s, int base, int *result, char **endp)
-> +{
-> +	long ul;
-> +	char *dummy = NULL;
-> +
-> +	if (!endp)
-> +		endp = &dummy;
-> +	errno = 0;
-> +	ul = strtol(s, endp, base);
-> +	if (errno ||
-> +	    /*
-> +	     * if we are told to parse to the end of the string by
-> +	     * passing NULL to endp, it is an error to have any
-> +	     * remaining character after the digits.
-> +	     */
-> +	   (dummy && *dummy) ||
-> +	    *endp == s || (int) ul != ul)
-> +		return -1;
-> +	*result = ul;
-> +	return 0;
-> +}
-> +
->  void git_stable_qsort(void *base, size_t nmemb, size_t size,
->  		      int(*compar)(const void *, const void *));
->  #ifdef INTERNAL_QSORT
+I agree it's a better solution here. I'll send a v2 in a moment with
+that.
+
+(Ironically, that template requires "call" which is in make 3.81, but
+the commit adding it didn't discuss that at all).
+
+> On a related note, 'make clean' doesn't remove this 't/unit-tests/bin'
+> directory.
+
+Not the end of the world, as we do clean out the contents, so "ls-files
+-o" would not mention any leftover cruft. But I agree that we should
+strive for "make clean" to be the opposite of "make" as much as
+possible.
+
+I'll add in a patch to v2.
+
+-Peff
