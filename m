@@ -1,80 +1,98 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5618038380
-	for <git@vger.kernel.org>; Tue, 30 Jan 2024 05:44:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FA4E381AF
+	for <git@vger.kernel.org>; Tue, 30 Jan 2024 05:48:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706593444; cv=none; b=oRkKUfpiUeb25iT904G/Z/vz6JqzGlgGfJmwljyqPSIs7LVrAnQDjdZU/Uuj2KRDXrUVeNejpFu0z793PZb+5bn55lCEaAchuCVjK0Bs7FNQGiF6xtYp8uAas9gSS0M4qtbQEYEzMEJoRgUfQIEtTb2Lqgro0o3AJWC1TYw1wAs=
+	t=1706593683; cv=none; b=OleYkI6ieREx8epjng8FTDLKVfoOfQLzJ5hCBmKvYlsaAOCX3p+BjdqGXyQCA0to92YqQqbEj4DCFGswOqDLcnpaODGQpM8egSYq5dLTD90Ms0+J0mdS/SLWyeE+JvcieLpKp/XZzmgMv+J+OIDT+JernbqXFSP0pHSbB2gixpo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706593444; c=relaxed/simple;
-	bh=H2k7/rSxaYJrqoGMJTfMfY3Ge9k3cxAs/G4wNTy3I8E=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ZgycG1X5ioSMHC9bly/vsMzA0KM6b7YcGgKrBilZOWEIKIbTFUJy10mt8S0o4IUPz64MZEYKQetBNzFo0GaOR8xn7O5uq82iFSUN2t9aKHapSqDGF0mAlBAZwAqiJ81sq/xhAqH8hFJ5vjfyeIRdNOSaHK5qFvQyEZOXg6qBXWk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
-Received: (qmail 8717 invoked by uid 109); 30 Jan 2024 05:44:03 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 30 Jan 2024 05:44:03 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 29179 invoked by uid 111); 30 Jan 2024 05:44:04 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 30 Jan 2024 00:44:04 -0500
-Authentication-Results: peff.net; auth=none
-Date: Tue, 30 Jan 2024 00:44:01 -0500
-From: Jeff King <peff@peff.net>
-To: Sergey Organov <sorganov@gmail.com>
-Cc: Junio C Hamano <gitster@pobox.com>, Elijah Newren <newren@gmail.com>,
-	git@vger.kernel.org
-Subject: Re: what should "git clean -n -f [-d] [-x] <pattern>" do?
-Message-ID: <20240130054401.GA166761@coredump.intra.peff.net>
-References: <87il3h72ym.fsf@osv.gnss.ru>
- <xmqq1qa5xq4n.fsf@gitster.g>
- <87ede56tva.fsf@osv.gnss.ru>
- <87a5ot6tos.fsf@osv.gnss.ru>
- <xmqqzfwspmh0.fsf@gitster.g>
- <87ede4fg8s.fsf@osv.gnss.ru>
- <xmqqzfwrjdul.fsf@gitster.g>
- <87jzns7a8a.fsf@osv.gnss.ru>
- <20240129182006.GC3765717@coredump.intra.peff.net>
- <87v87bx12j.fsf@osv.gnss.ru>
+	s=arc-20240116; t=1706593683; c=relaxed/simple;
+	bh=poYcSlCghXrjI3dsaEhJpNfHNYGlI6RpBPnpT82EtnM=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=TPcip+aaf60T3Edos84uyd36qWmLR/WLYLpezWXsAU4FOTWugXdC0VN+4c16YnA5vJwfL8R2HugUTOYr2kA9ubS2tRJ3PduZYB6TlMUtYkmozPFoRNDYFWErQKEsoUoleWxhR97jbNiOYyDn/yq34eZXoY+btxcedLm22ofRqUY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=KV3caTy5; arc=none smtp.client-ip=173.228.157.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="KV3caTy5"
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id 45E2D253DA;
+	Tue, 30 Jan 2024 00:48:01 -0500 (EST)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=poYcSlCghXrjI3dsaEhJpNfHNYGlI6RpBPnpT8
+	2EtnM=; b=KV3caTy53cgj9X/KBJkjEGEgEqmA5Y0/H+bgx1XzKUG9kWRVyXb+2A
+	vsXWwhUhtpm/nJeZ64sFpNKtazebDvXg84FL5pUBNDtTv/x5gzOBqS6F7Sb8B1Q4
+	GjBLh++ekN04AKzu7xsac3l4XXMtqmOT/L1ucWqhCunPcyyxFOrf8=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id 3E2F7253D9;
+	Tue, 30 Jan 2024 00:48:01 -0500 (EST)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.200.93])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 4A6DE253D7;
+	Tue, 30 Jan 2024 00:47:57 -0500 (EST)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Britton Leo Kerin <britton.kerin@gmail.com>
+Cc: git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>
+Subject: Re: [PATCH v4 8/8] completion: add tests for git-bisect
+In-Reply-To: <20240128223447.342493-9-britton.kerin@gmail.com> (Britton Leo
+	Kerin's message of "Sun, 28 Jan 2024 13:34:47 -0900")
+References: <20240118204323.1113859-1-britton.kerin@gmail.com>
+	<20240128223447.342493-1-britton.kerin@gmail.com>
+	<20240128223447.342493-9-britton.kerin@gmail.com>
+Date: Mon, 29 Jan 2024 21:47:55 -0800
+Message-ID: <xmqq5xzbe5is.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <87v87bx12j.fsf@osv.gnss.ru>
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 1EA1871C-BF33-11EE-B2F2-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
 
-On Tue, Jan 30, 2024 at 12:49:08AM +0300, Sergey Organov wrote:
+Britton Leo Kerin <britton.kerin@gmail.com> writes:
 
-> > Please don't. I set it to "false", because I find the default behavior a
-> > pointless roadblock if you are already aware that "git clean" can be
-> > destructive. Surely I can't be the only one.
-> 
-> Well, provided there is at least one person who finds it useful to set
-> it to 'false', I withdraw my suggestion.
-> 
-> That said, did you consider to:
-> 
->   $ git config --global alias.cl 'clean -f'
-> 
-> instead of
-> 
->   $ git config --global clean.requireForce false
-> 
-> I wonder?
+> +test_expect_success 'git bisect - start subcommand arguments before double-dash are completed as revs' '
+> +	(
+> +		cd git-bisect &&
+> +		test_completion "git bisect start " <<-\EOF
+> +		HEAD Z
+> +		final Z
+> +		initial Z
+> +		master Z
+> +		EOF
+> +	)
+> +'
 
-Not really, as when I originally set the config in 2007, it was just
-undoing the then-recent change to default clean.requireForce to true. I
-already had muscle memory using "git clean" as it had worked
-historically from 2005-2007.
+When GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME is set to 'main' (can be
+seen as a failure in linux-gcc job in GitHub CI), this piece breaks
+the test, because 'master' would not appear there in the list.
 
-I know that isn't necessarily relevant for new users today, but my point
-is mostly that we have clean.requireForce already and people would
-probably be annoyed if we took it away. :)
+You could detect what the initial default branch name currently is
+and use that branch name to dynamically generate the above list
+during the test.  I do not think it is worth it, and forcing the
+fixed name should be sufficient.
 
--Peff
+Perhaps like this (not tested):
+
+diff --git a/t/t9902-completion.sh b/t/t9902-completion.sh
+index 698e278450..26f616fcfe 100755
+--- a/t/t9902-completion.sh
++++ b/t/t9902-completion.sh
+@@ -5,6 +5,8 @@
+ 
+ test_description='test bash completion'
+ 
++GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=master
++export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+ . ./lib-bash.sh
+ 
+ complete ()
