@@ -1,183 +1,86 @@
-Received: from mail-pf1-f173.google.com (mail-pf1-f173.google.com [209.85.210.173])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A9D445BE7
-	for <git@vger.kernel.org>; Tue, 30 Jan 2024 12:37:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 758758612E
+	for <git@vger.kernel.org>; Tue, 30 Jan 2024 16:02:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706618261; cv=none; b=NrgB93/IW/0dVdUD8ltfOW9U8W6bhIPm4Psou6LVcvAPVG7ZKsd0ZVX/h8pzGVmnd3MOVNMXsJReNI+15ofzBWMa2BqYJmXRzgbk7uXwH5dZF2jptQZUhc503AsJvbC56RE3Eec/3o/UWoOOXSjrcobgA5uwuih/euMSsJ4X8gI=
+	t=1706630522; cv=none; b=gFJiH3Bll1tB3gHiT52HYiO3q9Lerc29v0ZTNa3GU1xxEXnpDVTVMSDrqLzTytNOR1wRUyPHzioOII38mpCn9n1VN3LJgwn64pJqtwLIL0RFWJscJyEn6OXYw7fMMRjuIID0CbAYpLDcX2TSDP1fHCr8+b5Lb0Q7nVjE9CYV5Ok=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706618261; c=relaxed/simple;
-	bh=imjdykfP7i73arSTHHMM5vb7zmI3UPeddCVmxkMf38I=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=QhlzJI7Lu5U63IqEgbue6z0CldyFakkLtnEwz/BA0WwphZ/xsR4kVfZcEcWbW17gev8J46/5XgVxhwnQ8jTVYY8gXk1+HM23dGRYS/y5X5y+X3O8khf+Y8Xz08gqDhAjYyD7jZPmw5itgB3prPVw4xCq/Gf1eZveE+2f7vxAR3M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ibiWuexr; arc=none smtp.client-ip=209.85.210.173
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1706630522; c=relaxed/simple;
+	bh=xoMClEzvzXzZHDBqzo1hF6+ocL+fRrAlAR4fRYk6EX4=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=Ol6A2Pon/hvaefKZrde7+O74X6j1evA9HjNIkwpkgeM6xZWtva6iBUJeFZCe12z4ublPVwkDrr4BEGr2nzNpTtk98P9Vc2hj+H5Ivlckdsi+aOLP1f9hRWBxYmUPkhv4XQxGqJy4zAv+dOS4inhkO4jms2lyMJ7UkqvM+H2E1Ws=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=oldrfW8b; arc=none smtp.client-ip=64.147.108.70
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ibiWuexr"
-Received: by mail-pf1-f173.google.com with SMTP id d2e1a72fcca58-6ddcfbc5a5fso3081874b3a.2
-        for <git@vger.kernel.org>; Tue, 30 Jan 2024 04:37:39 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1706618259; x=1707223059; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=kslP/Y24xRGOv7TfLx9ORN/aeYkIeKgpRf0sK8PLxtA=;
-        b=ibiWuexrj2kT/N8K72sMJCqScA5/cBpNqQkNhAh2+xEHalf9IKzdc36j4hDP70s6TR
-         GDwWlIs6FinhMYBothOluaO5DFY1BVmMsNJgBJiz/pG+4mMJXiJOHc+QK1sgLupExmUQ
-         TQjkLq0P64tmBRI49+lOrytcDuLBl7LI5/VHe/KUOpz1zCnByXDVsmhAv2DugZQEMs5o
-         gxEVbUJyzWnSreAVksSeQCNENBvqYSE8nPL0a7PhfpFXtexT3wwc7KM87isdY/a9ry72
-         lFdg2ntDNFaVbXBNUe6J1UKnCfat1muktqNOm0XGWEaaE/uc6OycJZxT2+ACtoyXSK1u
-         NTyg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1706618259; x=1707223059;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=kslP/Y24xRGOv7TfLx9ORN/aeYkIeKgpRf0sK8PLxtA=;
-        b=OH836Fz7+hnE23izqiAQZUoxXSXZBCFcpoGwWrHxAyzaQ+syClL1FyAOZ6FO+zvXaS
-         588MH/tjHcOewhxpBTjkkjiowhS9D6zhRFl4bfRxZQQTXfXlgDNCjcjm+oZBkg3ndf1g
-         WREtI7UE9+HBc34hHTBiiBG8SPhNGGXixilGNvcG+IDuRlOOMB/Yr5btl0rCv7jF1lt3
-         MhYnHklTYpEjO5YZLo5funTTsVVzepYI9xgnhuQaCYVDXPVTvOUcpKW/wAAuc6BleB1o
-         aTLsbqL0/RK+ic3CMUHD4XgRAZEbpcBcMAuWmnDiNHdT2rsDQKAzge9gM55dXsdSW0BC
-         sMxg==
-X-Gm-Message-State: AOJu0Yz6vPoKIuijrV3JHnlqOGo/CRf8FuFrCa9BPwp+kt3BqbXXrCkS
-	FxzN20voau8intgn8SEX7NkyjDRIkkHGPUcgYtHxHdtY1sUNHlBgJCF7zU24uxu7PhxP3Prvnt2
-	nu2HvgH0XSl0p6kV7d+5EbPaxPcg=
-X-Google-Smtp-Source: AGHT+IESQQZibYilPcMCZCYxQcs9RosWuCAn60fzkBL8wMFPkbopwoniEgKN9l5MTW4Z+3F1ff9OcRQ0kItrBdw7EbQ=
-X-Received: by 2002:a05:6a21:9183:b0:19c:8505:a232 with SMTP id
- tp3-20020a056a21918300b0019c8505a232mr8445715pzb.40.1706618259365; Tue, 30
- Jan 2024 04:37:39 -0800 (PST)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="oldrfW8b"
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 019DE1DFE9A;
+	Tue, 30 Jan 2024 11:01:59 -0500 (EST)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=xoMClEzvzXzZ
+	HDBqzo1hF6+ocL+fRrAlAR4fRYk6EX4=; b=oldrfW8bcMPlR3XSDofNvMXU+kkV
+	n3r+FGryq6CVflrVcKLogYy6AJQ2/8LTgD3lj71/rvBB9UgcC0pmKYvmh3GZa1cA
+	xQVxlOUKT+Ybsvm59wwq6VP9K9iaFXz8QTxC8wySzyeFluWq1D8Ec15qDLFcK4bi
+	r7P7pWYnkmXOrDA=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id EDA191DFE98;
+	Tue, 30 Jan 2024 11:01:58 -0500 (EST)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.200.93])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 5B8A61DFE97;
+	Tue, 30 Jan 2024 11:01:58 -0500 (EST)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Jeff King <peff@peff.net>
+Cc: =?utf-8?Q?Rub=C3=A9n?= Justo <rjusto@gmail.com>,  Git List
+ <git@vger.kernel.org>
+Subject: Re: [PATCH 0/4] mark tests as leak-free
+In-Reply-To: <20240130055448.GC166761@coredump.intra.peff.net> (Jeff King's
+	message of "Tue, 30 Jan 2024 00:54:48 -0500")
+References: <45eb0748-6415-4e52-a54f-8d4e5ad57dde@gmail.com>
+	<20240130055448.GC166761@coredump.intra.peff.net>
+Date: Tue, 30 Jan 2024 08:01:57 -0800
+Message-ID: <xmqqr0hydd3e.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CAGX9RpFMCVLQV7RbK2u9AabusvkZD+RZNv_UD=R00cSUrjutBg@mail.gmail.com>
- <xmqqjzq9cl70.fsf@gitster.g> <xmqqv89tau3r.fsf@gitster.g> <xmqqpm01au0w.fsf_-_@gitster.g>
- <bf848477-b4dd-49d3-8e4b-de0fc3948570@gmail.com> <xmqqwmu42ccb.fsf@gitster.g>
- <b3532261-3cf4-4666-9cbd-4ce668cd2e49@gmail.com> <CAGX9RpH0RJfBADQwJ=c7PCHU955vOqd0Wdc7Yi7XUuAQQW_FNQ@mail.gmail.com>
- <CAPig+cSGF+vQrnD0f99cbdpQOOC7X6ULa9tFe+FwVrG0SF4PGg@mail.gmail.com> <xmqqsf4c39e9.fsf@gitster.g>
-In-Reply-To: <xmqqsf4c39e9.fsf@gitster.g>
-From: Willem Verstraeten <willem.verstraeten@gmail.com>
-Date: Tue, 30 Jan 2024 13:37:26 +0100
-Message-ID: <CAGX9RpF=tvPwiLO6UYA+uR5f2oqOLUSNaDL-jfn=T=BQ9FNtkQ@mail.gmail.com>
-Subject: Re: [PATCH 2/2] checkout: forbid "-B <branch>" from touching a branch
- used elsewhere
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Eric Sunshine <sunshine@sunshineco.com>, phillip.wood@dunelm.org.uk, 
-	git@vger.kernel.org, Jeff King <peff@peff.net>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID:
+ E59F1424-BF88-11EE-9CF5-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
+Content-Transfer-Encoding: quoted-printable
 
-Hi all,
+Jeff King <peff@peff.net> writes:
 
-Sorry for dropping out of the conversation, but I see that the changes
-landed on the master, ready for the 2.44.0 release.
+> On Mon, Jan 29, 2024 at 10:04:10PM +0100, Rub=C3=A9n Justo wrote:
+>
+>> The tests: t0080, t5332 and t6113 can be annotated as leak-free.
+>>=20
+>> I used:
+>>   $ make SANITIZE=3Dleak GIT_TEST_PASSING_SANITIZE_LEAK=3Dcheck GIT_TE=
+ST_SANITIZE_LEAK_LOG=3Dtrue test
+>>=20
+>> Rub=C3=A9n Justo (4):
+>>   t0080: mark as leak-free
+>>   t5332: mark as leak-free
+>>   t6113: mark as leak-free
+>>   test-lib: check for TEST_PASSES_SANITIZE_LEAK
+>
+> These all looked reasonable to me. Thank you for not just fixing them,
+> but including the background for each case (e.g., leak-free as of commi=
+t
+> XYZ, etc).
 
-Thank you very much!
+Yup, the background description was very useful to read.
 
-On Fri, 8 Dec 2023 at 18:13, Junio C Hamano <gitster@pobox.com> wrote:
->
-> Eric Sunshine <sunshine@sunshineco.com> writes:
->
-> >    Needs review and documentation updates.
-> >
-> > I'm not sure if the "Needs review" comment is still applicable since
-> > the patch did get some review comments, however, the mentioned
-> > documentation update is probably still needed for this series to
-> > graduate.
->
-> Thanks.  I think "-B" being defined as "branch -f <branch>" followed
-> by "checkout <branch>" makes it technically unnecessary to add any
-> new documentation (because "checkout <branch>" will refuse, so it
-> naturally follows that "checkout -B <branch>" should), but giving
-> the failure mode a bit more explicit mention would be more helpful
-> to readers.
->
-> Here is to illustrate what I have in mind.  The mention of the
-> "transactional" was already in the documentation for the "checkout"
-> back when switch was described at d787d311 (checkout: split part of
-> it to new command 'switch', 2019-03-29), but somehow was left out in
-> the documentation of the "switch".  While it is not incorrect to say
-> that it is a convenient short-cut, it is more important to say what
-> happens when one of them fails, so I am tempted to port that
-> description over to the "switch" command, and give the "used elsewhere"
-> as a sample failure mode.
->
-> The test has been also enhanced to check the "transactional" nature.
->
->  Documentation/git-checkout.txt |  4 +++-
->  Documentation/git-switch.txt   |  9 +++++++--
->  t/t2400-worktree-add.sh        | 18 ++++++++++++++++--
->  3 files changed, 26 insertions(+), 5 deletions(-)
->
-> diff --git c/Documentation/git-checkout.txt w/Documentation/git-checkout.txt
-> index 240c54639e..55a50b5b23 100644
-> --- c/Documentation/git-checkout.txt
-> +++ w/Documentation/git-checkout.txt
-> @@ -63,7 +63,9 @@ $ git checkout <branch>
->  ------------
->  +
->  that is to say, the branch is not reset/created unless "git checkout" is
-> -successful.
-> +successful (e.g., when the branch is in use in another worktree, not
-> +just the current branch stays the same, but the branch is not reset to
-> +the start-point, either).
->
->  'git checkout' --detach [<branch>]::
->  'git checkout' [--detach] <commit>::
-> diff --git c/Documentation/git-switch.txt w/Documentation/git-switch.txt
-> index c60fc9c138..6137421ede 100644
-> --- c/Documentation/git-switch.txt
-> +++ w/Documentation/git-switch.txt
-> @@ -59,13 +59,18 @@ out at most one of `A` and `B`, in which case it defaults to `HEAD`.
->  -c <new-branch>::
->  --create <new-branch>::
->         Create a new branch named `<new-branch>` starting at
-> -       `<start-point>` before switching to the branch. This is a
-> -       convenient shortcut for:
-> +       `<start-point>` before switching to the branch. This is the
-> +       transactional equivalent of
->  +
->  ------------
->  $ git branch <new-branch>
->  $ git switch <new-branch>
->  ------------
-> ++
-> +that is to say, the branch is not reset/created unless "git switch" is
-> +successful (e.g., when the branch is in use in another worktree, not
-> +just the current branch stays the same, but the branch is not reset to
-> +the start-point, either).
->
->  -C <new-branch>::
->  --force-create <new-branch>::
-> diff --git c/t/t2400-worktree-add.sh w/t/t2400-worktree-add.sh
-> index bbcb2d3419..5d5064e63d 100755
-> --- c/t/t2400-worktree-add.sh
-> +++ w/t/t2400-worktree-add.sh
-> @@ -129,8 +129,22 @@ test_expect_success 'die the same branch is already checked out' '
->  test_expect_success 'refuse to reset a branch in use elsewhere' '
->         (
->                 cd here &&
-> -               test_must_fail git checkout -B newmain 2>actual &&
-> -               grep "already used by worktree at" actual
-> +
-> +               # we know we are on detached HEAD but just in case ...
-> +               git checkout --detach HEAD &&
-> +               git rev-parse --verify HEAD >old.head &&
-> +
-> +               git rev-parse --verify refs/heads/newmain >old.branch &&
-> +               test_must_fail git checkout -B newmain 2>error &&
-> +               git rev-parse --verify refs/heads/newmain >new.branch &&
-> +               git rev-parse --verify HEAD >new.head &&
-> +
-> +               grep "already used by worktree at" error &&
-> +               test_cmp old.branch new.branch &&
-> +               test_cmp old.head new.head &&
-> +
-> +               # and we must be still on the same detached HEAD state
-> +               test_must_fail git symbolic-ref HEAD
->         )
->  '
->
+Thanks.
