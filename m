@@ -1,126 +1,186 @@
-Received: from wfhigh4-smtp.messagingengine.com (wfhigh4-smtp.messagingengine.com [64.147.123.155])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f45.google.com (mail-pj1-f45.google.com [209.85.216.45])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F29A845012
-	for <git@vger.kernel.org>; Tue, 30 Jan 2024 06:10:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.155
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8C7D3838F
+	for <git@vger.kernel.org>; Tue, 30 Jan 2024 06:39:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706595017; cv=none; b=Inik/KNByuaneFjy5wr48HdQRfm4kpCDmIo9lPkMlMNoLIcJVNNX7M0n5ksCUIKnvL0Gzsh/brlO8zscXEc08NEk+61R128U1Dxsy8sUeWY4qlKnctVSRq7vbrVekoR3+z2ZfnCjlHlO44lpAkM7CZzuLWuLy1tuoyo8DGUUeJw=
+	t=1706596762; cv=none; b=iuAhE4DP4crJ48ie3pCbs8cD2bCgsiGYuKOlxGJQM24io15bcQ+yCE1YjGo/WORMwCHGYr/N/Wr/hHwmxLdJz7tdz1jHiUKa0gw1xtgBW/rwnwyKg8Vg5Qa5wAfyvMzB/h25gHBv+oKBZeTSuv559D/FMv7Lt+IOfi+i57GhWCg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706595017; c=relaxed/simple;
-	bh=+AEr/QaihzfxHf/s3Q1eGqZulaWrtqZuFp2QddFS7kU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=CvM0Y1/EHpRCZgX7fdmgLfCe1kAdu0RUtGJGUqxCIxcU9q6YWD+ShdjI7Sjm2ug7+CUmIF7OKDhBCAJo7mQMGZWCNe50jGrnGgFpctOiS0tStk40tiTCIEdiQ9Bixv6jtEpcQatXYxhD6pD3qZtIeIYLZV14lsd3tlNxY8Jli7o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=NR1OwQ2R; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Vsd6GCfB; arc=none smtp.client-ip=64.147.123.155
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1706596762; c=relaxed/simple;
+	bh=IVZiEdvEi5Tkon5zffsxNQZNVkUegusuWb5uqDn+HF8=;
+	h=Mime-Version:Content-Type:Date:Message-Id:From:To:Cc:Subject:
+	 References:In-Reply-To; b=tQZgb/zECNWjM2pIqeY98giYrQHhf4x9VFoUx8XKb+BSiGKmf25slUs/UV8CtIEuuhqW0FHJ6lgcBYdTWRMSkt9IGTM4N7FWsiNQIQbmLvXHOxEjIa1r2hqBbveoDeGQVCYI1HqYw1JDQtVfa+/IHq0PD/LsNl3AHj3zCYSfH8o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=nm4XT8cG; arc=none smtp.client-ip=209.85.216.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="NR1OwQ2R";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Vsd6GCfB"
-Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
-	by mailfhigh.west.internal (Postfix) with ESMTP id 6F3791800099;
-	Tue, 30 Jan 2024 01:10:13 -0500 (EST)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute4.internal (MEProxy); Tue, 30 Jan 2024 01:10:13 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1706595012; x=1706681412; bh=+Hg2jptizA
-	XMTl/B9+zxMnsXiokGqj4hs+Q0FQfO9r4=; b=NR1OwQ2RM9YlLy6QHY7TPp5gW0
-	oI+/wpgQsju/4ccnxTp8ltgcesKqlMf8DPzKKhatjDaAQdx0orRSRYmBFZaozqAY
-	A05uAbfCWMaVSwmtIu/cUdEq+LflcfPxKfqLal5MlhzLTsqspWqyUDdvtaH7xAqp
-	vSgsN72PVbxHbVkdGb8VG4KqG9ivhZJGHYD8belfEnnnkgTFIg3fKUFRs2jl+n26
-	fi+bREhZHPBaIAzd4x7jFXOoM/Ii0jjVw7Lr01Rk/aiRTmbTvXBqBXnxSJd4PMnb
-	tCDxdp4rXfZQygYuALvAQe40AYDQbLoN1CU2fg6grSBT+Rhh9j/vV5ETa56A==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1706595012; x=1706681412; bh=+Hg2jptizAXMTl/B9+zxMnsXiokG
-	qj4hs+Q0FQfO9r4=; b=Vsd6GCfBuqTiJAqE0WyO5YrA9oBAI+B6PJ3l3DJuXm1e
-	0Zs628JWIs+Ip9MBF8i24qq44qNWGrFu06aQ6CO3YGvb0z+QJWHOy+TwBy/kU5UA
-	ZgovUcDY3gB1A9enZCcmEyQ1/i/JnDu/gJUpWNBqTbnTDzdinjdmPc4Gh/JE9ApL
-	VSo4asfdL0HRT2nFCMzit88ArE1Ac9zhkPboyAzh0D3wW6kHZzPkBZBZjEx80efO
-	i6WDo5ryNPEo/5Pbr+GOfiCFuZ1bX+Ikm4T+9qsz9RLAHvnB874u21X339zPu0wX
-	hFeKwBxhrSMYq6Z3xEF8bdVLT85JKgLwnNCCxnaKHQ==
-X-ME-Sender: <xms:xJK4ZS-WW057LUcGUlmyJmvLAQVMKC84VodQRMC_9kCdO9Nxfht2nA>
-    <xme:xJK4ZStINyN5FCmfYrvPzHBMKAUsTDqdKerNvOYPv4fGr8o1v4JAlabYWDF8EaU5t
-    l113Zk-Z8tNol8w_A>
-X-ME-Received: <xmr:xJK4ZYC0ZHLST-6YPKQlaNbH0QbzdG8AT45_UIMDJs9EY-Gr-8yJrXFUpPh_9Xcg7eUZASOM-joShqcruucWIm4y_6qK9GcOnP_PFxM-zxrgQ5c>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrfedthedgleduucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvvefukfhfgggtuggjsehgtd
-    orredttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshes
-    phhkshdrihhmqeenucggtffrrghtthgvrhhnpeehfefhuedtvedtfeeiteeugefgfeelge
-    elveehffeukeelfefhieekteevudfhffenucevlhhushhtvghrufhiiigvpedtnecurfgr
-    rhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhm
-X-ME-Proxy: <xmx:xJK4ZadG79kE950yFeCnrEjcIEUKnzVm3QdmQe8LEu6-QcZNvuVfwg>
-    <xmx:xJK4ZXPjkvSReSXdLQ_u5TpnbNM5-MmlI6Z20Eo0VFIZ7yZXBRbv-g>
-    <xmx:xJK4ZUnGzgMPD_XsnAcjrRAl3cHV-LbZ6qoLMgWirfFJfrXgK6yh-Q>
-    <xmx:xJK4ZQbMnctcqTiSFnQpSsumc3CGcMAncjGfHi5BWdjiCx8iU2kBwsKpSW8>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 30 Jan 2024 01:10:11 -0500 (EST)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 97f91920 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 30 Jan 2024 06:06:53 +0000 (UTC)
-Date: Tue, 30 Jan 2024 07:10:08 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 0/3] Comment style fixes
-Message-ID: <ZbiSwAbRaxXXfLMk@tanuki>
-References: <20240129202839.2234084-1-gitster@pobox.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nm4XT8cG"
+Received: by mail-pj1-f45.google.com with SMTP id 98e67ed59e1d1-290b37bb7deso2993566a91.0
+        for <git@vger.kernel.org>; Mon, 29 Jan 2024 22:39:20 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1706596760; x=1707201560; darn=vger.kernel.org;
+        h=in-reply-to:references:subject:cc:to:from:message-id:date
+         :content-transfer-encoding:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=jLNYfNKOwOfitxp6FzfqOl1fN2d7hXGaHRklBGLBApQ=;
+        b=nm4XT8cGKo8F1cG0/3yAZSqrbLscK85RSzCvsxX9mV9lpWsc5veDMgJak2O5GiH1YW
+         PnENQzAtynchShDtA2vjxfReZrqUuJIUPDhE35Ct/WkceIdmaeDGWE6qv3amt1MEZNSm
+         Klag6JQmEatbyRQ+tuMW2OfyEqYJKmhMZ3iBeF2AJjWDpocDM0JxKPVHeihsgO0z4r63
+         pjcLAZOVbhyE4IXmtVu8TSJTIVCfRnjYkivberWW8TGmAAc0rBxU0l1iNMQaHLh1qF4Y
+         vM5DgOcYTVZHVVXSB2Id6NAyxJsI2wqykv9BK1bU8nv3hDfyyxjjXjLUQ/byhk/VFA7s
+         Q8Lg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1706596760; x=1707201560;
+        h=in-reply-to:references:subject:cc:to:from:message-id:date
+         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=jLNYfNKOwOfitxp6FzfqOl1fN2d7hXGaHRklBGLBApQ=;
+        b=BxEJSf36CXnE8NB4600fMW6s6yrZIFNcSK2kT38LCMi4YCxn64sBpAMVKRvg6CnsDC
+         h/9EgdXZG2/7SpKe6IiiFKa6396rsC8k4k48l5ICvRB2qDfolxTLTZJF1PKxrILEpQBS
+         5xh0BYhj5FPSMEPzlwac+Z662pVktI9Vj+jGwgVBx7OsDOrz/c838tMMV4sNKXMTP21Q
+         7c8NfzNLNh0Vev3UZSPhDCaVIJ5LDnBWqd3eVbVG2Pn1wiThEqDIGY77TONjQxBJq/W/
+         2MPbRnZMFcBhmNJ4hqB7OcqT4YwlMC+KdyPg3+PZa871NsF5xae6A7YDfbDICuGJfRL/
+         5AJg==
+X-Gm-Message-State: AOJu0Yzd3TUoQ+209WaxvBnV7YTM2ZkO1VHMD8g20YfXHy19Ut5Mvhvy
+	UG5FURLv8hvqInoYK9u9paQChG7Zyv/Gtpl/YH7fU8pJqhfQM9CpqPtOlce9TFs=
+X-Google-Smtp-Source: AGHT+IGKTEoFVo377cRYqKVUdV6qUQehZuiwqvVqVSV3SItJl3Znti50AA5jD6ZxcLa5oMhZNZ+LTA==
+X-Received: by 2002:a17:90a:bd90:b0:293:b540:5a8 with SMTP id z16-20020a17090abd9000b00293b54005a8mr5183728pjr.8.1706596759905;
+        Mon, 29 Jan 2024 22:39:19 -0800 (PST)
+Received: from localhost ([2402:a00:401:a99b:f188:2dd3:d960:a8ab])
+        by smtp.gmail.com with ESMTPSA id pw18-20020a17090b279200b00295bbbf1029sm299906pjb.2.2024.01.29.22.39.18
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 29 Jan 2024 22:39:19 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="Kbbx7L1IEHwZ7S/i"
-Content-Disposition: inline
-In-Reply-To: <20240129202839.2234084-1-gitster@pobox.com>
-
-
---Kbbx7L1IEHwZ7S/i
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+Mime-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Tue, 30 Jan 2024 12:09:15 +0530
+Message-Id: <CYRU26F9KCDF.2XI7VRT7N04OC@gmail.com>
+From: "Ghanshyam Thakkar" <shyamthakkar001@gmail.com>
+To: "Patrick Steinhardt" <ps@pks.im>
+Cc: <git@vger.kernel.org>
+Subject: Re: [RFC PATCH 1/2] add-patch: compare object id instead of literal
+ string
+X-Mailer: aerc 0.15.2
+References: <20240128181202.986753-2-shyamthakkar001@gmail.com>
+ <20240128181202.986753-3-shyamthakkar001@gmail.com>
+ <ZbeQmv_KcChtrPqJ@tanuki>
+In-Reply-To: <ZbeQmv_KcChtrPqJ@tanuki>
 
-On Mon, Jan 29, 2024 at 12:28:36PM -0800, Junio C Hamano wrote:
-> Among comments in the traditional /* single liner */ ones, our
-> reviews seem to have missed a few // comments.  While they are not
-> illegal per-se, they look out of place mixed with the /* ... */
-> style comments, which is the prevailing style used in this project.
->=20
-> Fix those small number of style violations in our own code; files
-> with borrowed code that have // comments as the prevalent style are
-> left untouched.
+On Mon Jan 29, 2024 at 5:18 PM IST, Patrick Steinhardt wrote:
+> On Sun, Jan 28, 2024 at 11:41:22PM +0530, Ghanshyam Thakkar wrote:
+>
+> We typically start commit messages with an explanation of what the
+> actual problem is that the commit is trying to solve. This helps to set
+> the stage for any reviewers so that they know why you're doing changes
+> in the first place.
 
-These changes look obviously good to me, thanks!
+I will keep that in mind for future patches.
 
-Patrick
+> > Add a new function reveq(), which takes repository struct and two revis=
+ion
+> > strings as arguments and returns 0 if the revisions point to the same
+> > object. Passing a rev which does not point to an object is considered
+> > undefined behavior as the underlying function memcmp() will be called
+> > with NULL hash strings.
+> >=20
+> > Subsequently, replace literal string comparison to HEAD in run_add_p()
+> > with reveq() to handle more ways of saying HEAD (such as '@' or '$branc=
+h'
+> > where $branch points to same commit as HEAD). This addresses the
+> > NEEDSWORK comment in run_add_p().
+> >=20
+> > However, in ADD_P_RESET mode keep string comparison in logical OR with
+> > reveq() to handle unborn HEAD.
+> >=20
+> > As for the behavior change, with this patch applied if the given
+> > revision points to the same object as HEAD, the patch mode will be set =
+to
+> > patch_mode_(reset,checkout,worktree)_head instead of
+> > patch_mode_(...)_nothead. That is equivalent of not setting -R flag in
+> > diff-index, which would have been otherwise set before this patch.
+> > However, when given same set of inputs, the actual outcome is same as
+> > before this patch. Therefore, this does not affect any automated script=
+s.
+>
+> So this is the closest to an actual description of what your goal is.
+> But it doesn't say why that is a good idea, it only explains the change
+> in behaviour.
+>
+> I think the best thing to do would be to give a sequence of Git commands
+> that demonstrate the problem that you are trying to solve. This would
+> help the reader gain a high-level understanding of what you propose to
+> change.
 
---Kbbx7L1IEHwZ7S/i
-Content-Type: application/pgp-signature; name="signature.asc"
+Yeah, my original motive was to support '@' as a shorthand for HEAD.
+But, since '@' can also be used as branch name, I thought of comparing
+object ids instead of string comparison in accordance with the
+NEEDSWORK comment. However, as Junio pointed out, treating a branch
+name revision that points to same commit as HEAD, as HEAD would just
+cause confusion.
 
------BEGIN PGP SIGNATURE-----
+> > Also, add testcases to check the similarity of result between different
+> > ways of saying HEAD.
+> >=20
+> > Signed-off-by: Ghanshyam Thakkar <shyamthakkar001@gmail.com>
+> > ---
+> > Should the return values of repo_get_oid() be checked in reveq()? As
+> > reveq() is not a global function and is only used in run_add_p(), the
+> > validity of revisions is already checked beforehand by builtin/checkout=
+.c
+> > and builtin/reset.c before the call to run_add_p().
+> >=20
+> >  add-patch.c               | 28 +++++++++++++++-------
+> >  t/t2016-checkout-patch.sh | 50 +++++++++++++++++++++++----------------
+> >  t/t2071-restore-patch.sh  | 21 ++++++++++------
+> >  t/t7105-reset-patch.sh    | 14 +++++++++++
+> >  4 files changed, 77 insertions(+), 36 deletions(-)
+> >=20
+> > diff --git a/add-patch.c b/add-patch.c
+> > index 79eda168eb..01eb71d90e 100644
+> > --- a/add-patch.c
+> > +++ b/add-patch.c
+> > @@ -14,6 +14,7 @@
+> >  #include "color.h"
+> >  #include "compat/terminal.h"
+> >  #include "prompt.h"
+> > +#include "hash.h"
+> > =20
+> >  enum prompt_mode_type {
+> >  	PROMPT_MODE_CHANGE =3D 0, PROMPT_DELETION, PROMPT_ADDITION, PROMPT_HU=
+NK,
+> > @@ -316,6 +317,18 @@ static void setup_child_process(struct add_p_state=
+ *s,
+> >  		     INDEX_ENVIRONMENT "=3D%s", s->s.r->index_file);
+> >  }
+> > =20
+> > +// Check if two revisions point to the same object. Passing a rev whic=
+h does not
+> > +// point to an object is undefined behavior.
+>
+> We only use `/* */`-style comments in the Git codebase.
+>
+> > +static inline int reveq(struct repository *r, const char *rev1,
+> > +			const char *rev2)
+> > +{
+> > +	struct object_id oid_rev1, oid_rev2;
+> > +	repo_get_oid(r, rev1, &oid_rev1);
+> > +	repo_get_oid(r, rev2, &oid_rev2);
+> > +
+> > +	return !oideq(&oid_rev1, &oid_rev2);
+> > +}
+>
+> I don't think it's a good idea to allow for undefined behaviour here.
+> While more tedious for the caller, I think it's preferable to handle the
+> case correctly where revisions don't resolve, e.g. by returning `-1` in
+> case either of the revisions does not resolve.
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmW4kr8ACgkQVbJhu7ck
-PpRPRBAAj7Za7TgfTqvX6ITfW3276SyBmHcbCU8tsjJG//V5brVQN7XTjGGpY4rQ
-ePR61u3iJMOw1zlQPrH3R3X9bf5PwY6koQue83s5u4EuuT6j8RUy7Nzvt90I/GkB
-6uBlHeu3LiqRUnK4ao8v2MfByYBkJ3awEhk+xLUUAVkCf4E/m8AfWmDF06XKz/yy
-DDKJCBXgl3Ehs/JdCVgLy9gAC7pV94AwgSENJvsxMypLFIGpUVIdudVBfjW9imhN
-IbehBfCSV6ARE3flj3GqPj2YtxNumOIeZq51rXvOIyzOHB1+bxGr5vGulC1ZU6et
-LAkHw16NsCICZ4lgRuW3fQlCi178GFPn5Ti9Sb9PeAK41AZAYO5Mm7Q38hC51RBS
-VqpMUBoFqRZiD0KmnSUXR90TAWTTn/wpGk53j4YBLyytKGyOMyQbjq0GxNJGsgHc
-APKcueI1uCKtrmYLxmNW83hWDTS6NgU4po0Ef+K8vSMlG5zBKe6xQirIhU1Y2obn
-otsPRl58qMtAxp/F0q8n85yrZYvkojmbU2aTQwO2CHIR0WVAw3oz1/vT/f7gbs8J
-1R5nNiurRuUFvy5srYWd5h3kylD6DbPlEa3AMF5WxuYmQ0nBhBNux8plSzSq4GtH
-t2ssdZViKP6aTO0etVIcqwE7KfcOkLvH/tQB16gUSdgBrW1xP9s=
-=qYnB
------END PGP SIGNATURE-----
+Will update it.=20
 
---Kbbx7L1IEHwZ7S/i--
+Thanks.
+
