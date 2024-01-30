@@ -1,135 +1,197 @@
-Received: from mail-yw1-f202.google.com (mail-yw1-f202.google.com [209.85.128.202])
+Received: from mail-pf1-f178.google.com (mail-pf1-f178.google.com [209.85.210.178])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45094376FE
-	for <git@vger.kernel.org>; Tue, 30 Jan 2024 02:58:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.202
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47D24374EF
+	for <git@vger.kernel.org>; Tue, 30 Jan 2024 03:47:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706583536; cv=none; b=eIeHaNQZRnsj5HiNix5tOPCWmQ6DtheQ9sRJiH6eKvG0OIRlfTGEG9Sk0q5L9QB/TJtHYX5Ad42hQhqWfXncj7l+wIJIE/wN2FmzWtnpSAwucF3LP5atvtNjppfk8hWMLvBMxZrCZ3F/ePWFwhN5vE5VZ27X4Yi8qGdVj6d+jvI=
+	t=1706586461; cv=none; b=DhmgcTxslR+CLvZ7/ZJs9auQnGlPUeB9FB4DCPSBvZc0iow6nYVtdnXTLHNTMQz9iiqTWYerHXbyiqO4f04zjgH32gNIVpxVZ28R9p2MdI7qoK/MDuXjYnb0E3fwE7MWrNO0M8/4qo4Zev3VK244ddJf/gwL9g/wRPJRljh82X8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706583536; c=relaxed/simple;
-	bh=0eFxsSS+Kxz5/D5pL6c2ilW/pQpXI5U3rrgtxFv/TxY=;
-	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
-	 To:Cc:Content-Type; b=PhhzBl1cNYcSiyYAE5FTbOJfbM2gC4nZ31GZAxJ2NsrVDH6CU6De7qWJ7V0A2xV9Vte8WT0PSt5HU70tOZFtqVcyvHIk6Gz1gtqPNNhLAu47Aoen924lIt/rL9eyP0dPx1uBrw6+M//JS25mcFIwFo0NigCsL1ucyTQP7cn0vmU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--linusa.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=sjZAzNby; arc=none smtp.client-ip=209.85.128.202
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--linusa.bounces.google.com
+	s=arc-20240116; t=1706586461; c=relaxed/simple;
+	bh=De38W/cGvnoineRLkAJVxq5wvGHStrQ67epU/OHld8A=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=UtTc58Ca0meE9XNDbg11O4fRcHn5U5Oc13NwOkWvGH7GZjUXPLPYPOmQ8bBvsS6YMh6h+OC7ZM0ThnNtAU7oPZajK6aBv1SmSKGBt099vqbQLLYvlfavyCmyCTtCkr2aAw+xEb1qWjidCwX2atd9hB0BK4dDq59XuRy6LAGZVs0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=i9lHy9d1; arc=none smtp.client-ip=209.85.210.178
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="sjZAzNby"
-Received: by mail-yw1-f202.google.com with SMTP id 00721157ae682-5ff817c96a5so62872027b3.3
-        for <git@vger.kernel.org>; Mon, 29 Jan 2024 18:58:54 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="i9lHy9d1"
+Received: by mail-pf1-f178.google.com with SMTP id d2e1a72fcca58-6ddd19552e6so1662996b3a.1
+        for <git@vger.kernel.org>; Mon, 29 Jan 2024 19:47:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1706583534; x=1707188334; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:from:subject:message-id:references
-         :mime-version:in-reply-to:date:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=VP+ch5fXR3K9e46xLslpN6uVysgmCt6NdrRJdMRxdio=;
-        b=sjZAzNbyiwu3YDCQmA0xEm6PhMf7vs9NZ7QTyrxD0wx7u6KgTaKECwiG/tg1LjvlaW
-         xpZP8uBZ8Z0Hk78i9t/IaYyk8vUMI5QnJamdGhMdd8mlUQqWI8CjYzZPIvYXoeQTOsNF
-         i8verhq6vl+PCPc9RWT2y72CcESnVILLAcS4rNB1dmCCHoi/+yjYg5jCUcuOeUAfIJdK
-         U0WKuS/fhsGPmeyLd52/jTM1JbZU/tPCkNIaDmpS5QsNsQNBd/l27pXi1HQ/sTrIHPD/
-         LeLSKRdXL3pkabMji6WIU/L4dDD+ggF342anv6mMJM3V4RrHJtl9ElevQplss1MF16w+
-         0g3Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1706583534; x=1707188334;
-        h=content-transfer-encoding:cc:to:from:subject:message-id:references
-         :mime-version:in-reply-to:date:x-gm-message-state:from:to:cc:subject
+        d=gmail.com; s=20230601; t=1706586459; x=1707191259; darn=vger.kernel.org;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
          :date:message-id:reply-to;
-        bh=VP+ch5fXR3K9e46xLslpN6uVysgmCt6NdrRJdMRxdio=;
-        b=wkhdXOhFnWSJFVjwk8WUbKz6viKQM69lICVYl9WqZdoIWYqIirE6b0LcFXDRxcQHXO
-         Mf+kmGCykqpg3vVG8OxAPjvJ9gMUn4/ylPWt0yaFGJcy2Ayw+JGv/vSaSvsmANeu8Ltn
-         iNK5cQClaYr0ktTeTADzKOx8O4DMutxfOM3m+2eMu9vHdz37Kyw11weBXf7Uid4z8EqT
-         YjjNvfbrG1kh0647VkteHHnBcaDOKfe+H1OBNVuBP/RERwGExXmf25F102Mox2lBA12a
-         SwjCij6FsgIZ+jcEpseR5qsO/kE9P7vM8Gig9nYGLbv5oA9n+OuKSt5Tfxv306UQ9cv/
-         dUYg==
-X-Gm-Message-State: AOJu0Yz2qhEVq42uUtKqGiOJE0wnS9YLArOg+NsqXIvBQK3btHiF2F7R
-	8NF35RTKwEvg2ZfMZb5UMjw2JS0iMzRmFZO6JH9aql3N78sqHQ8HIFT9EVo4yMRb0mvLqCATD8j
-	zNg==
-X-Google-Smtp-Source: AGHT+IEm0EdEtIIWd6E7Gr71gRKYxuJAD9HQDiTKV+q/I0DM7pq/KSxU3SZmwjelnqWlRUWQfPil5h6EtMo=
-X-Received: from fine.c.googlers.com ([fda3:e722:ac3:cc00:7f:e700:c0a8:2221])
- (user=linusa job=sendgmr) by 2002:a05:690c:d84:b0:603:ea10:c37c with SMTP id
- da4-20020a05690c0d8400b00603ea10c37cmr529651ywb.7.1706583534181; Mon, 29 Jan
- 2024 18:58:54 -0800 (PST)
-Date: Mon, 29 Jan 2024 18:58:52 -0800
-In-Reply-To: <ZbhByped3D0-NBAs@google.com>
+        bh=aPAJnq2Oy2ce8IkF4RMBwbPzjGdTqObVHli6GVkcgek=;
+        b=i9lHy9d1I15w3sE+WPBEtb8X5vj72f80WmOrIjwFbTDZiu21adXBBCvJ4S7qOXPCnv
+         B7++CrvErtgjD4gzSHMK37koGUyjfhdCOR60DBtdE4NyBopy/K2IMfOk8UqoCnko0qte
+         as6kC57Y/TBIpstnWMblbedmrZIBleoaQJ1XwsPlolapjjIkZIXGb/WxfoUox6CE3xVf
+         XPomk7+Y3/G2QrMnB7sNjNElMpjTXuAm6Sxz74c0HJNCOFsGXiDA8aa7aoz2LIrTL96A
+         cqELQOp61U2aZUww3VgDUE6b29W/EumHIITnmgDOdbTjVSitlv/hpaJbkSW2EDSu9tp6
+         pl/w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1706586459; x=1707191259;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=aPAJnq2Oy2ce8IkF4RMBwbPzjGdTqObVHli6GVkcgek=;
+        b=a6zGi42na/Nqc5K/FDGGrZAEJ++CwP9I3+q4camDmGSGq8t6H/QzvpZFC7j+gW0R0Y
+         ISaDjg7JArp/PI+iENGUbbJu3FTOFVLMFTmVxDJtQlRrh2AiMOur03kllUenvPNh52yO
+         4cJlRtngR0fwtRurecRzpMStfuCI4gl7NwvtE0c0yVO3rtuvYGVnXfoJjR4W3scmTAe1
+         Kp5c/jFkE+C0a6BaycsFbc4g1NomKwEhZ7bwj+/OTN/J1gmvBl11qmEFA83dyJknap72
+         rNDpe7aankegxRpTibAEiBDpHl+EIQzoJMq/u86yWgtzY1XXKgLIIoqbasXjODv6TFdd
+         wrIw==
+X-Gm-Message-State: AOJu0YyvLuuJgEDHcu/EYTVV+VwwVfHdjSDfLHoRrQburcP7nb7Q7LTt
+	isBRRwdzDWI0K36/HeBrHUmrFnWxLxW6jxytX3bJG4bCNCRc1RyZudXkopE+DO5ddppTFC/0x34
+	5rgRqumfSjaJWVyri0E6fXFsmys7KhIGw5gg=
+X-Google-Smtp-Source: AGHT+IHumygVeWnZycwQ3JMQZ5vNLF5JWsrE/WHC9xTRRYVHimcG2giiaPcASxMSAVr5y7Tqf5HvB49vHYFuvmCC1OY=
+X-Received: by 2002:a05:6a00:138f:b0:6dd:dbb2:8ee9 with SMTP id
+ t15-20020a056a00138f00b006dddbb28ee9mr6084152pfg.6.1706586459106; Mon, 29 Jan
+ 2024 19:47:39 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-References: <pull.1632.git.1704869487.gitgitgadget@gmail.com>
- <pull.1632.v2.git.1706308737.gitgitgadget@gmail.com> <9b7747d550e87457195c40a49347bc749a7290d0.1706308737.git.gitgitgadget@gmail.com>
- <ZbhByped3D0-NBAs@google.com>
-Message-ID: <owly8r4734sz.fsf@fine.c.googlers.com>
-Subject: Re: [PATCH v2 03/10] trailer: unify trailer formatting machinery
-From: Linus Arver <linusa@google.com>
-To: Josh Steadmon <steadmon@google.com>, 
-	Linus Arver via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, Christian Couder <chriscool@tuxfamily.org>, 
-	Junio C Hamano <gitster@pobox.com>, Emily Shaffer <nasamuffin@google.com>, 
-	"Randall S. Becker" <rsbecker@nexbridge.com>
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0
+From: Jacek Lipiec <jacek.lipiec.bc@gmail.com>
+Date: Tue, 30 Jan 2024 04:47:27 +0100
+Message-ID: <CAPGWkwcqbkanFP4h1P0umJAFzmiQYTvSm1KeD0=yY0n2K=KS7g@mail.gmail.com>
+Subject: Multiple indices / staging areas
+To: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-Josh Steadmon <steadmon@google.com> writes:
+Hello,
+I am thinking about extending the current index mechanism, and I wish
+to ask for feedback if this would be something that you would be
+interested in. Please note, I have no prior git development
+experience.
 
-> On 2024.01.26 22:38, Linus Arver via GitGitGadget wrote:
->> From: Linus Arver <linusa@google.com>
->>=20
->> Currently have two functions for formatting trailers exposed in
->> trailer.h:
->>=20
->>     void format_trailers(FILE *outfile, struct list_head *head,
->>                         const struct process_trailer_options *opts);
->>=20
->>     void format_trailers_from_commit(struct strbuf *out, const char *msg=
-,
->>                                     const struct process_trailer_options=
- *opts);
->>=20
->> and previously these functions, although similar enough (even taking the
->> same process_trailer_options struct pointer), did not build on each
->> other.
->>=20
->> Make format_trailers_from_commit() rely on format_trailers(). Teach
->> format_trailers() to process trailers with the additional
->> process_trailer_options fields like opts->key_only which is only used by
->> format_trailers_from_commit() and not builtin/interpret-trailers.c.
->> While we're at it, reorder parameters to put the trailer processing
->> options first, and the out parameter (strbuf we write into) at the end.
->>=20
->> This unification will allow us to delete the format_trailer_info() and
->> print_tok_val() functions in the next patch. They are not deleted here
->> in order to keep the diff small.
->
-> Unfortunately this breaks the build:
->
-> trailer.c:1145:13: error: =E2=80=98format_trailer_info=E2=80=99 defined b=
-ut not used [-Werror=3Dunused-function]
->
-> and
->
-> trailer.c:147:13: error: =E2=80=98print_tok_val=E2=80=99 defined but not =
-used [-Werror=3Dunused-function]
->
-> While separating this patch from the deletion does make it easier to
-> review, it may make bisection more difficult.
+The main idea is to mirror the "changelist" functionality found in
+IntelliJ IDE's (https://www.jetbrains.com/help/idea/managing-changelists.html).
+Namely, at each given moment you can create a "changelist"/separate
+index to which you can move hunks to. Such changelists are named, and
+optionally have a (default) commit message.
+This allows for an easy way to split current changes into separate
+commits, to have clean and atomic work units committed; while seeing
+the combined changes in the worktree; as well as having a
+conceptual/logical separation for changes
 
-FTR I've tried a preview version of squashing the deletion into this
-patch with "/preview" in GitGitGadget, and it generated a clean-enough
-diff where the deletions weren't intermixed with additions (maybe it
-uses the patience diff algorithm). But I didn't squash them for v2
-because I was concerned about the range diff becoming even more
-difficult to read for reviewers.
+Scenario: I am introducing a new functionality. Changes are
+conceptually separate, but work together. i.e. new version of package
+& using the new functionality from the package.
+Scenario 2: I am not yet sure about what needs to be done, so I am
+sketching in code. Some changes will be of linting nature, some will
+introduce code, some will be an "ad-hoc fix".
 
-I'm OK with squashing them for v3, but I'm also not sure that's
-necessary. For example, during bisection you could use DEVOPTS=3Dno-error
-(or similar) in config.mak to skip over harmless errors like
-"unused-function". Personally I'd prefer to keep the patches separate
-because they started separately on the list.
+What we can do with the current flow:
+* Commit/amend/fixup. This works best when one has prior knowledge of
+what needs to be done, i.e. bumping versions then using the
+functionality. Problems arise when the code is "living", as such you
+need to fixup commits in the local branch, which can lead to
+conflicts. Another issue is that if you wish to commit small change
+(i.e. a fix for a linter) you need to juggle the staging area. (This
+is my current flow in the vanilla git. It can become clunky if you,
+like me, sketch the solution in the code)
+* git worktree. While this functionality is the closest to what I am
+proposing, it does not allow for easy transfer of hunks, nor it allows
+for working with all the changes in the same worktree at the same
+time.
+* branches. This again does not allow us to see all the changes at the
+same time.
 
-Ultimately, I don't have a strong opinion on this. Maybe Junio or
-someone else can cast the tie-breaking vote? To squash or not to squash?
-I will take lazy consensus to mean "squash" for v3 if no one has
-objections. Thanks.
+The idea for the implementation would be as follows, and should
+hopefully introduce no change to the existing flow.
+
+1) Design
+
+1.1) New indices file
+We add a new file in the $GIT_DIR, called `indices`. This is a map
+file that will MUST have at least one entry. Index entry MUST have a
+name. Index entries COULD have default commit message
+Example:
+```.git/indices
+selected=1 # maps to .git/index.1
+#  translates to .git/index.0
+index[0].name=Default
+#  translates to .git/index.1
+index[1].name=Add named index
+#  translates to .git/index.2
+index[2].name=Wip
+index[2].message=Add named index\n\nThis is a longer description
+```
+The "selected" index is in two places - one is `index` and the other
+is based on the selected entry; so following example, `index.1`. The
+best way to keep them synced would be to symlink them, though this
+would introduce FS dependency. Synchronized copy would work as well.
+Renames could work, but there would be IMO high risk of losing changes
+from the index due to a mistake.
+
+This way, the existing index file format remains unchanged; and all
+new functionality can be handled via the new `indices` file; due to
+that all existing code should work without an issue.
+I see a potential problem of two indices overlapping (i.e. index
+changed via older git, or other tool) - in this case I would
+transparently correct other indices, treating selected index as the
+source of truth. This would imply that software not aware of the
+indices would see the changes in the not-selected index as unstaged.
+The second issue is the split index, as I know nothing about it, yet
+it might require changes.
+
+1.2) Commands
+A git index create <name> [-m|--message <message>]
+A git index delete <name>
+A git index switch <name>
+A git index update <name> [-m|--message <message>] [-n|--name <new name>]
+M git add [-I|--index <index name>]
+M git diff [-I|--index <index name>]
+
+2) Example workflows
+2.1) Working with indices/non interactive add
+git index create "wip" --message="This is a default commit message" #
+We have a new index, but the default one is selected
+touch {example|example2|example3}
+git add example # Added to the "current"/"default" index, by default 0
+git index switch "wip"
+git add example2 # Added to the "wip"/ index, with id of 1
+git add example3 --index=default # Added to the "current"/"default" index,
+git commit # commit message="This is a default commit message"
+# At this point, index.1 (wip) is empty, but selected. We can commit
+another index
+git commit --index=default -m "This is a commit message for the default index"
+
+2.2) Status
+> git status
+On branch main
+Selected index: wip
+Changes to be committed (wip):
+  (use "git restore --staged <file>..." to unstage)
+        modified:   example
+
+Changes staged for commit (default)
+  (use "git restore --index=default --staged <file>..." to unstage)
+        modified:   example
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+        modified:   example
+
+2.3) Git add (interactive)
+> git add --interactive # details omitted for brevity
+-Example change
++Example change 2
+(1/1) Stage this hunk to wip [y,n,q,a,d,e,i,?]?
+> ?
+i - change the current index
+
+2.4) Remove index
+> git index remove # removes current, all staged goes to the "default" branch/index 0
+> git index remove wip # removes wip, all staged goes to the default branch/index 0
+> git index switch default
+> git index remove # Does nothing...
+> git index rename default "WIP" # index[0].name=WIP
+> git index remove # renames default -> index[0].name=Default
+...
+
+I am open for the feedback/questions, or early go/nogo.
+
+Jacek Lipiec
