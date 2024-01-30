@@ -1,93 +1,140 @@
-Received: from mail-pg1-f180.google.com (mail-pg1-f180.google.com [209.85.215.180])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AC7C86AE7
-	for <git@vger.kernel.org>; Tue, 30 Jan 2024 16:56:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39C1026AC6
+	for <git@vger.kernel.org>; Tue, 30 Jan 2024 17:15:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706633789; cv=none; b=LQVYptA3UrbmRTiiUcxYT9wXcwp4nGu16GeiuYqqfxkMgvIq0HhZJxG2K9u2xH5I5XKjaM0DTShqKbFEbBeHwKXvm5JJ3Cs11mxpkiSYfXeGzoFX4uMXpTtQr1nGt3s9+dh/+uLW6FvkZXouRmkpOGyOpvCeWQeok6lBFbAYNzk=
+	t=1706634949; cv=none; b=X/zLejzhl8/c3v/IJCOvINEE8mA/bxC3pHLer2aV8Uij98QsDOM5EwdEooe/wM7XIbXzo0wkAZT+x1Dw0lxapn1ncHgnGyMnDC2aki6NXJGQ0QK3Ii3QhyFt6mtnyPWORIUTIzp/TLSDxIAhkUd9AkqQ0xJfT1eKwo8IYaqTd8w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706633789; c=relaxed/simple;
-	bh=hNB6MPmy+h9Xnx1D/Z5nASsbHVVA4r+etADuRhdOs5c=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=sxJgReq6Fob1rqu9e3IlbBDL/Dd7D5r1qEwwhUC//UtBF6J0L4g2ApMKI9GV1ulvclJ1pifZzlF2FJIGlGZfs3wP2veUBTUnS6PMWPp3n85/j3h2klO02itoT7u8o2r5hpNxOHvF3M4dg1KfcW9hBXNK1X4yOtP8uOoPE6ogAp0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=TvDccGGI; arc=none smtp.client-ip=209.85.215.180
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1706634949; c=relaxed/simple;
+	bh=IH6zcOS5l3n610Cr9a2nNGEslzXsWLETcge4MtEYscw=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=a7Y5qsu1ddvLDB3vyi0Mfqr9lL8Z6IcUSibxHugFtAT1Gj0rVybruoP4O0rZpiLur54cMPE3H0JoOpdp4DJGHT1tgHP9AjFr+0XipiHsBlCoWwq/GZZVraReXLas+06q5oYv3gJPDSa6VrQCa4fgOSt1HTcadNsiFAK8E1Dn7Ok=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=vXZUSbYG; arc=none smtp.client-ip=173.228.157.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TvDccGGI"
-Received: by mail-pg1-f180.google.com with SMTP id 41be03b00d2f7-5cddfe0cb64so2179984a12.0
-        for <git@vger.kernel.org>; Tue, 30 Jan 2024 08:56:28 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1706633787; x=1707238587; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=sgbpM3rClbdciPjoHKZYCbmjzzbjdMICRXHXsLaBZjs=;
-        b=TvDccGGIGY0FmUnZ1+6zjDLj9lqyleR+RYE3h6Ma+TAM8IADoZN/22T2TLLWDKwxam
-         3HmfYKO6qsry0Wrx0YR2TwvA1kONR4IXu9ZWMnVRIi90gfLji2kZcCZoumHoEmo54xN+
-         Sh6PH3ATYueds+BzImno8mYf+IeBjNFsXqQyi8b+8tQDUS38ojVn6DE4EBVa536RjL/p
-         l10NVfr1Y2dZqsKztT5J5fk663f8ktlWe2S95McPGsYk6nz79jJEdMJBJanxELQZhwst
-         FMSXHZvXdNoy/mmhtX644y7Ret1JC/FGof3kQiWJqB7wIpv6qu4nqQSDNCgVB0w39bcE
-         7c0Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1706633787; x=1707238587;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=sgbpM3rClbdciPjoHKZYCbmjzzbjdMICRXHXsLaBZjs=;
-        b=ceTdzOx2V3ZQYYLPSHhxHxuxpJeK9+yOy08dc34/3QC42v0vq2PkiVlbopWKEdTovx
-         AmxBAElSHsHV4Im0ZkASP2pT1o0sC/9T5MD8iu74TR7UlNkfGxojAbTzmrjNrHy1/nzJ
-         LujinpC+lW0TDfgs78GqjMEPVTADJpCxGAWjljwZNTwSK8bAZYTR40kDa4XtsNdW3cjY
-         AQAeq1BmtkxpeUilSmFhPyab3hjg2rCLUdCkzdnSkmZ3xGfTytQolqVgR3QQGM4uU5r7
-         uZ6MStG2QwQc1ZPCqyqv36/sqRnSHa+biJgF53kPzQKQ+LgmSboc7JHiUeC9y6VOxJZ4
-         zUQQ==
-X-Gm-Message-State: AOJu0Yx/1TsH0TM6T8IBnMjBahKvOeGbTSbbhwwYKR7yEJse/1+/P0ec
-	ePdWcskpeu8uoGiS7c6WXBitNLRsm8L8NJbG6tDjTrNvxUmGoOG88JH9SIMSkRc6wcSPiN3R91m
-	6hk28HD85vp7JtlanfDfYpL2/YoE=
-X-Google-Smtp-Source: AGHT+IEFOHrHW5KSiBQocN6kagYzTHN/Gt3TZHOBnI9VDZexdrna/d8Ac1JKfdeREfgnGv5hAicdtRCmJ/FCmAWfruM=
-X-Received: by 2002:a05:6a20:c706:b0:19c:9d22:a6bb with SMTP id
- hi6-20020a056a20c70600b0019c9d22a6bbmr4919320pzb.30.1706633787453; Tue, 30
- Jan 2024 08:56:27 -0800 (PST)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="vXZUSbYG"
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id A78E428C38;
+	Tue, 30 Jan 2024 12:15:47 -0500 (EST)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=IH6zcOS5l3n610Cr9a2nNGEslzXsWLETcge4Mt
+	EYscw=; b=vXZUSbYG+M52ZdguFicexQhPWGbzCWI6vRdPSE2jcSOd8s4Z+DmwbI
+	hCNkbRuqYxhnQX6wua/O4H8J8g16TC2AlvS5yMsZbn1rEVv1R3EcBzaD6DCYO3BV
+	Ri3uupRaGuaOFTzT8sjKlNqNuXBSRKmZoxEpukMNCIu6h0Yueussw=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id 9F35228C37;
+	Tue, 30 Jan 2024 12:15:47 -0500 (EST)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.200.93])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 323BF28C35;
+	Tue, 30 Jan 2024 12:15:42 -0500 (EST)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Elijah Newren <newren@gmail.com>
+Cc: Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+  git@vger.kernel.org,  Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH] merge-tree: accept 3 trees as arguments
+In-Reply-To: <CABPp-BFPe_RrX5ZHo7-mMHHS96j_O+1wiEwGC5+zGPP5h+686Q@mail.gmail.com>
+	(Elijah Newren's message of "Mon, 29 Jan 2024 23:04:53 -0800")
+References: <pull.1647.git.1706277694231.gitgitgadget@gmail.com>
+	<CABPp-BFPe_RrX5ZHo7-mMHHS96j_O+1wiEwGC5+zGPP5h+686Q@mail.gmail.com>
+Date: Tue, 30 Jan 2024 09:15:40 -0800
+Message-ID: <xmqqbk92bv43.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <cover.1706099090.git.ps@pks.im> <a211818108053754aca002726d0206623a347952.1706263589.git.ps@pks.im>
-In-Reply-To: <a211818108053754aca002726d0206623a347952.1706263589.git.ps@pks.im>
-From: Justin Tobler <jltobler@gmail.com>
-Date: Tue, 30 Jan 2024 10:56:13 -0600
-Message-ID: <CAGAWz+7enErUf9apL9nE13=bWSHL=Sz6PdUQ_DRH7-9NCvQ8Fw@mail.gmail.com>
-Subject: Re: [PATCH v3] reftable/stack: adjust permissions of compacted tables
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, Karthik Nayak <karthik.188@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 326DF464-BF93-11EE-8C27-A19503B9AAD1-77302942!pb-smtp21.pobox.com
 
-On Fri, Jan 26, 2024 at 4:09=E2=80=AFAM Patrick Steinhardt <ps@pks.im> wrot=
-e:
->
-> When creating a new compacted table from a range of preexisting ones we
-> don't set the default permissions on the resulting table when specified
-> by the user. This has the effect that the "core.sharedRepository" config
-> will not be honored correctly.
->
-> Fix this bug and add a test to catch this issue. Note that we only test
-> on non-Windows platforms because Windows does not use POSIX permissions
-> natively.
->
-> Signed-off-by: Patrick Steinhardt <ps@pks.im>
-> ---
->
-> Changes compared to v2:
->
->   - Extended the commit message to say why we don't test on Windows
->     systems.
->
->   - Renamed the `scratch` variable to `path`.
+Elijah Newren <newren@gmail.com> writes:
 
-Thanks Patrick! This version looks good to me. I have nothing else to add
+>> ---merge-base=<commit>::
+>> +--merge-base=<tree-ish>::
+>
+> A very minor point, but any chance we can just use `<tree>`, like
+> git-restore does?  I've never liked the '-ish' that we use as it seems
+> to throw users, and I think they understand that they can use a commit
+> or a tag where a tree is expected
 
--Justin
+You are right that the "X-ish" was invented exactly so that folks
+(including the nitpicky types among us) can tell if only "X" is
+accepted, or other types of objects that uniquely can be peeled to a
+"X" also can be used.  Many commands at the Porcelain level may take
+a commit or a tag that eventually peel to a tree where at the lowest
+level we only need it to be a tree, but it still matters in some
+lower level corners of the system where the plumbing commands that
+only accept a tree but not a tree-ish exist.  We've discussed this
+in the past, e.g.:
+
+    https://lore.kernel.org/git/7voc8ihq4a.fsf@alter.siamese.dyndns.org/
+
+In general, I am OK to update the documentation and usage strings to
+drop the "-ish" suffix when it is clear from the context.  But what
+does it exactly mean that "--merge-base=<tree>" is meant to take any
+tree-ish from the context of this documentation we are discussing?
+
+ - Is it because merge-tree is a Porcelain command and we would
+   adopt "Porcelains are to peel liberally what they accept, and
+   when they are documented to take X they always accept any X-ish"
+   rule?
+
+ - Is it because the description that follows "--merge-base=<tree>"
+   header does not mention "contrary to our usual convention, this
+   option only accepts a tree and not a commit or a tag that points
+   at a tree" and we would adopt "all commands and options that are
+   documented to take X take X-ish, unless explicitly documented
+   they only take X"?
+
+As long as we clearly spell out such a ground rule and make sure
+readers of the documentation understand it, I will not object to
+such a tree-wide clean-up.  The current ground rule is "We write X
+when we mean to take only X and we write X-ish otherwise", if I am
+not mistaken.
+
+>>         opt.branch1 = branch1;
+>>         opt.branch2 = branch2;
+>
+> If branch1 and branch2 refer to trees, then when users hit conflicts
+> they'll see e.g.
+>
+> <<<<<<< aaaaaaa
+>   somecode();
+> =======
+>   othercode();
+>>>>>>>> bbbbbbb
+>
+> but aaaaaaa and bbbbbbb are not commits that they can find.
+
+Correct.  They are what they fed as two trees to be merged, aren't
+they?  They (or the script that drives merge-tree and fed these two
+trees) should be recognise these two trees, as long as they are told
+that is what we show, no?
+
+> That raises the question: if the user passes trees in, should we
+> require helpful names be provided as additional parameters?
+
+If the user wants to give human-readable name to override whatever
+the code would internally produce, such new options may help them,
+and should probably apply equally to input that happens to be a
+commit (or a tag that is a tree-ish) as well, I would think.
+
+> Or are
+> the usecases such that we don't expect callers to have any useful
+> information about where these trees come from and these suboptimal
+> conflicts are the best we can do?
+
+I do not necessarily think the output is "suboptimal" from the point
+of view of our users, exactly because that is what they fed into the
+command themselves.
