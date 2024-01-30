@@ -1,129 +1,168 @@
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f171.google.com (mail-yw1-f171.google.com [209.85.128.171])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 839CD155A32
-	for <git@vger.kernel.org>; Tue, 30 Jan 2024 18:08:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E1D41552E0
+	for <git@vger.kernel.org>; Tue, 30 Jan 2024 18:14:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706638139; cv=none; b=Wi/Y7KCtYctP8/h88JDelbwp0uuWu8vV1LMSQTva70+9s7ftwoHeL07W1rN5Fphlf1NpnEiSHZZDRWonn+2QSLmh+HkQ8aGpGJmXb+B27txNwaX5MDvS9T9ADIlJEfMwUMlRsXWdzpDdng753ilyLnYhnd8TmEUxs2arD8mYD7A=
+	t=1706638458; cv=none; b=hITA2TYFddXlMM5w2Pq4zMn6NEes81o06hqkoHu7nnirnR3obUyjqatlQ3xIJZaqPAX8NlDH6hSdc+pvXxJTkp2Va7ovg02V3c6wrPb5jFC931mqkOQXDUGO8dIuFsZiHVj+ARt2pwM34lTQrc7tS1uSuzk/0BWPhSPGM4slRME=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706638139; c=relaxed/simple;
-	bh=CWqn6cNz48Q2ICAPcY0dDTraQoOcr4E4703gjJzZ7xY=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=WQ0LzPEQw2rfXrt47UEx4mkgiDTg2L49pBG7A/ad2ldUs4CBT+jgvVtjQn2gGM/f7/H9gfmcDkox2ACNG6W9CT953VTKBoqdtFtwie/OfOkG88RdHU42AgeDJo+OUFHoaRr44x1FZX2LYxHRPebFZt0Y4aarAnzffxYb6N6ZhBo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=u3wO+pps; arc=none smtp.client-ip=173.228.157.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1706638458; c=relaxed/simple;
+	bh=INDcoqKUS7syylXpOYjh2fgu6Iuw6LmuWX4+Azx8Yc0=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=tgEz+2i9QgnPXlJZXH3+f+gOrjRQNBYLLPq/BQ4guIaDaqRJXYOvBLe/uqcrn3bRgkC697ku86wtuILTst9rkWNmDiUH0Ep3fKuYaM3k5J0+c/L0QI/ewa2d4buftz/6ZUUfKYyTIVRR16BoBEho6lCmFF/uKoq56pyNlTquoU4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=lJm/p04Z; arc=none smtp.client-ip=209.85.128.171
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="u3wO+pps"
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id C77BC298BC;
-	Tue, 30 Jan 2024 13:08:51 -0500 (EST)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:date:message-id:mime-version:content-type; s=sasl; bh=C
-	Wqn6cNz48Q2ICAPcY0dDTraQoOcr4E4703gjJzZ7xY=; b=u3wO+pps/DT/4b2pd
-	38NtUiPc/Dd1IP1VqcuxdoBtQnN5K/eXqIQJwtTBSsuYhxiY0qIOuq6pJXaDIcir
-	gPK4PSS1cDZQTnXMq1kT8TAzgD7kBVF22o70nw/K31osSVH7I91q87OFOxZOMEHe
-	h25deqX7AEXbYmL+20+6IjL2Hk=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id BF491298BB;
-	Tue, 30 Jan 2024 13:08:51 -0500 (EST)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.200.93])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id EEB45298BA;
-	Tue, 30 Jan 2024 13:08:47 -0500 (EST)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-Cc: Josh Steadmon <steadmon@google.com>
-Subject: [RFH] disable bogus .maybe_tree suggestion by Coccinelle?
-Date: Tue, 30 Jan 2024 10:08:46 -0800
-Message-ID: <xmqq1q9ybsnl.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lJm/p04Z"
+Received: by mail-yw1-f171.google.com with SMTP id 00721157ae682-5edfcba97e3so47117267b3.2
+        for <git@vger.kernel.org>; Tue, 30 Jan 2024 10:14:16 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1706638456; x=1707243256; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:from:user-agent:mime-version:date:message-id:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=aaPXdwpqKVH1JxVhINpJRl9zbbRowOO5NUDI2wy29pI=;
+        b=lJm/p04ZgohvDAMUxJvrQDiPy98ytEjze7OUm1l429s8wU2njn8ObxreDwkR3JdHlo
+         zM+qS2BaofWNMJtn7VK5g/UNc2GfaGMl/THlLH5WgBvFrFcqv0VBzoqe2DLvpgbFzpxa
+         HNdXDTdW5Nq+/7SsRUdIgsErxHJrG1W76TMzJkZ1+8YToRf3fzhNfHEkWyztwBto8IcH
+         QqSkH1RZkFfvB5M5RdGOf2jRbISYiAVu+zOzodt+FCkACeGIiayB9fbBWMClWFOPPA0/
+         4UXPtRFIWCEkkiMOs2fXuXBuFpJHpKGyqyD95xWsM0elnF+LGhRfT8zBa4CwmlNneqhc
+         6x+A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1706638456; x=1707243256;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:from:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=aaPXdwpqKVH1JxVhINpJRl9zbbRowOO5NUDI2wy29pI=;
+        b=wT8rlXOJTiT3Qe7Sk9T6R4s+3ToGfVQfV7b6oW7rZMXmg9EwZFH8m/D+0RAFe47RtN
+         CIjNtcEuKxfVuiPv07Vw6A6CNXD+JAmpFQDk4Vfvh+WDDEPPBhdfsaMwcUdfkC8yqB1h
+         CfZafyZC7niv2qNvk7FHghj6leQ3Xu9vOpdmG+Zyd7lwKS0Wv8rJ3HPGRH4GWpNJDLTo
+         qPc1kN5AwFFVYM2QBpLoEP0jwVfCcHHW8yetOxWmj0fT7toyVajDquOgbnt2wCzXMv6k
+         qppHh/TTiL+cJBSt4n1/qkIevymD4BP89hin5PAaWMCl7HgYdgqEv0x0xeGYAggZyzmC
+         xDeQ==
+X-Gm-Message-State: AOJu0Yz1jk5sXA/L6ThDIg8OT+j6p1TRR4deDZ8lRWj0LSTWlAGQgQYY
+	s7Tc0unh5JgtcdsY0/U3byJM5pYpIOMSrAHk+sHqE2mcjEcwqcE+fXIwGOGE
+X-Google-Smtp-Source: AGHT+IHyoRjUkCg7JH+Shm+Jya20s4YqTYcrSBKFFLrIh/l0RzNmUTSrAAh78uX6rxxCq3xozTwNBQ==
+X-Received: by 2002:a81:ae67:0:b0:5ff:a09d:b3d5 with SMTP id g39-20020a81ae67000000b005ffa09db3d5mr6849609ywk.45.1706638455895;
+        Tue, 30 Jan 2024 10:14:15 -0800 (PST)
+Received: from gmail.com (77.red-88-14-198.dynamicip.rima-tde.net. [88.14.198.77])
+        by smtp.gmail.com with ESMTPSA id g81-20020a0ddd54000000b005ff7cda85c5sm3309170ywe.69.2024.01.30.10.14.14
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 30 Jan 2024 10:14:15 -0800 (PST)
+Message-ID: <f3a84780-de59-421a-b4a7-2e33b4fd2d97@gmail.com>
+Date: Tue, 30 Jan 2024 19:14:12 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- 9D4C00E4-BF9A-11EE-89EB-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
+User-Agent: Mozilla Thunderbird
+From: =?UTF-8?Q?Rub=C3=A9n_Justo?= <rjusto@gmail.com>
+Subject: Re: [PATCH 1/4] t0080: mark as leak-free
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Git List <git@vger.kernel.org>
+References: <45eb0748-6415-4e52-a54f-8d4e5ad57dde@gmail.com>
+ <4adfcba4-0f2b-44f5-a312-97f00f979435@gmail.com> <xmqqa5onhjm4.fsf@gitster.g>
+ <c932fbfc-f14f-4403-bfc5-cf1d616b22de@gmail.com> <xmqqwmrrg0l6.fsf@gitster.g>
+Content-Language: en-US
+In-Reply-To: <xmqqwmrrg0l6.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-Josh at $WORK noticed that "make coccicheck" shows tons of false
-positives to tell us to avoid direct access to the .maybe_tree
-member of a commit object, even for those that are meant to be
-excluded from the rewrite rule, like this:
+On 29-ene-2024 15:51:33, Junio C Hamano wrote:
+> Rubén Justo <rjusto@gmail.com> writes:
+> 
+> >> The point of the t-basic tests is to ensure the lightweight unit
+> >> test framework that requires nothing from Git behaves (and keeps
+> >> behaving) sensibly.  The point of running t[0-9][0-9][0-9][0-9]
+> >> tests under leak sanitizer is to exercise production Git code to
+> >> catch leaks in Git code.
+> >> 
+> >> So it is not quite clear if we even want to run this t0080 under
+> >> leak sanitizer to begin with.  t0080 is a relatively tiny test, but
+> >> do we even want to spend leak sanitizer cycles on it?  I dunno.
+> >
+> > IIUC, that would imply building test-tool with a different set of flags
+> > than Git, new artifacts ...  or running test-tool with some LSAN_OPTIONS
+> > options, to disable it ...  or both ... or ...
+> >
+> > And that is assuming that with test-tool we won't catch a leak in Git
+> > that we're not seeing in the other tests ...
+> 
+> But t0080 does not even run test-tool, does it?  The t-basic unit
+> test is about testing the unit test framework and does not even
+> trigger any of the half-libified Git code.  So I am not sure why
+> you are bringing up test-tool into the picture.
 
-        diff -u -p a/commit-graph.c b/commit-graph.c
-        --- a/commit-graph.c
-        +++ b/commit-graph.c
-        @@ -905,7 +905,7 @@ static void fill_commit_graph_info(struc
+Of course, test-tool has nothing to do here.  I think I got distracted
+because:
 
-         static inline void set_commit_tree(struct commit *c, struct tree *t)
-         {
-        -	c->maybe_tree = t;
-        +	repo_get_commit_tree(specify_the_right_repo_here, c) = t;
-         }
+  $ ( cd t; ./t0080-unit-test-output.sh )
+  Bail out! You need to build test-tool; Run "make t/helper/test-tool" in the source (toplevel) directory
 
-         static int fill_commit_in_graph(struct repository *r,
+My reasoning was about t/unit-test/bin/t-basic (though also applies to
+test-tool), due to:
 
-It turns out that "make coccicheck" shows the same undesirable
-suggestions, even in a checkout of 301b8c7f (commit.c: add
-repo_get_commit_tree(), 2019-04-16) that added these rules.
+  $ make SANITIZE=leak -n t/unit-tests/bin/t-basic 
+  ...
+  echo '   ' LINK t/unit-tests/bin/t-basic;cc   -g -O2 -Wall -I. \
+  -DHAVE_SYSINFO -fsanitize=leak -fno-sanitize-recover=leak \
+  -fno-omit-frame-pointer -DSUPPRESS_ANNOTATED_LEAKS -O0 \
+  -DGIT_HOST_CPU="\"x86_64\"" -DHAVE_ALLOCA_H  -DUSE_CURL_FOR_IMAP_SEND \
+  -DSUPPORTS_SIMPLE_IPC -DSHA1_DC -DSHA1DC_NO_STANDARD_INCLUDES \
+  -DSHA1DC_INIT_SAFE_HASH_DEFAULT=0 \
+  -DSHA1DC_CUSTOM_INCLUDE_SHA1_C="\"git-compat-util.h\"" \
+  -DSHA1DC_CUSTOM_INCLUDE_UBC_CHECK_C="\"git-compat-util.h\"" -DSHA256_BLK \
+  -DHAVE_PATHS_H -DHAVE_DEV_TTY -DHAVE_CLOCK_GETTIME \
+  -DHAVE_CLOCK_MONOTONIC -DHAVE_SYNC_FILE_RANGE -DHAVE_GETDELIM \
+  '-DPROCFS_EXECUTABLE_PATH="/proc/self/exe"' -DFREAD_READS_DIRECTORIES \
+  -DNO_STRLCPY -DSHELL_PATH='"/bin/sh"' -o t/unit-tests/bin/t-basic   \
+  t/unit-tests/t-basic.o t/unit-tests/test-lib.o common-main.o libgit.a \
+  xdiff/lib.a reftable/libreftable.a libgit.a xdiff/lib.a \
+  reftable/libreftable.a libgit.a -lz -lpthread -lrt
 
-If nobody has a better idea (which would obviously to "fix" it so
-that we still are reminded to think twice before directly accessing
-the .maybe_tree member without these false positives), I'd propose
-to remove these rules.
+Note that we inject this flags:
+  -fsanitize=leak -fno-sanitize-recover=leak -fno-omit-frame-pointer \
+  -DSUPPRESS_ANNOTATED_LEAKS -O0
 
-The box I observed the sympotom had this
+> 
+> > Maybe this is tangential to this series but,  while a decision is being
+> > made, annotating the test makes GIT_TEST_PASSING_SANITIZE_LEAK=check
+> > pass, which is the objective in this series. 
+> 
+> One major reason why we want to set TEST_PASSES_SANITIZE_LEAK to
+> true is because that way the marked test will be run under the leak
+> sanitizer in the CI.
+> 
+> What do we expect to gain by running t0080, which is to run the
+> t-basic unit test, under the leak sanitizer?  Unlike other
+> t[0-9][0-9][0-9][0-9] tests that exercise Git production code, would
+> we care about a new leak found in t-basic run from t0080 in the
+> first place?
+> 
+> Annotating with TEST_PASSES_SANITIZE_LEAK is not a goal by itself.
 
-    $ spatch --version
-    spatch version 1.1.1 compiled with OCaml version 4.14.1
-    Flags passed to the configure script: --prefix=/usr --sysconfdir=/etc --libdir=/usr/lib --enable-ocaml --enable-python --with-python=python3 --enable-opt
-    OCaml scripting support: yes
-    Python scripting support: yes
-    Syntax of regular expressions: Str
+Indeed.  It points to a horizon.
 
+> Annotating the tests that we want to run under the sanitizer and see
+> them passing with it is.
 
----
- contrib/coccinelle/commit.cocci | 23 -----------------------
- 1 file changed, 23 deletions(-)
+Maybe this is also a horizon (not reachable by definition), and
+expecting "make test" to be leak-free (including t0080) a good path
+towards that horizon, IMHO.  But you are right, those leak sanitizer
+cycles may not be worth it.
 
-diff --git c/contrib/coccinelle/commit.cocci w/contrib/coccinelle/commit.cocci
-index af6dd4c20c..397f01b9ff 100644
---- c/contrib/coccinelle/commit.cocci
-+++ w/contrib/coccinelle/commit.cocci
-@@ -10,29 +10,6 @@ expression c;
- - c->maybe_tree->object.oid.hash
- + get_commit_tree_oid(c)->hash
- 
--@@
--identifier f !~ "^set_commit_tree$";
--expression c;
--expression s;
--@@
--  f(...) {<...
--- c->maybe_tree = s
--+ set_commit_tree(c, s)
--  ...>}
--
--// These excluded functions must access c->maybe_tree directly.
--// Note that if c->maybe_tree is written somewhere outside of these
--// functions, then the recommended transformation will be bogus with
--// repo_get_commit_tree() on the LHS.
--@@
--identifier f !~ "^(repo_get_commit_tree|get_commit_tree_in_graph_one|load_tree_for_commit|set_commit_tree)$";
--expression c;
--@@
--  f(...) {<...
--- c->maybe_tree
--+ repo_get_commit_tree(specify_the_right_repo_here, c)
--  ...>}
--
- @@
- struct commit *c;
- expression E;
+> And obviously these tests that exercise
+> Git production code are very good candidates for us to do so.  It is
+> unclear if t0080 falls into the same category.  That is why I asked
+> what we expect to gain by running it.
+> 
+> Thanks.
+
+Thank you for bringing up a good question.
+
+I see you queued this as 4/4.  OK.  I'll consider that if a re-roll for
+this series is needed.
