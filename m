@@ -1,120 +1,112 @@
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-f172.google.com (mail-pg1-f172.google.com [209.85.215.172])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE5D2EC9
-	for <git@vger.kernel.org>; Tue, 30 Jan 2024 00:28:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B287533CCF
+	for <git@vger.kernel.org>; Tue, 30 Jan 2024 00:44:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706574485; cv=none; b=aKa7f3DGnP44SOay9CRExGMzCk7PizMsKiT910NBglJ7bVMrrWYxPCiaYDaVyG2Gm5FtCzRl4g8OwIedDU15NXXKrc2qqf3jwZLjG1mJykl1Gyz0IxbFo6Qh2o7qHAdN4RlK2cEcWOBH4PNM7uLqFIqV2YO4VGWdPA6kGviq534=
+	t=1706575449; cv=none; b=t/hzPS8uX62bvOia92D49ij5oWBCTxbOM4jVOOwqsr6kRw0p8Y/ehOmtIWE5s9aGef4cJfZFM2CLQyhCmYd58ywLYzbB+/Tt/lHmmxkXqyv77HVBMDAuHfXaL9EIGTgMWIeotmi+xehpXjAel1dQUSvs0Ah/85kOn3tuhnW52lk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706574485; c=relaxed/simple;
-	bh=5HLDwc92UAIr/wOOb43l7Xx61zQQLxtFdE2GlZ+pI40=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=liFhV5U4XlH9b9P8e7j7vRnMLM7YT+fDqmBwuf4kJePsP9mu89PqcB8ad9XLNhPmVwgUhturF6VQQpF+pZbw5KuZKtNX4+5qjKaOImg9vA9sPIxnvB41c+/kpUhGBFIMVr/FL4zFOMQ0bTt8FXOXkDG9u+x4FZ6pzOQy3PsBiSg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=Bj/GHrqk; arc=none smtp.client-ip=64.147.108.70
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1706575449; c=relaxed/simple;
+	bh=j/vZNYjRbgndIfO6+ce85Hd3DIYyCMBRtjkDzFF2QBU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=prWwnxQrMj+wagvy/Ci2zUom+PiacDajPidv5PuAxCwr1EhESl0e6UWkFD/6Mtqk9ujAd7pAk6TX3iLlb69dwPZ5DjKS+LArm1h4fKlLfXbuQGbOZBPAwiWl6G+Lv37C35K95m3Ox/HKxWuZOpUaYvG5+teoxLqscxbTXzCQL+8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=A7A4sZ4v; arc=none smtp.client-ip=209.85.215.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="Bj/GHrqk"
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 1A67C1DA130;
-	Mon, 29 Jan 2024 19:28:02 -0500 (EST)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=5HLDwc92UAIr/wOOb43l7Xx61zQQLxtFdE2GlZ
-	+pI40=; b=Bj/GHrqkKWPDXzVP6nvHe7uU1Ewl4+p+BYL7EuyR3378UZ7uM/MNdO
-	gNR5VQIWRlwe9u1IXo7i3JgRD1iLjrxRoNdOeByQsWWM3bEElIIZldqE2tnDAJ+s
-	231KN1c33XUM8HXed09a9AOGz8a0y34H3eX6iUF/Qi+G5ht+83Vgc=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id EA8451DA12F;
-	Mon, 29 Jan 2024 19:28:01 -0500 (EST)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.200.93])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 65B781DA12D;
-	Mon, 29 Jan 2024 19:28:00 -0500 (EST)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Adam Dinwoodie <adam@dinwoodie.org>
-Cc: Jeff King <peff@peff.net>,  Patrick Steinhardt <ps@pks.im>,
-  git@vger.kernel.org,  Phillip Wood <phillip.wood@dunelm.org.uk>
-Subject: Re: [PATCH 2/2] t/Makefile: get UNIT_TESTS list from C sources
-In-Reply-To: <CA+kUOanDydgCEax9RFu_xVXkx_LeiSPOoWiUpwAg=EVQxSDJRw@mail.gmail.com>
-	(Adam Dinwoodie's message of "Mon, 29 Jan 2024 21:31:11 +0000")
-References: <20240129031540.GA2433764@coredump.intra.peff.net>
-	<20240129031933.GB2433899@coredump.intra.peff.net>
-	<ZbeLcrjIYd4d7PaB@tanuki>
-	<20240129174918.GA3765717@coredump.intra.peff.net>
-	<CA+kUOanDydgCEax9RFu_xVXkx_LeiSPOoWiUpwAg=EVQxSDJRw@mail.gmail.com>
-Date: Mon, 29 Jan 2024 16:27:59 -0800
-Message-ID: <xmqqeddzfywg.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="A7A4sZ4v"
+Received: by mail-pg1-f172.google.com with SMTP id 41be03b00d2f7-5cfd95130c6so1855591a12.1
+        for <git@vger.kernel.org>; Mon, 29 Jan 2024 16:44:07 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1706575447; x=1707180247; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references
+         :mail-followup-to:message-id:subject:cc:to:from:date:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=vfl/qcIWlOhv307WJ0kX44C8+eXsC0qFOpXRSDIW9To=;
+        b=A7A4sZ4vTY4byP5vi7+B2C46UiJGhAI70817mf+Ny9WX6XJkQ9bsk0fk2N3nB6hzeh
+         XyH0Ix1F6hlcizwNzDOMyYMshRWOfcH1WBkxS6CLrIR1sKu0uhIEk4Jdq36ngEntGNBv
+         A5oRl4Ch3BWLiI87OgLSx2iI/PTRtuiOJNBcwmF0Z7Ao7M3ZRcEaVEKPCPGQ9PznJSsk
+         SPiq/crCiGVomCn1mrSybgayCmWeDjCM7GMzGt4MCsAMIbz0/UzWRIPmiQh9Qjuw/J5o
+         cQwsVgwChHRdCpJ99YUcG8Djs9H96olNsz5qkzLyCHs0hbY9+Z0In5oFVItRnxTgTw3p
+         sLRQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1706575447; x=1707180247;
+        h=in-reply-to:content-disposition:mime-version:references
+         :mail-followup-to:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=vfl/qcIWlOhv307WJ0kX44C8+eXsC0qFOpXRSDIW9To=;
+        b=RQAiA3pY2DAeoMvKszURcVybxcsXl5a7mfAV15oypqo2R1tIhzZn9xgRW0A20/chzC
+         uDDBpQttUH9i30YR85xVuMA4pNYmZaJfa4fyBtPj9b/4a8rG4GZzbiDAM5jzsTkNpSVq
+         yfEYm/laPZJq1XCqr3wDp8rNz84t+le4raxkVHtpq8XNWIHc0VkbF78BI35xy+5Xar4g
+         xmCBAQaqxcc8xvCVLXTS1LsSSr9V0MswRmYyBjKlDFJ2IRaKm4UxwKQ5mLi1f/XU4aKO
+         TbXXHyRbJ5JxiPpiljvDM8Zz4UkTMeYy02lOT0kR2ehMc3Tx3UsHoAYettivHLPt2Ahj
+         E2xw==
+X-Gm-Message-State: AOJu0YxucUkbyAuck47EoBh0dkxVelNOlPprO1GpX0KnYKqaGup7QMSv
+	blmIkFpxLWqz7Rx7VOZIdm4vCRO7HtHJifQVJ7CjNcWD/XFjqmxAO8wEbTwFoQ==
+X-Google-Smtp-Source: AGHT+IGP2v5GvKhowtre3N7sSyVPoVBBs7ngEznN6bKUx5Vd0JGE8QiQKSmW+LgYLyTGykF4+59M3A==
+X-Received: by 2002:a17:902:f542:b0:1d8:ffb2:8bcd with SMTP id h2-20020a170902f54200b001d8ffb28bcdmr1605447plf.66.1706575446834;
+        Mon, 29 Jan 2024 16:44:06 -0800 (PST)
+Received: from google.com ([2620:15c:2d3:204:4527:c1dd:9b37:d3a0])
+        by smtp.gmail.com with ESMTPSA id ke15-20020a170903340f00b001d8e04de78asm2533793plb.132.2024.01.29.16.44.05
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 29 Jan 2024 16:44:06 -0800 (PST)
+Date: Mon, 29 Jan 2024 16:44:01 -0800
+From: Josh Steadmon <steadmon@google.com>
+To: Linus Arver via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, Christian Couder <chriscool@tuxfamily.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Emily Shaffer <nasamuffin@google.com>,
+	"Randall S. Becker" <rsbecker@nexbridge.com>,
+	Linus Arver <linusa@google.com>
+Subject: Re: [PATCH v2 01/10] trailer: prepare to expose functions as part of
+ API
+Message-ID: <ZbhGUYcxEaeOXPAi@google.com>
+Mail-Followup-To: Josh Steadmon <steadmon@google.com>,
+	Linus Arver via GitGitGadget <gitgitgadget@gmail.com>,
+	git@vger.kernel.org, Christian Couder <chriscool@tuxfamily.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Emily Shaffer <nasamuffin@google.com>,
+	"Randall S. Becker" <rsbecker@nexbridge.com>,
+	Linus Arver <linusa@google.com>
+References: <pull.1632.git.1704869487.gitgitgadget@gmail.com>
+ <pull.1632.v2.git.1706308737.gitgitgadget@gmail.com>
+ <e2d3ed9b5b6d67273c22671374daf7695c67709f.1706308737.git.gitgitgadget@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- 6C673960-BF06-11EE-BF28-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <e2d3ed9b5b6d67273c22671374daf7695c67709f.1706308737.git.gitgitgadget@gmail.com>
 
-Adam Dinwoodie <adam@dinwoodie.org> writes:
+On 2024.01.26 22:38, Linus Arver via GitGitGadget wrote:
+> From: Linus Arver <linusa@google.com>
+> 
+> In the next patch, we will move "process_trailers" from trailer.c to
+> builtin/interpret-trailers.c. That move will necessitate the growth of
+> the trailer.h API, forcing us to expose some additional functions in
+> trailer.h.
+> 
+> Rename relevant functions so that they include the term "trailer" in
+> their name, so that clients of the API will be able to easily identify
+> them by their "trailer" moniker, just like all the other functions
+> already exposed by trailer.h.
+> 
+> The the opportunity to start putting trailer processions options (opts)
 
->> Hmm, good point. It seems like the answer should obviously be "yes", but
->> Windows CI seemed to pass all the same (and I checked that it indeed ran
->> the unit tests). Do we only get the $X suffix for MSVC builds or
->> something? Looks like maybe cygwin, as well.
->
-> Cygwin will automatically append ".exe" when doing directory listings;
-> a check if the file "a" exists will return true on Cygwin if "a" or
-> "a.exe" exists; a glob for "a*" in a directory containing files "a1"
-> and "a2.exe" will return "a1" and "a2". This causes problems in some
-> edge cases, but it means *nix scripts and applications are much more
-> likely to work without any Cygwin-specific handling. I *think* this
-> logic is carried downstream to MSYS2 and thence to Git for Windows.
+Nitpick: typo in the commit message.
+s/The the opportunity/Take the opportunity/ ?
 
-Interesting, especially that "a*" is globbed to "a2" and not
-"a2.exe".
-
-> As a result, I'm not surprised this worked without handling $X, but I
-> don't think there's any harm in adding it either.
-
-OK.
-
-I wonder if something like this is sufficient?  I am not sure if we
-should lift the building of t/unit-tests/* up to the primary Makefile
-to mimic the way stuff related to test-tool are built and linked.
-That way, we do not have to contaminate t/Makefile with compilation
-related stuff that we didn't need originally.
-
- t/Makefile | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
-
-diff --git c/t/Makefile w/t/Makefile
-index b7a6fefe28..010ce083b1 100644
---- c/t/Makefile
-+++ w/t/Makefile
-@@ -6,6 +6,7 @@ include ../shared.mak
- # Copyright (c) 2005 Junio C Hamano
- #
- 
-+include ../config.mak.uname
- -include ../config.mak.autogen
- -include ../config.mak
- 
-@@ -42,7 +43,9 @@ TPERF = $(sort $(wildcard perf/p[0-9][0-9][0-9][0-9]-*.sh))
- TINTEROP = $(sort $(wildcard interop/i[0-9][0-9][0-9][0-9]-*.sh))
- CHAINLINTTESTS = $(sort $(patsubst chainlint/%.test,%,$(wildcard chainlint/*.test)))
- CHAINLINT = '$(PERL_PATH_SQ)' chainlint.pl
--UNIT_TESTS = $(sort $(filter-out %.pdb unit-tests/bin/t-basic%,$(wildcard unit-tests/bin/t-*)))
-+UNIT_TEST_SOURCES = $(wildcard unit-tests/t-*.c)
-+UNIT_TEST_PROGRAMS = $(patsubst unit-tests/%.c,unit-tests/bin/%$X,$(UNIT_TEST_SOURCES))
-+UNIT_TESTS = $(sort $(filter-out unit-tests/bin/t-basic%,$(UNIT_TEST_PROGRAMS)))
- 
- # `test-chainlint` (which is a dependency of `test-lint`, `test` and `prove`)
- # checks all tests in all scripts via a single invocation, so tell individual
-
-
+> as the first parameter. This will be the pattern going forward in this
+> series.
+> 
+> Helped-by: Junio C Hamano <gitster@pobox.com>
+> Signed-off-by: Linus Arver <linusa@google.com>
+> ---
+>  builtin/interpret-trailers.c |  4 ++--
+>  trailer.c                    | 26 +++++++++++++-------------
+>  trailer.h                    |  6 +++---
+>  3 files changed, 18 insertions(+), 18 deletions(-)
