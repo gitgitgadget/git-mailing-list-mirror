@@ -1,771 +1,280 @@
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+Received: from NAM11-DM6-obe.outbound.protection.outlook.com (mail-dm6nam11olkn2019.outbound.protection.outlook.com [40.92.19.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CF23347A2
-	for <git@vger.kernel.org>; Tue, 30 Jan 2024 01:10:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706577011; cv=none; b=qI/A2RIbuQtl+/joP3N7JMaMSfLK77nCfrtZLawHk2gR0lIAiiNcmOgF4ocruDa8TABjDjl4hIMZRAfDGiPH7UsjYseLA76bVTvdcACgBztPrLsQ1Fjq5LG2TuFE0CobGNA2oPKzBsp6IYOEprpUaRopIpy8wnIec9bxqmvc51U=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706577011; c=relaxed/simple;
-	bh=pxwQC5FkrV9avTnd2vdhcjpJ1FIG5jmu+rCuc81JW7g=;
-	h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type; b=FRLwqFr78HkJWxr3Lr46JY88qMKdyaFRj4uCqdfVqM5ADShkokFuUZENdDNdagAAsFurIDfmBRi0Ny16gu4/NWEpSqNEfL0crdsLRyT2o8ivqDRunS0e0urjoA8N+Dcsc9+WJgDlXlvWEzC91dadeZlM6B580H+7lLns740PLW0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=s/ZM85br; arc=none smtp.client-ip=64.147.108.70
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E91F336131
+	for <git@vger.kernel.org>; Tue, 30 Jan 2024 01:52:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.92.19.19
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1706579569; cv=fail; b=bUhye1CztysXoGALZ9xRsV9TCT/1Br/iIM4r2eK27OHxw9+JqP53+MgrGHlKLvkjCVopEaIhJ5IiT+gVWp5PU9exE6QXylR8MKYb8mdv/jAMa6eD+6BZrMChCwii72yWslwKtAqSuPyDJvE6x0TWmeHq/vK1RnSqvUA4FYvlyWc=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1706579569; c=relaxed/simple;
+	bh=Qk2i+JD5wNb8SF/2R7W5mwBit2qytzs38a7+5JAtKvI=;
+	h=From:To:Subject:Date:Message-ID:Content-Type:MIME-Version; b=NAAA947E3b0GcK/qO98rJ+99IGTQ/wyfpyNUOAdWuoSROlgDYHY+zAWPwi4Y0Y7IN4h4Hp4B5iIMlsuvfRWSmvEshuPzf8tGpgkODGPl5IzA1W/FrzlY09i19icyaBeE8fvW0REHo3tWaid0zp4kCqv1KnZyO/vyd4vRQk/Qx0s=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=outlook.com; spf=pass smtp.mailfrom=outlook.com; dkim=pass (2048-bit key) header.d=outlook.com header.i=@outlook.com header.b=DFQqh1tW; arc=fail smtp.client-ip=40.92.19.19
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=outlook.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=outlook.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="s/ZM85br"
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id C3F7D1DA700;
-	Mon, 29 Jan 2024 20:10:05 -0500 (EST)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to
-	:subject:date:message-id:mime-version:content-type; s=sasl; bh=p
-	xwQC5FkrV9avTnd2vdhcjpJ1FIG5jmu+rCuc81JW7g=; b=s/ZM85brRmEUf/c7x
-	OxIZpFr+Z+14RnefqecFLD5O8Qu9eZaSQ94IuOjXSUrnJ9NHRJRxpBroFXjSCVAt
-	QX7gonEupPo9R9p5asH0tKD1JVKqG+6+RYxo2n3R8/al3SBzuBLI8N4GNUYIsLie
-	c4FcRwfsD7ghg+Jdh5peTY50s4=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 9E3131DA6FF;
-	Mon, 29 Jan 2024 20:10:05 -0500 (EST)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.200.93])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id B7E8E1DA6FE;
-	Mon, 29 Jan 2024 20:10:04 -0500 (EST)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-Subject: What's cooking in git.git (Jan 2024, #09; Mon, 29)
-X-master-at: c5b454771e6b086f60c7f1f139025f174bcedac9
-X-next-at: fb1a86299d91ca856248ba2018147aff99ef91fd
-Date: Mon, 29 Jan 2024 17:10:02 -0800
-Message-ID: <xmqqr0hzeidx.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=outlook.com header.i=@outlook.com header.b="DFQqh1tW"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=N0rCVhxDIWY8BmMrOmoDsNJ0IB6sDdnlJQkgSR6zgpX9hIBLJm/A6ZTnM/sG3v/x6vs7j59Sf9tAyzOlR6EKjv2KM8l38A7nBhLiemlw7EYVk4qUXVyAgKI5Qn8UHz6c1slquiJN2fszwczgiFPr5A/90A4CZr5Hwk+w2bSvqb2eEcQ2pmc1rEKUUAvPLhfoXaBcuAWHYmmkq/dsOtcisWGzFhnXF9bKhYv0ys0tmiuzRezlCjIKvJVPC2BVDwDdD8Y6s+8KdWEi8F5Arf0RphAWn2nAtiZIugmgbxsI7AoFvFhAe3rU1imergqOeTaH7/I+aKHXOr8giPWt91nbiw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=Kt5QOGFLKxfR05By6IGOZVPeqbLecQQFndkR0ngJiwk=;
+ b=n0OZ3u9bHFWTza0eBaOQh3Y5B6fhUeevI8ebjKtvd2d54oQOxiYDxiQnOtANRghiFs8iVeSMAuE3TZdq9TuMJTH/CSSyJXq47z0oQ8pgj0lrnAlUIxMMEqv8wFwHn4xxQksxJPq0v+tliPPhrSeEfHB69J3uYmtdOFXfuGZ3ex8qOoH7vN4WaSefzdHPgX3zi2F+wr7Nyy5Al6LEN+jqD9OL82eD673VVkPNynOZAADiIhrmuMZHuCI/2RQeWyrN5d6OR4Q5s+cpR1akGV1Ee6QzXAfPjP+wHcQW/PeIuarIaE+6A+hifKJUSlF4ySxqb70W9ToVJKbEDiULHRuaww==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
+ dkim=none; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=outlook.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=Kt5QOGFLKxfR05By6IGOZVPeqbLecQQFndkR0ngJiwk=;
+ b=DFQqh1tW7Ol+pLMQK+QFi4hqafOYVbrETDVSkZkjlaegkD3ps/bPPO+qUsNs94TiqYGW9ZGNKrWmAx740l1ZInCoCfES4G/JlEM1y50sRwWI1gT0GCm010j73WZZuhOVKuhpvaFVRaXYt1UpnQjJzIQNyXMYFULMd0GEjukVsAjhvfFjXs/dcDMTDaoQznespvKbEDmKp6AhO+fVeu72JctIVByB1VExlynpuVZVvwK0JK04wHEeOdowHxDxLTNH3/FqbNib/IrCk/C70SXnp9yEnOA1IzciIH86XJ3NLIsT+QjJT6aHmYKZMQ7ttvv8d/EyT737FJ+v32urHJSPtw==
+Received: from PH7P220MB1290.NAMP220.PROD.OUTLOOK.COM (2603:10b6:510:315::21)
+ by LV8P220MB1875.NAMP220.PROD.OUTLOOK.COM (2603:10b6:408:1be::10) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7228.34; Tue, 30 Jan
+ 2024 01:52:44 +0000
+Received: from PH7P220MB1290.NAMP220.PROD.OUTLOOK.COM
+ ([fe80::bbad:b21e:e7b0:25a0]) by PH7P220MB1290.NAMP220.PROD.OUTLOOK.COM
+ ([fe80::bbad:b21e:e7b0:25a0%2]) with mapi id 15.20.7228.029; Tue, 30 Jan 2024
+ 01:52:44 +0000
+From: ross nicholas Oneil thomas <rossrecovery93245@outlook.com>
+To: GitHub <support@githubsupport.com>, Github email <git@vger.kernel.org>,
+	Legal Notice <dmcanotice@mozilla.com>, "licensing@mozilla.org"
+	<licensing@mozilla.org>, "wikimedia-l-owner@lists.wikimedia.org"
+	<wikimedia-l-owner@lists.wikimedia.org>, Microsoft Outlook
+	<MicrosoftExchange329e71ec88ae4615bbc36ab6ce41109e@sct-15-20-4755-11-msonline-outlook-3458f.templatetenant>,
+	"opencode@microsoft.com" <opencode@microsoft.com>
+Subject: =?Windows-1252?Q?=93_Hello_World_=93?=
+Thread-Topic: =?Windows-1252?Q?=93_Hello_World_=93?=
+Thread-Index: AQHaUx8EYH/L5iChNEKSxYhzA4w9JQ==
+Date: Tue, 30 Jan 2024 01:52:44 +0000
+Message-ID:
+ <PH7P220MB12908BE92500163FF1C859E0FB7D2@PH7P220MB1290.NAMP220.PROD.OUTLOOK.COM>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: yes
+X-MS-TNEF-Correlator:
+x-tmn: [4RWq1d21YcUbu8bRGIluoKCA/U9x94bl39hQxAY5y1g=]
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: PH7P220MB1290:EE_|LV8P220MB1875:EE_
+x-ms-office365-filtering-correlation-id: 0e4f687b-8b07-4f3f-efb8-08dc213626ed
+x-ms-exchange-slblob-mailprops:
+ obhAqMD0nT8ImFmzuH22kRh6THLYDVuSlrZuPEcI1JFHkzpLrKbc/k8CacEra6XMP706MKM6IBSo/toJ4wTSl5Dvob9P3KVtwuNCMcQveJkYOraq7AIzUEyhueTrph/oqRwuEocKHzkf7kmNxM/fxb/JRXy08x2qEcW0CHzNCZdSZYH1eUxhdT4ZAEDi+fEgeSm4H8H3VwCrgGd4rzjBKf043a8gUst98fxB0LDQdN3Ld1UPNLYyTFN4hj13p1CMqPhkuk7LFwbgghUXVBdZPvzqY37o4wGp/r0PvK26JtC9Ibj8L67Ve8d3hMeFl9uqDSQjHH/N2P7R9UTsB4T6yDGoRQb4jXjB8RAbk44aScB+mH1SPFz/+tstwzphzDtb1YUbCFP0fzzWgVrn2neRSytG0LbcyWvhZIAJ1R2dWxJD2QVpCY5Stl64qmkUJdJ/qWA+wX7bBO7Sof7kMzQBjlDFf8mZ00Hoy1pQPrrdbHssDFzgCdVrR5nNGb+ZYW7wDjcIbZwr4eZm553IUQUOOsSd40rQ+cDl+UoSlgIId3pL6rKiUrS1hkxyVkR9q3mMDw1Uyi7MtgAfQv9sEaVrAfxKuXSSzZgrnZWx4eR8Xbfa9x2tVXB+KrNIN3Z490NOMKgFcwoJfZALRv15wNZv4O6tFDo6g6zjzkBeJlREuquErYrwKX5nzI0b6Qs6ef1/hnEmrVQmZRSe9LEtsGIRtL6J650Zwrw1IARgAQvoXXvCnWfH9VwWVfI0lM79kMJjFurskVoOGTaJA6yZScBHCCLolAg8ijEp2FNSVXi/QfGtIGklbYoKSxxOSc/TdJVJ
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info:
+ kqSBmIQFkAUicoi0ZN58q3u4XfHkUCPwN8ZOKWj2HIj60f2HJyyxTD9qmdM5V4lBHAK0AzQb4AuaH4tlOpgZYScVW4CxPUC9ICOBw82hgZwcKO0LDmZgtlESWiqt70+xi15Jl425sdWGwH4JAio1RjRyUuvEMeymF6htIpOC+G+v+7iYkMozNinW8zMc+y6K6APYVHjRdcmectETmYrms9dalHf8PI7ta593+zeGGBmhBzYd7Wjlk0rqn8WdB9QVgnK5A9gptpMVENKu8cs7vJEPI77AA6jQRO+owEj6vesmNf4mjm8Ja1bveL8sFuod27S628vVIHvdCuZyfhjqhYGSZwXdmtrR04bGm8MDDIs/vlyV7zY2JgxDRhF66FGWPDZdpbh23VPutYU2aPICgYyTb3JkqGqMJlDzgK14dBGIWI/6JY5HC7EAkMpe8Nuy/MvHOe3vVeaYS/d3DFYIGJbVgA4OrpQTCPiyXRMpidOUUeTEw6pbExJb7K7zdV6XcvcpRm9TdhzDWpZ7nmC4vJDRtLpUdQnJuMS7Iuo/vEGdpjn7xovTZ/rDWEqBhkMKIViN7cFUHZcEBvY7bSshM9IkkAhdZ9lhOMLDD0x6sXkYfuOCnlDS3nuhsU+Yfsxqi9Z0rioTAgl8+SpJ0vwwLg==
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0:
+ =?Windows-1252?Q?YbO0F5g3FVbWp8WZ3y7f++GR5d6dOSPhPO4Gm9N1wNVsxMdOydPJO6cQ?=
+ =?Windows-1252?Q?OfW17EB7MGFTmZqlZQRrzxdkkOgOU7BtM2qFBtKsL1eJILjbdIGv/8hl?=
+ =?Windows-1252?Q?bDHJP9+AdSmdkM3/myJpk+nnO4ULwjEL9re0yJY1CHuJ1u16lbrMHUSo?=
+ =?Windows-1252?Q?q39CA3AH6SXEs8YAL8eiRkSLgt92ORHrApwY8yeQp1ThSlZ+LXD9j7Al?=
+ =?Windows-1252?Q?l/0KmwyX5HPfjyoEsDbbIzuXvFgik0H4ITJOB4sW+IVJJXV0bOXsW3z+?=
+ =?Windows-1252?Q?LMdqiJNsccGLaX2pmWWNyOCjVE828dN7+D4YQF25TFg6VNq8/GIVU12m?=
+ =?Windows-1252?Q?yfG/amQZ/p7VaZ8psTHmDf0NwsYvCoF1dS5AB6N4InIggeo1q1r2dwWx?=
+ =?Windows-1252?Q?+EgpsBcdqiPbOgHE5ZRWP5/VDz2xT5O4cGf2etO5HenlwQ0ka42XE/VE?=
+ =?Windows-1252?Q?tyyTqri7uPz3TDV86Uo0hfob3mu3AuL2w/mWiMCw/AKljIu+yTfF1jmN?=
+ =?Windows-1252?Q?cWI84eLUtoCwugo3Lvkwfnb0FazXFCPTOwqbWGlKwlayVS0HLb/4KSUB?=
+ =?Windows-1252?Q?NhpH7RZI+wTg5T7QKFN5AR0+YdoPWX0CQdWi9gjq3N503jJ8RRAAnv7/?=
+ =?Windows-1252?Q?V3Wu5uubRtbgv+Bd3oGlObtuHnmCClC/jVWXbca6Fa9ADflPFd9GUiGA?=
+ =?Windows-1252?Q?pAKPYvEPWmgzb8ouuonDhdEXvnEuf6HVLSixFYrjJ6bCGVivOMrvo5At?=
+ =?Windows-1252?Q?D8y6TUyXvGZuE5qN0YcK9KtDF3nLBXUzqRETRMZ0ibWt/Pn48y8a3Gc/?=
+ =?Windows-1252?Q?XyY+ynL0IhvOM4ElVfehIbcJglQkvOmkr7PIHHUm+mMO75RUhiqiDrDX?=
+ =?Windows-1252?Q?US2r9JdCHEQUBzgR+xKJ2nfED/geKs0Pe+JYOb7/JnQgtGzWSWyFsQdm?=
+ =?Windows-1252?Q?V4EXtoQxYdwwi8/C87+6j/+nC9ywLFf7letqxe0XrKDhkwGalfZlH7Wg?=
+ =?Windows-1252?Q?EFSGShRA81uwMkXm3hJAfuklQFPyrU+DD/Lk2tT+Gxr80A6p4TinbpDQ?=
+ =?Windows-1252?Q?NDD8uMo7g4/x+t9tBACQRXA+EyDNtlEE6oYagkctgGQ5FNSPXpj5NTJO?=
+ =?Windows-1252?Q?QwyGAKAeeE2xOPy30ZnVsfH3rdLWYMB/bX2KtueXfBUw9FDlcfVvCQ/l?=
+ =?Windows-1252?Q?nnbAOA7yTfDgBZBPsmsoIyZTc2basZHInW6SnXsqyzuVSmGT3NMcNsb2?=
+ =?Windows-1252?Q?wCuhJ5zv2JGw+ccY2HmXWgmxQy0Lh8b3TTmj3NdXXzNlJ/oem3n6WPlB?=
+ =?Windows-1252?Q?ZWVopIMIqGfSETE8a76L5ZgoNlsnlFBsbS31oFscfiy/6XSI?=
+Content-Type: multipart/mixed;
+	boundary="_003_PH7P220MB12908BE92500163FF1C859E0FB7D2PH7P220MB1290NAMP_"
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- 4D049A3A-BF0C-11EE-B9FB-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
-
-Here are the topics that have been cooking in my tree.  Commits
-prefixed with '+' are in 'next' (being in 'next' is a sign that a
-topic is stable enough to be used and are candidate to be in a
-future release).  Commits prefixed with '-' are only in 'seen', and
-aren't considered "accepted" at all and may be annotated with an URL
-to a message that raises issues but they are no means exhaustive.  A
-topic without enough support may be discarded after a long period of
-no activity (of course they can be resubmit when new interests
-arise).
-
-Copies of the source code to Git live in many repositories, and the
-following is a list of the ones I push into or their mirrors.  Some
-repositories have only a subset of branches.
-
-With maint, master, next, seen, todo:
-
-	git://git.kernel.org/pub/scm/git/git.git/
-	git://repo.or.cz/alt-git.git/
-	https://kernel.googlesource.com/pub/scm/git/git/
-	https://github.com/git/git/
-	https://gitlab.com/git-vcs/git/
-
-With all the integration branches and topics broken out:
-
-	https://github.com/gitster/git/
-
-Even though the preformatted documentation in HTML and man format
-are not sources, they are published in these repositories for
-convenience (replace "htmldocs" with "manpages" for the manual
-pages):
-
-	git://git.kernel.org/pub/scm/git/git-htmldocs.git/
-	https://github.com/gitster/git-htmldocs.git/
-
-Release tarballs are available at:
-
-	https://www.kernel.org/pub/software/scm/git/
-
---------------------------------------------------
-[Graduated to 'master']
-
-* al/t2400-depipe (2024-01-20) 1 commit
-  (merged to 'next' on 2024-01-22 at a20d4a9a7f)
- + t2400: avoid losing exit status to pipes
-
- Coding style fix.
- source: <20240120021547.199-1-ach.lumap@gmail.com>
-
-
-* en/diffcore-delta-final-line-fix (2024-01-18) 1 commit
-  (merged to 'next' on 2024-01-22 at 7141d202cb)
- + diffcore-delta: avoid ignoring final 'line' of file
-
- Rename detection logic ignored the final line of a file if it is an
- incomplete line.
- source: <pull.1637.v2.git.1705119973690.gitgitgadget@gmail.com>
-
-
-* gt/t0024-style-fixes (2024-01-20) 2 commits
-  (merged to 'next' on 2024-01-22 at 36b46efbd0)
- + t0024: style fix
- + t0024: avoid losing exit status to pipes
-
- Coding style fix.
- source: <20240118215407.8609-1-shyamthakkar001@gmail.com>
-
-
-* jc/majordomo-to-subspace (2024-01-20) 1 commit
-  (merged to 'next' on 2024-01-22 at 6a95f43de4)
- + Docs: majordomo@vger.kernel.org has been decomissioned
-
- Doc update.
- source: <xmqqmst1hsd6.fsf@gitster.g>
-
-
-* js/oss-fuzz-build-in-ci (2024-01-19) 2 commits
-  (merged to 'next' on 2024-01-22 at 2954da5a39)
- + ci: build and run minimal fuzzers in GitHub CI
- + fuzz: fix fuzz test build rules
-
- oss-fuzz tests are built and run in CI.
- source: <cover.1705700054.git.steadmon@google.com>
-
-
-* nb/rebase-x-shell-docfix (2024-01-17) 1 commit
-  (merged to 'next' on 2024-01-22 at db49e10354)
- + rebase: fix documentation about used shell in -x
-
- Doc update.
- source: <20240117085347.948960-1-nik.borisov@suse.com>
-
-
-* ps/not-so-many-refs-are-special (2024-01-19) 7 commits
-  (merged to 'next' on 2024-01-22 at f70f463847)
- + Documentation: add "special refs" to the glossary
- + refs: redefine special refs
- + refs: convert MERGE_AUTOSTASH to become a normal pseudo-ref
- + sequencer: introduce functions to handle autostashes via refs
- + refs: convert AUTO_MERGE to become a normal pseudo-ref
- + sequencer: delete REBASE_HEAD in correct repo when picking commits
- + sequencer: clean up pseudo refs with REF_NO_DEREF
-
- Define "special ref" as a very narrow set that consists of
- FETCH_HEAD and MERGE_HEAD, and clarify everything else that used to
- be classified as such are actually just pseudorefs.
- source: <cover.1705659748.git.ps@pks.im>
-
-
-* ps/reftable-optimize-io (2024-01-18) 7 commits
-  (merged to 'next' on 2024-01-22 at b867e8b9a8)
- + reftable/stack: fix race in up-to-date check
- + reftable/stack: unconditionally reload stack after commit
-  (merged to 'next' on 2024-01-12 at 4096e880e0)
- + reftable/blocksource: use mmap to read tables
- + reftable/blocksource: refactor code to match our coding style
- + reftable/stack: use stat info to avoid re-reading stack list
- + reftable/stack: refactor reloading to use file descriptor
- + reftable/stack: refactor stack reloading to have common exit path
-
- Low-level I/O optimization for reftable.
- source: <cover.1704966670.git.ps@pks.im>
- source: <cover.1705585037.git.ps@pks.im>
-
-
-* tc/show-ref-exists-fix (2024-01-18) 1 commit
-  (merged to 'next' on 2024-01-22 at 831452f2dd)
- + builtin/show-ref: treat directory as non-existing in --exists
-
- Update to a new feature recently added, "git show-ref --exists".
- source: <20240110141559.387815-2-toon@iotcl.com>
-
---------------------------------------------------
-[New Topics]
-
-* jc/comment-style-fixes (2024-01-29) 3 commits
- - reftable/pq_test: comment style fix
- - merge-ort.c: comment style fix
- - builtin/worktree: comment style fixes
-
- Rewrite //-comments to /* comments */ in files whose comments
- prevalently use the latter.
-
- Will merge to 'next'.
- source: <20240129202839.2234084-1-gitster@pobox.com>
-
-
-* jk/diff-external-with-no-index (2024-01-29) 1 commit
- - diff: handle NULL meta-info when spawning external diff
-
- "git diff --no-index file1 file2" segfaulted while invoking the
- external diff driver, which has been corrected.
-
- Will merge to 'next'.
- source: <20240129015708.GA1762343@coredump.intra.peff.net>
-
-
-* jk/unit-tests-buildfix (2024-01-29) 2 commits
- - t/Makefile: get UNIT_TESTS list from C sources
- - Makefile: use order-only prereq for UNIT_TEST_BIN
-
- Build dependency fix around unit tests.
-
- Expecting a reroll.
- cf. <20240129202201.GA9612@szeder.dev>
- source: <20240129031540.GA2433764@coredump.intra.peff.net>
-
-
-* js/merge-tree-3-trees (2024-01-29) 1 commit
- - merge-tree: accept 3 trees as arguments
-
- "git merge-tree" has learned that the three trees involved in the
- 3-way merge only need to be trees, not necessarily commits.
-
- Will merge to 'next'.
- source: <pull.1647.v2.git.1706474063109.gitgitgadget@gmail.com>
-
-
-* jt/p4-spell-re-with-raw-string (2024-01-29) 1 commit
- - git-p4: use raw string literals for regular expressions
-
- "git p4" update to squelch warnings from Python.
-
- Will merge to 'next'.
- source: <pull.1639.v2.git.1706312496608.gitgitgadget@gmail.com>
-
-
-* kh/maintenance-use-xdg-when-it-should (2024-01-29) 1 commit
- - config: add back code comment
-
- Comment fix.
-
- Will merge to 'next'.
- source: <48d66e94ece3b763acbe933561d82157c02a5f58.1706466321.git.code@khaugsbakk.name>
-
-
-* mh/credential-oauth-refresh-token-with-wincred (2024-01-29) 1 commit
- - credential/wincred: store oauth_refresh_token
-
- Teach wincred credential backend to support oauth refresh token the
- same way as credential-cache and credential-libsecret backends.
-
- Needs review.
- source: <pull.1534.v3.git.1706477103039.gitgitgadget@gmail.com>
-
-
-* pb/complete-config (2024-01-29) 5 commits
- - completion: add an use _ _git_compute_second_level_config_vars_for_section
- - builtin/help: add --config-all-for-completion
- - completion: add and use _ _git_compute_first_level_config_vars_for_section
- - completion: complete 'submodule.*' config variables
- - completion: add space after config variable names also in Bash 3
-
- The command line completion script (in contrib/) learned to
- complete configuration variable names better.
-
- Needs review.
- source: <pull.1660.v2.git.git.1706534881.gitgitgadget@gmail.com>
-
-
-* rj/complete-reflog (2024-01-26) 4 commits
- - completion: reflog show <log-options>
- - completion: reflog with implicit "show"
- - completion: introduce __git_find_subcommand
- - completion: introduce __gitcomp_subcommand
-
- The command line completion script (in contrib/) learned to
- complete "git reflog" better.
-
- Needs review.
- source: <98daf977-dbad-4d3b-a293-6a769895088f@gmail.com>
-
-
-* rj/test-with-leak-check (2024-01-29) 4 commits
- - t0080: mark as leak-free
- - test-lib: check for TEST_PASSES_SANITIZE_LEAK
- - t6113: mark as leak-free
- - t5332: mark as leak-free
-
- Mark tests that are supposed to pass leak sanitizer as such.
-
- Will merge to 'next'?
- source: <45eb0748-6415-4e52-a54f-8d4e5ad57dde@gmail.com>
-
-
-* tb/pack-bitmap-drop-unused-struct-member (2024-01-29) 1 commit
- - pack-bitmap: drop unused `reuse_objects`
-
- Code clean-up.
-
- Will merge to 'next'.
- source: <0bbaf9a3591765161872fb71383263edb0c7ef83.1706328008.git.me@ttaylorr.com>
-
---------------------------------------------------
-[Cooking]
-
-* jc/coc-whitespace-fix (2024-01-23) 1 commit
-  (merged to 'next' on 2024-01-26 at 6fb290ad59)
- + CoC: whitespace fix
-
- Docfix.
-
- Will merge to 'master'.
- source: <xmqqmssvnb8d.fsf_-_@gitster.g>
-
-
-* jc/ls-files-doc-update (2024-01-25) 1 commit
-  (merged to 'next' on 2024-01-26 at a71aeec3d3)
- + ls-files: avoid the verb "deprecate" for individual options
-
- The documentation for the --exclude-per-directory option marked it
- as deprecated, which confused readers into thinking there may be a
- plan to remove it in the future, which was not our intention.
-
- Will merge to 'master'.
- source: <xmqqjznybfp4.fsf@gitster.g>
-
-
-* jk/fetch-auto-tag-following-fix (2024-01-24) 1 commit
-  (merged to 'next' on 2024-01-26 at d058f1511b)
- + transport-helper: re-examine object dir after fetching
-
- Fetching via protocol v0 over Smart HTTP transport sometimes failed
- to correctly auto-follow tags.
-
- Will merge to 'master'.
- source: <20240124010056.GA2603087@coredump.intra.peff.net>
-
-
-* ps/reftable-compacted-tables-permission-fix (2024-01-26) 1 commit
-  (merged to 'next' on 2024-01-29 at dbb06e1571)
- + reftable/stack: adjust permissions of compacted tables
-
- Reftable bugfix.
-
- Will merge to 'master'.
- source: <a211818108053754aca002726d0206623a347952.1706263589.git.ps@pks.im>
-
-
-* jc/index-pack-fsck-levels (2024-01-26) 2 commits
- - index-pack: --fsck-objects to take an optional argument for fsck msgs
- - index-pack: test and document --strict=<msg-id>=<severity>...
-
- The "--fsck-objects" option of "git index-pack" now can take the
- optional parameter to tweak severity of different fsck errors.
-
- Expecting a reroll.
- cf. <BF772E83-2BFE-4652-A742-67FADF3D8FE2@gmail.com>
- source: <pull.1658.v3.git.git.1706302749.gitgitgadget@gmail.com>
-
-
-* zf/subtree-split-fix (2024-01-25) 1 commit
-  (merged to 'next' on 2024-01-26 at a09e02f208)
- + subtree: fix split processing with multiple subtrees present
-
- "git subtree" (in contrib/) update.
-
- Will merge to 'master'.
- source: <pull.1587.v6.git.1701442494319.gitgitgadget@gmail.com>
-
-
-* ps/reftable-multi-level-indices-fix (2024-01-26) 6 commits
- - reftable: document reading and writing indices
- - reftable/writer: fix writing multi-level indices
- - reftable/writer: simplify writing index records
- - reftable/writer: use correct type to iterate through index entries
- - reftable/reader: be more careful about errors in indexed seeks
- - Merge branch 'jc/reftable-core-fsync' into ps/reftable-multi-level-indices-fix
- (this branch uses jc/reftable-core-fsync.)
-
- Write multi-level indices for reftable has been corrected.
- source: <cover.1706263918.git.ps@pks.im>
-
-
-* kl/allow-working-in-dot-git-in-non-bare-repository (2024-01-20) 1 commit
-  (merged to 'next' on 2024-01-24 at e77b796e11)
- + setup: allow cwd=.git w/ bareRepository=explicit
-
- Loosen "disable repository discovery of a bare repository" check,
- triggered by setting safe.bareRepository configuration variable to
- 'explicit', to exclude the ".git/" directory inside a non-bare
- repository from the check.
-
- Will merge to 'master'.
- source: <pull.1645.git.1705709303098.gitgitgadget@gmail.com>
-
-
-* rs/parse-options-with-keep-unknown-abbrev-fix (2024-01-22) 2 commits
-  (merged to 'next' on 2024-01-23 at a216b482cd)
- + parse-options: simplify positivation handling
- + parse-options: fully disable option abbreviation with PARSE_OPT_KEEP_UNKNOWN
-
- "git diff --no-rename A B" did not disable rename detection but did
- not trigger an error from the command line parser.
-
- Will merge to 'master'.
- source: <579fd5bc-3bfd-427f-b22d-dab5e7e56eb2@web.de>
- source: <fb3c679a-5f00-4934-b028-6b2d081cd5b2@web.de>
-
-
-* pb/ci-github-skip-logs-for-broken-tests (2024-01-22) 1 commit
-  (merged to 'next' on 2024-01-23 at f5e3ab2092)
- + ci(github): also skip logs of broken test cases
-
- GitHub CI update.
-
- Will merge to 'master'.
- cf. <dbe25fff-e1d4-41f2-8f8f-c538e8c2a77e@github.com>
- source: <pull.1649.git.git.1705808313306.gitgitgadget@gmail.com>
-
-
-* pb/complete-log-more (2024-01-22) 4 commits
-  (merged to 'next' on 2024-01-24 at 081d2a92fa)
- + completion: complete missing 'git log' options
- + completion: complete --encoding
- + completion: complete --patch-with-raw
- + completion: complete missing rev-list options
-
- The completion script (in contrib/) learned more options that can
- be used with "git log".
-
- Will merge to 'master'.
- source: <pull.1650.git.git.1705810071.gitgitgadget@gmail.com>
-
-
-* jc/reftable-core-fsync (2024-01-23) 1 commit
-  (merged to 'next' on 2024-01-24 at cea12beddb)
- + reftable: honor core.fsync
- (this branch is used by ps/reftable-multi-level-indices-fix.)
-
- The write codepath for the reftable data learned to honor
- core.fsync configuration.
-
- Will merge to 'master'.
- source: <pull.1654.git.git.1706035870956.gitgitgadget@gmail.com>
-
-
-* ad/custom-merge-placeholder-for-symbolic-pathnames (2024-01-24) 1 commit
-  (merged to 'next' on 2024-01-24 at d9cf4e227d)
- + merge-ll: expose revision names to custom drivers
-
- The labels on conflict markers for the common ancestor, our version,
- and the other version are available to custom 3-way merge driver
- via %S, %X, and %Y placeholders.
-
- Will merge to 'master'.
- source: <pull.1648.v4.git.git.1706126951879.gitgitgadget@gmail.com>
-
-
-* cp/unit-test-prio-queue (2024-01-22) 1 commit
- - tests: move t0009-prio-queue.sh to the new unit testing framework
-
- Migrate priority queue test to unit testing framework.
- source: <pull.1642.v4.git.1705865326185.gitgitgadget@gmail.com>
-
-
-* jc/reffiles-tests (2024-01-22) 12 commits
-  (merged to 'next' on 2024-01-24 at 0d1aaa6807)
- + t5312: move reffiles specific tests to t0601
- + t4202: move reffiles specific tests to t0600
- + t3903: make drop stash test ref backend agnostic
- + t1503: move reffiles specific tests to t0600
- + t1415: move reffiles specific tests to t0601
- + t1410: move reffiles specific tests to t0600
- + t1406: move reffiles specific tests to t0600
- + t1405: move reffiles specific tests to t0601
- + t1404: move reffiles specific tests to t0600
- + t1414: convert test to use Git commands instead of writing refs manually
- + remove REFFILES prerequisite for some tests in t1405 and t2017
- + t3210: move to t0601
-
- Tests on ref API are moved around to prepare for reftable.
-
- Will merge to 'master'.
- cf. <Za5TW-q4cKS8pNNc@tanuki>
- source: <pull.1647.v2.git.git.1705695540.gitgitgadget@gmail.com>
-
-
-* ml/log-merge-with-cherry-pick-and-other-pseudo-heads (2024-01-17) 2 commits
- - revision: implement `git log --merge` also for rebase/cherry_pick/revert
- - revision: ensure MERGE_HEAD is a ref in prepare_show_merge
-
- "git log --merge" learned to pay attention to CHERRY_PICK_HEAD and
- other kinds of *_HEAD pseudorefs.
-
- Comments?
- source: <xmqqzfxa9usx.fsf@gitster.g>
-
-
-* kn/for-all-refs (2024-01-29) 4 commits
- - for-each-ref: avoid filtering on empty pattern
- - refs: introduce `refs_for_each_all_refs()`
- - refs: extract out `loose_fill_ref_dir_regular_file()`
- - refs: introduce `is_pseudoref()` and `is_headref()`
-
- "git for-each-ref" filters its output with prefixes given from the
- command line, but it did not honor an empty string to mean "pass
- everything", which has been corrected.
-
- Will merge to 'next'.
- source: <20240129113527.607022-1-karthik.188@gmail.com>
-
-
-* bk/complete-bisect (2024-01-29) 8 commits
- - completion: add tests for git-bisect
- - completion: bisect: recognize but do not complete view subcommand
- - completion: bisect: complete log opts for visualize subcommand
- - completion: log: use __git_complete_log_opts
- - completion: new function __git_complete_log_opts
- - completion: bisect: complete missing --first-parent and --no-checkout options
- - completion: bisect: complete custom terms and related options
- - completion: bisect: complete bad, new, old, and help subcommands
-
- Command line completion support (in contrib/) has been
- updated for "git bisect".
-
- Comments?
- cf. <ZaofJhHsFjRxx7a3@tanuki>
- source: <20240128223447.342493-1-britton.kerin@gmail.com>
-
-
-* bk/complete-dirname-for-am-and-format-patch (2024-01-12) 1 commit
- - completion: dir-type optargs for am, format-patch
-
- Command line completion support (in contrib/) has been
- updated for a few commands to complete directory names where a
- directory name is expected.
-
- Needs review.
- source: <d37781c3-6af2-409b-95a8-660a9b92d20b@smtp-relay.sendinblue.com>
-
-
-* bk/complete-send-email (2024-01-12) 1 commit
- - completion: don't complete revs when --no-format-patch
-
- Command line completion support (in contrib/) has been taught to
- avoid offering revision names as candidates to "git send-email" when
- the command is used to send pre-generated files.
-
- Needs review.
- source: <a718b5ee-afb0-44bd-a299-3208fac43506@smtp-relay.sendinblue.com>
-
-
-* la/trailer-api (2024-01-26) 10 commits
- - trailer: delete obsolete argument handling code from API
- - trailer: move arg handling to interpret-trailers.c
- - trailer: prepare to move parse_trailers_from_command_line_args () to builtin
- - trailer: spread usage of "trailer_block" language
- - trailer: make trailer_info struct private
- - sequencer: use the trailer iterator
- - trailer: delete obsolete formatting functions
- - trailer: unify trailer formatting machinery
- - trailer: move interpret_trailers() to interpret-trailers.c
- - trailer: prepare to expose functions as part of API
-
- Code clean-up.
-
- Expecting a (hopefully final and small) reroll.
- cf. <owlyh6iy2grk.fsf@fine.c.googlers.com>
- source: <pull.1632.v2.git.1706308737.gitgitgadget@gmail.com>
-
-
-* ps/tests-with-ref-files-backend (2024-01-29) 6 commits
- - t: mark tests regarding git-pack-refs(1) to be backend specific
- - t5526: break test submodule differently
- - t1419: mark test suite as files-backend specific
- - t1302: make tests more robust with new extensions
- - t1301: mark test for `core.sharedRepository` as reffiles specific
- - t1300: make tests more robust with non-default ref backends
-
- Prepare existing tests on refs to work better with non-default
- backends.
-
- Will merge to 'next'.
- source: <cover.1706525813.git.ps@pks.im>
-
-
-* rj/advice-disable-how-to-disable (2024-01-16) 2 commits
-  (merged to 'next' on 2024-01-23 at f456f4937d)
- + advice: allow disabling the automatic hint in advise_if_enabled()
- + Merge branch 'rj/advice-delete-branch-not-fully-merged' into rj/advice-disable-how-to-disable
-
- All conditional "advice" messages show how to turn them off, which
- becomes repetitive.  Add a configuration variable to omit the
- instruction.
-
- Will merge to 'master'.
- source: <6a842ef8-b390-4739-9eef-e867d55ed5ea@gmail.com>
-
-
-* sd/negotiate-trace-fix (2024-01-03) 1 commit
-  (merged to 'next' on 2024-01-24 at 6305853ab2)
- + push: region_leave trace for negotiate_using_fetch
-
- Tracing fix.
-
- Will merge to 'master'.
- source: <20240103224054.1940209-1-delmerico@google.com>
-
-
-* cp/apply-core-filemode (2023-12-26) 3 commits
- - apply: code simplification
- - apply: correctly reverse patch's pre- and post-image mode bits
- - apply: ignore working tree filemode when !core.filemode
-
- "git apply" on a filesystem without filemode support have learned
- to take a hint from what is in the index for the path, even when
- not working with the "--index" or "--cached" option, when checking
- the executable bit match what is required by the preimage in the
- patch.
-
- Needs review.
- source: <20231226233218.472054-1-gitster@pobox.com>
-
-
-* ja/doc-placeholders-fix (2023-12-26) 2 commits
- - doc: enforce placeholders in documentation
- - doc: enforce dashes in placeholders
-
- Docfix.
-
- Needs review.
- source: <pull.1626.git.1703539287.gitgitgadget@gmail.com>
-
-
-* jc/bisect-doc (2023-12-09) 1 commit
- - bisect: document "terms" subcommand more fully
-
- Doc update.
-
- Needs review.
- source: <xmqqzfyjmk02.fsf@gitster.g>
-
-
-* tb/pair-chunk-expect (2023-11-10) 8 commits
- - midx: read `OOFF` chunk with `pair_chunk_expect()`
- - midx: read `OIDL` chunk with `pair_chunk_expect()`
- - commit-graph: read `BIDX` chunk with `pair_chunk_expect()`
- - commit-graph: read `GDAT` chunk with `pair_chunk_expect()`
- - commit-graph: read `CDAT` chunk with `pair_chunk_expect()`
- - commit-graph: read `OIDL` chunk with `pair_chunk_expect()`
- - chunk-format: introduce `pair_chunk_expect()` helper
- - Merge branch 'jk/chunk-bounds-more' into HEAD
-
- Further code clean-up.
-
- Needs review.
- source: <cover.1699569246.git.me@ttaylorr.com>
-
-
-* tb/path-filter-fix (2024-01-16) 17 commits
- - bloom: introduce `deinit_bloom_filters()`
- - commit-graph: reuse existing Bloom filters where possible
- - object.h: fix mis-aligned flag bits table
- - commit-graph: drop unnecessary `graph_read_bloom_data_context`
- - commit-graph.c: unconditionally load Bloom filters
- - bloom: prepare to discard incompatible Bloom filters
- - bloom: annotate filters with hash version
- - commit-graph: new Bloom filter version that fixes murmur3
- - repo-settings: introduce commitgraph.changedPathsVersion
- - t4216: test changed path filters with high bit paths
- - t/helper/test-read-graph: implement `bloom-filters` mode
- - bloom.h: make `load_bloom_filter_from_graph()` public
- - t/helper/test-read-graph.c: extract `dump_graph_info()`
- - gitformat-commit-graph: describe version 2 of BDAT
- - commit-graph: ensure Bloom filters are read with consistent settings
- - revision.c: consult Bloom filters for root commits
- - t/t4216-log-bloom.sh: harden `test_bloom_filters_not_used()`
-
- The Bloom filter used for path limited history traversal was broken
- on systems whose "char" is unsigned; update the implementation and
- bump the format version to 2.
-
- Expecting a reroll.
- cf. <20240129212614.GB9612@szeder.dev>
- source: <cover.1705442923.git.me@ttaylorr.com>
-
-
-* ak/color-decorate-symbols (2023-10-23) 7 commits
- - log: add color.decorate.pseudoref config variable
- - refs: exempt pseudorefs from pattern prefixing
- - refs: add pseudorefs array and iteration functions
- - log: add color.decorate.ref config variable
- - log: add color.decorate.symbol config variable
- - log: use designated inits for decoration_colors
- - config: restructure color.decorate documentation
-
- A new config for coloring.
-
- Needs review.
- source: <20231023221143.72489-1-andy.koppe@gmail.com>
-
-
-* eb/hash-transition (2023-10-02) 30 commits
- - t1016-compatObjectFormat: add tests to verify the conversion between objects
- - t1006: test oid compatibility with cat-file
- - t1006: rename sha1 to oid
- - test-lib: compute the compatibility hash so tests may use it
- - builtin/ls-tree: let the oid determine the output algorithm
- - object-file: handle compat objects in check_object_signature
- - tree-walk: init_tree_desc take an oid to get the hash algorithm
- - builtin/cat-file: let the oid determine the output algorithm
- - rev-parse: add an --output-object-format parameter
- - repository: implement extensions.compatObjectFormat
- - object-file: update object_info_extended to reencode objects
- - object-file-convert: convert commits that embed signed tags
- - object-file-convert: convert commit objects when writing
- - object-file-convert: don't leak when converting tag objects
- - object-file-convert: convert tag objects when writing
- - object-file-convert: add a function to convert trees between algorithms
- - object: factor out parse_mode out of fast-import and tree-walk into in object.h
- - cache: add a function to read an OID of a specific algorithm
- - tag: sign both hashes
- - commit: export add_header_signature to support handling signatures on tags
- - commit: convert mergetag before computing the signature of a commit
- - commit: write commits for both hashes
- - object-file: add a compat_oid_in parameter to write_object_file_flags
- - object-file: update the loose object map when writing loose objects
- - loose: compatibilty short name support
- - loose: add a mapping between SHA-1 and SHA-256 for loose objects
- - repository: add a compatibility hash algorithm
- - object-names: support input of oids in any supported hash
- - oid-array: teach oid-array to handle multiple kinds of oids
- - object-file-convert: stubs for converting from one object format to another
-
- Teach a repository to work with both SHA-1 and SHA-256 hash algorithms.
-
- Needs review.
- source: <878r8l929e.fsf@gmail.froward.int.ebiederm.org>
-
-
-* jx/remote-archive-over-smart-http (2024-01-22) 6 commits
-  (merged to 'next' on 2024-01-23 at 5fa4633015)
- + transport-helper: call do_take_over() in process_connect
- + transport-helper: call do_take_over() in connect_helper
- + http-backend: new rpc-service for git-upload-archive
- + transport-helper: protocol v2 supports upload-archive
- + remote-curl: supports git-upload-archive service
- + transport-helper: no connection restriction in connect_helper
-
- "git archive --remote=<remote>" learned to talk over the smart
- http (aka stateless) transport.
-
- Will merge to 'master'.
- source: <cover.1705841443.git.zhiyou.jx@alibaba-inc.com>
-
-
-* jc/rerere-cleanup (2023-08-25) 4 commits
- - rerere: modernize use of empty strbuf
- - rerere: try_merge() should use LL_MERGE_ERROR when it means an error
- - rerere: fix comment on handle_file() helper
- - rerere: simplify check_one_conflict() helper function
-
- Code clean-up.
-
- Not ready to be reviewed yet.
- source: <20230824205456.1231371-1-gitster@pobox.com>
+X-OriginatorOrg: outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: PH7P220MB1290.NAMP220.PROD.OUTLOOK.COM
+X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
+X-MS-Exchange-CrossTenant-Network-Message-Id: 0e4f687b-8b07-4f3f-efb8-08dc213626ed
+X-MS-Exchange-CrossTenant-rms-persistedconsumerorg: 00000000-0000-0000-0000-000000000000
+X-MS-Exchange-CrossTenant-originalarrivaltime: 30 Jan 2024 01:52:44.4481
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: LV8P220MB1875
+
+--_003_PH7P220MB12908BE92500163FF1C859E0FB7D2PH7P220MB1290NAMP_
+Content-Type: text/plain; charset="Windows-1252"
+Content-ID:
+ <53FEB9D205214A4BBED481D88B209275@sct-15-20-4755-11-msonline-outlook-3458f.templateTenant>
+Content-Transfer-Encoding: quoted-printable
+
+Hello=20
+These guys do not own GitHub or any licenses to GitHub at least not to the =
+JSON license! This is effecting me at coinbase!=20
+
+
+
+
+Ross Nicholas Oneil Thomas
+ownership of:
+www.github.com
+www.coinbase.com
+www.jsnull.com
+(559-816-2950)
+
+
+--_003_PH7P220MB12908BE92500163FF1C859E0FB7D2PH7P220MB1290NAMP_
+Content-Type: application/octet-stream; name="ewok.h"
+Content-Description: ewok.h
+Content-Disposition: attachment; filename="ewok.h"; size=6898;
+	creation-date="Tue, 30 Jan 2024 01:52:44 GMT";
+	modification-date="Tue, 30 Jan 2024 01:52:44 GMT"
+Content-ID:
+ <365B1D7B1EBF394AACED31034AAC4ADB@sct-15-20-4755-11-msonline-outlook-3458f.templateTenant>
+Content-Transfer-Encoding: base64
+
+LyoqDQogKiBDb3B5cmlnaHQgMjAxMywgR2l0SHViLCBJbmMNCiAqIENvcHlyaWdodCAyMDA5LTIw
+MTMsIERhbmllbCBMZW1pcmUsIENsaWZmIE1vb24sDQogKglEYXZpZCBNY0ludG9zaCwgUm9iZXJ0
+IEJlY2hvLCBHb29nbGUgSW5jLiBhbmQgVmVyb25pa2EgWmVueg0KICoNCiAqIFRoaXMgcHJvZ3Jh
+bSBpcyBmcmVlIHNvZnR3YXJlOyB5b3UgY2FuIHJlZGlzdHJpYnV0ZSBpdCBhbmQvb3INCiAqIG1v
+ZGlmeSBpdCB1bmRlciB0aGUgdGVybXMgb2YgdGhlIEdOVSBHZW5lcmFsIFB1YmxpYyBMaWNlbnNl
+DQogKiBhcyBwdWJsaXNoZWQgYnkgdGhlIEZyZWUgU29mdHdhcmUgRm91bmRhdGlvbjsgZWl0aGVy
+IHZlcnNpb24gMg0KICogb2YgdGhlIExpY2Vuc2UsIG9yIChhdCB5b3VyIG9wdGlvbikgYW55IGxh
+dGVyIHZlcnNpb24uDQogKg0KICogVGhpcyBwcm9ncmFtIGlzIGRpc3RyaWJ1dGVkIGluIHRoZSBo
+b3BlIHRoYXQgaXQgd2lsbCBiZSB1c2VmdWwsDQogKiBidXQgV0lUSE9VVCBBTlkgV0FSUkFOVFk7
+IHdpdGhvdXQgZXZlbiB0aGUgaW1wbGllZCB3YXJyYW50eSBvZg0KICogTUVSQ0hBTlRBQklMSVRZ
+IG9yIEZJVE5FU1MgRk9SIEEgUEFSVElDVUxBUiBQVVJQT1NFLiAgU2VlIHRoZQ0KICogR05VIEdl
+bmVyYWwgUHVibGljIExpY2Vuc2UgZm9yIG1vcmUgZGV0YWlscy4NCiAqDQogKiBZb3Ugc2hvdWxk
+IGhhdmUgcmVjZWl2ZWQgYSBjb3B5IG9mIHRoZSBHTlUgR2VuZXJhbCBQdWJsaWMgTGljZW5zZQ0K
+ICogYWxvbmcgd2l0aCB0aGlzIHByb2dyYW07IGlmIG5vdCwgd3JpdGUgdG8gdGhlIEZyZWUgU29m
+dHdhcmUNCiAqIEZvdW5kYXRpb24sIEluYy4sIDUxIEZyYW5rbGluIFN0cmVldCwgRmlmdGggRmxv
+b3IsIEJvc3RvbiwgTUEgIDAyMTEwLTEzMDEsIFVTQS4NCiAqLw0KI2lmbmRlZiBfX0VXT0tfQklU
+TUFQX0hfXw0KI2RlZmluZSBfX0VXT0tfQklUTUFQX0hfXw0KDQpzdHJ1Y3Qgc3RyYnVmOw0KdHlw
+ZWRlZiB1aW50NjRfdCBld29yZF90Ow0KI2RlZmluZSBCSVRTX0lOX0VXT1JEIChzaXplb2YoZXdv
+cmRfdCkgKiA4KQ0KDQovKioNCiAqIERvIG5vdCB1c2UgX19idWlsdGluX3BvcGNvdW50bGwuIFRo
+ZSBHQ0MgaW1wbGVtZW50YXRpb24NCiAqIGlzIG5vdG9yaW91c2x5IHNsb3cgb24gYWxsIHBsYXRm
+b3Jtcy4NCiAqDQogKiBTZWU6IGh0dHA6Ly9nY2MuZ251Lm9yZy9idWd6aWxsYS9zaG93X2J1Zy5j
+Z2k/aWQ9MzYwNDENCiAqLw0Kc3RhdGljIGlubGluZSB1aW50MzJfdCBld2FoX2JpdF9wb3Bjb3Vu
+dDY0KHVpbnQ2NF90IHgpDQp7DQoJeCA9ICh4ICYgMHg1NTU1NTU1NTU1NTU1NTU1VUxMKSArICgo
+eCA+PiAgMSkgJiAweDU1NTU1NTU1NTU1NTU1NTVVTEwpOw0KCXggPSAoeCAmIDB4MzMzMzMzMzMz
+MzMzMzMzM1VMTCkgKyAoKHggPj4gIDIpICYgMHgzMzMzMzMzMzMzMzMzMzMzVUxMKTsNCgl4ID0g
+KHggJiAweDBGMEYwRjBGMEYwRjBGMEZVTEwpICsgKCh4ID4+ICA0KSAmIDB4MEYwRjBGMEYwRjBG
+MEYwRlVMTCk7DQoJcmV0dXJuICh4ICogMHgwMTAxMDEwMTAxMDEwMTAxVUxMKSA+PiA1NjsNCn0N
+Cg0KLyogX19idWlsdGluX2N0emxsIHdhcyBub3QgYXZhaWxhYmxlIHVudGlsIDMuNC4wICovDQoj
+aWYgZGVmaW5lZChfX0dOVUNfXykgJiYgKF9fR05VQ19fID4gMyB8fCAoX19HTlVDX18gPT0gMyAg
+JiYgX19HTlVDX01JTk9SID4gMykpDQojZGVmaW5lIGV3YWhfYml0X2N0ejY0KHgpIF9fYnVpbHRp
+bl9jdHpsbCh4KQ0KI2Vsc2UNCnN0YXRpYyBpbmxpbmUgaW50IGV3YWhfYml0X2N0ejY0KHVpbnQ2
+NF90IHgpDQp7DQoJaW50IG4gPSAwOw0KCWlmICgoeCAmIDB4ZmZmZmZmZmYpID09IDApIHsgeCA+
+Pj0gMzI7IG4gKz0gMzI7IH0NCglpZiAoKHggJiAgICAgMHhmZmZmKSA9PSAwKSB7IHggPj49IDE2
+OyBuICs9IDE2OyB9DQoJaWYgKCh4ICYgICAgICAgMHhmZikgPT0gMCkgeyB4ID4+PSAgODsgbiAr
+PSAgODsgfQ0KCWlmICgoeCAmICAgICAgICAweGYpID09IDApIHsgeCA+Pj0gIDQ7IG4gKz0gIDQ7
+IH0NCglpZiAoKHggJiAgICAgICAgMHgzKSA9PSAwKSB7IHggPj49ICAyOyBuICs9ICAyOyB9DQoJ
+aWYgKCh4ICYgICAgICAgIDB4MSkgPT0gMCkgeyB4ID4+PSAgMTsgbiArPSAgMTsgfQ0KCXJldHVy
+biBuICsgIXg7DQp9DQojZW5kaWYNCg0Kc3RydWN0IGV3YWhfYml0bWFwIHsNCglld29yZF90ICpi
+dWZmZXI7DQoJc2l6ZV90IGJ1ZmZlcl9zaXplOw0KCXNpemVfdCBhbGxvY19zaXplOw0KCXNpemVf
+dCBiaXRfc2l6ZTsNCglld29yZF90ICpybHc7DQp9Ow0KDQp0eXBlZGVmIHZvaWQgKCpld2FoX2Nh
+bGxiYWNrKShzaXplX3QgcG9zLCB2b2lkICopOw0KDQpzdHJ1Y3QgZXdhaF9iaXRtYXAgKmV3YWhf
+cG9vbF9uZXcodm9pZCk7DQp2b2lkIGV3YWhfcG9vbF9mcmVlKHN0cnVjdCBld2FoX2JpdG1hcCAq
+c2VsZik7DQoNCi8qKg0KICogQWxsb2NhdGUgYSBuZXcgRVdBSCBDb21wcmVzc2VkIGJpdG1hcA0K
+ICovDQpzdHJ1Y3QgZXdhaF9iaXRtYXAgKmV3YWhfbmV3KHZvaWQpOw0KDQovKioNCiAqIENsZWFy
+IGFsbCB0aGUgYml0cyBpbiB0aGUgYml0bWFwLiBEb2VzIG5vdCBmcmVlIG9yIHJlc2l6ZQ0KICog
+bWVtb3J5Lg0KICovDQp2b2lkIGV3YWhfY2xlYXIoc3RydWN0IGV3YWhfYml0bWFwICpzZWxmKTsN
+Cg0KLyoqDQogKiBGcmVlIGFsbCB0aGUgbWVtb3J5IG9mIHRoZSBiaXRtYXANCiAqLw0Kdm9pZCBl
+d2FoX2ZyZWUoc3RydWN0IGV3YWhfYml0bWFwICpzZWxmKTsNCg0KaW50IGV3YWhfc2VyaWFsaXpl
+X3RvKHN0cnVjdCBld2FoX2JpdG1hcCAqc2VsZiwNCgkJICAgICAgaW50ICgqd3JpdGVfZnVuKSh2
+b2lkICpvdXQsIGNvbnN0IHZvaWQgKmJ1Ziwgc2l6ZV90IGxlbiksDQoJCSAgICAgIHZvaWQgKm91
+dCk7DQppbnQgZXdhaF9zZXJpYWxpemUoc3RydWN0IGV3YWhfYml0bWFwICpzZWxmLCBpbnQgZmQp
+Ow0KaW50IGV3YWhfc2VyaWFsaXplX25hdGl2ZShzdHJ1Y3QgZXdhaF9iaXRtYXAgKnNlbGYsIGlu
+dCBmZCk7DQppbnQgZXdhaF9zZXJpYWxpemVfc3RyYnVmKHN0cnVjdCBld2FoX2JpdG1hcCAqc2Vs
+Ziwgc3RydWN0IHN0cmJ1ZiAqKTsNCg0KaW50IGV3YWhfZGVzZXJpYWxpemUoc3RydWN0IGV3YWhf
+Yml0bWFwICpzZWxmLCBpbnQgZmQpOw0KaW50IGV3YWhfcmVhZF9tbWFwKHN0cnVjdCBld2FoX2Jp
+dG1hcCAqc2VsZiwgY29uc3Qgdm9pZCAqbWFwLCBzaXplX3QgbGVuKTsNCg0KdWludDMyX3QgZXdh
+aF9jaGVja3N1bShzdHJ1Y3QgZXdhaF9iaXRtYXAgKnNlbGYpOw0KDQovKioNCiAqIExvZ2ljYWwg
+bm90IChiaXR3aXNlIG5lZ2F0aW9uKSBpbi1wbGFjZSBvbiB0aGUgYml0bWFwDQogKg0KICogVGhp
+cyBvcGVyYXRpb24gaXMgbGluZWFyIHRpbWUgYmFzZWQgb24gdGhlIHNpemUgb2YgdGhlIGJpdG1h
+cC4NCiAqLw0Kdm9pZCBld2FoX25vdChzdHJ1Y3QgZXdhaF9iaXRtYXAgKnNlbGYpOw0KDQovKioN
+CiAqIENhbGwgdGhlIGdpdmVuIGNhbGxiYWNrIHdpdGggdGhlIHBvc2l0aW9uIG9mIGV2ZXJ5IHNp
+bmdsZSBiaXQNCiAqIHRoYXQgaGFzIGJlZW4gc2V0IG9uIHRoZSBiaXRtYXAuDQogKg0KICogVGhp
+cyBpcyBhbiBlZmZpY2llbnQgb3BlcmF0aW9uIHRoYXQgZG9lcyBub3QgZnVsbHkgZGVjb21wcmVz
+cw0KICogdGhlIGJpdG1hcC4NCiAqLw0Kdm9pZCBld2FoX2VhY2hfYml0KHN0cnVjdCBld2FoX2Jp
+dG1hcCAqc2VsZiwgZXdhaF9jYWxsYmFjayBjYWxsYmFjaywgdm9pZCAqcGF5bG9hZCk7DQoNCi8q
+Kg0KICogU2V0IGEgZ2l2ZW4gYml0IG9uIHRoZSBiaXRtYXAuDQogKg0KICogVGhlIGJpdCBhdCBw
+b3NpdGlvbiBgcG9zYCB3aWxsIGJlIHNldCB0byB0cnVlLiBCZWNhdXNlIG9mIHRoZQ0KICogd2F5
+IHRoYXQgdGhlIGJpdG1hcCBpcyBjb21wcmVzc2VkLCBhIHNldCBiaXQgY2Fubm90IGJlIHVuc2V0
+DQogKiBsYXRlciBvbi4NCiAqDQogKiBGdXJ0aGVybW9yZSwgc2luY2UgdGhlIGJpdG1hcCB1c2Vz
+IHN0cmVhbWluZyBjb21wcmVzc2lvbiwgYml0cw0KICogY2FuIG9ubHkgc2V0IGluY3JlbWVudGFs
+bHkuDQogKg0KICogRS5nLg0KICoJCWV3YWhfc2V0KGJpdG1hcCwgMSk7IC8vIG9rDQogKgkJZXdh
+aF9zZXQoYml0bWFwLCA3Nik7IC8vIG9rDQogKgkJZXdhaF9zZXQoYml0bWFwLCA3Nyk7IC8vIG9r
+DQogKgkJZXdhaF9zZXQoYml0bWFwLCA4NzEyODAwMTI3KTsgLy8gb2sNCiAqCQlld2FoX3NldChi
+aXRtYXAsIDI1KTsgLy8gZmFpbGVkLCBhc3NlcnQgcmFpc2VkDQogKi8NCnZvaWQgZXdhaF9zZXQo
+c3RydWN0IGV3YWhfYml0bWFwICpzZWxmLCBzaXplX3QgaSk7DQoNCnN0cnVjdCBld2FoX2l0ZXJh
+dG9yIHsNCgljb25zdCBld29yZF90ICpidWZmZXI7DQoJc2l6ZV90IGJ1ZmZlcl9zaXplOw0KDQoJ
+c2l6ZV90IHBvaW50ZXI7DQoJZXdvcmRfdCBjb21wcmVzc2VkLCBsaXRlcmFsczsNCglld29yZF90
+IHJsLCBsdzsNCglpbnQgYjsNCn07DQoNCi8qKg0KICogSW5pdGlhbGl6ZSBhIG5ldyBpdGVyYXRv
+ciB0byBydW4gdGhyb3VnaCB0aGUgYml0bWFwIGluIHVuY29tcHJlc3NlZCBmb3JtLg0KICoNCiAq
+IFRoZSBpdGVyYXRvciBjYW4gYmUgc3RhY2sgYWxsb2NhdGVkLiBUaGUgdW5kZXJseWluZyBiaXRt
+YXAgbXVzdCBub3QgYmUgZnJlZWQNCiAqIGJlZm9yZSB0aGUgaXRlcmF0aW9uIGlzIG92ZXIuDQog
+Kg0KICogRS5nLg0KICoNCiAqCQlzdHJ1Y3QgZXdhaF9iaXRtYXAgKmJpdG1hcCA9IGV3YWhfbmV3
+KCk7DQogKgkJc3RydWN0IGV3YWhfaXRlcmF0b3IgaXQ7DQogKg0KICoJCWV3YWhfaXRlcmF0b3Jf
+aW5pdCgmaXQsIGJpdG1hcCk7DQogKi8NCnZvaWQgZXdhaF9pdGVyYXRvcl9pbml0KHN0cnVjdCBl
+d2FoX2l0ZXJhdG9yICppdCwgc3RydWN0IGV3YWhfYml0bWFwICpwYXJlbnQpOw0KDQovKioNCiAq
+IFlpZWxkIGV2ZXJ5IHNpbmdsZSB3b3JkIGluIHRoZSBiaXRtYXAgaW4gdW5jb21wcmVzc2VkIGZv
+cm0uIFRoaXMgaXM6DQogKiB5aWVsZCBzaW5nbGUgd29yZHMgKDMyLTY0IGJpdHMpIHdoZXJlIGVh
+Y2ggYml0IHJlcHJlc2VudHMgYW4gYWN0dWFsDQogKiBiaXQgZnJvbSB0aGUgYml0bWFwLg0KICoN
+CiAqIFJldHVybjogdHJ1ZSBpZiBhIHdvcmQgd2FzIHlpZWxkLCBmYWxzZSBpZiB0aGVyZSBhcmUg
+bm8gd29yZHMgbGVmdA0KICovDQppbnQgZXdhaF9pdGVyYXRvcl9uZXh0KGV3b3JkX3QgKm5leHQs
+IHN0cnVjdCBld2FoX2l0ZXJhdG9yICppdCk7DQoNCnZvaWQgZXdhaF9vcigNCglzdHJ1Y3QgZXdh
+aF9iaXRtYXAgKmV3YWhfaSwNCglzdHJ1Y3QgZXdhaF9iaXRtYXAgKmV3YWhfaiwNCglzdHJ1Y3Qg
+ZXdhaF9iaXRtYXAgKm91dCk7DQoNCnZvaWQgZXdhaF9hbmRfbm90KA0KCXN0cnVjdCBld2FoX2Jp
+dG1hcCAqZXdhaF9pLA0KCXN0cnVjdCBld2FoX2JpdG1hcCAqZXdhaF9qLA0KCXN0cnVjdCBld2Fo
+X2JpdG1hcCAqb3V0KTsNCg0Kdm9pZCBld2FoX3hvcigNCglzdHJ1Y3QgZXdhaF9iaXRtYXAgKmV3
+YWhfaSwNCglzdHJ1Y3QgZXdhaF9iaXRtYXAgKmV3YWhfaiwNCglzdHJ1Y3QgZXdhaF9iaXRtYXAg
+Km91dCk7DQoNCnZvaWQgZXdhaF9hbmQoDQoJc3RydWN0IGV3YWhfYml0bWFwICpld2FoX2ksDQoJ
+c3RydWN0IGV3YWhfYml0bWFwICpld2FoX2osDQoJc3RydWN0IGV3YWhfYml0bWFwICpvdXQpOw0K
+DQovKioNCiAqIERpcmVjdCB3b3JkIGFjY2Vzcw0KICovDQpzaXplX3QgZXdhaF9hZGRfZW1wdHlf
+d29yZHMoc3RydWN0IGV3YWhfYml0bWFwICpzZWxmLCBpbnQgdiwgc2l6ZV90IG51bWJlcik7DQp2
+b2lkIGV3YWhfYWRkX2RpcnR5X3dvcmRzKA0KCXN0cnVjdCBld2FoX2JpdG1hcCAqc2VsZiwgY29u
+c3QgZXdvcmRfdCAqYnVmZmVyLCBzaXplX3QgbnVtYmVyLCBpbnQgbmVnYXRlKTsNCnNpemVfdCBl
+d2FoX2FkZChzdHJ1Y3QgZXdhaF9iaXRtYXAgKnNlbGYsIGV3b3JkX3Qgd29yZCk7DQoNCg0KLyoq
+DQogKiBVbmNvbXByZXNzZWQsIG9sZC1zY2hvb2wgYml0bWFwIHRoYXQgY2FuIGJlIGVmZmljaWVu
+dGx5IGNvbXByZXNzZWQNCiAqIGludG8gYW4gYGV3YWhfYml0bWFwYC4NCiAqLw0Kc3RydWN0IGJp
+dG1hcCB7DQoJZXdvcmRfdCAqd29yZHM7DQoJc2l6ZV90IHdvcmRfYWxsb2M7DQp9Ow0KDQpzdHJ1
+Y3QgYml0bWFwICpiaXRtYXBfbmV3KHZvaWQpOw0Kdm9pZCBiaXRtYXBfc2V0KHN0cnVjdCBiaXRt
+YXAgKnNlbGYsIHNpemVfdCBwb3MpOw0Kdm9pZCBiaXRtYXBfY2xlYXIoc3RydWN0IGJpdG1hcCAq
+c2VsZiwgc2l6ZV90IHBvcyk7DQppbnQgYml0bWFwX2dldChzdHJ1Y3QgYml0bWFwICpzZWxmLCBz
+aXplX3QgcG9zKTsNCnZvaWQgYml0bWFwX3Jlc2V0KHN0cnVjdCBiaXRtYXAgKnNlbGYpOw0Kdm9p
+ZCBiaXRtYXBfZnJlZShzdHJ1Y3QgYml0bWFwICpzZWxmKTsNCmludCBiaXRtYXBfZXF1YWxzKHN0
+cnVjdCBiaXRtYXAgKnNlbGYsIHN0cnVjdCBiaXRtYXAgKm90aGVyKTsNCmludCBiaXRtYXBfaXNf
+c3Vic2V0KHN0cnVjdCBiaXRtYXAgKnNlbGYsIHN0cnVjdCBiaXRtYXAgKnN1cGVyKTsNCg0Kc3Ry
+dWN0IGV3YWhfYml0bWFwICogYml0bWFwX3RvX2V3YWgoc3RydWN0IGJpdG1hcCAqYml0bWFwKTsN
+CnN0cnVjdCBiaXRtYXAgKmV3YWhfdG9fYml0bWFwKHN0cnVjdCBld2FoX2JpdG1hcCAqZXdhaCk7
+DQoNCnZvaWQgYml0bWFwX2FuZF9ub3Qoc3RydWN0IGJpdG1hcCAqc2VsZiwgc3RydWN0IGJpdG1h
+cCAqb3RoZXIpOw0Kdm9pZCBiaXRtYXBfb3JfZXdhaChzdHJ1Y3QgYml0bWFwICpzZWxmLCBzdHJ1
+Y3QgZXdhaF9iaXRtYXAgKm90aGVyKTsNCnZvaWQgYml0bWFwX29yKHN0cnVjdCBiaXRtYXAgKnNl
+bGYsIGNvbnN0IHN0cnVjdCBiaXRtYXAgKm90aGVyKTsNCg0Kdm9pZCBiaXRtYXBfZWFjaF9iaXQo
+c3RydWN0IGJpdG1hcCAqc2VsZiwgZXdhaF9jYWxsYmFjayBjYWxsYmFjaywgdm9pZCAqZGF0YSk7
+DQpzaXplX3QgYml0bWFwX3BvcGNvdW50KHN0cnVjdCBiaXRtYXAgKnNlbGYpOw0KDQojZW5kaWYN
+Cg==
+
+--_003_PH7P220MB12908BE92500163FF1C859E0FB7D2PH7P220MB1290NAMP_
+Content-Type: text/plain; name="ATT00001.txt"
+Content-Description: ATT00001.txt
+Content-Disposition: attachment; filename="ATT00001.txt"; size=115;
+	creation-date="Tue, 30 Jan 2024 01:52:44 GMT";
+	modification-date="Tue, 30 Jan 2024 01:52:44 GMT"
+Content-ID:
+ <D8411E52D22C38429B81CF874375898D@sct-15-20-4755-11-msonline-outlook-3458f.templateTenant>
+Content-Transfer-Encoding: base64
+
+DQoNClJvc3MgTmljaG9sYXMgT25laWwgVGhvbWFzDQpvd25lcnNoaXAgb2Y6DQp3d3cuZ2l0aHVi
+LmNvbQ0Kd3d3LmNvaW5iYXNlLmNvbQ0Kd3d3LmpzbnVsbC5jb20NCig1NTktODE2LTI5NTApDQoN
+Cg==
+
+--_003_PH7P220MB12908BE92500163FF1C859E0FB7D2PH7P220MB1290NAMP_--
