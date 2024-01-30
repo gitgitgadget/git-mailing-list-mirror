@@ -1,98 +1,82 @@
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FA4E381AF
-	for <git@vger.kernel.org>; Tue, 30 Jan 2024 05:48:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A598381B6
+	for <git@vger.kernel.org>; Tue, 30 Jan 2024 05:53:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706593683; cv=none; b=OleYkI6ieREx8epjng8FTDLKVfoOfQLzJ5hCBmKvYlsaAOCX3p+BjdqGXyQCA0to92YqQqbEj4DCFGswOqDLcnpaODGQpM8egSYq5dLTD90Ms0+J0mdS/SLWyeE+JvcieLpKp/XZzmgMv+J+OIDT+JernbqXFSP0pHSbB2gixpo=
+	t=1706594017; cv=none; b=tbr65AZI5lHUR5rUd70Y7sJKAD1u5pEZqIcFK2SsmP9V8u94LUBHfnvn0ChLvWcR3qT8AC1Xe3TDdH48gQfiBzuJnMHXvnUXP2ahTqS+WmOIWb53HFQgLrGuCOu3kxB6GIq/T7PYtcyIh17CRhCKjlPUJqJIaASSMB2cxC1AxTo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706593683; c=relaxed/simple;
-	bh=poYcSlCghXrjI3dsaEhJpNfHNYGlI6RpBPnpT82EtnM=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=TPcip+aaf60T3Edos84uyd36qWmLR/WLYLpezWXsAU4FOTWugXdC0VN+4c16YnA5vJwfL8R2HugUTOYr2kA9ubS2tRJ3PduZYB6TlMUtYkmozPFoRNDYFWErQKEsoUoleWxhR97jbNiOYyDn/yq34eZXoY+btxcedLm22ofRqUY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=KV3caTy5; arc=none smtp.client-ip=173.228.157.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="KV3caTy5"
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 45E2D253DA;
-	Tue, 30 Jan 2024 00:48:01 -0500 (EST)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=poYcSlCghXrjI3dsaEhJpNfHNYGlI6RpBPnpT8
-	2EtnM=; b=KV3caTy53cgj9X/KBJkjEGEgEqmA5Y0/H+bgx1XzKUG9kWRVyXb+2A
-	vsXWwhUhtpm/nJeZ64sFpNKtazebDvXg84FL5pUBNDtTv/x5gzOBqS6F7Sb8B1Q4
-	GjBLh++ekN04AKzu7xsac3l4XXMtqmOT/L1ucWqhCunPcyyxFOrf8=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 3E2F7253D9;
-	Tue, 30 Jan 2024 00:48:01 -0500 (EST)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.200.93])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 4A6DE253D7;
-	Tue, 30 Jan 2024 00:47:57 -0500 (EST)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Britton Leo Kerin <britton.kerin@gmail.com>
-Cc: git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>
-Subject: Re: [PATCH v4 8/8] completion: add tests for git-bisect
-In-Reply-To: <20240128223447.342493-9-britton.kerin@gmail.com> (Britton Leo
-	Kerin's message of "Sun, 28 Jan 2024 13:34:47 -0900")
-References: <20240118204323.1113859-1-britton.kerin@gmail.com>
-	<20240128223447.342493-1-britton.kerin@gmail.com>
-	<20240128223447.342493-9-britton.kerin@gmail.com>
-Date: Mon, 29 Jan 2024 21:47:55 -0800
-Message-ID: <xmqq5xzbe5is.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	s=arc-20240116; t=1706594017; c=relaxed/simple;
+	bh=0Pd+CVOGGA+H3Zd7522SVPTlkaxSnm4baVYd9z8rvxQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=iqJyra69f/wE/UwitmTFN8znCrB7ieapa5aR4bzfu9X8XtZc8Y2vnB6+ZIIGxSoJ5bFAUo7wtYuNOQAYckXU04lULBrecxE+At24z1xURyaoeQdOCeewzvvLZMm9vDRd+qONaeNxm3t0PUn7Clx7hPuG1/YF4XfX0N4HbBS3nSc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+Received: (qmail 8760 invoked by uid 109); 30 Jan 2024 05:53:35 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 30 Jan 2024 05:53:35 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 29256 invoked by uid 111); 30 Jan 2024 05:53:36 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 30 Jan 2024 00:53:36 -0500
+Authentication-Results: peff.net; auth=none
+Date: Tue, 30 Jan 2024 00:53:33 -0500
+From: Jeff King <peff@peff.net>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: =?utf-8?B?UnViw6lu?= Justo <rjusto@gmail.com>,
+	Git List <git@vger.kernel.org>
+Subject: Re: [PATCH 1/4] t0080: mark as leak-free
+Message-ID: <20240130055333.GB166761@coredump.intra.peff.net>
+References: <45eb0748-6415-4e52-a54f-8d4e5ad57dde@gmail.com>
+ <4adfcba4-0f2b-44f5-a312-97f00f979435@gmail.com>
+ <xmqqa5onhjm4.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- 1EA1871C-BF33-11EE-B2F2-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqa5onhjm4.fsf@gitster.g>
 
-Britton Leo Kerin <britton.kerin@gmail.com> writes:
+On Mon, Jan 29, 2024 at 02:15:15PM -0800, Junio C Hamano wrote:
 
-> +test_expect_success 'git bisect - start subcommand arguments before double-dash are completed as revs' '
-> +	(
-> +		cd git-bisect &&
-> +		test_completion "git bisect start " <<-\EOF
-> +		HEAD Z
-> +		final Z
-> +		initial Z
-> +		master Z
-> +		EOF
-> +	)
-> +'
+> > Let's mark it as leak-free to make sure it stays that way (and to reduce
+> > noise when looking for other leak-free scripts after we fix some leaks).
+> 
+> For other tests in this series, that rationale is a very sensible
+> thing, but does it apply to this one?
+> 
+> The point of the t-basic tests is to ensure the lightweight unit
+> test framework that requires nothing from Git behaves (and keeps
+> behaving) sensibly.  The point of running t[0-9][0-9][0-9][0-9]
+> tests under leak sanitizer is to exercise production Git code to
+> catch leaks in Git code.
+> 
+> So it is not quite clear if we even want to run this t0080 under
+> leak sanitizer to begin with.  t0080 is a relatively tiny test, but
+> do we even want to spend leak sanitizer cycles on it?  I dunno.
 
-When GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME is set to 'main' (can be
-seen as a failure in linux-gcc job in GitHub CI), this piece breaks
-the test, because 'master' would not appear there in the list.
+I think you are right that we do not particularly care about leaks in
+the t-basic code. That is also true of other test harness code (other
+unit-tests, but also stuff in t/helper). But IMHO it is less work to
+just keep that code leak-free than it is to try to distinguish between
+production and test code.
 
-You could detect what the initial default branch name currently is
-and use that branch name to dynamically generate the above list
-during the test.  I do not think it is worth it, and forcing the
-fixed name should be sufficient.
+Right now, it is not that hard to simply leave the PASSES_SANITIZE_LEAK
+flag off of t0080, and then it won't be run in the leak-checking CI job.
+But I think the end-game of all of this leak-checking stuff is that
+eventually _everything_ will be leak-free, and we will discard the whole
+PASSES_SANITIZE_LEAK mechanism entirely. And in that end-game, it is
+simpler for everything, including t-basic, to just be leak-free and
+checked under the same regime.
 
-Perhaps like this (not tested):
+Setting the flag now just makes sure we continue correctly on that path,
+rather than getting surprised near the end of the road that t-basic has
+some dumb leak. Plus it avoids the script popping up as a false positive
+when checking for scripts which can be marked.
 
-diff --git a/t/t9902-completion.sh b/t/t9902-completion.sh
-index 698e278450..26f616fcfe 100755
---- a/t/t9902-completion.sh
-+++ b/t/t9902-completion.sh
-@@ -5,6 +5,8 @@
- 
- test_description='test bash completion'
- 
-+GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=master
-+export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
- . ./lib-bash.sh
- 
- complete ()
+-Peff
