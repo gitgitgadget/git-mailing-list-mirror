@@ -1,82 +1,126 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+Received: from wfhigh4-smtp.messagingengine.com (wfhigh4-smtp.messagingengine.com [64.147.123.155])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BF6D381B9
-	for <git@vger.kernel.org>; Tue, 30 Jan 2024 06:07:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F29A845012
+	for <git@vger.kernel.org>; Tue, 30 Jan 2024 06:10:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706594822; cv=none; b=ilh6sFoGz76Ve4yLAd3gLu2p5FQ+G9jlRcz3d40kALY7o2162HOixzMalR2K1vAD40pqHn9FI4Hd++hmDlvHRmLX+m+9pdzxCwbtBQgZ9sf8PHptt5UFafhafaQb6B98aM0v1db69063xzf7uiC3h8mfTqQWCGP8KAL8Mz/CXYk=
+	t=1706595017; cv=none; b=Inik/KNByuaneFjy5wr48HdQRfm4kpCDmIo9lPkMlMNoLIcJVNNX7M0n5ksCUIKnvL0Gzsh/brlO8zscXEc08NEk+61R128U1Dxsy8sUeWY4qlKnctVSRq7vbrVekoR3+z2ZfnCjlHlO44lpAkM7CZzuLWuLy1tuoyo8DGUUeJw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706594822; c=relaxed/simple;
-	bh=kWoibuHHSvWobbebSnfRRlMrXqLNYBM1TfIiG+DPU6M=;
+	s=arc-20240116; t=1706595017; c=relaxed/simple;
+	bh=+AEr/QaihzfxHf/s3Q1eGqZulaWrtqZuFp2QddFS7kU=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=GJw/ChJT9OTuKkQi6IOZ8UofiSXq+PDghr3tmAqUIZcW+T9uQxT5PrTEDQo74F2BcIpHjhgaWsAHrTlcaeNE/TccOPjlzmDk8tVpR13ZTcC5WLF3RjVf4qFXLzJol7X/kIViSWpNAzuSw1wRYl7uisGrGilG/8xomdvHfell70w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
-Received: (qmail 8867 invoked by uid 109); 30 Jan 2024 06:06:59 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 30 Jan 2024 06:06:59 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 29382 invoked by uid 111); 30 Jan 2024 06:07:01 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 30 Jan 2024 01:07:01 -0500
-Authentication-Results: peff.net; auth=none
-Date: Tue, 30 Jan 2024 01:06:58 -0500
-From: Jeff King <peff@peff.net>
+	 Content-Type:Content-Disposition:In-Reply-To; b=CvM0Y1/EHpRCZgX7fdmgLfCe1kAdu0RUtGJGUqxCIxcU9q6YWD+ShdjI7Sjm2ug7+CUmIF7OKDhBCAJo7mQMGZWCNe50jGrnGgFpctOiS0tStk40tiTCIEdiQ9Bixv6jtEpcQatXYxhD6pD3qZtIeIYLZV14lsd3tlNxY8Jli7o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=NR1OwQ2R; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Vsd6GCfB; arc=none smtp.client-ip=64.147.123.155
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="NR1OwQ2R";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Vsd6GCfB"
+Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
+	by mailfhigh.west.internal (Postfix) with ESMTP id 6F3791800099;
+	Tue, 30 Jan 2024 01:10:13 -0500 (EST)
+Received: from mailfrontend1 ([10.202.2.162])
+  by compute4.internal (MEProxy); Tue, 30 Jan 2024 01:10:13 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1706595012; x=1706681412; bh=+Hg2jptizA
+	XMTl/B9+zxMnsXiokGqj4hs+Q0FQfO9r4=; b=NR1OwQ2RM9YlLy6QHY7TPp5gW0
+	oI+/wpgQsju/4ccnxTp8ltgcesKqlMf8DPzKKhatjDaAQdx0orRSRYmBFZaozqAY
+	A05uAbfCWMaVSwmtIu/cUdEq+LflcfPxKfqLal5MlhzLTsqspWqyUDdvtaH7xAqp
+	vSgsN72PVbxHbVkdGb8VG4KqG9ivhZJGHYD8belfEnnnkgTFIg3fKUFRs2jl+n26
+	fi+bREhZHPBaIAzd4x7jFXOoM/Ii0jjVw7Lr01Rk/aiRTmbTvXBqBXnxSJd4PMnb
+	tCDxdp4rXfZQygYuALvAQe40AYDQbLoN1CU2fg6grSBT+Rhh9j/vV5ETa56A==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm3; t=1706595012; x=1706681412; bh=+Hg2jptizAXMTl/B9+zxMnsXiokG
+	qj4hs+Q0FQfO9r4=; b=Vsd6GCfBuqTiJAqE0WyO5YrA9oBAI+B6PJ3l3DJuXm1e
+	0Zs628JWIs+Ip9MBF8i24qq44qNWGrFu06aQ6CO3YGvb0z+QJWHOy+TwBy/kU5UA
+	ZgovUcDY3gB1A9enZCcmEyQ1/i/JnDu/gJUpWNBqTbnTDzdinjdmPc4Gh/JE9ApL
+	VSo4asfdL0HRT2nFCMzit88ArE1Ac9zhkPboyAzh0D3wW6kHZzPkBZBZjEx80efO
+	i6WDo5ryNPEo/5Pbr+GOfiCFuZ1bX+Ikm4T+9qsz9RLAHvnB874u21X339zPu0wX
+	hFeKwBxhrSMYq6Z3xEF8bdVLT85JKgLwnNCCxnaKHQ==
+X-ME-Sender: <xms:xJK4ZS-WW057LUcGUlmyJmvLAQVMKC84VodQRMC_9kCdO9Nxfht2nA>
+    <xme:xJK4ZStINyN5FCmfYrvPzHBMKAUsTDqdKerNvOYPv4fGr8o1v4JAlabYWDF8EaU5t
+    l113Zk-Z8tNol8w_A>
+X-ME-Received: <xmr:xJK4ZYC0ZHLST-6YPKQlaNbH0QbzdG8AT45_UIMDJs9EY-Gr-8yJrXFUpPh_9Xcg7eUZASOM-joShqcruucWIm4y_6qK9GcOnP_PFxM-zxrgQ5c>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrfedthedgleduucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvvefukfhfgggtuggjsehgtd
+    orredttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshes
+    phhkshdrihhmqeenucggtffrrghtthgvrhhnpeehfefhuedtvedtfeeiteeugefgfeelge
+    elveehffeukeelfefhieekteevudfhffenucevlhhushhtvghrufhiiigvpedtnecurfgr
+    rhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhm
+X-ME-Proxy: <xmx:xJK4ZadG79kE950yFeCnrEjcIEUKnzVm3QdmQe8LEu6-QcZNvuVfwg>
+    <xmx:xJK4ZXPjkvSReSXdLQ_u5TpnbNM5-MmlI6Z20Eo0VFIZ7yZXBRbv-g>
+    <xmx:xJK4ZUnGzgMPD_XsnAcjrRAl3cHV-LbZ6qoLMgWirfFJfrXgK6yh-Q>
+    <xmx:xJK4ZQbMnctcqTiSFnQpSsumc3CGcMAncjGfHi5BWdjiCx8iU2kBwsKpSW8>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 30 Jan 2024 01:10:11 -0500 (EST)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id 97f91920 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 30 Jan 2024 06:06:53 +0000 (UTC)
+Date: Tue, 30 Jan 2024 07:10:08 +0100
+From: Patrick Steinhardt <ps@pks.im>
 To: Junio C Hamano <gitster@pobox.com>
-Cc: Wilfred Hughes <me@wilfred.me.uk>, git@vger.kernel.org
-Subject: Re: [PATCH] diff: handle NULL meta-info when spawning external diff
-Message-ID: <20240130060658.GD166761@coredump.intra.peff.net>
-References: <CAFXAjY7XcL1APhLRXU8TO96z=f7957f2ieK56dHVsXUay55vpg@mail.gmail.com>
- <20240129015708.GA1762343@coredump.intra.peff.net>
- <xmqqede0htp2.fsf@gitster.g>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 0/3] Comment style fixes
+Message-ID: <ZbiSwAbRaxXXfLMk@tanuki>
+References: <20240129202839.2234084-1-gitster@pobox.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="Kbbx7L1IEHwZ7S/i"
 Content-Disposition: inline
-In-Reply-To: <xmqqede0htp2.fsf@gitster.g>
+In-Reply-To: <20240129202839.2234084-1-gitster@pobox.com>
 
-On Mon, Jan 29, 2024 at 10:37:29AM -0800, Junio C Hamano wrote:
 
-> Jeff King <peff@peff.net> writes:
-> 
-> >> $ git diff --no-index foo bar
-> >> zsh: segmentation fault (core dumped)  git diff --no-index foo bar
-> >
-> > Thanks for providing a simple reproduction recipe. There's a pretty
-> > straight-forward fix below, though it leaves open some question of
-> > whether there's another bug lurking with --no-index (but either way, I
-> > think we'd want this simple fix as a first step).
-> 
-> Yup, I agree with you that the "--no-index" mode violates the basic
-> design that "the other path" and "xfrm_msg" go hand-in-hand.  In its
-> two tree comparison mode "git diff --no-index A/ B/", it should be
-> able to behave sensibly, but in its two files comparison mode to
-> compare plain regular files 'foo' and 'bar', there is nothing it can
-> do reasonably, I am afraid.  You could say that the change is
-> renaming 'foo' to create 'bar', and feed consistent data that is
-> aligned with that rename to external diff, which might be slightly
-> more logical than showing a change to 'foo' that has no rename
-> involved (i.e. omitting "other name"), but neither is satisfying.
+--Kbbx7L1IEHwZ7S/i
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Yeah, I think the two-tree mode does behave correctly, and this is
-really just about the two-blob mode. I agree that one could think of it
-as a rename or not, depending on how much you want to read into the
-importance of the names (after all, you could compare a/foo and b/foo,
-which is sort of a moral equivalent of the usual two-tree case).
+On Mon, Jan 29, 2024 at 12:28:36PM -0800, Junio C Hamano wrote:
+> Among comments in the traditional /* single liner */ ones, our
+> reviews seem to have missed a few // comments.  While they are not
+> illegal per-se, they look out of place mixed with the /* ... */
+> style comments, which is the prevailing style used in this project.
+>=20
+> Fix those small number of style violations in our own code; files
+> with borrowed code that have // comments as the prevalent style are
+> left untouched.
 
-The current behavior is somewhere in between, though. You get an "other"
-name passed to the external diff, but the metainfo argument makes no
-mention of a rename (it's either blank for an exact rename, or may
-contain an "index" line if there was a content change).
+These changes look obviously good to me, thanks!
 
-I'm not sure anybody really cares that much either way, though. It's
-external diff, which I suspect hardly anybody uses, and those extra
-fields aren't even documented in the first place.
+Patrick
 
--Peff
+--Kbbx7L1IEHwZ7S/i
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmW4kr8ACgkQVbJhu7ck
+PpRPRBAAj7Za7TgfTqvX6ITfW3276SyBmHcbCU8tsjJG//V5brVQN7XTjGGpY4rQ
+ePR61u3iJMOw1zlQPrH3R3X9bf5PwY6koQue83s5u4EuuT6j8RUy7Nzvt90I/GkB
+6uBlHeu3LiqRUnK4ao8v2MfByYBkJ3awEhk+xLUUAVkCf4E/m8AfWmDF06XKz/yy
+DDKJCBXgl3Ehs/JdCVgLy9gAC7pV94AwgSENJvsxMypLFIGpUVIdudVBfjW9imhN
+IbehBfCSV6ARE3flj3GqPj2YtxNumOIeZq51rXvOIyzOHB1+bxGr5vGulC1ZU6et
+LAkHw16NsCICZ4lgRuW3fQlCi178GFPn5Ti9Sb9PeAK41AZAYO5Mm7Q38hC51RBS
+VqpMUBoFqRZiD0KmnSUXR90TAWTTn/wpGk53j4YBLyytKGyOMyQbjq0GxNJGsgHc
+APKcueI1uCKtrmYLxmNW83hWDTS6NgU4po0Ef+K8vSMlG5zBKe6xQirIhU1Y2obn
+otsPRl58qMtAxp/F0q8n85yrZYvkojmbU2aTQwO2CHIR0WVAw3oz1/vT/f7gbs8J
+1R5nNiurRuUFvy5srYWd5h3kylD6DbPlEa3AMF5WxuYmQ0nBhBNux8plSzSq4GtH
+t2ssdZViKP6aTO0etVIcqwE7KfcOkLvH/tQB16gUSdgBrW1xP9s=
+=qYnB
+-----END PGP SIGNATURE-----
+
+--Kbbx7L1IEHwZ7S/i--
