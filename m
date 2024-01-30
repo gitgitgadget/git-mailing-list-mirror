@@ -1,53 +1,53 @@
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 618CC1272C2
-	for <git@vger.kernel.org>; Tue, 30 Jan 2024 16:29:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92655364D6
+	for <git@vger.kernel.org>; Tue, 30 Jan 2024 16:42:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706632181; cv=none; b=mh05hLMZR3mBlVFk9g/lo6EguB66f+m1tBx2ZzH9rUwQFEOkhJVnC9W2hOFtKoPACX/6qi5Cg2ioWn3QSmqWFq2gYNmnBNebfy3u87PP2/bGsq0xlj3DwrLH8jYs2VFW2N/Fi5YP4IW8iu95MFdphPAvltbM+Toy6BfUM41DHKA=
+	t=1706632951; cv=none; b=OYXpdFDLhFdHcX+p+qVaZJcKifjuJGDJtSJp8auYhr6vxPoP1gAORBWg4yb36cUh5qXyUz6JOpncKf5OcU+mMXvNszB/qX3NcJaU8U36S2tV7xrBpQ4MWSSxLiAxpHwjefl/5/VP7kiaehJQ9gJ+v1MAMKKPOd4ncQbb6Cv/tQ0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706632181; c=relaxed/simple;
-	bh=uR/2mbD4D/j62TAMA5JJSs/ob0n2sFVzo2xbNqks54o=;
+	s=arc-20240116; t=1706632951; c=relaxed/simple;
+	bh=kExNIhrSAvaB/DKYZN+X9BdoJEDjJF0L/kfzeIOsDxI=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=F4pLSYDi4IFc+ZCmLL6e6YIbUtvNaPQcT73et9Q/Di7xtVnV0yYzJ9TVtKCp+cPmERLQ6ue9SxsjDaIlfAY+NXCTTJ6Rx0LbrivyqI8vAd7bwAvFQ2wv9jW9fp1MfnV1HCEo8nqXKbedfaZhBWowDaeRR/vlPsULa176f4Mpexw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=ZI/sl0UF; arc=none smtp.client-ip=173.228.157.53
+	 MIME-Version:Content-Type; b=cYJsOUwY+cJnN//s3UZN4cMuuVXHtZC2yd6FDdtYgHLeWdf94/TLRP+r7eeXi0RuFLbTleUiVrhDjQWOoYgIX0pzdWkzB3hYwAH5XXwW7kc8tKH6KRg5iCPgSnADR8Pul4wXhJ6wDAMUUMRaKVpZxIKaSH9lPmNoNm7CNRwL7gM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=ULsLTALm; arc=none smtp.client-ip=64.147.108.70
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="ZI/sl0UF"
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id AD80A28793;
-	Tue, 30 Jan 2024 11:29:39 -0500 (EST)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="ULsLTALm"
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 443201E02AE;
+	Tue, 30 Jan 2024 11:42:28 -0500 (EST)
 	(envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=uR/2mbD4D/j62TAMA5JJSs/ob0n2sFVzo2xbNq
-	ks54o=; b=ZI/sl0UF0AHid+J5XQRvgLN+nFVNB9LziF7cgKvCgqBLLK+fBGzVhd
-	J1uxCybJlAXeMbrL8j+0sFFwU0+dIxiO4PfrH1DuGU8IZxwclyWauO7VT3nwFc1k
-	qv8cBLn2ZBSDpPygqSI8MTzeK+48dYsfqknWZtyz19R4i8/B/7DJk=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id A709D28791;
-	Tue, 30 Jan 2024 11:29:39 -0500 (EST)
+	:content-type; s=sasl; bh=kExNIhrSAvaB/DKYZN+X9BdoJEDjJF0L/kfzeI
+	OsDxI=; b=ULsLTALmYR9z3a5TazdETJk196GQgawMjaDO/dVR/SNTVzDcBqBtr5
+	f45o5Y/2amT7ELwdQsfhZ8S5ATmPG2QQ4Ns6pid1mseHRG2EAXSnLN0LdJmIU/uT
+	+UfKzEBXvqjA0nvJUirms4qSsV1uoKw+gaG4r8kN6ph3kOKI46Tac=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 3A8CB1E02AD;
+	Tue, 30 Jan 2024 11:42:28 -0500 (EST)
 	(envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.125.200.93])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id C2CEB28790;
-	Tue, 30 Jan 2024 11:29:34 -0500 (EST)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 89E941E02AC;
+	Tue, 30 Jan 2024 11:42:27 -0500 (EST)
 	(envelope-from junio@pobox.com)
 From: Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
-Cc: Wilfred Hughes <me@wilfred.me.uk>,  git@vger.kernel.org
-Subject: Re: [PATCH] diff: handle NULL meta-info when spawning external diff
-In-Reply-To: <20240130060658.GD166761@coredump.intra.peff.net> (Jeff King's
-	message of "Tue, 30 Jan 2024 01:06:58 -0500")
-References: <CAFXAjY7XcL1APhLRXU8TO96z=f7957f2ieK56dHVsXUay55vpg@mail.gmail.com>
-	<20240129015708.GA1762343@coredump.intra.peff.net>
-	<xmqqede0htp2.fsf@gitster.g>
-	<20240130060658.GD166761@coredump.intra.peff.net>
-Date: Tue, 30 Jan 2024 08:29:33 -0800
-Message-ID: <xmqqa5omdbte.fsf@gitster.g>
+To: "Ghanshyam Thakkar" <shyamthakkar001@gmail.com>
+Cc: "Patrick Steinhardt" <ps@pks.im>,  <git@vger.kernel.org>
+Subject: Re: [RFC PATCH 1/2] add-patch: compare object id instead of literal
+ string
+In-Reply-To: <CYRU26F9KCDF.2XI7VRT7N04OC@gmail.com> (Ghanshyam Thakkar's
+	message of "Tue, 30 Jan 2024 12:09:15 +0530")
+References: <20240128181202.986753-2-shyamthakkar001@gmail.com>
+	<20240128181202.986753-3-shyamthakkar001@gmail.com>
+	<ZbeQmv_KcChtrPqJ@tanuki> <CYRU26F9KCDF.2XI7VRT7N04OC@gmail.com>
+Date: Tue, 30 Jan 2024 08:42:26 -0800
+Message-ID: <xmqqsf2ebwnh.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -57,39 +57,38 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 X-Pobox-Relay-ID:
- C0ECD27A-BF8C-11EE-821C-A19503B9AAD1-77302942!pb-smtp21.pobox.com
+ 8D8822FC-BF8E-11EE-9C6C-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
 
-Jeff King <peff@peff.net> writes:
+"Ghanshyam Thakkar" <shyamthakkar001@gmail.com> writes:
 
-> The current behavior is somewhere in between, though. You get an "other"
-> name passed to the external diff, but the metainfo argument makes no
-> mention of a rename (it's either blank for an exact rename, or may
-> contain an "index" line if there was a content change).
->
-> I'm not sure anybody really cares that much either way, though. It's
-> external diff, which I suspect hardly anybody uses, and those extra
-> fields aren't even documented in the first place.
+> Yeah, my original motive was to support '@' as a shorthand for HEAD.
+> But, since '@' can also be used as branch name, I thought of comparing
+> object ids instead of string comparison in accordance with the
+> NEEDSWORK comment. However, as Junio pointed out, treating a branch
+> name revision that points to same commit as HEAD, as HEAD would just
+> cause confusion.
 
-Oh, we probably should fix the documentation eventually, then.
+FWIW, if we are not doing so in our documentation already, we may
+want to discourage use of "refs/heads/@", given that "@" is used as
+a synonym for "HEAD" in some[*] contexts, specifying the HEAD
+(i.e. "work on the branch that is currently checked out, or in the
+detached state") and specifying the concrete name of a branch
+(i.e. "work on this branch") mean totally different things and may
+result in (what may appear to the user as a) confusing behaviour.
 
-But I agree that in this case, whatever stops the segfault would be
-good enough.
+Granted, the user who names their branch "@" is only hurting
+themselves and it falls into the "Doctor, it hurts when I do
+this. Then don't do that!" category.  
 
-I am surprised to learn that this 8th hidden parameter dates back to
-427dcb4b ([PATCH] Diff overhaul, adding half of copy detection.,
-2005-05-21), and it is more surprising that even before it happened,
-the external diff interface with 7 parameters was already
-documented, which happened with 03ea2802 ([PATCH 2/2] core-git
-documentation update, 2005-05-08).  Before the addition of the copy
-detection, the presence of the "other" was how you learned if we saw
-a rename (because there was no copy, the only reason "other" is
-there was due to a rename).  With copy detection added, extra bits
-of information needed to be passed and we started passing the
-xfrm_msg as well through the interface.  At least, by dumping it to
-the end-user, an external diff driver could help the end-user tell
-if that "other" came from a rename or from a copy, even if it did
-not understand it itself.
+But the documentation is where we tell them "Then don't do that!"
+and we should know better how it hurts when they do so than those
+who learn from the documentation, so ...
 
-And of course, after merely 6 weeks since the inception, Git did not
-have the "--no-index" mode (we did not even have a unified "git
-diff" frontend), so this was never a problem back then.
+
+[Footnote]
+
+ * Even use of "@" as a synonym for "HEAD" may want to be
+   discouraged, as there are still unnecessary differences between
+   them that are not worth our engineering resource to fix.  Do
+   people know what "git checkout HEAD" and "git checkout @" do, for
+   example?
