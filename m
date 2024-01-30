@@ -1,71 +1,77 @@
-Received: from mail-qv1-f45.google.com (mail-qv1-f45.google.com [209.85.219.45])
+Received: from mail-pl1-f178.google.com (mail-pl1-f178.google.com [209.85.214.178])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AEDC54656
-	for <git@vger.kernel.org>; Mon, 29 Jan 2024 23:58:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E54D3D68
+	for <git@vger.kernel.org>; Tue, 30 Jan 2024 00:24:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706572726; cv=none; b=DGOvmgTk8vteswH/sufEAS/icqRyKbYIdqzOiN3gOL29Eexf3tXeK4bcdXGLqgk6OXlM5ZI3ySqbWEoZbSM2w6V/CnbY/pPJRVDo1ttiLCNFFVOfn3SDfHge2OQtKd3iEDsVtlScBpAVSI9+RUjLkJhMGZJzQdBMNB+CPWR4Zt4=
+	t=1706574289; cv=none; b=Q5/AyNMTqRyp4t1r7OeMTG07Au5Rzy4dB1BAfiTdvj0HPHfglXyyNY0ribN2IuHpddrU32VoahZhdE9m9Y/IJCeaX9zEgpFc/Sr7A7FVUGYoUWAFpMwLIXYbj9qZJ/IS2PyrqWNr9dr3PWxYW9tbUMcuj1f666+cQkSH9fNUdVI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706572726; c=relaxed/simple;
-	bh=fqdrcxS1yc8norHRtORpvJn4+OPAvjIbtDzKZVsnMMU=;
+	s=arc-20240116; t=1706574289; c=relaxed/simple;
+	bh=U4kLgDbYobradV1k8QQnfHNloO4Ej5q+1YVddpGVJ9A=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=CyK0VGCxnKgoIoV0UGn178Rff5urMEqBA1qSnTie5YT7dmpK/iUHO1U0o8YGYLmvKjogjg5wXEo4KtbMCyAMNJDSa6HGuQe9avG6oej+sNjLuxilref+yHW6FCv323uWasBGRgTpJfHPG0pLg2Zvasw2NoVfQyIFwJtrAuV+16c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=none smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=spYgVwlk; arc=none smtp.client-ip=209.85.219.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ttaylorr.com
+	 Content-Type:Content-Disposition:In-Reply-To; b=L/fyqOM0F07Emi5skW5BLJTEmakVxsZcaq/9fdQzVqACPPICPQ2XqPAPNvAccs4sUkbzd8/1rJAe3+wGH/5NpdM3uqd3gZN+bwqlTeToYjq4g/Kp6OQxNZMTJxiGu7UjsezVj4ACsSqEtUmMkslk+4zkanrX9jMEaAVVuFYJz30=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=gE8+QQ6v; arc=none smtp.client-ip=209.85.214.178
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="spYgVwlk"
-Received: by mail-qv1-f45.google.com with SMTP id 6a1803df08f44-6818a9fe380so26166756d6.2
-        for <git@vger.kernel.org>; Mon, 29 Jan 2024 15:58:44 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="gE8+QQ6v"
+Received: by mail-pl1-f178.google.com with SMTP id d9443c01a7336-1d748d43186so16702395ad.0
+        for <git@vger.kernel.org>; Mon, 29 Jan 2024 16:24:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1706572723; x=1707177523; darn=vger.kernel.org;
+        d=google.com; s=20230601; t=1706574287; x=1707179087; darn=vger.kernel.org;
         h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=F/E6kW0WuIj3ODp1XnQ2lYO5zLc5L7Fy+ZMQq/TBzbU=;
-        b=spYgVwlk9msiOAyAFLo+9ecFMBe56IZOSZle7j6IopRqZ9qUIhOfecpEK+7eQCgi+X
-         nwxVcR3LbSTvR6rxK0uUwsm+jkAZBLvs6ZS/84W698vDRXSuJFvZEFxUrB9uuG9eFylS
-         Bq00pwxMGvgnWV7IRfDTZM49e0E9wtdCiDnmZyh3vn6U9H3znShiABcYaxWpHpQJv+6T
-         45OV/tIjsAlK4opH655QWpBfrAkVDcHFqdFUnH3bssUXOMqYdJ9R+QXdWdDR3h96yTc5
-         u4q71jm51jDzLtTonO5CzhvGqp0DAtr0zM4XvvcvzQz48xbNYjjBbAOVdexb+HtOyEJO
-         93dw==
+         :mime-version:references:mail-followup-to:message-id:subject:cc:to
+         :from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=NrXfj9vGPsFkLTbKBifNAHPByTa4tclq0kAZqQeC4m4=;
+        b=gE8+QQ6vYYK1VykmBmbeFbvPoK3yMpLmWztlBlyvEav/SLso5W4gs77sDKkLqr/KZC
+         p/OMtSxbPBNHbFiR8ozQGhZlnqQvsULmPaBi7H6zITuY3i3UgJVdJnO4bohxjmMB50aV
+         BsKOqeGxTN0JMhKax5gNMuU9Mbdetz87kx9z6TzRr3wUEvNoXgK+Wcif7Wi8arIOCPTD
+         0qWZ5eE8HlUUX3W6fjv9A9h80n3kPablhxByi55yhCWteRc0DYuOlvqs/YkmmVRXGPf8
+         N6x/Pqep+mg5WkPnAwMbyCPLR7aNPikaNVVOrxbMwnguzPfJdsE6Qa1rbe8CR79ZUGgw
+         EuNQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1706572723; x=1707177523;
+        d=1e100.net; s=20230601; t=1706574287; x=1707179087;
         h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=F/E6kW0WuIj3ODp1XnQ2lYO5zLc5L7Fy+ZMQq/TBzbU=;
-        b=GNrrZKnOTqg0Y5wXNxX9nG32CGAGeI1kJId2GSUT/FG0Tm7U1iljr9MHZRYM3TyM0e
-         V2El7JkUUcEJptmsBwWDv86XO+jMBwPlgyqkw1WsNM8yas5uJfJO/vjGAibL5FKalxd0
-         S5DywT/eZ8wOZBXusAjAPiFjvm6l51Foh52hIJTJd1r9/kJtxQNigmsNLP9vLUsfG/37
-         USyuo94iTOh55BP9GlyVz559kxEiEM6BGuUArTGyQWSCSb/968fMdoaG1b2nN7Fve9TD
-         OUmufY2lthTJfbM69DHI7D23omImvPhX8t9Ru0lflGujfu32p4L2v6+bT8RaY5xCA2YA
-         HRaw==
-X-Gm-Message-State: AOJu0YzT0MYgU0AkzpR2h/ciK7RzC/Fkn4AIutHzu44FvBpPKEDlhAee
-	j4V1PJ3Pr2h8J3yEJ0ZI5wymc0J5FGInjsAwxrPXWP4pxP0/ss/N8WilS8AHaHI=
-X-Google-Smtp-Source: AGHT+IFgarSvu2pETVV1R2/1CoPQc5ZPrpfAkjzDe3MYmS1Zub+tKjr3M7ux99OZPQC9cA9BQcC0uA==
-X-Received: by 2002:a05:6214:4104:b0:68c:5f08:9c46 with SMTP id kc4-20020a056214410400b0068c5f089c46mr317475qvb.110.1706572723358;
-        Mon, 29 Jan 2024 15:58:43 -0800 (PST)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id ph15-20020a0562144a4f00b0068c50dec857sm1203339qvb.128.2024.01.29.15.58.43
+         :mime-version:references:mail-followup-to:message-id:subject:cc:to
+         :from:date:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=NrXfj9vGPsFkLTbKBifNAHPByTa4tclq0kAZqQeC4m4=;
+        b=AgFdEFSa+fq0hhpfiDKKIqSS+zpA7PyRwIHyCO/mcyJn/axSFHJAqcJcG4B/fKg78W
+         KT5e9i1UdXLBTHBlCCzBOmu+76MnXOqm7QUlcoSM1364cHFa8PUxWeAN+A/g7VOdGtOC
+         mfxlkkVUlN0b/e3WxncvY9cClYLn/FNB7mnKJTVFyt16Tzw1oRP9Il5/dBWquSXVgxti
+         y+TL4mCR+SWLf2qgOjAFssccFU4RBMlJcVxx9HIWfHw0UczdHnljU/Q2fwwzg39XIp20
+         pH7IaQRCv75K9sswuJylsQqfQbN/5rpDZjgPhsZwsXPGLZdMZv3Vts5jh7nt0QmxDCXq
+         RJXA==
+X-Gm-Message-State: AOJu0Yx0JmN3ZqfrgQZL0BVGjroiyUi2iRG65K7DPGW/2qndluQYU3HT
+	qYBjdqlben0/7o9G0HYE1RygxIT9K6KpLCdwzt7jBcOhJonEtF7nregEAhkG0Q==
+X-Google-Smtp-Source: AGHT+IFSpMRX0YXMR9Fxn56KjarbHw5ZFCyzZua6JN78zlU6Z36nz/HcASJWp0xp49hr/gPURoLaCQ==
+X-Received: by 2002:a17:903:2281:b0:1d7:617f:6dea with SMTP id b1-20020a170903228100b001d7617f6deamr4339164plh.59.1706574287195;
+        Mon, 29 Jan 2024 16:24:47 -0800 (PST)
+Received: from google.com ([2620:15c:2d3:204:4527:c1dd:9b37:d3a0])
+        by smtp.gmail.com with ESMTPSA id l17-20020a170902eb1100b001d8e4de7a44sm2272089plb.127.2024.01.29.16.24.46
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 29 Jan 2024 15:58:43 -0800 (PST)
-Date: Mon, 29 Jan 2024 18:58:42 -0500
-From: Taylor Blau <me@ttaylorr.com>
-To: SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, Elijah Newren <newren@gmail.com>,
-	"Eric W. Biederman" <ebiederm@gmail.com>, Jeff King <peff@peff.net>,
-	Patrick Steinhardt <ps@pks.im>,
-	Jonathan Tan <jonathantanmy@google.com>
-Subject: Re: [PATCH v5 09/17] repo-settings: introduce
- commitgraph.changedPathsVersion
-Message-ID: <Zbg7so2b4puSEWNK@nand.local>
-References: <cover.1697653929.git.me@ttaylorr.com>
- <cover.1705442923.git.me@ttaylorr.com>
- <a77dcc99b4eb0a19dc6c09a40a84785413502126.1705442923.git.me@ttaylorr.com>
- <20240129212614.GB9612@szeder.dev>
+        Mon, 29 Jan 2024 16:24:46 -0800 (PST)
+Date: Mon, 29 Jan 2024 16:24:42 -0800
+From: Josh Steadmon <steadmon@google.com>
+To: Linus Arver via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, Christian Couder <chriscool@tuxfamily.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Emily Shaffer <nasamuffin@google.com>,
+	"Randall S. Becker" <rsbecker@nexbridge.com>,
+	Linus Arver <linusa@google.com>
+Subject: Re: [PATCH v2 03/10] trailer: unify trailer formatting machinery
+Message-ID: <ZbhByped3D0-NBAs@google.com>
+Mail-Followup-To: Josh Steadmon <steadmon@google.com>,
+	Linus Arver via GitGitGadget <gitgitgadget@gmail.com>,
+	git@vger.kernel.org, Christian Couder <chriscool@tuxfamily.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Emily Shaffer <nasamuffin@google.com>,
+	"Randall S. Becker" <rsbecker@nexbridge.com>,
+	Linus Arver <linusa@google.com>
+References: <pull.1632.git.1704869487.gitgitgadget@gmail.com>
+ <pull.1632.v2.git.1706308737.gitgitgadget@gmail.com>
+ <9b7747d550e87457195c40a49347bc749a7290d0.1706308737.git.gitgitgadget@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -75,28 +81,42 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20240129212614.GB9612@szeder.dev>
+In-Reply-To: <9b7747d550e87457195c40a49347bc749a7290d0.1706308737.git.gitgitgadget@gmail.com>
 
-On Mon, Jan 29, 2024 at 10:26:14PM +0100, SZEDER Gábor wrote:
-> At this point in the series this test fails with:
->
->   + test_cmp expect.err err
->   + test 2 -ne 2
->   + eval diff -u "$@"
->   + diff -u expect.err err
->   --- expect.err  2024-01-29 21:02:57.927462620 +0000
->   +++ err 2024-01-29 21:02:57.923462642 +0000
->   @@ -1 +0,0 @@
->   -warning: disabling Bloom filters for commit-graph layer 'e338a7a1b4cfa5f6bcd31aea3e027df67d06442a' due to incompatible settings
->   error: last command exited with $?=1
+On 2024.01.26 22:38, Linus Arver via GitGitGadget wrote:
+> From: Linus Arver <linusa@google.com>
+> 
+> Currently have two functions for formatting trailers exposed in
+> trailer.h:
+> 
+>     void format_trailers(FILE *outfile, struct list_head *head,
+>                         const struct process_trailer_options *opts);
+> 
+>     void format_trailers_from_commit(struct strbuf *out, const char *msg,
+>                                     const struct process_trailer_options *opts);
+> 
+> and previously these functions, although similar enough (even taking the
+> same process_trailer_options struct pointer), did not build on each
+> other.
+> 
+> Make format_trailers_from_commit() rely on format_trailers(). Teach
+> format_trailers() to process trailers with the additional
+> process_trailer_options fields like opts->key_only which is only used by
+> format_trailers_from_commit() and not builtin/interpret-trailers.c.
+> While we're at it, reorder parameters to put the trailer processing
+> options first, and the out parameter (strbuf we write into) at the end.
+> 
+> This unification will allow us to delete the format_trailer_info() and
+> print_tok_val() functions in the next patch. They are not deleted here
+> in order to keep the diff small.
 
-Very good catch, thanks, I'm not sure how this one slipped through.
+Unfortunately this breaks the build:
 
-The fix should be mostly trivial, but I'll have to reroll the series
-since it has some minor fallout outside of just this patch.
+trailer.c:1145:13: error: ‘format_trailer_info’ defined but not used [-Werror=unused-function]
 
-Junio, please hold off on merging this to 'next' until I've had a chance
-to send out a new round.
+and
 
-Thanks,
-Taylor
+trailer.c:147:13: error: ‘print_tok_val’ defined but not used [-Werror=unused-function]
+
+While separating this patch from the deletion does make it easier to
+review, it may make bisection more difficult.
