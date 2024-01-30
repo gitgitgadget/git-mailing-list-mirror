@@ -1,145 +1,183 @@
-Received: from wout1-smtp.messagingengine.com (wout1-smtp.messagingengine.com [64.147.123.24])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f173.google.com (mail-pf1-f173.google.com [209.85.210.173])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81D795DF1E
-	for <git@vger.kernel.org>; Tue, 30 Jan 2024 09:09:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.24
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A9D445BE7
+	for <git@vger.kernel.org>; Tue, 30 Jan 2024 12:37:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706605744; cv=none; b=OTV93uPH9mvuMofOZ/ceMLaUM1z2TeKBsNFdXqLJbvQR1cc+4n0M8zOWzE+PaxTBOXa/Im3kamNzE41mpYn0Y1W2SLheqp2gzwChBs6lLC971LTmmbzKoxfoqjBCx9MoN6whqrStZrOqnQZWEtwntYm++PeD05ZcpVBIGrGNAr0=
+	t=1706618261; cv=none; b=NrgB93/IW/0dVdUD8ltfOW9U8W6bhIPm4Psou6LVcvAPVG7ZKsd0ZVX/h8pzGVmnd3MOVNMXsJReNI+15ofzBWMa2BqYJmXRzgbk7uXwH5dZF2jptQZUhc503AsJvbC56RE3Eec/3o/UWoOOXSjrcobgA5uwuih/euMSsJ4X8gI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706605744; c=relaxed/simple;
-	bh=h/pw1/l5pWreWytYTuj1Ro1yvyza59SqtXgCeaRk7XQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=cxtPE1xxhfNjzMUKK4C2E/2CvCnW0YD7QycreZw1y6x7SKCKuvEjU54/p4Wgxl+ZMpp9kWTwFAAT7gw4svRcsFR31vGzfx+4dzsahaRyFT5dgA1mxSALDMyUToWCK46LcPexXrpbqanfMZ9xAtC+pgBspYcvdnE+EMgI6vo9FVg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=FMDrAXOs; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=RSDY12/h; arc=none smtp.client-ip=64.147.123.24
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1706618261; c=relaxed/simple;
+	bh=imjdykfP7i73arSTHHMM5vb7zmI3UPeddCVmxkMf38I=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=QhlzJI7Lu5U63IqEgbue6z0CldyFakkLtnEwz/BA0WwphZ/xsR4kVfZcEcWbW17gev8J46/5XgVxhwnQ8jTVYY8gXk1+HM23dGRYS/y5X5y+X3O8khf+Y8Xz08gqDhAjYyD7jZPmw5itgB3prPVw4xCq/Gf1eZveE+2f7vxAR3M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ibiWuexr; arc=none smtp.client-ip=209.85.210.173
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="FMDrAXOs";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="RSDY12/h"
-Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
-	by mailout.west.internal (Postfix) with ESMTP id E390B3200AAA;
-	Tue, 30 Jan 2024 04:08:59 -0500 (EST)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute3.internal (MEProxy); Tue, 30 Jan 2024 04:09:00 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1706605739; x=1706692139; bh=h/pw1/l5pW
-	reWytYTuj1Ro1yvyza59SqtXgCeaRk7XQ=; b=FMDrAXOsTx7PGCEP8cuorgbUGl
-	SwhCPZHykCWwrPDbLJpA65OBVphvqgAUjBHCtASII7o9HjFyHM6RIg//1+C8HOVS
-	EzYaTN9XnxFybXcovqQgMbADGFRvSFYRJIyk5Sn8AS7Pyt9Dg6WuRYyiRFswGHlE
-	/FfHKBSmNYbDUHxPLaA4dqs14UfGaGYmGxUr+mAjjTTyN2rhg1+85xXcxZD2dLAv
-	zOEpHdQOCPzuQs6CyKTGectRmzlPI1m8vOYDmCUQWDdrTWziQ1La6TizUoo7haII
-	Q6zNU26y7L4BZW0FGRBv/7qcjyphWUOnlzGo0LAHZiO6nXLb6D3/CzDE5C4A==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1706605739; x=1706692139; bh=h/pw1/l5pWreWytYTuj1Ro1yvyza
-	59SqtXgCeaRk7XQ=; b=RSDY12/hQhVmFua2z9uGiSlHZVBbSbzr/xsSyqkvElJ4
-	YXEeKnm5GhDeaW6JPFT/P+h9j6Ea2WYSGl2ehvO5/dXvOY+V9RJ2zbdlq9G9dPFT
-	iVUhtecZJ+wZ9KYwkpvDpYXdxT0xWg1p203B3cbfFMkM7jP4ZXZOMhk6On6oEBmi
-	e89iT618t70q6ng1eqkhqjRzcKkslYEutDEcRaXiH5KxRZuecg8rVoDqdA3CAZbp
-	Lqxl9Ooj2sqFP22rPbVmP4mU3AFIcGrAiP5IxZ0s/UnbGKmOZZPB4x3dCmpomj+e
-	xkAOyKB3OdW5ABm11yeH7mI7RJXtkr0MGuPGyDv3KQ==
-X-ME-Sender: <xms:q7y4ZcwwWoftX3aIquGcl3EZVczhQFcnE79GRcgAwjxcIVW4Rm21uw>
-    <xme:q7y4ZQQrRNUT35pW3fYxEplLu7SpwT6UZW88gtFvDKfJN4pPiI_PMLJP6vCj_1rAG
-    r0OPMR7ZpP1jahWFA>
-X-ME-Received: <xmr:q7y4ZeVAvCP6NSGRp3XtXtHB4aADiRTG0USWBeaPO4YIzfKu93AFHD6geeSb3ZAPE23abP3ivSy8U1igc8a66LUjcCRBbImFwcjm7Q1UJFTUIa4>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrfedtiecutefuodetggdotefrodftvfcurf
-    hrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenogfuuh
-    hsphgvtghtffhomhgrihhnucdlgeelmdenucfjughrpeffhffvvefukfhfgggtuggjsehg
-    tderredttdejnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpsh
-    esphhkshdrihhmqeenucggtffrrghtthgvrhhnpedtfeelvdekleeufeevffejieejfeeh
-    ieejkeeftdeljefhteevudfgfeejgfejheenucffohhmrghinhepghhithhhuhgsrdhioh
-    enucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshes
-    phhkshdrihhm
-X-ME-Proxy: <xmx:q7y4ZajLdAfj76MopZ9PTnY0REDJTQAqKXJmBG73faTzR354Mhxm-Q>
-    <xmx:q7y4ZeBq18bylTFWRb0QZKaOFOXkHjAn9VOHErsgHL2pkl-fVOuP6Q>
-    <xmx:q7y4ZbJdJHuKNrTpOW_vRmayv0kmd9JsN2FaXwtdLpTpRXN5YnMXSA>
-    <xmx:q7y4ZV7sKplibmfzBw6riX4w2GKGvnBzTdI0i3wIWtvyLtGv91YO-g>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 30 Jan 2024 04:08:57 -0500 (EST)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 0f510941 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 30 Jan 2024 09:05:37 +0000 (UTC)
-Date: Tue, 30 Jan 2024 10:08:53 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: Christian Couder <christian.couder@gmail.com>
-Cc: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
-	git <git@vger.kernel.org>, Taylor Blau <me@ttaylorr.com>,
-	Junio C Hamano <gitster@pobox.com>, Victoria Dye <vdye@github.com>
-Subject: Re: Git in GSoC 2024
-Message-ID: <Zbi8pfvGpYrlZXAu@tanuki>
-References: <1de82b27-116a-450e-98c0-52eb65a8f608@gmail.com>
- <CAP8UFD1VAvnkM6afZvtpdXhA4csDBDwMnF9yUzSx_ut-Ypf+eA@mail.gmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ibiWuexr"
+Received: by mail-pf1-f173.google.com with SMTP id d2e1a72fcca58-6ddcfbc5a5fso3081874b3a.2
+        for <git@vger.kernel.org>; Tue, 30 Jan 2024 04:37:39 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1706618259; x=1707223059; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=kslP/Y24xRGOv7TfLx9ORN/aeYkIeKgpRf0sK8PLxtA=;
+        b=ibiWuexrj2kT/N8K72sMJCqScA5/cBpNqQkNhAh2+xEHalf9IKzdc36j4hDP70s6TR
+         GDwWlIs6FinhMYBothOluaO5DFY1BVmMsNJgBJiz/pG+4mMJXiJOHc+QK1sgLupExmUQ
+         TQjkLq0P64tmBRI49+lOrytcDuLBl7LI5/VHe/KUOpz1zCnByXDVsmhAv2DugZQEMs5o
+         gxEVbUJyzWnSreAVksSeQCNENBvqYSE8nPL0a7PhfpFXtexT3wwc7KM87isdY/a9ry72
+         lFdg2ntDNFaVbXBNUe6J1UKnCfat1muktqNOm0XGWEaaE/uc6OycJZxT2+ACtoyXSK1u
+         NTyg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1706618259; x=1707223059;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=kslP/Y24xRGOv7TfLx9ORN/aeYkIeKgpRf0sK8PLxtA=;
+        b=OH836Fz7+hnE23izqiAQZUoxXSXZBCFcpoGwWrHxAyzaQ+syClL1FyAOZ6FO+zvXaS
+         588MH/tjHcOewhxpBTjkkjiowhS9D6zhRFl4bfRxZQQTXfXlgDNCjcjm+oZBkg3ndf1g
+         WREtI7UE9+HBc34hHTBiiBG8SPhNGGXixilGNvcG+IDuRlOOMB/Yr5btl0rCv7jF1lt3
+         MhYnHklTYpEjO5YZLo5funTTsVVzepYI9xgnhuQaCYVDXPVTvOUcpKW/wAAuc6BleB1o
+         aTLsbqL0/RK+ic3CMUHD4XgRAZEbpcBcMAuWmnDiNHdT2rsDQKAzge9gM55dXsdSW0BC
+         sMxg==
+X-Gm-Message-State: AOJu0Yz6vPoKIuijrV3JHnlqOGo/CRf8FuFrCa9BPwp+kt3BqbXXrCkS
+	FxzN20voau8intgn8SEX7NkyjDRIkkHGPUcgYtHxHdtY1sUNHlBgJCF7zU24uxu7PhxP3Prvnt2
+	nu2HvgH0XSl0p6kV7d+5EbPaxPcg=
+X-Google-Smtp-Source: AGHT+IESQQZibYilPcMCZCYxQcs9RosWuCAn60fzkBL8wMFPkbopwoniEgKN9l5MTW4Z+3F1ff9OcRQ0kItrBdw7EbQ=
+X-Received: by 2002:a05:6a21:9183:b0:19c:8505:a232 with SMTP id
+ tp3-20020a056a21918300b0019c8505a232mr8445715pzb.40.1706618259365; Tue, 30
+ Jan 2024 04:37:39 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="uVz2gc6BX/qmEklP"
-Content-Disposition: inline
-In-Reply-To: <CAP8UFD1VAvnkM6afZvtpdXhA4csDBDwMnF9yUzSx_ut-Ypf+eA@mail.gmail.com>
+References: <CAGX9RpFMCVLQV7RbK2u9AabusvkZD+RZNv_UD=R00cSUrjutBg@mail.gmail.com>
+ <xmqqjzq9cl70.fsf@gitster.g> <xmqqv89tau3r.fsf@gitster.g> <xmqqpm01au0w.fsf_-_@gitster.g>
+ <bf848477-b4dd-49d3-8e4b-de0fc3948570@gmail.com> <xmqqwmu42ccb.fsf@gitster.g>
+ <b3532261-3cf4-4666-9cbd-4ce668cd2e49@gmail.com> <CAGX9RpH0RJfBADQwJ=c7PCHU955vOqd0Wdc7Yi7XUuAQQW_FNQ@mail.gmail.com>
+ <CAPig+cSGF+vQrnD0f99cbdpQOOC7X6ULa9tFe+FwVrG0SF4PGg@mail.gmail.com> <xmqqsf4c39e9.fsf@gitster.g>
+In-Reply-To: <xmqqsf4c39e9.fsf@gitster.g>
+From: Willem Verstraeten <willem.verstraeten@gmail.com>
+Date: Tue, 30 Jan 2024 13:37:26 +0100
+Message-ID: <CAGX9RpF=tvPwiLO6UYA+uR5f2oqOLUSNaDL-jfn=T=BQ9FNtkQ@mail.gmail.com>
+Subject: Re: [PATCH 2/2] checkout: forbid "-B <branch>" from touching a branch
+ used elsewhere
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Eric Sunshine <sunshine@sunshineco.com>, phillip.wood@dunelm.org.uk, 
+	git@vger.kernel.org, Jeff King <peff@peff.net>
+Content-Type: text/plain; charset="UTF-8"
 
+Hi all,
 
---uVz2gc6BX/qmEklP
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Sorry for dropping out of the conversation, but I see that the changes
+landed on the master, ready for the 2.44.0 release.
 
-On Tue, Jan 30, 2024 at 09:38:48AM +0100, Christian Couder wrote:
-> On Mon, Jan 29, 2024 at 7:16=E2=80=AFPM Kaartic Sivaraam
-> <kaartic.sivaraam@gmail.com> wrote:
-[snip]
-> > The GSoC contributor application deadline is April 2 - 18:00 UTC, so
-> > (co-)mentors and org admins are already welcome to volunteer. As usual,
-> > we also need project ideas to refresh our idea page from last year
-> > (https://git.github.io/SoC-2023-Ideas/). Feel free to share your
-> > thoughts and discuss.
->=20
-> I am volunteering as both an Org Admin and a mentor too.
->=20
-> I am not sure how many tests there are left to be ported to the new
-> unit test framework. Patrick told me about porting some reftable unit
-> tests to the new unit test framework though. So it might still work as
-> a GSoC project.
+Thank you very much!
 
-Yes, the tests in t0032-reftable-unittest.sh should be ported over to
-the new unit test framework eventually, and I think that this might be a
-good GSoC project indeed.
-
-If there is interest I'd also be happy to draft up some more topics in
-the context of refs and the reftable backend. I'm sure there should be
-some topics here that would be a good fit for the GSoC project, and I'd
-be happy to mentor any such project in this context.
-
-Patrick
-
---uVz2gc6BX/qmEklP
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmW4vKQACgkQVbJhu7ck
-PpRhlg//bZB9og3AuQhAdLYZvVRxczPRio5g2yvRqKsUlRjMTuapz2VFowpLi61p
-TtPjT8OeaP5h3f3P+1JuERaKIdnGJbvOjG9X+BCXMgFszIZ3FDQ5M8Fw/BHxI4Jh
-b9LyvSfzAjQNdfj9Fi2Rs0CPwL87hachEFbHdWgRDNW9g0MKI5ib0Z/r/P3fvK2k
-0vNo9hRsSPvEKMYT0ZrrAE1qWNPy5zu4IXEgrBPibH11xyvu5iZ/PgzbfNaJb1J4
-jGzxsM36eCrlzKGLx0kugw609m+6a8E4eVxu5b9QkSG6hGcqqR8DUqNxuZ8wv8nh
-Gy4M0gwJsxWviYSsUzFXkZnUjte6h9xDk7GgmjGCTU9vedkqs1+Lt0WIAzGQScdb
-dLozSvfsPhTYukI3Sez69yoh7KLVNV9FGfcKcTuekadHmAAZqo1qk+pkdjb6RLck
-yEi8fTwTUY0qNI5fhTbbaKUiM1QytlD4KFMfU9+n0/2vkmaZ+60mmWaJNYjOhUP/
-sqpmwbjPKis0zYdkMUsQObYFEGH3kGdc2T4zMyBQITywSkTM30ox6TXR6ujO07u8
-uAFSKbAVuqPggBjcUFQFjeHxe7u7iE03nGJZDbY8BmQIK83Io406jlaRiq+ggWFO
-GfGK/a1746TOGay8StUFIKnuoU9dMrby6zoL+dLgX2tBzdOGfSs=
-=7v3P
------END PGP SIGNATURE-----
-
---uVz2gc6BX/qmEklP--
+On Fri, 8 Dec 2023 at 18:13, Junio C Hamano <gitster@pobox.com> wrote:
+>
+> Eric Sunshine <sunshine@sunshineco.com> writes:
+>
+> >    Needs review and documentation updates.
+> >
+> > I'm not sure if the "Needs review" comment is still applicable since
+> > the patch did get some review comments, however, the mentioned
+> > documentation update is probably still needed for this series to
+> > graduate.
+>
+> Thanks.  I think "-B" being defined as "branch -f <branch>" followed
+> by "checkout <branch>" makes it technically unnecessary to add any
+> new documentation (because "checkout <branch>" will refuse, so it
+> naturally follows that "checkout -B <branch>" should), but giving
+> the failure mode a bit more explicit mention would be more helpful
+> to readers.
+>
+> Here is to illustrate what I have in mind.  The mention of the
+> "transactional" was already in the documentation for the "checkout"
+> back when switch was described at d787d311 (checkout: split part of
+> it to new command 'switch', 2019-03-29), but somehow was left out in
+> the documentation of the "switch".  While it is not incorrect to say
+> that it is a convenient short-cut, it is more important to say what
+> happens when one of them fails, so I am tempted to port that
+> description over to the "switch" command, and give the "used elsewhere"
+> as a sample failure mode.
+>
+> The test has been also enhanced to check the "transactional" nature.
+>
+>  Documentation/git-checkout.txt |  4 +++-
+>  Documentation/git-switch.txt   |  9 +++++++--
+>  t/t2400-worktree-add.sh        | 18 ++++++++++++++++--
+>  3 files changed, 26 insertions(+), 5 deletions(-)
+>
+> diff --git c/Documentation/git-checkout.txt w/Documentation/git-checkout.txt
+> index 240c54639e..55a50b5b23 100644
+> --- c/Documentation/git-checkout.txt
+> +++ w/Documentation/git-checkout.txt
+> @@ -63,7 +63,9 @@ $ git checkout <branch>
+>  ------------
+>  +
+>  that is to say, the branch is not reset/created unless "git checkout" is
+> -successful.
+> +successful (e.g., when the branch is in use in another worktree, not
+> +just the current branch stays the same, but the branch is not reset to
+> +the start-point, either).
+>
+>  'git checkout' --detach [<branch>]::
+>  'git checkout' [--detach] <commit>::
+> diff --git c/Documentation/git-switch.txt w/Documentation/git-switch.txt
+> index c60fc9c138..6137421ede 100644
+> --- c/Documentation/git-switch.txt
+> +++ w/Documentation/git-switch.txt
+> @@ -59,13 +59,18 @@ out at most one of `A` and `B`, in which case it defaults to `HEAD`.
+>  -c <new-branch>::
+>  --create <new-branch>::
+>         Create a new branch named `<new-branch>` starting at
+> -       `<start-point>` before switching to the branch. This is a
+> -       convenient shortcut for:
+> +       `<start-point>` before switching to the branch. This is the
+> +       transactional equivalent of
+>  +
+>  ------------
+>  $ git branch <new-branch>
+>  $ git switch <new-branch>
+>  ------------
+> ++
+> +that is to say, the branch is not reset/created unless "git switch" is
+> +successful (e.g., when the branch is in use in another worktree, not
+> +just the current branch stays the same, but the branch is not reset to
+> +the start-point, either).
+>
+>  -C <new-branch>::
+>  --force-create <new-branch>::
+> diff --git c/t/t2400-worktree-add.sh w/t/t2400-worktree-add.sh
+> index bbcb2d3419..5d5064e63d 100755
+> --- c/t/t2400-worktree-add.sh
+> +++ w/t/t2400-worktree-add.sh
+> @@ -129,8 +129,22 @@ test_expect_success 'die the same branch is already checked out' '
+>  test_expect_success 'refuse to reset a branch in use elsewhere' '
+>         (
+>                 cd here &&
+> -               test_must_fail git checkout -B newmain 2>actual &&
+> -               grep "already used by worktree at" actual
+> +
+> +               # we know we are on detached HEAD but just in case ...
+> +               git checkout --detach HEAD &&
+> +               git rev-parse --verify HEAD >old.head &&
+> +
+> +               git rev-parse --verify refs/heads/newmain >old.branch &&
+> +               test_must_fail git checkout -B newmain 2>error &&
+> +               git rev-parse --verify refs/heads/newmain >new.branch &&
+> +               git rev-parse --verify HEAD >new.head &&
+> +
+> +               grep "already used by worktree at" error &&
+> +               test_cmp old.branch new.branch &&
+> +               test_cmp old.head new.head &&
+> +
+> +               # and we must be still on the same detached HEAD state
+> +               test_must_fail git symbolic-ref HEAD
+>         )
+>  '
+>
