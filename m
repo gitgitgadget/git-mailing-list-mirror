@@ -1,28 +1,28 @@
 Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91AE2381D9
-	for <git@vger.kernel.org>; Tue, 30 Jan 2024 05:37:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCB0F381B0
+	for <git@vger.kernel.org>; Tue, 30 Jan 2024 05:38:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706593064; cv=none; b=U9swAeDKNnDxNTgZNmkQhHHM1rblZvKBnFc9bGXkiWswISw7XeVcTjhmpfYqdCVXqurIDMxvNWWq4KEpZ/XqS1XfMUdY5eHOrCwzYWkNuWEAMZOlWryPORO8pMfW6fgEYpOhz6G1u+AazjrgaWX/SJNl+FLf/YN+OTiPTbKRCf8=
+	t=1706593139; cv=none; b=epxJG3sbh4ofb7vdaJE/vqTtXocny/QxlK+IRUDa+CMLl4/ToiD9gCmut1lzkGw02Hbem8HS4MgU1hjzjMqBiMzBCzaNXNxoneq9veAf81qlk18nHOYG8kFBqYnx+4FMZ27rICVH4vFchUmUVRtH3KMD/DEzOmxh1XddRHabGWk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706593064; c=relaxed/simple;
-	bh=IIkPo5cFfoSCYjgULsx1zjpikU+iw0tBDEtsA9brO3g=;
+	s=arc-20240116; t=1706593139; c=relaxed/simple;
+	bh=sSpjyuAa8PT163VefM9hMO+wlS12osGa26NgGbu6pN8=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=nhDIA/C1invww5vgMvJUoPZGQD/YxwpGJYPDZKf4QS0J/UJQjv5yyUUUPK9jGVWLujcDFXxAKox2qT2Kj2kt773veFtqg0p9BnZ++TNQW7UNm/SlcFNTGPHqP6WgEm4zejuyOzkmbfhEyqtEvtrYCj7pjZRHAYN6lB2RnRk4Oas=
+	 Content-Type:Content-Disposition:In-Reply-To; b=S0lbQUMed7wju2QK/e9RO2N7pVsmUBVc1bcvAplwrYFqIGZ+BW2LieSkFi2awni/Oeqi4EB7JeQwaJO5Z/i4k8+gsPk9+jftEkkSWnP7TvzYgqLVFVAjqcKiIy7oITzvzLp7syTXHSRws7Wi5R9JpU0P3qZgdzaFcNBfu3Uvqu4=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
-Received: (qmail 8647 invoked by uid 109); 30 Jan 2024 05:37:42 -0000
+Received: (qmail 8662 invoked by uid 109); 30 Jan 2024 05:38:57 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 30 Jan 2024 05:37:42 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 30 Jan 2024 05:38:57 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 29088 invoked by uid 111); 30 Jan 2024 05:37:43 -0000
+Received: (qmail 29101 invoked by uid 111); 30 Jan 2024 05:38:58 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 30 Jan 2024 00:37:43 -0500
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 30 Jan 2024 00:38:58 -0500
 Authentication-Results: peff.net; auth=none
-Date: Tue, 30 Jan 2024 00:37:40 -0500
+Date: Tue, 30 Jan 2024 00:38:56 -0500
 From: Jeff King <peff@peff.net>
 To: git@vger.kernel.org
 Cc: Phillip Wood <phillip.wood@dunelm.org.uk>,
@@ -30,9 +30,9 @@ Cc: Phillip Wood <phillip.wood@dunelm.org.uk>,
 	Junio C Hamano <gitster@pobox.com>,
 	Adam Dinwoodie <adam@dinwoodie.org>, Patrick Steinhardt <ps@pks.im>,
 	git@vger.kernel.org
-Subject: [PATCH v2 1/3] Makefile: use mkdir_p_parent_template for
- UNIT_TEST_BIN
-Message-ID: <20240130053740.GA166699@coredump.intra.peff.net>
+Subject: [PATCH v2 2/3] Makefile: remove UNIT_TEST_BIN directory with "make
+ clean"
+Message-ID: <20240130053856.GB166699@coredump.intra.peff.net>
 References: <20240130053714.GA165967@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -42,85 +42,45 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
 In-Reply-To: <20240130053714.GA165967@coredump.intra.peff.net>
 
-We build the UNIT_TEST_BIN directory (t/unit-tests/bin) on the fly with
-"mkdir -p". And so the recipe for UNIT_TEST_PROGS, which put their
-output in that directory, depend on UNIT_TEST_BIN to make sure it's
-there.
+We remove $(UNIT_TEST_PROGS), but that leaves the automatically
+generated "bin" dir they reside in. And once we start cleaning that,
+there is no point in removing the individual programs, as they'll by
+wiped out by the recurse "rm".
 
-But using a normal dependency leads to weird outcomes, because the
-timestamp of the directory is important. For example, try this:
-
-  $ make
-  [...builds everything...]
-
-  [now re-build one unit test]
-  $ touch t/unit-tests/t-ctype.c
-  $ make
-      SUBDIR templates
-      CC t/unit-tests/t-ctype.o
-      LINK t/unit-tests/bin/t-ctype
-
-So far so good. Now running make again should build nothing. But it
-doesn't!
-
-  $ make
-      SUBDIR templates
-      LINK t/unit-tests/bin/t-basic
-      LINK t/unit-tests/bin/t-mem-pool
-      LINK t/unit-tests/bin/t-strbuf
-
-Er, what? Let's rebuild again:
-
-  $ make
-      SUBDIR templates
-      LINK t/unit-tests/bin/t-ctype
-
-Weird. And now we ping-pong back and forth forever:
-
-  $ make
-      SUBDIR templates
-      LINK t/unit-tests/bin/t-basic
-      LINK t/unit-tests/bin/t-mem-pool
-      LINK t/unit-tests/bin/t-strbuf
-  $ make
-      SUBDIR templates
-      LINK t/unit-tests/bin/t-ctype
-
-What happens is that writing t/unit-tests/bin/t-ctype updates the mtime
-of the directory t/unit-tests/bin. And then on the next invocation of
-make, all of those other tests are now older and so get rebuilt. And
-back and forth forever.
-
-We can fix this by making the directory as part of the build recipe for
-the programs, using the template from 0b6d0bc924 (Makefiles: add and use
-wildcard "mkdir -p" template, 2022-03-03).
-
-Helped-by: SZEDER Gábor <szeder.dev@gmail.com>
 Signed-off-by: Jeff King <peff@peff.net>
 ---
- Makefile | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+The layout of the clean rule is kind of weird, in that we put only
+sort-of related things together on their own $(RM) line. I suspect a lot
+more of this could be lumped together, reducing the total number of
+shells and rm invocations needed, but I guess nobody really cares that
+much about the runtime cost of "make clean".
+
+ Makefile | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/Makefile b/Makefile
-index 0f748a52e6..228f34a3fe 100644
+index 228f34a3fe..b5ae34ea7b 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -3868,10 +3868,8 @@ $(FUZZ_PROGRAMS): %: %.o oss-fuzz/dummy-cmd-main.o $(GITLIBS) GIT-LDFLAGS
+@@ -3680,14 +3680,14 @@ cocciclean:
+ 	$(RM) contrib/coccinelle/*.cocci.patch
  
- fuzz-all: $(FUZZ_PROGRAMS)
- 
--$(UNIT_TEST_BIN):
--	@mkdir -p $(UNIT_TEST_BIN)
--
--$(UNIT_TEST_PROGS): $(UNIT_TEST_BIN)/%$X: $(UNIT_TEST_DIR)/%.o $(UNIT_TEST_DIR)/test-lib.o $(GITLIBS) GIT-LDFLAGS $(UNIT_TEST_BIN)
-+$(UNIT_TEST_PROGS): $(UNIT_TEST_BIN)/%$X: $(UNIT_TEST_DIR)/%.o $(UNIT_TEST_DIR)/test-lib.o $(GITLIBS) GIT-LDFLAGS
-+	$(call mkdir_p_parent_template)
- 	$(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) \
- 		$(filter %.o,$^) $(filter %.a,$^) $(LIBS)
- 
+ clean: profile-clean coverage-clean cocciclean
+-	$(RM) -r .build
++	$(RM) -r .build $(UNIT_TEST_BIN)
+ 	$(RM) po/git.pot po/git-core.pot
+ 	$(RM) git.res
+ 	$(RM) $(OBJECTS)
+ 	$(RM) headless-git.o
+ 	$(RM) $(LIB_FILE) $(XDIFF_LIB) $(REFTABLE_LIB) $(REFTABLE_TEST_LIB)
+ 	$(RM) $(ALL_PROGRAMS) $(SCRIPT_LIB) $(BUILT_INS) $(OTHER_PROGRAMS)
+-	$(RM) $(TEST_PROGRAMS) $(UNIT_TEST_PROGS)
++	$(RM) $(TEST_PROGRAMS)
+ 	$(RM) $(FUZZ_PROGRAMS)
+ 	$(RM) $(SP_OBJ)
+ 	$(RM) $(HCC)
 -- 
 2.43.0.797.g29b680fc68
 
