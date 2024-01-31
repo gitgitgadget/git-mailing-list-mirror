@@ -1,100 +1,85 @@
-Received: from mail-pg1-f174.google.com (mail-pg1-f174.google.com [209.85.215.174])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8687A12FF87
-	for <git@vger.kernel.org>; Wed, 31 Jan 2024 18:03:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D240712FF77
+	for <git@vger.kernel.org>; Wed, 31 Jan 2024 18:14:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706724221; cv=none; b=OojuwOSd34iD0s3p+AcYnLWPm3/JaF7T/Y1znsacro/b+Lowz6a+0CIhUQV5avrnoM2H12Ur/FQ1nVhdq0e5TcYW4HB+XcXxfqMZMkNX9BgOp0LnyqoZTLDu1bQaGBRv7Gr6rpxsvgmnroZB1uO9BOiZlMX54Ka+mdKRFBK4lu4=
+	t=1706724884; cv=none; b=DmddHBWeGYbE8NUVhVt5NpdP/VtZ4qUHb7aKsrtdCAJygSi3BNe2kX8vov5sJR0GILrpUVVPetmD9wvWSKWf9TzRARNbUri0dcFc6d7k39Te+Z7Zcoyj1A5EfkmKJymyM+Jm2SWADEN3BlNK10OsP5Ou5cRSEblZWu7uyQCdGK0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706724221; c=relaxed/simple;
-	bh=xDdVIJxrCZDj73qYyZlmZvxPpZYo1FAXI5mRjsdWzDk=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
-	 In-Reply-To:Content-Type; b=KKvjYdn4L9UIso/gRcsTDrGdTGqqmvMBNrVR+5qLFHyFlh41lebLap+7lh0OMqj1gYfFT0rfEY8maMtdKBlkyOvEu7rayt6o6EY1EPWReSS2EaB31is7oCi9TgTSBLTJtEo0b4aVyrORYVEygeVpeOm2YLWu2rvxkTs1jYq+/r0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ZnL1qLNu; arc=none smtp.client-ip=209.85.215.174
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1706724884; c=relaxed/simple;
+	bh=VABSXniSuNGAsaZXwq6MDHqlLW6COnIyMfBydB626pY=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=nmUsvM6YkjRDXzNyueDjFiNgUdnTC4cz5rHI/JsjEAoExGZ/lbsLa91ZjccQKfFh1gwZqZx3E2WmSYqOvlfcIxT09Fb3eFmbIuZNpxeqMJy1hF1CuPDv9yxwV8C221rafdzlX/u2SNTvvHSJP3+v5BnZ8tapOqw0i1KpeIPe4vw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=mhUw6srX; arc=none smtp.client-ip=64.147.108.70
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZnL1qLNu"
-Received: by mail-pg1-f174.google.com with SMTP id 41be03b00d2f7-5d8df34835aso9103a12.0
-        for <git@vger.kernel.org>; Wed, 31 Jan 2024 10:03:40 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1706724220; x=1707329020; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:references:cc:to:from
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=AITbC+hL6bPcJg0BamD8jSCof5JkCpU756mgmI0ESP0=;
-        b=ZnL1qLNuVxrpEEtTz31wmPSecwf4m0hsFf7alenWzDdJhbzwcRFWjPNfUVXZoC8OCb
-         gjPuSiuFOgzVlmwxLzydV7EXlxL6ZffpZUbws9dxSlgj8YRJkadKxnUJia2LdPHbDJCY
-         uyLk2Ma1KNjVcv9IdDub47IGnJiNt7/LE0dVX68hgUxvNm5SE9g57RwvqvyBMO9bc0xH
-         9RGZNllrBEp5SWntcxUXyI1/m0WWQRIquKoKgPYjJSDOpSN1NUPjTjtJu+JaVlzc/opF
-         9u4nyA5tYQhVNsyvT2nXvTymE2A+KH4NnySBExZJkLG16lUuGzeX5Z8C+990e3283ixN
-         aDeQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1706724220; x=1707329020;
-        h=content-transfer-encoding:in-reply-to:references:cc:to:from
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=AITbC+hL6bPcJg0BamD8jSCof5JkCpU756mgmI0ESP0=;
-        b=vOp4NHiOzu6Vdg2vVMqVzduShRRvTx+L8jnjuAj4qsKx/KauPln5RSwFdNp90kywOT
-         MvzTfkYS1I5xzrTaUCNCAtwE+ctCOU9ct7PjLuDhMMITxcY7mASIlhcOlvOICQgg8F1i
-         XOvK6cDKHwg4RpfqhzuSeOjjvyUFoDORjMY7ANvYB9bZpBag2UzYG2fF2W1wbnJ7Xn/1
-         xsJ+6u3fvfwcYJot6r4194yciyc75oWa9/gPfgqryfwZwgi3w+LIsgBLPlYb+LWebsKt
-         AshwSO5RZEX0XSQTx2SJ9D/bdHdZverCufvET85aUiRnr2mqk9p3WgTilfurXji34b1K
-         KsRg==
-X-Gm-Message-State: AOJu0YzhU2JbjsBKHsft8wpE5+iscF+LbBJlLuGylNb5Kiy9DDgXYXgx
-	ZU3KqNqVGFYva3FCp0Ljaikh7EbD8yIVYHqi+uOjkmhSyxL0gp0wI5fvi+Qo
-X-Google-Smtp-Source: AGHT+IFjuy26vNckPItPJoTHGrCbncrJX7zNox/OkKfmYbDkuvW7pTBFb4bdG8yD4vr6j8d2vT+Thw==
-X-Received: by 2002:a05:6a20:3194:b0:19b:42ea:314f with SMTP id x20-20020a056a20319400b0019b42ea314fmr2449545pza.16.1706724219696;
-        Wed, 31 Jan 2024 10:03:39 -0800 (PST)
-X-Forwarded-Encrypted: i=0; AJvYcCUygbwE6Hwb3y9vBc1h2BLw0wdE/jJ6VIR2NXYGJjl/lSHLXoQLv0TLHkOHAE4BpyQfdHUluZbBHTvTfxU/SKLYll9dG8BKMzyABtCkJs1BT90Y3LtMVYOI9Dg4r0yfCU/re2Eb6wRhJVZYEtoEOos4fQzL2+G1UB1T1wBtXTFx
-Received: from [192.168.208.87] ([106.51.151.68])
-        by smtp.gmail.com with ESMTPSA id d10-20020a63fd0a000000b005cf450e91d2sm10988214pgh.52.2024.01.31.10.03.37
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 31 Jan 2024 10:03:39 -0800 (PST)
-Message-ID: <62165479-8539-407e-9a33-6f2733414cf6@gmail.com>
-Date: Wed, 31 Jan 2024 23:33:35 +0530
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="mhUw6srX"
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 639541E9E02;
+	Wed, 31 Jan 2024 13:14:41 -0500 (EST)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=VABSXniSuNGA
+	saZXwq6MDHqlLW6COnIyMfBydB626pY=; b=mhUw6srXTQlKGIwynVPoPYzkAg8B
+	9k+c//Pnu4JiQqSfUpVtDxWujERivB5uqpQ0ejAETxnKuMcuuAxKTJ/aacUKANc/
+	YpcZgioI9D8MCamWtZcEB6/PCNIzv/+NiiKpaBe84Cu99aHiesN+MrPtuP7p92gz
+	ej/FYrKVy5sb5+4=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 4B10A1E9E01;
+	Wed, 31 Jan 2024 13:14:41 -0500 (EST)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.200.93])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 9CA7F1E9E00;
+	Wed, 31 Jan 2024 13:14:40 -0500 (EST)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Elijah Newren <newren@gmail.com>
+Cc: Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+  git@vger.kernel.org,  Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH] merge-tree: accept 3 trees as arguments
+In-Reply-To: <CABPp-BEDLsVFxjr13XJX9eBLeqD+tRoeHxwJyPsc_+AgGY2GTw@mail.gmail.com>
+	(Elijah Newren's message of "Wed, 31 Jan 2024 08:34:13 -0800")
+References: <pull.1647.git.1706277694231.gitgitgadget@gmail.com>
+	<CABPp-BFPe_RrX5ZHo7-mMHHS96j_O+1wiEwGC5+zGPP5h+686Q@mail.gmail.com>
+	<xmqqbk92bv43.fsf@gitster.g>
+	<CABPp-BEDLsVFxjr13XJX9eBLeqD+tRoeHxwJyPsc_+AgGY2GTw@mail.gmail.com>
+Date: Wed, 31 Jan 2024 10:14:39 -0800
+Message-ID: <xmqqil3974kw.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: Git in GSoC 2024
-Content-Language: en-US
-From: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-To: Patrick Steinhardt <ps@pks.im>,
- Christian Couder <christian.couder@gmail.com>
-Cc: git <git@vger.kernel.org>, Taylor Blau <me@ttaylorr.com>,
- Junio C Hamano <gitster@pobox.com>, Victoria Dye <vdye@github.com>
-References: <1de82b27-116a-450e-98c0-52eb65a8f608@gmail.com>
- <CAP8UFD1VAvnkM6afZvtpdXhA4csDBDwMnF9yUzSx_ut-Ypf+eA@mail.gmail.com>
- <Zbi8pfvGpYrlZXAu@tanuki> <ZbpGzAd6FGEeTdrh@tanuki>
- <c61322de-8cd9-42b8-a04b-a8ae47b25c5e@gmail.com>
-In-Reply-To: <c61322de-8cd9-42b8-a04b-a8ae47b25c5e@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID:
+ 99E9F8DC-C064-11EE-BD0F-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
+Content-Transfer-Encoding: quoted-printable
 
-Hi,
+Elijah Newren <newren@gmail.com> writes:
 
-On 31/01/24 23:27, Kaartic Sivaraam wrote:
-> 
-> Great. Thanks for your interest in willing to mentor!
-> 
-> I created a fairly rough SoC ideas page for now including a barebones 
-> information about the unit test migration idea:
-> 
-> https://git.github.io/SoC-2024-Ideas/
-> 
+> On Tue, Jan 30, 2024 at 9:15=E2=80=AFAM Junio C Hamano <gitster@pobox.c=
+om> wrote:
+>> ...
+>> > but aaaaaaa and bbbbbbb are not commits that they can find.
+>>
+>> Correct.  They are what they fed as two trees to be merged, aren't
+>> they?  They (or the script that drives merge-tree and fed these two
+>> trees) should be recognise these two trees, as long as they are told
 
-For the note, I also put up the 2024 microprojects page by basically 
-renaming the 2022 page. I'm supposing the projects are still relevant. 
-Kindly correct me if that's not the case.
+I notice "able to" is missing here...
 
-https://git.github.io/SoC-2024-Microprojects/
+>> that is what we show, no?
+> ...
+> Yeah, I was worried though that the end user wasn't the one running
+> the git-merge-tree command, and was trying to dig more into usage
+> cases.
 
-Also, feel free to suggest other microproject ideas that you may have.
-
--- 
-Sivaraam
+Sure.  That is exactly why I wrote "They (or the script that
+drives..."  above.
