@@ -1,65 +1,66 @@
-Received: from mail-qk1-f170.google.com (mail-qk1-f170.google.com [209.85.222.170])
+Received: from mail-yb1-f174.google.com (mail-yb1-f174.google.com [209.85.219.174])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B7933A8D8
-	for <git@vger.kernel.org>; Wed, 31 Jan 2024 22:52:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3AAA3A8E0
+	for <git@vger.kernel.org>; Wed, 31 Jan 2024 22:52:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706741548; cv=none; b=jLFCd7sMeW1fbHNTxzn/QXLA8KaHiGCcj9EnM2j9VUI3bXzLpMBCul3lRP1dytMxCfRmBUxakLWy67TOTlWswR/jCcYbzIuvcj/KHNUkWVRf1e/jv7gOmCrGdwlepSMgUET1SkCVUqcnjYjuzVMdSVw9FGdphrGB/KR2RC3NFQI=
+	t=1706741550; cv=none; b=Fb7Jf1H4wOseRH7yLpXux7siRTsPfAXdFUjC+gAajlJmfZgFMw01muoejwvCUjez+G33JkLQYwBO9ZHZggVRftpHR1no88FrH8f+C7LAdsJhOMbTkw3zYNEuYlbfjdfd1UuAiIdLsKhmOR3L0S1Wlnf8XZ6JKKcd9YksTsXsTq8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706741548; c=relaxed/simple;
-	bh=pUd/X8NFfCFpEiWOyQIbhiv2bPzxlaFqxa3ThbssICg=;
+	s=arc-20240116; t=1706741550; c=relaxed/simple;
+	bh=Tx53PZbRBDMeIHiec7/7WqFNf3mZcEiYy9/Dp0+afvA=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=tyobfsjZjhtlkmOSp72MVhnhXIVLT3Q11hlQHsNJIt76YYX31Bz4BX2Ckqs3gBJVD1wBDvdBZvaBxBel2wMzufg7xvVnIuXBrZAMgNk/bXeZ/2dKGTNnstMONUHMnD24skc2iAPtbEWwXpVUW6ZCpEcFjA/40zpNGJMYEYUTuuU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=none smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=ZKlgRm/t; arc=none smtp.client-ip=209.85.222.170
+	 Content-Type:Content-Disposition:In-Reply-To; b=Yq6qJdcGumfSfHXVDTls14+aiBBG40dH17jXHg/rWGfLX43XEBgAs/004Rgx34erHiS3vAD7QzRkP8mnwbjIBW6O3Y8a6kZ7QmlGkqiRYQlMe1PmgUluSLDQ4xmx8mImylN0jfHz9eVosL5TN27hjnB/aQZkQshJkCTtkeNaRYM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=none smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=F+YQvscz; arc=none smtp.client-ip=209.85.219.174
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="ZKlgRm/t"
-Received: by mail-qk1-f170.google.com with SMTP id af79cd13be357-783e22a16d4so104942885a.0
-        for <git@vger.kernel.org>; Wed, 31 Jan 2024 14:52:25 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="F+YQvscz"
+Received: by mail-yb1-f174.google.com with SMTP id 3f1490d57ef6-dc6b7df1169so230646276.0
+        for <git@vger.kernel.org>; Wed, 31 Jan 2024 14:52:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1706741544; x=1707346344; darn=vger.kernel.org;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1706741547; x=1707346347; darn=vger.kernel.org;
         h=in-reply-to:content-transfer-encoding:content-disposition
          :mime-version:references:message-id:subject:cc:to:from:date:from:to
          :cc:subject:date:message-id:reply-to;
-        bh=9BniYaMPwayL90qzNYpZNYvso3bcVW7OgFrLipKNQrk=;
-        b=ZKlgRm/t7+OhIFmbTK/fxIzHnnSmQ/ntArgtrDmtHGS5Dmr3toNPbM42UQ96mMhh+i
-         4o4mGiNxwjCzE650N/wmdap3COBvTwJyH6f863XhPfs5Wdic5Dzd7gqTCPbnIWpYlNBv
-         7DYkgZrGAZahgGoTtEZI12wjpQWtvXV2Q/THobqkBd6mcciiAfHl1HJ9nsvhWFvPypYm
-         dZ9ro+m83+FPymdX8gjUbJbwlEXfu2aGEWimMyCFwugPVUqRi9ljNuMZErD6AgrvFAom
-         D4OWDtntGy0LReaIdw90m/MGU68RvmfmE7LF3+Yu4OL3bSgWEtFOO369YWZe3VcxvVwn
-         qOtw==
+        bh=L7JmEiC/QvMRZuCY1vDkFxL1XU/ro565ss6SRiED2gI=;
+        b=F+YQvsczA8RHKb8moo/gKa8NSePwBc7lx1BggvgF4l8OCeSwc3ylA4E6bHgTQLjm5/
+         4SO3lPOrxsR65ol3hAB/MNByBLR6G56H8INTMq69W6ao+ZTly+2MxxvMX6PVZreDChzB
+         XNxqFAfzZNcNUHf1qUL1vnTwh7FpcWxWLhTWz9zMItpKAi0hknA1xT+Yc76HAl+Rlccm
+         n+di1gSGeou/k6J14FRy9e+iRzdQKejwRNvwSFEH9SiA0vUC/EA6Ob1y+ub6wLOLnTjU
+         pgdnoDGP6qRBgE/EwSIfDDzZ88Ln58N7lVwMHchXwTz3sWWB/CDA3ITz5TWNyc6dcAlb
+         mS7w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1706741544; x=1707346344;
+        d=1e100.net; s=20230601; t=1706741547; x=1707346347;
         h=in-reply-to:content-transfer-encoding:content-disposition
          :mime-version:references:message-id:subject:cc:to:from:date
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=9BniYaMPwayL90qzNYpZNYvso3bcVW7OgFrLipKNQrk=;
-        b=XfzDb6ymTGCakeKko0Z6uxJbmwgbQzo2ZGA7zRSPEUxTETnKY8jUOQDWeNIJWDFwNG
-         AWo8wy6LVFYk8YJxw/Y+i0q2BGT0Z5zafCiUrRdkqPfCE1RLAedCT/iysclsd15/8cKD
-         9P6F9QiAeIV1+xo5Al76Q0cFHWnBg8zmt2k6MFK2WAGZB8owH7WWFuNA2XETz5ajibWF
-         XRFwkaY4Htgut8SOkTVSeeJpJ+kId0ajWX6zFY/0RDTjlepimlZWkfoby4Fwg2KJnqHk
-         k+TMMfh5Kh6sQXUw/66c3oL6ECe6Gmns4t7dtgLyRBHEBggDoSPUBadOFvjGu2LZNlRe
-         W2gA==
-X-Gm-Message-State: AOJu0Yy9FOCSCzs71x7bo240w/4kq+i2FtnIa2Jw/pKQPRkF5/7nW7cf
-	KXiCMt89X3EyCixKRRSWAdBD0d8jjiIOmj0zF52DtCsH1BrRnaJa2C1oqBQd7TnLshJWp74e35h
-	cuYw=
-X-Google-Smtp-Source: AGHT+IFMl6yY88LUuPCOhvRd1MVm/inobZtgkncSMLrV53II/ySJ6SGfwnwaXQVX4f9CWcU364MWew==
-X-Received: by 2002:a0c:f10c:0:b0:68c:4475:2f2a with SMTP id i12-20020a0cf10c000000b0068c44752f2amr7047856qvl.18.1706741544646;
-        Wed, 31 Jan 2024 14:52:24 -0800 (PST)
+        bh=L7JmEiC/QvMRZuCY1vDkFxL1XU/ro565ss6SRiED2gI=;
+        b=RR0rQQGAp8ZafZMzJHNVcSBuZ6DWeNRjmfuppykdryG+aW/1f/hovIPUtznWdxf1CJ
+         advTmeGGy9jihxWXO3qL68EStohkpOeyW792X4vOXI9J37h4hz0Tjl9U6dDhsURKdXY8
+         gzfktcnhJB7ICkBRogR0ZZyI4X1drd4233EGovYrq46P8D3fFpE7dAv4HakdEWK/oyWu
+         js47H9REKCq8Aqp8Lqgz7TgG8wvhQi2cxn8Z6yukzH3udnpn8D7kbW0S2mqVTOYPHxXr
+         YxYF9HCqodkEDkfgIfbTF5SU52SUfhTsc+l5CKmFiXSxnFmiAzPoNaBGBg/MQv58SSYD
+         NDpA==
+X-Gm-Message-State: AOJu0Yy+01nH2ELutbcDmcNIn8eQokBkvM62QzhlnZ/8YDpHZqxCxjV7
+	tRDkppYN6wuMZPBmF7tnzWaTyGl1jpQsP4OiH9TS0/Zlga9tCgU0n2bhRkm5W8UO7URRfq7wFiJ
+	Kfn8=
+X-Google-Smtp-Source: AGHT+IHHa+6VjiMD15sIezGXVizIv9wxyx0fSZ2ZZcLZQs2SYhu5+VZ5Htaux/aadWV5WOvijp7uxw==
+X-Received: by 2002:a25:b1a4:0:b0:dc6:8b4:7388 with SMTP id h36-20020a25b1a4000000b00dc608b47388mr490938ybj.35.1706741547367;
+        Wed, 31 Jan 2024 14:52:27 -0800 (PST)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id eo10-20020ad4594a000000b0068179afede6sm3150343qvb.100.2024.01.31.14.52.24
+        by smtp.gmail.com with ESMTPSA id ow11-20020a0562143f8b00b0068c41c0d346sm1207209qvb.27.2024.01.31.14.52.26
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 31 Jan 2024 14:52:24 -0800 (PST)
-Date: Wed, 31 Jan 2024 17:52:23 -0500
+        Wed, 31 Jan 2024 14:52:27 -0800 (PST)
+Date: Wed, 31 Jan 2024 17:52:26 -0500
 From: Taylor Blau <me@ttaylorr.com>
 To: git@vger.kernel.org
 Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
 	Jonathan Tan <jonathantanmy@google.com>,
 	SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-Subject: [PATCH v6 02/16] revision.c: consult Bloom filters for root commits
-Message-ID: <a6dc377f1b46d4afd442023426fc8dd5cd8ceb8e.1706741516.git.me@ttaylorr.com>
+Subject: [PATCH v6 03/16] commit-graph: ensure Bloom filters are read with
+ consistent settings
+Message-ID: <a77ab941bc8867a2a40e02a0f9be4194681aa6e1.1706741516.git.me@ttaylorr.com>
 References: <cover.1706741516.git.me@ttaylorr.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -72,123 +73,189 @@ Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
 In-Reply-To: <cover.1706741516.git.me@ttaylorr.com>
 
-The commit-graph stores changed-path Bloom filters which represent the
-set of paths included in a tree-level diff between a commit's root tree
-and that of its parent.
+The changed-path Bloom filter mechanism is parameterized by a couple of
+variables, notably the number of bits per hash (typically "m" in Bloom
+filter literature) and the number of hashes themselves (typically "k").
 
-When a commit has no parents, the tree-diff is computed against that
-commit's root tree and the empty tree. In other words, every path in
-that commit's tree is stored in the Bloom filter (since they all appear
-in the diff).
+It is critically important that filters are read with the Bloom filter
+settings that they were written with. Failing to do so would mean that
+each query is liable to compute different fingerprints, meaning that the
+filter itself could return a false negative. This goes against a basic
+assumption of using Bloom filters (that they may return false positives,
+but never false negatives) and can lead to incorrect results.
 
-Consult these filters during pathspec-limited traversals in the function
-`rev_same_tree_as_empty()`. Doing so yields a performance improvement
-where we can avoid enumerating the full set of paths in a parentless
-commit's root tree when we know that the path(s) of interest were not
-listed in that commit's changed-path Bloom filter.
+We have some existing logic to carry forward existing Bloom filter
+settings from one layer to the next. In `write_commit_graph()`, we have
+something like:
 
-Suggested-by: SZEDER Gábor <szeder.dev@gmail.com>
-Original-patch-by: Jonathan Tan <jonathantanmy@google.com>
+    if (!(flags & COMMIT_GRAPH_NO_WRITE_BLOOM_FILTERS)) {
+        struct commit_graph *g = ctx->r->objects->commit_graph;
+
+        /* We have changed-paths already. Keep them in the next graph */
+        if (g && g->chunk_bloom_data) {
+            ctx->changed_paths = 1;
+            ctx->bloom_settings = g->bloom_filter_settings;
+        }
+    }
+
+, which drags forward Bloom filter settings across adjacent layers.
+
+This doesn't quite address all cases, however, since it is possible for
+intermediate layers to contain no Bloom filters at all. For example,
+suppose we have two layers in a commit-graph chain, say, {G1, G2}. If G1
+contains Bloom filters, but G2 doesn't, a new G3 (whose base graph is
+G2) may be written with arbitrary Bloom filter settings, because we only
+check the immediately adjacent layer's settings for compatibility.
+
+This behavior has existed since the introduction of changed-path Bloom
+filters. But in practice, this is not such a big deal, since the only
+way up until this point to modify the Bloom filter settings at write
+time is with the undocumented environment variables:
+
+  - GIT_TEST_BLOOM_SETTINGS_BITS_PER_ENTRY
+  - GIT_TEST_BLOOM_SETTINGS_NUM_HASHES
+  - GIT_TEST_BLOOM_SETTINGS_MAX_CHANGED_PATHS
+
+(it is still possible to tweak MAX_CHANGED_PATHS between layers, but
+this does not affect reads, so is allowed to differ across multiple
+graph layers).
+
+But in future commits, we will introduce another parameter to change the
+hash algorithm used to compute Bloom fingerprints itself. This will be
+exposed via a configuration setting, making this foot-gun easier to use.
+
+To prevent this potential issue, validate that all layers of a split
+commit-graph have compatible settings with the newest layer which
+contains Bloom filters.
+
+Reported-by: SZEDER Gábor <szeder.dev@gmail.com>
+Original-test-by: SZEDER Gábor <szeder.dev@gmail.com>
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- revision.c           | 26 ++++++++++++++++++++++----
- t/t4216-log-bloom.sh |  8 ++++++--
- 2 files changed, 28 insertions(+), 6 deletions(-)
+ commit-graph.c       | 25 +++++++++++++++++
+ t/t4216-log-bloom.sh | 65 +++++++++++++++++++++++++++++++++++++++++++-
+ 2 files changed, 89 insertions(+), 1 deletion(-)
 
-diff --git a/revision.c b/revision.c
-index 2424c9bd67..0e6f7d02b6 100644
---- a/revision.c
-+++ b/revision.c
-@@ -833,17 +833,28 @@ static int rev_compare_tree(struct rev_info *revs,
- 	return tree_difference;
+diff --git a/commit-graph.c b/commit-graph.c
+index 45417d7412..216cf03da1 100644
+--- a/commit-graph.c
++++ b/commit-graph.c
+@@ -543,6 +543,30 @@ static int validate_mixed_generation_chain(struct commit_graph *g)
+ 	return 0;
  }
  
--static int rev_same_tree_as_empty(struct rev_info *revs, struct commit *commit)
-+static int rev_same_tree_as_empty(struct rev_info *revs, struct commit *commit,
-+				  int nth_parent)
- {
- 	struct tree *t1 = repo_get_commit_tree(the_repository, commit);
-+	int bloom_ret = -1;
- 
- 	if (!t1)
- 		return 0;
- 
-+	if (!nth_parent && revs->bloom_keys_nr) {
-+		bloom_ret = check_maybe_different_in_bloom_filter(revs, commit);
-+		if (!bloom_ret)
-+			return 1;
++static void validate_mixed_bloom_settings(struct commit_graph *g)
++{
++	struct bloom_filter_settings *settings = NULL;
++	for (; g; g = g->base_graph) {
++		if (!g->bloom_filter_settings)
++			continue;
++		if (!settings) {
++			settings = g->bloom_filter_settings;
++			continue;
++		}
++
++		if (g->bloom_filter_settings->bits_per_entry != settings->bits_per_entry ||
++		    g->bloom_filter_settings->num_hashes != settings->num_hashes) {
++			g->chunk_bloom_indexes = NULL;
++			g->chunk_bloom_data = NULL;
++			FREE_AND_NULL(g->bloom_filter_settings);
++
++			warning(_("disabling Bloom filters for commit-graph "
++				  "layer '%s' due to incompatible settings"),
++				oid_to_hex(&g->oid));
++		}
 +	}
++}
 +
- 	tree_difference = REV_TREE_SAME;
- 	revs->pruning.flags.has_changes = 0;
- 	diff_tree_oid(NULL, &t1->object.oid, "", &revs->pruning);
- 
-+	if (bloom_ret == 1 && tree_difference == REV_TREE_SAME)
-+		count_bloom_filter_false_positive++;
-+
- 	return tree_difference == REV_TREE_SAME;
- }
- 
-@@ -881,7 +892,7 @@ static int compact_treesame(struct rev_info *revs, struct commit *commit, unsign
- 		if (nth_parent != 0)
- 			die("compact_treesame %u", nth_parent);
- 		old_same = !!(commit->object.flags & TREESAME);
--		if (rev_same_tree_as_empty(revs, commit))
-+		if (rev_same_tree_as_empty(revs, commit, nth_parent))
- 			commit->object.flags |= TREESAME;
- 		else
- 			commit->object.flags &= ~TREESAME;
-@@ -977,7 +988,14 @@ static void try_to_simplify_commit(struct rev_info *revs, struct commit *commit)
- 		return;
- 
- 	if (!commit->parents) {
--		if (rev_same_tree_as_empty(revs, commit))
-+		/*
-+		 * Pretend as if we are comparing ourselves to the
-+		 * (non-existent) first parent of this commit object. Even
-+		 * though no such parent exists, its changed-path Bloom filter
-+		 * (if one exists) is relative to the empty tree, using Bloom
-+		 * filters is allowed here.
-+		 */
-+		if (rev_same_tree_as_empty(revs, commit, 0))
- 			commit->object.flags |= TREESAME;
- 		return;
+ static int add_graph_to_chain(struct commit_graph *g,
+ 			      struct commit_graph *chain,
+ 			      struct object_id *oids,
+@@ -666,6 +690,7 @@ struct commit_graph *load_commit_graph_chain_fd_st(struct repository *r,
  	}
-@@ -1058,7 +1076,7 @@ static void try_to_simplify_commit(struct rev_info *revs, struct commit *commit)
  
- 		case REV_TREE_NEW:
- 			if (revs->remove_empty_trees &&
--			    rev_same_tree_as_empty(revs, p)) {
-+			    rev_same_tree_as_empty(revs, p, nth_parent)) {
- 				/* We are adding all the specified
- 				 * paths from this parent, so the
- 				 * history beyond this parent is not
+ 	validate_mixed_generation_chain(graph_chain);
++	validate_mixed_bloom_settings(graph_chain);
+ 
+ 	free(oids);
+ 	fclose(fp);
 diff --git a/t/t4216-log-bloom.sh b/t/t4216-log-bloom.sh
-index b7baf49d62..cc6ebc8140 100755
+index cc6ebc8140..64737b6ee9 100755
 --- a/t/t4216-log-bloom.sh
 +++ b/t/t4216-log-bloom.sh
-@@ -88,7 +88,11 @@ test_bloom_filters_not_used () {
- 		# if the Bloom filter system is initialized, ensure that no
- 		# filters were used
- 		data="statistics:{"
--		data="$data\"filter_not_present\":0,"
-+		# unusable filters (e.g., those computed with a
-+		# different value of commitGraph.changedPathsVersion)
-+		# are counted in the filter_not_present bucket, so any
-+		# value is OK there.
-+		data="$data\"filter_not_present\":[0-9][0-9]*,"
- 		data="$data\"maybe\":0,"
- 		data="$data\"definitely_not\":0,"
- 		data="$data\"false_positive\":0}"
-@@ -175,7 +179,7 @@ test_expect_success 'setup - add commit-graph to the chain with Bloom filters' '
+@@ -421,8 +421,71 @@ test_expect_success 'Bloom generation backfills empty commits' '
+ 	)
+ '
  
- test_bloom_filters_used_when_some_filters_are_missing () {
- 	log_args=$1
--	bloom_trace_prefix="statistics:{\"filter_not_present\":3,\"maybe\":6,\"definitely_not\":9"
-+	bloom_trace_prefix="statistics:{\"filter_not_present\":3,\"maybe\":6,\"definitely_not\":10"
- 	setup "$log_args" &&
- 	grep -q "$bloom_trace_prefix" "$TRASH_DIRECTORY/trace.perf" &&
- 	test_cmp log_wo_bloom log_w_bloom
++graph=.git/objects/info/commit-graph
++graphdir=.git/objects/info/commit-graphs
++chain=$graphdir/commit-graph-chain
++
++test_expect_success 'setup for mixed Bloom setting tests' '
++	repo=mixed-bloom-settings &&
++
++	git init $repo &&
++	for i in one two three
++	do
++		test_commit -C $repo $i file || return 1
++	done
++'
++
++test_expect_success 'ensure Bloom filters with incompatible settings are ignored' '
++	# Compute Bloom filters with "unusual" settings.
++	git -C $repo rev-parse one >in &&
++	GIT_TEST_BLOOM_SETTINGS_NUM_HASHES=3 git -C $repo commit-graph write \
++		--stdin-commits --changed-paths --split <in &&
++	layer=$(head -n 1 $repo/$chain) &&
++
++	# A commit-graph layer without Bloom filters "hides" the layers
++	# below ...
++	git -C $repo rev-parse two >in &&
++	git -C $repo commit-graph write --stdin-commits --no-changed-paths \
++		--split=no-merge <in &&
++
++	# Another commit-graph layer that has Bloom filters, but with
++	# standard settings, and is thus incompatible with the base
++	# layer written above.
++	git -C $repo rev-parse HEAD >in &&
++	git -C $repo commit-graph write --stdin-commits --changed-paths \
++		--split=no-merge <in &&
++
++	test_line_count = 3 $repo/$chain &&
++
++	# Ensure that incompatible Bloom filters are ignored.
++	git -C $repo -c core.commitGraph=false log --oneline --no-decorate -- file \
++		>expect 2>err &&
++	git -C $repo log --oneline --no-decorate -- file >actual 2>err &&
++	test_cmp expect actual &&
++	grep "disabling Bloom filters for commit-graph layer .$layer." err
++'
++
++test_expect_success 'merge graph layers with incompatible Bloom settings' '
++	# Ensure that incompatible Bloom filters are ignored when
++	# merging existing layers.
++	git -C $repo commit-graph write --reachable --changed-paths 2>err &&
++	grep "disabling Bloom filters for commit-graph layer .$layer." err &&
++
++	test_path_is_file $repo/$graph &&
++	test_dir_is_empty $repo/$graphdir &&
++
++	git -C $repo -c core.commitGraph=false log --oneline --no-decorate -- \
++		file >expect &&
++	trace_out="$(pwd)/trace.perf" &&
++	GIT_TRACE2_PERF="$trace_out" \
++		git -C $repo log --oneline --no-decorate -- file >actual 2>err &&
++
++	test_cmp expect actual &&
++	grep "statistics:{\"filter_not_present\":0," trace.perf &&
++	test_must_be_empty err
++'
++
+ corrupt_graph () {
+-	graph=.git/objects/info/commit-graph &&
+ 	test_when_finished "rm -rf $graph" &&
+ 	git commit-graph write --reachable --changed-paths &&
+ 	corrupt_chunk_file $graph "$@"
 -- 
 2.43.0.509.g253f65a7fc
 
