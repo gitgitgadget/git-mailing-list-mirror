@@ -1,194 +1,164 @@
-Received: from mail-lf1-f49.google.com (mail-lf1-f49.google.com [209.85.167.49])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 693237BAEC
-	for <git@vger.kernel.org>; Wed, 31 Jan 2024 16:40:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D08B67EF1B
+	for <git@vger.kernel.org>; Wed, 31 Jan 2024 17:12:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706719254; cv=none; b=r2nw32+uYwh3+2sMMOpJD6T+WpiGCdif6WgnsSpwnNxRbLCvxhulsiFnGcBteGue4NC93is9/PF/USIgMOnNGtrQfHWJMaCRHZsbhwP2kOyjVW4d106WwxVqTJytZ5wR9q7kxk0o77PYzS7y7wgIJOB5BLxjpaLPRGGc2ptb0fg=
+	t=1706721166; cv=none; b=CeySkPWH4qWLFX01kOXvuG1XSCV6TP3iCDt3zRUPMaTDRK0GsyaK1qPpXWRGBxniJLCOmIBKxSo8fazZAnr7JADrwL0XrwrAybdwnN4p+ZiQpMXYCsaPiLPdKRp8qL0MYpoMiI6cSNMvzxDViHDpEIu1csXttYJS3mEr9RfNzIc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706719254; c=relaxed/simple;
-	bh=GFXwTSHJKnFUSBvMk0l9lXgP2oOY5ORYE55KrQZD5o8=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=lM4yNpA+rJ3JQH/ZsFQTtZHrVjBXMfOnBS/KlL3pDXS1/apuCN2vyw7qZVszL9qiBAZvfZrpp1wtU21Jx6y7C1/a3YvNNyEUImgwVCvhTCp4l2n+tovRXeiWor780OK4S5wkchYVz747AQ3ZZ7mJVX17Q6/P7uNYXyfC9T8PCAE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=UMRuFZX2; arc=none smtp.client-ip=209.85.167.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1706721166; c=relaxed/simple;
+	bh=KOCcFXwDxSmbBYFd9/s4yQwnQuXaioTYQs5i7t50ZQs=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=Dy+UgcBJXs31nAFbYNJsJD1WVqLWaK6z5uQeHu8ivWF21SAduoHl1xtsNc+JsD7QwbNeSno2IFlnoE4SCl7I8Pocv/Mo206C+vimrTndmNAA87nRnKwNt8/sYDZIu2EcwhwufvBxVcqRp7EnnKal27p4s7a7Y35oYqmZ+NcstiU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=gLlW98bO; arc=none smtp.client-ip=173.228.157.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UMRuFZX2"
-Received: by mail-lf1-f49.google.com with SMTP id 2adb3069b0e04-510221ab3ebso7516515e87.1
-        for <git@vger.kernel.org>; Wed, 31 Jan 2024 08:40:52 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1706719250; x=1707324050; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=UG+kaISee2Bzy+z8sDcFFqYNP9+MSILKhxwvDEfMFFE=;
-        b=UMRuFZX2va5YyrR3f9g/FvCMCffVwuIyXMDB4iSbQ9v/doYfZzczYK1oGG+6MntJgd
-         NgUKFCNWkucXOlVqQ09DVUiSmRCvMuznOwf4dtvMG6c73ieYwJkFGMOs+923aPMXGCwz
-         qAhHCvyl7iD5m9V7D2zNOQbTG/baNc3Aegb+E4HNPdo5lmaAOngE8CN61VHJVzc+sQOY
-         2XUxh6Ca9cu5YN+XsRAW+jUIyxMWM7gfFom85B5Yforqd+ZQ1DJeDBp66ZaufFJmBumE
-         D8tq0yAuULznER3UvC//YNIGMjYAY1ukplqYrwqKHwFYA/75bjE3PZ1+SNpdnWfyBIV3
-         Cfvw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1706719250; x=1707324050;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=UG+kaISee2Bzy+z8sDcFFqYNP9+MSILKhxwvDEfMFFE=;
-        b=I60gUNddftVyWH/Bc70aE5u/UupFEJmMIpfrNLUvlfUNwiMyeXL/J6nCAvqnnuiI2t
-         tryx1vvhc5b3LG3RWQdz4nNHcgH/18pqGIJM/z2VGl2jZXrxmHPJysYUXHzzsPsfQ3q3
-         Ux6v72wLbI2s5n4LF0idS+eoph9gkLWReOUeJ3MTkafbq4NJVPLO6umWFVijtUZIez0e
-         oByiIR7bNs7cKYN3NvfoW0K18byWpyK55IOHrpuz0P69wudCOZQhu90hR82YLQxW/qyv
-         Teq/IuLNkycd6X/w8bMbpGNCoxr6oCHmMlSLiglSX5birdsb0JCHhzDnyQc00Uv7Pbcl
-         IQDw==
-X-Gm-Message-State: AOJu0YzWxQcSjZEP06nD6g6NEJ3SMSyMwZwcjnD4RNmxJQ1zT6pAi8zb
-	3WxwlXpLRkgjcmiDpjodCBTUwEFtdRlDdd6Sc2tYbTRlvCnZSF2B8aDtHc4NFFPUYOC9TY9ynB6
-	WzfJfk0z5bjrwseaOeWD03NJr0YA=
-X-Google-Smtp-Source: AGHT+IGGuxs7B9ruQfWfMW20a/+nq52r2N2RHIwY+0mQHKa4UgYgxA5ZFlbnRFzsT+MDPrk6HHI9+8k2LmZPZg1trGQ=
-X-Received: by 2002:a05:6512:2355:b0:510:1624:d78a with SMTP id
- p21-20020a056512235500b005101624d78amr1967353lfu.48.1706719250156; Wed, 31
- Jan 2024 08:40:50 -0800 (PST)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="gLlW98bO"
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id 0BAAF331CD;
+	Wed, 31 Jan 2024 12:12:43 -0500 (EST)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=KOCcFXwDxSmbBYFd9/s4yQwnQuXaioTYQs5i7t
+	50ZQs=; b=gLlW98bOJke/MLcRqTu8HDRirWaTbgedXP1Ajp7sBtgqm3gq0DSPZ4
+	veEQFQkKdL+98H/qJOXxt/sCY5fbb3nx9AthsQQTAFevptWZYLFD6AkMk/ECDQuY
+	Rp6blwTxvHLZCRHVnCIALR2qbnN083H701bLnAnkFfaUiw0cEAxI4=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id 038AD331CC;
+	Wed, 31 Jan 2024 12:12:43 -0500 (EST)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.200.93])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 3CB85331C9;
+	Wed, 31 Jan 2024 12:12:39 -0500 (EST)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Haritha via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Haritha <harithamma.d@ibm.com>
+Subject: Re: [PATCH] This PR enables a successful git build on z/OS.
+In-Reply-To: <pull.1663.git.git.1706710861778.gitgitgadget@gmail.com> (Haritha
+	via GitGitGadget's message of "Wed, 31 Jan 2024 14:21:01 +0000")
+References: <pull.1663.git.git.1706710861778.gitgitgadget@gmail.com>
+Date: Wed, 31 Jan 2024 09:12:37 -0800
+Message-ID: <xmqqr0hx77ga.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.1647.git.1706277694231.gitgitgadget@gmail.com>
- <CABPp-BFPe_RrX5ZHo7-mMHHS96j_O+1wiEwGC5+zGPP5h+686Q@mail.gmail.com> <557604aa-dea4-995a-4fb2-a71b515a8129@gmx.de>
-In-Reply-To: <557604aa-dea4-995a-4fb2-a71b515a8129@gmx.de>
-From: Elijah Newren <newren@gmail.com>
-Date: Wed, 31 Jan 2024 08:40:37 -0800
-Message-ID: <CABPp-BF1p48hZ0Y7tRqKb8R53CjTB1oJGW_iV4dA29ALgbh8KQ@mail.gmail.com>
-Subject: Re: [PATCH] merge-tree: accept 3 trees as arguments
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc: Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ EFCA44E0-C05B-11EE-9D67-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
 
-Hi Johannes,
+"Haritha  via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-On Tue, Jan 30, 2024 at 12:04=E2=80=AFPM Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
->
-> Hi Elijah,
->
-> On Mon, 29 Jan 2024, Elijah Newren wrote:
->
-> > On Fri, Jan 26, 2024 at 6:18=E2=80=AFAM Johannes Schindelin via GitGitG=
-adget
-> > <gitgitgadget@gmail.com> wrote:
-> > >
-[...]
-> That's funny: I asked Victoria Dye to look over the patch, and she pointe=
-d
-> out the exact opposite: I had written `<tree>` and she remarked that most
-> of Git's manual pages would call this a `<tree-ish>` :-)
+> Subject: Re: [PATCH] This PR enables a successful git build on z/OS.
 
-A code review isn't complete until you get two contradictory requests, I gu=
-ess?
+Please think with longer term effects in mind when formulating the
+title of the commit.  What title will your next patch have if we
+break the build for z/OS next time, after this fix goes in?
+"enables a successful build again"?  How would one tell which commit
+changed what aspect of the build procedure to adjust to z/OS?
 
-> On another funny note, I tried to establish the term "ent" for this categ=
-ory
-> almost 222 months ago because I also disliked the "-ish" convention:
-> https://lore.kernel.org/git/Pine.LNX.4.63.0508051655480.8418@wgmdd8.bioze=
-ntrum.uni-wuerzburg.de/
+Perhaps
 
-:-)
+    [PATCH] Makefile: adjust for z/OS that lack dynamic library support
 
-> > > diff --git a/builtin/merge-tree.c b/builtin/merge-tree.c
-> > > index 3bdec53fbe5..cbd8e15af6d 100644
-> > > --- a/builtin/merge-tree.c
-> > > +++ b/builtin/merge-tree.c
-> > > @@ -429,35 +429,43 @@ static int real_merge(struct merge_tree_options=
- *o,
-> > >         struct merge_options opt;
-> > >
-> > >         copy_merge_options(&opt, &o->merge_options);
-> > > -       parent1 =3D get_merge_parent(branch1);
-> > > -       if (!parent1)
-> > > -               help_unknown_ref(branch1, "merge-tree",
-> > > -                                _("not something we can merge"));
-> > > -
-> > > -       parent2 =3D get_merge_parent(branch2);
-> > > -       if (!parent2)
-> > > -               help_unknown_ref(branch2, "merge-tree",
-> > > -                                _("not something we can merge"));
-> > > -
-> > >         opt.show_rename_progress =3D 0;
-> > >
-> > >         opt.branch1 =3D branch1;
-> > >         opt.branch2 =3D branch2;
-> >
-> > If branch1 and branch2 refer to trees, then when users hit conflicts
-> > they'll see e.g.
-> >
-> > <<<<<<< aaaaaaa
-> >   somecode();
-> > =3D=3D=3D=3D=3D=3D=3D
-> >   othercode();
-> > >>>>>>> bbbbbbb
-> >
-> > but aaaaaaa and bbbbbbb are not commits that they can find.
->
-> That is true. And it is not totally obvious to many users that they could
-> then call `git show aaaaaaa:file` to see the full pre-image on the
-> first-parent side.
->
-> On the other hand, the label that is shown is precisely what the user
-> specified on the command-line.
+or something would be specific enough.
 
-So this is only for direct use?  I was curious if the user was using
-some other tool of yours, perhaps even some web GUI, and thus that
-something else was controlling what was passed to git-merge-tree.
+> From: Haritha D <harithamma.d@ibm.com>
+>
+> Since the z/OS linker does not support searching dynamic libraries,
+> and the current setting of CC_LD_DYNPATH results in a directory
+> to be supplied to the link step with no option as the suffix,
+> it causes a linker error because the z/OS LD linker
+> does not accept directories as input.
 
-> For example:
->
->         $ git merge-tree --merge-base=3Dv2.42.0:t v2.43.0~11:t v2.43.0~10=
-^2:t
->
-> will result in the following conflict markers:
->
->         $ git show 021c3ce211:t0091-bugreport.sh
->         [...]
->         <<<<<<< v2.43.0~11:t
->                 grep usage output &&
->                 test_path_is_missing git-bugreport-*
->         '
->
->         test_expect_success 'incorrect positional arguments abort with us=
-age and hint' '
->                 test_must_fail git bugreport false 2>output &&
->                 grep usage output &&
->                 grep false output &&
->         =3D=3D=3D=3D=3D=3D=3D
->                 test_grep usage output &&
->         >>>>>>> v2.43.0~10^2:t
->         [...]
->
-> which I personally find very pleasing output.
+Hmph, it is not quite clear to me where that "current setting of
+CC_LD_DYNPATH" comes from and what exact value it is set to.
 
-Oh, good point -- if users provide trees in the revision:path format
-then they still have access to more information about why the change
-was made via the revision.
+Here is my attempt (blind guesses are involved, so please correct
+whatever errors you spot):
 
-Of course, if users are using the tool directly, presumably they have
-access to more information about where those trees came from anyway
-even without the conflict label.
+    The autoconf generated configuration gives an empty string to
+    CC_LD_DYNPATH when it cannot find a way to use a shared library
+    and gives up with "linker does not support runtime path to
+    dynamic libraries" message.  This leaves the directory path that
+    is usually appended to -Wl,-rpath, or -R, or whatever alone on
+    the command line of the linker, e.g. "-L/usr/lib /usr/lib", which
+    breaks the linker.
 
-> Besides, the manual page of `git merge-tree` says in no sugar-coated
-> words:
+    Work it around by setting CD_LD_DYNPATH to -L; we will end up
+    giving the same directory twice, e.g., "-L/usr/lib -L/usr/lib",
+    but it is only ugly without breaking anything.
+
+    While at it, define appropriate settings for z/OS (OS/390) in
+    the config.mak.uname file.
+
+> Therefore, we workaround this by adding the -L option.
+> And, Introduced z/OS (OS/390) as a platform in config.mak.uname
 >
->         Do NOT look through the resulting toplevel tree to try to find wh=
-ich
->         files conflict; [...]
->
-> :-)
+> Signed-off-by: Haritha D <harithamma.d@ibm.com>
+> ---
+>     This PR enables a successful git build on z/OS.
+>     
+>     Since the z/OS linker does not support searching dynamic libraries, and
+>     the current setting of CC_LD_DYNPATH results in a directory to be
+>     supplied to the link step with no option as the suffix, it causes a
+>     linker error because the z/OS LD linker does not accept directories as
+>     input. Therefore, we workaround this by adding the -L option. And,
+>     Introduced z/OS (OS/390) as a platform in config.mak.uname
 
-Right, but this isn't using the tree to find which files conflict;
-they already are looking at the conflict.  They are instead wanting to
-learn why certain textual changes were made on one side of history to
-better inform how to resolve an otherwise less than obvious conflict
-resolution.  At least, that's the only thing I've seen those conflict
-labels be used for.
+You do not have to write the same thing twice.  The text under "---"
+is meant for extra explanation that does not need to become part of
+the final commit log message.
+
+> diff --git a/config.mak.uname b/config.mak.uname
+> index dacc95172dc..c8006f854e5 100644
+> --- a/config.mak.uname
+> +++ b/config.mak.uname
+> @@ -638,6 +638,18 @@ ifeq ($(uname_S),NONSTOP_KERNEL)
+>  	SANE_TOOL_PATH = /usr/coreutils/bin:/usr/local/bin
+>  	SHELL_PATH = /usr/coreutils/bin/bash
+>  endif
+> +ifeq ($(uname_S),OS/390)
+> +        NO_SYS_POLL_H = YesPlease
+> +        NO_STRCASESTR = YesPlease
+> +        NO_REGEX = YesPlease
+> +        NO_MMAP = YesPlease
+> +        NO_NSEC = YesPlease
+> +        NO_STRLCPY = YesPlease
+> +        NO_MEMMEM = YesPlease
+> +        NO_GECOS_IN_PWENT = YesPlease
+> +        HAVE_STRINGS_H = YesPlease
+> +        NEEDS_MODE_TRANSLATION = YesPlease
+> +endif
+
+I cannot tell if these are reasonable for z/OS myself and I'll take
+your word for it ;-)  After all you're the expert.
+
+> diff --git a/configure.ac b/configure.ac
+> index d1a96da14eb..64569a80d53 100644
+> --- a/configure.ac
+> +++ b/configure.ac
+> @@ -463,6 +463,9 @@ else
+>              CC_LD_DYNPATH=-Wl,+b,
+>            else
+>               CC_LD_DYNPATH=
+> +	     if test "$(uname -s)" = "OS/390"; then
+> +		     CC_LD_DYNPATH=-L
+> +	     fi
+>               AC_MSG_WARN([linker does not support runtime path to dynamic libraries])
+>            fi
+>        fi
+
+The use of "uname -s" looks totally out of place.
+
+Wouldn't it be a better approach to set it in config.mak.uname for
+OS/390 above and leave this part untouched, I wonder?
