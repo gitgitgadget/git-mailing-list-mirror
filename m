@@ -1,64 +1,65 @@
-Received: from mail-oi1-f176.google.com (mail-oi1-f176.google.com [209.85.167.176])
+Received: from mail-qv1-f41.google.com (mail-qv1-f41.google.com [209.85.219.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BD3C3A8E4
-	for <git@vger.kernel.org>; Wed, 31 Jan 2024 22:52:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71F913AC0C
+	for <git@vger.kernel.org>; Wed, 31 Jan 2024 22:52:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706741553; cv=none; b=KBUppihhowpWQIVQPYjbO4/xDu1Pniyz1t0LPspuz1t/nHbuBFZE0MuGXk3UelTWnV7l53OF0S7J5SpY2lJ5qTnEfieY5TNiazsB7+pW4B4qGiRdM68XSJvoVQakmZ/TRhxgB9nga8B73jDOUT26d4IB/XvxaOFWXF/7SpVcgjk=
+	t=1706741555; cv=none; b=jqKWrl4N6of4MU7MyomVAdBeQqlWJ+zkazWTmqLzngxZ18t/1E88TheyFxdUbBmuTLFfZ9/s2595FoJB67YEhX3ti4487GdhD9BfQcj7qa85vLVZNI4/X5mCK5+PFM/t0YvlqNmxSvCuowEDfY5D9jRsYjwkyNLhDiLMQmeVUxE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706741553; c=relaxed/simple;
-	bh=6fayB0pzbqY0SSuq1+LMbdKYgnZFeQDprowmSXeJY0k=;
+	s=arc-20240116; t=1706741555; c=relaxed/simple;
+	bh=4XhSqhJ8JVRpKFDRekH/n+lbH+xqkm2X1r3AFFo+4uA=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=tiDRndaFAw/cCcLUNF8HmM6ohImVv4/AULVw798JmcS9VxWttYBOEMop6cAuJ455+F4ldS+9fMvk0RtAE00mdOv5KwobKJUaZQFwMAppfbY0vwwtfO9NOpDjjzaIHB+ust0HOoPnm1VBaWHg4TgldhLxQHq6UZ11ypfHg/XmJ5o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=none smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=u/Q+7ZEu; arc=none smtp.client-ip=209.85.167.176
+	 Content-Type:Content-Disposition:In-Reply-To; b=MaJPVzf+c1xv/E/y73W4vKRP4gmsApWksoAPqnK+aELzBC5ACYB59owhjFlD0pE/lGiYi96F7FYPBwGnE8w9EnGAhHgJqiLD8M3gxst06G240ki8stlLQjgZZPMgTx0V3gc+JyJxwXGvSYMLSFm7/QhkaEQZ3bwk7WOLp1AmEK4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=none smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=THg/lgQ0; arc=none smtp.client-ip=209.85.219.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="u/Q+7ZEu"
-Received: by mail-oi1-f176.google.com with SMTP id 5614622812f47-3bbbc6b4ed1so216117b6e.2
-        for <git@vger.kernel.org>; Wed, 31 Jan 2024 14:52:31 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="THg/lgQ0"
+Received: by mail-qv1-f41.google.com with SMTP id 6a1803df08f44-68c3d51ecebso1639646d6.3
+        for <git@vger.kernel.org>; Wed, 31 Jan 2024 14:52:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1706741550; x=1707346350; darn=vger.kernel.org;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1706741553; x=1707346353; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=0er1k/e891E7VZYgtccUhj/xF/eCgQLRnf6QB/xQh2s=;
-        b=u/Q+7ZEuvqPqVxMYKfIWDmc22jp06rrhfhN99M5S6/6xXsnDue8XBuuj7A9x3JxgYO
-         GdLy3r7kPdA9NQ/UYzDS1PaU4g2j6fluE8J1V6+X+6ZV7wWSemovirFvEfH7bh4550qw
-         AFKxhsRwds+RYhaW6Cey9IDOKxJqw8B21MfF1hK5GxttJ2uBR+sRjizh2gJ9PdKgVLbv
-         I+X6dsUII+aKQIZs4gj/zeMqkoV20NhKJNdTJRVaYIJT1c+KJYvqSkcviU0yzwnRPnLb
-         TTrSTBFC07q/dlkqd/yR4sRwUYQ3Lsq5pwAPHLu5RvTmWU7kfrd1EBio130Ab+hkEvRn
-         E+Kg==
+        bh=Wr9AYQwXdBciiOcJb83i1K/quz2L7bBhtA0Rvd+PWnQ=;
+        b=THg/lgQ0UDqXGFcZI3k9/DRisD9or198GZvMuUpBL/5ZokJNB/Ts+yFhcss1l/H9jt
+         8m74yyRHv7JWuDpxYAe1DxXxcUk27ihy5Dabg5h0wFHz3PqD4mdrkfB85qygr4vl7pKx
+         phOzdIPjsIOFFZAFbhfNv0nHaskipBENF7ADk99P8KbBTJzxxtpiOTCwAM9rUUgKlVJT
+         2W6jF7LdO6cOE2z6vmRTlRgeUrKVxfbqTx/dsopX2OGh+RCARkHOgqkvQJpsHV6GIKmC
+         o2faZ6ywUz3fmdglZ/fDTs0tYJ7KN8KXWBsFfOFR7W3IeHrUwBJED/DxOGE0liaGfGwH
+         EJ8Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1706741550; x=1707346350;
+        d=1e100.net; s=20230601; t=1706741553; x=1707346353;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=0er1k/e891E7VZYgtccUhj/xF/eCgQLRnf6QB/xQh2s=;
-        b=WHgoCYTW2/z914CIzrnDXylOq6wAS8Vf214JQWP32qXgPOT/2fjjNkJy7gtH09m4ZK
-         Q2JAUj3OKbknU8DJ42p28nx93pLOfMMvcuvIas9GLfSCVTtZzxazBnymRnp4cC/d1aJq
-         4OwnQE+9dfqdzWsoTaFxslvQKXGBAUhfGOuaeZ+Fcsk/3qCebSzwUJIY0FX0UPsS2CgJ
-         JeaPSlnYZ2/BuiJWld5KhhB2a/z3gmx05qQjTrYSIgODLUiQ5Ux1gk9oR4fDNNdXdEov
-         XMhlhhTNUTfnUKn44P/hFbld4N2klWiMNcCMaJ+yggsmRkViMwpAluK5BahZkiaYNCJR
-         nLDQ==
-X-Gm-Message-State: AOJu0YxP9QE0cOAHZ+v6WZC4Y9ZpkG2DOEjjVCuWP+RUm5AOUCMD0sbd
-	fXTdESD3rN4t8dxVFZHTAGvL9Wcw1GETMEbrAySxoyDJsOvX3+9D/f3dXj1AKFKfXouxeGCx+lJ
-	2SLg=
-X-Google-Smtp-Source: AGHT+IH9Mp7uasqrHWKJ+tDD71BNBD9C4WOfl1lGKQplzPFJbsDKYM8Yjv7+8TFH/F8PBIcYLWHSUg==
-X-Received: by 2002:a05:6808:114c:b0:3bf:1a8c:75b3 with SMTP id u12-20020a056808114c00b003bf1a8c75b3mr443117oiu.26.1706741550083;
-        Wed, 31 Jan 2024 14:52:30 -0800 (PST)
+        bh=Wr9AYQwXdBciiOcJb83i1K/quz2L7bBhtA0Rvd+PWnQ=;
+        b=ZLh44SE/KtgumFtphDU9gfaVuUww/MwFdDyq0xKHzSrQRtbSpIWGmo2qM/EO+X37tC
+         AP7o/tz0l53zke9gPd3VjDKgN4c6GpjXSGnnUCiIoiCf99AdMZ6Uu1qqKwhTjfV8fJTo
+         S5eYm2+awsP0HaBWYhwBb0Pv6D/RZrHabFurDw6fglBcs1YnYWLK764ucarvKfsMuc7I
+         h4gFRnrSd505qZxPR8QDrt15DDUr5YMSPPZGcQKSX3JKr6s8886/OCMZRxs6NE+z1EP4
+         fh7lyf/24QA+hzA/yq9GaXQALJMsrBGvAPThqvBhHZVjxab/UaBzXdplDs/JN76cMvNR
+         kZvw==
+X-Gm-Message-State: AOJu0Ywme1QB9NBzHa+J/4Pa8rfGn7xodgQIaZOai9ZUOsDaM94L2EQ8
+	x55StTXtBGApy7zTT7wylTfaeM6fVy1U7dMME1UYBkTlIOeek301SfqnrqeP63YTnyPlehogBqF
+	n23c=
+X-Google-Smtp-Source: AGHT+IHcz983P/VvH/L0uRPPmPC2ZDFWSry9CTUM7jAcUn/aT/1FtGezZ/RDpkEOnxsG9HU1QwvBDw==
+X-Received: by 2002:a05:6214:c8b:b0:686:10cc:f695 with SMTP id r11-20020a0562140c8b00b0068610ccf695mr3394150qvr.21.1706741552960;
+        Wed, 31 Jan 2024 14:52:32 -0800 (PST)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id c19-20020a37e113000000b00783fb14c67bsm3192563qkm.48.2024.01.31.14.52.29
+        by smtp.gmail.com with ESMTPSA id lu19-20020a0562145a1300b00686a4f9312bsm5952677qvb.50.2024.01.31.14.52.32
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 31 Jan 2024 14:52:29 -0800 (PST)
-Date: Wed, 31 Jan 2024 17:52:29 -0500
+        Wed, 31 Jan 2024 14:52:32 -0800 (PST)
+Date: Wed, 31 Jan 2024 17:52:31 -0500
 From: Taylor Blau <me@ttaylorr.com>
 To: git@vger.kernel.org
 Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
 	Jonathan Tan <jonathantanmy@google.com>,
 	SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-Subject: [PATCH v6 04/16] gitformat-commit-graph: describe version 2 of BDAT
-Message-ID: <56a9fdaff02e8b4488a44d4995a25651f33ccc2c.1706741516.git.me@ttaylorr.com>
+Subject: [PATCH v6 05/16] t/helper/test-read-graph.c: extract
+ `dump_graph_info()`
+Message-ID: <7484a82f7f3dc2cae32fac90d6f8e94f3d46aa93.1706741516.git.me@ttaylorr.com>
 References: <cover.1706741516.git.me@ttaylorr.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -70,42 +71,68 @@ Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 In-Reply-To: <cover.1706741516.git.me@ttaylorr.com>
 
-From: Jonathan Tan <jonathantanmy@google.com>
+Prepare for the 'read-graph' test helper to perform other tasks besides
+dumping high-level information about the commit-graph by extracting its
+main routine into a separate function.
 
-The code change to Git to support version 2 will be done in subsequent
-commits.
-
+Signed-off-by: Taylor Blau <me@ttaylorr.com>
 Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- Documentation/gitformat-commit-graph.txt | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ t/helper/test-read-graph.c | 31 ++++++++++++++++++-------------
+ 1 file changed, 18 insertions(+), 13 deletions(-)
 
-diff --git a/Documentation/gitformat-commit-graph.txt b/Documentation/gitformat-commit-graph.txt
-index 31cad585e2..3e906e8030 100644
---- a/Documentation/gitformat-commit-graph.txt
-+++ b/Documentation/gitformat-commit-graph.txt
-@@ -142,13 +142,16 @@ All multi-byte numbers are in network byte order.
+diff --git a/t/helper/test-read-graph.c b/t/helper/test-read-graph.c
+index 8c7a83f578..3375392f6c 100644
+--- a/t/helper/test-read-graph.c
++++ b/t/helper/test-read-graph.c
+@@ -5,20 +5,8 @@
+ #include "bloom.h"
+ #include "setup.h"
  
- ==== Bloom Filter Data (ID: {'B', 'D', 'A', 'T'}) [Optional]
-     * It starts with header consisting of three unsigned 32-bit integers:
--      - Version of the hash algorithm being used. We currently only support
--	value 1 which corresponds to the 32-bit version of the murmur3 hash
-+      - Version of the hash algorithm being used. We currently support
-+	value 2 which corresponds to the 32-bit version of the murmur3 hash
- 	implemented exactly as described in
- 	https://en.wikipedia.org/wiki/MurmurHash#Algorithm and the double
- 	hashing technique using seed values 0x293ae76f and 0x7e646e2 as
- 	described in https://doi.org/10.1007/978-3-540-30494-4_26 "Bloom Filters
--	in Probabilistic Verification"
-+	in Probabilistic Verification". Version 1 Bloom filters have a bug that appears
-+	when char is signed and the repository has path names that have characters >=
-+	0x80; Git supports reading and writing them, but this ability will be removed
-+	in a future version of Git.
-       - The number of times a path is hashed and hence the number of bit positions
- 	      that cumulatively determine whether a file is present in the commit.
-       - The minimum number of bits 'b' per entry in the Bloom filter. If the filter
+-int cmd__read_graph(int argc UNUSED, const char **argv UNUSED)
++static void dump_graph_info(struct commit_graph *graph)
+ {
+-	struct commit_graph *graph = NULL;
+-	struct object_directory *odb;
+-
+-	setup_git_directory();
+-	odb = the_repository->objects->odb;
+-
+-	prepare_repo_settings(the_repository);
+-
+-	graph = read_commit_graph_one(the_repository, odb);
+-	if (!graph)
+-		return 1;
+-
+ 	printf("header: %08x %d %d %d %d\n",
+ 		ntohl(*(uint32_t*)graph->data),
+ 		*(unsigned char*)(graph->data + 4),
+@@ -57,6 +45,23 @@ int cmd__read_graph(int argc UNUSED, const char **argv UNUSED)
+ 	if (graph->topo_levels)
+ 		printf(" topo_levels");
+ 	printf("\n");
++}
++
++int cmd__read_graph(int argc UNUSED, const char **argv UNUSED)
++{
++	struct commit_graph *graph = NULL;
++	struct object_directory *odb;
++
++	setup_git_directory();
++	odb = the_repository->objects->odb;
++
++	prepare_repo_settings(the_repository);
++
++	graph = read_commit_graph_one(the_repository, odb);
++	if (!graph)
++		return 1;
++
++	dump_graph_info(graph);
+ 
+ 	UNLEAK(graph);
+ 
 -- 
 2.43.0.509.g253f65a7fc
 
