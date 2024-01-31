@@ -1,62 +1,77 @@
-Received: from mail-pl1-f182.google.com (mail-pl1-f182.google.com [209.85.214.182])
+Received: from mail-pl1-f174.google.com (mail-pl1-f174.google.com [209.85.214.174])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8096038F8F
-	for <git@vger.kernel.org>; Wed, 31 Jan 2024 19:23:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD3853EA96
+	for <git@vger.kernel.org>; Wed, 31 Jan 2024 20:02:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706729004; cv=none; b=Vn4EB+EiJKIxylqEPOhqllIWS9dEZ4vq7HBV1dfS4M3Ooo9k7Yu+F7+jBpbK5vd44+1C7X76hsArblnhzWpOSHuDbaItXLH7CRANaE7zyalgPQJ2ZvvS0chLBdfTkeV51thGb7dgv7gGNqEnz1nbiTYAWh6dOYlhKsc6AEPGHCg=
+	t=1706731344; cv=none; b=oBMkNx7c0xSxPNKW6Aq5rB10tyh2gY/9J5DHPZ1+1SjQx3dkjI+y8a4eCBMcovNoEzQe05ZuhMY4WbtWMI+XvTTIxmXKMpp52Wlky/9Mva4UgVEtZ117mw244RyXRvVwZb5vg3iEbTFc9TPfnZQYEw6qHLSOpQZ7GP5nxhIJVrM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706729004; c=relaxed/simple;
-	bh=Qw2Zl2Rp0MI7hUq8c46FKHGUDSu0iD7E2qINVOGKbdU=;
+	s=arc-20240116; t=1706731344; c=relaxed/simple;
+	bh=B9lVQ3p0szt7XFEhlU1etduq8MiqjhnbzosXzQPBNd0=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Kwey/C2v1ulcQfLKVjEr1EWP2zYdqFIlhqCHWUklPVuvdnVFRq/cy8dcrZfOvdN3J0kNlEXAzFQ+nBIj702sVD8TA2OVzlGl9PHo7xJ45QHKyrGfCaujaJ2DI762pJFLCbEW/ZLc1szdoNRscHMnPCV43mFDpnOvixJytpHq6c0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jgXXJACn; arc=none smtp.client-ip=209.85.214.182
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	 Content-Type:Content-Disposition:In-Reply-To; b=SCVXjlEE60/HzIduBVIkQCOZKtkUGtOJLcHywtdILwsYhqFZCCV1W1X7PYAMnFeepAfuHvpaBkWBJyvcW9cxb81ZBOk1kWHLHJ7Ky/Mli2HFDKQ0AGqklQZxfvk3TxBx7dGpQP4/UI5mXBcioHbPqq9k92ausbv9aflyMBpBv7w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=P8i4hPVH; arc=none smtp.client-ip=209.85.214.174
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jgXXJACn"
-Received: by mail-pl1-f182.google.com with SMTP id d9443c01a7336-1d71cb97937so975755ad.3
-        for <git@vger.kernel.org>; Wed, 31 Jan 2024 11:23:23 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="P8i4hPVH"
+Received: by mail-pl1-f174.google.com with SMTP id d9443c01a7336-1d76671e5a4so1339145ad.0
+        for <git@vger.kernel.org>; Wed, 31 Jan 2024 12:02:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1706729003; x=1707333803; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=jltsvj/HIEE0MSssR1stP/IVk0vkuzDsQdEPpWEobmA=;
-        b=jgXXJACnx9+cNM9Dc7CvDTCnx9cxggq3TzxqdgwfTLmRR38qzMPwHtGMOffc/lgShx
-         fp6TrS1nKjXy3hd7soGzrAjJ9SMWlueTQeTTgBLBQT2fPXxhpLSE65YWK400htii0tcm
-         glHhp5zjbkAFN2Q9MOFhFtfiLWh4Gh1IibMivzndolBMc+ZwpTZYGBP5kepbsSYw9NBI
-         80K6vXmCmJUWlZYo/nTt1aNMAPZyf5/kJ9aBtzJ/OHzvkktY1iYHdehtFU9ywtipiE8B
-         TC+jwOn3jqjyWW0HDIOSxZtrzK4nverzJ1W17kmaJAbt8VjDELUYEFyvdSrNVpYCA13u
-         afOg==
+        d=google.com; s=20230601; t=1706731342; x=1707336142; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references
+         :mail-followup-to:message-id:subject:cc:to:from:date:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=B9lVQ3p0szt7XFEhlU1etduq8MiqjhnbzosXzQPBNd0=;
+        b=P8i4hPVHIatNs3AssMpMs8Qg7IQJOon6PGoYdiO16hRc48TQdkY2+wLYUdzhbbnEEE
+         r+PKCLHJjrwFrSNF9jvhWJY/pYO5TKRWmh/DcpWKP1crYf32iLA7Zey2Z0aVWDfue7xE
+         /5g7dkJ0ceWhpHiYgQ/xk2+5Tbw9SapKYsukB4r9KkZ0bEvLYIkO4qX4fPgOPqSfZGJY
+         GvNbw8LHMumTBUzrf32qc5H2p4TVXooZkqma1lXjmYGZlk/QbVgs7jULGmH0rWfMWcg+
+         j+gMChQDiKJmlCWYq2tIqbqkPac+DFmD4FsCJNlWRz5AgOYr+vvPbEZJ/3e0Wok5RDVN
+         gnKg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1706729003; x=1707333803;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=jltsvj/HIEE0MSssR1stP/IVk0vkuzDsQdEPpWEobmA=;
-        b=WlHqS9qyZKgDWXoznkMv7sWyecaisn8JS4u/wq3LL/+0IiRBicn5zj9NnT61pUPlyA
-         14MLNGTAT6nmF1y67SzpslaunFtMJS2j5094ubNQj+UWIVr1I4DxPREEKj9cTDmhIwvJ
-         hWQpZsXsMCYDNOs3dOpdJrWJvFh+Q5KTPjoFq7zrqc7V6PspjDiRA4HF+t+yqRQegIar
-         wrStpBDLp0SyESOJnKU8sCst9vezuUVWc9tdjikUkjBRurjl7tVhT1SL37phE5tycXuz
-         o9p8qBPt4OILnhoo856bYL+E6CbMPC7ulbceYRZvSqne7vTsSR5S0xcmu051qxdWF1M6
-         6hYQ==
-X-Gm-Message-State: AOJu0YxONjZXcTRTfuXywGDJDr5dn3c4qGGlTGciTwvaSYoHq5WyARkH
-	nBDNV2X3Qme3O9LEQsRXilFtD72hVc2lhB611FpuYyoFUtDN3APX/gR+y2h2
-X-Google-Smtp-Source: AGHT+IEnfMNtsGpPmgv14HJ2uG1Np1RHFBII3ADQOnOTBHtA+ATBv8z04lDMROatFUX3RvNgfiHwOw==
-X-Received: by 2002:a17:902:ecc1:b0:1d8:a108:2cab with SMTP id a1-20020a170902ecc100b001d8a1082cabmr3164406plh.67.1706729002478;
-        Wed, 31 Jan 2024 11:23:22 -0800 (PST)
-Received: from Carlos-MacBook-Pro-2.local ([2601:640:8e80:1270:fc94:809e:19f2:d7a6])
-        by smtp.gmail.com with ESMTPSA id y5-20020a170902e18500b001d8d52905e9sm6552160pla.0.2024.01.31.11.23.21
+        d=1e100.net; s=20230601; t=1706731342; x=1707336142;
+        h=in-reply-to:content-disposition:mime-version:references
+         :mail-followup-to:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=B9lVQ3p0szt7XFEhlU1etduq8MiqjhnbzosXzQPBNd0=;
+        b=RcMG7ik5o3t0mU+kDYiOvXTMcjthbln3rfLR15GvlRrvANeVR1hEL1+nq4ioEQBsbW
+         l/61+ZtJULo8XmhenpszzTiTwAMoCVNjL7FuTzmgndJXqWeo54X2v3Gs7u60Qh0pu7/U
+         pLofqa6OD/AgSy+vbb7/Vnf/mtLldkAZCVc/A3zmSe2jse65LozCRJE70IRANVxF0An+
+         so6rRrzgTfT3m9EdTRjVEtbhY4ngEC+9KBnGUZW0JX+uFd9wo4xnMJ6pZ5xGCHZT3IQj
+         ItBNK/UxLAMNGBYSrECZsd+uqQJrvTpKAJWx9mCvKXuS1Fj0IOUwMRhc/WSLeNriak5y
+         hEqg==
+X-Gm-Message-State: AOJu0Yz/cjTxcKrBsvgv6t2MuTCnKlZDmLwNqxHONKQ38+BKuZ5cgciS
+	HEUvr6EAgOJM62XAWomLO4qfs633xE97Bssg9S4mhW/cASQftK7ijaSw5zSdGQ==
+X-Google-Smtp-Source: AGHT+IHwYwCtaa/p80wyc+/hxi4drXQ7L0MmvJta9b20L7KEijKtof4rn0huIz+jllS3VRbILH9U/g==
+X-Received: by 2002:a17:903:190:b0:1d8:e946:38ea with SMTP id z16-20020a170903019000b001d8e94638eamr3170540plg.22.1706731342104;
+        Wed, 31 Jan 2024 12:02:22 -0800 (PST)
+X-Forwarded-Encrypted: i=0; AJvYcCXiffvuA8a1HXFCaPmMr8j1JP2J9Lycl3F+TjaTUJ67BSqUcgn9QEWUR2Fu3Y8oY4cTMHdphl/W3vvFKvOvgtmGUa6AhIIGs6INjEobeEbjl9sH9TD5hej/OX8bKXuMxzrYzNVrkEmBq2sUJuritVTIAMWdMyAApcLGJoxz0HdZ4GtdpnzhXtvOVqHE6Ta1El97hcw6Vn6RkODD+cE=
+Received: from google.com ([2620:15c:2d3:204:cb48:caae:a426:b2b])
+        by smtp.gmail.com with ESMTPSA id e2-20020a170902d38200b001d8e4de7a44sm514752pld.127.2024.01.31.12.02.20
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 31 Jan 2024 11:23:22 -0800 (PST)
-Date: Wed, 31 Jan 2024 11:23:20 -0800
-From: Carlo Marcelo Arenas =?utf-8?B?QmVsw7Nu?= <carenas@gmail.com>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc: git@vger.kernel.org
-Subject: Re: FreeBSD CI suspended on git/git and gitgitgadget/git
-Message-ID: <22cfob7wthmveupp5w7dbdtbparybcsdagoitwneqw6f2cmhs5@x3tnbbftvtyw>
-References: <d2d7da84-e2a3-a7b2-3f95-c8d53ad4dd5f@gmx.de>
+        Wed, 31 Jan 2024 12:02:21 -0800 (PST)
+Date: Wed, 31 Jan 2024 12:02:16 -0800
+From: Josh Steadmon <steadmon@google.com>
+To: Linus Arver via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, Christian Couder <chriscool@tuxfamily.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Emily Shaffer <nasamuffin@google.com>,
+	"Randall S. Becker" <rsbecker@nexbridge.com>,
+	Linus Arver <linusa@google.com>
+Subject: Re: [PATCH v3 03/10] trailer: unify trailer formatting machinery
+Message-ID: <ZbqnSNPjIQW3Durz@google.com>
+Mail-Followup-To: Josh Steadmon <steadmon@google.com>,
+	Linus Arver via GitGitGadget <gitgitgadget@gmail.com>,
+	git@vger.kernel.org, Christian Couder <chriscool@tuxfamily.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Emily Shaffer <nasamuffin@google.com>,
+	"Randall S. Becker" <rsbecker@nexbridge.com>,
+	Linus Arver <linusa@google.com>
+References: <pull.1632.v2.git.1706308737.gitgitgadget@gmail.com>
+ <pull.1632.v3.git.1706664144.gitgitgadget@gmail.com>
+ <5c7a2354df0f4a29841f9ab8294ead0e1c3b9cf5.1706664145.git.gitgitgadget@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -65,24 +80,11 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <d2d7da84-e2a3-a7b2-3f95-c8d53ad4dd5f@gmx.de>
+In-Reply-To: <5c7a2354df0f4a29841f9ab8294ead0e1c3b9cf5.1706664145.git.gitgitgadget@gmail.com>
 
-On Wed, Jan 31, 2024 at 08:11:46AM +0100, Johannes Schindelin wrote:
-> Team,
-> 
-> I noticed that there is a problem with the FreeBSD runs on Cirrus CI (see
-> e.g. https://cirrus-ci.com/task/6611218006278144):
+On 2024.01.31 01:22, Linus Arver via GitGitGadget wrote:
+> This unification will allow us to delete the format_trailer_info() and
+> print_tok_val() functions in the next patch. They are not deleted here
+> in order to keep the diff small.
 
-Thanks and sorry for not catching this earlier.
-
-The proposed[1] "fix" runs successful and might allow (albeit with the
-warning about prioritization) for this job to be restarted:
-
-  https://cirrus-ci.com/task/6173598017126400
-
-As explained there, FreeBSD 12 has been EOL for a while and therefore this
-update was long overdue and will need further tweaks.
-
-Carlo
-
-[1] https://lore.kernel.org/git/20240131191325.33228-1-carenas@gmail.com/
+Needs to be removed after squashing v2 patch 4 :)
