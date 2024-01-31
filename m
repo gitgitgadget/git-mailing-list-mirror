@@ -1,64 +1,63 @@
-Received: from mail-wr1-f47.google.com (mail-wr1-f47.google.com [209.85.221.47])
+Received: from mail-wr1-f45.google.com (mail-wr1-f45.google.com [209.85.221.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4FD24C80
-	for <git@vger.kernel.org>; Wed, 31 Jan 2024 01:22:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 975094C8B
+	for <git@vger.kernel.org>; Wed, 31 Jan 2024 01:22:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706664152; cv=none; b=Gynvxm6qB6PxuxwzGgyOIt71mfM0g+XY5obgnoEcQlaCN17prSjjfSkvZft6Wc7qXN6lBXfbJubFJyl4UZs0N+YjkY9hIh7frO/sW+YcmdZsPxc4tj2CbKTOr4c4WDhkG//gdsY4wwjC41FTz7M2+TnjdNRwemWE9xVsIAAmmNA=
+	t=1706664153; cv=none; b=GUPoMY/AJpqikqjJ/t5p0iMhDuLfE5QFs47nmibIgS2NfpN75QAmzg5H3Ym0vyK2nJbDkal7BcOzeT4T/0EBJuxMy6JKmgLRx2cbl7gNYp+jveluEz8knptrXChaH5h8IpFpa0/Sh41jOY/p0fN5yBX66tKrbEOClDMQu1SvUN4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706664152; c=relaxed/simple;
-	bh=fMCXjUdyuhLJ4Gc+7eaxYHB0c9IDPxQolPg/NHgAE+U=;
+	s=arc-20240116; t=1706664153; c=relaxed/simple;
+	bh=qD11dIUtmh9kRSMtA+SMDwCYtB3P4MWKWYsRkERDAuE=;
 	h=Message-ID:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=XTBrucfCHQK2MA/bHnly4RdMfRDjYd8gqXC17fw1rmOduMMFtREhbgspOG9PXSfGCUXvF1IpZBnCVwO8VsZCYOL52wNUaL0BdRosGpqC0Ar+D30glzVm1XFh179QIyllH9FvEtLZlw/TVHUNQ6QRtTI3RB0M6D0G3xHkFQxwADc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=P2IPT1aG; arc=none smtp.client-ip=209.85.221.47
+	 MIME-Version:To:Cc; b=K7BnU3FubZ/uJ+2EZKwxDMITArQXfm9K3U1hfVU46rwa6AAHeDJvI0s3/sWoDzpGpykwha/5Nnk5rHslRlKB9FkvtkvoQE2wdQTvJ3Bun7Rh4H0BWE553Wv5DjOxDRy/E4yWQ67XAQHrUy8ESV1yiqISBNrojiS9e7Xk3vtglds=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=TF2aEMQn; arc=none smtp.client-ip=209.85.221.45
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="P2IPT1aG"
-Received: by mail-wr1-f47.google.com with SMTP id ffacd0b85a97d-33ae3cc8a70so2626313f8f.0
-        for <git@vger.kernel.org>; Tue, 30 Jan 2024 17:22:30 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TF2aEMQn"
+Received: by mail-wr1-f45.google.com with SMTP id ffacd0b85a97d-33ae3be1c37so197174f8f.0
+        for <git@vger.kernel.org>; Tue, 30 Jan 2024 17:22:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1706664148; x=1707268948; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1706664149; x=1707268949; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=NpojQAaKlGmHiZEzjwkMhzKZt4+nX45Mkg/XBEC8eJM=;
-        b=P2IPT1aGGV0j1fS0GOPLVAFpPZgWOnEPA2cmYhH/QAFsAZB1y3RYwkHdyOG6i7ofgf
-         /9xRTUQk/BpexglG8FZBSgROZuaIyAzg0N7RJryXM6BAkW7Wul/BpQcn+ooSEUKjWrB0
-         YAyd2CvL2MnKWnsJGq7yKEUPamXvSzQj7E/KTE9kqy67znmEcc6AVC1IVcLS4ZRyqR/4
-         oQ+RI4U2WzkWo0TpUUGdk6DLUJzSfC8BPD/f1RqOh2RmA7lD1XUSfgXOLQ5Rl4dv7L3Z
-         ZmJ91rPhID3QDRi89RG2z7tFtWgMT88Ln2ttkFqcsOpFieDwIWBPz4hW01J3U4YI3H3q
-         aCOw==
+        bh=xnHHQoR9/DDo6ct23yHBud4gJU5mZOnRADHbnIfxa4g=;
+        b=TF2aEMQnVjsqeE+UHD9kLjZlwfrskXVA5QQQKYufwsO2bztRaSwKa0FIEryiacBgZc
+         Tx5iF/E0wPOVN8BlhqeePvyz1sZyonQnos5Ojh4gAFAcZK/u32Ws92/h7ZrYls/EE95h
+         lvDrRSwTSJBUvvVxPY72dGnr2Q8tWUuqxYBiIZWTEpnZQP/TvyEWREdvn+pXlpx7grqp
+         glDL/VC+A5lEMJpNIJLRBr8QsXZi8LS0himhKecu821R35fqnZO7m1X9EhNT2UYsK5IZ
+         Lnbqxp1MOZYEsJD6Wy93NdeiK2N1GmrOXmivSVkYgZV9vckdbBrtPSOYEBXKC3HkNtWT
+         AOMA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1706664148; x=1707268948;
+        d=1e100.net; s=20230601; t=1706664149; x=1707268949;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=NpojQAaKlGmHiZEzjwkMhzKZt4+nX45Mkg/XBEC8eJM=;
-        b=hTiJh/ufygTnHRdjUl5hh9GdiPZMDYZ6CPkxQafk8nE/ANpmHvkHLpgdQcvQbyna7y
-         2ob5FTSybk6VX0An619+VYQdtsGhBcsxs/t5vrmerKqBeOU/bvT9TyiQ7DY3rIO+F/A2
-         sLLHNIwaG9vmpgdoOvm3wvTRmjbSKHfKKT3hZAfmvqLQ0a2jpwLPwAvxFCqOKe5YQVqN
-         e7lziq8xKwKnUeqPptgeitUXxJHYGE8G5jkWhccGmboWe/BxHyomFSzWCCVs7C8sai+V
-         qvbL4LVZkzjHy0JiFtgoTrCclBugv/4cMlb+w52yY7WPYz7wlje/w6bNR7WmVcXu02C6
-         0aVg==
-X-Gm-Message-State: AOJu0Yy0xTYHuLIiiK5I5ocRPBMX8QVg4NAur8pidoQOY5GDCC9KRpOT
-	Zqfl041jy1yketx74xUZlxH/PNJK+dNwDSnkGTMFvu5SYzJq1bXmBQdCBmf9
-X-Google-Smtp-Source: AGHT+IEGDL1dHyJRcXB8SxQ1QM9KCZXO/lMmLhr9dzbr9w4FMnadkwL1ufZsmqU7tM+SCxZlnpcEBQ==
-X-Received: by 2002:adf:ec82:0:b0:33a:f1e7:f193 with SMTP id z2-20020adfec82000000b0033af1e7f193mr110895wrn.56.1706664148250;
-        Tue, 30 Jan 2024 17:22:28 -0800 (PST)
+        bh=xnHHQoR9/DDo6ct23yHBud4gJU5mZOnRADHbnIfxa4g=;
+        b=WAEnd2FiuPyqKikfnzGbFgEOBKGE+tJQqXC1sZtiZGx5hppZpTW26riTKt7/Ji7ebO
+         u2ENG8kTSDe8mO92KRlxhxxNiorXKgFNMCnJcf8rUeeDAz6Vnlp57Y/HSsv5UpOCsc/x
+         pIjK/sgCn1qyJ9IqhpSrCHG6TK9piLLsjXLAM4Jww87UKcfab2YCMUJHXjcYSyjupHtr
+         WW8R3UWe8ANP7qNLVbTl87Kw9BoWRwsEuCmKQi0Tg4zxNN6EYUU3weEyBK951l3WrV2H
+         t2G5L+ZLS+RZ/h4i+eddFwgfAtuIPprY40AAcEXoCyxm1PTOxm6zyga2mWVyCSy44g4S
+         OjdQ==
+X-Gm-Message-State: AOJu0YzElp20byoXkBljntiKIPhr0U3y5kTplcve+sDyJHeMOBaIQOdn
+	hhrAsOMWWtz1qsbed4ZoHnCeNtj2Y70SH7/EaOyduVIrIjfi4QBLgd8TaTlP
+X-Google-Smtp-Source: AGHT+IHwxtyHY/ONZ8YXDkHbIYTbbJwMP5Qye/UetWe7psOGoqjyLxa1awYBFLaPR4wImjXQIsur1g==
+X-Received: by 2002:a5d:484c:0:b0:336:58e8:d444 with SMTP id n12-20020a5d484c000000b0033658e8d444mr2832820wrs.30.1706664149542;
+        Tue, 30 Jan 2024 17:22:29 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id bw3-20020a0560001f8300b0033b00fe6e96sm692929wrb.14.2024.01.30.17.22.27
+        by smtp.gmail.com with ESMTPSA id ay12-20020a5d6f0c000000b0033ad47d7b86sm12075982wrb.27.2024.01.30.17.22.28
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 30 Jan 2024 17:22:27 -0800 (PST)
-Message-ID: <cafa39d10489f90897227a244e012457989a7710.1706664145.git.gitgitgadget@gmail.com>
+        Tue, 30 Jan 2024 17:22:28 -0800 (PST)
+Message-ID: <5c7a2354df0f4a29841f9ab8294ead0e1c3b9cf5.1706664145.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1632.v3.git.1706664144.gitgitgadget@gmail.com>
 References: <pull.1632.v2.git.1706308737.gitgitgadget@gmail.com>
 	<pull.1632.v3.git.1706664144.gitgitgadget@gmail.com>
 From: "Linus Arver via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Wed, 31 Jan 2024 01:22:16 +0000
-Subject: [PATCH v3 02/10] trailer: move interpret_trailers() to
- interpret-trailers.c
+Date: Wed, 31 Jan 2024 01:22:17 +0000
+Subject: [PATCH v3 03/10] trailer: unify trailer formatting machinery
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -79,368 +78,332 @@ Cc: Christian Couder <chriscool@tuxfamily.org>,
 
 From: Linus Arver <linusa@google.com>
 
-The interpret-trailers.c builtin is the only place we need to call
-interpret_trailers(), so move its definition there.
+Currently have two functions for formatting trailers exposed in
+trailer.h:
 
-Delete the corresponding declaration from trailer.h, which then forces
-us to expose the working innards of that function. This enriches
-trailer.h with a more granular API, which can then be unit-tested in the
-future (because interpret_trailers() by itself does too many things to
-be able to be easily unit-tested).
+    void format_trailers(FILE *outfile, struct list_head *head,
+                        const struct process_trailer_options *opts);
 
-Take this opportunity to demote some file-handling functions out of the
-trailer API implementation, as these have nothing to do with trailers.
+    void format_trailers_from_commit(struct strbuf *out, const char *msg,
+                                    const struct process_trailer_options *opts);
 
+and previously these functions, although similar enough (even taking the
+same process_trailer_options struct pointer), did not build on each
+other.
+
+Make format_trailers_from_commit() rely on format_trailers(). Teach
+format_trailers() to process trailers with the additional
+process_trailer_options fields like opts->key_only which is only used by
+format_trailers_from_commit() and not builtin/interpret-trailers.c.
+While we're at it, reorder parameters to put the trailer processing
+options first, and the out parameter (strbuf we write into) at the end.
+
+This unification will allow us to delete the format_trailer_info() and
+print_tok_val() functions in the next patch. They are not deleted here
+in order to keep the diff small.
+
+Helped-by: Junio C Hamano <gitster@pobox.com>
 Signed-off-by: Linus Arver <linusa@google.com>
 ---
- builtin/interpret-trailers.c |  94 +++++++++++++++++++++++++++
- trailer.c                    | 120 ++++-------------------------------
- trailer.h                    |  20 +++++-
- 3 files changed, 124 insertions(+), 110 deletions(-)
+ builtin/interpret-trailers.c |   6 +-
+ pretty.c                     |   2 +-
+ ref-filter.c                 |   2 +-
+ trailer.c                    | 176 +++++++++++++++++------------------
+ trailer.h                    |  19 ++--
+ 5 files changed, 98 insertions(+), 107 deletions(-)
 
 diff --git a/builtin/interpret-trailers.c b/builtin/interpret-trailers.c
-index 85a3413baf5..8556acde4aa 100644
+index 8556acde4aa..5352ee65bd1 100644
 --- a/builtin/interpret-trailers.c
 +++ b/builtin/interpret-trailers.c
-@@ -9,6 +9,7 @@
- #include "gettext.h"
- #include "parse-options.h"
- #include "string-list.h"
-+#include "tempfile.h"
- #include "trailer.h"
- #include "config.h"
- 
-@@ -91,6 +92,99 @@ static int parse_opt_parse(const struct option *opt, const char *arg,
- 	return 0;
- }
- 
-+static struct tempfile *trailers_tempfile;
-+
-+static FILE *create_in_place_tempfile(const char *file)
-+{
-+	struct stat st;
-+	struct strbuf filename_template = STRBUF_INIT;
-+	const char *tail;
-+	FILE *outfile;
-+
-+	if (stat(file, &st))
-+		die_errno(_("could not stat %s"), file);
-+	if (!S_ISREG(st.st_mode))
-+		die(_("file %s is not a regular file"), file);
-+	if (!(st.st_mode & S_IWUSR))
-+		die(_("file %s is not writable by user"), file);
-+
-+	/* Create temporary file in the same directory as the original */
-+	tail = strrchr(file, '/');
-+	if (tail)
-+		strbuf_add(&filename_template, file, tail - file + 1);
-+	strbuf_addstr(&filename_template, "git-interpret-trailers-XXXXXX");
-+
-+	trailers_tempfile = xmks_tempfile_m(filename_template.buf, st.st_mode);
-+	strbuf_release(&filename_template);
-+	outfile = fdopen_tempfile(trailers_tempfile, "w");
-+	if (!outfile)
-+		die_errno(_("could not open temporary file"));
-+
-+	return outfile;
-+}
-+
-+static void read_input_file(struct strbuf *sb, const char *file)
-+{
-+	if (file) {
-+		if (strbuf_read_file(sb, file, 0) < 0)
-+			die_errno(_("could not read input file '%s'"), file);
-+	} else {
-+		if (strbuf_read(sb, fileno(stdin), 0) < 0)
-+			die_errno(_("could not read from stdin"));
-+	}
-+}
-+
-+static void interpret_trailers(const struct process_trailer_options *opts,
-+			       struct list_head *new_trailer_head,
-+			       const char *file)
-+{
-+	LIST_HEAD(head);
-+	struct strbuf sb = STRBUF_INIT;
-+	struct trailer_info info;
-+	FILE *outfile = stdout;
-+
-+	trailer_config_init();
-+
-+	read_input_file(&sb, file);
-+
-+	if (opts->in_place)
-+		outfile = create_in_place_tempfile(file);
-+
-+	parse_trailers(opts, &info, sb.buf, &head);
-+
-+	/* Print the lines before the trailers */
-+	if (!opts->only_trailers)
-+		fwrite(sb.buf, 1, info.trailer_block_start, outfile);
-+
-+	if (!opts->only_trailers && !info.blank_line_before_trailer)
-+		fprintf(outfile, "\n");
-+
-+
-+	if (!opts->only_input) {
-+		LIST_HEAD(config_head);
-+		LIST_HEAD(arg_head);
-+		parse_trailers_from_config(&config_head);
-+		parse_trailers_from_command_line_args(&arg_head, new_trailer_head);
-+		list_splice(&config_head, &arg_head);
-+		process_trailers_lists(&head, &arg_head);
-+	}
-+
-+	format_trailers(opts, &head, outfile);
-+
-+	free_trailers(&head);
-+	trailer_info_release(&info);
-+
-+	/* Print the lines after the trailers as is */
-+	if (!opts->only_trailers)
-+		fwrite(sb.buf + info.trailer_block_end, 1, sb.len - info.trailer_block_end, outfile);
-+
-+	if (opts->in_place)
-+		if (rename_tempfile(&trailers_tempfile, file))
-+			die_errno(_("could not rename temporary file to %s"), file);
-+
-+	strbuf_release(&sb);
-+}
-+
- int cmd_interpret_trailers(int argc, const char **argv, const char *prefix)
+@@ -140,6 +140,7 @@ static void interpret_trailers(const struct process_trailer_options *opts,
  {
- 	struct process_trailer_options opts = PROCESS_TRAILER_OPTIONS_INIT;
+ 	LIST_HEAD(head);
+ 	struct strbuf sb = STRBUF_INIT;
++	struct strbuf trailer_block = STRBUF_INIT;
+ 	struct trailer_info info;
+ 	FILE *outfile = stdout;
+ 
+@@ -169,7 +170,10 @@ static void interpret_trailers(const struct process_trailer_options *opts,
+ 		process_trailers_lists(&head, &arg_head);
+ 	}
+ 
+-	format_trailers(opts, &head, outfile);
++	/* Print trailer block. */
++	format_trailers(opts, &head, &trailer_block);
++	fwrite(trailer_block.buf, 1, trailer_block.len, outfile);
++	strbuf_release(&trailer_block);
+ 
+ 	free_trailers(&head);
+ 	trailer_info_release(&info);
+diff --git a/pretty.c b/pretty.c
+index cf964b060cd..bdbed4295aa 100644
+--- a/pretty.c
++++ b/pretty.c
+@@ -1759,7 +1759,7 @@ static size_t format_commit_one(struct strbuf *sb, /* in UTF-8 */
+ 				goto trailer_out;
+ 		}
+ 		if (*arg == ')') {
+-			format_trailers_from_commit(sb, msg + c->subject_off, &opts);
++			format_trailers_from_commit(&opts, msg + c->subject_off, sb);
+ 			ret = arg - placeholder + 1;
+ 		}
+ 	trailer_out:
+diff --git a/ref-filter.c b/ref-filter.c
+index 35b989e1dfe..d358953b0ce 100644
+--- a/ref-filter.c
++++ b/ref-filter.c
+@@ -1985,7 +1985,7 @@ static void grab_sub_body_contents(struct atom_value *val, int deref, struct exp
+ 			struct strbuf s = STRBUF_INIT;
+ 
+ 			/* Format the trailer info according to the trailer_opts given */
+-			format_trailers_from_commit(&s, subpos, &atom->u.contents.trailer_opts);
++			format_trailers_from_commit(&atom->u.contents.trailer_opts, subpos, &s);
+ 
+ 			v->s = strbuf_detach(&s, NULL);
+ 		} else if (atom->u.contents.option == C_BARE)
 diff --git a/trailer.c b/trailer.c
-index 66b6660f5a4..d3899195876 100644
+index d3899195876..71ea2bb67f8 100644
 --- a/trailer.c
 +++ b/trailer.c
-@@ -5,7 +5,6 @@
- #include "string-list.h"
- #include "run-command.h"
- #include "commit.h"
--#include "tempfile.h"
- #include "trailer.h"
- #include "list.h"
- /*
-@@ -163,8 +162,8 @@ static void print_tok_val(FILE *outfile, const char *tok, const char *val)
- 		fprintf(outfile, "%s%c %s\n", tok, separators[0], val);
+@@ -144,37 +144,6 @@ static char last_non_space_char(const char *s)
+ 	return '\0';
  }
  
--static void format_trailers(const struct process_trailer_options *opts,
--			    struct list_head *trailers, FILE *outfile)
-+void format_trailers(const struct process_trailer_options *opts,
-+		     struct list_head *trailers, FILE *outfile)
- {
- 	struct list_head *pos;
- 	struct trailer_item *item;
-@@ -366,8 +365,8 @@ static int find_same_and_apply_arg(struct list_head *head,
- 	return 0;
- }
- 
--static void process_trailers_lists(struct list_head *head,
--				   struct list_head *arg_head)
-+void process_trailers_lists(struct list_head *head,
-+			    struct list_head *arg_head)
- {
- 	struct list_head *pos, *p;
- 	struct arg_item *arg_tok;
-@@ -589,7 +588,7 @@ static int git_trailer_config(const char *conf_key, const char *value,
- 	return 0;
- }
- 
--static void trailer_config_init(void)
-+void trailer_config_init(void)
- {
- 	if (configured)
- 		return;
-@@ -719,7 +718,7 @@ static void add_arg_item(struct list_head *arg_head, char *tok, char *val,
- 	list_add_tail(&new_item->list, arg_head);
- }
- 
--static void parse_trailers_from_config(struct list_head *config_head)
-+void parse_trailers_from_config(struct list_head *config_head)
- {
- 	struct arg_item *item;
- 	struct list_head *pos;
-@@ -735,8 +734,8 @@ static void parse_trailers_from_config(struct list_head *config_head)
- 	}
- }
- 
--static void parse_trailers_from_command_line_args(struct list_head *arg_head,
--						  struct list_head *new_trailer_head)
-+void parse_trailers_from_command_line_args(struct list_head *arg_head,
-+					   struct list_head *new_trailer_head)
- {
- 	struct strbuf tok = STRBUF_INIT;
- 	struct strbuf val = STRBUF_INIT;
-@@ -775,17 +774,6 @@ static void parse_trailers_from_command_line_args(struct list_head *arg_head,
- 	free(cl_separators);
- }
- 
--static void read_input_file(struct strbuf *sb, const char *file)
+-static void print_tok_val(FILE *outfile, const char *tok, const char *val)
 -{
--	if (file) {
--		if (strbuf_read_file(sb, file, 0) < 0)
--			die_errno(_("could not read input file '%s'"), file);
--	} else {
--		if (strbuf_read(sb, fileno(stdin), 0) < 0)
--			die_errno(_("could not read from stdin"));
+-	char c;
+-
+-	if (!tok) {
+-		fprintf(outfile, "%s\n", val);
+-		return;
+-	}
+-
+-	c = last_non_space_char(tok);
+-	if (!c)
+-		return;
+-	if (strchr(separators, c))
+-		fprintf(outfile, "%s%s\n", tok, val);
+-	else
+-		fprintf(outfile, "%s%c %s\n", tok, separators[0], val);
+-}
+-
+-void format_trailers(const struct process_trailer_options *opts,
+-		     struct list_head *trailers, FILE *outfile)
+-{
+-	struct list_head *pos;
+-	struct trailer_item *item;
+-	list_for_each(pos, trailers) {
+-		item = list_entry(pos, struct trailer_item, list);
+-		if ((!opts->trim_empty || strlen(item->value) > 0) &&
+-		    (!opts->only_trailers || item->token))
+-			print_tok_val(outfile, item->token, item->value);
 -	}
 -}
 -
- static const char *next_line(const char *str)
+ static struct trailer_item *trailer_from_arg(struct arg_item *arg_tok)
  {
- 	const char *nl = strchrnul(str, '\n');
-@@ -1000,10 +988,10 @@ static void unfold_value(struct strbuf *val)
+ 	struct trailer_item *new_item = xcalloc(1, sizeof(*new_item));
+@@ -984,6 +953,78 @@ static void unfold_value(struct strbuf *val)
+ 	strbuf_release(&out);
+ }
+ 
++void format_trailers(const struct process_trailer_options *opts,
++		     struct list_head *trailers,
++		     struct strbuf *out)
++{
++	struct list_head *pos;
++	struct trailer_item *item;
++	int need_separator = 0;
++
++	list_for_each(pos, trailers) {
++		item = list_entry(pos, struct trailer_item, list);
++		if (item->token) {
++			char c;
++
++			struct strbuf tok = STRBUF_INIT;
++			struct strbuf val = STRBUF_INIT;
++			strbuf_addstr(&tok, item->token);
++			strbuf_addstr(&val, item->value);
++
++			/*
++			 * Skip key/value pairs where the value was empty. This
++			 * can happen from trailers specified without a
++			 * separator, like `--trailer "Reviewed-by"` (no
++			 * corresponding value).
++			 */
++			if (opts->trim_empty && !strlen(item->value))
++				continue;
++
++			if (!opts->filter || opts->filter(&tok, opts->filter_data)) {
++				if (opts->unfold)
++					unfold_value(&val);
++
++				if (opts->separator && need_separator)
++					strbuf_addbuf(out, opts->separator);
++				if (!opts->value_only)
++					strbuf_addbuf(out, &tok);
++				if (!opts->key_only && !opts->value_only) {
++					if (opts->key_value_separator)
++						strbuf_addbuf(out, opts->key_value_separator);
++					else {
++						c = last_non_space_char(tok.buf);
++						if (c) {
++							if (!strchr(separators, c))
++								strbuf_addf(out, "%c ", separators[0]);
++						}
++					}
++				}
++				if (!opts->key_only)
++					strbuf_addbuf(out, &val);
++				if (!opts->separator)
++					strbuf_addch(out, '\n');
++
++				need_separator = 1;
++			}
++
++			strbuf_release(&tok);
++			strbuf_release(&val);
++		} else if (!opts->only_trailers) {
++			if (opts->separator && need_separator) {
++				strbuf_addbuf(out, opts->separator);
++			}
++			strbuf_addstr(out, item->value);
++			if (opts->separator)
++				strbuf_rtrim(out);
++			else
++				strbuf_addch(out, '\n');
++
++			need_separator = 1;
++		}
++
++	}
++}
++
+ /*
   * Parse trailers in "str", populating the trailer info and "head"
   * linked list structure.
-  */
--static void parse_trailers(struct trailer_info *info,
--			     const char *str,
--			     struct list_head *head,
--			     const struct process_trailer_options *opts)
-+void parse_trailers(const struct process_trailer_options *opts,
-+		    struct trailer_info *info,
-+		    const char *str,
-+		    struct list_head *head)
- {
- 	struct strbuf tok = STRBUF_INIT;
- 	struct strbuf val = STRBUF_INIT;
-@@ -1035,7 +1023,7 @@ static void parse_trailers(struct trailer_info *info,
- 	}
+@@ -1083,74 +1124,25 @@ void trailer_info_release(struct trailer_info *info)
+ 	free(info->trailers);
  }
  
--static void free_trailers(struct list_head *trailers)
-+void free_trailers(struct list_head *trailers)
+-static void format_trailer_info(struct strbuf *out,
+-				const struct trailer_info *info,
+-				const char *msg,
+-				const struct process_trailer_options *opts)
++void format_trailers_from_commit(const struct process_trailer_options *opts,
++				 const char *msg,
++				 struct strbuf *out)
  {
- 	struct list_head *pos, *p;
- 	list_for_each_safe(pos, p, trailers) {
-@@ -1044,88 +1032,6 @@ static void free_trailers(struct list_head *trailers)
- 	}
- }
+-	size_t origlen = out->len;
+-	size_t i;
++	LIST_HEAD(head);
++	struct trailer_info info;
++
++	parse_trailers(opts, &info, msg, &head);
  
--static struct tempfile *trailers_tempfile;
--
--static FILE *create_in_place_tempfile(const char *file)
--{
--	struct stat st;
--	struct strbuf filename_template = STRBUF_INIT;
--	const char *tail;
--	FILE *outfile;
--
--	if (stat(file, &st))
--		die_errno(_("could not stat %s"), file);
--	if (!S_ISREG(st.st_mode))
--		die(_("file %s is not a regular file"), file);
--	if (!(st.st_mode & S_IWUSR))
--		die(_("file %s is not writable by user"), file);
--
--	/* Create temporary file in the same directory as the original */
--	tail = strrchr(file, '/');
--	if (tail)
--		strbuf_add(&filename_template, file, tail - file + 1);
--	strbuf_addstr(&filename_template, "git-interpret-trailers-XXXXXX");
--
--	trailers_tempfile = xmks_tempfile_m(filename_template.buf, st.st_mode);
--	strbuf_release(&filename_template);
--	outfile = fdopen_tempfile(trailers_tempfile, "w");
--	if (!outfile)
--		die_errno(_("could not open temporary file"));
--
--	return outfile;
--}
--
--void interpret_trailers(const struct process_trailer_options *opts,
--			struct list_head *new_trailer_head,
--			const char *file)
--{
--	LIST_HEAD(head);
--	struct strbuf sb = STRBUF_INIT;
--	struct trailer_info info;
--	FILE *outfile = stdout;
--
--	trailer_config_init();
--
--	read_input_file(&sb, file);
--
--	if (opts->in_place)
--		outfile = create_in_place_tempfile(file);
--
--	parse_trailers(&info, sb.buf, &head, opts);
--
--	/* Print the lines before the trailers */
--	if (!opts->only_trailers)
--		fwrite(sb.buf, 1, info.trailer_block_start, outfile);
--
--	if (!opts->only_trailers && !info.blank_line_before_trailer)
--		fprintf(outfile, "\n");
--
--
--	if (!opts->only_input) {
--		LIST_HEAD(config_head);
--		LIST_HEAD(arg_head);
--		parse_trailers_from_config(&config_head);
--		parse_trailers_from_command_line_args(&arg_head, new_trailer_head);
--		list_splice(&config_head, &arg_head);
--		process_trailers_lists(&head, &arg_head);
+ 	/* If we want the whole block untouched, we can take the fast path. */
+ 	if (!opts->only_trailers && !opts->unfold && !opts->filter &&
+ 	    !opts->separator && !opts->key_only && !opts->value_only &&
+ 	    !opts->key_value_separator) {
+-		strbuf_add(out, msg + info->trailer_block_start,
+-			   info->trailer_block_end - info->trailer_block_start);
+-		return;
 -	}
 -
--	format_trailers(opts, &head, outfile);
+-	for (i = 0; i < info->trailer_nr; i++) {
+-		char *trailer = info->trailers[i];
+-		ssize_t separator_pos = find_separator(trailer, separators);
 -
--	free_trailers(&head);
--	trailer_info_release(&info);
+-		if (separator_pos >= 1) {
+-			struct strbuf tok = STRBUF_INIT;
+-			struct strbuf val = STRBUF_INIT;
 -
--	/* Print the lines after the trailers as is */
--	if (!opts->only_trailers)
--		fwrite(sb.buf + info.trailer_block_end, 1, sb.len - info.trailer_block_end, outfile);
+-			parse_trailer(&tok, &val, NULL, trailer, separator_pos);
+-			if (!opts->filter || opts->filter(&tok, opts->filter_data)) {
+-				if (opts->unfold)
+-					unfold_value(&val);
 -
--	if (opts->in_place)
--		if (rename_tempfile(&trailers_tempfile, file))
--			die_errno(_("could not rename temporary file to %s"), file);
+-				if (opts->separator && out->len != origlen)
+-					strbuf_addbuf(out, opts->separator);
+-				if (!opts->value_only)
+-					strbuf_addbuf(out, &tok);
+-				if (!opts->key_only && !opts->value_only) {
+-					if (opts->key_value_separator)
+-						strbuf_addbuf(out, opts->key_value_separator);
+-					else
+-						strbuf_addstr(out, ": ");
+-				}
+-				if (!opts->key_only)
+-					strbuf_addbuf(out, &val);
+-				if (!opts->separator)
+-					strbuf_addch(out, '\n');
+-			}
+-			strbuf_release(&tok);
+-			strbuf_release(&val);
 -
--	strbuf_release(&sb);
+-		} else if (!opts->only_trailers) {
+-			if (opts->separator && out->len != origlen) {
+-				strbuf_addbuf(out, opts->separator);
+-			}
+-			strbuf_addstr(out, trailer);
+-			if (opts->separator) {
+-				strbuf_rtrim(out);
+-			}
+-		}
+-	}
+-
 -}
 -
- void trailer_info_get(struct trailer_info *info, const char *str,
- 		      const struct process_trailer_options *opts)
- {
+-void format_trailers_from_commit(struct strbuf *out, const char *msg,
+-				 const struct process_trailer_options *opts)
+-{
+-	struct trailer_info info;
++		strbuf_add(out, msg + info.trailer_block_start,
++			   info.trailer_block_end - info.trailer_block_start);
++	} else
++		format_trailers(opts, &head, out);
+ 
+-	trailer_info_get(&info, msg, opts);
+-	format_trailer_info(out, &info, msg, opts);
++	free_trailers(&head);
+ 	trailer_info_release(&info);
+ }
+ 
 diff --git a/trailer.h b/trailer.h
-index 37033e631a1..ca701c04f3b 100644
+index ca701c04f3b..244f29fc91f 100644
 --- a/trailer.h
 +++ b/trailer.h
-@@ -81,15 +81,29 @@ struct process_trailer_options {
+@@ -101,22 +101,17 @@ void trailer_info_release(struct trailer_info *info);
  
- #define PROCESS_TRAILER_OPTIONS_INIT {0}
+ void trailer_config_init(void);
+ void format_trailers(const struct process_trailer_options *opts,
+-		     struct list_head *trailers, FILE *outfile);
++		     struct list_head *trailers,
++		     struct strbuf *out);
+ void free_trailers(struct list_head *);
  
--void interpret_trailers(const struct process_trailer_options *opts,
--			struct list_head *new_trailer_head,
--			const char *file);
-+void parse_trailers_from_config(struct list_head *config_head);
-+
-+void parse_trailers_from_command_line_args(struct list_head *arg_head,
-+					   struct list_head *new_trailer_head);
-+
-+void process_trailers_lists(struct list_head *head,
-+			    struct list_head *arg_head);
-+
-+void parse_trailers(const struct process_trailer_options *opts,
-+		    struct trailer_info *info,
-+		    const char *str,
-+		    struct list_head *head);
- 
- void trailer_info_get(struct trailer_info *info, const char *str,
- 		      const struct process_trailer_options *opts);
- 
- void trailer_info_release(struct trailer_info *info);
- 
-+void trailer_config_init(void);
-+void format_trailers(const struct process_trailer_options *opts,
-+		     struct list_head *trailers, FILE *outfile);
-+void free_trailers(struct list_head *);
-+
  /*
-  * Format the trailers from the commit msg "msg" into the strbuf "out".
-  * Note two caveats about "opts":
+- * Format the trailers from the commit msg "msg" into the strbuf "out".
+- * Note two caveats about "opts":
+- *
+- *   - this is primarily a helper for pretty.c, and not
+- *     all of the flags are supported.
+- *
+- *   - this differs from process_trailers slightly in that we always format
+- *     only the trailer block itself, even if the "only_trailers" option is not
+- *     set.
++ * Convenience function to format the trailers from the commit msg "msg" into
++ * the strbuf "out". Reuses format_trailers internally.
+  */
+-void format_trailers_from_commit(struct strbuf *out, const char *msg,
+-				 const struct process_trailer_options *opts);
++void format_trailers_from_commit(const struct process_trailer_options *opts,
++				 const char *msg,
++				 struct strbuf *out);
+ 
+ /*
+  * An interface for iterating over the trailers found in a particular commit
 -- 
 gitgitgadget
 
