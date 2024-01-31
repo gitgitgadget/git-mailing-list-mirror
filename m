@@ -1,146 +1,94 @@
-Received: from wfout2-smtp.messagingengine.com (wfout2-smtp.messagingengine.com [64.147.123.145])
+Received: from mout.gmx.net (mout.gmx.net [212.227.17.22])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EB7A3D99C
-	for <git@vger.kernel.org>; Wed, 31 Jan 2024 05:46:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.145
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B48A060ECB
+	for <git@vger.kernel.org>; Wed, 31 Jan 2024 07:11:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.22
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706680008; cv=none; b=RBZ/pQh602ow7FnwQ22DPw20NgojBdRv7U9emhN0llIs6+uyBzakYFea5nij1bOgyBCfnBHtB9XUIWx9j9gbGNPlQ68RyD1C9IzmMU2HCnwT+BkOBmFGlMzLpYcqjVt8HiTlXRsU/7YpJE5lho0mXfIP3bIF/BJDc6ehGBXFZIo=
+	t=1706685112; cv=none; b=RX089nEforDV9sGrTTnQEKn8wagLsepjGjAb32M06qEMTI30T5Mtk2+bXOnOypsleSeLOkIS3k9g1uW+XnrAnGhfT/lhqRnmPnIATn2F00w6zqEeqDkSCMZRMraJt3cFMXUA2swL0mhuN39uvrK0scdyxFDMw3RE3NvNfP1fC4o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706680008; c=relaxed/simple;
-	bh=6pOiMhxGmWxkIZGFmmY/FnwwnM6NZNkA735jUD4ESNk=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=or8e7l0qYHN+h4+dcRZHz3z/ubf/5XNjDzXR248/dzhWDHOSjXXVV8XahaRc6dWg6fBCP3mxUM4CGDQDtoKXzglWT3fsxwopPsR6X90VhJILCmCVdY1AzSL3dl+TIyR90BVDbr5LbJUpahcgSYxDis0aPQN6yRgC73ex4/xyZDE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=gV0/PLj1; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=J0rxvVyF; arc=none smtp.client-ip=64.147.123.145
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1706685112; c=relaxed/simple;
+	bh=6nMP5MPH4JmFjOyEu7nZMkm7WS0ERYKYm8HR4Jf0p9M=;
+	h=Date:From:To:Subject:Message-ID:MIME-Version:Content-Type; b=AvwGDMyODvcIXi9nx7eorPuL7vfUxBlOpAXvNI0vPDpDXgB6NFmp0ut5CNgHSG9NegNzX0Lm0OqQ+GJ/D/yFL8J6ssQpSCdDd2wNhMhBCgSufCX4WfG8680agRaRNZnLCSX2j7/ATVGEZhIyOYEWZ/C+w4JjCm99BhMpJctoPkA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b=K0k7+vdN; arc=none smtp.client-ip=212.227.17.22
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="gV0/PLj1";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="J0rxvVyF"
-Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
-	by mailfout.west.internal (Postfix) with ESMTP id D46C61C00087;
-	Wed, 31 Jan 2024 00:46:43 -0500 (EST)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute5.internal (MEProxy); Wed, 31 Jan 2024 00:46:44 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1706680003; x=1706766403; bh=fEBpbdrltl
-	iQgoz/wBPtURtFP8ngwEarWlCgCd1Qboo=; b=gV0/PLj1OAvvZEfz2aMeg2KVQ8
-	Ixpi2t/ydjQkGaGeVaVUEUZoOaWlKoEoujPVcApAbjJ0fyk61M1VznlawD5jrp6q
-	dlYU5JuSCgzSgbkS9HFDMwQ0aEzvGJIJ+xjKQmEFdDDncoPGiPXv9cXpXIrAJ2wU
-	zm7YvRmU5O/IacV2AyicDNC/q3lyeGUpt1QQxcxId4AHRlBctFEzsys12pWyVWaQ
-	Pa7PQqjyWZgBboqay5pkBzuYS4QE27jos7rFu6wmA9p9xx/4wQPTyHNIWLOJz4fj
-	kZ9P1zIrv4z3lr5EHeQDkmlkLbUFT55gjfBn+3YOvTSg3JvDqmknMKyn7DmQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1706680003; x=1706766403; bh=fEBpbdrltliQgoz/wBPtURtFP8ng
-	wEarWlCgCd1Qboo=; b=J0rxvVyFUN/BLOfn/HnbxpLU98I/ZpHYayaSgX6rCmmW
-	foj5vmK4BBate643TXGsrcYJrCRBdx345NymQDTlaGdEjyJoPj9iE6bbHthgYHsq
-	YO9bEQ8E7L73Cl8EB3Cb8B+wq3nTFS5bKduuZ5TRsmYZ7JcdVCdlO2StvBFqOIte
-	pa0nyQ0LTqrkxiIiLUW20sZkW2sBSo8Q7C/wbTzq0u/H/JqzF5TnRhGumvbnhU1i
-	VokMR1a1GQx7XGKCGgdk6RfpDOc4kQVjSQA5P0+gOt0MfteQ/sjaA6TtrCG8AGYY
-	HGbp8JVUaRZqeI8tgte9Q2UY0fZtt/ym55Nz2gLuSA==
-X-ME-Sender: <xms:w965ZT780VEfjQtqhpSV-96S8sT3_3AWts76baNM049HGYBXfLqHZg>
-    <xme:w965ZY42JhQtUyObKhyXlb1e_ofydtRhNUQIDipAmAzLmNzfD5B49ThpDWsi9LC5n
-    6ROCUowp06KEzdUFg>
-X-ME-Received: <xmr:w965ZacmkU9pcGRsNhPHAhijiP8Py23N0_b3OH-qcnrFFsaB93QfDSi7kZTi8NdYG3rR9iXsZiaG47bqb_VavmIlfrGT0OnIdJnblH0URmjjnPQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrfedtkedgkeeiucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    cujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtjeenucfhrhhomheprfgrthhr
-    ihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvg
-    hrnhepteeuvefhhfdufedvgeeiueeileegtdfhgeeftdeuveejjedtgfejhedujeeutddu
-    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
-    hpkhhsrdhimh
-X-ME-Proxy: <xmx:w965ZULrXgJJw_rgUQhNWn9TCBos6SVy_sQbnRKE64n6QWDvrs11ZQ>
-    <xmx:w965ZXI746KFDBSYL8iRYWu_yTwqNON-VqSX5AvCQW2qfoR-gyd2UA>
-    <xmx:w965ZdxXJ6wPH6teyCnh7U7In_Lh8eUDw2twaGJt8K8lIGp00hWYUw>
-    <xmx:w965Zf1cGN1PCPti6UQD59uTzk7DJz3aLt2EZoB7kgkLeCEVKGhjLw0ne4g>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 31 Jan 2024 00:46:42 -0500 (EST)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id d751d1d7 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 31 Jan 2024 05:43:19 +0000 (UTC)
-Date: Wed, 31 Jan 2024 06:46:36 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: Justin Tobler <jltobler@gmail.com>
-Cc: git@vger.kernel.org, John Cai <johncai86@gmail.com>
-Subject: Re: [PATCH] reftable/stack: fsync "tables.list" during compaction
-Message-ID: <ZbnevPIN5cudLU5w@tanuki>
-References: <7bdafc9bd7f53f38a24d69a563615b6ad484e1ba.1706592127.git.ps@pks.im>
- <CAGAWz+4wyd13UYRH3ZSSZEq1Y=5HE_p+qaXeOJS-ENMpWoLabA@mail.gmail.com>
+	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b="K0k7+vdN"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.de; s=s31663417;
+	t=1706685107; x=1707289907; i=johannes.schindelin@gmx.de;
+	bh=6nMP5MPH4JmFjOyEu7nZMkm7WS0ERYKYm8HR4Jf0p9M=;
+	h=X-UI-Sender-Class:Date:From:To:Subject;
+	b=K0k7+vdNkmcbji4Iv3WX/hWyLjp3cNBE5Eiw7gC5WR7dxcDInoyHX5sv7PvRKSMC
+	 SRlZIx9yNHBvTJW8WFAPrmKKlre4eDM2IJou4Z1lOQc+ozzYxkRoXvm/R5o0LHTsX
+	 Fo7NSfrYzNGO9jCwl0A0gU5+DhkgpnPuzkflsRKq6r2zPBBmjfiPwkNwMU/ikoAgE
+	 GCz95fJJVCDpPijsDsuoLIwxW6HAapde7/IRR1Ff6PtQ12VBMs/vpbNM/qpq7ESuT
+	 JgkohYYDXUYJBKWd/vMhqJbpsl0YKMBwFMWgwWMNu3A4AUwQsivFbO79R/QXNolxH
+	 pxbvKXBZsttFMW6aBg==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from [172.23.242.68] ([89.1.216.23]) by mail.gmx.net (mrgmx105
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MWigq-1rXAEN2JgG-00X5EK for
+ <git@vger.kernel.org>; Wed, 31 Jan 2024 08:11:47 +0100
+Date: Wed, 31 Jan 2024 08:11:46 +0100 (CET)
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: git@vger.kernel.org
+Subject: FreeBSD CI suspended on git/git and gitgitgadget/git
+Message-ID: <d2d7da84-e2a3-a7b2-3f95-c8d53ad4dd5f@gmx.de>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="fkx0gIEOi6SLWZdf"
-Content-Disposition: inline
-In-Reply-To: <CAGAWz+4wyd13UYRH3ZSSZEq1Y=5HE_p+qaXeOJS-ENMpWoLabA@mail.gmail.com>
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:HB7CK5bFUjwP4dGuHt+gU+ADvmrRynWMFwWUwOEs59Bhul3M72k
+ ofd6sMecj0fUGRKme2VcI5IGZp6QAuQRw4Grv9RcMlILMbAFk566uEzXjXOqR6UXeR5mWS/
+ ghxbsacPL0hyfieFvSjYrgKp8qM5MjkHHWTP65hQz10ZMdPz1DHhq3L6sfDCIOkQyecvJp+
+ p2I8Dy5Aipe9kqFTyy3cQ==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:ekP5Fp8Erf0=;ydT2Qa+fFRJTLuT5ht1upEXBa60
+ Rotze/kAqXRONxaJrxU8tH5xLWtGSQZ2Q/XKEN1SqLPk4vXZ9PS1IPhRvd2izOEg/il2C7Bf7
+ xtvIvBZ/u9PSHWL4P9zCQx3BbrdplvMhcUiTlWdQ3O8Ug3FoQY4O9eW70AKCnqIpMko1pP5hg
+ b1WEVzUhdrbVAGEnMYfHzwaSZEhF1EFRcKhKHrdfqaJr6aDIR0EV7zuQMVuc+I1KtFHZ2Rf8J
+ Bv5NnMWTKNObfLugp60TBs9dqWyF0T7h/pJwwzG4LPY5fssCWWbj54rPDxnLxsZpm7PhUrOIY
+ LgMmVyc4h9fcOWgL9qSpct7xEvPj73YpIF1BLS3vQq1vhJEljqsAYeEcxyzEBfrt2tl1/AbHx
+ ORhp+Ak+ffsPmWJzlC1OWxMXBZ0wahX9fgedK1JvjdgvD1vMOwIM2Fl2lsk6Lg0J91H0/UzZn
+ ikWPJQYOHD6f59QppTN++ORD8GAgKmjStAoJiYNxIVedonqvSRhAc/DGDh8ITut1GNzj9GHLH
+ rVqcNlvR2C6OfZnyw9KC9s3M2ay5Wkn8wT15FRPsx2bMlDzbZaBZidTy9OghmuGYU7Rg1k6hm
+ Odu0FOjQzGMfxBfp9YFpkN7bvDMFGAKhJqYSA9KeRCtdY9e5reJVuk61JRGWye5t3+M72RlXA
+ syA6rjRLtS7TL/0cOKlWJLzlbtB00Yaf7+t4K6SJtmmodierUs/2ajtHfNoMMAislKqOylPW0
+ FGEa/8/L9ckhTcC7ahA+uCh77aZMCNmqNAWdCl4NNwNx4Y020wDgNnkSlVz3kEd/RaeCcXZ4b
+ bilotGht+ABQB7jmaozQd/wQmK12MUBxpT7W0Rl0Dno5MUY1qQ83Qv9tgO5FV5CZISnhMFmic
+ w4G6A6XHFph4njHKuxRi86gz/6mZ9FDo9kC8qMpdwHltiGbvnkg0grqRC1B1Sy8MLmvQalvTl
+ ifxX+Q==
 
+Team,
 
---fkx0gIEOi6SLWZdf
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+I noticed that there is a problem with the FreeBSD runs on Cirrus CI (see
+e.g. https://cirrus-ci.com/task/6611218006278144):
 
-On Tue, Jan 30, 2024 at 01:04:46PM -0600, Justin Tobler wrote:
-> On Mon, Jan 29, 2024 at 11:23=E2=80=AFPM Patrick Steinhardt <ps@pks.im> w=
-rote:
-> >
-> > In 1df18a1c9a (reftable: honor core.fsync, 2024-01-23), we have added
-> > code to fsync both newly written reftables as well as "tables.list" to
-> > disk. But there are two code paths where "tables.list" is being written:
-> >
-> >   - When appending a new table due to a normal ref update.
-> >
-> >   - When compacting a range of tables during compaction.
-> >
-> > We have only addressed the former code path, but do not yet sync the new
-> > "tables.list" file in the latter. Fix this ommission.
->=20
-> nit: s/ommission/omission
+  Not enough compute credits to prioritize tasks!
+  Failed to start an instance: INVALID_ARGUMENT: Not Found 404 Not Found
+  POST https://compute.googleapis.com:443/compute/v1/projects/cirrus-ci-community/zones/us-central1-c/instances
+  {
+    "error":
+    {
+      "code": 404,
+      "message": "The resource 'projects/freebsd-org-cloud-dev/global/images/family/freebsd-12-3' was not found",
+      "errors": [
+        {
+          "message": "The resource 'projects/freebsd-org-cloud-dev/global/images/family/freebsd-12-3' was not found",
+          "domain": "global",
+          "reason": "notFound"
+        }
+      ]
+    }
+  }
 
-I knew this looked weird when writing it! Should've looked it up.
+This makes all the FreeBSD CI builds fail immediately. Sadly, I do not
+have time to investigate further, so I suspended the Cirrus CI
+installations on https://github.com/git/git and
+https://github.com/gitgitgadget/git.
 
-> > Note that we are not yet adding any tests. These tests will be added
-> > once the "reftable" backend has been upstreamed.
-> >
->=20
-> Nice catch! I noticed a small typo in the commit message but otherwise lo=
-oks
-> good to me.
-
-Thanks. I'll refrain from sending out a new version for this typo alone,
-but will fix it if other feedback requires a second iteration.
-
-Patrick
-
---fkx0gIEOi6SLWZdf
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmW53rcACgkQVbJhu7ck
-PpTzmA//ebNsJ8x64V9Mm4mmp49yRDbr62sW65qTa1vLFktdaiM7S0SSd/cSi5P5
-LsPbQrHNCsVaNxgqDOZLpxLKpnu0GHK5zeuzyIJ1rlQpcuWan1bj4t5s6PyczXlA
-n6zXrd0FB66/ofaNPs+1HDaTAwtffrb+cH2kiDmUCn14qQPHUbUKHAIDCjLhCRkv
-AhROAyOQLDl0sSj3aXvevvSy8GRaAefa1eb2CDZJbx46qqgdqq6lpZ0E2e50QAPJ
-ptNSjPfoEd0VYXE9nfkRxskHITbs6tWW3eSPZPLsTQMLwdwiQeLtk/r9oSLm+U8b
-eYmMMqXPjQ54Nf3NsZXWnueBErwsqucZ5ikdFgBkf9Wp985kSVxlwuVS1dZrMgNM
-TWHIRvoTZd6lSOrD0nmODYS9zu7pODSF9aHE3D1v6zMRxS3Zt/KqzqmvaBM+0L6o
-rTNdFySj7A/C4Hfl+O3fHQFVD+5obaS7z18/RBoMHce98CI5LMlU4M7hQcdStA20
-wiDpyUwX2quQnTgJbrGuigV+atsshU8FOiGU99V6vJ9zq6JZxHVF++zDVnocw0uQ
-qYEgncd5GU1A+wEsKhJ2VnKQ0pp44Oe8+KmMC4mg/NBFFaxObcWVz+sod6c0LhcX
-7s3oKNcJosTsuBRcADKK2wzzevwfyOyVKr7qUlFAdkzp9MMN68M=
-=RmML
------END PGP SIGNATURE-----
-
---fkx0gIEOi6SLWZdf--
+Ciao,
+Johannes
