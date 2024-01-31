@@ -1,94 +1,184 @@
-Received: from mout.gmx.net (mout.gmx.net [212.227.17.22])
+Received: from out1-smtp.messagingengine.com (out1-smtp.messagingengine.com [66.111.4.25])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B48A060ECB
-	for <git@vger.kernel.org>; Wed, 31 Jan 2024 07:11:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.22
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F182955C08
+	for <git@vger.kernel.org>; Wed, 31 Jan 2024 08:01:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=66.111.4.25
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706685112; cv=none; b=RX089nEforDV9sGrTTnQEKn8wagLsepjGjAb32M06qEMTI30T5Mtk2+bXOnOypsleSeLOkIS3k9g1uW+XnrAnGhfT/lhqRnmPnIATn2F00w6zqEeqDkSCMZRMraJt3cFMXUA2swL0mhuN39uvrK0scdyxFDMw3RE3NvNfP1fC4o=
+	t=1706688069; cv=none; b=g5xoX3XRSpDZcMmHtPlGBE1RxC2XH8cs+F/++8HaVP3L/aqT+5KPSrA5xXwBzv78zNtdCqhAWmJBKI7PkzkJpJ9bAird5w+tZya91lAgRY6rsw0NQxZzLthwV394zrxGs/F6KEIWDg6U0D4sOutUauPjtxeH1jdAoF/kzU+Ye/Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706685112; c=relaxed/simple;
-	bh=6nMP5MPH4JmFjOyEu7nZMkm7WS0ERYKYm8HR4Jf0p9M=;
-	h=Date:From:To:Subject:Message-ID:MIME-Version:Content-Type; b=AvwGDMyODvcIXi9nx7eorPuL7vfUxBlOpAXvNI0vPDpDXgB6NFmp0ut5CNgHSG9NegNzX0Lm0OqQ+GJ/D/yFL8J6ssQpSCdDd2wNhMhBCgSufCX4WfG8680agRaRNZnLCSX2j7/ATVGEZhIyOYEWZ/C+w4JjCm99BhMpJctoPkA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b=K0k7+vdN; arc=none smtp.client-ip=212.227.17.22
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
+	s=arc-20240116; t=1706688069; c=relaxed/simple;
+	bh=FdHMtPNiRNMFaLjm17e+xvATgQ3JuT+D6hIziIdm2bA=;
+	h=Date:From:To:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition; b=eYLgRmVoEXwvxPkW3q50knNSy51MLa8UKeR6dL5xjOKjrRSaIjQYwJOZobONsBxqPWnwfyaE1cWgFpzwTbC1X6LFF+YNG7SMy+hicKqOepd9FEtK4DO11WcBFFu4BfBVWr8AGZVvCO2Z+mU1FZZCtWavQ/CBwIzELY/6qpwTZTQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=mdFH4U42; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=WJN3Ogc9; arc=none smtp.client-ip=66.111.4.25
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b="K0k7+vdN"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.de; s=s31663417;
-	t=1706685107; x=1707289907; i=johannes.schindelin@gmx.de;
-	bh=6nMP5MPH4JmFjOyEu7nZMkm7WS0ERYKYm8HR4Jf0p9M=;
-	h=X-UI-Sender-Class:Date:From:To:Subject;
-	b=K0k7+vdNkmcbji4Iv3WX/hWyLjp3cNBE5Eiw7gC5WR7dxcDInoyHX5sv7PvRKSMC
-	 SRlZIx9yNHBvTJW8WFAPrmKKlre4eDM2IJou4Z1lOQc+ozzYxkRoXvm/R5o0LHTsX
-	 Fo7NSfrYzNGO9jCwl0A0gU5+DhkgpnPuzkflsRKq6r2zPBBmjfiPwkNwMU/ikoAgE
-	 GCz95fJJVCDpPijsDsuoLIwxW6HAapde7/IRR1Ff6PtQ12VBMs/vpbNM/qpq7ESuT
-	 JgkohYYDXUYJBKWd/vMhqJbpsl0YKMBwFMWgwWMNu3A4AUwQsivFbO79R/QXNolxH
-	 pxbvKXBZsttFMW6aBg==
-X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from [172.23.242.68] ([89.1.216.23]) by mail.gmx.net (mrgmx105
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MWigq-1rXAEN2JgG-00X5EK for
- <git@vger.kernel.org>; Wed, 31 Jan 2024 08:11:47 +0100
-Date: Wed, 31 Jan 2024 08:11:46 +0100 (CET)
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="mdFH4U42";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="WJN3Ogc9"
+Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
+	by mailout.nyi.internal (Postfix) with ESMTP id C33115C011B
+	for <git@vger.kernel.org>; Wed, 31 Jan 2024 03:01:05 -0500 (EST)
+Received: from mailfrontend1 ([10.202.2.162])
+  by compute2.internal (MEProxy); Wed, 31 Jan 2024 03:01:05 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:message-id:mime-version:reply-to:subject:subject:to:to; s=fm3;
+	 t=1706688065; x=1706774465; bh=xPgf0h16C7b0Zf8azgULCvd3f6vGOW6d
+	WOunxCsEkOo=; b=mdFH4U425hlRYL+TXBN0xFmfKxVxmFZ01Lt9v7r4ertoaaCE
+	niVpmvdvfnSJLB4CcodWEvc0yGoxK+y8+PBtifeQCZT0HRu+OLyTpRerV5tAaGzm
+	fzLz3kB5KmWI6/pyPjm3ZJx6wAr52EE2+mdJ4eKRs8Z05zleNkkGUmse+wMzV7AJ
+	2D2LueqRekU4aVj1VU8Wz69E1Z5idpodesAnVm9rmcWHAPRED1g11YemE+wWDJhf
+	8l4/2G4CdCpp66+48nVjR2TC4bUMFEubNB2fDKpkPDvJ38hR5WxHfkwwK+HuUun7
+	xpX2lOPfc2+NAEvHwz/9ktFQFeQR6EO5kMDTWA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:message-id
+	:mime-version:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1706688065; x=1706774465; bh=xPgf0h16C7b0Zf8azgULCvd3f6vGOW6dWOu
+	nxCsEkOo=; b=WJN3Ogc9j5AY+wwQp7gO6ELW85DWxEeGWBVjlXAo9YJc+sYmXIo
+	/D5HEnJG3yuO+WTJUN/9kukvNaWWCYJvUtiZJ2wKA+NTRY+hj4s/LsQ2OgzJSt/d
+	7uLFHSTaVoUhV2xk86HI/1+HV11c9+9o0yyp473ttIyk02YOfBXeSVanOA6l6Iq0
+	qcuelF0AJMRLzvv1w3gUqim5igchEPB0zQI5ephuO9ufAiM6AQxivp32/T47pvHb
+	A3G1r/ydr+asVBdKAKrm0TtV1X0a6rxcNPjs2QnLi/pP1qWL6/cxejtmxeOk8hbr
+	QgFXravGIYIRox7TRenE17Hpz5Nggz1hJwQ==
+X-ME-Sender: <xms:Qf65ZdmBXyhz_80vBthFdGZYPgeo2iP8PBAxMaqY8Rt7CDcxfZXuUA>
+    <xme:Qf65ZY1bVSnk_v5I5A1TiblgRPq2cKIJEfijZ6EDDP0Y54yIKP50f6LIiUNsHRMLt
+    KzAkNjn4MOzEWvGow>
+X-ME-Received: <xmr:Qf65ZToB9ezxWm4ZItUNhE2Z7jJAef5M7CSKXedXWCOc0iz4Kx9cZoKDQBsKfR3FzEAx3VkLvI-v40ue0_QKc2AnWCW4OozDs6LAaZKUs9Q8WZI>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrfedtkedguddufecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
+    necuuegrihhlohhuthemuceftddtnecunecujfgurhepfffhvffukfggtggusehgtderre
+    dttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhk
+    shdrihhmqeenucggtffrrghtthgvrhhnpeejieefvdeuleffgfejudffvdeghfeigfejgf
+    dvvdefudevffefveffhffgkeeiffenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgr
+    mhepmhgrihhlfhhrohhmpehpshesphhkshdrihhm
+X-ME-Proxy: <xmx:Qf65ZdkNx7XI6qRPOrT3FqPix6lE_7oKbGDxBRRzCnQdbLTvhK-xJA>
+    <xmx:Qf65Zb2fgWrSp40X_llW0XoC8rJCcJzvYAUnWHV4QW1eYtM3qlqVog>
+    <xmx:Qf65Zctt13c6WAANCkDc2xoXqXMJ0OoXqko-XOQmUTnmEZtG_0npXw>
+    <xmx:Qf65ZY9LBxPtv1LsVLIe8TGE8BtAC6jMawF26ty9yqYUY_yYdOxIaA>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA for
+ <git@vger.kernel.org>; Wed, 31 Jan 2024 03:01:04 -0500 (EST)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id 6f1d22d1 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	for <git@vger.kernel.org>;
+	Wed, 31 Jan 2024 07:57:42 +0000 (UTC)
+Date: Wed, 31 Jan 2024 09:00:59 +0100
+From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
-Subject: FreeBSD CI suspended on git/git and gitgitgadget/git
-Message-ID: <d2d7da84-e2a3-a7b2-3f95-c8d53ad4dd5f@gmx.de>
+Subject: [PATCH 0/9] reftable: code style improvements
+Message-ID: <cover.1706687982.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:HB7CK5bFUjwP4dGuHt+gU+ADvmrRynWMFwWUwOEs59Bhul3M72k
- ofd6sMecj0fUGRKme2VcI5IGZp6QAuQRw4Grv9RcMlILMbAFk566uEzXjXOqR6UXeR5mWS/
- ghxbsacPL0hyfieFvSjYrgKp8qM5MjkHHWTP65hQz10ZMdPz1DHhq3L6sfDCIOkQyecvJp+
- p2I8Dy5Aipe9kqFTyy3cQ==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:ekP5Fp8Erf0=;ydT2Qa+fFRJTLuT5ht1upEXBa60
- Rotze/kAqXRONxaJrxU8tH5xLWtGSQZ2Q/XKEN1SqLPk4vXZ9PS1IPhRvd2izOEg/il2C7Bf7
- xtvIvBZ/u9PSHWL4P9zCQx3BbrdplvMhcUiTlWdQ3O8Ug3FoQY4O9eW70AKCnqIpMko1pP5hg
- b1WEVzUhdrbVAGEnMYfHzwaSZEhF1EFRcKhKHrdfqaJr6aDIR0EV7zuQMVuc+I1KtFHZ2Rf8J
- Bv5NnMWTKNObfLugp60TBs9dqWyF0T7h/pJwwzG4LPY5fssCWWbj54rPDxnLxsZpm7PhUrOIY
- LgMmVyc4h9fcOWgL9qSpct7xEvPj73YpIF1BLS3vQq1vhJEljqsAYeEcxyzEBfrt2tl1/AbHx
- ORhp+Ak+ffsPmWJzlC1OWxMXBZ0wahX9fgedK1JvjdgvD1vMOwIM2Fl2lsk6Lg0J91H0/UzZn
- ikWPJQYOHD6f59QppTN++ORD8GAgKmjStAoJiYNxIVedonqvSRhAc/DGDh8ITut1GNzj9GHLH
- rVqcNlvR2C6OfZnyw9KC9s3M2ay5Wkn8wT15FRPsx2bMlDzbZaBZidTy9OghmuGYU7Rg1k6hm
- Odu0FOjQzGMfxBfp9YFpkN7bvDMFGAKhJqYSA9KeRCtdY9e5reJVuk61JRGWye5t3+M72RlXA
- syA6rjRLtS7TL/0cOKlWJLzlbtB00Yaf7+t4K6SJtmmodierUs/2ajtHfNoMMAislKqOylPW0
- FGEa/8/L9ckhTcC7ahA+uCh77aZMCNmqNAWdCl4NNwNx4Y020wDgNnkSlVz3kEd/RaeCcXZ4b
- bilotGht+ABQB7jmaozQd/wQmK12MUBxpT7W0Rl0Dno5MUY1qQ83Qv9tgO5FV5CZISnhMFmic
- w4G6A6XHFph4njHKuxRi86gz/6mZ9FDo9kC8qMpdwHltiGbvnkg0grqRC1B1Sy8MLmvQalvTl
- ifxX+Q==
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="ACiHqbHuQpA22c2i"
+Content-Disposition: inline
 
-Team,
 
-I noticed that there is a problem with the FreeBSD runs on Cirrus CI (see
-e.g. https://cirrus-ci.com/task/6611218006278144):
+--ACiHqbHuQpA22c2i
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-  Not enough compute credits to prioritize tasks!
-  Failed to start an instance: INVALID_ARGUMENT: Not Found 404 Not Found
-  POST https://compute.googleapis.com:443/compute/v1/projects/cirrus-ci-community/zones/us-central1-c/instances
-  {
-    "error":
-    {
-      "code": 404,
-      "message": "The resource 'projects/freebsd-org-cloud-dev/global/images/family/freebsd-12-3' was not found",
-      "errors": [
-        {
-          "message": "The resource 'projects/freebsd-org-cloud-dev/global/images/family/freebsd-12-3' was not found",
-          "domain": "global",
-          "reason": "notFound"
-        }
-      ]
-    }
-  }
+Hi,
 
-This makes all the FreeBSD CI builds fail immediately. Sadly, I do not
-have time to investigate further, so I suspended the Cirrus CI
-installations on https://github.com/git/git and
-https://github.com/gitgitgadget/git.
+this patch series contains a more or less random assortments of code
+style improvements for the reftable library. The patch series is
+structured as follows:
 
-Ciao,
-Johannes
+  - Patches 1-2 introduce macros to allocate and grow arrays. These are
+    basically the same as our ALLOC_GROW and ALLOC_ARRAY macros, but
+    specific to the reftable library.
+
+  - Patches 3-6 refactor some code to use `size_t` to index into array
+    slices instead of `int`.
+
+  - Patches 7-9 are some more debatable cleanups that helped me
+    personally to make sense of the code better.
+
+I've been a bit hesitant to send out these patches as they may be
+considered "noise", especially the last three ones. But the reftable
+library feels quite alien in our codebase, which does increase the
+mental overhead at least for me when reading its ccode.
+
+I think it should be a goal of ours to align it closer to our normal
+coding style, which will of course end up in quite a bit of churn over
+time. A different approach would be to do these refactorings while
+already touching the code anyway due to other reasons. But I found
+myself doing the same refactorings over and over again in different
+contexts for patch series I ultimately didn't end up sending, so I'd
+really rather want to get those out of my way.
+
+Anyway, please let me know how you feel about patch series like these.
+
+Patrick
+
+Patrick Steinhardt (9):
+  reftable: introduce macros to grow arrays
+  reftable: introduce macros to allocate arrays
+  reftable/stack: fix parameter validation when compacting range
+  reftable/stack: index segments with `size_t`
+  reftable/stack: use `size_t` to track stack slices during compaction
+  reftable/stack: use `size_t` to track stack length
+  reftable/merged: refactor seeking of records
+  reftable/merged: refactor initialization of iterators
+  reftable/record: improve semantics when initializing records
+
+ reftable/basics.c          |  15 ++--
+ reftable/basics.h          |  17 ++++-
+ reftable/block.c           |  25 +++---
+ reftable/block_test.c      |   2 +-
+ reftable/blocksource.c     |   4 +-
+ reftable/iter.c            |   3 +-
+ reftable/merged.c          | 100 +++++++++++-------------
+ reftable/merged_test.c     |  52 ++++++-------
+ reftable/pq.c              |   8 +-
+ reftable/publicbasics.c    |   3 +-
+ reftable/reader.c          |  12 ++-
+ reftable/readwrite_test.c  |   8 +-
+ reftable/record.c          |  43 +++--------
+ reftable/record.h          |  10 +--
+ reftable/record_test.c     |   8 +-
+ reftable/refname.c         |   4 +-
+ reftable/reftable-merged.h |   2 +-
+ reftable/stack.c           | 151 +++++++++++++++++--------------------
+ reftable/stack.h           |   6 +-
+ reftable/stack_test.c      |   7 +-
+ reftable/tree.c            |   4 +-
+ reftable/writer.c          |  21 ++----
+ 22 files changed, 221 insertions(+), 284 deletions(-)
+
+
+base-commit: bc7ee2e5e16f0d1e710ef8fab3db59ab11f2bbe7
+--=20
+2.43.GIT
+
+
+--ACiHqbHuQpA22c2i
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmW5/joACgkQVbJhu7ck
+PpRi2xAAi6AzpOIl7/ecx8kE55080GlGdL+2JkhMzIgT/xGZcfF9YXcGpQkZ42TN
+xPslUxlVZsSI/CbZyrFZSxrvwSUMixyuFKfV6Ak267QhD3zhoYeUlmJ/QBQ0R294
+NlKXcwz3l8lFxWvv0n+XiS27aF7WKy5qQldRMfCEKFvIA+BhGQxMrX5rdJbiYZbE
++l8BhUx8xbYXMdJIQYmDiRjVkVYxqXghIoEJjt+1eFBSWlGgiB1rlu4dmrEXaYtw
+Jemf0HvzE7NVjUAWKaGJHfGVKKWo10iMSjtEoh6y5pNnH4ekiVK28pj8fmUhj5dP
+yXUKrUgGOtRL4eFpk7tVtC0mpcXkSo0weICl4BLVWEsPChS7sQsT07ZoUua5VIYL
+sPcpeV8Caq4ugu31ByiNYRL7SESGTarA05k0r+SbxtKGgjWwJD7JzNlrOd5Gwer3
+aeJXm9h1Fm3f7CiYL5inykm9kDBwlAcKOwwOvXHXVnRvJN8+/5pv5sdlxMbfudnj
+dIx3ZMRleH9rNBSuEyJt7T7zGo20Yq2JJX9HSFrB4FsjynzIm3NmcpMSKpFwcNVe
+sqjr1yzAH5YrooLu+JCDxQy2cZxlKvIAmYrLcf6cE1YNcprPOHxeDR9NlGE6zilj
+TKCXA5KsOOOi+AKZYxvv6CH51GsMDy/ljmqI6XfZu+8spgm15FE=
+=0nl5
+-----END PGP SIGNATURE-----
+
+--ACiHqbHuQpA22c2i--
