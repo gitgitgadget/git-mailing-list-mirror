@@ -1,75 +1,100 @@
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-f174.google.com (mail-pg1-f174.google.com [209.85.215.174])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE5CC12F5B6
-	for <git@vger.kernel.org>; Wed, 31 Jan 2024 17:58:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8687A12FF87
+	for <git@vger.kernel.org>; Wed, 31 Jan 2024 18:03:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706723914; cv=none; b=IkdSKtLOkncI4kHT9A18hlWMk8otZE+0XuOFdovMrkVt7rGaNfnvADC/9+JFU8S851KjJO2m5I2+TDYWE8RtmUkBhMYHLYGUfK0+0jSWiHMtXsqCm38CS/sKa9NKIxjXAP17dfTtn8G8b99Uo8phgt5mC1/v0WAROGj7du2aFnY=
+	t=1706724221; cv=none; b=OojuwOSd34iD0s3p+AcYnLWPm3/JaF7T/Y1znsacro/b+Lowz6a+0CIhUQV5avrnoM2H12Ur/FQ1nVhdq0e5TcYW4HB+XcXxfqMZMkNX9BgOp0LnyqoZTLDu1bQaGBRv7Gr6rpxsvgmnroZB1uO9BOiZlMX54Ka+mdKRFBK4lu4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706723914; c=relaxed/simple;
-	bh=hiO6LOkbQnqiKQqvG/PtfPJ6nbJdcR2qA6+1NdcLn4I=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=WsEQae8kWydn46Iyb2ZlyGIJWBdnZ6sbh3DkPfKegOTk25dmANIRnaNu7MY/3Q/cRT/xR41i2wVRqYxoa3ym5towAImgfNhfdG3U9sBcfWRlzVZ/TESbI8bZQgN1wQDff79+0hrXMhpZK2zy2sHMgUvnt0bsdahDHUbZ38aGHyU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=YmpKBeaJ; arc=none smtp.client-ip=173.228.157.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1706724221; c=relaxed/simple;
+	bh=xDdVIJxrCZDj73qYyZlmZvxPpZYo1FAXI5mRjsdWzDk=;
+	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
+	 In-Reply-To:Content-Type; b=KKvjYdn4L9UIso/gRcsTDrGdTGqqmvMBNrVR+5qLFHyFlh41lebLap+7lh0OMqj1gYfFT0rfEY8maMtdKBlkyOvEu7rayt6o6EY1EPWReSS2EaB31is7oCi9TgTSBLTJtEo0b4aVyrORYVEygeVpeOm2YLWu2rvxkTs1jYq+/r0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ZnL1qLNu; arc=none smtp.client-ip=209.85.215.174
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="YmpKBeaJ"
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id 2A2E73284A;
-	Wed, 31 Jan 2024 12:58:32 -0500 (EST)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=hiO6LOkbQnqiKQqvG/PtfPJ6nbJdcR2qA6+1Nd
-	cLn4I=; b=YmpKBeaJ3beHsrOd4rPQkXHoVn8KSxHOVj4nSjPAIFpItrBLcDtvCW
-	lS47Z7298qCOIIM6ftc4tydejthn4hSqJ8VwDrVEQ50tANkICdXrMjfP96DcH993
-	Wm4U9KAeIe1XaZV+iYny5PobUHqOgpgarN5hmpsOex0c299b6thdE=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id 2252732849;
-	Wed, 31 Jan 2024 12:58:32 -0500 (EST)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.200.93])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 5ADB432848;
-	Wed, 31 Jan 2024 12:58:28 -0500 (EST)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Kristoffer Haugsbakk" <code@khaugsbakk.name>
-Cc: "Josh Soref" <gitgitgadget@gmail.com>,  Haritha <harithamma.d@ibm.com>,
-  git@vger.kernel.org
-Subject: Re: [PATCH] This PR enables a successful git build on z/OS.
-In-Reply-To: <4d0efd0f-f35d-4a3a-aea1-e08cc55bd2d9@app.fastmail.com>
-	(Kristoffer Haugsbakk's message of "Wed, 31 Jan 2024 17:12:27 +0100")
-References: <pull.1663.git.git.1706710861778.gitgitgadget@gmail.com>
-	<4d0efd0f-f35d-4a3a-aea1-e08cc55bd2d9@app.fastmail.com>
-Date: Wed, 31 Jan 2024 09:58:26 -0800
-Message-ID: <xmqqmssl75bx.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZnL1qLNu"
+Received: by mail-pg1-f174.google.com with SMTP id 41be03b00d2f7-5d8df34835aso9103a12.0
+        for <git@vger.kernel.org>; Wed, 31 Jan 2024 10:03:40 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1706724220; x=1707329020; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:references:cc:to:from
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=AITbC+hL6bPcJg0BamD8jSCof5JkCpU756mgmI0ESP0=;
+        b=ZnL1qLNuVxrpEEtTz31wmPSecwf4m0hsFf7alenWzDdJhbzwcRFWjPNfUVXZoC8OCb
+         gjPuSiuFOgzVlmwxLzydV7EXlxL6ZffpZUbws9dxSlgj8YRJkadKxnUJia2LdPHbDJCY
+         uyLk2Ma1KNjVcv9IdDub47IGnJiNt7/LE0dVX68hgUxvNm5SE9g57RwvqvyBMO9bc0xH
+         9RGZNllrBEp5SWntcxUXyI1/m0WWQRIquKoKgPYjJSDOpSN1NUPjTjtJu+JaVlzc/opF
+         9u4nyA5tYQhVNsyvT2nXvTymE2A+KH4NnySBExZJkLG16lUuGzeX5Z8C+990e3283ixN
+         aDeQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1706724220; x=1707329020;
+        h=content-transfer-encoding:in-reply-to:references:cc:to:from
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=AITbC+hL6bPcJg0BamD8jSCof5JkCpU756mgmI0ESP0=;
+        b=vOp4NHiOzu6Vdg2vVMqVzduShRRvTx+L8jnjuAj4qsKx/KauPln5RSwFdNp90kywOT
+         MvzTfkYS1I5xzrTaUCNCAtwE+ctCOU9ct7PjLuDhMMITxcY7mASIlhcOlvOICQgg8F1i
+         XOvK6cDKHwg4RpfqhzuSeOjjvyUFoDORjMY7ANvYB9bZpBag2UzYG2fF2W1wbnJ7Xn/1
+         xsJ+6u3fvfwcYJot6r4194yciyc75oWa9/gPfgqryfwZwgi3w+LIsgBLPlYb+LWebsKt
+         AshwSO5RZEX0XSQTx2SJ9D/bdHdZverCufvET85aUiRnr2mqk9p3WgTilfurXji34b1K
+         KsRg==
+X-Gm-Message-State: AOJu0YzhU2JbjsBKHsft8wpE5+iscF+LbBJlLuGylNb5Kiy9DDgXYXgx
+	ZU3KqNqVGFYva3FCp0Ljaikh7EbD8yIVYHqi+uOjkmhSyxL0gp0wI5fvi+Qo
+X-Google-Smtp-Source: AGHT+IFjuy26vNckPItPJoTHGrCbncrJX7zNox/OkKfmYbDkuvW7pTBFb4bdG8yD4vr6j8d2vT+Thw==
+X-Received: by 2002:a05:6a20:3194:b0:19b:42ea:314f with SMTP id x20-20020a056a20319400b0019b42ea314fmr2449545pza.16.1706724219696;
+        Wed, 31 Jan 2024 10:03:39 -0800 (PST)
+X-Forwarded-Encrypted: i=0; AJvYcCUygbwE6Hwb3y9vBc1h2BLw0wdE/jJ6VIR2NXYGJjl/lSHLXoQLv0TLHkOHAE4BpyQfdHUluZbBHTvTfxU/SKLYll9dG8BKMzyABtCkJs1BT90Y3LtMVYOI9Dg4r0yfCU/re2Eb6wRhJVZYEtoEOos4fQzL2+G1UB1T1wBtXTFx
+Received: from [192.168.208.87] ([106.51.151.68])
+        by smtp.gmail.com with ESMTPSA id d10-20020a63fd0a000000b005cf450e91d2sm10988214pgh.52.2024.01.31.10.03.37
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 31 Jan 2024 10:03:39 -0800 (PST)
+Message-ID: <62165479-8539-407e-9a33-6f2733414cf6@gmail.com>
+Date: Wed, 31 Jan 2024 23:33:35 +0530
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- 56655A9A-C062-11EE-86D7-A19503B9AAD1-77302942!pb-smtp21.pobox.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: Git in GSoC 2024
+Content-Language: en-US
+From: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+To: Patrick Steinhardt <ps@pks.im>,
+ Christian Couder <christian.couder@gmail.com>
+Cc: git <git@vger.kernel.org>, Taylor Blau <me@ttaylorr.com>,
+ Junio C Hamano <gitster@pobox.com>, Victoria Dye <vdye@github.com>
+References: <1de82b27-116a-450e-98c0-52eb65a8f608@gmail.com>
+ <CAP8UFD1VAvnkM6afZvtpdXhA4csDBDwMnF9yUzSx_ut-Ypf+eA@mail.gmail.com>
+ <Zbi8pfvGpYrlZXAu@tanuki> <ZbpGzAd6FGEeTdrh@tanuki>
+ <c61322de-8cd9-42b8-a04b-a8ae47b25c5e@gmail.com>
+In-Reply-To: <c61322de-8cd9-42b8-a04b-a8ae47b25c5e@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-"Kristoffer Haugsbakk" <code@khaugsbakk.name> writes:
+Hi,
 
-> Hi
->
->> [PATCH] This PR enables a successful git build on z/OS.
->
-> Maybe the subject could be:
->
->> [PATCH] build: support z/OS (OS/390)
+On 31/01/24 23:27, Kaartic Sivaraam wrote:
+> 
+> Great. Thanks for your interest in willing to mentor!
+> 
+> I created a fairly rough SoC ideas page for now including a barebones 
+> information about the unit test migration idea:
+> 
+> https://git.github.io/SoC-2024-Ideas/
+> 
 
-Nice.  This is nicer than what I came up with, that placed too much
-stress on the runtime path to the dynamic library.  With all the
-stuff added to config.mak.uname, yours is much more appropriate.
+For the note, I also put up the 2024 microprojects page by basically 
+renaming the 2022 page. I'm supposing the projects are still relevant. 
+Kindly correct me if that's not the case.
 
-Thanks.
+https://git.github.io/SoC-2024-Microprojects/
+
+Also, feel free to suggest other microproject ideas that you may have.
+
+-- 
+Sivaraam
