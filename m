@@ -1,101 +1,88 @@
-Received: from mail-oi1-f181.google.com (mail-oi1-f181.google.com [209.85.167.181])
+Received: from mail-pl1-f182.google.com (mail-pl1-f182.google.com [209.85.214.182])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE3F9182C1
-	for <git@vger.kernel.org>; Wed, 31 Jan 2024 19:13:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8096038F8F
+	for <git@vger.kernel.org>; Wed, 31 Jan 2024 19:23:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706728424; cv=none; b=jslQPfZj/fHIlTKnu7EMP+IBwW3xBBP15gmkashwtrFYuKEmZzASmdzCJgwzLymR/bmUnLIVUYvRPFAGfstBD6YpGe42d/FPJBPujF5cjfU6wWBdPjvWETORR4WIITQIoG7Qu0P7jdW1ZlUjOGCgBHnfYp+GEvMcpMebgOZOJCo=
+	t=1706729004; cv=none; b=Vn4EB+EiJKIxylqEPOhqllIWS9dEZ4vq7HBV1dfS4M3Ooo9k7Yu+F7+jBpbK5vd44+1C7X76hsArblnhzWpOSHuDbaItXLH7CRANaE7zyalgPQJ2ZvvS0chLBdfTkeV51thGb7dgv7gGNqEnz1nbiTYAWh6dOYlhKsc6AEPGHCg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706728424; c=relaxed/simple;
-	bh=Kfkecy6TaLptZ49IJ7QeTorybxrvLmisdSsuVfqPtcc=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=RMsIF6Yv4xXv4ctv668adTTWY/aKLaGCTG3wkj5OC7DmyDSh71umf3ypDPx9bdbHQnwFPV02rfkgKu1SeXW6JlA1gynfTueSAJDDD31mOMhEAw9Vk6Q+4qfZoWa/SvBlqbMeXf9yJUTOxiyXCTYumhsEyOk/AizodgXXPHGVOdg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=dinwoodie.org; spf=pass smtp.mailfrom=dinwoodie.org; dkim=pass (2048-bit key) header.d=dinwoodie.org header.i=@dinwoodie.org header.b=Fs8odoyJ; arc=none smtp.client-ip=209.85.167.181
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=dinwoodie.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=dinwoodie.org
+	s=arc-20240116; t=1706729004; c=relaxed/simple;
+	bh=Qw2Zl2Rp0MI7hUq8c46FKHGUDSu0iD7E2qINVOGKbdU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Kwey/C2v1ulcQfLKVjEr1EWP2zYdqFIlhqCHWUklPVuvdnVFRq/cy8dcrZfOvdN3J0kNlEXAzFQ+nBIj702sVD8TA2OVzlGl9PHo7xJ45QHKyrGfCaujaJ2DI762pJFLCbEW/ZLc1szdoNRscHMnPCV43mFDpnOvixJytpHq6c0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jgXXJACn; arc=none smtp.client-ip=209.85.214.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=dinwoodie.org header.i=@dinwoodie.org header.b="Fs8odoyJ"
-Received: by mail-oi1-f181.google.com with SMTP id 5614622812f47-3be2ba0ffd8so22900b6e.0
-        for <git@vger.kernel.org>; Wed, 31 Jan 2024 11:13:41 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jgXXJACn"
+Received: by mail-pl1-f182.google.com with SMTP id d9443c01a7336-1d71cb97937so975755ad.3
+        for <git@vger.kernel.org>; Wed, 31 Jan 2024 11:23:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=dinwoodie.org; s=google; t=1706728420; x=1707333220; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=qX+4+laxpw0oZyrzMzZ1sIK1QP7Rh69BJV8RI/Ec/mo=;
-        b=Fs8odoyJHHpJtmfuyH93L0UsswZNro/imaIEVnsZvcIy5TctcaygL2RY7SZ3TWiSUS
-         Zm7Xxvbg+gjiGx/cbgUb1Qj9XlSql3gQmIIcoE6uw6sUez4vTPGxLOrhLekAeIeEE+8y
-         RELs/FwW/fXjIUcyL9weWHyrF+TxweVd+KZWOKGxLI8yqEoJYkEJn5nDgWX6ekWim3Gz
-         c6sY9zG8zFsEdS5xBoWfhHBdRX/JovaNmLXZizpr0doNYZVn+eXus129VLEB+MbFPYtz
-         V+m7b8tKjQbpT7eKG0uiRc+sJsJ9oeRGS1/oZQlAMS0WatqwFnsxctuyK63jaCM5dXqK
-         2nsg==
+        d=gmail.com; s=20230601; t=1706729003; x=1707333803; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=jltsvj/HIEE0MSssR1stP/IVk0vkuzDsQdEPpWEobmA=;
+        b=jgXXJACnx9+cNM9Dc7CvDTCnx9cxggq3TzxqdgwfTLmRR38qzMPwHtGMOffc/lgShx
+         fp6TrS1nKjXy3hd7soGzrAjJ9SMWlueTQeTTgBLBQT2fPXxhpLSE65YWK400htii0tcm
+         glHhp5zjbkAFN2Q9MOFhFtfiLWh4Gh1IibMivzndolBMc+ZwpTZYGBP5kepbsSYw9NBI
+         80K6vXmCmJUWlZYo/nTt1aNMAPZyf5/kJ9aBtzJ/OHzvkktY1iYHdehtFU9ywtipiE8B
+         TC+jwOn3jqjyWW0HDIOSxZtrzK4nverzJ1W17kmaJAbt8VjDELUYEFyvdSrNVpYCA13u
+         afOg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1706728420; x=1707333220;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=qX+4+laxpw0oZyrzMzZ1sIK1QP7Rh69BJV8RI/Ec/mo=;
-        b=ZQ1MALls273aUs7uUoVdBil1892xCZtMFSYiMGQT81TaV5kin559yxI3pLmnpyeeuj
-         sLGzlvkdpeJalT04j6xOgkZ3s+3SS6xg1dCtKth205S61nTiAkSPsISa7V19XMHoGKdB
-         Dd1ZfHO5AvbhL6C6sbkbIk/piTNcQQMGi54S0ga1FUsMNfjUyRzFP6Gnbr1W88v3NWgQ
-         ElJ/1J9eapf2+Y5jXhXJJl5EymgJes8fOPGm5NJyZRbwaRydl4322UFkloJEvaEw3P+8
-         /QS8EUjFKb1MPEGExV38oThrtJjbJo3fJQX2+7u/D/p60ifGdqsDEvT8E5o7ZwJq/d8O
-         zzIg==
-X-Gm-Message-State: AOJu0YyAAtYarxWlUtJBvWO8yqOMLhzU5Z2HaA1S3kx8f9M7nGioUqbh
-	7hns0fWbxv9tlfte9K7Dc326swqArhThfTWHSqS4TXDwnNWt1dqav+fodZ8FAcxP6F0aBaoY3tD
-	8Yth71bUw2YtC8I8QgknaNurIjEYIT51S40zr
-X-Google-Smtp-Source: AGHT+IG0l1KGavxFBJJI4uY9G0dCPg6RH/HpBFUiNtYpAriOvBuUyRtB3KDzSYqorJKQzj3MKZQZTp2btyuFelYf4S8=
-X-Received: by 2002:a05:6870:659e:b0:218:d535:4aca with SMTP id
- fp30-20020a056870659e00b00218d5354acamr95404oab.5.1706728420524; Wed, 31 Jan
- 2024 11:13:40 -0800 (PST)
+        d=1e100.net; s=20230601; t=1706729003; x=1707333803;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=jltsvj/HIEE0MSssR1stP/IVk0vkuzDsQdEPpWEobmA=;
+        b=WlHqS9qyZKgDWXoznkMv7sWyecaisn8JS4u/wq3LL/+0IiRBicn5zj9NnT61pUPlyA
+         14MLNGTAT6nmF1y67SzpslaunFtMJS2j5094ubNQj+UWIVr1I4DxPREEKj9cTDmhIwvJ
+         hWQpZsXsMCYDNOs3dOpdJrWJvFh+Q5KTPjoFq7zrqc7V6PspjDiRA4HF+t+yqRQegIar
+         wrStpBDLp0SyESOJnKU8sCst9vezuUVWc9tdjikUkjBRurjl7tVhT1SL37phE5tycXuz
+         o9p8qBPt4OILnhoo856bYL+E6CbMPC7ulbceYRZvSqne7vTsSR5S0xcmu051qxdWF1M6
+         6hYQ==
+X-Gm-Message-State: AOJu0YxONjZXcTRTfuXywGDJDr5dn3c4qGGlTGciTwvaSYoHq5WyARkH
+	nBDNV2X3Qme3O9LEQsRXilFtD72hVc2lhB611FpuYyoFUtDN3APX/gR+y2h2
+X-Google-Smtp-Source: AGHT+IEnfMNtsGpPmgv14HJ2uG1Np1RHFBII3ADQOnOTBHtA+ATBv8z04lDMROatFUX3RvNgfiHwOw==
+X-Received: by 2002:a17:902:ecc1:b0:1d8:a108:2cab with SMTP id a1-20020a170902ecc100b001d8a1082cabmr3164406plh.67.1706729002478;
+        Wed, 31 Jan 2024 11:23:22 -0800 (PST)
+Received: from Carlos-MacBook-Pro-2.local ([2601:640:8e80:1270:fc94:809e:19f2:d7a6])
+        by smtp.gmail.com with ESMTPSA id y5-20020a170902e18500b001d8d52905e9sm6552160pla.0.2024.01.31.11.23.21
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 31 Jan 2024 11:23:22 -0800 (PST)
+Date: Wed, 31 Jan 2024 11:23:20 -0800
+From: Carlo Marcelo Arenas =?utf-8?B?QmVsw7Nu?= <carenas@gmail.com>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc: git@vger.kernel.org
+Subject: Re: FreeBSD CI suspended on git/git and gitgitgadget/git
+Message-ID: <22cfob7wthmveupp5w7dbdtbparybcsdagoitwneqw6f2cmhs5@x3tnbbftvtyw>
+References: <d2d7da84-e2a3-a7b2-3f95-c8d53ad4dd5f@gmx.de>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240129031540.GA2433764@coredump.intra.peff.net>
- <20240129031933.GB2433899@coredump.intra.peff.net> <ZbeLcrjIYd4d7PaB@tanuki>
- <20240129174918.GA3765717@coredump.intra.peff.net> <CA+kUOanDydgCEax9RFu_xVXkx_LeiSPOoWiUpwAg=EVQxSDJRw@mail.gmail.com>
- <xmqqeddzfywg.fsf@gitster.g>
-In-Reply-To: <xmqqeddzfywg.fsf@gitster.g>
-From: Adam Dinwoodie <adam@dinwoodie.org>
-Date: Wed, 31 Jan 2024 19:13:05 +0000
-Message-ID: <CA+kUOakoMi4wb0=pAbWiRLmSumiQCXewW3S67cM5WJ4tttYFhg@mail.gmail.com>
-Subject: Re: [PATCH 2/2] t/Makefile: get UNIT_TESTS list from C sources
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Jeff King <peff@peff.net>, Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org, 
-	Phillip Wood <phillip.wood@dunelm.org.uk>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <d2d7da84-e2a3-a7b2-3f95-c8d53ad4dd5f@gmx.de>
 
-On Tue, 30 Jan 2024 at 00:28, Junio C Hamano <gitster@pobox.com> wrote:
->
-> Adam Dinwoodie <adam@dinwoodie.org> writes:
->
-> >> Hmm, good point. It seems like the answer should obviously be "yes", but
-> >> Windows CI seemed to pass all the same (and I checked that it indeed ran
-> >> the unit tests). Do we only get the $X suffix for MSVC builds or
-> >> something? Looks like maybe cygwin, as well.
-> >
-> > Cygwin will automatically append ".exe" when doing directory listings;
-> > a check if the file "a" exists will return true on Cygwin if "a" or
-> > "a.exe" exists; a glob for "a*" in a directory containing files "a1"
-> > and "a2.exe" will return "a1" and "a2". This causes problems in some
-> > edge cases, but it means *nix scripts and applications are much more
-> > likely to work without any Cygwin-specific handling. I *think* this
-> > logic is carried downstream to MSYS2 and thence to Git for Windows.
->
-> Interesting, especially that "a*" is globbed to "a2" and not
-> "a2.exe".
+On Wed, Jan 31, 2024 at 08:11:46AM +0100, Johannes Schindelin wrote:
+> Team,
+> 
+> I noticed that there is a problem with the FreeBSD runs on Cirrus CI (see
+> e.g. https://cirrus-ci.com/task/6611218006278144):
 
-My error, sorry! I've just double-checked and Cygwin's globbing will
-report the file with the .exe extension. I clearly misremembered how
-this works.
+Thanks and sorry for not catching this earlier.
 
-Having looked up a bit more of the implementation is simply that, if
-Cygwin tries to open a file named "x" and doesn't find it, it will
-attempt to open "x.exe" before it returns the failure. This means that
-scripts that call (say) `/usr/bin/env bash` or `cat` or `[ "$x" = "$y"
-]`  or whatever will broadly Just Work(TM) rather than needing to be
-rewritten with the extension added. But the behaviour only applies
-when Cygwin is looking for a specific filename.
+The proposed[1] "fix" runs successful and might allow (albeit with the
+warning about prioritization) for this job to be restarted:
+
+  https://cirrus-ci.com/task/6173598017126400
+
+As explained there, FreeBSD 12 has been EOL for a while and therefore this
+update was long overdue and will need further tweaks.
+
+Carlo
+
+[1] https://lore.kernel.org/git/20240131191325.33228-1-carenas@gmail.com/
