@@ -1,110 +1,110 @@
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ot1-f43.google.com (mail-ot1-f43.google.com [209.85.210.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3B51210E2
-	for <git@vger.kernel.org>; Wed, 31 Jan 2024 18:54:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 901603E481
+	for <git@vger.kernel.org>; Wed, 31 Jan 2024 19:13:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706727269; cv=none; b=bs+NcRyOKobtA484n4oHRCQ98jvbV5d5J4JjdAUM2XQDfJ4cE41I+JyC6Uxo62y63CoZWV6uTfEQJIWcAo5EfV8pgYLMTLRd4NDueEUpneVfkx+auG2D9snd5UCD8zXvI/jfPPypEkkmO/EqQd2JhofTBF5cCwNp5HdiuBHfMIc=
+	t=1706728422; cv=none; b=dEYbH0nECLQuq7Pak/QWfyXZ/IA8ATgD8Ogr8OIyyBUECFiGuGY1hPPPw/mA5RkqvFt+u75bpy+Mk7cdaCY1E5Z2pQ5yEZ4Ao03js7d9MdUgKL+FAodF33ibRhDmV+N3UmndSaILD7lsGiky82JWr4m3qXzynPKhXABSvugcLiQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706727269; c=relaxed/simple;
-	bh=OdcVcSOMkB8kD42TmS6XUg+SVeKsh6Sfj4nRfuz1w4M=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=pzGAHb8CPf8acjuIJWF/3Be0jx+ekjFNwSC9Y+kJFbtXWVvPxK50tygeZN2pyRGc4mOPxUC0vOqcTTMolgn08m2AZJm/xmK+HQMhvvTM3gzb3onc+jGBA0ArZfdR9SslcxKX6DBg9o6XeBkESUyIS+HYA7/bZO916Y1aw7G7cH8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=D8F5sSt6; arc=none smtp.client-ip=173.228.157.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1706728422; c=relaxed/simple;
+	bh=dm7Knym0Mm9QooYNLPaIiJHD9opknD9oqXOtAo3OvYM=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version:Content-Type; b=NZ2mpr6rtEMsiajFKPGTe6nEwRHjuldnYQrg/83319sfsb3whNgIyPf0oeq1wLdyM4ouruDaQkNdh9j3aO0LVLFWQG3t761fn98LfbuueDEG4KN909jId8OGZSvy5JnD2LJe0kpMuUhBhOT/GcYISgD0X3FK5bKWB++vpwc/bG4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=L+BHUWnd; arc=none smtp.client-ip=209.85.210.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="D8F5sSt6"
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id 5405532DED;
-	Wed, 31 Jan 2024 13:54:27 -0500 (EST)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=OdcVcSOMkB8kD42TmS6XUg+SVeKsh6Sfj4nRfu
-	z1w4M=; b=D8F5sSt6nEORElwy4wEfqcbEAT0kSed90HVtcX+WUA6ZM513DOORe0
-	YS3AoPXC/P2B8iERMO4AOJomPy4jyhDhAosajU0OTRhmTfDwPxZT6LN9nGOf5tFZ
-	Hd9QQbPWXqhEnY/iyx9qMlg4y+uthDrcDUMBaNtim/jgBxWPWk3UM=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id 4C0A832DEC;
-	Wed, 31 Jan 2024 13:54:27 -0500 (EST)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.200.93])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 8254432DEB;
-	Wed, 31 Jan 2024 13:54:23 -0500 (EST)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Linus Arver via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Christian Couder <chriscool@tuxfamily.org>,  Emily
- Shaffer <nasamuffin@google.com>,  Josh Steadmon <steadmon@google.com>,
-  "Randall S. Becker" <rsbecker@nexbridge.com>,  Linus Arver
- <linusa@google.com>
-Subject: Re: [PATCH v3 02/10] trailer: move interpret_trailers() to
- interpret-trailers.c
-In-Reply-To: <cafa39d10489f90897227a244e012457989a7710.1706664145.git.gitgitgadget@gmail.com>
-	(Linus Arver via GitGitGadget's message of "Wed, 31 Jan 2024 01:22:16
-	+0000")
-References: <pull.1632.v2.git.1706308737.gitgitgadget@gmail.com>
-	<pull.1632.v3.git.1706664144.gitgitgadget@gmail.com>
-	<cafa39d10489f90897227a244e012457989a7710.1706664145.git.gitgitgadget@gmail.com>
-Date: Wed, 31 Jan 2024 10:54:21 -0800
-Message-ID: <xmqqy1c55o6a.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="L+BHUWnd"
+Received: by mail-ot1-f43.google.com with SMTP id 46e09a7af769-6e11cd97960so52594a34.0
+        for <git@vger.kernel.org>; Wed, 31 Jan 2024 11:13:40 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1706728419; x=1707333219; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=ypHIcU7qYTRvfuyAf5SPYRFqspAOgB6/5zx6Ngb2mZE=;
+        b=L+BHUWnda6vizTe7UAdRXiXYgZfONJVVeHEs5Hbm/xDapNLfafkNoLlCPr3nsil9s4
+         ylzq5KTBY4RLjiHhBNcmFXNFSCuzuV3AVIBT8UmqKraAsPvD8Loo3GJRbyhCO1z1nyeG
+         M7CFRyn+7ujkWFky/II6y1Tl2zlBbxcKv0XxOAxwCjahjUeOMelqx4eHR9lwnOYtm77C
+         0Hkw0s8qOwzQsLKS7OQ2FRt7D4GWfitVLnVlFe9Kbpzm97u3Yf9mbwg9SK3GoZ2BhcLa
+         tss64uzcEedft8Dc0QNkdGYXJJIDqjtGd3SkmP7g2t/L0RVYZ+1OX+FlzCgn1b3JR8SC
+         Mjaw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1706728419; x=1707333219;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=ypHIcU7qYTRvfuyAf5SPYRFqspAOgB6/5zx6Ngb2mZE=;
+        b=AciTduGyjVb8SCK5++Gs/+ak3lp+rKQjs8OL79C3t9TlXJYSP55PZxDrRvN97e8bXl
+         DEAi0NoERxiql/zp5dDzFdnAfPNg7AR4u3BCfJTk9+B9g6T3t9hRrdYaP0bFqmyeRkkk
+         VSxXCgFI+oBQ3Co/lPHO5LVVoEBcEDognpKpgyjNOdzD0LuJICYyMzuEVLshgYwtVAWA
+         AANN57nr2aD1r971UzotgRPIK7ov0dQszTxgKmqlyZ46Yj3n6sWiiwthaLfWWbhRqhqm
+         WqM4DgX5xbDFyuHwOba8uPDVQgiHlci9HjrOPfoua3MRapDlF2jicMKyabtFXQgngWrN
+         ZeLw==
+X-Gm-Message-State: AOJu0Yw2iGLzINgeLLqmt1QtFn2Z4DYvFpIz1IHS9UAiczDpL/SIqjIY
+	ZBV5tXgp3KkHIQq76SOyD7NGLVMDddUlUjse6j3Ew/9bAalA6pzTwb9g0jgo
+X-Google-Smtp-Source: AGHT+IGL51IvACO5X2e8pWRT5lv86EDXtExtMXHgCD83hdS3njed3TtB9mE3jxs+LvnKeM/orERKjg==
+X-Received: by 2002:a05:6358:d5a9:b0:176:9e92:8e4 with SMTP id ms41-20020a056358d5a900b001769e9208e4mr2891118rwb.10.1706728418672;
+        Wed, 31 Jan 2024 11:13:38 -0800 (PST)
+Received: from localhost.localdomain ([2601:640:8e80:1270:fc94:809e:19f2:d7a6])
+        by smtp.gmail.com with ESMTPSA id p16-20020a63e650000000b005d553239b16sm10771162pgj.20.2024.01.31.11.13.33
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 31 Jan 2024 11:13:38 -0800 (PST)
+From: =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= <carenas@gmail.com>
+To: git@vger.kernel.org
+Cc: Johannes.Schindelin@gmx.de,
+	=?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= <carenas@gmail.com>
+Subject: [PATCH] ci: update FreeBSD cirrus job
+Date: Wed, 31 Jan 2024 11:13:25 -0800
+Message-Id: <20240131191325.33228-1-carenas@gmail.com>
+X-Mailer: git-send-email 2.39.3 (Apple Git-145)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- 263A8F9A-C06A-11EE-B51B-A19503B9AAD1-77302942!pb-smtp21.pobox.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-"Linus Arver via GitGitGadget" <gitgitgadget@gmail.com> writes:
+FreeBSD 12 is EOL and no longer available, causing errors in this job.
 
-> From: Linus Arver <linusa@google.com>
->
-> The interpret-trailers.c builtin is the only place we need to call
-> interpret_trailers(), so move its definition there.
+Upgrade to 13.2, which is the next oldest release with support and that
+should keep it for at least another 4 months.
 
-A few helper functions that are only called by interpret_trailers()
-are also moved, naturally.  I would have less surprised to see
-the addtion near the beginning of builtin/interpret-trailers.c if
-this part said:
+This will be upgraded again once 13.3 is released to avoid furtheer
+surprises.
 
-    ..., so move its definition there, together with a few helper
-    functions called only by it, and remove its external declaration
-    from <trailer.h>.
+"Not enough compute credits to prioritize tasks!" seems to be just a
+reminder that the credit allocate for the Free Tier by Cirrus is all
+used up and which might result in additional delays getting a result.
 
-> Delete the corresponding declaration from trailer.h, which then forces
-> us to expose the working innards of that function.
+Signed-off-by: Carlo Marcelo Arenas Belón <carenas@gmail.com>
+---
+ .cirrus.yml | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-This was a bit confusing, at least to me.  The reason why several
-other helper functions that are called by interpret_trailers() need
-to be declared in trailer.h is not because the declaration of
-interpret_trailers() is deleted from trailer.h but that is how I
-read the above.
+diff --git a/.cirrus.yml b/.cirrus.yml
+index b6280692d2..77346a4929 100644
+--- a/.cirrus.yml
++++ b/.cirrus.yml
+@@ -1,7 +1,7 @@
+ env:
+   CIRRUS_CLONE_DEPTH: 1
+ 
+-freebsd_12_task:
++freebsd_task:
+   env:
+     GIT_PROVE_OPTS: "--timer --jobs 10"
+     GIT_TEST_OPTS: "--no-chain-lint --no-bin-wrappers"
+@@ -9,7 +9,7 @@ freebsd_12_task:
+     DEFAULT_TEST_TARGET: prove
+     DEVELOPER: 1
+   freebsd_instance:
+-    image_family: freebsd-12-3
++    image_family: freebsd-13-2
+     memory: 2G
+   install_script:
+     pkg install -y gettext gmake perl5
+-- 
+2.39.3 (Apple Git-145)
 
-    Several helper functions that are called by interpret_trailers()
-    remain in trailer.c because other callers in the same file still
-    call them, so add declaration for them to <trailer.h>.
-
-> This enriches
-> trailer.h with a more granular API, which can then be unit-tested in the
-> future (because interpret_trailers() by itself does too many things to
-> be able to be easily unit-tested).
->
-> Take this opportunity to demote some file-handling functions out of the
-> trailer API implementation, as these have nothing to do with trailers.
->
-> Signed-off-by: Linus Arver <linusa@google.com>
-> ---
->  builtin/interpret-trailers.c |  94 +++++++++++++++++++++++++++
->  trailer.c                    | 120 ++++-------------------------------
->  trailer.h                    |  20 +++++-
-
-Together with the preparatory renaming in the previous step, this
-made quite a pleasant read.  Thanks.
