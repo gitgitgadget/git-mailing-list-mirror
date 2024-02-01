@@ -1,100 +1,78 @@
-Received: from mail.manjaro.org (mail.manjaro.org [116.203.91.91])
-	(using TLSv1.2 with cipher DHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5170B84FD0
-	for <git@vger.kernel.org>; Thu,  1 Feb 2024 19:00:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=116.203.91.91
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F8628405B
+	for <git@vger.kernel.org>; Thu,  1 Feb 2024 19:06:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706814008; cv=none; b=ZeyCywnVTsEN8xUP+W2K6vkE9UI3a8vXTmZ8PaEymx4jJ3sf0QerDTulTuEgPWIROjIZFF3be5GdVZCMTE6Ph6Akk3aEH7zvU7DsTKQpMhmJxzFUc3gqkZPNo/8pKjVYcJqeBfbNYR9N1UuUrQiszaG2oRCHdmzItVKDWOfVI+Y=
+	t=1706814419; cv=none; b=NCwYNYoKjHRm9LSJ5S7RwMlJ0MhbP+iXGuCv08JRGZgi80Rj7noZkoWD+XhYbg1E99bLbpL4Aoilzfya99WHPUW1d7PRAB5myxKcHVoj/gqlg342zBvVLGc1nJgyk+kU7BIgVc02lQnelZ12XccpyAqOoyEb3HrSnE9jMgWGtN0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706814008; c=relaxed/simple;
-	bh=awdexd4TUz/GZKbQ2D3Bbc23e9P+36Yu8ivJC+eP2Ek=;
-	h=MIME-Version:Date:From:To:Cc:Subject:In-Reply-To:References:
-	 Message-ID:Content-Type; b=ZgJ0j9AOuZ9h6eNrGNKzNLh9nWykZa/VKHF5sClHqAU/fmbCujCpyb2rXqSLt0ZbJFtKym2H2Y7UNwx5BySGniosQXETNLOSK/RxaypHd8LHJGH6JKqRWk409xbVU9WkZz3Tp1LK8ozOyioai1ML6abF4+t0o1ifIJjRiqzKrI8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org; spf=pass smtp.mailfrom=manjaro.org; dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b=yxOpKm/U; arc=none smtp.client-ip=116.203.91.91
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=manjaro.org
+	s=arc-20240116; t=1706814419; c=relaxed/simple;
+	bh=F2JsmpZVb5HXZ/O9PfRwYiWcofU/34ErkJraZWcrC4Q=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=q5z98QNU/ii8jqZdsFwcE+K7oMZvIau3KfUWIJ56maJBxlYgkhxLDp+2HRFXGFs+4+uK9nIt1MMb3GZh3EVU5PIcA+XtCql379tVVlbdLcHJLgOHugJingqWfeOJH9VC1D/8WB8RtcphbRKv4SNHHetrB43ZXELYq21goJxQ5mM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=DOR/iDmO; arc=none smtp.client-ip=64.147.108.71
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b="yxOpKm/U"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="DOR/iDmO"
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 81DAA1E1517;
+	Thu,  1 Feb 2024 14:06:56 -0500 (EST)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=F2JsmpZVb5HXZ/O9PfRwYiWcofU/34ErkJraZW
+	crC4Q=; b=DOR/iDmOHNxg9L8yadNTAU7x5TBJQlUsAK9KNA3d/Kv0Dcb9F4Yi6b
+	vwDuMrygW3mFEE3i7Bai2+B6T4GzJuCQjPAo69+qSgzR2pCynUWZOeYic/+3WAo/
+	vaBFadp5CAEw34sRddG4sfQARRc7ET8QI9RckaYUmbyajxVPUdNXI=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 77E561E1516;
+	Thu,  1 Feb 2024 14:06:56 -0500 (EST)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.200.93])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id BE70E1E1515;
+	Thu,  1 Feb 2024 14:06:55 -0500 (EST)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Linus Arver via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Christian Couder <chriscool@tuxfamily.org>,  Emily
+ Shaffer <nasamuffin@google.com>,  Josh Steadmon <steadmon@google.com>,
+  "Randall S. Becker" <rsbecker@nexbridge.com>,  Linus Arver
+ <linusa@google.com>
+Subject: Re: [PATCH v3 07/10] trailer: prepare to move
+ parse_trailers_from_command_line_args() to builtin
+In-Reply-To: <97e5d86ddf0ea25df1b512dfbf620910298c1b02.1706664145.git.gitgitgadget@gmail.com>
+	(Linus Arver via GitGitGadget's message of "Wed, 31 Jan 2024 01:22:21
+	+0000")
+References: <pull.1632.v2.git.1706308737.gitgitgadget@gmail.com>
+	<pull.1632.v3.git.1706664144.gitgitgadget@gmail.com>
+	<97e5d86ddf0ea25df1b512dfbf620910298c1b02.1706664145.git.gitgitgadget@gmail.com>
+Date: Thu, 01 Feb 2024 11:06:54 -0800
+Message-ID: <xmqqeddwypf5.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=manjaro.org; s=2021;
-	t=1706814003;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=Rz3oBWchhfsK4ClzxjP2DCFN5xcpr87ELgamWv1N/VU=;
-	b=yxOpKm/UFxDfdJpKABe2lmtOzgpcdZH02sg9LouJQWMhyD/Tn7zoCZ+mtk5ouKGldoasAF
-	iID0vau6qUrc19Ya2BlV0fcF3zjjy0xGC8NbNetI7w8WRiWie7JPFN2ZoVuRZo3a86ddla
-	d2JivDgaappcV6cpIJd5TC6WJakDFjRqmnH+CDSoPbSGN16b5Cbqz1eoPSLvusOfrFYtBj
-	e5Df1Z1YrYWg+Vpi/ZWT+TOODsY30RkU1S8E7wWlCYvSp0kz10+j+4ofM9Gid/i6L4errK
-	sgD2Rj6IlLUpcTwTLfLyrdnqWlDTbS7gsLQiSnNtWfRLrBdd28jpxOXgQR9Hkg==
-Date: Thu, 01 Feb 2024 20:00:02 +0100
-From: Dragan Simic <dsimic@manjaro.org>
-To: Hans Meiser <brille1@hotmail.com>
-Cc: Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
- git@vger.kernel.org
-Subject: Re: Migrate away from vger to GitHub or (on-premise) GitLab?
-In-Reply-To: <DB9P195MB21303B5546A764A18FE78C97E2432@DB9P195MB2130.EURP195.PROD.OUTLOOK.COM>
-References: <AS2P195MB21350F44B079009C05A1EAF1E2432@AS2P195MB2135.EURP195.PROD.OUTLOOK.COM>
- <AS2P195MB2135D91EE464FF30EE84E77EE2432@AS2P195MB2135.EURP195.PROD.OUTLOOK.COM>
- <20240201-primitive-aardwark-of-contentment-aaabb9@lemur>
- <DB9P195MB21301E5E271567256303443CE2432@DB9P195MB2130.EURP195.PROD.OUTLOOK.COM>
- <c3b6de0c2ccf71f0dfa5aff06fa63d8f@manjaro.org>
- <DB9P195MB21303B5546A764A18FE78C97E2432@DB9P195MB2130.EURP195.PROD.OUTLOOK.COM>
-Message-ID: <691395bc13ea6c3013adcb98cfcbd102@manjaro.org>
-X-Sender: dsimic@manjaro.org
-Content-Type: text/plain; charset=UTF-8;
- format=flowed
-Content-Transfer-Encoding: 8bit
-Authentication-Results: ORIGINATING;
-	auth=pass smtp.auth=dsimic@manjaro.org smtp.mailfrom=dsimic@manjaro.org
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 1104A428-C135-11EE-9B3D-25B3960A682E-77302942!pb-smtp2.pobox.com
 
-On 2024-02-01 19:36, Hans Meiser wrote:
->> Could you, please, clarify what kind of git documentation are you
->> referring to?  Are you having git man pages in mind?
-> 
-> Yes, these in particular.
-> 
-> From my point of view, many of these are quite unorganized, hard to
-> read and – as I believe – need a fix-up. Markdown could replace the
-> currently used language, so editing them would be more easy, proving
-> support for preview and lint the documentation.
+"Linus Arver via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-Please keep in mind that editing the git man pages requires very
-intimate knowledge of the related git source code.  Many times even
-small changes to the language style can change the meaning and diverge
-the man pages from the source code, making the man pages useless.
+> Rename add_arg_item() to trailer_add_arg_item() because it will have to
+> be exposed as an API function in the next patch. Rename
+> new_trailers_clear() to free_new_trailers() because it will be promoted
+> into an API function; the API already has free_trailers(), so using the
+> "free_*" naming style will keep it consistent. Also rename "conf_info"
+> to "trailer_conf" for readability, dropping the low-value "_info" suffix
+> as we did earlier in this series for "trailer_info" to "trailer_block".
 
->> Quite frankly, I think you've missed some important points from the
->> Konstantin's message.  To sum it up a bit, not having continuous 
->> support
->> is simply unacceptable for any kind of a long-term project.
-> 
-> As I wrote, once installed on-premise, no-one will shut down an
-> on-premise git server except for yourself. It can run for eternity.
-> You just need someone to administer it properly and publish the
-> website.
+Makes sense.
 
-A git server?  I was under impression that you proposed running an
-own instance of GitLab or something similar.
-
-> In the end, it's all just about git. You may create your own git
-> webserver (https://git-scm.com/book/en/v2/Git-on-the-Server-GitWeb),
-> or just use an existing one, like the GitLab server:
-> https://about.gitlab.com/install/
-> 
-> In these servers, everything is configurable. Moreover, many plug-ins
-> exist for plumbing extensions to these providers. It's possible to
-> establish your own workflow, rights management and automatic handling.
-> You just need someone who is an expert with the tool of your choice.
-> 
-> Many other great repositories already are using one of those
-> providers; Meta, Google, Microsoft for example share their code there
-> – just to name a few. I wouldn't consider these users as being known
-> for being exceptional risk-takers.
+Thanks.
