@@ -1,147 +1,141 @@
-Received: from wfout8-smtp.messagingengine.com (wfout8-smtp.messagingengine.com [64.147.123.151])
+Received: from silver.cherry.relay.mailchannels.net (silver.cherry.relay.mailchannels.net [23.83.223.166])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 726976FBB7
-	for <git@vger.kernel.org>; Thu,  1 Feb 2024 17:40:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.151
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706809242; cv=none; b=im2Fbv52/58T5X9E1iYm2EXFpEzbcPnAb1BaPGd7yZ7YOMcI/H0fcApdWujKWucvDOwf1BZF978jyn9mRXqTo/tyMpD7ynj0sqyPJWhQ1tLSI/7TMvfIBcxTFv7IpYaBUfoDVGN6A5iIbruFfzGf6WVy3ijbmSfuIGhFs/GXzlY=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706809242; c=relaxed/simple;
-	bh=GjHhJiyAegDUHLO7C9OhkEwp8PT4X77fK0b3YLOxKX4=;
-	h=MIME-Version:Message-Id:In-Reply-To:References:Date:From:To:Cc:
-	 Subject:Content-Type; b=G2kUa7tmC7TxYUOEvFOQlXJAfs1xrEsD5etlncoloa/D+iixNJADfYJikBAQQFrTZK0japOLrkpcd8jFiddyAFdDPGw2PHVSNjY3KFHyNn/aA2/2d8og2YPCbYv9snevqLp0bObuyPjjiEdAlE+3RQauO48dBmSGzEuha0MCc/c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=khaugsbakk.name; spf=pass smtp.mailfrom=khaugsbakk.name; dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b=Ypw2vJTP; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=bPg0mncD; arc=none smtp.client-ip=64.147.123.151
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=khaugsbakk.name
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=khaugsbakk.name
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86B9D7C6F7
+	for <git@vger.kernel.org>; Thu,  1 Feb 2024 17:46:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=23.83.223.166
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1706809613; cv=pass; b=rLSaK38PHAm4mGMEGIvP6tl2hUu4cFIXAQ5iXiMCJH/DBE8wt1zdmC5/u3dioDQLgUy3AGiwIVvTVeFZ7jvKpNSoEDjfkYKRZlnDFgmrCWOtp37PJ8aL9waamprlenAuG0hRmEzZd0JWmFB4Fjg/62D+1pCG5lhzw/1ww9bCCdk=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1706809613; c=relaxed/simple;
+	bh=2ULry9k5qvLgXtafNDywBYEnsnjJa2R1oey5JxMhoso=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=F6NvPHyvZmevpkOo254WpZRq1SX1ub32ZdPRCm9ProshOO2wA/xXV2iduWfs7VrfuFNJMCtRYE82rG8xYBnQTWwE4Xse8hmR1X4XCqPY204LblcMckEyuwiuIH/RhCEQCJx73ppiUYMW7gvtp1Ex2pMkNUJS1Dtjd+VnaW1d17Y=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=cryptonector.com; spf=pass smtp.mailfrom=cryptonector.com; dkim=pass (2048-bit key) header.d=cryptonector.com header.i=@cryptonector.com header.b=D4CV6uXm; arc=pass smtp.client-ip=23.83.223.166
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=cryptonector.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=cryptonector.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b="Ypw2vJTP";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="bPg0mncD"
-Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
-	by mailfout.west.internal (Postfix) with ESMTP id 163031C0008D;
-	Thu,  1 Feb 2024 12:40:37 -0500 (EST)
-Received: from imap49 ([10.202.2.99])
-  by compute1.internal (MEProxy); Thu, 01 Feb 2024 12:40:38 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=khaugsbakk.name;
-	 h=cc:cc:content-transfer-encoding:content-type:content-type
-	:date:date:from:from:in-reply-to:in-reply-to:message-id
-	:mime-version:references:reply-to:subject:subject:to:to; s=fm2;
-	 t=1706809237; x=1706895637; bh=OhoJuphoqg1qwTI9b6X0gcLxhRPq1k7f
-	6RxSKLvbot8=; b=Ypw2vJTPfJ2hp+MV5liKVTSVoCj/3+MX6SUR1RxMWY6xhVca
-	fH2UCDkkJ2UqjRPliMFBMJrmXoFGGWd/yqhiduNsmHbGsqwJHdYfdw+j553anJn/
-	+XogvBsTVEz8ogrucNrjl+Fq+Q3skMaPN0REdcvUdwDl9mkEUdC1GLRoJrjtSdl0
-	rvafhp28j2ORV2WF8GO5uuceiNaNEJerdUnEj6UYKWk+hFTKo7KwcFZ8AeZe+yv/
-	kMmIJECiueYGb5kMxTTirjD1cwgxNR0MujlJN2SOzjC+UTbkqVN7lJQ8hrHxAPRX
-	uHshzIe9LC3D833O3vytGrXHMD8BsAtDS4e/+A==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1706809237; x=
-	1706895637; bh=OhoJuphoqg1qwTI9b6X0gcLxhRPq1k7f6RxSKLvbot8=; b=b
-	Pg0mncD1G3SZcPF51ozfjcoKFwmcrlQRlQKu8VbrFEUMYks1b5jwccin+Gbc6zqW
-	GfqTPtUeYvfEwFyR2L3Rink9nwftEk/oSAVsHMxxxIvblI8paefMEzRieh3lCJMv
-	gqOMcMy1To3vOc977DpKUzPN4XkU4bfr/fH9vjMBJ9RynxKcJplUe8pAvXHc3uzj
-	3HxRFoZ8h28OYXkmP0lO1x+Evnq35E1NUufMkfVLpiaQnGFLAQQ6Dl0FeTN2k5H2
-	qtaiVhEdrLm12aVKvd6FxRLlnch4B8Gqjv8Yc0Y6F2jslh19x9gSStqmgefWVjww
-	LvEXNDmoPP+Cny1mC2tCg==
-X-ME-Sender: <xms:lde7ZdlQiqjPFMLKmKTzjLMRztktHmBWkx7pFnDoQgIoAtHahlvFFvg>
-    <xme:lde7ZY1-iQVZMxh3ne3ejDGoCkxUYWAlgYUv5T7DJ6jYC-aFtZlIHrZPSjoIvqI8Z
-    j9we5GDyO8dX9UIIA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrfeduuddgleelucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    cujfgurhepofgfggfkjghffffhvfevufgtgfesthhqredtreerjeenucfhrhhomhepfdfm
-    rhhishhtohhffhgvrhcujfgruhhgshgsrghkkhdfuceotghouggvsehkhhgruhhgshgsrg
-    hkkhdrnhgrmhgvqeenucggtffrrghtthgvrhhnpedvveehiedufeehffdvteeuveekhefh
-    leeigfektdeifeduteeuheeufeetffefudenucevlhhushhtvghrufhiiigvpedtnecurf
-    grrhgrmhepmhgrihhlfhhrohhmpegtohguvgeskhhhrghughhssggrkhhkrdhnrghmvg
-X-ME-Proxy: <xmx:lde7ZTromcoKrObTQehz3Fuct4q2X4xgQ-YWnali5oQNap5jyi1cdA>
-    <xmx:lde7ZdlohzCjfMbU0r4s2UfHKvjcUt4rZDlWjVw5CicyaQKFrV_u6g>
-    <xmx:lde7Zb1eKmQGKgKymAxb6MqIKxaNitvS0wl1XYBGvPXqRkOpDgrtoQ>
-    <xmx:lde7ZcxUYEO1K2QnNqCuBCZJ1AS3TyKDq0xIsE5D_cxaNIBBOm0RlDHMnQY>
-Feedback-ID: i2671468f:Fastmail
-Received: by mailuser.nyi.internal (Postfix, from userid 501)
-	id 35E9815A0092; Thu,  1 Feb 2024 12:40:37 -0500 (EST)
-X-Mailer: MessagingEngine.com Webmail Interface
-User-Agent: Cyrus-JMAP/3.11.0-alpha0-144-ge5821d614e-fm-20240125.002-ge5821d61
+	dkim=pass (2048-bit key) header.d=cryptonector.com header.i=@cryptonector.com header.b="D4CV6uXm"
+X-Sender-Id: dreamhost|x-authsender|nico@cryptonector.com
+Received: from relay.mailchannels.net (localhost [127.0.0.1])
+	by relay.mailchannels.net (Postfix) with ESMTP id 8FCEF903D5C;
+	Thu,  1 Feb 2024 17:46:42 +0000 (UTC)
+Received: from pdx1-sub0-mail-a275.dreamhost.com (unknown [127.0.0.6])
+	(Authenticated sender: dreamhost)
+	by relay.mailchannels.net (Postfix) with ESMTPA id 1C1E5903DC2;
+	Thu,  1 Feb 2024 17:46:42 +0000 (UTC)
+ARC-Seal: i=1; s=arc-2022; d=mailchannels.net; t=1706809602; a=rsa-sha256;
+	cv=none;
+	b=fL4UyqR17K7N9IcOry+P2nAWRZoCVv8oayBH/jlZuC8BIy/mNj3tc82+6XoX4J7SUp7axu
+	31Gz7xKfScjRKnk+K9EtvrDH1xz9UUrQplqTZJxcvLIqz0WfCcqunTdFxHIJ5L/4mAOCTN
+	obWC06oz3fQmps7de0dBC02wqPMMmHNFyDqmWOmgC8gPOAONvYQarRfW3OUqBVWiQHu6BM
+	QOajLahmCf41ceHnLNjAKU1O6v6TVOxEwSwzmsxEumMxvB7vnbjpMLry9e+cXzVJkXQtd2
+	FKakJB6E7+t8S7e1I5YxY7z+9nBIaUV4jqtbLynVK12f0ghnxV6E6VRLkhReSg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=mailchannels.net;
+	s=arc-2022; t=1706809602;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references:dkim-signature;
+	bh=Mh5AmsyVTC3ffVCe3yAp/2s5vqubUb2Ej58qY/3ZrBo=;
+	b=eHBYxxlB+N6v/zrMAVWAYHHbHJjnkaclPseBULDaYkajreUVkLQ+yJUwLX8M+Ji3/Tvzkk
+	1c0j83UBmbjrkaJzMNd//oE2S2jVXzWx6oAqt9oN1b20SBQXDEL/RyWe/qjjhbBQDextsO
+	muvduGmAD2J/IIVlLvXcJIXDFCkpE7mRa2+JGGG+QVkVDHG4ClwaaA0KS377aJTWD+2iGJ
+	4OUrZy9grlftThbKqnMnUPOLwG04zghxeH04P26DkKJ0H6bjIdCenfGTAS78gyDo2DcJIf
+	h6eU/pPnYLHOPfMTILUaCK0r3vQkCPLuXbCH3N+FJ90YyEZpXbwKahRNTMpyyA==
+ARC-Authentication-Results: i=1;
+	rspamd-6bdc45795d-7j9w4;
+	auth=pass smtp.auth=dreamhost smtp.mailfrom=nico@cryptonector.com
+X-Sender-Id: dreamhost|x-authsender|nico@cryptonector.com
+X-MC-Relay: Neutral
+X-MailChannels-SenderId: dreamhost|x-authsender|nico@cryptonector.com
+X-MailChannels-Auth-Id: dreamhost
+X-Whimsical-Little: 2cdc777716c90a9f_1706809602357_2862307471
+X-MC-Loop-Signature: 1706809602357:3048038301
+X-MC-Ingress-Time: 1706809602357
+Received: from pdx1-sub0-mail-a275.dreamhost.com (pop.dreamhost.com
+ [64.90.62.162])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384)
+	by 100.122.38.211 (trex/6.9.2);
+	Thu, 01 Feb 2024 17:46:42 +0000
+Received: from ubby (075-081-095-064.res.spectrum.com [75.81.95.64])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	(Authenticated sender: nico@cryptonector.com)
+	by pdx1-sub0-mail-a275.dreamhost.com (Postfix) with ESMTPSA id 4TQmYY2ntQz52;
+	Thu,  1 Feb 2024 09:46:41 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cryptonector.com;
+	s=dreamhost; t=1706809601;
+	bh=Mh5AmsyVTC3ffVCe3yAp/2s5vqubUb2Ej58qY/3ZrBo=;
+	h=Date:From:To:Cc:Subject:Content-Type;
+	b=D4CV6uXmw8fyzzFMk/CdYglbSfK2+E6cbBC0irJWeUIzGKubGb+YdL8REGU0s/dWa
+	 NDh2IoF1QTdqod5LsbXZqIb0HMUtbJIhlvHZO4xrWCXK56PShajoG0Cm7CRUEGgQhC
+	 G45S8RROypY2x06pR6JzVZ8OhrZ8/O7b0oiQQp1c2Gn8BGYTSCzF2t4NEyjKJNsTBR
+	 jWPyOaUeQBEUh0V00f1i4gGBCpbiBaRtiXcYiF68rp0JouJ/Z5fvVNsWbN3Ya3W7nd
+	 aSra1Jd8hy1ErL7QjXgsKAAekkeTnxdorwve4k0Sdaf4x8EOmqnDrs1asPSGabA2xO
+	 T+ASM/05KF3PA==
+Date: Thu, 1 Feb 2024 11:46:39 -0600
+From: Nico Williams <nico@cryptonector.com>
+To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+Cc: Hans Meiser <brille1@hotmail.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: Migrate away from vger to GitHub or (on-premise) GitLab?
+Message-ID: <ZbvY/01kebuFagn2@ubby>
+References: <AS2P195MB21350F44B079009C05A1EAF1E2432@AS2P195MB2135.EURP195.PROD.OUTLOOK.COM>
+ <AS2P195MB2135D91EE464FF30EE84E77EE2432@AS2P195MB2135.EURP195.PROD.OUTLOOK.COM>
+ <20240201-primitive-aardwark-of-contentment-aaabb9@lemur>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Message-Id: <6174fbd7-5eee-450b-a38b-1d1b695f6d14@app.fastmail.com>
-In-Reply-To: 
- <AS2P195MB2135D91EE464FF30EE84E77EE2432@AS2P195MB2135.EURP195.PROD.OUTLOOK.COM>
-References: 
- <AS2P195MB21350F44B079009C05A1EAF1E2432@AS2P195MB2135.EURP195.PROD.OUTLOOK.COM>
- <AS2P195MB2135D91EE464FF30EE84E77EE2432@AS2P195MB2135.EURP195.PROD.OUTLOOK.COM>
-Date: Thu, 01 Feb 2024 18:39:30 +0100
-From: "Kristoffer Haugsbakk" <code@khaugsbakk.name>
-To: "Hans Meiser" <brille1@hotmail.com>
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
- "Dragan Simic" <dsimic@manjaro.org>,
- "Konstantin Ryabitsev" <konstantin@linuxfoundation.org>
-Subject: Re: Migrate away from vger to GitHub or (on-premise) GitLab?
-Content-Type: text/plain;charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240201-primitive-aardwark-of-contentment-aaabb9@lemur>
 
-(Disclaimer that I=E2=80=99m relatively inexperienced with this project
-workflow)
+On Thu, Feb 01, 2024 at 10:39:04AM -0500, Konstantin Ryabitsev wrote:
+> [excellent discussion of e-mail workflows elided]
 
-My impression is that the email workflow is very flexible and
-tool-agnostic.[1] On the other hand it=E2=80=99s hard to get set up in a=
- way
-that makes contributing to a project as easy as contributing to a
-project that is hosted on GitHub.[2]
+It would surely help if the e-mail interfaces of forges were not
+terrible.  But they really have to be as good as the mailing list
+approach.
 
-=E2=80=A0 1: Konstantin=E2=80=99s reply here seems to confirm this. And =
-thanks by the
-    way for all your emails on this workflow subject, which I always
-    enjoy reading. And for your work on tooling that of course other
-    email-based projects than Linux can use.
-=E2=80=A0 2: With the assumption that you already have an account there
+I envision that the "issues" and "PRs" could be webmail-ish thread
+trackers that auto-close on prolonged silence.  One could open issues/
+PRs by e-mail, close them by e-mail, etc., all e-mails going to the same
+[forge-run?] list address, but still have a forge-style view of a PR's
+commits, still have a forge-style code review web UI (with all comments
+going to e-mail too, and with e-mail being first-class, not an
+afterthought), still have a CI checks UI, and still have a big
+rebase-and-merge button for maintainers.
 
-What would really =E2=80=9Csell=E2=80=9D the email workflow would be to =
-have some sort
-of program which can set everything up for you so that you can track
-your contributions as easily as a PR on GitHub. Of course people use all
-kinds of different platforms, but let=E2=80=99s say that it only was for=
- the
-latest Mac OS (this is all hypothetical anyway). All you would need to
-do was to give your email credentials and whatever other technical email
-things that are required. Just install one program and track all your
-patches as well as the replies on them. More concretely: maybe it would
-have an email client which would make sure that all your outgoing emails
-are done correctly. Including things like not mangling patches in your
-reply because of hard-wrapping or something. (I created a support ticket
-for that on Fastmail yesterday.) Or: let you immediately inline a
-=E2=80=9Cscissor lines=E2=80=9D patch into your current message based on=
- a commit or
-just your current working tree.[3]
+I.e., forge e-mail UI as first-class equivalent of forge web UI.
 
-Also: never having to copy=E2=80=93paste message ids manually. :)
+The forges tend to be run by people who prioritize users who are not
+heavy e-mail workflow devs.  It makes economic sense, given how few
+users demand e-mail as a first-class forge UI.  Still, it would be quite
+awesome if some forge did this.
 
-(Again, all hypothetical for the sake of the argument)
+> - How to avoid a vendor lock-in? [...]
 
-This program could be very opinionated and dictate a very rigid
-workflow; the point would be that there *is* a way to have a setup which
-is as easy as GitHub (modulo email credentials/technical
-things). Because then if you want to customize your workflow you are
-still totally free to put together your own tools just like what
-apparently many people do right now.
+Assuming some forge exists with an e-mail UI on the same footing as its
+web UI, and also good enough for kernel/git/... devs, you could maintain
+mirrors on all the other forges, naturally, and always fallback on
+e-mail only if the primary forge disappears or becomes too expensive.
 
-If this was even just hypothetically possible=E2=80=94I dunno=E2=80=94th=
-en that would be
-a strong argument in favor of this kind of project workflow.
+> - How to avoid centralization and single points of failure? [...]
 
-I think that would be the best of both worlds.
+It's all forks, all the time.  It'd be good if the kernel maintainers
+maintained non-forge git servers as mirror/staging/primary repos.
 
-=E2=80=A0 3: That also sounds more convenient than pushing to a GitHub r=
-epo. in
-    order to make a PR
+> - How to avoid alienating these hundreds of key maintainers who are now
+>   extremely proficient at their query-based workflows? [...]
 
---=20
-Kristoffer Haugsbakk
+The only answer is to stick to the current workflow until some forge
+provide an equivalently first-class e-mail interface.  New participants
+just have to get used to it.  IMO.
+
+Nico
+-- 
