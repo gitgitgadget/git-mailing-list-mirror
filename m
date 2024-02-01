@@ -1,57 +1,57 @@
-Received: from mail-lf1-f53.google.com (mail-lf1-f53.google.com [209.85.167.53])
+Received: from mail-lf1-f51.google.com (mail-lf1-f51.google.com [209.85.167.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C8F24D9FF
-	for <git@vger.kernel.org>; Thu,  1 Feb 2024 11:58:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C239715D5C5
+	for <git@vger.kernel.org>; Thu,  1 Feb 2024 11:58:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706788709; cv=none; b=jsOnz89Z+tOXUY+7+dHUyjGINiDaP7i9kcvqbDhLzhrafk8mPld770Q/2+7zTbPqKlklKZjSZs6Dr/K/zvv9jifqkCh/bJECRcEG3UkQep+HO6Cr2tBZccpbhFYPvDbeksWt9u3P9PmFItoOT9flb/6SqZgEBmkpFfLfvsfHwGg=
+	t=1706788711; cv=none; b=c7h63G1LzPXdfj5cT+Cdzg3t3T1Bkn0Fu6Ea7Xdf+XYEg+3Cj2PFP/A2vCuPB06GUtJqJqXEoS6b+r1QdB+S3EQmM4q6Epq0oMAl9STTtpG/IZ+czFqQlOgQQgIY2gDoNCgpDhOb43/nCp9wyr521KrQSmhIsb6AdNC05+J//SU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706788709; c=relaxed/simple;
-	bh=c6NuoEPV2b5MqMtHYDF6h4XhoAfGJaCazNzoIZEn5mY=;
+	s=arc-20240116; t=1706788711; c=relaxed/simple;
+	bh=aeQ3Erh/fbZ/PZ300U8hAloeC9Tfa3iEu8AJceU6/1o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eCNMiCfqH1yymfKx3qhZLprkDxPoe7UyczEYk3LK2sXPqIlZXU3jg2p3YmRMpBRXmxCbnccO1ro5X74abQRP4wynFcmEzFuToPO+OyEj9GkIsa4hMpUqwE/CNhXajn9HQ/IxHkXin6iHrSGKvkF9e5AZS0EZ2Jn9R5jy5T1YCas=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=KfX1fDD4; arc=none smtp.client-ip=209.85.167.53
+	 MIME-Version; b=KKMsvrqKZ7ScMhDMt88xjIPn3z1VAfIaSTxjT1x+uhl1Cx5LPwnaz8zx7Y7k1W4udG0eo2T598hSyj3uUZfprdGgy1YeiTAbOee6Hlh4Db4Aao4d+xXudlMZJIuLLmHnFcF7qGSaZ9T2NWKHqN8Akxi2Sd6X/GH1H6uOeG6O6TQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VMen5QQx; arc=none smtp.client-ip=209.85.167.51
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KfX1fDD4"
-Received: by mail-lf1-f53.google.com with SMTP id 2adb3069b0e04-5111e5e4e2bso1279210e87.3
-        for <git@vger.kernel.org>; Thu, 01 Feb 2024 03:58:27 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VMen5QQx"
+Received: by mail-lf1-f51.google.com with SMTP id 2adb3069b0e04-51121637524so1112726e87.1
+        for <git@vger.kernel.org>; Thu, 01 Feb 2024 03:58:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1706788705; x=1707393505; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1706788707; x=1707393507; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=cUaQ64beMWrLIMpaF6W97IbkMP2Q53oP91SRuxFXnHI=;
-        b=KfX1fDD4aSOBGMi0q/E9Qz/229V6avC2FOY57Gz5O6xNHeaewg35QMQIqEicgbmjCg
-         K/NhxGsVYjYA4ZTWIglq+JO6ReT+twTPXMmRsS81MsR+chph3xeEd2JX/hviPTKChqsp
-         BBzz3Nj2RnjVXghM27wS3KyBcdXTu1JJ4e7zZfEDBBOURMlDX40Wwel8mOGTs1PT+CSA
-         b/Yq3MIVJ2Wav70oFpzWNA5yttA8MwGJjcSrCl4+5CGuhgBbla7gvkyHEH3JD3zBA9fl
-         FCYmgnOdTzMQGeZqQzF+Xl+YzcIe3s/aN7kcYld2llLMxPKFVSNTZ9mCqzl71UMIVyY+
-         x8eQ==
+        bh=kv+cJ7ob1td5pzKZwFqj5zOW6fAB39eybS77es30yB0=;
+        b=VMen5QQxi+XKAptwFJVA2WifNN5cixnKzSNpmrOfPk7UbwMHOR2g9CJIeHY28JrWs8
+         igzhAofJlYJXMoqvYPIXqJG1Dmhf1w0HwGiAPmHj58xAEE/Pe56NmZf20cMGMmqvky/P
+         kG9fJTOh9bDSchI94xXKsbLJpa9tskrnMka7zqQ45q6gkudbdKgo0s4UlGiPD3Lr1vt0
+         YdZE1NiWadCS9lsSt9+XxXO9EWTQSrLMxQVpO+SR85XrwGs5wVehr1svSPZhost6cfxI
+         u+2iyLbs5DGeUwGt98AXxFurKZoehaT4z0XM2VDSfCN5pOWHSbEj5mhtp+gUb1g/dDOu
+         //PQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1706788705; x=1707393505;
+        d=1e100.net; s=20230601; t=1706788707; x=1707393507;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=cUaQ64beMWrLIMpaF6W97IbkMP2Q53oP91SRuxFXnHI=;
-        b=qiQTPcbNydavLDUV8QS325whZJeJLIR6hss+1GwR9ECw9u3U3p3z7OV4i9Ygh7pu5x
-         l81/ttfQnWXU1fH90IDBBnJdMVzvaJqudOtnulHMNbLwfEpko7p5+mLJ5/GfUhaYJoag
-         6RM+zXyInk/P+53cXyhY+uGM5LJYYxdIgc7Oi4X0LRLBq4swY53uqvY9Mx9IhO1hbrhv
-         Ps/RK8IEI7TchGq1fnkgaxAPY201Awg9xhMV9MsYwbokpxfpUnCIJCWMRevWwuMsCkem
-         iTKJnVXaoaAZ2nOvKQJVEhJFFfafIZc6wBxQHdi18ibWaXSlxeRLYncCG8dmbUVqvuGt
-         AdkA==
-X-Gm-Message-State: AOJu0Ywt/lwjB4Apoo5GGef+Kb7DypRDW1EetQHIM8tAlg1iXvcnr7XG
-	aIFVd53ssWNzedQ8sYqzbP7uyVTSUTvurqzcDz2KdJquaKaKjbbe452FXqek
-X-Google-Smtp-Source: AGHT+IEI2lHpfstmJvcXIChEhHstl1Cp96EP4zgiZ7fOR+qAOJFQrbH3FkQVlImn/vDy4DVvZQNjNQ==
-X-Received: by 2002:a05:6512:e86:b0:510:14c5:3360 with SMTP id bi6-20020a0565120e8600b0051014c53360mr1675163lfb.65.1706788704882;
-        Thu, 01 Feb 2024 03:58:24 -0800 (PST)
-X-Forwarded-Encrypted: i=0; AJvYcCV4MKz+uenWKRz6KtnStYqTFjNbLICfmPINhrvi98MN4Bqmb9mQC+OauFMvW3lPHVzYObKHZSxMSTyde24uHGJ0LZlBhHdztuoEtISJREXxr+MV1BdHDIeic2SvjliIoRJ6B9g7kwn32Xjvjn4m0a9ZMkf+8pY2CO5zKuGU4fa72P8wCw==
+        bh=kv+cJ7ob1td5pzKZwFqj5zOW6fAB39eybS77es30yB0=;
+        b=rse4LAb5Ts56Keetstvba9Hbl1p0TJtPuYqrgYyUMX8yonE/KzOMlaP6qNrPJjh16y
+         PoyB+WjtpaNO05s0QYs5t66GAmOf/RXw4R7d76cm4oBxks5p4cAiIXxeVOkKNQVjtrjG
+         REZDA3pMiWXcJESFyJScNGipQQy8bnkghnUT2mIwU+/obAxqA/2x7q2ZbV02B0yoId53
+         q5fy0h5VDCMfiW53/F4rPAb7t+n1SnufGSyzQWqrOjmc+kZ57mJ8yVtuTizSgMV0VcRK
+         IJw2f98pKQtJbURRntwvOtEbth/r8fRi6/jaWwSI4qOz9C9QAEdXyRoUqL1AEP4whYG6
+         fl+w==
+X-Gm-Message-State: AOJu0YwtQgDG7WZuIWjEjBfVu+/AQ+QrbJV8sNYTGi8IwuHJ2zbV70aH
+	9xhI3OZf7BL3NBHFHKf+ghOmG10LCKOms1p3Q3p7Gm4YgcbwPFbt4j04s9Zf
+X-Google-Smtp-Source: AGHT+IHT7F/09Sth6L3oP0fqCQJHMZvllEke3miIDA8P59bf3ds6r7l6+aTeF4K0bozX5yMUTqlHqA==
+X-Received: by 2002:ac2:558a:0:b0:511:22ba:c0a7 with SMTP id v10-20020ac2558a000000b0051122bac0a7mr1592830lfg.17.1706788706957;
+        Thu, 01 Feb 2024 03:58:26 -0800 (PST)
+X-Forwarded-Encrypted: i=0; AJvYcCV5aDy38cdfJ+UWW6PLClDxdENpPOhvrpOLD+BxdkfWleFRCsQnHM59utOkch9eQ7Qt9qVFIV5kUR4pS2rRY1TX2TRjFIGmA5DWfYscpru4LOFxRJjrA5DQMN06S+hJ2gmYa6yBLqn3QIdTfrKSpoGURGHmDVLV4bYs6n9QvCpgnL02cQ==
 Received: from localhost.localdomain ([2001:861:3f04:7ca0:e1e0:bb55:1733:6146])
-        by smtp.gmail.com with ESMTPSA id s6-20020a05600c044600b0040faf410320sm4113495wmb.20.2024.02.01.03.58.24
+        by smtp.gmail.com with ESMTPSA id s6-20020a05600c044600b0040faf410320sm4113495wmb.20.2024.02.01.03.58.25
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 01 Feb 2024 03:58:24 -0800 (PST)
+        Thu, 01 Feb 2024 03:58:25 -0800 (PST)
 From: Christian Couder <christian.couder@gmail.com>
 To: git@vger.kernel.org
 Cc: Junio C Hamano <gitster@pobox.com>,
@@ -59,9 +59,9 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	John Cai <johncai86@gmail.com>,
 	Christian Couder <christian.couder@gmail.com>,
 	Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH 1/3] revision: clarify a 'return NULL' in get_reference()
-Date: Thu,  1 Feb 2024 12:58:07 +0100
-Message-ID: <20240201115809.1177064-2-christian.couder@gmail.com>
+Subject: [PATCH 2/3] t6022: fix 'even though' typo in comment
+Date: Thu,  1 Feb 2024 12:58:08 +0100
+Message-ID: <20240201115809.1177064-3-christian.couder@gmail.com>
 X-Mailer: git-send-email 2.43.0.496.g8be34ce359
 In-Reply-To: <20240201115809.1177064-1-christian.couder@gmail.com>
 References: <20240201115809.1177064-1-christian.couder@gmail.com>
@@ -73,34 +73,24 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-In general when we know a pointer variable is NULL, it's clearer to
-explicitely return NULL than to return that variable.
-
-In get_reference() when 'object' is NULL, we already return NULL
-when 'revs->exclude_promisor_objects && is_promisor_object(oid)' is
-true, but we return 'object' when 'revs->ignore_missing' is true.
-
-Let's make the code clearer and more uniform by also explicitely
-returning NULL when 'revs->ignore_missing' is true.
-
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- revision.c | 2 +-
+ t/t6022-rev-list-missing.sh | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/revision.c b/revision.c
-index 2424c9bd67..4c5cd7c3ce 100644
---- a/revision.c
-+++ b/revision.c
-@@ -385,7 +385,7 @@ static struct object *get_reference(struct rev_info *revs, const char *name,
+diff --git a/t/t6022-rev-list-missing.sh b/t/t6022-rev-list-missing.sh
+index 211672759a..527aa94f07 100755
+--- a/t/t6022-rev-list-missing.sh
++++ b/t/t6022-rev-list-missing.sh
+@@ -46,7 +46,7 @@ do
+ 			git rev-list --objects --no-object-names \
+ 				HEAD ^$obj >expect.raw &&
  
- 	if (!object) {
- 		if (revs->ignore_missing)
--			return object;
-+			return NULL;
- 		if (revs->exclude_promisor_objects && is_promisor_object(oid))
- 			return NULL;
- 		die("bad object %s", name);
+-			# Blobs are shared by all commits, so evethough a commit/tree
++			# Blobs are shared by all commits, so even though a commit/tree
+ 			# might be skipped, its blob must be accounted for.
+ 			if [ $obj != "HEAD:1.t" ]; then
+ 				echo $(git rev-parse HEAD:1.t) >>expect.raw &&
 -- 
 2.43.0.496.gd667eb0d7d.dirty
 
