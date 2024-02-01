@@ -1,118 +1,72 @@
-Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
+Received: from mail-qv1-f49.google.com (mail-qv1-f49.google.com [209.85.219.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8268F5D47D
-	for <git@vger.kernel.org>; Thu,  1 Feb 2024 14:02:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94B495F46A
+	for <git@vger.kernel.org>; Thu,  1 Feb 2024 14:53:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706796159; cv=none; b=PzuYFp62oJZ0DKqmfKTjjfoh7ZdAg/fmF2VBhUIJ2Auc9BuUFeqwdXiEW0Ra8aghVosqNxqEimBAU4V/n7SmWED4kHHV4UWSC5CjDTRYqiCcXFQ39fEpH+8ZbtLSW0ew5qTmDxMmRBT5vFpMayfoWBiUibzn/EIgywKwiVcwPaM=
+	t=1706799239; cv=none; b=VsF1AjgX9U1p9hx+YWHpRY2OtpsdOrIR3uTYj2QsKT+1SFxAW7c9FxbtZXoqeD6KBzilsI188mF34AUf+kpPwJYEaDAkgasBA9A7Hh8ttLna7V+vnGpAYXAFttld6XDLMZ12U+5kfj+uMyfoiI2iSJgij/Hmoc/mKSAlTRcGXc4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706796159; c=relaxed/simple;
-	bh=v+VQThbLcZwCXqFNg2io5NW1rHX2/EjQxKJFaXxh0hk=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=IZYbUql31J+RLeZ1Qq4QONgo4OuAYRWeno4jD8dnkC5QmjqUi7a8HBWSDRoBx+3Nol8lnrlr9R0CeYLov1HB23qRljJMW27z0QLad+MtvGjtt4BnLbiAdu2ckP8yUPz0WIQQigN+dv0PzLjlglGIJmCdl/wZWCIVKovZ7EveaZU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=MMtOMCqV; arc=none smtp.client-ip=209.85.128.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+	s=arc-20240116; t=1706799239; c=relaxed/simple;
+	bh=opXUQtZeoqwtHcGP29TC0P9PzwDqqJ1TuQyG7+a34YQ=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=SklDigtHscO1Jnzh35S9Zlqp/4CTS2QokgPb08YKUTPCefRLRkAZ/DA9aushgq02HyGH86w0rKrj58IAow4Xyd7nCSuqGaX3GSUwaEd2COzD+JZmn31AlHfC5a9sZN3pdF1VX4A/2icXyxzv98aNtdZTdS5FSYB5Dp1Y8M7zJG0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.219.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MMtOMCqV"
-Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-40e7065b7bdso8086705e9.3
-        for <git@vger.kernel.org>; Thu, 01 Feb 2024 06:02:37 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1706796155; x=1707400955; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=qtEb3uPG3Hk6+9WlQSE5UxdHjHDsx8KuYQjL3t+wURo=;
-        b=MMtOMCqV5BcDLTk3PB0oOC7Hi+s6Wnbyaf6P0tbbvMdtsUCj+vBdggMoi4FLepeL0r
-         J4QdtDOBZPoV5/2b4XR7bpHeVru96iGZrreUX+lrwFJeYVPQIQOB23qvjdHyfuh1k/aT
-         cCP4w9bP3lQ9+Zq0S2NIZd67Ko9UuE5uNzW06QozJ76dp3v0neNflCsl1Y3o0VWAnf3+
-         5FENwDANKAeJ8LT/dg8/dkhCiuub6+x1sqXuJRAD0vZP31YAsNEVNeVzW5XNA8WnZz0C
-         hhMoxC9WZT2/gCBi8tKwRI5QWF7bYwCXVOM1l5cltI6CW5/n2Jix5fqmiqADfpLhl5ML
-         FmxQ==
+Received: by mail-qv1-f49.google.com with SMTP id 6a1803df08f44-68c438fde8eso5712476d6.1
+        for <git@vger.kernel.org>; Thu, 01 Feb 2024 06:53:57 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1706796155; x=1707400955;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:reply-to:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=qtEb3uPG3Hk6+9WlQSE5UxdHjHDsx8KuYQjL3t+wURo=;
-        b=dr6o1hxj7uC9KpEJQPne6Ca2FMo+c+ScwqQfxqPgZMLr/xpO56HVTKe8H6WntLpnAf
-         +Q5M2MVWFIXFn/xiuHgn/cELkbSd8CklH8B4uoh+i3YaarHtGE079xQ2/cqaGuomTlEO
-         eb3toTmrf0Z+Pvm9dAp4jYVG9IMaihU51BGz5SypIWpTnZ0b21iibqfVGUODoBFTV29A
-         eEqzsFlgfU+ZNN3WDh9oTEUjiasAbeSfQwmSz66IwMInK7MElNkKaDerNigMcp9MbXSl
-         KOlyfWmo3zB33WzXJphzO1NhBiQe+p2tzZXUJ9C9FandW0UOofsHao/vjN47QK5PyvX2
-         5XaQ==
-X-Gm-Message-State: AOJu0YzjPg10Y3nuIhHTVGxk+DgYBgAG2umVNlOTvxPTYIbOSRyNcPFk
-	DnW6JTHN+/vLPwxI3sLXWO3l7O2jZPsST9HG+qffZyGuPbYXkA6j
-X-Google-Smtp-Source: AGHT+IHo12rCGJ5N4FZ3I7ttKznD/iAoCiG4p/A++WMgq7mLdmkSh83OJLASaGH6YEwAVki2lmjI0g==
-X-Received: by 2002:a05:600c:a3a5:b0:40f:afd6:b266 with SMTP id hn37-20020a05600ca3a500b0040fafd6b266mr1821759wmb.18.1706796155436;
-        Thu, 01 Feb 2024 06:02:35 -0800 (PST)
-X-Forwarded-Encrypted: i=0; AJvYcCVAj3mmrR0btl3qQPqkxPxhbTj0+cvdNU5CqACZsgmnVv5Y1E0Sbv7qIrEXfEEWJCcK8c/3qoHCOodog0xTbmZ4xAeZwC4pH7y21p5UMndHZYeeguNuPhbq2Y/BKeNhlAFpR3fa1sYb4HuCU81V
-Received: from ?IPV6:2a0a:ef40:62e:a901:d2c6:37ff:fef6:7b1? ([2a0a:ef40:62e:a901:d2c6:37ff:fef6:7b1])
-        by smtp.googlemail.com with ESMTPSA id o7-20020a05600c510700b0040e880ac6ecsm4595341wms.35.2024.02.01.06.02.35
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 01 Feb 2024 06:02:35 -0800 (PST)
-Message-ID: <20b6c81a-b1cf-4d10-980b-94698d7e62aa@gmail.com>
-Date: Thu, 1 Feb 2024 14:02:35 +0000
+        d=1e100.net; s=20230601; t=1706799236; x=1707404036;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=opXUQtZeoqwtHcGP29TC0P9PzwDqqJ1TuQyG7+a34YQ=;
+        b=Ug2ZxD/m/UYvu0rpL3skEIWoXW2wOSbD2gkTGQrO8uLbH6PZ6+xLWK7Z3uUvBux8Th
+         DDWSWMy4F4wy4lk/JDogEpgCQ28hIqg9K/XCkjJ2Sf/K9KgqyhBOZ1N4hpaw8XOQOgOP
+         J8d//Fo5/kPGOHG+C5prFzx/ioRs+euB+6/7UxllGLKgnqwnHRaXN6BGjNsIrP/+Qrd+
+         06TC/RlVa5BnXwhJJKkeQlMxL7lYULLw25SEz1ipyMUEyUffCnKeHOKg68r1ec6JU4aG
+         +CJWSO5qOjlEuygfY7dlukbbM0Arz5yevpHWp5TvK6hXLxyJfzgziwfWkHK1lwU8Bthg
+         t+kw==
+X-Gm-Message-State: AOJu0YwnHaCKnkuVwSBgfmFZlH08MIxLLX2oeyIU675qI1TVwBqF3Mdv
+	8St9NI2q7eXpIyZrbBl1A6FXTrZ+XGdub6EyIBWHprDG21d6Wy2CgOtqvXXAP2VU1DaH6kqC/Bo
+	SQtmTGdSKEsVX3dNSTCViwALf8IA=
+X-Google-Smtp-Source: AGHT+IEzX1qBJ76+jpDadlkd53ihOt4IDhWXaoRoObG8D3JOCb2KWja4uGeAdBwIHfFEMksJJpZAzH/D0VubUPpay3Q=
+X-Received: by 2002:a05:6214:509e:b0:68c:539b:b493 with SMTP id
+ kk30-20020a056214509e00b0068c539bb493mr5286019qvb.20.1706799236416; Thu, 01
+ Feb 2024 06:53:56 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH 3/4] rebase: Update `--empty=ask` to `--empty=drop`
-Content-Language: en-US
-To: Brian Lyles <brianmlyles@gmail.com>, phillip.wood@dunelm.org.uk
-Cc: git@vger.kernel.org, me@ttaylorr.com, newren@gmail.com
-References: <20240119060721.3734775-2-brianmlyles@gmail.com>
- <20240119060721.3734775-4-brianmlyles@gmail.com>
- <7032ae96-602f-499d-8430-a5dc3864d1bb@gmail.com>
- <CAHPHrSefHb7KddWNS4NS2bAFG9DFfKZ=Ue499+EqDT3myS_tEA@mail.gmail.com>
-From: Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <CAHPHrSefHb7KddWNS4NS2bAFG9DFfKZ=Ue499+EqDT3myS_tEA@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+References: <20240201115809.1177064-1-christian.couder@gmail.com> <20240201115809.1177064-2-christian.couder@gmail.com>
+In-Reply-To: <20240201115809.1177064-2-christian.couder@gmail.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Date: Thu, 1 Feb 2024 09:53:45 -0500
+Message-ID: <CAPig+cSNM0VJZ5SpvazY5T6rFvXuoTdfgD5J5f36PW4iW7xLVA@mail.gmail.com>
+Subject: Re: [PATCH 1/3] revision: clarify a 'return NULL' in get_reference()
+To: Christian Couder <christian.couder@gmail.com>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>, 
+	John Cai <johncai86@gmail.com>, Christian Couder <chriscool@tuxfamily.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Hi Brian
+On Thu, Feb 1, 2024 at 6:58=E2=80=AFAM Christian Couder
+<christian.couder@gmail.com> wrote:
+> In general when we know a pointer variable is NULL, it's clearer to
+> explicitely return NULL than to return that variable.
 
-On 27/01/2024 21:49, Brian Lyles wrote:
-> On Tue, Jan 23, 2024 at 8:24 AM Phillip Wood <phillip.wood123@gmail.com> wrote:
->> On 19/01/2024 05:59, brianmlyles@gmail.com wrote:
->>> From: Brian Lyles <brianmlyles@gmail.com>
->>>
->>> When `git-am` got its own `--empty` option in 7c096b8d61 (am: support
->>> --empty=<option> to handle empty patches, 2021-12-09), `stop` was used
->>> instead of `ask`. `stop` is a more accurate term for describing what
->>> really happens,
->>
->> I can see your reasoning but I think of stopping as git's way of asking
->> what to do so I'm not sure if "stop" is better than "ask". I don't know
->> how we ended up with two different terms - the prior art is "ask" so
->> maybe we should change "am --empty" instead. Lets see what others think.
-> 
-> The suggestion to use 'stop' instead of 'ask' for rebase was initially
-> Elijah's[1], which I agreed with. I am certainly open to others'
-> opinions here though, and am content with whatever is decided. I am
-> mostly aiming for consistency between git-rebase(1), git-am(1), and
-> ultimately git-cherry-pick(1).
-> 
-> [1]: https://lore.kernel.org/git/CABPp-BGJfvBhO_zEX8nLoa8WNsjmwvtZ2qOjmYm9iPoZg4SwPw@mail.gmail.com/
+s/explicitely/explicitly/
 
-Thanks for the link, that is useful context
+> In get_reference() when 'object' is NULL, we already return NULL
+> when 'revs->exclude_promisor_objects && is_promisor_object(oid)' is
+> true, but we return 'object' when 'revs->ignore_missing' is true.
+>
+> Let's make the code clearer and more uniform by also explicitely
+> returning NULL when 'revs->ignore_missing' is true.
 
->> It would be helpful to mention the tests in the commit message - we end
->> up with a mixture of "--empty=ask" and "--empty=stop" I assume that is
->> by design
-> 
-> You are correct -- the intent being to ensure that `--ask` continues
-> working for as long as it is supported. I'll add this to the message in
-> v2.
+s/explicitely/explicitly/
 
-That makes sense,
-
-Thanks
-
-Phillip
+> Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
