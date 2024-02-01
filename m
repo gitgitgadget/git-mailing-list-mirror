@@ -1,177 +1,133 @@
-Received: from wout5-smtp.messagingengine.com (wout5-smtp.messagingengine.com [64.147.123.21])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f42.google.com (mail-wr1-f42.google.com [209.85.221.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDBA01586E6
-	for <git@vger.kernel.org>; Thu,  1 Feb 2024 10:25:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.21
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1880A1552F9
+	for <git@vger.kernel.org>; Thu,  1 Feb 2024 10:50:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706783128; cv=none; b=gZwBL3gXk7leClxq7g72yxVouL61kjnX2RDCcU0xpM7DbB7hvXOk9kRDgOI+Di6b6/3U3k9mbbIsCPisA+lqxF7sGXQkO357XFFaIwYiUUhHaUbpSQ28WIfx30SHsszwe7yUtqdG3784V4K0MWuo8QdBwKY4sa2ydZtLZci0XWc=
+	t=1706784647; cv=none; b=IbVrVsA2HfAD7rZZuu16nuRikKNlTlASg1eI0omfXI5sYx0mZLjl1j1QydWJT6YmTdnpmPEfz7+v5L69se+B4OozIrklFzXNd+6h2C7m3hbw3LR2Oy4Qrc4Pja0UH50GTmI+qh3dREgugjViTDumkqWB9jesRkB5q58u1bSf7A8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706783128; c=relaxed/simple;
-	bh=7V6A1twzfvQCyEKkX3cj7OvUNn0Kj0MyZjVGcC0L3/E=;
-	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Tea11465HjLOgvYHxOR+x3hjHxEAzAy0Y9Fa7dXAFi03YkSqtm+Y7NpHohDB+Geew8kZPkqDguzfMv8NBoXQhDsAERmmUoFbK/hXUcxiVrZZiyPOuMsjWh7w/YZKWb6XeTPZIdRWFuN1J6sDpb1C5zJqvQcDWk7qZFi0RgtPG/A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=A8dufSI9; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=pyVezRWN; arc=none smtp.client-ip=64.147.123.21
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1706784647; c=relaxed/simple;
+	bh=XBLb9Ltvy7oRJJAYFrm1M+/bIqm3iwUqkcBCfbj0h5I=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=Nxn5MorsbA5ffdM4Kcj+24GTgMumpN9OD2cpiqavSa//zQHpe8TWLkqHFjVh8xQhAh4iF6bwYB5AQ/bTT404po+CvAqL5ki/GanUHPHs8nXicNfJ+f095XgF5VVC57QrA60j91yEF92oo2nNnBB1I4wNIYz4jvrId+Zbqj3hn+U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=X0DQZHCz; arc=none smtp.client-ip=209.85.221.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="A8dufSI9";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="pyVezRWN"
-Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
-	by mailout.west.internal (Postfix) with ESMTP id 073013200B76
-	for <git@vger.kernel.org>; Thu,  1 Feb 2024 05:25:24 -0500 (EST)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute1.internal (MEProxy); Thu, 01 Feb 2024 05:25:25 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1706783124; x=1706869524; bh=Vp5hTAHxFp
-	J4LH+lE0B3pWwZeTpdMqvzxwvdZOkkwPc=; b=A8dufSI9R+eAQQtVy9RSLoHL/d
-	BxDsOFGC1cWpbRRHteupQt6pP+U+W3s9gvTsJxhpTETmTKhV6/wk8L2g/Rp3N0Mf
-	T+GThywBlCt4Yc4615NiX8oIVHxJOwolVlBJ4hXO+EGIdf2AyAmA26BL9M2JMOes
-	+6BgJWQ/UuT5nRn8w0W0MJJt94tu2kikUV1J6CUQDrwLeGsV0/EJmL1ezRq2t//0
-	5myKK+y36YvQY+MCmVSaHLAnVZ+AZRUS1JHSrnBpbcXdDQIUCqAJgqopMsH7YDpc
-	eLGZf4BeiQAyWiWdxwQx+ADaFAnbvHgbkNnQw15+MU5+d6sN1GXtMhYskEzQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1706783124; x=1706869524; bh=Vp5hTAHxFpJ4LH+lE0B3pWwZeTpd
-	MqvzxwvdZOkkwPc=; b=pyVezRWNt4cU5UH8lavdZE3VzL+7M26rDe8TE59GB3Ff
-	Jl0CyKyxM8lXvzQSTbMJlXbu9QFNozKbLhMYLumBYSJqKcH9BHwivMOYqYt6FNeL
-	y0iJ94m7n/pEqS3qBZUVN/YMkWMeRYp6CqIDsnyuibmyiqtIWEGCOp+k6zTWhK9U
-	MsDKJVA9xRDEoLEsDbgPMzPCVBjwT5a7ISLF+BVZ/LYpvIG+UXCVGrpPjChUzrk4
-	nFNalHLfQjoFtn3YHQFOgOW9qzHA8lyIQNkotQmKMhp9xdYdpFhonVFt2lf5n3vW
-	cI1n/hWlSH73CZ87GR+MEa1e75CnkLAfpcsUa7Ya/Q==
-X-ME-Sender: <xms:lHG7ZbYWyebZiDYCrgr7WMyqOrWfbgX5rqpU5KFUHpVJYvEXeGIG0A>
-    <xme:lHG7ZaZLxPkyUynzb60utPPAxZmKErgGXm5FsbpiLWY4gB-rtt3gJ385BSMshQiYJ
-    PZlcu_FN3oP1ZnC2Q>
-X-ME-Received: <xmr:lHG7Zd-x81xIAydUq1xDfxi9mURPqeh5PgY5UqKyTYKrUO9O8AR4BdGCBdmwq8vJXIixuiBksyDyo7LTfdC7qScOnB9hcDcGCwNoI_eygNiR5A>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrfeduuddgudefucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvuffkfhggtggujgesghdtre
-    ertddtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehp
-    khhsrdhimheqnecuggftrfgrthhtvghrnhepheeghfdtfeeuffehkefgffduleffjedthf
-    dvjeektdfhhedvlefgtefgvdettdfhnecuvehluhhsthgvrhfuihiivgeptdenucfrrghr
-    rghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimh
-X-ME-Proxy: <xmx:lHG7ZRqCCCYBG5QUPg20xGZuSA8XClG1Jxmi4CaIioJRNEwzVa94TA>
-    <xmx:lHG7ZWqFvo7jP4dqfUfr1SPwg74ncItI2mdCE7KYoFD1YrN3gMhhHw>
-    <xmx:lHG7ZXSmml1L_tB2Rn6feKGXrpPzzevHJI5UdRbHiw96fWB22ppijg>
-    <xmx:lHG7ZdSLa7VrX9LayPAokGxihnYynOqFi4A8eGW2ImU82Og6UvaTCw>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Thu, 1 Feb 2024 05:25:23 -0500 (EST)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id af856a86 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
-	for <git@vger.kernel.org>;
-	Thu, 1 Feb 2024 10:22:01 +0000 (UTC)
-Date: Thu, 1 Feb 2024 11:25:22 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: git@vger.kernel.org
-Subject: [PATCH 7/7] reftable/reader: add comments to `table_iter_next()`
-Message-ID: <2f1f1dd95e1cc360bde3547bd18e227a9c326e13.1706782841.git.ps@pks.im>
-References: <cover.1706782841.git.ps@pks.im>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="X0DQZHCz"
+Received: by mail-wr1-f42.google.com with SMTP id ffacd0b85a97d-33934567777so471309f8f.1
+        for <git@vger.kernel.org>; Thu, 01 Feb 2024 02:50:45 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1706784644; x=1707389444; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=TrJqckI+Rya0cQQ/K3zF3rJU2gk9T7FDFn6TCDuR0W8=;
+        b=X0DQZHCz2Uc3tu5wTZQuzF4M2IH5aWhSpTeHDN5GQ/rNrkmxQ/Fmc3KguYSkOcI5M+
+         QuZc11bycOjFA90hSs1yPxYDdY3w6gs+DfT3DlB1DvEnSpAP/mCdG0AjNgOOi47w7Qh5
+         Eze7EsdiXG5jP7LVpOf4R1UEHrdGto1tpv3XMRxq1EjisSVJ7a92ZLjRA+uZiMIxi1RY
+         fE+S0I3WxxFaPnMxCCfRoh5Hnp3idQbd1d/3mHxLnYJFgoROXsgQ6kmCCtuTqIyk7D8n
+         i8knNzobRoIcVODJo5JK6LHbtkH97JGaHaQyJNAK5FI+WFPTcDd3Z19pOBsdkC83jmXw
+         OkZQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1706784644; x=1707389444;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:reply-to:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=TrJqckI+Rya0cQQ/K3zF3rJU2gk9T7FDFn6TCDuR0W8=;
+        b=oy+D0oDbXeOuQR/CHYMPC5713Ha657vRJX3K6OJmx6ohAAZiFqQcmEo78bguMX1+Qn
+         PIEpuo5cNJTGriIVYutoX/QmaCL/cUqyXq6BgDQS5ggv7+IkhBVN3LxQmYigOre77F7c
+         vMTFrc1LMRtLYsUMFbVOpybBUYRBtpRgIJWkqttB0GHo6eiSdrFQw6JGkIRELoygiTGH
+         S10dcbtFCPDuBzah0Ki4vwD/alCi+dPLBvXHzwST0oc3QZdeyGKL2VVdKgxPM5Ljk2rk
+         md+n6uHzc03rN8W9k/FylHRiMFqGUD8qaaL6t42JTu2nJIr7+mw6CxUQ7kFI6GWhmmu6
+         Hh8Q==
+X-Gm-Message-State: AOJu0YxtjdU8TSzR3QnALs2w6bjFkIX7YGrGiz76T0w8zOKk3UihIE+S
+	0C/wPeuLULpCg6Mg0VJ4iDB5hSsbC9ehBJPpX/g6ywEzC/2JEfhi
+X-Google-Smtp-Source: AGHT+IHLaUm2PvMAETMUJoyQt5eQlJpzZd+QJJ75LPZ1Y53qsUZ+kqB/ljntnSXvZ2o8xoGDZ/gSwQ==
+X-Received: by 2002:adf:e6cc:0:b0:33b:11e9:be3d with SMTP id y12-20020adfe6cc000000b0033b11e9be3dmr1669592wrm.16.1706784643996;
+        Thu, 01 Feb 2024 02:50:43 -0800 (PST)
+X-Forwarded-Encrypted: i=0; AJvYcCU15VAisvIJ1WU/7vGd3YcnUhV6m8zxi7Qrj2FWSSpbywPJXHYWr1mddQ/BnrOVcGHiy7OP9xWxwqF6mhLd+0UGd7FTtf2Q+jIiKbbY1xg4oEw18C6QplQXTqaIdijdxljX21UTSVhKUyPwbRAJsHus077ETXwiT6A+NzEL64C5QSRvW/V3HK1JLtqh
+Received: from ?IPV6:2a0a:ef40:62e:a901:d2c6:37ff:fef6:7b1? ([2a0a:ef40:62e:a901:d2c6:37ff:fef6:7b1])
+        by smtp.googlemail.com with ESMTPSA id z7-20020a5d4c87000000b0033af9b7db6esm6941658wrs.22.2024.02.01.02.50.43
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 01 Feb 2024 02:50:43 -0800 (PST)
+Message-ID: <08303f49-63dd-4141-be34-0d6b5fa28a0b@gmail.com>
+Date: Thu, 1 Feb 2024 10:50:43 +0000
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="pxcd3/tq9LlF0NPd"
-Content-Disposition: inline
-In-Reply-To: <cover.1706782841.git.ps@pks.im>
+User-Agent: Mozilla Thunderbird
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v2 3/3] t/Makefile: get UNIT_TESTS list from C sources
+Content-Language: en-US
+To: Jeff King <peff@peff.net>, git@vger.kernel.org
+Cc: Phillip Wood <phillip.wood@dunelm.org.uk>,
+ =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
+ Junio C Hamano <gitster@pobox.com>, Adam Dinwoodie <adam@dinwoodie.org>,
+ Patrick Steinhardt <ps@pks.im>
+References: <20240130053714.GA165967@coredump.intra.peff.net>
+ <20240130054037.GC166699@coredump.intra.peff.net>
+From: Phillip Wood <phillip.wood123@gmail.com>
+In-Reply-To: <20240130054037.GC166699@coredump.intra.peff.net>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
+Hi Peff
 
---pxcd3/tq9LlF0NPd
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+On 30/01/2024 05:40, Jeff King wrote:
+> We decide on the set of unit tests to run by asking make to expand the
+> wildcard "t/unit-tests/bin/*". One unfortunate outcome of this is that
+> we'll run anything in that directory, even if it is leftover cruft from
+> a previous build. This isn't _quite_ as bad as it sounds, since in
+> theory the unit tests executables are self-contained (so if they passed
+> before, they'll pass even though they now have nothing to do with the
+> checked out version of Git). But at the very least it's wasteful, and if
+> they _do_ fail it can be quite confusing to understand why they are
+> being run at all.
+> 
+> This wildcarding presumably came from our handling of the regular
+> shell-script tests, which use $(wildcard t[0-9][0-9][0-9][0-9]-*.sh).
+> But the difference there is that those are actual tracked files. So if
+> you checkout a different commit, they'll go away. Whereas the contents
+> of unit-tests/bin are ignored (so not only do they stick around, but you
+> are not even warned of the stale files via "git status").
+> 
+> This patch fixes the situation by looking for the actual unit-test
+> source files and then massaging those names into the final executable
+> names. This has two additional benefits:
+> 
+>    1. It will notice if we failed to build one or more unit-tests for
+>       some reason (wheras the current code just runs whatever made it to
+>       the bin/ directory).
 
-While working on the optimizations in the preceding patches I stumbled
-upon `table_iter_next()` multiple times. It is quite easy to miss the
-fact that we don't call `table_iter_next_in_block()` twice, but that the
-second call is in fact `table_iter_next_block()`.
+The downside to this is that if there are any cruft C files lying about 
+t/unit-tests we'll fail to run the unit tests. In the past we've avoided 
+using wildcard rules on C sources to avoid problems like this[1]. This 
+change may well be the lesser of two evils but a test run that fails due 
+to a cruft C file cannot be fixed by "make clean && make" whereas that 
+will fix the problem of a stale test executable.
 
-Add comments to explain what exactly is going on here to make things
-more obvious. While at it, touch up the code to conform to our code
-style better.
+>    2. The wildcard should avoid other build cruft, like the pdb files we
+>       worked around in 0df903d402 (unit-tests: do not mistake `.pdb`
+>       files for being executable, 2023-09-25).
+> 
+> Our new wildcard does make an assumption that unit tests are built from
+> C sources. It would be a bit cleaner if we consulted UNIT_TEST_PROGRAMS
+> from the top-level Makefile. But doing so is tricky unless we reorganize
+> that Makefile to split the source file lists into include-able subfiles.
+> That might be worth doing in general, but in the meantime, the
+> assumptions made by the wildcard here seems reasonable.
 
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
----
- reftable/reader.c | 26 +++++++++++++++++---------
- 1 file changed, 17 insertions(+), 9 deletions(-)
+Using UNIT_TEST_PROGRAMS would definitely be a nicer approach long term.
 
-diff --git a/reftable/reader.c b/reftable/reader.c
-index 64dc366fb1..add7d57f0b 100644
---- a/reftable/reader.c
-+++ b/reftable/reader.c
-@@ -357,24 +357,32 @@ static int table_iter_next(struct table_iter *ti, str=
-uct reftable_record *rec)
-=20
- 	while (1) {
- 		struct table_iter next =3D TABLE_ITER_INIT;
--		int err =3D 0;
--		if (ti->is_finished) {
-+		int err;
-+
-+		if (ti->is_finished)
- 			return 1;
--		}
-=20
-+		/*
-+		 * Check whether the current block still has more records. If
-+		 * so, return it. If the iterator returns positive then the
-+		 * current block has been exhausted.
-+		 */
- 		err =3D table_iter_next_in_block(ti, rec);
--		if (err <=3D 0) {
-+		if (err <=3D 0)
- 			return err;
--		}
-=20
-+		/*
-+		 * Otherwise, we need to continue to the next block in the
-+		 * table and retry. If there are no more blocks then the
-+		 * iterator is drained.
-+		 */
- 		err =3D table_iter_next_block(&next, ti);
--		if (err !=3D 0) {
--			ti->is_finished =3D 1;
--		}
- 		table_iter_block_done(ti);
--		if (err !=3D 0) {
-+		if (err) {
-+			ti->is_finished =3D 1;
- 			return err;
- 		}
-+
- 		table_iter_copy_from(ti, &next);
- 		block_iter_close(&next.bi);
- 	}
---=20
-2.43.GIT
+Best Wishes
 
+Phillip
 
---pxcd3/tq9LlF0NPd
-Content-Type: application/pgp-signature; name="signature.asc"
+[1] https://lore.kernel.org/git/xmqqtugl102l.fsf@gitster.g/
 
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmW7cZEACgkQVbJhu7ck
-PpQetBAAg+lGpx2FyvcLBmVhOV/KYcGyvxlV05S9EakB4Cb2N6t64DPzuZ9YvC+m
-MyVvEDBCHIE1d2gssA+z8v/0w+4mObltq9fTQ5pt9QxYEyRUV0pgR0+hH9WdFv3h
-viS0jOaGri/PBAc2lq2iNPi00JqPkzLCVjYFqnuZvkYt0zWLaUSmrn48Fj3647SR
-q/S2FCrNBoahx4+kfD4k6bHKtgzFbKMXoySz/MqQJsB06mdcWdy6hAwvBp2OXobL
-MypEX8WmkTQpmqYPC+sa6m1fWR9U7OfcfAb2lr5dXALcUSPJZDyYG/2PzeSJDjc4
-3v3FoqRhYyd2qgm3W7alHe0+dqRwxupTJmSCrovuvZWut0bgu9QcM5Xfnt0M4S6j
-nEPoSmq5Ju3MwUh4WMO0kdTaXMO21PBiHpmx2uuU4JeJeGulXbU5nItXAr7S/fuP
-fIfcAF+4Um7aXlUacF2tTV1HQzSllOxjgc+WtD5IGnFYOaXmNmgtgfcbOkGATr6s
-c/qAVZLtMsp2BEY1/0Ux2NQUpfNaJQ7pFSxwxZWueoUpVWjQf2SF+T6NcC4vIGAl
-qw82e9sp3e5JoPf+ycmdkN1eSpnJ8kEKLQ8aQB6I+ax/Slo0PjrECdulzzyBfW0+
-eH8vdmoj8vtmyd2Roj6IAV4rO8xmcdC+FMnaHNXAWJwb3RwVrlc=
-=UAPR
------END PGP SIGNATURE-----
-
---pxcd3/tq9LlF0NPd--
