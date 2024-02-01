@@ -1,205 +1,192 @@
-Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from wfout2-smtp.messagingengine.com (wfout2-smtp.messagingengine.com [64.147.123.145])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45630442A
-	for <git@vger.kernel.org>; Thu,  1 Feb 2024 01:38:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E55C8158D7A
+	for <git@vger.kernel.org>; Thu,  1 Feb 2024 07:29:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706751490; cv=none; b=dcOYU0Kscg0aW42XonFs8jPLCNjB37gwlQaOnq72r2FtSmCiJUFG5lu46LF/Kq8zfiaa7KQEfpjyhbO02C7pKBuftq9oD+gSRVGyiLOJTJGmB2kGKBnpQgqNxHEWuID5JAjWrg9P/Pm1QrtG8t3IOULlejCTZwAGr+OsrOciYOY=
+	t=1706772558; cv=none; b=WwLOEgRqPUFR5CMX3dCSTjs+pu6dLKGdBqy+Gi+xNsENGmuKrWIDD1q0cK59xP7plwjywz0FfZJ5OLTJt5wj7/02Oj0inJif2tj/EZHk04aR2SHrJm5CoVyx7fWHkWINSjOAcOPXW0zPkqQ8pDNq2GOcw/e0LppSupz/UM9tuI0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706751490; c=relaxed/simple;
-	bh=6f3ymxW7go7bTXLUj3ASGa9fCnHupGQjdk3TttkOwqI=;
-	h=Message-ID:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=mh+0F7yJ0c2uyIQj66IqRoxagsDeZCc0NHOD0WozhHv5Xr34kDeV0hSU8iUAD/dVCKkmwpKsSAaymauhj4r4CxES/ybXezSebkJsqhrCAnZoOoDeCT+lnmP07zCpCNs5sv2nZRu3qyoybrdT6F81YHQwXN8fH+Ba2fZjJhsoPI4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=EZCc0hmw; arc=none smtp.client-ip=209.85.128.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1706772558; c=relaxed/simple;
+	bh=yI3i6+zeKPcbMa0bomATqDdVxvwoUNl3S5HTMpFA9M8=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=jBUruadroCPD/fzFZQ0x/VJxzw8AN0LSJBzlAWRi65OwUhKTJjhqi61NbbjbVPDZq/UXxD6bKCJb/NZzwq6V88QIXXvDvsb52xQyQPu4uKJPhsxdR12asyDLaZJN9DtywczdXqWEtCp5qnpKLFhnF0rF2bypB7HpEfU6tm32rWE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=IORlmaBr; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=mZrioM+5; arc=none smtp.client-ip=64.147.123.145
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EZCc0hmw"
-Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-40e7e2e04f0so3782855e9.1
-        for <git@vger.kernel.org>; Wed, 31 Jan 2024 17:38:08 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1706751486; x=1707356286; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=2xVEioQQprtkdsv60zjjAfM3AVj5k/Vci4ZMkyUX2is=;
-        b=EZCc0hmwC82hAyhqRcf55bhc96fV0UEj4E1GY1oEKc8T1BZJUpmAG182vdfPp8OMZi
-         rmCGz9ghxgDZHuFEBzrslfvYaeXClJDQBX0t2Cg7t4HtfndXgXBV5gWFbYyA7s7SFdkd
-         GRn74LFqH5tvQYIRXhaJUVxNOGgtFQsimerIyQf77UsSfaN8AGCEGq0d67HOqPowry4I
-         NNwUkXlq0Wnv71lEsT8i4SBS8wDl+MiKMAZlYvFue4mcV6t/Co09iGiHziC8VVuQ1kUv
-         JlZXyI39WWtNJd0CF88lvWwKdB1TA0RXDvz4+4tNMerfjIMaYRaqlBarEqoG0BLGgsTB
-         oE4w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1706751486; x=1707356286;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=2xVEioQQprtkdsv60zjjAfM3AVj5k/Vci4ZMkyUX2is=;
-        b=djh+lKSol78iLrQk7jVl61ObFN4eTLtnr9StvWJ9XnGcxAzHoDbbnNukM7/zgqI6sH
-         KP710rqZqdc/Gs10VUVbo3Drmpl9OUuiRj03dxsPn53kdYkhxCXPh5ED/Yrrt6/r3Xm4
-         wTzNvR1T7SDrpocP+iN1uLRSjOpcbPmG21kwz5P/0ewLIVp6uoD3HRlR7+4zhtBmP4ha
-         auz4JSbOvTo9naUvl1L1S+h+oWjaNXHCafqWdTteaOz83cr2W2DaBH483IaIKXmhLRHR
-         W93jZ9YGi9Qpa+5XHC3iZj9JvglT8VuYcSx6ITzUlmquYIdezHohspReiRckt8mv9yNM
-         XCuw==
-X-Gm-Message-State: AOJu0YwSgiI69wfVlQsgEZRx++gVCKTyfultH25sScpeNEpyZYTL1ALp
-	dOSEgM2jdCr/4gNrUVB/zR7BePy8tqJnATo4wMHDQ9lxIxbK+KAl6lryKpsc
-X-Google-Smtp-Source: AGHT+IHBxJxuHyQJbqNPiic1qVmu32v2N6q6xTw2y8ATkW9DZ3fZjLt4yNOXo/QU1Y0KWTRPtOXYBQ==
-X-Received: by 2002:a05:600c:3b96:b0:40e:b17d:2f56 with SMTP id n22-20020a05600c3b9600b0040eb17d2f56mr2249588wms.23.1706751485824;
-        Wed, 31 Jan 2024 17:38:05 -0800 (PST)
-X-Forwarded-Encrypted: i=0; AJvYcCWUq0hLBfvqqZguxkQQdDgCm3jf9sfRDPSG1KUdh3XgzMXxhBUNSVOnS3ji36znBZSpMXxkfurt3yw3mhQnGvThWCEVFSeRqRJOHDJ1wEY=
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id c3-20020a05600c0a4300b0040e541ddcb1sm2971510wmq.33.2024.01.31.17.38.05
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 31 Jan 2024 17:38:05 -0800 (PST)
-Message-ID: <f29ab9136fb4c23c5700a73731a5e220f92b7c30.1706751483.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1658.v4.git.git.1706751483.gitgitgadget@gmail.com>
-References: <pull.1658.v3.git.git.1706302749.gitgitgadget@gmail.com>
-	<pull.1658.v4.git.git.1706751483.gitgitgadget@gmail.com>
-From: "John Cai via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Thu, 01 Feb 2024 01:38:02 +0000
-Subject: [PATCH v4 2/2] index-pack: --fsck-objects to take an optional
- argument for fsck msgs
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="IORlmaBr";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="mZrioM+5"
+Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
+	by mailfout.west.internal (Postfix) with ESMTP id C0F461C0007A;
+	Thu,  1 Feb 2024 02:29:13 -0500 (EST)
+Received: from mailfrontend1 ([10.202.2.162])
+  by compute6.internal (MEProxy); Thu, 01 Feb 2024 02:29:14 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1706772553; x=1706858953; bh=qoJzd5CugA
+	iTOQJ0GC4JHxe8GvzFb3VBzP0QfANlFoI=; b=IORlmaBrISHwfwcn/wWAxTP9PA
+	IY6K7spRyCpgGQblq2T1WefgA6up9+vwlYEYfrvEC5GJ4rtX48afh9j29bSyknq/
+	/F+7msLvIfBheSCCELmyAZ5ny4Y8SvtcC+gA8FK5U24c+prbAX/WmugcUcb1zlfI
+	lf3szZ3IHM2QWeOJbCdBbHLzFO7iKRFcqB/dvfa0B29am9aIJZdKr7vIRaOEdrdS
+	pysb8y+VkjENGlJxa0ynUor6nlWkADAZ5wTmpYFNDZepSWwQWRwHCKDRpyfHj1Ss
+	w29Qv0eFsBVXUm7YOAaCjvtLB+LOmwtFtmZoDgmKetzXJT+QETI9h8QZwWNA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm3; t=1706772553; x=1706858953; bh=qoJzd5CugAiTOQJ0GC4JHxe8GvzF
+	b3VBzP0QfANlFoI=; b=mZrioM+5K7/1z00BC365z2Jb+4yqQuSI/w8A3B99SNE7
+	DT2HkTru1TFRlPk969kXK2vl1KKPqRTk5C/xHbASNNSBDPLj6VGv/wFXb4nKUHSG
+	M2FL9fckVLwLaZ8x4xEOt6u6ZF0xgz1+SKkhxkeSHoTqmGDk2tOho+tyBMZVnw61
+	+l04sxrmeHUmey0OA9QGwc7M5/lrcyEVhlOVEv5TIoDTGnERZ2C18yIM4oJ3pI4n
+	PUVXmHkvZFvWARIAz42A/JONsV38E0PB0zWXPdES8zoyPsp+Sgx6EyCEhYwZwq0K
+	E0LXXebJvwCWvgknOhMnGPvnFpPY9nIbItJ5eRFXSQ==
+X-ME-Sender: <xms:SEi7ZZQg1TLb1kIQqZfV6vf_kuFdl6FZySEgCqegME0e2tqFy9qb9A>
+    <xme:SEi7ZSzzachDAo6jeZUnXVl55RhyXdi9XCBK6Lo8gMjCYjml2fymOhQHWMpBJh42k
+    GJr2Yq72cqabaeNTw>
+X-ME-Received: <xmr:SEi7Ze1phtGG7j1QB8SnvUimisDidREd0iT8fh-5ZA8jTAL6WvL7dwRXGzsS4W4INHmFa11ET1X8GmFbU2Nw9k3MhczInGtukexgduyXsYPGtg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrfedutddguddtiecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
+    necuuegrihhlohhuthemuceftddtnecunecujfgurhepfffhvfevuffkfhggtggujgesgh
+    dtreertddtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhs
+    sehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepueektdevtdffveeljeetgfehheeige
+    ekleduvdeffeeghefgledttdehjeelffetnecuvehluhhsthgvrhfuihiivgeptdenucfr
+    rghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimh
+X-ME-Proxy: <xmx:SEi7ZRB0xWorS2YcmnG2soRoXplkz1CTlIwNQEf0-wW2CxDsj29pVA>
+    <xmx:SEi7ZSiPXPdH9Ty_KwuDiysrKTNOGCsUWDywuhgBATib73M0yRVQvg>
+    <xmx:SEi7ZVqAzaTag3b_3qrA7__XB9NGjpIhaWO5k5-77HUGmhGvFrAHSg>
+    <xmx:SUi7ZVtZa6Wnf7loGw8XmrSDVK7DBrZ7_JJHxFhZO0N_kk6Kqpm32YqUFSw>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 1 Feb 2024 02:29:12 -0500 (EST)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id e1909c0f (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 1 Feb 2024 07:25:46 +0000 (UTC)
+Date: Thu, 1 Feb 2024 08:29:07 +0100
+From: Patrick Steinhardt <ps@pks.im>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 1/9] reftable: introduce macros to grow arrays
+Message-ID: <ZbtIQ3Hk6Mgvkv4j@tanuki>
+References: <cover.1706687982.git.ps@pks.im>
+ <0597e6944a1a65720d050f47bc82766d5bcf860b.1706687982.git.ps@pks.im>
+ <xmqqmssl44wo.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Jonathan Tan <jonathantanmy@google.com>,
-    Patrick Steinhardt <ps@pks.im>,
-    John Cai <johncai86@gmail.com>,
-    John Cai <johncai86@gmail.com>
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="gZrmbb/qDLzDFH/i"
+Content-Disposition: inline
+In-Reply-To: <xmqqmssl44wo.fsf@gitster.g>
 
-From: John Cai <johncai86@gmail.com>
 
-git-index-pack has a --strict option that can take an optional argument
-to provide a list of fsck issues to change their severity.
---fsck-objects does not have such a utility, which would be useful if
-one would like to be more lenient or strict on data integrity in a
-repository.
+--gZrmbb/qDLzDFH/i
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Like --strict, allow --fsck-objects to also take a list of fsck msgs to
-change the severity.
+On Wed, Jan 31, 2024 at 12:35:51PM -0800, Junio C Hamano wrote:
+> Patrick Steinhardt <ps@pks.im> writes:
+>=20
+> > patterns in the reftable library. For In most cases, we end up only hav=
+ing a
+> > single item in the array, so the initial capacity that our global growth
+> > factor uses (which is 24), significantly overallocates in a lot of code
+> > paths.=20
+>=20
+> You need to know not just that you very often initially have only
+> one but you rarely grow it beyond 3, or something like that to
+> explain "significantly overallocates", though.
 
-Remove the "For internal use only" note for --fsck-objects, and document
-the option. This won't often be used by the normal end user, but it
-turns out it is useful for Git forges like GitLab.
+True.
 
-Reviewed-by: Christian Couder <christian.couder@gmail.com>
-Signed-off-by: John Cai <johncai86@gmail.com>
----
- Documentation/git-index-pack.txt | 17 +++++++++++------
- builtin/index-pack.c             |  5 +++--
- t/t5300-pack-object.sh           | 29 ++++++++++++++++++++++++-----
- 3 files changed, 38 insertions(+), 13 deletions(-)
+> > This effect is indeed measurable:
+>=20
+> And measuring is very good, but I somehow expected that you would
+> measure not the time (if you often under-allocate and end up
+> reallocating too many times, it might consume more time, though) but
+> the peak memory usage.  I cannot quite tell what to think of that 2%
+> time difference.
 
-diff --git a/Documentation/git-index-pack.txt b/Documentation/git-index-pack.txt
-index 694bb9409bf..5a20deefd5f 100644
---- a/Documentation/git-index-pack.txt
-+++ b/Documentation/git-index-pack.txt
-@@ -96,13 +96,18 @@ default and "Indexing objects" when `--stdin` is specified.
- --check-self-contained-and-connected::
- 	Die if the pack contains broken links. For internal use only.
- 
----fsck-objects::
--	For internal use only.
-+--fsck-objects[=<msg-id>=<severity>...]::
-+	Die if the pack contains broken objects, but unlike `--strict`, don't
-+	choke on broken links. If the pack contains a tree pointing to a
-+	.gitmodules blob that does not exist, prints the hash of that blob
-+	(for the caller to check) after the hash that goes into the name of the
-+	pack/idx file (see "Notes").
- +
--Die if the pack contains broken objects. If the pack contains a tree
--pointing to a .gitmodules blob that does not exist, prints the hash of
--that blob (for the caller to check) after the hash that goes into the
--name of the pack/idx file (see "Notes").
-+An optional comma-separated list of `<msg-id>=<severity>` can be passed to
-+change the severity of some possible issues, e.g.,
-+`--fsck-objects="missingEmail=ignore,badTagName=ignore"`. See the entry for the
-+`fsck.<msg-id>` configuration options in linkgit:git-fsck[1] for more
-+information on the possible values of `<msg-id>` and `<severity>`.
- 
- --threads=<n>::
- 	Specifies the number of threads to spawn when resolving
-diff --git a/builtin/index-pack.c b/builtin/index-pack.c
-index 240c7021168..a3a37bd215d 100644
---- a/builtin/index-pack.c
-+++ b/builtin/index-pack.c
-@@ -24,7 +24,7 @@
- #include "setup.h"
- 
- static const char index_pack_usage[] =
--"git index-pack [-v] [-o <index-file>] [--keep | --keep=<msg>] [--[no-]rev-index] [--verify] [--strict[=<msg-id>=<severity>...]] (<pack-file> | --stdin [--fix-thin] [<pack-file>])";
-+"git index-pack [-v] [-o <index-file>] [--keep | --keep=<msg>] [--[no-]rev-index] [--verify] [--strict[=<msg-id>=<severity>...]] [--fsck-objects[=<msg-id>=<severity>...]] (<pack-file> | --stdin [--fix-thin] [<pack-file>])";
- 
- struct object_entry {
- 	struct pack_idx_entry idx;
-@@ -1785,8 +1785,9 @@ int cmd_index_pack(int argc, const char **argv, const char *prefix)
- 			} else if (!strcmp(arg, "--check-self-contained-and-connected")) {
- 				strict = 1;
- 				check_self_contained_and_connected = 1;
--			} else if (!strcmp(arg, "--fsck-objects")) {
-+			} else if (skip_to_optional_arg(arg, "--fsck-objects", &arg)) {
- 				do_fsck_object = 1;
-+				fsck_set_msg_types(&fsck_options, arg);
- 			} else if (!strcmp(arg, "--verify")) {
- 				verify = 1;
- 			} else if (!strcmp(arg, "--verify-stat")) {
-diff --git a/t/t5300-pack-object.sh b/t/t5300-pack-object.sh
-index 496fffa0f8a..a58f91035d1 100755
---- a/t/t5300-pack-object.sh
-+++ b/t/t5300-pack-object.sh
-@@ -441,8 +441,7 @@ test_expect_success 'index-pack with --strict' '
- 	)
- '
- 
--test_expect_success 'index-pack with --strict downgrading fsck msgs' '
--	test_when_finished rm -rf strict &&
-+test_expect_success 'setup for --strict and --fsck-objects downgrading fsck msgs' '
- 	git init strict &&
- 	(
- 		cd strict &&
-@@ -457,12 +456,32 @@ test_expect_success 'index-pack with --strict downgrading fsck msgs' '
- 
- 		EOF
- 		git hash-object --literally -t commit -w --stdin <commit >commit_list &&
--		PACK=$(git pack-objects test <commit_list) &&
--		test_must_fail git index-pack --strict "test-$PACK.pack" &&
--		git index-pack --strict="missingEmail=ignore" "test-$PACK.pack"
-+		git pack-objects test <commit_list >pack-name
- 	)
- '
- 
-+test_with_bad_commit () {
-+	must_fail_arg="$1" &&
-+	must_pass_arg="$2" &&
-+	(
-+		cd strict &&
-+		test_expect_fail git index-pack "$must_fail_arg" "test-$(cat pack-name).pack"
-+		git index-pack "$must_pass_arg" "test-$(cat pack-name).pack"
-+	)
-+}
-+
-+test_expect_success 'index-pack with --strict downgrading fsck msgs' '
-+	test_with_bad_commit --strict --strict="missingEmail=ignore"
-+'
-+
-+test_expect_success 'index-pack with --fsck-objects downgrading fsck msgs' '
-+	test_with_bad_commit --fsck-objects --fsck-objects="missingEmail=ignore"
-+'
-+
-+test_expect_success 'cleanup for --strict and --fsck-objects downgrading fsck msgs' '
-+	rm -rf strict
-+'
-+
- test_expect_success 'honor pack.packSizeLimit' '
- 	git config pack.packSizeLimit 3m &&
- 	packname_10=$(git pack-objects test-10 <obj-list) &&
--- 
-gitgitgadget
+Very good point indeed. I don't think peak memory usage is really all
+that helpful either because the problem is not that we are allocating
+arrays that we keep around all the time, but many small arrays which are
+short lived. So what is telling is the total number of bytes we end up
+allocating:
+
+    Before change:
+
+        HEAP SUMMARY:
+            in use at exit: 671,983 bytes in 152 blocks
+          total heap usage: 3,843,446 allocs, 3,843,294 frees, 223,761,402 =
+bytes allocated
+
+    Growth factor (alloc * 2 + 1):
+
+        HEAP SUMMARY:
+            in use at exit: 671,983 bytes in 152 blocks
+          total heap usage: 3,843,446 allocs, 3,843,294 frees, 223,761,410 =
+bytes allocated
+
+    Growth factor (alloc + 16) * 2 / 3:
+
+        HEAP SUMMARY:
+            in use at exit: 671,983 bytes in 152 blocks
+          total heap usage: 3,833,673 allocs, 3,833,521 frees, 4,728,251,74=
+2 bytes allocated
+
+Allocating 21 times as many bytes with our default growth factor should
+be a much more compelling argument why we don't actually want to use it
+compared to the 2% speedup.
+
+It's somewhat amazing though that this huge difference only makes for a
+2% speedup.
+
+> > Convert the reftable library to use these new macros.
+>=20
+> In any case, the conversion shortens the code and is a good thing.
+> I wish we had a way to tell these macros that we are actually using
+> the same single allocator (which we are doing in our code when
+> linking the reftable thing to us anyway), which would have made this
+> even simpler because you did not have to introduce separate macros..
+
+Yeah, I wasn't a huge fan of this, either. I initially just wanted to
+reuse our usual macros, but when I noticed the resulting difference in
+allocated bytes I already had two arguments against this: the fact that
+we have pluggable allocators in the reftable library and the growth
+factor. While we could make our macros more flexible so that they can
+accommodate for both, I don't think that the result would be pretty.
+
+So at that point I decided to just duplicate the code. It still ends up
+removing a lot of code duplication in the reftable library itself, so I
+don't think it is too bad.
+
+Patrick
+
+--gZrmbb/qDLzDFH/i
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmW7SD4ACgkQVbJhu7ck
+PpShng/9GrhKxV6Zr0zyzMLnQh8BtpHkKp5A/fP+yzA9OWvcsswZFkt9vy5SKrgG
+ou0pKplRTs+aTPvb0AXowj+S+WdHYYu/ISMvcbHHTDQzMsCeSxwOKk38MPwaPXGy
+41Yt9F/QJ+8yQe+BfzT+CPpCmrUoS3+eOgog+hoEwzwr0KiwlbXGAIiUenQ8hA4l
+E5apPm6q/JHZ/J2HSoiKm1EshgZ5w1ZUJqe70aJnI98SiqBDz8QrXsBxoMg2OZBp
+t0d2NRWaVE14lTRQHQUbMAhQx5eQlSe36LaxjpwQc1Qt0cVt7BWhR9kK4Qj1hmtf
+WAuajQsp+5jy+FCPu5cqZprPNjjcW4TapHQtu+lSczNLsiSOzlgO+2eXRPf6frog
+uFpVTV0sErOwKpTcC9HEY3GzWpGqI4H9ExcRFam6I+8vdm3D18QimLa7xzV8kW+K
+EioqpvHH0cnEIkHeuVgJswJoGhu1fdH+QluFUt6sv9LHDoeEwB9W1E0Ehbua1mGH
+LjUk7Dd8CU+z2Qr0dshwFZjFwc2TsCW2FKnqC8fHK77M7F+3vvmmeOtr1Nbk3LkK
+p+I5dhY9gwVQPDjbLcWNFVIOd5pE1LHGOjo1yWwcPI0MN4RVjYeaIOqRacPz1loN
+5DT4N//f0owzO83QW9k2c/WyLOdTBhH9LmFnsOe/dUxW1pRFxBA=
+=vQzg
+-----END PGP SIGNATURE-----
+
+--gZrmbb/qDLzDFH/i--
