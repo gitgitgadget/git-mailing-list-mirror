@@ -1,106 +1,77 @@
-Received: from mout.kundenserver.de (mout.kundenserver.de [212.227.17.10])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail.manjaro.org (mail.manjaro.org [116.203.91.91])
+	(using TLSv1.2 with cipher DHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0B458665C
-	for <git@vger.kernel.org>; Thu,  1 Feb 2024 12:25:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.10
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 662948663E
+	for <git@vger.kernel.org>; Thu,  1 Feb 2024 12:56:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=116.203.91.91
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706790345; cv=none; b=COCoNW0osj6BEgSX5f7SIi7zOBOg0txkoPmv2TmRwk8Q8+heAm3SB6NQw4QuB4VpVAReyxF3BvhurDHN05+Fg8ikx64B0rNCfFO4li16zuPN8Y7zJ1aZHE4fHKI/yUfuLfdA9aTN3wZCSK9E+6NMFrTsm1pLQJb/55wOhPojZgg=
+	t=1706792173; cv=none; b=bh0+Ssbg3IRp3L5c9JoAcD6lnnTQw0RGI4at2hkRMvfiw0eX2GTInV9bEr7KOlof1Xz0886es+GyzBAzwR92j7mNS5t499rk4iJTuanLWYoYAsxU5AM0hpODPE5QwEo4TQVG5Xi2B3aI9q9aCtbxPBMmlEceA6VwtC1DmwM/w0c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706790345; c=relaxed/simple;
-	bh=rmT98KXegVczCd0xy4WFbcP8ESn7LMZZKOaxL8E4EDM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=HUk2k/VwR/9tioVzLnrwoQYgboQo/WQz1KJSVafGEPo9pqrayw3jwHsNqvt74mowrZ7tD4jbVmv0mXGUMoYHqPoKDMJo1q0/esjtby0srSg6t+PPGaxXT2pnqxz8aZoiy3zw/4T0ihlcFsApxqoYxtoL6POSLPUttINF98rBSkk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=delpeuch.eu; spf=pass smtp.mailfrom=delpeuch.eu; dkim=pass (2048-bit key) header.d=delpeuch.eu header.i=antonin@delpeuch.eu header.b=LkQMrfq/; arc=none smtp.client-ip=212.227.17.10
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=delpeuch.eu
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=delpeuch.eu
+	s=arc-20240116; t=1706792173; c=relaxed/simple;
+	bh=ceU0zIcOKimqjOoGw/DZnDYxd/iwtBKaPo1UDqLMPFo=;
+	h=MIME-Version:Date:From:To:Cc:Subject:In-Reply-To:References:
+	 Message-ID:Content-Type; b=KU1nZHlyi398V5Cd8kyK8Sjom1w2YjESt0N9LSKq9MhM307m0xjQ9ioqIjj2HEw2S2au5UjJ+WT2DWfjQrBAdVt5q/axCBhbyfwNIHSSTVYfQA8HuH1quHtSJEMK2J4BISj8acgxzPDVrZvdOkwEn6x/6Bd6GBSq8JFAJ4RkUrU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org; spf=pass smtp.mailfrom=manjaro.org; dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b=GKgueb2F; arc=none smtp.client-ip=116.203.91.91
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=manjaro.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=delpeuch.eu header.i=antonin@delpeuch.eu header.b="LkQMrfq/"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=delpeuch.eu;
-	s=s1-ionos; t=1706790340; x=1707395140; i=antonin@delpeuch.eu;
-	bh=rmT98KXegVczCd0xy4WFbcP8ESn7LMZZKOaxL8E4EDM=;
-	h=X-UI-Sender-Class:Date:Subject:To:References:From:In-Reply-To;
-	b=LkQMrfq/Jm5diBRDG9yY8rY9I4sOF95OPwK7vBRrNB6x5DcGBXVPMPRdU61M8I5H
-	 UBUmjoDCoybqu2G1GVR23/1zC+sNXrixcAKlmg9e7dIU5mtOAOGiCK2XSItF4Efyq
-	 3Q+kwn/eaSEjFXVb6YcbZObrtSwh7VAkOUuPOEyoEitPoVfZrZdmpdeqpS7d4C/RJ
-	 nnm8rVhH6pbUjl7l5US7WqDPVhOobkOvSNgetxGbzY5wuI5fGQvKv+ClX1jQ8miSk
-	 J8B1UVUW8TJbqP4a30mmiriGLS+gPxSDp8PNkRgFst2g/MsnNe42PvXCDnvEom/pA
-	 uaaeZfOMdONfHZvfVw==
-X-UI-Sender-Class: 55c96926-9e95-11ee-ae09-1f7a4046a0f6
-Received: from [192.168.178.24] ([87.167.83.59]) by mrelayeu.kundenserver.de
- (mreue108 [212.227.15.183]) with ESMTPSA (Nemesis) id
- 1MoNu2-1qgpAh3yK8-00opGj; Thu, 01 Feb 2024 13:20:28 +0100
-Message-ID: <213029f5-63db-4fa6-9c88-2aebd0df9a15@delpeuch.eu>
-Date: Thu, 1 Feb 2024 13:20:27 +0100
+	dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b="GKgueb2F"
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=manjaro.org; s=2021;
+	t=1706792168;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=lcQcbPgx25I5TrkvpaN90a1snVH0vOxYXp8DHS6H/bU=;
+	b=GKgueb2F73FYP6WisUtwReGvtOl8r3EFOoE1WGFomNEjsJuir2HSvvP64r1Fph4l8ET4Rq
+	criYpvsMYfyME9hUESCerTv+HUPZVVbs+FmZ3El8gTBHJzp/uqEOBqtq/7HUSzDuZK/hgv
+	RraMRIkXXIOhx6h3v9anHURerucLhUQ4zUI7mC+5N70ZK+MalaAUIpITj+Q1SczfweEysW
+	0JaNq3rCVvnBOqC6NTKam6zDZ9i8InWcDPSmXv66szWXnPjDGIb1X9L7dkKhYLd9gy6RQr
+	1IcsHJUmGdb/J9QP4YqFXwxdyqxaz1yymXhRQFkewdevStzLIqnzfmnozlnPgA==
+Date: Thu, 01 Feb 2024 13:56:08 +0100
+From: Dragan Simic <dsimic@manjaro.org>
+To: Hans Meiser <brille1@hotmail.com>
+Cc: git@vger.kernel.org
 Subject: Re: Migrate away from vger to GitHub or (on-premise) GitLab?
-To: Hans Meiser <brille1@hotmail.com>,
- "git@vger.kernel.org" <git@vger.kernel.org>
+In-Reply-To: <AS2P195MB2135D91EE464FF30EE84E77EE2432@AS2P195MB2135.EURP195.PROD.OUTLOOK.COM>
 References: <AS2P195MB21350F44B079009C05A1EAF1E2432@AS2P195MB2135.EURP195.PROD.OUTLOOK.COM>
  <AS2P195MB2135D91EE464FF30EE84E77EE2432@AS2P195MB2135.EURP195.PROD.OUTLOOK.COM>
-Content-Language: en-US
-From: Antonin Delpeuch <antonin@delpeuch.eu>
-In-Reply-To: <AS2P195MB2135D91EE464FF30EE84E77EE2432@AS2P195MB2135.EURP195.PROD.OUTLOOK.COM>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:DhX4emPjSbz3IrWFfZs8C8zwMjDznRB1tYtiWODb8VbimaxVFO9
- ovnmbjLCts6TTfJe/Hy0zPMAozlK4I4YBKL6el8IeepWpaYfMkFerOsDnjcpoSvIUfaV587
- DoK5vufpoqktU674Ym5bf9f82g5QxDpl3bpzMORpo/m6vH0u6MYQLR6bS5bR2JSsnyMrqAe
- deE3Tj1/bwxjOrSCVwjYA==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:UL7tqPB6Vak=;DSX5UBt1VBPBXFIrbHI13ncFoRl
- Ck50SYawEdtJBK7LA+Lzz+jNi5eHrIdkaRMySvKRlULz1w4SR/ndDFe/PzaUvcZaHQDinqoXh
- DJ11+sKzOhvymC/KAndC2mlzZ42eiEyST6T635dQ7ag4aJNpndco/tvtimhpnTGG6qRYGr46n
- A87z+CF8e1rbVrUUZJm2SL1HM8Ak7OHOpXLa85Oj9TELAxcIXjGMuSy2EbLyyjhPT6YWsSplG
- SNyPzdC/CL7rJk4c82mpl9uzZe8jCfNtGozR5t7HHPu27HZXJvWtcIcYsCB81dtwQ5CSZffwY
- hLnAOYRyUKXfQwJyfNX5RoMr0KdNUFBXGY1mHhM/L6CC3w2JSutPfzXJ/W02UfrKmpRzW8MCw
- KqbIpUvtJSR224JHPBsnndhKPTj0TlZxNRqJUHbL9ffPyvL+aXrhigSfdl7K84DsA3M28UzrC
- T//oK9U9jZH7SD40rkXCY1JbCzE/fptbcYnzRFHlu3xwygHiZsAsHfA2fdLl7mPUMSkky2UsX
- /8oHaJu/ROElcvVEtnZr3fEQDG0CVsiGBiHYoTur62bdf7yC9FIhxu1XxERfRkCbFEsSyqWZ/
- UCuUqAeVbwW+FcuEp8K1TIr7aIhnmuWIJprcqhNHGScW/KcVCgu8uyiU5Vp/+aYsAGnTSCVRB
- n+zQeYdonfaUJtu3Xfqfcg8VeplDXjaU/3t1HXsdkcHB0FHb4QqcH0stsbmjyTD2OHk5z7I5G
- xA+cDEc9lxU/MlZC6w9RTmUsF4XjOnvnamwP5x3aBL7DeQRh+shpSI=
+Message-ID: <cf4a0ac7850a9b1e4597830bfd5e1c42@manjaro.org>
+X-Sender: dsimic@manjaro.org
+Content-Type: text/plain; charset=UTF-8;
+ format=flowed
+Content-Transfer-Encoding: 8bit
+Authentication-Results: ORIGINATING;
+	auth=pass smtp.auth=dsimic@manjaro.org smtp.mailfrom=dsimic@manjaro.org
 
-Hi Hans,
+Hello,
 
-As a new contributor I have also been wondering about that and I found
-the notes of the 2023 contributor summit very interesting in this regard:
-
-https://docs.google.com/document/d/1GKoYtVhpdr_N2BAonYsxVTpPToP1CgCS9um0K7=
-Gx9gQ/edit#heading=3Dh.bdw77tvsksnr
-
-There is a section on "Project management practices" which touches on
-this topic, with the idea of using a bug tracker being raised for
-instance. So you are not the only one thinking about it at least.
-
-For what it's worth, I have written up a small report about my
-contribution experience (which covers project management practices):
-
-https://antonin.delpeuch.eu/posts/contribution-experience-report-git/
-
-Best,
-
-Antonin
-
-On 01/02/2024 13:10, Hans Meiser wrote:
-> Hi,
->
-> is there any current discussion about moving Git development=C2=A0away f=
-rom using a mailing list to some modern form of collaboration?
->
-> I'd like to be able to follow a structured discussion in issues and to c=
-ontribute to the Git documentation, but the mailing list currently just bl=
-oats my personal inbox with loads of uninteresting e-mails in an unstructu=
-red waterfall of messy discussion that I am not able to follow professiona=
-lly.
->
+On 2024-02-01 13:10, Hans Meiser wrote:
+> is there any current discussion about moving Git development away from
+> using a mailing list to some modern form of collaboration?
+> 
+> I'd like to be able to follow a structured discussion in issues and to
+> contribute to the Git documentation, but the mailing list currently
+> just bloats my personal inbox with loads of uninteresting e-mails in
+> an unstructured waterfall of messy discussion that I am not able to
+> follow professionally.
+> 
 > Are you consideration for migrating?
->
-> Regards,
-> Axel Dahmen
+
+Perhaps it would be good to also know that many people simply don't
+live in a web browser, so to speak, and live in the CLI instead.  For
+such people, having to use a web browser for development is simply,
+well, awkward and inefficient.
+
+In other words, as much as not using some more modern, web-based
+tools may drive some people away, there's also exactly the opposite
+reaction that should also be considered.
+
+There was recently some similar discussion for another open-source
+project, but I simply can't find it now. :/
