@@ -1,84 +1,92 @@
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail.manjaro.org (mail.manjaro.org [116.203.91.91])
+	(using TLSv1.2 with cipher DHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1558F7C6E2
-	for <git@vger.kernel.org>; Thu,  1 Feb 2024 17:48:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28F7F7C6CA
+	for <git@vger.kernel.org>; Thu,  1 Feb 2024 17:50:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=116.203.91.91
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706809728; cv=none; b=ptTiunVNj/g0tvg5GBxCC1ZfaMQ240p+Lo4Z0dy3BbtENYzq6f+lTUIz07gItAV+IC1w4klFetHukYC4fyqQgZD5BiiPxCGCF7W4OLEcPQQgpovYqWOy7RXyR4i7KlAx+aVKr/EDcY9q8T4Ji2ibQY3lxYiO3yFDgXCF7cGk8KI=
+	t=1706809804; cv=none; b=f0zf0SHfesIYn4dd2taTSAfX5vr9vwU5uWt+/hkzwjX8BqHJ7Q8gc1AqYTY1sEI29DqhB4QBw/aZvnkipsWRpLrumFfqRsHXgSTPLNyVy9KaURwQvUdM7knbR/tyMZgW+Gd6DXepWjWqnuc0TgsO0j/RbOw+tI5zXfC/k+R/yp4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706809728; c=relaxed/simple;
-	bh=M35i/HVbGLgvbQAknNE/7MZ+1LglSSTlDuj7+xDUYyM=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=KnJx6beliFdopc0BZYUUMa2survzjcjNOB6u2GJdJj6skRFT0Nm/7RP+mPH5l4zHSyOCVwm0KRe0b5g/IpEbWRxUpD+lF+L119tZuGsjYoBgEi3f7VSmB9iNOXexT9Wyf5i/09rfNPqGhez9hEisMBonhTEgG63d/5akd5ahf2U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=bsFO9EmB; arc=none smtp.client-ip=173.228.157.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1706809804; c=relaxed/simple;
+	bh=wogAKccdrvoz9GeowoQTHdLOJbmHqhqV07XfJmk9dgA=;
+	h=MIME-Version:Date:From:To:Cc:Subject:In-Reply-To:References:
+	 Message-ID:Content-Type; b=maOOByyunxGgHaZ7V+tR9L286cXd7ATgrOB3/9+slXFK9CCDiQ6XkS6fQ7JH22SYenA10EZsAjjUyrFg/WPr6C6cW+nVAka8F2xhHf+Q7403hBaNy95eEAmZE5TLvZOWLYeV1RxpOmmfc4QQRj5llx+TPrUZu9XK7NERoNZ42ko=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org; spf=pass smtp.mailfrom=manjaro.org; dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b=sFuwrI8z; arc=none smtp.client-ip=116.203.91.91
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=manjaro.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="bsFO9EmB"
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id 440D23B74F;
-	Thu,  1 Feb 2024 12:48:46 -0500 (EST)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=M35i/HVbGLgvbQAknNE/7MZ+1LglSSTlDuj7+x
-	DUYyM=; b=bsFO9EmBS+z/9H86KMRJ2rZhJknhP4GtyRYzuOHYVSXexlg0V3gCyM
-	j6OPN2wZT7estrpMEQFP8yXJVFIXPpQI+yU9Qke1fCk0Ytcbals210zY+muqeFOK
-	iY0ro2wOn8xUmT80Ei1QaXF/iBKssFp36hceNFZd1fadTzs7gXEG0=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id 3C3693B74E;
-	Thu,  1 Feb 2024 12:48:46 -0500 (EST)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.200.93])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 74B713B74D;
-	Thu,  1 Feb 2024 12:48:42 -0500 (EST)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Linus Arver <linusa@google.com>
-Cc: Josh Steadmon <steadmon@google.com>,  Linus Arver via GitGitGadget
- <gitgitgadget@gmail.com>,  git@vger.kernel.org,  Christian Couder
- <chriscool@tuxfamily.org>,  Emily Shaffer <nasamuffin@google.com>,
-  "Randall S. Becker" <rsbecker@nexbridge.com>
-Subject: Re: [PATCH v3 03/10] trailer: unify trailer formatting machinery
-In-Reply-To: <owly1q9x2io6.fsf@fine.c.googlers.com> (Linus Arver's message of
-	"Wed, 31 Jan 2024 15:21:29 -0800")
-References: <pull.1632.v2.git.1706308737.gitgitgadget@gmail.com>
-	<pull.1632.v3.git.1706664144.gitgitgadget@gmail.com>
-	<5c7a2354df0f4a29841f9ab8294ead0e1c3b9cf5.1706664145.git.gitgitgadget@gmail.com>
-	<ZbqnSNPjIQW3Durz@google.com> <owly1q9x2io6.fsf@fine.c.googlers.com>
-Date: Thu, 01 Feb 2024 09:48:40 -0800
-Message-ID: <xmqqjzno13ev.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b="sFuwrI8z"
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- 2397454C-C12A-11EE-BC73-A19503B9AAD1-77302942!pb-smtp21.pobox.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=manjaro.org; s=2021;
+	t=1706809798;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=mYA1zD8JQf+k5rfHSmuRXXveGVP4aOdhvorGzaUsW7s=;
+	b=sFuwrI8zqJakjp2xphPtzApWZ+8yvK537ODhADHt89AWx+AQscguClgKrvbiriC8q6gfgV
+	lt1/1ffG0+SxbrJMa5enl3bV30uK7UPYqoPkXFr+wEys2Wcaf5kI5Smm4YBjhhf7C5eRFp
+	GFheiXoKwRe+xWCTglxdQcAmaRATgN/289JlALyEwAwSDcM0lHqvuh4XJa7aasNKkxF7Rm
+	eGXMNFlJP9cgudZRzGuijiPicgM/TsgQCA829GTnLYtEE5jn8qmg4/JCQIVrt+WSi5Y/uQ
+	0RaUAmXv89yv2Kg+9gZVJcbdC1Tr77F7XmW/Xw7Wn3a7ki0+ErK1tHK+FG9XvQ==
+Date: Thu, 01 Feb 2024 18:49:58 +0100
+From: Dragan Simic <dsimic@manjaro.org>
+To: Hans Meiser <brille1@hotmail.com>
+Cc: Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
+ git@vger.kernel.org
+Subject: Re: Migrate away from vger to GitHub or (on-premise) GitLab?
+In-Reply-To: <DB9P195MB21301E5E271567256303443CE2432@DB9P195MB2130.EURP195.PROD.OUTLOOK.COM>
+References: <AS2P195MB21350F44B079009C05A1EAF1E2432@AS2P195MB2135.EURP195.PROD.OUTLOOK.COM>
+ <AS2P195MB2135D91EE464FF30EE84E77EE2432@AS2P195MB2135.EURP195.PROD.OUTLOOK.COM>
+ <20240201-primitive-aardwark-of-contentment-aaabb9@lemur>
+ <DB9P195MB21301E5E271567256303443CE2432@DB9P195MB2130.EURP195.PROD.OUTLOOK.COM>
+Message-ID: <c3b6de0c2ccf71f0dfa5aff06fa63d8f@manjaro.org>
+X-Sender: dsimic@manjaro.org
+Content-Type: text/plain; charset=UTF-8;
+ format=flowed
+Content-Transfer-Encoding: 8bit
+Authentication-Results: ORIGINATING;
+	auth=pass smtp.auth=dsimic@manjaro.org smtp.mailfrom=dsimic@manjaro.org
 
-Linus Arver <linusa@google.com> writes:
+On 2024-02-01 18:28, Hans Meiser wrote:
+> Thank you for enlightening me and elaborating on all of these very
+> important facts!
+> 
+> Just to make sure: So "git" is considered part of the kernel? And the
+> "git documentation" is considered part of the kernel, too?
 
-> Josh Steadmon <steadmon@google.com> writes:
->
->> On 2024.01.31 01:22, Linus Arver via GitGitGadget wrote:
->>> This unification will allow us to delete the format_trailer_info() and
->>> print_tok_val() functions in the next patch. They are not deleted here
->>> in order to keep the diff small.
->>
->> Needs to be removed after squashing v2 patch 4 :)
->
-> Oops. Will update in next reroll, thanks.
+Of course it isn't.
 
-FWIW, by the way, having them in the same patch made it a lot easier
-to compare what the original did (with these removed functions) and
-what the updated code would do.  When a change is supposed to be a
-clean-up of an existing code without changing the behaviour, it helps
-to make the before and after versions visible in the patch.
+> Shouldn't these topics be separated then into separate repositories,
+> particularly the git documentation?
+> 
+> For people like me, who are contributing to dozens of documentations
+> on GitHub (and GitLab) … We don't focus on the kernel alone. We
+> receive dozens of important technical, business and financially
+> important e-mails from different sources day by day. So, people like
+> me need some modern, common channels/tools for contributing. (If
+> contribution is considered helpful and valuable by the kernel team at
+> all.)
 
-Thanks.
+Could you, please, clarify what kind of git documentation are you
+referring to?  Are you having git man pages in mind?
+
+> With todays platforms, issues can be created by e-mail and e-mails
+> will be received with each issue update. It's even possible to upload
+> patches via REST services. No web browser required. So this would keep
+> mailing list users acquainted to their habit.
+> 
+> Setting up a local (on-premise) GitLab or Azure DevOps server for
+> long-term use should not be impossible. I'm running each of these
+> myself. Once installed on-premise, the installation wouldn't be bound
+> to any continuous support. All it needs is a provider for keeping the
+> server machine running.
+
+Quite frankly, I think you've missed some important points from the
+Konstantin's message.  To sum it up a bit, not having continuous support
+is simply unacceptable for any kind of a long-term project.
