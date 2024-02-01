@@ -1,118 +1,203 @@
-Received: from secure.elehost.com (secure.elehost.com [185.209.179.11])
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A067685642
-	for <git@vger.kernel.org>; Thu,  1 Feb 2024 20:09:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.209.179.11
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F7E88528E
+	for <git@vger.kernel.org>; Thu,  1 Feb 2024 20:20:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706818180; cv=none; b=JN2NjjOFo97urAyuJ1S2AWlgQer6lWlP6OjP3JmH5r6r+sEo+8SHVlO5Z1CCI9JcJwhqNvzw0C/6sAe1LeSMH8vU60aIh/8BZx+PJPYNPmZ6qEqZqYaTk3Jk/zAECBKv+z2HlZnzrgUrGPF9XTl7kFUwg+Ziuvn4DsBSGvW8PmE=
+	t=1706818853; cv=none; b=jA1B6qw/tlsin9Bxp8Dg4eLeExt8Ti0qIl88SJsvFuOYX/WU/g0Ee8tsQlPRshJ+HpL2ZI8fig6m9hx5rSXEWpfVCdXnKZhZRj4rg3kMTWqCshKEbfrRqDcvda8MXYHN0r+JUDfuz1kEfQXuLS0HWLycNz9h2l2GMkmONerxbCg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706818180; c=relaxed/simple;
-	bh=DG8aXXFkAUKB2bv6+2G7m6V6/CXbnMRvNKpYZ1kv/cE=;
-	h=From:To:Cc:References:In-Reply-To:Subject:Date:Message-ID:
-	 MIME-Version:Content-Type; b=ar267Aifwh62BA9lduZrFngWA0gF9+2vIrmP61F26/1JMviVEGV2vL3XRaNdrqr/j0lWGzFl08CD9Rr4nVBw7mC7P2upPHMRNwd4HmwY7oLTABjwpbzXL8p8gX1ynI19hPGN07C2M1Ok/BKyL8HMI2vf1XchC+Mc42HGK4ZiTMw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com; spf=pass smtp.mailfrom=nexbridge.com; arc=none smtp.client-ip=185.209.179.11
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nexbridge.com
-X-Virus-Scanned: Debian amavisd-new at secure.elehost.com
-Received: from Mazikeen (cpebc4dfb928313-cmbc4dfb928310.cpe.net.cable.rogers.com [99.228.251.108] (may be forged))
-	(authenticated bits=0)
-	by secure.elehost.com (8.15.2/8.15.2/Debian-22ubuntu3) with ESMTPSA id 411K1Mo01582340
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 1 Feb 2024 20:01:23 GMT
-Reply-To: <rsbecker@nexbridge.com>
-From: <rsbecker@nexbridge.com>
-To: "'Dragan Simic'" <dsimic@manjaro.org>,
-        "'Hans Meiser'" <brille1@hotmail.com>
-Cc: "'Konstantin Ryabitsev'" <konstantin@linuxfoundation.org>,
-        <git@vger.kernel.org>
-References: <AS2P195MB21350F44B079009C05A1EAF1E2432@AS2P195MB2135.EURP195.PROD.OUTLOOK.COM> <AS2P195MB2135D91EE464FF30EE84E77EE2432@AS2P195MB2135.EURP195.PROD.OUTLOOK.COM> <20240201-primitive-aardwark-of-contentment-aaabb9@lemur> <DB9P195MB21301E5E271567256303443CE2432@DB9P195MB2130.EURP195.PROD.OUTLOOK.COM> <c3b6de0c2ccf71f0dfa5aff06fa63d8f@manjaro.org> <DB9P195MB21303B5546A764A18FE78C97E2432@DB9P195MB2130.EURP195.PROD.OUTLOOK.COM> <691395bc13ea6c3013adcb98cfcbd102@manjaro.org>
-In-Reply-To: <691395bc13ea6c3013adcb98cfcbd102@manjaro.org>
-Subject: RE: Migrate away from vger to GitHub or (on-premise) GitLab?
-Date: Thu, 1 Feb 2024 15:01:17 -0500
-Organization: Nexbridge Inc.
-Message-ID: <060d01da5549$6e93e250$4bbba6f0$@nexbridge.com>
+	s=arc-20240116; t=1706818853; c=relaxed/simple;
+	bh=eST0zo6nargVK7BGvYMEclwmbgpRUEPGCVtWYhJa/7I=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=QBb7TcGBuRCyxPnHltdy9B82GNQRlLNTUBqzOjThFvOyAc7pm0TXKJO09o2M+iyeWTlMjzxZuHocYW+UKczC6WGkxfJxqfXABY8lBLAxN6YIMDWlZ+fe94nEAUiL7QIjkqr+XC8Fu8YxhWANYaX3Hq7jDCaGRkH3X67y69h3njQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=JZd41N/m; arc=none smtp.client-ip=173.228.157.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="JZd41N/m"
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id 6C89D1D5A4;
+	Thu,  1 Feb 2024 15:20:51 -0500 (EST)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=eST0zo6nargVK7BGvYMEclwmbgpRUEPGCVtWYh
+	Ja/7I=; b=JZd41N/mkmWa5nbcDFsjAUCGLWmU3nR1ZPfkdKSZH/xQ8PMjUF3nSF
+	uFKfeLD1jPczwbsSfx2yCKMJCiJHSpfnz5FuGggECGJ0c6798XwxtF8A8KLPwwYx
+	7m8bTNLC/9tYVObNASc93ayjrW7QtEXVYzrdwZpCqg6tGUiG0tB2E=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id 64AEE1D5A3;
+	Thu,  1 Feb 2024 15:20:51 -0500 (EST)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.200.93])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 954D81D5A2;
+	Thu,  1 Feb 2024 15:20:47 -0500 (EST)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Christian Couder <christian.couder@gmail.com>
+Cc: git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>,  John Cai
+ <johncai86@gmail.com>,  Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: [PATCH 3/3] rev-list: add --allow-missing-tips to be used with
+ --missing=...
+In-Reply-To: <20240201115809.1177064-4-christian.couder@gmail.com> (Christian
+	Couder's message of "Thu, 1 Feb 2024 12:58:09 +0100")
+References: <20240201115809.1177064-1-christian.couder@gmail.com>
+	<20240201115809.1177064-4-christian.couder@gmail.com>
+Date: Thu, 01 Feb 2024 12:20:45 -0800
+Message-ID: <xmqqo7d0x7fm.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain;
-	charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
-X-Mailer: Microsoft Outlook 16.0
-Content-Language: en-ca
-Thread-Index: AQMTzlW4975feouBsT254Lv1BIoWdQGhQd7aAVNiZS8BbXS0WQGm69duAVRHZx4B89kghK44awdw
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 6297D184-C13F-11EE-BFA7-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
 
-On Thursday, February 1, 2024 2:00 PM, Dragan Simic wrote:
->On 2024-02-01 19:36, Hans Meiser wrote:
->>> Could you, please, clarify what kind of git documentation are you
->>> referring to?  Are you having git man pages in mind?
->>
->> Yes, these in particular.
->>
->> From my point of view, many of these are quite unorganized, hard to
->> read and =E2=80=93 as I believe =E2=80=93 need a fix-up. Markdown =
-could replace the
->> currently used language, so editing them would be more easy, proving
->> support for preview and lint the documentation.
+Christian Couder <christian.couder@gmail.com> writes:
+
+> In 9830926c7d (rev-list: add commit object support in `--missing`
+> option, 2023-10-27) we fixed the `--missing` option in `git rev-list`
+> so that it now works with commits too.
 >
->Please keep in mind that editing the git man pages requires very =
-intimate knowledge
->of the related git source code.  Many times even small changes to the =
-language style
->can change the meaning and diverge the man pages from the source code, =
-making
->the man pages useless.
+> Unfortunately, such a command would still fail with a "fatal: bad
+> object <oid>" if it is passed a missing commit, blob or tree as an
+> argument.
 >
->>> Quite frankly, I think you've missed some important points from the
->>> Konstantin's message.  To sum it up a bit, not having continuous
->>> support is simply unacceptable for any kind of a long-term project.
->>
->> As I wrote, once installed on-premise, no-one will shut down an
->> on-premise git server except for yourself. It can run for eternity.
->> You just need someone to administer it properly and publish the
->> website.
+> When such a command is used to find the dependencies of some objects,
+> for example the dependencies of quarantined objects, it would be
+> better if the command would instead consider such missing objects,
+> especially commits, in the same way as other missing objects.
 >
->A git server?  I was under impression that you proposed running an own =
-instance of
->GitLab or something similar.
+> If, for example `--missing=print` is used, it would be nice for some
+> use cases if the missing tips passed as arguments were reported in
+> the same way as other missing objects instead of the command just
+> failing.
+>
+> Let's introduce a new `--allow-missing-tips` option to make it work
+> like this.
 
-Git is unique, as a project, given that everything (! Not everything but =
-a whole lot) is managed using git, including the enterprise git server =
-platforms.
+OK.  Unlike a missing object referenced by a tree, a commit, or a
+tag, where the expected type of the missing object is known to Git,
+I would expect that nobody knowsn what type these missing objects at
+the tip have.  So do we now require "object X missing" instead of
+"commit X missing" in the output?  If we are not giving any type
+information even when we know what the type we expect is, then we do
+not have to worry about this change introducing a new output logic,
+I guess.
 
-A huge advantage of using a git server is being able to mirror the =
-repository. If we went with a GitLab host, we could potentially mirror =
-over to GitHub. The drawback is that the pull request history (and =
-related discussions) id not (currently) preserved. I think this is a =
-situation no matter what, even if we go GitLab/GitLab or GitHub/GitHub. =
-The value of the discussion threads is the most important part of what =
-needs to be preserved. I have high confidence that the team could move =
-to either Pull Request/Merge Request structure reasonably easily, but if =
-we had to move again in future (count on it), there must be a way to =
-preserve the community assets of the discussions that went into making =
-decisions. Without that, I am concerned that a migration to a GitLab (or =
-any other) instance would increase velocity but put long term decisions =
-at risk.
+> diff --git a/builtin/rev-list.c b/builtin/rev-list.c
+> index b3f4783858..ae7bb15478 100644
+> --- a/builtin/rev-list.c
+> +++ b/builtin/rev-list.c
+> @@ -562,6 +562,16 @@ int cmd_rev_list(int argc, const char **argv, const char *prefix)
+>  				break;
+>  		}
+>  	}
+> +	for (i = 1; i < argc; i++) {
+> +		const char *arg = argv[i];
+> +		if (!strcmp(arg, "--allow-missing-tips")) {
+> +			if (arg_missing_action == MA_ERROR)
+> +				die(_("option '%s' only makes sense with '%s' set to '%s' or '%s'"),
+> +				      "--allow-missing-tips", "--missing=", "allow-*", "print");
+> +			revs.do_not_die_on_missing_tips = 1;
+> +			break;
+> +		}
+> +	}
 
->> In the end, it's all just about git. You may create your own git
->> webserver (https://git-scm.com/book/en/v2/Git-on-the-Server-GitWeb),
->> or just use an existing one, like the GitLab server:
->> https://about.gitlab.com/install/
->>
->> In these servers, everything is configurable. Moreover, many plug-ins
->> exist for plumbing extensions to these providers. It's possible to
->> establish your own workflow, rights management and automatic =
-handling.
->> You just need someone who is an expert with the tool of your choice.
->>
->> Many other great repositories already are using one of those
->> providers; Meta, Google, Microsoft for example share their code there
->> =E2=80=93 just to name a few. I wouldn't consider these users as =
-being known
->> for being exceptional risk-takers.
+It is unfortunate that we need to add yet another dumb loop that
+does not even try to understand there may be an option whose value
+happens to be the string strcmp() looks for (we already have two
+such loops above this hunk).  I have to wonder if we can do better.
 
---Randall
+An idle piece of idea.  Perhaps we can instruct setup_revisions()
+not to die immediately upon seeing a problematic argument, marking
+the revs as "broken" instead, and keep going and interpreting as
+much as it could, so that it may record the presence of "--missing",
+"--exclude-promisor-objects", and "--allow-missing-tips".  Then upon
+seeing setup_revisions() return with such an error, we can redo the
+call with these bits already on.
 
+Anyway, I digress.
+
+> diff --git a/t/t6022-rev-list-missing.sh b/t/t6022-rev-list-missing.sh
+> index 527aa94f07..283e8fc2c2 100755
+> --- a/t/t6022-rev-list-missing.sh
+> +++ b/t/t6022-rev-list-missing.sh
+> @@ -77,4 +77,55 @@ do
+>  	done
+>  done
+>  
+> +for obj in "HEAD~1" "HEAD~1^{tree}" "HEAD:1.t"
+> +do
+> +	for tip in "" "HEAD"
+> +	do
+> +		for action in "allow-any" "print"
+> +		do
+> +			test_expect_success "--missing=$action --allow-missing-tips with tip '$obj' missing and tip '$tip'" '
+> +				oid="$(git rev-parse $obj)" &&
+> +				path=".git/objects/$(test_oid_to_path $oid)" &&
+> +
+> +				# Before the object is made missing, we use rev-list to
+> +				# get the expected oids.
+> +				if [ "$tip" = "HEAD" ]; then
+
+Style:
+
+                                if test "$tip" = "HEAD"
+                                then
+
+> +					git rev-list --objects --no-object-names \
+> +						HEAD ^$obj >expect.raw
+> +				else
+> +					>expect.raw
+> +				fi &&
+> +
+> +				# Blobs are shared by all commits, so even though a commit/tree
+> +				# might be skipped, its blob must be accounted for.
+> +				if [ "$tip" = "HEAD" ] && [ $obj != "HEAD:1.t" ]; then
+
+Ditto.
+
+> +					echo $(git rev-parse HEAD:1.t) >>expect.raw &&
+> +					echo $(git rev-parse HEAD:2.t) >>expect.raw
+> +				fi &&
+> +
+> +				mv "$path" "$path.hidden" &&
+> +				test_when_finished "mv $path.hidden $path" &&
+> +
+> +				git rev-list --missing=$action --allow-missing-tips \
+> +				     --objects --no-object-names $oid $tip >actual.raw &&
+> +
+> +				# When the action is to print, we should also add the missing
+> +				# oid to the expect list.
+> +				case $action in
+> +				allow-any)
+> +					;;
+> +				print)
+> +					grep ?$oid actual.raw &&
+> +					echo ?$oid >>expect.raw
+> +					;;
+
+OK.  We do not say anything more than the object name (and the fact
+that it is missing with a single byte '?'), so my earlier worry was
+unfounded.  Good.
+
+> +				esac &&
+> +
+> +				sort actual.raw >actual &&
+> +				sort expect.raw >expect &&
+> +				test_cmp expect actual
+> +			'
+> +		done
+> +	done
+> +done
+> +
+>  test_done
+
+THanks.
