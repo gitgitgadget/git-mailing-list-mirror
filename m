@@ -1,123 +1,87 @@
-Received: from mail-pj1-f74.google.com (mail-pj1-f74.google.com [209.85.216.74])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA42B8526B
-	for <git@vger.kernel.org>; Thu,  1 Feb 2024 19:14:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.74
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04F53127B43
+	for <git@vger.kernel.org>; Thu,  1 Feb 2024 19:21:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706814884; cv=none; b=cwid5OvQ8phphlsn3p4V3dX0A+E+atjxAJCJMKXMKUQ1OuGqtVWT388a3DvyTbTaJVLe2nGeUoclT8qKTGcCYFIf36+v1i2ksIwtD5mNy3pFGux9JEWBIuVYQkWvXsx2nJbx2JaEg+HFF9QX3wj0RA5OLSFQEHm8b3lYEjuPdTY=
+	t=1706815273; cv=none; b=CJ1kYS71QmZhCuN9V+WeJ4P+SX1QRv3oHGKUxx/7yYnNTzpOtXshDXZK1qMa7gJK3pc+joRFIDhzhxiE/GqpjpnPJPo+7nsrfpD7ir3ImoMu5MJOBKQ8oIf1zT5r3GAhRjeY2oUMaJe3Rkgps2CLNspJuoOO6KcPdAOPOaEfEu8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706814884; c=relaxed/simple;
-	bh=p7m25jc8kD9MAALUc30gii6C3WFmQa0PoKXdm1ixy/o=;
-	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
-	 To:Cc:Content-Type; b=X490B3aUv7Y9MAaJxyqLBriPY/tvkIE/UVdxSYJLeSYfOaMxR/7lWohSR7BIoMq/8UGPAxlUA+JdlEI7WR/+FsfHQSwSvR+cWH+kqTBZzeUsRMqOcOOLQvjH8qmThhGQJKS0/KytI9+HUePnfmxfPLEu3AbezwyyRW0HQBsQo2c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--linusa.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=DkHXhiwf; arc=none smtp.client-ip=209.85.216.74
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--linusa.bounces.google.com
+	s=arc-20240116; t=1706815273; c=relaxed/simple;
+	bh=1sRjJL6hCPbLq84D9OJQHDQpcgeNJYUfzALPh79BFM0=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=onkxKkcvbw0S75sgr0KYIj0nrFbHhnnd5//XzakSG+7z4sxTjBk40BcAs2aLYSMDq0e5zSBQ6HVxecDzdl7yVfbMiQ/IUL0e6qf2CpKbXrzvhFQCpfyHWlISlqC6jtH4FCkOgXC8MTSXzKiJas/LsMU72qbQFGc8QWNdEKkGpd8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=LixhWiWi; arc=none smtp.client-ip=64.147.108.70
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="DkHXhiwf"
-Received: by mail-pj1-f74.google.com with SMTP id 98e67ed59e1d1-2963802f73cso47768a91.2
-        for <git@vger.kernel.org>; Thu, 01 Feb 2024 11:14:39 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1706814879; x=1707419679; darn=vger.kernel.org;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=esT4QlrcPeVN9x30aQGcS1Ugeh+NuQcz2OlaTf+VTJc=;
-        b=DkHXhiwfwh0VmBWbpJh9yCMydvLVZ4dDHElqz8MbKt5x+xD38Xezx2DyvcgZ+lOOhN
-         nIJZE+B3KuYqzMF+fxheAUVaFdeOPc1cpgMtLy4KFRm5nA3hgyYww8HvOX5EhGLm/8d1
-         QDfZpFj8v8x6DQ7TRDTR0SyzMv1OUK+St8Qv2nTqScdTblOENFS7FW9IAk/Ryxi7Ua7F
-         yWsKvA3u1WRPM94UnX8UcZrYoTg3+nFfq46obF5W/mU+Hl1YhgQFfGZoZTNMkUohS5Yg
-         wOjkSkxzfa1kBEDSe2mRjaGzRYE0vJhJGRRWsNZCp/nZrqmKOMdAC0qvXtt009jpBiHE
-         5UqQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1706814879; x=1707419679;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=esT4QlrcPeVN9x30aQGcS1Ugeh+NuQcz2OlaTf+VTJc=;
-        b=nvHHGG0PYDNE/QLR0bltHWPupOi8t9N5Ga6VPjslDmawGXQkz6qQNFhevOZJM79XTY
-         yyLRggS7yfTMEbY3Zqtk6UbITYaxXV0T2S9o4eGs8Wom2ITz+ToJwk17BSPBnghg8edK
-         uJeH8Ahmn4yNs9t+K4pLLHf/QU3krgl5v7VBI5PbHfV5SUEIXn6LE9t02ODsOll8w2AV
-         ywZ/1URXGauqI71nnVGeLD4mmMxldfgXOO4yNO617T2h0H8gUJIda2UrbGC4Uj9NKzC2
-         pHFimMgE+l0yhTd2QWZ3Pqj40fRExHwCDBh+JNaPc1Di5pz532t1Ouit6GiDj87dl6Vs
-         uDFg==
-X-Gm-Message-State: AOJu0YwLIQEudKP9auSzdTJS3Ly8l5u9ngCf6+aBSmA86X74lBJrtbrL
-	3AhzZzRgEWBo/lyk68o2tXbNKI4VnaJHuwUtBpVkluwF3PMqcWeRXZbfFtkA8uwjS5n7yOBNW0r
-	6gQ==
-X-Google-Smtp-Source: AGHT+IE7Qeow1JVSGYngp4du5lwEwpp/m49jdPwRHAxcKGWVDbi+ugmYBYq+68YLk0ZJbc246xcIMBdpgWc=
-X-Received: from fine.c.googlers.com ([fda3:e722:ac3:cc00:7f:e700:c0a8:2221])
- (user=linusa job=sendgmr) by 2002:a17:90b:104c:b0:295:b7e1:f6db with SMTP id
- gq12-20020a17090b104c00b00295b7e1f6dbmr18268pjb.4.1706814878848; Thu, 01 Feb
- 2024 11:14:38 -0800 (PST)
-Date: Thu, 01 Feb 2024 11:14:35 -0800
-In-Reply-To: <xmqqa5ok12lt.fsf@gitster.g>
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="LixhWiWi"
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 68A961BC133;
+	Thu,  1 Feb 2024 14:21:09 -0500 (EST)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=1sRjJL6hCPbLq84D9OJQHDQpcgeNJYUfzALPh7
+	9BFM0=; b=LixhWiWiRBaM9S25+tB7ShTTDsM029Mha7PZkLF2rm1p557/vCAcrN
+	gAkI2zWORpBlecI2BwUk5MA+JVhiX69zCCkzwqxn3wLX3MME4FCo5FmmVqrfHJwK
+	igUrSjQdiHXHpNKC1mW/sRiFEHEPIDnUEOSfhEjFQJg6qi3Cl6fMo=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 5CDFD1BC132;
+	Thu,  1 Feb 2024 14:21:09 -0500 (EST)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.200.93])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 14E051BC131;
+	Thu,  1 Feb 2024 14:21:07 -0500 (EST)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Linus Arver <linusa@google.com>
+Cc: Linus Arver via GitGitGadget <gitgitgadget@gmail.com>,
+  git@vger.kernel.org,  Christian Couder <chriscool@tuxfamily.org>,  Emily
+ Shaffer <nasamuffin@google.com>,  Josh Steadmon <steadmon@google.com>,
+  "Randall S. Becker" <rsbecker@nexbridge.com>
+Subject: Re: [PATCH v3 03/10] trailer: unify trailer formatting machinery
+In-Reply-To: <owlyo7d011no.fsf@fine.c.googlers.com> (Linus Arver's message of
+	"Thu, 01 Feb 2024 10:26:35 -0800")
+References: <pull.1632.v2.git.1706308737.gitgitgadget@gmail.com>
+	<pull.1632.v3.git.1706664144.gitgitgadget@gmail.com>
+	<5c7a2354df0f4a29841f9ab8294ead0e1c3b9cf5.1706664145.git.gitgitgadget@gmail.com>
+	<xmqqy1c545y0.fsf@gitster.g> <xmqqa5ol409k.fsf@gitster.g>
+	<owlyv879106s.fsf@fine.c.googlers.com> <xmqqfryd2drm.fsf@gitster.g>
+	<owlyo7d011no.fsf@fine.c.googlers.com>
+Date: Thu, 01 Feb 2024 11:21:05 -0800
+Message-ID: <xmqqa5okyori.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-References: <pull.1632.v2.git.1706308737.gitgitgadget@gmail.com>
- <pull.1632.v3.git.1706664144.gitgitgadget@gmail.com> <bf2b8e1a3c4bc77022fab1ebaa0fc89a7813b4c4.1706664145.git.gitgitgadget@gmail.com>
- <xmqqa5ok12lt.fsf@gitster.g>
-Message-ID: <owlyle840zfo.fsf@fine.c.googlers.com>
-Subject: Re: [PATCH v3 04/10] sequencer: use the trailer iterator
-From: Linus Arver <linusa@google.com>
-To: Junio C Hamano <gitster@pobox.com>, 
-	Linus Arver via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, Christian Couder <chriscool@tuxfamily.org>, 
-	Emily Shaffer <nasamuffin@google.com>, Josh Steadmon <steadmon@google.com>, 
-	"Randall S. Becker" <rsbecker@nexbridge.com>
-Content-Type: text/plain; charset="UTF-8"
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 0D0A0302-C137-11EE-82AC-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
 
-Junio C Hamano <gitster@pobox.com> writes:
+Linus Arver <linusa@google.com> writes:
 
-> "Linus Arver via GitGitGadget" <gitgitgadget@gmail.com> writes:
+> I am planning to spend today trying to break up this patch into smaller
+> preparatory chunks that still end up at the same state as this patch.
 >
->> From: Linus Arver <linusa@google.com>
->>
->> This patch allows for the removal of "trailer_info_get()" from the
->> trailer.h API, which will be in the next patch.
->
-> Hmph, do you mean "shortlog" and the sequencer were the only two
-> external callers and with this we can make it file-scope static to
-> trailer.c?
+> Will post another update on how this goes by EOD. Thanks.
 
-This was what I meant (originally ...
+I stopped reading the function after noticing the double unfolding,
+so there may be similar "why do we do this unexplained new thing in
+the function that the original didn't?" issues in the "same state",
 
-> Or do you mean the next step will be more than a removal
-> of a declaration from trailer.h plus adding "static" in front of its
-> definition in trailer.c, because there need other adjustments before
-> that happens?
+In any case, if I understood your plan I heard from you in the
+discussion yesterday correctly, the unfolding should not be added to
+format (to make it double), but would be moved from parse to format
+in a single step.  It would avoid making it double, and would make
+the parse step about purely parsing without modification, which is a
+very worthwhile thing to do.  So I am not sure if we want to end up
+with the same state in the first place, though.
 
-... but now I realize that the operation adds a few small tweaks, such
-as tweaking the parameters it expects and also what it returns). In the
-spirit of breaking up patch 3, I will also break this up into
-preparatory patches as well.
+THanks.
 
->> Also, teach the iterator about non-trailer lines, by adding a new field
->> called "raw" to hold both trailer and non-trailer lines. This is
->> necessary because a "trailer block" is a list of trailer lines of at
->> least 25% trailers (see 146245063e (trailer: allow non-trailers in
->> trailer block, 2016-10-21)), such that it may hold non-trailer lines.
->
-> That sounds like a task larger than something we would want in a
-> patch that focuses on another task (e.g. update sequencer not to
-> call trailer_info_get()) while at it.  It seems from a casual glance
-> that the change to shortlog.c is to accomodate this change in the
-> semantics of what the iterator could return?  It smells that this
-> patch does two more or less unrelated things at the same time?
-
-I think you're correct. Hopefully breaking this up will make things
-easier to review.
-
-I am learning very quickly from your review comments in patch 3 and in
-here that, in the absence of area experts, the existing tests/CI tests
-cannot be trusted alone (after all some tests could be missing), which
-makes it more important to do so-called "micro-commits".
-
-But overall, breaking things up is a good thing anyway as a general
-practice, so, I think this is a good lesson. TBH I have a (bad) habit of
-saying "is the diff ~100 lines?" and if so I don't spend any time
-thinking of breaking these up. X-<
-
-Thanks.
