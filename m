@@ -1,141 +1,125 @@
-Received: from wfhigh3-smtp.messagingengine.com (wfhigh3-smtp.messagingengine.com [64.147.123.154])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oa1-f51.google.com (mail-oa1-f51.google.com [209.85.160.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D3B815AAC8
-	for <git@vger.kernel.org>; Thu,  1 Feb 2024 08:39:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.154
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9078715AABB
+	for <git@vger.kernel.org>; Thu,  1 Feb 2024 09:00:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706776792; cv=none; b=KvSS34aMsUBmxzejUtLRVAPV+/tx7aj8+Dnyl2PHu33nW69K97BOWVliu8hjK/hloR2TmdazdM4cgT3Bg4QKb/POvnUxUU/WbK8796aYCvJsYLjumz9jiBOlWALq8vZHWO/5EtMfa6kErSyW7UNPcBFDoHKYfj0wfTKWVytQK3U=
+	t=1706778041; cv=none; b=VpdDZgZfR4bPLz9zBtpaEanxCmkZvCmreKBFKPB1qtNcAT6m/vLfYb8iq9BaJYrJTdHmhfeSu9IE/FvMZUlwoLI9hV+B/UrqWWWFideVkz49iMgyoHKSeVuZs9QGfSr9fZsX6nGqBHADighOgRd5k5Ccaso6suNhVXzHE2SJRaw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706776792; c=relaxed/simple;
-	bh=bnCsjc/vmdX38KotrmShJXA4JYm8Y12kBz5YZNn7xx4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=aQ0a0rJ+vUO+izs4Sz6f8zx96hw+ustfUFg4P2e0YK42avR3ryQgLf1YDQtb3lPLmggdAucYMkzpxEH1xX09DrCX3ssihebGTwPvswEe0830fZpKkU5yjozNzykeEq28GarEgkkKI9CtHZLIok47iUzGYF9BgLjCaRdHJTsGTKo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=WDBLIAnn; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Tjqx13vu; arc=none smtp.client-ip=64.147.123.154
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1706778041; c=relaxed/simple;
+	bh=frBa1r+I6lPDr6NcdTwoInw9wzmTEMYx0oIH+NV3/+M=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=gG/4uGa24m7AaEZ1kBIQEeUYTDvHTbrFcK5O1E3Lr9O+NYC8ojwGnu422ybYQTWzGPauPjKcsic4bLbTzpc/379i1wpQ0tBJkvkzVsVsmmkZnGfCu5VaHS+IXmlXtZ3c3D0Hd/EthhSIPMghwemsmIKHJ96/9/zIBUvufMuWGOw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RxXNDMWq; arc=none smtp.client-ip=209.85.160.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="WDBLIAnn";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Tjqx13vu"
-Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
-	by mailfhigh.west.internal (Postfix) with ESMTP id 705D81800085;
-	Thu,  1 Feb 2024 03:39:49 -0500 (EST)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute6.internal (MEProxy); Thu, 01 Feb 2024 03:39:49 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1706776788; x=1706863188; bh=R6TROvch+u
-	8vTxffUB+Vkz4egxhFAEKsldg5yBWg/VQ=; b=WDBLIAnnYJ6TpK/ktzf/KbQ04Y
-	oC/sbTjGF5gqwTdiv00xabDou2WSNYCcmgqlgTFXpGrHdD8zPuQmetB2UYICRvSe
-	+SLKybKiM1N7IR/YBpTgbqr0p3XpXDHJvGJtxoSgcUDSlam02BgsBnAPHq/u8zsV
-	CLimKpRr0XjgSGQc+Xj5HhYlNLqOIQSOKwicz/0pPOyesFdh8/kC9Lt1vCDK1YMH
-	Y0YT8/TLlz7JfnvD4owbjQ8s6yD8WFZVGrs/yhAeXW3fC1IFkc2tMfHsT1C4VARa
-	EEGGJrr/IVEA+LTmboAdWzlq81gbDnlOrWuw8COhh6NOyzqpYB/S/cX8QoCQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1706776788; x=1706863188; bh=R6TROvch+u8vTxffUB+Vkz4egxhF
-	AEKsldg5yBWg/VQ=; b=Tjqx13vu7FAKgHcIJuVp6u8cWXPh0/DTtduC+UMnqRc2
-	wPo8boMgxw634/AUhirary4pvTv7LSQenz7wN5t6MI414v9hehiOu0AAt/f1wCXW
-	JfzhpxgA9RujfTcnGt8mLsvhywYHS+NBwwsQMiPHQGIrRY9U66V6lokR8XG3ctYZ
-	56UVGq6BshxFzILP552iBp2wlWcKcocFGNWGbclWN0sh47el/KNi4/QKRPoir4K5
-	yRVc52gdSPgEhrHIbAwv4Wk4MWDk3JP3EAVpMi0uEijxRQ8t1Zw2CmobTaKufvLF
-	HFIzoqNopJrVSAQa+KPmFYjY+31ItEbF+LCP6xzOTA==
-X-ME-Sender: <xms:1Fi7Za4sUlwYiaKy4OnPdvEuQ9U4B5CxwY441TTRyAkr33ZCUrplsQ>
-    <xme:1Fi7ZT52f38cRMcXB-q0TvR4-y_0mkMgpeJQfWs4kENNLWCd9EAm-tjJwkrG1XGQL
-    ZjWm3SXsNMKT4gEnA>
-X-ME-Received: <xmr:1Fi7ZZdkCYrwbQVfZMKd08QTB_DSJBX_KIcDIy1QNT6gXRDbDLoeDBkbbXBOXuxLEevr-0sIiPaiIa8jR60VRu3xp6DEGo28T6n_u3vzJncqTw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrfedutddguddvtdcutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
-    necuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
-    enucfjughrpeffhffvvefukfhfgggtuggjsehgtderredttddvnecuhfhrohhmpefrrght
-    rhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtth
-    gvrhhnpeeukedtvedtffevleejtefgheehieegkeeluddvfeefgeehgfeltddtheejleff
-    teenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpsh
-    esphhkshdrihhm
-X-ME-Proxy: <xmx:1Fi7ZXLqdijYDtrwrBAPw4kIpYjSrfAWy2C9ePhtZaX_kcoGLI-y4w>
-    <xmx:1Fi7ZeICoEowFf8bumiYqFkZy0mz8vKnmefw-wP2OXHeK0N74sFsbQ>
-    <xmx:1Fi7ZYzi9q05owKpHyeZR5VSQcKSDZNgWT-LdubWc12timA1tf7WMQ>
-    <xmx:1Fi7ZVXK34VXvPb5G7K9lvfzylFgd5aTZkks43CDPMFwYm3FgXaYVJnW7qk>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 1 Feb 2024 03:39:47 -0500 (EST)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 47e39812 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 1 Feb 2024 08:36:19 +0000 (UTC)
-Date: Thu, 1 Feb 2024 09:39:39 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: Toon Claes <toon@iotcl.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 3/5] reftable/writer: simplify writing index records
-Message-ID: <ZbtYy4ZdjATQ4yi_@tanuki>
-References: <cover.1706263918.git.ps@pks.im>
- <b0982baacf74a4501ce5c543b294bc15d6937875.1706263918.git.ps@pks.im>
- <87sf2dppjt.fsf@iotcl.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RxXNDMWq"
+Received: by mail-oa1-f51.google.com with SMTP id 586e51a60fabf-21499c9650cso387172fac.1
+        for <git@vger.kernel.org>; Thu, 01 Feb 2024 01:00:39 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1706778038; x=1707382838; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=frBa1r+I6lPDr6NcdTwoInw9wzmTEMYx0oIH+NV3/+M=;
+        b=RxXNDMWqIn5pwxCM0JddoRe/Gu0DdGeSAy6aYwtAuT+JUYJCpoWoP1NrBJp7SevxJN
+         tDpgnUnJGa11EaU2FKsvH4oXPKItVBE9hBDHBNiYrSteDgBC00/9BeCeLvxgD6PaVGFr
+         fPOG70Ag6Gw/IEP1dYZqz548yEg6a89Y71M6IXRDztikeNtc1Xqf8FeH2dsiLk2UPRQH
+         8f2tAlcDRO5Jhe5s/zIiFZeaJMFFiUpXlNiQThosPdvlkrCEOf/+pgTQ9lkehsm8qQp+
+         D5a4JpQ1u236N7fcHNS4OvybdmuY8D/P2dcmr+hBvFcupJlB8BplLPKy2N0eH5eMAvtw
+         RddQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1706778038; x=1707382838;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=frBa1r+I6lPDr6NcdTwoInw9wzmTEMYx0oIH+NV3/+M=;
+        b=S99IS8KtD8idIaUAjsw+BpOAyQjmD0deR9Tp/Hh5x9SEUyrkiVfcFFMOfs88t9LvdB
+         mytNBadSHW1esPVzmfBukbTcF09/yWAU86zBIOzeQzWrFJW7Av5m6XxEEbcd5Cwebl0Y
+         mWIgqLWb3k+2u48NGTNu1XNdKxGShvWHRn5nHMy9F3XRwqsFA5LuRyTVYMFQzU5VDSwH
+         kidpO4BMfxv3iJ/kBvtR5s93xCS/Pq9sePlHqHtfIzMtDhd0fpJOHeutfOP75VGQmlh4
+         W7+nWZ6kYKycR6OV1ZCaY/8a8TB9k97sZ4Nqf1jEtpx6g3moYQxuSRyEXITWNCvz5Osg
+         r9tg==
+X-Gm-Message-State: AOJu0Yzt4Qf27RsBMsCKKQknujhouRohn5rIRa2tvmuYpYKKgRqwkeEn
+	tmZigwbQ+xgYBoQRmJfPJfo1PtlB+MQgH3ISCsE1zsBvhXaOrnU0iG//pFjR4cfje/hA6aVTUrL
+	Za3A1G2xcU7PIxqNVCs4/yI8Xl8M=
+X-Google-Smtp-Source: AGHT+IFKZh+CjgMGQ5hx4xmoDzJBPK0Lw5U/I03jRyIQafEweENqaspMUIRU8illjuKx87AH+VFdX9bmv4bRbGktKpg=
+X-Received: by 2002:a05:6870:65a3:b0:214:fc3f:3471 with SMTP id
+ fp35-20020a05687065a300b00214fc3f3471mr4671188oab.40.1706778038277; Thu, 01
+ Feb 2024 01:00:38 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="ZF+JdpHz2PbT0BRn"
-Content-Disposition: inline
-In-Reply-To: <87sf2dppjt.fsf@iotcl.com>
-
-
---ZF+JdpHz2PbT0BRn
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+References: <1de82b27-116a-450e-98c0-52eb65a8f608@gmail.com>
+ <CAP8UFD1VAvnkM6afZvtpdXhA4csDBDwMnF9yUzSx_ut-Ypf+eA@mail.gmail.com>
+ <Zbi8pfvGpYrlZXAu@tanuki> <ZbpGzAd6FGEeTdrh@tanuki> <c61322de-8cd9-42b8-a04b-a8ae47b25c5e@gmail.com>
+In-Reply-To: <c61322de-8cd9-42b8-a04b-a8ae47b25c5e@gmail.com>
+From: Karthik Nayak <karthik.188@gmail.com>
+Date: Thu, 1 Feb 2024 10:00:11 +0100
+Message-ID: <CAOLa=ZQCh1YR9kGzjsX5EFkkN2n55gCX_S8PGwTSMKN=94Y+AQ@mail.gmail.com>
+Subject: Re: Git in GSoC 2024
+To: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+Cc: Patrick Steinhardt <ps@pks.im>, Christian Couder <christian.couder@gmail.com>, git <git@vger.kernel.org>, 
+	Taylor Blau <me@ttaylorr.com>, Junio C Hamano <gitster@pobox.com>, Victoria Dye <vdye@github.com>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Wed, Jan 31, 2024 at 02:44:38PM +0100, Toon Claes wrote:
->=20
-> Patrick Steinhardt <ps@pks.im> writes:
->=20
-> > When finishing the current section we may end up writing index records
-> > for the section to the table. The logic to do so essentially copies what
-> > we already have in `writer_add_record()`, making this more complicated
-> > than it really has to be.
->=20
-> I didn't feel like this commit message made it easier for me to
-> understand, because I interpreted words differently than you intended.
-> Using "may end up" makes it sound like it's unexpected behavior. Also
-> the use of "copies" implies to me it's doing a copy operation. I would
-> rephrase it to something like:
->=20
->   When finishing the current section some index records might be written
->   for the section to the table. The logic to do so is essentially
->   duplicated from what we already have in `writer_add_record()`, making
->   this more complicated than it really has to be.
->=20
-> Other than that, I don't have any comments about this patch series.
+Hello all!
 
-Thanks, I'll use a slightly adapted version of this.
+On Wed, Jan 31, 2024 at 6:58=E2=80=AFPM Kaartic Sivaraam
+<kaartic.sivaraam@gmail.com> wrote:
+>
+> Hi Patrick,
+>
+> On 31 January 2024 6:40:36 pm IST, Patrick Steinhardt <ps@pks.im> wrote:
+> >On Tue, Jan 30, 2024 at 10:08:53AM +0100, Patrick Steinhardt wrote:
+> >> On Tue, Jan 30, 2024 at 09:38:48AM +0100, Christian Couder wrote:
+> >>
+> >> Yes, the tests in t0032-reftable-unittest.sh should be ported over to
+> >> the new unit test framework eventually, and I think that this might be=
+ a
+> >> good GSoC project indeed.
+> >>
+>
+> Nice. Good to hear that.
+>
+> >> If there is interest I'd also be happy to draft up some more topics in
+> >> the context of refs and the reftable backend. I'm sure there should be
+> >> some topics here that would be a good fit for the GSoC project, and I'=
+d
+> >> be happy to mentor any such project in this context.
+> >
+>
+> Great. Thanks for your interest in willing to mentor!
+>
+> I created a fairly rough SoC ideas page for now including a barebones
+> information about the unit test migration idea:
+>
+> https://git.github.io/SoC-2024-Ideas/
+>
+> Note well that the existing idea's description is far from complete and
+> I mostly just cooked it up to serve as a template for how the idea entry
+> could look like. Kindly contribute towards elaborating the same :-)
+>
+> Also, feel free to suggest ideas you have around refs and reftable
+> backed, Patrick. Those would be helpful.
+>
+> >I noticed that the starting period falls right into my honeymoon from
+> >June 17th until July 19th. This unfortunately makes it quite a lot
+> >harder for me to mentor projects alone. Still, I'd be happy to co-mentor
+> >or help out in other ways.
+> >
+>
+> I too don't believe your vacation is going to be a deal breaker for you
+> being a mentor. It should be totally fine given that we get a backup
+> mentor who is also willing to mentor the candidate. (side note: I myself
+> have no knowledge about refs backends. So, I suppose I might not be able
+> to help co-mentor this one).
 
-Patrick
-
---ZF+JdpHz2PbT0BRn
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmW7WMoACgkQVbJhu7ck
-PpTbsg/8C+jChylOCVd+bN+BF4mOVSCpdeaKcvvX0Ov1Q8w+QFPWUM7tDN39SoSe
-wq1k1g/OXrPGY+GEiw1lwjxAs89EjBgIKpcenjMx0XSOJK56BXsqekTMOWdUKD+o
-6W/WPicrhzcV1u4snu3OFz8EZDLfT0T5H/SB6P0PAMyLoO4uBTh/Hyx9P19S8jZK
-QUMUIS4Aw1Dvxxye68lIr9Ir1Vdc0aQNPIPECNEhI52lZaTRZKqwYhcYylzRwvlL
-1m8rAU0fDbhnLqDJxVxj5fHqlcneWhGXtG4cTbnu3jGA2KYUKk5+89LVrLUbVnow
-wVR46bfN7dkROWbTIt32fJJm91fdDWcMrbWyzchvNrC406nRnBRazm5wvRQWT9OY
-LE+JAfe4v1DeH6e9nzwSOVnY0WaBeExbzETfyoAxTNS1X/c/6Gi7SNHPLuDZksBw
-xPpDYJejd4prwnHneZTstTd5Fry8DLPGjxyJ+uibO8mn5srxdM3waZt/AdAjaOnj
-RRwTk6fvn+clzFY/OxTkyv/IWgcrR5yFCPuGNv3wm1gSklGz4IZvY9zdEgy/qTBa
-msuNU+qJ70nUeQ57iDc6Vbxl7+0lV0Si/xa8mQC2oGXo84aEizIL/xFxNYxOeyKO
-ntT3Qlg/vHnaLyiHukJUidciJj2CRaT9vGmcekSQYxuJ6vfsq5U=
-=Y8xM
------END PGP SIGNATURE-----
-
---ZF+JdpHz2PbT0BRn--
+I should be able to help out here, happy to co-mentor on the reftable topic=
+s.
