@@ -1,127 +1,165 @@
-Received: from EUR05-AM6-obe.outbound.protection.outlook.com (mail-am6eur05olkn2095.outbound.protection.outlook.com [40.92.91.95])
+Received: from out4-smtp.messagingengine.com (out4-smtp.messagingengine.com [66.111.4.28])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 503F678B6D
-	for <git@vger.kernel.org>; Fri,  2 Feb 2024 10:48:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.92.91.95
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706870885; cv=fail; b=r7rAbuG1z1o4bljX7jds263d45gzz3o4OdYck3LShCo3wjZuBcBGiN1pzkmRAjg6xpbG+iWT5bnRR2eqd3E7k3/4UB+aQXOtVsm39UF/3acypzyoDfUeaZZhNIkDpO4K/VzRwzwxLzTWpqe/ksMXocleJsqiVIHNNJXvbEJy9lQ=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706870885; c=relaxed/simple;
-	bh=3lOlZCTLovBlxBrCQfriLOwxkNHZDqyT2H8XRB9UR1k=;
-	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
-	 Content-Type:MIME-Version; b=QsnGnbExT398NZyiVbHXKFCmkkb5uBv51yTGi7FdpYTQq9LyEQsIX8d7mrb5VO5wla6qsO6PxF/yXmiBq0hTylSgiVMcLMEFqyValwGs4CiT+JL6u0ng3l5OzJFB3bpx0FoKOOLilMFbEM+6eNbQK2xIORKMkYQW8JZEhr3BQjE=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=hotmail.com; spf=pass smtp.mailfrom=hotmail.com; dkim=pass (2048-bit key) header.d=hotmail.com header.i=@hotmail.com header.b=Jgq4q5Pl; arc=fail smtp.client-ip=40.92.91.95
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=hotmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=hotmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 605EAF508
+	for <git@vger.kernel.org>; Fri,  2 Feb 2024 10:52:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=66.111.4.28
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1706871138; cv=none; b=mVHxn84Aqu0A4oUTQMiOX0mnEl4pVtSRpICUqqZ3JGSwQDB6SxiNzHdfR/XJ3JNtXYBPD+qKl62cAPQYh/SQsk+L2vKRenkYrDZgXgji1CTuC06z/E8XDNp+1dtWhcpURDIOcyz5DPd7OVkYJ78kxHer4Hv0ak7xDccs11YIh8s=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1706871138; c=relaxed/simple;
+	bh=+H1GSY1Dg9cor9KGXg9CgNRRQ02W10tTgrZcep8e2vo=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=XDO0VREaDlOINUQwCoHblfwTpojNdCm2JhmgRtTs9eIMUW+N8J18cbystfEVNk7CBOYEeUaf+pT//5G6n8FkJo479oEAi+r5D3eDiAuSldkXMqR6fQrPl2YD74zM8R7wDbQfGZWCXDXiJSddShp5joB5cyPCbuiDSiIOCM7JO9c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=UiPvKthQ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=sdcUrd1Z; arc=none smtp.client-ip=66.111.4.28
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=hotmail.com header.i=@hotmail.com header.b="Jgq4q5Pl"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=kWSL5mqLL7dNwKFT1y2kUYAh5w6KWproKKCgIc8o6LP7HYVfi0zYRRHI4W7Hs0GmBiUhlrSuGbwgsi4KryHMeCz7VPspDz6ZB7MOryVKB1BLk82c/gkfuMUrKMiPVoH6/7gNrGj1zszT3tVYDq2vUpuH/FkwyBGWA8+g5Rq3f1zCDYeqkWxxKuPTps6/m6YkK0Cd4mkJSx3koSRr2X6co9/liDFII7mMw4cM4S2EOeFNTZ20Ipf2vxzat+ahBhy9x6fnSSExahM/qHxeT9ANoTU8gmWkUoG+fzX14OG6q5G+OhwJpZAfr3Qq9bXznisj++r5poYP4iPr2FB7CMstdw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=3lOlZCTLovBlxBrCQfriLOwxkNHZDqyT2H8XRB9UR1k=;
- b=Guj9OBNgeam7cI0vqpp3cHX1ALtWJZu9i3Tctcf2VOI6HKO/5jsKKOy9Eoan0D1TWPbTYMBPEEjrwV2HfGUNvwbN58Nfw43mkuLOer9LLjc+gnzT3J/Xh9y7y06u649Jw4T36uYM23ZIn4BxLztjhHSJb9f2Gr/NY1Z5B+jp5awuK55Oh/iRYXM7nze71I3VBg3XfbNB6ofiupjuKvrxq4d4QUqvI06qvDTnZqL0BBSFjDngFYxS7ZYbqW/GSUlvyKhUuhRTXom7rL1pU4ivClixC3zpBmpRXpTANQQRy9xsFfAhHuYI/lIy7X53xnKfvj+sk1RdYZfXi06CgvIwMA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
- dkim=none; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=hotmail.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=3lOlZCTLovBlxBrCQfriLOwxkNHZDqyT2H8XRB9UR1k=;
- b=Jgq4q5PlWxdfAUmj5pLW3Y3ELmfLjV/HohXXHrN5V7zkG/NxwOuov9JwDJ+NMJVJulvDUdJi4O3jTsyAU2K+9BLIldN21kg29jn2sB0Gz6QEiYBRLsWIKypgVyyt8/Z+JELjTWU45QIgZw29mD/ONXNzZ+/RjI39e3ve6xcr7opNW54TNkost5krbbWyp3zruBEetLYlfoQG6jNh2qiPnIna1lUJscmfhFvQPrWDtZDPq1dltJyIcGmTA9wnHISjcM0brbh3hZt+DqO6EbUJP8SeuzmxknBQVmdvEyU+SPIkKQQLLRMh9fUK5FR873QwBKcY65ofNO6QYc/BeFMBlA==
-Received: from DB9P195MB2130.EURP195.PROD.OUTLOOK.COM (2603:10a6:10:3d9::18)
- by DB8P195MB0630.EURP195.PROD.OUTLOOK.COM (2603:10a6:10:159::19) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7249.23; Fri, 2 Feb
- 2024 10:48:01 +0000
-Received: from DB9P195MB2130.EURP195.PROD.OUTLOOK.COM
- ([fe80::61bd:4376:abf9:2b10]) by DB9P195MB2130.EURP195.PROD.OUTLOOK.COM
- ([fe80::61bd:4376:abf9:2b10%7]) with mapi id 15.20.7270.010; Fri, 2 Feb 2024
- 10:48:01 +0000
-From: Hans Meiser <brille1@hotmail.com>
-To: "brian m. carlson" <sandals@crustytoothpaste.net>
-CC: Dragan Simic <dsimic@manjaro.org>, Konstantin Ryabitsev
-	<konstantin@linuxfoundation.org>, "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: Migrate away from vger to GitHub or (on-premise) GitLab?
-Thread-Topic: Migrate away from vger to GitHub or (on-premise) GitLab?
-Thread-Index:
- AQHaVQX2n79jCmLH3kymUsYhfKUndbD1ZQcXgAA6fwCAABmD9oAACw8AgAAGJuWAAH5PgIAAkvjQgAAEw08=
-Date: Fri, 2 Feb 2024 10:48:01 +0000
-Message-ID:
- <DB9P195MB21306A747B3BEBB53FCBCE5FE2422@DB9P195MB2130.EURP195.PROD.OUTLOOK.COM>
-References:
- <AS2P195MB21350F44B079009C05A1EAF1E2432@AS2P195MB2135.EURP195.PROD.OUTLOOK.COM>
- <AS2P195MB2135D91EE464FF30EE84E77EE2432@AS2P195MB2135.EURP195.PROD.OUTLOOK.COM>
- <20240201-primitive-aardwark-of-contentment-aaabb9@lemur>
- <DB9P195MB21301E5E271567256303443CE2432@DB9P195MB2130.EURP195.PROD.OUTLOOK.COM>
- <c3b6de0c2ccf71f0dfa5aff06fa63d8f@manjaro.org>
- <DB9P195MB21303B5546A764A18FE78C97E2432@DB9P195MB2130.EURP195.PROD.OUTLOOK.COM>
- <ZbxI4wNTBZ48YcTi@tapette.crustytoothpaste.net>
- <DB9P195MB21302F96E3E2CD404FDBF9ACE2422@DB9P195MB2130.EURP195.PROD.OUTLOOK.COM>
-In-Reply-To:
- <DB9P195MB21302F96E3E2CD404FDBF9ACE2422@DB9P195MB2130.EURP195.PROD.OUTLOOK.COM>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-msip_labels:
-x-ms-exchange-messagesentrepresentingtype: 1
-x-tmn: [Gt0ZYGwVK5/PBR+i5QG6OVq0oqt0gSAN]
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: DB9P195MB2130:EE_|DB8P195MB0630:EE_
-x-ms-office365-filtering-correlation-id: b4fe45d5-9531-49d0-3083-08dc23dc6d89
-x-ms-exchange-slblob-mailprops:
- F3kBGFPBgzYX34cN5wvmE1g/1jaARvbY/Vt6eU1bpiMsHePsCUf+eMR743ZhFI8GqBL4jkSSG+Pep58yaTtPqdG/02921hP4GO145hUOAA/FkgvuQuQqTdaAEhkC9M3S+aLkfgeoA+Cr58y7CxhW2NzGw5z5xjKs3iEIMC1dFaAowx/vo7m16GSXo/4po3kvRQTrFFqIQJHGs0PQwTrZDcZj2KKEPhRsuXaDaTSD1gKQ/9XP4BcN89lMFOONm3RUPQaeZbtsfLL3JXnLzsMKfd4wUaoRTEQGbOGEi7/2K2TKnrLt6EPFbrGamWq0I66rhXhX/eQc0mRY9PhiJg8FNc/G4wA3GbbWkhig8mLn4L8ZLEq7QBboFmLvZlP5InYRPoJLBNvJZnkjrhaNLIEjt3MAZ6lssg5JcouMJh8Czm8dO87gFOVxX5CcFYrQDW0WQ3LatNjfGnkOVXA/5a65qljlG9Tl7fo1t3eIAXC9EM/9fq5NKVRNd2Qgf7Eo/n+cKLy9C5H1ma1B8cNeILhCJNXczGE5sEE8xY63ZbHd4xxDSCbkBHfhVZTkBJV4/pjgKEO8TbMMMq/55QbfMXxXvcFirbAnf5Hu2AZU/VKIrGnKsDVmdLXY5NhikuKQEmQUEfkYN27UR25QWPl7jpAC9bfPoRVBupjIq0ApJawRi1wONJFgmVW6guBiWJEFVcVXHalarMItyPmC00Z+WWk7ez0hExZadeTglalhW4sCtgs8/pJGANAa+MuvXAyPZTvq0mheXQQlizk6GDTbDFPKffUHcqHo4szL
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info:
- 4IjTg7fEsZh/vaoZKpXkP7SSB6+bwgdVd3IMiXFLjeCGlhudje6mmi9RRkrlcY3yaAPAIZq2447+R66cvuwIqc109t4l/5K05tMaAloonWWWhn+UmFbJ9E+nJbzdlFqdeUpTA49LE0+MFc0a248rtbE29KRXAhmN8qA5Xie5EjvZfRMfEuyk5EZoX1RTHjEsl21R1H+ZFU+9dPC2SO98eHCNTSoqkLNIsqwvDs4pypMZgqDMISCkufIFngoPrRtfTXKqDSBPfva6uEQqX6gPKutWE1Q7mfijDtLXef8hDMCOJFdan32dR/F7cLq35hezJ3PAQB7tlTxfdxMQQG2fTknYZztUz8lWso8axdoLiVg+Xw3QfTUWROyNYkJJUWQmVAiyEbwWxx267XScMjT9SExF73zDzAEc/DmVh/Vuilow0z4eD8ppGQ61KB8rUdgx0SZZzhWg1ctPfcmrEzAFogPuymfkA50G3loX96mpD+BGYtvUJzYcLk5F5ySmgcGxdNhut7PSK+K8noA1UOKNXOkAimKQKkLQk4RO+Uhny442Xpbg808VsP06m86g5v7ZzQSrj6oEuja8uIszJz/79vlZb6bUyJ9eWw0mDtm1Ebg=
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0:
- =?iso-8859-1?Q?GxxBYrei9XxMW4qXyzf+UJNqX6puHrlI5L6Ykwq7MXebloJQphKe82lX9o?=
- =?iso-8859-1?Q?Wh4OqO3hLcMYQNs5yUlsG5QcvplTJcfmcpaXBGxPTgvsM8qvDq6mYzy7u2?=
- =?iso-8859-1?Q?o82zbkw0Q1nXYBPTfvkOW6YFymISKAkk0sddEJ0G1t7JzWgUgvcRyWUKgO?=
- =?iso-8859-1?Q?wXXmt1hd4sM1ygazWqYcYV1mGjvcBdLA+ddMfQCfri5VnIAvY2osltzht/?=
- =?iso-8859-1?Q?wo1p9r6/Be2bOKrrGXQwRGCmFw2OaKGepv28p4FhMOv1GsgAstDzfQ50Ca?=
- =?iso-8859-1?Q?EzjIwNBch1t7gruIb7jhuftXtJUalY2cZMFxuJ12OktNZEo0SoVN4Va6wy?=
- =?iso-8859-1?Q?c0C5DhmVwFigKpdP1LsQ9NVdFkad+EA9wM7+GamQhjvWu/vC9g+Vi4K5Vv?=
- =?iso-8859-1?Q?vlm7q5eteJI2u+GR6X/O2kYUo+vOUZkGp3SYXT4vaH5MejH33djkGAg9qO?=
- =?iso-8859-1?Q?wT1Vhn4c4CZ7Em+rYs38zgBKN6/121pQrfOYSie2rLd68SUNEWVJIzJt+I?=
- =?iso-8859-1?Q?0lnKCgqtHGH6PEr49SfZBrhsqv71G6gkUJg0BdVDEwk9QOgDFpya388aoH?=
- =?iso-8859-1?Q?O3dGQkQBOtUdLaiStOjmYhGGdnI/7lkY91qmgN/FulBJ2h50OZnsGC01Si?=
- =?iso-8859-1?Q?AKxShTcATGHLs6hilKJNkYVsyQ+cpU06ya05pfgOmtQu7oF6f/VnDv7b8+?=
- =?iso-8859-1?Q?GgJzfSwGRLEAC8+suYwSFyVlX4kGBiCdrEvKTp6ty4oEvjLXLgtgjUdnaY?=
- =?iso-8859-1?Q?oXWWppom8VQSwHdjtFot/U6jB5cixuct79+tRmXX89K19tOF/5ukgWVQPH?=
- =?iso-8859-1?Q?wkihVyQVYi4agrnVxPOYcv7dVr9qIh3K4n/bDstM6J5e+IR9HvY3Phx2mr?=
- =?iso-8859-1?Q?otGF/0tYbgbU4FqJwGyYAer+5MeujgDKuVsr8HMPSKFqNEV6SVoe+jOHxG?=
- =?iso-8859-1?Q?NkwYBpQBxwHt214Q2sYG/lp3CjJpFsLEVquOd4GKcADN2g4UXOaU6z9rox?=
- =?iso-8859-1?Q?h9Y1WkMcxG62GtPz9WCp2z5a8LH7/MzDdkTo6QunYjlMMtEwKGT4kExLdg?=
- =?iso-8859-1?Q?G1z38n7xjZF+cAY6DxG2hbWYfPO3+VnHfk+u5+7DNAwT+Owe9g//eekv07?=
- =?iso-8859-1?Q?11RBkgGI/jrSw2HPddomY/hyBeHRp+EbeNOjCsHL6Sxk+zBCLU/iPndmj9?=
- =?iso-8859-1?Q?cm8jniohMyxl9FhemZU/iQR7+QuU7WfQqlh1wSaXYD7IMf4QqtOtQnop?=
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="UiPvKthQ";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="sdcUrd1Z"
+Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
+	by mailout.nyi.internal (Postfix) with ESMTP id 2A43C5C0101;
+	Fri,  2 Feb 2024 05:52:15 -0500 (EST)
+Received: from mailfrontend2 ([10.202.2.163])
+  by compute3.internal (MEProxy); Fri, 02 Feb 2024 05:52:15 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1706871135; x=1706957535; bh=ytUEB8Aw8h
+	QYVSNMlTzzV1tjbw45i/16zxZmVFiftc4=; b=UiPvKthQpPUwqyR2ro3JzdcFW8
+	ubsV4QhtDFOG4kesGasEk/eWKy7+PWc5IpajgAF8GEB9SSNSbIXxcrUJe7IXpKmd
+	2V3rxbycvEh9oxu/5jtJghKqj00pjJ0TkT9fhbef03C82qgforc6NwEWdjLEAOqq
+	rlASI8DQ9qINUXezf7t7qy/GD9LJdZHReTAR2nHWSUH7Yn7Oiv1xNI82Gi3alLfF
+	Cz7iqMYZaXrqDGh5r1OJvxD8zmQvYJj+6L0Rl7SJoOXYMyx+rqA8D7uv2FhGmmrT
+	SJ0AXw5t05FTB/g1txhyvcXrcQH9IMC1736e4vdyljEEPhigZoSqVjhqQLKg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm3; t=1706871135; x=1706957535; bh=ytUEB8Aw8hQYVSNMlTzzV1tjbw45
+	i/16zxZmVFiftc4=; b=sdcUrd1Z0iX+/1QqUiSG+pxxkMl+n/+EE9/8fqbncx25
+	IbegntbRBooQkv7LUGDW7y00JegusgfNiVjWtgCm8ZzElNwggcnyYhcuXpiJj1Hk
+	ewgFF6VQroCvmkx/HdzIPztnWml8irWszOQ9VnT+DuH1To+vZHkOBgurB42uI1a8
+	dFx4f/Yx/Xj+sOYRgOLxJz7+ljmkXmo1iZ7fGoCph5/Jn343QDLom3F6WeKZRjkE
+	qhnEvhrZO2s5vwYGgNCT2YyGTPs1LQxrUDJ4LnMt0ARQTexiZ+XDnL1vtXRA4LWC
+	7VmnvVdVLyI0DrfVA8P9+lnbmjYeyCW/a68mCtFbww==
+X-ME-Sender: <xms:Xsm8ZSyOz1N7YWiZYDADk4aUm4wj-CqU9i8UKAvLWryGWpe5C1yQaw>
+    <xme:Xsm8ZeQsoakZsm8KOx-yhioncTP-VXwZS9ljtR_-RkLJmMrA-2g7d_vu0625j9lJC
+    VAvmwHljwJk7ZjFGQ>
+X-ME-Received: <xmr:Xsm8ZUVNhRkHSJIHHVNFv09ISeM80pFgbtqgox_Q4Us-eic0oN8gNnM6Rl8S4iij3Agn5nsSlP0M8Q5oM8DDaSGXTKhQDnMW_KzVwua7SHQr1w>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrfedugedgvddtucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+    cujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtvdenucfhrhhomheprfgrthhr
+    ihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvg
+    hrnhepueektdevtdffveeljeetgfehheeigeekleduvdeffeeghefgledttdehjeelffet
+    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
+    hpkhhsrdhimh
+X-ME-Proxy: <xmx:Xsm8ZYhQrfdhC96dmfPs0HigWoD4rxVThVS96wBC3IpDvVL5H_8yWg>
+    <xmx:Xsm8ZUA-yZRKeBOaJLYoo3bZFJbYLWMd0i4UC4mIv6Ffn9fye0RH7Q>
+    <xmx:Xsm8ZZKdg4tMfJJs-oDyOVKD8yfOd10I-V896PMUmbAV-4hSzgrZaw>
+    <xmx:X8m8ZXPTpadShJbujBZeb2aQ0E1Rm5Dyo8CjZ9gXGKEYRIi_2HAiyA>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 2 Feb 2024 05:52:14 -0500 (EST)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id b6b9853d (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 2 Feb 2024 10:48:48 +0000 (UTC)
+Date: Fri, 2 Feb 2024 11:52:10 +0100
+From: Patrick Steinhardt <ps@pks.im>
+To: Karthik Nayak <karthik.188@gmail.com>
+Cc: git@vger.kernel.org, Han-Wen Nienhuys <hanwen@google.com>
+Subject: Re: [PATCH 1/2] refs: introduce reftable backend
+Message-ID: <ZbzJWo-DBpGZiMO4@tanuki>
+References: <cover.1706601199.git.ps@pks.im>
+ <5598cd13074beef092a61235a505476d0cbceb90.1706601199.git.ps@pks.im>
+ <CAOLa=ZTrPuRAbkDgg1Dh4M-3o58Rw1KruAMcw47o2V_LrK9KPg@mail.gmail.com>
+ <ZbyoL3r7yEVYe35B@tanuki>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-OriginatorOrg: sct-15-20-4755-11-msonline-outlook-49ed2.templateTenant
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: DB9P195MB2130.EURP195.PROD.OUTLOOK.COM
-X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
-X-MS-Exchange-CrossTenant-Network-Message-Id: b4fe45d5-9531-49d0-3083-08dc23dc6d89
-X-MS-Exchange-CrossTenant-rms-persistedconsumerorg: 00000000-0000-0000-0000-000000000000
-X-MS-Exchange-CrossTenant-originalarrivaltime: 02 Feb 2024 10:48:01.6711
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DB8P195MB0630
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="tNyzHsM2cCgxIZwg"
+Content-Disposition: inline
+In-Reply-To: <ZbyoL3r7yEVYe35B@tanuki>
 
-> Actually, there a plenty of converters out there converting Markdown to a=
-nything.=0A=
-=0A=
-You may even want to convert Markdown to AsciiDoc:=0A=
-https://matthewsetter.com/technical-documentation/asciidoc/convert-markdown=
--to-asciidoc-with-kramdoc/=0A=
+
+--tNyzHsM2cCgxIZwg
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+On Fri, Feb 02, 2024 at 09:30:39AM +0100, Patrick Steinhardt wrote:
+> On Thu, Feb 01, 2024 at 07:17:45AM -0800, Karthik Nayak wrote:
+> > > +		iter->err =3D reftable_iterator_next_ref(&iter->iter, &iter->ref);
+> > > +		if (iter->err)
+> > > +			break;
+> > > +
+> > > +		/*
+> > > +		 * The files backend only lists references contained in
+> > > +		 * "refs/". We emulate the same behaviour here and thus skip
+> > > +		 * all references that don't start with this prefix.
+> > > +		 */
+> > > +		if (!starts_with(iter->ref.refname, "refs/"))
+> > > +			continue;
+> > > +
+> >=20
+> > Since my patch series [1] to print all refs is now merged to next, maybe
+> > you could add this in?
+> >=20
+> >     diff --git a/refs/reftable-backend.c b/refs/reftable-backend.c
+> >     index 895de0b273..3f4f905292 100644
+> >     --- a/refs/reftable-backend.c
+> >     +++ b/refs/reftable-backend.c
+> >     @@ -348,11 +348,10 @@ static int
+> > reftable_ref_iterator_advance(struct ref_iterator *ref_iterator)
+> >      			break;
+> >=20
+> >      		/*
+> >     -		 * The files backend only lists references contained in
+> >     -		 * "refs/". We emulate the same behaviour here and thus skip
+> >     -		 * all references that don't start with this prefix.
+> >     +		 * Unless the `DO_FOR_EACH_INCLUDE_ALL_REFS` flag is use, we only
+> >     +		 * list references contained in "refs/" to mimic the file-backen=
+d.
+> >      		 */
+> >     -		if (!starts_with(iter->ref.refname, "refs/"))
+> >     +		if (!(iter->flags & DO_FOR_EACH_INCLUDE_ALL_REFS) &&
+> > !starts_with(iter->ref.refname, "refs/"))
+> >      			continue;
+> >=20
+> >      		if (iter->prefix &&
+>=20
+> I'm still waiting for your patch series to hit `next` before making it a
+> dependency of this series, but thanks for the patch!
+
+Oops, didn't read this carefully enough and missed that it already is in
+`next`. I'll adapt accordingly in the next version, thanks!
+
+Patrick
+
+--tNyzHsM2cCgxIZwg
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmW8yVkACgkQVbJhu7ck
+PpQOoQ//RMdiUTH2vJ9kJt9oOGoFzcRNbMlpE5l9mbwwxFj+O6XS1wlOMeQdW0PF
+2ZzNv9C+bfl1ar83HXtMziavpwoFip6beW5hQJ5jkbl5yVklxIepwhyhceSOMUpt
+5oQuJgVbZIIo4ptYesTm8WiWeeNRyrw28sNtDDK1ST/ZE7RDBs75swrChcWrewIo
+QzAlqOwtNB24BswnMRy9q8RAgh6U6d5Tdv8RYVuRu4v074xUOT+/GjA+1HJJqoD/
+jdNHQdoSUWrCWGR7D58SeoMj8uJ6bBNOGDQ9OJuk3JSotWZVBMZ+/ujbhS62EcYX
+mJvCA1ow41To430/DnB2rOtdwyDK7fEpacV9TEyy//txTBnTqug2rjFKYzcBBq4d
+wEjhaJH6G5Mk2+WJJGlA1gUbpcGWoVhWvz5k69P7uOcGxLHO+v/AUnNlKw9ANn2H
+IENakdUZGQdC1ihPfjtpBa5gNrKYpNDOzS7KM84gBHEpKzu2aopmUNV4wjkheFTt
+tes/VbUcbzC7KLtIljCTnC4gP/KDQPYCGYbDYwpVW3Hak8+EPQ1jvNx65VIh1rIM
+8Qd6CZ/fZPWanPGPwigGRAxGsK7m/cSXtbVK2R7J5MWdTxkPTukncNDJMf9sWxaE
+XgyYleJ/aARt5orl9rPRxYD7GFDIzfhT9tk19Z50KSD1LLjNzzc=
+=FGW1
+-----END PGP SIGNATURE-----
+
+--tNyzHsM2cCgxIZwg--
