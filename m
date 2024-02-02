@@ -1,73 +1,59 @@
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+Received: from secure.elehost.com (secure.elehost.com [185.209.179.11])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16FAD14C5B1
-	for <git@vger.kernel.org>; Fri,  2 Feb 2024 17:43:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8E024776F
+	for <git@vger.kernel.org>; Fri,  2 Feb 2024 17:50:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.209.179.11
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706895831; cv=none; b=NAvij/HhHRyVI6KuX91LZH5YsNLOkaz/LfTItw+yjE4i5/H694VxjcNqCiKMmdZGy+muHwvqfyU4WpcFxqa2akxVtM3i5+m5uEq3JrvKQmMN/fFXJwf7aT69DfjDhb3ucp9F6uH9xeTpXYOqK/dZ0uwAo6xidHBYSTo9+odze7Y=
+	t=1706896250; cv=none; b=J3iF9d2gNx13fqHcxzGcIo+5jpSvaSj+pqs6s6hq30JQxxtS5OGwwcH6KFRLANZtXG2IqytKODpXaERSW72oTTDSIoAMw4fNVWi4TQVJbdFRu+VxMBS1HV2gAYmyM5jP1x5GwevTWMfPfNvTWuJASKJhohXNUCLAR67lDgY5Nmk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706895831; c=relaxed/simple;
-	bh=L5NlZUlKBSu5tJsgRU4TlhAKnKvahMNrt30qA0mGYOk=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=cQ0yzWDcrvh6dV3f7y4IZGd9t9pellzthY1VvqX7Azg7Ac/lrBMcYbZhED17j/cFrknMIEShtdRuiOFNF7fT298E+8/bkM7WgGmImIS6N+3hiXtCJifn9Js/fh2R8viFUkZeSa+A6reQGvFpZ9/V3GfNUmLxOfdSuRjaV6o8L7k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=HEBoQj3V; arc=none smtp.client-ip=173.228.157.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="HEBoQj3V"
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 6FE6725783;
-	Fri,  2 Feb 2024 12:43:49 -0500 (EST)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=L5NlZUlKBSu5tJsgRU4TlhAKnKvahMNrt30qA0
-	mGYOk=; b=HEBoQj3V27nuvmk+zXZLQulW7xZxXJwqOB3R8qjMSk9XXpF3ExDKAX
-	ZPL9TW6F7KMGUaGSb+vUk0M0iFu2KI4gLPq4eKKliVLoKJEBZ0xJGxgAOuYTC4AB
-	B21GSWq0tIX+nkmdwQsAb0kOTBJnlcHeh2HmFAc/HPTm7j7loSTVA=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 68EEA25782;
-	Fri,  2 Feb 2024 12:43:49 -0500 (EST)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.200.93])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id A3DA525781;
-	Fri,  2 Feb 2024 12:43:45 -0500 (EST)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Ghanshyam Thakkar <shyamthakkar001@gmail.com>
-Cc: git@vger.kernel.org,  ps@pks.im
-Subject: Re: [PATCH v2 2/2] add-patch: classify '@' as a synonym for 'HEAD'
-In-Reply-To: <xmqqh6iqu73y.fsf@gitster.g> (Junio C. Hamano's message of "Fri,
-	02 Feb 2024 09:08:17 -0800")
-References: <20240128181202.986753-2-shyamthakkar001@gmail.com>
-	<20240202150434.11256-1-shyamthakkar001@gmail.com>
-	<20240202150434.11256-3-shyamthakkar001@gmail.com>
-	<xmqqh6iqu73y.fsf@gitster.g>
-Date: Fri, 02 Feb 2024 09:43:44 -0800
-Message-ID: <xmqqv876sqwf.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	s=arc-20240116; t=1706896250; c=relaxed/simple;
+	bh=zbJe+z17ATOCBfFR1SF55y8ZUMyYbX5JyNZbPxg5zBE=;
+	h=From:To:Cc:References:In-Reply-To:Subject:Date:Message-ID:
+	 MIME-Version:Content-Type; b=Wi4bz7kagKsjSuba8znBD1WKzKFwTC2vBHHYOo/YdihY43XEbpe+KGdj8hdJxqOp3cXC1wcvVSJVKao2BubvUrYB0sZHesj90ed6ZQdvMno5gJ4eyQIphMumIHMDHfi7r55XoH8yLxgTUPIe+9PChVmfgD56uQ5SE1YiFxk8liU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com; spf=pass smtp.mailfrom=nexbridge.com; arc=none smtp.client-ip=185.209.179.11
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nexbridge.com
+X-Virus-Scanned: Debian amavisd-new at secure.elehost.com
+Received: from Mazikeen (cpebc4dfb928313-cmbc4dfb928310.cpe.net.cable.rogers.com [99.228.251.108] (may be forged))
+	(authenticated bits=0)
+	by secure.elehost.com (8.15.2/8.15.2/Debian-22ubuntu3) with ESMTPSA id 412Hohba1734776
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 2 Feb 2024 17:50:43 GMT
+Reply-To: <rsbecker@nexbridge.com>
+From: <rsbecker@nexbridge.com>
+To: "'Junio C Hamano'" <gitster@pobox.com>
+Cc: <git@vger.kernel.org>
+References: <AS2P195MB21350F44B079009C05A1EAF1E2432@AS2P195MB2135.EURP195.PROD.OUTLOOK.COM>	<AS2P195MB2135D91EE464FF30EE84E77EE2432@AS2P195MB2135.EURP195.PROD.OUTLOOK.COM>	<877cjm53bf.fsf@osv.gnss.ru>	<008b01da55eb$9f3c36d0$ddb4a470$@nexbridge.com>	<xmqqcytevmwq.fsf@gitster.g>	<009601da55fa$1ecc9580$5c65c080$@nexbridge.com> <xmqq1q9uu5nc.fsf@gitster.g>
+In-Reply-To: <xmqq1q9uu5nc.fsf@gitster.g>
+Subject: RE: Migrate away from vger to GitHub or (on-premise) GitLab?
+Date: Fri, 2 Feb 2024 12:50:36 -0500
+Organization: Nexbridge Inc.
+Message-ID: <00a201da5600$574b1ca0$05e155e0$@nexbridge.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- 9D17761C-C1F2-11EE-BD88-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
+Content-Type: text/plain;
+	charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+X-Mailer: Microsoft Outlook 16.0
+Thread-Index: AQMTzlW4975feouBsT254Lv1BIoWdQGhQd7aAcbbN+4BmxetWgFZgewTAdVh0I0Bcdvdpa43RDXQ
+Content-Language: en-ca
 
-Junio C Hamano <gitster@pobox.com> writes:
+On Friday, February 2, 2024 12:40 PM, Junio wrote:
+>To: rsbecker@nexbridge.com
+>Cc: git@vger.kernel.org
+>Subject: Re: Migrate away from vger to GitHub or (on-premise) GitLab?
+><rsbecker@nexbridge.com> writes:
+>
+>> I should have qualified this with "free" NNTP. I have only been able
+>> to find for fee NNTP servers where I am. The search continues.
+>
+>The NNTP server "nntp.lore.kernel.org" carries the mailing list served by
+>lore.kernel.org archives, including this list.
 
-> You decided to use is_rev_head() instead of user_meant_head(), so
-> you'd need to update the above description to match, I think.
-
-Having said this, I have a slight fear that normal users would
-expect is_rev_head(X) to say "yes" for "master" when the current
-branch is "master", though.  is_head(X) would have the same
-downside.
-
-
+Thanks. This is sufficient for git. Appreciate it.
 
