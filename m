@@ -1,102 +1,146 @@
-Received: from fhigh7-smtp.messagingengine.com (fhigh7-smtp.messagingengine.com [103.168.172.158])
+Received: from siwi.pair.com (siwi.pair.com [209.68.5.199])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B22708060A
-	for <git@vger.kernel.org>; Fri,  2 Feb 2024 19:16:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4EBF15E5B5
+	for <git@vger.kernel.org>; Fri,  2 Feb 2024 19:25:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.68.5.199
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706901393; cv=none; b=RAuvQPUZU54zXjaDvrNNZ/yUahtm3qmgqobtvw8XuDawWV98YONrSSjS5v15FiGsy/edJGZwKmEDYyND/qPVXEPgExBNsYl6i+K7+egD9K/txJLVTN95gDBcvmzwLFlWmsINhM8fQFA0YMyQOr9o+hVglEo/AiyVkBubFpRvk3k=
+	t=1706901925; cv=none; b=FVDJltLA2xqmjzz+o8RfIKAFyfNc8UXZTrAAKYgoxB+lY65afQE60UjRRvAefBKFpoouwrzmCbKA0fKVFZ7TUbTfEplCj9wwkFURNJMvLz84QNHmx7xkDpQn96V3x7u811ZXvKFr4gSlUDmCTnhSdiXz9G8kWk8NeXp8ADb8F70=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706901393; c=relaxed/simple;
-	bh=dd0+jBcE5beHPqjNFGtOCWwlf9RcJZmUpLuvp6Nyrqs=;
-	h=MIME-Version:Message-Id:In-Reply-To:References:Date:From:To:Cc:
-	 Subject:Content-Type; b=l2ItHU50nIcc3RYPotOFP8MLIoOcgvds5d8uk9i23e4xbhKFdGg/ikICutOiY7fTuddq0ABtrEZgNdXftGEZpf81FX8FHJAMlDyhxpcFxe01b6zn92xeazTdGP9n1bnOxc0A7IUoPWgcWqzLhNKl8kvhxV/Vloq6TZ+ClOJ64IQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=khaugsbakk.name; spf=pass smtp.mailfrom=khaugsbakk.name; dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b=Pwr5nLL8; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=VSbQkIri; arc=none smtp.client-ip=103.168.172.158
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=khaugsbakk.name
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=khaugsbakk.name
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b="Pwr5nLL8";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="VSbQkIri"
-Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
-	by mailfhigh.nyi.internal (Postfix) with ESMTP id 87D861140084;
-	Fri,  2 Feb 2024 14:16:29 -0500 (EST)
-Received: from imap49 ([10.202.2.99])
-  by compute1.internal (MEProxy); Fri, 02 Feb 2024 14:16:29 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=khaugsbakk.name;
-	 h=cc:cc:content-type:content-type:date:date:from:from
-	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:subject:subject:to:to; s=fm2; t=1706901389; x=
-	1706987789; bh=dd0+jBcE5beHPqjNFGtOCWwlf9RcJZmUpLuvp6Nyrqs=; b=P
-	wr5nLL85h9kC5pFIAcH1Oy6ZI4glloVeIMjCMNA7xA1Aa2uJtj4CoPIMzdlcRTXO
-	73dqvlWp7/UXWvDKQU0Ot8ycsC29l5HeSqDsX0n56nspUQcMDC+gwYhCAVUt7P8l
-	0rLLunN+lFzBwBhqdQvSO8my1+ewf37VyQN3yho4/HlR6Le3J4+7a4UYd8r4Um/G
-	pM6Lm0FLYeQjJbv3QSSfenJe7PbOAJrAfPbvbNBp7jvIEBbZTmMNdarRXSIL4/AH
-	PPzX58UpkrIsBhlY9T82iRujiycXUS10yUZ0KQAkCBiJiaMvQfp/x9wFw2HFT/j/
-	zq1WRS8CfIk7fev1OIyiw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1706901389; x=1706987789; bh=dd0+jBcE5beHPqjNFGtOCWwlf9Rc
-	JZmUpLuvp6Nyrqs=; b=VSbQkIribi5Ll8+OvVLPLSblh74nwgIAZbP5WZ8yIM2b
-	/OJqoGP1GNJJXByYddOfEmizgOGW3Ugxs38NlbkYey961MQKqLafP9xQndAqYymv
-	MtuB1nGGespH5wqH21xqT/0B9a3/N/7bIj9vZ7Ds7VZzJgUfWZ07i4V9FQctg1cv
-	XwH1BU0v6qkxxliK47npGacUxzdX5vTB/KJv0lcZqdNc5QLWyxvXXQ5Tms/DGE83
-	VbF+L8ZEVzqwFKGWPX03Z+2Buqlc3XrclP2jKtEjn3AhRrBI2mBjM/qA1vGxdra1
-	aZ2mZnKrYMfPItVhF09tv6/x1qhTR6iY7apbb2aTHg==
-X-ME-Sender: <xms:jT-9ZRSJLQRUjxdmdkHp7fJ2jYHYX87kzdFL-PNCScMVAIelffTTuSk>
-    <xme:jT-9Zaxx8a6btD_QkxHD02tHKwQulmUHUXC7lNNtWTr8Gd7fG1Zom6YVP7Z0RZ8w5
-    f6TLVo5LN222odq4A>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrfedugedguddvtdcutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
-    necuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
-    enogfuuhhsphgvtghtffhomhgrihhnucdlgeelmdenucfjughrpefofgggkfgjfhffhffv
-    vefutgesthdtredtreertdenucfhrhhomhepfdfmrhhishhtohhffhgvrhcujfgruhhgsh
-    gsrghkkhdfuceotghouggvsehkhhgruhhgshgsrghkkhdrnhgrmhgvqeenucggtffrrght
-    thgvrhhnpeehueehfeeiiefgiedtveehudduteehuddttdekkeejteeljedvfeehtefffe
-    ekffenucffohhmrghinhepghhithhhuhgsrdgtohhmpdhgohhoghhlvgdrtghomhenucev
-    lhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpegtohguvgeskh
-    hhrghughhssggrkhhkrdhnrghmvg
-X-ME-Proxy: <xmx:jT-9ZW1G3lLYhJV3D0bbvth54O4xN2vo-v4bJcSX8TB89HEYnJkztQ>
-    <xmx:jT-9ZZBWSbOZ_JEzgg0KXRPU72NCHlyvWXRZxx0m2TOMKiTqsitehA>
-    <xmx:jT-9Zaj_AiPS6qyy3AtJZSYiSls5AVNNMWVBi7TqWehy1EcsblEIeQ>
-    <xmx:jT-9ZeajXrfX4iAhA1EnR91QcCs5Dd7cF2KN-R4P62sJ45Tpx_2aCA>
-Feedback-ID: i2671468f:Fastmail
-Received: by mailuser.nyi.internal (Postfix, from userid 501)
-	id 4289915A0092; Fri,  2 Feb 2024 14:16:29 -0500 (EST)
-X-Mailer: MessagingEngine.com Webmail Interface
-User-Agent: Cyrus-JMAP/3.11.0-alpha0-144-ge5821d614e-fm-20240125.002-ge5821d61
+	s=arc-20240116; t=1706901925; c=relaxed/simple;
+	bh=1a8qsfscIvo9ZEdmq7ArdIBHQNuqq24bMbgOrpVg88k=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=FLcbZYV3wTr2FZxCI7W01wkUTuax69gT+r5b2ZSRDSJRBEL2imDnDrySauf/0e0IK8jOpN8Fu6cIheA4An1kyZk0/2m8hd/zgBHjZM6ZKyz/Cy0AA0sU0ksbbCTJHDPwu7S/VKCYyu9X0CN7N3ldHNk9N3osjNJWkhm2IHfno/w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=jeffhostetler.com; spf=fail smtp.mailfrom=jeffhostetler.com; arc=none smtp.client-ip=209.68.5.199
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=jeffhostetler.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=jeffhostetler.com
+Received: from siwi.pair.com (localhost [127.0.0.1])
+	by siwi.pair.com (Postfix) with ESMTP id 658CECA126F;
+	Fri,  2 Feb 2024 14:19:18 -0500 (EST)
+Received: from [IPV6:2600:1700:840:e768:5ab:5ff0:49e9:ac9] (unknown [IPv6:2600:1700:840:e768:5ab:5ff0:49e9:ac9])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	by siwi.pair.com (Postfix) with ESMTPSA id 3428DCC83C0;
+	Fri,  2 Feb 2024 14:19:18 -0500 (EST)
+Message-ID: <2bae709a-18da-6ab8-2b76-032ddc045641@jeffhostetler.com>
+Date: Fri, 2 Feb 2024 14:19:17 -0500
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Message-Id: <876d8834-a3e9-4971-bce9-f93a04feaaac@app.fastmail.com>
-In-Reply-To: 
- <LV8PR13MB6560538530A2A7D1C1FD89C19C422@LV8PR13MB6560.namprd13.prod.outlook.com>
-References: 
- <LV8PR13MB6560538530A2A7D1C1FD89C19C422@LV8PR13MB6560.namprd13.prod.outlook.com>
-Date: Fri, 02 Feb 2024 20:16:08 +0100
-From: "Kristoffer Haugsbakk" <code@khaugsbakk.name>
-To: "Christian Castro" <christian.castro@dlhcorp.com>
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: Hello question on Git for Windows 2.43.0 - GUID and/or SWID tag for this
- title
-Content-Type: text/plain
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
+ Gecko/20100101 Thunderbird/102.15.1
+Subject: Re: [PATCH] sparse-index: pass string length to index_file_exists()
+To: Junio C Hamano <gitster@pobox.com>,
+ Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, Jeff Hostetler <jeffhostetler@github.com>
+References: <pull.1649.git.1706897095273.gitgitgadget@gmail.com>
+ <xmqqo7cysp01.fsf@gitster.g>
+Content-Language: en-US
+From: Jeff Hostetler <git@jeffhostetler.com>
+In-Reply-To: <xmqqo7cysp01.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: mailmunge 3.11 on 209.68.5.199
 
-Hi
 
-On Fri, Feb 2, 2024, at 19:57, Christian Castro wrote:
-> Hello Git for Windows,
->
->
-> I have a question on the GUID and/or SWID tag for Git for Windows
-> 2.43.0.
 
-This is the Git For Windows repository: https://github.com/git-for-windows/git
+On 2/2/24 1:24 PM, Junio C Hamano wrote:
+> "Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com> writes:
+> 
+>> From: Jeff Hostetler <jeffhostetler@github.com>
+>>
+>> The call to index_file_exists() in the loop in expand_to_path() passes
+>> the wrong string length.  Let's fix that.
+>>
+>> The loop in expand_to_path() searches the name-hash for each
+>> sub-directory prefix in the provided pathname. That is, by searching
+>> for "dir1/" then "dir1/dir2/" then "dir1/dir2/dir3/" and so on until
+>> it finds a cache-entry representing a sparse directory.
+>>
+>> The code creates "strbuf path_mutable" to contain the working pathname
+>> and modifies the buffer in-place by temporarily replacing the character
+>> following each successive "/" with NUL for the duration of the call to
+>> index_file_exists().
+>>
+>> It does not update the strbuf.len during this substitution.
+> 
+> Meaning we memihash() the full pathname munged with '/' -> NUL through
+> to the end of the original, when we should memihash() the truncated
+> leading pathname.  This is bad, and the ...
+> 
+>>
+>> Pass the patched length of the prefix path instead.
+> 
+> ... fix looks quite straight-forward.
+> 
+>> Signed-off-by: Jeff Hostetler <jeffhostetler@github.com>
+>> ---
+> 
+> The problem description and the fix makes sense, but did you
+> actually see an end-user visible breakage due to this bug?  I am
+> wondering how you found it, and if it is reasonable to have a test
+> demonstrate the breakage.
 
-This is the mailing list: https://groups.google.com/g/git-for-windows
+I'm working on a bug where the fsmonitor client doesn't
+invalidate the CE flags when there is a case discrepancy between
+the expected and observed case on a case-insensitive file system.
+(Fix due shortly.)
 
-Just saying that they might be more responsive there.
+And I was single-stepping in the debugger inside of
+`index_file_exists()` while tracking that down and noticed that the
+length argument was bogus.  Something like { name="dir1/", len=10 }
+
+I don't remember if this bug caused visible problems or not. It felt
+like it caused a few extra rounds of mutually-recursive calls between
+`index_file_exists()` and `expand_to_path()`, but I can't say that
+for certain (and I was focused on a different problem at the time).
+
+I do have some test code in `t/helper/lazy-init-name-hash.c` that
+I suppose we could extend to beat on it, but I'm not sure it is
+worth it in this case.
+
+Jeff
+
+
+> 
+>>   sparse-index.c | 4 ++--
+>>   1 file changed, 2 insertions(+), 2 deletions(-)
+>>
+>> diff --git a/sparse-index.c b/sparse-index.c
+>> index 1fdb07a9e69..093708f6220 100644
+>> --- a/sparse-index.c
+>> +++ b/sparse-index.c
+>> @@ -579,8 +579,9 @@ void expand_to_path(struct index_state *istate,
+>>   		replace++;
+>>   		temp = *replace;
+>>   		*replace = '\0';
+>> +		substr_len = replace - path_mutable.buf;
+>>   		if (index_file_exists(istate, path_mutable.buf,
+>> -				      path_mutable.len, icase)) {
+>> +				      substr_len, icase)) {
+> 
+> There is a break out of this loop when the condition for this "if"
+> statement holds, but the value of substr_len does not affect what
+> happens after this index_file_exists() call (correctly) computes its
+> result.  The fix looks good.
+> 
+> Thanks.
+> 
+>>   			/*
+>>   			 * We found a parent directory in the name-hash
+>>   			 * hashtable, because only sparse directory entries
+>> @@ -593,7 +594,6 @@ void expand_to_path(struct index_state *istate,
+>>   		}
+>>   
+>>   		*replace = temp;
+>> -		substr_len = replace - path_mutable.buf;
+>>   	}
+>>   
+>>   cleanup:
+>>
+>> base-commit: 43c8a30d150ecede9709c1f2527c8fba92c65f40
+> 
