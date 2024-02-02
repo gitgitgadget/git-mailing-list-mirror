@@ -1,159 +1,94 @@
-Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.223.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70E361799A
-	for <git@vger.kernel.org>; Fri,  2 Feb 2024 17:23:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C332D4776F
+	for <git@vger.kernel.org>; Fri,  2 Feb 2024 17:26:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706894612; cv=none; b=UuMPSdi0feK3f9nn5f/TCBW6dGjh8rrnrryqCDt9R3nFMbwh9+Y4N1jsFF2N6L0IIqNvLXbEbswldDPmbwQlHxhoGcaaNiTrcT51/gNEviS/jPqShc43mYqo7XLmggNkqChNd6uso5Cr5kgTLKJ1CovQfbNP2vkwzuY5U5KGC2I=
+	t=1706894818; cv=none; b=ldG3ZyyKbI4TUp+ndA7TYohhBerORjor/qmuh85eqY7hmHts0ejkrXiUEzll1H1OL2sPL3cwUnT7nM8z7mDfNOMmpAzKI4eD1CrMzGJ8aXTdgZBgTumdSl0pBEhr58i3cy1hsRszWrlan/8p5Al4kpK1QVIkQsPv6QO6pd7TtOY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706894612; c=relaxed/simple;
-	bh=PH6bS6/92I3osZfj2pw2CF/9M0AmvtMWXo05ATUITi4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Viqjbo/1Y+5nsrXcsnKovTB7bswldUeurYjE+LuKEsVNTrltgSW1s7xxV5IaxKr75PlR4r0wfbD/dlYuhdhowh5ig3gl00hy0V+oxLEcUKrMZqTKsFHa2cK2qxBlflWQdZxIIB/F44lBVqakG6aGOztL5SMNP8S8K19UT0rmjyg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de; spf=pass smtp.mailfrom=suse.de; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=t5917IAv; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=0OW86cdi; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=t5917IAv; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=0OW86cdi; arc=none smtp.client-ip=195.135.223.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
+	s=arc-20240116; t=1706894818; c=relaxed/simple;
+	bh=X459Z71zXBpLYP8J/CApNMiQML+eTC4NefTaHJwRjCg=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=XBSo/CU9LoZOnO8FWuNP7Zefl/0ME9avV0xnZgNdw62tRPYl3Ti+rwpV3mCx/vkqpoz5wP6Ji383jjEhHz+pm8aHQDOV0fPNzOSpayMr4RQNRoMAqeDC04GGhMMWKRikdaC5nkKm6R34O+087nSrO6devWsTH32YT9NY8yAZRJg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=AvtrgQcx; arc=none smtp.client-ip=64.147.108.71
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="t5917IAv";
-	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="0OW86cdi";
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="t5917IAv";
-	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="0OW86cdi"
-Received: from kitsune.suse.cz (unknown [10.100.12.127])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (P-256) server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="AvtrgQcx"
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 58A311C276E;
+	Fri,  2 Feb 2024 12:26:55 -0500 (EST)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=X459Z71zXBpLYP8J/CApNMiQML+eTC4NefTaHJ
+	wRjCg=; b=AvtrgQcxcmQRV03ie8FQ5w0ngcdp81S7/bb243oeEXk2Ha9PeoVVTK
+	GHDSTHYsAetgZ+Z21Y3kbKwemm5/r8QRiNeNHlfkwaGpJCCnOpT3O7qZv75h7b90
+	cjIMX79z7llFAA9bczJDCIfQ7P/ceH0fgX+DsTj7xdVUp1ckZQurg=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 4F09D1C276D;
+	Fri,  2 Feb 2024 12:26:55 -0500 (EST)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.200.93])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp-out2.suse.de (Postfix) with ESMTPS id 8BE0E1FD3B;
-	Fri,  2 Feb 2024 17:23:28 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1706894608; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=UcUbOZQfnQI37R4zl4+l4XfX5EYbhozfSl3r20ce6to=;
-	b=t5917IAveOtz0mXl76nzo7HwiyebVFChK095isaA3RjKc6p6cPDmwQHCcU4OVsibKCQgs9
-	Ors6M9gec97HwpZWmS7Qby99nZnEYyUR2bTt20/63vpNgKV6qTyLXaKLVRZiDHQsEq3t+5
-	nwved08zQ2beUIhkceieY/FKvRsoaY8=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1706894608;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=UcUbOZQfnQI37R4zl4+l4XfX5EYbhozfSl3r20ce6to=;
-	b=0OW86cdis9wGRMGOj2GPStoVEVbj0BSwR8cW+0R13XqfeYt0hTnY61yEiM9L6OT7K9TJ0f
-	0VsqG/MMhMOgTfDA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1706894608; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=UcUbOZQfnQI37R4zl4+l4XfX5EYbhozfSl3r20ce6to=;
-	b=t5917IAveOtz0mXl76nzo7HwiyebVFChK095isaA3RjKc6p6cPDmwQHCcU4OVsibKCQgs9
-	Ors6M9gec97HwpZWmS7Qby99nZnEYyUR2bTt20/63vpNgKV6qTyLXaKLVRZiDHQsEq3t+5
-	nwved08zQ2beUIhkceieY/FKvRsoaY8=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1706894608;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=UcUbOZQfnQI37R4zl4+l4XfX5EYbhozfSl3r20ce6to=;
-	b=0OW86cdis9wGRMGOj2GPStoVEVbj0BSwR8cW+0R13XqfeYt0hTnY61yEiM9L6OT7K9TJ0f
-	0VsqG/MMhMOgTfDA==
-Date: Fri, 2 Feb 2024 18:23:27 +0100
-From: Michal =?iso-8859-1?Q?Such=E1nek?= <msuchanek@suse.de>
-To: Theodore Ts'o <tytso@mit.edu>
-Cc: rsbecker@nexbridge.com, 'Sergey Organov' <sorganov@gmail.com>,
-	'Hans Meiser' <brille1@hotmail.com>, git@vger.kernel.org
-Subject: Re: Migrate away from vger to GitHub or (on-premise) GitLab?
-Message-ID: <20240202172327.GW9696@kitsune.suse.cz>
-References: <AS2P195MB21350F44B079009C05A1EAF1E2432@AS2P195MB2135.EURP195.PROD.OUTLOOK.COM>
- <AS2P195MB2135D91EE464FF30EE84E77EE2432@AS2P195MB2135.EURP195.PROD.OUTLOOK.COM>
- <877cjm53bf.fsf@osv.gnss.ru>
- <008b01da55eb$9f3c36d0$ddb4a470$@nexbridge.com>
- <20240202161643.GD119530@mit.edu>
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id B54F51C276B;
+	Fri,  2 Feb 2024 12:26:54 -0500 (EST)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Linus Arver <linusa@google.com>
+Cc: Linus Arver via GitGitGadget <gitgitgadget@gmail.com>,
+  git@vger.kernel.org,  Christian Couder <chriscool@tuxfamily.org>,  Emily
+ Shaffer <nasamuffin@google.com>,  Josh Steadmon <steadmon@google.com>,
+  "Randall S. Becker" <rsbecker@nexbridge.com>
+Subject: Re: [PATCH v3 03/10] trailer: unify trailer formatting machinery
+In-Reply-To: <owlyil371g96.fsf@fine.c.googlers.com> (Linus Arver's message of
+	"Thu, 01 Feb 2024 23:23:33 -0800")
+References: <pull.1632.v2.git.1706308737.gitgitgadget@gmail.com>
+	<pull.1632.v3.git.1706664144.gitgitgadget@gmail.com>
+	<5c7a2354df0f4a29841f9ab8294ead0e1c3b9cf5.1706664145.git.gitgitgadget@gmail.com>
+	<xmqqy1c545y0.fsf@gitster.g> <xmqqa5ol409k.fsf@gitster.g>
+	<owlyv879106s.fsf@fine.c.googlers.com> <xmqqfryd2drm.fsf@gitster.g>
+	<owlyo7d011no.fsf@fine.c.googlers.com> <xmqqa5okyori.fsf@gitster.g>
+	<owlyil371g96.fsf@fine.c.googlers.com>
+Date: Fri, 02 Feb 2024 09:26:53 -0800
+Message-ID: <xmqq8r42u68y.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240202161643.GD119530@mit.edu>
-User-Agent: Mutt/1.10.1 (2018-07-13)
-Authentication-Results: smtp-out2.suse.de;
-	none
-X-Spamd-Result: default: False [-2.10 / 50.00];
-	 ARC_NA(0.00)[];
-	 URIBL_BLOCKED(0.00)[nexbridge.com:email,gmaine.io:url];
-	 FROM_HAS_DN(0.00)[];
-	 TO_DN_SOME(0.00)[];
-	 FREEMAIL_ENVRCPT(0.00)[gmail.com,hotmail.com];
-	 TO_MATCH_ENVRCPT_ALL(0.00)[];
-	 MIME_GOOD(-0.10)[text/plain];
-	 RCPT_COUNT_FIVE(0.00)[5];
-	 DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
-	 FUZZY_BLOCKED(0.00)[rspamd.com];
-	 RCVD_COUNT_ZERO(0.00)[0];
-	 FROM_EQ_ENVFROM(0.00)[];
-	 MIME_TRACE(0.00)[0:+];
-	 SUBJECT_ENDS_QUESTION(1.00)[];
-	 FREEMAIL_CC(0.00)[nexbridge.com,gmail.com,hotmail.com,vger.kernel.org];
-	 BAYES_HAM(-3.00)[100.00%]
-X-Spam-Level: 
-X-Spam-Flag: NO
-X-Spam-Score: -2.10
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 4287E472-C1F0-11EE-9325-25B3960A682E-77302942!pb-smtp2.pobox.com
 
-On Fri, Feb 02, 2024 at 11:16:43AM -0500, Theodore Ts'o wrote:
-> On Fri, Feb 02, 2024 at 10:22:18AM -0500, rsbecker@nexbridge.com wrote:
-> > >
-> > >Did you consider to rather read the list through
-> > >gmane.comp.version-control.git nntp newsgroup?
-> > >
-> > >This way you get only very specific mails in your mail-box, those
-> > >where you are explicitly CC'ed, and you usually get more support
-> > >for structuring from NNTP readers than from mail clients.
-> > 
-> > Google is dropping Usenet NNTP updates on 22 Feb 2024. I would love
-> > that idea, but it has a limited lifespan.
-> 
-> Google might be dropping Usenix NNTP updates, but news.gmaine.io and
-> nntp.lore.kernel.org are not not run by Google.  So whether or not
-> Google groups are supporting NNTP is not really supporting.
-> 
-> One other thing I would note that is that if someone isn't interested
-> in following most of the git mailing list, it's unclear how much they
-> can actually contribute.  Maybe they could fix spelling or grammer
-> issues in the git man pages, but it's unlikely they could actually
-> make code contributions.
-> 
-> So from an open source project perspective, which is primarily run by
-> volunteers, each open source project has to make a cost-benefit
-> tradeoff as far as the *project* is concerned.  Individuals do not
-> have a fundamental human right to contribute to a project.  Hence, the
-> open source project doesn't owe an obligation to spend a huge amount
-> of effort supporting some kind of forge web site just because some
-> potential contributors are clammoring for it.  Especially if they are
-> saying that they can't be bothered to follow the mailing list traffic
-> because it's somehow too much.
+Linus Arver <linusa@google.com> writes:
 
-That's not to say that the mailing list traffic cannot be wrapped in
-another interface if somebody has the motivation and spends the effort
-to do it.
+> The hard part is not so much the rearranging of
+> code but rather thinking up of good commit messages to explain the
+> intent of each smaller step.
 
-For example, there used to be (and maybe still is) a bidirectional
-gateway that bridged the ruby-talk mailing list into a web forum that was
-run by a person who thought it's a good idea, and resolved the problems
-that came out of it.
+Good.
 
-e-mails have pretty good 1:! correspondence to forum posts or forge PR
-comments. Some features like post edits or emoji reactions do not
-translate, and cannot be provided with e-mail backend.
+Coming up with a good explanation of what you did forces you to
+think it thorough again.  People often discover bugs in the code
+they just wrote, or different and better ways to solve the problem,
+while explaining the change to their colleagues, and I found it has
+very similar effect to try to write a good explanation in the commit
+log.  Time to write such a good explanation is time worth investing
+in.
 
-However, presenting the mailing list through a different interface, and
-hosting the application doing the translation is a work that the person
-suggesting the change would have to do, or hire someone to do for them,
-rather than coming and saying 'Throw away all the tools you have now,
-and install and run this thing instead to make it easy for me'.
+Incidentally, this is why we value clearly written proposed log
+message while reviewing.  A commit that is a product of "I tried
+this, which did not work, and then tried something else, which did
+not work either, and after some more random tries, this seems to
+work" would not have a clear thinking behind it, but if such
+iterations of random tries happened to hit the best solution,
+thinking backwards from the result to the original problem and
+explaining how the solution works would result in a good
+description.
 
-Thanks
-
-Michal
+Thanks.
