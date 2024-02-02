@@ -1,158 +1,127 @@
-Received: from ring.crustytoothpaste.net (ring.crustytoothpaste.net [172.105.110.227])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f53.google.com (mail-lf1-f53.google.com [209.85.167.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78AC3BA24
-	for <git@vger.kernel.org>; Fri,  2 Feb 2024 01:53:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.110.227
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3F22168B1
+	for <git@vger.kernel.org>; Fri,  2 Feb 2024 05:09:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706838812; cv=none; b=ZWCNDekfN6WiKkW4i4ro7g8AKF8uhoJy1395yWWTrXzcOefLwWK6xAOpGQCGPnYRI8W2mb9jWajy8YdjGKBzONGkonYlhqZdEqdP93n6NhlFNe5nDvPvPrB7u06B6npBn0cwvYp8LjBW+KMbtW1BgjKx/shhcVEQk0jZC202JEs=
+	t=1706850589; cv=none; b=pGkKJp0llGUM6+etka3fSQQ7qFK889jbZDtMMK5Hq3T2Oup6zghGPBGXvYa62D0DO5qUQ6qNcfEGmW5oR0XneFNK1bMtSSM6z35OtJPG0xQH1GwDPRYK7bVkyhuJ8ihJ0t55Wq2fGZ0lYwOwfJS19Dw572tsXvV4pKtmk4MFGb0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706838812; c=relaxed/simple;
-	bh=HW4kD+f/5G4Fq06yREearRzivFnUEYP78TF+WM2MdGE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Le67qf3wmjvhK+rkwicYtYBpZLsifRVti2yjg3ufWi4v7d9HtU3YnGt5D+R/uGCokiCIteyiBfPjhi+c9Ac/DC6StUd/r7+IDC2w+5zXeC0dFDD2rqP9gml0dtYZ69jNHArpyD6C3Uj1pwhQzkrUOdSfFDnssRTXlxVcT60jJH8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=n1X3xL71; arc=none smtp.client-ip=172.105.110.227
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
+	s=arc-20240116; t=1706850589; c=relaxed/simple;
+	bh=MqrPTJoB9uR0X6Pd1j2NGVzrnqL1p4N1oZgwcTO5j1c=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=JxgLhAsAPb48BxD+W3mnsPqcGANsV4nxexyDgmor2/MXEZky715bgf3nEG2dXSS2abzMzPETdQPKPFYkdxdm+XIf83nEeIxkwAK1Q4nZ7ALVw6bkP1JcA6BYscdUHjAwQ+tTGjPjWIfrNvbcwtee9rMWT17A+DMiyFdQHL3YtoA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dbDq2GGH; arc=none smtp.client-ip=209.85.167.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="n1X3xL71"
-Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:e59a:3ed0:5f5c:31f3])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (P-256) server-signature RSA-PSS (3072 bits) server-digest SHA256)
-	(No client certificate requested)
-	by ring.crustytoothpaste.net (Postfix) with ESMTPSA id DBEA95A41A;
-	Fri,  2 Feb 2024 01:44:04 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1706838244;
-	bh=HW4kD+f/5G4Fq06yREearRzivFnUEYP78TF+WM2MdGE=;
-	h=Date:From:To:Cc:Subject:References:Content-Type:
-	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-	 Content-Type:Content-Disposition;
-	b=n1X3xL71rB0gBBpAM5CuqH8RZAVA/UlyMK+QuNV9uhQYD9TvFy4BffO2denz+pr6t
-	 MoB3h3PIv+oU2rtOU7SA+IuyA2+vl90lLD7sMoyXojvPyR5L/hFAsSKQ84KQmorxo5
-	 KcwK+biLcGFnigWElj4mszz5wFNiPVRPWckHIdrg43kn3vd+Lkpca62aQH4nnMnVAM
-	 mxbbKBEHQ859Z1rQB/MT3g5G/ndFkIU8Y6bKDi8zAmIQoL19lXinpZZ81lzkOPn6XU
-	 vFV/56hRg9/+U5EAKJa05RJyLympg5xMiBWENpixIVXqtTIxGNJciSlpnD4o54+nz6
-	 0X5Xy4NILKQ8Brp/l7E9TtDRP/3gOCqIuCd+jbecT5/PxxVY1bVAE3K0uWofhmxQPL
-	 QAQxUjqEvtGZX0VtiW8TjmP7/YBbQrG1/C8SOgU7FJtmVFuBnE1RQ4u/GVg4igdBV3
-	 RxP8u9XGHDkCLNvePhhKW9p74ohDebdQtwUzq5ujg9N6r0Lk1nX
-Date: Fri, 2 Feb 2024 01:44:03 +0000
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: Hans Meiser <brille1@hotmail.com>
-Cc: Dragan Simic <dsimic@manjaro.org>,
-	Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: Migrate away from vger to GitHub or (on-premise) GitLab?
-Message-ID: <ZbxI4wNTBZ48YcTi@tapette.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Hans Meiser <brille1@hotmail.com>,
-	Dragan Simic <dsimic@manjaro.org>,
-	Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-References: <AS2P195MB21350F44B079009C05A1EAF1E2432@AS2P195MB2135.EURP195.PROD.OUTLOOK.COM>
- <AS2P195MB2135D91EE464FF30EE84E77EE2432@AS2P195MB2135.EURP195.PROD.OUTLOOK.COM>
- <20240201-primitive-aardwark-of-contentment-aaabb9@lemur>
- <DB9P195MB21301E5E271567256303443CE2432@DB9P195MB2130.EURP195.PROD.OUTLOOK.COM>
- <c3b6de0c2ccf71f0dfa5aff06fa63d8f@manjaro.org>
- <DB9P195MB21303B5546A764A18FE78C97E2432@DB9P195MB2130.EURP195.PROD.OUTLOOK.COM>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dbDq2GGH"
+Received: by mail-lf1-f53.google.com with SMTP id 2adb3069b0e04-510322d5363so2651404e87.1
+        for <git@vger.kernel.org>; Thu, 01 Feb 2024 21:09:47 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1706850586; x=1707455386; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=R0vHIgXtOV5aVIegmek+B1dYtYlPq8xQ49GXWk81PF0=;
+        b=dbDq2GGHwJsXZEg/+sGxIptar3xAESdiCk63ml3RdDtZM59orZhSL7mHMnqeu8MaPQ
+         R2AlSYatJMMOOEOk3PFz4yGJB8x8y2z6lLPTeia0Tpg5CyzLfCZNXYdrVVUv3caV8Cdq
+         +pOkMxwoq6ljrCm84Y/aIjZ9w00utMPRGkRKiFIenhwt85UU5oDf0q+pO7zpitxH15ja
+         qpzp8u1EPgmDHKQ/PX0ujbqZLLyevAsWq9neJ8lxltBlUV2YQbvHq4YSmlcScdpZEUba
+         ZuoEIt2ZVTtvAlSMV92TXH8QRumKGSMTyt56o1qHgsGG0xoEcSuXID9WM2Bh21OwPSPt
+         0wtA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1706850586; x=1707455386;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=R0vHIgXtOV5aVIegmek+B1dYtYlPq8xQ49GXWk81PF0=;
+        b=bn3ocJffbLq9x4zQHZ0bMVNKaYbPqttAH9llFrMr/8HkV7cAspOovqw98+sw7lgJPu
+         qA+KmFN7NCtS+vQzr00IkjQNp3IoJRYdHvWQf3d726qT9qt5pen2R1N2xk0xW03bAllY
+         zMY6zwVCF7NjaA+p3hTpxm860c/F9UqHBESJ/ITxI+cGH8rD7EQd1AThUSTSeO93/Tkn
+         etfLNexutOX2okUlAY4verg2om0pgGew6ToMkFIgIQIldqKK+Oe9KPJ2VsyZc0Jtd6G6
+         CdhiMVI7yIV1fygzbVwZS7bFFxqUXb/YM5tuWj81qIsBkrvHkKxqY4Txjvu1n8jNUDHJ
+         LMWw==
+X-Gm-Message-State: AOJu0YyrYRRHtWuIY47rQfoEEAReauCnvWLQ2bXri6QaA/wWKKELzk6z
+	JrZMRyKw8YWVU821w3RP4IypBqqvMy51U+stXShePdhZXIN/eNpS2kxxnUgh+8CJiTmeJdPtZL9
+	+3R8a/waH29YHVKu5QecZ0NkhmUY=
+X-Google-Smtp-Source: AGHT+IF/zo0dMFELmAPoBWeT3wEeGrtaWRClaW8KieCkziTknlqC6fcKSnanLCH7V3gwOrLipEqzUIPxZDdxXCX1swg=
+X-Received: by 2002:a19:f808:0:b0:511:2088:df39 with SMTP id
+ a8-20020a19f808000000b005112088df39mr3165801lff.1.1706850585437; Thu, 01 Feb
+ 2024 21:09:45 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="UPqonseOJ2bFxRpf"
-Content-Disposition: inline
-In-Reply-To: <DB9P195MB21303B5546A764A18FE78C97E2432@DB9P195MB2130.EURP195.PROD.OUTLOOK.COM>
-User-Agent: Mutt/2.2.12 (2023-09-09)
-
-
---UPqonseOJ2bFxRpf
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+References: <pull.1664.git.git.1706833113569.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1664.git.git.1706833113569.gitgitgadget@gmail.com>
+From: Elijah Newren <newren@gmail.com>
+Date: Thu, 1 Feb 2024 21:09:32 -0800
+Message-ID: <CABPp-BH0zZPDd2-dLPbWLFG=G6oE_kM6N2xLwUbzqgZeXCon9A@mail.gmail.com>
+Subject: Re: [PATCH] imap-send: add missing "strbuf.h" include under NO_CURL
+To: Philippe Blain via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, Christian Hesse <mail@eworm.de>, Taylor Blau <me@ttaylorr.com>, 
+	Philippe Blain <levraiphilippeblain@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On 2024-02-01 at 18:36:48, Hans Meiser wrote:
-> > Could you, please, clarify what kind of git documentation are you
-> > referring to?=C2=A0 Are you having git man pages in mind?
->=20
-> Yes, these in particular.
->=20
-> From my point of view, many of these are quite unorganized, hard to
-> read and =E2=80=93 as I believe =E2=80=93 need a fix-up. Markdown could r=
-eplace the
-> currently used language, so editing them would be more easy, proving
-> support for preview and lint the documentation.
+On Thu, Feb 1, 2024 at 4:18=E2=80=AFPM Philippe Blain via GitGitGadget
+<gitgitgadget@gmail.com> wrote:
+>
+> From: Philippe Blain <levraiphilippeblain@gmail.com>
+>
+> Building with NO_CURL is currently broken since imap-send.c uses things
+> defined in "strbuf.h" wihtout including it.
+>
+> The inclusion of that header was removed in eea0e59ffb (treewide: remove
+> unnecessary includes in source files, 2023-12-23), which failed to
+> notice that "strbuf.h" was transitively included in imap-send.c via
+> "http.h", but only if USE_CURL_FOR_IMAP_SEND is defined. Add back the
+> missing include. Note that it was explicitely added in 3307f7dde2
+> (imap-send: include strbuf.h, 2023-05-17) after a similar breakage in
+> ba3d1c73da (treewide: remove unnecessary cache.h includes, 2023-02-24) -
+> see the thread starting at [1].
 
-We've discussed moving to Markdown.  Unfortunately, while Markdown is
-great for HTML, it's pretty terrible for things that are not HTML.
-Certainly there are tools that convert Markdown to other formats, but
-I'm not aware of any single tool (outside of Pandoc[0]) that does so into
-all the formats we offer, including HTML, PDF, Texinfo, and manual
-pages.  Markdown also comes in a large variety of variants and writing
-documentation to please any substantial number of tools is very
-difficult.
+Ugh, sorry.
 
-AsciiDoc supports converting into all of those things either directly or
-through DocBook, and it's flexible enough to allow a decent amount of
-customization, which we take advantage of.  It also has relatively
-little variation.  Both of these are part of the reason that Git LFS
-moved from Markdown to AsciiDoc.
+> It can be verified by inspection that this is the only case where a
+> header we include is dependent on a Makefile knob in the files modified
+> in eea0e59ffb.
 
-> >Quite frankly, I think you've missed some important points from the
-> > Konstantin's message.=C2=A0 To sum it up a bit, not having continuous s=
-upport
-> > is simply unacceptable for any kind of a long-term project.
->=20
-> As I wrote, once installed on-premise, no-one will shut down an
-> on-premise git server except for yourself. It can run for eternity.
-> You just need someone to administer it properly and publish the
-> website.
+Thanks for checking.
 
-Yes, and that would be someone at kernel.org, which is a nonprofit.
-Maintaining a busy Git server takes server resources and sufficient
-staffing to ensure that things work properly and that problems are
-resolved in a timely manner.  It also comes with potential security
-risks.  The mail-based approach will likely remain for the Linux kernel,
-so someone will have to maintain this in addition.  Are you offering to
-provide long-term funding to kernel.org to provide the necessary
-resources and staffing?
+> [1] https://lore.kernel.org/git/20230517070632.71884-1-list@eworm.de/
+>
+> Signed-off-by: Philippe Blain <levraiphilippeblain@gmail.com>
+> ---
+>     imap-send: add missing "strbuf.h" include under NO_CURL
+>
+> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-166=
+4%2Fphil-blain%2Fimap-send-include-no-openssl-v1
+> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1664/p=
+hil-blain/imap-send-include-no-openssl-v1
+> Pull-Request: https://github.com/git/git/pull/1664
+>
+>  imap-send.c | 1 +
+>  1 file changed, 1 insertion(+)
+>
+> diff --git a/imap-send.c b/imap-send.c
+> index d662811ee83..f2e1947e638 100644
+> --- a/imap-send.c
+> +++ b/imap-send.c
+> @@ -28,6 +28,7 @@
+>  #include "run-command.h"
+>  #include "parse-options.h"
+>  #include "setup.h"
+> +#include "strbuf.h"
+>  #if defined(NO_OPENSSL) && !defined(HAVE_OPENSSL_CSPRNG)
+>  typedef void *SSL;
+>  #endif
+>
+> base-commit: bc7ee2e5e16f0d1e710ef8fab3db59ab11f2bbe7
+> --
+> gitgitgadget
 
-> In the end, it's all just about git. You may create your own git
-> webserver (https://git-scm.com/book/en/v2/Git-on-the-Server-GitWeb),
-> or just use an existing one, like the GitLab server:
-> https://about.gitlab.com/install/
-
-The Git project has tried for a long time to be neutral on any
-particular external piece of software.  Installing a GitLab server as
-our preferred development platform would promote GitLab as the preferred
-forge to other users.  Similarly, moving to GitHub would prefer GitHub
-over other forges.  That's not a thing we want to do.
-
-We also don't accept patches or features for the benefit of one
-particular forge or external project.  Patches and features must be
-of general benefit to the project at large.
-
-[0] Pandoc is built in Haskell using GHC, which has decent architecture
-support, but quite poor OS support outside of the most common platforms.
-Relying on it would be a serious regression in terms of documentation
-support.
---=20
-brian m. carlson (he/him or they/them)
-Toronto, Ontario, CA
-
---UPqonseOJ2bFxRpf
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.4.3 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZbxI4gAKCRB8DEliiIei
-gR74AQDhp+drXfAeSKp3+jb2ELSOqFkYhrh2LJ26BAYHyGobswD/SFeD06zyrm/2
-UnHGlrEfFbknbBKHOiM1JuRxi8eBpw4=
-=Y7yj
------END PGP SIGNATURE-----
-
---UPqonseOJ2bFxRpf--
+Again, thanks for cleaning this up for me.
