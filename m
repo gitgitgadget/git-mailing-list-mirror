@@ -1,276 +1,178 @@
-Received: from mail-ej1-f43.google.com (mail-ej1-f43.google.com [209.85.218.43])
+Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.223.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C4E713DB92
-	for <git@vger.kernel.org>; Fri,  2 Feb 2024 11:29:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 481DE13D515
+	for <git@vger.kernel.org>; Fri,  2 Feb 2024 11:50:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706873382; cv=none; b=bylGbMKDgVAqVVP/5GabN43gyNU+S6RaU7R0/DNOdKovAPN7y2e80CDP8EOIGrfRc8jsLqHRNu3KPRthnyHp49qnSuA0meRPLWPnZ5LIygyGcmc4TDVz10D7mFwZQCfpx6mF9icRKJu6Jd74SOAUbT2ARYq+vlFsYfftKBFUKY8=
+	t=1706874609; cv=none; b=BBErDcpXvAAImlaNL5SlujFaPRdmb36sPlafMGYvZo4O4xVt9Z5HXgokvDxCLU/e8KvQWeFMV9JmNkRhvEgCO0SyN73t3j4oDvyatYLeD4xgMXwVF4wbvoXgSEtL2HSRFhJfQQ/Nxs+Totel7Z3/e9FrwmP6cOYgh7WM9UN+Tvc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706873382; c=relaxed/simple;
-	bh=mXlS96cf5gpbPIdh3YPY3TmK9lrgPI3Dx8H0mhKCJJA=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=fhlJmlKr63uCJakDjAhwOqoKWyhA2lZ/voahEinryySavuLeU5NNK+BCc4wYuJYxK9m20B56rqu+ou9UpczLQNrZODQx/1Sju95LTtuYA8+Vcexzsg5V/Qb/ljf0H7HnTpDdQLryDOIA49tdCQmRKVGt0KYfZxKI3DT8QP2yYDo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=X/Jag1lX; arc=none smtp.client-ip=209.85.218.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1706874609; c=relaxed/simple;
+	bh=//ETGNxGdzQNTm9MSRp0g1kxlR1sVJ+Sxpi7/5Jk7Os=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=GLmnHktvMWMkN4lV97SpOg+JEUVUa1cWDJb5TsdHy1vwGQ5HxN7obTda1hb8yYJf+XKvyyC0wRlyJ86rSXhBAxmUQWIjt+Jmh96zENUsvzoP/rbpf/g+PLLo/WGRQ8D3rLgSfun+7wOatSLycTN4z4w9aZEbOShpFMgq0BqgwEk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de; spf=pass smtp.mailfrom=suse.de; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=n0tqhlu0; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=OMx5IXA6; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=n0tqhlu0; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=OMx5IXA6; arc=none smtp.client-ip=195.135.223.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="X/Jag1lX"
-Received: by mail-ej1-f43.google.com with SMTP id a640c23a62f3a-a30e445602cso660523166b.0
-        for <git@vger.kernel.org>; Fri, 02 Feb 2024 03:29:40 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1706873378; x=1707478178; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Imm3BbaX3hedRD5TsqjHvdtCGE5gvkVojKW1pgfNerU=;
-        b=X/Jag1lXlrbaDDXk31FiTu8Mi4wa4k9Ss+3Wo+wtRqCXDO+C/E2lEEp9d3kCtF6JcE
-         4UIZUmre8hhPxHdEGgEh8nyjdAxZ6jx5Ry0/T7JkGrjO72A1KkYnBlDj1CYV2vO9/oql
-         BwWKd0XYHUZCFq5wtWg1mbKTMC/kpthhx34VtM9clJI/IQS+VzhpRJHbavTMvbDv0AS4
-         6r9qXp2liq7IPO6KBimYl+iRLUQayEmAlr5GWi1KfzqldkFa11iTahUpKz8zGkwLMy1G
-         t38ACh/vl0ICRpQT5wVCwPieE9KCm1hhXCN3r41zk1+EH6Kd1ZhP+fARmw1yrCZt3Ed2
-         dUVw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1706873378; x=1707478178;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=Imm3BbaX3hedRD5TsqjHvdtCGE5gvkVojKW1pgfNerU=;
-        b=LrJXg0RAh0MAOBO4nnm6rxpKJJSs6GbFBQd7jFLXlbvClFE/RwnB9PGk5jwE7eCW7H
-         sYZWHDNTAg3YaCIoW06ckgAAQVsxkTzy9UPKS2roTmhXt1u1XueQhR6w9/GfwLUqASp3
-         jGNccqW4P/swZqi5qPcpYESUgln7yLgRa/bWcclLe8Hpwidui8ctG2p9cUhAFI461EYE
-         Na3vE9AvnWc7cbyk+OCZVCxiK9yoJWbcfZx8adKYsF8mgh25Uv2pjfUI9NlnyI0jYWxV
-         U3+o7Jf+7YQWUPXpBDUK2OOS3+nWvSBTt4HJuSDccwei03nAxOOLf/aqn+gKHhn2cyWG
-         AoSA==
-X-Gm-Message-State: AOJu0YxaML4EcnTbl6TnunHxIKtbNRkqQJn4dd8P+5osYkYXIcqTKhTm
-	oeKPLVa+0l6N/U+y1ajLl0D63UPr8M+z8YVm65RxSrq+iNdi0CzL451UEzGf1wQhy2RuT9r4Ree
-	r8amMFqL3KCtSOwy/0mnN2bCsQUhMjV2uowY=
-X-Google-Smtp-Source: AGHT+IGVoJD/DMoJPrq0JH/PNqeonQyO0dajPROLeMe51ffbD71OeMoaAHURdQ7zDGbv0oytgRj+TpY2MhOZrmjw5U4=
-X-Received: by 2002:a17:906:2b07:b0:a37:23e1:7705 with SMTP id
- a7-20020a1709062b0700b00a3723e17705mr332379ejg.7.1706873378161; Fri, 02 Feb
- 2024 03:29:38 -0800 (PST)
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="n0tqhlu0";
+	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="OMx5IXA6";
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="n0tqhlu0";
+	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="OMx5IXA6"
+Received: from kitsune.suse.cz (unknown [10.100.12.127])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (P-256) server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by smtp-out2.suse.de (Postfix) with ESMTPS id 659C21FCE1;
+	Fri,  2 Feb 2024 11:50:05 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1706874605; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=W+kIO5YhdWBXCMQ4Hv+OhdHY9dKz6tOeiIvFYvJdUu0=;
+	b=n0tqhlu0aDv13fVKvl46orshkLKppmB1yirBZ8nl0GGiPTQY+zw2ORgZD/GUyn4hJHy3io
+	vadoFBuIIGxSb0GbfpUtn79h26c6UeMvM0PJF6doP0NVe8Cb5Hfzj0fvq/dqPBF2rnmqPa
+	UQzfoh2z7w9zEz9AUpHTDXhGYHb+nVw=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1706874605;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=W+kIO5YhdWBXCMQ4Hv+OhdHY9dKz6tOeiIvFYvJdUu0=;
+	b=OMx5IXA64gjalGQ812Rze6kJKNDATjBzcxws7lrEWNFDnTwQnR8VqOUt2C80CqjVvJaUz7
+	gjzgtvmeOx4EnFDw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1706874605; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=W+kIO5YhdWBXCMQ4Hv+OhdHY9dKz6tOeiIvFYvJdUu0=;
+	b=n0tqhlu0aDv13fVKvl46orshkLKppmB1yirBZ8nl0GGiPTQY+zw2ORgZD/GUyn4hJHy3io
+	vadoFBuIIGxSb0GbfpUtn79h26c6UeMvM0PJF6doP0NVe8Cb5Hfzj0fvq/dqPBF2rnmqPa
+	UQzfoh2z7w9zEz9AUpHTDXhGYHb+nVw=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1706874605;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=W+kIO5YhdWBXCMQ4Hv+OhdHY9dKz6tOeiIvFYvJdUu0=;
+	b=OMx5IXA64gjalGQ812Rze6kJKNDATjBzcxws7lrEWNFDnTwQnR8VqOUt2C80CqjVvJaUz7
+	gjzgtvmeOx4EnFDw==
+Date: Fri, 2 Feb 2024 12:50:04 +0100
+From: Michal =?iso-8859-1?Q?Such=E1nek?= <msuchanek@suse.de>
+To: phillip.wood@dunelm.org.uk
+Cc: Patrick Steinhardt <ps@pks.im>,
+	"brian m. carlson" <sandals@crustytoothpaste.net>,
+	Hans Meiser <brille1@hotmail.com>,
+	Dragan Simic <dsimic@manjaro.org>,
+	Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: Migrate away from vger to GitHub or (on-premise) GitLab?
+Message-ID: <20240202115004.GV9696@kitsune.suse.cz>
+References: <AS2P195MB21350F44B079009C05A1EAF1E2432@AS2P195MB2135.EURP195.PROD.OUTLOOK.COM>
+ <AS2P195MB2135D91EE464FF30EE84E77EE2432@AS2P195MB2135.EURP195.PROD.OUTLOOK.COM>
+ <20240201-primitive-aardwark-of-contentment-aaabb9@lemur>
+ <DB9P195MB21301E5E271567256303443CE2432@DB9P195MB2130.EURP195.PROD.OUTLOOK.COM>
+ <c3b6de0c2ccf71f0dfa5aff06fa63d8f@manjaro.org>
+ <DB9P195MB21303B5546A764A18FE78C97E2432@DB9P195MB2130.EURP195.PROD.OUTLOOK.COM>
+ <ZbxI4wNTBZ48YcTi@tapette.crustytoothpaste.net>
+ <Zbx5Xzb3kyHvkp7C@tanuki>
+ <0e3e6102-40eb-4462-b541-0c7452e79f42@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240201115809.1177064-1-christian.couder@gmail.com>
- <20240201115809.1177064-4-christian.couder@gmail.com> <xmqqo7d0x7fm.fsf@gitster.g>
-In-Reply-To: <xmqqo7d0x7fm.fsf@gitster.g>
-From: Christian Couder <christian.couder@gmail.com>
-Date: Fri, 2 Feb 2024 12:29:25 +0100
-Message-ID: <CAP8UFD0HwQr+qj=FrDQXJeY8PhVH1e7oErbVopgtv2X8ig7a7Q@mail.gmail.com>
-Subject: Re: [PATCH 3/3] rev-list: add --allow-missing-tips to be used with --missing=...
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>, John Cai <johncai86@gmail.com>, 
-	Christian Couder <chriscool@tuxfamily.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <0e3e6102-40eb-4462-b541-0c7452e79f42@gmail.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
+Authentication-Results: smtp-out2.suse.de;
+	none
+X-Spam-Level: 
+X-Spam-Score: -3.30
+X-Spamd-Result: default: False [-3.30 / 50.00];
+	 ARC_NA(0.00)[];
+	 TO_DN_EQ_ADDR_SOME(0.00)[];
+	 FROM_HAS_DN(0.00)[];
+	 TO_DN_SOME(0.00)[];
+	 FREEMAIL_ENVRCPT(0.00)[hotmail.com];
+	 TO_MATCH_ENVRCPT_ALL(0.00)[];
+	 MIME_GOOD(-0.10)[text/plain];
+	 NEURAL_HAM_LONG(-1.00)[-1.000];
+	 DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+	 NEURAL_HAM_SHORT(-0.20)[-1.000];
+	 RCPT_COUNT_SEVEN(0.00)[7];
+	 FUZZY_BLOCKED(0.00)[rspamd.com];
+	 RCVD_COUNT_ZERO(0.00)[0];
+	 FROM_EQ_ENVFROM(0.00)[];
+	 MIME_TRACE(0.00)[0:+];
+	 SUBJECT_ENDS_QUESTION(1.00)[];
+	 FREEMAIL_CC(0.00)[pks.im,crustytoothpaste.net,hotmail.com,manjaro.org,linuxfoundation.org,vger.kernel.org];
+	 BAYES_HAM(-3.00)[100.00%]
+X-Spam-Flag: NO
 
-On Thu, Feb 1, 2024 at 9:20=E2=80=AFPM Junio C Hamano <gitster@pobox.com> w=
-rote:
->
-> Christian Couder <christian.couder@gmail.com> writes:
->
-> > In 9830926c7d (rev-list: add commit object support in `--missing`
-> > option, 2023-10-27) we fixed the `--missing` option in `git rev-list`
-> > so that it now works with commits too.
-> >
-> > Unfortunately, such a command would still fail with a "fatal: bad
-> > object <oid>" if it is passed a missing commit, blob or tree as an
-> > argument.
-> >
-> > When such a command is used to find the dependencies of some objects,
-> > for example the dependencies of quarantined objects, it would be
-> > better if the command would instead consider such missing objects,
-> > especially commits, in the same way as other missing objects.
-> >
-> > If, for example `--missing=3Dprint` is used, it would be nice for some
-> > use cases if the missing tips passed as arguments were reported in
-> > the same way as other missing objects instead of the command just
-> > failing.
-> >
-> > Let's introduce a new `--allow-missing-tips` option to make it work
-> > like this.
->
-> OK.  Unlike a missing object referenced by a tree, a commit, or a
-> tag, where the expected type of the missing object is known to Git,
-> I would expect that nobody knowsn what type these missing objects at
-> the tip have.  So do we now require "object X missing" instead of
-> "commit X missing" in the output?  If we are not giving any type
-> information even when we know what the type we expect is, then we do
-> not have to worry about this change introducing a new output logic,
-> I guess.
+Hello,
 
-Yeah, we are not giving type information in the output, only a `?`
-before the oid.
+On Fri, Feb 02, 2024 at 11:15:26AM +0000, Phillip Wood wrote:
+> On 02/02/2024 05:10, Patrick Steinhardt wrote:
+> > On Fri, Feb 02, 2024 at 01:44:03AM +0000, brian m. carlson wrote:
+> > > On 2024-02-01 at 18:36:48, Hans Meiser wrote:
+> > [snip]
+> > > > In the end, it's all just about git. You may create your own git
+> > > > webserver (https://git-scm.com/book/en/v2/Git-on-the-Server-GitWeb),
+> > > > or just use an existing one, like the GitLab server:
+> > > > https://about.gitlab.com/install/
+> > > 
+> > > The Git project has tried for a long time to be neutral on any
+> > > particular external piece of software.  Installing a GitLab server as
+> > > our preferred development platform would promote GitLab as the preferred
+> > > forge to other users.  Similarly, moving to GitHub would prefer GitHub
+> > > over other forges.  That's not a thing we want to do.
+> > > 
+> > > We also don't accept patches or features for the benefit of one
+> > > particular forge or external project.  Patches and features must be
+> > > of general benefit to the project at large.
+> > 
+> > I think this point is indeed really important in the context of the Git
+> > project.
+> 
+> Agreed, thank you for making it brian. If we did decide to use a forge we'd
+> need to be very clear in our decision making that it was selected based on
+> the specific needs of this project and was not a general endorsement of one
+> product over another. We'd also need to address the important practical
+> problems of finding resources to maintain the infrastructure and software to
+> run it.
 
-> > diff --git a/builtin/rev-list.c b/builtin/rev-list.c
-> > index b3f4783858..ae7bb15478 100644
-> > --- a/builtin/rev-list.c
-> > +++ b/builtin/rev-list.c
-> > @@ -562,6 +562,16 @@ int cmd_rev_list(int argc, const char **argv, cons=
-t char *prefix)
-> >                               break;
-> >               }
-> >       }
-> > +     for (i =3D 1; i < argc; i++) {
-> > +             const char *arg =3D argv[i];
-> > +             if (!strcmp(arg, "--allow-missing-tips")) {
-> > +                     if (arg_missing_action =3D=3D MA_ERROR)
-> > +                             die(_("option '%s' only makes sense with =
-'%s' set to '%s' or '%s'"),
-> > +                                   "--allow-missing-tips", "--missing=
-=3D", "allow-*", "print");
-> > +                     revs.do_not_die_on_missing_tips =3D 1;
-> > +                     break;
-> > +             }
-> > +     }
->
-> It is unfortunate that we need to add yet another dumb loop that
-> does not even try to understand there may be an option whose value
-> happens to be the string strcmp() looks for (we already have two
-> such loops above this hunk).  I have to wonder if we can do better.
+In this context using lore is basically also a forge choice. It is built
+on top of git, and expands the functionality of what the project git
+repository alone provides.
 
-I am also not happy with adding yet another dump loop like this. I did
-it because I couldn't think of a simple solution to avoid that.
+Unlike most other forge software it is based completely on open
+standards such as e-mail headers and git itself, very open and modular,
+and does not in any way tie the project git repository to this
+additional functionality provided by lore.
 
-> An idle piece of idea.  Perhaps we can instruct setup_revisions()
-> not to die immediately upon seeing a problematic argument, marking
-> the revs as "broken" instead, and keep going and interpreting as
-> much as it could, so that it may record the presence of "--missing",
-> "--exclude-promisor-objects", and "--allow-missing-tips".  Then upon
-> seeing setup_revisions() return with such an error, we can redo the
-> call with these bits already on.
+This open and separate nature of lore is what makes it the tool of
+choice for Linux and git, and any forge that aims to replace lore should
+aim at similar level of openness. Of the forges I am aware of only
+sourcehut comes close in terms of planned functionality but it's nowhere
+near completed as far as I am aware.
 
-When we discussed rejecting some rev walking options before calling
-setup_revisions() in the context of `git replay`, one thing people
-seemed to agree on was that there should be a mechanism in
-setup_revisions() that allows us to tell setup_revisions() which rev
-walking options it should allow or not. I think that such a mechanism
-might need an early parsing of options which could be reused for
-options like `--exclude-promisor-objects`, `--missing=3D...`  and
-`--allow-missing-tips`. But I think adding such a mechanism does not
-belong to this patch series. It's some cleanup and refactoring that we
-might have needed for a long time already.
+Given the open nature of lore it should be feasible to provide
+additional interfaces on top of it that cater to people used to PRs
+on popular forge web UIs without hijacking the whole project and the
+existing tools and interfaces. For some reason people are set on
+replacing it as a whole, and removing the interfaces they personally
+don't use, calling them obosolete.
 
-In my current version, I have added the following NEEDSWORK comment
-before the three dump loops to make sure we remember about this:
+In a project with large numger of collaborators with varying backgrounds
+that's not going to work well. There are many people working on git
+using different workflows, and adding support for new workflow by
+removing a number of existing ones will cause problems. The goal of
+changing the forge software should be to be more open, supporting more
+users with more varying workflows and needs, not less.
 
-    /*
-     * NEEDSWORK: These dump loops to look for some options early
-     * are ugly. We really need setup_revisions() to have a
-     * mechanism to allow and disallow some sets of options for
-     * different commands (like rev-list, replay, etc). Such
-     * mechanism should do an early parsing of option and be able
-     * to manage the `--exclude-promisor-objects`, `--missing=3D...`
-     * and `--allow-missing-tips` options below.
-     */
+Thanks
 
-I have also added the following to the commit message:
-
-"We introduce another dump loop to look for that options early, but
-addressing the dump loops should likely be part of adding a new
-mechanism to setup_revisions() which is a different topic. Anyway
-let's add a big NEEDSWORK comment to remember that we really need to
-do this."
-
-> Anyway, I digress.
->
-> > diff --git a/t/t6022-rev-list-missing.sh b/t/t6022-rev-list-missing.sh
-> > index 527aa94f07..283e8fc2c2 100755
-> > --- a/t/t6022-rev-list-missing.sh
-> > +++ b/t/t6022-rev-list-missing.sh
-> > @@ -77,4 +77,55 @@ do
-> >       done
-> >  done
-> >
-> > +for obj in "HEAD~1" "HEAD~1^{tree}" "HEAD:1.t"
-> > +do
-> > +     for tip in "" "HEAD"
-> > +     do
-> > +             for action in "allow-any" "print"
-> > +             do
-> > +                     test_expect_success "--missing=3D$action --allow-=
-missing-tips with tip '$obj' missing and tip '$tip'" '
-> > +                             oid=3D"$(git rev-parse $obj)" &&
-> > +                             path=3D".git/objects/$(test_oid_to_path $=
-oid)" &&
-> > +
-> > +                             # Before the object is made missing, we u=
-se rev-list to
-> > +                             # get the expected oids.
-> > +                             if [ "$tip" =3D "HEAD" ]; then
->
-> Style:
->
->                                 if test "$tip" =3D "HEAD"
->                                 then
-
-Fixed in my current version. In it, I also fixed in patch 2/3 a
-similar style typo in the tests before these ones.
-
-> > +                                     git rev-list --objects --no-objec=
-t-names \
-> > +                                             HEAD ^$obj >expect.raw
-> > +                             else
-> > +                                     >expect.raw
-> > +                             fi &&
-> > +
-> > +                             # Blobs are shared by all commits, so eve=
-n though a commit/tree
-> > +                             # might be skipped, its blob must be acco=
-unted for.
-> > +                             if [ "$tip" =3D "HEAD" ] && [ $obj !=3D "=
-HEAD:1.t" ]; then
->
-> Ditto.
-
-Fixed too in my current version.
-
-> > +                                     echo $(git rev-parse HEAD:1.t) >>=
-expect.raw &&
-> > +                                     echo $(git rev-parse HEAD:2.t) >>=
-expect.raw
-> > +                             fi &&
-> > +
-> > +                             mv "$path" "$path.hidden" &&
-> > +                             test_when_finished "mv $path.hidden $path=
-" &&
-> > +
-> > +                             git rev-list --missing=3D$action --allow-=
-missing-tips \
-> > +                                  --objects --no-object-names $oid $ti=
-p >actual.raw &&
-> > +
-> > +                             # When the action is to print, we should =
-also add the missing
-> > +                             # oid to the expect list.
-> > +                             case $action in
-> > +                             allow-any)
-> > +                                     ;;
-> > +                             print)
-> > +                                     grep ?$oid actual.raw &&
-> > +                                     echo ?$oid >>expect.raw
-> > +                                     ;;
->
-> OK.  We do not say anything more than the object name (and the fact
-> that it is missing with a single byte '?'), so my earlier worry was
-> unfounded.  Good.
->
-> > +                             esac &&
-> > +
-> > +                             sort actual.raw >actual &&
-> > +                             sort expect.raw >expect &&
-> > +                             test_cmp expect actual
-> > +                     '
-> > +             done
-> > +     done
-> > +done
-> > +
-> >  test_done
->
-> THanks.
-
-Thanks for the review!
+Michal
