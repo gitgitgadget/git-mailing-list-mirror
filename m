@@ -1,59 +1,55 @@
 Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 464F112C7E7
-	for <git@vger.kernel.org>; Fri,  2 Feb 2024 19:02:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C198D15E5AA
+	for <git@vger.kernel.org>; Fri,  2 Feb 2024 19:04:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706900563; cv=none; b=LLypZFsTe4v00wGpAorncMs5H4MCyD0dpOIO5Ju/OdvkcNAy2hYMvStJZ1wUYV2A2c9ABUtjVnMenXowDIccgf6cw7boLuAcIjvZmKxdCrIkstO33u6DNPXuG2yWN2fVMUITS2x7J5R5L651vW93CJbwQhLe2qFsvNwPIoKkx8g=
+	t=1706900689; cv=none; b=ZPPpkA0+PDdt8/5f5INoz0fSZnCSxnvxgruS9Yv6WyNjBdD0SUJwfj6PcDgb3/Z0I7aeXkC4hWi3qDee8HsLhjD8xS8lR7tzrQIOMrMDOdnNcsCMqdhZQqVspY8Dks5n+8ETa8Q7upuEO3RNinUlTbD2A8eC+LtNGtSY7Zd29K8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706900563; c=relaxed/simple;
-	bh=YBHpj4ajvIBrmqTYLNFtfTgQsmpozmLdwmzQgMRqPqg=;
+	s=arc-20240116; t=1706900689; c=relaxed/simple;
+	bh=+OWFquoMSwVs9Z0VNeXxGBG+eOuMj12yPu5Jy9tOcTI=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=ZDJz8lftDTNsvNZtePgKhyyNjgayQldDHSgoqCMZGd9i0jO6S1kL1f9OcZ2naQNs8f8l0Scj2u1t9LXV6Jq67eCJ8X5DsizfOnM+nNEO6qlKgPF7AUSJa9AQmI3j3SEUB+qmzXzp8vzOm4mrtI597SwTIJpSj9I1rhx8Cwk+xtA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=C9yZ0HyM; arc=none smtp.client-ip=173.228.157.52
+	 MIME-Version:Content-Type; b=OLVXlQLB2ZLUq162kUC1rNfBRWMFBzieK5pbuK2453EFvQfE9ptCTZhdWsA/2piwSR4f/M5vAXQUj43CxpeBSTDnV4oPLykqnDsX7XQS9PJIm6GeCCZ+ipZts2wC83i81tKk0ie6Cxuoxsr0eUoncfCtbmzvDxYfhaMIG/+fhB0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=NHMaufy0; arc=none smtp.client-ip=173.228.157.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="C9yZ0HyM"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="NHMaufy0"
 Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 731242601C;
-	Fri,  2 Feb 2024 14:02:40 -0500 (EST)
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id 2A5E32603A;
+	Fri,  2 Feb 2024 14:04:47 -0500 (EST)
 	(envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=YBHpj4ajvIBrmqTYLNFtfTgQsmpozmLdwmzQgM
-	RqPqg=; b=C9yZ0HyMuFgstBdVCV4M2qXMaNG5Fw6xejabtzRrymAtvSDVWcmXwJ
-	KSZbfWdRFlYHsLqvKeLfKCQHukNw7rEpaKyVwzZnouMLhTL5YKH20gn7CzPYQy5c
-	uf7kNElrxsKuxevJBBlnD4NPBEBpbq3nLgWiJXy0HfB60jtHlm7/4=
+	:content-type; s=sasl; bh=+OWFquoMSwVs9Z0VNeXxGBG+eOuMj12yPu5Jy9
+	tOcTI=; b=NHMaufy0RNy8TezBwMde+ag7POISL+aop6Bl/87mEgCTKoOhG4ePcg
+	isBIusY76rUQtslNEejxcfXqETm+JH+4algfTQKRk2DRNaGIT7TCHCzu3N1oCIGr
+	9WTonm6j6Gu+PPZm2ONWSt/L8mJN11ppg6sRfwlxXULpkJCPIfIOQ=
 Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 5F0182601B;
-	Fri,  2 Feb 2024 14:02:40 -0500 (EST)
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id 222F826039;
+	Fri,  2 Feb 2024 14:04:47 -0500 (EST)
 	(envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.125.200.93])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 8B35426018;
-	Fri,  2 Feb 2024 14:02:36 -0500 (EST)
+	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 5708C26038;
+	Fri,  2 Feb 2024 14:04:43 -0500 (EST)
 	(envelope-from junio@pobox.com)
 From: Junio C Hamano <gitster@pobox.com>
-To: Phillip Wood <phillip.wood123@gmail.com>
-Cc: Dragan Simic <dsimic@manjaro.org>,  Hans Meiser <brille1@hotmail.com>,
-  Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
-  git@vger.kernel.org
+To: "Theodore Ts'o" <tytso@mit.edu>
+Cc: rsbecker@nexbridge.com,  "'Sergey Organov'" <sorganov@gmail.com>,
+  "'Hans Meiser'" <brille1@hotmail.com>,  git@vger.kernel.org
 Subject: Re: Migrate away from vger to GitHub or (on-premise) GitLab?
-In-Reply-To: <6b34d999-3da2-42ef-bfff-37c8f592347f@gmail.com> (Phillip Wood's
-	message of "Fri, 2 Feb 2024 11:07:18 +0000")
+In-Reply-To: <20240202161643.GD119530@mit.edu> (Theodore Ts'o's message of
+	"Fri, 2 Feb 2024 11:16:43 -0500")
 References: <AS2P195MB21350F44B079009C05A1EAF1E2432@AS2P195MB2135.EURP195.PROD.OUTLOOK.COM>
 	<AS2P195MB2135D91EE464FF30EE84E77EE2432@AS2P195MB2135.EURP195.PROD.OUTLOOK.COM>
-	<20240201-primitive-aardwark-of-contentment-aaabb9@lemur>
-	<DB9P195MB21301E5E271567256303443CE2432@DB9P195MB2130.EURP195.PROD.OUTLOOK.COM>
-	<c3b6de0c2ccf71f0dfa5aff06fa63d8f@manjaro.org>
-	<DB9P195MB21303B5546A764A18FE78C97E2432@DB9P195MB2130.EURP195.PROD.OUTLOOK.COM>
-	<691395bc13ea6c3013adcb98cfcbd102@manjaro.org>
-	<6b34d999-3da2-42ef-bfff-37c8f592347f@gmail.com>
-Date: Fri, 02 Feb 2024 11:02:34 -0800
-Message-ID: <xmqqa5oisn91.fsf@gitster.g>
+	<877cjm53bf.fsf@osv.gnss.ru>
+	<008b01da55eb$9f3c36d0$ddb4a470$@nexbridge.com>
+	<20240202161643.GD119530@mit.edu>
+Date: Fri, 02 Feb 2024 11:04:41 -0800
+Message-ID: <xmqq5xz6sn5i.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -63,42 +59,29 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 X-Pobox-Relay-ID:
- A0ED0A58-C1FD-11EE-B059-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
+ EC7F5D86-C1FD-11EE-AECB-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
 
-Phillip Wood <phillip.wood123@gmail.com> writes:
+"Theodore Ts'o" <tytso@mit.edu> writes:
 
-> While there are some aspects of the documentation that require a
-> familiarity with the source I don't think that is true in general. If
-> someone has a suggestion to improve part of the documentation that
-> they found hard to understand we should be encouraging them to
-> contribute a patch. There is no doubt that there are places where our
-> documentation could be improved and it is not necessary to be a C
-> programmer to contribute improvements to it.
+> So from an open source project perspective, which is primarily run by
+> volunteers, each open source project has to make a cost-benefit
+> tradeoff as far as the *project* is concerned.  Individuals do not
+> have a fundamental human right to contribute to a project.  Hence, the
+> open source project doesn't owe an obligation to spend a huge amount
+> of effort supporting some kind of forge web site just because some
+> potential contributors are clammoring for it.  Especially if they are
+> saying that they can't be bothered to follow the mailing list traffic
+> because it's somehow too much.
 
-True.  It is even possible to:
+Thanks for saying this (even though with my Devil's advocate hat on,
+I am not sure how strong our "this is run by volunteers, so do not
+demand" card is these days).
 
- - have a group of document nitpickers, whose charter is to improve
-   the documentation by fixing spelling and grammar mistakes and
-   mark-up mistakes, while making sure that what the original wanted
-   to say is still what the updated version says.
+> (Of course, I have all of the Linux kernel mailing list flowing into
+> my inbox, and have e-mail practices that can handle that load --- so
+> it's hard for me to have much sympathy about people complaining that
+> the e-mail load for git is too large --- compared to LKML, it's
+> *nothing*.  :-)
 
- - have a gatekeeper who makes sure that the output from the above
-   group is within the scope of its charter, before it is merged to
-   the main tree.
-
-Then, the choice of the collaboration medium among "document
-nitpickers" can be delegated to the group, as long as the quality of
-their output is tightly controlled by the gatekeeper to meet the bar
-of the main tree.  The resulting history should be consistent with
-the rest of the system when seen in "git shortlog" output, for
-example.
-
-The above is quite similar to how the l10n team works.  There is a
-l10n coordinator who acts as the gatekeeper for po/ hierarchy, and
-l10n folks coordinate among themselves without much supervision and
-review of their output on the list.  We can treat the documentation
-work that does not involve any knowledge of what the documentation
-describes the same way.
-
-Thanks.
-
+True, too.  We may have enough patch traffic but not enough reviews
+on them.
