@@ -1,149 +1,120 @@
-Received: from mx0b-00069f02.pphosted.com (mx0b-00069f02.pphosted.com [205.220.177.32])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f49.google.com (mail-wr1-f49.google.com [209.85.221.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CACA27763A
-	for <git@vger.kernel.org>; Fri,  2 Feb 2024 09:19:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.177.32
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D15FB605DB
+	for <git@vger.kernel.org>; Fri,  2 Feb 2024 09:59:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706865546; cv=none; b=MXDJP6aeYrFS2sqYXU4bwWIVcZkzpQvwzHsDdlyyakYJIUTD7rZ3Aj91XvsAICRSdn60D1c1SogeuCWePlW7RmTHbG93NRkKH+Jwkev1alcJyGMsaRSZ0v+MrmoNTQIu5Mb1TvBfdhRQvRBIIbR2/8uvDp8NPZJThHYECX2RY9M=
+	t=1706867991; cv=none; b=cTT2RLRHp4RrwP45Fo+n9Q7VzulYdsg1LmqpGaVwphx0Sn8wTku9DY8fbKHDuP19b9sEop19kTcPTj1mZJVcWulpX0VJNOBFSS2ViAFpjAE1eSfvrg6UMlLavn2pLkZGF1fqWKOasB42bwPC2Hr4YwH8k+R5oqvM09Ra7q9APUk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706865546; c=relaxed/simple;
-	bh=hjZ6g5EupWqYXAgzz/00nC8rGs0ZDnbWVs4IqAeQs5Y=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=YyvKsQwqDh4E9Xm3PBGM/MTboIlJUvTzu2Cd3cl7bM7RChRh5aUWkieBvV8brJbkpyefj0uWTOPMP2HY4R1WC0apEW9UUT/vUJjgZahtWalcd4u6KEOlUocAdxLWrWY0DEcfSZ39iuSz2OEJOJUlT06Y4vkTRxTpZvoxwg3RIio=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oracle.com; spf=pass smtp.mailfrom=oracle.com; dkim=pass (2048-bit key) header.d=oracle.com header.i=@oracle.com header.b=AdYop5VV; arc=none smtp.client-ip=205.220.177.32
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oracle.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oracle.com
+	s=arc-20240116; t=1706867991; c=relaxed/simple;
+	bh=UOS4JEc6Hl4InjPGu05+tKpxR3so9ANCdZvhfxw7+yo=;
+	h=From:Content-Type:Mime-Version:Subject:Message-Id:Date:To; b=gSd+CGqjlP3MKGtclHQvk18N+8/1PhEcF4RytQoI5+HTorW31LJdpNQ8JzKIcVa2uTLm6gPQ3lruhYA6/F/NFPZN/U3upkm28DwkOKvHb1xfOf+SU8Ip4SxpFuvrFPi2H6jIlZcYQRAPFQROcbbIFfaIy1KEI7qqfyVvLy0XLZ4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=veryflatcat.com; spf=none smtp.mailfrom=veryflatcat.com; dkim=pass (2048-bit key) header.d=veryflatcat-com.20230601.gappssmtp.com header.i=@veryflatcat-com.20230601.gappssmtp.com header.b=tiKDMdRz; arc=none smtp.client-ip=209.85.221.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=veryflatcat.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=veryflatcat.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=oracle.com header.i=@oracle.com header.b="AdYop5VV"
-Received: from pps.filterd (m0333520.ppops.net [127.0.0.1])
-	by mx0b-00069f02.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 4128T2nG028345;
-	Fri, 2 Feb 2024 09:19:02 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=from : to : cc :
- subject : date : message-id : mime-version : content-transfer-encoding;
- s=corp-2023-11-20; bh=egPRMxJw3gf2gFgzMdk3EXcxhuppwflHWAm2oFlbgoY=;
- b=AdYop5VVomsBbU7Fqx07Wff8j2EM62TJz/pzO3Nwp0GyLqjsR7yVGnmnu56CeG+KJ/bA
- d4z9AtlKOMba6Soy0hejka1aNCb4VQoCHwalVLub4wJhlsISnWdeTQY8Nlr6Uaw8EDe0
- rUKDasEJAo9n/HvNHcqtB0L171p5SsuGom+1E03L5bwJk+Q5cZt8JflC2D7GagpR0CjQ
- /9JAe4dLzw7Qvdl31aTrlMq0oQ5wgs5Iet5IRxl7tGnIkCPMbQ0i7gN7w/T73y0nYfch
- R7qQtwI+lTt8XlxGgQLRjFUFrjYFmeb4dgxu8E+UjLP44EU1hZrWZ1E0xvFITcEEADlq /A== 
-Received: from phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (phxpaimrmta02.appoci.oracle.com [147.154.114.232])
-	by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 3vvsvdy20n-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Fri, 02 Feb 2024 09:19:01 +0000
-Received: from pps.filterd (phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
-	by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (8.17.1.19/8.17.1.19) with ESMTP id 41274RWS028402;
-	Fri, 2 Feb 2024 09:19:00 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
-	by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id 3vvr9bu005-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Fri, 02 Feb 2024 09:19:00 +0000
-Received: from phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
-	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 4129J00f039410;
-	Fri, 2 Feb 2024 09:19:00 GMT
-Received: from t460-2.nl.oracle.com (dhcp-10-175-60-116.vpn.oracle.com [10.175.60.116])
-	by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTP id 3vvr9btyx4-1;
-	Fri, 02 Feb 2024 09:18:59 +0000
-From: Vegard Nossum <vegard.nossum@oracle.com>
-To: gitster@pobox.com
-Cc: git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>,
-        Vegard Nossum <vegard.nossum@oracle.com>,
-        Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
-Subject: [PATCH] t/t3515-cherry-pick-rebase.sh: new testcase demonstrating broken behavior
-Date: Fri,  2 Feb 2024 10:18:50 +0100
-Message-Id: <20240202091850.160203-1-vegard.nossum@oracle.com>
-X-Mailer: git-send-email 2.34.1
+	dkim=pass (2048-bit key) header.d=veryflatcat-com.20230601.gappssmtp.com header.i=@veryflatcat-com.20230601.gappssmtp.com header.b="tiKDMdRz"
+Received: by mail-wr1-f49.google.com with SMTP id ffacd0b85a97d-33b130f605eso1138858f8f.1
+        for <git@vger.kernel.org>; Fri, 02 Feb 2024 01:59:49 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=veryflatcat-com.20230601.gappssmtp.com; s=20230601; t=1706867987; x=1707472787; darn=vger.kernel.org;
+        h=to:date:message-id:subject:mime-version:content-transfer-encoding
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=gbi/1L8Ob5J8dNQxdgYn+5fw4c3sByILuRDQsKNHq7o=;
+        b=tiKDMdRzjUYd0AoP4EbYn1wlLT6vYmXbkX+UwZnYV0Ncbnd/Y2sJJO/FBcEATS3VOv
+         C0AWsDv2a1JgFkiqtEnRSMvN/+vBI3QmfF+zEsoM8cBVfnvZWQEhr0K4Pvg8H1Wl8WD4
+         hEmRtvjinXOAIZYKhy3jXLJKzHQ75tbKbyAXVt84dPRP3Vb3Gc0xe0SZNevWysUuqclG
+         E/qJZlON1UrjPi12HONiED+uMe7VZbiCBA/wOV855EwrCRftBFDP95/MG5VJtfs4gn/6
+         NvCNjiN2Ita/OMMoXorvqurHcdDBD3BK/7bY1rBUqNgpiNHXAnJJs3POzCWmJ7TJFVvF
+         eA/w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1706867987; x=1707472787;
+        h=to:date:message-id:subject:mime-version:content-transfer-encoding
+         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=gbi/1L8Ob5J8dNQxdgYn+5fw4c3sByILuRDQsKNHq7o=;
+        b=EIBs0ZwoPDsOF8oaLZ/8h/Tipoz/DPDtJgDCBGUbB9T0lfsjDyQYSYXRhPJGIRU4hI
+         yiJjcU+jOcb7kbWsY6uADE9qo8CVVy/pXFpQroNBPmusI34IXVnnN2gaOhUcmyp5RDox
+         as3gocbyV8gtFt3XkVQf0C/vj8z42N/d9siVlYGIjMwQlLXaoje1bcGWuI23qJUjX1X5
+         GuHxg4Opq79kV5pabmtPTZfJR6F+QGcTXw2a9+7+WyxoRQf8Fl9NC486ZdMBxKSIfeiS
+         lQlKfXxPc04NvoLYjrukS5hhrbkk9IQz1Mfhe+h8w41lYw+GlPnlTNF1pCve3oVMVMfr
+         shuQ==
+X-Gm-Message-State: AOJu0YySxkD1WEWjWLJjHaTFN+kXR8ygRjyU4lBa3ClomxuBdKkVzemd
+	AgkmH19hDnDebeVPIqhvg23yH+IxnyDb0X1Jg1h7wiT5kGJHjAP/VXqjE/Bd3u5lPuSoPDUoU61
+	7
+X-Google-Smtp-Source: AGHT+IG/+8ihBVI4oydEv2kU6JKkJc/TfPAarN4znvu+QOULBjmnpXexmDtuNoO+RxpdJqg1xaK+tQ==
+X-Received: by 2002:a5d:4f05:0:b0:33b:252d:ec26 with SMTP id c5-20020a5d4f05000000b0033b252dec26mr389046wru.65.1706867987274;
+        Fri, 02 Feb 2024 01:59:47 -0800 (PST)
+Received: from smtpclient.apple ([41.164.20.115])
+        by smtp.gmail.com with ESMTPSA id i4-20020a5d5224000000b0033afcc069c3sm1549162wra.84.2024.02.02.01.59.45
+        for <git@vger.kernel.org>
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 02 Feb 2024 01:59:46 -0800 (PST)
+From: David Weber <dave@veryflatcat.com>
+Content-Type: text/plain;
+	charset=us-ascii
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-02-02_03,2024-01-31_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 phishscore=0 bulkscore=0 malwarescore=0
- mlxscore=0 mlxlogscore=999 spamscore=0 adultscore=0 suspectscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2311290000
- definitions=main-2402020067
-X-Proofpoint-ORIG-GUID: GlHpgMxQP_a543j0N4TDT56VrbMDqFhE
-X-Proofpoint-GUID: GlHpgMxQP_a543j0N4TDT56VrbMDqFhE
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3774.300.61.1.2\))
+Subject: Git submodule ssh command recursion bug
+Message-Id: <FB27DE07-1C5A-4E2F-8BE6-8AC958365C9B@veryflatcat.com>
+Date: Fri, 2 Feb 2024 11:59:33 +0200
+To: git@vger.kernel.org
+X-Mailer: Apple Mail (2.3774.300.61.1.2)
 
-Running "git cherry-pick" as an x-command in the rebase plan loses the
-original authorship information.
+What did you do before the bug happened? (Steps to reproduce your issue)
+I attempted to run `git -c core.sshCommand=3D"ssh -i ~/.ssh/my_key" =
+submodule update --init --recursive` in
+a repo with three submodules. The first was a public repository and the =
+2nd and 3rd required the private
+key that I specified as above.
 
-Write a known-broken test case for this:
+What did you expect to happen? (Expected behaviour)
+I expected all the submodules to be updated
 
-    $ (cd t && ./t3515-cherry-pick-rebase.sh)
-    ok 1 - setup
-    ok 2 - cherry-pick preserves authorship information
-    not ok 3 - cherry-pick inside rebase preserves authorship information # TODO known breakage
-    # still have 1 known breakage(s)
-    # passed all remaining 2 test(s)
-    1..3
+What happened instead? (Actual behaviour)
+The public repository was correctly checked out. The private ones were =
+not checked out and I was asked for
+a user name for the repository.
 
-Running with --verbose we see the diff between expected and actual:
+What's different between what you expected and what actually happened?
+I expected git to use the private key provided and not ask for user =
+name.
 
-    --- expected    2024-02-02 08:54:48.954753285 +0000
-    +++ actual      2024-02-02 08:54:48.966753294 +0000
-    @@ -1 +1 @@
-    -Original Author
-    +A U Thor
+Anything else you want to add:
+If I did the following then the command worked as expected:
 
-As far as I can tell, this is due to the check in print_advice()
-which deletes CHERRY_PICK_HEAD when GIT_CHERRY_PICK_HELP is set,
-but I'm not sure what a good fix would be.
+  EXPORT GIT_SSH_COMMAND=3D"ssh -i ~/.ssh/my_key"
+  submodule update --init --recursive
 
-Cc: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
-Signed-off-by: Vegard Nossum <vegard.nossum@oracle.com>
----
- t/t3515-cherry-pick-rebase.sh | 37 +++++++++++++++++++++++++++++++++++
- 1 file changed, 37 insertions(+)
- create mode 100755 t/t3515-cherry-pick-rebase.sh
+Then all submodules update as expected. I assume this is because the `-c =
+ core.sshCommand` is not propagated
+to the underlying operations that perform the task of checking out the =
+modules.
 
-diff --git a/t/t3515-cherry-pick-rebase.sh b/t/t3515-cherry-pick-rebase.sh
-new file mode 100755
-index 0000000000..ffe6f5fe2a
---- /dev/null
-+++ b/t/t3515-cherry-pick-rebase.sh
-@@ -0,0 +1,37 @@
-+#!/bin/sh
-+
-+test_description='test cherry-pick during a rebase'
-+
-+GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
-+export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
-+
-+. ./test-lib.sh
-+
-+test_expect_success setup '
-+	test_commit --author "Original Author <original.author@example.com>" foo file contents1 &&
-+	git checkout -b feature &&
-+	test_commit --author "Another Author <another.author@example.com>" bar file contents2
-+'
-+
-+test_expect_success 'cherry-pick preserves authorship information' '
-+	git checkout -B tmp feature &&
-+	test_must_fail git cherry-pick foo &&
-+	git add file &&
-+	git commit --no-edit &&
-+	git log -1 --format='%an' foo >expected &&
-+	git log -1 --format='%an' >actual &&
-+	test_cmp expected actual
-+'
-+
-+test_expect_failure 'cherry-pick inside rebase preserves authorship information' '
-+	git checkout -B tmp feature &&
-+	echo "x git cherry-pick -x foo" >rebase-plan &&
-+	test_must_fail env GIT_SEQUENCE_EDITOR="cp rebase-plan" git rebase -i feature &&
-+	git add file &&
-+	git commit --no-edit &&
-+	git log -1 --format='%an' foo >expected &&
-+	git log -1 --format='%an' >actual &&
-+	test_cmp expected actual
-+'
-+
-+test_done
--- 
-2.34.1
+I have the same behaviour on Linux and OSX.
 
+Please review the rest of the bug report below.
+You can delete any lines you don't wish to share.
+
+
+[System Info]
+git version:
+git version 2.34.1
+cpu: x86_64
+no commit associated with this build
+sizeof-long: 8
+sizeof-size_t: 8
+shell-path: /bin/sh
+uname: Linux 6.5.0-14-generic #14~22.04.1-Ubuntu SMP PREEMPT_DYNAMIC Mon =
+Nov 20 18:15:30 UTC 2 x86_64
+compiler info: gnuc: 11.4
+libc info: glibc: 2.35
+$SHELL (typically, interactive shell): /usr/bin/zsh
+
+
+[Enabled Hooks]=
