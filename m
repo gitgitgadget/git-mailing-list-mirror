@@ -1,66 +1,64 @@
-Received: from mail-lf1-f53.google.com (mail-lf1-f53.google.com [209.85.167.53])
+Received: from mail-lf1-f52.google.com (mail-lf1-f52.google.com [209.85.167.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5E7346B9A
-	for <git@vger.kernel.org>; Fri,  2 Feb 2024 14:49:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2406C145354
+	for <git@vger.kernel.org>; Fri,  2 Feb 2024 14:59:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706885370; cv=none; b=eYfKxOvV8kMhC8CpBoqZJlAm+LoQ2yxDUuZWJYfEDyWJiq76oPqnRyDwQxPBfNkIuXHZsbG4/OPzwVwUveKljJrVjqXeBcQqWi6irPWfHa3Gk7q7JLfImf7/PZG9dQYjpkDRg/qVprEYBffwyAqC3gxMEZrANwTwwYbLjoujtxc=
+	t=1706885984; cv=none; b=LYF/aROTmd06Ps/QACG2NmQSeAj9lWDPvGO1ZcNUv+vy9+qK9ZxAKIsszT+96dpXlrvnUpi8Gxipy+MT5RQLA/X0qo7roPXRn5DBcAvfhYi/glB6+6lb6X38Pni13njLI0tHrtQ0YeyoBud+O1fPDsVuPg5PhkHYrkBM8ofsdyk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706885370; c=relaxed/simple;
-	bh=zCIlE/agAp5Z8/vQOsTkztSyeW94tAH/S55AZAI2mLE=;
+	s=arc-20240116; t=1706885984; c=relaxed/simple;
+	bh=XaUMOSEGs2LIcv37NYadYw9e/nqtULtdIX2kgjy8xUk=;
 	h=From:To:Cc:Subject:References:Date:In-Reply-To:Message-ID:
-	 MIME-Version:Content-Type; b=k0cbhmcgE0XFjfTiKQoSPDkX7Am+Zyhw2x4GjEqEMu09VyKUCPC6P8b4SbAxvf4p21rKrTpxHtfx1W4bTqGJulnGxsB3TSYQKvRLMW3w2vC8s/K1PJMCIwrAQ9UvXcH+lemyxhNPFSOyKKF2dShrXw4OHGjLmxPzEfqSq/lwfII=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LGChFC5E; arc=none smtp.client-ip=209.85.167.53
+	 MIME-Version:Content-Type; b=fkT5FcoFwqPx6T9o1IMgUACc/0IjrHOVRq0T9wIWEJ7CHh5QapACq0xV9UaD/JGh1WN9kNOyq4gu7Vz1aOHDU8mQ17IjBrLE1nemhUsHoBD4L/yJYcL4Z9qX96O+8GV21/2Robwv9Be3jkWxsG3AQ1CGgHQNp4xMKe+TjCDQxs0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Qocohmy8; arc=none smtp.client-ip=209.85.167.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LGChFC5E"
-Received: by mail-lf1-f53.google.com with SMTP id 2adb3069b0e04-51134caba39so1228968e87.0
-        for <git@vger.kernel.org>; Fri, 02 Feb 2024 06:49:28 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Qocohmy8"
+Received: by mail-lf1-f52.google.com with SMTP id 2adb3069b0e04-5101cd91017so2735237e87.2
+        for <git@vger.kernel.org>; Fri, 02 Feb 2024 06:59:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1706885366; x=1707490166; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:user-agent:message-id
-         :in-reply-to:date:references:subject:cc:to:from:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=xpjrkRAsi8Rv+akADjE9jIluv1MnQ6mNcdKQtw6xeO4=;
-        b=LGChFC5EaoWqwAagrQa2hhcu0fzDVDZiqJNyWaDg5xIeGtphDD8KUvYZOx8o1NRgyT
-         EbQh9COm7Y2pe1jS4GOppZMZWTMLYf4QL/HK1ndxcw3Uk7b3GBw8wYzur2KCEVowCcS6
-         jIDnNPth0fUbzrMZ2ZpvFALzmfyFlWUUlX3dmLQiWIejk/pMMw0a0jkPmXUhjHm4pRDb
-         9tfot+J5Cg9EbNJaoXGg+OB0P404Tbkxa7qBCJjJyLXkTMf5zBwlIYqJY6FUzbUMyj+R
-         TjnXym1hyFUIy59d2nGXGOgYgeGlaQVMhl/zLZCnc3M21dPlV09+4/C8bSggOqBQmkHq
-         J02w==
+        d=gmail.com; s=20230601; t=1706885979; x=1707490779; darn=vger.kernel.org;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=1IePLtzWvuONvPeUGsrwqu0tYogfUbpsB4H9K2VDXD8=;
+        b=Qocohmy80nea33hvDvFLJE/E/INV6r7T4azJL+InGjFCVzfrL9kDR//HCL6nNAtGSM
+         2j/eAAq8oyR+r2P0tPk8lbj8G45jtRCaoOSKPvfzKjBGvgnBGR74Z4wQhddwzAynTbg1
+         1F2n0i+RO+A5a5sLxt9XjdtCyqYRWj7WmNOjWcPoazD21Q/kaNLcDy+g8QXLyOumxnIX
+         kHeMFX0RJx/SxPFVyj+y5JQjEOawVkxBd1vf9Dc2Y0BuGQkWXSl5Sk2sMqD30kmIiKTc
+         pOJ1CLJqQYmLLdaOUWGj6P2LnTQ2LODld2wCH34lYpZUMiAg1Tski3fVnNt+wTEJcDJO
+         CAHA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1706885366; x=1707490166;
-        h=content-transfer-encoding:mime-version:user-agent:message-id
-         :in-reply-to:date:references:subject:cc:to:from:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=xpjrkRAsi8Rv+akADjE9jIluv1MnQ6mNcdKQtw6xeO4=;
-        b=mhUEHw5CQRDMW0OLmfqEjDFNm3azjyivtywmirvJYVwyCRMldYBKGPHB8akkbvRXcz
-         vOc/Yx0mzOkIg+TirY9z4zt56TRdhlxY83On51uYt0NWMeXVa8j1wAV4pm/fvj2IFJaZ
-         cta3xVMMwl+76NHjIbol4JAEwNFJCBC9NqKs9q7NToU4TPOyKxCj6c6IBx1FpkNZgSen
-         jcN/Y95NNL/iwtnl5MA81qbBluDb/owEBCYevpzadYb5dZC8pOxb/kFcnXykSMhO5wjM
-         hcODpKpY2m0ifA2L0oHhiu8upNnd016SP5liz/G+6i7Gz+NOW2hkGF4L6az1qYbQdrZ8
-         yoLA==
-X-Gm-Message-State: AOJu0YyaUIkP8LEF9hkCZi8RtZldSz7sI6DPcL6l/RiBkwda2aPXua0Z
-	UqMxArC3+qYZG9/fAafyfQn6v/TR0Ia+aE57+iyTUt2qSB9ji+J52ib7qbxM
-X-Google-Smtp-Source: AGHT+IGAFAaANlYeIG/IWi9J+Nq5JDer62u/YynJJDKnoOkdRte72VwjceeL5T7VaqYhkFuV+btiKg==
-X-Received: by 2002:a05:6512:2804:b0:50e:7411:2489 with SMTP id cf4-20020a056512280400b0050e74112489mr5598006lfb.31.1706885366186;
-        Fri, 02 Feb 2024 06:49:26 -0800 (PST)
+        d=1e100.net; s=20230601; t=1706885979; x=1707490779;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=1IePLtzWvuONvPeUGsrwqu0tYogfUbpsB4H9K2VDXD8=;
+        b=c98BinCkR3IT676e6laWMuLcw6EYAkYR1uJlZ9NPCUc72bP3S9SFn68ZAe7pMT1Frm
+         UaWlDNhz3IOY1/rfI4VFs1xkar2TtirhTFC4ePJZXzO+gwbN2pw1uPYEdhDyGGJHLu8M
+         pB91gpeZdprrkDZEpgZqhbll4h5LQvWGPTePDwvV5ghVw03ssOIxO+12o15f6PdwbPUU
+         I9/8K0Og8OJz1bCdcFH795MXBEhVzpG4qElhDJ+cjBCdenvTFnVKH+hyF1VzSg1p+JjL
+         kQ4WMRe68JjPuPU8oHhtt+eRNaxV26KhskobIzmc83NydfVvbpF8TLxfJOdDbUMXg49z
+         tCUQ==
+X-Gm-Message-State: AOJu0YwiDvvV6HOGD1mSLAoF6MnLfr6wNN0CoU5ULND9hEo9fqIGkCdV
+	BM5k0dLc8r7DMhOJlw5bLh7GJz5IaGBd5JBND6neFI4cT7D0jcknL7jxACXe
+X-Google-Smtp-Source: AGHT+IFLSUpIcGKIQogIbYU5pl5WDOJN7mmNnTsFZLbpKm/Y/kessDR69h/s5Uhgq5IoxIbdXCPpRw==
+X-Received: by 2002:ac2:5f97:0:b0:511:35ff:bb8f with SMTP id r23-20020ac25f97000000b0051135ffbb8fmr1547593lfe.0.1706885978715;
+        Fri, 02 Feb 2024 06:59:38 -0800 (PST)
 Received: from osv.localdomain ([89.175.180.246])
-        by smtp.gmail.com with ESMTPSA id h11-20020ac2596b000000b005112af32296sm324813lfp.139.2024.02.02.06.49.25
+        by smtp.gmail.com with ESMTPSA id 6-20020ac24826000000b0051119c078adsm328410lft.231.2024.02.02.06.59.38
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 02 Feb 2024 06:49:25 -0800 (PST)
+        Fri, 02 Feb 2024 06:59:38 -0800 (PST)
 From: Sergey Organov <sorganov@gmail.com>
-To: Hans Meiser <brille1@hotmail.com>
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: Migrate away from vger to GitHub or (on-premise) GitLab?
-References: <AS2P195MB21350F44B079009C05A1EAF1E2432@AS2P195MB2135.EURP195.PROD.OUTLOOK.COM>
-	<AS2P195MB2135D91EE464FF30EE84E77EE2432@AS2P195MB2135.EURP195.PROD.OUTLOOK.COM>
-Date: Fri, 02 Feb 2024 17:49:24 +0300
-In-Reply-To: <AS2P195MB2135D91EE464FF30EE84E77EE2432@AS2P195MB2135.EURP195.PROD.OUTLOOK.COM>
-	(Hans Meiser's message of "Thu, 1 Feb 2024 12:10:11 +0000")
-Message-ID: <877cjm53bf.fsf@osv.gnss.ru>
+To: Martin Guy <martinwguy@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: single-char options
+References: <0e88ac8ad60d2da689d0a308cc59a02d468bc15f.camel@gmail.com>
+Date: Fri, 02 Feb 2024 17:59:37 +0300
+In-Reply-To: <0e88ac8ad60d2da689d0a308cc59a02d468bc15f.camel@gmail.com>
+	(Martin Guy's message of "Fri, 02 Feb 2024 13:45:55 +0000")
+Message-ID: <8734ua52ue.fsf@osv.gnss.ru>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -68,32 +66,26 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-Hans Meiser <brille1@hotmail.com> writes:
+Martin Guy <martinwguy@gmail.com> writes:
 
-> Hi,
->
-> is there any current discussion about moving Git development away from
-> using a mailing list to some modern form of collaboration?
+> I'm sure this must have been thought of before and rejected, but us RSI
+> sufferers would like to be able to say "git rebase -c" for "--continue"
+> not only for speed and ease, but for all the other RSI sufferers out
+> there.
 
-Yes, now there is (again).
+I'm afraid you'll have hard time to bring *any* one-letter option into
+core Git.
 
-> I'd like to be able to follow a structured discussion in issues and to
-> contribute to the Git documentation, but the mailing list currently
-> just bloats my personal inbox with loads of uninteresting e-mails in
-> an unstructured waterfall of messy discussion that I am not able to
-> follow professionally.
+That said, an option here is to maintain suitable set of aliases,
+probably contributed to Git to be easily installed, containing, say,
 
-Did you consider to rather read the list through
-gmane.comp.version-control.git nntp newsgroup?
+  git config --global alias.re 'rebase'
+  git config --global alias.rc 'rebase --continue'
+  git config --global alias.ra 'rebase --abort'
+  etc.
 
-This way you get only very specific mails in your mail-box, those where
-you are explicitly CC'ed, and you usually get more support for
-structuring from NNTP readers than from mail clients.
-
-HTH
-
+HTH,
 -- 
 Sergey Organov
