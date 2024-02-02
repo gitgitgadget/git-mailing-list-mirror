@@ -1,78 +1,77 @@
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5012715E5BB
-	for <git@vger.kernel.org>; Fri,  2 Feb 2024 19:30:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6214927473
+	for <git@vger.kernel.org>; Fri,  2 Feb 2024 20:39:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706902248; cv=none; b=FdLQfMQsb4TJnDTPdPgWDJEsCQOs9TmeJoRV8FFgopKNQESlco03YvG+7h1OdT/FhOn4UZJ7l+tcJFPTN1qrAKQohOkANVk5PWEhXAzfZeJzlVkNs1M4gFzL1drvT8PYQIlFEhXi5cQlaiotNjFYM6DRNUTjvdi5zARTLQWDbb8=
+	t=1706906382; cv=none; b=u0+CyIprRGRDoPuNdKUCpHIUIRX4Z6nGwqnlL9ix3BQLEkHFLw3CqEejrBViGB2Y4J2vaQx8jM4Cuw3H3m9aZm0r7I08h3RY1jPHEy/OmcKduC58zenMLnIO8iacvgKuUWY5bS4C8RBDtO+ikFmKIJvmUGDzTecNPLlqvUyqhe4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706902248; c=relaxed/simple;
-	bh=vqoLUT1riI17M1Nvjt2mCqW8UjQ3HY/aNez9RV/gTfQ=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=C4E6NDU22utInXmUL54hcK7GKxJPI2VYkwJc11dnLNDH8x8Ezl6J8E7jBIVgTzPp+Uulq0zNF9IS0/N211Q3r2fR56ysRBdPsbmK3gfPah/ydaBvwO6/XIJNEAZ+eElp9zRsacdR0mlDyIYP+lfVkwcvSb16z2TyD8rY6+R3S7g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=VmCRyDwi; arc=none smtp.client-ip=173.228.157.53
+	s=arc-20240116; t=1706906382; c=relaxed/simple;
+	bh=GddtFCA25o0qnXlGBhOsRIwz/bUd/9hkOT9+CMOwZoo=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=gUvjgbUwlwDqarvXYkmdQ/i++DC9d5KPufq+wxpEWXsdFJZcC90VUBlRMLP4zF/8UY+b0+dLszSXA2LiCZS6N+1QvSXSf5+uLe249UpzY0+mWMQVdMiWF/nnUEcqGUUZ3qelHXL25ScPgPMRUu90q81GjrNH8tEc45MA7BtlclA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=oO75fxgS; arc=none smtp.client-ip=173.228.157.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="VmCRyDwi"
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id 7736B1D53F;
-	Fri,  2 Feb 2024 14:30:45 -0500 (EST)
-	(envelope-from junio@pobox.com)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="oO75fxgS"
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id A7CB826BB7;
+	Fri,  2 Feb 2024 15:39:40 -0500 (EST)
+	(envelope-from gitster@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=vqoLUT1riI17M1Nvjt2mCqW8UjQ3HY/aNez9RV
-	/gTfQ=; b=VmCRyDwiG5gTn7ajD2LHTG9VXUsszVnes9iGZpwg8a9z4qnyOIhnK8
-	HlogQ2DNY9rIi1Pw3wE/o771oZt265SrE9tbcrkNbGNEyw+XBa7IlI0GZ/hVIrCm
-	YkY2aVkh3uP21je2QyxDs8hyLzTe4XhREFwU7DuTde/vuBhYRPU8U=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id 6F6861D53E;
-	Fri,  2 Feb 2024 14:30:45 -0500 (EST)
-	(envelope-from junio@pobox.com)
+	:subject:date:message-id:mime-version:content-transfer-encoding;
+	 s=sasl; bh=GddtFCA25o0qnXlGBhOsRIwz/bUd/9hkOT9+CMOwZoo=; b=oO75
+	fxgSFlcfU3BVtY5Ov4ixau36ypBORXmx9EdkqQb8PXUh8U6dhkylJl0La9PETXGL
+	QuqnCPydxUAu8yAWuuYe4fulNGNsvbhRhp+PzGWlt080wsciDXMRL+j3icWSuIl5
+	nUv79oN0lTG64kpndjqRcpKXmxvbSdEEmUaYH64=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id A048826BB6;
+	Fri,  2 Feb 2024 15:39:40 -0500 (EST)
+	(envelope-from gitster@pobox.com)
 Received: from pobox.com (unknown [34.125.200.93])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id A703F1D53C;
-	Fri,  2 Feb 2024 14:30:41 -0500 (EST)
-	(envelope-from junio@pobox.com)
+	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id D579E26BB3;
+	Fri,  2 Feb 2024 15:39:36 -0500 (EST)
+	(envelope-from gitster@pobox.com)
 From: Junio C Hamano <gitster@pobox.com>
-To: Jeff Hostetler <git@jeffhostetler.com>
-Cc: Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>,
-  git@vger.kernel.org,  Jeff Hostetler <jeffhostetler@github.com>
-Subject: Re: [PATCH] sparse-index: pass string length to index_file_exists()
-In-Reply-To: <2bae709a-18da-6ab8-2b76-032ddc045641@jeffhostetler.com> (Jeff
-	Hostetler's message of "Fri, 2 Feb 2024 14:19:17 -0500")
-References: <pull.1649.git.1706897095273.gitgitgadget@gmail.com>
-	<xmqqo7cysp01.fsf@gitster.g>
-	<2bae709a-18da-6ab8-2b76-032ddc045641@jeffhostetler.com>
-Date: Fri, 02 Feb 2024 11:30:39 -0800
-Message-ID: <xmqq1q9usly8.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+To: git@vger.kernel.org
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: [PATCH 0/2] GitHub Actions update
+Date: Fri,  2 Feb 2024 12:39:33 -0800
+Message-ID: <20240202203935.1240458-1-gitster@pobox.com>
+X-Mailer: git-send-email 2.43.0-522-g2a540e432f
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
 X-Pobox-Relay-ID:
- 8D559088-C201-11EE-AE77-A19503B9AAD1-77302942!pb-smtp21.pobox.com
+ 2E1947B8-C20B-11EE-9702-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
+Content-Transfer-Encoding: quoted-printable
 
-Jeff Hostetler <git@jeffhostetler.com> writes:
+The CI jobs are getting "Node.js 16 actions are deprecated."
+warnings for jobs that use checkout@v3, github-script@v6, and
+download-artifact@v3.
 
-> I don't remember if this bug caused visible problems or not. It felt
-> like it caused a few extra rounds of mutually-recursive calls between
-> `index_file_exists()` and `expand_to_path()`, but I can't say that
-> for certain (and I was focused on a different problem at the time).
->
-> I do have some test code in `t/helper/lazy-init-name-hash.c` that
-> I suppose we could extend to beat on it, but I'm not sure it is
-> worth it in this case.
+These two patches update these jobs to use checkout@v4 and
+github-script@v7, both of which are said to use Node.js 20.
 
-Yeah, if we had a reproduction already handy that would have been a
-different story, but I agree that it is not worth it.
+download-artifact@v4 exists but it is labeled as "major changes"
+with breaking changes, so I refrained from touching its use to defer
+it to folks who are more experienced with its use.
 
-Thanks for a fix.  Queued.
+Junio C Hamano (2):
+  GitHub Actions: update to checkout@v4
+  GitHub Actions: update to github-script@v7
 
+ .github/workflows/check-whitespace.yml |  2 +-
+ .github/workflows/coverity.yml         |  2 +-
+ .github/workflows/main.yml             | 20 ++++++++++----------
+ 3 files changed, 12 insertions(+), 12 deletions(-)
+
+--=20
+2.43.0-522-g2a540e432f
 
