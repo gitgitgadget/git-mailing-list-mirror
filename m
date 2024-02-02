@@ -1,117 +1,135 @@
-Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mail.manjaro.org (mail.manjaro.org [116.203.91.91])
+	(using TLSv1.2 with cipher DHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18D6879DB8
-	for <git@vger.kernel.org>; Fri,  2 Feb 2024 11:15:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 605C960BA2
+	for <git@vger.kernel.org>; Fri,  2 Feb 2024 11:23:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=116.203.91.91
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706872530; cv=none; b=quI9xxYxy4wYq9w5wyjMb4w1Jn6RYVmXYJfHaIC1hMvitWOmp5bFywZ9tQ0V8bQ3YUvWMxsaOML9ia2nFwpytBUMRJpoZyI/i8UG6hvQy4UWHHfGtgkIS01MYU2t5frylEvJAsK3nXJzAlP3Du0R+HjNnmZ4e2BO+8RHpd7VfqM=
+	t=1706873026; cv=none; b=plECZpm+1qF22tFdXgMZHKxlaXNiOuKoxCRtykpyO1L38oo6OY7laC4tiiss7OeEFNvBkv5jlIR2TyjYRUnjtMixiA6qV93nwY2D9V6TR0lKz+fZnqdlCdrYWhqP+u223uoRd5piO2Wb5JjakokxDzpBsh+XfnPF147Z1/+7Ehs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706872530; c=relaxed/simple;
-	bh=/jMfoJoXMFVEqfmSYeY35CecLfWe3Nc0EaCkAeqThh8=;
-	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=F88c/FBuvIaLmi6OSOMEXTDHjAa9VJrR6nH7Cy3P4sppqpdZ0Va1fAZFvRV+2wd1rTNED1E9tokrLVklwFT4XgpjxBbxTUF6F+6ADB0s8zNp9jtevSh8zZ6VjeX+I4VY2vtmId+jkTPu1HtI0lttpinNm0R5QkiIJ/i5oEMbCYg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NvYXBbge; arc=none smtp.client-ip=209.85.128.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1706873026; c=relaxed/simple;
+	bh=Hk6/ZXhu22kOUjJ5YyoTLpU6yHn8Jgh2nSu+Wc4TPW0=;
+	h=MIME-Version:Date:From:To:Cc:Subject:In-Reply-To:References:
+	 Message-ID:Content-Type; b=s4dXvZTCaqT0G6U4GnlQKJp5zQ938gTGFLwq6hSIhS1qwJSgYtwonT8qxVijiiGxtDDrWGbE5LELgNjRKHiNzvmdM2Yv9iYKqrcNdqqbSn16kaUzGqoVakUzlHY7CMuF209Kjf9QIRI1395qF6+ub2DkdX+OXcVElCSXMSL6b4Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org; spf=pass smtp.mailfrom=manjaro.org; dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b=SRIti5Y9; arc=none smtp.client-ip=116.203.91.91
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=manjaro.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NvYXBbge"
-Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-40fb020de65so16968355e9.2
-        for <git@vger.kernel.org>; Fri, 02 Feb 2024 03:15:28 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1706872527; x=1707477327; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=8mjFYKPLGzyrLtsyyIfmONxZGQLmS63a+4HngSM7fso=;
-        b=NvYXBbge2jgQquPuGToF8OT7HQj0Xp4QI+dVevG6MMFfnLS0Smlqa+6qtOmSfZtOik
-         xLTN8TY5z10jYoUiFDulyhr/IFKPE+3qcMN/QtElKA2uAMUK5YXbywx058QfgCV1UNYZ
-         NIhQuZ0P/hZjDE9GpBwC8aCmTm9NtNK24OMCldWkPiZ/9sXL7NjPS4e9NUdR66/56P3l
-         S+1KYzFigMSqI651tq2n2D0GLa/89m/LKNNpWKcUOdQDIxnizfvwM/vkC1Gag2itG3gj
-         x5ms4lHQYS1zcS3qEfoEa1h5uPdDfb2WPmUIv03ez26W+tZqrNjwLgtaUacn7fxu6IaB
-         atrQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1706872527; x=1707477327;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:reply-to:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=8mjFYKPLGzyrLtsyyIfmONxZGQLmS63a+4HngSM7fso=;
-        b=cUjpY7fmp32LjcduzaySNfw2UsTWe04iUBz8hBLddVgMYz7V7s+7XJaOTyFIzffaHK
-         CtuUi9Diw0iTACwEKbO+fc19s3HcYZK7Hd9n0Bdr5z9ndSAWLCEL81rW2lBJxFwr9Q92
-         ykPFOy4cvoVsLhjzkmuslPlH0lQG5WV1g8jS7BTNmfGidxHIvHMgNamve4bZUhYvxp8P
-         Ucz+l5vVrrAtaKiMkV6TYf4cR6DIk+209RsLJlDY1Z+3kiAX3AXfXOAYJdYL+JIn24ZX
-         VhF1yXv+/pCFXtblT3IH4BWgPHPhNKOp20PseV//GgGxruSRY4peql09NZJXMQ5MNn6Y
-         HjZA==
-X-Gm-Message-State: AOJu0Yzid/5pfs0tVxLz/Lla+6AV0+etusvg1pX5kOXVb+SDzQyqJDz5
-	l3T7WxYytHayWfbglgjt7qu1DdranoBpPd0rrLQRjumU4ORxcyVzASLdsUqc
-X-Google-Smtp-Source: AGHT+IGfGlc9S+xRisv4Ssq/WHlILkHvEWMAdk3HyYhUaedRYl6P31Jj4KB/2UUf0FtGU1exM4AwTg==
-X-Received: by 2002:a05:600c:470f:b0:40e:f632:723d with SMTP id v15-20020a05600c470f00b0040ef632723dmr6570389wmo.16.1706872526976;
-        Fri, 02 Feb 2024 03:15:26 -0800 (PST)
-X-Forwarded-Encrypted: i=0; AJvYcCUg4Pf41Y9KPUZ5Fwp4rRlttTv83Fpg4DGnFHg6r/bWKoDTGzpfcZtzY6o10lAXLAu0uao2OCITx6wiQS9b7mrkl0FNsJKhudMYd9ecLumFx0gzYIBVYGR9mdpQORMbhgniKkJhWxx7tGw6ycqtvvzMeUP/4RR93ul9aKF5Uzwu9xKkOa+7Y7Rtl5nUqmgA5KlT6eL1dF5/aHMINHEuEHkrhJ7090bFgII4uA==
-Received: from ?IPV6:2a0a:ef40:62e:a901:d2c6:37ff:fef6:7b1? ([2a0a:ef40:62e:a901:d2c6:37ff:fef6:7b1])
-        by smtp.googlemail.com with ESMTPSA id z2-20020a05600c0a0200b0040f0219c371sm2325541wmp.19.2024.02.02.03.15.26
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 02 Feb 2024 03:15:26 -0800 (PST)
-Message-ID: <0e3e6102-40eb-4462-b541-0c7452e79f42@gmail.com>
-Date: Fri, 2 Feb 2024 11:15:26 +0000
+	dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b="SRIti5Y9"
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: Migrate away from vger to GitHub or (on-premise) GitLab?
-Content-Language: en-US
-To: Patrick Steinhardt <ps@pks.im>,
- "brian m. carlson" <sandals@crustytoothpaste.net>,
- Hans Meiser <brille1@hotmail.com>, Dragan Simic <dsimic@manjaro.org>,
- Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
- "git@vger.kernel.org" <git@vger.kernel.org>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=manjaro.org; s=2021;
+	t=1706873022;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=+MpFUf4lzdPCQItN1rL7qFlcQsKwZRIGri63/Ih0kRc=;
+	b=SRIti5Y9d7kIFccwDrts+84ysoNt0/9NDjyNbH45OpFxbrCyPRNFUyjQXKAIGJ13EN++Gu
+	+/0L6T7BJoYDD8f83vfhM9WutudeIzjvFguVGB+5d40Psp2StYjiVT2/3lH/EkuIGPGJhV
+	0BhoZ2R6jx+pnuLiD+faMYJSUxmQ2rMonEZVNmuD9+SfpQQjaaQ6m0/tLzKxjOMKh2B+0U
+	rVap37XXA5Bi9xyJ08sc2xPzba6FFwjFMFs3+zg/BtW/ezC0bbXmo++kK2XrB5AQcgAENE
+	WJTsxefyZn8ac9mvHFvmhMaW2ukG72C/EUnnXxSrJK1sqfg9RfyHBRvHGd1LtA==
+Date: Fri, 02 Feb 2024 12:23:41 +0100
+From: Dragan Simic <dsimic@manjaro.org>
+To: git@vger.kernel.org
+Cc: Konstantin Ryabitsev <konstantin@linuxfoundation.org>, Hans Meiser
+ <brille1@hotmail.com>, Patrick Steinhardt <ps@pks.im>, "brian m. carlson"
+ <sandals@crustytoothpaste.net>, rsbecker@nexbridge.com, Nico Williams
+ <nico@cryptonector.com>, Kristoffer Haugsbakk <code@khaugsbakk.name>,
+ Antonin Delpeuch <antonin@delpeuch.eu>, Phillip Wood
+ <phillip.wood123@gmail.com>
+Subject: Muting and unmuting threads (Was: Migrate away from vger to GitHub or
+ (on-premise) GitLab?)
+In-Reply-To: <c9a0cb1fe64f8e7d21c21458e5e76af9@manjaro.org>
 References: <AS2P195MB21350F44B079009C05A1EAF1E2432@AS2P195MB2135.EURP195.PROD.OUTLOOK.COM>
  <AS2P195MB2135D91EE464FF30EE84E77EE2432@AS2P195MB2135.EURP195.PROD.OUTLOOK.COM>
  <20240201-primitive-aardwark-of-contentment-aaabb9@lemur>
  <DB9P195MB21301E5E271567256303443CE2432@DB9P195MB2130.EURP195.PROD.OUTLOOK.COM>
  <c3b6de0c2ccf71f0dfa5aff06fa63d8f@manjaro.org>
  <DB9P195MB21303B5546A764A18FE78C97E2432@DB9P195MB2130.EURP195.PROD.OUTLOOK.COM>
- <ZbxI4wNTBZ48YcTi@tapette.crustytoothpaste.net> <Zbx5Xzb3kyHvkp7C@tanuki>
-From: Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <Zbx5Xzb3kyHvkp7C@tanuki>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+ <691395bc13ea6c3013adcb98cfcbd102@manjaro.org>
+ <DB9P195MB2130EB8EB69A8140A31BB432E2422@DB9P195MB2130.EURP195.PROD.OUTLOOK.COM>
+ <c9a0cb1fe64f8e7d21c21458e5e76af9@manjaro.org>
+Message-ID: <93be64af474b228e914a4c39443b5a9c@manjaro.org>
+X-Sender: dsimic@manjaro.org
+Content-Type: text/plain; charset=UTF-8;
+ format=flowed
+Content-Transfer-Encoding: 8bit
+Authentication-Results: ORIGINATING;
+	auth=pass smtp.auth=dsimic@manjaro.org smtp.mailfrom=dsimic@manjaro.org
 
-On 02/02/2024 05:10, Patrick Steinhardt wrote:
-> On Fri, Feb 02, 2024 at 01:44:03AM +0000, brian m. carlson wrote:
->> On 2024-02-01 at 18:36:48, Hans Meiser wrote:
-> [snip]
->>> In the end, it's all just about git. You may create your own git
->>> webserver (https://git-scm.com/book/en/v2/Git-on-the-Server-GitWeb),
->>> or just use an existing one, like the GitLab server:
->>> https://about.gitlab.com/install/
->>
->> The Git project has tried for a long time to be neutral on any
->> particular external piece of software.  Installing a GitLab server as
->> our preferred development platform would promote GitLab as the preferred
->> forge to other users.  Similarly, moving to GitHub would prefer GitHub
->> over other forges.  That's not a thing we want to do.
->>
->> We also don't accept patches or features for the benefit of one
->> particular forge or external project.  Patches and features must be
->> of general benefit to the project at large.
+Hello everyone,
+
+I went ahead and contacted the mlmmj project, which runs the vger 
+mailing
+lists, [1] with an idea to implement a new command/feature that allows
+threads to be muted or unmuted.  For example, that would allow receiving
+only the replies to one's patch that was sent to a list.
+
+The initial reactions are good, but various concerns have been raised
+regarding the actual implementation.  I'll think about the way to 
+implement
+it in an efficient and simple way.  I think this would make using 
+mailing
+lists much more friendly to many users.
+
+All suggestions and thoughts are welcome, of course.
+
+[1] https://people.kernel.org/monsieuricon/subspace-mailing-list-server
+
+
+On 2024-02-02 11:54, Dragan Simic wrote:
+> On 2024-02-02 11:18, Hans Meiser wrote:
+>>> Please keep in mind that editing the git man pages requires very
+>>> intimate knowledge of the related git source code.  Many times even
+>>> small changes to the language style can change the meaning and 
+>>> diverge
+>>> the man pages from the source code, making the man pages useless.
+>> 
+>> Sure. Eventually, I'd rather propose to have parts of the man pages be
+>> generated from code comments (XmlDoc, JsDoc or similar), particularly
+>> syntax and parameter list. That would keep documentation from
+>> deviating from code right from the beginning. And it would keep
+>> documentation writers from manually updating obvious parts.
 > 
-> I think this point is indeed really important in the context of the Git
-> project.
-
-Agreed, thank you for making it brian. If we did decide to use a forge 
-we'd need to be very clear in our decision making that it was selected 
-based on the specific needs of this project and was not a general 
-endorsement of one product over another. We'd also need to address the 
-important practical problems of finding resources to maintain the 
-infrastructure and software to run it.
-
-Best Wishes
-
-Phillip
-
+> That might work out in some places, but I'm not really sure about the
+> overall effectiveness.  The git man pages don't document function 
+> calls.
+> 
+>>> A git server?  I was under impression that you proposed running an
+>>> own instance of GitLab or something similar.
+>> 
+>> Basically, GitLab, GitHub, Azure DevOps are all just Git servers, plus
+>> collaboration and automation functionality. I suggested using GitWeb
+>> only in case you wanted to write  (and keep control over)
+>> collaboration and automation functionality yourself. Otherwise you may
+>> use one of the existing ones that have already been written (i.e.,
+>> GitLab, GitHub, Azure DevOps).
+> 
+> The plus brings additional issues.  It's been already noted that 
+> favoring
+> any of those solutions actually wouldn't be in the interest of git 
+> itself
+> as a project, because it wants to remain neutral.
+> 
+> IMHO, these days too much is expected to be handled by "something 
+> else",
+> instead of the developers handling that.  It's like offloading the 
+> basically
+> unavoidable complexity to some utility, and expecting that the 
+> complexity
+> will somehow go away.
+> 
+> In other words, a developer has to keep quite a lot in their short-term
+> memory, and a lot in their long-term memory, to be able to accomplish 
+> some
+> task, and hardly any utility is going to make that significantly 
+> easier.
+> The same principle, in general, applies to a group of developers 
+> working
+> on the same task.
