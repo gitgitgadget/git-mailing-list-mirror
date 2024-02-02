@@ -1,135 +1,118 @@
-Received: from mail.manjaro.org (mail.manjaro.org [116.203.91.91])
-	(using TLSv1.2 with cipher DHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f41.google.com (mail-ed1-f41.google.com [209.85.208.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 605C960BA2
-	for <git@vger.kernel.org>; Fri,  2 Feb 2024 11:23:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=116.203.91.91
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A62A171C2
+	for <git@vger.kernel.org>; Fri,  2 Feb 2024 11:29:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706873026; cv=none; b=plECZpm+1qF22tFdXgMZHKxlaXNiOuKoxCRtykpyO1L38oo6OY7laC4tiiss7OeEFNvBkv5jlIR2TyjYRUnjtMixiA6qV93nwY2D9V6TR0lKz+fZnqdlCdrYWhqP+u223uoRd5piO2Wb5JjakokxDzpBsh+XfnPF147Z1/+7Ehs=
+	t=1706873379; cv=none; b=G/oHcxCPopD1bdV1e5akmKyOqyK+UTD5mZUL1aMRgmm0mX/VvBM/ccDyZoe+ewdH6d79my0d7c6zZK8UrQOUO57ylALR/ixYwqjpdIIZwrPfHdLiAT293KdijhG2X6ftP+Is+O8m1qTZ5B8DXHo5swzqAfgKr6tMFD0To76ekmY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706873026; c=relaxed/simple;
-	bh=Hk6/ZXhu22kOUjJ5YyoTLpU6yHn8Jgh2nSu+Wc4TPW0=;
-	h=MIME-Version:Date:From:To:Cc:Subject:In-Reply-To:References:
-	 Message-ID:Content-Type; b=s4dXvZTCaqT0G6U4GnlQKJp5zQ938gTGFLwq6hSIhS1qwJSgYtwonT8qxVijiiGxtDDrWGbE5LELgNjRKHiNzvmdM2Yv9iYKqrcNdqqbSn16kaUzGqoVakUzlHY7CMuF209Kjf9QIRI1395qF6+ub2DkdX+OXcVElCSXMSL6b4Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org; spf=pass smtp.mailfrom=manjaro.org; dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b=SRIti5Y9; arc=none smtp.client-ip=116.203.91.91
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=manjaro.org
+	s=arc-20240116; t=1706873379; c=relaxed/simple;
+	bh=hwzOJ8z2HA39A1H4rL0Gu59hvi4SD2iR6blk9aMrfNs=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=tzg6tFxGCoK1Q1AKwK2u+yyBgglbCwnAnSVkYo4xUZ9XJ6kvUwqdDBP34obduSMpzSmEkS4qxbQNzbggJ9Ck9gA1sMli4HoRJN1iu4apPCVIjuiq6WFHDACHZSaqwRFBP6exvPPNH1BNTRHJzQM1jybnF6MQ5egBOMPlYX42RHk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=WD06zt7x; arc=none smtp.client-ip=209.85.208.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b="SRIti5Y9"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WD06zt7x"
+Received: by mail-ed1-f41.google.com with SMTP id 4fb4d7f45d1cf-55f50cf2021so2685207a12.1
+        for <git@vger.kernel.org>; Fri, 02 Feb 2024 03:29:37 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1706873375; x=1707478175; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=7rxki8dq+2yLHR9DXEa/i6Jo75xTu2fTc2C4mqa51xc=;
+        b=WD06zt7xDNz9ulm3FJ7/uxZb3b4GiOZ3XtA5YU3c1ykcoMWdnUZ50eFGsC9HP4YRFM
+         YbDWqdV6o8Xmzr+SKloS6T0WrnxToa6TNOiPR31IXDKR5M+BbVj1Ow/Pw8WeiyZXi8M8
+         RQf1+tyWUGUvSMlHlbT2rwpo8+/87794Z1QEX/HKRJYD6QjnQXGQvfYTfvaxKBLorDAd
+         LNnn0rGDN/csmEvRfqk+OjrNaHsTHnRW3Q+ajyXP5rPuIv43t353YM/tWj7t6W9ncynU
+         FsLpuJtYazLsrrLy/OrzTJX5C19Ys1T/ZI8/p6RP96vyPR1erwS4DHeCJCiXv11I7iq8
+         UCdw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1706873375; x=1707478175;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=7rxki8dq+2yLHR9DXEa/i6Jo75xTu2fTc2C4mqa51xc=;
+        b=NkjlFbyPihJ18XgdTxFMNa2i+7YfzZIoNo+Lq38nkHuL/+li2a9BooiVuPx1Eu00tg
+         bAeaHDp0X9SHxO8/rMvkg+OlNgA78ouWI4Qr6pPkzHjOm7G5RxS3KWlKpJFG39XF7nFf
+         q0kPJsnO+Repotd0sn5hcvGWpSOalw1pAxCr0nfAi8kWwT6L979KpumzTTSK1VMCEp94
+         WY4JH8iabe7q5icp2k1QPJSXPBg2kdsZwW8ACKJfPsQCyOHQGzyHpE6QsAvnMKGcUpRv
+         lVF9uZMBzy/foKfeu17sMTrmRboHT2U+FmGSSboiAfw8wPNy1aKrS24ImXaWGSB5KN6e
+         iGSg==
+X-Gm-Message-State: AOJu0YwR9DEZV95i/WjGFkCn6jovWDtpNn8Ls3L4zw2wi2atkcIZ0PCk
+	LabL6lhXw1XpmwUF0kOmy2TvN5jyLFEMdHRVBQzKQ+WB8yHz0OrfOg4ziosbYZ5kpCiuRnfUfC2
+	4u8FEWbFFaVOJ4n+KymsSbkH6Hbo=
+X-Google-Smtp-Source: AGHT+IHzimUU+mrwCoPDa4WvcvQ7a/Mcj10S63ZMoXM9s9RgUXOwDYrtYfzhlB77JUJQ0wy20H7IjUFbBkKGW1a+tpk=
+X-Received: by 2002:aa7:d615:0:b0:55f:cec9:3a7e with SMTP id
+ c21-20020aa7d615000000b0055fcec93a7emr1033896edr.0.1706873375408; Fri, 02 Feb
+ 2024 03:29:35 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=manjaro.org; s=2021;
-	t=1706873022;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=+MpFUf4lzdPCQItN1rL7qFlcQsKwZRIGri63/Ih0kRc=;
-	b=SRIti5Y9d7kIFccwDrts+84ysoNt0/9NDjyNbH45OpFxbrCyPRNFUyjQXKAIGJ13EN++Gu
-	+/0L6T7BJoYDD8f83vfhM9WutudeIzjvFguVGB+5d40Psp2StYjiVT2/3lH/EkuIGPGJhV
-	0BhoZ2R6jx+pnuLiD+faMYJSUxmQ2rMonEZVNmuD9+SfpQQjaaQ6m0/tLzKxjOMKh2B+0U
-	rVap37XXA5Bi9xyJ08sc2xPzba6FFwjFMFs3+zg/BtW/ezC0bbXmo++kK2XrB5AQcgAENE
-	WJTsxefyZn8ac9mvHFvmhMaW2ukG72C/EUnnXxSrJK1sqfg9RfyHBRvHGd1LtA==
-Date: Fri, 02 Feb 2024 12:23:41 +0100
-From: Dragan Simic <dsimic@manjaro.org>
-To: git@vger.kernel.org
-Cc: Konstantin Ryabitsev <konstantin@linuxfoundation.org>, Hans Meiser
- <brille1@hotmail.com>, Patrick Steinhardt <ps@pks.im>, "brian m. carlson"
- <sandals@crustytoothpaste.net>, rsbecker@nexbridge.com, Nico Williams
- <nico@cryptonector.com>, Kristoffer Haugsbakk <code@khaugsbakk.name>,
- Antonin Delpeuch <antonin@delpeuch.eu>, Phillip Wood
- <phillip.wood123@gmail.com>
-Subject: Muting and unmuting threads (Was: Migrate away from vger to GitHub or
- (on-premise) GitLab?)
-In-Reply-To: <c9a0cb1fe64f8e7d21c21458e5e76af9@manjaro.org>
-References: <AS2P195MB21350F44B079009C05A1EAF1E2432@AS2P195MB2135.EURP195.PROD.OUTLOOK.COM>
- <AS2P195MB2135D91EE464FF30EE84E77EE2432@AS2P195MB2135.EURP195.PROD.OUTLOOK.COM>
- <20240201-primitive-aardwark-of-contentment-aaabb9@lemur>
- <DB9P195MB21301E5E271567256303443CE2432@DB9P195MB2130.EURP195.PROD.OUTLOOK.COM>
- <c3b6de0c2ccf71f0dfa5aff06fa63d8f@manjaro.org>
- <DB9P195MB21303B5546A764A18FE78C97E2432@DB9P195MB2130.EURP195.PROD.OUTLOOK.COM>
- <691395bc13ea6c3013adcb98cfcbd102@manjaro.org>
- <DB9P195MB2130EB8EB69A8140A31BB432E2422@DB9P195MB2130.EURP195.PROD.OUTLOOK.COM>
- <c9a0cb1fe64f8e7d21c21458e5e76af9@manjaro.org>
-Message-ID: <93be64af474b228e914a4c39443b5a9c@manjaro.org>
-X-Sender: dsimic@manjaro.org
-Content-Type: text/plain; charset=UTF-8;
- format=flowed
-Content-Transfer-Encoding: 8bit
-Authentication-Results: ORIGINATING;
-	auth=pass smtp.auth=dsimic@manjaro.org smtp.mailfrom=dsimic@manjaro.org
+References: <20240201115809.1177064-1-christian.couder@gmail.com>
+ <20240201115809.1177064-4-christian.couder@gmail.com> <xmqqil37yix1.fsf@gitster.g>
+In-Reply-To: <xmqqil37yix1.fsf@gitster.g>
+From: Christian Couder <christian.couder@gmail.com>
+Date: Fri, 2 Feb 2024 12:29:22 +0100
+Message-ID: <CAP8UFD3Hfgud19y_K1bZOudkBE-ss1_SgWTRVkJ7gUbYJ400yQ@mail.gmail.com>
+Subject: Re: [PATCH 3/3] rev-list: add --allow-missing-tips to be used with --missing=...
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>, John Cai <johncai86@gmail.com>, 
+	Christian Couder <chriscool@tuxfamily.org>, Elijah Newren <newren@gmail.com>, 
+	Jeff Hostetler <git@jeffhostetler.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Hello everyone,
+On Thu, Feb 1, 2024 at 10:27=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
+wrote:
+>
+> Christian Couder <christian.couder@gmail.com> writes:
+>
+> > When such a command is used to find the dependencies of some objects,
+> > for example the dependencies of quarantined objects, it would be
+> > better if the command would instead consider such missing objects,
+> > especially commits, in the same way as other missing objects.
+> >
+> > If, for example `--missing=3Dprint` is used, it would be nice for some
+> > use cases if the missing tips passed as arguments were reported in
+> > the same way as other missing objects instead of the command just
+> > failing.
+> >
+> > Let's introduce a new `--allow-missing-tips` option to make it work
+> > like this.
+>
+> An obvious question is if this even needs to be a new option.  What
+> are expected use cases where --missing=3Dprint without this option is
+> beneficial?
 
-I went ahead and contacted the mlmmj project, which runs the vger 
-mailing
-lists, [1] with an idea to implement a new command/feature that allows
-threads to be muted or unmuted.  For example, that would allow receiving
-only the replies to one's patch that was sent to a list.
+I am not sure if such a case is really beneficial but some
+people/script/forges might rely on an error from `git rev-list
+--missing=3Dprint` to propagate back an error to some user interface.
 
-The initial reactions are good, but various concerns have been raised
-regarding the actual implementation.  I'll think about the way to 
-implement
-it in an efficient and simple way.  I think this would make using 
-mailing
-lists much more friendly to many users.
+> If there is no plausible use case, perhaps we can treat
+> it as a mere bugfix to the existing --missing mechanism, especially
+> given that support of commits in "--missing" itself is relatively
+> a new thing.
 
-All suggestions and thoughts are welcome, of course.
+`--missing=3D...` detecting missing commits is new, but it might have
+been used to find missing blobs or trees for some time as it exists
+since:
 
-[1] https://people.kernel.org/monsieuricon/subspace-mailing-list-server
+caf3827e2f (rev-list: add list-objects filtering support, 2017-11-21)
 
+> If we can do this as a bugfix that is always on when --missing is
+> used, then we do not have to worry about adding another tasteless
+> loop outside the main command line parser, which is a huge upside
+> ;-).
 
-On 2024-02-02 11:54, Dragan Simic wrote:
-> On 2024-02-02 11:18, Hans Meiser wrote:
->>> Please keep in mind that editing the git man pages requires very
->>> intimate knowledge of the related git source code.  Many times even
->>> small changes to the language style can change the meaning and 
->>> diverge
->>> the man pages from the source code, making the man pages useless.
->> 
->> Sure. Eventually, I'd rather propose to have parts of the man pages be
->> generated from code comments (XmlDoc, JsDoc or similar), particularly
->> syntax and parameter list. That would keep documentation from
->> deviating from code right from the beginning. And it would keep
->> documentation writers from manually updating obvious parts.
-> 
-> That might work out in some places, but I'm not really sure about the
-> overall effectiveness.  The git man pages don't document function 
-> calls.
-> 
->>> A git server?  I was under impression that you proposed running an
->>> own instance of GitLab or something similar.
->> 
->> Basically, GitLab, GitHub, Azure DevOps are all just Git servers, plus
->> collaboration and automation functionality. I suggested using GitWeb
->> only in case you wanted to write  (and keep control over)
->> collaboration and automation functionality yourself. Otherwise you may
->> use one of the existing ones that have already been written (i.e.,
->> GitLab, GitHub, Azure DevOps).
-> 
-> The plus brings additional issues.  It's been already noted that 
-> favoring
-> any of those solutions actually wouldn't be in the interest of git 
-> itself
-> as a project, because it wants to remain neutral.
-> 
-> IMHO, these days too much is expected to be handled by "something 
-> else",
-> instead of the developers handling that.  It's like offloading the 
-> basically
-> unavoidable complexity to some utility, and expecting that the 
-> complexity
-> will somehow go away.
-> 
-> In other words, a developer has to keep quite a lot in their short-term
-> memory, and a lot in their long-term memory, to be able to accomplish 
-> some
-> task, and hardly any utility is going to make that significantly 
-> easier.
-> The same principle, in general, applies to a group of developers 
-> working
-> on the same task.
+Even if I very much dislike the tasteless loops, I'd rather not risk
+user regressions by changing how `git rev-list --missing=3D...` handles
+errors in the commits it is passed as arguments. See my other message
+responding to your previous comments about how I'd prefer we handle
+this.
