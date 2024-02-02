@@ -1,46 +1,72 @@
-Received: from mail.manjaro.org (mail.manjaro.org [116.203.91.91])
-	(using TLSv1.2 with cipher DHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f41.google.com (mail-wm1-f41.google.com [209.85.128.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8817E1946F
-	for <git@vger.kernel.org>; Fri,  2 Feb 2024 10:54:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=116.203.91.91
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FCA27867F
+	for <git@vger.kernel.org>; Fri,  2 Feb 2024 11:07:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706871298; cv=none; b=Lt+nNh6UlUU79Nc7YVfReLT1gJILhJnGK1yIBhjOITUNVBK4PozvHNEklQDmxEeU7+FdZVZE6OW3KwJN8GQKcNj4H9+lsxsOWlX/AJbuGEOHPdiC8IN9PoDjxBIJSi26Jdy2Qgw+moxcfZiRyMt0a/czl5Iu81wjYIvzXzQ5zWA=
+	t=1706872045; cv=none; b=tfB+rI9FBNTnUvlrp+do8jUWWczeSxxtzmvzV5A7xkUBlfto7oe75lvNe/L+0p59yqS42qqw81YAk+9NqBN4ahCSevu1GZreP0mH3iBRmYDjxlJns0jGRwt7u7QJuEgka4niKLxQujxFn+6EmwSNmjN/jIuCqQ9JW8z+ECvSaFk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706871298; c=relaxed/simple;
-	bh=ZidGPjJ+YNYPVG/JoSgUbDVotdPwL+kdVOc5sZZK3Jg=;
-	h=MIME-Version:Date:From:To:Cc:Subject:In-Reply-To:References:
-	 Message-ID:Content-Type; b=n3FMIYTweULZpY1tC43nkKXmjEuGC7ouxVRa5ybSsAIzgoNBWoc2T3oPCSwMyzwpMDwUfZT301FbqclWaI/iQrMt8Zyzsqk8te4abrDgS+xxgUzv9ORR48HtU6uE8n+LUL8I2cqGHt/UNAz485rskfAzOrPHoURXW7gPdO7qE2A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org; spf=pass smtp.mailfrom=manjaro.org; dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b=jJKM8cmx; arc=none smtp.client-ip=116.203.91.91
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=manjaro.org
+	s=arc-20240116; t=1706872045; c=relaxed/simple;
+	bh=fg0kRIj4FLYM4iKg0Wz/vYpLILup83fhDLN8m0cb2OM=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=eEU1IsS6r6RH++r2btm4ac5E/DPKFT4vH/xMNWMaMupe3CIYRHrFrcN75fEZOnvfbx2YmNYug89pECSZuTa20wPsgUlIiUPEEJdK9BSISe1E68Aolnhp+19Sfa17TxNOJZLceiVXO88Vh0EXxbn4tSV0p5AZLZ4hL7jsZQm5o/0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=d4nDjOUd; arc=none smtp.client-ip=209.85.128.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b="jJKM8cmx"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="d4nDjOUd"
+Received: by mail-wm1-f41.google.com with SMTP id 5b1f17b1804b1-40fcb6ebe24so492605e9.0
+        for <git@vger.kernel.org>; Fri, 02 Feb 2024 03:07:21 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1706872040; x=1707476840; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=NcM+B6ynvB2d4+w+E2um+teTKkZBaDzxDWeqtf1u4lA=;
+        b=d4nDjOUdfM/fqcn9cF2NdqQWm1sYaFzYxVHDmhzbuMs2dk1BwR358966im7NKrdc8E
+         gKx7KFkjrnx+gzw3GpPInfFK6NXaFm/2OalHVh1AG9ezQXLbL5V/ccZcUBlk8Q6kiadB
+         mT2taFYDbbjkHQIaIAjLNnF4Yx99I0h+Dd9w8bMWB+Wl+2HZCXSAxWx59nP6yzCjTgQ9
+         fPf3RoJ8xQX18bHOOv/wU/aSdN/ICZntaeIWQOJyW6kHbkwOB/IbbDslB32AtClPFFcI
+         j//hs7jctLIPzK9AXUnGcaesuIVSAaDIQesQLdnvMthcpmLPuzQuS9Lkcw8AjA4da9CH
+         N+4w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1706872040; x=1707476840;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:reply-to:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=NcM+B6ynvB2d4+w+E2um+teTKkZBaDzxDWeqtf1u4lA=;
+        b=oXaaKvaMd/9+ZTwe4EZHsF9tMj9Yiq8qGvX5hL7FnY9UIeyXwnHyQzhFliRgR7GhGu
+         e+7EtqF7+rMi/6YRAmOqSiVivhmAS1Kfn/aDm5ALr7P6JdiIb2e21KnglYoxefjA8TD9
+         RXnHkbtFdgBXrh8nwd0SViZ/aUF5GTWQeLtT53Ex2FukbufGAaHiWl8qPrfLATM8svo0
+         0dkTWPbbVipdwdeoF8lk8xrKuLAHzAFPKhcPIEYX68pAfDqxW5CdZ/V13WvJJ36G8NLn
+         VleCaAzn73L2UO/WvZsTJBSogEs5TtCYkykZLZHS1PV9SlFUn9XwRcIwW51lCvMfV9OG
+         invg==
+X-Gm-Message-State: AOJu0YymHOvittBqj1sSwZbbA78f7emYOYbR8cx6eR2IqVHdhOeyhQ5c
+	YXWCQPARljIWgqwwVT0wgqMy/gPWRjxes3fqNfC8fZDVmdv7s8neapa6gJeW
+X-Google-Smtp-Source: AGHT+IGErxLIKvnj/VssreyxlCtgMK5mu5AjwwLGYMQEf6iOAzjCHACM5+eRSJHzDkgRiTo4NN1ghg==
+X-Received: by 2002:a05:600c:1390:b0:40e:fb8f:debe with SMTP id u16-20020a05600c139000b0040efb8fdebemr5911657wmf.38.1706872039663;
+        Fri, 02 Feb 2024 03:07:19 -0800 (PST)
+X-Forwarded-Encrypted: i=0; AJvYcCWOaVsnTX2R/FW1vEhxEIqkpRSl8pygScuCneJl5teMEpU8kj2RKz6zwmkHVcG73P+K/ie1MIOrSShBGm6NYGx73kURWbg/WCwy9qn/UGsNhZgp52zXY106
+Received: from ?IPV6:2a0a:ef40:62e:a901:d2c6:37ff:fef6:7b1? ([2a0a:ef40:62e:a901:d2c6:37ff:fef6:7b1])
+        by smtp.googlemail.com with ESMTPSA id z2-20020a05600c0a0200b0040f0219c371sm2325541wmp.19.2024.02.02.03.07.19
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 02 Feb 2024 03:07:19 -0800 (PST)
+Message-ID: <6b34d999-3da2-42ef-bfff-37c8f592347f@gmail.com>
+Date: Fri, 2 Feb 2024 11:07:18 +0000
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=manjaro.org; s=2021;
-	t=1706871292;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=UWBaS8W9okOow4B1spgol0tSeUaIxaq4BdY4B+T8Aic=;
-	b=jJKM8cmxcoFWIG4JHCLhw4wYUmTquY9PeRhSBH/3rJc24GYgGa0GmVeMmyaLwu01UTaeLp
-	sMvndLZfw50xuH9zwNyh2xVD0rwpJXLud7m9HcLUu/sdYH2Nx7gYcb33cJNpLGxJ0bMdhv
-	2NWiuUNqG999EdxTqDxvG3Y9i53Hi86jNBg/qpbJtLNonWaZluHH9PZL7iXHZD4oaizxTV
-	YG8RFXEmY0eXBf9Ks3UZ4fWU+lWZYRbPC9yuqs1j4US3q3abcpd5rtB4jQmMH1o4tBt6zm
-	IUFLoINpbK1cKYgyG2q7RVyPT0zv3NjuMgO3EwR+AadIjwMl2AfGtXEfEWZt7A==
-Date: Fri, 02 Feb 2024 11:54:51 +0100
-From: Dragan Simic <dsimic@manjaro.org>
-To: Hans Meiser <brille1@hotmail.com>
-Cc: Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
- git@vger.kernel.org
+User-Agent: Mozilla Thunderbird
+Reply-To: phillip.wood@dunelm.org.uk
 Subject: Re: Migrate away from vger to GitHub or (on-premise) GitLab?
-In-Reply-To: <DB9P195MB2130EB8EB69A8140A31BB432E2422@DB9P195MB2130.EURP195.PROD.OUTLOOK.COM>
+Content-Language: en-US
+To: Dragan Simic <dsimic@manjaro.org>, Hans Meiser <brille1@hotmail.com>
+Cc: Konstantin Ryabitsev <konstantin@linuxfoundation.org>, git@vger.kernel.org
 References: <AS2P195MB21350F44B079009C05A1EAF1E2432@AS2P195MB2135.EURP195.PROD.OUTLOOK.COM>
  <AS2P195MB2135D91EE464FF30EE84E77EE2432@AS2P195MB2135.EURP195.PROD.OUTLOOK.COM>
  <20240201-primitive-aardwark-of-contentment-aaabb9@lemur>
@@ -48,56 +74,27 @@ References: <AS2P195MB21350F44B079009C05A1EAF1E2432@AS2P195MB2135.EURP195.PROD.O
  <c3b6de0c2ccf71f0dfa5aff06fa63d8f@manjaro.org>
  <DB9P195MB21303B5546A764A18FE78C97E2432@DB9P195MB2130.EURP195.PROD.OUTLOOK.COM>
  <691395bc13ea6c3013adcb98cfcbd102@manjaro.org>
- <DB9P195MB2130EB8EB69A8140A31BB432E2422@DB9P195MB2130.EURP195.PROD.OUTLOOK.COM>
-Message-ID: <c9a0cb1fe64f8e7d21c21458e5e76af9@manjaro.org>
-X-Sender: dsimic@manjaro.org
-Content-Type: text/plain; charset=UTF-8;
- format=flowed
+From: Phillip Wood <phillip.wood123@gmail.com>
+In-Reply-To: <691395bc13ea6c3013adcb98cfcbd102@manjaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Authentication-Results: ORIGINATING;
-	auth=pass smtp.auth=dsimic@manjaro.org smtp.mailfrom=dsimic@manjaro.org
 
-On 2024-02-02 11:18, Hans Meiser wrote:
->> Please keep in mind that editing the git man pages requires very
->> intimate knowledge of the related git source code.  Many times even
->> small changes to the language style can change the meaning and diverge
->> the man pages from the source code, making the man pages useless.
-> 
-> Sure. Eventually, I'd rather propose to have parts of the man pages be
-> generated from code comments (XmlDoc, JsDoc or similar), particularly
-> syntax and parameter list. That would keep documentation from
-> deviating from code right from the beginning. And it would keep
-> documentation writers from manually updating obvious parts.
+On 01/02/2024 19:00, Dragan Simic wrote:
+> On 2024-02-01 19:36, Hans Meiser wrote:
+> Please keep in mind that editing the git man pages requires very
+> intimate knowledge of the related git source code.  Many times even
+> small changes to the language style can change the meaning and diverge
+> the man pages from the source code, making the man pages useless.
 
-That might work out in some places, but I'm not really sure about the
-overall effectiveness.  The git man pages don't document function calls.
+While there are some aspects of the documentation that require a 
+familiarity with the source I don't think that is true in general. If 
+someone has a suggestion to improve part of the documentation that they 
+found hard to understand we should be encouraging them to contribute a 
+patch. There is no doubt that there are places where our documentation 
+could be improved and it is not necessary to be a C programmer to 
+contribute improvements to it.
 
->> A git server?  I was under impression that you proposed running an
->> own instance of GitLab or something similar.
-> 
-> Basically, GitLab, GitHub, Azure DevOps are all just Git servers, plus
-> collaboration and automation functionality. I suggested using GitWeb
-> only in case you wanted to write  (and keep control over)
-> collaboration and automation functionality yourself. Otherwise you may
-> use one of the existing ones that have already been written (i.e.,
-> GitLab, GitHub, Azure DevOps).
+Best Wishes
 
-The plus brings additional issues.  It's been already noted that 
-favoring
-any of those solutions actually wouldn't be in the interest of git 
-itself
-as a project, because it wants to remain neutral.
+Phillip
 
-IMHO, these days too much is expected to be handled by "something else",
-instead of the developers handling that.  It's like offloading the 
-basically
-unavoidable complexity to some utility, and expecting that the 
-complexity
-will somehow go away.
-
-In other words, a developer has to keep quite a lot in their short-term
-memory, and a lot in their long-term memory, to be able to accomplish 
-some
-task, and hardly any utility is going to make that significantly easier.
-The same principle, in general, applies to a group of developers working
-on the same task.
