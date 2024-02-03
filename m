@@ -1,304 +1,258 @@
-Received: from mail-yb1-f202.google.com (mail-yb1-f202.google.com [209.85.219.202])
+Received: from mail-yw1-f201.google.com (mail-yw1-f201.google.com [209.85.128.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE5B564B
-	for <git@vger.kernel.org>; Sat,  3 Feb 2024 00:50:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.202
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DF7E80B
+	for <git@vger.kernel.org>; Sat,  3 Feb 2024 00:50:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706921436; cv=none; b=es4ZHbXGx5U4si6vrnKU/PoPnuBsl8WyOygIU/lkGGptATEOHEhd1yarrtzbadFz5IhbQzFSdYepL9TWlQYMPKIfp3X4TRxljqbXUEbCrGiBlWKKHM9LxyuLVo1hsUeWFioAuzlPUvFxi1Oa1DqllBeplHqOQISYtW3tLW9HTLM=
+	t=1706921439; cv=none; b=Lt2+QWQ00IdIbHpKdNhJM51PUiR3V+2kb9f39i8hE6tEDwdZjMnSzbcOpPLPPe6FX+OdpgK/+/buMh1CKpV//r2GieOyS6nAxCCUW1U2womTgoidOSQDT2jzvvhoi/UHlI5G7nZ6qmQIQN0TYZLw5kRXJe3w+xrZ2hF0hGlzwfI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706921436; c=relaxed/simple;
-	bh=48LxXsl6fFzsqF8AnY6HPfSJRcBux2WrZMlZK6dGC8Q=;
+	s=arc-20240116; t=1706921439; c=relaxed/simple;
+	bh=PXLH0pY3oA0Yi6rs6XgHa8cM5sjwAoNNTh4VytQrCNs=;
 	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
-	 To:Cc:Content-Type; b=lYfhL29XfOi/Rz+FuUO03HpY2dD7mBtTvqywvP8oGrOnI7NreGiAUzSMfgt54rU154EulW2Ntk4frlwkn2aQX2Jc07ptVyfCet0U03j1IFScU0kBRo4oHXtRA3BZlNLITx7sBBblo7gc7WK/a9gmIQIkYFc92s2qtuN5BOo5uv8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--steadmon.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=oAy0okCG; arc=none smtp.client-ip=209.85.219.202
+	 To:Cc:Content-Type; b=eS8s1mVn/wxKK45iASJ0C40leNixqilbZB/DETtFs4PcLE+fpdw7uWKLUMlVur9+3zXV65lXIN1UnYt80GsXduX2kAr64+K6QNuvz0DQTuTmMDokgIKtQwcah0udPfAF3qhqwG3f+AUABVRBm4I8PreTUyREg99ywZhXzNvdmYA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--steadmon.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=Gi1MeWP+; arc=none smtp.client-ip=209.85.128.201
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--steadmon.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="oAy0okCG"
-Received: by mail-yb1-f202.google.com with SMTP id 3f1490d57ef6-dc6c47cf679so4724357276.0
-        for <git@vger.kernel.org>; Fri, 02 Feb 2024 16:50:34 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="Gi1MeWP+"
+Received: by mail-yw1-f201.google.com with SMTP id 00721157ae682-60420dcb127so17001647b3.1
+        for <git@vger.kernel.org>; Fri, 02 Feb 2024 16:50:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1706921434; x=1707526234; darn=vger.kernel.org;
+        d=google.com; s=20230601; t=1706921436; x=1707526236; darn=vger.kernel.org;
         h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
          :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=Sxp6XD/y3/MFkmGZAkFxIwu7AEIL/K+WrB4PQxk8EqA=;
-        b=oAy0okCG/eZue/f00ugR/RkegJgw9YjclyuqN45F2OgdMUPBSjhr7AYmDI/Rv+zZ8/
-         +aAIwISwH8UDbmvyyEWJbDCGmVY2SRx14CPlMUtNhr+j9yFr8cQWKwCsFuOKErnwBCob
-         mRcpf2GkIsiLbC0rMztq2UdEVDN58UGR7YM0BzWKpTqYdCw7fnWqAHj2XEsoR1iq7atA
-         IZWeMHjO92s+kqivi1tGHMnQYmT7QRgWL/LvnKBHR6R0JTOWDBZzJnlPhC/Cm4JkBDi2
-         t8R8/+fEpVCQFTok9X5rU35Xx/aeBaXXqEWCRdFcJCS+UA9ExHbAy2mskRHcw0Xah5nv
-         HSeg==
+        bh=OB9yBM/Qv2VlOAI02pRTqgA5ieBc/fQLzo/91PcTd0E=;
+        b=Gi1MeWP+qnG875wjyWge7yJtRBrH+/OdQKvEy63pb4ooqkYjqaYIDSwKH82joi4te6
+         VsrHyBFiDxoONJnDG13q4S+9m1vS9kS+cy0jrPGp/230rBAfi3C/oaZg3pkOf8339Z8Y
+         sixWGnhUABKypckrjPxzkDrbkCeGPF1x6qENfc1uoEQR9bXp7HyKn0UGCGvrf5NDwv+W
+         ic0Fh7WwsyfVImCnwpneTM07SQoevlJn0NTKbhaElOhSe+ImjKXJ/qcUHMzHEJpUocEi
+         W1KdsdR7/Gm5z3Co6NwraOfI9x/2swMYNLXTzFiHjEEmkZyb3rXqKvk3LToUVBjbMVdT
+         ystg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1706921434; x=1707526234;
+        d=1e100.net; s=20230601; t=1706921436; x=1707526236;
         h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
          :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Sxp6XD/y3/MFkmGZAkFxIwu7AEIL/K+WrB4PQxk8EqA=;
-        b=ZjVIPqzzIs9yWJUNKziI7GUf/BQLrusRINOo7Q1sTqrTOf2YT/t07JrIRnErdpSsQo
-         p0q6V/00eO1fZD5s4zIZhXJHUKfDizgYWSaSbv0jKWa8Qx+sU2lBDivyW4wCfj5rsINX
-         g+c0UXjTQHedr63cR9op1E0EgDjham6s6EPJQ/aVS82clAI1hR9zLCHGqd4sxZ1bTquX
-         1940iDoMxLH8PnZ/lm7PdEAv7Mp1pSTaWIVKJD3wY6rhDVhoovMTKbRGAxaYYa9LR1v5
-         rzT1TliaiBDtODoaAqzX8MRl9WL+5ug/SgjPzRIp+VxCJJfEnTxrFs9U9qVE2rhf20tE
-         bYqg==
-X-Gm-Message-State: AOJu0YwOS9/zKcar/EpYyz3m0jwrOcu5uchwoJllzJop5t6HvNOFLESH
-	naIPHXEnrYtKS1HAfcEjq06nr5mQIoCpf4kTrsTx2LNEhVXUwvN+AeFhQG8shVrPxrwk/ZPJMc8
-	LAi0U4vl+2bPzleblGCQAtiGah6elw95jr4nJk7MBwP37WLpukRcy/V23NEJ3CVDKoKUTCLcb+t
-	yxLGGoRqb2hgaETBPmcSp/jnxvQds2bYTnt8pRxSI=
-X-Google-Smtp-Source: AGHT+IEmiLfVc2Oy6XcARIkO2nHszTFLpG6KbuV7eWkI1zDIe/nZQZs/IWhfPzcpP8DXX/kuetnb/XUYO0gyHw==
+        bh=OB9yBM/Qv2VlOAI02pRTqgA5ieBc/fQLzo/91PcTd0E=;
+        b=r6D6RYSM4jOoCzd36P/SYeMAyBEFDgYYNM/FvOQaV3datPTd+dom/km7Jnjgc3+stK
+         7ZTt7BbRuXM9eJSx1seE2z+vMLGazrM+Kja/5rNzr3stb6FNPXJ4bX2cViyyG9x36VIs
+         6+1QcH+HMQgrAzgaKfRIyr1zbue7I1v4kG8F/FEoyVOFc2zL7NuAR3S+2ObmwM5VTkcM
+         C44/LE7WMw7EfO47FtSi3R7yHLL8eSlYXNhb7uIH1ZSX+hRVBz0a6aQXTLjbu9j6Rymz
+         2L6LJgqb/pFLRFQAGi+lmwI6nUXzpQnafem/m5eckZvbiTT3m18DFlUyB+QIs4YvhOYW
+         dPHg==
+X-Gm-Message-State: AOJu0Yx57c9G0XiwA0rUdprs30UxIV39KRDgZTUE/DEyqDJu1E6Ue1/t
+	av3OfIPkWdSGesEi0gk/qco48FhDYlRjPACMlnfoyWkcnDpuneOcfonowzY6lPOP3PCNhB1OjZw
+	ioGxt+8EDO7WJlyusn/4fBUru3L/V7JXQAndZvXd72JIVbmRArkeXOYxAnCP66H/Ji7xlAE1qaQ
+	vOi1aiUv3sTghdtIdeMUJRg8Di6tw4Er0xCu/l40Y=
+X-Google-Smtp-Source: AGHT+IFDEc+wulD8wlqlFOtchbycnj8m+B4WH4BaLKrYQnbiPf98cVPVE7nye0AIpHfAl3bi8vhEt1jDJoF+2Q==
 X-Received: from lunarfall.svl.corp.google.com ([2620:15c:2d3:204:705c:77af:6ef2:8f42])
- (user=steadmon job=sendgmr) by 2002:a05:6902:260d:b0:dc6:e1ed:bd1a with SMTP
- id dw13-20020a056902260d00b00dc6e1edbd1amr1019676ybb.2.1706921433858; Fri, 02
- Feb 2024 16:50:33 -0800 (PST)
-Date: Fri,  2 Feb 2024 16:50:25 -0800
-In-Reply-To: <cover.1705443632.git.steadmon@google.com>
+ (user=steadmon job=sendgmr) by 2002:a05:690c:ece:b0:5ff:6e82:ea31 with SMTP
+ id cs14-20020a05690c0ece00b005ff6e82ea31mr44916ywb.3.1706921436138; Fri, 02
+ Feb 2024 16:50:36 -0800 (PST)
+Date: Fri,  2 Feb 2024 16:50:26 -0800
+In-Reply-To: <cover.1706921262.git.steadmon@google.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 Mime-Version: 1.0
-References: <cover.1705443632.git.steadmon@google.com>
+References: <cover.1705443632.git.steadmon@google.com> <cover.1706921262.git.steadmon@google.com>
 X-Mailer: git-send-email 2.43.0.594.gd9cf4e227d-goog
-Message-ID: <cover.1706921262.git.steadmon@google.com>
-Subject: [RFC PATCH v2 0/6] test-tool: add unit test suite runner
+Message-ID: <da756b4bfb9d1ce0d1213d585e72acfbf667e2a2.1706921262.git.steadmon@google.com>
+Subject: [RFC PATCH v2 1/6] t0080: turn t-basic unit test into a helper
 From: Josh Steadmon <steadmon@google.com>
 To: git@vger.kernel.org
 Cc: johannes.schindelin@gmx.de, peff@peff.net, phillip.wood@dunelm.org.uk, 
 	gitster@pobox.com
 Content-Type: text/plain; charset="UTF-8"
 
-Please note: this series has been rebased onto jk/unit-tests-buildfix.
+While t/unit-tests/t-basic.c uses the unit-test framework added in
+e137fe3b29 (unit tests: add TAP unit test framework, 2023-11-09), it is
+not a true unit test in that it intentionally fails in order to exercise
+various codepaths in the unit-test framework. Thus, we intentionally
+exclude it when running unit tests through the various t/Makefile
+targets. Instead, it is executed by t0080-unit-test-output.sh, which
+verifies its output follows the TAP format expected for the various
+pass, skip, or fail cases.
 
-For various reasons (see discussion at [1]) we would like an alternative
-to `prove` for running test suites (including the unit tests) on
-Windows.
+As such, it makes more sense for t-basic to be a helper item for
+t0080-unit-test-output.sh, so let's move it to
+t/helper/test-example-tap.c and adjust Makefiles as necessary.
 
-This series extends the existing `test-tool run-command testsuite` to
-support running unit tests. In addition, it includes some small
-cleanups:
-* move t-basic out of the unit-tests directory
-* don't hardcode the shell for running tests in `test-tool ... testsuite`
-* don't hardcode a test name filter in `test-tool ... testsuite`
-* add a test wrapper script to allow unit tests and the shell test suite
-  to run in a single `prove` process
+This has the additional benefit that test harnesses seeking to run all
+unit tests can find them with a simple glob of "t/unit-tests/bin/t-*",
+with no exceptions needed. This will be important in a later patch where
+we add support for running the unit tests via a test-tool subcommand.
 
-Some known remaining bits of work:
-* We should investigate switching the Windows CI to use `test-tool`
-  instead of prove. However, Windows CI seems broken on
-  jk/unit-tests-buildfix, and I haven't had time to determine why.
-* We should determine whether it is confusing or otherwise harmful to
-  people's workflow to have the unit tests run in parallel with shell
-  tests when using prove as the default test target.
-
-[1] https://lore.kernel.org/git/pull.1613.git.1699894837844.gitgitgadget@gmail.com/
-
-Changes in V2:
-* Patch 1: move t-basic to a test-tool subcommand rather than a new
-  executable under t/t0080/
-* New patch 2: get the shell path from TEST_SHELL_PATH in
-  `test-tool run-command testsuite`
-* New patch 3: remove the hardcoded filename filter in
-  `test-tool run-command testsuite`
-* Patch 4 (previously 2): simplified now that we no longer need to add
-  any command-line flags to support unit tests
-* Patch 5 (previously 3): avoid trying to run cmake *.pdb files by using
-  the unit test list built in the makefile in jk/unit-tests-buildfix.
-
-
-Jeff King (1):
-  t/Makefile: run unit tests alongside shell tests
-
-Josh Steadmon (5):
-  t0080: turn t-basic unit test into a helper
-  test-tool run-command testsuite: get shell from env
-  test-tool run-command testsuite: remove hardcoded filter
-  test-tool run-command testsuite: support unit tests
-  unit tests: add rule for running with test-tool
-
- Makefile                                      |  6 ++--
- t/Makefile                                    | 15 +++++++---
+Signed-off-by: Josh Steadmon <steadmon@google.com>
+---
+ Makefile                                      |  4 ++--
+ t/Makefile                                    |  3 +--
  .../t-basic.c => helper/test-example-tap.c}   |  5 ++--
- t/helper/test-run-command.c                   | 29 +++++++++++++++----
  t/helper/test-tool.c                          |  1 +
  t/helper/test-tool.h                          |  1 +
- t/run-test.sh                                 | 13 +++++++++
- t/t0080-unit-test-output.sh                   | 24 +++++++--------
- 8 files changed, 67 insertions(+), 27 deletions(-)
+ t/t0080-unit-test-output.sh                   | 24 +++++++++----------
+ 6 files changed, 20 insertions(+), 18 deletions(-)
  rename t/{unit-tests/t-basic.c => helper/test-example-tap.c} (95%)
- create mode 100755 t/run-test.sh
 
-Range-diff against v1:
-1:  a9f67ed703 < -:  ---------- t0080: turn t-basic unit test into a helper
--:  ---------- > 1:  da756b4bfb t0080: turn t-basic unit test into a helper
--:  ---------- > 2:  c8448406d7 test-tool run-command testsuite: get shell from env
--:  ---------- > 3:  e1b89ae93e test-tool run-command testsuite: remove hardcoded filter
-2:  5ecbc976e6 ! 4:  b5665386b5 test-tool run-command testsuite: support unit tests
-    @@ Commit message
-         test-tool run-command testsuite: support unit tests
-     
-         Teach the testsuite runner in `test-tool run-command testsuite` how to
-    -    run unit tests, by adding two new flags:
-    +    run unit tests: if TEST_SHELL_PATH is not set, assume that we're running
-    +    the programs directly from CWD, rather than defaulting to "sh" as an
-    +    interpreter.
-     
-    -    First, "--(no-)run-in-shell" allows the test-tool to exec the unit-test
-    -    binaries directly, rather than trying to interpret them as shell
-    -    scripts.
-    -
-    -    Second "--(no-)require-shell-test-pattern" bypasses the check that the
-    -    test filenames match the expected t####-*.sh pattern.
-    -
-    -    With these changes, you can now use test-tool to run the unit tests:
-    +    With this change, you can now use test-tool to run the unit tests:
-         $ make
-         $ cd t/unit-tests/bin
-    -    $ ../../helper/test-tool run-command testsuite --no-run-in-shell \
-    -        --no-require-shell-test-pattern
-    +    $ ../../helper/test-tool run-command testsuite
-     
-         This should be helpful on Windows to allow running tests without
-         requiring Perl (for `prove`), as discussed in [1] and [2].
-     
-    +    This again breaks backwards compatibility, as it is now required to set
-    +    TEST_SHELL_PATH properly for executing shell scripts, but again, as
-    +    noted in [2], there are no longer any such invocations in our codebase.
-    +
-         [1] https://lore.kernel.org/git/nycvar.QRO.7.76.6.2109091323150.59@tvgsbejvaqbjf.bet/
-         [2] https://lore.kernel.org/git/850ea42c-f103-68d5-896b-9120e2628686@gmx.de/
-     
-     
-      ## t/helper/test-run-command.c ##
-    -@@ t/helper/test-run-command.c: static int task_finished(int result UNUSED,
-    - struct testsuite {
-    - 	struct string_list tests, failed;
-    - 	int next;
-    --	int quiet, immediate, verbose, verbose_log, trace, write_junit_xml;
-    -+	int quiet, immediate, verbose, verbose_log, trace, write_junit_xml, run_in_shell;
-    - };
-    - #define TESTSUITE_INIT { \
-    - 	.tests = STRING_LIST_INIT_DUP, \
-    - 	.failed = STRING_LIST_INIT_DUP, \
-    -+	.run_in_shell = 1, \
-    - }
-    - 
-    - static int next_test(struct child_process *cp, struct strbuf *err, void *cb,
-    -@@ t/helper/test-run-command.c: static int next_test(struct child_process *cp, struct strbuf *err, void *cb,
-    - 		return 0;
-    - 
-    - 	test = suite->tests.items[suite->next++].string;
-    --	strvec_pushl(&cp->args, "sh", test, NULL);
-    -+	if (suite->run_in_shell)
-    -+		strvec_push(&cp->args, "sh");
-    -+	strvec_push(&cp->args, test);
-    - 	if (suite->quiet)
-    - 		strvec_push(&cp->args, "--quiet");
-    - 	if (suite->immediate)
-    -@@ t/helper/test-run-command.c: static const char * const testsuite_usage[] = {
-    - static int testsuite(int argc, const char **argv)
-    - {
-    - 	struct testsuite suite = TESTSUITE_INIT;
-    --	int max_jobs = 1, i, ret = 0;
-    -+	int max_jobs = 1, i, ret = 0, require_shell_test_pattern = 1;
-    - 	DIR *dir;
-    - 	struct dirent *d;
-    - 	struct option options[] = {
-    -@@ t/helper/test-run-command.c: static int testsuite(int argc, const char **argv)
-    - 		OPT_BOOL('x', "trace", &suite.trace, "trace shell commands"),
-    - 		OPT_BOOL(0, "write-junit-xml", &suite.write_junit_xml,
-    - 			 "write JUnit-style XML files"),
-    -+		OPT_BOOL(0, "run-in-shell", &suite.run_in_shell,
-    -+			 "run programs in the suite via `sh`"),
-    -+		OPT_BOOL(0, "require-shell-test-pattern", &require_shell_test_pattern,
-    -+			 "require programs to match 't####-*.sh'"),
-    - 		OPT_END()
-    - 	};
-    - 	struct run_process_parallel_opts opts = {
-     @@ t/helper/test-run-command.c: static int testsuite(int argc, const char **argv)
-      		.task_finished = test_finished,
-      		.data = &suite,
-    @@ t/helper/test-run-command.c: static int testsuite(int argc, const char **argv)
-      
-      	argc = parse_options(argc, argv, NULL, options,
-      			testsuite_usage, PARSE_OPT_STOP_AT_NON_OPTION);
-    - 
-    +@@ t/helper/test-run-command.c: static int testsuite(int argc, const char **argv)
-      	if (max_jobs <= 0)
-      		max_jobs = online_cpus();
-    + 
-     +	/*
-     +	 * If we run without a shell, we have to provide the relative path to
-     +	 * the executables.
-     +	 */
-    -+	if (!suite.run_in_shell)
-    + 	suite.shell_path = getenv("TEST_SHELL_PATH");
-    + 	if (!suite.shell_path)
-    +-		suite.shell_path = "sh";
-     +		strbuf_addstr(&progpath, "./");
-     +	path_prefix_len = progpath.len;
-      
-      	dir = opendir(".");
-      	if (!dir)
-     @@ t/helper/test-run-command.c: static int testsuite(int argc, const char **argv)
-    - 	while ((d = readdir(dir))) {
-    - 		const char *p = d->d_name;
-    - 
-    --		if (*p != 't' || !isdigit(p[1]) || !isdigit(p[2]) ||
-    --		    !isdigit(p[3]) || !isdigit(p[4]) || p[5] != '-' ||
-    --		    !ends_with(p, ".sh"))
-    -+		if (!strcmp(p, ".") || !strcmp(p, ".."))
-    - 			continue;
-    -+		if (require_shell_test_pattern)
-    -+			if (*p != 't' || !isdigit(p[1]) || !isdigit(p[2]) ||
-    -+			    !isdigit(p[3]) || !isdigit(p[4]) || p[5] != '-' ||
-    -+			    !ends_with(p, ".sh"))
-    -+				continue;
-      
-      		/* No pattern: match all */
-      		if (!argc) {
-3:  5b34c851cd ! 5:  f2746703d5 unit tests: add rule for running with test-tool
-    @@ Commit message
-         `make DEFAULT_UNIT_TEST_TARGET=unit-tests-test-tool unit-tests`, or by
-         setting DEFAULT_UNIT_TEST_TARGET in config.mak.
-     
-    -    NEEDS WORK: we need to exclude .pdb files generated by cmake [see
-    -    0df903d402 (unit-tests: do not mistake `.pdb` files for being
-    -    executable, 2023-09-25)]
-    -
-     
-      ## Makefile ##
-    -@@ Makefile: $(UNIT_TEST_HELPER_PROGS): %$X: %.o $(UNIT_TEST_DIR)/test-lib.o $(GITLIBS) GIT-L
-    +@@ Makefile: $(UNIT_TEST_PROGS): $(UNIT_TEST_BIN)/%$X: $(UNIT_TEST_DIR)/%.o $(UNIT_TEST_DIR)/
-      
-      .PHONY: build-unit-tests unit-tests
-      build-unit-tests: $(UNIT_TEST_PROGS)
-    @@ Makefile: $(UNIT_TEST_HELPER_PROGS): %$X: %.o $(UNIT_TEST_DIR)/test-lib.o $(GITL
-      	$(MAKE) -C t/ unit-tests
-     
-      ## t/Makefile ##
-    +@@ t/Makefile: CHAINLINTTESTS = $(sort $(patsubst chainlint/%.test,%,$(wildcard chainlint/*.tes
-    + CHAINLINT = '$(PERL_PATH_SQ)' chainlint.pl
-    + UNIT_TEST_SOURCES = $(wildcard unit-tests/t-*.c)
-    + UNIT_TESTS = $(patsubst unit-tests/%.c,unit-tests/bin/%$(X),$(UNIT_TEST_SOURCES))
-    ++UNIT_TESTS_NO_DIR = $(notdir $(UNIT_TESTS))
-    + 
-    + # `test-chainlint` (which is a dependency of `test-lint`, `test` and `prove`)
-    + # checks all tests in all scripts via a single invocation, so tell individual
-     @@ t/Makefile: $(T):
-      $(UNIT_TESTS):
-      	@echo "*** $@ ***"; $@
-    @@ t/Makefile: unit-tests-raw: $(UNIT_TESTS)
-     +	@echo "*** test-tool - unit tests **"
-     +	( \
-     +		cd unit-tests/bin && \
-    -+		../../helper/test-tool run-command testsuite --no-run-in-shell --no-require-shell-test-pattern \
-    ++		../../helper/test-tool$X run-command testsuite $(UNIT_TESTS_NO_DIR)\
-     +	)
-     +
-      pre-clean:
-4:  c823265f0d = 6:  cd7467a7bd t/Makefile: run unit tests alongside shell tests
-
-base-commit: 799d449105dc1f6e77fa1ebaea4f6d8bdc6537cf
+diff --git a/Makefile b/Makefile
+index 23723367b8..ba55d817ee 100644
+--- a/Makefile
++++ b/Makefile
+@@ -802,6 +802,7 @@ TEST_BUILTINS_OBJS += test-dump-split-index.o
+ TEST_BUILTINS_OBJS += test-dump-untracked-cache.o
+ TEST_BUILTINS_OBJS += test-env-helper.o
+ TEST_BUILTINS_OBJS += test-example-decorate.o
++TEST_BUILTINS_OBJS += test-example-tap.o
+ TEST_BUILTINS_OBJS += test-find-pack.o
+ TEST_BUILTINS_OBJS += test-fsmonitor-client.o
+ TEST_BUILTINS_OBJS += test-genrandom.o
+@@ -1338,7 +1339,6 @@ THIRD_PARTY_SOURCES += compat/regex/%
+ THIRD_PARTY_SOURCES += sha1collisiondetection/%
+ THIRD_PARTY_SOURCES += sha1dc/%
+ 
+-UNIT_TEST_PROGRAMS += t-basic
+ UNIT_TEST_PROGRAMS += t-mem-pool
+ UNIT_TEST_PROGRAMS += t-strbuf
+ UNIT_TEST_PROGRAMS += t-ctype
+@@ -3218,7 +3218,7 @@ perf: all
+ 
+ .PRECIOUS: $(TEST_OBJS)
+ 
+-t/helper/test-tool$X: $(patsubst %,t/helper/%,$(TEST_BUILTINS_OBJS))
++t/helper/test-tool$X: $(patsubst %,t/helper/%,$(TEST_BUILTINS_OBJS)) $(UNIT_TEST_DIR)/test-lib.o
+ 
+ t/helper/test-%$X: t/helper/test-%.o GIT-LDFLAGS $(GITLIBS) $(REFTABLE_TEST_LIB)
+ 	$(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) $(filter %.o,$^) $(filter %.a,$^) $(LIBS)
+diff --git a/t/Makefile b/t/Makefile
+index 281f4c3534..1283c90c10 100644
+--- a/t/Makefile
++++ b/t/Makefile
+@@ -44,8 +44,7 @@ TINTEROP = $(sort $(wildcard interop/i[0-9][0-9][0-9][0-9]-*.sh))
+ CHAINLINTTESTS = $(sort $(patsubst chainlint/%.test,%,$(wildcard chainlint/*.test)))
+ CHAINLINT = '$(PERL_PATH_SQ)' chainlint.pl
+ UNIT_TEST_SOURCES = $(wildcard unit-tests/t-*.c)
+-UNIT_TEST_PROGRAMS = $(patsubst unit-tests/%.c,unit-tests/bin/%$(X),$(UNIT_TEST_SOURCES))
+-UNIT_TESTS = $(sort $(filter-out unit-tests/bin/t-basic%,$(UNIT_TEST_PROGRAMS)))
++UNIT_TESTS = $(patsubst unit-tests/%.c,unit-tests/bin/%$(X),$(UNIT_TEST_SOURCES))
+ 
+ # `test-chainlint` (which is a dependency of `test-lint`, `test` and `prove`)
+ # checks all tests in all scripts via a single invocation, so tell individual
+diff --git a/t/unit-tests/t-basic.c b/t/helper/test-example-tap.c
+similarity index 95%
+rename from t/unit-tests/t-basic.c
+rename to t/helper/test-example-tap.c
+index fda1ae59a6..21e4848e78 100644
+--- a/t/unit-tests/t-basic.c
++++ b/t/helper/test-example-tap.c
+@@ -1,4 +1,5 @@
+-#include "test-lib.h"
++#include "t/unit-tests/test-lib.h"
++#include "test-tool.h"
+ 
+ /*
+  * The purpose of this "unit test" is to verify a few invariants of the unit
+@@ -69,7 +70,7 @@ static void t_empty(void)
+ 	; /* empty */
+ }
+ 
+-int cmd_main(int argc, const char **argv)
++int cmd__example_tap(int argc, const char **argv)
+ {
+ 	test_res = TEST(check_res = check_int(1, ==, 1), "passing test");
+ 	TEST(t_res(1), "passing test and assertion return 1");
+diff --git a/t/helper/test-tool.c b/t/helper/test-tool.c
+index 33b9501c21..bb5c04c9c0 100644
+--- a/t/helper/test-tool.c
++++ b/t/helper/test-tool.c
+@@ -29,6 +29,7 @@ static struct test_cmd cmds[] = {
+ 	{ "dump-untracked-cache", cmd__dump_untracked_cache },
+ 	{ "env-helper", cmd__env_helper },
+ 	{ "example-decorate", cmd__example_decorate },
++	{ "example-tap", cmd__example_tap },
+ 	{ "find-pack", cmd__find_pack },
+ 	{ "fsmonitor-client", cmd__fsmonitor_client },
+ 	{ "genrandom", cmd__genrandom },
+diff --git a/t/helper/test-tool.h b/t/helper/test-tool.h
+index b72f07ded9..38001bd1c6 100644
+--- a/t/helper/test-tool.h
++++ b/t/helper/test-tool.h
+@@ -23,6 +23,7 @@ int cmd__dump_untracked_cache(int argc, const char **argv);
+ int cmd__dump_reftable(int argc, const char **argv);
+ int cmd__env_helper(int argc, const char **argv);
+ int cmd__example_decorate(int argc, const char **argv);
++int cmd__example_tap(int argc, const char **argv);
+ int cmd__find_pack(int argc, const char **argv);
+ int cmd__fsmonitor_client(int argc, const char **argv);
+ int cmd__genrandom(int argc, const char **argv);
+diff --git a/t/t0080-unit-test-output.sh b/t/t0080-unit-test-output.sh
+index 961b54b06c..83b1e3b7f5 100755
+--- a/t/t0080-unit-test-output.sh
++++ b/t/t0080-unit-test-output.sh
+@@ -8,50 +8,50 @@ test_expect_success 'TAP output from unit tests' '
+ 	cat >expect <<-EOF &&
+ 	ok 1 - passing test
+ 	ok 2 - passing test and assertion return 1
+-	# check "1 == 2" failed at t/unit-tests/t-basic.c:76
++	# check "1 == 2" failed at t/helper/test-example-tap.c:77
+ 	#    left: 1
+ 	#   right: 2
+ 	not ok 3 - failing test
+ 	ok 4 - failing test and assertion return 0
+ 	not ok 5 - passing TEST_TODO() # TODO
+ 	ok 6 - passing TEST_TODO() returns 1
+-	# todo check ${SQ}check(x)${SQ} succeeded at t/unit-tests/t-basic.c:25
++	# todo check ${SQ}check(x)${SQ} succeeded at t/helper/test-example-tap.c:26
+ 	not ok 7 - failing TEST_TODO()
+ 	ok 8 - failing TEST_TODO() returns 0
+-	# check "0" failed at t/unit-tests/t-basic.c:30
++	# check "0" failed at t/helper/test-example-tap.c:31
+ 	# skipping test - missing prerequisite
+-	# skipping check ${SQ}1${SQ} at t/unit-tests/t-basic.c:32
++	# skipping check ${SQ}1${SQ} at t/helper/test-example-tap.c:33
+ 	ok 9 - test_skip() # SKIP
+ 	ok 10 - skipped test returns 1
+ 	# skipping test - missing prerequisite
+ 	ok 11 - test_skip() inside TEST_TODO() # SKIP
+ 	ok 12 - test_skip() inside TEST_TODO() returns 1
+-	# check "0" failed at t/unit-tests/t-basic.c:48
++	# check "0" failed at t/helper/test-example-tap.c:49
+ 	not ok 13 - TEST_TODO() after failing check
+ 	ok 14 - TEST_TODO() after failing check returns 0
+-	# check "0" failed at t/unit-tests/t-basic.c:56
++	# check "0" failed at t/helper/test-example-tap.c:57
+ 	not ok 15 - failing check after TEST_TODO()
+ 	ok 16 - failing check after TEST_TODO() returns 0
+-	# check "!strcmp("\thello\\\\", "there\"\n")" failed at t/unit-tests/t-basic.c:61
++	# check "!strcmp("\thello\\\\", "there\"\n")" failed at t/helper/test-example-tap.c:62
+ 	#    left: "\011hello\\\\"
+ 	#   right: "there\"\012"
+-	# check "!strcmp("NULL", NULL)" failed at t/unit-tests/t-basic.c:62
++	# check "!strcmp("NULL", NULL)" failed at t/helper/test-example-tap.c:63
+ 	#    left: "NULL"
+ 	#   right: NULL
+-	# check "${SQ}a${SQ} == ${SQ}\n${SQ}" failed at t/unit-tests/t-basic.c:63
++	# check "${SQ}a${SQ} == ${SQ}\n${SQ}" failed at t/helper/test-example-tap.c:64
+ 	#    left: ${SQ}a${SQ}
+ 	#   right: ${SQ}\012${SQ}
+-	# check "${SQ}\\\\${SQ} == ${SQ}\\${SQ}${SQ}" failed at t/unit-tests/t-basic.c:64
++	# check "${SQ}\\\\${SQ} == ${SQ}\\${SQ}${SQ}" failed at t/helper/test-example-tap.c:65
+ 	#    left: ${SQ}\\\\${SQ}
+ 	#   right: ${SQ}\\${SQ}${SQ}
+ 	not ok 17 - messages from failing string and char comparison
+-	# BUG: test has no checks at t/unit-tests/t-basic.c:91
++	# BUG: test has no checks at t/helper/test-example-tap.c:92
+ 	not ok 18 - test with no checks
+ 	ok 19 - test with no checks returns 0
+ 	1..19
+ 	EOF
+ 
+-	! "$GIT_BUILD_DIR"/t/unit-tests/bin/t-basic >actual &&
++	! test-tool example-tap >actual &&
+ 	test_cmp expect actual
+ '
+ 
 -- 
 2.43.0.594.gd9cf4e227d-goog
 
