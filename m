@@ -1,124 +1,102 @@
-Received: from mout.gmx.net (mout.gmx.net [212.227.15.19])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yb1-f201.google.com (mail-yb1-f201.google.com [209.85.219.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A42837F4
-	for <git@vger.kernel.org>; Fri,  2 Feb 2024 23:52:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.19
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2909B64E
+	for <git@vger.kernel.org>; Sat,  3 Feb 2024 00:39:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706917964; cv=none; b=ByIcXSUNNElMlJr7pKkhZFCg+xtaGBVYpA4AiWuXV4h5fZqyXVWHdWJe6jau+XbUD2ry+Sr1IWyz+lRpHBujhJX0Ud1qJVPedr3bwX9qYwmdp5zxz6bx5x25vXI0QqDQsK4f5pYCFMWfv689i3uiPEMZVfnlfk+iftMZChBppK0=
+	t=1706920755; cv=none; b=nXBVsD2FgMZyXTFMNqjhnBJgvNxLjyfxrB14yWauupCLvJdvqzQGX6VJyoxgzuqHulhz1Zlzc4JNZUHJB+w/iC9mb9l6pWfpsYW2NJjlOoxNo81exyI+9P7P209H8uao2NPa8EW0gwpuZ/X9Fobf1wWHN/C9aD6kK8Czc7ALmXM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706917964; c=relaxed/simple;
-	bh=L8sHXjJ+ypYTgstfPjid1yoc8eTeUotCQjiVJK7vd3k=;
-	h=Date:From:To:cc:Subject:In-Reply-To:Message-ID:References:
-	 MIME-Version:Content-Type; b=ceF/P8E86RT8C6V3JaihhYzm9NCZHsmLAzfvZ0fWvFpACxfHBQi9g4GEd/lOZzrV2xlOMbI9N3DQbr+VgGxSvcJHhpgBgtHdOxVOfj3ZhKaNyn3mKEpvX+u5GujPML95IwsBcLzetpkGqL839EbLn8fY7Y9XVll95kmLoN2+w/g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b=rdDMs1JO; arc=none smtp.client-ip=212.227.15.19
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
+	s=arc-20240116; t=1706920755; c=relaxed/simple;
+	bh=H4h/plEu1ob6pioPgjbHamBggmivJe59w+m0IPfUjLY=;
+	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
+	 To:Cc:Content-Type; b=Xa0ltJQ749AYV6ye/zflkEBqHU3RhP/RA2os9QQkBSUVWMs5UkXPWBGYc3635VnxJgPunA7cZqg88AMDr8oJKaKA4IEujHLVJQkl3f8L6wfJAh0BjW2thVYMwGQ84U8fShh2U+nbuaEKdKB1dFusUHh164RyxUpCMD6H7/NB5r8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--linusa.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=qlaMAlHx; arc=none smtp.client-ip=209.85.219.201
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--linusa.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b="rdDMs1JO"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.de; s=s31663417;
-	t=1706917938; x=1707522738; i=johannes.schindelin@gmx.de;
-	bh=L8sHXjJ+ypYTgstfPjid1yoc8eTeUotCQjiVJK7vd3k=;
-	h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:
-	 References;
-	b=rdDMs1JO9dJN7hozO8RNWdlPgsrxW2ucFiulFSdiXqlIttNqydg5rDuyG9spXZNN
-	 91an3qIY54GlEmnCQvz+lq8AvR9PuAaycMxYjsBYVyhmcDiY82aX70uKSmsDcKZmM
-	 fffmMv+5JPzD+pljcvXMP9sX+AXze/tu41bKRFOTsdtzr/5CGrwGXGf+4MxdHVAyG
-	 GAlFUKlv1au6cmeta7DEFg+ThSpFwB5Hy5v7s3JEuDLX70nVXAcaTxOdcF+Rq69V3
-	 d64ZJb9MoE/n+Pk3SrEcNzIjoDv3qHcBSVtlfV49MV6jqKszv9ryS2GIawwjkIgs2
-	 KQkxOo6ytYZVLfWQQA==
-X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from [172.23.242.68] ([89.1.214.32]) by mail.gmx.net (mrgmx004
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MIdiZ-1rHXFv1jMr-00Edwe; Sat, 03
- Feb 2024 00:52:18 +0100
-Date: Sat, 3 Feb 2024 00:52:16 +0100 (CET)
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Junio C Hamano <gitster@pobox.com>
-cc: git@vger.kernel.org, Jeff King <peff@peff.net>, 
-    Phillip Wood <phillip.wood@dunelm.org.uk>, 
-    =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>, 
-    Adam Dinwoodie <adam@dinwoodie.org>, Patrick Steinhardt <ps@pks.im>
-Subject: Re: [PATCH v2 0/3] some unit-test Makefile polishing
-In-Reply-To: <xmqqh6irwtkd.fsf@gitster.g>
-Message-ID: <b7b92f1a-9231-2f53-299e-ad58fc699284@gmx.de>
-References: <20240129031540.GA2433764@coredump.intra.peff.net> <20240130053714.GA165967@coredump.intra.peff.net> <xmqqh6irwtkd.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="qlaMAlHx"
+Received: by mail-yb1-f201.google.com with SMTP id 3f1490d57ef6-dc6c2643a07so4812905276.3
+        for <git@vger.kernel.org>; Fri, 02 Feb 2024 16:39:13 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1706920753; x=1707525553; darn=vger.kernel.org;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:from:to:cc:subject:date:message-id:reply-to;
+        bh=kA6K79ymk+KMizOTXjsHSkyc8PFMzrJBENbiQKddsYY=;
+        b=qlaMAlHxKcnxkuLk4J3yMMuQV5UZW9+kZ8rtlamICvQ19eAbKUZ0e/bXPQygStHXPw
+         ggCcqcLx+z4rKbh749NwJ3AqTKaT5+r5665AG6z54GeS0coy7phGdaZHtBWz3dWIGSk3
+         0FZ2+f5RXi1QpOtvgsP4TL1ZRPXBvpNHz6q5G0yxvvU//zlaFblHlJ9WnlpRt3T+Qvm4
+         JUpc/tQYwTYYeRib2dVl9D0Gz241WhsUo7O7K/9rUr8lHay+v1S34lGVMucAg+YudkuA
+         hbZ6mOzcLK/nCodF3l/Fbuc/t791sIEgIUdyJFK0BNQNS4jjKsCEdhoquLPSmxxW5gs0
+         gVRw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1706920753; x=1707525553;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=kA6K79ymk+KMizOTXjsHSkyc8PFMzrJBENbiQKddsYY=;
+        b=rgQYWG1VgOtt5FOGyg+SjlHQvF1Do4JJRUkVqR4R6gjgWOSMvzcMktJBFbN9P1vKEY
+         HIaU/Yhw3qPM7WZb82GuVjr5XKpsiG5gBK2QKZGPtSbjjsBjV+Y0E3LRDXysfR9mbenH
+         x3DuXJJpDTKK0nCRwWy6yeaDOu5XMV8aYzjeTH+H3KLb+fyAMNZl+ozh+/wbXbxulRac
+         78SKVwh5ioUGYtoIU/EPzNauDErQEWajJbi9YkpalIwYEihIMVU++XCV9STo487Wqja9
+         K9isdlAT398qYQsbAO/kp9YfK2T4vbwbTeXp68Exrjd+4a2UFOAk7GAs0FhGY+QXeNGp
+         ANhQ==
+X-Gm-Message-State: AOJu0Yxt4JYPG0oBJRXo0FH9qq30sSSc9pLi53BHe2+J9jN55czexOKk
+	mimvrsQc7EeuiYOoaSnRR9TJ5USksROQJ3pZaUbVKtgcxIAS5WNFO5MM18Fm2PjNDqi1ERf7mD4
+	vIg==
+X-Google-Smtp-Source: AGHT+IE0vaL7730/e4EhaVa9N/ZuCz1yjQdodOdRvth6m84rFGvAiDk+gKL1qexbNNJLcJhzwW3uCLC8CnQ=
+X-Received: from fine.c.googlers.com ([fda3:e722:ac3:cc00:7f:e700:c0a8:2221])
+ (user=linusa job=sendgmr) by 2002:a05:6902:1085:b0:dc6:e5e9:f3af with SMTP id
+ v5-20020a056902108500b00dc6e5e9f3afmr1254813ybu.9.1706920753183; Fri, 02 Feb
+ 2024 16:39:13 -0800 (PST)
+Date: Fri, 02 Feb 2024 16:39:11 -0800
+In-Reply-To: <owlyle840zfo.fsf@fine.c.googlers.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:4vYCixqAidGiWNvSKisPFwJIdzTfMbgNQMKdVOALDnJGXj/D1n7
- 3g4ESyWRd46H3/lijI8znYCM254mWKDlq2/b9t9Lf8vS05kPEYfxmQA2bqingSp6iyVx22Y
- uD2+Zfwx9z0CNLUYkwfiJhsf8BLWdACN5DGQ/coUrKOyijLtePohd9xXSmKPgZrf3TLYvrG
- NbQeNIDWdtPcTachYqTCQ==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:E3B+FPLJK20=;lniTouuvlcWCd9cnHSiHcZxola0
- aP34uDov0Gi/ebCu6hYlrd0iYlE/QlH/6i7Hf6s93vkm0x759qPEZA2ZWYdDePy4caFxeo88d
- qVmy83ZYKKPcyTy4dzDF/QwgsUgYqCvCioBrFL64OPMI6PjjGbw/8CM9LFsg9kShgt1yfvUDK
- 0uFsuMqtD67J/Cs/0zmMc13rausKOyOM1j7t+AvS4DqUozUdMRkCqJNpJq6t0g+zUkU3hUdcc
- o+Vq7h0CDdB5k4JsEVKpXoR6Bsl99iNowPnuhNq9H69p9eUTwKVHEhWvtxAzJtLoT7nJeTtZr
- HqgQVrTAMydGpDbsgjnzVr9pAaFKAqGVkjSBt6Lw10NK3+vm6+DRqvKusPK9TRXj5ZtHjbesg
- iksZlPk4V3yMUI+1tkMxjesMoUg9XO6IHj3nJuk9z2KoUxn6bJxwgI3fYOshg7sXcVqwMHOc+
- S/cJbzmkTgLz4GbLbVPC8sPkTLjuAPNOdWKL0vcFfoiZyZn6oqAzqPFC7euDzGg/p5eIt2u0o
- 4qFH5+kHBKEsIwgxKsT3FqXsBGIRVJoQmHnne129BClI/r2Xgv2G8pefR6DkGtJRZxu4yqJ5E
- JV2e+3jKQ/IFzh9YMM+QxVU3VFWNmJXVVnXQEWJOaLpubPaSO1xm7rPUcZGVDQlxcXjO6gGl4
- MQC7dDp2IelqE27SHV2jM6kc1oGy/g5sqWd7iKyURFwh1EPOMnP6rEgy5uhIk14KkwYBgELnJ
- BrLjyLiHyzou3CyHOpPUJFy4B//ivl3glkD0dFekVbmRlzHWv5z36VXbLWN7v24R/MkfNwVRp
- bKUmG6pqfHnvjlKLvCoKaOFPv+IvEO//HZKdQ9D4hTbmg=
-Content-Transfer-Encoding: quoted-printable
+Mime-Version: 1.0
+References: <pull.1632.v2.git.1706308737.gitgitgadget@gmail.com>
+ <pull.1632.v3.git.1706664144.gitgitgadget@gmail.com> <bf2b8e1a3c4bc77022fab1ebaa0fc89a7813b4c4.1706664145.git.gitgitgadget@gmail.com>
+ <xmqqa5ok12lt.fsf@gitster.g> <owlyle840zfo.fsf@fine.c.googlers.com>
+Message-ID: <owlyfrya1ivk.fsf@fine.c.googlers.com>
+Subject: Re: [PATCH v3 04/10] sequencer: use the trailer iterator
+From: Linus Arver <linusa@google.com>
+To: Junio C Hamano <gitster@pobox.com>, 
+	Linus Arver via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, Christian Couder <chriscool@tuxfamily.org>, 
+	Emily Shaffer <nasamuffin@google.com>, Josh Steadmon <steadmon@google.com>, 
+	"Randall S. Becker" <rsbecker@nexbridge.com>
+Content-Type: text/plain; charset="UTF-8"
 
-Hi Junio,
+Linus Arver <linusa@google.com> writes:
 
-On Thu, 1 Feb 2024, Junio C Hamano wrote:
-
-> https://github.com/git/git/actions/runs/7748054008 is a run of 'next'
-> that is broken.
+> Junio C Hamano <gitster@pobox.com> writes:
 >
-> https://github.com/git/git/actions/runs/7748547579 is a run of 'seen~1'
-> with this topic reverted (the ps/reftable-backend topic is excluded),
-> which seems to pass.
+>> "Linus Arver via GitGitGadget" <gitgitgadget@gmail.com> writes:
+>>
+>>> From: Linus Arver <linusa@google.com>
+>>>
+>>> Also, teach the iterator about non-trailer lines, by adding a new field
+>>> called "raw" to hold both trailer and non-trailer lines. This is
+>>> necessary because a "trailer block" is a list of trailer lines of at
+>>> least 25% trailers (see 146245063e (trailer: allow non-trailers in
+>>> trailer block, 2016-10-21)), such that it may hold non-trailer lines.
+>>
+>> That sounds like a task larger than something we would want in a
+>> patch that focuses on another task (e.g. update sequencer not to
+>> call trailer_info_get()) while at it.  It seems from a casual glance
+>> that the change to shortlog.c is to accomodate this change in the
+>> semantics of what the iterator could return?  It smells that this
+>> patch does two more or less unrelated things at the same time?
 >
-> Does it ring a bell, anybody?
+> I think you're correct. Hopefully breaking this up will make things
+> easier to review.
 
-Yes, it does ring a clear bell over here.
-https://github.com/git/git/actions/runs/7748054008/job/21130098985#step:5:=
-81
-points to the culprit:
+And now that I've broken it up locally, I can say that the change I made
+to shortlog was unnecessary (shortlog already has a check to see if the
+trailer key is empty) which makes the "is_trailer" check I added to it
+here redundant (because non-trailer lines, which the new iterator can
+iterate over, have empty keys).
 
-    fatal: not a git repository (or any of the parent directories): .git
-    make: *** [../config.mak.uname:753: vcxproj] Error 128
-
-The line 753 of that file (as can be seen at
-https://github.com/git/git/blob/38aa6559b0c513d755d6d5ccf32414ed63754726/c=
-onfig.mak.uname#L753)
-is the first statement of the `vcxproj` target, executing `update-refresh`=
-:
-
-    vcxproj:
-        # Require clean work tree
-        git update-index -q --refresh && \
-        git diff-files --quiet && \
-        git diff-index --cached --quiet HEAD --
-        [...]
-
-This means that `vcxproj` is executed. And the explanation is in
-https://github.com/git/git/actions/runs/7748054008/job/21130098985#step:5:=
-78,
-which runs `make --quiet -C t 'T=3D<long-list-of-files>'`, crucially
-_without_ specifying any Makefile rule, and the `vcxproj` rule happens to
-be the first one that is defined on Windows, so it's used by default.
-
-One workaround would be to remove the `vcxproj` rule (which by now has
-been safely superseded by the CMake support we have in
-`contrib/buildsystems/`).
-
-But the safer way would be to insert these two lines at the beginning of
-`t/Makefile` (cargo-culted from the top-level `Makefile`):
-
-    # The default target of this Makefile is...
-    all::
-
-Ciao,
-Johannes
+Will remove the shortlog change in v4. Thanks.
