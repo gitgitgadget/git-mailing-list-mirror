@@ -1,262 +1,132 @@
-Received: from mail-wm1-f54.google.com (mail-wm1-f54.google.com [209.85.128.54])
+Received: from mail-pf1-f172.google.com (mail-pf1-f172.google.com [209.85.210.172])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCDDA5D726
-	for <git@vger.kernel.org>; Sat,  3 Feb 2024 11:39:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8C5541744
+	for <git@vger.kernel.org>; Sat,  3 Feb 2024 11:41:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706960381; cv=none; b=nplvKyc0hrXgGqLvTo1B9+VqHz6W4O3u/2VAxlTST1+Qdkv2kQk/Nv6EjjVScbAkHF60TLPxWCFeT5fkN4LfON4mmkMbM2ZbjzGbre77hwpAAZPHdXpTHuDOFr7npmYDNouB5pCHKPI8rJc06EMfBG9VeKVsEYQM7xgjQU/TUSg=
+	t=1706960495; cv=none; b=Qv/cl9H3sZiyaXZwCICWSrsHG4nfn4F20vyxpBMmHL/t1GUgJzH9ttZhX3j9qIYDeoD7cxswNMavJKE6xfXzUOpJBktaSe7nqS6j/nqelFa5rE+K+x+CIFlITNDXIlV6y9JCPs6mISVN94d8FAv8BG2abUwAkTSwRAGWsqXlxo8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706960381; c=relaxed/simple;
-	bh=98jTjzv7Brvz6RyXer+SUDpU1t5SdD3yhhSmIyyjRSU=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Ts+Q1NUw2BsXBfvH4G4URGAM6CQ0LudsE3Y5DjWEvfTBpYe6EX06bDhT8zBnoACSdTHNJBbVieCJ9DIBdJnrXa2HgX/J1MahhiZpbBr0bWciD4z7zp/RewLzL0uglgdCgFNgr/o6uBRD8N1Zj3BCWoCv016c2n2luIaQS1GA2Wg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=IaVEYQop; arc=none smtp.client-ip=209.85.128.54
+	s=arc-20240116; t=1706960495; c=relaxed/simple;
+	bh=+OExbHyltULrtLgWBocNSH6YorR6+nwZuTdvBAHCwuo=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=HdvEtxXLBwii+zFdwfoshMn63KtdJ5LuPitlT0WdPESGGG6hzoDCpC+LQ/4JmIjDBIduwD1hcHwVmV4/ngZgPgq3b592F56IKDlNYxR9BLQpbw/7wftwZR+Ao4FPMGyEuw6RMZJ/2tJaFbakvlhwm2eKhASHdgTLHiRoWZuclwU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VmmoBUx4; arc=none smtp.client-ip=209.85.210.172
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IaVEYQop"
-Received: by mail-wm1-f54.google.com with SMTP id 5b1f17b1804b1-40e800461baso25563595e9.3
-        for <git@vger.kernel.org>; Sat, 03 Feb 2024 03:39:38 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VmmoBUx4"
+Received: by mail-pf1-f172.google.com with SMTP id d2e1a72fcca58-6ddc268ce2bso1805503b3a.0
+        for <git@vger.kernel.org>; Sat, 03 Feb 2024 03:41:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1706960377; x=1707565177; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Qq0gOlbooxp07qM5WiaSONTKJeLkdtx1ai900Qv+Xz4=;
-        b=IaVEYQop7WQzHtrZjmCh7z0mqdaEpHbHMigJyYzmbB4Sk3mJIBKDv4EbaSxeDXwNrp
-         BDGtNBuqCkO+eSmqYKlgx81oLkUWfdB809tSNfjY7NEmN+V8fQEUsAWryKhXn7fOKRcP
-         oJwkdQ6myFRh5tWb0m9HdW8O9260uJDZUL6kAcAdG0YyS4yYgtyA5wJVWrXjrINUwq6C
-         78H0v6NaIgy3VwHPAYgoQ8iCY/9AczBuf5/eMEpT1g1A2BVJoY9L+nMbrEP8NUdatNiD
-         MgC7T0dhW1g5mZ4GHc5PSAK9IE80KND5Lc0aMexenHv6t8QiwmmlsAVhBgN1jRDVuPF5
-         f+3A==
+        d=gmail.com; s=20230601; t=1706960493; x=1707565293; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=nuSd6S3waz4WVOKKwl9UTAHnXhMpvafl5IJ6BiwaKJI=;
+        b=VmmoBUx4+pcGjrpXmmu/DdoTbBHnJZ7Mbb6+C0H44qay9IarCLdahTMzdW8Cvss1Se
+         hDkumbHPIGEQClwp9VljFtYqNS6Io2Rycv+KQ52+o52B/AuS2IaVnC51hsIA9UvQ/khS
+         XsFri6C8vnEFDEdwGL83q5Um5Gt9bHLY9xGgOb8vn9UnFlMYX+JG4Wa6l8Jq8Z679tPG
+         jX1qgjLO0IyKLL6U9d8CS9DhgCwjHvZxJAtqp9KxyZHA4605TpDFzF/dEOHvinkSETbT
+         O4PEBOTlLNU50aWUvJB4+jgsyeN6KmSQJN5DTu9PZUVJDl3Ul2j5saxlwLy/wCNSa9Uq
+         mMgA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1706960377; x=1707565177;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=Qq0gOlbooxp07qM5WiaSONTKJeLkdtx1ai900Qv+Xz4=;
-        b=WG0pjncnM6m170mnhnD1iFnAj08Ywk8oh3fRE8ruBOSwksyxROK8xyj4uF1BuxP3LH
-         mZQ1EsdcbSXzJSexGKd72GVZIU8sAjk0jlW10xvleyF03OGXfy1WUfED5rOyuINVU2oC
-         /2e02PlE2VKPgzY8KD/xfYvG/LVhFmODWp3j27HbQiIictWVgN9w0oxSCftsm2bg6B8h
-         vqJxGDdx1hNXh61lPkXDNDR4RKSbwFBH9pjoSkieAhYQYMuY04D7P7F8BuD/yEj9lsYX
-         oTjsqIgiZVqCpQg9zeHOVfhfEJCIpce1mWnYUF/xyqs+dyIWKq3ZsDYVo3k9UonGtuUE
-         TbIw==
-X-Gm-Message-State: AOJu0YzaOjS/mo+AXpm6CR2qafNUtAh68VvazHl08onMsRmVLDlR49Ed
-	tQF7F61Hgks/HEOCoGZDa+GhaCLa/P0uYAPv7dy/+Sd5e2HpF3SJeua1ocKTQDTp8lnBPJ6E04h
-	L4xvmK7GIzxPsERpmtnHzpbsdhFaRyVBqVyoAAcNa
-X-Google-Smtp-Source: AGHT+IHCB9/u50BxXSHlLMSdGnhYVGooqJNFLXxKcUmVXwXuSFq+jzMqPBpYiHtQ5kkKVJllAk6xDaPAfvDmYQiSR+8=
-X-Received: by 2002:a5d:51c2:0:b0:33b:21f9:cd9a with SMTP id
- n2-20020a5d51c2000000b0033b21f9cd9amr3206486wrv.19.1706960376694; Sat, 03 Feb
- 2024 03:39:36 -0800 (PST)
+        d=1e100.net; s=20230601; t=1706960493; x=1707565293;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=nuSd6S3waz4WVOKKwl9UTAHnXhMpvafl5IJ6BiwaKJI=;
+        b=kEXS6Y4Sjhef2L11Tc6J71hiBTqcFuZvS2T/DA63waJ/IR0v5xt8/6C6TYOCWSE158
+         rtPB0dwqaorRxAJ27yHHT6f+eCvYkiBPyO/gfvCEoDkf8zGmBikRXJJ2ygNSafobPF7Q
+         ziF60yHDlGBwnY2HHZOGjI5Ap4D8LMh0DixbWVw+iBYetOlDQ718kubcQSsUoqDVyIdp
+         KyLiuR2HsTBGt0Ps+tTuiahm7iFzLSFiTGqg2NnAi4qYWBCB811JFPpGKzOTzd3Lh012
+         kZgqwBFv4JLRG2J8K1FrkteTVIZLgDmR5ppxZG1iPznJCQHRuPoRx0D3w8DxP23hu5vx
+         5l4w==
+X-Gm-Message-State: AOJu0YynX4Z53otEzPwIIVEcNY2X2jCZojcV+CX3Pt78XsyJ3mavtQn4
+	+1SWZOhskh7qmJMgaakDa11DSCeFrWgKOEeeJuuZSAOiEVHqB2s1
+X-Google-Smtp-Source: AGHT+IEKYgfHiw3Qg2ucqYp8DmWIMAyuKoHvlJA5bvq2Npwx0q81U4XUCKjsxWI4SpGlK8JY3KNruw==
+X-Received: by 2002:a05:6a00:11d6:b0:6d9:aa18:291c with SMTP id a22-20020a056a0011d600b006d9aa18291cmr8812017pfu.8.1706960492922;
+        Sat, 03 Feb 2024 03:41:32 -0800 (PST)
+X-Forwarded-Encrypted: i=0; AJvYcCXeVn34+OifBcEb7DiFeWDLCWHeKtKq/4iU2n1t3v3DTjGubBx8zxsUXXibbbgXU0DbMsxcW3OOj+XJ2qRg+Pcoyr9ro8wNzVoxXozq6lPi1uJfsSYZwKkIHPJ8tYGc4moydt6jmDaJDbRFn45fZpN89b3GX0I2GU9cnQ0HXBoKNI3FKu7zwZL5f/MUgW7BbD7cL6FnHg8=
+Received: from [192.168.208.87] ([106.51.151.68])
+        by smtp.gmail.com with ESMTPSA id c26-20020aa7881a000000b006d9be753ac7sm3216915pfo.108.2024.02.03.03.41.30
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 03 Feb 2024 03:41:32 -0800 (PST)
+Message-ID: <d4797f27-825b-4e2b-85a6-cc30f33934e3@gmail.com>
+Date: Sat, 3 Feb 2024 17:11:28 +0530
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240202203935.1240458-1-gitster@pobox.com> <20240202203935.1240458-2-gitster@pobox.com>
- <CADCFv=5=uwp_NVpndTYFiRRK4hEwmMdA2At80cXuS91V5mKN2A@mail.gmail.com>
-In-Reply-To: <CADCFv=5=uwp_NVpndTYFiRRK4hEwmMdA2At80cXuS91V5mKN2A@mail.gmail.com>
-From: =?UTF-8?B?w5NzY2FyIERvbcOtbmd1ZXogQ2VsYWRh?= <dominguez.celada@gmail.com>
-Date: Sat, 3 Feb 2024 12:39:00 +0100
-Message-ID: <CADCFv=4Gjh5B6RFF3P--FO9T7R+uGg2dyN8hT4VR0yJtJt-UsA@mail.gmail.com>
-Subject: Re: [PATCH 1/2] GitHub Actions: update to checkout@v4
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: Git in GSoC 2024
+To: Patrick Steinhardt <ps@pks.im>,
+ Christian Couder <christian.couder@gmail.com>
+Cc: git <git@vger.kernel.org>, Taylor Blau <me@ttaylorr.com>,
+ Junio C Hamano <gitster@pobox.com>, Victoria Dye <vdye@github.com>,
+ Karthik Nayak <karthik.188@gmail.com>
+References: <1de82b27-116a-450e-98c0-52eb65a8f608@gmail.com>
+ <CAP8UFD1VAvnkM6afZvtpdXhA4csDBDwMnF9yUzSx_ut-Ypf+eA@mail.gmail.com>
+ <Zbi8pfvGpYrlZXAu@tanuki> <ZbpGzAd6FGEeTdrh@tanuki>
+ <c61322de-8cd9-42b8-a04b-a8ae47b25c5e@gmail.com> <Zbtmoo8qTmj-yt99@tanuki>
+Content-Language: en-US
+From: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+In-Reply-To: <Zbtmoo8qTmj-yt99@tanuki>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-I am adding non-html e-mail reply to keep track in git@vger.kernel.org:
+Hi Patrick, Karthik and Christian,
 
-The switch to checkout@v4 for GitHub Actions looks good to me. I
-wonder if we should be updating other actions to v4 so they start
-using Node 20:
+For the note, other project ideas and volunteer are always welcome. So, 
+feel free to chime in if you have any ideas or wish to volunteer as a 
+mentor to guide potential future contributors of the community. :-)
 
-In coverity.yml
-(https://github.com/git/git/blob/8838dd21e8a4ec1324377ffcfa90413844ca3674/.=
-github/workflows/coverity.yml#L101C15-L101C39)
-
-actions/cache/restore@v3 -> v4 (reference:
-https://github.com/actions/cache/releases/tag/v4.0.0)
-actions/cache/save@v3 -> v4 (reference:
-https://github.com/actions/cache/releases/tag/v4.0.0)
-
-In main.yml
-
-actions/upload-artifact@v3 -> v4 (reference:
-https://github.com/actions/upload-artifact/commit/aa5cae10db2b39d79f5244f6b=
-c5084278993a3ae#diff-1243c5424efaaa19bd8e813c5e6f6da46316e63761421b3e5f5c8c=
-ed9a36e6b6R33)
-actions/download-artifact@v3 -> v4 (reference:
-https://github.com/actions/download-artifact/commit/88dadfbcfcdd10293192ac8=
-ee1e3ffe61f7055ee#diff-1243c5424efaaa19bd8e813c5e6f6da46316e63761421b3e5f5c=
-8ced9a36e6b6R28)
-
-
-On Sat, 3 Feb 2024 at 12:31, =C3=93scar Dom=C3=ADnguez Celada
-<dominguez.celada@gmail.com> wrote:
->
-> The switch to checkout@v4 for GitHub Actions looks good to me. I wonder i=
-f we should be updating other actions to v4 so they start using Node 20:
->
-> In coverity.yml
->
-> actions/cache/restore@v3 -> v4 (reference: https://github.com/actions/cac=
-he/releases/tag/v4.0.0)
-> actions/cache/save@v3 -> v4 (reference: https://github.com/actions/cache/=
-releases/tag/v4.0.0)
->
-> In main.yml
->
-> actions/upload-artifact@v3 -> v4 (reference: https://github.com/actions/u=
-pload-artifact/commit/aa5cae10db2b39d79f5244f6bc5084278993a3ae#diff-1243c54=
-24efaaa19bd8e813c5e6f6da46316e63761421b3e5f5c8ced9a36e6b6R33)
-> actions/download-artifact@v3 -> v4 (reference: https://github.com/actions=
-/download-artifact/commit/88dadfbcfcdd10293192ac8ee1e3ffe61f7055ee#diff-124=
-3c5424efaaa19bd8e813c5e6f6da46316e63761421b3e5f5c8ced9a36e6b6R28)
->
->
-> On Fri, 2 Feb 2024 at 21:39, Junio C Hamano <gitster@pobox.com> wrote:
+On 01/02/24 15:08, Patrick Steinhardt wrote:
+> On Wed, Jan 31, 2024 at 11:27:13PM +0530, Kaartic Sivaraam wrote:
 >>
->> We seem to be getting "Node.js 16 actions are deprecated." warnings
->> for jobs that use checkout@v3.  Except for the i686 containers job
->> that is kept at checkout@v1 [*], update to checkout@v4, which is
->> said to use Node.js 20.
+>> I created a fairly rough SoC ideas page for now including a barebones
+>> information about the unit test migration idea:
 >>
->> [*] 6cf4d908 (ci(main): upgrade actions/checkout to v3, 2022-12-05)
->>     refers to https://github.com/actions/runner/issues/2115 and
->>     explains why container jobs are kept at checkout@v1.  We may
->>     want to check the current status of the issue and move it to the
->>     same version as other jobs, but that is outside the scope of
->>     this step.
+>> https://git.github.io/SoC-2024-Ideas/
 >>
->> Signed-off-by: Junio C Hamano <gitster@pobox.com>
->> ---
->>  .github/workflows/check-whitespace.yml |  2 +-
->>  .github/workflows/coverity.yml         |  2 +-
->>  .github/workflows/main.yml             | 18 +++++++++---------
->>  3 files changed, 11 insertions(+), 11 deletions(-)
+>> Note well that the existing idea's description is far from complete and I
+>> mostly just cooked it up to serve as a template for how the idea entry could
+>> look like. Kindly contribute towards elaborating the same :-)
 >>
->> diff --git a/.github/workflows/check-whitespace.yml b/.github/workflows/=
-check-whitespace.yml
->> index a58e2dc8ad..a241a63428 100644
->> --- a/.github/workflows/check-whitespace.yml
->> +++ b/.github/workflows/check-whitespace.yml
->> @@ -19,7 +19,7 @@ jobs:
->>    check-whitespace:
->>      runs-on: ubuntu-latest
->>      steps:
->> -    - uses: actions/checkout@v3
->> +    - uses: actions/checkout@v4
->>        with:
->>          fetch-depth: 0
->>
->> diff --git a/.github/workflows/coverity.yml b/.github/workflows/coverity=
-.yml
->> index e5532d381b..a81a7566d1 100644
->> --- a/.github/workflows/coverity.yml
->> +++ b/.github/workflows/coverity.yml
->> @@ -38,7 +38,7 @@ jobs:
->>        COVERITY_LANGUAGE: cxx
->>        COVERITY_PLATFORM: overridden-below
->>      steps:
->> -      - uses: actions/checkout@v3
->> +      - uses: actions/checkout@v4
->>        - name: install minimal Git for Windows SDK
->>          if: contains(matrix.os, 'windows')
->>          uses: git-for-windows/setup-git-for-windows-sdk@v1
->> diff --git a/.github/workflows/main.yml b/.github/workflows/main.yml
->> index 4d97da57ec..90973f9693 100644
->> --- a/.github/workflows/main.yml
->> +++ b/.github/workflows/main.yml
->> @@ -112,7 +112,7 @@ jobs:
->>        group: windows-build-${{ github.ref }}
->>        cancel-in-progress: ${{ needs.ci-config.outputs.skip_concurrent =
-=3D=3D 'yes' }}
->>      steps:
->> -    - uses: actions/checkout@v3
->> +    - uses: actions/checkout@v4
->>      - uses: git-for-windows/setup-git-for-windows-sdk@v1
->>      - name: build
->>        shell: bash
->> @@ -173,10 +173,10 @@ jobs:
->>        group: vs-build-${{ github.ref }}
->>        cancel-in-progress: ${{ needs.ci-config.outputs.skip_concurrent =
-=3D=3D 'yes' }}
->>      steps:
->> -    - uses: actions/checkout@v3
->> +    - uses: actions/checkout@v4
->>      - uses: git-for-windows/setup-git-for-windows-sdk@v1
->>      - name: initialize vcpkg
->> -      uses: actions/checkout@v3
->> +      uses: actions/checkout@v4
->>        with:
->>          repository: 'microsoft/vcpkg'
->>          path: 'compat/vcbuild/vcpkg'
->> @@ -297,7 +297,7 @@ jobs:
->>        runs_on_pool: ${{matrix.vector.pool}}
->>      runs-on: ${{matrix.vector.pool}}
->>      steps:
->> -    - uses: actions/checkout@v3
->> +    - uses: actions/checkout@v4
->>      - run: ci/install-dependencies.sh
->>      - run: ci/run-build-and-tests.sh
->>      - name: print test failures
->> @@ -317,7 +317,7 @@ jobs:
->>        CC: clang
->>      runs-on: ubuntu-latest
->>      steps:
->> -    - uses: actions/checkout@v3
->> +    - uses: actions/checkout@v4
->>      - run: ci/install-dependencies.sh
->>      - run: ci/run-build-and-minimal-fuzzers.sh
->>    dockerized:
->> @@ -342,7 +342,7 @@ jobs:
->>      runs-on: ubuntu-latest
->>      container: ${{matrix.vector.image}}
->>      steps:
->> -    - uses: actions/checkout@v3
->> +    - uses: actions/checkout@v4
->>        if: matrix.vector.jobname !=3D 'linux32'
->>      - uses: actions/checkout@v1
->>        if: matrix.vector.jobname =3D=3D 'linux32'
->> @@ -373,7 +373,7 @@ jobs:
->>        group: static-analysis-${{ github.ref }}
->>        cancel-in-progress: ${{ needs.ci-config.outputs.skip_concurrent =
-=3D=3D 'yes' }}
->>      steps:
->> -    - uses: actions/checkout@v3
->> +    - uses: actions/checkout@v4
->>      - run: ci/install-dependencies.sh
->>      - run: ci/run-static-analysis.sh
->>      - run: ci/check-directional-formatting.bash
->> @@ -396,7 +396,7 @@ jobs:
->>          artifact: sparse-20.04
->>      - name: Install the current `sparse` package
->>        run: sudo dpkg -i sparse-20.04/sparse_*.deb
->> -    - uses: actions/checkout@v3
->> +    - uses: actions/checkout@v4
->>      - name: Install other dependencies
->>        run: ci/install-dependencies.sh
->>      - run: make sparse
->> @@ -411,6 +411,6 @@ jobs:
->>        jobname: Documentation
->>      runs-on: ubuntu-latest
->>      steps:
->> -    - uses: actions/checkout@v3
->> +    - uses: actions/checkout@v4
->>      - run: ci/install-dependencies.sh
->>      - run: ci/test-documentation.sh
->> --
->> 2.43.0-522-g2a540e432f
->>
+>> Also, feel free to suggest ideas you have around refs and reftable backed,
+>> Patrick. Those would be helpful.
+> 
+> I'll have a the beginning of next week and will think about topics
+> meanwhile.
 >
->
-> --
-> =C3=93scar Dom=C3=ADnguez Celada
 
+Thanks, Patrick! It would be great if you could share the same as soon 
+as possible. The deadline for applying to GSoC is Feb 6 (18:00 UTC) and 
+we need the ideas page to be decent enough before we go ahead with 
+applying for this year.
 
+If the elaborate project description could take time, feel free to share 
+a paragraph or two that are supplemented with a few references. That 
+should be sufficient for applying to GSoC.
 
---=20
-=C3=93scar Dom=C3=ADnguez Celada
+Christian,
+
+It would be great if you could look into and improve the detail for the 
+unit test migration idea. I just added a very terse description based on 
+what I could get my hands on. If you think the description we used for 
+the Outreachy round would do, kindly update the page with the same or 
+kindly share it here so that I could update the same in the ideas page :-)
+
+> 
+> Yeah, as long as there is a co-mentor that can take over during my
+> absence I'm happy to do it. Karthik said that he'd be willing to cover
+> me, which I think would be a good fit given that he's already got quite
+> a bit of exposure to the reftable backend internally at GitLab. Thanks!
+> 
+
+Sounds good. Thank you for volunteering to co-mentor, Karthik!
+
+-- 
+Sivaraam
