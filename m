@@ -1,108 +1,99 @@
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+Received: from wfhigh7-smtp.messagingengine.com (wfhigh7-smtp.messagingengine.com [64.147.123.158])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 489C25F54D
-	for <git@vger.kernel.org>; Sat,  3 Feb 2024 17:33:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 253C55FEEA
+	for <git@vger.kernel.org>; Sat,  3 Feb 2024 18:45:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706981604; cv=none; b=lCopbk2TVzkePOBeG9jiuZjUZcVcxBHa702YxnkItoZ4NfKXRKvLTt0w71G1aBuwCsIZ2ezVRnFAc6sLt5Kx+ocqp0Y0CTa5r+GWYf9abbaVNhGmhlfIzbf6h7J5jOt7p6rKPvBBoQlHyezMti/V4mbKENPoONqUJqtQFIpkKjU=
+	t=1706985947; cv=none; b=bMnncX2abNh4M/S1jycptBLR1XDK+LYaNqgm5Cp5LdrqSBhtcVSL5l1vgEepLEjHW4Y7KR4syMEgl1szS9IpoZxbH5Zyg5RpfoxAsdFOBNiOB4R0L9RN0ppHFLweCms/yQ+x2XrdX/J/QpXxtaU2OTbooNppPi2HgO4u3QJ1Yjs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706981604; c=relaxed/simple;
-	bh=IbK3UtvSbR+9BYjPiA3GeoLvQFx9WMRq/EEE9Fh3ovU=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=CWKX804H8SudUmNcJ+46jlI3A2SJP2RR/99fDHEGcQwA4v9s+ghloZlIprcxtE4YdH1i4qITuWX1Kj2i7KRt+WiaC9OEVdOzo9AgKykDaO0T7faxvhgqucK0vcU80Dkzh77YkR5uvq3W0pFNf02i5WyApIzTFSqEfZfVja/AdNU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=nQY2iekL; arc=none smtp.client-ip=64.147.108.70
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1706985947; c=relaxed/simple;
+	bh=Q481W5qqwiNCU64YMJsZ8AeR07K5JI3ocxymJ3boJX4=;
+	h=MIME-Version:Message-Id:In-Reply-To:References:Date:From:To:Cc:
+	 Subject:Content-Type; b=R621baTB9HSY2GOke1d1DNgyRRFZwqClkdhF30TRr9BTKwa0yIJ7uLCz7dQSF5gMavfjcsLKmgfNlhSbFT/DLFEDJoKmd8dWuebrr1OnC495UrxV64ejfSgf+AmSXdRMsNceTfVm2sb1t3rpFC8y27+IA7XxYvauwVHdfHWKNns=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=khaugsbakk.name; spf=pass smtp.mailfrom=khaugsbakk.name; dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b=PsyXdxcx; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=C+y7zjVa; arc=none smtp.client-ip=64.147.123.158
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=khaugsbakk.name
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=khaugsbakk.name
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="nQY2iekL"
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 9C77D1D122A;
-	Sat,  3 Feb 2024 12:33:21 -0500 (EST)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=IbK3UtvSbR+9
-	BYjPiA3GeoLvQFx9WMRq/EEE9Fh3ovU=; b=nQY2iekLR/HBo9+uB55Qbi4ILD8F
-	76NkzfoyNF1MMN5QOQhwfl07YDD8vgRL96nHtK6yxReVtMCE1Wz4SgPbWd7Jgj4t
-	Cg+VeDPMceQgG0XlibA8L4mem3KO1LPpdkPxStZQL+f8DmAnhMp/U8k7W0LsEQ46
-	4UKSiLs6QV7N7j8=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 93F541D1229;
-	Sat,  3 Feb 2024 12:33:21 -0500 (EST)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.165.85])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 063631D1228;
-	Sat,  3 Feb 2024 12:33:20 -0500 (EST)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Kristoffer Haugsbakk" <code@khaugsbakk.name>
-Cc: git@vger.kernel.org
-Subject: Re: git-users: email list has become spam-drowned
-In-Reply-To: <339f17e1-c6a0-4859-aa5b-481dd6e0e91b@app.fastmail.com>
-	(Kristoffer Haugsbakk's message of "Sat, 03 Feb 2024 16:02:49 +0100")
-References: <339f17e1-c6a0-4859-aa5b-481dd6e0e91b@app.fastmail.com>
-Date: Sat, 03 Feb 2024 09:33:19 -0800
-Message-ID: <xmqqbk8xsba8.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b="PsyXdxcx";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="C+y7zjVa"
+Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
+	by mailfhigh.west.internal (Postfix) with ESMTP id 12D8D180006B;
+	Sat,  3 Feb 2024 13:45:34 -0500 (EST)
+Received: from imap49 ([10.202.2.99])
+  by compute1.internal (MEProxy); Sat, 03 Feb 2024 13:45:35 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=khaugsbakk.name;
+	 h=cc:cc:content-transfer-encoding:content-type:content-type
+	:date:date:from:from:in-reply-to:in-reply-to:message-id
+	:mime-version:references:reply-to:subject:subject:to:to; s=fm2;
+	 t=1706985934; x=1707072334; bh=we+jrRalOMNEq5e8MeKVMXgE3MfqsM8K
+	k4qm3Jqu3cs=; b=PsyXdxcx7k851vBfb0orOn6mKcC3Oc0OEFLvENEzYGAh11Lg
+	8rLIz0bBuUUwaf/cZ/jh6MqQqgp0CU54m/uMMdlclZBhiDDjFAg+uMSjcVm8Cc34
+	s9rFnigzQrmquhKir65NDjojAIwa/YKgaKR0m1CR4fvBkhewIXiQrL/03Y1V5PVh
+	vDZKITg8raviaDm80SoL2XWsV91r/0ax6jc4N7sdItyDKNDFRPog50PwANmY/Jww
+	f18I8F+RB1OMxGEHual09RFFnaNtoelfUgzO4z5bzLVQ319zSpEJh3TKMlODyFBg
+	OZuxj0qHGw4z+AOADCZgn5NEv0mxHNaPjAsMsQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1706985934; x=
+	1707072334; bh=we+jrRalOMNEq5e8MeKVMXgE3MfqsM8Kk4qm3Jqu3cs=; b=C
+	+y7zjVaABz+r8oCbDcG+Gcz/CPAatNcjOkXkCAd3ugxAGpV02fpZOfMsKaePGaxp
+	g/kVGwAA6vOdKSi5ezF5ZrDMAaUxZKIwqRR3Uo/l0KjAWWWpRfDYafPh2/qN1znU
+	9FasoZ+1yIXLVkcWj5nbluc1ghXCWNQF55PEClPFUVAtz6EdQefLhnQDphBC4ELh
+	Y/Wg4LzoiOAW1TMo46bfe13EUpQVyE1CLTU1GQYXly7Zo+ItqoQGcqK6hih7FJbx
+	iIReLE0yHrYuxZB3sJ/2Ev+37zoTqUCOtkoIwX9MqNl08N2iPItiRb8nSLv79thf
+	UMkINEyVPgw9IkWyrP/Mg==
+X-ME-Sender: <xms:zom-ZY8M3_0cugpYjaNsZ4a9DnnZ9KsoH7LjM7nphNUV9dSE0iiRgqk>
+    <xme:zom-ZQvvClvyGqMmol84rVpndYIjrvL5oCgCdy1Eaqci9IaTH2A8N5LSGzUymg_ia
+    hlIruMQWPvoITLqZg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrfeduiedguddufecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
+    necuuegrihhlohhuthemuceftddtnecunecujfgurhepofgfggfkjghffffhvfevufgtgf
+    esthhqredtreerjeenucfhrhhomhepfdfmrhhishhtohhffhgvrhcujfgruhhgshgsrghk
+    khdfuceotghouggvsehkhhgruhhgshgsrghkkhdrnhgrmhgvqeenucggtffrrghtthgvrh
+    hnpedvveehiedufeehffdvteeuveekhefhleeigfektdeifeduteeuheeufeetffefuden
+    ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpegtohguvg
+    eskhhhrghughhssggrkhhkrdhnrghmvg
+X-ME-Proxy: <xmx:zom-ZeAB8HX0LF0X-o5SOCu6bJseO3fxOl3n2K0A-4u5NlDkN_1_tA>
+    <xmx:zom-ZYd4QxgCV6oib3Sxk6rUf0CcPt2x8HHB6B02CLfs0XDX0itq1w>
+    <xmx:zom-ZdNfu11FWVr3LtR6XpAaDC5ykzmqBhQWSEyTNyYZ2fbiMs80xg>
+    <xmx:zom-Zb1taGhPdrPIZ17wNrGREwFhFIoLYjw-ORChDnj_DvSn431d-QyAmWU>
+Feedback-ID: i2671468f:Fastmail
+Received: by mailuser.nyi.internal (Postfix, from userid 501)
+	id 530CF15A0092; Sat,  3 Feb 2024 13:45:34 -0500 (EST)
+X-Mailer: MessagingEngine.com Webmail Interface
+User-Agent: Cyrus-JMAP/3.11.0-alpha0-144-ge5821d614e-fm-20240125.002-ge5821d61
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID:
- 53304BE6-C2BA-11EE-9058-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
+Message-Id: <06931285-71cc-4c71-9f74-1a675b9186ae@app.fastmail.com>
+In-Reply-To: <xmqqbk8xsba8.fsf@gitster.g>
+References: <339f17e1-c6a0-4859-aa5b-481dd6e0e91b@app.fastmail.com>
+ <xmqqbk8xsba8.fsf@gitster.g>
+Date: Sat, 03 Feb 2024 19:45:14 +0100
+From: "Kristoffer Haugsbakk" <code@khaugsbakk.name>
+To: "Junio C Hamano" <gitster@pobox.com>
+Cc: git@vger.kernel.org
+Subject: Re: git-users: email list has become spam-drowned
+Content-Type: text/plain;charset=utf-8
 Content-Transfer-Encoding: quoted-printable
 
-"Kristoffer Haugsbakk" <code@khaugsbakk.name> writes:
+On Sat, Feb 3, 2024, at 18:33, Junio C Hamano wrote:
+> to find out who the owners are and how many members there are.  I
+> expect the UI redacts the e-mail addresses of them, but there should
+> be a "Contact owners and managers" link, from which you can contact
+> them, to let them know about the situation.
 
-> Hello
->
-> I know that this list has got nothing to do with git-scm (per se). But =
-I
-> was recommended by Dscho to raise the issue here.[1]
->
-> Maybe someone who happens to be affiliated with git-users happens to
-> read this.
->
-> =E2=80=A0 1: from https://github.com/git/git-scm.com/issues/1828
->
-> =E2=80=94
->
-> According to https://git-scm.com/community
->
->> There is also [Git user mailing
->> list](https://groups.google.com/forum/?fromgroups#!forum/git-users) on
->> Google Groups which is a nice place for beginners to ask about
->> anything.
->
-> I am not allowed to access it. Just as well because this is apparently
-> what it looks like:
-> https://www.mail-archive.com/git-users@googlegroups.com/
->
-> The last legitimate thread (except for an email saying =E2=80=9Cbye, th=
-is list
-> is too spammy=E2=80=9D) was 2023-12-29.
+I tried that now. Turns out my Gmail account was already a member. I was
+able to find the owner. But when sending the message it said something
+like =E2=80=9Ccouldn=E2=80=99t send message=E2=80=9D.
 
-I am not a member of that list so I cannot do this, but somebody who
-is a member should be able to visit
-
-    https://groups.google.com/g/git-users/about
-
-to find out who the owners are and how many members there are.  I
-expect the UI redacts the e-mail addresses of them, but there should
-be a "Contact owners and managers" link, from which you can contact
-them, to let them know about the situation.
-
-What they could do after getting notified is not clear to me,
-though.  Volunteer themselves, or gather volunteer groups among the
-members to moderate the traffic, if they want to run it in a useful
-form, in ongoing basis might be too much, but at least they can flip
-the "Anyone on the web can join group" bit a bit tighter, perhaps,
-and then eject spammy group members as a one-time clean-up?
-
+--=20
+Kristoffer Haugsbakk
 
