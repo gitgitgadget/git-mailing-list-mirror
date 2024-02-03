@@ -1,116 +1,102 @@
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f201.google.com (mail-pf1-f201.google.com [209.85.210.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B8AF4411
-	for <git@vger.kernel.org>; Sat,  3 Feb 2024 01:32:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C051B5396
+	for <git@vger.kernel.org>; Sat,  3 Feb 2024 01:37:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706923972; cv=none; b=X7K7AYDIOu0nQqDPuroOBhawSDuUD/BShARqpyqpMCWGllq8naszYukIXAxzBkCuQwIxiH4D8mv4YaJxe07KfDjcvRknENdQ/jqrUHHnm4TUY5GXmzAsLDDB2QzIZSzTgvjeA3b68rlf2MJ8+fLDG9C1cSs/pk+QZeEqcopgZYs=
+	t=1706924251; cv=none; b=hVucbCSxmIFsKhBXi4Bd+m3LO9U71FkTFYFRQFvjSJSbaJlpL/JJPPodlDrUJmGIeWwpqF6G8hJOT7cu4EnApWvrfsQomtjv4kT4XdE8CQpGkAP0/SpaG6NB9Jd81+bLuA8C/PVa35M1UWgVSiSW4GSvQN2diYAGV3klFn9uh9M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706923972; c=relaxed/simple;
-	bh=yiBV00rb4qbTjymicophakR/BbQmGP7X347RU0hgh2s=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=ER+OaXoguQx6sVeGIXeJRF8tsYhEbPDDRQRVlMVlVQ3URE+I9QHC9uWzy/bKttzkro4mGru64HdMaNz4EqAiXn8oLlAIacqkt+NpQpw/WJ6qaarY0hbLZJUROoXIcEhdlgZ88KHMrC1bMJtfC+SpbKMdnaQZZRxw3+nFBqLcZic=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=AovmA/fA; arc=none smtp.client-ip=173.228.157.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1706924251; c=relaxed/simple;
+	bh=0xTiR+unbRBJ2hTET9kiaEU28TQ3+yEIXNlJ4W5zk4c=;
+	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
+	 To:Cc:Content-Type; b=kT1i1MGNRUQa4SNkr1ndMQ3fIRePX2/580yCZs0XTn2iML6MoHRCyRYpboLpuLbsKBO5azWFHSCOcBASxi7GbgD4ykWKRUG2c0dDkLjCcnhVxbmdUglSTBAn39Zc+wx/AQANYvVqJj+rmeK4lXb5/Y+c6mt7ULuO7ZsxpKEnmLk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--linusa.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=aBzZpZgG; arc=none smtp.client-ip=209.85.210.201
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--linusa.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="AovmA/fA"
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id F07471FB00;
-	Fri,  2 Feb 2024 20:32:48 -0500 (EST)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=yiBV00rb4qbTjymicophakR/BbQmGP7X347RU0
-	hgh2s=; b=AovmA/fAQRPS2coVkTYCwX2rXhzuOS7Y1JSqJLUuAu1dJoGwGdFYUV
-	Kou04C+RGvxfIkmesHvhHdBCMM9U37FpC1cvvs8/9zXqmOlS7B08WMzOd2Pt9hFb
-	9QTOYAVewVtCvc0C/Ej9rSOh+DAmt3Sd4L4okA0PN6EnnaPx/z/zA=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id E8C4D1FAFF;
-	Fri,  2 Feb 2024 20:32:48 -0500 (EST)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.165.85])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 88F6E1FAFE;
-	Fri,  2 Feb 2024 20:32:44 -0500 (EST)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc: git@vger.kernel.org,  Jeff King <peff@peff.net>,  Phillip Wood
- <phillip.wood@dunelm.org.uk>,  SZEDER =?utf-8?Q?G=C3=A1bor?=
- <szeder.dev@gmail.com>,  Adam
- Dinwoodie <adam@dinwoodie.org>,  Patrick Steinhardt <ps@pks.im>
-Subject: Re: [PATCH v2 0/3] some unit-test Makefile polishing
-In-Reply-To: <b7b92f1a-9231-2f53-299e-ad58fc699284@gmx.de> (Johannes
-	Schindelin's message of "Sat, 3 Feb 2024 00:52:16 +0100 (CET)")
-References: <20240129031540.GA2433764@coredump.intra.peff.net>
-	<20240130053714.GA165967@coredump.intra.peff.net>
-	<xmqqh6irwtkd.fsf@gitster.g>
-	<b7b92f1a-9231-2f53-299e-ad58fc699284@gmx.de>
-Date: Fri, 02 Feb 2024 17:32:42 -0800
-Message-ID: <xmqqjznmtjr9.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="aBzZpZgG"
+Received: by mail-pf1-f201.google.com with SMTP id d2e1a72fcca58-6dde04e1c79so2529245b3a.0
+        for <git@vger.kernel.org>; Fri, 02 Feb 2024 17:37:29 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1706924249; x=1707529049; darn=vger.kernel.org;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:from:to:cc:subject:date:message-id:reply-to;
+        bh=GhfGF/4oO6YWRU05JyromzFAhDR9xSfDn7L9Yp1Hibk=;
+        b=aBzZpZgGdzK5XkdoyNcQW3h36orO/Kk6M3SOpvSVpkbfUmyTccmA5h9Kp2Mklm1rip
+         qeyMfJddgteoxGSeAp1OrG+Hhy65iHQ3qfkGM8KdT8c7F0ehWA1VYfZEslvECGq+c+pk
+         sDfG/3o27Mk4AT2sSx/ICyoqpVFecpprK6AtnuXC1xCrZcs7S/9whobrb8Ju7Pv3KTc4
+         rRJpx1xj0p5sLnyEzDCa5ltEJTw3yh9PwZy2A2UhFnItb4PJdNKtMTBcghxPjXpbkotA
+         4t3MgVJ/zkduTbX6gHuDaYuVRyI7Vk8jm9pqCyoyfY1gxbgxmjMxZfSPUSE1Jp9y3LDn
+         +WXg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1706924249; x=1707529049;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=GhfGF/4oO6YWRU05JyromzFAhDR9xSfDn7L9Yp1Hibk=;
+        b=TKuLXkMHEk4kZIQxNQF5IEYP3RnxFpGDRx4zxVc3QnCL0vCpnAH0wGC2p6YNYt1vcR
+         2mZpvv7sHN0ajv/okQO3A4meSXOz+LA59k1BDinkFl0IPwrWywQskzloOyUXvpYi0rSn
+         yx383idoUcjFj4of4TqnMna0aW6Gqb6BBIHLj+6FdF/dDgHet/e5r70YeVNenEYMSNEa
+         UPr/dWVZK9hZUEWdVepG1FDuHowp7xmeskqwc6IVR9PWHyfiEIhXx5zNSrn5mHYJMkrI
+         NSVVq/279STlR+qOfXjQ3u+RJwp4uKzSOtAWCiarLMdyRiSmbC3MD3TWussKSvhCC0n7
+         IGqw==
+X-Gm-Message-State: AOJu0Ywnzeic9PvfN0UA9nHq9qGIHFOED7pUMkXECzn4bQxLjhoUQZ+X
+	FlQdUzsk4cVcOXN0IhV9tLEkq7BSz/37wus3HopIucGXEbN1DPf95artKhUJ3idcdeGQg/UjxAu
+	bTQ==
+X-Google-Smtp-Source: AGHT+IF4S3eDunDgoftoy8WUdY6C2rS6U5kah0Ja8zAkyzYhUL+YeU9BnshwL/5alExhO9i8tyQpIuzOQb8=
+X-Received: from fine.c.googlers.com ([fda3:e722:ac3:cc00:7f:e700:c0a8:2221])
+ (user=linusa job=sendgmr) by 2002:a05:6a00:1d14:b0:6df:dd47:ff44 with SMTP id
+ a20-20020a056a001d1400b006dfdd47ff44mr275801pfx.6.1706924248945; Fri, 02 Feb
+ 2024 17:37:28 -0800 (PST)
+Date: Fri, 02 Feb 2024 17:37:27 -0800
+In-Reply-To: <xmqqil38ypuk.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- 212D463E-C234-11EE-BA67-A19503B9AAD1-77302942!pb-smtp21.pobox.com
+Mime-Version: 1.0
+References: <pull.1632.v2.git.1706308737.gitgitgadget@gmail.com>
+ <pull.1632.v3.git.1706664144.gitgitgadget@gmail.com> <0a9a7438c3ff39f1434087bf3ed6a9865758c803.1706664145.git.gitgitgadget@gmail.com>
+ <xmqqil38ypuk.fsf@gitster.g>
+Message-ID: <owly8r421g6g.fsf@fine.c.googlers.com>
+Subject: Re: [PATCH v3 06/10] trailer: spread usage of "trailer_block" language
+From: Linus Arver <linusa@google.com>
+To: Junio C Hamano <gitster@pobox.com>, 
+	Linus Arver via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, Christian Couder <chriscool@tuxfamily.org>, 
+	Emily Shaffer <nasamuffin@google.com>, Josh Steadmon <steadmon@google.com>, 
+	"Randall S. Becker" <rsbecker@nexbridge.com>
+Content-Type: text/plain; charset="UTF-8"
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> The line 753 of that file (as can be seen at
-> https://github.com/git/git/blob/38aa6559b0c513d755d6d5ccf32414ed63754726/config.mak.uname#L753)
+> "Linus Arver via GitGitGadget" <gitgitgadget@gmail.com> writes:
+>
+>> From: Linus Arver <linusa@google.com>
+>>
+>> Deprecate the "trailer_info" struct name and replace it with
+>> "trailer_block". The main reason is to help readability, because
+>> "trailer_info" on the surface sounds like it's about a single trailer
+>> when in reality it is a collection of contiguous lines, at least 25% of
+>> which are trailers.
+>
+> Yup, "info" is usually a fairly meaningless word.  At least "block"
+> may imply it is a collection of trailers.
+>
+> The naming would not matter as much to the API users, if the thing
+> is now opaque, though.
 
-Ouch.  When it is laid out like this it is very obvious why this is
-broken, and what its workaround should be.
+You make an interesting point (and I agree).
 
-Thanks.  Let's queue this on top.
+If we were to provide additional private structs named "trailer_<foo>"
+at that point we should think about how these <foo> parts "interact"
+with each other (if you will) in terms of names. For example we probably
+would never want to name a struct "trailer_block_parser" if it has no
+relationship to the existing "trailer_block" struct. More elaborate APIs
+might design a particular naming scheme (with some rules about certain
+suffixes, perhaps, for opaque pointers that all behave a certain way).
 
-------- >8 ------------- >8 ------------- >8 ------------- >8 -------
-Subject: [PATCH] t/Makefile: say the default target upfront
-
-Similar to how 2731d048 (Makefile: say the default target upfront.,
-2005-12-01) added the default target to the very beginning of the
-main Makefile to prevent a random rule that happens to be defined
-first in an included makefile fragments from becoming the default
-target, protect this Makefile the same way.
-
-This started to matter as we started to include config.mak.uname
-and that included makefile fragment does more than defining Make
-macros, unfortunately.
-
-Helped-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- t/Makefile | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
-
-diff --git a/t/Makefile b/t/Makefile
-index 281f4c3534..2d95046f26 100644
---- a/t/Makefile
-+++ b/t/Makefile
-@@ -1,3 +1,6 @@
-+# The default target of this Makefile is...
-+all::
-+
- # Import tree-wide shared Makefile behavior and libraries
- include ../shared.mak
- 
-@@ -52,7 +55,7 @@ UNIT_TESTS = $(sort $(filter-out unit-tests/bin/t-basic%,$(UNIT_TEST_PROGRAMS)))
- # scripts not to run the external "chainlint.pl" script themselves
- CHAINLINTSUPPRESS = GIT_TEST_EXT_CHAIN_LINT=0 && export GIT_TEST_EXT_CHAIN_LINT &&
- 
--all: $(DEFAULT_TEST_TARGET)
-+all:: $(DEFAULT_TEST_TARGET)
- 
- test: pre-clean check-chainlint $(TEST_LINT)
- 	$(CHAINLINTSUPPRESS) $(MAKE) aggregate-results-and-cleanup
--- 
-2.43.0-522-g2a540e432f
-
+But such naming considerations would naturally come into view
+independent of this public vs public struct discussion, so I think the
+above paragraph is moot.
