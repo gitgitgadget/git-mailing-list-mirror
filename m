@@ -1,671 +1,262 @@
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f54.google.com (mail-wm1-f54.google.com [209.85.128.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B1094EB5C
-	for <git@vger.kernel.org>; Sat,  3 Feb 2024 08:23:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCDDA5D726
+	for <git@vger.kernel.org>; Sat,  3 Feb 2024 11:39:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706948596; cv=none; b=dcDdQ7wNvlIH9w4EopNJ/m66gT6tP/Cur48Rc1HniHhWABTaGoGFwXoh6LCAJXgXZ+QY8mKpwSWN1BkQY/vODbJJW7nKaQpFHkoh/hXeiVfJ658fscWr0EbvodcqHyw+JYedFMNr2vOM2iaOqsU001Y/npymz8YNzqvN53neJbk=
+	t=1706960381; cv=none; b=nplvKyc0hrXgGqLvTo1B9+VqHz6W4O3u/2VAxlTST1+Qdkv2kQk/Nv6EjjVScbAkHF60TLPxWCFeT5fkN4LfON4mmkMbM2ZbjzGbre77hwpAAZPHdXpTHuDOFr7npmYDNouB5pCHKPI8rJc06EMfBG9VeKVsEYQM7xgjQU/TUSg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706948596; c=relaxed/simple;
-	bh=R599ANiApMLiUoPqsco7ndCtrBr2d/o1ofU/kX7Uz04=;
-	h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type; b=govpdx3mj1l4y5Hwj3HC8+b7Kx26ZaJA2hS4mTcva92SIUtxwL937hEKFqTntBHIEmQPQSv8trKZhonFyKJ3ysh4504kcY6yNQKXzm5BUL5cHA/HiFVkBK99BRgfrUg8N8rVJ7hJxUnj4oPCKZqVKesCKTk+pvLyRsvZZbriiMk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=R7wgrW1S; arc=none smtp.client-ip=173.228.157.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1706960381; c=relaxed/simple;
+	bh=98jTjzv7Brvz6RyXer+SUDpU1t5SdD3yhhSmIyyjRSU=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=Ts+Q1NUw2BsXBfvH4G4URGAM6CQ0LudsE3Y5DjWEvfTBpYe6EX06bDhT8zBnoACSdTHNJBbVieCJ9DIBdJnrXa2HgX/J1MahhiZpbBr0bWciD4z7zp/RewLzL0uglgdCgFNgr/o6uBRD8N1Zj3BCWoCv016c2n2luIaQS1GA2Wg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=IaVEYQop; arc=none smtp.client-ip=209.85.128.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="R7wgrW1S"
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id 8B21E2200A;
-	Sat,  3 Feb 2024 03:23:12 -0500 (EST)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to
-	:subject:date:message-id:mime-version:content-type; s=sasl; bh=R
-	599ANiApMLiUoPqsco7ndCtrBr2d/o1ofU/kX7Uz04=; b=R7wgrW1SEERvbGPmx
-	eCGt8Imi3FZrANth9lFjncmXs1oeo+KaUYr/6QO+W5mP6/bfkxQgBmKKT+ycmJNJ
-	BQ/TukF5DplqRh8fqeccDnw5DhupbnDhRZYmJ3No6H75soOxtUZWuJq0JxVlpc4W
-	UcrOw3Xo31IHyvN5vUHBd0zpAQ=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id 758B022009;
-	Sat,  3 Feb 2024 03:23:12 -0500 (EST)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.165.85])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 87C5922006;
-	Sat,  3 Feb 2024 03:23:08 -0500 (EST)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-Subject: What's cooking in git.git (Feb 2024, #02; Fri, 2)
-X-master-at: 2a540e432fe5dff3cfa9d3bf7ca56db2ad12ebb9
-X-next-at: 8838dd21e8a4ec1324377ffcfa90413844ca3674
-Date: Sat, 03 Feb 2024 00:23:06 -0800
-Message-ID: <xmqqmssirm6t.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IaVEYQop"
+Received: by mail-wm1-f54.google.com with SMTP id 5b1f17b1804b1-40e800461baso25563595e9.3
+        for <git@vger.kernel.org>; Sat, 03 Feb 2024 03:39:38 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1706960377; x=1707565177; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Qq0gOlbooxp07qM5WiaSONTKJeLkdtx1ai900Qv+Xz4=;
+        b=IaVEYQop7WQzHtrZjmCh7z0mqdaEpHbHMigJyYzmbB4Sk3mJIBKDv4EbaSxeDXwNrp
+         BDGtNBuqCkO+eSmqYKlgx81oLkUWfdB809tSNfjY7NEmN+V8fQEUsAWryKhXn7fOKRcP
+         oJwkdQ6myFRh5tWb0m9HdW8O9260uJDZUL6kAcAdG0YyS4yYgtyA5wJVWrXjrINUwq6C
+         78H0v6NaIgy3VwHPAYgoQ8iCY/9AczBuf5/eMEpT1g1A2BVJoY9L+nMbrEP8NUdatNiD
+         MgC7T0dhW1g5mZ4GHc5PSAK9IE80KND5Lc0aMexenHv6t8QiwmmlsAVhBgN1jRDVuPF5
+         f+3A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1706960377; x=1707565177;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=Qq0gOlbooxp07qM5WiaSONTKJeLkdtx1ai900Qv+Xz4=;
+        b=WG0pjncnM6m170mnhnD1iFnAj08Ywk8oh3fRE8ruBOSwksyxROK8xyj4uF1BuxP3LH
+         mZQ1EsdcbSXzJSexGKd72GVZIU8sAjk0jlW10xvleyF03OGXfy1WUfED5rOyuINVU2oC
+         /2e02PlE2VKPgzY8KD/xfYvG/LVhFmODWp3j27HbQiIictWVgN9w0oxSCftsm2bg6B8h
+         vqJxGDdx1hNXh61lPkXDNDR4RKSbwFBH9pjoSkieAhYQYMuY04D7P7F8BuD/yEj9lsYX
+         oTjsqIgiZVqCpQg9zeHOVfhfEJCIpce1mWnYUF/xyqs+dyIWKq3ZsDYVo3k9UonGtuUE
+         TbIw==
+X-Gm-Message-State: AOJu0YzaOjS/mo+AXpm6CR2qafNUtAh68VvazHl08onMsRmVLDlR49Ed
+	tQF7F61Hgks/HEOCoGZDa+GhaCLa/P0uYAPv7dy/+Sd5e2HpF3SJeua1ocKTQDTp8lnBPJ6E04h
+	L4xvmK7GIzxPsERpmtnHzpbsdhFaRyVBqVyoAAcNa
+X-Google-Smtp-Source: AGHT+IHCB9/u50BxXSHlLMSdGnhYVGooqJNFLXxKcUmVXwXuSFq+jzMqPBpYiHtQ5kkKVJllAk6xDaPAfvDmYQiSR+8=
+X-Received: by 2002:a5d:51c2:0:b0:33b:21f9:cd9a with SMTP id
+ n2-20020a5d51c2000000b0033b21f9cd9amr3206486wrv.19.1706960376694; Sat, 03 Feb
+ 2024 03:39:36 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- 7638A176-C26D-11EE-9366-A19503B9AAD1-77302942!pb-smtp21.pobox.com
-
-Here are the topics that have been cooking in my tree.  Commits
-prefixed with '+' are in 'next' (being in 'next' is a sign that a
-topic is stable enough to be used and are candidate to be in a
-future release).  Commits prefixed with '-' are only in 'seen', and
-aren't considered "accepted" at all and may be annotated with an URL
-to a message that raises issues but they are no means exhaustive.  A
-topic without enough support may be discarded after a long period of
-no activity (of course they can be resubmit when new interests
-arise).
-
-Copies of the source code to Git live in many repositories, and the
-following is a list of the ones I push into or their mirrors.  Some
-repositories have only a subset of branches.
-
-With maint, master, next, seen, todo:
-
-	git://git.kernel.org/pub/scm/git/git.git/
-	git://repo.or.cz/alt-git.git/
-	https://kernel.googlesource.com/pub/scm/git/git/
-	https://github.com/git/git/
-	https://gitlab.com/git-vcs/git/
-
-With all the integration branches and topics broken out:
-
-	https://github.com/gitster/git/
-
-Even though the preformatted documentation in HTML and man format
-are not sources, they are published in these repositories for
-convenience (replace "htmldocs" with "manpages" for the manual
-pages):
-
-	git://git.kernel.org/pub/scm/git/git-htmldocs.git/
-	https://github.com/gitster/git-htmldocs.git/
-
-Release tarballs are available at:
-
-	https://www.kernel.org/pub/software/scm/git/
-
---------------------------------------------------
-[Cooking]
-
-* jc/t0091-with-unknown-git (2024-01-30) 1 commit
-  (merged to 'next' on 2024-01-31 at 3dfcad1b18)
- + t0091: allow test in a repository without tags
-
- The test did not work when Git was built from a repository without
- tags.
-
- Will merge to 'master'.
- source: <xmqqv87aabk3.fsf@gitster.g>
-
-
-* ps/reftable-backend (2024-02-02) 3 commits
- - ci: add jobs to test with the reftable backend
- - refs: introduce reftable backend
- - Merge branch 'ps/tests-with-ref-files-backend' into ps/reftable-backend
- (this branch uses ps/tests-with-ref-files-backend.)
-
- Integrate the reftable code into the refs framework as a backend.
-
- Needs review.
- source: <cover.1706862705.git.ps@pks.im>
-
-
-* js/win32-retry-pipe-write-on-enospc (2024-01-30) 1 commit
-  (merged to 'next' on 2024-01-31 at 60ad589fd0)
- + win32: special-case `ENOSPC` when writing to a pipe
-
- Update to the code that writes to pipes on Windows.
-
- Will merge to 'master'.
- source: <pull.1648.git.1706650619950.gitgitgadget@gmail.com>
-
-
-* jc/make-libpath-template (2024-01-31) 2 commits
-  (merged to 'next' on 2024-01-31 at 559d5138bc)
- + Makefile: simplify output of the libpath_template
- + Makefile: reduce repetitive library paths
-
- The Makefile often had to say "-L$(path) -R$(path)" that repeats
- the path to the same library directory for link time and runtime.
- A Makefile template is used to reduce such repetition.
-
- Will merge to 'master'.
- source: <20240131174220.4160560-1-gitster@pobox.com>
-
-
-* cb/use-freebsd-13-2-at-cirrus-ci (2024-01-31) 1 commit
-  (merged to 'next' on 2024-01-31 at f89dc8a289)
- + ci: update FreeBSD cirrus job
-
- Cirrus CI jobs started breaking because we specified version of
- FreeBSD that is no longer available, which has been corrected.
-
- Will merge to 'master'.
- source: <20240131191325.33228-1-carenas@gmail.com>
-
-
-* cc/rev-list-allow-missing-tips (2024-02-01) 3 commits
- - rev-list: add --allow-missing-tips to be used with --missing=...
- - t6022: fix 'even though' typo in comment
- - revision: clarify a 'return NULL' in get_reference()
-
- "git rev-list --missing=print" have learned to optionally take
- "--allow-missing-tips", which allows the objects at the starting
- points to be missing.
-
- Needs review.
- source: <20240201115809.1177064-1-christian.couder@gmail.com>
-
-
-* ps/reftable-iteration-perf (2024-02-01) 7 commits
- - reftable/reader: add comments to `table_iter_next()`
- - reftable/record: don't try to reallocate ref record name
- - reftable/block: swap buffers instead of copying
- - reftable/pq: allocation-less comparison of entry keys
- - reftable/merged: skip comparison for records of the same subiter
- - reftable/merged: allocation-less dropping of shadowed records
- - reftable/record: introduce function to compare records by key
-
- The code to iterate over refs with the reftable backend has seen
- some optimization.
-
- Needs review.
- source: <cover.1706782841.git.ps@pks.im>
-
-
-* ps/reftable-styles (2024-02-01) 9 commits
- - reftable/record: improve semantics when initializing records
- - reftable/merged: refactor initialization of iterators
- - reftable/merged: refactor seeking of records
- - reftable/stack: use `size_t` to track stack length
- - reftable/stack: use `size_t` to track stack slices during compaction
- - reftable/stack: index segments with `size_t`
- - reftable/stack: fix parameter validation when compacting range
- - reftable: introduce macros to allocate arrays
- - reftable: introduce macros to grow arrays
-
- Code clean-up in various reftable code paths.
-
- Needs review.
- source: <cover.1706772591.git.ps@pks.im>
-
-
-* pb/imap-send-wo-curl-build-fix (2024-02-01) 1 commit
- - imap-send: add missing "strbuf.h" include under NO_CURL
-
- Build fix.
-
- Will merge to 'next'.
- source: <pull.1664.git.git.1706833113569.gitgitgadget@gmail.com>
-
-
-* jc/github-actions-update (2024-02-02) 1 commit
- - Merge branch 'jc/maint-github-actions-update' into jc/github-actions-update
- (this branch uses jc/maint-github-actions-update.)
-
- An evil merge of the other topic to a more modern codebase.
-
- Will merge to 'next'?
-
-
-* jc/maint-github-actions-update (2024-02-02) 2 commits
- - GitHub Actions: update to github-script@v7
- - GitHub Actions: update to checkout@v4
- (this branch is used by jc/github-actions-update.)
-
- Squelch node.js 16 deprecation warnings from GitHub Actions CI
- by updating actions/github-script and actions/checkout that use
- node.js 20.
-
- Needs review.
- source: <20240202203935.1240458-1-gitster@pobox.com>
-
-
-* jh/sparse-index-expand-to-path-fix (2024-02-02) 1 commit
- - sparse-index: pass string length to index_file_exists()
-
- A caller called index_file_exists() that takes a string expressed
- as <ptr, length> with a wrong length, which has been corrected.
-
- Will merge to 'next'.
- source: <pull.1649.git.1706897095273.gitgitgadget@gmail.com>
-
-
-* jc/comment-style-fixes (2024-01-29) 3 commits
-  (merged to 'next' on 2024-01-30 at a58d48a9ce)
- + reftable/pq_test: comment style fix
- + merge-ort.c: comment style fix
- + builtin/worktree: comment style fixes
-
- Rewrite //-comments to /* comments */ in files whose comments
- prevalently use the latter.
-
- Will merge to 'master'.
- source: <20240129202839.2234084-1-gitster@pobox.com>
-
-
-* jk/diff-external-with-no-index (2024-01-29) 1 commit
-  (merged to 'next' on 2024-01-30 at 30c3e9f91d)
- + diff: handle NULL meta-info when spawning external diff
-
- "git diff --no-index file1 file2" segfaulted while invoking the
- external diff driver, which has been corrected.
-
- Will merge to 'next'.
- source: <20240129015708.GA1762343@coredump.intra.peff.net>
-
-
-* jk/unit-tests-buildfix (2024-02-02) 4 commits
-  (merged to 'next' on 2024-02-02 at 8838dd21e8)
- + t/Makefile: say the default target upfront
-  (merged to 'next' on 2024-01-31 at 00df31c4c8)
- + t/Makefile: get UNIT_TESTS list from C sources
- + Makefile: remove UNIT_TEST_BIN directory with "make clean"
- + Makefile: use mkdir_p_parent_template for UNIT_TEST_BIN
-
- Build dependency around unit tests has been fixed.
-
- Will merge to 'master'.
- source: <20240130053714.GA165967@coredump.intra.peff.net>
- source: <xmqqjznmtjr9.fsf@gitster.g>
-
-
-* js/merge-tree-3-trees (2024-01-29) 1 commit
-  (merged to 'next' on 2024-01-30 at 0c77b04e59)
- + merge-tree: accept 3 trees as arguments
-
- "git merge-tree" has learned that the three trees involved in the
- 3-way merge only need to be trees, not necessarily commits.
-
- Will merge to 'master'.
- source: <pull.1647.v2.git.1706474063109.gitgitgadget@gmail.com>
-
-
-* jt/p4-spell-re-with-raw-string (2024-01-29) 1 commit
-  (merged to 'next' on 2024-01-30 at 42b03b58eb)
- + git-p4: use raw string literals for regular expressions
-
- "git p4" update to squelch warnings from Python.
-
- Will merge to 'master'.
- source: <pull.1639.v2.git.1706312496608.gitgitgadget@gmail.com>
-
-
-* kh/maintenance-use-xdg-when-it-should (2024-01-29) 1 commit
-  (merged to 'next' on 2024-01-30 at c449ac74bf)
- + config: add back code comment
-
- Comment fix.
-
- Will merge to 'master'.
- source: <48d66e94ece3b763acbe933561d82157c02a5f58.1706466321.git.code@khaugsbakk.name>
-
-
-* mh/credential-oauth-refresh-token-with-wincred (2024-01-29) 1 commit
- - credential/wincred: store oauth_refresh_token
-
- Teach wincred credential backend to support oauth refresh token the
- same way as credential-cache and credential-libsecret backends.
-
- Will merge to 'next'.
- source: <pull.1534.v3.git.1706477103039.gitgitgadget@gmail.com>
-
-
-* pb/complete-config (2024-01-29) 5 commits
- - completion: add an use _ _git_compute_second_level_config_vars_for_section
- - builtin/help: add --config-all-for-completion
- - completion: add and use _ _git_compute_first_level_config_vars_for_section
- - completion: complete 'submodule.*' config variables
- - completion: add space after config variable names also in Bash 3
-
- The command line completion script (in contrib/) learned to
- complete configuration variable names better.
-
- Needs review.
- source: <pull.1660.v2.git.git.1706534881.gitgitgadget@gmail.com>
-
-
-* rj/complete-reflog (2024-01-26) 4 commits
- - completion: reflog show <log-options>
- - completion: reflog with implicit "show"
- - completion: introduce __git_find_subcommand
- - completion: introduce __gitcomp_subcommand
-
- The command line completion script (in contrib/) learned to
- complete "git reflog" better.
-
- Needs review.
- source: <98daf977-dbad-4d3b-a293-6a769895088f@gmail.com>
-
-
-* rj/test-with-leak-check (2024-01-29) 4 commits
-  (merged to 'next' on 2024-01-31 at 76e4596666)
- + t0080: mark as leak-free
- + test-lib: check for TEST_PASSES_SANITIZE_LEAK
- + t6113: mark as leak-free
- + t5332: mark as leak-free
-
- More tests that are supposed to pass leak sanitizer are marked as such.
-
- Will merge to 'master'.
- source: <45eb0748-6415-4e52-a54f-8d4e5ad57dde@gmail.com>
-
-
-* tb/pack-bitmap-drop-unused-struct-member (2024-01-29) 1 commit
-  (merged to 'next' on 2024-01-30 at f3749b15fc)
- + pack-bitmap: drop unused `reuse_objects`
-
- Code clean-up.
-
- Will merge to 'master'.
- source: <0bbaf9a3591765161872fb71383263edb0c7ef83.1706328008.git.me@ttaylorr.com>
-
-
-* ps/reftable-compacted-tables-permission-fix (2024-01-26) 1 commit
-  (merged to 'next' on 2024-01-29 at dbb06e1571)
- + reftable/stack: adjust permissions of compacted tables
-
- Reftable bugfix.
-
- Will merge to 'master'.
- source: <a211818108053754aca002726d0206623a347952.1706263589.git.ps@pks.im>
-
-
-* jc/index-pack-fsck-levels (2024-02-01) 2 commits
-  (merged to 'next' on 2024-02-02 at 0e4ef26aa1)
- + index-pack: --fsck-objects to take an optional argument for fsck msgs
- + index-pack: test and document --strict=<msg-id>=<severity>...
-
- The "--fsck-objects" option of "git index-pack" now can take the
- optional parameter to tweak severity of different fsck errors.
-
- Will merge to 'master'.
- source: <pull.1658.v4.git.git.1706751483.gitgitgadget@gmail.com>
-
-
-* ps/reftable-multi-level-indices-fix (2024-02-01) 6 commits
- - reftable: document reading and writing indices
- - reftable/writer: fix writing multi-level indices
- - reftable/writer: simplify writing index records
- - reftable/writer: use correct type to iterate through index entries
- - reftable/reader: be more careful about errors in indexed seeks
- - Merge branch 'jc/reftable-core-fsync' into ps/reftable-multi-level-indices-fix
- (this branch uses jc/reftable-core-fsync.)
-
- Write multi-level indices for reftable has been corrected.
-
- Needs review.
- source: <cover.1706773842.git.ps@pks.im>
-
-
-* jc/reftable-core-fsync (2024-01-30) 2 commits
-  (merged to 'next' on 2024-01-30 at c3a79b6172)
- + reftable/stack: fsync "tables.list" during compaction
-  (merged to 'next' on 2024-01-24 at cea12beddb)
- + reftable: honor core.fsync
- (this branch is used by ps/reftable-multi-level-indices-fix.)
-
- The write codepath for the reftable data learned to honor
- core.fsync configuration.
-
- Will merge to 'master'.
- source: <7bdafc9bd7f53f38a24d69a563615b6ad484e1ba.1706592127.git.ps@pks.im>
-
-
-* cp/unit-test-prio-queue (2024-01-22) 1 commit
-  (merged to 'next' on 2024-02-01 at 38aa6559b0)
- + tests: move t0009-prio-queue.sh to the new unit testing framework
-
- Migrate priority queue test to unit testing framework.
-
- Will merge to 'master'.
- source: <pull.1642.v4.git.1705865326185.gitgitgadget@gmail.com>
-
-
-* ml/log-merge-with-cherry-pick-and-other-pseudo-heads (2024-01-17) 2 commits
- - revision: implement `git log --merge` also for rebase/cherry_pick/revert
- - revision: ensure MERGE_HEAD is a ref in prepare_show_merge
-
- "git log --merge" learned to pay attention to CHERRY_PICK_HEAD and
- other kinds of *_HEAD pseudorefs.
-
- Comments?
- source: <xmqqzfxa9usx.fsf@gitster.g>
-
-
-* kn/for-all-refs (2024-01-29) 4 commits
-  (merged to 'next' on 2024-01-30 at e7a9234a8b)
- + for-each-ref: avoid filtering on empty pattern
- + refs: introduce `refs_for_each_all_refs()`
- + refs: extract out `loose_fill_ref_dir_regular_file()`
- + refs: introduce `is_pseudoref()` and `is_headref()`
-
- "git for-each-ref" filters its output with prefixes given from the
- command line, but it did not honor an empty string to mean "pass
- everything", which has been corrected.
-
- Will merge to 'master'.
- source: <20240129113527.607022-1-karthik.188@gmail.com>
-
-
-* bk/complete-bisect (2024-01-29) 9 commits
- - SQUASH???
- - completion: add tests for git-bisect
- - completion: bisect: recognize but do not complete view subcommand
- - completion: bisect: complete log opts for visualize subcommand
- - completion: log: use __git_complete_log_opts
- - completion: new function __git_complete_log_opts
- - completion: bisect: complete missing --first-parent and --no-checkout options
- - completion: bisect: complete custom terms and related options
- - completion: bisect: complete bad, new, old, and help subcommands
-
- Command line completion support (in contrib/) has been
- updated for "git bisect".
-
- Comments?
- cf. <ZaofJhHsFjRxx7a3@tanuki>
- source: <20240128223447.342493-1-britton.kerin@gmail.com>
-
-
-* bk/complete-dirname-for-am-and-format-patch (2024-01-12) 1 commit
- - completion: dir-type optargs for am, format-patch
-
- Command line completion support (in contrib/) has been
- updated for a few commands to complete directory names where a
- directory name is expected.
-
- Needs review.
- source: <d37781c3-6af2-409b-95a8-660a9b92d20b@smtp-relay.sendinblue.com>
-
-
-* bk/complete-send-email (2024-01-12) 1 commit
- - completion: don't complete revs when --no-format-patch
-
- Command line completion support (in contrib/) has been taught to
- avoid offering revision names as candidates to "git send-email" when
- the command is used to send pre-generated files.
-
- Needs review.
- source: <a718b5ee-afb0-44bd-a299-3208fac43506@smtp-relay.sendinblue.com>
-
-
-* la/trailer-api (2024-01-30) 10 commits
- - trailer: introduce "template" term for readability
- - trailer: delete obsolete argument handling code from API
- - trailer: move arg handling to interpret-trailers.c
- - trailer: prepare to move parse_trailers_from_command_line_args() to builtin
- - trailer: spread usage of "trailer_block" language
- - trailer: make trailer_info struct private
- - sequencer: use the trailer iterator
- - trailer: unify trailer formatting machinery
- - trailer: move interpret_trailers() to interpret-trailers.c
- - trailer: prepare to expose functions as part of API
-
- Code clean-up.
-
- Needs review.
- cf. <xmqqa5ol409k.fsf@gitster.g>
- source: <pull.1632.v3.git.1706664144.gitgitgadget@gmail.com>
-
-
-* ps/tests-with-ref-files-backend (2024-01-29) 6 commits
-  (merged to 'next' on 2024-01-30 at 376b9c9c1b)
- + t: mark tests regarding git-pack-refs(1) to be backend specific
- + t5526: break test submodule differently
- + t1419: mark test suite as files-backend specific
- + t1302: make tests more robust with new extensions
- + t1301: mark test for `core.sharedRepository` as reffiles specific
- + t1300: make tests more robust with non-default ref backends
- (this branch is used by ps/reftable-backend.)
-
- Prepare existing tests on refs to work better with non-default
- backends.
-
- Will merge to 'master'.
- source: <cover.1706525813.git.ps@pks.im>
-
-
-* cp/apply-core-filemode (2023-12-26) 3 commits
- - apply: code simplification
- - apply: correctly reverse patch's pre- and post-image mode bits
- - apply: ignore working tree filemode when !core.filemode
-
- "git apply" on a filesystem without filemode support have learned
- to take a hint from what is in the index for the path, even when
- not working with the "--index" or "--cached" option, when checking
- the executable bit match what is required by the preimage in the
- patch.
-
- Needs review.
- source: <20231226233218.472054-1-gitster@pobox.com>
-
-
-* ja/doc-placeholders-fix (2023-12-26) 2 commits
- - doc: enforce placeholders in documentation
- - doc: enforce dashes in placeholders
-
- Docfix.
-
- Will merge to 'next'.
- source: <pull.1626.git.1703539287.gitgitgadget@gmail.com>
-
-
-* jc/bisect-doc (2023-12-09) 1 commit
- - bisect: document "terms" subcommand more fully
-
- Doc update.
-
- Needs review.
- source: <xmqqzfyjmk02.fsf@gitster.g>
-
-
-* tb/pair-chunk-expect (2023-11-10) 8 commits
- - midx: read `OOFF` chunk with `pair_chunk_expect()`
- - midx: read `OIDL` chunk with `pair_chunk_expect()`
- - commit-graph: read `BIDX` chunk with `pair_chunk_expect()`
- - commit-graph: read `GDAT` chunk with `pair_chunk_expect()`
- - commit-graph: read `CDAT` chunk with `pair_chunk_expect()`
- - commit-graph: read `OIDL` chunk with `pair_chunk_expect()`
- - chunk-format: introduce `pair_chunk_expect()` helper
- - Merge branch 'jk/chunk-bounds-more' into HEAD
-
- Further code clean-up.
-
- Needs review.
- source: <cover.1699569246.git.me@ttaylorr.com>
-
-
-* tb/path-filter-fix (2024-01-31) 16 commits
- - bloom: introduce `deinit_bloom_filters()`
- - commit-graph: reuse existing Bloom filters where possible
- - object.h: fix mis-aligned flag bits table
- - commit-graph: new Bloom filter version that fixes murmur3
- - commit-graph: unconditionally load Bloom filters
- - bloom: prepare to discard incompatible Bloom filters
- - bloom: annotate filters with hash version
- - repo-settings: introduce commitgraph.changedPathsVersion
- - t4216: test changed path filters with high bit paths
- - t/helper/test-read-graph: implement `bloom-filters` mode
- - bloom.h: make `load_bloom_filter_from_graph()` public
- - t/helper/test-read-graph.c: extract `dump_graph_info()`
- - gitformat-commit-graph: describe version 2 of BDAT
- - commit-graph: ensure Bloom filters are read with consistent settings
- - revision.c: consult Bloom filters for root commits
- - t/t4216-log-bloom.sh: harden `test_bloom_filters_not_used()`
-
- The Bloom filter used for path limited history traversal was broken
- on systems whose "char" is unsigned; update the implementation and
- bump the format version to 2.
- source: <cover.1706741516.git.me@ttaylorr.com>
-
-
-* ak/color-decorate-symbols (2023-10-23) 7 commits
- - log: add color.decorate.pseudoref config variable
- - refs: exempt pseudorefs from pattern prefixing
- - refs: add pseudorefs array and iteration functions
- - log: add color.decorate.ref config variable
- - log: add color.decorate.symbol config variable
- - log: use designated inits for decoration_colors
- - config: restructure color.decorate documentation
-
- A new config for coloring.
-
- Needs review.
- source: <20231023221143.72489-1-andy.koppe@gmail.com>
-
-
-* eb/hash-transition (2023-10-02) 30 commits
- - t1016-compatObjectFormat: add tests to verify the conversion between objects
- - t1006: test oid compatibility with cat-file
- - t1006: rename sha1 to oid
- - test-lib: compute the compatibility hash so tests may use it
- - builtin/ls-tree: let the oid determine the output algorithm
- - object-file: handle compat objects in check_object_signature
- - tree-walk: init_tree_desc take an oid to get the hash algorithm
- - builtin/cat-file: let the oid determine the output algorithm
- - rev-parse: add an --output-object-format parameter
- - repository: implement extensions.compatObjectFormat
- - object-file: update object_info_extended to reencode objects
- - object-file-convert: convert commits that embed signed tags
- - object-file-convert: convert commit objects when writing
- - object-file-convert: don't leak when converting tag objects
- - object-file-convert: convert tag objects when writing
- - object-file-convert: add a function to convert trees between algorithms
- - object: factor out parse_mode out of fast-import and tree-walk into in object.h
- - cache: add a function to read an OID of a specific algorithm
- - tag: sign both hashes
- - commit: export add_header_signature to support handling signatures on tags
- - commit: convert mergetag before computing the signature of a commit
- - commit: write commits for both hashes
- - object-file: add a compat_oid_in parameter to write_object_file_flags
- - object-file: update the loose object map when writing loose objects
- - loose: compatibilty short name support
- - loose: add a mapping between SHA-1 and SHA-256 for loose objects
- - repository: add a compatibility hash algorithm
- - object-names: support input of oids in any supported hash
- - oid-array: teach oid-array to handle multiple kinds of oids
- - object-file-convert: stubs for converting from one object format to another
-
- Teach a repository to work with both SHA-1 and SHA-256 hash algorithms.
-
- Needs review.
- source: <878r8l929e.fsf@gmail.froward.int.ebiederm.org>
-
-
-* jc/rerere-cleanup (2023-08-25) 4 commits
- - rerere: modernize use of empty strbuf
- - rerere: try_merge() should use LL_MERGE_ERROR when it means an error
- - rerere: fix comment on handle_file() helper
- - rerere: simplify check_one_conflict() helper function
-
- Code clean-up.
-
- Not ready to be reviewed yet.
- source: <20230824205456.1231371-1-gitster@pobox.com>
+References: <20240202203935.1240458-1-gitster@pobox.com> <20240202203935.1240458-2-gitster@pobox.com>
+ <CADCFv=5=uwp_NVpndTYFiRRK4hEwmMdA2At80cXuS91V5mKN2A@mail.gmail.com>
+In-Reply-To: <CADCFv=5=uwp_NVpndTYFiRRK4hEwmMdA2At80cXuS91V5mKN2A@mail.gmail.com>
+From: =?UTF-8?B?w5NzY2FyIERvbcOtbmd1ZXogQ2VsYWRh?= <dominguez.celada@gmail.com>
+Date: Sat, 3 Feb 2024 12:39:00 +0100
+Message-ID: <CADCFv=4Gjh5B6RFF3P--FO9T7R+uGg2dyN8hT4VR0yJtJt-UsA@mail.gmail.com>
+Subject: Re: [PATCH 1/2] GitHub Actions: update to checkout@v4
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+I am adding non-html e-mail reply to keep track in git@vger.kernel.org:
+
+The switch to checkout@v4 for GitHub Actions looks good to me. I
+wonder if we should be updating other actions to v4 so they start
+using Node 20:
+
+In coverity.yml
+(https://github.com/git/git/blob/8838dd21e8a4ec1324377ffcfa90413844ca3674/.=
+github/workflows/coverity.yml#L101C15-L101C39)
+
+actions/cache/restore@v3 -> v4 (reference:
+https://github.com/actions/cache/releases/tag/v4.0.0)
+actions/cache/save@v3 -> v4 (reference:
+https://github.com/actions/cache/releases/tag/v4.0.0)
+
+In main.yml
+
+actions/upload-artifact@v3 -> v4 (reference:
+https://github.com/actions/upload-artifact/commit/aa5cae10db2b39d79f5244f6b=
+c5084278993a3ae#diff-1243c5424efaaa19bd8e813c5e6f6da46316e63761421b3e5f5c8c=
+ed9a36e6b6R33)
+actions/download-artifact@v3 -> v4 (reference:
+https://github.com/actions/download-artifact/commit/88dadfbcfcdd10293192ac8=
+ee1e3ffe61f7055ee#diff-1243c5424efaaa19bd8e813c5e6f6da46316e63761421b3e5f5c=
+8ced9a36e6b6R28)
+
+
+On Sat, 3 Feb 2024 at 12:31, =C3=93scar Dom=C3=ADnguez Celada
+<dominguez.celada@gmail.com> wrote:
+>
+> The switch to checkout@v4 for GitHub Actions looks good to me. I wonder i=
+f we should be updating other actions to v4 so they start using Node 20:
+>
+> In coverity.yml
+>
+> actions/cache/restore@v3 -> v4 (reference: https://github.com/actions/cac=
+he/releases/tag/v4.0.0)
+> actions/cache/save@v3 -> v4 (reference: https://github.com/actions/cache/=
+releases/tag/v4.0.0)
+>
+> In main.yml
+>
+> actions/upload-artifact@v3 -> v4 (reference: https://github.com/actions/u=
+pload-artifact/commit/aa5cae10db2b39d79f5244f6bc5084278993a3ae#diff-1243c54=
+24efaaa19bd8e813c5e6f6da46316e63761421b3e5f5c8ced9a36e6b6R33)
+> actions/download-artifact@v3 -> v4 (reference: https://github.com/actions=
+/download-artifact/commit/88dadfbcfcdd10293192ac8ee1e3ffe61f7055ee#diff-124=
+3c5424efaaa19bd8e813c5e6f6da46316e63761421b3e5f5c8ced9a36e6b6R28)
+>
+>
+> On Fri, 2 Feb 2024 at 21:39, Junio C Hamano <gitster@pobox.com> wrote:
+>>
+>> We seem to be getting "Node.js 16 actions are deprecated." warnings
+>> for jobs that use checkout@v3.  Except for the i686 containers job
+>> that is kept at checkout@v1 [*], update to checkout@v4, which is
+>> said to use Node.js 20.
+>>
+>> [*] 6cf4d908 (ci(main): upgrade actions/checkout to v3, 2022-12-05)
+>>     refers to https://github.com/actions/runner/issues/2115 and
+>>     explains why container jobs are kept at checkout@v1.  We may
+>>     want to check the current status of the issue and move it to the
+>>     same version as other jobs, but that is outside the scope of
+>>     this step.
+>>
+>> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+>> ---
+>>  .github/workflows/check-whitespace.yml |  2 +-
+>>  .github/workflows/coverity.yml         |  2 +-
+>>  .github/workflows/main.yml             | 18 +++++++++---------
+>>  3 files changed, 11 insertions(+), 11 deletions(-)
+>>
+>> diff --git a/.github/workflows/check-whitespace.yml b/.github/workflows/=
+check-whitespace.yml
+>> index a58e2dc8ad..a241a63428 100644
+>> --- a/.github/workflows/check-whitespace.yml
+>> +++ b/.github/workflows/check-whitespace.yml
+>> @@ -19,7 +19,7 @@ jobs:
+>>    check-whitespace:
+>>      runs-on: ubuntu-latest
+>>      steps:
+>> -    - uses: actions/checkout@v3
+>> +    - uses: actions/checkout@v4
+>>        with:
+>>          fetch-depth: 0
+>>
+>> diff --git a/.github/workflows/coverity.yml b/.github/workflows/coverity=
+.yml
+>> index e5532d381b..a81a7566d1 100644
+>> --- a/.github/workflows/coverity.yml
+>> +++ b/.github/workflows/coverity.yml
+>> @@ -38,7 +38,7 @@ jobs:
+>>        COVERITY_LANGUAGE: cxx
+>>        COVERITY_PLATFORM: overridden-below
+>>      steps:
+>> -      - uses: actions/checkout@v3
+>> +      - uses: actions/checkout@v4
+>>        - name: install minimal Git for Windows SDK
+>>          if: contains(matrix.os, 'windows')
+>>          uses: git-for-windows/setup-git-for-windows-sdk@v1
+>> diff --git a/.github/workflows/main.yml b/.github/workflows/main.yml
+>> index 4d97da57ec..90973f9693 100644
+>> --- a/.github/workflows/main.yml
+>> +++ b/.github/workflows/main.yml
+>> @@ -112,7 +112,7 @@ jobs:
+>>        group: windows-build-${{ github.ref }}
+>>        cancel-in-progress: ${{ needs.ci-config.outputs.skip_concurrent =
+=3D=3D 'yes' }}
+>>      steps:
+>> -    - uses: actions/checkout@v3
+>> +    - uses: actions/checkout@v4
+>>      - uses: git-for-windows/setup-git-for-windows-sdk@v1
+>>      - name: build
+>>        shell: bash
+>> @@ -173,10 +173,10 @@ jobs:
+>>        group: vs-build-${{ github.ref }}
+>>        cancel-in-progress: ${{ needs.ci-config.outputs.skip_concurrent =
+=3D=3D 'yes' }}
+>>      steps:
+>> -    - uses: actions/checkout@v3
+>> +    - uses: actions/checkout@v4
+>>      - uses: git-for-windows/setup-git-for-windows-sdk@v1
+>>      - name: initialize vcpkg
+>> -      uses: actions/checkout@v3
+>> +      uses: actions/checkout@v4
+>>        with:
+>>          repository: 'microsoft/vcpkg'
+>>          path: 'compat/vcbuild/vcpkg'
+>> @@ -297,7 +297,7 @@ jobs:
+>>        runs_on_pool: ${{matrix.vector.pool}}
+>>      runs-on: ${{matrix.vector.pool}}
+>>      steps:
+>> -    - uses: actions/checkout@v3
+>> +    - uses: actions/checkout@v4
+>>      - run: ci/install-dependencies.sh
+>>      - run: ci/run-build-and-tests.sh
+>>      - name: print test failures
+>> @@ -317,7 +317,7 @@ jobs:
+>>        CC: clang
+>>      runs-on: ubuntu-latest
+>>      steps:
+>> -    - uses: actions/checkout@v3
+>> +    - uses: actions/checkout@v4
+>>      - run: ci/install-dependencies.sh
+>>      - run: ci/run-build-and-minimal-fuzzers.sh
+>>    dockerized:
+>> @@ -342,7 +342,7 @@ jobs:
+>>      runs-on: ubuntu-latest
+>>      container: ${{matrix.vector.image}}
+>>      steps:
+>> -    - uses: actions/checkout@v3
+>> +    - uses: actions/checkout@v4
+>>        if: matrix.vector.jobname !=3D 'linux32'
+>>      - uses: actions/checkout@v1
+>>        if: matrix.vector.jobname =3D=3D 'linux32'
+>> @@ -373,7 +373,7 @@ jobs:
+>>        group: static-analysis-${{ github.ref }}
+>>        cancel-in-progress: ${{ needs.ci-config.outputs.skip_concurrent =
+=3D=3D 'yes' }}
+>>      steps:
+>> -    - uses: actions/checkout@v3
+>> +    - uses: actions/checkout@v4
+>>      - run: ci/install-dependencies.sh
+>>      - run: ci/run-static-analysis.sh
+>>      - run: ci/check-directional-formatting.bash
+>> @@ -396,7 +396,7 @@ jobs:
+>>          artifact: sparse-20.04
+>>      - name: Install the current `sparse` package
+>>        run: sudo dpkg -i sparse-20.04/sparse_*.deb
+>> -    - uses: actions/checkout@v3
+>> +    - uses: actions/checkout@v4
+>>      - name: Install other dependencies
+>>        run: ci/install-dependencies.sh
+>>      - run: make sparse
+>> @@ -411,6 +411,6 @@ jobs:
+>>        jobname: Documentation
+>>      runs-on: ubuntu-latest
+>>      steps:
+>> -    - uses: actions/checkout@v3
+>> +    - uses: actions/checkout@v4
+>>      - run: ci/install-dependencies.sh
+>>      - run: ci/test-documentation.sh
+>> --
+>> 2.43.0-522-g2a540e432f
+>>
+>
+>
+> --
+> =C3=93scar Dom=C3=ADnguez Celada
+
+
+
+--=20
+=C3=93scar Dom=C3=ADnguez Celada
