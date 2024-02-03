@@ -1,52 +1,51 @@
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE9395D73E
-	for <git@vger.kernel.org>; Sat,  3 Feb 2024 18:52:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95935F503
+	for <git@vger.kernel.org>; Sat,  3 Feb 2024 20:41:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706986372; cv=none; b=f5NGYhVs9NZ1w1EYTdzXh5rQPsMmH85E7hHsB4uVS2Me/+0W0OApX3TLzgAhkitUHLDg1IZJYV/H5bPXM0ByjMTQreB9yEI/C/w9+1KME4wX4vQYReFMZAfpnfbEGq8/DbbeDN+32pyTGcMWM+zGdTmblnhgyD5OTeTXdZCdFUU=
+	t=1706992872; cv=none; b=ESLe7Zsb9eQ0ceNttVJ0jBfBoyvT1RdOA2II1uxm9uuftIUWO4mBwCDWxB6r+ktpRmREIS8HYJjKdTXg4mSxSBVqtoWSjKAw7DDHgybPRXtAoKfGcxFBYmGFHQmeO8t/kB8sUPw25iZQcZeyDyvqycI/SBYOAc6w8X8gBAdooig=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706986372; c=relaxed/simple;
-	bh=rY0MI9H9USX+v8DkFAyJnelJGEIEhdNORNfdnLgtjWs=;
+	s=arc-20240116; t=1706992872; c=relaxed/simple;
+	bh=OvZjSOA2zXVlbPt2qbLVXi0uZjCwCf2DBvmRxWmQOug=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=cdHfx5WIgHmFAaxs6UloNrWm4pGRzoXpqjgSLclzuo4+GsDM0aGlmV7a2IbaZS4x/b/8o2iJHnS2Xg/hBKN+tCLGgtaZ+BcA1O0uWewy/88aXCI3JtLLUfx1btU0czZTOHiyPIFEUnps7LhG+bFnPD6N8Hd4XN9uP9/f81ituDc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=eKQNPTaT; arc=none smtp.client-ip=173.228.157.52
+	 MIME-Version:Content-Type; b=VpMBIrhdVcLzDv5r0L7urVdx7k0Eom1bO4ItBiRJipAFp+ethzEM0YzbjYGncjen2gVrNhxUl2UG9Pt5o9f0LZ1ZLT1bJ4qliOG1tkyr1uUMmsMH3ISVn0QEMfIA0LG2xjsRQOe+FZQeI+CR41VHuODTQYxkESWjSVqjqOEkxgw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=UkC9DuQT; arc=none smtp.client-ip=64.147.108.71
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="eKQNPTaT"
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 2F2962C712;
-	Sat,  3 Feb 2024 13:52:44 -0500 (EST)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="UkC9DuQT"
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 4DEA51CEAA6;
+	Sat,  3 Feb 2024 15:41:03 -0500 (EST)
 	(envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=rY0MI9H9USX+v8DkFAyJnelJGEIEhdNORNfdnL
-	gtjWs=; b=eKQNPTaT3OZeXCQkWzl/nV/I5RFFAGV4vZyQHZEAQexcJT+u5OCuGa
-	WCJl1sXGGHe2XXr6zDR2IVXHEK3ZQiofEWHIdDrztoAi3oAiegxjSG3qfwW1o1yu
-	5h/wq3P9RQH2EqqPNxMN322hOhNJWcueQFHEhsbjpQhOL0wrfdbFs=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 1C3EE2C711;
-	Sat,  3 Feb 2024 13:52:44 -0500 (EST)
+	:content-type; s=sasl; bh=OvZjSOA2zXVlbPt2qbLVXi0uZjCwCf2DBvmRxW
+	mQOug=; b=UkC9DuQTj7fV2nofCBgNXOzzp5DOiXSUGhNxbYQ09THr+CA9fSTgIX
+	C6xFggEJtArErcB/YUIuRm1oKnPYN4lHab1weXktYzMlqTSAQeobYlVOtUth0RVh
+	4Gur3vThBqLmn4sQoVjEcdhd8qtgWnMCgffJl/9vvpA5kirZhmvNw=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 28C591CEAA5;
+	Sat,  3 Feb 2024 15:41:03 -0500 (EST)
 	(envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.125.165.85])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id B3CCA2C710;
-	Sat,  3 Feb 2024 13:52:40 -0500 (EST)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 4DBA31CEAA4;
+	Sat,  3 Feb 2024 15:41:02 -0500 (EST)
 	(envelope-from junio@pobox.com)
 From: Junio C Hamano <gitster@pobox.com>
-To: Josh Steadmon <steadmon@google.com>
-Cc: git@vger.kernel.org,  johannes.schindelin@gmx.de,  peff@peff.net,
-  phillip.wood@dunelm.org.uk
-Subject: Re: [RFC PATCH v2 0/6] test-tool: add unit test suite runner
-In-Reply-To: <cover.1706921262.git.steadmon@google.com> (Josh Steadmon's
-	message of "Fri, 2 Feb 2024 16:50:25 -0800")
-References: <cover.1705443632.git.steadmon@google.com>
-	<cover.1706921262.git.steadmon@google.com>
-Date: Sat, 03 Feb 2024 10:52:39 -0800
-Message-ID: <xmqqjznlqt1k.fsf@gitster.g>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org,  Han-Wen Nienhuys <hanwen@google.com>,  Karthik
+ Nayak <karthik.188@gmail.com>
+Subject: Re: [PATCH v2 0/2] refs: introduce reftable backend
+In-Reply-To: <cover.1706862705.git.ps@pks.im> (Patrick Steinhardt's message of
+	"Fri, 2 Feb 2024 09:38:25 +0100")
+References: <cover.1706601199.git.ps@pks.im> <cover.1706862705.git.ps@pks.im>
+Date: Sat, 03 Feb 2024 12:41:01 -0800
+Message-ID: <xmqq8r41qo0y.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -56,40 +55,24 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 X-Pobox-Relay-ID:
- 68322766-C2C5-11EE-82EE-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
+ 8B713028-C2D4-11EE-97D8-25B3960A682E-77302942!pb-smtp2.pobox.com
 
-Josh Steadmon <steadmon@google.com> writes:
+Patrick Steinhardt <ps@pks.im> writes:
 
-> Please note: this series has been rebased onto jk/unit-tests-buildfix.
+> this is the second version of my patch series that introduces the
+> reftable backend.
 >
-> For various reasons (see discussion at [1]) we would like an alternative
-> to `prove` for running test suites (including the unit tests) on
-> Windows.
->
-> This series extends the existing `test-tool run-command testsuite` to
-> support running unit tests. In addition, it includes some small
-> cleanups:
-> * move t-basic out of the unit-tests directory
-> * don't hardcode the shell for running tests in `test-tool ... testsuite`
-> * don't hardcode a test name filter in `test-tool ... testsuite`
-> * add a test wrapper script to allow unit tests and the shell test suite
->   to run in a single `prove` process
->
-> Some known remaining bits of work:
-> * We should investigate switching the Windows CI to use `test-tool`
->   instead of prove. However, Windows CI seems broken on
->   jk/unit-tests-buildfix, and I haven't had time to determine why.
+> This version addresses the feedback by Karthik. I don't think it really
+> makes sense to spell out every change here -- the range diff should
+> likely be easier to digest.
 
-Thanks to Dscho who figured this out, the jk/unit-tests-buildfix
-topic in my tree has been updated to pass "win test (n)" jobs.
+This, when merged to 'seen' (which also has "for-each-ref now thinks
+an empty string is a signal to show ref-like things outside the
+refs/ hierarchy" topic, kn/for-all-refs), seems to break *-reftable
+CI tests, cf.  https://github.com/git/git/actions/runs/7765401528
 
-> * We should determine whether it is confusing or otherwise harmful to
->   people's workflow to have the unit tests run in parallel with shell
->   tests when using prove as the default test target.
+I'll tentatively eject the topic from 'seen', even though I have a
+suspicion that it byitself would pass all the tests.
 
-I do not know much about "confusing" thing, but if the user
-allocates, say, 16 jobs to run tests in parallel, and one of them
-drives the "unit test suite runner" that wants to do its own
-parallelism, we'd easily end up busting the resource limit the
-end-user desires.  It does not necessarily mean that we should limit
-the parallelism of "unit test suite runner" to 1 under prove, though.
+Thanks.
+
