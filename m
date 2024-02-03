@@ -1,55 +1,55 @@
-Received: from mail-yb1-f201.google.com (mail-yb1-f201.google.com [209.85.219.201])
+Received: from mail-yw1-f201.google.com (mail-yw1-f201.google.com [209.85.128.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27000257A
-	for <git@vger.kernel.org>; Sat,  3 Feb 2024 00:50:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10C1B5396
+	for <git@vger.kernel.org>; Sat,  3 Feb 2024 00:50:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706921442; cv=none; b=iGDIIlDTjNrsduifWHp894wTrcbjM03aQnATd76j9qLsLe9WzACf/+5HKeHdqj/3RssSqjkjw+xwsZt18GI4vkq/1DvUOHOpv6eS1dt5MhjTyDwU4Ok4yANMoVq4FlS/WN7hzvZyucLkJPMJGOQjbpUvjugEr3nVicXlzH+Lkis=
+	t=1706921444; cv=none; b=Xe4BI5Og+vGre/eFzUyAY1I0+JCXdblbNhnGByQGOQnvQgtWlSzyEweSnKCUt6eX73XBPQ8+A8H+7QcbKZHvMx5SfluKaTBkuYhDtA8Y49kNtm2SNOMkUIKJKC9/pAXGtGGMCERl6+5qhOwHVK/TySxlHh7EzGNkDhdqWRnnDnM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706921442; c=relaxed/simple;
-	bh=AtMiQtE8aAJVCZGBMVK3ZcGu3LOeGL5Z4Oq0ih+F0G8=;
+	s=arc-20240116; t=1706921444; c=relaxed/simple;
+	bh=BFkovf9z3h2O/Zj7FehocK22dRLk7/+hP9pwgz2IbGU=;
 	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
-	 To:Cc:Content-Type; b=Z5mN1vScp9/IdfiA+wYPGbornroKan8L5JJNszVM4fUCyNVf0VggTUcG7JIjRAn10+SFENxRQu9e+pho8g548Z93v8C5qN1blcaswyBE7gMQlL+gt094+rw3fb736fwoPhxf1/FqTQOrR0CJPS/PNFcqSAnCsrPkRaW3Z3EMWWQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--steadmon.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=Gp28FXrU; arc=none smtp.client-ip=209.85.219.201
+	 To:Cc:Content-Type; b=KUYj4wFZ94wYSC3c8RW7B6fHLfrguoyymHRMGoo21X2nNltdZhxCNoVePn823SoMklpZ48c1VFkidK1yC0QpJiYgTKyMsETki5591IWMtEgwmITz+bKZrt2yutGm8Vsc8Yquml70ai33lpE/5jA58rX+c9ZQbHMX5Bnk6kLEyTI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--steadmon.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=gywh0mWb; arc=none smtp.client-ip=209.85.128.201
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--steadmon.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="Gp28FXrU"
-Received: by mail-yb1-f201.google.com with SMTP id 3f1490d57ef6-dc6b269686aso3898040276.1
-        for <git@vger.kernel.org>; Fri, 02 Feb 2024 16:50:41 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="gywh0mWb"
+Received: by mail-yw1-f201.google.com with SMTP id 00721157ae682-60420dcb127so17003077b3.1
+        for <git@vger.kernel.org>; Fri, 02 Feb 2024 16:50:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1706921440; x=1707526240; darn=vger.kernel.org;
+        d=google.com; s=20230601; t=1706921442; x=1707526242; darn=vger.kernel.org;
         h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
          :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=cVROZgRCYYjvX4iQzXA0HgvWzMdib79l9N9wUFJRqjw=;
-        b=Gp28FXrUahZX7oRPqgIJQIobr4f/GL2q53rEhTggk0LiflKuwt/WQid82PLnmCRLkJ
-         SbaPPWwPo3ukHE7p4yZMOC18IViIXPM8kE54x16Cn+MnqacLIOyEY59oA/QSL5EuOLwh
-         oyBUzHx0TXPaV941XhP/W38J2cYDmszxQZk3Y3dKfeECoAfkoJAVhOoijQzL/ltZKV0a
-         bbPyoStcixKCbLUQ2UE8Omu1tyeSIb4SY6veJPe7hhEayRFzt3czx9n7TJGaxU3NY9KI
-         zh+AbnS7mYDqBt+qyPT3f2/qurkgBCGy2gKRnUVb/TSZdedPXndShdtsoGGCuiTX3pe5
-         bwgg==
+        bh=Ik1LLyHE1sLsNq5BQyDgfQO92otwf9v4YaUoiA61F6M=;
+        b=gywh0mWbGk+PMFuLHoBcnlZ9NTGH6dYX7o+Tq5QEz5Pkofvhb1HuMu3xmbBjgTf/bq
+         FM88fpeOiKVmT/CaZONitUu5cvon//C1E1WQ077YYwZH/dTdJYRUkMpWaPkMUeHq3b68
+         96d1qXjyI0JtqFrmw2PipPdJryOeDuvwdAJtU0iw+mO+mU7hHkf7hFf8OVudttBMekES
+         JQ5Nicp6M20ostVfrTbQxpIcU6xAAZy6qIQLFSW8TNnJf68BNTIjI8+/zqPiHM59zInK
+         3QxoIpwVzjwO+XSvF/SVAaHdce3KxGyLces9DsmsSkszmWJVAd+lj+AKSZhWsV8M5uHN
+         ZPNA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1706921440; x=1707526240;
+        d=1e100.net; s=20230601; t=1706921442; x=1707526242;
         h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
          :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=cVROZgRCYYjvX4iQzXA0HgvWzMdib79l9N9wUFJRqjw=;
-        b=sQjDH7edVzf+yyi6sreDwBLP5bn96h5ohmGViom2BF2uGNSRw0DtWQkY5N0UBvXAMt
-         GoyQ9kaP1uT3r9LGnN6EJ93cKcGd+h80XYYvSAvYIQEVJGuRzuhrNkWmPhnLwTN1ddXX
-         xzCSuyIOPJcto9aRlssp/iao7fZzZQPDrNT5mSYPg3Q2f192X17xbAtu0I1M0GmOzA2O
-         4E36jSLaDOgmGXEyoIgqSh9YP8Ka6bJpb6UOGzP7yI9+iGBsy4iyyraZ2hSgmApx9w1P
-         0k04TsHB0Mjc8NrbmA5P+eobnZoUQ9HwHkWzlniOeurSqFstLOfFtJyhp/9kYhpah6we
-         +5mg==
-X-Gm-Message-State: AOJu0Yw/LGicNoaTjal8MsRPcBB6X7YzzzH2tqwE1LZWPdp5+ZWvdHm4
-	4Gz1JAo2wLRJqBd5yw+or9Fn+uL+FvfsoWRjJCK8196GKq85PQFik0HGkl//4/p0Oy+5iWThrgu
-	uScUNknX1+r7IERZn7JB0KBU2Go5ckMICGBZ4GLeH7ubrx76r8krLI44eGqW9AOzUYGQaiI27lr
-	5P12Hj3fh+wzJwk9w0ZAncWsnUd4Z6FMOJ28buPxI=
-X-Google-Smtp-Source: AGHT+IGByA6gRo//9wLnu3lRV7t91EiOzK7cC8w0wWZhazosw/zAQ99LUOu0UrNfs/RMV7decKKFyFGFi8iGwQ==
+        bh=Ik1LLyHE1sLsNq5BQyDgfQO92otwf9v4YaUoiA61F6M=;
+        b=MJ3/Ju9MM+BO1ZQ4cabgvDpX6KnuaxqL+1rzHyWxKeDo6aQwbu0DqYY+RPwFcEVwRI
+         jY2kPyOCbllwOoE0xuZHKHESh52d8tcoBttyvemNjo8+pzTGkxwbPVfh7J2ayBv3ixHe
+         QbBqF5Iibdbtct7hHn/y0bdpF4Cnu5zI0SN3o1YJe3oP4rOb04JdAm8Dhj8+hty2bAVf
+         BmLfVmpMYFavXjBWVwrUOJUIIe5DZ5QVF6900G8PI3WHp3aUM5aZ0j6orN/2c5we1sqI
+         jPvD0SYyYsqSt8iWwx8fOYOBzncDUEokZZtM6F3S/q7D+cTFCyBBD42IT1x+ZodmpZr1
+         XPeg==
+X-Gm-Message-State: AOJu0YwncuUXiKQQOod7NSDyjpdPNojikjSjA5HclPRv0iuzoVJhcyHK
+	EaRxSbBe+ZfEPx4g8RaZlE3xqEkRq2gnL569OYr6fVkZ3C5VsMsg3fqA+h97UNZJvYlyI+FElW9
+	m82MwDOMNXKseP8sjBBu0kM/vIS0c9QGnxVxTPD9QsfSXWEv2knnm4ncFEL81GM4ie7q9tgWLWk
+	ktfxzFpthY2A3mhPLMo+5M62BuUh+8TgcJd7pXavU=
+X-Google-Smtp-Source: AGHT+IHpEzFQ+VUfC6AeECewDKcRpFM3xRmGbvtCvTIDLc1TjnKzfYK3cbNr0oXgtOOuYZGfF57CM6kYpj7jqA==
 X-Received: from lunarfall.svl.corp.google.com ([2620:15c:2d3:204:705c:77af:6ef2:8f42])
- (user=steadmon job=sendgmr) by 2002:a05:6902:2012:b0:dc6:ece2:634c with SMTP
- id dh18-20020a056902201200b00dc6ece2634cmr138335ybb.11.1706921440124; Fri, 02
- Feb 2024 16:50:40 -0800 (PST)
-Date: Fri,  2 Feb 2024 16:50:28 -0800
+ (user=steadmon job=sendgmr) by 2002:a05:690c:ece:b0:5ff:6e82:ea31 with SMTP
+ id cs14-20020a05690c0ece00b005ff6e82ea31mr44935ywb.3.1706921442018; Fri, 02
+ Feb 2024 16:50:42 -0800 (PST)
+Date: Fri,  2 Feb 2024 16:50:29 -0800
 In-Reply-To: <cover.1706921262.git.steadmon@google.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -59,51 +59,96 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 Mime-Version: 1.0
 References: <cover.1705443632.git.steadmon@google.com> <cover.1706921262.git.steadmon@google.com>
 X-Mailer: git-send-email 2.43.0.594.gd9cf4e227d-goog
-Message-ID: <e1b89ae93e930cd902d1527955d588c3d0c15490.1706921262.git.steadmon@google.com>
-Subject: [RFC PATCH v2 3/6] test-tool run-command testsuite: remove hardcoded filter
+Message-ID: <b5665386b56df91fa5d95ee5b11288b5853546f0.1706921262.git.steadmon@google.com>
+Subject: [RFC PATCH v2 4/6] test-tool run-command testsuite: support unit tests
 From: Josh Steadmon <steadmon@google.com>
 To: git@vger.kernel.org
 Cc: johannes.schindelin@gmx.de, peff@peff.net, phillip.wood@dunelm.org.uk, 
 	gitster@pobox.com
 Content-Type: text/plain; charset="UTF-8"
 
-`test-tool run-command testsuite` currently assumes that it will only be
-running the shell test suite, and therefore filters out anything that
-does not match a hardcoded pattern of "t[0-9][0-9][0-9][0-9]-*.sh".
+Teach the testsuite runner in `test-tool run-command testsuite` how to
+run unit tests: if TEST_SHELL_PATH is not set, assume that we're running
+the programs directly from CWD, rather than defaulting to "sh" as an
+interpreter.
 
-Later in this series, we'll adapt `test-tool run-command testsuite` to
-also support unit tests, which do not follow the same naming conventions
-as the shell tests, so this hardcoded pattern is inconvenient.
+With this change, you can now use test-tool to run the unit tests:
+$ make
+$ cd t/unit-tests/bin
+$ ../../helper/test-tool run-command testsuite
 
-Since `testsuite` also allows specifying patterns on the command-line,
-let's just remove this pattern. As noted in [1], there are no longer any
-uses of `testsuite` in our codebase, it should be OK to break backwards
-compatibility in this case. We also add a new filter to avoid trying to
-execute "." and "..", so that users who wish to execute every test in a
-directory can do so without specifying a pattern.
+This should be helpful on Windows to allow running tests without
+requiring Perl (for `prove`), as discussed in [1] and [2].
 
-[1] https://lore.kernel.org/git/850ea42c-f103-68d5-896b-9120e2628686@gmx.de/
+This again breaks backwards compatibility, as it is now required to set
+TEST_SHELL_PATH properly for executing shell scripts, but again, as
+noted in [2], there are no longer any such invocations in our codebase.
+
+[1] https://lore.kernel.org/git/nycvar.QRO.7.76.6.2109091323150.59@tvgsbejvaqbjf.bet/
+[2] https://lore.kernel.org/git/850ea42c-f103-68d5-896b-9120e2628686@gmx.de/
 
 Signed-off-by: Josh Steadmon <steadmon@google.com>
 ---
- t/helper/test-run-command.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ t/helper/test-run-command.c | 18 +++++++++++++++---
+ 1 file changed, 15 insertions(+), 3 deletions(-)
 
 diff --git a/t/helper/test-run-command.c b/t/helper/test-run-command.c
-index a41a54d9cb..e6bd792274 100644
+index e6bd792274..a0b8dc6fd7 100644
 --- a/t/helper/test-run-command.c
 +++ b/t/helper/test-run-command.c
-@@ -175,9 +175,7 @@ static int testsuite(int argc, const char **argv)
- 	while ((d = readdir(dir))) {
- 		const char *p = d->d_name;
+@@ -158,6 +158,8 @@ static int testsuite(int argc, const char **argv)
+ 		.task_finished = test_finished,
+ 		.data = &suite,
+ 	};
++	struct strbuf progpath = STRBUF_INIT;
++	size_t path_prefix_len;
  
--		if (*p != 't' || !isdigit(p[1]) || !isdigit(p[2]) ||
--		    !isdigit(p[3]) || !isdigit(p[4]) || p[5] != '-' ||
--		    !ends_with(p, ".sh"))
-+		if (!strcmp(p, ".") || !strcmp(p, ".."))
- 			continue;
+ 	argc = parse_options(argc, argv, NULL, options,
+ 			testsuite_usage, PARSE_OPT_STOP_AT_NON_OPTION);
+@@ -165,9 +167,14 @@ static int testsuite(int argc, const char **argv)
+ 	if (max_jobs <= 0)
+ 		max_jobs = online_cpus();
+ 
++	/*
++	 * If we run without a shell, we have to provide the relative path to
++	 * the executables.
++	 */
+ 	suite.shell_path = getenv("TEST_SHELL_PATH");
+ 	if (!suite.shell_path)
+-		suite.shell_path = "sh";
++		strbuf_addstr(&progpath, "./");
++	path_prefix_len = progpath.len;
+ 
+ 	dir = opendir(".");
+ 	if (!dir)
+@@ -180,13 +187,17 @@ static int testsuite(int argc, const char **argv)
  
  		/* No pattern: match all */
+ 		if (!argc) {
+-			string_list_append(&suite.tests, p);
++			strbuf_setlen(&progpath, path_prefix_len);
++			strbuf_addstr(&progpath, p);
++			string_list_append(&suite.tests, progpath.buf);
+ 			continue;
+ 		}
+ 
+ 		for (i = 0; i < argc; i++)
+ 			if (!wildmatch(argv[i], p, 0)) {
+-				string_list_append(&suite.tests, p);
++				strbuf_setlen(&progpath, path_prefix_len);
++				strbuf_addstr(&progpath, p);
++				string_list_append(&suite.tests, progpath.buf);
+ 				break;
+ 			}
+ 	}
+@@ -213,6 +224,7 @@ static int testsuite(int argc, const char **argv)
+ 
+ 	string_list_clear(&suite.tests, 0);
+ 	string_list_clear(&suite.failed, 0);
++	strbuf_release(&progpath);
+ 
+ 	return ret;
+ }
 -- 
 2.43.0.594.gd9cf4e227d-goog
 
