@@ -1,86 +1,98 @@
-Received: from mail-pj1-f73.google.com (mail-pj1-f73.google.com [209.85.216.73])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9197B1FCC
-	for <git@vger.kernel.org>; Sat,  3 Feb 2024 01:48:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.73
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74D85101C1
+	for <git@vger.kernel.org>; Sat,  3 Feb 2024 04:43:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1706924901; cv=none; b=RASNztCSgVv8n9asDqOmSU+U3Cvh4rYw0jq7mcwLvIx0uUr1aMuuRIlNkJDEkpMQVrXH6WnvZ0YjPRtYhvCcAzPBlUfg8CmQote+i7i89rQ/iBkXjo7RieWRhCZgXdLxHTo/X05uGyzgZW4EWHkJ2+KP7s1/darHYT44PGIcjRg=
+	t=1706935397; cv=none; b=pAAgZAj4j+2mOCiGjILX/rbZSrZ63jjKsb9GTnyZc3trdZOjHnSl1n4kypk48Ga5TBtfHiNOYzLn8Vz29iDP9keekyUD49XzoJSJ2bNtTnGADRUoX6oF9XLhsjvwTCUtEtLCZ1H7qc8k7S7syKN3rRR3EmindzW3tFQgONcBEPA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1706924901; c=relaxed/simple;
-	bh=1y7Re0S60/nxUfGPZdTtJJ6lZPQ6nwdtGTiukNf/l3c=;
-	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
-	 To:Cc:Content-Type; b=GKWKQ8qQLwNiMmYL7hOkqpOPFfTuNFrTO+ODuJgAPJJDnWulKNPQdp7dtvBiJR8ymQf9WUU8e8hvAacjGQUeA6xGX5FRUuAxZu9hU+qjG9ostuN+uH0i/26sCq+9q31f3fwOGAOFAWFO/Pnb+9JIYJEgUrW7LN9vLRk2dk2DEog=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--linusa.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=AOSNhN4V; arc=none smtp.client-ip=209.85.216.73
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--linusa.bounces.google.com
+	s=arc-20240116; t=1706935397; c=relaxed/simple;
+	bh=cfyzWbvOJw6sHtfD3OspUDIYqlpHDnqKik/YVf3SDf8=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=N0v2zEZhaY77XDLxczaeRqPAZS4/zpwU5irt9LgifJZ/OVhL4U6DL1g0tHmvAa3VpbxoyMLTtA0hg5D/pb70jhXDQYxex5NJeqAbrly5PKPReS05Px4VeSXxNgyIwkDu9DY89g198sK4xa5KxvJh7zzfdwpLK9ay3rXEAZJqrAE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=pX7Rq1Ls; arc=none smtp.client-ip=64.147.108.70
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="AOSNhN4V"
-Received: by mail-pj1-f73.google.com with SMTP id 98e67ed59e1d1-29653f86832so620348a91.1
-        for <git@vger.kernel.org>; Fri, 02 Feb 2024 17:48:20 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1706924900; x=1707529700; darn=vger.kernel.org;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=1y7Re0S60/nxUfGPZdTtJJ6lZPQ6nwdtGTiukNf/l3c=;
-        b=AOSNhN4VgoxSaiuvpfGA+wPsywEZAyXUL272qTakztY4Bjc8VonDl2bTSRtOz2wGPt
-         4EuMFqvG8/yqCLlXYP1qw9WMieiB6FrZGS4WDP8S16P0YCbmfuKtZf9enb4itzOGoN5T
-         x/iIrdWlkPjujCmtyU1z/OdYmp6+O+kEuF3NfnJsQiyETbE7QUh2JcBGYOq2nQqvlOFe
-         +y8tjVt29Jp8wWro+guI94R4Uo3TS5Tnk5xTZRk7QxlTID5ItUk7Wnute2fc0PVgAqQX
-         R1hJ9MpgTs6sz+1KLVwxgMesOqwr5xusLDzuiuPMYx3zXIq++W9fptwmHKM/1BdF9jCJ
-         +uyA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1706924900; x=1707529700;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=1y7Re0S60/nxUfGPZdTtJJ6lZPQ6nwdtGTiukNf/l3c=;
-        b=VTnXVQr4uAE44xacVM8FXAO4SajcZC7sDtB7MmT8GV24dXkQSkcIkiJC+jZBJStV6W
-         loLgfiBjTgVw7+UITg/6su5ezgynquFPPq59Ov7rhmeicMyZiVJyOqXz8VINFMACsRdy
-         HUCd25lYSnR50bQF9lMxzwiwvue2gnhiPhLop2/GGLPCYd/mXi9ByDQ+WlA4E5nLqtsE
-         Ee5C561z4EHza2WYonsuN2Giz8J9N6R/g5InImr33GBdpYpDxy3CYQ6GA78MipJFbtZ+
-         tcGPC+QhEo2gZYMi7c0uOW4Lv7knKqayPY0fXFrKcZZhaUDULqw5GxvwdPpZX9x6R0Aw
-         huTQ==
-X-Gm-Message-State: AOJu0YzqVMAPofVDVmWloJVTlgdwa0pCq9boIv1yS969V1xTVBKoVZz+
-	5nf8TNNUuzSWrn0vtKrK4yxA6Iaz/QoZNOMgjqJpEzLy1tqPnzjLVSiKW6CCPXkzORHjOdXldLk
-	nkA==
-X-Google-Smtp-Source: AGHT+IHEKyvT+vITC7ckm4CM9T8PQkU7TZVxmTkTC23rjTYH4CKN/I14bAi6VBjn20YxHDLJkBOVgU0g6N0=
-X-Received: from fine.c.googlers.com ([fda3:e722:ac3:cc00:7f:e700:c0a8:2221])
- (user=linusa job=sendgmr) by 2002:a17:90b:35c9:b0:296:4d0:5840 with SMTP id
- nb9-20020a17090b35c900b0029604d05840mr9378pjb.4.1706924898808; Fri, 02 Feb
- 2024 17:48:18 -0800 (PST)
-Date: Fri, 02 Feb 2024 17:48:17 -0800
-In-Reply-To: <xmqqttmrx1ro.fsf@gitster.g>
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="pX7Rq1Ls"
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id E0F321CBE6A;
+	Fri,  2 Feb 2024 23:43:08 -0500 (EST)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=cfyzWbvOJw6sHtfD3OspUDIYqlpHDnqKik/YVf
+	3SDf8=; b=pX7Rq1LsRuSJBQRjDTsWGFbYynGNfAOp1Sqkqi/nYZT6XDyku014V0
+	XmWa79tflrCZZuMb8C8EHfYstb/x3XdhK8LhPF7/x2nckF6frIig7rwae0vAPyxO
+	pJC2xLEktRJe6L9hRZ1HZfCHLXzVsz0ziG3eDoSw3GDiaxhn1AWD8=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id D85171CBE68;
+	Fri,  2 Feb 2024 23:43:08 -0500 (EST)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.165.85])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 425B11CBE65;
+	Fri,  2 Feb 2024 23:43:08 -0500 (EST)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Linus Arver <linusa@google.com>
+Cc: Linus Arver via GitGitGadget <gitgitgadget@gmail.com>,
+  git@vger.kernel.org,  Christian Couder <chriscool@tuxfamily.org>,  Emily
+ Shaffer <nasamuffin@google.com>,  Josh Steadmon <steadmon@google.com>,
+  "Randall S. Becker" <rsbecker@nexbridge.com>
+Subject: Re: [PATCH v3 05/10] trailer: make trailer_info struct private
+In-Reply-To: <owlycyte1hhj.fsf@fine.c.googlers.com> (Linus Arver's message of
+	"Fri, 02 Feb 2024 17:09:12 -0800")
+References: <pull.1632.v2.git.1706308737.gitgitgadget@gmail.com>
+	<pull.1632.v3.git.1706664144.gitgitgadget@gmail.com>
+	<c19c1dcc592186d8da2857692f4ebbfe35adfac0.1706664145.git.gitgitgadget@gmail.com>
+	<xmqqplxgyq7f.fsf@gitster.g> <owlycyte1hhj.fsf@fine.c.googlers.com>
+Date: Fri, 02 Feb 2024 20:43:06 -0800
+Message-ID: <xmqq4jeqtaxx.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-References: <pull.1632.v2.git.1706308737.gitgitgadget@gmail.com>
- <pull.1632.v3.git.1706664144.gitgitgadget@gmail.com> <465dc51cdcba28d235241021bc52369f6082d329.1706664145.git.gitgitgadget@gmail.com>
- <xmqqttmrx1ro.fsf@gitster.g>
-Message-ID: <owly1q9u1foe.fsf@fine.c.googlers.com>
-Subject: Re: [PATCH v3 08/10] trailer: move arg handling to interpret-trailers.c
-From: Linus Arver <linusa@google.com>
-To: Junio C Hamano <gitster@pobox.com>, 
-	Linus Arver via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, Christian Couder <chriscool@tuxfamily.org>, 
-	Emily Shaffer <nasamuffin@google.com>, Josh Steadmon <steadmon@google.com>, 
-	"Randall S. Becker" <rsbecker@nexbridge.com>
-Content-Type: text/plain; charset="UTF-8"
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ BA3DD2FC-C24E-11EE-83AA-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
 
-Junio C Hamano <gitster@pobox.com> writes:
+Linus Arver <linusa@google.com> writes:
 
-> "Linus Arver via GitGitGadget" <gitgitgadget@gmail.com> writes:
+>>> +size_t trailer_block_start(struct trailer_info *info);
+>>> +size_t trailer_block_end(struct trailer_info *info);
+>>> +int blank_line_before_trailer_block(struct trailer_info *info);
+>>
+>> And we need new accessors, which is a good change regardless of the
+>> answer to the "do we really want an extra pointer dereference?
+>> Shouldn't the existing 'private' and 'internal' label we see below
+>> sufficient?" question.
 >
-> [...]
+> I am very surprised with your response here, because I was expecting the
+> complete opposite reaction from reviewers --- something like
 >
-> Other than that, the main thrust of this step seems sensible.
+>     Hmph, we have to write accessor functions now when before we could
+>     just reach inside the struct directly? Isn't this just adding
+>     needless verbosity?
 >
-> Thanks.
+> (perhaps with more dissatisfaction). Something tells me you meant "bad
+> change" but accidentally wrote "good change". Am I correct?
 
-Quick update: I've broken down patches 3 and 4 into smaller pieces, and
-am now ready to break this one down, too.
+I often make typoes and screw up my double negations, but not this
+time.  While I still suspect that the extra secrecy afforded by
+using a pointer to an opaque structure is something unnecessary
+between friends, as coding convention, it would be a good change to
+introduce accessors and have them used by the API users, i.e. code
+outside the API implementation.
 
-Hopefully sometime over the weekend I'll have some answers ready for the
-many good questions you've raised. Thanks.
+You can still "git grep" for references to the ".trailer_private"
+(or whatever the "private" members are named by convention) member
+outside the trailer "client code" to see if there are people who are
+too intimate than they should be that way, as they should all be
+using the published accessors.
+
