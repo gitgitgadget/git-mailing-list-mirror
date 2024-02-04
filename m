@@ -1,97 +1,181 @@
-Received: from 9.mo550.mail-out.ovh.net (9.mo550.mail-out.ovh.net [178.32.108.172])
+Received: from sender4-of-o54.zoho.com (sender4-of-o54.zoho.com [136.143.188.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 113A62C68D
-	for <git@vger.kernel.org>; Sun,  4 Feb 2024 21:59:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=178.32.108.172
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707083966; cv=none; b=GP9xeTmgpwsDGPFAgsabalN5Pc5OaCztUTHVIGvWKtPAqCLEVe0TRKkYvIrXZKHQw38SMg6Hjz0huZAbyIDKL2UYsQ7hkw82JzDTzVNqI/0E1UBJ/N8urTB6JH/UfsRoFgWQbCI+SQ7xgToe1SZLtrSf+i08/LBURWAwiIFSlJk=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707083966; c=relaxed/simple;
-	bh=ZbW0XBpXgAowPyaT9yOwoFzX1r1BPzgzsjU18I1tZjM=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ul2F35/EApxUqQh/KIyFksiBrcyHnxNkBlzk6Wo7L6HP64ekiXrsWTTDARQGihi6gT2eSKYJrzRL+x7fPEfhdNVvUPe7JcZk1lh1SZQ5v6sE3SIyrvSNMWNOW62B8+SQVCH6JFtzNtbvaek6vqa0/NxZVLs/OF5io0xtPDxbbVw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=devyard.org; spf=pass smtp.mailfrom=devyard.org; arc=none smtp.client-ip=178.32.108.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=devyard.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=devyard.org
-Received: from director8.ghost.mail-out.ovh.net (unknown [10.108.25.166])
-	by mo550.mail-out.ovh.net (Postfix) with ESMTP id 37E0C2668F
-	for <git@vger.kernel.org>; Sun,  4 Feb 2024 18:54:33 +0000 (UTC)
-Received: from ghost-submission-6684bf9d7b-z4d9m (unknown [10.108.54.55])
-	by director8.ghost.mail-out.ovh.net (Postfix) with ESMTPS id EC8671FD65;
-	Sun,  4 Feb 2024 18:54:32 +0000 (UTC)
-Received: from devyard.org ([37.59.142.107])
-	by ghost-submission-6684bf9d7b-z4d9m with ESMTPSA
-	id UDPCN2jdv2XGEgAAbck5jQ
-	(envelope-from <ypsah@devyard.org>); Sun, 04 Feb 2024 18:54:32 +0000
-Authentication-Results:garm.ovh; auth=pass (GARM-107S00188968416-08b6-4ec3-8d22-14fa806dc18e,
-                    2F615BA836ACE59B185ACC479DFD3D80C8A04DFC) smtp.auth=ashpy@devyard.org
-X-OVh-ClientIp:213.10.167.74
-From: Quentin Bouget <ypsah@devyard.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55FDE2C689
+	for <git@vger.kernel.org>; Sun,  4 Feb 2024 22:14:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.54
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1707084873; cv=pass; b=ibyzsZQK6OE/PuGoH3Lp3vi/NIPHXQ/s1WNwO2usqE76qmEAki4EOR4crhfb4T8f4g5XUWnu4tUuyPBfcpXtHsl877B/Inecm3Gnsgh8QueofrBUqDGaDCIOLC2OAR0eXlKeiWf0eXyMryBf1bHmogtvM9A38hnR46iFxUyljd4=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1707084873; c=relaxed/simple;
+	bh=sS2vTQpNTptpSYO8d0Az4dG3SNdnvUxkGXVTjZ19Ndk=;
+	h=Date:From:To:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition; b=ic3Lw3nzNjtxut0H3dqoxYGc9K5GmYgxEJ+uSg4ke8tJKJaqANXbpo22s5SrSOcAD/uQelKBaFQ+WKaN3fTlv1gtWoh48tR2fRlPQqEe7WmUuAFKIkXj7BVumLXpmepjOH2ktjxp0oraOxwvqJABxJ4k/EJ+iK/gT+OPJi5w9Ck=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=zoho.com; spf=pass smtp.mailfrom=zoho.com; dkim=pass (1024-bit key) header.d=zoho.com header.i=mmogilvi+git@zoho.com header.b=LZL3gVFn; arc=pass smtp.client-ip=136.143.188.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=zoho.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=zoho.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=zoho.com header.i=mmogilvi+git@zoho.com header.b="LZL3gVFn"
+ARC-Seal: i=1; a=rsa-sha256; t=1707084869; cv=none; 
+	d=zohomail.com; s=zohoarc; 
+	b=Deqju/MMmwkAq/nVWt+jPlswhHw49kalpqKRE9gKCLspfowh4obMS0WeS7QC3RCBYEqGSkuxf9hSSpOHP28RCnkwCzYCEuhh/umgfE34LXEWU0xvHoD9gvFac6x7yjmXMRS8rYb5HLkBzsUNps+nAbLkpRqvgYwtWDJ0Efh6eCQ=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
+	t=1707084869; h=Content-Type:Date:Date:From:From:MIME-Version:Message-ID:Subject:Subject:To:To:Message-Id:Reply-To:Cc; 
+	bh=QBD2+Tml8/cij/GR7mHAYqgKiZHvijKXm1O+M5HQylA=; 
+	b=equvAqDhtsKor64cLMntAYklvg3Ui3T8bB7sTQjtl8IziXU9gOfck4EuUrFKFGbWnkOTicUBUsj+vL2y5MkMWJHUlH57bNaqNU+27HDWZXTyLLrAypuGDdm4mhtaYe1NV1oNSmrRIE/TsXI9BqJDk2Y0VDlNrU6G/ZIgXy2yOlE=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+	dkim=pass  header.i=zoho.com;
+	spf=pass  smtp.mailfrom=mmogilvi+git@zoho.com;
+	dmarc=pass header.from=<mmogilvi+git@zoho.com>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1707084869;
+	s=zm2022; d=zoho.com; i=mmogilvi+git@zoho.com;
+	h=Date:Date:From:From:To:To:Subject:Subject:Message-ID:MIME-Version:Content-Type:Message-Id:Reply-To:Cc;
+	bh=QBD2+Tml8/cij/GR7mHAYqgKiZHvijKXm1O+M5HQylA=;
+	b=LZL3gVFnFkWPsD0zP67DPyER7vgPCuZQnzsUDADvxcT8Ch6XHaQawnlNvt1yB/Vj
+	rH1tz7xsL2RsOnxP/MFTye0u6OQ6LINZiGwjsj4Aiu0SyhRqVRb8MMi6AMigEUnSh/5
+	5s2+HdSVb9mPX/0/YxOd1b7i724RM4gRjrxXe4Wg=
+Received: from mmogilvi.dynu.net (75.70.202.171 [75.70.202.171]) by mx.zohomail.com
+	with SMTPS id 170708486773026.400363244894038; Sun, 4 Feb 2024 14:14:27 -0800 (PST)
+Received: by mmogilvi.dynu.net (Postfix, from userid 501)
+	id 6920147C3464; Sun,  4 Feb 2024 15:14:26 -0700 (MST)
+Date: Sun, 4 Feb 2024 15:14:26 -0700
+From: Matthew Ogilvie <mmogilvi+git@zoho.com>
 To: git@vger.kernel.org
-Cc: Quentin Bouget <ypsah@devyard.org>
-Subject: [PATCH 2/2] http: prevent redirect from dropping credentials during reauth
-Date: Sun,  4 Feb 2024 19:54:27 +0100
-Message-ID: <20240204185427.39664-3-ypsah@devyard.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240204185427.39664-1-ypsah@devyard.org>
-References: <20240204185427.39664-1-ypsah@devyard.org>
+Subject: submodules: multiple alternative relative URL schemes?
+Message-ID: <ZcAMQpQlVsV2w2y2@comcast.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Ovh-Tracer-Id: 15954283154963412405
-X-VR-SPAMSTATE: OK
-X-VR-SPAMSCORE: 0
-X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrgedvkedrfedukedguddujecutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfqggfjpdevjffgvefmvefgnecuuegrihhlohhuthemucehtddtnecunecujfgurhephffvvefufffkofgjfhgggfestdekredtredttdenucfhrhhomhepsfhuvghnthhinhcuuehouhhgvghtuceohihpshgrhhesuggvvhihrghrugdrohhrgheqnecuggftrfgrthhtvghrnhepveelgefhtdekffejtdeiffevheehgfefjedtffdvkefgudeghfeigeeugeehfffhnecukfhppeduvdejrddtrddtrddupddvudefrddutddrudeijedrjeegpdefjedrheelrddugedvrddutdejnecuvehluhhsthgvrhfuihiivgepfeenucfrrghrrghmpehinhgvthepuddvjedrtddrtddruddpmhgrihhlfhhrohhmpeeohihpshgrhhesuggvvhihrghrugdrohhrgheqpdhnsggprhgtphhtthhopedupdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdpoffvtefjohhsthepmhhoheehtddpmhhouggvpehsmhhtphhouhht
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+X-ZohoMailClient: External
 
-During a re-authentication (second attempt at authenticating with a
-remote, e.g. after a failed GSSAPI attempt), git allows the remote to
-provide credential overrides in the redirect URL and unconditionnaly
-drops the current HTTP credentials in favors of those, even when there
-aren't any.
+Background:
 
-This commit makes it so HTTP credentials are only overridden when the
-redirect URL actually contains credentials itself.
+At work we are switching to submodules to share various
+utility code between mostly-unrelated projects and programs.
 
-Signed-off-by: Quentin Bouget <ypsah@devyard.org>
----
- http.c | 18 ++++++++++++++++++
- 1 file changed, 18 insertions(+)
+When working on any one project, I commonly fetch and push
+preliminary changes beween numerous different sandboxes in
+various places (same machine, different machines, VM's, etc).
+Basically, I make extensive use of git's distributed nature.
 
-diff --git a/http.c b/http.c
-index ccea19ac47..caba9cac1e 100644
---- a/http.c
-+++ b/http.c
-@@ -2160,7 +2160,25 @@ static int http_request_reauth(const char *url,
- 	if (options && options->effective_url && options->base_url) {
- 		if (update_url_from_redirect(options->base_url,
- 					     url, options->effective_url)) {
-+			char *username = NULL, *password = NULL;
-+
-+			if (http_auth.username)
-+				username = xstrdup(http_auth.username);
-+			if (http_auth.password)
-+				password = xstrdup(http_auth.password);
-+
- 			credential_from_url(&http_auth, options->base_url->buf);
-+
-+			if (http_auth.username)
-+				free(username);
-+			else if (username)
-+				http_auth.username = username;
-+
-+			if (http_auth.password)
-+				free(password);
-+			else if (password)
-+				http_auth.password = password;
-+
- 			url = options->effective_url->buf;
- 		}
- 	}
--- 
-2.43.0
+Issue:
 
+However, submodules don't seem to streamline fetching/pushing
+the whole collection of modules together from varied sources
+very well, without manually configuring or manipulating each
+submodule and its' "remote"s individually.  For example, if
+I recursively clone from a local sandbox with local changes
+into another local sandbox, it will clone the main superproject
+from the local source, but the submodules will be downloaded
+from the URLs in the .gitmodules file, not the local copies
+(that might have local changes that will be missed).
+
+-----
+
+Relative URLs could maybe help, except there seems to be at least
+two common relative URL repository schemes/organizations that
+are often needed, and probably more:
+
+1. Subproject bare repositories are immediately adjacent to the
+superproject repository, such that relative URLs like
+"../submodule1.git" should work.
+
+This is probably common in web-based hosting of personal "forks"
+like in github, bitbucket, or similar.
+
+It is also the most obvious way to organize multiple
+semi-related repositories on a small self-hosted server.
+
+2. Or you want to fetch changes between sandboxes, perhaps
+to test code changes on multiple platforms, or to continue someone
+else's incomplete work.  In this case, relative links like
+"./.git/modules/submodule1" would probably work.  But bare/origin/main
+repositories would rarely be organized like this.
+
+3. "Official" configured upstream URLs may also be organized in other
+ways.  For example, in something like github, different upstream URLs
+may be "owned" by different owners, so they may URLs like
+"BASE/OWNER1/MODULE1.git", "BASE/OWNER2/MODULE2.git",
+with different and semi-random "OWNER"s, not amenable to template
+strings (see (E) below).  Or different submodule upstreams may be on
+completely different servers...
+
+-----
+
+Basically, I would like to restore or at least improve git's
+ability to transparently/smoothly work in a "distributed" manner
+(no "blesssed main upstream repositories") when a project
+requires certain submodules.
+
+Some Ideas:
+
+A. Is there something I'm missing?  Is there some good solution
+I just haven't stumbled over?  Any documentation URLs and/or
+keywords I should look for?
+
+B. Of course no matter what, you could always set up all your various
+remote URLs individually manually, or write special project-specific
+helper scripts.  But something more automated and built-in
+would be nice...
+
+C. future?: Potentially, the .gitmodules file could define multiple
+different URLs for each submodule, distinguished by named URL
+"schemes" that could be specified on the command line.
+"git clone", "git fetch", "git push", "git submodule", etc could
+all take an optional "scheme" argument of some kind to indicate
+which sets of URLs to use...
+
+D. future?: Potentially hard-code some schemes?  1 and 2 are probably the
+most common alternative relative URL schemes, so it might be worth
+explicitly supporting them without requiring any explicit configuration
+changes.  Maybe this would be adequate by itself; don't even support
+other "alternative" named schemes (multiple 3's)?
+
+E. future?: In some cases, a "scheme" for a whole set of URLs
+could maybe be simplified into a single URL template string.
+Substitute in the "base" and the submodule name to get a
+specific URL...
+
+F. Potentially add some optional fallback logic?  If it fails to
+fetch/clone from one URL, try another scheme instead?  (But this
+might leave things in a confusingly unpredictable/mixed state,
+particularly if the network is flakey...)
+
+G. Different approach: Instead of separate repositories, maybe
+the submodules could essentially all be in one repository, but
+distinguished by using different tags/namespaces in the "refs"
+hierarchy.  ("refs/heads/SUBMODULE/WHATEVER"?
+"refs/SUBMODULE/heads/WHATEVER"?)  The "original/main" upstream
+might still split up repositories, but clones/local changes/etc
+could be more self-contained this way...  (Working out all the
+nuances to streamline this idea might be a whole separate
+discussion...)
+
+H. "git subtree" instead of submodules: If it was up to me, I like
+the subtree solution.  Most of the time you can ignore the fact that
+some code is shared, and only need to worry about it when actually
+syncing/merging shared code between different projects, which is
+generally much rarer than day-to-day development tasks.
+But unfortunately subtrees seems to be somewhat unpopular, as
+currently implemented: Isolated in "contrib", doing graph traversal
+logic in shell script of all things (very slow, especially on
+Windows where many of my coworkers reside), etc.  And ultimately
+in my case I think I've already lost this argument.  So I'm trying
+to figure out how to make submodules work better.
+
+I. Any other ideas?
+
+-----
+
+In the short term, I expect I'll have to resort to (B) (custom scripts).
+
+In the longer term, depending on what people think and if I can find
+the time, maybe I could actually implement some of these ideas
+in git for a future release?  What do people think of these ideas?
+
+                - Matthew Ogilvie
