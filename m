@@ -1,106 +1,97 @@
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+Received: from 9.mo550.mail-out.ovh.net (9.mo550.mail-out.ovh.net [178.32.108.172])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A3B225542
-	for <git@vger.kernel.org>; Sun,  4 Feb 2024 20:17:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 113A62C68D
+	for <git@vger.kernel.org>; Sun,  4 Feb 2024 21:59:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=178.32.108.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707077871; cv=none; b=l3w9FyV0Ro+8QhYLMDvZcjhcgIFb9TTSjvLVJko4Qm42+GFp83xB/HWW5SagB6Ovf/bLTlIRUnulAP0jlai8uui2VOpbT2TdZ5Eh61mkidvHKJCxUltYDjy64Kb07KD43o2kQ/L0UApRTG7LYEBKOIiXcyd0wFfJbwsj9ExgwVQ=
+	t=1707083966; cv=none; b=GP9xeTmgpwsDGPFAgsabalN5Pc5OaCztUTHVIGvWKtPAqCLEVe0TRKkYvIrXZKHQw38SMg6Hjz0huZAbyIDKL2UYsQ7hkw82JzDTzVNqI/0E1UBJ/N8urTB6JH/UfsRoFgWQbCI+SQ7xgToe1SZLtrSf+i08/LBURWAwiIFSlJk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707077871; c=relaxed/simple;
-	bh=3Nh/qhV+GL1KKi8JBSY06b71y7gb0UysHr2hBeYLmN4=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=YQvU8cWvL/ZWB140av3Y1+5B+Fe/j3efVImZD9LxfKHoesMnKFosfNAhpJjr7LlS4YCisFqVbmhbv4VtqtIyZ8Cv4kG2bj3Q63w28EMtNLkylVQXK0X92mVEUgCZ7UD6x1H+9Nv8mQ+4wLFDhwacNh9QVncq/mlw17AwKFMACBk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=FuYzQfcK; arc=none smtp.client-ip=64.147.108.70
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="FuYzQfcK"
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 9F8921DB94E;
-	Sun,  4 Feb 2024 15:17:41 -0500 (EST)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=3Nh/qhV+GL1KKi8JBSY06b71y7gb0UysHr2hBe
-	YLmN4=; b=FuYzQfcKZRFYgxh4KH46lgLUa8o6azeqGlbRat76yC6+Y2TzqPGr3Y
-	SgFsumbcc6cjhFb9GDGkat5bXcxSx6Vk2j+LGXW069DORRpfHCaPe1ckTwc9h88t
-	wjowNcs32usMNjfhhvmmyNtUzvQKoNxmsgMT36nNPdblFQRp8mlY4=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 975DF1DB94D;
-	Sun,  4 Feb 2024 15:17:41 -0500 (EST)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.165.85])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id C5ED11DB94B;
-	Sun,  4 Feb 2024 15:17:40 -0500 (EST)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Philippe Blain via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-  Philippe Blain <levraiphilippeblain@gmail.com>
-Subject: Re: [PATCH] .github/PULL_REQUEST_TEMPLATE.md: add a note about
- single-commit PRs
-In-Reply-To: <pull.1665.git.git.1707069808205.gitgitgadget@gmail.com>
-	(Philippe Blain via GitGitGadget's message of "Sun, 04 Feb 2024
-	18:03:28 +0000")
-References: <pull.1665.git.git.1707069808205.gitgitgadget@gmail.com>
-Date: Sun, 04 Feb 2024 12:17:39 -0800
-Message-ID: <xmqqsf28oufw.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	s=arc-20240116; t=1707083966; c=relaxed/simple;
+	bh=ZbW0XBpXgAowPyaT9yOwoFzX1r1BPzgzsjU18I1tZjM=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=ul2F35/EApxUqQh/KIyFksiBrcyHnxNkBlzk6Wo7L6HP64ekiXrsWTTDARQGihi6gT2eSKYJrzRL+x7fPEfhdNVvUPe7JcZk1lh1SZQ5v6sE3SIyrvSNMWNOW62B8+SQVCH6JFtzNtbvaek6vqa0/NxZVLs/OF5io0xtPDxbbVw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=devyard.org; spf=pass smtp.mailfrom=devyard.org; arc=none smtp.client-ip=178.32.108.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=devyard.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=devyard.org
+Received: from director8.ghost.mail-out.ovh.net (unknown [10.108.25.166])
+	by mo550.mail-out.ovh.net (Postfix) with ESMTP id 37E0C2668F
+	for <git@vger.kernel.org>; Sun,  4 Feb 2024 18:54:33 +0000 (UTC)
+Received: from ghost-submission-6684bf9d7b-z4d9m (unknown [10.108.54.55])
+	by director8.ghost.mail-out.ovh.net (Postfix) with ESMTPS id EC8671FD65;
+	Sun,  4 Feb 2024 18:54:32 +0000 (UTC)
+Received: from devyard.org ([37.59.142.107])
+	by ghost-submission-6684bf9d7b-z4d9m with ESMTPSA
+	id UDPCN2jdv2XGEgAAbck5jQ
+	(envelope-from <ypsah@devyard.org>); Sun, 04 Feb 2024 18:54:32 +0000
+Authentication-Results:garm.ovh; auth=pass (GARM-107S00188968416-08b6-4ec3-8d22-14fa806dc18e,
+                    2F615BA836ACE59B185ACC479DFD3D80C8A04DFC) smtp.auth=ashpy@devyard.org
+X-OVh-ClientIp:213.10.167.74
+From: Quentin Bouget <ypsah@devyard.org>
+To: git@vger.kernel.org
+Cc: Quentin Bouget <ypsah@devyard.org>
+Subject: [PATCH 2/2] http: prevent redirect from dropping credentials during reauth
+Date: Sun,  4 Feb 2024 19:54:27 +0100
+Message-ID: <20240204185427.39664-3-ypsah@devyard.org>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20240204185427.39664-1-ypsah@devyard.org>
+References: <20240204185427.39664-1-ypsah@devyard.org>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- 727D5A76-C39A-11EE-AE6F-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
+Content-Transfer-Encoding: 8bit
+X-Ovh-Tracer-Id: 15954283154963412405
+X-VR-SPAMSTATE: OK
+X-VR-SPAMSCORE: 0
+X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrgedvkedrfedukedguddujecutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfqggfjpdevjffgvefmvefgnecuuegrihhlohhuthemucehtddtnecunecujfgurhephffvvefufffkofgjfhgggfestdekredtredttdenucfhrhhomhepsfhuvghnthhinhcuuehouhhgvghtuceohihpshgrhhesuggvvhihrghrugdrohhrgheqnecuggftrfgrthhtvghrnhepveelgefhtdekffejtdeiffevheehgfefjedtffdvkefgudeghfeigeeugeehfffhnecukfhppeduvdejrddtrddtrddupddvudefrddutddrudeijedrjeegpdefjedrheelrddugedvrddutdejnecuvehluhhsthgvrhfuihiivgepfeenucfrrghrrghmpehinhgvthepuddvjedrtddrtddruddpmhgrihhlfhhrohhmpeeohihpshgrhhesuggvvhihrghrugdrohhrgheqpdhnsggprhgtphhtthhopedupdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdpoffvtefjohhsthepmhhoheehtddpmhhouggvpehsmhhtphhouhht
 
-"Philippe Blain via GitGitGadget" <gitgitgadget@gmail.com> writes:
+During a re-authentication (second attempt at authenticating with a
+remote, e.g. after a failed GSSAPI attempt), git allows the remote to
+provide credential overrides in the redirect URL and unconditionnaly
+drops the current HTTP credentials in favors of those, even when there
+aren't any.
 
-> diff --git a/.github/PULL_REQUEST_TEMPLATE.md b/.github/PULL_REQUEST_TEMPLATE.md
-> index 952c7c3a2aa..65fa3a37173 100644
-> --- a/.github/PULL_REQUEST_TEMPLATE.md
-> +++ b/.github/PULL_REQUEST_TEMPLATE.md
-> @@ -4,4 +4,8 @@ a mailing list (git@vger.kernel.org) for code submissions, code reviews, and
->  bug reports. Nevertheless, you can use GitGitGadget (https://gitgitgadget.github.io/)
->  to conveniently send your Pull Requests commits to our mailing list.
->  
-> +If you use Gitgitgadget for a single-commit pull request, please *leave the pull
-> +request description empty*: your commit message itself should describe your
-> +changes.
-> +
->  Please read the "guidelines for contributing" linked above!
+This commit makes it so HTTP credentials are only overridden when the
+redirect URL actually contains credentials itself.
 
-Making it easier for contributors to come up with the right output
-is greatly appreciated.  I think "If you use Gitgitgadget for" ->
-"For" is probably a good change, for two reasons (one, we do not
-take pull request except for GGG gateway in the first place, and
-two, PR messages being similar to cover letters, you do not want to
-have a detailed PR message that (a) takes extra time to write, (b)
-can duplicate what the you already have written, and (c) could
-contradict what the commit log message says.
+Signed-off-by: Quentin Bouget <ypsah@devyard.org>
+---
+ http.c | 18 ++++++++++++++++++
+ 1 file changed, 18 insertions(+)
 
-I wonder if such a rule can be also enforced at the GGG side?  It
-apparently knows if it is dealing with a single-patch request or a
-multi-patch series (as the types of messages this documentation
-update tries to address are the only ones that get duplicates under
-the three-dash line), and I've seen GGG complain on the contents of
-the commit log message (e.g., "not signed off") so there is enough
-support to inspect things in a PR and add instruction to the PR
-discussion.  Unless the machinery GGG uses lack the ability to read
-the PR message (unlike the commit log messages that it can read
-apparently), it may be able to enforce that "for a single patch, PR
-message should be empty" rule before the /submit instruction.  It
-might make things even more helpful if it can notice the commit log
-message is similar enough or superset of PR message and refrain from
-inserting it after the three-dash line, but that might be asking too
-much ;-)
-
-Thanks for helping to improve the situation.
-
-Will queue.
+diff --git a/http.c b/http.c
+index ccea19ac47..caba9cac1e 100644
+--- a/http.c
++++ b/http.c
+@@ -2160,7 +2160,25 @@ static int http_request_reauth(const char *url,
+ 	if (options && options->effective_url && options->base_url) {
+ 		if (update_url_from_redirect(options->base_url,
+ 					     url, options->effective_url)) {
++			char *username = NULL, *password = NULL;
++
++			if (http_auth.username)
++				username = xstrdup(http_auth.username);
++			if (http_auth.password)
++				password = xstrdup(http_auth.password);
++
+ 			credential_from_url(&http_auth, options->base_url->buf);
++
++			if (http_auth.username)
++				free(username);
++			else if (username)
++				http_auth.username = username;
++
++			if (http_auth.password)
++				free(password);
++			else if (password)
++				http_auth.password = password;
++
+ 			url = options->effective_url->buf;
+ 		}
+ 	}
+-- 
+2.43.0
 
