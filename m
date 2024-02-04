@@ -1,86 +1,155 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f45.google.com (mail-wr1-f45.google.com [209.85.221.45])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F356611A
-	for <git@vger.kernel.org>; Sun,  4 Feb 2024 04:41:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89B546FBD
+	for <git@vger.kernel.org>; Sun,  4 Feb 2024 05:48:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707021677; cv=none; b=cOJXjXYj4XzR4H2+4RV0Zn09xCxl1pUzSk/GNRaPNG/bLftyIJono5Q3gkC+iuxG3KEsEojLnHopPsMJwIW3buLl80AkXXUBJLZITB7phzQAXaNptC+owMGBC6Ud1+kEf0+6Sz/N/HWjxLhF/11UnuhQ7YYDo0Ly5REPXPOw3xM=
+	t=1707025724; cv=none; b=Dafh8Xi4wOOXqBsKY9hnixo/7Szs5rEJKWCuG9Z9jMkAmZLREpaqsFEV2aFsmji/BiYa5mVbgkPzRvsvsmvYl5m6XIpQsLDQRgkLAYygxpbX7YlDL+4HAWgmb235a315UrarAuWIoerqRM2B8nW5Pws5KbPtm6ryKxx50WIgtXY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707021677; c=relaxed/simple;
-	bh=kyIbpB8+3X7Jmmdwq3pUPQSHh1wwRZiNTitxKgN3EtM=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=jCViMbYnNHSK4i0IhmrUNYaSPrynuFWZcIPtbc6vlrbOnGwGNVN1U5LKO8lNQZtgul1/EDkMiUnZ/ehFwgnPWMlPTan77Kg9rB3qUkTeBmmEWCLlAX0gs93PQPe/kKOEQC9u0YOdhwHffLEbnaHnhhIELbJNfPJKShPhEjlT7fU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
-Received: (qmail 28076 invoked by uid 109); 4 Feb 2024 04:41:08 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sun, 04 Feb 2024 04:41:08 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 18482 invoked by uid 111); 4 Feb 2024 04:41:06 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sat, 03 Feb 2024 23:41:06 -0500
-Authentication-Results: peff.net; auth=none
-Date: Sat, 3 Feb 2024 23:41:04 -0500
-From: Jeff King <peff@peff.net>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>, git@vger.kernel.org,
-	Phillip Wood <phillip.wood@dunelm.org.uk>,
-	SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>,
-	Adam Dinwoodie <adam@dinwoodie.org>, Patrick Steinhardt <ps@pks.im>
-Subject: Re: [PATCH v2 0/3] some unit-test Makefile polishing
-Message-ID: <20240204044104.GA295803@coredump.intra.peff.net>
-References: <20240129031540.GA2433764@coredump.intra.peff.net>
- <20240130053714.GA165967@coredump.intra.peff.net>
- <xmqqh6irwtkd.fsf@gitster.g>
- <b7b92f1a-9231-2f53-299e-ad58fc699284@gmx.de>
- <xmqqjznmtjr9.fsf@gitster.g>
+	s=arc-20240116; t=1707025724; c=relaxed/simple;
+	bh=+zzACZtjRyF+gYwxLYSivO//jjL7dlE0PjBMNESNhes=;
+	h=Message-ID:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=K4xRynd2hgtDE46C2/k+kAlwHNAIwXqSuB5KI3zK9p+oubf3K1kOVbyLEIEL04+xtSCPwbEj1lJBDAIyOCmmdr9vRDQu25EM9fRoTpnkZnK26rhacdxC84z1uP1YMuBVgaW/8q185iIfNMYp4W15QGcXETYOCEBylIijffJE968=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ICW97AAi; arc=none smtp.client-ip=209.85.221.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ICW97AAi"
+Received: by mail-wr1-f45.google.com with SMTP id ffacd0b85a97d-33b1d7f736bso1413170f8f.3
+        for <git@vger.kernel.org>; Sat, 03 Feb 2024 21:48:42 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1707025720; x=1707630520; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=c+skceXVkeKCQhUwU1BtieueuIBSjQo/3DOEAYKQuxA=;
+        b=ICW97AAi5C7W6qLFP5bHuy+WimiclJQ+FlAza4x68ub9jLnSv9ArXsf+YqK3HgP9qs
+         XkkIg8ohFFAf3mZfWOQ5ZM81xdu7wp0W1LUnAg79sC3bGOub4w6HZmIXt3R6q9SkI8Z9
+         fSGq9F8+Mx3S11Asy5s7yxZvVpxw0UcQlayIwvs1+XetCx8J7HoGbsQg6Cgnq176LKGh
+         vappscIsGVvhVfDUTUMYhROPKByqxBxAl8zysgfYgMQr5s2Sa2GSJ9S/rGxzdOTB5YQ0
+         oMxeqgVLXazcre97ZaWoNT545EHpV1S1aJeIpyC3c+uoFJRd9JWJ5rq0NfdvdZ7zsT92
+         cbeg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1707025720; x=1707630520;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=c+skceXVkeKCQhUwU1BtieueuIBSjQo/3DOEAYKQuxA=;
+        b=Lffgeu2FJBhmBsn1dlU9wtR2O9TCHFPmHHUatIlEGxBZOBf2RpwEVu3dN93aAy+xkF
+         Lmd4uVXNJCxbyWGRVZSYHCw9BVSd5VvvzpC8OU9Z0+5ehacKdB1A7TzpHwk399UrNThY
+         5J8IJtTav03MHDmHttZou1BE2U/I8IoovPP7hy4cxrQsTxrnSJlf5Fu5qqycwOwIBUpT
+         d5ugksiGUAnVfwlapCm/4De1EFuftDCUpH1Il3xqLvNETfVvJwf+aM/eo2HfGKrlKqt3
+         xyHlrJ8UliciiwZ8Ryo9pJJ4wgUQE7L8HUHECheGC7GHimC6bNFIxxC4wVRVq7MDhBP0
+         /LYw==
+X-Gm-Message-State: AOJu0Yz9xptMBs90a6mZF0od+W+y+jyIvJfS0YgHOLR9FBmLHkDK9df+
+	xPzooZ6KHJV374lHG6A+7OFzzjpWkmrPdD4aZpFr1Q9XRGX04pGmyaG3GZR4
+X-Google-Smtp-Source: AGHT+IEB/FvvmNUij7qlncyRsIsVW0wABMmL0XQwT8AlTGdQ65uoKz44IQDFe+FFDfz6iD/QKMYUng==
+X-Received: by 2002:adf:f5c3:0:b0:33a:fcc2:d850 with SMTP id k3-20020adff5c3000000b0033afcc2d850mr6064934wrp.36.1707025720354;
+        Sat, 03 Feb 2024 21:48:40 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id m5-20020adfe945000000b0033921c383b2sm3591221wrn.67.2024.02.03.21.48.39
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 03 Feb 2024 21:48:39 -0800 (PST)
+Message-ID: <pull.1646.v6.git.1707025718.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1646.v5.git.1706416952.gitgitgadget@gmail.com>
+References: <pull.1646.v5.git.1706416952.gitgitgadget@gmail.com>
+From: "Mohit Marathe via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Sun, 04 Feb 2024 05:48:36 +0000
+Subject: [PATCH v6 0/2] Replace atoi() with strtoi_with_tail()
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqjznmtjr9.fsf@gitster.g>
+To: git@vger.kernel.org
+Cc: Mohit Marathe <mohitmarathe@proton.me>
 
-On Fri, Feb 02, 2024 at 05:32:42PM -0800, Junio C Hamano wrote:
+Hello,
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> 
-> > The line 753 of that file (as can be seen at
-> > https://github.com/git/git/blob/38aa6559b0c513d755d6d5ccf32414ed63754726/config.mak.uname#L753)
-> 
-> Ouch.  When it is laid out like this it is very obvious why this is
-> broken, and what its workaround should be.
-> 
-> Thanks.  Let's queue this on top.
-> 
-> ------- >8 ------------- >8 ------------- >8 ------------- >8 -------
-> Subject: [PATCH] t/Makefile: say the default target upfront
-> 
-> Similar to how 2731d048 (Makefile: say the default target upfront.,
-> 2005-12-01) added the default target to the very beginning of the
-> main Makefile to prevent a random rule that happens to be defined
-> first in an included makefile fragments from becoming the default
-> target, protect this Makefile the same way.
-> 
-> This started to matter as we started to include config.mak.uname
-> and that included makefile fragment does more than defining Make
-> macros, unfortunately.
-> 
-> Helped-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+This patch series replaces atoi() with an updated version of strtol_i()
+called strtoi_with_tail (Credits: Junio C Hamano). The reasoning behind this
+is to improve error handling by not allowing non-numerical characters in the
+hunk header (which might happen in case of a corrupt patch, although
+rarely).
 
-Thanks both of you for identifying and fixing this. I should have been
-able to catch this, as it triggers with a simple "make" in the t/
-directory (rather than "make prove" or "make unit-test", which is of
-course what I checked).
+There is still a change to be made, as Junio says: "A corrupt patch may be
+getting a nonsense patch-ID with the current code and hopefully is not
+matching other patches that are not corrupt, but with such a change, a
+corrupt patch may not be getting any patch-ID and a loop that computes
+patch-ID for many files and try to match them up might need to be rewritten
+to take the new failure case into account." I'm not sure where this change
+needs to me made (maybe get_one_patchid()?). It would be great if anyone
+could point me to the correct place.
 
-Sorry I'm slow to chime in; I've been offline all week (and probably
-will be for another few days) due to a family emergency. But hopefully
-with this fix the topic is OK now.
+Thanks, Mohit Marathe
 
--Peff
+Mohit Marathe (2):
+  git-compat-util: add strtoi_with_tail()
+  patch-id: replace `atoi()` with `strtoi_with_tail`
+
+ builtin/patch-id.c | 12 ++++++++----
+ git-compat-util.h  | 18 ++++++++++++++----
+ 2 files changed, 22 insertions(+), 8 deletions(-)
+
+
+base-commit: 2a540e432fe5dff3cfa9d3bf7ca56db2ad12ebb9
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1646%2Fmohit-marathe%2Fupdate-strtol_i-v6
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1646/mohit-marathe/update-strtol_i-v6
+Pull-Request: https://github.com/gitgitgadget/git/pull/1646
+
+Range-diff vs v5:
+
+ 1:  f09b0838f04 ! 1:  98e516a7be7 git-compat-util: add strtoi_with_tail()
+     @@ Commit message
+          Signed-off-by: Mohit Marathe <mohitmarathe@proton.me>
+      
+       ## git-compat-util.h ##
+     -@@ git-compat-util.h: static inline int strtol_i(char const *s, int base, int *result)
+     +@@ git-compat-util.h: static inline int strtoul_ui(char const *s, int base, unsigned int *result)
+       	return 0;
+       }
+       
+     +-static inline int strtol_i(char const *s, int base, int *result)
+      +#define strtol_i(s,b,r) strtoi_with_tail((s), (b), (r), NULL)
+      +static inline int strtoi_with_tail(char const *s, int base, int *result, char **endp)
+     -+{
+     -+	long ul;
+     + {
+     + 	long ul;
+     +-	char *p;
+      +	char *dummy = NULL;
+     -+
+     + 
+      +	if (!endp)
+      +		endp = &dummy;
+     -+	errno = 0;
+     + 	errno = 0;
+     +-	ul = strtol(s, &p, base);
+     +-	if (errno || *p || p == s || (int) ul != ul)
+      +	ul = strtol(s, endp, base);
+      +	if (errno ||
+      +	    /*
+     @@ git-compat-util.h: static inline int strtol_i(char const *s, int base, int *resu
+      +	     */
+      +	   (dummy && *dummy) ||
+      +	    *endp == s || (int) ul != ul)
+     -+		return -1;
+     -+	*result = ul;
+     -+	return 0;
+     -+}
+     -+
+     - void git_stable_qsort(void *base, size_t nmemb, size_t size,
+     - 		      int(*compar)(const void *, const void *));
+     - #ifdef INTERNAL_QSORT
+     + 		return -1;
+     + 	*result = ul;
+     + 	return 0;
+ 2:  ee8f4ae991d = 2:  858d6f94e79 patch-id: replace `atoi()` with `strtoi_with_tail`
+
+-- 
+gitgitgadget
