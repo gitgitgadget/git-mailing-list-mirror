@@ -1,69 +1,106 @@
-Received: from 18.mo583.mail-out.ovh.net (18.mo583.mail-out.ovh.net [178.33.45.10])
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 113B025543
-	for <git@vger.kernel.org>; Sun,  4 Feb 2024 20:10:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=178.33.45.10
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A3B225542
+	for <git@vger.kernel.org>; Sun,  4 Feb 2024 20:17:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707077456; cv=none; b=TKzxoKXiI2yO9Ilf911sAY9FAIDnBJtEdNDKRSxDuxGAxeiAYCNOdKgwTJqsHRnc4d6ADbv5r9t5SH+X6GBsPOFSrIhmGuQuLGWqjVbrnJtaVwujKM/QYws7UqzyXyQ3ewWtQR0t+LAuaqtc2xiB9zMdAzvPRnJWgZso1BD/HRw=
+	t=1707077871; cv=none; b=l3w9FyV0Ro+8QhYLMDvZcjhcgIFb9TTSjvLVJko4Qm42+GFp83xB/HWW5SagB6Ovf/bLTlIRUnulAP0jlai8uui2VOpbT2TdZ5Eh61mkidvHKJCxUltYDjy64Kb07KD43o2kQ/L0UApRTG7LYEBKOIiXcyd0wFfJbwsj9ExgwVQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707077456; c=relaxed/simple;
-	bh=e0DuWMhu9g4/318aPBkgBXPnWq6g6zflIiHUu4GMLrk=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=P8h0FkycCAH59bNDV+SzeAWoZa2MUDqZtA6UeiX2M3IwmTEiAn4VZ5f3MTJnUa1hEN31wtwFH609KFTSxsugwCEpYRzxJ07dLncP+Xnv/9RknwIA/cpCxIufwdv8fG+zN0S2VivRTbRcDIyIUfRFa9863hSga1wq3q/eSOsWRi0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=devyard.org; spf=pass smtp.mailfrom=devyard.org; arc=none smtp.client-ip=178.33.45.10
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=devyard.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=devyard.org
-Received: from director8.ghost.mail-out.ovh.net (unknown [10.109.140.177])
-	by mo583.mail-out.ovh.net (Postfix) with ESMTP id 8DDB827EBF
-	for <git@vger.kernel.org>; Sun,  4 Feb 2024 18:54:32 +0000 (UTC)
-Received: from ghost-submission-6684bf9d7b-z4d9m (unknown [10.108.54.55])
-	by director8.ghost.mail-out.ovh.net (Postfix) with ESMTPS id 50CC61FE42;
-	Sun,  4 Feb 2024 18:54:32 +0000 (UTC)
-Received: from devyard.org ([37.59.142.107])
-	by ghost-submission-6684bf9d7b-z4d9m with ESMTPSA
-	id yN1wDWjdv2XGEgAAbck5jQ
-	(envelope-from <ypsah@devyard.org>); Sun, 04 Feb 2024 18:54:32 +0000
-Authentication-Results:garm.ovh; auth=pass (GARM-107S0011759a858-b6e9-4507-bc98-cd2f8028aea6,
-                    2F615BA836ACE59B185ACC479DFD3D80C8A04DFC) smtp.auth=ashpy@devyard.org
-X-OVh-ClientIp:213.10.167.74
-From: Quentin Bouget <ypsah@devyard.org>
-To: git@vger.kernel.org
-Cc: Quentin Bouget <ypsah@devyard.org>
-Subject: [PATCH 0/2] Fix gitlab's token-based authentication w/ kerberos
-Date: Sun,  4 Feb 2024 19:54:25 +0100
-Message-ID: <20240204185427.39664-1-ypsah@devyard.org>
-X-Mailer: git-send-email 2.43.0
+	s=arc-20240116; t=1707077871; c=relaxed/simple;
+	bh=3Nh/qhV+GL1KKi8JBSY06b71y7gb0UysHr2hBeYLmN4=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=YQvU8cWvL/ZWB140av3Y1+5B+Fe/j3efVImZD9LxfKHoesMnKFosfNAhpJjr7LlS4YCisFqVbmhbv4VtqtIyZ8Cv4kG2bj3Q63w28EMtNLkylVQXK0X92mVEUgCZ7UD6x1H+9Nv8mQ+4wLFDhwacNh9QVncq/mlw17AwKFMACBk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=FuYzQfcK; arc=none smtp.client-ip=64.147.108.70
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="FuYzQfcK"
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 9F8921DB94E;
+	Sun,  4 Feb 2024 15:17:41 -0500 (EST)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=3Nh/qhV+GL1KKi8JBSY06b71y7gb0UysHr2hBe
+	YLmN4=; b=FuYzQfcKZRFYgxh4KH46lgLUa8o6azeqGlbRat76yC6+Y2TzqPGr3Y
+	SgFsumbcc6cjhFb9GDGkat5bXcxSx6Vk2j+LGXW069DORRpfHCaPe1ckTwc9h88t
+	wjowNcs32usMNjfhhvmmyNtUzvQKoNxmsgMT36nNPdblFQRp8mlY4=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 975DF1DB94D;
+	Sun,  4 Feb 2024 15:17:41 -0500 (EST)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.165.85])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id C5ED11DB94B;
+	Sun,  4 Feb 2024 15:17:40 -0500 (EST)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Philippe Blain via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+  Philippe Blain <levraiphilippeblain@gmail.com>
+Subject: Re: [PATCH] .github/PULL_REQUEST_TEMPLATE.md: add a note about
+ single-commit PRs
+In-Reply-To: <pull.1665.git.git.1707069808205.gitgitgadget@gmail.com>
+	(Philippe Blain via GitGitGadget's message of "Sun, 04 Feb 2024
+	18:03:28 +0000")
+References: <pull.1665.git.git.1707069808205.gitgitgadget@gmail.com>
+Date: Sun, 04 Feb 2024 12:17:39 -0800
+Message-ID: <xmqqsf28oufw.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Ovh-Tracer-Id: 15954001683053458869
-X-VR-SPAMSTATE: OK
-X-VR-SPAMSCORE: 0
-X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrgedvkedrfedukedguddujecutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfqggfjpdevjffgvefmvefgnecuuegrihhlohhuthemucehtddtnecunecujfgurhephffvvefufffkofgggfestdekredtredttdenucfhrhhomhepsfhuvghnthhinhcuuehouhhgvghtuceohihpshgrhhesuggvvhihrghrugdrohhrgheqnecuggftrfgrthhtvghrnhepgfetueeugedtheefvdevteevgfetjefhkeeuffffkeethfeivedvtdeiieejhffgnecuffhomhgrihhnpehgihhtlhgrsgdrtghomhenucfkphepuddvjedrtddrtddruddpvddufedruddtrdduieejrdejgedpfeejrdehledrudegvddruddtjeenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepihhnvghtpeduvdejrddtrddtrddupdhmrghilhhfrhhomhepoeihphhsrghhseguvghvhigrrhgurdhorhhgqedpnhgspghrtghpthhtohepuddprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdfovfetjfhoshhtpehmohehkeefpdhmohguvgepshhmthhpohhuth
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 727D5A76-C39A-11EE-AE6F-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
 
-Gitlab supports GSSAPI-based authentication with kerberos but when setup
-on port 443, token-based authentication with credentials provided in the
-remote's URL no longer works (cf. the note here [1]).
+"Philippe Blain via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-This patch series provides a fix which I tested against such a gitlab
-setup.
+> diff --git a/.github/PULL_REQUEST_TEMPLATE.md b/.github/PULL_REQUEST_TEMPLATE.md
+> index 952c7c3a2aa..65fa3a37173 100644
+> --- a/.github/PULL_REQUEST_TEMPLATE.md
+> +++ b/.github/PULL_REQUEST_TEMPLATE.md
+> @@ -4,4 +4,8 @@ a mailing list (git@vger.kernel.org) for code submissions, code reviews, and
+>  bug reports. Nevertheless, you can use GitGitGadget (https://gitgitgadget.github.io/)
+>  to conveniently send your Pull Requests commits to our mailing list.
+>  
+> +If you use Gitgitgadget for a single-commit pull request, please *leave the pull
+> +request description empty*: your commit message itself should describe your
+> +changes.
+> +
+>  Please read the "guidelines for contributing" linked above!
 
-This is my first ever contribution to git, apologies in advance for any
-"faux pas".
+Making it easier for contributors to come up with the right output
+is greatly appreciated.  I think "If you use Gitgitgadget for" ->
+"For" is probably a good change, for two reasons (one, we do not
+take pull request except for GGG gateway in the first place, and
+two, PR messages being similar to cover letters, you do not want to
+have a detailed PR message that (a) takes extra time to write, (b)
+can duplicate what the you already have written, and (c) could
+contradict what the commit log message says.
 
-[1] https://docs.gitlab.com/ee/integration/kerberos.html#http-git-access-with-kerberos-token-passwordless-authentication
+I wonder if such a rule can be also enforced at the GGG side?  It
+apparently knows if it is dealing with a single-patch request or a
+multi-patch series (as the types of messages this documentation
+update tries to address are the only ones that get duplicates under
+the three-dash line), and I've seen GGG complain on the contents of
+the commit log message (e.g., "not signed off") so there is enough
+support to inspect things in a PR and add instruction to the PR
+discussion.  Unless the machinery GGG uses lack the ability to read
+the PR message (unlike the commit log messages that it can read
+apparently), it may be able to enforce that "for a single patch, PR
+message should be empty" rule before the /submit instruction.  It
+might make things even more helpful if it can notice the commit log
+message is similar enough or superset of PR message and refrain from
+inserting it after the three-dash line, but that might be asking too
+much ;-)
 
-Quentin Bouget (2):
-  http: only reject basic auth credentials once they have been tried
-  http: prevent redirect from dropping credentials during reauth
+Thanks for helping to improve the situation.
 
- http.c | 26 ++++++++++++++++++++++----
- 1 file changed, 22 insertions(+), 4 deletions(-)
-
--- 
-2.43.0
+Will queue.
 
