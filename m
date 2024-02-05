@@ -1,168 +1,116 @@
-Received: from mail-oa1-f43.google.com (mail-oa1-f43.google.com [209.85.160.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-00069f02.pphosted.com (mx0b-00069f02.pphosted.com [205.220.177.32])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DFF820DFF
-	for <git@vger.kernel.org>; Mon,  5 Feb 2024 13:10:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84D062C684
+	for <git@vger.kernel.org>; Mon,  5 Feb 2024 14:13:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.177.32
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707138660; cv=none; b=TEZB7ayrWEPDDIp6Qwd8Kpi9IlP96TsZD3mXFEzFYlDkAWMskuVjmnuoXmIz9+LyuNBl8PChQvXxwbmu0wWjNM15TEgDR7Oeyr1tUefvK4RuUbcMc64UZsgCGtj7Hk+WrbDD/esOcdCqGJUbe0MmZBT/UEtdANpMYf6tpa+jmAE=
+	t=1707142429; cv=none; b=nyps9YRLylE2orJ53fATdNco3Nv/YIR9FElEetBC3hlMy3HNqn9EMEgbiqb7qazCBw9tw2uvaaJAaVLx1J8PgxTHi6Yj0XOEzosuAB9HkbKwbPQ/7bJOT3Hd3U/tnTtzRv1pmXpTkhcoSjZbj1WeVPxdJcEAjvBwiYI9MCROgFc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707138660; c=relaxed/simple;
-	bh=a0NzR5oFowpwcMr1enL14gXNCk8zsA2wr8CXshGvmJY=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=QXqKJUWThpnFivRWqYZnJkinPigOmW1iTB9iVlNcOvAxCGa2w484HtpTZda6zD9Xe27WNHSNBFiQt9QZcEBlulxrYyKASd0u/AahOI0ucrJnrxxcqhjzNsREM7UZaOdMcN3ZK4Tqnxg3cQ8xTCXqxSjh46E+hLtFV9qo0u7jtVM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=QotMVc//; arc=none smtp.client-ip=209.85.160.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1707142429; c=relaxed/simple;
+	bh=vYXd3RzIsHGA0pzpoJWrs4gdmOJDFtHomWA85G6vSIw=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version; b=JkLLlmanmD84SMrSAqbrrxalE/q62qlSPzeFGuh02/F8HoXLNnVj660oVF48SyWJNT5ExrTgU3/NqjVLNLewYl9eh1u86/mXLvMEthkwyk6ipUHlZHFl299STHfP/XTdWOjiFF9siByKvfmZ/nhlWRe+np/n4enf/J6NWy5NUXQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oracle.com; spf=pass smtp.mailfrom=oracle.com; dkim=pass (2048-bit key) header.d=oracle.com header.i=@oracle.com header.b=Er/BuXPA; arc=none smtp.client-ip=205.220.177.32
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oracle.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oracle.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QotMVc//"
-Received: by mail-oa1-f43.google.com with SMTP id 586e51a60fabf-204235d0913so2650068fac.1
-        for <git@vger.kernel.org>; Mon, 05 Feb 2024 05:10:58 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1707138658; x=1707743458; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=V3SABvqg/5ixY6fxHv5s1efe9RTlTdiIsmq6y+5I6nA=;
-        b=QotMVc//1esxTD1eYKU3vx2JVnFStZQQZp6JZFgMnCwAPY1d84DZsnWtxCZSmqtEVj
-         ParCGacrhuZNJwe8TqxPfCNFbMPsuG+aTkz6CcpNhER09JBvFWcn50dqWEx6cm5YxeO4
-         YNajrylsfuc9x0vANINXodsSILLE7GO1rucpW4zKLYMrSke2ocAMMI3HySc0GFSwx2qQ
-         rIrNsiWFbW0PELy+a/WR5HikG5pgIX9IZ8vStixl53rQBUVGH5kcUsLUT1ufNVlMnFl+
-         aHpflg4CwfrDP2RN7BI6Zgmq3WRHYrOvJw+21Oxu98u1u5eFZ2M75rYwki5W0Yh/jYPK
-         20mw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1707138658; x=1707743458;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=V3SABvqg/5ixY6fxHv5s1efe9RTlTdiIsmq6y+5I6nA=;
-        b=JdsekgJlbSt+5fdRm0tcCaYaxYEuhOZwRuXJnCampAyNUOFxJS4r74WT/eZ3kBEXbn
-         2lCKGo0o3wIwAqr49pzeOTqjIHAMNXSg4yknkJHtcOnQUf6ekiEmno31bD0nqpa56oi/
-         3CWwb8WXRSgRrtcL/jquYc29EJJ+rPjCuSlRR9yTdISnODti8E5+rj+EmBVQ5KUTuFsW
-         AJKPkMGO2yJ0pd2NuGsp7jHl93m6ENmfgVIKlVVUioRG7kg8Y9pVkLgdyKVPrDT+HiIR
-         Zg94wpdIvjzTt+kAH9ZHanUXncAYqzrWA1wenFuB9YMzdKaQxjnIaT1RoT/cz7MYyrEv
-         sbpA==
-X-Gm-Message-State: AOJu0Yzy/m++/mHFHGCeNPA3vG9UgyMqIieHWnkzooYJVRlHrbAaQ0Dv
-	xtHRPquDErnv3RhkttV9xqcP6dA7gFIdo7C093fbzKva/ka0KSfIHVQg3D9R4Ikn+y+ry0l/wtl
-	kKAj1LSWTQLQCRbMgxd3jZU+7FUBe9nMe
-X-Google-Smtp-Source: AGHT+IGqz6XOZRRFKJMzS97+GUqcgVYZ0KohHolxUqh7xQdY76QEYIBE38/gEs4wMTY2lCQahVK028LS539xaHJyNeQ=
-X-Received: by 2002:a05:6870:d88c:b0:218:f68f:db50 with SMTP id
- oe12-20020a056870d88c00b00218f68fdb50mr8218481oac.10.1707138658106; Mon, 05
- Feb 2024 05:10:58 -0800 (PST)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Mon, 5 Feb 2024 05:10:57 -0800
-From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <cover.1707109509.git.ps@pks.im>
-References: <cover.1706601199.git.ps@pks.im> <cover.1707109509.git.ps@pks.im>
+	dkim=pass (2048-bit key) header.d=oracle.com header.i=@oracle.com header.b="Er/BuXPA"
+Received: from pps.filterd (m0246632.ppops.net [127.0.0.1])
+	by mx0b-00069f02.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 415DVp84023701;
+	Mon, 5 Feb 2024 14:13:43 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=from : to : cc :
+ subject : date : message-id : in-reply-to : references : mime-version :
+ content-transfer-encoding; s=corp-2023-11-20;
+ bh=bsRNun+SNF2ZbktBLclxD2/HSOp3N+H0/tBmfEEd2M4=;
+ b=Er/BuXPA5cwqtqlWLBdZnMyULM+yP8tYHe0nbdIscNi3Mko8WMpSnjOFWfCb3TXhMFfm
+ chWW+zJ9r3G4lm5c/ZScbseK6Mmsnzb5OYrVn3d2TPgLP/5a64VdTDxXaDcz5QxGJWso
+ WGhQbGEy87eWLpBi4uUnN7/+23StHXbZ7Ps0+E15yx2EeF4ntiriJ7y1atKmHBjattmW
+ XPdpm5kxSBIz6cVHSmFo1B6jXwFG2BfZLDWCAH/1M61HUr0QSLW9LLU5cZtlxwfRLhaX
+ UEnyEOLcMI5btqhRLKr7RQWurVeL1dtqI4wL1C0tkRj9gQ30eyIwe/ExL/WIn1+nHoGe IA== 
+Received: from iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com (iadpaimrmta03.appoci.oracle.com [130.35.103.27])
+	by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 3w1d3uc0cg-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Mon, 05 Feb 2024 14:13:43 +0000
+Received: from pps.filterd (iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
+	by iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com (8.17.1.19/8.17.1.19) with ESMTP id 415DDwq4036765;
+	Mon, 5 Feb 2024 14:13:42 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+	by iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTPS id 3w1bx5r89w-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Mon, 05 Feb 2024 14:13:42 +0000
+Received: from iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com (iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
+	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 415EDgHg035661;
+	Mon, 5 Feb 2024 14:13:42 GMT
+Received: from localhost.localdomain (dhcp-10-175-57-13.vpn.oracle.com [10.175.57.13])
+	by iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTP id 3w1bx5r88k-1;
+	Mon, 05 Feb 2024 14:13:42 +0000
+From: Vegard Nossum <vegard.nossum@oracle.com>
+To: gitster@pobox.com
+Cc: git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>,
+        Vegard Nossum <vegard.nossum@oracle.com>,
+        Phillip Wood <phillip.wood123@gmail.com>
+Subject: [PATCH 2/2] sequencer: unset GIT_CHERRY_PICK_HELP for 'exec' commands
+Date: Mon,  5 Feb 2024 15:13:35 +0100
+Message-Id: <20240205141335.762947-1-vegard.nossum@oracle.com>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <0adb1068-ef10-44ed-ad1d-e0927a09245d@gmail.com>
+References: <0adb1068-ef10-44ed-ad1d-e0927a09245d@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Mon, 5 Feb 2024 05:10:57 -0800
-Message-ID: <CAOLa=ZTtGJyzQqTTYfO2aypDU2-jDn2cehGGR3B4Vg-tFT0duA@mail.gmail.com>
-Subject: Re: [PATCH v3 0/2] refs: introduce reftable backend
-To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
-Cc: Junio C Hamano <gitster@pobox.com>, Han-Wen Nienhuys <hanwen@google.com>
-Content-Type: multipart/mixed; boundary="0000000000004c9d140610a2319b"
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-02-05_08,2024-01-31_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 phishscore=0 bulkscore=0
+ mlxlogscore=999 suspectscore=0 adultscore=0 spamscore=0 malwarescore=0
+ mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2311290000 definitions=main-2402050108
+X-Proofpoint-ORIG-GUID: WSjd_hI_TAWuIvhw0p_Y1a0CmditIuAk
+X-Proofpoint-GUID: WSjd_hI_TAWuIvhw0p_Y1a0CmditIuAk
 
---0000000000004c9d140610a2319b
-Content-Type: text/plain; charset="UTF-8"
+Running "git cherry-pick" as an x-command in the rebase plan loses the
+original authorship information.
 
-Hello,
+To fix this, unset GIT_CHERRY_PICK_HELP for 'exec' commands.
 
-Patrick Steinhardt <ps@pks.im> writes:
-> Hi,
->
-> this is the third version of my patch series that introduces the
-> reftable backend.
->
-> The only real change in this version is that I've pulled in
-> kn/for-all-refs at 693e807311 (for-each-ref: avoid filtering on empty
-> pattern, 2024-01-29) as a dependency. This series introduces a new
-> DO_FOR_EACH_INCLUDE_ALL_REFS flag that we need to handle in the reftable
-> backend. With this change all tests should pass again.
->
-> Patrick
->
-> Patrick Steinhardt (2):
->   refs: introduce reftable backend
->   ci: add jobs to test with the reftable backend
->
->  .github/workflows/main.yml                    |    9 +
->  .gitlab-ci.yml                                |    9 +
->  Documentation/ref-storage-format.txt          |    2 +
->  .../technical/repository-version.txt          |    5 +-
->  Makefile                                      |    1 +
->  ci/lib.sh                                     |    2 +-
->  ci/run-build-and-tests.sh                     |    3 +
->  contrib/workdir/git-new-workdir               |    2 +-
->  path.c                                        |    2 +-
->  path.h                                        |    1 +
->  refs.c                                        |    1 +
->  refs/refs-internal.h                          |    1 +
->  refs/reftable-backend.c                       | 2297 +++++++++++++++++
->  repository.h                                  |    5 +-
->  t/t0610-reftable-basics.sh                    |  887 +++++++
->  t/t0611-reftable-httpd.sh                     |   26 +
->  t/test-lib.sh                                 |    2 +
->  17 files changed, 3248 insertions(+), 7 deletions(-)
->  create mode 100644 refs/reftable-backend.c
->  create mode 100755 t/t0610-reftable-basics.sh
->  create mode 100755 t/t0611-reftable-httpd.sh
->
-> Range-diff against v2:
-> 1:  d6548dcfad ! 1:  d83e66e980 refs: introduce reftable backend
->     @@ refs/reftable-backend.c (new)
->      +{
->      +	switch (log->value_type) {
->      +	case REFTABLE_LOG_UPDATE:
->     -+		/* when we write log records, the hashes are owned by a struct
->     -+		 * oid */
->     ++		/*
->     ++		 * When we write log records, the hashes are owned by the
->     ++		 * caller and thus shouldn't be free'd.
->     ++		 */
->      +		log->value.update.old_hash = NULL;
->      +		log->value.update.new_hash = NULL;
->      +		break;
->     @@ refs/reftable-backend.c (new)
->      +			break;
->      +
->      +		/*
->     -+		 * The files backend only lists references contained in
->     -+		 * "refs/". We emulate the same behaviour here and thus skip
->     -+		 * all references that don't start with this prefix.
->     ++		 * Unless DO_FOR_EACH_INCLUDE_ALL_REFS is set, we only list
->     ++		 * refs starting with "refs/" to mimic the "files" backend.
->      +		 */
->     -+		if (!starts_with(iter->ref.refname, "refs/"))
->     ++		if (!(iter->flags & DO_FOR_EACH_INCLUDE_ALL_REFS) &&
->     ++		    !starts_with(iter->ref.refname, "refs/"))
->      +			continue;
->      +
->      +		if (iter->prefix &&
-> 2:  63eafc9f5b = 2:  146bb95c03 ci: add jobs to test with the reftable backend
+Link: https://lore.kernel.org/git/0adb1068-ef10-44ed-ad1d-e0927a09245d@gmail.com/
+Suggested-by: Phillip Wood <phillip.wood123@gmail.com>
+Signed-off-by: Vegard Nossum <vegard.nossum@oracle.com>
+---
+ sequencer.c                   | 1 +
+ t/t3515-cherry-pick-rebase.sh | 2 +-
+ 2 files changed, 2 insertions(+), 1 deletion(-)
 
-This range-diff looks good to me. I'd already reviewed the previous
-version, so overall looks good now.
+diff --git a/sequencer.c b/sequencer.c
+index 91de546b32..f49a871ac0 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -3641,6 +3641,7 @@ static int do_exec(struct repository *r, const char *command_line)
+ 	fprintf(stderr, _("Executing: %s\n"), command_line);
+ 	cmd.use_shell = 1;
+ 	strvec_push(&cmd.args, command_line);
++	strvec_push(&cmd.env, "GIT_CHERRY_PICK_HELP");
+ 	status = run_command(&cmd);
+ 
+ 	/* force re-reading of the cache */
+diff --git a/t/t3515-cherry-pick-rebase.sh b/t/t3515-cherry-pick-rebase.sh
+index ffe6f5fe2a..5cb2b96f66 100755
+--- a/t/t3515-cherry-pick-rebase.sh
++++ b/t/t3515-cherry-pick-rebase.sh
+@@ -23,7 +23,7 @@ test_expect_success 'cherry-pick preserves authorship information' '
+ 	test_cmp expected actual
+ '
+ 
+-test_expect_failure 'cherry-pick inside rebase preserves authorship information' '
++test_expect_success 'cherry-pick inside rebase preserves authorship information' '
+ 	git checkout -B tmp feature &&
+ 	echo "x git cherry-pick -x foo" >rebase-plan &&
+ 	test_must_fail env GIT_SEQUENCE_EDITOR="cp rebase-plan" git rebase -i feature &&
+-- 
+2.34.1
 
---0000000000004c9d140610a2319b
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: 37edc14fbe2487e8_0.1
-
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1YQTNsMFdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mMktUQy80L3RCeis1M0lrendxRy84WEVUV05nU0VvMgpMbnRBVFZwMGdv
-ZDNvMXZ1SURJRUcxRlVNc05oVTFLTWlVMEJBUmZqMTdHQkVodlM3WXNSRUJ2ZjQvT2VMVTk1Cnpn
-aXpUYlVzSGdRcnlsSy80UU1qS1JidFd5QjRhV1ozc0lSeTFTOWRET1NkdmxLdHJJOCszWVlvVThu
-MWw1T04KN0dha2Zya1VYejk5eDUwcUZIQWFvaEQ3Y21udVh0bW1DT2QyRDhCVGRPcFRZWUhUSWpF
-bGZlZU10aUMxcHFZMgpFR3A5ZFdiVUVsVlRvUm5xclJmeHg4RHlEZm13R3FYcldRaFhab0M2YnAy
-dzJqdnQxMTFJdlNBb1Q1SU5qc1I2CnUwUWNuSnVmcS9xc0E0bkVjVTUzWmZCMW0wOVRLTjFXN1B6
-SDI1YUozY3dqNWxtYnpxL3JSb0twczFmVmFUdEMKc21XYUxGdWlJUmZtQjVCWXFIM0dDbWxPUFlv
-NW9DcGpUcDhWbXdxaWNleFl3WU03Y3RpVk9XRURUVE9RNnU1Vwo3aTI5Y2ZGOFVyN1lqbWlSUUVs
-WmowL3pNRHFKZGZBVUxjd3U3ZFF2TFg3N3ZrUDlMS2IyODdUVDlmOVIzVGxYCnoybW5KZkVVT2Ji
-N3NLRi9QdlZPb2VpVWR2dVNLTnM4TVBCV0I3VT0KPTR4eU0KLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---0000000000004c9d140610a2319b--
