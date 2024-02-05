@@ -1,67 +1,68 @@
-Received: from mail-qv1-f46.google.com (mail-qv1-f46.google.com [209.85.219.46])
+Received: from mail-ua1-f46.google.com (mail-ua1-f46.google.com [209.85.222.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68A2A28FD
-	for <git@vger.kernel.org>; Mon,  5 Feb 2024 22:44:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43AC61DA52
+	for <git@vger.kernel.org>; Mon,  5 Feb 2024 22:48:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707173095; cv=none; b=BINdG/+8SuFxW+xc1QjtFmXQl6TbBNLdFGKBYa3wnRVCqQCvQUotVdLuNgYjz22IadUFqXq4ALAl2a29kivVzHSeOUSH+PiXSeb7LxLR9BP2jX3rMB9udjiCpvJV9F8Vu79w7RrwrKJLfeQHx9PT2y3XIoTA46bEZ/wrbuye+Vk=
+	t=1707173302; cv=none; b=DQg6IymWo+n9TXhvDofm9iebJW7J2oBOX86Pu8Z1ILvPCqLQ0gAMr6wor2Ab0Xr2cw9gr4gObKY5q8Lm52ODBjfa+kJE2oY83c/1QAmfCqDbBBPmrUsGIz0HO5rHnFRSfaSxGY5DQuTQZuTsoXDs+6c+Jnvt2KHRq85c+sXQGfc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707173095; c=relaxed/simple;
-	bh=XO8QxT2Zdzvnmc6WfnF/z51jw58rrYSMeCwdyoxFBwc=;
+	s=arc-20240116; t=1707173302; c=relaxed/simple;
+	bh=PRvY35L5Bdc3fJ62IYbxrCTV047Y/DvMawiQu2+iOEk=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=N6mTCtJIy/a2aJEY/pRq/+S1A3+y5bOzBUBn6DOafd/PHF0Rr5LN6TlKZMdfcsb9hv7s6h+sx6FHNtekZJR4S2BxRMtGQLStLNhMirq6JYWVN1Iz7wAURN8IjyNJ2K+YTxMluIoiOLDCGM++m4h2bRpIxv9mik1HucjEHXuZQ4k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=none smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=ayb4KmG1; arc=none smtp.client-ip=209.85.219.46
+	 Content-Type:Content-Disposition:In-Reply-To; b=gcQkmeky72zcwC03l5Hiqf+1U+ch27MbReTUBEVahkhsoR7dm+dT8fbdMdNUpLkW7ta8F/hStmGv9cu6TXciX+MLc8NnJJwdBIR9El15RKZ+FmDwGyMm/nKZ1HUC2EqI+/eLqXkK4l2BI9fDoIGlYsgiNdWSfYPzcxR3Lmpx3QY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=none smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=zistZeMx; arc=none smtp.client-ip=209.85.222.46
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="ayb4KmG1"
-Received: by mail-qv1-f46.google.com with SMTP id 6a1803df08f44-6818aa07d81so30458876d6.0
-        for <git@vger.kernel.org>; Mon, 05 Feb 2024 14:44:54 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="zistZeMx"
+Received: by mail-ua1-f46.google.com with SMTP id a1e0cc1a2514c-7d2e16b552dso2651213241.1
+        for <git@vger.kernel.org>; Mon, 05 Feb 2024 14:48:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1707173093; x=1707777893; darn=vger.kernel.org;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1707173300; x=1707778100; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=c2zsnYx0+PqLCb2DAx/cs3jdZbpH52yMQrTE6N3AYQM=;
-        b=ayb4KmG1Q8Ggk+PNcbHSfPBQzG+cUznILr5uvptL8/CaZYQYlMgYcsQlCRl2sY/f5I
-         X7zhLwiZOF5/5Oym4cwm6ZIZIPUC70sNkC931J8HP3aiOrcWa4cwS4EoJ4L2AflKXMfT
-         FougwQoXFX6agzZi7x66p60r35GqRvIj3EnWMnqyNvQYVCiv0MBiQhH/U38Ha7Cvewrw
-         VFkIhJfcwDQISrVAPleMLZO5Br1RTasi2AT/cLzak3CpWi7rJhVHg2S4Z/wLhewJ/BP+
-         2KPtsjRiBpQUFR0Ygu00Tphpcgyx7w24r3IV+XclCVxZoAs4WGyjInTo5sz+/Kaz69jx
-         3vwg==
+        bh=PRvY35L5Bdc3fJ62IYbxrCTV047Y/DvMawiQu2+iOEk=;
+        b=zistZeMxYJiE4si0Np+OQ5fDuwp0NaNBmR/Bv71yfX7G4/7k3py6/Q3bLjcsTIHNm8
+         FVH854w2IZ4cbzrJBcRNefPr4DIOAzjMOOMCFr7XvsEZEKfJAcHQz+se0YwuU8nmnMJY
+         mwJToIFZuW5yBxqkeW8tq56cfA1k1+DaE9yEPO3r138zinQYXvZ/0a9lML23U5cfPkC1
+         uoP3Z+0CL2cwPVFxrAW8MOW9UQ2gIRfw20eLTMn9UqCODbZo+u6RBhDwUknW/9ZO5sm/
+         B0+Sgfy4qwuUkPbPbHXJHqMUzSD7j7yWQducAKKjzaIjsmEiWCaVVfQwwjU0LUCdepW7
+         BFfg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1707173093; x=1707777893;
+        d=1e100.net; s=20230601; t=1707173300; x=1707778100;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=c2zsnYx0+PqLCb2DAx/cs3jdZbpH52yMQrTE6N3AYQM=;
-        b=E/455EZwMniWmo57qj2VfcwgshI15bz5PTbrnvciXOkiG0lv+pItPsainqRyzMSTAY
-         O+ypzZKpOCutd9mJf7oYioe20xyyENK1DOAdWQZX615DfgtsDB7QfGySijXCjqHj0Fgg
-         hrPMNh0+HCpJmgQBjRgvPGAwkmrEqhRacHXXnxsJrvb9z8Pm4oMbOI6r0N8+EZPMOVQl
-         so89iy9St3KZHvBQ+FM59WtxThDK0D+C2PF1kyp2pV8QY6c1Bq9f9yfjdbhxLsGWAVPf
-         NWg8fTqa2B4Lz4NweBSFoJuUdIoylr3L0BsogkDQ89S7BiZnVmCHUCVY1och73BEe6wF
-         mKOA==
-X-Gm-Message-State: AOJu0YyU7fFwuDwet+IK3hmfIaZaWyALQgOVPWXrnVoeFUJQBwPpIR2m
-	4SQm3XLf8hFmGb39+3/49/ORxnBfEo5aKIOnHTCcuSm0NQ0NJdSk8hY5WsQeLjk=
-X-Google-Smtp-Source: AGHT+IGkYTCNmJkDQunSeUUnHKlu+LNf3wiJqtIBUgYBe/18i/PT7kJD8YEMrYZS4nsagp9WopJckg==
-X-Received: by 2002:a05:6214:e6d:b0:68c:96cc:e70 with SMTP id jz13-20020a0562140e6d00b0068c96cc0e70mr402685qvb.14.1707173093227;
-        Mon, 05 Feb 2024 14:44:53 -0800 (PST)
-X-Forwarded-Encrypted: i=0; AJvYcCXKDGyl5hm9UaaxvrvpUpxtlE3U3a5nZ0ITl4kDxBSXK9L4P8DD8+2bRCeU5wAI9K59tHhDZ1fOeW3Yp1LyKq1BIVOokf+oQsfSY6QU9mkmlA==
+        bh=PRvY35L5Bdc3fJ62IYbxrCTV047Y/DvMawiQu2+iOEk=;
+        b=sJbm6hOEjkHnOhbgpfgoRCNROqOVW417gWfzIltvUB7d1X3atIlhXLTCJGHbapAzSx
+         wyNaSUAnZeT2JwlJ63A8a+zMLWbrJXvqI6QXQYGWqgVy5HfcsEBOoLhdN14qbVA6Gwar
+         sSoHEvCYqQd73UaFOP5k+1X3CWi0kxjUQB76uR9pWxq4lRhGezLrWR+pvQ69GB8pK9RD
+         KoPvDNdJSg2PHxVcAOQnPDG5gyhe5UKguhjAmXR+dl3g9mANa0CKDjQ2NgoRJINiMXgi
+         eufvCMrdAVcMwJ4uqoCj+Gy2SmtiNgH7VcPQ46tRFzoVo31/TvfsgQiLCPwGiOy4HVK8
+         FdMg==
+X-Gm-Message-State: AOJu0YxcsRcVVvGMDRUOtu4sw87XifnmG67j4YBTxYfufA/qZqaGg8xV
+	DhuFM4x/yzkEER6V4ncLtC0ozMDKlJYcaVXav849/KzXtE/DpM6+JIuwhf+EJuA4c1p75KqOe5b
+	/yM4=
+X-Google-Smtp-Source: AGHT+IG5GWSbj/8nE0TFM2UcZ/N927lW1Wb62vCgxIIvXC3Tztz6oglQzz7btj0DHBzPM003tKiU7A==
+X-Received: by 2002:a67:be16:0:b0:46d:3977:9fe9 with SMTP id x22-20020a67be16000000b0046d39779fe9mr419449vsq.30.1707173299997;
+        Mon, 05 Feb 2024 14:48:19 -0800 (PST)
+X-Forwarded-Encrypted: i=0; AJvYcCVSY9lr6vUY65h6m0petb/wd9F28Jt0tXSHDH1wX9qL4Jh7fpnfNMwSJrtRuOtxbuduDzygCqVVw7gPekX8vUWPjvF1q/xX+okmGHX3+5Yhkg==
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id dm8-20020ad44e28000000b00681785c95e0sm425575qvb.46.2024.02.05.14.44.52
+        by smtp.gmail.com with ESMTPSA id ow8-20020a0562143f8800b0068caf901c9bsm254028qvb.17.2024.02.05.14.48.19
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 05 Feb 2024 14:44:52 -0800 (PST)
-Date: Mon, 5 Feb 2024 17:44:51 -0500
+        Mon, 05 Feb 2024 14:48:19 -0800 (PST)
+Date: Mon, 5 Feb 2024 17:48:18 -0500
 From: Taylor Blau <me@ttaylorr.com>
 To: Patrick Steinhardt <ps@pks.im>
 Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
 	Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/2] t5332-multi-pack-reuse.sh: extract pack-objects
- helper functions
-Message-ID: <ZcFk4yvj6TM2WzXn@nand.local>
+Subject: Re: [PATCH 2/2] pack-objects: enable multi-pack reuse via
+ `feature.experimental`
+Message-ID: <ZcFlshJhJJIOsXqJ@nand.local>
 References: <cover.1705431816.git.me@ttaylorr.com>
- <94dd41e1afdd6d926a106ab387295cf5fce624cf.1705431816.git.me@ttaylorr.com>
- <ZaeCeY-9AIR-zt7u@tanuki>
+ <a2d0af562a5d0a4052c94f87c1d71639ff0b87f2.1705431816.git.me@ttaylorr.com>
+ <ZaeCf1KCwAUCeBPy@tanuki>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -70,31 +71,37 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <ZaeCeY-9AIR-zt7u@tanuki>
+In-Reply-To: <ZaeCf1KCwAUCeBPy@tanuki>
 
-On Wed, Jan 17, 2024 at 08:32:09AM +0100, Patrick Steinhardt wrote:
-> > @@ -104,12 +110,7 @@ test_expect_success 'reuse objects from first pack with middle gap' '
-> >  	^$(git rev-parse D)
-> >  	EOF
-> >
-> > -	: >trace2.txt &&
-> > -	GIT_TRACE2_EVENT="$PWD/trace2.txt" \
-> > -		git pack-objects --stdout --delta-base-offset --revs <in >/dev/null &&
-> > -
-> > -	test_pack_reused 3 <trace2.txt &&
-> > -	test_packs_reused 1 <trace2.txt
-> > +	test_pack_objects_reused 3 1 <in
->
-> This conversion causes us to drop the `--delta-base-offset` flag. It
-> would be great to have an explanation in the commit message why it is
-> fine to drop it.
+On Wed, Jan 17, 2024 at 08:32:15AM +0100, Patrick Steinhardt wrote:
+> I would like to avoid cases like this by laying out a plan for when
+> experimental features become the new default. It could be as simple as
+> "Let's wait N releases and then mark it stable". But having something
+> and documenting such a plan in our code makes it a lot more actionable
+> to promote those features to become stable eventually.
 
-Oops, that was unintentional. I'll resend a new round that fixes this
-issue shortly.
+Fair point. I think that these have been mostly ad-hoc. Unfortunately,
+when folks leave the project or change their attention to working on a
+different feature, things that were left in feature.experimental may be
+forgotten about.
 
-> Other than that this looks like a nice simplification to me.
+When this inevitably happens, it would be nice to have a written record
+(either in the repository, or here on the mailing list) so that other
+folks can take up the mantle and graduate those feature(s) as
+appropriate.
 
-Thanks for the review!
+> I know that this is not in any way specific to your patch, but I thought
+> this was a good opportunity to start this discussion. If we can agree on
+> my opinion then it would be great to add a comment to the experimental
+> feature to explain such an exit criterion.
+
+I don't have a ton to add here for a graduation plan other than it would
+be nice to enable it eventually, likely after a few releases without any
+show-stopping bug reports.
+
+> Other than that this patch looks good to me, thanks!
+
+Thanks again for the review!
 
 Thanks,
 Taylor
