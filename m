@@ -1,112 +1,180 @@
-Received: from mail-ot1-f43.google.com (mail-ot1-f43.google.com [209.85.210.43])
+Received: from mail-wm1-f53.google.com (mail-wm1-f53.google.com [209.85.128.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF6483FE4F
-	for <git@vger.kernel.org>; Mon,  5 Feb 2024 16:10:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6A3828E1B
+	for <git@vger.kernel.org>; Mon,  5 Feb 2024 16:16:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707149410; cv=none; b=X0RoArWpv2C0nAXsNwbCJrxuDIjzvShEpsU035fPXrgC5+S1cKTWPc4LKm767oUvreKFblnrPQE6o6jlR/1IwH+ehYf2bNgORxJ7dNLgtLkBGzBloYy4ucthXlPjq6Kij20QaUMTOhdVKgx+yYJwCUhOac9nsZUfdp9JBF8DNNQ=
+	t=1707149804; cv=none; b=lXWD3YXOXWetDSJTIU1clG29d5NpMQSPsJnvFwvvK13ktWSi35LOVVaX14lM6GCzu1GvUvsBiDMJCxcB+GUMJKH+BXot6sXqDg+xj6/jsGeQSTG2zYqA3Ot1fbNHFo8w7nYeu8h0HQF8tDBpOmOl6YFdV+2HcVhDJVhK1n6lCGk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707149410; c=relaxed/simple;
-	bh=H1IMg9fbwLD3KZ8JgUXJvSwZNiiIMkoe+IJiyP9lERw=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=FMrvdtruy5VyzVlrFev2GoJS3EHWgGHTRGljkOXe2Hs+IHzryp0uETIYzvCYcNNFC2uUTtaDjQOewaS7VPU5fI4zoGPcPsqRFRf1vaXM1YVU+cpV6JMRtQK89vwiuM/pPEY9JQ/KA9/AcgbEQE99/TqVsbLEZHSqkAlfJu1TL5o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CojOF/A8; arc=none smtp.client-ip=209.85.210.43
+	s=arc-20240116; t=1707149804; c=relaxed/simple;
+	bh=B6zt2l5anuhky63f1zsT24Of3PiVSgvMpGQsY3bXx/Y=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=vEEn24N9uArhO99gD+YHKK2G4qBeMmvxFrASYU3aosJhsv/B7bb9AeuZelqFGKHEFd5j96+rfWZ2jiqo4v4jbH3qgOU4xBUWUnZ6LVfTFaw+GyVA64Ks+SpP5BSNeq3sWe7Zk5JOLWcD5gvL7uWvY/2tKGnrnk4Y9+TUpXF4aHs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=BTD+Xfqq; arc=none smtp.client-ip=209.85.128.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CojOF/A8"
-Received: by mail-ot1-f43.google.com with SMTP id 46e09a7af769-6e13cfc0b2fso2527611a34.2
-        for <git@vger.kernel.org>; Mon, 05 Feb 2024 08:10:08 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BTD+Xfqq"
+Received: by mail-wm1-f53.google.com with SMTP id 5b1f17b1804b1-40fb804e330so41970645e9.0
+        for <git@vger.kernel.org>; Mon, 05 Feb 2024 08:16:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1707149408; x=1707754208; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=dCFUsEelTGeR1BwMUQiRVHlsGnd5ZudjBUrmOFgLJQg=;
-        b=CojOF/A8/fj2qNdoW+MIkepfN4VMmiCukoDLc3r3HqT5os9yAHRaE/xQsqvbEpiWXL
-         9/V5FAXruck4Yv5HdDj86OJfv9Hf6CF3o9ylJbHiVN36uCoE9V7Vv/cLaHfpJP13e8G2
-         z6mKKxzwGwKzkAGc+j0XU7GSdjm3cMqesSh8wqINd/pCb14rX1p120cfNOP4rtB6dNKO
-         tLCFx5wku8aac1QGN2I0JAlh0CUylmDOVtCcqlyCar+zjqSrkCvj9r84UveP8IlUFOni
-         hdSaLnbw7qGeyBAgEW3bykSKA+0NB19NbLlfCNBFJwmt8Q/S1o5zQprrnVDwa5IoBaC1
-         XZYA==
+        d=gmail.com; s=20230601; t=1707149801; x=1707754601; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=5ipbfzFoq+yoLETNup7NLDANVqPeJsGY51Lt+VBF9S8=;
+        b=BTD+XfqqLDWA8xEc866GibiRFkx+K5s6UqSSa9qs0bnPOQohrZY5GPqJhwm6aXblLK
+         bFcUqOmWBzj2u/3A0FTZwoNpK4X6aOVfp5xFvxJV/QlX2aEBwFA1QJtu9ZYZd+j67quY
+         jFwpBiFXW1a1gYz0v2EaL6lMwvGv1lPOAI5Ook2sm78TDAQuduuRD1obs+6WG9hAhMc9
+         iuQZi1mamlfxs3k0OuHjnTKxQEutL7ld7CIseo5BR3byGj8L3E7y4oec914Bdjv5olg6
+         w/4vXtWNDfLYyIiVGTC0jNj+qiG1//xdJCq5D7odCi+AAHSNggc2R2UHbquQCbBJ6J0N
+         zcDQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1707149408; x=1707754208;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=dCFUsEelTGeR1BwMUQiRVHlsGnd5ZudjBUrmOFgLJQg=;
-        b=MtuOQ+UIEzNMnwJN6MQzDri8oF+Dd0jSo+lZ+FLdyEIWpb6YDDPDalHz39WZKEnaYh
-         DUtVkuaDw/FZn0ejrtCcuK7G7mBv2OBd0jCQNLhlAjvL6o6Z4fWIECqMSZtKThqsbY1t
-         wvgWqS2sYd5cZvObMYaMNHMJqkbSie9K/fyeos7gTWsCehCWLzcT/kuzfK3P12jPBQ+5
-         sgFdKgcXRMdhX91eTt7E5i91uOLz/9MTNNmMr949CSboIbFnq/EPZT81iip1Wr6cwgtq
-         1IT9g6mz0Ay2T6tGgyA1Izgy6zX8g+PHaDoGBgl24N2xdYIitDTmgWxzNDWSjo2liUm4
-         a4iQ==
-X-Gm-Message-State: AOJu0YySQJEnjBDozGcF7hNO9aGcfx33P5vf092kikHTRf4E341PpbZX
-	X8u/zciygmBHCgM+L5GVhZ+Y4usei88qPyz16o0t25bUm/6pn2yMgrttpmp74mP5cKd4G4ItUry
-	Q3K0ypecF+v3U3JUO6xkMxq7e/h4=
-X-Google-Smtp-Source: AGHT+IFjp0owmrAstXBPWdW3N3Yc2UFoKL8jiSFzRP8hzrrmBtxWSe0ytD0kvb0Cjqm05Xo8jaHN1k0Va9iLiANKyiA=
-X-Received: by 2002:a05:6870:3290:b0:219:257a:da0d with SMTP id
- q16-20020a056870329000b00219257ada0dmr123565oac.51.1707149407830; Mon, 05 Feb
- 2024 08:10:07 -0800 (PST)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Mon, 5 Feb 2024 08:10:06 -0800
-From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <pull.1650.git.1707143753726.gitgitgadget@gmail.com>
-References: <pull.1650.git.1707143753726.gitgitgadget@gmail.com>
+        d=1e100.net; s=20230601; t=1707149801; x=1707754601;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=5ipbfzFoq+yoLETNup7NLDANVqPeJsGY51Lt+VBF9S8=;
+        b=vQQNf5DXxdemXGRTALJdvi2JW2Vp40duw84NyBZ86HQQza5sDjmAKqNCfQ+BgXPCBW
+         oH+HRMizftfAHx5Ze8t3ENeo2ChTeN07FJXWIyeSB+Ch4NgQhK8JzuxpRIA7WUc5TX1+
+         xmCUuKlhdsx8SKrRiDGeh4wzwRip0x10z6zsoYcLplD/Upz1WIkDMWQRPKkUvQRQRSFN
+         km8RBc2GFGbNjXGCwh/mAYTBVc0m89LWmvyXOPHhIIoxcOf4ryvAMMYgJ3HR+FZuQ4Dq
+         hXp99U9Pr2aLsAL+gL2Q3L34+Hc+hvR2rUANHbFvoa/woW1exp2x8MiAkV18KEbBVe03
+         9qgw==
+X-Gm-Message-State: AOJu0YwiB1mm/DtgFOgMbjuEyCzqqYcEwnPmC/3AKxgzMpTa4M20hYl/
+	22fP12fLkFCmE2LwJr3SW+5EUFS512XCqnTZwBFh7jTF7/e1nHYU
+X-Google-Smtp-Source: AGHT+IFfbtuaz7guGA3pOEtB73OYfWAfCj3Wh3MtjdtWu1pTaPXMwegtOuWiAjh1jOcMfVLLcLVc/Q==
+X-Received: by 2002:a05:600c:1d8a:b0:40f:5c3a:bbb0 with SMTP id p10-20020a05600c1d8a00b0040f5c3abbb0mr153746wms.23.1707149800535;
+        Mon, 05 Feb 2024 08:16:40 -0800 (PST)
+X-Forwarded-Encrypted: i=0; AJvYcCWcG5W5OHZC8LRXXyfQfVit/s9xQqnk9ICroPpoNkmuc/CsW8eiO6BlueXkCqHUyIcVaObB5KLPZNHebS8WDTj6/22XoQSzNEZNiMoRa82ySPmDq4lEaaMI0d6N7115kVua2Z2n2enzclDKjy8lfbEMV1YaG5W/Pph4510pGqY7ENE=
+Received: from ?IPV6:2a0a:ef40:62e:a901:386f:d8d1:628a:e68d? ([2a0a:ef40:62e:a901:386f:d8d1:628a:e68d])
+        by smtp.gmail.com with ESMTPSA id az25-20020a05600c601900b0040ef95e1c78sm9183287wmb.3.2024.02.05.08.16.38
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 05 Feb 2024 08:16:40 -0800 (PST)
+Message-ID: <4e2cbadd-1e0c-4526-a50f-9ba8600e7788@gmail.com>
+Date: Mon, 5 Feb 2024 16:16:35 +0000
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Mon, 5 Feb 2024 08:10:06 -0800
-Message-ID: <CAOLa=ZQOALZRNqp7dDH0qDWoHwo6_3G8VgVuMbb3C20UdJ4C5A@mail.gmail.com>
-Subject: Re: [PATCH] Always check the return value of `repo_read_object_file()`
-To: Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
-Cc: Johannes Schindelin <johannes.schindelin@gmx.de>
-Content-Type: multipart/mixed; boundary="000000000000085af70610a4b2e0"
+User-Agent: Mozilla Thunderbird
+From: phillip.wood123@gmail.com
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [RFC PATCH v2 4/6] test-tool run-command testsuite: support unit
+ tests
+To: Josh Steadmon <steadmon@google.com>, git@vger.kernel.org
+Cc: johannes.schindelin@gmx.de, peff@peff.net, phillip.wood@dunelm.org.uk,
+ gitster@pobox.com
+References: <cover.1705443632.git.steadmon@google.com>
+ <cover.1706921262.git.steadmon@google.com>
+ <b5665386b56df91fa5d95ee5b11288b5853546f0.1706921262.git.steadmon@google.com>
+Content-Language: en-US
+In-Reply-To: <b5665386b56df91fa5d95ee5b11288b5853546f0.1706921262.git.steadmon@google.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
---000000000000085af70610a4b2e0
-Content-Type: text/plain; charset="UTF-8"
+Hi Josh
 
-Hello,
+On 03/02/2024 00:50, Josh Steadmon wrote:
+> Teach the testsuite runner in `test-tool run-command testsuite` how to
+> run unit tests: if TEST_SHELL_PATH is not set, assume that we're running
+> the programs directly from CWD, rather than defaulting to "sh" as an
+> interpreter.
 
-"Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com> writes:
-> diff --git a/bisect.c b/bisect.c
-> index f1273c787d9..f75e50c3397 100644
-> --- a/bisect.c
-> +++ b/bisect.c
-> @@ -158,6 +158,9 @@ static void show_list(const char *debug, int counted, int nr,
->  		const char *subject_start;
->  		int subject_len;
->
-> +		if (!buf)
-> +			die(_("unable to read %s"), oid_to_hex(&commit->object.oid));
-> +
+Judging from the last patch in this series it seems likely that we'll 
+want to run unit tests and integration tests parallel. In which case it 
+might be better to look at the filename extension to decide whether to 
+sh as an interpreter so that we can avoid having to use a wrapper 
+script. Then
 
-Nit: We know that `repo_read_object_file()` fails on corrupt objects, so
-this means that this is only happening when the object doesn't exist. I
-wonder if it makes more sense to replace "unable to read %s" which is a
-little ambiguous with something like "object %q doesn't exist".
+     cd t
+     helper/test-tool run-command testsuite 't[0-9]*.sh' 'unit-tests/bin/*'
 
-Otherwise, the patch looks good, thanks!
+would run the integration tests via "sh" and the unit-tests directly. 
+We'd need to figure out how to look for tests in both directories as 
+well though...
 
---000000000000085af70610a4b2e0
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: 8fdf3801e4ce9b23_0.1
+Best Wishes
 
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1YQkNGd1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mNVdjQy85bjE4MFZpcW1hRE1ueVhQMVF1T0QyUCtRbwpYZWN2N2tIbmhD
-VlFreEVIR3UwN2Z0dVZTc1A4d29iU2wrVEUranp5c0ZHZ3RjYkxMMXdiWUtiUWZIRHdNT0o5Clhy
-WnVvbzkrS2RDQkhoS0l5bVJnbzhuODJ5SVo4Tm0rQ3lHVGE0blQxNjdpYjQvek9yY0RzSGR5RjJR
-UTZWWEIKb1d2UWdzUVpudXBma3hWSkNUcEZDYVYxNkd4Tm94YUxSa2phQ2h1MTY2V2ZGcjE2VCtV
-K0kzVnJZZ2I0WHlISApDc0N4bVRHUGpUVjYyNVoxTzFkN3RCUzJUeUt5cG5PbU9UcmNZaTFQVjVF
-NkZEWE1PUzViRVFVOE9ZR1E5dkFiCkR6a3lxdmJWM3dVejVuL093bk1GWGh2ckxnTmhyc0ZpbExq
-ZitseFVoUWxSN29ZWk1WTm1lM0paaEtyeURSR0kKV0VraXZselZsOEtjbXdZcWIxd2tHaStaeWVI
-aDE1Si81cVM3cnRtWFRHVXVpU3ZYd1p4Z0F6YWptMUZidnlEUgp1K0MwOEJLNnBtZUM1R0cyRzBC
-bklXUXRYUGprYTBXczVIM1JGeGdTK2RBSURMdm1IbWFISXFqWmdIUm1VOGRmCkd5WWgxcFNSWStk
-Z29TMi9JbzQzVXlONzlEenJMT0dNaWMyOXZKND0KPVRkQ3IKLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---000000000000085af70610a4b2e0--
+Phillip
+
+> With this change, you can now use test-tool to run the unit tests:
+> $ make
+> $ cd t/unit-tests/bin
+> $ ../../helper/test-tool run-command testsuite
+> 
+> This should be helpful on Windows to allow running tests without
+> requiring Perl (for `prove`), as discussed in [1] and [2].
+> 
+> This again breaks backwards compatibility, as it is now required to set
+> TEST_SHELL_PATH properly for executing shell scripts, but again, as
+> noted in [2], there are no longer any such invocations in our codebase.
+> 
+> [1] https://lore.kernel.org/git/nycvar.QRO.7.76.6.2109091323150.59@tvgsbejvaqbjf.bet/
+> [2] https://lore.kernel.org/git/850ea42c-f103-68d5-896b-9120e2628686@gmx.de/
+> 
+> Signed-off-by: Josh Steadmon <steadmon@google.com>
+> ---
+>   t/helper/test-run-command.c | 18 +++++++++++++++---
+>   1 file changed, 15 insertions(+), 3 deletions(-)
+> 
+> diff --git a/t/helper/test-run-command.c b/t/helper/test-run-command.c
+> index e6bd792274..a0b8dc6fd7 100644
+> --- a/t/helper/test-run-command.c
+> +++ b/t/helper/test-run-command.c
+> @@ -158,6 +158,8 @@ static int testsuite(int argc, const char **argv)
+>   		.task_finished = test_finished,
+>   		.data = &suite,
+>   	};
+> +	struct strbuf progpath = STRBUF_INIT;
+> +	size_t path_prefix_len;
+>   
+>   	argc = parse_options(argc, argv, NULL, options,
+>   			testsuite_usage, PARSE_OPT_STOP_AT_NON_OPTION);
+> @@ -165,9 +167,14 @@ static int testsuite(int argc, const char **argv)
+>   	if (max_jobs <= 0)
+>   		max_jobs = online_cpus();
+>   
+> +	/*
+> +	 * If we run without a shell, we have to provide the relative path to
+> +	 * the executables.
+> +	 */
+>   	suite.shell_path = getenv("TEST_SHELL_PATH");
+>   	if (!suite.shell_path)
+> -		suite.shell_path = "sh";
+> +		strbuf_addstr(&progpath, "./");
+> +	path_prefix_len = progpath.len;
+>   
+>   	dir = opendir(".");
+>   	if (!dir)
+> @@ -180,13 +187,17 @@ static int testsuite(int argc, const char **argv)
+>   
+>   		/* No pattern: match all */
+>   		if (!argc) {
+> -			string_list_append(&suite.tests, p);
+> +			strbuf_setlen(&progpath, path_prefix_len);
+> +			strbuf_addstr(&progpath, p);
+> +			string_list_append(&suite.tests, progpath.buf);
+>   			continue;
+>   		}
+>   
+>   		for (i = 0; i < argc; i++)
+>   			if (!wildmatch(argv[i], p, 0)) {
+> -				string_list_append(&suite.tests, p);
+> +				strbuf_setlen(&progpath, path_prefix_len);
+> +				strbuf_addstr(&progpath, p);
+> +				string_list_append(&suite.tests, progpath.buf);
+>   				break;
+>   			}
+>   	}
+> @@ -213,6 +224,7 @@ static int testsuite(int argc, const char **argv)
+>   
+>   	string_list_clear(&suite.tests, 0);
+>   	string_list_clear(&suite.failed, 0);
+> +	strbuf_release(&progpath);
+>   
+>   	return ret;
+>   }
