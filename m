@@ -1,229 +1,151 @@
-Received: from mail-wm1-f41.google.com (mail-wm1-f41.google.com [209.85.128.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from ring.crustytoothpaste.net (ring.crustytoothpaste.net [172.105.110.227])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB5F31AB7ED
-	for <git@vger.kernel.org>; Mon,  5 Feb 2024 22:22:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B9891DA37
+	for <git@vger.kernel.org>; Mon,  5 Feb 2024 22:29:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.110.227
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707171727; cv=none; b=WA1Bab+hRd+rd3LkjkaV9yzDVzzbEduJLwa9rgiRg7NrTvWIIbu13F6Ovx7DuTk4xIJG16g8gKYOZSVzhmVhAfPgan+ImXjIBWEPvfwE5kxFsLq5rcc4EdBzYTqzNQbXR7vGPUYKNAWx5iva69xHy5JA4ZEtglEu5qEGevg3RFM=
+	t=1707172153; cv=none; b=XVIn9mZFr2NsDlz/RYHcs/76lNoat1uS9x5tIvvQZ+FWIgEuw1npULHOFP0yw8ZPS0a/vWDcWSQQBfxwhER123OfXiD4HeT8u0ewoS7Ay92WOmikJkiShudDrAfRzxRAP+1T+zduVnIyxVgUfdT1BigYyhKnaNL9+yVKqvBIdIQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707171727; c=relaxed/simple;
-	bh=DwwaBrqVW1lk8Bulxa3MDqTHi/Ms1QW7wDqlbgsNnGU=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=FxRbHBZ360tgxMDIIRXngYDbKAQRrYCGMDCmALPW8LNg7l7+kjEy4Z603bA6SlS/FUZQQ577R1MwazF7NINSC1ZEdGftfF3ONH1gafgEBzYuvWjNTcMMFg/ZwwFSyq/cUEthy30b8ZUguJ7TxJbWc4X8hFadVn7+9wf+yy0V63o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Qoj0rvxl; arc=none smtp.client-ip=209.85.128.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1707172153; c=relaxed/simple;
+	bh=tixJVOqZQR/dNLpx9o5pzTuNri7GVTF2o45PsBY/2Dc=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=o0rMZfQDw3yFWnOUR2kr3eJVvO0O0YE1SwlglLmzXhiqpOlmBXiux7AsAHexPTWAur3Y3Dsh4BKdR0j0LjpUuwSuDObbEKatyjqkComKIgCixz4WXZ2v63HGlp3Ov7vLOiYHQo/HQl8iQqdwUY6KaTmhj1BEmk4DWQVYBKheqVo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=JIE2czck; arc=none smtp.client-ip=172.105.110.227
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Qoj0rvxl"
-Received: by mail-wm1-f41.google.com with SMTP id 5b1f17b1804b1-40fe0641bb4so2900355e9.3
-        for <git@vger.kernel.org>; Mon, 05 Feb 2024 14:22:05 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1707171724; x=1707776524; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=jqxgEKgBg8lP2EcAcQgTZMYhbFv6vy/DV3drMRz1CWw=;
-        b=Qoj0rvxlLs9nNkfARoYJlmRGzfJqvE7jD3af5I7eC1D4mSQ41fCpR/JWIjQGAzECwv
-         UM2RSWpGSSHz/iF324Fw42zixU9A5BYlJAEGFBdLLtKzq4NuA4QXVf5x1XuShX9gwhVH
-         d2JYulX/j45UaZK7VOuGdbYt5FHJvM3R88aEGdr+XAgSKl5dDho2HU3xjW1bB6ujFJtX
-         5zsQuZxk2EmnBOKGqyF9NNw/XOSIOxFwg2e1zih3bwRDet9NeLazSLhpblH3hXcSOi87
-         uPZOjovG0rB5z2xsJ9Mfh4qxhahCZuZX3rQuhOIH2xFWWEL3MBpfoLi+pU9MeFnCJeis
-         3B2w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1707171724; x=1707776524;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=jqxgEKgBg8lP2EcAcQgTZMYhbFv6vy/DV3drMRz1CWw=;
-        b=YY8MOGVMLHMnILLEkaRZ2JJuFbIAXVS/QOxrUYfAt54FWVeaDxrhZNdmn9ZXF+tWJa
-         SVe+ItR8UnEOGApSEe6mxPB/QLlFiuHyrj/TV6Ww5WoWG5UidbMelizk+kJXab7/CM+X
-         jXlcBV+exSRbzDJd23h0csFzZTE4bV69BrAJawkymG1wkdkpaTrk5Mxd2Eoi5YKD6A8h
-         xxtbGFNKcEfq5C/RUUfLDmzkv2KSyEAupCeFAM2Jo7H8kJYJWA0alvtBvLQGTcL2NpKS
-         7viJ1ZhzqyI4SKTlqXg0MFmrLMlQbwtSAnzVDVsDZ24QenGPKdk0yzDbakfz39+YX1pM
-         KmYQ==
-X-Gm-Message-State: AOJu0YzJjAI5wOIXbYcj1WN7YKt1y8JjI5Fhf6ss6lJn2X6j8U8QWIXI
-	v/euEfQGHSk+UoHe8rmyH+9lOjphx5goFeYs4k7Uvygngn0JSke6
-X-Google-Smtp-Source: AGHT+IF1fJfGrWAHkfTXLxPwYRsEp/tbq+qMFsX3fwYniekLxEYm4zCsh7muH3SSTNKSsD2cfF5mDg==
-X-Received: by 2002:a05:600c:4510:b0:40f:dd18:a152 with SMTP id t16-20020a05600c451000b0040fdd18a152mr204177wmo.41.1707171723537;
-        Mon, 05 Feb 2024 14:22:03 -0800 (PST)
-X-Forwarded-Encrypted: i=0; AJvYcCWGG/9Xs3sscOiQg71Wq+9tnbBsSUv93MJ5tHWvx3Zjt0Sd9p53JrAntz1NzrBcHvE71teHiI3kvo6AnjloV6XNonCp
-Received: from gmail.com (77.red-88-14-198.dynamicip.rima-tde.net. [88.14.198.77])
-        by smtp.gmail.com with ESMTPSA id s9-20020a05600c45c900b0040fddaf9ff4sm2751313wmo.40.2024.02.05.14.22.02
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 05 Feb 2024 14:22:03 -0800 (PST)
-Message-ID: <f07d33e4-5595-43e3-838e-fd89c5621485@gmail.com>
-Date: Mon, 5 Feb 2024 23:22:01 +0100
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="JIE2czck"
+Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:e59a:3ed0:5f5c:31f3])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (P-256) server-signature RSA-PSS (3072 bits) server-digest SHA256)
+	(No client certificate requested)
+	by ring.crustytoothpaste.net (Postfix) with ESMTPSA id 3F8395A456;
+	Mon,  5 Feb 2024 22:29:10 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1707172150;
+	bh=tixJVOqZQR/dNLpx9o5pzTuNri7GVTF2o45PsBY/2Dc=;
+	h=Date:From:To:Cc:Subject:References:Content-Type:
+	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+	 Content-Type:Content-Disposition;
+	b=JIE2czckt/GarWIkjrZiydrISPFXHGT55ccvYwOZkg0c5iW6RhC1571DirTo/jmKp
+	 TTuC3dcPXRfHASEHfYZpKyopbNN21KZxt8R3Dx+N87ZBUGMn/X7l5jruV/pkcT1VAV
+	 GOuHlhYeFJiSCGPT5QM+UhGv1IyZkIUbm51vXTLK4k5UYhWdmmdfhSZUcARGb2uLGK
+	 MKBS1+UzBxpNwktGdnFlFGUoZ0VHIEZTuF+qBYFkrDGfNkQwhfv5savhfOYWwKW8fK
+	 ukpybQQt/gVsBQwhW2ErWn+lkbuqQ/2orVftduhCKp3VYxAV1WKy3bAOjeHI3HCXjK
+	 IDYVMLCnYEk7uwZodyc6XpoG4tDPwjglHjg8uyBJZZzTTYUwI9fB1s68tEwOvd9wGq
+	 HEucE8+Q7/MCU6u6owZ0dizQQRtb+mTt3jVtBpbl54eelMf1fgo9Mey/+XOdB2DJyf
+	 RI1BfJsXZ2XBMbzhu4Ow2TAiqAqN/qoYFDWa29ZKu3kXkX2LGRW
+Date: Mon, 5 Feb 2024 22:29:08 +0000
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+To: Tobias Boesch <tobias.boesch@googlemail.com>
+Cc: git@vger.kernel.org
+Subject: Re: git-gui desktop launcher
+Message-ID: <ZcFhNPRprfMqeRu1@tapette.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Tobias Boesch <tobias.boesch@googlemail.com>, git@vger.kernel.org
+References: <beeab03c564e94861ab339d26c4e135b879a1ccd.camel@googlemail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] builtin/stash: report failure to write to index
-To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
-Cc: moti sd <motisd8@gmail.com>
-References: <CAPvDF0P7_s-iy_V7FNSHtXXc9v5E3Fm=AdgduDDsd0rM-zNg-g@mail.gmail.com>
- <2cd44b01dc29b099a07658499481a6847c46562d.1707116449.git.ps@pks.im>
-Content-Language: en-US
-From: =?UTF-8?Q?Rub=C3=A9n_Justo?= <rjusto@gmail.com>
-In-Reply-To: <2cd44b01dc29b099a07658499481a6847c46562d.1707116449.git.ps@pks.im>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-
-On 05-feb-2024 08:01:04, Patrick Steinhardt wrote:
-> The git-stash(1) command needs to write to the index for many of its
-> operations. When the index is locked by a concurrent writer it will thus
-> fail to operate, which is expected. What is not expected though is that
-> we do not print any error message at all in this case. The user can thus
-> easily miss the fact that the command didn't do what they expected it to
-> do and would be left wondering why that is.
-> 
-> Fix this bug and report failures to write to the index. Add tests for
-> the subcommands which hit the respective code paths.
-> 
-> Note that the chosen error message ("Cannot write to the index") does
-> not match our guidelines as it starts with a capitalized letter. This is
-> intentional though and matches the style of all the other messages used
-> in git-stash(1).
-
-Your message made me curious, so I ran:
-
-   $ git grep -E '(die|error)\(' builtin/stash.c
-   
-   builtin/stash.c:168:               die(_("'%s' is not a stash-like commit"), revision);
-   builtin/stash.c:214:               return error(_("%s is not a valid reference"), revision);
-   builtin/stash.c:261:               return error(_("git stash clear with arguments is "
-   builtin/stash.c:303:               return error(_("unable to write new index file"));
-   builtin/stash.c:487:                                       die("Failed to move %s to %s\n",
-   builtin/stash.c:523:               die(_("Unable to write index."));
-   builtin/stash.c:544:               return error(_("cannot apply a stash in the middle of a merge"));
-   builtin/stash.c:555:                               return error(_("could not generate diff %s^!."),
-   builtin/stash.c:562:                               return error(_("conflicts in index. "
-   builtin/stash.c:569:                               return error(_("could not save index tree"));
-   builtin/stash.c:610:               ret = error(_("could not write index"));
-   builtin/stash.c:630:               ret = error(_("could not restore untracked files from stash"));
-   builtin/stash.c:702:               return error(_("%s: Could not drop stash entry"),
-   builtin/stash.c:721:               return error(_("'%s' is not a stash reference"), info->revision.buf);
-   builtin/stash.c:872:                       die(_("failed to parse tree"));
-   builtin/stash.c:883:               die(_("failed to unpack trees"));
-   builtin/stash.c:1547:              if (report_path_error(ps_matched, ps)) {
-   builtin/stash.c:1763:                      die("subcommand wasn't specified; 'push' can't be assumed due to unexpected token '%s'",
-   builtin/stash.c:1773:                      die(_("options '%s' and '%s' cannot be used together"), "--pathspec-from-file", "--patch");
-   builtin/stash.c:1776:                      die(_("options '%s' and '%s' cannot be used together"), "--pathspec-from-file", "--staged");
-   builtin/stash.c:1779:                      die(_("'%s' and pathspec arguments cannot be used together"), "--pathspec-from-file");
-   builtin/stash.c:1785:              die(_("the option '%s' requires '%s'"), "--pathspec-file-nul", "--pathspec-from-file");
-
-Certainly, there are some error messages in builtin/stash.c that do not
-follow the notes in Documentation/CodingGuideLines, but it does not seem
-to be "the style of all other messages" in git-stash.
-
-However, your message is clear ...  What error messages are you
-considering?
-
-> 
-> Reported-by: moti sd <motisd8@gmail.com>
-> Signed-off-by: Patrick Steinhardt <ps@pks.im>
-> ---
->  builtin/stash.c  |  6 +++---
->  t/t3903-stash.sh | 52 ++++++++++++++++++++++++++++++++++++++++++++++++
->  2 files changed, 55 insertions(+), 3 deletions(-)
-> 
-> diff --git a/builtin/stash.c b/builtin/stash.c
-> index b2813c614c..9df072b459 100644
-> --- a/builtin/stash.c
-> +++ b/builtin/stash.c
-> @@ -537,7 +537,7 @@ static int do_apply_stash(const char *prefix, struct stash_info *info,
->  	repo_read_index_preload(the_repository, NULL, 0);
->  	if (repo_refresh_and_write_index(the_repository, REFRESH_QUIET, 0, 0,
->  					 NULL, NULL, NULL))
-> -		return -1;
-> +		return error(_("Cannot write to the index"));
->  
->  	if (write_index_as_tree(&c_tree, &the_index, get_index_file(), 0,
->  				NULL))
-> @@ -1364,7 +1364,7 @@ static int do_create_stash(const struct pathspec *ps, struct strbuf *stash_msg_b
->  	repo_read_index_preload(the_repository, NULL, 0);
->  	if (repo_refresh_and_write_index(the_repository, REFRESH_QUIET, 0, 0,
->  					 NULL, NULL, NULL) < 0) {
-> -		ret = -1;
-> +		ret = error(_("Cannot write to the index"));
->  		goto done;
->  	}
->  
-> @@ -1555,7 +1555,7 @@ static int do_push_stash(const struct pathspec *ps, const char *stash_msg, int q
->  
->  	if (repo_refresh_and_write_index(the_repository, REFRESH_QUIET, 0, 0,
->  					 NULL, NULL, NULL)) {
-> -		ret = -1;
-> +		ret = error(_("Cannot write to the index"));
->  		goto done;
->  	}
->  
-> diff --git a/t/t3903-stash.sh b/t/t3903-stash.sh
-> index 3319240515..770881e537 100755
-> --- a/t/t3903-stash.sh
-> +++ b/t/t3903-stash.sh
-> @@ -1516,4 +1516,56 @@ test_expect_success 'restore untracked files even when we hit conflicts' '
->  	)
->  '
->  
-> +test_expect_success 'stash create reports a locked index' '
-> +	test_when_finished "rm -rf repo" &&
-> +	git init repo &&
-> +	(
-> +		cd repo &&
-> +		test_commit A A.file &&
-> +		echo change >A.file &&
-> +		touch .git/index.lock &&
-> +
-> +		cat >expect <<-EOF &&
-> +		error: Cannot write to the index
-> +		EOF
-> +		test_must_fail git stash create 2>err &&
-> +		test_cmp expect err
-> +	)
-> +'
-> +
-> +test_expect_success 'stash push reports a locked index' '
-> +	test_when_finished "rm -rf repo" &&
-> +	git init repo &&
-> +	(
-> +		cd repo &&
-> +		test_commit A A.file &&
-> +		echo change >A.file &&
-> +		touch .git/index.lock &&
-> +
-> +		cat >expect <<-EOF &&
-> +		error: Cannot write to the index
-> +		EOF
-> +		test_must_fail git stash push 2>err &&
-> +		test_cmp expect err
-> +	)
-> +'
-> +
-> +test_expect_success 'stash apply reports a locked index' '
-> +	test_when_finished "rm -rf repo" &&
-> +	git init repo &&
-> +	(
-> +		cd repo &&
-> +		test_commit A A.file &&
-> +		echo change >A.file &&
-> +		git stash push &&
-> +		touch .git/index.lock &&
-> +
-> +		cat >expect <<-EOF &&
-> +		error: Cannot write to the index
-> +		EOF
-> +		test_must_fail git stash apply 2>err &&
-> +		test_cmp expect err
-> +	)
-> +'
-> +
->  test_done
-> -- 
-> 2.43.GIT
-> 
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="+kN3LJLeU40/st3A"
+Content-Disposition: inline
+In-Reply-To: <beeab03c564e94861ab339d26c4e135b879a1ccd.camel@googlemail.com>
+User-Agent: Mutt/2.2.12 (2023-09-09)
 
 
+--+kN3LJLeU40/st3A
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+On 2024-02-05 at 20:12:10, Tobias Boesch wrote:
+> Hello everyone,
+>=20
+> quoting from downstream issue:
+> https://gitlab.archlinux.org/archlinux/packaging/packages/git/-/issues/5
+>=20
+> -------------------------
+>=20
+> "As far as I can see git gui cannot easily be used by me on arch.
+> A .desktop entry is missing for me.
+> I created one that opens git gui.
+> It also adds an entry in the "Open With..." menu of file managers (I
+> tested only with Nautilus). Opeing git gui with this entry git gui is
+> opened in the folder where the menu was opened.
+> If it is a git repository git gui open it. If it is no git repository
+> git gui opens just as if it was called from the desktop launcher.
+> Since it took a while to create it and adds value for me I would like
+> to share it to be added to the git package by default.
+> It is far from being perfect. It's a first working version. For me
+> personally it is enough.
+> Before tweaking it further to fit the packaging standards I would like
+> to ask if is desired to be added.
+>=20
+> .desktop file proposal
+>=20
+> [Desktop Entry]
+> Name=3Dgit gui
+
+I don't know whether this is the official name of the project or not.
+Perhaps someone else can comment on what the capitalization and
+punctuation of this entry should be.
+
+> Comment=3DA portable graphical interface to Git
+> Exec=3D/bin/bash -c 'if [[ "$0" =3D "/bin/bash" ]]; then git gui; else cd
+> "$0" && git gui; fi' %F
+
+It's not guaranteed that bash even exists on the system, let alone that
+it's in /bin.  For example, this wouldn't work on most of the BSDs.
+This would need to be templated using SHELL_PATH and written in POSIX
+sh (e.g., no `[[`).
+
+> Icon=3D/usr/share/git-gui/lib/git-gui.ico
+
+This would also need to be given an appropriate location based on the
+build parameters.
+
+> Type=3DApplication
+> Terminal=3Dfalse
+> Categories=3DDevelopment;
+>=20
+>=20
+> I think upstream has any interest to add this. Therefore I ask here."
+>=20
+> -------------------------
+>=20
+> The arch package maintainer proposed to try to to add this to upstream
+> before just putting it into the arch package.
+> Here I am asking if it could be added to git.
+
+If you wanted to send a suitable patch for the file such that it were
+appropriately built as part of the build process and installed, then we
+could probably accept it. Such patches are usually created by using
+`git format-patch` on one or multiple commits and then sent using `git
+send-email`.  You can take a look at `Documentation/SubmittingPatches`
+for more details.
+
+I think such functionality would be generally useful, and probably be
+beneficial to a wide variety of distributors.
+--=20
+brian m. carlson (he/him or they/them)
+Toronto, Ontario, CA
+
+--+kN3LJLeU40/st3A
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.4.3 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZcFhMwAKCRB8DEliiIei
+gcQWAQCfrX2Ufiga6OiJETBDCx683ywz5tYdoT78fjbZjj3LvgD/SKZEJD+UYN1r
+f73OO7ppuz/07K2t5TH7mAVNlYMFggk=
+=g8ol
+-----END PGP SIGNATURE-----
+
+--+kN3LJLeU40/st3A--
