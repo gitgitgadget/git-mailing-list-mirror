@@ -1,60 +1,38 @@
-Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mout.web.de (mout.web.de [212.227.17.11])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C57041770
-	for <git@vger.kernel.org>; Mon,  5 Feb 2024 18:57:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32D1845C1C
+	for <git@vger.kernel.org>; Mon,  5 Feb 2024 19:57:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.11
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707159473; cv=none; b=lw4yjMkBgYRaXDAQmFjCnCREri84D5TKvvrgOqK6Mu7QMNtOP6Vh6+/HbndRE8pp9UrrevoMT2HwRCOeoCXWZH7LKDHkmkfvgrJM1e72/fEoUCNErU6ahX+hCRMpCqyKY2sIY0TRqlrNzBJmzq41zte0AsOj1Gkz8Jri6v0EgbM=
+	t=1707163072; cv=none; b=DsI7PdsQ8dWw/5PiXm9tqbLi2Zsp/jYq6Ktrr3ndX2nbKxe1CtKWiZMKd36UzKhRA9/kjY5hDeagL+82VbeBJPHKvND+aUw/g0LRLnKvXl1kWOIVbZMiGXMljI2ogdHjonmcOW+3Ri5RfvgOcKB1OD2XPhBuD5Dcy9qm+L0qmvA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707159473; c=relaxed/simple;
-	bh=nB7Nvj73k1yUDDiJR6OMAvJEP+Gu6xBZ+X5DdQJQw4E=;
-	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=fEH94clsuNTixwtD18F60ONoXAgBM1XpwEE2B3BvRlO+tPsySwRvlPr8nFhw9yRXgjxnBwihw7I4MYSYge0KiYE3S1Y4TgGUpQEyP+5G2elQclxP0FiMmD3J9QgStd+5qJZs73CM4eRAnQzT5GmFoSmDnHfv4QJmA++ACQKKNgs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=eMrqVGRU; arc=none smtp.client-ip=209.85.128.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1707163072; c=relaxed/simple;
+	bh=M+dv/nN0y4e4JSr07isoJxvCH6Y1gmOxzydyWgdmSEo=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=jPTrMbCni669jfDb9R8bUZbsG6eGLnLJrJAMmFX3UW8g7ItAGjeh35M2ZLz+syo8foENSjHgALGcN9OKXlV954eGEMZdmfoJJuFb575R6UIkVJGl2b03Ho6DWApbyJOStVXzOaUzHpdk++gOx4PYXnYiUodRsRP0igydcwnhp6E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b=XrjN3oeM; arc=none smtp.client-ip=212.227.17.11
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="eMrqVGRU"
-Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-40f02b8d176so41945735e9.1
-        for <git@vger.kernel.org>; Mon, 05 Feb 2024 10:57:51 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1707159470; x=1707764270; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=CEb5pp7W+LvPxTHpbv9Kjk92lVUiQg4K+UsTh6vkcvQ=;
-        b=eMrqVGRUy5bLms6TMIaIR2LtPivhvbfTzkOlp3Ajyb4Uuk6BUj/ltfk02L+K/Yl0bJ
-         tjS7F6t+25LMsuzauJnnUaJuMizrgGSDfJKrfcLFb1T4WmVOlV6yjNbgOnKfPGkx877L
-         fbCjpulIBu4ne6LH7LenGJhfPUBh8NDDx6FDacQugNj4hw3XdKEwlE5tkRQtL5ta1KnN
-         iZiw4QsOfGJcgTm0MS+7oeQcewhpvIWvvals+ZbBZdCWqp4ewTbMXL5zqnj09zqTYYS1
-         KHWdkGWdk8dKhUHyZV7XKv0WSWnqFx6mXW+9ibuhrNy5Tn8QBEzcoG87zX8ydBZrkEPB
-         5QxA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1707159470; x=1707764270;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:reply-to:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=CEb5pp7W+LvPxTHpbv9Kjk92lVUiQg4K+UsTh6vkcvQ=;
-        b=On5QoCWMn0a4Fsr38kRb/TAxhSfqgIBZbxFsGYhyDN6KMT7HmTfk66/lsx44PUdDKS
-         skEqHUEMA7NJoBUrqAMzsxjnIiGx7KV8SPh6AeXchlXLg1wgI+i3/5htV2fF+TfDlMBO
-         qK47vI1gc1TDQNIyag6bgiwNrYeBLYT5E4PnUVhQvkQn51hswyu24g97qZqNQqZmzfF6
-         G/dWarpjF9BvhJmvnklX69wybHm59rcWUkl7iOzsa1AHgpq2VCaWiI5MZcJ8aP33F7vZ
-         3RWR0q+8KexmDnOWjvlMMdhu9zpt4rjQnov1OyALA6ZguTowMXyMPFuDJXmGi9TLMHRO
-         q2Bg==
-X-Gm-Message-State: AOJu0YxIk9zEGjGTZ7+jZF4Kyzhy79ELovrp46bOgNfTvHJ8A2GqdMDk
-	uUqKFOo38vsYpbPdbagtouh0QK8c6zIN/eekOnGXph/MniccjjwQ
-X-Google-Smtp-Source: AGHT+IFTd9b7ci8gakEWOHIQRYBgNvSDicW2yH1AyfvxvvDcec+aCpYMAcxGc22KCGp5SUiB2cMAmQ==
-X-Received: by 2002:a05:600c:3146:b0:40d:484e:935 with SMTP id h6-20020a05600c314600b0040d484e0935mr468196wmo.12.1707159470170;
-        Mon, 05 Feb 2024 10:57:50 -0800 (PST)
-X-Forwarded-Encrypted: i=0; AJvYcCXVOXaGX5yLYEkxR03lbYpy3OBObYdXM4CA0Qw0scPTphL6edLjGI4e5MgW/MaQmz3TtYxhbNQzHDeEMh7YcJKNWDgs
-Received: from ?IPV6:2a0a:ef40:62e:a901:d2c6:37ff:fef6:7b1? ([2a0a:ef40:62e:a901:d2c6:37ff:fef6:7b1])
-        by smtp.googlemail.com with ESMTPSA id i11-20020a05600c354b00b0040fc76ed923sm9474980wmq.6.2024.02.05.10.57.49
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 05 Feb 2024 10:57:49 -0800 (PST)
-Message-ID: <087d3438-98a1-46fe-89d9-8e7e1662151b@gmail.com>
-Date: Mon, 5 Feb 2024 18:57:49 +0000
+	dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b="XrjN3oeM"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de; s=s29768273;
+	t=1707163067; x=1707767867; i=l.s.r@web.de;
+	bh=M+dv/nN0y4e4JSr07isoJxvCH6Y1gmOxzydyWgdmSEo=;
+	h=X-UI-Sender-Class:Date:Subject:To:Cc:References:From:
+	 In-Reply-To;
+	b=XrjN3oeMoe1SG79+LXAcGgfuBTVseyBvZBkGZoxFeNqzFCy12V/QA37H3wS2ugaO
+	 //a9m3kSfcXMIshS8LPdeMZY8pDTX6fieiXiK8J3rnwUmiZ+wOQv7uhYhul+HiwG1
+	 YFOyOgLcMmPu+dCQ58tK8PRQFfp9Gl9ztnWlG6clSt3uKLNTwRqhnWE85eFCBnrFu
+	 llqQegbVvrLVMIOsHPsXWiHYIFhO4p35LlE0oYOPQoilMB+xIgFm95KmiA5UW4Q5V
+	 4/5DVZ3jNm7msso4Vm+ektlli+3zNp6OXMVeCZXzzyEyxRx9x2a7QHCmzgLhg+efq
+	 +Spbe7hyIvMHivN/QQ==
+X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
+Received: from [192.168.178.29] ([79.203.27.60]) by smtp.web.de (mrweb105
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 1MhFhg-1r2xGz1SXi-00eXVu; Mon, 05
+ Feb 2024 20:57:47 +0100
+Message-ID: <ce83bd09-dbd2-4c9e-8197-6e4800935523@web.de>
+Date: Mon, 5 Feb 2024 20:57:46 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -62,50 +40,99 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: What's cooking in git.git (Feb 2024, #02; Fri, 2)
+Subject: Re: [PATCH] commit.c: ensure strchrnul() doesn't scan beyond range
+To: Chandra Pratap via GitGitGadget <gitgitgadget@gmail.com>,
+ git@vger.kernel.org
+Cc: Chandra Pratap <chandrapratap376@gmail.com>,
+ Chandra Pratap <chandrapratap3519@gmail.com>
+References: <pull.1652.git.1707153705840.gitgitgadget@gmail.com>
 Content-Language: en-US
-To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-References: <xmqqmssirm6t.fsf@gitster.g>
-From: Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <xmqqmssirm6t.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+From: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
+In-Reply-To: <pull.1652.git.1707153705840.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:7BfzJoMYmpW45eEfiWnPZB88u/IOvKMg+GdeaCl63p3w9smJpRY
+ QANqjMbNzURnAVhm/LUv5MXWTGVQCxghuTNsjvTTaOIfoy98x6c/daKmqlOvkzYrslX9Wx/
+ PgBeW4epxt8JKzCLbkn3V2g9M5Dv12qo4jOgI3blm9xcAoJMEAvQV+G90ldp8UmjMxzXmWK
+ QsXJLlI4A/KATmpb/s4JQ==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:ZJ8MmHMkktQ=;q6AigO9p9sgfdRmEqzQLhpB7L3c
+ n+ShFgUZBiBOIvZ/TriwD1/S65MtgQ3cW89B3RB0Ipp4IYlpkWxcO8+Zsrvcu71bVLDcqnHnI
+ l4Rr8wxorMknw5sdcG0g9AdtprW7NXJOI/jW5C765hGEkFqyCON6hfexha5JSrq+PW39MX+op
+ /3Yyb4zJSdk4G984fCy914mMHU71CB1fLeqD0HY0VvOJCnzjgWnGkQ78njPL871ouF6+wzvXg
+ msnhJFb04hiBy0AMx5oCtx15AxjEslDen7rxWdX/PQXksOyPcc2nv9YUrPg76q9Y8ULLgBvz+
+ S764Z/VIbycum5wIkk/69xPD0Vo8L9EmYYxCQ/egLVtocrECoCY5PJB+P1xewAsH4KMBY01k6
+ rvLacIMTX8tlT0llQ4SdPpnzLx0Y1v4Gtz4zLRMwstgQUp6RrpD/xxVMYiFV/UBhfALBxoISf
+ hjnCoCPKXcbIWiU6L06eiXoxxsw6uvrEpT3j61ASCEd3vttuwoKCQMBzJzcs0dTW69Z2CDVRa
+ VctPg4+0PPdDS3IJofZ1Fh75WuUBFs+hSAGM4lLRxUhpvCMGGmNZkZkB1CgAu/9hlgWDgYn5M
+ 98cJmrSEqojfZFldgU/RhYwGUUPqLJs4qaguRGyx8yjZEEEoEK0TL6Nm/hXo0LW+tWoUub4oJ
+ spI0MToegNH96jmSBN4iOHY9w3T/MPg2X+R11NCNAZb0Qw08E1b51xZ1rlEq18AEGpw6EdKFe
+ fQKZkTRO354MvQCbmzerIC61XTzcprVc/Oco/4a0i/A66Sq1mTRFu83Cfm3g464OkFf5lIezT
+ 85WRyrYQoodIPF75tskNyN8gCmCH32OMut6S5iD3TyhYs=
 
-Hi Junio
+Am 05.02.24 um 18:21 schrieb Chandra Pratap via GitGitGadget:
+> From: Chandra Pratap <chandrapratap3519@gmail.com>
+>
+> Signed-off-by: Chandra Pratap <chandrapratap3519@gmail.com>
+> ---
+>     commit.c: ensure strchrnul() doesn't scan beyond range
+>
+> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1652%2=
+FChand-ra%2Fstrchrnul-v1
+> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1652/Chan=
+d-ra/strchrnul-v1
+> Pull-Request: https://github.com/gitgitgadget/git/pull/1652
+>
+>  commit.c | 8 +-------
+>  1 file changed, 1 insertion(+), 7 deletions(-)
+>
+> diff --git a/commit.c b/commit.c
+> index ef679a0b939..a65b8e92e94 100644
+> --- a/commit.c
+> +++ b/commit.c
+> @@ -1743,15 +1743,9 @@ const char *find_header_mem(const char *msg, size=
+_t len,
+>  	int key_len =3D strlen(key);
+>  	const char *line =3D msg;
+>
+> -	/*
+> -	 * NEEDSWORK: It's possible for strchrnul() to scan beyond the range
+> -	 * given by len. However, current callers are safe because they comput=
+e
+> -	 * len by scanning a NUL-terminated block of memory starting at msg.
+> -	 * Nonetheless, it would be better to ensure the function does not loo=
+k
+> -	 * at msg beyond the len provided by the caller.
+> -	 */
+>  	while (line && line < msg + len) {
+>  		const char *eol =3D strchrnul(line, '\n');
+> +		assert(eol - line <=3D len);
 
-On 03/02/2024 08:23, Junio C Hamano wrote:
-> * kn/for-all-refs (2024-01-29) 4 commits
->    (merged to 'next' on 2024-01-30 at e7a9234a8b)
->   + for-each-ref: avoid filtering on empty pattern
->   + refs: introduce `refs_for_each_all_refs()`
->   + refs: extract out `loose_fill_ref_dir_regular_file()`
->   + refs: introduce `is_pseudoref()` and `is_headref()`
-> 
->   "git for-each-ref" filters its output with prefixes given from the
->   command line, but it did not honor an empty string to mean "pass
->   everything", which has been corrected.
+Something like this might work in Verse, but C is more simple-minded.
+You can't undo an out-of-bounds access after the fact, and assert()
+would be compiled out if the code is built with NDEBUG anyway.
 
-I've been a bit slow to look at the latest re-roll but having done so 
-I'm concerned that the UI could use some improvement. If I understand 
-correctly the proposal is to make
+If you want to make the code work with buffers that lack a terminating
+NUL then you need to replace the strchrnul() call with something that
+respects buffer lengths.  You could e.g. call memchr().  Don't forget
+to check for NUL to preserve the original behavior.  Or you could roll
+your own custom replacement, perhaps like this:
 
-	git for-each-ref
+char *strnchrnul(const char *s, int c, size_t len)
+{
+	while (len-- && *s && *s !=3D c)
+		s++;
+	return (char *)s;
+}
 
-and
+A test with the new unit-test framework would be nice.  It should be
+possible to show that the current code runs over the passed len,
+without causing undefined behavior.  E.g. find_header_mem("foo bar",
+2, "foo", &len) is safe, but returns "bar" instead of NULL.
 
-	git for-each-ref ""
-
-behave differently so that the latter prints the pseudorefs from the 
-current worktree and the former does not. I can't help feeling that's 
-the sort of thing that makes people complain that git is hard to 
-understand. I wonder if we'd be better off adding an option to include 
-pseudorefs and have an empty pattern behave the same as no pattern.
-
-Best Wishes
-
-Phillip
-
->   Will merge to 'master'.
->   source: <20240129113527.607022-1-karthik.188@gmail.com>
+>
+>  		if (line =3D=3D eol)
+>  			return NULL;
+>
+> base-commit: a54a84b333adbecf7bc4483c0e36ed5878cac17b
 
