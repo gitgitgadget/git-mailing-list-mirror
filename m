@@ -1,172 +1,215 @@
-Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
+Received: from mail-ej1-f53.google.com (mail-ej1-f53.google.com [209.85.218.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25C1533CD4
-	for <git@vger.kernel.org>; Mon,  5 Feb 2024 16:37:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 675083FE5B
+	for <git@vger.kernel.org>; Mon,  5 Feb 2024 16:43:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707151048; cv=none; b=GVUE7787s2PC4OsnGitHNLp2GdtSs+xkpP3Hdy16X/89gqTSOPLh94bsbLBEoMF5dv6yp8TxvfQv3/ywdIwXzDheApEzJmr+QC3s8CDTFAFhGoE8eYUu2jgYTCon2+C1rZ9a2kosj/UezMXp9b2YoclmooqedSOU+VkOSFp15ew=
+	t=1707151414; cv=none; b=gVQr+YlAeDa9jV5GVkv1AXpVbtPqb5xXdrjoDrV0SWOS8OcyZBnO4S7iQD32a6GWDncK0kfoWdJ1/YSfKK+asWZCV8Yw85uDH6AuEBu2AYKMcvD/R4e1IojHNPxpl8Q5UslcRLwNfEHYTHyukEQHyrOI+b5ZUIYy9fgdHzHzmDE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707151048; c=relaxed/simple;
-	bh=qM06THL1jv5zHzy2lkijYvmGNHHPqY0Nv+nJZB6qdcM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=kJ9fWtrN+/OSz9RnT3Xv3wimrwHkPuhr6FsaucSgp0It0QwqmuugR4la7eK5HNcWkQDLFGZI3KWd31IDubYoOnPnwAiKlqy0E3LzwdDJWq9MPBd9JVCpH3jlb11JsSqYP7dmP5XB9HfaWgfX1d4jXlFtHceityuWgspDBI4HHlg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HgvTKknj; arc=none smtp.client-ip=209.85.128.48
+	s=arc-20240116; t=1707151414; c=relaxed/simple;
+	bh=kEUytqHdV9XuQC/SDtX7Mq6/Xsud5BA0hv1poFGw01k=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=W7dqeJO+FTXeSIzEf6Z0Rppb0/AfqdKXgEpGB43YIzGdOrANz4SRsVOgAY0Q1M7yVw1QkehQow5GH5kVIfoi0zvwsCstG+eYtox8zGib3PsUQYAD09jJeh8qYhX6NEjoyd8Fi2/yTI2KZXcLuzAddR+uYqxFVLsr4aHlIfJOyXE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=nb5RK4zQ; arc=none smtp.client-ip=209.85.218.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HgvTKknj"
-Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-40fc52c2ae4so30510445e9.3
-        for <git@vger.kernel.org>; Mon, 05 Feb 2024 08:37:26 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nb5RK4zQ"
+Received: by mail-ej1-f53.google.com with SMTP id a640c23a62f3a-a37ce4b2b23so107764066b.3
+        for <git@vger.kernel.org>; Mon, 05 Feb 2024 08:43:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1707151045; x=1707755845; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=Pgrlx7ObXOOnHSLKiOrnkcnLFCVqV9GiAkMhi/lzs2Y=;
-        b=HgvTKknjRQAmVRD3CmVVUB1glI2WWQXDVnoTrHNZrdwDI9D0KfHBeIkKr5yrmVLyYY
-         E3Yl4r93Tc/i15yQCqG/X1srJ/E3l/iy3PAj0JBc9lQ20wtz6DQrHPSNT4sDxYrIKYw2
-         bnCMZ9akewM9awJWpcP5lxPaVTExzNTvwy5o+RH+LoJ0S5FPeY3cHX7QTkmUFLJFPblG
-         vBYVKwL3/iI8/K3bH26uPxxf33mHc3v4CyCpUK8KrSpx1RpPynzvmCff3As9BRdeHx4I
-         RCpzhJ5gqNUFrQyp9dpKrWtvILzU2PYLGrKT1o6KOgIHd46qJnzceHMl/ywjl3GV3zib
-         1pEQ==
+        d=gmail.com; s=20230601; t=1707151410; x=1707756210; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=RVJ8BaAUXchHqFZKzmHNwXyolNB02oclljSr0583Erw=;
+        b=nb5RK4zQdulS80XnCtMxUhHXiqcPyuAvFy10uiyT3h5KwN1T5fwSVOWsastJpcP9qC
+         i93RrGsS3/FiRLmHTc4G9M30ejCS4NE8u6cIFf3NHlzEifwyGk9psiUncCRAXeoKsj3h
+         Jwm3Ai+wxrPPnvc2zJw1gOWwDEjNtnqpvkOE0rHy9ra5MrkOygIRXrpbFc8vdq+izF64
+         G/0w7Fz0EFLEUl7Ryrn1ojBcJXg7AxWsTIA/j4bhqSQvxPWR5CewZJxS1OlX/c6v2czc
+         pVEE0tp3PoC3J5DCz8cxJi+2OoQMs92xlhN4gfhL+jUJTTqD+cu/AFjeGo6tw4Yg1QNv
+         wDew==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1707151045; x=1707755845;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:reply-to:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=Pgrlx7ObXOOnHSLKiOrnkcnLFCVqV9GiAkMhi/lzs2Y=;
-        b=tuO6fnUuCm/Ecf7z34Ce/A7Ytdh8ffLGIBFJhcCnyuzGrMK4XQWFn6URZZsRNxyBa4
-         QGcWCpQAdwLYZEw511yI7FZiFlNYXK3bXjWkCuq4SjQSaeN8twGrmd8g75KIpRsmWLYj
-         4DrVLFgoKPsluDdlBjTG+fXLGtiTAlOhnKpplTnIMDGgVHXn3vq6WgHiqiVI4xvDA6tW
-         MlzJDvvrzfBAEcb4Bf7VPmcbZzmGPGWZzmiMI/h7m/GZSz54y7c9yGBaE2dq5xUe9bnj
-         jsTDqzAutIVlzNeR0KJ2Ah2d2pB/GwZWpULnWDLVOJXy+DbwqVVMNNvl0nK9TRw6f1aW
-         in6g==
-X-Gm-Message-State: AOJu0Ywhd4GlsDPJSdQmXf2iN3iUUX8FcwF8jPo+p1RalWx/qyGK0QQm
-	oJQgvI7CjUpmIFiNV6j1e3kyPGi0vEvG72RQ5V+JJ0cC6zuD3JwjjV8ikD65
-X-Google-Smtp-Source: AGHT+IHb3oU4s01GBpnmdTkHBTcgJQgtBk8nTUPVU1IHfbKwEjDVPBBGF7eoJbeW137cRHixQdn/Fg==
-X-Received: by 2002:a05:600c:3108:b0:40f:aabc:d508 with SMTP id g8-20020a05600c310800b0040faabcd508mr223600wmo.10.1707151044996;
-        Mon, 05 Feb 2024 08:37:24 -0800 (PST)
-X-Forwarded-Encrypted: i=0; AJvYcCXOwPgJ9OhyuEANXJOqv50Ruxv/HhN0OAbIV4NCjGEVEad08t8AtKvVkzpEiFPBdoBR7asZ9W+cuOwd8oyDmYJdPrzC1BNaMf6Y17gRa+s=
-Received: from ?IPV6:2a0a:ef40:62e:a901:386f:d8d1:628a:e68d? ([2a0a:ef40:62e:a901:386f:d8d1:628a:e68d])
-        by smtp.gmail.com with ESMTPSA id r9-20020a05600c35c900b0040fb44a9288sm9112937wmq.48.2024.02.05.08.37.24
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 05 Feb 2024 08:37:24 -0800 (PST)
-Message-ID: <9f9f26f1-5460-468e-a893-5caf7fbea981@gmail.com>
-Date: Mon, 5 Feb 2024 16:37:22 +0000
+        d=1e100.net; s=20230601; t=1707151410; x=1707756210;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=RVJ8BaAUXchHqFZKzmHNwXyolNB02oclljSr0583Erw=;
+        b=Goy0BoJlOZGOiP8axb4lGF5iSDh50yXUzbTd0kC4mK3r9/kyRd2kHvGUHY5HrWk7Ys
+         jEK5WNrSSR6j6U3EIz63JxQzUXQ4P0xikKQwfISsy9tb3ZApdZPFdesio6f6oi8W+LY7
+         rpJO9OkDzPEcjbHn4c3lxg8hOu/50e3QO95V5dAHYg9kuYP0p46KJ8P81ZPDP44rZ49d
+         frReJMk2Lwqh3PVfXZvkjbdGXdLTCT9MCs++y9L6Cwm6GR62xjIr6I34xbtc3/dRmfuJ
+         RBV7JcD3bvkaj0BD6eewwuCYFS9EwGO1MhOieSTd2b6xhEFOZDZUUaMfKj1+SvDgeVZD
+         4PLQ==
+X-Gm-Message-State: AOJu0Yz2Pvmk+yRO0AKX3no8jNI/S8KKBm9iQYCUf82KfiLmP7QQQBKT
+	S+jURiGHmnciqbnWOO2aNiXjI2Y2+YVSSn5wF7VA9SWgsu8BkHOnxhqD03kt2Lf8sq6TzxkFYi8
+	RZ/Ql1wB5QnEe5XWw6QIVlEFQEYw=
+X-Google-Smtp-Source: AGHT+IFaWqCqoF2LUdX3gmr7flBVbj5HXbnz6dUXPahDFNs8trVDFQ9G1hD71dH1vqknHxfTwRZ0sai9oz8YD3Ezrp0=
+X-Received: by 2002:a17:906:314c:b0:a37:4765:658 with SMTP id
+ e12-20020a170906314c00b00a3747650658mr4822861eje.34.1707151410322; Mon, 05
+ Feb 2024 08:43:30 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v3 2/2] add-patch: classify '@' as a synonym for 'HEAD'
-Content-Language: en-US
-To: Ghanshyam Thakkar <shyamthakkar001@gmail.com>, git@vger.kernel.org
-Cc: gitster@pobox.com, ps@pks.im
-References: <20240202150434.11256-1-shyamthakkar001@gmail.com>
- <20240203112619.979239-6-shyamthakkar001@gmail.com>
-From: Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <20240203112619.979239-6-shyamthakkar001@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+References: <d4797f27-825b-4e2b-85a6-cc30f33934e3@gmail.com> <106b8e7be9ddc2d24670b01d54347dfcf9aef196.1707122040.git.ps@pks.im>
+In-Reply-To: <106b8e7be9ddc2d24670b01d54347dfcf9aef196.1707122040.git.ps@pks.im>
+From: Christian Couder <christian.couder@gmail.com>
+Date: Mon, 5 Feb 2024 17:43:17 +0100
+Message-ID: <CAP8UFD3F95TzytdpKO=LLf6Y_ejxwh9QtgAxRNKgMXW-72hjgQ@mail.gmail.com>
+Subject: Re: [PATCH] Add ideas for GSoC 2024
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>, 
+	Junio C Hamano <gitster@pobox.com>, Victoria Dye <vdye@github.com>, 
+	Karthik Nayak <karthik.188@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Hi Ghanshyam
+On Mon, Feb 5, 2024 at 9:39=E2=80=AFAM Patrick Steinhardt <ps@pks.im> wrote=
+:
+>
+> Add project ideas for the GSoC 2024.
+> ---
+>
+> I came up with four different topics:
+>
+>   - The reftable unit test refactorings. This topic can also be squashed
+>     into the preexisting unit test topics, I wouldn't mind. In that case
+>     I'd be happy to be a possible mentor, too.
+>
+>   - Ref consistency checks for git-fsck(1). This should be rather
+>     straight forward and make for an interesting topic.
+>
+>   - Making git-bisect(1)'s state more self-contained as recently
+>     discussed. This topic is easy to implement, but the backwards
+>     compatibility issues might require a lot of attention.
+>
+>   - Implementing support for reftables in the "dumb" HTTP protocol. It's
+>     quite niche given that the dumb protocol isn't really used much
+>     nowadays anymore. But it could make for an interesting project
+>     regardless.
+>
+> It's hard to estimate for me whether their scope is either too small or
+> too big. So please feel free to chime in and share your concerns if you
+> think that any of those proposals don't make much sense in your opinion.
 
-I think this is a useful addition, I've left a couple of comments below
+Thanks a lot for these ideas! I have applied your patch and pushed it.
 
-On 03/02/2024 11:25, Ghanshyam Thakkar wrote:
-> diff --git a/add-patch.c b/add-patch.c
-> index 68f525b35c..7d565dcb33 100644
-> --- a/add-patch.c
-> +++ b/add-patch.c
-> @@ -378,6 +378,11 @@ static int parse_hunk_header(struct add_p_state *s, struct hunk *hunk)
->   	return 0;
->   }
->   
-> +static inline int user_meant_head(const char *rev)
-> +{
-> +	return !strcmp(rev, "HEAD") || !strcmp(rev, "@");
-> +}
+I have a few concerns though, see below.
+
+>  SoC-2024-Ideas.md | 129 ++++++++++++++++++++++++++++++++++++++++++++++
+>  1 file changed, 129 insertions(+)
+>
+> diff --git a/SoC-2024-Ideas.md b/SoC-2024-Ideas.md
+> index 3efbcaf..286aea0 100644
+> --- a/SoC-2024-Ideas.md
+> +++ b/SoC-2024-Ideas.md
+> @@ -39,3 +39,132 @@ Languages: C, shell(bash)
+>  Possible mentors:
+>  * Christian Couder < <christian.couder@gmail.com> >
+>
+> +### Convert reftable unit tests to use the unit testing framework
 > +
+> +The "reftable" unit tests in "t0032-reftable-unittest.sh"
+> +predate the unit testing framework that was recently
+> +introduced into Git. These tests should be converted to use
+> +the new framework.
+> +
+> +See:
+> +
+> +  - this discussion <https://lore.kernel.org/git/cover.1692297001.git.st=
+eadmon@google.com/>
+> +
+> +Expected Project Size: 175 hours or 350 hours
+> +
+> +Difficulty: Low
 
-As well as the places you have converted we also have an explicit test 
-for "HEAD" in parse_diff() which looks like
+"Difficulty: Low" might not be very accurate from the point of view of
+contributors. I think it's always quite difficult to contribute
+something significant to Git, and sometimes more than we expected.
 
-	if (s->revision) {
-		struct object_id oid;
-		strvec_push(&args,
-			    /* could be on an unborn branch */
-			    !strcmp("HEAD", s->revision) &&
-			    repo_get_oid(the_repository, "HEAD", &oid) ?
-			    empty_tree_oid_hex() : s->revision);
-	}
+> +Languages: C, shell(bash)
+> +
+> +Possible mentors:
+> +* Patrick Steinhardt < <ps@pks.im> >
+> +* Karthik Nayak < <karthik.188@gmail.com> >
+> +
+> +### Implement consistency checks for refs
+> +
+> +The git-fsck(1) command is used to check various data
+> +structures for consistency. Notably missing though are
+> +consistency checks for the refdb. While git-fsck(1)
+> +implicitly checks some of the properties of the refdb
+> +because it uses its refs for a connectivity check, these
+> +checks aren't sufficient to properly ensure that all refs
+> +are properly consistent.
+> +
+> +The goal of this project would be to introduce consistency
+> +checks that can be implemented by the ref backend. Initially
+> +these checks may only apply to the "files" backend. With the
+> +ongoing efforts to upstream a new "reftable" backend the
+> +effort may be extended.
+> +
+> +See:
+> +
+> +  - https://lore.kernel.org/git/6cfee0e4-3285-4f18-91ff-d097da9de737@rd1=
+0.de/
+> +  - https://lore.kernel.org/git/cover.1706601199.git.ps@pks.im/
+> +
+> +Expected Project Size: 175 hours or 350 hours
+> +
+> +Difficulty: Medium
+> +
+> +Languages: C, shell(bash)
+> +
+> +Possible mentors:
+> +* Patrick Steinhardt < <ps@pks.im> >
+> +* Karthik Nayak < <karthik.188@gmail.com> >
+> +
+> +### Refactor git-bisect(1) to make its state self-contained
+> +
+> +The git-bisect(1) command is used to find a commit in a
+> +range of commits that introduced a specific bug. Starting a
+> +bisection run creates a set of state files into the Git
+> +repository which record various different parameters like
+> +".git/BISECT_START". These files look almost like refs
+> +due to their names being all-uppercase. This has led to
+> +confusion with the new "reftable" backend because it wasn't
+> +quite clear whether those files are in fact refs or not.
+> +
+> +As it turns out they are not refs and should never be
+> +treated like one. Overall, it has been concluded that the
+> +way those files are currently stored is not ideal. Instead
+> +of having a proliferation of files in the Git directory, it
+> +was discussed whether the bisect state should be moved into
+> +its own "bisect-state" subdirectory. This would make it more
+> +self-contained and thereby avoid future confusion. It is
+> +also aligned with the sequencer state used by rebases, which
+> +is neatly contained in the "rebase-apply" and "rebase-merge"
+> +directories.
+> +
+> +The goal of this project would be to realize this change.
+> +While rearchitecting the layout should be comparatively easy
+> +to do, the harder part will be to hash out how to handle
+> +backwards compatibility.
+> +
+> +See:
+> +
+> +  - https://lore.kernel.org/git/Za-gF_Hp_lXViGWw@tanuki/
 
-I suspect we need to update that code as well to accept "@" as a synonym 
-for "HEAD" on an unborn branch.
+From reading the discussion it looks like everyone is Ok with doing
+this. I really hope that we are not missing something that might make
+us decide early not to do this though.
 
-> diff --git a/builtin/checkout.c b/builtin/checkout.c
-> index a6e30931b5..79e208ee6d 100644
-> --- a/builtin/checkout.c
-> +++ b/builtin/checkout.c
-> @@ -539,12 +539,13 @@ static int checkout_paths(const struct checkout_opts *opts,
->   		 * recognized by diff-index), we will always replace the name
->   		 * with the hex of the commit (whether it's in `...` form or
->   		 * not) for the run_add_interactive() machinery to work
-> -		 * properly. However, there is special logic for the HEAD case
-> -		 * so we mustn't replace that.  Also, when we were given a
-> -		 * tree-object, new_branch_info->commit would be NULL, but we
-> -		 * do not have to do any replacement, either.
-> +		 * properly. However, there is special logic for the 'HEAD' and
-> +		 * '@' case so we mustn't replace that.  Also, when we were
-> +		 * given a tree-object, new_branch_info->commit would be NULL,
-> +		 * but we do not have to do any replacement, either.
->   		 */
-> -		if (rev && new_branch_info->commit && strcmp(rev, "HEAD"))
-> +		if (rev && new_branch_info->commit && strcmp(rev, "HEAD") &&
-> +		    strcmp(rev, "@"))
->   			rev = oid_to_hex_r(rev_oid, &new_branch_info->commit->object.oid);
-
-I agree with Junio's suggestion to use the user_meant_head() here. 
-Looking at this made me wonder why builtin/reset.c does not need 
-updating. The answer seems to be that reset passes in the revision as 
-given on the commandline after checking it refers to a valid tree 
-whereas for checkout the revision for on the commandline might contain 
-"..." which run_add_p() cannot handle.
-> diff --git a/t/t2071-restore-patch.sh b/t/t2071-restore-patch.sh
-> index b5c5c0ff7e..3dc9184b4a 100755
-> --- a/t/t2071-restore-patch.sh
-> +++ b/t/t2071-restore-patch.sh
-> @@ -44,13 +44,17 @@ test_expect_success PERL 'git restore -p with staged changes' '
-
-It is a pre-existing problem but all these "PERL" prerequisites are 
-no-longer required as we've removed the perl implementation of "add -p"
-
->   	verify_state dir/foo index index
->   '
->   
-> -test_expect_success PERL 'git restore -p --source=HEAD' '
-> -	set_state dir/foo work index &&
-> -	# the third n is to get out in case it mistakenly does not apply
-> -	test_write_lines n y n | git restore -p --source=HEAD &&
-> -	verify_saved_state bar &&
-> -	verify_state dir/foo head index
-> -'
-> +for opt in "HEAD" "@"
-> +do
-> +	test_expect_success PERL "git restore -p --source=$opt" '
-> +		set_state dir/foo work index &&
-> +		# the third n is to get out in case it mistakenly does not apply
-> +		test_write_lines n y n | git restore -p --source=$opt >output &&
-> +		verify_saved_state bar &&
-> +		verify_state dir/foo head index &&
-> +		test_grep "Discard" output
-
-It is good to see that we're now testing for a reversed patch here.
-
-Best Wishes
-
-Phillip
+> +Expected Project Size: 175 hours or 350 hours
+> +
+> +Difficulty: Medium
+> +
+> +Languages: C, shell(bash)
+> +
+> +Possible mentors:
+> +* Patrick Steinhardt < <ps@pks.im> >
+> +* Karthik Nayak < <karthik.188@gmail.com> >
