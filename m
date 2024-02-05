@@ -1,107 +1,123 @@
-Received: from mail-wm1-f53.google.com (mail-wm1-f53.google.com [209.85.128.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from secure.elehost.com (secure.elehost.com [185.209.179.11])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5ACA928DD1
-	for <git@vger.kernel.org>; Mon,  5 Feb 2024 17:21:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 380C845956
+	for <git@vger.kernel.org>; Mon,  5 Feb 2024 17:34:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.209.179.11
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707153711; cv=none; b=UqcghHJpyNIS+VPzzBSkddZp6VbAjVRAmw8K7I+pKq9IlO9+aIPC9D3aXYm5V9C6SPiYJnL4r0lgAKQVVG+4Ji/KCLUFYx6lszlnfEtJbMvP68er69W9/5Ab9VA0GRyeoCJnh+ZBxrIqYCr3ticSI1PgtqyRnHU7bPSCMJ6n8sk=
+	t=1707154463; cv=none; b=iXdgU3+5khlc1uy5VfIr+vhzxcAM60yQ0+w6mabKg4WGYqudK5l17bkxVOeYqvIR6ARTPjXfuaOLzYWQCFQnC4ehALcHBVuyu8vPxmDO86oe7Ligu4wlg4ImnPz0mCaSGTNIb7rdjRavFCp1YQIjxhSAF1EEjH0soov0MovLn28=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707153711; c=relaxed/simple;
-	bh=rjj4nnqJQTDhTzUIu7ktClSHT+0vhXH3QpAjE5EkMFU=;
-	h=Message-ID:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=NXduvrcqbXNiLfjgCIoUIJybqh6wTaWeeYWQZiMnO0xtLvlOuCdxavqsnSqbNdHRMPS5JxbjIRD2N5mpoI4CLMgs4diK7D7VZfHEzPYhtXQRcZYUnX/IDiAaENCR8Stffu2hdfXCBU8CxNDtYU/t6MhUs2BQO30Y6HuOWqEmQ6Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Fqpb9BgE; arc=none smtp.client-ip=209.85.128.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Fqpb9BgE"
-Received: by mail-wm1-f53.google.com with SMTP id 5b1f17b1804b1-40fb804e330so42574465e9.0
-        for <git@vger.kernel.org>; Mon, 05 Feb 2024 09:21:48 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1707153707; x=1707758507; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=BAltXQokftvu94m9ceSfETc7NGAuLWFiKK0zeWPJkLc=;
-        b=Fqpb9BgE24xDogfaulptvESl4DjU6V/pXSGeobp5hi8JYZ/Ujjtp19JUrr2eNxIXtl
-         f+lP/bqTN+fsCcw1BHvPEYY3Kj+fR6WsmWjcme9j9eoKjRAuIuHmtiv4NRDUSnMyj/Qg
-         37XLB3gFDxZ6MMSxe5BOaykoa3CWhQspG6nnA6uo6Bujj1BzFIBd80J3RlLm6x9Bz4mu
-         ZHQk0DdGLd0Lmz04iqzjaMAfZjWW1JujI3j7OuAtddeZu55CJNiMSR60Q8kFV/9ZgFkK
-         XXgVGQSNywWH0ORbbnhaCnXgYB4e3HE6QsYfwYujzN/mDVOueF0cnDdl2XuH5Ijjyml0
-         HVBg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1707153707; x=1707758507;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=BAltXQokftvu94m9ceSfETc7NGAuLWFiKK0zeWPJkLc=;
-        b=k4O1VVjspBhmhbyAhudLZMJeuogo4jmWctl46800IeS6zIjyOfN/lN42ySHEtXsLJr
-         K4zcb1wNvqoylp6r1VKR3oMqtlbWnOuNVA+gJi24lzwaIJ/rMV4NMZsARj0qsPcFgzdo
-         MLNyt1IdItYHNhjsDGC0VAX7PGt6Ke73K16eK7p1qXXDRSwR2YE5nhb6hTQjl0yJPrXA
-         KaSwkU7SHm1ZFeUo9J8G1TWm2Uw38RsDhqBdjwqwa4fNrJs0w/V8hmn5DzUeboP5ECdb
-         vKfr8Yykr2glhhj+u3GGdDvbwTb2Jq0PbYDJ/au2nVBPM6tJlVRWJXiibFEU7ngbJHrZ
-         zfSA==
-X-Gm-Message-State: AOJu0YwVb08W3mNotqM+yw8hOc8hLMTqr84Wx+fMRILz0YKWE7WNyR5M
-	mxJnE4hd9nlHFhsqZRnHgzNODQCYtN8jQiqyW4DjJ0ReaJR1dhxyeFiQpXWj
-X-Google-Smtp-Source: AGHT+IFYqP092R4bEg4U2LxozXZneFW8A/gN+nMY6MBcqzUZaAIWJKuClZWHpFl45sj2NizNSQCXGA==
-X-Received: by 2002:a05:600c:a39e:b0:40f:dd4a:11f5 with SMTP id hn30-20020a05600ca39e00b0040fdd4a11f5mr306879wmb.34.1707153706657;
-        Mon, 05 Feb 2024 09:21:46 -0800 (PST)
-X-Forwarded-Encrypted: i=0; AJvYcCWXIOKjqOYawa7LrckFUrsVNmy6AD1ijcGhCo+ijCd5lZLaXVe9E8zeeuFDmvwEUIwoWiOUBplEczIug9hGrInhpr7wLBJapW+Apgk=
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id y21-20020a05600c365500b0040ef718cf81sm429935wmq.28.2024.02.05.09.21.46
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 05 Feb 2024 09:21:46 -0800 (PST)
-Message-ID: <pull.1652.git.1707153705840.gitgitgadget@gmail.com>
-From: "Chandra Pratap via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Mon, 05 Feb 2024 17:21:45 +0000
-Subject: [PATCH] commit.c: ensure strchrnul() doesn't scan beyond range
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+	s=arc-20240116; t=1707154463; c=relaxed/simple;
+	bh=6lkNX+Q6XiueTXMBk0YSYCw4t7RMhInB1y5xzqgwULs=;
+	h=From:To:Cc:References:In-Reply-To:Subject:Date:Message-ID:
+	 MIME-Version:Content-Type; b=HFxh/PCl1YOO5Q87VhybqJWtmDi74z6DfGukb3eZhNlOT2lUTGq/5wdfgf3eGXmbV0PJCJOnf/YtHcpPN11bGzA6aEgER/03N8HfMZYta+wBNuinE5fYV067zdGeaQjd81ESb44NOQGqxxBR5/egkwUCbo08vWsaUoBzl2GXnMo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com; spf=pass smtp.mailfrom=nexbridge.com; arc=none smtp.client-ip=185.209.179.11
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nexbridge.com
+X-Virus-Scanned: Debian amavisd-new at secure.elehost.com
+Received: from Mazikeen (cpebc4dfb928313-cmbc4dfb928310.cpe.net.cable.rogers.com [99.228.251.108] (may be forged))
+	(authenticated bits=0)
+	by secure.elehost.com (8.15.2/8.15.2/Debian-22ubuntu3) with ESMTPSA id 415HYEgJ2220857
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 5 Feb 2024 17:34:14 GMT
+Reply-To: <rsbecker@nexbridge.com>
+From: <rsbecker@nexbridge.com>
+To: "'Achu Luma'" <ach.lumap@gmail.com>, <git@vger.kernel.org>
+Cc: <christian.couder@gmail.com>,
+        "'Christian Couder'" <chriscool@tuxfamily.org>
+References: <20240205162506.1835-1-ach.lumap@gmail.com>
+In-Reply-To: <20240205162506.1835-1-ach.lumap@gmail.com>
+Subject: RE: [Outreachy][PATCH 1/2] date: refactor 64 bit prereq code into reusable functions
+Date: Mon, 5 Feb 2024 12:34:09 -0500
+Organization: Nexbridge Inc.
+Message-ID: <020a01da5859$89e41210$9dac3630$@nexbridge.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Chandra Pratap <chandrapratap376@gmail.com>,
-    Chandra Pratap <chandrapratap3519@gmail.com>
+Content-Type: text/plain;
+	charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+X-Mailer: Microsoft Outlook 16.0
+Thread-Index: AQJG+DLJogej7FKn0EbXWbwPX+LtxLAiwhrw
+Content-Language: en-ca
 
-From: Chandra Pratap <chandrapratap3519@gmail.com>
+On Monday, February 5, 2024 11:25 AM, Achu Luma wrote:
+>In a following commit we are going to port code from "t/helper/test-date.c"
+and
+>"t/t0006-date.sh" to a new "t/unit-tests/t-date.c" file using the recently
+added unit
+>test framework.
+>
+>We cannot fully port all the code from "t/helper/test-date.c" though, as
+the test-
+>tool date helper is still used by a number of "t/*.sh" tests.
+>The TIME_IS_64BIT and TIME_T_IS_64BIT prereqs are especially used by
+"t5000-
+>tar-tree.sh", "t5318-commit-graph.sh" and
+"t5328-commit-graph-64bit-time.sh"
+>while checking those prereqs will be required in the new
+"t/unit-tests/t-date.c" file
+>too.
+>
+>To avoid duplicating in both "t/helper/test-date.c" and
+"t/unit-tests/t-date.c" the
+>small amount of code checking these prereqs, let's move it into inline
+functions in
+>"date.h".
+>
+>The names of these new inline functions contain "TIME_IS_64BIT" or
+>"TIME_T_IS_64BIT" as it will simplify the macros we will use when we will
+port code
+>to "t/unit-tests/t-date.c" in a following commit.
+>
+>Mentored-by: Christian Couder <chriscool@tuxfamily.org>
+>Signed-off-by: Achu Luma <ach.lumap@gmail.com>
+>---
+> date.h               | 6 ++++++
+> t/helper/test-date.c | 4 ++--
+> 2 files changed, 8 insertions(+), 2 deletions(-)
+>
+>diff --git a/date.h b/date.h
+>index 6136212a19..fb70490a51 100644
+>--- a/date.h
+>+++ b/date.h
+>@@ -70,4 +70,10 @@ void datestamp(struct strbuf *out);  timestamp_t
+>approxidate_careful(const char *, int *);  int date_overflows(timestamp_t
+date);
+>time_t tm_to_time_t(const struct tm *tm);
+>+static inline int check_prereq_TIME_IS_64BIT(void) {
+>+	return sizeof(timestamp_t) == 8;
+>+}
+>+static inline int check_prereq_TIME_T_IS_64BIT(void) {
+>+	return sizeof(time_t) == 8;
+>+}
+> #endif
+>diff --git a/t/helper/test-date.c b/t/helper/test-date.c index
+>0683d46574..be0b8679c3 100644
+>--- a/t/helper/test-date.c
+>+++ b/t/helper/test-date.c
+>@@ -126,9 +126,9 @@ int cmd__date(int argc UNUSED, const char **argv)
+> 	else if (!strcmp(*argv, "getnanos"))
+> 		getnanos(argv+1);
+> 	else if (!strcmp(*argv, "is64bit"))
+>-		return sizeof(timestamp_t) == 8 ? 0 : 1;
+>+		return !check_prereq_TIME_IS_64BIT();
+> 	else if (!strcmp(*argv, "time_t-is64bit"))
+>-		return sizeof(time_t) == 8 ? 0 : 1;
+>+		return !check_prereq_TIME_T_IS_64BIT();
+> 	else
+> 		usage(usage_msg);
+> 	return 0;
+>--
+>2.43.0.windows.1
 
-Signed-off-by: Chandra Pratap <chandrapratap3519@gmail.com>
----
-    commit.c: ensure strchrnul() doesn't scan beyond range
+I would suggest that you also take into account whether time_t is signed or
+not (more difficult perhaps). Some platforms use signed time_t to allow
+representation of dates prior to 1970-01-01, while others make this signed.
+Some other platforms (S/390 for example) have retained time_t as 32-bits but
+have a time64_t for 64 bits. It might be useful to account for this.
+--Randall
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1652%2FChand-ra%2Fstrchrnul-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1652/Chand-ra/strchrnul-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/1652
-
- commit.c | 8 +-------
- 1 file changed, 1 insertion(+), 7 deletions(-)
-
-diff --git a/commit.c b/commit.c
-index ef679a0b939..a65b8e92e94 100644
---- a/commit.c
-+++ b/commit.c
-@@ -1743,15 +1743,9 @@ const char *find_header_mem(const char *msg, size_t len,
- 	int key_len = strlen(key);
- 	const char *line = msg;
- 
--	/*
--	 * NEEDSWORK: It's possible for strchrnul() to scan beyond the range
--	 * given by len. However, current callers are safe because they compute
--	 * len by scanning a NUL-terminated block of memory starting at msg.
--	 * Nonetheless, it would be better to ensure the function does not look
--	 * at msg beyond the len provided by the caller.
--	 */
- 	while (line && line < msg + len) {
- 		const char *eol = strchrnul(line, '\n');
-+		assert(eol - line <= len);
- 
- 		if (line == eol)
- 			return NULL;
-
-base-commit: a54a84b333adbecf7bc4483c0e36ed5878cac17b
--- 
-gitgitgadget
