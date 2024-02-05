@@ -1,184 +1,109 @@
-Received: from mail-qt1-f172.google.com (mail-qt1-f172.google.com [209.85.160.172])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from secure.elehost.com (secure.elehost.com [185.209.179.11])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C939B1EB3B
-	for <git@vger.kernel.org>; Mon,  5 Feb 2024 22:50:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C0ED482CD
+	for <git@vger.kernel.org>; Mon,  5 Feb 2024 22:52:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.209.179.11
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707173427; cv=none; b=a4FGznR3cDivVi5uCCnqkQ0LlUzhlh98dtvVq5aA6xqdBfZ0LrcFVWk03ASgvcS4Sgq86VfiWOnpH3dxJpnUZhl3vRy6UKm3g14GpjE+LHRe2lGdvxGZiMCb26beAvgsE1I2VMVjXYPPcIHLwbZ6ZrCK+9LHOlZ87tOqwc5p/1s=
+	t=1707173555; cv=none; b=aTq/MfWFmH30oSrtQkoR6Q7XFf16Hhv3NIFUI6wHVA4gbRTxGZtH1DC4yAqwSqz8aAJeGFmVJ4uObo3mcyZra+GY8xw+eANTCVu5BscS2hgmRjwqxTHik8MYwhwW0sVmXLctdpRWeq+3AF07mu7sDDV5XuuYM95/l2AExc/K/wU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707173427; c=relaxed/simple;
-	bh=K3U1/+JFQlP++DGfuwfnMUyhvqVrOs137dtv6hXAgLM=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Nwlp0LH6rsDX5qqdiWodgExRcVe/IdBUcRGaJbN1NCw18h/8QJ+ms31EFuOWo2LqPrhMIPROLZkDpbne3qoEll0uOYOfIw7h3k4vKyRUkRBuJYQ4+RNjDJVczEuzG9dgpg2lWIy0j2mgObq5DBznkcmM6u6Ex0MTB/hnE+tP8gk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=none smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=K0ZSza5E; arc=none smtp.client-ip=209.85.160.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ttaylorr.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="K0ZSza5E"
-Received: by mail-qt1-f172.google.com with SMTP id d75a77b69052e-429d7896d35so31064941cf.3
-        for <git@vger.kernel.org>; Mon, 05 Feb 2024 14:50:25 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1707173424; x=1707778224; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=GFpPb8ERa49DMDU/lFPWcEhZpkl14sq41lvNAoUJsGY=;
-        b=K0ZSza5E1+vuxCA0tm5WbSBAo+NYXEuebDRQ6HbxfngjLjz4kXepCxMjzixqO0Jb6V
-         49laBtb/Mrye9RCl7CzQaXggsxQAA5Ju7DCC5LOwnp1ox4THVaR47bkCFvCd2DCjgAfm
-         uqdJAToiIpisO2E3VvRMhT0ZiTVglQMvByZ/Adfiu6uK+oInCQpq8ADVEMv6zQKc1Low
-         M7mCz9D+lfirob/uRIsuDsQTBImeTOtEdDFh3RCMr/On9D3uwgMBdN+ngtcHksYi91xT
-         TzdIChEehSagUDvNcKtLrpyEk5V3raFGdAqAi7Ir2+PwbYEQc+4K8M6kuIHc3LvTG1A7
-         Gxhg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1707173424; x=1707778224;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=GFpPb8ERa49DMDU/lFPWcEhZpkl14sq41lvNAoUJsGY=;
-        b=aDbV37jIkQ9VuNBSvzNXe0AHW0ofqh+uQ5r86T/hPv8OZGLC+m+TOz1dzfBUE5O7fR
-         ecDw+Vc1Xo5+GPKUUmcaF5X7GnjbQva7+N4Hf+iiPBL6ygvOIeOTvwbv7eRglgzmvWYj
-         8/4rVZ6vJFA29l2EVzq2KgMUtc5DM/sRR+nyKokzz8vBhQVOW7ns5fJH6tg92lupWaj+
-         xhBREvlPtIr0/GLTHmXXMk6bUOzlrU0svSx3l/nv0Bb2k1xBkEnh1q/wI/GT+qARyKq7
-         lTg56ff9G/M3SoHKwDLMf7whCryVDZX053j7NWBsbQTfw7uVJn3gB2P5wVN/uZzvkw30
-         kD1g==
-X-Gm-Message-State: AOJu0Yy+WWNAm5VqFVc99f7sFA6DZnJ+iScmb0d5+JhD0Pyp6ChmUrFQ
-	am7TKsQBnZ9UMvKepe+SzE+qq1dAWgBe4al3VY8fnTq+4mF8Q6LX8pXlxsi4JyNh7XF2FzJblc/
-	Ds88=
-X-Google-Smtp-Source: AGHT+IHsLUTbJtvlJfE0W486FSCIRz5Y6xh+vygV4lh90jMR4+mefHZJubDD5PGWcqe9R+qnwbf+Jg==
-X-Received: by 2002:a0c:9e89:0:b0:685:c584:6e8b with SMTP id r9-20020a0c9e89000000b00685c5846e8bmr356621qvd.0.1707173424582;
-        Mon, 05 Feb 2024 14:50:24 -0800 (PST)
-X-Forwarded-Encrypted: i=0; AJvYcCXRVbdTcdTo8NrlGngD9a7nVI5ijHhCGG48uHqszqtFWbVJC3KTQjh1OCBi0l9UDHUDDFmf4HDGmrZn+LWwqng16m8/c9Dcxde4G1ju
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id mh10-20020a056214564a00b0068c87ff82a1sm416445qvb.131.2024.02.05.14.50.24
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 05 Feb 2024 14:50:24 -0800 (PST)
-Date: Mon, 5 Feb 2024 17:50:23 -0500
-From: Taylor Blau <me@ttaylorr.com>
-To: git@vger.kernel.org
-Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-	Patrick Steinhardt <pk@pks.im>
-Subject: [PATCH v2 2/2] pack-objects: enable multi-pack reuse via
- `feature.experimental`
-Message-ID: <683ffd154e02b98a7a17c6200613e35183963823.1707173415.git.me@ttaylorr.com>
-References: <cover.1705431816.git.me@ttaylorr.com>
- <cover.1707173415.git.me@ttaylorr.com>
+	s=arc-20240116; t=1707173555; c=relaxed/simple;
+	bh=3J4gueTzzEsszpBFyJ6Z5Y4rUdbaZ7ooRWzjtmvw/yQ=;
+	h=From:To:Cc:References:In-Reply-To:Subject:Date:Message-ID:
+	 MIME-Version:Content-Type; b=f8pXQzWjSWoNm2pOn5ydTFVjy/jesIuHKLiNSm4sHBQTtxTQfNH4lN/d/1n8ofOuWCIA1nMlGRR/rYHMszCP0a9BLs43HD7BPCJeatnIBs2MPq/r1FguBRlZz30hGPnTm9/dGt1DKEjSQq/Idb3koBbB2AwxZ3zPBd6zsY4+seg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com; spf=pass smtp.mailfrom=nexbridge.com; arc=none smtp.client-ip=185.209.179.11
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nexbridge.com
+X-Virus-Scanned: Debian amavisd-new at secure.elehost.com
+Received: from Mazikeen (cpebc4dfb928313-cmbc4dfb928310.cpe.net.cable.rogers.com [99.228.251.108] (may be forged))
+	(authenticated bits=0)
+	by secure.elehost.com (8.15.2/8.15.2/Debian-22ubuntu3) with ESMTPSA id 415MqHe12320916
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 5 Feb 2024 22:52:18 GMT
+Reply-To: <rsbecker@nexbridge.com>
+From: <rsbecker@nexbridge.com>
+To: "'brian m. carlson'" <sandals@crustytoothpaste.net>,
+        "'Quentin Bouget'" <ypsah@devyard.org>
+Cc: <git@vger.kernel.org>
+References: <20240204185427.39664-1-ypsah@devyard.org> <20240204185427.39664-3-ypsah@devyard.org> <ZcARb4YNCD4NLJku@tapette.crustytoothpaste.net> <CYWT6JWQCTFG.106OCJTV3NQDU@devyard.org> <ZcFeoyFXqLhMXVRh@tapette.crustytoothpaste.net>
+In-Reply-To: <ZcFeoyFXqLhMXVRh@tapette.crustytoothpaste.net>
+Subject: RE: [PATCH 2/2] http: prevent redirect from dropping credentials during reauth
+Date: Mon, 5 Feb 2024 17:52:12 -0500
+Organization: Nexbridge Inc.
+Message-ID: <024001da5885$f85e1160$e91a3420$@nexbridge.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <cover.1707173415.git.me@ttaylorr.com>
+Content-Type: text/plain;
+	charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+X-Mailer: Microsoft Outlook 16.0
+Thread-Index: AQOLeevKzT3v0wkj8zcvqA/epUr17AK8HKeCAYoxON0B0zcOTQIO8efkrVjS90A=
+Content-Language: en-ca
 
-Now that multi-pack reuse is supported, enable it via the
-feature.experimental configuration in addition to the classic
-`pack.allowPackReuse`.
+On Monday, February 5, 2024 5:18 PM, brian m. carlson wrote:
+>On 2024-02-05 at 03:01:17, Quentin Bouget wrote:
+>> Good point, I had not considered the security implications.
+>>
+>> I can see libcurl only reuses credentials after a redirect if the
+>> hostname has not changed: [1]
+>>
+>> 	By default, libcurl only sends credentials and Authentication
+>> 	headers to the initial hostname as given in the original URL, to
+>> 	avoid leaking username + password to other sites.
+>>
+>> Does it sound OK if I use the credentials provided by the redirect
+>> when there are any (out of consistency with the current
+>> implementation), and only allow reusing the current credentials when
+>> the redirect and the original URLs share the same hostname?
+>
+>I don't think we can actually rely on that functionality because
+>`credential.usehttppath` could actually have been set, in which case =
+we'd need a
+>different credential.  For example, I know some forges issue certain =
+types of tokens
+>that are tied to a specific URL and wouldn't validate for a redirect, =
+even if it were
+>actually the same repo.
+>
+>If there are credentials in the URL provided by the redirect, I think =
+it should be safe
+>to use them; otherwise, we'd need to rely on filling them with the =
+credential
+>protocol.
+>
+>> Apologies, I feel like I may have given the impression I wanted to
+>> configure credentials in git's configuration files, which is not the
+>> case.
+>>
+>> My use case is to `git push` a tag from a CI/CD pipeline to trigger a
+>> release, similar to how I do it here. [3]
+>>
+>> Or is this the kind of use case you are trying to discourage?
+>
+>We're trying to discourage all use of credentials in the URL at the =
+command line and
+>in remote names/configuration files.  If you want to pass in =
+credentials from the
+>environment, the Git FAQ explains how to do that[0], and that technique =
+can be
+>used in such a situation.
+>
+>[0] https://git-scm.com/docs/gitfaq#http-credentials-environment
 
-This will allow more users to experiment with the new behavior who might
-not otherwise be aware of the existing `pack.allowPackReuse`
-configuration option.
+A common side-use case (not directly in git) for this situation is to =
+attempt to use curl (or libcurl) to create a Pull Request via the GitHub =
+(or other enterprise git server) CLI or POST. This is most often done =
+via REST rather than supplying via the URL. It does remove the need to =
+pass some credentials (a.k.a. the API token) via the URL as the API =
+token gets injected into the JSON content - this may have been the =
+original motivation as many of the servers do redirects. However, they =
+do not reprocess or inject different credentials. I am wonder about the =
+specific use case is for this situation and why a redirect injects a =
+credential change, which I cannot see is a good thing.
 
-The enum with values NO_PACK_REUSE, SINGLE_PACK_REUSE, and
-MULTI_PACK_REUSE is defined statically in builtin/pack-objects.c's
-compilation unit. We could hoist that enum into a scope visible from the
-repository_settings struct, and then use that enum value in
-pack-objects. Instead, define a single int that indicates what
-pack-objects's default value should be to avoid additional unnecessary
-code movement.
+--Randall
 
-Though `feature.experimental` implies `pack.allowPackReuse=multi`, this
-can still be overridden by explicitly setting the latter configuration
-to either "single" or "false". Tests covering all of these cases are
-showin t5332.
-
-Signed-off-by: Taylor Blau <me@ttaylorr.com>
----
- Documentation/config/feature.txt |  3 +++
- builtin/pack-objects.c           |  2 ++
- repo-settings.c                  |  1 +
- repository.h                     |  1 +
- t/t5332-multi-pack-reuse.sh      | 16 ++++++++++++++++
- 5 files changed, 23 insertions(+)
-
-diff --git a/Documentation/config/feature.txt b/Documentation/config/feature.txt
-index bf9546fca4..f061b64b74 100644
---- a/Documentation/config/feature.txt
-+++ b/Documentation/config/feature.txt
-@@ -17,6 +17,9 @@ skipping more commits at a time, reducing the number of round trips.
- +
- * `pack.useBitmapBoundaryTraversal=true` may improve bitmap traversal times by
- walking fewer objects.
-++
-+* `pack.allowPackReuse=multi` may improve the time it takes to create a pack by
-+reusing objects from multiple packs instead of just one.
- 
- feature.manyFiles::
- 	Enable config options that optimize for repos with many files in the
-diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-index d8c2128a97..329aeac804 100644
---- a/builtin/pack-objects.c
-+++ b/builtin/pack-objects.c
-@@ -4396,6 +4396,8 @@ int cmd_pack_objects(int argc, const char **argv, const char *prefix)
- 		prepare_repo_settings(the_repository);
- 		if (sparse < 0)
- 			sparse = the_repository->settings.pack_use_sparse;
-+		if (the_repository->settings.pack_use_multi_pack_reuse)
-+			allow_pack_reuse = MULTI_PACK_REUSE;
- 	}
- 
- 	reset_pack_idx_option(&pack_idx_opts);
-diff --git a/repo-settings.c b/repo-settings.c
-index 30cd478762..a0b590bc6c 100644
---- a/repo-settings.c
-+++ b/repo-settings.c
-@@ -43,6 +43,7 @@ void prepare_repo_settings(struct repository *r)
- 	if (experimental) {
- 		r->settings.fetch_negotiation_algorithm = FETCH_NEGOTIATION_SKIPPING;
- 		r->settings.pack_use_bitmap_boundary_traversal = 1;
-+		r->settings.pack_use_multi_pack_reuse = 1;
- 	}
- 	if (manyfiles) {
- 		r->settings.index_version = 4;
-diff --git a/repository.h b/repository.h
-index 7a250a6605..21949c5a17 100644
---- a/repository.h
-+++ b/repository.h
-@@ -39,6 +39,7 @@ struct repo_settings {
- 	int sparse_index;
- 	int pack_read_reverse_index;
- 	int pack_use_bitmap_boundary_traversal;
-+	int pack_use_multi_pack_reuse;
- 
- 	/*
- 	 * Does this repository have core.useReplaceRefs=true (on by
-diff --git a/t/t5332-multi-pack-reuse.sh b/t/t5332-multi-pack-reuse.sh
-index d516062f84..b925a81d37 100755
---- a/t/t5332-multi-pack-reuse.sh
-+++ b/t/t5332-multi-pack-reuse.sh
-@@ -58,6 +58,22 @@ test_expect_success 'preferred pack is reused for single-pack reuse' '
- 	test_pack_objects_reused_all 3 1
- '
- 
-+test_expect_success 'multi-pack reuse is disabled by default' '
-+	test_pack_objects_reused_all 3 1
-+'
-+
-+test_expect_success 'feature.experimental implies multi-pack reuse' '
-+	test_config feature.experimental true &&
-+
-+	test_pack_objects_reused_all 6 2
-+'
-+
-+test_expect_success 'multi-pack reuse can be disabled with feature.experimental' '
-+	test_config feature.experimental true &&
-+	test_config pack.allowPackReuse single &&
-+
-+	test_pack_objects_reused_all 3 1
-+'
- 
- test_expect_success 'enable multi-pack reuse' '
- 	git config pack.allowPackReuse multi
--- 
-2.43.0.524.g683ffd154e
