@@ -1,115 +1,188 @@
-Received: from mail-ej1-f47.google.com (mail-ej1-f47.google.com [209.85.218.47])
+Received: from mail-pl1-f179.google.com (mail-pl1-f179.google.com [209.85.214.179])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0561112FF88
-	for <git@vger.kernel.org>; Mon,  5 Feb 2024 20:12:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06E13136648
+	for <git@vger.kernel.org>; Mon,  5 Feb 2024 20:38:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707163934; cv=none; b=otorfvtErqQDHyRRPKjH3nj1BOYzIOXQD9gqAMFanHzjfNPRUZJPGp/KcPTywsD/5v1dodqRoXMWgG8UqsJmPI46EMQhif4RqGIuK2GFHrXakJ7p9Y9+ggtzTjayYEplxgW/EQNFAOf3iZwHkbur6umg7BMaCP8F1SZ5dVk3fYk=
+	t=1707165506; cv=none; b=URL/8Y8SsTcNBl8X1AYIVdu8Oa138dIEgSnz0Cs6t2w0bqjvjRvGMDZLld6LN3j3/fmWgpZmYtZ0G0qtyUGRwWAG7pt1Kv/fcsV3pYwMgSt4aRQh1qY8wbubJjXAito5wV5TRKps5C1MGdt5zZVpb1MOWgk34ELsO2SdXfCMe8A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707163934; c=relaxed/simple;
-	bh=4/+vyZ2dFN05s6ibikwpVypk+oQ4Ie2DgUzqq7djOaw=;
-	h=Message-ID:Subject:From:To:Date:Content-Type:MIME-Version; b=jucvXfBjKXzzZiGzxvlj2tP1sqUMPyvWTRtwJNQA9SM1c/gSjjZJMlAinPVUN6WEUqP+/hWhHw5Jr5asaH1LuR/D5mKU3xNMrU5lxjiVc/rIyyJNgDCD7T7orNtM+TecMTB8zGCSfwwYmBfIx84WsC+YwGVsD9HoVH73Q/Bjq3A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=googlemail.com; spf=pass smtp.mailfrom=googlemail.com; dkim=pass (2048-bit key) header.d=googlemail.com header.i=@googlemail.com header.b=M+JVE+QG; arc=none smtp.client-ip=209.85.218.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=googlemail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=googlemail.com
+	s=arc-20240116; t=1707165506; c=relaxed/simple;
+	bh=fpzjoIWadlW9dIZTbStcdHDb8WkLXwAbGwcRVK/5JoE=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
+	 References:In-Reply-To; b=b/xLoPc4RzuQeQ1sdvgj4wcjUnDfuLhuzRwIQIPlqQu9cBomvKEhErqmSmSILq1m6T3SF9iWmZuz69nC2fz6Ie4JLzzyE5SpQsj0SXC6UN8KQYpgRNx/s6Jez+/QS8SQCUalhKI3XmTbD7Zj5T+7NzGayIlKT3WrWWcWHc1qDyE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=It+YJCpk; arc=none smtp.client-ip=209.85.214.179
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=googlemail.com header.i=@googlemail.com header.b="M+JVE+QG"
-Received: by mail-ej1-f47.google.com with SMTP id a640c23a62f3a-a34c5ca2537so667448966b.0
-        for <git@vger.kernel.org>; Mon, 05 Feb 2024 12:12:12 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="It+YJCpk"
+Received: by mail-pl1-f179.google.com with SMTP id d9443c01a7336-1d7858a469aso35567845ad.2
+        for <git@vger.kernel.org>; Mon, 05 Feb 2024 12:38:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=20230601; t=1707163931; x=1707768731; darn=vger.kernel.org;
-        h=mime-version:user-agent:content-transfer-encoding:date:to:from
-         :subject:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=4/+vyZ2dFN05s6ibikwpVypk+oQ4Ie2DgUzqq7djOaw=;
-        b=M+JVE+QGRVXnaXtu6S5i5ms9dM4MNjf+tPDUp95QEXpGvSxgvot1Gxa0hVkqRXqS1e
-         gxYdeVaYoJC3jmDBP7zW5y5UBQgVpcMziezWGuBd+afFVTqHSdXehn92l8m2+d7rL6x8
-         cqIhSJUFNH/g6PSfz7Q75aXhIXxyZXPrv6+CVFuZUNLW/XoQiByyMT28dyfeTv3FPcBs
-         nT3ybMKc14VIuiBov8Yd2Scb4ky6VSDNiXQpXEejD5bPNrQP4zGd35e3yt+DuF8c25pj
-         AVo4WJ0tiCYYTzIZE3FH2uQbkbBnpdaOO9OoEbr3j2/F6pldBV+dwjTkb81vO3KEBUya
-         IYSA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1707163931; x=1707768731;
-        h=mime-version:user-agent:content-transfer-encoding:date:to:from
-         :subject:message-id:x-gm-message-state:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1707165504; x=1707770304; darn=vger.kernel.org;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-transfer-encoding:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=4/+vyZ2dFN05s6ibikwpVypk+oQ4Ie2DgUzqq7djOaw=;
-        b=Tkw0OIqR6Rilr1Er8wAAnFN20RF/TxDwHRsD29YeyzuCrFg3Yo0R2o1pgkRvJrquvB
-         hcRJ1lTGfXBr0dm7+pIOtwbct/0C3zyDWd97lCMYa0Ug7RbGDhVa/QM/N4FoXqduCgAC
-         uAWjmBx9TbZD/CAnlnAGbvrzjRRcbaDBYnwZhlzl6DlVcEdx6jsynHByDmGd6+cWjMSP
-         2clSaM2QrMdB8wEm5Ypla3ThuMjIPT8/KH4Ojut44yCKARjLO/Jz5zbuKM85aHc8+vty
-         rWKTxEPIWlpLk8VrRpBrRch+1UC3dXk1bjR8BA1Ao3Po5mcFFEspSDZcXGJUAG/2zj1H
-         8ewg==
-X-Gm-Message-State: AOJu0YyJpX5koQVtXLpO+YYAdSGcu8WjyNrBuS0IQTTsZ9xSYJd8FEXU
-	9d5REJkLPV9pTF/QwJZcjXe8k1uEobcq+cVAJSqgjXYKrL4eSYg=
-X-Google-Smtp-Source: AGHT+IED/tyQ3rhARx+LRaRvbnyDWSN8Lw8qDX0wqRdTEahheBfFCKnWZnOcSaCMsmD6iOa8yLuRsA==
-X-Received: by 2002:a17:906:3757:b0:a38:b94:48c1 with SMTP id e23-20020a170906375700b00a380b9448c1mr202700ejc.16.1707163930907;
-        Mon, 05 Feb 2024 12:12:10 -0800 (PST)
-Received: from ?IPv6:2a01:c22:8ca1:9d00:8429:a4b6:daf6:f86? (dynamic-2a01-0c22-8ca1-9d00-8429-a4b6-daf6-0f86.c22.pool.telefonica.de. [2a01:c22:8ca1:9d00:8429:a4b6:daf6:f86])
-        by smtp.gmail.com with ESMTPSA id a13-20020a1709066d4d00b00a36f314daa6sm213723ejt.46.2024.02.05.12.12.10
-        for <git@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 05 Feb 2024 12:12:10 -0800 (PST)
-Message-ID: <beeab03c564e94861ab339d26c4e135b879a1ccd.camel@googlemail.com>
-Subject: git-gui desktop launcher
-From: Tobias Boesch <tobias.boesch@googlemail.com>
-To: git@vger.kernel.org
-Date: Mon, 05 Feb 2024 21:12:10 +0100
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.50.3 
+        bh=i34B6S4EpUV2gW12KwQ5gPY4uYgzaBeWOfNUc5geN7Q=;
+        b=It+YJCpkHr2ufmNcX2hX+8Ywdytmg6Plg/7dbZtCuw1nyuoKOvwS1f2NO1ZifNsPRW
+         Ls/jFQxo6TnUPao3E/EHBpejV/PJxzcY0DOeIBmjIZRVvvRbB2Faw9r/2mMlhQNwsf0M
+         edca6cjtl7ZeyscjQqhWIkYR/Kq8HVrVAuZ3zvwkbSdQi2inkX91V2qcbL/83bRLc/JX
+         ggb3gtpWmfxLO3DDN/ac7B8ENZeSj+tXoCyDKoQSlgu6EE/a1XH4MWHYDffaQKD/U/7M
+         V6HPgq7svCo8ojiteTjInd9rmHI0DDDmRpVNQ3hwVWGTXjj2Sbw7T4NtqmbVwvqJIJKk
+         rWwg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1707165504; x=1707770304;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=i34B6S4EpUV2gW12KwQ5gPY4uYgzaBeWOfNUc5geN7Q=;
+        b=PIfavepcFMT6CqUDS3ZPtT5dc5Qf6fLI3Js8P5nW6WGck5NnD2s9CrrJQz3CC4/Ek9
+         kUhLhNyj5QxACp3tqB6/Z4T2lZuvodqsAky7ERh/g6MjMfzFN7iSmI5EHUPQ0+SbUbwy
+         dd+Cq1WN3VvCpGxWogZA416zMmDfIREXBGj0sxndLwCdbxuWtgs96mW8EXaYiH4HyDbO
+         t1sgqCTvVNht/gYR0gJEUxs5AQg6WamvqQxdGnt/Yforss6wRvXBnB7QHSRdKpAqlKcw
+         4RVZrVNtvfCEhEH9rTg/9BrkY4X+a+RXL95zCdfe/3kL8WnxpYB5JYPnQ0uoghfZPqD5
+         xUxQ==
+X-Gm-Message-State: AOJu0YzPXJMF12KgbHXGF7LWGLUArUveF0fCsS8Zy6uWK8oe/Nj9wKza
+	j6CV8AY93rOHROGPYhXire1MS0C9z1jFt8Z0f4ZjuTzPdELuw+Pm
+X-Google-Smtp-Source: AGHT+IFDPOAA22toJ4bsaF3xNuZ731+wgJ5JfHUQQjCWOr0DpW0PO0h0puKlIuEyOi2eVsxu3YPVPg==
+X-Received: by 2002:a17:903:1248:b0:1d9:66df:f7b3 with SMTP id u8-20020a170903124800b001d966dff7b3mr237741plh.45.1707165504030;
+        Mon, 05 Feb 2024 12:38:24 -0800 (PST)
+X-Forwarded-Encrypted: i=0; AJvYcCWmihDiAy8J15G0SIee8Zk/nuL5BvE438NpFDeJyFSgjk7vGydkloZQ2nnDXZpzjAFFBEwU0DVPIdDyCh/z0nT38/s9TTbbu4dAPUZ0kjA=
+Received: from localhost ([2402:a00:401:a99b:f188:2dd3:d960:a8ab])
+        by smtp.gmail.com with ESMTPSA id jw19-20020a170903279300b001d911dd145esm289024plb.219.2024.02.05.12.38.21
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 05 Feb 2024 12:38:23 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Tue, 06 Feb 2024 02:08:18 +0530
+Message-Id: <CYXFNV97P2SC.1ABUMGOIR1GQ0@gmail.com>
+Cc: <gitster@pobox.com>, <ps@pks.im>
+Subject: Re: [PATCH v3 2/2] add-patch: classify '@' as a synonym for 'HEAD'
+From: "Ghanshyam Thakkar" <shyamthakkar001@gmail.com>
+To: <phillip.wood@dunelm.org.uk>, <git@vger.kernel.org>
+X-Mailer: aerc 0.15.2
+References: <20240202150434.11256-1-shyamthakkar001@gmail.com>
+ <20240203112619.979239-6-shyamthakkar001@gmail.com>
+ <9f9f26f1-5460-468e-a893-5caf7fbea981@gmail.com>
+In-Reply-To: <9f9f26f1-5460-468e-a893-5caf7fbea981@gmail.com>
 
-Hello everyone,
+On Mon Feb 5, 2024 at 10:07 PM IST, Phillip Wood wrote:
+> On 03/02/2024 11:25, Ghanshyam Thakkar wrote:
+> > diff --git a/add-patch.c b/add-patch.c
+> > index 68f525b35c..7d565dcb33 100644
+> > --- a/add-patch.c
+> > +++ b/add-patch.c
+> > @@ -378,6 +378,11 @@ static int parse_hunk_header(struct add_p_state *s=
+, struct hunk *hunk)
+> >   	return 0;
+> >   }
+> >  =20
+> > +static inline int user_meant_head(const char *rev)
+> > +{
+> > +	return !strcmp(rev, "HEAD") || !strcmp(rev, "@");
+> > +}
+> > +
+>
+> As well as the places you have converted we also have an explicit test=20
+> for "HEAD" in parse_diff() which looks like
+>
+> 	if (s->revision) {
+> 		struct object_id oid;
+> 		strvec_push(&args,
+> 			    /* could be on an unborn branch */
+> 			    !strcmp("HEAD", s->revision) &&
+> 			    repo_get_oid(the_repository, "HEAD", &oid) ?
+> 			    empty_tree_oid_hex() : s->revision);
+> 	}
+>
+> I suspect we need to update that code as well to accept "@" as a synonym=
+=20
+> for "HEAD" on an unborn branch.
+I had already considered that. Updating here will not have any effect,
+because on unborn branch, we do not allow naming HEAD or @. This case is
+for when we run without naming any revision (i.e. git reset -p) on
+unborn branch. In such cases, we pass 'HEAD' as a default value.
+>
+> > diff --git a/builtin/checkout.c b/builtin/checkout.c
+> > index a6e30931b5..79e208ee6d 100644
+> > --- a/builtin/checkout.c
+> > +++ b/builtin/checkout.c
+> > @@ -539,12 +539,13 @@ static int checkout_paths(const struct checkout_o=
+pts *opts,
+> >   		 * recognized by diff-index), we will always replace the name
+> >   		 * with the hex of the commit (whether it's in `...` form or
+> >   		 * not) for the run_add_interactive() machinery to work
+> > -		 * properly. However, there is special logic for the HEAD case
+> > -		 * so we mustn't replace that.  Also, when we were given a
+> > -		 * tree-object, new_branch_info->commit would be NULL, but we
+> > -		 * do not have to do any replacement, either.
+> > +		 * properly. However, there is special logic for the 'HEAD' and
+> > +		 * '@' case so we mustn't replace that.  Also, when we were
+> > +		 * given a tree-object, new_branch_info->commit would be NULL,
+> > +		 * but we do not have to do any replacement, either.
+> >   		 */
+> > -		if (rev && new_branch_info->commit && strcmp(rev, "HEAD"))
+> > +		if (rev && new_branch_info->commit && strcmp(rev, "HEAD") &&
+> > +		    strcmp(rev, "@"))
+> >   			rev =3D oid_to_hex_r(rev_oid, &new_branch_info->commit->object.oid=
+);
+>
+> I agree with Junio's suggestion to use the user_meant_head() here.=20
+> Looking at this made me wonder why builtin/reset.c does not need=20
+> updating. The answer seems to be that reset passes in the revision as=20
+> given on the commandline after checking it refers to a valid tree=20
+> whereas for checkout the revision for on the commandline might contain=20
+> "..." which run_add_p() cannot handle.
+I was not able to run reset with '...'. I ran,
+'git reset main...$ANOTHERBRANCH'
+but it gave me "fatal: ambiguous argument 'main...$ANOTHERBRANCH'"
+error, with or without -p. While,
+'git restore --source=3Dmain...$ANOTHERBRANCH .' and=20
+'git checkout main...$ANOTHERBRANCH' works fine, with or without -p.
 
-quoting from downstream issue:
-https://gitlab.archlinux.org/archlinux/packaging/packages/git/-/issues/5
+> > diff --git a/t/t2071-restore-patch.sh b/t/t2071-restore-patch.sh
+> > index b5c5c0ff7e..3dc9184b4a 100755
+> > --- a/t/t2071-restore-patch.sh
+> > +++ b/t/t2071-restore-patch.sh
+> > @@ -44,13 +44,17 @@ test_expect_success PERL 'git restore -p with stage=
+d changes' '
+>
+> It is a pre-existing problem but all these "PERL" prerequisites are=20
+> no-longer required as we've removed the perl implementation of "add -p"
+I can send a separate patch to clean up this script, removing PERL
+pre-req from all tests.
 
--------------------------
+> >   	verify_state dir/foo index index
+> >   '
+> >  =20
+> > -test_expect_success PERL 'git restore -p --source=3DHEAD' '
+> > -	set_state dir/foo work index &&
+> > -	# the third n is to get out in case it mistakenly does not apply
+> > -	test_write_lines n y n | git restore -p --source=3DHEAD &&
+> > -	verify_saved_state bar &&
+> > -	verify_state dir/foo head index
+> > -'
+> > +for opt in "HEAD" "@"
+> > +do
+> > +	test_expect_success PERL "git restore -p --source=3D$opt" '
+> > +		set_state dir/foo work index &&
+> > +		# the third n is to get out in case it mistakenly does not apply
+> > +		test_write_lines n y n | git restore -p --source=3D$opt >output &&
+> > +		verify_saved_state bar &&
+> > +		verify_state dir/foo head index &&
+> > +		test_grep "Discard" output
+>
+> It is good to see that we're now testing for a reversed patch here.
+>
+> Best Wishes
+>
+> Phillip
 
-"As far as I can see git gui cannot easily be used by me on arch.
-A .desktop entry is missing for me.
-I created one that opens git gui.
-It also adds an entry in the "Open With..." menu of file managers (I
-tested only with Nautilus). Opeing git gui with this entry git gui is
-opened in the folder where the menu was opened.
-If it is a git repository git gui open it. If it is no git repository
-git gui opens just as if it was called from the desktop launcher.
-Since it took a while to create it and adds value for me I would like
-to share it to be added to the git package by default.
-It is far from being perfect. It's a first working version. For me
-personally it is enough.
-Before tweaking it further to fit the packaging standards I would like
-to ask if is desired to be added.
+Thanks for the review.
 
-.desktop file proposal
-
-[Desktop Entry]
-Name=3Dgit gui
-Comment=3DA portable graphical interface to Git
-Exec=3D/bin/bash -c 'if [[ "$0" =3D "/bin/bash" ]]; then git gui; else cd
-"$0" && git gui; fi' %F
-Icon=3D/usr/share/git-gui/lib/git-gui.ico
-Type=3DApplication
-Terminal=3Dfalse
-Categories=3DDevelopment;
-
-
-I think upstream has any interest to add this. Therefore I ask here."
-
--------------------------
-
-The arch package maintainer proposed to try to to add this to upstream
-before just putting it into the arch package.
-Here I am asking if it could be added to git.
-
-If it's worth to add it, I would take the time to improve it if there
-are suggestions or comments on the current version.
-
-Best wishes and thanks for developing git.
-Tobias
