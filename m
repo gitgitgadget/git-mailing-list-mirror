@@ -1,123 +1,78 @@
-Received: from secure.elehost.com (secure.elehost.com [185.209.179.11])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com [209.85.128.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 380C845956
-	for <git@vger.kernel.org>; Mon,  5 Feb 2024 17:34:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.209.179.11
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6887547F47
+	for <git@vger.kernel.org>; Mon,  5 Feb 2024 18:12:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707154463; cv=none; b=iXdgU3+5khlc1uy5VfIr+vhzxcAM60yQ0+w6mabKg4WGYqudK5l17bkxVOeYqvIR6ARTPjXfuaOLzYWQCFQnC4ehALcHBVuyu8vPxmDO86oe7Ligu4wlg4ImnPz0mCaSGTNIb7rdjRavFCp1YQIjxhSAF1EEjH0soov0MovLn28=
+	t=1707156759; cv=none; b=MYywFAsUJMwkQT+M90e1XKHG17lzmTpaY2HVeFBZvkoo5jr8zVvz1kaPNKjlcO2p9zosH/c1tzvFzHL1nXxGi3cv32XDx8bkf6Gl49a+6A9jmbFjs9VvOXl50cFtaDE9Dk+CzvCgLhSWs7MUHAKcer+ZvD5T7AKQvElccXOywjg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707154463; c=relaxed/simple;
-	bh=6lkNX+Q6XiueTXMBk0YSYCw4t7RMhInB1y5xzqgwULs=;
-	h=From:To:Cc:References:In-Reply-To:Subject:Date:Message-ID:
-	 MIME-Version:Content-Type; b=HFxh/PCl1YOO5Q87VhybqJWtmDi74z6DfGukb3eZhNlOT2lUTGq/5wdfgf3eGXmbV0PJCJOnf/YtHcpPN11bGzA6aEgER/03N8HfMZYta+wBNuinE5fYV067zdGeaQjd81ESb44NOQGqxxBR5/egkwUCbo08vWsaUoBzl2GXnMo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com; spf=pass smtp.mailfrom=nexbridge.com; arc=none smtp.client-ip=185.209.179.11
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nexbridge.com
-X-Virus-Scanned: Debian amavisd-new at secure.elehost.com
-Received: from Mazikeen (cpebc4dfb928313-cmbc4dfb928310.cpe.net.cable.rogers.com [99.228.251.108] (may be forged))
-	(authenticated bits=0)
-	by secure.elehost.com (8.15.2/8.15.2/Debian-22ubuntu3) with ESMTPSA id 415HYEgJ2220857
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 5 Feb 2024 17:34:14 GMT
-Reply-To: <rsbecker@nexbridge.com>
-From: <rsbecker@nexbridge.com>
-To: "'Achu Luma'" <ach.lumap@gmail.com>, <git@vger.kernel.org>
-Cc: <christian.couder@gmail.com>,
-        "'Christian Couder'" <chriscool@tuxfamily.org>
-References: <20240205162506.1835-1-ach.lumap@gmail.com>
-In-Reply-To: <20240205162506.1835-1-ach.lumap@gmail.com>
-Subject: RE: [Outreachy][PATCH 1/2] date: refactor 64 bit prereq code into reusable functions
-Date: Mon, 5 Feb 2024 12:34:09 -0500
-Organization: Nexbridge Inc.
-Message-ID: <020a01da5859$89e41210$9dac3630$@nexbridge.com>
+	s=arc-20240116; t=1707156759; c=relaxed/simple;
+	bh=Tk6g2xOCRZXALSIY3uA3VGb/JW7TOWRbCRjUfPuTHE8=;
+	h=Message-ID:Date:MIME-Version:From:To:Subject:Content-Type; b=a0md43uwpudoPLW89kWad9lSkybH4Fe3iiTYdkphcpGAV0oo+waVfyG+Gj/BeAhcfFyV8p0mq4BMdaAZ4yGh2er4CcOd5sK5hJ6weFExWK3NEVecuABcJW/G038n7NaIIYu8tz+whhphV577TplnHyiRyGLxOqKGIB8dirtG66M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=GYp+Xxm9; arc=none smtp.client-ip=209.85.128.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GYp+Xxm9"
+Received: by mail-wm1-f46.google.com with SMTP id 5b1f17b1804b1-40fdb18ffc7so11442465e9.1
+        for <git@vger.kernel.org>; Mon, 05 Feb 2024 10:12:38 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1707156756; x=1707761556; darn=vger.kernel.org;
+        h=content-transfer-encoding:subject:to:from:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=Tk6g2xOCRZXALSIY3uA3VGb/JW7TOWRbCRjUfPuTHE8=;
+        b=GYp+Xxm9fJHRwntmSQu5TQiWBdr4jruX2gVWDNU+cy0XXbqIri1s2UPyTxQYlUItC6
+         lPvWDatCAO4KcxrT6tYBAZQ9xABHtQIH6qDs15yWyQCopXYyUMbksfRsMB8pHaYtKZsm
+         Zb0grTO/PtDBDIF051h5aUZU6tvaEmMvW+AyRjDVWc0OTlupn1wG2otbCcHT7qnYa+AI
+         /XPcNBGV0jySodwfAa2rNkBiIH23pe1B68YJkO/EoslTKW+18UmkG75OrRXyRERUZR8s
+         W86hAKCdlaW51yb0YkMNLykUQK81+mNABAK/dVA/OpESb3Nun8P2/YDZH0dJ6uvbmv9D
+         uiVQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1707156756; x=1707761556;
+        h=content-transfer-encoding:subject:to:from:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Tk6g2xOCRZXALSIY3uA3VGb/JW7TOWRbCRjUfPuTHE8=;
+        b=DzkxYoPhDojXdohHL3Nxfa/sXOULOF+pSL1inTUtNlMpQV7NKlVmnlnXDpHj0Xi+hB
+         Cb3eGcO58sOo6rs4gxdZgI0DYXGVmMjIf0YQOLNCwe2tE9K7hhIHK9nM7652GoraoJxe
+         fG3evjiw0NwV48EX+f5HQYFeUdOXM0x/r+YZuxSYMAjdynbZZOFPgI9FJuMKJPxHvxdM
+         7IBSWEV8esdnMh/q+js3A79kBsEFNk5s5+GRzl2EHm4LaJsbVNGR5KdLxsqyt8O62X59
+         nz0xM5YDvggES3PMhvKU4SDOs7t6PFto8nYK3ZlKhqb95MpBqvcCSD4ShWfAmnmnB45t
+         qxpw==
+X-Gm-Message-State: AOJu0YxukJYM5fIveOWaD5anIXj71JCpfirRXBxXuHd5pmWCoxy2LOEJ
+	B4Yo2uOvi0g7pjn2wQw6R9q1qoBluUQVLAZ09+I7p6QJQANfp2WjDAVEqkDR
+X-Google-Smtp-Source: AGHT+IFSY3iQkRI95c/8gfa4WyR8voqiFxyI26I5aY02Wt6KDNDdB35tSi9nm9z0P+ZPtQ2vnyJ2ig==
+X-Received: by 2002:a5d:4292:0:b0:33b:2ca6:5a4 with SMTP id k18-20020a5d4292000000b0033b2ca605a4mr243077wrq.4.1707156756408;
+        Mon, 05 Feb 2024 10:12:36 -0800 (PST)
+Received: from DESKTOP-MB1G5MF ([39.62.25.99])
+        by smtp.gmail.com with ESMTPSA id m10-20020adff38a000000b0033b43a5f53csm153289wro.103.2024.02.05.10.12.35
+        for <git@vger.kernel.org>
+        (version=TLS1 cipher=ECDHE-ECDSA-AES128-SHA bits=128/128);
+        Mon, 05 Feb 2024 10:12:36 -0800 (PST)
+Message-ID: <65c12514.df0a0220.d6294.1234@mx.google.com>
+Date: Mon, 05 Feb 2024 10:12:36 -0800 (PST)
+X-Google-Original-Date: 5 Feb 2024 14:11:46 -0800
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain;
-	charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AQJG+DLJogej7FKn0EbXWbwPX+LtxLAiwhrw
-Content-Language: en-ca
+From: arnoldroberts123@gmail.com
+To: git@vger.kernel.org
+Subject: Project Estimates
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: quoted-printable
 
-On Monday, February 5, 2024 11:25 AM, Achu Luma wrote:
->In a following commit we are going to port code from "t/helper/test-date.c"
-and
->"t/t0006-date.sh" to a new "t/unit-tests/t-date.c" file using the recently
-added unit
->test framework.
->
->We cannot fully port all the code from "t/helper/test-date.c" though, as
-the test-
->tool date helper is still used by a number of "t/*.sh" tests.
->The TIME_IS_64BIT and TIME_T_IS_64BIT prereqs are especially used by
-"t5000-
->tar-tree.sh", "t5318-commit-graph.sh" and
-"t5328-commit-graph-64bit-time.sh"
->while checking those prereqs will be required in the new
-"t/unit-tests/t-date.c" file
->too.
->
->To avoid duplicating in both "t/helper/test-date.c" and
-"t/unit-tests/t-date.c" the
->small amount of code checking these prereqs, let's move it into inline
-functions in
->"date.h".
->
->The names of these new inline functions contain "TIME_IS_64BIT" or
->"TIME_T_IS_64BIT" as it will simplify the macros we will use when we will
-port code
->to "t/unit-tests/t-date.c" in a following commit.
->
->Mentored-by: Christian Couder <chriscool@tuxfamily.org>
->Signed-off-by: Achu Luma <ach.lumap@gmail.com>
->---
-> date.h               | 6 ++++++
-> t/helper/test-date.c | 4 ++--
-> 2 files changed, 8 insertions(+), 2 deletions(-)
->
->diff --git a/date.h b/date.h
->index 6136212a19..fb70490a51 100644
->--- a/date.h
->+++ b/date.h
->@@ -70,4 +70,10 @@ void datestamp(struct strbuf *out);  timestamp_t
->approxidate_careful(const char *, int *);  int date_overflows(timestamp_t
-date);
->time_t tm_to_time_t(const struct tm *tm);
->+static inline int check_prereq_TIME_IS_64BIT(void) {
->+	return sizeof(timestamp_t) == 8;
->+}
->+static inline int check_prereq_TIME_T_IS_64BIT(void) {
->+	return sizeof(time_t) == 8;
->+}
-> #endif
->diff --git a/t/helper/test-date.c b/t/helper/test-date.c index
->0683d46574..be0b8679c3 100644
->--- a/t/helper/test-date.c
->+++ b/t/helper/test-date.c
->@@ -126,9 +126,9 @@ int cmd__date(int argc UNUSED, const char **argv)
-> 	else if (!strcmp(*argv, "getnanos"))
-> 		getnanos(argv+1);
-> 	else if (!strcmp(*argv, "is64bit"))
->-		return sizeof(timestamp_t) == 8 ? 0 : 1;
->+		return !check_prereq_TIME_IS_64BIT();
-> 	else if (!strcmp(*argv, "time_t-is64bit"))
->-		return sizeof(time_t) == 8 ? 0 : 1;
->+		return !check_prereq_TIME_T_IS_64BIT();
-> 	else
-> 		usage(usage_msg);
-> 	return 0;
->--
->2.43.0.windows.1
-
-I would suggest that you also take into account whether time_t is signed or
-not (more difficult perhaps). Some platforms use signed time_t to allow
-representation of dates prior to 1970-01-01, while others make this signed.
-Some other platforms (S/390 for example) have retained time_t as 32-bits but
-have a time64_t for 64 bits. It might be useful to account for this.
---Randall
+=0D=0AHello,=0D=0A=0D=0AEstimating is required in all constructio=
+n projects whether you are bidding or executing the plans! Our co=
+mpany is here to help with this process and save your TIME!=0D=0A=
+=0D=0AClassic Estimation LLC provides detailed construction estim=
+ating/take-offs services as well as Scheduling (Gantt Chart) and =
+Architectural (2D/3D drawings) services.=0D=0A=0D=0AWe can send y=
+ou some samples according to your trade! Let us know whether you =
+are a general contractor or subcontractor. =0D=0A=0D=0ALooking fo=
+rward to hearing from you!=0D=0AThanks.=0D=0A=0D=0ARegards,=0D=0A=
+Arnold Roberts=0D=0AMarketing Manager=0D=0AClassic Estimation LLC
 
