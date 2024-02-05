@@ -1,109 +1,106 @@
-Received: from secure.elehost.com (secure.elehost.com [185.209.179.11])
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C0ED482CD
-	for <git@vger.kernel.org>; Mon,  5 Feb 2024 22:52:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.209.179.11
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 491CD28E22
+	for <git@vger.kernel.org>; Mon,  5 Feb 2024 23:07:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707173555; cv=none; b=aTq/MfWFmH30oSrtQkoR6Q7XFf16Hhv3NIFUI6wHVA4gbRTxGZtH1DC4yAqwSqz8aAJeGFmVJ4uObo3mcyZra+GY8xw+eANTCVu5BscS2hgmRjwqxTHik8MYwhwW0sVmXLctdpRWeq+3AF07mu7sDDV5XuuYM95/l2AExc/K/wU=
+	t=1707174441; cv=none; b=npIRcc+7mi1FvnSCDK9/GhzTieCf1L1AsKo/zt6CIvHntWnUo7sAN0ggMDTfDksKf5N43/h/PZgCuSW0JHbE9ary5w6w8QWdTn/sfRbakWFhG7MltKlk4qIqGA8yUXcDaiFQRnddd0idvCM0EDw7opCr31ua5vQS8EUmMwrlqEo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707173555; c=relaxed/simple;
-	bh=3J4gueTzzEsszpBFyJ6Z5Y4rUdbaZ7ooRWzjtmvw/yQ=;
-	h=From:To:Cc:References:In-Reply-To:Subject:Date:Message-ID:
-	 MIME-Version:Content-Type; b=f8pXQzWjSWoNm2pOn5ydTFVjy/jesIuHKLiNSm4sHBQTtxTQfNH4lN/d/1n8ofOuWCIA1nMlGRR/rYHMszCP0a9BLs43HD7BPCJeatnIBs2MPq/r1FguBRlZz30hGPnTm9/dGt1DKEjSQq/Idb3koBbB2AwxZ3zPBd6zsY4+seg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com; spf=pass smtp.mailfrom=nexbridge.com; arc=none smtp.client-ip=185.209.179.11
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nexbridge.com
-X-Virus-Scanned: Debian amavisd-new at secure.elehost.com
-Received: from Mazikeen (cpebc4dfb928313-cmbc4dfb928310.cpe.net.cable.rogers.com [99.228.251.108] (may be forged))
-	(authenticated bits=0)
-	by secure.elehost.com (8.15.2/8.15.2/Debian-22ubuntu3) with ESMTPSA id 415MqHe12320916
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 5 Feb 2024 22:52:18 GMT
-Reply-To: <rsbecker@nexbridge.com>
-From: <rsbecker@nexbridge.com>
-To: "'brian m. carlson'" <sandals@crustytoothpaste.net>,
-        "'Quentin Bouget'" <ypsah@devyard.org>
-Cc: <git@vger.kernel.org>
-References: <20240204185427.39664-1-ypsah@devyard.org> <20240204185427.39664-3-ypsah@devyard.org> <ZcARb4YNCD4NLJku@tapette.crustytoothpaste.net> <CYWT6JWQCTFG.106OCJTV3NQDU@devyard.org> <ZcFeoyFXqLhMXVRh@tapette.crustytoothpaste.net>
-In-Reply-To: <ZcFeoyFXqLhMXVRh@tapette.crustytoothpaste.net>
-Subject: RE: [PATCH 2/2] http: prevent redirect from dropping credentials during reauth
-Date: Mon, 5 Feb 2024 17:52:12 -0500
-Organization: Nexbridge Inc.
-Message-ID: <024001da5885$f85e1160$e91a3420$@nexbridge.com>
+	s=arc-20240116; t=1707174441; c=relaxed/simple;
+	bh=/jJnaaXzIFYwQd7tKDkqkHnct2P4TSAeCI592jDK+Pc=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=GO8TE1u4s+I/+HFrAJhGdftj9AsndMlcd20QMqfB3c8o4U4Yk5FvQDihJuMwsXIsalK0yl3mYWNLmEtIm8mdDDtNOwoxt7OY6Jzlhs6mY0TIKlZOX5akmKM+EnyL6bgq6kq9Qb+qlaYWuAbMYiqUDetUPqRiQZHV1egnne81u2s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=QIWLxyhT; arc=none smtp.client-ip=64.147.108.71
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="QIWLxyhT"
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 708AF1E3354;
+	Mon,  5 Feb 2024 18:07:13 -0500 (EST)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=/jJnaaXzIFYwQd7tKDkqkHnct2P4TSAeCI592j
+	DK+Pc=; b=QIWLxyhTe/y1NMU43UJVGui2QaE5lGly4ipyK4+71O37NeM3tp4tfI
+	UzsF9giUCJMSSRlmEUjmg3jQdpTkfbbGXh5idNyAL6J/RX6cT6VSla4MPz8+8+4I
+	CwI98g+6eGkrCd6gry5ZldPzdtfH6Q8+5A4a1wrey0Kcy/NGJMDhA=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 68C201E3353;
+	Mon,  5 Feb 2024 18:07:13 -0500 (EST)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.165.85])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 9F42B1E3352;
+	Mon,  5 Feb 2024 18:07:12 -0500 (EST)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Phillip Wood <phillip.wood123@gmail.com>
+Cc: Ghanshyam Thakkar <shyamthakkar001@gmail.com>,  git@vger.kernel.org,
+  ps@pks.im
+Subject: Re: [PATCH v3 2/2] add-patch: classify '@' as a synonym for 'HEAD'
+In-Reply-To: <9f9f26f1-5460-468e-a893-5caf7fbea981@gmail.com> (Phillip Wood's
+	message of "Mon, 5 Feb 2024 16:37:22 +0000")
+References: <20240202150434.11256-1-shyamthakkar001@gmail.com>
+	<20240203112619.979239-6-shyamthakkar001@gmail.com>
+	<9f9f26f1-5460-468e-a893-5caf7fbea981@gmail.com>
+Date: Mon, 05 Feb 2024 15:07:11 -0800
+Message-ID: <xmqq34u6o6hs.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain;
-	charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
-X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AQOLeevKzT3v0wkj8zcvqA/epUr17AK8HKeCAYoxON0B0zcOTQIO8efkrVjS90A=
-Content-Language: en-ca
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 4BCB0FC2-C47B-11EE-8B04-25B3960A682E-77302942!pb-smtp2.pobox.com
 
-On Monday, February 5, 2024 5:18 PM, brian m. carlson wrote:
->On 2024-02-05 at 03:01:17, Quentin Bouget wrote:
->> Good point, I had not considered the security implications.
->>
->> I can see libcurl only reuses credentials after a redirect if the
->> hostname has not changed: [1]
->>
->> 	By default, libcurl only sends credentials and Authentication
->> 	headers to the initial hostname as given in the original URL, to
->> 	avoid leaking username + password to other sites.
->>
->> Does it sound OK if I use the credentials provided by the redirect
->> when there are any (out of consistency with the current
->> implementation), and only allow reusing the current credentials when
->> the redirect and the original URLs share the same hostname?
->
->I don't think we can actually rely on that functionality because
->`credential.usehttppath` could actually have been set, in which case =
-we'd need a
->different credential.  For example, I know some forges issue certain =
-types of tokens
->that are tied to a specific URL and wouldn't validate for a redirect, =
-even if it were
->actually the same repo.
->
->If there are credentials in the URL provided by the redirect, I think =
-it should be safe
->to use them; otherwise, we'd need to rely on filling them with the =
-credential
->protocol.
->
->> Apologies, I feel like I may have given the impression I wanted to
->> configure credentials in git's configuration files, which is not the
->> case.
->>
->> My use case is to `git push` a tag from a CI/CD pipeline to trigger a
->> release, similar to how I do it here. [3]
->>
->> Or is this the kind of use case you are trying to discourage?
->
->We're trying to discourage all use of credentials in the URL at the =
-command line and
->in remote names/configuration files.  If you want to pass in =
-credentials from the
->environment, the Git FAQ explains how to do that[0], and that technique =
-can be
->used in such a situation.
->
->[0] https://git-scm.com/docs/gitfaq#http-credentials-environment
+Phillip Wood <phillip.wood123@gmail.com> writes:
 
-A common side-use case (not directly in git) for this situation is to =
-attempt to use curl (or libcurl) to create a Pull Request via the GitHub =
-(or other enterprise git server) CLI or POST. This is most often done =
-via REST rather than supplying via the URL. It does remove the need to =
-pass some credentials (a.k.a. the API token) via the URL as the API =
-token gets injected into the JSON content - this may have been the =
-original motivation as many of the servers do redirects. However, they =
-do not reprocess or inject different credentials. I am wonder about the =
-specific use case is for this situation and why a redirect injects a =
-credential change, which I cannot see is a good thing.
+> As well as the places you have converted we also have an explicit test
+> for "HEAD" in parse_diff() which looks like
+>
+> 	if (s->revision) {
+> 		struct object_id oid;
+> 		strvec_push(&args,
+> 			    /* could be on an unborn branch */
+> 			    !strcmp("HEAD", s->revision) &&
+> 			    repo_get_oid(the_repository, "HEAD", &oid) ?
+> 			    empty_tree_oid_hex() : s->revision);
+> 	}
+>
+> I suspect we need to update that code as well to accept "@" as a
+> synonym for "HEAD" on an unborn branch.
 
---Randall
+I actually think "@" in the input should be normalized to "HEAD" as
+soon as possible.  After the if/elseif/ cascade in run_add_p() the
+patch in this thread touches, there is an assignment
+
+	s.revision = revision;
+
+and even though we rewrite !strcmp(revision, "HEAD") to "user means
+HEAD" to additionally accept "@" in that if/elseif/ cascade, here we
+will stuff different values to s.revision here.  We could normalize
+the end-user supplied "@" to "HEAD" before making this assignment,
+then you do not have to worry about the code in parse_diff() above,
+and more importantly, we do not have to rely on what the current set
+of callers happen to do and do not happen to do (e.g., "git reset
+-p" happens to use hardcoded "HEAD" for unborn case without using
+anything obtained from the user, so the above code in parse_diff()
+might be safe in that case, but we do not want to rely on such
+subtlety to make sure our code is correct)
+
+Come to think of it, we could even do the "normalizing" even before,
+and that might greatly simplify things.  For example, if we did so
+at the very beginning of run_add_p(), before we come to that if/else
+if/ cascade, we may not even have to worry about the "user meant HEAD"
+helper.  After the normalization, we can just keep using !strcmp()
+with "HEAD" alone.  Simple and clean, no?
+
+Thanks.
+
 
