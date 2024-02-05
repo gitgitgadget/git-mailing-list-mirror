@@ -1,215 +1,138 @@
-Received: from mail-ej1-f53.google.com (mail-ej1-f53.google.com [209.85.218.53])
+Received: from mail-ej1-f49.google.com (mail-ej1-f49.google.com [209.85.218.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 675083FE5B
-	for <git@vger.kernel.org>; Mon,  5 Feb 2024 16:43:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7C4344C65
+	for <git@vger.kernel.org>; Mon,  5 Feb 2024 17:07:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707151414; cv=none; b=gVQr+YlAeDa9jV5GVkv1AXpVbtPqb5xXdrjoDrV0SWOS8OcyZBnO4S7iQD32a6GWDncK0kfoWdJ1/YSfKK+asWZCV8Yw85uDH6AuEBu2AYKMcvD/R4e1IojHNPxpl8Q5UslcRLwNfEHYTHyukEQHyrOI+b5ZUIYy9fgdHzHzmDE=
+	t=1707152866; cv=none; b=K7EuYEgQaWIQF3KkoIgdrli5hMCSdaiJa2KqRd35iA+8W8rqTj4bhAELMT5+SS2Gfq+no77yXqjqRm1ZdZmEbV6QEq3nnHWeFaPYoUMWWBjSjQwwJUbTsZydk+w6ecEzxpR2pbiq1vvLgr4PNmafDVnpJNXSHiVKrnLmSr8Ldds=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707151414; c=relaxed/simple;
-	bh=kEUytqHdV9XuQC/SDtX7Mq6/Xsud5BA0hv1poFGw01k=;
+	s=arc-20240116; t=1707152866; c=relaxed/simple;
+	bh=iYQAjAlQbnW0Pj1DPLJV3yFxNjipOTH6vCau1BXFKYw=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=W7dqeJO+FTXeSIzEf6Z0Rppb0/AfqdKXgEpGB43YIzGdOrANz4SRsVOgAY0Q1M7yVw1QkehQow5GH5kVIfoi0zvwsCstG+eYtox8zGib3PsUQYAD09jJeh8qYhX6NEjoyd8Fi2/yTI2KZXcLuzAddR+uYqxFVLsr4aHlIfJOyXE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=nb5RK4zQ; arc=none smtp.client-ip=209.85.218.53
+	 To:Cc:Content-Type; b=sn1vD83Kcz27SVd518UmA5RA9C6bXdnoDQyPx7/PTpRq8B8pQz70oqyOntP8mCg5ADuCRiEdND26vcv5ufzwsEsp2MMAWfTowVCIMZxx+buzIVtL9p03a5Ncgo1RYaNdF7izfiY6Y6jwBJrnQCu36kvOlp+EYsajs2A0ImgiyV8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hYuwexyp; arc=none smtp.client-ip=209.85.218.49
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nb5RK4zQ"
-Received: by mail-ej1-f53.google.com with SMTP id a640c23a62f3a-a37ce4b2b23so107764066b.3
-        for <git@vger.kernel.org>; Mon, 05 Feb 2024 08:43:32 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hYuwexyp"
+Received: by mail-ej1-f49.google.com with SMTP id a640c23a62f3a-a2a17f3217aso624405966b.2
+        for <git@vger.kernel.org>; Mon, 05 Feb 2024 09:07:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1707151410; x=1707756210; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1707152863; x=1707757663; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=RVJ8BaAUXchHqFZKzmHNwXyolNB02oclljSr0583Erw=;
-        b=nb5RK4zQdulS80XnCtMxUhHXiqcPyuAvFy10uiyT3h5KwN1T5fwSVOWsastJpcP9qC
-         i93RrGsS3/FiRLmHTc4G9M30ejCS4NE8u6cIFf3NHlzEifwyGk9psiUncCRAXeoKsj3h
-         Jwm3Ai+wxrPPnvc2zJw1gOWwDEjNtnqpvkOE0rHy9ra5MrkOygIRXrpbFc8vdq+izF64
-         G/0w7Fz0EFLEUl7Ryrn1ojBcJXg7AxWsTIA/j4bhqSQvxPWR5CewZJxS1OlX/c6v2czc
-         pVEE0tp3PoC3J5DCz8cxJi+2OoQMs92xlhN4gfhL+jUJTTqD+cu/AFjeGo6tw4Yg1QNv
-         wDew==
+        bh=iYQAjAlQbnW0Pj1DPLJV3yFxNjipOTH6vCau1BXFKYw=;
+        b=hYuwexypX5tD2QWWKwuok3wmZN/CiE8UKiC6R0MJbK848eHXc3IONU1QS1Q+fjNzdM
+         PD/zpPzT7wB6YEu3u8dL9XZIg1EKM3/x9j6xKf9SUt91b+50lOfSD0MQ5w8UexnM3wRS
+         ZVSROS0JP0RIpodBQfsHd87Qkv2E8mcZwaCr0M95GjdHgWRyn6TBpViaN2n0sSpj1J9I
+         3SI8iJPQTeoVUCn631816UeTwyG7HF7npucAbnMRajScvCXI5tpPMR3pQfMc4QnWwCib
+         RLX72NuUvLBdmdOAZpQkfbkzbLO+qP0ICuNcDnZfCOdZ0Hm6Z0xfZBdY6/moFp4nQ2Zb
+         020w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1707151410; x=1707756210;
+        d=1e100.net; s=20230601; t=1707152863; x=1707757663;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=RVJ8BaAUXchHqFZKzmHNwXyolNB02oclljSr0583Erw=;
-        b=Goy0BoJlOZGOiP8axb4lGF5iSDh50yXUzbTd0kC4mK3r9/kyRd2kHvGUHY5HrWk7Ys
-         jEK5WNrSSR6j6U3EIz63JxQzUXQ4P0xikKQwfISsy9tb3ZApdZPFdesio6f6oi8W+LY7
-         rpJO9OkDzPEcjbHn4c3lxg8hOu/50e3QO95V5dAHYg9kuYP0p46KJ8P81ZPDP44rZ49d
-         frReJMk2Lwqh3PVfXZvkjbdGXdLTCT9MCs++y9L6Cwm6GR62xjIr6I34xbtc3/dRmfuJ
-         RBV7JcD3bvkaj0BD6eewwuCYFS9EwGO1MhOieSTd2b6xhEFOZDZUUaMfKj1+SvDgeVZD
-         4PLQ==
-X-Gm-Message-State: AOJu0Yz2Pvmk+yRO0AKX3no8jNI/S8KKBm9iQYCUf82KfiLmP7QQQBKT
-	S+jURiGHmnciqbnWOO2aNiXjI2Y2+YVSSn5wF7VA9SWgsu8BkHOnxhqD03kt2Lf8sq6TzxkFYi8
-	RZ/Ql1wB5QnEe5XWw6QIVlEFQEYw=
-X-Google-Smtp-Source: AGHT+IFaWqCqoF2LUdX3gmr7flBVbj5HXbnz6dUXPahDFNs8trVDFQ9G1hD71dH1vqknHxfTwRZ0sai9oz8YD3Ezrp0=
-X-Received: by 2002:a17:906:314c:b0:a37:4765:658 with SMTP id
- e12-20020a170906314c00b00a3747650658mr4822861eje.34.1707151410322; Mon, 05
- Feb 2024 08:43:30 -0800 (PST)
+        bh=iYQAjAlQbnW0Pj1DPLJV3yFxNjipOTH6vCau1BXFKYw=;
+        b=D9Rnql7WZiXF1jGuy/ut/GylDj+uyEXY4tR9Tt/CBWyKLuFbliVMn96EVOCA922YdI
+         8HuWCfMLHVkiNKnRRABAENT12kTlbAR/cbuwj74Dp9kdq/xSX8Wux4c+BWhsM9XJcpY5
+         1hP5IUrbMxzhxHxaFBtWemOdLKtUscgq5WmMhh/94pMi4LWcnM/D0Rcjui/7u0bH+RuP
+         LjdmQ21lnE0xsJuwfrrG6zqC6ZEvjXUpnyo32Afwx7FwzgloFR0wsdJuXeequsRsDrwP
+         /svu4fXjBfA3V6q69l8wqfR+Xwe2nUKj9fwO1bD03temOqfAGhZ3j77LOtaQrDaI/CLe
+         PjuQ==
+X-Gm-Message-State: AOJu0YwYqhb11zTBCWxA/GN7laKI8HR2ql02vDnFX90YOlHApMXdJIin
+	+0dpvRC2KK1pWlizULY15p7WB9OxIPjUN1b3NWLdFXi9sYgY2b5Mktg1UeX+aFYHc+Xyx0oNRzh
+	VciTSQZnqEy82395wKuZXCTYwfeU=
+X-Google-Smtp-Source: AGHT+IHJ0+RTfHY0CSVSObvfAbpC1mhxEdo8kadG1HEpF0iFCa9IcVE6OXyMlFoZ8Lk3csjq/FMQCPE0bP1BGYMs9No=
+X-Received: by 2002:a17:906:abcd:b0:a37:6acf:d445 with SMTP id
+ kq13-20020a170906abcd00b00a376acfd445mr32321ejb.53.1707152862785; Mon, 05 Feb
+ 2024 09:07:42 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <d4797f27-825b-4e2b-85a6-cc30f33934e3@gmail.com> <106b8e7be9ddc2d24670b01d54347dfcf9aef196.1707122040.git.ps@pks.im>
-In-Reply-To: <106b8e7be9ddc2d24670b01d54347dfcf9aef196.1707122040.git.ps@pks.im>
+References: <1de82b27-116a-450e-98c0-52eb65a8f608@gmail.com>
+ <CAP8UFD1VAvnkM6afZvtpdXhA4csDBDwMnF9yUzSx_ut-Ypf+eA@mail.gmail.com>
+ <Zbi8pfvGpYrlZXAu@tanuki> <ZbpGzAd6FGEeTdrh@tanuki> <c61322de-8cd9-42b8-a04b-a8ae47b25c5e@gmail.com>
+ <Zbtmoo8qTmj-yt99@tanuki> <d4797f27-825b-4e2b-85a6-cc30f33934e3@gmail.com>
+In-Reply-To: <d4797f27-825b-4e2b-85a6-cc30f33934e3@gmail.com>
 From: Christian Couder <christian.couder@gmail.com>
-Date: Mon, 5 Feb 2024 17:43:17 +0100
-Message-ID: <CAP8UFD3F95TzytdpKO=LLf6Y_ejxwh9QtgAxRNKgMXW-72hjgQ@mail.gmail.com>
-Subject: Re: [PATCH] Add ideas for GSoC 2024
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>, 
+Date: Mon, 5 Feb 2024 18:07:30 +0100
+Message-ID: <CAP8UFD3GBT7s1jGOc=fe6XdYGF1c--tMBDiy_sDg1Afsa=drDw@mail.gmail.com>
+Subject: Re: Git in GSoC 2024
+To: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+Cc: Patrick Steinhardt <ps@pks.im>, git <git@vger.kernel.org>, Taylor Blau <me@ttaylorr.com>, 
 	Junio C Hamano <gitster@pobox.com>, Victoria Dye <vdye@github.com>, 
 	Karthik Nayak <karthik.188@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Mon, Feb 5, 2024 at 9:39=E2=80=AFAM Patrick Steinhardt <ps@pks.im> wrote=
-:
->
-> Add project ideas for the GSoC 2024.
-> ---
->
-> I came up with four different topics:
->
->   - The reftable unit test refactorings. This topic can also be squashed
->     into the preexisting unit test topics, I wouldn't mind. In that case
->     I'd be happy to be a possible mentor, too.
->
->   - Ref consistency checks for git-fsck(1). This should be rather
->     straight forward and make for an interesting topic.
->
->   - Making git-bisect(1)'s state more self-contained as recently
->     discussed. This topic is easy to implement, but the backwards
->     compatibility issues might require a lot of attention.
->
->   - Implementing support for reftables in the "dumb" HTTP protocol. It's
->     quite niche given that the dumb protocol isn't really used much
->     nowadays anymore. But it could make for an interesting project
->     regardless.
->
-> It's hard to estimate for me whether their scope is either too small or
-> too big. So please feel free to chime in and share your concerns if you
-> think that any of those proposals don't make much sense in your opinion.
+Hi Kaartic, Patrick, Karthik and all,
 
-Thanks a lot for these ideas! I have applied your patch and pushed it.
+On Sat, Feb 3, 2024 at 12:41=E2=80=AFPM Kaartic Sivaraam
+<kaartic.sivaraam@gmail.com> wrote:
+> On 01/02/24 15:08, Patrick Steinhardt wrote:
+> > On Wed, Jan 31, 2024 at 11:27:13PM +0530, Kaartic Sivaraam wrote:
+> >>
+> >> I created a fairly rough SoC ideas page for now including a barebones
+> >> information about the unit test migration idea:
+> >>
+> >> https://git.github.io/SoC-2024-Ideas/
 
-I have a few concerns though, see below.
+Thanks for creating the page!
 
->  SoC-2024-Ideas.md | 129 ++++++++++++++++++++++++++++++++++++++++++++++
->  1 file changed, 129 insertions(+)
+I have just applied the patch Patrick sent to the mailing list with
+the ideas related to reftable.
+
+> >> Note well that the existing idea's description is far from complete an=
+d I
+> >> mostly just cooked it up to serve as a template for how the idea entry=
+ could
+> >> look like. Kindly contribute towards elaborating the same :-)
+> >>
+> >> Also, feel free to suggest ideas you have around refs and reftable bac=
+ked,
+> >> Patrick. Those would be helpful.
+> >
+> > I'll have a the beginning of next week and will think about topics
+> > meanwhile.
+> >
 >
-> diff --git a/SoC-2024-Ideas.md b/SoC-2024-Ideas.md
-> index 3efbcaf..286aea0 100644
-> --- a/SoC-2024-Ideas.md
-> +++ b/SoC-2024-Ideas.md
-> @@ -39,3 +39,132 @@ Languages: C, shell(bash)
->  Possible mentors:
->  * Christian Couder < <christian.couder@gmail.com> >
+> Thanks, Patrick! It would be great if you could share the same as soon
+> as possible. The deadline for applying to GSoC is Feb 6 (18:00 UTC) and
+> we need the ideas page to be decent enough before we go ahead with
+> applying for this year.
 >
-> +### Convert reftable unit tests to use the unit testing framework
-> +
-> +The "reftable" unit tests in "t0032-reftable-unittest.sh"
-> +predate the unit testing framework that was recently
-> +introduced into Git. These tests should be converted to use
-> +the new framework.
-> +
-> +See:
-> +
-> +  - this discussion <https://lore.kernel.org/git/cover.1692297001.git.st=
-eadmon@google.com/>
-> +
-> +Expected Project Size: 175 hours or 350 hours
-> +
-> +Difficulty: Low
+> If the elaborate project description could take time, feel free to share
+> a paragraph or two that are supplemented with a few references. That
+> should be sufficient for applying to GSoC.
 
-"Difficulty: Low" might not be very accurate from the point of view of
-contributors. I think it's always quite difficult to contribute
-something significant to Git, and sometimes more than we expected.
+Yeah, we need a decent idea page, but it doesn't need to be finalized.
+I think we can still make changes after the deadline (which is for the
+Open Source Orgs to apply).
 
-> +Languages: C, shell(bash)
-> +
-> +Possible mentors:
-> +* Patrick Steinhardt < <ps@pks.im> >
-> +* Karthik Nayak < <karthik.188@gmail.com> >
-> +
-> +### Implement consistency checks for refs
-> +
-> +The git-fsck(1) command is used to check various data
-> +structures for consistency. Notably missing though are
-> +consistency checks for the refdb. While git-fsck(1)
-> +implicitly checks some of the properties of the refdb
-> +because it uses its refs for a connectivity check, these
-> +checks aren't sufficient to properly ensure that all refs
-> +are properly consistent.
-> +
-> +The goal of this project would be to introduce consistency
-> +checks that can be implemented by the ref backend. Initially
-> +these checks may only apply to the "files" backend. With the
-> +ongoing efforts to upstream a new "reftable" backend the
-> +effort may be extended.
-> +
-> +See:
-> +
-> +  - https://lore.kernel.org/git/6cfee0e4-3285-4f18-91ff-d097da9de737@rd1=
-0.de/
-> +  - https://lore.kernel.org/git/cover.1706601199.git.ps@pks.im/
-> +
-> +Expected Project Size: 175 hours or 350 hours
-> +
-> +Difficulty: Medium
-> +
-> +Languages: C, shell(bash)
-> +
-> +Possible mentors:
-> +* Patrick Steinhardt < <ps@pks.im> >
-> +* Karthik Nayak < <karthik.188@gmail.com> >
-> +
-> +### Refactor git-bisect(1) to make its state self-contained
-> +
-> +The git-bisect(1) command is used to find a commit in a
-> +range of commits that introduced a specific bug. Starting a
-> +bisection run creates a set of state files into the Git
-> +repository which record various different parameters like
-> +".git/BISECT_START". These files look almost like refs
-> +due to their names being all-uppercase. This has led to
-> +confusion with the new "reftable" backend because it wasn't
-> +quite clear whether those files are in fact refs or not.
-> +
-> +As it turns out they are not refs and should never be
-> +treated like one. Overall, it has been concluded that the
-> +way those files are currently stored is not ideal. Instead
-> +of having a proliferation of files in the Git directory, it
-> +was discussed whether the bisect state should be moved into
-> +its own "bisect-state" subdirectory. This would make it more
-> +self-contained and thereby avoid future confusion. It is
-> +also aligned with the sequencer state used by rebases, which
-> +is neatly contained in the "rebase-apply" and "rebase-merge"
-> +directories.
-> +
-> +The goal of this project would be to realize this change.
-> +While rearchitecting the layout should be comparatively easy
-> +to do, the harder part will be to hash out how to handle
-> +backwards compatibility.
-> +
-> +See:
-> +
-> +  - https://lore.kernel.org/git/Za-gF_Hp_lXViGWw@tanuki/
+> Christian,
+>
+> It would be great if you could look into and improve the detail for the
+> unit test migration idea. I just added a very terse description based on
+> what I could get my hands on. If you think the description we used for
+> the Outreachy round would do, kindly update the page with the same or
+> kindly share it here so that I could update the same in the ideas page :-=
+)
 
-From reading the discussion it looks like everyone is Ok with doing
-this. I really hope that we are not missing something that might make
-us decide early not to do this though.
+The project description for Outreachy was not very elaborate and is
+now quite outdated. I have instead improved the project description in
+the Ideas page.
 
-> +Expected Project Size: 175 hours or 350 hours
-> +
-> +Difficulty: Medium
-> +
-> +Languages: C, shell(bash)
-> +
-> +Possible mentors:
-> +* Patrick Steinhardt < <ps@pks.im> >
-> +* Karthik Nayak < <karthik.188@gmail.com> >
+> > Yeah, as long as there is a co-mentor that can take over during my
+> > absence I'm happy to do it. Karthik said that he'd be willing to cover
+> > me, which I think would be a good fit given that he's already got quite
+> > a bit of exposure to the reftable backend internally at GitLab. Thanks!
+>
+> Sounds good. Thank you for volunteering to co-mentor, Karthik!
+
+Yeah, thank you Patrick and Karthik!
