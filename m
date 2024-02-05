@@ -1,60 +1,59 @@
-Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
+Received: from mail-pf1-f180.google.com (mail-pf1-f180.google.com [209.85.210.180])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C4C4481A7
-	for <git@vger.kernel.org>; Mon,  5 Feb 2024 18:48:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE93647F67
+	for <git@vger.kernel.org>; Mon,  5 Feb 2024 18:55:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707158937; cv=none; b=B3qNDcF2ibGffhveihILyezUAb8tA8gGyzimFWwPLijChDl3VB5u1vMGR+t28Wy5RLJA0ry5R1tfURPm43Yu5FeZ6PjigaD+a31nxMHPckLYCe142od87YTqTFsXS+V/lk1ZKo/e+S60L1c7RBBBKOym/jrv2RstFoiC2o78bcs=
+	t=1707159339; cv=none; b=kFnFXWH1KDTwlLq0tZpQFPHl3RwJFnM4jzyGCViTqbPCdjlDS7vyN8XXtPRuO97HYKldhbEmZe2rCqtESX1WHbUkVtrCWm7rbcGJD49K0SYrTE2kESIQrTX/y1Z6cxcLurLtswMtRVpUDA+pjmylXtB3fOneW9qzYGK4QyR9b4E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707158937; c=relaxed/simple;
-	bh=GxjJ86S/tppn3Fa9nkIG1rGUsxHDIMHEKlg1bHahIvs=;
+	s=arc-20240116; t=1707159339; c=relaxed/simple;
+	bh=TcLwj9eureKFt8zTK8rXwPZ9qXyv+PR6lRizOXXDx4g=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=iszVTnHu+BOWd7cojTJ8rtNUy1iSc3Ld4lVTkke5+TA/6g8R76dZZPHVJc1UTvwH5sKJ6iJI+8BHGhYBoeG5q4Ky3Va/PUpE6T+nccB4kIva18rtpJkc7Br/4EJHtSc13gw3uGFW2U8n2RkJciXycAkKmKplBENM6E06E2dIlEA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=GxErZVev; arc=none smtp.client-ip=209.85.128.50
+	 In-Reply-To:Content-Type; b=JsbtYDJrKX/ouake6i9e3r77ztnRa1EDJAyUZmUqbfQrBIsRAc93w4IxnnJ/hZfTxAKPWhvBUbn3+uZH91m94aYL126m0RE95Gl6z7wFFytnoifD+5GsJz2Vo67kuWKjq9nee49Szf//BSaGaRbUdmhbpv5YTpbGT7uHVmZaZws=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=etdFRmNQ; arc=none smtp.client-ip=209.85.210.180
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GxErZVev"
-Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-40fe0641bb4so1278445e9.3
-        for <git@vger.kernel.org>; Mon, 05 Feb 2024 10:48:55 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="etdFRmNQ"
+Received: by mail-pf1-f180.google.com with SMTP id d2e1a72fcca58-6e04eca492fso514830b3a.1
+        for <git@vger.kernel.org>; Mon, 05 Feb 2024 10:55:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1707158934; x=1707763734; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1707159337; x=1707764137; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=CFJt6cVyAxjmnOHCRZP3nIvchJbnFs9Z0azOAqZ/F5Y=;
-        b=GxErZVev3RDNaadTj/2wzEdVyJnRSUelDw/bixW7xr7Wirp1AkAVDYJh7JoTWlIk52
-         swQjlupMNxNxFegs+0QrMLMuPrfnK8hUxucpZNhPsXMgm+60MpwIpjmnVECe3iI6NDdB
-         QeK6grznkSAJ8JtwTO7SNdPqwuFCesyXekA42G0bHnw85aqFA3zelPeOgljfxOlcqzNX
-         7rsFRAbOAU4kAcs+yeG4oLXOjhZO6FPCuyjyicQ8sPScdxmjzGH7AxMgv5KAueVYBZ7f
-         ptXeU6cXMiehR8dpxcmGNOfrOymzrh24Rl2I+yuDDUfM6N6/EiKb0+G6gfzHDtMHcw+/
-         HJIw==
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=Wg+/3IfIYMlXUW+UJD+f4nyKD+KR8u/jMt58QYPT/9I=;
+        b=etdFRmNQtNdIzvZch3LJzMooFXQvkj4T2Y/b/Ddh05wu7sqeM6JP3c8ImL/LtEhkHR
+         ifPbBKEMNHR4Pb85+87i1Za4mWHet/pyHZzy+x3illcDoWRSkvt02IXnVLE0fvVAxc6f
+         OGNG7Xm58lGwymyRKAhH3hYkhwGYdDPKGucoU+KBPmRobG4QFaJ/8ZODG6m2AG0hVC/p
+         eUF6vF/pZb9BswSna+IErczoiwywDk353tjGDoxhYCfFAMq4bXYor1yLulYEkeGuUPLG
+         4J0a2aQqU1D1cn5JyHzyfZVVmffmRXnCiZnZyeWjQupzywYQD96hp1whK5HlEqC6I/uB
+         kk0g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1707158934; x=1707763734;
+        d=1e100.net; s=20230601; t=1707159337; x=1707764137;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:reply-to:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=CFJt6cVyAxjmnOHCRZP3nIvchJbnFs9Z0azOAqZ/F5Y=;
-        b=QHiKTKOEFq7FbpKppYErcN63Sh0mooJbNGNdsRQt+vpC3Ylt8HQ38FOuKr8C96AKx/
-         SFLUp2mX7F4CvY281gPRL9bscjSNr5+NV6V4sTWtmvBm30Xc/sKnvvRKtw8upwOvw1Oa
-         JQ0B57harmY9HWQUsL9kbsXwWYs5pkHqC1ZAhpOel1//2UbMzEdqoWszfp6r0W/gRku6
-         HuuHzjJpMcq1cwDuVaYuUJs2x4TGe36VxGn7RvQDDfjTSzcA2ELju5yKzqJEiW1UWgJm
-         OhRC5chlhriWX7/G0lnYdC7UB5FgEYiPPfPyDfl7auGZGNfiApw+G+ZlnBauwkVDJxUg
-         I4Dg==
-X-Gm-Message-State: AOJu0YzHgXElhsOzv56ozMkDZPpq6gZHb+zIgNtS5ZZV/lRHIpoWjoMe
-	nfET6G3Vz2YzqVR75QvWC03mrm9p2CxkKBfxA1g2bOjbjqEpq1WR
-X-Google-Smtp-Source: AGHT+IE5GrT1jZMRYLZ2kmqVcyetOn96PnJTW65GsKa2tosVnePxgjkv0f4vG7nI/brVJ1++ECjEFA==
-X-Received: by 2002:a05:600c:294a:b0:40e:fbc8:401 with SMTP id n10-20020a05600c294a00b0040efbc80401mr502186wmd.20.1707158933430;
-        Mon, 05 Feb 2024 10:48:53 -0800 (PST)
-X-Forwarded-Encrypted: i=0; AJvYcCU++fpLzbUgJZM1f2A+SW3c5Mz524/DI3/IIgn+ll01mludsysE/vFVEMNe4yqJ+dP6ox5qvF7irqaC7mb3MV54pFy+WftP2b1TgFUnDQY=
-Received: from ?IPV6:2a0a:ef40:62e:a901:d2c6:37ff:fef6:7b1? ([2a0a:ef40:62e:a901:d2c6:37ff:fef6:7b1])
-        by smtp.googlemail.com with ESMTPSA id i11-20020a05600c354b00b0040fc76ed923sm9474980wmq.6.2024.02.05.10.48.52
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=Wg+/3IfIYMlXUW+UJD+f4nyKD+KR8u/jMt58QYPT/9I=;
+        b=oyyZl+JCQILt3oL7UEDXKonHSyWbIDiCwuOQZLH7e248X6lcnIkoz1ELqcj9Oh2PVF
+         iQeQwXp7q1sv1LTf00Z/Fid3noagCUVsT6mCt5oAAa1imc1FFTm/5goBh2fSwRQmlr28
+         UGGoILyr+QSgB9vPW0sFZ1JbSAL5WExAdrY1vTHMf0i0FeHGmRBlkptkYvkTffO75W0O
+         qYxI8mWYjvUx/ghiZq5l8hgYF1U9U2N3HSyCrm6qra2Fclh3QSdpM/9pMU+SNGQDJ0To
+         oVQ58BCqehSFHgMZEWl2NCOS+Zcl+v18XUH8XrIAWRLEp+bSj7K5MLC0H7ebzi9I+A+v
+         MEdw==
+X-Gm-Message-State: AOJu0Yz0tCSseTCT1EUyYCtiPtXGGyQja18MziEeMF84EILAOYegBjIx
+	zZ1HPWHNLZdxPW60qU8dkQ3it4pocMHFwYTqcfQOFaC9FL82wjNC
+X-Google-Smtp-Source: AGHT+IGSwznyUdVS36/ppBIbdCU/wf+hYpDGSk9bkwEaQXXpIasw2+aunn51G1/bfQGH7NPiVeHxgg==
+X-Received: by 2002:a62:ce8d:0:b0:6e0:3d29:8eaa with SMTP id y135-20020a62ce8d000000b006e03d298eaamr409932pfg.7.1707159336901;
+        Mon, 05 Feb 2024 10:55:36 -0800 (PST)
+X-Forwarded-Encrypted: i=0; AJvYcCW4VnR/wuBZhQJhwvZwltM+f5kHVY1V57xNgsU9+Vsrh6tfvlaUb4rg7S7naR39eCzf9TZ5Uhz6L/ShjSE01waccZ5RX90Guf3WPs2i5DRnYqdormEyH9Kha8hcgjUBEog51yQZmhAPIrHcIBFQ3g84CguK5dh4Z2J3pYRWo+K5Kd2+lPQJ
+Received: from [192.168.208.87] ([106.51.148.224])
+        by smtp.gmail.com with ESMTPSA id x23-20020aa784d7000000b006e04f2a438bsm180428pfn.105.2024.02.05.10.55.34
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 05 Feb 2024 10:48:53 -0800 (PST)
-Message-ID: <98d79d33-0d7e-4a9c-a6a3-ed9b58cd7445@gmail.com>
-Date: Mon, 5 Feb 2024 18:48:52 +0000
+        Mon, 05 Feb 2024 10:55:36 -0800 (PST)
+Message-ID: <e1c04f67-5981-4393-8a8e-a28cc53858eb@gmail.com>
+Date: Tue, 6 Feb 2024 00:25:31 +0530
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -62,65 +61,80 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v3 4/4] for-each-ref: avoid filtering on empty pattern
+Subject: Re: [PATCH] Add ideas for GSoC 2024
 Content-Language: en-US
-To: Karthik Nayak <karthik.188@gmail.com>, git@vger.kernel.org
-Cc: gitster@pobox.com, ps@pks.im
-References: <20240119142705.139374-1-karthik.188@gmail.com>
- <20240129113527.607022-1-karthik.188@gmail.com>
- <20240129113527.607022-5-karthik.188@gmail.com>
-From: Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <20240129113527.607022-5-karthik.188@gmail.com>
+To: Christian Couder <christian.couder@gmail.com>,
+ Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>,
+ Junio C Hamano <gitster@pobox.com>, Victoria Dye <vdye@github.com>,
+ Karthik Nayak <karthik.188@gmail.com>
+References: <d4797f27-825b-4e2b-85a6-cc30f33934e3@gmail.com>
+ <106b8e7be9ddc2d24670b01d54347dfcf9aef196.1707122040.git.ps@pks.im>
+ <CAP8UFD3F95TzytdpKO=LLf6Y_ejxwh9QtgAxRNKgMXW-72hjgQ@mail.gmail.com>
+From: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+In-Reply-To: <CAP8UFD3F95TzytdpKO=LLf6Y_ejxwh9QtgAxRNKgMXW-72hjgQ@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-Hi Karthik
+Hi Patrick, Christian and all,
 
-On 29/01/2024 11:35, Karthik Nayak wrote:
-> When the user uses an empty string pattern (""), we don't match any refs
-> in git-for-each-ref(1). This is because in git-for-each-ref(1), we use
-> path based matching and an empty string doesn't match any path.
->
-> In this commit we change this behavior by making empty string pattern
-> match all references. This is done by introducing a new flag
-> `FILTER_REFS_NO_FILTER` in `ref-filter.c`, which uses the newly
-> introduced `refs_for_each_all_refs()` function to iterate over all the
-> refs in the repository.
-
-It actually iterates over all the refs in the current worktree, not all 
-the refs in the repository. I have to say that I find it extremely 
-unintuitive that "" behaves differently to not giving a pattern. I 
-wonder if we can find a better UI here - perhaps a command line option 
-to include pseudorefs?
-
-> Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
-> ---
->   Documentation/git-for-each-ref.txt |  3 ++-
->   builtin/for-each-ref.c             | 21 +++++++++++++++++-
->   ref-filter.c                       | 13 ++++++++++--
->   ref-filter.h                       |  4 +++-
->   t/t6302-for-each-ref-filter.sh     | 34 ++++++++++++++++++++++++++++++
->   5 files changed, 70 insertions(+), 5 deletions(-)
+On 05/02/24 22:13, Christian Couder wrote:
 > 
-> diff --git a/Documentation/git-for-each-ref.txt b/Documentation/git-for-each-ref.txt
-> index be9543f684..b1cb482bf5 100644
-> --- a/Documentation/git-for-each-ref.txt
-> +++ b/Documentation/git-for-each-ref.txt
-> @@ -32,7 +32,8 @@ OPTIONS
->   	If one or more patterns are given, only refs are shown that
->   	match against at least one pattern, either using fnmatch(3) or
->   	literally, in the latter case matching completely or from the
-> -	beginning up to a slash.
-> +	beginning up to a slash. If an empty string is provided all refs
-> +	are printed, including HEAD and pseudorefs.
+> Thanks a lot for these ideas! I have applied your patch and pushed it.
+> 
 
-I think it would be helpful to clarify that it is all the refs for the 
-current worktree that are printed, not all the refs in the repository - 
-we still don't have a way to iterate over the per-worktree refs from 
-other worktrees
+Yeah. Thanks for sharing these great ideas! I've submitted the 
+application using the new ideas page now as mentioned in the parent thread.
 
-Best Wishes
+>> +### Convert reftable unit tests to use the unit testing framework
+>> +
+>> +The "reftable" unit tests in "t0032-reftable-unittest.sh"
+>> +predate the unit testing framework that was recently
+>> +introduced into Git. These tests should be converted to use
+>> +the new framework.
+>> +
+>> +See:
+>> +
+>> +  - this discussion <https://lore.kernel.org/git/cover.1692297001.git.steadmon@google.com/>
+>> +
+>> +Expected Project Size: 175 hours or 350 hours
+>> +
+>> +Difficulty: Low
+> 
+> "Difficulty: Low" might not be very accurate from the point of view of
+> contributors. I think it's always quite difficult to contribute
+> something significant to Git, and sometimes more than we expected.
+> 
 
-Phillip
+Makes sense. Also, I'm kind of cat-one-the-wall about whether it makes 
+sense to have two projects about the unit test migration effort itself. 
+If we're clear that both of them would not overlap, it should be fine. 
+Otherwise, it would be better to merge them as Patrick suggests.
 
+That said, how helpful would it be to link the following doc in the unit 
+testing related ideas?
+
+https://github.com/git/git/blob/master/Documentation/technical/unit-tests.txt
+
+>> +### Implement consistency checks for refs
+>> +
+ >>
+ >> [ ... snip ... ]
+ >>
+>> +
+>> +  - https://lore.kernel.org/git/6cfee0e4-3285-4f18-91ff-d097da9de737@rd10.de/
+>> +  - https://lore.kernel.org/git/cover.1706601199.git.ps@pks.im/
+>> +
+ >> [ .... snip ... ]
+>> +
+>> +### Implement support for reftables in "dumb" HTTP transport
+
+Would it worth linking the reftable technical doc for the above ideas?
+
+https://git-scm.com/docs/reftable
+
+I could see it goes into a lot of detail. I'm just wondering if link to 
+it would help someone who's looking to learn about reftable.
+
+-- 
+Sivaraam
