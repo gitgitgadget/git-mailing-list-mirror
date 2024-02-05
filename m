@@ -1,127 +1,229 @@
-Received: from ring.crustytoothpaste.net (ring.crustytoothpaste.net [172.105.110.227])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f41.google.com (mail-wm1-f41.google.com [209.85.128.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFD7648CCC
-	for <git@vger.kernel.org>; Mon,  5 Feb 2024 22:18:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.110.227
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB5F31AB7ED
+	for <git@vger.kernel.org>; Mon,  5 Feb 2024 22:22:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707171497; cv=none; b=IAen8QYpui5QvhMkOsHgikSv3aavnmhm++dFim+1yfvOY4bdNnjdDnpijKPkQ/BqjO8BetixqePAz7FuyLLRFhIKm1QPukr3kLT8KjALkXpu0HYWLAYEDzvKkuJDy7lek0O5c7c4vOtZWU1FVupTsofSZu3HHZzczJjqG/9u2uo=
+	t=1707171727; cv=none; b=WA1Bab+hRd+rd3LkjkaV9yzDVzzbEduJLwa9rgiRg7NrTvWIIbu13F6Ovx7DuTk4xIJG16g8gKYOZSVzhmVhAfPgan+ImXjIBWEPvfwE5kxFsLq5rcc4EdBzYTqzNQbXR7vGPUYKNAWx5iva69xHy5JA4ZEtglEu5qEGevg3RFM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707171497; c=relaxed/simple;
-	bh=yFV3aTdMWbISWS/zemxrrVbYFOajAeUHopDm512MMSg=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=pVCJZKJuN2W+lNDEEswFZbo7Gl+pOeCh2/dKdq90HtnQD9hckmCsdShDrJ8GuH8r/n6EBB2kyRd2knFXgwYGn5GhuMxDaMlf4N4CqkuyWdPN2Zrh9ZKM5fI/Q00pfTM552erR8PV5JSjaAf9qJk2EXFG7sWaj+KUE9d83UYQ2Eg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=hlkA1wec; arc=none smtp.client-ip=172.105.110.227
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
+	s=arc-20240116; t=1707171727; c=relaxed/simple;
+	bh=DwwaBrqVW1lk8Bulxa3MDqTHi/Ms1QW7wDqlbgsNnGU=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=FxRbHBZ360tgxMDIIRXngYDbKAQRrYCGMDCmALPW8LNg7l7+kjEy4Z603bA6SlS/FUZQQ577R1MwazF7NINSC1ZEdGftfF3ONH1gafgEBzYuvWjNTcMMFg/ZwwFSyq/cUEthy30b8ZUguJ7TxJbWc4X8hFadVn7+9wf+yy0V63o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Qoj0rvxl; arc=none smtp.client-ip=209.85.128.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="hlkA1wec"
-Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:e59a:3ed0:5f5c:31f3])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (P-256) server-signature RSA-PSS (3072 bits) server-digest SHA256)
-	(No client certificate requested)
-	by ring.crustytoothpaste.net (Postfix) with ESMTPSA id 97E1F5A455;
-	Mon,  5 Feb 2024 22:18:13 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1707171493;
-	bh=yFV3aTdMWbISWS/zemxrrVbYFOajAeUHopDm512MMSg=;
-	h=Date:From:To:Cc:Subject:References:Content-Type:
-	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-	 Content-Type:Content-Disposition;
-	b=hlkA1wecYDHUKs9optLHjsvkUC6C3QJgswbJgXx4NOV7A9S7CsD61closL5TjcyIN
-	 KFVpTe0t9opIsBi5w8hMuWL94M8UUfg31FbYdshvD9oJtoqzHFcW79mi/RjrTKRZBA
-	 gT/+RrQHQ1skjvyswj8nYUQg5It+94k2GqlNoksEHNMbaqe+KhLyLB7GgLE+2mkTb9
-	 CTdgeariN7CjW8B7augOauZjrCZzA/w+Z0iObYlzRGmPeABPxBvZEWFhP8KVavqCTD
-	 C2DjMAkCUtPvg/ySob7YcU96sy/5YQRDApFPjbqGgopka0+mgqHn4du7hcvBZIF54t
-	 BPGwlgyOsgY/B+TWe18sNKNfOKEVnoSOuevugRNMYnbBXt7tsUW1BINaHzLC3P8pTK
-	 624nEQpqnqR9peWVQYv+97O1G5/rxPbmzdQZH+WJeUrfP143lD9e26l5DkTLo/rpd2
-	 hbY4TsolQoKlPuIGvCxYye9bMLasLX60nTX5s3Nz0tPyV4japVW
-Date: Mon, 5 Feb 2024 22:18:11 +0000
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: Quentin Bouget <ypsah@devyard.org>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 2/2] http: prevent redirect from dropping credentials
- during reauth
-Message-ID: <ZcFeoyFXqLhMXVRh@tapette.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Quentin Bouget <ypsah@devyard.org>, git@vger.kernel.org
-References: <20240204185427.39664-1-ypsah@devyard.org>
- <20240204185427.39664-3-ypsah@devyard.org>
- <ZcARb4YNCD4NLJku@tapette.crustytoothpaste.net>
- <CYWT6JWQCTFG.106OCJTV3NQDU@devyard.org>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Qoj0rvxl"
+Received: by mail-wm1-f41.google.com with SMTP id 5b1f17b1804b1-40fe0641bb4so2900355e9.3
+        for <git@vger.kernel.org>; Mon, 05 Feb 2024 14:22:05 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1707171724; x=1707776524; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=jqxgEKgBg8lP2EcAcQgTZMYhbFv6vy/DV3drMRz1CWw=;
+        b=Qoj0rvxlLs9nNkfARoYJlmRGzfJqvE7jD3af5I7eC1D4mSQ41fCpR/JWIjQGAzECwv
+         UM2RSWpGSSHz/iF324Fw42zixU9A5BYlJAEGFBdLLtKzq4NuA4QXVf5x1XuShX9gwhVH
+         d2JYulX/j45UaZK7VOuGdbYt5FHJvM3R88aEGdr+XAgSKl5dDho2HU3xjW1bB6ujFJtX
+         5zsQuZxk2EmnBOKGqyF9NNw/XOSIOxFwg2e1zih3bwRDet9NeLazSLhpblH3hXcSOi87
+         uPZOjovG0rB5z2xsJ9Mfh4qxhahCZuZX3rQuhOIH2xFWWEL3MBpfoLi+pU9MeFnCJeis
+         3B2w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1707171724; x=1707776524;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=jqxgEKgBg8lP2EcAcQgTZMYhbFv6vy/DV3drMRz1CWw=;
+        b=YY8MOGVMLHMnILLEkaRZ2JJuFbIAXVS/QOxrUYfAt54FWVeaDxrhZNdmn9ZXF+tWJa
+         SVe+ItR8UnEOGApSEe6mxPB/QLlFiuHyrj/TV6Ww5WoWG5UidbMelizk+kJXab7/CM+X
+         jXlcBV+exSRbzDJd23h0csFzZTE4bV69BrAJawkymG1wkdkpaTrk5Mxd2Eoi5YKD6A8h
+         xxtbGFNKcEfq5C/RUUfLDmzkv2KSyEAupCeFAM2Jo7H8kJYJWA0alvtBvLQGTcL2NpKS
+         7viJ1ZhzqyI4SKTlqXg0MFmrLMlQbwtSAnzVDVsDZ24QenGPKdk0yzDbakfz39+YX1pM
+         KmYQ==
+X-Gm-Message-State: AOJu0YzJjAI5wOIXbYcj1WN7YKt1y8JjI5Fhf6ss6lJn2X6j8U8QWIXI
+	v/euEfQGHSk+UoHe8rmyH+9lOjphx5goFeYs4k7Uvygngn0JSke6
+X-Google-Smtp-Source: AGHT+IF1fJfGrWAHkfTXLxPwYRsEp/tbq+qMFsX3fwYniekLxEYm4zCsh7muH3SSTNKSsD2cfF5mDg==
+X-Received: by 2002:a05:600c:4510:b0:40f:dd18:a152 with SMTP id t16-20020a05600c451000b0040fdd18a152mr204177wmo.41.1707171723537;
+        Mon, 05 Feb 2024 14:22:03 -0800 (PST)
+X-Forwarded-Encrypted: i=0; AJvYcCWGG/9Xs3sscOiQg71Wq+9tnbBsSUv93MJ5tHWvx3Zjt0Sd9p53JrAntz1NzrBcHvE71teHiI3kvo6AnjloV6XNonCp
+Received: from gmail.com (77.red-88-14-198.dynamicip.rima-tde.net. [88.14.198.77])
+        by smtp.gmail.com with ESMTPSA id s9-20020a05600c45c900b0040fddaf9ff4sm2751313wmo.40.2024.02.05.14.22.02
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 05 Feb 2024 14:22:03 -0800 (PST)
+Message-ID: <f07d33e4-5595-43e3-838e-fd89c5621485@gmail.com>
+Date: Mon, 5 Feb 2024 23:22:01 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="rKtwmGkDohAlEXS4"
-Content-Disposition: inline
-In-Reply-To: <CYWT6JWQCTFG.106OCJTV3NQDU@devyard.org>
-User-Agent: Mutt/2.2.12 (2023-09-09)
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] builtin/stash: report failure to write to index
+To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
+Cc: moti sd <motisd8@gmail.com>
+References: <CAPvDF0P7_s-iy_V7FNSHtXXc9v5E3Fm=AdgduDDsd0rM-zNg-g@mail.gmail.com>
+ <2cd44b01dc29b099a07658499481a6847c46562d.1707116449.git.ps@pks.im>
+Content-Language: en-US
+From: =?UTF-8?Q?Rub=C3=A9n_Justo?= <rjusto@gmail.com>
+In-Reply-To: <2cd44b01dc29b099a07658499481a6847c46562d.1707116449.git.ps@pks.im>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+
+On 05-feb-2024 08:01:04, Patrick Steinhardt wrote:
+> The git-stash(1) command needs to write to the index for many of its
+> operations. When the index is locked by a concurrent writer it will thus
+> fail to operate, which is expected. What is not expected though is that
+> we do not print any error message at all in this case. The user can thus
+> easily miss the fact that the command didn't do what they expected it to
+> do and would be left wondering why that is.
+> 
+> Fix this bug and report failures to write to the index. Add tests for
+> the subcommands which hit the respective code paths.
+> 
+> Note that the chosen error message ("Cannot write to the index") does
+> not match our guidelines as it starts with a capitalized letter. This is
+> intentional though and matches the style of all the other messages used
+> in git-stash(1).
+
+Your message made me curious, so I ran:
+
+   $ git grep -E '(die|error)\(' builtin/stash.c
+   
+   builtin/stash.c:168:               die(_("'%s' is not a stash-like commit"), revision);
+   builtin/stash.c:214:               return error(_("%s is not a valid reference"), revision);
+   builtin/stash.c:261:               return error(_("git stash clear with arguments is "
+   builtin/stash.c:303:               return error(_("unable to write new index file"));
+   builtin/stash.c:487:                                       die("Failed to move %s to %s\n",
+   builtin/stash.c:523:               die(_("Unable to write index."));
+   builtin/stash.c:544:               return error(_("cannot apply a stash in the middle of a merge"));
+   builtin/stash.c:555:                               return error(_("could not generate diff %s^!."),
+   builtin/stash.c:562:                               return error(_("conflicts in index. "
+   builtin/stash.c:569:                               return error(_("could not save index tree"));
+   builtin/stash.c:610:               ret = error(_("could not write index"));
+   builtin/stash.c:630:               ret = error(_("could not restore untracked files from stash"));
+   builtin/stash.c:702:               return error(_("%s: Could not drop stash entry"),
+   builtin/stash.c:721:               return error(_("'%s' is not a stash reference"), info->revision.buf);
+   builtin/stash.c:872:                       die(_("failed to parse tree"));
+   builtin/stash.c:883:               die(_("failed to unpack trees"));
+   builtin/stash.c:1547:              if (report_path_error(ps_matched, ps)) {
+   builtin/stash.c:1763:                      die("subcommand wasn't specified; 'push' can't be assumed due to unexpected token '%s'",
+   builtin/stash.c:1773:                      die(_("options '%s' and '%s' cannot be used together"), "--pathspec-from-file", "--patch");
+   builtin/stash.c:1776:                      die(_("options '%s' and '%s' cannot be used together"), "--pathspec-from-file", "--staged");
+   builtin/stash.c:1779:                      die(_("'%s' and pathspec arguments cannot be used together"), "--pathspec-from-file");
+   builtin/stash.c:1785:              die(_("the option '%s' requires '%s'"), "--pathspec-file-nul", "--pathspec-from-file");
+
+Certainly, there are some error messages in builtin/stash.c that do not
+follow the notes in Documentation/CodingGuideLines, but it does not seem
+to be "the style of all other messages" in git-stash.
+
+However, your message is clear ...  What error messages are you
+considering?
+
+> 
+> Reported-by: moti sd <motisd8@gmail.com>
+> Signed-off-by: Patrick Steinhardt <ps@pks.im>
+> ---
+>  builtin/stash.c  |  6 +++---
+>  t/t3903-stash.sh | 52 ++++++++++++++++++++++++++++++++++++++++++++++++
+>  2 files changed, 55 insertions(+), 3 deletions(-)
+> 
+> diff --git a/builtin/stash.c b/builtin/stash.c
+> index b2813c614c..9df072b459 100644
+> --- a/builtin/stash.c
+> +++ b/builtin/stash.c
+> @@ -537,7 +537,7 @@ static int do_apply_stash(const char *prefix, struct stash_info *info,
+>  	repo_read_index_preload(the_repository, NULL, 0);
+>  	if (repo_refresh_and_write_index(the_repository, REFRESH_QUIET, 0, 0,
+>  					 NULL, NULL, NULL))
+> -		return -1;
+> +		return error(_("Cannot write to the index"));
+>  
+>  	if (write_index_as_tree(&c_tree, &the_index, get_index_file(), 0,
+>  				NULL))
+> @@ -1364,7 +1364,7 @@ static int do_create_stash(const struct pathspec *ps, struct strbuf *stash_msg_b
+>  	repo_read_index_preload(the_repository, NULL, 0);
+>  	if (repo_refresh_and_write_index(the_repository, REFRESH_QUIET, 0, 0,
+>  					 NULL, NULL, NULL) < 0) {
+> -		ret = -1;
+> +		ret = error(_("Cannot write to the index"));
+>  		goto done;
+>  	}
+>  
+> @@ -1555,7 +1555,7 @@ static int do_push_stash(const struct pathspec *ps, const char *stash_msg, int q
+>  
+>  	if (repo_refresh_and_write_index(the_repository, REFRESH_QUIET, 0, 0,
+>  					 NULL, NULL, NULL)) {
+> -		ret = -1;
+> +		ret = error(_("Cannot write to the index"));
+>  		goto done;
+>  	}
+>  
+> diff --git a/t/t3903-stash.sh b/t/t3903-stash.sh
+> index 3319240515..770881e537 100755
+> --- a/t/t3903-stash.sh
+> +++ b/t/t3903-stash.sh
+> @@ -1516,4 +1516,56 @@ test_expect_success 'restore untracked files even when we hit conflicts' '
+>  	)
+>  '
+>  
+> +test_expect_success 'stash create reports a locked index' '
+> +	test_when_finished "rm -rf repo" &&
+> +	git init repo &&
+> +	(
+> +		cd repo &&
+> +		test_commit A A.file &&
+> +		echo change >A.file &&
+> +		touch .git/index.lock &&
+> +
+> +		cat >expect <<-EOF &&
+> +		error: Cannot write to the index
+> +		EOF
+> +		test_must_fail git stash create 2>err &&
+> +		test_cmp expect err
+> +	)
+> +'
+> +
+> +test_expect_success 'stash push reports a locked index' '
+> +	test_when_finished "rm -rf repo" &&
+> +	git init repo &&
+> +	(
+> +		cd repo &&
+> +		test_commit A A.file &&
+> +		echo change >A.file &&
+> +		touch .git/index.lock &&
+> +
+> +		cat >expect <<-EOF &&
+> +		error: Cannot write to the index
+> +		EOF
+> +		test_must_fail git stash push 2>err &&
+> +		test_cmp expect err
+> +	)
+> +'
+> +
+> +test_expect_success 'stash apply reports a locked index' '
+> +	test_when_finished "rm -rf repo" &&
+> +	git init repo &&
+> +	(
+> +		cd repo &&
+> +		test_commit A A.file &&
+> +		echo change >A.file &&
+> +		git stash push &&
+> +		touch .git/index.lock &&
+> +
+> +		cat >expect <<-EOF &&
+> +		error: Cannot write to the index
+> +		EOF
+> +		test_must_fail git stash apply 2>err &&
+> +		test_cmp expect err
+> +	)
+> +'
+> +
+>  test_done
+> -- 
+> 2.43.GIT
+> 
 
 
---rKtwmGkDohAlEXS4
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-On 2024-02-05 at 03:01:17, Quentin Bouget wrote:
-> Good point, I had not considered the security implications.
->=20
-> I can see libcurl only reuses credentials after a redirect if the
-> hostname has not changed: [1]
->=20
-> 	By default, libcurl only sends credentials and Authentication
-> 	headers to the initial hostname as given in the original URL, to
-> 	avoid leaking username + password to other sites.=20
->=20
-> Does it sound OK if I use the credentials provided by the redirect when
-> there are any (out of consistency with the current implementation), and
-> only allow reusing the current credentials when the redirect and the
-> original URLs share the same hostname?
-
-I don't think we can actually rely on that functionality because
-`credential.usehttppath` could actually have been set, in which case
-we'd need a different credential.  For example, I know some forges issue
-certain types of tokens that are tied to a specific URL and wouldn't
-validate for a redirect, even if it were actually the same repo.
-
-If there are credentials in the URL provided by the redirect, I think it
-should be safe to use them; otherwise, we'd need to rely on filling them
-with the credential protocol.
-
-> Apologies, I feel like I may have given the impression I wanted to
-> configure credentials in git's configuration files, which is not the
-> case.
->=20
-> My use case is to `git push` a tag from a CI/CD pipeline to trigger a
-> release, similar to how I do it here. [3]
->=20
-> Or is this the kind of use case you are trying to discourage?
-
-We're trying to discourage all use of credentials in the URL at the
-command line and in remote names/configuration files.  If you want to
-pass in credentials from the environment, the Git FAQ explains how to do
-that[0], and that technique can be used in such a situation.
-
-[0] https://git-scm.com/docs/gitfaq#http-credentials-environment
---=20
-brian m. carlson (he/him or they/them)
-Toronto, Ontario, CA
-
---rKtwmGkDohAlEXS4
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.4.3 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZcFeowAKCRB8DEliiIei
-ga0aAQCy0HJSU22HZ9iR1v0Zj6N9Ht6m81b50oIsV3St3P+YLQEAj5sRyZPbpV34
-H2ijj8qHrx8VdnAUrxVq3FBtnS3KvwY=
-=1+Ii
------END PGP SIGNATURE-----
-
---rKtwmGkDohAlEXS4--
