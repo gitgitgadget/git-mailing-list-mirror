@@ -1,81 +1,126 @@
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f43.google.com (mail-wr1-f43.google.com [209.85.221.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 405484A9B0
-	for <git@vger.kernel.org>; Mon,  5 Feb 2024 23:20:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60AD41C2AE
+	for <git@vger.kernel.org>; Mon,  5 Feb 2024 23:53:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707175227; cv=none; b=pRndEiTRYBsTyuhjcCJur51GnOJrHFdVw2awUWX8E94h4zgo6F606ok2+ZhlpC+vFwT+GHPUhSXq/a5myOFspDz7UEys+kjZosh1QuCdEC7ZKZx6rPUh6q1p6ZDFkTnaMsLfFpy1hNCFK/S5gFvP+Ht+2EIEEm4JISIRzEIabnQ=
+	t=1707177240; cv=none; b=rluYQsxftgSpDjptaOtlaYpc1VcuBgAylvKWHmCKH+OMvm/Hu3xmQXepoyA8lxQxOZh+VX5WvdLG0LF+uVfacmidDGrlwQJJzMOrVWDiBYSNgCmjla67ILK7f3oexaJq5LrPJpeQDVInKLagXGtdA9LBsKx6g8+Lj6xXR2LR6qs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707175227; c=relaxed/simple;
-	bh=W2WGHn8DW0DPCvarBdq72NbSjwuqbK7cwpodEanQBwU=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=b4NNRv2YCK5NA8HMnKuZz1V/NMFSfCXWeG22Hd4SlSVogNglyQLeehIBRhfi5Wmd9VlHocYQVu9IuQtvHXZ015Or8Hhe0AJJ4pRu3Iu0/T3SHHZJ9c848WJ1Bgd2w8VlKqEcSpNX1g/Y3ALFfq0cX2QjLzj+QvJYHfAX7D4FJhE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=YehyYk6L; arc=none smtp.client-ip=64.147.108.71
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1707177240; c=relaxed/simple;
+	bh=a1D1PlI0Lcj+SW7c3J/NsmBBUbeJ5W7xLlv+FZ08e4w=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=ox0I6WQU8cZCIbRBuSvPAzPONbYwknL6xzp+udxHRbwFSqvMtQeQCIgcdR4Rfpl2KtRrZyYRym7nUV43p5TprrN5z63NSw1Z0GxnOqkB5/81nPzuB78Cwgf96iR7RUuVuZvkd0NtVtZkMR7BJW9xyMDdbw/YgNgMcyZqWmJgslg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=U08O1Abd; arc=none smtp.client-ip=209.85.221.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="YehyYk6L"
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id B16F11E3614;
-	Mon,  5 Feb 2024 18:20:23 -0500 (EST)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=W2WGHn8DW0DPCvarBdq72NbSjwuqbK7cwpodEa
-	nQBwU=; b=YehyYk6LIKKY6xcLlaDh1Ny+uB2wu+HHzstmIuoimniId5e37e7/e5
-	GSJWFW+71UkxleiMdlsX9gVPCltZ7oZDYfvaKx2v9LI5gAlj0fgqho6d9f4k7zKc
-	LKXknFtokpR92IZ8skbtKcO12OZ8bgwAM1QvodoZDawfFlA0LdKRc=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id A92411E3613;
-	Mon,  5 Feb 2024 18:20:23 -0500 (EST)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.165.85])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id EC12A1E3611;
-	Mon,  5 Feb 2024 18:20:22 -0500 (EST)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Phillip Wood <phillip.wood123@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Feb 2024, #02; Fri, 2)
-In-Reply-To: <087d3438-98a1-46fe-89d9-8e7e1662151b@gmail.com> (Phillip Wood's
-	message of "Mon, 5 Feb 2024 18:57:49 +0000")
-References: <xmqqmssirm6t.fsf@gitster.g>
-	<087d3438-98a1-46fe-89d9-8e7e1662151b@gmail.com>
-Date: Mon, 05 Feb 2024 15:20:21 -0800
-Message-ID: <xmqqjznimrbe.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="U08O1Abd"
+Received: by mail-wr1-f43.google.com with SMTP id ffacd0b85a97d-33aeb088324so3710383f8f.2
+        for <git@vger.kernel.org>; Mon, 05 Feb 2024 15:53:49 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1707177228; x=1707782028; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=cBAE3CBj4Aneo/OZ1I0TPZuNKlXNHAltpjOoz4vNpv0=;
+        b=U08O1AbdSJqk6VACjdyKSPNWi/xKQuzJnsMLEgdDNbxCQ4VHFALmj1ewCWcgH/Uuvk
+         JppqmwfJgMEaKNI5RmmyZ7ZkTEaLoTyJQ5hq1glvW+moG87edrsUVmr4Nl0m1dbeienI
+         /8XXIt79mY1kG5BKA01uUKMbYBqgosi4JQa4tigIC2Tk7n3shDIB3WHJ36hvHNDnRVAJ
+         XTdnbjc1XK29tPfKrntViySWr3u7jhZw5nccnmE1fapPUqWhqK2Zza+0FcJhEVACp9tV
+         ZMi9u3TIM2L6CcIMNt9Iuvp3FWrhdaKXLAPzM9qtFwb4BUSYwYVje0wpU6RMwiwStLPa
+         8hTg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1707177228; x=1707782028;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=cBAE3CBj4Aneo/OZ1I0TPZuNKlXNHAltpjOoz4vNpv0=;
+        b=aRT10czxs3+5MpsQPp9KWYJnPnBTWuVxzIHtx7sx5RRnE3m6lRwcu/y8Wc73wDSHD0
+         LIzLu4BfXYASfVc89aRDjlxHiwTSr4ncyDFeFmayigv8VtYq32TdEYIEye/zJkJHzb3Q
+         ALRtbJryuNWbZBHnxJVTAFCfEKN5q4RNMc1RGj4xKkLi4zLrjV7Ii/s1RGUR6M+CMcSD
+         YxxeeNIW/mNNUSOfEGQYrfWhdXS4ZwCohoarPIYDai06INkMpGmAzMwJLbucG6kwfcFD
+         1+6n+2KdaMRD+cI3Z6/8PT5BwuJh1NLHkWTy/WR+NuMfx/4LbzmzYArUFjLGX4FkWOOR
+         fKNQ==
+X-Gm-Message-State: AOJu0YwaIcBVv93Ui8CkpX2vkF40t7qzeNA9mSvl/NwYj+ALdcY/RThK
+	vHbQGZZWoMDcI1PQ/gfnarvE+F/KzzL9+Y8AzDWwpWGTieKy4snqquDokcmKTAicJ4wpLazfQNU
+	MiPoCrSi80PEbv+Xa7mP0ydRSdGjsNUGeQeeOn6Cii9ONtiSoxw==
+X-Google-Smtp-Source: AGHT+IFSGZ0J9xFJRsMvD5DzLpWfFUaKRqF1IlUTTAH3kqOMo6hVpIHykNaDd6HNydr3HgSOx7YAspIQHkA1Lm3x63c=
+X-Received: by 2002:a5d:6ac5:0:b0:33b:28:1084 with SMTP id u5-20020a5d6ac5000000b0033b00281084mr37944wrw.33.1707177227744;
+ Mon, 05 Feb 2024 15:53:47 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- 22DC59B6-C47D-11EE-B084-25B3960A682E-77302942!pb-smtp2.pobox.com
+References: <e2eb777bca8ffeec42bdd684837d28dd52cfc9c3.1707136999.git.dsimic@manjaro.org>
+In-Reply-To: <e2eb777bca8ffeec42bdd684837d28dd52cfc9c3.1707136999.git.dsimic@manjaro.org>
+From: Kyle Lippincott <spectral@google.com>
+Date: Mon, 5 Feb 2024 15:53:31 -0800
+Message-ID: <CAO_smViHVZRObZjg0tEPXezJZb7wvs9LQdHUFJQTK4-ASCfrmw@mail.gmail.com>
+Subject: Re: [PATCH] branch: clarify <oldbranch> and <newbranch> terms further
+To: Dragan Simic <dsimic@manjaro.org>
+Cc: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Phillip Wood <phillip.wood123@gmail.com> writes:
+On Mon, Feb 5, 2024 at 4:45=E2=80=AFAM Dragan Simic <dsimic@manjaro.org> wr=
+ote:
+>
+> Clarify further the uses for <oldbranch> and describe the additional use
+> for <newbranch>.  Mentioning both renaming and copying in these places mi=
+ght
+> seem a bit redundant, but it should actually make understanding these ter=
+ms
+> easier to the readers of the git-branch(1) man page.
+>
+> Signed-off-by: Dragan Simic <dsimic@manjaro.org>
+> ---
+>  Documentation/git-branch.txt | 10 ++++++----
+>  1 file changed, 6 insertions(+), 4 deletions(-)
+>
+> diff --git a/Documentation/git-branch.txt b/Documentation/git-branch.txt
+> index 0b0844293235..7392c2f0797d 100644
+> --- a/Documentation/git-branch.txt
+> +++ b/Documentation/git-branch.txt
+> @@ -312,12 +312,14 @@ superproject's "origin/main", but tracks the submod=
+ule's "origin/main".
+>         option is omitted, the current HEAD will be used instead.
+>
+>  <oldbranch>::
+> -       The name of an existing branch.  If this option is omitted,
+> -       the name of the current branch will be used instead.
+> +       The name of an existing branch to be renamed or copied.
+> +       If this option is omitted, the name of the current branch
+> +       will be used instead.
+>
+>  <newbranch>::
+> -       The new name for an existing branch. The same restrictions as for
+> -       <branchname> apply.
+> +       The new name for an existing branch, when renaming a branch,
+> +       or the name for a new branch, when copying a branch.  The same
+> +       naming restrictions apply as for <branchname>.
 
-> I'm concerned that the UI could use some improvement. If I understand
-> correctly the proposal is to make
->
-> 	git for-each-ref
->
-> and
->
-> 	git for-each-ref ""
->
-> behave differently so that the latter prints the pseudorefs from the
-> current worktree and the former does not.
+The precision here makes me worry that I'm potentially missing
+something when reading this, and has made me re-read it multiple times
+to try to figure out what it is.
 
-I would actually think that is perfectly sensible.  The optional
-arguments for-each-ref name "filtering patterns" and you can view
-the behaviour of the command as using "refs/" as the default
-filtering pattern when nothing is given.  But it is easy to defeat
-the unfortunate and historical default filtering pattern, by saying
-"we do not limit to any hierarchy, anything goes" by giving "" as
-the prefix.
+I think this would be cleaner:
 
+The name to give the branch created by the rename or copy operation.
+The operation fails if <newbranch> already exists, use --force to ignore
+this error. The same naming restrictions apply as for <branchname>.
+
+I'm not super pleased with that second sentence, and maybe we
+shouldn't include it here. Maybe it belongs on the documentation for
+--move and --copy instead? It's sort of mentioned in the text at the
+top describing the -m/-M and -c/-C options, though it's not clear from
+that text what actually happens to the existing copy of <newbranch> if
+one uses --force. If we could include a better description of what
+happens to the existing branch when one uses --force, that'd be nice.
+
+>
+>  --sort=3D<key>::
+>         Sort based on the key given. Prefix `-` to sort in descending
+>
