@@ -1,116 +1,140 @@
-Received: from bsmtp5.bon.at (bsmtp5.bon.at [195.3.86.187])
+Received: from wfhigh5-smtp.messagingengine.com (wfhigh5-smtp.messagingengine.com [64.147.123.156])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30E1F7F460
-	for <git@vger.kernel.org>; Tue,  6 Feb 2024 07:27:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.3.86.187
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64D2A7EEE0
+	for <git@vger.kernel.org>; Tue,  6 Feb 2024 07:40:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707204426; cv=none; b=J6kO6jM+f9q2EoxOqFSeXJMcujD9MBuDvRCAzi8GXW8wXnfXJ8VdTDO1cw+6fFzQv2O4UHJBvieIuZc60w+Eg2oUQw8+EUew94fAnbXF4um0+F2BMBigx69NhPqYrno708w8DsRE2Id80+P44Y7otkl/MfKeNQH98IV0p51Z6NM=
+	t=1707205238; cv=none; b=az1OAZWpf3XWHYLFozTVwmVwZZgaoKD4iu2P1D122k7tKKGkQkt9s0hr4qFd8SNjVnwWFVpWSWPqLVmYMMGNOjBi8cqJX7I8lPRRYBjvUsca05fsoldmkkcSr51m8/AmB9uRIzna12bCNXvscEZN0iTKVPcfH2pYqljhDWQ8TvE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707204426; c=relaxed/simple;
-	bh=WReHO0uFqkxpByKhnAfJtpRTypOIozWcsh1cYafoCAM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:References:From:Cc:
-	 In-Reply-To:Content-Type; b=cfLIcMnqxldPwKAFvyqDj4i19Bf9vKrVEmtPK0L6H5zu9GKqCkNeZLDxG0Y1BBGw+oRCKudN+iomNOfR2wDwbASRim+oDy3wngK+oKc3WifRNhwjxOVlkhL+9NuN2a8vVDQWdo/TRWulAlB7CUy33YMl/LgoaQt4PhJ7+FNzZUA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org; spf=pass smtp.mailfrom=kdbg.org; arc=none smtp.client-ip=195.3.86.187
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kdbg.org
-Received: from bsmtp1.bon.at (unknown [192.168.181.103])
-	by bsmtp5.bon.at (Postfix) with ESMTPS id 4TTYmb0Bh7z5wTn
-	for <git@vger.kernel.org>; Tue,  6 Feb 2024 07:50:54 +0100 (CET)
-Received: from [192.168.0.101] (unknown [93.83.142.38])
-	by bsmtp1.bon.at (Postfix) with ESMTPSA id 4TTYmQ6XY3z5tlC;
-	Tue,  6 Feb 2024 07:50:46 +0100 (CET)
-Message-ID: <993e6823-7fa7-4130-8c0a-69ed31da5fbe@kdbg.org>
-Date: Tue, 6 Feb 2024 07:50:46 +0100
+	s=arc-20240116; t=1707205238; c=relaxed/simple;
+	bh=LfVltxN48LJ2Jmo+SFSWIbWGRtDJawZweVukQUzwpyA=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=uoTAHbNCDB0EivB1lDf847ndNV3QCGkX3TIePqHKcNy034ai+RAAMfNWq3dX4sxd6PHvis55yozBfuigoyYzvh0MHtY3gMQdXCKirYEjJqi/MFgCNngoJgQFim0CiQf9ehWHO0YYQO8P2Z0jbo5Wb7cmk+0yjL/l92G5Wt7X/Mw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=crH1INQD; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=jHLZytAS; arc=none smtp.client-ip=64.147.123.156
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="crH1INQD";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="jHLZytAS"
+Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
+	by mailfhigh.west.internal (Postfix) with ESMTP id 060B51800081;
+	Tue,  6 Feb 2024 02:40:34 -0500 (EST)
+Received: from mailfrontend2 ([10.202.2.163])
+  by compute6.internal (MEProxy); Tue, 06 Feb 2024 02:40:35 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1707205234; x=1707291634; bh=+jCDiigl7h
+	EdQ3cnyFSQR4hwEKMcCR4EIJGiGkaJAq8=; b=crH1INQDVIcAi5fkW6OIpi+rI6
+	IvVFCqDgckbKi1W/jQXUe2IquK6T2mws9fPGWEVonzY+xLfYuRchC+/SyYQBMZfg
+	Qjl1hwbpw0D7ifrbpANrIXq0EnXrwNO7wxnXqs+Tadlnudq9Nyzu3KqO4wn2HaCU
+	E/pLrK9qPkMH63VaaYdO4iliubdLm29dT1GGt5Jy0Ojh0/r6I27sZQAO4zaVH0K8
+	6IdmuMoarMI6D2WpFi0TtiN9x+WQJoqou3zqEZwAo31AhtFO7Ps9MD58mpIW/qJx
+	hEOz3jV3itI5iqyuT68EvHGvwPbGnk+x1cwVo3LjeRS44I1R060/0Vf2Yc6g==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm3; t=1707205234; x=1707291634; bh=+jCDiigl7hEdQ3cnyFSQR4hwEKMc
+	CR4EIJGiGkaJAq8=; b=jHLZytASHoIwPiOfrdNixFGNVqlCaPGJDiBnniT7VwvU
+	PMpm4VIgywsJJ/RISF/ajg+889v5Grn5KavM6nQr4DVeNAUkksBGutSRIlehY5g3
+	OSdLsmL2NN3/2I2fC5eVAfA8hSxweutA9vlg4cRRjbGpSTJf2QAvhxi68d9ZohnK
+	OL6CHrbXd3rschDvvA4OhJ0ZCI30NGTKx998x04wA2OaEx3gtEBAWorC2LnvLkpz
+	8/sP0Jn6yddnG6tb2O6euM+6JT9pULvRmk8GYDilvhiolxmvcDbe0A61IxJxnCiM
+	ywQl3TwiMKGHWJ8RBoXdPy3ToGniADLtWqvRadIkQw==
+X-ME-Sender: <xms:cuLBZc7Lk7E-9juosV-K2vFCREQy_Xzc8f74ZuE5mOh2DUEm06tOhQ>
+    <xme:cuLBZd725jK-U2o6n2BncOdGfLYUhsR-73B-n3rAWXvuJyGOexLrKYLpsZ3wrcLct
+    q6zmXykLo6MNt2U_g>
+X-ME-Received: <xmr:cuLBZbfoKj4QkFyZfKUg_OfZhmfnX0FZv9zAyYWplHk9wjg36aTlvzWUENo1SsSkDW5ana4yynmpJJoqvSyPd59OsB0dMsbX_2PIjPPXMt7wyoQ5>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrfedvvddguddufecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
+    necuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
+    enucfjughrpeffhffvvefukfhfgggtuggjsehgtderredttddvnecuhfhrohhmpefrrght
+    rhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtth
+    gvrhhnpeeukedtvedtffevleejtefgheehieegkeeluddvfeefgeehgfeltddtheejleff
+    teenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpsh
+    esphhkshdrihhm
+X-ME-Proxy: <xmx:cuLBZRLs8ISdmTRkJ7fkvQr-far3Dlh266rRMD7mZT0EPh7YOj1FWA>
+    <xmx:cuLBZQJ0iIe5qE07r3dUK_5cOOtcT8uzDv1nPJSrWVNav5CmxyeRvg>
+    <xmx:cuLBZSzNEXyKgCjQU8M0-v-En0VMoYZYriNVp2cxLhK07ptfP4miDg>
+    <xmx:cuLBZU0svu3TD5fulYqaR1xcj-o-zoD17TCJTjdxuam1TnL0QjwCS38tTJw>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 6 Feb 2024 02:40:33 -0500 (EST)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id e3e924b1 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 6 Feb 2024 07:37:02 +0000 (UTC)
+Date: Tue, 6 Feb 2024 08:40:30 +0100
+From: Patrick Steinhardt <ps@pks.im>
+To: Britton Leo Kerin <britton.kerin@gmail.com>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v5 0/7] completion: improvements for git-bisect
+Message-ID: <ZcHibljA82KSMqz4@tanuki>
+References: <20240128223447.342493-1-britton.kerin@gmail.com>
+ <20240206020930.312164-1-britton.kerin@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: git-gui desktop launcher
-To: Tobias Boesch <tobias.boesch@googlemail.com>
-References: <beeab03c564e94861ab339d26c4e135b879a1ccd.camel@googlemail.com>
-Content-Language: en-US
-From: Johannes Sixt <j6t@kdbg.org>
-Cc: git@vger.kernel.org
-In-Reply-To: <beeab03c564e94861ab339d26c4e135b879a1ccd.camel@googlemail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="FALXyVoEo23B+U7O"
+Content-Disposition: inline
+In-Reply-To: <20240206020930.312164-1-britton.kerin@gmail.com>
 
-Am 05.02.24 um 21:12 schrieb Tobias Boesch:
-> Hello everyone,
-> 
-> quoting from downstream issue:
-> https://gitlab.archlinux.org/archlinux/packaging/packages/git/-/issues/5
-> 
-> -------------------------
-> 
-> "As far as I can see git gui cannot easily be used by me on arch.
-> A .desktop entry is missing for me.
-> I created one that opens git gui.
-> It also adds an entry in the "Open With..." menu of file managers (I
-> tested only with Nautilus). Opeing git gui with this entry git gui is
-> opened in the folder where the menu was opened.
-> If it is a git repository git gui open it. If it is no git repository
-> git gui opens just as if it was called from the desktop launcher.
-> Since it took a while to create it and adds value for me I would like
-> to share it to be added to the git package by default.
-> It is far from being perfect. It's a first working version. For me
-> personally it is enough.
-> Before tweaking it further to fit the packaging standards I would like
-> to ask if is desired to be added.
-> 
-> .desktop file proposal
 
-Thank you, this is certainly helpful. To get a .desktop file accepted,
-you would have to submit it in patch form. Additionally, since there is
-a dependence on the install location, it must be included in the build
-process.
+--FALXyVoEo23B+U7O
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> 
-> [Desktop Entry]
-> Name=git gui
+On Mon, Feb 05, 2024 at 05:09:23PM -0900, Britton Leo Kerin wrote:
+> Relative to v4 this make the following actual changes:
+>=20
+>   * fixes GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME to 'master' for all of
+>     t9902-completion.sh as suggested by Junio.  This change affects all
+>     of t9902-completion.sh so I've put it by itself in it's own commit.
+>=20
+>   * uses BISECT_TERMS to avoid pointless processes as suggested by Patric=
+k.
+>=20
+> The commits are also refactored as follows:
+>=20
+>   * squashes the introduction of __git_complete_log_opts in with it's
+>     first use a suggested by Patrick.
+>=20
+>   * spreads tests across commits as suggest by Patrick.
+>=20
+> Thanks for the reviews.
 
-When I launch the program on my openSUSE desktop, the titlebar uses the
-name "Git Gui". IMO, that would make it more consistent.
+This version looks great to me, thanks! I have a last set of nits to
+bring this over the finish line (at least from my perspective). Each one
+of them on its own wouldn't be worth addressing, but combined I think it
+does make sense to send out a new version to address them.
 
-> Comment=A portable graphical interface to Git
+Patrick
 
-I have two gripes with this Comment:
+--FALXyVoEo23B+U7O
+Content-Type: application/pgp-signature; name="signature.asc"
 
-- That the program is portable is irrelevant for the user. The word need
-not occur in this Comment.
+-----BEGIN PGP SIGNATURE-----
 
-- I had hoped for a more precise description. In particular, when a
-program is advertised as "graphical interface to Git", then I would
-expect that it can do a bit more than initialize repositories and make
-commits. At a minimum, I would expect a history viewer; but Git Gui
-doesn't have one. Unless you count the two "Visualize" entries in the
-"Repository" menu that invoke gitk as such. So, I dunno.
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmXB4m0ACgkQVbJhu7ck
+PpQpbA//T8rilcF/VRjv0+lmFH6+no9z9/2vtADzOItwRCm5T3Lx/uSctCraS4nR
+GKtrJ04ulUy1678qNK1yxwkUB5D1dEhHyH+b1NuHyztk4vwA1vi/K+AWjsQR/t2p
+KHPB+2h3SoEhJ98RUf72UNcaopAcQEQ4+rlYc1bhSZ5rLBmwjwJrpraqSdZUTYZt
+61VKdlNsLGtCK2RXmni6It7moJOf2g0qeXphdOzpweJfoHabN1BHxnj+gXrfDViF
+xeznMqeVLqQHeGqHD44QfzvnbaFP+CZJjIqvo1sUS2f+g9MBre/ZGDLJ1nIRHzQ5
+EqrDgQusB6HYHpJxcnLifdl0jfApTihtM/lKlnj3bCCuucVqVIXy0uCtTv03O0hL
+03MY0JWYhvlQPde97AZrnw5T4p3CIPFGaclW5dHPsxupTmPaRCilUdNA9r+FHzD/
+qZy1bP2SowMm/uHMedy/p1/HtYj7XPj47srricPvgl483OedskZ+oMHspTxdv/Gj
+Stg6IvrWpel4NbRr8YCU/Igo8XkApXaoZ5XqUHHBRmkDNSiWqPWA6KBjoh2kZFFH
+t820siFn+q8DPtjMg50BLxUHM2USlhlAMchuJA+EXMMsmOcsbsmuBmbran1jVM4w
+NFGIitlVpmxS2hFCnhGEmz7Mk3BLiAHKLdyMxHNHQs7Y+9bLRYk=
+=/Ojm
+-----END PGP SIGNATURE-----
 
-> Exec=/bin/bash -c 'if [[ "$0" = "/bin/bash" ]]; then git gui; else cd
-> "$0" && git gui; fi' %F
-> Icon=/usr/share/git-gui/lib/git-gui.ico
-> Type=Application
-> Terminal=false
-> Categories=Development;
-> 
-> 
-> I think upstream has any interest to add this. Therefore I ask here."
-> 
-> -------------------------
-> 
-> The arch package maintainer proposed to try to to add this to upstream
-> before just putting it into the arch package.
-> Here I am asking if it could be added to git.
-> 
-> If it's worth to add it, I would take the time to improve it if there
-> are suggestions or comments on the current version.
-> 
-> Best wishes and thanks for developing git.
-> Tobias
-
--- Hannes
-
+--FALXyVoEo23B+U7O--
