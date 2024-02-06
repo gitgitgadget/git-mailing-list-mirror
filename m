@@ -1,147 +1,99 @@
-Received: from mail-ej1-f50.google.com (mail-ej1-f50.google.com [209.85.218.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from out2-smtp.messagingengine.com (out2-smtp.messagingengine.com [66.111.4.26])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B909113172E
-	for <git@vger.kernel.org>; Tue,  6 Feb 2024 13:55:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4061131E36
+	for <git@vger.kernel.org>; Tue,  6 Feb 2024 13:55:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=66.111.4.26
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707227707; cv=none; b=JryuhsezREZ6aNoquSCgpWEtnri4hTIQ3udnLB4fz3wh3sVablwOWkkfg1UO88egePvq63vmTUfPtXQmJlq2GyYWpeWjJVXp9luL94Qiroi1XzWep5SVY+twJZeNrQhYJjPSf6yTIlo1bfwmXERueQAYqgXklPhlZx+9T/u9XaI=
+	t=1707227749; cv=none; b=s61ePCS9wJZ6v/eMgXblLsxcFsgMmfQAGNKJgQZbr+APuP/f0QyXLf/t12MDJktb87eeLcZbH500FTob7ncZGAFEJQDvqTST01slO9RRQCUqZqQphlg/VsBXPINQ5FM7xgfP0sMEOeGLkVD97dE8b1mLjZ4YM0NQi8BJoqPTjSo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707227707; c=relaxed/simple;
-	bh=3G3nOOPY4d9v5rErAHBGEDYzBQpna/akfDBiZd6ByqU=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=StY2j15r17vNB/tBufQT/+ZR6MDsbim4zqhFFE9DaGl9pO88jL8XUWJ2/hogonNucGLECPytQgQAN4Yz+odrAIvInBA3s+VDg2Q1FTZ9ex4Diqp6J5QYzp8HxnY9dPAYrRlZvxq56Oqpym8V6syEj6hUQEwsYH3Vuk8oQnimVcc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=KUqmTcvh; arc=none smtp.client-ip=209.85.218.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1707227749; c=relaxed/simple;
+	bh=FFR/PHGGJFzPzTIJ/ZQ6/sNQHKbjRujj5+PFTFq8eS0=;
+	h=MIME-Version:Message-Id:In-Reply-To:References:Date:From:To:Cc:
+	 Subject:Content-Type; b=DdT/9fnvWDunjJ8/fwCQ3DKYeRdNkqpWgsPCOz9knFd4L0qa+W2bjsT33N0sWgCMoP7avmyhjEpo79vzId8H53KUxlfG/cUFp8AkZ4SyGBxBl2TBpgAhxIulhqacyAXeEqbG3JEtqAo56Lcr9Go2EFtsi+ER8yZ18es5tlz1bs0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=khaugsbakk.name; spf=pass smtp.mailfrom=khaugsbakk.name; dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b=Sxv0AFq1; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=xOYrPSt4; arc=none smtp.client-ip=66.111.4.26
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=khaugsbakk.name
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=khaugsbakk.name
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KUqmTcvh"
-Received: by mail-ej1-f50.google.com with SMTP id a640c23a62f3a-a380c98e824so117544966b.2
-        for <git@vger.kernel.org>; Tue, 06 Feb 2024 05:55:05 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1707227704; x=1707832504; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=dUNhGdftGPCXkKZvmPUbJq6+fdU4P/LHrzb07EEcfcI=;
-        b=KUqmTcvhzafo/CmwWEwJ4n4xt88qHLGWrGXli9UKehznBvJnecaqaE77ti/KIbSl3o
-         NxiW9MNdZKysZOCXWRwqqG+GtBSUJQoLPowg1/uXKl+emgwjXj80oliw3WIFj9xS78rB
-         /SQ7f34q7A8EWehlC8oOtUOkgAMPo1VoQwdeIczE0ob2j/wHIITMBeMaL5wRWHM9YSGt
-         n6Rxc0+2LEe0wwz9YLQDJjt0xkRzqHGQJi6zDOjRa1zha40b76/C9yKGDQpKvM2aNkhl
-         lFWN3L7RmSPNWvxHyRaZOG3O/MMckqnvb3Fy5w+Pzfclxz8UVGpa1Gu6WgpWwo0JRr3n
-         ieIQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1707227704; x=1707832504;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:reply-to:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=dUNhGdftGPCXkKZvmPUbJq6+fdU4P/LHrzb07EEcfcI=;
-        b=Kk/M1vttEMILoAnzOg82GXDmJm0HNe60dHvoiEDCenSJhUn51OpjkH84M9ej1NwkhC
-         FbSmEu4FZVNrLum5OMCRJyctVISn/f8dktPWXBE+qDC0bI1qaUVGBA2c5UdzcPyz+qqY
-         Rlj1ldP7Y2PR1gjT2Umlk/Icfwr3Ff8rkP5N4fMihv6grckeXIj2/HN8NVOzyyecCeeS
-         n2j53vxXejlvEzA+1GsPTl9X13T/fCazb3LwcuHPu1asuHKCAtsGAZ416uHOoqVp0vl+
-         aWiVjw6y/sPjTvksz/1mGLHleF3aB94cn5ffCHGygq4tMvvMSq35N9cBAPFUdYr/Isg/
-         n6Gg==
-X-Gm-Message-State: AOJu0YxSMjUfkNC/G3IirSPFmM5YYxBhw9hlr0X4X9li1DCGh9a7Dt65
-	ys7GdboilrlERQDSktSUeD/jbDacA6d9L7baO0jPs77XlPeuZoTi
-X-Google-Smtp-Source: AGHT+IHEcU7vTq4brIB0CQxWu6AcK8w73ty+j17wF/pe053ho50lFH7qNeGH3c84Z7KGMehOeNq8/Q==
-X-Received: by 2002:a17:906:23e9:b0:a31:4e96:f40a with SMTP id j9-20020a17090623e900b00a314e96f40amr1723966ejg.26.1707227703644;
-        Tue, 06 Feb 2024 05:55:03 -0800 (PST)
-X-Forwarded-Encrypted: i=0; AJvYcCVc5B4lF+R1v0jPtMhuyHj8TLf9DBDr0E5gLKOznvUa1WFu5WKrWh39iKtD38sYNPjGeA9jgSM60PW4cs4pnl+/N1hmL7WzlHoJ7rJ3TNPlf2wXyRXSPQ+8LMQhGG8nCSUYpiL63iPJGA==
-Received: from ?IPV6:2a0a:ef40:62e:a901:d2c6:37ff:fef6:7b1? ([2a0a:ef40:62e:a901:d2c6:37ff:fef6:7b1])
-        by smtp.googlemail.com with ESMTPSA id gt26-20020a170906f21a00b00a37b795348fsm1154280ejb.127.2024.02.06.05.55.02
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 06 Feb 2024 05:55:03 -0800 (PST)
-Message-ID: <92ba680d-0b48-49f0-aafc-f503e5a5e0ea@gmail.com>
-Date: Tue, 6 Feb 2024 13:55:02 +0000
+	dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b="Sxv0AFq1";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="xOYrPSt4"
+Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
+	by mailout.nyi.internal (Postfix) with ESMTP id 8420C5C006A;
+	Tue,  6 Feb 2024 08:55:45 -0500 (EST)
+Received: from imap49 ([10.202.2.99])
+  by compute1.internal (MEProxy); Tue, 06 Feb 2024 08:55:45 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=khaugsbakk.name;
+	 h=cc:cc:content-type:content-type:date:date:from:from
+	:in-reply-to:in-reply-to:message-id:mime-version:references
+	:reply-to:subject:subject:to:to; s=fm2; t=1707227745; x=
+	1707314145; bh=C7GweQFNB+47iBnURirQgT3fp8xZMeYhDrD0t32e4fA=; b=S
+	xv0AFq11FbOuUihTdZ75UcZxk+oBZoHsWLD+eYgsOdMz9LXYr5WymQpJDPpEjrr8
+	0Phy4VDAgDJnYeiaWHgomPNQLasVEEh+RzQqnMS8XRrHJRY3JZX23l6HnsRMHcNb
+	AW5DYulu9v32ZikFXHW3AHRATVo8VBScfyfU8MbHJ87HQ9ItQ0Sb6JlgIttLp/rk
+	Syh+ZGN/2/vcDStf+5wYbP/W1/op8ddFcp7ZNCO1QviSw+PAQsjoFRLZKuHrgDs5
+	Al1H9qN+ZErRGSKjIloFLz+Y6Jm9zc7GSeiIqp9eSvyRB8zSoTh4oROLTPMjvcsh
+	VnUvkexEo0MMWsO0lKrsA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm3; t=1707227745; x=1707314145; bh=C7GweQFNB+47iBnURirQgT3fp8xZ
+	MeYhDrD0t32e4fA=; b=xOYrPSt49R2CQXwFTul2Ow9Ijopj4S3TQIdFfoDzMAk1
+	y6jWDpK8U8gVMQ+EF8QIIiA/qRU6oFfGQN0TDsBb/bWP0HUL2/0wfoZdUFQhovDR
+	fOfvHhN6NBdlhDS8DCFs+cw1CbRoELUzdGrIxtPpDSaTC0so9Q79ZfYqfyA2y0dt
+	pGTZXsich86+kgUc3JehDztv5jLv8LXMjUKcEJWWnWzEwwRqX0A+4bAkNfTBygju
+	IFM3Al9dqB5qhm0aeyLyxYOk7GkYib83eonJTR3Nx/NJMTl5TOX7PNCgi4V72Tvq
+	U2OpklAlexRguM8wBs4ScOSQlZbMvUh+UKeMqhADuQ==
+X-ME-Sender: <xms:YTrCZW_QPcgWqO4lhWLLyow540FGqRBMNCNqQQMNJJW7P1OfnanYu2o>
+    <xme:YTrCZWuV33tNs_4ZlTrxsvpzvyuMH8xJYM4aMxo11mfW-gu79nd9TYyroorkHtoLF
+    2ZJLCEwwkXV1jKkpw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrtddtgddvkecutefuodetggdotefrodftvf
+    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
+    uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
+    fjughrpefofgggkfgjfhffhffvvefutgesthdtredtreertdenucfhrhhomhepfdfmrhhi
+    shhtohhffhgvrhcujfgruhhgshgsrghkkhdfuceotghouggvsehkhhgruhhgshgsrghkkh
+    drnhgrmhgvqeenucggtffrrghtthgvrhhnpedtkedtjeeiffelteffheeiheeufffgheel
+    ueeftdejkeeufffgiefhgeekffffueenucevlhhushhtvghrufhiiigvpedtnecurfgrrh
+    grmhepmhgrihhlfhhrohhmpegtohguvgeskhhhrghughhssggrkhhkrdhnrghmvg
+X-ME-Proxy: <xmx:YTrCZcAYdR6JFosTvIKqHvmhB9Q0xPJNnlXXSEULCrAdWb4WawZdVw>
+    <xmx:YTrCZed1-8F0FMIfQvHKmV_zzJezJli8mJcNhm1SF9tZtxcrbwN2uw>
+    <xmx:YTrCZbOBNsNobzppG4T_H2XnHVdHi8Fnr59UCLrClcVUyEHfByNxyQ>
+    <xmx:YTrCZUoV_2y689rlazdI10l8n4jFueUkl5sVG2zA3wbbcAA8spmelw>
+Feedback-ID: i2671468f:Fastmail
+Received: by mailuser.nyi.internal (Postfix, from userid 501)
+	id 0EEFF15A0093; Tue,  6 Feb 2024 08:55:44 -0500 (EST)
+X-Mailer: MessagingEngine.com Webmail Interface
+User-Agent: Cyrus-JMAP/3.11.0-alpha0-144-ge5821d614e-fm-20240125.002-ge5821d61
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v3 4/4] for-each-ref: avoid filtering on empty pattern
-Content-Language: en-US
-To: Karthik Nayak <karthik.188@gmail.com>, phillip.wood@dunelm.org.uk
-Cc: git@vger.kernel.org, gitster@pobox.com, ps@pks.im
-References: <20240119142705.139374-1-karthik.188@gmail.com>
- <20240129113527.607022-1-karthik.188@gmail.com>
- <20240129113527.607022-5-karthik.188@gmail.com>
- <98d79d33-0d7e-4a9c-a6a3-ed9b58cd7445@gmail.com>
- <CAOLa=ZR=_tt=ppphGMkxqj_YB5G+YkTMWGzRzcHTbrZz4ysb5w@mail.gmail.com>
-From: Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <CAOLa=ZR=_tt=ppphGMkxqj_YB5G+YkTMWGzRzcHTbrZz4ysb5w@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Message-Id: <45dd15d9-cdb3-41da-a7dd-cc0da3c85112@app.fastmail.com>
+In-Reply-To: <xmqqil32l0i6.fsf@gitster.g>
+References: <20240205204932.16653-1-maarten.bosmans@vortech.nl>
+ <20240205204932.16653-2-maarten.bosmans@vortech.nl>
+ <xmqqil32l0i6.fsf@gitster.g>
+Date: Tue, 06 Feb 2024 14:55:23 +0100
+From: "Kristoffer Haugsbakk" <code@khaugsbakk.name>
+To: "Junio C Hamano" <gitster@pobox.com>
+Cc: git@vger.kernel.org, "Teng Long" <dyroneteng@gmail.com>,
+ "Maarten Bosmans" <maarten.bosmans@vortech.nl>,
+ "Maarten Bosmans" <mkbosmans@gmail.com>
+Subject: Re: [PATCH 1/4] notes: print note blob to stdout directly
+Content-Type: text/plain
 
-Hi Karthik
+On Tue, Feb 6, 2024, at 04:44, Junio C Hamano wrote:
+> I actually was hoping, after seeing the use case description in the
+> cover letter, that the series would be introducing a batch mode
+> interface to allow callers to ask notes for many objects and have
+> the command respond notes for these objects in a way that which
+> piece of output corresponds to which object in the request, reducing
+> the process overhead amortised over many objects.
 
-On 06/02/2024 08:52, Karthik Nayak wrote:
-> On Mon, Feb 5, 2024 at 7:48 PM Phillip Wood <phillip.wood123@gmail.com> wrote:
->> On 29/01/2024 11:35, Karthik Nayak wrote:
->>> When the user uses an empty string pattern (""), we don't match any refs
->>> in git-for-each-ref(1). This is because in git-for-each-ref(1), we use
->>> path based matching and an empty string doesn't match any path.
->>>
->>> In this commit we change this behavior by making empty string pattern
->>> match all references. This is done by introducing a new flag
->>> `FILTER_REFS_NO_FILTER` in `ref-filter.c`, which uses the newly
->>> introduced `refs_for_each_all_refs()` function to iterate over all the
->>> refs in the repository.
->>
->> It actually iterates over all the refs in the current worktree, not all
->> the refs in the repository. I have to say that I find it extremely
->> unintuitive that "" behaves differently to not giving a pattern. I
->> wonder if we can find a better UI here - perhaps a command line option
->> to include pseudorefs?
->>
-> 
-> As Patrick mentioned, this was discussed a while ago and we decided to
-> move forward with the `git for-each-ref ""` syntax.
+That sounds great. I imagine that would be very useful.
 
-Thanks I'd missed that discussion. I see that at the end of that 
-discussion Junio was concerned that the proposed "" did not account for 
-"refs/worktrees/$worktree/*" [1] - how has that been resolved?
-
-Best Wishes
-
-Phillip
-
-
-[1] https://lore.kernel.org/git/xmqq1qawr6p4.fsf@gitster.g/
-
->>> Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
->>> ---
->>>    Documentation/git-for-each-ref.txt |  3 ++-
->>>    builtin/for-each-ref.c             | 21 +++++++++++++++++-
->>>    ref-filter.c                       | 13 ++++++++++--
->>>    ref-filter.h                       |  4 +++-
->>>    t/t6302-for-each-ref-filter.sh     | 34 ++++++++++++++++++++++++++++++
->>>    5 files changed, 70 insertions(+), 5 deletions(-)
->>>
->>> diff --git a/Documentation/git-for-each-ref.txt b/Documentation/git-for-each-ref.txt
->>> index be9543f684..b1cb482bf5 100644
->>> --- a/Documentation/git-for-each-ref.txt
->>> +++ b/Documentation/git-for-each-ref.txt
->>> @@ -32,7 +32,8 @@ OPTIONS
->>>        If one or more patterns are given, only refs are shown that
->>>        match against at least one pattern, either using fnmatch(3) or
->>>        literally, in the latter case matching completely or from the
->>> -     beginning up to a slash.
->>> +     beginning up to a slash. If an empty string is provided all refs
->>> +     are printed, including HEAD and pseudorefs.
->>
->> I think it would be helpful to clarify that it is all the refs for the
->> current worktree that are printed, not all the refs in the repository -
->> we still don't have a way to iterate over the per-worktree refs from
->> other worktrees
->>
-> 
-> I agree, based on if we keep the current commits or remove them, I'll
-> send in a new patch or amend the current series.
-> 
-> Thanks!
-
+-- 
+Kristoffer Haugsbakk
