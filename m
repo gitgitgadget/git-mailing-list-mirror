@@ -1,83 +1,85 @@
 Received: from fhigh1-smtp.messagingengine.com (fhigh1-smtp.messagingengine.com [103.168.172.152])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49DBE77F00
-	for <git@vger.kernel.org>; Tue,  6 Feb 2024 05:47:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2554977F00
+	for <git@vger.kernel.org>; Tue,  6 Feb 2024 05:51:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707198462; cv=none; b=XgOGAQWZWcv3QLWegzbq71UBqxGJjvqXn7jsde7HeINKF4xGDG1XviNrSSi05LiN2L6pugcNj0N30a0rgd139aMFXf/OQGqdqT3JMqeVIOpIN6xg8BVBCBovEF6tWmQLXu9EdBa68AKi/Xcj0Tye/TtSmla2gRoaEdy+JVtgjDQ=
+	t=1707198668; cv=none; b=m0MFopTghfzuYYFQq+hnlPQ7Wjp9syc3mio2mi7m/LhX1qlV7Y2DyrZFSRAqiWIwQ6+XtYYwNLT9UW9scHzbRF478d2nZCTIsLb5XGsB44OZfwpZR8xzo+RFPPSlKTDwWThTT5MJblLUqVmRjiAwSJvC4bBH6VA2jXmM4yaofd4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707198462; c=relaxed/simple;
-	bh=ryLEjMYiAUQ6CxGYsfwPTdHpvwUd3MlNDXjsJVFQqHs=;
+	s=arc-20240116; t=1707198668; c=relaxed/simple;
+	bh=KjbRpXOoFxVXiC9RN0Z2LCznHmrlXxtu8kGNGFaiPsI=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=GnvbVkQWJ+DohpPUUGw0o7w+S5qEGr8RJ+QCMh11hVODRtjgNvqaivm+3kx9/64pssPzJsbPs7lJcpO7hduFiphZj//O6b4jPTMMO3x4BCiwBdlOPJBx2/69fwB2qW6wWc0V9ncOItrs+fmCyAbD4RhOSOsadH6of8wRGorHm54=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=UTBfZMvW; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=vLHWnsg9; arc=none smtp.client-ip=103.168.172.152
+	 Content-Type:Content-Disposition:In-Reply-To; b=AmfNkK/uaMnOk5lBSWYImbytDXv18Rk90dFNRJHqCB6Gj/SBC4lcYuSr9CyJ0uMj9QRE+QLJV1I1rGIi8ukaSC+JaSXOxbIngPXaQ+NDA7TQfVAp/IyOPVYhcSDxp95YO6SfiqD/chmt9PsvmCI11xhccPQ67gwCFhkCa+Gh3wQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=TZlBKbZS; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=gAevfFTh; arc=none smtp.client-ip=103.168.172.152
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="UTBfZMvW";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="vLHWnsg9"
-Received: from compute7.internal (compute7.nyi.internal [10.202.2.48])
-	by mailfhigh.nyi.internal (Postfix) with ESMTP id 20B501140091;
-	Tue,  6 Feb 2024 00:47:39 -0500 (EST)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute7.internal (MEProxy); Tue, 06 Feb 2024 00:47:39 -0500
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="TZlBKbZS";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="gAevfFTh"
+Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
+	by mailfhigh.nyi.internal (Postfix) with ESMTP id E1EE21140063;
+	Tue,  6 Feb 2024 00:51:04 -0500 (EST)
+Received: from mailfrontend2 ([10.202.2.163])
+  by compute1.internal (MEProxy); Tue, 06 Feb 2024 00:51:04 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1707198459; x=1707284859; bh=mS1r5ea+fx
-	VzNGQyyLvmQwKhCQDFu0x8cslwNKC1xQI=; b=UTBfZMvWgaLqW0eIwC0F5wiNwJ
-	O2J6tkDHUWCFqBmmp+WVyF+VzqnnFcZ/flLtM8+H6TCXquwc6eN0pkJR55LfdRD3
-	LPK/EgibpyvIICZzVJRtb37Ry7pH/QBrM6MWLgBn5586UZpDE4xohsWlAr5YK8AZ
-	6cl6u/2jdE1nT17O/Aa4WIqOXRnMDN2MvTwb9eOH72500nSD9IfRKSTDiOTkMqvs
-	LjeTr4WvcJZoPltr2mPhMRzGzKam7BWJUI0x3/pZod6KU/Kwbi7Z7FU1vc6tefp9
-	IVl5lzlf0nV3z/LzT/M6/rhfaxOipCOb1G4uH1w9/6FIDDYXYcJrAQ0LGGaw==
+	:subject:to:to; s=fm3; t=1707198664; x=1707285064; bh=guuQPWKvJN
+	9fdzBBgAeBrGX4k9VvZttSbHg5tEn9Ut0=; b=TZlBKbZSDCxZ3aqqmabUV/39F5
+	wMnbZq/S/n8vOoC4Dc+DS6SfmHTsLYmg6Q+G0Hi9frKlRYovCkJRsJcC9qUmH32W
+	xGPjw2mKSQFHrEd4hZRKt9exq6pgJKiP3DYNbDFap+twI8oH017HHElrRfSeHjtK
+	nsFgsjcLWDSXnN/IciRG9ol3JkqHvAEELAusXFuR4hSDy0kZ2LETCfX5JBhF/0OB
+	RZVIdjAJ1NmG8UOSOau0niyuSguI2Rg4yWzMd641anKnJnS8Qdr97FWvTrDBUVzN
+	RUajr9l/eveUeLlFxchdEUesQmNzZYhWSn+Q+lLBpelnRjb5EywpHZqhEW9Q==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1707198459; x=1707284859; bh=mS1r5ea+fxVzNGQyyLvmQwKhCQDF
-	u0x8cslwNKC1xQI=; b=vLHWnsg9kARyeCsxpH3bj93AgDy9lK9T4sfXro0ynQNE
-	39QB6rgI4RMWPgRS1VlN7cgSXPQfbyqA07jD3AD1J0rBIW4MNMsVc4ErZB5JBnE2
-	7u+41jpt98hbr16aR3P29DK8h9RSJymho0WVlXqwom/aSC2DMJv/xbNzTrBU8+zq
-	2ZYImjI/7O1Xq8H95YSRInncwnVG/tTUQv5PpBTRcHDowr6JLB3RswWhRbW1/jZ4
-	JC3HLY6/dBJ19JjKeKRORRlAChChX2Bl4KcyDXBzc37ymvM1OUp9wpn4K5Wx9MPz
-	MuNMQKMhSQdZDIM4zIPGB1b9XkLAgs/hk8d8HdH/jw==
-X-ME-Sender: <xms:-sfBZSbZV-rnFsQSoCs2ESQYCdPmCIj7eJ2sbYutvcyoGBP_cgBYoQ>
-    <xme:-sfBZVa1fR-E24Om6c53IE564LI7fNPtO6l9_iyuv8inQl3FTIYj-CkLUuzScY2SN
-    FvtTDGTOGcXEyuK3A>
-X-ME-Received: <xmr:-sfBZc_RGRCcz41tOwmvcBOpSSaZ5eDgSFjz0pUqk5N8o6aioOCwAgWFiraqRexOkw51kQCZwQ4voonxFxCQbGqyk0hBmbyhjh9JdVmg5uJ0EPqM>
+	fm3; t=1707198664; x=1707285064; bh=guuQPWKvJN9fdzBBgAeBrGX4k9Vv
+	ZttSbHg5tEn9Ut0=; b=gAevfFThuQfmO0wCxGveBHi09xOW53FeMF6CT/gkv8LZ
+	SXBksBbLImgw1U0RcgY3DghFjT+JhtkZKduxrwPzxstHnqUOs51/UdNlVb1oJg8y
+	Hf1NHhdrVj+ur/bOidxpDnJzt+OEjbFzTDm5DxWS31aAYw4koSeOo3zANBmsP6VA
+	yoJotPtpIEHvu6SWAv5o6TXpgjKOnf00JnSn7VlcQPM3bP4bEQb4B9V9y3CvTiVT
+	KkudrFai+0T2gq/wBiJVy1GzEB9QeJqa/yyptCvCORvh50PvjLJgBkl9tWaIlxkt
+	JvSvJCf9M312FGkHl5yEnG5DKRzVmUlKggBx1UBHtA==
+X-ME-Sender: <xms:yMjBZc2mQJWrDcYWG1Myy98re4Tra7jpKk8RQGttDi5_kunoxe1eXA>
+    <xme:yMjBZXFPVXXXDit_lorkfvbWZeN-G0n5oGhlFNl8vU393YneiYQXLJDWxhIDsmylM
+    djuMR_i-uU8EEVprA>
+X-ME-Received: <xmr:yMjBZU6xPsxQxT6aA_PrqksnlSyvf_Ea4tIebUThfW_yEAFHsGXUsgiqW0FKHHgdDC3aHKYLapwN4tqiqOFFGx-njvJ0F-2SBUAmvUQxkCN17m9U>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrfedvvddgledtucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
     uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    cujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtjeenucfhrhhomheprfgrthhr
+    cujfgurhepfffhvfevuffkfhggtggujgesghdtroertddtvdenucfhrhhomheprfgrthhr
     ihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvg
-    hrnhephedvfeehtdehjefgtefftddvheeiueeihffhteeuveeftdehieekkefhgffhhefg
-    necuffhomhgrihhnpehhthhtphhprhhothhotgholhdrihhtpdhkvghrnhgvlhdrohhrgh
-    enucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshes
-    phhkshdrihhm
-X-ME-Proxy: <xmx:-sfBZUq7NT8BcvMW63QflSHe4DRtgcv3WrNRKMMpIbf6dnrdJdULyg>
-    <xmx:-sfBZdr-oEC4WHyQeSEnwfagg87-X5qT99q7rapeBeURk1zBW_BaFw>
-    <xmx:-sfBZST7YqeKEihqFT_3yibV39aJiJk2ZZEEdFrkxZ5QxaMDZVMVEQ>
-    <xmx:-8fBZefTpYA2uCRbhCCngjyTvZZT9Iaedo_ikfisznr_Znzq22WifQ>
+    hrnhepvefhjefhkefgiefgffejtdfggeejtddvheelgfejkeduiefhteekffehvdfggefg
+    necuffhomhgrihhnpehkvghrnhgvlhdrohhrghdpghhithhhuhgsrdgtohhmpdhgihhtqd
+    hstghmrdgtohhmnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhf
+    rhhomhepphhssehpkhhsrdhimh
+X-ME-Proxy: <xmx:yMjBZV3-yKYGNZNUslADpr5W2nNW6pQYEEhdj13-aiIu5ghQp8xQ-g>
+    <xmx:yMjBZfGfG_iLFww6UCjdzTYX3RLIC5_3c2TmJC7uCXutHMIzUemKzA>
+    <xmx:yMjBZe87iGYV1YRsKjBQfzOtM-CHKejjb8FzUC8ov63rIll2zE_55A>
+    <xmx:yMjBZe2X5cbij2w0FSWB1zIp1ElqByv8OB63T7bl3Y2FCXqY8miWjQ>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 6 Feb 2024 00:47:37 -0500 (EST)
+ 6 Feb 2024 00:51:03 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 58ab2318 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 6 Feb 2024 05:44:05 +0000 (UTC)
-Date: Tue, 6 Feb 2024 06:47:33 +0100
+	by vm-mail (OpenSMTPD) with ESMTPSA id f856a813 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 6 Feb 2024 05:47:33 +0000 (UTC)
+Date: Tue, 6 Feb 2024 06:51:01 +0100
 From: Patrick Steinhardt <ps@pks.im>
-To: Christian Couder <christian.couder@gmail.com>
-Cc: git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>,
-	Junio C Hamano <gitster@pobox.com>, Victoria Dye <vdye@github.com>,
+To: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+Cc: Christian Couder <christian.couder@gmail.com>, git@vger.kernel.org,
+	Taylor Blau <me@ttaylorr.com>, Junio C Hamano <gitster@pobox.com>,
+	Victoria Dye <vdye@github.com>,
 	Karthik Nayak <karthik.188@gmail.com>
 Subject: Re: [PATCH] Add ideas for GSoC 2024
-Message-ID: <ZcHH9UCiQgGvugyc@tanuki>
+Message-ID: <ZcHIxcrKbgyhdyWn@tanuki>
 References: <d4797f27-825b-4e2b-85a6-cc30f33934e3@gmail.com>
  <106b8e7be9ddc2d24670b01d54347dfcf9aef196.1707122040.git.ps@pks.im>
  <CAP8UFD3F95TzytdpKO=LLf6Y_ejxwh9QtgAxRNKgMXW-72hjgQ@mail.gmail.com>
+ <e1c04f67-5981-4393-8a8e-a28cc53858eb@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -85,191 +87,119 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="iYHXNYA6NBOjD78n"
+	protocol="application/pgp-signature"; boundary="Ic5yB1Y78sawGb+k"
 Content-Disposition: inline
-In-Reply-To: <CAP8UFD3F95TzytdpKO=LLf6Y_ejxwh9QtgAxRNKgMXW-72hjgQ@mail.gmail.com>
+In-Reply-To: <e1c04f67-5981-4393-8a8e-a28cc53858eb@gmail.com>
 
 
---iYHXNYA6NBOjD78n
-Content-Type: text/plain; charset=utf-8
+--Ic5yB1Y78sawGb+k
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Mon, Feb 05, 2024 at 05:43:17PM +0100, Christian Couder wrote:
-> On Mon, Feb 5, 2024 at 9:39=E2=80=AFAM Patrick Steinhardt <ps@pks.im> wro=
-te:
-> >
-> > Add project ideas for the GSoC 2024.
-> > ---
-> >
-> > I came up with four different topics:
-> >
-> >   - The reftable unit test refactorings. This topic can also be squashed
-> >     into the preexisting unit test topics, I wouldn't mind. In that case
-> >     I'd be happy to be a possible mentor, too.
-> >
-> >   - Ref consistency checks for git-fsck(1). This should be rather
-> >     straight forward and make for an interesting topic.
-> >
-> >   - Making git-bisect(1)'s state more self-contained as recently
-> >     discussed. This topic is easy to implement, but the backwards
-> >     compatibility issues might require a lot of attention.
-> >
-> >   - Implementing support for reftables in the "dumb" HTTP protocol. It's
-> >     quite niche given that the dumb protocol isn't really used much
-> >     nowadays anymore. But it could make for an interesting project
-> >     regardless.
-> >
-> > It's hard to estimate for me whether their scope is either too small or
-> > too big. So please feel free to chime in and share your concerns if you
-> > think that any of those proposals don't make much sense in your opinion.
+On Tue, Feb 06, 2024 at 12:25:31AM +0530, Kaartic Sivaraam wrote:
+> Hi Patrick, Christian and all,
 >=20
-> Thanks a lot for these ideas! I have applied your patch and pushed it.
+> On 05/02/24 22:13, Christian Couder wrote:
+> >=20
+> > Thanks a lot for these ideas! I have applied your patch and pushed it.
+> >=20
 >=20
-> I have a few concerns though, see below.
+> Yeah. Thanks for sharing these great ideas! I've submitted the application
+> using the new ideas page now as mentioned in the parent thread.
 >=20
-> >  SoC-2024-Ideas.md | 129 ++++++++++++++++++++++++++++++++++++++++++++++
-> >  1 file changed, 129 insertions(+)
-> >
-> > diff --git a/SoC-2024-Ideas.md b/SoC-2024-Ideas.md
-> > index 3efbcaf..286aea0 100644
-> > --- a/SoC-2024-Ideas.md
-> > +++ b/SoC-2024-Ideas.md
-> > @@ -39,3 +39,132 @@ Languages: C, shell(bash)
-> >  Possible mentors:
-> >  * Christian Couder < <christian.couder@gmail.com> >
-> >
-> > +### Convert reftable unit tests to use the unit testing framework
-> > +
-> > +The "reftable" unit tests in "t0032-reftable-unittest.sh"
-> > +predate the unit testing framework that was recently
-> > +introduced into Git. These tests should be converted to use
-> > +the new framework.
-> > +
-> > +See:
-> > +
-> > +  - this discussion <https://lore.kernel.org/git/cover.1692297001.git.=
-steadmon@google.com/>
-> > +
-> > +Expected Project Size: 175 hours or 350 hours
-> > +
-> > +Difficulty: Low
+> > > +### Convert reftable unit tests to use the unit testing framework
+> > > +
+> > > +The "reftable" unit tests in "t0032-reftable-unittest.sh"
+> > > +predate the unit testing framework that was recently
+> > > +introduced into Git. These tests should be converted to use
+> > > +the new framework.
+> > > +
+> > > +See:
+> > > +
+> > > +  - this discussion <https://lore.kernel.org/git/cover.1692297001.gi=
+t.steadmon@google.com/>
+> > > +
+> > > +Expected Project Size: 175 hours or 350 hours
+> > > +
+> > > +Difficulty: Low
+> >=20
+> > "Difficulty: Low" might not be very accurate from the point of view of
+> > contributors. I think it's always quite difficult to contribute
+> > something significant to Git, and sometimes more than we expected.
+> >=20
 >=20
-> "Difficulty: Low" might not be very accurate from the point of view of
-> contributors. I think it's always quite difficult to contribute
-> something significant to Git, and sometimes more than we expected.
+> Makes sense. Also, I'm kind of cat-one-the-wall about whether it makes se=
+nse
+> to have two projects about the unit test migration effort itself. If we're
+> clear that both of them would not overlap, it should be fine. Otherwise, =
+it
+> would be better to merge them as Patrick suggests.
 
-That's certainly true. I understood the difficulty levels here as being
-relative to the already-high bar that the Git project typically sets.
-Otherwise there wouldn't be much use to specify difficulty in the first
-place if all items had the same difficulty.
+I don't quite mind either way. I think overall we have enough tests that
+can be converted even if both projects got picked up separately. And the
+reftable unit tests are a bit more involved than the other tests given
+that their coding style doesn't fit at all into the Git project. So it's
+not like they can just be copied over, they definitely need some special
+care.
 
-Or is the intent of the difficulty level rather on a global GSoC level?
-In that case I agree that we should bump the difficulty to "medium".
+Also, the technical complexity of the "reftable" backend is rather high,
+which is another hurdle to take.
 
-> > +Languages: C, shell(bash)
-> > +
-> > +Possible mentors:
-> > +* Patrick Steinhardt < <ps@pks.im> >
-> > +* Karthik Nayak < <karthik.188@gmail.com> >
-> > +
-> > +### Implement consistency checks for refs
-> > +
-> > +The git-fsck(1) command is used to check various data
-> > +structures for consistency. Notably missing though are
-> > +consistency checks for the refdb. While git-fsck(1)
-> > +implicitly checks some of the properties of the refdb
-> > +because it uses its refs for a connectivity check, these
-> > +checks aren't sufficient to properly ensure that all refs
-> > +are properly consistent.
-> > +
-> > +The goal of this project would be to introduce consistency
-> > +checks that can be implemented by the ref backend. Initially
-> > +these checks may only apply to the "files" backend. With the
-> > +ongoing efforts to upstream a new "reftable" backend the
-> > +effort may be extended.
-> > +
-> > +See:
-> > +
-> > +  - https://lore.kernel.org/git/6cfee0e4-3285-4f18-91ff-d097da9de737@r=
-d10.de/
-> > +  - https://lore.kernel.org/git/cover.1706601199.git.ps@pks.im/
-> > +
-> > +Expected Project Size: 175 hours or 350 hours
-> > +
-> > +Difficulty: Medium
-> > +
-> > +Languages: C, shell(bash)
-> > +
-> > +Possible mentors:
-> > +* Patrick Steinhardt < <ps@pks.im> >
-> > +* Karthik Nayak < <karthik.188@gmail.com> >
-> > +
-> > +### Refactor git-bisect(1) to make its state self-contained
-> > +
-> > +The git-bisect(1) command is used to find a commit in a
-> > +range of commits that introduced a specific bug. Starting a
-> > +bisection run creates a set of state files into the Git
-> > +repository which record various different parameters like
-> > +".git/BISECT_START". These files look almost like refs
-> > +due to their names being all-uppercase. This has led to
-> > +confusion with the new "reftable" backend because it wasn't
-> > +quite clear whether those files are in fact refs or not.
-> > +
-> > +As it turns out they are not refs and should never be
-> > +treated like one. Overall, it has been concluded that the
-> > +way those files are currently stored is not ideal. Instead
-> > +of having a proliferation of files in the Git directory, it
-> > +was discussed whether the bisect state should be moved into
-> > +its own "bisect-state" subdirectory. This would make it more
-> > +self-contained and thereby avoid future confusion. It is
-> > +also aligned with the sequencer state used by rebases, which
-> > +is neatly contained in the "rebase-apply" and "rebase-merge"
-> > +directories.
-> > +
-> > +The goal of this project would be to realize this change.
-> > +While rearchitecting the layout should be comparatively easy
-> > +to do, the harder part will be to hash out how to handle
-> > +backwards compatibility.
-> > +
-> > +See:
-> > +
-> > +  - https://lore.kernel.org/git/Za-gF_Hp_lXViGWw@tanuki/
+Which overall makes me lean more towards keeping this as a separate
+project now that I think about it.
+
+> That said, how helpful would it be to link the following doc in the unit
+> testing related ideas?
 >=20
-> From reading the discussion it looks like everyone is Ok with doing
-> this. I really hope that we are not missing something that might make
-> us decide early not to do this though.
+> https://github.com/git/git/blob/master/Documentation/technical/unit-tests=
+=2Etxt
 
-I agree that this is a risky one, and that's what I tried to bring
-across with the "harder part will be to hash out how to handle backwards
-compatibility". Overall I think this project will be more about selling
-the patch and reasoning about how it can be done without breaking
-backwards compatibility.
+Makes sense to me.
 
-We could bump the difficulty to high to reflect that better. But if you
-deem the risk to be too high then I'm also happy to drop the topic
-completely.
+> > > +### Implement consistency checks for refs
+> > > +
+> >>
+> >> [ ... snip ... ]
+> >>
+> > > +
+> > > +  - https://lore.kernel.org/git/6cfee0e4-3285-4f18-91ff-d097da9de737=
+@rd10.de/
+> > > +  - https://lore.kernel.org/git/cover.1706601199.git.ps@pks.im/
+> > > +
+> >> [ .... snip ... ]
+> > > +
+> > > +### Implement support for reftables in "dumb" HTTP transport
+>=20
+> Would it worth linking the reftable technical doc for the above ideas?
+>=20
+> https://git-scm.com/docs/reftable
+>=20
+> I could see it goes into a lot of detail. I'm just wondering if link to it
+> would help someone who's looking to learn about reftable.
+
+Definitely doesn't hurt.
 
 Patrick
 
---iYHXNYA6NBOjD78n
+--Ic5yB1Y78sawGb+k
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmXBx/QACgkQVbJhu7ck
-PpTNIg//dmoE/q/r3mHC9QiNfZhoMXhuHmwab7KXxW+uOsdoAP+cXkV/Q/vnJZ9a
-A8cTinuBWLKKnsSWVrUswlmixlyt7JOJlflMYtXhW/RPKN3CHdlxJQPFW1mpRq3U
-QuHf2leFggNj9k99HRNd/SezDNNNRwV9DgEMkfy/1EdR71AluRdU2b661Yj7bSLw
-P5jw4cz09XBIM4IwPu+M3vldvJ0nUxB4PAz26mjol5xRPWZcxlWttZ23t83wXdVm
-X5UPN6SZ6UsY3CVuSA1L0aj+LKeREWL6wDdXBh3m7Z4ndjCj/fXWJDdb6utTTC9x
-WzzwWs2BRSOe77fD3TYa1JQq8S4lmhGREoZ1v3d3gixVnHoDCQcf0tiXZ4QtfH6x
-xI8qoJJqMF7UExWe+Jgz0/vU/WWoNU2+b4xFpYjKiWV66bfoigfh4je2SHLxnaQE
-2iVez0/ioRsPW/Snce9Fc9Wqcq2+DhZ5nqU6H06IAx8ZZfVP2MdcnbvpDAKI24sK
-uoVEWmYyF5TJv+6Kz42fK2rLUCjO8cviOFv0sv9b1m9V7eYMLTnAPnQA/2NtjH38
-gE3mna3WtOk53/Jc9icEP99yKF8BkkBB1Ok7Q8L1a3qLNLk4h2o4+m7skieUhrRy
-XKBV0xoTzQuBYbAOnJVjwWae36PmHkih4XznpUVcXAO4KvD8reY=
-=SMKf
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmXByMQACgkQVbJhu7ck
+PpRWtQ/+MViVZAM/seyvvQomTWxEVZNVB/UO/S3jMkNAkwMrwhSvipulKR8hqgTU
+E6KDdiRdVQjYINq7U45WCY916aNXPi6wdOkObtDb+KvQufvhQnV760OBiPLPnjOO
+gG1tZbWBa/pyi7hU5J0eDQfIKMHYYLuXclqEvSh0pVuoCu0lChlk3TvSYf9+GUG3
+NYdwRyqW5ilQ209RkibY01Kz7N15pLMXXtTFElFNuFiou87xtQlCTz2dCKlBPa9L
+oq+WW+74qpe7bPXJMdwTVaUR8jbFmD5cvUPRrrXUfGZRdJnxdR67uAKiWHYLk0IN
+LHmKx9KXUJlWqnfunHeW7M4OJVXibKtT1I6O3Y3q4GnPGhGUyaEiajlsD1U9CC3C
+XlQ+6BLsx0CUl+PjruTjptHMmumdHF2QmniQvPBCdvcOG6g2oOWxtvPuV6KElJbf
+zBF3c82y+T41+nxHpyuzxj9uBGD3Gn9UU4UFXUS7jNjiqMTZoVE7ZH/9GryXBBmM
+DUPmffXYKH49OGv49I/ZTV+so76uEUcNDoPG1gwdgZxlsjd8fDEA1B8YqYxdpfRE
+Momq0tAmRCd6x/67k+p3LiYe1UjlIwPjuhoqWEcg9KsJlK6UVaI+1xF9vr6fulza
+qz+w99AHkz1QgE6APfsoiPQ1xFmkgMkssyVRGleZnoIEgp5+ClQ=
+=KPsV
 -----END PGP SIGNATURE-----
 
---iYHXNYA6NBOjD78n--
+--Ic5yB1Y78sawGb+k--
