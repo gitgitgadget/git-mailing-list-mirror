@@ -1,142 +1,81 @@
-Received: from mail-oi1-f172.google.com (mail-oi1-f172.google.com [209.85.167.172])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F2581E521
-	for <git@vger.kernel.org>; Tue,  6 Feb 2024 15:30:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.172
+Received: from m15.mail.163.com (m15.mail.163.com [45.254.50.220])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4504E13341F
+	for <git@vger.kernel.org>; Tue,  6 Feb 2024 16:07:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.254.50.220
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707233461; cv=none; b=Pd6FEKPY4gJRWqFCT84E0Pdk7SAvt/Zb26Vwo3xlpOn/SRKHFaVqlW7XGQLNidwjKIWYvRgywdnBTmToYhQoz4R/I1fJF0jNl/aU+fMDx0EI+IX5EtDI3PaSbuYnQvy98lpxEkJxcv2RYrW+tQ9s5P27gwYL2SD3JZ7GHdOdheg=
+	t=1707235643; cv=none; b=F7r7UNtoPtcfwtBEO2jNqmF3m8I7i9r9BYSWucM2aUKmn9u2ByhhTEpDTORFTpF2LaTMezuQE4MXbhs5UI3FadmS0L6wd2WqYXYhU3Ev5xAPFDci6s6WwSd4DxN2WvQIn4qiOBjptrd67wmxTloi7kdHDXFBkEs4VsxdD4UGOAc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707233461; c=relaxed/simple;
-	bh=cy2HpYTSralTg848GTva4z/KxtAWDbWbGGymYVCTPfw=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=fYVoYC55BD9isIgumnFGqUAPel4l0nSk0zYsB8sSTC2cibkwcFlCjPORScrj5oOi96VaG3I9r76WPL9mboU7m9vXBjt7xjFJ+laXP84GaSPdZKlh0GKlvAm6xHlDn0UCOPmUjZXx6H1ztW917FBndtgyYqN3gBXIHlC4Et36smo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NcVTwn+F; arc=none smtp.client-ip=209.85.167.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1707235643; c=relaxed/simple;
+	bh=2mCK/N1qELeSbT2nWkaGXZlfxsgXiLObt94LNCOo41U=;
+	h=Date:From:To:Subject:Content-Type:MIME-Version:Message-ID; b=q66f0NTYX/IzvSqw3Q1PWi778dhG1t0YO8HTryovAp64yXJId5RpR0AkRnfZnya/lUBV2WDCgYxwpa72LD/E8rD3ZOPzg+9KJNSk9pGNdIjaKE0e5MQBstT7CEjVClz4pAlcNftw2gXXpKxCJR3jqi9F4YSqHFUzmqd4s032Zq4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com; spf=pass smtp.mailfrom=163.com; dkim=fail (1024-bit key) header.d=163.com header.i=@163.com header.b=OGHp0wH3 reason="signature verification failed"; arc=none smtp.client-ip=45.254.50.220
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=163.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NcVTwn+F"
-Received: by mail-oi1-f172.google.com with SMTP id 5614622812f47-3beab443a63so4428294b6e.3
-        for <git@vger.kernel.org>; Tue, 06 Feb 2024 07:30:59 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1707233459; x=1707838259; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=d0adi98HX4Ci9dCy7gNy8af3miGt/Ev/DR765HIZVTE=;
-        b=NcVTwn+FP8g3KrGytZVda20IR+qyH6I84XoJDqqjTIlOMy1bctlK0Gs/2lsgne0sGC
-         68p37zxTsIWJTyvosf2u65SirfCXLKKy1r3dJs/R245rzntYbgln4XTxNcWRoNlNb5cb
-         CiR0cncfmiiS6q0mq12Hj1SXABZBgXUMfSR1RV2SEw+M63FPEvrVoKvp3em6MTOIL1KP
-         U5b1l8Wec6q0SRsern2eBxnuqksouLoN3Aov5/LvATDvdCZtzg0r+MLOtj/VIvjIXs7/
-         6mTCxGth9IXQD9dl/8hJENOBlli1JJfHOlJO+p840a5ndeYD84jst6rn78z1hw6DFQwT
-         wUWQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1707233459; x=1707838259;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=d0adi98HX4Ci9dCy7gNy8af3miGt/Ev/DR765HIZVTE=;
-        b=jUO6crbbxg34a6gfPnXIRvPJyK7Cgl0hqPv4XtBrhP3Tu/DwQEK0JwR6tyk8Cu5SZF
-         zMhh7jC0EJGowja4dJ+EU46PsvCi1nelgCLbb8PMN1abia0QUqTbkqkctaEX/coE1yuD
-         5VZg3qryGBWLWX9K4+09TU2zMwnjVCUgvnkFGK5SXlSGSz/0EeS/79jmHVLyuY2Em2sc
-         9d97qxap8ZSQn3uPoaXJyoWgEvFOByxAPEoFJiqXksQjBOFkztwQXhExbFBex9Avy46b
-         pPEJef+xihSv16R79oIvPxKp9Yr+jEiD+ZNiKvkfibWkgaA+r405F7haAKvdcwsWqpnW
-         K1zA==
-X-Gm-Message-State: AOJu0YwlPqtCbNHFQ6nrh3U1h2TdZGydCaSjmbGgZ4TvOg43xCKcH5Bc
-	VikbYdTi6xtXx5GIQD6J4gkZjEWZp8EUqm/bh4GMCt2JgjnqeD54W9+WO2ThJwFKbh4Dwg/qQ1J
-	s8Z6OrW8c36f9e2pIlzBgvWXvd/JBTY4DOKw=
-X-Google-Smtp-Source: AGHT+IEKCVYyFp9tvZcriNz4MHjaVbmEHH0TnGn9dj77hh1bqT+BA1q47ruyh8aFl6odhNPpkMpppUxtiIj1rK8EpCc=
-X-Received: by 2002:a05:6871:3a14:b0:219:570f:31ca with SMTP id
- pu20-20020a0568713a1400b00219570f31camr3187269oac.9.1707233459073; Tue, 06
- Feb 2024 07:30:59 -0800 (PST)
+	dkim=fail reason="signature verification failed" (1024-bit key) header.d=163.com header.i=@163.com header.b="OGHp0wH3"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
+	s=s110527; h=Date:From:Subject:Content-Type:MIME-Version:
+	Message-ID; bh=DmglOQpLcp37TfhKxywoNtaUnVu+F1YoUYIiFhLykFM=; b=O
+	GHp0wH3JqITr2yuWju9r4936c4GOUf8roQJUGKfSeh6Xql5C/xnq3aq2/ZvcYLjl
+	eAlGUTpJz3+oNrCH344fxQ3fBIzULs/Eelz0BYqVR6x6/VbSnpZIpZXp6l6tqdy5
+	IAIwYJbZGD03hbvVJj8CZrk/g1zzVk4fxFdVbVtd/8=
+Received: from dingjunyao0703$163.com ( [39.144.159.248] ) by
+ ajax-webmail-wmsvr-40-100 (Coremail) ; Wed, 7 Feb 2024 00:07:07 +0800 (CST)
+Date: Wed, 7 Feb 2024 00:07:07 +0800 (CST)
+From: DingJunyao  <dingjunyao0703@163.com>
+To: "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Bug: git submodule update doesn't give a prompt to add pubkey of
+ remote repo host, and failed because of it.
+X-Priority: 3
+X-Mailer: Coremail Webmail Server Version XT5.0.14 build 20230109(dcb5de15)
+ Copyright (c) 2002-2024 www.mailtech.cn 163com
+X-NTES-SC: AL_Qu2bBf6Yuk4p4SefYelS6TNw4JVpHZXE6LhlnuMkavwRlw/I2yUeUHp6HkDo1+JV/IiCdGy7mwHu8nPAy4Or
+Content-Transfer-Encoding: base64
+Content-Type: text/plain; charset=GBK
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240119142705.139374-1-karthik.188@gmail.com>
- <20240129113527.607022-1-karthik.188@gmail.com> <20240129113527.607022-5-karthik.188@gmail.com>
- <98d79d33-0d7e-4a9c-a6a3-ed9b58cd7445@gmail.com> <CAOLa=ZR=_tt=ppphGMkxqj_YB5G+YkTMWGzRzcHTbrZz4ysb5w@mail.gmail.com>
- <92ba680d-0b48-49f0-aafc-f503e5a5e0ea@gmail.com>
-In-Reply-To: <92ba680d-0b48-49f0-aafc-f503e5a5e0ea@gmail.com>
-From: Karthik Nayak <karthik.188@gmail.com>
-Date: Tue, 6 Feb 2024 16:30:32 +0100
-Message-ID: <CAOLa=ZRLuy2H-r3A0BE-mS4Zm=ebhLR+SemZ3nAghEnRB5dR_A@mail.gmail.com>
-Subject: Re: [PATCH v3 4/4] for-each-ref: avoid filtering on empty pattern
-To: phillip.wood@dunelm.org.uk
-Cc: git@vger.kernel.org, gitster@pobox.com, ps@pks.im
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Message-ID: <37a01273.7951.18d7f2c5303.Coremail.dingjunyao0703@163.com>
+X-Coremail-Locale: zh_CN
+X-CM-TRANSID:_____wD338ArWcJl+mnOAA--.19824W
+X-CM-SenderInfo: pglqwy5xq1t0iqxqjqqrwthudrp/xtbB0BF84mWXv2GjgAACsS
+X-Coremail-Antispam: 1U5529EdanIXcx71UUUUU7vcSsGvfC2KfnxnUU==
 
-Hello,
-
-On Tue, Feb 6, 2024 at 2:55=E2=80=AFPM Phillip Wood <phillip.wood123@gmail.=
-com> wrote:
->
-> Hi Karthik
->
-> On 06/02/2024 08:52, Karthik Nayak wrote:
-> > On Mon, Feb 5, 2024 at 7:48=E2=80=AFPM Phillip Wood <phillip.wood123@gm=
-ail.com> wrote:
-> >> On 29/01/2024 11:35, Karthik Nayak wrote:
-> >>> When the user uses an empty string pattern (""), we don't match any r=
-efs
-> >>> in git-for-each-ref(1). This is because in git-for-each-ref(1), we us=
-e
-> >>> path based matching and an empty string doesn't match any path.
-> >>>
-> >>> In this commit we change this behavior by making empty string pattern
-> >>> match all references. This is done by introducing a new flag
-> >>> `FILTER_REFS_NO_FILTER` in `ref-filter.c`, which uses the newly
-> >>> introduced `refs_for_each_all_refs()` function to iterate over all th=
-e
-> >>> refs in the repository.
-> >>
-> >> It actually iterates over all the refs in the current worktree, not al=
-l
-> >> the refs in the repository. I have to say that I find it extremely
-> >> unintuitive that "" behaves differently to not giving a pattern. I
-> >> wonder if we can find a better UI here - perhaps a command line option
-> >> to include pseudorefs?
-> >>
-> >
-> > As Patrick mentioned, this was discussed a while ago and we decided to
-> > move forward with the `git for-each-ref ""` syntax.
->
-> Thanks I'd missed that discussion. I see that at the end of that
-> discussion Junio was concerned that the proposed "" did not account for
-> "refs/worktrees/$worktree/*" [1] - how has that been resolved?
->
-
-The current implementation (merged to next) prints all the refs from the cu=
-rrent
-worktree and doesn't support printing from other worktrees.
-
-    $ git worktree add ../wt-files @~10
-    Preparing worktree (detached HEAD 559d5138bc)
-    HEAD is now at 559d5138bc Merge branch 'jc/make-libpath-template' into =
-next
-
-    $ cd ../wt-files/
-    direnv: unloading
-
-    $ git for-each-ref "" | grep -v "refs"
-    559d5138bc8b81354fd1bc3421ace614076e66de commit    HEAD
-    559d5138bc8b81354fd1bc3421ace614076e66de commit    ORIG_HEAD
-
-    $ git rebase -i @~3
-    Stopped at be65f9ef88...  t/Makefile: get UNIT_TESTS list from C source=
-s
-    You can amend the commit now, with
-
-      git commit --amend '-S'
-
-    Once you are satisfied with your changes, run
-
-      git rebase --continue
-
-    $ git for-each-ref "" | grep -v "refs"
-    be65f9ef88ff741454dcf10a0af6e384d0bf26cf commit    HEAD
-    43f081b9c7dfb9c23e547ffee1778af0f30c5c4e commit    ORIG_HEAD
-    be65f9ef88ff741454dcf10a0af6e384d0bf26cf commit    REBASE_HEAD
+R2l0IHZlcnNpb246IGdpdCB2ZXJzaW9uIDIuNDMuMC53aW5kb3dzLjEKT1M6IFdpbmRvd3MgMTEg
+MjJIMiAoMjI2MjEuMzAwNykKKEkgZG9uJ3Qga25vdyB3aGV0aGVyIGl0J3MgYSBXaW5kb3dzLXNw
+ZWNpZmljIGJ1ZykKCkkgY2xvbmVkIGEgcHJvamVjdCBmcm9tIG9uZSByZW1vdGUgcmVwbyAoQSks
+IGFuZCB0aGUgcHJvamVjdCBoYXMgYSBzdWJtb2R1bGUgZnJvbSB0aGUgb3RoZXIgcmVtb3RlIHJl
+cG8gKEIpLiBCb3RoIG9mIHRoZW0gYXJlIGNvbm5lY3RlZCB0byB0aGUgcmVtb3RlIHJlcG8gb2Yg
+d2hpY2ggYnkgU1NILCBhbmQgSSBhZGRlZCBteSBwdWJrZXkgdG8gYm90aCBvZiB0aGUgcmVwbyBw
+cm92aWRlcnMuCgpJIGV4ZWN1dGVkIHRoZSBjb21tYW5kIGluIHByb2plY3QgZGlyZWN0b3J5OgoK
+ICAgIGdpdCBzdWJtb2R1bGUgaW5pdAogICAgZ2l0IHN1Ym1vZHVsZSB1cGRhdGUKCldoZW4gdXBk
+YXRpbmcsIHRoZSBmb2xsb3dpbmcgZXJyb3IgaGFwcGVuZWQ6CgogICAgQ2xvbmluZyBpbnRvICcv
+cGF0aC90by9zdWJtb2R1bGUnLi4uCiAgICBIb3N0IGtleSB2ZXJpZmljYXRpb24gZmFpbGVkLgog
+ICAgZmF0YWw6IENvdWxkIG5vdCByZWFkIGZyb20gcmVtb3RlIHJlcG9zaXRvcnkuCgogICAgUGxl
+YXNlIG1ha2Ugc3VyZSB5b3UgaGF2ZSB0aGUgY29ycmVjdCBhY2Nlc3MgcmlnaHRzCiAgICBhbmQg
+dGhlIHJlcG9zaXRvcnkgZXhpc3RzLgogICAgZmF0YWw6IGNsb25lIG9mICd1c2VyQGhvc3Q6cmVw
+by9wYXRoLmdpdCcgaW50byBzdWJtb2R1bGUgcGF0aCAnL3BhdGgvdG8vc3VibW9kdWxlJyBmYWls
+ZWQKICAgIEZhaWxlZCB0byBjbG9uZSAndGhlbWVzL2FuemhpeXUtZGluZy1tb2QnLiBSZXRyeSBz
+Y2hlZHVsZWQKICAgIENsb25pbmcgaW50byAnL3BhdGgvdG8vc3VibW9kdWxlJy4uLgogICAgSG9z
+dCBrZXkgdmVyaWZpY2F0aW9uIGZhaWxlZC4KICAgIGZhdGFsOiBDb3VsZCBub3QgcmVhZCBmcm9t
+IHJlbW90ZSByZXBvc2l0b3J5LgoKICAgIFBsZWFzZSBtYWtlIHN1cmUgeW91IGhhdmUgdGhlIGNv
+cnJlY3QgYWNjZXNzIHJpZ2h0cwogICAgYW5kIHRoZSByZXBvc2l0b3J5IGV4aXN0cy4KICAgIGZh
+dGFsOiBjbG9uZSBvZiAndXNlckBob3N0OnJlcG8vcGF0aC5naXQnIGludG8gc3VibW9kdWxlIHBh
+dGggJy9wYXRoL3RvL3N1Ym1vZHVsZScgZmFpbGVkCiAgICBGYWlsZWQgdG8gY2xvbmUgJ3BhdGgv
+dG8vc3VibW9kdWxlJyBhIHNlY29uZCB0aW1lLCBhYm9ydGluZwoKSSBjbG9uZWQgYW5vdGhlciBy
+ZXBvIGZyb20gQi4gV2hlbiBJIGRpZCBpdCwgSSBmb3VuZCBJIGhhZG4ndCBhZGRlZCB0aGUgcHVi
+a2V5IG9mIHJlcG8gQiB0byB0aGUgbGlzdCBvZiBrbm93biBob3N0cyBiZWZvcmUuCgogICAgVGhl
+IGF1dGhlbnRpY2l0eSBvZiBob3N0ICdob3N0IChYWFguWFhYLlhYWC5YWFgpJyBjYW4ndCBiZSBl
+c3RhYmxpc2hlZC4KICAgIEVEMjU1MTkga2V5IGZpbmdlcnByaW50IGlzIFNIQTI1NjpYWFhYWFhY
+WFhYWFhYLgogICAgVGhpcyBrZXkgaXMgbm90IGtub3duIGJ5IGFueSBvdGhlciBuYW1lcy4KICAg
+IEFyZSB5b3Ugc3VyZSB5b3Ugd2FudCB0byBjb250aW51ZSBjb25uZWN0aW5nICh5ZXMvbm8vW2Zp
+bmdlcnByaW50XSk/IHllcwogICAgV2FybmluZzogUGVybWFuZW50bHkgYWRkZWQgJ2hvc3QnIChF
+RDI1NTE5KSB0byB0aGUgbGlzdCBvZiBrbm93biBob3N0cy4KCkFmdGVyIHRoYXQsIEkgdHJpZWQg
+dG8gZXhlY3V0ZSBgZ2l0IHN1Ym1vZHVsZSB1cGRhdGVgIGluIHRoZSBwcmV2aW91cyBwcm9qZWN0
+IGFuZCBzdWNjZWVkZWQuCgpJIHRoaW5rIHdoZW4gSSB1cGRhdGUgc3VibW9kdWxlIGFuZCBJIGhh
+dmVuJ3QgYWRkZWQgdGhlIGtleSB0byB0aGUgc3VibW9kdWxlIHJlbW90ZSByZXBvLCBpdCBuZWVk
+cyB0byBnaXZlIGEgcHJvbXB0IHRvIGFkZCB0aGUgcHVibGljIGtleSwganVzdCBsaWtlIGNsb25p
+bmcu
