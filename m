@@ -1,80 +1,79 @@
-Received: from wfout4-smtp.messagingengine.com (wfout4-smtp.messagingengine.com [64.147.123.147])
+Received: from wfhigh4-smtp.messagingengine.com (wfhigh4-smtp.messagingengine.com [64.147.123.155])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35B99128810
-	for <git@vger.kernel.org>; Tue,  6 Feb 2024 06:35:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.147
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E444128361
+	for <git@vger.kernel.org>; Tue,  6 Feb 2024 06:35:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707201337; cv=none; b=NlH0/DzpPPQ+mOQbSb7zjLcZ3X9Cq3AaLjpI1Ga/NPhLhlI/VjezoLxZ1DcbCDh8UFSlo71c4ptk9jzoL5rhgJ5iZECQzFiL6G0hdDDGJFDpQxIXHwppyv+o6ROuIsuREskvBGROAZECZTCOAsRve76MnWhBYh3ylRwTIRv9MJo=
+	t=1707201342; cv=none; b=TntGtnfk8Wbqs9HFyCkaNa7PkcOt/mZjpb6jpoSiXdx58Qi6l+iYb74RcwPeaoMs684fhqDl71TTazFgB7hURcNoqBgejnJQPZMvmZUwjkSyrUN+WlzTmxJyOzUBeBcOcy9RYsSaENTJHPpEZveezc7evleHeErt3ZQX2WnTNlw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707201337; c=relaxed/simple;
-	bh=gJIC8e471W0GQiO2WwWC4u85WIbvRtBNL5y1D2L+Km8=;
+	s=arc-20240116; t=1707201342; c=relaxed/simple;
+	bh=DYzSdWt0waJVHIVE124yOd/fXzGmo4hza56tWQP+ews=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=kvYiGLftfnl3GYutnStFJBPXWbqo1tonqkdRtyAQ//VAxEC5S6sywS23JoEJVz+vhUO4KqKpl1OpJD0uOxjk4dspEzuSiXhvM7ldEiczEiD87iRS/VDnQymEuL7+KPlEPAI5PNKxQHlXyfJac5W2gbxOS8WfGJnGQFoVGeH8HRs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=YlLtBfZL; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=o68tnyrj; arc=none smtp.client-ip=64.147.123.147
+	 Content-Type:Content-Disposition:In-Reply-To; b=QF0nO6xtpjWIn7wUPGfIelfrtl9r6TrvYHaUyxffu82eTvPruWiwnTbQDBJUE00pOB9u3qyVYsRq5gJnVo7Ri2axVDd+UN5NEfel+MZTD1Je/I4cr6FBkY1oeqUbrY2PWcmcpvaUT2r3aNtXvVKUHOVSmFoRYFq71Si7paBMTWY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=ICmluv/+; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=uEj0xC3f; arc=none smtp.client-ip=64.147.123.155
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="YlLtBfZL";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="o68tnyrj"
-Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
-	by mailfout.west.internal (Postfix) with ESMTP id 0185C1C00079;
-	Tue,  6 Feb 2024 01:35:34 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="ICmluv/+";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="uEj0xC3f"
+Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
+	by mailfhigh.west.internal (Postfix) with ESMTP id 5796F1800080;
+	Tue,  6 Feb 2024 01:35:39 -0500 (EST)
 Received: from mailfrontend1 ([10.202.2.162])
-  by compute6.internal (MEProxy); Tue, 06 Feb 2024 01:35:35 -0500
+  by compute1.internal (MEProxy); Tue, 06 Feb 2024 01:35:39 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1707201334; x=1707287734; bh=w0MbeE3MGv
-	LdhudkaJRo40D6s7aVFQkBIeQ68+RVn7g=; b=YlLtBfZLs1ynfempHbULnpBuBm
-	NKFoxwBW7u+CHtl4YlMXVv/IC6ozFwxn2Mbv/m1tgw+7DpnB2GDJjqhrluwlUZlI
-	l75x71uaMYz0l53OaDR4SpjdHsb4JhZLLKrfenNNEQB42nd71WoY5SFYTUdhJvYw
-	nO3OhGVZ238Xbiamiu9/2weqKiVgXqJIT6KSVbfkST0Q2Ob7jqh9Xol7Yxk7DNmY
-	aGuJR7ilrBvv27dvsuGaze2+x64ZUXY38sofbhMgq4hw0NkNBw39sSLyeD90qmTU
-	SJpkpa8WLzpLjXzPrFgH0juFOlKxF1o6LI1hNYKVaKcv13GWBqiVYHbbKJwQ==
+	:subject:to:to; s=fm3; t=1707201338; x=1707287738; bh=KQ6+At56Ov
+	vvDoUL9wUOQFplhKYONfH3azh95NQyc9w=; b=ICmluv/+DK47Xrrbc2UH1eH0Eo
+	iRdMlm7gd6AAba2jv8aXRsirZigbMdOCNXPbBQ84vKceRk5ZTWDrniVHjZ8mdzUs
+	zAMO9jugLBn+PJbRYapaZPS6z8bjYRmn85HGL6V4yQ5O5jPsQNRFzFmMhpRD/jEr
+	XFpnlwuEjTWu5P61ieI+wXbVJMTOls4DIP7psLWIc8F+KIE8bBPijV41uWIcf/K1
+	MU+++SQDBjFC+b/3m5WQfpOedXRJd+Lp0k6L5SRWEnEORue/Ta4/eWNw8CToRt8B
+	SUcYnQwYHjo8vSLd3A7pzVGPe+5o0f66McqToO+zStClNCAytIo07Y68S5ZQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1707201334; x=1707287734; bh=w0MbeE3MGvLdhudkaJRo40D6s7aV
-	FQkBIeQ68+RVn7g=; b=o68tnyrjhca3TvQktEwx2f15EipZ/gVtVo+FEMM//Vm4
-	IaG+lF0NXaUjk8gq/MaxexB8iD6bXUfpAAvH7HsK/ZKosSpkjkEEeHULyH25HBpj
-	l7GzfcyKppplM/hPkf81Qi7yVZlGGTC56KpRqOD2hMRvMhQsWdP/a6vxYJJXi55F
-	qH4D+W+8uHPossWYajxzCCNf0e4FNGhQCbzx09tAFwJfdH+SF2X8i3YgSk/moAIU
-	p8OG1A6MNVQB+KB2pksh6AIz3edV1jRR38Cqvopbo04B9tZfr/D4XcN26z0Asxo3
-	gIJvgqN8LDA6eLHGRyEb7QgVjD/VnW+smR+alZojiw==
-X-ME-Sender: <xms:NtPBZdyi9_yH6KDxHCMaAkJDDS8UcilLM-O8StpW8Bsoo5SUlvNkQg>
-    <xme:NtPBZdQbiGQcb5SF1YDzl7jdq0U2WfMfmACC-Xrl_Z9FP13n42Lr-qVMeYlWCkZZK
-    tP_BFXZUIKK4ObStg>
-X-ME-Received: <xmr:NtPBZXWpxI3aB_-bUd4_JFj8s-Q_2RFNm21kK36IHMx0DzCddt9HY68RNW3DMdIveMWVNDzRQmbDJk-YGh3xUFaWrERXswS3Hap5dvjHmKbih5V4>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrfedvvddguddttdcutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
-    necuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
-    enucfjughrpeffhffvvefukfhfgggtuggjsehgtderredttddvnecuhfhrohhmpefrrght
-    rhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtth
-    gvrhhnpeeukedtvedtffevleejtefgheehieegkeeluddvfeefgeehgfeltddtheejleff
-    teenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpsh
-    esphhkshdrihhm
-X-ME-Proxy: <xmx:NtPBZfiwuv-osSELKAwsW5E7I06n4EmeNlD14fDhGEWS0ppAFAutOg>
-    <xmx:NtPBZfDtXw6WL6T4r-e8-uq0IWuVA896j0xng_GhyXeZbDPayR6ZjQ>
-    <xmx:NtPBZYKLxEhSM970sCtmwRNud1sdlIkrO7GFzXRYhCEF2xpZVF7kRg>
-    <xmx:NtPBZa7QXJJoZqJPw9U2Z4iUCZa2C2ldejeTcZh_cDWkHuywecGy10zmCVY>
+	fm3; t=1707201338; x=1707287738; bh=KQ6+At56OvvvDoUL9wUOQFplhKYO
+	NfH3azh95NQyc9w=; b=uEj0xC3f3gkESXSHYag0HS8P3p1tXNVVoeNPbbRLYvwy
+	vo2MGqwH19KEvRBJNZxm74O7JVutlp//jhZKSeHjfW4LxxcFHJ0YCjUnuJv/sxtQ
+	ikHZhOAgse1aGgwpXlTnEkREnREjpdTUn/xfaY3cutR3Cf5TycZwXft45+C9AD6+
+	BmpGKqsFpUxgjq1tqJJd2cdJMx+RwlxlTXCpYMwd+elpY00prSaUdFuRbVzOyNUJ
+	40P/uBydPRbcBM5Ta8PDyYFO8ySpLNWuWmJ/ukjv+2b5YdZlgiCllCF3KpO/YMK1
+	WJVn/5fCqttBsN9odPtCAfer3tVt5iQzzB5qxIyD7A==
+X-ME-Sender: <xms:OtPBZU1ub2CGStixHBHwp3yDotCai_Uwib8zzl-GYl2SysEJdex2kQ>
+    <xme:OtPBZfFAfelUrD5NRug6-7fWycdfXD1qizg8UW_Uoml7tXNXYsnP8eNwwSqP1POgg
+    n0327Z_3mnnOx4_4w>
+X-ME-Received: <xmr:OtPBZc6EOcYj_rHeubALGsCQuxNCArwds0UmpKWAfQhObiM9hMeuDLVSO_klgIORhrnhGBezocnHbg2Wp3EPhMcpHAREFXBpwk9To2KpZcrHaI0I>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrfedvvddgleelucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+    cujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtvdenucfhrhhomheprfgrthhr
+    ihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvg
+    hrnhepueektdevtdffveeljeetgfehheeigeekleduvdeffeeghefgledttdehjeelffet
+    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
+    hpkhhsrdhimh
+X-ME-Proxy: <xmx:OtPBZd0LmmpcOCwbXrl5073CrCm5aeNWnyjgDbXhkyBNNv7i69o2Bg>
+    <xmx:OtPBZXFfP5wDfuPBpbm900BtS4nqKsNoazZfZEsXP_dmgU3pAPZnow>
+    <xmx:OtPBZW_FzfElGwPjr_3eqaoxxoZ27gKbPiVhbq1DGu1snHwFLgk7lA>
+    <xmx:OtPBZYNGD3sY3TI5kxYXxlpBSNTXuH4kyhbZKkMmugENYwfJvjE2bxRnWIo>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 6 Feb 2024 01:35:33 -0500 (EST)
+ 6 Feb 2024 01:35:37 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id dae1357b (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 6 Feb 2024 06:32:03 +0000 (UTC)
-Date: Tue, 6 Feb 2024 07:35:31 +0100
+	by vm-mail (OpenSMTPD) with ESMTPSA id 1f269b53 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 6 Feb 2024 06:32:08 +0000 (UTC)
+Date: Tue, 6 Feb 2024 07:35:35 +0100
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
 Cc: Eric Sunshine <sunshine@sunshineco.com>,
 	Junio C Hamano <gitster@pobox.com>, Toon Claes <toon@iotcl.com>,
 	Karthik Nayak <karthik.188@gmail.com>
-Subject: [PATCH v3 3/9] reftable/stack: fix parameter validation when
- compacting range
-Message-ID: <f0e8f08884769fef048997ef6ba2c8dd1633a1c5.1707200355.git.ps@pks.im>
+Subject: [PATCH v3 4/9] reftable/stack: index segments with `size_t`
+Message-ID: <7bcfe7b305b800f0d7c20d8322ca8b68b4f9d656.1707200355.git.ps@pks.im>
 References: <cover.1706687982.git.ps@pks.im>
  <cover.1707200355.git.ps@pks.im>
 Precedence: bulk
@@ -84,122 +83,163 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="895bV6IZQfIoyrA+"
+	protocol="application/pgp-signature"; boundary="Y7F3Lrz7tShQuqKR"
 Content-Disposition: inline
 In-Reply-To: <cover.1707200355.git.ps@pks.im>
 
 
---895bV6IZQfIoyrA+
+--Y7F3Lrz7tShQuqKR
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-The `stack_compact_range()` function receives a "first" and "last" index
-that indicates which tables of the reftable stack should be compacted.
-Naturally, "first" must be smaller than "last" in order to identify a
-proper range of tables to compress, which we indeed also assert in the
-function. But the validations happens after we have already allocated
-arrays with a size of `last - first + 1`, leading to an underflow and
-thus an invalid allocation size.
-
-Fix this by reordering the array allocations to happen after we have
-validated parameters. While at it, convert the array allocations to use
-the newly introduced macros.
-
-Note that the relevant variables pointing into arrays should also be
-converted to use `size_t` instead of `int`. This is left for a later
-commit in this series.
+We use `int`s to index into arrays of segments and track the length of
+them, which is considered to be a code smell in the Git project. Convert
+the code to use `size_t` instead.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- reftable/stack.c | 24 +++++++++++++-----------
- 1 file changed, 13 insertions(+), 11 deletions(-)
+ reftable/stack.c      | 25 +++++++++++--------------
+ reftable/stack.h      |  6 +++---
+ reftable/stack_test.c |  7 +++----
+ 3 files changed, 17 insertions(+), 21 deletions(-)
 
 diff --git a/reftable/stack.c b/reftable/stack.c
-index a7b2c61026..1de2f6751c 100644
+index 1de2f6751c..5da4ea8141 100644
 --- a/reftable/stack.c
 +++ b/reftable/stack.c
-@@ -966,6 +966,7 @@ static int stack_write_compact(struct reftable_stack *s=
-t,
- static int stack_compact_range(struct reftable_stack *st, int first, int l=
-ast,
- 			       struct reftable_log_expiry_config *expiry)
+@@ -1202,12 +1202,11 @@ int fastlog2(uint64_t sz)
+ 	return l - 1;
+ }
+=20
+-struct segment *sizes_to_segments(int *seglen, uint64_t *sizes, int n)
++struct segment *sizes_to_segments(size_t *seglen, uint64_t *sizes, size_t =
+n)
  {
-+	char **delete_on_success =3D NULL, **subtable_locks =3D NULL, **listp =3D=
- NULL;
- 	struct strbuf temp_tab_file_name =3D STRBUF_INIT;
- 	struct strbuf new_table_name =3D STRBUF_INIT;
- 	struct strbuf lock_file_name =3D STRBUF_INIT;
-@@ -974,12 +975,7 @@ static int stack_compact_range(struct reftable_stack *=
-st, int first, int last,
- 	int err =3D 0;
- 	int have_lock =3D 0;
- 	int lock_file_fd =3D -1;
--	int compact_count =3D last - first + 1;
--	char **listp =3D NULL;
--	char **delete_on_success =3D
--		reftable_calloc(compact_count + 1, sizeof(*delete_on_success));
--	char **subtable_locks =3D
--		reftable_calloc(compact_count + 1, sizeof(*subtable_locks));
-+	int compact_count;
- 	int i =3D 0;
- 	int j =3D 0;
- 	int is_empty_table =3D 0;
-@@ -989,6 +985,10 @@ static int stack_compact_range(struct reftable_stack *=
-st, int first, int last,
- 		goto done;
- 	}
+ 	struct segment *segs =3D reftable_calloc(n, sizeof(*segs));
+-	int next =3D 0;
+ 	struct segment cur =3D { 0 };
+-	int i =3D 0;
++	size_t next =3D 0, i;
 =20
-+	compact_count =3D last - first + 1;
-+	REFTABLE_CALLOC_ARRAY(delete_on_success, compact_count + 1);
-+	REFTABLE_CALLOC_ARRAY(subtable_locks, compact_count + 1);
+ 	if (n =3D=3D 0) {
+ 		*seglen =3D 0;
+@@ -1233,29 +1232,27 @@ struct segment *sizes_to_segments(int *seglen, uint=
+64_t *sizes, int n)
+ 	return segs;
+ }
+=20
+-struct segment suggest_compaction_segment(uint64_t *sizes, int n)
++struct segment suggest_compaction_segment(uint64_t *sizes, size_t n)
+ {
+-	int seglen =3D 0;
+-	struct segment *segs =3D sizes_to_segments(&seglen, sizes, n);
+ 	struct segment min_seg =3D {
+ 		.log =3D 64,
+ 	};
+-	int i =3D 0;
++	struct segment *segs;
++	size_t seglen =3D 0, i;
 +
- 	st->stats.attempts++;
++	segs =3D sizes_to_segments(&seglen, sizes, n);
+ 	for (i =3D 0; i < seglen; i++) {
+-		if (segment_size(&segs[i]) =3D=3D 1) {
++		if (segment_size(&segs[i]) =3D=3D 1)
+ 			continue;
+-		}
 =20
- 	strbuf_reset(&lock_file_name);
-@@ -1146,12 +1146,14 @@ static int stack_compact_range(struct reftable_stac=
-k *st, int first, int last,
- done:
- 	free_names(delete_on_success);
-=20
--	listp =3D subtable_locks;
--	while (*listp) {
--		unlink(*listp);
--		listp++;
-+	if (subtable_locks) {
-+		listp =3D subtable_locks;
-+		while (*listp) {
-+			unlink(*listp);
-+			listp++;
-+		}
-+		free_names(subtable_locks);
+-		if (segs[i].log < min_seg.log) {
++		if (segs[i].log < min_seg.log)
+ 			min_seg =3D segs[i];
+-		}
  	}
--	free_names(subtable_locks);
- 	if (lock_file_fd >=3D 0) {
- 		close(lock_file_fd);
- 		lock_file_fd =3D -1;
+=20
+ 	while (min_seg.start > 0) {
+-		int prev =3D min_seg.start - 1;
+-		if (fastlog2(min_seg.bytes) < fastlog2(sizes[prev])) {
++		size_t prev =3D min_seg.start - 1;
++		if (fastlog2(min_seg.bytes) < fastlog2(sizes[prev]))
+ 			break;
+-		}
+=20
+ 		min_seg.start =3D prev;
+ 		min_seg.bytes +=3D sizes[prev];
+diff --git a/reftable/stack.h b/reftable/stack.h
+index c1e3efa899..d919455669 100644
+--- a/reftable/stack.h
++++ b/reftable/stack.h
+@@ -32,13 +32,13 @@ struct reftable_stack {
+ int read_lines(const char *filename, char ***lines);
+=20
+ struct segment {
+-	int start, end;
++	size_t start, end;
+ 	int log;
+ 	uint64_t bytes;
+ };
+=20
+ int fastlog2(uint64_t sz);
+-struct segment *sizes_to_segments(int *seglen, uint64_t *sizes, int n);
+-struct segment suggest_compaction_segment(uint64_t *sizes, int n);
++struct segment *sizes_to_segments(size_t *seglen, uint64_t *sizes, size_t =
+n);
++struct segment suggest_compaction_segment(uint64_t *sizes, size_t n);
+=20
+ #endif
+diff --git a/reftable/stack_test.c b/reftable/stack_test.c
+index 289e902146..2d5b24e5c5 100644
+--- a/reftable/stack_test.c
++++ b/reftable/stack_test.c
+@@ -711,7 +711,7 @@ static void test_sizes_to_segments(void)
+ 	uint64_t sizes[] =3D { 2, 3, 4, 5, 7, 9 };
+ 	/* .................0  1  2  3  4  5 */
+=20
+-	int seglen =3D 0;
++	size_t seglen =3D 0;
+ 	struct segment *segs =3D
+ 		sizes_to_segments(&seglen, sizes, ARRAY_SIZE(sizes));
+ 	EXPECT(segs[2].log =3D=3D 3);
+@@ -726,7 +726,7 @@ static void test_sizes_to_segments(void)
+=20
+ static void test_sizes_to_segments_empty(void)
+ {
+-	int seglen =3D 0;
++	size_t seglen =3D 0;
+ 	struct segment *segs =3D sizes_to_segments(&seglen, NULL, 0);
+ 	EXPECT(seglen =3D=3D 0);
+ 	reftable_free(segs);
+@@ -735,8 +735,7 @@ static void test_sizes_to_segments_empty(void)
+ static void test_sizes_to_segments_all_equal(void)
+ {
+ 	uint64_t sizes[] =3D { 5, 5 };
+-
+-	int seglen =3D 0;
++	size_t seglen =3D 0;
+ 	struct segment *segs =3D
+ 		sizes_to_segments(&seglen, sizes, ARRAY_SIZE(sizes));
+ 	EXPECT(seglen =3D=3D 1);
 --=20
 2.43.GIT
 
 
---895bV6IZQfIoyrA+
+--Y7F3Lrz7tShQuqKR
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmXB0zIACgkQVbJhu7ck
-PpSgxg/+MqbtvzvFI8rB+Gh/KmUbGNH9yK3n9zSenAt1qefJpBFogbGeLo0Vz4Q8
-rvzmpt6wQ4NkCx7reb3AxPbQxzhAs6otrEPBNi70gewCKMl6cGMvhK+pTSvQ0uTT
-D/xZpWfJ3Z1lr60EMqGNk51SBXaFf2wQSojZKXFgu0ixOWn8AmCRhF/BuDl0WiaP
-+0xxCEYBnxs2lylSAwDAcCVb4Fx5ZoIlMFCCPdKyi/R3a5xtAcPR5jU8zVKj/JyN
-IKSZlbWiw9N5NL9+f9jdfg0Fhmfx9iFEk+Pff2g+egSdP8wv3MFvTjMt5Rou8nJo
-RKogtRogMKvnokyfCbBz+4kK8iAr3SFzMfYIHg5CAIccXuy5J/bZTIzHn5TPaNmq
-fatwsHuQadCipQCBVZ6Esb1wU1EhrnjBFLiOnw7xNLWyW8GOgaedGypl7V+NJCRn
-gkUPp7B4JyyAbtr9n+P2nYqNWClEwgkpYDuvtraCc0XD05r1/0tcqInn6ooidC8V
-YkVPOo/cM08Q7HFqq7uaVQ3BeS/PrgMiWIy6NwRzt9IqupG7JklGTIvCIeH4tkA2
-sXkbf6LT8jjn4v/e7WIogbqmhCYvhptgyLiubDGbVYeIiC/GaRki0lY3NDYvAOap
-A9Q8N+yQp5Vt/GRcY3TPYtdoWAeQecSavfvzim7BU4e9fXogHlM=
-=ypQt
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmXB0zYACgkQVbJhu7ck
+PpSugw//a/GLFN2Ew233sCDeakw2rKetuf4V9XSx8MisnOd4zpZX+9nvNC4d1/v0
+KFX/uynNQ9V6LdwIMCdZkprtqBcVLZETNo+A04xxQaGQawMsKT2QYlbqqAcFbJfW
+nd00OVh6tTO9y+kkeNDjJdBPNPjIO0bm5ukpGmjgDA5Huf8uO14j6xp5i+uEa1FB
+NCp0D06CG6jxZTc4JgyyEMaHLHJXZfyzyQCfwxvaxfVl4Fhs4MOBihVHlPGTu1SF
+HbO1S6W0A6+3ynBmMZFu/Us3z77LYapK6Xm9pqPwcE2H4XYrGnD/yuQ9K3Kk1Wmn
+tWsRncWJ0PztRGGKEE5uahp4XeU0KDQizvvQ+iW+excdOIZN66YFr9/ObD/5N6uV
+l6ZcELtevFqr0RNLvSPdwuQsAPAbbz/R0l4xG7v8Af9L8vjqmO4ZuIDQ/Jqm5wSx
+iSZd3XGUGrJgze5uOcbBRnFYyxpj1OVutt2R1bMGvBZw49RLJVWw9ACggMo936xm
++2VeCwT0m3tHCHt4FWGEiDDsF0VOI0VhLGIEKOVt02Egnj6cHIHBQ0d/j3X+P2+s
+guBtkkbTrGc5yJNBbfKtLwEQt/hB6b0SqBNp5d282q3J09rCYf4ldmBbgL28mpyd
+YUDAcDKPWFO+vdcj8JuDcszO3EQEo5TykgNHuzCMPn9GpMWXegE=
+=eY7v
 -----END PGP SIGNATURE-----
 
---895bV6IZQfIoyrA+--
+--Y7F3Lrz7tShQuqKR--
