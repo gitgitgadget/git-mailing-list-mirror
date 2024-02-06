@@ -1,56 +1,54 @@
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C12C2DDAE
-	for <git@vger.kernel.org>; Tue,  6 Feb 2024 17:04:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80167134A4
+	for <git@vger.kernel.org>; Tue,  6 Feb 2024 17:52:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707239048; cv=none; b=ZdPq70b4nRwplpJe2rml7Rn0espKx0kF3bFDUHFpJ3uNvMBCjQEN19wI6Ye+SoNRsZDzWq6T89xLKDY/4kq9HOcQsvYtHVtabG5NWcRJhPjzI3xwp6gd5oENLGuTytgGXIsU5d/P2MHYJyaGNxhGhtNE8IDzmBohzt5S5IC6MQg=
+	t=1707241970; cv=none; b=uSNZKu5XaklJWIi0oV699AuJaHHLnZPVkbZEg3i52w4fwUf2YUHiNycof+9Ukem4IHogujlBKP1u1U6MDRMiysbZYA4T0pjYJvv6b3cZ00acNOWiwJ7gwdWjbUZiOdyuELhg4JPvNoYiC9gb+iEtzFKjIjNAG0IZLCsyW5uQJnY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707239048; c=relaxed/simple;
-	bh=Sra3V7UPT72sH5D9JP2XOMebxRVg8XRNJWR9DuwBsfo=;
+	s=arc-20240116; t=1707241970; c=relaxed/simple;
+	bh=TMN4VxkrqkZM/i8978c5axS9kZ+QeH2J4cDdQayWtak=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=ToGGCITa5L5GWDFIMKYcGxtDhayEYyYu9MfEqiNQIanZJlULsus2MJShcaPCliNMUvx56wf3RrN71GuvclicK0NooO88pgIyFub2wUm5jGusEIKKOsEQiP1Jb+sUb7iUC6qUFUZ74bl6NvvXkZoayvVtw08cOiwMwRKtMJ2SMsM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=yWeOtYiS; arc=none smtp.client-ip=173.228.157.52
+	 MIME-Version:Content-Type; b=Y0GHF2j/jykFM1g1vsCHrWfPPxCsbui4DcOstRoluW9gzaAeDsaMdY6UglDPO23lkIb1IEpn2OjEcULA5OeZ6gmWV+BswkljSb9W2giuB0/6aJmdSC+8VJywQPL0coiOpqcteOxtuu1NcFnqDmhTvP5aWN4jMWVd3eaS9j/sXTA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=Hk4tSGfk; arc=none smtp.client-ip=173.228.157.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="yWeOtYiS"
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 8C47423953;
-	Tue,  6 Feb 2024 12:04:00 -0500 (EST)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="Hk4tSGfk"
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id A81EE20DF6;
+	Tue,  6 Feb 2024 12:52:43 -0500 (EST)
 	(envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=Sra3V7UPT72sH5D9JP2XOMebxRVg8XRNJWR9Du
-	wBsfo=; b=yWeOtYiSFbdlt47Yc83dwqKgNCWOiOMmfgbWpsoQrX6Wy7or1Y6DaT
-	ctq82+fhBOOD31Uku4Pi+/hhN/VQ0tZKN6TYHNg8B8fPOag2gUlo0xZtz2nQ8Zlz
-	Z4kdI2pcLAJuVJx0TYL6VaWP/Wu5yhcdNMH1plUlOV0FOIJ6LP2qU=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 841E323952;
-	Tue,  6 Feb 2024 12:04:00 -0500 (EST)
+	:content-type; s=sasl; bh=TMN4VxkrqkZM/i8978c5axS9kZ+QeH2J4cDdQa
+	yWtak=; b=Hk4tSGfkW9QFKLaYFed7MDVjMj1Vt8S4h8ahUcEsbtNK+hgOalne4b
+	pRdUGlDGYQ8qc4HGzq//h+KfCI5PYQaKtLg0vjRnTdk9NA4mqxLZ1GfhyxLDYB07
+	v0JKTSXigVt9Hwwnta12D9uqOJ0cuzNZu6DpYhoxeYDom1JyREHJI=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id A01C120DF5;
+	Tue,  6 Feb 2024 12:52:43 -0500 (EST)
 	(envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.125.165.85])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 2028323951;
-	Tue,  6 Feb 2024 12:03:57 -0500 (EST)
+	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 304CD20DF4;
+	Tue,  6 Feb 2024 12:52:40 -0500 (EST)
 	(envelope-from junio@pobox.com)
 From: Junio C Hamano <gitster@pobox.com>
-To: Phillip Wood <phillip.wood123@gmail.com>
-Cc: Karthik Nayak <karthik.188@gmail.com>,  phillip.wood@dunelm.org.uk,
-  git@vger.kernel.org,  ps@pks.im
-Subject: Re: [PATCH v3 4/4] for-each-ref: avoid filtering on empty pattern
-In-Reply-To: <92ba680d-0b48-49f0-aafc-f503e5a5e0ea@gmail.com> (Phillip Wood's
-	message of "Tue, 6 Feb 2024 13:55:02 +0000")
-References: <20240119142705.139374-1-karthik.188@gmail.com>
-	<20240129113527.607022-1-karthik.188@gmail.com>
-	<20240129113527.607022-5-karthik.188@gmail.com>
-	<98d79d33-0d7e-4a9c-a6a3-ed9b58cd7445@gmail.com>
-	<CAOLa=ZR=_tt=ppphGMkxqj_YB5G+YkTMWGzRzcHTbrZz4ysb5w@mail.gmail.com>
-	<92ba680d-0b48-49f0-aafc-f503e5a5e0ea@gmail.com>
-Date: Tue, 06 Feb 2024 09:03:55 -0800
-Message-ID: <xmqqle7xjzic.fsf@gitster.g>
+To: Maarten Bosmans <mkbosmans@gmail.com>
+Cc: git@vger.kernel.org,  Teng Long <dyroneteng@gmail.com>,  Maarten Bosmans
+ <maarten.bosmans@vortech.nl>
+Subject: Re: [PATCH 1/4] notes: print note blob to stdout directly
+In-Reply-To: <CA+CvcKTtcHCCKucQ0h1dnaDAMNfErJ+a1CXEVi=ZE5dv57Tb3A@mail.gmail.com>
+	(Maarten Bosmans's message of "Tue, 6 Feb 2024 10:55:04 +0100")
+References: <20240205204932.16653-1-maarten.bosmans@vortech.nl>
+	<20240205204932.16653-2-maarten.bosmans@vortech.nl>
+	<xmqqil32l0i6.fsf@gitster.g>
+	<CA+CvcKTtcHCCKucQ0h1dnaDAMNfErJ+a1CXEVi=ZE5dv57Tb3A@mail.gmail.com>
+Date: Tue, 06 Feb 2024 09:52:38 -0800
+Message-ID: <xmqqy1bxiiop.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -60,73 +58,40 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 X-Pobox-Relay-ID:
- B7100314-C511-11EE-8708-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
+ 8558B9C2-C518-11EE-A001-A19503B9AAD1-77302942!pb-smtp21.pobox.com
 
-Phillip Wood <phillip.wood123@gmail.com> writes:
+Maarten Bosmans <mkbosmans@gmail.com> writes:
 
-> Thanks I'd missed that discussion. I see that at the end of that
-> discussion Junio was concerned that the proposed "" did not account
-> for "refs/worktrees/$worktree/*" [1] - how has that been resolved?
+>> I am not sure if we want to accept an approach that feels somewhat
+>> narrow/short sighted, like this patch.  When "git show" learns an
+>> improved way to show blob objects, who will update the code this
+>> patch touches to teach it to use the same improved way to show the
+>> notes?
 
-Ah, that is an excellent point.
+Another thing I forgot to mention was that I suspected the use of
+"git show" was so that we can deal with notes trees whose leaves are
+*not* blob objects.  As our "git notes" machinery, including how the
+initial contents are populated with "git notes add" and how existing
+notes on the same object are merged, all assume and depend on that
+the leaves are blobs, we can say "we'll just dump to stdout with
+write_in_full()", but who knows what kind of custom crap random
+third-party tools and IDEs try to use notes trees to store.
 
-If we plan to never allow showing refs/worktrees/ hierarchy, then
-the "there is a default pattern, refs/, that gets used when there is
-no user-specified patterns" model would be sufficient to allow
-showing things that are directly beneath $GIT_DIR and are out of
-refs/ hierarchy, but that does not explain why refs/worktrees/ is
-omitted.  I'll envision a design for a longer term later, but an
-easy way out would be to add --include-worktree-refs option for
-that, and at that point, adding --include-root-refs option for things
-outside the refs/ hierarchy may become a lot more natural solution.
+Even if we limit ourselves to blobs, they may not be suitable to be
+dumped to tty (or a pager, for that matter), and I can see how
+textconv could be used as a way out ("detect that the notes payload
+is an image and spawn display" kind of hack in a repository full of
+images and notes used to store thumbnails, perhaps).
 
-In the longer term, I suspect that we would want something similar
-to the negative refspec magic (e.g., "git log ':!Documentation/'"
-that shows things outside the named hierarchy) exposed to the API[*],
-so that we can say
+> That is also a cool idea. That would probably use the functionality of
+> the cat-file batch mode, right?
 
-    $ git for-each-ref --format=... \
-	refs/ !refs/heads/ !refs/tags/ !refs/remotes/
+Not really.  I was hoping that "git show" that can take multiple
+objects from its command line would directly be used, or with a new
+option that gives a separator between these objects.
 
-to show things under refs/ excluding the commonly used hierarchies,
-and at that point, the current behaviour for "no limit" case can
-again become explainable as having "refs/ !refs/worktrees/" as the
-default.  It still does not explain why "git for-each-ref refs/"
-omits the refs/worktrees/ hierchy, unless the default limit pattern
-rule were something like "unless you give a positive limit pattern
-rule, then we use 'refs/' by default, and unless you give a negative
-limit pattern rule, then we use '!refs/worktrees/' by default".
-
-It then gives an easy explanation on the traditional behaviour, with
-"" used for "including stuff outside refs/", and is more flexible.
-
-The use of dashed-options to include hierachies that are by default
-excluded (e.g. "--include-root-refs" and "--include-worktree-refs")
-feels limiting, but should be sufficient for our needs, both current
-(i.e. I want to see HEAD and FETCH_HEAD) and in the immediate future
-(i.e. I want to see worktree refs from that worktree), and I can buy
-that as a good alternative solution, at least in the shorter term.
-
-I still worry that it may make introducing the negative ref patterns
-harder, though.  How does --include-worktree-refs=another to include
-the worktree refs from another worktree in refs/worktrees/another
-interact with a negative pattern that was given from the command
-line that overlaps with it?  Whatever interaction rules we define,
-can we easily explain it in the documentation?
-
-Just like "an empty string tells Git to include everything" is a
-perfectly reasonable approach if we plan to never allow
-refs/worktrees/ hierarchy, "dashed-options for selected hierarchies"
-is a perfectly reasonable approach if we plan to never allow
-negative limit patterns, I suspect.  We should stop complexity at
-some point, and the decision to never support negative limit
-patterns might be the place to draw that line.  I dunno.
-
-
-[Footnote]
-
- * Such an exclusion mechanism already exists and are used to hide
-   certain refs from being seen over the network by "git fetch" and
-   friends.  I do not think it is plugged to the machinery used by
-   for-each-ref and friends, but it smells like a reasonably easy
-   thing to do.
+Perhaps we want a new option, e.g., "git notes show --text" that
+passes the contents of the leaf blob object to write_in_full(),
+bypassing all the things "git show" does, while in a rare case when
+the leaf we find is not a blob to invoke "git show".  That might be
+a safe approach to move forward, if we wanted to do this.
