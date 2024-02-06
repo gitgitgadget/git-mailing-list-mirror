@@ -1,141 +1,147 @@
-Received: from mail-ed1-f49.google.com (mail-ed1-f49.google.com [209.85.208.49])
+Received: from mail-ej1-f50.google.com (mail-ej1-f50.google.com [209.85.218.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C864130AC7
-	for <git@vger.kernel.org>; Tue,  6 Feb 2024 13:20:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B909113172E
+	for <git@vger.kernel.org>; Tue,  6 Feb 2024 13:55:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707225617; cv=none; b=s7riVt7ntXV3Ale+2HW0iRvMLaIdFstUtHt3ONv+RxBVRcaF3x6Sl2J7AVI+L5j06jOmLC78Nys5Z8tXYJMxGMabtRxqFfQz0nVN2ISqFoLOrEjNQex88OJ6iJFsyBZ1dQc3JLGAUa/MX0rQNWKpo0UAygUOEoQfpOibaRzmXkA=
+	t=1707227707; cv=none; b=JryuhsezREZ6aNoquSCgpWEtnri4hTIQ3udnLB4fz3wh3sVablwOWkkfg1UO88egePvq63vmTUfPtXQmJlq2GyYWpeWjJVXp9luL94Qiroi1XzWep5SVY+twJZeNrQhYJjPSf6yTIlo1bfwmXERueQAYqgXklPhlZx+9T/u9XaI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707225617; c=relaxed/simple;
-	bh=CjEFt0pyCdW4uOgDSnT+sFetVg7X+Jqx6GcLfHFGSF8=;
-	h=Message-ID:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=BjnU85R7CB6EfGPT1y9AQ3gsRXtzGGTqcOgl6YUGaPB86/DVFqf9ShLmVjG8pLXw2814FsdVgVbIvn2CYXn7khYaffm97SDQjiGNPfs1VWW5ZBLnONtGl3scMvIhwfmHDODzxOEOwfL9uNZ/BvF2muDEI8Auto/gvB5CLlaU6TA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RS5HYtl7; arc=none smtp.client-ip=209.85.208.49
+	s=arc-20240116; t=1707227707; c=relaxed/simple;
+	bh=3G3nOOPY4d9v5rErAHBGEDYzBQpna/akfDBiZd6ByqU=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=StY2j15r17vNB/tBufQT/+ZR6MDsbim4zqhFFE9DaGl9pO88jL8XUWJ2/hogonNucGLECPytQgQAN4Yz+odrAIvInBA3s+VDg2Q1FTZ9ex4Diqp6J5QYzp8HxnY9dPAYrRlZvxq56Oqpym8V6syEj6hUQEwsYH3Vuk8oQnimVcc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=KUqmTcvh; arc=none smtp.client-ip=209.85.218.50
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RS5HYtl7"
-Received: by mail-ed1-f49.google.com with SMTP id 4fb4d7f45d1cf-55a8fd60af0so7300108a12.1
-        for <git@vger.kernel.org>; Tue, 06 Feb 2024 05:20:15 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KUqmTcvh"
+Received: by mail-ej1-f50.google.com with SMTP id a640c23a62f3a-a380c98e824so117544966b.2
+        for <git@vger.kernel.org>; Tue, 06 Feb 2024 05:55:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1707225613; x=1707830413; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=WkHPYBTlTDflC6Yd73ueIov5cjIU2Iy0FtNls23aywo=;
-        b=RS5HYtl77AS8wbvRtniuJZUrTOFRqp/D4lgcI4qs+GkIfDZ/4uFHm7j7a5evVx11Ln
-         zPdj2mNLbVfRuP3uGfB6nwPkp1yAKNQiIO3QcIQryEQW6PnqW58/4Dbe3wvxD+4lnCEN
-         V8BwUU0+LtWnbBoyTX/wtXb7l3PadV9e2eiSBO5QyoJTYqzF/h3mr8xzqt9ivU2zTKfn
-         F2H7sVhOgDgzVA2cyp0adJR7cuyuHf2ZOEKvjtgh44oykLksCHp14MGvUobN0ulgvLAk
-         Ddtf906p0EcwzVAARHXux7o7FtmleRkan1fGlGlYJkahnT5u83I80A5BKruRaHeOI/bG
-         k9Sw==
+        d=gmail.com; s=20230601; t=1707227704; x=1707832504; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=dUNhGdftGPCXkKZvmPUbJq6+fdU4P/LHrzb07EEcfcI=;
+        b=KUqmTcvhzafo/CmwWEwJ4n4xt88qHLGWrGXli9UKehznBvJnecaqaE77ti/KIbSl3o
+         NxiW9MNdZKysZOCXWRwqqG+GtBSUJQoLPowg1/uXKl+emgwjXj80oliw3WIFj9xS78rB
+         /SQ7f34q7A8EWehlC8oOtUOkgAMPo1VoQwdeIczE0ob2j/wHIITMBeMaL5wRWHM9YSGt
+         n6Rxc0+2LEe0wwz9YLQDJjt0xkRzqHGQJi6zDOjRa1zha40b76/C9yKGDQpKvM2aNkhl
+         lFWN3L7RmSPNWvxHyRaZOG3O/MMckqnvb3Fy5w+Pzfclxz8UVGpa1Gu6WgpWwo0JRr3n
+         ieIQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1707225613; x=1707830413;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=WkHPYBTlTDflC6Yd73ueIov5cjIU2Iy0FtNls23aywo=;
-        b=t6hr7ajHlNnalE7kBvWtdlZQBeW4n52xue9yqEuvIREsk6kEC4MWLxcqzRpUVu1Orb
-         gN1SupQ9VrtCOkGkcrrNnTlWR9EKFKLh4tJpeEcvHN7JUsn16QcxbzeK569cyjwg9qNb
-         MgPGQGHHA7qHhnraoJ6sBIdVCZRxd6UhhGqdSgVGKH92t8DHWExBgX4gD3LhRldUGNSA
-         OE+gMCVeOxOK1uCuSnuTgzgAqKWzyodaiLnj7z7V7d8GOvo7ajYFW7S8HYCFapz6lqEj
-         gdzx3zaOd2EpGVBtu6APvzlKBXYbtY7ReX7ZMGk+1Z2TylIWjO36TOD7EUbOI2Q5K+wp
-         kvBA==
-X-Gm-Message-State: AOJu0YymV/Tt/luiWQnp5/JagX3b3hEnWzMWaolF8OZ3AzcbEKlQVJnq
-	VZ6mvjARszBBuJ7ya0xkZTbT56Sszv2jgaiiI9OyySsphc7hCq1gMEE+jBcl
-X-Google-Smtp-Source: AGHT+IEJhws+BH0YsI9ECPuxmeuupAwGQjpOCaZoV6oQGzUpjFr/NdMlLSTa2XZZavYEzJRX4uSPDg==
-X-Received: by 2002:a17:907:2cf5:b0:a37:9bf7:bff3 with SMTP id hz21-20020a1709072cf500b00a379bf7bff3mr1327045ejc.58.1707225613491;
-        Tue, 06 Feb 2024 05:20:13 -0800 (PST)
-X-Forwarded-Encrypted: i=0; AJvYcCWD2ZU+xfRTHC3VjXDMwXJwgu0MpIEjn4wuYmquqHwPVKKI6uluJ+gcV4kaRv5uuGuJuDPM3n+wzRzF6nbBan5n3ALvrKzwHCtJW++n2w==
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id h21-20020a170906111500b00a372330e834sm1143055eja.102.2024.02.06.05.20.13
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 06 Feb 2024 05:20:13 -0800 (PST)
-Message-ID: <pull.1665.v2.git.git.1707225612576.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1665.git.git.1707069808205.gitgitgadget@gmail.com>
-References: <pull.1665.git.git.1707069808205.gitgitgadget@gmail.com>
-From: "Philippe Blain via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Tue, 06 Feb 2024 13:20:12 +0000
-Subject: [PATCH v2] .github/PULL_REQUEST_TEMPLATE.md: add a note about
- single-commit PRs
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        d=1e100.net; s=20230601; t=1707227704; x=1707832504;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:reply-to:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=dUNhGdftGPCXkKZvmPUbJq6+fdU4P/LHrzb07EEcfcI=;
+        b=Kk/M1vttEMILoAnzOg82GXDmJm0HNe60dHvoiEDCenSJhUn51OpjkH84M9ej1NwkhC
+         FbSmEu4FZVNrLum5OMCRJyctVISn/f8dktPWXBE+qDC0bI1qaUVGBA2c5UdzcPyz+qqY
+         Rlj1ldP7Y2PR1gjT2Umlk/Icfwr3Ff8rkP5N4fMihv6grckeXIj2/HN8NVOzyyecCeeS
+         n2j53vxXejlvEzA+1GsPTl9X13T/fCazb3LwcuHPu1asuHKCAtsGAZ416uHOoqVp0vl+
+         aWiVjw6y/sPjTvksz/1mGLHleF3aB94cn5ffCHGygq4tMvvMSq35N9cBAPFUdYr/Isg/
+         n6Gg==
+X-Gm-Message-State: AOJu0YxSMjUfkNC/G3IirSPFmM5YYxBhw9hlr0X4X9li1DCGh9a7Dt65
+	ys7GdboilrlERQDSktSUeD/jbDacA6d9L7baO0jPs77XlPeuZoTi
+X-Google-Smtp-Source: AGHT+IHEcU7vTq4brIB0CQxWu6AcK8w73ty+j17wF/pe053ho50lFH7qNeGH3c84Z7KGMehOeNq8/Q==
+X-Received: by 2002:a17:906:23e9:b0:a31:4e96:f40a with SMTP id j9-20020a17090623e900b00a314e96f40amr1723966ejg.26.1707227703644;
+        Tue, 06 Feb 2024 05:55:03 -0800 (PST)
+X-Forwarded-Encrypted: i=0; AJvYcCVc5B4lF+R1v0jPtMhuyHj8TLf9DBDr0E5gLKOznvUa1WFu5WKrWh39iKtD38sYNPjGeA9jgSM60PW4cs4pnl+/N1hmL7WzlHoJ7rJ3TNPlf2wXyRXSPQ+8LMQhGG8nCSUYpiL63iPJGA==
+Received: from ?IPV6:2a0a:ef40:62e:a901:d2c6:37ff:fef6:7b1? ([2a0a:ef40:62e:a901:d2c6:37ff:fef6:7b1])
+        by smtp.googlemail.com with ESMTPSA id gt26-20020a170906f21a00b00a37b795348fsm1154280ejb.127.2024.02.06.05.55.02
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 06 Feb 2024 05:55:03 -0800 (PST)
+Message-ID: <92ba680d-0b48-49f0-aafc-f503e5a5e0ea@gmail.com>
+Date: Tue, 6 Feb 2024 13:55:02 +0000
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-    Philippe Blain <levraiphilippeblain@gmail.com>,
-    Philippe Blain <levraiphilippeblain@gmail.com>
+User-Agent: Mozilla Thunderbird
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v3 4/4] for-each-ref: avoid filtering on empty pattern
+Content-Language: en-US
+To: Karthik Nayak <karthik.188@gmail.com>, phillip.wood@dunelm.org.uk
+Cc: git@vger.kernel.org, gitster@pobox.com, ps@pks.im
+References: <20240119142705.139374-1-karthik.188@gmail.com>
+ <20240129113527.607022-1-karthik.188@gmail.com>
+ <20240129113527.607022-5-karthik.188@gmail.com>
+ <98d79d33-0d7e-4a9c-a6a3-ed9b58cd7445@gmail.com>
+ <CAOLa=ZR=_tt=ppphGMkxqj_YB5G+YkTMWGzRzcHTbrZz4ysb5w@mail.gmail.com>
+From: Phillip Wood <phillip.wood123@gmail.com>
+In-Reply-To: <CAOLa=ZR=_tt=ppphGMkxqj_YB5G+YkTMWGzRzcHTbrZz4ysb5w@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-From: Philippe Blain <levraiphilippeblain@gmail.com>
+Hi Karthik
 
-Contributors using Gitgitgadget continue to send single-commit PRs with
-their commit message text duplicated below the three-dash line,
-increasing the signal-to-noise ratio for reviewers.
+On 06/02/2024 08:52, Karthik Nayak wrote:
+> On Mon, Feb 5, 2024 at 7:48 PM Phillip Wood <phillip.wood123@gmail.com> wrote:
+>> On 29/01/2024 11:35, Karthik Nayak wrote:
+>>> When the user uses an empty string pattern (""), we don't match any refs
+>>> in git-for-each-ref(1). This is because in git-for-each-ref(1), we use
+>>> path based matching and an empty string doesn't match any path.
+>>>
+>>> In this commit we change this behavior by making empty string pattern
+>>> match all references. This is done by introducing a new flag
+>>> `FILTER_REFS_NO_FILTER` in `ref-filter.c`, which uses the newly
+>>> introduced `refs_for_each_all_refs()` function to iterate over all the
+>>> refs in the repository.
+>>
+>> It actually iterates over all the refs in the current worktree, not all
+>> the refs in the repository. I have to say that I find it extremely
+>> unintuitive that "" behaves differently to not giving a pattern. I
+>> wonder if we can find a better UI here - perhaps a command line option
+>> to include pseudorefs?
+>>
+> 
+> As Patrick mentioned, this was discussed a while ago and we decided to
+> move forward with the `git for-each-ref ""` syntax.
 
-This is because Gitgitgadget copies the pull request description as an
-in-patch commentary, for single-commit PRs, and _GitHub_ defaults to
-prefilling the pull request description with the commit message, for
-single-commit PRs (followed by the content of the pull request
-template).
+Thanks I'd missed that discussion. I see that at the end of that 
+discussion Junio was concerned that the proposed "" did not account for 
+"refs/worktrees/$worktree/*" [1] - how has that been resolved?
 
-Add a note in the pull request template mentioning that for
-single-commit PRs, the PR description should thus be kept empty, in the
-hope that contributors read it and act on it.
+Best Wishes
 
-This partly addresses:
-https://github.com/gitgitgadget/gitgitgadget/issues/340
-
-Signed-off-by: Philippe Blain <levraiphilippeblain@gmail.com>
----
-    .github/PULL_REQUEST_TEMPLATE.md: add a note about single-commit PRs
-    
-    Changes since v1:
-    
-     * simplified the wording as suggested by Junio
-
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1665%2Fphil-blain%2Fempty-description-single-commit-prs-v2
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1665/phil-blain/empty-description-single-commit-prs-v2
-Pull-Request: https://github.com/git/git/pull/1665
-
-Range-diff vs v1:
-
- 1:  4786f84884a ! 1:  f719e11b1df .github/PULL_REQUEST_TEMPLATE.md: add a note about single-commit PRs
-     @@ .github/PULL_REQUEST_TEMPLATE.md: a mailing list (git@vger.kernel.org) for code
-       bug reports. Nevertheless, you can use GitGitGadget (https://gitgitgadget.github.io/)
-       to conveniently send your Pull Requests commits to our mailing list.
-       
-     -+If you use Gitgitgadget for a single-commit pull request, please *leave the pull
-     -+request description empty*: your commit message itself should describe your
-     -+changes.
-     ++For a single-commit pull request, please *leave the pull request description
-     ++empty*: your commit message itself should describe your changes.
-      +
-       Please read the "guidelines for contributing" linked above!
+Phillip
 
 
- .github/PULL_REQUEST_TEMPLATE.md | 3 +++
- 1 file changed, 3 insertions(+)
+[1] https://lore.kernel.org/git/xmqq1qawr6p4.fsf@gitster.g/
 
-diff --git a/.github/PULL_REQUEST_TEMPLATE.md b/.github/PULL_REQUEST_TEMPLATE.md
-index 952c7c3a2aa..37654cdfd7a 100644
---- a/.github/PULL_REQUEST_TEMPLATE.md
-+++ b/.github/PULL_REQUEST_TEMPLATE.md
-@@ -4,4 +4,7 @@ a mailing list (git@vger.kernel.org) for code submissions, code reviews, and
- bug reports. Nevertheless, you can use GitGitGadget (https://gitgitgadget.github.io/)
- to conveniently send your Pull Requests commits to our mailing list.
- 
-+For a single-commit pull request, please *leave the pull request description
-+empty*: your commit message itself should describe your changes.
-+
- Please read the "guidelines for contributing" linked above!
+>>> Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
+>>> ---
+>>>    Documentation/git-for-each-ref.txt |  3 ++-
+>>>    builtin/for-each-ref.c             | 21 +++++++++++++++++-
+>>>    ref-filter.c                       | 13 ++++++++++--
+>>>    ref-filter.h                       |  4 +++-
+>>>    t/t6302-for-each-ref-filter.sh     | 34 ++++++++++++++++++++++++++++++
+>>>    5 files changed, 70 insertions(+), 5 deletions(-)
+>>>
+>>> diff --git a/Documentation/git-for-each-ref.txt b/Documentation/git-for-each-ref.txt
+>>> index be9543f684..b1cb482bf5 100644
+>>> --- a/Documentation/git-for-each-ref.txt
+>>> +++ b/Documentation/git-for-each-ref.txt
+>>> @@ -32,7 +32,8 @@ OPTIONS
+>>>        If one or more patterns are given, only refs are shown that
+>>>        match against at least one pattern, either using fnmatch(3) or
+>>>        literally, in the latter case matching completely or from the
+>>> -     beginning up to a slash.
+>>> +     beginning up to a slash. If an empty string is provided all refs
+>>> +     are printed, including HEAD and pseudorefs.
+>>
+>> I think it would be helpful to clarify that it is all the refs for the
+>> current worktree that are printed, not all the refs in the repository -
+>> we still don't have a way to iterate over the per-worktree refs from
+>> other worktrees
+>>
+> 
+> I agree, based on if we keep the current commits or remove them, I'll
+> send in a new patch or amend the current series.
+> 
+> Thanks!
 
-base-commit: bc7ee2e5e16f0d1e710ef8fab3db59ab11f2bbe7
--- 
-gitgitgadget
