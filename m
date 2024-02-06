@@ -1,64 +1,65 @@
-Received: from mail-wr1-f44.google.com (mail-wr1-f44.google.com [209.85.221.44])
+Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06EE77D3F2
-	for <git@vger.kernel.org>; Tue,  6 Feb 2024 05:12:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B74E745E6
+	for <git@vger.kernel.org>; Tue,  6 Feb 2024 05:12:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707196364; cv=none; b=ja4qMPcyK7QZmVaUtyC30Z8xNyTAhDZJLk5k7higwNjokpJaOldGdMGjdUCpzQD9ZYUlVFWZg+k/taeGb7PHzl2J1X3fKXp3YeRW1dQfZ11Q9at2TQkUimzuytJJbRWZZXe91uKwjpFhHszzveLZI5U9l8KcpxQ5izG4K6bJ5eU=
+	t=1707196365; cv=none; b=NvqUuCo60q+wDfE7nPCC3uNITGWcdk8v3h3YhqM6y4cjy4vubaVrIwar2X11Mj7JTxuF7oNWomM5uVdZNUXZvxsAThMjqzgXrw1NmDWAyB8gXndkaQG6PwWKj1Kjz1VtYOvILUa3mg1admPTM1Q0eC5bj1ipKq/eUuy7jW2zZjA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707196364; c=relaxed/simple;
-	bh=hFYWqf/eNtAVR2xBEDUlIu9gKkRnsIbQ80K31A2J3Nk=;
+	s=arc-20240116; t=1707196365; c=relaxed/simple;
+	bh=MAUZuXKcVV+ZwGP6aGQG2JUwVo4pOZNJXxi299Qu5Eo=;
 	h=Message-ID:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=DD5C0DcFpeSqYufZk7Fst5GstrBFwFCVCSvo9785f9/5si8V7EncEVDnujQ5jjyGYdANMXaK598A/GdXrt476KJjxk9hRQioOTxITUiu9DzUyMaJ63jWakLbGhuSZHQ5kN5vIifs7qk6bxL0ax9iASHyEYntJ9s9NzjqxqaaV9A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HQJ+ob0X; arc=none smtp.client-ip=209.85.221.44
+	 MIME-Version:To:Cc; b=kWDFByeypgBQsoD+dBIi8Q8N/o6jWtSZxLe7QmKKbXgUGuoqq03Dgl9QQSRpZ/k4DNjs0HU17rWgGY+bfw9X5/xFUaawzQk3o18HH5vr+WqKz16lIWIjM/LIIjm8Ezuiaaadx6OyveWD7omoBjvCBX7DTwMP3jHwgWxGxp+gt2o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SeAayx6r; arc=none smtp.client-ip=209.85.128.44
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HQJ+ob0X"
-Received: by mail-wr1-f44.google.com with SMTP id ffacd0b85a97d-33b409fc4aeso952851f8f.1
-        for <git@vger.kernel.org>; Mon, 05 Feb 2024 21:12:42 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SeAayx6r"
+Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-40fe282b8e2so1987125e9.2
+        for <git@vger.kernel.org>; Mon, 05 Feb 2024 21:12:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20230601; t=1707196361; x=1707801161; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=bu3C6QYFVde3gn9amt7IKrmgfKcfRFijD1kT5Q6lcwI=;
-        b=HQJ+ob0XQlSyagPpsLP3cQebLgvttWz/8jt157ZKzD23ef4PEE5aBfnvmh5wC9k2JU
-         +isSog1IQOyp8z89QQeF9tE6y3/3n/L8RYD0E8KOjuj8FH7TIO7MdYUhwwK+BBcxPhzo
-         FWlLBLfSl+1o4b8LWNba4G9WIAgBGUW8554LZOC1lcJngoso33GlgnzdEhHfA9QJDIU7
-         Ml1Jn9sXr097xEMAi9LoQdxO0/bg/114HVit+jMnSaYEHuGf9mHP5Sgji1i4nAuhSUnC
-         stQ0/Lhte30fcHZYD5aAtOZo7tKhoagDacmH3Ldk4f8FEwvPKJ/OEZvJ9tf6Le7dJ2l4
-         o4Qw==
+        bh=/k8UYAywJQQ83aTCDk0e2w+uJAEUxmObItRX55s2ycs=;
+        b=SeAayx6rS0zl0/lPzg6WBcnjc9wJwquavdKstG1UihqK5v0zXcn2mpJM6c9tAdPB4F
+         Mtqah0fgg6l6/E7fKxu1da/vzE7gztfPvJAfnEh3qs1HMxqWuxb+KHkD0gx5XvMwpQC/
+         IgfsxRA1y+xEP87SDxcMU4Leb7XahBEZiXfSgqsZrpVzeVsXL0Es+Z0Hpj2n6PfoGdr6
+         bQdyygoMA5wEamv0iCrPxj8HFS42YAalC0sHpNhkGddahMNjsAPBxTaWfs5jof6npssI
+         c9RDN37k0ZpQXHTEm33wGhHy/jIvLqYzMjgUBBp+duCAMxmd++CmNPtgj5PAAL0dbMLB
+         glNQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20230601; t=1707196361; x=1707801161;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=bu3C6QYFVde3gn9amt7IKrmgfKcfRFijD1kT5Q6lcwI=;
-        b=npKywFojWt8vqTxnEi/TRO4/eB493G78NSzjps6ZaUg6RoCzXpOwsZfcXuF17gnRES
-         /g0bGd2A2hI1WLD6E1i198vOCy+A7dgcVyR1ZZjg5YIYPLy6egDKY5exhE/C4kJfCjIq
-         UOIh82ZrZP5UofW25x24tqalKs52K6iOFtvN6DZemjmi24pEDEem1Gp+LtMv7qTJlOda
-         mLIJLgTB9Z8KzGVOX3EQnaQYo71sLKOA26z+m9G4lfHI0fOi6EkypULrqp7bppu1aQXp
-         x0FnZB5/Oj6taqHpf8jh7ANkSDVC52gGrWK0moXM5vjRHmRp8mRfY9kJnu3Kf5VXBf+e
-         +Fmw==
-X-Gm-Message-State: AOJu0YzdpLcbfxw/nP5oR/WmIqZovEtMWKOvdrtWtIPvUCUH4CJkfNAr
-	3UKtMqrUi79f44UNZVqf+A/oD49NETcUyojhUxvIj0WI2n+diGv2PtYYZ/K2
-X-Google-Smtp-Source: AGHT+IHGFk9hlSWq8mmWafuCoN6q0DsXd/QPQNk7OOp1wN9Nw1mNNOInDC69n3Y23PSuHkNujFWBCA==
-X-Received: by 2002:adf:fecf:0:b0:33b:3ad8:22c5 with SMTP id q15-20020adffecf000000b0033b3ad822c5mr368128wrs.68.1707196360899;
-        Mon, 05 Feb 2024 21:12:40 -0800 (PST)
-X-Forwarded-Encrypted: i=0; AJvYcCWAITre0R28baAOmBVLmmvaqdQktV/5wURO0rKgAHNRouKUp7eQNN395PaVBfYHlU3YOKq83RnAkFqb2Kri54evyjkQ/CjP3Kld7q0JBIF/ojyllb3wJU/Pom/ZsWwOvrpU0gVBaV/dVEPVZNprYu8dpw81ep1NzO58ly8OW/4BET9r5CI9dKAgSDLnliDuIDPiTgpt3X2Q7Q==
+        bh=/k8UYAywJQQ83aTCDk0e2w+uJAEUxmObItRX55s2ycs=;
+        b=GFcooKBRAvGKPisHotDeeUk00gpeX2TIXoT16fj2aD8/ZXxPF7/UpRLeF253PRkfae
+         hr+nucrFK0hhGH0f+sBZTx/gih9ALtPinrvbR6AXvfFgYr9YXC/PnvzfKQIrESAyt0BB
+         v8A52baoBed1PDVKmkzPMrVUC9PMBtqAJCUeE2ubbTigot2DW+jjPbfNHTKnZWheG0ua
+         yrzLmGimL8DeydW6VWw0L9eU8s/lwET90zYwdKVyzc4dtavt/tokr10vhkrmFk4MiiYy
+         Wzs0r62KXr5hN9oQoVvcJqzYqygplNLc72lvNAKEVPmHfrtZsgHfAvHdMHI1KTafE2Mr
+         LjCQ==
+X-Gm-Message-State: AOJu0Ywh5VHkl5E/+v4y265m3fgYo+MjF7gSYtnyHBwg2DYQRw4Lx+f7
+	+2tgFfPRi5h4htnrTBUJUX92FgfsZUo5ueiRIQFI1g5nz7dSiKP4599FUDby
+X-Google-Smtp-Source: AGHT+IFKgA9VYjXrVrEhTxJcJ6m+TqsDwQeyK+do8lI6Lsh/Y3i9tyaGiyanA6oCTjCBE9u9e+Z/DA==
+X-Received: by 2002:a05:600c:354b:b0:40e:befe:37f3 with SMTP id i11-20020a05600c354b00b0040ebefe37f3mr826076wmq.4.1707196361370;
+        Mon, 05 Feb 2024 21:12:41 -0800 (PST)
+X-Forwarded-Encrypted: i=0; AJvYcCWKtZj5yJn0X+So1aRdSahTDUu92KmwLqUq6kN3Q75nGaKm167ELzrmaJUdOnDEBwpuWITZJPbSNh6on07hWaH1cA+GJLdlQjxEs8wBUKqnRiBFRDeKNnakaRVwZB/YIvy7f8cpdd9f1gwPeQKr9DB6xVItpVHy8D0vOv3dpyJZ+uZPDojXTOv5GiwSYT8p3M1QnPpARxsSJg==
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id q12-20020adff78c000000b0033ae4df3cf4sm1060630wrp.40.2024.02.05.21.12.40
+        by smtp.gmail.com with ESMTPSA id o27-20020a05600c511b00b0040fdb244485sm640761wms.40.2024.02.05.21.12.41
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 05 Feb 2024 21:12:40 -0800 (PST)
-Message-ID: <457f2a839d5da9da225e842275bbf8b15f194f1f.1707196348.git.gitgitgadget@gmail.com>
+        Mon, 05 Feb 2024 21:12:41 -0800 (PST)
+Message-ID: <a72eca301f7f9016ef3a8063f79790ce00f41ffe.1707196348.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1632.v4.git.1707196348.gitgitgadget@gmail.com>
 References: <pull.1632.v3.git.1706664144.gitgitgadget@gmail.com>
 	<pull.1632.v4.git.1707196348.gitgitgadget@gmail.com>
 From: "Linus Arver via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Tue, 06 Feb 2024 05:12:11 +0000
-Subject: [PATCH v4 11/28] format_trailer_info(): drop redundant unfold_value()
+Date: Tue, 06 Feb 2024 05:12:12 +0000
+Subject: [PATCH v4 12/28] format_trailer_info(): append newline for
+ non-trailer lines
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -79,35 +80,62 @@ Cc: Christian Couder <chriscool@tuxfamily.org>,
 
 From: Linus Arver <linusa@google.com>
 
-This is another preparatory refactor to unify the trailer formatters.
+This wraps up the preparatory refactors to unify the trailer formatters.
 
-In the last patch we made format_trailer_info() use trailer_item objects
-instead of the "trailers" string array. This means that the call to
-unfold_value() here is redundant because the trailer_item objects are
-already unfolded in parse_trailers() which is a dependency of our
-caller, format_trailers_from_commit().
+Two patches ago we made format_trailer_info() use trailer_item objects
+instead of the "trailers" string array. The strings in the array
+include trailing newlines, because the string array is split up with
 
-Remove the redundant call.
+    trailer_lines = strbuf_split_buf(str + trailer_block_start,
+                                     end_of_log_message - trailer_block_start,
+                                     '\n',
+                                     0);
+
+in trailer_info_get() and strbuf_split_buf() includes the terminator (in
+this case the newline character '\n') for each split-up substring.
+
+And before we made the transition to use trailer_item objects for it,
+format_trailer_info() called parse_trailer() (which trims newlines) for
+trailer lines but did _not_ call parse_trailer() for non-trailer lines.
+So for trailer lines it had to add back the trimmed newline like this
+
+    if (!opts->separator)
+        strbuf_addch(out, '\n');
+
+But for non-trailer lines it didn't have to add back the newline because
+it could just reuse same string in the "trailers" string array (which
+again, already included the trailing newline).
+
+Now that format_trailer_info() uses trailer_item objects for all cases,
+it can't rely on "trailers" string array anymore.  And so it must be
+taught to add a newline back when printing non-trailer lines, just like
+it already does for trailer lines. Do so now.
+
+The test suite passes again, so format_trailer_info() is in better shape
+supersede format_trailers(), which we'll do in the next patch.
 
 Signed-off-by: Linus Arver <linusa@google.com>
 ---
- trailer.c | 3 ---
- 1 file changed, 3 deletions(-)
+ trailer.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
 diff --git a/trailer.c b/trailer.c
-index 6333dfe1c11..12cae5b73d2 100644
+index 12cae5b73d2..0774a544c4f 100644
 --- a/trailer.c
 +++ b/trailer.c
-@@ -1102,9 +1102,6 @@ static void format_trailer_info(const struct process_trailer_options *opts,
- 			strbuf_addstr(&val, item->value);
- 
- 			if (!opts->filter || opts->filter(&tok, opts->filter_data)) {
--				if (opts->unfold)
--					unfold_value(&val);
--
- 				if (opts->separator && out->len != origlen)
- 					strbuf_addbuf(out, opts->separator);
- 				if (!opts->value_only)
+@@ -1125,9 +1125,10 @@ static void format_trailer_info(const struct process_trailer_options *opts,
+ 				strbuf_addbuf(out, opts->separator);
+ 			}
+ 			strbuf_addstr(out, item->value);
+-			if (opts->separator) {
++			if (opts->separator)
+ 				strbuf_rtrim(out);
+-			}
++			else
++				strbuf_addch(out, '\n');
+ 		}
+ 	}
+ }
 -- 
 gitgitgadget
 
