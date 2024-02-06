@@ -1,126 +1,95 @@
-Received: from mail.manjaro.org (mail.manjaro.org [116.203.91.91])
-	(using TLSv1.2 with cipher DHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A68D4745C3
-	for <git@vger.kernel.org>; Tue,  6 Feb 2024 03:33:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=116.203.91.91
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23D1D2CA4
+	for <git@vger.kernel.org>; Tue,  6 Feb 2024 03:44:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707190383; cv=none; b=ovXtFDQBlI6AGSasbuhq+PziEOfcVk9KBHyZAm2xliKU/Gm6p8BcA1EO50+WxddP0RE7okn922WvEYwEvabynyvt0QmYJvvSEz3ZFHpBZqQd4FlbnuFSAEt8YbI9W7J/yoEWFNUjlRB3ZdHXW6OVisDrwhqQAthxPlpR5chM5VQ=
+	t=1707191094; cv=none; b=K5ozL8ke6vWsUPQ0HUbTwym7SU7s+E0vGLXHsjSBuhwWS2TLXUrNYd+Tm9kUsqBtc1v5GAplRl44ohYIl+xIoVa0uxSBM840YrCUF/DLN7C7FtsOp7JbLYgd9WjkUPGO8PlUdwlADDrSBA/oADdgCKGrdK/IOmrajJd/tGGJ1/8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707190383; c=relaxed/simple;
-	bh=5w9YSljjE04ysouRI/TQAu5tcvN+csWMf+iySYP3BZ4=;
-	h=MIME-Version:Date:From:To:Cc:Subject:In-Reply-To:References:
-	 Message-ID:Content-Type; b=dLUwIx4JW5Xjvf0jCFiUY1n3VqpkhlZpXxa2deSuupKBo+fKttFDqoNG+vq5TUxxH9duwrotCq03DteKAgur3z57HlfDw9wSdZpkc5TwTalpi2koF0Yk32rUyG/msJr72tSG/Tzj/ZqIEEBjd986T2Yseo1j13PvKIXLDN8iuxM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org; spf=pass smtp.mailfrom=manjaro.org; dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b=w+6UB5qd; arc=none smtp.client-ip=116.203.91.91
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=manjaro.org
+	s=arc-20240116; t=1707191094; c=relaxed/simple;
+	bh=0rXDdo6tcGDzWG9odY/kGYUCrEKTX+L5JVZU6dSCrH8=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=XMdydCu19pKX9F7JEmcsb83VjWlHrPjD+ycTDJJLtA3i9k2Y3+k7jcE5VIvGhbQ5q/jc7Nk25HR1TLZ99v8JvOHgJL522NZj9pY4nN9u8JSkOU93Rg/+/vaZOQuKquf7zQzYaynPFZ65c4coX9kSpVWuBEi9Zyk65nidMBySRI8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=nkPxqx3z; arc=none smtp.client-ip=64.147.108.71
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b="w+6UB5qd"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="nkPxqx3z"
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id A42841E570E;
+	Mon,  5 Feb 2024 22:44:51 -0500 (EST)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=0rXDdo6tcGDzWG9odY/kGYUCrEKTX+L5JVZU6d
+	SCrH8=; b=nkPxqx3zp/rD+tE4RwaI9wtQYltbl00mWTdNs3Cq6F3+ZL3D3H8c3R
+	E9M3+g61YZw0xPeA43G9V9sRsvoCbl2kzC1VnXJPwk967U10HEB7A2RIhVlGXD6Y
+	c4diomUwvR13z7FxmNIzw8VVHw5gRkYuM+Kd50qramcf9p0TvgDuo=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 881E91E570D;
+	Mon,  5 Feb 2024 22:44:51 -0500 (EST)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.165.85])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id D8FFA1E570C;
+	Mon,  5 Feb 2024 22:44:50 -0500 (EST)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Maarten Bosmans <mkbosmans@gmail.com>
+Cc: git@vger.kernel.org,  Teng Long <dyroneteng@gmail.com>,  Maarten Bosmans
+ <maarten.bosmans@vortech.nl>
+Subject: Re: [PATCH 1/4] notes: print note blob to stdout directly
+In-Reply-To: <20240205204932.16653-2-maarten.bosmans@vortech.nl> (Maarten
+	Bosmans's message of "Mon, 5 Feb 2024 21:49:29 +0100")
+References: <20240205204932.16653-1-maarten.bosmans@vortech.nl>
+	<20240205204932.16653-2-maarten.bosmans@vortech.nl>
+Date: Mon, 05 Feb 2024 19:44:49 -0800
+Message-ID: <xmqqil32l0i6.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=manjaro.org; s=2021;
-	t=1707190378;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=kF8tqYLU+Djb4atfqvVXxD0le2qCCukoSa5N+S2vqv4=;
-	b=w+6UB5qdlQtNwC+SraRxcX3zJrxVxNVW30oNMToygb0K1qxfC2POY+0I1CcKoRUXfLQzZt
-	qv0wxoKKeTusnLcN7CYlvKbgboGWISh1ob8BPoFQXxLqCIFz8TaMBZC8Sq4BTT0/rHcQUy
-	iH3NXEuPl/BNucejmmFOShd4PV9r/UwBhPdC4eJ4nZmK+UaFrWFkBljvViN+YiMeYaYFnX
-	aAnUaR1HLyf9oGd4fkQXLnprsTBkc52Tfbuoe0jjRpQm7dkt6FLs2XcQIZn0jlUZd/5tYf
-	J+5i/U8Z2UjtZImO9GhEsEMjxpBfz1IxR3pKgAhaU3ccmcb+Ifte4qei4NcmDg==
-Date: Tue, 06 Feb 2024 04:32:57 +0100
-From: Dragan Simic <dsimic@manjaro.org>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Kyle Lippincott <spectral@google.com>, git@vger.kernel.org
-Subject: Re: [PATCH] branch: clarify <oldbranch> and <newbranch> terms further
-In-Reply-To: <xmqqttmmlahf.fsf@gitster.g>
-References: <e2eb777bca8ffeec42bdd684837d28dd52cfc9c3.1707136999.git.dsimic@manjaro.org>
- <CAO_smViHVZRObZjg0tEPXezJZb7wvs9LQdHUFJQTK4-ASCfrmw@mail.gmail.com>
- <xmqqttmmlahf.fsf@gitster.g>
-Message-ID: <8f588db87929b063462dbf4ff134adc7@manjaro.org>
-X-Sender: dsimic@manjaro.org
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Authentication-Results: ORIGINATING;
-	auth=pass smtp.auth=dsimic@manjaro.org smtp.mailfrom=dsimic@manjaro.org
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 14E08C18-C4A2-11EE-B040-25B3960A682E-77302942!pb-smtp2.pobox.com
 
-Hello Junio,
+Maarten Bosmans <mkbosmans@gmail.com> writes:
 
-On 2024-02-06 01:09, Junio C Hamano wrote:
-> Kyle Lippincott <spectral@google.com> writes:
-> 
->> I'm not super pleased with that second sentence, and maybe we
->> shouldn't include it here. Maybe it belongs on the documentation for
->> --move and --copy instead? It's sort of mentioned in the text at the
->> top describing the -m/-M and -c/-C options, though it's not clear from
->> that text what actually happens to the existing copy of <newbranch> if
->> one uses --force. If we could include a better description of what
->> happens to the existing branch when one uses --force, that'd be nice.
-> 
-> My preference is to limit the "OPTIONS" section to dashed options.
-> If "--move" takes one or two arguments, update its description to
-> talk about how these one or two arguments are used, perhaps like
-> 
-> 	-m [<oldbranch>] <newbranch>::
-> 	--move [<oldbranch>] <newbranch>::
-> 
-> 		Rename an existing branch <oldbranch>, which
->                 defaults to the current branch, to <newbranch>.  The
->                 configuration variables about and the reflog of
->                 <oldbranch> are also renamed appropriately to be
->                 used with <newbranch>. It is an error if <newbranch>
->                 exists (you can use `--force` to clobber an existing
->                 <newbranch>).
-> 
-> or something like that.
+> From: Maarten Bosmans <mkbosmans@gmail.com>
+>
+> From: Maarten Bosmans <maarten.bosmans@vortech.nl>
 
-Thank you for your detailed feedback!
+Which one of you are you?  Please make up your mind and use only one
+;-)  IOW, the first one is unneeded, as the latter matches what you
+have on the S-o-b line.
 
-I like it and I fully agree that describing the operation arguments
-fits and flows much better in the descriptions of their respective
-operations.  Describing the outcome of forced operations is also
-needed for completeness, and for safety.
+> Avoid the need to launch a subprocess by calling stream_blob_to_fd
+> directly.  This does not only get rid of the overhead of a separate
+> child process, but also avoids the initalization of the whole log
+> machinery that `git show` does.  That is needed for example to show
+> decorated commits and applying the mailmap.  For simply displaying
+> a blob however, the only useful thing show does is enabling the pager.
+>
+> Signed-off-by: Maarten Bosmans <maarten.bosmans@vortech.nl>
+> ---
+>  builtin/notes.c | 10 ++++++----
+>  1 file changed, 6 insertions(+), 4 deletions(-)
 
-I'll prepare and send a v2 that takes that approach.
+I am not sure if we want to accept an approach that feels somewhat
+narrow/short sighted, like this patch.  When "git show" learns an
+improved way to show blob objects, who will update the code this
+patch touches to teach it to use the same improved way to show the
+notes?
 
-> Listing non-options in the list may have been a misguided attempt to
-> "save" description on arguments that are common to multiple options,
-> but it is not working.  We can see the bad effect of that approach
-> only by looking at the current description of the above option,
-> which reads:
-> 
-> 	-m::
-> 	--move::
-> 		Move/rename a branch, together with its config and reflog.
-> 
-> It does not mentioning what arguments "--move" takes, and does not
-> even refer the readers to the entries for <newbranch> and
-> <oldbranch>, so the only plausible way the users can learn what they
-> want about this single option is by reading the page from top to
-> bottom.
+I actually was hoping, after seeing the use case description in the
+cover letter, that the series would be introducing a batch mode
+interface to allow callers to ask notes for many objects and have
+the command respond notes for these objects in a way that which
+piece of output corresponds to which object in the request, reducing
+the process overhead amortised over many objects.
 
-... or the users can perhaps learn by simply experimenting a bit
-and observing what happens, after getting a bit disappointed by the
-current descriptions of the operations and resorting to the rather
-usual "tl;dr" approach.
-
-Avoiding such "tl;dr" scenarios is the way to move forward with the
-improvements to the git man pages, if you agree.
-
-> And trim the DESCRIPTION part. A lot. Because things are explained
-> redundantly between there and the OPTIONS part, and their details
-> are waiting to drift apart unless we are careful.
-> 
-> I think I laid all this out and more in a separate message.
-> 
-> https://lore.kernel.org/git/xmqq8r4zln08.fsf@gitster.g/
-
-I agree about this as well, but that will perhaps be handled in some
-separate patch for the git-branch(1) man page.
