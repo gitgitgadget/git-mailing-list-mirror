@@ -1,64 +1,64 @@
 Received: from mail-wm1-f43.google.com (mail-wm1-f43.google.com [209.85.128.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBFF67A737
-	for <git@vger.kernel.org>; Tue,  6 Feb 2024 05:12:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1ECBE7F49D
+	for <git@vger.kernel.org>; Tue,  6 Feb 2024 05:12:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707196375; cv=none; b=PHnHQuwmZVh2IsjRnwBUWyXlpaH2RwOG43ro48+2ibTkKfsXPycVgJn+PPqzd58ai+YdoFGu9Tm2rCCBR8s9ubWuJ4CR55bEXR2nb1lE0u4msCTfNjL2dn/aOGplUM0rjXlno4/GZMDz0bAjxbQkS873I+sejnmDOGWN3oOL53k=
+	t=1707196376; cv=none; b=UaRBAVfTFGWwWdWvzZw9IlsZgRhGYGAsLErJ2EUjBpk02j4o2JVsdrD/ZuWPOhYIiJ3qIgVG7szfVRR0iZlfsdHnnkDMpLR61fu9kXy6cQj2xBP2PkwiZd83LVrNUM9RzfWAW6dNCLDKNoWxUMHm9IHoa+nQaOVdNUYwa1KqODM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707196375; c=relaxed/simple;
-	bh=Tvoc962DK84h7XfF7yeSpNbE+8NFwvB32afkrqbKmWQ=;
+	s=arc-20240116; t=1707196376; c=relaxed/simple;
+	bh=g9UlVwtI1LDXpmXGclI49NRsg4MbiMGfDL1LQrY7AIo=;
 	h=Message-ID:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=OpnQH4lW+6azrurUTqi1u0kaDaWMReaAo08L6uI5THNI/scqdMdUy45G14Vw3jYgZ8qFMMi21YRe4kwdWWpJ5gs+7g9ZiK1tVN0sG9b2gKJQnEahLXxyVE1ouHWHxPjA1LjP19h2j7A/vOvCUGO6j2MxLqhfboqIEhwcFVQtF4o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=byEBuUjF; arc=none smtp.client-ip=209.85.128.43
+	 MIME-Version:To:Cc; b=Nr3/UKJg5PWPQ1fd9KwVYYo5L5So6Vw8aiy5Wjrm06D3k0BwRn6JK/x3GLrTE5uiZq5F7VSmI/dDyEGDf8Qc4ID2JVG0+7A1sjovCnmUwJ+oWTyu6doR2e7zxmiYQPdss4Kxn9e9KriHZwVGdRvoJNhLZjLU/b+ZsUtVnQuj9EQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dl8yVMps; arc=none smtp.client-ip=209.85.128.43
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="byEBuUjF"
-Received: by mail-wm1-f43.google.com with SMTP id 5b1f17b1804b1-40fc654a718so32916145e9.2
-        for <git@vger.kernel.org>; Mon, 05 Feb 2024 21:12:53 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dl8yVMps"
+Received: by mail-wm1-f43.google.com with SMTP id 5b1f17b1804b1-40fd280421aso22400375e9.3
+        for <git@vger.kernel.org>; Mon, 05 Feb 2024 21:12:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1707196371; x=1707801171; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1707196372; x=1707801172; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=N6+NQd5nEV2eczt7YhKu1bosuM3eQgb4jedizSfu40Q=;
-        b=byEBuUjF/ISZGM22BgQrt6dQcK3hN0zaQ9WB9tGhNOzGAgT/76ggtL4ZVWPEwiDNEz
-         cV7hvKzhWmlWBsqdOs01vp3Rquko5HdTCzHoapd4s8D3DPwjsV5pLUSpo56RWp07dsZU
-         mJAn1nxydwUPMInANbuMhoJg9f3/Fm9THgt0rpQndsgTfvDKsDLAmKAZkXGxIG69oZjM
-         Qgdyyl8o1PYaJOOxIUkHRucQtcb+VSn/RjJar8oT4YQ9+syE0ozXtHUtxayDj8KIGmb1
-         tCyLpjchjz/HSFbh1t5h86N8zEilHa7mtrAuV7gn7OqxGP5Jv7vqHr3wc3SYuqwA4ohY
-         f7Kw==
+        bh=MOREw6q372qtoCRNyAiB9WUVEqb0ov38KcUfz5lCeOg=;
+        b=dl8yVMpsUXd0SEoZRXOOmuMZQjdH17lrrq3y9WSUmq+IXns4m3qWed4dusRtQsQKJm
+         i5bN5yQ/vpbPIOeAGooYXMW/bSkBS3mPJa4jl9wTBp8RzV+UxvuYmOprknl03RQxwgnB
+         7YlsP4PS/We/Bccft40/iIERTRh1OnK6iu/Jk9ZoiQjs+2xiuWMbbv4iK3bwwn0vf3Lh
+         opnOu4YmoEXKSdY57GUz61oOMincdJeNTu4kqfiRRuwTlseYxYYhIbX7KzqJP+v/CAdW
+         rs77cbaD5LvU+WAaNZ1rnT8ypiDWQI7C4fAGlDEscXOtlT19mAEIHYHXTlL20KwEvomg
+         482A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1707196371; x=1707801171;
+        d=1e100.net; s=20230601; t=1707196372; x=1707801172;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=N6+NQd5nEV2eczt7YhKu1bosuM3eQgb4jedizSfu40Q=;
-        b=FcHoqPzHcWBAoL2//c2D+6wEBEiojo+qQ/dLyDJPvRpzPMxoLSJ5boFJCdH4It6P8g
-         h+gbgcYb7o5xdn1/Xd2gM7LwSlmwnTXQO66xrxi0VIFD5wRfLHIuaDJzKH6wCIGjzXYp
-         9NeaJ1XzmU4L1iviwkIEQP465VxbqXMhm+ZazQwxyNVgpNsmH84aU1usaJsTa8BpGiUM
-         +TWp45wiqQG9bH4wdN+/d685UfzyxIU3i37Bnj4q0BeQT9hCNDcxnXGK6U/4Zgivm/47
-         QnrqOj0CpT8seO9AoobSUpEKppfZmMFtCVJ5LgLwCi5CjEHUqnSAvE2kZXQ6Zh98DRsU
-         RnqQ==
-X-Gm-Message-State: AOJu0YxL/efoNr/VJdVZFPhMD465Dq0i4o8mcSmMZZcTeiyVZkUz5EXl
-	fwBeYX0ZMocxKjfrewfNSe0Qx4v+tXxbPa9UFGcctc0dN5HECc821DKBy33/
-X-Google-Smtp-Source: AGHT+IGvadSFOuQU9a2UtKEBxhCF2XPtFxEqNXaU+NfleMDKZXtk+tvvYw6R4Zv34p8i4sXCHIIJoA==
-X-Received: by 2002:a05:600c:4f54:b0:40f:dc51:1882 with SMTP id m20-20020a05600c4f5400b0040fdc511882mr1237560wmq.8.1707196371539;
-        Mon, 05 Feb 2024 21:12:51 -0800 (PST)
-X-Forwarded-Encrypted: i=0; AJvYcCXwzzUgqL7ob/r4BFIskt6377vcv9kBRwN4+HAjjawIxtmaPkOIv3+7KhL7y6bbwBPydP1/kCZQLKaW1wxL0V1rAVayzTrdqzpiHdTuEpIxcUNPLPHlvSFaAFA37TZ7IbRIEb5v7/E0IUYADCRWiFb1P9eAM1thiObsA1L6b9FU6giJq3Gn8w8MXFZtKLpwvBBS+bfI4Gi0Nw==
+        bh=MOREw6q372qtoCRNyAiB9WUVEqb0ov38KcUfz5lCeOg=;
+        b=Z3CI7HNLAZUrpLgWMvtslcO0EPGifNy48SFMS+YrL+5IAnGnWDr7fJdnuCQK4wKWLY
+         ZnehYxNT60HwPTc2thkILCmXGiibbnlY2xe/YiJD8Z2yKugtBk+JN2ipaJCVDHTihN63
+         2v5ZG8jXUJm8/smxly46bOolhTL15o73bg2FZeBFMNEQHbg3cC+siQnRSjxmiEU72Om4
+         cWVJ2/pc64CByGIfv+LUJ7hsybcWO61IYcQK23AG/hseNFTAy3ma5Mp0/o0nk5kf6Ymi
+         uupZQe/T3+0ZCo+Nfw7vOfyQ5Nrsw67HV3qH2yj8fLJMf2+ggrtR0BuWDJoKnYotf3QZ
+         UaOw==
+X-Gm-Message-State: AOJu0YzrfxXe+2eGvnMINwMLt57fddORDa2wPRWec6R5rH1JWkV5vOLM
+	WQ1ik6ciu+ADz+NBC6AjRE6HU2LxKarV6BgNM/O8wlwjwM6dx7XZsO5SjYBh
+X-Google-Smtp-Source: AGHT+IEPky0KU8N7zTF1zeZ1Zs9RLiX1/bo+GUbl+a8FrtmMnqOrPMzvp9uzvtHx5kuQ31g1lcaVOw==
+X-Received: by 2002:a05:600c:1551:b0:40f:24e:d480 with SMTP id f17-20020a05600c155100b0040f024ed480mr1170079wmg.18.1707196372691;
+        Mon, 05 Feb 2024 21:12:52 -0800 (PST)
+X-Forwarded-Encrypted: i=0; AJvYcCUjPceNVeSlbgrsOpz6VZxEsTrVv8jnFtBdw5iHmaYQaN1OQCtzvK1ly5EIECewzpd5wqmlMU15Tx/VWbgOu3ZtZswqffLQd3B/Fol0iqQoyj1FzUt6NlzV46G5awC29NLpfLM9O44RTDnbxk2RSjFP/Tt7R/frqAsvL4bgWJJ40LNekpOuXhBsfI1j1/Brv8+vF8zr4zh4jA==
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id h8-20020a05600c314800b0040ee8765901sm641415wmo.43.2024.02.05.21.12.51
+        by smtp.gmail.com with ESMTPSA id g19-20020a05600c4ed300b0040fd2f3dc0esm639458wmq.45.2024.02.05.21.12.51
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Mon, 05 Feb 2024 21:12:51 -0800 (PST)
-Message-ID: <3bfe4809ecbc5aa0ea52daee7684289398cb88d4.1707196348.git.gitgitgadget@gmail.com>
+Message-ID: <80e1958bb8d5d4e74fc9d4334b99d149ae2bcab1.1707196348.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1632.v4.git.1707196348.gitgitgadget@gmail.com>
 References: <pull.1632.v3.git.1706664144.gitgitgadget@gmail.com>
 	<pull.1632.v4.git.1707196348.gitgitgadget@gmail.com>
 From: "Linus Arver via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Tue, 06 Feb 2024 05:12:23 +0000
-Subject: [PATCH v4 23/28] trailer: add new helper functions to API
+Date: Tue, 06 Feb 2024 05:12:24 +0000
+Subject: [PATCH v4 24/28] trailer_add_arg_item(): drop new_trailer_item usage
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -80,156 +80,100 @@ Cc: Christian Couder <chriscool@tuxfamily.org>,
 From: Linus Arver <linusa@google.com>
 
 This is a preparatory refactor for deprecating "new_trailer_item" from
-the API (which will let us deprecate
-parse_trailers_from_command_line_args()).
+the API.
 
-Expose new helper functions from the API, because we'll be calling them
-from interpret-trailers.c soon when we move
-parse_trailers_from_command_line_args() there.
+Instead of preserving the where/if_exists/if_missing information inside
+the new_trailer_item struct in parse_trailers_from_command_line_args()
+(only to look inside it again later on in trailer_add_arg_item()), pass
+this information directly as a trailer_conf which trailer_add_arg_item()
+already knows how to handle. This reduces the number of parameters we
+have to pass to trailer_add_arg_item() without any behavioral change.
 
-Move free_new_trailers() from the builtin to trailer.c because later on
-we will adjust it to free arg_item structs, which are private to
-trailer.c.
+In the next patch we'll be able to delete "new_trailer_item" altogether.
 
 Signed-off-by: Linus Arver <linusa@google.com>
 ---
- builtin/interpret-trailers.c | 12 ---------
- trailer.c                    | 49 ++++++++++++++++++++++++++++++++++++
- trailer.h                    |  8 ++++++
- 3 files changed, 57 insertions(+), 12 deletions(-)
+ trailer.c | 29 +++++++++++++++++------------
+ trailer.h |  3 +--
+ 2 files changed, 18 insertions(+), 14 deletions(-)
 
-diff --git a/builtin/interpret-trailers.c b/builtin/interpret-trailers.c
-index f674b5f4b9e..9169c320921 100644
---- a/builtin/interpret-trailers.c
-+++ b/builtin/interpret-trailers.c
-@@ -45,18 +45,6 @@ static int option_parse_if_missing(const struct option *opt,
- 	return trailer_set_if_missing(opt->value, arg);
- }
- 
--static void free_new_trailers(struct list_head *trailers)
--{
--	struct list_head *pos, *tmp;
--	struct new_trailer_item *item;
--
--	list_for_each_safe(pos, tmp, trailers) {
--		item = list_entry(pos, struct new_trailer_item, list);
--		list_del(pos);
--		free(item);
--	}
--}
--
- static int option_parse_trailer(const struct option *opt,
- 				   const char *arg, int unset)
- {
 diff --git a/trailer.c b/trailer.c
-index 3b8f0ba103c..9b8cb94c021 100644
+index 9b8cb94c021..6ab5cf7e5d7 100644
 --- a/trailer.c
 +++ b/trailer.c
-@@ -66,6 +66,11 @@ static LIST_HEAD(conf_head);
- 
- static char *separators = ":";
- 
-+const char *trailer_default_separators(void)
-+{
-+	return separators;
-+}
-+
- static int configured;
- 
- #define TRAILER_ARG_STRING "$ARG"
-@@ -424,6 +429,29 @@ int trailer_set_if_missing(enum trailer_if_missing *item, const char *value)
- 	return 0;
+@@ -729,21 +729,12 @@ static struct trailer_item *add_trailer_item(struct list_head *head, char *tok,
  }
  
-+void trailer_set_conf_where(enum trailer_where where,
-+			    struct trailer_conf *conf)
-+{
-+	conf->where = where;
-+}
-+
-+void trailer_set_conf_if_exists(enum trailer_if_exists if_exists,
-+				struct trailer_conf *conf)
-+{
-+	conf->if_exists = if_exists;
-+}
-+
-+void trailer_set_conf_if_missing(enum trailer_if_missing if_missing,
-+				 struct trailer_conf *conf)
-+{
-+	conf->if_missing = if_missing;
-+}
-+
-+struct trailer_conf *new_trailer_conf(void)
-+{
-+	 return xcalloc(1, sizeof(struct trailer_conf));
-+}
-+
- void duplicate_trailer_conf(struct trailer_conf *dst,
- 			    const struct trailer_conf *src)
+ void trailer_add_arg_item(struct list_head *arg_head, char *tok, char *val,
+-			  const struct trailer_conf *conf,
+-			  const struct new_trailer_item *new_trailer_item)
++			  const struct trailer_conf *conf)
  {
-@@ -434,6 +462,15 @@ void duplicate_trailer_conf(struct trailer_conf *dst,
- 	dst->cmd = xstrdup_or_null(src->cmd);
+ 	struct arg_item *new_item = xcalloc(1, sizeof(*new_item));
+ 	new_item->token = tok;
+ 	new_item->value = val;
+ 	duplicate_trailer_conf(&new_item->conf, conf);
+-	if (new_trailer_item) {
+-		if (new_trailer_item->where != WHERE_DEFAULT)
+-			new_item->conf.where = new_trailer_item->where;
+-		if (new_trailer_item->if_exists != EXISTS_DEFAULT)
+-			new_item->conf.if_exists = new_trailer_item->if_exists;
+-		if (new_trailer_item->if_missing != MISSING_DEFAULT)
+-			new_item->conf.if_missing = new_trailer_item->if_missing;
+-	}
+ 	list_add_tail(&new_item->list, arg_head);
  }
  
-+void free_trailer_conf(struct trailer_conf *conf)
-+{
-+	free(conf->name);
-+	free(conf->key);
-+	free(conf->command);
-+	free(conf->cmd);
-+	free(conf);
-+}
-+
- static struct arg_item *get_conf_item(const char *name)
- {
- 	struct list_head *pos;
-@@ -1076,6 +1113,18 @@ void free_trailers(struct list_head *trailers)
+@@ -759,7 +750,7 @@ void parse_trailers_from_config(struct list_head *config_head)
+ 			trailer_add_arg_item(config_head,
+ 					     xstrdup(token_from_item(item, NULL)),
+ 					     xstrdup(""),
+-					     &item->conf, NULL);
++					     &item->conf);
  	}
  }
  
-+void free_new_trailers(struct list_head *trailers)
-+{
-+	struct list_head *pos, *tmp;
-+	struct new_trailer_item *item;
+@@ -791,11 +782,25 @@ void parse_trailers_from_command_line_args(struct list_head *arg_head,
+ 			      (int) sb.len, sb.buf);
+ 			strbuf_release(&sb);
+ 		} else {
++			struct trailer_conf *conf_current = new_trailer_conf();
+ 			parse_trailer(tr->text, separator_pos, &tok, &val, &conf);
++			duplicate_trailer_conf(conf_current, conf);
 +
-+	list_for_each_safe(pos, tmp, trailers) {
-+		item = list_entry(pos, struct new_trailer_item, list);
-+		list_del(pos);
-+		free(item);
-+	}
-+}
++			/*
++			 * Override conf_current with settings specified via CLI flags.
++			 */
++			if (tr->where != WHERE_DEFAULT)
++				trailer_set_conf_where(tr->where, conf_current);
++			if (tr->if_exists != EXISTS_DEFAULT)
++				trailer_set_conf_if_exists(tr->if_exists, conf_current);
++			if (tr->if_missing != MISSING_DEFAULT)
++				trailer_set_conf_if_missing(tr->if_missing, conf_current);
 +
- size_t trailer_block_start(struct trailer_block *trailer_block)
- {
- 	return trailer_block->start;
+ 			trailer_add_arg_item(arg_head,
+ 					     strbuf_detach(&tok, NULL),
+ 					     strbuf_detach(&val, NULL),
+-					     conf, tr);
++					     conf_current);
++			free_trailer_conf(conf_current);
+ 		}
+ 	}
+ 
 diff --git a/trailer.h b/trailer.h
-index f80f8f7e63f..a2569c10451 100644
+index a2569c10451..32fc93beb33 100644
 --- a/trailer.h
 +++ b/trailer.h
-@@ -46,8 +46,14 @@ struct new_trailer_item {
- 	enum trailer_if_missing if_missing;
- };
- 
-+void trailer_set_conf_where(enum trailer_where, struct trailer_conf *);
-+void trailer_set_conf_if_exists(enum trailer_if_exists, struct trailer_conf *);
-+void trailer_set_conf_if_missing(enum trailer_if_missing, struct trailer_conf *);
-+
-+struct trailer_conf *new_trailer_conf(void);
- void duplicate_trailer_conf(struct trailer_conf *dst,
+@@ -55,8 +55,7 @@ void duplicate_trailer_conf(struct trailer_conf *dst,
  			    const struct trailer_conf *src);
-+const char *trailer_default_separators(void);
+ const char *trailer_default_separators(void);
  void trailer_add_arg_item(struct list_head *arg_head, char *tok, char *val,
- 			  const struct trailer_conf *conf,
- 			  const struct new_trailer_item *new_trailer_item);
-@@ -98,6 +104,8 @@ void format_trailers(const struct process_trailer_options *,
- 		     struct list_head *trailers,
- 		     struct strbuf *out);
- void free_trailers(struct list_head *);
-+void free_new_trailers(struct list_head *);
-+void free_trailer_conf(struct trailer_conf *);
+-			  const struct trailer_conf *conf,
+-			  const struct new_trailer_item *new_trailer_item);
++			  const struct trailer_conf *conf);
  
- /*
-  * Convenience function to format the trailers from the commit msg "msg" into
+ struct process_trailer_options {
+ 	int in_place;
 -- 
 gitgitgadget
 
