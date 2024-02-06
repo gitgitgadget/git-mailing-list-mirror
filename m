@@ -1,72 +1,113 @@
-Received: from mail.manjaro.org (mail.manjaro.org [116.203.91.91])
-	(using TLSv1.2 with cipher DHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f169.google.com (mail-lj1-f169.google.com [209.85.208.169])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62D1013FE7
-	for <git@vger.kernel.org>; Tue,  6 Feb 2024 19:12:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=116.203.91.91
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B2281773D
+	for <git@vger.kernel.org>; Tue,  6 Feb 2024 19:45:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707246731; cv=none; b=AKmChSmMenT6J4+0aPk83ebzgR8QOkQJtaS1y1wxqfuj8XNWtfPuS0nxByu9J1fwq6BRUjKPPl2+r53wYJqn93qZYnLTKlZSaKK9P+yd7PHyqruMopb+oT1O+eX9Cs570YfWr/kLqH+AqFgzh/eqP2snka0fASDx3hEir18PMcI=
+	t=1707248723; cv=none; b=p1M5BIB+EF7WkaNJDek+on2Sw8yPXDG7xgYAwGx3N9EzMMjPeNstBk5OJQi5v5sjIsokQwNDzFFOozKNM1tCjmjMItpcXBCP2qccOtO4iIqRY5+oxy0gqphka8YoOEvUwXu3X4+rrgH2zSRjlZcBQLCEq+UhsKtXUoAzc8BYHss=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707246731; c=relaxed/simple;
-	bh=X5hYZNwVFxhDh07JlJAgvIChGHNzcwUQry6MOZxmjX8=;
-	h=MIME-Version:Date:From:To:Cc:Subject:In-Reply-To:References:
-	 Message-ID:Content-Type; b=ZyMOmxBi0oI9aIsjXteFVrLdC05BTYqkankIQHg3/9xTDmf1+WItWtaMGAM7gy8SfsBiiHAp4h0KfHaOJM3eiHx7WFWD0NDOiNy1gi5OXkb5SQIGZe5QhUPa9YcjMrC05p1dphlbB4cQeiMXzmyhHFBRYr86iuZp3bEl5eVp9jU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org; spf=pass smtp.mailfrom=manjaro.org; dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b=v5ZJ5E4c; arc=none smtp.client-ip=116.203.91.91
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=manjaro.org
+	s=arc-20240116; t=1707248723; c=relaxed/simple;
+	bh=nS3PdsKeLdh46hZarLchB7nz8iakKkQeo5+QCik/sTw=;
+	h=From:To:Cc:Subject:References:Date:In-Reply-To:Message-ID:
+	 MIME-Version:Content-Type; b=JotSpg/HeAjY9bcBFMrRJyxi/kvJ9K6p0dLRXRJh8oSAFWoltCz+DY7YbxaRAUnZbaKJaTFx16xbs2MQe0EgZIFe8sqnpWHi1dUlZGH3O4iw44woWH7W1kP2Llxe+vKV+/Xyvu2j2EIAeuL3QMy+IGL+j2WvAN/o4UCYGN0nlfw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=kHlUDEqU; arc=none smtp.client-ip=209.85.208.169
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b="v5ZJ5E4c"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kHlUDEqU"
+Received: by mail-lj1-f169.google.com with SMTP id 38308e7fff4ca-2d0b750518bso23813601fa.0
+        for <git@vger.kernel.org>; Tue, 06 Feb 2024 11:45:21 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1707248720; x=1707853520; darn=vger.kernel.org;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=pE6f+QE1whJ4t+O4hAXBKgJMlhmvN3reSE483kaovCg=;
+        b=kHlUDEqUT0UNN7MF1ewww3vMv78r6TOm+x8uOXZZKLDYdmfJYQDDsA9nuD//shQhIT
+         5c7SSRyax3QdtX7Sp+d+BzmxUeNlyLkwmVK+xllJNCrSehoijGbkkJZ0ZAesliIFbgEw
+         CX3jtPvcOOLqYzPdRGXRJse8LeCrvWFAZ8GuK0exblaUJAFOvMlOW/q+I5ChYMditnYt
+         h4RAQHa1gqc2Blv1kdz5pKovICE/roc8MG8tli32CJ4KS5Gzceq3Ny/DXSNy2mh6rXZ+
+         ULjtxfTopP9CFzM9zUReG5kan7SDjajFTEo1gh9X2i3p/Sob1NsA2EquPVzrYLSFrpZd
+         7PmQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1707248720; x=1707853520;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=pE6f+QE1whJ4t+O4hAXBKgJMlhmvN3reSE483kaovCg=;
+        b=kIPaobZ+2sQIbJffniuZ4ySUyROnZBOhf7RlGmXdO8lgr5ii7liKprsqFa1n9D3f29
+         fG/pgbGLnn+RAeKo2zxED0m4pvf+xXul2tMxa6dVbkSZ9NhcZA/gNZUl1Y8Uhv//rSFs
+         Np3CSfxxivkiG8o2sg+RYx9XuQNIMZMZMoy6H1shBBm6VNHkkeDwJUS3hYeFkmCUzQnn
+         hxk1hhescn39gA4uTiGPYYmjmB7BIPwqv4v/YzOYwAlh3+znjSXg2NbrbhMf0+mGlq30
+         BDeTAfvGnthtLLyJp5mxlWjEhHxVRHRISsBxQOQDJlNJkmPcELUeIau7/wsl8X2pCe2j
+         6RbQ==
+X-Gm-Message-State: AOJu0YzDe5376BG06Uyd0gq1Ic742FTkc9tbIf4epI1qUdNqUE5Rpfyo
+	JK6VRYDWgLzVKzTGWMUcEbnX7Bi12a7bamLVQK+FngQj3mRh+URMO0ztbE94/qk=
+X-Google-Smtp-Source: AGHT+IGTy1w7N3MpoNciwFHGxhk+W7IcdO7v1oPXVtvHYvnG+3hsgb2VdRX949Ioua+Cw9IKOYLJsg==
+X-Received: by 2002:a05:651c:1411:b0:2d0:9fac:bdff with SMTP id u17-20020a05651c141100b002d09facbdffmr2549021lje.38.1707248719388;
+        Tue, 06 Feb 2024 11:45:19 -0800 (PST)
+X-Forwarded-Encrypted: i=0; AJvYcCU8ZMC+PiAgdNBgksWgFVRKkWs2ptYtfzO/PKv3xe9eh950Wshe9+NJU1FdFsFFKjVhOvnbq8AZvmjWfLojiue0eBG0
+Received: from osv.localdomain ([89.175.180.246])
+        by smtp.gmail.com with ESMTPSA id z13-20020a2ebe0d000000b002cf30f27698sm352176ljq.91.2024.02.06.11.45.18
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 06 Feb 2024 11:45:18 -0800 (PST)
+From: Sergey Organov <sorganov@gmail.com>
+To: Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
+Cc: Britton Kerin <britton.kerin@gmail.com>,  git@vger.kernel.org
+Subject: Re: is it a bug that git status show the in-progress 'edit' in an
+ interactive rebase as 'done'?
+References: <CAC4O8c_oKT+a0hm+tqSOG7d1=AuJJKy5bsh72cJKVsWynvHw+w@mail.gmail.com>
+	<ZcIYz82iLxPOVR9Q@ugly>
+Date: Tue, 06 Feb 2024 22:45:18 +0300
+In-Reply-To: <ZcIYz82iLxPOVR9Q@ugly> (Oswald Buddenhagen's message of "Tue, 6
+	Feb 2024 12:32:31 +0100")
+Message-ID: <87il31s7g1.fsf@osv.gnss.ru>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=manjaro.org; s=2021;
-	t=1707246725;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=dXbjlRz+3X+J8wvZr9hyE/h9iV32ZS5wD4QVZerSRuE=;
-	b=v5ZJ5E4cCuJQV7zs6W0K9JK2L9iEVZwH7R9CFoBvxalI3Zit4rJaRBkk5qdkN9Wb9nCRVN
-	FF1goEczQCjW7546GlxzLnrIaFLznxARh2R7s3X2eWZIf92xTdPayWprd35qB0OKbBGqA3
-	EYRz4IDvLgkR/Pl65QeAqAJsc/y4km/RRWv80jvQ/HIy7OAdkCtRxhfoJ30GF6hu31vm0w
-	RlNQbfytCZuQyrIdBZFEZeHM2tBrZvRXSJKu8ANmrRuxdONoU1cV/ichU5xam6fSsvaDzS
-	jdqDzdx7nyZWGl6HC+QxEQU59+6K6/ASKqdQTzuqni2tVXLAzT2j0nZKYDx1iw==
-Date: Tue, 06 Feb 2024 20:12:05 +0100
-From: Dragan Simic <dsimic@manjaro.org>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: "brian m. carlson" <sandals@crustytoothpaste.net>, Tobias Boesch
- <tobias.boesch@googlemail.com>, git@vger.kernel.org
-Subject: Re: git-gui desktop launcher
-In-Reply-To: <xmqqle7xh1hc.fsf@gitster.g>
-References: <beeab03c564e94861ab339d26c4e135b879a1ccd.camel@googlemail.com>
- <ZcFhNPRprfMqeRu1@tapette.crustytoothpaste.net> <xmqqle7xh1hc.fsf@gitster.g>
-Message-ID: <c6be276bfc3c219e1a0ca1619f56c165@manjaro.org>
-X-Sender: dsimic@manjaro.org
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Authentication-Results: ORIGINATING;
-	auth=pass smtp.auth=dsimic@manjaro.org smtp.mailfrom=dsimic@manjaro.org
+Content-Type: text/plain
 
-On 2024-02-06 19:49, Junio C Hamano wrote:
-> "brian m. carlson" <sandals@crustytoothpaste.net> writes:
-> 
->> I think such functionality would be generally useful, and probably be
->> beneficial to a wide variety of distributors.
-> 
-> How have the various distros been packaging their binaries?  Would
-> this change affect what they have done already?
-> 
-> As long as it does not conflict, I am all for it (i.e. we do it once
-> and everybody benefits).
+Oswald Buddenhagen <oswald.buddenhagen@gmx.de> writes:
 
-AFAICT, Linux distributions provided their own version(s) of the
-.desktop file.  Perhaps the version provided by Fedora [1] could be
-consulted, for example, to see what's already expected there, and
-to provide parity in the version supplied by us.
+> On Tue, Feb 06, 2024 at 01:02:43AM -0900, Britton Kerin wrote:
+>>>Last command done (1 command done):
+>>>   edit 71b73de914 message for first commit
+>>>...
+>>>You are currently editing a commit while rebasing branch
+>>>...
+>>
+>>This seems wrong, because until git rebase --continue has been done
+>>the edit operation for the first commit is *ongoing* and it would be
+>>much clearer for the output of status to accurately say so.
+>>
+> it makes a lot of more sense when you decompose 'edit' into 'pick'
+> followed by 'break', which it essentially is. so from git's perspective,
+> the command really _is_ already done. note that in this state, you can
+> do all kinds of crazy things - including adding new commits (possibly by
+> cherry-picking them) and even dropping already rewritten commits (using
+> a hard reset). so in a way, the message above is even a bit too
+> suggestive.
 
-[1] 
-https://koji.fedoraproject.org/koji/fileinfo?rpmID=37302272&filename=git-gui.desktop
+Yep. Maybe, if the rebase action itself were called "amend" rather than
+"edit", it'd have been more clear and consistent thus less confusing.
+Check:
+
+git status
+interactive rebase in progress; onto e79552d197
+Last command done (1 command done):
+   amend 71b73de914 message for first commit
+Next commands to do (6 remaining commands):
+   amend 3a478a7a08 message for second commit
+   pick fab7159cf4 message for third commit
+  (use "git rebase --edit-todo" to view and edit)
+You are currently amending a commit while rebasing branch
+'my_completion_updates' on 'e79552d197'.
+  (use "git commit --amend" to amend the current commit)
+  (use "git rebase --continue" once you are satisfied with your changes)
+
+-- 
+Sergey
