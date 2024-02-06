@@ -1,54 +1,54 @@
-Received: from mail-ed1-f46.google.com (mail-ed1-f46.google.com [209.85.208.46])
+Received: from mail-ed1-f43.google.com (mail-ed1-f43.google.com [209.85.208.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC51912AAD6
-	for <git@vger.kernel.org>; Tue,  6 Feb 2024 08:13:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 520F412AAD9
+	for <git@vger.kernel.org>; Tue,  6 Feb 2024 08:26:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707207198; cv=none; b=YGEK2DXYyqVzEFlad3ZwKyqy6DNfkqOagq8zgNMePlKbG0SXeMqQyzW4VEOrHS/HrCsdHG9VMRKKhWl2ET87K2OoyOm0t+EbDIdQxHcq30A4+epAuIQ0CmoGpXonhTF80EwDMVRdUum/Z4MgdhV7lCTdB04eQKAuSLWF35Z39UA=
+	t=1707207982; cv=none; b=aHizT8VPh/IPuAaiAOycFACw6gJ79ugH56AinW7s+uYMuW9k0O5gc+BVWe4c8p85M4/mg7CeaD0Gsa0w7FXl1nfvQUv/MC5rhW2WcsDMa5hU/ad0ZyPGbLoTL70MAQvSSAxYrF59J5jPL6bl+ccs/RQJGEXMw/qiVwVtbHr6IEM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707207198; c=relaxed/simple;
-	bh=FKN87WdJTsTwTpI3gE+YpHtCGpxYe56agBjM4UrCbEg=;
+	s=arc-20240116; t=1707207982; c=relaxed/simple;
+	bh=dGItd5crTRX5L6ftYe0Gv0myT6BLqD2ia3EvtfzNRGM=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=X/7MPOH5dG7/c6K+RfcYnwud9cqaYCOyKBJRjvPR7IcAQGET69BUTNo+cNjPZ/36ZhEJXZY90SnQjN/QsCf1/6dc6dr2GVXt51exi9Dwie2JYuLMIKtcjuuh4iLk6ig3aD8scucAsFC+KB8gsefQg6y+0aZyt7bI8BI7J1ZC2HI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Zh1XbgPJ; arc=none smtp.client-ip=209.85.208.46
+	 To:Cc:Content-Type; b=nz24r/srD5b0onnN2tViAiJjTPXq5+qALSCkIikgqEycb+qNG0stuogGHUngxxT0nIIJ+BOQKj1pcjk6FWiIugPErc7MYMBTA6IQ9/2d1ZTExzdSb5jSOAypAKnB26bQexeRDybRKoortgnbG3WJVUx2Y+oFkT1289NrX/Q7Rq4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=feKfGZKK; arc=none smtp.client-ip=209.85.208.43
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Zh1XbgPJ"
-Received: by mail-ed1-f46.google.com with SMTP id 4fb4d7f45d1cf-556c3f0d6c5so6024312a12.2
-        for <git@vger.kernel.org>; Tue, 06 Feb 2024 00:13:16 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="feKfGZKK"
+Received: by mail-ed1-f43.google.com with SMTP id 4fb4d7f45d1cf-5602500d1a6so3072735a12.3
+        for <git@vger.kernel.org>; Tue, 06 Feb 2024 00:26:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1707207195; x=1707811995; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1707207978; x=1707812778; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=FKN87WdJTsTwTpI3gE+YpHtCGpxYe56agBjM4UrCbEg=;
-        b=Zh1XbgPJITbRWdy2nmuXO1ztuN2IzZMmE4mwsVzKl3usC0Mc+F+Kqq8X1Dsc3jG896
-         6rtJJKo5jayqWdzbqRaxjNiCD4t0Quz6yBfaoGzbXHFtz224N+BvQ91bUPwiAM3If/D8
-         5j6SNaWN4cFSzzoNGlAms7xV+RvSf941tYDIdDEIW3dY+8nHNPWno3ZKJLNaZowqwVa/
-         l/9mjeh4XBKK36nNShHrm3IiJo02TrL+r4F4x02iNzzS7psP8DT/3Xx6TsUx3Qoeev3Q
-         LxxLA8KcNkzZjSh7/X4PynfM5ILcwPLE2eo0p/zvFSRJXfDRY0U/Fcc76tKWfyhG2jS6
-         D2lA==
+        bh=dGItd5crTRX5L6ftYe0Gv0myT6BLqD2ia3EvtfzNRGM=;
+        b=feKfGZKKb/EEhHmwMzCLQaXnLgR7ZGhfJojaf1qq/c0TGI/Qb4y9WQ0MbFGCo5zW/0
+         wBSaoVRCBFsw2BpuT8kbbbf6hK4iT8IurXL2mrwKDcxCcGdPxD26dWPzcJRhXx4nbocW
+         sO8NIJtAkF+xUyamhc5Oak5i0ogYoaPs/rJKbwRZZxcTb6S+qIZhwVbU5Z5eqJxEDlVe
+         QQthpqf7DgNothMblgGKVmnyk/p7OXBfTrRwLmv41LRB/OVpqTurewy7ANlQuoHhGRRz
+         9QoB/TGyEBDwnsc+zu4ymMP0hVcpTiECWbXP4xlkS+FU5c4SYZQkjaYpWztHGAvaxueN
+         eWlQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1707207195; x=1707811995;
+        d=1e100.net; s=20230601; t=1707207978; x=1707812778;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=FKN87WdJTsTwTpI3gE+YpHtCGpxYe56agBjM4UrCbEg=;
-        b=APV/tPLfVhfYgBs6T9QmikICInoCiGh92kGxLUYSjatwYduZQWiSob/yTyQIn3KJpn
-         so3njX0fisUDVapZvmT9m9eg/FJUNGXhJ0YmhcpcKWPpjhxm9kEauyLQ+mju0DoqbYFj
-         2Fz+PrWodgmsDupQILP8KVPwZMw8IAURAStTaUN+xAIjZrukZj8qUXqcb3zpFyVrbCYL
-         +wOYArZDtkxnI25sSMeQm4qXlHwE9k0nVSRJi4mLvOPqPTIZlZnmK0o6QSPEUZTV76XB
-         LZ0qZWES8wENBNC5oLDzqlwY9jYnFh3DztfNIcwKMnQrOVllyUje0nQGixLQDbLAXKeZ
-         EAbg==
-X-Gm-Message-State: AOJu0YzeTo2Xo5X2SlUJqT1j3c8tYcCuvOp8GusCKmYKrat7RTHp0G6q
-	bslJeImiza7Cs5VCNXXOT19GtndV6YDyycJe9Y0G6YiNXTmfdunCLEdU/uwrHS2LStXvekGQW00
-	quKJDc7UAVrw6pUhLoPWFXcunxy4=
-X-Google-Smtp-Source: AGHT+IFZjDT5gZ2pOBjY2DNKE8mng4W9J0DfTdK0BoYxk9UjZHDHjB326uO6aofmNjveuWyyH3v5y7tNaS6BqSeqq5U=
-X-Received: by 2002:aa7:cf87:0:b0:560:6518:8ac with SMTP id
- z7-20020aa7cf87000000b00560651808acmr1144375edx.2.1707207194979; Tue, 06 Feb
- 2024 00:13:14 -0800 (PST)
+        bh=dGItd5crTRX5L6ftYe0Gv0myT6BLqD2ia3EvtfzNRGM=;
+        b=RCkSfSDAxXdsXeALJIeHLOL+GhtmGh27DkLU+U147R5P0pIs+2BnwB3z3+ftZntHIv
+         On/3Kcdp7/8L5s/jY2x0mna/Hkmdk2DiKRbyBEYQ9TDosBwTyp6tqMlAoEdCymXmofcJ
+         lnu/JodCsYvTWy+6D9WNug5ZKvuEFEjp+q+V6nvp6We+QLzbX6j3c8ecJiFF5ZetR02V
+         kwBzBumqSy4dezlkFsK5GkFEWevLyIb61/Fwky+ADIFpXf8Vx6sZohEsmVC7IdArtLTr
+         PgHj2E5tOVo5d4IbhIwYPDjLPnxEzhPmrYZmVNAEo5N7TflrKi6Koes4Hh8y18dtDhY8
+         X48Q==
+X-Gm-Message-State: AOJu0YwZIDLGX2zQo1zBtWlaPpz/uCZJ6IGWiq+VMYHJ+nEnBMP6RGnQ
+	44HI2S2k3CjPQmhjHUBSDKKt5/Zr9+EfpA96se5RMC+Gfzz48WhKpxnTguvvWOstWz3ReLWUDkt
+	rpOILdMML73gXsIthEmWThKw6jXY=
+X-Google-Smtp-Source: AGHT+IGzRuaEkA1BLWVvwf17E0L3t6IiO1XStJvgk/trViMQLr5Gci0hcxNxPAGbwPC/lPGwpjLWSvtN0M7qW7rmP1A=
+X-Received: by 2002:a05:6402:7c5:b0:560:5c58:dfc4 with SMTP id
+ u5-20020a05640207c500b005605c58dfc4mr1206838edy.1.1707207978400; Tue, 06 Feb
+ 2024 00:26:18 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -57,70 +57,66 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 References: <d4797f27-825b-4e2b-85a6-cc30f33934e3@gmail.com>
  <106b8e7be9ddc2d24670b01d54347dfcf9aef196.1707122040.git.ps@pks.im>
- <CAP8UFD3F95TzytdpKO=LLf6Y_ejxwh9QtgAxRNKgMXW-72hjgQ@mail.gmail.com>
- <e1c04f67-5981-4393-8a8e-a28cc53858eb@gmail.com> <ZcHIxcrKbgyhdyWn@tanuki>
-In-Reply-To: <ZcHIxcrKbgyhdyWn@tanuki>
+ <CAP8UFD3F95TzytdpKO=LLf6Y_ejxwh9QtgAxRNKgMXW-72hjgQ@mail.gmail.com> <ZcHH9UCiQgGvugyc@tanuki>
+In-Reply-To: <ZcHH9UCiQgGvugyc@tanuki>
 From: Christian Couder <christian.couder@gmail.com>
-Date: Tue, 6 Feb 2024 09:13:02 +0100
-Message-ID: <CAP8UFD2yFr1uOjKOnMjznjR6BEzGqq=R7K85z2Jz4i=sG0CLJA@mail.gmail.com>
+Date: Tue, 6 Feb 2024 09:26:05 +0100
+Message-ID: <CAP8UFD2t-eD_WWz8Zv_iz-uPL6bqxO8o8_SXgvRc-p2v=FCY-Q@mail.gmail.com>
 Subject: Re: [PATCH] Add ideas for GSoC 2024
 To: Patrick Steinhardt <ps@pks.im>
-Cc: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>, git@vger.kernel.org, 
-	Taylor Blau <me@ttaylorr.com>, Junio C Hamano <gitster@pobox.com>, Victoria Dye <vdye@github.com>, 
+Cc: git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>, 
+	Junio C Hamano <gitster@pobox.com>, Victoria Dye <vdye@github.com>, 
 	Karthik Nayak <karthik.188@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Tue, Feb 6, 2024 at 6:51=E2=80=AFAM Patrick Steinhardt <ps@pks.im> wrote=
+On Tue, Feb 6, 2024 at 6:47=E2=80=AFAM Patrick Steinhardt <ps@pks.im> wrote=
 :
-> On Tue, Feb 06, 2024 at 12:25:31AM +0530, Kaartic Sivaraam wrote:
+> On Mon, Feb 05, 2024 at 05:43:17PM +0100, Christian Couder wrote:
 
-> > Makes sense. Also, I'm kind of cat-one-the-wall about whether it makes =
-sense
-> > to have two projects about the unit test migration effort itself. If we=
-'re
-> > clear that both of them would not overlap, it should be fine. Otherwise=
-, it
-> > would be better to merge them as Patrick suggests.
+> > "Difficulty: Low" might not be very accurate from the point of view of
+> > contributors. I think it's always quite difficult to contribute
+> > something significant to Git, and sometimes more than we expected.
 >
-> I don't quite mind either way. I think overall we have enough tests that
-> can be converted even if both projects got picked up separately. And the
-> reftable unit tests are a bit more involved than the other tests given
-> that their coding style doesn't fit at all into the Git project. So it's
-> not like they can just be copied over, they definitely need some special
-> care.
+> That's certainly true. I understood the difficulty levels here as being
+> relative to the already-high bar that the Git project typically sets.
+
+I am not sure potential contributors are aware of the high bar that
+the Git project typically sets.
+
+> Otherwise there wouldn't be much use to specify difficulty in the first
+> place if all items had the same difficulty.
 >
-> Also, the technical complexity of the "reftable" backend is rather high,
-> which is another hurdle to take.
+> Or is the intent of the difficulty level rather on a global GSoC level?
+
+Yeah, I think it makes more sense to consider it like this.
+
+> In that case I agree that we should bump the difficulty to "medium".
+
+Yeah, I think we should bump it to "medium".
+
+> > From reading the discussion it looks like everyone is Ok with doing
+> > this. I really hope that we are not missing something that might make
+> > us decide early not to do this though.
 >
-> Which overall makes me lean more towards keeping this as a separate
-> project now that I think about it.
-
-Ok, for me. If we have a contributor working on each of these 2
-projects, we just need to be clear that the contributors should not
-work together on the 2 projects as I think the GSoC forbids that.
-
-> > That said, how helpful would it be to link the following doc in the uni=
-t
-> > testing related ideas?
-> >
-> > https://github.com/git/git/blob/master/Documentation/technical/unit-tes=
-ts.txt
+> I agree that this is a risky one, and that's what I tried to bring
+> across with the "harder part will be to hash out how to handle backwards
+> compatibility". Overall I think this project will be more about selling
+> the patch and reasoning about how it can be done without breaking
+> backwards compatibility.
 >
-> Makes sense to me.
+> We could bump the difficulty to high to reflect that better. But if you
+> deem the risk to be too high then I'm also happy to drop the topic
+> completely.
 
-To me too.
+I think we can keep this topic with a "Medium" difficulty. Perhaps it
+will actually not be very difficult if all goes well.
 
-> > Would it worth linking the reftable technical doc for the above ideas?
-> >
-> > https://git-scm.com/docs/reftable
-> >
-> > I could see it goes into a lot of detail. I'm just wondering if link to=
- it
-> > would help someone who's looking to learn about reftable.
->
-> Definitely doesn't hurt.
-
-I agree.
-
-Thanks!
+Yeah, it may seem strange, but I think unless we start to have
+projects not related much to our code base, like perhaps projects
+related to our web sites or some infrastructure or the Git Rev News or
+our docs, I think most projects should have a "Medium" difficulty. We
+might want to use "High" sometimes if we want to discourage
+contributors unless they have some special background related to the
+specific topic (like multi-threading for example if we had related
+projects).
