@@ -1,76 +1,106 @@
-Received: from mail-pf1-f170.google.com (mail-pf1-f170.google.com [209.85.210.170])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 594A41B7E1
-	for <git@vger.kernel.org>; Tue,  6 Feb 2024 20:27:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E4931B949
+	for <git@vger.kernel.org>; Tue,  6 Feb 2024 21:12:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707251221; cv=none; b=r8hswQbbArYsQEQnCnNsQGn5oQ3JpKE4nRqS6de3f9XXOMHXpi1+KSDbVSf1b1TlB3chGdZQmw3i+jeIr1mWoB+IKmlrGUifN/B9NLbbVjho2sO8V8D/fyAnezgNHJoAY7kk9uMCr6Kdd2+/KPbh7cJr6PDw5ECakOChAbvaBDw=
+	t=1707253940; cv=none; b=a0gR6BTekLzBCPxuOKHyZwByg4S5kA4r/2HoRum6KCqFONVdpsHfbr3KrhvGPl5wWX0UUVNeeVPPBPn5Vv73D+HGSmcCVRUaCXb+s/c6456PdBLbK/QVvRAuMssqxk8Ajn0rCz9/YwZF3t6yHiqgdb6lv5Dz32g72SNeIkGvBXA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707251221; c=relaxed/simple;
-	bh=9Jt5wek2lIBvusAX+n5BnYTBdtkIQjAtjJPb/OIu8v0=;
-	h=From:Content-Type:Mime-Version:Subject:Message-Id:Date:To; b=K4IkgqP/bOCzbOy54bJ4Troyi8CvtRILCcplaewjMb6Sm3xNoxkEoX7/QA/t3TveuzrYweotBJSmD+uvOixA3hVzTN1WvsZc3EXzo5Xad8XEwlHtSArYJ5MfkRpobso0bO4GeR4Kzwdmvrk5NV0zNFU1ZcNaBKhU+RVGZFuKYcM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Otc25koF; arc=none smtp.client-ip=209.85.210.170
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1707253940; c=relaxed/simple;
+	bh=THVWepmIL1PfRpwWlKGfwv/As4hSm5g2vvdNc+MVGP0=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=nZEvanOC6FmwVvgN68leIoTDxEsjqDfQBEprZVOhZZv6XbEYowfN1mZ8z9epEJ+GvJA/UtLntvPjGZi22TtDNfYkfvd65aEDy4136jBojOBKiYWx5+iaU7c6LC2NrgAvm0+FyD8PRnqu6wvWpiuswEXQy3y05o+LG0Cq3hbXm1g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=sphmtSTj; arc=none smtp.client-ip=64.147.108.71
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Otc25koF"
-Received: by mail-pf1-f170.google.com with SMTP id d2e1a72fcca58-6e05f6c7f50so545087b3a.3
-        for <git@vger.kernel.org>; Tue, 06 Feb 2024 12:27:00 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1707251219; x=1707856019; darn=vger.kernel.org;
-        h=to:date:message-id:subject:mime-version:content-transfer-encoding
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=9Jt5wek2lIBvusAX+n5BnYTBdtkIQjAtjJPb/OIu8v0=;
-        b=Otc25koFr33quQy773SAXTAl/9D92kR+D6vgCg2cAiXyF4fISR2jF2m0PC5/lopP/F
-         rRLKIcLTw7bw0lALTf4cMOb6QLYaJrO6bpjbI1cZmpjVDf+yCd3d8FivYgF8JuJGAGvB
-         cNge/0+3hZMq60est88i9MLIO2fhQexWCKV2wx4BDJkmtQ0EMzu8omzVkhO8tYg8KGzX
-         GcoiC4EMiqOlbi1IVjGY6bHYXfSEKYUg9X3KAvswAr/AE3WV8knt0lA44iHJUZ60KAph
-         w69wY6L24roYPGPwIqT8cZ7ry0shWTpd+1Y0b1fgL/joMVt/xbFUqQoaGd4XQyaslcQ5
-         YV1A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1707251219; x=1707856019;
-        h=to:date:message-id:subject:mime-version:content-transfer-encoding
-         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=9Jt5wek2lIBvusAX+n5BnYTBdtkIQjAtjJPb/OIu8v0=;
-        b=roorb38kwapRZY+i1RaxwC1oihG7b0U96zVVUnM/6TK42O4NZG9gOSfYDIDcguw5ZD
-         m5437ny9nZO2S5EIcuPbPJ22mZcKZKQ/dJn3N5VFlc93LZDkWfCqCditz4RjIp5LUf+8
-         Jq1dRjw1iskshO/efzVmp3l6CIFtorPmVnMiHpqwe23ynbXrJfjWfHiQyD0GyQhCZn+r
-         AAD1hDoREZgQj0lQeQ7yjCP80Z8SPUF1POCivi7+VjySPbYOblQdG4ckwCoCdAV+FiUH
-         7dYY3GLFhOAjOchnTx4QunUshYYXnjkBTbFo9U4GgssGaK12qG60LhSB5eL9C6lml/8Q
-         LqQg==
-X-Gm-Message-State: AOJu0Yx1ZzRuTYRdu8QZqlRMbKVYLIMullExssCqukxaKa3fgaH+ZzYI
-	ReYmdLcs9EcJa42ErVCEw3KQe5My51jSTiOPLOhE4uxMQYzqdzHFl5RTozb9Y7Y=
-X-Google-Smtp-Source: AGHT+IG8Q/v5pOxb3hNXeLYRo40BDj9aWXLa+OGr1zPDt6jYlTzv0Pt/1CV2s96EN1MdoYBw6vY71A==
-X-Received: by 2002:a05:6a00:c95:b0:6e0:3efb:cb4d with SMTP id a21-20020a056a000c9500b006e03efbcb4dmr800211pfv.23.1707251219088;
-        Tue, 06 Feb 2024 12:26:59 -0800 (PST)
-Received: from smtpclient.apple ([2409:40d1:101d:6931:71fb:92bc:bd9e:5395])
-        by smtp.gmail.com with ESMTPSA id gu14-20020a056a004e4e00b006e03c68ae9asm2505139pfb.16.2024.02.06.12.26.57
-        for <git@vger.kernel.org>
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 06 Feb 2024 12:26:58 -0800 (PST)
-From: Divyaditya Singh <divyadityasnaruka@gmail.com>
-Content-Type: text/plain;
-	charset=us-ascii
-Content-Transfer-Encoding: quoted-printable
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="sphmtSTj"
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id A286F1CE3BE;
+	Tue,  6 Feb 2024 16:12:17 -0500 (EST)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=THVWepmIL1PfRpwWlKGfwv/As4hSm5g2vvdNc+
+	MVGP0=; b=sphmtSTjf1+u1C4MZ9RYS61lPZi/2ZBTfM6xxDlPO2t/xAI0WKcmM6
+	ETCIemR8DztiM/LP9dF1d1a8lX+thVikLObcxr821X0lc9g07sSXmcUGSadCy0oW
+	CPRzJmVw2XIUD6RcaS0KgRPzho3snwCpbKjl6+QOAlS931fNauTUA=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 9AE211CE3BD;
+	Tue,  6 Feb 2024 16:12:17 -0500 (EST)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.165.85])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id F3E6E1CE3BC;
+	Tue,  6 Feb 2024 16:12:16 -0500 (EST)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH 0/4] merge-tree: handle missing objects correctly
+In-Reply-To: <pull.1651.git.1707212981.gitgitgadget@gmail.com> (Johannes
+	Schindelin via GitGitGadget's message of "Tue, 06 Feb 2024 09:49:37
+	+0000")
+References: <pull.1651.git.1707212981.gitgitgadget@gmail.com>
+Date: Tue, 06 Feb 2024 13:12:15 -0800
+Message-ID: <xmqq7cjhguvk.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3774.400.31\))
-Subject: Query about gitignore
-Message-Id: <B7F364DA-27E7-4BDC-93EE-32E6430B6ACE@gmail.com>
-Date: Wed, 7 Feb 2024 01:56:34 +0530
-To: git@vger.kernel.org
-X-Mailer: Apple Mail (2.3774.400.31)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 68136328-C534-11EE-9B50-25B3960A682E-77302942!pb-smtp2.pobox.com
 
-Hello there,=20
+"Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+writes:
 
-I hope you are having a wonderful day.=20
-I apologize if this is inappropriate but I wanted to ask is there a way =
-that I can make my .gitignore such that it ignores the entire parent =
-directory of a matching file.
+> I recently looked into issues where git merge-tree calls returned bogus data
+> (in one instance returning an empty tree for non-empty merge parents). By
+> the time I had a look at the corresponding repository, the issue was no
+> longer reproducible, but a closer look at the code combined with some manual
+> experimenting turned up the fact that missing tree objects aren't handled as
+> errors by git merge-tree.
+>
+> While at it, I added a commit on top that tries to catch all remaining
+> unchecked parse_tree() calls.
+>
+> This patch series is based on js/merge-tree-3-trees because I introduced
+> three unchecked parse_tree() calls in that topic branch.
 
-Thank You
-DV=
+Thanks.  All the added checks looked reasonable to me.
+
+Will queue.
+
+>
+> Johannes Schindelin (4):
+>   merge-tree: fail with a non-zero exit code on missing tree objects
+>   merge-ort: do check `parse_tree()`'s return value
+>   t4301: verify that merge-tree fails on missing blob objects
+>   Always check `parse_tree*()`'s return value
+>
+>  builtin/checkout.c               | 19 ++++++++++++++++---
+>  builtin/clone.c                  |  3 ++-
+>  builtin/commit.c                 |  3 ++-
+>  builtin/merge-tree.c             |  6 ++++++
+>  builtin/read-tree.c              |  3 ++-
+>  builtin/reset.c                  |  4 ++++
+>  cache-tree.c                     |  4 ++--
+>  merge-ort.c                      | 16 +++++++++++-----
+>  merge-recursive.c                |  3 ++-
+>  merge.c                          |  5 ++++-
+>  reset.c                          |  5 +++++
+>  sequencer.c                      |  4 ++++
+>  t/t4301-merge-tree-write-tree.sh | 24 ++++++++++++++++++++++++
+>  13 files changed, 84 insertions(+), 15 deletions(-)
+>
+>
+> base-commit: 5f43cf5b2e4b68386d3774bce880b0f74d801635
+> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1651%2Fdscho%2Fmerge-tree-and-missing-objects-v1
+> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1651/dscho/merge-tree-and-missing-objects-v1
+> Pull-Request: https://github.com/gitgitgadget/git/pull/1651
