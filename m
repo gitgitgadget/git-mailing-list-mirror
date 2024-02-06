@@ -1,180 +1,182 @@
-Received: from wout4-smtp.messagingengine.com (wout4-smtp.messagingengine.com [64.147.123.20])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail.manjaro.org (mail.manjaro.org [116.203.91.91])
+	(using TLSv1.2 with cipher DHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0181446AE
-	for <git@vger.kernel.org>; Tue,  6 Feb 2024 07:40:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.20
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3309C12B176
+	for <git@vger.kernel.org>; Tue,  6 Feb 2024 08:06:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=116.203.91.91
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707205254; cv=none; b=YgKx6OWoomJEuXA49NS34Mz0omu0e8FDrvXWzbW8a7gw1y6uwt75tn4/BGltBMVowo3oTxBDw1nPHjWdlL1WvLE3rXesmlvrtDM+aMrFte0Zk++9OpzBFiA82Ut6UDWPE/kHxIZVbUmoCXhVUb8QsbWzD0hqELFthQxw0AjU/V4=
+	t=1707206788; cv=none; b=huKC5KiQieh0I7tG1w9+O61WOjzXaycahVEnFzwIPVQBTyAgu/zuKTzb/DNwMIdASVnvG6BQWjRLFjE1C1sVg9fNF8dWN1HWucSxQ3AYzZJAhcEZEP6t1LvKo/zsB/T0qHD+F2stq8DAznNva7LNrd5HpNw9x4yK7grMpcs/opk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707205254; c=relaxed/simple;
-	bh=+7lW5n3epzOldg3YjweXSOTzOHKbrSph9FZZj781Whw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=NqeI1EQUBKJ1dkDqLW0i1L4I4O2zta9S+eiO8UcKCQSxts4DIlkniEmrKsfgPjICvtAlDn4MBWBrzVwNX9VpqcAV2yZC1yZYayBzwbxjfdjWHpI8XDbh/vDsW7Sf4kJSgDsIGYF2+017xJnD36iDYXC3us8Ve1FhE/9UpexSnOg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=TZr7m4Cg; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=riAqgt6x; arc=none smtp.client-ip=64.147.123.20
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1707206788; c=relaxed/simple;
+	bh=rUVLpUgaLQP+8n81JNcJkcuBOz762uiGWnQUJFsrhuA=;
+	h=MIME-Version:Date:From:To:Cc:Subject:In-Reply-To:References:
+	 Message-ID:Content-Type; b=irB2G9lvLuym/McByQMkEcErza7y2RnMAuX1b8O54Fo5YkyZ+0HwEowBqZkJpiFYcmYhrRQ1XOXKmuWaR6wfbtqRSBJmJPvyLn6u+kaa9F675INIP9PILBrHGjB+AlJrWysfZC59K4J56/ZoxT1ToYSxe4InJ8U1ZANEmFxppIk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org; spf=pass smtp.mailfrom=manjaro.org; dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b=jCay+oJQ; arc=none smtp.client-ip=116.203.91.91
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=manjaro.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="TZr7m4Cg";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="riAqgt6x"
-Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
-	by mailout.west.internal (Postfix) with ESMTP id EA73E3200AFC;
-	Tue,  6 Feb 2024 02:40:51 -0500 (EST)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute1.internal (MEProxy); Tue, 06 Feb 2024 02:40:52 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1707205251; x=1707291651; bh=OfKgHNYD2V
-	l1/YvSAkLteepQ7sczhfw/LCZDzvOFQNY=; b=TZr7m4CgHDIAgXEH/pFnnjBC3d
-	1JUHJ8P+aZBbpbuNs+YYpWLGKI+Fa2MzAZs5kYbf7jALDluTLY49IzWFtReN6Y58
-	kMQl4gelC83AAUJgvzPW0Mt/KBMqY23SNkVtuO4hXXOpoNkxVpQOh5F7RwnkynjX
-	lxsjbo6qQGF6lZxXN4WaQ0rkt4mPKMThe3h11kZPWVBMjAMxgMil+OPLti6p70U4
-	HbK1e96XLs3xwDoEikn9UGlJBJ9/kVaLWy9oeq8gqpeP8z7fK7UOgOmXXvH8HvPm
-	lw6N0KAz7PfdKZk+tpdMbHkE67PjiH9O21bXn4yo+Pr49/joKAL+DHlwKQBA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1707205251; x=1707291651; bh=OfKgHNYD2Vl1/YvSAkLteepQ7scz
-	hfw/LCZDzvOFQNY=; b=riAqgt6xhRYpwl4A1S5hiETt9d2bP6/VgORyNWOm5ctO
-	jrmese5eVdwGSnQdEfx9nVK/qbqEELG/MO3N8jnufacWOvuZkkZzyxAbMmliCm+h
-	oUqwl5dilOYN7i9IjucQzNuWtstd1h+W48f2KsPjQhSoN4DPpbq5hSP+UTMvngmf
-	0Gyefc8clZrt7eYa2pJ8Ni0uU9AjEo5prQBclQyq8iBzrJIoq3leQhAnpibrejKK
-	6WU4AksYGPExegK2HEtfgqYyA4KJ262ba5JmMQsLfri8maLsMN3RWsirVJtC+dT9
-	Eg6XPcPpP0VV6da1OD9bM2qijQHrqNi6Kbx9W13jlg==
-X-ME-Sender: <xms:g-LBZcCQvR8AwEPO_f_fdsrt60EB0LkjawlGBHfhXGAqvJOhOpyUTQ>
-    <xme:g-LBZeg9uQw3jsdCQ1vRlKvQBBA-CsF7Q6YRE4kf-QwA9BV-VS8XMv6ChLPUd0baR
-    NdXCevQYGai89vWKw>
-X-ME-Received: <xmr:g-LBZfkjvhGBu9ol-vECRS8U8bUQt5B4oBjn6VF3NUTVfo_R2XVEKUTnk6tx2kwpNv01f0qDr3OgbY26ix1zcK-Rc2eX50_rFsh9tqBcQSVvVoVq>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrfedvvddgudduvdcutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
-    necuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
-    enucfjughrpeffhffvvefukfhfgggtuggjsehgtderredttddvnecuhfhrohhmpefrrght
-    rhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtth
-    gvrhhnpeeukedtvedtffevleejtefgheehieegkeeluddvfeefgeehgfeltddtheejleff
-    teenucevlhhushhtvghrufhiiigvpedunecurfgrrhgrmhepmhgrihhlfhhrohhmpehpsh
-    esphhkshdrihhm
-X-ME-Proxy: <xmx:g-LBZSxztr7OEeLE3hVr-gnu8fs0j2DrZdfABcSQkk1IuhW3dkPPIw>
-    <xmx:g-LBZRRW_K9iAH07QCmzmKGjJ_RdOa81eiDKeGDbG5-UcmIFDky-QA>
-    <xmx:g-LBZdY6Hddqq7HWvm5bSOs_3ONnPbhZxHUujQz-u66YI5a2zVD5Ng>
-    <xmx:g-LBZceRrAL88Mu5I7atHMjk5F62YrM4cKMSV4JgI-XLEV0ky5Nzkw>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 6 Feb 2024 02:40:50 -0500 (EST)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 8a3ac08f (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 6 Feb 2024 07:37:21 +0000 (UTC)
-Date: Tue, 6 Feb 2024 08:40:49 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: Britton Leo Kerin <britton.kerin@gmail.com>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v5 5/7] completion: new function __git_complete_log_opts
-Message-ID: <ZcHigQ9ZyeUjsO-E@tanuki>
-References: <20240128223447.342493-1-britton.kerin@gmail.com>
- <20240206020930.312164-1-britton.kerin@gmail.com>
- <20240206020930.312164-6-britton.kerin@gmail.com>
+	dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b="jCay+oJQ"
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="tjbUt8L+xorVvC56"
-Content-Disposition: inline
-In-Reply-To: <20240206020930.312164-6-britton.kerin@gmail.com>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=manjaro.org; s=2021;
+	t=1707206782;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=cBWtNTReWRypAGaIMNPbxemxtwTBsI4q+eFtAxt4TRs=;
+	b=jCay+oJQLH99NNqyXCVGJf7FDnigq5/GOu3A5rLv7A0YuvSa61VNWgwrNP/ObiUgpmy9bv
+	pVyhXg5AvG/cBWMeIX0kl+p2ELfr0Gb/jRaduyh3i3oDVqPJozJCocNdx54pBrcxPWZI4l
+	XumDfWn6I3oAiBU8kprLJF7TIIYs1TvW/rJ5/v7ef2IQSHCbV4kilstvHMUwI98nfHlPFj
+	xxsdr4cvfGFNnHTJG6OgkscMwbroVdngZPcylinU+bs5P7FUIBAh/PN1MrQccJCYnozw/U
+	zPLjybFb5o0V8FYFTSPLT8VunRxMClxztuQ3AM6xeoMGIobFlbq0GWQsMNxo9w==
+Date: Tue, 06 Feb 2024 09:06:22 +0100
+From: Dragan Simic <dsimic@manjaro.org>
+To: Hans Meiser <brille1@hotmail.com>
+Cc: Theodore Ts'o <tytso@mit.edu>, Junio C Hamano <gitster@pobox.com>,
+ rsbecker@nexbridge.com, 'Sergey Organov' <sorganov@gmail.com>,
+ git@vger.kernel.org
+Subject: Re: Migrate away from vger to GitHub or (on-premise) GitLab?
+In-Reply-To: <DB9P195MB213080E6DD9ECA0EE3D2B491E2462@DB9P195MB2130.EURP195.PROD.OUTLOOK.COM>
+References: <AS2P195MB21350F44B079009C05A1EAF1E2432@AS2P195MB2135.EURP195.PROD.OUTLOOK.COM>
+ <AS2P195MB2135D91EE464FF30EE84E77EE2432@AS2P195MB2135.EURP195.PROD.OUTLOOK.COM>
+ <877cjm53bf.fsf@osv.gnss.ru> <008b01da55eb$9f3c36d0$ddb4a470$@nexbridge.com>
+ <20240202161643.GD119530@mit.edu> <xmqq5xz6sn5i.fsf@gitster.g>
+ <20240202212809.GA36616@mit.edu>
+ <DB9P195MB213080E6DD9ECA0EE3D2B491E2462@DB9P195MB2130.EURP195.PROD.OUTLOOK.COM>
+Message-ID: <aca58f5d44d48f98b464e6c4a8d637fe@manjaro.org>
+X-Sender: dsimic@manjaro.org
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Authentication-Results: ORIGINATING;
+	auth=pass smtp.auth=dsimic@manjaro.org smtp.mailfrom=dsimic@manjaro.org
 
+Hello Hans,
 
---tjbUt8L+xorVvC56
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+On 2024-02-06 08:22, Hans Meiser wrote:
+>> Please, keep in mind that not everyone lives in a web browser and
+>> loves to click around.  Some people simply prefer to use the CLI
+>> utilities and to press the keys on their keyboards, and are very
+>> efficient while doing that.
+> 
+> You are aware of the fact that all these Git collaboration websites
+> are providing a REST interface? So, you are free to access any
+> function by means of CLI?
 
-On Mon, Feb 05, 2024 at 05:09:28PM -0900, Britton Leo Kerin wrote:
-> The options accepted by git-log are also accepted by at least one other
-> command (git-bisect).  Factor the common option completion code into
-> a new function and use it from _git_log.
->=20
-> Signed-off-by: Britton Leo Kerin <britton.kerin@gmail.com>
-> ---
->  contrib/completion/git-completion.bash | 18 +++++++++++++++---
->  1 file changed, 15 insertions(+), 3 deletions(-)
->=20
-> diff --git a/contrib/completion/git-completion.bash b/contrib/completion/=
-git-completion.bash
-> index 57c6e09968..8c3b1b8e96 100644
-> --- a/contrib/completion/git-completion.bash
-> +++ b/contrib/completion/git-completion.bash
-> @@ -2089,10 +2089,12 @@ __git_diff_merges_opts=3D"off none on first-paren=
-t 1 separate m combined c dense-c
->  __git_log_pretty_formats=3D"oneline short medium full fuller reference e=
-mail raw format: tformat: mboxrd"
->  __git_log_date_formats=3D"relative iso8601 iso8601-strict rfc2822 short =
-local default human raw unix auto: format:"
-> =20
-> -_git_log ()
-> +# Complete porcelain (i.e. not git-rev-list) options and at least some
-> +# option arguments accepted by git-log.  Note that this same set of opti=
-ons
-> +# are also accepted by some other git commands besides git-log.
-> +__git_complete_log_opts ()
->  {
-> -	__git_has_doubledash && return
-> -	__git_find_repo_path
-> +        COMPREPLY=3D""
+Perhaps I wasn't clear enough, so please allow me to clarify a bit.
 
-Nit: this is indented with spaces instead of tabs.
+To me, it isn't just about using the CLI or TUI utilities.  It's
+actually about using standard CLI/TUI utilities, such as using git
+directly, instead of using some specialized CLI/TUI utilities that
+are made to interact with a forge in a forge-specific way.
 
-It would also be nice to mention in the commit message why we empty
-COMPREPLY here. It didn't happen before either, so this is essentially
-not a no-op conversion.
+Perhaps you'll ask why I find using a forge such a bad thing, so
+I'll try to provide an answer in advance.
 
-Patrick
+Git is a widespread, standard system of utilities that isn't backed
+by some company that sees its profit as the main goal.  On the other
+hand, most forges are backed by a company, and as we know, companies
+don't last forever, and they often pivot due to business decisions.
+What we don't want is to tie the project into something that isn't
+expected to virtually last forever.
 
-> =20
->  	local merge=3D""
->  	if [ -f "$__git_repo_path/MERGE_HEAD" ]; then
-> @@ -2186,6 +2188,16 @@ _git_log ()
->  		return
->  		;;
->  	esac
-> +}
-> +
-> +_git_log ()
-> +{
-> +	__git_has_doubledash && return
-> +	__git_find_repo_path
-> +
-> +	__git_complete_log_opts
-> +	[ -z "$COMPREPLY" ] || return
-> +
->  	__git_complete_revlist
->  }
-> =20
-> --=20
-> 2.43.0
->=20
+It's similar to the concept of bit rot.  A lot of data is poured
+into something and it slowly starts to degrade over time.  Though,
+in the case of a forge becoming no longer available it wouldn't be
+a gradual decay, but an abrupt disruption that would make all the
+data unavailable and unusable.  Of course, the data perhaps can be
+exported from a forge in some format, including the discussions,
+but who's going to sift through years worth of such data and make
+it usable through some other interface or in some other format?
+Frankly, I wouldn't see that happening.
 
---tjbUt8L+xorVvC56
-Content-Type: application/pgp-signature; name="signature.asc"
+On the other hand, discussion in form of mailing lists aren't tied
+to anything, the underlying data format has been around for decades,
+and the raw data can be accessed by any editor or viewer, such as
+less(1).  It isn't tied to anything.
 
------BEGIN PGP SIGNATURE-----
+>> As a Linux kernel subsystem maintainer, I am super grateful for those
+>> who do code reviews and those who work test regressions, because in
+>> general, that which doesn't get done by other developers ends up
+>> getting done by the maintainers and project leads if it's going to
+>> happen at all.
+>> 
+>> When it comes to requests like "you should migrate the project to use
+>> some forge web site, because we can't be bothered to use e-mail, and
+>> web interfaces are the new hotness", the entitlement that comes from
+>> that request (which is in the subject line of this thread), can
+>> sometimes be a bit frustrating.
+>> 
+>> Going back to the original topic of this thread, my personal
+>> experience has been that the *vest* percentage of pull requests that I
+>> get from github tend to be drive-by pull requests that are very low
+>> quality, especially compared to those that I get via the mailing list.
+>> So making a change to use a forge which might result in a larger
+>> number of lower quality code contributions, when code review bandwidth
+>> might be more of a bottlenck, might not be as appealing as some might
+>> think.
+> 
+> Again, you are aware of the fact that Git collaboration websites
+> provide a powerful user rights management?
+> (https://docs.gitlab.com/ee/user/permissions.html
+> https://docs.github.com/en/organizations/managing-user-access-to-your-organizations-repositories/managing-repository-roles/repository-roles-for-an-organization)
+> 
+> Using Git collaboration websites you can easily control and filter who
+> will be contributing. And you are able to focus on issues and filter
+> out spammers. It's quite the contrary of of what you have now with
+> your mailing list. A vanilla student from the "axis of evil" could
+> bomb your mailing list in a snap by just registering a dozen new
+> e-mail accounts and writing a script that bloated your mailing list.
+> And you cannot thwart that at all.
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmXB4oAACgkQVbJhu7ck
-PpTDkA/+PDZ1TKHCvzCGt+I5fLjAa05cIcadOYy3hhZ0tUNtVkzXBRdRIvvlZ6Pp
-X7xZjgSoSldX/N+pRomLe0QASb8FA8+se4iY+lF6VRvOovWSAV9OKvB8uj01UFBF
-jqGsd7OPi2j/r8ufHkzAEJctbwwHt54hQYp4OYT9Yzge+SH+XFJ0eQJMSijKLJ3T
-rK1e2xqp8yUEAMlyYOBUSQ21F9xS6MFt7bJHB1syfrYG5bdRbnIKNM4Geijwo4up
-AMdLx8lwsDhTsn9xJUgDiAq4semsGWr7AhnE2IJ3ehFesOY+BsjmnE+jchb/nNAM
-Hp3XQ1VjneFiyRX+89/YprwR/s/4HkBmaB2e3u8hEZ4wwEuA5eaooYfpqhrleZzp
-BiUQBppHeDrxqrTuyEHWdoMRw8Uzn5sIsQ365cePrBA189Oex+DWTrBuFHYPk5Pi
-OdL9Kyys60pttecWCqVjUq6ncp/d9GdJwLCvpsaUJHnXhIyL0ptERHbVmnHD+tjM
-dZQ59e8KXeRgERm0Lu2lcbC6p+MxljA0QanehFyY40XIeFAVsMC12AmtKzKMAiJ0
-og7aVNlRPvkXWBu/6AR7nyeDr9vRkEy3NcAOVcIz7NP/FIeMYPfEfTK498ppQFbn
-mp9duerNUDnkalSBCmJT0OMJSpJS3hV7GUzuEPr/jkjO7lwSsHc=
-=pUKx
------END PGP SIGNATURE-----
+I don't remember such cases.  It doesn't mean something like that will
+never happen, though.  Also, pretty much anyone can create dozens of
+fake accounts on a forge and do malicious things.
 
---tjbUt8L+xorVvC56--
+Please note that creating an account of any kind is often unacceptable
+to many people.  I was a bit surprised to discover that.
+
+> With your mailing list approach you don't have ANY sort of gateway to
+> keep away spam or "low quality" contributions other by means of the
+> intrinsic clumsiness and intricateness of a mailing list. After having
+> subscribed to your mailing list, my e-mail spam rate immediately
+> increased significantly.
+
+You must be having bad luck for some reason.  Knocking on wood,
+I've received zero spam emails directed to my email address since
+subscribing to the list.
+
+> Again, on Git collaboration websites you can hide your personal access
+> information and focus on your repository tasks rather than wasting
+> your time on cumbersome additional and unneccessary work.
+
+If you ask me, one's identity shouldn't be hidden when one willingly
+contributes to a public project.  Taking part in the discussions is
+also a way of contributing.
+
+> I'm getting the impression that you didn't yet seriously investigate
+> on the features these Git collaboration websites provide.
+> 
+> Let me finish this thread from my side now. I suggested a way to
+> improve your daily business by employing tools that have been
+> established and proven to raise code and documentation quality and
+> that will allow you to focus on important tasks rather than wasting
+> time on an old fashioned workflow. Well, it's up to you now to decide
+> whether to stick here or to migrate.
+
+As I noted already, these days it's expected too much that some
+utilities will do the programmer's work.  Also, being unable to
+follow a moderately busy mailing list, such as the git's, may also
+show that one needs to improve their own skills in some areas.
+
+In the case of high-volume mailing lists, I admit that things can
+be different and much harder to handle.  That's why I plan to work
+on extending mlmmj to support muting and unmuting threads. [1]
+
+[1] 
+https://lore.kernel.org/git/93be64af474b228e914a4c39443b5a9c@manjaro.org/
