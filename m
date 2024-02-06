@@ -1,101 +1,76 @@
-Received: from mail-ej1-f43.google.com (mail-ej1-f43.google.com [209.85.218.43])
+Received: from mail-pf1-f170.google.com (mail-pf1-f170.google.com [209.85.210.170])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 369E01B7E1
-	for <git@vger.kernel.org>; Tue,  6 Feb 2024 20:10:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 594A41B7E1
+	for <git@vger.kernel.org>; Tue,  6 Feb 2024 20:27:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707250212; cv=none; b=Ww5ajDI/KwraGFJbP5laeYR4OtSmd1m6xS3FArJ6njz7Xx2FX6U7zXRZmHdSXi/1hTx37ev7x/vFBrRt63zXwYqUeSZaMCd3xqP9d8pIHceX+fiEJpXGouRdkvKREmHfkcx3iVEoWifw50rloB767BvhU1KcZr/IT4+kkA+tdeg=
+	t=1707251221; cv=none; b=r8hswQbbArYsQEQnCnNsQGn5oQ3JpKE4nRqS6de3f9XXOMHXpi1+KSDbVSf1b1TlB3chGdZQmw3i+jeIr1mWoB+IKmlrGUifN/B9NLbbVjho2sO8V8D/fyAnezgNHJoAY7kk9uMCr6Kdd2+/KPbh7cJr6PDw5ECakOChAbvaBDw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707250212; c=relaxed/simple;
-	bh=pw+ZXYry/9TT6aC2zbFLymvMH6iDQ6y0aa4BtvLmXHs=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Xl46d/2kQf3ul6qRDCodNVFt6nnzqGiJF2PR2nvx5vNJBXUpJjIsvgbKns9R1r5zIYCEV3X3BVNCIqe0cM7qyzLd3TSXsez2Ke8YZUpO4DJd5Dg9Wx2XcC9DIWzlyBMtvDLidJylC6RbQgkziFs9DrM7+HrhBWdqXbfKPeNQnuI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hp+2viK9; arc=none smtp.client-ip=209.85.218.43
+	s=arc-20240116; t=1707251221; c=relaxed/simple;
+	bh=9Jt5wek2lIBvusAX+n5BnYTBdtkIQjAtjJPb/OIu8v0=;
+	h=From:Content-Type:Mime-Version:Subject:Message-Id:Date:To; b=K4IkgqP/bOCzbOy54bJ4Troyi8CvtRILCcplaewjMb6Sm3xNoxkEoX7/QA/t3TveuzrYweotBJSmD+uvOixA3hVzTN1WvsZc3EXzo5Xad8XEwlHtSArYJ5MfkRpobso0bO4GeR4Kzwdmvrk5NV0zNFU1ZcNaBKhU+RVGZFuKYcM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Otc25koF; arc=none smtp.client-ip=209.85.210.170
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hp+2viK9"
-Received: by mail-ej1-f43.google.com with SMTP id a640c23a62f3a-a370e7e1e02so466761366b.0
-        for <git@vger.kernel.org>; Tue, 06 Feb 2024 12:10:10 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Otc25koF"
+Received: by mail-pf1-f170.google.com with SMTP id d2e1a72fcca58-6e05f6c7f50so545087b3a.3
+        for <git@vger.kernel.org>; Tue, 06 Feb 2024 12:27:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1707250209; x=1707855009; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=+LoBHizEIDb8O6aYNGNXf11h61CJXUIABERm/nlkWr8=;
-        b=hp+2viK9yvY1U01gwfUKD/ucYcttco9R6tYoyr5LX7JxazqMnupaVNAiz8BjXTb5D4
-         AECvq69sQnZQVDj+OT94kEZmIClzaUKymP6Iy6McbjFd3etRF0qQOZXgXOaleWPkg3Tm
-         A2LWS/UVgtZzXsQWedth4pe7a/TVnoFHZN8lYTwpKRoniV6jtzrgnHqrO/RnkTkDM4Bl
-         30A3Lzqugls3ZSDsgWP44w1x2lD0R9YFD5SPkVta8i2Bob4Tm0TnNzdEls/eEMbqF70E
-         1lp3k6pRWfpqw+rChRMvuI0PHibHgZZitB99Ys7Tm27Ar3fNMw9vv5CvRek+2D+XLUnu
-         /43w==
+        d=gmail.com; s=20230601; t=1707251219; x=1707856019; darn=vger.kernel.org;
+        h=to:date:message-id:subject:mime-version:content-transfer-encoding
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=9Jt5wek2lIBvusAX+n5BnYTBdtkIQjAtjJPb/OIu8v0=;
+        b=Otc25koFr33quQy773SAXTAl/9D92kR+D6vgCg2cAiXyF4fISR2jF2m0PC5/lopP/F
+         rRLKIcLTw7bw0lALTf4cMOb6QLYaJrO6bpjbI1cZmpjVDf+yCd3d8FivYgF8JuJGAGvB
+         cNge/0+3hZMq60est88i9MLIO2fhQexWCKV2wx4BDJkmtQ0EMzu8omzVkhO8tYg8KGzX
+         GcoiC4EMiqOlbi1IVjGY6bHYXfSEKYUg9X3KAvswAr/AE3WV8knt0lA44iHJUZ60KAph
+         w69wY6L24roYPGPwIqT8cZ7ry0shWTpd+1Y0b1fgL/joMVt/xbFUqQoaGd4XQyaslcQ5
+         YV1A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1707250209; x=1707855009;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=+LoBHizEIDb8O6aYNGNXf11h61CJXUIABERm/nlkWr8=;
-        b=eAQW0+3G6YvCgq24grPQTpTcIAeAbjvshGOXo9PMsjU29f9nJqYM11rHkQIikTRfSL
-         yJaB1XNUxZf1zspD1q5vXj0UmmFXDWwtlSAEu46v3oO/D6I3eTMKdzc8wopbQqny3bvL
-         Z/cG+tQySkBdGAfjmuXKo3YenHIsi5NOgYi/Ny+toNNL7lStc5ynLn7Pw4kuqamqq6mr
-         Hj6sag/u8NL+ARumpzM5AuLOjGD4HtWulyba2hjynMjbobw9r+04Vqit69L+Zxw3CyJz
-         yNzK4jFPnHFUimmH1YVUHzFGluYG4+pACj3vq8fAavElzXnmlpjrQhPW4WtpIXuZB2zu
-         LP7w==
-X-Gm-Message-State: AOJu0YxxhhHO8OJtkloBvPL0gCoJinYRLawOg910NWxLGMOIH1rANNAu
-	78a0acT2W2wpf7gkBY12ygHT4WdyW99HF4rPMjbILk+D6fmaEyZRTcJqLlhhpP9Ua+jpBiQXO1D
-	vhosoRv+jzpeDare2khjo+L+d18Q=
-X-Google-Smtp-Source: AGHT+IH2ijMA1eASz0pw6HA9Qm+ml7I++75rETDfKx6+CkIUBk1aiPomIWrDCreKtA/fdz/N1lpLOr4aqNEnYOqJJtM=
-X-Received: by 2002:a17:906:1c89:b0:a37:e5fd:94ee with SMTP id
- g9-20020a1709061c8900b00a37e5fd94eemr2597679ejh.72.1707250209042; Tue, 06 Feb
- 2024 12:10:09 -0800 (PST)
+        d=1e100.net; s=20230601; t=1707251219; x=1707856019;
+        h=to:date:message-id:subject:mime-version:content-transfer-encoding
+         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=9Jt5wek2lIBvusAX+n5BnYTBdtkIQjAtjJPb/OIu8v0=;
+        b=roorb38kwapRZY+i1RaxwC1oihG7b0U96zVVUnM/6TK42O4NZG9gOSfYDIDcguw5ZD
+         m5437ny9nZO2S5EIcuPbPJ22mZcKZKQ/dJn3N5VFlc93LZDkWfCqCditz4RjIp5LUf+8
+         Jq1dRjw1iskshO/efzVmp3l6CIFtorPmVnMiHpqwe23ynbXrJfjWfHiQyD0GyQhCZn+r
+         AAD1hDoREZgQj0lQeQ7yjCP80Z8SPUF1POCivi7+VjySPbYOblQdG4ckwCoCdAV+FiUH
+         7dYY3GLFhOAjOchnTx4QunUshYYXnjkBTbFo9U4GgssGaK12qG60LhSB5eL9C6lml/8Q
+         LqQg==
+X-Gm-Message-State: AOJu0Yx1ZzRuTYRdu8QZqlRMbKVYLIMullExssCqukxaKa3fgaH+ZzYI
+	ReYmdLcs9EcJa42ErVCEw3KQe5My51jSTiOPLOhE4uxMQYzqdzHFl5RTozb9Y7Y=
+X-Google-Smtp-Source: AGHT+IG8Q/v5pOxb3hNXeLYRo40BDj9aWXLa+OGr1zPDt6jYlTzv0Pt/1CV2s96EN1MdoYBw6vY71A==
+X-Received: by 2002:a05:6a00:c95:b0:6e0:3efb:cb4d with SMTP id a21-20020a056a000c9500b006e03efbcb4dmr800211pfv.23.1707251219088;
+        Tue, 06 Feb 2024 12:26:59 -0800 (PST)
+Received: from smtpclient.apple ([2409:40d1:101d:6931:71fb:92bc:bd9e:5395])
+        by smtp.gmail.com with ESMTPSA id gu14-20020a056a004e4e00b006e03c68ae9asm2505139pfb.16.2024.02.06.12.26.57
+        for <git@vger.kernel.org>
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 06 Feb 2024 12:26:58 -0800 (PST)
+From: Divyaditya Singh <divyadityasnaruka@gmail.com>
+Content-Type: text/plain;
+	charset=us-ascii
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-References: <CAC4O8c_oKT+a0hm+tqSOG7d1=AuJJKy5bsh72cJKVsWynvHw+w@mail.gmail.com>
- <ZcIYz82iLxPOVR9Q@ugly>
-In-Reply-To: <ZcIYz82iLxPOVR9Q@ugly>
-From: Britton Kerin <britton.kerin@gmail.com>
-Date: Tue, 6 Feb 2024 11:09:55 -0900
-Message-ID: <CAC4O8c_1JnDc5v+_xS9Q=0fJmoK3e8iYiag2gT8KchcJdvgcTg@mail.gmail.com>
-Subject: Re: is it a bug that git status show the in-progress 'edit' in an
- interactive rebase as 'done'?
-To: Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
-Cc: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3774.400.31\))
+Subject: Query about gitignore
+Message-Id: <B7F364DA-27E7-4BDC-93EE-32E6430B6ACE@gmail.com>
+Date: Wed, 7 Feb 2024 01:56:34 +0530
+To: git@vger.kernel.org
+X-Mailer: Apple Mail (2.3774.400.31)
 
-On Tue, Feb 6, 2024 at 2:32=E2=80=AFAM Oswald Buddenhagen
-<oswald.buddenhagen@gmx.de> wrote:
->
-> On Tue, Feb 06, 2024 at 01:02:43AM -0900, Britton Kerin wrote:
-> >>Last command done (1 command done):
-> >>   edit 71b73de914 message for first commit
-> >>...
-> >>You are currently editing a commit while rebasing branch
-> >>...
-> >
-> >This seems wrong, because until git rebase --continue has been done
-> >the edit operation for the first commit is *ongoing* and it would be
-> >much clearer for the output of status to accurately say so.
-> >
-> it makes a lot of more sense when you decompose 'edit' into 'pick'
-> followed by 'break', which it essentially is. so from git's perspective,
-> the command really _is_ already done. note that in this state, you can
+Hello there,=20
 
-well viewed this way the pick may be done but not the implicit break
+I hope you are having a wonderful day.=20
+I apologize if this is inappropriate but I wanted to ask is there a way =
+that I can make my .gitignore such that it ignores the entire parent =
+directory of a matching file.
 
-> do all kinds of crazy things - including adding new commits (possibly by
-> cherry-picking them) and even dropping already rewritten commits (using
-> a hard reset). so in a way, the message above is even a bit too
-> suggestive.
-
-Yes.  I'd handle this by changing the description of edit offered in
-the comments in the todo to better reflect the possibilities.  The
-hints that git rebase -i  (or --continue I guess) gives when it hits
-the edit commit also don't reflect all the possibilities very well.
-
-Britton
+Thank You
+DV=
