@@ -1,80 +1,81 @@
-Received: from wout4-smtp.messagingengine.com (wout4-smtp.messagingengine.com [64.147.123.20])
+Received: from wfout4-smtp.messagingengine.com (wfout4-smtp.messagingengine.com [64.147.123.147])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3B73127B73
-	for <git@vger.kernel.org>; Tue,  6 Feb 2024 06:35:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.20
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A1AC41C84
+	for <git@vger.kernel.org>; Tue,  6 Feb 2024 06:35:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707201327; cv=none; b=itYeEDjvOYtbAwBnrViKPKeUfc7jNbyJodOzHEgHbIXWKIEe1lriKwTkXGSgdT4GpsPR5JwJLCbdkFX+sMIm5NELcfzAIn3RYt0kw1FYdXN8GfauLzY/tCBrzDBEAzdEqnJMi0/S6ZxbEGMHznn0AUGtWjCz2J8OZqgwQCR3+Qw=
+	t=1707201330; cv=none; b=ABuMrdWaQPFc34KYkTlArB66SgW1Xj6/H2YfRfzZT7qyGmOJ4hnuHug7VSmNF2pMJrk3IsyVzPo1aGBOCw9df7aMR5D+q/OrAWVmTn2QgW7l6IyglJoOpv/e+qQmOl/Vg9xptLuMHwt9nGoDveEahwGMo5Hs4duoLcd+0vJcdgM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707201327; c=relaxed/simple;
-	bh=AsnO7lf9kbnK7kgVZ/StJJStSuC1gPa9rJuI5bf6yuk=;
+	s=arc-20240116; t=1707201330; c=relaxed/simple;
+	bh=sx+REWNdhYoidmMJIaBdLB6GikeamS7mXi8j/skXUNU=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=D0imrhxFCHXQ0HfRQQo/P2Lz8kFMx4MsnMlrYE+XXCtwwru3SG3s9vZqUDQAjJhflqYYeTXUTOwcGdpoIRbastTH5m8IYqrJrL4O/IQesSkyHzT/qa5isBMcOpOFL9HHJju3Im6SYejxSb0vHeym3T6Zb6THPhRXlkz2brL6BNE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=nGpP3+i4; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=eH3TLmPE; arc=none smtp.client-ip=64.147.123.20
+	 Content-Type:Content-Disposition:In-Reply-To; b=fHiBDl/PSY9bcrpCPgi3DcYaW+WWhqASYgVW9IdFpD/wOpvaaIpf3L2s4KN9qHSDRSvsaKkNszc67Z+yfg8f91yvYZcMO006KUn9xSHAsCq5hXCvtapJTdC1Oh34owzYmhaB2Tv3Jn37i3Su7CmtbC6HIpSI1ElITkpNhlc7lAk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=KZAsAHV1; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=lq9c4fzE; arc=none smtp.client-ip=64.147.123.147
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="nGpP3+i4";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="eH3TLmPE"
-Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
-	by mailout.west.internal (Postfix) with ESMTP id 5F1003200A48;
-	Tue,  6 Feb 2024 01:35:24 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="KZAsAHV1";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="lq9c4fzE"
+Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
+	by mailfout.west.internal (Postfix) with ESMTP id D3F131C00074;
+	Tue,  6 Feb 2024 01:35:26 -0500 (EST)
 Received: from mailfrontend1 ([10.202.2.162])
-  by compute6.internal (MEProxy); Tue, 06 Feb 2024 01:35:24 -0500
+  by compute4.internal (MEProxy); Tue, 06 Feb 2024 01:35:27 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1707201323; x=1707287723; bh=V9Xm+eobsg
-	UELyVp42i7FOjBS12+56b90fzIVFShXj4=; b=nGpP3+i4W5VWTKVkUbzaSQtv+i
-	5S1UYPLtzJAegXNP6upBqTwCX3pKsUu52A56w1CVl9T/DpFAgatAvuyTOljWGRtQ
-	phV44GetTR3nPGMGQvdNqaxt/hLEGQ+IGGBaI+uWV+pD6hWyYtVM4QY5/VZUENo9
-	MJqjUEshPjtQp3fswUijo7FBG0u66WzkUak6qYnr/0KMcVt5Vh6UVTdva5Y69Dhk
-	19HArl41GD7wbFMa/+Mb0p/92+NbAa3yr4fsiU0vuHNB59qzOt1jVUedpkJZjkzN
-	MM/AYLT6jW+A2ClURBObzRyntHX/rUs49haTPFYLqLweLq39s1kvB3TifLTQ==
+	:subject:to:to; s=fm3; t=1707201326; x=1707287726; bh=zQl0dNX+LA
+	SazJyO+N+85iYw7JsblCAcMpUGkkgRM1s=; b=KZAsAHV1jQjQnzr40Yj80pOlty
+	STFHHucKpadkUyyOEl4BilB8PnB75RVVNRg5mnfur6utSPdFeu5Hdo6BZXDad13g
+	o5OjKCUHo+xD2BGTwNQWPwD+Ud2BQBnQYJ4sU0MKKRYAxMgSw14ppgj/NA0/sT//
+	nRpi/3GbkBPrgPmq3oxDINjGRuxwJFeS6quAaS2URQ+f5+knPLGE9z29rVwEG6xw
+	QXs59itTWc3nCASFXDP5JAyWJLd8EKaugntNbElVMDyCx36S8i0/S/q4jmhYTL08
+	OBZYBLRO16toUmcxjVCHBPxCmxKAvIXIAZAezYAmw4FM5VAmVQ0E4B/wKG/Q==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1707201323; x=1707287723; bh=V9Xm+eobsgUELyVp42i7FOjBS12+
-	56b90fzIVFShXj4=; b=eH3TLmPEjHwcnCDQ0ofpBXGqHPwKfUGWpBjWRT/npxWG
-	6Ki4JLexyOQKvo3C30lQsrQpFGeSc5uTi+uww5BuM2H2CB5e62/OVa38DPdLWTP0
-	0d+6H2gDvXnUwRd/VzZGlcxsVlhJjASuLzKWwT7YPgbmLWOVMr3b0Cevp+1HspS4
-	oGJNjJ0MuMsKSXOdnzRv+4CUdfB19I+UKPGWJN7ZhqjbDvFAtiufleIEE9W3agdU
-	ug0PfdlXs1C11/nT1ceF1/uqofXDcTa2shP/nqD6rn8EqOxGZy7Smtl79gMGYCmo
-	xzAY/jSYjB/umC1c42Aob4XYjhLnY1tQy+8cnDb8pA==
-X-ME-Sender: <xms:K9PBZYpelKuaQ_LJdEMFTaVF_Rd-d_k7hpZ2yE8aPJaBTqb2FH8c5w>
-    <xme:K9PBZepYSnZRGlU4fWgh04sWW6CSizOSnXY7mtAubAqS8vd4iHZ2F1PvwKJkth6_-
-    p_A1nRTjOE7wNeTPA>
-X-ME-Received: <xmr:K9PBZdNvogQSPIQYJAgluL26KnutFel92I5yfsLyhpQxhOynQ3UfujUvUXfc5TXkvxgMW1IIRpZVnH_vHC4kKOH74daomIoZWfT9VBx5HhGJ-CED>
+	fm3; t=1707201326; x=1707287726; bh=zQl0dNX+LASazJyO+N+85iYw7Jsb
+	lCAcMpUGkkgRM1s=; b=lq9c4fzEVxi6A0NFwkfEHkg8kagF89Xcvdg7A6nReZGi
+	D+fA4654ZFVHPO+S2Di7nOEfXUwpIg769DalXVH84s1sGkUD4ZXOgUqRQ8gOAorF
+	LAPlmFHg/0CwpphYPpkJlJg0pMFORfwqojBxAf7ohiXzsOpHAQwf7kdyBz45AtcR
+	RkzbO9BWlm20sYZcI7udDIW6R3P1IJXiFwgND3A03DbskbcsiKkJ29mSjvxYytvX
+	ad+FFay9wtvumUQ/CK/plpTMRhyjdkL9RkkgGNteGCJctZVMLEL8aFAydiQ1RCZi
+	vIpjHmcOU4+nhxvSYuiOFi8KDUThtVZgpKIGVKUHUw==
+X-ME-Sender: <xms:LtPBZURWTziCXBHVouSZidQHyIa2jtoVJQqKqvdon6lcB8Pmzhk1Zw>
+    <xme:LtPBZRzv7gf7cW2XWYRl4VqF3NCkiQnhUI9VjNpDO9AlDXY0XE9O2iEe389jX5lEx
+    hKgErtOYLmnC3a64g>
+X-ME-Received: <xmr:LtPBZR1Pv7jZfefdqaDAHG5DBy_j88TyETJCT-QPjP1WtZXj40hpuWmPsVGsxmqi8xbzHRSZH0VmfrE77GvtwOXzauNcWZWaVluflKgBmXXvId4t>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrfedvvddguddttdcutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
     necuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
     enucfjughrpeffhffvvefukfhfgggtuggjsehgtderredttddvnecuhfhrohhmpefrrght
     rhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtth
-    gvrhhnpeegvedtffehvdehheegueeuffefteeitdefheejheetveeiheekkeeifefhvdev
-    heenucffohhmrghinhepuhhpuggrthgvrdhnvgifnecuvehluhhsthgvrhfuihiivgeptd
-    enucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimh
-X-ME-Proxy: <xmx:K9PBZf6aCD_4bs-Qgja7shJsCKcEAKgFpY68lKSfpjdusha34ws59g>
-    <xmx:K9PBZX72VfS06pNHviucrGev1ELIiZaCipYDXX3Tz9f8iBg01fiGuA>
-    <xmx:K9PBZfjDHUUOT100o9kteYRrce9kim_f3lyiNQzUuCGcAwLfKrribw>
-    <xmx:K9PBZa1GHVT33VN1RARanRuwFoj-d4UnogXLf-BS5-3fcoVy1cc3jw>
+    gvrhhnpeeukedtvedtffevleejtefgheehieegkeeluddvfeefgeehgfeltddtheejleff
+    teenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpsh
+    esphhkshdrihhm
+X-ME-Proxy: <xmx:LtPBZYApKOS89L2_Qn6jvyZ0FNYOCpVk3F2mFzpfezuXOZ3Y3_hebw>
+    <xmx:LtPBZdhvprgyTIzSqXoDOHW8S6mGhu72PKAEq5ujvHIr0CMKEh-m3w>
+    <xmx:LtPBZUpLYBNqiKmCz-AQcaVZUqh0ngc8TWEvip5uT4Co_zA6gtHwZw>
+    <xmx:LtPBZbZi_1p1ETBkkk4f4VY8BZ4-6OpLvKacL3mxdL3eKox1e0HnMc3sshI>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 6 Feb 2024 01:35:22 -0500 (EST)
+ 6 Feb 2024 01:35:25 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id a0f993ab (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 6 Feb 2024 06:31:51 +0000 (UTC)
-Date: Tue, 6 Feb 2024 07:35:19 +0100
+	by vm-mail (OpenSMTPD) with ESMTPSA id a66554fe (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 6 Feb 2024 06:31:55 +0000 (UTC)
+Date: Tue, 6 Feb 2024 07:35:23 +0100
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
 Cc: Eric Sunshine <sunshine@sunshineco.com>,
 	Junio C Hamano <gitster@pobox.com>, Toon Claes <toon@iotcl.com>,
 	Karthik Nayak <karthik.188@gmail.com>
-Subject: [PATCH v3 0/9] reftable: code style improvements
-Message-ID: <cover.1707200355.git.ps@pks.im>
+Subject: [PATCH v3 1/9] reftable: introduce macros to grow arrays
+Message-ID: <12bd721ddff7020eb9e9ebd4e797d50193250bc0.1707200355.git.ps@pks.im>
 References: <cover.1706687982.git.ps@pks.im>
+ <cover.1707200355.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -82,236 +83,366 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="xBj3apZ3AZA1F04l"
+	protocol="application/pgp-signature"; boundary="Ui2G6qpz6EgsToSW"
 Content-Disposition: inline
-In-Reply-To: <cover.1706687982.git.ps@pks.im>
+In-Reply-To: <cover.1707200355.git.ps@pks.im>
 
 
---xBj3apZ3AZA1F04l
+--Ui2G6qpz6EgsToSW
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-Hi,
+Throughout the reftable library we have many cases where we need to grow
+arrays. In order to avoid too many reallocations, we roughly double the
+capacity of the array on each iteration. The resulting code pattern is
+duplicated across many sites.
 
-this is the third version of my patch series that tries to align the
-reftable library's coding style to be closer to Git's own code style.
+We have similar patterns in our main codebase, which is why we have
+eventually introduced an `ALLOC_GROW()` macro to abstract it away and
+avoid some code duplication. We cannot easily reuse this macro here
+though because `ALLOC_GROW()` uses `REALLOC_ARRAY()`, which in turn will
+call realloc(3P) to grow the array. The reftable code is structured as a
+library though (even if the boundaries are fuzzy), and one property this
+brings with it is that it is possible to plug in your own allocators. So
+instead of using realloc(3P), we need to use `reftable_realloc()` that
+knows to use the user-provided implementation.
 
-The only change compared to v2 is that I've now also converted some
-calls to `reftable_malloc()` to use `REFTABLE_ALLOC_ARRAY`.
+So let's introduce two new macros `REFTABLE_REALLOC_ARRAY()` and
+`REFTABLE_ALLOC_GROW()` that mirror what we do in our main codebase,
+with two modifications:
 
-Thanks!
+  - They use `reftable_realloc()`, as explained above.
 
-Patrick
+  - They use a different growth factor of `2 * cap + 1` instead of `(cap
+    + 16) * 3 / 2`.
 
-Patrick Steinhardt (9):
-  reftable: introduce macros to grow arrays
-  reftable: introduce macros to allocate arrays
-  reftable/stack: fix parameter validation when compacting range
-  reftable/stack: index segments with `size_t`
-  reftable/stack: use `size_t` to track stack slices during compaction
-  reftable/stack: use `size_t` to track stack length
-  reftable/merged: refactor seeking of records
-  reftable/merged: refactor initialization of iterators
-  reftable/record: improve semantics when initializing records
+The second change is because we know a bit more about the allocation
+patterns in the reftable library. In most cases, we end up only having a
+handful of items in the array and don't end up growing them. The initial
+capacity that our normal growth factor uses (which is 24) would thus end
+up over-allocating in a lot of code paths. This effect is measurable:
 
- reftable/basics.c          |  15 ++--
- reftable/basics.h          |  17 ++++-
- reftable/block.c           |  35 ++++-----
- reftable/block_test.c      |   2 +-
- reftable/blocksource.c     |   4 +-
- reftable/iter.c            |   3 +-
- reftable/merged.c          | 100 +++++++++++-------------
- reftable/merged_test.c     |  52 ++++++-------
- reftable/pq.c              |   8 +-
- reftable/publicbasics.c    |   3 +-
- reftable/reader.c          |  12 ++-
- reftable/readwrite_test.c  |   8 +-
- reftable/record.c          |  57 +++++---------
- reftable/record.h          |  10 +--
- reftable/record_test.c     |   8 +-
- reftable/refname.c         |   4 +-
- reftable/reftable-merged.h |   2 +-
- reftable/stack.c           | 153 +++++++++++++++++--------------------
- reftable/stack.h           |   6 +-
- reftable/stack_test.c      |   7 +-
- reftable/tree.c            |   4 +-
- reftable/writer.c          |  21 ++---
- 22 files changed, 236 insertions(+), 295 deletions(-)
+  - Before change:
 
-Range-diff against v2:
- 1:  12bd721ddf =3D  1:  12bd721ddf reftable: introduce macros to grow arra=
-ys
- 2:  2dde581a02 !  2:  95689ca7ce reftable: introduce macros to allocate ar=
-rays
-    @@ Commit message
-         it means that we can now provide proper overflow checks when multi=
-plying
-         the array size with the member size.
-    =20
-    -    Convert callsites of `reftable_calloc()` to the new signature, usi=
-ng the
-    -    new macros where possible.
-    +    Convert callsites of `reftable_calloc()` to the new signature and =
-start
-    +    using the new macros where possible.
-    =20
-         Signed-off-by: Patrick Steinhardt <ps@pks.im>
-    =20
-    @@ reftable/basics.h: int names_length(char **names);
-      #define REFTABLE_ALLOC_GROW(x, nr, alloc) \
-      	do { \
-    =20
-    + ## reftable/block.c ##
-    +@@ reftable/block.c: int block_writer_finish(struct block_writer *w)
-    + 		int block_header_skip =3D 4 + w->header_off;
-    + 		uLongf src_len =3D w->next - block_header_skip;
-    + 		uLongf dest_cap =3D src_len * 1.001 + 12;
-    ++		uint8_t *compressed;
-    ++
-    ++		REFTABLE_ALLOC_ARRAY(compressed, dest_cap);
-    +=20
-    +-		uint8_t *compressed =3D reftable_malloc(dest_cap);
-    + 		while (1) {
-    + 			uLongf out_dest_len =3D dest_cap;
-    + 			int zresult =3D compress2(compressed, &out_dest_len,
-    +@@ reftable/block.c: int block_reader_init(struct block_reader *br, st=
-ruct reftable_block *block,
-    + 		uLongf dst_len =3D sz - block_header_skip; /* total size of dest
-    + 							    buffer. */
-    + 		uLongf src_len =3D block->len - block_header_skip;
-    +-		/* Log blocks specify the *uncompressed* size in their header.
-    +-		 */
-    +-		uncompressed =3D reftable_malloc(sz);
-    ++
-    ++		/* Log blocks specify the *uncompressed* size in their header. */
-    ++		REFTABLE_ALLOC_ARRAY(uncompressed, sz);
-    +=20
-    + 		/* Copy over the block header verbatim. It's not compressed. */
-    + 		memcpy(uncompressed, block->data, block_header_skip);
-    +
-      ## reftable/block_test.c ##
-     @@ reftable/block_test.c: static void test_block_read_write(void)
-      	int j =3D 0;
-    @@ reftable/readwrite_test.c: static void test_table_read_write_seek_in=
-dex(void)
-      	uint8_t want_hash[GIT_SHA1_RAWSZ];
-     =20
-    =20
-    + ## reftable/record.c ##
-    +@@ reftable/record.c: static void reftable_obj_record_copy_from(void *=
-rec, const void *src_rec,
-    + 		(const struct reftable_obj_record *)src_rec;
-    +=20
-    + 	reftable_obj_record_release(obj);
-    +-	obj->hash_prefix =3D reftable_malloc(src->hash_prefix_len);
-    ++
-    ++	REFTABLE_ALLOC_ARRAY(obj->hash_prefix, src->hash_prefix_len);
-    + 	obj->hash_prefix_len =3D src->hash_prefix_len;
-    + 	if (src->hash_prefix_len)
-    + 		memcpy(obj->hash_prefix, src->hash_prefix, obj->hash_prefix_len);
-    +=20
-    +-	obj->offsets =3D reftable_malloc(src->offset_len * sizeof(uint64_t));
-    ++	REFTABLE_ALLOC_ARRAY(obj->offsets, src->offset_len);
-    + 	obj->offset_len =3D src->offset_len;
-    + 	COPY_ARRAY(obj->offsets, src->offsets, src->offset_len);
-    + }
-    +@@ reftable/record.c: static int reftable_obj_record_decode(void *rec,=
- struct strbuf key,
-    + 	int n =3D 0;
-    + 	uint64_t last;
-    + 	int j;
-    +-	r->hash_prefix =3D reftable_malloc(key.len);
-    ++
-    ++	REFTABLE_ALLOC_ARRAY(r->hash_prefix, key.len);
-    + 	memcpy(r->hash_prefix, key.buf, key.len);
-    + 	r->hash_prefix_len =3D key.len;
-    +=20
-    +@@ reftable/record.c: static int reftable_obj_record_decode(void *rec,=
- struct strbuf key,
-    + 	if (count =3D=3D 0)
-    + 		return start.len - in.len;
-    +=20
-    +-	r->offsets =3D reftable_malloc(count * sizeof(uint64_t));
-    ++	REFTABLE_ALLOC_ARRAY(r->offsets, count);
-    + 	r->offset_len =3D count;
-    +=20
-    + 	n =3D get_var_int(&r->offsets[0], &in);
-    +@@ reftable/record.c: static void reftable_log_record_copy_from(void *=
-rec, const void *src_rec,
-    + 		}
-    +=20
-    + 		if (dst->value.update.new_hash) {
-    +-			dst->value.update.new_hash =3D reftable_malloc(hash_size);
-    ++			REFTABLE_ALLOC_ARRAY(dst->value.update.new_hash, hash_size);
-    + 			memcpy(dst->value.update.new_hash,
-    + 			       src->value.update.new_hash, hash_size);
-    + 		}
-    + 		if (dst->value.update.old_hash) {
-    +-			dst->value.update.old_hash =3D reftable_malloc(hash_size);
-    ++			REFTABLE_ALLOC_ARRAY(dst->value.update.old_hash, hash_size);
-    + 			memcpy(dst->value.update.old_hash,
-    + 			       src->value.update.old_hash, hash_size);
-    + 		}
-    +
-      ## reftable/record_test.c ##
-     @@ reftable/record_test.c: static void test_reftable_log_record_roundt=
-rip(void)
-      				.value_type =3D REFTABLE_LOG_UPDATE,
-    @@ reftable/stack.c: static ssize_t reftable_fd_write(void *arg, const =
-void *data,
-      	struct strbuf list_file_name =3D STRBUF_INIT;
-      	int err =3D 0;
-     =20
-    +@@ reftable/stack.c: static int fd_read_lines(int fd, char ***namesp)
-    + 		goto done;
-    + 	}
-    +=20
-    +-	buf =3D reftable_malloc(size + 1);
-    ++	REFTABLE_ALLOC_ARRAY(buf, size + 1);
-    + 	if (read_in_full(fd, buf, size) !=3D size) {
-    + 		err =3D REFTABLE_IO_ERROR;
-    + 		goto done;
-     @@ reftable/stack.c: int read_lines(const char *filename, char ***name=
-sp)
-      	int err =3D 0;
-      	if (fd < 0) {
- 3:  f134702dc5 =3D  3:  f0e8f08884 reftable/stack: fix parameter validatio=
-n when compacting range
- 4:  50dac904e8 =3D  4:  7bcfe7b305 reftable/stack: index segments with `si=
-ze_t`
- 5:  a5ffbf09dd =3D  5:  a0867c0378 reftable/stack: use `size_t` to track s=
-tack slices during compaction
- 6:  55605fb53b =3D  6:  29c5a54ae8 reftable/stack: use `size_t` to track s=
-tack length
- 7:  80cf2fd272 =3D  7:  4605ad7247 reftable/merged: refactor seeking of re=
-cords
- 8:  8c1be2b159 =3D  8:  8c35968ce8 reftable/merged: refactor initializatio=
-n of iterators
- 9:  c39d7e30e7 =3D  9:  5bb2858c13 reftable/record: improve semantics when=
- initializing records
+      HEAP SUMMARY:
+          in use at exit: 671,983 bytes in 152 blocks
+        total heap usage: 3,843,446 allocs, 3,843,294 frees, 223,761,402 by=
+tes allocated
+
+  - After change with a growth factor of `(2 * alloc + 1)`:
+
+      HEAP SUMMARY:
+          in use at exit: 671,983 bytes in 152 blocks
+        total heap usage: 3,843,446 allocs, 3,843,294 frees, 223,761,410 by=
+tes allocated
+
+  - After change with a growth factor of `(alloc + 16)* 2 / 3`:
+
+      HEAP SUMMARY:
+          in use at exit: 671,983 bytes in 152 blocks
+        total heap usage: 3,833,673 allocs, 3,833,521 frees, 4,728,251,742 =
+bytes allocated
+
+While the total heap usage is roughly the same, we do end up allocating
+significantly more bytes with our usual growth factor (in fact, roughly
+21 times as many).
+
+Convert the reftable library to use these new macros.
+
+Signed-off-by: Patrick Steinhardt <ps@pks.im>
+---
+ reftable/basics.c      |  8 ++------
+ reftable/basics.h      | 11 +++++++++++
+ reftable/block.c       |  7 +------
+ reftable/merged_test.c | 20 ++++++--------------
+ reftable/pq.c          |  8 ++------
+ reftable/stack.c       | 29 ++++++++++++-----------------
+ reftable/writer.c      | 14 ++------------
+ 7 files changed, 36 insertions(+), 61 deletions(-)
+
+diff --git a/reftable/basics.c b/reftable/basics.c
+index f761e48028..af9004cec2 100644
+--- a/reftable/basics.c
++++ b/reftable/basics.c
+@@ -89,17 +89,13 @@ void parse_names(char *buf, int size, char ***namesp)
+ 			next =3D end;
+ 		}
+ 		if (p < next) {
+-			if (names_len =3D=3D names_cap) {
+-				names_cap =3D 2 * names_cap + 1;
+-				names =3D reftable_realloc(
+-					names, names_cap * sizeof(*names));
+-			}
++			REFTABLE_ALLOC_GROW(names, names_len + 1, names_cap);
+ 			names[names_len++] =3D xstrdup(p);
+ 		}
+ 		p =3D next + 1;
+ 	}
+=20
+-	names =3D reftable_realloc(names, (names_len + 1) * sizeof(*names));
++	REFTABLE_REALLOC_ARRAY(names, names_len + 1);
+ 	names[names_len] =3D NULL;
+ 	*namesp =3D names;
+ }
+diff --git a/reftable/basics.h b/reftable/basics.h
+index 096b36862b..2f855cd724 100644
+--- a/reftable/basics.h
++++ b/reftable/basics.h
+@@ -53,6 +53,17 @@ void *reftable_realloc(void *p, size_t sz);
+ void reftable_free(void *p);
+ void *reftable_calloc(size_t sz);
+=20
++#define REFTABLE_REALLOC_ARRAY(x, alloc) (x) =3D reftable_realloc((x), st_=
+mult(sizeof(*(x)), (alloc)))
++#define REFTABLE_ALLOC_GROW(x, nr, alloc) \
++	do { \
++		if ((nr) > alloc) { \
++			alloc =3D 2 * (alloc) + 1; \
++			if (alloc < (nr)) \
++				alloc =3D (nr); \
++			REFTABLE_REALLOC_ARRAY(x, alloc); \
++		} \
++	} while (0)
++
+ /* Find the longest shared prefix size of `a` and `b` */
+ struct strbuf;
+ int common_prefix_size(struct strbuf *a, struct strbuf *b);
+diff --git a/reftable/block.c b/reftable/block.c
+index 1df3d8a0f0..6952d0facf 100644
+--- a/reftable/block.c
++++ b/reftable/block.c
+@@ -51,12 +51,7 @@ static int block_writer_register_restart(struct block_wr=
+iter *w, int n,
+ 	if (2 + 3 * rlen + n > w->block_size - w->next)
+ 		return -1;
+ 	if (is_restart) {
+-		if (w->restart_len =3D=3D w->restart_cap) {
+-			w->restart_cap =3D w->restart_cap * 2 + 1;
+-			w->restarts =3D reftable_realloc(
+-				w->restarts, sizeof(uint32_t) * w->restart_cap);
+-		}
+-
++		REFTABLE_ALLOC_GROW(w->restarts, w->restart_len + 1, w->restart_cap);
+ 		w->restarts[w->restart_len++] =3D w->next;
+ 	}
+=20
+diff --git a/reftable/merged_test.c b/reftable/merged_test.c
+index 46908f738f..e05351e035 100644
+--- a/reftable/merged_test.c
++++ b/reftable/merged_test.c
+@@ -231,14 +231,10 @@ static void test_merged(void)
+ 	while (len < 100) { /* cap loops/recursion. */
+ 		struct reftable_ref_record ref =3D { NULL };
+ 		int err =3D reftable_iterator_next_ref(&it, &ref);
+-		if (err > 0) {
++		if (err > 0)
+ 			break;
+-		}
+-		if (len =3D=3D cap) {
+-			cap =3D 2 * cap + 1;
+-			out =3D reftable_realloc(
+-				out, sizeof(struct reftable_ref_record) * cap);
+-		}
++
++		REFTABLE_ALLOC_GROW(out, len + 1, cap);
+ 		out[len++] =3D ref;
+ 	}
+ 	reftable_iterator_destroy(&it);
+@@ -368,14 +364,10 @@ static void test_merged_logs(void)
+ 	while (len < 100) { /* cap loops/recursion. */
+ 		struct reftable_log_record log =3D { NULL };
+ 		int err =3D reftable_iterator_next_log(&it, &log);
+-		if (err > 0) {
++		if (err > 0)
+ 			break;
+-		}
+-		if (len =3D=3D cap) {
+-			cap =3D 2 * cap + 1;
+-			out =3D reftable_realloc(
+-				out, sizeof(struct reftable_log_record) * cap);
+-		}
++
++		REFTABLE_ALLOC_GROW(out, len + 1, cap);
+ 		out[len++] =3D log;
+ 	}
+ 	reftable_iterator_destroy(&it);
+diff --git a/reftable/pq.c b/reftable/pq.c
+index dcefeb793a..2461daf5ff 100644
+--- a/reftable/pq.c
++++ b/reftable/pq.c
+@@ -75,13 +75,9 @@ void merged_iter_pqueue_add(struct merged_iter_pqueue *p=
+q, const struct pq_entry
+ {
+ 	int i =3D 0;
+=20
+-	if (pq->len =3D=3D pq->cap) {
+-		pq->cap =3D 2 * pq->cap + 1;
+-		pq->heap =3D reftable_realloc(pq->heap,
+-					    pq->cap * sizeof(struct pq_entry));
+-	}
+-
++	REFTABLE_ALLOC_GROW(pq->heap, pq->len + 1, pq->cap);
+ 	pq->heap[pq->len++] =3D *e;
++
+ 	i =3D pq->len - 1;
+ 	while (i > 0) {
+ 		int j =3D (i - 1) / 2;
+diff --git a/reftable/stack.c b/reftable/stack.c
+index bf3869ce70..1dfab99e96 100644
+--- a/reftable/stack.c
++++ b/reftable/stack.c
+@@ -551,7 +551,7 @@ struct reftable_addition {
+ 	struct reftable_stack *stack;
+=20
+ 	char **new_tables;
+-	int new_tables_len;
++	size_t new_tables_len, new_tables_cap;
+ 	uint64_t next_update_index;
+ };
+=20
+@@ -602,8 +602,9 @@ static int reftable_stack_init_addition(struct reftable=
+_addition *add,
+=20
+ static void reftable_addition_close(struct reftable_addition *add)
+ {
+-	int i =3D 0;
+ 	struct strbuf nm =3D STRBUF_INIT;
++	size_t i;
++
+ 	for (i =3D 0; i < add->new_tables_len; i++) {
+ 		stack_filename(&nm, add->stack, add->new_tables[i]);
+ 		unlink(nm.buf);
+@@ -613,6 +614,7 @@ static void reftable_addition_close(struct reftable_add=
+ition *add)
+ 	reftable_free(add->new_tables);
+ 	add->new_tables =3D NULL;
+ 	add->new_tables_len =3D 0;
++	add->new_tables_cap =3D 0;
+=20
+ 	delete_tempfile(&add->lock_file);
+ 	strbuf_release(&nm);
+@@ -631,8 +633,8 @@ int reftable_addition_commit(struct reftable_addition *=
+add)
+ {
+ 	struct strbuf table_list =3D STRBUF_INIT;
+ 	int lock_file_fd =3D get_tempfile_fd(add->lock_file);
+-	int i =3D 0;
+ 	int err =3D 0;
++	size_t i;
+=20
+ 	if (add->new_tables_len =3D=3D 0)
+ 		goto done;
+@@ -660,12 +662,12 @@ int reftable_addition_commit(struct reftable_addition=
+ *add)
+ 	}
+=20
+ 	/* success, no more state to clean up. */
+-	for (i =3D 0; i < add->new_tables_len; i++) {
++	for (i =3D 0; i < add->new_tables_len; i++)
+ 		reftable_free(add->new_tables[i]);
+-	}
+ 	reftable_free(add->new_tables);
+ 	add->new_tables =3D NULL;
+ 	add->new_tables_len =3D 0;
++	add->new_tables_cap =3D 0;
+=20
+ 	err =3D reftable_stack_reload_maybe_reuse(add->stack, 1);
+ 	if (err)
+@@ -792,11 +794,9 @@ int reftable_addition_add(struct reftable_addition *ad=
+d,
+ 		goto done;
+ 	}
+=20
+-	add->new_tables =3D reftable_realloc(add->new_tables,
+-					   sizeof(*add->new_tables) *
+-						   (add->new_tables_len + 1));
+-	add->new_tables[add->new_tables_len] =3D strbuf_detach(&next_name, NULL);
+-	add->new_tables_len++;
++	REFTABLE_ALLOC_GROW(add->new_tables, add->new_tables_len + 1,
++			    add->new_tables_cap);
++	add->new_tables[add->new_tables_len++] =3D strbuf_detach(&next_name, NULL=
+);
+ done:
+ 	if (tab_fd > 0) {
+ 		close(tab_fd);
+@@ -1367,17 +1367,12 @@ static int stack_check_addition(struct reftable_sta=
+ck *st,
+ 	while (1) {
+ 		struct reftable_ref_record ref =3D { NULL };
+ 		err =3D reftable_iterator_next_ref(&it, &ref);
+-		if (err > 0) {
++		if (err > 0)
+ 			break;
+-		}
+ 		if (err < 0)
+ 			goto done;
+=20
+-		if (len >=3D cap) {
+-			cap =3D 2 * cap + 1;
+-			refs =3D reftable_realloc(refs, cap * sizeof(refs[0]));
+-		}
+-
++		REFTABLE_ALLOC_GROW(refs, len + 1, cap);
+ 		refs[len++] =3D ref;
+ 	}
+=20
+diff --git a/reftable/writer.c b/reftable/writer.c
+index ee4590e20f..4483bb21c3 100644
+--- a/reftable/writer.c
++++ b/reftable/writer.c
+@@ -200,12 +200,7 @@ static void writer_index_hash(struct reftable_writer *=
+w, struct strbuf *hash)
+ 		return;
+ 	}
+=20
+-	if (key->offset_len =3D=3D key->offset_cap) {
+-		key->offset_cap =3D 2 * key->offset_cap + 1;
+-		key->offsets =3D reftable_realloc(
+-			key->offsets, sizeof(uint64_t) * key->offset_cap);
+-	}
+-
++	REFTABLE_ALLOC_GROW(key->offsets, key->offset_len + 1, key->offset_cap);
+ 	key->offsets[key->offset_len++] =3D off;
+ }
+=20
+@@ -674,12 +669,7 @@ static int writer_flush_nonempty_block(struct reftable=
+_writer *w)
+ 	if (err < 0)
+ 		return err;
+=20
+-	if (w->index_cap =3D=3D w->index_len) {
+-		w->index_cap =3D 2 * w->index_cap + 1;
+-		w->index =3D reftable_realloc(
+-			w->index,
+-			sizeof(struct reftable_index_record) * w->index_cap);
+-	}
++	REFTABLE_ALLOC_GROW(w->index, w->index_len + 1, w->index_cap);
+=20
+ 	ir.offset =3D w->next;
+ 	strbuf_reset(&ir.last_key);
 --=20
 2.43.GIT
 
 
---xBj3apZ3AZA1F04l
+--Ui2G6qpz6EgsToSW
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmXB0yYACgkQVbJhu7ck
-PpSN0Q/+KZvduL1CaPMXV4+tuSs3LUScA/p/kKWKe7wLJPLsq7X9yZegfiMbHGYG
-vG93XDHYVSwCd6f2/ImoIMHdm+d5cnTO9DlpRk/6rk0DILX+wgkhP0rsp8WEfatE
-Zjj1DfCSqjz/tWfgue0gkx6DYGHzEuVFWptswl75jRuysGEIiQ+g2PCwhjf8yjXH
-PW0VmHPJEtXjBEl4itp4s1+wFhwtXSwJDIrzhQGMxZcnIZfTfSVs2hVhzg86S4kt
-y4pIydHg2g6UjWW9IJPXS031+i5h2JkhHD7Su7tHAmqB6CPhjFd9+CrIBD6hhveX
-BRDKvY4w3mjuCLDuwUEwuRT48iqTHIIZSTW9X+3i3/0wW9WZXHXThSN1KilMFJpn
-wX5c9CfFNeDSdmj1gtcx+wlu/CQ+QeSdgp8imgFVuKV4WJXyddlCPf5ZyDRbCN/U
-RUUerX9Kuo97F0yllM7GGxoyxY2uXswLw08JQjUz6gVaKMSSAjhuhLoojdRLjDlT
-prRlgNidbC6qZyd6uS+IxM4BRJwwKSEW7pe+HdS8w54toEegFv8VmRnt6VW+4gz9
-hhAhBGL9vIC0ECG+f/vyvpsoYKeIV4XU7cXLJyOU9y/R2j1i7hHYnr9PyU/7yDNW
-5gxnAlqeev7bhCbVMRxhSiBCQhN+jU+8G6RGG+OfQ3qD3kO+FTQ=
-=72S2
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmXB0yoACgkQVbJhu7ck
+PpSJ4g/8DYUtJxNBxUyNvZ0pbj8EQV4vGezbePBWWD1NscJYdKq2Nvhw3LtzpuK0
+Txwrj+v7OzURIqqK4baxe6zeGCMUP3rqSghJTyyyJcSTY4zQt/tm7uuFYUQ+PDsV
+kXj+D+BsTHX/3xVl8EqrQrnc3hbruHZYUGhMrXXN0Qo4pmWTZEDUAq9MoHkcoq0A
+XG6LMfTyCKqdOYCLSUfAuipDCTtwOIeUGwDGLdI+bGGAvo+WuylXX8mYQzyb8///
+/5hunKAr5sam6+DL6oLlU05tXZ/uMEzmvXCoe+kBdH3KOgXCLW+cCTHUyz40tl2A
+4v7KnKGokZCTiC1ZoR/IUx9mOpqKH9zLnOp1Mttj365jgaTMdZIav6yFZDYz8KSv
+/pudzwKghu+HkY/CN70vuaVMuq7yE2fq6yb2BJzUKItvU5h3cHuw0JtplhvLxSwW
+fpgdy8ZhigQeglRGWpeveG/mOipXKqDc8cu2aAznOahMb6y8XWRYvo8GIn5eJJip
+YJBlGqjT4EJV1hvZZMpD70blwVyCos+lW18lOjWTxzhrp6c7BrS57VgFHX8zEa3z
+qKrRcWKQpa3H09alsiBUGYWn+jz4nAgvpVeucFEYbZc2wVIp0zf8PV+lq+9MGx5y
+yoqVVxtFns3+kK/QKPHIFfEK9Eb4m1IQVLKS7jz6cQMxkXAW30M=
+=wUCK
 -----END PGP SIGNATURE-----
 
---xBj3apZ3AZA1F04l--
+--Ui2G6qpz6EgsToSW--
