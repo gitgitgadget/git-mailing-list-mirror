@@ -1,81 +1,75 @@
-Received: from m15.mail.163.com (m15.mail.163.com [45.254.50.220])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4504E13341F
-	for <git@vger.kernel.org>; Tue,  6 Feb 2024 16:07:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.254.50.220
+Received: from mail-pg1-f174.google.com (mail-pg1-f174.google.com [209.85.215.174])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFC09134CEB
+	for <git@vger.kernel.org>; Tue,  6 Feb 2024 16:24:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707235643; cv=none; b=F7r7UNtoPtcfwtBEO2jNqmF3m8I7i9r9BYSWucM2aUKmn9u2ByhhTEpDTORFTpF2LaTMezuQE4MXbhs5UI3FadmS0L6wd2WqYXYhU3Ev5xAPFDci6s6WwSd4DxN2WvQIn4qiOBjptrd67wmxTloi7kdHDXFBkEs4VsxdD4UGOAc=
+	t=1707236655; cv=none; b=Z1vED5n11GcSSS3yL4/0Zm+8bBFtf/y51t1zZdC763299+rUutGERBqo3I6nifk6HmCww/Teu9KqtvD4H6vzVCQYiHJnEXoGwbcmafn9nZmgTXzn/4Bf1SNcY6hzmUgQL03o+ldZFEiMee2srjemv5CUfe4O+hqwKjA/xqPJgng=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707235643; c=relaxed/simple;
-	bh=2mCK/N1qELeSbT2nWkaGXZlfxsgXiLObt94LNCOo41U=;
-	h=Date:From:To:Subject:Content-Type:MIME-Version:Message-ID; b=q66f0NTYX/IzvSqw3Q1PWi778dhG1t0YO8HTryovAp64yXJId5RpR0AkRnfZnya/lUBV2WDCgYxwpa72LD/E8rD3ZOPzg+9KJNSk9pGNdIjaKE0e5MQBstT7CEjVClz4pAlcNftw2gXXpKxCJR3jqi9F4YSqHFUzmqd4s032Zq4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com; spf=pass smtp.mailfrom=163.com; dkim=fail (1024-bit key) header.d=163.com header.i=@163.com header.b=OGHp0wH3 reason="signature verification failed"; arc=none smtp.client-ip=45.254.50.220
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=163.com
+	s=arc-20240116; t=1707236655; c=relaxed/simple;
+	bh=hjtvoi6nEncpkFKDNE3JQ8GU4AH9FPTkcIZWxLSUVOw=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=qoNiW/fUuYnwBhweduxj6CeoKSWsO9ooxEO4G0egv++uq2ZSz5qIrq/RKaWwO0YKg4M3TinWDT5lPdltr+a0vEf/MqEqTqk9AX9/s1Avzzbi1th+ass2HYTHis+ZMZ2ANaz3sTPDsehfwHPO1gTujGOL4MqpjESWHzQjXmd135o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=iENd8nQI; arc=none smtp.client-ip=209.85.215.174
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (1024-bit key) header.d=163.com header.i=@163.com header.b="OGHp0wH3"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
-	s=s110527; h=Date:From:Subject:Content-Type:MIME-Version:
-	Message-ID; bh=DmglOQpLcp37TfhKxywoNtaUnVu+F1YoUYIiFhLykFM=; b=O
-	GHp0wH3JqITr2yuWju9r4936c4GOUf8roQJUGKfSeh6Xql5C/xnq3aq2/ZvcYLjl
-	eAlGUTpJz3+oNrCH344fxQ3fBIzULs/Eelz0BYqVR6x6/VbSnpZIpZXp6l6tqdy5
-	IAIwYJbZGD03hbvVJj8CZrk/g1zzVk4fxFdVbVtd/8=
-Received: from dingjunyao0703$163.com ( [39.144.159.248] ) by
- ajax-webmail-wmsvr-40-100 (Coremail) ; Wed, 7 Feb 2024 00:07:07 +0800 (CST)
-Date: Wed, 7 Feb 2024 00:07:07 +0800 (CST)
-From: DingJunyao  <dingjunyao0703@163.com>
-To: "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Bug: git submodule update doesn't give a prompt to add pubkey of
- remote repo host, and failed because of it.
-X-Priority: 3
-X-Mailer: Coremail Webmail Server Version XT5.0.14 build 20230109(dcb5de15)
- Copyright (c) 2002-2024 www.mailtech.cn 163com
-X-NTES-SC: AL_Qu2bBf6Yuk4p4SefYelS6TNw4JVpHZXE6LhlnuMkavwRlw/I2yUeUHp6HkDo1+JV/IiCdGy7mwHu8nPAy4Or
-Content-Transfer-Encoding: base64
-Content-Type: text/plain; charset=GBK
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="iENd8nQI"
+Received: by mail-pg1-f174.google.com with SMTP id 41be03b00d2f7-5d8b276979aso915943a12.2
+        for <git@vger.kernel.org>; Tue, 06 Feb 2024 08:24:13 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1707236653; x=1707841453; darn=vger.kernel.org;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=hjtvoi6nEncpkFKDNE3JQ8GU4AH9FPTkcIZWxLSUVOw=;
+        b=iENd8nQICY704ocFf/vY5F5MoCEevOxqCuW8Jh+iypRDpELP1/uMmsMhu1j2CzTkxm
+         RnISdag6nWI/AxyYVjm4XI39Aefq5XkdglQr58ZlFdKarIPGzbc7IITHoZl62/3+lkY/
+         7nTWQC5vXRYSXBp037GAMclYWfL+CAffQrbj1bISIvxL8fy6E+YBI31P9dca3TE3Y4q8
+         fFwGf9mWyRcyVpb1b86iQVlvFk5nfHy9w6N74Y/G+ihq45qIb0LndrgUyEwiODRpHVno
+         5IuMDbn0srEkvNzKB2OPBRfve2JDnjVTgtMg64H+VEDK1IL80kb8fdxyT+RJ5YZF8d/d
+         Un/w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1707236653; x=1707841453;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=hjtvoi6nEncpkFKDNE3JQ8GU4AH9FPTkcIZWxLSUVOw=;
+        b=MdrEdifVEOwXzpE8iSUJOQD2BJpYaUL+QR0Eq0bzRk32Y3HQwpTegqb8tWo+Bbw64z
+         VasDWORb06zTFa3qEaNmQPBdjU52WwszqVldju25kC+sLVMgjmVZXCan8+LVYYji3L2p
+         P9fZIE+lZsGny374EkSrqqE0rArKQp8AnT6enGejUZv0psLhsidYnvjghz4TeuGke2wl
+         N41jo7wumgFKJNNMsnGGfvlQ76m+rfcBjGQO4yrHVFlB4mMq5RCXM5I5qSZTtY0iAbmZ
+         C7YQn1YfVDUI+PiqDsMBmViS4nf3rwoQwYZNeXEF2BjvLGvyblQg0QfUcSv95poSoE18
+         nSRw==
+X-Gm-Message-State: AOJu0YwCkpegwsGP/LZfGpylOCqj+LCZaqCO4g5IKFeT8xqEhWM3Mqf9
+	uss1Q1stPeALaufWkyR1QI9D7RwMFH6Bu6uiC4Q6cj16MxSD4G4Wdiu6NECYCI5BJCMHOqqS4QN
+	d54WISqTqqMTCtvlA9w2VQmLfakM2B7uRWE0=
+X-Google-Smtp-Source: AGHT+IFB8IkX6GQbNYq4j/+b6BSQjRtnQm6qgC/WXWSPLSvoJbpu2kfc8+uLxv6z+Ip3SirYG1Kl00hLAxMMCvcN0vA=
+X-Received: by 2002:a17:90b:3591:b0:296:1ddc:d46a with SMTP id
+ mm17-20020a17090b359100b002961ddcd46amr11884pjb.39.1707236652104; Tue, 06 Feb
+ 2024 08:24:12 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Message-ID: <37a01273.7951.18d7f2c5303.Coremail.dingjunyao0703@163.com>
-X-Coremail-Locale: zh_CN
-X-CM-TRANSID:_____wD338ArWcJl+mnOAA--.19824W
-X-CM-SenderInfo: pglqwy5xq1t0iqxqjqqrwthudrp/xtbB0BF84mWXv2GjgAACsS
-X-Coremail-Antispam: 1U5529EdanIXcx71UUUUU7vcSsGvfC2KfnxnUU==
+From: Sergey Kosukhin <skosukhin@gmail.com>
+Date: Tue, 6 Feb 2024 17:24:01 +0100
+Message-ID: <CAGMF1KiFNnr1nFBg2+mRqiurXpxOOXAcoWc0GciRKDoWzpJSkA@mail.gmail.com>
+Subject: Wrong exit code on failed SSH signing
+To: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-R2l0IHZlcnNpb246IGdpdCB2ZXJzaW9uIDIuNDMuMC53aW5kb3dzLjEKT1M6IFdpbmRvd3MgMTEg
-MjJIMiAoMjI2MjEuMzAwNykKKEkgZG9uJ3Qga25vdyB3aGV0aGVyIGl0J3MgYSBXaW5kb3dzLXNw
-ZWNpZmljIGJ1ZykKCkkgY2xvbmVkIGEgcHJvamVjdCBmcm9tIG9uZSByZW1vdGUgcmVwbyAoQSks
-IGFuZCB0aGUgcHJvamVjdCBoYXMgYSBzdWJtb2R1bGUgZnJvbSB0aGUgb3RoZXIgcmVtb3RlIHJl
-cG8gKEIpLiBCb3RoIG9mIHRoZW0gYXJlIGNvbm5lY3RlZCB0byB0aGUgcmVtb3RlIHJlcG8gb2Yg
-d2hpY2ggYnkgU1NILCBhbmQgSSBhZGRlZCBteSBwdWJrZXkgdG8gYm90aCBvZiB0aGUgcmVwbyBw
-cm92aWRlcnMuCgpJIGV4ZWN1dGVkIHRoZSBjb21tYW5kIGluIHByb2plY3QgZGlyZWN0b3J5OgoK
-ICAgIGdpdCBzdWJtb2R1bGUgaW5pdAogICAgZ2l0IHN1Ym1vZHVsZSB1cGRhdGUKCldoZW4gdXBk
-YXRpbmcsIHRoZSBmb2xsb3dpbmcgZXJyb3IgaGFwcGVuZWQ6CgogICAgQ2xvbmluZyBpbnRvICcv
-cGF0aC90by9zdWJtb2R1bGUnLi4uCiAgICBIb3N0IGtleSB2ZXJpZmljYXRpb24gZmFpbGVkLgog
-ICAgZmF0YWw6IENvdWxkIG5vdCByZWFkIGZyb20gcmVtb3RlIHJlcG9zaXRvcnkuCgogICAgUGxl
-YXNlIG1ha2Ugc3VyZSB5b3UgaGF2ZSB0aGUgY29ycmVjdCBhY2Nlc3MgcmlnaHRzCiAgICBhbmQg
-dGhlIHJlcG9zaXRvcnkgZXhpc3RzLgogICAgZmF0YWw6IGNsb25lIG9mICd1c2VyQGhvc3Q6cmVw
-by9wYXRoLmdpdCcgaW50byBzdWJtb2R1bGUgcGF0aCAnL3BhdGgvdG8vc3VibW9kdWxlJyBmYWls
-ZWQKICAgIEZhaWxlZCB0byBjbG9uZSAndGhlbWVzL2FuemhpeXUtZGluZy1tb2QnLiBSZXRyeSBz
-Y2hlZHVsZWQKICAgIENsb25pbmcgaW50byAnL3BhdGgvdG8vc3VibW9kdWxlJy4uLgogICAgSG9z
-dCBrZXkgdmVyaWZpY2F0aW9uIGZhaWxlZC4KICAgIGZhdGFsOiBDb3VsZCBub3QgcmVhZCBmcm9t
-IHJlbW90ZSByZXBvc2l0b3J5LgoKICAgIFBsZWFzZSBtYWtlIHN1cmUgeW91IGhhdmUgdGhlIGNv
-cnJlY3QgYWNjZXNzIHJpZ2h0cwogICAgYW5kIHRoZSByZXBvc2l0b3J5IGV4aXN0cy4KICAgIGZh
-dGFsOiBjbG9uZSBvZiAndXNlckBob3N0OnJlcG8vcGF0aC5naXQnIGludG8gc3VibW9kdWxlIHBh
-dGggJy9wYXRoL3RvL3N1Ym1vZHVsZScgZmFpbGVkCiAgICBGYWlsZWQgdG8gY2xvbmUgJ3BhdGgv
-dG8vc3VibW9kdWxlJyBhIHNlY29uZCB0aW1lLCBhYm9ydGluZwoKSSBjbG9uZWQgYW5vdGhlciBy
-ZXBvIGZyb20gQi4gV2hlbiBJIGRpZCBpdCwgSSBmb3VuZCBJIGhhZG4ndCBhZGRlZCB0aGUgcHVi
-a2V5IG9mIHJlcG8gQiB0byB0aGUgbGlzdCBvZiBrbm93biBob3N0cyBiZWZvcmUuCgogICAgVGhl
-IGF1dGhlbnRpY2l0eSBvZiBob3N0ICdob3N0IChYWFguWFhYLlhYWC5YWFgpJyBjYW4ndCBiZSBl
-c3RhYmxpc2hlZC4KICAgIEVEMjU1MTkga2V5IGZpbmdlcnByaW50IGlzIFNIQTI1NjpYWFhYWFhY
-WFhYWFhYLgogICAgVGhpcyBrZXkgaXMgbm90IGtub3duIGJ5IGFueSBvdGhlciBuYW1lcy4KICAg
-IEFyZSB5b3Ugc3VyZSB5b3Ugd2FudCB0byBjb250aW51ZSBjb25uZWN0aW5nICh5ZXMvbm8vW2Zp
-bmdlcnByaW50XSk/IHllcwogICAgV2FybmluZzogUGVybWFuZW50bHkgYWRkZWQgJ2hvc3QnIChF
-RDI1NTE5KSB0byB0aGUgbGlzdCBvZiBrbm93biBob3N0cy4KCkFmdGVyIHRoYXQsIEkgdHJpZWQg
-dG8gZXhlY3V0ZSBgZ2l0IHN1Ym1vZHVsZSB1cGRhdGVgIGluIHRoZSBwcmV2aW91cyBwcm9qZWN0
-IGFuZCBzdWNjZWVkZWQuCgpJIHRoaW5rIHdoZW4gSSB1cGRhdGUgc3VibW9kdWxlIGFuZCBJIGhh
-dmVuJ3QgYWRkZWQgdGhlIGtleSB0byB0aGUgc3VibW9kdWxlIHJlbW90ZSByZXBvLCBpdCBuZWVk
-cyB0byBnaXZlIGEgcHJvbXB0IHRvIGFkZCB0aGUgcHVibGljIGtleSwganVzdCBsaWtlIGNsb25p
-bmcu
+Hello!
+
+There seems to be a bug in the sign_buffer_ssh function in
+gpg-interface.c: a possible exit code of ssh-keygen is 255, which is
+returned as-is by sign_buffer_ssh. The problem is that, for example,
+the function build_tag_object in builtin/tag.c considers only negative
+values as a failure. Since 255 >= 0, the error message "unable to sign
+the tag" is not emitted and git exits normally with zero exit code. It
+might be enough to return -1 in sign_buffer_ssh if ret is not zero.
+
+I am sorry if this has already been reported or taken care of. Thank you.
+
+Best regards,
+Sergey
