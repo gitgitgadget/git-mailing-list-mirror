@@ -1,69 +1,61 @@
-Received: from mail-pj1-f48.google.com (mail-pj1-f48.google.com [209.85.216.48])
+Received: from mail-pl1-f171.google.com (mail-pl1-f171.google.com [209.85.214.171])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D6CA1C68F
-	for <git@vger.kernel.org>; Tue,  6 Feb 2024 22:58:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30E951CD1E
+	for <git@vger.kernel.org>; Tue,  6 Feb 2024 23:05:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707260337; cv=none; b=FFC+0d0XpvPKVraB3AA0DyzXElKorJh1w9SOzFZ1ImSiGpslgGfEw9xWSfjGgmw6x/M07ywhcGv8hQ2A57Ayy7NDxTd4fxAr/0Fdpu5nI7j+Na+Ay+Zjrf+UKJlm7GZIeojvhEej4I9AghDae/CHsyz1nlzEVnufj41GXulgt3s=
+	t=1707260735; cv=none; b=Xs0d38g8NAHmYsMGLeGCQBAIJpMwPhao7gy1T8jDWNyMUpvVsFUtXw/Y19APc+az1wy0wBqtGG2kybyzpmNUOVpJJm9kAfmBbEvFICBvOtpwU3AJshA4nMNZFrARnvR7fk7EdKjOoe9QEpnFofk3gf/sti7ZtXpjpEJQ/agC1Bs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707260337; c=relaxed/simple;
-	bh=6ec2bdsuTMuroQ4E35vXOtkIaYmz3t7UIlvaNBg/Ljc=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=A+OyVdmObaZw9arIxoJgX+FTtMq4Ff+3vUXlZE3wQQPuyzIrQfC0caVNlNW4LLd6OKy+BRewPYsrPzAMlKK8iCEZPL1ANMsZq/HXag/kQsQzl7PBb9+wTYXt+FJgSwzX2DevC1Qe08bGnlwf4wyQRuii+3SnzKnEZ2j1ghzBrDE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=bTBRYiUe; arc=none smtp.client-ip=209.85.216.48
+	s=arc-20240116; t=1707260735; c=relaxed/simple;
+	bh=wJIFueftImMKsRrETiQzXQ7IobLJ/IzSPVEYHc6Rd2A=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=i0n7frO5SVSELszIQcvLJh7PlZhlfmtfRm2dL6nUreTab/9F/LPGaLWU5spNaQXyD+rGccFLPJ+MBkDZ22tLjkTOtrjcTQVL0FB1H8WHVWA67fGfId5qrX8rxaj+R/5ZCfbCzPCBe0WQJ8DPoFTCPCwekyTPU11MSM8ViX2ku+0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CEKtx2yl; arc=none smtp.client-ip=209.85.214.171
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bTBRYiUe"
-Received: by mail-pj1-f48.google.com with SMTP id 98e67ed59e1d1-2909978624eso906a91.1
-        for <git@vger.kernel.org>; Tue, 06 Feb 2024 14:58:55 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CEKtx2yl"
+Received: by mail-pl1-f171.google.com with SMTP id d9443c01a7336-1d7881b1843so510615ad.3
+        for <git@vger.kernel.org>; Tue, 06 Feb 2024 15:05:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1707260335; x=1707865135; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=hNLUdmy/+b5Lm/CfOkIR8ER/NgOrIBatIucmGzVtfHk=;
-        b=bTBRYiUe/8n0+Ch66zW4XtlvNFK8mz2YinyHoWjcKPBVxB0G5b37snY+hKUSGQNrSU
-         IWko+629TJOtwCgyE7j0CiWTnegVrGtwIcG9bVVTfC6EgN/6aJlKVQyCWkdUgHRVcOCX
-         MBBURvPZKmCAawKNu3JwKIOSJrMutYnCUXXEqmvz/8UHS8lAA6APoBMke0ad2pZrrGx7
-         EFmmusY8enrAIl3mgTJzUhWRabqA/Wuyb3ovBUYw0eilvhhnCK0Dt4Ngy8cuAbCWng+5
-         32/MJBGuRRF2gMRuTPgiEuXTGifZYVjG/8LLWtvvPhaZUoqjt1SjXkbk9+rBuqgMLUz3
-         22fw==
+        d=gmail.com; s=20230601; t=1707260733; x=1707865533; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=qLozVxFXrI1jwDxjqQa1EeEosMwctfRFjXMDPRUY2sE=;
+        b=CEKtx2yl9fp92SA7QfFpW3SoTPlTYmm7iLmqs7TE5Nz7JiSgSF18MJXYH9iJnvcpLo
+         YiybxhyJ1FjR2hUVpJpZsw+EM4CnQzjGGQYD/R0CyBUtz0ZvMO8u0Bn1MAdofNYRNGaG
+         1OVJr4z/2EY+T/dNeuRuD0GoV648Qy/ANZuequnxk/mILOChRdsLlF3woVoKLmyYH6P/
+         gm1vy0GES4LMa7l1sXAM32POm0pbmQ9gOUv25spimyRn8MxZ/5Sj7TJuQCKZPB6KLizv
+         5QnOGO0payh+GBGNl70qIx+JaJ1ym72Ofb/i/I+QuzC72DlbqLZsFelNvNKjkfUT0jeM
+         umLw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1707260335; x=1707865135;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=hNLUdmy/+b5Lm/CfOkIR8ER/NgOrIBatIucmGzVtfHk=;
-        b=vCFO6/dIpvUTvgp4IQsAfFXhfnZXkwwuJ4zerhYRUZJj6fSgV2F/3p4WTThx0oXHFG
-         fDkEY+RRYsQt1YqARDVqQWAocv1wIWho/tboCTx0JUIeuznba6WpisEil+Hn3hAUheIr
-         1xK5BiUfNXdBoFi/LZFSo5RwkPoyLuOJ1nyPDwgWMZOeh/Q80dm9z8r4Do3G8GdZXDGE
-         y7YwwQ0N1R9WA4yMFxy+B6JwUt33Yt/FFDGDmF66SwWE0dGpwWwG5VUBTp8MtLGYGqmO
-         pcvhvE+sHgwKkYjCREOdQ/aAu5kJaJtM1ZqSfJTLoIzFpGMkQ+mGTSxofInudv4yTL3V
-         qVpg==
-X-Gm-Message-State: AOJu0Ywk6dpKvWOnf1kbVdhURI5TpFU2/pWUeWc5hYh/3heqcm2T+58J
-	mEhgZxP/YuL/OW8Zg6e5RmDUnJEPCjq/lWqDRKJ2JKXHcPHxufBblSXlTV1u
-X-Google-Smtp-Source: AGHT+IGDUhq4yLBMgzm+kzPfIs5fuz0ULPNfJcxft445O0AKXexqweuhQOVT+lhWSeBFj3cvXjHR0Q==
-X-Received: by 2002:a17:90b:ecc:b0:296:65c5:d69b with SMTP id gz12-20020a17090b0ecc00b0029665c5d69bmr1074809pjb.6.1707260334800;
-        Tue, 06 Feb 2024 14:58:54 -0800 (PST)
-X-Forwarded-Encrypted: i=1; AJvYcCUR1enmdMu1du34f+MNZqBSvhP/v/wnJOs4rANvxIgdhMPuSvQbl+6+aPbxkvrW/x2ym6bGfm3XvERyhjJa91y6N/vk3p8Xp3HTpXvtKZ1tg8bjaILQECYQLEbzHCCEHMYv8dwrNDn9ojRYHczpk6A=
+        d=1e100.net; s=20230601; t=1707260733; x=1707865533;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=qLozVxFXrI1jwDxjqQa1EeEosMwctfRFjXMDPRUY2sE=;
+        b=aKwoztdfk9nuVHohpwduvblckmROwbKnATlycGTmmFwHhUR4YT5dCeHLiPGVvod33B
+         kspx1fZN2UVZmqOBYhOjvgaHVf6/tThBA2peEzbU0SyBcn9n1cJUv2n3DtqysB8yplBv
+         ekr9t3Fi5SFtwoFXe1lRCXF+8OWj2GVSkUohq9bRgvsVZNI2L+LA2cLipiC3VAzy5ThD
+         jp7CAuVpYHVC8u0KoFZFTy76o7BsX/HQjBM4hqu/LE/aRzc/qAYrslMVpP7aZBjjgshd
+         glYWUdRtcXQ7f2PKSva+D1sBV3IELKeEkHcdlDh0WyaoMuxwg4O05wXRb3J/kLi101IU
+         xxQw==
+X-Gm-Message-State: AOJu0YznT0IooUBjIEwAlz2Ip1zhdt0EVMTUtUTpgbJ2fW0awFj7A+Xt
+	XSUHt5/gEqoV/OKLJXXkp6CuvRK6MT2YheDdQ4ioqd4M1T1Uas6F8CoPcqa6
+X-Google-Smtp-Source: AGHT+IHN/Vog5ytrhHN3S/G76ILbG7QuMBkpAdgTSI1DgjfX8uQk5kqZANnvEPGbcla0Z3X9SqMoCA==
+X-Received: by 2002:a17:902:744a:b0:1d9:9331:5281 with SMTP id e10-20020a170902744a00b001d993315281mr2826670plt.24.1707260732854;
+        Tue, 06 Feb 2024 15:05:32 -0800 (PST)
 Received: from localhost.localdomain ([2402:a00:401:a99b:f188:2dd3:d960:a8ab])
-        by smtp.gmail.com with ESMTPSA id x20-20020a17090aca1400b00290f9e8b4f9sm46741pjt.46.2024.02.06.14.58.52
+        by smtp.gmail.com with ESMTPSA id jw24-20020a170903279800b001d95b3c6259sm49639plb.263.2024.02.06.15.05.31
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 06 Feb 2024 14:58:54 -0800 (PST)
+        Tue, 06 Feb 2024 15:05:32 -0800 (PST)
 From: Ghanshyam Thakkar <shyamthakkar001@gmail.com>
 To: git@vger.kernel.org
-Cc: gitster@pobox.com,
-	phillip.wood123@gmail.com,
-	ps@pks.im,
-	Ghanshyam Thakkar <shyamthakkar001@gmail.com>
-Subject: [PATCH v4 3/3] add -p tests: remove Perl prerequisite
-Date: Wed,  7 Feb 2024 04:20:39 +0530
-Message-ID: <20240206225122.1095766-7-shyamthakkar001@gmail.com>
+Cc: Ghanshyam Thakkar <shyamthakkar001@gmail.com>
+Subject: [PATCH] restore: allow --staged on unborn branch
+Date: Wed,  7 Feb 2024 04:33:50 +0530
+Message-ID: <20240206230357.1097505-2-shyamthakkar001@gmail.com>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240203112619.979239-2-shyamthakkar001@gmail.com>
-References: <20240203112619.979239-2-shyamthakkar001@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -72,230 +64,129 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-The Perl version of the add -i/-p commands has been removed since
-20b813d (add: remove "add.interactive.useBuiltin" & Perl "git
-add--interactive", 2023-02-07)
+Some users expect that being on an unborn branch is similar to having an
+empty tree checked out. However, when running "git restore --staged ."
+on unborn branch having staged changes, the follwing error gets printed,
 
-Therefore, Perl prerequisite in t2071-restore-patch and
-t7105-reset-patch is not necessary.
+    fatal: could not resolve HEAD
+
+Therefore, teach "git restore --staged ." without a source option, to
+take empty tree as source on unborn branch. Note that, this assumption
+is already taken by "git reset" (166ec2e9). However, still disallow
+explicitly referring to HEAD on unborn branch.
 
 Signed-off-by: Ghanshyam Thakkar <shyamthakkar001@gmail.com>
 ---
- t/t2071-restore-patch.sh | 26 +++++++++++++-------------
- t/t7105-reset-patch.sh   | 22 +++++++++++-----------
- 2 files changed, 24 insertions(+), 24 deletions(-)
+ builtin/checkout.c        | 27 +++++++++++++++++++-------
+ t/t2073-restore-unborn.sh | 40 +++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 60 insertions(+), 7 deletions(-)
+ create mode 100755 t/t2073-restore-unborn.sh
 
-diff --git a/t/t2071-restore-patch.sh b/t/t2071-restore-patch.sh
-index dbbefc188d..27e85be40a 100755
---- a/t/t2071-restore-patch.sh
-+++ b/t/t2071-restore-patch.sh
-@@ -4,7 +4,7 @@ test_description='git restore --patch'
+diff --git a/builtin/checkout.c b/builtin/checkout.c
+index a6e30931b5..1258ae0a59 100644
+--- a/builtin/checkout.c
++++ b/builtin/checkout.c
+@@ -1691,6 +1691,7 @@ static int checkout_main(int argc, const char **argv, const char *prefix,
+ 			 struct branch_info *new_branch_info)
+ {
+ 	int parseopt_flags = 0;
++	int unborn_and_unspecified = 0;
  
- . ./lib-patch-mode.sh
+ 	opts->overwrite_ignore = 1;
+ 	opts->prefix = prefix;
+@@ -1754,12 +1755,6 @@ static int checkout_main(int argc, const char **argv, const char *prefix,
+ 	}
+ 	if (opts->checkout_index < 0 || opts->checkout_worktree < 0)
+ 		BUG("these flags should be non-negative by now");
+-	/*
+-	 * convenient shortcut: "git restore --staged [--worktree]" equals
+-	 * "git restore --staged [--worktree] --source HEAD"
+-	 */
+-	if (!opts->from_treeish && opts->checkout_index)
+-		opts->from_treeish = "HEAD";
  
--test_expect_success PERL 'setup' '
-+test_expect_success 'setup' '
- 	mkdir dir &&
- 	echo parent >dir/foo &&
- 	echo dummy >bar &&
-@@ -16,28 +16,28 @@ test_expect_success PERL 'setup' '
- 	save_head
- '
+ 	/*
+ 	 * From here on, new_branch will contain the branch to be checked out,
+@@ -1785,6 +1780,18 @@ static int checkout_main(int argc, const char **argv, const char *prefix,
+ 		opts->new_branch = argv0 + 1;
+ 	}
  
--test_expect_success PERL 'restore -p without pathspec is fine' '
-+test_expect_success 'restore -p without pathspec is fine' '
- 	echo q >cmd &&
- 	git restore -p <cmd
- '
++	/*
++	 * convenient shortcut: "git restore --staged [--worktree]" equals
++	 * "git restore --staged [--worktree] --source HEAD"
++	 */
++	if (!opts->from_treeish && opts->checkout_index) {
++		struct object_id oid;
++		opts->from_treeish = "HEAD";
++
++		if(repo_get_oid(the_repository, opts->from_treeish, &oid))
++			unborn_and_unspecified = 1;
++	}
++
+ 	/*
+ 	 * Extract branch name from command line arguments, so
+ 	 * all that is left is pathspecs.
+@@ -1812,7 +1819,13 @@ static int checkout_main(int argc, const char **argv, const char *prefix,
+ 	} else if (!opts->accept_ref && opts->from_treeish) {
+ 		struct object_id rev;
  
- # note: bar sorts before dir/foo, so the first 'n' is always to skip 'bar'
+-		if (repo_get_oid_mb(the_repository, opts->from_treeish, &rev))
++		/*
++		 * when the branch is unborn and no revision is given, use
++		 * empty tree as source
++		 */
++		if(unborn_and_unspecified)
++			oidcpy(&rev, the_hash_algo->empty_tree);
++		else if (repo_get_oid_mb(the_repository, opts->from_treeish, &rev))
+ 			die(_("could not resolve %s"), opts->from_treeish);
  
--test_expect_success PERL 'saying "n" does nothing' '
-+test_expect_success 'saying "n" does nothing' '
- 	set_and_save_state dir/foo work head &&
- 	test_write_lines n n | git restore -p &&
- 	verify_saved_state bar &&
- 	verify_saved_state dir/foo
- '
- 
--test_expect_success PERL 'git restore -p' '
-+test_expect_success 'git restore -p' '
- 	set_and_save_state dir/foo work head &&
- 	test_write_lines n y | git restore -p &&
- 	verify_saved_state bar &&
- 	verify_state dir/foo head head
- '
- 
--test_expect_success PERL 'git restore -p with staged changes' '
-+test_expect_success 'git restore -p with staged changes' '
- 	set_state dir/foo work index &&
- 	test_write_lines n y | git restore -p &&
- 	verify_saved_state bar &&
-@@ -56,7 +56,7 @@ do
- 	'
- done
- 
--test_expect_success PERL 'git restore -p --source=HEAD^' '
-+test_expect_success 'git restore -p --source=HEAD^' '
- 	set_state dir/foo work index &&
- 	# the third n is to get out in case it mistakenly does not apply
- 	test_write_lines n y n | git restore -p --source=HEAD^ &&
-@@ -64,7 +64,7 @@ test_expect_success PERL 'git restore -p --source=HEAD^' '
- 	verify_state dir/foo parent index
- '
- 
--test_expect_success PERL 'git restore -p --source=HEAD^...' '
-+test_expect_success 'git restore -p --source=HEAD^...' '
- 	set_state dir/foo work index &&
- 	# the third n is to get out in case it mistakenly does not apply
- 	test_write_lines n y n | git restore -p --source=HEAD^... &&
-@@ -72,7 +72,7 @@ test_expect_success PERL 'git restore -p --source=HEAD^...' '
- 	verify_state dir/foo parent index
- '
- 
--test_expect_success PERL 'git restore -p handles deletion' '
-+test_expect_success 'git restore -p handles deletion' '
- 	set_state dir/foo work index &&
- 	rm dir/foo &&
- 	test_write_lines n y | git restore -p &&
-@@ -85,21 +85,21 @@ test_expect_success PERL 'git restore -p handles deletion' '
- # dir/foo.  There's always an extra 'n' to reject edits to dir/foo in
- # the failure case (and thus get out of the loop).
- 
--test_expect_success PERL 'path limiting works: dir' '
-+test_expect_success 'path limiting works: dir' '
- 	set_state dir/foo work head &&
- 	test_write_lines y n | git restore -p dir &&
- 	verify_saved_state bar &&
- 	verify_state dir/foo head head
- '
- 
--test_expect_success PERL 'path limiting works: -- dir' '
-+test_expect_success 'path limiting works: -- dir' '
- 	set_state dir/foo work head &&
- 	test_write_lines y n | git restore -p -- dir &&
- 	verify_saved_state bar &&
- 	verify_state dir/foo head head
- '
- 
--test_expect_success PERL 'path limiting works: HEAD^ -- dir' '
-+test_expect_success 'path limiting works: HEAD^ -- dir' '
- 	set_state dir/foo work head &&
- 	# the third n is to get out in case it mistakenly does not apply
- 	test_write_lines y n n | git restore -p --source=HEAD^ -- dir &&
-@@ -107,7 +107,7 @@ test_expect_success PERL 'path limiting works: HEAD^ -- dir' '
- 	verify_state dir/foo parent head
- '
- 
--test_expect_success PERL 'path limiting works: foo inside dir' '
-+test_expect_success 'path limiting works: foo inside dir' '
- 	set_state dir/foo work head &&
- 	# the third n is to get out in case it mistakenly does not apply
- 	test_write_lines y n n | (cd dir && git restore -p foo) &&
-@@ -115,7 +115,7 @@ test_expect_success PERL 'path limiting works: foo inside dir' '
- 	verify_state dir/foo head head
- '
- 
--test_expect_success PERL 'none of this moved HEAD' '
-+test_expect_success 'none of this moved HEAD' '
- 	verify_saved_head
- '
- 
-diff --git a/t/t7105-reset-patch.sh b/t/t7105-reset-patch.sh
-index 7147148138..3691b94d1b 100755
---- a/t/t7105-reset-patch.sh
-+++ b/t/t7105-reset-patch.sh
-@@ -5,7 +5,7 @@ test_description='git reset --patch'
- TEST_PASSES_SANITIZE_LEAK=true
- . ./lib-patch-mode.sh
- 
--test_expect_success PERL 'setup' '
-+test_expect_success 'setup' '
- 	mkdir dir &&
- 	echo parent > dir/foo &&
- 	echo dummy > bar &&
-@@ -19,14 +19,14 @@ test_expect_success PERL 'setup' '
- 
- # note: bar sorts before foo, so the first 'n' is always to skip 'bar'
- 
--test_expect_success PERL 'saying "n" does nothing' '
-+test_expect_success 'saying "n" does nothing' '
- 	set_and_save_state dir/foo work work &&
- 	test_write_lines n n | git reset -p &&
- 	verify_saved_state dir/foo &&
- 	verify_saved_state bar
- '
- 
--test_expect_success PERL 'git reset -p' '
-+test_expect_success 'git reset -p' '
- 	test_write_lines n y | git reset -p >output &&
- 	verify_state dir/foo work head &&
- 	verify_saved_state bar &&
-@@ -43,28 +43,28 @@ do
- 	'
- done
- 
--test_expect_success PERL 'git reset -p HEAD^' '
-+test_expect_success 'git reset -p HEAD^' '
- 	test_write_lines n y | git reset -p HEAD^ >output &&
- 	verify_state dir/foo work parent &&
- 	verify_saved_state bar &&
- 	test_grep "Apply" output
- '
- 
--test_expect_success PERL 'git reset -p HEAD^^{tree}' '
-+test_expect_success 'git reset -p HEAD^^{tree}' '
- 	test_write_lines n y | git reset -p HEAD^^{tree} >output &&
- 	verify_state dir/foo work parent &&
- 	verify_saved_state bar &&
- 	test_grep "Apply" output
- '
- 
--test_expect_success PERL 'git reset -p HEAD^:dir/foo (blob fails)' '
-+test_expect_success 'git reset -p HEAD^:dir/foo (blob fails)' '
- 	set_and_save_state dir/foo work work &&
- 	test_must_fail git reset -p HEAD^:dir/foo &&
- 	verify_saved_state dir/foo &&
- 	verify_saved_state bar
- '
- 
--test_expect_success PERL 'git reset -p aaaaaaaa (unknown fails)' '
-+test_expect_success 'git reset -p aaaaaaaa (unknown fails)' '
- 	set_and_save_state dir/foo work work &&
- 	test_must_fail git reset -p aaaaaaaa &&
- 	verify_saved_state dir/foo &&
-@@ -76,27 +76,27 @@ test_expect_success PERL 'git reset -p aaaaaaaa (unknown fails)' '
- # dir/foo.  There's always an extra 'n' to reject edits to dir/foo in
- # the failure case (and thus get out of the loop).
- 
--test_expect_success PERL 'git reset -p dir' '
-+test_expect_success 'git reset -p dir' '
- 	set_state dir/foo work work &&
- 	test_write_lines y n | git reset -p dir &&
- 	verify_state dir/foo work head &&
- 	verify_saved_state bar
- '
- 
--test_expect_success PERL 'git reset -p -- foo (inside dir)' '
-+test_expect_success 'git reset -p -- foo (inside dir)' '
- 	set_state dir/foo work work &&
- 	test_write_lines y n | (cd dir && git reset -p -- foo) &&
- 	verify_state dir/foo work head &&
- 	verify_saved_state bar
- '
- 
--test_expect_success PERL 'git reset -p HEAD^ -- dir' '
-+test_expect_success 'git reset -p HEAD^ -- dir' '
- 	test_write_lines y n | git reset -p HEAD^ -- dir &&
- 	verify_state dir/foo work parent &&
- 	verify_saved_state bar
- '
- 
--test_expect_success PERL 'none of this moved HEAD' '
-+test_expect_success 'none of this moved HEAD' '
- 	verify_saved_head
- '
- 
+ 		setup_new_branch_info_and_source_tree(new_branch_info,
+diff --git a/t/t2073-restore-unborn.sh b/t/t2073-restore-unborn.sh
+new file mode 100755
+index 0000000000..fbd8b2df5f
+--- /dev/null
++++ b/t/t2073-restore-unborn.sh
+@@ -0,0 +1,40 @@
++#!/bin/sh
++
++test_description='restore --staged should work on unborn branch'
++. ./test-lib.sh
++
++test_expect_success 'explicitly naming HEAD on unborn should fail' '
++	echo a >foo &&
++	echo b >bar &&
++	git add foo bar &&
++	test_must_fail git restore --staged --source=HEAD .
++'
++
++test_expect_success 'restore --staged .' '
++	rm .git/index &&
++	git add foo bar &&
++	git restore --staged . &&
++	git diff --cached --name-only >actual &&
++	test_must_be_empty actual
++'
++
++test_expect_success 'restore --staged $file' '
++	rm .git/index &&
++	git add foo bar &&
++	git restore --staged foo &&
++	git diff --cached --name-only >actual &&
++	echo bar >expected &&
++	test_cmp expected actual
++'
++
++test_expect_success 'restore -p --staged' '
++	rm .git/index &&
++	git add foo bar &&
++	test_write_lines y n | git restore -p --staged >output &&
++	git diff --cached --name-only >actual &&
++	echo foo >expected &&
++	test_cmp expected actual &&
++	test_grep "Unstage" output
++'
++
++test_done
 -- 
 2.43.0
 
