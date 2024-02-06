@@ -1,110 +1,129 @@
-Received: from mail-wm1-f53.google.com (mail-wm1-f53.google.com [209.85.128.53])
+Received: from mail-lj1-f181.google.com (mail-lj1-f181.google.com [209.85.208.181])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 837B112C803
-	for <git@vger.kernel.org>; Tue,  6 Feb 2024 09:49:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE7F212C7E1
+	for <git@vger.kernel.org>; Tue,  6 Feb 2024 09:55:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707212990; cv=none; b=j8tbdjPypzVPm51UXqgbxlJIAH5LwxhkWUDPo7tmRYt+VB/H1KsTqDX4VvNoLTaF7rVtQpcZnoyz01hSDTVMEYDMHJkJHEBGNMu0JJMxrdLi4j7DMeI4Hvq5peIy9RFFOxMrwN8e145m2c4QT6aAYL8dYI7nTDN2c9JVLvZpmq0=
+	t=1707213319; cv=none; b=hNJ3tdDzf2TADfRB+SI9L+6k2nVVPMleBa/Ud5VlhiYJoGfd+hRQyDGqoXaQOOc7EhAb/AYHT9iD0oP5B8o5h5zXcd8EKJgFFEMtnKP/DGvOEkanJ3CRMotSTpoDSEsV6X/tVUrkGBdy5zsxUZV3dnGTTjeSD/y/ZHXqrJB7hMI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707212990; c=relaxed/simple;
-	bh=Og36+Y9Y1mkcIZf7hhF7LpKF7o/BSNCJBY9g3T1XPOw=;
-	h=Message-ID:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=hhMJ9BOYHJD4bA1gv7p8JL41mD6fv45pFz8+vcxJDWxNh2t+5/8M3G+PTEa66FO1ix7yQOnKGmY5pvpcwUL8hd64flpakaWnCE+i1jjGn7llGwRXb+ffEZLV+RXmfEcYylcmb+lQMMXAIT1lKoF5FUoE0Be6gK/MnlYbFedeMcM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=EQRi/vhM; arc=none smtp.client-ip=209.85.128.53
+	s=arc-20240116; t=1707213319; c=relaxed/simple;
+	bh=tK7QKfUubxwYnmyqlsQNBJkqh671KaYkNGmAyjvfUpk=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=n9O9rz5W0vGp5YRfBvltasF/299MLFZryseirMKWwiUYK3Cs46Ou/e0wy7xyslUdDBvL85tp3/0e5SwjLCls/rZzUIF6SbuXhFyniGh1DgqNcbyhlR9QWCSXduDGlz6XVonkR+89QOLA7NlhSiYTEuzXuqdoHYTrGtvojgAwpNE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fI6PkNJ1; arc=none smtp.client-ip=209.85.208.181
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EQRi/vhM"
-Received: by mail-wm1-f53.google.com with SMTP id 5b1f17b1804b1-40fe6c66c3fso2191515e9.2
-        for <git@vger.kernel.org>; Tue, 06 Feb 2024 01:49:47 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fI6PkNJ1"
+Received: by mail-lj1-f181.google.com with SMTP id 38308e7fff4ca-2d0b750518bso14205191fa.0
+        for <git@vger.kernel.org>; Tue, 06 Feb 2024 01:55:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1707212985; x=1707817785; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=CDg6C0kp0tIphGPIcDJqqlIdDG7TgaRDGAT8tV9t48Y=;
-        b=EQRi/vhMybjBqjcHKaxJW+XWGTHuDchwBo8kVbSp+g958TgGO+Q7xqow+yfjwpFaNc
-         vtN+EeZrAGdS5AssX7glIeaKdnLEijMo62IoqxOgqp14Ks9rxJxY9eAMRts8fZHYIXG0
-         JI7tIv4nbJJfjmMyGdkQ1Da8sl+xcbAPQ02fpmfXMygJQkM2DNvVGfTk7l/CYXsE+sxM
-         XsHqNmr2dOoVs8tptKBvLnRoEwgocK+2b+76c47PiAwnezZiH3IbFZT69So+0O1VemYd
-         nrze8MJ6U0Ti7iQVc3fNhM3KI+KP39pGAUAP2VhT8cqqoJJsmfXbVVSvacCqadiQYb9B
-         Kevw==
+        d=gmail.com; s=20230601; t=1707213316; x=1707818116; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=nazWR0R+R/XKWaQAmjXnbcGqbFLUm0IFMAlcJZ4MrzQ=;
+        b=fI6PkNJ1dkdmWA36thiFrfyuTYTIG7u6hq/X8Fy1WBoEGNFibncwloSK+gmtPP0rHb
+         eg2jhoykZ6YHadrvJ1iFDVWAOeXyUFO1vwB9xLYoETDFTVyUNuQFjtiTI+luBLcXRFfA
+         iiPfGXU0YsQp9Ftr/bnL2epcna1ResbflTycsRAfZDkO6Xwu+nXZ2WjiM5cOoYxjGHKK
+         ZKUCESSJXgc0mpvizqA8+2C22qTNjgTP+dOQ0yvR3iv/H//MsSc+DUC0NAEc00h3mo+d
+         1Hd21qxOvtcopesFI8oNcgWkSd/LlbOkLru21LEjYCHLeeNGxhY0G2W/L2G9NjvhguLL
+         76+A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1707212985; x=1707817785;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=CDg6C0kp0tIphGPIcDJqqlIdDG7TgaRDGAT8tV9t48Y=;
-        b=J7wZY8TQut/akUoajB7PX3+23TZES3xhyPkMnKolv316XayYGuOhYn5UmM0b+JEQUQ
-         +I2hbViGeMgwL8syWazaZKe2jgGhweMHBgZB2DSPNeYeHOKMGc4sjms2/xoMggBovXwP
-         mceZyM2DxyOU4HwH9bvDX+sUREG72IOBYKhY2EAlLhASLlP3145/nzC5N5Yqcafse555
-         FSA2CrBbXdlLNdYtB9rvAF7KXR/2Ej6L6IljTvInWcNcK2JqB6lj9SMGttnv7rt2aUFi
-         91WtaR+aT8US6EfD970iSBPFpFPkqiKnN3EvlcdcoXm51v48aNEwzEDXP0Kw9QIk6yTL
-         /kbg==
-X-Gm-Message-State: AOJu0Yxr7ceGFR08ddzNL8bdnChqj+njix5FhpxVx5hH+EIXY9/debmE
-	VTAOiWpzMCfnmhJFRjDyUbGHJBAri/no6VaH6iTU+OK2tYla9HLMtp5z6fcx
-X-Google-Smtp-Source: AGHT+IHQ9gQ8zKo/h+jnQbD3a6ob5gk06mil8JYPtGPhEyMKIXayKCAcqQ2Gt19Gjpywssbi3Qyd8g==
-X-Received: by 2002:adf:edd0:0:b0:33b:179d:d9aa with SMTP id v16-20020adfedd0000000b0033b179dd9aamr727898wro.26.1707212985121;
-        Tue, 06 Feb 2024 01:49:45 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id u13-20020a5d6dad000000b0033b1b01e4fcsm1659035wrs.96.2024.02.06.01.49.44
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 06 Feb 2024 01:49:44 -0800 (PST)
-Message-ID: <85d3e6728714606c3eac42a561ae89b61457647b.1707212981.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1651.git.1707212981.gitgitgadget@gmail.com>
-References: <pull.1651.git.1707212981.gitgitgadget@gmail.com>
-From: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Tue, 06 Feb 2024 09:49:40 +0000
-Subject: [PATCH 3/4] t4301: verify that merge-tree fails on missing blob
- objects
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        d=1e100.net; s=20230601; t=1707213316; x=1707818116;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=nazWR0R+R/XKWaQAmjXnbcGqbFLUm0IFMAlcJZ4MrzQ=;
+        b=tYXek7Kh5Xo2jSEnEVBv5zt8cVB6oGS9BDA4pWtkrnslS/VNC+nV4vGYAcACGj6Cq4
+         mnUFDtuvn0zrO7Trg2mIknhi9dF+71h4DcUrC4+dIzCyxslNtWld4V1oOQMeqtSR7Vwh
+         GlUGIteJL1nwpAjfC601DcOdVjpRMpnHtUKfmc5XqqpI4SO3tgOT9PBuaFs9zDRrU0vs
+         xse/bWaCTJtHYSXRoP4DIt4iZmu8x2BDlbtwMeFpp/wB/2V5sO7imjUnJmaZAqV693pn
+         6HGFYmcgNTVQGB6GgQP288bBBM7c0Bp55Cty6S6eNDRpsCO0D3qsWFTloAr4fQS1Fti8
+         XlCQ==
+X-Gm-Message-State: AOJu0Yzt6I3XjTtYd8BF66kUe8o89spAM6OyfjZ5IapW3NJtvErvUJQf
+	sjc2cjn90mEB7WEMc29qSPKj9X5RNp9hEUNRJTo/L2sCBTyfodyZR41D3Ykyk237fTwXR+Ov+Qz
+	UQKu0P1CJjQ8XaCMIHz5NxFgV9lQ=
+X-Google-Smtp-Source: AGHT+IHy2k4UVGpQmG3lguP1jdoMTHj8dmoX0mckcY2QpioJQBv+pySaqkMqiNA0elvTZevtpIsbSRs8ILjEB6cgmXc=
+X-Received: by 2002:a2e:8053:0:b0:2d0:992a:cc5f with SMTP id
+ p19-20020a2e8053000000b002d0992acc5fmr1401411ljg.15.1707213315417; Tue, 06
+ Feb 2024 01:55:15 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
-    Johannes Schindelin <johannes.schindelin@gmx.de>
+References: <20240205204932.16653-1-maarten.bosmans@vortech.nl>
+ <20240205204932.16653-2-maarten.bosmans@vortech.nl> <xmqqil32l0i6.fsf@gitster.g>
+In-Reply-To: <xmqqil32l0i6.fsf@gitster.g>
+From: Maarten Bosmans <mkbosmans@gmail.com>
+Date: Tue, 6 Feb 2024 10:55:04 +0100
+Message-ID: <CA+CvcKTtcHCCKucQ0h1dnaDAMNfErJ+a1CXEVi=ZE5dv57Tb3A@mail.gmail.com>
+Subject: Re: [PATCH 1/4] notes: print note blob to stdout directly
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, Teng Long <dyroneteng@gmail.com>, 
+	Maarten Bosmans <maarten.bosmans@vortech.nl>
+Content-Type: text/plain; charset="UTF-8"
 
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
+Op di 6 feb 2024 om 04:44 schreef Junio C Hamano <gitster@pobox.com>:
+>
+> Maarten Bosmans <mkbosmans@gmail.com> writes:
+> > Avoid the need to launch a subprocess by calling stream_blob_to_fd
+> > directly.  This does not only get rid of the overhead of a separate
+> > child process, but also avoids the initalization of the whole log
+> > machinery that `git show` does.  That is needed for example to show
+> > decorated commits and applying the mailmap.  For simply displaying
+> > a blob however, the only useful thing show does is enabling the pager.
+> >
+> > Signed-off-by: Maarten Bosmans <maarten.bosmans@vortech.nl>
+> > ---
+> >  builtin/notes.c | 10 ++++++----
+> >  1 file changed, 6 insertions(+), 4 deletions(-)
+>
+> I am not sure if we want to accept an approach that feels somewhat
+> narrow/short sighted, like this patch.  When "git show" learns an
+> improved way to show blob objects, who will update the code this
+> patch touches to teach it to use the same improved way to show the
+> notes?
 
-We just fixed a problem where `merge-tree` would not fail on missing
-tree objects. Let's ensure that that problem does not occur with blob
-objects (and won't, in the future, either).
+Yes, you would loose some of the flexibility by just calling out to
+another git command. But whether that is actually an issue depends on
+the way git show would be extended. As I mentioned in the cover
+letter, there is some handling of textconv
+being done in git show for the blob case. I though it would not be
+applicable to note blobs, but am not entirely sure.
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- t/t4301-merge-tree-write-tree.sh | 14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+To address your concern and the textconv case, instead of calling
+stream_blob_to_fd() directly, show_blob_object() could be used. Right
+now that is a static function in building/log.c I guess that needs to
+be moved then to log.c (or show.c)?
 
-diff --git a/t/t4301-merge-tree-write-tree.sh b/t/t4301-merge-tree-write-tree.sh
-index 4ea1b74445d..86807a57d4d 100755
---- a/t/t4301-merge-tree-write-tree.sh
-+++ b/t/t4301-merge-tree-write-tree.sh
-@@ -961,4 +961,18 @@ test_expect_success 'error out on missing tree objects' '
- 	test_must_be_empty actual
- '
- 
-+test_expect_success 'error out on missing blob objects' '
-+	seq1=$(test_seq 1 10 | git hash-object -w --stdin) &&
-+	seq2=$(test_seq 1 11 | git hash-object -w --stdin) &&
-+	seq3=$(test_seq 0 10 | git hash-object -w --stdin) &&
-+	tree1=$(printf "100644 blob %s\tsequence" $seq1 | git mktree) &&
-+	tree2=$(printf "100644 blob %s\tsequence" $seq2 | git mktree) &&
-+	tree3=$(printf "100644 blob %s\tsequence" $seq3 | git mktree) &&
-+	git init --bare missing-blob.git &&
-+	test_write_lines $seq1 $seq3 $tree1 $tree2 $tree3 |
-+	git pack-objects missing-blob.git/objects/pack/side1-whatever-is-missing &&
-+	test_must_fail git --git-dir=missing-blob.git merge-tree --merge-base=$tree1 $tree2 $tree3 >actual &&
-+	test_must_be_empty actual
-+'
-+
- test_done
--- 
-gitgitgadget
+I'm still not sure that is a good approach though, as the notes
+edit/append subcommands use repo_read_object_file() directly to fill
+the current note contents. So anything fancy that git show would do to
+blob output is not reflected when editing a note.
 
+> I actually was hoping, after seeing the use case description in the
+> cover letter, that the series would be introducing a batch mode
+> interface to allow callers to ask notes for many objects and have
+> the command respond notes for these objects in a way that which
+> piece of output corresponds to which object in the request, reducing
+> the process overhead amortised over many objects.
+
+That is also a cool idea. That would probably use the functionality of
+the cat-file batch mode, right? In that case you loose any future
+changes to git show anyway. At least the current behavior of git show
+when fed multiple blob hashes is to simply output them directly after
+another, without any way of identifying the parts.
+
+My concern would be that this additional functionality would not get
+used much, as it requires a bit more than just a quick-n-dirty bash
+script with some loops and command substitutions. If that approach is
+reasonably fast (the object of this patch series), then there is not
+much to be gained in a practical sense by a batch mode. To me it seems
+the git notes code is already a bit undermaintained currently, so I'd
+rather keep it generic, instead of customizing it to more specific use
+cases.
+
+Maarten
