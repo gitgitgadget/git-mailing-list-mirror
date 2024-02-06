@@ -1,64 +1,64 @@
-Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
+Received: from mail-wr1-f50.google.com (mail-wr1-f50.google.com [209.85.221.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65D757C088
-	for <git@vger.kernel.org>; Tue,  6 Feb 2024 05:12:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5621A7C0B6
+	for <git@vger.kernel.org>; Tue,  6 Feb 2024 05:12:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707196361; cv=none; b=uwqq+aQlo2CUKhBGniUNvOAqrwJPBNgC01vFzVZgL0atJpOoS5SvtDaWfVSXSQCR3fTTvt2zMJz/4C/y/qR3ZVo9BtVFtvIUnQ4bT0X4Mxe+pMtTRoJC5WdBCN0iz9fbT7m7m2PeI1b2izjC+EbEcF2iZajk/oQv+LnFJL4Tozw=
+	t=1707196362; cv=none; b=hkolGZGVlPLwjUhcUSF5kaoZxJEZwUROGcio0Nkd53PalqqZm4ORPTbjI174bAUP4qUtjUJKLu7yZEpsFThnwp+mIG3mynm33A/4oL1FClakSgex9LXGqwTs7uozXTeFtAmtvML9qpweo6YIClnPp7MQZz1oGl7KANDeO/uDeRk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707196361; c=relaxed/simple;
-	bh=ttUB/lGc31VezpwkxCUqYNd8Tz9/24eZbrL+BweDCnY=;
+	s=arc-20240116; t=1707196362; c=relaxed/simple;
+	bh=8zW5s9dVw12pr9fbZJS4z8TlV+Q1EwM2vdLxdUNtO1o=;
 	h=Message-ID:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=X+/nD+BR+P2xvYmiJsvP5XUcsZrg43a+sQHAzPaOa3cxWbJzAVcc4VX8DL4PE900O2GbCaviB0IFqjtAFEvy555Vn06WISHMLrJ//u5c/zW3MmQLl/9zc1ja+fz8zxOYfkywyOVYh+yq893KuFvvtOSpLYlbMP2Ni82mKpKwu/w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VFd0FZCI; arc=none smtp.client-ip=209.85.128.50
+	 MIME-Version:To:Cc; b=jeE7UlcHd2bLopDWCvavJypVSEyRn3CF0vu1MOE+9wxkgwI8xEdHu0ZtDNvXejU0vjclepNGeqqnuTWgbFXR8zsxgThHwnd1qErthDbCMcAx5wA5vALCMkuMmjsqlfjljMWVb8a9LSwu02eZHEt1WpKWFztiiBw+H2/FD0dIuoI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=npGwSMxG; arc=none smtp.client-ip=209.85.221.50
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VFd0FZCI"
-Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-40fc6343bd2so34058145e9.1
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="npGwSMxG"
+Received: by mail-wr1-f50.google.com with SMTP id ffacd0b85a97d-33b13332ca7so3199325f8f.2
         for <git@vger.kernel.org>; Mon, 05 Feb 2024 21:12:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1707196357; x=1707801157; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1707196358; x=1707801158; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=s2ChbUKr39IIl/empUwfg3AmHJCZvdutzce068y7PcQ=;
-        b=VFd0FZCIEV1vRxXhO+EL1RQP2yl+PiQuI9GMRcmVZ2+DsAJUOxA0ne0LqDZXih06s/
-         Im13Fad2we5hhqAUnCdM/+i2oIeanW8U9oWpeFQ7BPHcK8BlC7x7+hwJcGwr/CttWgQm
-         LMWC1mQe6wIFbLP2zxutr7yzsdRG2HpQnX973P3hb+TemItJIe+50bWYj5MWr133C4FM
-         +Wcj3hXqCX2Yxbodx6lj7hKtmcFBivUrMhl8V0TQzDklOofPq8KY60rSnBCp9SCld6Sj
-         7sbUPpHm0nur+gOJUDCbeRoik3Go8D8+yWx2u+6M4Zt/l+vpB8chn2BXfsmsnWxpd9bz
-         me+Q==
+        bh=KVmCHXSxcIJ8BC25Gubr/EV2nNjiB4Aj4jeRQHFX7BQ=;
+        b=npGwSMxGZmNZbN6nyHSk/9QQbZATFHyTxySpLmyy0WDSu5CKMg3SBcO/Q0UIRaGYfP
+         A493YS/1O3ijhdAONYe4L7IRYTpj1U+PCnoe3WUb3k1s/0efZPJfdM8b4vHl7J7fkHet
+         bFCvRwwq+j93ZbpoDxPiWUTig+nx+fWlxuHgLs/Zc54y9WWfNuTNJF3QbiFm9SgEJM+0
+         13iZMQXqv9SLhVkE2e9rKdWilTObFGymjVuc3PQwXNfxsVQrpsDaWeI8284VrBZtFdrN
+         YEicxGs9yT+kFXXnxUmDuriAJjw+7n257/sse4I3xt3Dx06t6JJH3cXPMqBWrsH0GAup
+         Jb8Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1707196357; x=1707801157;
+        d=1e100.net; s=20230601; t=1707196358; x=1707801158;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=s2ChbUKr39IIl/empUwfg3AmHJCZvdutzce068y7PcQ=;
-        b=wvqqXLWqdu7exUCGPDyCx2e8tknt7wk0iTwtiSeZs+zycJcX9Wdgltbv2fG0dRkyJ3
-         XN8zE9EGdefxsZ58ETNtcwiWOTYNvNMqPd8DwbMlBvWT4daFnQ6HXEQQMRgB1WrTfmnF
-         enGiJ2Ipwf5wP1HPv+Ql5gYlBpikCusAPgEXrxWKGI9y8fxqIZXplajen4eAciKYUcFq
-         tJBYJ1szhe54+A6DOz4jTvvGIECgqtOZPGZFOHpxcZTnGoUOCjvvUkxIzORDwhYnQ7MC
-         HbMM+hwAkCaIgXOAIQI1fg97Cl/3gjoWfmJiLQ3kjvWytHDnMa0zrAzCXitYGe2xqA0s
-         YrCA==
-X-Gm-Message-State: AOJu0YzkgEFp3CAy0YPoluGpFhfp+T11JbZZq35P1139YwSeGeR446I8
-	c5ltdKd/RYusf6v/tCEC6SA9xtNCvA15Rb9HVJYeBIBSoAW+VyoWW6g7G4xL
-X-Google-Smtp-Source: AGHT+IEIqAQZOXUSPOhwTacddVPVpn8MRdrpnheX/fhLegU+NYz0eevVyEzVx9+LMW8T8MOUsvJHGQ==
-X-Received: by 2002:a5d:4704:0:b0:33b:3b88:e357 with SMTP id y4-20020a5d4704000000b0033b3b88e357mr344203wrq.35.1707196357074;
-        Mon, 05 Feb 2024 21:12:37 -0800 (PST)
-X-Forwarded-Encrypted: i=0; AJvYcCWd+RvLS//n1xE4zigFL34V3SVvBX8oYN1D8Zz1BSNiaR4t1V6uUfMHsSIwUD3sy6cOVTSuVvWH5e1jX2UUpa8YENGD4ZAbEck+JsZi1Fb5n4+qicwvP0kqOP+VI/8wcTYlyCfcbKE0KSxnAhX8geHjJDHlyRaoo6gad7zXcb3ioVOIcHvQftRhHfPYU/kY39wtSXjkXb3w0g==
+        bh=KVmCHXSxcIJ8BC25Gubr/EV2nNjiB4Aj4jeRQHFX7BQ=;
+        b=bZDXrgp1eELmuNA1ClWXBdXgfpRgAwwj9oGJP98BbuAi8Vaxk/b7VIz2Qz5/mXUJiu
+         iNLJYHIT/vB16lRkmfA9Zjss4RtZAw37XzBcPap6aYgatV5paliyETngQj+0oNjPsxU9
+         WI+hWxzGdVHjhV/ZFC+loBXblVbPQTCTjplyxHQdzppu0+uOW52geq/Cn9yUN2iPtJqL
+         w2vs7Fa4KVmF/0ebVjDPD4QtcI5+JUkuH44YBEbHhD2zcPja9jQH6Q4+B7H1SmRQ8dsA
+         jIgAS9bwJ5sSMN+poII79fmDFxCa/7koo1/kjaqO9uMGou0nCyq/sT/qptBZ/lQdkXqc
+         B0zg==
+X-Gm-Message-State: AOJu0YwUNHDrxdh5s+1IoIV7MgEeHBNog9E45/1QKtbDh6iaSxH2i6Ca
+	TAe0VbI477o541CKlHMGGtJPvoPHQHVH6h5Qe79E+d+35I6GQlnGYu1vHiMk
+X-Google-Smtp-Source: AGHT+IFPA6ySMuwoPUCvvXKUGaDOOPZb78hxdg95P/CSH+BShheLZQzHWy8L1mO5mVmrQXpV+FgkKQ==
+X-Received: by 2002:adf:ea49:0:b0:33a:f27b:7fc1 with SMTP id j9-20020adfea49000000b0033af27b7fc1mr427523wrn.31.1707196358204;
+        Mon, 05 Feb 2024 21:12:38 -0800 (PST)
+X-Forwarded-Encrypted: i=0; AJvYcCVbgqB3ZOndMv1LkvSIpHa+B/kvFWb39cG5HF2jYDk3c0C2upxQKuEq2I9p9TAXqMi4Ha0DX7NMfLk4xDA+6ewGdsgMs091ouAnPU13F7CgyuOD4kH9/jKHrjjdzlutLv7FiBq1QfbYTIKPaHXbwO7j1afWzxrJfBnVvvBqhLofikMzdJX5oSngz2Ge6Jhf2mPpxT6bEe2x6g==
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id jq16-20020a05600c55d000b0040fb0bf6abesm639803wmb.29.2024.02.05.21.12.36
+        by smtp.gmail.com with ESMTPSA id n8-20020a5d4c48000000b0033afe816977sm1048148wrt.66.2024.02.05.21.12.37
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 05 Feb 2024 21:12:36 -0800 (PST)
-Message-ID: <9dc912b5bc5ff07fedc0dd217b5ecb8a1eb10cc3.1707196348.git.gitgitgadget@gmail.com>
+        Mon, 05 Feb 2024 21:12:37 -0800 (PST)
+Message-ID: <b97c06d8bc324139710b6fb8c7765326f2a2bd2c.1707196348.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1632.v4.git.1707196348.gitgitgadget@gmail.com>
 References: <pull.1632.v3.git.1706664144.gitgitgadget@gmail.com>
 	<pull.1632.v4.git.1707196348.gitgitgadget@gmail.com>
 From: "Linus Arver via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Tue, 06 Feb 2024 05:12:07 +0000
-Subject: [PATCH v4 07/28] format_trailers(): use strbuf instead of FILE
+Date: Tue, 06 Feb 2024 05:12:08 +0000
+Subject: [PATCH v4 08/28] format_trailer_info(): move "fast path" to caller
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -81,103 +81,66 @@ From: Linus Arver <linusa@google.com>
 
 This is another preparatory refactor to unify the trailer formatters.
 
-Make format_trailers() also write to a strbuf, to align with
-format_trailers_from_commit() which also does the same. Doing this makes
-format_trailers() behave similar to format_trailer_info() (which will
-soon help us replace one with the other).
+This allows us to drop the "msg" parameter from format_trailer_info(),
+so that it take 3 parameters, similar to format_trailers() which also
+takes 3 parameters:
+
+    void format_trailers(const struct process_trailer_options *opts,
+                         struct list_head *trailers,
+                         struct strbuf *out)
+
+The short-term goal is to make format_trailer_info() be smart enough to
+deprecate format_trailers(). And then ultimately we will rename
+format_trailer_info() to format_trailers().
 
 Signed-off-by: Linus Arver <linusa@google.com>
 ---
- builtin/interpret-trailers.c |  6 +++++-
- trailer.c                    | 13 +++++++------
- trailer.h                    |  3 ++-
- 3 files changed, 14 insertions(+), 8 deletions(-)
+ trailer.c | 20 +++++++++-----------
+ 1 file changed, 9 insertions(+), 11 deletions(-)
 
-diff --git a/builtin/interpret-trailers.c b/builtin/interpret-trailers.c
-index d1cf0aa33a2..11f4ce9e4a2 100644
---- a/builtin/interpret-trailers.c
-+++ b/builtin/interpret-trailers.c
-@@ -140,6 +140,7 @@ static void interpret_trailers(const struct process_trailer_options *opts,
- {
- 	LIST_HEAD(head);
- 	struct strbuf sb = STRBUF_INIT;
-+	struct strbuf trailer_block = STRBUF_INIT;
- 	struct trailer_info info;
- 	FILE *outfile = stdout;
- 
-@@ -169,8 +170,11 @@ static void interpret_trailers(const struct process_trailer_options *opts,
- 		process_trailers_lists(&head, &arg_head);
- 	}
- 
--	format_trailers(opts, &head, outfile);
-+	/* Print trailer block. */
-+	format_trailers(opts, &head, &trailer_block);
- 	free_trailers(&head);
-+	fwrite(trailer_block.buf, 1, trailer_block.len, outfile);
-+	strbuf_release(&trailer_block);
- 
- 	/* Print the lines after the trailers as is */
- 	if (!opts->only_trailers)
 diff --git a/trailer.c b/trailer.c
-index f92d844361a..cbd643cd1fe 100644
+index cbd643cd1fe..e92d0154d90 100644
 --- a/trailer.c
 +++ b/trailer.c
-@@ -144,12 +144,12 @@ static char last_non_space_char(const char *s)
- 	return '\0';
- }
+@@ -1087,21 +1087,11 @@ void trailer_info_release(struct trailer_info *info)
  
--static void print_tok_val(FILE *outfile, const char *tok, const char *val)
-+static void print_tok_val(struct strbuf *out, const char *tok, const char *val)
+ static void format_trailer_info(const struct process_trailer_options *opts,
+ 				const struct trailer_info *info,
+-				const char *msg,
+ 				struct strbuf *out)
  {
- 	char c;
+ 	size_t origlen = out->len;
+ 	size_t i;
  
- 	if (!tok) {
--		fprintf(outfile, "%s\n", val);
-+		strbuf_addf(out, "%s\n", val);
- 		return;
- 	}
+-	/* If we want the whole block untouched, we can take the fast path. */
+-	if (!opts->only_trailers && !opts->unfold && !opts->filter &&
+-	    !opts->separator && !opts->key_only && !opts->value_only &&
+-	    !opts->key_value_separator) {
+-		strbuf_add(out, msg + info->trailer_block_start,
+-			   info->trailer_block_end - info->trailer_block_start);
+-		return;
+-	}
+-
+ 	for (i = 0; i < info->trailer_nr; i++) {
+ 		char *trailer = info->trailers[i];
+ 		ssize_t separator_pos = find_separator(trailer, separators);
+@@ -1153,7 +1143,15 @@ void format_trailers_from_commit(const struct process_trailer_options *opts,
+ 	struct trailer_info info;
  
-@@ -157,13 +157,14 @@ static void print_tok_val(FILE *outfile, const char *tok, const char *val)
- 	if (!c)
- 		return;
- 	if (strchr(separators, c))
--		fprintf(outfile, "%s%s\n", tok, val);
-+		strbuf_addf(out, "%s%s\n", tok, val);
- 	else
--		fprintf(outfile, "%s%c %s\n", tok, separators[0], val);
-+		strbuf_addf(out, "%s%c %s\n", tok, separators[0], val);
+ 	trailer_info_get(opts, msg, &info);
+-	format_trailer_info(opts, &info, msg, out);
++	/* If we want the whole block untouched, we can take the fast path. */
++	if (!opts->only_trailers && !opts->unfold && !opts->filter &&
++	    !opts->separator && !opts->key_only && !opts->value_only &&
++	    !opts->key_value_separator) {
++		strbuf_add(out, msg + info.trailer_block_start,
++			   info.trailer_block_end - info.trailer_block_start);
++	} else
++		format_trailer_info(opts, &info, out);
++
+ 	trailer_info_release(&info);
  }
  
- void format_trailers(const struct process_trailer_options *opts,
--		     struct list_head *trailers, FILE *outfile)
-+		     struct list_head *trailers,
-+		     struct strbuf *out)
- {
- 	struct list_head *pos;
- 	struct trailer_item *item;
-@@ -171,7 +172,7 @@ void format_trailers(const struct process_trailer_options *opts,
- 		item = list_entry(pos, struct trailer_item, list);
- 		if ((!opts->trim_empty || strlen(item->value) > 0) &&
- 		    (!opts->only_trailers || item->token))
--			print_tok_val(outfile, item->token, item->value);
-+			print_tok_val(out, item->token, item->value);
- 	}
- }
- 
-diff --git a/trailer.h b/trailer.h
-index 410c61b62be..1d106b6dd40 100644
---- a/trailer.h
-+++ b/trailer.h
-@@ -102,7 +102,8 @@ void trailer_info_release(struct trailer_info *info);
- 
- void trailer_config_init(void);
- void format_trailers(const struct process_trailer_options *,
--		     struct list_head *trailers, FILE *outfile);
-+		     struct list_head *trailers,
-+		     struct strbuf *out);
- void free_trailers(struct list_head *);
- 
- /*
 -- 
 gitgitgadget
 
