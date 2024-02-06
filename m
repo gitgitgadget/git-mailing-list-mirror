@@ -1,67 +1,67 @@
-Received: from mail-pg1-f171.google.com (mail-pg1-f171.google.com [209.85.215.171])
+Received: from mail-pl1-f174.google.com (mail-pl1-f174.google.com [209.85.214.174])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D886D5677B
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20E1E56B68
 	for <git@vger.kernel.org>; Tue,  6 Feb 2024 02:09:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.171
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707185376; cv=none; b=Y4Ede0oTVDz8Tc1p13rviOXlpYzvpcWgfw4jZA40RXFNExqaVyV5r2FD20rxxJf2DEtUZI/R03AAW9+vUkDlvRnWDiczRr4TTWz2VVqz/3tGR3YKO/zAdETE3muFouGfwI8+OFGq+9F/D7FLV/izynG8+hLRPWxGIaEDEk/GjxQ=
+	t=1707185376; cv=none; b=ams4+6AU2ENAF6+wDoQ55j1vH7V43/XLBje/KMDZeGjTTys0DWQGqvXNmbwl/mGbfmhPdlQxPkgQzzo5fPfRCkVvAfH6WXPwxoCfnncjbpc6Werw4GqJ1UOiAvPtcOxS+fUEFLMXU0/8NHEqkqCIV887//OUV0mBbZrYOMdrCCY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1707185376; c=relaxed/simple;
-	bh=6h5e1f3ZIeMJQUz8oMhboJbNf+tiaXGt48DYcgHkjUE=;
+	bh=It5gCIbSeOT89nUeP4WauYwQ68Qq8cs3daDHgcLoVUs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=t9TATIzgKhOJOMQWQSx+9avOGkLSJWW4bfaUIx5Z8HcmMCjXsRz++knjjXTRqboqxQk0lbHqRbsk7hpxYV6oxnV2P5NIMCnr75o7NfHAdx72Z5X/gAEqGpjXtNqdfp2Pt/Lkd47/D0K8qSoDpQ6oHQ+DjVpoQp+Cu2taHtiRB5c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=TZDFVy5H; arc=none smtp.client-ip=209.85.215.171
+	 MIME-Version; b=T0ZfBueXj1QVkeJYwn1CjyCy4srrM69FBm42soPL+pd5W9gZOOzTaqrDEclMBR76x+njY1RIjs1T+V7qelf6ng6VEqwGlo3Z7In5F9KiN5b/XT9ylJjX7AB/LBWEVgVxh9bFvsEzEXrH0SAmkILFe0tXVvCF9tug541ilauJGNg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Q+agI3I5; arc=none smtp.client-ip=209.85.214.174
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TZDFVy5H"
-Received: by mail-pg1-f171.google.com with SMTP id 41be03b00d2f7-53fbf2c42bfso4230653a12.3
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Q+agI3I5"
+Received: by mail-pl1-f174.google.com with SMTP id d9443c01a7336-1d8aadc624dso38228185ad.0
         for <git@vger.kernel.org>; Mon, 05 Feb 2024 18:09:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20230601; t=1707185374; x=1707790174; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=4mtZl/JLBY55f0TcDPFOUW1HtKEHIRTFgF3o82xinFE=;
-        b=TZDFVy5H86QaB6/oeyQEppk8UzHn2+so8YRmescoIp/UJoDPIPWsAvNP+KhYMqKUlC
-         hz5+vKXaJAknP6g73o6F5JEZ38AzkHsjuAqHf3kewpphKgIzAkOy7PE4iC7aY5MEX56z
-         Rio56vXSK72pewzriwyZYLg/WJiV8SlmQr9fuJg5KsAF+nECGVWBmRSN1/ZNVG4aHwYX
-         exTls209jnNMBFj1HZCDhnEF/6pjkg7+yuDzz3mdZoYnab6IYyTAiA4ecTks8MhLa4ti
-         hqNSXErwtxuBVDob5gPK4uC1eEWjgyJkeeFNUL4T+vqJ9ryRJhk5bS3RN30CjCAgZ9cA
-         WEHQ==
+        bh=LXtmhqYFFwTSutZKMF97JDHxuH9zThRsF3fiEBpbgGw=;
+        b=Q+agI3I5eQnRocCCOUb/4W+JwQNXRgqG6yvFQxqphVMm8cEHthOw7mszfqx1izTmJ2
+         TQi4Z3gvPf9HzQtfhD3vgV92NGe9VJi5UzWsGdvKDz5CKtKrd4HAwwoVT8rkTN+26dph
+         Vw7KHjtPULm6Z6vgBIBYNoXb496hnI/YwWmB+jQv8EJ7S9aLGRwOP1lNkWft/x57PcIP
+         IhuRl60dspwMEHfCUF16vwNmnkltWF26/Ffy8F8knHeh8P4wyTwKg2OKYxNC4uV7rLjf
+         OeIrlgoIHma7XRaGxTXNV5kMDK3q2C6mqCXPPdjynZkeiegyrK/qIicp/g49fLyO7hes
+         X0zg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20230601; t=1707185374; x=1707790174;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=4mtZl/JLBY55f0TcDPFOUW1HtKEHIRTFgF3o82xinFE=;
-        b=mVa4j+SqqkCRFh3j1qypQdntYqr7V3baP87L7/JalVaZ3bxlsxBi9640g2gMZV5Tdx
-         JdfdQJRdzatWv89Qu8Q2IdAriqKV5GbE2pCHLlTG/mP0hHZ3iJulZkFPPl14tcxO0RSN
-         E3FdyUzO0MhdLY8h7wzmFztSxSHyiTEzP4jkvVfs7x08ouHkP20KpNQKy6Pp2taXvzqN
-         IdxxGt/B9cWMGu5JJRV84Z5X1Dkzb3mHiwZsgrCLV4PyybDWCFELUOSyh8/5UNXmssH2
-         Su8h7/yASabTdinKdMHMcjON+onds4zjJloaMbgqxLR0uSNBU/DprjbPn3ezqD1iliyq
-         M4wg==
-X-Gm-Message-State: AOJu0Yx3nqQvb64F40mWy9o4aJFOxwVYtfKAZwvCsnLmeoD81VL6e93r
-	1XrIQjP/tS+odjkSPo/PqLHE9vAKWfKgoqmBXBfn0JYHdWl/YPMXsmQLBK7H4JI=
-X-Google-Smtp-Source: AGHT+IFB7ZNx9+A+nNHKVflB+VjnTGqvfQx8MS+JR99DXS73gTnFiCXKXvoncB+ruJHtweAMgsbLng==
-X-Received: by 2002:a05:6a20:3ca7:b0:19c:64a5:2162 with SMTP id b39-20020a056a203ca700b0019c64a52162mr337799pzj.20.1707185374106;
+        bh=LXtmhqYFFwTSutZKMF97JDHxuH9zThRsF3fiEBpbgGw=;
+        b=uMoVKrtYMrf24dF9BwJ5usD+VlPQTclLQi1OZn8pRrPAiuM6ykDlCsJJ4JQnSxZAa1
+         vNKr0T5T78DXiAIRU9DUnjzBXVfAgbosQe2C1SdNg1bItNmY4tQ63ZULr5jE06NTTmEY
+         5k7rOtYrkZcyQNBjF6G0J0vHThhYECy3elS9mExOTT/HpPYdR1k78w7beEfJ8/d3v7iW
+         Yr2xCuiqoFSF/DR4xSJabNpIeb7c+tLqVeDSZOmObd4eODV22gwUxr6KfnoNgZJ2ll5I
+         bfm8YmcVmF7ZFLjAu9UqL/nT4df58lJxyOG9BghfmjK7NJ1empetCMvYSQVkzsFYTVy/
+         sL+w==
+X-Gm-Message-State: AOJu0YyKb/TqC42ik5njzq6hIbRc4rkvt2+m2DZbBbMw91DNhU5lCMfZ
+	+itB/gWiwwGqhxIfkAZ3PuayNyo3wwQmDx1kgXf2gYQhIs7NiL6w
+X-Google-Smtp-Source: AGHT+IGy9WNqIbzrQGl9ysFFBKg0RFmmMjCy9XYyIIMu6lLQWObt6lo8L5wvXCUfIF9yPXgrqGiLEA==
+X-Received: by 2002:a17:902:d902:b0:1d9:a527:608f with SMTP id c2-20020a170902d90200b001d9a527608fmr254111plz.64.1707185374423;
         Mon, 05 Feb 2024 18:09:34 -0800 (PST)
-X-Forwarded-Encrypted: i=1; AJvYcCU+CwgdvX5FlWElfMK86B2ddO3Y/FXE5oH8uoz7JCY0i3N1/I8yuLjUNsPWCPP8cyoZRYag2cKEu1xpmxApkMJO03IX1cH9a9LdOwy0AJDNwCSz
+X-Forwarded-Encrypted: i=0; AJvYcCWxh35ByCW7t3PxOIo5E9FVTdY4RBxV+C2bu+7dfdmnp+9HbjYO71G8J/YOgVEqzI/VVA5hEK6FItwSFBFc4u39SN3ayWWPlNYf+ONDGG7o1w0E
 Received: from brittons-large-Vivobook ([2600:380:4635:872e:d8c9:9f5d:4e33:1b6a])
-        by smtp.gmail.com with ESMTPSA id js12-20020a17090b148c00b002960a58b04bsm190485pjb.28.2024.02.05.18.09.33
+        by smtp.gmail.com with ESMTPSA id w5-20020a170902d3c500b001d91b6175afsm577297plb.18.2024.02.05.18.09.33
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Mon, 05 Feb 2024 18:09:33 -0800 (PST)
 Received: by brittons-large-Vivobook (Postfix, from userid 1000)
-	id 76BE0520288; Mon,  5 Feb 2024 17:09:31 -0900 (AKST)
+	id 7A94052028D; Mon,  5 Feb 2024 17:09:31 -0900 (AKST)
 From: Britton Leo Kerin <britton.kerin@gmail.com>
 To: git@vger.kernel.org
 Cc: Junio C Hamano <gitster@pobox.com>,
 	Patrick Steinhardt <ps@pks.im>,
 	Britton Leo Kerin <britton.kerin@gmail.com>
-Subject: [PATCH v5 1/7] completion: tests: always use 'master' for default initial branch name
-Date: Mon,  5 Feb 2024 17:09:24 -0900
-Message-ID: <20240206020930.312164-2-britton.kerin@gmail.com>
+Subject: [PATCH v5 2/7] completion: bisect: complete bad, new, old, and help subcommands
+Date: Mon,  5 Feb 2024 17:09:25 -0900
+Message-ID: <20240206020930.312164-3-britton.kerin@gmail.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240206020930.312164-1-britton.kerin@gmail.com>
 References: <20240128223447.342493-1-britton.kerin@gmail.com>
@@ -74,36 +74,123 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-The default initial branch name can normally be configured using the
-GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME environment variable.  However,
-when testing e.g. <rev> completion it's convenient to know the
-exact initial branch name that will be used.
+The bad, new, old and help subcommands to git-bisect(1) are not
+completed.
 
-To achieve that without too much trouble it is considered sufficient
-to force the default initial branch name to 'master' for all of
-t9902-completion.sh.
+Add the bad, new, old, and help subcommands to the appropriate lists
+such that the commands and their possible ref arguments are completed.
+Add tests.
 
-Signed-off-by: Britton Leo Kerin <britton.kerin@gmail.com>
+Signed-off-by: Britton Leo Kerin <britton.kerin@gmail.c
 ---
- t/t9902-completion.sh | 5 +++++
- 1 file changed, 5 insertions(+)
+ contrib/completion/git-completion.bash |  4 +-
+ t/t9902-completion.sh                  | 71 ++++++++++++++++++++++++++
+ 2 files changed, 73 insertions(+), 2 deletions(-)
 
+diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+index 185b47d802..06d0b156e7 100644
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -1449,7 +1449,7 @@ _git_bisect ()
+ {
+ 	__git_has_doubledash && return
+ 
+-	local subcommands="start bad good skip reset visualize replay log run"
++	local subcommands="start bad new good old skip reset visualize replay log run help"
+ 	local subcommand="$(__git_find_on_cmdline "$subcommands")"
+ 	if [ -z "$subcommand" ]; then
+ 		__git_find_repo_path
+@@ -1462,7 +1462,7 @@ _git_bisect ()
+ 	fi
+ 
+ 	case "$subcommand" in
+-	bad|good|reset|skip|start)
++	bad|new|good|old|reset|skip|start)
+ 		__git_complete_refs
+ 		;;
+ 	*)
 diff --git a/t/t9902-completion.sh b/t/t9902-completion.sh
-index aa9a614de3..a5d4e900a2 100755
+index a5d4e900a2..7388c892cf 100755
 --- a/t/t9902-completion.sh
 +++ b/t/t9902-completion.sh
-@@ -5,6 +5,11 @@
+@@ -1264,6 +1264,77 @@ test_expect_success 'git switch - with no options, complete local branches and u
+ 	EOF
+ '
  
- test_description='test bash completion'
- 
-+# Override environment and always use master for the default initial branch
-+# name for these tests, so that rev completion candidates are as expected.
-+GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=master
-+export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
++test_expect_success 'git bisect - when not bisecting, complete only replay and start subcommands' '
++	test_completion "git bisect " <<-\EOF
++	replay Z
++	start Z
++	EOF
++'
 +
- . ./lib-bash.sh
- 
- complete ()
++test_expect_success 'setup for git-bisect tests requiring a repo' '
++	git init git-bisect &&
++	(
++		cd git-bisect &&
++		echo "initial contents" >file &&
++		git add file &&
++		git commit -am "Initial commit" &&
++		git tag initial &&
++		echo "new line" >>file &&
++		git commit -am "First change" &&
++		echo "another new line" >>file &&
++		git commit -am "Second change" &&
++		git tag final
++	)
++'
++
++test_expect_success 'git bisect - start subcommand arguments before double-dash are completed as revs' '
++	(
++		cd git-bisect &&
++		test_completion "git bisect start " <<-\EOF
++		HEAD Z
++		final Z
++		initial Z
++		master Z
++		EOF
++	)
++'
++
++# Note that these arguments are <pathspec>s, which in practice the fallback
++# completion (not the git completion) later ends up completing as paths.
++test_expect_success 'git bisect - start subcommand arguments after double-dash are not completed' '
++	(
++		cd git-bisect &&
++		test_completion "git bisect start final initial -- " ""
++	)
++'
++
++test_expect_success 'setup for git-bisect tests requiring ongoing bisection' '
++	(
++		cd git-bisect &&
++		git bisect start --term-new=custom_new --term-old=custom_old final initial
++	)
++'
++
++test_expect_success 'git-bisect - when bisecting all subcommands are candidates' '
++	(
++		cd git-bisect &&
++		test_completion "git bisect " <<-\EOF
++		start Z
++		bad Z
++		new Z
++		good Z
++		old Z
++		skip Z
++		reset Z
++		visualize Z
++		replay Z
++		log Z
++		run Z
++		help Z
++		EOF
++	)
++'
++
+ test_expect_success 'git checkout - completes refs and unique remote branches for DWIM' '
+ 	test_completion "git checkout " <<-\EOF
+ 	HEAD Z
 -- 
 2.43.0
 
