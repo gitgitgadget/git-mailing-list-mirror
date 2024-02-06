@@ -1,75 +1,132 @@
-Received: from mail-pg1-f174.google.com (mail-pg1-f174.google.com [209.85.215.174])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFC09134CEB
-	for <git@vger.kernel.org>; Tue,  6 Feb 2024 16:24:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C12C2DDAE
+	for <git@vger.kernel.org>; Tue,  6 Feb 2024 17:04:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707236655; cv=none; b=Z1vED5n11GcSSS3yL4/0Zm+8bBFtf/y51t1zZdC763299+rUutGERBqo3I6nifk6HmCww/Teu9KqtvD4H6vzVCQYiHJnEXoGwbcmafn9nZmgTXzn/4Bf1SNcY6hzmUgQL03o+ldZFEiMee2srjemv5CUfe4O+hqwKjA/xqPJgng=
+	t=1707239048; cv=none; b=ZdPq70b4nRwplpJe2rml7Rn0espKx0kF3bFDUHFpJ3uNvMBCjQEN19wI6Ye+SoNRsZDzWq6T89xLKDY/4kq9HOcQsvYtHVtabG5NWcRJhPjzI3xwp6gd5oENLGuTytgGXIsU5d/P2MHYJyaGNxhGhtNE8IDzmBohzt5S5IC6MQg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707236655; c=relaxed/simple;
-	bh=hjtvoi6nEncpkFKDNE3JQ8GU4AH9FPTkcIZWxLSUVOw=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=qoNiW/fUuYnwBhweduxj6CeoKSWsO9ooxEO4G0egv++uq2ZSz5qIrq/RKaWwO0YKg4M3TinWDT5lPdltr+a0vEf/MqEqTqk9AX9/s1Avzzbi1th+ass2HYTHis+ZMZ2ANaz3sTPDsehfwHPO1gTujGOL4MqpjESWHzQjXmd135o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=iENd8nQI; arc=none smtp.client-ip=209.85.215.174
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1707239048; c=relaxed/simple;
+	bh=Sra3V7UPT72sH5D9JP2XOMebxRVg8XRNJWR9DuwBsfo=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=ToGGCITa5L5GWDFIMKYcGxtDhayEYyYu9MfEqiNQIanZJlULsus2MJShcaPCliNMUvx56wf3RrN71GuvclicK0NooO88pgIyFub2wUm5jGusEIKKOsEQiP1Jb+sUb7iUC6qUFUZ74bl6NvvXkZoayvVtw08cOiwMwRKtMJ2SMsM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=yWeOtYiS; arc=none smtp.client-ip=173.228.157.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="iENd8nQI"
-Received: by mail-pg1-f174.google.com with SMTP id 41be03b00d2f7-5d8b276979aso915943a12.2
-        for <git@vger.kernel.org>; Tue, 06 Feb 2024 08:24:13 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1707236653; x=1707841453; darn=vger.kernel.org;
-        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=hjtvoi6nEncpkFKDNE3JQ8GU4AH9FPTkcIZWxLSUVOw=;
-        b=iENd8nQICY704ocFf/vY5F5MoCEevOxqCuW8Jh+iypRDpELP1/uMmsMhu1j2CzTkxm
-         RnISdag6nWI/AxyYVjm4XI39Aefq5XkdglQr58ZlFdKarIPGzbc7IITHoZl62/3+lkY/
-         7nTWQC5vXRYSXBp037GAMclYWfL+CAffQrbj1bISIvxL8fy6E+YBI31P9dca3TE3Y4q8
-         fFwGf9mWyRcyVpb1b86iQVlvFk5nfHy9w6N74Y/G+ihq45qIb0LndrgUyEwiODRpHVno
-         5IuMDbn0srEkvNzKB2OPBRfve2JDnjVTgtMg64H+VEDK1IL80kb8fdxyT+RJ5YZF8d/d
-         Un/w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1707236653; x=1707841453;
-        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=hjtvoi6nEncpkFKDNE3JQ8GU4AH9FPTkcIZWxLSUVOw=;
-        b=MdrEdifVEOwXzpE8iSUJOQD2BJpYaUL+QR0Eq0bzRk32Y3HQwpTegqb8tWo+Bbw64z
-         VasDWORb06zTFa3qEaNmQPBdjU52WwszqVldju25kC+sLVMgjmVZXCan8+LVYYji3L2p
-         P9fZIE+lZsGny374EkSrqqE0rArKQp8AnT6enGejUZv0psLhsidYnvjghz4TeuGke2wl
-         N41jo7wumgFKJNNMsnGGfvlQ76m+rfcBjGQO4yrHVFlB4mMq5RCXM5I5qSZTtY0iAbmZ
-         C7YQn1YfVDUI+PiqDsMBmViS4nf3rwoQwYZNeXEF2BjvLGvyblQg0QfUcSv95poSoE18
-         nSRw==
-X-Gm-Message-State: AOJu0YwCkpegwsGP/LZfGpylOCqj+LCZaqCO4g5IKFeT8xqEhWM3Mqf9
-	uss1Q1stPeALaufWkyR1QI9D7RwMFH6Bu6uiC4Q6cj16MxSD4G4Wdiu6NECYCI5BJCMHOqqS4QN
-	d54WISqTqqMTCtvlA9w2VQmLfakM2B7uRWE0=
-X-Google-Smtp-Source: AGHT+IFB8IkX6GQbNYq4j/+b6BSQjRtnQm6qgC/WXWSPLSvoJbpu2kfc8+uLxv6z+Ip3SirYG1Kl00hLAxMMCvcN0vA=
-X-Received: by 2002:a17:90b:3591:b0:296:1ddc:d46a with SMTP id
- mm17-20020a17090b359100b002961ddcd46amr11884pjb.39.1707236652104; Tue, 06 Feb
- 2024 08:24:12 -0800 (PST)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="yWeOtYiS"
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id 8C47423953;
+	Tue,  6 Feb 2024 12:04:00 -0500 (EST)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=Sra3V7UPT72sH5D9JP2XOMebxRVg8XRNJWR9Du
+	wBsfo=; b=yWeOtYiSFbdlt47Yc83dwqKgNCWOiOMmfgbWpsoQrX6Wy7or1Y6DaT
+	ctq82+fhBOOD31Uku4Pi+/hhN/VQ0tZKN6TYHNg8B8fPOag2gUlo0xZtz2nQ8Zlz
+	Z4kdI2pcLAJuVJx0TYL6VaWP/Wu5yhcdNMH1plUlOV0FOIJ6LP2qU=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id 841E323952;
+	Tue,  6 Feb 2024 12:04:00 -0500 (EST)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.165.85])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 2028323951;
+	Tue,  6 Feb 2024 12:03:57 -0500 (EST)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Phillip Wood <phillip.wood123@gmail.com>
+Cc: Karthik Nayak <karthik.188@gmail.com>,  phillip.wood@dunelm.org.uk,
+  git@vger.kernel.org,  ps@pks.im
+Subject: Re: [PATCH v3 4/4] for-each-ref: avoid filtering on empty pattern
+In-Reply-To: <92ba680d-0b48-49f0-aafc-f503e5a5e0ea@gmail.com> (Phillip Wood's
+	message of "Tue, 6 Feb 2024 13:55:02 +0000")
+References: <20240119142705.139374-1-karthik.188@gmail.com>
+	<20240129113527.607022-1-karthik.188@gmail.com>
+	<20240129113527.607022-5-karthik.188@gmail.com>
+	<98d79d33-0d7e-4a9c-a6a3-ed9b58cd7445@gmail.com>
+	<CAOLa=ZR=_tt=ppphGMkxqj_YB5G+YkTMWGzRzcHTbrZz4ysb5w@mail.gmail.com>
+	<92ba680d-0b48-49f0-aafc-f503e5a5e0ea@gmail.com>
+Date: Tue, 06 Feb 2024 09:03:55 -0800
+Message-ID: <xmqqle7xjzic.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: Sergey Kosukhin <skosukhin@gmail.com>
-Date: Tue, 6 Feb 2024 17:24:01 +0100
-Message-ID: <CAGMF1KiFNnr1nFBg2+mRqiurXpxOOXAcoWc0GciRKDoWzpJSkA@mail.gmail.com>
-Subject: Wrong exit code on failed SSH signing
-To: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ B7100314-C511-11EE-8708-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
 
-Hello!
+Phillip Wood <phillip.wood123@gmail.com> writes:
 
-There seems to be a bug in the sign_buffer_ssh function in
-gpg-interface.c: a possible exit code of ssh-keygen is 255, which is
-returned as-is by sign_buffer_ssh. The problem is that, for example,
-the function build_tag_object in builtin/tag.c considers only negative
-values as a failure. Since 255 >= 0, the error message "unable to sign
-the tag" is not emitted and git exits normally with zero exit code. It
-might be enough to return -1 in sign_buffer_ssh if ret is not zero.
+> Thanks I'd missed that discussion. I see that at the end of that
+> discussion Junio was concerned that the proposed "" did not account
+> for "refs/worktrees/$worktree/*" [1] - how has that been resolved?
 
-I am sorry if this has already been reported or taken care of. Thank you.
+Ah, that is an excellent point.
 
-Best regards,
-Sergey
+If we plan to never allow showing refs/worktrees/ hierarchy, then
+the "there is a default pattern, refs/, that gets used when there is
+no user-specified patterns" model would be sufficient to allow
+showing things that are directly beneath $GIT_DIR and are out of
+refs/ hierarchy, but that does not explain why refs/worktrees/ is
+omitted.  I'll envision a design for a longer term later, but an
+easy way out would be to add --include-worktree-refs option for
+that, and at that point, adding --include-root-refs option for things
+outside the refs/ hierarchy may become a lot more natural solution.
+
+In the longer term, I suspect that we would want something similar
+to the negative refspec magic (e.g., "git log ':!Documentation/'"
+that shows things outside the named hierarchy) exposed to the API[*],
+so that we can say
+
+    $ git for-each-ref --format=... \
+	refs/ !refs/heads/ !refs/tags/ !refs/remotes/
+
+to show things under refs/ excluding the commonly used hierarchies,
+and at that point, the current behaviour for "no limit" case can
+again become explainable as having "refs/ !refs/worktrees/" as the
+default.  It still does not explain why "git for-each-ref refs/"
+omits the refs/worktrees/ hierchy, unless the default limit pattern
+rule were something like "unless you give a positive limit pattern
+rule, then we use 'refs/' by default, and unless you give a negative
+limit pattern rule, then we use '!refs/worktrees/' by default".
+
+It then gives an easy explanation on the traditional behaviour, with
+"" used for "including stuff outside refs/", and is more flexible.
+
+The use of dashed-options to include hierachies that are by default
+excluded (e.g. "--include-root-refs" and "--include-worktree-refs")
+feels limiting, but should be sufficient for our needs, both current
+(i.e. I want to see HEAD and FETCH_HEAD) and in the immediate future
+(i.e. I want to see worktree refs from that worktree), and I can buy
+that as a good alternative solution, at least in the shorter term.
+
+I still worry that it may make introducing the negative ref patterns
+harder, though.  How does --include-worktree-refs=another to include
+the worktree refs from another worktree in refs/worktrees/another
+interact with a negative pattern that was given from the command
+line that overlaps with it?  Whatever interaction rules we define,
+can we easily explain it in the documentation?
+
+Just like "an empty string tells Git to include everything" is a
+perfectly reasonable approach if we plan to never allow
+refs/worktrees/ hierarchy, "dashed-options for selected hierarchies"
+is a perfectly reasonable approach if we plan to never allow
+negative limit patterns, I suspect.  We should stop complexity at
+some point, and the decision to never support negative limit
+patterns might be the place to draw that line.  I dunno.
+
+
+[Footnote]
+
+ * Such an exclusion mechanism already exists and are used to hide
+   certain refs from being seen over the network by "git fetch" and
+   friends.  I do not think it is plugged to the machinery used by
+   for-each-ref and friends, but it smells like a reasonably easy
+   thing to do.
