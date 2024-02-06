@@ -1,140 +1,181 @@
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f175.google.com (mail-pf1-f175.google.com [209.85.210.175])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 685FF1B94E
-	for <git@vger.kernel.org>; Tue,  6 Feb 2024 21:25:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E65401BF37
+	for <git@vger.kernel.org>; Tue,  6 Feb 2024 21:50:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707254743; cv=none; b=Lb0dzvFWnfJPtt9ekro2MgCJv2DEXqj8pe0zSxUt3Ok7S2uP5818EoPZ+y7gnt8dxTFVXuwF9rREVzikUVBWWLiLonEYpgKInuHDMjZ59YtLgecrnotDI8Zd43A+0EMkufdIctthnAVQMsVbxnaeOyUMZ/ikdsootR4bfrcAFaI=
+	t=1707256254; cv=none; b=hGjsMvzoc4SlcC3VUBI/33USDX3vHstQT9oQ7mHD0Bs7vZT2E6Kqnp/pkkQ1kuhskNa+xTo0UhV+FDLUsCvnrYa0UO5QSWVccpa1HxYzk2Ut/JeIWxBupWzY6jnyvhzcM9xJGHjc9QtWDL8fTbowdeFfZIK/ESO5Au51M04AYSs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707254743; c=relaxed/simple;
-	bh=5+rnhnJuh3Bi1dLh7Mse9WK0tZNeh62FJs8t8oTtw60=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=bVAvxl22ISM9B9noXFGayPEDegSjhVyLpEjY7EMNiZ/XkjjB9cgL07wzp2VsW0yTaPny3A8afVvUpapF0UYaXCqhr6uxUOYBwOGAdAGV8/oUq5isorShXEg2/H8c0Kl+gDfKRgpdQJXZUUrIDGp9FKgmVu/cE55qxWCat9U6lW8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=NV3H+Oyu; arc=none smtp.client-ip=173.228.157.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1707256254; c=relaxed/simple;
+	bh=N+lhkUYX+ibAyiAiKKcpJ8+fwTaEnVT199o29zMyKys=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=NPF7GTQdGvjZx+2aFfGXWm6nMDNNIfvuHzf/LS3wwTodJQwo4k30yoi6tKuc6tvwOyvRqZkTzV9y/7CizEYSUTPQzvdaPtsGU3ypGfSRtyquCqGdO6j9az/29r036MLwebSFxvK6Nq7O7Oyz8e6SsmLj7fSShJSIcv56miOBghU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Keph1np7; arc=none smtp.client-ip=209.85.210.175
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="NV3H+Oyu"
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id AF87E2294A;
-	Tue,  6 Feb 2024 16:25:41 -0500 (EST)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=5+rnhnJuh3Bi1dLh7Mse9WK0tZNeh62FJs8t8o
-	Ttw60=; b=NV3H+OyueJ0KSTdiu8aOOF7ivAM5+fUmWqJYZpPK7pm85ndja5PUvw
-	AO5SsOeydOhgwpEcyv+F/17UAqASC3wHUqcxMCgPKWn+mC5GMJejrUuIte4r3Vjw
-	nrSAC8fWGRy9Esm4FTNMExZ1kPTvdXkfjdFlamolm+pveuYlIIJ7o=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id A8A3F22949;
-	Tue,  6 Feb 2024 16:25:41 -0500 (EST)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.165.85])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 12BEB22948;
-	Tue,  6 Feb 2024 16:25:38 -0500 (EST)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Sergey Kosukhin <skosukhin@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: Wrong exit code on failed SSH signing
-In-Reply-To: <CAGMF1KiFNnr1nFBg2+mRqiurXpxOOXAcoWc0GciRKDoWzpJSkA@mail.gmail.com>
-	(Sergey Kosukhin's message of "Tue, 6 Feb 2024 17:24:01 +0100")
-References: <CAGMF1KiFNnr1nFBg2+mRqiurXpxOOXAcoWc0GciRKDoWzpJSkA@mail.gmail.com>
-Date: Tue, 06 Feb 2024 13:25:36 -0800
-Message-ID: <xmqqy1bxffov.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Keph1np7"
+Received: by mail-pf1-f175.google.com with SMTP id d2e1a72fcca58-6da6b0eb2d4so479b3a.1
+        for <git@vger.kernel.org>; Tue, 06 Feb 2024 13:50:52 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1707256252; x=1707861052; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=5iK0kg8AT6BboYTyOgGtw7VMuRBV10GcaVsu3gzfdHg=;
+        b=Keph1np7f3X8Dy16BAknOzP4HABWuCrx9jyVn9IYBOIWWA6At7CtYLBpCTRAq56Byr
+         vV1Cjg1saINTNZBQh5nZGRGyQaCVU0wXc0AJrvTx75BSXZmdUcXpnjSbBb8meNT+Wrij
+         2SU2+GkHAHCVgVwB7MJhXTqUACNw5y5egEYS0mgjayejLSBFBXLaycBLFlWBCyjbpLiW
+         sxrKLQ8SMkV98cjRdp5Cd6oZzzlJtTEr7j5rXhGA3BK0pOUaMvda4cCU3Qq/Mb6p8B1C
+         Gn5V1QlREUwm7P7PGQxX16RPnFNmeY9hqdg+1tM+3ux4khjTHjN6d4kMBly5KQrmBkcy
+         9/zw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1707256252; x=1707861052;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=5iK0kg8AT6BboYTyOgGtw7VMuRBV10GcaVsu3gzfdHg=;
+        b=pvy2paYgN3vAnNIM/Te2cyffNRQsx07MgAkKo43xshmegolBFzSk4eiH3TeQG7l+AF
+         RAbIxbWSwPvMoUKHtkNlo6bpjpVTQBuCU3+uk28GtyHn+Lh57U4F/592WdSKmnkbXMYH
+         sx1t1xN1sCrsluAyO17RGwWahbUgtqS+bC+z/bGa721l/D9I5V+yIgrkNqO10lZp+m6R
+         vBtgcHinDeJTJM9BRpFAphXGtLvpI3WA3y648MzfUXzZ9MY2gvy+PLTowGUmtInND1FK
+         KJH0i2VszO/jyXeUrjd9NWIG/J/ruVmNAfvgv4w2ooaOkNOiNlfQx3Wz2GvxjS22dBhv
+         RgOg==
+X-Gm-Message-State: AOJu0YxsiXQogzJLp/qRXxzzTkL/iyH71TZK2mZ6HMYAmKDxmUz3Rft+
+	q9ogQmVB1roYAlL0obeWBixfRWlET1yFKcAiVwzTbWld1BSD/bFQVOQSxnYJ
+X-Google-Smtp-Source: AGHT+IEFbdPfIs56yiCrikp4+RmE7K8ge3KVwu/msaMEAZHN5TQ3jHHqjTVRQzoZ0jY7Muht00XJHw==
+X-Received: by 2002:a05:6a00:994:b0:6df:f8db:44db with SMTP id u20-20020a056a00099400b006dff8db44dbmr970498pfg.16.1707256252103;
+        Tue, 06 Feb 2024 13:50:52 -0800 (PST)
+X-Forwarded-Encrypted: i=0; AJvYcCXiybRTnTMGpzgp2GDS20k1eYzaZDf9bk3RcEEbBgpQRsbg+7Mtai2OUng/TrMsij+dQDsVtsFHW21LjB365x2/eAEmViRTe7vByzjl0TvdZMaC
+Received: from brittons-large-Vivobook ([209.112.166.194])
+        by smtp.gmail.com with ESMTPSA id it9-20020a056a00458900b006e03b413056sm2462384pfb.188.2024.02.06.13.50.51
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 06 Feb 2024 13:50:51 -0800 (PST)
+Received: by brittons-large-Vivobook (Postfix, from userid 1000)
+	id 43EBC52029D; Tue,  6 Feb 2024 12:50:50 -0900 (AKST)
+From: Britton Leo Kerin <britton.kerin@gmail.com>
+To: git@vger.kernel.org
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Patrick Steinhardt <ps@pks.im>,
+	Britton Leo Kerin <britton.kerin@gmail.com>
+Subject: [PATCH v6 0/7] completion: improvements for git-bisect
+Date: Tue,  6 Feb 2024 12:50:41 -0900
+Message-ID: <20240206215048.488344-1-britton.kerin@gmail.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20240206020930.312164-1-britton.kerin@gmail.com>
+References: <20240206020930.312164-1-britton.kerin@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- 458E0E14-C536-11EE-A4D2-A19503B9AAD1-77302942!pb-smtp21.pobox.com
+Content-Transfer-Encoding: 8bit
 
-Sergey Kosukhin <skosukhin@gmail.com> writes:
+Relative to v5 this makes the following actual changes:
 
-> There seems to be a bug in the sign_buffer_ssh function in
-> gpg-interface.c: a possible exit code of ssh-keygen is 255, which is
-> returned as-is by sign_buffer_ssh. The problem is that, for example,
-> the function build_tag_object in builtin/tag.c considers only negative
-> values as a failure. Since 255 >= 0, the error message "unable to sign
-> the tag" is not emitted and git exits normally with zero exit code. It
-> might be enough to return -1 in sign_buffer_ssh if ret is not zero.
+  * Treat COMPREPLY as an array on assignment and test, rather than
+    relying on the bash mechanism of implicitly acting on the first
+    element of the array.
 
-Thanks for noticing and an excellent initial diagnosis.
+  * Whitespace fixes.
 
-There are three callers of sign_buffer():
+The commit message about __git_complete_log_opts has also been changed
+to indicate that COMPREPLY is emptied and why, and a broken
+Signed-off-by line fixed.
 
- - send-pack.c:generate_push_cert() lets the user sign the push
-   certificate, and non-zero return from sign_buffer() is a sign
-   that we failed to sign.
+Britton Leo Kerin (7):
+  completion: tests: always use 'master' for default initial branch name
+  completion: bisect: complete bad, new, old, and help subcommands
+  completion: bisect: complete custom terms and related options
+  completion: bisect: complete missing --first-parent and --no-checkout
+    options
+  completion: new function __git_complete_log_opts
+  completion: bisect: complete log opts for visualize subcommand
+  completion: bisect: recognize but do not complete view subcommand
 
- - commit.c:sign_with_header() lets the user sign a commit object,
-   and non-zero return from sign_buffer() is taken as an error.
+ contrib/completion/git-completion.bash |  65 ++++++++++--
+ t/t9902-completion.sh                  | 141 +++++++++++++++++++++++++
+ 2 files changed, 199 insertions(+), 7 deletions(-)
 
- - builtin/tag.c:do_sign() calls sign_buffer() and propagates the
-   return value to its caller, which assumes that positive return
-   values are not errors.
+Range-diff against v5:
+1:  71b73de914 = 1:  71b73de914 completion: tests: always use 'master' for default initial branch name
+2:  3a478a7a08 ! 2:  7bc45bfc13 completion: bisect: complete bad, new, old, and help subcommands
+    @@ Commit message
+         such that the commands and their possible ref arguments are completed.
+         Add tests.
 
-It seems to me that what needs fixing is the last caller.  Perhaps
-inside "git tag" implementation, there is a local convention that
-errors are signaled with negative values, and that is fine, but then
-builtin/tag.c:do_sign() should be doing the same translation as
-builtin/tag.c:verify_tag() does, I would say.
+    -    Signed-off-by: Britton Leo Kerin <britton.kerin@gmail.c
+    +    Signed-off-by: Britton Leo Kerin <britton.kerin@gmail.com>
 
-The latter calls gpg_verify_tag() and upon non-zero return,
-translates that to a return of -1 to its caller, like so:
+      ## contrib/completion/git-completion.bash ##
+     @@ contrib/completion/git-completion.bash: _git_bisect ()
+3:  fab7159cf4 ! 3:  be925327d3 completion: bisect: complete custom terms and related options
+    @@ t/t9902-completion.sh: test_expect_success 'git-bisect - when bisecting all subc
+      		reset Z
+      		visualize Z
+     @@ t/t9902-completion.sh: test_expect_success 'git-bisect - when bisecting all subcommands are candidates'
+    - 		EOF
+      	)
+      '
+    +
+     +test_expect_success 'git-bisect - options to terms subcommand are candidates' '
+     +	(
+     +		cd git-bisect &&
+    @@ t/t9902-completion.sh: test_expect_success 'git-bisect - when bisecting all subc
+     +	)
+     +'
+     +
+    -
+      test_expect_success 'git checkout - completes refs and unique remote branches for DWIM' '
+      	test_completion "git checkout " <<-\EOF
+    + 	HEAD Z
+4:  73f3343b94 = 4:  c3141921e5 completion: bisect: complete missing --first-parent and --no-checkout options
+5:  a20846bbd3 ! 5:  092bfba6b1 completion: new function __git_complete_log_opts
+    @@ Commit message
+         completion: new function __git_complete_log_opts
 
-        static int verify_tag(const char *name, const char *ref UNUSED,
-                              const struct object_id *oid, void *cb_data)
-        {
-                int flags;
-                struct ref_format *format = cb_data;
-                flags = GPG_VERIFY_VERBOSE;
+         The options accepted by git-log are also accepted by at least one other
+    -    command (git-bisect).  Factor the common option completion code into
+    -    a new function and use it from _git_log.
+    +    command (git-bisect).  Factor the common option completion code into a
+    +    new function and use it from _git_log.  The new function leaves
+    +    COMPREPLY empty if no option candidates are found, so that callers can
+    +    safely check it to determine if completion for other arguments should be
+    +    attempted.
 
-                if (format->format)
-                        flags = GPG_VERIFY_OMIT_STATUS;
+         Signed-off-by: Britton Leo Kerin <britton.kerin@gmail.com>
 
-                if (gpg_verify_tag(oid, name, flags))
-                        return -1;
+    @@ contrib/completion/git-completion.bash: __git_diff_merges_opts="off none on firs
+      {
+     -	__git_has_doubledash && return
+     -	__git_find_repo_path
+    -+        COMPREPLY=""
+    ++	COMPREPLY=()
 
-                ...
+      	local merge=""
+      	if [ -f "$__git_repo_path/MERGE_HEAD" ]; then
+    @@ contrib/completion/git-completion.bash: _git_log ()
+     +	__git_find_repo_path
+     +
+     +	__git_complete_log_opts
+    -+	[ -z "$COMPREPLY" ] || return
+    ++        [ ${#COMPREPLY[@]} -eq 0 ] || return
+     +
+      	__git_complete_revlist
+      }
+6:  fe5545c9a3 ! 6:  9afd4d4e0f completion: bisect: complete log opts for visualize subcommand
+    @@ t/t9902-completion.sh: test_expect_success 'git-bisect - options to terms subcom
+     +		EOF
+     +	)
+     +'
+    -
+    ++
+      test_expect_success 'git checkout - completes refs and unique remote branches for DWIM' '
+      	test_completion "git checkout " <<-\EOF
+    + 	HEAD Z
+7:  c9102ac532 = 7:  dba916b31c completion: bisect: recognize but do not complete view subcommand
+--
+2.43.0
 
-So perhaps something like this with a proper log message would be a
-better fix?
-
- builtin/tag.c   | 2 +-
- gpg-interface.h | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
-
-diff --git c/builtin/tag.c w/builtin/tag.c
-index f036cf32f5..37473ac21f 100644
---- c/builtin/tag.c
-+++ w/builtin/tag.c
-@@ -153,7 +153,7 @@ static int verify_tag(const char *name, const char *ref UNUSED,
- 
- static int do_sign(struct strbuf *buffer)
- {
--	return sign_buffer(buffer, buffer, get_signing_key());
-+	return sign_buffer(buffer, buffer, get_signing_key()) ? -1 : 0;
- }
- 
- static const char tag_template[] =
-diff --git c/gpg-interface.h w/gpg-interface.h
-index 143cdc1c02..7cd98161f7 100644
---- c/gpg-interface.h
-+++ w/gpg-interface.h
-@@ -66,7 +66,7 @@ size_t parse_signed_buffer(const char *buf, size_t size);
-  * Create a detached signature for the contents of "buffer" and append
-  * it after "signature"; "buffer" and "signature" can be the same
-  * strbuf instance, which would cause the detached signature appended
-- * at the end.
-+ * at the end.  Returns 0 on success, non-zero on failure.
-  */
- int sign_buffer(struct strbuf *buffer, struct strbuf *signature,
- 		const char *signing_key);
