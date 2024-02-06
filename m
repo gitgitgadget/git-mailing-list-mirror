@@ -1,108 +1,108 @@
-Received: from mail-ot1-f46.google.com (mail-ot1-f46.google.com [209.85.210.46])
+Received: from mail-wm1-f52.google.com (mail-wm1-f52.google.com [209.85.128.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 438E512A159
-	for <git@vger.kernel.org>; Tue,  6 Feb 2024 09:10:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7513D12D770
+	for <git@vger.kernel.org>; Tue,  6 Feb 2024 09:49:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707210645; cv=none; b=QoQma/KktTKmfXiHuq9Xi8zCom2kFAKITFh9ZmkmFn5P2R7cXI5GSql5rY1mjnF5TTelSveM0QmXIMSvLTG2+N2StWpkU4vnkW0UsMGamwEfKub6jXWtGHQz57oiPjh5Dd4txlTocUo55e+7z1fojbPE+074Wf/WDZi3Fc/TB3Y=
+	t=1707212988; cv=none; b=EZlyGBbx4/YuE8sRnpk809zOmUQ9+Q6AqpAGB7muQOUMKC4ZkcWVpOzq9VwTiOvSKp/0h3634HfZ6DmD5matyVho0Dhi74mZyXqxGCPDbo6tpdYZs//mnkeuMl+DT1FkxSOsxwVG1anJAnY2cp7EdPl1As4bNEBiwSv11d/Qlts=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707210645; c=relaxed/simple;
-	bh=2kA3uRnYvtvgqaGWP3G9upckOQJahsLxbMS7ApMGTGk=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=QJw3SECdhzGiqnSXmvwyE5B+C7idOKxBrRQZBazxSPIr2et8My43RXhbmbDotfONZGHbFybbvgXCuLkHB5G+rRgWfMPsY//D1uNKZWNwiBy72AiWXMwb08vGVmI84+WgS4cz8fn/8NXmIBzwxOKLL5zzUC0wwvjzwMCEos/zmJM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Efy1T284; arc=none smtp.client-ip=209.85.210.46
+	s=arc-20240116; t=1707212988; c=relaxed/simple;
+	bh=MGWIqPFeek6AFznRhcmOEbiA/DCeJUYqu8wefCTrEGI=;
+	h=Message-ID:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=HKV/veo7dcbKXKzufK1AsUYZGNUqonEmWlPXD6R/Cf0/IKSMdcDREL0vStPR2Su50/g9hpBBb1YPFIwMlaoJlej+VFkFR7VHMIsn/rnMPIghesynZ4rvXLnFmlw8HAFvSZAHrMIwtR4Ehak3/zJLjn0CHTMVvrul6yQ4XjJG1xE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Knj28P8c; arc=none smtp.client-ip=209.85.128.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Efy1T284"
-Received: by mail-ot1-f46.google.com with SMTP id 46e09a7af769-6e112826395so242159a34.0
-        for <git@vger.kernel.org>; Tue, 06 Feb 2024 01:10:43 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Knj28P8c"
+Received: by mail-wm1-f52.google.com with SMTP id 5b1f17b1804b1-40fe79f199bso1722905e9.1
+        for <git@vger.kernel.org>; Tue, 06 Feb 2024 01:49:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1707210643; x=1707815443; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=2kA3uRnYvtvgqaGWP3G9upckOQJahsLxbMS7ApMGTGk=;
-        b=Efy1T284Ea5wUOyhQ0OFc8oSU3ZUgqDp4C02/S2VgWusbqqpHyGCgXG81JsAVVPU8F
-         n2J69UpMlslIAZiPNwyc3ggMSVy1mLBDbFD3oJHJuyZMCVF9bqMgd/wtognj5QMfWOlZ
-         eR2CdvE0HxuldXrgqHdH/LKqdmltxgAYybEoS9Ky+DY6P3HEwYEvSqGTMLx4lwrYsR+9
-         ARn7HKW/mQP71g2jyuhmXAX/dW4sOW+WgkIRwz9axEE+EqfoQvegvxwXx3/no+8at1yn
-         HI+59GrsyDVVIzET3d0B9Yon6Kx709owWVDreNOuVRtQ2i0pq4yzimm6+7VeVmK5auyi
-         i5eA==
+        d=gmail.com; s=20230601; t=1707212983; x=1707817783; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=00eylBT2p3AsuzOj0/01BSYA1Mt9fCjN9hcSVfDbm+U=;
+        b=Knj28P8c4xIDpKCJ964MZ7uQ9AJwsICiJ+lcMTE1andVC3znKAkNgCYZLJ7w4EXN6T
+         iOte7H9EdY3vSab381LNhJOjcIvHl/hMcH3a4LO/ou2Zs/oZuW6WEJc9+ssAjsw4Ojdj
+         cWNZOCKC683aLysf/3cTYLxT9qmbN3XtQCk/FXdMNexzT2MWmy9iziUKKfxTBjrQR4hA
+         aQ3nKV33J3u+88bzgQ95Zl5320OidvIZYnFZJxLpVGboXEM3oqkLHcg47epviCecQkvU
+         E23l3ou7WXAnV5FZmIdoiynz1z8CR34/SZmRwgyD6fNTe0CRoRya2EucjpMT3BaUNq/w
+         OSgw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1707210643; x=1707815443;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=2kA3uRnYvtvgqaGWP3G9upckOQJahsLxbMS7ApMGTGk=;
-        b=nmhT9jkljGtyAhEVYk0qOIq7cIRXTf5mW3v31eebtGp73KOTg6Fq7dRDLxIhYVEwPz
-         KpVTRIpwgquEoyQnJfvGLSAUnShpK2OK7wF2XJLu99hz8WTKfkhGwNVkeY6prj/HaIm8
-         cos5tu+whwn6o1z06rVk8vRmmHO/psBs+7pD/dpw2waEbEcHK/yg3vzB4VSuJn5wKMgB
-         kU0qrSNRTSPt5o2Pe6dNFs6b0MYtxLqma1h90Pzvv+dQVSKluUiOvVMy9X0m/KbYOV3p
-         usfvxEF18K5GMJXopCbuBKTkURjYYlGBH5Jp84ATpy0pmy0YWsr3oeyK7hkK86aNr9rG
-         QjYw==
-X-Gm-Message-State: AOJu0YzBmEFmw1Bcvc/WTkM/Qcs+FpqGqUyzSYWf/ICy6bQrg6brZFmZ
-	pCSYf44JFQCY+8aC1c4FnHgNHTnfRkewlU0AFLaZRsa28pGGSkoWOzlAXSSyXvV3Wc/Vm9lfJis
-	tKts+q7acOcqzMTDy77hu5U4pkf8=
-X-Google-Smtp-Source: AGHT+IGL+3Moj7gvDJx+7EFNQhjsmEPvxlquFudnPW1ii0DJLAchbw3xI3scwn5O8AFyJM8/zkJyR8Oge7eiNSiHqRU=
-X-Received: by 2002:a05:6870:7f0d:b0:219:6c0d:8b1a with SMTP id
- xa13-20020a0568707f0d00b002196c0d8b1amr2574978oab.50.1707210643100; Tue, 06
- Feb 2024 01:10:43 -0800 (PST)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Tue, 6 Feb 2024 01:10:42 -0800
-From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <cover.1707200355.git.ps@pks.im>
-References: <cover.1706687982.git.ps@pks.im> <cover.1707200355.git.ps@pks.im>
+        d=1e100.net; s=20230601; t=1707212983; x=1707817783;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=00eylBT2p3AsuzOj0/01BSYA1Mt9fCjN9hcSVfDbm+U=;
+        b=pWKYR+8WtOHCMyaJGCPyussWHBi+RtwNYxvi1nRFbvNw1Mocz1ZNhsOWxoWUq/nhcA
+         r4c96EBdustbjF9xIkMHF3s1UYSFzWSY4kJU0TtxCZMJQak9t0W2zNOQbPkxvlMyeIG5
+         pSBxOt00lZxdTOUEYZqryKOTLPsGyR3U1LBup/9zrbe4qPN7nqEgBgliPddkWpVNSezA
+         rvWrPddYlTKtsbKKxWR7jYhPKEE7VDU4FsC0cYSCZa28+BHWEbUvC7KhpGZIBF1w0y74
+         QduoyE1frmWgjy2txBdtGdwUDMTL6PTDyNO2y10DzBNJlprkY9uO6+PWAQwZfiDFEaph
+         xwSg==
+X-Gm-Message-State: AOJu0Yzg4ylH2/j2635eHDyLq6G1RGtUaz/1kRiXbjYYIy6xtYm320bv
+	61yztu83pGbsdUmJwOdUADOxRXP2lqFr+8s856WpNm3PAz5U4nx8q6yrASee
+X-Google-Smtp-Source: AGHT+IFEZy/+aDwluFdnF3zHbUmJVo8jWmDwJ9JLCn4TYiThRgvGGElnmDhApcF4Kva5WSpGV3v4Fw==
+X-Received: by 2002:a05:600c:35d1:b0:40e:fb93:96a8 with SMTP id r17-20020a05600c35d100b0040efb9396a8mr1749192wmq.34.1707212982646;
+        Tue, 06 Feb 2024 01:49:42 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id n33-20020a05600c502100b0040fd2823f52sm1437856wmr.2.2024.02.06.01.49.42
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 06 Feb 2024 01:49:42 -0800 (PST)
+Message-ID: <pull.1651.git.1707212981.gitgitgadget@gmail.com>
+From: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Tue, 06 Feb 2024 09:49:37 +0000
+Subject: [PATCH 0/4] merge-tree: handle missing objects correctly
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Tue, 6 Feb 2024 01:10:42 -0800
-Message-ID: <CAOLa=ZRAZjEPYO3QdbqZrAxwmC0W5p9icg9tyA1yp68beSaYNQ@mail.gmail.com>
-Subject: Re: [PATCH v3 0/9] reftable: code style improvements
-To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
-Cc: Eric Sunshine <sunshine@sunshineco.com>, Junio C Hamano <gitster@pobox.com>, 
-	Toon Claes <toon@iotcl.com>
-Content-Type: multipart/mixed; boundary="000000000000f0737a0610b2f35c"
+To: git@vger.kernel.org
+Cc: Johannes Schindelin <johannes.schindelin@gmx.de>
 
---000000000000f0737a0610b2f35c
-Content-Type: text/plain; charset="UTF-8"
+I recently looked into issues where git merge-tree calls returned bogus data
+(in one instance returning an empty tree for non-empty merge parents). By
+the time I had a look at the corresponding repository, the issue was no
+longer reproducible, but a closer look at the code combined with some manual
+experimenting turned up the fact that missing tree objects aren't handled as
+errors by git merge-tree.
 
-Hello,
+While at it, I added a commit on top that tries to catch all remaining
+unchecked parse_tree() calls.
 
-Patrick Steinhardt <ps@pks.im> writes:
-> Hi,
->
-> this is the third version of my patch series that tries to align the
-> reftable library's coding style to be closer to Git's own code style.
->
-> The only change compared to v2 is that I've now also converted some
-> calls to `reftable_malloc()` to use `REFTABLE_ALLOC_ARRAY`.
->
+This patch series is based on js/merge-tree-3-trees because I introduced
+three unchecked parse_tree() calls in that topic branch.
 
-The range-diff looks good to me, since this was the only change I
-requested, the patch series looks good now.
+Johannes Schindelin (4):
+  merge-tree: fail with a non-zero exit code on missing tree objects
+  merge-ort: do check `parse_tree()`'s return value
+  t4301: verify that merge-tree fails on missing blob objects
+  Always check `parse_tree*()`'s return value
 
-Thanks!
+ builtin/checkout.c               | 19 ++++++++++++++++---
+ builtin/clone.c                  |  3 ++-
+ builtin/commit.c                 |  3 ++-
+ builtin/merge-tree.c             |  6 ++++++
+ builtin/read-tree.c              |  3 ++-
+ builtin/reset.c                  |  4 ++++
+ cache-tree.c                     |  4 ++--
+ merge-ort.c                      | 16 +++++++++++-----
+ merge-recursive.c                |  3 ++-
+ merge.c                          |  5 ++++-
+ reset.c                          |  5 +++++
+ sequencer.c                      |  4 ++++
+ t/t4301-merge-tree-write-tree.sh | 24 ++++++++++++++++++++++++
+ 13 files changed, 84 insertions(+), 15 deletions(-)
 
---000000000000f0737a0610b2f35c
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: dc4adad37f0c34f5_0.1
 
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1YQjk1QVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mekEwREFDSitDYkNGcUxyaS9XWW1aSXdvaXBhclQxNAp3S3RycFExb2JH
-ODRtQWhub21aOVNjNFlVSzVrS1RBbnJmaDB3bm5uaGJPaFc1NU1aR2dlejhYSG5oYjkxZW5oCmc5
-Q2MxUzhKeDFoU3FiOWgyWC9BRnA4NmYwbGM4VlBMSHNvTStVT1F4Vk94b2NRcE5ncEJFVGdJNXV5
-YmJFcUwKWVBSM0JjS3lsTHY2a0ZZMmVFTmtubUtvZkM0NmpmRnBRS0oyQXRkRkRsMkpjSW9lak14
-QjNmYWpvTmhIMjEvYgpQSDVuZHplRlRWc1pGVE93TjhXU2tYMHQyMVdSRGR0eU5BQW9ZZTh4QmdH
-Q1o4RHNxcG50YWw5bkhRZnEvMUNOCkhGRzV0V0N1dXYzOFVTRy9CVFZkUENtQTNmeEcxc1VHSmFB
-MmlJZktvdWt6ZkFHZlE1bVR0eEtvZzZBbXlpQkkKaTNmSjdkb0t4M3F5ekZYT3ZJZ3JUYWdmWnRN
-dU1KM2RiQ21QSG5QYzJSTEJ0TE5MUXNPSTV6YjI3Y3c4bktLTAo1am11V0FSVmlPazVaMjF3T2Vs
-MWUrU0NiZm4vSzRMcCt0cnhWc0taNzVjSldNdUdlVHpXWVZ1T1FwREtrRDdmCmxEZEM5WEdrR2xJ
-YU54T2Q3c2ZocGNsblB0Z215L0FNL1ZZOEFPRT0KPU5qU0cKLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---000000000000f0737a0610b2f35c--
+base-commit: 5f43cf5b2e4b68386d3774bce880b0f74d801635
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1651%2Fdscho%2Fmerge-tree-and-missing-objects-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1651/dscho/merge-tree-and-missing-objects-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/1651
+-- 
+gitgitgadget
