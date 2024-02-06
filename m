@@ -1,129 +1,88 @@
-Received: from mail-lj1-f181.google.com (mail-lj1-f181.google.com [209.85.208.181])
+Received: from mail-ed1-f51.google.com (mail-ed1-f51.google.com [209.85.208.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE7F212C7E1
-	for <git@vger.kernel.org>; Tue,  6 Feb 2024 09:55:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E4E612D761
+	for <git@vger.kernel.org>; Tue,  6 Feb 2024 10:02:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707213319; cv=none; b=hNJ3tdDzf2TADfRB+SI9L+6k2nVVPMleBa/Ud5VlhiYJoGfd+hRQyDGqoXaQOOc7EhAb/AYHT9iD0oP5B8o5h5zXcd8EKJgFFEMtnKP/DGvOEkanJ3CRMotSTpoDSEsV6X/tVUrkGBdy5zsxUZV3dnGTTjeSD/y/ZHXqrJB7hMI=
+	t=1707213779; cv=none; b=FNfKYI2ufXlTSmVA2YZXtK3hh8yhjoGHltaGG2P7VwHYAY5CZqPC37UJASBzCLqUhTZ15mHgKL3FkQ00N29JDYoqRwwm2eNwWwQA9VaDFn9/evHWuBd6b6UFofSNT0C1AVmGOPPGi2c35vDjcJKNkFZqV/Gb/qOBsK+fCrc0syE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707213319; c=relaxed/simple;
-	bh=tK7QKfUubxwYnmyqlsQNBJkqh671KaYkNGmAyjvfUpk=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=n9O9rz5W0vGp5YRfBvltasF/299MLFZryseirMKWwiUYK3Cs46Ou/e0wy7xyslUdDBvL85tp3/0e5SwjLCls/rZzUIF6SbuXhFyniGh1DgqNcbyhlR9QWCSXduDGlz6XVonkR+89QOLA7NlhSiYTEuzXuqdoHYTrGtvojgAwpNE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fI6PkNJ1; arc=none smtp.client-ip=209.85.208.181
+	s=arc-20240116; t=1707213779; c=relaxed/simple;
+	bh=BCcW2FQiFuzpQVdDQ6yCoIcXff8Z0AClC+rgkvM1Ydg=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=DGIG/ibtAEYoUPrKS3msH0CML34fn/JVviRBqVaKYWWPJxQK6PXv7LBbsK6MxhXgLf5FdAj1HDRptihiuFNfunNDoPk6iS1z0gyruayRZ69509MxNX1E+o6aoUbnlRx7Z30uSxxMH2emg2FvRsTF02dWJwyXjRQciaPrIeuOdrQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=kBQZ/uCq; arc=none smtp.client-ip=209.85.208.51
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fI6PkNJ1"
-Received: by mail-lj1-f181.google.com with SMTP id 38308e7fff4ca-2d0b750518bso14205191fa.0
-        for <git@vger.kernel.org>; Tue, 06 Feb 2024 01:55:17 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kBQZ/uCq"
+Received: by mail-ed1-f51.google.com with SMTP id 4fb4d7f45d1cf-55a8fd60af0so7053116a12.1
+        for <git@vger.kernel.org>; Tue, 06 Feb 2024 02:02:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1707213316; x=1707818116; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=nazWR0R+R/XKWaQAmjXnbcGqbFLUm0IFMAlcJZ4MrzQ=;
-        b=fI6PkNJ1dkdmWA36thiFrfyuTYTIG7u6hq/X8Fy1WBoEGNFibncwloSK+gmtPP0rHb
-         eg2jhoykZ6YHadrvJ1iFDVWAOeXyUFO1vwB9xLYoETDFTVyUNuQFjtiTI+luBLcXRFfA
-         iiPfGXU0YsQp9Ftr/bnL2epcna1ResbflTycsRAfZDkO6Xwu+nXZ2WjiM5cOoYxjGHKK
-         ZKUCESSJXgc0mpvizqA8+2C22qTNjgTP+dOQ0yvR3iv/H//MsSc+DUC0NAEc00h3mo+d
-         1Hd21qxOvtcopesFI8oNcgWkSd/LlbOkLru21LEjYCHLeeNGxhY0G2W/L2G9NjvhguLL
-         76+A==
+        d=gmail.com; s=20230601; t=1707213776; x=1707818576; darn=vger.kernel.org;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=NzcTMehewYUkNBug803UpgpY53POROc6gOWvYWmgE48=;
+        b=kBQZ/uCqmZsvPEUxH2fadSWI/7zJPkhbfijHNci0iRtMJzhQcTjqN++6gdM2RR2OlV
+         pMz6qz18zXfGiabIJCavrBDViIfhKZRIe+keNj07dJ8mGBuRT3l7RNKOuiEjwJOjofr+
+         cCgiBsPX2OGz2ikZp2hpQbH2z3gWhVypg/Xi7TVtSY2zH9NFTGY9CWbagDOuAQOgDz5g
+         ybmGqOjOJzmO+sxbuwfbO/HB1AV69OcB7Ue6RgSvsqo6NCs1C9JreXy22fJCOc8knazy
+         iKNJpHF2/LOey1b8GxXk/tWyZJt4jvDuWwV5D2/3TS6xund1MFKNscHwAYXOwEk0PM3t
+         7SwQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1707213316; x=1707818116;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=nazWR0R+R/XKWaQAmjXnbcGqbFLUm0IFMAlcJZ4MrzQ=;
-        b=tYXek7Kh5Xo2jSEnEVBv5zt8cVB6oGS9BDA4pWtkrnslS/VNC+nV4vGYAcACGj6Cq4
-         mnUFDtuvn0zrO7Trg2mIknhi9dF+71h4DcUrC4+dIzCyxslNtWld4V1oOQMeqtSR7Vwh
-         GlUGIteJL1nwpAjfC601DcOdVjpRMpnHtUKfmc5XqqpI4SO3tgOT9PBuaFs9zDRrU0vs
-         xse/bWaCTJtHYSXRoP4DIt4iZmu8x2BDlbtwMeFpp/wB/2V5sO7imjUnJmaZAqV693pn
-         6HGFYmcgNTVQGB6GgQP288bBBM7c0Bp55Cty6S6eNDRpsCO0D3qsWFTloAr4fQS1Fti8
-         XlCQ==
-X-Gm-Message-State: AOJu0Yzt6I3XjTtYd8BF66kUe8o89spAM6OyfjZ5IapW3NJtvErvUJQf
-	sjc2cjn90mEB7WEMc29qSPKj9X5RNp9hEUNRJTo/L2sCBTyfodyZR41D3Ykyk237fTwXR+Ov+Qz
-	UQKu0P1CJjQ8XaCMIHz5NxFgV9lQ=
-X-Google-Smtp-Source: AGHT+IHy2k4UVGpQmG3lguP1jdoMTHj8dmoX0mckcY2QpioJQBv+pySaqkMqiNA0elvTZevtpIsbSRs8ILjEB6cgmXc=
-X-Received: by 2002:a2e:8053:0:b0:2d0:992a:cc5f with SMTP id
- p19-20020a2e8053000000b002d0992acc5fmr1401411ljg.15.1707213315417; Tue, 06
- Feb 2024 01:55:15 -0800 (PST)
+        d=1e100.net; s=20230601; t=1707213776; x=1707818576;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=NzcTMehewYUkNBug803UpgpY53POROc6gOWvYWmgE48=;
+        b=coMM/olyIUg4Tr1uIyav2+eLCRnX8LfEFL+bJGEH/GHjWvY1lVe0yE53uHD2JkgfvI
+         L702Sj96zclGdCpddwKRNkOhdrSx5Z0CKxugtEQa2KDIwdOLEB3iW1TTw91RtDfJchss
+         YnxHhq1Yk75uzSbBjzG6KqGHikqs7jUYhYflUSKK+Vvqot41fbC/171LQD3mmWUUeTIa
+         Nr8nNOHBCyK/AnaLjozYvxoFddSCZj5nVEsfBV18V9Btu8KfiwJ2bXCjiR1bRYKMNPn1
+         HPGPf3agFKGfwJhjFGLZ/sjuVoB/SukfcEy/e0FRXX8LMGARHJRGgmwX1W9W2dYARmcV
+         q/SA==
+X-Gm-Message-State: AOJu0YxjepHzjuhLcH5z7OGd4QElgIWivm5nsNYnLUSWK2mFOnm41bVh
+	UIOPsn04VKXpmAddVKh4TIj+dQtZZ244AekT4SigEQ/mY6+6LkQBqG71MbpOtnpA12q+TRLe3J+
+	L7HsgWGxm/gxJASo4YGWOGYA4TXJ1evrR7+M=
+X-Google-Smtp-Source: AGHT+IFtpFCoZNBd9twqvM3Oe45FwzJR6G1ATYs3fLxTgxcj12ZgAmdSgiivCA2LX9NehiDZcLJYTLr7SHjU1xRnbkM=
+X-Received: by 2002:a17:906:3498:b0:a38:25f0:aa35 with SMTP id
+ g24-20020a170906349800b00a3825f0aa35mr992922ejb.41.1707213775656; Tue, 06 Feb
+ 2024 02:02:55 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240205204932.16653-1-maarten.bosmans@vortech.nl>
- <20240205204932.16653-2-maarten.bosmans@vortech.nl> <xmqqil32l0i6.fsf@gitster.g>
-In-Reply-To: <xmqqil32l0i6.fsf@gitster.g>
-From: Maarten Bosmans <mkbosmans@gmail.com>
-Date: Tue, 6 Feb 2024 10:55:04 +0100
-Message-ID: <CA+CvcKTtcHCCKucQ0h1dnaDAMNfErJ+a1CXEVi=ZE5dv57Tb3A@mail.gmail.com>
-Subject: Re: [PATCH 1/4] notes: print note blob to stdout directly
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, Teng Long <dyroneteng@gmail.com>, 
-	Maarten Bosmans <maarten.bosmans@vortech.nl>
+From: Britton Kerin <britton.kerin@gmail.com>
+Date: Tue, 6 Feb 2024 01:02:43 -0900
+Message-ID: <CAC4O8c_oKT+a0hm+tqSOG7d1=AuJJKy5bsh72cJKVsWynvHw+w@mail.gmail.com>
+Subject: is it a bug that git status show the in-progress 'edit' in an
+ interactive rebase as 'done'?
+To: git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 
-Op di 6 feb 2024 om 04:44 schreef Junio C Hamano <gitster@pobox.com>:
->
-> Maarten Bosmans <mkbosmans@gmail.com> writes:
-> > Avoid the need to launch a subprocess by calling stream_blob_to_fd
-> > directly.  This does not only get rid of the overhead of a separate
-> > child process, but also avoids the initalization of the whole log
-> > machinery that `git show` does.  That is needed for example to show
-> > decorated commits and applying the mailmap.  For simply displaying
-> > a blob however, the only useful thing show does is enabling the pager.
-> >
-> > Signed-off-by: Maarten Bosmans <maarten.bosmans@vortech.nl>
-> > ---
-> >  builtin/notes.c | 10 ++++++----
-> >  1 file changed, 6 insertions(+), 4 deletions(-)
->
-> I am not sure if we want to accept an approach that feels somewhat
-> narrow/short sighted, like this patch.  When "git show" learns an
-> improved way to show blob objects, who will update the code this
-> patch touches to teach it to use the same improved way to show the
-> notes?
+If I do 'git rebase -i master' from a branch then set the action of
+the first two commits of a branch being rebased to 'edit' and exit the
+editor, an immediately subsequent 'git status' shows (for example):
 
-Yes, you would loose some of the flexibility by just calling out to
-another git command. But whether that is actually an issue depends on
-the way git show would be extended. As I mentioned in the cover
-letter, there is some handling of textconv
-being done in git show for the blob case. I though it would not be
-applicable to note blobs, but am not entirely sure.
+git status
+interactive rebase in progress; onto e79552d197
+Last command done (1 command done):
+   edit 71b73de914 message for first commit
+Next commands to do (6 remaining commands):
+   edit 3a478a7a08 message for second commit
+   pick fab7159cf4 message for third commit
+  (use "git rebase --edit-todo" to view and edit)
+You are currently editing a commit while rebasing branch
+'my_completion_updates' on 'e79552d197'.
+  (use "git commit --amend" to amend the current commit)
+  (use "git rebase --continue" once you are satisfied with your changes)
 
-To address your concern and the textconv case, instead of calling
-stream_blob_to_fd() directly, show_blob_object() could be used. Right
-now that is a static function in building/log.c I guess that needs to
-be moved then to log.c (or show.c)?
+This seems wrong, because until git rebase --continue has been done
+the edit operation for the first commit is *ongoing* and it would be
+much clearer for the output of status to accurately say so.
 
-I'm still not sure that is a good approach though, as the notes
-edit/append subcommands use repo_read_object_file() directly to fill
-the current note contents. So anything fancy that git show would do to
-blob output is not reflected when editing a note.
+The same applies to edit operations that don't happen to be the first.
 
-> I actually was hoping, after seeing the use case description in the
-> cover letter, that the series would be introducing a batch mode
-> interface to allow callers to ask notes for many objects and have
-> the command respond notes for these objects in a way that which
-> piece of output corresponds to which object in the request, reducing
-> the process overhead amortised over many objects.
+Is this a bug or is there some reason it's like this that I'm not seeing?
 
-That is also a cool idea. That would probably use the functionality of
-the cat-file batch mode, right? In that case you loose any future
-changes to git show anyway. At least the current behavior of git show
-when fed multiple blob hashes is to simply output them directly after
-another, without any way of identifying the parts.
-
-My concern would be that this additional functionality would not get
-used much, as it requires a bit more than just a quick-n-dirty bash
-script with some loops and command substitutions. If that approach is
-reasonably fast (the object of this patch series), then there is not
-much to be gained in a practical sense by a batch mode. To me it seems
-the git notes code is already a bit undermaintained currently, so I'd
-rather keep it generic, instead of customizing it to more specific use
-cases.
-
-Maarten
+Britton
