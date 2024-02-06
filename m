@@ -1,58 +1,63 @@
-Received: from mail-wm1-f52.google.com (mail-wm1-f52.google.com [209.85.128.52])
+Received: from mail-wr1-f44.google.com (mail-wr1-f44.google.com [209.85.221.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7513D12D770
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E3A412880E
 	for <git@vger.kernel.org>; Tue,  6 Feb 2024 09:49:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.52
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707212988; cv=none; b=EZlyGBbx4/YuE8sRnpk809zOmUQ9+Q6AqpAGB7muQOUMKC4ZkcWVpOzq9VwTiOvSKp/0h3634HfZ6DmD5matyVho0Dhi74mZyXqxGCPDbo6tpdYZs//mnkeuMl+DT1FkxSOsxwVG1anJAnY2cp7EdPl1As4bNEBiwSv11d/Qlts=
+	t=1707212988; cv=none; b=dLUiyNa/JPwOpxQnQ2ysThKa/6eqvHE4jmr7DsDRaK0/Ud3P9HSCd0ueGnx4AS/mdEUc8cLwGSat9qL9usTqnBvMiwdVy4rwvtW8v/J2kPzGS8IceriINYlHnNzyYMv/JsUySo0XmXLUOaiK+vxPGx4kMa6hMl+AsCPu8kQ083Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1707212988; c=relaxed/simple;
-	bh=MGWIqPFeek6AFznRhcmOEbiA/DCeJUYqu8wefCTrEGI=;
-	h=Message-ID:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=HKV/veo7dcbKXKzufK1AsUYZGNUqonEmWlPXD6R/Cf0/IKSMdcDREL0vStPR2Su50/g9hpBBb1YPFIwMlaoJlej+VFkFR7VHMIsn/rnMPIghesynZ4rvXLnFmlw8HAFvSZAHrMIwtR4Ehak3/zJLjn0CHTMVvrul6yQ4XjJG1xE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Knj28P8c; arc=none smtp.client-ip=209.85.128.52
+	bh=UF1LtAtCg3Xw6aOmpz2Kn8rD8A25KkCrQgAaLydPfJQ=;
+	h=Message-ID:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=D4mAs/tnl/RdKogSRBa4UDAPcSmYlV6D4qXbkBuX4eRW4nEBM9GaWJBG9G/sDdgdFo5U90RAmTwjTnbC2OznOBUBTgzW3MNYSxpqoJlW/yU5Piw6P9YOTCx9Ti6Moul3eaSbjUSiptDW/kLaMPuL9LsP9WJdw9Tg/ymssZK2nNA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=b3zl0qHa; arc=none smtp.client-ip=209.85.221.44
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Knj28P8c"
-Received: by mail-wm1-f52.google.com with SMTP id 5b1f17b1804b1-40fe79f199bso1722905e9.1
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="b3zl0qHa"
+Received: by mail-wr1-f44.google.com with SMTP id ffacd0b85a97d-33b409fc4aeso1101145f8f.1
         for <git@vger.kernel.org>; Tue, 06 Feb 2024 01:49:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20230601; t=1707212983; x=1707817783; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=00eylBT2p3AsuzOj0/01BSYA1Mt9fCjN9hcSVfDbm+U=;
-        b=Knj28P8c4xIDpKCJ964MZ7uQ9AJwsICiJ+lcMTE1andVC3znKAkNgCYZLJ7w4EXN6T
-         iOte7H9EdY3vSab381LNhJOjcIvHl/hMcH3a4LO/ou2Zs/oZuW6WEJc9+ssAjsw4Ojdj
-         cWNZOCKC683aLysf/3cTYLxT9qmbN3XtQCk/FXdMNexzT2MWmy9iziUKKfxTBjrQR4hA
-         aQ3nKV33J3u+88bzgQ95Zl5320OidvIZYnFZJxLpVGboXEM3oqkLHcg47epviCecQkvU
-         E23l3ou7WXAnV5FZmIdoiynz1z8CR34/SZmRwgyD6fNTe0CRoRya2EucjpMT3BaUNq/w
-         OSgw==
+         :references:in-reply-to:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=sR/xfp1VY9CgeMC+I7NGlzGCLSwaZNZyqDSar95wmrc=;
+        b=b3zl0qHaH1VSGwoWtb9I2qwolE+ZbC95rZOMoi84xOt5vIOu8i98shO49950WT+WRM
+         7QJD+0IlYVSEfFNCEVJWGjXQYz61A1C2vVlEHCplnopkyW1cdNF+nT4f6Tf8xEJlpmP/
+         ICrWjIn6HLkT9Q3NwhLz3ofizilDCwV/xqs0I93Vrwu+UA1KGgdZjw34k4oY4ptixznZ
+         OgPJlZe8g5V9nlvepJLBOcxHC89NA8ChQuW8kHrvHiJUEgDWStXEbiiwllpaiSSnayaj
+         2M2DaDUKzXKOIM0ZFp5BPs0b7rKNNLWI8cFGw0nekQ6PLtvf52bT2cwsxtVCgLoCXihM
+         6Uew==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20230601; t=1707212983; x=1707817783;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=00eylBT2p3AsuzOj0/01BSYA1Mt9fCjN9hcSVfDbm+U=;
-        b=pWKYR+8WtOHCMyaJGCPyussWHBi+RtwNYxvi1nRFbvNw1Mocz1ZNhsOWxoWUq/nhcA
-         r4c96EBdustbjF9xIkMHF3s1UYSFzWSY4kJU0TtxCZMJQak9t0W2zNOQbPkxvlMyeIG5
-         pSBxOt00lZxdTOUEYZqryKOTLPsGyR3U1LBup/9zrbe4qPN7nqEgBgliPddkWpVNSezA
-         rvWrPddYlTKtsbKKxWR7jYhPKEE7VDU4FsC0cYSCZa28+BHWEbUvC7KhpGZIBF1w0y74
-         QduoyE1frmWgjy2txBdtGdwUDMTL6PTDyNO2y10DzBNJlprkY9uO6+PWAQwZfiDFEaph
-         xwSg==
-X-Gm-Message-State: AOJu0Yzg4ylH2/j2635eHDyLq6G1RGtUaz/1kRiXbjYYIy6xtYm320bv
-	61yztu83pGbsdUmJwOdUADOxRXP2lqFr+8s856WpNm3PAz5U4nx8q6yrASee
-X-Google-Smtp-Source: AGHT+IFEZy/+aDwluFdnF3zHbUmJVo8jWmDwJ9JLCn4TYiThRgvGGElnmDhApcF4Kva5WSpGV3v4Fw==
-X-Received: by 2002:a05:600c:35d1:b0:40e:fb93:96a8 with SMTP id r17-20020a05600c35d100b0040efb9396a8mr1749192wmq.34.1707212982646;
-        Tue, 06 Feb 2024 01:49:42 -0800 (PST)
+         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=sR/xfp1VY9CgeMC+I7NGlzGCLSwaZNZyqDSar95wmrc=;
+        b=kGtwts+TgFYhsJFPZsgpzBk54JIaSFGSPcaXlREkmVuGneOicEn3H8fqrih0xgPWMD
+         UuJ366cJSA2QNF5DqRhupFnvcYFH8nUEeb/FN83/PmodUD6/Lqjb7ZmsycWUTS3uCv3P
+         gEbGaziLICOMlOIRv8hqVvVv7uNoF4jBMnnK9ZpldxXFUaxIJXI1zfitx3n5ehHXG3lD
+         jhelAt6cghgpJVAccx36nr0ploUIAOf1s9JvXZzxYZLYxtX4SuOjbpDWkaiicPq5S2Yc
+         gFfbEvDJShaE/xYmV4ue5lWQovDKDjTEX8ksfjbbi4EO4zN2Slh3RHd7FXatYDG4H3LQ
+         7/9w==
+X-Gm-Message-State: AOJu0YwZ6iBtZFjSdrlSN2z2+/OFUvpr0Q9T8J1euGmHtAtS/itq8sYG
+	cj8Vm1UtwbgWtkx/8Yn2vEkyZlFmYwpwhZ5Q/c/5OwPtXVFOaXHFjdYv2PG3
+X-Google-Smtp-Source: AGHT+IHxHbod8aEUhkl3CJShL/ikn871qzlPM+MYHFVJ2lYNpYMQgSTlNZtqj+ALL3wqEL3VgLLJCQ==
+X-Received: by 2002:a5d:4cc8:0:b0:33b:381d:a71e with SMTP id c8-20020a5d4cc8000000b0033b381da71emr741431wrt.17.1707212983191;
+        Tue, 06 Feb 2024 01:49:43 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id n33-20020a05600c502100b0040fd2823f52sm1437856wmr.2.2024.02.06.01.49.42
+        by smtp.gmail.com with ESMTPSA id r21-20020adfa155000000b0033b2497fdaesm1637634wrr.95.2024.02.06.01.49.42
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 06 Feb 2024 01:49:42 -0800 (PST)
-Message-ID: <pull.1651.git.1707212981.gitgitgadget@gmail.com>
+        Tue, 06 Feb 2024 01:49:43 -0800 (PST)
+Message-ID: <a3e8ae8611484f95df15490ea8f1abcec8f4cb36.1707212981.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1651.git.1707212981.gitgitgadget@gmail.com>
+References: <pull.1651.git.1707212981.gitgitgadget@gmail.com>
 From: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Tue, 06 Feb 2024 09:49:37 +0000
-Subject: [PATCH 0/4] merge-tree: handle missing objects correctly
+Date: Tue, 06 Feb 2024 09:49:38 +0000
+Subject: [PATCH 1/4] merge-tree: fail with a non-zero exit code on missing
+ tree objects
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -63,46 +68,63 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 To: git@vger.kernel.org
-Cc: Johannes Schindelin <johannes.schindelin@gmx.de>
+Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
+    Johannes Schindelin <johannes.schindelin@gmx.de>
 
-I recently looked into issues where git merge-tree calls returned bogus data
-(in one instance returning an empty tree for non-empty merge parents). By
-the time I had a look at the corresponding repository, the issue was no
-longer reproducible, but a closer look at the code combined with some manual
-experimenting turned up the fact that missing tree objects aren't handled as
-errors by git merge-tree.
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-While at it, I added a commit on top that tries to catch all remaining
-unchecked parse_tree() calls.
+When `git merge-tree` encounters a missing tree object, it should error
+out and not continue quietly as if nothing had happened.
 
-This patch series is based on js/merge-tree-3-trees because I introduced
-three unchecked parse_tree() calls in that topic branch.
+However, as of time of writing, `git merge-tree` _does_ continue, and
+then offers the empty tree as result.
 
-Johannes Schindelin (4):
-  merge-tree: fail with a non-zero exit code on missing tree objects
-  merge-ort: do check `parse_tree()`'s return value
-  t4301: verify that merge-tree fails on missing blob objects
-  Always check `parse_tree*()`'s return value
+Let's fix this.
 
- builtin/checkout.c               | 19 ++++++++++++++++---
- builtin/clone.c                  |  3 ++-
- builtin/commit.c                 |  3 ++-
- builtin/merge-tree.c             |  6 ++++++
- builtin/read-tree.c              |  3 ++-
- builtin/reset.c                  |  4 ++++
- cache-tree.c                     |  4 ++--
- merge-ort.c                      | 16 +++++++++++-----
- merge-recursive.c                |  3 ++-
- merge.c                          |  5 ++++-
- reset.c                          |  5 +++++
- sequencer.c                      |  4 ++++
- t/t4301-merge-tree-write-tree.sh | 24 ++++++++++++++++++++++++
- 13 files changed, 84 insertions(+), 15 deletions(-)
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+ merge-ort.c                      |  7 ++++---
+ t/t4301-merge-tree-write-tree.sh | 10 ++++++++++
+ 2 files changed, 14 insertions(+), 3 deletions(-)
 
-
-base-commit: 5f43cf5b2e4b68386d3774bce880b0f74d801635
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1651%2Fdscho%2Fmerge-tree-and-missing-objects-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1651/dscho/merge-tree-and-missing-objects-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/1651
+diff --git a/merge-ort.c b/merge-ort.c
+index 6491070d965..c37fc035f13 100644
+--- a/merge-ort.c
++++ b/merge-ort.c
+@@ -1659,9 +1659,10 @@ static int collect_merge_info(struct merge_options *opt,
+ 	info.data = opt;
+ 	info.show_all_errors = 1;
+ 
+-	parse_tree(merge_base);
+-	parse_tree(side1);
+-	parse_tree(side2);
++	if (parse_tree(merge_base) < 0 ||
++	    parse_tree(side1) < 0 ||
++	    parse_tree(side2) < 0)
++		return -1;
+ 	init_tree_desc(t + 0, merge_base->buffer, merge_base->size);
+ 	init_tree_desc(t + 1, side1->buffer, side1->size);
+ 	init_tree_desc(t + 2, side2->buffer, side2->size);
+diff --git a/t/t4301-merge-tree-write-tree.sh b/t/t4301-merge-tree-write-tree.sh
+index 7d0fa74da74..4ea1b74445d 100755
+--- a/t/t4301-merge-tree-write-tree.sh
++++ b/t/t4301-merge-tree-write-tree.sh
+@@ -950,5 +950,15 @@ test_expect_success '--merge-base with tree OIDs' '
+ 	git merge-tree --merge-base=side1^^{tree} side1^{tree} side3^{tree} >with-trees &&
+ 	test_cmp with-commits with-trees
+ '
++test_expect_success 'error out on missing tree objects' '
++	git init --bare missing-tree.git &&
++	(
++		git rev-list side3 &&
++		git rev-parse side3^:
++	) | git pack-objects missing-tree.git/objects/pack/side3-tree-is-missing &&
++	side3=$(git rev-parse side3) &&
++	test_must_fail git --git-dir=missing-tree.git merge-tree $side3^ $side3 >actual &&
++	test_must_be_empty actual
++'
+ 
+ test_done
 -- 
 gitgitgadget
+
