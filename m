@@ -1,79 +1,82 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA5361CD3B
-	for <git@vger.kernel.org>; Wed,  7 Feb 2024 22:58:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12ED82033E
+	for <git@vger.kernel.org>; Wed,  7 Feb 2024 23:26:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707346685; cv=none; b=uT1BAseB0DCH2W4mvVUUBZ+VUVyMZNcEfJ3OTzKPqXxU0kmvYU3jAQMtwk3gZco/Dk6Srj9inhv3k+UQ5EfiZ2xfgM6GXbGUmFdsWqdQyG3P6IC32rrmXXR1NveK1i5MZU/bBalAYhumr3Ab1Vkza0ZCf7Mi+CBHOyEsXOLcBKM=
+	t=1707348393; cv=none; b=ZB5IFIGt5SJt3TRki+tryt1D42oe68/TSR/V6Vmqjua2WHBQ6PBgGiqqf29qg5sDZtk2n6jv9bIaiNU6lz/VgKQO3G1ALNEMxjLf16kyaEF5q2rxkq/kKpuNCFj/bfCmbu7o80eKljIrhgQNbh3M7UX6pHwvbwcI3nYzWqBPBqk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707346685; c=relaxed/simple;
-	bh=Ixvy1e/z9soNZGNeiQiime64tYsnghBvSVQnUIlW7C0=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=aUMQqrEPy/0SEeHo/p9UjNIzEV6TUC0XsUA2DtBd94gbTwGAxLosg5vWWrp6t0IsFyKEyKLvz2Q9Loaqic2lSS946KUIUlDAdLGm6U794gRW+veBmcqhKy1ta56RCn56l0VcSqdc4bL92OTEePrSht3mNvm5HvvvByDI1TsKxLk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
-Received: (qmail 11955 invoked by uid 109); 7 Feb 2024 22:58:03 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 07 Feb 2024 22:58:03 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 24327 invoked by uid 111); 7 Feb 2024 22:58:03 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 07 Feb 2024 17:58:03 -0500
-Authentication-Results: peff.net; auth=none
-Date: Wed, 7 Feb 2024 17:58:02 -0500
-From: Jeff King <peff@peff.net>
-To: Josh Steadmon <steadmon@google.com>
-Cc: git@vger.kernel.org, johannes.schindelin@gmx.de,
-	phillip.wood@dunelm.org.uk, gitster@pobox.com
-Subject: Re: [RFC PATCH v2 1/6] t0080: turn t-basic unit test into a helper
-Message-ID: <20240207225802.GA538110@coredump.intra.peff.net>
+	s=arc-20240116; t=1707348393; c=relaxed/simple;
+	bh=U9HTDf609Dmg0UXJqKYdsnXA7/wxNpWPkl9XjxEosmI=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=QtthN326qydNW/+v6LbcOvGVqFqJAU8xJSJs+O0Tzu4ZclsseEBztjG9grak52/HPoGm0zvAIeLR4c7ZE2OHOgngGARlPeLbx+RJt8TAiPkrX/brpkF2X2FaLhWQIi2etuN0d9mikw+X3Eh8QlazhQ1DGzwvjoBJGfnvpgfI6Oc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=RFJoX+vg; arc=none smtp.client-ip=64.147.108.71
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="RFJoX+vg"
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 917601DA756;
+	Wed,  7 Feb 2024 18:26:30 -0500 (EST)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=U9HTDf609Dmg0UXJqKYdsnXA7/wxNpWPkl9Xjx
+	EosmI=; b=RFJoX+vgiNsqlVcweJteneFmHJru50B5GqfGdZ4F9Fvv84bb01R9FK
+	LTuRC6NkjkQbm19VX/xZ1DXN8szmpqS9YF+T99Zyny/UVK31BcvMpLwfse6RKZnn
+	loNBcKe/yRWw+I+lslOpVLib7QL5Le6ns89nBk/uhVzsYsOnTv0Gg=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 85E5F1DA755;
+	Wed,  7 Feb 2024 18:26:30 -0500 (EST)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.165.85])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id B94B41DA752;
+	Wed,  7 Feb 2024 18:26:29 -0500 (EST)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Jeff King <peff@peff.net>
+Cc: Josh Steadmon <steadmon@google.com>,  git@vger.kernel.org,
+  johannes.schindelin@gmx.de,  phillip.wood@dunelm.org.uk
+Subject: Re: [RFC PATCH v2 6/6] t/Makefile: run unit tests alongside shell
+ tests
+In-Reply-To: <20240207224350.GA537799@coredump.intra.peff.net> (Jeff King's
+	message of "Wed, 7 Feb 2024 17:43:50 -0500")
 References: <cover.1705443632.git.steadmon@google.com>
- <cover.1706921262.git.steadmon@google.com>
- <da756b4bfb9d1ce0d1213d585e72acfbf667e2a2.1706921262.git.steadmon@google.com>
+	<cover.1706921262.git.steadmon@google.com>
+	<cd7467a7bd51fbc01c999ee1bd7688770b1d11e5.1706921262.git.steadmon@google.com>
+	<xmqqzfwc6lle.fsf@gitster.g>
+	<20240207224350.GA537799@coredump.intra.peff.net>
+Date: Wed, 07 Feb 2024 15:26:28 -0800
+Message-ID: <xmqqle7vrh3v.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <da756b4bfb9d1ce0d1213d585e72acfbf667e2a2.1706921262.git.steadmon@google.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 524F4F52-C610-11EE-B980-25B3960A682E-77302942!pb-smtp2.pobox.com
 
-On Fri, Feb 02, 2024 at 04:50:26PM -0800, Josh Steadmon wrote:
+Jeff King <peff@peff.net> writes:
 
-> This has the additional benefit that test harnesses seeking to run all
-> unit tests can find them with a simple glob of "t/unit-tests/bin/t-*",
-> with no exceptions needed. This will be important in a later patch where
-> we add support for running the unit tests via a test-tool subcommand.
+> Not if they share the same command-line options. If you use something
+> like "--state=slow,save", then the first run will write the list of all
+> tests to ".prove", and then the second will run every test mentioned in
+> .prove (in addition to the unit-tests provided on the command-line).
+>
+> You should be able to work around it by passing "--statefile". I _think_
+> it might be OK to just do that unconditionally. Something like:
+>
+>   prove --exec $(TEST_SHELL_PATH $(GIT_PROVE_OPTS) $(T) :: $(GIT_TEST_OPTS)
+>   prove --statefile=.prove-unit-tests $(GIT_PROVE_OPTS) $(UNIT_TESTS) :: $(GIT_TEST_OPTS)
+>
+> and then it's just a noop if GIT_PROVE_OPTS doesn't use --state. But I
+> haven't played with it myself.
 
-Is this last paragraph still accurate? I think in this rebased version
-of the series, we'll continue to use $(UNIT_TESTS) derived from the
-source list rather than a glob in bin/.
-
-> --- a/t/Makefile
-> +++ b/t/Makefile
-> @@ -44,8 +44,7 @@ TINTEROP = $(sort $(wildcard interop/i[0-9][0-9][0-9][0-9]-*.sh))
->  CHAINLINTTESTS = $(sort $(patsubst chainlint/%.test,%,$(wildcard chainlint/*.test)))
->  CHAINLINT = '$(PERL_PATH_SQ)' chainlint.pl
->  UNIT_TEST_SOURCES = $(wildcard unit-tests/t-*.c)
-> -UNIT_TEST_PROGRAMS = $(patsubst unit-tests/%.c,unit-tests/bin/%$(X),$(UNIT_TEST_SOURCES))
-> -UNIT_TESTS = $(sort $(filter-out unit-tests/bin/t-basic%,$(UNIT_TEST_PROGRAMS)))
-> +UNIT_TESTS = $(patsubst unit-tests/%.c,unit-tests/bin/%$(X),$(UNIT_TEST_SOURCES))
-
-This drops the intermediate UNIT_TEST_PROGRAMS, which makes sense. It
-was only used to keep the long lines a bit more readable. But it also
-drops the $(sort) call. Do we need to keep it?
-
-Certainly I'd think we want the contents of $(UNIT_TESTS) to be in a
-deterministic order. Does the $(wildcard) function already return things
-in sorted order? I can't find any mention in the documention. It seems
-to do so for me in a simple test, but aae5239be2 (t/Makefile: Use $(sort
-...) explicitly where needed, 2011-09-04) argues otherwise.
-
-So I think we probably want to keep it (or possibly move it onto the
-UNIT_TEST_SOURCES line, which keeps it close to the wildcard call).
-
--Peff
+I do not think it warrants such complexity.  The wrapper script is
+fine.
