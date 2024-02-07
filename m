@@ -1,53 +1,50 @@
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5961C149E0D
-	for <git@vger.kernel.org>; Wed,  7 Feb 2024 22:12:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAACC149E14
+	for <git@vger.kernel.org>; Wed,  7 Feb 2024 22:16:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707343925; cv=none; b=snCMFAinIu2+MeEVtpFK9tQ2M63Tj2p/XzVUbSj3K0Gl0AgmDuFSWyNAICja7hfosI7GrTnk9SvG/If6yiPkoeKnH/gajSUFbtZt+dohiu0oStVwd/bGErA+qdFEHuDNdxMx/F2p2pTRN6cmj+PA5PWEAaSjJ8mEtH6R1Z4JcTk=
+	t=1707344165; cv=none; b=QC/F+unOKe+xkFSf/OqNDfSWSxeyYIDEUMBhdaes12vBRU1UpyWpn5kgWs6gMBJPFUnwpek1UvMnAwnupeXfywtmodIIwcOOAQCD/zw6xJ9Akx5jIbTbtsNLDp6zkw0g4CvIhDFINkpT71vjtfWhkeRVduel3/uHjKOk7EPOu44=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707343925; c=relaxed/simple;
-	bh=5zeC6k5TzdFLjfaP1k5QnZb54QJ3IgBOs07buG8qUKM=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=dYuUgySk7m1S5eAlcXVgBjsXPzNeUnt4pmC29JuUhqQIcsETFjJ87MGEWbpWi6lOJoJ1XESIlF1+LOdN2eEV4IjSXeBShicWaLLmvpsX5+aBU8qOYqe0ZRCgOwJr3hzQ8d3GwbwYzBhUk64cuNyZ4sM+PRTbNIs6oW7ApPUkR4c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=sHzXaUU9; arc=none smtp.client-ip=64.147.108.71
+	s=arc-20240116; t=1707344165; c=relaxed/simple;
+	bh=V88NlKM7B2dTJjlwwWf47hxYjbhL2fGl3Y1YFuRZFAc=;
+	h=From:To:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=eYB0jW2jJ5ZM6iJto+CaaH8J1YVFn0X3boXOSfJtEyr+aI1IhbC4ic1vC5lMQHjWR6zm9db86LNzVPi1SrGUebMB9hWXbWID3p5JrGlAHKsIuM2gGkL/RbydGk9M1WcKxr6y84gP/Pukaepp48WQvy5KkNqrCF/7NLK7gXoYp0o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=Y3P3xfQx; arc=none smtp.client-ip=173.228.157.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="sHzXaUU9"
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id D67E71D9F05;
-	Wed,  7 Feb 2024 17:12:02 -0500 (EST)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="Y3P3xfQx"
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id 4233B2C0C9;
+	Wed,  7 Feb 2024 17:16:03 -0500 (EST)
 	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to
 	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=5zeC6k5TzdFLjfaP1k5QnZb54QJ3IgBOs07buG
-	8qUKM=; b=sHzXaUU9jkRufQKZSf/kvCGfkjC7AkC8pBPYBJwVvYBM1fRzpIY9pR
-	NC1QlpTe1pATpEzn1VszvpC42T2tHNAiHp0AdHMV74bCB9dMAsycqvdw6EZY2pU4
-	6/Fxslr8WQjwF/LXjM9KjDJoHLeKDTnkYfwzPFpHFkMTVfqw95FG0=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id CF17B1D9F04;
-	Wed,  7 Feb 2024 17:12:02 -0500 (EST)
+	:content-type; s=sasl; bh=V88NlKM7B2dTJjlwwWf47hxYjbhL2fGl3Y1YFu
+	RZFAc=; b=Y3P3xfQxp5daKvLecXsZfL0cswdctK2umuW1ge8zLIUnojRAaTYCRb
+	ppw4QrtNIwWAbFXP/qMOQcTTMIaNZHXLhtqc/IBeoMIRA5+4nwXKhUF6RaUV53iH
+	AQQp+d5IwhN4eH0oG5Z9knbxswj92e0SJkxCvBMiNdzdFzqy/xMv0=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id 3C01F2C0C8;
+	Wed,  7 Feb 2024 17:16:03 -0500 (EST)
 	(envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.125.165.85])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 2FCB71D9F01;
-	Wed,  7 Feb 2024 17:12:02 -0500 (EST)
+	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id D5E8C2C0C2;
+	Wed,  7 Feb 2024 17:15:59 -0500 (EST)
 	(envelope-from junio@pobox.com)
 From: Junio C Hamano <gitster@pobox.com>
-To: <git@vger.kernel.org>
-Cc: "Britton Leo Kerin" <britton.kerin@gmail.com>
-Subject: Re: [PATCH v2 1/1] completion: don't complete revs when
- --no-format-patch
-In-Reply-To: <a718b5ee-afb0-44bd-a299-3208fac43506@smtp-relay.sendinblue.com>
-	(Britton Leo Kerin's message of "Mon, 8 Jan 2024 16:08:30 -0900")
-References: <9627364b-c0c9-4b85-a81a-ba1ef0735c9a@smtp-relay.sendinblue.com>
-	<20240109010830.458775-1-britton.kerin@gmail.com>
-	<a718b5ee-afb0-44bd-a299-3208fac43506@smtp-relay.sendinblue.com>
-Date: Wed, 07 Feb 2024 14:12:00 -0800
-Message-ID: <xmqq4jej6i1b.fsf@gitster.g>
+To: git@vger.kernel.org
+Subject: Re: [PATCH v4 0/3] apply with core.filemode=false
+In-Reply-To: <20231226233218.472054-1-gitster@pobox.com> (Junio C. Hamano's
+	message of "Tue, 26 Dec 2023 15:32:15 -0800")
+References: <pull.1620.v3.git.1703066893657.gitgitgadget@gmail.com>
+	<20231226233218.472054-1-gitster@pobox.com>
+Date: Wed, 07 Feb 2024 14:15:58 -0800
+Message-ID: <xmqqzfwb53a9.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -57,49 +54,34 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 X-Pobox-Relay-ID:
- EB6FFE12-C605-11EE-8862-25B3960A682E-77302942!pb-smtp2.pobox.com
+ 7919D972-C606-11EE-B61D-A19503B9AAD1-77302942!pb-smtp21.pobox.com
 
-"Britton Leo Kerin" <britton.kerin@gmail.com> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> In this case the user has specifically said they don't want send-email
-> to run format-patch so revs aren't valid argument completions (and it's
-> likely revs and dirs do have some same names or prefixes as in
-> Documentation/MyFirstContribution.txt 'psuh').
+> Chandra Pratap noticed that "git apply" on a filesystem without
+> executable bit support gives a warning when applying a patch that
+> expects the preimage file to have executable bit on.  Dscho noticed
+> that the initial fix by Chandra did not work well when applying a
+> patch in reverse.  It turns out that apply.c:reverse_patches()
+> invalidates the "a patch that does not change mode bits have the
+> mode bits in .old_mode member and not in .new_mode member" invariant
+> we rely on.
 >
-> Signed-off-by: Britton Leo Kerin <britton.kerin@gmail.com>
-> ---
->  contrib/completion/git-completion.bash | 6 +++++-
->  1 file changed, 5 insertions(+), 1 deletion(-)
+> Here is the result of concerted effort.
+>
+> Chandra Pratap (1):
+>   apply: ignore working tree filemode when !core.filemode
+>
+> Junio C Hamano (2):
+>   apply: correctly reverse patch's pre- and post-image mode bits
+>   apply: code simplification
+>
+>  apply.c                   | 16 +++++++++++++---
+>  t/t4129-apply-samemode.sh | 27 +++++++++++++++++++++++++++
+>  2 files changed, 40 insertions(+), 3 deletions(-)
 
-Any reviews people want to offer to this one?
+Anybody wants to offer a review on this?  I actually am fairly
+confortable with these without any additional review, but since I am
+sweeping the "Needs review" topics in the What's cooking report, I
+thought I would ask for this one, too.
 
-Thanks.
-
-> diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-> index 185b47d802..c983f3b2ab 100644
-> --- a/contrib/completion/git-completion.bash
-> +++ b/contrib/completion/git-completion.bash
-> @@ -1242,10 +1242,12 @@ __git_find_last_on_cmdline ()
->  	while test $# -gt 1; do
->  		case "$1" in
->  		--show-idx)	show_idx=y ;;
-> +		--)		shift && break ;;
->  		*)		return 1 ;;
->  		esac
->  		shift
->  	done
-> +	[ $# -eq 1 ] || return 1   # return 1 if we got wrong # of non-opts
->  	local wordlist="$1"
->  
->  	while [ $c -gt "$__git_cmd_idx" ]; do
-> @@ -2429,7 +2431,9 @@ _git_send_email ()
->  		return
->  		;;
->  	esac
-> -	__git_complete_revlist
-> +	if [ "$(__git_find_last_on_cmdline -- "--format-patch --no-format-patch")" != "--no-format-patch" ]; then
-> +		__git_complete_revlist
-> +	fi
->  }
->  
->  _git_stage ()
