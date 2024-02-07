@@ -1,98 +1,102 @@
-Received: from mail-qk1-f173.google.com (mail-qk1-f173.google.com [209.85.222.173])
+Received: from mail-ot1-f46.google.com (mail-ot1-f46.google.com [209.85.210.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BECD0823AF
-	for <git@vger.kernel.org>; Wed,  7 Feb 2024 17:02:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 155A41E532
+	for <git@vger.kernel.org>; Wed,  7 Feb 2024 17:03:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707325367; cv=none; b=YuAF9m2s/eEBwS3s+LskuRY1UWLdSmGvgpKyhkT2g8Yv/Vm37EUT0DWgprOc2VEiJYZkrlAMKUMGwlRY68XelKKeWvmDjkutEqiYOPSZZr+gCjuXGkykpwem9aQSoIOCYb3rXxTDa1KyNWPJ5pZ5Qmwhkb5ddhdlZ6yNHMRi2pQ=
+	t=1707325385; cv=none; b=VmsE+5TL1amfX0L/ACEHDgw/YaMmDAhcNs3XtjoVayt8XugxzCwzhWv1P/cdJPGZMTdQo7mUhiWKk4vmAF2WQmtXs5fYxxJWpOqZvbcLuq7TIzGHa/EYbs4tRUDRHFM3A5J8o1XPeLPHKBP8icsjrMNQg0DrPlyvKb1U7F+u7MU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707325367; c=relaxed/simple;
-	bh=4DTJJXT6aUDjQcxeStBslwg1HaSIzSN7Bo8bYOLNobQ=;
+	s=arc-20240116; t=1707325385; c=relaxed/simple;
+	bh=7q9cj75nkOaImX05BkJFJx1jRZDF9unNCgZkpcIlGiE=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=KCsEPIiltuYSTmBN+GQtI6YCssj35QBywi1iE0JuytV5RXwBK18fiqXlr1vtsZSaxcnLu+opSRWcGqMNILavSnGeUh/1XLBTYX9AR440A+vKU9czfiwv4/6Z5ar9C1f4jcSbuzkpY5Y9EK5Rwz2UOejJOpY+i3JpEb3R7mdPnIQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.222.173
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com
+	 To:Cc:Content-Type; b=GTchvD9aGx3XOrcXsD69DA37zt5Fm3q0j49FlpZLASRq2Fe68QLCvNkPH2Y6FQy55J+EVd186+JJQBmxzTRGef7rn64IbAVQG91NpjLy2bYhe225hTIw5d3OtNnpS13YSQRFA/FamwNC5osGxedX4mYpYDBeOfWEQipW8j4ra5Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=N8jPpB7E; arc=none smtp.client-ip=209.85.210.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-qk1-f173.google.com with SMTP id af79cd13be357-785738e94b9so34994385a.0
-        for <git@vger.kernel.org>; Wed, 07 Feb 2024 09:02:45 -0800 (PST)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="N8jPpB7E"
+Received: by mail-ot1-f46.google.com with SMTP id 46e09a7af769-6ddf26eba3cso615175a34.0
+        for <git@vger.kernel.org>; Wed, 07 Feb 2024 09:03:03 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1707325383; x=1707930183; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=sdyrsYC2fF0xSv7M8u1Ynu0ZfBB+FcmROyYWGIIRZXg=;
+        b=N8jPpB7EjqbO5fXtJ5sXwOFmzcJ8gAgpEPBTmmapINlbL3Akn+jYRjj5elezjbpazp
+         +i/nYAfP8b7F53eMUh+Xwv0kTs0PgZOYnDzT5NsqnEgFRMjRt3L3IQNaWAjqs8O3W2g1
+         9D+q7AopE94Am8dNYjTu20uS4my+ocVaizge4566nzxEkBaeh9AUrFeWvR2EePOfSqyi
+         sGmzbJaH4vvZROfaL1q2pvAyqpF3Vd7kHLHaEv3vl5hMy+X6mKqHsxA3zGi2fBZ0uLsn
+         uq7t8pN/4IxYCVPmQKukKjsL+Na7C8fADnc/sZjdfUiaB96KILOePZ8GotSPGQjJisyi
+         Z0YQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1707325364; x=1707930164;
+        d=1e100.net; s=20230601; t=1707325383; x=1707930183;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=vW9ttwme0rN5rmOxVbW+QyVJH+EdUve8MAh6KFDOz+c=;
-        b=IvzMzG2yBl4phLsqEjuQE70iaLQ9Upt+zGJcpn3oy2vr27na4au2dj2yma5YGsOcY7
-         79zRWgrmWZpC4PkE95561HDtgNZgfuPsPZWY7ERbTcDlBppp/08Rx5FTcEYA1S4T6FaP
-         ddXHk3J+LhaEkzMvznO68P5kGMbW2f62uAW/JYuN/SmAHn24get0ojeCD1k3GvuIbANz
-         3RfnzU4Fc3uLYm4U/IEv5sDwhFUJTafhT3FJtipG+FZjgrcesZrofangsZsl9eey32/o
-         8jP/krsi7JEIcArfeqaYIGJoQqxMIuYXBuPT7oviYGQ4+NlfAK0H1QL2VNLpGsMaLv5q
-         o8xA==
-X-Gm-Message-State: AOJu0YwEWxaIfy2DbKqXGyf1AvdNC+jQNRF1VeaHMWWS0hIbQTD93Z9f
-	9aQ52bEChuTm/nPJDiWc32YXXZeT6J8SRlYkUIRzBe8VyZLHcOdNYJXkC6VrF4RAtv0P7Kxi4Yk
-	l6oFQf51ryPHsNO3hoAFsVETwIBU=
-X-Google-Smtp-Source: AGHT+IGERlPiWZBY2JQ7t+TKWxPlGuLRHmiMn1UDXIUYb4Av6jgdBe75Ik9BRa1WtIvnp5pMbqdEl7qlYmNgIu7VkOw=
-X-Received: by 2002:a0c:db0a:0:b0:68c:36bf:29f1 with SMTP id
- d10-20020a0cdb0a000000b0068c36bf29f1mr5788139qvk.12.1707325364574; Wed, 07
- Feb 2024 09:02:44 -0800 (PST)
+        bh=sdyrsYC2fF0xSv7M8u1Ynu0ZfBB+FcmROyYWGIIRZXg=;
+        b=QsRjpoZUKCi0beawsvOLxgjl6Hj9Wsd4IEMVCt8tRxmkPmJEmo3nxdnKlREiCXvpd4
+         7m7BrtitO3kO9oZlLnxSXdPdsqPDW2FuD6Ld/72TZy1VsHrfMG3QVlgzzo8BNe8mXSU5
+         +0Ud6i7/YjYxUv3RU3Q9AG2nSsrbvh/+KzGMECk6SmrtsFIUegVR2fpIgqxTCtsCLMy+
+         wFLiecp6xlzTSbnOHkIRjcH9sCOALOreggMbiOoK4nxcaBk7MZIzMSe3TobHunkJIP7O
+         MVthtUG8rtIb6SwsthprkYkbWyJh8xU09gQKcL1fugkWSTGUtIhiCyXV75Iw4ZI+Ko8d
+         rNAg==
+X-Forwarded-Encrypted: i=1; AJvYcCXmSLpAL3zXeE9P3k7qTE7NY55ebt+3q9Y7OcrxNYIFPF3Axd+kkBuM7qDnrqr10cG3oy5lxYy8rD65gTdsRpWReeKT
+X-Gm-Message-State: AOJu0YwRdcRqo3yuNWt1v7G08h1wl8RRP0ymH0P3xFYrEzQBz726wsdb
+	E9nXEDOVIaAvFBTnqTmiCBm89VfDz3sv2UbLRXjyr1iaKpzBSfya/8OzUFmP0hcsST5crqykbd9
+	9WFPeAVfYCh76F/yPoNQOwfFTNME=
+X-Google-Smtp-Source: AGHT+IHvt1zsXhF2dgDD4+nKV8owq/X1oUxxnbhEQGYUWNZ+2gFw56lQDl0mUvSo8I745QLQRyGvpMQQGChogyhjjlk=
+X-Received: by 2002:a05:6870:3325:b0:214:a08c:5220 with SMTP id
+ x37-20020a056870332500b00214a08c5220mr7194001oae.20.1707325382921; Wed, 07
+ Feb 2024 09:03:02 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.1651.git.1707212981.gitgitgadget@gmail.com>
- <pull.1651.v2.git.1707324461.gitgitgadget@gmail.com> <01dfd66568c1818819e81e001cc189f9066d0cf0.1707324462.git.gitgitgadget@gmail.com>
-In-Reply-To: <01dfd66568c1818819e81e001cc189f9066d0cf0.1707324462.git.gitgitgadget@gmail.com>
-From: Eric Sunshine <sunshine@sunshineco.com>
-Date: Wed, 7 Feb 2024 12:02:33 -0500
-Message-ID: <CAPig+cSs8MFkLasTULh7tybrFm7SwaT+JeR7HnXjh+-agCHYMw@mail.gmail.com>
-Subject: Re: [PATCH v2 1/5] merge-tree: fail with a non-zero exit code on
- missing tree objects
-To: Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>, 
-	Johannes Schindelin <johannes.schindelin@gmx.de>
+References: <20240119142705.139374-1-karthik.188@gmail.com>
+ <20240129113527.607022-1-karthik.188@gmail.com> <20240129113527.607022-5-karthik.188@gmail.com>
+ <98d79d33-0d7e-4a9c-a6a3-ed9b58cd7445@gmail.com> <CAOLa=ZR=_tt=ppphGMkxqj_YB5G+YkTMWGzRzcHTbrZz4ysb5w@mail.gmail.com>
+ <92ba680d-0b48-49f0-aafc-f503e5a5e0ea@gmail.com> <xmqqle7xjzic.fsf@gitster.g>
+ <xmqqr0hph1ku.fsf@gitster.g> <CAOLa=ZSZJ=_VCppHXcJeE=Z61go4_040xyc1NBTu-o=xysLrdg@mail.gmail.com>
+ <xmqqcyt9fdc7.fsf@gitster.g> <CAOLa=ZRcWYmEYnxh_=ykOerahZ61xaanLCj_JHHLvtrvN=Xs-w@mail.gmail.com>
+ <xmqq1q9oe029.fsf@gitster.g> <CAOLa=ZQzz7_L_9cBmK+pgFwd_DFqfWDVRiaZMAxU+54kBq6Pcw@mail.gmail.com>
+ <xmqq1q9ocje3.fsf@gitster.g>
+In-Reply-To: <xmqq1q9ocje3.fsf@gitster.g>
+From: Karthik Nayak <karthik.188@gmail.com>
+Date: Wed, 7 Feb 2024 18:02:34 +0100
+Message-ID: <CAOLa=ZQaXxwrXmbmFvGR59EDo3Eqa-Xfc3OG9+6ES-veDU8Bhg@mail.gmail.com>
+Subject: Re: [PATCH v3 4/4] for-each-ref: avoid filtering on empty pattern
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Phillip Wood <phillip.wood123@gmail.com>, phillip.wood@dunelm.org.uk, 
+	git@vger.kernel.org, ps@pks.im
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Wed, Feb 7, 2024 at 11:48=E2=80=AFAM Johannes Schindelin via GitGitGadge=
-t
-<gitgitgadget@gmail.com> wrote:
-> When `git merge-tree` encounters a missing tree object, it should error
-> out and not continue quietly as if nothing had happened.
+On Wed, Feb 7, 2024 at 5:46=E2=80=AFPM Junio C Hamano <gitster@pobox.com> w=
+rote:
 >
-> However, as of time of writing, `git merge-tree` _does_ continue, and
-> then offers the empty tree as result.
+> Karthik Nayak <karthik.188@gmail.com> writes:
 >
-> Let's fix this.
+> > This is a bit of a grey area, what I mean is that we do allow users to =
+create
+> > non "refs/" prefixed refs:
+> >
+> >     $ git update-ref foo @~1
+> >
+> >     $ cat .git/foo
+> >     2b52187cd2930931c6d34436371f470bb26eef4f
+> >
+> > What I mean to say is that, by saying "--include-root-refs" it seems to=
+ imply
+> > that any such refs should be included too, but this simply is not the c=
+ase.
 >
-> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> ---
-> diff --git a/t/t4301-merge-tree-write-tree.sh b/t/t4301-merge-tree-write-=
-tree.sh
-> @@ -951,4 +951,14 @@ test_expect_success '--merge-base with tree OIDs' '
-> +test_expect_success 'error out on missing tree objects' '
-> +       git init --bare missing-tree.git &&
-> +       git rev-list side3 >list &&
-> +       git rev-parse side3^: >list &&
+> But isn't that a quality of implementation issue?  I'd consider it a
+> bug once we have and enforce the definition of what pseudorefs are.
 
-Isn't the git-rev-parse invocation simply overwriting "list" rather
-than appending to it? Did you mean:
+Yeah, that makes sense. I'll use "--include-root-refs" then.
 
-    git rev-list side3 >list &&
-    git rev-parse side3^: >>list &&
-
-An alternative would be:
-
-    {
-        git rev-list side3 &&
-        git rev-parse side3^:
-    } >list &&
-
-> +       git pack-objects missing-tree.git/objects/pack/side3-tree-is-miss=
-ing <list &&
-> +       side3=3D$(git rev-parse side3) &&
-> +       test_must_fail git --git-dir=3Dmissing-tree.git merge-tree $side3=
-^ $side3 >actual &&
-> +       test_must_be_empty actual
-> +'
+Thanks
