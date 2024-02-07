@@ -1,38 +1,39 @@
 Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1DEE3D76
-	for <git@vger.kernel.org>; Wed,  7 Feb 2024 22:31:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0205D149DFD
+	for <git@vger.kernel.org>; Wed,  7 Feb 2024 22:43:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707345087; cv=none; b=G8cDCHXQzmo1IgPLx60fmgPLhjSlWRAFnHXGWs9jYY8QE7cB9Hz5CPpbUXHPT0rfV7oRYpWmdfGkCgJfDrRG7UKAb3yqrLgym8e4Ry8gdd/pIoOgNzgRYBfA3Ywp4/hhA++HnPnNACL7Zj4sqp3xGrliYLaqgccdsNFxeM0tIC4=
+	t=1707345834; cv=none; b=ESVEG5liigdk3XPZto4ehTcfOisvmUa+0g75o1q3qIX/nCTMUVH/4HVcfeT8HX+EF+x050MZbbEo0CUMIZSTU3wANJjs2UooMx3lR4D+Lvp91S+LefTFhfWBr+QbORaKsaKsqLlSoN42mIkNhbgXGIY43EmbqUU97V8aYBnkUnA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707345087; c=relaxed/simple;
-	bh=1gWysid0PVUypSvI2NIdSBjkFxDvFleWyFDeJSxtU6c=;
+	s=arc-20240116; t=1707345834; c=relaxed/simple;
+	bh=y93BkbgeJ6KPZbxdOhogXe/WOMb1XmikuMJRu64OgjU=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=U8TE8FSW09R02uuVHnkr9lFhs0xU18SQnkPfAitWqL04Z4i3C90P2BlCmeMl3mwi+DRLS+TPw8cXgzwVDJqigLEH6jzGAdrcECg6ibTL6xHk1H1ZKSwOixGhxPENnNUx0v8qDW9+OHszWDXzU6LeB+rTg/P89dVcjQJ6YDkiqXg=
+	 Content-Type:Content-Disposition:In-Reply-To; b=EW7QEvwUtPSSB1POsPA/SqgqsIGeYhCkWtkHzTGrMzXAW016blJmX1e/1k4vIpHuwHZBKkgZD2w3Kyno3ZjWn/93rmwFKqk7QIK6wGfADRsSCoxJOb9L0jqJXX9FEI35czVLJNtKz8TItOPwTBdDcJoDSfCJJTDonK/jEffoGTA=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
-Received: (qmail 11701 invoked by uid 109); 7 Feb 2024 22:31:24 -0000
+Received: (qmail 11797 invoked by uid 109); 7 Feb 2024 22:43:51 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 07 Feb 2024 22:31:24 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 07 Feb 2024 22:43:51 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 24032 invoked by uid 111); 7 Feb 2024 22:31:21 -0000
+Received: (qmail 24200 invoked by uid 111); 7 Feb 2024 22:43:51 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 07 Feb 2024 17:31:21 -0500
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 07 Feb 2024 17:43:51 -0500
 Authentication-Results: peff.net; auth=none
-Date: Wed, 7 Feb 2024 17:31:20 -0500
+Date: Wed, 7 Feb 2024 17:43:50 -0500
 From: Jeff King <peff@peff.net>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Han-Wen Nienhuys <hanwen@google.com>,
-	Karthik Nayak <karthik.188@gmail.com>
-Subject: Re: [PATCH v4 1/2] refs: introduce reftable backend
-Message-ID: <20240207223120.GA537741@coredump.intra.peff.net>
-References: <cover.1706601199.git.ps@pks.im>
- <cover.1707288261.git.ps@pks.im>
- <5de60d46bdccbfbf0a923abc2f45eda07f30c110.1707288261.git.ps@pks.im>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Josh Steadmon <steadmon@google.com>, git@vger.kernel.org,
+	johannes.schindelin@gmx.de, phillip.wood@dunelm.org.uk
+Subject: Re: [RFC PATCH v2 6/6] t/Makefile: run unit tests alongside shell
+ tests
+Message-ID: <20240207224350.GA537799@coredump.intra.peff.net>
+References: <cover.1705443632.git.steadmon@google.com>
+ <cover.1706921262.git.steadmon@google.com>
+ <cd7467a7bd51fbc01c999ee1bd7688770b1d11e5.1706921262.git.steadmon@google.com>
+ <xmqqzfwc6lle.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -41,62 +42,50 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <5de60d46bdccbfbf0a923abc2f45eda07f30c110.1707288261.git.ps@pks.im>
+In-Reply-To: <xmqqzfwc6lle.fsf@gitster.g>
 
-On Wed, Feb 07, 2024 at 08:20:31AM +0100, Patrick Steinhardt wrote:
+On Wed, Feb 07, 2024 at 12:55:09PM -0800, Junio C Hamano wrote:
 
-> +static int write_copy_table(struct reftable_writer *writer, void *cb_data)
-> +{
-> [...]
-> +	/*
-> +	 * Create the reflog entry for the newly created branch.
-> +	 */
-> +	ALLOC_GROW(logs, logs_nr + 1, logs_alloc);
-> +	memset(&logs[logs_nr], 0, sizeof(logs[logs_nr]));
-> +	fill_reftable_log_record(&logs[logs_nr]);
-> +	logs[logs_nr].refname = (char *)arg->newname;
-> +	logs[logs_nr].update_index = creation_ts;
-> +	logs[logs_nr].value.update.message =
-> +		xstrndup(arg->logmsg, arg->refs->write_options.block_size / 2);
-> +	logs[logs_nr].value.update.new_hash = old_ref.value.val1;
-> +	logs_nr++;
-> +
-> +	/*
-> +	 * In addition to writing the reflog entry for the new branch, we also
-> +	 * copy over all log entries from the old reflog. Last but not least,
-> +	 * when renaming we also have to delete all the old reflog entries.
-> +	 */
-> +	ret = reftable_merged_table_seek_log(mt, &it, arg->oldname);
-> +	if (ret < 0)
-> +		return ret;
+> > +# A simple wrapper to run shell tests via TEST_SHELL_PATH,
+> > +# or exec unit tests directly.
+> > +
+> > +case "$1" in
+> > +*.sh)
+> > +	exec ${TEST_SHELL_PATH:-/bin/sh} "$@"
+> > +	;;
+> > +*)
+> > +	exec "$@"
+> > +	;;
+> > +esac
+> 
+> Hmph.  This penalizes the non-unit tests by doing an extra "exec",
+> once per program?
 
-Should this last line be "goto done" as is used elsewhere in the
-function? Otherwise we are at least leaking the "logs" array (and
-possibly some of the other cleanup is important, too).
+It does, but IMHO that is not likely to be a problem. It's once per
+top-level script (so ~1000), and each of those scripts spawns hundreds
+or thousands of sub-commands. I didn't do any measurements, though.
 
-> +	while (1) {
-> +		ret = reftable_iterator_next_log(&it, &old_log);
-> +		if (ret < 0)
-> +			goto done;
-> +		if (ret > 0 || strcmp(old_log.refname, arg->oldname)) {
-> +			ret = 0;
-> +			break;
-> +		}
+You can extend "prove" with extra perl modules so that it makes the
+distinction internally without the extra shell invocation. But when I
+tried to do it, I found it rather baroque and complicated (I can't
+remember if I succeeded but found it too gross, or just gave up halfway
+through trying).
 
-This "ret = 0" doesn't have any effect. We break out of the loop, and
-then...
+> Of course we cannot run two $(PROVE) invocations serially, one for
+> doing $(T) and the other for doing $(UNIT_TESTS)?
 
-> +	}
-> +
-> +	ret = reftable_writer_add_logs(writer, logs, logs_nr);
-> +	if (ret < 0)
-> +		goto done;
+Not if they share the same command-line options. If you use something
+like "--state=slow,save", then the first run will write the list of all
+tests to ".prove", and then the second will run every test mentioned in
+.prove (in addition to the unit-tests provided on the command-line).
 
-...the first thing we do is write over it. I dunno if it's worth keeping
-as a maintenance precaution, though (if the code after the loop changed
-to omit that assignment, then setting "ret" would become important).
+You should be able to work around it by passing "--statefile". I _think_
+it might be OK to just do that unconditionally. Something like:
 
-Both were noticed by Coverity (along with several other false
-positives).
+  prove --exec $(TEST_SHELL_PATH $(GIT_PROVE_OPTS) $(T) :: $(GIT_TEST_OPTS)
+  prove --statefile=.prove-unit-tests $(GIT_PROVE_OPTS) $(UNIT_TESTS) :: $(GIT_TEST_OPTS)
+
+and then it's just a noop if GIT_PROVE_OPTS doesn't use --state. But I
+haven't played with it myself.
 
 -Peff
