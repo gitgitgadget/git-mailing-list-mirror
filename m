@@ -1,45 +1,46 @@
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B77D11E516
-	for <git@vger.kernel.org>; Wed,  7 Feb 2024 18:35:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37487126F14
+	for <git@vger.kernel.org>; Wed,  7 Feb 2024 18:46:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707330909; cv=none; b=YK0G+2vNdzygsbmanV9ll8upAD8rWoDUuHB7IXLsp2N6gbu7mrp1y9kSLcLw3h61D/T34KL7DubRfuTCrJdx14hkwmPLSZBiTPqCQz7tozyVLgal9VsNYhVJSaJBaFOl94wBPcmw3CaNksCFPG4BzqSNE05+wtGtu/6puw4NEGU=
+	t=1707331621; cv=none; b=TTttUdOKr3i+w/W1oCoYucvJ65rh/uQB5gWT6rxd9U/gut1nsslzg05W6dShbxCZfoCejcsf/3bRnmzOgXRmNsfgeeZiLGyhcIr0TgAtttpOZXF2bRH5ggLVClXKDg3npyREkpFMcNa8VJA7gC9ALUQjOU1e1ojjaNsEvS3EuDE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707330909; c=relaxed/simple;
-	bh=GRFu9DJBlLBsl34ppe/epCCFaWWpaaWF0nJ1WJC9JTg=;
-	h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type; b=aVNJIIxiJr5Ii/jqvu5Ys/AvFgBZZm7lB8bg7RbUKAFi/tFFctwa24UR62d9FBDg+nSe6la3wEuoSBy+TzSqfKuaj0h5VpV/TZ8FgF9URF4o2UHNDVZgJgV90hfefQAiPQChQ/fxH9GRdIMgZjyfT9DHgLPc1lrLkvacnjc6WwY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=A98du3ss; arc=none smtp.client-ip=173.228.157.53
+	s=arc-20240116; t=1707331621; c=relaxed/simple;
+	bh=WOzyarsPaSX+IF2ugP0y9GBpFVXn8+fxaKmlws5Dh8M=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=j+dDv60yRTHhbr5NYDWuK4kU0THpr9+91AYfXrtm9csI0aggP7k7MiOBFmh7jQAq3MrGlVYVglyERYtIWgukOaFE9jQMNqvM15Y28lruvfR243nBn3P47x8fdtp7/XJy1HLn2NYstIR5cA6QmhwIIERy+LO7vYzzOTwNKklwRcg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=pqh/HFTh; arc=none smtp.client-ip=64.147.108.71
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="A98du3ss"
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id 9C9DD2A81E;
-	Wed,  7 Feb 2024 13:35:01 -0500 (EST)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="pqh/HFTh"
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id BFE6C1D8398;
+	Wed,  7 Feb 2024 13:46:56 -0500 (EST)
 	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to
-	:subject:date:message-id:mime-version:content-type; s=sasl; bh=G
-	RFu9DJBlLBsl34ppe/epCCFaWWpaaWF0nJ1WJC9JTg=; b=A98du3sswztKF2Oio
-	LwiX8a4Sa87eRO6WDEm6et8iKUMh+Glc4d3FpphZ7cnNnTItxw7FFlfJphDGpJjd
-	4M7EgBDTA+T0TVXCTu/+Ti2MjQhs8DgjqiFPrHqKJCJn0xNqd83nLhenDyN3J90P
-	jAxCwFpa4P39m8g592JIjP/Z1Q=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id 9574F2A81D;
-	Wed,  7 Feb 2024 13:35:01 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:date:message-id:mime-version:content-type; s=sasl; bh=W
+	OzyarsPaSX+IF2ugP0y9GBpFVXn8+fxaKmlws5Dh8M=; b=pqh/HFThMgSVWF7kc
+	lRRVi601F7WeF2NiAcXzvtpaWDv7f14JNEh/NdGvH7Q1QBtUZygD2nKSFgrlGAEB
+	7NcCo3M52ji3d90NyxRjpjkRr5ZPjQB6zefKjCuVJxYIWyaSGYXhuGytqTB5dl8g
+	/t43rP/ddoMxOPLppyb83W6mSc=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id B59641D8397;
+	Wed,  7 Feb 2024 13:46:56 -0500 (EST)
 	(envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.125.165.85])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 3CD9C2A81A;
-	Wed,  7 Feb 2024 13:34:58 -0500 (EST)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 15E791D8396;
+	Wed,  7 Feb 2024 13:46:56 -0500 (EST)
 	(envelope-from junio@pobox.com)
 From: Junio C Hamano <gitster@pobox.com>
 To: git@vger.kernel.org
-Subject: [RFH] "git -C there add foo" completes, s/add/diff/ does not
-Date: Wed, 07 Feb 2024 10:34:56 -0800
-Message-ID: <xmqqcyt89l7z.fsf@gitster.g>
+Cc: Sergey Kosukhin <skosukhin@gmail.com>
+Subject: [PATCH] tag: fix sign_buffer() call to create a signed tag
+Date: Wed, 07 Feb 2024 10:46:54 -0800
+Message-ID: <xmqq4jek9ko1.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -49,34 +50,59 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 X-Pobox-Relay-ID:
- 988E3D3A-C5E7-11EE-93EA-A19503B9AAD1-77302942!pb-smtp21.pobox.com
+ 446C4768-C5E9-11EE-BBD7-25B3960A682E-77302942!pb-smtp2.pobox.com
 
-As some of you may already know, I keep an untracked directory
-called "Meta" at the top-level of the working tree of the Git
-source tree.  This "Meta" directory is actually a single-branch
-clone of the git.kernel.org/pub/scm/git/git.git that checks out
-its "todo" branch, where files like whats-cooking.txt lives.
+The command "git tag -s" internally calls sign_buffer() to make a
+cryptographic signature using the chosen backend like GPG and SSH.
+The internal helper functions used by "git tag" implementation seem
+to use a "negative return values are errors, zero or positive return
+values are not" convention, and there are places (e.g., verify_tag()
+that calls gpg_verify_tag()) that these internal helper functions
+translate return values that signal errors to conform to this
+convention, but do_sign() that calls sign_buffer() forgets to do so.
 
-So, what I often would do is
+Fix it, so that a failed call to sign_buffer() that can return the
+exit status from pipe_command() will not be overlooked.
 
-    $ git -C Meta add whats-cooking.txt
+Reported-by: Sergey Kosukhin <skosukhin@gmail.com>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
 
-after updating the draft of the next issue of the "What's cooking"
-report.  The command line completion support for "git add" knows how
-to complete this when I stopped typing the above after whats-" and
-hit <TAB>.  It seems that __git_find_repo_path helper function that
-notices "-C there" and discovers the $GIT_DIR, and _git_add helper
-uses __git_complete_index_file that honors the discovered $GIT_DIR
-to find paths in the correct index, which is wonderful.
+ * We alternatively could fix individual sign_buffer() backend that
+   signals an error with a positive value (sign_buffer_ssh() in this
+   case) to return a negative value, but this would hopefully be
+   more future-proof.
 
-But the same does not work for the step before I can decide to
-actually "add" the contents, which is to "diff", i.e.
+ builtin/tag.c   | 2 +-
+ gpg-interface.h | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-    $ git -C Meta diff whats-<TAB>
-
-does not complete.
-
-Anybody wants to take a crack at it?
-
-Thanks.
+diff --git a/builtin/tag.c b/builtin/tag.c
+index 3918eacbb5..b28ead06ea 100644
+--- a/builtin/tag.c
++++ b/builtin/tag.c
+@@ -176,7 +176,7 @@ static int verify_tag(const char *name, const char *ref UNUSED,
+ 
+ static int do_sign(struct strbuf *buffer)
+ {
+-	return sign_buffer(buffer, buffer, get_signing_key());
++	return sign_buffer(buffer, buffer, get_signing_key()) ? -1 : 0;
+ }
+ 
+ static const char tag_template[] =
+diff --git a/gpg-interface.h b/gpg-interface.h
+index 143cdc1c02..7cd98161f7 100644
+--- a/gpg-interface.h
++++ b/gpg-interface.h
+@@ -66,7 +66,7 @@ size_t parse_signed_buffer(const char *buf, size_t size);
+  * Create a detached signature for the contents of "buffer" and append
+  * it after "signature"; "buffer" and "signature" can be the same
+  * strbuf instance, which would cause the detached signature appended
+- * at the end.
++ * at the end.  Returns 0 on success, non-zero on failure.
+  */
+ int sign_buffer(struct strbuf *buffer, struct strbuf *signature,
+ 		const char *signing_key);
+-- 
+2.43.0-561-g235986be82
 
