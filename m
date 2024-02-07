@@ -1,60 +1,61 @@
-Received: from mail-wr1-f45.google.com (mail-wr1-f45.google.com [209.85.221.45])
+Received: from mail-wm1-f53.google.com (mail-wm1-f53.google.com [209.85.128.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 073C8175A6
-	for <git@vger.kernel.org>; Wed,  7 Feb 2024 10:38:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B3541758E
+	for <git@vger.kernel.org>; Wed,  7 Feb 2024 10:50:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707302326; cv=none; b=Yx8iZYZiyw9RlFXgqzOs/AKsulXef7I3ybAYOQz+gKwJw7K7pDvsqqKpv3tvC2qpaY79VdyBULwvtIYG1qXhNm/8zQR3IgmlJV9QFMysPFdpaOAWEEinusOuQhAQ0M1Vh8MABhbgm7iTuRDE2kJShM3xpCfBhDvvLwtkkQnNAdI=
+	t=1707303012; cv=none; b=HAIfInMU5sgXt0rNXt7LV4Lf3a3LTvEyVKo6F2WaixTUpYvHOhC1wmTmbJMVre+AWe6lKL7T1Hs7iP43ljq2vSsO8mhb816NOZC0DY11l0tJbhUZ9cm6jp7lecvZ7I+UUkw+02kZ22TrKpqIxQWmiWuYhvfUVjqDMx/bf+DsxeE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707302326; c=relaxed/simple;
-	bh=KqzKdZrNdxV9LD06YYBYyiW2u49xdbUtUyrjoTRvzys=;
+	s=arc-20240116; t=1707303012; c=relaxed/simple;
+	bh=FJD2G+7WRzk/6rCDERoltLXN4/oTaBmFfVv6whjCxGg=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=o++d84tXPPXqgvnWSHMA3MNDjTToZH6BB3vtxfmHnIqlXFZu55EaIzxcdXmS30oImmHLVase4FF+ig8SCCmhwzl1IkqpUE9TgZGBh8qT18V3Ysr3eFm83qRlrbFV8Hm5kTGY8iiVTcl7lnvRZ/L5fvdn+MOHgLOlZ0OR+DEV2UI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jfim0zWN; arc=none smtp.client-ip=209.85.221.45
+	 In-Reply-To:Content-Type; b=pUYjsrNqagNoBrXVFJ8By6wCIy8oxXUBXRXPjHceY4z7UAc+Noig5S8ki9y3a1Wck+wIcCHAA4MttLmumViHjOvvL2sQtDRtXFe3Gx6f73ZyRb06Y51bDUk1jslHzK5CU/cT5IdILUfHPbJEqtpAPh3LrMuQ3HJq0DAg/2vrdDs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Bb2VmlkP; arc=none smtp.client-ip=209.85.128.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jfim0zWN"
-Received: by mail-wr1-f45.google.com with SMTP id ffacd0b85a97d-33b18099411so348279f8f.0
-        for <git@vger.kernel.org>; Wed, 07 Feb 2024 02:38:44 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Bb2VmlkP"
+Received: by mail-wm1-f53.google.com with SMTP id 5b1f17b1804b1-40fff96d5d7so3879295e9.2
+        for <git@vger.kernel.org>; Wed, 07 Feb 2024 02:50:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1707302323; x=1707907123; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1707303009; x=1707907809; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:reply-to:user-agent:mime-version:date
          :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=1W+gvetXZ42LoORZGQR4BpuXc5hvDwdAv5rERF3GURg=;
-        b=jfim0zWNNrRFLOwzX5JNqHYW+ONOkFqXfjplDiNYA4CsAl5a4MqOeqD+t0TbvSbiey
-         Upv7Q42MLMI732kps4YsjEngxkDeQUw9Sf3OCMIBaul67Q6zb8v8HDU2cmFIZmFv6ydJ
-         k8OYFM4zjia/Wwtc0E389GFJnaacFyqRQnjbl/PaAWevhlxbfGnB0vPxZqSVlTPCChIe
-         8YGyrtvYLHP3LOt1X6Zexb16XFrxUR5HEwKU9D87D+54vj0MxSaL1g5/7okaJNIQ7O25
-         FSLrlZbcEM+oxJUjOE68y0xtDxIHA3+4ks7FouNBjUwe6ojUqevqjSeUurLaHSnu2AiS
-         RrLQ==
+        bh=+wzi4USkURGXEUWErHPo/4NGPTVmFGRjiYK+pumcQSw=;
+        b=Bb2VmlkP7MKGsId58ncsLRdO+5hqt9n+2p6JqEIyVSxvHme6W5jtq9GaabsL5DWGkw
+         2sCePOFW9vOpDJ05UNgsmrG8QrCQxt7qicjgeAxCXSoH2oPGA3ZG74rSGrbieUHsCYVh
+         tFBK+8a4QEHvIEWzbWNVSFONQKgrp/b1LFhWbx7S7tWPkOXn7XGCxEynL2yPEoyyj87k
+         4I86OOn+k0E3+z16EC4LpJVVtrezoaHU50uG2DaTSCcHbrgaHJxGRuIwbvoVZTL3qcM2
+         pFyVllYUqs66iY8hoLNwkeBvK7j4faipEG0AlVQj37uNjydg70UzILV6MODv+37emSuv
+         RPKg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1707302323; x=1707907123;
+        d=1e100.net; s=20230601; t=1707303009; x=1707907809;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:reply-to:user-agent:mime-version:date
          :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=1W+gvetXZ42LoORZGQR4BpuXc5hvDwdAv5rERF3GURg=;
-        b=BUN+lL/CGHoIy6IULImQLQhWWbeJRTQl9QIU8j2LOlx8ROLfjt2ZEWUTGX0tGX5pOt
-         XHq2D4HVBVEzpSMKVjf2LCLNDPTbRgRUkkGZndW4B+SUnDr4rInhdwGH246Q4j3p38Cd
-         H2gA2sC914oHdasYLwMUzOiSK+d3HTcgQV8sk1mp03ZT9vB+KZ793dLkAYL8nc+Ytljz
-         ugA9nVaoW4h3dPKBWdh4mTjpqlg04AabpBTI0afLlBzCZaTY4I+yvac9KBBexGAHOgn2
-         RlhfLj0UaDgjEUWhV+/rBYfbqCAialLZlyg5G8f61M+E47JBuA9xLq1BJdN1/EQydlXR
-         9hAA==
-X-Gm-Message-State: AOJu0YzIyLnZrR7P6Sn12w16ugknj+eR2Sd1oYhMTSJ6LBsWPW1TTNAB
-	aBZGgd0CIlErtGBAQ951j9lclHsn0qFYohmESyeC8i529FfvZbHr
-X-Google-Smtp-Source: AGHT+IHcswYLBQ16yVhvewk7AHujB27ecehrWXe+D5GFzG9Z1fanzljD/NOlkumFsW/b0O3LRrLgIQ==
-X-Received: by 2002:a05:6000:4021:b0:33b:47d0:52ce with SMTP id cp33-20020a056000402100b0033b47d052cemr4596599wrb.25.1707302323012;
-        Wed, 07 Feb 2024 02:38:43 -0800 (PST)
-X-Forwarded-Encrypted: i=1; AJvYcCVSFZkjOGHcPImXWZRJBXaZLf0Fgbgizv+1OqLZd4x+EqEq7DXX6y6IDT+BaMrUL6ez3/l0pf7go2Pj/yARC+/zR1t3Qf1osYk0l616zdYir8rjvWA=
+        bh=+wzi4USkURGXEUWErHPo/4NGPTVmFGRjiYK+pumcQSw=;
+        b=KcypW5M7CaXOOu9or6/dMKYuukHOQyLu7VV0X3FBQ9yKADi31psYDtjCzQTdM41zzS
+         wYPrSlJYL68Q2UTsqv79kLZipr36LjwGVHB3S1ErZdbsFSYTrP5tylhxtX75SI9j5ZuR
+         xYcjaIALNmuNhw3VT9wlcln4xAbbodCWQZoHlFaWNamjevRqVeKWibaRLu+xuzIYX4kA
+         hokTeiK5BKY5psYHMP7ZdfsIjLfsvn3GJDYJLhyLLEXNFV4kOOSTH//9RsufqokmQZSv
+         ZbSUg4cT45uFsoijBCzEH9zkdA4Xah8qhb0Wqcc/jAcFVLHHG7Tr1mSZXmGQZrBcf8We
+         4cEA==
+X-Forwarded-Encrypted: i=1; AJvYcCU55qRJ3OmfduaDHI/BL6T2mUzkpoi6/wrj1wFX3yUFHBcH+dJOuxK2TbZHDskGLCseZyYNE3WJ+a3OCJ8I8thRugji
+X-Gm-Message-State: AOJu0YyMccUlvzbHBXHas+mvv0ZM2WoAQJRFt11lGFtfKuOmwd2k2IQs
+	lfo/sif1qDioki6qlgC50IQ9xvbe3xU9vIfNGm1PbNTc2AeAaMQ8
+X-Google-Smtp-Source: AGHT+IHlE5p+PJT6cbNPQqHdOfNhKstltyhhuFpeIwbJ5TJXFyt1Y52jcAFZXHqRxYX6+isDZFfQUg==
+X-Received: by 2002:a5d:4523:0:b0:337:c4c2:8141 with SMTP id j3-20020a5d4523000000b00337c4c28141mr3230447wra.35.1707303008393;
+        Wed, 07 Feb 2024 02:50:08 -0800 (PST)
+X-Forwarded-Encrypted: i=1; AJvYcCUUO9LjNAKTBX8MSCcsi/P8c5AuFmNTPIucoQEIPpnRIbu95n4MOurJTvKjV0HJkxbJU5gWjBo4OHV+9KC7lm52rM5QBWigsL9soX/oW1k=
 Received: from ?IPV6:2a0a:ef40:62e:a901:d2c6:37ff:fef6:7b1? ([2a0a:ef40:62e:a901:d2c6:37ff:fef6:7b1])
-        by smtp.googlemail.com with ESMTPSA id e22-20020adfa456000000b0033b4e5f54c4sm1112558wra.79.2024.02.07.02.38.42
+        by smtp.googlemail.com with ESMTPSA id b15-20020a05600010cf00b0033b4e58746asm1140381wrx.69.2024.02.07.02.50.07
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 07 Feb 2024 02:38:42 -0800 (PST)
-Message-ID: <1aabcaec-7266-40f8-b7ce-e82b8df58891@gmail.com>
-Date: Wed, 7 Feb 2024 10:38:41 +0000
+        Wed, 07 Feb 2024 02:50:08 -0800 (PST)
+Message-ID: <8baa44ef-4960-4f0d-8cab-38d3d6ff971a@gmail.com>
+Date: Wed, 7 Feb 2024 10:50:07 +0000
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -63,65 +64,252 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v4 2/3] add-patch: classify '@' as a synonym for 'HEAD'
+Subject: Re: [PATCH v4 3/3] add -p tests: remove Perl prerequisite
 Content-Language: en-US
-To: Junio C Hamano <gitster@pobox.com>,
- Ghanshyam Thakkar <shyamthakkar001@gmail.com>
-Cc: git@vger.kernel.org, ps@pks.im
+To: Ghanshyam Thakkar <shyamthakkar001@gmail.com>, git@vger.kernel.org
+Cc: gitster@pobox.com, ps@pks.im
 References: <20240203112619.979239-2-shyamthakkar001@gmail.com>
- <20240206225122.1095766-6-shyamthakkar001@gmail.com>
- <xmqqil31dqx6.fsf@gitster.g>
+ <20240206225122.1095766-7-shyamthakkar001@gmail.com>
 From: Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <xmqqil31dqx6.fsf@gitster.g>
+In-Reply-To: <20240206225122.1095766-7-shyamthakkar001@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 07/02/2024 01:05, Junio C Hamano wrote:
-> Ghanshyam Thakkar <shyamthakkar001@gmail.com> writes:
-> 
->> Currently, (checkout, reset, restore) commands correctly take '@' as a
->> synonym for 'HEAD'. However, in patch mode (-p/--patch), for both '@'
->> and 'HEAD', different prompts/messages are given by the commands
->> mentioned above (because of applying reverse mode(-R) in case of '@').
->> This is due to the literal and only string comparison with the word
->> 'HEAD' in run_add_p(). Synonymity between '@' and 'HEAD' is obviously
->> desired, especially since '@' already resolves to 'HEAD'.
->>
->> Therefore, replace '@' to 'HEAD' at the beginning of
->> add-patch.c:run_add_p().
-> 
-> Of course there is only one possible downside for this approach, in
-> that if we are using "revision" in an error message, users who asked
-> for "@" may complain when an error message says "HEAD" in it.  I think
-> the simplicity of the implementation far outweighs this downside.
+Hi Ghanshyam
 
-I agree, if we were replacing the revision the user gave us with a hex 
-object id that would be confusing but as "@" is just a shortcut for 
-"HEAD" I think replacing it in the error message is fine. It was a good 
-idea just to replace "@" with "HEAD", this version is much simpler.
+On 06/02/2024 22:50, Ghanshyam Thakkar wrote:
+ > The Perl version of the add -i/-p commands has been removed since
+ > 20b813d (add: remove "add.interactive.useBuiltin" & Perl "git
+ > add--interactive", 2023-02-07)
+ >
+ > Therefore, Perl prerequisite in t2071-restore-patch and
+ > t7105-reset-patch is not necessary.
+
+Thanks for adding this patch. If you do re-roll I've just noticed that 
+one of the tests in t7106-reset-unborn-branch.sh and another in 
+t2024-checkout-dwim.sh still have PERL prerequisites as well. I don't 
+think it is worth re-rolling just for that as we can clean them up 
+separately if needed.
 
 Best Wishes
 
 Phillip
 
->> There is also logic in builtin/checkout.c to
->> convert all command line input rev to the raw object name for underlying
->> machinery (e.g., diff-index) that does not recognize the <a>...<b>
->> notation, but we'd need to leave 'HEAD' intact. Now we need to teach
->> that '@' is a synonym to 'HEAD' to that code and leave '@' intact, too.
+> Signed-off-by: Ghanshyam Thakkar <shyamthakkar001@gmail.com>
+> ---
+>   t/t2071-restore-patch.sh | 26 +++++++++++++-------------
+>   t/t7105-reset-patch.sh   | 22 +++++++++++-----------
+>   2 files changed, 24 insertions(+), 24 deletions(-)
 > 
-> Makes me wonder why we cannot use the same "normalize @ to HEAD
-> upfront" approach here, though?
-> 
-> It would involve translating "@" given to new_branch_info->name to
-> "HEAD" early, possibly in setup_new_branch_info_and_source_tree(),
-> and that probably will fix the other strcmp() with "HEAD" that
-> appears in builtin/checkout.c:update_refs_for_switch() as well, no?
-> 
->> +	/* helpful in deciding the patch mode ahead */
->> +	if(revision && !strcmp(revision, "@"))
->> +		revision = "HEAD";
-> 
-> Style.  "if (revision ...)"
-> 
+> diff --git a/t/t2071-restore-patch.sh b/t/t2071-restore-patch.sh
+> index dbbefc188d..27e85be40a 100755
+> --- a/t/t2071-restore-patch.sh
+> +++ b/t/t2071-restore-patch.sh
+> @@ -4,7 +4,7 @@ test_description='git restore --patch'
+>   
+>   . ./lib-patch-mode.sh
+>   
+> -test_expect_success PERL 'setup' '
+> +test_expect_success 'setup' '
+>   	mkdir dir &&
+>   	echo parent >dir/foo &&
+>   	echo dummy >bar &&
+> @@ -16,28 +16,28 @@ test_expect_success PERL 'setup' '
+>   	save_head
+>   '
+>   
+> -test_expect_success PERL 'restore -p without pathspec is fine' '
+> +test_expect_success 'restore -p without pathspec is fine' '
+>   	echo q >cmd &&
+>   	git restore -p <cmd
+>   '
+>   
+>   # note: bar sorts before dir/foo, so the first 'n' is always to skip 'bar'
+>   
+> -test_expect_success PERL 'saying "n" does nothing' '
+> +test_expect_success 'saying "n" does nothing' '
+>   	set_and_save_state dir/foo work head &&
+>   	test_write_lines n n | git restore -p &&
+>   	verify_saved_state bar &&
+>   	verify_saved_state dir/foo
+>   '
+>   
+> -test_expect_success PERL 'git restore -p' '
+> +test_expect_success 'git restore -p' '
+>   	set_and_save_state dir/foo work head &&
+>   	test_write_lines n y | git restore -p &&
+>   	verify_saved_state bar &&
+>   	verify_state dir/foo head head
+>   '
+>   
+> -test_expect_success PERL 'git restore -p with staged changes' '
+> +test_expect_success 'git restore -p with staged changes' '
+>   	set_state dir/foo work index &&
+>   	test_write_lines n y | git restore -p &&
+>   	verify_saved_state bar &&
+> @@ -56,7 +56,7 @@ do
+>   	'
+>   done
+>   
+> -test_expect_success PERL 'git restore -p --source=HEAD^' '
+> +test_expect_success 'git restore -p --source=HEAD^' '
+>   	set_state dir/foo work index &&
+>   	# the third n is to get out in case it mistakenly does not apply
+>   	test_write_lines n y n | git restore -p --source=HEAD^ &&
+> @@ -64,7 +64,7 @@ test_expect_success PERL 'git restore -p --source=HEAD^' '
+>   	verify_state dir/foo parent index
+>   '
+>   
+> -test_expect_success PERL 'git restore -p --source=HEAD^...' '
+> +test_expect_success 'git restore -p --source=HEAD^...' '
+>   	set_state dir/foo work index &&
+>   	# the third n is to get out in case it mistakenly does not apply
+>   	test_write_lines n y n | git restore -p --source=HEAD^... &&
+> @@ -72,7 +72,7 @@ test_expect_success PERL 'git restore -p --source=HEAD^...' '
+>   	verify_state dir/foo parent index
+>   '
+>   
+> -test_expect_success PERL 'git restore -p handles deletion' '
+> +test_expect_success 'git restore -p handles deletion' '
+>   	set_state dir/foo work index &&
+>   	rm dir/foo &&
+>   	test_write_lines n y | git restore -p &&
+> @@ -85,21 +85,21 @@ test_expect_success PERL 'git restore -p handles deletion' '
+>   # dir/foo.  There's always an extra 'n' to reject edits to dir/foo in
+>   # the failure case (and thus get out of the loop).
+>   
+> -test_expect_success PERL 'path limiting works: dir' '
+> +test_expect_success 'path limiting works: dir' '
+>   	set_state dir/foo work head &&
+>   	test_write_lines y n | git restore -p dir &&
+>   	verify_saved_state bar &&
+>   	verify_state dir/foo head head
+>   '
+>   
+> -test_expect_success PERL 'path limiting works: -- dir' '
+> +test_expect_success 'path limiting works: -- dir' '
+>   	set_state dir/foo work head &&
+>   	test_write_lines y n | git restore -p -- dir &&
+>   	verify_saved_state bar &&
+>   	verify_state dir/foo head head
+>   '
+>   
+> -test_expect_success PERL 'path limiting works: HEAD^ -- dir' '
+> +test_expect_success 'path limiting works: HEAD^ -- dir' '
+>   	set_state dir/foo work head &&
+>   	# the third n is to get out in case it mistakenly does not apply
+>   	test_write_lines y n n | git restore -p --source=HEAD^ -- dir &&
+> @@ -107,7 +107,7 @@ test_expect_success PERL 'path limiting works: HEAD^ -- dir' '
+>   	verify_state dir/foo parent head
+>   '
+>   
+> -test_expect_success PERL 'path limiting works: foo inside dir' '
+> +test_expect_success 'path limiting works: foo inside dir' '
+>   	set_state dir/foo work head &&
+>   	# the third n is to get out in case it mistakenly does not apply
+>   	test_write_lines y n n | (cd dir && git restore -p foo) &&
+> @@ -115,7 +115,7 @@ test_expect_success PERL 'path limiting works: foo inside dir' '
+>   	verify_state dir/foo head head
+>   '
+>   
+> -test_expect_success PERL 'none of this moved HEAD' '
+> +test_expect_success 'none of this moved HEAD' '
+>   	verify_saved_head
+>   '
+>   
+> diff --git a/t/t7105-reset-patch.sh b/t/t7105-reset-patch.sh
+> index 7147148138..3691b94d1b 100755
+> --- a/t/t7105-reset-patch.sh
+> +++ b/t/t7105-reset-patch.sh
+> @@ -5,7 +5,7 @@ test_description='git reset --patch'
+>   TEST_PASSES_SANITIZE_LEAK=true
+>   . ./lib-patch-mode.sh
+>   
+> -test_expect_success PERL 'setup' '
+> +test_expect_success 'setup' '
+>   	mkdir dir &&
+>   	echo parent > dir/foo &&
+>   	echo dummy > bar &&
+> @@ -19,14 +19,14 @@ test_expect_success PERL 'setup' '
+>   
+>   # note: bar sorts before foo, so the first 'n' is always to skip 'bar'
+>   
+> -test_expect_success PERL 'saying "n" does nothing' '
+> +test_expect_success 'saying "n" does nothing' '
+>   	set_and_save_state dir/foo work work &&
+>   	test_write_lines n n | git reset -p &&
+>   	verify_saved_state dir/foo &&
+>   	verify_saved_state bar
+>   '
+>   
+> -test_expect_success PERL 'git reset -p' '
+> +test_expect_success 'git reset -p' '
+>   	test_write_lines n y | git reset -p >output &&
+>   	verify_state dir/foo work head &&
+>   	verify_saved_state bar &&
+> @@ -43,28 +43,28 @@ do
+>   	'
+>   done
+>   
+> -test_expect_success PERL 'git reset -p HEAD^' '
+> +test_expect_success 'git reset -p HEAD^' '
+>   	test_write_lines n y | git reset -p HEAD^ >output &&
+>   	verify_state dir/foo work parent &&
+>   	verify_saved_state bar &&
+>   	test_grep "Apply" output
+>   '
+>   
+> -test_expect_success PERL 'git reset -p HEAD^^{tree}' '
+> +test_expect_success 'git reset -p HEAD^^{tree}' '
+>   	test_write_lines n y | git reset -p HEAD^^{tree} >output &&
+>   	verify_state dir/foo work parent &&
+>   	verify_saved_state bar &&
+>   	test_grep "Apply" output
+>   '
+>   
+> -test_expect_success PERL 'git reset -p HEAD^:dir/foo (blob fails)' '
+> +test_expect_success 'git reset -p HEAD^:dir/foo (blob fails)' '
+>   	set_and_save_state dir/foo work work &&
+>   	test_must_fail git reset -p HEAD^:dir/foo &&
+>   	verify_saved_state dir/foo &&
+>   	verify_saved_state bar
+>   '
+>   
+> -test_expect_success PERL 'git reset -p aaaaaaaa (unknown fails)' '
+> +test_expect_success 'git reset -p aaaaaaaa (unknown fails)' '
+>   	set_and_save_state dir/foo work work &&
+>   	test_must_fail git reset -p aaaaaaaa &&
+>   	verify_saved_state dir/foo &&
+> @@ -76,27 +76,27 @@ test_expect_success PERL 'git reset -p aaaaaaaa (unknown fails)' '
+>   # dir/foo.  There's always an extra 'n' to reject edits to dir/foo in
+>   # the failure case (and thus get out of the loop).
+>   
+> -test_expect_success PERL 'git reset -p dir' '
+> +test_expect_success 'git reset -p dir' '
+>   	set_state dir/foo work work &&
+>   	test_write_lines y n | git reset -p dir &&
+>   	verify_state dir/foo work head &&
+>   	verify_saved_state bar
+>   '
+>   
+> -test_expect_success PERL 'git reset -p -- foo (inside dir)' '
+> +test_expect_success 'git reset -p -- foo (inside dir)' '
+>   	set_state dir/foo work work &&
+>   	test_write_lines y n | (cd dir && git reset -p -- foo) &&
+>   	verify_state dir/foo work head &&
+>   	verify_saved_state bar
+>   '
+>   
+> -test_expect_success PERL 'git reset -p HEAD^ -- dir' '
+> +test_expect_success 'git reset -p HEAD^ -- dir' '
+>   	test_write_lines y n | git reset -p HEAD^ -- dir &&
+>   	verify_state dir/foo work parent &&
+>   	verify_saved_state bar
+>   '
+>   
+> -test_expect_success PERL 'none of this moved HEAD' '
+> +test_expect_success 'none of this moved HEAD' '
+>   	verify_saved_head
+>   '
+>   
 
