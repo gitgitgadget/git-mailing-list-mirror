@@ -1,91 +1,104 @@
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+Received: from fout8-smtp.messagingengine.com (fout8-smtp.messagingengine.com [103.168.172.151])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9B2D13A244
-	for <git@vger.kernel.org>; Wed,  7 Feb 2024 21:44:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEFC413A267
+	for <git@vger.kernel.org>; Wed,  7 Feb 2024 21:48:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707342293; cv=none; b=Yq1bbR7XckkPRNjwl2zOPBl0LSahuUoGVmuA6YKX9HR5jEhxHDa8AQs9jsFxBTMdVXJi2kkT07ggYD5xGy25IiZ0Idwls6uUqWHAbEC/IwV+emsDVKp2fe9k011Fxx6AwYATf93H1D0z2/K8Z4Z8EWay/tWke+hwrBR/b5h4WYU=
+	t=1707342483; cv=none; b=Q9cI0lgAq437mG93PCElzN2bjme/cvMTQUhspnJ26ruI06fUn+FHAtk29qPvpz6AwW1dHWSlZB1dWe9U7mTnw9dpVgYJ2/IgZK4EUd5rpmdIE9z5ynk84whrJTJqp+bbWrgWYpFys7HIWjD7CAErrIvuYgnpbbQwYU9vDPy5BV8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707342293; c=relaxed/simple;
-	bh=VkVU8bZIupGREFb6UOOGQIhb5u+sScx6bTcHAUtHGpg=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qlCh0e/Lxk7VY+w/bmbJ8jIAoJSwQej+Q4cqJkIypEw3UT7pDKujaXl1ewTNG1KDYGsAk2nn0k/LF1rWIKvyspclN0D8DN9avysfCpQEvwHtcsnHGnt+6Cfw8LeTMxzloC/F7A+0Fy/VBkJ2YEClVmCMUntQqxiM7ik8O+OEcMo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=gSKF+Au4; arc=none smtp.client-ip=173.228.157.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1707342483; c=relaxed/simple;
+	bh=fteVdpun+5W2GkS/y1TEAkYSx9jmounOshotf7ITHU0=;
+	h=MIME-Version:Message-Id:In-Reply-To:References:Date:From:To:Cc:
+	 Subject:Content-Type; b=HavQXb1Dij7Y7E+LYchi9jnOuX6qarBSonaTi2sSUe5uslKu4q0/9S7jPDbS5APn9xTAHG3nczUdUZDreuqHkSFU0byOzMTVkARjsla7nAPqPA7irtpRojbtplEOa5O64VpgOi9cgEPHKbe0fX8ED3Caeiate4gLWOtsz3UgGb8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=khaugsbakk.name; spf=pass smtp.mailfrom=khaugsbakk.name; dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b=MOr6Dzjz; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ny92gRw+; arc=none smtp.client-ip=103.168.172.151
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=khaugsbakk.name
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=khaugsbakk.name
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="gSKF+Au4"
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id 0F5AF2BD3C;
-	Wed,  7 Feb 2024 16:44:51 -0500 (EST)
-	(envelope-from gitster@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:date:message-id:in-reply-to:references:mime-version
-	:content-transfer-encoding; s=sasl; bh=VkVU8bZIupGREFb6UOOGQIhb5
-	u+sScx6bTcHAUtHGpg=; b=gSKF+Au4vKtA0s/dudVT8ShtxB8mm7becG6MDoocV
-	Yo0SvFlJv2qntlrco9jfiDBmZTH7rLj3DHye6WLl99yg3iNm6ofcBtAfVXaEcZLd
-	cnERi0nc099idXliOxPqp4kBAQ2amFxS8PECKZE9cF+xHIZ/oRNy3PeN3CXBYKzP
-	lE=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id 0735A2BD3B;
-	Wed,  7 Feb 2024 16:44:51 -0500 (EST)
-	(envelope-from gitster@pobox.com)
-Received: from pobox.com (unknown [34.125.165.85])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 967D02BD39;
-	Wed,  7 Feb 2024 16:44:46 -0500 (EST)
-	(envelope-from gitster@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-Cc: Matthieu Moy <git@matthieu-moy.fr>
-Subject: [PATCH 2/2] bisect: document command line arguments for "bisect start"
-Date: Wed,  7 Feb 2024 13:44:36 -0800
-Message-ID: <20240207214436.538586-3-gitster@pobox.com>
-X-Mailer: git-send-email 2.43.0-561-g235986be82
-In-Reply-To: <20240207214436.538586-1-gitster@pobox.com>
-References: <24a42fa6-7bc4-4a3b-8bf4-a0ef85dc457a@matthieu-moy.fr>
- <20240207214436.538586-1-gitster@pobox.com>
+	dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b="MOr6Dzjz";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ny92gRw+"
+Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
+	by mailfout.nyi.internal (Postfix) with ESMTP id A60A313800B5;
+	Wed,  7 Feb 2024 16:48:00 -0500 (EST)
+Received: from imap49 ([10.202.2.99])
+  by compute1.internal (MEProxy); Wed, 07 Feb 2024 16:48:00 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=khaugsbakk.name;
+	 h=cc:cc:content-transfer-encoding:content-type:content-type
+	:date:date:from:from:in-reply-to:in-reply-to:message-id
+	:mime-version:references:reply-to:subject:subject:to:to; s=fm2;
+	 t=1707342480; x=1707428880; bh=BInNS6GYWiC+YqwNONwvKffDwipVlfrV
+	liebOtmaQ1Q=; b=MOr6Dzjz0BOY09FereflULcAt8vrgo6RFQPNx7pf49Wkg74/
+	BCHliRjJOI4vHIxx8RK4lVhJPjM+Nj9/lVKxOfYjq72mKIt/iJPcBJZ5FlE/z0T4
+	iDOWMFWcZOOAqzz1/hmW4Eq7h3Q80Q6xV8I+MkoQo2aadcZrebEeqzpHjLGh65GN
+	2nLLpOVPoh2F+un6dXPwB0u11y/I/XOARDLslp+IauNlnPm56se/TIuPmXmLWa+b
+	LOVdnLr19VKUi/berS9/jmy8uqipXWuV1wPPbMPXPZmTlw1OBNuxK3TMgl6mpbML
+	beBDO/HCmQwURQqtU5KPrTz6tv1Uu/OQWeQ37w==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1707342480; x=
+	1707428880; bh=BInNS6GYWiC+YqwNONwvKffDwipVlfrVliebOtmaQ1Q=; b=n
+	y92gRw+aPWSmkP1L/WqPUn+RVvXIm7sEH38+evLoYvhyFLGEJePz33Fl/WV9+WyD
+	CmUq0YBF0dT42d6+iNorznBT8OdYxjVpP1vWX39Rn/M60XYHefnIKJ7RXZwjx4JH
+	JW7bB9cOtQWiTU3CoPZbu/eE0L1h8oITHSRQ26fU8o5VDq0MX/SeRdGSJLwm6E6b
+	egk9iw+gHSTlfpMNQ992FjLfLrnwfYp97xBJrb+I6OuN+Xcqku8eRlZB6XUqd5ob
+	10XpCxAMpiiM85tkI/JvjFH9WBOcnAAfXUF3cOd5vhAgS1V6gSGKxy2NeqqZgAAj
+	59Dqye0V0cJiUjT9u+JhQ==
+X-ME-Sender: <xms:kPrDZcWJpZtJVsdCk7EKtW2YywObkpFBeEUk0TNJSNhsNhHh0ev38S0>
+    <xme:kPrDZQnD1B7K86r4cIIKdMA6Via_cEML3vmxttsfmNkuv-9rEVWBtA0MhBNZqqhXi
+    06kVBghk_-kSowIig>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrtddvgdduhedtucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+    cujfgurhepofgfggfkjghffffhvfevufgtgfesthhqredtreerjeenucfhrhhomhepfdfm
+    rhhishhtohhffhgvrhcujfgruhhgshgsrghkkhdfuceotghouggvsehkhhgruhhgshgsrg
+    hkkhdrnhgrmhgvqeenucggtffrrghtthgvrhhnpedvveehiedufeehffdvteeuveekhefh
+    leeigfektdeifeduteeuheeufeetffefudenucevlhhushhtvghrufhiiigvpedtnecurf
+    grrhgrmhepmhgrihhlfhhrohhmpegtohguvgeskhhhrghughhssggrkhhkrdhnrghmvg
+X-ME-Proxy: <xmx:kPrDZQZ5fdmIWBkvSC854sJLbgSCDXe3_P0WgMeU7zg6hcOOmMgf6w>
+    <xmx:kPrDZbVXk1_5T5rtJBtKp3iEGSBqIYzeb--7NYMnTmrGl31OC_UxCA>
+    <xmx:kPrDZWm6qB9LDE-XsylhfiVtwTxbwSnHMbUKi4pXmaE6y1za9xUfsA>
+    <xmx:kPrDZavE9wg-rCPkrV68IuPBnFUimIUYyz0tFnC4NHIyuwlMB6LYhA>
+Feedback-ID: i2671468f:Fastmail
+Received: by mailuser.nyi.internal (Postfix, from userid 501)
+	id 682E315A0093; Wed,  7 Feb 2024 16:48:00 -0500 (EST)
+X-Mailer: MessagingEngine.com Webmail Interface
+User-Agent: Cyrus-JMAP/3.11.0-alpha0-144-ge5821d614e-fm-20240125.002-ge5821d61
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-Pobox-Relay-ID:
- 1C8D2CE4-C602-11EE-8219-A19503B9AAD1-77302942!pb-smtp21.pobox.com
+Message-Id: <a18532ba-b168-4928-bced-d1604a483f24@app.fastmail.com>
+In-Reply-To: 
+ <CAGHpTBKpYp370QTw93wK_RP+X2S+44jd-8kjodiUj4k0BoAEqA@mail.gmail.com>
+References: 
+ <CAGHpTBKpYp370QTw93wK_RP+X2S+44jd-8kjodiUj4k0BoAEqA@mail.gmail.com>
+Date: Wed, 07 Feb 2024 22:47:40 +0100
+From: "Kristoffer Haugsbakk" <code@khaugsbakk.name>
+To: "Orgad Shaneh" <orgads@gmail.com>
+Cc: git <git@vger.kernel.org>
+Subject: Re: git gc destroys autostash
+Content-Type: text/plain;charset=utf-8
 Content-Transfer-Encoding: quoted-printable
 
-The syntax commonly used for alternatives is --opt-(a|b), not
---opt-{a,b}.
+On Wed, Feb 7, 2024, at 21:52, Orgad Shaneh wrote:
+> Running git gc --prune=3Dnow during rebase with autostash deletes the
+> autostash object, and it cannot be recovered when the rebase ends.
 
-List bad/new and good/old consistently in this order, to be
-consistent with the description for "git bisect terms".  Clarify
-<term> to either <term-old> or <term-new> to make them consistent
-with the description of "git bisect (good|bad)" subcommands.
+Things like this is why I don=E2=80=99t use the stash.[1][2] I just comm=
+it
+everything of value and non-value.
 
-Suggested-by: Matthieu Moy <git@matthieu-moy.fr>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- Documentation/git-bisect.txt | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+=E2=80=A0 1: With very rare exceptions where the stash is popped before =
+the
+    whole operation leaves my own working memory
+=E2=80=A0 2: Also how you have to find unreachable objects using git-fsc=
+k(1) if
+    you pop the last stash
 
-diff --git a/Documentation/git-bisect.txt b/Documentation/git-bisect.txt
-index 3d813f9c77..73f889b97b 100644
---- a/Documentation/git-bisect.txt
-+++ b/Documentation/git-bisect.txt
-@@ -16,7 +16,7 @@ DESCRIPTION
- The command takes various subcommands, and different options depending
- on the subcommand:
-=20
-- git bisect start [--term-{new,bad}=3D<term> --term-{old,good}=3D<term>]
-+ git bisect start [--term-(bad|new)=3D<term-new> --term-(good|old)=3D<te=
-rm-old>]
- 		  [--no-checkout] [--first-parent] [<bad> [<good>...]] [--] [<paths>..=
-.]
-  git bisect (bad|new|<term-new>) [<rev>]
-  git bisect (good|old|<term-old>) [<rev>...]
 --=20
-2.43.0-561-g235986be82
-
+Kristoffer Haugsbakk
