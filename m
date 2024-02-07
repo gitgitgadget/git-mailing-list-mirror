@@ -1,192 +1,96 @@
-Received: from mail-pl1-f171.google.com (mail-pl1-f171.google.com [209.85.214.171])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30E951CD1E
-	for <git@vger.kernel.org>; Tue,  6 Feb 2024 23:05:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DA698F55
+	for <git@vger.kernel.org>; Wed,  7 Feb 2024 01:06:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707260735; cv=none; b=Xs0d38g8NAHmYsMGLeGCQBAIJpMwPhao7gy1T8jDWNyMUpvVsFUtXw/Y19APc+az1wy0wBqtGG2kybyzpmNUOVpJJm9kAfmBbEvFICBvOtpwU3AJshA4nMNZFrARnvR7fk7EdKjOoe9QEpnFofk3gf/sti7ZtXpjpEJQ/agC1Bs=
+	t=1707267970; cv=none; b=paD3SBmFuY+VcT4hm327ZV+i1uFwmXyBAD49a72xLb6wOWUvux0gW9kFAGG8IDUbWcIydFlsIvCoRTzvkagpPjChZw7pYl+A5kZjGgII3IaSdSmDVTLO7GlQx2XG2Tu5mnicSrAxrv5VGbC1rQ5NrEhKBLOKvwxjTpoOXlY39Wg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707260735; c=relaxed/simple;
-	bh=wJIFueftImMKsRrETiQzXQ7IobLJ/IzSPVEYHc6Rd2A=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=i0n7frO5SVSELszIQcvLJh7PlZhlfmtfRm2dL6nUreTab/9F/LPGaLWU5spNaQXyD+rGccFLPJ+MBkDZ22tLjkTOtrjcTQVL0FB1H8WHVWA67fGfId5qrX8rxaj+R/5ZCfbCzPCBe0WQJ8DPoFTCPCwekyTPU11MSM8ViX2ku+0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CEKtx2yl; arc=none smtp.client-ip=209.85.214.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1707267970; c=relaxed/simple;
+	bh=c1Yx3SKxTt/bK/bpUt8Uo2XM4FWuaL4G/587sL1td0o=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=NqGS5etNTqoEJderslC7VKS8QDJijHRbWxHWxK8eYK4tHQK+XL7lWTECfFUJkal+cJZsXSKzPvg048d4AVDTAjtIy9fEw2bcP/6HCYn3MzfFSjnKCeKG0mNt+SKkDiGOgttFFvIzYeEw06Mhir7E/yjRXv58GlJMPTjINvtRzBA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=FcgzN40u; arc=none smtp.client-ip=64.147.108.71
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CEKtx2yl"
-Received: by mail-pl1-f171.google.com with SMTP id d9443c01a7336-1d7881b1843so510615ad.3
-        for <git@vger.kernel.org>; Tue, 06 Feb 2024 15:05:33 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1707260733; x=1707865533; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=qLozVxFXrI1jwDxjqQa1EeEosMwctfRFjXMDPRUY2sE=;
-        b=CEKtx2yl9fp92SA7QfFpW3SoTPlTYmm7iLmqs7TE5Nz7JiSgSF18MJXYH9iJnvcpLo
-         YiybxhyJ1FjR2hUVpJpZsw+EM4CnQzjGGQYD/R0CyBUtz0ZvMO8u0Bn1MAdofNYRNGaG
-         1OVJr4z/2EY+T/dNeuRuD0GoV648Qy/ANZuequnxk/mILOChRdsLlF3woVoKLmyYH6P/
-         gm1vy0GES4LMa7l1sXAM32POm0pbmQ9gOUv25spimyRn8MxZ/5Sj7TJuQCKZPB6KLizv
-         5QnOGO0payh+GBGNl70qIx+JaJ1ym72Ofb/i/I+QuzC72DlbqLZsFelNvNKjkfUT0jeM
-         umLw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1707260733; x=1707865533;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=qLozVxFXrI1jwDxjqQa1EeEosMwctfRFjXMDPRUY2sE=;
-        b=aKwoztdfk9nuVHohpwduvblckmROwbKnATlycGTmmFwHhUR4YT5dCeHLiPGVvod33B
-         kspx1fZN2UVZmqOBYhOjvgaHVf6/tThBA2peEzbU0SyBcn9n1cJUv2n3DtqysB8yplBv
-         ekr9t3Fi5SFtwoFXe1lRCXF+8OWj2GVSkUohq9bRgvsVZNI2L+LA2cLipiC3VAzy5ThD
-         jp7CAuVpYHVC8u0KoFZFTy76o7BsX/HQjBM4hqu/LE/aRzc/qAYrslMVpP7aZBjjgshd
-         glYWUdRtcXQ7f2PKSva+D1sBV3IELKeEkHcdlDh0WyaoMuxwg4O05wXRb3J/kLi101IU
-         xxQw==
-X-Gm-Message-State: AOJu0YznT0IooUBjIEwAlz2Ip1zhdt0EVMTUtUTpgbJ2fW0awFj7A+Xt
-	XSUHt5/gEqoV/OKLJXXkp6CuvRK6MT2YheDdQ4ioqd4M1T1Uas6F8CoPcqa6
-X-Google-Smtp-Source: AGHT+IHN/Vog5ytrhHN3S/G76ILbG7QuMBkpAdgTSI1DgjfX8uQk5kqZANnvEPGbcla0Z3X9SqMoCA==
-X-Received: by 2002:a17:902:744a:b0:1d9:9331:5281 with SMTP id e10-20020a170902744a00b001d993315281mr2826670plt.24.1707260732854;
-        Tue, 06 Feb 2024 15:05:32 -0800 (PST)
-Received: from localhost.localdomain ([2402:a00:401:a99b:f188:2dd3:d960:a8ab])
-        by smtp.gmail.com with ESMTPSA id jw24-20020a170903279800b001d95b3c6259sm49639plb.263.2024.02.06.15.05.31
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 06 Feb 2024 15:05:32 -0800 (PST)
-From: Ghanshyam Thakkar <shyamthakkar001@gmail.com>
-To: git@vger.kernel.org
-Cc: Ghanshyam Thakkar <shyamthakkar001@gmail.com>
-Subject: [PATCH] restore: allow --staged on unborn branch
-Date: Wed,  7 Feb 2024 04:33:50 +0530
-Message-ID: <20240206230357.1097505-2-shyamthakkar001@gmail.com>
-X-Mailer: git-send-email 2.43.0
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="FcgzN40u"
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id BFAE11D0511;
+	Tue,  6 Feb 2024 20:05:59 -0500 (EST)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=c1Yx3SKxTt/bK/bpUt8Uo2XM4FWuaL4G/587sL
+	1td0o=; b=FcgzN40uXz5aHw2qtIdVj5Yc4zBrYxqqqjVUNqO0QgMGrP2DbrdBW5
+	rvuWAx9zu+L7gn5dX6Mp13yeNwO1P69RZLCnE3JsmfrIrouq+c4sf7rhFqzLgeci
+	fDn3u73Sud/IDn60AmxVrCEM8ALa8yCP4SE3CTCUpDa8EDbuYzkg4=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id B68FD1D050E;
+	Tue,  6 Feb 2024 20:05:59 -0500 (EST)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.165.85])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 04C561D050B;
+	Tue,  6 Feb 2024 20:05:58 -0500 (EST)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Ghanshyam Thakkar <shyamthakkar001@gmail.com>
+Cc: git@vger.kernel.org,  phillip.wood123@gmail.com,  ps@pks.im
+Subject: Re: [PATCH v4 2/3] add-patch: classify '@' as a synonym for 'HEAD'
+In-Reply-To: <20240206225122.1095766-6-shyamthakkar001@gmail.com> (Ghanshyam
+	Thakkar's message of "Wed, 7 Feb 2024 04:20:38 +0530")
+References: <20240203112619.979239-2-shyamthakkar001@gmail.com>
+	<20240206225122.1095766-6-shyamthakkar001@gmail.com>
+Date: Tue, 06 Feb 2024 17:05:57 -0800
+Message-ID: <xmqqil31dqx6.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 0DDB11DC-C555-11EE-9924-25B3960A682E-77302942!pb-smtp2.pobox.com
 
-Some users expect that being on an unborn branch is similar to having an
-empty tree checked out. However, when running "git restore --staged ."
-on unborn branch having staged changes, the follwing error gets printed,
+Ghanshyam Thakkar <shyamthakkar001@gmail.com> writes:
 
-    fatal: could not resolve HEAD
+> Currently, (checkout, reset, restore) commands correctly take '@' as a
+> synonym for 'HEAD'. However, in patch mode (-p/--patch), for both '@'
+> and 'HEAD', different prompts/messages are given by the commands
+> mentioned above (because of applying reverse mode(-R) in case of '@').
+> This is due to the literal and only string comparison with the word
+> 'HEAD' in run_add_p(). Synonymity between '@' and 'HEAD' is obviously
+> desired, especially since '@' already resolves to 'HEAD'.
+>
+> Therefore, replace '@' to 'HEAD' at the beginning of
+> add-patch.c:run_add_p().
 
-Therefore, teach "git restore --staged ." without a source option, to
-take empty tree as source on unborn branch. Note that, this assumption
-is already taken by "git reset" (166ec2e9). However, still disallow
-explicitly referring to HEAD on unborn branch.
+Of course there is only one possible downside for this approach, in
+that if we are using "revision" in an error message, users who asked
+for "@" may complain when an error message says "HEAD" in it.  I think
+the simplicity of the implementation far outweighs this downside.
 
-Signed-off-by: Ghanshyam Thakkar <shyamthakkar001@gmail.com>
----
- builtin/checkout.c        | 27 +++++++++++++++++++-------
- t/t2073-restore-unborn.sh | 40 +++++++++++++++++++++++++++++++++++++++
- 2 files changed, 60 insertions(+), 7 deletions(-)
- create mode 100755 t/t2073-restore-unborn.sh
+> There is also logic in builtin/checkout.c to
+> convert all command line input rev to the raw object name for underlying
+> machinery (e.g., diff-index) that does not recognize the <a>...<b>
+> notation, but we'd need to leave 'HEAD' intact. Now we need to teach
+> that '@' is a synonym to 'HEAD' to that code and leave '@' intact, too.
 
-diff --git a/builtin/checkout.c b/builtin/checkout.c
-index a6e30931b5..1258ae0a59 100644
---- a/builtin/checkout.c
-+++ b/builtin/checkout.c
-@@ -1691,6 +1691,7 @@ static int checkout_main(int argc, const char **argv, const char *prefix,
- 			 struct branch_info *new_branch_info)
- {
- 	int parseopt_flags = 0;
-+	int unborn_and_unspecified = 0;
- 
- 	opts->overwrite_ignore = 1;
- 	opts->prefix = prefix;
-@@ -1754,12 +1755,6 @@ static int checkout_main(int argc, const char **argv, const char *prefix,
- 	}
- 	if (opts->checkout_index < 0 || opts->checkout_worktree < 0)
- 		BUG("these flags should be non-negative by now");
--	/*
--	 * convenient shortcut: "git restore --staged [--worktree]" equals
--	 * "git restore --staged [--worktree] --source HEAD"
--	 */
--	if (!opts->from_treeish && opts->checkout_index)
--		opts->from_treeish = "HEAD";
- 
- 	/*
- 	 * From here on, new_branch will contain the branch to be checked out,
-@@ -1785,6 +1780,18 @@ static int checkout_main(int argc, const char **argv, const char *prefix,
- 		opts->new_branch = argv0 + 1;
- 	}
- 
-+	/*
-+	 * convenient shortcut: "git restore --staged [--worktree]" equals
-+	 * "git restore --staged [--worktree] --source HEAD"
-+	 */
-+	if (!opts->from_treeish && opts->checkout_index) {
-+		struct object_id oid;
-+		opts->from_treeish = "HEAD";
-+
-+		if(repo_get_oid(the_repository, opts->from_treeish, &oid))
-+			unborn_and_unspecified = 1;
-+	}
-+
- 	/*
- 	 * Extract branch name from command line arguments, so
- 	 * all that is left is pathspecs.
-@@ -1812,7 +1819,13 @@ static int checkout_main(int argc, const char **argv, const char *prefix,
- 	} else if (!opts->accept_ref && opts->from_treeish) {
- 		struct object_id rev;
- 
--		if (repo_get_oid_mb(the_repository, opts->from_treeish, &rev))
-+		/*
-+		 * when the branch is unborn and no revision is given, use
-+		 * empty tree as source
-+		 */
-+		if(unborn_and_unspecified)
-+			oidcpy(&rev, the_hash_algo->empty_tree);
-+		else if (repo_get_oid_mb(the_repository, opts->from_treeish, &rev))
- 			die(_("could not resolve %s"), opts->from_treeish);
- 
- 		setup_new_branch_info_and_source_tree(new_branch_info,
-diff --git a/t/t2073-restore-unborn.sh b/t/t2073-restore-unborn.sh
-new file mode 100755
-index 0000000000..fbd8b2df5f
---- /dev/null
-+++ b/t/t2073-restore-unborn.sh
-@@ -0,0 +1,40 @@
-+#!/bin/sh
-+
-+test_description='restore --staged should work on unborn branch'
-+. ./test-lib.sh
-+
-+test_expect_success 'explicitly naming HEAD on unborn should fail' '
-+	echo a >foo &&
-+	echo b >bar &&
-+	git add foo bar &&
-+	test_must_fail git restore --staged --source=HEAD .
-+'
-+
-+test_expect_success 'restore --staged .' '
-+	rm .git/index &&
-+	git add foo bar &&
-+	git restore --staged . &&
-+	git diff --cached --name-only >actual &&
-+	test_must_be_empty actual
-+'
-+
-+test_expect_success 'restore --staged $file' '
-+	rm .git/index &&
-+	git add foo bar &&
-+	git restore --staged foo &&
-+	git diff --cached --name-only >actual &&
-+	echo bar >expected &&
-+	test_cmp expected actual
-+'
-+
-+test_expect_success 'restore -p --staged' '
-+	rm .git/index &&
-+	git add foo bar &&
-+	test_write_lines y n | git restore -p --staged >output &&
-+	git diff --cached --name-only >actual &&
-+	echo foo >expected &&
-+	test_cmp expected actual &&
-+	test_grep "Unstage" output
-+'
-+
-+test_done
--- 
-2.43.0
+Makes me wonder why we cannot use the same "normalize @ to HEAD
+upfront" approach here, though?
 
+It would involve translating "@" given to new_branch_info->name to
+"HEAD" early, possibly in setup_new_branch_info_and_source_tree(),
+and that probably will fix the other strcmp() with "HEAD" that
+appears in builtin/checkout.c:update_refs_for_switch() as well, no?
+
+> +	/* helpful in deciding the patch mode ahead */
+> +	if(revision && !strcmp(revision, "@"))
+> +		revision = "HEAD";
+
+Style.  "if (revision ...)"
