@@ -1,75 +1,83 @@
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qv1-f49.google.com (mail-qv1-f49.google.com [209.85.219.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98CD981AC0
-	for <git@vger.kernel.org>; Wed,  7 Feb 2024 16:58:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89F11823AC
+	for <git@vger.kernel.org>; Wed,  7 Feb 2024 16:58:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707325110; cv=none; b=mf5PYu0pzmsoSzCa+m3JeHD0PO5J456fYqxeyTtRTZtM3nCvzeLMwyv3fQE65MXzTtiGKVKuGhImsS6Uq5CcVOJUGMb6GDHlap2l2ZHxnsAGZ5Z+ag1mznZUWx3pST7WhBzRI5DJWqq2MiWUH8AUS9/Hb9EBVYuJtZcgvL0otyE=
+	t=1707325134; cv=none; b=kKll7g0o4gCp6hOEKbZQI9JUvBAitkYFw6jiLGcZAzO25mJ1N/uk0/pSQDlxs2gdJGN2/JmTaNMZMRady8a3jsjaYKDhODDaiNzahDzjOzRtHq/pmWM9SOWBf3tiCKwNvsmnf9gxa+Z1gnVdgmDdYeSnNruVVWvO2xKlZxRTRDs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707325110; c=relaxed/simple;
-	bh=QmAlCOyLMv8+eOdXVR8nwdDzsmny67nhe0I5dJKOr4Y=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=mx2aDIXJACqAdaS5vwrkrbfnQ0ayJNCArbD7FwN23MP806RLZBIBHCmZEQ7TBeFTKlOEldkJPJMeBdUuYJeHw3IL2jGUkr4eIRDoXV5AQO6SZ4quVb4G9jZdeOB7qXkAcOtOmrh+5Atj4TqulnZ7ISTQ5paGd7nSQxcl4YaZza8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=OHbLPj8K; arc=none smtp.client-ip=64.147.108.71
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="OHbLPj8K"
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 19BCD1D7599;
-	Wed,  7 Feb 2024 11:58:27 -0500 (EST)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=QmAlCOyLMv8+eOdXVR8nwdDzsmny67nhe0I5dJ
-	KOr4Y=; b=OHbLPj8Kmt0u5FUK01rWIXd4LV8RVqdEfznF0XGkieAHDQmT66A+IG
-	sJJM4YH5qo6QAfSj20J38295DiHnNu5x+v3lpF4c9GNApZogY5vWar8lHd/skqVv
-	7sCEeLgepKxqEm1oJSgWeUoEsi5tsnKxrXULJQTmjGE9qrQpye6Vo=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 0FC271D7598;
-	Wed,  7 Feb 2024 11:58:27 -0500 (EST)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.165.85])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 631BE1D7596;
-	Wed,  7 Feb 2024 11:58:26 -0500 (EST)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>,  Johannes
- Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH v2 5/5] cache-tree: avoid an unnecessary check
-In-Reply-To: <43c04749513d07733f5fa2c15a694d99d31fe6e3.1707324462.git.gitgitgadget@gmail.com>
-	(Johannes Schindelin via GitGitGadget's message of "Wed, 07 Feb 2024
-	16:47:41 +0000")
-References: <pull.1651.git.1707212981.gitgitgadget@gmail.com>
-	<pull.1651.v2.git.1707324461.gitgitgadget@gmail.com>
-	<43c04749513d07733f5fa2c15a694d99d31fe6e3.1707324462.git.gitgitgadget@gmail.com>
-Date: Wed, 07 Feb 2024 08:58:25 -0800
-Message-ID: <xmqqwmrgb49a.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	s=arc-20240116; t=1707325134; c=relaxed/simple;
+	bh=8R+eLT5K6+Dgl++MnpXORB7pQxjmTFIa9S5frWtC8sA=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=JK/wdRdL9HPu8VuCUHOoknpvMmyH84OQqBM7GNHSdI1m3878ldJYtWpZpIlzw+KpkymBBrUKuB2GTZZBnwbFiCX/kX/qUkFKCx/D/YPkOV4L9TJDlZvZD2i6JlrowvSArlUNPv8Ix8oqbeRr5QkjxaOJTScPE/71MZITSQAgtKs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.219.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-qv1-f49.google.com with SMTP id 6a1803df08f44-6818f3cf00aso5329546d6.0
+        for <git@vger.kernel.org>; Wed, 07 Feb 2024 08:58:52 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1707325131; x=1707929931;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=orHOJvFo+vqmjfs9YsSEp2Hhl83wSdouqO/Mc6SeSVo=;
+        b=AvXJkTjVhfzF/cpTLHRZRuKj+xXoZHNRuNiQ+ju3plGba7FwQ1sjinEa8yJ5bN7g1X
+         t7IdDZZDaP7FVGnoG42Ex0wZnK+aMHRXmcagLACUdQR96T3dymltTMTLJGt+2eqdayz+
+         alMR5XjKp5hKbOavDJGJWoDPulS9k+LJshVHTKAPiQrqkVm6xHh8y6YwbbcDxWFlVhkl
+         jyx36AboCZnIHLXnhH4Ogu5XGENKvZPy+Pnl7IHpYR7XjCsEGJ9s/7Uxq4CGPCzHYBS9
+         ELIXF+fnLpbao/hdYYie9Q0e3tqim9DhZXw4dkpUN25tU2GyAZDg/sHxH0+j6VJ+UfJZ
+         eIMQ==
+X-Gm-Message-State: AOJu0YxOlTGiy7gq0LM0dENXyvsZCmeot5D2IoS5t2foWM+JKp7q3g7v
+	OBp83lUo+nbxeZRTLK0Yi5RUy8yZzEegi4tlPcjKawJbGRGbZ/LCo1wqetpUCm0wn/KWIcxWoUW
+	+UWEcfTMuhzXZZ9j2Mjl6fmwI/AU=
+X-Google-Smtp-Source: AGHT+IHgsSA5FIpD+GNjDgopfV7Xyk4e+aXbJm+2dqY8/aM1XN4gzJLKbZoO+gVNboXT4/EBHmM+iZLv2CADU9UztSU=
+X-Received: by 2002:a05:6214:e67:b0:68c:92f8:f146 with SMTP id
+ jz7-20020a0562140e6700b0068c92f8f146mr5711796qvb.60.1707325131380; Wed, 07
+ Feb 2024 08:58:51 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- 1C5A1188-C5DA-11EE-A6ED-25B3960A682E-77302942!pb-smtp2.pobox.com
+References: <20240203112619.979239-2-shyamthakkar001@gmail.com>
+ <20240206225122.1095766-7-shyamthakkar001@gmail.com> <8baa44ef-4960-4f0d-8cab-38d3d6ff971a@gmail.com>
+ <df1fc65f-8716-47bb-b379-1e1f1eeece8b@gmail.com>
+In-Reply-To: <df1fc65f-8716-47bb-b379-1e1f1eeece8b@gmail.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Date: Wed, 7 Feb 2024 11:58:40 -0500
+Message-ID: <CAPig+cT4gY_Smhvxs9AHTZVDWaLTtCABNaTDFsR3ukJx_pYJGg@mail.gmail.com>
+Subject: Re: [PATCH v4 3/3] add -p tests: remove Perl prerequisite
+To: phillip.wood@dunelm.org.uk
+Cc: Ghanshyam Thakkar <shyamthakkar001@gmail.com>, git@vger.kernel.org, gitster@pobox.com, 
+	ps@pks.im
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-"Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-writes:
-
-> From: Johannes Schindelin <johannes.schindelin@gmx.de>
+On Wed, Feb 7, 2024 at 8:51=E2=80=AFAM Phillip Wood <phillip.wood123@gmail.=
+com> wrote:
+> On 07/02/2024 10:50, Phillip Wood wrote:
+> > On 06/02/2024 22:50, Ghanshyam Thakkar wrote:
+> >  > The Perl version of the add -i/-p commands has been removed since
+> >  > 20b813d (add: remove "add.interactive.useBuiltin" & Perl "git
+> >  > add--interactive", 2023-02-07)
+> >  >
+> >  > Therefore, Perl prerequisite in t2071-restore-patch and
+> >  > t7105-reset-patch is not necessary.
+> >
+> > Thanks for adding this patch. If you do re-roll I've just noticed that
+> > one of the tests in t7106-reset-unborn-branch.sh and another in
+> > t2024-checkout-dwim.sh still have PERL prerequisites as well. I don't
+> > think it is worth re-rolling just for that as we can clean them up
+> > separately if needed.
 >
-> The first thing the `parse_tree()` function does is to return early if
-> the tree has already been parsed. Therefore we do not need to guard the
-> `parse_tree()` call behind a check of that flag.
+> I didn't cast my net wide enough when I was grepping earlier,
+> t7514-commit-patch.sh and t3904-stash-patch.sh also have unnecessary
+> PERL prerequisites
 
-Makes sense, and it doubly makes sense to keep this separate from
-the change done to the same location in [4/5].
-
-Will queue.
+Additionally, patch [2/3] drops a PERL prerequisite when it moves an
+existing test into a loop, but the removal of the prerequisite is not
+mentioned in the commit message. Presumably, the relocation-into-loop
+and prerequisite-removal should have been done separately (in patches
+[2/3] and [3/3], respectively), and that's how I'd suggest doing it.
