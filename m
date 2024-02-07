@@ -1,104 +1,100 @@
-Received: from fout8-smtp.messagingengine.com (fout8-smtp.messagingengine.com [103.168.172.151])
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEFC413A267
-	for <git@vger.kernel.org>; Wed,  7 Feb 2024 21:48:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A029C535A5
+	for <git@vger.kernel.org>; Wed,  7 Feb 2024 22:03:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707342483; cv=none; b=Q9cI0lgAq437mG93PCElzN2bjme/cvMTQUhspnJ26ruI06fUn+FHAtk29qPvpz6AwW1dHWSlZB1dWe9U7mTnw9dpVgYJ2/IgZK4EUd5rpmdIE9z5ynk84whrJTJqp+bbWrgWYpFys7HIWjD7CAErrIvuYgnpbbQwYU9vDPy5BV8=
+	t=1707343385; cv=none; b=lLqf8LR20wB4gsTq70Jw3OEo+P68Jt2AM8/lL73lca2LhZjVM/AQ4TaOS38rWOz16vOWHCdDiBZdWKd3iRguU7D/LggFxPQtHH8Ha59YZUphrszUeAvcuF7psPMqidpPkqxBnj2Z2sJkZ8cYeb/6qKpIkGJt4MuhfJGWNn8LTB4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707342483; c=relaxed/simple;
-	bh=fteVdpun+5W2GkS/y1TEAkYSx9jmounOshotf7ITHU0=;
-	h=MIME-Version:Message-Id:In-Reply-To:References:Date:From:To:Cc:
-	 Subject:Content-Type; b=HavQXb1Dij7Y7E+LYchi9jnOuX6qarBSonaTi2sSUe5uslKu4q0/9S7jPDbS5APn9xTAHG3nczUdUZDreuqHkSFU0byOzMTVkARjsla7nAPqPA7irtpRojbtplEOa5O64VpgOi9cgEPHKbe0fX8ED3Caeiate4gLWOtsz3UgGb8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=khaugsbakk.name; spf=pass smtp.mailfrom=khaugsbakk.name; dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b=MOr6Dzjz; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ny92gRw+; arc=none smtp.client-ip=103.168.172.151
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=khaugsbakk.name
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=khaugsbakk.name
+	s=arc-20240116; t=1707343385; c=relaxed/simple;
+	bh=PNti276mfMCZbIBaNEves8EeOeXjqyBHM5SskWiqhEs=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=gygWnM8AYJvIVZBTarC04CYJY0ttkqwp0at4aY6OI6frcBzFaqSbA0RDsaTHF0C7FYYEPFueHvUMEs2+G06p2AFg2DFR9gQK/Y3mfhJ6UUHnwibwqHl0YWfz/gPFclmvPMz2lgCh0XMVKjSJ42CTpLC79hGxjUzFsgX+BEJZ11Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=g+ZajW1T; arc=none smtp.client-ip=173.228.157.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b="MOr6Dzjz";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ny92gRw+"
-Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
-	by mailfout.nyi.internal (Postfix) with ESMTP id A60A313800B5;
-	Wed,  7 Feb 2024 16:48:00 -0500 (EST)
-Received: from imap49 ([10.202.2.99])
-  by compute1.internal (MEProxy); Wed, 07 Feb 2024 16:48:00 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=khaugsbakk.name;
-	 h=cc:cc:content-transfer-encoding:content-type:content-type
-	:date:date:from:from:in-reply-to:in-reply-to:message-id
-	:mime-version:references:reply-to:subject:subject:to:to; s=fm2;
-	 t=1707342480; x=1707428880; bh=BInNS6GYWiC+YqwNONwvKffDwipVlfrV
-	liebOtmaQ1Q=; b=MOr6Dzjz0BOY09FereflULcAt8vrgo6RFQPNx7pf49Wkg74/
-	BCHliRjJOI4vHIxx8RK4lVhJPjM+Nj9/lVKxOfYjq72mKIt/iJPcBJZ5FlE/z0T4
-	iDOWMFWcZOOAqzz1/hmW4Eq7h3Q80Q6xV8I+MkoQo2aadcZrebEeqzpHjLGh65GN
-	2nLLpOVPoh2F+un6dXPwB0u11y/I/XOARDLslp+IauNlnPm56se/TIuPmXmLWa+b
-	LOVdnLr19VKUi/berS9/jmy8uqipXWuV1wPPbMPXPZmTlw1OBNuxK3TMgl6mpbML
-	beBDO/HCmQwURQqtU5KPrTz6tv1Uu/OQWeQ37w==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1707342480; x=
-	1707428880; bh=BInNS6GYWiC+YqwNONwvKffDwipVlfrVliebOtmaQ1Q=; b=n
-	y92gRw+aPWSmkP1L/WqPUn+RVvXIm7sEH38+evLoYvhyFLGEJePz33Fl/WV9+WyD
-	CmUq0YBF0dT42d6+iNorznBT8OdYxjVpP1vWX39Rn/M60XYHefnIKJ7RXZwjx4JH
-	JW7bB9cOtQWiTU3CoPZbu/eE0L1h8oITHSRQ26fU8o5VDq0MX/SeRdGSJLwm6E6b
-	egk9iw+gHSTlfpMNQ992FjLfLrnwfYp97xBJrb+I6OuN+Xcqku8eRlZB6XUqd5ob
-	10XpCxAMpiiM85tkI/JvjFH9WBOcnAAfXUF3cOd5vhAgS1V6gSGKxy2NeqqZgAAj
-	59Dqye0V0cJiUjT9u+JhQ==
-X-ME-Sender: <xms:kPrDZcWJpZtJVsdCk7EKtW2YywObkpFBeEUk0TNJSNhsNhHh0ev38S0>
-    <xme:kPrDZQnD1B7K86r4cIIKdMA6Via_cEML3vmxttsfmNkuv-9rEVWBtA0MhBNZqqhXi
-    06kVBghk_-kSowIig>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrtddvgdduhedtucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    cujfgurhepofgfggfkjghffffhvfevufgtgfesthhqredtreerjeenucfhrhhomhepfdfm
-    rhhishhtohhffhgvrhcujfgruhhgshgsrghkkhdfuceotghouggvsehkhhgruhhgshgsrg
-    hkkhdrnhgrmhgvqeenucggtffrrghtthgvrhhnpedvveehiedufeehffdvteeuveekhefh
-    leeigfektdeifeduteeuheeufeetffefudenucevlhhushhtvghrufhiiigvpedtnecurf
-    grrhgrmhepmhgrihhlfhhrohhmpegtohguvgeskhhhrghughhssggrkhhkrdhnrghmvg
-X-ME-Proxy: <xmx:kPrDZQZ5fdmIWBkvSC854sJLbgSCDXe3_P0WgMeU7zg6hcOOmMgf6w>
-    <xmx:kPrDZbVXk1_5T5rtJBtKp3iEGSBqIYzeb--7NYMnTmrGl31OC_UxCA>
-    <xmx:kPrDZWm6qB9LDE-XsylhfiVtwTxbwSnHMbUKi4pXmaE6y1za9xUfsA>
-    <xmx:kPrDZavE9wg-rCPkrV68IuPBnFUimIUYyz0tFnC4NHIyuwlMB6LYhA>
-Feedback-ID: i2671468f:Fastmail
-Received: by mailuser.nyi.internal (Postfix, from userid 501)
-	id 682E315A0093; Wed,  7 Feb 2024 16:48:00 -0500 (EST)
-X-Mailer: MessagingEngine.com Webmail Interface
-User-Agent: Cyrus-JMAP/3.11.0-alpha0-144-ge5821d614e-fm-20240125.002-ge5821d61
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="g+ZajW1T"
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id D7EF82BFD5;
+	Wed,  7 Feb 2024 17:03:01 -0500 (EST)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=PNti276mfMCZbIBaNEves8EeOeXjqyBHM5SskW
+	iqhEs=; b=g+ZajW1T2+xK5IM7jOO9dTgM86NejqirQXgXvjqzEniZeEquD4ZS4y
+	rudvECBOMB//LffQCiEAoZ9QPJWwDazet5jOOsbLWKTjUsi4/QCYeuIdULrMmxoF
+	9X6D3KQ+zl0iHazcaTko/jxlBh5R5uaqkiOh+HqUyNlKXl8CYcfZA=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id CF3642BFD4;
+	Wed,  7 Feb 2024 17:03:01 -0500 (EST)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.165.85])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 7E2BF2BFD2;
+	Wed,  7 Feb 2024 17:02:58 -0500 (EST)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Kousik Sanagavarapu <five231003@gmail.com>
+Cc: Andy Koppe <andy.koppe@gmail.com>,  git@vger.kernel.org
+Subject: Re: [PATCH v3 5/7] refs: add pseudorefs array and iteration functions
+In-Reply-To: <ZcEvLwp0t8-rcyGn@five231003> (Kousik Sanagavarapu's message of
+	"Tue, 6 Feb 2024 00:25:43 +0530")
+References: <ZcEvLwp0t8-rcyGn@five231003>
+Date: Wed, 07 Feb 2024 14:02:56 -0800
+Message-ID: <xmqqcyt853vz.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Message-Id: <a18532ba-b168-4928-bced-d1604a483f24@app.fastmail.com>
-In-Reply-To: 
- <CAGHpTBKpYp370QTw93wK_RP+X2S+44jd-8kjodiUj4k0BoAEqA@mail.gmail.com>
-References: 
- <CAGHpTBKpYp370QTw93wK_RP+X2S+44jd-8kjodiUj4k0BoAEqA@mail.gmail.com>
-Date: Wed, 07 Feb 2024 22:47:40 +0100
-From: "Kristoffer Haugsbakk" <code@khaugsbakk.name>
-To: "Orgad Shaneh" <orgads@gmail.com>
-Cc: git <git@vger.kernel.org>
-Subject: Re: git gc destroys autostash
-Content-Type: text/plain;charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ A7600AF6-C604-11EE-BE0D-A19503B9AAD1-77302942!pb-smtp21.pobox.com
 
-On Wed, Feb 7, 2024, at 21:52, Orgad Shaneh wrote:
-> Running git gc --prune=3Dnow during rebase with autostash deletes the
-> autostash object, and it cannot be recovered when the rebase ends.
+Kousik Sanagavarapu <five231003@gmail.com> writes:
 
-Things like this is why I don=E2=80=99t use the stash.[1][2] I just comm=
-it
-everything of value and non-value.
+> Andy Koppe <andy.koppe@gmail.com> wrote:
+> ...
+>> +static const char *const pseudorefs[] = {
+>> +	"FETCH_HEAD",
+>> +	"ORIG_HEAD",
+>> +	"MERGE_HEAD",
+>> +	"REBASE_HEAD",
+>> +	"CHERRY_PICK_HEAD",
+>> +	"REVERT_HEAD",
+>> +	"BISECT_HEAD",
+>> +	"AUTO_MERGE",
+>> +};
+>> +
+>>  struct ref_namespace_info ref_namespace[] = {
+>>  	[NAMESPACE_HEAD] = {
+>>  		.ref = "HEAD",
+>> @@ -1549,6 +1564,33 @@ int head_ref(each_ref_fn fn, void *cb_data)
+>>  	return refs_head_ref(get_main_ref_store(the_repository), fn, cb_data);
+>>  }
+>
+> The first thing that popped up in my head was "Should we somehow use
+> is_pseudoref_syntax() instead of manually listing these?" (although I
+> read in this thread later that Junio was okay with the listing) but then ...
+>
+> I thought I saw something similar in some other thread (which entered
+> the mailing list much after this patch series was submitted) ...
+>
+> 	https://lore.kernel.org/git/20231221170715.110565-2-karthik.188@gmail.com/T/
 
-=E2=80=A0 1: With very rare exceptions where the stash is popped before =
-the
-    whole operation leaves my own working memory
-=E2=80=A0 2: Also how you have to find unreachable objects using git-fsc=
-k(1) if
-    you pop the last stash
+We are halting Karthik's topic to rethink its UI for now, but your
+point stands.  We should use a unified definition of what pseudorefs
+there are across the codebase for consistency, and Karthik's topic
+would be a better place to do so.
 
---=20
-Kristoffer Haugsbakk
+Andy, let me drop this topic for now from my tree, and let's wait
+until Karthik's "iterate over all refs" topic solidifies, at which
+time an updated iteration (v4?)  of this topic hopefully can build
+on top of it.
+
+Thanks.
