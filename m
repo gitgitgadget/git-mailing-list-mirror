@@ -1,81 +1,129 @@
-Received: from mail-lf1-f45.google.com (mail-lf1-f45.google.com [209.85.167.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1AB31EB49
-	for <git@vger.kernel.org>; Wed,  7 Feb 2024 20:52:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3C78823B8
+	for <git@vger.kernel.org>; Wed,  7 Feb 2024 20:55:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707339135; cv=none; b=t5e0x4M1ITnaFfbXB1YA9cV0RLrs4EXLu4tcxBNu6Cy62jalShmeu49Yow4kdS4uFAjYXTZ893HOF3o77aWR0pRvzogoLVzSUvftQvL3JdeMSz505YU74CJE+LqUaEEErb0fi5G2Ww5hVwPvNnCRnIipvXD8XErO2nRo/u+cyoA=
+	t=1707339314; cv=none; b=Q7ZtuPXcjvLYE5ue8VVWdEPH9bwm9s4BaA/l9PTPmPMZGOva9oary5z1HD6MZpHD/VRRKE+UI2BPhvDL7INYH520v5Z+zgg59sqzY2mQwzehursIjfpVKmrFGwDJLjdN5hEqTzQpDu8IehaV5h2SN2qNIUdT0dd2j/K9D7r8Ujg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707339135; c=relaxed/simple;
-	bh=8n6AMWgOFaiIi6u3f10dGnpCGTyFKIUKIfpLcO8Xl88=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=sJLZi/qSJjAURNWj4d6U9NZ7BHKmtAb8R4IsNHALlF2GdTDMAl8LQ+Q+7XhDNkZCHbLbfLA2EoX3BcKA6zXxbmq06hamLTcWYtze+GdSAONo0o0qPhI5Nk1eDcZhZCYgG+w2RzT2q0PmjMwVnoAKtuvrNaeI5wjaOQ9w8Z+exa8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Dt2r5bIO; arc=none smtp.client-ip=209.85.167.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1707339314; c=relaxed/simple;
+	bh=1WFCVMoFSXSBDvhRLiRoj1sJE2CVG0fXWWtCguNAC9c=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=Mv2fqdHsKTFFgjkj+lez1RYatEpc2rXXLj9r4WYanhHrnMYIKn54GXeah9AP/Cz8UVViyarCWWjjiDWTvQi1zRb+DPzRV6YkNGTW2SfkXCZPTb9QtUVvii3SW6yHjOK48frvURL8eqDDxZ2qCzsBHWNGH5q6qvRUyWVjGwjfS+I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=TtmWkqNq; arc=none smtp.client-ip=64.147.108.71
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Dt2r5bIO"
-Received: by mail-lf1-f45.google.com with SMTP id 2adb3069b0e04-5116ba772dcso531944e87.3
-        for <git@vger.kernel.org>; Wed, 07 Feb 2024 12:52:13 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1707339132; x=1707943932; darn=vger.kernel.org;
-        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=8n6AMWgOFaiIi6u3f10dGnpCGTyFKIUKIfpLcO8Xl88=;
-        b=Dt2r5bIOPkoJ4xDgYas/lOut+qQnAXuMnXNXEO2YSmlB2Z4JrsSTbLZ97aHE8hO0Pw
-         ArWZ5waAB3/x1vITrwS1epL8s5xu9ITnaYI+rDCCiTFkAfElsLOpmpI1qnwftNsYXeLL
-         dxwokznbUrhji3qsGvpNnXhBF2nBDLZ3Ff2Uvsm2ubn9DLr3IJBNwXu5x9yJiEsr9Av3
-         73CdLH/iflCNxEaxfTdDHQGsc6GCypSVMBnOX2BaWn23vgtebJaNDRa4XqGn2Bq4Ze/P
-         UMRcjpR5cNKB1zNUhs3A5fLQLKc3mdCYWXrgYZjMMi+++Q0zgrs990cEz6Y/Hl6YJWMb
-         P5/Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1707339132; x=1707943932;
-        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=8n6AMWgOFaiIi6u3f10dGnpCGTyFKIUKIfpLcO8Xl88=;
-        b=vElEQrdxUTj/t8NV8rH6EF+uRG2hCzFIZ44UvH4rI08plA/Ur/ghL0zSrHM0PlyPit
-         DHhyh2ZetOlnF59H0oH+Td7IElUMTae+9U05+JxH8Gxn4rgBMJVoiJsSU1icLC/uqrwo
-         sK6Vh3hekpNMDdxvgYyFsUAJUuOoPKQb/J+aUt5X+lpl1pQTXwbXIID6gUoVep3H+3LC
-         p0OoF5a/jEou+yGkauqWe6UJ9pkXpDIJEGCEUaN5C9sDxxUMLeOwsorr7m7sK2tLv8N9
-         5Q2vAzgLlaWKxNlY3b3SCUiyT2r+6W7LCpGcMuLBTiISzIFuEj2IR3JRJxQh+HHTpQWO
-         hTRQ==
-X-Gm-Message-State: AOJu0YxG0MGjqhFifbpKYowEN+LlN2wLPmN5PkBlQw6lN2vM3/cmCqiW
-	0n4ebDDnhxeiDy2SZf6ZNa/Ij1f6ElS/Wgx53C7bUqHFZmDiKv1lBPTZ2zdNoTjMLS2HW6NZcNb
-	PK0XmGj09LwQG29N2MXaSgNOQgwBtbXk/hQA=
-X-Google-Smtp-Source: AGHT+IECUycZQwjL08EfqLgt+cwkYvm9mktQM8bmj1G0YKj0y9VR2TeWLHJjojX+MoW7vXs0w0sRY3GpfqJTCbeUD4M=
-X-Received: by 2002:a2e:9dc7:0:b0:2d0:c833:1a32 with SMTP id
- x7-20020a2e9dc7000000b002d0c8331a32mr1939348ljj.45.1707339131334; Wed, 07 Feb
- 2024 12:52:11 -0800 (PST)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="TtmWkqNq"
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 57CB81D943A;
+	Wed,  7 Feb 2024 15:55:11 -0500 (EST)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=1WFCVMoFSXSBDvhRLiRoj1sJE2CVG0fXWWtCgu
+	NAC9c=; b=TtmWkqNq/rk9O9vw4YtGD4/wN+t64K40q3mxF8Dq//Py1cEE5m1khA
+	L+vORJ2j78ALMRXB+Gd81f8TFbnP0776udBWYaTo4w6b3oVjIGWnU4vX1U2//3I5
+	JLxdsekPeKXB71p7BODD0oISwcEIBbHx25tqm9jdUBUVaw8ES3bgM=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 4C4B21D9438;
+	Wed,  7 Feb 2024 15:55:11 -0500 (EST)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.165.85])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 8302B1D9436;
+	Wed,  7 Feb 2024 15:55:10 -0500 (EST)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Josh Steadmon <steadmon@google.com>
+Cc: git@vger.kernel.org,  johannes.schindelin@gmx.de,  peff@peff.net,
+  phillip.wood@dunelm.org.uk
+Subject: Re: [RFC PATCH v2 6/6] t/Makefile: run unit tests alongside shell
+ tests
+In-Reply-To: <cd7467a7bd51fbc01c999ee1bd7688770b1d11e5.1706921262.git.steadmon@google.com>
+	(Josh Steadmon's message of "Fri, 2 Feb 2024 16:50:31 -0800")
+References: <cover.1705443632.git.steadmon@google.com>
+	<cover.1706921262.git.steadmon@google.com>
+	<cd7467a7bd51fbc01c999ee1bd7688770b1d11e5.1706921262.git.steadmon@google.com>
+Date: Wed, 07 Feb 2024 12:55:09 -0800
+Message-ID: <xmqqzfwc6lle.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: Orgad Shaneh <orgads@gmail.com>
-Date: Wed, 7 Feb 2024 22:52:00 +0200
-Message-ID: <CAGHpTBKpYp370QTw93wK_RP+X2S+44jd-8kjodiUj4k0BoAEqA@mail.gmail.com>
-Subject: git gc destroys autostash
-To: git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 2EAC3B7E-C5FB-11EE-8755-25B3960A682E-77302942!pb-smtp2.pobox.com
 
-Running git gc --prune=now during rebase with autostash deletes the
-autostash object, and it cannot be recovered when the rebase ends.
+Josh Steadmon <steadmon@google.com> writes:
 
-Example:
+> From: Jeff King <peff@peff.net>
+>
+> Add a wrapper script to allow `prove` to run both shell tests and unit
+> tests from a single invocation. This avoids issues around running prove
+> twice in CI, as discussed in [1].
+>
+> Additionally, this moves the unit tests into the main dev workflow, so
+> that errors can be spotted more quickly.
+>
+> NEEDS WORK: as discussed in previous commits in this series, there's a
+> desire to avoid `prove` specifically and (IIUC) unnecessary
+> fork()/exec()ing in general on Windows. This change adds an extra exec()
+> for each shell and unit test execution, will that be a problem for
+> Windows?
+>
+> [1] https://lore.kernel.org/git/pull.1613.git.1699894837844.gitgitgadget@gmail.com/
+>
+> Signed-off-by: Jeff King <peff@peff.net>
+> Signed-off-by: Josh Steadmon <steadmon@google.com>
+> ---
+>  t/Makefile    |  2 +-
+>  t/run-test.sh | 13 +++++++++++++
+>  2 files changed, 14 insertions(+), 1 deletion(-)
+>  create mode 100755 t/run-test.sh
+>
+> diff --git a/t/Makefile b/t/Makefile
+> index 6e6316c29b..6a67fc22d7 100644
+> --- a/t/Makefile
+> +++ b/t/Makefile
+> @@ -64,7 +64,7 @@ failed:
+>  	test -z "$$failed" || $(MAKE) $$failed
+>  
+>  prove: pre-clean check-chainlint $(TEST_LINT)
+> -	@echo "*** prove ***"; $(CHAINLINTSUPPRESS) $(PROVE) --exec '$(TEST_SHELL_PATH_SQ)' $(GIT_PROVE_OPTS) $(T) :: $(GIT_TEST_OPTS)
+> +	@echo "*** prove (shell & unit tests) ***"; $(CHAINLINTSUPPRESS) $(PROVE) --exec ./run-test.sh $(GIT_PROVE_OPTS) $(T) $(UNIT_TESTS) :: $(GIT_TEST_OPTS)
+>  	$(MAKE) clean-except-prove-cache
+>  
+>  $(T):
+> diff --git a/t/run-test.sh b/t/run-test.sh
+> new file mode 100755
+> index 0000000000..c29fef48dc
+> --- /dev/null
+> +++ b/t/run-test.sh
+> @@ -0,0 +1,13 @@
+> +#!/bin/sh
+> +
+> +# A simple wrapper to run shell tests via TEST_SHELL_PATH,
+> +# or exec unit tests directly.
+> +
+> +case "$1" in
+> +*.sh)
+> +	exec ${TEST_SHELL_PATH:-/bin/sh} "$@"
+> +	;;
+> +*)
+> +	exec "$@"
+> +	;;
+> +esac
 
-#!/bin/sh
+Hmph.  This penalizes the non-unit tests by doing an extra "exec",
+once per program?
 
-git init
-echo 1 > foo; git add foo; git commit -m 'Initial commit'
-echo 2 > foo; git add foo; git commit -m 'Second commit'
-echo 3 > foo; git rebase -i --autostash HEAD^
-# Choose edit
-git gc --prune=now
-git rebase --continue
-# fatal: '3b88163a1bff3859a005554c168d94e5357ee45b' is not a stash-like commit
-# error: cannot store 3b88163a1bff3859a005554c168d94e5357ee45b
-# Successfully rebased and updated refs/heads/master.
+Of course we cannot run two $(PROVE) invocations serially, one for
+doing $(T) and the other for doing $(UNIT_TESTS)?
 
-Thanks,
-- Orgad
+
