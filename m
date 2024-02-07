@@ -1,78 +1,102 @@
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C250535C9
-	for <git@vger.kernel.org>; Wed,  7 Feb 2024 22:19:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1DEE3D76
+	for <git@vger.kernel.org>; Wed,  7 Feb 2024 22:31:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707344345; cv=none; b=qgg5451iQRNJn+uNfDZSEYwMOP6/mEVV0JbaEzwVS454FCFAfq1Mt499zIZRJe+5nYvdwUdvxKtLTgmUEDBBMLWtP/GooFN9ekHfprMEKBsUDYwVgVqtxQvB81Sqk0SZJMLWG9Mr50bbfDTWKYDuo7NgTiZ+0f86W7aH14CrO6k=
+	t=1707345087; cv=none; b=G8cDCHXQzmo1IgPLx60fmgPLhjSlWRAFnHXGWs9jYY8QE7cB9Hz5CPpbUXHPT0rfV7oRYpWmdfGkCgJfDrRG7UKAb3yqrLgym8e4Ry8gdd/pIoOgNzgRYBfA3Ywp4/hhA++HnPnNACL7Zj4sqp3xGrliYLaqgccdsNFxeM0tIC4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707344345; c=relaxed/simple;
-	bh=lGP3h/Nf7MVpSjhEBF4BQjB3SnGU4bIhRigm1xqiov0=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=rdZUfLPysRKSEwp/mFnQQpK7fB/seoCFTqQXJ27CG8CTSdAe0Al7c3HDDEzsrGnl2IJvs6bKt4SPX9TLyNp1wwXpQKPwdtA2N7C1JHGPySbjTH7MHxdfR1qO+KvG52Q/SyPhvwLbLrIuFFEkZlsiarNYeaXHzbLmYd+pS4mEIFk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=fPR5Afdu; arc=none smtp.client-ip=173.228.157.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="fPR5Afdu"
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id B95E02C257;
-	Wed,  7 Feb 2024 17:19:03 -0500 (EST)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=lGP3h/Nf7MVpSjhEBF4BQjB3SnGU4bIhRigm1x
-	qiov0=; b=fPR5Afdu2FX62O4U17AcAhKwxyUZJ1/Hagj9W97NQ4buc66wAsRk1/
-	29EU6MzUj6I/PFi3pPc2hwyo/7ZEcucyR7/oxC/c6AQ+C81p7qDt2G2DkB2mhqP7
-	vGQ57OYyaIpcIjD7ZxsiQFQxjWEdJTR7HFyrMXpqDWXBmRzoWKW30=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id 9FD312C255;
-	Wed,  7 Feb 2024 17:19:03 -0500 (EST)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.165.85])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 556D42C24B;
-	Wed,  7 Feb 2024 17:19:00 -0500 (EST)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: <git@vger.kernel.org>
-Cc: "Eric W. Biederman" <ebiederm@gmail.com>,  "brian m. carlson"
- <sandals@crustytoothpaste.net>,  Eric Sunshine <sunshine@sunshineco.com>,
-  "Eric W. Biederman" <ebiederm@xmission.com>
-Subject: Re: [PATCH v2 00/30] initial support for multiple hash functions
-In-Reply-To: <878r8l929e.fsf@gmail.froward.int.ebiederm.org> (Eric
-	W. Biederman's message of "Sun, 01 Oct 2023 21:39:09 -0500")
-References: <87jzsbjt0a.fsf@gmail.froward.int.ebiederm.org>
-	<878r8l929e.fsf@gmail.froward.int.ebiederm.org>
-Date: Wed, 07 Feb 2024 14:18:58 -0800
-Message-ID: <xmqqv86z5359.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	s=arc-20240116; t=1707345087; c=relaxed/simple;
+	bh=1gWysid0PVUypSvI2NIdSBjkFxDvFleWyFDeJSxtU6c=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=U8TE8FSW09R02uuVHnkr9lFhs0xU18SQnkPfAitWqL04Z4i3C90P2BlCmeMl3mwi+DRLS+TPw8cXgzwVDJqigLEH6jzGAdrcECg6ibTL6xHk1H1ZKSwOixGhxPENnNUx0v8qDW9+OHszWDXzU6LeB+rTg/P89dVcjQJ6YDkiqXg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+Received: (qmail 11701 invoked by uid 109); 7 Feb 2024 22:31:24 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 07 Feb 2024 22:31:24 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 24032 invoked by uid 111); 7 Feb 2024 22:31:21 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 07 Feb 2024 17:31:21 -0500
+Authentication-Results: peff.net; auth=none
+Date: Wed, 7 Feb 2024 17:31:20 -0500
+From: Jeff King <peff@peff.net>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Han-Wen Nienhuys <hanwen@google.com>,
+	Karthik Nayak <karthik.188@gmail.com>
+Subject: Re: [PATCH v4 1/2] refs: introduce reftable backend
+Message-ID: <20240207223120.GA537741@coredump.intra.peff.net>
+References: <cover.1706601199.git.ps@pks.im>
+ <cover.1707288261.git.ps@pks.im>
+ <5de60d46bdccbfbf0a923abc2f45eda07f30c110.1707288261.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- E4AC4E86-C606-11EE-B1C4-A19503B9AAD1-77302942!pb-smtp21.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <5de60d46bdccbfbf0a923abc2f45eda07f30c110.1707288261.git.ps@pks.im>
 
-"Eric W. Biederman" <ebiederm@gmail.com> writes:
+On Wed, Feb 07, 2024 at 08:20:31AM +0100, Patrick Steinhardt wrote:
 
-> This addresses all of the known test failures from v1 of this set of
-> changes.  In particular I have reworked commit_tree_extended which
-> was flagged by smatch, -Werror=array-bounds, and the leak detector.
->
-> One functional bug was fixed in repo_for_each_abbrev where it was
-> mistakenly displaying too many ambiguous oids.
->
-> I am posting this so that people review and testing of this patchset
-> won't be distracted by the known and fixed issues.
+> +static int write_copy_table(struct reftable_writer *writer, void *cb_data)
+> +{
+> [...]
+> +	/*
+> +	 * Create the reflog entry for the newly created branch.
+> +	 */
+> +	ALLOC_GROW(logs, logs_nr + 1, logs_alloc);
+> +	memset(&logs[logs_nr], 0, sizeof(logs[logs_nr]));
+> +	fill_reftable_log_record(&logs[logs_nr]);
+> +	logs[logs_nr].refname = (char *)arg->newname;
+> +	logs[logs_nr].update_index = creation_ts;
+> +	logs[logs_nr].value.update.message =
+> +		xstrndup(arg->logmsg, arg->refs->write_options.block_size / 2);
+> +	logs[logs_nr].value.update.new_hash = old_ref.value.val1;
+> +	logs_nr++;
+> +
+> +	/*
+> +	 * In addition to writing the reflog entry for the new branch, we also
+> +	 * copy over all log entries from the old reflog. Last but not least,
+> +	 * when renaming we also have to delete all the old reflog entries.
+> +	 */
+> +	ret = reftable_merged_table_seek_log(mt, &it, arg->oldname);
+> +	if (ret < 0)
+> +		return ret;
 
-We haven't seen any reviews on this second round, and have had it
-outside 'next' for too long.  I am tempted to say that we merge it
-to 'next' and see if anybody screams at this point.
+Should this last line be "goto done" as is used elsewhere in the
+function? Otherwise we are at least leaking the "logs" array (and
+possibly some of the other cleanup is important, too).
 
-Thanks.
+> +	while (1) {
+> +		ret = reftable_iterator_next_log(&it, &old_log);
+> +		if (ret < 0)
+> +			goto done;
+> +		if (ret > 0 || strcmp(old_log.refname, arg->oldname)) {
+> +			ret = 0;
+> +			break;
+> +		}
+
+This "ret = 0" doesn't have any effect. We break out of the loop, and
+then...
+
+> +	}
+> +
+> +	ret = reftable_writer_add_logs(writer, logs, logs_nr);
+> +	if (ret < 0)
+> +		goto done;
+
+...the first thing we do is write over it. I dunno if it's worth keeping
+as a maintenance precaution, though (if the code after the loop changed
+to omit that assignment, then setting "ret" would become important).
+
+Both were noticed by Coverity (along with several other false
+positives).
+
+-Peff
