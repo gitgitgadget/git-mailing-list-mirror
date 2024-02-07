@@ -1,50 +1,53 @@
 Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A029C535A5
-	for <git@vger.kernel.org>; Wed,  7 Feb 2024 22:03:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 074E76BFCB
+	for <git@vger.kernel.org>; Wed,  7 Feb 2024 22:08:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707343385; cv=none; b=lLqf8LR20wB4gsTq70Jw3OEo+P68Jt2AM8/lL73lca2LhZjVM/AQ4TaOS38rWOz16vOWHCdDiBZdWKd3iRguU7D/LggFxPQtHH8Ha59YZUphrszUeAvcuF7psPMqidpPkqxBnj2Z2sJkZ8cYeb/6qKpIkGJt4MuhfJGWNn8LTB4=
+	t=1707343694; cv=none; b=DRnaUOqJwrkT1CECY7eevjOHGz6H/HU4gU/DOYotbsjsxdM+1i+7H8r1USUw2Hw2lz52QgPsmcfE4Qnq0qGiG48QCqhNOkf1cDscUbyq8BzcF5kE22vSeifKmv28SyoyXf/yzLVp0zLsHld0F4mQJLPduzdQMvKpkgIA8d8LHbg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707343385; c=relaxed/simple;
-	bh=PNti276mfMCZbIBaNEves8EeOeXjqyBHM5SskWiqhEs=;
+	s=arc-20240116; t=1707343694; c=relaxed/simple;
+	bh=lG2I/2AOsF/AzCVCQS62qgB3crnjUZJwputC99mTSGw=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=gygWnM8AYJvIVZBTarC04CYJY0ttkqwp0at4aY6OI6frcBzFaqSbA0RDsaTHF0C7FYYEPFueHvUMEs2+G06p2AFg2DFR9gQK/Y3mfhJ6UUHnwibwqHl0YWfz/gPFclmvPMz2lgCh0XMVKjSJ42CTpLC79hGxjUzFsgX+BEJZ11Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=g+ZajW1T; arc=none smtp.client-ip=173.228.157.53
+	 MIME-Version:Content-Type; b=m0BZzAeOAJ5wGQsTBpfDSUivE1MsruHdsBNN+JUM7fCRIiN99O9CJPVe9ZqyER7JNRA2IXqbXe1MTdypp6ySEJtH73kIMNQh1/deakG657DJEhIJBNGnBFcuxNCdFDoD9b7rDlgXVFAxYh3pSepjNVDOKcJI4fsGONioig2et+c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=SlSm0QG0; arc=none smtp.client-ip=173.228.157.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="g+ZajW1T"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="SlSm0QG0"
 Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id D7EF82BFD5;
-	Wed,  7 Feb 2024 17:03:01 -0500 (EST)
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id 6B27B2C018;
+	Wed,  7 Feb 2024 17:08:12 -0500 (EST)
 	(envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=PNti276mfMCZbIBaNEves8EeOeXjqyBHM5SskW
-	iqhEs=; b=g+ZajW1T2+xK5IM7jOO9dTgM86NejqirQXgXvjqzEniZeEquD4ZS4y
-	rudvECBOMB//LffQCiEAoZ9QPJWwDazet5jOOsbLWKTjUsi4/QCYeuIdULrMmxoF
-	9X6D3KQ+zl0iHazcaTko/jxlBh5R5uaqkiOh+HqUyNlKXl8CYcfZA=
+	:content-type; s=sasl; bh=lG2I/2AOsF/AzCVCQS62qgB3crnjUZJwputC99
+	mTSGw=; b=SlSm0QG0CO6xMyWNYnexV9SqlXn+6j510b+RNiR084hxKRUmEyujTw
+	kLgKa4Wpp3Aa1NwMt+Xtst9vN0IGBgwHEWXfIMhI9d1ObyE8WnRoh1Ls9HoySnJ8
+	VM2Ko7/IYvxdkx7Oh4ho54X0D19v/ROwa4VnfxqXSDoKpBMqBS8LY=
 Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id CF3642BFD4;
-	Wed,  7 Feb 2024 17:03:01 -0500 (EST)
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id 6349A2C017;
+	Wed,  7 Feb 2024 17:08:12 -0500 (EST)
 	(envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.125.165.85])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 7E2BF2BFD2;
-	Wed,  7 Feb 2024 17:02:58 -0500 (EST)
+	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 15AEA2C016;
+	Wed,  7 Feb 2024 17:08:09 -0500 (EST)
 	(envelope-from junio@pobox.com)
 From: Junio C Hamano <gitster@pobox.com>
-To: Kousik Sanagavarapu <five231003@gmail.com>
-Cc: Andy Koppe <andy.koppe@gmail.com>,  git@vger.kernel.org
-Subject: Re: [PATCH v3 5/7] refs: add pseudorefs array and iteration functions
-In-Reply-To: <ZcEvLwp0t8-rcyGn@five231003> (Kousik Sanagavarapu's message of
-	"Tue, 6 Feb 2024 00:25:43 +0530")
-References: <ZcEvLwp0t8-rcyGn@five231003>
-Date: Wed, 07 Feb 2024 14:02:56 -0800
-Message-ID: <xmqqcyt853vz.fsf@gitster.g>
+To: git@vger.kernel.org
+Cc: "Philippe Blain via GitGitGadget" <gitgitgadget@gmail.com>,  Philippe
+ Blain <levraiphilippeblain@gmail.com>
+Subject: Re: [PATCH v2 0/5] completion: remove hardcoded config variable names
+In-Reply-To: <pull.1660.v2.git.git.1706534881.gitgitgadget@gmail.com>
+	(Philippe Blain via GitGitGadget's message of "Mon, 29 Jan 2024
+	13:27:56 +0000")
+References: <pull.1660.git.git.1706472173.gitgitgadget@gmail.com>
+	<pull.1660.v2.git.git.1706534881.gitgitgadget@gmail.com>
+Date: Wed, 07 Feb 2024 14:08:07 -0800
+Message-ID: <xmqq8r3w53nc.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -54,47 +57,28 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 X-Pobox-Relay-ID:
- A7600AF6-C604-11EE-BE0D-A19503B9AAD1-77302942!pb-smtp21.pobox.com
+ 607DD2FC-C605-11EE-B6B5-A19503B9AAD1-77302942!pb-smtp21.pobox.com
 
-Kousik Sanagavarapu <five231003@gmail.com> writes:
+"Philippe Blain via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> Andy Koppe <andy.koppe@gmail.com> wrote:
-> ...
->> +static const char *const pseudorefs[] = {
->> +	"FETCH_HEAD",
->> +	"ORIG_HEAD",
->> +	"MERGE_HEAD",
->> +	"REBASE_HEAD",
->> +	"CHERRY_PICK_HEAD",
->> +	"REVERT_HEAD",
->> +	"BISECT_HEAD",
->> +	"AUTO_MERGE",
->> +};
->> +
->>  struct ref_namespace_info ref_namespace[] = {
->>  	[NAMESPACE_HEAD] = {
->>  		.ref = "HEAD",
->> @@ -1549,6 +1564,33 @@ int head_ref(each_ref_fn fn, void *cb_data)
->>  	return refs_head_ref(get_main_ref_store(the_repository), fn, cb_data);
->>  }
+> Changes since v1:
 >
-> The first thing that popped up in my head was "Should we somehow use
-> is_pseudoref_syntax() instead of manually listing these?" (although I
-> read in this thread later that Junio was okay with the listing) but then ...
+>  * Corrected my email in PATCH 2/5 (sorry for the noise)
 >
-> I thought I saw something similar in some other thread (which entered
-> the mailing list much after this patch series was submitted) ...
+> v1: This series removes hardcoded config variable names in the
+> __git_complete_config_variable_name function, partly by adding a new mode to
+> 'git help'. It also adds completion for 'submodule.*' config variables,
+> which were previously missing.
 >
-> 	https://lore.kernel.org/git/20231221170715.110565-2-karthik.188@gmail.com/T/
+> I think it makes sense to do that in the same series since it's closely
+> related, and splitting it would result in textual conflicts between both
+> series if one does not build on top of the other, but I'm open to other
+> suggestions.
+>
+> Thanks,
 
-We are halting Karthik's topic to rethink its UI for now, but your
-point stands.  We should use a unified definition of what pseudorefs
-there are across the codebase for consistency, and Karthik's topic
-would be a better place to do so.
-
-Andy, let me drop this topic for now from my tree, and let's wait
-until Karthik's "iterate over all refs" topic solidifies, at which
-time an updated iteration (v4?)  of this topic hopefully can build
-on top of it.
+Neither rounds of this series unfortunately got any review.
+Comments from anybody interested in helping to improve completion
+scripts?
 
 Thanks.
