@@ -1,120 +1,78 @@
-Received: from mail-ot1-f52.google.com (mail-ot1-f52.google.com [209.85.210.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E424580625
-	for <git@vger.kernel.org>; Wed,  7 Feb 2024 16:19:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2514B1E498
+	for <git@vger.kernel.org>; Wed,  7 Feb 2024 16:34:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707322766; cv=none; b=qjW+Rtj+oy6OG5nvmizAmer7Qt8ERrIuIkHdUlThGA891duvRtjOtTvDtKHWVP8hRxA4zR0W/6sHDViTR2wjfDg/6FNsi1IslSmg6sLItvMaM6xEtwMeHMr6bfsvsoKPZYsbyLNWDXLlksJRGKpMz/To+60gWW9CHT6+yhKzHyA=
+	t=1707323667; cv=none; b=Rj0BFWtgNulRdNgHBEA87z8Fh9bkWQ+QoOSnv09T6DWhjhAd/mumLSmL+1Ue97BI3gZy+bWohn+S0IKGYVvH0K5oa2CZo/Gaq5ZCTTsmjEDUQ+rQvo4XUMOst3FoApexF5Ssq9qlK74rgwX82/fVkywz+PESwz/iwZZHjNWPxGo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707322766; c=relaxed/simple;
-	bh=xjuwQwxxBr+4Yv8xRjzVuCpnT0A95M34hgIdMi3SHXM=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=ZECDmrmbxNPwIhNKOUpnRus1kwavS4sS7lG3I72D8t4JQfCRAHtQwgmdAPcQDw+57cf7Ao63k5e8vW1PnJDuKajvjJZyhrzTutecKeoCmr45nL2SECYAllmD4+f2kDPpNGBwlryuLQkTkZQiYXSGlAKV1otOtVGOZHvTiiBjCr0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=TRen8ZZi; arc=none smtp.client-ip=209.85.210.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1707323667; c=relaxed/simple;
+	bh=fOtOIdMXxv3Bw0+Xl+/vrGyue8D2yj7Z5d9ngk5zDp4=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=fiejr9mIS1RU7PXQUgyRS7Dc8ILhsdomfqfzsy9rEGyMKqwr/DIltHaKVTzKqGwcM8hUC1t8OtBwpDNB+RO5p7KVRJSbZBLf+/uZNyUklT47Hb+9LuO8S5vtpxMvWVS8lFburCZ06wi0g2QHmopFjcom0b22xqIwIJWi+MbYJi4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=vu1Z7Y33; arc=none smtp.client-ip=64.147.108.71
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TRen8ZZi"
-Received: by mail-ot1-f52.google.com with SMTP id 46e09a7af769-6e12b917df2so471521a34.1
-        for <git@vger.kernel.org>; Wed, 07 Feb 2024 08:19:24 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1707322764; x=1707927564; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=2oYnZBztl6dKy9Ik33f6yDc5tyWZdwCTdoGoiRlzlsE=;
-        b=TRen8ZZindNU8D4JcDk8ZfybqQflUjBYszg6Ip/9kQdAqUCttdLcTrchUGBl8BjQyo
-         QIkn86a6Rm3fwL0oL2UAv6aYTE91A/OZ8SkWKcV7XTBr/RQQsUR4NCry/H7lZaU1OFRf
-         7rxnHNnIPSP9C+oHMyFsChQ2WzfuodJhy87WUpb+6dHtO9IBPVYGt0vbInc5L8b7TB+m
-         3snbvQbjQYzL8LeB8jLnHHNj8mm+GedlBrOzidUF+UH7TFKzxnMCI7BFDPcfkePsL3q3
-         zck9N7P+NH3Ak52vvypZozdh+ihGwJ6vuN1a5NJxJo0x6TmFvdoh1B4lymKksH1NFdHS
-         N7pg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1707322764; x=1707927564;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=2oYnZBztl6dKy9Ik33f6yDc5tyWZdwCTdoGoiRlzlsE=;
-        b=U5xWQ/ZFYpeMNCJ36Q5O2IdnoHp7CgzLQnS68XyfSEA+ouqXTBNNb1dTKd4bR9nda/
-         8Avn7m1tpfi2QO/3uzwib/OzihcHuFWrz1sYW+rcwygodmGsq+Ed4bUdC2nUDMsBIhbM
-         NtYIClnfUPe9XSwV5bKk4uRPZvLWQatHokpujV5DQfD/z2pbqFjmU5QLTr+b4IdiKXWE
-         iByPNJBy2G3LNvVSZ+C+b2px4dBVsGu5lWoraAGoO/Z+5bkSQcSh6BH91D1ncp5Vqk6W
-         JdfrTNItqAFIZ9pf3XBfva4UD0nfTUHtWreyoVt6Mi1T0NtS8WhKM6S48XpAlbW81pqi
-         +EdQ==
-X-Gm-Message-State: AOJu0YwQk9GcBsAIkdNr/dR1gD1JsMd10+0Ak9i1mLQ+NVRpI3V4PB4L
-	Tr70alQY9Bw5V7lqJAFHx7r03M+2wuCHM0tpXx3NlpiTRa3kD87aWQZqIJHyjmmpSBcXQVX1OU5
-	XADez3GT5D6Th7VNudhQ62chmlJ8=
-X-Google-Smtp-Source: AGHT+IFDi1OsDWWcoKl++xjLhCaFmbsAl3V4NnEmfKi75IO5SuytvPELLKe5TzO9r10o1j2Jp2Bfy0MV2o4VEaXcOHQ=
-X-Received: by 2002:a05:6870:469f:b0:219:c8bc:66a8 with SMTP id
- a31-20020a056870469f00b00219c8bc66a8mr3144701oap.55.1707322763869; Wed, 07
- Feb 2024 08:19:23 -0800 (PST)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="vu1Z7Y33"
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id A34091D7213;
+	Wed,  7 Feb 2024 11:34:24 -0500 (EST)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=fOtOIdMXxv3Bw0+Xl+/vrGyue8D2yj7Z5d9ngk
+	5zDp4=; b=vu1Z7Y33qzhSYKecfI9JVMechtiPHJL4uL6boKPcido/Sm/tSO24mn
+	Fx04HSIeWthH/r4aTmpERTTo+/BwdG8b/OjwCFcWu4npk1vLtnIqdJHjQiEkUlHk
+	fPRRUpmR5zG7QPd3EtPCmGGA1WU/u4zSKhOWHoPBHvJsBldfKS7ds=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 9A6D21D7212;
+	Wed,  7 Feb 2024 11:34:24 -0500 (EST)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.165.85])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 0696A1D7210;
+	Wed,  7 Feb 2024 11:34:23 -0500 (EST)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Linus Arver <linusa@google.com>
+Cc: Christian Couder <christian.couder@gmail.com>,  git@vger.kernel.org,
+  Patrick Steinhardt <ps@pks.im>,  John Cai <johncai86@gmail.com>,
+  Christian Couder <chriscool@tuxfamily.org>,  Elijah Newren
+ <newren@gmail.com>,  Jeff Hostetler <git@jeffhostetler.com>
+Subject: Re: [PATCH 3/3] rev-list: add --allow-missing-tips to be used with
+ --missing=...
+In-Reply-To: <owlyttmkmwaf.fsf@fine.c.googlers.com> (Linus Arver's message of
+	"Wed, 07 Feb 2024 01:57:28 -0800")
+References: <20240201115809.1177064-1-christian.couder@gmail.com>
+	<20240201115809.1177064-4-christian.couder@gmail.com>
+	<xmqqil37yix1.fsf@gitster.g>
+	<CAP8UFD3Hfgud19y_K1bZOudkBE-ss1_SgWTRVkJ7gUbYJ400yQ@mail.gmail.com>
+	<owlyttmkmwaf.fsf@fine.c.googlers.com>
+Date: Wed, 07 Feb 2024 08:34:22 -0800
+Message-ID: <xmqqfry4cjxt.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240119142705.139374-1-karthik.188@gmail.com>
- <20240129113527.607022-1-karthik.188@gmail.com> <20240129113527.607022-5-karthik.188@gmail.com>
- <98d79d33-0d7e-4a9c-a6a3-ed9b58cd7445@gmail.com> <CAOLa=ZR=_tt=ppphGMkxqj_YB5G+YkTMWGzRzcHTbrZz4ysb5w@mail.gmail.com>
- <92ba680d-0b48-49f0-aafc-f503e5a5e0ea@gmail.com> <xmqqle7xjzic.fsf@gitster.g>
- <xmqqr0hph1ku.fsf@gitster.g> <CAOLa=ZSZJ=_VCppHXcJeE=Z61go4_040xyc1NBTu-o=xysLrdg@mail.gmail.com>
- <xmqqcyt9fdc7.fsf@gitster.g> <CAOLa=ZRcWYmEYnxh_=ykOerahZ61xaanLCj_JHHLvtrvN=Xs-w@mail.gmail.com>
- <xmqq1q9oe029.fsf@gitster.g>
-In-Reply-To: <xmqq1q9oe029.fsf@gitster.g>
-From: Karthik Nayak <karthik.188@gmail.com>
-Date: Wed, 7 Feb 2024 17:18:56 +0100
-Message-ID: <CAOLa=ZQzz7_L_9cBmK+pgFwd_DFqfWDVRiaZMAxU+54kBq6Pcw@mail.gmail.com>
-Subject: Re: [PATCH v3 4/4] for-each-ref: avoid filtering on empty pattern
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Phillip Wood <phillip.wood123@gmail.com>, phillip.wood@dunelm.org.uk, 
-	git@vger.kernel.org, ps@pks.im
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ C0A09568-C5D6-11EE-8E02-25B3960A682E-77302942!pb-smtp2.pobox.com
 
-On Wed, Feb 7, 2024 at 5:00=E2=80=AFPM Junio C Hamano <gitster@pobox.com> w=
-rote:
->
-> Karthik Nayak <karthik.188@gmail.com> writes:
->
-> > I'm thinking "--all-ref-types" might be a good alternative. Mostly beca=
-use,
-> > "--include-root-refs" seems very specific to the files backend. Also, w=
-e don't
-> > include other refs which are not HEAD | pseudorefs, but in the $GIT_DIR=
-.
->
-> I strongly disagree wiht the "files backend specific" part of the
-> comment.  No matter what backend you would use, refs and pseudorefs
-> have the full refname, which may look like "HEAD", "FETCH_HEAD",
-> "refs/heads/maint", etc., and you can easily see these full refnames
-> form a tree structure, with "HEAD", "FETCH_HEAD", "refs/" at the
-> root level.
+Linus Arver <linusa@google.com> writes:
 
-I conceded to this point, I was thinking "root" here refers to $GIT_DIR
-and this structuring comes from the files backend. But I see the flaw there
-that irrelevant of the backend, there is a tree hierarchy built up and for =
-refs
-without prefixes, it can be considered as "root".
+> IOW, make the minority (certainly not majority, I think?) of users who
+> really need the error propagation use the (new) extra flag, while the
+> rest of us (including the version of you who was surprised by the
+> limited behavior of "--missing=...", enough to write this series) don't
+> have to.
 
-> I do not understand your "we don't include other refs", either.
-> There may be "things" that are ignored by your implementation of
-> "for-each-ref ''" even with the files backend in $GIT_DIR directory.
-> They are not refs, because the refs are by definition inside "refs/"
-> hierarchy, unless they are ones that are specifically included from
-> outside the hierarchy ("pseudorefs" is one class of specific
-> exception, "HEAD" is another).
-
-This is a bit of a grey area, what I mean is that we do allow users to crea=
-te
-non "refs/" prefixed refs:
-
-    $ git update-ref foo @~1
-
-    $ cat .git/foo
-    2b52187cd2930931c6d34436371f470bb26eef4f
-
-What I mean to say is that, by saying "--include-root-refs" it seems to imp=
-ly
-that any such refs should be included too, but this simply is not the case.
+I am skeptical that we even want that.  Those who want to use the
+"--missing" and care about special casing missing starting points
+can easily check with things like "cat-file -e" before even running
+the "rev-list --missing".
