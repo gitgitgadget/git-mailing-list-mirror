@@ -1,81 +1,81 @@
-Received: from wout3-smtp.messagingengine.com (wout3-smtp.messagingengine.com [64.147.123.19])
+Received: from wfhigh3-smtp.messagingengine.com (wfhigh3-smtp.messagingengine.com [64.147.123.154])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E642E6A025
-	for <git@vger.kernel.org>; Thu,  8 Feb 2024 07:42:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.19
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B0C869DE4
+	for <git@vger.kernel.org>; Thu,  8 Feb 2024 07:57:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707378150; cv=none; b=q8J55wDad35dLPxtq1F0Ken0yJl/aiYAvYUKR1emathHAIzsrAg0Y2Ww5N5jLiVtUv7VhO/Svjk6L8jCue3ZAFe9OnHpfMY3hf7HkB10XQnpskVgkdAfPQEAA0nQ3V/aebJDOs2ytrbt3rhkLw3XtgSorCACJ/mclGkXZcyr+A0=
+	t=1707379056; cv=none; b=bgxt+4bPyJ9tCbzoR2E/ebDQJ2C45+8EHUENCmwF8x/JpyDgnu5s80njVeK0FxKUJ9Ui7835S7voN6odJYUhyp3SIlokbAbFUqKupduEEKXdqocFYMTo9dWQQQXeOQbGcCRqD98owAGqPWE5pkzFYQTMFIYNv8SMrbET7N9CE+o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707378150; c=relaxed/simple;
-	bh=who93FgXOo6RiEjkFom0nEyIXjFd052urBaYyVTbigE=;
+	s=arc-20240116; t=1707379056; c=relaxed/simple;
+	bh=p+htWYrlx4ElOU2tJogmYwRwxydEj1ZHVvrDGINsKiA=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=jD/jL6kpTi0j98owUz4DM2EvCE4iKoaI/aif8M/vtZ0+r56rh0lG98zYygMiVRBDQz+4T24dMggDAlgOe9+SlZI2hs7H9mFoSf4hY7rKaHILHYbPS+YK+FL72agI8C1lb4VXq6VS7YAI+PD/wnAYqJHtCgFsnqD0+kNrMZIoFCo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=E/PkBwCt; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=LJT3hn4+; arc=none smtp.client-ip=64.147.123.19
+	 Content-Type:Content-Disposition:In-Reply-To; b=R3qAHTlyUpQlwjmoJrPamU5iiXdY5WSHUghhkfO/g+fyNiYhlSdES08JNWtsDh1u8EG+/MmcJqVASufeBSePfItumU9XqQpgd8h5YuBZgBrRcU3kqLr0TCNglJHNyhyNMD34GUnQYtnPehIXWXTwmUhL5Migm0lq334qGsqTyLM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Jo+obKma; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=OpcAMbT2; arc=none smtp.client-ip=64.147.123.154
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="E/PkBwCt";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="LJT3hn4+"
-Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
-	by mailout.west.internal (Postfix) with ESMTP id 01D9D3200A7A;
-	Thu,  8 Feb 2024 02:42:27 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Jo+obKma";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="OpcAMbT2"
+Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
+	by mailfhigh.west.internal (Postfix) with ESMTP id 6F292180007C;
+	Thu,  8 Feb 2024 02:57:33 -0500 (EST)
 Received: from mailfrontend1 ([10.202.2.162])
-  by compute6.internal (MEProxy); Thu, 08 Feb 2024 02:42:28 -0500
+  by compute4.internal (MEProxy); Thu, 08 Feb 2024 02:57:33 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1707378147; x=1707464547; bh=bvBO8I9LsI
-	+aF17bi5GEp7xsWX85sJzxH2aKR3LY8ac=; b=E/PkBwCtQUrgHjjKb8JTacKNIn
-	b4aMiAABmREgt7XpuAUDeG0fW+UdU7+u+9wjJnXsTMRRkqRZY4MepoRMMqIlncyz
-	q0uFUTVRXtcwYPwUW32GgyoeGJKTf0Xe3GTq+xgZAa7cu4x9J6wYSzeLo2X8A7yj
-	VH7Ww0H0ma3zskwIcZo8z5uwEtuuQbCi6JZXmhYeTsFZD6ad6d85KN90D1roi4uk
-	ihnrKrxbpgvQktkOphsFp7oq6Y1GRoeQlTJszRIoPyay+2wtK26ZlL+21nvs6g1l
-	2YmUk57kDSzKdYCn8kVcrd02f4kca/wqc3mGAOhrwl/CW31JrWvpCHlJQ32Q==
+	:subject:to:to; s=fm3; t=1707379052; x=1707465452; bh=ymT5TB3SXn
+	xDtKOBYN7HJUK66zIINmifhFIoxyDcj4g=; b=Jo+obKmaNdzcPAg5aZqvf6tS9a
+	WboKL2uo/9irzP9JiZd1Uf5NeTWeEGUZe9dziU+wfca6Fx+caiCYCjA+YIwWcOgb
+	UaWWsVEeg3K/Xj0rI0ynbcxa7ntdEIbUzW19nJHLycV0PSr7WZleO2wRma3paaH3
+	mqviCw6qFNDM9jq41V0Zcw1yjyIsrJrSfvU12GYF20Leuexshz6+FRI1nl3ldvj1
+	0+TGmcvsk2EYIXnME/3AGa/RknUf2k7q5OMdqbwFSpY7zTls+CaPlOpXvAn/DxSw
+	/oaY59Gw6acgDvw4NdXMmgMFqbSBcQndW5Ckv2Rwt4SPfuZjhWzmsfPh7nFQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1707378147; x=1707464547; bh=bvBO8I9LsI+aF17bi5GEp7xsWX85
-	sJzxH2aKR3LY8ac=; b=LJT3hn4+aWPlXeWGQKFxxI0mRN3eh5tYxhfoM/G/HLTc
-	vjA85ZLAd+nxdBYMDEz+qdtrNwUVEgv6g83tcVsnvQYancvNlRKQ7EJ1C/PTrq6f
-	4Ay8HVN4kp8kPUdBquPeKivch2JeZoRDSycq1KXtI2Xy+QumzIF4oEN65SgyeI2k
-	F3bLZEsPGggZUOOFo+6PATAKtp0NJbXU6SxkoxXsXUxlFl8YOYL3uUsw2fBA/Fah
-	XNFqiqeTCW9DIlesojY9JtBuLS/bRQNg1idQXOtXFzj/uAyPke6ory+rYwjDzg+v
-	2WF65Ai7IW0ia4w93NUNe+nFVY2VJx+/8iWUWbyHDw==
-X-ME-Sender: <xms:44XEZUYFoiTslGAIkaHOypyjgPm4hVbwnLva55rkYAjKEHHJvOxzNQ>
-    <xme:44XEZfY-NwLe166lvm_sq4Eqv8Jzhyap5cPqwCmHDr65d4omGbDtpBFyfG3LN2--d
-    glXFhvB_XFlgLVo0g>
-X-ME-Received: <xmr:44XEZe8qP-qE0PCMsQJbBTWu6Bq_TPTLamjyCbuf9MioeIjlBkiotjLzIyIUUtyKGSbKdicnPnFRKNiFcijhiSVsAWscNPtjrgs4ujKXlcpoeXKr>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrtdefgdduudduucetufdoteggodetrfdotf
+	fm3; t=1707379052; x=1707465452; bh=ymT5TB3SXnxDtKOBYN7HJUK66zII
+	NmifhFIoxyDcj4g=; b=OpcAMbT2tRapP25M8sfFOKK9mKug9hw87JW76hm9C9nR
+	xAKUb+DCxXB2j/Au8pJ1+D9owWnMD1I8OI0U+KJYpMNfPrAI8bVa14cBVdizWkIF
+	Carq2KPzg0dI2DXX12/mKWEtEwCPbvWqDzUFE0qPsxich30d+ixkl1ywbzlAtWRC
+	ug4QHD3fo7Xq5kV4ZcWToG9zsFjfOUTgbd9Uhn6QF1kSzPmF6TD0sVI40ChXvkQC
+	HNRMZpGLtpWFGfQC9/d/gqLK37nh75O9cZBkrihu02LdR76Zm3+fgh3bcXA64vfH
+	GPVtWCPgf1crq8fp0YI3soFC98yDEhIkgTk4IbVJIA==
+X-ME-Sender: <xms:bInEZbxNcWzfZaej9BhV8cMmhtuWtDIFKm8658SZXQqA7HSHSO-M8Q>
+    <xme:bInEZTQdW_FtxSShFKpPOznKxS7OSWUb_Vx5mg8E5LwnDrLjg2hXQMi5Lpv01jR_h
+    b3R_jQY__dy1UHu6g>
+X-ME-Received: <xmr:bInEZVV_WJsqFdBnt9-MIVbyLgXDOiEEmfBXwHUgRFvJZBidGYuomPMngHSuG-Eg_mhKevr-M2KAaQNGTTkBpXeNmMeUh5FSKGW0FIKs75nbLRnt>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrtdefgdduudegucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
     uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    cujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtvdenucfhrhhomheprfgrthhr
+    cujfgurhepfffhvfevuffkfhggtggujgesghdtroertddtvdenucfhrhhomheprfgrthhr
     ihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvg
-    hrnhepueektdevtdffveeljeetgfehheeigeekleduvdeffeeghefgledttdehjeelffet
-    necuvehluhhsthgvrhfuihiivgepfeenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
+    hrnhepheefhfeutdevtdefieetueeggfefleegleevheffueekleefhfeikeetveduhfff
+    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
     hpkhhsrdhimh
-X-ME-Proxy: <xmx:44XEZeptr5iVMm4Nhw2_OtYaA5SZvMAFrR-Jh71LloQ55Le227ZC_Q>
-    <xmx:44XEZfrMbRviUgQl7OimNhML3lTDCDGlJNPWhTejujiGtiEISxt3Gw>
-    <xmx:44XEZcR-R5cCzojBDe2b2dq0iIFHFkqkowWtE3QFpNcpQ4gBEfIUgA>
-    <xmx:44XEZW2_Y16ph4qHCpmx9O0r2cgZK-fsVbUTNq_RM8v2pYCL3Xuc6Q>
+X-ME-Proxy: <xmx:bInEZVgBVASyHsKbTFjPtpX8BeXddbwQyaEgMsZ2GXH-EPScDXbYbg>
+    <xmx:bInEZdBmXRqI0603QlpLqGE9omSJdJUQDBGmH-Hk07k6eD0UaHfaaQ>
+    <xmx:bInEZeJCyszlRYmsVMFsyP7O4JQO558Q0cnbt1hfF9BzSuTR2W8P2w>
+    <xmx:bInEZQN-wDEyeKpEmSONv65zkdsmInSJarbmMamqw9qF9MEQMZ0nKqct2PY>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 8 Feb 2024 02:42:26 -0500 (EST)
+ 8 Feb 2024 02:57:32 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id b72b3703 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 8 Feb 2024 07:38:53 +0000 (UTC)
-Date: Thu, 8 Feb 2024 08:42:25 +0100
+	by vm-mail (OpenSMTPD) with ESMTPSA id 7cf1cd9f (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 8 Feb 2024 07:53:57 +0000 (UTC)
+Date: Thu, 8 Feb 2024 08:57:29 +0100
 From: Patrick Steinhardt <ps@pks.im>
-To: Philippe Blain via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, Philippe Blain <levraiphilippeblain@gmail.com>
-Subject: Re: [PATCH v2 5/5] completion: add an use
- __git_compute_second_level_config_vars_for_section
-Message-ID: <ZcSF4fv_a16Ziwyy@tanuki>
-References: <pull.1660.git.git.1706472173.gitgitgadget@gmail.com>
- <pull.1660.v2.git.git.1706534881.gitgitgadget@gmail.com>
- <a2e792c911e1b9fa77d27ec327f6a9dfe06d4de4.1706534882.git.gitgitgadget@gmail.com>
+To: Britton Leo Kerin <britton.kerin@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH v2 1/1] completion: don't complete revs when
+ --no-format-patch
+Message-ID: <ZcSJaRczdHApmnVi@tanuki>
+References: <9627364b-c0c9-4b85-a81a-ba1ef0735c9a@smtp-relay.sendinblue.com>
+ <20240109010830.458775-1-britton.kerin@gmail.com>
+ <a718b5ee-afb0-44bd-a299-3208fac43506@smtp-relay.sendinblue.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -83,116 +83,86 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="YOQJfmN8IpBGejlu"
+	protocol="application/pgp-signature"; boundary="4YU01qYLrGqMnQaK"
 Content-Disposition: inline
-In-Reply-To: <a2e792c911e1b9fa77d27ec327f6a9dfe06d4de4.1706534882.git.gitgitgadget@gmail.com>
+In-Reply-To: <a718b5ee-afb0-44bd-a299-3208fac43506@smtp-relay.sendinblue.com>
 
 
---YOQJfmN8IpBGejlu
+--4YU01qYLrGqMnQaK
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Mon, Jan 29, 2024 at 01:28:01PM +0000, Philippe Blain via GitGitGadget w=
-rote:
-> From: Philippe Blain <levraiphilippeblain@gmail.com>
-[snip]
+On Mon, Jan 08, 2024 at 04:08:30PM -0900, Britton Leo Kerin wrote:
+> In this case the user has specifically said they don't want send-email
+> to run format-patch so revs aren't valid argument completions (and it's
+> likely revs and dirs do have some same names or prefixes as in
+> Documentation/MyFirstContribution.txt 'psuh').
+>=20
+> Signed-off-by: Britton Leo Kerin <britton.kerin@gmail.com>
+> ---
+>  contrib/completion/git-completion.bash | 6 +++++-
+>  1 file changed, 5 insertions(+), 1 deletion(-)
+>=20
 > diff --git a/contrib/completion/git-completion.bash b/contrib/completion/=
 git-completion.bash
-> index 2934ceb7637..0e8fd63bfdb 100644
+> index 185b47d802..c983f3b2ab 100644
 > --- a/contrib/completion/git-completion.bash
 > +++ b/contrib/completion/git-completion.bash
-> @@ -2605,6 +2612,15 @@ __git_compute_first_level_config_vars_for_section =
-()
->  	printf -v "__git_first_level_config_vars_for_section_${section}" %s "$(=
-echo "$__git_config_vars" | grep -E "^${section}\.[a-z]" | awk -F. '{print =
-$2}')"
->  }
-> =20
-> +__git_compute_second_level_config_vars_for_section ()
-> +{
-> +	section=3D"$1"
-
-This should be `local section`, as well.
-
-> +	__git_compute_config_vars_all
-> +	local this_section=3D"__git_second_level_config_vars_for_section_${sect=
-ion}"
-> +	test -n "${!this_section}" ||
-> +	printf -v "__git_second_level_config_vars_for_section_${section}" %s "$=
-(echo "$__git_config_vars_all" | grep -E "^${section}\.<" | awk -F. '{print=
- $3}')"
-> +}
-> +
->  __git_config_sections=3D
->  __git_compute_config_sections ()
->  {
-> @@ -2749,10 +2765,13 @@ __git_complete_config_variable_name ()
+> @@ -1242,10 +1242,12 @@ __git_find_last_on_cmdline ()
+>  	while test $# -gt 1; do
+>  		case "$1" in
+>  		--show-idx)	show_idx=3Dy ;;
+> +		--)		shift && break ;;
+>  		*)		return 1 ;;
+>  		esac
+>  		shift
 >  	done
+> +	[ $# -eq 1 ] || return 1   # return 1 if we got wrong # of non-opts
+>  	local wordlist=3D"$1"
 > =20
->  	case "$cur_" in
-> -	branch.*.*)
-> +	branch.*.*|guitool.*.*|difftool.*.*|man.*.*|mergetool.*.*|remote.*.*|su=
-bmodule.*.*|url.*.*)
->  		local pfx=3D"${cur_%.*}."
->  		cur_=3D"${cur_##*.}"
-> -		__gitcomp "remote pushRemote merge mergeOptions rebase" "$pfx" "$cur_"=
- "$sfx"
-> +		local section=3D"${pfx%.*.}"
-> +		__git_compute_second_level_config_vars_for_section "${section}"
-> +		local this_section=3D"__git_second_level_config_vars_for_section_${sec=
-tion}"
-> +		__gitcomp "${!this_section}" "$pfx" "$cur_" "$sfx"
+>  	while [ $c -gt "$__git_cmd_idx" ]; do
+> @@ -2429,7 +2431,9 @@ _git_send_email ()
 >  		return
 >  		;;
+>  	esac
+> -	__git_complete_revlist
+> +	if [ "$(__git_find_last_on_cmdline -- "--format-patch --no-format-patch=
+")" !=3D "--no-format-patch" ]; then
+> +		__git_complete_revlist
+> +	fi
+>  }
 
-Nice.
+While this second hunk here makes perfect sense to me, there is no
+explanation why we need to change `__git_find_last_on_cmdline ()`. It's
+already used with "--guess --no-guess" in another place, so I would
+think that it ought to work alright for this usecase, too. Or is it that
+the existing callsite of this function is buggy, too? If so, we should
+likely fix that in a separate patch together with a test.
 
-[snip]
-> diff --git a/t/t9902-completion.sh b/t/t9902-completion.sh
-> index f28d8f531b7..24ff786b273 100755
-> --- a/t/t9902-completion.sh
-> +++ b/t/t9902-completion.sh
-> @@ -2593,6 +2593,16 @@ test_expect_success 'git config - variable name - =
-__git_compute_first_level_conf
->  	submodule.recurse Z
->  	EOF
->  '
-
-Missing a newline.
-
-> +test_expect_success 'git config - variable name - __git_compute_second_l=
-evel_config_vars_for_section' '
-> +	test_completion "git config branch.main." <<-\EOF
-> +	branch.main.description Z
-> +	branch.main.remote Z
-> +	branch.main.pushRemote Z
-> +	branch.main.merge Z
-> +	branch.main.mergeOptions Z
-> +	branch.main.rebase Z
-> +	EOF
-> +'
+Also, adding a test for git-send-email that exercises this new behaviour
+would be very much welcome, too.
 
 Patrick
 
---YOQJfmN8IpBGejlu
+--4YU01qYLrGqMnQaK
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmXEheAACgkQVbJhu7ck
-PpSmOg//VjkgZgYRD2Xs7Uvp+35gvzlbhhG/O1vBaAVTd+lWLcPfyabuotpYMTdy
-IuLira4XUo4ZeAuwU4UOMSgYm7SSm3jshWgt5cRHHPKp8tvkt6Vjg58MJcKbpBbe
-TRyGjl+5SAD1yk1nSM6b8fRKuW+4EkmhojOXkWFvboMB/jMPCVubgX+FQVuZHHKk
-WrMPiofXAvJt9R13bGexCVbo+6GkRRVX4psIW/381D5jVWZFng8udI7DDLTcr8dN
-HXlJUAmsA+HA9bkAo0Q0U2c2OjnAk+BqO1JoWDviWnrr5jPLOp1AitLAwHmN3Iel
-71F8WSysFc+HqPrfI6KF8gL/ITOR81zVptqZlXwiBU+mBIo61kOa4jg72eJ4uRQ4
-lbnpfgfmFQIGVT6GGm5zNz2mG0JfA6rrmSaIsVij6CmpCOXo1ih6CN6zwa1V4hz/
-mbII6jpA2iDfTgSGF0HsNPyhu2qHoD9nC7njB0hSsSTSdwQwBUNnrM6N2fH107cI
-mwhW1CJLWEPPAr1iXV/mg5n24a6/4k8uwDWRCZqHb69e+xiH10LTeBTUZB3Hsi63
-a/W5h8Sy2HJywo9+nNq2cVKtsyczCZKUYu+1D+FlbEOjcn6y+8R64LN3uYeJacik
-2jFSqCgbM/4qDjOXeUHN1l0q+Uf5iDI0AY+ciK3v53t41D7gx0U=
-=yx4y
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmXEiWgACgkQVbJhu7ck
+PpTZew//WyWv58gjEeeA1CHX3K49Y3JEVIxisf30iUV5I74R+AjwoDe06nsru9vj
+0p1wCQuQ4ooNOza5FNw2UtLPDENgDBLxjgdsjvGrtvsKStzkdy/xKtp81YZxmKWs
+fil47aIu1qBAT5rLESpNBWXOwJ1Htxxgdi5xIqHiBgXjMwQ27Lu5lL0ezhy6eYoh
+K7/5cw2HUlPXNPowMtXSVHn8NjvwWuFZQCoOMIgHMn2l/t/SY/cWs8/vHWuDKJWt
+yPts3cpatj/hSA12ChgwTxhrth5Itopv6ehJrkBBKN8pYZkBjG1d4x56UKgWrHhG
+j4bSgv8Vsb1T87DgLQrUKnmeCJTX4Jw/EJhBuR1D3l3xCIjMptIqw96ltetW3iPD
+14wayELkWuzD7AJo648pavZKjtbyyNJIyOtmZfsjH+A9GvTo8QNL09f3sZHPnbmJ
+6qMvyFYyNSO3NsY9rNDSrHoB4jzxWTYts/j1iasqbJO/B6wc8bXJBDf7wrxmMg82
+UZvbc6x1d5wW84k9FMcSarERxQ7OpRDP6iaisA1fZmDwNRaC1i1R/KwQjhSdRGFV
+rVy/6o6OVanTLIT/DX0CQCmttCgwBdoLOukPSWspkyOlkdl5yakClu9+I3ICEq5B
+gsjASFvWVzllCWQ0ja89kvg+QNrjSNSNQq/E0uYbHBJdeT6tHtY=
+=BM92
 -----END PGP SIGNATURE-----
 
---YOQJfmN8IpBGejlu--
+--4YU01qYLrGqMnQaK--
