@@ -1,102 +1,226 @@
-Received: from mail-lf1-f50.google.com (mail-lf1-f50.google.com [209.85.167.50])
+Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBBA96E2BF
-	for <git@vger.kernel.org>; Thu,  8 Feb 2024 10:28:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 610B278B69
+	for <git@vger.kernel.org>; Thu,  8 Feb 2024 13:51:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707388139; cv=none; b=ocAboQsEhJfqf9RaNC1WvhpwFh+Bp86ZPJV3LXgwVmfrgnWNi3f/UcpWHV0avBfqEyljR1HUlGKYWGhlsIH8JEZb7PqNP28/mZs+soSM7wcQx9vVFNUwXgnvz7FQZP+HR6htPeX3UOyfRne6+WVvvwzgu3+6W5RQhutVJxaoEkA=
+	t=1707400281; cv=none; b=uVTVgmTIyLg3ecCmBJ5zAfnpp8mCl8jl4lJnPHxOddni7T5LEX3K6xmkfExPEOYUmFMGhwxJHnUPKv2XpNxm3Z1vSCbMvn8l85In2Z+67zffaTJu+JQiZy06DUGdxHHH9CFly/n5q7E2M1H9nLKHBhpKE06gHbln4C4/nlAVkFA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707388139; c=relaxed/simple;
-	bh=647NQqya0Zu8ceocSHGOEQ3GBryu5muUmgq2Wec8cUk=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=Fs9S9SkJU6YLWtWTg1POoci3OvEvawEsjxhgrVVIv2a8Ibx3n3XYN68f81WR6ktKS4GZoaNxzau+uzZpHgUN7qmk68ute764h07R6buTrIO1qO5foezOizIDvwgkz+jqfd97qjkpvrjjfga9nFfA+kJvf0uRygiPqHiC1AcZKS0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=diEcGHKE; arc=none smtp.client-ip=209.85.167.50
+	s=arc-20240116; t=1707400281; c=relaxed/simple;
+	bh=JZOEIemr+GI9M5XpNl/Ibta4CCoL/0RvB76LcW6bYuk=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=ZBlnJWSfx05h71NveNy4jI+zh/yLN1I5OBizwnGxYvKHaIBKACUZmUdNnF6AtPNYv+qxbkJM3fWfF0ci7KZ4px/T3i28DXLlyzjNfC0S3jLHWa+5z3JPPHw63HYULBXk9w5N4r4INmYUvHRAJL2bLtjEl4qYMT0ZWCb2iXXV9i4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Wpi97uN7; arc=none smtp.client-ip=209.85.128.44
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="diEcGHKE"
-Received: by mail-lf1-f50.google.com with SMTP id 2adb3069b0e04-5116ec49365so417457e87.3
-        for <git@vger.kernel.org>; Thu, 08 Feb 2024 02:28:57 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Wpi97uN7"
+Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-4103be6e938so4663395e9.0
+        for <git@vger.kernel.org>; Thu, 08 Feb 2024 05:51:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1707388136; x=1707992936; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:references:cc:to
-         :content-language:subject:reply-to:from:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=aeDgKBPIOwys7NO1D2q2mZvrPHTtAc8jRxLkQRNQSjs=;
-        b=diEcGHKEA0R/Y7raqWdT1xNTSgUEI/h7n6zwLycNGEzC21MxYb7OSGlXjhzAmIgm9X
-         ksC0PZc8+xB3lC/kre5WmMiF7hYqEFbP6FuSxqo18ciZ5PwCW2siQaR0wPngjpppF/uw
-         crbZ1axUnUWEn/WD/MBOIKV+65al8KgekWmrwlbp85vcazxr3PXS80jN2tENRbVpPgsc
-         h8lD4DPDSxRHGaSFQz+HMq35gM+IwIgZWYJzTB5RuK+T8PELo9yVGPq5LJEfxg5rKhsd
-         zIUOeuzycl0ZqbbBKL5FV4A8y2sNeezSTpr5yRCjK0dgnFEshcqMnc4IwELN6zwodDP0
-         YU5g==
+        d=gmail.com; s=20230601; t=1707400277; x=1708005077; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=ydcASjF3a+XkgFoIYrUAchNBjfJQ/3rm6LsAi/MAm/k=;
+        b=Wpi97uN7hSB4JoZ8TqgnN+U0ClG3U/y8eQyPMCaMPpHOZxDzfNBGwkJSPXo778Vtbp
+         tLdpwHQ5UMWFXqWkK7HArATostlk3reEqm6kGfS9qs8dRzbkBUmfrhHQDUL20UuhHwKH
+         8fbDtZCuKprQwhI/4j2cMposGZd1aS340izBghylDNewKQUHyCzKj3SVxRb+n0SYaCRL
+         wkbO4qvF6Z61btiZJ/5yyk+v1lqB4GK/eSQ8QVDRZfC0o4fwGhgGpijNSg/8meTdz4x+
+         8XBCW9kEs/ueEVz7qyLA4IqAWjxirasj4XK0ewJvhuw84czP9ylB1GtbyEvPAi+kqhPc
+         7pBw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1707388136; x=1707992936;
-        h=content-transfer-encoding:in-reply-to:references:cc:to
-         :content-language:subject:reply-to:from:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=1e100.net; s=20230601; t=1707400277; x=1708005077;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=aeDgKBPIOwys7NO1D2q2mZvrPHTtAc8jRxLkQRNQSjs=;
-        b=uAollB82kx2szjYavHBsQt5Q6ET5+M7NXu6vxgqvaQVTwnf5P2LLQo7HPECIbooCNc
-         YJstX5+vWhAmqH12rnExzsr6n6+KbSiHhBwpAZ6HULgwutCLaSdD96Pgc/I1Gzanvz7G
-         3W+e2k2RwaRy3UWDuiinbJmNNSOmwvHAP3YPoHRT5iZiFmAwQ5W99Se8TmZhJ8u5YX2X
-         sdg2wsjMIszC4OBOKtXAPW+Y3rNCzYT6VACVPUP2NKBAK+B+qfLyedz9oTcO0Kdt7QpX
-         78G/4B9ZgyRUMxi07HhqKC1x9fsUzM5iAq+9BmfJmisxf+CKytbP+hNfVXQ2kbD1pemj
-         Z9rw==
-X-Forwarded-Encrypted: i=1; AJvYcCXU9ZIzKzMs9zTqLTJzwqy51iB9OEfCUGyYfUU9Zkx26ZrwduahDeQO7VnZH+sHMVvpnUV/AIQwbk9dfdJ2jbVz+uiU
-X-Gm-Message-State: AOJu0YzFiQK/EmbxH/90O4VJm6aJnXq51MsBSkAo9l4zQ1yOJ4KblwxC
-	s5GK9j8b0eEZfBy5Wn8Ozj+NL4Yj7tmfq+6d6mW7jm6b6jShOzu7
-X-Google-Smtp-Source: AGHT+IH5ZXNAcILvGosXNOHZ7KrJmYzLexxL0zm9l/qHLs1yLembuS2RiMxca1vrHBHQU/huTIbDaw==
-X-Received: by 2002:a05:6512:1107:b0:511:6458:4c4d with SMTP id l7-20020a056512110700b0051164584c4dmr4365239lfg.43.1707388135640;
-        Thu, 08 Feb 2024 02:28:55 -0800 (PST)
-X-Forwarded-Encrypted: i=1; AJvYcCVMAl8UD+Psc6p0T6jf4BjOzZ8jwq0zI6rv9us7FZbbQm0ZoZo7P6Itl51WTNOJtbxobEUd2Lc836tm+poTI+sFESnx/z7tqleHsfidfnhW6MHXyFmvzzOlbZz8DpT/H+IAByz37w==
-Received: from ?IPV6:2a0a:ef40:62e:a901:386f:d8d1:628a:e68d? ([2a0a:ef40:62e:a901:386f:d8d1:628a:e68d])
-        by smtp.gmail.com with ESMTPSA id l9-20020a05600c4f0900b0041004826669sm1179175wmq.42.2024.02.08.02.28.54
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 08 Feb 2024 02:28:55 -0800 (PST)
-Message-ID: <613b85a3-677d-40d8-84b5-69dd5c27cafe@gmail.com>
-Date: Thu, 8 Feb 2024 10:28:52 +0000
+        bh=ydcASjF3a+XkgFoIYrUAchNBjfJQ/3rm6LsAi/MAm/k=;
+        b=uELhZ1cMgpfRTwU6WUMcIEAfAKF1SjuL4PL681LfHTlkiWSnK/Y2hi3IPZMdtzdIPT
+         MjKKm5eVYqe0e792b2aYWaQpoWuyeutfZjLl2SCmLmPgYJQ2Af25vJ88gf67FwY/S8sP
+         vrLEQ1siHDeYJBN9qwQNgMSJpoEorzp/ps7DEBmk3ciWnafa3nEsxED/n2cHwdLNgD0T
+         14L/1vrabrrnEqvQLtWBOZlglCIhAbdzlG/ytCWs5sBPYetbawwN+bljhiqAVnWeQ4MS
+         +3g7PymccoedjD80GhzixglfwzAvyZsjsga30woQnypV4MwlitTF74yHrL5UFEJDN0iJ
+         uwRw==
+X-Gm-Message-State: AOJu0YwkqZJ+a8UCyn5vNs0RT1fZtO2Ka6z+yzqFIL1AXwgB4yLvULBf
+	6TDodvSXnqjauFE1TxIRet1IU26LK0hXlhlYaN2eMhOg32AcRq9o1U9ISzje
+X-Google-Smtp-Source: AGHT+IFjD48X7RaXBBA8zy83c9jw6OwDvMnVT/exlZIYI9L5JsFAygwBC9te7ADJZrwE8abXEBJq+g==
+X-Received: by 2002:a05:600c:4708:b0:410:384f:ec36 with SMTP id v8-20020a05600c470800b00410384fec36mr1562350wmo.15.1707400276797;
+        Thu, 08 Feb 2024 05:51:16 -0800 (PST)
+X-Forwarded-Encrypted: i=1; AJvYcCVFQw/Ojn6wv4k1KVIRa5+ZxofxSiBzvg2Lyj6TCSr2VscuamQB2gaXj8cyPtrMO50o5FJEow6tMc93FG4HO0+peeHULaEC0bdVpTB/ckbipr1h7G1thQi8Q+rR1GJA+Ihd8Fgta1ZOWOZpnQgFg/v+M5OsRt5EtB89FNnDYg==
+Received: from localhost.localdomain ([2001:861:3f04:7ca0:4c16:5b8b:3341:9836])
+        by smtp.gmail.com with ESMTPSA id j12-20020a05600c190c00b0040ebf603a89sm1698307wmq.11.2024.02.08.05.51.15
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 08 Feb 2024 05:51:15 -0800 (PST)
+From: Christian Couder <christian.couder@gmail.com>
+To: git@vger.kernel.org
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Patrick Steinhardt <ps@pks.im>,
+	John Cai <johncai86@gmail.com>,
+	Linus Arver <linusa@google.com>,
+	Christian Couder <christian.couder@gmail.com>
+Subject: [PATCH v2 0/4] rev-list: allow missing tips with --missing
+Date: Thu,  8 Feb 2024 14:50:51 +0100
+Message-ID: <20240208135055.2705260-1-christian.couder@gmail.com>
+X-Mailer: git-send-email 2.43.0.565.g97b5fd12a3.dirty
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Phillip Wood <phillip.wood123@gmail.com>
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v3 4/4] for-each-ref: avoid filtering on empty pattern
-Content-Language: en-US
-To: Junio C Hamano <gitster@pobox.com>, Karthik Nayak <karthik.188@gmail.com>
-Cc: phillip.wood@dunelm.org.uk, git@vger.kernel.org, ps@pks.im
-References: <20240119142705.139374-1-karthik.188@gmail.com>
- <20240129113527.607022-1-karthik.188@gmail.com>
- <20240129113527.607022-5-karthik.188@gmail.com>
- <98d79d33-0d7e-4a9c-a6a3-ed9b58cd7445@gmail.com>
- <CAOLa=ZR=_tt=ppphGMkxqj_YB5G+YkTMWGzRzcHTbrZz4ysb5w@mail.gmail.com>
- <92ba680d-0b48-49f0-aafc-f503e5a5e0ea@gmail.com> <xmqqle7xjzic.fsf@gitster.g>
- <xmqqr0hph1ku.fsf@gitster.g>
- <CAOLa=ZSZJ=_VCppHXcJeE=Z61go4_040xyc1NBTu-o=xysLrdg@mail.gmail.com>
- <xmqqcyt9fdc7.fsf@gitster.g>
-In-Reply-To: <xmqqcyt9fdc7.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-Hi Juino
+# Intro
 
-On 06/02/2024 22:16, Junio C Hamano wrote:
->   - we do not want to say "pseudo refs", as I expect we would want to
->     show HEAD that is (unfortunately) classified outside "pseudoref"
->     class.
+A recent patch series, kn/rev-list-missing-fix [1] extended the
+`--missing` option in git-rev-list(1) to support commit objects.
 
-This is a bit of a tangent but I've been wondering what the practical 
-benefit of distinguishing between "HEAD" and "pseudoref" is. I don't 
-know the history so there may be a good reason but not classifying 
-"HEAD" as a "pseudoref" seems to make discussions like this more 
-complicated than they would be if "HEAD" were a "pseudoref". Would it be 
-beneficial to loosen the definition of "psuedoref" to remove the 
-restriction that they may not be symbolic refs or have a reflog?
+Unfortunately, git-rev-list(1) with `--missing` set to something other
+than 'error' still fails, usually with a "fatal: bad object <oid>"
+error message, when a missing object is passed as an argument.
 
-Best Wishes
+This patch series removes this limitation and when using
+`--missing=print` allows all missing objects to be printed including
+those that are passed as arguments.
 
-Phillip
+[1] https://lore.kernel.org/git/20231026101109.43110-1-karthik.188@gmail.com/
+
+# Patch overview
+
+Patches 1/4 (revision: clarify a 'return NULL' in get_reference()),
+2/4 (oidset: refactor oidset_insert_from_set()) and 
+3/4 (t6022: fix 'test' style and 'even though' typo) are very small
+preparatory cleanups.
+
+Patch 4/4 (rev-list: allow missing tips with --missing=[print|allow*])
+allows git-rev-list(1) with `--missing=<arg>` when <arg> is not
+'error' to not fail if some tips it is passed are missing.
+
+# Changes since V1
+
+Thanks to Linus Arver, Eric Sunshine and Junio who commented on V1!
+The changes since V1 are the following:
+
+  - In patch 1/4 (revision: clarify a 'return NULL' in
+    get_reference()), some 's/explicitely/explicitly/' typos were fixed
+    in the commit message. Thanks to a suggestion from Eric. 
+
+  - Patch 2/4 (oidset: refactor oidset_insert_from_set()) is new. It
+    refactors some code into "oidset.{c,h}" to avoid duplicating code
+    to copy elements from one oidset into another one. Thanks to a
+    suggestion from Linus.
+
+  - Patch 3/4 (t6022: fix 'test' style and 'even though' typo) used to
+    fix only an 'even though' typo, but while at it I made it use
+    `if test ...` instead of `if [ ... ]` too. Thanks to a suggestion
+    from Junio.
+
+  - Patch 4/4 (rev-list: allow missing tips with
+    --missing=[print|allow*]) was changed so that missing tips are
+    always allowed when `--missing=[print|allow*]` is used, as
+    suggested by Junio. So:
+      - no new `--allow-missing-tips` option is implemented,
+      - no ugly early parsing loop is added,
+      - no new 'do_not_die_on_missing_tips' flag is added into
+        'struct rev_info',
+      - the 'do_not_die_on_missing_objects' is used more instead,
+      - the commit message as been changed accordingly.
+
+  - In patch 4/4 (rev-list: allow missing tips with
+    --missing=[print|allow*]), a code comment has been added before
+    `if (get_oid_with_context(...))` in "revision.c::get_reference()"
+    as suggested by Linus.
+
+  - In patch 4/4 (rev-list: allow missing tips with
+    --missing=[print|allow*]), a big NEEDSWORK comment has been added
+    before the ugly early parsing loops for the
+    `--exclude-promisor-objects` and `--missing=...` options in
+    "builtin/rev-list.c".
+
+  - In patch 4/4 (rev-list: allow missing tips with
+    --missing=[print|allow*]), a code comment now uses "missing tips"
+    instead of "missing commits" in "builtin/rev-list.c", as
+    suggested by Linus.
+    
+  - In patch 4/4 (rev-list: allow missing tips with
+    --missing=[print|allow*]), the added tests in t6022 have the
+    following changes:
+      - variables 'obj' and 'tip' have been renamed to 'missing_tip'
+        and 'existing_tip' respectively as suggested by Linus,
+      - a comment explaining how the 'existing_tip' variable is useful
+        has been added as suggested by Linus,
+      - `if test ...` is used instead of `if [ ... ]`, as suggested by
+        Junio.
+
+  - Also in patch 4/4 (rev-list: allow missing tips with
+    --missing=[print|allow*]), the documentation of the `--missing=...`
+    option has been improved to talk about missing tips.
+
+# Range-diff since V1
+
+Unfortunately there has been many changes in patch 4/4, so the
+range-diff shows different patches:
+
+1:  b8abbc1d42 ! 1:  5233a83181 revision: clarify a 'return NULL' in get_reference()
+    @@ Commit message
+         revision: clarify a 'return NULL' in get_reference()
+     
+         In general when we know a pointer variable is NULL, it's clearer to
+    -    explicitely return NULL than to return that variable.
+    +    explicitly return NULL than to return that variable.
+     
+         In get_reference() when 'object' is NULL, we already return NULL
+         when 'revs->exclude_promisor_objects && is_promisor_object(oid)' is
+         true, but we return 'object' when 'revs->ignore_missing' is true.
+     
+    -    Let's make the code clearer and more uniform by also explicitely
+    +    Let's make the code clearer and more uniform by also explicitly
+         returning NULL when 'revs->ignore_missing' is true.
+     
+    +    Helped-by: Eric Sunshine <sunshine@sunshineco.com>
+         Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+     
+      ## revision.c ##
+-:  ---------- > 2:  cfa72c8cf1 oidset: refactor oidset_insert_from_set()
+2:  208d43eb81 ! 3:  5668340516 t6022: fix 'even though' typo in comment
+    @@ Metadata
+     Author: Christian Couder <chriscool@tuxfamily.org>
+     
+      ## Commit message ##
+    -    t6022: fix 'even though' typo in comment
+    +    t6022: fix 'test' style and 'even though' typo
+     
+         Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+     
+    @@ t/t6022-rev-list-missing.sh: do
+     -                  # Blobs are shared by all commits, so evethough a commit/tree
+     +                  # Blobs are shared by all commits, so even though a commit/tree
+                        # might be skipped, its blob must be accounted for.
+    -                   if [ $obj != "HEAD:1.t" ]; then
+    +-                  if [ $obj != "HEAD:1.t" ]; then
+    ++                  if test $obj != "HEAD:1.t"
+    ++                  then
+                                echo $(git rev-parse HEAD:1.t) >>expect.raw &&
+    +                           echo $(git rev-parse HEAD:2.t) >>expect.raw
+    +                   fi &&
+3:  8be34ce359 < -:  ---------- rev-list: add --allow-missing-tips to be used with --missing=...
+-:  ---------- > 4:  55792110ca rev-list: allow missing tips with --missing=[print|allow*]
+
+
+Christian Couder (4):
+  revision: clarify a 'return NULL' in get_reference()
+  oidset: refactor oidset_insert_from_set()
+  t6022: fix 'test' style and 'even though' typo
+  rev-list: allow missing tips with --missing=[print|allow*]
+
+ Documentation/rev-list-options.txt |  4 ++
+ builtin/rev-list.c                 | 15 +++++++-
+ list-objects-filter.c              | 11 +-----
+ oidset.c                           | 10 +++++
+ oidset.h                           |  6 +++
+ revision.c                         | 16 ++++++--
+ t/t6022-rev-list-missing.sh        | 61 +++++++++++++++++++++++++++++-
+ 7 files changed, 106 insertions(+), 17 deletions(-)
+
+-- 
+2.43.0.565.g97b5fd12a3.dirty
+
