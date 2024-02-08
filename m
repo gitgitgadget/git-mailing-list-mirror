@@ -1,89 +1,76 @@
-Received: from mail-qv1-f44.google.com (mail-qv1-f44.google.com [209.85.219.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FD9E1CD2E
-	for <git@vger.kernel.org>; Thu,  8 Feb 2024 00:52:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B5765C8B
+	for <git@vger.kernel.org>; Thu,  8 Feb 2024 01:00:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707353578; cv=none; b=m1NHgtZkSWfHmw9uixvnl4WJ2Cnahaq9tAO3aGgtjuiEgKE2ICIibwpvRX3sxCQRkicf3B3YEZbbTM0/J7gCCjDXUThDUUBeFOr/lvYZ3pzTcjFHY2lMcIEWQjuYji6Sz75KrkpsC5o9owUQHYjkJdqin8ZsXFi2o6znNHD7vlc=
+	t=1707354044; cv=none; b=MjjI5Er7wWDj5xEj3nz3C8mgnX8woeGjz9aZerQhdL0+VUs4W7V0w8/hE39RrpNIb5JdV+sJMjjnRrjat1oZST/qDvp+E29LwLh+v4bwr5qSHP1wXGn/78DBR3EutlszTSIhzEbPX4I3mNq1IE4OEXu0dHtnwpcfabcsA1zfaTk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707353578; c=relaxed/simple;
-	bh=dVdBW8rm7i8CCq70AQ5JIkWaGDxujUFwX4y2yAoReTA=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=eE22PTYjQorjYSs5P0LgeaBcb75sL0SOa5HdJ6ehZcDXBoHPy5n9T/kciYJxwbu59gkMdF59pYxVIWbN8dLQvgalzLWHEGmQzFF8CHCv//WGLsLcjTt46b9Yy3SpS5esmWpizV04jmh7tedqLUbiRSXzqTeufrt6qLCiKQB7370=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.219.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-qv1-f44.google.com with SMTP id 6a1803df08f44-68009cb4669so6124426d6.1
-        for <git@vger.kernel.org>; Wed, 07 Feb 2024 16:52:56 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1707353575; x=1707958375;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=7fowMwWOhFhtGgNdM2uS25COrQz+nek/r4uXDG1Emro=;
-        b=gySKHXhjNfEc52M05OZHK0itiAfZRc5at65pmfaK9QJ3nWK6s7+mD0XwoHFQkCIAwx
-         drATOTo55T1dYbNjS8vFpIj5W2FcSFv0xyAGj3/fY5U0XjfossYhukjvjqXjCv99kDrC
-         KHfo40b3BUiL6eYzoMmGlM/es17Ou52j6GHx5kzGfbsgBloNHprpvZculJmZB3nog+Ni
-         mUZNazJ7N9URnWBLODJ1Uos4PQCGynXtObuqByymIbOgGtt5k1OD+P30236DSmg+YSRY
-         3QbsTAzDge9OO3Zaqo9gnWCxYE3wtDhy+W5BWgVXU2DjKVbiVHPbdkaeOc0C0hk+xDna
-         gHDw==
-X-Gm-Message-State: AOJu0YzOUienbDBLKtXgQSvspTcSHBKJyfb3/2WHqztVL46uMGlwsS8N
-	SfXtA5ZEYqikz3fbbc5UoOWepZhLLpEXnj0RYMIC77hGUFW6nKakUL2PF9cMZWjjWG8/7E6gvaR
-	F3UAey+FnIp+ymG3aB5meQ0+dFgM=
-X-Google-Smtp-Source: AGHT+IFpeQx3iH52Se5SacdVvUfQDjKhS767VIWCflDw0InaqCplc516Ue5fbfqc/iXM8+kNDCB1LX1Lzs+lHqc0mSo=
-X-Received: by 2002:a05:6214:f09:b0:68c:8a21:2de6 with SMTP id
- gw9-20020a0562140f0900b0068c8a212de6mr8666880qvb.57.1707353575157; Wed, 07
- Feb 2024 16:52:55 -0800 (PST)
+	s=arc-20240116; t=1707354044; c=relaxed/simple;
+	bh=NgtX2C3R4IifT+H11cgyKcxLjV0q1ejV5j8MUeLW2Fs=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=mBAOQZcS5JqPBpQlZb0NpX07sBUHgVUvFWVfkYc+sa1edC0ntNgn73CiiPcLMaTBj7cJl1Za17kSUPk46xuuTZcPp1fcVC+Q35egndKKT3TyVAoHYNSJriiAvP2oGJr9DSbEQY5Lx899UhiOqyHWQ+wqa+sFM6DwrYVGDPB2SuM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+Received: (qmail 13215 invoked by uid 109); 8 Feb 2024 01:00:41 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 08 Feb 2024 01:00:41 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 25568 invoked by uid 111); 8 Feb 2024 01:00:42 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 07 Feb 2024 20:00:42 -0500
+Authentication-Results: peff.net; auth=none
+Date: Wed, 7 Feb 2024 20:00:40 -0500
+From: Jeff King <peff@peff.net>
+To: =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
+Cc: Chandra Pratap via GitGitGadget <gitgitgadget@gmail.com>,
+	git@vger.kernel.org, Chandra Pratap <chandrapratap376@gmail.com>,
+	Chandra Pratap <chandrapratap3519@gmail.com>
+Subject: Re: [PATCH] commit.c: ensure strchrnul() doesn't scan beyond range
+Message-ID: <20240208010040.GB1059751@coredump.intra.peff.net>
+References: <pull.1652.git.1707153705840.gitgitgadget@gmail.com>
+ <ce83bd09-dbd2-4c9e-8197-6e4800935523@web.de>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.1651.git.1707212981.gitgitgadget@gmail.com>
- <pull.1651.v2.git.1707324461.gitgitgadget@gmail.com> <be1dadf28502fe3e9662fa61523e8c57ce3352f1.1707324462.git.gitgitgadget@gmail.com>
- <CAPig+cSJz3U+vT==NhX5hcrTjsCggnAzhzQOvZcSXbcEGuYaKQ@mail.gmail.com>
-In-Reply-To: <CAPig+cSJz3U+vT==NhX5hcrTjsCggnAzhzQOvZcSXbcEGuYaKQ@mail.gmail.com>
-From: Eric Sunshine <sunshine@sunshineco.com>
-Date: Wed, 7 Feb 2024 19:52:43 -0500
-Message-ID: <CAPig+cQx1=wM7v0cCuVwNwhd3Zsh0fZgZ1A-vX--uy0dd1+kDg@mail.gmail.com>
-Subject: Re: [PATCH v2 3/5] t4301: verify that merge-tree fails on missing
- blob objects
-To: Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>, 
-	Johannes Schindelin <johannes.schindelin@gmx.de>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <ce83bd09-dbd2-4c9e-8197-6e4800935523@web.de>
 
-On Wed, Feb 7, 2024 at 12:24=E2=80=AFPM Eric Sunshine <sunshine@sunshineco.=
-com> wrote:
-> Interpolating the $seqN variable directly into the string rather than
-> using %s would make it even clearer that only a single line is being
-> generated as input to git-mktree:
->
->    tree1=3D$(printf "100644 blob $seq1\tsequence\n" | git mktree) &&
->    tree2=3D$(printf "100644 blob $seq2\tsequence\n" | git mktree) &&
->    tree3=3D$(printf "100644 blob $seq3\tsequence\n" | git mktree) &&
->
-> Alternatively `echo` could be used, though it's not necessarily any nicer=
-:
->
->     tree1=3D$(echo "100644 blob $seq1Qsequence" | q_to_tab | git mktree) =
-&&
->     tree2=3D$(echo "100644 blob $seq2Qsequence" | q_to_tab | git mktree) =
-&&
->     tree3=3D$(echo "100644 blob $seq3Qsequence" | q_to_tab | git mktree) =
-&&
+On Mon, Feb 05, 2024 at 08:57:46PM +0100, René Scharfe wrote:
 
-The `printf` example is probably cleaner, thus preferable. For
-completeness, though, I should mention that the `echo` example is, of
-course, not quite correct. For the interpolation to work as intended,
-it would need ${...}:
+> If you want to make the code work with buffers that lack a terminating
+> NUL then you need to replace the strchrnul() call with something that
+> respects buffer lengths.  You could e.g. call memchr().  Don't forget
+> to check for NUL to preserve the original behavior.  Or you could roll
+> your own custom replacement, perhaps like this:
 
-    tree1=3D$(echo "100644 blob ${seq1}Qsequence" | q_to_tab | git mktree) =
-&&
-    tree2=3D$(echo "100644 blob ${seq2}Qsequence" | q_to_tab | git mktree) =
-&&
-    tree3=3D$(echo "100644 blob ${seq3}Qsequence" | q_to_tab | git mktree) =
-&&
+I'm not sure it is worth retaining the check for NUL. The original
+function added by me in fe6eb7f2c5 (commit: provide a function to find a
+header in a buffer, 2014-08-27) just took a NUL-terminated string, so
+we certainly were not expecting embedded NULs.
+
+In cfc5cf428b (receive-pack.c: consolidate find header logic,
+2022-01-06) we switched to taking the "len" parameter, but the new
+caller just passes strlen(msg) anyway.
+
+I guess you could argue that before that commit, receive-pack.c's
+find_header() which took a length was buggy to use strchrnul(). It gets
+fed with a push-cert buffer. I guess it's possible for there to be an
+embedded NUL there, but in practice there shouldn't be. If we are
+thinking of malformed or malicious input, it's not clear which behavior
+(finding or not finding a header past a NUL) is more harmful. So all
+things being equal, I would try to reduce the number of special cases
+here by not worrying about NULs.
+
+(Though if somebody really wants to dig, it's possible there's a clever
+dual-parser attack here where "\nfoo\0bar baz" finds the header "bar
+baz" in one parser but not in another).
+
+-Peff
