@@ -1,111 +1,87 @@
-Received: from mail-ed1-f47.google.com (mail-ed1-f47.google.com [209.85.208.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E92FF1BDE2
-	for <git@vger.kernel.org>; Thu,  8 Feb 2024 02:50:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8934A1CFA9
+	for <git@vger.kernel.org>; Thu,  8 Feb 2024 03:08:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707360621; cv=none; b=uyqdHNy2d6AjKeJs518oVA3mV3EGeSm4jGVGdUEViP00sFUvaYoufPdaKuVa+7YgYrHb+8F0skJUvEBbOyuAPXZBIKMAa1dTpiIaPerQ6z7hpj363rDzSrgdBM4cbrOD9jG4o3BRyP0O4dh/Q9aEi7tA+O6capPkrn6e3wzteFc=
+	t=1707361728; cv=none; b=nt1/82f39Rxkxz/D0BTdnRFJVeiOnvLfTwqh8OnFBJ9U7k2pwey+j8olG+/8SdgfsWa9RJg1Rk/BcBxulAxcgLyBP7bCWJS2NHZgAjR40KzVlmoWW7IMPoc2OSYtfL/pWuTGuuA2r0fURSGc8nbuxgJ7KOu6Nx+so63/iassWEg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707360621; c=relaxed/simple;
-	bh=2X+qvQQebqVFpz9OCd2V/rbSneTIgT10qkaUj5WUoRg=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=VohnFSgWZpmCW72XqRjibC8B7BmctcBfDIokW8PNuObnC3V7jQg3HWbHp1tL+yFPDSJfoL/b7gcjTKYdX+dKCTrJhf0D9YQQqbOxH6m2qshDFQf0fsVNbwzmDAMbkK5Ska/1j8xskaYTXEqnayDIzRHARuuC+WSBLy83olecgFs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=SYcg5Ozn; arc=none smtp.client-ip=209.85.208.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	s=arc-20240116; t=1707361728; c=relaxed/simple;
+	bh=Arsatqn15SX23ShrFbccifSdlF5pxSfl3ueKXHHan0E=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=sLhI6ktOuFuT0rprzEi6O6AXct5GLHeof3wHdFR1bpt4yuVqVUYNBEhYTI5fMXFSDIciY7Ntq3hH5F849KbcpyVRHiDOgxXNwZwX7ZohPIhtEeYSWf7lCCFsnBklFI20V5W9i0c++uYnQYp2IM7OYAWN/EFCE6iMbzlerRDpOS4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=adEXK19T; arc=none smtp.client-ip=64.147.108.71
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="SYcg5Ozn"
-Received: by mail-ed1-f47.google.com with SMTP id 4fb4d7f45d1cf-5610b9855a8so134017a12.0
-        for <git@vger.kernel.org>; Wed, 07 Feb 2024 18:50:19 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1707360618; x=1707965418; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=FaSe+eOe5Ch2peicOaEY8ILUbICNxFSLcZ4M8Mfz4+Q=;
-        b=SYcg5OznUjRTXUuk5FXsLhyYz6iLhUb49fS8KiRJjHkftGd+9vfnVzd5FqqRTZlgbY
-         tV1JsjwSJZr0QsNey7e14GR8W9DSbr6d0SWbuniMQOp7gt043BeQGarhRHMyA9LgZwzO
-         lDSqdwDjeWsmvOrqJkNQ/VBm7Q3+a41d1Q3kuBnRvexlQQoZD+JzECHO7S77ORtvKIeU
-         BCzFEeZA+Uvdnd7ILz3h4vBEwrj7AYRPIsvQG9O39wY7JEeLGYD1OqOblDfSBaJ1rVBR
-         mII30wWATwnlVkAR7s8IKFzHJJDXtEGjqHZMzHhmkneSL99nz/RYzrGcqE+DqP+0WfGh
-         4djw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1707360618; x=1707965418;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=FaSe+eOe5Ch2peicOaEY8ILUbICNxFSLcZ4M8Mfz4+Q=;
-        b=mh/XMaEVTVc0qshNnvcRajAr719sG1luOXLTird8BzuwgENt247fUnsVVJQxtNT0GF
-         cUEw5kMc0Drcga98Lof3nMyCrFWZ3K4m/YqsisZd2KeS0qW5i2oARL6axPhl++Bz0T2C
-         SpfoBUU3CrMUqNNULlgS6r5XWYNNEtRrBoRZuWw1tuiL6w6m75VQQ3fuQMBRZkJ1jNee
-         0Us6ReNxg9hA+CXrN/0xOen9u7msMoYUfoAmMkiTzYKqIkOyU6GOWeiF+L3Hx67Hnhzm
-         k99RSOflEOpHCOedWJZsgfXyUsWbFTQXNYZmop9BDxhFy9JMBb/3PcGg/2tUjVJeMX73
-         Y9Ew==
-X-Gm-Message-State: AOJu0YzDAiu6dIJPkQq/oZf3JH0wm8TGxnApJ4KMZzvZm210yceqsM3A
-	n6eA37K5c/RKA4AByMisXr0VjeYUGy70HteSqzXgGc6UtEyGaAQgZnaIhzMpggUQdw9ExlteWaK
-	AFYbChoPUbG8+rh2ULOu0XgTi8ryjcQwiwPXv/AlGRTRV3qtodw==
-X-Google-Smtp-Source: AGHT+IHls0CIkcodcJ/5SoN6TOZvHGeUS9mJgzRK1xiShlebsmJx6t69sPE2j3Wht4SKwojIDzVAWrRwX4NXT8S8sdM=
-X-Received: by 2002:a17:906:abcb:b0:a35:e5bf:b585 with SMTP id
- kq11-20020a170906abcb00b00a35e5bfb585mr1100050ejb.35.1707360618081; Wed, 07
- Feb 2024 18:50:18 -0800 (PST)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="adEXK19T"
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 93BBE1DC187;
+	Wed,  7 Feb 2024 22:08:39 -0500 (EST)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=Arsatqn15SX23ShrFbccifSdlF5pxSfl3ueKXH
+	Han0E=; b=adEXK19TUNY6SyUEhkrW/nPZVRIcw0aB4m7WnPfARoYKmEycU7M5ax
+	XX3ebqEK9KX5eV3kUw/l2HsPOLCl0NHGEovDoy9XbwZR4l7aJrj5iWKC6vxWeTZd
+	fDGSdlRSgEALiRtgDx7ny0K3+ScOqdLwYKHn5QTAGC8O4opmy74kY=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 8AAD51DC186;
+	Wed,  7 Feb 2024 22:08:39 -0500 (EST)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.165.85])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id E53551DC185;
+	Wed,  7 Feb 2024 22:08:38 -0500 (EST)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Jeff King <peff@peff.net>
+Cc: git@vger.kernel.org,  Sergey Kosukhin <skosukhin@gmail.com>
+Subject: Re: [PATCH] tag: fix sign_buffer() call to create a signed tag
+In-Reply-To: <20240208004757.GA1059751@coredump.intra.peff.net> (Jeff King's
+	message of "Wed, 7 Feb 2024 19:47:57 -0500")
+References: <xmqq4jek9ko1.fsf@gitster.g>
+	<20240208004757.GA1059751@coredump.intra.peff.net>
+Date: Wed, 07 Feb 2024 19:08:37 -0800
+Message-ID: <xmqq5xyzr6tm.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <xmqqcyt89l7z.fsf@gitster.g>
-In-Reply-To: <xmqqcyt89l7z.fsf@gitster.g>
-From: Kyle Lippincott <spectral@google.com>
-Date: Wed, 7 Feb 2024 18:50:02 -0800
-Message-ID: <CAO_smVjnknv1ePTHhDNKK=C_iEg6+T0nNwaXqA67QuPd6tBkxw@mail.gmail.com>
-Subject: Re: [RFH] "git -C there add foo" completes, s/add/diff/ does not
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 5B1EC828-C62F-11EE-A509-25B3960A682E-77302942!pb-smtp2.pobox.com
 
-On Wed, Feb 7, 2024 at 10:35=E2=80=AFAM Junio C Hamano <gitster@pobox.com> =
-wrote:
->
-> As some of you may already know, I keep an untracked directory
-> called "Meta" at the top-level of the working tree of the Git
-> source tree.  This "Meta" directory is actually a single-branch
-> clone of the git.kernel.org/pub/scm/git/git.git that checks out
-> its "todo" branch, where files like whats-cooking.txt lives.
->
-> So, what I often would do is
->
->     $ git -C Meta add whats-cooking.txt
->
-> after updating the draft of the next issue of the "What's cooking"
-> report.  The command line completion support for "git add" knows how
-> to complete this when I stopped typing the above after whats-" and
-> hit <TAB>.  It seems that __git_find_repo_path helper function that
-> notices "-C there" and discovers the $GIT_DIR, and _git_add helper
-> uses __git_complete_index_file that honors the discovered $GIT_DIR
-> to find paths in the correct index, which is wonderful.
->
-> But the same does not work for the step before I can decide to
-> actually "add" the contents, which is to "diff", i.e.
->
->     $ git -C Meta diff whats-<TAB>
->
-> does not complete.
+Jeff King <peff@peff.net> writes:
 
-I'm not a completions expert, but I think what's happening is that the
-completions for `git diff` aren't producing anything, so it (where
-"it" here might be the shell?) falls back to just doing normal path
-completion. For `git add`, it's checking the `git status` output to
-filter the list to things that need to be added, so it respects the
-`-C` option when calling into git to get that list, but there's no
-such logic for `git diff` (the git-specific logic treats the
-[optional] positional argument as a ref, not a file).
+>>  * We alternatively could fix individual sign_buffer() backend that
+>>    signals an error with a positive value (sign_buffer_ssh() in this
+>>    case) to return a negative value, but this would hopefully be
+>>    more future-proof.
+>
+> FWIW, I would have gone the other way, and fixed sign_buffer_ssh(). Your
+> solution here is future-proofing the tag code against other
+> sign_buffer_*() functions behaving like ssh. But it is also leaving
+> other sign_buffer() callers to introduce the same bug.
+>
+> Your documentation change at least makes that less likely. But given how
+> much of our code uses the "negative is error" convention, I wouldn't be
+> surprised to see it happen anyway.
 
->
-> Anybody wants to take a crack at it?
->
-> Thanks.
->
->
+Yeah, but other callers are prepared to honor the current return
+value convention used by gpg-interface, so "fixing" sign_buffer_ssh()
+would not give us any future-proofing.
+
+We could do belt and suspenders by tightening the other callers to
+only expect negative for errors (but then what should they do when
+they receive non-zero positive?  Should they BUG() out???) while
+teaching sign_buffer_ssh() that our convention is to return negative
+for an error, of course, but I am not sure if it that is worth it.
+
+Thanks.
+
