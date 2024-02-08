@@ -1,141 +1,105 @@
-Received: from out1-smtp.messagingengine.com (out1-smtp.messagingengine.com [66.111.4.25])
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D381767C51
-	for <git@vger.kernel.org>; Thu,  8 Feb 2024 05:26:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=66.111.4.25
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DE8F67C40
+	for <git@vger.kernel.org>; Thu,  8 Feb 2024 05:29:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707369982; cv=none; b=umppKNzc/x9/EUzmo+xqI6BLfhzChFfK8jz7JQ4IKNkG/lbJQdc8p6aSoKuP3FydvK0BJ6oHUGOwN+G41SQIKVfS34QIEBY2E7ypUkrdhwkxvDECBGUl8i77fieh2rQBzsATX6Mjam/I1V9L0yZULGKQ7bmN9nSXEcbUj7yOLaA=
+	t=1707370147; cv=none; b=XkUhzo9g3xWnFgJdsXK4l37ekDwZFgH69P4n5ZFtD/eip5enZzESRmq3wRJqqcF3SrDDjv/y+B4dMYpATFTymMng6IzQuNYMTG1MfGs61iLNwil8iwTTq8Z5fZQmMexXLZi8+glXOSq902IUt6GUgwiLi2e/3eQ/9/Utx3Mcrbc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707369982; c=relaxed/simple;
-	bh=oQKVPkVTcA1zJnwC7hxKQ7mOPDZHTJoShwl3f4hZyA8=;
-	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition; b=mgdfwkMSSo9lRrD9lyJcvJw0+w8CangKivaMum/q3ePw+YeA9s4nVU34EJopjTLlpRvoCGAv8jBO/3mGkv7K1yFPImu2Hf2aVPrwsDlHZiEowNUZd0ManoQ3LYoJmavyna53GOetRlgu8+dyih6ccYy6uhR1ikiBfYATUkOEq70=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=r1mglsRa; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=PkylRCIx; arc=none smtp.client-ip=66.111.4.25
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1707370147; c=relaxed/simple;
+	bh=1bbhiFgT1gTISA/hJCqV30EebBmiEILja75rblYWf2U=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=Ns0jvfuxco1oy7XeL1kHIZy0yhfNfU68aXbSLtKpPKn+h1KukmnAdgoGABL7LSH7X+MWNw0HPm1eUfrjlVQ7LyUQJClwiSKxn6fY6gm4GSgbTSlAM8jcNXH+RHgzIWL71+PsqvBT5cA6pmHqUFNKNVF3pGxF1rxMGUulzyWoGJ0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=LyF7CqLN; arc=none smtp.client-ip=173.228.157.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="r1mglsRa";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="PkylRCIx"
-Received: from compute7.internal (compute7.nyi.internal [10.202.2.48])
-	by mailout.nyi.internal (Postfix) with ESMTP id 939A35C0103;
-	Thu,  8 Feb 2024 00:26:18 -0500 (EST)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute7.internal (MEProxy); Thu, 08 Feb 2024 00:26:18 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:message-id:mime-version:reply-to:subject:subject:to:to; s=fm3;
-	 t=1707369978; x=1707456378; bh=6+HcZ6s96geoW+BAReGG1l3qRUDrO0Jd
-	9v3TyQWvF1A=; b=r1mglsRaKAXxiOFSaqC2LUOvTwL1oGh308fKujCp0JaEN3nS
-	GZZLuHdm1kAwd0KaaMrzrj+pC71ghnWM9DhwV8W5mj7omrp85PYMCKJPCloCiXnp
-	JRKG/oJB9Ei90clZv/+AiuAEKCfxg1KnqSM7+zgLndkLsT5O8jousjDT1j+7aewX
-	olIkNnIUkRwKDSeNYWga5oUX3seaDSZmttInlnM2ZkIUHbsEVfjefoC6Jg38pOP9
-	YNJAm/Go0brDMP4z8V1vyRETOMW8gc7vTf6VAo5olPd1IeOG+2LZTYIw2UgwJo2n
-	d9gc6JgC3RxI7xEEM0swCJZgK0UnkpmCbt6Xkg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:message-id
-	:mime-version:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1707369978; x=1707456378; bh=6+HcZ6s96geoW+BAReGG1l3qRUDrO0Jd9v3
-	TyQWvF1A=; b=PkylRCIxG8AH6a/D1lynRtN8gLHEtG3+g6nxD2TR2UNctgdO+SG
-	08lDlCVKhldoOuS1aDfkynZMp7kbRvFWpy7VNKa7oh/asPrNla4Ho89gg9zM/SHX
-	pLmsZIKyE7MoqRQEWzSl74fO8honf3KA7imDdtspzoMtU8cEEqTpdkOV72QLg8H1
-	uUPm5itMh6iLSUCVCHEVcckufEFjikw42VXMYjIgHd4tQjD14KI44BDz67fN9Q9k
-	c63eL0ikIM282YcqxuNMsoX5RK9sJMbLyfFQbg5YqbO3J2XNN1tnJRdcRKdOtPqF
-	noTNO8/kCC/R8f7ISq7tfbYvvXNas1fN4iA==
-X-ME-Sender: <xms:-mXEZYhgy7-BD9CfWHFbi4bGMKBZyqzskWNlQ9IFon3AHSvI6Vkxvg>
-    <xme:-mXEZRBmqJdHKHIni2dJY9BCitnNxzA9DLY4KTE3BWoP9xGvDJt3kAAqi9tDeGvZA
-    b_yS5t8DZXUqaehCw>
-X-ME-Received: <xmr:-mXEZQEthsy_-sUHNB6a9iIVF7CO8zmEGxPTvJznZtNi5M08INJnVR33A0JaioY25kktjPMZIyoNEyAP88YgeiOAcveK5JmH30u8U6QqqWevKWd6>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrtdefgdekfecutefuodetggdotefrodftvf
-    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
-    uegrihhlohhuthemuceftddtnecunecujfgurhepfffhvfevuffkgggtugesghdtreertd
-    dtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhs
-    rdhimheqnecuggftrfgrthhtvghrnhepuefguedtueeiheetleevgedujeekjeehleejje
-    fhhffghfevgfekueekjedtieejnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghm
-    pehmrghilhhfrhhomhepphhssehpkhhsrdhimh
-X-ME-Proxy: <xmx:-mXEZZR7X0EllKYpCTQfAiz1cSyx9UBx9i6ALDn-2fNALseHaptpqA>
-    <xmx:-mXEZVxaYh-d7htAC9dJ08R0LCAYRnFOkWaOafY_vyBJkQIeVI6hfw>
-    <xmx:-mXEZX69xU_5ITrP5XyPvZN03IgUgITGljhREAOl_K8wuEZAaYYwOw>
-    <xmx:-mXEZWrlyp4h_da_hJ7x81CYNTINURG9Qc602j1Nm5w84BbxkQuXoQ>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 8 Feb 2024 00:26:17 -0500 (EST)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 457a8aa1 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 8 Feb 2024 05:22:42 +0000 (UTC)
-Date: Thu, 8 Feb 2024 06:26:14 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: git@vger.kernel.org
-Cc: Jeff King <peff@peff.net>
-Subject: [PATCH] refs/reftable: fix leak when copying reflog fails
-Message-ID: <02f7a97a451927f9a7ee06f3c5ea5af4c4eb6645.1707369907.git.ps@pks.im>
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="LyF7CqLN"
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id 6EDBD32362;
+	Thu,  8 Feb 2024 00:29:05 -0500 (EST)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=1bbhiFgT1gTISA/hJCqV30EebBmiEILja75rbl
+	YWf2U=; b=LyF7CqLNDMXPTkKZURpYGdaN57kGRs6HOIzCgbVeKxq8dwhQs7iOV+
+	BJj7nX1X1lknMulo8BWU6NDYQNM9WEzVFNu+270r/nJ64j9v6kj+1TNz89NvOHLl
+	fo9O+m7kFt91BjntAnhe4NE385WSRyNrR6N4FP4v1QmPlz4T6mCkQ=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id 59BFF32361;
+	Thu,  8 Feb 2024 00:29:05 -0500 (EST)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.165.85])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id D72D83235F;
+	Thu,  8 Feb 2024 00:29:01 -0500 (EST)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Jeff King <peff@peff.net>
+Cc: git@vger.kernel.org,  Sergey Kosukhin <skosukhin@gmail.com>
+Subject: Re: [PATCH] tag: fix sign_buffer() call to create a signed tag
+In-Reply-To: <xmqq5xyzr6tm.fsf@gitster.g> (Junio C. Hamano's message of "Wed,
+	07 Feb 2024 19:08:37 -0800")
+References: <xmqq4jek9ko1.fsf@gitster.g>
+	<20240208004757.GA1059751@coredump.intra.peff.net>
+	<xmqq5xyzr6tm.fsf@gitster.g>
+Date: Wed, 07 Feb 2024 21:29:00 -0800
+Message-ID: <xmqqv86zplr7.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="1jupAWvD3401hMwP"
-Content-Disposition: inline
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ F79508B2-C642-11EE-8A1C-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
 
+Junio C Hamano <gitster@pobox.com> writes:
 
---1jupAWvD3401hMwP
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> We could do belt and suspenders by tightening the other callers to
+> only expect negative for errors (but then what should they do when
+> they receive non-zero positive?  Should they BUG() out???) while
+> teaching sign_buffer_ssh() that our convention is to return negative
+> for an error, of course, but I am not sure if it that is worth it.
 
-When copying a ref with the reftable backend we also copy the
-corresponding log records. When seeking the first log record that we're
-about to copy fails though we directly return from `write_copy_table()`
-without doing any cleanup, leaking several allocated data structures.
+Actually, we could loosen the caller(s) while tightening the
+callee(s), which is the more usual approach we would take in a
+situation like this.  Here is what I am tempted to pile on top of
+the patch.
 
-Fix this by exiting via our common cleanup logic instead.
+----- >8 --------- >8 --------- >8 --------- >8 --------- >8 -----
+Subject: [PATCH] ssh signing: signal an error with a negative return value
 
-Reported-by: Jeff King <peff@peff.net> via Coverity
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
+The other backend for the sign_buffer() function followed our usual
+"an error is signalled with a negative return" convention, but the
+SSH signer did not.  Even though we already fixed the caller that
+assumed only a negative return value is an error, tighten the callee
+to signal an error with a negative return as well.  This way, the
+callees will be strict on what they produce, while the callers will
+be lenient in what they accept.
+
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- refs/reftable-backend.c | 2 +-
+ gpg-interface.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/refs/reftable-backend.c b/refs/reftable-backend.c
-index 85214baa60..a14f2ad7f4 100644
---- a/refs/reftable-backend.c
-+++ b/refs/reftable-backend.c
-@@ -1503,7 +1503,7 @@ static int write_copy_table(struct reftable_writer *w=
-riter, void *cb_data)
- 	 */
- 	ret =3D reftable_merged_table_seek_log(mt, &it, arg->oldname);
- 	if (ret < 0)
--		return ret;
-+		goto done;
-=20
- 	while (1) {
- 		ret =3D reftable_iterator_next_log(&it, &old_log);
---=20
-2.43.GIT
+diff --git a/gpg-interface.c b/gpg-interface.c
+index 48f43c5a21..e19a69c400 100644
+--- a/gpg-interface.c
++++ b/gpg-interface.c
+@@ -1088,7 +1088,7 @@ static int sign_buffer_ssh(struct strbuf *buffer, struct strbuf *signature,
+ 		if (strstr(signer_stderr.buf, "usage:"))
+ 			error(_("ssh-keygen -Y sign is needed for ssh signing (available in openssh version 8.2p1+)"));
+ 
+-		error("%s", signer_stderr.buf);
++		ret = error("%s", signer_stderr.buf);
+ 		goto out;
+ 	}
+ 
+-- 
+2.43.0-561-g235986be82
 
-
---1jupAWvD3401hMwP
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmXEZfUACgkQVbJhu7ck
-PpS7DQ/+LbIF7rbDTrUnME04SVXzzIN6ORIITEynxnqCbNohQlGd9S7RUCnrq1WU
-pbHUSvuHMPlqRDlxcH0XATNYgoud+a09L3Z+Eh35bjkkOlgKcp6YK/bA92pgMquU
-uRV+yfUvHf/cXd428ai0nJ/0OotARW98/+tA8WGzL7+CTNNt9XW8lYOJIE9sZRiR
-v0pV92mbeQtbsNlusfA8dxb0i6UV06qrT0FJVCkzLPagPCBT9UzzsCwNQQr7K1Rn
-+LQcaqCEHulzE6eGuh1fhNd1aaCgdYkwMaE2cCEk7cznYcDb6nPZonNpfN5+Kx9p
-jlx10n6/Hp1AZpryD/W/mw0g/pI6gUeeCYsOc/bimJv0z+wD8SP+d0jEt6mv7HjG
-zLFg4yPqhR8DskD9KYcDou9v4djY4dsPcGeoe6gaIT/iHCbmg+N0H+z8EZduRd9P
-8U9Q3t4VNsAAW6E0K0oeeQiEBfx6jjLkbmfvhG/0AwMg4ZRgfHFxuAjLfGkzYAac
-Hm+aefQlH76Tnw0k2mJe37HC2FLVh4ASHSVVZkzzjGtH86YaP5qHZa7RgXuFGGld
-55WXMOc6dOwDMF0kIdpWoJHCZlW/jys/fSvq/S/41KSYQh97zjOXaljbF8drOEI9
-sITUgNTGlLunAHBU/KOVxZbDIEN+v1WZKeLSsynHEZHcAU4Upac=
-=vTV5
------END PGP SIGNATURE-----
-
---1jupAWvD3401hMwP--
