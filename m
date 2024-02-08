@@ -1,54 +1,61 @@
 Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7B2A823CD
-	for <git@vger.kernel.org>; Thu,  8 Feb 2024 17:44:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D15C97A714
+	for <git@vger.kernel.org>; Thu,  8 Feb 2024 17:53:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707414253; cv=none; b=mdwatqeK9Sta0h76zZzCsvUWPICDgzajYyxGpXi2eeYzuGZupTr1jBLBcrT5ofLeeYcrWpOeR2AcusNZlk+NATl6krhwAWvGNZdm0Wa3mWvRqiYJxyshZWXy2tYGBfFPnvfOyY/7m8Dxl/knbGAcx1j3me8zDz3fSs6ixQrAjeQ=
+	t=1707414809; cv=none; b=lppVcZwJATOopN5R/F3Oa33kzb6VGn4T7jVxaXjnP4bCXUALBBt7MH390yfIJctrq2lYb08l5njGyREPP5UWEhqDoQ1+Eehph2JbOQi1W7ws4CCV+qGj4o+/WTVfeukJB9QrJJUlaYG5r4PkMlXLAefzBJf7xHf5yy60RHcYRC0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707414253; c=relaxed/simple;
-	bh=t54G1Emw1JJs1LyB1DS0hwHV5mGWgu13f7QRTOvu6Tk=;
+	s=arc-20240116; t=1707414809; c=relaxed/simple;
+	bh=sahhgTYgv4XcToccSMlW9hbxke+eCaaU+UouY1uolOI=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=bY+Sq4sJ+wjCeUxKLLG320SqWgvTMXP+LrboatZOd8ROTKiSh43PTNULivEaQcHlDxQrL/FG1PF/n0VRViEKoiZoo7a9H2D6StqyXnkRouKq0d4a6URdM81VNidXTZF+odcjVU9+orAlPgNxZnnD0PLCSUhgljhH57oWoEWwP5g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=S9c1hgl6; arc=none smtp.client-ip=64.147.108.70
+	 MIME-Version:Content-Type; b=ZSxhM6BtB7nq5yN8L87zE0gpPDvEwDpN2nUawHiea5N+O61jJ4v1Y5qlCwGo2BLnYH7Czor70fb3zrsRDP96incbh6KwbbaA2bVFM6atNF1vJTVWMKWK3d+VmqnV38RJfcZ+OQUqj/4y/NcdCzLTxT7BbTUKK1yp4VklesDN7ek=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=bB4dVAKh; arc=none smtp.client-ip=64.147.108.70
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="S9c1hgl6"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="bB4dVAKh"
 Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 5D1931E7B1D;
-	Thu,  8 Feb 2024 12:44:10 -0500 (EST)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 47F041E7BF9;
+	Thu,  8 Feb 2024 12:53:26 -0500 (EST)
 	(envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=t54G1Emw1JJs1LyB1DS0hwHV5mGWgu13f7QRTO
-	vu6Tk=; b=S9c1hgl6Y9yJ3rHY8hwzN4PWcTTZ49M/PWxwmRW/uX/SQtgsDnp/Tv
-	DdiqzpDe7RnScssIlPLngWxztxhcevIX7/M8tVn4y+/IoBLi1X3Zr44HQxB+3AcQ
-	zEuwD+gPWwO8EjDSrcwJ/Z0j1MbNDRFzxGPHBU/n1c8zPLFMygVjc=
+	:content-type; s=sasl; bh=sahhgTYgv4XcToccSMlW9hbxke+eCaaU+UouY1
+	uolOI=; b=bB4dVAKhOTwMb3urUlqkQi/Vfv+mx8ogUGNK4+yAJTk8L+NtCcRerC
+	wKspPnz4GcTKUDR6YLWGKLDHulLstavH2Bu+QSlWjSAX4ejulIG0o0CTyog3695f
+	A+hIEmtUM1Y+MNMW7izmIaww7h+CI6toSVWPSU+inLVJJi2S/G+50=
 Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 528001E7B1C;
-	Thu,  8 Feb 2024 12:44:10 -0500 (EST)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 408521E7BF8;
+	Thu,  8 Feb 2024 12:53:26 -0500 (EST)
 	(envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.125.165.85])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id BC8E71E7B1B;
-	Thu,  8 Feb 2024 12:44:09 -0500 (EST)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id A49DD1E7BF7;
+	Thu,  8 Feb 2024 12:53:25 -0500 (EST)
 	(envelope-from junio@pobox.com)
 From: Junio C Hamano <gitster@pobox.com>
-To: Christian Couder <christian.couder@gmail.com>
-Cc: git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>,  John Cai
- <johncai86@gmail.com>,  Linus Arver <linusa@google.com>,  Christian Couder
- <chriscool@tuxfamily.org>
-Subject: Re: [PATCH v2 4/4] rev-list: allow missing tips with
- --missing=[print|allow*]
-In-Reply-To: <20240208135055.2705260-5-christian.couder@gmail.com> (Christian
-	Couder's message of "Thu, 8 Feb 2024 14:50:55 +0100")
-References: <20240208135055.2705260-1-christian.couder@gmail.com>
-	<20240208135055.2705260-5-christian.couder@gmail.com>
-Date: Thu, 08 Feb 2024 09:44:07 -0800
-Message-ID: <xmqqeddmonq0.fsf@gitster.g>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: Karthik Nayak <karthik.188@gmail.com>,  Phillip Wood
+ <phillip.wood123@gmail.com>,  phillip.wood@dunelm.org.uk,
+  git@vger.kernel.org
+Subject: Re: [PATCH v3 4/4] for-each-ref: avoid filtering on empty pattern
+In-Reply-To: <ZcUOP_rWUwymhe5c@ncase> (Patrick Steinhardt's message of "Thu, 8
+	Feb 2024 18:24:15 +0100")
+References: <xmqqr0hph1ku.fsf@gitster.g>
+	<CAOLa=ZSZJ=_VCppHXcJeE=Z61go4_040xyc1NBTu-o=xysLrdg@mail.gmail.com>
+	<xmqqcyt9fdc7.fsf@gitster.g>
+	<CAOLa=ZRcWYmEYnxh_=ykOerahZ61xaanLCj_JHHLvtrvN=Xs-w@mail.gmail.com>
+	<xmqq1q9oe029.fsf@gitster.g>
+	<CAOLa=ZQzz7_L_9cBmK+pgFwd_DFqfWDVRiaZMAxU+54kBq6Pcw@mail.gmail.com>
+	<xmqq1q9ocje3.fsf@gitster.g>
+	<CAOLa=ZQaXxwrXmbmFvGR59EDo3Eqa-Xfc3OG9+6ES-veDU8Bhg@mail.gmail.com>
+	<ZcSVx4slikt4xB3D@tanuki> <xmqq7cjeq43t.fsf@gitster.g>
+	<ZcUOP_rWUwymhe5c@ncase>
+Date: Thu, 08 Feb 2024 09:53:24 -0800
+Message-ID: <xmqq34u2onaj.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -58,69 +65,55 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 X-Pobox-Relay-ID:
- A9EF504C-C6A9-11EE-8E5F-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
+ F5478E64-C6AA-11EE-A2DC-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
 
-Christian Couder <christian.couder@gmail.com> writes:
+Patrick Steinhardt <ps@pks.im> writes:
 
->  The form '--missing=print' is like 'allow-any', but will also print a
->  list of the missing objects.  Object IDs are prefixed with a ``?'' character.
-> ++
-> +If some tips passed to the traversal are missing, they will be
-> +considered as missing too, and the traversal will ignore them. In case
-> +we cannot get their Object ID though, an error will be raised.
+> That's a different problem from the one I have right now. Let's take the
+> following sequence of commands:
+>
+>     $ git init repo
+>     Initialized empty Git repository in /tmp/repo/.git/
+>     $ git -C repo commit --allow-empty --message message
+>     [main (root-commit) aa5eec4] message
+>     $ git -C repo update-ref ref/head/foo HEAD
+>     $ ls repo/.git/ref/head/foo
+>     repo/.git/ref/head/foo
+>
+> Now the fact that you can create "ref/head/foo" is a bug that needs to
+> be fixed, no arguing there. The problem is that rectifying this problem
+> with the "files" backend is easy -- you look into the repo, notice that
+> there's a weird directory, and then "rm -rf" it.
 
-Makes sense.
+OK.
 
-> diff --git a/builtin/rev-list.c b/builtin/rev-list.c
-> index b3f4783858..ec9556f135 100644
-> --- a/builtin/rev-list.c
-> +++ b/builtin/rev-list.c
-> @@ -545,6 +545,15 @@ int cmd_rev_list(int argc, const char **argv, const char *prefix)
->  	 *
->  	 * Let "--missing" to conditionally set fetch_if_missing.
->  	 */
-> +	/*
-> +	 * NEEDSWORK: These dump loops to look for some options early
-> +	 * are ugly. We really need setup_revisions() to have a
+> But how do you learn about this ref existing with the "reftable" backend
+> in the first place? You can't without looking at the binary format --
+> there doesn't exist a single command that would allow you to list all
+> refs unfiltered. But that is very much required in order to learn about
+> misbehaviour and fix it.
 
-I would drop the "dump" and "ugly" from here.  It OK to make value
-judgement with such words in casual conversations on a proposed
-patch, but when we make a request to future developers to fix our
-mess, we should be more objective and stick to the techincal facts,
-so that they have better understanding on why we think this area
-needs more work.
+I think I have been saying that it is perfectly OK if reftable
+backend, being newer and backed by more experience using Git,
+rejected any attempt to create anything under "ref/" (to avoid
+confusion to those who are reading from sidelines, it should allow
+creating "refs/mytool/" for third-party tools to store their own
+pointers).
 
-Perhaps something like:
+> As I said -- this is a bug, and I agree that it shouldn't happen. But
+> bugs happen, and especially with the new reftable format I expect them
+> to happen. What I look for in this context is to create the tools to fix
+> problems like this, but `--include-root-refs` doesn't. A flag that
+> unconditionally returns all refs, regardless of whether they have a bad
+> name or not, does address the issue. Think of it of more of a debugging
+> tool.
 
-    These loops that attempt to find presence of options without
-    understanding what the options they are skipping are broken
-    (e.g., it would not know "--grep --exclude-promisor-objects" is
-    not triggering "--exclude-promisor-objects" option).
+OK, "--include-all-refs" would be fine.  And without bugs there
+should not be a difference.
 
-Everything after "We really need" is good (modulo possible grammos),
-I think.  Thanks for writing it.
+Where does "all refs in this worktree" you mentioned fit in this
+picture?  Should a bogus "ref/foo/bar" be considered to be worktree
+specific, or is it an incorrect attempt to create a ref that is
+specific to 'foo' worktree that is not the current one and be
+filtered out?
 
-> +	 * mechanism to allow and disallow some sets of options for
-> +	 * different commands (like rev-list, replay, etc). Such
-> +	 * mechanism should do an early parsing of option and be able
-> +	 * to manage the `--exclude-promisor-objects` and `--missing=...`
-> +	 * options below.
-> +	 */
->  	for (i = 1; i < argc; i++) {
->  		const char *arg = argv[i];
->  		if (!strcmp(arg, "--exclude-promisor-objects")) {
-> @@ -753,8 +762,12 @@ int cmd_rev_list(int argc, const char **argv, const char *prefix)
->  
->  	if (arg_print_omitted)
->  		oidset_init(&omitted_objects, DEFAULT_OIDSET_SIZE);
-> -	if (arg_missing_action == MA_PRINT)
-> +	if (arg_missing_action == MA_PRINT) {
->  		oidset_init(&missing_objects, DEFAULT_OIDSET_SIZE);
-> +		/* Already add missing tips */
-> +		oidset_insert_from_set(&missing_objects, &revs.missing_commits);
-> +		oidset_clear(&revs.missing_commits);
-> +	}
-
-It is unclear what "already" here refers to, at least to me.
-
-Thanks.
