@@ -1,55 +1,55 @@
-Received: from mail-wm1-f41.google.com (mail-wm1-f41.google.com [209.85.128.41])
+Received: from mail-lf1-f48.google.com (mail-lf1-f48.google.com [209.85.167.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37073763EF
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 120AA76C6A
 	for <git@vger.kernel.org>; Thu,  8 Feb 2024 13:51:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.41
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707400281; cv=none; b=jSEKNbaEfX3od0PWK6gOBXDfbSCriyiU1Wg1MJyvzw0+jQd9wOnL/K7ZjlKbnfJ77bm21K5q2qiAaCLGKjanc7a2tsFBc0FPNjlp78REhF/zqg/lAbTR7PmAn/CX/NJziK6v83iGKxSt20hxkDga8RyxVPIXooeM+3urealmjAE=
+	t=1707400284; cv=none; b=QjyJGAkt5zvKuejvxzhEdJmheHGEvifOFwwCK6LIXDYaVsJDZfErboSke1Cv4FKt9qPSZyEPOxGWtId66TeVVZWdK5e/nnuTrRFXzmzgZ3jJwmgIgFj9YYEVQ/hD+nbJpuhaRs56Ok+4I16VSICD2Zz91VTJ/jaE3uV3HLnIIp0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707400281; c=relaxed/simple;
-	bh=WlAVCZv1vTIGI27NO4zu0LVYzGNW9oTXI51RaMttLjE=;
+	s=arc-20240116; t=1707400284; c=relaxed/simple;
+	bh=45ufkIQzxDtRIrHSNLkv/FGBfeRbsrOrwSHiILwjwsY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ejEeORorv8rgFCkkkZYSeCD+fgoyRBxARQIX4l6tR7P+SBkPES22ebYC13CA34ErQJsrDfn5aBbT6ot/yUv2SFcWASfmxsfMpoErqjQvV0Sp6Y7KhJj8qxV2fFhay0C6jj4frKuK/jnttBqFhojL7siTgYg7s0YgalX+EqsV4l0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=WnLbNxDS; arc=none smtp.client-ip=209.85.128.41
+	 MIME-Version; b=YaAIBOh0duJwj0dYnc9KBlkhfiosPedjMjVB3/VJIJ5dJMz8xmW1TkohlFjvWJdTq3/5WBXeDBXO0SaQYwG43VqYpSNurud4brr7yxwppKAN95krutfvEzuBY7Did/ZTo9CVfI8d504okCDMrBsj4gaocxfwROdOpB9PLqy0tOc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=breguh2n; arc=none smtp.client-ip=209.85.167.48
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WnLbNxDS"
-Received: by mail-wm1-f41.google.com with SMTP id 5b1f17b1804b1-4101fc00832so11846825e9.3
-        for <git@vger.kernel.org>; Thu, 08 Feb 2024 05:51:19 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="breguh2n"
+Received: by mail-lf1-f48.google.com with SMTP id 2adb3069b0e04-511234430a4so3742906e87.3
+        for <git@vger.kernel.org>; Thu, 08 Feb 2024 05:51:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20230601; t=1707400278; x=1708005078; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=CDTU2iJB3MJ6UQ/7B8AuIDzoCBbdaRMCgCBIY8DkBhk=;
-        b=WnLbNxDSpGMOxYkhUPmZ3XPb4BH+nj/frN75d1Qg/u2oHIKSpAoPOI/h5BVA+7vK7Q
-         YF+andPxHOY7XU9+/oEKLlMESFGj32wptH/xDB0S3kMWPrx8xCHlhcWuU3f+2TtAQRLf
-         CWETeuLvQPltR+uPVMrQOCvUWNoG4/wiOcDkrOEOiKRRXIbc3QxFelOA0z+yRVlFZWDd
-         7o2d+B5AmC56KH73iiLiu7Sg8AzYSo3pqNiPTw8OFvQLb+pLD4dZVLWmCHNT83ydUcvq
-         75j7tA2Bw/TgpCS1oOw1uqiizBeIhecZyxrbWnkchPKWdQfJA18ZQxQ+KfhgNwi7IYva
-         Q/Jw==
+        bh=E/i/lyJ+wzUg0LWI3ZUdwHbk/ESQ2s6tD9llOIvj6GY=;
+        b=breguh2n3p1s/tDKAleNvacG2XeAGcWXV4aKedjzN/hnmgr4KI6lf5gIi6+zdvHnZS
+         ytgX+FloJ0ulnyc/5YZe6IHnePUB6feZCZ2FznJLcJzafUAwMM4lMjX3wmWM7ISb4+xt
+         Lc5OlT5GqJEPTVq9W4hE9Pe4LW9nnxoNMcsIFA/25EkHg9YUtDcs50u4WtWFsBTJOSQu
+         1yjXg/YXojwGbIbiYAdKZqstmtgyuRP/bHziiumMsQ2gahBCJp6Ua4QH37cX4y7Iljd3
+         zS3faQOkgl/E4JpvYKdTGzeS2dz7mI+81QL/tNlUt7hydUIpMcuADoj5gJQLN89xZsVD
+         2wUA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20230601; t=1707400278; x=1708005078;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=CDTU2iJB3MJ6UQ/7B8AuIDzoCBbdaRMCgCBIY8DkBhk=;
-        b=ICbLNX3NDFiCS8k6Fo4iDR8cC5E73XmXg+L3MNmcwLspBhYen6fkGTr8ADaABc2Os9
-         xS915ncG9Qu5i22uxhRIqmpIsguyMw2bSdgV5hnz1PJoh7lZY5OaaNuXmSGf67IC/4hZ
-         Ie23x7/23XKWOflJK1++Ms9+gHH9SADxcu91qnr2+PozRRXNEMNk4dQN6KUHRqUwCgvc
-         rra/SLvkADd2vKvEJ31njl1RUtKMTm7s4Gwy+o13sI5OhpH0TOGygxVI7dFp0NRbjNjB
-         zNs+tI5JLwD1C95O/FCpd/JqAk6nEwnLkmugOhBq2JAr2ObCLfJ8x1As1UjAmDL3cFlr
-         7NQw==
-X-Gm-Message-State: AOJu0YxcNkxOOCiNWGSVjzX59MSk8Olv5uNVRjR+r/JeYyst943jC2lL
-	fyG8G6GlL0tvE7O4exfiurfEl40jMTXqZk6lk2o0+gJobmTBzbij7DyG5xiJ
-X-Google-Smtp-Source: AGHT+IGL6c6LPoLFw1Po6H3XY2dBcPy/6YN15maOksa2FCVx9tMj7KYcNeNdl6Q82Bnqn/pckQLd1Q==
-X-Received: by 2002:a05:600c:3d91:b0:410:5578:d9a0 with SMTP id bi17-20020a05600c3d9100b004105578d9a0mr4701wmb.21.1707400277472;
-        Thu, 08 Feb 2024 05:51:17 -0800 (PST)
-X-Forwarded-Encrypted: i=1; AJvYcCW/ujc9tPPZyMvTYpILC4NuJGjNb02YjMYvDEGWfBahl0PZCMJLp6xut6T2sqUiVJe/bvO7Wt/WDLcvl4QIdvRmtvexUOpxrRlo6NT3RwNxQhjfJb+BuX5/fHpwNgitcFqLZgBF0dPt5Ewe+yX1ssyE0Ny6eSe6A9kI4R/AgHngooaxn2Xjd+q9jM1xpT1zgWM0aTroxm+aPRIqclvjggp10B5YijJHDAv0Hk1aCMva
+        bh=E/i/lyJ+wzUg0LWI3ZUdwHbk/ESQ2s6tD9llOIvj6GY=;
+        b=sJxZ0qcDohRpCbDCFfPZiNvXOfpmjxfogUUKeiv3IfYs7yBxYftp1a4ZIlCeRnqEs2
+         d1Z2fScZRi/PzR7wQmNA0hvBC5S5Pn7ohsNO3VxAcnOLxv6fCo2SMPZnqhqA/rs+TVWm
+         R/rMWBRDBWJsQwebPg2d9jiVSqAKSsEaEDZw3I/DQ93zoin16n0O01BJGoUeQIQN8po+
+         y4II2dj5xNl37SSX5J9ATcasHYB7peTm3HgFqMIgmeCrcoFx+URGITygvP4lKkO6E/Nr
+         cz7kvbocIJ2dXPLqVofTL37jNOoi8BhGgb7/nsICLFb3qNxlQL5Oj9F+vxrNokrW8xLO
+         BJFQ==
+X-Gm-Message-State: AOJu0YwdVmyaMCfDBl+lsUsejuhAX0ie9d26uYDRtFxIH5SqOMHlsdL0
+	3cLgbMghB6O0R8JDHlhp287UMLOMxy2eiV58+UT9Rd+jklfGHaHO4aJGTBh6
+X-Google-Smtp-Source: AGHT+IGNwJnm7aMGOckC9SaXbJPfo3SLQCi13J+CVHYGHwOq9zj7bXOfLLwE3UJNvej7X5DLvL+qEA==
+X-Received: by 2002:ac2:4c45:0:b0:511:2dfc:9ffc with SMTP id o5-20020ac24c45000000b005112dfc9ffcmr7494441lfk.60.1707400278531;
+        Thu, 08 Feb 2024 05:51:18 -0800 (PST)
+X-Forwarded-Encrypted: i=1; AJvYcCVvUM0oFZXBMwOWBA4+jadn9RUxNEcY8MtSzuOjaCzb40TB+53uczaDONAR+ZrF/cqKaDRLDsih910fY2CNzKSXcSLwo42bolgpvKbilkrUdLtpzrNDiiGE/J/6/TUIlPJqBO6EI5amSJul1JFOdUaFGxMHb7y/ZroC/qP4NBA7iGIl1dklDDpsaE3K82Em/8n512jkg3g=
 Received: from localhost.localdomain ([2001:861:3f04:7ca0:4c16:5b8b:3341:9836])
-        by smtp.gmail.com with ESMTPSA id j12-20020a05600c190c00b0040ebf603a89sm1698307wmq.11.2024.02.08.05.51.16
+        by smtp.gmail.com with ESMTPSA id j12-20020a05600c190c00b0040ebf603a89sm1698307wmq.11.2024.02.08.05.51.17
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Thu, 08 Feb 2024 05:51:17 -0800 (PST)
 From: Christian Couder <christian.couder@gmail.com>
@@ -59,11 +59,10 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	John Cai <johncai86@gmail.com>,
 	Linus Arver <linusa@google.com>,
 	Christian Couder <christian.couder@gmail.com>,
-	Eric Sunshine <sunshine@sunshineco.com>,
 	Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH v2 1/4] revision: clarify a 'return NULL' in get_reference()
-Date: Thu,  8 Feb 2024 14:50:52 +0100
-Message-ID: <20240208135055.2705260-2-christian.couder@gmail.com>
+Subject: [PATCH v2 2/4] oidset: refactor oidset_insert_from_set()
+Date: Thu,  8 Feb 2024 14:50:53 +0100
+Message-ID: <20240208135055.2705260-3-christian.couder@gmail.com>
 X-Mailer: git-send-email 2.43.0.565.g97b5fd12a3.dirty
 In-Reply-To: <20240208135055.2705260-1-christian.couder@gmail.com>
 References: <20240208135055.2705260-1-christian.couder@gmail.com>
@@ -75,35 +74,89 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-In general when we know a pointer variable is NULL, it's clearer to
-explicitly return NULL than to return that variable.
+In a following commit, we will need to add all the oids from a set into
+another set. In "list-objects-filter.c", there is already a static
+function called add_all() to do that.
 
-In get_reference() when 'object' is NULL, we already return NULL
-when 'revs->exclude_promisor_objects && is_promisor_object(oid)' is
-true, but we return 'object' when 'revs->ignore_missing' is true.
+Let's rename this function oidset_insert_from_set() and move it into
+oidset.{c,h} to make it generally available.
 
-Let's make the code clearer and more uniform by also explicitly
-returning NULL when 'revs->ignore_missing' is true.
+While at it, let's remove a useless `!= NULL`.
 
-Helped-by: Eric Sunshine <sunshine@sunshineco.com>
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- revision.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ list-objects-filter.c | 11 +----------
+ oidset.c              | 10 ++++++++++
+ oidset.h              |  6 ++++++
+ 3 files changed, 17 insertions(+), 10 deletions(-)
 
-diff --git a/revision.c b/revision.c
-index 2424c9bd67..4c5cd7c3ce 100644
---- a/revision.c
-+++ b/revision.c
-@@ -385,7 +385,7 @@ static struct object *get_reference(struct rev_info *revs, const char *name,
+diff --git a/list-objects-filter.c b/list-objects-filter.c
+index da287cc8e0..4346f8da45 100644
+--- a/list-objects-filter.c
++++ b/list-objects-filter.c
+@@ -711,15 +711,6 @@ static void filter_combine__free(void *filter_data)
+ 	free(d);
+ }
  
- 	if (!object) {
- 		if (revs->ignore_missing)
--			return object;
-+			return NULL;
- 		if (revs->exclude_promisor_objects && is_promisor_object(oid))
- 			return NULL;
- 		die("bad object %s", name);
+-static void add_all(struct oidset *dest, struct oidset *src) {
+-	struct oidset_iter iter;
+-	struct object_id *src_oid;
+-
+-	oidset_iter_init(src, &iter);
+-	while ((src_oid = oidset_iter_next(&iter)) != NULL)
+-		oidset_insert(dest, src_oid);
+-}
+-
+ static void filter_combine__finalize_omits(
+ 	struct oidset *omits,
+ 	void *filter_data)
+@@ -728,7 +719,7 @@ static void filter_combine__finalize_omits(
+ 	size_t sub;
+ 
+ 	for (sub = 0; sub < d->nr; sub++) {
+-		add_all(omits, &d->sub[sub].omits);
++		oidset_insert_from_set(omits, &d->sub[sub].omits);
+ 		oidset_clear(&d->sub[sub].omits);
+ 	}
+ }
+diff --git a/oidset.c b/oidset.c
+index d1e5376316..91d1385910 100644
+--- a/oidset.c
++++ b/oidset.c
+@@ -23,6 +23,16 @@ int oidset_insert(struct oidset *set, const struct object_id *oid)
+ 	return !added;
+ }
+ 
++void oidset_insert_from_set(struct oidset *dest, struct oidset *src)
++{
++	struct oidset_iter iter;
++	struct object_id *src_oid;
++
++	oidset_iter_init(src, &iter);
++	while ((src_oid = oidset_iter_next(&iter)))
++		oidset_insert(dest, src_oid);
++}
++
+ int oidset_remove(struct oidset *set, const struct object_id *oid)
+ {
+ 	khiter_t pos = kh_get_oid_set(&set->set, *oid);
+diff --git a/oidset.h b/oidset.h
+index ba4a5a2cd3..262f4256d6 100644
+--- a/oidset.h
++++ b/oidset.h
+@@ -47,6 +47,12 @@ int oidset_contains(const struct oidset *set, const struct object_id *oid);
+  */
+ int oidset_insert(struct oidset *set, const struct object_id *oid);
+ 
++/**
++ * Insert all the oids that are in set 'src' into set 'dest'; a copy
++ * is made of each oid inserted into set 'dest'.
++ */
++void oidset_insert_from_set(struct oidset *dest, struct oidset *src);
++
+ /**
+  * Remove the oid from the set.
+  *
 -- 
 2.43.0.565.g97b5fd12a3.dirty
 
