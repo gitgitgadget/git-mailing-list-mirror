@@ -1,95 +1,98 @@
-Received: from mail-ej1-f54.google.com (mail-ej1-f54.google.com [209.85.218.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mail.manjaro.org (mail.manjaro.org [116.203.91.91])
+	(using TLSv1.2 with cipher DHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA503381C7
-	for <git@vger.kernel.org>; Thu,  8 Feb 2024 19:52:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9864136B0A
+	for <git@vger.kernel.org>; Thu,  8 Feb 2024 20:16:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=116.203.91.91
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707421974; cv=none; b=aWEqbLJJC9WHemTEjkz91xUAfPwOP2Tsp7r03aJUTNt5GmG1jYbhUr2FPQ27SWUu4mEwLPoSTPxtN7cF62VacXrZEbe0ggzzRTmNAvq/S24XgUOZFk7EPL5C/Lf5xjIZrYnNoE0Mai5O/JCxe0FVdePyxf5zdR8h8+TcXIuInU4=
+	t=1707423399; cv=none; b=qfcEn0ixaoyhO1TYYFt7P3SVyQM7U5P0nSL4Raj4Wdpd6d3RtBlyGrUzD/3+0xQeB6e6WYDWbj3vd+Y2hKOCaMNzKl4vXtUG0r7uIbz4fVARFZnT0vjIt+5jR7/DNE1OrB9jxo84BQxrUHG9t3wZg1GuGXIkbhHjZdMjG7saFL8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707421974; c=relaxed/simple;
-	bh=LFu1CZ9bE8y89Gj5hoMLME2rKRbrQQIhrRAJP66YgNo=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=g4MrV64fVmITE5YayXhFlP4YcCnmzXq67d/0I/dlVQ/WX7CZvqCwDdkheHA7VnxrXO1isHVet2cr5LCD14pbJn7V4OBwfrDF6Q88LN/8IjjDs6Dffg7ScSG+o+SR0967pCRKiA9svU38R2gmgpxYgFALqKWy7EVZSUtKYZapty8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=v+nJbozD; arc=none smtp.client-ip=209.85.218.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	s=arc-20240116; t=1707423399; c=relaxed/simple;
+	bh=z7BWFwOkZc5R3hOGyMz76HfP0yUCittf6yW6C/J29cQ=;
+	h=MIME-Version:Date:From:To:Cc:Subject:In-Reply-To:References:
+	 Message-ID:Content-Type; b=ixMabNlzUII+8074Otk2c7TgGW8J+AXsMkj2Xgsrrm6h4upyNe/u9bHDWOSK4ckxwPau3PENjId0e2uVnekaSXL7VQC08hvUq6p7mu12Zbd5npti54UHc1uWpiHmLtP8kaSLQXO5oc96LuwAT9zprGw8u4oTl7rFUsrw01JFsjY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org; spf=pass smtp.mailfrom=manjaro.org; dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b=IypZ11zD; arc=none smtp.client-ip=116.203.91.91
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=manjaro.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="v+nJbozD"
-Received: by mail-ej1-f54.google.com with SMTP id a640c23a62f3a-a28a6cef709so23226666b.1
-        for <git@vger.kernel.org>; Thu, 08 Feb 2024 11:52:52 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1707421971; x=1708026771; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=RqeoYz7JJjhbg3AYSJABZodnHgqRyMolTZxxbuyAbgo=;
-        b=v+nJbozDq1t8pnwxQDWexDVz7K2VJZLn20J3MmMgSUGqiB//tS7u8FA1YP6BYZAhzM
-         P+RiV9e8ON/cjS7ZRIkL7hsZVdzIT9IWlWV4SiiDYt1Atdgn1G4ohMerg3BkW8QQw2Em
-         NpurRTryyW/BN4c7moQ1byDbex0HBInXjse/CAtjlcgVkZi5ePbyusZg77QNLyTK/ao0
-         EQjcRGa1EO1yfHOiAshGFomfy3dOwg0Lff7kkrR87PrLIVbOPtuHHSMpLEWP16NdmAtI
-         UDiQKb2Dj3yB5Lzar0HlaxS6GVHR+FkffYNel1ABNjd9hHJKL+raGA8tBhNHIoFhUer/
-         rn0A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1707421971; x=1708026771;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=RqeoYz7JJjhbg3AYSJABZodnHgqRyMolTZxxbuyAbgo=;
-        b=dxKtBf6E3FCfdz9S5OtSiMTeuyaEdDb8LGU8v9pfFlTyA/Lc8AL5PzFH/YHVUw0cJJ
-         skhUE4S7U9vgT/ajdJFnrXZk5u6eGlM8YJTuaK1OameSe8i3SXu/KrtBFyKGtgPRrFdD
-         3P096/PkzZGaF+KAPusGg0xOn80jOs6L+E5vUkNlS5iSB8ag6xbGinSIwNnuWu68KAHm
-         pMSZxF3IMgALhvvsmkKRxv4S/fhR9lxYh6cZmz+LLDcqvZeLNVr4zDGUbL2841azYCa1
-         DbFmd5Q9iuNlPR5p7/lRhj/Uvw6rWckKAPbWgaYOGiQmEFPpppz5uGQdeC8+Yn4j4KO5
-         MdOQ==
-X-Gm-Message-State: AOJu0YwfT50oPXjdqHkLDF6wUCcN3EhuhVxVagHQkk9JZw+QD5sTrWTe
-	PQjRDoFm5nCDfiue7WGHuC6DTJt2Gia16Ra40ZHBHFyK1VP5xhuKEk31V5Qn8po4FXSCEZYUqy+
-	Ey7UTdFHV0JBdXqYEkgM4lKZKCg0btu/tzgC+
-X-Google-Smtp-Source: AGHT+IE+syI92eb+BmHT1H7LF2eBeNxLLUYfvnp/XrZhFcf97xSVnhFaIKFXOKmCuIx688KAnhwKDVAj8ieUHEzlXr0=
-X-Received: by 2002:a17:906:b78f:b0:a38:970a:75df with SMTP id
- dt15-20020a170906b78f00b00a38970a75dfmr288805ejb.15.1707421970879; Thu, 08
- Feb 2024 11:52:50 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b="IypZ11zD"
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.1652.git.1707153705840.gitgitgadget@gmail.com>
- <ce83bd09-dbd2-4c9e-8197-6e4800935523@web.de> <20240208010040.GB1059751@coredump.intra.peff.net>
- <8313d9d6-f6bd-4fae-be9c-e7a8129768eb@web.de> <xmqqil2yn3ey.fsf@gitster.g>
-In-Reply-To: <xmqqil2yn3ey.fsf@gitster.g>
-From: Kyle Lippincott <spectral@google.com>
-Date: Thu, 8 Feb 2024 11:52:35 -0800
-Message-ID: <CAO_smVhsKHu0QrvpFbofd7y-Exhnk7=JUzffECNZQx=MWzmnsw@mail.gmail.com>
-Subject: Re: [PATCH] commit.c: ensure strchrnul() doesn't scan beyond range
-To: Junio C Hamano <gitster@pobox.com>
-Cc: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>, Jeff King <peff@peff.net>, 
-	Chandra Pratap via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
-	Chandra Pratap <chandrapratap376@gmail.com>, Chandra Pratap <chandrapratap3519@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=manjaro.org; s=2021;
+	t=1707423391;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=M3GtL+1RRytM+56bZXa1dDSatJeIDo+FvTTZrYc9+bg=;
+	b=IypZ11zDTaF8rMqETVUnYAZvM/z12nzW5ID5ztvfwKR4PP8PYzrI/T6iGelnAyJvjOpIy1
+	oB0yGDdSG9l3rUJQaGwMz8FAC4tCj8lF5he0HPcl/bfceEstqrbe31RCRZ2S4SSB+u+2Yz
+	vRW7xPakWmQpjcQgy432oPisKKkA3TEUXgkYUto6XNPZYCjnlfGyVEJObRj/16iam1+cd/
+	epuId3B6er/p+3PqrjP5Zn03wNk0Uf9TYwmhaAnBDQHoZK12vrHDkVphFkBkjI7uSZUWWR
+	dC5900TbzMZDxKlKj0Zu5LLouPbFB4OFAgYkHmTNW11nUKECZ6j39915NKfLrA==
+Date: Thu, 08 Feb 2024 21:16:31 +0100
+From: Dragan Simic <dsimic@manjaro.org>
+To: =?UTF-8?Q?Toralf_F=C3=B6rster?= <toralf.foerster@gmx.de>
+Cc: git@vger.kernel.org
+Subject: Re: cloning the linxu kernel repo at a VPS with small RAM
+In-Reply-To: <2f773980-70ec-4ad0-a49c-3ac12c294a39@gmx.de>
+References: <2f773980-70ec-4ad0-a49c-3ac12c294a39@gmx.de>
+Message-ID: <6c4e309aa77e534cffdba9ae56032b99@manjaro.org>
+X-Sender: dsimic@manjaro.org
+Content-Type: text/plain; charset=UTF-8;
+ format=flowed
+Content-Transfer-Encoding: 8bit
+Authentication-Results: ORIGINATING;
+	auth=pass smtp.auth=dsimic@manjaro.org smtp.mailfrom=dsimic@manjaro.org
 
-On Thu, Feb 8, 2024 at 11:48=E2=80=AFAM Junio C Hamano <gitster@pobox.com> =
-wrote:
->
-> Ren=C3=A9 Scharfe <l.s.r@web.de> writes:
->
-> > But anyway: If NULs are of no concern and we currently end parsing when
-> > we see one in all cases, why do we need a _mem function at all?  The
-> > original version of the function, find_commit_header(), should suffice.
-> > check_nonce() could be run against the NUL-terminated sigcheck.payload
-> > and check_cert_push_options() parses an entire strbuf, so there is no
-> > risk of out-of-bounds access.
->
-> If I recall correctly, the caller that does not pass strlen() as the
-> payload length gives a length that is shorter than the buffer, i.e.
-> "stop the parsing here, do not get confused into thinking the
-> garbage after this point contains useful payload" was the reason why
-> we have a separate "len".
->
+Hello Toralf,
 
-I just rediscovered that. I think this probably should be something
-that caller (check_nonce) implements, then. Having a _mem function
-implies to me (though I'm very new to this codebase) that it supports
-embedded NULs, but that's not what's happening here.
+On 2024-02-08 18:32, Toralf Förster wrote:
+> Situation:
+> 
+> The command
+>     git clone
+> https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git
+> fails at a virtual server with about 2 GiB RAM under a recent Debian
+> bookworm with git 2.39.2. What works for me:
+>       git clone --depth=1
+> https://git.kernel.org/pub/scm/linux/kernel/git/stable
+>       cd ./linux
+>       git config gc.auto 0
+>       git config pack.threads 1
+>       git fetch --tags
+> as seen in [1].
+> 
+> Q:
+> I do wonder if Git could automatically try to deal with only 1.5 GiB
+> available RAM?
+
+Here's an excerpt from my ~/.bashrc, which sets the things up
+on my Pinebook Pro laptop with an RK3399 SoC and 4 GB of RAM,
+which is also thermally constrained:
+
+# Missing nproc(1) is handled properly
+REASONABLE_THREADS=$(nproc 2> /dev/null || echo 1)
+REASONABLE_THREADS=$((${REASONABLE_THREADS} / 2))
+((${REASONABLE_THREADS} == 0)) && REASONABLE_THREADS=1
+
+export GIT_CONFIG_COUNT=3
+export GIT_CONFIG_KEY_0='grep.threads'
+export GIT_CONFIG_VALUE_0=${REASONABLE_THREADS}
+export GIT_CONFIG_KEY_1='index.threads'
+export GIT_CONFIG_VALUE_1=${REASONABLE_THREADS}
+export GIT_CONFIG_KEY_2='pack.threads'
+export GIT_CONFIG_VALUE_2=${REASONABLE_THREADS}
+
+export ZSTD_NBTHREADS=${REASONABLE_THREADS}
+unset REASONABLE_THREADS
+
+Obviously, this does a bit more than configuring git only.
+
+Perhaps modifying this to additionally take the amount of RAM
+into the calculation of REASONABLE_THREADS could be a solution
+for your use case?
