@@ -1,61 +1,51 @@
 Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D15C97A714
-	for <git@vger.kernel.org>; Thu,  8 Feb 2024 17:53:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9670285C6E
+	for <git@vger.kernel.org>; Thu,  8 Feb 2024 18:06:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707414809; cv=none; b=lppVcZwJATOopN5R/F3Oa33kzb6VGn4T7jVxaXjnP4bCXUALBBt7MH390yfIJctrq2lYb08l5njGyREPP5UWEhqDoQ1+Eehph2JbOQi1W7ws4CCV+qGj4o+/WTVfeukJB9QrJJUlaYG5r4PkMlXLAefzBJf7xHf5yy60RHcYRC0=
+	t=1707415603; cv=none; b=KIsmDJQAtDAz63ZLSLpNqS+NtnXIE9Sao2UjdVfxp3PfDajpC1em8/lTQZxZ1YdMRZMWndlVWqIAIB92piHSlgRevsGjFpLL7yPi810TLb4cA19ulfsxgLhpZ+7GD3+gC4ZKHxllJGyy8bI3moQPZKQlixE0pyxblXJlorB7rWI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707414809; c=relaxed/simple;
-	bh=sahhgTYgv4XcToccSMlW9hbxke+eCaaU+UouY1uolOI=;
+	s=arc-20240116; t=1707415603; c=relaxed/simple;
+	bh=Acfr9fQWTEl2g/99JlN4W6AVokbroFLrSJW3OWu0v9E=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=ZSxhM6BtB7nq5yN8L87zE0gpPDvEwDpN2nUawHiea5N+O61jJ4v1Y5qlCwGo2BLnYH7Czor70fb3zrsRDP96incbh6KwbbaA2bVFM6atNF1vJTVWMKWK3d+VmqnV38RJfcZ+OQUqj/4y/NcdCzLTxT7BbTUKK1yp4VklesDN7ek=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=bB4dVAKh; arc=none smtp.client-ip=64.147.108.70
+	 MIME-Version:Content-Type; b=i6/PpW1aVV/Qw+zT8/6mKG2IKPAXQ9qVFlgIZBwPp5kF8MWtU2MSTzcEezkN/li4EGqJTteMrzZiKovWUEJ70QK4NdkcOscen6dTzXQb3vtkc842A/q612Mp61v5TBlIfIInWvSjcH198UZKV6rLsNpg9DLP6Vm8zQLk23X6cfw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=TLW2WjVI; arc=none smtp.client-ip=64.147.108.70
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="bB4dVAKh"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="TLW2WjVI"
 Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 47F041E7BF9;
-	Thu,  8 Feb 2024 12:53:26 -0500 (EST)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 176001E7CD7;
+	Thu,  8 Feb 2024 13:06:40 -0500 (EST)
 	(envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=sahhgTYgv4XcToccSMlW9hbxke+eCaaU+UouY1
-	uolOI=; b=bB4dVAKhOTwMb3urUlqkQi/Vfv+mx8ogUGNK4+yAJTk8L+NtCcRerC
-	wKspPnz4GcTKUDR6YLWGKLDHulLstavH2Bu+QSlWjSAX4ejulIG0o0CTyog3695f
-	A+hIEmtUM1Y+MNMW7izmIaww7h+CI6toSVWPSU+inLVJJi2S/G+50=
+	:content-type; s=sasl; bh=Acfr9fQWTEl2g/99JlN4W6AVokbroFLrSJW3OW
+	u0v9E=; b=TLW2WjVICbtydxBWjJ5KbJJfpX3qfvwRRZ3mMUh5WeTBMu8l+R/wf2
+	KwQlaTQgQNwntMHk4MrwzI+KC2Er3cjP/x2BAzY3w4MyxXkIMQh+9ICbVap5m5nM
+	hHLBtSFENdKY5ch2SjjEnozoKqy/8phLaxV83q+4q3uPE4UCtNqJI=
 Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 408521E7BF8;
-	Thu,  8 Feb 2024 12:53:26 -0500 (EST)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 0F28C1E7CD6;
+	Thu,  8 Feb 2024 13:06:40 -0500 (EST)
 	(envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.125.165.85])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id A49DD1E7BF7;
-	Thu,  8 Feb 2024 12:53:25 -0500 (EST)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 739B91E7CD4;
+	Thu,  8 Feb 2024 13:06:39 -0500 (EST)
 	(envelope-from junio@pobox.com)
 From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: Karthik Nayak <karthik.188@gmail.com>,  Phillip Wood
- <phillip.wood123@gmail.com>,  phillip.wood@dunelm.org.uk,
-  git@vger.kernel.org
-Subject: Re: [PATCH v3 4/4] for-each-ref: avoid filtering on empty pattern
-In-Reply-To: <ZcUOP_rWUwymhe5c@ncase> (Patrick Steinhardt's message of "Thu, 8
-	Feb 2024 18:24:15 +0100")
-References: <xmqqr0hph1ku.fsf@gitster.g>
-	<CAOLa=ZSZJ=_VCppHXcJeE=Z61go4_040xyc1NBTu-o=xysLrdg@mail.gmail.com>
-	<xmqqcyt9fdc7.fsf@gitster.g>
-	<CAOLa=ZRcWYmEYnxh_=ykOerahZ61xaanLCj_JHHLvtrvN=Xs-w@mail.gmail.com>
-	<xmqq1q9oe029.fsf@gitster.g>
-	<CAOLa=ZQzz7_L_9cBmK+pgFwd_DFqfWDVRiaZMAxU+54kBq6Pcw@mail.gmail.com>
-	<xmqq1q9ocje3.fsf@gitster.g>
-	<CAOLa=ZQaXxwrXmbmFvGR59EDo3Eqa-Xfc3OG9+6ES-veDU8Bhg@mail.gmail.com>
-	<ZcSVx4slikt4xB3D@tanuki> <xmqq7cjeq43t.fsf@gitster.g>
-	<ZcUOP_rWUwymhe5c@ncase>
-Date: Thu, 08 Feb 2024 09:53:24 -0800
-Message-ID: <xmqq34u2onaj.fsf@gitster.g>
+To: "Phillip Wood via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Orgad Shaneh <orgads@gmail.com>,  Phillip Wood
+ <phillip.wood@dunelm.org.uk>
+Subject: Re: [PATCH] prune: mark rebase autostash and orig-head as reachable
+In-Reply-To: <pull.1656.git.1707411636382.gitgitgadget@gmail.com> (Phillip
+	Wood via GitGitGadget's message of "Thu, 08 Feb 2024 17:00:36 +0000")
+References: <pull.1656.git.1707411636382.gitgitgadget@gmail.com>
+Date: Thu, 08 Feb 2024 10:06:38 -0800
+Message-ID: <xmqqmssan841.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -65,55 +55,34 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 X-Pobox-Relay-ID:
- F5478E64-C6AA-11EE-A2DC-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
+ CE6B81FE-C6AC-11EE-8963-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
 
-Patrick Steinhardt <ps@pks.im> writes:
+"Phillip Wood via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> That's a different problem from the one I have right now. Let's take the
-> following sequence of commands:
->
->     $ git init repo
->     Initialized empty Git repository in /tmp/repo/.git/
->     $ git -C repo commit --allow-empty --message message
->     [main (root-commit) aa5eec4] message
->     $ git -C repo update-ref ref/head/foo HEAD
->     $ ls repo/.git/ref/head/foo
->     repo/.git/ref/head/foo
->
-> Now the fact that you can create "ref/head/foo" is a bug that needs to
-> be fixed, no arguing there. The problem is that rectifying this problem
-> with the "files" backend is easy -- you look into the repo, notice that
-> there's a weird directory, and then "rm -rf" it.
+> Rebase records the oid of HEAD before rebasing and the commit created by
+> "--autostash" in files in the rebase state directory. This means that
+> the autostash commit is never reachable from any ref or reflog and when
+> rebasing a detached HEAD the original HEAD can become unreachable if the
+> user expires HEAD's the reflog while the rebase is running. Fix this by
+> reading the relevant files when marking reachable commits.
 
-OK.
+I do not like this kind of special casing in general, but because
+these are our tools' droppings, I am OK to grandfather them in, as
+long as we promise ourselves that we will not add more of these
+ad-hoc "text files" that record object names, loss of which affects
+correctness.  They should, like "git bisect", be using proper
+references to protect these objects instead, of course.
 
-> But how do you learn about this ref existing with the "reftable" backend
-> in the first place? You can't without looking at the binary format --
-> there doesn't exist a single command that would allow you to list all
-> refs unfiltered. But that is very much required in order to learn about
-> misbehaviour and fix it.
+I agree with you that we might want to add pseudorefs as a starting
+points of reachability traversal, but I suspect it would add
+unnecessary complexity we would rather not want to deal with.
 
-I think I have been saying that it is perfectly OK if reftable
-backend, being newer and backed by more experience using Git,
-rejected any attempt to create anything under "ref/" (to avoid
-confusion to those who are reading from sidelines, it should allow
-creating "refs/mytool/" for third-party tools to store their own
-pointers).
+For example, not GC'ing what is pointed at by lines in FETCH_HEAD is
+OK.  Excluding those objects that are only reachable from an object
+mentioned by a pseudoref, when a new "git fetch" is negotiating with
+a remote what objects need to be sent here, might be disastrous, as
+the pseudoref that said "this object is here and you can safely
+consider everything reachable from it is" will be short-lived and
+can go away anytime, and an auto-gc kicking in at a wrong time ...
 
-> As I said -- this is a bug, and I agree that it shouldn't happen. But
-> bugs happen, and especially with the new reftable format I expect them
-> to happen. What I look for in this context is to create the tools to fix
-> problems like this, but `--include-root-refs` doesn't. A flag that
-> unconditionally returns all refs, regardless of whether they have a bad
-> name or not, does address the issue. Think of it of more of a debugging
-> tool.
-
-OK, "--include-all-refs" would be fine.  And without bugs there
-should not be a difference.
-
-Where does "all refs in this worktree" you mentioned fit in this
-picture?  Should a bogus "ref/foo/bar" be considered to be worktree
-specific, or is it an incorrect attempt to create a ref that is
-specific to 'foo' worktree that is not the current one and be
-filtered out?
-
+Thanks.
