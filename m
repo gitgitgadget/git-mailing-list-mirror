@@ -1,152 +1,103 @@
-Received: from wfhigh2-smtp.messagingengine.com (wfhigh2-smtp.messagingengine.com [64.147.123.153])
+Received: from out1-smtp.messagingengine.com (out1-smtp.messagingengine.com [66.111.4.25])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34A2D4C84
-	for <git@vger.kernel.org>; Thu,  8 Feb 2024 06:11:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.153
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11AED3F9DB
+	for <git@vger.kernel.org>; Thu,  8 Feb 2024 06:37:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=66.111.4.25
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707372703; cv=none; b=nBb9r65Rgt1Nb7HdozkMlI5Ackzi6nqPZPqkIrOUUTS22u73ziPothh/Uwld0D7X/gtalI7w6c/M4YVCE9hLO2To5miy/niV0kvwWurI3tQka32UMgk4v9co0I1nFW1XdotHu8l0LAGuPKO0bq/YncjUQt855tVOegdSQLUUfb4=
+	t=1707374263; cv=none; b=nosNL5kAHwx0BZAoECFunnXYDac8adEf0TvoNMfR+d8TjfRoX7lFZ28itLcJt5OHDBblnDRMbI9CG1ekrZdnUJRYD5eaw4y11e5HYFNiKMG4736yFsy3Y9vCfH/YaFTBs8HGwELK+XBqHkOxa9Nt3SI6HzklEHNTfXoKvY+ndTo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707372703; c=relaxed/simple;
-	bh=FKXyvpcXFAprPLcpiqX93NqClFtD7fEYzdyMCkPHodo=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Ybv8lw0IPAqQ+rn0NRv0MvtvwaJGRmDhK9bCKNnBNFxYdoBZh6ZuTCqFCkKoZIhM6sZy0eTaZ3ih8hiOZ4oiu14ETItGD/xaUK9fNs8HB6rc7fKB36wevdJ/OWsF9d6xJSqd54kA5QhgC4gjlfq3Y8LGP355zhOTi7XshSOQAkw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=kKDQ15RJ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=aWtohGuM; arc=none smtp.client-ip=64.147.123.153
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1707374263; c=relaxed/simple;
+	bh=NqAmUGnnnQ8EZBxjkp0T9couxyz6gfzh51F24TckRU0=;
+	h=MIME-Version:Message-Id:In-Reply-To:References:Date:From:To:Cc:
+	 Subject:Content-Type; b=De1KDPOH3tTR/3x1BOYuxqO3eVmhxKZ98zRpfpLWkMGZNcC+r7E5VQ+ijucxRUFzo6iQHP6wY6KKoWSt3lhxVZlW37yBqEvysniJMACnpqkbt5fiTgkkIu736tfsrjzRGFzZHl113+jXesDyhKI5+e09XwGwkwo4B2wzxcX38Z4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=khaugsbakk.name; spf=pass smtp.mailfrom=khaugsbakk.name; dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b=JzDnTpyv; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=wAeRZFpx; arc=none smtp.client-ip=66.111.4.25
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=khaugsbakk.name
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=khaugsbakk.name
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="kKDQ15RJ";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="aWtohGuM"
-Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
-	by mailfhigh.west.internal (Postfix) with ESMTP id 7C55A180007D;
-	Thu,  8 Feb 2024 01:11:39 -0500 (EST)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute6.internal (MEProxy); Thu, 08 Feb 2024 01:11:40 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1707372699; x=1707459099; bh=qAdHSWCBm2
-	sivOgY4i5trXfAXML5ga0Z3NQGHbxWPpw=; b=kKDQ15RJzAsoerwoe6u4aMQdIB
-	g8++r8n/ALhS97VffQLmQR96enbydZvRQxtHR/PZPhmBx+AZ65Y3kX712hvVI6im
-	JY8FruO/85B9ZZO/MSXs55rnrViVcGWNvCrYtRhpKRF55Ve5pbXjtLdM5ON8ed6a
-	Hdz9APtgvdoymDtEIy+bmP8WwAnBk6pnozk3U4hbGiAQUq7Y4iwJqiHhj3Njxq1W
-	di/v7Gia3TkLRyZx+ag4pccZSmI5alBHg4jWoOdKsXt3u98ebMN0Tx5ahLvtFuXy
-	HPkWw/JITvXQATUzNHno2a/2XOznP5XuEsanek/EI421NyOlpZJyUR6MsQGQ==
+	dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b="JzDnTpyv";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="wAeRZFpx"
+Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
+	by mailout.nyi.internal (Postfix) with ESMTP id DB4DD5C0152;
+	Thu,  8 Feb 2024 01:37:39 -0500 (EST)
+Received: from imap49 ([10.202.2.99])
+  by compute1.internal (MEProxy); Thu, 08 Feb 2024 01:37:39 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=khaugsbakk.name;
+	 h=cc:cc:content-type:content-type:date:date:from:from
+	:in-reply-to:in-reply-to:message-id:mime-version:references
+	:reply-to:subject:subject:to:to; s=fm2; t=1707374259; x=
+	1707460659; bh=E3UGQBA92iHzRkYjzCm6vExtfC5DBN1jggqaKI6KS38=; b=J
+	zDnTpyv2lf9J8dNDpyJxFYXt0ZEkmbVh2x0L6c8Liy1cQrV3GbN9UNoz5jngUIEd
+	cJxosIHywZuct0tn4e7pz+2Phd4C07F91/gkfxHwueubS/teLjWG7h/lXiNylQRd
+	f4Zk8EkWo0P2P9weNPP7bhzaCFlwpJ1kIhfl/rgj+SEYGqBNHMWUmoiVS+xpnO5F
+	PtLZFEdS/gp6soiqUa27h4qFJEBZ5i0H8kacPnFfhq445+H7XIIVE0LYXtcfrHTe
+	dm0XC9RzMhFOShsO2KdiwdLd4o890gAjCobDbNVEJXFYiYVtCJTTAyJ5ISzyYDcG
+	DwLFjSnCBDyR8EYy4SqbA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1707372699; x=1707459099; bh=qAdHSWCBm2sivOgY4i5trXfAXML5
-	ga0Z3NQGHbxWPpw=; b=aWtohGuMEnH6BrHaupSAsvA92CbYBc1qduNfLDqIeLjW
-	+MeSL8I3LJa+UYUvZDbiBLwGVCfXS1m37Xz+UWsa1uRmMdY0Wf1B/yCP84flaA0/
-	edGPf06shpHa59+R1Fc+ewQOK4aWKzBhMPrQIrp9T+FQ5a8rtIA3x9teG+rZjNny
-	dPU88HmOR7JiKhw5Ayfz20PJWvCsiLgP2y2oQAhz4Csm4VxENwVi3FVVMuZ3qhWl
-	13T9jt7cv+qD2IL83+1YxuXZrxWSvjofG2BVGgofp5PH/2T0bBxtshJ/7NE6Ed0v
-	ulTDDImlBTZF/BUJznk6/BQtHZNGU6mry8aelvXfpw==
-X-ME-Sender: <xms:mnDEZQzJfmO18CqRcY6Ysa1stencRLj5Ni2qRIFXqbcd1iCbsNIDlQ>
-    <xme:mnDEZUR-okw1DFKPW9HkgEkxIN1O68-xJB3DcbWJ8z2ANu1AcnNKTBsO-_W3xtAT_
-    C8r3aFjcA2do7q4QQ>
-X-ME-Received: <xmr:mnDEZSUzsfTcy3zpdyoR9tcDH_6HmZj5kzSLdHH6XcP-UQW44YDnIyMWzIYggIYoz0dxS7tYe_tcLsQdz8YlDTOpZ5_llc6PwEophxMZKXN0l44t>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrtdefgdelfecutefuodetggdotefrodftvf
+	fm3; t=1707374259; x=1707460659; bh=E3UGQBA92iHzRkYjzCm6vExtfC5D
+	BN1jggqaKI6KS38=; b=wAeRZFpxDvD4RJbdZCCuQAXsjErdFqm//WpbEqp7ANeT
+	yCNhh3kIWUfHoJWZr0lEz+L1ERLru0T+X6us8sl9zkRw+qMrOwFLtpit3xixxSzX
+	vhmYNZC97syimpcksTfp4SR44iqRnIfpPxWSkwPKN7ZQ0Hp5SlGHqJeLNq6KlHuH
+	FKudkZ0vY6pYaRmM/c2eSoV4tFOtllrbvykNgjPpIRM9d7kYSDPoFbVEI6wFGwPQ
+	3ZwtXZkSz2afEPdsPY6QgKCm5EXxF95ZEr2hSSz8fmd76WjGl3oECpRcrl/Hab/l
+	zwzir/sDkeN57oOdNnJJVBzzZZ3Fmn2bd8VTyXGJqg==
+X-ME-Sender: <xms:s3bEZaJzBoMeUaR3nsF7CODrwGSHfMkOdxxRfzPgt4FQmniLSmeiyLc>
+    <xme:s3bEZSLk8PKYhEP93XvDLLQSP-WboQWzVRaThyFhETuhRTsN6LnRBnprWcpcn440_
+    TpLLkQ434XmXkyAPg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrtdefgdelkecutefuodetggdotefrodftvf
     curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
-    uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
-    fjughrpeffhffvvefukfhfgggtuggjsehgtderredttddvnecuhfhrohhmpefrrghtrhhi
-    tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
-    hnpeeukedtvedtffevleejtefgheehieegkeeluddvfeefgeehgfeltddtheejleffteen
-    ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
-    hkshdrihhm
-X-ME-Proxy: <xmx:mnDEZehwZeR-fS8jEGsLpvzjPSM2T_n4CMTMhcWpDl8kiFz5aKYPyQ>
-    <xmx:mnDEZSBHxeRDppVoZbKCxxQ6bzqZTfJ-dbxt7Ziu6dZJGPcH-jsdfA>
-    <xmx:mnDEZfKkTHi1UcthX7eOpA7xVjSaBJee5930Cwtm5dAuPwcXworyMw>
-    <xmx:m3DEZYAheGMnr_y8kgjG0BdKxEerJHRgzZZaHBVXfP7wzpB2QYcRRZJkkOQ>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 8 Feb 2024 01:11:37 -0500 (EST)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 97450342 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 8 Feb 2024 06:08:01 +0000 (UTC)
-Date: Thu, 8 Feb 2024 07:11:33 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: Linus Arver <linusa@google.com>
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	"Eric W. Biederman" <ebiederm@gmail.com>,
-	"brian m. carlson" <sandals@crustytoothpaste.net>,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	"Eric W. Biederman" <ebiederm@xmission.com>
-Subject: Re: [PATCH v2 00/30] initial support for multiple hash functions
-Message-ID: <ZcRwlUdKbM6bEVmr@tanuki>
-References: <87jzsbjt0a.fsf@gmail.froward.int.ebiederm.org>
- <878r8l929e.fsf@gmail.froward.int.ebiederm.org>
- <xmqqv86z5359.fsf@gitster.g>
- <owlymssbn6qa.fsf@fine.c.googlers.com>
+    uegrihhlohhuthemuceftddtnecunecujfgurhepofgfggfkjghffffhvfevufgtsehttd
+    ertderredtnecuhfhrohhmpedfmfhrihhsthhofhhfvghrucfjrghughhssggrkhhkfdcu
+    oegtohguvgeskhhhrghughhssggrkhhkrdhnrghmvgeqnecuggftrfgrthhtvghrnheptd
+    ektdejieffleetffehieehueffgfehleeufedtjeekueffgfeihfegkeffffeunecuvehl
+    uhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomheptghouggvsehkhh
+    gruhhgshgsrghkkhdrnhgrmhgv
+X-ME-Proxy: <xmx:s3bEZasGQKCPIFh8dvJG0gA5isUrDmG6oJN9TcQPTxNq2aZPEmcGuQ>
+    <xmx:s3bEZfbkx3VzUoACvOBA-CMpiC7bvtOwgKp5jTmnP3bC9E_XoD-eig>
+    <xmx:s3bEZRZF3WDCSBleX5AHcNwPTlSTCEhK8CoNE8iggUGPBKR7sRaPPQ>
+    <xmx:s3bEZQxZ3lIQeOqMAE-hyA4D-cudLyQBpJDPbi21_m7Njq9ax7HfPw>
+Feedback-ID: i2671468f:Fastmail
+Received: by mailuser.nyi.internal (Postfix, from userid 501)
+	id 9EF3A15A0092; Thu,  8 Feb 2024 01:37:39 -0500 (EST)
+X-Mailer: MessagingEngine.com Webmail Interface
+User-Agent: Cyrus-JMAP/3.11.0-alpha0-144-ge5821d614e-fm-20240125.002-ge5821d61
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="b+BjDHYwMBVoF04B"
-Content-Disposition: inline
-In-Reply-To: <owlymssbn6qa.fsf@fine.c.googlers.com>
+Message-Id: <a8e67945-153b-43bb-b1b0-ea24fa786097@app.fastmail.com>
+In-Reply-To: <20240207214436.538586-2-gitster@pobox.com>
+References: <24a42fa6-7bc4-4a3b-8bf4-a0ef85dc457a@matthieu-moy.fr>
+ <20240207214436.538586-1-gitster@pobox.com>
+ <20240207214436.538586-2-gitster@pobox.com>
+Date: Thu, 08 Feb 2024 07:36:55 +0100
+From: "Kristoffer Haugsbakk" <code@khaugsbakk.name>
+To: "Junio C Hamano" <gitster@pobox.com>
+Cc: "Matthieu Moy" <git@matthieu-moy.fr>, git@vger.kernel.org
+Subject: Re: [PATCH 1/2] bisect: document "terms" subcommand more fully
+Content-Type: text/plain
 
+On Wed, Feb 7, 2024, at 22:44, Junio C Hamano wrote:
+> The documentation for "git bisect terms", although it did not hide
+> any information, was a bit incomplete and forced readers to fill in
+> the blanks to get the complete picture.
+>
+> Acked-by: Matthieu Moy <git@matthieu-moy.fr>
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> ---
 
---b+BjDHYwMBVoF04B
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Past tense? How about:
 
-On Wed, Feb 07, 2024 at 04:24:13PM -0800, Linus Arver wrote:
-> Junio C Hamano <gitster@pobox.com> writes:
->=20
-> > "Eric W. Biederman" <ebiederm@gmail.com> writes:
-> >
-> >> This addresses all of the known test failures from v1 of this set of
-> >> changes.  In particular I have reworked commit_tree_extended which
-> >> was flagged by smatch, -Werror=3Darray-bounds, and the leak detector.
-> >>
-> >> One functional bug was fixed in repo_for_each_abbrev where it was
-> >> mistakenly displaying too many ambiguous oids.
-> >>
-> >> I am posting this so that people review and testing of this patchset
-> >> won't be distracted by the known and fixed issues.
-> >
-> > We haven't seen any reviews on this second round, and have had it
-> > outside 'next' for too long.  I am tempted to say that we merge it
-> > to 'next' and see if anybody screams at this point.
->=20
-> FWIW out of all the "Needs review" topics this one seemed like the most
-> deserving of another pair of eyes, and I was planning to review some of
-> the patches here this week + the weekend. If my review takes too long
-> (taking longer than this weekend) I can give another update next week
-> saying "too hard for me, please don't wait for me" to unblock you from
-> merging to next.
+    The documentation for "git bisect terms"---although it does not hide
+    any information---is a bit incomplete and forces readers to fill in
+    the blanks to get the complete picture.
 
-I completely lost track of this patch series. So same for me: I don't
-want to hold it up, but would be happy to give it a pair of eyes next
-week.
+-- 
+Kristoffer Haugsbakk
 
-Patrick
-
---b+BjDHYwMBVoF04B
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmXEcJQACgkQVbJhu7ck
-PpQithAAhSC0O9/FlfDhLZlsiSHUyRF1EuVIGKe+3WgJlbmmvhtKMFuuYScnsGPE
-TxlGM4DzDqBps5yYdj8jqa1HaiZErw7JYBPNjcR1iputX2dRR8S3Ye5QJuYIjaPL
-wrwfHzJLqGf1rp6VAHgPt2eJQSL/mS4HGF6SHP1sEfWiYR3wXRzlROPJwghmTgcY
-fC+Ibvk7Dj3evE8W8ld8JDNlCla/9saLVQiC0PJq6f37fdhmnpwojjT79pN34IRR
-T9Ge8PWlxEhV2InODSTNTgJNFzn22p4/R/X4Ki2TKllNTMBdgNKt3/TVR+0TUgfq
-tQ+rec2D50RXYUs41xYTzxVYVolKZd9LmI2DWGY87H89VPjCMxtHox2z3vEFoZSj
-1ahcgSOtFGbbN4MazULJ8Sjky2Yw2HhdoKO7Tc+cUj1f94sGNAQ7xp+qOUYAtGCm
-hXzm8lTMQjJXmGO/4/lQOEaIS3AcXuSNbJf6hsZcMGnbzn6TB2LU10ERjYZ4o0SW
-ceqOTsKkRppCJ4YBZKRpWeGwLcg+KqiA71bPRQqUQKorEG5tDQODR4RMSsbHMhAw
-JzN0FKFngDak68Ds6grTflzcOEUNzRh7eVYgx9rj2anGurBCqkr9YWsNcDvBhyQT
-wdMbrH3cM0q9m0aaMSpQvT7SK9LaqHyE1kjLo4z/Ue9foHh3x4M=
-=sgZM
------END PGP SIGNATURE-----
-
---b+BjDHYwMBVoF04B--
