@@ -1,118 +1,99 @@
-Received: from secure.elehost.com (secure.elehost.com [185.209.179.11])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f43.google.com (mail-ed1-f43.google.com [209.85.208.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D12E2E652
-	for <git@vger.kernel.org>; Fri,  9 Feb 2024 13:31:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.209.179.11
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12E19383B6
+	for <git@vger.kernel.org>; Fri,  9 Feb 2024 13:35:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707485518; cv=none; b=HdTsYdVxk7qiC/IHmxBq0T7mJxAOecsy/ByCwvUhnx/rO45IskqfnL+K+F8yFD74Fi6jN6NoNRMJurk836oeV7UM0vpJE4cTnmAZ1X/gGTQqqfzg/p/KTMEbrPORk46uj0OxyGFs4EJtJcsipG6oxTVN8h45uVKKZ1ZA+7IsagY=
+	t=1707485758; cv=none; b=TEs+8DVL76/678ilQ36tJq3WXLxCsdNi+suEYmbWWXvPWnr13ajWxSdXvnoetO9ZC9Lf8wUWT1dM1mS7ChuEZtUcCyKtu4WUCaAGc3tkFWXkOkUGQZ4Ptn/sSgojPWe8wluc8MqSooWfeW49Y24ZpBW5fgwwoWbylq1R8QsKuoM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707485518; c=relaxed/simple;
-	bh=BTHy6SOS3FNlS3GOAZdSgO/jsLrbxazX/S1iJrLmpAA=;
-	h=From:To:References:In-Reply-To:Subject:Date:Message-ID:
-	 MIME-Version:Content-Type; b=eT8XoE05w11/lrgQ7UJEVe2v6XjEgjhLhJY31MfIJk/m8t+SfCSRFP7LzGkS0AAq3fVvbfFwq4NRTt0wIhutfq8yB2R45pbVVlO2HhDEOROamzbR26qhl7idkSe7ywUAUgxXPZ67MjI0ulK79mna8fkhy1BvWidJIFbt0QSNSTc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com; spf=pass smtp.mailfrom=nexbridge.com; arc=none smtp.client-ip=185.209.179.11
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nexbridge.com
-X-Virus-Scanned: Debian amavisd-new at secure.elehost.com
-Received: from Mazikeen (cpebc4dfb928313-cmbc4dfb928310.cpe.net.cable.rogers.com [99.228.251.108] (may be forged))
-	(authenticated bits=0)
-	by secure.elehost.com (8.15.2/8.15.2/Debian-22ubuntu3) with ESMTPSA id 419DVkZG3060158
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 9 Feb 2024 13:31:47 GMT
-Reply-To: <rsbecker@nexbridge.com>
-From: <rsbecker@nexbridge.com>
-To: "'Kyle Lippincott'" <spectral@google.com>, <git@vger.kernel.org>
-References: <CAO_smVji5aGjx1V-EGbumRRpOuGY0SkXZUn9g4LxKmMO3aw=Sg@mail.gmail.com>
-In-Reply-To: <CAO_smVji5aGjx1V-EGbumRRpOuGY0SkXZUn9g4LxKmMO3aw=Sg@mail.gmail.com>
-Subject: RE: libification: how to avoid symbol collisions?
-Date: Fri, 9 Feb 2024 08:31:41 -0500
-Organization: Nexbridge Inc.
-Message-ID: <000301da5b5c$5477d7f0$fd6787d0$@nexbridge.com>
+	s=arc-20240116; t=1707485758; c=relaxed/simple;
+	bh=sWOZ7lDY52/fxizsiGRJfusv7uO0hJCWJacq+WiuT1A=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Content-Type; b=BPmCcBzu8JM9gufxkOSni5OFkVD6uO/k60CuHO3sTWieqhK5rwoOuBLvbfOscExqGzh8KqEYOCDmtw57pU5RNu0vwSKHy3LyRd1sGlEjOk397ACE+E2RiD95uPTEoRVtkoxJrUmVkKYGQ0YPToMT0GQfVEEMFCbZmUAOuPohqr0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=F+HWcK2m; arc=none smtp.client-ip=209.85.208.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="F+HWcK2m"
+Received: by mail-ed1-f43.google.com with SMTP id 4fb4d7f45d1cf-56002e7118dso1338985a12.0
+        for <git@vger.kernel.org>; Fri, 09 Feb 2024 05:35:56 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1707485755; x=1708090555; darn=vger.kernel.org;
+        h=content-transfer-encoding:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=RJl0CgCUWXlzBXOQOcXjJBO200xUfYadvMq2llf+JQg=;
+        b=F+HWcK2mQnI7xAx+ABrwZaXhSSljOEpMlqb4hxET6RmO8OMF5ooiDVoOYqW3nWqO6R
+         1ztqkCJHTzGBNToHxOqXNDDesQ6cwkY43zCPeORhpm3y3ZxenZqV0RTM6YfGWMr4UMJq
+         Tfyez7hGJTVYMzsZhLOW5JDEn12diSf17A3bYcddRqBxzCnyQeTD/52BZnu0ggi6qAw1
+         dsBGcGcCYleXnjOn26Vqbm6BrQbZ90z/IOlfkt8TQ5TtphX9osMqFPuPX+0NEwjaofB1
+         c0fZ7LhIKlfN+JmHYSkb/oZTXN6wJZ3altjnhgCic2wrU6Vy9VJVqsJgovxnnRRiy1zM
+         8uJg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1707485755; x=1708090555;
+        h=content-transfer-encoding:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=RJl0CgCUWXlzBXOQOcXjJBO200xUfYadvMq2llf+JQg=;
+        b=iXwcUHFyfczrQnacs0an9PkLoPERjQzfCO0UQoUK7T/LxJIYgovdyY1u5R4M86TZZi
+         hMJJYwBtcmC8om4nUNBIBU/VFtbKQ15SSxx0KHF9DXKC/kHLfSexUw0ZcaueZt96chgB
+         zQZgSRgdO73h+0I3phDMFM3XiMuNqeA9KhZvNAdX4ZE8NOnm9TZaXLrxdpiQKHDKHD0Q
+         xjE+MtF1dYVesv6U2/UI5GDEFEuhyBNwV5YdbunnUY8VFwFnfHEJq8X4Qxj1ECHU3oBx
+         0vsfBqH1meGSPxsJLq2oatpxagRU2otffRjgn4/wgrraJrr+VOmU6YSt2zcJ89dNKbVt
+         G/4A==
+X-Gm-Message-State: AOJu0YyeR6mbwFoheKUtuMogkeNVPfm2fGAYfun3nJI4HatRAngxUSGY
+	ZqvVVjl081gSd+/BDJJD6qewr+I0WoTWukx8Ju1Rut6iYgGtZ70NzK0cZZPCZ8Z16hy1CQNlT90
+	hIUpe/NTiB7jjfF/5y/+cOLJqjJM=
+X-Google-Smtp-Source: AGHT+IFBMXiFKOQ0KltzLNfjUDUS0Mz6jtC8zmxpAFpEgxecLQs1V7+FpFuviRRriEqj04XTzYNNBWgiWrsCv3d0naU=
+X-Received: by 2002:a05:6402:2044:b0:560:da94:2306 with SMTP id
+ bc4-20020a056402204400b00560da942306mr1166728edb.29.1707485754887; Fri, 09
+ Feb 2024 05:35:54 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain;
-	charset="utf-8"
+References: <CAGHpTB+mCxvzJ4LDpQrMgHmzigUzcAnRcwMewV0oYKM2HwbNXw@mail.gmail.com>
+ <ZcWCDEnmv97orQyY@tapette.crustytoothpaste.net>
+In-Reply-To: <ZcWCDEnmv97orQyY@tapette.crustytoothpaste.net>
+From: Orgad Shaneh <orgads@gmail.com>
+Date: Fri, 9 Feb 2024 15:35:42 +0200
+Message-ID: <CAGHpTB+_yo24d5wtTnxCHF+i+wLCiq3XjjpmaX1Z=AOxFjx+mQ@mail.gmail.com>
+Subject: Re: Supporting --no-edit for git rebase --continue
+To: "brian m. carlson" <sandals@crustytoothpaste.net>, Orgad Shaneh <orgads@gmail.com>, 
+	git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AQKUbq48vojvy9SXqm0UJ5SmxsLjhK+N2ldg
-Content-Language: en-ca
 
-On Thursday, February 8, 2024 9:30 PM, Kyle Lippincott wrote:
->While thinking about libification, I was wondering what we can/need to =
-do about
->symbols (specifically functions, since our libraries will likely have =
-few to no extern
->variables) that need to escape their translation unit (.c file) but =
-that we don't want
->to risk colliding with symbols from our "host" project.
+On Fri, Feb 9, 2024 at 3:38=E2=80=AFAM brian m. carlson
+<sandals@crustytoothpaste.net> wrote:
 >
->For any header that we're offering up as an API boundary we can have =
-prefixed
->names, but there are symbols from git-compat-util.h with simple and =
-likely
->common names like `die`, `usage`, error`, etc. I'm far from an expert =
-on linkers, but
->I'm under the impression that even though we'll only be #including =
-git-compat-
->util.h in our own .c files (so the compiler for the host project =
-wouldn't see them),
->the produced static library will still be "providing" these symbols =
-unless we mark
->them as `static` (and if we mark them as `static`, they can't be used =
-outside of their
->translation unit). This means that if the host project has a version of =
-`die` (or links
->against yet another library that does), we run into what C++ calls a =
-One Definition
->Rule (ODR)
->violation: we have two providers of the symbol `die` with different
->implementations, and the behavior is undefined (no error needs to be =
-generated as
->far as I know).
+> On 2024-02-07 at 20:46:16, Orgad Shaneh wrote:
+> > Hi,
+> >
+> > Is it possible to add --no-edit for git rebase --continue, similar to
+> > the functionality of this flag for git cherry-pick --continue and
+> > similar commands?
 >
->With dynamic libraries I believe that we have more control over what =
-gets exposed,
->but I don't know of functionality for this when linking statically. I'm =
-assuming there
->is no such functionality, as projects like openssl (ty Randall for =
-mentioning this)
->appear to have a convention of prefixing the symbols they put in their =
-"public" API
->(i.e. in non-internal header files) with things like OSSL_, and of =
-prefixing the symbols
->they put in their "private" APIs that can't be marked as `static` with =
-`ossl_`. I'd love
->to be wrong about this. :)
->
->If I'm right that this is an issue, does this imply that we'd need to =
-rename every non-
->static function in the git codebase that's part of a library to have a =
-`git_` prefix, even
->if it won't be used outside of the git project's own .c files? Is there =
-a solution that
->doesn't involve making it so that we have to type `git_` a billion =
-times a day that's
->also maintainable? We could try to guess at how likely a name collision =
-would be
->and only do this for ones where it's obviously going to collide, but if =
-we get it wrong,
->I'm concerned that we'll run into subtle ODR violations that *at best* =
-erode
->confidence in our library, and can actually cause outages, data =
-corruption, and
->security/privacy issues.
+> I haven't checked whether this is actually possible, but I imagine it is
+> with some work.  I think it would be a valuable feature to add, but I
+> don't think anyone's planning on working on it.  Would you be willing to
+> send a patch?  Even if many people think it's a good idea, we're all
+> busy, and thus it'll only be implemented if someone is willing to pick
+> it up.
 
-I think we only need to do this for functions that are in the =
-libification code-base for non-static symbols (and any data elements =
-that may end up in a DLL some day). The bulk of the non-libified code =
-base would only need to adapt to new symbol names if those symbols are =
-specifically moved. die(), error(), are probably going to be impacted, =
-but they can be aliased with #defines internally to git to git_die() or =
-git_error(), for example.
---Randall
+Thank you. I'll try to prepare a patch.
 
+> In the meantime, you could try setting `GIT_EDITOR=3D:` in your
+> environment (for example, using an alias) like so:
+>
+> [alias]
+>   rncontinue =3D "!f() { GIT_EDITOR=3D: git rebase --continue; };f"
+>
+> and that can serve as a workaround.
+
+Nice, thanks!
+
+- Orgad
