@@ -1,121 +1,122 @@
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f54.google.com (mail-ed1-f54.google.com [209.85.208.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1325C4E1A2
-	for <git@vger.kernel.org>; Fri,  9 Feb 2024 19:57:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5778E54F86
+	for <git@vger.kernel.org>; Fri,  9 Feb 2024 19:57:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707508622; cv=none; b=k5bp4U6FaL/1qsy1yFesb98uxhZpNUopiX2TTFSKsDzMgJKz7W4ocP38Om44Q5bGDSP7Uc0uJyQmM1ODUutYFVd5q3Imyov7ZHJdPB7e70VlFsnwTFhzOwugfyxi+5v/BgDdtu3JsSlUU9snN+tePqGPJZpzhRZjnTBM67dCTn4=
+	t=1707508633; cv=none; b=pp6KpXQcDq3sbwFkRi2ANHzXCzCgWh/OY19M8ZaD/6HAeC43ZHcO6o13rH9LXhH2T0XeAZuIQXSb9IkCiwVs/wsL4Wmv3u2tb0WlKmIy0FD1ognkhuCiT71OXEolsFNqmM9sHxWLT8b8fkuq96rOeGaKC1vN0cVVBVt6rFiyd1c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707508622; c=relaxed/simple;
-	bh=d409UbZSg5emj+lL9DveNPDN+1IJrfWej0K4gFYMyxY=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=sSzbEUdWVOxH7gArwZflbXHlGYLGigF71W7IIXrR0RO4zsl2RMxyGaVa+dvDFJnOewnxBe3TUehlzgdTvzupvIX/pNaoC0KoQ391qLPK92T5wjI3q7/BJFIP6EAPbu+VOHqiyEKrIy9cfMC55YWUNQpMKro6av/hbXVmm5vgNSo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=SMX/nZTC; arc=none smtp.client-ip=64.147.108.71
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1707508633; c=relaxed/simple;
+	bh=1dlJNd3TfBABcRgItH0o+73LFjfMYUomxr0/w/FCoLE=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=h02hxlJLdveCjjFETc7u9SrXgqzy1aWN7nSfecTEvKPnm5cRsq3hT6sP7JbcqwP1R7th3PJzqJVqIU2hvVFlGqGp1iJo+Q64uzqyO7GKfTarhCf3EmRrp56EtDu1A2y4yozaygtsZhVlmipNZr2qv4f4AAxSNl1y0wfc3KVmmnQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=Ovnq3Xc6; arc=none smtp.client-ip=209.85.208.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="SMX/nZTC"
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 4F1D51C3E75;
-	Fri,  9 Feb 2024 14:56:59 -0500 (EST)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=d409UbZSg5em
-	j+lL9DveNPDN+1IJrfWej0K4gFYMyxY=; b=SMX/nZTCIItQX5+Xc8D11l/s7V2l
-	Mi40TgE3oBv4Bjxh1f0sartgEVnrhvr6RmAwtoirn5Sh8rp0/VWhX4/blDJkcZRB
-	kuPjm3N5oEJJ4NILjDGcodQnd7tER92M3VXiNMBAumi/8x+NRjQTWSZdnSZCqSXw
-	Qx/HB4n+GxuQS8I=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 43D5A1C3E74;
-	Fri,  9 Feb 2024 14:56:59 -0500 (EST)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.165.85])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 9C1D51C3E72;
-	Fri,  9 Feb 2024 14:56:58 -0500 (EST)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Kristoffer Haugsbakk" <code@khaugsbakk.name>
-Cc: "Marcus Tillmanns" <Marcus.Tillmanns@qt.io>,  "git@vger.kernel.org"
- <git@vger.kernel.org>,  "Phillip Wood" <phillip.wood@dunelm.org.uk>
-Subject: Re: Bug: Commit fails when no global email address is set even
- though --author is used
-In-Reply-To: <d59a0e25-81c4-4ecd-826e-ef4b23423575@app.fastmail.com>
-	(Kristoffer Haugsbakk's message of "Fri, 09 Feb 2024 18:38:37 +0100")
-References: <F7D40DCD-2331-44D8-B4BF-8E6CD9EE64A6@qt.io>
-	<51599394-3f75-4b75-a4c0-f13f117e73bc@gmail.com>
-	<60512662-9BE1-4DF7-A4E0-FD2E852E8E76@qt.io>
-	<3c3db003-1506-47c4-a010-a8b783dff959@app.fastmail.com>
-	<26317088-7020-43EF-8B60-41D719A6D145@qt.io>
-	<5c25da43-c886-41d2-b057-b95a84b107ba@app.fastmail.com>
-	<xmqqfry1h7ej.fsf@gitster.g>
-	<d59a0e25-81c4-4ecd-826e-ef4b23423575@app.fastmail.com>
-Date: Fri, 09 Feb 2024 11:56:57 -0800
-Message-ID: <xmqqfry1fm2e.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="Ovnq3Xc6"
+Received: by mail-ed1-f54.google.com with SMTP id 4fb4d7f45d1cf-5611e54a92dso1739028a12.2
+        for <git@vger.kernel.org>; Fri, 09 Feb 2024 11:57:11 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1707508629; x=1708113429; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=0vvSyYPijVEB9Ujgvqwh0PVZCm0zetE6z2l9vkRpsn0=;
+        b=Ovnq3Xc6jYZEUKNHd1q9q7qSvAsYhngHCN06PYwKJ86lcmk3yOWiQ1Pw2G9zsAtXOw
+         lsQ4lQwzlSyGwQxorTmTOHQaGzMzqUrMgx9ffCGRZwnmIjbgwtthLzziIAciiEEWgdTe
+         THRTeOnaTpY+yV0llDx3XCTdfukiZmd5R5sHqus1KEmR2809GNK8oOsqWf/3kdguppbC
+         vctnpFeO/MSfR641tol0JofmA8bWNt6rsZ7TY4xlLaTn9KsskJQ22Hu/OfwPw5KZe0HZ
+         zCz9CiHFYLPsr4YZpiUImztBLPoC9Zjbtvv8fsO7t9BS09Vdp8iGQ0wjRbyQnem+fWD1
+         00OQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1707508629; x=1708113429;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=0vvSyYPijVEB9Ujgvqwh0PVZCm0zetE6z2l9vkRpsn0=;
+        b=Mgcb7WTLQr2Ka1hdblORF+35fRYM9DfT1ZJtMTNwg545+uevQbudmMzt+AgKplmlIr
+         trRqEPb9o6diMfTkcnkFJ/Elgi7oGkfwhHXGiveNweDDDQS89kr6gnE+1CFN/IgLLZYr
+         pE3QzGI8DpI30YDB92JbI0dqwLYJipoE3dtu1WiqnEgtVFRACIbjZnjsLj3Lrp4iQEPd
+         jVbDH8Q78ol8wrqJokGZSE/i9WPk5gjt8uAQ1rOMzG5w6Gh2z//U7bJgWZjBGus9AL6J
+         wcIXOZZOqoWqycqv7gF49nOWp/PLamFVUSZ3waXHmplGlC3NJm8BI2HFRmO5VoMq6QGk
+         qiKQ==
+X-Gm-Message-State: AOJu0YwkaHl0G+jUsIx44xBhB0QTTBI5IBXTARElml33RFyIH2kkOkBe
+	/ACjo8veNYvQ290oJvyHGa8O8S0Tud7UvI3+8wQJyiDpw/4/2kUtbPV0HeTXurixdewFAv/AVgL
+	DAeZ8jehInx+7MWdXw1mg/MH3gdvpTmf8wCc3
+X-Google-Smtp-Source: AGHT+IGOBHiJ/N/rhnRwslHQoYRUcM4EsR4Z95ukiFvQ3KnPTWjostvDJ+xW4jhxRqko67juiI+FKIfnw2zJzlMcgGA=
+X-Received: by 2002:a17:906:4095:b0:a38:6d3:ac5c with SMTP id
+ u21-20020a170906409500b00a3806d3ac5cmr67261ejj.48.1707508629330; Fri, 09 Feb
+ 2024 11:57:09 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID:
- 622A784A-C785-11EE-85B5-25B3960A682E-77302942!pb-smtp2.pobox.com
+References: <pull.1650.git.1707143753726.gitgitgadget@gmail.com>
+ <CAO_smVhrMn=-uF1B6+RA8A+VLCEN=o57zbQPtr8hpxRKY=qJRQ@mail.gmail.com> <5fd95ae0-cd50-ddc4-5095-ee953c2640b3@gmx.de>
+In-Reply-To: <5fd95ae0-cd50-ddc4-5095-ee953c2640b3@gmx.de>
+From: Kyle Lippincott <spectral@google.com>
+Date: Fri, 9 Feb 2024 11:56:52 -0800
+Message-ID: <CAO_smViXpcwo6_zd3iqpM175nEnH_mjca7XqJ=V4bBobY_02wQ@mail.gmail.com>
+Subject: Re: [PATCH] Always check the return value of `repo_read_object_file()`
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc: Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-"Kristoffer Haugsbakk" <code@khaugsbakk.name> writes:
-
-> On Fri, Feb 9, 2024, at 18:30, Junio C Hamano wrote:
->> So, now, let's be productive.  When somebody who does not know much
->> about Git tries to commit without configuring anything and hits the
->> error, what is a more appropriate message to guide who does not know
->> what he or she does not know?
->>
->> The user claims that "committer identity unknown, please tell me who
->> you are" were not helpful enough.  Would it make it more helpful if
->> we append how to "tell who they are" after that message, perhaps
->> with "git config" on user.email and user.name variables, or
->> something?
->>
->> Or do we need three-way switch that does
->>
->> 	if (neither is known) {
->>         	printf("neither author or committer is known");
->> 	} else if (author is known but committer is not known) {
->> 		printf("author is known but committer is not"):
->> 	} else if (author is not known but committer is known) {
->> 		printf("committer is known but author is not"):
->> 	} else {
->> 		return happy;
->> 	}
->>
->> 	printf("please tell us who you are...");
->>
->> perhaps?
+On Fri, Feb 9, 2024 at 12:06=E2=80=AFAM Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
 >
-> I think a three-way switch looks good. With the amendment that it steer=
-s
-> you towards `user.*` instead of setting both `author.*` and
-> `committer.*`.
+> Hi Kyle,
 >
-> Something like
+> On Mon, 5 Feb 2024, Kyle Lippincott wrote:
 >
-> =E2=80=A2 Author is set, not committer
->   =E2=80=A2 Message: author is set but not committer: you might want to=
- set
->     *user* instead (prints suggested config)
+> > On Mon, Feb 5, 2024 at 6:36=E2=80=AFAM Johannes Schindelin via GitGitGa=
+dget
+> > <gitgitgadget@gmail.com> wrote:
+> > >
+> > > diff --git a/builtin/notes.c b/builtin/notes.c
+> > > index e65cae0bcf7..caf20fd5bdd 100644
+> > > --- a/builtin/notes.c
+> > > +++ b/builtin/notes.c
+> > > @@ -716,9 +716,11 @@ static int append_edit(int argc, const char **ar=
+gv, const char *prefix)
+> > >                 struct strbuf buf =3D STRBUF_INIT;
+> > >                 char *prev_buf =3D repo_read_object_file(the_reposito=
+ry, note, &type, &size);
+> > >
+> > > -               if (prev_buf && size)
+> > > +               if (!prev_buf)
+> > > +                       die(_("unable to read %s"), oid_to_hex(note))=
+;
+> >
+> > This changes the behavior of this function. Previously, it would not
+> > add prev_buf output, but still succeed. This now dies.
 >
-> I can try to make a patch later.
+> It does change behavior. The previous behavior looked up the note OID,
+> then tried to read it, and if it was missing just pretended that there ha=
+d
+> not been a note.
+>
+> I'm not quite sure whether we should keep that behavior, as it is unclear
+> in which scenarios it would be desirable to paper over missing objects.
+>
+> In GitGitGadget, I am a heavy user of notes and it wouldn't do any good t=
+o
+> have this behavior: It would lose information.
+>
+> And even in scenarios where the `notes` ref is fetch shallowly, I would
+> expect all of the actual notes blobs to be present, and I would _want_ th=
+e
+> `git note edit ...` command to error out when that blob is not found.
+>
+> Does that reasoning make sense to you?
 
-Wait. I didn't realize this when I wrote the message you are
-responding to, but we *do* already suggest settig user.* variables.
+Sounds good, thanks for talking through it with me.
 
-If the user chose to ignore that, then there isn't much we can do to
-help, is there?
-
-Puzzled, but I'll stop here.
-
+>
+> Ciao,
+> Johannes
