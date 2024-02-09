@@ -1,170 +1,111 @@
-Received: from wout5-smtp.messagingengine.com (wout5-smtp.messagingengine.com [64.147.123.21])
+Received: from fallback2.i.mail.ru (fallback2.i.mail.ru [79.137.243.68])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2786E804
-	for <git@vger.kernel.org>; Fri,  9 Feb 2024 08:18:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.21
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 184E533CF4
+	for <git@vger.kernel.org>; Fri,  9 Feb 2024 08:21:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=79.137.243.68
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707466687; cv=none; b=NDADkfJk+b9jJN0gkiyB6UkSPYFJljtEFN7TDiJ36QZ8pNXWQCoJLmA2MJKiGv6kPKPF3vyQLwLPJYt6GrPBzLA381iTJDl5tLDez8RrngqFbLU9SajQwFs3ApU357AGWipOz4ODyT4nyCE6UoZzsSppSvAqRmCU/HRLUSI/F50=
+	t=1707466917; cv=none; b=UQOiwYe1J/qxJ0SxFT4QoFqhP7liShgFMtHhaIriXdcpYnvbc925GCLxG/YlEgzZ6v+z0T3uukn/Nfb5jw2CJMCKXA4lJpXV4hUw36J1lHjmXRWJ1+rnnGH5ScC0FNrOZil/9jDq0RK/Bt/34dnidrcUdoiuGqLqFYcio40v8b4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707466687; c=relaxed/simple;
-	bh=97DETr6Y6wY0zLXNf2P9KYLBSuIRr3Oh6Y2ZyrVWj2o=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=nlglRE4UjtrJPgc0OO+SuIWEob3GNE7toFY3qEXLpbGKCTsboUfZ9ErtpeeZJhbrjfIysq0xw/+NiJXTqs/w6tbioorV1Ui4KD4n43A5E1Ik2tYrfCsnaPlHk5Nskb5iVIfFRMxW2h6iL+h0ID91mOTdMZFK92ea70EZIYgLu6k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=U3yDb4lV; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=pH062qQW; arc=none smtp.client-ip=64.147.123.21
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1707466917; c=relaxed/simple;
+	bh=/WjeK+zPm7vtRTy144dOPUk+K1fHdwZxz80jfESMtaM=;
+	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=dAh5XWyEOwwCQ1rVoyZ9XvmW8M6DqOYnyrKww3XrgrhnCoYqwJVNMxENUgRKKI73Y2i+LLWefldGBiWSU+0YZs2SRKfrBQNrMsrsZYHmnGJ8GPD6HXKKgV/gEunJViY3kr1bo/gQiH4KtDNLBsJO64n4vLOvHGl3XSDONux8JmQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bswap.ru; spf=pass smtp.mailfrom=bswap.ru; dkim=pass (1024-bit key) header.d=bswap.ru header.i=@bswap.ru header.b=iMLkAxMa; dkim=pass (1024-bit key) header.d=bswap.ru header.i=@bswap.ru header.b=mmcUZfbp; arc=none smtp.client-ip=79.137.243.68
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bswap.ru
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bswap.ru
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="U3yDb4lV";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="pH062qQW"
-Received: from compute7.internal (compute7.nyi.internal [10.202.2.48])
-	by mailout.west.internal (Postfix) with ESMTP id 0B65132000D9;
-	Fri,  9 Feb 2024 03:18:03 -0500 (EST)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute7.internal (MEProxy); Fri, 09 Feb 2024 03:18:04 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1707466683; x=1707553083; bh=Th7itDMgsf
-	yWG7q1gdjK6kVSIqBExvDagGO68ECsXmA=; b=U3yDb4lVngQp6EXapN7D5UjlTJ
-	0Tm1h4Kt6Ga9lNpWpKceRwffyzZGUhJYvpHbCtsPYypnYkOhZXa62WB3jOfBk2iM
-	UFnsc8HFGSYYpdM4QEs2pLC1A1xTk8xRBXAu+raa0fPl7v5r6X+7113mD8k+HjR7
-	OvqSEdGQDwKm144JSVdeW3PbtWUQawsp7unoEYza639SRBP128XpvpPf2UNrMnHC
-	lH0BJw3qIj079ZxeNo06iiqw2MwIHp12EB8hH42vetgv9SdFnnsYaQSncM7rnw55
-	Y18GkVG95mUWHRlHcwzvxUe/0vgcmGG68JKMsvPAKK95QWPjXoZTmeFtIwpQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1707466683; x=1707553083; bh=Th7itDMgsfyWG7q1gdjK6kVSIqBE
-	xvDagGO68ECsXmA=; b=pH062qQWQ6p4PAjI2F3R4upngt9dMfURg7zshjuDSlg7
-	Bau4phxNw3fWeIWQ5DMrPvB2JYl2L7txKZV87IIvScO+Qjs1+Xbt1nVfODOuyEBZ
-	amd74VfKb1RpKMI7W2XB6pk4KGfzRkVxkbci66r5CtmJ3K9NCb7VQ5Y/ZaX7KS9v
-	laOwS0EbgiUvobLxKYpgu4ZSWbp5XjqRPbVdguBd7Sx3nSO9tvkCYJhUUtys6CmD
-	FnNs65smyWa9iYdbY94eQc2bNOpI5jltx5gaSxRAYxhzVNQvQo0AJxw/M5UgVvPK
-	7tRp9Dq9MhWlrbefaiutQLp8rEd5AsJuAERZHHOizA==
-X-ME-Sender: <xms:u9_FZWy23XtOTNW0p_DMSGNZ3hzzaKf5gz8BzdcyZWZcsqlVvoEoMw>
-    <xme:u9_FZSTQ0QrQmGLdyzp75xbTiw6IwWEAKwNWTyyPpkLwPR9hMejWQQtxlwzOi1byv
-    L9_-k0rcqP63WAQpg>
-X-ME-Received: <xmr:u9_FZYVP5ix6EO0ITmOtMfHqp_l1PlhQK9jMVs-bq6hBG6ksiOWDDtg0z-S-sxK8cCg3aX6jSRHOUu2YuLcF47XzjvwAtRBeF-2HEqNQn22izp8>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrtdehgdduudehucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    cujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtvdenucfhrhhomheprfgrthhr
-    ihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvg
-    hrnhepleejteffveehgeegteekteeiudeiieeigeeigedtffehgeekhfejheefkefhveel
-    necuffhomhgrihhnpehgihhthhhusgdrtghomhenucevlhhushhtvghrufhiiigvpedtne
-    curfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhm
-X-ME-Proxy: <xmx:u9_FZcjFAPN353r51xLOlf1fTtj57z9VPXl6Kgt_eiReVsRcoQIPmQ>
-    <xmx:u9_FZYCqqSkTASlnjB_zI9FbOJQvGG4rw1MgzavuyrJ26yZVo9wCkQ>
-    <xmx:u9_FZdI0U9uL9sAxNuHquz8nnEWNbkc1UGhbeGQ6EKqmcIwvSUTMnw>
-    <xmx:u9_FZbOHD6GYBxlOa2HFc4ML9l7RDxWuYODusIQ4TRmIoaH3iJFyyw>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 9 Feb 2024 03:18:02 -0500 (EST)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id c62c8a93 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 9 Feb 2024 08:14:25 +0000 (UTC)
-Date: Fri, 9 Feb 2024 09:17:59 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc: Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-	git@vger.kernel.org
-Subject: Re: [PATCH] Always check the return value of
- `repo_read_object_file()`
-Message-ID: <ZcXft0_UbsABjlVQ@tanuki>
-References: <pull.1650.git.1707143753726.gitgitgadget@gmail.com>
- <ZcHW_bc6N5umk2G4@tanuki>
- <3f14077f-c70c-5eef-5b25-984fdf7b3b68@gmx.de>
+	dkim=pass (1024-bit key) header.d=bswap.ru header.i=@bswap.ru header.b="iMLkAxMa";
+	dkim=pass (1024-bit key) header.d=bswap.ru header.i=@bswap.ru header.b="mmcUZfbp"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=bswap.ru; s=mailru;
+	h=In-Reply-To:Content-Transfer-Encoding:Content-Type:MIME-Version:References:Message-ID:Subject:To:From:Date:From:Subject:Content-Type:Content-Transfer-Encoding:To:Cc; bh=iODF+yqkarXgRkGQ4A8W0Y1UgtAQBcvrv9sVX/I0wL4=;
+	t=1707466912;x=1707556912; 
+	b=iMLkAxMaw03gpx78w+tN7uVtJIcPcWloPF7RwbuuG+NncB8kZ0MTmcYJGSk2FvvRHclmBGYRIA1FZL4mrfDZWhtHE+xWg0GDhODlDTfCvisBJ2fgV/aVb5jPI9oRBF8RqOJMdsinwc+IV69hMD2vyIuBeXr5TNxwDlO2YSwbnu8=;
+Received: from [10.12.4.16] (port=40340 helo=smtp47.i.mail.ru)
+	by fallback2.i.mail.ru with esmtp (envelope-from <kostix@bswap.ru>)
+	id 1rYM8m-00D1Yd-3S
+	for git@vger.kernel.org; Fri, 09 Feb 2024 11:21:44 +0300
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=bswap.ru;
+	s=mailru; h=In-Reply-To:Content-Transfer-Encoding:Content-Type:MIME-Version:
+	References:Message-ID:Subject:To:From:Date:From:Sender:Reply-To:To:Cc:
+	Content-Type:Content-Transfer-Encoding:Content-ID:Content-Description:
+	Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:
+	List-Id:List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:
+	List-Archive:X-Cloud-Ids:Disposition-Notification-To;
+	bh=iODF+yqkarXgRkGQ4A8W0Y1UgtAQBcvrv9sVX/I0wL4=; t=1707466904; x=1707556904; 
+	b=mmcUZfbpqJt5Km/zrVBfXE2udUN5iuKdaSBUuZX+hC2JjDE5+QH0xhsgNNNEb0BBmHdhJFVu069
+	sU3dmo9RGt8lhR7TnLO/seuO+f0cEB90we74akakW9KAawNp8QHxeCltnv30pcKo+djn2bimmQHas
+	y4IoDkYQWOKFO4ylyv0=;
+Received: by smtp47.i.mail.ru with esmtpa (envelope-from <kostix@bswap.ru>)
+	id 1rYM8c-0000000DWiN-3NxK
+	for git@vger.kernel.org; Fri, 09 Feb 2024 11:21:35 +0300
+Date: Fri, 9 Feb 2024 11:21:33 +0300
+From: Konstantin Khomoutov <kostix@bswap.ru>
+To: "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: Bug: Commit fails when no global email address is set even
+ though --author is used
+Message-ID: <20240209082133.jzldo5diog2fd4en@carbon>
+Mail-Followup-To: "git@vger.kernel.org" <git@vger.kernel.org>
+References: <F7D40DCD-2331-44D8-B4BF-8E6CD9EE64A6@qt.io>
+ <51599394-3f75-4b75-a4c0-f13f117e73bc@gmail.com>
+ <60512662-9BE1-4DF7-A4E0-FD2E852E8E76@qt.io>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="Xn10RWzUTB2wS0+V"
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <3f14077f-c70c-5eef-5b25-984fdf7b3b68@gmx.de>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <60512662-9BE1-4DF7-A4E0-FD2E852E8E76@qt.io>
+X-Mailru-Src: smtp
+X-7564579A: 646B95376F6C166E
+X-77F55803: 4F1203BC0FB41BD91FEFD63CE1B09916316E0C418293B113AB9044BC056ED5D000894C459B0CD1B900F72F70D5ACA1D73D241DDC9C51DED2093538AC161553387B800F9EC084592B092611B121F4B2B0
+X-7FA49CB5: FF5795518A3D127A4AD6D5ED66289B5278DA827A17800CE789066434B85BF7C7EA1F7E6F0F101C67BD4B6F7A4D31EC0BCC500DACC3FED6E28638F802B75D45FF8AA50765F79006378D7045943A292EC88638F802B75D45FF36EB9D2243A4F8B5A6FCA7DBDB1FC311F39EFFDF887939037866D6147AF826D87CC038F71190D7954AFF1B3376FF70732A3A9D8866708474CC7F00164DA146DAFE8445B8C89999728AA50765F7900637DCE3DBD6F8E38AFD389733CBF5DBD5E9C8A9BA7A39EFB766F5D81C698A659EA7CC7F00164DA146DA9985D098DBDEAEC8D2DCF9CF1F528DBCF6B57BC7E6449061A352F6E88A58FB86F5D81C698A659EA73AA81AA40904B5D9A18204E546F3947CAD74539164518AE503F1AB874ED890284AD6D5ED66289B523666184CF4C3C14F6136E347CC761E07725E5C173C3A84C3EAD86A1CE980672ABA3038C0950A5D36B5C8C57E37DE458B330BD67F2E7D9AF16D1867E19FE14079C09775C1D3CA48CFE478A468B35FE7671DD303D21008E298D5E8D9A59859A8B6D082881546D9349175ECD9A6C639B01B78DA827A17800CE79E6B27D82EEA174F731C566533BA786AA5CC5B56E945C8DA
+X-C1DE0DAB: 0D63561A33F958A5C2F2A2E891CFF8965002B1117B3ED69617EDD12A97A5990EAD0703CEB2EF9A27823CB91A9FED034534781492E4B8EEAD9DB614F8F96CFA30BDAD6C7F3747799A
+X-C8649E89: 1C3962B70DF3F0ADBF74143AD284FC7177DD89D51EBB7742DC8270968E61249B1004E42C50DC4CA955A7F0CF078B5EC49A30900B95165D3452F7993FB7281BFDA51B42EA77EBA3FB877E7223FB93DC8B017DAF7A3A109AC89D37DFC9861904551D7E09C32AA3244CF6C2FB0923816E54459F46583F07963CB1091C103EB5EA76EA455F16B58544A2C99F59F2F009F0963871D1C702CBDB0A9665A0FD7AD89E8F722DFA761B3F797A
+X-D57D3AED: 3ZO7eAau8CL7WIMRKs4sN3D3tLDjz0dLbV79QFUyzQ2Ujvy7cMT6pYYqY16iZVKkSc3dCLJ7zSJH7+u4VD18S7Vl4ZUrpaVfd2+vE6kuoey4m4VkSEu530nj6fImhcD4MUrOEAnl0W826KZ9Q+tr5ycPtXkTV4k65bRjmOUUP8cvGozZ33TWg5HZplvhhXbhDGzqmQDTd6OAevLeAnq3Ra9uf7zvY2zzsIhlcp/Y7m53TZgf2aB4JOg4gkr2biojt6itc0777ZqInc0rKhiOrw==
+X-Mailru-Sender: 641179478317D3F0421D0BEF39CFD138DB13C9925C254BFC7FC47A557B39A39B08B49274FCAFD4F17B225377A301302A2F0A6AF357119A4D04176AAE5055CC72595A8557D9C981F4633CE835492D9647D182D770C8C7E642B4A721A3011E896F
+X-Mras: Ok
+X-7564579A: 646B95376F6C166E
+X-77F55803: 6242723A09DB00B46EA299E95BC82A782CFFFEF9892CBE782509CFD7B116BC46049FFFDB7839CE9E2038077D049FFA75AA60C6DB85FC50C9AF2E955390004958D8A7CB9907972E9F
+X-7FA49CB5: 0D63561A33F958A5AED55EA3AEBDD8BE0F65F8F1C78F160DECEF05176D44EEE68941B15DA834481FA18204E546F3947CB4B51A2BAB7FBE05117882F4460429724CE54428C33FAD30A8DF7F3B2552694AC26CFBAC0749D213D2E47CDBA5A9658378DA827A17800CE791DAD9F922AA71188941B15DA834481F9449624AB7ADAF3735872C767BF85DA227C277FBC8AE2E8BAEFF4136F5E2B48575ECD9A6C639B01B4E70A05D1297E1BBCB5012B2E24CD356
+X-D57D3AED: 3ZO7eAau8CL7WIMRKs4sN3D3tLDjz0dLbV79QFUyzQ2Ujvy7cMT6pYYqY16iZVKkSc3dCLJ7zSJH7+u4VD18S7Vl4ZUrpaVfd2+vE6kuoey4m4VkSEu530nj6fImhcD4MUrOEAnl0W826KZ9Q+tr5ycPtXkTV4k65bRjmOUUP8cvGozZ33TWg5HZplvhhXbhDGzqmQDTd6OAevLeAnq3Ra9uf7zvY2zzsIhlcp/Y7m53TZgf2aB4JOg4gkr2biojt6itc0777ZrPMTpVDkpEWA==
+X-Mailru-MI: 8000000000000800
+X-Mras: Ok
 
+On Fri, Feb 09, 2024 at 07:43:01AM +0000, Marcus Tillmanns wrote:
 
---Xn10RWzUTB2wS0+V
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> Uff, that’s a mean trap. Especially since there is no “--committer” option
+> as far as I can see. Also the difference between the two error messages is
+> just one (the first) word.
+> 
+> Maybe that could be made more obvious, especially if the user specifies
+> “--author” already.
 
-On Fri, Feb 09, 2024 at 09:15:15AM +0100, Johannes Schindelin wrote:
-> Hi Patrick,
->=20
-> On Tue, 6 Feb 2024, Patrick Steinhardt wrote:
->=20
-> > On Mon, Feb 05, 2024 at 02:35:53PM +0000, Johannes Schindelin via GitGi=
-tGadget wrote:
-> > > From: Johannes Schindelin <johannes.schindelin@gmx.de>
-> > [snip]
-> > > diff --git a/rerere.c b/rerere.c
-> > > index ca7e77ba68c..13c94ded037 100644
-> > > --- a/rerere.c
-> > > +++ b/rerere.c
-> > > @@ -973,6 +973,9 @@ static int handle_cache(struct index_state *istat=
-e,
-> > >  			mmfile[i].ptr =3D repo_read_object_file(the_repository,
-> > >  							      &ce->oid, &type,
-> > >  							      &size);
-> > > +			if (!mmfile[i].ptr)
-> > > +				die(_("unable to read %s"),
-> > > +				    oid_to_hex(&ce->oid));
-> > >  			mmfile[i].size =3D size;
-> > >  		}
-> > >  	}
-> >
-> > A few lines below this we check whether `mmfile[i].ptr` is `NULL` and
-> > replace it with the empty string if so. So this patch here is basically
-> > a change in behaviour where we now die instead of falling back to the
-> > empty value.
-> >
-> > I'm not familiar enough with the code to say whether the old behaviour
-> > is intended or not -- it certainly feels somewhat weird to me. But it
-> > did leave me wondering and could maybe use some explanation.
->=20
-> Hmm. That's a good point. The `mmfile[i].ptr =3D=3D NULL` situation is in=
-deed
-> handled specifically.
->=20
-> However, after reading the code I come to the conclusion that the `i`
-> refers to the stage of an index entry, i.e. that loop
-> (https://github.com/git/git/blob/v2.43.0/rerere.c#L981-L983) handles the
-> case where conflicts are due to deletions (where one side of the merge
-> deleted the file) or double-adds (where both sides of the merge added the
-> file, with different contents).
->=20
-> Therefore I would suggest that ignoring missing blobs (as is the pre-patch
-> behavior) would mishandle the available data and paper over a corruption
-> of the database (the blob is reachable via the Git index, but is missing).
+There's a way to specify the author and e-mail on the command-line during a
+single invocation:
 
-Yeah, that explanation sounds reasonable to me, thanks!
+  git -c user.name=marcus -c user.email=user@example.com commit ...
 
-Patrick
+This "-c" command-line option is explained in the "root" Git manual page
+(run `git help git` for instance).
 
---Xn10RWzUTB2wS0+V
-Content-Type: application/pgp-signature; name="signature.asc"
+The reasoning behind having different author and committer is that Git has
+been created to handle the development of Linux where most of the code flowed
+(and still does, I presume) in in the form of patches sent to a set of mailing
+lists, so the person creating a Git commit out of such a patch in most cases
+not the person who has authored the change introduced by the patch (the
+author).
 
------BEGIN PGP SIGNATURE-----
+Also note that you do not have to set the name and e-mail globally: Git has
+three levels of configuration, one of which is "local" meaning it's stored in
+the repository's metadata. So you can basically run
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmXF37YACgkQVbJhu7ck
-PpQzwxAAhYsKt5Ex6oTAJvU0WUHdMGR6nFzpB1IcDkpOOfV3Dxu82f2pWgrzfQWj
-V6nleTnilIB+k/nEo3kvtQreG3EmrREBz9qBZ7M0sG+UUy1/5fBAtBvCXREpXLGJ
-6z4DwAUeJr8nDpwNWjoDRSil7S2rbFNzOgZQ+lYgvkAX13Oro6VY6OQc7vGmkcgS
-Pw5rX7R4/lpufedNz7EboCdgMOsYux2mv4QldtBuh1YcffaUM1402ytY7DffJLgc
-QuHQ7TeFCO4eL1VKac+0URjZNUUAevvs/zr0HoUYO7kYa7sTbh/GeW8HNdDDK1pO
-YZRJ0FvowX44GJnvrAT2heskoh+PrbY7Mw8R9gysQIetha6YAgfGhlB6pQXES876
-8TzRWsZeZbduuGCPKEnSOPDL0iMO7hHY+kzzkkA8vBfh+JAZ3e5ctn/j5IR3l/+v
-5+ra54OfPjBMtzCg/B3CXGw4JMXzsiYwLeuU1Wx5m9soHybynSDyhcqf4RlmxqnR
-suCl39ziMOfEFRAlQPu55EjP6JYXQHvwVsoq1COZ+0KENX3eFlmIyNUheWhaaudv
-sIVapxmGJlkg3zo8LNJeavzLI9SntOu3JGa+g7oGGTCbeJlmH8l8A8t8xdQXMuKE
-9bfwXpkr5asH8hHFhg3SquWRPPJGQO7mWux8YV/MoU9nUmcJR6o=
-=lsNy
------END PGP SIGNATURE-----
+  git config --local --add user.name marcus
 
---Xn10RWzUTB2wS0+V--
+to have this setting apply only to the repository which you "are in"
+currently. This value will override any "global" (per-user) settings and any
+"system" settings.
+
