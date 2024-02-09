@@ -1,76 +1,122 @@
-Received: from out-173.mta0.migadu.com (out-173.mta0.migadu.com [91.218.175.173])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFA334CB50
-	for <git@vger.kernel.org>; Fri,  9 Feb 2024 13:51:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D90CF2E834
+	for <git@vger.kernel.org>; Fri,  9 Feb 2024 14:15:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707486724; cv=none; b=qpXELrRIlDAcI5MfRAecX8c8/KtCguK8z6P5BDYgTQWK8aKaFJKojcvSueZYOmc7zhac/b9g30/iRlyw36R/EpCtE1VDKzMRBKmU3bGsmtg5ejNSSre+jX2ZdhhMQ5esql2lz41Qmc7A3VsaYTXsRM6xbEb40EImJWYcpBdoXCA=
+	t=1707488130; cv=none; b=mGPUE1JToW13pNqqRXN+gqvtmU/tHwGFp/kqWwJ3LM2dvTTgm2mq4QxxQLuqfvCVMXVyTwmJgUPpN1U2uOWzqU/c+fJQSUzxz6tpF0yklg7nvzDfkVmKOowhNdV84J1XwvYzMDpn6zvwZS6q2lTLvjBsfOoHWxRbn2fxSv8q6kI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707486724; c=relaxed/simple;
-	bh=NooesN/N8tToTtICakbAtZB46rWMzc4HXVqECDQ1YMk=;
-	h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type; b=GBPTr0ID1XC48YtKtGfswoyQz8tXwgsbZt/gMud8ABSGI6Gio3++dJ9IOsfiUN//08TnfjkmvpH88LhIniiKc393Fwv3J9OUygxMuo9J+K0uUHm7r4c2Fbsuf3V8yRWtSneN439Pb3SW8tUeXPmgQRz9JiL62ObdDDg0abJkUPg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com; spf=fail smtp.mailfrom=iotcl.com; dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b=YGVZcAeJ; arc=none smtp.client-ip=91.218.175.173
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=iotcl.com
+	s=arc-20240116; t=1707488130; c=relaxed/simple;
+	bh=2rlWVegTPygmsRa13XOlOO2mZiJboGoIe7nJ3sahol4=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=Szot6t8RMUUJ1JrsgC+IYkfFNg3qCDM6o0MNHTa7DkcmTtJvQOitABpWz/3waC2AEnk0yEkKzxOtl3w/hXJpl6pF4DUdgpXOZx/aF8suoxRQXxrhJpPKNvvxJD9eWhW9UBsbgmGakBZRL+bbspzbw/vp6dagjtXhysl5ElsEf0A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=amozH+uT; arc=none smtp.client-ip=209.85.128.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b="YGVZcAeJ"
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iotcl.com; s=key1;
-	t=1707486717;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:mime-version:mime-version:content-type:content-type;
-	bh=xAslB4lnOkjlgSW3j6U+cMxp45ZMY/PxZJOEeL/Dfn0=;
-	b=YGVZcAeJ+yNttkeFTbZYbzvIMUw9NZr1nCQ+3jrUZziqe8/rK0j8v4bBWNG1GfhVsbh3vP
-	aX33wlfg7igWOP83ZreobFeeK8aSli/MT3aK+W2zwZBOZI5hskMj9SEagklLLR9J3zS1C0
-	XGqMKuURKxvrQtjBqSbDEIdMDvo4FJc=
-From: Toon Claes <toon@iotcl.com>
-To: git@vger.kernel.org
-Subject: Race condition in git-bundle(1) create when ref is updated while
- running
-Date: Fri, 09 Feb 2024 14:40:30 +0100
-Message-ID: <87eddlpx5k.fsf@iotcl.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="amozH+uT"
+Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-40fe03cd1caso9100885e9.0
+        for <git@vger.kernel.org>; Fri, 09 Feb 2024 06:15:28 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1707488127; x=1708092927; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=n/6fX/zyLaCSQs5Uhs/sZafpa8qiVVnpOqYUztEAxZ8=;
+        b=amozH+uTij3M5JhYYgkcrp6V9PcBBWtVc8D33P4q7R5isqL9ntw1fGLWfrQJx2Yyyk
+         1vAzU+pn9UKjfRjb6Dd+1DIHgZazBszRRWfYNW7/g2Y8vlTgsimYgkQJvKZkictp/2+L
+         goZtb4Zp6oxfYAgvCXSzR1mZvxZzbAkcWW7xUPomeyFvfQdsVad9XQ8EJ5KHAfRXMzJ2
+         37ccSyufA4xJgEPGuudhS0hjbniVnppKtYbAjvJ0Y8P0rRxXbNgW37keIevfsewpk2WV
+         NLYKzZNayUYc++0B5IuxjoX4xLfzcTGmIvmAaB/McJLPjJQzm2KiWdbC9pv+NfsyPjJ8
+         CfRQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1707488127; x=1708092927;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:reply-to:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=n/6fX/zyLaCSQs5Uhs/sZafpa8qiVVnpOqYUztEAxZ8=;
+        b=cFuyT+QNwzBr/ltV70bbKpErdBqFqnYAodwrN5WvTyQzVRmWwCOBg2Y0klGKc1HqGZ
+         PjSeSKCpTpb/GrooBNegdPBzg9X14AdOtIozFsCKdKzb1IozYrBSf2uzgSN/5WYVCeQ5
+         hPLCtBXESJ8a9H8G0LCoCDva8Xx3XPj219o/EFEcc+/k4/AhT2+rDSaJvW4gazGtGi+V
+         9OLUonKTlHpeQt/rtuYxE1REEWpWuxDfq40Wn3EeZCq8Zc/4OL7VGtFganHbnet/diOy
+         Ya2w48vZzyEtJ/mD3tkygcDiCSrCz608B3dh0SvoKUAT4L3aLg+LwfG54zM99dKZTZJM
+         tdGA==
+X-Gm-Message-State: AOJu0Yy76HET9CCD7bfH3F0Vw8EnxrLrWf3HDJNKl8CZOmN7j8AQVeLi
+	zJ+5c3boblwVm7bLT7ezT9MK5GjSCvLh95ImDSFCTSzgVZcnFFcy
+X-Google-Smtp-Source: AGHT+IFnlNMyQMPkdCHAUHuygD6mbtfNFTO+mPBYcZGzq39djTPvAQuk+L+jMk1bea3tDwDQg/Shlg==
+X-Received: by 2002:a05:600c:3596:b0:410:6506:68c2 with SMTP id p22-20020a05600c359600b00410650668c2mr1146056wmq.14.1707488126863;
+        Fri, 09 Feb 2024 06:15:26 -0800 (PST)
+X-Forwarded-Encrypted: i=1; AJvYcCUImfRHa0olXnI0F59sdSv6KO1GyQ/aBJkFJcZQv21oSUx6DJ3sldf6d5o9hxfV82jLN6cGVe5eIOKKBwE3zuEhpKkAKTz8oH6eeZYKX9xdvLPcFd6rFbHXBjde+9fLP5uI8stIhcTagOuUnrmGiFCIfLWWZw==
+Received: from ?IPV6:2a0a:ef40:62e:a901:d2c6:37ff:fef6:7b1? ([2a0a:ef40:62e:a901:d2c6:37ff:fef6:7b1])
+        by smtp.googlemail.com with ESMTPSA id m3-20020adfa3c3000000b0033b512b2031sm1914623wrb.114.2024.02.09.06.15.26
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 09 Feb 2024 06:15:26 -0800 (PST)
+Message-ID: <6d2e3c87-4ab8-419a-8350-b95cf03b00c7@gmail.com>
+Date: Fri, 9 Feb 2024 14:15:25 +0000
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Migadu-Flow: FLOW_OUT
+User-Agent: Mozilla Thunderbird
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH] prune: mark rebase autostash and orig-head as reachable
+Content-Language: en-US
+To: Junio C Hamano <gitster@pobox.com>,
+ Phillip Wood via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, Orgad Shaneh <orgads@gmail.com>,
+ Phillip Wood <phillip.wood@dunelm.org.uk>
+References: <pull.1656.git.1707411636382.gitgitgadget@gmail.com>
+ <xmqqmssan841.fsf@gitster.g>
+From: Phillip Wood <phillip.wood123@gmail.com>
+In-Reply-To: <xmqqmssan841.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Hi y'all,
+Hi Junio
 
-I discovered a bug in git-bundle(1) create. There is a race condition
-happening when a ref gets updated while the bundle creation process is
-running.
+On 08/02/2024 18:06, Junio C Hamano wrote:
+> "Phillip Wood via GitGitGadget" <gitgitgadget@gmail.com> writes:
+> 
+>> Rebase records the oid of HEAD before rebasing and the commit created by
+>> "--autostash" in files in the rebase state directory. This means that
+>> the autostash commit is never reachable from any ref or reflog and when
+>> rebasing a detached HEAD the original HEAD can become unreachable if the
+>> user expires HEAD's the reflog while the rebase is running. Fix this by
+>> reading the relevant files when marking reachable commits.
+> 
+> I do not like this kind of special casing in general, but because
+> these are our tools' droppings, I am OK to grandfather them in, as
+> long as we promise ourselves that we will not add more of these
+> ad-hoc "text files" that record object names, loss of which affects
+> correctness.  They should, like "git bisect", be using proper
+> references to protect these objects instead, of course.
 
-To reproduce, I've been running git-bundle(1) with
-`create my.bndl --all --ignore-missing` in a debugger. I've set a
-breakpoint at bundle.c:515[1] where setup_revisions() is called. After
-stepping over this line I see in the debugger `revs.pending` is
-populated.
+We should definitely do that for future commands
 
-    (gdb) p *revs.pending.objects
-    $6 = {item = 0x7a2fb0, name = 0x78d7e0 "refs/heads/master", path = 0x0, mode = 12288}
-    (gdb) p *revs.pending.objects.item
-    $7 = {parsed = 1, type = 1, flags = 0, oid = {hash = "R\026\370\365\304\b\236\302\234\344\232\372\024t4\302>\017\001c\000\000\000\000sS\344\367\377\177\000", algo = 1}}
+> I agree with you that we might want to add pseudorefs as a starting
+> points of reachability traversal, but I suspect it would add
+> unnecessary complexity we would rather not want to deal with.
+> 
+> For example, not GC'ing what is pointed at by lines in FETCH_HEAD is
+> OK.  Excluding those objects that are only reachable from an object
+> mentioned by a pseudoref, when a new "git fetch" is negotiating with
+> a remote what objects need to be sent here, might be disastrous, as
+> the pseudoref that said "this object is here and you can safely
+> consider everything reachable from it is" will be short-lived and
+> can go away anytime, and an auto-gc kicking in at a wrong time ...
 
-The hash value is the binary representation of
-`5216f8f5c4089ec29ce49afa147434c23e0f0163`, the current HEAD of
-`master`. At this point I've updated `master` in another terminal
-window:
+I can see that including pseudorefs when "git fetch" is negotiating 
+could be problematic but does it use mark_reachable_objects()? Maybe I'm 
+missing something as I've only done a quick grep but it only seems to be 
+called from builtin/prune.c and builtin/repack.c and prior to 4421474e06 
+(Move traversal of reachable objects into a separate library., 
+2007-01-06) it seems to have been a static method in builtin-prune.c
 
-    git commit --allow-empty -m"dummy"
+Best Wishes
 
-Then in the debugger I continue the process to create the bundle. The
-resulting bundle seems to be missing `refs/heads/master`.
+Phillip
 
-I'm surprised this ref is completely omitted from the bundle. Even
-though the ref is outdated, I would expect git-bundle(1) to just take
-the old commit ID.
-
-[1]: https://github.com/git/git/blob/5216f8f5c4089ec29ce49afa147434c23e0f0163/bundle.c#L515
-
---
-Toon
