@@ -1,138 +1,74 @@
-Received: from wout3-smtp.messagingengine.com (wout3-smtp.messagingengine.com [64.147.123.19])
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DE077B3D2
-	for <git@vger.kernel.org>; Fri,  9 Feb 2024 17:39:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.19
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1849253398
+	for <git@vger.kernel.org>; Fri,  9 Feb 2024 17:39:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707500342; cv=none; b=pqIfbjijyyCQadf/Ec5n0wPe1gv3pwcZX6/4cEpAy1FswygUOPAf00z+S9PFA6CvNpLWpIQ7iQhfwVSel3lz2mzYmU0MLnRRysigq7XCXgyBvpsssSc9hP1vtzRIdyNlfhjD38osb3vTXqNg3s6n+sTzNizGsaWI51QdQwlIihM=
+	t=1707500384; cv=none; b=hjItR9erhqHm2gUzj+V17rQAGNvyl7HfirG4qbTaW/glpPPDS9+MCYOnT7QRLY0Ax78wr63mMs6yAjKM2lCQNRteqlVi6V75IGDkqVQxvlsZLSmzFuHswGTx4nva3/DIjJG2mq03A9H0fAGPqtMm5gH2ZIyn8wbN36kkWg3SF40=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707500342; c=relaxed/simple;
-	bh=JAyKiN/2lXb5rsGsiseD6Jm1NaNMsaZcLz4w6MWP8YQ=;
-	h=MIME-Version:Message-Id:In-Reply-To:References:Date:From:To:Cc:
-	 Subject:Content-Type; b=aNcv5njMs9fca3b+dVsxy1OBluRcHbKMbHczGVszquQ7DAo4yLJ7XUEtkQC6S2x1FIVu4Qc58bhEYDYEoJEuZijIH693MqAUHf1C1fTA4tts1QdY/POs10jCY7+e7AnGeZb4no2nzK+EsNBaR7lj4U2VVVJyMhfaBlLMNdi6w30=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=khaugsbakk.name; spf=pass smtp.mailfrom=khaugsbakk.name; dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b=l3g8k33r; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=k3cy6m7w; arc=none smtp.client-ip=64.147.123.19
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=khaugsbakk.name
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=khaugsbakk.name
+	s=arc-20240116; t=1707500384; c=relaxed/simple;
+	bh=3Vf+9xp4zyKp0psRWy3QfOqyIoTEgjVXC36A3LX8WWg=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=KoGVwiyd9FRt/YB7yCaAhS/4K4izB9nyeYqYs6lGZ6jG/Hi4VeICDsPPdExCmpVLgLM3jWmORZvLW6zYcsmrh3F4hWVMLAmhfViYnSr4+KkBU+CPzF6ud3Lo2q5igExpNp9UpLW1EMMN/xn7yyLEP8120CubOAeeKxe90rHsqxI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=buc8yANF; arc=none smtp.client-ip=173.228.157.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b="l3g8k33r";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="k3cy6m7w"
-Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
-	by mailout.west.internal (Postfix) with ESMTP id 5B57532002D8;
-	Fri,  9 Feb 2024 12:38:59 -0500 (EST)
-Received: from imap49 ([10.202.2.99])
-  by compute1.internal (MEProxy); Fri, 09 Feb 2024 12:38:59 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=khaugsbakk.name;
-	 h=cc:cc:content-transfer-encoding:content-type:content-type
-	:date:date:from:from:in-reply-to:in-reply-to:message-id
-	:mime-version:references:reply-to:subject:subject:to:to; s=fm2;
-	 t=1707500338; x=1707586738; bh=MENpdS/EiI33mv3FksqRlePsaoygPc6M
-	7sopKAmc2F0=; b=l3g8k33rvFw4vqtOur25KyHDfVkZuvN292dSjHg1WKy3yDiK
-	6X/i4CqgRop6hrCR2YqCmXIgsCy6m/nqumlGwlKMu201vpYgAztdJ7gOO0KdUejL
-	kyTINX6zn/MWK2J92rOYelm7Xu+ONJ4rv/ClFXr7Q2p1Yfs2XAzeeQoH3kAYc2UF
-	WCcnOJtDKODHK+zEPbDPKJ2sNOfi19jQmZr1A6BcSs0pyJcf72OyKbI2CQFt0PQc
-	S4qRubFxwDYRpvc+KE4VsrULAUrTuByTFwe7wvJzf++XJZJi6HQUpcljbh+Toinz
-	d853Tcj3vxyWFgcTMOk2EZYtlm71Oqj1zXzaIQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1707500338; x=
-	1707586738; bh=MENpdS/EiI33mv3FksqRlePsaoygPc6M7sopKAmc2F0=; b=k
-	3cy6m7wLx5vIHTITBNtj7qO8F/aLAqeWQy7UsSv+O4I1dx+s/B6x2vvU8UmKqrn+
-	exWiPHm9titk5rTX6np4rR4R9X2ZfuYgc7hd8BQVvAG8cwmAmKdVhjuNySaNB/eS
-	TN2c6QDBs0rvk7Op5VtHmHvcreHRFf6fzmQVu3wMdo0vAoJ9Gt9cNAUvRviUIi1P
-	VvjtnEJYBZee2ij5h/a8ftcANf/hId20zUWYBWh+xAE3oCudpxC6qs+ebelLzvoi
-	tWhy8xNHoo3kLnSOeuwHqrIBHihp0jGe8uB6Yjdz7nRCAkhTI/7Z9lUisY24ACjO
-	mXZawekZ0HmJvKFzvNmsw==
-X-ME-Sender: <xms:MWPGZSeb2PmZ-hHowb9u4HUzcj5nHs3XxfXtxQUO4o-LM4xjMQ_5m7o>
-    <xme:MWPGZcM1iR7oFoWHHuaJoIIOMSzTFq7RHR6jndjnFdKd5krf1awUninQAGPVQr6uw
-    RpWRCiUpxvN1Vo3yg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrtdeigddutdduucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    cujfgurhepofgfggfkjghffffhvfevufgtgfesthhqredtreerjeenucfhrhhomhepfdfm
-    rhhishhtohhffhgvrhcujfgruhhgshgsrghkkhdfuceotghouggvsehkhhgruhhgshgsrg
-    hkkhdrnhgrmhgvqeenucggtffrrghtthgvrhhnpedvveehiedufeehffdvteeuveekhefh
-    leeigfektdeifeduteeuheeufeetffefudenucevlhhushhtvghrufhiiigvpedtnecurf
-    grrhgrmhepmhgrihhlfhhrohhmpegtohguvgeskhhhrghughhssggrkhhkrdhnrghmvg
-X-ME-Proxy: <xmx:MWPGZThu3efg0M59t9LETTRRq5E9t970iiyspLskX9e61z9wi6lH5Q>
-    <xmx:MWPGZf-p0Rqo6oKKev8R8zFeLTbvkdItk2TASZMMHH4vbJECUGiNzw>
-    <xmx:MWPGZes_WN_547raysv54NZ-8UrtIcdP_ZerXIY4MaiHdfHDKrEMOA>
-    <xmx:MmPGZX4_1YgIxVASXxxyhtINy7lM54Kd1IpDbu5RjX685F06qIwVcA>
-Feedback-ID: i2671468f:Fastmail
-Received: by mailuser.nyi.internal (Postfix, from userid 501)
-	id A152215A0092; Fri,  9 Feb 2024 12:38:57 -0500 (EST)
-X-Mailer: MessagingEngine.com Webmail Interface
-User-Agent: Cyrus-JMAP/3.11.0-alpha0-144-ge5821d614e-fm-20240125.002-ge5821d61
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="buc8yANF"
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id 573021AD35;
+	Fri,  9 Feb 2024 12:39:42 -0500 (EST)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=3Vf+9xp4zyKp0psRWy3QfOqyIoTEgjVXC36A3L
+	X8WWg=; b=buc8yANF4/4oWQMpqBTbEPVf3tyYeRvkTAk4TYj4p2RD3f+CPSBxkL
+	sPjQOfhmOo4uKhfb/iAoEvKkHf9YlskUpBkgZoOhE4CWkPG4hilWA44cqHZxxQMB
+	Koigum4ccJNvET3tRoyn2o5vHoEuWfOHDlTxtsASAdBFtzT260Syg=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id 5013E1AD34;
+	Fri,  9 Feb 2024 12:39:42 -0500 (EST)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.165.85])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 742DC1AD33;
+	Fri,  9 Feb 2024 12:39:39 -0500 (EST)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Toon Claes <toon@iotcl.com>
+Cc: git@vger.kernel.org
+Subject: Re: Race condition in git-bundle(1) create when ref is updated
+ while running
+In-Reply-To: <87eddlpx5k.fsf@iotcl.com> (Toon Claes's message of "Fri, 09 Feb
+	2024 14:40:30 +0100")
+References: <87eddlpx5k.fsf@iotcl.com>
+Date: Fri, 09 Feb 2024 09:39:38 -0800
+Message-ID: <xmqq5xyxh6zp.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Message-Id: <d59a0e25-81c4-4ecd-826e-ef4b23423575@app.fastmail.com>
-In-Reply-To: <xmqqfry1h7ej.fsf@gitster.g>
-References: <F7D40DCD-2331-44D8-B4BF-8E6CD9EE64A6@qt.io>
- <51599394-3f75-4b75-a4c0-f13f117e73bc@gmail.com>
- <60512662-9BE1-4DF7-A4E0-FD2E852E8E76@qt.io>
- <3c3db003-1506-47c4-a010-a8b783dff959@app.fastmail.com>
- <26317088-7020-43EF-8B60-41D719A6D145@qt.io>
- <5c25da43-c886-41d2-b057-b95a84b107ba@app.fastmail.com>
- <xmqqfry1h7ej.fsf@gitster.g>
-Date: Fri, 09 Feb 2024 18:38:37 +0100
-From: "Kristoffer Haugsbakk" <code@khaugsbakk.name>
-To: "Junio C Hamano" <gitster@pobox.com>
-Cc: "Marcus Tillmanns" <Marcus.Tillmanns@qt.io>,
- "git@vger.kernel.org" <git@vger.kernel.org>,
- "Phillip Wood" <phillip.wood@dunelm.org.uk>
-Subject: Re: Bug: Commit fails when no global email address is set even though --author
- is used
-Content-Type: text/plain;charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 333CEB52-C772-11EE-B56D-A19503B9AAD1-77302942!pb-smtp21.pobox.com
 
-On Fri, Feb 9, 2024, at 18:30, Junio C Hamano wrote:
-> So, now, let's be productive.  When somebody who does not know much
-> about Git tries to commit without configuring anything and hits the
-> error, what is a more appropriate message to guide who does not know
-> what he or she does not know?
->
-> The user claims that "committer identity unknown, please tell me who
-> you are" were not helpful enough.  Would it make it more helpful if
-> we append how to "tell who they are" after that message, perhaps
-> with "git config" on user.email and user.name variables, or
-> something?
->
-> Or do we need three-way switch that does
->
-> 	if (neither is known) {
->         	printf("neither author or committer is known");
-> 	} else if (author is known but committer is not known) {
-> 		printf("author is known but committer is not"):
-> 	} else if (author is not known but committer is known) {
-> 		printf("committer is known but author is not"):
-> 	} else {
-> 		return happy;
-> 	}
->
-> 	printf("please tell us who you are...");
->
-> perhaps?
+Toon Claes <toon@iotcl.com> writes:
 
-I think a three-way switch looks good. With the amendment that it steers
-you towards `user.*` instead of setting both `author.*` and
-`committer.*`.
+> I discovered a bug in git-bundle(1) create. There is a race condition
+> happening when a ref gets updated while the bundle creation process is
+> running.
 
-Something like
-
-=E2=80=A2 Author is set, not committer
-  =E2=80=A2 Message: author is set but not committer: you might want to =
-set
-    *user* instead (prints suggested config)
-
-I can try to make a patch later.
-
---=20
-Kristoffer Haugsbakk
+"--all" that tells "traverse from the tip of all the refs" to any
+rev-list family of commands (like log and bundle) eventually boils
+down to opendir("refs/...") followed by readdir(), and if somebody
+creates or deletes files while you are reading in such a loop,
+readdir() may appear to skip an entry, which is understandable.
+Even "git for-each-ref" would race with a ref update (which involves
+removing a file and then creating another file at the same path), I
+would think.  IOW, I do not think this is limited to "git bundle".
 
