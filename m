@@ -1,134 +1,121 @@
-Received: from mail-oi1-f171.google.com (mail-oi1-f171.google.com [209.85.167.171])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2460F7BAED
-	for <git@vger.kernel.org>; Fri,  9 Feb 2024 18:27:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1325C4E1A2
+	for <git@vger.kernel.org>; Fri,  9 Feb 2024 19:57:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707503262; cv=none; b=XbQSEeczg+9mwSGWijA5z9OcxxgLA6ur4yMywJ3SVVnTJFZoYEhAcTWEuEjAjCT17lHH1LH9iJDs4dH/h8oMTnQ/9ZuOPPfRtqOEsE/JuwatPTdIrSVzUuygaH3rrJEFsH3Ap2+RGwDWJO47PG6P763lZn2+hiazvT/3Ga2zrCM=
+	t=1707508622; cv=none; b=k5bp4U6FaL/1qsy1yFesb98uxhZpNUopiX2TTFSKsDzMgJKz7W4ocP38Om44Q5bGDSP7Uc0uJyQmM1ODUutYFVd5q3Imyov7ZHJdPB7e70VlFsnwTFhzOwugfyxi+5v/BgDdtu3JsSlUU9snN+tePqGPJZpzhRZjnTBM67dCTn4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707503262; c=relaxed/simple;
-	bh=KGsaMId3LMpoGE6ckW/o1qVoWvNDMRAegEUw1yHDDpk=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=sdLdMeiMZ0+RcB3mQsMwiVOSnBl7/kbajvMSrZ8WzlCw4OToxnq4ij7WxIBz84sCsLW4cjHIU/LVR7w3FSx+3X8Dbf2jCe7ekiKABX0oP+u8VRJT2t7nL26RRVKlhR42yAHPKqTYrDwOW7AXQN5llTA8rJQm6hqzi009bSnNkf0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=WNbY1U06; arc=none smtp.client-ip=209.85.167.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1707508622; c=relaxed/simple;
+	bh=d409UbZSg5emj+lL9DveNPDN+1IJrfWej0K4gFYMyxY=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=sSzbEUdWVOxH7gArwZflbXHlGYLGigF71W7IIXrR0RO4zsl2RMxyGaVa+dvDFJnOewnxBe3TUehlzgdTvzupvIX/pNaoC0KoQ391qLPK92T5wjI3q7/BJFIP6EAPbu+VOHqiyEKrIy9cfMC55YWUNQpMKro6av/hbXVmm5vgNSo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=SMX/nZTC; arc=none smtp.client-ip=64.147.108.71
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WNbY1U06"
-Received: by mail-oi1-f171.google.com with SMTP id 5614622812f47-3be48947186so611217b6e.3
-        for <git@vger.kernel.org>; Fri, 09 Feb 2024 10:27:40 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1707503260; x=1708108060; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=HChu5gnjeonaab8xGMWsDrmuGQrdMidrN1bgB4ItVRk=;
-        b=WNbY1U06W1sjPOdokW/iImukiubldoQrTNu/Z/sT4UzoJhyu95XtrdybPdd3rffX6I
-         2YtqQdu7T2+9tjKWpGIWqoVSezoL3U4EkulMWIVpGiROO0wBsTAAInMW8zDXqmn94jn+
-         Q6WNS73j2p4FOc8eJ4sCUk8NUkXzEkt4NDftTL7NkR9qDLxjsfYtsCgeNkLoCw47w8Vb
-         vQVJ3ZdtzaQVypXwsXzW8Vot83/Mpweu40cH/dVoqi9ToRpO+8NrN7pUg2V48QKU9Gls
-         4JFgA7on+d/XUmbvMbYbr1WlTATop0YkFTxZ1MUgcbQS9cv+eNs5whvrVutNH/oqwegz
-         aB2w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1707503260; x=1708108060;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=HChu5gnjeonaab8xGMWsDrmuGQrdMidrN1bgB4ItVRk=;
-        b=NoBNoNrlGk+/LF5L63S4recuYrLpn2flP3PZ7XjvO41cMSVdHsNQu3FuzsRqlrs1r9
-         0hd6t4aN56yA3YxwnbYQlGrSi3brhqs+S+jOENzJMdHvuIT/gu2YhjpEC2hjmhiG9exM
-         11gxDQ/cWYCS7FFxVStCYHhUbL50GqAdVA3nGtySfDfKaDVfBPRz3zlOaWAQjSGuLYGH
-         oWhQfTaVNX4W3+70rRxinMFCUmyCzv2d9upNDPyO1NUYsdWZkU8ceBGATpizAVUS7+ia
-         ROWFwH47fkpYFO1Zl6fEaeYVzBNgFDii0zSXPBsMHI/8zfysewrgPqIwTHoB0SNfgJE/
-         p7Vg==
-X-Forwarded-Encrypted: i=1; AJvYcCUaL7UByJmML+06bGyfOPMLdhApQ90Qectdldn5y4xCN9wJ9ocFHl0/ZXrcgK9ic2+UIqfSBjQAOZYR67RQuXiWjTrk
-X-Gm-Message-State: AOJu0Yz3kNTlFRg+nDOsvC1x3Ohx7cWMDzJC7u3T3Nx0vSUxSQtl8KDL
-	ZMn7sFVWUwtZtmKR1XQmmVhJVg5BLsWG3pZPqIYM15OZx3ky+cAWpHVP1EsK9kg/aPVAPplr0QN
-	Lv60PfFouY1gx+x1LRF+8CIHt2NE=
-X-Google-Smtp-Source: AGHT+IECrXwPSsPfF0YpBOxnUS1OcKbPbRPR4XESCfAUO3+qlH7+zNXiifArNejO4OnUhLM9x7kiQiB7jr3t+IGnLR0=
-X-Received: by 2002:a05:6871:581e:b0:219:f674:c693 with SMTP id
- oj30-20020a056871581e00b00219f674c693mr27857oac.35.1707503260056; Fri, 09 Feb
- 2024 10:27:40 -0800 (PST)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Fri, 9 Feb 2024 18:27:39 +0000
-From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <xmqq8r3timnr.fsf@gitster.g>
-References: <xmqqcyt9fdc7.fsf@gitster.g> <CAOLa=ZRcWYmEYnxh_=ykOerahZ61xaanLCj_JHHLvtrvN=Xs-w@mail.gmail.com>
- <xmqq1q9oe029.fsf@gitster.g> <CAOLa=ZQzz7_L_9cBmK+pgFwd_DFqfWDVRiaZMAxU+54kBq6Pcw@mail.gmail.com>
- <xmqq1q9ocje3.fsf@gitster.g> <CAOLa=ZQaXxwrXmbmFvGR59EDo3Eqa-Xfc3OG9+6ES-veDU8Bhg@mail.gmail.com>
- <ZcSVx4slikt4xB3D@tanuki> <xmqq7cjeq43t.fsf@gitster.g> <ZcUOP_rWUwymhe5c@ncase>
- <xmqq34u2onaj.fsf@gitster.g> <ZcXddvQzlt6j7T7L@tanuki> <xmqq8r3timnr.fsf@gitster.g>
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="SMX/nZTC"
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 4F1D51C3E75;
+	Fri,  9 Feb 2024 14:56:59 -0500 (EST)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=d409UbZSg5em
+	j+lL9DveNPDN+1IJrfWej0K4gFYMyxY=; b=SMX/nZTCIItQX5+Xc8D11l/s7V2l
+	Mi40TgE3oBv4Bjxh1f0sartgEVnrhvr6RmAwtoirn5Sh8rp0/VWhX4/blDJkcZRB
+	kuPjm3N5oEJJ4NILjDGcodQnd7tER92M3VXiNMBAumi/8x+NRjQTWSZdnSZCqSXw
+	Qx/HB4n+GxuQS8I=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 43D5A1C3E74;
+	Fri,  9 Feb 2024 14:56:59 -0500 (EST)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.165.85])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 9C1D51C3E72;
+	Fri,  9 Feb 2024 14:56:58 -0500 (EST)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Kristoffer Haugsbakk" <code@khaugsbakk.name>
+Cc: "Marcus Tillmanns" <Marcus.Tillmanns@qt.io>,  "git@vger.kernel.org"
+ <git@vger.kernel.org>,  "Phillip Wood" <phillip.wood@dunelm.org.uk>
+Subject: Re: Bug: Commit fails when no global email address is set even
+ though --author is used
+In-Reply-To: <d59a0e25-81c4-4ecd-826e-ef4b23423575@app.fastmail.com>
+	(Kristoffer Haugsbakk's message of "Fri, 09 Feb 2024 18:38:37 +0100")
+References: <F7D40DCD-2331-44D8-B4BF-8E6CD9EE64A6@qt.io>
+	<51599394-3f75-4b75-a4c0-f13f117e73bc@gmail.com>
+	<60512662-9BE1-4DF7-A4E0-FD2E852E8E76@qt.io>
+	<3c3db003-1506-47c4-a010-a8b783dff959@app.fastmail.com>
+	<26317088-7020-43EF-8B60-41D719A6D145@qt.io>
+	<5c25da43-c886-41d2-b057-b95a84b107ba@app.fastmail.com>
+	<xmqqfry1h7ej.fsf@gitster.g>
+	<d59a0e25-81c4-4ecd-826e-ef4b23423575@app.fastmail.com>
+Date: Fri, 09 Feb 2024 11:56:57 -0800
+Message-ID: <xmqqfry1fm2e.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Fri, 9 Feb 2024 18:27:39 +0000
-Message-ID: <CAOLa=ZS3y=K6SCEoC7hZSi7vhAT1-W4fAzPb3rYaBbGcqO5Cyw@mail.gmail.com>
-Subject: Re: [PATCH v3 4/4] for-each-ref: avoid filtering on empty pattern
-To: Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>
-Cc: Phillip Wood <phillip.wood123@gmail.com>, phillip.wood@dunelm.org.uk, 
-	git@vger.kernel.org
-Content-Type: multipart/mixed; boundary="00000000000044d3f00610f7151a"
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID:
+ 622A784A-C785-11EE-85B5-25B3960A682E-77302942!pb-smtp2.pobox.com
+Content-Transfer-Encoding: quoted-printable
 
---00000000000044d3f00610f7151a
-Content-Type: text/plain; charset="UTF-8"
+"Kristoffer Haugsbakk" <code@khaugsbakk.name> writes:
 
-Junio C Hamano <gitster@pobox.com> writes:
-
-> Patrick Steinhardt <ps@pks.im> writes:
->
->> Depending on the answer, I think we can go one of two ways:
+> On Fri, Feb 9, 2024, at 18:30, Junio C Hamano wrote:
+>> So, now, let's be productive.  When somebody who does not know much
+>> about Git tries to commit without configuring anything and hits the
+>> error, what is a more appropriate message to guide who does not know
+>> what he or she does not know?
 >>
->>   - Accept the diverging behaviour and add `--include-all-refs`. The
->>     "files" backend does a best effort and only includes root refs, the
->>     "reftable" backend lists all refs.
+>> The user claims that "committer identity unknown, please tell me who
+>> you are" were not helpful enough.  Would it make it more helpful if
+>> we append how to "tell who they are" after that message, perhaps
+>> with "git config" on user.email and user.name variables, or
+>> something?
 >>
->>   - Double down on the fact that refs must either be pseudo refs or
->>     start with "refs/" and treat any ref that doesn't fit this bill as
->>     corrupted. The consequence here would be that we instead go with
->>     `--include-root-refs` that can be implemented the same for both
->>     backends. In addition, we add checks to git-fsck(1) to surface and
->>     flag refs with bogus names for the "reftable" backend.
+>> Or do we need three-way switch that does
 >>
->> While I seem to have convinced you that `--include-all-refs` might not
->> be a bad idea after all, you have convinced me by now that the second
->> option would be preferable. I'd be okay with either of these options as
->> both of them address the issue at hand.
+>> 	if (neither is known) {
+>>         	printf("neither author or committer is known");
+>> 	} else if (author is known but committer is not known) {
+>> 		printf("author is known but committer is not"):
+>> 	} else if (author is not known but committer is known) {
+>> 		printf("committer is known but author is not"):
+>> 	} else {
+>> 		return happy;
+>> 	}
+>>
+>> 	printf("please tell us who you are...");
+>>
+>> perhaps?
 >
-> For now my tentative preference is the latter.  If ref/head/foo is
-> an end-user mistake with one backend, it is cleaner if it is
-> considered a mistake with other backends.
+> I think a three-way switch looks good. With the amendment that it steer=
+s
+> you towards `user.*` instead of setting both `author.*` and
+> `committer.*`.
 >
-> Doesn't our ref enumeration/iteration API have "include broken ones
-> as well" bit?  I wonder if this issue becomes easier to solve by
-> (re|ab)using that bit.
+> Something like
+>
+> =E2=80=A2 Author is set, not committer
+>   =E2=80=A2 Message: author is set but not committer: you might want to=
+ set
+>     *user* instead (prints suggested config)
+>
+> I can try to make a patch later.
 
-I'll then go ahead with point 2 then.
+Wait. I didn't realize this when I wrote the message you are
+responding to, but we *do* already suggest settig user.* variables.
 
-I'll modify my patch series for now to fit in and will follow up "checks
-to git-fsck(1) to surface and flag refs with bogus names for the
-"reftable" backend" in a follow up series.
+If the user chose to ignore that, then there isn't much we can do to
+help, is there?
 
-- Karthik
+Puzzled, but I'll stop here.
 
---00000000000044d3f00610f7151a
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: dd392d5657d709f_0.1
-
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1YR2Jwa1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1md1FWQy80c3NPVkhZZUc5dHhPWUdqYWJ5dFoycGxUbQoyWHhCUXVjRkVn
-dlZHODlBTUF0clJLQ0ZVVWpyMTZ5cFoyZWRHS1d2SHRpLzhWRmpXUm03Nll2eXh4M0JCUmp4CkJE
-S2p2TXRNb2VseUgxUEo1TWV1UzROUklVTjlVTFJrRUxWS2RuMSszSnVsOVhQVFRGOHkwMXpaOEZv
-V0NCU00KNG52b2gxQ0MreDByYnNLb2JmMS8xU2tBYU5iNTBDR3BjSytaQTMvTzNRQk9KYU1CL0E3
-SzdwU3VaOFgzT3E3QgpxWjg0OFBhM1h3UFljeDZBQUZIVC9wQ0JIWmdJNWZEMVYzWW9ZQWhIbllz
-eXgveFpmUkdaMXJpUFRSNHcrN1ZRCmNEVERBajgzRUhLVDd5Y0hXY1hKd2theWJ6dldZR1R2RG5U
-ZTVOak15aG9PK1VSVUFaRHNtczRmR1BzdUxGMi8KY3YwblFmLzdHQlJsVHBSVmU2MFFnUkhWdFd4
-QWx5RERiUnpkOTdMczdFYmdCOWcya2Q4dTZncnJudWc1Rkp0TQoyV0JoM2IydU9XWmpmQ21TczBv
-YVp3anU1eEwwS2lmQmw0ZHdybXhyelE0cGFUNXY0QjhRR2U0RXhtRXVFUW5JCnJ0ak5acGJBa3Nq
-RnNremlGYlp0ZlE5Tm5TTTdFdHNjdjV3WUc2cz0KPUZwN3QKLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---00000000000044d3f00610f7151a--
