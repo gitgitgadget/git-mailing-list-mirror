@@ -1,84 +1,145 @@
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+Received: from wout5-smtp.messagingengine.com (wout5-smtp.messagingengine.com [64.147.123.21])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 879CF60DDF
-	for <git@vger.kernel.org>; Fri,  9 Feb 2024 06:31:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D19D657B0
+	for <git@vger.kernel.org>; Fri,  9 Feb 2024 07:23:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.21
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707460321; cv=none; b=DvgrHrAT8S3AozPlF/xJAnbvIHSvMoLEhiM18e+1iOyT3GrT9gtEdJ+riXBpNjBNUwPBimhnuL4DwBfMJrFT0vhsI41ztPbd+LelzyICPDPnK4CR4KG3QQzk3C5tgsbDUiRUmFfvui1rnN1521gEpWBH3xPxA4UHtncjWEs8YkA=
+	t=1707463394; cv=none; b=Fh9Mpl3L27tBfwwmfG0Ho/PuzTgXWf0DZmmIvp9+6qNz9XaphdCs3njKdoOpG0abqpYuR0gY4QjLG614xPVaLZUEMys0tbVr3qdctGxpT8UxxEluS+23oqrXZKMGr15OYus8dYdVZ3xC7TSc1SpSetEKIGidzYNSV2OkiiJbs/Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707460321; c=relaxed/simple;
-	bh=bT9vTXAT2pEP9TXR4PuNAbRu2hw8fro2+M/ClxIyECU=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=rLqDt4OKeZdBb6640MHmtm0zSgmCiXUuT9xhyXX/EK3SdVpaKeYPbs6wqw1bzN45atLJcVqqcza1ntugoCPwddPKv0ue/WU5VwMcuAuwioHQnC3jmaFUC3gkQUPZNiLazh0oS1D1GIDJ/bwwyfWmXsVf6MFh9Up48CiAg8y55lQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=FS/FJ/xX; arc=none smtp.client-ip=173.228.157.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1707463394; c=relaxed/simple;
+	bh=ZgiNiAdjfpDB24AoBnpXD6ACwBIDTGkv13eHEA7OTtY=;
+	h=Date:From:To:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition; b=bNhYJY+PVrFV4o+GIcgjQmhJMifkKFycNQm9Em/QpFXyx5U65j/aVT5f4a4ozGeccEcVgyo/jI+yhfuBLejhsBOxvTr9Y2XSdS2+GNF1M8tniuAP3XKanA0t6RB+tC6Ti/a7H2lzOjC+MfZPmU2EbaxFvWc0mR39Z40nNTHOm7A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Dax2Aoou; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=x75mjvLZ; arc=none smtp.client-ip=64.147.123.21
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="FS/FJ/xX"
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id AC0EE374AA;
-	Fri,  9 Feb 2024 01:31:58 -0500 (EST)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=bT9vTXAT2pEP9TXR4PuNAbRu2hw8fro2+M/Clx
-	IyECU=; b=FS/FJ/xXzM150IaMW+XoO+6TlLsIogpiGpzaiQzvxFbpiD58zmwKxu
-	NaDr6EbyLHYZkXLX6h8F/wfTO9k1Qpteh8rtdKeBQ3qFzIoXXsFpF3AiJ+vB5KpP
-	w5HlfKbYyJNI6VsSqUvA2fe7J4WhqaM/Lcrm+jQYkn+1yJ3/09dyE=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id 97553374A9;
-	Fri,  9 Feb 2024 01:31:58 -0500 (EST)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.165.85])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 3CE4C374A8;
-	Fri,  9 Feb 2024 01:31:55 -0500 (EST)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Victoria Dye <vdye@github.com>
-Cc: Victoria Dye via GitGitGadget <gitgitgadget@gmail.com>,
-  git@vger.kernel.org
-Subject: Re: [PATCH] ref-filter.c: sort formatted dates by byte value
-In-Reply-To: <5ed018da-2150-42d8-995e-59a35a2e3821@github.com> (Victoria Dye's
-	message of "Thu, 8 Feb 2024 18:46:50 -0800")
-References: <pull.1655.git.1707357439586.gitgitgadget@gmail.com>
-	<xmqqzfwbps43.fsf@gitster.g>
-	<5ed018da-2150-42d8-995e-59a35a2e3821@github.com>
-Date: Thu, 08 Feb 2024 22:31:53 -0800
-Message-ID: <xmqqeddmkv1i.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Dax2Aoou";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="x75mjvLZ"
+Received: from compute7.internal (compute7.nyi.internal [10.202.2.48])
+	by mailout.west.internal (Postfix) with ESMTP id 887803200A67
+	for <git@vger.kernel.org>; Fri,  9 Feb 2024 02:23:10 -0500 (EST)
+Received: from mailfrontend1 ([10.202.2.162])
+  by compute7.internal (MEProxy); Fri, 09 Feb 2024 02:23:10 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:message-id:mime-version:reply-to:subject:subject:to:to; s=fm3;
+	 t=1707463390; x=1707549790; bh=G4wfsC7tLty6dWt5KdbJTLMcSoYUYoM+
+	rvBC6uWBWXA=; b=Dax2AoousES7i7sAWRLaNIW7Q2SIUb2tyXeheIj2mQsFEmLO
+	ZWOz3lah8U59u5ZQu0iadiq6FTZLBSR/rv8wbVvTxuqJjsrj5uofu99cM/bEVD2/
+	Y7eeDxfABxhLqNs2dWkcVfdQlXsEfu+lhjpMdRcD202Zoan+HZJwWrGgYwXSPyon
+	MGJOcG8t0ZoAsQ5xoALI2Ckyw/zZC2kLLWD+45j2Cxbo8M/m/2k0hEv/ZpjEvX8/
+	SyZZ4ygjBStRJcuhFfH7XW5T6sp5whHPahEcOnRKWQ4xtOF1MeQ34iy7k0s8o0Wi
+	G/DZmkByQs1wp8lH6kHvmSoiuyGu9XWjvBIj0w==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:message-id
+	:mime-version:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1707463390; x=1707549790; bh=G4wfsC7tLty6dWt5KdbJTLMcSoYUYoM+rvB
+	C6uWBWXA=; b=x75mjvLZaIKCIaGrBhdMJFzvE/7EbnDJbgZSbhaTU2AnxoB9sWz
+	scl6ugkc5JPfE7rNG8EF82kLcVotQDfnTU39g6ldEVLQDoj+lPZulIVIk0J9Szra
+	F5JIUHT3rgMxQ7+5vF/4PUhTyWokqGhQs97MyfvGPS0PMpZUJeCxKYYTcIVNcTSd
+	nfqZmY94aw72yiboqTiIIG6rUSHCvwxvyWr1LCxiDIP2flIIgOEBEZK8SbuRpbkF
+	oMXn2doFp/qYmdC3WtKkGV4V398LC3s8TcxaUmM3X3V8UO1GqscHpgTFzoC3b/4S
+	GgCifUKezLoDzNIokCv2ADPf2EFbl/kNp+w==
+X-ME-Sender: <xms:3dLFZUNqw5eXHVzSqhfmBe3kqLO0abp3YZPqyle3ncLQezKZlMBUEQ>
+    <xme:3dLFZa-MZoeMg-mSZ8ESvQTealCm8kVkG3oSVWtS3BZtUohpZCQIktPAHVPYGZ1t9
+    42ETsFmB0hPVGtl4A>
+X-ME-Received: <xmr:3dLFZbR4wzNwuu5TBN_PE6w78yQICPrV4IuKDEIMP1nNeNpVWxYXUh2stma797xI0qy6l5fNv-Z1Uzwt2ClYC4nio-Gf7q8sbpfCim5fi67tfI8>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrtdehgddutdegucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvuffkgggtugesghdtreertd
+    dtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhs
+    rdhimheqnecuggftrfgrthhtvghrnhepjeeifedvueelfffgjeduffdvgefhiefgjefgvd
+    dvfeduvefffeevfffhgfekieffnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghm
+    pehmrghilhhfrhhomhepphhssehpkhhsrdhimh
+X-ME-Proxy: <xmx:3dLFZcuIf0tDt0UfgJ6UDiTEcilbxhuOo6MyT_R9H-wGkPiuswtdNg>
+    <xmx:3dLFZcdkmxsM-LjHagzTwGjsmu16t1S-Aa-4EarEgdPfq4evcQrXrw>
+    <xmx:3dLFZQ1PD1iow10DP9FfKi4vJJMuu49_A_XubQz3xq3-SRmcmASBlQ>
+    <xmx:3tLFZUl4e3rJWFOVzIztoISA3p0f6HdamGgOQlaMHjzkrA9FXuaS6A>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA for
+ <git@vger.kernel.org>; Fri, 9 Feb 2024 02:23:09 -0500 (EST)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id e4f54931 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	for <git@vger.kernel.org>;
+	Fri, 9 Feb 2024 07:19:31 +0000 (UTC)
+Date: Fri, 9 Feb 2024 08:23:05 +0100
+From: Patrick Steinhardt <ps@pks.im>
+To: git@vger.kernel.org
+Subject: [PATCH 0/7] t: drop more REFFILES prereqs
+Message-ID: <cover.1707463221.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- EB19B2C2-C714-11EE-95CA-A19503B9AAD1-77302942!pb-smtp21.pobox.com
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="PDcx7tW0ccPMkrWK"
+Content-Disposition: inline
 
-Victoria Dye <vdye@github.com> writes:
 
-> Junio C Hamano wrote:
->>>     I came across a use case for 'git for-each-ref' at $DAYJOB in which I'd
->>>     want to sort by a portion of a formatted 'creatordate' (e.g., only the
->>>     time of day, sans date). When I tried to run something like 'git
->>>     for-each-ref --sort=creatordate:format:%H:%M:%S',
->> 
->> Hmph, this indeed is interesting ;-)
->> 
->> I wonder if there are other "sort by numeric but the thing could be
->> stringified by the end-user" atoms offered by for-each-ref
->> machinery.  IOW, is the timestamp the only thing that needs this
->> fix?
->
-> The only non-FIELD_STR atoms other than the date ones are "objectsize" and
-> "numparent". "objectsize" has an optional ":disk" modifier, but that doesn't
-> change formatting (just the value of the integer printed). "numparent"
-> doesn't have any modifiers, it just prints the integer number of parents.
-> Otherwise, everything is sorted by string value, so I think only the date
-> atoms have this kind of mismatch between formatted value and sort value.
+--PDcx7tW0ccPMkrWK
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Thanks.
+Hi,
+
+this patch series is another step towards less tests with the REFFILES
+prerequisite. Some of the tests are simply moved into t0600 because they
+are inherently exercising low-level behaviour of the "files" backend.
+Other tests are adapted so that they work across both the "files" and
+the "reftable" backends.
+
+Patrick
+
+Patrick Steinhardt (7):
+  t: move tests exercising the "files" backend
+  t0410: enable tests with extensions with non-default repo format
+  t1400: exercise reflog with gaps with reftable backend
+  t1404: make D/F conflict tests compatible with reftable backend
+  t1405: remove unneeded cleanup step
+  t2011: exercise D/F conflicts with HEAD with the reftable backend
+  t7003: ensure filter-branch prunes reflogs with the reftable backend
+
+ t/t0410-partial-clone.sh         |  6 +--
+ t/t0600-reffiles-backend.sh      | 91 ++++++++++++++++++++++++++++++++
+ t/t1301-shared-repo.sh           | 16 ------
+ t/t1400-update-ref.sh            | 50 +++---------------
+ t/t1404-update-ref-errors.sh     | 37 ++++++-------
+ t/t1405-main-ref-store.sh        |  6 ---
+ t/t2011-checkout-invalid-head.sh | 17 +++---
+ t/t3200-branch.sh                | 29 ----------
+ t/t3400-rebase.sh                | 10 ----
+ t/t7003-filter-branch.sh         |  5 +-
+ 10 files changed, 125 insertions(+), 142 deletions(-)
+
+--=20
+2.43.GIT
+
+
+--PDcx7tW0ccPMkrWK
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmXF0tgACgkQVbJhu7ck
+PpQP9g//Rf6E8ZBPjlOSR1WmOCH8zJSUM8aED8ZdcZ/8X6ewEssF6paioYt2hvxZ
+bL3yr6aqJggJaTTRWp86RWL8fI8M2QVB5Ow00UirSZoe/8hQlHRyk4J61DfqvP0k
+5EXYaz1BQ6CIhs/REOFvVCIzqZE/bVnylMlTCyQHbSKwd9VLkkTfCNYF1/cwUmtj
+VeKbaD01qUPQxwgNdlw3bcEBxBAI+WJWINe0Tvuf8TF3jv6cw/Cf6h6Tb1gJCIuI
+8UsjRkXwwIHAO29oJm7PQPr86DciUsVSd1f1LXByLwEkJ6Zc/GAr7KaMqRdGaJ2z
+gcNi6e0/zM/sbf24E6feJTZ5mh2lHKcmUKbdo1IU1BMiVdRP7qolS1NYaV1q6E5y
+Eov2a0ytmd/8dmW8sVhy14++uXaE/2ISEspdqbhQiXkRZwHC2esie1MFoCnmz57O
+MY7AF4i0JrNhs8s+VwotVlkdfPUzZ7G551S6atYY4n+rPCjXDQOnmXLqrcJxYfH0
+sdfJMIYrj0FYFV5/hqV9vI8l6/OzdCMMtfEpCJxt3ZrbsVqSRraRbOji6oaPKaXB
+OLmABlLHadm7aUBrS5nxhX5hgXiE2JaIB1eWjGPjBu0p0VhYFWxQcvbitPfQ7EX3
+fssvtlELPbPEAFR5pN9kT72i2Dt4LffSUkefzpTqGm4EcDzuCVA=
+=hv4y
+-----END PGP SIGNATURE-----
+
+--PDcx7tW0ccPMkrWK--
