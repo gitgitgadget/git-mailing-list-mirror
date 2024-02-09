@@ -1,99 +1,76 @@
-Received: from mail-ed1-f43.google.com (mail-ed1-f43.google.com [209.85.208.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from out-173.mta0.migadu.com (out-173.mta0.migadu.com [91.218.175.173])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12E19383B6
-	for <git@vger.kernel.org>; Fri,  9 Feb 2024 13:35:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFA334CB50
+	for <git@vger.kernel.org>; Fri,  9 Feb 2024 13:51:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707485758; cv=none; b=TEs+8DVL76/678ilQ36tJq3WXLxCsdNi+suEYmbWWXvPWnr13ajWxSdXvnoetO9ZC9Lf8wUWT1dM1mS7ChuEZtUcCyKtu4WUCaAGc3tkFWXkOkUGQZ4Ptn/sSgojPWe8wluc8MqSooWfeW49Y24ZpBW5fgwwoWbylq1R8QsKuoM=
+	t=1707486724; cv=none; b=qpXELrRIlDAcI5MfRAecX8c8/KtCguK8z6P5BDYgTQWK8aKaFJKojcvSueZYOmc7zhac/b9g30/iRlyw36R/EpCtE1VDKzMRBKmU3bGsmtg5ejNSSre+jX2ZdhhMQ5esql2lz41Qmc7A3VsaYTXsRM6xbEb40EImJWYcpBdoXCA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707485758; c=relaxed/simple;
-	bh=sWOZ7lDY52/fxizsiGRJfusv7uO0hJCWJacq+WiuT1A=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Content-Type; b=BPmCcBzu8JM9gufxkOSni5OFkVD6uO/k60CuHO3sTWieqhK5rwoOuBLvbfOscExqGzh8KqEYOCDmtw57pU5RNu0vwSKHy3LyRd1sGlEjOk397ACE+E2RiD95uPTEoRVtkoxJrUmVkKYGQ0YPToMT0GQfVEEMFCbZmUAOuPohqr0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=F+HWcK2m; arc=none smtp.client-ip=209.85.208.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1707486724; c=relaxed/simple;
+	bh=NooesN/N8tToTtICakbAtZB46rWMzc4HXVqECDQ1YMk=;
+	h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type; b=GBPTr0ID1XC48YtKtGfswoyQz8tXwgsbZt/gMud8ABSGI6Gio3++dJ9IOsfiUN//08TnfjkmvpH88LhIniiKc393Fwv3J9OUygxMuo9J+K0uUHm7r4c2Fbsuf3V8yRWtSneN439Pb3SW8tUeXPmgQRz9JiL62ObdDDg0abJkUPg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com; spf=fail smtp.mailfrom=iotcl.com; dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b=YGVZcAeJ; arc=none smtp.client-ip=91.218.175.173
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=iotcl.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="F+HWcK2m"
-Received: by mail-ed1-f43.google.com with SMTP id 4fb4d7f45d1cf-56002e7118dso1338985a12.0
-        for <git@vger.kernel.org>; Fri, 09 Feb 2024 05:35:56 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1707485755; x=1708090555; darn=vger.kernel.org;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=RJl0CgCUWXlzBXOQOcXjJBO200xUfYadvMq2llf+JQg=;
-        b=F+HWcK2mQnI7xAx+ABrwZaXhSSljOEpMlqb4hxET6RmO8OMF5ooiDVoOYqW3nWqO6R
-         1ztqkCJHTzGBNToHxOqXNDDesQ6cwkY43zCPeORhpm3y3ZxenZqV0RTM6YfGWMr4UMJq
-         Tfyez7hGJTVYMzsZhLOW5JDEn12diSf17A3bYcddRqBxzCnyQeTD/52BZnu0ggi6qAw1
-         dsBGcGcCYleXnjOn26Vqbm6BrQbZ90z/IOlfkt8TQ5TtphX9osMqFPuPX+0NEwjaofB1
-         c0fZ7LhIKlfN+JmHYSkb/oZTXN6wJZ3altjnhgCic2wrU6Vy9VJVqsJgovxnnRRiy1zM
-         8uJg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1707485755; x=1708090555;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=RJl0CgCUWXlzBXOQOcXjJBO200xUfYadvMq2llf+JQg=;
-        b=iXwcUHFyfczrQnacs0an9PkLoPERjQzfCO0UQoUK7T/LxJIYgovdyY1u5R4M86TZZi
-         hMJJYwBtcmC8om4nUNBIBU/VFtbKQ15SSxx0KHF9DXKC/kHLfSexUw0ZcaueZt96chgB
-         zQZgSRgdO73h+0I3phDMFM3XiMuNqeA9KhZvNAdX4ZE8NOnm9TZaXLrxdpiQKHDKHD0Q
-         xjE+MtF1dYVesv6U2/UI5GDEFEuhyBNwV5YdbunnUY8VFwFnfHEJq8X4Qxj1ECHU3oBx
-         0vsfBqH1meGSPxsJLq2oatpxagRU2otffRjgn4/wgrraJrr+VOmU6YSt2zcJ89dNKbVt
-         G/4A==
-X-Gm-Message-State: AOJu0YyeR6mbwFoheKUtuMogkeNVPfm2fGAYfun3nJI4HatRAngxUSGY
-	ZqvVVjl081gSd+/BDJJD6qewr+I0WoTWukx8Ju1Rut6iYgGtZ70NzK0cZZPCZ8Z16hy1CQNlT90
-	hIUpe/NTiB7jjfF/5y/+cOLJqjJM=
-X-Google-Smtp-Source: AGHT+IFBMXiFKOQ0KltzLNfjUDUS0Mz6jtC8zmxpAFpEgxecLQs1V7+FpFuviRRriEqj04XTzYNNBWgiWrsCv3d0naU=
-X-Received: by 2002:a05:6402:2044:b0:560:da94:2306 with SMTP id
- bc4-20020a056402204400b00560da942306mr1166728edb.29.1707485754887; Fri, 09
- Feb 2024 05:35:54 -0800 (PST)
+	dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b="YGVZcAeJ"
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iotcl.com; s=key1;
+	t=1707486717;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:mime-version:mime-version:content-type:content-type;
+	bh=xAslB4lnOkjlgSW3j6U+cMxp45ZMY/PxZJOEeL/Dfn0=;
+	b=YGVZcAeJ+yNttkeFTbZYbzvIMUw9NZr1nCQ+3jrUZziqe8/rK0j8v4bBWNG1GfhVsbh3vP
+	aX33wlfg7igWOP83ZreobFeeK8aSli/MT3aK+W2zwZBOZI5hskMj9SEagklLLR9J3zS1C0
+	XGqMKuURKxvrQtjBqSbDEIdMDvo4FJc=
+From: Toon Claes <toon@iotcl.com>
+To: git@vger.kernel.org
+Subject: Race condition in git-bundle(1) create when ref is updated while
+ running
+Date: Fri, 09 Feb 2024 14:40:30 +0100
+Message-ID: <87eddlpx5k.fsf@iotcl.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CAGHpTB+mCxvzJ4LDpQrMgHmzigUzcAnRcwMewV0oYKM2HwbNXw@mail.gmail.com>
- <ZcWCDEnmv97orQyY@tapette.crustytoothpaste.net>
-In-Reply-To: <ZcWCDEnmv97orQyY@tapette.crustytoothpaste.net>
-From: Orgad Shaneh <orgads@gmail.com>
-Date: Fri, 9 Feb 2024 15:35:42 +0200
-Message-ID: <CAGHpTB+_yo24d5wtTnxCHF+i+wLCiq3XjjpmaX1Z=AOxFjx+mQ@mail.gmail.com>
-Subject: Re: Supporting --no-edit for git rebase --continue
-To: "brian m. carlson" <sandals@crustytoothpaste.net>, Orgad Shaneh <orgads@gmail.com>, 
-	git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Migadu-Flow: FLOW_OUT
 
-On Fri, Feb 9, 2024 at 3:38=E2=80=AFAM brian m. carlson
-<sandals@crustytoothpaste.net> wrote:
->
-> On 2024-02-07 at 20:46:16, Orgad Shaneh wrote:
-> > Hi,
-> >
-> > Is it possible to add --no-edit for git rebase --continue, similar to
-> > the functionality of this flag for git cherry-pick --continue and
-> > similar commands?
->
-> I haven't checked whether this is actually possible, but I imagine it is
-> with some work.  I think it would be a valuable feature to add, but I
-> don't think anyone's planning on working on it.  Would you be willing to
-> send a patch?  Even if many people think it's a good idea, we're all
-> busy, and thus it'll only be implemented if someone is willing to pick
-> it up.
+Hi y'all,
 
-Thank you. I'll try to prepare a patch.
+I discovered a bug in git-bundle(1) create. There is a race condition
+happening when a ref gets updated while the bundle creation process is
+running.
 
-> In the meantime, you could try setting `GIT_EDITOR=3D:` in your
-> environment (for example, using an alias) like so:
->
-> [alias]
->   rncontinue =3D "!f() { GIT_EDITOR=3D: git rebase --continue; };f"
->
-> and that can serve as a workaround.
+To reproduce, I've been running git-bundle(1) with
+`create my.bndl --all --ignore-missing` in a debugger. I've set a
+breakpoint at bundle.c:515[1] where setup_revisions() is called. After
+stepping over this line I see in the debugger `revs.pending` is
+populated.
 
-Nice, thanks!
+    (gdb) p *revs.pending.objects
+    $6 = {item = 0x7a2fb0, name = 0x78d7e0 "refs/heads/master", path = 0x0, mode = 12288}
+    (gdb) p *revs.pending.objects.item
+    $7 = {parsed = 1, type = 1, flags = 0, oid = {hash = "R\026\370\365\304\b\236\302\234\344\232\372\024t4\302>\017\001c\000\000\000\000sS\344\367\377\177\000", algo = 1}}
 
-- Orgad
+The hash value is the binary representation of
+`5216f8f5c4089ec29ce49afa147434c23e0f0163`, the current HEAD of
+`master`. At this point I've updated `master` in another terminal
+window:
+
+    git commit --allow-empty -m"dummy"
+
+Then in the debugger I continue the process to create the bundle. The
+resulting bundle seems to be missing `refs/heads/master`.
+
+I'm surprised this ref is completely omitted from the bundle. Even
+though the ref is outdated, I would expect git-bundle(1) to just take
+the old commit ID.
+
+[1]: https://github.com/git/git/blob/5216f8f5c4089ec29ce49afa147434c23e0f0163/bundle.c#L515
+
+--
+Toon
