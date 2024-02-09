@@ -1,102 +1,99 @@
-Received: from mail-ej1-f54.google.com (mail-ej1-f54.google.com [209.85.218.54])
+Received: from mail-pl1-f177.google.com (mail-pl1-f177.google.com [209.85.214.177])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10C98394
-	for <git@vger.kernel.org>; Fri,  9 Feb 2024 02:30:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A847184D
+	for <git@vger.kernel.org>; Fri,  9 Feb 2024 02:46:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707445839; cv=none; b=boRS4cj+KGhZdBxQ9eO5rrgzpWQE6ptRwcJQ4sAKu+tPuh3rl3PMZlezGUb+Y4v8IykSPI7cgYMaK4CViTCuFRjrq54Dg3IZFF3UT6tggiWHKXs20K4jpxy/P30ud/UvPSQwR+Mg2FUHaGlb6C9ZdLioI0rAIlD5IopDMBP4wqE=
+	t=1707446814; cv=none; b=CwynnwUwCJC8s6GlPDebqVM+HFL5mOGQu7zf6SX7zwENpqtZN8JvwUIwY7q/ypIs0Xm1gwgSUBfryOO5YrFZCF1LiUdF/vJcwyBmw+upWltDuP89AU/tSH7OdcrHjHTmAMcudaUlOQv32A96Bpgi3vpnz6IUZ9IMfENcnDJpuNE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707445839; c=relaxed/simple;
-	bh=Dv79cuN8WH2fw91oqmvKijlh1BtNI6lJm7iqkfJ383E=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=AHSvJRPWWwoc/hf/CMnkcBFe1xnilIKXoGMVWtf5jd0O43WgGE3E14Dfn3M078QQ2S6s/ma9G7pAAWf/cLacEqj4EBH8OUabF9HdLnGRCVEzIW5aTISoxGDz+70LUwrTtx+LtjqNC1tW4Bts4oUDALsiqmM2+SdVZ11Pk3A6RMA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=Rr7zPsxI; arc=none smtp.client-ip=209.85.218.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	s=arc-20240116; t=1707446814; c=relaxed/simple;
+	bh=uUe+amIg+uEaXpnvgfdzSBCALwzIG6OmN6RhbryL6d0=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=C7MmKWTYyf0q3GFgbumlvTPPhRUgVLZ+e48xu58RyjUolKfGB8qvDjOUhrfxDeb23qL2ZAW2CXuJ3eXMkOJ2Po6ju1S/j1MoOSJ1w9JF5R0WSAPQFZb7i7uWg/+mlEaG7mpaY5+Z1bGlYYedP7JuObDmCJrN2ZKAQuv/r6RaIkg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=github.com; spf=pass smtp.mailfrom=github.com; dkim=pass (2048-bit key) header.d=github.com header.i=@github.com header.b=AufIQUFB; arc=none smtp.client-ip=209.85.214.177
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=github.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=github.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="Rr7zPsxI"
-Received: by mail-ej1-f54.google.com with SMTP id a640c23a62f3a-a388c5542e9so281959066b.1
-        for <git@vger.kernel.org>; Thu, 08 Feb 2024 18:30:37 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=github.com header.i=@github.com header.b="AufIQUFB"
+Received: by mail-pl1-f177.google.com with SMTP id d9443c01a7336-1d95d67ff45so3691275ad.2
+        for <git@vger.kernel.org>; Thu, 08 Feb 2024 18:46:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1707445836; x=1708050636; darn=vger.kernel.org;
-        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=Dv79cuN8WH2fw91oqmvKijlh1BtNI6lJm7iqkfJ383E=;
-        b=Rr7zPsxICjKsIJG+KrtmmXAOTJEaxSH6qxerxcEg4lIj4kpJ2ZL53qm0/9+GfvRx5/
-         VaXjrZamuiCkEyMRqIJCwuph5QUXseR1ltWJmCUZWljboTSKcKtazI2r7BJtCvSMGf1B
-         hct+neadgE7J4RmYoYAiotoaStxIcSnpOAvMNI8YapLAr2rZG0XtiEkSvPWSrsrSKT/a
-         ur1hZO2s9V7lEDA9orteBs9Vhs5jQwB+FwsIzoT4X58v9zfj64r2bMybIyBfsfGGfEu2
-         1WeLe/D77B/+Lv6MISRm42XX5FvKlT59umrL1WCL9R21cgqVouacjiFYVPVBF5RmndjE
-         cdGA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1707445836; x=1708050636;
-        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+        d=github.com; s=google; t=1707446812; x=1708051612; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=Dv79cuN8WH2fw91oqmvKijlh1BtNI6lJm7iqkfJ383E=;
-        b=SoMPwDz3yknozSZiFzF/89dvAGylwEhTvCB9PnF4G8+qII3fUaP5wU1fK9TjV8aw8D
-         Y6ujY4CP6UgguAMMrvHgyqgWe+NyocYEQOwPhh3XA2iKLdWyO8UIMzQ1OMfWCetHncW1
-         yvo17ErFTvtii3JnUfVlU9pZev4H5OQPlGmQgjECwMFXbxqKraOTf9TvYsS2q8HY0TAt
-         8kRpJlhvOBLGK5PNY0wqLlebZ7jxlqn1XqcnvQpromZ1XXXGMJ/3BKeulrDVji9JjPdC
-         74iGY3B7p/YsYLi6j3I7Q51rVX+xmTxnB7nhSXk7k0gU/xHbg8d3WXcv1Bko61dGfcM6
-         SZ9A==
-X-Gm-Message-State: AOJu0YzXANyop5VnOiUQqgFkJm1ZD1vvWLh6h3jwbSA74I8lfhUQP1h5
-	nO/hPF20M6iN46k20WXyOi3e8R5XrbRqDkbGs+EnMvOt0r2twUs4lxJ0m5FRuD0UYuZ3GtyoXvK
-	maOXHaVQVVCiHcJ4QHvQwKWMbKBKLZ09DIGuRTpYy/wudtzVowQ==
-X-Google-Smtp-Source: AGHT+IHV4BLFIy+4LfP4XFCMl85DZtO95nIEARDy8B7Wb/M3dDDC0xuWQyQr1m7SryIt3g7+zV6LgXxdK/z4W2/yzFE=
-X-Received: by 2002:a17:906:a299:b0:a38:158b:bbbc with SMTP id
- i25-20020a170906a29900b00a38158bbbbcmr179220ejz.38.1707445835690; Thu, 08 Feb
- 2024 18:30:35 -0800 (PST)
+        bh=r1TmJQbigyl2yPqmufw+zPmz24FwMH2GfB87Pxlu/DA=;
+        b=AufIQUFBiaR7pRlYN+v+c8YnrPydymNy0r/q8mLOLl7HD78DOgI0+teWsJ99gdk8Dr
+         7lXEqVVT6swemKPj0fzUAXbms7GKbkNb9hTOZIPqg74yu/rVgRJ2wUrSTgSIJuym6zb3
+         L7olcXa2V9B3SNYXjw/j61I3Dwp1FqrWNaE0oJY113wO2VwRVX3h06dHFOf5DLGFdZ80
+         ti/lQEUMsg6HFRRUrAHAy8TE0ZeGZG5NeRDM9YaIk1olM84Uhx+rdaF9aqQNhTje3QbZ
+         0nQ0gmcOo3yYW41yb0hvIgpNUk/cQw9no1wkcJ7PZsMDnI/74UovrXfnux7jsk+0FcOh
+         kCBw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1707446812; x=1708051612;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=r1TmJQbigyl2yPqmufw+zPmz24FwMH2GfB87Pxlu/DA=;
+        b=O+qOYS9PPd9LGQHl9RpzO7Ty6no4NC/qYhbRF8ksmY0V13jAkj7A3fpSbShIQJ3xJ0
+         nEEfAftHgwNxFd66Acju8WG0q52MB5SqgCpkQutxBT4RZUzJm7XWom0tlU/Z+1C5P+Lb
+         sUEiY1oqByno7V62cYHjPF7sH1OkIj2GkSkllH4y1SteulfEaAiVzoSOVplcCP+9EifB
+         jI3YPD7xJoTHqpfjszfKNOfRDpu7rIgQd4l/rLrCNAIOItGuyxs8Ai2s7JZcw3yDL3yD
+         hsNmKxsefrkdOAzGrg0gtIVT48RtAGNX/foIO0ynFSUNETkZBEHicVTJVMS4o8JEkDIQ
+         Payg==
+X-Gm-Message-State: AOJu0YykNRp/bwIO1Tirgf7K/q0GwocC3g1PpX4U5gDNmuMT7vg36U9E
+	bYkaCJ4ProQ7JqOXm6QXFVC+0M41zgLlAMgkLMRYOrjw/aJE380rxPyYDPaoxi635Jk9/Ryrxg=
+	=
+X-Google-Smtp-Source: AGHT+IHv1Dgs4GBKVOerCRc/6qorSMJyW3Wqbssbz4/6iPN39qW2CmfJSI0naH8/cbmX8PoTMiwVNA==
+X-Received: by 2002:a17:902:ea04:b0:1d9:f313:60a2 with SMTP id s4-20020a170902ea0400b001d9f31360a2mr401243plg.38.1707446812463;
+        Thu, 08 Feb 2024 18:46:52 -0800 (PST)
+X-Forwarded-Encrypted: i=1; AJvYcCUq5Y3JT6547UgTD4q4kh1w3f0GpCCGhxsD1B3NfsNyGw6uimdM/Jv+pnMYp4x+EHbWba6+KORysJof9TzVlAxL9ePYdU8G
+Received: from [192.168.50.41] (172-091-184-234.res.spectrum.com. [172.91.184.234])
+        by smtp.gmail.com with ESMTPSA id x5-20020a170902e04500b001d9641003cfsm465327plx.142.2024.02.08.18.46.51
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 08 Feb 2024 18:46:52 -0800 (PST)
+Message-ID: <5ed018da-2150-42d8-995e-59a35a2e3821@github.com>
+Date: Thu, 8 Feb 2024 18:46:50 -0800
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: Kyle Lippincott <spectral@google.com>
-Date: Thu, 8 Feb 2024 18:30:22 -0800
-Message-ID: <CAO_smVji5aGjx1V-EGbumRRpOuGY0SkXZUn9g4LxKmMO3aw=Sg@mail.gmail.com>
-Subject: libification: how to avoid symbol collisions?
-To: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] ref-filter.c: sort formatted dates by byte value
+To: Junio C Hamano <gitster@pobox.com>,
+ Victoria Dye via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org
+References: <pull.1655.git.1707357439586.gitgitgadget@gmail.com>
+ <xmqqzfwbps43.fsf@gitster.g>
+Content-Language: en-US
+From: Victoria Dye <vdye@github.com>
+In-Reply-To: <xmqqzfwbps43.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-While thinking about libification, I was wondering what we can/need to
-do about symbols (specifically functions, since our libraries will
-likely have few to no extern variables) that need to escape their
-translation unit (.c file) but that we don't want to risk colliding
-with symbols from our "host" project.
+Junio C Hamano wrote:
+>>     I came across a use case for 'git for-each-ref' at $DAYJOB in which I'd
+>>     want to sort by a portion of a formatted 'creatordate' (e.g., only the
+>>     time of day, sans date). When I tried to run something like 'git
+>>     for-each-ref --sort=creatordate:format:%H:%M:%S',
+> 
+> Hmph, this indeed is interesting ;-)
+> 
+> I wonder if there are other "sort by numeric but the thing could be
+> stringified by the end-user" atoms offered by for-each-ref
+> machinery.  IOW, is the timestamp the only thing that needs this
+> fix?
 
-For any header that we're offering up as an API boundary we can have
-prefixed names, but there are symbols from git-compat-util.h with
-simple and likely common names like `die`, `usage`, error`, etc. I'm
-far from an expert on linkers, but I'm under the impression that even
-though we'll only be #including git-compat-util.h in our own .c files
-(so the compiler for the host project wouldn't see them), the produced
-static library will still be "providing" these symbols unless we mark
-them as `static` (and if we mark them as `static`, they can't be used
-outside of their translation unit). This means that if the host
-project has a version of `die` (or links against yet another library
-that does), we run into what C++ calls a One Definition Rule (ODR)
-violation: we have two providers of the symbol `die` with different
-implementations, and the behavior is undefined (no error needs to be
-generated as far as I know).
+The only non-FIELD_STR atoms other than the date ones are "objectsize" and
+"numparent". "objectsize" has an optional ":disk" modifier, but that doesn't
+change formatting (just the value of the integer printed). "numparent"
+doesn't have any modifiers, it just prints the integer number of parents.
+Otherwise, everything is sorted by string value, so I think only the date
+atoms have this kind of mismatch between formatted value and sort value.
 
-With dynamic libraries I believe that we have more control over what
-gets exposed, but I don't know of functionality for this when linking
-statically. I'm assuming there is no such functionality, as projects
-like openssl (ty Randall for mentioning this) appear to have a
-convention of prefixing the symbols they put in their "public" API
-(i.e. in non-internal header files) with things like OSSL_, and of
-prefixing the symbols they put in their "private" APIs that can't be
-marked as `static` with `ossl_`. I'd love to be wrong about this. :)
+> 
+> Thanks.
 
-If I'm right that this is an issue, does this imply that we'd need to
-rename every non-static function in the git codebase that's part of a
-library to have a `git_` prefix, even if it won't be used outside of
-the git project's own .c files? Is there a solution that doesn't
-involve making it so that we have to type `git_` a billion times a day
-that's also maintainable? We could try to guess at how likely a name
-collision would be and only do this for ones where it's obviously
-going to collide, but if we get it wrong, I'm concerned that we'll run
-into subtle ODR violations that *at best* erode confidence in our
-library, and can actually cause outages, data corruption, and
-security/privacy issues.
