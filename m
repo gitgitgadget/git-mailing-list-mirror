@@ -1,76 +1,77 @@
-Received: from wout5-smtp.messagingengine.com (wout5-smtp.messagingengine.com [64.147.123.21])
+Received: from wfout1-smtp.messagingengine.com (wfout1-smtp.messagingengine.com [64.147.123.144])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2292365BA6
-	for <git@vger.kernel.org>; Fri,  9 Feb 2024 07:23:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.21
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4D5B65BA7
+	for <git@vger.kernel.org>; Fri,  9 Feb 2024 07:23:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707463404; cv=none; b=FECh1pBbVdQ7eQdRuTK6FLMpcUvFX5g/VHDVhMDiq7Wxa13lwAoqfibSpr1wBqHBaDaQHY/4RoHXCsW9KucNPPXB26Bpx1lfFhZBJG35Rkip/jRFllaD2dSxB4qu9IYnWYOLl8J0gkKVtMpF0JPDogoxdBVSqekuVr/eksLlSKc=
+	t=1707463408; cv=none; b=gVbLLCLSvhcyc14aN6wq4H9yzQ+HaeMWu65OVJlBDvcsdBkw41Sjdjw3PSZgqZ1CcIDD+BxAPLlHs6dQN9q2FfGvOONXaUjLQuMPF4JYnCki2EE39bR3fiFXlITGMVgnfAA6bvLEnozQdvV+6W5l6s63KvauuGOVqFhD2omdGX4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707463404; c=relaxed/simple;
-	bh=cIGGivZUOTOAsdXUCX5xfP57ESqBUQpSzCY3J96xxzg=;
+	s=arc-20240116; t=1707463408; c=relaxed/simple;
+	bh=gq2DETqOF6jaFMmYfh4Wsss+vevXJ+8yVB5yOAEAgnA=;
 	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=KodgMMLbVzdF9E6MMhrlBsw7quzYrhGocu305jRosoj5lXj/uyI+rqO42oBfdgG0OS7id0FFrMmq3hIDyOgnlN0te11O+T4nZLkuvMyTJu9WCy9J8y7GOONsx0jS4eZ9I/ccriOB9WGQ8NlzLVW+UXeCC+B6+Z14/Mk1iV9siSc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=EyYDG96o; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=i1hhkDJV; arc=none smtp.client-ip=64.147.123.21
+	 Content-Type:Content-Disposition:In-Reply-To; b=US5e/yrVpJwSgO5U6WLz3n25g1ACM70R+WK5m9ozJyXJfb1wHaUfQs5+rt9PylugV7gZVUBo/rVaGD+IrJOET5ff4KdQYwwuYdBwBv+b4R2U0rMEUDReI1Jxw+vJ0TYtdR4C3dQuCjmR+e60XYkCK3g4LfM5ELh7Tx7OJYToA/E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Fr7ZL9M7; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=HIPguQFx; arc=none smtp.client-ip=64.147.123.144
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="EyYDG96o";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="i1hhkDJV"
-Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
-	by mailout.west.internal (Postfix) with ESMTP id 51F2C3200A9C
-	for <git@vger.kernel.org>; Fri,  9 Feb 2024 02:23:21 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Fr7ZL9M7";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="HIPguQFx"
+Received: from compute7.internal (compute7.nyi.internal [10.202.2.48])
+	by mailfout.west.internal (Postfix) with ESMTP id DE9251C00091
+	for <git@vger.kernel.org>; Fri,  9 Feb 2024 02:23:25 -0500 (EST)
 Received: from mailfrontend1 ([10.202.2.162])
-  by compute2.internal (MEProxy); Fri, 09 Feb 2024 02:23:21 -0500
+  by compute7.internal (MEProxy); Fri, 09 Feb 2024 02:23:26 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1707463400; x=1707549800; bh=KpMF1qlFyO
-	E7YXi633QcknyHhIUv/RQ6NP4bMcXHe4k=; b=EyYDG96oZ+oiQ6b581JmWmQ9fW
-	U/MarCnY6w4j7tq4zNXS6B0w7rkg/wdyARMaQZQsaEImH9J/A3XHhL47YLZiKUjf
-	8p4YDwuXqf+0u1CCWiGFsIlHNk8yJ17q+ywYPHPCpNGs1De5FRjthReDJtx9eFuG
-	U3U/iMf3TQzfiZdBoQlk8WzTgr6n3GlEKu4/mx544NuGLH1EhgdKfECuw1mAxNSc
-	vXZnYxARq2qGMi2a617yfysAVEcC5k3rsOTdttxmDfwDnCw0RU0cWMzU5om+6pkk
-	V65mRjdPOo4qOpKs0nJu6vasdlZYlpikXvjlPXsKlgT+My0ozRgBJyn4vBTQ==
+	:subject:to:to; s=fm3; t=1707463405; x=1707549805; bh=D9M55pJmpT
+	yqrzRR1sFbbfV4E2MrrqVwsFUjFYQ+qgE=; b=Fr7ZL9M72hjZShqLcPxXiMYLY0
+	ftSrKXAkfMCFaEg9X+ZuVrHUuFzuFLSCQbwEL27b2OGeNZqtFvY4fNs8e8IDmiw/
+	baFBC7PF24+Pk74QQNwNP7myFhKqdSiBRcOJPA2vP1ddJv6U2fS8mrrEnAHIRpa5
+	sWagtbI42mbHwn5j2vV3bM0Q1wOojQ/9/KIt3KXlpdyYEhwu2P92PDIW1+OGUQ87
+	OHbhaqEq1A2pacEUtdLVSDl6M1eBd52OiEc3K/VvEp/aMgPClLt2NH7w30sDRQrq
+	y9FIBk3yt8gAKrLEecFzn09Fi0/CAOaAytTWn3l+CHc8ux0uU59lpIOQgQ6w==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1707463400; x=1707549800; bh=KpMF1qlFyOE7YXi633QcknyHhIUv
-	/RQ6NP4bMcXHe4k=; b=i1hhkDJVZllUeNdHAvWt4SGh68Lzwcy8YdSuZpdPQVnA
-	3Z9Bh6DEFkTfPYwvAhYV+q1+HN/IIupNXOyKiNMk9EWRdov13fU0YqBLG/yDYKGy
-	j7ZttRP48aAspY23ETKXvVnMqyIY6Q2ZyClVnqAxrhGk04DAUdbgqMzqzPLfYCtF
-	6PVPbtB3MmqiWJ7psyNzag41V49pDt2Gi2VzPI0Gsx4EZ/ace95ap1t7EIt3OnLO
-	jlLW1nYVz4CgsDee7B+z4hytrtqQDA4WQj3X3w+BFISW0G1Isl0UaI870XVVdJxc
-	nxYqPKrBbhvY8g+jfTsyVBcl+7+HxAC9eiRMyFPsYw==
-X-ME-Sender: <xms:6NLFZcnQVpbJ8OG8vxK0I-s5lTHQVBjDMD01GR67lPwKv1BphsRWTg>
-    <xme:6NLFZb2XzRH3aIwfwkInd7mH1bntJ1Acb2RXdeceRcA9xval5Zlf5XS9SXeRGB9-Y
-    n-26bTj1ow67eDNNQ>
-X-ME-Received: <xmr:6NLFZarBeQpGzNm3m9iJU09sdMQgDDa_OswTM_zzLOS14Uke9mv4nluvQ0qXZly3C1gsAVvmh2zgUrAyFOxuOiUk2jtlIB1M1CQccscvUOAxd9U>
+	fm3; t=1707463405; x=1707549805; bh=D9M55pJmpTyqrzRR1sFbbfV4E2Mr
+	rqVwsFUjFYQ+qgE=; b=HIPguQFxSBT2tH9Bfz46rfQVNwf26mHgMS+fYm6L7KTb
+	xc0hh0ItemqRfCIvF8wcZ1lz03bsYaJ/nr7Lq4YQN5D7iEC6LnjgpCf+F6/SuIER
+	SNgnkLD3CNxGk1qAjNXxyCwa1q4tgGAMCEL/+BEE9BsIxEZ1KQm2CeZZdGl4bjjD
+	7v6ruPuP9gEyyl8T1rQqtjkRyZySxCKDcVYqQ9jad4xLwZ7A0Xz/A9dq6IhtMAIo
+	Vl3KSDQmIwJfAD/J+6ezyB7RudRWYIZsNiw+nOWBoN3qGsd+PZ4UobfdoSlprqcA
+	aOR3K5rqaBQo2mXeD/PiZbg4rcV4srki+9odmV0SEA==
+X-ME-Sender: <xms:7dLFZRVb5c2VKjSIc-vgs2le2vxtcUYYVC7moFGLAeRok7mTDzxmNw>
+    <xme:7dLFZRnCzi_G1va9-pO0pv18SWUBPhm59V5pieuCcf-e6SQQDsWUSJ5BSxtk3fc9m
+    cu0SJgcZ0wo_OtLzQ>
+X-ME-Received: <xmr:7dLFZdZy17EhZUVV05lOuZ7ZkrRqiA3Y_2XbqdeliPUpM3-k_Rp41O17Co6Y5fRDuyWYyMh3Nb4lQwBtFDgj4Ymz7RA4eOzm4VpAD_HLCaq4MS0>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrtdehgddutdegucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
     uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvuffkfhggtggujgesghdtre
     ertddtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehp
     khhsrdhimheqnecuggftrfgrthhtvghrnhepheeghfdtfeeuffehkefgffduleffjedthf
-    dvjeektdfhhedvlefgtefgvdettdfhnecuvehluhhsthgvrhfuihiivgeptdenucfrrghr
+    dvjeektdfhhedvlefgtefgvdettdfhnecuvehluhhsthgvrhfuihiivgepvdenucfrrghr
     rghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimh
-X-ME-Proxy: <xmx:6NLFZYmdcRNa5MHvzsS_juTbegDp6s36kXiOj2FCdrI0inHd4TT7WA>
-    <xmx:6NLFZa3teJ9dmbx40NS9uiO8AY49y2UqQrosiBXtyMYHTF543pq_fw>
-    <xmx:6NLFZfs8aS79CAhhPMR_BOPQNfpPrJqr2qc1DJV6Vvt5ZD9ppQ931A>
-    <xmx:6NLFZf-p2bS0DqXalVj2ktjTN-jpi--8c8EqjUa9HSj7l4XQXOGcUA>
+X-ME-Proxy: <xmx:7dLFZUWVEwCr1WBl3kz2VtbtlinsseRBEs3dztfw-ssGs2nbDiNmkQ>
+    <xmx:7dLFZblQUk7h8I0J4hjJGWwkqWJAh_HfUSsaPk9jTpcytW9GtZ7THg>
+    <xmx:7dLFZRcxBad0RXXQnqq_jJenYsRLuyozWtl42x6kj9U3wi0PfGlOqg>
+    <xmx:7dLFZTskjLVAMKaaBSQ5Mtzc8FKm_DQDu_gg3J1M9d0YBwXGd7lM8u17etM>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Fri, 9 Feb 2024 02:23:20 -0500 (EST)
+ <git@vger.kernel.org>; Fri, 9 Feb 2024 02:23:24 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id b951426a (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	by vm-mail (OpenSMTPD) with ESMTPSA id d19cf47d (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
 	for <git@vger.kernel.org>;
-	Fri, 9 Feb 2024 07:19:44 +0000 (UTC)
-Date: Fri, 9 Feb 2024 08:23:18 +0100
+	Fri, 9 Feb 2024 07:19:48 +0000 (UTC)
+Date: Fri, 9 Feb 2024 08:23:22 +0100
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
-Subject: [PATCH 3/7] t1400: exercise reflog with gaps with reftable backend
-Message-ID: <9d8eed354ee3f0c9f66c22d92afd4c4c80f102e4.1707463221.git.ps@pks.im>
+Subject: [PATCH 4/7] t1404: make D/F conflict tests compatible with reftable
+ backend
+Message-ID: <70c6f980126aabb2ade336861e816cf1fe6e9110.1707463221.git.ps@pks.im>
 References: <cover.1707463221.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -79,80 +80,203 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="D9gFv0dhVyBD9j0i"
+	protocol="application/pgp-signature"; boundary="xwORT3AxbzUM7lXm"
 Content-Disposition: inline
 In-Reply-To: <cover.1707463221.git.ps@pks.im>
 
 
---D9gFv0dhVyBD9j0i
+--xwORT3AxbzUM7lXm
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-In t1400, we have a test that exercises whether we print a warning
-message as expected when the reflog contains entries which have a gap
-between the old entry's new object ID and the new entry's old object ID.
-While the logic should apply to all ref backends, the test setup writes
-into `.git/logs` directly and is thus "files"-backend specific.
+Some of the tests in t1404 exercise whether Git correctly aborts
+transactions when there is a directory/file conflict with ref names.
+While these tests are all marked to require the "files" backend, they do
+in fact apply to the "reftable" backend as well.
 
-Refactor the test to instead use `git reflog delete` to create the gap
-and drop the REFFILES prerequisite.
+This may not make much sense on the surface: D/F conflicts only exist
+because the "files" backend uses the filesystem to store loose refs, and
+thus the restriction theoretically shouldn't apply to the "reftable"
+backend. But for now, the "reftable" backend artificially restricts the
+creation of such conflicting refs so that it is a drop-in replacement
+for the "files" backend. This also ensures that the "reftable" backend
+can easily be used on the server side without causing issues for clients
+which only know to use the "files" backend.
+
+The only difference between the "files" and "reftable" backends is a
+slightly different error message. Adapt the tests to accomodate for this
+difference and remove the REFFILES prerequisite so that we start testing
+with both backends.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- t/t1400-update-ref.sh | 14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+ t/t1404-update-ref-errors.sh | 37 +++++++++++++++++-------------------
+ 1 file changed, 17 insertions(+), 20 deletions(-)
 
-diff --git a/t/t1400-update-ref.sh b/t/t1400-update-ref.sh
-index 3294b7ce08..3aeb103d34 100755
---- a/t/t1400-update-ref.sh
-+++ b/t/t1400-update-ref.sh
-@@ -426,15 +426,15 @@ test_expect_success 'Query "main@{2005-05-28}" (past =
-end of history)' '
- rm -f expect
- git update-ref -d $m
-=20
--test_expect_success REFFILES 'query reflog with gap' '
-+test_expect_success 'query reflog with gap' '
- 	test_when_finished "git update-ref -d $m" &&
-=20
--	git update-ref $m $F &&
--	cat >.git/logs/$m <<-EOF &&
--	$Z $A $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> 1117150320 -0500
--	$A $B $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> 1117150380 -0500
--	$D $F $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> 1117150680 -0500
+diff --git a/t/t1404-update-ref-errors.sh b/t/t1404-update-ref-errors.sh
+index 00b7013705..98e9158bd2 100755
+--- a/t/t1404-update-ref-errors.sh
++++ b/t/t1404-update-ref-errors.sh
+@@ -92,9 +92,6 @@ df_test() {
+ 	else
+ 		delname=3D"$delref"
+ 	fi &&
+-	cat >expected-err <<-EOF &&
+-	fatal: cannot lock ref $SQ$addname$SQ: $SQ$delref$SQ exists; cannot creat=
+e $SQ$addref$SQ
 -	EOF
-+	GIT_COMMITTER_DATE=3D"1117150320 -0500" git update-ref $m $A &&
-+	GIT_COMMITTER_DATE=3D"1117150380 -0500" git update-ref $m $B &&
-+	GIT_COMMITTER_DATE=3D"1117150480 -0500" git update-ref $m $C &&
-+	GIT_COMMITTER_DATE=3D"1117150580 -0500" git update-ref $m $D &&
-+	GIT_COMMITTER_DATE=3D"1117150680 -0500" git update-ref $m $F &&
-+	git reflog delete $m@{2} &&
+ 	$pack &&
+ 	if $add_del
+ 	then
+@@ -103,7 +100,7 @@ df_test() {
+ 		printf "%s\n" "delete $delname" "create $addname $D"
+ 	fi >commands &&
+ 	test_must_fail git update-ref --stdin <commands 2>output.err &&
+-	test_cmp expected-err output.err &&
++	grep "fatal:\( cannot lock ref $SQ$addname$SQ:\)\? $SQ$delref$SQ exists; =
+cannot create $SQ$addref$SQ" output.err &&
+ 	printf "%s\n" "$C $delref" >expected-refs &&
+ 	git for-each-ref --format=3D"%(objectname) %(refname)" $prefix/r >actual-=
+refs &&
+ 	test_cmp expected-refs actual-refs
+@@ -191,69 +188,69 @@ test_expect_success 'one new ref is a simple prefix o=
+f another' '
 =20
- 	git rev-parse --verify "main@{2005-05-26 23:33:01}" >actual 2>stderr &&
- 	echo "$B" >expect &&
+ '
+=20
+-test_expect_success REFFILES 'D/F conflict prevents add long + delete shor=
+t' '
++test_expect_success 'D/F conflict prevents add long + delete short' '
+ 	df_test refs/df-al-ds --add-del foo/bar foo
+ '
+=20
+-test_expect_success REFFILES 'D/F conflict prevents add short + delete lon=
+g' '
++test_expect_success 'D/F conflict prevents add short + delete long' '
+ 	df_test refs/df-as-dl --add-del foo foo/bar
+ '
+=20
+-test_expect_success REFFILES 'D/F conflict prevents delete long + add shor=
+t' '
++test_expect_success 'D/F conflict prevents delete long + add short' '
+ 	df_test refs/df-dl-as --del-add foo/bar foo
+ '
+=20
+-test_expect_success REFFILES 'D/F conflict prevents delete short + add lon=
+g' '
++test_expect_success 'D/F conflict prevents delete short + add long' '
+ 	df_test refs/df-ds-al --del-add foo foo/bar
+ '
+=20
+-test_expect_success REFFILES 'D/F conflict prevents add long + delete shor=
+t packed' '
++test_expect_success 'D/F conflict prevents add long + delete short packed'=
+ '
+ 	df_test refs/df-al-dsp --pack --add-del foo/bar foo
+ '
+=20
+-test_expect_success REFFILES 'D/F conflict prevents add short + delete lon=
+g packed' '
++test_expect_success 'D/F conflict prevents add short + delete long packed'=
+ '
+ 	df_test refs/df-as-dlp --pack --add-del foo foo/bar
+ '
+=20
+-test_expect_success REFFILES 'D/F conflict prevents delete long packed + a=
+dd short' '
++test_expect_success 'D/F conflict prevents delete long packed + add short'=
+ '
+ 	df_test refs/df-dlp-as --pack --del-add foo/bar foo
+ '
+=20
+-test_expect_success REFFILES 'D/F conflict prevents delete short packed + =
+add long' '
++test_expect_success 'D/F conflict prevents delete short packed + add long'=
+ '
+ 	df_test refs/df-dsp-al --pack --del-add foo foo/bar
+ '
+=20
+ # Try some combinations involving symbolic refs...
+=20
+-test_expect_success REFFILES 'D/F conflict prevents indirect add long + de=
+lete short' '
++test_expect_success 'D/F conflict prevents indirect add long + delete shor=
+t' '
+ 	df_test refs/df-ial-ds --sym-add --add-del foo/bar foo
+ '
+=20
+-test_expect_success REFFILES 'D/F conflict prevents indirect add long + in=
+direct delete short' '
++test_expect_success 'D/F conflict prevents indirect add long + indirect de=
+lete short' '
+ 	df_test refs/df-ial-ids --sym-add --sym-del --add-del foo/bar foo
+ '
+=20
+-test_expect_success REFFILES 'D/F conflict prevents indirect add short + i=
+ndirect delete long' '
++test_expect_success 'D/F conflict prevents indirect add short + indirect d=
+elete long' '
+ 	df_test refs/df-ias-idl --sym-add --sym-del --add-del foo foo/bar
+ '
+=20
+-test_expect_success REFFILES 'D/F conflict prevents indirect delete long +=
+ indirect add short' '
++test_expect_success 'D/F conflict prevents indirect delete long + indirect=
+ add short' '
+ 	df_test refs/df-idl-ias --sym-add --sym-del --del-add foo/bar foo
+ '
+=20
+-test_expect_success REFFILES 'D/F conflict prevents indirect add long + de=
+lete short packed' '
++test_expect_success 'D/F conflict prevents indirect add long + delete shor=
+t packed' '
+ 	df_test refs/df-ial-dsp --sym-add --pack --add-del foo/bar foo
+ '
+=20
+-test_expect_success REFFILES 'D/F conflict prevents indirect add long + in=
+direct delete short packed' '
++test_expect_success 'D/F conflict prevents indirect add long + indirect de=
+lete short packed' '
+ 	df_test refs/df-ial-idsp --sym-add --sym-del --pack --add-del foo/bar foo
+ '
+=20
+-test_expect_success REFFILES 'D/F conflict prevents add long + indirect de=
+lete short packed' '
++test_expect_success 'D/F conflict prevents add long + indirect delete shor=
+t packed' '
+ 	df_test refs/df-al-idsp --sym-del --pack --add-del foo/bar foo
+ '
+=20
+-test_expect_success REFFILES 'D/F conflict prevents indirect delete long p=
+acked + indirect add short' '
++test_expect_success 'D/F conflict prevents indirect delete long packed + i=
+ndirect add short' '
+ 	df_test refs/df-idlp-ias --sym-add --sym-del --pack --del-add foo/bar foo
+ '
+=20
 --=20
 2.43.GIT
 
 
---D9gFv0dhVyBD9j0i
+--xwORT3AxbzUM7lXm
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmXF0uUACgkQVbJhu7ck
-PpQEbw/+KN6TXEQ2xOIlUb8ZOH9OmRoUsUBZDPloqmlJp5636eDet/pvcc2bQQPw
-Kv2rFoFmxF03UZHO0y/h5EysMFJDjx6f227/i3QIX1lpjtC28iF89di+BadDCKXk
-ryyiym7Q6krAqAQu0YsVchA+3dhe6tbqb1ThodHI1n+MKg5kT7FqWOTfTIiizqin
-tPmLbR6W4i1MintpwyEza5+KuOHNw9c3zIaydUv+tLNlNXg0D6vZR8QyRVzLd/0j
-V07C1HDEupj1qqqC+38KW6RmnotGFsHk9G96QoZct+9y97J9fHg1rHah4E99ihKS
-pSbOrqs92k1E61U6DLiIPsnRsZwZDlnjk2FC/clotcoriBRBSuTYIlyDjK7h1OS+
-OrbiaK0ehglBKWbSBoGEhm0Eq3H2r9CE5VZDuL5iDSkEOtjs6lIZu3jnUWMtL/qZ
-AY8K66fsOGiU7vbLlzXT9QddXVDnC5+rg5nt/VTb+MjCz3yufgsIFglgJeqduWBW
-hUUMI7sx3qsROQkGMY7bctTXg0/ffzCyC8X8tpOgebdlD4t0whmYJplx+z23Zf72
-Om5qC557vcycO+YCh/382+QTW2e+mGsefHTwzTIWGen/40+IB4sBEkdUAvMevxxT
-2Tg7G9IRyTteCS0D8NSg4thEaFIuuHm/BtcZO5pZI36Tb2potJc=
-=JWA4
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmXF0ukACgkQVbJhu7ck
+PpSHkA//dT4jR5Q0ZdSjA+uJDZYbyaO+rc2GKVR4fnz48dvQQguLMzAHrZiQib/K
+7KkBQKAHU4K4RIAi0zeXaucioXCZeg8Nq5O0G6NooWnCy4rUreH8NRp7JOuoYFJy
+y7lxUfNikHLKy4tFkJOPlpmPWGq2XHxTQMg7ZcyEhwF8e6scU75ton/e2g2suABH
+FdoCubCbBbB4frqAZ9iw/UuIVbuE3rwSgV2iJacN/VxOSPztyW2haU87Latv5Xgt
+J9sevZqmju2hMeNGnf5eF3excrJ695dDtH5nDTMmxYh9I/ijh85SzS+JxL4HDup9
+bj7ZGyMDgbDFmNUJOGZCPBDHcfq7NU6TVZHcoKotX/0nmeEszdn6L2FWzXGHCiWX
+3Ar5rbhAZjVHshUz+KMYIectXOUBPHnOHT/NQ7+iuMKIQHDfUmCkUPCGutrRm0RU
+l3GO3fkt27xBV2ESZpN/Npp7q09oZr4FGO0KUIA1odeOPFq65Q7SSd2o/m/UPziN
+ZNn6ptyGb8eR73sAWH7r8hrpqxXJCqhvntfZXseZhuNwx6quuvfsnUsnyiCtA/Vi
+qR43c6eHMWGSVkKV9jorKO1pJAHf9QU+a5QScOUb9S3buzPzkbfmffrtYrkUKysN
+3nwSd1/JNymBFEFtR9vSojMIIsLaeZFSBlTtypiE/IJMuykebd4=
+=EESI
 -----END PGP SIGNATURE-----
 
---D9gFv0dhVyBD9j0i--
+--xwORT3AxbzUM7lXm--
