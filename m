@@ -1,122 +1,140 @@
-Received: from mail-ed1-f54.google.com (mail-ed1-f54.google.com [209.85.208.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mout.web.de (mout.web.de [217.72.192.78])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5778E54F86
-	for <git@vger.kernel.org>; Fri,  9 Feb 2024 19:57:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1270ACA66
+	for <git@vger.kernel.org>; Fri,  9 Feb 2024 20:37:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.72.192.78
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707508633; cv=none; b=pp6KpXQcDq3sbwFkRi2ANHzXCzCgWh/OY19M8ZaD/6HAeC43ZHcO6o13rH9LXhH2T0XeAZuIQXSb9IkCiwVs/wsL4Wmv3u2tb0WlKmIy0FD1ognkhuCiT71OXEolsFNqmM9sHxWLT8b8fkuq96rOeGaKC1vN0cVVBVt6rFiyd1c=
+	t=1707511024; cv=none; b=CrA2jeQeEhcyXUxFQC1X9oj/+mv+klLRNbdC37kqPD5TVFsIFdUhyTRnZb+waiNgkkgGG8IAIEoWi9IBmlv2mWofg61GZv6Yzuw/hrz6Vn+difFXwKsUK5zrUt4NlCHgkSYCKV/ikg+HQInx4uEgrbgc9dqSEh9GUfx0J8Ofonc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707508633; c=relaxed/simple;
-	bh=1dlJNd3TfBABcRgItH0o+73LFjfMYUomxr0/w/FCoLE=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=h02hxlJLdveCjjFETc7u9SrXgqzy1aWN7nSfecTEvKPnm5cRsq3hT6sP7JbcqwP1R7th3PJzqJVqIU2hvVFlGqGp1iJo+Q64uzqyO7GKfTarhCf3EmRrp56EtDu1A2y4yozaygtsZhVlmipNZr2qv4f4AAxSNl1y0wfc3KVmmnQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=Ovnq3Xc6; arc=none smtp.client-ip=209.85.208.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	s=arc-20240116; t=1707511024; c=relaxed/simple;
+	bh=fM0GTAsgMbg4fQ7aGF72rrfpV0dIpdySiFKqjnEl9gg=;
+	h=Message-ID:Date:MIME-Version:To:Cc:From:Subject:Content-Type; b=opJC9zGnrdhSYAvikMUjI/YKNyFhvtYsOvZuvLk2NaHdoXRrFf5UUMs1wGrUMR/rd/hOP3DCRoX/EtnZhxNlvaWf7FYvCmBYA3HbjTggQXBF/lB0knrYHdfAsQCzqjoHhuNEYyak2M9XsWJ3uTx7QCOBjJ8JoGwLI3Zw59tco18=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b=hktkhEYj; arc=none smtp.client-ip=217.72.192.78
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="Ovnq3Xc6"
-Received: by mail-ed1-f54.google.com with SMTP id 4fb4d7f45d1cf-5611e54a92dso1739028a12.2
-        for <git@vger.kernel.org>; Fri, 09 Feb 2024 11:57:11 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1707508629; x=1708113429; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=0vvSyYPijVEB9Ujgvqwh0PVZCm0zetE6z2l9vkRpsn0=;
-        b=Ovnq3Xc6jYZEUKNHd1q9q7qSvAsYhngHCN06PYwKJ86lcmk3yOWiQ1Pw2G9zsAtXOw
-         lsQ4lQwzlSyGwQxorTmTOHQaGzMzqUrMgx9ffCGRZwnmIjbgwtthLzziIAciiEEWgdTe
-         THRTeOnaTpY+yV0llDx3XCTdfukiZmd5R5sHqus1KEmR2809GNK8oOsqWf/3kdguppbC
-         vctnpFeO/MSfR641tol0JofmA8bWNt6rsZ7TY4xlLaTn9KsskJQ22Hu/OfwPw5KZe0HZ
-         zCz9CiHFYLPsr4YZpiUImztBLPoC9Zjbtvv8fsO7t9BS09Vdp8iGQ0wjRbyQnem+fWD1
-         00OQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1707508629; x=1708113429;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=0vvSyYPijVEB9Ujgvqwh0PVZCm0zetE6z2l9vkRpsn0=;
-        b=Mgcb7WTLQr2Ka1hdblORF+35fRYM9DfT1ZJtMTNwg545+uevQbudmMzt+AgKplmlIr
-         trRqEPb9o6diMfTkcnkFJ/Elgi7oGkfwhHXGiveNweDDDQS89kr6gnE+1CFN/IgLLZYr
-         pE3QzGI8DpI30YDB92JbI0dqwLYJipoE3dtu1WiqnEgtVFRACIbjZnjsLj3Lrp4iQEPd
-         jVbDH8Q78ol8wrqJokGZSE/i9WPk5gjt8uAQ1rOMzG5w6Gh2z//U7bJgWZjBGus9AL6J
-         wcIXOZZOqoWqycqv7gF49nOWp/PLamFVUSZ3waXHmplGlC3NJm8BI2HFRmO5VoMq6QGk
-         qiKQ==
-X-Gm-Message-State: AOJu0YwkaHl0G+jUsIx44xBhB0QTTBI5IBXTARElml33RFyIH2kkOkBe
-	/ACjo8veNYvQ290oJvyHGa8O8S0Tud7UvI3+8wQJyiDpw/4/2kUtbPV0HeTXurixdewFAv/AVgL
-	DAeZ8jehInx+7MWdXw1mg/MH3gdvpTmf8wCc3
-X-Google-Smtp-Source: AGHT+IGOBHiJ/N/rhnRwslHQoYRUcM4EsR4Z95ukiFvQ3KnPTWjostvDJ+xW4jhxRqko67juiI+FKIfnw2zJzlMcgGA=
-X-Received: by 2002:a17:906:4095:b0:a38:6d3:ac5c with SMTP id
- u21-20020a170906409500b00a3806d3ac5cmr67261ejj.48.1707508629330; Fri, 09 Feb
- 2024 11:57:09 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b="hktkhEYj"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de; s=s29768273;
+	t=1707511001; x=1708115801; i=l.s.r@web.de;
+	bh=fM0GTAsgMbg4fQ7aGF72rrfpV0dIpdySiFKqjnEl9gg=;
+	h=X-UI-Sender-Class:Date:To:Cc:From:Subject;
+	b=hktkhEYjHy9jOF2iTiVJXO2F5HwGVv94H0i4PcS420Sy0FrfEG+WrlnS2aeVwKod
+	 sC/oQDBZK7vqf5rH+x/c7AoAZjLHGgOpj0Tx8eVdu6ont7q5M41q34KY04087cK/y
+	 er0gsG9UIdVAbaTbRo+PHFtYar2GnnAABWILHeKpYPoBQTAZPqJ+rRzeS9I3H9oTg
+	 5ZluvFHj8aqsy2BeI0Bu1djQG6iDewlz/TZxrhA0Vhe7KizemTMWSlMZAekVicutn
+	 Osn2rsKZp9sSRU3P2I65ffLbCt4Zecx2kE5ZyajdZvkGdxtm6xv1GSRuxMyjOzKgf
+	 JaZVA466FXfY4QIKVg==
+X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
+Received: from [192.168.178.29] ([79.203.17.81]) by smtp.web.de (mrweb105
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 1MPrPV-1rL9is2bBb-00MsVA; Fri, 09
+ Feb 2024 21:36:41 +0100
+Message-ID: <ff0db7e3-abce-44ea-a1e3-16e1fdaf4c75@web.de>
+Date: Fri, 9 Feb 2024 21:36:40 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.1650.git.1707143753726.gitgitgadget@gmail.com>
- <CAO_smVhrMn=-uF1B6+RA8A+VLCEN=o57zbQPtr8hpxRKY=qJRQ@mail.gmail.com> <5fd95ae0-cd50-ddc4-5095-ee953c2640b3@gmx.de>
-In-Reply-To: <5fd95ae0-cd50-ddc4-5095-ee953c2640b3@gmx.de>
-From: Kyle Lippincott <spectral@google.com>
-Date: Fri, 9 Feb 2024 11:56:52 -0800
-Message-ID: <CAO_smViXpcwo6_zd3iqpM175nEnH_mjca7XqJ=V4bBobY_02wQ@mail.gmail.com>
-Subject: Re: [PATCH] Always check the return value of `repo_read_object_file()`
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc: Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla Thunderbird
+Content-Language: en-US
+To: Git List <git@vger.kernel.org>
+Cc: Chandra Pratap <chandrapratap376@gmail.com>,
+ Chandra Pratap <chandrapratap3519@gmail.com>, Jeff King <peff@peff.net>,
+ Kyle Lippincott <spectral@google.com>, John Cai <johncai86@gmail.com>,
+ Junio C Hamano <gitster@pobox.com>
+From: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
+Subject: [PATCH 1/2] receive-pack: use find_commit_header() in
+ check_cert_push_options()
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:rbjvgsWTxCk5BzuevGjz0+OHxiftrDNsWtxQZxEmRyYEZ6bnXFD
+ 8Bn/1ipexNU0TpY1/OxCo09IIDkkme2i327D+tKG8dwy80o06DOp1ldPvwUL7oQVwc8X3+q
+ BCfgWsUf8AkzaAdOR2w0iSmXdTm2TJGuCd5tN4Gc6IOOouLTtIO0KYY5hlIIWygTQJYmDt9
+ Af0XWQ0sHfMGxKI6cgnRA==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:EpnHZpVT+Eg=;3KEZT4Wdi+v7qxXX4A1SgRFkyKI
+ C6zbCbOx9qGeWemd5OdrT98Mv3FgymyIOjfpnsZ/nVqczWP/50Id/z+CmuUZKJtB9+EDWjsnE
+ lpUVGpNpRhEzjNpCcEoVAYtdcUyqTkMVmxA0hsm5MhRjV7qn/myrw2TL2v5U2nuwqwWcEBD/b
+ L/JT9fB7buXV7SwsEKPq/2n6p7boQB9p+XOcaPFme3DPHX2jrQw5zaNMFWyWFzJn0n1A6oaiK
+ EZrJGduj6YLfDLVLbp1bT7e4FDeRbgymkjL6UwfrX/VZq6k6YlTcKhyF/eUKZUBrMnezM13Gw
+ SXAWpYCrxC+rKm28Z/UR2RBZ0xZKzoZEanOvOcA+eWeihjrL3Xy9LvcEWNJd+1TrjSz6tyIVr
+ oTzIxzR+fmydgZC+8Eh5WAe6943w8w9qvMd2OIQ53lNaJqAnX60KnXnq0mdcV5+lpItY2tmLw
+ z3mP5DWhuDatpQuD8F1Q/j+/oNVH3DtQSwMaeKakmHyqnYhpT41z1FzAN6uhAN/w4eIuG9I0r
+ akL4KKowDiIoMyrfUVhnlScrEkuL8wVRL2C2qsYFWqbL67CM2lt+10jnx/CH88qGZN5lohUtp
+ HH4fvPElxV8R6xpmgTmyOTWBrIPosFYFGFbNWwJlqkOG1bkBIoHRGY66arWgtdwk3l9ffaVKW
+ ilj00fZHHnK3UpfFMdaeWuXcHGy22SQ6HFgexluVrQzNxjpZnxgXjvD6JBu4n7i8TIU7yHCN0
+ OARhx/PHUceXLU33bmuMr2LyLttqGq3Bg56PPs/VuwyY+LkO1kHfIv3WNa5KP78QyJkgvAOyX
+ M6+Zrrbg+BSs09uKed5xmMNTuAzK+aPiaEd+p4t63jps8=
 
-On Fri, Feb 9, 2024 at 12:06=E2=80=AFAM Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
->
-> Hi Kyle,
->
-> On Mon, 5 Feb 2024, Kyle Lippincott wrote:
->
-> > On Mon, Feb 5, 2024 at 6:36=E2=80=AFAM Johannes Schindelin via GitGitGa=
-dget
-> > <gitgitgadget@gmail.com> wrote:
-> > >
-> > > diff --git a/builtin/notes.c b/builtin/notes.c
-> > > index e65cae0bcf7..caf20fd5bdd 100644
-> > > --- a/builtin/notes.c
-> > > +++ b/builtin/notes.c
-> > > @@ -716,9 +716,11 @@ static int append_edit(int argc, const char **ar=
-gv, const char *prefix)
-> > >                 struct strbuf buf =3D STRBUF_INIT;
-> > >                 char *prev_buf =3D repo_read_object_file(the_reposito=
-ry, note, &type, &size);
-> > >
-> > > -               if (prev_buf && size)
-> > > +               if (!prev_buf)
-> > > +                       die(_("unable to read %s"), oid_to_hex(note))=
-;
-> >
-> > This changes the behavior of this function. Previously, it would not
-> > add prev_buf output, but still succeed. This now dies.
->
-> It does change behavior. The previous behavior looked up the note OID,
-> then tried to read it, and if it was missing just pretended that there ha=
-d
-> not been a note.
->
-> I'm not quite sure whether we should keep that behavior, as it is unclear
-> in which scenarios it would be desirable to paper over missing objects.
->
-> In GitGitGadget, I am a heavy user of notes and it wouldn't do any good t=
-o
-> have this behavior: It would lose information.
->
-> And even in scenarios where the `notes` ref is fetch shallowly, I would
-> expect all of the actual notes blobs to be present, and I would _want_ th=
-e
-> `git note edit ...` command to error out when that blob is not found.
->
-> Does that reasoning make sense to you?
+Use the public function find_commit_header() instead of find_header() to
+simplify the code.  This is possible and safe because we're operating on
+a strbuf, which is always NUL-terminated, so there is no risk of running
+over the end of the buffer.  It cannot contain NUL within the buffer, as
+it is built using strbuf_addstr(), only.
 
-Sounds good, thanks for talking through it with me.
+The string comparison becomes more complicated because we need to check
+for NUL explicitly after comparing the length-limited option, but on the
+flip side we don't need to clean up allocations or track the remaining
+buffer length.
 
->
-> Ciao,
-> Johannes
+Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
+=2D--
+ builtin/receive-pack.c | 24 +++++++++---------------
+ 1 file changed, 9 insertions(+), 15 deletions(-)
+
+diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
+index e36b1d619f..8ebb3a872f 100644
+=2D-- a/builtin/receive-pack.c
++++ b/builtin/receive-pack.c
+@@ -718,35 +718,29 @@ static const char *check_nonce(const char *buf, size=
+_t len)
+ static int check_cert_push_options(const struct string_list *push_options=
+)
+ {
+ 	const char *buf =3D push_cert.buf;
+-	int len =3D push_cert.len;
+
+-	char *option;
+-	const char *next_line;
++	const char *option;
++	size_t optionlen;
+ 	int options_seen =3D 0;
+
+ 	int retval =3D 1;
+
+-	if (!len)
++	if (!*buf)
+ 		return 1;
+
+-	while ((option =3D find_header(buf, len, "push-option", &next_line))) {
+-		len -=3D (next_line - buf);
+-		buf =3D next_line;
++	while ((option =3D find_commit_header(buf, "push-option", &optionlen))) =
+{
++		buf =3D option + optionlen + 1;
+ 		options_seen++;
+ 		if (options_seen > push_options->nr
+-		    || strcmp(option,
+-			      push_options->items[options_seen - 1].string)) {
+-			retval =3D 0;
+-			goto leave;
+-		}
+-		free(option);
++		    || strncmp(push_options->items[options_seen - 1].string,
++			       option, optionlen)
++		    || push_options->items[options_seen - 1].string[optionlen])
++			return 0;
+ 	}
+
+ 	if (options_seen !=3D push_options->nr)
+ 		retval =3D 0;
+
+-leave:
+-	free(option);
+ 	return retval;
+ }
+
+=2D-
+2.43.0
