@@ -1,129 +1,182 @@
-Received: from mout.gmx.net (mout.gmx.net [212.227.17.21])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f181.google.com (mail-pl1-f181.google.com [209.85.214.181])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B19BE2B9B3
-	for <git@vger.kernel.org>; Sat, 10 Feb 2024 10:35:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.21
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3066C364B7
+	for <git@vger.kernel.org>; Sat, 10 Feb 2024 10:43:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707561323; cv=none; b=NvgL+u3wUW4BKDarCsl2JIUk1aO2TLlA7JTucBT0kiwLNsbX/rKAS+f/fKa7stAl92zm65nqmmM21oebvDYn2DDHwNb2SV4o71AJ/3tjBR1jdPo9EopBlc4ofxeMDfek99jLXEFv42rs92P3DVZzPN58dDSJfNVqksEAuBE8Sew=
+	t=1707561807; cv=none; b=nt8+/YredwnxBuChDzxLzyPEh57lhTzpCK7Q5wSdDHca4XpPzVyUvLS1ESBjVKiXPUEf3G47c9ljRAAyMLLGBiqy5rnCaGWuDNJtMz+VxlqxPkp65TxsBWS7cc+DQfdyei2qD1lPrv+YtJkOzRaKpNHJRdVml73n3zg30V4n/Cg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707561323; c=relaxed/simple;
-	bh=v6lC/AMj9mUrO8F9aqNVmagYqjr5HejHXscdTB5EHTs=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:References:
-	 In-Reply-To:Content-Type; b=aG0Ta/sWxYObOvpA2lCXd+OISk7VP453hxkUAGwcTBt4RWXzrbgXgckqGPxW+E10rKBYeI/Pe20dzxyea+gGUCLh/yLuaVk5FtFcrjbDx8Hw0yRSrKNtM7HUyTTL7eR7wbdYQt7fI9nrmZa05PyhDw76gK6Cn1Q3QH9w4kzujuQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=toralf.foerster@gmx.de header.b=ceaOUJfr; arc=none smtp.client-ip=212.227.17.21
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
+	s=arc-20240116; t=1707561807; c=relaxed/simple;
+	bh=GZmBeAFEBKe/Ry/hWRDicwm3U97pwMuoT5/dfiourUM=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=XAahRchG9qmoB5QoA34TKSpclLRqaSV2uv3nJNY2Vv/6ux4ZD4WwBWaDVD1eB58Ib/2Rm8Ns+plY83eTf9nTdDZCkgHSVOy7k3Gx1DBGl+WudmDWRSb9tk1VJLzAnw+rSLlVNs1qjTIK1m8sSPZNc4C6kDfCtQVssa3i/O8B7t0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=WhWZ89kq; arc=none smtp.client-ip=209.85.214.181
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmx.de header.i=toralf.foerster@gmx.de header.b="ceaOUJfr"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.de; s=s31663417;
-	t=1707561318; x=1708166118; i=toralf.foerster@gmx.de;
-	bh=v6lC/AMj9mUrO8F9aqNVmagYqjr5HejHXscdTB5EHTs=;
-	h=X-UI-Sender-Class:Date:Subject:From:To:References:In-Reply-To;
-	b=ceaOUJfr07dXPLWDY9qcSRbfy2+NZp2xaVYcGVS4zcS7+w7DutJ/UrtvIa+jswoZ
-	 GORg+qk8rqiimZj4Fah1iOskShqzCIx/uCwsnQ4qRcPEatLmq2pRNwIhR7/5xmtvg
-	 WsTERK1UP0loIA+BUGfuP254ReXputPF5FC1opi0TGL6YEJC+K36Bl5z2hBEiyLEd
-	 o7WTTBjn5rNlyqtRgA7yEKryCi25etrEo0FsioIx+oDJROlqG3+mwEp07Pxw+ChJ5
-	 3heorUfIELNc2WPZten6/X/h37iNcNfsTWTfLcL5rbE0O1kBStRT5B+FFR4uUlF+e
-	 mtlsIhHV5eKFX6hB4w==
-X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from [192.168.178.33] ([77.1.190.122]) by mail.gmx.net (mrgmx105
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MhlKy-1r44ik36lk-00dm2P for
- <git@vger.kernel.org>; Sat, 10 Feb 2024 11:35:18 +0100
-Message-ID: <c936daec-df9f-44ab-8626-5f0813593246@gmx.de>
-Date: Sat, 10 Feb 2024 11:35:14 +0100
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WhWZ89kq"
+Received: by mail-pl1-f181.google.com with SMTP id d9443c01a7336-1d94323d547so16795395ad.3
+        for <git@vger.kernel.org>; Sat, 10 Feb 2024 02:43:25 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1707561805; x=1708166605; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=l3mWJb9dAGuxzmyHbYkSqfvm4fCOml4ojquX9CVlSks=;
+        b=WhWZ89kq3caQaRkq7vo9wmoyTLc3cNsBkON1jwFBElXU+Jw/C5mJx5Q+A1Zj+sSs+l
+         D3/vjZ+t9tp7XQ1uOAqT8dDGYTzNV5QHekFlKPuwCrhHMkBRul+RFyWjhb3nHOiS3JOp
+         nbnsq+7gUlv3wMxNMRpPS6C1aylkvucBFuaWpblgfUQOFDvTNS5AW/YLvjD/GUaKNfCh
+         68KgG7/3CsLjSNb1OOx1ZyLRsSnqCgSE4wZy/qc1x3aClau2yp5tePQsccl3laYpY2OA
+         k+QoI7djm5vdxFXlx/yiF/b+2Kwlx/Gh8Yync3McBOmhr46RBK0gHA0T3v7f67fDwROo
+         eFxw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1707561805; x=1708166605;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=l3mWJb9dAGuxzmyHbYkSqfvm4fCOml4ojquX9CVlSks=;
+        b=QzOohhYKt72ValmFQF2BpiOw44RAZElswW4IA3CgyPHNbh3xRtIkNc1odCkHuop9zc
+         1121A1dp92fMqBdh8YD1yv5R6xqmmexFvKy6AQ5cyObWRvPzaLk/72TBk4Hi6dlGNEZn
+         PQPXxHEXRpr+B+HZD7C3b9/TMD7jtMWAwHW9wc704YqqMDkxaMb66c8lNft/z1sJpOM5
+         38sVnhNI7621F+m9RH/HeyXlxprZxiCDkpZPAHxO5gFh98CwZCfSdFhOaFj3IRjOnDnD
+         +Xybu7SOoyhSH7aLh55FoAXqBDbQU8scMVGmGUhvgSz8LuLbXJHJY4i8M+dgOMNXbAl4
+         KZwQ==
+X-Gm-Message-State: AOJu0YyrPoFMHFXniyr5Ls6BBu9Jb2fcd9LVqUkx5YdXHQvokuVP/iKS
+	/cqgV+Rb4BWwQGrFlnHvyi9RlkUg6nrO2dxMfHCxIHJeiudDQK10eCLzjDBmk3w=
+X-Google-Smtp-Source: AGHT+IHisiWBq2pliCUpKJ1MGogVugPLmw6uYpkYzXBfqp7BP36+UsXiG6tpZftfCyMEDkq/BbK0cA==
+X-Received: by 2002:a17:902:cec8:b0:1d7:15ea:4249 with SMTP id d8-20020a170902cec800b001d715ea4249mr2204437plg.7.1707561805224;
+        Sat, 10 Feb 2024 02:43:25 -0800 (PST)
+X-Forwarded-Encrypted: i=1; AJvYcCV7ntS6I3YmN221fDmc7dKApys5UWfbf4JRh+aK6VeP02JLSKSikcV/ZO+HTL7sRDG3W64UITKWH2ydaEJ11gP8ovhr4f8yFqevNE90aWUsIg205guLK1ZUSc7S8fYH1qtXI8xvbakixJFOfuRZGhZUj07B6YEkMMxc5KzrRu8GcQ582vokRigIqcriXEnyO/iv5GomTCs4euXGrGgWw1k0BNdyVuV9b5RgXembGfAuBBbMQ52PSMV2+61t1CFD5Jo119ki85UBKY8+Vux81xzmH3+90TaGup7UDvBsYWezutA8Y4FK6m3Ejf6YY+lmmLwKAomfTxeekI9aDTvsycK08niTuaf4JM8BBEfU7ZHIgq0NvLkYOS+5JWrYENOVU7B2IFOL7/FKUxo9Nh9v5zS61QmjufA166tV7pDSOR0xGejKcDgToiiaE78fAhdebRRdIay0cCpYK2io0c2l2AO0LoirEgVGRok0fNtxi8TxzH+SoMQfPcWfc4rTEtaS4LjvDUKx05XU1HWxvsDX/8X0ZImh4gThgxkZBrZrzKFyX86ofBG1xarN2TasrFWlQWjkh5ZGxAsDbdHNHgNpvlu6DFtDxby3ILSsntg2aYoTQj7HCUAH
+Received: from tigtog-proxy.localdomain.localdomain (144.34.163.219.16clouds.com. [144.34.163.219])
+        by smtp.gmail.com with ESMTPSA id jz8-20020a170903430800b001d95d1078fdsm2840853plb.56.2024.02.10.02.43.24
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Sat, 10 Feb 2024 02:43:24 -0800 (PST)
+From: Jiang Xin <worldhello.net@gmail.com>
+To: Git List <git@vger.kernel.org>,
+	Git l10n discussion group <git-l10n@googlegroups.com>,
+	Alexander Shopov <ash@kambanaria.org>,
+	Jordi Mas <jmas@softcatala.org>,
+	Ralf Thielow <ralf.thielow@gmail.com>,
+	Jimmy Angelakos <vyruss@hellug.gr>,
+	=?UTF-8?q?Christopher=20D=C3=ADaz?= <christopher.diaz.riv@gmail.com>,
+	=?UTF-8?q?Jean-No=C3=ABl=20Avila?= <jn.avila@free.fr>,
+	Bagas Sanjaya <bagasdotme@gmail.com>,
+	Alessandro Menti <alessandro.menti@alessandromenti.it>,
+	Gwan-gyeong Mun <elongbug@gmail.com>,
+	Arusekk <arek_koz@o2.pl>,
+	Daniel Santos <dacs.git@brilhante.top>,
+	Dimitriy Ryazantcev <DJm00n@mail.ru>,
+	Peter Krefting <peter@softwolves.pp.se>,
+	Emir SARI <bitigchi@me.com>,
+	Arkadii Yakovets <ark@cho.red>,
+	=?UTF-8?q?Tr=E1=BA=A7n=20Ng=E1=BB=8Dc=20Qu=C3=A2n?= <vnwildman@gmail.com>,
+	Teng Long <dyroneteng@gmail.com>,
+	Yi-Jyun Pan <pan93412@gmail.com>
+Cc: Jiang Xin <worldhello.net@gmail.com>,
+	Patrick Steinhardt <ps@pks.im>
+Subject: [L10N] Kickoff for Git 2.44.0 round #1
+Date: Sat, 10 Feb 2024 18:43:21 +0800
+Message-Id: <20240210104321.3303-1-worldhello.net@gmail.com>
+X-Mailer: git-send-email 2.32.0.rc3
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: cloning the linxu kernel repo at a VPS with small RAM
-Content-Language: en-US
-From: =?UTF-8?Q?Toralf_F=C3=B6rster?= <toralf.foerster@gmx.de>
-To: git@vger.kernel.org
-References: <2f773980-70ec-4ad0-a49c-3ac12c294a39@gmx.de>
-Autocrypt: addr=toralf.foerster@gmx.de; keydata=
- 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
-In-Reply-To: <2f773980-70ec-4ad0-a49c-3ac12c294a39@gmx.de>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:DSO/P129kna+b9Sv/HL8oFKO2YvOyxZPFwx//9gKjfGbEfKcgmz
- B2fZlGrVZE8dy48kucO5qvyQyaVGZlkcAZImjo9jnibwIhSBYbmsw/GbH7WH0Z5LzGwdlDO
- NfNOqBgbGyUwFdnInIsXa8kfx0uK8RKE7JKmDKGaR4DcxKA5IT1N2CzZgi0aqYvb/QSyyIo
- 5C2X93gFKlY0PzHnINMoA==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:g2w2/C1f4t0=;dfTIAy2wUj2chA9R5+9TjxIu8OW
- ByMYpZBZCk1eo0mKxOLPx4HJc4n2y02C2UDhP8m5MmjGfi/Whn05QSqV88A9bz/NovphoxN6u
- Q3dE09lcrdUYLyhTNpzDgsgQQwAyYaFMZ3n+vFZC/ImADf51vTuzS2/V4ZueqrPOa9XqxZEf5
- uDtjzUsZSKwhv2v5bNTubGNtGNLNlU8Z4xHJQuOdWK8iS6OmHzI4zsLqYl+1ZoDe1INMGsiVD
- Phozo9J6oqPKkdnO8J+8AQe7TakGI1iwpz9Z2bvTv0UOBa9NnatDmf56rell5/b9BuQE6jlJy
- sceaENn33iswAgbzMKkakLkbtzKNh42IHhtnuwsRqPpWS4+U5TVZAF/kJYjuU4EIyFzZS+tI2
- Dx+niMqKt7IT+Ou+7KlGUhPL1p3DBSvc3VzsGR8Ow8kosB2pUdiISKB+KnqEfNK6rboDwmgjW
- KeXtTQ3JZkKw0lpR4kwJ45l7cMlrbQyQKWPpi11StTtOqpeHDkGYWacsz/bmBy/qFf0rk4SSw
- ljLQyllRP+LSaRELPN1BnLvYM6Ql/VXtyO/2J7yJKXARJ3lp1FQgOzJzCmtRbnrGdFldw8jwb
- udo1pl7SiIKCwwUG8aNMmO5O26SRGFAcMVU+QrU8lpyQY4XU56XMYLgDBpf5Lw9NDlq41s2JC
- bB3p0CbBieLGdXl5+1z2PnyxU+SnCcONHUDRbVkI57SFDdM4MmMnendcyRDSjxnlZ5SxVISEt
- /J1QJy+bslXfVsDwR68UDVpctpBRdtMH2ny+9Ae7nKl31VfiKutUw2rAfVPwOWA3ZcMZc/AlN
- KU0pzLN01/vh0ffNFnWH1c88wKWi1vYteriWA8CY/pkmE=
+Content-Transfer-Encoding: 8bit
 
-On 2/8/24 18:32, Toralf F=C3=B6rster wrote:
->
-> Q:
-> I do wonder if Git could automatically try to deal with only 1.5 GiB
-> available=C2=A0RAM?
+Hi,
 
-Given that git fails for the linux kernel repo - where Git was used
-first in the wild (?) - it should definitely works for that repo even
-with a small RAM, right?
+Git v2.44.0-rc0 has been released, and it's time to start new round of
+git l10n.  This time there are 52 updated messages need to be translated
+since last release. Please send your pull request to the l10n coordinator's
+repository below before this update window closes on Sun, 18 Feb 2024. 
 
-=2D-
-Toralf
+    https://github.com/git-l10n/git-po/
 
+Our l10n helper program (git-po-helper) has been upgraded to v0.7.3 to
+detect typos on mismatched refspec (such as refs/ vs ref/) reported by
+Patrick. See [1]. Please check translations using git-po-helper before
+sending your PR.
+
+
+As of git 2.37, we (git l10n contributors) have a new l10n workflow. The
+following description of the new l10n workflow is from the "po/README.md"
+file.
+
+
+## The "po/git.pot" file is a generated file, no longer in the repository
+
+The l10n coordinator does not need to generate the "po/git.pot" file every
+time to start a new l10n workflow, and there is no "po/git.pot" file at all.
+
+Everyone can generate the "po/git.pot" file with the command below:
+
+    make po/git.pot
+
+But we can also forget about it. By updating our corresponding "po/XX.po"
+file, the "po/git.pot" file is automatically generated.
+
+
+## Update the "po/XX.po" file, and start to translate
+
+Before updating the "po/XX.po" file, l10n contributors should pull the latest
+commits from the master branch of "git.git". E.g.:
+
+    git pull --rebase git@github.com:git/git.git master
+
+Then update the cooresponding "po/XX.po" file using the following command:
+
+    make po-update PO_FILE=po/XX.po
+
+Translate the uptodate "po/XX.po" file, and create a new commit.
+
+
+## Refine your commits, send pull requests
+
+In the "po/XX.po" file, there are location lines in comments like below:
+
+    #: add-interactive.c:535 add-interactive.c:836 reset.c:136 sequencer.c:3505
+    #: sequencer.c:3970 sequencer.c:4127 builtin/rebase.c:1261
+    #: builtin/rebase.c:1671
+
+These comments with file locations are useful for l10n contributors to locate
+the context easily during translation. But these file locations introduce a
+lot of noise and will consume a lot of repository storage. Therefore, we
+should remove these file locations from the "po/XX.po" file.
+
+To remove file locations in the "po/XX.po" file, you can use one of the
+following two ways, but don't switch back and forth.
+
+ * Keep the filenames, only remove locations (need gettext 0.19 and above):
+
+        msgcat --add-location=file po/XX.po >po/XX.po.new
+        mv po/XX.po.new po/XX.po
+
+ * Remove both filenames and locations:
+
+        msgcat --no-location po/XX.po >po/XX.po.new
+        mv po/XX.po.new po/XX.po
+
+After squashing trivial commits and removing file locations in the "po/XX.po"
+file, send pull request to the l10n coordinator's repository below:
+
+    https://github.com/git-l10n/git-po/
+
+
+## Resolve errors found by the l10n CI pipeline for the pull request
+
+A helper program hosted on "https://github.com/git-l10n/git-po-helper" can
+help git l10n coordinator and git l10n contributors to check the conventions
+of git l10n contributions, and it is also used in GitHub actions as l10n CI
+pipeline to validate each pull request in the "git-l10n/git-po" repository.
+Please fix the issues found by the helper program.
+
+
+** Please note: The update window will close on Sun, 18 Feb 2024. **
+
+
+[1] https://lore.kernel.org/git/ZX_9nRYKVq0jT0Lp@tanuki/
+
+--
+Jiang Xin
