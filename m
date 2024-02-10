@@ -1,182 +1,142 @@
-Received: from mail-pl1-f181.google.com (mail-pl1-f181.google.com [209.85.214.181])
+Received: from mail-qt1-f174.google.com (mail-qt1-f174.google.com [209.85.160.174])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3066C364B7
-	for <git@vger.kernel.org>; Sat, 10 Feb 2024 10:43:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 456532EAF9
+	for <git@vger.kernel.org>; Sat, 10 Feb 2024 15:39:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707561807; cv=none; b=nt8+/YredwnxBuChDzxLzyPEh57lhTzpCK7Q5wSdDHca4XpPzVyUvLS1ESBjVKiXPUEf3G47c9ljRAAyMLLGBiqy5rnCaGWuDNJtMz+VxlqxPkp65TxsBWS7cc+DQfdyei2qD1lPrv+YtJkOzRaKpNHJRdVml73n3zg30V4n/Cg=
+	t=1707579578; cv=none; b=d8FrJ4Df4mJIr8Li7ooosW9MaVkFEiDNW2tz728+nzol2lCuPg2tlxBLie6J1WJ7A8HVFuMfdW3ifND5/iq/TlGIFCw/2ynmPmYrir0fZBt7F69SHE3xrI7+tsF/XFCwDqyoL7BAY06kfJBVNehiBoyVGflGMK6pHr1wwvLgwCg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707561807; c=relaxed/simple;
-	bh=GZmBeAFEBKe/Ry/hWRDicwm3U97pwMuoT5/dfiourUM=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=XAahRchG9qmoB5QoA34TKSpclLRqaSV2uv3nJNY2Vv/6ux4ZD4WwBWaDVD1eB58Ib/2Rm8Ns+plY83eTf9nTdDZCkgHSVOy7k3Gx1DBGl+WudmDWRSb9tk1VJLzAnw+rSLlVNs1qjTIK1m8sSPZNc4C6kDfCtQVssa3i/O8B7t0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=WhWZ89kq; arc=none smtp.client-ip=209.85.214.181
+	s=arc-20240116; t=1707579578; c=relaxed/simple;
+	bh=LqAZWo6wLWVcqASgx6f2kDBecYlDlAU6ct0LIWmQvgc=;
+	h=Subject:To:Cc:References:From:Message-ID:Date:MIME-Version:
+	 In-Reply-To:Content-Type; b=fquJogpnFwdEnDbvYewS0zl+E/ZiSacp3E1IvIk2qSq9cKqrwIrhX0mxBuvUaoS62mw3tkGgKaqUnFaAqdYkUZc52U5WXphhsKX96H+rLVwH0Gbf4s/LLuibzyK0KltdhhcN8FNDD/kpx+Rf/m7qv9bhUPVOAOvjQyZSulcsMQw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=luusyFH2; arc=none smtp.client-ip=209.85.160.174
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WhWZ89kq"
-Received: by mail-pl1-f181.google.com with SMTP id d9443c01a7336-1d94323d547so16795395ad.3
-        for <git@vger.kernel.org>; Sat, 10 Feb 2024 02:43:25 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="luusyFH2"
+Received: by mail-qt1-f174.google.com with SMTP id d75a77b69052e-42c6b6ec76eso2835521cf.1
+        for <git@vger.kernel.org>; Sat, 10 Feb 2024 07:39:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1707561805; x=1708166605; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=l3mWJb9dAGuxzmyHbYkSqfvm4fCOml4ojquX9CVlSks=;
-        b=WhWZ89kq3caQaRkq7vo9wmoyTLc3cNsBkON1jwFBElXU+Jw/C5mJx5Q+A1Zj+sSs+l
-         D3/vjZ+t9tp7XQ1uOAqT8dDGYTzNV5QHekFlKPuwCrhHMkBRul+RFyWjhb3nHOiS3JOp
-         nbnsq+7gUlv3wMxNMRpPS6C1aylkvucBFuaWpblgfUQOFDvTNS5AW/YLvjD/GUaKNfCh
-         68KgG7/3CsLjSNb1OOx1ZyLRsSnqCgSE4wZy/qc1x3aClau2yp5tePQsccl3laYpY2OA
-         k+QoI7djm5vdxFXlx/yiF/b+2Kwlx/Gh8Yync3McBOmhr46RBK0gHA0T3v7f67fDwROo
-         eFxw==
+        d=gmail.com; s=20230601; t=1707579576; x=1708184376; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-language:in-reply-to:mime-version
+         :user-agent:date:message-id:from:references:cc:to:subject:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=M+aeq43P15LFsNikD8u8bBTaZJ2JWw4s8YbZoJUVKb0=;
+        b=luusyFH2vqX8M3LTolZsyzaHsV7M1vYvVUJzMlV20Mr2kbBDxfMzHFsIPIYEnNWCeg
+         J8+Qdpqk3RHqygjt/lKFWuoMSUrI9S8+hP52jZgZIFELGKsS/y79jcn4BdxmM+F54siF
+         jy9gY5hID3CnJgpMbD9Wa8GfQiYUGEaoWNEndzt0ESzep6n3TfauKJ73u1FeA6EVrl31
+         LL1ugnWMqD/dUMUXnpBKBj40YSpPW+XcC1qUe1V2FeDMhqNlwv4WzzBGrV0+VKqcpOvX
+         urSNcA9+fa3yePpxzsk2+4f++tD2xxi0D4CfDSpGS3du8ZupeTlaJlgpp/Wbw9X0Q+u3
+         q09A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1707561805; x=1708166605;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=l3mWJb9dAGuxzmyHbYkSqfvm4fCOml4ojquX9CVlSks=;
-        b=QzOohhYKt72ValmFQF2BpiOw44RAZElswW4IA3CgyPHNbh3xRtIkNc1odCkHuop9zc
-         1121A1dp92fMqBdh8YD1yv5R6xqmmexFvKy6AQ5cyObWRvPzaLk/72TBk4Hi6dlGNEZn
-         PQPXxHEXRpr+B+HZD7C3b9/TMD7jtMWAwHW9wc704YqqMDkxaMb66c8lNft/z1sJpOM5
-         38sVnhNI7621F+m9RH/HeyXlxprZxiCDkpZPAHxO5gFh98CwZCfSdFhOaFj3IRjOnDnD
-         +Xybu7SOoyhSH7aLh55FoAXqBDbQU8scMVGmGUhvgSz8LuLbXJHJY4i8M+dgOMNXbAl4
-         KZwQ==
-X-Gm-Message-State: AOJu0YyrPoFMHFXniyr5Ls6BBu9Jb2fcd9LVqUkx5YdXHQvokuVP/iKS
-	/cqgV+Rb4BWwQGrFlnHvyi9RlkUg6nrO2dxMfHCxIHJeiudDQK10eCLzjDBmk3w=
-X-Google-Smtp-Source: AGHT+IHisiWBq2pliCUpKJ1MGogVugPLmw6uYpkYzXBfqp7BP36+UsXiG6tpZftfCyMEDkq/BbK0cA==
-X-Received: by 2002:a17:902:cec8:b0:1d7:15ea:4249 with SMTP id d8-20020a170902cec800b001d715ea4249mr2204437plg.7.1707561805224;
-        Sat, 10 Feb 2024 02:43:25 -0800 (PST)
-X-Forwarded-Encrypted: i=1; AJvYcCV7ntS6I3YmN221fDmc7dKApys5UWfbf4JRh+aK6VeP02JLSKSikcV/ZO+HTL7sRDG3W64UITKWH2ydaEJ11gP8ovhr4f8yFqevNE90aWUsIg205guLK1ZUSc7S8fYH1qtXI8xvbakixJFOfuRZGhZUj07B6YEkMMxc5KzrRu8GcQ582vokRigIqcriXEnyO/iv5GomTCs4euXGrGgWw1k0BNdyVuV9b5RgXembGfAuBBbMQ52PSMV2+61t1CFD5Jo119ki85UBKY8+Vux81xzmH3+90TaGup7UDvBsYWezutA8Y4FK6m3Ejf6YY+lmmLwKAomfTxeekI9aDTvsycK08niTuaf4JM8BBEfU7ZHIgq0NvLkYOS+5JWrYENOVU7B2IFOL7/FKUxo9Nh9v5zS61QmjufA166tV7pDSOR0xGejKcDgToiiaE78fAhdebRRdIay0cCpYK2io0c2l2AO0LoirEgVGRok0fNtxi8TxzH+SoMQfPcWfc4rTEtaS4LjvDUKx05XU1HWxvsDX/8X0ZImh4gThgxkZBrZrzKFyX86ofBG1xarN2TasrFWlQWjkh5ZGxAsDbdHNHgNpvlu6DFtDxby3ILSsntg2aYoTQj7HCUAH
-Received: from tigtog-proxy.localdomain.localdomain (144.34.163.219.16clouds.com. [144.34.163.219])
-        by smtp.gmail.com with ESMTPSA id jz8-20020a170903430800b001d95d1078fdsm2840853plb.56.2024.02.10.02.43.24
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 10 Feb 2024 02:43:24 -0800 (PST)
-From: Jiang Xin <worldhello.net@gmail.com>
-To: Git List <git@vger.kernel.org>,
-	Git l10n discussion group <git-l10n@googlegroups.com>,
-	Alexander Shopov <ash@kambanaria.org>,
-	Jordi Mas <jmas@softcatala.org>,
-	Ralf Thielow <ralf.thielow@gmail.com>,
-	Jimmy Angelakos <vyruss@hellug.gr>,
-	=?UTF-8?q?Christopher=20D=C3=ADaz?= <christopher.diaz.riv@gmail.com>,
-	=?UTF-8?q?Jean-No=C3=ABl=20Avila?= <jn.avila@free.fr>,
-	Bagas Sanjaya <bagasdotme@gmail.com>,
-	Alessandro Menti <alessandro.menti@alessandromenti.it>,
-	Gwan-gyeong Mun <elongbug@gmail.com>,
-	Arusekk <arek_koz@o2.pl>,
-	Daniel Santos <dacs.git@brilhante.top>,
-	Dimitriy Ryazantcev <DJm00n@mail.ru>,
-	Peter Krefting <peter@softwolves.pp.se>,
-	Emir SARI <bitigchi@me.com>,
-	Arkadii Yakovets <ark@cho.red>,
-	=?UTF-8?q?Tr=E1=BA=A7n=20Ng=E1=BB=8Dc=20Qu=C3=A2n?= <vnwildman@gmail.com>,
-	Teng Long <dyroneteng@gmail.com>,
-	Yi-Jyun Pan <pan93412@gmail.com>
-Cc: Jiang Xin <worldhello.net@gmail.com>,
-	Patrick Steinhardt <ps@pks.im>
-Subject: [L10N] Kickoff for Git 2.44.0 round #1
-Date: Sat, 10 Feb 2024 18:43:21 +0800
-Message-Id: <20240210104321.3303-1-worldhello.net@gmail.com>
-X-Mailer: git-send-email 2.32.0.rc3
+        d=1e100.net; s=20230601; t=1707579576; x=1708184376;
+        h=content-transfer-encoding:content-language:in-reply-to:mime-version
+         :user-agent:date:message-id:from:references:cc:to:subject
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=M+aeq43P15LFsNikD8u8bBTaZJ2JWw4s8YbZoJUVKb0=;
+        b=nuLcrtkPC1+lh33fIc3sfdzqKva9feAMXSgzf4jds9U4jQ3qQnJ89FXAlUTYVPkbCK
+         fh2/t5/0qwZG1JBAOeMfmaXWWUMtthG+3krZbBtRnLqSZUfXSvVsSKAR4LAxsIP/KdZc
+         J0KLKHsvK6gBuCE+vKqKHm2cHp7303f/a3meKcoWFk6Czcn9SEznZ8q9oLj8iIq7SwOB
+         CsvEfohPulb42UPd003ckjV92lMCSFTr7NjujITQmKLmu06YYeBlSma/bsm/B4eGExvs
+         3NC3lx29PQ4Vl1X4BUqD2ECPj7/9LmNmZtBwxGi8i7TskeAT/I1Yqkd4oAUbDPTdShiY
+         O05Q==
+X-Gm-Message-State: AOJu0Yx76tEyNyAZEqx75tEFIId9CXtEy2ik+4HDkNLB3j8P1o3hPG8X
+	Ry+Y3tPL7wmtXh0h9DPbpo87JI9guDUK2juRPAj+iQ5njJatp03g71U3Ezy/
+X-Google-Smtp-Source: AGHT+IGW3D5Kr8qIHNRJJU1FqOxsZ4NbEuEvGHpvJEjkduPNk8UqCBvZsKdJjm5lO9C5grSBObohGQ==
+X-Received: by 2002:ad4:5fc7:0:b0:68c:af0f:c377 with SMTP id jq7-20020ad45fc7000000b0068caf0fc377mr3711807qvb.2.1707579575927;
+        Sat, 10 Feb 2024 07:39:35 -0800 (PST)
+X-Forwarded-Encrypted: i=1; AJvYcCV5abG+T+4lB3PHP2N7XINniPV/sj9TGZSmcklnWG8pyDpN+GdRdTtZqxrOMzbZ2Ar8d46ZKi1NP+cVjki2vfu4BgF0b/Sx
+Received: from ?IPv6:2606:6d00:17:3855:7446:337:f37a:d47? ([2606:6d00:17:3855:7446:337:f37a:d47])
+        by smtp.gmail.com with ESMTPSA id lx14-20020a0562145f0e00b0068ca3929a5asm1863920qvb.85.2024.02.10.07.39.35
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 10 Feb 2024 07:39:35 -0800 (PST)
+Subject: Re: [PATCH v2 2/5] completion: complete 'submodule.*' config
+ variables
+To: Patrick Steinhardt <ps@pks.im>,
+ Philippe Blain via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org
+References: <pull.1660.git.git.1706472173.gitgitgadget@gmail.com>
+ <pull.1660.v2.git.git.1706534881.gitgitgadget@gmail.com>
+ <426374ff9b3820512f73ef094f9533e6a1ea5cad.1706534882.git.gitgitgadget@gmail.com>
+ <ZcSF0Uw0xxlJXRlH@tanuki>
+From: Philippe Blain <levraiphilippeblain@gmail.com>
+Message-ID: <14b31a82-6c16-025c-3a85-41424dd47417@gmail.com>
+Date: Sat, 10 Feb 2024 10:39:33 -0500
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:78.0)
+ Gecko/20100101 Thunderbird/78.14.0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+In-Reply-To: <ZcSF0Uw0xxlJXRlH@tanuki>
+Content-Type: text/plain; charset=windows-1252
+Content-Language: fr
 Content-Transfer-Encoding: 8bit
 
-Hi,
+Hi Patrick,
 
-Git v2.44.0-rc0 has been released, and it's time to start new round of
-git l10n.  This time there are 52 updated messages need to be translated
-since last release. Please send your pull request to the l10n coordinator's
-repository below before this update window closes on Sun, 18 Feb 2024. 
+Le 2024-02-08 à 02:42, Patrick Steinhardt a écrit :
+> On Mon, Jan 29, 2024 at 01:27:58PM +0000, Philippe Blain via GitGitGadget wrote:
+>> From: Philippe Blain <levraiphilippeblain@gmail.com>
+>>
+>> In the Bash completion script, function
+>> __git_complete_config_variable_name completes config variables and has
+>> special logic to deal with config variables involving user-defined
+>> names, like branch.<name>.* and remote.<name>.*.
+>>
+>> This special logic is missing for submodule-related config variables.
+>> Add the appropriate branches to the case statement, making use of the
+>> in-tree '.gitmodules' to list relevant submodules.
+>>
+>> Signed-off-by: Philippe Blain <levraiphilippeblain@gmail.com>
+>> ---
+>>  contrib/completion/git-completion.bash | 13 +++++++++++++
+>>  1 file changed, 13 insertions(+)
+>>
+>> diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+>> index 159a4fd8add..8af9bc3f4e1 100644
+>> --- a/contrib/completion/git-completion.bash
+>> +++ b/contrib/completion/git-completion.bash
+>> @@ -2803,6 +2803,19 @@ __git_complete_config_variable_name ()
+>>  		__gitcomp_nl_append "pushDefault" "$pfx" "$cur_" "${sfx:- }"
+>>  		return
+>>  		;;
+>> +	submodule.*.*)
+>> +		local pfx="${cur_%.*}."
+>> +		cur_="${cur_##*.}"
+>> +		__gitcomp "url update branch fetchRecurseSubmodules ignore active" "$pfx" "$cur_" "$sfx"
+>> +		return
+>> +		;;
+>> +	submodule.*)
+>> +		local pfx="${cur_%.*}."
+>> +		cur_="${cur_#*.}"
+>> +		__gitcomp_nl "$(__git config -f "$(__git rev-parse --show-toplevel)/.gitmodules" --get-regexp 'submodule.*.path' | awk -F. '{print $2}')" "$pfx" "$cur_" "."
+>> +		__gitcomp_nl_append $'alternateErrorStrategy\nfetchJobs\nactive\nalternateLocation\nrecurse\npropagateBranches' "$pfx" "$cur_" "${sfx:- }"
+>> +		return
+>> +		;;
+> 
+> Hm, it feels quite awkward that we have to manually massage the
+> gitmodules config like this. But the closest tool I could find is
+> `git submodule status`, which would also end up describing commits in
+> each of the submodules and thus do needless work. And second, it prints
+> submodule paths and not submodule names, so it surfaces the wrong info
+> in the first place.
+> 
+> Ideally, we would create such a tool that makes the information more
+> accessible to us. But that certainly seems out of scope of this patch
+> series.
+> 
+> In any case though it would be nice to add some tests for these new
+> completions.
 
-    https://github.com/git-l10n/git-po/
+OK, I end up testing them in 3/5 via the __git_compute_first_level_config_vars_for_section
+function I'm adding. But it's true I could add the test directly
+in 2/5, if it makes more sense.
 
-Our l10n helper program (git-po-helper) has been upgraded to v0.7.3 to
-detect typos on mismatched refspec (such as refs/ vs ref/) reported by
-Patrick. See [1]. Please check translations using git-po-helper before
-sending your PR.
+Thanks for your review !
 
-
-As of git 2.37, we (git l10n contributors) have a new l10n workflow. The
-following description of the new l10n workflow is from the "po/README.md"
-file.
-
-
-## The "po/git.pot" file is a generated file, no longer in the repository
-
-The l10n coordinator does not need to generate the "po/git.pot" file every
-time to start a new l10n workflow, and there is no "po/git.pot" file at all.
-
-Everyone can generate the "po/git.pot" file with the command below:
-
-    make po/git.pot
-
-But we can also forget about it. By updating our corresponding "po/XX.po"
-file, the "po/git.pot" file is automatically generated.
-
-
-## Update the "po/XX.po" file, and start to translate
-
-Before updating the "po/XX.po" file, l10n contributors should pull the latest
-commits from the master branch of "git.git". E.g.:
-
-    git pull --rebase git@github.com:git/git.git master
-
-Then update the cooresponding "po/XX.po" file using the following command:
-
-    make po-update PO_FILE=po/XX.po
-
-Translate the uptodate "po/XX.po" file, and create a new commit.
-
-
-## Refine your commits, send pull requests
-
-In the "po/XX.po" file, there are location lines in comments like below:
-
-    #: add-interactive.c:535 add-interactive.c:836 reset.c:136 sequencer.c:3505
-    #: sequencer.c:3970 sequencer.c:4127 builtin/rebase.c:1261
-    #: builtin/rebase.c:1671
-
-These comments with file locations are useful for l10n contributors to locate
-the context easily during translation. But these file locations introduce a
-lot of noise and will consume a lot of repository storage. Therefore, we
-should remove these file locations from the "po/XX.po" file.
-
-To remove file locations in the "po/XX.po" file, you can use one of the
-following two ways, but don't switch back and forth.
-
- * Keep the filenames, only remove locations (need gettext 0.19 and above):
-
-        msgcat --add-location=file po/XX.po >po/XX.po.new
-        mv po/XX.po.new po/XX.po
-
- * Remove both filenames and locations:
-
-        msgcat --no-location po/XX.po >po/XX.po.new
-        mv po/XX.po.new po/XX.po
-
-After squashing trivial commits and removing file locations in the "po/XX.po"
-file, send pull request to the l10n coordinator's repository below:
-
-    https://github.com/git-l10n/git-po/
-
-
-## Resolve errors found by the l10n CI pipeline for the pull request
-
-A helper program hosted on "https://github.com/git-l10n/git-po-helper" can
-help git l10n coordinator and git l10n contributors to check the conventions
-of git l10n contributions, and it is also used in GitHub actions as l10n CI
-pipeline to validate each pull request in the "git-l10n/git-po" repository.
-Please fix the issues found by the helper program.
-
-
-** Please note: The update window will close on Sun, 18 Feb 2024. **
-
-
-[1] https://lore.kernel.org/git/ZX_9nRYKVq0jT0Lp@tanuki/
-
---
-Jiang Xin
+Philippe.
