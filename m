@@ -1,134 +1,118 @@
-Received: from mout.web.de (mout.web.de [212.227.17.12])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ot1-f52.google.com (mail-ot1-f52.google.com [209.85.210.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12F2B2B9CA
-	for <git@vger.kernel.org>; Sat, 10 Feb 2024 07:43:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.12
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91FBE525B
+	for <git@vger.kernel.org>; Sat, 10 Feb 2024 07:49:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707550987; cv=none; b=bJ5OZVuj655zDs36MlogimME9Zl5NjYVB7zwxgdaQLmT7PnQJn5xQ6ZoVPFcn6cHEoowaSg6tdi7cGFGlCnCHu7GrOpuct3lcNCIUd3zZRF1HPvaZW/jDtihkue2HT640IoNWokZMjjSSSYhMbWWTF2nAz42bzy0eVZZkKPJbyU=
+	t=1707551374; cv=none; b=C9Gsotz9HRg5/3MQ05kRa9z/TD2cvGEwhqqC1Jp6D8Mc8gkfkTo4r6HgyMJ1urskJcILjOIE05Ok9bchjvdpuW64VSNbctyhzOZPCY+9kSVe2U0eN34XJXV/UIxW6wz9TfOsDwy4gxUNCs60Ljqv2T8F2yjBzVbI4TXZA4fxPpQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707550987; c=relaxed/simple;
-	bh=WMqq+8aXCS3fWtllgBmMpJM2TTWRL3VgEhHTrVIaN4s=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=kjcPOHU+cHbvOAXsjPRjdF0qSyxSPsfYOt96EZXqySn+95ukf5GTeh1DS7Ij1ZKQmbhoSQMjk3Tfj3akHzJJJ8WcY0kzbdix6FDbLOJLNslXhXdW+VMFuKDWQCJ+/XaVaUenTbMVE2P4ohsBepa94e2rURS8PtINjIOuB/yAMAc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b=TvkDCV/y; arc=none smtp.client-ip=212.227.17.12
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
+	s=arc-20240116; t=1707551374; c=relaxed/simple;
+	bh=gUjfnx1+TUrT2ymvp7WmebZHpKWKQri+VcA+bEuvJhU=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=n1UmLmsewGuoGUosY1txWFmxi+oAAg/PQf0QWQKjPVWRcpy0QNsEQnnvreZzwdueTdYTPEMlF9VxMafchKiLKNJkYo9B26K/2XqdNqBsGp6Sk+JZ5Au7gLxz1HkhmO6T9ZMGA6+MgN+uY/e05hMCKuA06fKjc3vTQk/dbYBGXu8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=TFKnBjb5; arc=none smtp.client-ip=209.85.210.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b="TvkDCV/y"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de; s=s29768273;
-	t=1707550969; x=1708155769; i=l.s.r@web.de;
-	bh=WMqq+8aXCS3fWtllgBmMpJM2TTWRL3VgEhHTrVIaN4s=;
-	h=X-UI-Sender-Class:Date:Subject:To:Cc:References:From:
-	 In-Reply-To;
-	b=TvkDCV/y7oOQN4OMEJhFhbYV5os9VvZ6UX+TbgqiXrEMaxEmtb/SicBUMCf3kHuI
-	 mdRKYMrgdx+19jKjtVqRBT1vtFTWDyocdqjQqxxGxtfU2pOANtR36EECPVot9rxdt
-	 jaUr/xNqnklMvYCvRDiSmTzFvSYmKcejj81UTdtGHtjlLvpk3N0Ls+OvqiNB5b6X5
-	 kW1UAeDCiflJ0sbYj4dsaqm73v1ou/8enzkPU0UldX7kGO3lCZ7uW5Mijs3UXTXF2
-	 1V3wWDqJ6mQlQIGr4D+udvOxFiENMH5CtXRM/DIiXyf2S6eZ/SwoJTyT4h7UAAQMm
-	 HVM8NEodp6p8m/ytcQ==
-X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
-Received: from [192.168.178.29] ([79.203.17.81]) by smtp.web.de (mrweb105
- [213.165.67.124]) with ESMTPSA (Nemesis) id 1MS17h-1rRJSc1bSN-00TQsB; Sat, 10
- Feb 2024 08:42:49 +0100
-Message-ID: <7b0a87f1-4693-480e-90d4-14675e9a5f01@web.de>
-Date: Sat, 10 Feb 2024 08:42:48 +0100
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TFKnBjb5"
+Received: by mail-ot1-f52.google.com with SMTP id 46e09a7af769-6e0f43074edso843038a34.1
+        for <git@vger.kernel.org>; Fri, 09 Feb 2024 23:49:32 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1707551370; x=1708156170; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=WlSJEzXqwwbFHoeQvXTuIpU28kHZ+iUWTGi2td7CbT4=;
+        b=TFKnBjb5mj7BNIjeqoW9ryg5Xe4dxO6RZRcLyqTeL2Fz+mtlEaty7V/iLjfRKv+OA8
+         SDBLwY39hVzF1x9k1kbJjfWtw/lNtiUXtkkqJmS2XF+ypfYdiurIr9h229xgZfEPehR3
+         nUWCNWoGXlOaObxtN8prOPjf/+9ghNTmsn4ebxGbUBdZgtlS7cVcL+/DVcgoKdDTtAOR
+         LjpDac6xHNx5G9VywOXKYclXOSRscyKtMjYG79QhTk4TqKn63tqOgweftlwQU1l7geDH
+         /sZNFP+D2Z8kVBpMjyBeFpRsu+eyya4kAcghnvXdN4ZHUQWJh+diAQkTXUWvtP3LPkoi
+         Y1SA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1707551370; x=1708156170;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=WlSJEzXqwwbFHoeQvXTuIpU28kHZ+iUWTGi2td7CbT4=;
+        b=YxrvvnwF0rlnSSKuFvdILEkMfrEkqn/3mT/scXnHwFOsPSiTdEH5+fUqEuvl9OxIMZ
+         uUjz5LGzNnBH+rp6X+lN1W1zYrFJ1LQQYpYPAyrhjQFDMfVuVtNxXsziy3BDIcUUw8L7
+         UQRFjrwvjYO+WWUfUfAOpfz5ewuWtzlqaO4OCgr6SEFQzLvP41ZyLo1ZzyP2fuP38kdZ
+         gRxJTQ00Oe1JQh3KmB+T/bc8PhcYHxzhiath4gFc7NqbfkX7k+wgAay1EEvP/ztZQVLE
+         /MOyV2ZZpyP0GrY6FOcYbbOFxSZAXWTYIox5Nwyvxkmkl+ceOMr6ZFDKktT7VditaeOs
+         vXSw==
+X-Gm-Message-State: AOJu0Yy8IMfcW2+0RQZpTfVDrBO7Gw2xX6Ktx74KAPiwVLnWn3DfZPC7
+	fBxnv4VIa40KQCqPu8PPFxzinvTi8yRSb4f5ia00rsW17UAdVPUAYmrchUwVShA=
+X-Google-Smtp-Source: AGHT+IEGg1C4QACdyxwILRoZhGA9YhoNjrhhKPIAIUmpiKTGAL9yE+CuVuzhR0emCorLALzNmSLIWg==
+X-Received: by 2002:a05:6871:3a23:b0:214:27cf:bd1d with SMTP id pu35-20020a0568713a2300b0021427cfbd1dmr1461863oac.25.1707551370410;
+        Fri, 09 Feb 2024 23:49:30 -0800 (PST)
+X-Forwarded-Encrypted: i=1; AJvYcCVfH6z4GBuPx9yCGxp0NEquB7B1s5+QyTkxt7+BC2VcX3zdJ6ROzCxDbSN+VpcKydCnF5b/QrVCCN2dr88EiDTKIfmvWvjkul2VhEr6zm8qb902uJxWetCK1tVymPur/zNSuOGLKJzTxvihc920PIyL5ig7lc3d2oew8UYNz/q7
+Received: from localhost.localdomain (047-034-027-162.res.spectrum.com. [47.34.27.162])
+        by smtp.gmail.com with ESMTPSA id v19-20020a056870955300b00219fd9e3194sm310028oal.7.2024.02.09.23.49.29
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 09 Feb 2024 23:49:29 -0800 (PST)
+From: Brian Lyles <brianmlyles@gmail.com>
+To: git@vger.kernel.org
+Cc: Brian Lyles <brianmlyles@gmail.com>,
+	newren@gmail.com,
+	me@ttaylorr.com,
+	phillip.wood123@gmail.com,
+	gitster@pobox.com
+Subject: [PATCH v2 0/8] cherry-pick: add `--empty`
+Date: Sat, 10 Feb 2024 01:43:48 -0600
+Message-ID: <20240210074859.552497-1-brianmlyles@gmail.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20240119060721.3734775-2-brianmlyles@gmail.com>
+References: <20240119060721.3734775-2-brianmlyles@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] receive-pack: use find_commit_header() in
- check_cert_push_options()
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Git List <git@vger.kernel.org>,
- Chandra Pratap <chandrapratap376@gmail.com>,
- Chandra Pratap <chandrapratap3519@gmail.com>, Jeff King <peff@peff.net>,
- Kyle Lippincott <spectral@google.com>, John Cai <johncai86@gmail.com>
-References: <ff0db7e3-abce-44ea-a1e3-16e1fdaf4c75@web.de>
- <xmqqsf21cmp4.fsf@gitster.g>
-Content-Language: en-US
-From: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
-In-Reply-To: <xmqqsf21cmp4.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:OmOyvyOmr7JAmsdbyhY+81d9ic0uLbf3SQ3HmfIzI2tuZiHjdvw
- ntt6n9MtVWa6eE2qjrjZWvbkhSfDMc4NKv70pVe6J9ImqeboyGJsKQOaIBDLNwBcOf/zVuG
- M7dplnb5rHWk0a3hgGjXd+lvw5kWPkV11Q/e0KuF1JctX1Bk1Jdr9Wuip1/0R6W9dpe24mN
- TxnHsz2rr3lnm58DdQIgQ==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:VJa/YsfO3Oc=;fJZBkluXQVOTKqOU/i8UxfPLb69
- EYQgD3cGgHaceTeeQS9iguIxn9GCNpNklYGhz4mqYVOZsuXx9Kob0prVC7w7ZGv/TzvFB5vxQ
- FLvimRKHSIb8sKU/6auwrMMvDVcR0CQlg8WsYEu51JicRjxCSzvWKSoZZz+VDAH9tOaabLfoV
- 8ooiPrH0VdgBJKvA8AGqbSei7iaR/+BZJWv2edZLLrUY2jKWJxwAGlFcsXVYt15FDOBc0vAg2
- 3LEt0T1TINO3Gt4FncMEzOyFotyi9/HmD0u5AM0+QAjJYMikQlGEhu/GDaRh/83TAGqziT/9F
- dwU2N9+NH3fGEwqT4vX6o1h7BFX5jZ6jPwTlcNYlXiS0HhnHPeie/f3xVO/mUTkUyU204DWuT
- /JbQsA2hweoILHWKKiSBaQiTGEQTNKRvtiUcDrilgV9MdPaW/joh9aB4FpUhvpGwXulCI2tNU
- WJ65OzLzpSEg13NJNuAOLGxKrrxrkGIYyRIgw/QJzgPzs32Wh2k0EqdOF+QyoHtbmY+iw93MM
- vFs4M6i3ymel7BLHpr8AdrGwriOX7UOz9WxKNlHpXvAkmUPsW+U6VVCqZTu6/VlQdNS/2XRYM
- zOHfeJW+CQgGKZ7ZK/PQv0+K6IsxPxgDmSEzAMqX6lEQiQTxD2Ixi34qAqQp0vStzsUGuw0ms
- DxiLjzoKQS5Z00tkQaZNzylnqH5LR2azX8jqxgUJdfcmlrl8ozUwOjfEK+8oEADLKJePT0Wjx
- imgQ+ghaggkBcNnBZr8HfQPvZ+TuEa5qODpIrKJe4IpvcJBXfq8FBfDdxBAMD7SiaVT/qqRxd
- L1kBwDAY11gFFIjv7KgsuJrDhk7Eg3xEtQtxeS2+Pu7EA=
+Content-Transfer-Encoding: 8bit
 
-Am 09.02.24 um 23:11 schrieb Junio C Hamano:
-> Ren=C3=A9 Scharfe <l.s.r@web.de> writes:
->
->> The string comparison becomes more complicated because we need to check
->> for NUL explicitly after comparing the length-limited option, but on th=
-e
->> flip side we don't need to clean up allocations or track the remaining
->> buffer length.
->
-> Yeah, the strncmp() followed by the termination check indeed is
-> trickier but not having to worry about allocation is nice.
->
->>  		if (options_seen > push_options->nr
->> -		    || strcmp(option,
->> -			      push_options->items[options_seen - 1].string)) {
->
-> We used to allocate option[] with NUL termination, but ...
->
->> -			retval =3D 0;
->> -			goto leave;
->> -		}
->> -		free(option);
->> +		    || strncmp(push_options->items[options_seen - 1].string,
->> +			       option, optionlen)
->> +		    || push_options->items[options_seen - 1].string[optionlen])
->
-> ... now option[] is a borrowed memory, option[optionlen] would have
-> been NUL if we were allocating.  So to see if the last-seen string[]
-> is different from option[], we have to see that they match up to
-> optionlen and the last-seen string[] ends there.  Trickier than
-> before, but is correct.
+The ultimate goal of this series is to allow git-cherry-pick(1) to
+automatically drop redundant commits. The mechanism chosen is an
+`--empty` option that provides the same flexibility as the `--empty`
+options for git-rebase(1) and git-am(1).
 
-I just discovered 14570dc67d (wrapper: add function to compare strings
-with different NUL termination, 2020-05-25).  Perhaps squash this in to
-simplify?
+Some secondary goals are to improve the consistency in the values and
+documentation for this option across the three commands.
 
-=2D--
- builtin/receive-pack.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+See "Does extending `--empty` to git-cherry-pick make sense?" [1] for
+some context for why this option is desired in git-cherry-pick(1).
 
-diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
-index dbee508775..db65607485 100644
-=2D-- a/builtin/receive-pack.c
-+++ b/builtin/receive-pack.c
-@@ -717,9 +717,8 @@ static int check_cert_push_options(const struct string=
-_list *push_options)
- 		buf =3D option + optionlen + 1;
- 		options_seen++;
- 		if (options_seen > push_options->nr
--		    || strncmp(push_options->items[options_seen - 1].string,
--			       option, optionlen)
--		    || push_options->items[options_seen - 1].string[optionlen])
-+		    || xstrncmpz(push_options->items[options_seen - 1].string,
-+				 option, optionlen))
- 			return 0;
- 	}
+[1]: https://lore.kernel.org/git/CAHPHrSevBdQF0BisR8VK=jM=wj1dTUYEVrv31gLerAzL9=Cd8Q@mail.gmail.com
 
-=2D-
+Along the way, I (with some help from Elijah and Phillip) found a few
+other things in the docs and related sequencer code to clean up.
+
+Brian Lyles (8):
+  docs: address inaccurate `--empty` default with `--exec`
+  docs: clean up `--empty` formatting in git-rebase(1) and git-am(1)
+  rebase: update `--empty=ask` to `--empty=drop`
+  sequencer: treat error reading HEAD as unborn branch
+  sequencer: do not require `allow_empty` for redundant commit options
+  cherry-pick: decouple `--allow-empty` and `--keep-redundant-commits`
+  cherry-pick: enforce `--keep-redundant-commits` incompatibility
+  cherry-pick: add `--empty` for more robust redundant commit handling
+
+ Documentation/git-am.txt                    | 20 ++++---
+ Documentation/git-cherry-pick.txt           | 30 +++++++---
+ Documentation/git-rebase.txt                | 26 ++++++---
+ builtin/rebase.c                            | 16 +++--
+ builtin/revert.c                            | 40 +++++++++++--
+ sequencer.c                                 | 65 +++++++++++----------
+ t/t3424-rebase-empty.sh                     | 55 ++++++++++++++++-
+ t/t3501-revert-cherry-pick.sh               | 11 ++++
+ t/t3505-cherry-pick-empty.sh                | 29 ++++++++-
+ t/t3510-cherry-pick-sequence.sh             | 40 +++++++++++++
+ t/t3515-cherry-pick-incompatible-options.sh | 48 +++++++++++++++
+ 11 files changed, 312 insertions(+), 68 deletions(-)
+ create mode 100755 t/t3515-cherry-pick-incompatible-options.sh
+
+-- 
 2.43.0
+
