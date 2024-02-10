@@ -1,252 +1,98 @@
-Received: from mail-lj1-f180.google.com (mail-lj1-f180.google.com [209.85.208.180])
+Received: from mail-qk1-f169.google.com (mail-qk1-f169.google.com [209.85.222.169])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A0E85F844
-	for <git@vger.kernel.org>; Sat, 10 Feb 2024 18:42:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76D26364BA
+	for <git@vger.kernel.org>; Sat, 10 Feb 2024 18:49:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707590568; cv=none; b=sFo8DfCH/YhJ8fQNLzYv9ims9pPCgqRHN9Q3i6KQ2rHefg7U+mKvOUl1E8HjPy7mxpT6eCckQzMLRiPZMcrxIQa3AHgWsXTKbTglXi0R9CkBm3t1rNE7SGHcbXnZjxqFU6uMNXxLvR+qFNBKL41gBV5R41RbyeOu1GASABxJ10s=
+	t=1707590983; cv=none; b=n3i7XNtldTWvpWE5zPdkvx7P9DdXkRxv2M9zSE4R6NMCxDVzlP1SoFMUrVJkrA/zDUnCCgLGY5Yotb/03elayg28XL+ilY1cJmc++bL+hynZX8XPB6j7xuGQVvCMBD8kWJgeRow1v6JkQxRlmGu1bQXqLjlNC8SATfTmdxg16oM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707590568; c=relaxed/simple;
-	bh=9tMfKGSj/90NHxeg+0j5bNb9Vd5nSpa/g6He4anynYk=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=deQR+qGaWqR2MDzuQzwmHubnTVM7NMW8UD33k9+DRCHM/yUfxXJTjupEdXnKAHgZwET1nlzW9JDvQVAsf4WSnnOPtzEJdiLaUWSuQFW7a4KAUVapv1PT7td8Rcb+i+7yQMny4DUejDl0MegqHLZmK4/CwVnTLKwqZ95ao+ka3Zk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VWvhRql6; arc=none smtp.client-ip=209.85.208.180
+	s=arc-20240116; t=1707590983; c=relaxed/simple;
+	bh=dLa9RzFnNcjL9Qd6SrJO4y//GigFpOR8EMWIV0pWZqM=;
+	h=Subject:To:References:From:Message-ID:Date:MIME-Version:
+	 In-Reply-To:Content-Type; b=Oubo1gaZJ/UwqZrqmGkMyJlS4dRtNV8V+Lp1EZ334Lpj0l/rwl4Y73fRrwat+3v8EzYM2xloaVzK0flLGQ+iAdtPdhUCv1n/LBBULA/kIdu9W6500PpKH60Yy+k4rIx7KEM4FPcGwz/IfrT4NNDVqBJXFqhwZK4sDZ0h9Hc1ATY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mkFA8I6r; arc=none smtp.client-ip=209.85.222.169
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VWvhRql6"
-Received: by mail-lj1-f180.google.com with SMTP id 38308e7fff4ca-2d0a4e1789cso21731431fa.3
-        for <git@vger.kernel.org>; Sat, 10 Feb 2024 10:42:46 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mkFA8I6r"
+Received: by mail-qk1-f169.google.com with SMTP id af79cd13be357-783d916d039so140838485a.2
+        for <git@vger.kernel.org>; Sat, 10 Feb 2024 10:49:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1707590564; x=1708195364; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=9Hcs3hSHIscuZV6p4k0jIfxcdKAprGzJ8ylKG30k/GY=;
-        b=VWvhRql6V9umWugOpDFiLWXz2/E5L8OGnrAvOCyrm6By34/Lnbr9aoqoOjLrFU6bZB
-         7I0w2XEBaj3MdeQM+DNCrVPJsLhuY2QD1C5Sfvucrp1fNynJLWJ0yQp3lZ26J1EU8TyK
-         BU1my6CHkO+U1Amr05dmWMznqQSJSSAMaOLEzW/sURJhlRscY6CbUVKIH3qErBFAyAkk
-         De+fQ7J1BMub/YSXEugGjDLNcWyJlcfx8lmV2HgC/Ca7VA0rwv5QsBR19RpRN5hNMcoN
-         S4Tw60EFnOp4Kkhlx2I2LqYmbLO0y8SI6bRChaQW9TLWfwGVdxfHSAG6mYeHJe6gjA/G
-         tAWA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1707590564; x=1708195364;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+        d=gmail.com; s=20230601; t=1707590981; x=1708195781; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-language:in-reply-to:mime-version
+         :user-agent:date:message-id:from:references:to:subject:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=9Hcs3hSHIscuZV6p4k0jIfxcdKAprGzJ8ylKG30k/GY=;
-        b=FP4lBzzQnL6tKVKtDVKfho74SXKgrqEXSFv1CAdPR4Vlo0cGqahzIroJRCdd9YPLER
-         3mV3qmbEEfEDWjpA7fBsbsXMTnzstmdPJ73t911h2IHKxrCf8AP3VRDB3uxdmj9i6j4Z
-         Fxiy2gabLzTe3fiY9VYYZcqCfFpQdh+Srj+rKDaFenBz7PbFekvYViW4ObWE+lq8v2mJ
-         bj5CmAFsWdzLs26Ah7UmWphCYJeusjZ9ONPdXWhKhkKXJMiU4iSm+8J+j28TwGaHrwVo
-         MIVNzvFG7l5F7c7nk2UMSVpfzit8LIo5IHQqlxHVeWVQmIA61NUdQ91EAcqfD/fGG14U
-         r6wQ==
-X-Gm-Message-State: AOJu0Yw57C9LXsI4ydrJ44C7suIFuKLNl2lGoegkZUDDttrF7DXPAKOA
-	4vvlHg/Hf2PFQR5ed2nk3nqpT5D7cNEeKsgkoT1NIUwfOahqatWN9TcWluBHfND8eQ4pFnvvczd
-	mDXY1tgRebLB0qDI9V2uluAIF7gx5tPyQ0MkpTSfz
-X-Google-Smtp-Source: AGHT+IEyIdHQf26djVPfnumB5bhFJ28pp7jlAt+ilrWNv1u06PHUzt21uljx+FDzxD5zF2S4RFzjxAXrrcpMi3w21jY=
-X-Received: by 2002:a05:651c:124b:b0:2d0:de6f:c697 with SMTP id
- h11-20020a05651c124b00b002d0de6fc697mr1504846ljh.13.1707590564070; Sat, 10
- Feb 2024 10:42:44 -0800 (PST)
+        bh=hsPvR6SGZIUF5xk/aIzB9UDk5YX+qu1iVEtJ44NfrhE=;
+        b=mkFA8I6r8L8t0AmLjbmm4sp9OibBcMpHlXVcjN/coDzlI+WzJzqdFjZ/eqh+qiE96h
+         J0L6E9rftv+An52aHXgo4dPG5YVz+cFpLkFhOyS8luk4RQXi83yfUI3xiPI8klduvJZR
+         6urZ0QMG2CN7Eiq1qKAPg3VVI8TZGNP1hXOjIileTMLon3e/d7/gvcVbvCq7sOK5WGzq
+         E5Ke9xURrzHif2P/nuno0FcjYGMsRiT54sl+tXViDdKVw9WkZrH9APcYbhX2ipGstz49
+         M7pAfz2YTdjqlRD8VH6U71qSgH2qqdnFloryp9YXdvqvRn3yzbbGo85pEXUarwAPOrPn
+         x2qg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1707590981; x=1708195781;
+        h=content-transfer-encoding:content-language:in-reply-to:mime-version
+         :user-agent:date:message-id:from:references:to:subject
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=hsPvR6SGZIUF5xk/aIzB9UDk5YX+qu1iVEtJ44NfrhE=;
+        b=r/J5lvck3vLh0BhfdsRH/hfKBeBTj/avEbYe4kU7ltWkAG71u4EWn0WAFnlBlfXHk5
+         E9WtvpESC0Bpcy0ezC8UvdhFQjxUpmlzxXlAgosQfM61A6BtB+QkF/Q1f/L4c0w9tXx1
+         JJTqHmmYqKmRtHSQ6pfPEBWFeua1eEuxMRjpizHwV7uzPw30v2EuiRMPJ0nWcrAVZMbT
+         45FZtZWUmMnhcYmlZ0K1CGCy+iV7Bcr1yIe8Jhfazt9g2DaQZhzsWYiBumH+V5p0sHqf
+         OSXXLZ4w9ZA8WzKY/bjUwGdfDXUw1m3Z6moLRwteVL/b6m2UAj2QTOpUv/muQW8BPCFx
+         B7Lg==
+X-Forwarded-Encrypted: i=1; AJvYcCXGiBGRToBPHiDXVVnCdOR2EYv6ZQSTtCCtOiDzKR8ciDSFwk5St09DrC1ZBHuAym12vYdkSgF/RRHNJR9HdJUU9qY1
+X-Gm-Message-State: AOJu0YyCPv8TmJd+WmyomSIpElje58W4pIznPcnbwU+W8f6TLZXuTQBa
+	Cik6sue+ZAbmzIlakJPP/fPX7Q5cpkAnREUaCMt9ol05IhACIZrY
+X-Google-Smtp-Source: AGHT+IE8pNQK5l/zVBAO8PMDfo6kQyZyYgfN4cUluD/aU5ciRJYkc39tonhcrQVqHnW3BTpV8Ixctw==
+X-Received: by 2002:a0c:f291:0:b0:68c:499f:f803 with SMTP id k17-20020a0cf291000000b0068c499ff803mr2923970qvl.30.1707590981365;
+        Sat, 10 Feb 2024 10:49:41 -0800 (PST)
+X-Forwarded-Encrypted: i=1; AJvYcCUIkstf8jcb6H7p//52SjcmWtsJcpQDZOaspNBlwUhYE3pu1jHiaDUaHp2YBQNqp+TKxHvUWTnLqHriW0q7uxSS4aZKELaKAaBBagFEXzRdwrjt1tKUX40kDOqwuA==
+Received: from ?IPv6:2606:6d00:17:3855:7446:337:f37a:d47? ([2606:6d00:17:3855:7446:337:f37a:d47])
+        by smtp.gmail.com with ESMTPSA id mc3-20020a056214554300b0068cc3a7a59dsm1976474qvb.106.2024.02.10.10.49.40
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 10 Feb 2024 10:49:41 -0800 (PST)
+Subject: Re: What's cooking in git.git (Feb 2024, #04; Thu, 8)
+To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+ mi.al.lohmann@gmail.com
+References: <xmqqzfw9h7oy.fsf@gitster.g>
+From: Philippe Blain <levraiphilippeblain@gmail.com>
+Message-ID: <13f08ce5-f036-f769-1ba9-7d47b572af28@gmail.com>
+Date: Sat, 10 Feb 2024 13:49:39 -0500
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:78.0)
+ Gecko/20100101 Thunderbird/78.14.0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CAK7MZG1MeeS5QNPog9oS+MbdKpkDXu61eVOszsC20Q=ik+Ng=g@mail.gmail.com>
- <m05xyw9r92.fsf@epic96565.epic.com>
-In-Reply-To: <m05xyw9r92.fsf@epic96565.epic.com>
-From: Vijay Raghavan Aravamudhan <avijayr@gmail.com>
-Date: Sun, 11 Feb 2024 00:12:32 +0530
-Message-ID: <CAK7MZG29+Cy-7SJnWayro_5GGEe3iZLysQqVaATLz8GLtEtA5A@mail.gmail.com>
-Subject: Re: git status became very slow after upgrading git
-To: Sean Allred <allred.sean@gmail.com>
-Cc: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <xmqqzfw9h7oy.fsf@gitster.g>
+Content-Type: text/plain; charset=utf-8
+Content-Language: fr
+Content-Transfer-Encoding: 8bit
 
-Thanks for responding. I have run the command that you gave on an open
-source repo so that its easy for you to replicate. The remote url is:
-https://github.com/vraravam/ferdium-app
+Hi Junio,
 
-The output is:
- =EF=85=B9 =EE=82=B0 =EF=81=BC ~/d/o/ferdium =EE=82=B0 on =EF=84=93 =EF=84=
-=A6 develop =EE=82=B0 GIT_TRACE=3D1 GIT_TRACE_SETUP=3D1
-GIT_TRACE_PERFORMANCE=3D1 git status
-00:08:15.548976 trace.c:314             setup: git_dir: .git
-00:08:15.550590 trace.c:315             setup: git_common_dir: .git
-00:08:15.550600 trace.c:316             setup: worktree:
-/Users/vijay/dev/oss/ferdium
-00:08:15.550604 trace.c:317             setup: cwd: /Users/vijay/dev/oss/fe=
-rdium
-00:08:15.550611 trace.c:318             setup: prefix: (null)
-00:08:15.550707 chdir-notify.c:70       setup: chdir from
-'/Users/vijay/dev/oss/ferdium' to '/Users/vijay/dev/oss/ferdium'
-00:08:15.550723 git.c:463               trace: built-in: git status
-00:08:15.552184 read-cache.c:2386       performance: 0.000183000 s:
-read cache .git/index
-00:08:15.555964 read-cache.c:1629       performance: 0.003696000 s:
-refresh index
-00:08:15.556442 diff-lib.c:273          performance: 0.000132000 s:  diff-f=
-iles
-00:08:15.558558 unpack-trees.c:2004     performance: 0.000019000 s:
-traverse_trees
-00:08:15.558801 unpack-trees.c:438      performance: 0.000003000 s:
-check_updates
-00:08:15.558813 unpack-trees.c:2096     performance: 0.000394000 s:
-unpack_trees
-00:08:15.558819 diff-lib.c:638          performance: 0.000524000 s:  diff-i=
-ndex
-00:08:15.559166 name-hash.c:613         performance: 0.000148000 s:
-initialize name hash
-On branch develop
-Your branch is up to date with 'origin/develop'.
+Le 2024-02-09 à 12:24, Junio C Hamano a écrit :
+> * ml/log-merge-with-cherry-pick-and-other-pseudo-heads (2024-02-08) 2 commits
+>  - revision: implement `git log --merge` also for rebase/cherry_pick/revert
+>  - revision: ensure MERGE_HEAD is a ref in prepare_show_merge
+> 
+>  "git log --merge" learned to pay attention to CHERRY_PICK_HEAD and
+>  other kinds of *_HEAD pseudorefs.
+> 
+>  Will merge to 'next'?
+>  source: <20240117081405.14012-1-mi.al.lohmann@gmail.com>
+>  source: <dfb582cf-b1e4-414d-bfe1-0f93d910ec54@kdbg.org>
 
-00:08:15.567249 run-command.c:657       trace: run_command:
-GIT_INDEX_FILE=3D.git/index git submodule summary --cached --for-status
---summary-limit -1 HEAD
-00:08:15.833334 git.c:749               trace: exec: git-submodule
-summary --cached --for-status --summary-limit -1 HEAD
-00:08:15.834114 run-command.c:657       trace: run_command:
-git-submodule summary --cached --for-status --summary-limit -1 HEAD
-00:08:16.880778 trace.c:414             performance: 0.000013000 s:
-git command: git --exec-path
-00:08:18.216639 git.c:463               trace: built-in: git rev-parse --gi=
-t-dir
-00:08:18.218740 trace.c:414             performance: 0.002132000 s:
-git command: git rev-parse --git-dir
-00:08:18.489025 git.c:463               trace: built-in: git rev-parse
---git-path objects
-00:08:18.490677 trace.c:414             performance: 0.001675000 s:
-git command: git rev-parse --git-path objects
-00:08:19.031080 git.c:463               trace: built-in: git rev-parse
---show-prefix
-00:08:19.032882 trace.c:414             performance: 0.001827000 s:
-git command: git rev-parse --show-prefix
-00:08:19.296074 git.c:463               trace: built-in: git rev-parse
---show-toplevel
-00:08:19.297559 trace.c:414             performance: 0.001504000 s:
-git command: git rev-parse --show-toplevel
-00:08:19.830285 trace.c:314             setup: git_dir: .git
-00:08:19.830972 trace.c:315             setup: git_common_dir: .git
-00:08:19.830981 trace.c:316             setup: worktree:
-/Users/vijay/dev/oss/ferdium
-00:08:19.830984 trace.c:317             setup: cwd: /Users/vijay/dev/oss/fe=
-rdium
-00:08:19.830990 trace.c:318             setup: prefix: (null)
-00:08:19.830994 git.c:463               trace: built-in: git
-submodule--helper summary --cached --for-status -n -1 -- HEAD
-00:08:19.834629 read-cache.c:2386       performance: 0.000164000 s:
-read cache .git/index
-00:08:19.834914 unpack-trees.c:2004     performance: 0.000024000 s:
-traverse_trees
-00:08:19.834932 unpack-trees.c:438      performance: 0.000003000 s:
-check_updates
-00:08:19.834940 unpack-trees.c:2096     performance: 0.000157000 s:
-unpack_trees
-00:08:19.834958 diff-lib.c:638          performance: 0.000307000 s:  diff-i=
-ndex
-00:08:19.834975 trace.c:414             performance: 0.005922000 s:
-git command: git submodule--helper summary --cached --for-status -n -1
--- HEAD
-00:08:19.836137 trace.c:414             performance: 4.003693000 s:
-git command: /opt/homebrew/opt/git/libexec/git-core/git submodule
-summary --cached --for-status --summary-limit -1 HEAD
-00:08:19.836842 run-command.c:657       trace: run_command:
-GIT_INDEX_FILE=3D.git/index git submodule summary --files --for-status
---summary-limit -1
-00:08:20.106802 git.c:749               trace: exec: git-submodule
-summary --files --for-status --summary-limit -1
-00:08:20.107638 run-command.c:657       trace: run_command:
-git-submodule summary --files --for-status --summary-limit -1
-00:08:21.162243 trace.c:414             performance: 0.000006000 s:
-git command: git --exec-path
-00:08:22.496146 git.c:463               trace: built-in: git rev-parse --gi=
-t-dir
-00:08:22.497722 trace.c:414             performance: 0.001589000 s:
-git command: git rev-parse --git-dir
-00:08:22.764795 git.c:463               trace: built-in: git rev-parse
---git-path objects
-00:08:22.766763 trace.c:414             performance: 0.001991000 s:
-git command: git rev-parse --git-path objects
-00:08:23.304626 git.c:463               trace: built-in: git rev-parse
---show-prefix
-00:08:23.306436 trace.c:414             performance: 0.001833000 s:
-git command: git rev-parse --show-prefix
-00:08:23.575506 git.c:463               trace: built-in: git rev-parse
---show-toplevel
-00:08:23.577138 trace.c:414             performance: 0.001656000 s:
-git command: git rev-parse --show-toplevel
-00:08:24.111335 trace.c:314             setup: git_dir: .git
-00:08:24.112123 trace.c:315             setup: git_common_dir: .git
-00:08:24.112138 trace.c:316             setup: worktree:
-/Users/vijay/dev/oss/ferdium
-00:08:24.112142 trace.c:317             setup: cwd: /Users/vijay/dev/oss/fe=
-rdium
-00:08:24.112149 trace.c:318             setup: prefix: (null)
-00:08:24.112154 git.c:463               trace: built-in: git
-submodule--helper summary --files --for-status -n -1 --
-00:08:24.113679 read-cache.c:2386       performance: 0.000216000 s:
-read cache .git/index
-00:08:24.117811 diff-lib.c:273          performance: 0.004115000 s:  diff-f=
-iles
-00:08:24.117838 trace.c:414             performance: 0.007389000 s:
-git command: git submodule--helper summary --files --for-status -n -1
---
-00:08:24.118895 trace.c:414             performance: 4.013083000 s:
-git command: /opt/homebrew/opt/git/libexec/git-core/git submodule
-summary --files --for-status --summary-limit -1
-nothing to commit, working tree clean
-00:08:24.119646 trace.c:414             performance: 8.571954000 s:
-git command: git status
+I think this is a very nice addition, I've been meaning to do a similar
+patch for quite some time.
 
-Hope this helps. Also, I noticed that the same repo, same versions of
-all tools, etc - this issue only occurs on my M2 mac, but works
-without any slowness on the intel mac.
+I think the commit message of 2/2 should be improved, which was pointed out a few
+times in the thread. I'll try to send a v4 with a more useful message, summarizing 
+the discussion, so maybe hold off on merging to next.
 
-On Sat, Feb 10, 2024 at 10:43=E2=80=AFPM Sean Allred <allred.sean@gmail.com=
-> wrote:
->
->
-> Vijay Raghavan Aravamudhan <avijayr@gmail.com> writes:
->
-> > What did you do before the bug happened? (Steps to reproduce your issue=
-)
-> > 1. brew update which pulled in latest version of git
-> > 2. git status in a repository (without submodules)
-> >
-> > What did you expect to happen? (Expected behavior)
-> > git status should have been fast
-> >
-> > What happened instead? (Actual behavior)
-> > git status takes almost 5s to complete.
->
-> Thanks for the report. This isn't a whole lot of information to go on.
-> At least, I'm not able to reproduce locally with a trivial repository:
->
->     git init
->     echo foo > file
->     git add file
->     git commit -mtest
->     git status
->
-> If you're able to reproduce, can you re-run `git status` with tracing
-> enabled and provide your output?
->
->     GIT_TRACE=3D1 GIT_TRACE_SETUP=3D1 GIT_TRACE_PERFORMANCE=3D1 git statu=
-s
->
-> If you can provide reproduction instructions that start with `git init`,
-> that would also help. It may take some time for you, but it'll take less
-> time than folks on this list taking shots in the dark :-)
->
-> --
-> Sean Allred
-
-
-
---=20
-You can visit my Github Profile to get to know what I work on outside
-of my day job
+Cheers,
+Philippe.
