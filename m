@@ -1,133 +1,136 @@
-Received: from secure.elehost.com (secure.elehost.com [185.209.179.11])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f54.google.com (mail-wr1-f54.google.com [209.85.221.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E5525D47B
-	for <git@vger.kernel.org>; Sat, 10 Feb 2024 18:14:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.209.179.11
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C38C5CDF4
+	for <git@vger.kernel.org>; Sat, 10 Feb 2024 18:32:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707588879; cv=none; b=O9ttuNR64okCifIDjTCkSQ2gjxKsItIMT4C9PldSF/C25kkPAVM1XADo7D0351LPB6Sp78GT4vZv6uw2tqvuZVrA+Atg+3CW6IbmIdFXRQy4QCyUXWRvumkfcM+F0d2y2bybe5AVFIuN7a0LWGIYVToBTn7lAyh4H369DMTme5w=
+	t=1707589948; cv=none; b=pAbtSjAk6HQL143BY36IRO1hrU3+ab5pp8//MyP80yyzvk+tL36pH1YWpKraKtJvbBZ5tFKIpSQN/NqU+jJtTA9jm7UMH+TfHPjI/3ZcHVwRYy27QVdyC4AemelcCWtFDMK/qgQF6d/VMUloE0OD+BUgAq5jtr+e2bre4onDnoU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707588879; c=relaxed/simple;
-	bh=qIXbUBKmWJtSGSrhvbOyaSXcib/Qo4u0OdMrDC3EAFY=;
-	h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type; b=IFq87yHVeXONJjgmc/6ENn8f16p8E+pY0EG/Y64X8OJPLLN8VJzRimsGFs95JpxnPNM7v5ymDlM/yDp1J99Wwh6Qlha5ldVOJqEIUcwYeFHlxQpJZ4zIr6stp7hvdY+c/KLz9FBpzPTYhhiJd5P0KPbxyBpy5thvD+tFnFHP6qA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com; spf=pass smtp.mailfrom=nexbridge.com; arc=none smtp.client-ip=185.209.179.11
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nexbridge.com
-X-Virus-Scanned: Debian amavisd-new at secure.elehost.com
-Received: from Mazikeen (cpebc4dfb928313-cmbc4dfb928310.cpe.net.cable.rogers.com [99.228.251.108] (may be forged))
-	(authenticated bits=0)
-	by secure.elehost.com (8.15.2/8.15.2/Debian-22ubuntu3) with ESMTPSA id 41AIETi93290144
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
-	for <git@vger.kernel.org>; Sat, 10 Feb 2024 18:14:30 GMT
-Reply-To: <rsbecker@nexbridge.com>
-From: <rsbecker@nexbridge.com>
-To: <git@vger.kernel.org>
-Subject: [BUG] git 2.44.0-rc0 t0080.1 Breaks on NonStop x86 and ia64
-Date: Sat, 10 Feb 2024 13:14:24 -0500
-Organization: Nexbridge Inc.
-Message-ID: <000401da5c4c$fd4ad260$f7e07720$@nexbridge.com>
+	s=arc-20240116; t=1707589948; c=relaxed/simple;
+	bh=lvMxwpu5SITz45OThYK9Sw30XiLRRcYvW3f6jY6Cpqc=;
+	h=Message-ID:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=EJ+WInTR+gCzXTqUdyxglegzDOiT9s2P5hxSbHRT7VOnQScAsyWBQOdKH+BTI4QP1dWLhpLUbuxLctjDOSlJq1uxQ6xM/jmQkStDGa40YgIuXviFAmzjvBbaTajXPUf1VkNj3cMaQ8OjjVhZ8YsCOalh5Tw3rMaUHtFvfitnrno=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dcwOTXWa; arc=none smtp.client-ip=209.85.221.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dcwOTXWa"
+Received: by mail-wr1-f54.google.com with SMTP id ffacd0b85a97d-33b712ebdb9so386518f8f.0
+        for <git@vger.kernel.org>; Sat, 10 Feb 2024 10:32:26 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1707589945; x=1708194745; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=XXyWyvBibm9hTSLDiYgyRvra4RZZ/TOhpEDNI9Sq/xo=;
+        b=dcwOTXWaRkeZOyVqzZM3udfwH259fVLAaBmjGckV4N+b55dTm7jFWTShZggZjmpZSL
+         cYbA5K5p5yW6tb9D/q+CrfJ1TL71v97/K3AT3tUTrBYDZX6jClkc29CsAZFrb6U57IDS
+         7EfHy3zwZGAPZMkN39+dHPGZndDC+pl+S/XXwcUuAjKWbnWXV1M5yyFuqfXLMHdAR1KD
+         SO9Nn1Cqx8ML3Fu5zXRJGySYxhgtqpC580IgQRrCASJjqd+I1949bV6zQfF9tgAtPJh5
+         AOCNIB2++Lhg0Oc492TeyyNeJoygDvhPOl0JIWCDWLSZXHb4PTPX3LRmVRGJS9az6Kyw
+         Ge+Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1707589945; x=1708194745;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=XXyWyvBibm9hTSLDiYgyRvra4RZZ/TOhpEDNI9Sq/xo=;
+        b=sDA4pvtybrbd7Rqn2Kg0Znwz0o5qD/sGqdL9mgg4QcH3QF5aIY0c/xPrfmXsGnO1Bw
+         ez84j8NzVI76mRXB6652c+S0ZQko0Wl25AhEImKGK4V+crRJ9A5yDWqtrOHUFD8CXbkU
+         gSrz238WG9rC9Kz/AJChjszxJ9GGuc7UJA3rT8o1syw6XFx8oFZ6eNWxOQU4rhgn0Siz
+         iIoHPR1a2fi6o14KEOKb+4hBAHUu55BeJykutOOvYFhO4WzAP20MhXQ92hQVK18OaeUw
+         zcqwxjzy8af6qyPKPzGZg1308DFGAI3jBP9SX6AuXcFTvri4ySNalZHK4Ao+sSavw1Jy
+         NwxA==
+X-Gm-Message-State: AOJu0YyaeH6Guwr3R4d4U0Bi9QZRQilBZjRxLu5BWNYXXar7ylPBQCqt
+	0gyVQcr792RDmzwdJcVJq4HHYhi8NXsBaW8HwtzPdQ24sH+xLqUyq1rNam4b
+X-Google-Smtp-Source: AGHT+IGy0RAL4OkH/8n4t9ZKzzK+194qPZUG1Dg5unsjZEn3YMzB2OpWZTvlpEyCVmu+db+XGeZ1oQ==
+X-Received: by 2002:a5d:47cb:0:b0:33b:3e48:59ec with SMTP id o11-20020a5d47cb000000b0033b3e4859ecmr2799170wrc.63.1707589945186;
+        Sat, 10 Feb 2024 10:32:25 -0800 (PST)
+X-Forwarded-Encrypted: i=1; AJvYcCUdAdZAzqqkEizByXsPGGJd2/h1shjwM/TpVRkF8B0enWucg+relgafPlI7MQI02S2gBje1N40GL1Jd3/2h79KeQ52g4DFgm4uj6cHrPA==
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id i15-20020adffc0f000000b0033af5716a7fsm2436567wrr.61.2024.02.10.10.32.24
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 10 Feb 2024 10:32:24 -0800 (PST)
+Message-ID: <837d92a6c277015fc8633ca84557124465390548.1707589943.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1660.v3.git.git.1707589943.gitgitgadget@gmail.com>
+References: <pull.1660.v2.git.git.1706534881.gitgitgadget@gmail.com>
+	<pull.1660.v3.git.git.1707589943.gitgitgadget@gmail.com>
+From: "Philippe Blain via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Sat, 10 Feb 2024 18:32:20 +0000
+Subject: [PATCH v3 1/4] completion: add space after config variable names also
+ in Bash 3
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain;
-	charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AdpcSu3BAKC5gP5PQd63DU96njZX6g==
-Content-Language: en-ca
+To: git@vger.kernel.org
+Cc: Patrick Steinhardt <ps@pks.im>,
+    Philippe Blain <levraiphilippeblain@gmail.com>,
+    Philippe Blain <levraiphilippeblain@gmail.com>,
+    Philippe Blain <levraiphilippeblain@gmail.com>
 
-I encountered a new problem on git 2.44.0-rc0 for test t0080.1. Run very
-verbose (--verbose -x):
+From: Philippe Blain <levraiphilippeblain@gmail.com>
 
-++ cat
-++ /home/randall/git/t/unit-tests/bin/t-basic
-++ test_cmp expect actual
-++ test 2 -ne 2
-++ eval 'diff -u' '"$@"'
-+++ diff -u expect actual
---- expect      2024-02-10 18:04:28 +0000
-+++ actual      2024-02-10 18:04:28 +0000
-@@ -1,43 +1,43 @@
- ok 1 - passing test
- ok 2 - passing test and assertion return 1
--# check "1 == 2" failed at t/unit-tests/t-basic.c:76
-+# check "1 == 2" failed at /home/randall/git/t/unit-tests/t-basic.c:76
- #    left: 1
- #   right: 2
- not ok 3 - failing test
- ok 4 - failing test and assertion return 0
- not ok 5 - passing TEST_TODO() # TODO
- ok 6 - passing TEST_TODO() returns 1
--# todo check 'check(x)' succeeded at t/unit-tests/t-basic.c:25
-+# todo check 'check(x)' succeeded at
-/home/randall/git/t/unit-tests/t-basic.c:25
- not ok 7 - failing TEST_TODO()
- ok 8 - failing TEST_TODO() returns 0
--# check "0" failed at t/unit-tests/t-basic.c:30
-+# check "0" failed at /home/randall/git/t/unit-tests/t-basic.c:30
- # skipping test - missing prerequisite
--# skipping check '1' at t/unit-tests/t-basic.c:32
-+# skipping check '1' at /home/randall/git/t/unit-tests/t-basic.c:32
- ok 9 - test_skip() # SKIP
- ok 10 - skipped test returns 1
- # skipping test - missing prerequisite
- ok 11 - test_skip() inside TEST_TODO() # SKIP
- ok 12 - test_skip() inside TEST_TODO() returns 1
--# check "0" failed at t/unit-tests/t-basic.c:48
-+# check "0" failed at /home/randall/git/t/unit-tests/t-basic.c:48
- not ok 13 - TEST_TODO() after failing check
- ok 14 - TEST_TODO() after failing check returns 0
--# check "0" failed at t/unit-tests/t-basic.c:56
-+# check "0" failed at /home/randall/git/t/unit-tests/t-basic.c:56
- not ok 15 - failing check after TEST_TODO()
- ok 16 - failing check after TEST_TODO() returns 0
--# check "!strcmp("\thello\\", "there\"\n")" failed at
-t/unit-tests/t-basic.c:61
-+# check "!strcmp("\thello\\", "there\"\n")" failed at
-/home/randall/git/t/unit-tests/t-basic.c:61
- #    left: "\011hello\\"
- #   right: "there\"\012"
--# check "!strcmp("NULL", NULL)" failed at t/unit-tests/t-basic.c:62
-+# check "!strcmp("NULL", NULL)" failed at
-/home/randall/git/t/unit-tests/t-basic.c:62
- #    left: "NULL"
- #   right: NULL
--# check "'a' == '\n'" failed at t/unit-tests/t-basic.c:63
-+# check "'a' == '\n'" failed at /home/randall/git/t/unit-tests/t-basic.c:63
- #    left: 'a'
- #   right: '\012'
--# check "'\\' == '\''" failed at t/unit-tests/t-basic.c:64
-+# check "'\\' == '\''" failed at
-/home/randall/git/t/unit-tests/t-basic.c:64
- #    left: '\\'
- #   right: '\''
- not ok 17 - messages from failing string and char comparison
--# BUG: test has no checks at t/unit-tests/t-basic.c:91
-+# BUG: test has no checks at /home/randall/git/t/unit-tests/t-basic.c:91
- not ok 18 - test with no checks
- ok 19 - test with no checks returns 0
- 1..19
-error: last command exited with $?=1
+In be6444d1ca (completion: bash: add correct suffix in variables,
+2021-08-16), __git_complete_config_variable_name was changed to use
+"${sfx- }" instead of "$sfx" as the fourth argument of _gitcomp_nl and
+_gitcomp_nl_append, such that this argument evaluates to a space if sfx
+is unset. This was to ensure that e.g.
 
-The diff appears to have failed because of an assumption of how paths are
-resolved during compilation. The assumption is that files remain partially
-qualified, which is not the case in all C compilers. This is c99. My
-experience with gcc is that it qualifies names differently than other
-compilers. It might be useful to pipe to sed to strip ${HOME}/ when building
-the actual file, something like:
+	git config branch.autoSetupMe[TAB]
 
-sed -i "1,\$s/${HOME}\//g" actual    # Not that that will actually work
-because sed will process /. A different delimiter would work.
+correctly completes to 'branch.autoSetupMerge ' with the trailing space.
+This commits notes that the fix only works in Bash 4 because in Bash 3
+the 'local sfx' construct at the beginning of
+__git_complete_config_variable_name creates an empty string.
 
-Randall
+Make the fix also work for Bash 3 by using the "unset or null' parameter
+expansion syntax ("${sfx:- }"), such that the parameter is also expanded
+to a space if it is set but null, as is the behaviour of 'local sfx' in
+Bash 3.
 
---
-Randall S. Becker
-NSGit Chief Architect
-Nexbridge Inc.
-+1.416.984.9826
+Signed-off-by: Philippe Blain <levraiphilippeblain@gmail.com>
+---
+ contrib/completion/git-completion.bash | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
+diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+index 6662db221df..159a4fd8add 100644
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -2750,7 +2750,7 @@ __git_complete_config_variable_name ()
+ 		local pfx="${cur_%.*}."
+ 		cur_="${cur_#*.}"
+ 		__gitcomp_direct "$(__git_heads "$pfx" "$cur_" ".")"
+-		__gitcomp_nl_append $'autoSetupMerge\nautoSetupRebase\n' "$pfx" "$cur_" "${sfx- }"
++		__gitcomp_nl_append $'autoSetupMerge\nautoSetupRebase\n' "$pfx" "$cur_" "${sfx:- }"
+ 		return
+ 		;;
+ 	guitool.*.*)
+@@ -2784,7 +2784,7 @@ __git_complete_config_variable_name ()
+ 		local pfx="${cur_%.*}."
+ 		cur_="${cur_#*.}"
+ 		__git_compute_all_commands
+-		__gitcomp_nl "$__git_all_commands" "$pfx" "$cur_" "${sfx- }"
++		__gitcomp_nl "$__git_all_commands" "$pfx" "$cur_" "${sfx:- }"
+ 		return
+ 		;;
+ 	remote.*.*)
+@@ -2800,7 +2800,7 @@ __git_complete_config_variable_name ()
+ 		local pfx="${cur_%.*}."
+ 		cur_="${cur_#*.}"
+ 		__gitcomp_nl "$(__git_remotes)" "$pfx" "$cur_" "."
+-		__gitcomp_nl_append "pushDefault" "$pfx" "$cur_" "${sfx- }"
++		__gitcomp_nl_append "pushDefault" "$pfx" "$cur_" "${sfx:- }"
+ 		return
+ 		;;
+ 	url.*.*)
+-- 
+gitgitgadget
 
