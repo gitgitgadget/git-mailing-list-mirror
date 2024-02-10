@@ -1,94 +1,183 @@
-Received: from mx.mylinuxtime.de (mx.mylinuxtime.de [88.99.235.251])
+Received: from secure.elehost.com (secure.elehost.com [185.209.179.11])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FACA51C4F
-	for <git@vger.kernel.org>; Sat, 10 Feb 2024 20:01:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=88.99.235.251
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B6B147F4B
+	for <git@vger.kernel.org>; Sat, 10 Feb 2024 23:22:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.209.179.11
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707595322; cv=none; b=SZ1rGbKXaXVNHS2xaTCJv+LJ45zqRqm++EZyqY5bREcQydPwKFlXx8vVCK+mcWLLZZDL8Yu3K1rRPYcespBV2d6w7JwtMrf2we/6za500skCRISSCsWBm7GucMk9BAOxNltY2eCiYvhTBFnpWbjJ2gDSRH+wYiSHJ4fpRLAHBos=
+	t=1707607376; cv=none; b=bBpnhkji+7HBuoZGdy0fZfdHB2ASCL+iSheO1TST75GZ68dQvZzsTgTMiDiBIK2CU/c9wsvdFiSFvVhwWYairNYP7qBQ2B+csf+m0LpqLC0wnfRBHl9SYkHb+yufXcHl+dkgOYjsSRcAvasqFwfsza6h4cXiELwc34kdJOrYqHY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707595322; c=relaxed/simple;
-	bh=DFU9v0itplzikoumtr3KhaMTTfV9zKvT3Fg7NCbzT3k=;
-	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=F05KuYpa44/ra4cBUVbUmNSPa7pqcrmQWdH9YO+ye+FpR0BGcZStUg1X9xTwYLG1mp7m2ji2GKyRQ/+hpphK/5SIYHsucPlcXK5T//HbiNNvnKp4W3pwhYavrVAgiaXaO3gOW+M4ivg3z5exSTIJboDt3yY/mTLD2KFHCm6RDq4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=eworm.de; spf=pass smtp.mailfrom=eworm.de; arc=none smtp.client-ip=88.99.235.251
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=eworm.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=eworm.de
-Received: from leda.eworm.net (p200300Cf2F303c0070a407264768c153.dip0.t-ipconnect.de [IPv6:2003:cf:2f30:3c00:70a4:726:4768:c153])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (P-256) server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by mx.mylinuxtime.de (Postfix) with ESMTPSA id 99D8324803C;
-	Sat, 10 Feb 2024 21:01:56 +0100 (CET)
-Date: Sat, 10 Feb 2024 21:01:55 +0100
-From: Christian Hesse <list@eworm.de>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Philippe Blain <levraiphilippeblain@gmail.com>, Git Mailing List
- <git@vger.kernel.org>, Christian Hesse <mail@eworm.de>
-Subject: Re: [PATCH 1/1] imap-send: include strbuf.h
-Message-ID: <20240210210155.71fa163d@leda.eworm.net>
-In-Reply-To: <xmqqeddlckqa.fsf@gitster.g>
-References: <20240209222622.102208-1-list@eworm.de>
-	<xmqqil2xcl9e.fsf@gitster.g>
-	<xmqqeddlckqa.fsf@gitster.g>
-X-Mailer: Claws Mail 4.2.0 (GTK 3.24.41; x86_64-pc-linux-gnu)
-X-Face: %O:rCSk<c"<MpJ:yn<>HSKf7^4uF|FD$9$I0}g$nbnS1{DYPvs#:,~e`).mzj\$P9]V!WCveE/XdbL,L!{)6v%x4<jA|JaB-SKm74~Wa1m;|\QFlOg>\Bt!b#{;dS&h"7l=ow'^({02!2%XOugod|u*mYBVm-OS:VpZ"ZrRA4[Q&zye,^j;ftj!Hxx\1@;LM)Pz)|B%1#sfF;s;,N?*K*^)
-Face: iVBORw0KGgoAAAANSUhEUgAAADAAAAAwBAMAAAClLOS0AAAAGFBMVEUZFRFENy6KVTKEd23CiGHeqofJvrX4+vdHgItOAAAACXBIWXMAAA3XAAAN1wFCKJt4AAACUklEQVQ4y2VUTZeqMAxNxXG2Io5uGd64L35unbF9ax0b3OLxgFs4PcLff0lBHeb1QIq5uelNCEJNq/TIFGyeC+iugH0WJr+B1MvzWASpuP4CYHOB0VfoDdddwA7OIFQIEHjXDiCtV5e9QX0WMu8AG0mB7g7WP4GqeqVdsi4vv/5kFBvaF/zD7zDquL4DxbrDGDyAsgNYOsJOYzth4Q9ZF6iLV+6TLAT1pi2kuvgAtZxSjoG8cL+8vIn251uoe1OOEWwbIPU04gHsmMsoxyyhYsD2FdIigF1yxaVbBuSOCAlCoX324I7wNMhrO1bhOLsRoA6DC6wQ5eQiSG5BiWQfM4gN+uItQTRDMaJUhVbGyKWCuaaUGSVFVKpl4PdoDn3yY8J+YxQxyhlHfoYOyPgyDcO+cSQK6Bvabjcy2nwRo3pxgA8jslnCuYw23ESOzHAPYwo4ITNQMaOO+RGPEGhSlPEZBh2jmBEjQ5cKbxmr0ruAe/WCriUxW76I8T3h7vqY5VR5wXLdERodg2rHEzdxxk5KpXTL4FwnarvndKM5/MWDY5CuBBdQ+3/0ivsUJHicuHd+Xh3jOdBL+FjSGq4SPCwco+orpWlERRTNo7BHCvbNXFVSIQMp+P5QsIL9upmr8kMTUOfxEHoanwzKRcNAe76WbjBwex/RkdHu48xT5YqP70DaMOhBcTHmAVDxLaBdle93oJy1QKFUh2GXT4am+YH/GGel1CeI98GdMXsytjCKIq/9cMrlgxFCROv+3/BU1fijNpcVD6DxE8VfLBaxUGr1D5usgDYdjwiPAAAAAElFTkSuQmCC
+	s=arc-20240116; t=1707607376; c=relaxed/simple;
+	bh=Q4WaXpf3T0f/uZuMZ39k8UHUI/OGZo0bq6kuGxp2HX0=;
+	h=From:To:References:In-Reply-To:Subject:Date:Message-ID:
+	 MIME-Version:Content-Type; b=lOBxZr4mvjvwH6zxsirlwzhtNY2AibxOVRfkDg7mgmII4r8XZPcPL18Iu4lg9X/M6y6fDJ4DOHpyy0ZAoJLdMi8skZbUEci/Wko32fZLtT/4FjxnYAphxZlafF6+YperGRGoXzLNq7i9IWAi7LwkGcvo0ZQVz5sjC7B6O5DKpV0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com; spf=pass smtp.mailfrom=nexbridge.com; arc=none smtp.client-ip=185.209.179.11
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nexbridge.com
+X-Virus-Scanned: Debian amavisd-new at secure.elehost.com
+Received: from Mazikeen (cpebc4dfb928313-cmbc4dfb928310.cpe.net.cable.rogers.com [99.228.251.108] (may be forged))
+	(authenticated bits=0)
+	by secure.elehost.com (8.15.2/8.15.2/Debian-22ubuntu3) with ESMTPSA id 41ANMqDs3323889
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Sat, 10 Feb 2024 23:22:52 GMT
+Reply-To: <rsbecker@nexbridge.com>
+From: <rsbecker@nexbridge.com>
+To: <rsbecker@nexbridge.com>, <git@vger.kernel.org>
+References: <000401da5c4c$fd4ad260$f7e07720$@nexbridge.com>
+In-Reply-To: <000401da5c4c$fd4ad260$f7e07720$@nexbridge.com>
+Subject: RE: [BUG] git 2.44.0-rc0 t0080.1 Breaks on NonStop x86 and ia64
+Date: Sat, 10 Feb 2024 18:22:46 -0500
+Organization: Nexbridge Inc.
+Message-ID: <002301da5c78$11959ea0$34c0dbe0$@nexbridge.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; boundary="Sig_/2c=Y8xJxk47OEbtS_v1S=mw";
- protocol="application/pgp-signature"; micalg=pgp-sha256
+Content-Type: text/plain;
+	charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+X-Mailer: Microsoft Outlook 16.0
+Thread-Index: AQEKhykLt/LB5hLsEaYKWm4eL/p/IrKj3vFw
+Content-Language: en-ca
 
---Sig_/2c=Y8xJxk47OEbtS_v1S=mw
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: quoted-printable
+On Saturday, February 10, 2024 1:14 PM, I wrote:
+>I encountered a new problem on git 2.44.0-rc0 for test t0080.1. Run very
+verbose
+>(--verbose -x):
+>
+>++ cat
+>++ /home/randall/git/t/unit-tests/bin/t-basic
+>++ test_cmp expect actual
+>++ test 2 -ne 2
+>++ eval 'diff -u' '"$@"'
+>+++ diff -u expect actual
+>--- expect      2024-02-10 18:04:28 +0000
+>+++ actual      2024-02-10 18:04:28 +0000
+>@@ -1,43 +1,43 @@
+> ok 1 - passing test
+> ok 2 - passing test and assertion return 1 -# check "1 == 2" failed at
+t/unit-tests/t-
+>basic.c:76
+>+# check "1 == 2" failed at /home/randall/git/t/unit-tests/t-basic.c:76
+> #    left: 1
+> #   right: 2
+> not ok 3 - failing test
+> ok 4 - failing test and assertion return 0  not ok 5 - passing TEST_TODO()
+# TODO
+>ok 6 - passing TEST_TODO() returns 1 -# todo check 'check(x)' succeeded at
+t/unit-
+>tests/t-basic.c:25
+>+# todo check 'check(x)' succeeded at
+>/home/randall/git/t/unit-tests/t-basic.c:25
+> not ok 7 - failing TEST_TODO()
+> ok 8 - failing TEST_TODO() returns 0
+>-# check "0" failed at t/unit-tests/t-basic.c:30
+>+# check "0" failed at /home/randall/git/t/unit-tests/t-basic.c:30
+> # skipping test - missing prerequisite
+>-# skipping check '1' at t/unit-tests/t-basic.c:32
+>+# skipping check '1' at /home/randall/git/t/unit-tests/t-basic.c:32
+> ok 9 - test_skip() # SKIP
+> ok 10 - skipped test returns 1
+> # skipping test - missing prerequisite
+> ok 11 - test_skip() inside TEST_TODO() # SKIP  ok 12 - test_skip() inside
+>TEST_TODO() returns 1 -# check "0" failed at t/unit-tests/t-basic.c:48
+>+# check "0" failed at /home/randall/git/t/unit-tests/t-basic.c:48
+> not ok 13 - TEST_TODO() after failing check  ok 14 - TEST_TODO() after
+failing check
+>returns 0 -# check "0" failed at t/unit-tests/t-basic.c:56
+>+# check "0" failed at /home/randall/git/t/unit-tests/t-basic.c:56
+> not ok 15 - failing check after TEST_TODO()  ok 16 - failing check after
+TEST_TODO()
+>returns 0 -# check "!strcmp("\thello\\", "there\"\n")" failed at
+>t/unit-tests/t-basic.c:61
+>+# check "!strcmp("\thello\\", "there\"\n")" failed at
+>/home/randall/git/t/unit-tests/t-basic.c:61
+> #    left: "\011hello\\"
+> #   right: "there\"\012"
+>-# check "!strcmp("NULL", NULL)" failed at t/unit-tests/t-basic.c:62
+>+# check "!strcmp("NULL", NULL)" failed at
+>/home/randall/git/t/unit-tests/t-basic.c:62
+> #    left: "NULL"
+> #   right: NULL
+>-# check "'a' == '\n'" failed at t/unit-tests/t-basic.c:63
+>+# check "'a' == '\n'" failed at
+>+/home/randall/git/t/unit-tests/t-basic.c:63
+> #    left: 'a'
+> #   right: '\012'
+>-# check "'\\' == '\''" failed at t/unit-tests/t-basic.c:64
+>+# check "'\\' == '\''" failed at
+>/home/randall/git/t/unit-tests/t-basic.c:64
+> #    left: '\\'
+> #   right: '\''
+> not ok 17 - messages from failing string and char comparison -# BUG: test
+has no
+>checks at t/unit-tests/t-basic.c:91
+>+# BUG: test has no checks at
+>+/home/randall/git/t/unit-tests/t-basic.c:91
+> not ok 18 - test with no checks
+> ok 19 - test with no checks returns 0
+> 1..19
+>error: last command exited with $?=1
+>
+>The diff appears to have failed because of an assumption of how paths are
+resolved
+>during compilation. The assumption is that files remain partially
+qualified, which is
+>not the case in all C compilers. This is c99. My experience with gcc is
+that it qualifies
+>names differently than other compilers. It might be useful to pipe to sed
+to strip
+>${HOME}/ when building the actual file, something like:
+>
+>sed -i "1,\$s/${HOME}\//g" actual    # Not that that will actually work
+>because sed will process /. A different delimiter would work.
+>
+>Randall
 
-Junio C Hamano <gitster@pobox.com> on Fri, 2024/02/09 14:54:
-> Junio C Hamano <gitster@pobox.com> writes:
->=20
-> > Christian Hesse <list@eworm.de> writes:
-> > =20
-> >> From: Christian Hesse <mail@eworm.de>
-> >>
-> >> We had this fixed in 3307f7dde2ae8f5281d0782f7291a073c9b1cdc2,
-> >> and it broke again in eea0e59ffbed6e33d171ace5be13cde9faa41639. =20
-> >
-> > Thanks, already reported and fixed, I believe? =20
->=20
-> Oops, missing link:
->=20
-> https://lore.kernel.org/git/pull.1664.git.git.1706833113569.gitgitgadget@=
-gmail.com/
+Putting the sed command in, as follows:
 
-Sorry, missed that... Probably because the breakage went into 2.43.1, but t=
-he
-upstream fix did not. So sorry for the noise.
+diff --git a/t/t0080-unit-test-output.sh b/t/t0080-unit-test-output.sh
+index 6657c114a3..eaf25f2ddc 100755
+--- a/t/t0080-unit-test-output.sh
++++ b/t/t0080-unit-test-output.sh
+@@ -52,7 +52,7 @@ test_expect_success 'TAP output from unit tests' '
+        1..19
+        EOF
 
-Anyway... does it make sense to move the include into the condition?
---=20
-main(a){char*c=3D/*    Schoene Gruesse                         */"B?IJj;MEH"
-"CX:;",b;for(a/*    Best regards             my address:    */=3D0;b=3Dc[a+=
-+];)
-putchar(b-1/(/*    Chris            cc -ox -xc - && ./x    */b/42*2-3)*42);}
+-       ! "$GIT_BUILD_DIR"/t/unit-tests/bin/t-basic >actual &&
++       ! "$GIT_BUILD_DIR"/t/unit-tests/bin/t-basic | sed "s?/.*/t/?t/?"
+>actual &&
+        test_cmp expect actual
+ '
 
---Sig_/2c=Y8xJxk47OEbtS_v1S=mw
-Content-Type: application/pgp-signature
-Content-Description: OpenPGP digital signature
+still results in a problem. The ! in the above line is being interpreted
+incorrectly:
 
------BEGIN PGP SIGNATURE-----
+diff expect actual
+27c27
+< # check "!strcmp("\thello\\", "there"\n")" failed at
+t/unit-tests/t-basic.c:61
+---
+> # check "!strcmp("\thello\\", "there\"\n")" failed at
+t/unit-tests/t-basic.c:61
+29c29
+< #   right: "there"\012"
+---
+> #   right: "there\"\012"
 
-iQEzBAEBCAAdFiEEXHmveYAHrRp+prOviUUh18yA9HYFAmXH1jMACgkQiUUh18yA
-9HaLowf6At5l/vXKNaRx79gbSf/UIKk3klJu739+jX2OGkm5ZrtugAVby1jd5yMw
-RUMD3hn5Wyqy+b7gCJJQj4qT4qUUD+llwpQu47ZSlpjJ1rvsbd664eiNU5sWA6U6
-GJhpBGPdy2sL84TuFvVoa3nxApln99FRGXp0wUvYQwUHZHZrU9sNTS7Z/WuH9PjM
-mSYgd4g04JEr1RpYk1xfASbcpz1JJrCX7KV3+0axXWFeXALNzra9WVH7RG/2aYcJ
-cHFuhmIighmjHrs00MhkYl34AtBZZAJNCYYKlmlp5fObezF7hXWZ1fY+j1yVuABF
-ygQEGbciJrrIRBGwdhMMABH7PGv7zg==
-=sa3E
------END PGP SIGNATURE-----
+I am not convinced the test is working properly. The ! appears to be causing
+/bin/ksh to be invoked instead of bash. If I remove !, the test works
+correctly. Did we not have issues with using ! in the past?
 
---Sig_/2c=Y8xJxk47OEbtS_v1S=mw--
+--Randall
+
+--
+Brief whoami: NonStop&UNIX developer since approximately
+UNIX(421664400)
+NonStop(211288444200000000)
+-- In real life, I talk too much.
+
+
+
