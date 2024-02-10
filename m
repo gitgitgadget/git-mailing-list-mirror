@@ -1,98 +1,98 @@
-Received: from mail-qk1-f169.google.com (mail-qk1-f169.google.com [209.85.222.169])
+Received: from mail-oi1-f177.google.com (mail-oi1-f177.google.com [209.85.167.177])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76D26364BA
-	for <git@vger.kernel.org>; Sat, 10 Feb 2024 18:49:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06E3B210EE
+	for <git@vger.kernel.org>; Sat, 10 Feb 2024 19:11:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707590983; cv=none; b=n3i7XNtldTWvpWE5zPdkvx7P9DdXkRxv2M9zSE4R6NMCxDVzlP1SoFMUrVJkrA/zDUnCCgLGY5Yotb/03elayg28XL+ilY1cJmc++bL+hynZX8XPB6j7xuGQVvCMBD8kWJgeRow1v6JkQxRlmGu1bQXqLjlNC8SATfTmdxg16oM=
+	t=1707592264; cv=none; b=OqgcUkL2IbA7nMDY/wQDqvMyE6DxU/Vf7ZWyutIkJkSvs9W2V9nRHXWRIRMJ18V3ofROiwjSHtG7foPY4IhmU1dcAsJP0+kDSONMGOL3nSmoAfANI+I3lynPxtw+JSEHI00cvPuZESpwyy39DU5Sr0bHo9iMs2JtkZS9POR3jns=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707590983; c=relaxed/simple;
-	bh=dLa9RzFnNcjL9Qd6SrJO4y//GigFpOR8EMWIV0pWZqM=;
-	h=Subject:To:References:From:Message-ID:Date:MIME-Version:
-	 In-Reply-To:Content-Type; b=Oubo1gaZJ/UwqZrqmGkMyJlS4dRtNV8V+Lp1EZ334Lpj0l/rwl4Y73fRrwat+3v8EzYM2xloaVzK0flLGQ+iAdtPdhUCv1n/LBBULA/kIdu9W6500PpKH60Yy+k4rIx7KEM4FPcGwz/IfrT4NNDVqBJXFqhwZK4sDZ0h9Hc1ATY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mkFA8I6r; arc=none smtp.client-ip=209.85.222.169
+	s=arc-20240116; t=1707592264; c=relaxed/simple;
+	bh=Ygx/UbUSP3FW3en/iMcqU7/bqad28ERJmrdsx9gXOlc=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=Gr6iQtblJfJyDxSaouTsCI0P8QII42m0i8Z1cL3CWrlzXijzU0QJbBBtRMfPFF61XyadHqxwiHtarU3Ln1kvZBry4BJTmCtg/w8R1Th7diAvDfQr9SdBLCHcKIIYtab1nuLzEY2vHTuV9nlKAY0CO/whGMH07pUEF3M5Vu+BQJ4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JW2sypm4; arc=none smtp.client-ip=209.85.167.177
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mkFA8I6r"
-Received: by mail-qk1-f169.google.com with SMTP id af79cd13be357-783d916d039so140838485a.2
-        for <git@vger.kernel.org>; Sat, 10 Feb 2024 10:49:42 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JW2sypm4"
+Received: by mail-oi1-f177.google.com with SMTP id 5614622812f47-3bbb4806f67so1513392b6e.3
+        for <git@vger.kernel.org>; Sat, 10 Feb 2024 11:11:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1707590981; x=1708195781; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-language:in-reply-to:mime-version
-         :user-agent:date:message-id:from:references:to:subject:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=hsPvR6SGZIUF5xk/aIzB9UDk5YX+qu1iVEtJ44NfrhE=;
-        b=mkFA8I6r8L8t0AmLjbmm4sp9OibBcMpHlXVcjN/coDzlI+WzJzqdFjZ/eqh+qiE96h
-         J0L6E9rftv+An52aHXgo4dPG5YVz+cFpLkFhOyS8luk4RQXi83yfUI3xiPI8klduvJZR
-         6urZ0QMG2CN7Eiq1qKAPg3VVI8TZGNP1hXOjIileTMLon3e/d7/gvcVbvCq7sOK5WGzq
-         E5Ke9xURrzHif2P/nuno0FcjYGMsRiT54sl+tXViDdKVw9WkZrH9APcYbhX2ipGstz49
-         M7pAfz2YTdjqlRD8VH6U71qSgH2qqdnFloryp9YXdvqvRn3yzbbGo85pEXUarwAPOrPn
-         x2qg==
+        d=gmail.com; s=20230601; t=1707592261; x=1708197061; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=Cs8/hHjX/9qUnvLRbWQKNBur2C+Ms17a9f1UTyvVWL0=;
+        b=JW2sypm4GZHVBf56ybO1gZaT9IVm2lxUwsbGcHQITUnEkd3rVKHDV9d0ISoMcci4LP
+         8ZsbQ0ZGIA046vtb6u1Fa+47qB8W1mR/GS4zq5M65v556WgcQNGJqOOAvbl9LnCV+tf6
+         TsQbiyqHE13JtNMqdRpc02xGU/AUvl/j2xIyTF4x0BnFO/3jjyyTo4m5S0sSuj2nTA3x
+         7x938vemo4H6+uvK7v1gkdVGP0p3f2qGdjy3EGEqRMJx0bnCdnT5SlFj5mkPaOZZIFDg
+         y9Iuf7nNsWh+rZMD/6AqwCGhox09+t7AeWYdSdHO59aDRGT/QisDf5qLKv36Q53vYIX5
+         fzRA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1707590981; x=1708195781;
-        h=content-transfer-encoding:content-language:in-reply-to:mime-version
-         :user-agent:date:message-id:from:references:to:subject
+        d=1e100.net; s=20230601; t=1707592261; x=1708197061;
+        h=content-transfer-encoding:in-reply-to:from:references:to
+         :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=hsPvR6SGZIUF5xk/aIzB9UDk5YX+qu1iVEtJ44NfrhE=;
-        b=r/J5lvck3vLh0BhfdsRH/hfKBeBTj/avEbYe4kU7ltWkAG71u4EWn0WAFnlBlfXHk5
-         E9WtvpESC0Bpcy0ezC8UvdhFQjxUpmlzxXlAgosQfM61A6BtB+QkF/Q1f/L4c0w9tXx1
-         JJTqHmmYqKmRtHSQ6pfPEBWFeua1eEuxMRjpizHwV7uzPw30v2EuiRMPJ0nWcrAVZMbT
-         45FZtZWUmMnhcYmlZ0K1CGCy+iV7Bcr1yIe8Jhfazt9g2DaQZhzsWYiBumH+V5p0sHqf
-         OSXXLZ4w9ZA8WzKY/bjUwGdfDXUw1m3Z6moLRwteVL/b6m2UAj2QTOpUv/muQW8BPCFx
-         B7Lg==
-X-Forwarded-Encrypted: i=1; AJvYcCXGiBGRToBPHiDXVVnCdOR2EYv6ZQSTtCCtOiDzKR8ciDSFwk5St09DrC1ZBHuAym12vYdkSgF/RRHNJR9HdJUU9qY1
-X-Gm-Message-State: AOJu0YyCPv8TmJd+WmyomSIpElje58W4pIznPcnbwU+W8f6TLZXuTQBa
-	Cik6sue+ZAbmzIlakJPP/fPX7Q5cpkAnREUaCMt9ol05IhACIZrY
-X-Google-Smtp-Source: AGHT+IE8pNQK5l/zVBAO8PMDfo6kQyZyYgfN4cUluD/aU5ciRJYkc39tonhcrQVqHnW3BTpV8Ixctw==
-X-Received: by 2002:a0c:f291:0:b0:68c:499f:f803 with SMTP id k17-20020a0cf291000000b0068c499ff803mr2923970qvl.30.1707590981365;
-        Sat, 10 Feb 2024 10:49:41 -0800 (PST)
-X-Forwarded-Encrypted: i=1; AJvYcCUIkstf8jcb6H7p//52SjcmWtsJcpQDZOaspNBlwUhYE3pu1jHiaDUaHp2YBQNqp+TKxHvUWTnLqHriW0q7uxSS4aZKELaKAaBBagFEXzRdwrjt1tKUX40kDOqwuA==
-Received: from ?IPv6:2606:6d00:17:3855:7446:337:f37a:d47? ([2606:6d00:17:3855:7446:337:f37a:d47])
-        by smtp.gmail.com with ESMTPSA id mc3-20020a056214554300b0068cc3a7a59dsm1976474qvb.106.2024.02.10.10.49.40
+        bh=Cs8/hHjX/9qUnvLRbWQKNBur2C+Ms17a9f1UTyvVWL0=;
+        b=HAbF1nhMTqzJ77nrKOsuOVqdcY6/oeiY5zwqANK5o33/rYGln049jLmlurm4mYZvzi
+         L0PQmDrj5bYXt2sFUBbCBBBD2Cd5MWe3JPEKMMv8Zg0ajll6l+yP51qwfgLa1/brej00
+         gNrpJ85X2WntzI3YFI0p7P+pa1hr4w83oqTFTml9JsKFZJ8SkOtvZpyvZ3x0ZNBupydi
+         bY5U/7VPEL/pFcJWLHeFfQgDQnFORoVZknLjg0yzo4kyev7+rJ7EfRF9UpJx726fbBqb
+         o28MoQnUq4Uu60RTGDBnxr00xywFpbs9Q62cU336OYdWLN15Ky5vf6ooO4IGGvIO2Kgd
+         +SHg==
+X-Forwarded-Encrypted: i=1; AJvYcCXg8ZARYla1nFg4EVqFfhwxNlAPDwOZDDDddvYHuIdCF2+k2RNleDQatReeRGjXv7C96cIAs1LltXN4fgjad1rXjGn6
+X-Gm-Message-State: AOJu0YwyDqbcB1O6uutlXI3SWwsgsm2ysCVISyhSVjW8sC9ZtYmlCkeN
+	2U5ZlxjOJitnnPivpzuTepr928jg9ERhlP807hENGeIg/nmRk1FdV/o5uANC
+X-Google-Smtp-Source: AGHT+IE3Fx32yiyX9rIBHM61iPZx+A2b3m/DHKATS7M+VeFzy70YjuhSJZShC5xHm9hoHTA+nQzLxg==
+X-Received: by 2002:a05:6808:1448:b0:3c0:29b2:5ae with SMTP id x8-20020a056808144800b003c029b205aemr3187791oiv.46.1707592260965;
+        Sat, 10 Feb 2024 11:11:00 -0800 (PST)
+X-Forwarded-Encrypted: i=1; AJvYcCXXvl8v4uWDubO134NEA08/9Kd/wEyUVn9MFvSHB0Ccfo3TpwYdLhUcIrntRBZyISHxCsjfG41ikcIP42t4d76yrkfQ
+Received: from ?IPV6:2600:4040:264f:8a00::387? ([2600:4040:264f:8a00::387])
+        by smtp.gmail.com with ESMTPSA id u9-20020a05620a022900b00783f9f6d5b7sm767164qkm.10.2024.02.10.11.11.00
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 10 Feb 2024 10:49:41 -0800 (PST)
-Subject: Re: What's cooking in git.git (Feb 2024, #04; Thu, 8)
-To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
- mi.al.lohmann@gmail.com
-References: <xmqqzfw9h7oy.fsf@gitster.g>
-From: Philippe Blain <levraiphilippeblain@gmail.com>
-Message-ID: <13f08ce5-f036-f769-1ba9-7d47b572af28@gmail.com>
-Date: Sat, 10 Feb 2024 13:49:39 -0500
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:78.0)
- Gecko/20100101 Thunderbird/78.14.0
+        Sat, 10 Feb 2024 11:11:00 -0800 (PST)
+Message-ID: <b5c93203-633f-405b-9bb3-1f8be87c16d6@gmail.com>
+Date: Sat, 10 Feb 2024 14:10:59 -0500
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-In-Reply-To: <xmqqzfw9h7oy.fsf@gitster.g>
-Content-Type: text/plain; charset=utf-8
-Content-Language: fr
+User-Agent: Mozilla Thunderbird
+Subject: Re: GitGui tool - new local clone is missing commit(s) and missing a
+ tag on master branch
+Content-Language: en-US
+To: Allan Ford <Allan.Ford@hambs.com.au>,
+ "git@vger.kernel.org" <git@vger.kernel.org>
+References: <MEYPR01MB6534B74E07CB2231EAE8D5C7A5452@MEYPR01MB6534.ausprd01.prod.outlook.com>
+From: Mark Levedahl <mlevedahl@gmail.com>
+In-Reply-To: <MEYPR01MB6534B74E07CB2231EAE8D5C7A5452@MEYPR01MB6534.ausprd01.prod.outlook.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 
-Hi Junio,
-
-Le 2024-02-09 à 12:24, Junio C Hamano a écrit :
-> * ml/log-merge-with-cherry-pick-and-other-pseudo-heads (2024-02-08) 2 commits
->  - revision: implement `git log --merge` also for rebase/cherry_pick/revert
->  - revision: ensure MERGE_HEAD is a ref in prepare_show_merge
+On 2/7/24 01:00, Allan Ford wrote:
+> Dear Git devs,
 > 
->  "git log --merge" learned to pay attention to CHERRY_PICK_HEAD and
->  other kinds of *_HEAD pseudorefs.
+> GitGui tool local clone is missing commit(s) and missing a tag on master branch
+>   
+> As compared to using Visual Studio 2022 or Visual Studio Code ..
+> Wondering if a bug somehow / somewhere ?
+> Other colleague devs observe the same ..
 > 
->  Will merge to 'next'?
->  source: <20240117081405.14012-1-mi.al.lohmann@gmail.com>
->  source: <dfb582cf-b1e4-414d-bfe1-0f93d910ec54@kdbg.org>
+> If I switch to the remote master branch then I get right content ..   but I should be able to do a new clone of master and hold locally.
 
-I think this is a very nice addition, I've been meaning to do a similar
-patch for quite some time.
+This is reminiscent of cloning issues some folks on my team raised 
+nearly a decade ago. git-gui uses a custom/unique do_clone function 
+written in tcl, rather than native git-clone, so problem diagnosis is 
+difficult and updates infrequent. My "cure" was to make git-gui use 
+git-clone. I still have that patch, have rebased it (some conflicts) 
+onto current git-gui master, and it still works in my very limited testing.
 
-I think the commit message of 2/2 should be improved, which was pointed out a few
-times in the thread. I'll try to send a v4 with a more useful message, summarizing 
-the discussion, so maybe hold off on merging to next.
+But, git-gui currently has no active maintainer, and Junio is now in a 
+release cycle, so the list's concern is not on new topics like this. For 
+both reasons, I'll hold onto the patch until the release cycle completes.
 
-Cheers,
-Philippe.
+Mark
