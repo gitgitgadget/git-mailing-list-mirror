@@ -1,64 +1,57 @@
-Received: from mail-oi1-f171.google.com (mail-oi1-f171.google.com [209.85.167.171])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2301C259B
-	for <git@vger.kernel.org>; Sat, 10 Feb 2024 17:13:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CB425BAF7
+	for <git@vger.kernel.org>; Sat, 10 Feb 2024 17:15:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707585229; cv=none; b=j8KvXsZ1mnbSjcHepYC1kTo1Kfneg84BkrH8FpS/SDi+TlCBb4Juv6kciC9+YhMp6Qo7fT6HYpRNFtx9PjKSyYW3fXerWZvGmuIzRpviQfC9IByh/Cb1AsFDkHfJi1B7Bv+cZ/SDQpNT7bWv0tAoWbU3dSnY9qMGdF2VFEZ+43g=
+	t=1707585349; cv=none; b=IA51zYD+TJ84cMaWGSBCPHnAtQdW0GVkV30NejTURNshojVGQJmLDn99+ksvTUSeipGU8wJvbNhMCj7Is6zIyx0IIecnp0jd5gvVXmtfrJIg+eItzzftWv9YfH0jm9pEZ7/FIaNNVcjsr+PApK33WXzSNGYyHonZbRN05X+NZ5E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707585229; c=relaxed/simple;
-	bh=pQeFWB+mUja2ogLifuulXjKjC4PI3jznA6LarQtDhos=;
-	h=References:From:To:Cc:Subject:Date:In-reply-to:Message-ID:
-	 MIME-Version:Content-Type; b=P59b+ZHbxhJMB3UrgzrEuz2KSXuxy8/IHBUbybmClnSaI+p2E8Qgi9O2ni1ywNvsUbmeGbli1/QqNPQN8iHcv4NxS5nnloWQIWfozUUrqbsz75pMFaM2ZWF4naRqmSaFPzfIf3mP9e58qDYeN6FiDs+b1h+zazYIpbrcQslVr5Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=bdRGgrV7; arc=none smtp.client-ip=209.85.167.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1707585349; c=relaxed/simple;
+	bh=UV/LdpTY6NV4e7OYQBDvz2V4GPnnvrbMUB20uWvFuzY=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=F9mTwGBry4lIF2bjGqH1mFoSWSe5z5DNuVZnIT8wgsra7cdrv8BqpJnTk6j122DNlucCCIBbSSLkL0gNhE1edJIVtOMcBnEqDd6Wzuf0HMtZzA60rspUgxDig3XMCU3PKi91Qttj9uP9qL6LIuViJY3teka8DAFUAMl2W/24AWo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=RaIwmtwE; arc=none smtp.client-ip=64.147.108.71
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bdRGgrV7"
-Received: by mail-oi1-f171.google.com with SMTP id 5614622812f47-3bc21303a35so733044b6e.0
-        for <git@vger.kernel.org>; Sat, 10 Feb 2024 09:13:47 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1707585227; x=1708190027; darn=vger.kernel.org;
-        h=mime-version:message-id:in-reply-to:date:subject:cc:to:from
-         :user-agent:references:from:to:cc:subject:date:message-id:reply-to;
-        bh=E7a3Vsf121z3UBl4nYNGP2nPvw6OLpZ47O0RD8nE36k=;
-        b=bdRGgrV7CeGXQHlMaw8kl2lrncW5S3N/gEKm/KG3lJ+/QUMlPrvEw5jKbufCzznbn7
-         h8PTCfXafA+D9QlH5KB/qWQ8UxnGdvhcY5t19lr0mM7lur3TnC7TzXwFrfZ4bU3EpJhp
-         lPVJXEIhiMUw+0z5lYSgf67UE7inruyQIEtC4v+xK7vJijcr5/gGHzeqJ2EdLUrEcFg1
-         purK+3HiQ8sR532jerbaHZPmxWbBjgMtyvU3yssLlIucwmmHl6lfYUXndE19JSnnwvft
-         t2BHbIfgZnPzVb684RqmxbL2xC97pL/L5+2aaoorsXvpft0wwp9q9nfsH9RtN7EQZ6zc
-         cbmA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1707585227; x=1708190027;
-        h=mime-version:message-id:in-reply-to:date:subject:cc:to:from
-         :user-agent:references:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=E7a3Vsf121z3UBl4nYNGP2nPvw6OLpZ47O0RD8nE36k=;
-        b=AeqW948ZeHLGhLqeswM9MYtNU4lyLj7HW/ffR3872mrYir14gpYKZ5s0hv1PmdR0TP
-         i6HZMpSEvoT8VhXmO6R+ppdQaXo5ueMU1Ka8gBxnfMB/h8OfZFmIgCKkMMTbFMtTUQyV
-         jS9UCBSBAOztTUM0MLI7+36MboGm1uFkAP37pNPVIqXtjlqN0rCpXNHyHeycJes8A7HX
-         GXYNARJIDZ9hMKWPVts4bMW6EGdvEZnGMPnc0oWLG8rBeuN0xvOf4revOupPnKLKl3Zv
-         0AvkjNXIfkjQCXcQZtWyFHqw69EOdG8tUtfAU6VsqIrMsuvtsSmJ657kr8kcWNbgDX+E
-         uAOA==
-X-Gm-Message-State: AOJu0Yxwty4OfD0GoH1juH0Ty8X4rxCarKqPsYOfAJ3hmBveROtGUhAB
-	4KbmbiIee1IfufPHz2hNcdJzTpeTQiz/GAPKUJF0LMvKg0c5pTSebSeq4A6v
-X-Google-Smtp-Source: AGHT+IHXew8JFGZdZkzYc7SqgNaCsslhDCWpiNylcBogiCrw8NCN2jOsTZX/YV1qZ6ebiduBRdNVGw==
-X-Received: by 2002:a9d:5c89:0:b0:6dd:e5bc:c6d7 with SMTP id a9-20020a9d5c89000000b006dde5bcc6d7mr2333425oti.1.1707585226750;
-        Sat, 10 Feb 2024 09:13:46 -0800 (PST)
-Received: from epic96565.epic.com (pat-verona-l.epic.com. [199.204.56.217])
-        by smtp.gmail.com with ESMTPSA id l20-20020ac84594000000b0042c3ce9c662sm1644988qtn.16.2024.02.10.09.13.46
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 10 Feb 2024 09:13:46 -0800 (PST)
-References: <CAK7MZG1MeeS5QNPog9oS+MbdKpkDXu61eVOszsC20Q=ik+Ng=g@mail.gmail.com>
-User-agent: mu4e 1.10.8; emacs 29.1
-From: Sean Allred <allred.sean@gmail.com>
-To: Vijay Raghavan Aravamudhan <avijayr@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: git status became very slow after upgrading git
-Date: Sat, 10 Feb 2024 11:06:20 -0600
-In-reply-to: <CAK7MZG1MeeS5QNPog9oS+MbdKpkDXu61eVOszsC20Q=ik+Ng=g@mail.gmail.com>
-Message-ID: <m05xyw9r92.fsf@epic96565.epic.com>
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="RaIwmtwE"
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id D70B21CC9B8;
+	Sat, 10 Feb 2024 12:15:45 -0500 (EST)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=UV/LdpTY6NV4e7OYQBDvz2V4GPnnvrbMUB20uW
+	vFuzY=; b=RaIwmtwEgVGPzUNvoenNlP8gdtOwC9mh6tgBoa9p5jJ/GRin1pwmCT
+	4gecbc28a60cn5ogR0dbXFcLArVIwU6IyFlvyvYtj5s0XWZpCDJBOygynQC/3w2q
+	OusM449EeAWBwRaVy7AgdeDLiUoPGJNxGcHwUTvHgyYW95W+zZ+zg=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id CD97C1CC9B7;
+	Sat, 10 Feb 2024 12:15:45 -0500 (EST)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.165.85])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 385AB1CC9B6;
+	Sat, 10 Feb 2024 12:15:45 -0500 (EST)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Philippe Blain <levraiphilippeblain@gmail.com>
+Cc: Patrick Steinhardt <ps@pks.im>,  Philippe Blain via GitGitGadget
+ <gitgitgadget@gmail.com>,  git@vger.kernel.org
+Subject: Re: [PATCH v2 3/5] completion: add and use
+ __git_compute_first_level_config_vars_for_section
+In-Reply-To: <e8642ad8-bdc9-00d6-39b5-81dd399e60ec@gmail.com> (Philippe
+	Blain's message of "Sat, 10 Feb 2024 11:06:23 -0500")
+References: <pull.1660.git.git.1706472173.gitgitgadget@gmail.com>
+	<pull.1660.v2.git.git.1706534881.gitgitgadget@gmail.com>
+	<838aabf2858b73361be8e8579bc80826e1cfd4c3.1706534882.git.gitgitgadget@gmail.com>
+	<ZcSF1mJ-JXQLmoZ5@tanuki>
+	<e8642ad8-bdc9-00d6-39b5-81dd399e60ec@gmail.com>
+Date: Sat, 10 Feb 2024 09:15:43 -0800
+Message-ID: <xmqqwmrcb5q8.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -66,37 +59,42 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 06C73D22-C838-11EE-9C23-25B3960A682E-77302942!pb-smtp2.pobox.com
+
+Philippe Blain <levraiphilippeblain@gmail.com> writes:
+
+>>> +	__git_compute_config_vars
+>>> +	local this_section="__git_first_level_config_vars_for_section_${section}"
+>>> +	test -n "${!this_section}" ||
+>>> +	printf -v "__git_first_level_config_vars_for_section_${section}" %s "$(echo "$__git_config_vars" | grep -E "^${section}\.[a-z]" | awk -F. '{print $2}')"
+>>> +}
+
+A silly question (primarily because I do not much use the indirect
+reference construct ${!name}).  Does the assignment with printf need
+to spell out the long variable name with "_${section}"?  Can it be
+
+    printf -v "$this_section" ...
+
+instead, as we already have the short-hand for it?
+
+> finds also others. I think the idea is to cache these lists to avoid 
+> computing them everytime they are needed (probably most useful on Windows 
+> where process creation is longer). I'll mention that in the 
+> commit message.
+
+Yup, as long as the contents of the list stays stable (e.g., list of
+Git subcommands, list of options a Git subcommand takes, list of
+configuration variable names that do not have end-user customization
+part, etc.), it is a viable optimization technique.  The available
+<slot> for color.branch.<slot> and color.diff.<slot> do not change
+(unless you talk about new version of Git adding support for more
+slots) and is a good idea to cache.  remote.<name>.url takes its
+<name> component out of an unbound set of end-user controlled names,
+so unless we somehow have a method to invalidate cached values, the
+list can go stale as remotes are added and removed.
+
+Thanks.
 
 
-Vijay Raghavan Aravamudhan <avijayr@gmail.com> writes:
 
-> What did you do before the bug happened? (Steps to reproduce your issue)
-> 1. brew update which pulled in latest version of git
-> 2. git status in a repository (without submodules)
->
-> What did you expect to happen? (Expected behavior)
-> git status should have been fast
->
-> What happened instead? (Actual behavior)
-> git status takes almost 5s to complete.
-
-Thanks for the report. This isn't a whole lot of information to go on.
-At least, I'm not able to reproduce locally with a trivial repository:
-
-    git init
-    echo foo > file
-    git add file
-    git commit -mtest
-    git status
-
-If you're able to reproduce, can you re-run `git status` with tracing
-enabled and provide your output?
-
-    GIT_TRACE=1 GIT_TRACE_SETUP=1 GIT_TRACE_PERFORMANCE=1 git status
-
-If you can provide reproduction instructions that start with `git init`,
-that would also help. It may take some time for you, but it'll take less
-time than folks on this list taking shots in the dark :-)
-
---
-Sean Allred
