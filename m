@@ -1,158 +1,121 @@
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oi1-f175.google.com (mail-oi1-f175.google.com [209.85.167.175])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 736131805F
-	for <git@vger.kernel.org>; Fri,  9 Feb 2024 23:54:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AA83365
+	for <git@vger.kernel.org>; Sat, 10 Feb 2024 04:34:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707522890; cv=none; b=T2zhwpMwoxYWDSDsz0jCPw2Rz4KgJtyPHigZtLrGBeCWSbj+4xxgac/o2jFcqao4PniHLkOhCTdmTUAEJLuLiYVwKqV+B84pZKdhBX1QKHcrp092Qw5jJHMAbaDgnRy7QqK2VJWi/vG/k1lQKQxxlHEBt72BFltTYds6eFSi14g=
+	t=1707539658; cv=none; b=dAg2tMKZo27P+fsfx1mIMLsPOWgyN2xPiu0rzm0dLj9fSN7VRlo0eADOr56APISV/DUT4tTcHEGQAsDewvWYwNZ51HAbWqx0HKuvr9qEBYlr+xI/O33++9v92KB6QLOwi0ZzwmLba27ML/pLtL+TA4ZNCdQPpFndPfi+6/A/2nA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707522890; c=relaxed/simple;
-	bh=RyV+wbv/dWkx9KIQ6MizMZnf5c5rA/SnOWymDSJ4oOc=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=DnujdhYwVNDC5CTIVy1pVodYp9YmphOMwF7sxEuaUsWA+9lChpaJGWtFAuCL6FEJ681lOaVtKvLT4pe365GqbLDSo3dKLbaM0ahkoNM+nFA0EnJS5sxKIzW/cCv2N+cOgwC6LuFK87+FXlHZsfnqsoAnTV12cDSas1c9gcPpqVA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=t3TWjpGJ; arc=none smtp.client-ip=173.228.157.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1707539658; c=relaxed/simple;
+	bh=7uE72IUpCFASvaI0B1bvzZyihvvTNernr17B48hI9yw=;
+	h=MIME-Version:From:To:In-Reply-To:Cc:Subject:Message-ID:Date:
+	 Content-Type; b=m1Uap9IZB5B4akqtN5PIIE6UFUS/C1GAsKLRYN8jxDqDavCY+RZfWupwbzfmVxW81cfEBBmHnFp3HUUBmJywl9zJO6p/eoISouOhfshqO0ENwVXG/bG3WMElivnJtc2VzFzVvBuwPgk4tHFvTu3pEat1mYzqkeDydsm3D5V4aa8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=lZbY+Avw; arc=none smtp.client-ip=209.85.167.175
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="t3TWjpGJ"
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id BE4A521473;
-	Fri,  9 Feb 2024 18:54:47 -0500 (EST)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=RyV+wbv/dWkx9KIQ6MizMZnf5c5rA/SnOWymDS
-	J4oOc=; b=t3TWjpGJQWTMIsCLkwvcRbjwEr47We2/w0E06UNzuAD2TXraCYIS1z
-	mOe1sdZZ8MNRlIA96gFCBrE8fR+lS6JmFuC877SPp/i19m/NTCJLiU/yLCv17uE3
-	sM2FqYnhOhBIb9swteqKP/MYmPKMd7xSahVcPkthi4qsP00rWCsF4=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id B788E21472;
-	Fri,  9 Feb 2024 18:54:47 -0500 (EST)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.165.85])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id D7A5821471;
-	Fri,  9 Feb 2024 18:54:44 -0500 (EST)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Johannes Sixt <j6t@kdbg.org>
-Cc: Elijah Newren <newren@gmail.com>,  Michael Lohmann
- <mi.al.lohmann@gmail.com>,  git@vger.kernel.org,
-  phillip.wood123@gmail.com
-Subject: Re: [PATCH v3 2/2] revision: Implement `git log --merge` also for
- rebase/cherry_pick/revert
-In-Reply-To: <dfb582cf-b1e4-414d-bfe1-0f93d910ec54@kdbg.org> (Johannes Sixt's
-	message of "Wed, 24 Jan 2024 18:19:39 +0100")
-References: <xmqqzfxa9usx.fsf@gitster.g>
-	<20240117081405.14012-1-mi.al.lohmann@gmail.com>
-	<20240117081405.14012-2-mi.al.lohmann@gmail.com>
-	<CABPp-BE4zqRX=wd5EBj96hzCS8V73QpdN-2pCpv7qMdkpkX93w@mail.gmail.com>
-	<dfb582cf-b1e4-414d-bfe1-0f93d910ec54@kdbg.org>
-Date: Fri, 09 Feb 2024 15:54:43 -0800
-Message-ID: <xmqq7cjdchx8.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lZbY+Avw"
+Received: by mail-oi1-f175.google.com with SMTP id 5614622812f47-3c02cad1dc2so106552b6e.3
+        for <git@vger.kernel.org>; Fri, 09 Feb 2024 20:34:17 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1707539655; x=1708144455; darn=vger.kernel.org;
+        h=content-transfer-encoding:date:message-id:subject:cc:in-reply-to:to
+         :from:mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=7uE72IUpCFASvaI0B1bvzZyihvvTNernr17B48hI9yw=;
+        b=lZbY+AvwjmQ0xz0t696yrZzslDXqYhS75NLSBrjbLbKDtSltXnGJ2Wst2Gp37QNQr1
+         CE+sneXonxolZR8sIcWHCTMspslew+dfgA5fEssS1lXOvlSRvv+qDHi5zfz+JBEUIcTg
+         Nz6AaZIWLyjrLpJgXMUVEtJndEHAuhjZMzP0ow6dW4AuCW5qRU3kmF8HptKXJWdd+Cwv
+         CO+v75WUV+oUwcDkCJpr9hccZE0ItFrzZtCSdA+o+m48MTz83WHIl32Rhn3N1jYURRhA
+         zK/xzasXzXHDoUq1bLAGcLKwwbGTFZbP9SEjGrp06o/w5pfHxXdqw467mqYG5R+bZ1cV
+         2kHA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1707539655; x=1708144455;
+        h=content-transfer-encoding:date:message-id:subject:cc:in-reply-to:to
+         :from:mime-version:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=7uE72IUpCFASvaI0B1bvzZyihvvTNernr17B48hI9yw=;
+        b=PN67Saoviwh1tTW+d3d4o9mRcRW5fYtBkg0sfWYL4OQbqTeg30Keb3sdWFXPTY6E4V
+         7MeEUYRqkzTGa4DM3uH2rgANatQ8VtNn1wjNcArXKrRP9RSBUVL45YkP96l+dZ4+EU5g
+         IQ7tg1bz+0svV5BQaEARh95PTxkqduEUTCDbDJhcJsBTchQEclm5ATBBkaj3EjXFc3Sc
+         TPtLHK/MSpkSuvIAQ8MAkVxdtkXOj0WbPxh+3ZqlKrvAwG8dCqdAB3bnqravOF66FPYx
+         Rj+fgNt8jlaoI9IOeD+feTXGaTi4665TChkgv1Bv9P5b3OlFIFGHaIjctSa0BWCN30Sl
+         iQDA==
+X-Gm-Message-State: AOJu0Yzvb5AuQ2EzNUwvtVL8YFqFPlooBrvVIXt32JZQ2DayMNPqAhKt
+	K75lzCQO6wSa0jC1Rc4ObZ7AZyL6SDPA5W0Mn9JktzU+g2XRgZ+CmyRT/9vQ
+X-Google-Smtp-Source: AGHT+IEvMcmJ6qHa2C7DduJ1Oj4AvbICFmOxNuuB/jcyfBRkkqJY5lRr9FffS0DekwhuVHPluQyLHA==
+X-Received: by 2002:a05:6808:7c5:b0:3bf:daf1:48bb with SMTP id f5-20020a05680807c500b003bfdaf148bbmr1146304oij.29.1707539655204;
+        Fri, 09 Feb 2024 20:34:15 -0800 (PST)
+Received: from zivdesk (047-034-027-162.res.spectrum.com. [47.34.27.162])
+        by smtp.gmail.com with ESMTPSA id 7-20020aca2807000000b003bfdf6679a4sm559170oix.25.2024.02.09.20.34.14
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 09 Feb 2024 20:34:14 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- 9981A00E-C7A6-11EE-BB0C-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
+From: "Brian Lyles" <brianmlyles@gmail.com>
+To: <phillip.wood@dunelm.org.uk>
+In-Reply-To: <8ff4650c-f84f-41bd-a46c-3b845ff29b70@gmail.com>
+Cc: <git@vger.kernel.org>, <me@ttaylorr.com>, 
+	<newren@gmail.com>, <gitster@pobox.com>
+Subject: Re: [PATCH 1/4] sequencer: Do not require `allow_empty` for redundant
+	 commit options
+Message-ID: <17b26644b51ba1ec.70b1dd9aae081c6e.203dcd72f6563036@zivdesk>
+Date: Sat, 10 Feb 2024 04:34:14 +0000
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
 
-Johannes Sixt <j6t@kdbg.org> writes:
+Hi Phillip
 
->> Also, what about cases where users do a cherry-pick in the middle of a
->> rebase, so that both REBASE_HEAD and CHERRY_PICK_HEAD exist?  What
->> then?
->
-> Good point! IMO, REBASE_HEAD should have lower precedence than all the
-> other *_HEADs. It would mean to reorder the entries:
->
-> 	static const char *const other_head[] = {
-> 		"MERGE_HEAD", "CHERRY_PICK_HEAD", "REVERT_HEAD", "REBASE_HEAD"
-> 	};
->
-> (and perhaps adjust the error message, too).
+On Thu, Feb 1, 2024 at 4:57=E2=80=AFAM Phillip Wood <phillip.wood123@gmail.c=
+om>
+wrote:
 
-I've tweaked this change into the commit.
+> That sounds like a good strategy. I'm wondering if we should not change=20
+> the behavior of `--keep-redundant-commits` to avoid breaking existing=20
+> users but have `--empty=3Dkeep|drop` not imply `--allow-empty`. What ever=
+=20
+> we do we'll annoy someone. It is confusing to have subtly different=20
+> behaviors for `--keep-redundant-commits` and `--empty=3Dkeep` but it=20
+> avoids breaking existing users. If we change `--keep-redundant-commits`=20
+> we potentially upset existing users but we don't confuse others with the=
+=20
+> subtle difference between the two.
 
-Thanks, all.
+I am starting to come around to this approach for this particular series
+just to avoid anything potentially controversial holding it up.
 
-------- >8 ------------- >8 ------------- >8 ------------- >8 -------
-From: Michael Lohmann <mi.al.lohmann@gmail.com>
-Date: Wed, 17 Jan 2024 09:14:05 +0100
-Subject: [PATCH] revision: implement `git log --merge` also for
- rebase/cherry_pick/revert
+>>> Do you have a practical example of where you want to keep the commits
+>>> that become empty but not the ones that start empty? I agree there is a
+>>> distinction but I think the common case is that the user wants to keep
+>>> both types of empty commit or none. I'm not against giving the user the
+>>> option to keep one or the other if it is useful but I'm wary of changing
+>>> the default.
+>>=20
+>> That practical example is documented in the initial discussion[1], which
+>> I should have ought to have linked in a cover letter for this series
+>> (and will do so in v2). I'll avoid copying the details here, but we'd
+>> very much like to be able to programmatically drop the commits that
+>> become empty when doing the automated cherry-pick described there.
+>>=20
+>> [1]: https://lore.kernel.org/git/CAHPHrSevBdQF0BisR8VK=3DjM=3Dwj1dTUYEVrv=
+31gLerAzL9=3DCd8Q@mail.gmail.com/
+>=20
+> Maybe I've missed something but that seems to be an argument for=20
+> implementing `--empty=3Ddrop` which is completely reasonable but doesn't=
+=20
+> explain why someone using `--keep-redundant-commits` would want to keep=20
+> the commits that become empty while dropping the commits that start empty.
 
-Co-authored-by: Johannes Sixt <j6t@kdbg.org>
-Signed-off-by: Michael Lohmann <mi.al.lohmann@gmail.com>
-[jc: tweaked in j6t's precedence fix that tries REBASE_HEAD last]
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- revision.c | 31 +++++++++++++++++++++++--------
- 1 file changed, 23 insertions(+), 8 deletions(-)
+Nope, you didn't miss something -- I just didn't read properly.
 
-diff --git a/revision.c b/revision.c
-index aa4c4dc778..36dc2f94f7 100644
---- a/revision.c
-+++ b/revision.c
-@@ -1961,11 +1961,31 @@ static void add_pending_commit_list(struct rev_info *revs,
- 	}
- }
- 
-+static const char *lookup_other_head(struct object_id *oid)
-+{
-+	int i;
-+	static const char *const other_head[] = {
-+		"MERGE_HEAD", "CHERRY_PICK_HEAD", "REVERT_HEAD", "REBASE_HEAD"
-+	};
-+
-+	for (i = 0; i < ARRAY_SIZE(other_head); i++)
-+		if (!read_ref_full(other_head[i],
-+				RESOLVE_REF_READING | RESOLVE_REF_NO_RECURSE,
-+				oid, NULL)) {
-+			if (is_null_oid(oid))
-+				die("%s is a symbolic ref???", other_head[i]);
-+			return other_head[i];
-+		}
-+
-+	die("--merge without MERGE_HEAD, CHERRY_PICK_HEAD, REVERT_HEAD or REBASE_HEAD?");
-+}
-+
- static void prepare_show_merge(struct rev_info *revs)
- {
- 	struct commit_list *bases;
- 	struct commit *head, *other;
- 	struct object_id oid;
-+	const char *other_name;
- 	const char **prune = NULL;
- 	int i, prune_num = 1; /* counting terminating NULL */
- 	struct index_state *istate = revs->repo->index;
-@@ -1973,15 +1993,10 @@ static void prepare_show_merge(struct rev_info *revs)
- 	if (repo_get_oid(the_repository, "HEAD", &oid))
- 		die("--merge without HEAD?");
- 	head = lookup_commit_or_die(&oid, "HEAD");
--	if (read_ref_full("MERGE_HEAD",
--			RESOLVE_REF_READING | RESOLVE_REF_NO_RECURSE,
--			&oid, NULL))
--		die("--merge without MERGE_HEAD?");
--	if (is_null_oid(&oid))
--		die("MERGE_HEAD is a symbolic ref???");
--	other = lookup_commit_or_die(&oid, "MERGE_HEAD");
-+	other_name = lookup_other_head(&oid);
-+	other = lookup_commit_or_die(&oid, other_name);
- 	add_pending_object(revs, &head->object, "HEAD");
--	add_pending_object(revs, &other->object, "MERGE_HEAD");
-+	add_pending_object(revs, &other->object, other_name);
- 	bases = repo_get_merge_bases(the_repository, head, other);
- 	add_rev_cmdline_list(revs, bases, REV_CMD_MERGE_BASE, UNINTERESTING | BOTTOM);
- 	add_pending_commit_list(revs, bases, UNINTERESTING | BOTTOM);
--- 
-2.44.0-rc0
+I don't have a concrete example here, but the behavior *feels* quite odd
+to me. But I suppose that's not a good enough reason to make a breaking
+change.
 
-
-
+--=20
+Thank you,
+Brian Lyles
