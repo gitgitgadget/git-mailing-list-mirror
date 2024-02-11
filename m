@@ -1,54 +1,54 @@
-Received: from fhigh3-smtp.messagingengine.com (fhigh3-smtp.messagingengine.com [103.168.172.154])
+Received: from fout1-smtp.messagingengine.com (fout1-smtp.messagingengine.com [103.168.172.144])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7991E1E488
-	for <git@vger.kernel.org>; Sun, 11 Feb 2024 18:16:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23CE45CDC2
+	for <git@vger.kernel.org>; Sun, 11 Feb 2024 18:19:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707675401; cv=none; b=QSgrAciNXS4xKvL+yJvgTmU7OVIhw5tX8JXfOglk8EiybSZn42n6eB/7EZ6ynynxc7vIg8Ro0K5rvfyqOvfxVifI+cwq2tln2vOU66KsJSmEafBvpfcuqgaQaB4e+0qhT+55cYErIeqtMBdplwlY7gowqQK+osbBS9Jx9x1ks50=
+	t=1707675545; cv=none; b=CjbFIgIeE0JCJ9hXQLWMLfl4YT5tfi7on4ZrYZeZGdSV6oFP4cmSC7N3cQt5rI148LFZbt1MHiieu1YPwaW2fiNiJ1iEVompqwgam/AH+VQUIyEYK56LLgpD3DOKYGVtSM1xwgITpgDjFEVjNSLHfdOBXOuqhp9jiEKyS1fNqtY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707675401; c=relaxed/simple;
-	bh=T67fTBol4IeIUWuL2n57UmbH65FcGms09bdk4vdaUMc=;
+	s=arc-20240116; t=1707675545; c=relaxed/simple;
+	bh=ApYNczzP8WsBa4XH1CocyiUk4ikWCrzR4GVWr6XelG8=;
 	h=MIME-Version:Message-Id:In-Reply-To:References:Date:From:To:Cc:
-	 Subject:Content-Type; b=pCZkCOUu5z7zC6jZXSfcwUZJf+ZTU5G8Sy/z8hjITJZDyBfYUF72Xkgd28dhU9kx8FamPjO6n+v/VapW8EZX5aKc6o+fJ4EUkS2c+MI2CfGEx6Y6r0r3Y74JfR4ffgRGKyQtQFb5IEekUkrsOOdiLaF5dRCBMibrnLhM7vxpADo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=khaugsbakk.name; spf=pass smtp.mailfrom=khaugsbakk.name; dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b=ifBreNeP; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=vu/9H6zB; arc=none smtp.client-ip=103.168.172.154
+	 Subject:Content-Type; b=U0PdU1VEhjccus3KzdKMJoaywU/ZrT7VK1nkv7QjROkpu4GsNujQbgBvDXsMWy4/Bz6bqpNtBCTfaXkhOcsK06zrPrwCEqbo2+lTEnS3MkmNTFd9ut+JNq5cXYdq+2m3as9ii9mHitxli5w3IcWGF8juJVhdkRhbSDiNIpb+2xA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=khaugsbakk.name; spf=pass smtp.mailfrom=khaugsbakk.name; dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b=ShJsYZBy; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=s87kS9w4; arc=none smtp.client-ip=103.168.172.144
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=khaugsbakk.name
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=khaugsbakk.name
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b="ifBreNeP";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="vu/9H6zB"
+	dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b="ShJsYZBy";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="s87kS9w4"
 Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
-	by mailfhigh.nyi.internal (Postfix) with ESMTP id 2F296114007D;
-	Sun, 11 Feb 2024 13:16:37 -0500 (EST)
+	by mailfout.nyi.internal (Postfix) with ESMTP id E7244138008B;
+	Sun, 11 Feb 2024 13:19:01 -0500 (EST)
 Received: from imap49 ([10.202.2.99])
-  by compute1.internal (MEProxy); Sun, 11 Feb 2024 13:16:37 -0500
+  by compute1.internal (MEProxy); Sun, 11 Feb 2024 13:19:01 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=khaugsbakk.name;
 	 h=cc:cc:content-transfer-encoding:content-type:content-type
 	:date:date:from:from:in-reply-to:in-reply-to:message-id
 	:mime-version:references:reply-to:subject:subject:to:to; s=fm2;
-	 t=1707675397; x=1707761797; bh=+aauMZwAplbHETx85AUlFmy4Uo5hKY0g
-	KgnAecu6NcA=; b=ifBreNeP2halhxAiP3zqn7oWGysQT4cPaeFiBwxfj4QqUjP/
-	a7Xvv51ioGt1OGBOoFfN2p4q5Wl6MZBD1e6WcdCwmpgq62T4DGY5khoANTKPwTRs
-	st59B7eTXDyUulyaKxHs8FTKGVQVRy022ewlaCNzZg2qLQULHM3h3zNGMqa+mfP4
-	FFniEBUTOv6oOT7EZ07vzREXAb0h/ohnpQb7f0aBFjGOTuUO6siGNiCCdnl138k2
-	HKJP29O6BC4eszvx9A+FcoV1ue4CZBUEyrilgMrrLrlIVtJb0t7vmQH2CT4aAqKF
-	ZGtgJsjBPawHugAa+IBUAASeA5/wCC3EON48Kg==
+	 t=1707675541; x=1707761941; bh=8Zydl+xBU5px36zqTLvTAIB+COCkSVFl
+	IbfLpfwVm+4=; b=ShJsYZByU4KmNVq2MdoFDCMZ6Mt7bn/oRnknBlsFQ1OYAb3r
+	aKY2bhLelYrCJi+9cAb4ofzFzHYwDWRCf/6Jq4UHOnz7V2ccQEp6G602Rtw9hXTZ
+	om72pxgmLNzWB5/O+6RI/pQp9orurJTvYmmLp5T5n3JG32KZKYXNr3N/+T6mR0DE
+	eC0lbgmtll19Uk0OI3RJa8ysDpf109ww5++O1tGIzguYbS1NEI9IZ7ZFTheLk5+V
+	JqAdBCQV1hiKBElo77gcizrP1m840ZLcyVxrbqfVXh2mOjxCdojtdA9v2je0fUh3
+	ZyZFFtfBr9fZ/TinNwiacNtVWq22fYbJv8Jj4g==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1707675397; x=
-	1707761797; bh=+aauMZwAplbHETx85AUlFmy4Uo5hKY0gKgnAecu6NcA=; b=v
-	u/9H6zBhk77LlEmg6I6fudXoYt4KfpIU/PZor81mQRIT5ZPFWFV5KS6OVQz85+x/
-	xxTA18OLRgIpGHOJa6u5BreEkWmwhw/GLo8TADuB3JyP1q36Ks56lbE3biPrtWAd
-	cY1wN4hSA76sxDN8KBvk7KvLlZNJmh+I1UFgA3TgDKdLCwnUxQYQ/7wgYKfN3xuv
-	kDPFznS7Tjb84dFU48bAtrzYamRBgQZC2t1cVzpvh2RNSiBalM9uIZyp+yltk7JD
-	CNpSGuiW7Bo3xA70LEBHnB+4KmB9ON0om+UXxwBUNZKB40GVO7XZssnNmGI8o938
-	CZNBNdGoID/GhALoiBA2w==
-X-ME-Sender: <xms:Ag_JZbROih0LeeSwq8HbClH1Ijj0xLGknOuCZMRHgONWWdDvphORtls>
-    <xme:Ag_JZcxWf8TqYGe6aOHatOSv-Q4-djPHMDkmq69Ogg_fw1VaUNEIy2LB7kmVkaVr0
-    IyJiEVV1BP2PZexuw>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1707675541; x=
+	1707761941; bh=8Zydl+xBU5px36zqTLvTAIB+COCkSVFlIbfLpfwVm+4=; b=s
+	87kS9w41SkQv2ewrtchtAf62wD6awahdlmf3Va+9VlFbur6k1pZCk97sWb57lFqX
+	x7zXwOc3MW+Z/oZTYAogZ8bgqG/mbLfOUDheduaXGT0nGaNgEhi+PfzNIlPdCSwt
+	AwlL6hD/6+Kl6Tzj2f0YgmxdqGULK+2idZA8WhOSoOxP0E7VQqkbayb5pRuYnHpY
+	AakSdL9zh1NRtMr4Me6osYuzazY07NrhgeVevtpd6crZwjcB2M+rxTj1EcRCNtsn
+	mJ43mcmYrCVAHS4nkeIaaymJNL45N5m8dr4nvdU+65A53Klgjxo4F+U8E5iMmg1I
+	PjMPqYGlwtm2mFoD+HCcw==
+X-ME-Sender: <xms:lQ_JZWh4m2YCXSu9mQ9SCwOSds2_uVUBKk6GJL0hBSWFmgtwjv8A7-Y>
+    <xme:lQ_JZXDQNda-H7pSy66tK2CFOsiEnzOH1iXT8a16NKEv3RuQfh0BEVBjM-hLYQdjh
+    092kiHRBxNNNJ0PYA>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledruddugdduudefucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
     uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
@@ -57,13 +57,13 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledruddugdduudefucetufdoteggod
     hkkhdrnhgrmhgvqeenucggtffrrghtthgvrhhnpedvveehiedufeehffdvteeuveekhefh
     leeigfektdeifeduteeuheeufeetffefudenucevlhhushhtvghrufhiiigvpedtnecurf
     grrhgrmhepmhgrihhlfhhrohhmpegtohguvgeskhhhrghughhssggrkhhkrdhnrghmvg
-X-ME-Proxy: <xmx:Ag_JZQ2Vo_WiT5kfIkuISNaGM4TrMPcUADnZQviQRUJBTcZ9pG_iXw>
-    <xmx:Ag_JZbCQb4EdemiHEXe1a-EchjS5_kaCI_W3ETxHWykx51MX0GDheQ>
-    <xmx:Ag_JZUh_ApfvwJTGyMMGMS5_CgW4l2c3uAwCNx1Nc5lDWS_Ie40POg>
-    <xmx:BQ_JZdvo6aWzm-xXlNRC5SWRhrG9P534knLJIosLdOZLBusWw7XBVg>
+X-ME-Proxy: <xmx:lQ_JZeG3zsyJfvYZOkWaD2131icfL2zgE2hK7HO9NLpH1F6kXjxpTw>
+    <xmx:lQ_JZfTch9Nx4uUFstLmUT6bdUtWW6QFlfkpBA412QV0LqefiTmdAQ>
+    <xmx:lQ_JZTwQkKbAZL2-d8Tex0hSBM0ovMv7i_q2sIrFIssVbVoyNnsJbA>
+    <xmx:lQ_JZT9xjMj9cdAt7UD-XspOa8_klUqU_YNMAjPC5iRZfMOgokn5kQ>
 Feedback-ID: i2671468f:Fastmail
 Received: by mailuser.nyi.internal (Postfix, from userid 501)
-	id 349B315A0092; Sun, 11 Feb 2024 13:16:34 -0500 (EST)
+	id A949A15A0092; Sun, 11 Feb 2024 13:19:01 -0500 (EST)
 X-Mailer: MessagingEngine.com Webmail Interface
 User-Agent: Cyrus-JMAP/3.11.0-alpha0-144-ge5821d614e-fm-20240125.002-ge5821d61
 Precedence: bulk
@@ -72,90 +72,45 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Message-Id: <9c22f49a-538b-41eb-bdce-39e547c614ef@app.fastmail.com>
-In-Reply-To: <xmqqfry1fm2e.fsf@gitster.g>
-References: <F7D40DCD-2331-44D8-B4BF-8E6CD9EE64A6@qt.io>
- <51599394-3f75-4b75-a4c0-f13f117e73bc@gmail.com>
- <60512662-9BE1-4DF7-A4E0-FD2E852E8E76@qt.io>
- <3c3db003-1506-47c4-a010-a8b783dff959@app.fastmail.com>
- <26317088-7020-43EF-8B60-41D719A6D145@qt.io>
- <5c25da43-c886-41d2-b057-b95a84b107ba@app.fastmail.com>
- <xmqqfry1h7ej.fsf@gitster.g>
- <d59a0e25-81c4-4ecd-826e-ef4b23423575@app.fastmail.com>
- <xmqqfry1fm2e.fsf@gitster.g>
-Date: Sun, 11 Feb 2024 19:16:05 +0100
+Message-Id: <34c18fd0-1fa3-4226-b5a1-b019fcb05548@app.fastmail.com>
+In-Reply-To: <xmqqle7q997e.fsf@gitster.g>
+References: 
+ <AS8P189MB21977ACC4866D9836DA29082BC4B2@AS8P189MB2197.EURP189.PROD.OUTLOOK.COM>
+ <76688ed2cc20031d70823d9f5d214f42b3bd1409.1707501064.git.code@khaugsbakk.name>
+ <19119aa6-9a8c-44c6-af79-0ea6a8bcb181@app.fastmail.com>
+ <CAPx1GvdDvmBmvoktd7onB4mSzikKf4eWVWnrzrn8c8Y1RcRgsA@mail.gmail.com>
+ <9c00311d-e31c-428b-9c66-fef7ac8bfc76@app.fastmail.com>
+ <xmqqle7q997e.fsf@gitster.g>
+Date: Sun, 11 Feb 2024 19:18:41 +0100
 From: "Kristoffer Haugsbakk" <code@khaugsbakk.name>
 To: "Junio C Hamano" <gitster@pobox.com>
-Cc: "Marcus Tillmanns" <Marcus.Tillmanns@qt.io>,
- "git@vger.kernel.org" <git@vger.kernel.org>,
- "Phillip Wood" <phillip.wood@dunelm.org.uk>
-Subject: Re: Bug: Commit fails when no global email address is set even though --author
- is used
+Cc: "Chris Torek" <chris.torek@gmail.com>, git@vger.kernel.org,
+ "Tiago Pascoal" <tiago@pascoal.net>
+Subject: Re: [PATCH] column: disallow negative padding
 Content-Type: text/plain;charset=utf-8
 Content-Transfer-Encoding: quoted-printable
 
-On Fri, Feb 9, 2024, at 20:56, Junio C Hamano wrote:
->> I think a three-way switch looks good. With the amendment that it ste=
-ers
->> you towards `user.*` instead of setting both `author.*` and
->> `committer.*`.
+On Sun, Feb 11, 2024, at 18:55, Junio C Hamano wrote:
+> "Kristoffer Haugsbakk" <code@khaugsbakk.name> writes:
+>> Yeah, thanks. You probably saved me a v3. :)
 >>
->> Something like
->>
->> =E2=80=A2 Author is set, not committer
->>   =E2=80=A2 Message: author is set but not committer: you might want =
-to set
->>     *user* instead (prints suggested config)
->>
->> I can try to make a patch later.
+>> Although I failed to notice that the string I stole was just a plain
+>> string, not a translation string. And apparently there are no generic
+>> =E2=80=9Cnon-negative=E2=80=9D translation strings. So I=E2=80=99ll j=
+ust make a new one.
 >
-> Wait. I didn't realize this when I wrote the message you are
-> responding to, but we *do* already suggest settig user.* variables.
+> The last time I took a look, I thought there were more than just the
+> single entry point you patched that can feed negative padding into
+> the machinery?  Don't you need to cover them as well?
 >
-> If the user chose to ignore that, then there isn't much we can do to
-> help, is there?
->
-> Puzzled, but I'll stop here.
+> Thanks.
 
-Aye, good point. Maybe I misremembered and/or didn=E2=80=99t look carefu=
-lly
-enough at the error message back when I set `author.*` instead of
-`user.*`.
+I=E2=80=99ve incorporated the `column.c` patch you posted in my
+not-yet-published v2. Hopefully that was it.(? :) ) I=E2=80=99ll take an=
+other
+look.
 
-Maybe the error could say (back to the multi-way switch):
-
-```
-Author identity known, but committer identity unknown
-
-*** Please tell me who you are.
-
-Run
-
-  git config --global user.email "code@khaugsbakk.name"
-  git config --global user.name "Kristoffer Haugsbakk"
-
-to set your account's default identity.
-Omit --global to set the identity only in this repository.
-
-fatal: empty ident name (for <>) not allowed
-```
-
-And then (see above) fill in the real information in the proposed config
-commands if the other identity is known. Maybe that could be
-accomplished with one more parameter to `ident_env_hint`:
-
-```
-static void ident_env_hint(enum want_ident whose_ident, char *other_iden=
-t)
-```
-
-(turned out to be a bit more tricky than I thought)
-
-But that=E2=80=99s a slightly longer error message, which (again) can ca=
-use the
-already-discussed glaze-over effect caused by the =E2=80=9Cwall of text=E2=
-=80=9D.
+v2 is finished now so maybe I=E2=80=99ll send it out soon.
 
 --=20
 Kristoffer Haugsbakk
-
