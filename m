@@ -1,169 +1,76 @@
-Received: from secure.elehost.com (secure.elehost.com [185.209.179.11])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oa1-f44.google.com (mail-oa1-f44.google.com [209.85.160.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98715185B
-	for <git@vger.kernel.org>; Sun, 11 Feb 2024 02:47:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.209.179.11
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C054FBF0
+	for <git@vger.kernel.org>; Sun, 11 Feb 2024 04:55:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707619646; cv=none; b=Lbl9CQgr/KbF0ehQu0gh1s22SABvZLIN4DbIub6vk35x2YIKn+wYZSGF7BXp7sp+gUe4OsbkVN6zA/uUnERodUJn5h6nWCRAB/I6u9d8LTXsVMDlhSaGz+QwE+GTTnLWXe05rGUSpJjHnvmOB61ictXa77UYIG4HyQIt6nnRKvA=
+	t=1707627303; cv=none; b=NQEH/NriI18jYk1R2jQ9HIV5F+MaEdgsPa7iY5k9GdBozXFpUlOyo5/xZjGPPNAUGX1AuOq6fUFAznFufn9LDdfvQwvbbVb3TVF5dT5xLL2Ggd9F4lGxFPjtCa4JmtjPFqmT2JFCcDQHJjA1a1JbG08HzngsGY6HqqjPtuAn1MI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707619646; c=relaxed/simple;
-	bh=651Gifi1sDC3k2IuYxOWxnfOyeyJwBsujZzo/HsSHBE=;
-	h=From:To:Cc:References:In-Reply-To:Subject:Date:Message-ID:
-	 MIME-Version:Content-Type; b=frMzrvDH+QdT3sIF0Tew+5gERom01+PQYJBYEsSSFFeFMz3ckzgRbjT1mWJMZ4I66WF3c+zMd1Ayo9Z9/EV1mS1tnuzVJCEKaev9nAK+EoMm80ibvaXaWBkvr4iwRFfPoEeWMaCS2GZNc+L0d58yqDnnKJNf1fh7FQleVTI00yE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com; spf=pass smtp.mailfrom=nexbridge.com; arc=none smtp.client-ip=185.209.179.11
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nexbridge.com
-X-Virus-Scanned: Debian amavisd-new at secure.elehost.com
-Received: from Mazikeen (cpebc4dfb928313-cmbc4dfb928310.cpe.net.cable.rogers.com [99.228.251.108] (may be forged))
-	(authenticated bits=0)
-	by secure.elehost.com (8.15.2/8.15.2/Debian-22ubuntu3) with ESMTPSA id 41B2lJwY3341557
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Sun, 11 Feb 2024 02:47:20 GMT
-Reply-To: <rsbecker@nexbridge.com>
-From: <rsbecker@nexbridge.com>
-To: "'Junio C Hamano'" <gitster@pobox.com>
-Cc: <git@vger.kernel.org>
-References: <000401da5c4c$fd4ad260$f7e07720$@nexbridge.com> <xmqqbk8nbvqy.fsf@gitster.g>
-In-Reply-To: <xmqqbk8nbvqy.fsf@gitster.g>
-Subject: RE: [BUG] git 2.44.0-rc0 t0080.1 Breaks on NonStop x86 and ia64
-Date: Sat, 10 Feb 2024 21:47:14 -0500
-Organization: Nexbridge Inc.
-Message-ID: <002a01da5c94$a1bc5340$e534f9c0$@nexbridge.com>
+	s=arc-20240116; t=1707627303; c=relaxed/simple;
+	bh=u8GEt41C5c91zEck7+Y48nYm6JO8FICtM2Z1rxxbZZk=;
+	h=MIME-Version:From:To:In-Reply-To:Cc:Subject:Message-ID:Date:
+	 Content-Type; b=ekapSX/AwcupBps0WPTnf1s3z/QorxmfZr+ZFGrqsJhDfrsTdnpVMZUigbpoQQ615m83wY7QHLyeb2lKc/4q9Nn88Zr6EYL23grOlw2HlABSADdtjhFviVMlu78B9++AZ0z/xvRCJKq57pZjaOUJ3sC+eI+p89uO0awE2lPLwsY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=QrjwfBS6; arc=none smtp.client-ip=209.85.160.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QrjwfBS6"
+Received: by mail-oa1-f44.google.com with SMTP id 586e51a60fabf-2184133da88so1314064fac.0
+        for <git@vger.kernel.org>; Sat, 10 Feb 2024 20:55:02 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1707627301; x=1708232101; darn=vger.kernel.org;
+        h=content-transfer-encoding:date:message-id:subject:cc:in-reply-to:to
+         :from:mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=u8GEt41C5c91zEck7+Y48nYm6JO8FICtM2Z1rxxbZZk=;
+        b=QrjwfBS6BVM+u3p6ehXMtO+kxMIpA14eF+DxeeWExphYyivcjrUZTmhOLo3PcaTIl/
+         A2SSftduE39IE4+aobfr74T0c6XChUqTlxYaywH6QYU8UoOELZWD5x0skFDBYdLYVd9v
+         Na+ZqQ0a8rIbMZrocZYCFfMLerG940+R6KVSEIS4QreF/+KmMDHURR1UFmzwF6sqUE0M
+         zI6QzAQagPQvCbFzDswstZhhkVsY+H14mXIMI5M5l8EJ2D5aeYXsw3pN/WkFO7V4KTkP
+         KE1MzGtavZj+2H0QakMSUUKMd8KuHyhBEYgIVcuVzPYW9UGxUq8Hdf09089vwQZaelxQ
+         GWGQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1707627301; x=1708232101;
+        h=content-transfer-encoding:date:message-id:subject:cc:in-reply-to:to
+         :from:mime-version:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=u8GEt41C5c91zEck7+Y48nYm6JO8FICtM2Z1rxxbZZk=;
+        b=ldZyrjCcD+xz8VQeQHlnDbjWrOGlJ6Vl28mVG5i9VbBH8ai2GLvLQk1N7XsEpYjEdp
+         JMF8jR8O+M5wIyC4t5QTd5VdUPPmkeM7q/bkitGIOlcAeMQKPvs3EF75v6utajJFHcWU
+         h4d5luCu4EHnxbpQNDTF45ZRsUqRiRZ81ZO1fuWHlU6vg797LqoUy7j+U5iDmaIH4imO
+         iua2ctN2AyPt0LpCzwdMcyXUkM0HF6l8fhLL/O0e9hXxAEAUA859/iZaKMC8PsJzK7IV
+         uonOkt1GWjZjWL3tw6whpN+gAI2+/q/Nge6cEkJw/GQw4UPVCcIMo5vHJJlkhtuN8VCl
+         s+cQ==
+X-Gm-Message-State: AOJu0YwsPAJuve7I9SaWKwT7LYfziV01erhzwrUfzs1t+1KluhYTeH/f
+	VcDxw+/kt2G4KHdxBeIiYr3mrW6TPBikgZjcStt4u+Wb7cGjjOYm
+X-Google-Smtp-Source: AGHT+IFtAvzuSWMpDfys7ssIGjc0tnnqBBR1WEsU1QKKEeufUl8iocJ8jUTShPZzTy41jNDs7knhvg==
+X-Received: by 2002:a05:6871:b2b:b0:21a:13e8:2989 with SMTP id fq43-20020a0568710b2b00b0021a13e82989mr4603779oab.14.1707627301145;
+        Sat, 10 Feb 2024 20:55:01 -0800 (PST)
+Received: from zivdesk (047-034-027-162.res.spectrum.com. [47.34.27.162])
+        by smtp.gmail.com with ESMTPSA id xl9-20020a0568709f0900b0021a04f8c541sm753266oab.40.2024.02.10.20.54.59
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 10 Feb 2024 20:55:00 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain;
-	charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AQEKhykLt/LB5hLsEaYKWm4eL/p/IgHSi0nNspWF5ZA=
-Content-Language: en-ca
+From: "Brian Lyles" <brianmlyles@gmail.com>
+To: <git@vger.kernel.org>
+In-Reply-To: <20240210074859.552497-4-brianmlyles@gmail.com>
+Cc: <newren@gmail.com>, <me@ttaylorr.com>, 
+	<phillip.wood123@gmail.com>, <gitster@pobox.com>
+Subject: Re: [PATCH v2 3/8] rebase: update `--empty=ask` to `--empty=drop`
+Message-ID: <17b2b5fb5acd8fad.70b1dd9aae081c6e.203dcd72f6563036@zivdesk>
+Date: Sun, 11 Feb 2024 04:54:59 +0000
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Saturday, February 10, 2024 9:06 PM, Junio C Hamano wrote:
-><rsbecker@nexbridge.com> writes:
->
->> The diff appears to have failed because of an assumption of how paths
->> are resolved during compilation. The assumption is that files remain
->> partially qualified, which is not the case in all C compilers. This is
->> c99. My experience with gcc is that it qualifies names differently
->> than other compilers.
->
->I just found this bit of gem in t/unit-tests/test-lib.c.  I guess Visual C
-falls into the
->same category as yours, while GCC and Clang are from different camps?
->
->The easiest way forward may be to build on top of it, perhaps like so, to
-generalize
->the make_relative() to cover your case, too?
->
-> t/unit-tests/test-lib.c | 63
-+++++++++++++++++++++++++++++++++++++---------
->---
-> 1 file changed, 48 insertions(+), 15 deletions(-)
->
->diff --git c/t/unit-tests/test-lib.c w/t/unit-tests/test-lib.c index
->7bf9dfdb95..69dbe1bbc7 100644
->--- c/t/unit-tests/test-lib.c
->+++ w/t/unit-tests/test-lib.c
->@@ -21,45 +21,78 @@ static struct {
-> 	.result = RESULT_NONE,
-> };
->
->-#ifndef _MSC_VER
->-#define make_relative(location) location -#else
->+#include "dir.h"
-> /*
->  * Visual C interpolates the absolute Windows path for `__FILE__`,
->  * but we want to see relative paths, as verified by t0080.
->+ * There are other compilers that do the same, and are not for
->+ * Windows.
->  */
->-#include "dir.h"
->-
-> static const char *make_relative(const char *location)  {
-> 	static char prefix[] = __FILE__, buf[PATH_MAX], *p;
-> 	static size_t prefix_len;
->+	static int need_bs_to_fs = -1;
->
->-	if (!prefix_len) {
->+	/* one-time preparation */
->+	if (need_bs_to_fs < 0) {
-> 		size_t len = strlen(prefix);
->-		const char *needle = "\\t\\unit-tests\\test-lib.c";
->+		char needle[] = "t\\unit-tests\\test-lib.c";
-> 		size_t needle_len = strlen(needle);
->
->-		if (len < needle_len || strcmp(needle, prefix + len -
-needle_len))
->+		if (len < needle_len)
->+			die("unexpected prefix '%s'", prefix);
->+
->+		/*
->+		 * The path could be relative (t/unit-tests/test-lib.c)
->+		 * or full (/home/user/git/t/unit-tests/test-lib.c).
->+		 * Check the slash between "t" and "unit-tests".
->+		 */
->+		prefix_len = len - needle_len;
->+		if (prefix[prefix_len + 1] == '/') {
->+			/* Oh, we're not Windows */
->+			for (size_t i = 0; i < needle_len; i++)
->+				if (needle[i] == '\\')
->+					needle[i] = '/';
->+			need_bs_to_fs = 0;
->+		} else {
->+			need_bs_to_fs = 1;
->+		}
->+
->+		/*
->+		 * prefix_len == 0 if the compiler gives paths relative
->+		 * to the root of the working tree.  Otherwise, we want
->+		 * to see that we did find the needle[] at a directory
->+		 * boundary.
->+		 */
->+		if (fspathcmp(needle, prefix + prefix_len) ||
->+		    (prefix_len &&
->+		     prefix[prefix_len - 1] != '/' &&
->+		     prefix[prefix_len - 1] != '\\'))
-> 			die("unexpected suffix of '%s'", prefix);
->
->-		/* let it end in a directory separator */
->-		prefix_len = len - needle_len + 1;
-> 	}
->
->+	/*
->+	 * If our compiler gives relative paths and we do not need
->+	 * to munge directory separator, we can return location as-is.
->+	 */
->+	if (!prefix_len && !need_bs_to_fs)
->+		return location;
->+
-> 	/* Does it not start with the expected prefix? */
-> 	if (fspathncmp(location, prefix, prefix_len))
-> 		return location;
->
-> 	strlcpy(buf, location + prefix_len, sizeof(buf));
-> 	/* convert backslashes to forward slashes */
->-	for (p = buf; *p; p++)
->-		if (*p == '\\')
->-			*p = '/';
->-
->+	if (need_bs_to_fs) {
->+		for (p = buf; *p; p++)
->+			if (*p == '\\')
->+				*p = '/';
->+	}
-> 	return buf;
-> }
->-#endif
->
-> static void msg_with_prefix(const char *prefix, const char *format,
-va_list ap)  {
+I just noticed that I incorrectly specified `--empty=3Ddrop` in the
+subject of this commit. It should read "rebase: update `--empty=3Dask` to
+`--empty=3Dstop`". This will need to be corrected in a v3 reroll.
 
-This looks like a good plan.
-
---Randall
-
+--=20
+Thank you,
+Brian Lyles
