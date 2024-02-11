@@ -1,52 +1,56 @@
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1887F1E506
-	for <git@vger.kernel.org>; Sun, 11 Feb 2024 15:58:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9A3433F1
+	for <git@vger.kernel.org>; Sun, 11 Feb 2024 16:43:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707667090; cv=none; b=Dh3VNjU5+GExpzE6o5lAQS9haMcBxk08Y5JJbKpQynAoMP3mmPsdRXz/X7CeIrbxosWX+kRbFEw4CohuQcWjDpgY94lq3gLCmu2E2Myz8atCgbbxaFClEReRXscG40mVCqCmam+qlNoQd8Zsmv35wLEI+MKS2yUlSg7Jt19g9X4=
+	t=1707669821; cv=none; b=dHPOIQn62Q6Co02WzC3ixgRYre5355HWg7R+jmobFxB3EnqhC9zqsW4mjRzYFws/UmIoi/JGdV/W8/UDwHjUI6zhCvASt2ZetcWhoiWX4q8Fe+cwF4BNlENcppF9oHy/yBLRWRhVDD28g2GTMKdMgGO51rqgPu6GUGr3JPBfHQo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707667090; c=relaxed/simple;
-	bh=ob9DSTvK9MQB4Tt37LViNibOKpyPROa2ZAEA5E/Nnuk=;
+	s=arc-20240116; t=1707669821; c=relaxed/simple;
+	bh=jbRRarGfgXJ6FNv8QGsIFnBPU365JPUEs0hem0KXHoI=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=qh0G6XbsVul1cff6Qgd/fHlM4Sgg21WRXgCgwET9G141uXe822BTBsq9x695OLgrKmdSC/PqEDq33dDeyL6oJ4AIrAZDDL8qaFXkJifodj8gYJQEE0j7HTcLwjpW9whg0M34OqicXvzgL/VcI6iZ+2c34kRpkHxX4G2z7PXkY/0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=ig7C69Ty; arc=none smtp.client-ip=64.147.108.71
+	 MIME-Version:Content-Type; b=W3eKrMqSWx6y4+31W7KgTc0seSir3t5Y9ISZpbO6jjzJHJ0sICNZlt7RNIysFy91kcEeZlxa0AYbKRxlJoopryOxcHN+GHh/cQt9TnocSxgg0H4rT1cs/jwqfF+53KVAWOMCNyCAlKn46eAIpvKbPwmod/tl4ewU0Xr1Rmzaejk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=D2AkPcNJ; arc=none smtp.client-ip=173.228.157.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="ig7C69Ty"
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 6CB951D50EE;
-	Sun, 11 Feb 2024 10:58:06 -0500 (EST)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="D2AkPcNJ"
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id 2DCDF289E6;
+	Sun, 11 Feb 2024 11:43:39 -0500 (EST)
 	(envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=ob9DSTvK9MQB4Tt37LViNibOKpyPROa2ZAEA5E
-	/Nnuk=; b=ig7C69TyszSD97lw7cdqHs4xhgR4TgQh4UF+raOhkFiII7ahX+REIu
-	9PpIg5Hq12yDnep769KS+AR337byM8/dcGTGO17XlRd+bwHq+Y/3tYuq2ecMWeCs
-	V0B8WtMAeDszxZ5zTwWf390dpZNNf4iUy6d+4/T59jx915fUS/3qU=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 64A281D50ED;
-	Sun, 11 Feb 2024 10:58:06 -0500 (EST)
+	:content-type:content-transfer-encoding; s=sasl; bh=jbRRarGfgXJ6
+	FNv8QGsIFnBPU365JPUEs0hem0KXHoI=; b=D2AkPcNJcSRMh1rCWdxcSib9doGZ
+	BKE970jS6PtEPUjv2zGgv8Ie+Gf8ZHrl7jN0XzOUbppYf7PXU7EyAKquDOtO6Zg6
+	wMygA2NFgGBX9WJvuVAIOb+N+ag5Ey1XLhHm4XOHeI8FLEaO99K/ElMeYeZ/1gW+
+	JPmkpTCCA9CrbUo=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id 25FA4289E5;
+	Sun, 11 Feb 2024 11:43:39 -0500 (EST)
 	(envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.125.165.85])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id BCAC91D50EC;
-	Sun, 11 Feb 2024 10:58:05 -0500 (EST)
+	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 4AFFB289E4;
+	Sun, 11 Feb 2024 11:43:35 -0500 (EST)
 	(envelope-from junio@pobox.com)
 From: Junio C Hamano <gitster@pobox.com>
-To: Phillip Wood <phillip.wood123@gmail.com>
-Cc: git@vger.kernel.org,  Johannes Schindelin <johannes.schindelin@gmx.de>,
-  "Randall S. Becker" <rsbecker@nexbridge.com>
-Subject: [PATCH v2] unit-tests: do show relative file paths on non-Windows, too
-In-Reply-To: <6872b42d-8763-44dc-9502-2362d1ed80a7@gmail.com> (Phillip Wood's
-	message of "Sun, 11 Feb 2024 11:03:55 +0000")
-References: <xmqqttmf9y46.fsf@gitster.g>
-	<6872b42d-8763-44dc-9502-2362d1ed80a7@gmail.com>
-Date: Sun, 11 Feb 2024 07:58:04 -0800
-Message-ID: <xmqqle7r9enn.fsf_-_@gitster.g>
+To: Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
+Cc: "brian m. carlson" <sandals@crustytoothpaste.net>,  K_V
+ <zinen2@gmail.com>,  git@vger.kernel.org
+Subject: Re: git gc changes ownerships of files linux
+In-Reply-To: <20240211154345.GA28699@tb-raspi4> ("Torsten =?utf-8?Q?B?=
+ =?utf-8?Q?=C3=B6gershausen=22's?=
+	message of "Sun, 11 Feb 2024 16:43:45 +0100")
+References: <CABkRduQNdgdF8WhZadP5hyYvpEWgP_AE8=qzxNiRNA71bdJcYQ@mail.gmail.com>
+	<20240211151455.GA27103@tb-raspi4>
+	<ZcjnuSAZiNHvA5h1@tapette.crustytoothpaste.net>
+	<20240211154345.GA28699@tb-raspi4>
+Date: Sun, 11 Feb 2024 08:43:33 -0800
+Message-ID: <xmqqcyt39cju.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -54,198 +58,49 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
 X-Pobox-Relay-ID:
- 57F054FE-C8F6-11EE-9A29-25B3960A682E-77302942!pb-smtp2.pobox.com
+ B2DD26D4-C8FC-11EE-91A9-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
+Content-Transfer-Encoding: quoted-printable
 
+Torsten B=C3=B6gershausen <tboegi@web.de> writes:
+
+> Briam, Hm, I wonder what this function (in path.c) does:
 >
-> We know which separator we're expecting so we could replace  the last
-> two comparisons with
+> int adjust_shared_perm(const char *path)
 >
-> 		prefix[prefix_len -1] != needle[1]
->
-> but as I say I'm not sure that is worth re-rolling for
+> According to my understanding, it was included into the Git codebase
+> to work around the missing "setgid" feature in Linux (and probably cygw=
+in).
 
-There is a larger clean-up opportunity to drop the need for making a
-copy, which probably is worth doing, so I folded the above into this
-version.
+No.  "g+s on directory" is required and depended upon for getting
+the correct group ownership.  We do not do anything to chown(2) a
+filesystem entry to force what group it is owned by there.
 
-------- >8 ------------- >8 ------------- >8 ------------- >8 -------
+What adjust_shared_perm() does is to counter what the screwed-up
+umask settings the user may have causes.  If you are a member of a
+group and working in a directory owned by the group with other
+members, you want to make sure others in the group can access the
+files and the directories in the project.  Their umask should be
+loosened to at least 027 and preferrably to 007 to give group
+members the same access as you do.  Yet people do not loosen their
+umask when starting work in such a group owned directory that is
+supposed to be shared, as it would be extremely cumbersome to do
+[*].  These users end up creating files with overly tight permission
+bits, e.g. 0644 or 0700, and we go in with adjust_shared_perm() to
+fix these modes.
 
-There are compilers other than Visual C that want to show absolute
-paths.  Generalize the helper introduced by a2c5e294 (unit-tests: do
-show relative file paths, 2023-09-25) so that it can also work with
-a path that uses slash as the directory separator, and becomes
-almost no-op once one-time preparation finds out that we are using a
-compiler that already gives relative paths.  Incidentally, this also
-should do the right thing on Windows with a compiler that shows
-relative paths but with backslash as the directory separator (if
-such a thing exists and is used to build git).
+You definitely must set up your initial directory with g+s if you
+are usihng the group-writable shared directory model (which I would
+actually be surprised to see in 2020---is a shared machine with more
+than one user-account still a thing???); adjust_shared_perm() will
+not help you there.
 
-Reported-by: Randall S. Becker <rsbecker@nexbridge.com>
-Helped-by: Phillip Wood <phillip.wood@dunelm.org.uk>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
 
-  * I found that the diff relative to the result of applying v1 was
-    easier to follow than the range-diff, so here it is.
+[Footnote]
 
-  diff --git c/t/unit-tests/test-lib.c w/t/unit-tests/test-lib.c
-  index 83c9eb8c59..66d6980ffb 100644
-  --- c/t/unit-tests/test-lib.c
-  +++ w/t/unit-tests/test-lib.c
-  @@ -64,34 +64,33 @@ static const char *make_relative(const char *location)
-   		 * prefix_len == 0 if the compiler gives paths relative
-   		 * to the root of the working tree.  Otherwise, we want
-   		 * to see that we did find the needle[] at a directory
-  -		 * boundary.
-  +		 * boundary.  Again we rely on that needle[] begins with
-  +		 * "t" followed by the directory separator.
-   		 */
-   		if (fspathcmp(needle, prefix + prefix_len) ||
-  -		    (prefix_len &&
-  -		     prefix[prefix_len - 1] != '/' &&
-  -		     prefix[prefix_len - 1] != '\\'))
-  +		    (prefix_len && prefix[prefix_len - 1] != needle[1]))
-   			die("unexpected suffix of '%s'", prefix);
-  -
-   	}
-   
-   	/*
-  -	 * If our compiler gives relative paths and we do not need
-  -	 * to munge directory separator, we can return location as-is.
-  +	 * Does it not start with the expected prefix?
-  +	 * Return it as-is without making it worse.
-   	 */
-  -	if (!prefix_len && !need_bs_to_fs)
-  +	if (prefix_len && fspathncmp(location, prefix, prefix_len))
-   		return location;
-   
-  -	/* Does it not start with the expected prefix? */
-  -	if (fspathncmp(location, prefix, prefix_len))
-  -		return location;
-  +	/*
-  +	 * If we do not need to munge directory separator, we can return
-  +	 * the substring at the tail of the location.
-  +	 */
-  +	if (!need_bs_to_fs)
-  +		return location + prefix_len;
-   
-  -	strlcpy(buf, location + prefix_len, sizeof(buf));
-   	/* convert backslashes to forward slashes */
-  -	if (need_bs_to_fs) {
-  -		for (p = buf; *p; p++)
-  -			if (*p == '\\')
-  -				*p = '/';
-  -	}
-  +	strlcpy(buf, location + prefix_len, sizeof(buf));
-  +	for (p = buf; *p; p++)
-  +		if (*p == '\\')
-  +			*p = '/';
-   	return buf;
-   }
-   
-
- t/unit-tests/test-lib.c | 61 +++++++++++++++++++++++++++++++----------
- 1 file changed, 47 insertions(+), 14 deletions(-)
-
-diff --git a/t/unit-tests/test-lib.c b/t/unit-tests/test-lib.c
-index 7bf9dfdb95..66d6980ffb 100644
---- a/t/unit-tests/test-lib.c
-+++ b/t/unit-tests/test-lib.c
-@@ -21,12 +21,11 @@ static struct {
- 	.result = RESULT_NONE,
- };
- 
--#ifndef _MSC_VER
--#define make_relative(location) location
--#else
- /*
-  * Visual C interpolates the absolute Windows path for `__FILE__`,
-  * but we want to see relative paths, as verified by t0080.
-+ * There are other compilers that do the same, and are not for
-+ * Windows.
-  */
- #include "dir.h"
- 
-@@ -34,32 +33,66 @@ static const char *make_relative(const char *location)
- {
- 	static char prefix[] = __FILE__, buf[PATH_MAX], *p;
- 	static size_t prefix_len;
-+	static int need_bs_to_fs = -1;
- 
--	if (!prefix_len) {
-+	/* one-time preparation */
-+	if (need_bs_to_fs < 0) {
- 		size_t len = strlen(prefix);
--		const char *needle = "\\t\\unit-tests\\test-lib.c";
-+		char needle[] = "t\\unit-tests\\test-lib.c";
- 		size_t needle_len = strlen(needle);
- 
--		if (len < needle_len || strcmp(needle, prefix + len - needle_len))
--			die("unexpected suffix of '%s'", prefix);
-+		if (len < needle_len)
-+			die("unexpected prefix '%s'", prefix);
-+
-+		/*
-+		 * The path could be relative (t/unit-tests/test-lib.c)
-+		 * or full (/home/user/git/t/unit-tests/test-lib.c).
-+		 * Check the slash between "t" and "unit-tests".
-+		 */
-+		prefix_len = len - needle_len;
-+		if (prefix[prefix_len + 1] == '/') {
-+			/* Oh, we're not Windows */
-+			for (size_t i = 0; i < needle_len; i++)
-+				if (needle[i] == '\\')
-+					needle[i] = '/';
-+			need_bs_to_fs = 0;
-+		} else {
-+			need_bs_to_fs = 1;
-+		}
- 
--		/* let it end in a directory separator */
--		prefix_len = len - needle_len + 1;
-+		/*
-+		 * prefix_len == 0 if the compiler gives paths relative
-+		 * to the root of the working tree.  Otherwise, we want
-+		 * to see that we did find the needle[] at a directory
-+		 * boundary.  Again we rely on that needle[] begins with
-+		 * "t" followed by the directory separator.
-+		 */
-+		if (fspathcmp(needle, prefix + prefix_len) ||
-+		    (prefix_len && prefix[prefix_len - 1] != needle[1]))
-+			die("unexpected suffix of '%s'", prefix);
- 	}
- 
--	/* Does it not start with the expected prefix? */
--	if (fspathncmp(location, prefix, prefix_len))
-+	/*
-+	 * Does it not start with the expected prefix?
-+	 * Return it as-is without making it worse.
-+	 */
-+	if (prefix_len && fspathncmp(location, prefix, prefix_len))
- 		return location;
- 
--	strlcpy(buf, location + prefix_len, sizeof(buf));
-+	/*
-+	 * If we do not need to munge directory separator, we can return
-+	 * the substring at the tail of the location.
-+	 */
-+	if (!need_bs_to_fs)
-+		return location + prefix_len;
-+
- 	/* convert backslashes to forward slashes */
-+	strlcpy(buf, location + prefix_len, sizeof(buf));
- 	for (p = buf; *p; p++)
- 		if (*p == '\\')
- 			*p = '/';
--
- 	return buf;
- }
--#endif
- 
- static void msg_with_prefix(const char *prefix, const char *format, va_list ap)
- {
--- 
-2.44.0-rc0
+* Unless, of course, you use some sort of "hook" in the shell to
+  notice you switched to a certain directory and run command
+  there---some people achieve this by aliasing their "cd", "pushd",
+  and "popd".
 
