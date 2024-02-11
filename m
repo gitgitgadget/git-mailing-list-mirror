@@ -1,162 +1,207 @@
-Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
+Received: from mail-wm1-f41.google.com (mail-wm1-f41.google.com [209.85.128.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC99C1EEE9
-	for <git@vger.kernel.org>; Sun, 11 Feb 2024 11:11:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37C435A4ED
+	for <git@vger.kernel.org>; Sun, 11 Feb 2024 11:52:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707649918; cv=none; b=ILWzL6FrduE1DP8KfpDDyW8Ol3Im2rWjyN/DSZAgfh04YucAqedBHzr5GbfNRCfF848ULIOK9ERPCKXO+jRS3zMM70tsRJ5P8KHzPxbmX5h4erbG82gQcyLfylHTuY3rIWim1RWAtZYI+/Vabjl5RYtV6+2i+NNxa4dOVHQR21M=
+	t=1707652363; cv=none; b=G2OuHM3IyqWKqTkVHA3ryB4NsIlRleJDw4d0kwo/jNwzntGDzAHD+SfoVAF1RqZFb6qd+MsZyMRHlxc1h+6WQeatU9wuiXPq0NAvCZ9SKP1Htgx5hrsCj9PWPgBDWwkJWc8dYbWnbCKGS3hU1rWZ49ZjDYj8+amoB+OmEsLtNdg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707649918; c=relaxed/simple;
-	bh=mkIN5E8MONoJ31PqtxrBOBO1j8Nt483k+UvCs5dAmQg=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=G+pJdsSeP0zguNSnMzWX/kM0yvjjDQeABba7jsfq7RzOCdc7ZdZhyKGI3TI3/nzfHgLlaHqfbllmUwqOKXItZPw9P2As2PGI+cQChUGC97JWWuF8f8uD6tZzecGkmXhVCAu4KK23IJlugoL4wiwrvtzBW1id5r5pnE9zlvnw+c8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fr3KATNK; arc=none smtp.client-ip=209.85.128.48
+	s=arc-20240116; t=1707652363; c=relaxed/simple;
+	bh=ydd1vPlCoyq9aCjVPHYIy06GdfQK7RtrSMNuCDnTRmc=;
+	h=Message-ID:From:Date:Subject:MIME-Version:Content-Type:To:Cc; b=V21RXirfoGVKIVnN4WDzrWbu9x9BDfqlWQcYInxEzT4//xt78FExrFZIDUKAo8h402mZ+7AAogw5IxzxEnrgs2HMGFNjSuN0axea23if+zr+8Z2AF+oHkPxOiUoK1QzKTzEEcqTP4A8gnMTbufaIZn0OJQ2VDBhgXF5KPSVY58w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=F0cAzKpS; arc=none smtp.client-ip=209.85.128.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fr3KATNK"
-Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-41090edfeb3so7094745e9.2
-        for <git@vger.kernel.org>; Sun, 11 Feb 2024 03:11:56 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="F0cAzKpS"
+Received: by mail-wm1-f41.google.com with SMTP id 5b1f17b1804b1-41097f9a9a4so6687905e9.2
+        for <git@vger.kernel.org>; Sun, 11 Feb 2024 03:52:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1707649915; x=1708254715; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:reply-to:user-agent:mime-version:date
+        d=gmail.com; s=20230601; t=1707652359; x=1708257159; darn=vger.kernel.org;
+        h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
          :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=4AP/eVDvF/DVdjxDf4IfDF9Lx63V5kUlMjpv2smQUVo=;
-        b=fr3KATNKak2hQ6ZwJk4sFMl6qIuWECH7sPl2gbx5FvPjfLd3B4VeUWjJXijKVKDnq1
-         JTGK/jm5XcQYdLPrDOY8A46tE6ttRHG+7rAAeN3EmNBcN7uS7KPMCND5ElZhNZTJuPHH
-         bAcpMJzOcUTt3noQRRo4bcN4qyEch3nO8deoXMst+EKfAflsq1i91hIttX88oyKVRl7+
-         nu39ZuD9i6oxofAqfFZS61+qEWVfZn1bh3sZBWr+pe8hBGpmhut+EmudK61T7LDXY7i0
-         xmqdR+pvBJ6L3CI81jvpXKMkOnXLNeLgfuAyWdvZECIaQffAF7KSscbUOVYhlzDhFQNJ
-         v+yw==
+        bh=880p1dgrYbVA4u9XMKUo/MQCkeyJxR1KAOMfBGN9oyo=;
+        b=F0cAzKpSXuWpcSMdXJup9pnIFRgz160bheBFktjvk5yM97/egykNkR4czBAg9nOywW
+         2Q2+IqMd28yAiGS2VO0Yso0Ah9QMzwToDR1wZR4Y6T/Rh3iYcr6mm3mZggiNQGUtqHGz
+         ultLvz2KG33JQ0PpqRxqCPtfrh82fFjvDJPFe89IQz07f9QjzX5eb2B47e1c0OvO6gRG
+         25bkG+YC/tMvQkhPzUvJEqIoNuiNNaUr95ss47AGEiGptkeb7D/W3APJOtZbOLErF8CX
+         RWPk9ZoVJbKagxgtW1f3NPqK8ekjug9/guEa+ykDO/cyhkRvWQUj/wtHb66hfqcz1hDO
+         3hLQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1707649915; x=1708254715;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:reply-to:user-agent:mime-version:date
+        d=1e100.net; s=20230601; t=1707652359; x=1708257159;
+        h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
          :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=4AP/eVDvF/DVdjxDf4IfDF9Lx63V5kUlMjpv2smQUVo=;
-        b=fF7iCdvYOHxrvHKhr/0ulfBcV5uI6esZ2vAMcPW6SDFkdvf2Ojd4vcobkPpnn/he//
-         3xIPOCT45jPLMd30LGiEQtKNntsdhklZThrGRYiICUp89C3H/FPg5By5udTL4u8uTgNQ
-         dUR1qZsGL4DdqbIttuudcWryLuFZO+k7cz+10OVWGjv5tW7BR89wF8FTL8+6MsyKBTmB
-         h2GEHwCVUl4LEGzAaj0DTQWHWSJR7Y1SPaeY6Y+s78lJey/riE4ECzC9A5YyZvk3xIBX
-         3OAhT9V4zIDIetFOCsovh57RJPc264fXir04qn3tW+9BIP9uLzWEmM/NB54puS60Trnf
-         Vkkw==
-X-Forwarded-Encrypted: i=1; AJvYcCVjA/OnThjTRRU7WVpzmy+IoBPQAuGnnyxg3j0Te4ue+VW6/TLWGxHEJCrtfx+KtcapqQBp3U5b5I7WpkxZiiqCev+e
-X-Gm-Message-State: AOJu0Yx2qgdrPXpeiOkLcNKplB1uVpoCTWVKgF1SslfbBnvYMmLMhfPS
-	0wc/ngOmHPUM/XiNbGct1+EjzBMmGSfKAFgFJRcoGfbHJnryiSi6
-X-Google-Smtp-Source: AGHT+IHLwpKlk2Wa6jTFgDUogwD57BslF9Y2J1ftNdOzR6/KjYCxmDP3YbZ4+Az78/KaxSs1lWcCfg==
-X-Received: by 2002:a05:600c:6543:b0:410:10d1:b91e with SMTP id dn3-20020a05600c654300b0041010d1b91emr2872777wmb.14.1707649915026;
-        Sun, 11 Feb 2024 03:11:55 -0800 (PST)
-X-Forwarded-Encrypted: i=1; AJvYcCVyAayU4ZHn30raEhl12BgQIc4ZO7Yfy6OyeoWqrlQPtS7/K7HdKr9MNaKc0eRAHO2Eyu4LiMsaurbHyb/x+SObOnmtmtfjU3bON2z6K0sDffT+/rmPoKhYzdWIxKZFcAyFcLUcgP4IczPzclrFCUo8Gw==
-Received: from ?IPV6:2a0a:ef40:62e:a901:386f:d8d1:628a:e68d? ([2a0a:ef40:62e:a901:386f:d8d1:628a:e68d])
-        by smtp.gmail.com with ESMTPSA id hi7-20020a05600c534700b00410be9b8b96sm1084211wmb.37.2024.02.11.03.11.54
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 11 Feb 2024 03:11:54 -0800 (PST)
-Message-ID: <4073b764-ab6a-4b4b-a8a3-2e898620b2f5@gmail.com>
-Date: Sun, 11 Feb 2024 11:11:52 +0000
+        bh=880p1dgrYbVA4u9XMKUo/MQCkeyJxR1KAOMfBGN9oyo=;
+        b=WYNRuidGm29/VT6fgd8GTX4eO11SFqmH38p8GB+kebhsxW27NHADKa+xlsBbk1J/y4
+         R2ER7u3JBZYBy38zdY0r6lPBtpFakyNVAJyi6A/aGKSNbbF3VJiPq+vyCZXvP0KSfkfz
+         F7q8smgNFyu5n/4nsCt0cqYBdyUZuOhrJFLi5Xx4FzIpsDN7l/kwcz8bRZ7ptmK2hhwd
+         ylRDwRo3X5SkbaLJMzn47ary2/sUXkRzaCIugOWzXcQi/aNRdcWGywqBc9ponyauRP2U
+         MRMOm+V8oFCPxUl2F74njzRNblFEjvxzTbKSdE7dw8K9BoMab7TrqViQh4NHyztB74Yd
+         UgyA==
+X-Gm-Message-State: AOJu0YzfEDoPYSNVfRt+Ypw8AjSaycjJHwsxHfyNGcf1LJTsoFocOkDe
+	QdSAAst2WfFkbcwuBXFjEbA1j6A4aEwQNF68mjPoTGWQkOOopD2GvHiLODIf
+X-Google-Smtp-Source: AGHT+IFYXmttLWTd1MULdlaEMH3c9ISJT9+KO74TBHEboMs1M5Kx0pu7HXAzZipfWsavS5Iy6wdn4g==
+X-Received: by 2002:a05:600c:4ed0:b0:410:c127:62fe with SMTP id g16-20020a05600c4ed000b00410c12762femr864072wmq.1.1707652358531;
+        Sun, 11 Feb 2024 03:52:38 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id jz15-20020a05600c580f00b004101f27737asm5575696wmb.29.2024.02.11.03.52.38
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 11 Feb 2024 03:52:38 -0800 (PST)
+Message-ID: <pull.1660.git.1707652357696.gitgitgadget@gmail.com>
+From: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Sun, 11 Feb 2024 11:52:37 +0000
+Subject: [PATCH] ci: bump remaining outdated Actions versions
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH 2/2] sequencer: unset GIT_CHERRY_PICK_HELP for 'exec'
- commands
-Content-Language: en-US
-To: Junio C Hamano <gitster@pobox.com>,
- Vegard Nossum <vegard.nossum@oracle.com>
-Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>, git@vger.kernel.org,
- Jonathan Nieder <jrnieder@gmail.com>
-References: <0adb1068-ef10-44ed-ad1d-e0927a09245d@gmail.com>
- <20240205141335.762947-1-vegard.nossum@oracle.com>
- <ebe188e5-7289-4f7b-b845-d59a47cd06fe@app.fastmail.com>
- <xmqqy1bymru0.fsf@gitster.g>
- <b3ec5d0b-ac17-4d1e-a17d-d5adfbfc6ccf@oracle.com>
- <xmqqcytal01i.fsf@gitster.g> <4e6d503a-8564-4536-82a7-29c489f5fec3@gmail.com>
- <xmqq8r3wcjq2.fsf@gitster.g>
- <ae8d96b7-93b0-4460-b7ed-ffebaddd6f97@oracle.com>
- <eaf511ff-f9e0-47ac-ae2e-3de0efa928dd@gmail.com> <xmqqv86yoot3.fsf@gitster.g>
-From: Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <xmqqv86yoot3.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Fcc: Sent
+To: git@vger.kernel.org
+Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
+    Johannes Schindelin <Johannes.Schindelin@gmx.de>
 
-Hi Junio
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 
-On 08/02/2024 17:20, Junio C Hamano wrote:
-> Phillip Wood <phillip.wood123@gmail.com> writes:
-> 
->> I think that typically for small suggestions like that we just add a
->> Helped-by: trailer but feel free to add my SOB if you want.
-> 
-> Thanks, both.  Here is what I assembled from the pieces.
-> 
-> ----- >8 --------- >8 --------- >8 --------- >8 -----
-> From: Vegard Nossum <vegard.nossum@oracle.com>
-> Date: Fri, 2 Feb 2024 10:18:50 +0100
-> Subject: [PATCH] sequencer: unset GIT_CHERRY_PICK_HELP for 'exec' commands
-> 
-> Running "git cherry-pick" as an x-command in the rebase plan loses
-> the original authorship information.
+This avoids "Node.js 16 Actions" deprecation messages by bumping the
+following Actions' versions:
 
-It might be worth explaining why this happens
+- actions/upload-artifact from 3 to 4
+- actions/download-artifact from 3 to 4
+- actions/cache from 3 to 4
 
-This is because rebase sets the GIT_CHERRY_PICK_HELP environment 
-variable to customize the advice given to users when there are conflicts 
-which causes the sequencer to remove CHERRY_PICK_HEAD.
+Helped-by: Matthias Aßhauer <mha1993@live.de>
+Original-commits-by: dependabot[bot] <support@github.com>
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+    ci: bump remaining outdated Actions versions
+    
+    I noticed that Junio recently bumped a couple of these Actions versions,
+    and incidentally I also activated automatic Dependabot updates of those
+    in git-for-windows/git. Dependabot noticed a couple of yet-unaddressed
+    updates, which I accumulated into a single patch.
+    
+    This patch is based on jc/github-actions-update.
 
-> To fix this, unset GIT_CHERRY_PICK_HELP for 'exec' commands.
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1660%2Fdscho%2Fmoar-github-actions-updates-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1660/dscho/moar-github-actions-updates-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/1660
 
-The patch itself looks fine
+ .github/workflows/coverity.yml |  4 ++--
+ .github/workflows/main.yml     | 18 +++++++++---------
+ 2 files changed, 11 insertions(+), 11 deletions(-)
 
-Best Wishes
+diff --git a/.github/workflows/coverity.yml b/.github/workflows/coverity.yml
+index a81a7566d10..53cf12fe044 100644
+--- a/.github/workflows/coverity.yml
++++ b/.github/workflows/coverity.yml
+@@ -98,7 +98,7 @@ jobs:
+       # A cache miss will add ~30s to create, but a cache hit will save minutes.
+       - name: restore the Coverity Build Tool
+         id: cache
+-        uses: actions/cache/restore@v3
++        uses: actions/cache/restore@v4
+         with:
+           path: ${{ runner.temp }}/cov-analysis
+           key: cov-build-${{ env.COVERITY_LANGUAGE }}-${{ env.COVERITY_PLATFORM }}-${{ steps.lookup.outputs.hash }}
+@@ -141,7 +141,7 @@ jobs:
+           esac
+       - name: cache the Coverity Build Tool
+         if: steps.cache.outputs.cache-hit != 'true'
+-        uses: actions/cache/save@v3
++        uses: actions/cache/save@v4
+         with:
+           path: ${{ runner.temp }}/cov-analysis
+           key: cov-build-${{ env.COVERITY_LANGUAGE }}-${{ env.COVERITY_PLATFORM }}-${{ steps.lookup.outputs.hash }}
+diff --git a/.github/workflows/main.yml b/.github/workflows/main.yml
+index bb857bdaf08..4eea49fc85c 100644
+--- a/.github/workflows/main.yml
++++ b/.github/workflows/main.yml
+@@ -123,7 +123,7 @@ jobs:
+     - name: zip up tracked files
+       run: git archive -o artifacts/tracked.tar.gz HEAD
+     - name: upload tracked files and build artifacts
+-      uses: actions/upload-artifact@v3
++      uses: actions/upload-artifact@v4
+       with:
+         name: windows-artifacts
+         path: artifacts
+@@ -140,7 +140,7 @@ jobs:
+       cancel-in-progress: ${{ needs.ci-config.outputs.skip_concurrent == 'yes' }}
+     steps:
+     - name: download tracked files and build artifacts
+-      uses: actions/download-artifact@v3
++      uses: actions/download-artifact@v4
+       with:
+         name: windows-artifacts
+         path: ${{github.workspace}}
+@@ -157,7 +157,7 @@ jobs:
+       run: ci/print-test-failures.sh
+     - name: Upload failed tests' directories
+       if: failure() && env.FAILED_TEST_ARTIFACTS != ''
+-      uses: actions/upload-artifact@v3
++      uses: actions/upload-artifact@v4
+       with:
+         name: failed-tests-windows
+         path: ${{env.FAILED_TEST_ARTIFACTS}}
+@@ -212,7 +212,7 @@ jobs:
+     - name: zip up tracked files
+       run: git archive -o artifacts/tracked.tar.gz HEAD
+     - name: upload tracked files and build artifacts
+-      uses: actions/upload-artifact@v3
++      uses: actions/upload-artifact@v4
+       with:
+         name: vs-artifacts
+         path: artifacts
+@@ -230,7 +230,7 @@ jobs:
+     steps:
+     - uses: git-for-windows/setup-git-for-windows-sdk@v1
+     - name: download tracked files and build artifacts
+-      uses: actions/download-artifact@v3
++      uses: actions/download-artifact@v4
+       with:
+         name: vs-artifacts
+         path: ${{github.workspace}}
+@@ -248,7 +248,7 @@ jobs:
+       run: ci/print-test-failures.sh
+     - name: Upload failed tests' directories
+       if: failure() && env.FAILED_TEST_ARTIFACTS != ''
+-      uses: actions/upload-artifact@v3
++      uses: actions/upload-artifact@v4
+       with:
+         name: failed-tests-windows
+         path: ${{env.FAILED_TEST_ARTIFACTS}}
+@@ -305,7 +305,7 @@ jobs:
+       run: ci/print-test-failures.sh
+     - name: Upload failed tests' directories
+       if: failure() && env.FAILED_TEST_ARTIFACTS != ''
+-      uses: actions/upload-artifact@v3
++      uses: actions/upload-artifact@v4
+       with:
+         name: failed-tests-${{matrix.vector.jobname}}
+         path: ${{env.FAILED_TEST_ARTIFACTS}}
+@@ -353,13 +353,13 @@ jobs:
+       run: ci/print-test-failures.sh
+     - name: Upload failed tests' directories
+       if: failure() && env.FAILED_TEST_ARTIFACTS != '' && matrix.vector.jobname != 'linux32'
+-      uses: actions/upload-artifact@v3
++      uses: actions/upload-artifact@v4
+       with:
+         name: failed-tests-${{matrix.vector.jobname}}
+         path: ${{env.FAILED_TEST_ARTIFACTS}}
+     - name: Upload failed tests' directories
+       if: failure() && env.FAILED_TEST_ARTIFACTS != '' && matrix.vector.jobname == 'linux32'
+-      uses: actions/upload-artifact@v1
++      uses: actions/upload-artifact@v4
+       with:
+         name: failed-tests-${{matrix.vector.jobname}}
+         path: ${{env.FAILED_TEST_ARTIFACTS}}
 
-Phillip
-
-> Helped-by: Phillip Wood <phillip.wood123@gmail.com>
-> Signed-off-by: Vegard Nossum <vegard.nossum@oracle.com>
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
-> ---
->   sequencer.c                   |  1 +
->   t/t3404-rebase-interactive.sh | 12 ++++++++++++
->   2 files changed, 13 insertions(+)
-> 
-> diff --git a/sequencer.c b/sequencer.c
-> index d584cac8ed..ed30ceaf8b 100644
-> --- a/sequencer.c
-> +++ b/sequencer.c
-> @@ -3647,6 +3647,7 @@ static int do_exec(struct repository *r, const char *command_line)
->   	fprintf(stderr, _("Executing: %s\n"), command_line);
->   	cmd.use_shell = 1;
->   	strvec_push(&cmd.args, command_line);
-> +	strvec_push(&cmd.env, "GIT_CHERRY_PICK_HELP");
->   	status = run_command(&cmd);
->   
->   	/* force re-reading of the cache */
-> diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
-> index c5f30554c6..84a92d6da0 100755
-> --- a/t/t3404-rebase-interactive.sh
-> +++ b/t/t3404-rebase-interactive.sh
-> @@ -153,6 +153,18 @@ test_expect_success 'rebase -i with the exec command checks tree cleanness' '
->   	git rebase --continue
->   '
->   
-> +test_expect_success 'cherry-pick works with rebase --exec' '
-> +	test_when_finished "git cherry-pick --abort; \
-> +			    git rebase --abort; \
-> +			    git checkout primary" &&
-> +	echo "exec git cherry-pick G" >todo &&
-> +	(
-> +		set_replace_editor todo &&
-> +		test_must_fail git rebase -i D D
-> +	) &&
-> +	test_cmp_rev G CHERRY_PICK_HEAD
-> +'
-> +
->   test_expect_success 'rebase -x with empty command fails' '
->   	test_when_finished "git rebase --abort ||:" &&
->   	test_must_fail env git rebase -x "" @ 2>actual &&
+base-commit: dcce2bda214ac4c838f4b85f2c550816df3a6ac9
+-- 
+gitgitgadget
