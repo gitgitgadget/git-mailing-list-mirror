@@ -1,92 +1,169 @@
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+Received: from secure.elehost.com (secure.elehost.com [185.209.179.11])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C234812
-	for <git@vger.kernel.org>; Sun, 11 Feb 2024 02:42:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98715185B
+	for <git@vger.kernel.org>; Sun, 11 Feb 2024 02:47:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.209.179.11
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707619359; cv=none; b=cSE4n9mb/Gqq39WvhcScJg2X461/6tHF8fe2iMu0/mDzHpl6TIIw2AtGl76vP4k3WzeVn98fZI7PHuBmxTvHULGDuKFLWjEHFeNlWFCPo9C1N3xy5wOCyP4C2vDB3Ey65GwM59hFDexHE2sV2V4XyT2bQ/yt7+XrFB2lGjsdJdw=
+	t=1707619646; cv=none; b=Lbl9CQgr/KbF0ehQu0gh1s22SABvZLIN4DbIub6vk35x2YIKn+wYZSGF7BXp7sp+gUe4OsbkVN6zA/uUnERodUJn5h6nWCRAB/I6u9d8LTXsVMDlhSaGz+QwE+GTTnLWXe05rGUSpJjHnvmOB61ictXa77UYIG4HyQIt6nnRKvA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707619359; c=relaxed/simple;
-	bh=PEDNMzQtoOO48vhCyQM5jAHBgqXkaBCtr5tdrqbeUx8=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=Km1kLSBqCNuGeV8q4mAz/wHu4AX9JVAk4J9p7hUmCiULDgH6CmTWsTGvsg0XBRKqFhkQt0tCAVO7TaHYhZ0DiT4jX3CiCD0FNyaKntZ3q83FMSqRbtppvMkDFE5KXe/ZRNphfFrG0zzyWzPs0bk0uVXweZteEKf3VEEJcdy2Wps=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=d8bV8eN5; arc=none smtp.client-ip=64.147.108.71
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="d8bV8eN5"
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 95FD61D05F1;
-	Sat, 10 Feb 2024 21:42:30 -0500 (EST)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=PEDNMzQtoOO48vhCyQM5jAHBgqXkaBCtr5tdrq
-	beUx8=; b=d8bV8eN5nJCIl0Syu2XVF+uGsmg2LX+IDrFYH7nZVwst+blUykQdDt
-	qIQ82OYNKSwU1WMP0Zguxy9IHvK2O8G4tMrEIfWO+YyVd0LP4v8gANZMzFy+AkQx
-	7l6IEdV3B/sWZY7p35qnwtz6Rblqan6ZVIqEwCvhcTxxjQQvauKqk=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 8E6871D05F0;
-	Sat, 10 Feb 2024 21:42:30 -0500 (EST)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.165.85])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id ECAFC1D05EF;
-	Sat, 10 Feb 2024 21:42:29 -0500 (EST)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Christian Hesse <list@eworm.de>
-Cc: Philippe Blain <levraiphilippeblain@gmail.com>,  Git Mailing List
- <git@vger.kernel.org>,  Christian Hesse <mail@eworm.de>
-Subject: Re: [PATCH 1/1] imap-send: include strbuf.h
-In-Reply-To: <20240210210155.71fa163d@leda.eworm.net> (Christian Hesse's
-	message of "Sat, 10 Feb 2024 21:01:55 +0100")
-References: <20240209222622.102208-1-list@eworm.de>
-	<xmqqil2xcl9e.fsf@gitster.g> <xmqqeddlckqa.fsf@gitster.g>
-	<20240210210155.71fa163d@leda.eworm.net>
-Date: Sat, 10 Feb 2024 18:42:28 -0800
-Message-ID: <xmqq7cjbbu23.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	s=arc-20240116; t=1707619646; c=relaxed/simple;
+	bh=651Gifi1sDC3k2IuYxOWxnfOyeyJwBsujZzo/HsSHBE=;
+	h=From:To:Cc:References:In-Reply-To:Subject:Date:Message-ID:
+	 MIME-Version:Content-Type; b=frMzrvDH+QdT3sIF0Tew+5gERom01+PQYJBYEsSSFFeFMz3ckzgRbjT1mWJMZ4I66WF3c+zMd1Ayo9Z9/EV1mS1tnuzVJCEKaev9nAK+EoMm80ibvaXaWBkvr4iwRFfPoEeWMaCS2GZNc+L0d58yqDnnKJNf1fh7FQleVTI00yE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com; spf=pass smtp.mailfrom=nexbridge.com; arc=none smtp.client-ip=185.209.179.11
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nexbridge.com
+X-Virus-Scanned: Debian amavisd-new at secure.elehost.com
+Received: from Mazikeen (cpebc4dfb928313-cmbc4dfb928310.cpe.net.cable.rogers.com [99.228.251.108] (may be forged))
+	(authenticated bits=0)
+	by secure.elehost.com (8.15.2/8.15.2/Debian-22ubuntu3) with ESMTPSA id 41B2lJwY3341557
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Sun, 11 Feb 2024 02:47:20 GMT
+Reply-To: <rsbecker@nexbridge.com>
+From: <rsbecker@nexbridge.com>
+To: "'Junio C Hamano'" <gitster@pobox.com>
+Cc: <git@vger.kernel.org>
+References: <000401da5c4c$fd4ad260$f7e07720$@nexbridge.com> <xmqqbk8nbvqy.fsf@gitster.g>
+In-Reply-To: <xmqqbk8nbvqy.fsf@gitster.g>
+Subject: RE: [BUG] git 2.44.0-rc0 t0080.1 Breaks on NonStop x86 and ia64
+Date: Sat, 10 Feb 2024 21:47:14 -0500
+Organization: Nexbridge Inc.
+Message-ID: <002a01da5c94$a1bc5340$e534f9c0$@nexbridge.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- 332DE146-C887-11EE-8841-25B3960A682E-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain;
+	charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+X-Mailer: Microsoft Outlook 16.0
+Thread-Index: AQEKhykLt/LB5hLsEaYKWm4eL/p/IgHSi0nNspWF5ZA=
+Content-Language: en-ca
 
-Christian Hesse <list@eworm.de> writes:
-
->> Oops, missing link:
->> 
->> https://lore.kernel.org/git/pull.1664.git.git.1706833113569.gitgitgadget@gmail.com/
+On Saturday, February 10, 2024 9:06 PM, Junio C Hamano wrote:
+><rsbecker@nexbridge.com> writes:
 >
-> Sorry, missed that... Probably because the breakage went into 2.43.1, but the
-> upstream fix did not. So sorry for the noise.
+>> The diff appears to have failed because of an assumption of how paths
+>> are resolved during compilation. The assumption is that files remain
+>> partially qualified, which is not the case in all C compilers. This is
+>> c99. My experience with gcc is that it qualifies names differently
+>> than other compilers.
+>
+>I just found this bit of gem in t/unit-tests/test-lib.c.  I guess Visual C
+falls into the
+>same category as yours, while GCC and Clang are from different camps?
+>
+>The easiest way forward may be to build on top of it, perhaps like so, to
+generalize
+>the make_relative() to cover your case, too?
+>
+> t/unit-tests/test-lib.c | 63
++++++++++++++++++++++++++++++++++++++---------
+>---
+> 1 file changed, 48 insertions(+), 15 deletions(-)
+>
+>diff --git c/t/unit-tests/test-lib.c w/t/unit-tests/test-lib.c index
+>7bf9dfdb95..69dbe1bbc7 100644
+>--- c/t/unit-tests/test-lib.c
+>+++ w/t/unit-tests/test-lib.c
+>@@ -21,45 +21,78 @@ static struct {
+> 	.result = RESULT_NONE,
+> };
+>
+>-#ifndef _MSC_VER
+>-#define make_relative(location) location -#else
+>+#include "dir.h"
+> /*
+>  * Visual C interpolates the absolute Windows path for `__FILE__`,
+>  * but we want to see relative paths, as verified by t0080.
+>+ * There are other compilers that do the same, and are not for
+>+ * Windows.
+>  */
+>-#include "dir.h"
+>-
+> static const char *make_relative(const char *location)  {
+> 	static char prefix[] = __FILE__, buf[PATH_MAX], *p;
+> 	static size_t prefix_len;
+>+	static int need_bs_to_fs = -1;
+>
+>-	if (!prefix_len) {
+>+	/* one-time preparation */
+>+	if (need_bs_to_fs < 0) {
+> 		size_t len = strlen(prefix);
+>-		const char *needle = "\\t\\unit-tests\\test-lib.c";
+>+		char needle[] = "t\\unit-tests\\test-lib.c";
+> 		size_t needle_len = strlen(needle);
+>
+>-		if (len < needle_len || strcmp(needle, prefix + len -
+needle_len))
+>+		if (len < needle_len)
+>+			die("unexpected prefix '%s'", prefix);
+>+
+>+		/*
+>+		 * The path could be relative (t/unit-tests/test-lib.c)
+>+		 * or full (/home/user/git/t/unit-tests/test-lib.c).
+>+		 * Check the slash between "t" and "unit-tests".
+>+		 */
+>+		prefix_len = len - needle_len;
+>+		if (prefix[prefix_len + 1] == '/') {
+>+			/* Oh, we're not Windows */
+>+			for (size_t i = 0; i < needle_len; i++)
+>+				if (needle[i] == '\\')
+>+					needle[i] = '/';
+>+			need_bs_to_fs = 0;
+>+		} else {
+>+			need_bs_to_fs = 1;
+>+		}
+>+
+>+		/*
+>+		 * prefix_len == 0 if the compiler gives paths relative
+>+		 * to the root of the working tree.  Otherwise, we want
+>+		 * to see that we did find the needle[] at a directory
+>+		 * boundary.
+>+		 */
+>+		if (fspathcmp(needle, prefix + prefix_len) ||
+>+		    (prefix_len &&
+>+		     prefix[prefix_len - 1] != '/' &&
+>+		     prefix[prefix_len - 1] != '\\'))
+> 			die("unexpected suffix of '%s'", prefix);
+>
+>-		/* let it end in a directory separator */
+>-		prefix_len = len - needle_len + 1;
+> 	}
+>
+>+	/*
+>+	 * If our compiler gives relative paths and we do not need
+>+	 * to munge directory separator, we can return location as-is.
+>+	 */
+>+	if (!prefix_len && !need_bs_to_fs)
+>+		return location;
+>+
+> 	/* Does it not start with the expected prefix? */
+> 	if (fspathncmp(location, prefix, prefix_len))
+> 		return location;
+>
+> 	strlcpy(buf, location + prefix_len, sizeof(buf));
+> 	/* convert backslashes to forward slashes */
+>-	for (p = buf; *p; p++)
+>-		if (*p == '\\')
+>-			*p = '/';
+>-
+>+	if (need_bs_to_fs) {
+>+		for (p = buf; *p; p++)
+>+			if (*p == '\\')
+>+				*p = '/';
+>+	}
+> 	return buf;
+> }
+>-#endif
+>
+> static void msg_with_prefix(const char *prefix, const char *format,
+va_list ap)  {
 
-Please don't be.  Duplicated reports are much much better than no
-reports due to "well, this must have been reported already by
-somebody else".  Thanks for reporting.
+This looks like a good plan.
 
-> Anyway... does it make sense to move the include into the condition?
-
-I do not think so.  The original breakage was because it implicitly
-relied on the fact that http.h, which is included only when
-USE_CURL_FOR_IMAP_SEND is defined, happens to include strbuf.h, even
-though the code that does not rely on USE_CURL_FOR_IMAP_SEND do
-unconditionally rely on the strbuf facility being available to them,
-possibly combined with the fact that not too many people build
-imap-send with USE_CURL_FOR_IMAP_SEND disabled.
-
-So the conditional thing still rely on an implicit assumption you
-are making, i.e. "http.h will forever be including strbuf.h", which
-is fragile when people from time to time come and make sweeping
-"header clean-up".  Which is a good thing.  But we need to be
-careful, and one way to help us being careful against such a header
-clean-up is to make sure you include what you use yourself, instead
-of assuming that somebody else you include will keep doing so.
+--Randall
 
