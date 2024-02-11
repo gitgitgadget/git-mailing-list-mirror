@@ -1,82 +1,59 @@
-Received: from secure.elehost.com (secure.elehost.com [185.209.179.11])
+Received: from sendmail.purelymail.com (sendmail.purelymail.com [34.202.193.197])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 652EAAD2D
-	for <git@vger.kernel.org>; Sun, 11 Feb 2024 19:48:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.209.179.11
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D701C5DF3D
+	for <git@vger.kernel.org>; Sun, 11 Feb 2024 20:16:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=34.202.193.197
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707680923; cv=none; b=dAUb4vJK+Wrh+YxW/6Xcy4Vg2ldSRxkv65Pzs8Ee1WEyeY3jAs7kiqheT2zikPf6oMSpTStp33PiQ2XsnUBlB9h3SY/GGB12/4HaeTIgD3ElyNrpG5lfT/wt4QMWuuhfkrs/o8mbrPSCEKPlqNBs3TxjPWUP+YuyrxqmIj1Woxc=
+	t=1707682617; cv=none; b=qh7vP4XfNqgY7BG6WZIT6H9QEEIsd3g/vWagsH18PdA6uz6rZw3mfd1KFsZJSTmvzi25tp4QVX67TvlunbG7DTV49yVDCw7gfs+Q83uuwzuJ+9Bzq5Nu4VUkgsweUqVuf+Qny/Y7I8N5mQ7OOyF2KznDWBIAc0/FkKliIapFYjw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707680923; c=relaxed/simple;
-	bh=KRLeANwYI7zsGIfEbneE+nR6PdzzaBNMtZ4i4vspxMQ=;
-	h=From:To:Cc:References:In-Reply-To:Subject:Date:Message-ID:
-	 MIME-Version:Content-Type; b=ElDKu1n8N1+qi0/1bL+g3thHBWSh84Ef3snZ43elr4XWkXb/wrL72RNXNp555FFQfpLBdSqxkvFa9Q0PKLkrTmbG9usV96E2ZvDUc8gaHSXcAEM9CHfPgpbWzGU6t0gBNZtYXvAdK7aRIcVx3E74UnFkwHibuxdQ57EQeR5pj9k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com; spf=pass smtp.mailfrom=nexbridge.com; arc=none smtp.client-ip=185.209.179.11
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nexbridge.com
-X-Virus-Scanned: Debian amavisd-new at secure.elehost.com
-Received: from Mazikeen (cpebc4dfb928313-cmbc4dfb928310.cpe.net.cable.rogers.com [99.228.251.108] (may be forged))
-	(authenticated bits=0)
-	by secure.elehost.com (8.15.2/8.15.2/Debian-22ubuntu3) with ESMTPSA id 41BJmJkH3436655
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Sun, 11 Feb 2024 19:48:19 GMT
-Reply-To: <rsbecker@nexbridge.com>
-From: <rsbecker@nexbridge.com>
-To: "'brian m. carlson'" <sandals@crustytoothpaste.net>,
-        "'Junio C Hamano'" <gitster@pobox.com>
-Cc: "=?UTF-8?Q?'Torsten_B=C3=B6gershausen'?=" <tboegi@web.de>,
-        "'K_V'" <zinen2@gmail.com>, <git@vger.kernel.org>
-References: <CABkRduQNdgdF8WhZadP5hyYvpEWgP_AE8=qzxNiRNA71bdJcYQ@mail.gmail.com> <20240211151455.GA27103@tb-raspi4> <ZcjnuSAZiNHvA5h1@tapette.crustytoothpaste.net> <20240211154345.GA28699@tb-raspi4> <xmqqcyt39cju.fsf@gitster.g> <ZckbeJqdvIfY4YPu@tapette.crustytoothpaste.net>
-In-Reply-To: <ZckbeJqdvIfY4YPu@tapette.crustytoothpaste.net>
-Subject: RE: git gc changes ownerships of files linux
-Date: Sun, 11 Feb 2024 14:48:13 -0500
-Organization: Nexbridge Inc.
-Message-ID: <006101da5d23$436ff460$ca4fdd20$@nexbridge.com>
+	s=arc-20240116; t=1707682617; c=relaxed/simple;
+	bh=4JULHKczuipdyqoBwAgoncfO0sN9rtEs7xgGnkJRetA=;
+	h=Message-ID:Date:MIME-Version:To:From:Subject:Content-Type; b=oqv6ZVvi7jr5qyNrMZ00IdgtA/AuXh/a7M91bUyDQW5V6DtE+mPCXWdEGWLlYRJEd5pY37AjA1IYs869qSvvV/rXv9FnVSNIEZYjJvk3pDqQj2bZMTIr8ug+qxGLUM1akLBrqLvX1t7vKcF8lzNIsB/MCCBqc4SiOJD+J0dRg6g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=tionis.dev; spf=pass smtp.mailfrom=tionis.dev; dkim=pass (2048-bit key) header.d=tionis.dev header.i=@tionis.dev header.b=hyxS+MCM; dkim=pass (2048-bit key) header.d=purelymail.com header.i=@purelymail.com header.b=X3FzOiC6; arc=none smtp.client-ip=34.202.193.197
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=tionis.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=tionis.dev
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=tionis.dev header.i=@tionis.dev header.b="hyxS+MCM";
+	dkim=pass (2048-bit key) header.d=purelymail.com header.i=@purelymail.com header.b="X3FzOiC6"
+DKIM-Signature: a=rsa-sha256; b=hyxS+MCMpQZKEYYGWgDl0Zn/gfm2P2bfZlE34cgT1x7npIpdqUZQ6hegjnRQ0gt6NgxzKVNeiCj7n2j4KYCus3mZ4sQSw9XwgWr7Zc/9DHgW8jGEUwAj9ixGGAlea7viXfbIGU56nF41h2SUP7y3WezZK5FgqRwRLQr3I3u6grfewTo1TpeTV7KlfNbxirk4uZgy8TUwv4/aWFX6N7vvtT88MheSIf80W2fBtoC2o7Lbn3xg3fhyyyi8kUTsWt6gJhjUoraoO4yhfvaUTwNlilfr9gjHzgkX6xe7iF/igsiVSLczGYlzlyILzoYnZ1WVqX/+SzaWv+Ax7uHBTOxW+g==; s=purelymail1; d=tionis.dev; v=1; bh=4JULHKczuipdyqoBwAgoncfO0sN9rtEs7xgGnkJRetA=; h=Received:To:From:Subject;
+DKIM-Signature: a=rsa-sha256; b=X3FzOiC6kN1y2gA7vzbSoxuFVLaPljLMu0ovdKNlZP5ebvnBnc7aVTLmo3FVc+hU9C2iT0ClGK2KQDLoKAvbTmqry1vTU/GBy8CKLW5i62QqpUenb1YiIoa6riYD6/zHjpnCMvGxEEkZPR15wg/FnjWxKaQWXTEfh/JoQn8q33mkZUaH5UowbAMKfpC9CCmgB+YubH0YcRACLwmyCp3qYy46Ntbt4gHc5u0kY3clfBMRMBq2SRS0vQl28oDjBJDP9HOhXazwANmXxDVTaLZ6u/CT0qakxvxJ1nI7WaJcAIBJtcDDTFeTMiSjDhbHZFpvRVjjgu6/O7FHkc3Cj8PY5w==; s=purelymail1; d=purelymail.com; v=1; bh=4JULHKczuipdyqoBwAgoncfO0sN9rtEs7xgGnkJRetA=; h=Feedback-ID:Received:To:From:Subject;
+Feedback-ID: 2034:545:null:purelymail
+X-Pm-Original-To: git@vger.kernel.org
+Received: by smtp.purelymail.com (Purelymail SMTP) with ESMTPSA id 239483542
+          for <git@vger.kernel.org>
+          (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384);
+          Sun, 11 Feb 2024 20:16:47 +0000 (UTC)
+Message-ID: <1d8fa22c-eb13-4cdb-8499-e19f0dea6b42@tionis.dev>
+Date: Sun, 11 Feb 2024 21:16:47 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain;
-	charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AQMb+8XFZrrIUcn89M9CO8HTNviv7AI7eFvcAYlHNGACev9s8AIMRq5MAXO/JZCuNE/vkA==
-Content-Language: en-ca
+User-Agent: Mozilla Thunderbird
+Content-Language: en-US
+To: git@vger.kernel.org
+From: tionis <git@tionis.dev>
+Subject: Bug: git-subtree: splitting subtree fails when subtree was added,
+ removed and added again
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Sunday, February 11, 2024 2:10 PM, brian m. carlson wrote:
->On 2024-02-11 at 16:43:33, Junio C Hamano wrote:
->> You definitely must set up your initial directory with g+s if you are
->> usihng the group-writable shared directory model (which I would
->> actually be surprised to see in 2020---is a shared machine with more
->> than one user-account still a thing???); adjust_shared_perm() will =
-not
->> help you there.
->
->I think it's relatively common to have shell hosts from which to log =
-into production
->machines, or to have shared hosts for students at universities, and I =
-do know that
->shared web hosting is still quite popular (because it tends to be very =
-economical and
->low maintenance for the user).
->
->I don't know that shared repositories are really that common anymore, =
-and I do
->usually recommend that people clone their own copies whenever possible, =
-but I
->have seen posts on StackOverflow where people are in fact using a =
-shared
->repository (possibly with multiple worktrees) on one system for various =
-reasons.
+I discovered a problem in git-subtree that I could also reproduce in a 
+minimal proof of concept over at
+https://github.com/tionis/git-subtree-bug-poc
 
-In my community, shared repositories are particularly common on the =
-operations side of the fence. It is a balance between the need for one =
-user id (generally does not log on) running the scripts, and the =
-individual operations staff specifying them. I have developed =
-(commercial) solutions to this that remove the need shared repositories =
-in this circumstance, but up to now, I have seen them used. This comes =
-into play when multiple people are manipulating web server content =
-without a separate deployment mechanism.
+The same bug was discussed some time ago on stackoverflow: 
+https://stackoverflow.com/questions/68761778/git-subtree-cache-exists
 
+It seems to occur when a subtree was added, removed, alter added again 
+and then modified in some commit.
+
+This leads to some error with the cache leading to an error message like
+
+fatal: cache for $commit-hash-here already exists!
+
+I'm unsure how to work around this other than modify the history or 
+creating a branch from before the first addition and fixing it there.
