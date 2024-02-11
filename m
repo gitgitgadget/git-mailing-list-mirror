@@ -1,201 +1,208 @@
-Received: from qs51p00im-qukt01071701.me.com (qs51p00im-qukt01071701.me.com [17.57.155.6])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f54.google.com (mail-wm1-f54.google.com [209.85.128.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D87325F484
-	for <git@vger.kernel.org>; Sun, 11 Feb 2024 22:08:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=17.57.155.6
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7F15107B2
+	for <git@vger.kernel.org>; Sun, 11 Feb 2024 22:48:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707689289; cv=none; b=BDATC6fvAoE/FgMyRAk1zUag4RRYQClx4RRDmW4qAx7RKvFqzSDGt15l9EsJA7Pgnq9O5SAZJIOjxCPjlPl5wB0APMCWulhb0E0NHbmAyJIR5CeafOHJj6YcfptnPPsuwzUVlTl5RghOXFJcJDEnSZxVUzK86tbma8PSo/SlnZ4=
+	t=1707691694; cv=none; b=FrH3jYGwgrc3Uugyd2HmGtVKaNCdXS7bGJWYzEBVsXV+ZWR+6rGq3VMUz9RIrMD8sfEfjNX7j1HJe/4ghfE1h1myKD38B2rKwdVZs1W5pyptiYA6OwsC9DIP3TaWKbbM0NzRUG4L/sKjtfGyJszgceJLxGuOYzKEHV6GNzNLFHs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707689289; c=relaxed/simple;
-	bh=ng/zDIQaC4OBIq2ubJSOjoE6+X4QiaL+aLE8BOZsHU0=;
-	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=NCS0ySJWTR4AnBBQcQmTgZkcEI8BpoqCx4o0BI1+GdI3ltHBX3FovlPzNrE6wfOs0RkTtkeGIYmaIqfhDSOfigPGjyJlbKibMNzgfozZ2ILn2xLdV6LZ0RhOvRXCBOR8bgguR0Z/GgjFUKAO4Ma3EK1pEucJPKrwvmMQllG5X9E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=icloud.com; spf=pass smtp.mailfrom=icloud.com; dkim=pass (2048-bit key) header.d=icloud.com header.i=@icloud.com header.b=iA7MDL6p; arc=none smtp.client-ip=17.57.155.6
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=icloud.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=icloud.com
+	s=arc-20240116; t=1707691694; c=relaxed/simple;
+	bh=CD6amrpi3P2TI7FpX0LPrvRhLfz8BJw7coISdW5gsmc=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=hVJrU7NeZJEIlmoV7ZLn9NtjbqDg5WMpdtaQEYmOYoLPX7WBItQ8MJiRWG6Kb8AnLRn9JrmepGYhNAvbUTY3UKHFEen6bRUThzT1YobgHLX54AXC7vVixMuRuQTkD8wDHmU7zq0P/F7dlhwSus6hki439otg2rkVg4UheXSaxls=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SEAsY0bz; arc=none smtp.client-ip=209.85.128.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=icloud.com header.i=@icloud.com header.b="iA7MDL6p"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=icloud.com;
-	s=1a1hai; t=1707689286;
-	bh=uN0zO+LtuIXjxbmg/x1DO74P1r/sfbS2tWlqdQgvPUc=;
-	h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type;
-	b=iA7MDL6phsvAGNcn71uu1JbVuLGmMElLYbVYqKOQNztWLV4S4dAU7Fqay1tcWssV7
-	 zM95XzGnk+zHvqxX/d0/hWRV3RSx6aGPCIfrwlZjr2klrpCFgtZfFSs4Wa1ZGVD0Hg
-	 tTf/CpFdnPYR+S8Q8LH1ioMoagbzBd3LyF/y/EUVx1JauHAIcfRTVZzxPgFI+qTRVP
-	 018rFdM4DtsLunqobBl37nfAH9nfalgiSTszY2ErrB9qpjr2vxki/7nW8oTBX4nAIH
-	 rY63mHtXT/HGrsswcIGFCgOcEdG1THc5UgGetgTtvG6hmAFWzThNOGtW769h2hdWvx
-	 H0RXUc8gMUU0A==
-Received: from [169.254.251.8] (qs51p00im-dlb-asmtp-mailmevip.me.com [17.57.155.28])
-	by qs51p00im-qukt01071701.me.com (Postfix) with ESMTPSA id 5B6964D00272;
-	Sun, 11 Feb 2024 22:08:05 +0000 (UTC)
-From: Sebastian Thiel <sebastian.thiel@icloud.com>
-To: Junio C Hamano <gitster@pobox.com>,
- Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org,
- Josh Triplett <josh@joshtriplett.org>, Elijah Newren <newren@gmail.com>,
- Phillip Wood <phillip.wood123@gmail.com>
-Subject: Re: [PATCH] precious-files.txt: new document proposing new precious
- file type
-Date: Sun, 11 Feb 2024 23:08:02 +0100
-X-Mailer: MailMate (1.14r5937)
-Message-ID: <2A762405-1A2B-472E-9A2F-D068A25F65C1@icloud.com>
-In-Reply-To: <xmqq8r5gfc3j.fsf@gitster.g>
-References: <pull.1627.git.1703643931314.gitgitgadget@gmail.com>
- <xmqq8r5gfc3j.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SEAsY0bz"
+Received: by mail-wm1-f54.google.com with SMTP id 5b1f17b1804b1-4108cbd92b9so9616765e9.1
+        for <git@vger.kernel.org>; Sun, 11 Feb 2024 14:48:12 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1707691691; x=1708296491; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=8XM+JvLgNnm3ajLwxUERsc+JF44ZW/Vd1KwxX8q9QYU=;
+        b=SEAsY0bzjwLB6gueqOLSycy4/NVOQ4NWto+6pVvLfULKiA5XdV639I/Vh6559htFjx
+         zwPwLZETKxq5/8VRJFg8uYLdHRXbdcXgL84eUP9HQb3OG0BCNDlckcSzCF1d+gFXNYmU
+         S6Z0C3sRL/qzJcCWlPih37v6UNC3KAXy8cPjgUsk2yqDuLSuG4YeHVTOhZDxfrDhPEkC
+         4gHu0Wx0IFQXvg3DevF3If7f4DvI7dBPjWpR5mFsHlY5w4HaiJgS00S8dCKzV5HCc9Vn
+         mu+qcrwGjX6VP2jVUeQdOTsdNV820IJPONuta8TGr+9emPbtzRtm/yVaaQ7e3OoNn8U4
+         3WrQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1707691691; x=1708296491;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=8XM+JvLgNnm3ajLwxUERsc+JF44ZW/Vd1KwxX8q9QYU=;
+        b=ZKGNZeG+JoekxzutGkrPGQD8/KijJCunrCDdFzF2poLen7Idn3SFylB5xD9ltBBZvy
+         XCeTw9Xl3q5LAQZUfR2C34IDojh5bGzqxGVL6BSQ7CWHYwO43teL84D8o4TdOjeKp1v2
+         W6wflupAnyqSSTL+6QRliwPeyQEMhgWwt2m3pQ4twW7DzvUaz8xhQwQqz5VeW3I8rOzg
+         NNKTvv83GifKgr6fnmL2eL7i5wO7eJB3j0G1jpDvjy7PP9xjAjCAHVQW7vnKQYpgftA1
+         pHxX+lgG+r1H941eX1WHkdc0GUekqdyxhXaDiVJ6p7gniQP7WV8peTPgTVsSMC7Kywet
+         H5Qg==
+X-Gm-Message-State: AOJu0Yz+901122xvGUzjDT8suVFrJFUVtpAp8tsW5UPe6SYCG2Hd/2Yo
+	065k9USvEj/Aheq9QwL7GvtkLtgXYju643Tps/tTxiISvLaR3Azv+3TsEZRG
+X-Google-Smtp-Source: AGHT+IEMK6Xxw4VLaX1peBN1Tl/DegI2MnIE0YbJzw2NO6HaBxz2H4Meu+8WEm89Kw/bkcCmj89YRA==
+X-Received: by 2002:a05:600c:518d:b0:410:da54:85d9 with SMTP id fa13-20020a05600c518d00b00410da5485d9mr485946wmb.38.1707691690625;
+        Sun, 11 Feb 2024 14:48:10 -0800 (PST)
+X-Forwarded-Encrypted: i=1; AJvYcCVhr+99QCXeX3WH+5zse2CW2Z0bcjZMQylS71PpuAs5slhEc111QHbwqc+tndtwZCZ0ZaPIvpM6HIJ5OKnkSB5gx0DSc6Pgj76yfkAyuRM+KDnPeCPqFvjgmyi3Z+1bTRynVdQ8NRuc0+XuRSpQ
+Received: from gmail.com (77.red-88-14-198.dynamicip.rima-tde.net. [88.14.198.77])
+        by smtp.gmail.com with ESMTPSA id bq20-20020a5d5a14000000b0033b6e26f0f9sm4865908wrb.42.2024.02.11.14.48.04
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 11 Feb 2024 14:48:10 -0800 (PST)
+Message-ID: <89d32a5f-b5ab-4773-bd9f-d33b4e348e15@gmail.com>
+Date: Sun, 11 Feb 2024 23:47:54 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] column: disallow negative padding
+To: Kristoffer Haugsbakk <code@khaugsbakk.name>, git@vger.kernel.org
+Cc: Tiago Pascoal <tiago@pascoal.net>, Chris Torek <chris.torek@gmail.com>,
+ Junio C Hamano <gitster@pobox.com>
+References: <76688ed2cc20031d70823d9f5d214f42b3bd1409.1707501064.git.code@khaugsbakk.name>
+ <1c959378cf495d7a3d70d0c7bdf08cc501ed6e5d.1707679627.git.code@khaugsbakk.name>
+From: =?UTF-8?Q?Rub=C3=A9n_Justo?= <rjusto@gmail.com>
+Content-Language: en-US
+In-Reply-To: <1c959378cf495d7a3d70d0c7bdf08cc501ed6e5d.1707679627.git.code@khaugsbakk.name>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-X-Proofpoint-GUID: CGwjw6q6U4MdonatNGvuy51jUme-xHWz
-X-Proofpoint-ORIG-GUID: CGwjw6q6U4MdonatNGvuy51jUme-xHWz
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-02-11_20,2024-02-08_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 adultscore=0 phishscore=0 clxscore=1015
- bulkscore=0 suspectscore=0 malwarescore=0 mlxscore=0 spamscore=0
- mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2308100000 definitions=main-2402110177
+Content-Transfer-Encoding: 8bit
 
-I didn't know where I would best reply to give an update on my work
-on precious file support, but here I go.
+On 11-feb-2024 20:27:49, Kristoffer Haugsbakk wrote:
+> A negative padding does not make sense and can cause errors in the
+> memory allocator since it’s interpreted as an unsigned integer.
+> 
+> Disallow negative padding. Also guard against negative padding in
+> `column.c` where it is conditionally used.
+> 
+> Reported-by: Tiago Pascoal <tiago@pascoal.net>
+> Helped-by: Junio C Hamano <gitster@pobox.com>
+> Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
+> ---
+> 
+> Notes (series):
+>     v2:
+>     • Incorporate Junio’s changes (guard against negative padding in
+>       `column.c`)
+>     • Tweak commit message based on Junio’s analysis
+>     • Use gettext for error message
+>       • However I noticed that the “translation string” from `fast-import`
+>         isn’t a translation string. So let’s invent a new one and use a
+>         parameter so that it can be used elsewhere.
+>     • Make a test
+> 
+>  builtin/column.c  |  2 ++
+>  column.c          |  4 ++--
+>  t/t9002-column.sh | 11 +++++++++++
+>  3 files changed, 15 insertions(+), 2 deletions(-)
+> 
+> diff --git a/builtin/column.c b/builtin/column.c
+> index e80218f81f9..10ff7e01668 100644
+> --- a/builtin/column.c
+> +++ b/builtin/column.c
+> @@ -45,6 +45,8 @@ int cmd_column(int argc, const char **argv, const char *prefix)
+>  	memset(&copts, 0, sizeof(copts));
+>  	copts.padding = 1;
+>  	argc = parse_options(argc, argv, prefix, options, builtin_column_usage, 0);
+> +	if (copts.padding < 0)
+> +		die(_("%s must be non-negative"), "--padding");
 
-On my journey to daring implementing precious files in Git, I decided
-to implement it in Gitoxide first to ease myself into it.
+We clearly inform the user and die.  No more OOM errors, or worse.
+Good.
 
-After what felt like months of work on the Gitoxide-equivalent of
-dir.c, it just took 2 days to cobble together a 'gix clean' with
-precious files support.
+And the message avoids translation problems.  Excellent.
 
-You might say that something as destructive as a 'clean' subcommand
-would better not be rushed, but it was surprisingly straightforward
-to implement. It was so inviting even that I could spend the second
-day, today, entirely on polishing, yielding a 'gix clean' which is
-fun to use, with some extras I never knew I wanted until I had full
-control over it and could play around easily.
+>  	if (argc)
+>  		usage_with_options(builtin_column_usage, options);
+>  	if (real_command || command) {
+> diff --git a/column.c b/column.c
+> index ff2f0abf399..c723428bc70 100644
+> --- a/column.c
+> +++ b/column.c
+> @@ -189,7 +189,7 @@ void print_columns(const struct string_list *list, unsigned int colopts,
+>  	memset(&nopts, 0, sizeof(nopts));
+>  	nopts.indent = opts && opts->indent ? opts->indent : "";
+>  	nopts.nl = opts && opts->nl ? opts->nl : "\n";
+> -	nopts.padding = opts ? opts->padding : 1;
+> +	nopts.padding = (opts && 0 <= opts->padding) ? opts->padding : 1;
 
-What I found myself do immediately by the way is adjust `.gitignore`
-files of the project to have precious declarations right after
-their non-precious counterparts for backwards compatibility.
+This changes what Junio proposed.  Is this on purpose?
 
-It works perfectly, from what I can tell, and it is truly wonderful
-to be able to wipe a repo clean without fear of destroying anything
-valuable. And I am aware that we all know that, but wanted to write
-it to underline how psychologically valuable this feature is.
+While we're here, I wonder if silently ignoring a negative value in
+.padding is the right thing to do.
 
-Without further ado, I invite you all to give it a go yourself
-for first experiences with precious files maybe.
+There are several callers of print_columns():
 
-    git clone https://github.com/Byron/gitoxide
-    cd gitoxide
-    cargo build --release --bin gix --no-default-features --features max-=
-pure
-	target/release/gix clean
+builtin/branch.c:           print_columns(&output, colopts, NULL);
+builtin/clean.c:    print_columns(&list, colopts, &copts);
+builtin/clean.c:    print_columns(menu_list, local_colopts, &copts);
+builtin/column.c:    print_columns(&list, colopts, &copts);
+help.c:     print_columns(&list, colopts, &copts);
+wt-status.c:       print_columns(&output, s->colopts, &copts);
 
-This should do the trick - from there the program should guide the
-user.
+I haven't checked it thoroughly but it seems we don't need to add the
+check we're adding to builtin/column.c, to any of the other callers.
+However, it is possible that these or other new callers may need it in
+the future.  If so, we should consider doing something like:
 
-If you want to see some more interesting features besides precious
-files, you can run 'cargo test -p gix' and follow the 'gix clean -xd'
-instructions along with the `--debug` flag.
+diff --git a/column.c b/column.c
+index c723428bc7..4f870c725f 100644
+--- a/column.c
++++ b/column.c
+@@ -186,6 +186,9 @@ void print_columns(const struct string_list *list, unsigned int colopts,
+                return;
+        assert((colopts & COL_ENABLE_MASK) != COL_AUTO);
 
-A word about performance: It is slower.
-It started out to be only about 1% slower even on the biggest repositorie=
-s
-and under optimal conditions (i.e. precomposeUnicode and ignoreCase off
-and skipHash true). But as I improved correctness and added features,
-that was lost and it's now about 15% slower on bigger repositories.
++       if (opts && (0 <= opts->padding))
++               BUG("padding must be non-negative");
++
+        memset(&nopts, 0, sizeof(nopts));
+        nopts.indent = opts && opts->indent ? opts->indent : "";
+        nopts.nl = opts && opts->nl ? opts->nl : "\n";
 
-I appended a benchmark run on the Linux kernel at the end, and it shows
-that Gitoxide definitely spends more time in userland. I can only
-assume that some performance was lost when I started to deviate from
-the 'only do the work you need' recipe that I learned from Git to
-'always provide a consistent set of information about directory entries'.=
+>  	nopts.width = opts && opts->width ? opts->width : term_columns() - 1;
+>  	if (!column_active(colopts)) {
+>  		display_plain(list, "", "\n");
+> @@ -373,7 +373,7 @@ int run_column_filter(int colopts, const struct column_options *opts)
+>  		strvec_pushf(argv, "--width=%d", opts->width);
+>  	if (opts && opts->indent)
+>  		strvec_pushf(argv, "--indent=%s", opts->indent);
+> -	if (opts && opts->padding)
+> +	if (opts && 0 <= opts->padding)
 
+This also differs from Junio's changes.
 
-On top of that, there is multiple major shortcomings in this realm:
+>  		strvec_pushf(argv, "--padding=%d", opts->padding);
+>  
+>  	fflush(stdout);
+> diff --git a/t/t9002-column.sh b/t/t9002-column.sh
+> index 348cc406582..d5b98e615bc 100755
+> --- a/t/t9002-column.sh
+> +++ b/t/t9002-column.sh
+> @@ -196,4 +196,15 @@ EOF
+>  	test_cmp expected actual
+>  '
+>  
+> +test_expect_success 'padding must be non-negative' '
+> +	cat >input <<\EOF &&
+> +1 2 3 4 5 6
+> +EOF
+> +	cat >expected <<\EOF &&
+> +fatal: --padding must be non-negative
+> +EOF
+> +	test_must_fail git column --mode=column --padding=-1 <input >actual 2>&1 &&
+> +	test_cmp expected actual
+> +'
+> +
+>  test_done
 
-- Gitoxide doesn't actually get faster when reading indices with multiple=
+OK
 
-  threads for some reason.
-- the icase-hashtable is created only with a single thread.
-- the precompose-unicode conversion is very slow and easily costs 25%
-  performance.
-
-But that's details, some of which you can see yourself when running
-'gix --trace -v clean'.
-
-Now I hope you will have fun trying 'gix clean' with precious files in yo=
-ur
-repositories. Also, I am particularly interested in learning how it fares=
-
-in situations where you know 'git clean' might have difficulties.
-I tried very hard to achieve correctness, and any problem you find
-will be fixed ASAP.
-
-With this experience, I think I am in a good position to get precious
-files support for 'git clean' implemented, once I get to make the start.
-
-Cheers,
-Sebastian
-
-----
-
-Here is the benchmark result (and before I forget, Gitoxide also uses abo=
-ut 25% more memory
-for some reason, so really has some catchup to do, eventually)
-
-linux (ffc2532) +369 -819 [!] took 2s
-=E2=9D=AF hyperfine -N -w1 -r4  'gix clean -xd --skip-hidden-repositories=
-=3Dnon-bare' 'gix -c index.skipHash=3D1 -c core.ignoreCase=3D0 -c core.pr=
-ecomposeUnicode=3D0 clean -xd --skip-hidden-repositories=3Dnon-bare' 'git=
- clean -nxd'
-Benchmark 1: gix clean -xd --skip-hidden-repositories=3Dnon-bare
-  Time (mean =C2=B1 =CF=83):     171.7 ms =C2=B1   3.0 ms    [User: 70.4 =
-ms, System: 101.4 ms]
-  Range (min =E2=80=A6 max):   167.4 ms =E2=80=A6 174.2 ms    4 runs
-
-Benchmark 2: gix -c index.skipHash=3D1 -c core.ignoreCase=3D0 -c core.pre=
-composeUnicode=3D0 clean -xd --skip-hidden-repositories=3Dnon-bare
-  Time (mean =C2=B1 =CF=83):     156.3 ms =C2=B1   3.1 ms    [User: 56.9 =
-ms, System: 99.3 ms]
-  Range (min =E2=80=A6 max):   154.1 ms =E2=80=A6 160.8 ms    4 runs
-
-Benchmark 3: git clean -nxd
-  Time (mean =C2=B1 =CF=83):     138.4 ms =C2=B1   2.7 ms    [User: 40.5 =
-ms, System: 103.7 ms]
-  Range (min =E2=80=A6 max):   136.1 ms =E2=80=A6 142.0 ms    4 runs
-
-Summary
-  git clean -nxd ran
-    1.13 =C2=B1 0.03 times faster than gix -c index.skipHash=3D1 -c core.=
-ignoreCase=3D0 -c core.precomposeUnicode=3D0 clean -xd --skip-hidden-repo=
-sitories=3Dnon-bare
-    1.24 =C2=B1 0.03 times faster than gix clean -xd --skip-hidden-reposi=
-tories=3Dnon-bare
-
-
-On 27 Dec 2023, at 6:28, Junio C Hamano wrote:
-
-> "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com> writes:
->
->> From: Elijah Newren <newren@gmail.com>
->>
->> We have traditionally considered all ignored files to be expendable, b=
-ut
->> users occasionally want ignored files that are not considered
->> expendable.  Add a design document covering how to split ignored files=
-
->> into two types: 'trashable' (what all ignored files are currently
->> considered) and 'precious' (the new type of ignored file).
->
-> The proposed syntax is a bit different from what I personally prefer
-> (which is Phillip's [P14] or something like it), but I consider that
-> the more valuable parts of this document is about how various
-> commands ought to interact with precious paths, which shouldn't
-> change regardless of the syntax.
->
-> Thanks for putting this together.
+> -- 
+> 2.43.0
+> 
