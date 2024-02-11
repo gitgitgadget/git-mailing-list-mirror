@@ -1,99 +1,129 @@
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+Received: from out4-smtp.messagingengine.com (out4-smtp.messagingengine.com [66.111.4.28])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A34036113
-	for <git@vger.kernel.org>; Sun, 11 Feb 2024 17:05:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B5D71DFCF
+	for <git@vger.kernel.org>; Sun, 11 Feb 2024 17:08:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=66.111.4.28
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707671145; cv=none; b=B/d64c5gCIu60TGisZWZCnYxZ58gm5S7neFGflofq0FfcYnlxU5orrxHnYGpqBMxhu5gsevgpP+Pytam7Pp1KyDZRhgVUZRPpkzeJOcIjUGKzMpk4buiL045Q9vH045VPrSV602gha8P2kUqedwytREq+HTJj/S0wgakcG7vPU8=
+	t=1707671314; cv=none; b=MEuCVGB7DvjbcKHSt8tLpBd+5/El7xFpifskgEtwEEPk7IVqTAdYg7afMfg7KrXr1AX6QOCTDEKb25IrmVsX2+fZ2guZaLemuDv6P/wn5+dMsZ1iXDYYmcAW5ypmbKgMtyOu+ehc7Gat5aGngeEx9P9jzrU5Le4Vyq1gSOahG1A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707671145; c=relaxed/simple;
-	bh=c7z6tQr6fb8eC13BkuV5Hx3zifbt/oBVqHFDiJjdwlA=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=dEWEeMU3kUa9WJK8+G1nqrI1EB0zXQxB4lXXJyWlvMVfDVZ0NFBrpF2ZAIUWaBJ1Ia+mstPwXYzjiCj1ubEt8O96BJQuFbdgUZ1Q7FxUuZF1gdwZEQluiLq8FOGgC69t4e4h5AaaU2ypKli69u3YnMS0sbdmHvBzZMWuT/ErRu8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=dwdM7g/l; arc=none smtp.client-ip=64.147.108.71
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1707671314; c=relaxed/simple;
+	bh=KAAJgQl/Eil8BLWJShvIJZigpDVHRMO1EYdqe0Eh72U=;
+	h=MIME-Version:Message-Id:In-Reply-To:References:Date:From:To:Cc:
+	 Subject:Content-Type; b=ILop73H9XQbbYTncYE1OhfClqVOQH3M1UmCo7RMDDJ3C8URLoQbo6ejywvsZauHOGrtNjb8+UE48WOkurD2EU+DTn0hWMNhSkdTZzfbOAnXPb5+wshNmYexGLUpX2Iz3KEo8gg+ugOFpS0Dy87h3QRss2kpyCfWst9A54+4U9Nk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=khaugsbakk.name; spf=pass smtp.mailfrom=khaugsbakk.name; dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b=DdCrEPT9; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=sskiz4Pe; arc=none smtp.client-ip=66.111.4.28
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=khaugsbakk.name
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=khaugsbakk.name
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="dwdM7g/l"
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id A0CE91D5870;
-	Sun, 11 Feb 2024 12:05:42 -0500 (EST)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=c7z6tQr6fb8eC13BkuV5Hx3zifbt/oBVqHFDiJ
-	jdwlA=; b=dwdM7g/lq0ii7yJSM8aguRxeykesFTcyVcfelpDLS4JqMRpbcjYv8h
-	fbxuVzCTMCz8g8KTv25DFWJFjooQBay84kWQga0+JHdvg9DQ7Y4CqTcjovD1QnQt
-	mYrxSpvP8f3nsK9DMBtn2jKhzSCpMEIbKtglv8p/9fZurAIceynyU=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 97D991D586F;
-	Sun, 11 Feb 2024 12:05:42 -0500 (EST)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.165.85])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id EE7F91D586E;
-	Sun, 11 Feb 2024 12:05:41 -0500 (EST)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Phillip Wood <phillip.wood123@gmail.com>
-Cc: Vegard Nossum <vegard.nossum@oracle.com>,  Kristoffer Haugsbakk
- <code@khaugsbakk.name>,  git@vger.kernel.org,  Jonathan Nieder
- <jrnieder@gmail.com>
-Subject: Re: [PATCH 2/2] sequencer: unset GIT_CHERRY_PICK_HELP for 'exec'
- commands
-In-Reply-To: <4073b764-ab6a-4b4b-a8a3-2e898620b2f5@gmail.com> (Phillip Wood's
-	message of "Sun, 11 Feb 2024 11:11:52 +0000")
-References: <0adb1068-ef10-44ed-ad1d-e0927a09245d@gmail.com>
-	<20240205141335.762947-1-vegard.nossum@oracle.com>
-	<ebe188e5-7289-4f7b-b845-d59a47cd06fe@app.fastmail.com>
-	<xmqqy1bymru0.fsf@gitster.g>
-	<b3ec5d0b-ac17-4d1e-a17d-d5adfbfc6ccf@oracle.com>
-	<xmqqcytal01i.fsf@gitster.g>
-	<4e6d503a-8564-4536-82a7-29c489f5fec3@gmail.com>
-	<xmqq8r3wcjq2.fsf@gitster.g>
-	<ae8d96b7-93b0-4460-b7ed-ffebaddd6f97@oracle.com>
-	<eaf511ff-f9e0-47ac-ae2e-3de0efa928dd@gmail.com>
-	<xmqqv86yoot3.fsf@gitster.g>
-	<4073b764-ab6a-4b4b-a8a3-2e898620b2f5@gmail.com>
-Date: Sun, 11 Feb 2024 09:05:40 -0800
-Message-ID: <xmqq8r3r9biz.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b="DdCrEPT9";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="sskiz4Pe"
+Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
+	by mailout.nyi.internal (Postfix) with ESMTP id DD7D55C0066;
+	Sun, 11 Feb 2024 12:08:30 -0500 (EST)
+Received: from imap49 ([10.202.2.99])
+  by compute1.internal (MEProxy); Sun, 11 Feb 2024 12:08:30 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=khaugsbakk.name;
+	 h=cc:cc:content-transfer-encoding:content-type:content-type
+	:date:date:from:from:in-reply-to:in-reply-to:message-id
+	:mime-version:references:reply-to:subject:subject:to:to; s=fm2;
+	 t=1707671310; x=1707757710; bh=GMQkQwfPvmV76b2aeyFULH0qNJMrMLem
+	ytIgCW61hpI=; b=DdCrEPT9l/iwGafo8HTx6RxtKglhDHTSu+B+2o0OOSZyExhn
+	cJlf/8h1/fwEX7wWAc8/stt6LuH2IUo2XDpiogriRiG6fFVQe8gHGUL7Yv3JQ1rL
+	+S2X7Fz7KOMLYBtlquIwhtgJSLcb5LbBvfIP1tLg+L09EQ+9liAj8zwERkj1u31f
+	3sMBapbfIlKGdZ4Aylz8y9D23XDLVKJqYP3v6apfqvzWiSrjbvKMbHxDrjh77hgM
+	AqFFrHpU3YSEtVxcoZKztnANNfWgQG3UYfoMLE13W6QsCWD8zAGZX6zOMsECdZwg
+	sw+zhuod1T6AdBJmLTJrNFSTh+GdcSOsDb3g8Q==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1707671310; x=
+	1707757710; bh=GMQkQwfPvmV76b2aeyFULH0qNJMrMLemytIgCW61hpI=; b=s
+	skiz4PegHXvCA5tJEOoKU8twv6M3PLa2eqRkLuRDMRCitlkZiUZSg1Z3CD4qffTX
+	6yCC/ntxK8Tr/AuZxJGLA23Zqo72jOGA+LWXkzVzN+YkYZE/5QrFSzwH2IxEntDB
+	QoJkSBMWz6q0i3TsVPFOk2bFJhCClYh4lZbkQD4vNbSaDjwkyIPc4rqu2eWhdjT/
+	hpxMvoCX1ozcbHk6QswOdZUKHX/gEYa0o3jXY40vDgzduUqk7nkrbwGZ3KRDaczq
+	YNCwJai1JsOqFIFxarlWIxEOSzdv9/OyhAdkZ2+25mOlONinYR41+tzxr5Mt0eOa
+	WP7rDNqhBbbWzMOr2DEqQ==
+X-ME-Sender: <xms:Dv_IZRDp1xhH4ZJWmwB2mlcCXF9N4blWppcg4BwsHwBpQAZYhIQnVpw>
+    <xme:Dv_IZfi3CJLv_kulxWOYMFGHmxJHx-OoI3D-VVoJO5IK0FmqGHPXfZRSB75p4IWZ0
+    GozSqMaTqIXcM2HEQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledruddugddutddtucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+    cujfgurhepofgfggfkjghffffhvfevufgtgfesthhqredtreerjeenucfhrhhomhepfdfm
+    rhhishhtohhffhgvrhcujfgruhhgshgsrghkkhdfuceotghouggvsehkhhgruhhgshgsrg
+    hkkhdrnhgrmhgvqeenucggtffrrghtthgvrhhnpeehgeffhfevhedvleeuhfeukedugefh
+    tdegudejtdfffffhlefghfejhfffudejhfenucffohhmrghinheptgholhhumhhnrdgtfi
+    enucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpegtohgu
+    vgeskhhhrghughhssggrkhhkrdhnrghmvg
+X-ME-Proxy: <xmx:Dv_IZcl8_6K2YhYzhgcgETCkwwjg0zIDzkYPDEEl9tNBvDGqei2giw>
+    <xmx:Dv_IZbwjFI0OBNLMA7ZdQGcKwmCfgxz6_k5_Vv6Ce780plilY7DC5A>
+    <xmx:Dv_IZWTjQV8PaBwEr5MYfocxP-EBZ2Rx4CvaWLmML3quF5pupj1-Pw>
+    <xmx:Dv_IZZJqTbvi5rviQ5vWgUx6vTNm0Pv1yDi3S6K_hunSAIlCqWI4TA>
+Feedback-ID: i2671468f:Fastmail
+Received: by mailuser.nyi.internal (Postfix, from userid 501)
+	id 8BAD715A0092; Sun, 11 Feb 2024 12:08:30 -0500 (EST)
+X-Mailer: MessagingEngine.com Webmail Interface
+User-Agent: Cyrus-JMAP/3.11.0-alpha0-144-ge5821d614e-fm-20240125.002-ge5821d61
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- C99F75A4-C8FF-11EE-AB9A-25B3960A682E-77302942!pb-smtp2.pobox.com
+Message-Id: <3380df68-83fb-417b-a490-71614edc342f@app.fastmail.com>
+In-Reply-To: <xmqqttmhfrko.fsf@gitster.g>
+References: 
+ <AS8P189MB21977ACC4866D9836DA29082BC4B2@AS8P189MB2197.EURP189.PROD.OUTLOOK.COM>
+ <571fb353-af1d-4cc9-a2c2-197296685623@app.fastmail.com>
+ <xmqqttmhfrko.fsf@gitster.g>
+Date: Sun, 11 Feb 2024 18:08:10 +0100
+From: "Kristoffer Haugsbakk" <code@khaugsbakk.name>
+To: "Junio C Hamano" <gitster@pobox.com>
+Cc: "Tiago Pascoal" <tiago@pascoal.net>,
+ "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: git column fails (or crashes) if padding is negative
+Content-Type: text/plain;charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-Phillip Wood <phillip.wood123@gmail.com> writes:
-
-> Hi Junio
+On Fri, Feb 9, 2024, at 18:57, Junio C Hamano wrote:
+>  builtin/column.c | 2 ++
+>  column.c         | 4 ++--
+>  2 files changed, 4 insertions(+), 2 deletions(-)
 >
-> On 08/02/2024 17:20, Junio C Hamano wrote:
->> Phillip Wood <phillip.wood123@gmail.com> writes:
->> 
->>> I think that typically for small suggestions like that we just add a
->>> Helped-by: trailer but feel free to add my SOB if you want.
->> Thanks, both.  Here is what I assembled from the pieces.
->> ----- >8 --------- >8 --------- >8 --------- >8 -----
->> From: Vegard Nossum <vegard.nossum@oracle.com>
->> Date: Fri, 2 Feb 2024 10:18:50 +0100
->> Subject: [PATCH] sequencer: unset GIT_CHERRY_PICK_HELP for 'exec' commands
->> Running "git cherry-pick" as an x-command in the rebase plan loses
->> the original authorship information.
->
-> It might be worth explaining why this happens
->
-> This is because rebase sets the GIT_CHERRY_PICK_HELP environment
-> variable to customize the advice given to users when there are
-> conflicts which causes the sequencer to remove CHERRY_PICK_HEAD.
+> [=E2=80=A6]
+> diff --git c/column.c w/column.c
+> index ff2f0abf39..9cc703832a 100644
+> --- c/column.c
+> +++ w/column.c
+> @@ -189,7 +189,7 @@ void print_columns(const struct string_list *list,
+> unsigned int colopts,
+>  	memset(&nopts, 0, sizeof(nopts));
+>  	nopts.indent =3D opts && opts->indent ? opts->indent : "";
+>  	nopts.nl =3D opts && opts->nl ? opts->nl : "\n";
+> -	nopts.padding =3D opts ? opts->padding : 1;
+> +	nopts.padding =3D (opts && 0 < opts->padding) ? opts->padding : 1;
 
-True.  I'd prefer to see the original submitter assemble the pieces
-and come up with the final version, rather than me doing so.
+If these two are meant to check the same condition as in
+`builtin/column.c`, shouldn=E2=80=99t it be `0 <=3D opts->padding`?
 
-Thanks.
+>  	nopts.width =3D opts && opts->width ? opts->width : term_columns() -=
+ 1;
+>  	if (!column_active(colopts)) {
+>  		display_plain(list, "", "\n");
+> @@ -373,7 +373,7 @@ int run_column_filter(int colopts, const struct
+> column_options *opts)
+>  		strvec_pushf(argv, "--width=3D%d", opts->width);
+>  	if (opts && opts->indent)
+>  		strvec_pushf(argv, "--indent=3D%s", opts->indent);
+> -	if (opts && opts->padding)
+> +	if (opts && 0 < opts->padding)
+>  		strvec_pushf(argv, "--padding=3D%d", opts->padding);
+>
+>  	fflush(stdout);
+
+--=20
+Kristoffer Haugsbakk
+
