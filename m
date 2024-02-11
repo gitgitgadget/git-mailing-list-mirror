@@ -1,121 +1,99 @@
-Received: from mout.web.de (mout.web.de [212.227.17.11])
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D98E12837D
-	for <git@vger.kernel.org>; Sun, 11 Feb 2024 16:59:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.11
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A34036113
+	for <git@vger.kernel.org>; Sun, 11 Feb 2024 17:05:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707670797; cv=none; b=CA55Io2NwtK8V+mEaw8PefrMN7mOW9UtTx7OKxlZFK2jGTnuvh8fPYIw+jAy4oCi2xUIoYbaMZx5h1PiD4G/as27Ztc57EUd/loqK8wdZGxEADck3Bqnf1DJb+RgnXVSGfOgpWcqKMVm/fVoQ0f8Qq7lfrXDN02Z2zZeTIBdlgQ=
+	t=1707671145; cv=none; b=B/d64c5gCIu60TGisZWZCnYxZ58gm5S7neFGflofq0FfcYnlxU5orrxHnYGpqBMxhu5gsevgpP+Pytam7Pp1KyDZRhgVUZRPpkzeJOcIjUGKzMpk4buiL045Q9vH045VPrSV602gha8P2kUqedwytREq+HTJj/S0wgakcG7vPU8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707670797; c=relaxed/simple;
-	bh=r54PbG61BShlj0vvVexQGmz39QfGCvp5LeS/ReW9qyI=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=EW9U59QW2lpaEKNiJRrh41Z6HuGq4H9It7aoIFarqnv15jOZGorXpOTs0Hng8DaRo998Qbo4bvx/BfZt6n6FrjZlx4+iaOcx0jlfcP4xPZ6XUy7equAo6fJobGjm5WrYpZTQM0kOllQAKN28X5ebSIcUeJh/qGT6b5HTjdAh4RI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=tboegi@web.de header.b=P29E1VB2; arc=none smtp.client-ip=212.227.17.11
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
+	s=arc-20240116; t=1707671145; c=relaxed/simple;
+	bh=c7z6tQr6fb8eC13BkuV5Hx3zifbt/oBVqHFDiJjdwlA=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=dEWEeMU3kUa9WJK8+G1nqrI1EB0zXQxB4lXXJyWlvMVfDVZ0NFBrpF2ZAIUWaBJ1Ia+mstPwXYzjiCj1ubEt8O96BJQuFbdgUZ1Q7FxUuZF1gdwZEQluiLq8FOGgC69t4e4h5AaaU2ypKli69u3YnMS0sbdmHvBzZMWuT/ErRu8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=dwdM7g/l; arc=none smtp.client-ip=64.147.108.71
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=web.de header.i=tboegi@web.de header.b="P29E1VB2"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de; s=s29768273;
-	t=1707670782; x=1708275582; i=tboegi@web.de;
-	bh=r54PbG61BShlj0vvVexQGmz39QfGCvp5LeS/ReW9qyI=;
-	h=X-UI-Sender-Class:Date:From:To:Cc:Subject:References:
-	 In-Reply-To;
-	b=P29E1VB2uZZppw1A1AQuUDT38Rrh1Ix8EB9h8o6e92BiQSsn05e29WeeVSGXNdtT
-	 uk6K9GXzZoz17ffkL80Pd74KEj6z5V0tR4WTty6x+4mzZxeVNjP9xORneIeQZ95lx
-	 mYT4qdEtAldpq5O939PLcXTKyj4lV2V6LFsfXDEdRmTC9shVXqYTcT5vGw1Dyk6Mj
-	 3YvfIByUyWPNm4Bu1L5P8xGKeQr5AYS6xyK39pIrwjahsrf2mdsVCoRbHwSP0avtL
-	 VgaT8OY+ZWWw8SiuF1UrfR+zFWefdS6No/xSo8aYyHRmyNZwF2Ob7wdHkBeI8tK6o
-	 GzYC9gkb79FRhX3akQ==
-X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
-Received: from localhost ([195.198.253.159]) by smtp.web.de (mrweb105
- [213.165.67.124]) with ESMTPSA (Nemesis) id 1MqIFF-1rDqqT0pKF-00nRlJ; Sun, 11
- Feb 2024 17:59:42 +0100
-Date: Sun, 11 Feb 2024 17:59:41 +0100
-From: Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	K_V <zinen2@gmail.com>, git@vger.kernel.org
-Subject: Re: git gc changes ownerships of files linux
-Message-ID: <20240211165941.GB28699@tb-raspi4>
-References: <CABkRduQNdgdF8WhZadP5hyYvpEWgP_AE8=qzxNiRNA71bdJcYQ@mail.gmail.com>
- <20240211151455.GA27103@tb-raspi4>
- <ZcjnuSAZiNHvA5h1@tapette.crustytoothpaste.net>
- <20240211154345.GA28699@tb-raspi4>
- <xmqqcyt39cju.fsf@gitster.g>
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="dwdM7g/l"
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id A0CE91D5870;
+	Sun, 11 Feb 2024 12:05:42 -0500 (EST)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=c7z6tQr6fb8eC13BkuV5Hx3zifbt/oBVqHFDiJ
+	jdwlA=; b=dwdM7g/lq0ii7yJSM8aguRxeykesFTcyVcfelpDLS4JqMRpbcjYv8h
+	fbxuVzCTMCz8g8KTv25DFWJFjooQBay84kWQga0+JHdvg9DQ7Y4CqTcjovD1QnQt
+	mYrxSpvP8f3nsK9DMBtn2jKhzSCpMEIbKtglv8p/9fZurAIceynyU=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 97D991D586F;
+	Sun, 11 Feb 2024 12:05:42 -0500 (EST)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.165.85])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id EE7F91D586E;
+	Sun, 11 Feb 2024 12:05:41 -0500 (EST)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Phillip Wood <phillip.wood123@gmail.com>
+Cc: Vegard Nossum <vegard.nossum@oracle.com>,  Kristoffer Haugsbakk
+ <code@khaugsbakk.name>,  git@vger.kernel.org,  Jonathan Nieder
+ <jrnieder@gmail.com>
+Subject: Re: [PATCH 2/2] sequencer: unset GIT_CHERRY_PICK_HELP for 'exec'
+ commands
+In-Reply-To: <4073b764-ab6a-4b4b-a8a3-2e898620b2f5@gmail.com> (Phillip Wood's
+	message of "Sun, 11 Feb 2024 11:11:52 +0000")
+References: <0adb1068-ef10-44ed-ad1d-e0927a09245d@gmail.com>
+	<20240205141335.762947-1-vegard.nossum@oracle.com>
+	<ebe188e5-7289-4f7b-b845-d59a47cd06fe@app.fastmail.com>
+	<xmqqy1bymru0.fsf@gitster.g>
+	<b3ec5d0b-ac17-4d1e-a17d-d5adfbfc6ccf@oracle.com>
+	<xmqqcytal01i.fsf@gitster.g>
+	<4e6d503a-8564-4536-82a7-29c489f5fec3@gmail.com>
+	<xmqq8r3wcjq2.fsf@gitster.g>
+	<ae8d96b7-93b0-4460-b7ed-ffebaddd6f97@oracle.com>
+	<eaf511ff-f9e0-47ac-ae2e-3de0efa928dd@gmail.com>
+	<xmqqv86yoot3.fsf@gitster.g>
+	<4073b764-ab6a-4b4b-a8a3-2e898620b2f5@gmail.com>
+Date: Sun, 11 Feb 2024 09:05:40 -0800
+Message-ID: <xmqq8r3r9biz.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <xmqqcyt39cju.fsf@gitster.g>
-User-Agent: Mutt/1.10.1 (2018-07-13)
-X-Provags-ID: V03:K1:OHT9FNyolKC3IHnBj5kJ4+w8KfpvJlGhl2XpQcrgB3E/sVvU2f9
- yKZJQTpmTTYvOrWJRfNkH8ua1Hv+1+g9B0PkgrN33KdtvERNd66OxlAZSCslMoJzsPJg/ol
- nNGLsMTivvcc3blYRMEeF1CyuQYD4XHheaoPpAiLlLQ+ZEyG66o9Uv3bgvZNWK4FZEmIEkk
- 8P6UtRrVTtVJqnodqFQsg==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:6Et4z+V3lDI=;bHMSgxZRIZwzvgXTxR9qWVsi2J5
- hj3glGZyw2uATC6Yb6vML7ABRTDWxsUBoHOT7dWllvwbzYEJQd+qI03EmSBzF8u5Y6isC90FE
- deEuUlgx35MDmFL9CbPhA+NXS6ZozjF/VMR96CDsLwz3TElFTS9iZbKh9eLcGlffG1DMEH8nB
- S1ljxxptERsTkA327sfHV/joSkp9h42blwhNJ8FzYIeKJTIA0X7m5LY4Pzwgqo8yTTMUrnaBY
- HdTX/9vILnYfw0LDKR8Pmzr4OyKHHCBhlz11Y2eJZqFOOJE7hI4Qo3klCed1OQCiXY4JJy3Me
- XO1c+tX7cvnohV1cELRttvJgcTExZH6tYKaW9jx1b9uDwz9YfESNvb+1+iCK5Njj5Nfi8LuVM
- Kal8JiYZAGF7ur7kRyLIXtyBtyaH2JgtW7Xh4cQ6VXriGzUiiG+EoWbeCRKvQ85NsuSUuBOGK
- lSdgqj+vI28gs4Iumn8T2OWJ2JI5AK7tbGJgjaBd2cgsL4KymqB3XfnHcm3R4qjylo49IvbCq
- fTk/fMFWRuUehaa4iUECA0zf9uPc/H7y6Dxcb5HcYXXhhixpgP6Hxoroot8WS34TLCQtM0TSD
- dAA1W0hqqnKV4sppmVZBVU+aO8PRCGIXTWOPFmud1r4SuZrAK7A7rP+E+9i7qCFDg9oYvBckV
- STDSFT8b3efevjYiwG1nfGT2qByh1KJ0a62/Ld6rIy9W04R+ItavJmR+26GtS1CtfQjdGF/ox
- mdmzIo/+Mg7i/4fEBYGS4SC/upkVEoFfPInqx1hVxQWT38zIQiUozMM+0xKWp9G3HCzr5aWy8
- qdEA9N7trWl63jCCP9NNhTrB4zwl6v++foW80Tl0JI1vQ=
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ C99F75A4-C8FF-11EE-AB9A-25B3960A682E-77302942!pb-smtp2.pobox.com
 
-On Sun, Feb 11, 2024 at 08:43:33AM -0800, Junio C Hamano wrote:
-> Torsten B=F6gershausen <tboegi@web.de> writes:
->
-> > Briam, Hm, I wonder what this function (in path.c) does:
-> >
-> > int adjust_shared_perm(const char *path)
-> >
-> > According to my understanding, it was included into the Git codebase
-> > to work around the missing "setgid" feature in Linux (and probably cyg=
-win).
->
-> No.  "g+s on directory" is required and depended upon for getting
-> the correct group ownership.  We do not do anything to chown(2) a
-> filesystem entry to force what group it is owned by there.
->
-> What adjust_shared_perm() does is to counter what the screwed-up
-> umask settings the user may have causes.  If you are a member of a
-> group and working in a directory owned by the group with other
-> members, you want to make sure others in the group can access the
-> files and the directories in the project.  Their umask should be
-> loosened to at least 027 and preferrably to 007 to give group
-> members the same access as you do.  Yet people do not loosen their
-> umask when starting work in such a group owned directory that is
-> supposed to be shared, as it would be extremely cumbersome to do
-> [*].  These users end up creating files with overly tight permission
-> bits, e.g. 0644 or 0700, and we go in with adjust_shared_perm() to
-> fix these modes.
->
-> You definitely must set up your initial directory with g+s if you
-> are usihng the group-writable shared directory model (which I would
-> actually be surprised to see in 2020---is a shared machine with more
-> than one user-account still a thing???); adjust_shared_perm() will
-> not help you there.
->
+Phillip Wood <phillip.wood123@gmail.com> writes:
 
-Oh - I learned something today and sorry for the noise.
+> Hi Junio
+>
+> On 08/02/2024 17:20, Junio C Hamano wrote:
+>> Phillip Wood <phillip.wood123@gmail.com> writes:
+>> 
+>>> I think that typically for small suggestions like that we just add a
+>>> Helped-by: trailer but feel free to add my SOB if you want.
+>> Thanks, both.  Here is what I assembled from the pieces.
+>> ----- >8 --------- >8 --------- >8 --------- >8 -----
+>> From: Vegard Nossum <vegard.nossum@oracle.com>
+>> Date: Fri, 2 Feb 2024 10:18:50 +0100
+>> Subject: [PATCH] sequencer: unset GIT_CHERRY_PICK_HELP for 'exec' commands
+>> Running "git cherry-pick" as an x-command in the rebase plan loses
+>> the original authorship information.
+>
+> It might be worth explaining why this happens
+>
+> This is because rebase sets the GIT_CHERRY_PICK_HELP environment
+> variable to customize the advice given to users when there are
+> conflicts which causes the sequencer to remove CHERRY_PICK_HEAD.
 
->
-> [Footnote]
->
-> * Unless, of course, you use some sort of "hook" in the shell to
->   notice you switched to a certain directory and run command
->   there---some people achieve this by aliasing their "cd", "pushd",
->   and "popd".
->
->
+True.  I'd prefer to see the original submitter assemble the pieces
+and come up with the final version, rather than me doing so.
+
+Thanks.
