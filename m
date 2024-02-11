@@ -1,52 +1,56 @@
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A6955B66F
-	for <git@vger.kernel.org>; Sun, 11 Feb 2024 17:17:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF3785C916
+	for <git@vger.kernel.org>; Sun, 11 Feb 2024 17:55:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707671852; cv=none; b=jN6N2Vd5zNtmgAsS9UWiLxMP28zWL2ENsXYUwsRrj+JebVVQLGJWFGx4SRgkEMaCQREijgUuC03WZS+ggbX9l6j9p3twx3xwEII2qrawT17zRLT42fEYfq3zTErwCXEtK3vAy15ERwDRWSXJm4TFZeIKSuAe9YSvY419s37+g30=
+	t=1707674154; cv=none; b=JngmOS8BD8L7uvdYnrpnqEzlemWmoarlSeI1PLdiY64+SEU55Euc+gjr4yD9s6XuFv83jkzNYcM/uQt9/5Nn4+vmZxEtqvfcqUP21CShc96FlwiYHPr4Z8iJuo2q6l/U8N29iB2lirQ6BGEU1/qeiBMDT/0K8v1pbBI6wCqWQDw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707671852; c=relaxed/simple;
-	bh=W+RG9e3CK5hsbQ1SkkHGjpoP6+kojEcTxA9+ZtYvGq4=;
+	s=arc-20240116; t=1707674154; c=relaxed/simple;
+	bh=Ugq2iQBF0v1OcTzGKKEzQPEQuk16zRpKMwZ/pvvhj2Y=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=pibzLpOX1YFmlfEiDxd7xG7s43sE0xCMk7If/rT/Wk1tYhkBAcb0GO8M6lIuS7oOCzfgK0SIi24+d03WOgL1uRs/yi+mFavtmzUxlQCbrrBEHgw7ebr8picO02tF78Z42G4LOK1qslBvz0590OfDaKNBy9Uh/Mfn//NiTQ2Lzck=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=PBp3h4q2; arc=none smtp.client-ip=173.228.157.52
+	 MIME-Version:Content-Type; b=Jpxx836pTqFs+5eTSFaeH9g6IeGBN2NS4qRvHDgf1WPcMr8WU6XghG/ftczQqD0F0hVk+bT4py3FsFoPKG2GMKSxW4RzBOUqqKHjCF8643xtD2EBuUSlGWDQawuZdcUPcIS26HxaPhtV82B5F9gbBzGCa1bjG1g1Cpk+/v+KtpM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=d7joA3hu; arc=none smtp.client-ip=64.147.108.71
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="PBp3h4q2"
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id D275A28BBF;
-	Sun, 11 Feb 2024 12:17:30 -0500 (EST)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="d7joA3hu"
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 44F9D1D5E1E;
+	Sun, 11 Feb 2024 12:55:51 -0500 (EST)
 	(envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=W+RG9e3CK5hs
-	bQ1SkkHGjpoP6+kojEcTxA9+ZtYvGq4=; b=PBp3h4q2WZ4q+/SHLw7GutiVnz16
-	bsQOYwcPInFFfjhe1QrV6i8bR7XTB+p6nyMG4PwhHh5Ql4oafnMJo8G1JUuqApSy
-	u2uvuqIYZkn0YGDv5mZopHX8jLhFpYXiOfygxkJNFWEyIQReqfLrHTUOPaEFXmPd
-	7dTsAzL14F/cTsc=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id CAFAD28BBE;
-	Sun, 11 Feb 2024 12:17:30 -0500 (EST)
+	:content-type:content-transfer-encoding; s=sasl; bh=Ugq2iQBF0v1O
+	cTzGKKEzQPEQuk16zRpKMwZ/pvvhj2Y=; b=d7joA3huk4y5oNSPWRmtW9axfhCU
+	Ftabst8lXVRpYkJRUfrCfVKdG+/r3ibds9czo99t5WoKIh4vjJLtQir74t5ZCxFR
+	GCrxFr0y5VNqiiC7Th5TEe+m1LXEpwAwRRK80ZW+e6IdV+O2w0NQhFcaAVEKoVk2
+	F3rcYz8CeVonEdQ=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 397FB1D5E1D;
+	Sun, 11 Feb 2024 12:55:51 -0500 (EST)
 	(envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.125.165.85])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 74E6628BBD;
-	Sun, 11 Feb 2024 12:17:27 -0500 (EST)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 9F1491D5E1C;
+	Sun, 11 Feb 2024 12:55:50 -0500 (EST)
 	(envelope-from junio@pobox.com)
 From: Junio C Hamano <gitster@pobox.com>
-To: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH] ci: bump remaining outdated Actions versions
-In-Reply-To: <pull.1660.git.1707652357696.gitgitgadget@gmail.com> (Johannes
-	Schindelin via GitGitGadget's message of "Sun, 11 Feb 2024 11:52:37
-	+0000")
-References: <pull.1660.git.1707652357696.gitgitgadget@gmail.com>
-Date: Sun, 11 Feb 2024 09:17:25 -0800
-Message-ID: <xmqqplx29aze.fsf@gitster.g>
+To: "Kristoffer Haugsbakk" <code@khaugsbakk.name>
+Cc: "Chris Torek" <chris.torek@gmail.com>,  git@vger.kernel.org,  "Tiago
+ Pascoal" <tiago@pascoal.net>
+Subject: Re: [PATCH] column: disallow negative padding
+In-Reply-To: <9c00311d-e31c-428b-9c66-fef7ac8bfc76@app.fastmail.com>
+	(Kristoffer Haugsbakk's message of "Sun, 11 Feb 2024 18:10:26 +0100")
+References: <AS8P189MB21977ACC4866D9836DA29082BC4B2@AS8P189MB2197.EURP189.PROD.OUTLOOK.COM>
+	<76688ed2cc20031d70823d9f5d214f42b3bd1409.1707501064.git.code@khaugsbakk.name>
+	<19119aa6-9a8c-44c6-af79-0ea6a8bcb181@app.fastmail.com>
+	<CAPx1GvdDvmBmvoktd7onB4mSzikKf4eWVWnrzrn8c8Y1RcRgsA@mail.gmail.com>
+	<9c00311d-e31c-428b-9c66-fef7ac8bfc76@app.fastmail.com>
+Date: Sun, 11 Feb 2024 09:55:49 -0800
+Message-ID: <xmqqle7q997e.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -56,58 +60,32 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 X-Pobox-Relay-ID:
- 6E220000-C901-11EE-B5EB-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
+ CAEE316E-C906-11EE-9DA2-25B3960A682E-77302942!pb-smtp2.pobox.com
 Content-Transfer-Encoding: quoted-printable
 
-"Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-writes:
+"Kristoffer Haugsbakk" <code@khaugsbakk.name> writes:
 
-> From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+> On Sat, Feb 10, 2024, at 10:48, Chris Torek wrote:
+>> On Sat, Feb 10, 2024 at 1:46=E2=80=AFAM Kristoffer Haugsbakk
+>> <code@khaugsbakk.name> wrote:
+>>> I forgot tests.
+>>
+>> You presumably also wanted the `_` here for gettext-ing:
+>>
+>>> +               die("%s: argument must be a non-negative integer", "p=
+adding");
+>>
+>> Chris
 >
-> This avoids "Node.js 16 Actions" deprecation messages by bumping the
-> following Actions' versions:
+> Yeah, thanks. You probably saved me a v3. :)
 >
-> - actions/upload-artifact from 3 to 4
-> - actions/download-artifact from 3 to 4
-> - actions/cache from 3 to 4
->
-> Helped-by: Matthias A=C3=9Fhauer <mha1993@live.de>
-> Original-commits-by: dependabot[bot] <support@github.com>
-> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> ---
+> Although I failed to notice that the string I stole was just a plain
+> string, not a translation string. And apparently there are no generic
+> =E2=80=9Cnon-negative=E2=80=9D translation strings. So I=E2=80=99ll jus=
+t make a new one.
 
->      - name: Upload failed tests' directories
->        if: failure() && env.FAILED_TEST_ARTIFACTS !=3D '' && matrix.vec=
-tor.jobname =3D=3D 'linux32'
-> -      uses: actions/upload-artifact@v1
-> +      uses: actions/upload-artifact@v4
->        with:
->          name: failed-tests-${{matrix.vector.jobname}}
->          path: ${{env.FAILED_TEST_ARTIFACTS}}
-
-Curious that, among all other uses of actions/upload-artifact@v3,
-only this one has been using @v1, which may deserve explanation.
-The proposed commit log message pretends that this never existed.
-
-Please drop a non-standard "Original-commits-by:"  trailer, and
-instead mention what you wrote under three-dash line about the
-dependabot in the log message.  Perhaps something like...
-
-	After activating automatic Dependabot updates in the
-	git-for-windows/git repository, Dependabot noticed a couple
-	of yet-unaddressed updates.  They avoid "Node.js 16 Actions"
-	deprecation messages by bumping the following Actions'
-	versions:
-
-        - actions/upload-artifact from 1 or 3 to 4
-        - actions/download-artifact from 3 to 4
-        - actions/cache from 3 to 4
-
-	Note that one actions/upload-artifact@v1 was used in one of
-	the rules because ...
-
-        Helped-by: Matthias A=C3=9Fhauer <mha1993@live.de>
-        Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-
+The last time I took a look, I thought there were more than just the
+single entry point you patched that can feed negative padding into
+the machinery?  Don't you need to cover them as well?
 
 Thanks.
