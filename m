@@ -1,116 +1,255 @@
-Received: from fout1-smtp.messagingengine.com (fout1-smtp.messagingengine.com [103.168.172.144])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f182.google.com (mail-lj1-f182.google.com [209.85.208.182])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23CE45CDC2
-	for <git@vger.kernel.org>; Sun, 11 Feb 2024 18:19:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B139C1DA2A
+	for <git@vger.kernel.org>; Sun, 11 Feb 2024 18:39:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707675545; cv=none; b=CjbFIgIeE0JCJ9hXQLWMLfl4YT5tfi7on4ZrYZeZGdSV6oFP4cmSC7N3cQt5rI148LFZbt1MHiieu1YPwaW2fiNiJ1iEVompqwgam/AH+VQUIyEYK56LLgpD3DOKYGVtSM1xwgITpgDjFEVjNSLHfdOBXOuqhp9jiEKyS1fNqtY=
+	t=1707676770; cv=none; b=LibKHS/meWbAKAEhfS9o6mx2MlxE1f7eEAFrtL5qeZJiD3LF8j+6iintAvvhuSLCe2adwY7go3cbYA8fgE6IcXdAkJl+cGc5sZDM98qZ6EOlV790U0iftrkRR0nVvkYEEM9gA/9WJ0sBjrqdYpbvfNgGMj9dRJErBdkNV6zO/xc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707675545; c=relaxed/simple;
-	bh=ApYNczzP8WsBa4XH1CocyiUk4ikWCrzR4GVWr6XelG8=;
-	h=MIME-Version:Message-Id:In-Reply-To:References:Date:From:To:Cc:
-	 Subject:Content-Type; b=U0PdU1VEhjccus3KzdKMJoaywU/ZrT7VK1nkv7QjROkpu4GsNujQbgBvDXsMWy4/Bz6bqpNtBCTfaXkhOcsK06zrPrwCEqbo2+lTEnS3MkmNTFd9ut+JNq5cXYdq+2m3as9ii9mHitxli5w3IcWGF8juJVhdkRhbSDiNIpb+2xA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=khaugsbakk.name; spf=pass smtp.mailfrom=khaugsbakk.name; dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b=ShJsYZBy; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=s87kS9w4; arc=none smtp.client-ip=103.168.172.144
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=khaugsbakk.name
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=khaugsbakk.name
+	s=arc-20240116; t=1707676770; c=relaxed/simple;
+	bh=RZubw7kf0sbEYO6mROaokkSezLx/kvdQdxz4nzJRFdI=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=gliNy34oR9MU/KfCa9aHxM9XHHtxQsCjPqqwjwhhi1m8QJIfeDCjFMGds6UbQlF2dVSAXBpAY8xPOHUZoaT1lFnjO33S9xa+z5UVtJAQnV2mDl7wIdUdUBijBvZvMLyWMxHbOqYeeViMQ4sBIxsTbgFNrWN+8HKmzEbhQq3S6XU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=kQbk3uNu; arc=none smtp.client-ip=209.85.208.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b="ShJsYZBy";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="s87kS9w4"
-Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
-	by mailfout.nyi.internal (Postfix) with ESMTP id E7244138008B;
-	Sun, 11 Feb 2024 13:19:01 -0500 (EST)
-Received: from imap49 ([10.202.2.99])
-  by compute1.internal (MEProxy); Sun, 11 Feb 2024 13:19:01 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=khaugsbakk.name;
-	 h=cc:cc:content-transfer-encoding:content-type:content-type
-	:date:date:from:from:in-reply-to:in-reply-to:message-id
-	:mime-version:references:reply-to:subject:subject:to:to; s=fm2;
-	 t=1707675541; x=1707761941; bh=8Zydl+xBU5px36zqTLvTAIB+COCkSVFl
-	IbfLpfwVm+4=; b=ShJsYZByU4KmNVq2MdoFDCMZ6Mt7bn/oRnknBlsFQ1OYAb3r
-	aKY2bhLelYrCJi+9cAb4ofzFzHYwDWRCf/6Jq4UHOnz7V2ccQEp6G602Rtw9hXTZ
-	om72pxgmLNzWB5/O+6RI/pQp9orurJTvYmmLp5T5n3JG32KZKYXNr3N/+T6mR0DE
-	eC0lbgmtll19Uk0OI3RJa8ysDpf109ww5++O1tGIzguYbS1NEI9IZ7ZFTheLk5+V
-	JqAdBCQV1hiKBElo77gcizrP1m840ZLcyVxrbqfVXh2mOjxCdojtdA9v2je0fUh3
-	ZyZFFtfBr9fZ/TinNwiacNtVWq22fYbJv8Jj4g==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1707675541; x=
-	1707761941; bh=8Zydl+xBU5px36zqTLvTAIB+COCkSVFlIbfLpfwVm+4=; b=s
-	87kS9w41SkQv2ewrtchtAf62wD6awahdlmf3Va+9VlFbur6k1pZCk97sWb57lFqX
-	x7zXwOc3MW+Z/oZTYAogZ8bgqG/mbLfOUDheduaXGT0nGaNgEhi+PfzNIlPdCSwt
-	AwlL6hD/6+Kl6Tzj2f0YgmxdqGULK+2idZA8WhOSoOxP0E7VQqkbayb5pRuYnHpY
-	AakSdL9zh1NRtMr4Me6osYuzazY07NrhgeVevtpd6crZwjcB2M+rxTj1EcRCNtsn
-	mJ43mcmYrCVAHS4nkeIaaymJNL45N5m8dr4nvdU+65A53Klgjxo4F+U8E5iMmg1I
-	PjMPqYGlwtm2mFoD+HCcw==
-X-ME-Sender: <xms:lQ_JZWh4m2YCXSu9mQ9SCwOSds2_uVUBKk6GJL0hBSWFmgtwjv8A7-Y>
-    <xme:lQ_JZXDQNda-H7pSy66tK2CFOsiEnzOH1iXT8a16NKEv3RuQfh0BEVBjM-hLYQdjh
-    092kiHRBxNNNJ0PYA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledruddugdduudefucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    cujfgurhepofgfggfkjghffffhvfevufgtgfesthhqredtreerjeenucfhrhhomhepfdfm
-    rhhishhtohhffhgvrhcujfgruhhgshgsrghkkhdfuceotghouggvsehkhhgruhhgshgsrg
-    hkkhdrnhgrmhgvqeenucggtffrrghtthgvrhhnpedvveehiedufeehffdvteeuveekhefh
-    leeigfektdeifeduteeuheeufeetffefudenucevlhhushhtvghrufhiiigvpedtnecurf
-    grrhgrmhepmhgrihhlfhhrohhmpegtohguvgeskhhhrghughhssggrkhhkrdhnrghmvg
-X-ME-Proxy: <xmx:lQ_JZeG3zsyJfvYZOkWaD2131icfL2zgE2hK7HO9NLpH1F6kXjxpTw>
-    <xmx:lQ_JZfTch9Nx4uUFstLmUT6bdUtWW6QFlfkpBA412QV0LqefiTmdAQ>
-    <xmx:lQ_JZTwQkKbAZL2-d8Tex0hSBM0ovMv7i_q2sIrFIssVbVoyNnsJbA>
-    <xmx:lQ_JZT9xjMj9cdAt7UD-XspOa8_klUqU_YNMAjPC5iRZfMOgokn5kQ>
-Feedback-ID: i2671468f:Fastmail
-Received: by mailuser.nyi.internal (Postfix, from userid 501)
-	id A949A15A0092; Sun, 11 Feb 2024 13:19:01 -0500 (EST)
-X-Mailer: MessagingEngine.com Webmail Interface
-User-Agent: Cyrus-JMAP/3.11.0-alpha0-144-ge5821d614e-fm-20240125.002-ge5821d61
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kQbk3uNu"
+Received: by mail-lj1-f182.google.com with SMTP id 38308e7fff4ca-2d0aabed735so33556141fa.0
+        for <git@vger.kernel.org>; Sun, 11 Feb 2024 10:39:28 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1707676766; x=1708281566; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=RcscRHd5PcP9gqXm6SYfFSr4dGemj0Pw738WB8v7DlM=;
+        b=kQbk3uNuxCdusoO5AQbu9zTDYfwmffXe9ECySxR0UcKJQRYC8iQBc7YdV1jB4eiXA+
+         FyxdPOeFsm5BOYZ3Vd4+F9Q7z7J2zhW8TGtYmJALiVpaF0lv0xW6dTlgbUX7wKxEaA5d
+         +d/NmkJ9ryZn/4KtEy8sDs5QRSotx2vleIxTXDdLMJ5wGnN9tnShnmPIsf3eT4hylHnz
+         jCJAXTwTSNhGLn7prIPm2SNZgbQAE6mziHda0kcPn+30Ip8pzGlBHutLDVa8gbg9hMoY
+         nELMeksiV1385eFkdZbAQBH2IzjxmnO+p1VYI4t3nGb8F9jgqveh/H59gF4mlA6dxO82
+         YjTw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1707676766; x=1708281566;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=RcscRHd5PcP9gqXm6SYfFSr4dGemj0Pw738WB8v7DlM=;
+        b=PUQ5ph3xlYVihc5gi1vwtVi0W0ItBR8OCt1t73U3ZFoEzdTKhWuOpgIeci3K+nAL0j
+         AvcqP4HX60JrkofCP2OOxB7dFKV3gEw0hCnxxLtMFhPeCN+0wNtC2pqBSkz8bK4mgsre
+         QKIzfkh+NUrn4t9ko/DP9SaCjqbBQzYB/6193FzAC186YUi/5lbqoKUx3ORI79lPoFWp
+         HEpE2aY8LeI/4jF3jhYKGIjE6C+2DE77KAofVN3tIvfh5JdVc0kRiA6GGCZe3nPNQk6I
+         uXHakWQqB73fnmXVq2RyREOAhqFwwPyQnRxsW+SGpD9IATqvMgwKTAV6SQeMTWQnOx87
+         n6Rw==
+X-Gm-Message-State: AOJu0Yzqzdo8EmB+1wLPkZYJrvTtROGZxiRJkHm22DMcgVeR1Iyy1cEv
+	VPNTyK9oQMvLamY3NJJsTDWIyYW8tn+7q+0YZfs4r14Dwc8j6i4Vh07jVKX2
+X-Google-Smtp-Source: AGHT+IEhyELc8ulRfEBi943tm6fuqNrtclytYk0B984AKwMAi5R9UVKwv/c06DYlOBIngBlhmvpTRA==
+X-Received: by 2002:a05:6512:3d15:b0:511:4fec:b976 with SMTP id d21-20020a0565123d1500b005114fecb976mr4018340lfv.51.1707676765944;
+        Sun, 11 Feb 2024 10:39:25 -0800 (PST)
+X-Forwarded-Encrypted: i=1; AJvYcCWFcD5MTlvrpk1R1Z0FUJ3ozceMMZuNmduxW4zkEQzKxbnMNWr0uM4wQFU/tCF7hWLDcDmrToGhhu9Qb3jBPy9oYcC3V7TPyVXKmwXAq5E0PZEDOfPHsKvXCqUmfdWdQhEx5CPgQRIS5ojb4w==
+Received: from localhost.localdomain (h-213.61.124.196.host.de.colt.net. [213.61.124.196])
+        by smtp.gmail.com with ESMTPSA id w12-20020a170906130c00b00a3716299b40sm3069808ejb.155.2024.02.11.10.39.24
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 11 Feb 2024 10:39:25 -0800 (PST)
+From: Karthik Nayak <karthik.188@gmail.com>
+To: git@vger.kernel.org
+Cc: gitster@pobox.com,
+	ps@pks.im,
+	phillip.wood123@gmail.com,
+	Karthik Nayak <karthik.188@gmail.com>
+Subject: [PATCH v4 0/5] for-each-ref: add '--include-root-refs' option
+Date: Sun, 11 Feb 2024 19:39:18 +0100
+Message-ID: <20240211183923.131278-1-karthik.188@gmail.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20240119142705.139374-1-karthik.188@gmail.com>
+References: <20240119142705.139374-1-karthik.188@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Message-Id: <34c18fd0-1fa3-4226-b5a1-b019fcb05548@app.fastmail.com>
-In-Reply-To: <xmqqle7q997e.fsf@gitster.g>
-References: 
- <AS8P189MB21977ACC4866D9836DA29082BC4B2@AS8P189MB2197.EURP189.PROD.OUTLOOK.COM>
- <76688ed2cc20031d70823d9f5d214f42b3bd1409.1707501064.git.code@khaugsbakk.name>
- <19119aa6-9a8c-44c6-af79-0ea6a8bcb181@app.fastmail.com>
- <CAPx1GvdDvmBmvoktd7onB4mSzikKf4eWVWnrzrn8c8Y1RcRgsA@mail.gmail.com>
- <9c00311d-e31c-428b-9c66-fef7ac8bfc76@app.fastmail.com>
- <xmqqle7q997e.fsf@gitster.g>
-Date: Sun, 11 Feb 2024 19:18:41 +0100
-From: "Kristoffer Haugsbakk" <code@khaugsbakk.name>
-To: "Junio C Hamano" <gitster@pobox.com>
-Cc: "Chris Torek" <chris.torek@gmail.com>, git@vger.kernel.org,
- "Tiago Pascoal" <tiago@pascoal.net>
-Subject: Re: [PATCH] column: disallow negative padding
-Content-Type: text/plain;charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 
-On Sun, Feb 11, 2024, at 18:55, Junio C Hamano wrote:
-> "Kristoffer Haugsbakk" <code@khaugsbakk.name> writes:
->> Yeah, thanks. You probably saved me a v3. :)
->>
->> Although I failed to notice that the string I stole was just a plain
->> string, not a translation string. And apparently there are no generic
->> =E2=80=9Cnon-negative=E2=80=9D translation strings. So I=E2=80=99ll j=
-ust make a new one.
->
-> The last time I took a look, I thought there were more than just the
-> single entry point you patched that can feed negative padding into
-> the machinery?  Don't you need to cover them as well?
->
-> Thanks.
+This is the forth version of my patch series to print root refs
+in git-for-each-ref(1).
 
-I=E2=80=99ve incorporated the `column.c` patch you posted in my
-not-yet-published v2. Hopefully that was it.(? :) ) I=E2=80=99ll take an=
-other
-look.
+With the introduction of the reftable backend, it becomes ever
+so important to provide the necessary tooling for printing all refs
+associated with a worktree.
 
-v2 is finished now so maybe I=E2=80=99ll send it out soon.
+While regular refs stored within the "refs/" namespace are currently
+supported by multiple commands like git-for-each-ref(1),
+git-show-ref(1). Neither support printing root refs within the worktree.
 
---=20
-Kristoffer Haugsbakk
+This patch series is a follow up to the RFC/discussion we had earlier on
+the list [1].
+
+The first 4 commits add the required functionality to ensure we can print
+all refs (regular, pseudo, HEAD). The 5th commit modifies the
+git-for-each-ref(1) command to add the "--include-root-refs" command which
+will include HEAD and pseudorefs with regular "refs/" refs.
+
+[1]: https://lore.kernel.org/git/20231221170715.110565-1-karthik.188@gmail.com/#t
+
+Changes from v3:
+1. Move from using 'git for-each-ref ""' to print root refs to adding
+the '--include-root-refs' option for git-for-each-ref(1). This provides better
+UX for users.
+2. Modify `is_pseudoref()` to use `refs_resolve_ref_unsafe`.
+3. Includes reftable-backend changes and is now rebased on top of next (ed35d3359).  
+
+Range-diff:
+
+1:  2141a2a62b ! 1:  98130a7ad7 refs: introduce `is_pseudoref()` and `is_headref()`
+    @@ Commit message
+         related files like 'BISECT_START' to a new directory similar to the
+         'rebase-merge' directory.
+     
+    +    Helped-by: Jeff King <peff@peff.net>
+         Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
+     
+      ## refs.c ##
+    @@ refs.c: static int is_pseudoref_syntax(const char *refname)
+     +		return 0;
+     +
+     +	if (ends_with(refname, "_HEAD")) {
+    -+		 read_ref_full(refname, RESOLVE_REF_READING | RESOLVE_REF_NO_RECURSE,
+    -+		      &oid, NULL);
+    -+		 return !is_null_oid(&oid);
+    ++		refs_resolve_ref_unsafe(refs, refname,
+    ++   					RESOLVE_REF_READING | RESOLVE_REF_NO_RECURSE,
+    ++   					&oid, NULL);
+    ++   		return !is_null_oid(&oid);
+     +	}
+     +
+     +	for (i = 0; i < ARRAY_SIZE(irregular_pseudorefs); i++)
+     +		if (!strcmp(refname, irregular_pseudorefs[i])) {
+    -+			read_ref_full(refname, RESOLVE_REF_READING | RESOLVE_REF_NO_RECURSE,
+    -+						  &oid, NULL);
+    ++			refs_resolve_ref_unsafe(refs, refname,
+    ++   						RESOLVE_REF_READING | RESOLVE_REF_NO_RECURSE,
+    ++   						&oid, NULL);
+     +			return !is_null_oid(&oid);
+     +		}
+     +
+2:  c96f0a9c83 = 2:  060ab08af5 refs: extract out `loose_fill_ref_dir_regular_file()`
+3:  d165358b83 ! 3:  40d2375ad9 refs: introduce `refs_for_each_all_refs()`
+    @@ Metadata
+     Author: Karthik Nayak <karthik.188@gmail.com>
+     
+      ## Commit message ##
+    -    refs: introduce `refs_for_each_all_refs()`
+    +    refs: introduce `refs_for_each_include_root_refs()`
+     
+    -    Introduce a new ref iteration flag `DO_FOR_EACH_INCLUDE_ALL_REFS`, which
+    -    will be used to iterate over all refs. In the files backend this is
+    -    limited to regular refs, pseudorefs and HEAD. For other backends like
+    -    the reftable this is the universal set of all refs stored in the
+    -    backend.
+    +    Introduce a new ref iteration flag `DO_FOR_EACH_INCLUDE_ROOT_REFS`,
+    +    which will be used to iterate over regular refs plus pseudorefs and
+    +    HEAD.
+     
+         Refs which fall outside the `refs/` and aren't either pseudorefs or HEAD
+         are more of a grey area. This is because we don't block the users from
+    -    creating such refs but they are not officially supported. In the files
+    -    backend, we can isolate such files from other files.
+    +    creating such refs but they are not officially supported.
+     
+    -    Introduce `refs_for_each_all_refs()` which calls `do_for_each_ref()`
+    -    with this newly introduced flag.
+    +    Introduce `refs_for_each_include_root_refs()` which calls
+    +    `do_for_each_ref()` with this newly introduced flag.
+     
+         In `refs/files-backend.c`, introduce a new function
+         `add_pseudoref_and_head_entries()` to add pseudorefs and HEAD to the
+         `ref_dir`. We then finally call `add_pseudoref_and_head_entries()`
+    -    whenever the `DO_FOR_EACH_INCLUDE_ALL_REFS` flag is set. Any new ref
+    +    whenever the `DO_FOR_EACH_INCLUDE_ROOT_REFS` flag is set. Any new ref
+         backend will also have to implement similar changes on its end.
+     
+         Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
+    @@ refs.c: int for_each_rawref(each_ref_fn fn, void *cb_data)
+      	return refs_for_each_rawref(get_main_ref_store(the_repository), fn, cb_data);
+      }
+      
+    -+int refs_for_each_all_refs(struct ref_store *refs, each_ref_fn fn,
+    -+			   void *cb_data)
+    ++int refs_for_each_include_root_refs(struct ref_store *refs, each_ref_fn fn,
+    ++				    void *cb_data)
+     +{
+     +	return do_for_each_ref(refs, "", NULL, fn, 0,
+    -+			       DO_FOR_EACH_INCLUDE_ALL_REFS, cb_data);
+    ++			       DO_FOR_EACH_INCLUDE_ROOT_REFS, cb_data);
+     +}
+     +
+      static int qsort_strcmp(const void *va, const void *vb)
+    @@ refs.h: int for_each_namespaced_ref(const char **exclude_patterns,
+      int for_each_rawref(each_ref_fn fn, void *cb_data);
+      
+     +/*
+    -+ * Iterates over all ref types, regular, pseudorefs and HEAD.
+    ++ * Iterates over all refs including root refs, i.e. pseudorefs and HEAD.
+     + */
+    -+int refs_for_each_all_refs(struct ref_store *refs, each_ref_fn fn,
+    -+			   void *cb_data);
+    ++int refs_for_each_include_root_refs(struct ref_store *refs, each_ref_fn fn,
+    ++				    void *cb_data);
+     +
+      /*
+       * Normalizes partial refs to their fully qualified form.
+    @@ refs/files-backend.c: static struct ref_cache *get_loose_ref_cache(struct files_
+      
+     +		dir = get_ref_dir(refs->loose->root);
+     +
+    -+		if (flags & DO_FOR_EACH_INCLUDE_ALL_REFS)
+    ++		if (flags & DO_FOR_EACH_INCLUDE_ROOT_REFS)
+     +			add_pseudoref_and_head_entries(dir->cache->ref_store, dir,
+    -+										   refs->loose->root->name);
+    ++						       refs->loose->root->name);
+     +
+      		/*
+      		 * Add an incomplete entry for "refs/" (to be filled
+    @@ refs/refs-internal.h: enum do_for_each_ref_flags {
+      	DO_FOR_EACH_OMIT_DANGLING_SYMREFS = (1 << 2),
+     +
+     +	/*
+    -+	 * Include all refs in the $GIT_DIR in contrast to generally only listing
+    -+	 * references having the "refs/" prefix. In the files-backend this is
+    -+	 * limited to regular refs, pseudorefs and HEAD.
+    ++	 * Include root refs i.e. HEAD and pseudorefs along with the regular
+    ++	 * refs.
+     +	 */
+    -+	DO_FOR_EACH_INCLUDE_ALL_REFS = (1 << 3),
+    ++	DO_FOR_EACH_INCLUDE_ROOT_REFS = (1 << 3),
+      };
+      
+      /*
+4:  a17983d0ba < -:  ---------- for-each-ref: avoid filtering on empty pattern
+-:  ---------- > 4:  b4b9435505 ref-filter: rename 'FILTER_REFS_ALL' to 'FILTER_REFS_REGULAR'
+-:  ---------- > 5:  ee99ac41ae for-each-ref: add new option to include root refs
+
+Karthik Nayak (5):
+  refs: introduce `is_pseudoref()` and `is_headref()`
+  refs: extract out `loose_fill_ref_dir_regular_file()`
+  refs: introduce `refs_for_each_include_root_refs()`
+  ref-filter: rename 'FILTER_REFS_ALL' to 'FILTER_REFS_REGULAR'
+  for-each-ref: add new option to include root refs
+
+ Documentation/git-for-each-ref.txt |   5 +-
+ builtin/for-each-ref.c             |  11 ++-
+ ref-filter.c                       |  29 ++++++-
+ ref-filter.h                       |   7 +-
+ refs.c                             |  48 +++++++++++
+ refs.h                             |   9 ++
+ refs/files-backend.c               | 127 +++++++++++++++++++++--------
+ refs/refs-internal.h               |   6 ++
+ refs/reftable-backend.c            |  11 ++-
+ t/t6302-for-each-ref-filter.sh     |  31 +++++++
+ 10 files changed, 238 insertions(+), 46 deletions(-)
+
+-- 
+2.43.GIT
+
