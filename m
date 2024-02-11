@@ -1,141 +1,121 @@
-Received: from mail-ot1-f45.google.com (mail-ot1-f45.google.com [209.85.210.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mout.web.de (mout.web.de [212.227.17.11])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 111F25B688
-	for <git@vger.kernel.org>; Sun, 11 Feb 2024 16:43:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D98E12837D
+	for <git@vger.kernel.org>; Sun, 11 Feb 2024 16:59:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.11
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707669823; cv=none; b=dh0sJLG52m6XIFO6gbtc9l07rrUdJqZe8BfuTLMyNRv23B7EC6N7swX9zy0iIPl7wfl40YMRnV5W2AQOs8Cn/VlebPccUkQKYYtrb8fgKVQLPlsnfJCIhBx/rXwT0XvQ3ZBbkSBIFvSPl3NaXCenJ/e+hfQcR5QRXEjrUN/G5Y0=
+	t=1707670797; cv=none; b=CA55Io2NwtK8V+mEaw8PefrMN7mOW9UtTx7OKxlZFK2jGTnuvh8fPYIw+jAy4oCi2xUIoYbaMZx5h1PiD4G/as27Ztc57EUd/loqK8wdZGxEADck3Bqnf1DJb+RgnXVSGfOgpWcqKMVm/fVoQ0f8Qq7lfrXDN02Z2zZeTIBdlgQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707669823; c=relaxed/simple;
-	bh=BS4XsabXZL+s3H/5bHO8bPmnUOtV4ojyEOnT53Ek2kc=;
-	h=Subject:To:Cc:References:From:Message-ID:Date:MIME-Version:
-	 In-Reply-To:Content-Type; b=O4tmycWRUwIUQnfPoevrssPvdDVgwZm68ncr1QN3FOza0CZO2qgtmfx5/Z1eDbNFy32SgO3K04MWn+mvfvr4bvvvktN7QD/Nk8MW9EyITHinyGgC6j9YcorehgPfNpdnKUzvNA65X4ZYLUUyMT5iBT33KG86XH14v/l1A+Ky3jE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SHSuQiPG; arc=none smtp.client-ip=209.85.210.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1707670797; c=relaxed/simple;
+	bh=r54PbG61BShlj0vvVexQGmz39QfGCvp5LeS/ReW9qyI=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=EW9U59QW2lpaEKNiJRrh41Z6HuGq4H9It7aoIFarqnv15jOZGorXpOTs0Hng8DaRo998Qbo4bvx/BfZt6n6FrjZlx4+iaOcx0jlfcP4xPZ6XUy7equAo6fJobGjm5WrYpZTQM0kOllQAKN28X5ebSIcUeJh/qGT6b5HTjdAh4RI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=tboegi@web.de header.b=P29E1VB2; arc=none smtp.client-ip=212.227.17.11
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SHSuQiPG"
-Received: by mail-ot1-f45.google.com with SMTP id 46e09a7af769-6e2e5824687so137106a34.0
-        for <git@vger.kernel.org>; Sun, 11 Feb 2024 08:43:41 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1707669821; x=1708274621; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-language:in-reply-to:mime-version
-         :user-agent:date:message-id:from:references:cc:to:subject:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=B2nGRuLso9XKe/+4CHOm47lNCHI2THXaHcCoSDilB/k=;
-        b=SHSuQiPGg/VTDo2ugu8AQZPe6MonHQjzZo2htUqAQyZn6kh1pUTqtIK7u5vwfvnU0a
-         BergpwcVm3cZrt6xwtZpI/Tn/LHGtNZoLXdeZc2cQqJ5x4Z0MYh4kP6EBERj3Vnqo08f
-         SuOWRRZmbsj5PyVqYmkmy9drAWtdn1AkJ3rqTO6WOCZk+6UAWl8M5/jmOYGsd9PtYt4c
-         YD00boEmg/mKPKHnxJy83YhoyaygxqfKAjWnJFdNSNsmSjME0ISnrtr9y/f6Xbq3SjC9
-         vidT/WFnV+Gy8Eh0GznDWduQNzjVI5t0LRhx/EY4zdDEXyuhE8iY4xrEkKMY2aHVylLG
-         Wq0Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1707669821; x=1708274621;
-        h=content-transfer-encoding:content-language:in-reply-to:mime-version
-         :user-agent:date:message-id:from:references:cc:to:subject
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=B2nGRuLso9XKe/+4CHOm47lNCHI2THXaHcCoSDilB/k=;
-        b=K78LLut+rloiDx2yAaKviuv6cTGHN7x9kR9w03nsMoyNUIGpLX0rCer/sGbfWzOBD2
-         CggZz+HoXlxIB4aOYjIoqKyXpKIj3SPRZ1i6FCLSjG1xypk+T/Cau9btlRXvKbtHOHbB
-         rLrLCg5OLxLmi0+fYRfHiMuBLa1qP9p9GToL+D4IVrojMvyWVLu3ItP+7JSeQ3BUjWeT
-         1QM1sqp8khGWLfLnZ33EE6Bs5kRNxjTGALzXAwFAcv9JqAMRt0V1xUWHYo5QpmODbF9B
-         //akbAFw7UZZeWle3pRvrw+1L7Q++JprPTPfYGpBty+fH42AAp4xDgOaNl99NVDuRr19
-         TlfQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWR3dq9Ah+FX2laNkOXHfH13NgoyxZYtR0QmckZzGiazq1W7qQNecqNZx/8obsesfMYOCr2czo01GIbi8bnrNZSYkpC
-X-Gm-Message-State: AOJu0YxqmJz/j/NXyx5CndjoEkmwCSw8aS+r770rP7LoixGDM9zjHCrv
-	lOaQeWzbq8ehBINrD3UteZ2nOo6nUxZaXDjpPdNc5rPqmBDbXx6S+Uqm92fYOMc=
-X-Google-Smtp-Source: AGHT+IHWu9/4f0tbwLS0Eh1gaOwWaY69kQnL3wfX7KCLllkhBdc2cpPh9D0D2pp2ZyYJeLZC+5wOGA==
-X-Received: by 2002:a9d:7756:0:b0:6e2:dfae:3eed with SMTP id t22-20020a9d7756000000b006e2dfae3eedmr1962833otl.27.1707669820722;
-        Sun, 11 Feb 2024 08:43:40 -0800 (PST)
-X-Forwarded-Encrypted: i=1; AJvYcCVvnd5oNfF0ACNYAK4vvFA94smLqXzlHRGppU1WHrIiGauqrokzhWv/BjtlxnBympUGFRKfkvBSJMjw85fxt0262RO93sIkZ4oRRzZb+qnyVB4DNRJkU3OjHZLo9usrh+RnoiXrUJC/l9Q6AuMOeTU4arrfWdpwM3BBrVaYGWtuJA11WO2w6NYgZuHDlYHPkrmxz1kCkw5auuAqouiFswdWa3GR0/fipbSTb7bM0sE=
-Received: from ?IPv6:2606:6d00:17:3855:859e:98ec:22d6:6e34? ([2606:6d00:17:3855:859e:98ec:22d6:6e34])
-        by smtp.gmail.com with ESMTPSA id h9-20020ac87449000000b0042c7145fd19sm673134qtr.12.2024.02.11.08.43.39
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 11 Feb 2024 08:43:40 -0800 (PST)
-Subject: Re: [PATCH v4 2/2] revision: implement `git log --merge` also for
- rebase/cherry-pick/revert
-To: Johannes Sixt <j6t@kdbg.org>
-Cc: Elijah Newren <newren@gmail.com>, Michael Lohmann
- <mial.lohmann@gmail.com>, Phillip Wood <phillip.wood@dunelm.org.uk>,
- Patrick Steinhardt <ps@pks.im>, Michael Lohmann <mi.al.lohmann@gmail.com>,
- Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-References: <20240210-ml-log-merge-with-cherry-pick-and-other-pseudo-heads-v4-0-3bc9e62808f4@gmail.com>
- <20240210-ml-log-merge-with-cherry-pick-and-other-pseudo-heads-v4-2-3bc9e62808f4@gmail.com>
- <2cf557e9-bf48-4bf3-be24-c1eeaa887418@kdbg.org>
-From: Philippe Blain <levraiphilippeblain@gmail.com>
-Message-ID: <1c258037-cb08-5fbc-d473-743a60cd8eab@gmail.com>
-Date: Sun, 11 Feb 2024 11:43:39 -0500
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:78.0)
- Gecko/20100101 Thunderbird/78.14.0
+	dkim=pass (2048-bit key) header.d=web.de header.i=tboegi@web.de header.b="P29E1VB2"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de; s=s29768273;
+	t=1707670782; x=1708275582; i=tboegi@web.de;
+	bh=r54PbG61BShlj0vvVexQGmz39QfGCvp5LeS/ReW9qyI=;
+	h=X-UI-Sender-Class:Date:From:To:Cc:Subject:References:
+	 In-Reply-To;
+	b=P29E1VB2uZZppw1A1AQuUDT38Rrh1Ix8EB9h8o6e92BiQSsn05e29WeeVSGXNdtT
+	 uk6K9GXzZoz17ffkL80Pd74KEj6z5V0tR4WTty6x+4mzZxeVNjP9xORneIeQZ95lx
+	 mYT4qdEtAldpq5O939PLcXTKyj4lV2V6LFsfXDEdRmTC9shVXqYTcT5vGw1Dyk6Mj
+	 3YvfIByUyWPNm4Bu1L5P8xGKeQr5AYS6xyK39pIrwjahsrf2mdsVCoRbHwSP0avtL
+	 VgaT8OY+ZWWw8SiuF1UrfR+zFWefdS6No/xSo8aYyHRmyNZwF2Ob7wdHkBeI8tK6o
+	 GzYC9gkb79FRhX3akQ==
+X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
+Received: from localhost ([195.198.253.159]) by smtp.web.de (mrweb105
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 1MqIFF-1rDqqT0pKF-00nRlJ; Sun, 11
+ Feb 2024 17:59:42 +0100
+Date: Sun, 11 Feb 2024 17:59:41 +0100
+From: Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	K_V <zinen2@gmail.com>, git@vger.kernel.org
+Subject: Re: git gc changes ownerships of files linux
+Message-ID: <20240211165941.GB28699@tb-raspi4>
+References: <CABkRduQNdgdF8WhZadP5hyYvpEWgP_AE8=qzxNiRNA71bdJcYQ@mail.gmail.com>
+ <20240211151455.GA27103@tb-raspi4>
+ <ZcjnuSAZiNHvA5h1@tapette.crustytoothpaste.net>
+ <20240211154345.GA28699@tb-raspi4>
+ <xmqqcyt39cju.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-In-Reply-To: <2cf557e9-bf48-4bf3-be24-c1eeaa887418@kdbg.org>
-Content-Type: text/plain; charset=utf-8
-Content-Language: fr
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <xmqqcyt39cju.fsf@gitster.g>
+User-Agent: Mutt/1.10.1 (2018-07-13)
+X-Provags-ID: V03:K1:OHT9FNyolKC3IHnBj5kJ4+w8KfpvJlGhl2XpQcrgB3E/sVvU2f9
+ yKZJQTpmTTYvOrWJRfNkH8ua1Hv+1+g9B0PkgrN33KdtvERNd66OxlAZSCslMoJzsPJg/ol
+ nNGLsMTivvcc3blYRMEeF1CyuQYD4XHheaoPpAiLlLQ+ZEyG66o9Uv3bgvZNWK4FZEmIEkk
+ 8P6UtRrVTtVJqnodqFQsg==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:6Et4z+V3lDI=;bHMSgxZRIZwzvgXTxR9qWVsi2J5
+ hj3glGZyw2uATC6Yb6vML7ABRTDWxsUBoHOT7dWllvwbzYEJQd+qI03EmSBzF8u5Y6isC90FE
+ deEuUlgx35MDmFL9CbPhA+NXS6ZozjF/VMR96CDsLwz3TElFTS9iZbKh9eLcGlffG1DMEH8nB
+ S1ljxxptERsTkA327sfHV/joSkp9h42blwhNJ8FzYIeKJTIA0X7m5LY4Pzwgqo8yTTMUrnaBY
+ HdTX/9vILnYfw0LDKR8Pmzr4OyKHHCBhlz11Y2eJZqFOOJE7hI4Qo3klCed1OQCiXY4JJy3Me
+ XO1c+tX7cvnohV1cELRttvJgcTExZH6tYKaW9jx1b9uDwz9YfESNvb+1+iCK5Njj5Nfi8LuVM
+ Kal8JiYZAGF7ur7kRyLIXtyBtyaH2JgtW7Xh4cQ6VXriGzUiiG+EoWbeCRKvQ85NsuSUuBOGK
+ lSdgqj+vI28gs4Iumn8T2OWJ2JI5AK7tbGJgjaBd2cgsL4KymqB3XfnHcm3R4qjylo49IvbCq
+ fTk/fMFWRuUehaa4iUECA0zf9uPc/H7y6Dxcb5HcYXXhhixpgP6Hxoroot8WS34TLCQtM0TSD
+ dAA1W0hqqnKV4sppmVZBVU+aO8PRCGIXTWOPFmud1r4SuZrAK7A7rP+E+9i7qCFDg9oYvBckV
+ STDSFT8b3efevjYiwG1nfGT2qByh1KJ0a62/Ld6rIy9W04R+ItavJmR+26GtS1CtfQjdGF/ox
+ mdmzIo/+Mg7i/4fEBYGS4SC/upkVEoFfPInqx1hVxQWT38zIQiUozMM+0xKWp9G3HCzr5aWy8
+ qdEA9N7trWl63jCCP9NNhTrB4zwl6v++foW80Tl0JI1vQ=
 
-Hi Johannes,
+On Sun, Feb 11, 2024 at 08:43:33AM -0800, Junio C Hamano wrote:
+> Torsten B=F6gershausen <tboegi@web.de> writes:
+>
+> > Briam, Hm, I wonder what this function (in path.c) does:
+> >
+> > int adjust_shared_perm(const char *path)
+> >
+> > According to my understanding, it was included into the Git codebase
+> > to work around the missing "setgid" feature in Linux (and probably cyg=
+win).
+>
+> No.  "g+s on directory" is required and depended upon for getting
+> the correct group ownership.  We do not do anything to chown(2) a
+> filesystem entry to force what group it is owned by there.
+>
+> What adjust_shared_perm() does is to counter what the screwed-up
+> umask settings the user may have causes.  If you are a member of a
+> group and working in a directory owned by the group with other
+> members, you want to make sure others in the group can access the
+> files and the directories in the project.  Their umask should be
+> loosened to at least 027 and preferrably to 007 to give group
+> members the same access as you do.  Yet people do not loosen their
+> umask when starting work in such a group owned directory that is
+> supposed to be shared, as it would be extremely cumbersome to do
+> [*].  These users end up creating files with overly tight permission
+> bits, e.g. 0644 or 0700, and we go in with adjust_shared_perm() to
+> fix these modes.
+>
+> You definitely must set up your initial directory with g+s if you
+> are usihng the group-writable shared directory model (which I would
+> actually be surprised to see in 2020---is a shared machine with more
+> than one user-account still a thing???); adjust_shared_perm() will
+> not help you there.
+>
 
-Le 2024-02-11 à 03:34, Johannes Sixt a écrit :
+Oh - I learned something today and sorry for the noise.
 
->> Adjust the documentation of this option accordingly.
->>
->> Co-authored-by: Philippe Blain <levraiphilippeblain@gmail.com>
->> Co-authored-by: Johannes Sixt <j6t@kdbg.org>
->> Signed-off-by: Philippe Blain <levraiphilippeblain@gmail.com>
->> Signed-off-by: Michael Lohmann <mi.al.lohmann@gmail.com>
->> [jc: tweaked in j6t's precedence fix that tries REBASE_HEAD last]
->> Signed-off-by: Junio C Hamano <gitster@pobox.com>
-> 
-> Signed-off-by trailers should occur in temporal order. Therefore, when
-> you pick up a commit and resend it, you should keep existing
-> Signed-off-by and add yours last.
-
-Thank you, I did not know that. I guess Junio should be kept last though ?
-Or maybe  I should remove Junio's sign-off if I send a new version of the 
-patch ?
-
-I'll resend with corrected order.
-
-
-By the way, Michael put you as co-author but did not add your signed-off-by...
-
-
->> ---
->>  Documentation/gitk.txt             |  8 ++++----
->>  Documentation/rev-list-options.txt |  6 ++++--
->>  revision.c                         | 31 +++++++++++++++++++++++--------
->>  3 files changed, 31 insertions(+), 14 deletions(-)
->>
->> diff --git a/Documentation/gitk.txt b/Documentation/gitk.txt
->> index c2213bb77b..80ff4e149a 100644
->> --- a/Documentation/gitk.txt
->> +++ b/Documentation/gitk.txt
->> @@ -63,10 +63,10 @@ linkgit:git-rev-list[1] for a complete list.
->>  
->>  --merge::
->>  
->> -	After an attempt to merge stops with conflicts, show the commits on
->> -	the history between two branches (i.e. the HEAD and the MERGE_HEAD)
->> -	that modify the conflicted files and do not exist on all the heads
->> -	being merged.
->> +	Show commits touching conflicted paths in the range `HEAD...$OTHER`,
->> +	where `$OTHER` is the first existing pseudoref in `MERGE_HEAD`,
->> +	`CHERRY_PICK_HEAD`, `REVERT_HEAD` or `REBASE_HEAD`. Only works
->> +	when the index has unmerged entries.
-> 
-> Unfortunately, this patch does not help gitk. Gitk has its own logic to
-> treat --merge and needs its own patch. This hunk should not be part of
-> this patch.
-
-Ah, you are right. I assumed it just used rev-list under the hood, but it's 
-not the case for this flag. I'll remove that hunk.
-
-
-Thanks,
-Philippe.
+>
+> [Footnote]
+>
+> * Unless, of course, you use some sort of "hook" in the shell to
+>   notice you switched to a certain directory and run command
+>   there---some people achieve this by aliasing their "cd", "pushd",
+>   and "popd".
+>
+>
