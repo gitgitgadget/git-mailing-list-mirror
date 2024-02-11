@@ -1,114 +1,113 @@
-Received: from out4-smtp.messagingengine.com (out4-smtp.messagingengine.com [66.111.4.28])
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9E1F5A102
-	for <git@vger.kernel.org>; Sun, 11 Feb 2024 17:10:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=66.111.4.28
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A6955B66F
+	for <git@vger.kernel.org>; Sun, 11 Feb 2024 17:17:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707671451; cv=none; b=jmTmyNmcISGMheFuPLZXOmjkcEuQKLelAB0WDOmbAqjqpH0rnpb34GyNEZzGtq6XkXg6tJKyQ8k0YD9HStfC5Kwa41BYdqaAfx2OWXgSCWa19DEp+QHHw2mPWiz8sQnMglFN5S+M3A7ce0L9MPQRJZqCOe9lVapEewu4fNBDmso=
+	t=1707671852; cv=none; b=jN6N2Vd5zNtmgAsS9UWiLxMP28zWL2ENsXYUwsRrj+JebVVQLGJWFGx4SRgkEMaCQREijgUuC03WZS+ggbX9l6j9p3twx3xwEII2qrawT17zRLT42fEYfq3zTErwCXEtK3vAy15ERwDRWSXJm4TFZeIKSuAe9YSvY419s37+g30=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707671451; c=relaxed/simple;
-	bh=A0jWtUfuEsoIudncw0T/La3ZzYoxvDPRMNnuo/96e7Q=;
-	h=MIME-Version:Message-Id:In-Reply-To:References:Date:From:To:Cc:
-	 Subject:Content-Type; b=P1OBUhtqRdrvw4fJH7oy2nZuLo/NKvAHsTjN7tveu/EQht7a5J0IN/xe9lE6EfR9j2RcAIjLTQ2QJMdTYvhfCxaQ9U27QkSqWBBGsysds74WtbGyx8+OKrP+BhM29zRoYbplNw6xwiAfCu5XGc7ssLuYN5vEi0EB04QxhDI1AqU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=khaugsbakk.name; spf=pass smtp.mailfrom=khaugsbakk.name; dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b=SEnQo7g9; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=aIdrMEB1; arc=none smtp.client-ip=66.111.4.28
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=khaugsbakk.name
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=khaugsbakk.name
+	s=arc-20240116; t=1707671852; c=relaxed/simple;
+	bh=W+RG9e3CK5hsbQ1SkkHGjpoP6+kojEcTxA9+ZtYvGq4=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=pibzLpOX1YFmlfEiDxd7xG7s43sE0xCMk7If/rT/Wk1tYhkBAcb0GO8M6lIuS7oOCzfgK0SIi24+d03WOgL1uRs/yi+mFavtmzUxlQCbrrBEHgw7ebr8picO02tF78Z42G4LOK1qslBvz0590OfDaKNBy9Uh/Mfn//NiTQ2Lzck=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=PBp3h4q2; arc=none smtp.client-ip=173.228.157.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b="SEnQo7g9";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="aIdrMEB1"
-Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
-	by mailout.nyi.internal (Postfix) with ESMTP id B3D995C0066;
-	Sun, 11 Feb 2024 12:10:48 -0500 (EST)
-Received: from imap49 ([10.202.2.99])
-  by compute1.internal (MEProxy); Sun, 11 Feb 2024 12:10:48 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=khaugsbakk.name;
-	 h=cc:cc:content-transfer-encoding:content-type:content-type
-	:date:date:from:from:in-reply-to:in-reply-to:message-id
-	:mime-version:references:reply-to:subject:subject:to:to; s=fm2;
-	 t=1707671448; x=1707757848; bh=nXwfEtiLA8Wyx3XqZJp1YOWC9Xnyzx45
-	aLVyQB70BB8=; b=SEnQo7g94BALVAzz4zyTJZ7COsMfDnNBseOPigdyJ99oV/AG
-	Aqu1DT/8bYycXC1pihSKFnxfaGHFZiEP/3O7SNd3oL4m/aBpEgteyvNebMypmU6M
-	MdN27FfndpUa0/eP6Eu5gE6PKV8qzmBFfh+m4m6jTf6rZeR7mxWqVoCrPkoXpLGm
-	BHg7EwTZXZytM3jpk0Qn2hIt6ApwNY6/gGSqqAFCzXAFAoKnCupd7pLTrK3U/02W
-	EU+heVWY4xxw4tR5uMwjG1ZW9F+dsphtfnNLSq5DIyD3tKeW8uy0Q4Jw89FTPLnz
-	VaWWyFTSJ3+srdE4Jvq0rgFbGBPQa/pnQnaSqg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1707671448; x=
-	1707757848; bh=nXwfEtiLA8Wyx3XqZJp1YOWC9Xnyzx45aLVyQB70BB8=; b=a
-	IdrMEB1kOPi+4wO6ykRzFYODuKRwQL4gde+rAUEMWQePP27z/CI2XWxFjpVBC+NK
-	LcxI9iVcEf8hmIGizk315Yp2bYZUvqFXk+mKQOE+wJ3e3QvClDC40AY+hyo6JBZY
-	IMR6jdTYYjVezU3zpNN5Brv6Jz3HT3cCdcL6QPBewgG8GggxBpVrI/EqY335NyI2
-	oQqi1krBLWdqm14W54RXuqK5P4ekgxxP0DcNZwiFIqJl9gWKNrXc6J5k8ZG72ezz
-	DimCSNeAdteo6wwiNSvATYGlYvqcac+n58/p+3wzGH8dFiZSqYVLZrLx9sh/f2V6
-	kLeYR0z2laP0IINBJZO2A==
-X-ME-Sender: <xms:mP_IZTq8esi9sbtSPkLUDLAhHQcLmMwVhcO5cPAA2MoRQ-kaqEJqx_8>
-    <xme:mP_IZdpczLqoXUUuQF0AJljonrSDYiLoirwDE3Z3IpiQiQ8i2jZG-QuYqNpV19oJm
-    FwvHCHUZpo9_nR7Jg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledruddugddutddtucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    cujfgurhepofgfggfkjghffffhvfevufgtgfesthhqredtreerjeenucfhrhhomhepfdfm
-    rhhishhtohhffhgvrhcujfgruhhgshgsrghkkhdfuceotghouggvsehkhhgruhhgshgsrg
-    hkkhdrnhgrmhgvqeenucggtffrrghtthgvrhhnpedvveehiedufeehffdvteeuveekhefh
-    leeigfektdeifeduteeuheeufeetffefudenucevlhhushhtvghrufhiiigvpedtnecurf
-    grrhgrmhepmhgrihhlfhhrohhmpegtohguvgeskhhhrghughhssggrkhhkrdhnrghmvg
-X-ME-Proxy: <xmx:mP_IZQO9x8DYmtES-mSDf0SDEzHxMRYD25owJQ6tScipHrir1w121w>
-    <xmx:mP_IZW6Yg6aI6kP8US4vjcns4ea5PPmo8gbPrUiJ6RCggBO7u3OjDg>
-    <xmx:mP_IZS5_pkYyc2BM9mcN_Sn9O8WPAZ8O89hWjQx3khCK9dTGzmAAbA>
-    <xmx:mP_IZSEE5TSMXiDTEQBwqkR6KAzwj7spg5ClQG7Z50LajSEq2LQLRg>
-Feedback-ID: i2671468f:Fastmail
-Received: by mailuser.nyi.internal (Postfix, from userid 501)
-	id 77D5D15A0093; Sun, 11 Feb 2024 12:10:48 -0500 (EST)
-X-Mailer: MessagingEngine.com Webmail Interface
-User-Agent: Cyrus-JMAP/3.11.0-alpha0-144-ge5821d614e-fm-20240125.002-ge5821d61
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="PBp3h4q2"
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id D275A28BBF;
+	Sun, 11 Feb 2024 12:17:30 -0500 (EST)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=W+RG9e3CK5hs
+	bQ1SkkHGjpoP6+kojEcTxA9+ZtYvGq4=; b=PBp3h4q2WZ4q+/SHLw7GutiVnz16
+	bsQOYwcPInFFfjhe1QrV6i8bR7XTB+p6nyMG4PwhHh5Ql4oafnMJo8G1JUuqApSy
+	u2uvuqIYZkn0YGDv5mZopHX8jLhFpYXiOfygxkJNFWEyIQReqfLrHTUOPaEFXmPd
+	7dTsAzL14F/cTsc=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id CAFAD28BBE;
+	Sun, 11 Feb 2024 12:17:30 -0500 (EST)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.165.85])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 74E6628BBD;
+	Sun, 11 Feb 2024 12:17:27 -0500 (EST)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH] ci: bump remaining outdated Actions versions
+In-Reply-To: <pull.1660.git.1707652357696.gitgitgadget@gmail.com> (Johannes
+	Schindelin via GitGitGadget's message of "Sun, 11 Feb 2024 11:52:37
+	+0000")
+References: <pull.1660.git.1707652357696.gitgitgadget@gmail.com>
+Date: Sun, 11 Feb 2024 09:17:25 -0800
+Message-ID: <xmqqplx29aze.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Message-Id: <9c00311d-e31c-428b-9c66-fef7ac8bfc76@app.fastmail.com>
-In-Reply-To: 
- <CAPx1GvdDvmBmvoktd7onB4mSzikKf4eWVWnrzrn8c8Y1RcRgsA@mail.gmail.com>
-References: 
- <AS8P189MB21977ACC4866D9836DA29082BC4B2@AS8P189MB2197.EURP189.PROD.OUTLOOK.COM>
- <76688ed2cc20031d70823d9f5d214f42b3bd1409.1707501064.git.code@khaugsbakk.name>
- <19119aa6-9a8c-44c6-af79-0ea6a8bcb181@app.fastmail.com>
- <CAPx1GvdDvmBmvoktd7onB4mSzikKf4eWVWnrzrn8c8Y1RcRgsA@mail.gmail.com>
-Date: Sun, 11 Feb 2024 18:10:26 +0100
-From: "Kristoffer Haugsbakk" <code@khaugsbakk.name>
-To: "Chris Torek" <chris.torek@gmail.com>
-Cc: git@vger.kernel.org, "Tiago Pascoal" <tiago@pascoal.net>,
- "Junio C Hamano" <gitster@pobox.com>
-Subject: Re: [PATCH] column: disallow negative padding
-Content-Type: text/plain;charset=utf-8
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID:
+ 6E220000-C901-11EE-B5EB-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
 Content-Transfer-Encoding: quoted-printable
 
-On Sat, Feb 10, 2024, at 10:48, Chris Torek wrote:
-> On Sat, Feb 10, 2024 at 1:46=E2=80=AFAM Kristoffer Haugsbakk
-> <code@khaugsbakk.name> wrote:
->> I forgot tests.
+"Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+writes:
+
+> From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 >
-> You presumably also wanted the `_` here for gettext-ing:
+> This avoids "Node.js 16 Actions" deprecation messages by bumping the
+> following Actions' versions:
 >
->> +               die("%s: argument must be a non-negative integer", "p=
-adding");
+> - actions/upload-artifact from 3 to 4
+> - actions/download-artifact from 3 to 4
+> - actions/cache from 3 to 4
 >
-> Chris
+> Helped-by: Matthias A=C3=9Fhauer <mha1993@live.de>
+> Original-commits-by: dependabot[bot] <support@github.com>
+> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> ---
 
-Yeah, thanks. You probably saved me a v3. :)
+>      - name: Upload failed tests' directories
+>        if: failure() && env.FAILED_TEST_ARTIFACTS !=3D '' && matrix.vec=
+tor.jobname =3D=3D 'linux32'
+> -      uses: actions/upload-artifact@v1
+> +      uses: actions/upload-artifact@v4
+>        with:
+>          name: failed-tests-${{matrix.vector.jobname}}
+>          path: ${{env.FAILED_TEST_ARTIFACTS}}
 
-Although I failed to notice that the string I stole was just a plain
-string, not a translation string. And apparently there are no generic
-=E2=80=9Cnon-negative=E2=80=9D translation strings. So I=E2=80=99ll just=
- make a new one.
+Curious that, among all other uses of actions/upload-artifact@v3,
+only this one has been using @v1, which may deserve explanation.
+The proposed commit log message pretends that this never existed.
 
-Cheers
+Please drop a non-standard "Original-commits-by:"  trailer, and
+instead mention what you wrote under three-dash line about the
+dependabot in the log message.  Perhaps something like...
 
---=20
-Kristoffer Haugsbakk
+	After activating automatic Dependabot updates in the
+	git-for-windows/git repository, Dependabot noticed a couple
+	of yet-unaddressed updates.  They avoid "Node.js 16 Actions"
+	deprecation messages by bumping the following Actions'
+	versions:
+
+        - actions/upload-artifact from 1 or 3 to 4
+        - actions/download-artifact from 3 to 4
+        - actions/cache from 3 to 4
+
+	Note that one actions/upload-artifact@v1 was used in one of
+	the rules because ...
+
+        Helped-by: Matthias A=C3=9Fhauer <mha1993@live.de>
+        Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+
+
+Thanks.
