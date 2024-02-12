@@ -1,165 +1,118 @@
-Received: from fhigh3-smtp.messagingengine.com (fhigh3-smtp.messagingengine.com [103.168.172.154])
+Received: from out4-smtp.messagingengine.com (out4-smtp.messagingengine.com [66.111.4.28])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2178A6FAD
-	for <git@vger.kernel.org>; Mon, 12 Feb 2024 06:51:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB3B95C9A
+	for <git@vger.kernel.org>; Mon, 12 Feb 2024 07:06:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=66.111.4.28
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707720712; cv=none; b=fOAb+5KtfGOUakkJFQuFouCadU4PRX9plfkZwT/9wtB+tAnGxJCgnwAQryYVfTE1oK0sDsrIDdsEy/y1xbY+VCDg8+BlSV3v5BLPZ2DZ6P2ehn16foiNINYxwD3VI/K6a1WxWwXyOchNYjmVSQLcWDEiipY760xEanzJmc6MdLg=
+	t=1707721570; cv=none; b=FKi9PS2c70o7etrsLiCSwXIUmEK7GhnkPh7KpuX9j4uU0DvA2AyOoQGtvl9dLBqm8XV5ujr/i0IjjLnmDj07ejpdWU4T4QQ47noPRnUBQuugam+H6MfyuO/RSIUw6PSjCx/cExLfl7UY3rq4sZ29UDwLFEUKjiv/1JasDtpaZgc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707720712; c=relaxed/simple;
-	bh=1pghuh9/d8Iz8QpETohOdmA92/5DEfN2BD5lBA86t+A=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=UyNNXtXYPUhRsnqdst/x7pg2hLmKjegsi1Qziorbw/Bo8sQC7l3T0vV7qpNpNa7Kw+xw/dY2ItkOolbCGu/WL7jnzYtofaGY2msfdc7DlnI3/YKbZxv3btiAdI/da40LcvrPpFPOy/FufLZl+KR36pzbYxDeyGQ7qMMbVRCfN6I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=DnL8+H3Z; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=eE0RMBRc; arc=none smtp.client-ip=103.168.172.154
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1707721570; c=relaxed/simple;
+	bh=NK7mmiv7q0H80pG74oCVRHB/HLB8ElYn1a4qI7uFot8=;
+	h=MIME-Version:Message-Id:In-Reply-To:References:Date:From:To:Cc:
+	 Subject:Content-Type; b=S7p2jBKNezKMiygpvqbt1JevwlBit5WdVvqgevWeZFC9l1TXLHfeZkiBxuLwnMVX/VN2cA8w8QRW7iAk2etEEP5oYJMddMid0r4QIASFOqptqvYBH+pBtOgceCb3sy9wT1mETQG/o8CWblOg6icGrG0MeTRyg4uTyr8Xv5uklL0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=khaugsbakk.name; spf=pass smtp.mailfrom=khaugsbakk.name; dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b=XBNUL+6S; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=eDdRV8zI; arc=none smtp.client-ip=66.111.4.28
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=khaugsbakk.name
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=khaugsbakk.name
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="DnL8+H3Z";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="eE0RMBRc"
-Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
-	by mailfhigh.nyi.internal (Postfix) with ESMTP id ADB171140087;
-	Mon, 12 Feb 2024 01:51:47 -0500 (EST)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute4.internal (MEProxy); Mon, 12 Feb 2024 01:51:47 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1707720707; x=1707807107; bh=fQCbIaC02k
-	gBb9slCEbh6yIT531SQ+NLNrB4eH/HGzM=; b=DnL8+H3Zy84nT6vRIk47sk78RV
-	Cl3gcr6yt5IsC/g9++TjXepwEOzV6v6dP8co1MxjympBXfohMRE21UQOqvRYPRW4
-	PWiwrt0e3hI4xQwiEcsmU2X/TCo2oM7nd+X9MLUNK7QCD0AVTZu7Ic3odyL6lJl/
-	O3Q+18OcNe6D7eSdjHaGkn+/noujWHWy9CCHXesunFMpEXB4wHQ3AB/hsJgYGUTd
-	WAXgm6SL4D97ctTN+7vAUAb9qn1uHsvTOgJfGupsWm64kjypc4Q74t6OnWzEL+UA
-	DEQIUteNZaaklMLFMcKRJOxeH3LjxcTqIUj2cMEiCvehArf2I7BcmuQQUWsQ==
+	dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b="XBNUL+6S";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="eDdRV8zI"
+Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
+	by mailout.nyi.internal (Postfix) with ESMTP id DB6EE5C0054;
+	Mon, 12 Feb 2024 02:06:02 -0500 (EST)
+Received: from imap49 ([10.202.2.99])
+  by compute1.internal (MEProxy); Mon, 12 Feb 2024 02:06:02 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=khaugsbakk.name;
+	 h=cc:cc:content-transfer-encoding:content-type:content-type
+	:date:date:from:from:in-reply-to:in-reply-to:message-id
+	:mime-version:references:reply-to:subject:subject:to:to; s=fm2;
+	 t=1707721562; x=1707807962; bh=bhEWxg7vGGSv2/5yJ6KCI0vJZMIO/Ktd
+	yLQ6vcjZRRE=; b=XBNUL+6SnC4L97+Z7VaBXB0rZ3i2Mk6cdClzMPOVr2eeHcxf
+	QlhwQBKLxldujlcM4pdXZPWxUx4KXnNN8GS/OBdXxr+UIlT6Z8yZ+o1jhrMW56gr
+	v5yohNqL0HMyCBsVpMnq1bXHovJ8tTXMaCONDaKIuB31aliuacH3TpiT6TjhbT35
+	o7gKwyeCkU83GY8xCCNezGlEEeVlCNnVwZ+KM5Br0zrpSZSDmAV8kWKhaayJmRCM
+	IJDZCLL++FhQwuw7H9s80X2NPL3BESpgKL9yEzDnR/+8fqZsDDja6jlZ7Ljf+DRW
+	pCiodxlToPugEOON4ldZg/7BoMu2BUa2dsUhww==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1707720707; x=1707807107; bh=fQCbIaC02kgBb9slCEbh6yIT531S
-	Q+NLNrB4eH/HGzM=; b=eE0RMBRcPy8wXKV0IJYwJZQ3GrX1SmVPEn1AGjEkHp7e
-	IZvoVqG5m7kdZVnZ9QzEmO1rzPO8f5QUcJN/0F7KYTQAFxX60go6ZlX3qpusa0LZ
-	Yw130bx9fUIGqYTM7LGA7A0D2WliVmDU6YAFjC47R+fRXYIaHVjj8V+qMfFdP+c4
-	x97IwO8LLVD/4iwjNanH5B9RuLKviZkTa0Cv5loYIGJDjt0aIuUMD/u7vSTi3vLT
-	fhtKGJVQB8BhDHdjmVvMT2sjeX6S8XdWCg8Xbs4P5CcPVumXYw3YUUPCdK6/tidi
-	TmfOCQVsyEXmdpX5kKVPg/DUzmz18wofEY3H6+ButQ==
-X-ME-Sender: <xms:AsDJZRszNoTJ9lu_liQpjgLHmYVaXB1lad2ADNWUZ41i11bEXALitg>
-    <xme:AsDJZacg2MuRFQcKPgBS2ElEaSZcRhcsyVgMjXvFBgL_EodXYUWLpUfLuWWjRAlbc
-    5ynxlv7B71oqZAVSA>
-X-ME-Received: <xmr:AsDJZUxJsNtgkmgGHV-lTpOZhE6sS02bkljshmVnQGO2nTaU5-odfzLT9ufUlPn_brD76jIAcapZRrxXHPdAkym3RY8CSKdKngY15j2FpZrBoro>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledruddvgddutddvucetufdoteggodetrfdotf
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1707721562; x=
+	1707807962; bh=bhEWxg7vGGSv2/5yJ6KCI0vJZMIO/KtdyLQ6vcjZRRE=; b=e
+	DdRV8zIbbrsoB2RQJsnjNpOEijeXsLWx2HVEqwUhuYD9UOR2AEIFFQB6GI3GFV1h
+	KbHsDzw9+Ydawi6Jy/qgFGQNspis5OSC/Z/p/ct4AypNDRQESuWv226eJdYzx7HT
+	0t/8p7YG3sjv1DSEs5xA8GjXGlseMY+QVcyfubljpPDv6mMFKEgGydRClkB9wmVB
+	LOPQZjMh0pn7RJBbndglRaL9PTYstq6fqZODbH/jnfcdznwAnp7uvIwM3HUnU7DA
+	bRTjbEypIBqUZhIa9k9T7qW9pGu29hjOWXF6X/DnLEH+8Ue6dFLuDh7iGzbVGhMx
+	138wFD66LKit/leGU6v1A==
+X-ME-Sender: <xms:WsPJZTMcYX7vwKc9mpVkDbtApPAvG9zrBPSJ5b3L61RnvpWeHLZEKyk>
+    <xme:WsPJZd_vqI-GGw_vQki-foIYFtFNsRsCjr4HXGfldfjxpy7oZjmJ26KxtdAHxLr0v
+    vXkwJZeG3VKva-5qw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledruddvgddutdehucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
     uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    cujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtvdenucfhrhhomheprfgrthhr
-    ihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvg
-    hrnhepueektdevtdffveeljeetgfehheeigeekleduvdeffeeghefgledttdehjeelffet
-    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
-    hpkhhsrdhimh
-X-ME-Proxy: <xmx:AsDJZYPp3KqfiQxd7hRSv15DSmBui4pVwjkZKKbFNowCVhsRjpZFuQ>
-    <xmx:AsDJZR_j4lRdNVetbqbMRYGaJAef7D-ZQt9Zt8jUoTDOA8yYeq_e5w>
-    <xmx:AsDJZYUqI8CHCzVxpFMVbJs16-EILzuEHWXTzvcM5nwo52W4yUCSGw>
-    <xmx:A8DJZUmTQujaSoU9aChpfIa8IfnXZ5A382PayJxtR208fvNjerQHUA>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 12 Feb 2024 01:51:45 -0500 (EST)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 4c2cadc7 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 12 Feb 2024 06:47:56 +0000 (UTC)
-Date: Mon, 12 Feb 2024 07:51:40 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: Karthik Nayak <karthik.188@gmail.com>
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Phillip Wood <phillip.wood123@gmail.com>,
-	phillip.wood@dunelm.org.uk, git@vger.kernel.org
-Subject: Re: [PATCH v3 4/4] for-each-ref: avoid filtering on empty pattern
-Message-ID: <Zcm__DROE3hKsfRX@tanuki>
-References: <CAOLa=ZQzz7_L_9cBmK+pgFwd_DFqfWDVRiaZMAxU+54kBq6Pcw@mail.gmail.com>
- <xmqq1q9ocje3.fsf@gitster.g>
- <CAOLa=ZQaXxwrXmbmFvGR59EDo3Eqa-Xfc3OG9+6ES-veDU8Bhg@mail.gmail.com>
- <ZcSVx4slikt4xB3D@tanuki>
- <xmqq7cjeq43t.fsf@gitster.g>
- <ZcUOP_rWUwymhe5c@ncase>
- <xmqq34u2onaj.fsf@gitster.g>
- <ZcXddvQzlt6j7T7L@tanuki>
- <xmqq8r3timnr.fsf@gitster.g>
- <CAOLa=ZS3y=K6SCEoC7hZSi7vhAT1-W4fAzPb3rYaBbGcqO5Cyw@mail.gmail.com>
+    cujfgurhepofgfggfkjghffffhvfevufgtgfesthhqredtreerjeenucfhrhhomhepfdfm
+    rhhishhtohhffhgvrhcujfgruhhgshgsrghkkhdfuceotghouggvsehkhhgruhhgshgsrg
+    hkkhdrnhgrmhgvqeenucggtffrrghtthgvrhhnpedtkeduvedthfelueevheffhedvveei
+    ueeiheehudehveegueetteduuddtfeelueenucffohhmrghinhepkhgvrhhnvghlrdhorh
+    hgnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomheptgho
+    uggvsehkhhgruhhgshgsrghkkhdrnhgrmhgv
+X-ME-Proxy: <xmx:WsPJZSTUZG1wEiIt1q7YqNLeI242jqEPvIPP0ajhKgJaHIzpoZ3qGQ>
+    <xmx:WsPJZXsXmjgYFX6Q5-bWvflh7j7W9scRnyV-TJi2X6W9YGgsvsDLiQ>
+    <xmx:WsPJZbdFXBZh8QEehPcYE3g6CwYGb9g7rEudTb_YlNFCols9Rze9FA>
+    <xmx:WsPJZX6lZ_k5qxVVUDSVKulS7fRLu-Ne-nOywPCDLwTanBHtIglfbQ>
+Feedback-ID: i2671468f:Fastmail
+Received: by mailuser.nyi.internal (Postfix, from userid 501)
+	id 9AA4715A0092; Mon, 12 Feb 2024 02:06:02 -0500 (EST)
+X-Mailer: MessagingEngine.com Webmail Interface
+User-Agent: Cyrus-JMAP/3.11.0-alpha0-144-ge5821d614e-fm-20240125.002-ge5821d61
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="TlW8wPx5jqF+EdRR"
-Content-Disposition: inline
-In-Reply-To: <CAOLa=ZS3y=K6SCEoC7hZSi7vhAT1-W4fAzPb3rYaBbGcqO5Cyw@mail.gmail.com>
-
-
---TlW8wPx5jqF+EdRR
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+Message-Id: <9582509b-9569-4321-a2b0-e5b33c2d550c@app.fastmail.com>
+In-Reply-To: <89d32a5f-b5ab-4773-bd9f-d33b4e348e15@gmail.com>
+References: 
+ <76688ed2cc20031d70823d9f5d214f42b3bd1409.1707501064.git.code@khaugsbakk.name>
+ <1c959378cf495d7a3d70d0c7bdf08cc501ed6e5d.1707679627.git.code@khaugsbakk.name>
+ <89d32a5f-b5ab-4773-bd9f-d33b4e348e15@gmail.com>
+Date: Mon, 12 Feb 2024 08:05:40 +0100
+From: "Kristoffer Haugsbakk" <code@khaugsbakk.name>
+To: =?UTF-8?Q?Rub=C3=A9n_Justo?= <rjusto@gmail.com>
+Cc: "Tiago Pascoal" <tiago@pascoal.net>,
+ "Chris Torek" <chris.torek@gmail.com>, "Junio C Hamano" <gitster@pobox.com>,
+ git@vger.kernel.org
+Subject: Re: [PATCH v2] column: disallow negative padding
+Content-Type: text/plain;charset=utf-8
 Content-Transfer-Encoding: quoted-printable
 
-On Fri, Feb 09, 2024 at 06:27:39PM +0000, Karthik Nayak wrote:
-> Junio C Hamano <gitster@pobox.com> writes:
-> > Patrick Steinhardt <ps@pks.im> writes:
-> >> Depending on the answer, I think we can go one of two ways:
-> >>
-> >>   - Accept the diverging behaviour and add `--include-all-refs`. The
-> >>     "files" backend does a best effort and only includes root refs, the
-> >>     "reftable" backend lists all refs.
-> >>
-> >>   - Double down on the fact that refs must either be pseudo refs or
-> >>     start with "refs/" and treat any ref that doesn't fit this bill as
-> >>     corrupted. The consequence here would be that we instead go with
-> >>     `--include-root-refs` that can be implemented the same for both
-> >>     backends. In addition, we add checks to git-fsck(1) to surface and
-> >>     flag refs with bogus names for the "reftable" backend.
-> >>
-> >> While I seem to have convinced you that `--include-all-refs` might not
-> >> be a bad idea after all, you have convinced me by now that the second
-> >> option would be preferable. I'd be okay with either of these options as
-> >> both of them address the issue at hand.
-> >
-> > For now my tentative preference is the latter.  If ref/head/foo is
-> > an end-user mistake with one backend, it is cleaner if it is
-> > considered a mistake with other backends.
-> >
-> > Doesn't our ref enumeration/iteration API have "include broken ones
-> > as well" bit?  I wonder if this issue becomes easier to solve by
-> > (re|ab)using that bit.
->=20
-> I'll then go ahead with point 2 then.
->=20
-> I'll modify my patch series for now to fit in and will follow up "checks
-> to git-fsck(1) to surface and flag refs with bogus names for the
-> "reftable" backend" in a follow up series.
+Hey, thanks for the review
 
-Thanks. Note that the fsck checks are also proposed as one of the GSoC
-projects where you're listed as a mentor. Might be worth it to hold back
-until we know whether any student wants to work on it.
+On Sun, Feb 11, 2024, at 23:47, Rub=C3=A9n Justo wrote:
+>>  	if (argc)
+>>  		usage_with_options(builtin_column_usage, options);
+>>  	if (real_command || command) {
+>> diff --git a/column.c b/column.c
+>> index ff2f0abf399..c723428bc70 100644
+>> --- a/column.c
+>> +++ b/column.c
+>> @@ -189,7 +189,7 @@ void print_columns(const struct string_list *list=
+, unsigned int colopts,
+>>  	memset(&nopts, 0, sizeof(nopts));
+>>  	nopts.indent =3D opts && opts->indent ? opts->indent : "";
+>>  	nopts.nl =3D opts && opts->nl ? opts->nl : "\n";
+>> -	nopts.padding =3D opts ? opts->padding : 1;
+>> +	nopts.padding =3D (opts && 0 <=3D opts->padding) ? opts->padding : =
+1;
+>
+> This changes what Junio proposed.  Is this on purpose?
 
-Patrick
+Yes https://lore.kernel.org/git/3380df68-83fb-417b-a490-71614edc342f@app=
+.fastmail.com/T/#m63ca728414def19b7a0c83ec76a8c1f2de68ffbb
 
---TlW8wPx5jqF+EdRR
-Content-Type: application/pgp-signature; name="signature.asc"
+--=20
+Kristoffer Haugsbakk
 
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmXJv/cACgkQVbJhu7ck
-PpQAVA//a5HIZT+qLpMe4YKNAC4o1UYGXHE4Y1HL91KhPPvzumzO0hdG8Hl3amUH
-7Qf3ofGnrasJbDXaJB/cdmJirJYnq2I78QK8vON0toanjaseG4cHAa7n3hgL/p1J
-G1VCOzPwA0xV9PbVf1Bw1N+kVIWRXd9jjudP5ikx8oW+jYEO8UJPbFodAJK81DWp
-EwS8EH77g/B7uUEytgRx3ScI1ppn/DM1EKW5FlLeKU3ZJ/9Prceom+1nJeh/Nh/g
-S66NEJOQ7sLxMjzx4yAVaHHBSjFLldCVtyR7XRnOWC6rFZeu5Hm92kOj6I103+ay
-988ofQqwYhPGBmVeLDEfpSBlEnFxMj78r4kWD7NWNEaqFsVMCYNnTqc2RrKQvJYu
-cV7WOraNLiVTzeDV4TV2ue5sHozzlNWtuUl2ti3uScPhjVwBzbmIMcegSKc1lRsX
-p81bvyzDzXlbJ+q3xZRH2koJpHMTCXD1J7fIuFq8QA7MXM9p2U+M9GI9K8lE+Xtj
-9+04Bd3z21SuY9Ip/Iuqs9HKGjgZrXVk44kIcLc0WLT5gOuyNZEmYgPeqCrV/66m
-hoWkxv/BScUp8gh4TRkaBpMTC6sPKo7fWsWjx0euqF+XOFZuiMmHN8CJukx4k/6R
-JluUSLgT7uFk/bE5Ju1BYxz9iXHiVLmHicQh5gSvONfPkpRKYK4=
-=9cfB
------END PGP SIGNATURE-----
-
---TlW8wPx5jqF+EdRR--
