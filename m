@@ -1,83 +1,155 @@
-Received: from mail-vk1-f171.google.com (mail-vk1-f171.google.com [209.85.221.171])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A09563E485
-	for <git@vger.kernel.org>; Mon, 12 Feb 2024 17:18:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E256A3EA74
+	for <git@vger.kernel.org>; Mon, 12 Feb 2024 17:19:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707758312; cv=none; b=jiCKbAqyquGeB7b66t5YHH9RYxLytVTA1EJQxb56L2mRy9nc3/9PdE/YN5/wGPkFr/Wnsad1kBU+o6SKd6QBcquuyRXRe5bClOXHJcTSXogE9WXJHoA3TYJLQLvfmYKmTZwu/33raOxotXigAgK03KmdilyDtq1gTdZxIXRQghM=
+	t=1707758367; cv=none; b=GPQq5nLZDo0VGu05zg2GmOzrHELBo9jMpfFwEoLWcK1xd6B84NRLcYjgO9GXv5n4fjqPBSoDfBv+ejCSkgEBRAPLigmmd/OxbOWa/BgNqT2xDjTsJlk4HzlsVmGHF2NFdYVcLIsip6guup8vpy/FA+zGiccwQYnT8hA8uO1/bcE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707758312; c=relaxed/simple;
-	bh=rgm3suO2ad+3ivL90APDk1qg31/fN5Jo+MlKnWTFezk=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Content-Type; b=Zy0VMfa/KvVWYkFit4STqtYfDiRydgl893WPlJXGVahDCBgDJmiqBrfKRSvH0XRWaml0evu13KkboIsQZb2VpkyPbLMTWSmxH0KwwpBTyr3PEfVIdWs0SLb1BiqK4p0WMnPthca4OupTiUJt50/WHYjt78kskP4i77cD7BoasLY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=TanNRIZP; arc=none smtp.client-ip=209.85.221.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1707758367; c=relaxed/simple;
+	bh=GgzAOFIg4YJikB49gmxd+AokSOoBNbn1+xJq2dSnR/0=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=DYP//1Qtn6I1AnqUz/J/pwL9Pya+bO+4rJ9sbD0YHkUw1DS12/tDdPh02ZOlUsKnLNRwLFOKJInO6FCaukbT78mv9/rgXSOJnhW34TBciCEARbIlDPyswMBvQ2cdcoLgFeuPNTcSyaL5+Ta4bUVckkfWL90G1j8IoFyngVKa1lI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=uTlpK7jt; arc=none smtp.client-ip=173.228.157.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TanNRIZP"
-Received: by mail-vk1-f171.google.com with SMTP id 71dfb90a1353d-4c081a0d56eso83104e0c.2
-        for <git@vger.kernel.org>; Mon, 12 Feb 2024 09:18:30 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1707758309; x=1708363109; darn=vger.kernel.org;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=ag3/nCkdPt6XBEAaeV+aFn7UYaiymrfRo0tNrw86h0s=;
-        b=TanNRIZP0aXGK2TafKOP3Tv9zr7HJbgIm13eg0wgQjglsm+w+J4gxf5i0cu1P0uN6L
-         zAMnjJn90p2cwBcQYhwWDR1l49D+WVP3x7QTKHvv8oSzSQM3uIwqwadO15acMNIaXcBk
-         NQHZjyGslhNYyh/rIrFhy5yJyjoaP0X/gNDIXN4PXzq94zIsWdkH8W+b8e2GX1VQTsWD
-         x4swsyJvBnU9wvMUsE7cF78+mRHpOjdo2ZnmuwYCY2cYwdhDomXJIhFB4LBQ5Fr0mkHb
-         jLiYxIs4VZBVJ2m05fcBD7V/nBhFFKTT0uPB4Y2TkfO1ccvl+OzsYtMjSOeQbj81Uvky
-         0tuQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1707758309; x=1708363109;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=ag3/nCkdPt6XBEAaeV+aFn7UYaiymrfRo0tNrw86h0s=;
-        b=d/+vGH/xBZVjW3WMSstUjXdIYjxr+uQ6UfvM5kphh1EFfJz/aJsCeBRTduUAdqqoO8
-         kGyv215u6d9LQ46j1ZIEV+EFVTviQ5Picz7sM5DW4pvx88Rdvci9BB+mzyEw3yGf0rt/
-         HIqHgWWsL+lgM4JhEwwAyBRG87+sV1mvPe2dc88cQD7AnOM5dxXnpVZ65AYDiauBfNRh
-         /kRDzFd4y8EU/vg0/Roud5lk+H+lZ7r/YTE3hUCUjCY5oqhaU6A4KZIivUPyPoobSI+o
-         dm1fcql3c14pwfiCXz5YbaH1Ck16hUAw5KbVBPta8W7PcuB38m8yoj23ux/PFwxX1ufu
-         u+qQ==
-X-Gm-Message-State: AOJu0YzVnb2P3o4dTy3BVnfP5SsZSkgwN5GxGC6KMqDuaQpNCSMRABq4
-	gxERj2aHnS95mPrEwZ1+xDeDEFYttVCIVWY1Mi6IMO7L1sci8y3Iae7CjSZLgl/yfF0k2rzRaJF
-	t3vYAVLwy5EzrEAJ6nOHF1Y8uQxz1C6lrq6U=
-X-Google-Smtp-Source: AGHT+IEDlqknzX+EKr+iUmEeAN1P9XbmSaRrdRM2tdyejG6EKUSA7IOdWqzRLeckLtgwDk2zc7x7/sVW1DxFhLvu49U=
-X-Received: by 2002:a67:f888:0:b0:46d:14ac:da4d with SMTP id
- h8-20020a67f888000000b0046d14acda4dmr4851980vso.15.1707758309301; Mon, 12 Feb
- 2024 09:18:29 -0800 (PST)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="uTlpK7jt"
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id 530562C35C;
+	Mon, 12 Feb 2024 12:19:25 -0500 (EST)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=GgzAOFIg4YJikB49gmxd+AokSOoBNbn1+xJq2d
+	SnR/0=; b=uTlpK7jt1Yl/qKKqKmne8irQPj7sC5D5VwoR8k6VLyyT1eGyWihL+V
+	Nsl1Wvy91lI52pBpoWiDrcZDmmOFpCoxerQnHhsDUH0TrvPJ9de+/ikqmh854aUz
+	vcHdQJl9B7xq0zOLT9laVCDx8qlLDEn2IcOaRpT40uuftGPQhbYqc=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id 4AB4A2C35B;
+	Mon, 12 Feb 2024 12:19:25 -0500 (EST)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.165.85])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id E25BD2C35A;
+	Mon, 12 Feb 2024 12:19:21 -0500 (EST)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org,  Eric Sunshine <sunshine@sunshineco.com>,  John Cai
+ <johncai86@gmail.com>
+Subject: Re: [PATCH v2 7/7] reftable/reader: add comments to
+ `table_iter_next()`
+In-Reply-To: <167f67fad841ad06535a5532088fa6c9125fb1cd.1707726654.git.ps@pks.im>
+	(Patrick Steinhardt's message of "Mon, 12 Feb 2024 09:32:57 +0100")
+References: <cover.1706782841.git.ps@pks.im> <cover.1707726654.git.ps@pks.im>
+	<167f67fad841ad06535a5532088fa6c9125fb1cd.1707726654.git.ps@pks.im>
+Date: Mon, 12 Feb 2024 09:19:20 -0800
+Message-ID: <xmqq4jed7g87.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CABn0oJvg3M_kBW-u=j3QhKnO=6QOzk-YFTgonYw_UvFS1NTX4g@mail.gmail.com>
- <xmqq8r3p7glr.fsf@gitster.g>
-In-Reply-To: <xmqq8r3p7glr.fsf@gitster.g>
-From: Xiaoguang WANG <wxiaoguang@gmail.com>
-Date: Tue, 13 Feb 2024 01:18:18 +0800
-Message-ID: <CABn0oJupUjbu2k0adFqcjryj6=XtmwQzb0vMGtYan8WccPtYxA@mail.gmail.com>
-Subject: Re: Bug report: Incorrect GIT_FLUSH behavior in 2.43.1 (regression
- and breaking)
-To: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ DCC375C4-C9CA-11EE-B7E1-A19503B9AAD1-77302942!pb-smtp21.pobox.com
 
-On Tue, Feb 13, 2024 at 1:11=E2=80=AFAM Junio C Hamano <gitster@pobox.com> =
-wrote:
+Patrick Steinhardt <ps@pks.im> writes:
 
-> > And by the way, only accepting GIT_FLUSH=3Dtrue is quite breaking, it
-> > drops the compatibility of GIT_FLUSH=3D1
+> While working on the optimizations in the preceding patches I stumbled
+> upon `table_iter_next()` multiple times. It is quite easy to miss the
+> fact that we don't call `table_iter_next_in_block()` twice, but that the
+> second call is in fact `table_iter_next_block()`.
 >
-> I do not think so. If the polarity is corrected, git_env_bool()
-> would say "that's affirmative" when any one of the "1", "true",
-> "yes", "on", etc. is given.  If you have been passing "1", you
-> should get the "always flush" behaviour.
+> Add comments to explain what exactly is going on here to make things
+> more obvious. While at it, touch up the code to conform to our code
+> style better.
+>
+> Note that one of the refactorings merges two conditional blocks into
+> one. Before, we had the following code:
+>
+> ```
+> err = table_iter_next_block(&next, ti
 
-Oh yes, you are right. There is a git_parse_int call in
-git_parse_maybe_bool, so if the "flipping" could be fixed, then
-everything should be fine.
+");"???
+
+> if (err != 0) {
+> 	ti->is_finished = 1;
+> }
+> table_iter_block_done(ti);
+> if (err != 0) {
+> 	return err;
+> }
+> ```
+>
+> As `table_iter_block_done()` does not care about `is_finished`, the
+> conditional blocks can be merged into one block:
+>
+> ```
+> err = table_iter_next_block(&next, ti
+> table_iter_block_done(ti);
+> if (err != 0) {
+> 	ti->is_finished = 1;
+> 	return err;
+> }
+> ```
+>
+> This is both easier to reason about and more performant because we have
+> one branch less.
+>
+> Signed-off-by: Patrick Steinhardt <ps@pks.im>
+> ---
+>  reftable/reader.c | 26 +++++++++++++++++---------
+>  1 file changed, 17 insertions(+), 9 deletions(-)
+>
+> diff --git a/reftable/reader.c b/reftable/reader.c
+> index 64dc366fb1..add7d57f0b 100644
+> --- a/reftable/reader.c
+> +++ b/reftable/reader.c
+> @@ -357,24 +357,32 @@ static int table_iter_next(struct table_iter *ti, struct reftable_record *rec)
+>  
+>  	while (1) {
+>  		struct table_iter next = TABLE_ITER_INIT;
+> -		int err = 0;
+> -		if (ti->is_finished) {
+> +		int err;
+> +
+> +		if (ti->is_finished)
+>  			return 1;
+> -		}
+>  
+> +		/*
+> +		 * Check whether the current block still has more records. If
+> +		 * so, return it. If the iterator returns positive then the
+> +		 * current block has been exhausted.
+> +		 */
+>  		err = table_iter_next_in_block(ti, rec);
+> -		if (err <= 0) {
+> +		if (err <= 0)
+>  			return err;
+> -		}
+>  
+> +		/*
+> +		 * Otherwise, we need to continue to the next block in the
+> +		 * table and retry. If there are no more blocks then the
+> +		 * iterator is drained.
+> +		 */
+>  		err = table_iter_next_block(&next, ti);
+> -		if (err != 0) {
+> -			ti->is_finished = 1;
+> -		}
+>  		table_iter_block_done(ti);
+> -		if (err != 0) {
+> +		if (err) {
+> +			ti->is_finished = 1;
+>  			return err;
+>  		}
+> +
+>  		table_iter_copy_from(ti, &next);
+>  		block_iter_close(&next.bi);
+>  	}
