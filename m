@@ -1,214 +1,410 @@
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f42.google.com (mail-wr1-f42.google.com [209.85.221.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7379E45973
-	for <git@vger.kernel.org>; Mon, 12 Feb 2024 19:02:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B0084C99
+	for <git@vger.kernel.org>; Mon, 12 Feb 2024 19:17:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707764531; cv=none; b=UZaEREP0tLP1eQ2ifLLg/vU/aRsvuSQpfPOcTxTUDUE5qkMGLWEUdfqCDbqLkl2o1L8lepL/tjv1JyaE6dsCQnYFYeCa5b55QaNFuqqciyocxsrQw84m+lQFM4x0H6itU8namLhhZ/76QRjEDsvq9JsxanpVxvigJdqHHCE5lBY=
+	t=1707765439; cv=none; b=NYwlrgVQ8SimSdg25jWAcxopt+i8aGNAHYy2lYrPDsQVIRIEeb8awW9/sxX4DzNVbMlYiBop/gPJM0uSYGur1tj/Ui1GZM3O3TRJJnCTOn0+xxl8BElVQsf4/4XXSeaJ9Hmyl77bvYm4jjGf8Vcopxn8CS03yD78iijffVDbdVc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707764531; c=relaxed/simple;
-	bh=LBdzt/YOnmHSk87WwpWydZAMLINwZEeDasaEyfNGr+o=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=VDN+tZzABdSaj8xwkbpfbi3lZKsAlQujywYE6cIvmJrBqoPt7ljAyPnPj5yfnKz6su1aWqgeSVmgWHQ/IixLdocyULaiSiBTF36SKJgHuvqrkEfpqdQ3KTxzfUCLtD6+JUrOmbGvzEg/PdizmA6BORXnL6nxl5QRe5kzfJrcTZk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=jYHB+Swp; arc=none smtp.client-ip=173.228.157.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1707765439; c=relaxed/simple;
+	bh=9L4yE2xmIjK4xKWwqvzHaug36DkWCUSozd3nEWIGff8=;
+	h=Message-ID:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=UcajZez1+tUDAWJj459+ADvsDvxHTcnAFmVXmLg5gDhv7UiRKSB0UfWLZBVpu+bAJatXpfGIWyR/QRKkYKFgULqjokQ1JhhZYLUyCgRM4OFuhJqklUO8WgTyfeeLwQoWhTOymqxhSS73fjlAIzGgnmYxPB7XfiKL5rRSJzJgqLs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ajxEstFJ; arc=none smtp.client-ip=209.85.221.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="jYHB+Swp"
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id E91D92CE41;
-	Mon, 12 Feb 2024 14:02:08 -0500 (EST)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=LBdzt/YOnmHSk87WwpWydZAMLINwZEeDasaEyf
-	NGr+o=; b=jYHB+Swp1kXVQU4uz+e62iB4KwQ9vAf0dr6CJXuWR+a0JFSENxLgLI
-	oVoMImHP3phKjzrdzDJUAYkNMI/KHJ3v9OOAWhtbP1w7F5Nq7mWbUyhjKwUyEZ2+
-	7+q+fv13yBiyMCRcxQsIydPTtqVdhPK8XNdFSvhgIDePGFr/AKUto=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id E16912CE40;
-	Mon, 12 Feb 2024 14:02:08 -0500 (EST)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.165.85])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 86E3B2CE3C;
-	Mon, 12 Feb 2024 14:02:05 -0500 (EST)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: <rsbecker@nexbridge.com>
-Cc: <git@vger.kernel.org>
-Subject: Re: [BUG] git 2.44.0-rc0 t0080.1 Breaks on NonStop x86 and ia64
-In-Reply-To: <010601da5ddd$3dec41a0$b9c4c4e0$@nexbridge.com>
-	(rsbecker@nexbridge.com's message of "Mon, 12 Feb 2024 12:59:31
-	-0500")
-References: <000401da5c4c$fd4ad260$f7e07720$@nexbridge.com>
-	<xmqqbk8nbvqy.fsf@gitster.g>
-	<002a01da5c94$a1bc5340$e534f9c0$@nexbridge.com>
-	<00fa01da5dcd$5b060150$111203f0$@nexbridge.com>
-	<xmqqzfw57hw0.fsf@gitster.g>
-	<010601da5ddd$3dec41a0$b9c4c4e0$@nexbridge.com>
-Date: Mon, 12 Feb 2024 11:02:03 -0800
-Message-ID: <xmqqil2t5wwk.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ajxEstFJ"
+Received: by mail-wr1-f42.google.com with SMTP id ffacd0b85a97d-3392b12dd21so2253474f8f.0
+        for <git@vger.kernel.org>; Mon, 12 Feb 2024 11:17:17 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1707765435; x=1708370235; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=EClPaWXIWy3GA7bTuVQxRnWCNaYtBEnMy2KSoTFiaMM=;
+        b=ajxEstFJRO2BGopo4c9eBM28+at/T74W1wnPM1iklAxq0XS06eLh5ZrfI3he7Ysy2a
+         7LLdutMhv9Jzht8cy03tJB68ugHLN8WP0PuaRI2P+Y83xrj5UkmxefJoTVlhLNOoXFGP
+         lEe0s/iOKkL9QHDH+uXDmR9E98OkrCg/yAxxnisq6fMhqsnzw+zo4i4myLIswoPrrfdq
+         l5S0ZqMW2pOcJvYG/c56YqhWPqNg3+McX2vhTMUNqLHY4VZprcejprznFEu4FyVisatW
+         EvwpaLkeAZODN3o+VOGjLJ5Phgt+Hl/iRZ8eBbtRcthrBtaUh+B3vjfMG1FRWzHnuho0
+         peyg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1707765435; x=1708370235;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=EClPaWXIWy3GA7bTuVQxRnWCNaYtBEnMy2KSoTFiaMM=;
+        b=slDZxXNfLSUw2wTP6Od8TTcQYNFe+3JnudfpE5EghoV9p6KWzPKlXAAeObumnBTkte
+         W+7gknXGCSOSbtfzuoRvOm1RXPzr2DHYnNoZM3IR7FD7NJs09BzfsrfQRsAciPsASRjx
+         lWDG3llanzhd5wOUdSgDJtgZ+Anao0NZwMwa5tAAeqJln4qF+ns/z3kekR3itvPiAwqO
+         G7zLXE4EphEtY+QVaU9UTvO8Lm9SsFzaFTyN8f94jYP54XkqUBtiMTTxHgKYCfqy7Crj
+         g5w0tW1liAnHD7GvweSU7FPAMJo3+/m3wbcVWhj2AF/dqr2XI7naKIhbD4tVHOJ5y7QA
+         gR+Q==
+X-Gm-Message-State: AOJu0Yz3GrdrLM5M1QXttECZWAKcRoZ8LiTs5GduVwzZ2tlejv9XVwu9
+	byRU7OEr4e5K24SwHnrtHvUHMeswNwVJm26uh/Vy65Wf3s9A89VUg/e1la9g
+X-Google-Smtp-Source: AGHT+IE2eK8hBBTrKD+2KKAOLi6k0hivpvXHRxtcVrk9UK0q6OpVAuU4Ya6o0R4OIDDcKHpVv21+5Q==
+X-Received: by 2002:a5d:6905:0:b0:33b:4b0a:b53b with SMTP id t5-20020a5d6905000000b0033b4b0ab53bmr4912526wru.69.1707765434866;
+        Mon, 12 Feb 2024 11:17:14 -0800 (PST)
+X-Forwarded-Encrypted: i=1; AJvYcCWoJaEuV1L/Iq8cgbSHDTAjakcLcYfq5Z6kx/buqSe0D5BGsnYc4YmvDiumSh/eDLza7UPoP3yUXFbKqyFz8sRb7yt+6xrPwhcM8t4=
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id x8-20020a5d6508000000b0033b1b01e4fcsm7570659wru.96.2024.02.12.11.17.14
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 12 Feb 2024 11:17:14 -0800 (PST)
+Message-ID: <pull.1661.v2.git.1707765433663.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1661.git.1707663197543.gitgitgadget@gmail.com>
+References: <pull.1661.git.1707663197543.gitgitgadget@gmail.com>
+From: "Chandra Pratap via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Mon, 12 Feb 2024 19:17:13 +0000
+Subject: [PATCH v2] t9146: replace test -d/-e/-f with appropriate
+ test_path_is_* function
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- 3691ECD0-C9D9-11EE-B7CD-A19503B9AAD1-77302942!pb-smtp21.pobox.com
+To: git@vger.kernel.org
+Cc: Chandra Pratap <chandrapratap376@gmail.com>,
+    Chandra Pratap <chandrapratap3519@gmail.com>
 
-<rsbecker@nexbridge.com> writes:
+From: Chandra Pratap <chandrapratap3519@gmail.com>
 
-> On Monday, February 12, 2024 11:43 AM, Junio C Hamano wrote:
->><rsbecker@nexbridge.com> writes:
->>
->>>>This looks like a good plan.
->>>
->>> This might be trivial, but I cannot tell. The #ifndef should be changed
-> as
->>> follows:
->>
->>https://lore.kernel.org/git/xmqqttmf9y46.fsf@gitster.g/
->
-> I applied this fix but there is no improvement in the result from the last
-> report. actual just has two lines. expect looks reasonable. I still had to
-> modify the #ifndef.
->
-> I have tried cherry-picking the change (no effect), building on master,
-> next... am lost.
+The helper functions test_path_is_* provide better debugging
+information than test -d/-e/-f.
 
-We seem to be looking at something totally different.  The later
-patch in question (not the "looks like a good plan" outline) does
-not have any #ifndef and applies the make_relative() logic
-everywhere.
+Replace "if ! test -d then <error message>" with "test_path_exists"
+and "test -d" with "test_path_is_dir" at places where we check for
+existent directories.
 
-I would suspect that cherry-picking f6628636 (unit-tests: do show
-relative file paths on non-Windows, too, 2024-02-11) would be the
-simplest.
+Replace "test -f" with "test_path_is_file" at places where we check
+for existent files.
 
---- >8 ---
-Subject: [PATCH] unit-tests: do show relative file paths on non-Windows, too
+Replace "test ! -e" with "test_path_is_missing" where we check for
+non-existent directories.
 
-There are compilers other than Visual C that want to show absolute
-paths.  Generalize the helper introduced by a2c5e294 (unit-tests: do
-show relative file paths, 2023-09-25) so that it can also work with
-a path that uses slash as the directory separator, and becomes
-almost no-op once one-time preparation finds out that we are using a
-compiler that already gives relative paths.  Incidentally, this also
-should do the right thing on Windows with a compiler that shows
-relative paths but with backslash as the directory separator (if
-such a thing exists and is used to build git).
-
-Reported-by: Randall S. Becker <rsbecker@nexbridge.com>
-Helped-by: Phillip Wood <phillip.wood@dunelm.org.uk>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
+Helped-by: Eric Sunshine <sunshine@sunshineco.com>
+Signed-off-by: Chandra Pratap <chandrapratap3519@gmail.com>
 ---
- t/unit-tests/test-lib.c | 61 +++++++++++++++++++++++++++++++----------
- 1 file changed, 47 insertions(+), 14 deletions(-)
+    t9146: replace test -d/-f with appropriate test_path_is_* function
+    
+    cc: Eric Sunshine sunshine@sunshineco.com
 
-diff --git a/t/unit-tests/test-lib.c b/t/unit-tests/test-lib.c
-index 7bf9dfdb95..66d6980ffb 100644
---- a/t/unit-tests/test-lib.c
-+++ b/t/unit-tests/test-lib.c
-@@ -21,12 +21,11 @@ static struct {
- 	.result = RESULT_NONE,
- };
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1661%2FChand-ra%2Ftestfix-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1661/Chand-ra/testfix-v2
+Pull-Request: https://github.com/gitgitgadget/git/pull/1661
+
+Range-diff vs v1:
+
+ 1:  93fe9e9eef7 ! 1:  5734b9edd61 t9146: replace test -d/-f with appropriate test_path_is_* function
+     @@ Metadata
+      Author: Chandra Pratap <chandrapratap3519@gmail.com>
+      
+       ## Commit message ##
+     -    t9146: replace test -d/-f with appropriate test_path_is_* function
+     +    t9146: replace test -d/-e/-f with appropriate test_path_is_* function
+      
+          The helper functions test_path_is_* provide better debugging
+          information than test -d/-e/-f.
+      
+     -    Replace "! test -d" with "test_path_is_missing" at places where
+     -    we check for non-existent directories.
+     +    Replace "if ! test -d then <error message>" with "test_path_exists"
+     +    and "test -d" with "test_path_is_dir" at places where we check for
+     +    existent directories.
+      
+     -    Replace "test -f" with "test_path_is_file" and "test -d" with
+     -    "test_path_is_dir" at places where we expect files or directories
+     -    to exist.
+     +    Replace "test -f" with "test_path_is_file" at places where we check
+     +    for existent files.
+      
+     +    Replace "test ! -e" with "test_path_is_missing" where we check for
+     +    non-existent directories.
+     +
+     +    Helped-by: Eric Sunshine <sunshine@sunshineco.com>
+          Signed-off-by: Chandra Pratap <chandrapratap3519@gmail.com>
+      
+       ## t/t9146-git-svn-empty-dirs.sh ##
+     @@ t/t9146-git-svn-empty-dirs.sh: test_expect_success 'empty directories exist' '
+       		for i in a b c d d/e d/e/f "weird file name"
+       		do
+      -			if ! test -d "$i"
+     -+			if test_path_is_missing "$i"
+     - 			then
+     - 				echo >&2 "$i does not exist" &&
+     - 				exit 1
+     +-			then
+     +-				echo >&2 "$i does not exist" &&
+     +-				exit 1
+     +-			fi
+     ++			test_path_exists "$i" || exit 1
+     + 		done
+     + 	)
+     + '
+      @@ t/t9146-git-svn-empty-dirs.sh: test_expect_success 'option automkdirs set to false' '
+       		git svn fetch &&
+       		for i in a b c d d/e d/e/f "weird file name"
+       		do
+      -			if test -d "$i"
+     -+			if test_path_is_dir "$i"
+     - 			then
+     - 				echo >&2 "$i exists" &&
+     - 				exit 1
+     +-			then
+     +-				echo >&2 "$i exists" &&
+     +-				exit 1
+     +-			fi
+     ++			test_path_is_missing "$i" || exit 1
+     + 		done
+     + 	)
+     + '
+      @@ t/t9146-git-svn-empty-dirs.sh: test_expect_success 'more emptiness' '
+       
+       test_expect_success 'git svn rebase creates empty directory' '
+     @@ t/t9146-git-svn-empty-dirs.sh: test_expect_success 'git svn mkdirs recreates emp
+       		for i in a b c d d/e d/e/f "weird file name" "! !"
+       		do
+      -			if ! test -d "$i"
+     -+			if test_path_is_missing "$i"
+     - 			then
+     - 				echo >&2 "$i does not exist" &&
+     - 				exit 1
+     +-			then
+     +-				echo >&2 "$i does not exist" &&
+     +-				exit 1
+     +-			fi
+     ++			test_path_exists "$i" || exit 1
+     + 		done
+     + 	)
+     + '
+      @@ t/t9146-git-svn-empty-dirs.sh: test_expect_success 'git svn mkdirs -r works' '
+       		git svn mkdirs -r7 &&
+       		for i in a b c d d/e d/e/f "weird file name"
+       		do
+      -			if ! test -d "$i"
+     -+			if test_path_is_missing "$i"
+     - 			then
+     - 				echo >&2 "$i does not exist" &&
+     - 				exit 1
+     - 			fi
+     +-			then
+     +-				echo >&2 "$i does not exist" &&
+     +-				exit 1
+     +-			fi
+     ++			test_path_exists "$i" || exit 1
+       		done &&
+       
+      -		if test -d "! !"
+     -+		if test_path_is_dir "! !"
+     - 		then
+     - 			echo >&2 "$i should not exist" &&
+     - 			exit 1
+     - 		fi &&
+     +-		then
+     +-			echo >&2 "$i should not exist" &&
+     +-			exit 1
+     +-		fi &&
+     ++		test_path_is_missing "! !" || exit 1 &&
+       
+       		git svn mkdirs -r8 &&
+      -		if ! test -d "! !"
+     -+		if test_path_is_missing "! !"
+     - 		then
+     - 			echo >&2 "$i not exist" &&
+     - 			exit 1
+     +-		then
+     +-			echo >&2 "$i not exist" &&
+     +-			exit 1
+     +-		fi
+     ++		test_path_exists "! !" || exit 1
+     + 	)
+     + '
+     + 
+      @@ t/t9146-git-svn-empty-dirs.sh: test_expect_success 'empty directories in trunk exist' '
+       		cd trunk &&
+       		for i in a "weird file name"
+       		do
+      -			if ! test -d "$i"
+     -+			if test_path_is_missing "$i"
+     - 			then
+     - 				echo >&2 "$i does not exist" &&
+     - 				exit 1
+     +-			then
+     +-				echo >&2 "$i does not exist" &&
+     +-				exit 1
+     +-			fi
+     ++			test_path_exists "$i" || exit 1
+     + 		done
+     + 	)
+     + '
+     +@@ t/t9146-git-svn-empty-dirs.sh: test_expect_success 'remove a top-level directory from svn' '
+     + 
+     + test_expect_success 'removed top-level directory does not exist' '
+     + 	git svn clone "$svnrepo" removed &&
+     +-	test ! -e removed/d
+     ++	test_path_is_missing removed/d
+     + 
+     + '
+     + unhandled=.git/svn/refs/remotes/git-svn/unhandled.log
+      @@ t/t9146-git-svn-empty-dirs.sh: test_expect_success 'git svn gc-ed files work' '
+     - 		cd removed &&
+     - 		git svn gc &&
+     - 		: Compress::Zlib may not be available &&
+     --		if test -f "$unhandled".gz
+     -+		if test_path_is_file "$unhandled".gz
+     - 		then
+       			svn_cmd mkdir -m gz "$svnrepo"/gz &&
+       			git reset --hard $(git rev-list HEAD | tail -1) &&
+       			git svn rebase &&
+     @@ t/t9146-git-svn-empty-dirs.sh: test_expect_success 'git svn gc-ed files work' '
+       			for i in a b c "weird file name" gz "! !"
+       			do
+      -				if ! test -d "$i"
+     -+				if test_path_is_missing "$i"
+     - 				then
+     - 					echo >&2 "$i does not exist" &&
+     - 					exit 1
+     +-				then
+     +-					echo >&2 "$i does not exist" &&
+     +-					exit 1
+     +-				fi
+     ++				test_path_exists "$i" || exit 1
+     + 			done
+     + 		fi
+     + 	)
+
+
+ t/t9146-git-svn-empty-dirs.sh | 56 ++++++++---------------------------
+ 1 file changed, 12 insertions(+), 44 deletions(-)
+
+diff --git a/t/t9146-git-svn-empty-dirs.sh b/t/t9146-git-svn-empty-dirs.sh
+index 09606f1b3cf..6bf94ad802c 100755
+--- a/t/t9146-git-svn-empty-dirs.sh
++++ b/t/t9146-git-svn-empty-dirs.sh
+@@ -20,11 +20,7 @@ test_expect_success 'empty directories exist' '
+ 		cd cloned &&
+ 		for i in a b c d d/e d/e/f "weird file name"
+ 		do
+-			if ! test -d "$i"
+-			then
+-				echo >&2 "$i does not exist" &&
+-				exit 1
+-			fi
++			test_path_exists "$i" || exit 1
+ 		done
+ 	)
+ '
+@@ -37,11 +33,7 @@ test_expect_success 'option automkdirs set to false' '
+ 		git svn fetch &&
+ 		for i in a b c d d/e d/e/f "weird file name"
+ 		do
+-			if test -d "$i"
+-			then
+-				echo >&2 "$i exists" &&
+-				exit 1
+-			fi
++			test_path_is_missing "$i" || exit 1
+ 		done
+ 	)
+ '
+@@ -52,7 +44,7 @@ test_expect_success 'more emptiness' '
  
--#ifndef _MSC_VER
--#define make_relative(location) location
--#else
- /*
-  * Visual C interpolates the absolute Windows path for `__FILE__`,
-  * but we want to see relative paths, as verified by t0080.
-+ * There are other compilers that do the same, and are not for
-+ * Windows.
-  */
- #include "dir.h"
+ test_expect_success 'git svn rebase creates empty directory' '
+ 	( cd cloned && git svn rebase ) &&
+-	test -d cloned/"! !"
++	test_path_is_dir cloned/"! !"
+ '
  
-@@ -34,32 +33,66 @@ static const char *make_relative(const char *location)
- {
- 	static char prefix[] = __FILE__, buf[PATH_MAX], *p;
- 	static size_t prefix_len;
-+	static int need_bs_to_fs = -1;
+ test_expect_success 'git svn mkdirs recreates empty directories' '
+@@ -62,11 +54,7 @@ test_expect_success 'git svn mkdirs recreates empty directories' '
+ 		git svn mkdirs &&
+ 		for i in a b c d d/e d/e/f "weird file name" "! !"
+ 		do
+-			if ! test -d "$i"
+-			then
+-				echo >&2 "$i does not exist" &&
+-				exit 1
+-			fi
++			test_path_exists "$i" || exit 1
+ 		done
+ 	)
+ '
+@@ -78,25 +66,13 @@ test_expect_success 'git svn mkdirs -r works' '
+ 		git svn mkdirs -r7 &&
+ 		for i in a b c d d/e d/e/f "weird file name"
+ 		do
+-			if ! test -d "$i"
+-			then
+-				echo >&2 "$i does not exist" &&
+-				exit 1
+-			fi
++			test_path_exists "$i" || exit 1
+ 		done &&
  
--	if (!prefix_len) {
-+	/* one-time preparation */
-+	if (need_bs_to_fs < 0) {
- 		size_t len = strlen(prefix);
--		const char *needle = "\\t\\unit-tests\\test-lib.c";
-+		char needle[] = "t\\unit-tests\\test-lib.c";
- 		size_t needle_len = strlen(needle);
+-		if test -d "! !"
+-		then
+-			echo >&2 "$i should not exist" &&
+-			exit 1
+-		fi &&
++		test_path_is_missing "! !" || exit 1 &&
  
--		if (len < needle_len || strcmp(needle, prefix + len - needle_len))
--			die("unexpected suffix of '%s'", prefix);
-+		if (len < needle_len)
-+			die("unexpected prefix '%s'", prefix);
-+
-+		/*
-+		 * The path could be relative (t/unit-tests/test-lib.c)
-+		 * or full (/home/user/git/t/unit-tests/test-lib.c).
-+		 * Check the slash between "t" and "unit-tests".
-+		 */
-+		prefix_len = len - needle_len;
-+		if (prefix[prefix_len + 1] == '/') {
-+			/* Oh, we're not Windows */
-+			for (size_t i = 0; i < needle_len; i++)
-+				if (needle[i] == '\\')
-+					needle[i] = '/';
-+			need_bs_to_fs = 0;
-+		} else {
-+			need_bs_to_fs = 1;
-+		}
+ 		git svn mkdirs -r8 &&
+-		if ! test -d "! !"
+-		then
+-			echo >&2 "$i not exist" &&
+-			exit 1
+-		fi
++		test_path_exists "! !" || exit 1
+ 	)
+ '
  
--		/* let it end in a directory separator */
--		prefix_len = len - needle_len + 1;
-+		/*
-+		 * prefix_len == 0 if the compiler gives paths relative
-+		 * to the root of the working tree.  Otherwise, we want
-+		 * to see that we did find the needle[] at a directory
-+		 * boundary.  Again we rely on that needle[] begins with
-+		 * "t" followed by the directory separator.
-+		 */
-+		if (fspathcmp(needle, prefix + prefix_len) ||
-+		    (prefix_len && prefix[prefix_len - 1] != needle[1]))
-+			die("unexpected suffix of '%s'", prefix);
- 	}
+@@ -114,11 +90,7 @@ test_expect_success 'empty directories in trunk exist' '
+ 		cd trunk &&
+ 		for i in a "weird file name"
+ 		do
+-			if ! test -d "$i"
+-			then
+-				echo >&2 "$i does not exist" &&
+-				exit 1
+-			fi
++			test_path_exists "$i" || exit 1
+ 		done
+ 	)
+ '
+@@ -129,7 +101,7 @@ test_expect_success 'remove a top-level directory from svn' '
  
--	/* Does it not start with the expected prefix? */
--	if (fspathncmp(location, prefix, prefix_len))
-+	/*
-+	 * Does it not start with the expected prefix?
-+	 * Return it as-is without making it worse.
-+	 */
-+	if (prefix_len && fspathncmp(location, prefix, prefix_len))
- 		return location;
+ test_expect_success 'removed top-level directory does not exist' '
+ 	git svn clone "$svnrepo" removed &&
+-	test ! -e removed/d
++	test_path_is_missing removed/d
  
--	strlcpy(buf, location + prefix_len, sizeof(buf));
-+	/*
-+	 * If we do not need to munge directory separator, we can return
-+	 * the substring at the tail of the location.
-+	 */
-+	if (!need_bs_to_fs)
-+		return location + prefix_len;
-+
- 	/* convert backslashes to forward slashes */
-+	strlcpy(buf, location + prefix_len, sizeof(buf));
- 	for (p = buf; *p; p++)
- 		if (*p == '\\')
- 			*p = '/';
--
- 	return buf;
- }
--#endif
- 
- static void msg_with_prefix(const char *prefix, const char *format, va_list ap)
- {
+ '
+ unhandled=.git/svn/refs/remotes/git-svn/unhandled.log
+@@ -143,15 +115,11 @@ test_expect_success 'git svn gc-ed files work' '
+ 			svn_cmd mkdir -m gz "$svnrepo"/gz &&
+ 			git reset --hard $(git rev-list HEAD | tail -1) &&
+ 			git svn rebase &&
+-			test -f "$unhandled".gz &&
+-			test -f "$unhandled" &&
++			test_path_is_file "$unhandled".gz &&
++			test_path_is_file "$unhandled" &&
+ 			for i in a b c "weird file name" gz "! !"
+ 			do
+-				if ! test -d "$i"
+-				then
+-					echo >&2 "$i does not exist" &&
+-					exit 1
+-				fi
++				test_path_exists "$i" || exit 1
+ 			done
+ 		fi
+ 	)
+
+base-commit: 235986be822c9f8689be2e9a0b7804d0b1b6d821
 -- 
-2.44.0-rc0
-
-
+gitgitgadget
