@@ -1,53 +1,60 @@
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73A633F9E5
-	for <git@vger.kernel.org>; Mon, 12 Feb 2024 18:05:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B4FB45BE8
+	for <git@vger.kernel.org>; Mon, 12 Feb 2024 18:27:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707761152; cv=none; b=nWN4erGd0DbxvALvRDkY43U8c/YbaZhDx6Dx70bWQPN43BF0zEVqmQLq/Ofoo0EPrx+AmGlNz0Alqz5BBumI2wSdQPEt1UhkujAbwf4sNzG3itDtiw24ISTMbSQY+tfDh/cYKwL7dtAxNkA0ugnvv2TEXjZ9UR2FoF8YNnKxYnc=
+	t=1707762465; cv=none; b=JuxAXn8kx754YiLJgRuj8Ntz9YEwas2FrPGIl3jvnwBIRIhF2d9LR5mLYsMt8SLUZFi4e3JaSxaG5H07siMhzmGB4S//vjTN9D6Jkw6iEkNsGvgqXOGZpTdYggsrfFc3ESdfGQaYpo0zFt2J5LLCFFT9BnSNJuUmsEEPzk8FZ3w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707761152; c=relaxed/simple;
-	bh=GV606oMwIoRCVaEu6nk4vLVmzdvDrVnnA+uqEkS/ZY8=;
+	s=arc-20240116; t=1707762465; c=relaxed/simple;
+	bh=uHlv7jTFAXmTRi3ojNnyTb4eB07FAmPcXF3jOHoWWp4=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=XMmO3I94aSxT9fk8yQXUqtphukSxv7EaGER4DZJaMlIocErCq6cAElwAePGP7nr7PLD2Tf3vwK2MqyCHLyj2tMuZeY/hqi3S908ZLcMCVxX+/FAr3Yk6fn4M05bN4fIYrZm2GKZIBhRUQ0hb4RKg7t+Vv04Z+4gcF4HqkMHohig=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=iffQ3pN8; arc=none smtp.client-ip=173.228.157.53
+	 MIME-Version:Content-Type; b=NhAfwQNyRPMD3G8y8oke0O2e5HBDhDyDJ7S2XpRy0oYvFHCU55eML1GYZC+0ebBZd/ShQbyZF2BRvXi+LyVMcS5ctXH394ZvLTLPCU4zobgAPJyXYMWA8+kKq08VCtIHxhd/qWM0F+ln4UoysjSEGR3AAJYLAFDxO4F1MQaqFTM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=wdkrLLl5; arc=none smtp.client-ip=64.147.108.71
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="iffQ3pN8"
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id C75FB2C81B;
-	Mon, 12 Feb 2024 13:05:48 -0500 (EST)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="wdkrLLl5"
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 80A5A1DF02F;
+	Mon, 12 Feb 2024 13:27:42 -0500 (EST)
 	(envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=GV606oMwIoRCVaEu6nk4vLVmzdvDrVnnA+uqEk
-	S/ZY8=; b=iffQ3pN8AJBtrbPi9hLT6pdbbMPOx4t2wL02uzLbLntMNvGdvE1mcr
-	bVgTmPUMjT+zDnLc7056j1/VYUfDwBZmV9LnqQoI5rrQi/GMzs+49OYImixOmitb
-	/GWHWDYGBhzfnFgKPtH5n9uqDsFT3eH4qF1f83o6REK9Z1NswDvHU=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id BFCDA2C81A;
-	Mon, 12 Feb 2024 13:05:48 -0500 (EST)
+	:content-type:content-transfer-encoding; s=sasl; bh=uHlv7jTFAXmT
+	Ri3ojNnyTb4eB07FAmPcXF3jOHoWWp4=; b=wdkrLLl5LZtp42+AK90PK5eZTWm6
+	EAORO+9EZPKSWWntPnnkoxyd7ueDY1K5yJLBjfe4LF2fWgJo/Ufji4mKDDTSBzvv
+	1KOKh5Ql4DOewAj9CSqUBEJPhj0xfqRGFD9o/Ib4GDGoH1u9PFf7cm2VKUZbpPAR
+	VmK0vtdzq1a08fc=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 7753B1DF02E;
+	Mon, 12 Feb 2024 13:27:42 -0500 (EST)
 	(envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.125.165.85])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 621522C817;
-	Mon, 12 Feb 2024 13:05:45 -0500 (EST)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id D30181DF02D;
+	Mon, 12 Feb 2024 13:27:41 -0500 (EST)
 	(envelope-from junio@pobox.com)
 From: Junio C Hamano <gitster@pobox.com>
-To: Karthik Nayak <karthik.188@gmail.com>
-Cc: git@vger.kernel.org,  ps@pks.im,  phillip.wood123@gmail.com,  Jeff King
- <peff@peff.net>
-Subject: Re: [PATCH v4 1/5] refs: introduce `is_pseudoref()` and `is_headref()`
-In-Reply-To: <20240211183923.131278-2-karthik.188@gmail.com> (Karthik Nayak's
-	message of "Sun, 11 Feb 2024 19:39:19 +0100")
-References: <20240119142705.139374-1-karthik.188@gmail.com>
-	<20240211183923.131278-1-karthik.188@gmail.com>
-	<20240211183923.131278-2-karthik.188@gmail.com>
-Date: Mon, 12 Feb 2024 10:05:43 -0800
-Message-ID: <xmqqwmr95zig.fsf@gitster.g>
+To: Philippe Blain <levraiphilippeblain@gmail.com>, Johannes Sixt
+ <j6t@kdbg.org>
+Cc:  Elijah Newren <newren@gmail.com>,  Michael Lohmann
+ <mial.lohmann@gmail.com>,  Phillip Wood <phillip.wood@dunelm.org.uk>,
+  Patrick Steinhardt <ps@pks.im>,  Michael Lohmann
+ <mi.al.lohmann@gmail.com>,  git@vger.kernel.org
+Subject: Re: [PATCH v4 2/2] revision: implement `git log --merge` also for
+ rebase/cherry-pick/revert
+In-Reply-To: <529c7b42-c606-408e-b6a3-fe189c28db9b@kdbg.org> (Johannes Sixt's
+	message of "Sun, 11 Feb 2024 18:59:09 +0100")
+References: <20240210-ml-log-merge-with-cherry-pick-and-other-pseudo-heads-v4-0-3bc9e62808f4@gmail.com>
+	<20240210-ml-log-merge-with-cherry-pick-and-other-pseudo-heads-v4-2-3bc9e62808f4@gmail.com>
+	<2cf557e9-bf48-4bf3-be24-c1eeaa887418@kdbg.org>
+	<1c258037-cb08-5fbc-d473-743a60cd8eab@gmail.com>
+	<529c7b42-c606-408e-b6a3-fe189c28db9b@kdbg.org>
+Date: Mon, 12 Feb 2024 10:27:40 -0800
+Message-ID: <xmqqmss55yhv.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -55,26 +62,48 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
 X-Pobox-Relay-ID:
- 57D8121E-C9D1-11EE-AA5E-A19503B9AAD1-77302942!pb-smtp21.pobox.com
+ 6884778A-C9D4-11EE-B634-25B3960A682E-77302942!pb-smtp2.pobox.com
+Content-Transfer-Encoding: quoted-printable
 
-Karthik Nayak <karthik.188@gmail.com> writes:
+Johannes Sixt <j6t@kdbg.org> writes:
 
-> +	if (ends_with(refname, "_HEAD")) {
-> +		refs_resolve_ref_unsafe(refs, refname,
-> +   					RESOLVE_REF_READING | RESOLVE_REF_NO_RECURSE,
-> +   					&oid, NULL);
-> +   		return !is_null_oid(&oid);
-> +	}
+> Am 11.02.24 um 17:43 schrieb Philippe Blain:
+>> Hi Johannes,
+>>=20
+>> Le 2024-02-11 =C3=A0 03:34, Johannes Sixt a =C3=A9crit=C2=A0:
+>>=20
+>>>> Adjust the documentation of this option accordingly.
+>>>>
+>>>> Co-authored-by: Philippe Blain <levraiphilippeblain@gmail.com>
+>>>> Co-authored-by: Johannes Sixt <j6t@kdbg.org>
+>>>> Signed-off-by: Philippe Blain <levraiphilippeblain@gmail.com>
+>>>> Signed-off-by: Michael Lohmann <mi.al.lohmann@gmail.com>
+>>>> [jc: tweaked in j6t's precedence fix that tries REBASE_HEAD last]
+>>>> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+>>>
+>>> Signed-off-by trailers should occur in temporal order. Therefore, whe=
+n
+>>> you pick up a commit and resend it, you should keep existing
+>>> Signed-off-by and add yours last.
+>>=20
+>> Thank you, I did not know that. I guess Junio should be kept last thou=
+gh ?
+>> Or maybe  I should remove Junio's sign-off if I send a new version of =
+the=20
+>> patch ?
+>
+> You should *not* remove Junio's Signed-off-by, because the patch went
+> through his hands before you picked it up. Then you add your own
+> sign-off below. Later, Junio will sign it off again.
 
-FYI. I see
+In the meantime, this is how I tweaked while queuing.
 
-.git/rebase-apply/patch:31: space before tab in indent.
-   					RESOLVE_REF_READING | RESOLVE_REF_NO_RECURSE,
-.git/rebase-apply/patch:32: space before tab in indent.
-   					&oid, NULL);
-.git/rebase-apply/patch:33: space before tab in indent.
-   		return !is_null_oid(&oid);
-
-around here.
+    Co-authored-by: Johannes Sixt <j6t@kdbg.org>
+    Signed-off-by: Michael Lohmann <mi.al.lohmann@gmail.com>
+    [jc: tweaked in j6t's precedence fix that tries REBASE_HEAD last]
+    Signed-off-by: Junio C Hamano <gitster@pobox.com>
+    [pb: greatly enhanced the log message]
+    Signed-off-by: Philippe Blain <levraiphilippeblain@gmail.com>
+    Signed-off-by: Junio C Hamano <gitster@pobox.com>
