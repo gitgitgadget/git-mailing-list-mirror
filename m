@@ -1,60 +1,61 @@
-Received: from mail-ej1-f49.google.com (mail-ej1-f49.google.com [209.85.218.49])
+Received: from mail-wm1-f52.google.com (mail-wm1-f52.google.com [209.85.128.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A8653A8C0
-	for <git@vger.kernel.org>; Mon, 12 Feb 2024 10:44:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 298DF28370
+	for <git@vger.kernel.org>; Mon, 12 Feb 2024 11:02:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707734688; cv=none; b=pI9pdbP/Fq/R/uY0X+Tcjdf0VzK/yj/1Y/S0LcBrdyjKXKqUEq+mU2V+LyN+tqLRTrHhOv8RSZzOBvHYVdF5UrOVwTJYhSFRGdZywaFgZ8XvsWgh6UdpOESebP8JA4be5D8CfePKJjuFAzSNrZUf49VVT+PJdSv3hqNLF+esIoo=
+	t=1707735781; cv=none; b=MH26/g6zroMx8B9NM6OOLcXS1QO5nlTk/Z7cpAMitY0Y1QC6yijcG3TfMlI5JDLVUgC8veJqEJv2sAGQp47YQCt7aM2wLuTNlc3BBCm6nf2aP1j/Qr8ebkU1P2mos6BSkkY18W3QYDVq67GSd82pYFQbQ9iWj/C92rr2HCRfIoU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707734688; c=relaxed/simple;
-	bh=DiAWb241YuEet4/5L1OHdPD8kHuFOlw7YHz3rYvpkYc=;
+	s=arc-20240116; t=1707735781; c=relaxed/simple;
+	bh=u/K1I8oeiwPCTqmIQr2Pz//pqz5JnTQLXVaQ9Oiknqs=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=TZ0RdkfUYJC/J3iUuesYOQupXw2D0Kiz2NvkqEBDGnHq7jUosT2EMoFSLZfGmdZhhV4zQRjfJRKjnlLRYPkRwkmFMaTEw38GfcCkDWfKJku3jyHIkFklQxlt4YRiLqsLKbfflxOv6we7q7ucxvdRo0hDhgiYczdjh6wG5u7gRmA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=j4MFFJtU; arc=none smtp.client-ip=209.85.218.49
+	 In-Reply-To:Content-Type; b=M9cngl/RTHQddimazZXw5ENv6NDALOcbpgmWsa5w+0pXrukKiCTJad7ll/iuwWLsCZxFZg9vfQVuhElVYuVvTt9tYxyJ4HfUJ3aJVo4/Wzqfdmq+ChxmgvXwURt9FH1fYhYHRT2any3yw9y25SqOyplyRfsg5ZawEuLdwL5f1WE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mrIeh0aa; arc=none smtp.client-ip=209.85.128.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="j4MFFJtU"
-Received: by mail-ej1-f49.google.com with SMTP id a640c23a62f3a-a26ed1e05c7so401599166b.2
-        for <git@vger.kernel.org>; Mon, 12 Feb 2024 02:44:45 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mrIeh0aa"
+Received: by mail-wm1-f52.google.com with SMTP id 5b1f17b1804b1-4114e0a2978so1406295e9.3
+        for <git@vger.kernel.org>; Mon, 12 Feb 2024 03:02:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1707734683; x=1708339483; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
+        d=gmail.com; s=20230601; t=1707735778; x=1708340578; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:reply-to:user-agent:mime-version:date
          :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=LuzMqqwVCYjc1WWmhd9Jr1x+bZRkpPBWY/VucGlfhv0=;
-        b=j4MFFJtUIQ9auDoufVDBah1niUdG1azaC5UFXjpcOPrle0JahBxtFSnQaFbFnqulSI
-         2twsjC/zxWYR6l0sxueg1bINv42Hl0CLXLcR8E2zX9miXr+hK6k0OewTcd1RQNKqUM2z
-         +yPqnUuyiRk4CeLKhmU5irpo/KvtNdNDoW9MmCf1sEc8QAGT1N1pcyyEhKKVDmt/2dKU
-         Z9t6T8JjkNen9QzL+EeBfmHDWAMgN6YUTHoyvFkc5aH6GWbPpWwMtl+xqUvu+MZJG4rM
-         wDfbhkteWROsTtBy4LYB+kEGYOXHBpXChST/nQ1RSV4QKhTx1Rciy8QHwbGVl+rLpsY6
-         nGXA==
+        bh=3Be7NdF1DavVP67NpaUXUBE/cLhKaJUG9pdJwMYWq/w=;
+        b=mrIeh0aaomPEW4gqu+Ai4kUHezAwEo86p8dRUjd6ZQSbEECcBafmq+7UpJolbGTEHr
+         WUg7DRxJ93vwr5Z6pkqb2f58oJElY7CCUV3zqqc5IwpREPh9sPhWOOqM8pEbO+gM+vm9
+         5SHLuH9VmiVC3e/UroGhKpFP+g37HxhM8zrECT20i2Q2WD8HHmhMM0MTuqy48y2YUire
+         oWNgipxzSjJG9Zx/t5OMHiw9t8G1eHkyC1Xi0+cuZ8/iBPeDmUb/kfKEQK1FtNpzIFha
+         KxDiKO0gXO73etIHBL0Ub7k8kmE1Xx4JzCUpLfzugkf8xovEKs0eNbvOx/OMhrCL64Nf
+         bZbA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1707734683; x=1708339483;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
+        d=1e100.net; s=20230601; t=1707735778; x=1708340578;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:reply-to:user-agent:mime-version:date
          :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=LuzMqqwVCYjc1WWmhd9Jr1x+bZRkpPBWY/VucGlfhv0=;
-        b=RbQhs/EH//L4Zd+o5FauxpIEX4ZcxF6BqbabhcnbIkkUrWr34+xkrJsPRGDdIPYgQv
-         rvJPEHb1KzTdRbJj0boBOlgs06B8b2HF/1zXtY5RS17hOJF20tUA2b7bsP3XYhC9kggr
-         O43uRCXaRxiQxSjkWhFtCVA+rFigLLOcU+JbgndpmusfdB2TszVgqExsoQr33b8FVJrm
-         YLKIF2lkuJZkpeRUDMskhwIvcrW+odU4e7Lk2cVNQH7FRHIYuLtLIflJVp43asBZStsx
-         bF7Etu1S22Fu3BwhM5bM50HtXEaT5xCJtab/A66AHMd69w2B0bXuwN4ywBy9GIBKEKIE
-         BBtg==
-X-Gm-Message-State: AOJu0Yxh+wrk6v4dQmoNdHt4AagXqVWAVrWfChOV9CQttqMwC5t24OUa
-	YkF4LFb9uOekvftzfGLi71Dp3pwRfw7NvcK5uc8c1+Ltx7wrtQPb
-X-Google-Smtp-Source: AGHT+IF7Pw4NBTRs1lM4bvLQ/qNbPLrXh9s0FpYiFh64hW5m0wlo88QhZVwYdvNh+Gueln2p23qZbQ==
-X-Received: by 2002:a17:906:3b5a:b0:a3c:63ee:ad82 with SMTP id h26-20020a1709063b5a00b00a3c63eead82mr2503279ejf.19.1707734683186;
-        Mon, 12 Feb 2024 02:44:43 -0800 (PST)
-X-Forwarded-Encrypted: i=1; AJvYcCUCRFsN/nWz84myvSmllPVq2/q9ee9OeHyilHQU/EiNlJsgWzpS1NZJJtDrBqCA02AwbK7tfx2HeSavpa9QnEXQ7ROK61KMWK2sV4NWogWJRdWOlJISIywgcH+5SsKlMZWMSA==
+        bh=3Be7NdF1DavVP67NpaUXUBE/cLhKaJUG9pdJwMYWq/w=;
+        b=LiSW/qCOWly7OHfNoqvUod63XhHUQesmn7earbGx4TuJS2HXCquV1cX0+hrFKWkn1D
+         de/82GcjCU8psdaKXPH1u8cBA2cF5lmGPYHcYX8xYfmC39qIJBb87wzAvRQXx49pBMqn
+         wI0+FnNiFn8WyYirHmXR2J/lMs/dGgvhGKv2Xsl/gZmR36I9tqUtU2W1H80Iks+Bz61f
+         q9d7/RczfL6E/Y22HaQeMH4mSF1zN2FyGkWTsWwUisORb/geQn7oc7qM/dAP9YQNDGCj
+         dnnluiNA3JBNmf9cP9cHiwIdSF5D7RMpe6eWBtsPrCjuCg6qwr0vgDhg2Sg1wOPbAfXW
+         Xe9w==
+X-Forwarded-Encrypted: i=1; AJvYcCWAQbiYX/SPK3Ri6MNsE3hIebLGRpSm/9NeqitM/h80p4ySzVmzoO2EYSV79UJooU8E9OMW8tQ31DGp+rGWdM1Y1NFs
+X-Gm-Message-State: AOJu0Yyt5mdEqDATmgxYyHI9BDns845Hiqh2EnyvFcgq5zvZLDn1AfHh
+	0B+Y18n4EFiU2p58PqtWKOkwNODTfw9c2jFrLQEADfUEDtj/rJVo
+X-Google-Smtp-Source: AGHT+IHBe/Alyvt3E2U+FLd3xsD2GgFRuAMd3pGSYnZpTUjvvPk+mOeU8V/81rzndL6thfrWoupD1Q==
+X-Received: by 2002:a05:600c:a386:b0:410:be25:12b5 with SMTP id hn6-20020a05600ca38600b00410be2512b5mr3123654wmb.9.1707735778116;
+        Mon, 12 Feb 2024 03:02:58 -0800 (PST)
+X-Forwarded-Encrypted: i=1; AJvYcCVea1DqOZGM5yYvZDY0wVwQI3dM4CyRQUtU9t56l8lCsiDyz6qH5Qh2w3KGzocF9uD8lJmSb+fx4zoTEH8v2Cw/cpxp7WehbiQ/c0nWI+8jBnRWRVBE8PyMxU1vuTU69DHOGwbd5ujSAbQX4yJJy87bskEGayEP/kR/xMqa6PCe0IuKzwpKZ0B1xB88OAV9O8D79Ym2k9lXevun+k043zzpajx3b7LaRsOzATs+DFJuskZmHCuW5PwnoZGnn6SXoEg=
 Received: from ?IPV6:2a0a:ef40:62e:a901:d2c6:37ff:fef6:7b1? ([2a0a:ef40:62e:a901:d2c6:37ff:fef6:7b1])
-        by smtp.googlemail.com with ESMTPSA id gz9-20020a170906f2c900b00a3515b35be4sm72920ejb.104.2024.02.12.02.44.42
+        by smtp.googlemail.com with ESMTPSA id m6-20020a7bcb86000000b00410df4bf22esm1874469wmi.38.2024.02.12.03.02.57
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 12 Feb 2024 02:44:42 -0800 (PST)
-Message-ID: <c625239a-a847-475a-a228-9deb622c67bf@gmail.com>
-Date: Mon, 12 Feb 2024 10:44:41 +0000
+        Mon, 12 Feb 2024 03:02:57 -0800 (PST)
+Message-ID: <c5d60b5b-3181-4bb7-a7f8-eb97474526d7@gmail.com>
+Date: Mon, 12 Feb 2024 11:02:56 +0000
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -63,216 +64,135 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v2] unit-tests: do show relative file paths on
- non-Windows, too
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, Johannes Schindelin <johannes.schindelin@gmx.de>,
- "Randall S. Becker" <rsbecker@nexbridge.com>
-References: <xmqqttmf9y46.fsf@gitster.g>
- <6872b42d-8763-44dc-9502-2362d1ed80a7@gmail.com>
- <xmqqle7r9enn.fsf_-_@gitster.g>
+Subject: Re: [PATCH v4 2/2] revision: implement `git log --merge` also for
+ rebase/cherry-pick/revert
 Content-Language: en-US
+To: Philippe Blain <levraiphilippeblain@gmail.com>, git@vger.kernel.org
+Cc: Johannes Sixt <j6t@kdbg.org>, Elijah Newren <newren@gmail.com>,
+ Michael Lohmann <mial.lohmann@gmail.com>,
+ Phillip Wood <phillip.wood@dunelm.org.uk>, Patrick Steinhardt <ps@pks.im>,
+ Michael Lohmann <mi.al.lohmann@gmail.com>, Junio C Hamano <gitster@pobox.com>
+References: <20240210-ml-log-merge-with-cherry-pick-and-other-pseudo-heads-v4-0-3bc9e62808f4@gmail.com>
+ <20240210-ml-log-merge-with-cherry-pick-and-other-pseudo-heads-v4-2-3bc9e62808f4@gmail.com>
 From: Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <xmqqle7r9enn.fsf_-_@gitster.g>
+In-Reply-To: <20240210-ml-log-merge-with-cherry-pick-and-other-pseudo-heads-v4-2-3bc9e62808f4@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-Hi Junio
+Hi Philippe
 
-On 11/02/2024 15:58, Junio C Hamano wrote:
->>
->> We know which separator we're expecting so we could replace  the last
->> two comparisons with
->>
->> 		prefix[prefix_len -1] != needle[1]
->>
->> but as I say I'm not sure that is worth re-rolling for
+On 10/02/2024 23:35, Philippe Blain wrote:
+> From: Michael Lohmann <mi.al.lohmann@gmail.com>
 > 
-> There is a larger clean-up opportunity to drop the need for making a
-> copy, which probably is worth doing, so I folded the above into this
-> version.
+> 'git log' learned in ae3e5e1ef2 (git log -p --merge [[--] paths...],
+> 2006-07-03) to show commits touching conflicted files in the range
+> HEAD...MERGE_HEAD, an addition documented in d249b45547 (Document
+> rev-list's option --merge, 2006-08-04).
+> 
+> It can be useful to look at the commit history to understand what lead
+> to merge conflicts also for other mergy operations besides merges, like
+> cherry-pick, revert and rebase.
+> 
+> For rebases, an interesting range to look at is HEAD...REBASE_HEAD,
+> since the conflicts are usually caused by how the code changed
+> differently on HEAD since REBASE_HEAD forked from it.
+> 
+> For cherry-picks and revert, it is less clear that
+> HEAD...CHERRY_PICK_HEAD and HEAD...REVERT_HEAD are indeed interesting
+> ranges, since these commands are about applying or unapplying a single
+> (or a few, for cherry-pick) commit(s) on top of HEAD. However, conflicts
+> encountered during these operations can indeed be caused by changes
+> introduced in preceding commits on both sides of the history.
 
-Ooh, that's nice. This version looks good, I found the code comments 
-very helpful
+I tend to think that there isn't much difference between rebase and 
+cherry-pick here - they are both cherry-picking commits and it is 
+perfectly possible to rebase a branch onto an unrelated upstream. The 
+important part for me is that we're showing these commits because even 
+though they aren't part of the 3-way merge they are relevant for 
+investigating where any merge conflicts come from.
 
-Best Wishes
+For revert I'd argue that the only sane use is reverting an ancestor of 
+HEAD but maybe I'm missing something. In that case REVERT_HEAD...HEAD is 
+the same as REVERT_HEAD..HEAD so it shows the changes since the commit 
+that is being reverted which will be the ones causing the conflict.
+
+> Adjust the code in prepare_show_merge so it constructs the range
+> HEAD...$OTHER for each of OTHER={MERGE_HEAD, CHERRY_PICK_HEAD,
+> REVERT_HEAD or REBASE_HEAD}. Note that we try these pseudorefs in order,
+> so keep REBASE_HEAD last since the three other operations can be
+> performed during a rebase. Note also that in the uncommon case where
+> $OTHER and HEAD do not share a common ancestor, this will show the
+> complete histories of both sides since their root commits, which is the
+> same behaviour as currently happens in that case for HEAD and
+> MERGE_HEAD.
+> 
+> Adjust the documentation of this option accordingly.
+
+Thanks for the comprehensive commit message.
+
+> diff --git a/Documentation/rev-list-options.txt b/Documentation/rev-list-options.txt
+> index 2bf239ff03..5b4672c346 100644
+> --- a/Documentation/rev-list-options.txt
+> +++ b/Documentation/rev-list-options.txt
+> @@ -341,8 +341,10 @@ See also linkgit:git-reflog[1].
+>   Under `--pretty=reference`, this information will not be shown at all.
+>   
+>   --merge::
+> -	After a failed merge, show refs that touch files having a
+> -	conflict and don't exist on all heads to merge.
+> +	Show commits touching conflicted paths in the range `HEAD...$OTHER`,
+> +	where `$OTHER` is the first existing pseudoref in `MERGE_HEAD`,
+> +	`CHERRY_PICK_HEAD`, `REVERT_HEAD` or `REBASE_HEAD`. Only works
+> +	when the index has unmerged entries.
+
+Do you know what "and don't exist on all heads to merge" in the original 
+is referring to? The new text doesn't mention anything that sounds like 
+that but I don't understand what the original was trying to say.
+
+It might be worth adding a sentence explaining when this option is useful.
+
+     This option can be used to show the commits that are relevant
+     when resolving conflicts from a 3-way merge
+
+or something like that.
+
+>   --boundary::
+>   	Output excluded boundary commits. Boundary commits are
+> diff --git a/revision.c b/revision.c
+> index aa4c4dc778..36dc2f94f7 100644
+> --- a/revision.c
+> +++ b/revision.c
+> @@ -1961,11 +1961,31 @@ static void add_pending_commit_list(struct rev_info *revs,
+>   	}
+>   }
+>   
+> +static const char *lookup_other_head(struct object_id *oid)
+> +{
+> +	int i;
+> +	static const char *const other_head[] = {
+> +		"MERGE_HEAD", "CHERRY_PICK_HEAD", "REVERT_HEAD", "REBASE_HEAD"
+> +	};
+> +
+> +	for (i = 0; i < ARRAY_SIZE(other_head); i++)
+> +		if (!read_ref_full(other_head[i],
+> +				RESOLVE_REF_READING | RESOLVE_REF_NO_RECURSE,
+> +				oid, NULL)) {
+> +			if (is_null_oid(oid))
+> +				die("%s is a symbolic ref???", other_head[i]);
+
+This would benefit from being translated and I think one '?' would 
+suffice (I'm not sure we even need that - are there other possible 
+causes of a null oid here?)
+
+> +			return other_head[i];
+> +		}
+> +
+> +	die("--merge without MERGE_HEAD, CHERRY_PICK_HEAD, REVERT_HEAD or REBASE_HEAD?");
+
+This is not a question and would also benefit from translation. It might 
+be more helpful to say that "--merge" requires one of those pseudorefs.
+
+Thanks for pick this series up and polishing it
 
 Phillip
-
-> ------- >8 ------------- >8 ------------- >8 ------------- >8 -------
-> 
-> There are compilers other than Visual C that want to show absolute
-> paths.  Generalize the helper introduced by a2c5e294 (unit-tests: do
-> show relative file paths, 2023-09-25) so that it can also work with
-> a path that uses slash as the directory separator, and becomes
-> almost no-op once one-time preparation finds out that we are using a
-> compiler that already gives relative paths.  Incidentally, this also
-> should do the right thing on Windows with a compiler that shows
-> relative paths but with backslash as the directory separator (if
-> such a thing exists and is used to build git).
-> 
-> Reported-by: Randall S. Becker <rsbecker@nexbridge.com>
-> Helped-by: Phillip Wood <phillip.wood@dunelm.org.uk>
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
-> ---
-> 
->    * I found that the diff relative to the result of applying v1 was
->      easier to follow than the range-diff, so here it is.
-> 
->    diff --git c/t/unit-tests/test-lib.c w/t/unit-tests/test-lib.c
->    index 83c9eb8c59..66d6980ffb 100644
->    --- c/t/unit-tests/test-lib.c
->    +++ w/t/unit-tests/test-lib.c
->    @@ -64,34 +64,33 @@ static const char *make_relative(const char *location)
->     		 * prefix_len == 0 if the compiler gives paths relative
->     		 * to the root of the working tree.  Otherwise, we want
->     		 * to see that we did find the needle[] at a directory
->    -		 * boundary.
->    +		 * boundary.  Again we rely on that needle[] begins with
->    +		 * "t" followed by the directory separator.
->     		 */
->     		if (fspathcmp(needle, prefix + prefix_len) ||
->    -		    (prefix_len &&
->    -		     prefix[prefix_len - 1] != '/' &&
->    -		     prefix[prefix_len - 1] != '\\'))
->    +		    (prefix_len && prefix[prefix_len - 1] != needle[1]))
->     			die("unexpected suffix of '%s'", prefix);
->    -
->     	}
->     
->     	/*
->    -	 * If our compiler gives relative paths and we do not need
->    -	 * to munge directory separator, we can return location as-is.
->    +	 * Does it not start with the expected prefix?
->    +	 * Return it as-is without making it worse.
->     	 */
->    -	if (!prefix_len && !need_bs_to_fs)
->    +	if (prefix_len && fspathncmp(location, prefix, prefix_len))
->     		return location;
->     
->    -	/* Does it not start with the expected prefix? */
->    -	if (fspathncmp(location, prefix, prefix_len))
->    -		return location;
->    +	/*
->    +	 * If we do not need to munge directory separator, we can return
->    +	 * the substring at the tail of the location.
->    +	 */
->    +	if (!need_bs_to_fs)
->    +		return location + prefix_len;
->     
->    -	strlcpy(buf, location + prefix_len, sizeof(buf));
->     	/* convert backslashes to forward slashes */
->    -	if (need_bs_to_fs) {
->    -		for (p = buf; *p; p++)
->    -			if (*p == '\\')
->    -				*p = '/';
->    -	}
->    +	strlcpy(buf, location + prefix_len, sizeof(buf));
->    +	for (p = buf; *p; p++)
->    +		if (*p == '\\')
->    +			*p = '/';
->     	return buf;
->     }
->     
-> 
->   t/unit-tests/test-lib.c | 61 +++++++++++++++++++++++++++++++----------
->   1 file changed, 47 insertions(+), 14 deletions(-)
-> 
-> diff --git a/t/unit-tests/test-lib.c b/t/unit-tests/test-lib.c
-> index 7bf9dfdb95..66d6980ffb 100644
-> --- a/t/unit-tests/test-lib.c
-> +++ b/t/unit-tests/test-lib.c
-> @@ -21,12 +21,11 @@ static struct {
->   	.result = RESULT_NONE,
->   };
->   
-> -#ifndef _MSC_VER
-> -#define make_relative(location) location
-> -#else
->   /*
->    * Visual C interpolates the absolute Windows path for `__FILE__`,
->    * but we want to see relative paths, as verified by t0080.
-> + * There are other compilers that do the same, and are not for
-> + * Windows.
->    */
->   #include "dir.h"
->   
-> @@ -34,32 +33,66 @@ static const char *make_relative(const char *location)
->   {
->   	static char prefix[] = __FILE__, buf[PATH_MAX], *p;
->   	static size_t prefix_len;
-> +	static int need_bs_to_fs = -1;
->   
-> -	if (!prefix_len) {
-> +	/* one-time preparation */
-> +	if (need_bs_to_fs < 0) {
->   		size_t len = strlen(prefix);
-> -		const char *needle = "\\t\\unit-tests\\test-lib.c";
-> +		char needle[] = "t\\unit-tests\\test-lib.c";
->   		size_t needle_len = strlen(needle);
->   
-> -		if (len < needle_len || strcmp(needle, prefix + len - needle_len))
-> -			die("unexpected suffix of '%s'", prefix);
-> +		if (len < needle_len)
-> +			die("unexpected prefix '%s'", prefix);
-> +
-> +		/*
-> +		 * The path could be relative (t/unit-tests/test-lib.c)
-> +		 * or full (/home/user/git/t/unit-tests/test-lib.c).
-> +		 * Check the slash between "t" and "unit-tests".
-> +		 */
-> +		prefix_len = len - needle_len;
-> +		if (prefix[prefix_len + 1] == '/') {
-> +			/* Oh, we're not Windows */
-> +			for (size_t i = 0; i < needle_len; i++)
-> +				if (needle[i] == '\\')
-> +					needle[i] = '/';
-> +			need_bs_to_fs = 0;
-> +		} else {
-> +			need_bs_to_fs = 1;
-> +		}
->   
-> -		/* let it end in a directory separator */
-> -		prefix_len = len - needle_len + 1;
-> +		/*
-> +		 * prefix_len == 0 if the compiler gives paths relative
-> +		 * to the root of the working tree.  Otherwise, we want
-> +		 * to see that we did find the needle[] at a directory
-> +		 * boundary.  Again we rely on that needle[] begins with
-> +		 * "t" followed by the directory separator.
-> +		 */
-> +		if (fspathcmp(needle, prefix + prefix_len) ||
-> +		    (prefix_len && prefix[prefix_len - 1] != needle[1]))
-> +			die("unexpected suffix of '%s'", prefix);
->   	}
->   
-> -	/* Does it not start with the expected prefix? */
-> -	if (fspathncmp(location, prefix, prefix_len))
-> +	/*
-> +	 * Does it not start with the expected prefix?
-> +	 * Return it as-is without making it worse.
-> +	 */
-> +	if (prefix_len && fspathncmp(location, prefix, prefix_len))
->   		return location;
->   
-> -	strlcpy(buf, location + prefix_len, sizeof(buf));
-> +	/*
-> +	 * If we do not need to munge directory separator, we can return
-> +	 * the substring at the tail of the location.
-> +	 */
-> +	if (!need_bs_to_fs)
-> +		return location + prefix_len;
-> +
->   	/* convert backslashes to forward slashes */
-> +	strlcpy(buf, location + prefix_len, sizeof(buf));
->   	for (p = buf; *p; p++)
->   		if (*p == '\\')
->   			*p = '/';
-> -
->   	return buf;
->   }
-> -#endif
->   
->   static void msg_with_prefix(const char *prefix, const char *format, va_list ap)
->   {
 
