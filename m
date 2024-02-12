@@ -1,72 +1,73 @@
-Received: from mail-pl1-f178.google.com (mail-pl1-f178.google.com [209.85.214.178])
+Received: from mail-pg1-f172.google.com (mail-pg1-f172.google.com [209.85.215.172])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A2AE4C63F
-	for <git@vger.kernel.org>; Mon, 12 Feb 2024 20:53:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 841F14C61B
+	for <git@vger.kernel.org>; Mon, 12 Feb 2024 21:15:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707771200; cv=none; b=d3jhCI1NXWFu49cLG8Gc08JiYC9Cms3iq4c/DE7adx0nLDSHTxrfCzdXIAW26TVLV41FscJo0NG41td//Z7u4sNjyx7AKWa7jItF1mdWzkQcbYd8LZROag897zDP/68IdjjMKv60PlSZs2biBZCIoTxbMP7T8V9jseCcPdD1cy4=
+	t=1707772533; cv=none; b=WvmA94eJIAsT9+q3ieIDX8Wd8KmtDZEONwAgPeYBcNKX9oQKimVJThCWMMqoct/hiiU3EOQTGeD5N0nBM6QtlHq5mpLv5lbc3F8sHQk69FnRiDFpHCYcgQTTus6woSbci9t1gKryB8zNpBGZCdNt8bNfD/3fzG1sp1ERBxgwgns=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707771200; c=relaxed/simple;
-	bh=MTUEUOUNXVr0opkTvb1oKZ1zcfyEC0M62pWlY89x+gg=;
+	s=arc-20240116; t=1707772533; c=relaxed/simple;
+	bh=Gw9+ElWowHSia0rktXvYl5BnIC3LZTRG0CafC71R7K0=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=KezzT8e+CWYnfjXxkrXGhtPaLi1I2NgbPxHsR+nqXE1+krSvDPpFVn/dwObnJOpBk+QwlJAOKnU0J45zSGDBqVk0S8YTqXltZzMQlXmUi3vch/kwbqSzpGyZBMv6e2A/ogXvRH7JKCjFQbjyloKyn2a6FKGDXsQQlfRxxBjYY0I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=qbVjsY9O; arc=none smtp.client-ip=209.85.214.178
+	 Content-Type:Content-Disposition:In-Reply-To; b=mv/cZ3xiThXcrWvii6nQP6P3rSz7I6dPAUuGeMCDRvx1cQ7/iqyUn24w+8X6exy3yI7T+rub5mlSZ6It2CeDc8hXKOaZFHuoOFKXUlIleOq+jc3i+UHAyJsWtb9pTSpR6RWAqI+tay2CTbChY0JXttFm2h8o0SzakH5h/qBfdtU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=C+3aDimX; arc=none smtp.client-ip=209.85.215.172
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="qbVjsY9O"
-Received: by mail-pl1-f178.google.com with SMTP id d9443c01a7336-1d9bd8fa49eso26145485ad.1
-        for <git@vger.kernel.org>; Mon, 12 Feb 2024 12:53:18 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="C+3aDimX"
+Received: by mail-pg1-f172.google.com with SMTP id 41be03b00d2f7-5cdf76cde78so2855690a12.1
+        for <git@vger.kernel.org>; Mon, 12 Feb 2024 13:15:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1707771198; x=1708375998; darn=vger.kernel.org;
+        d=google.com; s=20230601; t=1707772531; x=1708377331; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references
          :mail-followup-to:message-id:subject:cc:to:from:date:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=gt/I+Y81B0Xb3Nh6Iokii0/c3mr1F6Upf4fnukZDyOY=;
-        b=qbVjsY9OGN+/TFVbC7B8n/skf7DQvKiQQM+5Y9JOzvVAd9wNFFIbc2qFT/JRoOUnAo
-         jOBbHg844EKeBeKlHqDc4gDl/leZRoJlQVLlxvzgN2Gi+6jx3emNYhYjWcFcXTrcr3hA
-         NbOV6BELEWATo8rwjVy9vemUBehDVPoHxBqsspmwIfr0oShkeYZA/yLYZqxNapjeuwMe
-         YE90oIW2h82bSrVLOr/mMLQ6t6nF/AuO590yYaAbkoBPN1BvOwVwOX2FqQoGRBYYBZF4
-         3bs9P5o4SzY/X5OT18XZVQ7tA+E1mBeojTO+y2ERhzW6EGdH3iWjSokMvMWJ1lpJ799z
-         MVPA==
+        bh=pC7L10pHVRSvlofapo2bsfefvklc9WCPF1nQgAFaMjY=;
+        b=C+3aDimXKLrRxiSi5s9wTodYZLDUMjkfYvboaEngew3xnMUpHeWoXvF5bkiDNfc2EP
+         9eCF53vt0M3e2Cx9MAXP/uTQ5RgikMYVrRTBleHOhxXEYwCbWxjtoePh0UljjCu6TfYg
+         BXjFQ6Lp8UI/kXxdIAHBytsBaSe8gGB5HxcdhyMNXwrfBDKGUPSowb79iZAvkqULL1t7
+         aE1MHTDx80xIWqoyapOqN7MNyCwKURJZCH7I85Pn366vWq2fZCEKbT8TbjmdfDGJcF4C
+         kagEh3q81AZ1hRqC2wqqTLYZa6jYGiWyjp8UBCKWEDgGgHnFfUXw+Byw7PmQ4Hlkzqtz
+         ny2g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1707771198; x=1708375998;
+        d=1e100.net; s=20230601; t=1707772531; x=1708377331;
         h=in-reply-to:content-disposition:mime-version:references
          :mail-followup-to:message-id:subject:cc:to:from:date
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=gt/I+Y81B0Xb3Nh6Iokii0/c3mr1F6Upf4fnukZDyOY=;
-        b=kpXKP7/067jN2JennoD8Z5XD2UF13y1f1yFb+rrlBPKvGS5kVYIAKmcWYoiMDHzMy9
-         XC9MZcEziuicxEodl3JSGici5h75Wi+QpmgyLGMmzCsMWkIMESi6D4mJ+My3jjRP3lTv
-         qVQSVfi6ig+LV4O/HUlW1fi4Vn6EmhQto0wikx1Nd4PCsRgto73ZfVUMmD1mwr5ql1CN
-         4ckc9OgEwu5+2mQgyfH/kQqf99gdG2RJgAU6j/liGQ4R3gfjUGBYmAq3SHke8MXpGLCD
-         Cai7nzit8sHqNQ9wGNQd5vPNJMnmhSxqRno+6hKkAXV7/Go4fjBJmGKGv8suRhAExRI0
-         ZKWQ==
-X-Gm-Message-State: AOJu0YyGbTUksBNMMdqM7uHe8S54OAbOHDY5v15AbULU6XDCzCnbAz/q
-	CVLI5RTnnijvTfZgpkKHWVuXNOSspz6ba4sUfqROOcuu8HqjHxEDwObANtN4JA==
-X-Google-Smtp-Source: AGHT+IF51iCGAZ3HpcaHYy4nZliG3mmZe+vNjHweKgx+JHDNF9VrpEbiJTSp+GGdGchV+IPjJrmVDQ==
-X-Received: by 2002:a17:903:41c5:b0:1db:3076:21e3 with SMTP id u5-20020a17090341c500b001db307621e3mr317207ple.56.1707771198230;
-        Mon, 12 Feb 2024 12:53:18 -0800 (PST)
-X-Forwarded-Encrypted: i=1; AJvYcCXGlfEO4/wFbr6s0RmnO0ZPv6Te/T+HsVJMPz2/QiV2LlSz7JTKdMsf2QIFw3n1SwytXSSjQwYRgDxwXud2IJQKd6JFrU3yF2S7RXup9u7rZI50EPryghpuufYDZ78Jiw2XPeD+RWZsBD38+ByAM/TY2WIED5phY5zf
+        bh=pC7L10pHVRSvlofapo2bsfefvklc9WCPF1nQgAFaMjY=;
+        b=PuWhBRNa6lZm80aZklewAhlFaRU/BL/zXzhPA0eAU3x3ouRZvpw7Ug/Zv/xPLkdnNO
+         tjK4lEYg/KetjA09tJGxrDJMVcmhdRSQ6ujMtwNPs0cSq2epST9oOCwBu5lK+0Wu4vzU
+         9gcBQtX5v8e95At4VMs0hp9ot+ISbY87qlNOcuapjDMYAmJJYUaswjtg6qRdHWtEaNYA
+         PIdhMcrPVCtQkMPU17diJYvSYNu4EFT/+bOGRyfuCdHEYWbZTgFYFOjgzcwfthrlTwhm
+         c/i9W0ZRZ8Wd9kEODIyY3Fd0vmRRMznrkFPS6HVmSoKwZyYpuKeksttbHsSZaEmhQ+zd
+         db5w==
+X-Gm-Message-State: AOJu0YwLmwKKyR5lGIDSyLYzb+o6zCl1LITZDzFJQsfZxLR6Zjilyf01
+	by28ijyN/8GI222XIStzcXYIp2fGTCTlMI24GEmgugzKtsTD2CWTuW7CYu9KX+jmL/rjfHcKAxa
+	49w==
+X-Google-Smtp-Source: AGHT+IFiJQuoSCuo3leF0o08w3GtdYGgDi53tr1kSDKbDA1ZQNSq3D/wX3KZs92WSFaQZQpMhE/Q2Q==
+X-Received: by 2002:a17:90b:4009:b0:295:ade7:cdf2 with SMTP id ie9-20020a17090b400900b00295ade7cdf2mr4586077pjb.13.1707772531099;
+        Mon, 12 Feb 2024 13:15:31 -0800 (PST)
+X-Forwarded-Encrypted: i=1; AJvYcCWZWml4ozd4MIZmO2frn4S96feLRtzI/AtLx8NhGASSFr6SzvcriZRytUXQiFguL6DsoFnqTeUSLjPXDwBizd4HoUft2rzRoDNt91uUoSQoblZrwBM+otAfS+5L0IGAyqJiR4d96Ung3p45Ces=
 Received: from google.com ([2620:15c:2d3:204:5bb3:9725:3d2f:4438])
-        by smtp.gmail.com with ESMTPSA id p18-20020a170902e35200b001d8e04de78asm747623plc.132.2024.02.12.12.53.17
+        by smtp.gmail.com with ESMTPSA id lx4-20020a17090b4b0400b00296ba96cda9sm964449pjb.55.2024.02.12.13.15.30
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 12 Feb 2024 12:53:17 -0800 (PST)
-Date: Mon, 12 Feb 2024 12:53:13 -0800
+        Mon, 12 Feb 2024 13:15:30 -0800 (PST)
+Date: Mon, 12 Feb 2024 13:15:25 -0800
 From: Josh Steadmon <steadmon@google.com>
-To: Jeff King <peff@peff.net>
-Cc: git@vger.kernel.org, johannes.schindelin@gmx.de,
-	phillip.wood@dunelm.org.uk, gitster@pobox.com
-Subject: Re: [RFC PATCH v2 1/6] t0080: turn t-basic unit test into a helper
-Message-ID: <ZcqFOVuR0sxFDDUv@google.com>
-Mail-Followup-To: Josh Steadmon <steadmon@google.com>,
-	Jeff King <peff@peff.net>, git@vger.kernel.org,
-	johannes.schindelin@gmx.de, phillip.wood@dunelm.org.uk,
+To: phillip.wood@dunelm.org.uk
+Cc: git@vger.kernel.org, johannes.schindelin@gmx.de, peff@peff.net,
 	gitster@pobox.com
+Subject: Re: [RFC PATCH v2 4/6] test-tool run-command testsuite: support unit
+ tests
+Message-ID: <ZcqKbV37GDfNb4oF@google.com>
+Mail-Followup-To: Josh Steadmon <steadmon@google.com>,
+	phillip.wood@dunelm.org.uk, git@vger.kernel.org,
+	johannes.schindelin@gmx.de, peff@peff.net, gitster@pobox.com
 References: <cover.1705443632.git.steadmon@google.com>
  <cover.1706921262.git.steadmon@google.com>
- <da756b4bfb9d1ce0d1213d585e72acfbf667e2a2.1706921262.git.steadmon@google.com>
- <20240207225802.GA538110@coredump.intra.peff.net>
+ <b5665386b56df91fa5d95ee5b11288b5853546f0.1706921262.git.steadmon@google.com>
+ <4e2cbadd-1e0c-4526-a50f-9ba8600e7788@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -75,48 +76,31 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240207225802.GA538110@coredump.intra.peff.net>
+In-Reply-To: <4e2cbadd-1e0c-4526-a50f-9ba8600e7788@gmail.com>
 
-On 2024.02.07 17:58, Jeff King wrote:
-> On Fri, Feb 02, 2024 at 04:50:26PM -0800, Josh Steadmon wrote:
+On 2024.02.05 16:16, phillip.wood123@gmail.com wrote:
+> Hi Josh
 > 
-> > This has the additional benefit that test harnesses seeking to run all
-> > unit tests can find them with a simple glob of "t/unit-tests/bin/t-*",
-> > with no exceptions needed. This will be important in a later patch where
-> > we add support for running the unit tests via a test-tool subcommand.
+> On 03/02/2024 00:50, Josh Steadmon wrote:
+> > Teach the testsuite runner in `test-tool run-command testsuite` how to
+> > run unit tests: if TEST_SHELL_PATH is not set, assume that we're running
+> > the programs directly from CWD, rather than defaulting to "sh" as an
+> > interpreter.
 > 
-> Is this last paragraph still accurate? I think in this rebased version
-> of the series, we'll continue to use $(UNIT_TESTS) derived from the
-> source list rather than a glob in bin/.
-
-Right, thanks for the catch. Removed in V3.
-
-
-> > --- a/t/Makefile
-> > +++ b/t/Makefile
-> > @@ -44,8 +44,7 @@ TINTEROP = $(sort $(wildcard interop/i[0-9][0-9][0-9][0-9]-*.sh))
-> >  CHAINLINTTESTS = $(sort $(patsubst chainlint/%.test,%,$(wildcard chainlint/*.test)))
-> >  CHAINLINT = '$(PERL_PATH_SQ)' chainlint.pl
-> >  UNIT_TEST_SOURCES = $(wildcard unit-tests/t-*.c)
-> > -UNIT_TEST_PROGRAMS = $(patsubst unit-tests/%.c,unit-tests/bin/%$(X),$(UNIT_TEST_SOURCES))
-> > -UNIT_TESTS = $(sort $(filter-out unit-tests/bin/t-basic%,$(UNIT_TEST_PROGRAMS)))
-> > +UNIT_TESTS = $(patsubst unit-tests/%.c,unit-tests/bin/%$(X),$(UNIT_TEST_SOURCES))
+> Judging from the last patch in this series it seems likely that we'll want
+> to run unit tests and integration tests parallel. In which case it might be
+> better to look at the filename extension to decide whether to sh as an
+> interpreter so that we can avoid having to use a wrapper script. Then
 > 
-> This drops the intermediate UNIT_TEST_PROGRAMS, which makes sense. It
-> was only used to keep the long lines a bit more readable. But it also
-> drops the $(sort) call. Do we need to keep it?
+>     cd t
+>     helper/test-tool run-command testsuite 't[0-9]*.sh' 'unit-tests/bin/*'
 > 
-> Certainly I'd think we want the contents of $(UNIT_TESTS) to be in a
-> deterministic order. Does the $(wildcard) function already return things
-> in sorted order? I can't find any mention in the documention. It seems
-> to do so for me in a simple test, but aae5239be2 (t/Makefile: Use $(sort
-> ...) explicitly where needed, 2011-09-04) argues otherwise.
+> would run the integration tests via "sh" and the unit-tests directly. We'd
+> need to figure out how to look for tests in both directories as well
+> though...
 
-I see this line in the docs [1]: "As with wildcard expansion in rules,
-the results of the wildcard function are sorted". GNU Make has restored
-the sorted behavior of $(wildcard) since 2018 [2]. I'll leave the sort
-off for now, but if folks feel like we need to support older versions of
-`make`, I'll add it back.
-
-[1] https://www.gnu.org/software/make/manual/html_node/Wildcard-Function.html
-[2] https://savannah.gnu.org/bugs/index.php?52076
+At the moment, I'm not planning on trying to make unit tests and shell
+tests run under the same test-tool process. If that is a valuable
+change, hopefully the Windows / CI experts can use this series as a
+starting point to make additional test-tool changes. However, I will
+probably not spend any further time on this area.
