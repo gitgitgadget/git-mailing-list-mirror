@@ -1,82 +1,115 @@
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com [209.85.128.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCA0D1DDC5
-	for <git@vger.kernel.org>; Mon, 12 Feb 2024 21:27:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72A2A4CB3D
+	for <git@vger.kernel.org>; Mon, 12 Feb 2024 21:29:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707773236; cv=none; b=iqW4nQMTpgzpvjq3yMlFnv4MHP1tecjPjBiWQMSDcUt7FH5auTz4a5nfGDvhvOedgDJgcEMVJxbpvLkgU28UjOzv9sXU8uvO/D5l0RnQHZZasxc909K0miwAEBUZrxj54GmMET9RfGEnRsNnaiKbtYeySMqV7lEuI/jw109mawg=
+	t=1707773344; cv=none; b=a2SVDAOlyAz3jz0t63/jW6YKg3lt5mTgw7rqdbAhxwzCqUz+55UWBPSA78WTwZzfiUg+mwoITRI2ZiUkQ0hGasrMp1ITSHnwHtQZ6jbn+O1l4zMRerpUWCH9Emafai0VgRFKhox8xRsanvJEGR9pIdr0JQQn+Gc0wyAN08oMWT8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707773236; c=relaxed/simple;
-	bh=Sm/GGCEVz/fbQsmF0kpLt0SVBF7iYaTj3gIKKiRplas=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=izY4gTwEHV34F5BfObstQzfQ1ctPHEgyvBJUXZK3p5WldMGOOtzXW5+AFsxC2aJzyIRZLap6VYM8iROMei7RzOKBkxGZ0DiIdFd5/bZU+lwxXQNS3pE9xHnvf7yB75EuMOTPty7Ta7Iq5C7nJOMjt0YGSK/wY7ZcQuVNOX62YZ0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=LwclipAk; arc=none smtp.client-ip=64.147.108.71
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1707773344; c=relaxed/simple;
+	bh=DyO+Ksly2tlLCimpHuKQqyD4l/HqWhBM8uqgk2mx7yY=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=LT7agX+6zLBDc/qQHHlvz2fBX9y3/VbXg+Kifa3AByh0r9sU0Wy9PLqGj7rjnSuoTu3cRym0X0SGFvXxzYf0VJO2TomTmLZNFyme7mLumXk3DRpqrXdpveCutymBmHhePe1BYXA9Ysatf/nOXLFRUoYRbrNq5Pu6d3X+IXvwZ1I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NqX/VVit; arc=none smtp.client-ip=209.85.128.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="LwclipAk"
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 153A41E03E7;
-	Mon, 12 Feb 2024 16:27:13 -0500 (EST)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=Sm/GGCEVz/fbQsmF0kpLt0SVBF7iYaTj3gIKKi
-	Rplas=; b=LwclipAk70MD6YUyTt5EFn1+HESfKxNeDBXZQliy7/KFNtm3MiVxhK
-	RvZDP3P9PVMgXh/fGq7FSn40OqB4A634YzBGl5UGoWKfgWJrlJmf4SN1bGXbwS+G
-	RrA1qASgXaPUwk595h2az/oOtrx8yYvKoVjHhx+Q1DBRZd5MCIpbE=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 0BAA81E03E6;
-	Mon, 12 Feb 2024 16:27:13 -0500 (EST)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.165.85])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 6855C1E03E5;
-	Mon, 12 Feb 2024 16:27:12 -0500 (EST)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Josh Steadmon <steadmon@google.com>
-Cc: Jeff King <peff@peff.net>,  git@vger.kernel.org,
-  johannes.schindelin@gmx.de,  phillip.wood@dunelm.org.uk
-Subject: Re: [RFC PATCH v2 1/6] t0080: turn t-basic unit test into a helper
-In-Reply-To: <ZcqFOVuR0sxFDDUv@google.com> (Josh Steadmon's message of "Mon,
-	12 Feb 2024 12:53:13 -0800")
-References: <cover.1705443632.git.steadmon@google.com>
-	<cover.1706921262.git.steadmon@google.com>
-	<da756b4bfb9d1ce0d1213d585e72acfbf667e2a2.1706921262.git.steadmon@google.com>
-	<20240207225802.GA538110@coredump.intra.peff.net>
-	<ZcqFOVuR0sxFDDUv@google.com>
-Date: Mon, 12 Feb 2024 13:27:11 -0800
-Message-ID: <xmqq34tx5q6o.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NqX/VVit"
+Received: by mail-wm1-f46.google.com with SMTP id 5b1f17b1804b1-411ab6dbcb5so2744345e9.0
+        for <git@vger.kernel.org>; Mon, 12 Feb 2024 13:29:02 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1707773340; x=1708378140; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=Cev6dQXghVMeKDTOXpfdE6cMeZ6UI/U4cgZ6294/eB0=;
+        b=NqX/VVit+CeTA6JAmvTiL7r69x97Q7dDeKlrO+6BAJXOqEvwfDdAoZkaJj9Rh6e2Hx
+         Uc+1NvyMMviTzX1BqeYnaUHoTUKs4CipOBIbbsDvfiI244zAV+IXulW0LlenS+vGek4o
+         2xojg8iSMTFIoFU0uOK3xAuuaqOCFCp9lh82YCOYQCABA5ZdQnKehgCfJYECvp/J3qeE
+         WFADhuAhzQJBoe6vX0/4awshlp4CbBzabN24yACcupreQ/cLFFTy/z1B6tIFOSEPJBoE
+         20LcapXbrWSPMnUBUGRVokHZzptRrwaRiFS8e5oRhEIWNc3K1ue2pXEkWY+WX3TTiUDi
+         fwOg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1707773340; x=1708378140;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=Cev6dQXghVMeKDTOXpfdE6cMeZ6UI/U4cgZ6294/eB0=;
+        b=rOt302dmh5feBXSW9fs9s5uRoqDU2KAH1MMeTYQvi/8ll7ncEnzcxDK40PlL+CojNp
+         qPd2lDRl/Qdj7WUnkVvtRwIflR/8IM8/7BSnKxgYCiMPQmnwI7CvoLZH1sgl0tlDq1ni
+         Z3QzMiyVNuWQ2fvo2UdW2zg7G8IdOO0Roy1OsoZZ67C8GZi55501N5k5uSfzzZ+14uN4
+         ADTVl8yRtG9hj6HRqipzNem2yhBsPVgfGWrgXPZPyX+WgqKmOdFxN9F/51EzoRZibB1L
+         5qXGezHepNHHqJFapMCyoCEPr+1qI6wRNzOk67dJatnM9qihy22uoX/hwidYsa59SdGG
+         +VwQ==
+X-Gm-Message-State: AOJu0YxYrS1otasN+Xmq4F8VAGcQFaMwx9dEcqPoEGT0lz+6nGqhkPqb
+	03dVNhrGfVElbiolsQ111J8erBI2MsMZkZR69Pc6DW71k5cJx3eJ
+X-Google-Smtp-Source: AGHT+IEVjc8nIhruVYtIsSGoUR2RhGSLicC00CkMDnqsIdJ5lKBSG5pBEElaVbRGOVDvIqE/UkNxsQ==
+X-Received: by 2002:a05:600c:474f:b0:40f:cb0d:4de6 with SMTP id w15-20020a05600c474f00b0040fcb0d4de6mr588896wmo.5.1707773340505;
+        Mon, 12 Feb 2024 13:29:00 -0800 (PST)
+X-Forwarded-Encrypted: i=1; AJvYcCXKTlTQTmEtrA4wN2zplUnQ20cEaKVyeUVACxnAbrzDvbXwynTkEG7YbMMMr/as+U0lKP1O4/TwOIxiE4hlkrr+sfAH1zwCdubaNOCUr27MD0+E5SReMHCoizSx6SIhkqF1x4mvKeZRBe02/90A
+Received: from gmail.com (77.red-88-14-198.dynamicip.rima-tde.net. [88.14.198.77])
+        by smtp.gmail.com with ESMTPSA id bp9-20020a5d5a89000000b0033b4796641asm7869506wrb.22.2024.02.12.13.28.59
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 12 Feb 2024 13:29:00 -0800 (PST)
+Message-ID: <effd06fb-8344-4476-b5d5-dcb9f6fff692@gmail.com>
+Date: Mon, 12 Feb 2024 22:28:57 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- 7C45EDF8-C9ED-11EE-BA9F-25B3960A682E-77302942!pb-smtp2.pobox.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] column: disallow negative padding
+To: Kristoffer Haugsbakk <code@khaugsbakk.name>, git@vger.kernel.org
+Cc: Tiago Pascoal <tiago@pascoal.net>, Chris Torek <chris.torek@gmail.com>,
+ Junio C Hamano <gitster@pobox.com>
+References: <76688ed2cc20031d70823d9f5d214f42b3bd1409.1707501064.git.code@khaugsbakk.name>
+ <1c959378cf495d7a3d70d0c7bdf08cc501ed6e5d.1707679627.git.code@khaugsbakk.name>
+ <89d32a5f-b5ab-4773-bd9f-d33b4e348e15@gmail.com>
+ <09b1ab48-b58f-458c-89f5-0c419d92f61a@app.fastmail.com>
+From: =?UTF-8?Q?Rub=C3=A9n_Justo?= <rjusto@gmail.com>
+Content-Language: en-US
+In-Reply-To: <09b1ab48-b58f-458c-89f5-0c419d92f61a@app.fastmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-Josh Steadmon <steadmon@google.com> writes:
+On 12-feb-2024 17:50:54, Kristoffer Haugsbakk wrote:
+> On Sun, Feb 11, 2024, at 23:47, Rubén Justo wrote:
+> > While we're here, I wonder if silently ignoring a negative value in
+> > .padding is the right thing to do.
+> >
+> > There are several callers of print_columns():
+> >
+> > builtin/branch.c:           print_columns(&output, colopts, NULL);
+> > builtin/clean.c:    print_columns(&list, colopts, &copts);
+> > builtin/clean.c:    print_columns(menu_list, local_colopts, &copts);
+> > builtin/column.c:    print_columns(&list, colopts, &copts);
+> > help.c:     print_columns(&list, colopts, &copts);
+> > wt-status.c:       print_columns(&output, s->colopts, &copts);
+> >
+> > I haven't checked it thoroughly but it seems we don't need to add the
+> > check we're adding to builtin/column.c, to any of the other callers.
+> > However, it is possible that these or other new callers may need it in
+> > the future.  If so, we should consider doing something like:
+> >
+> > diff --git a/column.c b/column.c
+> > index c723428bc7..4f870c725f 100644
+> > --- a/column.c
+> > +++ b/column.c
+> > @@ -186,6 +186,9 @@ void print_columns(const struct string_list *list,
+> > unsigned int colopts,
+> >                 return;
+> >         assert((colopts & COL_ENABLE_MASK) != COL_AUTO);
+> >
+> > +       if (opts && (0 > opts->padding))
 
-> I see this line in the docs [1]: "As with wildcard expansion in rules,
-> the results of the wildcard function are sorted". GNU Make has restored
-> the sorted behavior of $(wildcard) since 2018 [2]. I'll leave the sort
-> off for now, but if folks feel like we need to support older versions of
-> `make`, I'll add it back.
->
-> [1] https://www.gnu.org/software/make/manual/html_node/Wildcard-Function.html
-> [2] https://savannah.gnu.org/bugs/index.php?52076
+;-) (fixed)
 
-Thanks for digging.  I thought I was certain that woldcard is sorted
-and stable and was quite perplexed when I could not find the mention
-in a version of doc I had handy ("""This is Edition 0.75, last
-updated 19 January 2020, of 'The GNU Make Manual', for GNU 'make'
-version 4.3.""").
+> > +               BUG("padding must be non-negative");
+> > +
+> 
+> Sure, I could add a `BUG` for `0 > opts->padding` in v3.
 
-
-
+Thank you for considering it.
