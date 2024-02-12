@@ -1,208 +1,278 @@
-Received: from fhigh4-smtp.messagingengine.com (fhigh4-smtp.messagingengine.com [103.168.172.155])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f49.google.com (mail-ej1-f49.google.com [209.85.218.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BDD5171BF
-	for <git@vger.kernel.org>; Mon, 12 Feb 2024 08:33:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A8653A8C0
+	for <git@vger.kernel.org>; Mon, 12 Feb 2024 10:44:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707726782; cv=none; b=hQl7KiiUnLB3XHaqNLejRKLnMcIfBWwqi3mrBxQJvGcpczgMQgcqbaLgvAquY8EuwQQpmv7U1RQIPXT1D2y2iPJrZIbcXLgKSnC+Aprq8jww6HufNC8iYiioTcMoCLnygl2zdVLb7buEoQwHyRZEapxH84+V2qnzysiamO0mH5o=
+	t=1707734688; cv=none; b=pI9pdbP/Fq/R/uY0X+Tcjdf0VzK/yj/1Y/S0LcBrdyjKXKqUEq+mU2V+LyN+tqLRTrHhOv8RSZzOBvHYVdF5UrOVwTJYhSFRGdZywaFgZ8XvsWgh6UdpOESebP8JA4be5D8CfePKJjuFAzSNrZUf49VVT+PJdSv3hqNLF+esIoo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707726782; c=relaxed/simple;
-	bh=2EgDi3phXmNUlLsMxAsU37jyBnHUTs9ZsrwDQNBTdA4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=dwt4KsIImvoL7XovYqoA+jF3RzJ24wKxeYZE8PQvsjuk3gtQ/gGFaaS78gLxvgnTnJcpveRoSWvejvgZ8A8U6vYadYgL5NnjYVo53hYNA7eXdlFW0QBm52dZgCvIZFkdACNpr9X78IlXeomIemQUNyTMPHw2RGG6lSipRDv12SM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=asAoQR0t; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=IjDqDvJz; arc=none smtp.client-ip=103.168.172.155
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1707734688; c=relaxed/simple;
+	bh=DiAWb241YuEet4/5L1OHdPD8kHuFOlw7YHz3rYvpkYc=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=TZ0RdkfUYJC/J3iUuesYOQupXw2D0Kiz2NvkqEBDGnHq7jUosT2EMoFSLZfGmdZhhV4zQRjfJRKjnlLRYPkRwkmFMaTEw38GfcCkDWfKJku3jyHIkFklQxlt4YRiLqsLKbfflxOv6we7q7ucxvdRo0hDhgiYczdjh6wG5u7gRmA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=j4MFFJtU; arc=none smtp.client-ip=209.85.218.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="asAoQR0t";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="IjDqDvJz"
-Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
-	by mailfhigh.nyi.internal (Postfix) with ESMTP id 9853E1140091;
-	Mon, 12 Feb 2024 03:32:59 -0500 (EST)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute2.internal (MEProxy); Mon, 12 Feb 2024 03:32:59 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1707726779; x=1707813179; bh=P0O5cnO4RQ
-	q7yqB8Y9NpgICI1dXNHsUFquFVZRWwRvA=; b=asAoQR0tftCphib2tzQgaaI0wV
-	JzY5A2O4c59kZ7TwGX+JJD2hmlfE2FoqvOD/wJuFuY4lydp3DN0puOPEynIXgkQy
-	m1HifiT9ogUtWxvRT3TScmUKQrn+V5AB6j3hzt/zCkE+bmflTm1eEtj7clmcsMAx
-	d7kSrZVUtioL8WYJStFQLe1btyay0WVg/J/QQVxG7k0zDJah/AJx6IxqnDyUwY5x
-	S4uZfCP4BKDr31GmV81bGuRmXlmT3bxndgGgR4sA9f1lfQKEwsvxU31VqlhNSLOr
-	H2+vBMhAHo8PKaPYB4JUV446+0WSDrXQJ5F3PHBP1q2Xcr51ZSdg9FiogmEg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1707726779; x=1707813179; bh=P0O5cnO4RQq7yqB8Y9NpgICI1dXN
-	HsUFquFVZRWwRvA=; b=IjDqDvJz1MbDxGMtPYCUZ0TdROD1/hgdGe3Neh5BIdlR
-	qqy3imXNkWFPWg9TCL1aCpXPLOqIkTTd+sQYSuG/59OQ6bkM3R88tMr4QXc6e3aV
-	JepLBx1SQiRA4uP5cFrQPlKGVA2jtJ1QrfA3du8Xin0WYP4IhV+7t08bEoG/Aq53
-	umMcSrlSvzVsTRUlkACt7l2Y1xLNuJSG/ykdUjbnHBDDHC692OMudr9lAS8BYsyF
-	dFWoDdde/EYw6M2pKuHUnVUH6wWe4j+DTOFDW8qXjwNk4jrLWt1pFN+i2ssPf3b5
-	2sKWTarpKxw8EWVYYXvx1mOB7XXdQp9eb9+fQhGWlw==
-X-ME-Sender: <xms:u9fJZRqZgQ94F3hGjPN7rvdLagcpBss5-IFPj1176Ca8e7QCm_k8uQ>
-    <xme:u9fJZTqoqQG8gfQ-FA89ndfsYGHGrr-vBm9yl7G59XSSesekzj7mqKcYQAt77yV6u
-    L7RRmaIB1vUXrADAg>
-X-ME-Received: <xmr:u9fJZeMUOXtqG5_KNfibQBd3ReFR335q27gvBKPtNKYTr1ZyXpSs-UIhze8lyKX_WQg3UwA0gaXo2-nZz-zai1jjb59oTqJv7U9GuiiSeSzglMY>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledruddvgdduvdefucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    cujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtvdenucfhrhhomheprfgrthhr
-    ihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvg
-    hrnhepueektdevtdffveeljeetgfehheeigeekleduvdeffeeghefgledttdehjeelffet
-    necuvehluhhsthgvrhfuihiivgepvdenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
-    hpkhhsrdhimh
-X-ME-Proxy: <xmx:u9fJZc5COSC8rx4xq9gREaVAhSEagLHzgj3L63gEoMZ81zB-gRMQqw>
-    <xmx:u9fJZQ5KkqCqQ3_1u9yTklQsBLqL3hyQtXF7pK6gZZknqWX_uE1SnA>
-    <xmx:u9fJZUi4oLbxb9kHjRc3D7RjvwaWlCFbgCLgvFPq1KAPzisIPllJ_g>
-    <xmx:u9fJZenePJ0b32QQNu8qeKFL5teOp5nf8p7Djj23b7Rq04pnNu7b1g>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 12 Feb 2024 03:32:58 -0500 (EST)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id f02954d4 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 12 Feb 2024 08:29:13 +0000 (UTC)
-Date: Mon, 12 Feb 2024 09:32:57 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: git@vger.kernel.org
-Cc: Eric Sunshine <sunshine@sunshineco.com>, John Cai <johncai86@gmail.com>
-Subject: [PATCH v2 7/7] reftable/reader: add comments to `table_iter_next()`
-Message-ID: <167f67fad841ad06535a5532088fa6c9125fb1cd.1707726654.git.ps@pks.im>
-References: <cover.1706782841.git.ps@pks.im>
- <cover.1707726654.git.ps@pks.im>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="j4MFFJtU"
+Received: by mail-ej1-f49.google.com with SMTP id a640c23a62f3a-a26ed1e05c7so401599166b.2
+        for <git@vger.kernel.org>; Mon, 12 Feb 2024 02:44:45 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1707734683; x=1708339483; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=LuzMqqwVCYjc1WWmhd9Jr1x+bZRkpPBWY/VucGlfhv0=;
+        b=j4MFFJtUIQ9auDoufVDBah1niUdG1azaC5UFXjpcOPrle0JahBxtFSnQaFbFnqulSI
+         2twsjC/zxWYR6l0sxueg1bINv42Hl0CLXLcR8E2zX9miXr+hK6k0OewTcd1RQNKqUM2z
+         +yPqnUuyiRk4CeLKhmU5irpo/KvtNdNDoW9MmCf1sEc8QAGT1N1pcyyEhKKVDmt/2dKU
+         Z9t6T8JjkNen9QzL+EeBfmHDWAMgN6YUTHoyvFkc5aH6GWbPpWwMtl+xqUvu+MZJG4rM
+         wDfbhkteWROsTtBy4LYB+kEGYOXHBpXChST/nQ1RSV4QKhTx1Rciy8QHwbGVl+rLpsY6
+         nGXA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1707734683; x=1708339483;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=LuzMqqwVCYjc1WWmhd9Jr1x+bZRkpPBWY/VucGlfhv0=;
+        b=RbQhs/EH//L4Zd+o5FauxpIEX4ZcxF6BqbabhcnbIkkUrWr34+xkrJsPRGDdIPYgQv
+         rvJPEHb1KzTdRbJj0boBOlgs06B8b2HF/1zXtY5RS17hOJF20tUA2b7bsP3XYhC9kggr
+         O43uRCXaRxiQxSjkWhFtCVA+rFigLLOcU+JbgndpmusfdB2TszVgqExsoQr33b8FVJrm
+         YLKIF2lkuJZkpeRUDMskhwIvcrW+odU4e7Lk2cVNQH7FRHIYuLtLIflJVp43asBZStsx
+         bF7Etu1S22Fu3BwhM5bM50HtXEaT5xCJtab/A66AHMd69w2B0bXuwN4ywBy9GIBKEKIE
+         BBtg==
+X-Gm-Message-State: AOJu0Yxh+wrk6v4dQmoNdHt4AagXqVWAVrWfChOV9CQttqMwC5t24OUa
+	YkF4LFb9uOekvftzfGLi71Dp3pwRfw7NvcK5uc8c1+Ltx7wrtQPb
+X-Google-Smtp-Source: AGHT+IF7Pw4NBTRs1lM4bvLQ/qNbPLrXh9s0FpYiFh64hW5m0wlo88QhZVwYdvNh+Gueln2p23qZbQ==
+X-Received: by 2002:a17:906:3b5a:b0:a3c:63ee:ad82 with SMTP id h26-20020a1709063b5a00b00a3c63eead82mr2503279ejf.19.1707734683186;
+        Mon, 12 Feb 2024 02:44:43 -0800 (PST)
+X-Forwarded-Encrypted: i=1; AJvYcCUCRFsN/nWz84myvSmllPVq2/q9ee9OeHyilHQU/EiNlJsgWzpS1NZJJtDrBqCA02AwbK7tfx2HeSavpa9QnEXQ7ROK61KMWK2sV4NWogWJRdWOlJISIywgcH+5SsKlMZWMSA==
+Received: from ?IPV6:2a0a:ef40:62e:a901:d2c6:37ff:fef6:7b1? ([2a0a:ef40:62e:a901:d2c6:37ff:fef6:7b1])
+        by smtp.googlemail.com with ESMTPSA id gz9-20020a170906f2c900b00a3515b35be4sm72920ejb.104.2024.02.12.02.44.42
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 12 Feb 2024 02:44:42 -0800 (PST)
+Message-ID: <c625239a-a847-475a-a228-9deb622c67bf@gmail.com>
+Date: Mon, 12 Feb 2024 10:44:41 +0000
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="wLwY7SWV7cnHy30h"
-Content-Disposition: inline
-In-Reply-To: <cover.1707726654.git.ps@pks.im>
+User-Agent: Mozilla Thunderbird
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v2] unit-tests: do show relative file paths on
+ non-Windows, too
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, Johannes Schindelin <johannes.schindelin@gmx.de>,
+ "Randall S. Becker" <rsbecker@nexbridge.com>
+References: <xmqqttmf9y46.fsf@gitster.g>
+ <6872b42d-8763-44dc-9502-2362d1ed80a7@gmail.com>
+ <xmqqle7r9enn.fsf_-_@gitster.g>
+Content-Language: en-US
+From: Phillip Wood <phillip.wood123@gmail.com>
+In-Reply-To: <xmqqle7r9enn.fsf_-_@gitster.g>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
+Hi Junio
 
---wLwY7SWV7cnHy30h
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+On 11/02/2024 15:58, Junio C Hamano wrote:
+>>
+>> We know which separator we're expecting so we could replace  the last
+>> two comparisons with
+>>
+>> 		prefix[prefix_len -1] != needle[1]
+>>
+>> but as I say I'm not sure that is worth re-rolling for
+> 
+> There is a larger clean-up opportunity to drop the need for making a
+> copy, which probably is worth doing, so I folded the above into this
+> version.
 
-While working on the optimizations in the preceding patches I stumbled
-upon `table_iter_next()` multiple times. It is quite easy to miss the
-fact that we don't call `table_iter_next_in_block()` twice, but that the
-second call is in fact `table_iter_next_block()`.
+Ooh, that's nice. This version looks good, I found the code comments 
+very helpful
 
-Add comments to explain what exactly is going on here to make things
-more obvious. While at it, touch up the code to conform to our code
-style better.
+Best Wishes
 
-Note that one of the refactorings merges two conditional blocks into
-one. Before, we had the following code:
+Phillip
 
-```
-err =3D table_iter_next_block(&next, ti
-if (err !=3D 0) {
-	ti->is_finished =3D 1;
-}
-table_iter_block_done(ti);
-if (err !=3D 0) {
-	return err;
-}
-```
+> ------- >8 ------------- >8 ------------- >8 ------------- >8 -------
+> 
+> There are compilers other than Visual C that want to show absolute
+> paths.  Generalize the helper introduced by a2c5e294 (unit-tests: do
+> show relative file paths, 2023-09-25) so that it can also work with
+> a path that uses slash as the directory separator, and becomes
+> almost no-op once one-time preparation finds out that we are using a
+> compiler that already gives relative paths.  Incidentally, this also
+> should do the right thing on Windows with a compiler that shows
+> relative paths but with backslash as the directory separator (if
+> such a thing exists and is used to build git).
+> 
+> Reported-by: Randall S. Becker <rsbecker@nexbridge.com>
+> Helped-by: Phillip Wood <phillip.wood@dunelm.org.uk>
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> ---
+> 
+>    * I found that the diff relative to the result of applying v1 was
+>      easier to follow than the range-diff, so here it is.
+> 
+>    diff --git c/t/unit-tests/test-lib.c w/t/unit-tests/test-lib.c
+>    index 83c9eb8c59..66d6980ffb 100644
+>    --- c/t/unit-tests/test-lib.c
+>    +++ w/t/unit-tests/test-lib.c
+>    @@ -64,34 +64,33 @@ static const char *make_relative(const char *location)
+>     		 * prefix_len == 0 if the compiler gives paths relative
+>     		 * to the root of the working tree.  Otherwise, we want
+>     		 * to see that we did find the needle[] at a directory
+>    -		 * boundary.
+>    +		 * boundary.  Again we rely on that needle[] begins with
+>    +		 * "t" followed by the directory separator.
+>     		 */
+>     		if (fspathcmp(needle, prefix + prefix_len) ||
+>    -		    (prefix_len &&
+>    -		     prefix[prefix_len - 1] != '/' &&
+>    -		     prefix[prefix_len - 1] != '\\'))
+>    +		    (prefix_len && prefix[prefix_len - 1] != needle[1]))
+>     			die("unexpected suffix of '%s'", prefix);
+>    -
+>     	}
+>     
+>     	/*
+>    -	 * If our compiler gives relative paths and we do not need
+>    -	 * to munge directory separator, we can return location as-is.
+>    +	 * Does it not start with the expected prefix?
+>    +	 * Return it as-is without making it worse.
+>     	 */
+>    -	if (!prefix_len && !need_bs_to_fs)
+>    +	if (prefix_len && fspathncmp(location, prefix, prefix_len))
+>     		return location;
+>     
+>    -	/* Does it not start with the expected prefix? */
+>    -	if (fspathncmp(location, prefix, prefix_len))
+>    -		return location;
+>    +	/*
+>    +	 * If we do not need to munge directory separator, we can return
+>    +	 * the substring at the tail of the location.
+>    +	 */
+>    +	if (!need_bs_to_fs)
+>    +		return location + prefix_len;
+>     
+>    -	strlcpy(buf, location + prefix_len, sizeof(buf));
+>     	/* convert backslashes to forward slashes */
+>    -	if (need_bs_to_fs) {
+>    -		for (p = buf; *p; p++)
+>    -			if (*p == '\\')
+>    -				*p = '/';
+>    -	}
+>    +	strlcpy(buf, location + prefix_len, sizeof(buf));
+>    +	for (p = buf; *p; p++)
+>    +		if (*p == '\\')
+>    +			*p = '/';
+>     	return buf;
+>     }
+>     
+> 
+>   t/unit-tests/test-lib.c | 61 +++++++++++++++++++++++++++++++----------
+>   1 file changed, 47 insertions(+), 14 deletions(-)
+> 
+> diff --git a/t/unit-tests/test-lib.c b/t/unit-tests/test-lib.c
+> index 7bf9dfdb95..66d6980ffb 100644
+> --- a/t/unit-tests/test-lib.c
+> +++ b/t/unit-tests/test-lib.c
+> @@ -21,12 +21,11 @@ static struct {
+>   	.result = RESULT_NONE,
+>   };
+>   
+> -#ifndef _MSC_VER
+> -#define make_relative(location) location
+> -#else
+>   /*
+>    * Visual C interpolates the absolute Windows path for `__FILE__`,
+>    * but we want to see relative paths, as verified by t0080.
+> + * There are other compilers that do the same, and are not for
+> + * Windows.
+>    */
+>   #include "dir.h"
+>   
+> @@ -34,32 +33,66 @@ static const char *make_relative(const char *location)
+>   {
+>   	static char prefix[] = __FILE__, buf[PATH_MAX], *p;
+>   	static size_t prefix_len;
+> +	static int need_bs_to_fs = -1;
+>   
+> -	if (!prefix_len) {
+> +	/* one-time preparation */
+> +	if (need_bs_to_fs < 0) {
+>   		size_t len = strlen(prefix);
+> -		const char *needle = "\\t\\unit-tests\\test-lib.c";
+> +		char needle[] = "t\\unit-tests\\test-lib.c";
+>   		size_t needle_len = strlen(needle);
+>   
+> -		if (len < needle_len || strcmp(needle, prefix + len - needle_len))
+> -			die("unexpected suffix of '%s'", prefix);
+> +		if (len < needle_len)
+> +			die("unexpected prefix '%s'", prefix);
+> +
+> +		/*
+> +		 * The path could be relative (t/unit-tests/test-lib.c)
+> +		 * or full (/home/user/git/t/unit-tests/test-lib.c).
+> +		 * Check the slash between "t" and "unit-tests".
+> +		 */
+> +		prefix_len = len - needle_len;
+> +		if (prefix[prefix_len + 1] == '/') {
+> +			/* Oh, we're not Windows */
+> +			for (size_t i = 0; i < needle_len; i++)
+> +				if (needle[i] == '\\')
+> +					needle[i] = '/';
+> +			need_bs_to_fs = 0;
+> +		} else {
+> +			need_bs_to_fs = 1;
+> +		}
+>   
+> -		/* let it end in a directory separator */
+> -		prefix_len = len - needle_len + 1;
+> +		/*
+> +		 * prefix_len == 0 if the compiler gives paths relative
+> +		 * to the root of the working tree.  Otherwise, we want
+> +		 * to see that we did find the needle[] at a directory
+> +		 * boundary.  Again we rely on that needle[] begins with
+> +		 * "t" followed by the directory separator.
+> +		 */
+> +		if (fspathcmp(needle, prefix + prefix_len) ||
+> +		    (prefix_len && prefix[prefix_len - 1] != needle[1]))
+> +			die("unexpected suffix of '%s'", prefix);
+>   	}
+>   
+> -	/* Does it not start with the expected prefix? */
+> -	if (fspathncmp(location, prefix, prefix_len))
+> +	/*
+> +	 * Does it not start with the expected prefix?
+> +	 * Return it as-is without making it worse.
+> +	 */
+> +	if (prefix_len && fspathncmp(location, prefix, prefix_len))
+>   		return location;
+>   
+> -	strlcpy(buf, location + prefix_len, sizeof(buf));
+> +	/*
+> +	 * If we do not need to munge directory separator, we can return
+> +	 * the substring at the tail of the location.
+> +	 */
+> +	if (!need_bs_to_fs)
+> +		return location + prefix_len;
+> +
+>   	/* convert backslashes to forward slashes */
+> +	strlcpy(buf, location + prefix_len, sizeof(buf));
+>   	for (p = buf; *p; p++)
+>   		if (*p == '\\')
+>   			*p = '/';
+> -
+>   	return buf;
+>   }
+> -#endif
+>   
+>   static void msg_with_prefix(const char *prefix, const char *format, va_list ap)
+>   {
 
-As `table_iter_block_done()` does not care about `is_finished`, the
-conditional blocks can be merged into one block:
-
-```
-err =3D table_iter_next_block(&next, ti
-table_iter_block_done(ti);
-if (err !=3D 0) {
-	ti->is_finished =3D 1;
-	return err;
-}
-```
-
-This is both easier to reason about and more performant because we have
-one branch less.
-
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
----
- reftable/reader.c | 26 +++++++++++++++++---------
- 1 file changed, 17 insertions(+), 9 deletions(-)
-
-diff --git a/reftable/reader.c b/reftable/reader.c
-index 64dc366fb1..add7d57f0b 100644
---- a/reftable/reader.c
-+++ b/reftable/reader.c
-@@ -357,24 +357,32 @@ static int table_iter_next(struct table_iter *ti, str=
-uct reftable_record *rec)
-=20
- 	while (1) {
- 		struct table_iter next =3D TABLE_ITER_INIT;
--		int err =3D 0;
--		if (ti->is_finished) {
-+		int err;
-+
-+		if (ti->is_finished)
- 			return 1;
--		}
-=20
-+		/*
-+		 * Check whether the current block still has more records. If
-+		 * so, return it. If the iterator returns positive then the
-+		 * current block has been exhausted.
-+		 */
- 		err =3D table_iter_next_in_block(ti, rec);
--		if (err <=3D 0) {
-+		if (err <=3D 0)
- 			return err;
--		}
-=20
-+		/*
-+		 * Otherwise, we need to continue to the next block in the
-+		 * table and retry. If there are no more blocks then the
-+		 * iterator is drained.
-+		 */
- 		err =3D table_iter_next_block(&next, ti);
--		if (err !=3D 0) {
--			ti->is_finished =3D 1;
--		}
- 		table_iter_block_done(ti);
--		if (err !=3D 0) {
-+		if (err) {
-+			ti->is_finished =3D 1;
- 			return err;
- 		}
-+
- 		table_iter_copy_from(ti, &next);
- 		block_iter_close(&next.bi);
- 	}
---=20
-2.43.GIT
-
-
---wLwY7SWV7cnHy30h
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmXJ17gACgkQVbJhu7ck
-PpSlsBAAjvn2mWTqKZORi8i6wyvs/lyNnJu7i2iurWllHCH85hv920pnG2wS+DWv
-B/lIF+IQbBMdxlQ1JkUnmIbB3iXLbdf//rb/miXi8QV+v8u+DiipjORi2/4tgsk1
-atKpyTNIS6XdJPNlFdSrgA9H26AjnTPUtPsQTiTqIKITFcm6wR36FTWW7Sd5dats
-Rk/NvcSCuXgYzLmBVIqvtEtxalBmiNWt0uc+r7+TRbYaG3f+5Gi728Lm4+eS6YjY
-bbBcU7rg7d1hQYs4UQ5LZqM12BXN1PSa8Kgx3RfnhyQhl2KYXVqElMiDm08PNCny
-cGUbfMz2je4nAlEGHaJNwZYTE5Wt50FP5k5fvGb7EH3LStyXmw4jkdYXY9UdrNp9
-fuKO9WdH4387v5BI7XC+sYrTDqDFPVGa03+BreA3wc6uWemNaKJG0kOSrfl3dOAN
-Zs+d9cS3o2/oC4ffTwGBbGL0Gw9FkhLA8yzL0gMUUpdFA21rvAiIi7ZMYASdqvRZ
-xpB4GM6B09fOxkez0e7so0seCGfMuW12Z5zbCoajqLVQW+XLRMKbTSezVOX3/jt8
-Ad9mFjX5BnP7ihcEHOLkLQqcnw9ed1OEgVqzvGzZfm0347RDeziBlGaAodMZhq6z
-rwvMWghMmEFoOBNpItPsZ2V0oR+siwW7AjOYpFjqwby4VdmysM4=
-=RuPR
------END PGP SIGNATURE-----
-
---wLwY7SWV7cnHy30h--
