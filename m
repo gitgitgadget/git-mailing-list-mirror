@@ -1,53 +1,53 @@
 Received: from fhigh4-smtp.messagingengine.com (fhigh4-smtp.messagingengine.com [103.168.172.155])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28F5610A05
-	for <git@vger.kernel.org>; Mon, 12 Feb 2024 08:32:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E50D10A05
+	for <git@vger.kernel.org>; Mon, 12 Feb 2024 08:32:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707726755; cv=none; b=dYNSALBqmltOa7rz8UIbm9gkmqxJltqb7B1En/+wUHCH56kRwQ6SZc1jsjmHog7A9Do9p+BO0BoWNtNvI46GEPZXUtdbwFziMwO3AuOp2vc5dw5O3X7N7a4H2LVlLZOBSLtSRb0pdk2mIIq1D9oU3C8fJfyZsZMlaXDZw6GqCXQ=
+	t=1707726763; cv=none; b=qzNtRHWmweVLHf41k78s2kWTbsSRLSPZZnKZjQpdo2K7Cl1n3Lo3J38u+vrCRcYNYyJYf4Kg5panMBeZyOX6HpN2uBlhSvRnCfijCOv0HYWOb6WQJqtz3X73brD00QJPBAoBrTPAW6z0/9p1dTCTnPQ7afMFRAksyfUPbJh+cLc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707726755; c=relaxed/simple;
-	bh=CJHSx1vBgsqj2R9gf0Wi7C+jSmP0h4B8Ii5Njbs9gNQ=;
+	s=arc-20240116; t=1707726763; c=relaxed/simple;
+	bh=g59/EbwwpiXrVK1/mtUySWh8H6xpWpH2KPzit1t7YIQ=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=japNEzwoXfjL02v/zWkgu+4CLhGWK0yrBvK0XCol47t8ND55U+QEYA29YG7TPu57Ny9wu9+9Xz0qPrGiKuJcq8DKxM3o1dUXL/CWp4+BRzu7Ppptmt5cPgkoNqDyqZ+nVjtWBFSx9JsRZc/pEoURKqFwJ+SRm6AYRntAGzT37kM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=SFaH0j0R; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ihIFeZXC; arc=none smtp.client-ip=103.168.172.155
+	 Content-Type:Content-Disposition:In-Reply-To; b=umyMRU8x+CkZzDKzplqE9pBEr6Y4NCl1/835VKKKfHZXL1SmOb0vqJ4Snk4CM6Z2a8avkTuJHWDP3E1UgCyRbYh8VrDp9S8yfWTVwRJkXzvFPhFZEs4kOTIe8Mqkx6WkDVutOftnojc7R0nCcmpucvlONy5XeBYljMdVa/iTJns=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=ZraYAelz; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=UKeZzRNC; arc=none smtp.client-ip=103.168.172.155
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="SFaH0j0R";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ihIFeZXC"
-Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
-	by mailfhigh.nyi.internal (Postfix) with ESMTP id D68E81140091;
-	Mon, 12 Feb 2024 03:32:32 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="ZraYAelz";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="UKeZzRNC"
+Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
+	by mailfhigh.nyi.internal (Postfix) with ESMTP id 4D67B1140099;
+	Mon, 12 Feb 2024 03:32:40 -0500 (EST)
 Received: from mailfrontend2 ([10.202.2.163])
-  by compute2.internal (MEProxy); Mon, 12 Feb 2024 03:32:32 -0500
+  by compute5.internal (MEProxy); Mon, 12 Feb 2024 03:32:40 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1707726752; x=1707813152; bh=66N+DOdzXN
-	mWAMITmQ8SJRMgrkELdG2OYYK5RPVpKAI=; b=SFaH0j0R49Xez9YH5Bd5NC4/IP
-	/MFJRbQEdv9aExCjxUO0/4Lujgpj5xr83ApzHEhwH8tBwTNZovgGJUlcAl+0QJYn
-	uOd0WmixYT2C+cZP4zFaWFipI57P8RnFYP3TZPSLuvOa5tkCldTGHNj0racaILz6
-	4IO5QBqA95DlLC/kOp5zyigCIFQ7FdcwKUwru4hlS+kT58WU+JYGfOGn0iVhSTkz
-	0ELj5YeNuki44yQTsvGfxuqqRjyGqNP9R2iyyaykJX35yI7eJEbMLlBVB62lUzOF
-	mSVG5hG/h7GsfuKQEZxGSVBQna2NB4Cod81+z0dQE9pwXNp/7/RGzv2Cprog==
+	:subject:to:to; s=fm3; t=1707726760; x=1707813160; bh=VJzeEQIQHi
+	q40lFoyRDy3hyPnHDudasBZ7yDj8vwh6I=; b=ZraYAelzkXgB7wDBFwx4c/tMTA
+	xe2EBmdatjkPlIVps3xG9sOl2DJseYhdmTXdvjwHGgQGacRL8KBXM0Z5EUt/BeEu
+	AdPmNB0oPNDsXV6Qzs12CKSo9UoFDMG+3sNMIoJEqmEiOfSFFPsQ/ffy6QSmO/rK
+	e0UjFMhW3zRua1qc6YZ5gkAZAoa4sX/8NvxNyBaNmGHdL6S1IjbU5AVNmbJJ7FTr
+	hvwcasYuaQBmfnieDyW3WCx72BUYLoLkhdhqbhnhhlkbkO83reRv3ht8nMmtz8Be
+	4SYHAPRSj9CnwsIpSrbpFU6TSX14B1dorNbtjn9MSms+faz/EYQdokwnUTNw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1707726752; x=1707813152; bh=66N+DOdzXNmWAMITmQ8SJRMgrkEL
-	dG2OYYK5RPVpKAI=; b=ihIFeZXC8mCvHIvPfVlWHi0kuHD/acSGJMVsw5VqD0C0
-	unYgVJ/d58L4LfkRs6su7HDyb/y8g8bsZ1HR6W5k9G3RMMAxyQP6EAg4rlkZmjNN
-	zXbhXoqeOY/iYkzuNpn6MCjyheBfWMsePI90XRxK1F7CMey9V379NnJoBqniVDIL
-	QhmRpDpH0ajq5JTJJZrhnHh7j680JJ2s7ETMpV0uG4dIei01UiiWt6BWmLBF4yRS
-	s8f4viOQx2XzPkSUUZ2TTW4HyEemhzQ9CuZfV7ytO5EyKGSn6alHPdQuN2nsmMUE
-	6n1HL/INZ8z3ooyBYvc97qSFO+yTUixB88QOJjKd9g==
-X-ME-Sender: <xms:oNfJZboiS_xHn5Ym7QVhA00UkdfERPXHj51bGGumKpZmlVQoePReoQ>
-    <xme:oNfJZVoBn4QO_YrQwwE4fCqSgZjjMVq-qzL7o-Tk-SQ9BLy2RAK8ZjeAqFrRr-8K0
-    6IcYHePYYhNF01q-A>
-X-ME-Received: <xmr:oNfJZYPHQpXagdGOX1FSS2gk7CTv8wdwKFkMNtd_-TNnaa2OutktVG3-KnO8tzVkzq1C7qYEgRhoE6pacBBAblGjWvdUbxfxKzyOsf8TZNVOle0>
+	fm3; t=1707726760; x=1707813160; bh=VJzeEQIQHiq40lFoyRDy3hyPnHDu
+	dasBZ7yDj8vwh6I=; b=UKeZzRNC7LIIFcpOrumXQIUEqnO63SYvFR1cOMwZhClX
+	dCj8JOm706yNAimF1ysNg4afW/Vcpj2RH9I+fwUZL1PXydSzIkPKMYrqIVDJB80u
+	+Bo8oMqjJ+vMvqybZXxGmk9+vzQqXNpY3c0JxRuuKijNzNevmQgxX23Gpn3O3w6d
+	V7kU9MlkK0b0ZmeZ10f2mT+7OVUyFjusgZc0bpDH3bWX+DnSraoC1JlzzisBqADq
+	d4Ae9R7MU/oibDhPc352VmsOMpDBg8AbHz3VbplMp9Q05xdPoA5liE92LYX2d8HB
+	56n1eTdTYqKmQ/ZktFodqaQfvbjwGrr8g1JFg6Orjg==
+X-ME-Sender: <xms:p9fJZQJBBIvNvs-xrec9oG6-xobTdFKG-OeJWIk33IRsgWukcN5eew>
+    <xme:p9fJZQKWBfV7kMooQ_JIcDoAhCj70rvLPOgCrSxUzFpLDSqqqDqOXs_uwzFsNlBoL
+    gix8dnMaCdcAuKj4A>
+X-ME-Received: <xmr:p9fJZQsDX1WzeTaxiFV4fHpqaq6p4pvGt64G4cM9SD5AI4oQar5fdwkhmP9UED1XPwIVWSCAoVicf47oA-eDyMdGwhXxv5JWyR0Lz0WE2I7RPLo>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledruddvgdduvdefucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
     uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
@@ -56,23 +56,23 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledruddvgdduvdefucetufdoteggod
     hrnhepteeuvefhhfdufedvgeeiueeileegtdfhgeeftdeuveejjedtgfejhedujeeutddu
     necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
     hpkhhsrdhimh
-X-ME-Proxy: <xmx:oNfJZe4QVlgy8XAXEhW8hCsC3kiRifNsaW4JxgtO6BnTvT0HCYzAtQ>
-    <xmx:oNfJZa7NhivXCqoeyB4MnaBoBOaDyd9TtBqao0d95L2q6DNmkkY4YA>
-    <xmx:oNfJZWiDfqawn57xUgnZXP2gNxlkA0Z_z7BZxzP74wB-V77QPszbbQ>
-    <xmx:oNfJZQnunIXveBlqVRKh3WCRcX_X-85J8u-VP6zwY4ZoBjtEjKq9ZQ>
+X-ME-Proxy: <xmx:p9fJZdaZN1P2yTQPml06VkeL2xzdFcwizVdN7YP8e3hB6109Vm_Ypw>
+    <xmx:p9fJZXaIbgSyeBQicjMVPG6bR9WmUjaG3mUWfJ-kn5yyiIZbgcygXA>
+    <xmx:p9fJZZC6WNOlqqYj_5BOX_Zo6NQSSpME77uvGZ_HzpqMOqIousipeA>
+    <xmx:qNfJZTHix6aPvdq8kmib-zmcj6DgvicM-kT3Slj3QmqF09dZsTAOHQ>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 12 Feb 2024 03:32:31 -0500 (EST)
+ 12 Feb 2024 03:32:39 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 4e5c3c38 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 12 Feb 2024 08:28:45 +0000 (UTC)
-Date: Mon, 12 Feb 2024 09:32:29 +0100
+	by vm-mail (OpenSMTPD) with ESMTPSA id ee8dfd64 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 12 Feb 2024 08:28:52 +0000 (UTC)
+Date: Mon, 12 Feb 2024 09:32:37 +0100
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
 Cc: Eric Sunshine <sunshine@sunshineco.com>, John Cai <johncai86@gmail.com>
-Subject: [PATCH v2 2/7] reftable/merged: allocation-less dropping of shadowed
- records
-Message-ID: <2364a0fa3369063355bed966267a19fb9af3a6b6.1707726654.git.ps@pks.im>
+Subject: [PATCH v2 3/7] reftable/merged: skip comparison for records of the
+ same subiter
+Message-ID: <205e6b488be9165d08e0fecb6197ebfc6747ba1c.1707726654.git.ps@pks.im>
 References: <cover.1706782841.git.ps@pks.im>
  <cover.1707726654.git.ps@pks.im>
 Precedence: bulk
@@ -82,154 +82,101 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="Rx89383GdCGFe2MK"
+	protocol="application/pgp-signature"; boundary="uV7/iz3E63Sp8I9+"
 Content-Disposition: inline
 In-Reply-To: <cover.1707726654.git.ps@pks.im>
 
 
---Rx89383GdCGFe2MK
+--uV7/iz3E63Sp8I9+
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-The purpose of the merged reftable iterator is to iterate through all
-entries of a set of tables in the correct order. This is implemented by
-using a sub-iterator for each table, where the next entry of each of
-these iterators gets put into a priority queue. For each iteration, we
-do roughly the following steps:
+When retrieving the next entry of a merged iterator we need to drop all
+records of other sub-iterators that would be shadowed by the record that
+we are about to return. We do this by comparing record keys, dropping
+all keys that are smaller or equal to the key of the record we are about
+to return.
 
-  1. Retrieve the top record of the priority queue. This is the entry we
-     want to return to the caller.
+There is an edge case here where we can skip that comparison: when the
+record in the priority queue comes from the same subiterator as the
+record we are about to return then we know that its key must be larger
+than the key of the record we are about to return. This property is
+guaranteed by the sub-iterators, and if it didn't hold then the whole
+merged iterator would return records in the wrong order, too.
 
-  2. Retrieve the next record of the sub-iterator that this record came
-     from. If any, add it to the priority queue at the correct position.
-     The position is determined by comparing the record keys, which e.g.
-     corresponds to the refname for ref records.
+While this may seem like a very specific edge case it's in fact quite
+likely to happen. For most repositories out there you can assume that we
+will end up with one large table and several smaller ones on top of it.
+Thus, it is very likely that the next entry will sort towards the top of
+the priority queue.
 
-  3. Keep removing the top record of the priority queue until we hit the
-     first entry whose key is larger than the returned record's key.
-     This is required to drop "shadowed" records.
+Special case this and break out of the loop in that case. The following
+benchmark uses git-show-ref(1) to print a single ref matching a pattern
+out of 1 million refs:
 
-The last step will lead to at least one comparison to the next entry,
-but may lead to many comparisons in case the reftable stack consists of
-many tables with shadowed records. It is thus part of the hot code path
-when iterating through records.
+  Benchmark 1: show-ref: single matching ref (revision =3D HEAD~)
+    Time (mean =C2=B1 =CF=83):     162.6 ms =C2=B1   4.5 ms    [User: 159.0=
+ ms, System: 3.5 ms]
+    Range (min =E2=80=A6 max):   156.6 ms =E2=80=A6 188.5 ms    1000 runs
 
-The code to compare the entries with each other is quite inefficient
-though. Instead of comparing record keys with each other directly, we
-first format them into `struct strbuf`s and only then compare them with
-each other. While we already optimized this code path to reuse buffers
-in 829231dc20 (reftable/merged: reuse buffer to compute record keys,
-2023-12-11), the cost to format the keys into the buffers still adds up
-quite significantly.
+  Benchmark 2: show-ref: single matching ref (revision =3D HEAD)
+    Time (mean =C2=B1 =CF=83):     156.8 ms =C2=B1   4.7 ms    [User: 153.0=
+ ms, System: 3.6 ms]
+    Range (min =E2=80=A6 max):   151.4 ms =E2=80=A6 188.4 ms    1000 runs
 
-Refactor the code to use `reftable_record_cmp()` instead, which has been
-introduced in the preceding commit. This function compares records with
-each other directly without requiring any memory allocations or copying
-and is thus way more efficient.
-
-The following benchmark uses git-show-ref(1) to print a single ref
-matching a pattern out of 1 million refs. This is the most direct way to
-exercise ref iteration speed as we remove all overhead of having to show
-the refs, too.
-
-    Benchmark 1: show-ref: single matching ref (revision =3D HEAD~)
-      Time (mean =C2=B1 =CF=83):     180.7 ms =C2=B1   4.7 ms    [User: 177=
-=2E1 ms, System: 3.4 ms]
-      Range (min =E2=80=A6 max):   174.9 ms =E2=80=A6 211.7 ms    1000 runs
-
-    Benchmark 2: show-ref: single matching ref (revision =3D HEAD)
-      Time (mean =C2=B1 =CF=83):     162.1 ms =C2=B1   4.4 ms    [User: 158=
-=2E5 ms, System: 3.4 ms]
-      Range (min =E2=80=A6 max):   155.4 ms =E2=80=A6 189.3 ms    1000 runs
-
-    Summary
-      show-ref: single matching ref (revision =3D HEAD) ran
-        1.11 =C2=B1 0.04 times faster than show-ref: single matching ref (r=
-evision =3D HEAD~)
+  Summary
+    show-ref: single matching ref (revision =3D HEAD) ran
+      1.04 =C2=B1 0.04 times faster than show-ref: single matching ref (rev=
+ision =3D HEAD~)
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- reftable/merged.c | 11 ++---------
- reftable/merged.h |  2 --
- 2 files changed, 2 insertions(+), 11 deletions(-)
+ reftable/merged.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
 diff --git a/reftable/merged.c b/reftable/merged.c
-index c258ce953e..fb9978d798 100644
+index fb9978d798..0f74a14a77 100644
 --- a/reftable/merged.c
 +++ b/reftable/merged.c
-@@ -51,8 +51,6 @@ static void merged_iter_close(void *p)
- 		reftable_iterator_destroy(&mi->stack[i]);
- 	}
- 	reftable_free(mi->stack);
--	strbuf_release(&mi->key);
--	strbuf_release(&mi->entry_key);
- }
-=20
- static int merged_iter_advance_nonnull_subiter(struct merged_iter *mi,
-@@ -105,14 +103,11 @@ static int merged_iter_next_entry(struct merged_iter =
-*mi,
- 	  such a deployment, the loop below must be changed to collect all
- 	  entries for the same key, and return new the newest one.
- 	*/
--	reftable_record_key(&entry.rec, &mi->entry_key);
- 	while (!merged_iter_pqueue_is_empty(mi->pq)) {
+@@ -107,6 +107,14 @@ static int merged_iter_next_entry(struct merged_iter *=
+mi,
  		struct pq_entry top =3D merged_iter_pqueue_top(mi->pq);
--		int cmp =3D 0;
-+		int cmp;
+ 		int cmp;
 =20
--		reftable_record_key(&top.rec, &mi->key);
--
--		cmp =3D strbuf_cmp(&mi->key, &mi->entry_key);
-+		cmp =3D reftable_record_cmp(&top.rec, &entry.rec);
++		/*
++		 * When the next entry comes from the same queue as the current
++		 * entry then it must by definition be larger. This avoids a
++		 * comparison in the most common case.
++		 */
++		if (top.index =3D=3D entry.index)
++			break;
++
+ 		cmp =3D reftable_record_cmp(&top.rec, &entry.rec);
  		if (cmp > 0)
  			break;
-=20
-@@ -246,8 +241,6 @@ static int merged_table_seek_record(struct reftable_mer=
-ged_table *mt,
- 		.typ =3D reftable_record_type(rec),
- 		.hash_id =3D mt->hash_id,
- 		.suppress_deletions =3D mt->suppress_deletions,
--		.key =3D STRBUF_INIT,
--		.entry_key =3D STRBUF_INIT,
- 	};
- 	int n =3D 0;
- 	int err =3D 0;
-diff --git a/reftable/merged.h b/reftable/merged.h
-index d5b39dfe7f..7d9f95d27e 100644
---- a/reftable/merged.h
-+++ b/reftable/merged.h
-@@ -31,8 +31,6 @@ struct merged_iter {
- 	uint8_t typ;
- 	int suppress_deletions;
- 	struct merged_iter_pqueue pq;
--	struct strbuf key;
--	struct strbuf entry_key;
- };
-=20
- void merged_table_release(struct reftable_merged_table *mt);
 --=20
 2.43.GIT
 
 
---Rx89383GdCGFe2MK
+--uV7/iz3E63Sp8I9+
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmXJ15wACgkQVbJhu7ck
-PpQKMA//YOYdUt0SM8LJfSR1duEHxduTDbdFDpKQQt8SbkBJsirWkOxFTmaIOrM5
-BQaPXW5+C4uwLnxdi0sqSD4CyrQnb5VhnuBAfsAEZ8YRprF6klqDzJNWbVb56rU1
-gzumsFyx4saPzqyZHKAStc+7cCdrAz7Ss8WMJ2nIXNd+ymwvDnOMhXEPbAoOw4G7
-fppTDKNYWyXqvJMGe3s/EWAk2LfPhEChPyednUV5+MgPuYA/WyaIxYHm/kuo4QlV
-v/+n3mWh9vH0SoYxPB9rRIUuhC7de6Gk1r9Wre95+oLqO0QXNcIrnMCIMDRorote
-0BWoJTpwIP8MjLDoPrx8zLuPHyGAF+GklcNa02W9TcriswKqcG/b9zBt4cA5mNhU
-PHBPjKAnIDO+vYbz/yxOz8cLuNkRKV+6zEVG3BxcryKMjmoRhKfmW/Ke1T7lLqAM
-QPgtJEvsgwH281rdbtzM3d/y5ujezPFtl8KunQD9LXnKen3DMGWWfATGJED46Wum
-3uEXHLvjMbZGDFcWAz5GUML5s5mn50vPP4k/ST44wMtSPGmxFm4dFfvYV7wyeaGE
-0FaFZb0BWHnuw0kKRI+2QoA7aKLi0E63IfAURz0uFCjOV8tjgIH4dtd9DSHV/G4s
-I1lH9dIzF8XGUSHSsugnZqLQO6ThqeHNpfFm/Keqlx6SlsQBAz8=
-=MXzM
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmXJ16QACgkQVbJhu7ck
+PpTkmw//Sy/jtrEWli4vUyatzmxiFlp4PcIhyn7YDeGQfgp3ZKEcvebMpxen2Ra7
+SFriMFFtIOqMuMOXHBvkyYUxZpK21vYJ9JjCyoiPXfiyEDp7SSW1Dc62w1sNLr38
+kYt/s80qQ3U7h+z9KheI8rMtPdR1GDbBP747vFYfA5Q6M7DWGh/DNtIryEjg1dDh
+1i03wNoIK+vjLEpF1iFf2MgDm5qM5irHG17t+OBNNCvX14yUTcYGQw96DdNbSUmp
+dkkoSj/ITrSbivcAPYmF7QElY41LtCLN+RUk/bfk0aLyXY9f8wzfQlxgQX+hyijh
+EiTs0d+emSEDBCS2n9OtKyzsxVllR39JXLB0dL+Aqf3rGNJmfkAPG1bW8auKfY/b
+KlUarThqlwZozrVOa0GAM4TaSOdPMN4J984shdl74eZAybGNnYbEA9cOdPTsBtfV
+VCjYajpQJlQ9Nbqo0cGU6usmleK3sbfsw6zSyOMU2xbDfbhkm/4fYO9e5WXZvdLe
+biWx1fxfkt4BnXpmr4zRAA0RQDM5AA8haQar0OCqCXS8iJ42xkCGNcT74Y1uIg3L
+/FEm7NTr5EnI/CDU8hpZTz8zeuDJkFeyXLIIlEixE/mI16C5/292SSwWgLopFeH4
+dPN0W7xgCmm2hZ4b8kcr/7jykBaIBr6/dsZdCgyUuzpg3zE5qoA=
+=0Xzq
 -----END PGP SIGNATURE-----
 
---Rx89383GdCGFe2MK--
+--uV7/iz3E63Sp8I9+--
