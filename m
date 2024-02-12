@@ -1,60 +1,56 @@
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B4FB45BE8
-	for <git@vger.kernel.org>; Mon, 12 Feb 2024 18:27:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7379E45973
+	for <git@vger.kernel.org>; Mon, 12 Feb 2024 19:02:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707762465; cv=none; b=JuxAXn8kx754YiLJgRuj8Ntz9YEwas2FrPGIl3jvnwBIRIhF2d9LR5mLYsMt8SLUZFi4e3JaSxaG5H07siMhzmGB4S//vjTN9D6Jkw6iEkNsGvgqXOGZpTdYggsrfFc3ESdfGQaYpo0zFt2J5LLCFFT9BnSNJuUmsEEPzk8FZ3w=
+	t=1707764531; cv=none; b=UZaEREP0tLP1eQ2ifLLg/vU/aRsvuSQpfPOcTxTUDUE5qkMGLWEUdfqCDbqLkl2o1L8lepL/tjv1JyaE6dsCQnYFYeCa5b55QaNFuqqciyocxsrQw84m+lQFM4x0H6itU8namLhhZ/76QRjEDsvq9JsxanpVxvigJdqHHCE5lBY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707762465; c=relaxed/simple;
-	bh=uHlv7jTFAXmTRi3ojNnyTb4eB07FAmPcXF3jOHoWWp4=;
+	s=arc-20240116; t=1707764531; c=relaxed/simple;
+	bh=LBdzt/YOnmHSk87WwpWydZAMLINwZEeDasaEyfNGr+o=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=NhAfwQNyRPMD3G8y8oke0O2e5HBDhDyDJ7S2XpRy0oYvFHCU55eML1GYZC+0ebBZd/ShQbyZF2BRvXi+LyVMcS5ctXH394ZvLTLPCU4zobgAPJyXYMWA8+kKq08VCtIHxhd/qWM0F+ln4UoysjSEGR3AAJYLAFDxO4F1MQaqFTM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=wdkrLLl5; arc=none smtp.client-ip=64.147.108.71
+	 MIME-Version:Content-Type; b=VDN+tZzABdSaj8xwkbpfbi3lZKsAlQujywYE6cIvmJrBqoPt7ljAyPnPj5yfnKz6su1aWqgeSVmgWHQ/IixLdocyULaiSiBTF36SKJgHuvqrkEfpqdQ3KTxzfUCLtD6+JUrOmbGvzEg/PdizmA6BORXnL6nxl5QRe5kzfJrcTZk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=jYHB+Swp; arc=none smtp.client-ip=173.228.157.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="wdkrLLl5"
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 80A5A1DF02F;
-	Mon, 12 Feb 2024 13:27:42 -0500 (EST)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="jYHB+Swp"
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id E91D92CE41;
+	Mon, 12 Feb 2024 14:02:08 -0500 (EST)
 	(envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=uHlv7jTFAXmT
-	Ri3ojNnyTb4eB07FAmPcXF3jOHoWWp4=; b=wdkrLLl5LZtp42+AK90PK5eZTWm6
-	EAORO+9EZPKSWWntPnnkoxyd7ueDY1K5yJLBjfe4LF2fWgJo/Ufji4mKDDTSBzvv
-	1KOKh5Ql4DOewAj9CSqUBEJPhj0xfqRGFD9o/Ib4GDGoH1u9PFf7cm2VKUZbpPAR
-	VmK0vtdzq1a08fc=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 7753B1DF02E;
-	Mon, 12 Feb 2024 13:27:42 -0500 (EST)
+	:content-type; s=sasl; bh=LBdzt/YOnmHSk87WwpWydZAMLINwZEeDasaEyf
+	NGr+o=; b=jYHB+Swp1kXVQU4uz+e62iB4KwQ9vAf0dr6CJXuWR+a0JFSENxLgLI
+	oVoMImHP3phKjzrdzDJUAYkNMI/KHJ3v9OOAWhtbP1w7F5Nq7mWbUyhjKwUyEZ2+
+	7+q+fv13yBiyMCRcxQsIydPTtqVdhPK8XNdFSvhgIDePGFr/AKUto=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id E16912CE40;
+	Mon, 12 Feb 2024 14:02:08 -0500 (EST)
 	(envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.125.165.85])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id D30181DF02D;
-	Mon, 12 Feb 2024 13:27:41 -0500 (EST)
+	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 86E3B2CE3C;
+	Mon, 12 Feb 2024 14:02:05 -0500 (EST)
 	(envelope-from junio@pobox.com)
 From: Junio C Hamano <gitster@pobox.com>
-To: Philippe Blain <levraiphilippeblain@gmail.com>, Johannes Sixt
- <j6t@kdbg.org>
-Cc:  Elijah Newren <newren@gmail.com>,  Michael Lohmann
- <mial.lohmann@gmail.com>,  Phillip Wood <phillip.wood@dunelm.org.uk>,
-  Patrick Steinhardt <ps@pks.im>,  Michael Lohmann
- <mi.al.lohmann@gmail.com>,  git@vger.kernel.org
-Subject: Re: [PATCH v4 2/2] revision: implement `git log --merge` also for
- rebase/cherry-pick/revert
-In-Reply-To: <529c7b42-c606-408e-b6a3-fe189c28db9b@kdbg.org> (Johannes Sixt's
-	message of "Sun, 11 Feb 2024 18:59:09 +0100")
-References: <20240210-ml-log-merge-with-cherry-pick-and-other-pseudo-heads-v4-0-3bc9e62808f4@gmail.com>
-	<20240210-ml-log-merge-with-cherry-pick-and-other-pseudo-heads-v4-2-3bc9e62808f4@gmail.com>
-	<2cf557e9-bf48-4bf3-be24-c1eeaa887418@kdbg.org>
-	<1c258037-cb08-5fbc-d473-743a60cd8eab@gmail.com>
-	<529c7b42-c606-408e-b6a3-fe189c28db9b@kdbg.org>
-Date: Mon, 12 Feb 2024 10:27:40 -0800
-Message-ID: <xmqqmss55yhv.fsf@gitster.g>
+To: <rsbecker@nexbridge.com>
+Cc: <git@vger.kernel.org>
+Subject: Re: [BUG] git 2.44.0-rc0 t0080.1 Breaks on NonStop x86 and ia64
+In-Reply-To: <010601da5ddd$3dec41a0$b9c4c4e0$@nexbridge.com>
+	(rsbecker@nexbridge.com's message of "Mon, 12 Feb 2024 12:59:31
+	-0500")
+References: <000401da5c4c$fd4ad260$f7e07720$@nexbridge.com>
+	<xmqqbk8nbvqy.fsf@gitster.g>
+	<002a01da5c94$a1bc5340$e534f9c0$@nexbridge.com>
+	<00fa01da5dcd$5b060150$111203f0$@nexbridge.com>
+	<xmqqzfw57hw0.fsf@gitster.g>
+	<010601da5ddd$3dec41a0$b9c4c4e0$@nexbridge.com>
+Date: Mon, 12 Feb 2024 11:02:03 -0800
+Message-ID: <xmqqil2t5wwk.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -62,48 +58,157 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain
 X-Pobox-Relay-ID:
- 6884778A-C9D4-11EE-B634-25B3960A682E-77302942!pb-smtp2.pobox.com
-Content-Transfer-Encoding: quoted-printable
+ 3691ECD0-C9D9-11EE-B7CD-A19503B9AAD1-77302942!pb-smtp21.pobox.com
 
-Johannes Sixt <j6t@kdbg.org> writes:
+<rsbecker@nexbridge.com> writes:
 
-> Am 11.02.24 um 17:43 schrieb Philippe Blain:
->> Hi Johannes,
->>=20
->> Le 2024-02-11 =C3=A0 03:34, Johannes Sixt a =C3=A9crit=C2=A0:
->>=20
->>>> Adjust the documentation of this option accordingly.
->>>>
->>>> Co-authored-by: Philippe Blain <levraiphilippeblain@gmail.com>
->>>> Co-authored-by: Johannes Sixt <j6t@kdbg.org>
->>>> Signed-off-by: Philippe Blain <levraiphilippeblain@gmail.com>
->>>> Signed-off-by: Michael Lohmann <mi.al.lohmann@gmail.com>
->>>> [jc: tweaked in j6t's precedence fix that tries REBASE_HEAD last]
->>>> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> On Monday, February 12, 2024 11:43 AM, Junio C Hamano wrote:
+>><rsbecker@nexbridge.com> writes:
+>>
+>>>>This looks like a good plan.
 >>>
->>> Signed-off-by trailers should occur in temporal order. Therefore, whe=
-n
->>> you pick up a commit and resend it, you should keep existing
->>> Signed-off-by and add yours last.
->>=20
->> Thank you, I did not know that. I guess Junio should be kept last thou=
-gh ?
->> Or maybe  I should remove Junio's sign-off if I send a new version of =
-the=20
->> patch ?
+>>> This might be trivial, but I cannot tell. The #ifndef should be changed
+> as
+>>> follows:
+>>
+>>https://lore.kernel.org/git/xmqqttmf9y46.fsf@gitster.g/
 >
-> You should *not* remove Junio's Signed-off-by, because the patch went
-> through his hands before you picked it up. Then you add your own
-> sign-off below. Later, Junio will sign it off again.
+> I applied this fix but there is no improvement in the result from the last
+> report. actual just has two lines. expect looks reasonable. I still had to
+> modify the #ifndef.
+>
+> I have tried cherry-picking the change (no effect), building on master,
+> next... am lost.
 
-In the meantime, this is how I tweaked while queuing.
+We seem to be looking at something totally different.  The later
+patch in question (not the "looks like a good plan" outline) does
+not have any #ifndef and applies the make_relative() logic
+everywhere.
 
-    Co-authored-by: Johannes Sixt <j6t@kdbg.org>
-    Signed-off-by: Michael Lohmann <mi.al.lohmann@gmail.com>
-    [jc: tweaked in j6t's precedence fix that tries REBASE_HEAD last]
-    Signed-off-by: Junio C Hamano <gitster@pobox.com>
-    [pb: greatly enhanced the log message]
-    Signed-off-by: Philippe Blain <levraiphilippeblain@gmail.com>
-    Signed-off-by: Junio C Hamano <gitster@pobox.com>
+I would suspect that cherry-picking f6628636 (unit-tests: do show
+relative file paths on non-Windows, too, 2024-02-11) would be the
+simplest.
+
+--- >8 ---
+Subject: [PATCH] unit-tests: do show relative file paths on non-Windows, too
+
+There are compilers other than Visual C that want to show absolute
+paths.  Generalize the helper introduced by a2c5e294 (unit-tests: do
+show relative file paths, 2023-09-25) so that it can also work with
+a path that uses slash as the directory separator, and becomes
+almost no-op once one-time preparation finds out that we are using a
+compiler that already gives relative paths.  Incidentally, this also
+should do the right thing on Windows with a compiler that shows
+relative paths but with backslash as the directory separator (if
+such a thing exists and is used to build git).
+
+Reported-by: Randall S. Becker <rsbecker@nexbridge.com>
+Helped-by: Phillip Wood <phillip.wood@dunelm.org.uk>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ t/unit-tests/test-lib.c | 61 +++++++++++++++++++++++++++++++----------
+ 1 file changed, 47 insertions(+), 14 deletions(-)
+
+diff --git a/t/unit-tests/test-lib.c b/t/unit-tests/test-lib.c
+index 7bf9dfdb95..66d6980ffb 100644
+--- a/t/unit-tests/test-lib.c
++++ b/t/unit-tests/test-lib.c
+@@ -21,12 +21,11 @@ static struct {
+ 	.result = RESULT_NONE,
+ };
+ 
+-#ifndef _MSC_VER
+-#define make_relative(location) location
+-#else
+ /*
+  * Visual C interpolates the absolute Windows path for `__FILE__`,
+  * but we want to see relative paths, as verified by t0080.
++ * There are other compilers that do the same, and are not for
++ * Windows.
+  */
+ #include "dir.h"
+ 
+@@ -34,32 +33,66 @@ static const char *make_relative(const char *location)
+ {
+ 	static char prefix[] = __FILE__, buf[PATH_MAX], *p;
+ 	static size_t prefix_len;
++	static int need_bs_to_fs = -1;
+ 
+-	if (!prefix_len) {
++	/* one-time preparation */
++	if (need_bs_to_fs < 0) {
+ 		size_t len = strlen(prefix);
+-		const char *needle = "\\t\\unit-tests\\test-lib.c";
++		char needle[] = "t\\unit-tests\\test-lib.c";
+ 		size_t needle_len = strlen(needle);
+ 
+-		if (len < needle_len || strcmp(needle, prefix + len - needle_len))
+-			die("unexpected suffix of '%s'", prefix);
++		if (len < needle_len)
++			die("unexpected prefix '%s'", prefix);
++
++		/*
++		 * The path could be relative (t/unit-tests/test-lib.c)
++		 * or full (/home/user/git/t/unit-tests/test-lib.c).
++		 * Check the slash between "t" and "unit-tests".
++		 */
++		prefix_len = len - needle_len;
++		if (prefix[prefix_len + 1] == '/') {
++			/* Oh, we're not Windows */
++			for (size_t i = 0; i < needle_len; i++)
++				if (needle[i] == '\\')
++					needle[i] = '/';
++			need_bs_to_fs = 0;
++		} else {
++			need_bs_to_fs = 1;
++		}
+ 
+-		/* let it end in a directory separator */
+-		prefix_len = len - needle_len + 1;
++		/*
++		 * prefix_len == 0 if the compiler gives paths relative
++		 * to the root of the working tree.  Otherwise, we want
++		 * to see that we did find the needle[] at a directory
++		 * boundary.  Again we rely on that needle[] begins with
++		 * "t" followed by the directory separator.
++		 */
++		if (fspathcmp(needle, prefix + prefix_len) ||
++		    (prefix_len && prefix[prefix_len - 1] != needle[1]))
++			die("unexpected suffix of '%s'", prefix);
+ 	}
+ 
+-	/* Does it not start with the expected prefix? */
+-	if (fspathncmp(location, prefix, prefix_len))
++	/*
++	 * Does it not start with the expected prefix?
++	 * Return it as-is without making it worse.
++	 */
++	if (prefix_len && fspathncmp(location, prefix, prefix_len))
+ 		return location;
+ 
+-	strlcpy(buf, location + prefix_len, sizeof(buf));
++	/*
++	 * If we do not need to munge directory separator, we can return
++	 * the substring at the tail of the location.
++	 */
++	if (!need_bs_to_fs)
++		return location + prefix_len;
++
+ 	/* convert backslashes to forward slashes */
++	strlcpy(buf, location + prefix_len, sizeof(buf));
+ 	for (p = buf; *p; p++)
+ 		if (*p == '\\')
+ 			*p = '/';
+-
+ 	return buf;
+ }
+-#endif
+ 
+ static void msg_with_prefix(const char *prefix, const char *format, va_list ap)
+ {
+-- 
+2.44.0-rc0
+
+
