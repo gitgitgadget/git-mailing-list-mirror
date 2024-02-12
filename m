@@ -1,74 +1,71 @@
-Received: from mail-pl1-f170.google.com (mail-pl1-f170.google.com [209.85.214.170])
+Received: from mail-oi1-f175.google.com (mail-oi1-f175.google.com [209.85.167.175])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC8BF4DA1D
-	for <git@vger.kernel.org>; Mon, 12 Feb 2024 22:48:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFBD54F5ED
+	for <git@vger.kernel.org>; Mon, 12 Feb 2024 22:50:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707778106; cv=none; b=dLXjOUkEytFyIYstGHsOjbil3sSx3n/9xwY7PWp3QTPeoP9aBOU/elfAWid9dFUzTqntZaLH/2yYeBJed0PSjp1gwgA5ok9NsfcYUUhTHoioC8axOXsC5WQUeUItbpNnDpY61HxOrIk6qg5FbPWOgJDe2O+FWMO84+PV33U6x/0=
+	t=1707778245; cv=none; b=FYrVlZrXZecxa32NICSdzzl9b4/rZHYoW2lIyZq0kuZgyrMruObBW48z/fg8WrAuVPBSkoQrKQj/TVP0M98QJB/6yiBPTBr6H1j2p6hisiyguxPyj6n5N6T2xBIhmZ46091fqDPvgOssZuKqgOCAV8gFvLX1LNF0KA9rg6NLYwg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707778106; c=relaxed/simple;
-	bh=605IEkbOTAFY1x+VJY1mQsWPpltxnLLdsLWmQfxTKuk=;
+	s=arc-20240116; t=1707778245; c=relaxed/simple;
+	bh=EVIyYbdFSEifal8YiexIgbSOqCSfvjVawBFrBrTINrI=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=SE6kIgwo5o8w7K4U61JeytDLC1iGKgNf6MsDBn+nMwE63k8hez33U4zEYWtCkHBSvuKmdtNaF/GajopeL+7if00aNDqXhYiam7V0JyRnKxikE3itBxgtEjJhSGaBAtj2aLfSisiExW5NsYzAbef8x45EdGMGCCfWvTpKiY5QIgM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=ag/V7vCw; arc=none smtp.client-ip=209.85.214.170
+	 Content-Type:Content-Disposition:In-Reply-To; b=fqsqAsF7ln+E6dIzU0c8p+5CK0oE19Nr7yGeYh57C8E+wRwjJEE5pe4lHUhNOPiYg124oEA6TYi/3cxmBaEmpWRM/xNXBCHNVy/hzM4uWa/tJGlrcFA2K6Er7dKMwRT714NkoLB7r0jTJT/b94h5Zk529Kz885OQRd/wXAyL08Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=AgYs36RD; arc=none smtp.client-ip=209.85.167.175
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="ag/V7vCw"
-Received: by mail-pl1-f170.google.com with SMTP id d9443c01a7336-1d93f2c3701so18409125ad.3
-        for <git@vger.kernel.org>; Mon, 12 Feb 2024 14:48:24 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="AgYs36RD"
+Received: by mail-oi1-f175.google.com with SMTP id 5614622812f47-3bd72353d9fso2794236b6e.3
+        for <git@vger.kernel.org>; Mon, 12 Feb 2024 14:50:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1707778104; x=1708382904; darn=vger.kernel.org;
+        d=google.com; s=20230601; t=1707778243; x=1708383043; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references
          :mail-followup-to:message-id:subject:cc:to:from:date:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=UyiVp18ukZWsLrvFfCiNZjInjrqDJcyM7Q9V2sD4AoU=;
-        b=ag/V7vCwIfMhRhTJL+LyBbCwe2YgK+2/NrBxXHJWSBoZ45PzMlxplCN/ia9rInGARD
-         onC3yJ/FsQv1j0T2zAwa6KjWveKmZgwSDj5Qz4ott/Vkf61US4Yk0QFBmHkZxIN7tZ/r
-         cYcObAa3Q/y+TcjR9NnW3iowZGPUeJEJECYaNJQMlpROJlx4kYVfYXVKtMHA2Xzxj16C
-         uJrCJoImTK5js9lT0aYlBdVdy1gQ+wmWjQUtksTi6Q8zFJHAmgaSXJseaH12wP98hxhL
-         KgyvvMjQ240DD9r952JolkI2nN4vYWwUlSirB8eFpF0tS9D4j7FVbXkblJSINDDVk5M/
-         tpkA==
+        bh=Q5XOctrhh6DEAOBPSbWcMobfnFWjkOMcUPL0eEmX5yQ=;
+        b=AgYs36RDXgloolMTUHGbs82XhJ6Syc0ELFOVYsHqMf3MDELOfocK9tyWPQ326gg1+d
+         eYZ9qliZErpRpiAdg8zRAO3cdZAMa4tIiPGsDKZB1G1Y41EQanz+lgf8H7JjbB0+E0UM
+         0fjKFNzpkVI6M6nLIMY1pRavT3506LCCTAgobCKyVc+brYnbaEFMLQ4jzoULvlo9sd+1
+         mOtajBLKpv0swq79zfWozxvRw9hbdlopF7QLHkt94hnpBbS90RL4jOHTEkU1uQwfp2yg
+         WZ3v/beLsfSjFSVBSVGtEH5O5ADVFHYx0t2E7yMGjVxpy9XJ4ZuHaFoKo6gj80TabZTW
+         DZ9g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1707778104; x=1708382904;
+        d=1e100.net; s=20230601; t=1707778243; x=1708383043;
         h=in-reply-to:content-disposition:mime-version:references
          :mail-followup-to:message-id:subject:cc:to:from:date
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=UyiVp18ukZWsLrvFfCiNZjInjrqDJcyM7Q9V2sD4AoU=;
-        b=CE0RxURmJsjzXIbpsaZ00SKzsFdR26NPD0W1DA33debgP0162Ufi3bzekctqbPVhv/
-         rtK9Bqk7caAYO0XWGRQPmTf/lMG2FzEfZrONR1vRJjxPlLz/SwIXEYG6LlzbW2/OISbK
-         qrwdBohMIlPHpymUECpoAiShKHpLYGvf+C1ORk2L0NuZeP7aZwoXkfWRk0X+gn7p9QQs
-         N6LHmo5r2WNdQyW970IRQRj++OBfTHf10mmvS0PqLsyFbKgg+ByyIlAFbRCp5cBQRBcE
-         3RWHXDigeRAvrBjS4y66yi4qLf+rdmAbegED2daHYGT68OHR/3Zi1DBgXUjdFKYnudja
-         bMMQ==
-X-Gm-Message-State: AOJu0YwGGzuQkDawndNmVFRDv9np4YLGNh+rI5acBFpvDPzLVJwGGXgY
-	jw1WSVrPREvHLpVP8Uilv1+Y6OfRHrUWn9/Ngik6o5MIECvRwE0B9OKqOsmKqio5NM9+ONs7kXo
-	6Zw==
-X-Google-Smtp-Source: AGHT+IEwGhsbOlv4SiZDduqDSy+qqBRx/FiFmtNOpl6weunDqIfuw+uHdBpu83TJomJ6RYg1pMEHRg==
-X-Received: by 2002:a17:902:ced1:b0:1d9:a2d3:8127 with SMTP id d17-20020a170902ced100b001d9a2d38127mr7466691plg.52.1707778103800;
-        Mon, 12 Feb 2024 14:48:23 -0800 (PST)
-X-Forwarded-Encrypted: i=1; AJvYcCWXqm1NnEpgbhMzEz5y9cuEXZQxsbXWIeeqxHWI85DkMPleLTrRmEzRoGJLozRQdml6pSIDKM+kVcWXdR957GnIbGu3zh0fHYXvp+dyNIyOOj3cwixP4DQ22qq3qVmU4+75Gkkx5KK4R62CRAflRJT4H3CRTj8=
+        bh=Q5XOctrhh6DEAOBPSbWcMobfnFWjkOMcUPL0eEmX5yQ=;
+        b=LXtiRvFpOu3ge/rSb/UaoLzriH0EPybS20n0QwbIqMBb7lst0Y7dwtYBx4q5KUge6H
+         UpX4AGaJcayZ5+Il0Ux/j/W8zKR1zpDNh/RaC/YvCiVc5dczQ/KHlL1V0jZMPDToefkz
+         kbPHBbxuwOkYqgEVTumA7zaHPkSuw853hH4pc2MEWkBOXKFrLszfgExpJ9e56UnHvui2
+         il/F2FzPGwuPRk7jvD7HtEDKNzGohl7GU3q8L7ZK1OK5UZd+a90ELkmOqIphkmwFQEWU
+         YD9QpsG8hVcYylZ3qMRboSiLFv/6bCujLwBSum60mQlTkcm61HY0DDcQrz3BqUzn+H/E
+         +clw==
+X-Gm-Message-State: AOJu0YyRYKC7A4++WEjekBEJk2t/F2ZQUv5eF91YK9t5EwyhDNJWY4nB
+	SB80hSe+jQoBAwhAl4X6izjOsYZXqLntf5jNFfMe5wFKDRRtROgqDpT+DUalGg==
+X-Google-Smtp-Source: AGHT+IHC3//iWxl8cz1FFYkJwTc8rY1s/3/7jHzHenMxyqwvTp8nSy8bzCh8oG7qxGZ2uJpJa201Mg==
+X-Received: by 2002:a05:6808:3c98:b0:3c0:4057:1282 with SMTP id gs24-20020a0568083c9800b003c040571282mr2377603oib.34.1707778242885;
+        Mon, 12 Feb 2024 14:50:42 -0800 (PST)
+X-Forwarded-Encrypted: i=1; AJvYcCWZ+aL4XWX5/os5GTUDkXoQUp2x06AC+TqCXAzS+oDzJlDU3v24ivxcm/pGqFZvdJATKfqx4v/ZgW6zWes0NzZgoF430Lg4RIl4cqaOs25st+YDdcGlyXlG3Zqfy2rVicJMH6e/DBiWSoNkR5aXW7fZud4x0s4=
 Received: from google.com ([2620:15c:2d3:204:a710:9f21:f1bd:da22])
-        by smtp.gmail.com with ESMTPSA id u11-20020a170903308b00b001d9a146907dsm847568plc.11.2024.02.12.14.48.22
+        by smtp.gmail.com with ESMTPSA id z16-20020aa78890000000b006dff3ca9e26sm6082545pfe.102.2024.02.12.14.50.41
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 12 Feb 2024 14:48:23 -0800 (PST)
-Date: Mon, 12 Feb 2024 14:48:18 -0800
+        Mon, 12 Feb 2024 14:50:42 -0800 (PST)
+Date: Mon, 12 Feb 2024 14:50:37 -0800
 From: Josh Steadmon <steadmon@google.com>
 To: Junio C Hamano <gitster@pobox.com>
 Cc: git@vger.kernel.org, johannes.schindelin@gmx.de, peff@peff.net,
 	phillip.wood@dunelm.org.uk
-Subject: Re: [RFC PATCH v2 3/6] test-tool run-command testsuite: remove
- hardcoded filter
-Message-ID: <ZcqgMgFx97DbH94y@google.com>
+Subject: Re: [RFC PATCH v2 0/6] test-tool: add unit test suite runner
+Message-ID: <ZcqgvRXG_rgl0lpP@google.com>
 Mail-Followup-To: Josh Steadmon <steadmon@google.com>,
 	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
 	johannes.schindelin@gmx.de, peff@peff.net,
 	phillip.wood@dunelm.org.uk
 References: <cover.1705443632.git.steadmon@google.com>
  <cover.1706921262.git.steadmon@google.com>
- <e1b89ae93e930cd902d1527955d588c3d0c15490.1706921262.git.steadmon@google.com>
- <xmqqeddo6lkk.fsf@gitster.g>
+ <xmqqjznlqt1k.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -77,37 +74,22 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <xmqqeddo6lkk.fsf@gitster.g>
+In-Reply-To: <xmqqjznlqt1k.fsf@gitster.g>
 
-On 2024.02.07 12:55, Junio C Hamano wrote:
+On 2024.02.03 10:52, Junio C Hamano wrote:
 > Josh Steadmon <steadmon@google.com> writes:
+> > * We should determine whether it is confusing or otherwise harmful to
+> >   people's workflow to have the unit tests run in parallel with shell
+> >   tests when using prove as the default test target.
 > 
-> > `test-tool run-command testsuite` currently assumes that it will only be
-> > running the shell test suite, and therefore filters out anything that
-> > does not match a hardcoded pattern of "t[0-9][0-9][0-9][0-9]-*.sh".
-> >
-> > Later in this series, we'll adapt `test-tool run-command testsuite` to
-> > also support unit tests, which do not follow the same naming conventions
-> > as the shell tests, so this hardcoded pattern is inconvenient.
-> 
-> Makes sense to explain what future steps this prepares the codebase
-> for like this.
-> 
-> > Since `testsuite` also allows specifying patterns on the command-line,
-> > let's just remove this pattern. As noted in [1], there are no longer any
-> > uses of `testsuite` in our codebase, it should be OK to break backwards
-> > compatibility in this case. We also add a new filter to avoid trying to
-> > execute "." and "..", so that users who wish to execute every test in a
-> > directory can do so without specifying a pattern.
-> 
-> As we discussed in Peff's Makefile change that enumerates "which are
-> the unit-test programs?" Generally, $(wildcard) and readdir() to
-> slurp everything in a directory, including stuff that is an
-> untracked cruft, is not an excellent idea.
-> 
-> This is not an end-user facing program and we are in full control of
-> its input (most notably, "which ones should we be running?"), I do
-> not think it would be a huge issue, though.
+> I do not know much about "confusing" thing, but if the user
+> allocates, say, 16 jobs to run tests in parallel, and one of them
+> drives the "unit test suite runner" that wants to do its own
+> parallelism, we'd easily end up busting the resource limit the
+> end-user desires.  It does not necessarily mean that we should limit
+> the parallelism of "unit test suite runner" to 1 under prove, though.
 
-Would you prefer if I remove the default behavior of "run everything in
-the CWD" and require passing in at least one filename filter?
+The current `prove` helper script does not do any separate parallelism,
+so we are fine in that case, and the new test-tool runner does not
+currently support running both unit tests and shell tests in the same
+process, so we should be OK in either case.
