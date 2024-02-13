@@ -1,215 +1,273 @@
-Received: from mail-yb1-f202.google.com (mail-yb1-f202.google.com [209.85.219.202])
+Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com [209.85.128.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C62822319
-	for <git@vger.kernel.org>; Tue, 13 Feb 2024 10:02:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.202
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 788232868D
+	for <git@vger.kernel.org>; Tue, 13 Feb 2024 10:55:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707818530; cv=none; b=tgC84MF9S1uWvv0ke7Lwbj97i6SzAacPmD2S0fFyFfo8A18xToH8JogVqDmFPIfpY2c+pXnY5yRNoSQfduvEzQKmfye9DzmAk2yhK6HuULaPY99fK94n8MEKPlBmf+5lI/ZiZ01fOMeO18F/6s8PX9lcAMJWS0tpFw3YSoN2EHs=
+	t=1707821731; cv=none; b=J1OJLnFGLAuUzkWF+OFRDarzlK2QvaON8pVOEYM+6ERGZhm3AfoC9UEnXlKBVyZ3STXSQIUgXfzx5t7x97Po1IA3rp74CNQwCTwMZmB5P17nrx0Jp/ba04W4hzJ86pudmo86llbwww6+rVu6cmq1qV939Rj5ZuCc/5+nob3iOII=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707818530; c=relaxed/simple;
-	bh=MaLnqENoavq1UCVH+AJTeaoLZuLPnMhZl9V00N7lcaE=;
-	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
-	 To:Cc:Content-Type; b=OWalCoClGxqlYsMyQgGoQFzb9vBum0sUFEtISYwFvVruXEOBVRcukxTNXydlyVlNXPFkXaCyoFdvMzZm9/aLPt0Dgo/wtWH3HG5wsSrlQXPGEKIMzHFxbAZH94+c+vGTg03sWqxuaZMC9SqTnaS7KSHjsQSsowvXLRVZVImz8yo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--linusa.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=tKKVJ0Ab; arc=none smtp.client-ip=209.85.219.202
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--linusa.bounces.google.com
+	s=arc-20240116; t=1707821731; c=relaxed/simple;
+	bh=qx8WHx2hpEDXZHCNEKgkG2DZJNGZU0qsshb6GU3EwBk=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=EArLcnX9qoeNE/3IadagL6hg6ulQQqPh//9Ham0Cgmd5mXq5SVuRpQU9f0Eexi9t/qIyfROmPWuyssxv3hBkKgmutmdfA5JtdTuzyebhGaArw4nMSOwOz6Cp0n3+492FtcH/SBbVMVWzMMS3Yi8gXGyEQtlRxzlGKcZJDb3YQzk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=R0zLDSME; arc=none smtp.client-ip=209.85.128.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="tKKVJ0Ab"
-Received: by mail-yb1-f202.google.com with SMTP id 3f1490d57ef6-dbf216080f5so6547919276.1
-        for <git@vger.kernel.org>; Tue, 13 Feb 2024 02:02:08 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="R0zLDSME"
+Received: by mail-wm1-f45.google.com with SMTP id 5b1f17b1804b1-4108cbd92b9so21766855e9.1
+        for <git@vger.kernel.org>; Tue, 13 Feb 2024 02:55:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1707818527; x=1708423327; darn=vger.kernel.org;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=Uvrhwn/ox0ozEe5vqTXaPl2yhVDxRIwBVCjDc+n4llE=;
-        b=tKKVJ0AbDr+6NE2HF3RDgEZWBuVvkY4fkq8dFXa/m4ty5hPD2g4LKwLIM1iDR2pkog
-         BmfTZLJQ0HorxWymSubH7rnzJpNlmAt4BQvp/LXMWl2gANUGJ7KxEyJ05FVg1siCWPrX
-         6dP/x5esO0AyvvyQqM8wx3dELAPngrmDGYtGeM6OOgsZxwkz61WKjkGDkOqathYsGs1E
-         gpK51kdk8m9laPupqsqEI9NfgO69/olWA706Dy/9Hn+gyFEPARF0fnmPEoArw2v9ri1J
-         yT9p416E+6PtJNV4C6+eUZPZflpez2fKih+rZJegux8s9axCyEHezx9cXSC2QYlhIgc9
-         EgOw==
+        d=gmail.com; s=20230601; t=1707821727; x=1708426527; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=GcTWc1g6jpwQa6pNxWiw7E3W+7U4YFEYy4HHrf4vQws=;
+        b=R0zLDSMEPRHh8ny2ZIROQZzcEIpNxJ1FAi8BVe1TdbJGziFer0C1sxzGjNyQpVbHjt
+         tYaoGmw481Uott+DNUH5zjtzEXrMzbtbcGSr1Dvmp3MjvX9zFbgG9UT33PC36m0e5Ze5
+         BMjpoOtBLkSnLa7Z+guaAVS8GsfUEqCwT8rqfFFAr+wGlZ+BvaQXxVA6K5DFHJsg2QWZ
+         xGvVkfpCx2byRS/pkXrSV6T/FdIaFWGPkeVuqMut7SkR1vxmGLulukj1VlmNQCU63IZl
+         ssWPuRL82CvzYUQktKhMBYAZST09cKJLeULCa53hytKZPPnDtgPzWRSoGTWmGec4W8te
+         yd6A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1707818527; x=1708423327;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Uvrhwn/ox0ozEe5vqTXaPl2yhVDxRIwBVCjDc+n4llE=;
-        b=lrKyO4nDJPVwLpU/j300m7xmOhHAZqIjZL9/tNNmo4TFEuqvhoVd8DxMUaY0d8GiL6
-         dVfokSI6SuxwrMR/Ux+jbwN4G6xJTJ4VQfsCjJC7wcrX5SwUKubTg5p1DEK2OYpnY4dt
-         qUjkWSWamrAGOoOYdGhXKiGjLQCvuE20wYq0NFz64lBaA9yNVGalQBSrk7m5qrl8XkDK
-         IOjE5lkKtsspWCM3tKXPCWGqCCuF5N/7jaen+YxNwc6OZl7No0XrIybMuJCgUT4SBegK
-         /wJmSBDMMiQSmFjYaZnlJGcOtEXPWu/a0bq+I+m55VXHHJn8maZREBe+U2WN7VtAYRHF
-         J1DQ==
-X-Gm-Message-State: AOJu0YyLoO4eubPVqvJ3YSuplQU7I398CsNlLdwvgONLnOZQhyc5Jm4N
-	RmE4u37FtX10+JPhnBRGoLLzhtvLuRnwyel15tS9Awk0KnmJaxgbD/PcCkNyKHTtFqED1Fb2MDz
-	T3w==
-X-Google-Smtp-Source: AGHT+IFX8EbqK7TeKYW/SYYrXX+p7Pf4RoBHIrJcvQ0V6H0Y0afY5cpjKhqqZK3TC81pxchV/SsC92WrFB4=
-X-Received: from fine.c.googlers.com ([fda3:e722:ac3:cc00:7f:e700:c0a8:2221])
- (user=linusa job=sendgmr) by 2002:a5b:7c4:0:b0:dcc:a58:2ddc with SMTP id
- t4-20020a5b07c4000000b00dcc0a582ddcmr478804ybq.5.1707818527367; Tue, 13 Feb
- 2024 02:02:07 -0800 (PST)
-Date: Tue, 13 Feb 2024 02:02:05 -0800
-In-Reply-To: <20231002024034.2611-4-ebiederm@gmail.com>
+        d=1e100.net; s=20230601; t=1707821727; x=1708426527;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=GcTWc1g6jpwQa6pNxWiw7E3W+7U4YFEYy4HHrf4vQws=;
+        b=gx7SdIECoCbW20X0VB4ihkuI04aK/QJeCCLvFje+xozaR+Bq/mdJLEusLBl06oGPC1
+         MfrY3JoNVy58pV8nGrltmzn6X32y+VXOaCWrbSHUKC66HvHWmx3DFPEuYwAT4wok0GrQ
+         GJnNJPUuzKBimFLgp/LIvgsV0vDnoPJmlj+IYkmlTZSGAWF0JvyYP6FipBo9jFyWRFN6
+         LupVUid3AYj08WzbDLve7HAnFctKlXDRDvfB1o5R2cczcXft8alNs+emibuT+bPL7Vct
+         Rc48yV2XpjjGYaBaxxIUF3lqtN/xYjohuUNQkgryZiNsJ2jy7SS1dwsQU/Zv0X82OMX3
+         y8HA==
+X-Gm-Message-State: AOJu0YxxO2671qO8xnJBer6sOlZrP1ewWMM0igjqQaPTW3eTrpJCTKN9
+	Ebm2TqsTLeOxVtAFQWJytwcu6sqeuFYyd2xTYlfYJnqb3VIIv9DA0YZu3JeQ
+X-Google-Smtp-Source: AGHT+IGjtgIj/oZPEk1899bJVZVqNpqNnCaJaM1QOLiFDaFxUukqU/aN0WWI454qY80/EH6UmZBQ2g==
+X-Received: by 2002:a05:600c:1d03:b0:40f:f891:d282 with SMTP id l3-20020a05600c1d0300b0040ff891d282mr8495368wms.18.1707821726446;
+        Tue, 13 Feb 2024 02:55:26 -0800 (PST)
+X-Forwarded-Encrypted: i=1; AJvYcCXnmcjiDtUlEUqiMyLkYyrZLmkhbiaXQlgY40pcLNGFMbh7pO1kD3XI6TQEhwdYm4UqMznSKt7D3AeEPQE3zI0mkMDUMpMn9VfWIDHDkWMH4lf2cRjI7GGDZOfgCTBx3qldzA==
+Received: from ?IPV6:2a0a:ef40:62e:a901:d2c6:37ff:fef6:7b1? ([2a0a:ef40:62e:a901:d2c6:37ff:fef6:7b1])
+        by smtp.googlemail.com with ESMTPSA id fs20-20020a05600c3f9400b00410232ffb2csm11405599wmb.25.2024.02.13.02.55.25
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 13 Feb 2024 02:55:26 -0800 (PST)
+Message-ID: <fd8874bb-8e45-4b39-986c-5a96ccf0747f@gmail.com>
+Date: Tue, 13 Feb 2024 10:55:25 +0000
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-References: <878r8l929e.fsf@gmail.froward.int.ebiederm.org> <20231002024034.2611-4-ebiederm@gmail.com>
-Message-ID: <owly4jecd6n6.fsf@fine.c.googlers.com>
-Subject: Re: [PATCH v2 04/30] repository: add a compatibility hash algorithm
-From: Linus Arver <linusa@google.com>
-To: "Eric W. Biederman" <ebiederm@gmail.com>, Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, "brian m. carlson" <sandals@crustytoothpaste.net>, 
-	Eric Sunshine <sunshine@sunshineco.com>, "Eric W. Biederman" <ebiederm@xmission.com>
-Content-Type: text/plain; charset="UTF-8"
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v2] unit-tests: do show relative file paths on
+ non-Windows, too
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, Johannes Schindelin <johannes.schindelin@gmx.de>,
+ "Randall S. Becker" <rsbecker@nexbridge.com>
+References: <xmqqttmf9y46.fsf@gitster.g>
+ <6872b42d-8763-44dc-9502-2362d1ed80a7@gmail.com>
+ <xmqqle7r9enn.fsf_-_@gitster.g>
+ <c625239a-a847-475a-a228-9deb622c67bf@gmail.com> <xmqqsf1x486b.fsf@gitster.g>
+Content-Language: en-US
+From: Phillip Wood <phillip.wood123@gmail.com>
+In-Reply-To: <xmqqsf1x486b.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-"Eric W. Biederman" <ebiederm@gmail.com> writes:
+On 12/02/2024 22:41, Junio C Hamano wrote:
+> Phillip Wood <phillip.wood123@gmail.com> writes:
+> 
+>>> There is a larger clean-up opportunity to drop the need for making a
+>>> copy, which probably is worth doing, so I folded the above into this
+>>> version.
+>>
+>> Ooh, that's nice. This version looks good, I found the code comments
+>> very helpful
+> 
+> Thanks.
+> 
+> Judging from https://github.com/git/git/actions/runs/7878254534/job/21496314393#step:5:142
+> I do not seen to have broken Windows with this change, so let's
+> fast-track and merge it down to 'master' before -rc1.
 
-> From: "Eric W. Biederman" <ebiederm@xmission.com>
->
-> We currently have support for using a full stage 4 SHA-256
-> implementation.  However, we'd like to support interoperability with
-> SHA-1 repositories as well.  The transition plan anticipates a
-> compatibility hash algorithm configuration option that we can use to
-> implement support for this.
+I think it was only the MSVC that needed the paths munging which we 
+don't test by default. I have tweaked our github actions to run those 
+tests and they pass 
+https://github.com/phillipwood/git/actions/runs/7885144920/job/21515922057#step:5:146
 
-Perhaps add
+Best Wishes
 
-    See section "Object names on the command line" in
-    git/Documentation/technical/hash-function-transition.txt .
+Phillip
 
-? That section does not use the language "compatibility hash algorithm"
-though, and I think "hash compatibility option" is easier to say.
 
-Hmm, or are you talking about "compatObjectFormat" discussed in that doc?
+>> Best Wishes
+>>
+>> Phillip
+>>
+>>> ------- >8 ------------- >8 ------------- >8 ------------- >8 -------
+>>> There are compilers other than Visual C that want to show absolute
+>>> paths.  Generalize the helper introduced by a2c5e294 (unit-tests: do
+>>> show relative file paths, 2023-09-25) so that it can also work with
+>>> a path that uses slash as the directory separator, and becomes
+>>> almost no-op once one-time preparation finds out that we are using a
+>>> compiler that already gives relative paths.  Incidentally, this also
+>>> should do the right thing on Windows with a compiler that shows
+>>> relative paths but with backslash as the directory separator (if
+>>> such a thing exists and is used to build git).
+>>> Reported-by: Randall S. Becker <rsbecker@nexbridge.com>
+>>> Helped-by: Phillip Wood <phillip.wood@dunelm.org.uk>
+>>> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+>>> ---
+>>>     * I found that the diff relative to the result of applying v1 was
+>>>       easier to follow than the range-diff, so here it is.
+>>>     diff --git c/t/unit-tests/test-lib.c w/t/unit-tests/test-lib.c
+>>>     index 83c9eb8c59..66d6980ffb 100644
+>>>     --- c/t/unit-tests/test-lib.c
+>>>     +++ w/t/unit-tests/test-lib.c
+>>>     @@ -64,34 +64,33 @@ static const char *make_relative(const char *location)
+>>>      		 * prefix_len == 0 if the compiler gives paths relative
+>>>      		 * to the root of the working tree.  Otherwise, we want
+>>>      		 * to see that we did find the needle[] at a directory
+>>>     -		 * boundary.
+>>>     +		 * boundary.  Again we rely on that needle[] begins with
+>>>     +		 * "t" followed by the directory separator.
+>>>      		 */
+>>>      		if (fspathcmp(needle, prefix + prefix_len) ||
+>>>     -		    (prefix_len &&
+>>>     -		     prefix[prefix_len - 1] != '/' &&
+>>>     -		     prefix[prefix_len - 1] != '\\'))
+>>>     +		    (prefix_len && prefix[prefix_len - 1] != needle[1]))
+>>>      			die("unexpected suffix of '%s'", prefix);
+>>>     -
+>>>      	}
+>>>          	/*
+>>>     -	 * If our compiler gives relative paths and we do not need
+>>>     -	 * to munge directory separator, we can return location as-is.
+>>>     +	 * Does it not start with the expected prefix?
+>>>     +	 * Return it as-is without making it worse.
+>>>      	 */
+>>>     -	if (!prefix_len && !need_bs_to_fs)
+>>>     +	if (prefix_len && fspathncmp(location, prefix, prefix_len))
+>>>      		return location;
+>>>         -	/* Does it not start with the expected prefix? */
+>>>     -	if (fspathncmp(location, prefix, prefix_len))
+>>>     -		return location;
+>>>     +	/*
+>>>     +	 * If we do not need to munge directory separator, we can return
+>>>     +	 * the substring at the tail of the location.
+>>>     +	 */
+>>>     +	if (!need_bs_to_fs)
+>>>     +		return location + prefix_len;
+>>>         -	strlcpy(buf, location + prefix_len, sizeof(buf));
+>>>      	/* convert backslashes to forward slashes */
+>>>     -	if (need_bs_to_fs) {
+>>>     -		for (p = buf; *p; p++)
+>>>     -			if (*p == '\\')
+>>>     -				*p = '/';
+>>>     -	}
+>>>     +	strlcpy(buf, location + prefix_len, sizeof(buf));
+>>>     +	for (p = buf; *p; p++)
+>>>     +		if (*p == '\\')
+>>>     +			*p = '/';
+>>>      	return buf;
+>>>      }
+>>>        t/unit-tests/test-lib.c | 61
+>>> +++++++++++++++++++++++++++++++----------
+>>>    1 file changed, 47 insertions(+), 14 deletions(-)
+>>> diff --git a/t/unit-tests/test-lib.c b/t/unit-tests/test-lib.c
+>>> index 7bf9dfdb95..66d6980ffb 100644
+>>> --- a/t/unit-tests/test-lib.c
+>>> +++ b/t/unit-tests/test-lib.c
+>>> @@ -21,12 +21,11 @@ static struct {
+>>>    	.result = RESULT_NONE,
+>>>    };
+>>>    -#ifndef _MSC_VER
+>>> -#define make_relative(location) location
+>>> -#else
+>>>    /*
+>>>     * Visual C interpolates the absolute Windows path for `__FILE__`,
+>>>     * but we want to see relative paths, as verified by t0080.
+>>> + * There are other compilers that do the same, and are not for
+>>> + * Windows.
+>>>     */
+>>>    #include "dir.h"
+>>>    @@ -34,32 +33,66 @@ static const char *make_relative(const char
+>>> *location)
+>>>    {
+>>>    	static char prefix[] = __FILE__, buf[PATH_MAX], *p;
+>>>    	static size_t prefix_len;
+>>> +	static int need_bs_to_fs = -1;
+>>>    -	if (!prefix_len) {
+>>> +	/* one-time preparation */
+>>> +	if (need_bs_to_fs < 0) {
+>>>    		size_t len = strlen(prefix);
+>>> -		const char *needle = "\\t\\unit-tests\\test-lib.c";
+>>> +		char needle[] = "t\\unit-tests\\test-lib.c";
+>>>    		size_t needle_len = strlen(needle);
+>>>    -		if (len < needle_len || strcmp(needle, prefix + len -
+>>> needle_len))
+>>> -			die("unexpected suffix of '%s'", prefix);
+>>> +		if (len < needle_len)
+>>> +			die("unexpected prefix '%s'", prefix);
+>>> +
+>>> +		/*
+>>> +		 * The path could be relative (t/unit-tests/test-lib.c)
+>>> +		 * or full (/home/user/git/t/unit-tests/test-lib.c).
+>>> +		 * Check the slash between "t" and "unit-tests".
+>>> +		 */
+>>> +		prefix_len = len - needle_len;
+>>> +		if (prefix[prefix_len + 1] == '/') {
+>>> +			/* Oh, we're not Windows */
+>>> +			for (size_t i = 0; i < needle_len; i++)
+>>> +				if (needle[i] == '\\')
+>>> +					needle[i] = '/';
+>>> +			need_bs_to_fs = 0;
+>>> +		} else {
+>>> +			need_bs_to_fs = 1;
+>>> +		}
+>>>    -		/* let it end in a directory separator */
+>>> -		prefix_len = len - needle_len + 1;
+>>> +		/*
+>>> +		 * prefix_len == 0 if the compiler gives paths relative
+>>> +		 * to the root of the working tree.  Otherwise, we want
+>>> +		 * to see that we did find the needle[] at a directory
+>>> +		 * boundary.  Again we rely on that needle[] begins with
+>>> +		 * "t" followed by the directory separator.
+>>> +		 */
+>>> +		if (fspathcmp(needle, prefix + prefix_len) ||
+>>> +		    (prefix_len && prefix[prefix_len - 1] != needle[1]))
+>>> +			die("unexpected suffix of '%s'", prefix);
+>>>    	}
+>>>    -	/* Does it not start with the expected prefix? */
+>>> -	if (fspathncmp(location, prefix, prefix_len))
+>>> +	/*
+>>> +	 * Does it not start with the expected prefix?
+>>> +	 * Return it as-is without making it worse.
+>>> +	 */
+>>> +	if (prefix_len && fspathncmp(location, prefix, prefix_len))
+>>>    		return location;
+>>>    -	strlcpy(buf, location + prefix_len, sizeof(buf));
+>>> +	/*
+>>> +	 * If we do not need to munge directory separator, we can return
+>>> +	 * the substring at the tail of the location.
+>>> +	 */
+>>> +	if (!need_bs_to_fs)
+>>> +		return location + prefix_len;
+>>> +
+>>>    	/* convert backslashes to forward slashes */
+>>> +	strlcpy(buf, location + prefix_len, sizeof(buf));
+>>>    	for (p = buf; *p; p++)
+>>>    		if (*p == '\\')
+>>>    			*p = '/';
+>>> -
+>>>    	return buf;
+>>>    }
+>>> -#endif
+>>>      static void msg_with_prefix(const char *prefix, const char
+>>> *format, va_list ap)
+>>>    {
 
-> Let's add an element to the repository
-> structure that indicates the compatibility hash algorithm so we can use
-> it when we need to consider interoperability between algorithms.
-
-How about just
-
-    Add a hash compatibility option to the repository structure to
-    consider interoperability between hash algorithms.
-
-?
-
-Aside: already we are seeing multiple keywords "compatibility",
-"transition", "interoperability" to all mean roughly similar things. I
-hope we can settle on just one (ideally) in the codebase by the end of
-this series.
-
-> Add a helper function repo_set_compat_hash_algo that takes a
-> compatibility hash algorithm and sets "repo->compat_hash_algo".  If
-> GIT_HASH_UNKNOWN is passed as the compatibility hash algorithm
-> "repo->compat_hash_algo" is set to NULL.
->
-> For now, the code results in "repo->compat_hash_algo" always being set
-> to NULL, but that will change once a configuration option is added.
-
-It's not clear to me whether you are talking about a config option to
-describe the different stages of transition around algorithms, or a hash
-algorithm itself (SHA1, SHA256, UNKNOWN).
-
-> Inspired-by: brian m. carlson <sandals@crustytoothpaste.net>
-> Signed-off-by: Eric W. Biederman <ebiederm@xmission.com>
-> ---
->  repository.c | 8 ++++++++
->  repository.h | 4 ++++
->  setup.c      | 3 +++
->  3 files changed, 15 insertions(+)
->
-> diff --git a/repository.c b/repository.c
-> index a7679ceeaa45..80252b79e93e 100644
-> --- a/repository.c
-> +++ b/repository.c
-> @@ -104,6 +104,13 @@ void repo_set_hash_algo(struct repository *repo, int hash_algo)
->  	repo->hash_algo = &hash_algos[hash_algo];
->  }
->  
-> +void repo_set_compat_hash_algo(struct repository *repo, int algo)
-> +{
-> +	if (hash_algo_by_ptr(repo->hash_algo) == algo)
-> +		BUG("hash_algo and compat_hash_algo match");
-> +	repo->compat_hash_algo = algo ? &hash_algos[algo] : NULL;
-> +}
-
-Ah, OK. So we are talking about an algorithm itself. Looking at this
-code it seems like a compat_hash_algo is something like "the hash
-algorithm I want my repository to start using but which has not
-already". Such a description would have been useful in the commit
-message.
-
-Nit: I think 
-
-    BUG("compat_hash_algo may not be the same as hash_algo");
-
-is more natural because the error message should explain the badness of
-the behavior rather than merely reflect the triggering condition. And
-the "star of the show" here is the new compat_hash_algo member, so it
-makes sense to emphasize that more as the only subject of the sentence
-instead of grouping it together with hash_algo (given them equal
-importance).
-
-> +
->  /*
->   * Attempt to resolve and set the provided 'gitdir' for repository 'repo'.
->   * Return 0 upon success and a non-zero value upon failure.
-> @@ -184,6 +191,7 @@ int repo_init(struct repository *repo,
->  		goto error;
->  
->  	repo_set_hash_algo(repo, format.hash_algo);
-> +	repo_set_compat_hash_algo(repo, GIT_HASH_UNKNOWN);
->  	repo->repository_format_worktree_config = format.worktree_config;
->  
->  	/* take ownership of format.partial_clone */
-> diff --git a/repository.h b/repository.h
-> index 5f18486f6465..bf3fc601cc53 100644
-> --- a/repository.h
-> +++ b/repository.h
-> @@ -160,6 +160,9 @@ struct repository {
->  	/* Repository's current hash algorithm, as serialized on disk. */
->  	const struct git_hash_algo *hash_algo;
->  
-> +	/* Repository's compatibility hash algorithm. */
-
-Perhaps add "May not be the same as hash_algo." ?
-
-> +	const struct git_hash_algo *compat_hash_algo;
-> +
->  	/* A unique-id for tracing purposes. */
->  	int trace2_repo_id;
->  
-> @@ -199,6 +202,7 @@ void repo_set_gitdir(struct repository *repo, const char *root,
->  		     const struct set_gitdir_args *extra_args);
->  void repo_set_worktree(struct repository *repo, const char *path);
->  void repo_set_hash_algo(struct repository *repo, int algo);
-> +void repo_set_compat_hash_algo(struct repository *repo, int compat_algo);
->  void initialize_the_repository(void);
->  RESULT_MUST_BE_USED
->  int repo_init(struct repository *r, const char *gitdir, const char *worktree);
-> diff --git a/setup.c b/setup.c
-> index 18927a847b86..aa8bf5da5226 100644
-> --- a/setup.c
-> +++ b/setup.c
-> @@ -1564,6 +1564,8 @@ const char *setup_git_directory_gently(int *nongit_ok)
->  		}
->  		if (startup_info->have_repository) {
->  			repo_set_hash_algo(the_repository, repo_fmt.hash_algo);
-> +			repo_set_compat_hash_algo(the_repository,
-> +						  GIT_HASH_UNKNOWN);
->  			the_repository->repository_format_worktree_config =
->  				repo_fmt.worktree_config;
->  			/* take ownership of repo_fmt.partial_clone */
-> @@ -1657,6 +1659,7 @@ void check_repository_format(struct repository_format *fmt)
->  	check_repository_format_gently(get_git_dir(), fmt, NULL);
->  	startup_info->have_repository = 1;
->  	repo_set_hash_algo(the_repository, fmt->hash_algo);
-> +	repo_set_compat_hash_algo(the_repository, GIT_HASH_UNKNOWN);
->  	the_repository->repository_format_worktree_config =
->  		fmt->worktree_config;
->  	the_repository->repository_format_partial_clone =
-> -- 
-> 2.41.0
