@@ -1,146 +1,126 @@
-Received: from mail-yw1-f202.google.com (mail-yw1-f202.google.com [209.85.128.202])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B61FB5DF18
-	for <git@vger.kernel.org>; Tue, 13 Feb 2024 17:05:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.202
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A912E5FB97
+	for <git@vger.kernel.org>; Tue, 13 Feb 2024 17:06:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707843957; cv=none; b=JiVLsKyVjZ09c3cQQ/lJq+b9f06F26HLd/XJltxbFFWK7otb+0YepXd8ALiu/qVTFJDYM+3sfw9+0eGyuZrJ5DSbueXd5sYpbTSClEpFRVD/LG4CEbRtzSxHzkAtkueURXgi+KXVtA5/V8j9P9Fjl4bmFAWILJlSHDifk8thVyU=
+	t=1707844019; cv=none; b=MuMW00XHsFr5Y5q240/z31dGMeXHmqs5Xm7mrJW6R9PBolWQHZEcFpH4ZHmlreTcJL9mjPi5dk4ZwY9k21EAFHsZk4mhBGJAW68gFtchkDB3CYmpinUVwsbaTWeIBVRZXEJuz7XNZ9LL5oP69IfNYPE7SQ7SWeVf1sruQgpTrA4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707843957; c=relaxed/simple;
-	bh=kgaL/UimXWt0EyA7vzK+4hUIktiZnfYG+nFi8+P+HI8=;
-	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
-	 To:Cc:Content-Type; b=KSg0FcL1vAAKCSwO63EWiXqwlGcIR2Xe7H9zuq2BKqUTZtOMwIoIG94O5R5GQvffuTqMAh/jEQihucPft6P27E+1195wCi+cd+rfD4W7YgP0/rnvX7ULXoxz9PsqcADv278y17p2bkjCdFPuubYuv7OqUNUWhhvZroYOCrMytUc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--linusa.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=n4dNXyJY; arc=none smtp.client-ip=209.85.128.202
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--linusa.bounces.google.com
+	s=arc-20240116; t=1707844019; c=relaxed/simple;
+	bh=sncvxtsMy6IatGyMLZkhcS/j9m7TSE66HxmlZtTgWds=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=FTUV5fsOeWtmpMkxntD4Zd0oYpBnYeNy59VlL2TA+3wrf8/RqIqI3lr+K96AAVgZhW/vppICfSrqx35Tj3KrRFLVsAC1E4PZrp2E7KXChguhcvVZpljDskZpL2LE0Ejc6ougYiHdGMQC03x7gYfx5gJ7ROOUKeuZHENc1yv0ocw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=T5UBdyMk; arc=none smtp.client-ip=173.228.157.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="n4dNXyJY"
-Received: by mail-yw1-f202.google.com with SMTP id 00721157ae682-6078b764778so16037667b3.2
-        for <git@vger.kernel.org>; Tue, 13 Feb 2024 09:05:55 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1707843954; x=1708448754; darn=vger.kernel.org;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=uK6BGBS6WMDqCLvNAuYgOebVPsh/P04oJQ4FQzs4iwY=;
-        b=n4dNXyJYu4bqortXNV/S0RCz1gqVKBvh9fXaz5um1WZd2gisUa9Ov+d5t8Veu6aL4g
-         2K40MC2HTtBsd5c2+0oG7kZ9Ri9GvFManEM2/4GoagFvlRbs117sXJKsnoA1Qi2LLyjM
-         qZ7afpGT7Kv/G9fiG3Hfl7TPwELnFMPli4Zw7Pj7k+Ds7sXfMFeHfpO3xrTiOCAwEFSv
-         3zX7HJNbkzBs8V1f30np+2WgKim8yYDuqwHhTXpcaWRVzm0n3nD5WtXS/+dfvda7wN4p
-         F/RpZq9n0W2Py1wccBh16qMTwDsGNu7p51Jq9OCyGoQ1zpzy58X7QPDqLt+KbUYAruDh
-         5j+A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1707843954; x=1708448754;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=uK6BGBS6WMDqCLvNAuYgOebVPsh/P04oJQ4FQzs4iwY=;
-        b=QntI1NnKMXJAE0cl6HBuN3oHg12hGJL6WyP06yLV/xJl5+Ou0tNjmxNQVetLf+3gmJ
-         XynRNkfSONYvqVDx4p6FZjlAh7NANrxbcExBx+1DtyzC9yfVggBWNlL3Ea7H0Z/RA/Zw
-         yejWcpiPAZhTXlrvrmTcFCztr+v7AlEvu2mq5hIu6va1MuxFus6rgZaUMUSap7vrWg65
-         jcAnRGWAJav6UJA4TCbnMW0dk1NWpBjzON/HqlBaVd8tgtNHlajJ9x4cA92AhdejpO5n
-         5Ifx02EvsUXHv2pGR0SHhXeI1EDA+RcfzfXy1bVc7lI0GzZwnTcsjUXn/Kb17e0ZxKsj
-         HOGQ==
-X-Gm-Message-State: AOJu0YxIJAG84GSM3LcVfIWz50WbKzNlfjngvb3ZZqD3piEkGbzW6Rhb
-	zjYoauhNJWneuJ3OpRivAIKZ2LXhWLN/li9dOP4W0t0OVP/z2sQksKtPQMrpEmQP+ylbYEcOdPz
-	CMA==
-X-Google-Smtp-Source: AGHT+IFs83zvZiFjc1h+W7zHNoPvwna7FcG2EuDRO9i49gwx3H2nJOTGMsoIvzgyXS2kGHFYBhF2+GmfDBQ=
-X-Received: from fine.c.googlers.com ([fda3:e722:ac3:cc00:7f:e700:c0a8:2221])
- (user=linusa job=sendgmr) by 2002:a05:6902:728:b0:dc7:53a0:83ad with SMTP id
- l8-20020a056902072800b00dc753a083admr2911530ybt.5.1707843954695; Tue, 13 Feb
- 2024 09:05:54 -0800 (PST)
-Date: Tue, 13 Feb 2024 09:05:53 -0800
-In-Reply-To: <CAP8UFD3wMD5SmfpP20jST4YndBdPX9U9qAbKh=4TnUzLkpULRA@mail.gmail.com>
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="T5UBdyMk"
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id 917F534B4F;
+	Tue, 13 Feb 2024 12:06:51 -0500 (EST)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=sncvxtsMy6Ia
+	tGyMLZkhcS/j9m7TSE66HxmlZtTgWds=; b=T5UBdyMkct6liqWeUCiAJWa5WEk6
+	wuLTC+sytkmf7lbfD8Rmngz1z4/DgD5u0daLgPgIut4lViTDA45TbW9DF4VLdfhJ
+	yCOHZktk9oSFpRyBIEpmM8sEsqlhLEldbHl0zdromIeILCigpvp12zTOvaw79PYN
+	UHjB7MSuNSp8et4=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id 8AF0C34B4E;
+	Tue, 13 Feb 2024 12:06:51 -0500 (EST)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.165.85])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 32E2034B4C;
+	Tue, 13 Feb 2024 12:06:48 -0500 (EST)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Kristoffer Haugsbakk <code@khaugsbakk.name>
+Cc: git@vger.kernel.org,  =?utf-8?Q?Rub=C3=A9n?= Justo <rjusto@gmail.com>
+Subject: Re: [PATCH v3 2/2] column: guard against negative padding
+In-Reply-To: <9355fc98e3dac5768ecaf9e179be2f7a0e74d633.1707839454.git.code@khaugsbakk.name>
+	(Kristoffer Haugsbakk's message of "Tue, 13 Feb 2024 17:01:21 +0100")
+References: <1c959378cf495d7a3d70d0c7bdf08cc501ed6e5d.1707679627.git.code@khaugsbakk.name>
+	<cover.1707839454.git.code@khaugsbakk.name>
+	<9355fc98e3dac5768ecaf9e179be2f7a0e74d633.1707839454.git.code@khaugsbakk.name>
+Date: Tue, 13 Feb 2024 09:06:46 -0800
+Message-ID: <xmqqcyt08fa1.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-References: <pull.1632.v3.git.1706664144.gitgitgadget@gmail.com>
- <pull.1632.v4.git.1707196348.gitgitgadget@gmail.com> <11f854399db2b0da5d82cad910c3b86ca9c2e0db.1707196348.git.gitgitgadget@gmail.com>
- <CAP8UFD3wMD5SmfpP20jST4YndBdPX9U9qAbKh=4TnUzLkpULRA@mail.gmail.com>
-Message-ID: <owlyttmcb8ge.fsf@fine.c.googlers.com>
-Subject: Re: [PATCH v4 14/28] format_trailer_info(): teach it about opts->trim_empty
-From: Linus Arver <linusa@google.com>
-To: Christian Couder <christian.couder@gmail.com>, 
-	Linus Arver via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, Christian Couder <chriscool@tuxfamily.org>, 
-	Junio C Hamano <gitster@pobox.com>, Emily Shaffer <nasamuffin@google.com>, 
-	Josh Steadmon <steadmon@google.com>, "Randall S. Becker" <rsbecker@nexbridge.com>
-Content-Type: text/plain; charset="UTF-8"
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID:
+ 45ECF4CC-CA92-11EE-BD82-A19503B9AAD1-77302942!pb-smtp21.pobox.com
+Content-Transfer-Encoding: quoted-printable
 
-Christian Couder <christian.couder@gmail.com> writes:
+Kristoffer Haugsbakk <code@khaugsbakk.name> writes:
 
->> diff --git a/trailer.c b/trailer.c
->> index f4defad3dae..c28b6c11cc5 100644
->> --- a/trailer.c
->> +++ b/trailer.c
->> @@ -162,20 +162,6 @@ static void print_tok_val(struct strbuf *out, const char *tok, const char *val)
->>                 strbuf_addf(out, "%s%c %s\n", tok, separators[0], val);
->>  }
->>
->> -static void format_trailers(const struct process_trailer_options *opts,
->> -                           struct list_head *trailers,
->> -                           struct strbuf *out)
->> -{
->> -       struct list_head *pos;
->> -       struct trailer_item *item;
->> -       list_for_each(pos, trailers) {
->> -               item = list_entry(pos, struct trailer_item, list);
->> -               if ((!opts->trim_empty || strlen(item->value) > 0) &&
->> -                   (!opts->only_trailers || item->token))
->> -                       print_tok_val(out, item->token, item->value);
->> -       }
->> -}
+> Make sure that client code can=E2=80=99t pass in a negative padding by =
+accident.
 >
-> It seems to me that this function could and should have been removed
-> in the previous patch. If there is a reason why it is better to do it
-> in this patch, I think it should be explained more clearly in the
-> commit message.
-
-Ah yes, the decision to delay the deletion like this was deliberate.
-Will update the commit message to add something like:
-
-    Although we could have deleted format_trailers() in the previous patch,
-    we perform the deletion here like this in order to isolate
-    (and highlight) in this patch the salvaging of the logic in the deleted
-    code
-
-        if ((!opts->trim_empty || strlen(item->value) > 0) && ...)
-            print_tok_val(...)
-
-    as
-
-        if (opts->trim_empty && !strlen(item->value))
-            continue;
-
-    in the new code, which has the same effect (because we are skipping the
-    formatting in the new code).
-
->>  static struct trailer_item *trailer_from_arg(struct arg_item *arg_tok)
->>  {
->>         struct trailer_item *new_item = xcalloc(1, sizeof(*new_item));
->> @@ -1101,6 +1087,15 @@ void format_trailer_info(const struct process_trailer_options *opts,
->>                         strbuf_addstr(&tok, item->token);
->>                         strbuf_addstr(&val, item->value);
->>
->> +                       /*
->> +                        * Skip key/value pairs where the value was empty. This
->> +                        * can happen from trailers specified without a
->> +                        * separator, like `--trailer "Reviewed-by"` (no
->> +                        * corresponding value).
->> +                        */
->> +                       if (opts->trim_empty && !strlen(item->value))
->> +                               continue;
->> +
+> Suggested-by: Rub=C3=A9n Justo <rjusto@gmail.com>
+> Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
+> ---
 >
-> Wasn't it possible to make this change in format_trailer_info() before
-> using format_trailer_info() to replace format_trailers()?
+> Notes (series):
+>     Apparently these are the only publicly-visible functions that use t=
+his
+>     struct according to `column.h`.
+>
+>  column.c | 4 ++++
+>  1 file changed, 4 insertions(+)
+>
+> diff --git a/column.c b/column.c
+> index ff2f0abf399..50bbccc92ee 100644
+> --- a/column.c
+> +++ b/column.c
+> @@ -182,6 +182,8 @@ void print_columns(const struct string_list *list, =
+unsigned int colopts,
+>  {
+>  	struct column_options nopts;
+> =20
+> +	if (opts && (0 > opts->padding))
+> +		BUG("padding must be non-negative");
 
-It was certainly possible, but the choice to purposely time the
-addition/deletion of code like this was deliberate (see my comment
-above).
+The only two current callers may happen to be "git branch" that
+passes NULL as opts, and "git clean" that passes 2 in opts->padding,
+so this BUG() will not trigger.  Once we add new callers to this
+function, or update the current callers, this safety start to matter.
 
->>                         if (!opts->filter || opts->filter(&tok, opts->filter_data)) {
->>                                 if (opts->separator && out->len != origlen)
->>                                         strbuf_addbuf(out, opts->separator);
+The actual breakage from a negative padding happens in layout(),
+so another option would be to have this guard there, which will
+protect us from having new callers of that function as well, or
+its caller display_table(), but these have only one caller each,
+so having the guard print_columns() here, that is the closest to
+the callers would be fine.
+
+>  	if (!list->nr)
+>  		return;
+>  	assert((colopts & COL_ENABLE_MASK) !=3D COL_AUTO);
+> @@ -361,6 +363,8 @@ int run_column_filter(int colopts, const struct col=
+umn_options *opts)
+>  {
+>  	struct strvec *argv;
+> =20
+> +	if (opts && (0 > opts->padding))
+> +		BUG("padding must be non-negative");
+
+This one happens to be safe currently because "git tag" passes 2 in
+opts->padding, but I do not think this is needed.
+
+We will pass these through to "git column" and the negative padding
+will be caught as an error there anyway, no?  So whether "git tag"
+is updated or a new caller of run_column_filter() is added, the
+developer will already notice it (and they will have to protect
+themselves just like the [1/2] of your series did for "git column"
+itself).
+
+>  	if (fd_out !=3D -1)
+>  		return -1;
