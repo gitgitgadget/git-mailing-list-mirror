@@ -1,231 +1,160 @@
-Received: from mail-ed1-f54.google.com (mail-ed1-f54.google.com [209.85.208.54])
+Received: from mail-ej1-f54.google.com (mail-ej1-f54.google.com [209.85.218.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1471E1DFFC
-	for <git@vger.kernel.org>; Tue, 13 Feb 2024 00:53:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D87A60DEE
+	for <git@vger.kernel.org>; Tue, 13 Feb 2024 01:02:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707785589; cv=none; b=LG72Tj+seVhUFEgNxdGiQ5fKB01Pj7rBaDeR7jUfO8iTh0Jk2KQVmMidxq49g8aX1eSkoDtQt479u97x7QjipmJI9PX/riCzKMo30kUg2ngFNA98dlBe11V5eNal+OCABmBuwOL81/8OoWZDVGcHGvnSDS3/FsSk3fWqk5sQwoE=
+	t=1707786177; cv=none; b=htI+z+m1B7ZfSxvvfiYAyLEChkeRjKqMNoqK56XvG2YONhUoYH31Kzd1EQK9NFhHdGzMN2AZQ/kUF9rLwHCnXKpEgCU9kairQeHxQggNwf7t1dJvQjwqelC2Qp84uNOpta+q+mEabDiFRDCdq6Bm3FIpWW5Su95kig6XT+hfRNQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707785589; c=relaxed/simple;
-	bh=J3Bmrvg+WSFK1xLg0redyBapUr3sQ58fqjs9r1oRSNU=;
+	s=arc-20240116; t=1707786177; c=relaxed/simple;
+	bh=TFgpKGzvr+UoDdR7ZNaMeG22UGWItbUC0nDmVKpaa34=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Content-Type; b=soqLeqLEuMUzkGm8FALouCGKTfpbiJKVBqdSGUieHcaP0h/0q6vAlgr1LTPGfaSD9viWH24a3zE82LH0OxmNFZwf8su5wBpje/KtUzp9S3Gda08WhyoIKT8Wxi0wiYzuR+Tc9G1PisOXccomJ8pIYdG9O2nSB7+5zF/VOF7DMgU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Z//RZhrK; arc=none smtp.client-ip=209.85.208.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	 To:Cc:Content-Type; b=FNmFDH+PNRg8orspTkQEHwQVEKiQLUMqHS1k9Tj5OyYnoBoZKI9fkFKHmoQ9u5hgmzkXbMUi11EUtm8XvlQrAnd4Zhh1gSesHdpLJ5S/FC8n2IPRfMLtlSG+ahQ1C7McMh4/IZNwvtl7EWhQIiZvn6dzTgbv+Ic1L0y3d/lMffs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=El+XmiI3; arc=none smtp.client-ip=209.85.218.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Z//RZhrK"
-Received: by mail-ed1-f54.google.com with SMTP id 4fb4d7f45d1cf-5605c7b1f32so5202819a12.0
-        for <git@vger.kernel.org>; Mon, 12 Feb 2024 16:53:06 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="El+XmiI3"
+Received: by mail-ej1-f54.google.com with SMTP id a640c23a62f3a-a3cc2f9621aso35934566b.1
+        for <git@vger.kernel.org>; Mon, 12 Feb 2024 17:02:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1707785585; x=1708390385; darn=vger.kernel.org;
-        h=content-transfer-encoding:to:subject:message-id:date:from
+        d=google.com; s=20230601; t=1707786173; x=1708390973; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=FxdiQI8hgXWB1yJL2Mg6pmTU/Ebz0PSXaqOlkoZXz+g=;
-        b=Z//RZhrKvhkAhvAfi8dm3HEPNG4LU8lAh653CFAgPgBaCeIlsFeyJ3LvGskByHWpIm
-         kcfQnaQF+JkpGYPIJLgH3MRAhpPg/xiMsXnjE+P62RVzEieq0tA24M/jDfSKhD6o0v4M
-         mWwzJHtnbTRKvX6EmwvSXiacn523Y7YruBwuNd0lm0A5sq6r6zs/ugMhDyVoatKRVPRs
-         E3GvpC6/9eNOHz/+De/0svFkTPiqxnJEPhxkMZBRA6fMjlBJ9/PlkiMN35ZWKRF2FKCO
-         DqKD7cQQ1fyAnbVenCacssRXpwNUb/tv4KxGuEFETYi5A8NEBnAwwbPBSNDOGiSz3EAL
-         4rcw==
+        bh=TFgpKGzvr+UoDdR7ZNaMeG22UGWItbUC0nDmVKpaa34=;
+        b=El+XmiI3eL16rNIkcvkLy8j9avU9ibSWlo8npFZmMKwCHw/84hKaOLUv+CWLEkxv7n
+         38K+uZ3QpNJ6CEkaeogvVljADHtApZUM4THEXl5hm8hr8pVZEXuf0HG2CAg1kCMwVgGj
+         5MxldPAfdcYmTs6pUmSp1j2A+4Kj2+DupEnGeZa4Pt8CUdCXeaVDiVmo5g8XggU10O8I
+         Z5CGMWKxxB3Y2re6JtMyJfFDKFmKGpNuYOU5kOKAGxor/p7tg8JnT0HDzs9LFW3y4cXb
+         PmsZnA631cLf51tqaQ0LooQ0JvFmi/1mQEOxlGVM8aprtOvhJG/99MpQWy54dBYJy3kM
+         qCEg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1707785585; x=1708390385;
-        h=content-transfer-encoding:to:subject:message-id:date:from
+        d=1e100.net; s=20230601; t=1707786173; x=1708390973;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=FxdiQI8hgXWB1yJL2Mg6pmTU/Ebz0PSXaqOlkoZXz+g=;
-        b=hEL0+pLlnRHgrfd1CG6T+sXRr3A/lQzY6wgmj8l9dm53nzZdR/z9VwNuVpsRy/sOCv
-         RV6drK0WVUo9TKyIBRhx0qeBaupZY1ei64wX2Ha3ZSRdvkZEBY6ITenlQQle7VG+y9Fe
-         YBzEyPSxENllWAAZS2lTjwf8+kP5Do6gLXJIzbD8VVBoquCKqv+qPjsDNL+7xxkmeovI
-         rOE9BWo4dTGny93G2AqoxajbD8hATXFM/hL80rwdjZYel0LCh1o5wCop/eHerffxwOLU
-         aH0us35FC6bPmX50e+mW1zp3l/jKuicW/BL2XA4A0hApy/TYX5OYLeTWgJw/en7Purcl
-         ihqg==
-X-Gm-Message-State: AOJu0YyF3zLY5pleXa4JLlmw10AeE0gn2nC2nHyndrP2VgXUAmq5JDq2
-	K3MWqI2GR3nEAroNaIhp/nw/iKvwgJ9jDjJnnV7yLLpwkXYMLLgduAluVqyPQjq74t9APLYLTff
-	rPRTRtzdYHNPaTBriCJckHF28mPvgT6RxhHE=
-X-Google-Smtp-Source: AGHT+IEMaYWIwJJLcyTzoz37X/eQkLT09H+75TEl+KIU1EPX6yS8PiadTWVxONCm/fbS8ov0S7C6Todq1CzlCyv3zYo=
-X-Received: by 2002:a17:907:9849:b0:a3b:aa50:da81 with SMTP id
- jj9-20020a170907984900b00a3baa50da81mr5291072ejc.5.1707785585012; Mon, 12 Feb
- 2024 16:53:05 -0800 (PST)
+        bh=TFgpKGzvr+UoDdR7ZNaMeG22UGWItbUC0nDmVKpaa34=;
+        b=HS4pARnw8VjK0G9wcMNaE9im97mkMxp5RS+IHlJLVMDELGBcpHIRZ7uaJLcCAvbRlR
+         /BfzcKr8bqZurKgj1I1vlr3Z0lfHvPIx92lfe8cYAm7UN+of4mFlQKYZyiwSggJOhoM8
+         JmsmFuhooc2Yl4r0mcOChNtzYgxcGVqOy/SuJhnzttSfoRFeECL78bcdUZAEwPuiJHsS
+         DZ8/AC6h0OpvOIZTkyT/oGqw1mxd38jl239VjdAdEi9OL3yeZHDAIydc+XzG8EmSZsPR
+         KhL6LSyFHUwN0QiSAVNRULw4QeVp7x0omwGLcns1pKk/XilAAw38rkrPrPJFrqe4HoXB
+         O2Cw==
+X-Gm-Message-State: AOJu0Yz/xq/w6/d0f/ij+/ADTWCdGogHtHV8qb7qrzQeS4YOMR51tSS7
+	tvx2gi1jNmsl3Jettb0IGESYD3pTjzqk6OLRahpr4Xqc7Z9X1B2v+vX1cMiTElhdAFMFOTQakBH
+	HMQdlD4VAvNIgk1b/rjfUcEtC6SDiRdtPVLUenlanqooXsPg0sQ==
+X-Google-Smtp-Source: AGHT+IGnJBKVpu1EbVXawJKkOz/D/eHIH8icu4N4KfD5Xa6jRghjVhen8U8hey+hz6+/WNEHXpBUdit4Ci7NhUN+7Hs=
+X-Received: by 2002:a17:906:558a:b0:a3c:f048:c9eb with SMTP id
+ y10-20020a170906558a00b00a3cf048c9ebmr568902ejp.12.1707786173408; Mon, 12 Feb
+ 2024 17:02:53 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <4714b88d-df5b-4e37-a5d7-af5033cfb861@smtp-relay.sendinblue.com>
- <20240109005303.444932-1-britton.kerin@gmail.com> <d37781c3-6af2-409b-95a8-660a9b92d20b@smtp-relay.sendinblue.com>
- <40c3a824-a961-490b-94d4-4eb23c8f713d@gmail.com>
-In-Reply-To: <40c3a824-a961-490b-94d4-4eb23c8f713d@gmail.com>
-From: Britton Kerin <britton.kerin@gmail.com>
-Date: Mon, 12 Feb 2024 15:52:53 -0900
-Message-ID: <CAC4O8c9z4s4fFU6_h6ZRBnDhZyiTp3XR8j0DrARj+1SauLbQEQ@mail.gmail.com>
-Subject: Re: [PATCH v2 1/1] completion: dir-type optargs for am, format-patch
-To: =?UTF-8?B?UnViw6luIEp1c3Rv?= <rjusto@gmail.com>, git@vger.kernel.org
+References: <CAO_smVji5aGjx1V-EGbumRRpOuGY0SkXZUn9g4LxKmMO3aw=Sg@mail.gmail.com>
+ <000301da5b5c$5477d7f0$fd6787d0$@nexbridge.com>
+In-Reply-To: <000301da5b5c$5477d7f0$fd6787d0$@nexbridge.com>
+From: Kyle Lippincott <spectral@google.com>
+Date: Mon, 12 Feb 2024 17:02:37 -0800
+Message-ID: <CAO_smVg-xxVeevuPr_E2F9mjnDzN7Tq6o9Tkhy4c+9qBmQTxdw@mail.gmail.com>
+Subject: Re: libification: how to avoid symbol collisions?
+To: rsbecker@nexbridge.com
+Cc: git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Sat, Feb 3, 2024 at 6:13=E2=80=AFAM Rub=C3=A9n Justo <rjusto@gmail.com> =
-wrote:
+On Fri, Feb 9, 2024 at 5:31=E2=80=AFAM <rsbecker@nexbridge.com> wrote:
 >
-> On 08-ene-2024 15:53:03, Britton Leo Kerin wrote:
-> > Signed-off-by: Britton Leo Kerin <britton.kerin@gmail.com>
-> > ---
-> >  contrib/completion/git-completion.bash | 37 ++++++++++++++++++++++++++
-> >  1 file changed, 37 insertions(+)
+> On Thursday, February 8, 2024 9:30 PM, Kyle Lippincott wrote:
+> >While thinking about libification, I was wondering what we can/need to d=
+o about
+> >symbols (specifically functions, since our libraries will likely have fe=
+w to no extern
+> >variables) that need to escape their translation unit (.c file) but that=
+ we don't want
+> >to risk colliding with symbols from our "host" project.
 > >
-> > diff --git a/contrib/completion/git-completion.bash b/contrib/completio=
-n/git-completion.bash
-> > index 185b47d802..2b2b6c9738 100644
-> > --- a/contrib/completion/git-completion.bash
-> > +++ b/contrib/completion/git-completion.bash
-> > @@ -1356,6 +1356,29 @@ __git_count_arguments ()
-> >       printf "%d" $c
-> >  }
+> >For any header that we're offering up as an API boundary we can have pre=
+fixed
+> >names, but there are symbols from git-compat-util.h with simple and like=
+ly
+> >common names like `die`, `usage`, error`, etc. I'm far from an expert on=
+ linkers, but
+> >I'm under the impression that even though we'll only be #including git-c=
+ompat-
+> >util.h in our own .c files (so the compiler for the host project wouldn'=
+t see them),
+> >the produced static library will still be "providing" these symbols unle=
+ss we mark
+> >them as `static` (and if we mark them as `static`, they can't be used ou=
+tside of their
+> >translation unit). This means that if the host project has a version of =
+`die` (or links
+> >against yet another library that does), we run into what C++ calls a One=
+ Definition
+> >Rule (ODR)
+> >violation: we have two providers of the symbol `die` with different
+> >implementations, and the behavior is undefined (no error needs to be gen=
+erated as
+> >far as I know).
 > >
-> > +# Complete actual dir (not pathspec), respecting any -C options.
-> > +#
-> > +# Usage: __git_complete_refs [<option>]...
-> > +# --cur=3D<word>: The current dir to be completed.  Defaults to the cu=
-rrent word.
-> > +__git_complete_dir ()
-> > +{
-> > +     local cur_=3D"$cur"
-> > +
-> > +     while test $# !=3D 0; do
-> > +             case "$1" in
-> > +             --cur=3D*)        cur_=3D"${1##--cur=3D}" ;;
-> > +             *)              return 1 ;;
-> > +             esac
-> > +             shift
-> > +     done
-> > +
-> > +        # This rev-parse invocation amounts to a pwd which respects -C=
- options
-> > +     local context_dir=3D$(__git rev-parse --show-toplevel --show-pref=
-ix 2>/dev/null | paste -s -d '/' 2>/dev/null)
-> > +     [ -d "$context_dir" ] || return 1
-> > +
-> > +     COMPREPLY=3D$(cd "$context_dir" 2>/dev/null && compgen -d -- "$cu=
-r_")
+> >With dynamic libraries I believe that we have more control over what get=
+s exposed,
+> >but I don't know of functionality for this when linking statically. I'm =
+assuming there
+> >is no such functionality, as projects like openssl (ty Randall for menti=
+oning this)
+> >appear to have a convention of prefixing the symbols they put in their "=
+public" API
+> >(i.e. in non-internal header files) with things like OSSL_, and of prefi=
+xing the symbols
+> >they put in their "private" APIs that can't be marked as `static` with `=
+ossl_`. I'd love
+> >to be wrong about this. :)
+> >
+> >If I'm right that this is an issue, does this imply that we'd need to re=
+name every non-
+> >static function in the git codebase that's part of a library to have a `=
+git_` prefix, even
+> >if it won't be used outside of the git project's own .c files? Is there =
+a solution that
+> >doesn't involve making it so that we have to type `git_` a billion times=
+ a day that's
+> >also maintainable? We could try to guess at how likely a name collision =
+would be
+> >and only do this for ones where it's obviously going to collide, but if =
+we get it wrong,
+> >I'm concerned that we'll run into subtle ODR violations that *at best* e=
+rode
+> >confidence in our library, and can actually cause outages, data corrupti=
+on, and
+> >security/privacy issues.
 >
-> This assignment is problematic.
->
-> First, COMPREPLY is expected to be an array.  Maybe a simple change can
-> do the trick:
->
-> -       COMPREPLY=3D$(cd "$context_dir" 2>/dev/null && compgen -d -- "$cu=
-r_")
-> +       COMPREPLY=3D( $(cd "$context_dir" 2>/dev/null && compgen -d -- "$=
-cur_") )
->
-> But, what happens with directories that have SP's in its name?  We're
-> giving wrong options:
->
->     $ mkdir one
->     $ mkdir "one more dir"
->     $ git am --directory=3Do<TAB><TAB>
->     dir   more  one
->
-> Setting IFS can help us:
->
-> +       local IFS=3D$'\n'
->
-> Now we're returning correct options:
->
->     $ mkdir one
->     $ mkdir "one more dir"
->     $ git am --directory=3Do<TAB><TAB>
->     one       one more dir
->
-> Here, the user might be expecting directory names with a trailing '/',
-> as Bash do.  Again, a simple trick:
->
-> -       COMPREPLY=3D( $(cd "$context_dir" 2>/dev/null && compgen -d -- "$=
-cur_") )
-> +       COMPREPLY=3D( $(cd "$context_dir" 2>/dev/null && compgen -d -S / =
--- "$cur_") )
->
-> Now looks better, IMO:
->
->     $ git am --directory=3Do<TAB><TAB>
->     one/      one more dir/
->
-> But, after all of this, we're going to provoke a problematic completion d=
-ue
-> to the SP:
->
->     $ mkdir "another one"
->     $ git am --directory=3Danot<TAB><TAB>
->     ...
->     $ git am --directory=3Danother one/
->
-> We should complete to:
->
->     $ git am --directory=3Danother\ one/
->
-> Here we need a less simple trick:
->
-> +       # use a hack to enable file mode in bash < 4
-> +       # compopt -o filenames +o nospace 2>/dev/null ||
-> +       compgen -f /non-existing-dir/ >/dev/null ||
-> +       true
->
-> Some commits you may find interesting:
-> fea16b47b6 (git-completion.bash: add support for path completion, 2013-01=
--11)
-> 3ffa4df4b2 (completion: add hack to enable file mode in bash < 4, 2013-04=
--27)
->
-> Well, so far, so good?  I'm afraid, not:  What happens with other
-> special characters like quotes '"'?
->
-> I suggest you take a look at how we are already doing all of
-> considerations for other commands, like git-add.
+> I think we only need to do this for functions that are in the libificatio=
+n code-base for non-static symbols (and any data elements that may end up i=
+n a DLL some day).
 
-Thanks for all these suggestions.  Considering them and working on it
-some more I end up with this function:
+I believe the hope is that the majority/entirety of plumbing code will
+be provided as a library, and we'll likely want to have a significant
+portion of porcelain code as well. I think we're really talking about
+(effectively) "all of git", but not all at once. If we attempt to make
+things safe based on guesses about what's likely to collide with other
+project's code, we'll (a) get it wrong, and only discover later when
+they try to add our library to their project, and (b) have a
+maintenance burden, where we now have to think about every function
+name we introduce, which would not be fun (and we'll get it wrong.
+Frequently.)
 
+> The bulk of the non-libified code base would only need to adapt to new sy=
+mbol names if those symbols are specifically moved.
 
-__git_complete_dir ()
-{
-        local cur_=3D"$cur"
+I'm not following what you mean by "moved" here.
 
-        while test $# !=3D 0; do
-                case "$1" in
-                --cur=3D*)        cur_=3D"${1##--cur=3D}" ;;
-                *)              return 1 ;;
-                esac
-                shift
-        done
-
-        # This rev-parse invocation amounts to a pwd which respects -C opti=
-ons
-        local context_dir=3D$(__git rev-parse --show-toplevel
---show-prefix 2>/dev/null | paste -s -d '/' 2>/dev/null)
-        [ -d "$context_dir" ] || return 1
-
-        compopt -o noquote
-
-        local IFS=3D$'\n'
-        local unescaped_candidates=3D($(cd "$context_dir" 2>/dev/null &&
-compgen -d -S / -- "$cur_"))
-        for ii in "${!unescaped_candidates[@]}"; do
-                COMPREPLY[$ii]=3D$(printf "%q" "${unescaped_candidates[$ii]=
-}")
-        done
-}
-
-This one works for all weird characters that I've tried in bash 5.2 at
-least, and in frameworks that do their own escaping also (e.g.
-ble.sh).  Since your advice so far was so good I thought I'd ask if
-there is anything obvious to you that is still wrong here?
-
-If not I guess what's left is special code to make it work better with
-old versions of bash.  I'm a little sceptical that this is worth it
-since bash 5 is already 5 years old and it's only completion code
-we're talking about  but I guess it could be done.
-
-Britton
+> die(), error(), are probably going to be impacted, but they can be aliase=
+d with #defines internally to git to git_die() or git_error(), for example.
+> --Randall
+>
