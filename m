@@ -1,124 +1,80 @@
-Received: from fout5-smtp.messagingengine.com (fout5-smtp.messagingengine.com [103.168.172.148])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f179.google.com (mail-lj1-f179.google.com [209.85.208.179])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36ED65F846
-	for <git@vger.kernel.org>; Tue, 13 Feb 2024 16:02:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFAD8399
+	for <git@vger.kernel.org>; Tue, 13 Feb 2024 16:30:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707840128; cv=none; b=Dh6OU2/81RqsjBoZ4u+IcD2qftiH50VXPyrIFlDz+PAIlEatU9JP93le3mVKBHbwShu8TScnArweE3D9A5ej4xn+F/qFPGlYOt1xOC96vLQ5DhO5BL9AWc8n5GkvPGCEKzhdiaMnB6CugaBYjJEtB8KLQLVEpE/g2fB1NSlfsDk=
+	t=1707841837; cv=none; b=sN0ERJUbQJGOkGhVz9uBR8PVyR0P39pzSOeOUFWMaJdDOKiaBV+w4eXv5caghQRfbdlBWyfEZMJjV9raAquqzjZeAUT7cUfPm5yG6j7imzDjFFStXKr/ktN/qyemjMV3nOLmjsdZ5mtInQN1NjTcdYaFUBQtlUza401uSBVJqXw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707840128; c=relaxed/simple;
-	bh=xoRQkpZn9O489wtevK19oNVKz26qmpPVkFyXnZ3ysNg=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=VIWw5MtTJX9coPmd7l+8W7el8Ut4BgBx6xB/8QeLzja/2gBM0Mp06b/lfw+XtyGl41uJj8gDbp26Yk9wQy0n9lIRc28aubfnlaibxl/ouEVh06fqxF+FlcAWpQfJTuOPb3ALlpUQs0s9EKhEA32GN9fXXlyHSxy0rsnf1/6aEXU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=khaugsbakk.name; spf=pass smtp.mailfrom=khaugsbakk.name; dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b=cgcp2kkD; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=gvjA/CLq; arc=none smtp.client-ip=103.168.172.148
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=khaugsbakk.name
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=khaugsbakk.name
+	s=arc-20240116; t=1707841837; c=relaxed/simple;
+	bh=dDCNtekxInVRJBorPrr9w25YT6BdDTUhU8/IKbvB11Y=;
+	h=Message-ID:Date:MIME-Version:From:To:Subject:Content-Type; b=Pf0FUBC7IuR+cunKYYUTHnL26+1LPteLidFOsnXmJhvhG7rzSHqmj78wivwetWg2USI8qqGAiRvSTQZJmCx2aJsfofNmm0zt610TL/lowV43ZboGj+Vzgs1aOj2SVtYB6aaxv5rcd/0+isqae68zmVb2n+SUb10mS6H9PGvyfnc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=EbrmrMBz; arc=none smtp.client-ip=209.85.208.179
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b="cgcp2kkD";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="gvjA/CLq"
-Received: from compute7.internal (compute7.nyi.internal [10.202.2.48])
-	by mailfout.nyi.internal (Postfix) with ESMTP id 7FB2813800B5;
-	Tue, 13 Feb 2024 11:02:05 -0500 (EST)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute7.internal (MEProxy); Tue, 13 Feb 2024 11:02:05 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=khaugsbakk.name;
-	 h=cc:cc:content-transfer-encoding:content-type:content-type
-	:date:date:from:from:in-reply-to:in-reply-to:message-id
-	:mime-version:references:reply-to:subject:subject:to:to; s=fm2;
-	 t=1707840125; x=1707926525; bh=N0d6g8aUFNm5pSLiq5R14Kb1uGfl4akU
-	uhzG9KEOM24=; b=cgcp2kkD2vmP5OZz2JgTNmo/WDXzpMERMSE7uvZ7nFRT9+m0
-	K3TcpRRTFIsKg9O5/W7MDcjVZLNFOW/FVp3Ht4MM9oPZsQgCCJQv51dYMuuCOVyQ
-	6LF6VXFwrFO3T0lZdvjVgvIIz7f4L8PnjCTJ5+MhezPS47bjLT7YtwCOjUySFDwY
-	LNID0asjki3SON7T2l8TzaalxXY417vQr+krW6sugdjMG7IEML2ufUk/1nG/O7Og
-	sOEMEaZal9BCbPuuNrc5m1t0UxF6ilO/bYwbnl5CPyYXF5ERn9ryNmYnSTXN/pPq
-	avh/8/KJNuGwXeWdtgCeYgvFg9josIp3cOmupw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1707840125; x=
-	1707926525; bh=N0d6g8aUFNm5pSLiq5R14Kb1uGfl4akUuhzG9KEOM24=; b=g
-	vjA/CLq4J4fCPkbjygnPF7xvuvXJuR79+VlvHpYPh1FhZaJkQ2xa22FaYY64mNUk
-	58O3wphK7wgDIU2r1BSsqMUR8Lmu/Xz3LfxwqUG+/eIlUBWyU7uE1+D2L468IY5m
-	fUk+V8VlU1+pkiPpTnLtk0zr65lF6ZkhwUIb10YeCuIwCTTQPtMws0CCDZVCnffP
-	m3yksbdqM6ZUIHNjmaZsWOUPvsoSzRxhNrgQp6/jwWj+EyufUkETkpk0pCdFeLwA
-	Xb2R/nra+9M7SL9TnzLVx92XsklvUivgQCV05W8CMxqEaahAOReCEFG7DdqQShpa
-	5ocYxPzJUr2fE7ckp8yTA==
-X-ME-Sender: <xms:fZLLZTOsSPxmCA7f58s07sVRYf6tkPAztuHRWV00mMDreXzTU3FsgIc>
-    <xme:fZLLZd8_ofbVEcH9wndjz-LNKvvOJvsErFZ7ToBv7weRPQORqFmWvpWIkpo8sE8lS
-    XiP6H4DJqwp6hZUKA>
-X-ME-Received: <xmr:fZLLZSTk_hziE5tPxDn7HsLazjqVrV_tb4egQURdtyB2oSApH9ze_sKY6YeHiRf9yoXaTr2mlaqTpujeKhI9TTjWJTy0ciCaX5OQCygmwQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrudehgdekfecutefuodetggdotefrodftvf
-    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
-    uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
-    fjughrpefhvfevufffkffojghfgggtgfesthekredtredtjeenucfhrhhomhepmfhrihhs
-    thhofhhfvghrucfjrghughhssggrkhhkuceotghouggvsehkhhgruhhgshgsrghkkhdrnh
-    grmhgvqeenucggtffrrghtthgvrhhnpeevgfelveeikeegjeeikeeuvefhleeiuddvleeg
-    feekjedtkeevtdetgfffveettdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmh
-    epmhgrihhlfhhrohhmpegtohguvgeskhhhrghughhssggrkhhkrdhnrghmvg
-X-ME-Proxy: <xmx:fZLLZXvnkiclHj5HOIlxC9AKgxoIik8bxFYdfvFlIwIy5GzpzDJU0A>
-    <xmx:fZLLZbfVLCFk0kY60_WXZcjgYIrhYmIXkspoyntoN8z83VMLZIwttw>
-    <xmx:fZLLZT0FtJ-veb9BaU6BXYKZf3HjCmzQh0E0tSFzAYe5MH1YurVbng>
-    <xmx:fZLLZX717u_kl0vFnUMuSzn3EiusvRTlnldq8pvvGeFScEUNh17oYA>
-Feedback-ID: i2671468f:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 13 Feb 2024 11:02:04 -0500 (EST)
-From: Kristoffer Haugsbakk <code@khaugsbakk.name>
-To: git@vger.kernel.org
-Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>,
-	=?UTF-8?q?Rub=C3=A9n=20Justo?= <rjusto@gmail.com>
-Subject: [PATCH v3 2/2] column: guard against negative padding
-Date: Tue, 13 Feb 2024 17:01:21 +0100
-Message-ID: <9355fc98e3dac5768ecaf9e179be2f7a0e74d633.1707839454.git.code@khaugsbakk.name>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <cover.1707839454.git.code@khaugsbakk.name>
-References: <1c959378cf495d7a3d70d0c7bdf08cc501ed6e5d.1707679627.git.code@khaugsbakk.name> <cover.1707839454.git.code@khaugsbakk.name>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EbrmrMBz"
+Received: by mail-lj1-f179.google.com with SMTP id 38308e7fff4ca-2d10ad20955so8875991fa.0
+        for <git@vger.kernel.org>; Tue, 13 Feb 2024 08:30:35 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1707841834; x=1708446634; darn=vger.kernel.org;
+        h=content-transfer-encoding:subject:to:from:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=dDCNtekxInVRJBorPrr9w25YT6BdDTUhU8/IKbvB11Y=;
+        b=EbrmrMBzm1y+ymO4sMDjV2Tv8A+xEtbK+2hOU+EsBCiznaume4OL9ArjNfe58hVJFD
+         xBBuMsl0lZeEJH+SnupqRS7dDygVwerAYF4YdEWdXbejCdwwYvWlx4V8QeTskZ3Vmx8Q
+         aJ/O8H+lcA8qe433KZ834FIHVZxWniPz0WSsrxc+6WD7cDte1JU04DzzPbS48XYA9gSq
+         EQagqwHkTACGni4WsZATsq44CvC7P6M9g+JJdlDP84J4bgdJAQceniIvrfzd36il7uYE
+         uGlWEKdG7T1neBswYYWxKO4VaZl4kxZUxQgRzDWVqYskMsCck5gJftBaJudP7s6iOS4M
+         wo4g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1707841834; x=1708446634;
+        h=content-transfer-encoding:subject:to:from:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=dDCNtekxInVRJBorPrr9w25YT6BdDTUhU8/IKbvB11Y=;
+        b=v+FEAa0hlrHEzGNKxWozaZFSubVHu1rMbEIXYmHFw8tAuoR7EnAGdSiyMtE5GaAR/Y
+         IYACx2zxYGlh5DHfDhxDRxIsBH8u5RH3uA7nfShbFLXAbmERRFLr9fK+J4DuJsnk+CD7
+         csrP3W7V5kS351PtwgVl8sF/hXgYEnjmRRpEaoOs2rI7dD9slTT4wyOUe3l3UXum1SJj
+         Rf/17VpLeOpHbiK432pR2odewLfwT5NaM8WL2wWqeAP26fwMT03I5ZysDYTFOdQjhw51
+         ClErTneFpCTTx8iIukei0apOQ9GPb5KQ2gNnDaKVxsj317LG9RYHYXo7StUTmSqhptTO
+         /H+Q==
+X-Gm-Message-State: AOJu0YzeJoHEm5taQas5TheDSNVwOH7abbeR6CEPo/dYs5faSWbSXP+g
+	sumLnCSBDOCmPmULt5F7Qgb/EkLQOsEyxjTRHlJJVqzTsTxMy16Lmbjb3cCN
+X-Google-Smtp-Source: AGHT+IFhsn0bM7+6rXdpMUcyfiPpPZpUtfSSmrt+CQ49PpG3ppb3mehVA6NDDuhQmxzhToELetl8zQ==
+X-Received: by 2002:a2e:8316:0:b0:2d0:ce3c:5848 with SMTP id a22-20020a2e8316000000b002d0ce3c5848mr101150ljh.51.1707841833577;
+        Tue, 13 Feb 2024 08:30:33 -0800 (PST)
+Received: from DESKTOP-T29D115 ([39.49.134.105])
+        by smtp.gmail.com with ESMTPSA id w17-20020a05600c475100b00411062c123esm4920303wmo.26.2024.02.13.08.30.32
+        for <git@vger.kernel.org>
+        (version=TLS1 cipher=ECDHE-ECDSA-AES128-SHA bits=128/128);
+        Tue, 13 Feb 2024 08:30:33 -0800 (PST)
+Message-ID: <65cb9929.050a0220.e37fb.b3e6@mx.google.com>
+Date: Tue, 13 Feb 2024 08:30:33 -0800 (PST)
+X-Google-Original-Date: 13 Feb 2024 21:30:33 +0500
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+From: richardclassicestimation@gmail.com
+To: git@vger.kernel.org
+Subject: Bids Take-off
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: quoted-printable
 
-Make sure that client code can’t pass in a negative padding by accident.
-
-Suggested-by: Rubén Justo <rjusto@gmail.com>
-Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
----
-
-Notes (series):
-    Apparently these are the only publicly-visible functions that use this
-    struct according to `column.h`.
-
- column.c | 4 ++++
- 1 file changed, 4 insertions(+)
-
-diff --git a/column.c b/column.c
-index ff2f0abf399..50bbccc92ee 100644
---- a/column.c
-+++ b/column.c
-@@ -182,6 +182,8 @@ void print_columns(const struct string_list *list, unsigned int colopts,
- {
- 	struct column_options nopts;
- 
-+	if (opts && (0 > opts->padding))
-+		BUG("padding must be non-negative");
- 	if (!list->nr)
- 		return;
- 	assert((colopts & COL_ENABLE_MASK) != COL_AUTO);
-@@ -361,6 +363,8 @@ int run_column_filter(int colopts, const struct column_options *opts)
- {
- 	struct strvec *argv;
- 
-+	if (opts && (0 > opts->padding))
-+		BUG("padding must be non-negative");
- 	if (fd_out != -1)
- 		return -1;
- 
--- 
-2.43.0
+Hello,=0D=0A=0D=0AConstruction is not a difficult undertaking whe=
+n you have the right equipment and a well-executed plan. A detail=
+ed construction estimate is the only way to make your constructio=
+n aspirations a reality.=0D=0AWe are a construction estimating/ta=
+ke-offs service that provides a detailed description of the proje=
+ct as well as the necessary expenses. We also provide a cost esti=
+mate of the given project.=0D=0A=0D=0AIf you'd like to see some o=
+f our typical customer work, please let us know if you're a gener=
+al contractor or a subcontractor (what trade you operate in) so w=
+e can show you some samples that will give you a better understan=
+ding of what we offer.=0D=0A=0D=0ARegards=0D=0ARichard=0D=0AMarke=
+ting Manager=0D=0Aclassic estimation
 
