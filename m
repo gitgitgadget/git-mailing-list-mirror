@@ -1,191 +1,159 @@
-Received: from mail-yw1-f202.google.com (mail-yw1-f202.google.com [209.85.128.202])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 658C2612FC
-	for <git@vger.kernel.org>; Tue, 13 Feb 2024 21:02:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.202
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7183261665
+	for <git@vger.kernel.org>; Tue, 13 Feb 2024 21:43:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707858125; cv=none; b=Y1qqQwWV7HSzop4p3wr5RKCQNYdGgTRXskVjzy8kxpOL11VLVdMLNET13im2G477gLkA0YFtA2w1l6Lr8YxlarNK5/aWJlxjm1xrBaAgJ8Rg49X545TVhqTaK/tns5fM1WS8d/0Up2VtWaREaIWfBNA100RgRVyhlCk6P+XKLHI=
+	t=1707860597; cv=none; b=eJMIo2nMimMteE3dDXLl3W8kYs0ZQpzPw40SEaYYgxEMFTUHTcQ2teNuiZbtao+Bf3vLOAfdNSMYqpTpLXjQRTWHYDGsw+bBQK8eu3SjAD5grGNp7yuwxRb02BVvYzNLBwOilLXhq//0BZUXm+xs43wnhGl+kgIrOLrqoUFgYu8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707858125; c=relaxed/simple;
-	bh=fN8Z6wYvztRqmGwtPpj+rae4Wyn/DY9O6NkiZgx1QXw=;
-	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
-	 To:Cc:Content-Type; b=YbxaaHhSD4lLBgqxev+yAD5FI1PVFvbocGqfv50jHjxlXscOf6CAJ147bZjlEDY/y8k/iMwjF3wnNfF0DqkrchKOO9qvg7a4WWD7kvjLLzksouvOZSVssEkL1jU5x8oqIfOSfPwCkY8AGXhZebgD5EjRNwoPkixxxYeWYYPEOIo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--linusa.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=a2qgzHmz; arc=none smtp.client-ip=209.85.128.202
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--linusa.bounces.google.com
+	s=arc-20240116; t=1707860597; c=relaxed/simple;
+	bh=jibJShu6+lJov/IjqUXj0e3I41NZbJxD1CGz+jRfSDs=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=D5heFULko6yhcOmm3MxKQqupQ1JJLp2DPqaT0nGSi+qenNQ256sZawbZ1iJ89mvWFOYW7fLDLuOXPvVKvuf7xe7XCBDTxgxe/hFxuDg2mazn7989HFK6814W3BH8RijWhfMFIVrv5tYmZ1pKZTH6hbA1oRCWuuX+AHcG1l9DQtk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=BsGJlorn; arc=none smtp.client-ip=64.147.108.70
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="a2qgzHmz"
-Received: by mail-yw1-f202.google.com with SMTP id 00721157ae682-60761bdbd4cso40283017b3.3
-        for <git@vger.kernel.org>; Tue, 13 Feb 2024 13:02:03 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1707858122; x=1708462922; darn=vger.kernel.org;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=ANzRiUL0aS+cfpXkvteXlTiGnAvONw6sPhew2QE9y8A=;
-        b=a2qgzHmzUrhXHFqZYv+9tzMHDoxkTsWifWKfVazKXoTbc1R8rWgMgYipIZS9RhvhRf
-         3m8iRQGivNH7p6A0ac+c6D2RA0USSFwCJ5UGWddkUF9HXbRxRnxXu0vaxRKBlHmccr2d
-         L+HwEgoGL0f4byDZmDfCMktuBzrnWXPWDnzYA+3172RQF9FaX9kqUdS/OlYfCL4hdSbl
-         snE3E9ch14M1CsbYBCHBMBwdOlIVDeQQnsqB+yG5uh3BkIPrBr3A95qY4xK/BpY5cSC2
-         2AHWOhpHKKJwLeQicnqVcKS+Ch0Zv03uuXdkh32J5Lm1n6Aa/kwMj526B3ec3r5XKBar
-         iwbQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1707858122; x=1708462922;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=ANzRiUL0aS+cfpXkvteXlTiGnAvONw6sPhew2QE9y8A=;
-        b=hvPysOGJlb8krMRdIX06ELrLKFX8vKaozT8K3fOFFpsjVGc4c9xTTcq5UDzLWBQL/2
-         Q7WguIQhtHb8pg+52yBMl1kmMB0YHu0XhwPyZ9Dsy/4qQbfv6nteTIghtjvp4fEW9Vwq
-         YiWQfiUXqiExYvfsMZ6BKde9vOFAd5AkaXuWdLayftSFHg8tL3joJerkNVphc05CaktQ
-         +4csNr7YVaeAkVMe8u2Iadnt6fzkq1AntdudgtOwk6MET6kEn0BGcCVNv+w6hSIZJRxG
-         dVrysEHyxB3J6OIT8gbX+vfkZfav7E1f9KKhPaMPJi2A3xmbnpb7SpUklF7nMG0/xe3k
-         B40w==
-X-Forwarded-Encrypted: i=1; AJvYcCUeuxiCNn7UAxxy9UsXnCUHeYYm9uo7d5y+zgTCC/EuCOubiW88ARPRYDNG/P7BjjQ6ERstpJOjC5XoIFsyAn8yAAnk
-X-Gm-Message-State: AOJu0Yx7p1nhXqdDDyiM2PwCcXp8YF8AJd/gxsgfyDEnc98nDRW1/8er
-	mVxFOYKzgSZTJanhFGbTdnUHQqpvGAWaumcJS57PKLRUvudeS8veWv21IhkPuSn35Le9IXKN6XP
-	xlw==
-X-Google-Smtp-Source: AGHT+IHV3uktckSUlbNGtap5TzE5GkRdpFqD1/4gLPVPT1iSU8xBoWH7Jkc9uxmJgY/Mlu+0VB14W9OPGpw=
-X-Received: from fine.c.googlers.com ([fda3:e722:ac3:cc00:7f:e700:c0a8:2221])
- (user=linusa job=sendgmr) by 2002:a0d:d885:0:b0:604:45d:27e5 with SMTP id
- a127-20020a0dd885000000b00604045d27e5mr129745ywe.7.1707858122222; Tue, 13 Feb
- 2024 13:02:02 -0800 (PST)
-Date: Tue, 13 Feb 2024 13:02:00 -0800
-In-Reply-To: <20240208135055.2705260-3-christian.couder@gmail.com>
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="BsGJlorn"
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id D2B771C7722;
+	Tue, 13 Feb 2024 16:43:13 -0500 (EST)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=jibJShu6+lJov/IjqUXj0e3I41NZbJxD1CGz+j
+	RfSDs=; b=BsGJlornsTxQSivF0vzkjND12+kk0sQ1/MV6m4kEk8HGvkZJaYTA7Q
+	iJIC3x4++RAzTbGc+TU7rqCg4Egqf89CQu1r2kJZ9Esrn5CWDqqYo6reHWm9vFd4
+	+yFJbqTsMVQu0IJzXsGuDetHSEetp6h6KcDyVuQCniknrJpNBdXWY=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id C86F21C7721;
+	Tue, 13 Feb 2024 16:43:13 -0500 (EST)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.165.85])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 3378F1C7720;
+	Tue, 13 Feb 2024 16:43:13 -0500 (EST)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Jeff Hostetler <jeffhostetler@github.com>
+Subject: Re: [PATCH 02/12] name-hash: add index_dir_exists2()
+In-Reply-To: <3464545fe3feceb08408618c77a70cc95745bfe9.1707857541.git.gitgitgadget@gmail.com>
+	(Jeff Hostetler via GitGitGadget's message of "Tue, 13 Feb 2024
+	20:52:11 +0000")
+References: <pull.1662.git.1707857541.gitgitgadget@gmail.com>
+	<3464545fe3feceb08408618c77a70cc95745bfe9.1707857541.git.gitgitgadget@gmail.com>
+Date: Tue, 13 Feb 2024 13:43:12 -0800
+Message-ID: <xmqqeddg2g7j.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-References: <20240208135055.2705260-1-christian.couder@gmail.com> <20240208135055.2705260-3-christian.couder@gmail.com>
-Message-ID: <owlyle7o9iyf.fsf@fine.c.googlers.com>
-Subject: Re: [PATCH v2 2/4] oidset: refactor oidset_insert_from_set()
-From: Linus Arver <linusa@google.com>
-To: Christian Couder <christian.couder@gmail.com>, git@vger.kernel.org
-Cc: Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>, John Cai <johncai86@gmail.com>, 
-	Christian Couder <christian.couder@gmail.com>, Christian Couder <chriscool@tuxfamily.org>
-Content-Type: text/plain; charset="UTF-8"
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ E35B200A-CAB8-11EE-9959-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
 
-Christian Couder <christian.couder@gmail.com> writes:
+"Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> In a following commit, we will need to add all the oids from a set into
-> another set. In "list-objects-filter.c", there is already a static
-> function called add_all() to do that.
-
-Nice find.
-
-> Let's rename this function oidset_insert_from_set() and move it into
-> oidset.{c,h} to make it generally available.
-
-At some point (I don't ask for it in this series) we should add unit
-tests for this newly-exposed function. Presumably the stuff around
-object/oid handling is stable enough to receive unit tests.
-
-> While at it, let's remove a useless `!= NULL`.
-
-Nice cleanup. It would have been fine to also put this in a separate
-patch, but as it is so simple I think it's also fine to keep it mixed in
-with the move as you did here.
-
-> Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
-> ---
->  list-objects-filter.c | 11 +----------
->  oidset.c              | 10 ++++++++++
->  oidset.h              |  6 ++++++
->  3 files changed, 17 insertions(+), 10 deletions(-)
+> From: Jeff Hostetler <jeffhostetler@github.com>
 >
-> diff --git a/list-objects-filter.c b/list-objects-filter.c
-> index da287cc8e0..4346f8da45 100644
-> --- a/list-objects-filter.c
-> +++ b/list-objects-filter.c
-> @@ -711,15 +711,6 @@ static void filter_combine__free(void *filter_data)
->  	free(d);
+> Create a new version of index_dir_exists() to return the canonical
+> spelling of the matched directory prefix.
+>
+> The existing index_dir_exists() returns a boolean to indicate if
+> there is a case-insensitive match in the directory name-hash, but
+> it doesn't tell the caller the exact spelling of that match.
+>
+> The new version also copies the matched spelling to a provided strbuf.
+> This lets the caller, for example, then call index_name_pos() with the
+> correct case to search the cache-entry array for the real insertion
+> position.
+>
+> Signed-off-by: Jeff Hostetler <jeffhostetler@github.com>
+> ---
+>  name-hash.c | 16 ++++++++++++++++
+>  name-hash.h |  2 ++
+>  2 files changed, 18 insertions(+)
+>
+> diff --git a/name-hash.c b/name-hash.c
+> index 251f036eef6..d735c81acb3 100644
+> --- a/name-hash.c
+> +++ b/name-hash.c
+> @@ -694,6 +694,22 @@ int index_dir_exists(struct index_state *istate, const char *name, int namelen)
+>  	dir = find_dir_entry(istate, name, namelen);
+>  	return dir && dir->nr;
 >  }
->  
-> -static void add_all(struct oidset *dest, struct oidset *src) {
-> -	struct oidset_iter iter;
-> -	struct object_id *src_oid;
-> -
-> -	oidset_iter_init(src, &iter);
-> -	while ((src_oid = oidset_iter_next(&iter)) != NULL)
-> -		oidset_insert(dest, src_oid);
-> -}
-> -
->  static void filter_combine__finalize_omits(
->  	struct oidset *omits,
->  	void *filter_data)
-> @@ -728,7 +719,7 @@ static void filter_combine__finalize_omits(
->  	size_t sub;
->  
->  	for (sub = 0; sub < d->nr; sub++) {
-> -		add_all(omits, &d->sub[sub].omits);
-> +		oidset_insert_from_set(omits, &d->sub[sub].omits);
->  		oidset_clear(&d->sub[sub].omits);
->  	}
->  }
-> diff --git a/oidset.c b/oidset.c
-> index d1e5376316..91d1385910 100644
-> --- a/oidset.c
-> +++ b/oidset.c
-> @@ -23,6 +23,16 @@ int oidset_insert(struct oidset *set, const struct object_id *oid)
->  	return !added;
->  }
->  
-> +void oidset_insert_from_set(struct oidset *dest, struct oidset *src)
+> +int index_dir_exists2(struct index_state *istate, const char *name, int namelen,
+> +		      struct strbuf *canonical_path)
 > +{
-> +	struct oidset_iter iter;
-> +	struct object_id *src_oid;
+> +	struct dir_entry *dir;
 > +
-> +	oidset_iter_init(src, &iter);
-> +	while ((src_oid = oidset_iter_next(&iter)))
-
-Are the extra parentheses necessary?
-
-> +		oidset_insert(dest, src_oid);
+> +	strbuf_init(canonical_path, namelen+1);
+> +
+> +	lazy_init_name_hash(istate);
+> +	expand_to_path(istate, name, namelen, 0);
+> +	dir = find_dir_entry(istate, name, namelen);
+> +
+> +	if (dir && dir->nr)
+> +		strbuf_add(canonical_path, dir->name, dir->namelen);
+> +
+> +	return dir && dir->nr;
 > +}
-> +
->  int oidset_remove(struct oidset *set, const struct object_id *oid)
->  {
->  	khiter_t pos = kh_get_oid_set(&set->set, *oid);
-> diff --git a/oidset.h b/oidset.h
-> index ba4a5a2cd3..262f4256d6 100644
-> --- a/oidset.h
-> +++ b/oidset.h
-> @@ -47,6 +47,12 @@ int oidset_contains(const struct oidset *set, const struct object_id *oid);
->   */
->  int oidset_insert(struct oidset *set, const struct object_id *oid);
 >  
-> +/**
-> + * Insert all the oids that are in set 'src' into set 'dest'; a copy
-> + * is made of each oid inserted into set 'dest'.
-> + */
+>  void adjust_dirname_case(struct index_state *istate, char *name)
 
-Just above in oid_insert() there is already a comment about needing to
-copy each oid.
+Missing inter-function blank line, before the new function.
 
-    /**
-     * Insert the oid into the set; a copy is made, so "oid" does not need
-     * to persist after this function is called.
-     *
-     * Returns 1 if the oid was already in the set, 0 otherwise. This can be used
-     * to perform an efficient check-and-add.
-     */
+I wonder if we can avoid such repetition---the body of
+index_dir_exists() is 100% shared with this new function.
 
-so perhaps the following wording is simpler?
+Isn't it extremely unusual to receive "struct strbuf *" and call
+strbuf_init() on it?  It means that the caller is expected to have a
+strbuf and pass a pointer to it, but also it is expected to leave
+the strbuf uninitialized.
 
-    Like oid_insert(), but insert all oids found in 'src'. Calls
-    oid_insert() internally.
+I'd understand if it calls strbuf_reset(), but it may not even be
+necessary, if we make it responsibility of the caller to pass a
+valid strbuf to be appended into.
 
-> +void oidset_insert_from_set(struct oidset *dest, struct oidset *src);
+	int index_dir_find(struct index_state *istate,
+			   const char *name, int namelen,
+			   struct strbuf *canonical_path)
+	{
+                struct dir_entry *dir;
 
-Perhaps "oidset_insert_all" would be a simpler name? I generally prefer
-to reuse any descriptors in comments to guide the names. Plus this
-function used to be called "add_all()" so keeping the "all" naming style
-feels right.
+                lazy_init_name_hash(istate);
+                expand_to_path(istate, name, namelen, 0);
+                dir = find_dir_entry(istate, name, namelen);
 
-> +
->  /**
->   * Remove the oid from the set.
->   *
-> -- 
-> 2.43.0.565.g97b5fd12a3.dirty
+                if (canonical_path && dir && dir->nr) {
+			// strbuf_reset(canonical_path); ???
+                	strbuf_add(canonical_path, dir->name, dir->namelen);
+		}
+                return dir && dir->nr;
+	}
+
+Then we can do
+
+	#define index_dir_exists(i, n, l) index_dir_find((i), (n), (l), NULL)
+
+in the header for existing callers.
+
+>  {
+> diff --git a/name-hash.h b/name-hash.h
+> index b1b4b0fb337..2fcac5c4870 100644
+> --- a/name-hash.h
+> +++ b/name-hash.h
+> @@ -5,6 +5,8 @@ struct cache_entry;
+>  struct index_state;
+>  
+>  int index_dir_exists(struct index_state *istate, const char *name, int namelen);
+> +int index_dir_exists2(struct index_state *istate, const char *name, int namelen,
+> +		      struct strbuf *canonical_path);
+>  void adjust_dirname_case(struct index_state *istate, char *name);
+>  struct cache_entry *index_file_exists(struct index_state *istate, const char *name, int namelen, int igncase);
