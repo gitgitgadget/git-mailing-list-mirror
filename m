@@ -1,160 +1,101 @@
-Received: from mail-ej1-f54.google.com (mail-ej1-f54.google.com [209.85.218.54])
+Received: from mail-wr1-f42.google.com (mail-wr1-f42.google.com [209.85.221.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D87A60DEE
-	for <git@vger.kernel.org>; Tue, 13 Feb 2024 01:02:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9164D17CD
+	for <git@vger.kernel.org>; Tue, 13 Feb 2024 02:24:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707786177; cv=none; b=htI+z+m1B7ZfSxvvfiYAyLEChkeRjKqMNoqK56XvG2YONhUoYH31Kzd1EQK9NFhHdGzMN2AZQ/kUF9rLwHCnXKpEgCU9kairQeHxQggNwf7t1dJvQjwqelC2Qp84uNOpta+q+mEabDiFRDCdq6Bm3FIpWW5Su95kig6XT+hfRNQ=
+	t=1707791059; cv=none; b=bDeJQhaEqQ0NAuFRdAMNYUV3PM2awWUaXsDbnsM4XORYRFrMnOUCLmn3vEv/nskgQtgcWedOGvtNODCS/4vRZ9wJLd9GFkbQAiDtiWe6x+9yqfJZvEyVo4RZzRmpBQoXQbX+ytGi3RHaniPZlJ/gNXtXy5DnKYtJogB9ZmXkViE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707786177; c=relaxed/simple;
-	bh=TFgpKGzvr+UoDdR7ZNaMeG22UGWItbUC0nDmVKpaa34=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=FNmFDH+PNRg8orspTkQEHwQVEKiQLUMqHS1k9Tj5OyYnoBoZKI9fkFKHmoQ9u5hgmzkXbMUi11EUtm8XvlQrAnd4Zhh1gSesHdpLJ5S/FC8n2IPRfMLtlSG+ahQ1C7McMh4/IZNwvtl7EWhQIiZvn6dzTgbv+Ic1L0y3d/lMffs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=El+XmiI3; arc=none smtp.client-ip=209.85.218.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	s=arc-20240116; t=1707791059; c=relaxed/simple;
+	bh=VRDF12S/WmvinvQYjVEO8ZAW+7vEK0HA1LM4HPzyQ8Y=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=dOt2WNzPDaxsHZ6PFxhu0sTNx9FMYA0TngZLJhCgpUtRQhjenH4Opp2wA+R75E0jiGRRc81bCcfJWhJsyWrlbYQ/wapm8tClwgarMaDrr9UZCUDoTU2ZFjCNdgBFwEyqVZcN8pSxY7GabIol9EplWoc+2XIz0at1RA386goE6+4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Hv+KQECs; arc=none smtp.client-ip=209.85.221.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="El+XmiI3"
-Received: by mail-ej1-f54.google.com with SMTP id a640c23a62f3a-a3cc2f9621aso35934566b.1
-        for <git@vger.kernel.org>; Mon, 12 Feb 2024 17:02:55 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Hv+KQECs"
+Received: by mail-wr1-f42.google.com with SMTP id ffacd0b85a97d-3392b045e0aso2639534f8f.2
+        for <git@vger.kernel.org>; Mon, 12 Feb 2024 18:24:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1707786173; x=1708390973; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=TFgpKGzvr+UoDdR7ZNaMeG22UGWItbUC0nDmVKpaa34=;
-        b=El+XmiI3eL16rNIkcvkLy8j9avU9ibSWlo8npFZmMKwCHw/84hKaOLUv+CWLEkxv7n
-         38K+uZ3QpNJ6CEkaeogvVljADHtApZUM4THEXl5hm8hr8pVZEXuf0HG2CAg1kCMwVgGj
-         5MxldPAfdcYmTs6pUmSp1j2A+4Kj2+DupEnGeZa4Pt8CUdCXeaVDiVmo5g8XggU10O8I
-         Z5CGMWKxxB3Y2re6JtMyJfFDKFmKGpNuYOU5kOKAGxor/p7tg8JnT0HDzs9LFW3y4cXb
-         PmsZnA631cLf51tqaQ0LooQ0JvFmi/1mQEOxlGVM8aprtOvhJG/99MpQWy54dBYJy3kM
-         qCEg==
+        d=gmail.com; s=20230601; t=1707791055; x=1708395855; darn=vger.kernel.org;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=wQw8xGiYCwSmEJDjeKW/KgiaPX0LsjocCKtzjDnZNr8=;
+        b=Hv+KQECsDaghS7bK4J54JmsyN6efCo2STPLDaAju8tnIXQT3jk8SSmy1Km44p/uy0Q
+         iziyuucxRWDJgvuYtQNpA8or85loijHIfPgteahTCsrc79BZVXYDvCOcmjldAnm266Fg
+         glUSzJfInHK9BkDXVPXxsygqTLD32EWlgAHGDHaSR6Poye+bLjVulJrkOYjfeZnxag/l
+         fCKgsIqntf3f+9Ms1+b8aI33+MwY4GmFztY4wrRXJAH5BHfMegGMksWHovidR0WWcBla
+         +1HjkDDVy/MQdk6S6JWdNWaquqIXpVoy8w0btgfu6D2ijjYuxi5DTjhdFmXc/KPIvl+j
+         bdcg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1707786173; x=1708390973;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=TFgpKGzvr+UoDdR7ZNaMeG22UGWItbUC0nDmVKpaa34=;
-        b=HS4pARnw8VjK0G9wcMNaE9im97mkMxp5RS+IHlJLVMDELGBcpHIRZ7uaJLcCAvbRlR
-         /BfzcKr8bqZurKgj1I1vlr3Z0lfHvPIx92lfe8cYAm7UN+of4mFlQKYZyiwSggJOhoM8
-         JmsmFuhooc2Yl4r0mcOChNtzYgxcGVqOy/SuJhnzttSfoRFeECL78bcdUZAEwPuiJHsS
-         DZ8/AC6h0OpvOIZTkyT/oGqw1mxd38jl239VjdAdEi9OL3yeZHDAIydc+XzG8EmSZsPR
-         KhL6LSyFHUwN0QiSAVNRULw4QeVp7x0omwGLcns1pKk/XilAAw38rkrPrPJFrqe4HoXB
-         O2Cw==
-X-Gm-Message-State: AOJu0Yz/xq/w6/d0f/ij+/ADTWCdGogHtHV8qb7qrzQeS4YOMR51tSS7
-	tvx2gi1jNmsl3Jettb0IGESYD3pTjzqk6OLRahpr4Xqc7Z9X1B2v+vX1cMiTElhdAFMFOTQakBH
-	HMQdlD4VAvNIgk1b/rjfUcEtC6SDiRdtPVLUenlanqooXsPg0sQ==
-X-Google-Smtp-Source: AGHT+IGnJBKVpu1EbVXawJKkOz/D/eHIH8icu4N4KfD5Xa6jRghjVhen8U8hey+hz6+/WNEHXpBUdit4Ci7NhUN+7Hs=
-X-Received: by 2002:a17:906:558a:b0:a3c:f048:c9eb with SMTP id
- y10-20020a170906558a00b00a3cf048c9ebmr568902ejp.12.1707786173408; Mon, 12 Feb
- 2024 17:02:53 -0800 (PST)
+        d=1e100.net; s=20230601; t=1707791055; x=1708395855;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=wQw8xGiYCwSmEJDjeKW/KgiaPX0LsjocCKtzjDnZNr8=;
+        b=VeYyxL55qcRT9rObYdWpcPgLdnY9zMoXgXXEDTEXZvaASsO6Rj+/CZ58QZXRIFIhKz
+         07ycGHK89kvLtGz6R7HUidhHd6Z0qp+9arH4l4/bFbq9ROAhjwistC1WaAtLiC/I58tV
+         RNUwKELeWsxOx2S1iqbair0LxHOSsGuxDedLq6aMLzRWzKKhQUoOZCvoD6lREdK3ZLoK
+         47AaiwA1lEmdUwKClEmdUKdxU8yyCdkY1k4URMT6MaKpC6ypgQvuMQpAmQpaSp3MquE5
+         xI/P31gk8S/09Tu/VQggZ4IlrrsF2+LeIzUFrYLm4vlVggoPBEg8NsbopaMpL24HizY6
+         y4FA==
+X-Gm-Message-State: AOJu0YxYcfyJB11ZXoTT2QzLXHLULL4+/Lxe1BzLKFXt0OQISR8RANcT
+	l7QRx6R3F1+Ep96MC3jQi3snf5vQ1nG1mmdMeMmDS3XBJLTG8A7L3Z2ql8uYUqZWB/GKbkSmuC1
+	kogu0re01PNqtjsowooM8lboBfy8eZKjWTg==
+X-Google-Smtp-Source: AGHT+IHj+CmJwk9qOn3KRUfm8owhX4AQIehd3bRu4MPewXtb5ZslmpeVdggeMbzSOQQzjoDuc9PRFoysRN+oqOzhXg4=
+X-Received: by 2002:a5d:658a:0:b0:33b:366f:f816 with SMTP id
+ q10-20020a5d658a000000b0033b366ff816mr6605200wru.67.1707791055418; Mon, 12
+ Feb 2024 18:24:15 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CAO_smVji5aGjx1V-EGbumRRpOuGY0SkXZUn9g4LxKmMO3aw=Sg@mail.gmail.com>
- <000301da5b5c$5477d7f0$fd6787d0$@nexbridge.com>
-In-Reply-To: <000301da5b5c$5477d7f0$fd6787d0$@nexbridge.com>
-From: Kyle Lippincott <spectral@google.com>
-Date: Mon, 12 Feb 2024 17:02:37 -0800
-Message-ID: <CAO_smVg-xxVeevuPr_E2F9mjnDzN7Tq6o9Tkhy4c+9qBmQTxdw@mail.gmail.com>
-Subject: Re: libification: how to avoid symbol collisions?
-To: rsbecker@nexbridge.com
-Cc: git@vger.kernel.org
+From: Groboclown <groboclown@gmail.com>
+Date: Mon, 12 Feb 2024 20:24:04 -0600
+Message-ID: <CAEfaiTSX8kh1WMQDtT0XFUC2o3Ldu9r75F0kB9qUuby5VcrZcQ@mail.gmail.com>
+Subject: Possible bug with 'diff --cc' report
+To: git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-On Fri, Feb 9, 2024 at 5:31=E2=80=AFAM <rsbecker@nexbridge.com> wrote:
->
-> On Thursday, February 8, 2024 9:30 PM, Kyle Lippincott wrote:
-> >While thinking about libification, I was wondering what we can/need to d=
-o about
-> >symbols (specifically functions, since our libraries will likely have fe=
-w to no extern
-> >variables) that need to escape their translation unit (.c file) but that=
- we don't want
-> >to risk colliding with symbols from our "host" project.
-> >
-> >For any header that we're offering up as an API boundary we can have pre=
-fixed
-> >names, but there are symbols from git-compat-util.h with simple and like=
-ly
-> >common names like `die`, `usage`, error`, etc. I'm far from an expert on=
- linkers, but
-> >I'm under the impression that even though we'll only be #including git-c=
-ompat-
-> >util.h in our own .c files (so the compiler for the host project wouldn'=
-t see them),
-> >the produced static library will still be "providing" these symbols unle=
-ss we mark
-> >them as `static` (and if we mark them as `static`, they can't be used ou=
-tside of their
-> >translation unit). This means that if the host project has a version of =
-`die` (or links
-> >against yet another library that does), we run into what C++ calls a One=
- Definition
-> >Rule (ODR)
-> >violation: we have two providers of the symbol `die` with different
-> >implementations, and the behavior is undefined (no error needs to be gen=
-erated as
-> >far as I know).
-> >
-> >With dynamic libraries I believe that we have more control over what get=
-s exposed,
-> >but I don't know of functionality for this when linking statically. I'm =
-assuming there
-> >is no such functionality, as projects like openssl (ty Randall for menti=
-oning this)
-> >appear to have a convention of prefixing the symbols they put in their "=
-public" API
-> >(i.e. in non-internal header files) with things like OSSL_, and of prefi=
-xing the symbols
-> >they put in their "private" APIs that can't be marked as `static` with `=
-ossl_`. I'd love
-> >to be wrong about this. :)
-> >
-> >If I'm right that this is an issue, does this imply that we'd need to re=
-name every non-
-> >static function in the git codebase that's part of a library to have a `=
-git_` prefix, even
-> >if it won't be used outside of the git project's own .c files? Is there =
-a solution that
-> >doesn't involve making it so that we have to type `git_` a billion times=
- a day that's
-> >also maintainable? We could try to guess at how likely a name collision =
-would be
-> >and only do this for ones where it's obviously going to collide, but if =
-we get it wrong,
-> >I'm concerned that we'll run into subtle ODR violations that *at best* e=
-rode
-> >confidence in our library, and can actually cause outages, data corrupti=
-on, and
-> >security/privacy issues.
->
-> I think we only need to do this for functions that are in the libificatio=
-n code-base for non-static symbols (and any data elements that may end up i=
-n a DLL some day).
+While testing out the report parser for the gitleaks go-gitdiff
+library against a repository, I encountered output in the form:
 
-I believe the hope is that the majority/entirety of plumbing code will
-be provided as a library, and we'll likely want to have a significant
-portion of porcelain code as well. I think we're really talking about
-(effectively) "all of git", but not all at once. If we attempt to make
-things safe based on guesses about what's likely to collide with other
-project's code, we'll (a) get it wrong, and only discover later when
-they try to add our library to their project, and (b) have a
-maintenance burden, where we now have to think about every function
-name we introduce, which would not be fun (and we'll get it wrong.
-Frequently.)
+@@@ -229,4 -229,18446744073709551615 +228,3 @@@ Comment
 
-> The bulk of the non-libified code base would only need to adapt to new sy=
-mbol names if those symbols are specifically moved.
+The '18446744073709551615' value is interesting, in that it's a uint64
+value storing a signed int64 -1.  Along with this, the number of
+changed lines in the output was actually 5 / 0 / 4 (as opposed to 4 /
+-1 / 3).  I found the '-1' value as the first, second, and third line
+counts (the code only used at most 2 parents per commit).
 
-I'm not following what you mean by "moved" here.
+At first I thought this to only happen on some 0 line change
+instances, but I also found a diff result that looked like (I added a
+' mark before each line to make the spacing obvious):
 
-> die(), error(), are probably going to be impacted, but they can be aliase=
-d with #defines internally to git to git_die() or git_error(), for example.
-> --Randall
->
+'@@@ -225,4 -237,2 +225,6 @@@ Comment
+' +line 1
+' +line 2
+' +line 3
+' +line 4
+'- line 5
+'++line 6
+'++line 7
+'+ line 8
+' -line 9
+' -line 10
+
+The reported line counts doesn't match the actual output.  Based on
+other examples plus the documentation, it looks like these are also
+off by 1 - by my count, it should be 5 / 3 / 7, rather than 4 / 2 / 6.
+
+System information:
+
+git version 2.43.0
+cpu: x86_64
+sizeof-long: 8
+sizeof-size_t: 8
+uname: Linux 5.15.146.1-microsoft-standard-WSL2
+compiler info: gnuc: 13.2
+libc info: glibc: 2.39
