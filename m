@@ -1,55 +1,57 @@
-Received: from mail-pj1-f74.google.com (mail-pj1-f74.google.com [209.85.216.74])
+Received: from mail-pl1-f202.google.com (mail-pl1-f202.google.com [209.85.214.202])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77BAE2919
-	for <git@vger.kernel.org>; Tue, 13 Feb 2024 16:35:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.74
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 883155FEF1
+	for <git@vger.kernel.org>; Tue, 13 Feb 2024 16:49:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.202
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707842147; cv=none; b=js5mf/xrhj2Ddog/twzFBS/itqx2UBTerwyVCArMccqJa6bgWl1CmszozrXlmBTxD9e5yduW8K0JfOwAH4wGtJdM7ljgAfYsSYuHxnxUC+AEThlEhkwMuEg6/qlD9kkQNkP1Ke4r1oIDVTjPY96BlKFN56SKLghMn5m48WpFisU=
+	t=1707842965; cv=none; b=qKg8YzbicQWzjXvYT6r2J9+/uCRYjBDznosFLKvvnQYRp/np6MU/ixMKwtxpydWmH7VRsyNT+ogl9dSg6CLYu70P8pCs4ey11j0CFIS8Q5/QdKIqfZFccy2pxX8a4mSOjfH2cSaJzVwynyOUy4crE6+HyacQ8ghysGZjkoRanJY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707842147; c=relaxed/simple;
-	bh=xBmfX2uF5GIH0ngs0qrPlCfyq+c3MOtgxVYuIxUPg5A=;
+	s=arc-20240116; t=1707842965; c=relaxed/simple;
+	bh=2lcXTpQ1Vv2x+Bjua90N++eaDnhVUVKqBp+Hxt0p+Rg=;
 	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
-	 To:Cc:Content-Type; b=DB7AjxghBZ12gF+1vFifR8LKaGX4DEPLVZD2diJG5kpIWvMfaFvAWAq1gCq7DwNpggAZ9fxbuxz5PMjVnc8PBrWTb1luqc19u3ifnu30SELk2EL71pLjoMSa5qCyP0Ur+HjMPk2D0sfhEnBOmvtigxzl68recezjbNFk4KoEags=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--linusa.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=LJR2h888; arc=none smtp.client-ip=209.85.216.74
+	 To:Cc:Content-Type; b=g3I3j613D6rlVCcOcd5XULC0cbOUGBgcgrJ0GHLpNabZP9ze8Uamd+WZEw0hYkMD5eXpuR7lGL3JBFLm1Qba3VBr3ayg38bnsl3F2xQ7rM/ZFFaCO8MXj4e2hkExqvgoGWs0PJ4O6UQbD8FYsblw0ZfW0L3BcPBUjLmDj1VhU9w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--linusa.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=pM/1AjNI; arc=none smtp.client-ip=209.85.214.202
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--linusa.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="LJR2h888"
-Received: by mail-pj1-f74.google.com with SMTP id 98e67ed59e1d1-298ae8b36d1so637619a91.0
-        for <git@vger.kernel.org>; Tue, 13 Feb 2024 08:35:46 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="pM/1AjNI"
+Received: by mail-pl1-f202.google.com with SMTP id d9443c01a7336-1d5b60c929bso71834925ad.3
+        for <git@vger.kernel.org>; Tue, 13 Feb 2024 08:49:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1707842146; x=1708446946; darn=vger.kernel.org;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=5LlgNbNVGyiNbqdXEtVPN5Sp1lT6tJlvlYxYh0eDSFs=;
-        b=LJR2h888YMLFcc6RfXqXLKv+eR6XANJ+QyasRmMsmYjTz/p0CXIFzcmlbhjU+RBDp7
-         8sWlNOXvsHyNXWM2+nwDCKOGdFJ+guSnVo25lGPcZZBi1jYYwY9OgQyswsPus2Vwn2y4
-         vlLSCwN6yGarLh8Q5F+tbbYogQegmcdNJ/KsIEwSL1ctoBD2uzbcJuzFtFA4Xq+qrs65
-         b9jX9WMJcx/1l/3CrCBGYt4WAVF5f7RM/Ih+wWMpsV+ShD46CaXDhNG5jVvSYRjLWIrQ
-         LMV8EbKUGfMrhgMWz2/E0Wy+V+gK+toxRPXH4bSuoK3+Y3fFOmma4qehu7/VtSaLVoa8
-         JT2Q==
+        d=google.com; s=20230601; t=1707842963; x=1708447763; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:from:subject:message-id:references
+         :mime-version:in-reply-to:date:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=2lcXTpQ1Vv2x+Bjua90N++eaDnhVUVKqBp+Hxt0p+Rg=;
+        b=pM/1AjNIMhILVswBZANd10eU7k91UqgQpGXY2afxv2iH8W9NHoCSONwZO3EDwhVedk
+         +XEADckBSu5zR7sASp+LbzCK+qvcRdJWpwfe3Ha6xb1AUt4nfOgcPeCHrL1V4rLY/mk5
+         7D3afIzx6H9Dzx3WyIduIfQxMAHnMmz0PP+TzKTLM2tTf07HNPmnTOY10VmUW51DDdUb
+         YTkG5ShwZFqtYif9hW39/1mqyNBi4xsRY5ndSawMM1IKyO12zJGhE3AD5bjBwZEZwgIj
+         r1ZfuQbIjnKpgYdtMT4jykag7QihMzUkcqBBlkkO7xTEqaGh3FlLv0WCTy+c1YjdwZdX
+         qh4Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1707842146; x=1708446946;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=5LlgNbNVGyiNbqdXEtVPN5Sp1lT6tJlvlYxYh0eDSFs=;
-        b=WZAakKNC+250oA2wNJHIpw5ROQ9YpjdI3gvkD+Sd7toItInWlN3iHzF6ZQKLTrUtFk
-         n6elJVwn9MSWfJV+BMkAfXZuzpZ2tZpDLIEIzPQ+0ul63dZHy8DS0h5BEKGhD+OFO9Z2
-         Yu7TsuSBOVYDQ8IfXMByaCEDR7WNAlMQbPddbikHASzp29nmQQXz3wugQoUNLew3bXwM
-         IxgEid+GxP9B/u9Cw41FDwd8qNH03lp9zZwBstgqxEmEe+Wk1nlSV0J8i8YGK3CxQ3iC
-         W96tajbt1To30sNiarWRf2krlrCUiJZwC8U0UdPd217V9rr2HH2a7qGBRzINSTudbkmL
-         IOqg==
-X-Gm-Message-State: AOJu0YyHd7I2e1GWPJEbFYmYszKFy56LCYDj6jid+NyuuEnHRDuIP94M
-	0cb/syIWg+CAJeDJoTClXOW5TFc06UB5QvRZ5B8PT76ydocremb8QjegLO6aMTg1iZ6Zjl8F8sM
-	Rdw==
-X-Google-Smtp-Source: AGHT+IE0a2/IU/SxTkDXPmdWo8Gx9sZQTEIwBrR/+ixe3GtVKciHsHOlys9kUWvG1dc0U/FS2CnPx+3yySk=
+        d=1e100.net; s=20230601; t=1707842963; x=1708447763;
+        h=content-transfer-encoding:cc:to:from:subject:message-id:references
+         :mime-version:in-reply-to:date:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=2lcXTpQ1Vv2x+Bjua90N++eaDnhVUVKqBp+Hxt0p+Rg=;
+        b=CpsOC8OgHlxswFXxL9k/HFbIMvHIycoJTAwLk2RoGdWprPVvqEJdCUMDsSp2JOP+8j
+         tevH07gIyGyKR7+7DYbbY5eZK885Bt/biepR7HCvBsOv/DTwo8j8Ya85g5lZrR+pcuSf
+         0iS9eMXrmvVdl59hdp8PveOZ1ifgncmHwaB0Jml8MvUSa8eSD8+VUJIMVsojBf/c1agy
+         RmnZmNTE/kVEuarElm14ER4Ej8bCXgiFIyqlsaeQtq6cNLEklhjM2wjvtXFM244YOfrh
+         i0E/E7jNIuQrxNndXxK80mfG1M8wNTTL1Br5ffXMlDySbHayRxjPYdzwov2T8hXpKWSR
+         XArw==
+X-Gm-Message-State: AOJu0Yz3tw8jKjMOuAlwpDqQsNnm4k9MVMOaEo5vvLhQvnIQQfTCKhNm
+	TBs+46N3yKVVbl0VPUc0hpAArO/10BFQJRMTftu4lYFKd18oWKJe3fuV0b6Y5AjzrVu/0BV2szN
+	lQg==
+X-Google-Smtp-Source: AGHT+IHEBbV0HLI3Eqs9/q778xz0to5vaMal2LM366kfpLX1ro3mC/tHV4YQqLLXAWB27fqhpspWu2uwlig=
 X-Received: from fine.c.googlers.com ([fda3:e722:ac3:cc00:7f:e700:c0a8:2221])
- (user=linusa job=sendgmr) by 2002:a17:90b:2e0d:b0:298:b1d6:dae with SMTP id
- sl13-20020a17090b2e0d00b00298b1d60daemr83pjb.0.1707842145690; Tue, 13 Feb
- 2024 08:35:45 -0800 (PST)
-Date: Tue, 13 Feb 2024 08:35:44 -0800
-In-Reply-To: <xmqq34u1e22y.fsf@gitster.g>
+ (user=linusa job=sendgmr) by 2002:a17:90b:3c0f:b0:298:c3ba:43b0 with SMTP id
+ pb15-20020a17090b3c0f00b00298c3ba43b0mr3419pjb.0.1707842963299; Tue, 13 Feb
+ 2024 08:49:23 -0800 (PST)
+Date: Tue, 13 Feb 2024 08:49:21 -0800
+In-Reply-To: <CAP8UFD1YaEfdM=apQ7An+GcKV+Wc26StsMqJcd9e5tHJg9U_hQ@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -57,48 +59,30 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 Mime-Version: 1.0
 References: <pull.1632.v3.git.1706664144.gitgitgadget@gmail.com>
- <pull.1632.v4.git.1707196348.gitgitgadget@gmail.com> <f5b7ba08aa7c80a3bd5bcbf5563eac8896fe7054.1707196348.git.gitgitgadget@gmail.com>
- <xmqq34u1e22y.fsf@gitster.g>
-Message-ID: <owly1q9gcof3.fsf@fine.c.googlers.com>
-Subject: Re: [PATCH v4 10/28] format_trailer_info(): use trailer_item objects
+ <pull.1632.v4.git.1707196348.gitgitgadget@gmail.com> <a72eca301f7f9016ef3a8063f79790ce00f41ffe.1707196348.git.gitgitgadget@gmail.com>
+ <CAP8UFD1YaEfdM=apQ7An+GcKV+Wc26StsMqJcd9e5tHJg9U_hQ@mail.gmail.com>
+Message-ID: <owlywmr8b97y.fsf@fine.c.googlers.com>
+Subject: Re: [PATCH v4 12/28] format_trailer_info(): append newline for
+ non-trailer lines
 From: Linus Arver <linusa@google.com>
-To: Junio C Hamano <gitster@pobox.com>, 
+To: Christian Couder <christian.couder@gmail.com>, 
 	Linus Arver via GitGitGadget <gitgitgadget@gmail.com>
 Cc: git@vger.kernel.org, Christian Couder <chriscool@tuxfamily.org>, 
-	Emily Shaffer <nasamuffin@google.com>, Josh Steadmon <steadmon@google.com>, 
-	"Randall S. Becker" <rsbecker@nexbridge.com>
-Content-Type: text/plain; charset="UTF-8"
+	Junio C Hamano <gitster@pobox.com>, Emily Shaffer <nasamuffin@google.com>, 
+	Josh Steadmon <steadmon@google.com>, "Randall S. Becker" <rsbecker@nexbridge.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
 
-Junio C Hamano <gitster@pobox.com> writes:
+Christian Couder <christian.couder@gmail.com> writes:
 
-> "Linus Arver via GitGitGadget" <gitgitgadget@gmail.com> writes:
+> On Tue, Feb 6, 2024 at 6:12=E2=80=AFAM Linus Arver via GitGitGadget
+> <gitgitgadget@gmail.com> wrote:
 >
->> From: Linus Arver <linusa@google.com>
->>
->> This is another preparatory refactor to unify the trailer formatters.
->>
->> Make format_trailer_info() operate on trailer_item objects, not the raw
->> string array.
->>
->> This breaks t4205 and t6300. We will continue to make improvements until
->> the test suite passes again, ultimately renaming format_trailer_info()
->> to format_trailers(), at which point the unification of these formatters
->> will be complete.
->>
->> Signed-off-by: Linus Arver <linusa@google.com>
->> ---
->>  trailer.c | 21 ++++++++++-----------
->>  1 file changed, 10 insertions(+), 11 deletions(-)
+> [...]
 >
-> I would have expected a (tentative) flip from test_expect_success to
-> test_expect_failure in the affected tests, to illustrate what behaviour
-> change this step introduces and why.
+>> The test suite passes again, so format_trailer_info() is in better shape
+>> supersede format_trailers(), which we'll do in the next patch.
+>
+> s/supersede/to supersede/
 
-Somehow, such a simple idea did not cross my mind (even though I admit I
-didn't like how I was breaking tests, albeit temporarily). Will update
-on next reroll.
-
-> But the huge single step in the previous round broken out into
-> smaller steps like this round makes them much easier to follow.
-
-Great, I'm doing something right for once! ;)
+Nice catch! Will update for next reroll, thanks.
