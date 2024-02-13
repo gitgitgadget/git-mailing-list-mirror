@@ -1,62 +1,63 @@
-Received: from mail-lj1-f174.google.com (mail-lj1-f174.google.com [209.85.208.174])
+Received: from mail-lj1-f177.google.com (mail-lj1-f177.google.com [209.85.208.177])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54DE4612F9
-	for <git@vger.kernel.org>; Tue, 13 Feb 2024 20:52:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57E3562168
+	for <git@vger.kernel.org>; Tue, 13 Feb 2024 20:52:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707857555; cv=none; b=c+BaXwDmSHIgLiYpleXjhTBXkvp0fjR9lTw/rDwilkWHQb9kKXse42BHHHHAgsKf+MAVjc2bZ0l4hPnfJMf+7/xlSEdB0oM3IHuWAOC9JDVqFHqxC0SFOGfK++6OXN4P899OFaWWgWHG6oHoQnxXHfqTbyyY+ozOuZTcYBcsV3Q=
+	t=1707857556; cv=none; b=uvpzzCn9KfTFswJBaIL52hRyTxj3K0mxxGaOK10Y0ndac0xPh7Z+L4S4yFL1rLFgs0vqzgNPKv4J0Emu7k4ZAE8whvrSc/hMAmA9aAO4U6lR+T4D6pv1idw3IX6Du6Qg+n5snkwZrHD/6AcGC2yJ8c9s/HgLq4yV+lLKm6AKLNc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707857555; c=relaxed/simple;
-	bh=GUwgwiNLNa5h58evi7O+FZbmMziB3B7fbsZQy5Gli9A=;
+	s=arc-20240116; t=1707857556; c=relaxed/simple;
+	bh=NdFP1QTEezanFkq27c5nWo5Lbjp8wyBfJVlmAKD4FuY=;
 	h=Message-ID:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=iyX6koZdOk8cM3To6M3WQw0euJ89CMhq3EZ1ZjfM6oQ6wuxVsRrpD0WFqMDx24pA0w97G9LOGwQ0TIKqDaqA2cbMKkytv1Ii/gTqdfAwM/GyqVtyfzo5JnypusFtPaMaiWTdqsXyR8SlTND1BBCRkQ017JFfcGkou/ZcBTMZeEc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XlAmHjg+; arc=none smtp.client-ip=209.85.208.174
+	 MIME-Version:To:Cc; b=EbOBwdABK8oETs+Gjrsm4zZOgetyLi9WiwtVOBxrTqRW1W1RNClvmZ5H4QLlVEEbEqZGijOtHnofdcavJ51VSYKWojGKORaQPjRFp06rnznjn3CuMm0K7HjvENNsHm0kEaQBAbgSn4ptSmI3WlziJEqeJatc38zP+GHkL73C51I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=bJ3RNlKI; arc=none smtp.client-ip=209.85.208.177
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XlAmHjg+"
-Received: by mail-lj1-f174.google.com with SMTP id 38308e7fff4ca-2d090c83d45so63128721fa.3
-        for <git@vger.kernel.org>; Tue, 13 Feb 2024 12:52:33 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bJ3RNlKI"
+Received: by mail-lj1-f177.google.com with SMTP id 38308e7fff4ca-2d0e5212559so43700651fa.0
+        for <git@vger.kernel.org>; Tue, 13 Feb 2024 12:52:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1707857551; x=1708462351; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1707857552; x=1708462352; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=aasr3DWCPvtTIrJX3OH9e1+U7yA+xVpNznRB7OPQquU=;
-        b=XlAmHjg+vnXpYTMobUffjFoGKfiAwXcpqDSH9FoSQiJ9L9P2ChksviD47iPM7Q7J0p
-         TpbbGW28NAEaNO5RvYRUDvfRl01lslpTSSp9SFcGAaTnkz4YPw4GaNASnFzfiz0TpowF
-         QNgUJQ4ZgNpIsciVNRurQVXKOu5s70vi4EF+2ppgnwmEMKcl29ntvVkv53ilaP6VcE02
-         Nl6oCqG7bJIB+A35CPTdFrUvG/lvyedyF7VUzIIDs78UsXIXnsjg6RaPePNHVQX94VAe
-         gWABRLDZyiMJgV5TaMrpsRW7rPZ0jblT1ytEW4p1Qj72PDcamJpqOfuSyTUsSey/quBS
-         RIdA==
+        bh=jdWsX3AXrUdArzaGIsxeDy3c9IdmIlzuNZTcXMGxkAk=;
+        b=bJ3RNlKIQhLX0qPnK0h/Z++ubIgj9VPWGoUXVOxDXNIiW3Q4+3lNurH4wZ9dAzOGGa
+         hM/9U22joZpU8Eb0MikAC/euBw842qQBzOYXzncE0OnDC78FDZ0KeDNr1iuwHFPqjCQQ
+         0Tu5FhN1AW/TpegiQAUpw/3XDV9Yg06Udhxq5jDfoOx6a45lgN7VhppYN/sH0NJT7UuE
+         Lw5HpgGW2RVhJmgo07AK5Na6BdtV5HGANPDtIn2QKV8jgh6jOZVrZaaqePcM+Sc5s0vq
+         tczdvEGMFn4LDxUGFsF5lsZvOU6+RhZJYlncj3KBiZ5AZZQIginyXBvvAPqTWAB6RhD/
+         uuaA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1707857551; x=1708462351;
+        d=1e100.net; s=20230601; t=1707857552; x=1708462352;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=aasr3DWCPvtTIrJX3OH9e1+U7yA+xVpNznRB7OPQquU=;
-        b=ZuqLqP1Ln80fOYlLR8qXifayO2NYG090m4Saa3i0GQ15sxZUHMUd26AaON72kB3bBY
-         /fknW+VPNwUf2qXvUr/vgkOVufsHFrQoNs55orN9cRUuDIPZAcNLp5cc6hAN0glOudEn
-         G11lRaWrqCn7f3zdZpDVRGjy4ByuH9AYBoHp2LCmoPFnoUyCZU0a4U39KdQxm2vxCtzf
-         xxG9ZDDAjVTrbWaRxtA7aj5l/5S/sTfdqe98C/0tv8CYIeQbdH0m5v6OLlg7Jb4VZQAb
-         7a6LTPuQNgCenVaMQvme3t8jeu/xAQgluRyrQ9ghWMo6FlkhBA8JAwG05vMK4tVE3xx1
-         MHrQ==
-X-Gm-Message-State: AOJu0YwCeShuFKIMLTFjI9HS0O7gyw5P3GIx43W2p89ou2OSgLeCaK45
-	MyBqpgOgCwwvxk2zMOTd6RqcG4oNJNEO8ejDqeLW20ToxRRZjI+K+UW6ezNM
-X-Google-Smtp-Source: AGHT+IHJlTjOp3+LixGEX13tGOEJVWSMT0re9c30Xv5ZYYlQGNmcfb+jCGTguMZ0WjfYt/GFv08pAA==
-X-Received: by 2002:a2e:94c2:0:b0:2d1:e53:cede with SMTP id r2-20020a2e94c2000000b002d10e53cedemr498367ljh.25.1707857550723;
-        Tue, 13 Feb 2024 12:52:30 -0800 (PST)
+        bh=jdWsX3AXrUdArzaGIsxeDy3c9IdmIlzuNZTcXMGxkAk=;
+        b=J+0DtsUAcmY3czury0hoYDzPxLDydqY0FJyxNgvuZbEHtO6VyAdx06fD78Rh9qSTIz
+         JAShRrC2Qb9kNpTZokI6JtWVkyf03mwxuTPCu0EJknrXXf0Gp7d2EJdEf4gMQmrRXQIr
+         DbY7NOsA09+91fitjalLL/ko8ZLuP6eOzESY3VJllNfjki9WPqNAbQ1PDerbX+8C+ou3
+         +OCnqnwYg1NNCjKOi/PFXDPEmhtmEDtJpTN6A5SDiuzWFbPw8ob/ugNb3jyKxZOv+MAT
+         o1UpPxGalz5IHp+CXpCXAKsAnE+8GqFiPgfgRXx8Un/YXMcNdKSWngfyxBRNFBIkKyiP
+         Z9TQ==
+X-Gm-Message-State: AOJu0Yx+UlyvqazU7xfo4FUM+yBJJKKraAPGDbzok38TsShF4s3spDre
+	cpyS3RTZmR1H22+tf7TIrbmjsBMw3kVk7YHtI/IW+S79R9hyLPfEQNycfWdf
+X-Google-Smtp-Source: AGHT+IHDnvqIodFqItlvtJ9GP6ehxEbW39k38gXgF71i3TAQIAuOKFKuaZmUPUmzVAAhk3JYQNcPFA==
+X-Received: by 2002:a2e:3c12:0:b0:2d0:8f01:f4d8 with SMTP id j18-20020a2e3c12000000b002d08f01f4d8mr497360lja.18.1707857551935;
+        Tue, 13 Feb 2024 12:52:31 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id z15-20020a05600c0a0f00b00411d6c1476asm916826wmp.1.2024.02.13.12.52.30
+        by smtp.gmail.com with ESMTPSA id u16-20020a05600c19d000b0040f0219c371sm12938987wmq.19.2024.02.13.12.52.31
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 13 Feb 2024 12:52:30 -0800 (PST)
-Message-ID: <a0cc4c8274c108d231816ac981781d9e3cf8fded.1707857541.git.gitgitgadget@gmail.com>
+        Tue, 13 Feb 2024 12:52:31 -0800 (PST)
+Message-ID: <bf18401f56c8df0432a1ba52ae79f5e68d81cdb9.1707857541.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1662.git.1707857541.gitgitgadget@gmail.com>
 References: <pull.1662.git.1707857541.gitgitgadget@gmail.com>
 From: "Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Tue, 13 Feb 2024 20:52:18 +0000
-Subject: [PATCH 09/12] fsmonitor: refactor non-directory callback
+Date: Tue, 13 Feb 2024 20:52:19 +0000
+Subject: [PATCH 10/12] fsmonitor: support case-insensitive non-directory
+ events
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -72,100 +73,60 @@ Cc: Jeff Hostetler <jeffhostetler@github.com>,
 
 From: Jeff Hostetler <jeffhostetler@github.com>
 
-Refactor the fsmonitor_refresh_callback_unqualified() code
-to try to use the _callback_slash() code and avoid having
-a custom filter in the child cache-entry scanner.
-
-On platforms that DO NOT annotate FS events with a trailing
-slash, if we fail to find an exact match for the pathname
-in the index, we do not know if the pathname represents a
-directory or simply an untracked file.  Pretend that the pathname
-is a directory and try again before assuming it is an untracked
-file.
-
 Signed-off-by: Jeff Hostetler <jeffhostetler@github.com>
 ---
- fsmonitor.c | 59 +++++++++++++++++++++++++++++++----------------------
- 1 file changed, 35 insertions(+), 24 deletions(-)
+ fsmonitor.c | 34 +++++++++++++++++++++++++++++++++-
+ 1 file changed, 33 insertions(+), 1 deletion(-)
 
 diff --git a/fsmonitor.c b/fsmonitor.c
-index 73e6ac82af7..cb27bae8aa8 100644
+index cb27bae8aa8..a7847f07a40 100644
 --- a/fsmonitor.c
 +++ b/fsmonitor.c
-@@ -287,41 +287,52 @@ static int my_callback_dir_name_hash(
- 	return nr_in_cone;
+@@ -336,6 +336,36 @@ static int fsmonitor_refresh_callback_unqualified(
+ 	}
  }
  
--static void fsmonitor_refresh_callback_unqualified(
 +/*
-+ * The daemon sent an observed pathname without a trailing slash.
-+ * (This is the normal case.)  We do not know if it is a tracked or
-+ * untracked file, a sparse-directory, or a populated directory (on a
-+ * platform such as Windows where FSEvents are not qualified).
++ * On a case-insensitive FS, use the name-hash to map the case of
++ * the observed path to the canonical case expected by the index.
 + *
-+ * The pathname contains the observed case reported by the FS. We
-+ * do not know it is case-correct or -incorrect.
-+ *
-+ * Assume it is case-correct and try an exact match.
++ * The given pathname DOES NOT include the trailing slash.
 + *
 + * Return the number of cache-entries that we invalidated.
 + */
-+static int fsmonitor_refresh_callback_unqualified(
- 	struct index_state *istate, const char *name, int len, int pos)
- {
--	int i;
--
- 	my_invalidate_untracked_cache(istate, name, len);
- 
- 	if (pos >= 0) {
- 		/*
--		 * We have an exact match for this path and can just
--		 * invalidate it.
-+		 * An exact match on a tracked file. We assume that we
-+		 * do not need to scan forward for a sparse-directory
-+		 * cache-entry with the same pathname, nor for a cone
-+		 * at that directory. (That is, assume no D/F conflicts.)
- 		 */
- 		istate->cache[pos]->ce_flags &= ~CE_FSMONITOR_VALID;
-+		return 1;
- 	} else {
-+		int nr_in_cone;
-+		struct strbuf work_path = STRBUF_INIT;
++static int fsmonitor_refresh_callback_unqualified_icase(
++	struct index_state *istate, const char *name, int len)
++{
++	int nr_in_cone;
 +
- 		/*
--		 * The path is not a tracked file -or- it is a
--		 * directory event on a platform that cannot
--		 * distinguish between file and directory events in
--		 * the event handler, such as Windows.
--		 *
--		 * Scan as if it is a directory and invalidate the
--		 * cone under it.  (But remember to ignore items
--		 * between "name" and "name/", such as "name-" and
--		 * "name.".
-+		 * The negative "pos" gives us the suggested insertion
-+		 * point for the pathname (without the trailing slash).
-+		 * We need to see if there is a directory with that
-+		 * prefix, but there can be lots of pathnames between
-+		 * "foo" and "foo/" like "foo-" or "foo-bar", so we
-+		 * don't want to do our own scan.
- 		 */
--		pos = -pos - 1;
--
--		for (i = pos; i < istate->cache_nr; i++) {
--			if (!starts_with(istate->cache[i]->name, name))
--				break;
--			if ((unsigned char)istate->cache[i]->name[len] > '/')
--				break;
--			if (istate->cache[i]->name[len] == '/')
--				istate->cache[i]->ce_flags &= ~CE_FSMONITOR_VALID;
--		}
-+		strbuf_add(&work_path, name, len);
-+		strbuf_addch(&work_path, '/');
-+		pos = index_name_pos(istate, work_path.buf, work_path.len);
-+		nr_in_cone = fsmonitor_refresh_callback_slash(
-+			istate, work_path.buf, work_path.len, pos);
-+		strbuf_release(&work_path);
++	/*
++	 * Look for a case-incorrect match for this non-directory
++	 * pathname.
++	 */
++	nr_in_cone = my_callback_name_hash(istate, name, len);
++	if (nr_in_cone)
 +		return nr_in_cone;
++
++	/*
++	 * Try the directory name-hash and see if there is a
++	 * case-incorrect directory with this pathanme.
++	 * (len) because we don't have a trailing slash.
++	 */
++	nr_in_cone = my_callback_dir_name_hash(istate, name, len);
++	return nr_in_cone;
++}
++
+ /*
+  * The daemon can decorate directory events, such as a move or rename,
+  * by adding a trailing slash to the observed name.  Use this to
+@@ -434,7 +464,9 @@ static void fsmonitor_refresh_callback(struct index_state *istate, char *name)
+ 		if (ignore_case && !nr_in_cone)
+ 			fsmonitor_refresh_callback_slash_icase(istate, name, len);
+ 	} else {
+-		fsmonitor_refresh_callback_unqualified(istate, name, len, pos);
++		nr_in_cone = fsmonitor_refresh_callback_unqualified(istate, name, len, pos);
++		if (ignore_case && !nr_in_cone)
++			fsmonitor_refresh_callback_unqualified_icase(istate, name, len);
  	}
  }
  
