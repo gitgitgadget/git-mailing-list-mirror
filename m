@@ -1,57 +1,57 @@
-Received: from mail-yw1-f202.google.com (mail-yw1-f202.google.com [209.85.128.202])
+Received: from mail-pl1-f201.google.com (mail-pl1-f201.google.com [209.85.214.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAE72605BC
-	for <git@vger.kernel.org>; Tue, 13 Feb 2024 17:57:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.202
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E150A604C0
+	for <git@vger.kernel.org>; Tue, 13 Feb 2024 18:12:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707847070; cv=none; b=Mka643cGymsG8hQREevdJhHBIPB8eNM2AbwErniP1yHfSHLPck2ClIkMNpMthRhGjK1A22Dt3bzwd8EzEnfJSricoJy0bT1VUFfc4THJJzBFyjhSd7Lfehksw0RGKJz9iW6IfYaes8VIxIv4WejrF2SVCl6Q0e6uPYlcPSPv0y4=
+	t=1707847961; cv=none; b=NwMXE8nsU9L2siraOuD2zKT/+K676l0ufYBJI64g869UVWoYmEOUj7GHCT/A2pB7PRCdRDkLcaMrySkDsYZRxwSQwbn4VT1zfRwBL9Z6GKd74HMIUHZ6Jc1sh0ugjYhEKl/Oyu+NmiOgkTdlfN+HLtJI6MpWZV/cFxC4t/qoz50=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707847070; c=relaxed/simple;
-	bh=eMgsYfq4t1C06iD9H7dQA5mZLpZY8hxHdL0b0Nni9b4=;
+	s=arc-20240116; t=1707847961; c=relaxed/simple;
+	bh=w6IwzzUpx5e1/+auWiYwIXyzm87si5K4rA/0HuTIstI=;
 	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
-	 To:Cc:Content-Type; b=KSv0gd4ug00qiJjinuyAavwIJ1ZAPWRD4WJymEpeWrO3+clNu+tBDAYZ+NVavTGpbi0QHfArHoxoHlj/sXLmE9W8BjHn8Bld4a/XKDQeJ4vqy0w6rWuY3inp/2FdIXLC9uceeHgGEVYuKR7KaLwweP5rN38XGe5qUGDYZhio5SY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--linusa.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=4iPPEplp; arc=none smtp.client-ip=209.85.128.202
+	 To:Cc:Content-Type; b=cibbjr2d7zD9sSNHnANjGt3XRxysWCBhPo1xAamowKdNarnSqOS7vnK2BU+gWJ0fW7oVCfTatNFr03xHXQd+8Q8BoJuEoA3SVT3EbIr8NhHVYUnLsR2w8vwAm+ERLAwMKrvvYAVvX/MEZiar75CnE7tvY3/VVtMNqDz1frodDoI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--linusa.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=XWzL7RNO; arc=none smtp.client-ip=209.85.214.201
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--linusa.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="4iPPEplp"
-Received: by mail-yw1-f202.google.com with SMTP id 00721157ae682-60799671960so10853957b3.1
-        for <git@vger.kernel.org>; Tue, 13 Feb 2024 09:57:48 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="XWzL7RNO"
+Received: by mail-pl1-f201.google.com with SMTP id d9443c01a7336-1d486bce39bso35636855ad.1
+        for <git@vger.kernel.org>; Tue, 13 Feb 2024 10:12:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1707847068; x=1708451868; darn=vger.kernel.org;
+        d=google.com; s=20230601; t=1707847959; x=1708452759; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:from:subject:message-id:references
          :mime-version:in-reply-to:date:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=eMgsYfq4t1C06iD9H7dQA5mZLpZY8hxHdL0b0Nni9b4=;
-        b=4iPPEplpdDNs/9yQPpKUSk8xoLVngf1FWhNVsFvYVKxRa0iw31tF0r5PIguSYzLvD4
-         aBd+hnxhFwNAwumBGBhU3iGrqDbfP+fhLcMdrjEdax2OGZYSrVfHt9tgMCTgJgrnXifR
-         QbakN4uD5W8QFeODMzivqUCRbof/ljcPDaC5TcMFCF5PDO3AVwwG9Ml2700yum98st1P
-         u2ESJEpN+sJAmc7GKJVE+0B63BSz4t9BHxM5gWGbhnn5b6X33UQ39LcvdZsHCmLpNg80
-         mPh45v0jktLCH/JnYgzsVwr/MmsWhrVVeIY7kI5zz4qJ8GDNdqU3FwfV5zn3zDLS8JN+
-         xUNQ==
+        bh=Ig5J1FYL13ns5yu4EzJUy/VuMnS6s/9DCSw1lkkCo94=;
+        b=XWzL7RNOGx0Qqv3+tqDMWkRk19H8cVW02/BT4jqxfv8iwIa2jTL/+UabU2D4dm4iOC
+         Ks8XwlYIFVk7saYcxbZJY0lsXjpiVCdvivt16kUG6Sp3nP2rXm4reDh7lG61p+1EOi44
+         3GFKLxZHUX1jsfuB7yHug99QR96iRJApXjRXfVL9dKQu5nDFYWsTwhw6Cv8Zc85OINkq
+         CUTosV5GDhTOgYtRERkLKxRcK0Ea/fyAxrUz+0KopEEOHEyd4PmoTlr7EOxX/O3oVNtN
+         giRHWz+D5xGXjeFqC0UebVuEJr83aevsP2YgbiAyJOIjNUQ7Ba1P2+/X0sqCSufHf0G5
+         JWNg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1707847068; x=1708451868;
+        d=1e100.net; s=20230601; t=1707847959; x=1708452759;
         h=content-transfer-encoding:cc:to:from:subject:message-id:references
          :mime-version:in-reply-to:date:x-gm-message-state:from:to:cc:subject
          :date:message-id:reply-to;
-        bh=eMgsYfq4t1C06iD9H7dQA5mZLpZY8hxHdL0b0Nni9b4=;
-        b=Adi3T9ylnRWkUoh5jf9WaAXDBgVAaIVzHonwi2f1TmYzsJhYYsntx8faCJ8mnUNfp/
-         WO60Nw51RM4/aiiaFxu+CW9jZj7NTBnH9o3v4f7B4afga3cqC5UvElTyZVQ50BVRzhaQ
-         SXq8zOphicFhKeLs9PlreP1gtdxMT4qAail22fzvef+lIL0ceJd7IHbbe0MCWyqL+Ysr
-         y/ho3RlfIK/cQbEvBW5ndxoYzC/SoZLvNJmGT1lWJPqvQUxqwbn8MqM8cdwnIPr8hn51
-         UCpgKfLLx9nnsEdoXl3cjsdqQof0F1gjTeoNtnr0lWeeStgAtOMD0B7YE4EIFjUDwrO+
-         117w==
-X-Gm-Message-State: AOJu0YwzaWJd0gkFA1qDTF6C9XN1C4ZEX+kIW1RdsxGPf/TAX6qNOZQ9
-	X353s+fkggF1p7uz3l7SabeD3bE01U3/dNgsuziLFiFG38hJMsknRgQljWZbEDAcxlsZyvcPAF0
-	3cg==
-X-Google-Smtp-Source: AGHT+IFvxvt280gqleaFfgS1j5/5zKcrE2dGhLvoQlyuA3sSOOlyMu/rhgCuqw5KTSBl2BGw/08D18e7kHg=
+        bh=Ig5J1FYL13ns5yu4EzJUy/VuMnS6s/9DCSw1lkkCo94=;
+        b=N2IOllhq5V5a3VI2lFeKT4QR96flKHe0WS0Vnhb1JPxPXJGvQPWA1lt3r4SSR8wWMc
+         kIJdxoakp0fxY+3hxao3GDS70NVFWhnzf23hTQm3mnuY9l9l49zoQaJ7i8OhIqUjosDC
+         5+TxTuvPfunM+m234erQglGB7tkl2aLfwQ3pQ1BIHqrALlF3Th9qW2yxVO9G31OMShCt
+         xyXABuYdqRQ04pb7R8LQQPFU8+insIi+d6kXcHPy050SVubJY21Jdj8GMT3MFWxvy76s
+         Bv+0PBkER8VRXueHe0PWTOL+gHJRk5m0jdJi1MySylTW1xm8+dr0XKpCRXLO7YelXYUP
+         HOeA==
+X-Gm-Message-State: AOJu0YwJuZ1REuNgsRVHxnS25RBnflMHnJ9tm+p+CsuivSXVgMBi4jkt
+	5y5+lGnZCDTJ/MquPtzc0ox1oLTL2OO2F5IN/ZudGQOoC2bMyPr1mMeDSDHpX7KzLUKmMRRDQO3
+	Swg==
+X-Google-Smtp-Source: AGHT+IFxOx2GA/s/IeIymKEReFvfQ+Wdre06idr79TP7tDAq2uVpiizbHjdtDsLxV8MdxTztEZDBMvWif9c=
 X-Received: from fine.c.googlers.com ([fda3:e722:ac3:cc00:7f:e700:c0a8:2221])
- (user=linusa job=sendgmr) by 2002:a05:6902:1007:b0:dc9:5ef8:2b2d with SMTP id
- w7-20020a056902100700b00dc95ef82b2dmr3721ybt.4.1707847067888; Tue, 13 Feb
- 2024 09:57:47 -0800 (PST)
-Date: Tue, 13 Feb 2024 09:57:46 -0800
-In-Reply-To: <CAP8UFD0XjHtwB55XDajJia994TmUwub4L73QxhCQ8yTXc8++Ww@mail.gmail.com>
+ (user=linusa job=sendgmr) by 2002:a17:902:e74a:b0:1d9:f75f:7647 with SMTP id
+ p10-20020a170902e74a00b001d9f75f7647mr734plf.1.1707847958929; Tue, 13 Feb
+ 2024 10:12:38 -0800 (PST)
+Date: Tue, 13 Feb 2024 10:12:37 -0800
+In-Reply-To: <CAP8UFD3u8qNpxObdOJDfBq+zVfxNwAG56bBcPeSC4i2=ZuhWjw@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -59,10 +59,10 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 Mime-Version: 1.0
 References: <pull.1632.v3.git.1706664144.gitgitgadget@gmail.com>
- <pull.1632.v4.git.1707196348.gitgitgadget@gmail.com> <3bfe4809ecbc5aa0ea52daee7684289398cb88d4.1707196348.git.gitgitgadget@gmail.com>
- <CAP8UFD0XjHtwB55XDajJia994TmUwub4L73QxhCQ8yTXc8++Ww@mail.gmail.com>
-Message-ID: <owlya5o4b61x.fsf@fine.c.googlers.com>
-Subject: Re: [PATCH v4 23/28] trailer: add new helper functions to API
+ <pull.1632.v4.git.1707196348.gitgitgadget@gmail.com> <9720526dd8a63b916c75fe9d6322ee13c8b36621.1707196348.git.gitgitgadget@gmail.com>
+ <CAP8UFD3u8qNpxObdOJDfBq+zVfxNwAG56bBcPeSC4i2=ZuhWjw@mail.gmail.com>
+Message-ID: <owly7cj8b5d6.fsf@fine.c.googlers.com>
+Subject: Re: [PATCH v4 26/28] trailer: unify "--trailer ..." arg handling
 From: Linus Arver <linusa@google.com>
 To: Christian Couder <christian.couder@gmail.com>, 
 	Linus Arver via GitGitGadget <gitgitgadget@gmail.com>
@@ -79,22 +79,36 @@ Christian Couder <christian.couder@gmail.com> writes:
 >>
 >> From: Linus Arver <linusa@google.com>
 >>
->> This is a preparatory refactor for deprecating "new_trailer_item" from
->> the API (which will let us deprecate
->> parse_trailers_from_command_line_args()).
->>
->> Expose new helper functions from the API, because we'll be calling them
->> from interpret-trailers.c soon when we move
->> parse_trailers_from_command_line_args() there.
->>
->> Move free_new_trailers() from the builtin to trailer.c because later on
->> we will adjust it to free arg_item structs, which are private to
->> trailer.c.
+>> Move the logic of parse_trailer_from_command_line_arg() into
+>> option_parse_trailer(), because that is the only caller and there's no
+>> benefit in keeping these two separate.
 >
-> This patch seems to be also doing too much.
+> Well one benefit could be that 2 small functions might be easier to
+> understand than a big one.
 
-I assume you mean that you'd like for the movement of
-free_new_trailers() to be separated into its own patch, separate from
-the introduction of new helper functions. I agree.
+True.
 
-Will update.
+> So perhaps
+> parse_trailer_from_command_line_arg() could just have been made
+> static?
+
+In this case I don't think keeping these two functions separate would
+make sense because parse_trailer_from_command_line_arg() is much more
+heavyweight than option_parse_trailer() (one is just a thin wrapper
+around the other). And I didn't like the thought of having 2 function
+names that look very different:
+
+    parse_trailer_from_command_line_arg()
+    option_parse_trailer()
+
+be so closely related in behavior.
+
+And I already have some more patches (not in this series) that refactors
+this area a bit also, so I wanted to wait until the dust settled down a
+bit before deciding (esp. when unit tests are added) whether keep this
+function separate. It's not clear to me yet whether we do want to add
+unit tests for parse_trailer_from_command_line_arg() (if we do end up
+"resurrecting it" in this patch or later), so IDK. The main reason is
+because I think the first set of unit tests should be for the exposed
+functions in <trailer.h>, not so much the helper functions that only the
+builtin uses.
