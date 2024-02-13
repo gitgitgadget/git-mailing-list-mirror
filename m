@@ -1,97 +1,151 @@
-Received: from fhigh3-smtp.messagingengine.com (fhigh3-smtp.messagingengine.com [103.168.172.154])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f49.google.com (mail-ej1-f49.google.com [209.85.218.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5B01134CB
-	for <git@vger.kernel.org>; Tue, 13 Feb 2024 08:33:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C7C3134CB
+	for <git@vger.kernel.org>; Tue, 13 Feb 2024 08:33:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707813211; cv=none; b=sDaIeWAN0CJYwKGZtm+7IP3bRU+E+p6S59LsYRbleeDighRvRXX5N1Fkk+JgP9JOWdX8g1j0D2HO/M/5hkJDhnV6sVkpCJbfeJxoL29JD91bPP+YJB7jRFn12R/qtPALUtJXmOZYjCDHa07C/POnAt6PgmNu5XL+tBXrvIRm4NQ=
+	t=1707813236; cv=none; b=ZW0WwfIDEw9HZkyW4VW+vpaeyScxzT6ebCCRE2DYHxlD77u6B6+OyzYYUAZ1+r9swj6+LLaF82Mi/WjA98foe7VI+2TO9kMI8hIaTc5DodHe9FRCyKr73gC4AVKGJ/1QIurS3GlpSZ/+uInZaWm28Mg0ui21nzpcC+2GAqLjH2U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707813211; c=relaxed/simple;
-	bh=7ZiTLmD4ImlQ0zjAnctxBDF7ofx3j606KykQubgfUjA=;
-	h=MIME-Version:Message-Id:In-Reply-To:References:Date:From:To:Cc:
-	 Subject:Content-Type; b=b1ymGkQj9klzq6958SuTwQ1IvBtUILMdL5WULRgA27xn5+cLrVv/hMwmOsngR39wLzlnk4kcmqUwgQdqXqeL35cfjCJcCAIfOY1SqVkamk3ns7hdwrVQ0Ed/+jA4P0YzI4PKK6HImMhDv/aBPTDNg9+l4V1/Xs/YsYwSQz1YfJQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=khaugsbakk.name; spf=pass smtp.mailfrom=khaugsbakk.name; dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b=RmYH22hi; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Du0bFwF/; arc=none smtp.client-ip=103.168.172.154
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=khaugsbakk.name
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=khaugsbakk.name
+	s=arc-20240116; t=1707813236; c=relaxed/simple;
+	bh=wS1pJqInDW/otLyUi+jXu61aA0yPWTLGC2Z9OiO8VrQ=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=NGtS115Gv75FLA4O2CJ4WS0IQkHNm9+0RHZTruBGioyYYQbDPs7dS13mGf14IchVZ2t3vhaDYbf5Q3Jn/+UttSuy9x1AN2rkrjZRUsJ+G1IWCTsBXNZC1v7TRYi1Y7840YUXhFjThFGSaywRLokwDZoiqJNIer+p+2xHg/jVYlo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Dr6KhrJg; arc=none smtp.client-ip=209.85.218.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b="RmYH22hi";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Du0bFwF/"
-Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
-	by mailfhigh.nyi.internal (Postfix) with ESMTP id 80CF71140110;
-	Tue, 13 Feb 2024 03:33:28 -0500 (EST)
-Received: from imap49 ([10.202.2.99])
-  by compute1.internal (MEProxy); Tue, 13 Feb 2024 03:33:28 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=khaugsbakk.name;
-	 h=cc:cc:content-type:content-type:date:date:from:from
-	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:subject:subject:to:to; s=fm2; t=1707813208; x=
-	1707899608; bh=HwcHJQOffPiq6YOG9tRI4c39eUj43gUjsgzvsUMH9BA=; b=R
-	mYH22hiQUVqdQSggn7LiNbONi5Xd9h1FYS7n+mxybkITo/BRbsrxcbv2jR7rP0t1
-	w+oeKjMlc/E/XT8fV66NUyFpQpm7tV2/rTJGmmQt5PVlkwvxqEpCAMWBJM4ABzq3
-	wFOZoKSZ0dG4Bt55+NDGcaRpGEfH5Sn9dQ2SXbKdk7DMfo3xePgSaIoOyfnOb6gh
-	hl7Q1/bsz9FsEwrMtEJq5zMgi40l6R8RQ3vbF9NUK9f3cG7sE3Q2SLjB7TN174pi
-	XWNve0CEaiYlS6ZdEDfCvmgLqoXRvu9RnJUTu9KGmSwScHaPhJ4axPF2B7fJe5Vi
-	BEr2o7L5ljP4Fr3RIpl6Q==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1707813208; x=1707899608; bh=HwcHJQOffPiq6YOG9tRI4c39eUj4
-	3gUjsgzvsUMH9BA=; b=Du0bFwF/FriGMCtY4PKcYtkm5xaMWO0OoKIQSvcLW+WV
-	Os3UuUPtO6dKusfWzuvMkDjzuo7bobaTOvFCTn+6M9aww32nee5HY2tSJSEGpFqN
-	Rt8SqgdYRsHBRlCD2mYIdXaKz4ots1FGZ0AtdunFmughLee9cQ82YYvsfvzr+rsa
-	44RZtnNtGlxFefmZEM/3sTOy+e3/BW2MJlpw7dszzSF2rGJsv89S+u8wR25KT2O1
-	22OQpc/VMSnrqKEKqPTK73/a7xJc0PHRv5OZ7qyST0qeq7wkwvU5xytWiIKh7xTK
-	f4BAfSCD1XycC14rqCiDo9TD7hZZFWhC63ZxYVmb5Q==
-X-ME-Sender: <xms:WCnLZTR1kaAZQWcgArOu9PcNoFXDniY9-Gi_HTDTfLp-zmG39IBRozs>
-    <xme:WCnLZUy7IXlk-KJsZuXwkCTnjx8ttG53Axv1l0ZFg8bABl6NfnrZ1HgMLnYKDwEXo
-    edrjl2NekVRNXfEGg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrudeggdduvddvucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    cujfgurhepofgfggfkjghffffhvfevufgtsehttdertderredtnecuhfhrohhmpedfmfhr
-    ihhsthhofhhfvghrucfjrghughhssggrkhhkfdcuoegtohguvgeskhhhrghughhssggrkh
-    hkrdhnrghmvgeqnecuggftrfgrthhtvghrnheptdektdejieffleetffehieehueffgfeh
-    leeufedtjeekueffgfeihfegkeffffeunecuvehluhhsthgvrhfuihiivgeptdenucfrrg
-    hrrghmpehmrghilhhfrhhomheptghouggvsehkhhgruhhgshgsrghkkhdrnhgrmhgv
-X-ME-Proxy: <xmx:WCnLZY1fE2t8rNmKtwe78JAjJFqopDpBdBJ0N31k5Ko3_h0Ue3B7Cw>
-    <xmx:WCnLZTDJ95-dBSHhXyLqTNAxfXvXs0IrX44-kGOBspSQho914nMNSg>
-    <xmx:WCnLZciNxQ-gklqqbV60cDVtzSlPqXlHRx85-EhXc2oGJuYLl7YeGA>
-    <xmx:WCnLZWbz-21Pzvx7QyZNKIRLdnp8rD6QVab8l-Oqc5G-tuWZ9HkMPA>
-Feedback-ID: i2671468f:Fastmail
-Received: by mailuser.nyi.internal (Postfix, from userid 501)
-	id 0F47715A0092; Tue, 13 Feb 2024 03:33:28 -0500 (EST)
-X-Mailer: MessagingEngine.com Webmail Interface
-User-Agent: Cyrus-JMAP/3.11.0-alpha0-144-ge5821d614e-fm-20240125.002-ge5821d61
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Dr6KhrJg"
+Received: by mail-ej1-f49.google.com with SMTP id a640c23a62f3a-a38271c0bd5so504626166b.0
+        for <git@vger.kernel.org>; Tue, 13 Feb 2024 00:33:54 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1707813233; x=1708418033; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=Uh9e+6ra8WAKFK/V+xqQjQSi9KpGp5w0xX3D3NaG8k4=;
+        b=Dr6KhrJg1gz8FIsEf6QKQYZ+nuM/bDEkIsbkWi6+8rPOrrCSPXPtq47K1IN6sc6sMf
+         x+W92pahxc4pBLAWK6BSUDEU/GuGb2nlRM2fx3zTp/LfuRZgW3e8n7Aydch2bYF2vS1I
+         uKFgaEk2ZB2F4ZO7WzZWgbgDwsU6ndIPP28bq2SuRhT/InN1yhXuMYM3S25LJLbDuZRu
+         GPkyNo3H3s669RloBDoTUTGywr9M8y70BbUtAbAMoWvf1ASaf5nlS4blyxIX1FbTeBMW
+         OKQRP/XaDXR+nKhzNrI6rqGB0HLmuV5/kbitX3jgGZkgIg6UWyeUxVNMvUakVCPUfH8z
+         BuUw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1707813233; x=1708418033;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=Uh9e+6ra8WAKFK/V+xqQjQSi9KpGp5w0xX3D3NaG8k4=;
+        b=OKBp20r12CrYUT2oyeH6upDLDTpkMQvK677ct89GlXJV62Q3/2ZnxI9a7cTVB0R7C6
+         3/31unp4B06EB+HU8tgZwEzb+P8yaa7g8CfapLp6ZB8lLQFzpSWwnsuyT7ekmCqolpts
+         2hYfwo7vzCo3SRhsB6RJu5SsOWmOa5PA1Lqx2U9keCiv2uJv7NOeqGXUUzyafQuZpkuv
+         RqVMU+2G3x5iwx4tK27x/T0oV+9QgvBdWK+JUiJfB+CPq7AXyCXUwQDvonBwCBE4ozod
+         F8dtfq2Js/lo73oYEJCEmksdtr7/XCBd6GQ86QhmBw9gHEsDFRGpIY5/iPQG/dE8Dnmv
+         sobw==
+X-Forwarded-Encrypted: i=1; AJvYcCWRBMfk4gBNdvxY2ejkzlNK3N8s1Yar2Njd/TBtms31vivLWbKnKA0/2+4UX76/A1hTNuplj2EGv5CjpDgsFXKkpPtR
+X-Gm-Message-State: AOJu0YwU2qFWcBp66E5PXBsdaqB7xipYfrAhWrVckEusgYy55H6riQY8
+	Yqx3WqGQ1mUNFTZYCAkuF+l7eGRuDnSDFCj2/6ykBG2Wtmnb51ff
+X-Google-Smtp-Source: AGHT+IF5ZjB/KAHeulE9oBGD4a5kgQVwWxe6d9nIoqfb3GMVdqzxkifX67lJm1XgFX4mCu8+UsU6dg==
+X-Received: by 2002:a17:906:5ad9:b0:a38:9eff:b4c7 with SMTP id x25-20020a1709065ad900b00a389effb4c7mr7305443ejs.26.1707813233120;
+        Tue, 13 Feb 2024 00:33:53 -0800 (PST)
+X-Forwarded-Encrypted: i=1; AJvYcCXSi0BQxVxNfvSxq8RgJ6DJW5GtZ35mA8Dg2qZXPjSfH4O1qVLCHdGlOG+P22kH9f0L7MKVP7usnHw3k5+AGrZ2KArLLeQcpkdDqNy5OBqhALcUwvV1gnxZBtd9KyDRkaQ6rb5H/IV/vQwkCp+tOVuuh4E0Ue64DApJ8kHDLaeqPtx0rBoKmqad4/CsenIYO8wWhS/RLxtNlFhrsFNLt3Ors9NEPa5LqwrBnW8dQ3Omp/cOxKYzFKztz/oLHmRr87k=
+Received: from [192.168.3.191] ([92.173.128.58])
+        by smtp.googlemail.com with ESMTPSA id ti13-20020a170907c20d00b00a3ce3c5b2a4sm870058ejc.195.2024.02.13.00.33.51
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 13 Feb 2024 00:33:52 -0800 (PST)
+Message-ID: <7a2a0ed5-f9dc-42dd-886b-457641b9bc79@gmail.com>
+Date: Tue, 13 Feb 2024 09:33:51 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Message-Id: <023394e2-5f64-4a59-af96-b77dafb20051@app.fastmail.com>
-In-Reply-To: <20231002024034.2611-2-ebiederm@gmail.com>
-References: <878r8l929e.fsf@gmail.froward.int.ebiederm.org>
- <20231002024034.2611-2-ebiederm@gmail.com>
-Date: Tue, 13 Feb 2024 09:31:22 +0100
-From: "Kristoffer Haugsbakk" <code@khaugsbakk.name>
-To: "Eric W. Biederman" <ebiederm@gmail.com>
-Cc: git@vger.kernel.org, "brian m. carlson" <sandals@crustytoothpaste.net>,
- "Eric Sunshine" <sunshine@sunshineco.com>,
- "Eric W. Biederman" <ebiederm@xmission.com>,
- "Junio C Hamano" <gitster@pobox.com>
-Subject: Re: [PATCH v2 02/30] oid-array: teach oid-array to handle multiple kinds of
- oids
-Content-Type: text/plain
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 2/2] revision: implement `git log --merge` also for
+ rebase/cherry-pick/revert
+Content-Language: fr
+To: Philippe Blain <levraiphilippeblain@gmail.com>, git@vger.kernel.org
+Cc: Johannes Sixt <j6t@kdbg.org>, Elijah Newren <newren@gmail.com>,
+ Michael Lohmann <mial.lohmann@gmail.com>,
+ Phillip Wood <phillip.wood@dunelm.org.uk>, Patrick Steinhardt <ps@pks.im>,
+ Michael Lohmann <mi.al.lohmann@gmail.com>, Junio C Hamano <gitster@pobox.com>
+References: <20240210-ml-log-merge-with-cherry-pick-and-other-pseudo-heads-v4-0-3bc9e62808f4@gmail.com>
+ <20240210-ml-log-merge-with-cherry-pick-and-other-pseudo-heads-v4-2-3bc9e62808f4@gmail.com>
+From: =?UTF-8?Q?Jean-No=C3=ABl_Avila?= <avila.jn@gmail.com>
+In-Reply-To: <20240210-ml-log-merge-with-cherry-pick-and-other-pseudo-heads-v4-2-3bc9e62808f4@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-On Mon, Oct 2, 2023, at 04:40, Eric W. Biederman wrote:
-> Signed-off-by: "Eric W. Biederman" <ebiederm@xmission.com>
+Le 11/02/2024 à 00:35, Philippe Blain a écrit :
+> From: Michael Lohmann <mi.al.lohmann@gmail.com>
+> 
+> 'git log' learned in ae3e5e1ef2 (git log -p --merge [[--] paths...],
+> 2006-07-03) to show commits touching conflicted files in the range
+> HEAD...MERGE_HEAD, an addition documented in d249b45547 (Document
+> rev-list's option --merge, 2006-08-04).
+> 
+> It can be useful to look at the commit history to understand what lead
+> to merge conflicts also for other mergy operations besides merges, like
+> cherry-pick, revert and rebase.
+> 
+> For rebases, an interesting range to look at is HEAD...REBASE_HEAD,
+> since the conflicts are usually caused by how the code changed
+> differently on HEAD since REBASE_HEAD forked from it.
+> 
+> For cherry-picks and revert, it is less clear that
+> HEAD...CHERRY_PICK_HEAD and HEAD...REVERT_HEAD are indeed interesting
+> ranges, since these commands are about applying or unapplying a single
+> (or a few, for cherry-pick) commit(s) on top of HEAD. However, conflicts
+> encountered during these operations can indeed be caused by changes
+> introduced in preceding commits on both sides of the history.
+> 
+> Adjust the code in prepare_show_merge so it constructs the range
+> HEAD...$OTHER for each of OTHER={MERGE_HEAD, CHERRY_PICK_HEAD,
+> REVERT_HEAD or REBASE_HEAD}. Note that we try these pseudorefs in order,
+> so keep REBASE_HEAD last since the three other operations can be
+> performed during a rebase. Note also that in the uncommon case where
+> $OTHER and HEAD do not share a common ancestor, this will show the
+> complete histories of both sides since their root commits, which is the
+> same behaviour as currently happens in that case for HEAD and
+> MERGE_HEAD.
+> 
+> Adjust the documentation of this option accordingly.
+> 
+> Co-authored-by: Philippe Blain <levraiphilippeblain@gmail.com>
+> Co-authored-by: Johannes Sixt <j6t@kdbg.org>
+> Signed-off-by: Philippe Blain <levraiphilippeblain@gmail.com>
+> Signed-off-by: Michael Lohmann <mi.al.lohmann@gmail.com>
+> [jc: tweaked in j6t's precedence fix that tries REBASE_HEAD last]
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> ---
+>   Documentation/gitk.txt             |  8 ++++----
+>   Documentation/rev-list-options.txt |  6 ++++--
+>   revision.c                         | 31 +++++++++++++++++++++++--------
+>   3 files changed, 31 insertions(+), 14 deletions(-)
+> 
+> diff --git a/Documentation/gitk.txt b/Documentation/gitk.txt
+> index c2213bb77b..80ff4e149a 100644
+> --- a/Documentation/gitk.txt
+> +++ b/Documentation/gitk.txt
+> @@ -63,10 +63,10 @@ linkgit:git-rev-list[1] for a complete list.
+>   
+>   --merge::
+>   
+> -	After an attempt to merge stops with conflicts, show the commits on
+> -	the history between two branches (i.e. the HEAD and the MERGE_HEAD)
+> -	that modify the conflicted files and do not exist on all the heads
+> -	being merged.
+> +	Show commits touching conflicted paths in the range `HEAD...$OTHER`,
 
-Most of your patches have this sign-off line with your name quoted.
+if $OTHER is a placeholder, why not use the placeholder notation <other> 
+instead of a notation that could deceive the reader into thinking that 
+this is an actual environment variable?
 
--- 
-Kristoffer Haugsbakk
+> +	where `$OTHER` is the first existing pseudoref in `MERGE_HEAD`,
+> +	`CHERRY_PICK_HEAD`, `REVERT_HEAD` or `REBASE_HEAD`. Only works
+> +	when the index has unmerged entries.
+>   
 
+Thanks
 
