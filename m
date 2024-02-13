@@ -1,88 +1,88 @@
-Received: from mail-pl1-f202.google.com (mail-pl1-f202.google.com [209.85.214.202])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 883155FEF1
-	for <git@vger.kernel.org>; Tue, 13 Feb 2024 16:49:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.202
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F0E45FB97
+	for <git@vger.kernel.org>; Tue, 13 Feb 2024 16:50:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707842965; cv=none; b=qKg8YzbicQWzjXvYT6r2J9+/uCRYjBDznosFLKvvnQYRp/np6MU/ixMKwtxpydWmH7VRsyNT+ogl9dSg6CLYu70P8pCs4ey11j0CFIS8Q5/QdKIqfZFccy2pxX8a4mSOjfH2cSaJzVwynyOUy4crE6+HyacQ8ghysGZjkoRanJY=
+	t=1707843026; cv=none; b=FrcMCAeAzaCNIWTurFKLzMWlz+31G27z0S8ISnLrsHsfNo/2LYBKyPkSdeUZ7pEVCB8TColxvcq0JeEFpP+UMvoD80kEu8hfkQHmgaFgvI38DvJevSJaDurkaEbd9PFF/jDIaRUHOvm1I6U4RTrPmSPssNc9oJu5QdjX9Y1Cq4U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707842965; c=relaxed/simple;
-	bh=2lcXTpQ1Vv2x+Bjua90N++eaDnhVUVKqBp+Hxt0p+Rg=;
-	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
-	 To:Cc:Content-Type; b=g3I3j613D6rlVCcOcd5XULC0cbOUGBgcgrJ0GHLpNabZP9ze8Uamd+WZEw0hYkMD5eXpuR7lGL3JBFLm1Qba3VBr3ayg38bnsl3F2xQ7rM/ZFFaCO8MXj4e2hkExqvgoGWs0PJ4O6UQbD8FYsblw0ZfW0L3BcPBUjLmDj1VhU9w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--linusa.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=pM/1AjNI; arc=none smtp.client-ip=209.85.214.202
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--linusa.bounces.google.com
+	s=arc-20240116; t=1707843026; c=relaxed/simple;
+	bh=bRwCaD1tcZSmxO1pdd8cpgHpez8CDRws0tJT2kx/hAY=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=HImC+UPNg4IKJpGIXs/5RYfjT5GnBMQm2jvHv7eFEgs6BRItJMqzr+PAZskQ3fiaPcFRxefTiR/X7WZci7ybK0iwFEwedzg32h/2uaTzBr4staGUbfqTh2nrUGHNPPwjnnx02UeQJ0flPmMf2Rqlln940Hi14SnBJWx7FaPyYQc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=IypebZoa; arc=none smtp.client-ip=64.147.108.70
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="pM/1AjNI"
-Received: by mail-pl1-f202.google.com with SMTP id d9443c01a7336-1d5b60c929bso71834925ad.3
-        for <git@vger.kernel.org>; Tue, 13 Feb 2024 08:49:23 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1707842963; x=1708447763; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:from:subject:message-id:references
-         :mime-version:in-reply-to:date:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=2lcXTpQ1Vv2x+Bjua90N++eaDnhVUVKqBp+Hxt0p+Rg=;
-        b=pM/1AjNIMhILVswBZANd10eU7k91UqgQpGXY2afxv2iH8W9NHoCSONwZO3EDwhVedk
-         +XEADckBSu5zR7sASp+LbzCK+qvcRdJWpwfe3Ha6xb1AUt4nfOgcPeCHrL1V4rLY/mk5
-         7D3afIzx6H9Dzx3WyIduIfQxMAHnMmz0PP+TzKTLM2tTf07HNPmnTOY10VmUW51DDdUb
-         YTkG5ShwZFqtYif9hW39/1mqyNBi4xsRY5ndSawMM1IKyO12zJGhE3AD5bjBwZEZwgIj
-         r1ZfuQbIjnKpgYdtMT4jykag7QihMzUkcqBBlkkO7xTEqaGh3FlLv0WCTy+c1YjdwZdX
-         qh4Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1707842963; x=1708447763;
-        h=content-transfer-encoding:cc:to:from:subject:message-id:references
-         :mime-version:in-reply-to:date:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=2lcXTpQ1Vv2x+Bjua90N++eaDnhVUVKqBp+Hxt0p+Rg=;
-        b=CpsOC8OgHlxswFXxL9k/HFbIMvHIycoJTAwLk2RoGdWprPVvqEJdCUMDsSp2JOP+8j
-         tevH07gIyGyKR7+7DYbbY5eZK885Bt/biepR7HCvBsOv/DTwo8j8Ya85g5lZrR+pcuSf
-         0iS9eMXrmvVdl59hdp8PveOZ1ifgncmHwaB0Jml8MvUSa8eSD8+VUJIMVsojBf/c1agy
-         RmnZmNTE/kVEuarElm14ER4Ej8bCXgiFIyqlsaeQtq6cNLEklhjM2wjvtXFM244YOfrh
-         i0E/E7jNIuQrxNndXxK80mfG1M8wNTTL1Br5ffXMlDySbHayRxjPYdzwov2T8hXpKWSR
-         XArw==
-X-Gm-Message-State: AOJu0Yz3tw8jKjMOuAlwpDqQsNnm4k9MVMOaEo5vvLhQvnIQQfTCKhNm
-	TBs+46N3yKVVbl0VPUc0hpAArO/10BFQJRMTftu4lYFKd18oWKJe3fuV0b6Y5AjzrVu/0BV2szN
-	lQg==
-X-Google-Smtp-Source: AGHT+IHEBbV0HLI3Eqs9/q778xz0to5vaMal2LM366kfpLX1ro3mC/tHV4YQqLLXAWB27fqhpspWu2uwlig=
-X-Received: from fine.c.googlers.com ([fda3:e722:ac3:cc00:7f:e700:c0a8:2221])
- (user=linusa job=sendgmr) by 2002:a17:90b:3c0f:b0:298:c3ba:43b0 with SMTP id
- pb15-20020a17090b3c0f00b00298c3ba43b0mr3419pjb.0.1707842963299; Tue, 13 Feb
- 2024 08:49:23 -0800 (PST)
-Date: Tue, 13 Feb 2024 08:49:21 -0800
-In-Reply-To: <CAP8UFD1YaEfdM=apQ7An+GcKV+Wc26StsMqJcd9e5tHJg9U_hQ@mail.gmail.com>
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="IypebZoa"
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 3ADE31C4F27;
+	Tue, 13 Feb 2024 11:50:17 -0500 (EST)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=bRwCaD1tcZSmxO1pdd8cpgHpez8CDRws0tJT2k
+	x/hAY=; b=IypebZoaGUCqGFPoKTWJjapIADuxPAjQGai2ffluytMjwJeSTt+KQP
+	ZWRbO+M7CA+1pFxoJu7T9UDBxfcGX4GoaM80EjFjKTLL9R3Jflx79rLE7Q7Ykze1
+	/URLnCqoivice0IttJ5lEv8indzshpVfHCwS6a2+++AEV32qVPhMQ=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 322891C4F25;
+	Tue, 13 Feb 2024 11:50:17 -0500 (EST)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.165.85])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 92EC01C4F24;
+	Tue, 13 Feb 2024 11:50:16 -0500 (EST)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Kyle Lippincott <spectral@google.com>
+Cc: git@vger.kernel.org
+Subject: Re: libification: how to avoid symbol collisions?
+In-Reply-To: <CAO_smVizKLL2NHFBpszJn+ieJhCEZyvvOT-BWv6Oz5pGiafPVg@mail.gmail.com>
+	(Kyle Lippincott's message of "Mon, 12 Feb 2024 18:48:26 -0800")
+References: <CAO_smVji5aGjx1V-EGbumRRpOuGY0SkXZUn9g4LxKmMO3aw=Sg@mail.gmail.com>
+	<xmqqil2ximxq.fsf@gitster.g>
+	<CAO_smVizKLL2NHFBpszJn+ieJhCEZyvvOT-BWv6Oz5pGiafPVg@mail.gmail.com>
+Date: Tue, 13 Feb 2024 08:50:15 -0800
+Message-ID: <xmqqr0hg8g1k.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-References: <pull.1632.v3.git.1706664144.gitgitgadget@gmail.com>
- <pull.1632.v4.git.1707196348.gitgitgadget@gmail.com> <a72eca301f7f9016ef3a8063f79790ce00f41ffe.1707196348.git.gitgitgadget@gmail.com>
- <CAP8UFD1YaEfdM=apQ7An+GcKV+Wc26StsMqJcd9e5tHJg9U_hQ@mail.gmail.com>
-Message-ID: <owlywmr8b97y.fsf@fine.c.googlers.com>
-Subject: Re: [PATCH v4 12/28] format_trailer_info(): append newline for
- non-trailer lines
-From: Linus Arver <linusa@google.com>
-To: Christian Couder <christian.couder@gmail.com>, 
-	Linus Arver via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, Christian Couder <chriscool@tuxfamily.org>, 
-	Junio C Hamano <gitster@pobox.com>, Emily Shaffer <nasamuffin@google.com>, 
-	Josh Steadmon <steadmon@google.com>, "Randall S. Becker" <rsbecker@nexbridge.com>
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ F6E1A0E6-CA8F-11EE-B955-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
 
-Christian Couder <christian.couder@gmail.com> writes:
+Kyle Lippincott <spectral@google.com> writes:
 
-> On Tue, Feb 6, 2024 at 6:12=E2=80=AFAM Linus Arver via GitGitGadget
-> <gitgitgadget@gmail.com> wrote:
->
-> [...]
->
->> The test suite passes again, so format_trailer_info() is in better shape
->> supersede format_trailers(), which we'll do in the next patch.
->
-> s/supersede/to supersede/
+> struct/enum/typedef/union names. That's going to be quite annoying to
+> maintain; even if we don't end up having to do all 3,500 symbols, for
+> the files that are part of some public library, we'd add maintenance
+> burden because we'd need to remember to either make every new function
+> be static, or add it to this list. I assume we could create a test
+> that would enforce this ("static, named with <prefix>, or added to
+> <list>"), so the issue is catchable, but it will be exceedingly
+> annoying every time one encounters this.
 
-Nice catch! Will update for next reroll, thanks.
+No matter how we do this, we'd need to maintain that list, so the
+choices are between "#define" and "objcopy --redefine-sym" if we
+limit ourselves to static linking, I think.  The former may be more
+portable but makes me feel dirty.  The debuggers will not see the
+names we want to use, for one thing.  "rename selected symbols in *.o
+files" approach, if it can be done on platforms we want the lib thing
+on, would be more preferable.
+
+We also should be able to create a single linkable object (e.g., Z.o
+out of X.o and Y.o from the previous example---it could be Z.so that
+is dynamically linked at runtime) to resolve the symbols that need
+to be shared only among the object files (like "foo" that is defined
+in X.o whose address is needed in Y.o) and after such a linking is
+done, these "internal" symbols can be stripped away from the
+resulting object file.  For that, we'd also need to maintain that
+list of internal symbols that are needed in order to link our
+objects together.
