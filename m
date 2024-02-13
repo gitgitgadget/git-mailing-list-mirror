@@ -1,55 +1,55 @@
-Received: from mail-lf1-f49.google.com (mail-lf1-f49.google.com [209.85.167.49])
+Received: from mail-ej1-f41.google.com (mail-ej1-f41.google.com [209.85.218.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD1C65FEF0
-	for <git@vger.kernel.org>; Tue, 13 Feb 2024 17:21:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 570305F54E
+	for <git@vger.kernel.org>; Tue, 13 Feb 2024 17:25:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707844915; cv=none; b=iTPZnHvJL/tyOQgG78p1TirSuTp7Rkzcweej35EAFdnJUKwiGkJ/Lx4zYIlBmOqvKHMgKPHsmZhv/DPVZSss0GxWScBmTyUxHT7p8ncOsEf0gpXMtYEasfQNNh6ebAqnx8T9sDzTQpBlDA7ZPpkeSow2bHvpTpAxdT4fEn5kvHI=
+	t=1707845121; cv=none; b=XzS2M19AkT02DEZpw7sYAMAp3PsLhvX9bmAmDLIh1KO1SUMGRMoBjDMCgFQaqI6RraBnIVOip7w5Se4L/ZkmTS2ExPkGT5MsRbZYDv0gghb/BV3wrdQlLxZde3JTY+Aa1fncW/q8stUk9UMx6RFwhibiJ31LSfcANtNyrTXo8ew=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707844915; c=relaxed/simple;
-	bh=UxYnVDSwNodxiYxoUhPKmZH113lR97xP9WnCKD0PeE8=;
+	s=arc-20240116; t=1707845121; c=relaxed/simple;
+	bh=PP4bsqy6ndS9ddSnsvxwSgvNY8Yto/q1j17O7m3qoVY=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=a/A0v2oT+s0TrEoKV9CCTfB0+m+ySYi4jc5QpJI5DULsUgBUDPv1RKDGwhtly/pGpe5mep2D2unDufGp8AM3j8Tgg8snxNXQc7k/lFU3brU2cAQZx78VcOByZFj7Q0I1ajGdXLUT46j/cOH7WMZtmqq8enjGGUDqxEzu0E8nNTI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NTKPxR+6; arc=none smtp.client-ip=209.85.167.49
+	 To:Cc:Content-Type; b=JNZvoGtvPmpz9afoXKVfAfhNaGafAMMcP1tpqagiFXE5M29OloeytoaRRiIKAyUjreWhqLlpPHm/+IwaCzUOwf1S98jF71OX8Gg/ORSzNx48zWK4obJHnMNBIgVAIH4AL+jB8W6/95nq5aNUPJCqQ8LiOetvyzobJiiW8HWtwFs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Htg5x94k; arc=none smtp.client-ip=209.85.218.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NTKPxR+6"
-Received: by mail-lf1-f49.google.com with SMTP id 2adb3069b0e04-5119cfaeb9bso919893e87.1
-        for <git@vger.kernel.org>; Tue, 13 Feb 2024 09:21:53 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Htg5x94k"
+Received: by mail-ej1-f41.google.com with SMTP id a640c23a62f3a-a2a17f3217aso596745466b.2
+        for <git@vger.kernel.org>; Tue, 13 Feb 2024 09:25:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1707844912; x=1708449712; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1707845118; x=1708449918; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=djTXGNbZuGqyKuTSQbKwVEYJtS4pdpJJAwqttgQi+h8=;
-        b=NTKPxR+67h9cV4kyUSljZ+M5ujNelVC0kIaJGk2h20378GU8B5plqTI0Zjh9GJgY+w
-         AnBqbUklin9G1AymeoNTuCRc8HfPqB/ZZzJi0SKtRBDtnxYxM+VnSnzpF/4a8jBEn0qG
-         pyX+WFUBWvHNDbpQi57Ya+O1a+dY0y7+ttD5cZ5tcIsw7eN6sBUQY8l9bocd2gVRhOY0
-         cZ0U0hdKTKoPY0REvCOdcZCrF2MolTeHqdsd3SCIRJdnUK1uV8YGBwFGHnmkXlmeOKa9
-         gtgNXEVfe8Zi1rwRT2L6sknYC05Oy8iJ3W4nvhhgcl1ZS7ywrXKmcoDd1v79P5mmTwsA
-         gjrA==
+        bh=PP4bsqy6ndS9ddSnsvxwSgvNY8Yto/q1j17O7m3qoVY=;
+        b=Htg5x94kQJ1n/6G5awLm/aF/sL1jntjYpeby1bf89QRINjlC+x8L/QAavCYtjFQNhG
+         i22NpkaGGoH+i9xzUU4uxfoH21DqQqcu53saSlZ4K0cEvqBDsYkA7B40e1qTrZ9G0XSj
+         gldZCTBe/lsDZI/TlXEQND+Qz4MXIEViYwcvDpJjw6ZAtE5y/slf7o3ikSg6uwKkI998
+         brk8pgLLDmo+HKS8qsZzUcIlVcPEwmMHToqW0RS+Jxfgigu2FrDntALTXceFS/pKkL/g
+         3vYUCjuon/w1Y/t9btGdEPZOZwW/ZZxcDW6Xc+knglheY27CvWtZ/58+D4/halZqt9ta
+         Iq3w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1707844912; x=1708449712;
+        d=1e100.net; s=20230601; t=1707845118; x=1708449918;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=djTXGNbZuGqyKuTSQbKwVEYJtS4pdpJJAwqttgQi+h8=;
-        b=lnx+qB5HpjnDbhHhVIhbTd5JT0LJdgomoqQ/+SgdPo8um+NXnyYYD+5DRyxlxJ0h5N
-         XpQOi3z4dToo1iK43ZCcXQZuDpNaS64IzfthuR02hOmvefl3SKEgsoJCoj2FJa8m36XM
-         jr5ZVDfUcDK58ebFO+bw/2w59OM1eYT9tB0JK8LzFScvId+RJJwyYGS1Ehxk3NasagDB
-         SQeakJQ9oRMjAhdN+mul+VHwNn7jPqKsb0edeP2e6aVqclvMl5zo+WICNF3OY6XJSZaG
-         MIpIdvnAVDvTqqocQosL8eJynwPLDjNKEanHT4ZNjvt5dChEQbzvOloD/Rf0tdi311/U
-         J0jw==
-X-Forwarded-Encrypted: i=1; AJvYcCU3DdjySIUC6INrYMM1voqj5wDiTzWUaEsWKuJosCIKIWfG6kjWLmSGDKATo/lfhv0hEFkJJarz030ngLkZMXBejRxq
-X-Gm-Message-State: AOJu0Yw95Mx11HCZ5TqlrtprLuc/gYSIEIma7F7syYbZXNbPxtje6v8s
-	G1elKRJ+kj0PH00sa3DOiF+P2Fudx/2KtB8agK7CQDKXysXha+5V6NeM6NZuS0LWXMim5JC1DJQ
-	/VZS6AmuqpkUjjy2mk5wt+mCI09h1z/wca2s=
-X-Google-Smtp-Source: AGHT+IGwFG1vbDe9RkXr5UDjy0BRscYDa19rV+OYmCf3pMdV31+7JUR/9OzJYPeR588RGM6V9ruuZtmz7XwGlBRVZy0=
-X-Received: by 2002:ac2:4554:0:b0:511:86ce:3913 with SMTP id
- j20-20020ac24554000000b0051186ce3913mr134134lfm.8.1707844911687; Tue, 13 Feb
- 2024 09:21:51 -0800 (PST)
+        bh=PP4bsqy6ndS9ddSnsvxwSgvNY8Yto/q1j17O7m3qoVY=;
+        b=s77YtfH7KSJ5ESDOJHttLcZ2hGmR6E0OQyx5W9RxWqQNRrqZLN8Ce/6vVewEzgdQjw
+         GY7ldX6NqeT/T25qejGPOxPTGyx0Rnobz1jB1eilHitlyhj4hzzE2/psnCxps1Mm4xtg
+         HwRM+KKf3wmihKpFiGE24R37LH3Ogk84rFlyW34WQpV9j8lSbqnJUC5BdPa9djuH3R1G
+         Pvn1ijLtawGJ6+Uu3YYxqCAfJBXkuhorvRZVa/wxTp9ZQmq5IXzYo+lWOxq7UpIB2VQy
+         /wRMk2z5M7oMm8H8OcSRjFpiaA9GA1dd8SNNC3ojJ2/5SX8WDh5LKHKJhIjfp52S4dbY
+         Regw==
+X-Forwarded-Encrypted: i=1; AJvYcCUZn5QZRUODioiO9+VFJv6+P5W76trJeBUp3lPbwJgt//gbdcA/X6SScuR8F0dvzrr7aD9QUl2Q/kcjqm0hHM11GsQl
+X-Gm-Message-State: AOJu0YzyvaTtlFUTWf/et37WF1a6NnzJmXLOLhkKpfyHnNfhOh7WF7jH
+	wWqrfhg8ihWdhxD1BzV3+NimPXOpIbcCmpVrRnHDKmMFAeabVgt4s+BuWq5aH7N29ORP1MEbv1z
+	gWEuu5TDbQvoiFxrN9QS91tblRGX89ohp
+X-Google-Smtp-Source: AGHT+IHSUQ5S1mkXhavKrhzyNB3p4P0qjIPs+vk/SM72mxHGm7qC5kKvbtI1iFJ8eh237CXv2JEfuGVddZFmaLqiDd8=
+X-Received: by 2002:a17:906:370e:b0:a38:215c:89b with SMTP id
+ d14-20020a170906370e00b00a38215c089bmr7647538ejc.73.1707845118258; Tue, 13
+ Feb 2024 09:25:18 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -57,13 +57,13 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 References: <pull.1632.v3.git.1706664144.gitgitgadget@gmail.com>
- <pull.1632.v4.git.1707196348.gitgitgadget@gmail.com> <11f854399db2b0da5d82cad910c3b86ca9c2e0db.1707196348.git.gitgitgadget@gmail.com>
- <CAP8UFD3wMD5SmfpP20jST4YndBdPX9U9qAbKh=4TnUzLkpULRA@mail.gmail.com> <owlyttmcb8ge.fsf@fine.c.googlers.com>
-In-Reply-To: <owlyttmcb8ge.fsf@fine.c.googlers.com>
+ <pull.1632.v4.git.1707196348.gitgitgadget@gmail.com> <ba1f387747b08a7270f7387beddd75dc4a8eddfe.1707196348.git.gitgitgadget@gmail.com>
+ <CAP8UFD3u+QDx2LqpO2ZpeHQszwjMAsQ90qqbE7Om=t1vPRQ==w@mail.gmail.com> <owlyr0hgb7qg.fsf@fine.c.googlers.com>
+In-Reply-To: <owlyr0hgb7qg.fsf@fine.c.googlers.com>
 From: Christian Couder <christian.couder@gmail.com>
-Date: Tue, 13 Feb 2024 18:21:39 +0100
-Message-ID: <CAP8UFD3Mx8TT0vZgNNAVBw1L3QBbRtbRL_mR1KGe6FNK77oMeg@mail.gmail.com>
-Subject: Re: [PATCH v4 14/28] format_trailer_info(): teach it about opts->trim_empty
+Date: Tue, 13 Feb 2024 18:25:06 +0100
+Message-ID: <CAP8UFD0nmK4ZigW9LcWOr_POEX5LX7m+T=Jq9rK34YL5C6xatw@mail.gmail.com>
+Subject: Re: [PATCH v4 15/28] format_trailer_info(): avoid double-printing the separator
 To: Linus Arver <linusa@google.com>
 Cc: Linus Arver via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
 	Christian Couder <chriscool@tuxfamily.org>, Junio C Hamano <gitster@pobox.com>, 
@@ -72,46 +72,21 @@ Cc: Linus Arver via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org,
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Tue, Feb 13, 2024 at 6:05=E2=80=AFPM Linus Arver <linusa@google.com> wro=
+On Tue, Feb 13, 2024 at 6:21=E2=80=AFPM Linus Arver <linusa@google.com> wro=
 te:
-> Christian Couder <christian.couder@gmail.com> writes:
-
-> >>  static struct trailer_item *trailer_from_arg(struct arg_item *arg_tok=
-)
-> >>  {
-> >>         struct trailer_item *new_item =3D xcalloc(1, sizeof(*new_item)=
-);
-> >> @@ -1101,6 +1087,15 @@ void format_trailer_info(const struct process_t=
-railer_options *opts,
-> >>                         strbuf_addstr(&tok, item->token);
-> >>                         strbuf_addstr(&val, item->value);
-> >>
-> >> +                       /*
-> >> +                        * Skip key/value pairs where the value was em=
-pty. This
-> >> +                        * can happen from trailers specified without =
-a
-> >> +                        * separator, like `--trailer "Reviewed-by"` (=
-no
-> >> +                        * corresponding value).
-> >> +                        */
-> >> +                       if (opts->trim_empty && !strlen(item->value))
-> >> +                               continue;
-> >> +
-> >
-> > Wasn't it possible to make this change in format_trailer_info() before
-> > using format_trailer_info() to replace format_trailers()?
 >
-> It was certainly possible, but the choice to purposely time the
-> addition/deletion of code like this was deliberate (see my comment
-> above).
+> Christian Couder <christian.couder@gmail.com> writes:
+>
+> > On Tue, Feb 6, 2024 at 6:12=E2=80=AFAM Linus Arver via GitGitGadget
+> > <gitgitgadget@gmail.com> wrote:
 
-I would have thought that it would be better to make this change
-earlier to avoid breaking tests.
+> > Also I wonder why it was not possible to modify format_trailer_info()
+> > like it is done in this patch before using it to replace
+> > format_trailers().
+>
+> The artificial organization apparent in this patch was deliberate, in
+> order to make it painfully obvious exactly what was being replaced and
+> how. See https://lore.kernel.org/git/xmqqjzno13ev.fsf@gitster.g/
 
-> >>                         if (!opts->filter || opts->filter(&tok, opts->=
-filter_data)) {
-> >>                                 if (opts->separator && out->len !=3D o=
-riglen)
-> >>                                         strbuf_addbuf(out, opts->separ=
-ator);
+As for the previous patch, I would have thought that it would be
+better not to break the tests.
