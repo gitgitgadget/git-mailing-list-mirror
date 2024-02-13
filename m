@@ -1,124 +1,97 @@
-Received: from mail-pf1-f202.google.com (mail-pf1-f202.google.com [209.85.210.202])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED7191E501
-	for <git@vger.kernel.org>; Tue, 13 Feb 2024 17:47:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.202
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90694604C4
+	for <git@vger.kernel.org>; Tue, 13 Feb 2024 17:49:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707846426; cv=none; b=F11FKQxzsSK628sRhad8l6gbgXXFybEX1qfhWSXFQiQCJMmCI3t+3k4TFvELMVqQ44KKQzVyU78PWCSVt6TSXuvUnFj6r/cAnwxrVSg1nYABsUwiKdiwoOexSIdugDbtVbl9M0ZY7zbSWBKo73XHxEZciE/R5oj42+BvbvQygmk=
+	t=1707846593; cv=none; b=WHurYGFbQF7gNuBxVMcqMFyl4+FWNZo8YedlTL5NQ/61IGvVKVwXYbB9WPEo0gm+XiMz033w6zI5pD/VGUxL63dVsVWESrJ81kyRXc0gJiyQLMpHI7YypHi6EBcECCHXjx+Wwv7KUb2pGxFNa1j8vNWTkdXoaNvPHxdZkRR5LpU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707846426; c=relaxed/simple;
-	bh=iQn54aaFVF8oAcaGpOpdgTZix129CTQXhlY+u0mIfPk=;
-	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
-	 To:Cc:Content-Type; b=sB/7Txxd44BVGzPWHmV+k5inTggZUM4F1MbJPik6Q8+wZ+4+FkI9vy93OLbDpPg5qsh9t3xvw5owiP7qtJjIT3JTzjnd4FKniSrtVmVh7qTsUFTdmTQJJ/8HpJyNBqmCouiLDzZURjal4s0tooOzk/xNCsmN+JqHTCHFgiNjBMg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--linusa.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=WIncUVD6; arc=none smtp.client-ip=209.85.210.202
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--linusa.bounces.google.com
+	s=arc-20240116; t=1707846593; c=relaxed/simple;
+	bh=i8ld5HtzeyeYWO2pGC5631Nlpy7oXvJ39SOh9/so1Cc=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=qt8Toci9pkCwxteEwOPx9kQZcz92u9f9/GkL55ZRtpQA3gh2k7ctB27p4aj7UYoD4aXNzYJtuEqxQsEj/PAVK8J2XjtPw2410ag5riE69MgQcvV5PDf+tv+2F6eMb0FJCHlDwzzj7Uuvb9GhdW9IkWKxGArX/SsdQ7CyMHQMBrI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=I3CDKceS; arc=none smtp.client-ip=173.228.157.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="WIncUVD6"
-Received: by mail-pf1-f202.google.com with SMTP id d2e1a72fcca58-6e0cceb6bd4so1221095b3a.1
-        for <git@vger.kernel.org>; Tue, 13 Feb 2024 09:47:04 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1707846424; x=1708451224; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:from:subject:message-id:references
-         :mime-version:in-reply-to:date:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=leHhGhFVtqhUtQi4yxb0IVZKTZl/DtAy/ejTaCdutUo=;
-        b=WIncUVD60zqeGbGTfNm9rpBBJhXSl2qkL7gxbSP6vztu1fyZhLnfGGtALQM+MHedhq
-         8boBSaN7vGL2fBmIozQlTcge9ghIgRmngG5X5k0hzL0Py5psfgc7TjAsVpyzb6WGmtBd
-         GF27f+lmjBT89qet5zNkbJEkcKbdr7VfK1sPMxfOI/Ed1xLDAaFHrVV+sAYylhQHvAZE
-         WpFISmPh2C+bCJ40VaBtwOCpNMsbtShHlJwiK30cruHjMXVut1Kt/quARbPB/WYjAeIx
-         866Q8gB7X0ksAoAmkXf/vbRR9UsxoVn78BHnrR+D+MVy0l/2LMAYn0EisYlKsKqtFsoi
-         hVGQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1707846424; x=1708451224;
-        h=content-transfer-encoding:cc:to:from:subject:message-id:references
-         :mime-version:in-reply-to:date:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=leHhGhFVtqhUtQi4yxb0IVZKTZl/DtAy/ejTaCdutUo=;
-        b=IyIbqlRicOe92itv9fQgKJeyk59L8EpYtxFLoaCQb8Izq6C+07HAxXOqu7iqvS2oJK
-         UQn+dM1tXvGj//U5Ra9UnF6ZdYCdDnCOxQeK+LhRl+KJVFq6W7bje2aBvY04UYNP9mL8
-         4dREtcMNBSMmK0QqcA6tPAkHeDZvzeGxcRn3NG2j9zptSDMXXQEmdYIj2zA1TpZFwLuF
-         VdJW9Zum9tbWHcIgASWMRhL6unVHegc4Qkhkfzs1KpLs+bXm13P6/sbkol0yQA2Y66Iz
-         IOLVK4SCidx6F3G5uuKvysGTDpMlMjNsRuce9ud5rOtpvZkpmq840eYZ/xA0pz4SvT3t
-         jXUA==
-X-Gm-Message-State: AOJu0Yw834k53/RvDFZniw0feLh9a5g9G02VNMrWJJwTg94t0EEotkJU
-	o8/66bRajzKy1F2utKbtm7LN4oE55ZE/2OArDpvXSFgKevl9joxwhmWqYmVZ6IebnHP6q7gy93d
-	Xpg==
-X-Google-Smtp-Source: AGHT+IEL1TtE8Hm2CsEdl6+BOHBYUanxfNoHkKfB5nWfnYgkwEOR3OUipez73EurGAb0ltWv8vIAN47aAjA=
-X-Received: from fine.c.googlers.com ([fda3:e722:ac3:cc00:7f:e700:c0a8:2221])
- (user=linusa job=sendgmr) by 2002:a05:6a00:9394:b0:6e0:f65c:aa2f with SMTP id
- ka20-20020a056a00939400b006e0f65caa2fmr247152pfb.6.1707846424278; Tue, 13 Feb
- 2024 09:47:04 -0800 (PST)
-Date: Tue, 13 Feb 2024 09:47:02 -0800
-In-Reply-To: <CAP8UFD3ZRfrG4s5jox55dYMRF7UT3uYMkyMraEGWRJ2HqBEYZA@mail.gmail.com>
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="I3CDKceS"
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id 12B0E18DE8;
+	Tue, 13 Feb 2024 12:49:51 -0500 (EST)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=i8ld5HtzeyeYWO2pGC5631Nlpy7oXvJ39SOh9/
+	so1Cc=; b=I3CDKceS0N5e+mB4ZmZktL98ySMx4ihZ68yRIWXMmrACTJcQ7EXust
+	xjK8IIER1pOg6QEmWQSKSgHppJE6O4KTAY5wExpK0LlVDU4rJRdPI8QOwVznwIRV
+	NyUQJ9U7OYhTZIVrT2XkN/UxStI7oOZFdGgFDhbW4ZBqw46ASnqsw=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id 0ACDE18DE7;
+	Tue, 13 Feb 2024 12:49:51 -0500 (EST)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.165.85])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id AB83B18DE6;
+	Tue, 13 Feb 2024 12:49:47 -0500 (EST)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Vincenzo MEZZELA <vincenzo.mezzela@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: [GSOC][RFC] microproject: use test_path_is_* functions in test
+ scripts
+In-Reply-To: <cbb450b3-b333-4391-ac83-66c2daf0ae4d@gmail.com> (Vincenzo
+	MEZZELA's message of "Tue, 13 Feb 2024 16:44:52 +0100")
+References: <cbb450b3-b333-4391-ac83-66c2daf0ae4d@gmail.com>
+Date: Tue, 13 Feb 2024 09:49:46 -0800
+Message-ID: <xmqqy1bo5k5h.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-References: <pull.1632.v3.git.1706664144.gitgitgadget@gmail.com>
- <pull.1632.v4.git.1707196348.gitgitgadget@gmail.com> <38f4b4c4135dfebc06c2b1d5c56854af4b07fedc.1707196348.git.gitgitgadget@gmail.com>
- <CAP8UFD3ZRfrG4s5jox55dYMRF7UT3uYMkyMraEGWRJ2HqBEYZA@mail.gmail.com>
-Message-ID: <owlyfrxwb6jt.fsf@fine.c.googlers.com>
-Subject: Re: [PATCH v4 21/28] trailer: spread usage of "trailer_block" language
-From: Linus Arver <linusa@google.com>
-To: Christian Couder <christian.couder@gmail.com>, 
-	Linus Arver via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, Christian Couder <chriscool@tuxfamily.org>, 
-	Junio C Hamano <gitster@pobox.com>, Emily Shaffer <nasamuffin@google.com>, 
-	Josh Steadmon <steadmon@google.com>, "Randall S. Becker" <rsbecker@nexbridge.com>
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 476C0530-CA98-11EE-91EA-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
 
-Christian Couder <christian.couder@gmail.com> writes:
+Vincenzo MEZZELA <vincenzo.mezzela@gmail.com> writes:
 
-> On Tue, Feb 6, 2024 at 6:12=E2=80=AFAM Linus Arver via GitGitGadget
-> <gitgitgadget@gmail.com> wrote:
->>
->> From: Linus Arver <linusa@google.com>
->>
->> Deprecate the "trailer_info" struct name and replace it with
->> "trailer_block". The main reason is to help readability, because
->> "trailer_info" on the surface sounds like it's about a single trailer
->> when in reality it is a collection of contiguous lines, at least 25% of
->> which are trailers.
->>
->> Signed-off-by: Linus Arver <linusa@google.com>
->> ---
->>  builtin/interpret-trailers.c | 25 +++++-----
->>  trailer.c                    | 97 ++++++++++++++++++------------------
->>  trailer.h                    | 18 +++----
->>  3 files changed, 71 insertions(+), 69 deletions(-)
->>
->> diff --git a/builtin/interpret-trailers.c b/builtin/interpret-trailers.c
->> index 6bf8cec005a..f76841c5280 100644
->> --- a/builtin/interpret-trailers.c
->> +++ b/builtin/interpret-trailers.c
->> @@ -140,8 +140,8 @@ static void interpret_trailers(const struct process_=
-trailer_options *opts,
->>  {
->>         LIST_HEAD(head);
->>         struct strbuf sb =3D STRBUF_INIT;
->> -       struct strbuf trailer_block =3D STRBUF_INIT;
->> -       struct trailer_info *info;
->> +       struct strbuf tb =3D STRBUF_INIT;
->> +       struct trailer_block *trailer_block;
+> Approach:
 >
-> I understand that using 'trailer_block' for a 'struct trailer_block *'
-> makes sense and I like the idea behind this patch, but it's
-> unfortunate that 'struct strbuf trailer_block' becomes 'struct strbuf
-> tb'.
+> As far as I understood, The work consists in replacing the shell
+> 'test' command in the test
+> script under 't/' directory with the ones present in the
+> t/test_lib_functions.sh as follows:
+>
+> - test -f --> test_path_is_file
+>
+> - test -d --> test_path_is_dir
+>
+> - test -e --> test_path_exists
 
-I confess I did not like the name "tb" either. It does have "symmetry in
-naming with 'sb' above" going for it, but that symmetry is only on the
-surface because the "b" in "sb" stands for "buf" (buffer),
-not "block" as is the case for "tb".
+One thing to note is that you'd need to make sure if "test -e" for
+example originally written really means "we want to see something
+there and it does not matter if it is a file or a directory" while
+turning it into test_path_exists.  The operations that such a test
+follows may be expected to create a file and never a directory, in
+which case the condition the original code is testing may need to
+be corrected first to expect a more specific type (e.g. "test -f").
+The same comment applies for the other two.
 
-Let me try to clean up the naming scheme a bit around here.
+Some tests check with "! test -f <path>", which often would want to
+be turned into "test_path_is_missing", but you'd need to make sure
+that is what the original test really meant to do.
 
-> Also the name change for 'struct strbuf trailer_block' could be
-> in a separate patch.
+A microproject is not about "doing the real work to help the
+project".  It is a practice session to come up with a set of small
+changes and explain them well, to send the result to the list to get
+reviewed, to respond to reviews and possibly send updates, and to
+repeat the cycle until completion.  So most likely you'd pick a
+single file or two and do the above conversion, while leaving the
+others as practice material for other GSoC participants.
 
-Will do, thanks.
+Enjoy.
+
