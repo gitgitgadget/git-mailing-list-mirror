@@ -1,80 +1,104 @@
-Received: from mail-lj1-f179.google.com (mail-lj1-f179.google.com [209.85.208.179])
+Received: from mail-pj1-f74.google.com (mail-pj1-f74.google.com [209.85.216.74])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFAD8399
-	for <git@vger.kernel.org>; Tue, 13 Feb 2024 16:30:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77BAE2919
+	for <git@vger.kernel.org>; Tue, 13 Feb 2024 16:35:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.74
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707841837; cv=none; b=sN0ERJUbQJGOkGhVz9uBR8PVyR0P39pzSOeOUFWMaJdDOKiaBV+w4eXv5caghQRfbdlBWyfEZMJjV9raAquqzjZeAUT7cUfPm5yG6j7imzDjFFStXKr/ktN/qyemjMV3nOLmjsdZ5mtInQN1NjTcdYaFUBQtlUza401uSBVJqXw=
+	t=1707842147; cv=none; b=js5mf/xrhj2Ddog/twzFBS/itqx2UBTerwyVCArMccqJa6bgWl1CmszozrXlmBTxD9e5yduW8K0JfOwAH4wGtJdM7ljgAfYsSYuHxnxUC+AEThlEhkwMuEg6/qlD9kkQNkP1Ke4r1oIDVTjPY96BlKFN56SKLghMn5m48WpFisU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707841837; c=relaxed/simple;
-	bh=dDCNtekxInVRJBorPrr9w25YT6BdDTUhU8/IKbvB11Y=;
-	h=Message-ID:Date:MIME-Version:From:To:Subject:Content-Type; b=Pf0FUBC7IuR+cunKYYUTHnL26+1LPteLidFOsnXmJhvhG7rzSHqmj78wivwetWg2USI8qqGAiRvSTQZJmCx2aJsfofNmm0zt610TL/lowV43ZboGj+Vzgs1aOj2SVtYB6aaxv5rcd/0+isqae68zmVb2n+SUb10mS6H9PGvyfnc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=EbrmrMBz; arc=none smtp.client-ip=209.85.208.179
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1707842147; c=relaxed/simple;
+	bh=xBmfX2uF5GIH0ngs0qrPlCfyq+c3MOtgxVYuIxUPg5A=;
+	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
+	 To:Cc:Content-Type; b=DB7AjxghBZ12gF+1vFifR8LKaGX4DEPLVZD2diJG5kpIWvMfaFvAWAq1gCq7DwNpggAZ9fxbuxz5PMjVnc8PBrWTb1luqc19u3ifnu30SELk2EL71pLjoMSa5qCyP0Ur+HjMPk2D0sfhEnBOmvtigxzl68recezjbNFk4KoEags=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--linusa.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=LJR2h888; arc=none smtp.client-ip=209.85.216.74
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--linusa.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EbrmrMBz"
-Received: by mail-lj1-f179.google.com with SMTP id 38308e7fff4ca-2d10ad20955so8875991fa.0
-        for <git@vger.kernel.org>; Tue, 13 Feb 2024 08:30:35 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="LJR2h888"
+Received: by mail-pj1-f74.google.com with SMTP id 98e67ed59e1d1-298ae8b36d1so637619a91.0
+        for <git@vger.kernel.org>; Tue, 13 Feb 2024 08:35:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1707841834; x=1708446634; darn=vger.kernel.org;
-        h=content-transfer-encoding:subject:to:from:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=dDCNtekxInVRJBorPrr9w25YT6BdDTUhU8/IKbvB11Y=;
-        b=EbrmrMBzm1y+ymO4sMDjV2Tv8A+xEtbK+2hOU+EsBCiznaume4OL9ArjNfe58hVJFD
-         xBBuMsl0lZeEJH+SnupqRS7dDygVwerAYF4YdEWdXbejCdwwYvWlx4V8QeTskZ3Vmx8Q
-         aJ/O8H+lcA8qe433KZ834FIHVZxWniPz0WSsrxc+6WD7cDte1JU04DzzPbS48XYA9gSq
-         EQagqwHkTACGni4WsZATsq44CvC7P6M9g+JJdlDP84J4bgdJAQceniIvrfzd36il7uYE
-         uGlWEKdG7T1neBswYYWxKO4VaZl4kxZUxQgRzDWVqYskMsCck5gJftBaJudP7s6iOS4M
-         wo4g==
+        d=google.com; s=20230601; t=1707842146; x=1708446946; darn=vger.kernel.org;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:from:to:cc:subject:date:message-id:reply-to;
+        bh=5LlgNbNVGyiNbqdXEtVPN5Sp1lT6tJlvlYxYh0eDSFs=;
+        b=LJR2h888YMLFcc6RfXqXLKv+eR6XANJ+QyasRmMsmYjTz/p0CXIFzcmlbhjU+RBDp7
+         8sWlNOXvsHyNXWM2+nwDCKOGdFJ+guSnVo25lGPcZZBi1jYYwY9OgQyswsPus2Vwn2y4
+         vlLSCwN6yGarLh8Q5F+tbbYogQegmcdNJ/KsIEwSL1ctoBD2uzbcJuzFtFA4Xq+qrs65
+         b9jX9WMJcx/1l/3CrCBGYt4WAVF5f7RM/Ih+wWMpsV+ShD46CaXDhNG5jVvSYRjLWIrQ
+         LMV8EbKUGfMrhgMWz2/E0Wy+V+gK+toxRPXH4bSuoK3+Y3fFOmma4qehu7/VtSaLVoa8
+         JT2Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1707841834; x=1708446634;
-        h=content-transfer-encoding:subject:to:from:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=dDCNtekxInVRJBorPrr9w25YT6BdDTUhU8/IKbvB11Y=;
-        b=v+FEAa0hlrHEzGNKxWozaZFSubVHu1rMbEIXYmHFw8tAuoR7EnAGdSiyMtE5GaAR/Y
-         IYACx2zxYGlh5DHfDhxDRxIsBH8u5RH3uA7nfShbFLXAbmERRFLr9fK+J4DuJsnk+CD7
-         csrP3W7V5kS351PtwgVl8sF/hXgYEnjmRRpEaoOs2rI7dD9slTT4wyOUe3l3UXum1SJj
-         Rf/17VpLeOpHbiK432pR2odewLfwT5NaM8WL2wWqeAP26fwMT03I5ZysDYTFOdQjhw51
-         ClErTneFpCTTx8iIukei0apOQ9GPb5KQ2gNnDaKVxsj317LG9RYHYXo7StUTmSqhptTO
-         /H+Q==
-X-Gm-Message-State: AOJu0YzeJoHEm5taQas5TheDSNVwOH7abbeR6CEPo/dYs5faSWbSXP+g
-	sumLnCSBDOCmPmULt5F7Qgb/EkLQOsEyxjTRHlJJVqzTsTxMy16Lmbjb3cCN
-X-Google-Smtp-Source: AGHT+IFhsn0bM7+6rXdpMUcyfiPpPZpUtfSSmrt+CQ49PpG3ppb3mehVA6NDDuhQmxzhToELetl8zQ==
-X-Received: by 2002:a2e:8316:0:b0:2d0:ce3c:5848 with SMTP id a22-20020a2e8316000000b002d0ce3c5848mr101150ljh.51.1707841833577;
-        Tue, 13 Feb 2024 08:30:33 -0800 (PST)
-Received: from DESKTOP-T29D115 ([39.49.134.105])
-        by smtp.gmail.com with ESMTPSA id w17-20020a05600c475100b00411062c123esm4920303wmo.26.2024.02.13.08.30.32
-        for <git@vger.kernel.org>
-        (version=TLS1 cipher=ECDHE-ECDSA-AES128-SHA bits=128/128);
-        Tue, 13 Feb 2024 08:30:33 -0800 (PST)
-Message-ID: <65cb9929.050a0220.e37fb.b3e6@mx.google.com>
-Date: Tue, 13 Feb 2024 08:30:33 -0800 (PST)
-X-Google-Original-Date: 13 Feb 2024 21:30:33 +0500
+        d=1e100.net; s=20230601; t=1707842146; x=1708446946;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=5LlgNbNVGyiNbqdXEtVPN5Sp1lT6tJlvlYxYh0eDSFs=;
+        b=WZAakKNC+250oA2wNJHIpw5ROQ9YpjdI3gvkD+Sd7toItInWlN3iHzF6ZQKLTrUtFk
+         n6elJVwn9MSWfJV+BMkAfXZuzpZ2tZpDLIEIzPQ+0ul63dZHy8DS0h5BEKGhD+OFO9Z2
+         Yu7TsuSBOVYDQ8IfXMByaCEDR7WNAlMQbPddbikHASzp29nmQQXz3wugQoUNLew3bXwM
+         IxgEid+GxP9B/u9Cw41FDwd8qNH03lp9zZwBstgqxEmEe+Wk1nlSV0J8i8YGK3CxQ3iC
+         W96tajbt1To30sNiarWRf2krlrCUiJZwC8U0UdPd217V9rr2HH2a7qGBRzINSTudbkmL
+         IOqg==
+X-Gm-Message-State: AOJu0YyHd7I2e1GWPJEbFYmYszKFy56LCYDj6jid+NyuuEnHRDuIP94M
+	0cb/syIWg+CAJeDJoTClXOW5TFc06UB5QvRZ5B8PT76ydocremb8QjegLO6aMTg1iZ6Zjl8F8sM
+	Rdw==
+X-Google-Smtp-Source: AGHT+IE0a2/IU/SxTkDXPmdWo8Gx9sZQTEIwBrR/+ixe3GtVKciHsHOlys9kUWvG1dc0U/FS2CnPx+3yySk=
+X-Received: from fine.c.googlers.com ([fda3:e722:ac3:cc00:7f:e700:c0a8:2221])
+ (user=linusa job=sendgmr) by 2002:a17:90b:2e0d:b0:298:b1d6:dae with SMTP id
+ sl13-20020a17090b2e0d00b00298b1d60daemr83pjb.0.1707842145690; Tue, 13 Feb
+ 2024 08:35:45 -0800 (PST)
+Date: Tue, 13 Feb 2024 08:35:44 -0800
+In-Reply-To: <xmqq34u1e22y.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-From: richardclassicestimation@gmail.com
-To: git@vger.kernel.org
-Subject: Bids Take-off
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: quoted-printable
+Mime-Version: 1.0
+References: <pull.1632.v3.git.1706664144.gitgitgadget@gmail.com>
+ <pull.1632.v4.git.1707196348.gitgitgadget@gmail.com> <f5b7ba08aa7c80a3bd5bcbf5563eac8896fe7054.1707196348.git.gitgitgadget@gmail.com>
+ <xmqq34u1e22y.fsf@gitster.g>
+Message-ID: <owly1q9gcof3.fsf@fine.c.googlers.com>
+Subject: Re: [PATCH v4 10/28] format_trailer_info(): use trailer_item objects
+From: Linus Arver <linusa@google.com>
+To: Junio C Hamano <gitster@pobox.com>, 
+	Linus Arver via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, Christian Couder <chriscool@tuxfamily.org>, 
+	Emily Shaffer <nasamuffin@google.com>, Josh Steadmon <steadmon@google.com>, 
+	"Randall S. Becker" <rsbecker@nexbridge.com>
+Content-Type: text/plain; charset="UTF-8"
 
-Hello,=0D=0A=0D=0AConstruction is not a difficult undertaking whe=
-n you have the right equipment and a well-executed plan. A detail=
-ed construction estimate is the only way to make your constructio=
-n aspirations a reality.=0D=0AWe are a construction estimating/ta=
-ke-offs service that provides a detailed description of the proje=
-ct as well as the necessary expenses. We also provide a cost esti=
-mate of the given project.=0D=0A=0D=0AIf you'd like to see some o=
-f our typical customer work, please let us know if you're a gener=
-al contractor or a subcontractor (what trade you operate in) so w=
-e can show you some samples that will give you a better understan=
-ding of what we offer.=0D=0A=0D=0ARegards=0D=0ARichard=0D=0AMarke=
-ting Manager=0D=0Aclassic estimation
+Junio C Hamano <gitster@pobox.com> writes:
 
+> "Linus Arver via GitGitGadget" <gitgitgadget@gmail.com> writes:
+>
+>> From: Linus Arver <linusa@google.com>
+>>
+>> This is another preparatory refactor to unify the trailer formatters.
+>>
+>> Make format_trailer_info() operate on trailer_item objects, not the raw
+>> string array.
+>>
+>> This breaks t4205 and t6300. We will continue to make improvements until
+>> the test suite passes again, ultimately renaming format_trailer_info()
+>> to format_trailers(), at which point the unification of these formatters
+>> will be complete.
+>>
+>> Signed-off-by: Linus Arver <linusa@google.com>
+>> ---
+>>  trailer.c | 21 ++++++++++-----------
+>>  1 file changed, 10 insertions(+), 11 deletions(-)
+>
+> I would have expected a (tentative) flip from test_expect_success to
+> test_expect_failure in the affected tests, to illustrate what behaviour
+> change this step introduces and why.
+
+Somehow, such a simple idea did not cross my mind (even though I admit I
+didn't like how I was breaking tests, albeit temporarily). Will update
+on next reroll.
+
+> But the huge single step in the previous round broken out into
+> smaller steps like this round makes them much easier to follow.
+
+Great, I'm doing something right for once! ;)
