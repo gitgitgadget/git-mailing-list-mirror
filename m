@@ -1,63 +1,63 @@
-Received: from mail-lj1-f179.google.com (mail-lj1-f179.google.com [209.85.208.179])
+Received: from mail-wm1-f43.google.com (mail-wm1-f43.google.com [209.85.128.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D4281B7FE
-	for <git@vger.kernel.org>; Tue, 13 Feb 2024 08:41:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E86D224C6
+	for <git@vger.kernel.org>; Tue, 13 Feb 2024 08:41:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707813717; cv=none; b=TEasSFO+t8Vhfw8HYElQAqqIjj0S4VFNcXu8lGIG0Rh8j4YneGxZ9QqDwwexLTZIt0lIbbp+7Nyqe5XXcNwUr2EQDJlmSZ4maST8HoxlhmIBY4aMS/OmsArAfFYyNAjBLRtC5HL/dDsofPEdq3ubDGk6smWGfPQL0woTM06icsg=
+	t=1707813719; cv=none; b=Im5T/HJf8tjz3FbAsYqx16/MlnMgERkqewz2MPqo3yWOd75IIDy2W+mDfiADtpgT5v2SrwKC9juVeq/XTMysn9rIR2Ycx1Buuk38+NLAmtVgz/5aGqCodf1Yyt/PuYmdddnrpahXKaY9osEdIJfXgkm2m74fmWG6kLuZVovegR4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707813717; c=relaxed/simple;
-	bh=GrslJf7zwznCr+lViYLeubzBI8nd61LlCqp9zotvxW4=;
+	s=arc-20240116; t=1707813719; c=relaxed/simple;
+	bh=JGK/3U+YVHbi42/87+8D4qb5BXiukQmXCkiwmW06+L0=;
 	h=Message-ID:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=T5TnYmSrenzZqRTU4OQMHv/J+UfhRTxmx0c0AjBTQmzqUmLCYUkD6Rk4lZsysxS0eBhBAlQZmhNUCkRmpJQSY/9JMe5MbnmSnOPODURwsND5iHIerRGfY7MuCAamiqNX1tv0FpzufI4VSRd38+dXNoWn04hOhQILPU5D2XQTpbs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hxjKCWpo; arc=none smtp.client-ip=209.85.208.179
+	 MIME-Version:To:Cc; b=Y3Z3FyGZuyYODiCF8BSEkKCzxVUw4MfwXYSYdOkxp0pSGc7WGH8oMGOrX0rqVlQWjOv1S5/u0wX4WAcLI2KwkZ/+BIJe7Xqnootr/yn2fvpFv/MVgSrqGXRqCT0dXaQ5+l4pfWdlCG0zgq65pwgegw+hpMvRlZPLlfZ+/1qt5L8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hypQ5M9c; arc=none smtp.client-ip=209.85.128.43
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hxjKCWpo"
-Received: by mail-lj1-f179.google.com with SMTP id 38308e7fff4ca-2d1094b5568so3728971fa.1
-        for <git@vger.kernel.org>; Tue, 13 Feb 2024 00:41:55 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hypQ5M9c"
+Received: by mail-wm1-f43.google.com with SMTP id 5b1f17b1804b1-411a6ceada8so8477985e9.3
+        for <git@vger.kernel.org>; Tue, 13 Feb 2024 00:41:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1707813714; x=1708418514; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1707813715; x=1708418515; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=EHXU9fzIVpwa+u3LyYtpp8MZzdGNheEGwQSj8lXLfYg=;
-        b=hxjKCWpoWx3y6QSjHENc8fL2gCnpU/QW52SHM8KkZKlhwfXKdkUMHK5X/KfqeihrSN
-         I8QyaiUBnS82bu47IOLngWZ33JE/GrCYnkOeHkZsj5dTPyN2ihslJQ8PfTaMU/cf0MDD
-         kYdZsHmRsKk6CKq0FVwFEuW75AwDgRjNr979/2srHol1fUNEhZrTxGeLIhsj8kisR0OS
-         IBHn0PyTReekb+wMswitjYqDQefCUc9+wDexUgbdfJ6FxKv/imrQm262iHgGGhwP29P2
-         fUn4fPJZZ4WBcC1fiiTpyHZnVlCFIdojRatWsb/ikNpOvt6Nr7eOk79f1s6/o72U4eBx
-         4/pg==
+        bh=rAXaQat3fAdnCzzf/SoTPVQfaVFuwFz0Zd8u1TmWe1M=;
+        b=hypQ5M9cv8AonhkgJJ65Pj20D9N9F2CI6kD/LF3OSkWNgSUXSB/nBCK3Xu6JLz5DpZ
+         N1o7hCSDcWu1+Zxvj59qJx1E8w6w5X7ulZxWc0Wh84yeXYvPWd4edeyLVbjCjrXJqGa2
+         5gEIi1wNVApu2s1zFw/G5alpQZADN4zDIYQ2u8HBB86QdeZyBQ9/jX3ZbaWdFbIToJ7k
+         J9zLCivTV7AU665cQqUe06ozRkXRA8zgcMawlBAs831NBJIkCIaKuyR5mtkRPf6bxHz8
+         psz1ZRmnm910bpRicbL1BgLF7vzYlf1yKG3Hk+ObwCuJZyKGLE+ZKAGBKZ6vj/qd+4S/
+         gXaw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1707813714; x=1708418514;
+        d=1e100.net; s=20230601; t=1707813715; x=1708418515;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=EHXU9fzIVpwa+u3LyYtpp8MZzdGNheEGwQSj8lXLfYg=;
-        b=v2vepoWktEQ30UZPediWSL0KOHD+41+QQdFy5S6j3vVkauZjO53dbNKcA3zicRbAMH
-         7E/reLcHxxvH0PpVsh6E7mN2DpeprWjLdXRxeTqyOUhzA/Fqxx0CI0uQdRbgSoWsQQTz
-         QZbtFAKaUdByyFnDVeJ+v+KK3Cd0n0xLUgq2cnrgcjbUCzjTzZ3jlPS6MY8PsmlKqGlG
-         g80JcJK5E+j/INpOjb7FUleCwPPed5niFkZhfRS4Ry21JhFCxO5MvB5jYMVbcp0nFIVh
-         z0NtT5HSTswExr3Nb+gwNJusK1WoBToTuwOS56dP4esNBFEU7YLpVlYcV/MKd4Zzg/ot
-         3fuA==
-X-Gm-Message-State: AOJu0YwuqZQ2zKsbkNLRd3s/3msnCCFy+wPAWmj1XgvcqlogFpWG0MQB
-	NbPrfUruzOzhxE+CpfIRA3c6uexHxPtXSbqSq/0xLM7jAJt54fCoFLqmrnOq
-X-Google-Smtp-Source: AGHT+IElKY0oVsHmLZRxTd1HPRX77xFUobasrBz7JB+Y0RhFUy+ImEFa6ry0Fpv4TptVC+y+xegfuA==
-X-Received: by 2002:a2e:a0c3:0:b0:2d0:5f2e:5b35 with SMTP id f3-20020a2ea0c3000000b002d05f2e5b35mr6475207ljm.30.1707813713588;
-        Tue, 13 Feb 2024 00:41:53 -0800 (PST)
+        bh=rAXaQat3fAdnCzzf/SoTPVQfaVFuwFz0Zd8u1TmWe1M=;
+        b=SxB2C1q+vvJ/ZTYzB6lZRke5A57ZhPe3T4k6W/Pghu10k/IcKBhv7WLpGyoglcDREt
+         xTtU7lBNVHmtBV4KxsLBdC+g6hheYAVu8JZN1yh6MQ3rXMbt53m2rQZ298/wkXg11pok
+         0vvIsUX6EzV6mhx5OCzSWoSu7a1IvS/JHRm9uQy3qIwB1OYBx0AyEjKPuF9OKsJTG7GY
+         JILR3SwuuDMVSPYxY+0YS8KniTYEdyzooEp2jUbip4KbR9PW/tKNvV7d8lvoXncen1W0
+         iTPPuUJ5pBRzhT3C25dcR9bFu3CPG9/7BI3sNUiwrz7KIZiwGKYpuRhw22lZ0WN5IYKB
+         qacA==
+X-Gm-Message-State: AOJu0YyPVXfbtagDed86RwID/I3JocRkv+r2V+32L2dDJvd5Q+lVsLg/
+	fMjGiMKAWZiO90FucAqU5JVVAtdqw5jJ1eSIiWLaQiFldudorPN6NwEmLwAL
+X-Google-Smtp-Source: AGHT+IE71+mhXCmkFw5LD6aTVtL57RGkXyKtMqGig7sWIwDHjhxcI8SOfK9NJHfStzS2etHg4nwDtw==
+X-Received: by 2002:a05:600c:474d:b0:40f:e40:b53d with SMTP id w13-20020a05600c474d00b0040f0e40b53dmr6611887wmo.1.1707813714970;
+        Tue, 13 Feb 2024 00:41:54 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id bj8-20020a0560001e0800b0033b3ca3a255sm8920997wrb.19.2024.02.13.00.41.52
+        by smtp.gmail.com with ESMTPSA id m18-20020a5d56d2000000b0033b60bad2fcsm8837068wrw.113.2024.02.13.00.41.54
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 13 Feb 2024 00:41:52 -0800 (PST)
-Message-ID: <7477b18adebe4eca721a0f2fa73ec5bdec389d36.1707813709.git.gitgitgadget@gmail.com>
+        Tue, 13 Feb 2024 00:41:54 -0800 (PST)
+Message-ID: <0aca08a2cb5d679dc4d5dd9401f989d026c80b5b.1707813709.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1657.git.1707813709.gitgitgadget@gmail.com>
 References: <pull.1657.git.1707813709.gitgitgadget@gmail.com>
 From: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Tue, 13 Feb 2024 08:41:40 +0000
-Subject: [PATCH 04/12] Prepare `paint_down_to_common()` for handling shallow
- commits
+Date: Tue, 13 Feb 2024 08:41:42 +0000
+Subject: [PATCH 06/12] merge_bases_many(): pass on errors from
+ `paint_down_to_common()`
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -73,84 +73,102 @@ Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-When `git fetch --update-shallow` needs to test for commit ancestry, it
-can naturally run into a missing object (e.g. if it is a parent of a
-shallow commit). To accommodate, the merge base logic will need to be
-able to handle this situation gracefully.
+The `paint_down_to_common()` function was just taught to indicate
+parsing errors, and now the `merge_bases_many()` function is aware of
+that, too.
 
-Currently, that logic pretends that a missing parent commit is
-equivalent to a a missing parent commit, and for the purpose of
-`--update-shallow` that is exactly what we need it to do.
+One tricky aspect is that `merge_bases_many()` parses commits of its
+own, but wants to gracefully handle the scenario where NULL is passed as
+a merge head, returning the empty list of merge bases. The way this was
+handled involved calling `repo_parse_commit(NULL)` and relying on it to
+return an error. This has to be done differently now so that we can
+handle missing commits correctly by producing a fatal error.
 
-Therefore, let's introduce a flag to indicate when that is precisely the
-logic we want.
-
-We need a flag, and cannot rely on `is_repository_shallow()` to indicate
-that situation, because that function would return 0: There may not
-actually be a `shallow` file, as demonstrated e.g. by t5537.10 ("add new
-shallow root with receive.updateshallow on") and t5538.4 ("add new
-shallow root with receive.updateshallow on").
+Next step: adjust the caller of `merge_bases_many()`:
+`get_merge_bases_many_0()`.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- commit-reach.c | 16 ++++++++++++----
- 1 file changed, 12 insertions(+), 4 deletions(-)
+ commit-reach.c | 35 ++++++++++++++++++++++-------------
+ 1 file changed, 22 insertions(+), 13 deletions(-)
 
 diff --git a/commit-reach.c b/commit-reach.c
-index 248a0f2b39d..1d1d8c989de 100644
+index dafe117036b..c9969da8c6c 100644
 --- a/commit-reach.c
 +++ b/commit-reach.c
-@@ -53,7 +53,8 @@ static int queue_has_nonstale(struct prio_queue *queue)
- static struct commit_list *paint_down_to_common(struct repository *r,
- 						struct commit *one, int n,
- 						struct commit **twos,
--						timestamp_t min_generation)
-+						timestamp_t min_generation,
-+						int ignore_missing_commits)
+@@ -129,39 +129,47 @@ static int paint_down_to_common(struct repository *r,
+ 	return 0;
+ }
+ 
+-static struct commit_list *merge_bases_many(struct repository *r,
+-					    struct commit *one, int n,
+-					    struct commit **twos)
++static int merge_bases_many(struct repository *r,
++			    struct commit *one, int n,
++			    struct commit **twos,
++			    struct commit_list **result)
  {
- 	struct prio_queue queue = { compare_commits_by_gen_then_commit_date };
- 	struct commit_list *result = NULL;
-@@ -106,6 +107,13 @@ static struct commit_list *paint_down_to_common(struct repository *r,
- 			if ((p->object.flags & flags) == flags)
- 				continue;
- 			if (repo_parse_commit(r, p)) {
-+				/*
-+				 * At this stage, we know that the commit is
-+				 * missing: `repo_parse_commit()` uses
-+				 * `OBJECT_INFO_DIE_IF_CORRUPT` and therefore
-+				 * corrupt commits would already have been
-+				 * dispatched with a `die()`.
-+				 */
- 				free_commit_list(result);
- 				return NULL;
- 			}
-@@ -142,7 +150,7 @@ static struct commit_list *merge_bases_many(struct repository *r,
- 			return NULL;
+ 	struct commit_list *list = NULL;
+-	struct commit_list *result = NULL;
+ 	int i;
+ 
+ 	for (i = 0; i < n; i++) {
+-		if (one == twos[i])
++		if (one == twos[i]) {
+ 			/*
+ 			 * We do not mark this even with RESULT so we do not
+ 			 * have to clean it up.
+ 			 */
+-			return commit_list_insert(one, &result);
++			*result = commit_list_insert(one, result);
++			return 0;
++		}
  	}
  
--	list = paint_down_to_common(r, one, n, twos, 0);
-+	list = paint_down_to_common(r, one, n, twos, 0, 0);
++	if (!one)
++		return 0;
+ 	if (repo_parse_commit(r, one))
+-		return NULL;
++		return error(_("could not parse commit %s"),
++			     oid_to_hex(&one->object.oid));
+ 	for (i = 0; i < n; i++) {
++		if (!twos[i])
++			return 0;
+ 		if (repo_parse_commit(r, twos[i]))
+-			return NULL;
++			return error(_("could not parse commit %s"),
++				     oid_to_hex(&twos[i]->object.oid));
+ 	}
+ 
+ 	if (paint_down_to_common(r, one, n, twos, 0, 0, &list) < 0)
+-		return NULL;
++		return -1;
  
  	while (list) {
  		struct commit *commit = pop_commit(&list);
-@@ -213,7 +221,7 @@ static int remove_redundant_no_gen(struct repository *r,
- 				min_generation = curr_generation;
- 		}
- 		common = paint_down_to_common(r, array[i], filled,
--					      work, min_generation);
-+					      work, min_generation, 0);
- 		if (array[i]->object.flags & PARENT2)
- 			redundant[i] = 1;
- 		for (j = 0; j < filled; j++)
-@@ -503,7 +511,7 @@ int repo_in_merge_bases_many(struct repository *r, struct commit *commit,
+ 		if (!(commit->object.flags & STALE))
+-			commit_list_insert_by_date(commit, &result);
++			commit_list_insert_by_date(commit, result);
+ 	}
+-	return result;
++	return 0;
+ }
  
- 	bases = paint_down_to_common(r, commit,
- 				     nr_reference, reference,
--				     generation);
-+				     generation, ignore_missing_commits);
- 	if (commit->object.flags & PARENT2)
- 		ret = 1;
- 	clear_commit_marks(commit, all_flags);
+ struct commit_list *get_octopus_merge_bases(struct commit_list *in)
+@@ -399,10 +407,11 @@ static struct commit_list *get_merge_bases_many_0(struct repository *r,
+ {
+ 	struct commit_list *list;
+ 	struct commit **rslt;
+-	struct commit_list *result;
++	struct commit_list *result = NULL;
+ 	int cnt, i;
+ 
+-	result = merge_bases_many(r, one, n, twos);
++	if (merge_bases_many(r, one, n, twos, &result) < 0)
++		return NULL;
+ 	for (i = 0; i < n; i++) {
+ 		if (one == twos[i])
+ 			return result;
 -- 
 gitgitgadget
 
