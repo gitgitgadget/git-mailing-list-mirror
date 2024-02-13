@@ -1,143 +1,87 @@
-Received: from wfhigh5-smtp.messagingengine.com (wfhigh5-smtp.messagingengine.com [64.147.123.156])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yb1-f202.google.com (mail-yb1-f202.google.com [209.85.219.202])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 826706088B
-	for <git@vger.kernel.org>; Tue, 13 Feb 2024 20:36:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.156
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1021B5FDD7
+	for <git@vger.kernel.org>; Tue, 13 Feb 2024 20:37:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.202
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707856568; cv=none; b=Kc+ClhLlKcK0d8bPE4Kz9zKIsdGmNGeQHzRn8TbJA7npyQF2bKUNmpTzn8rBt1y8pKB0fAU50IOJgS6NvhIPaBkpAZqF7JzP+DTwI/Q/FR9gZNTmPS0OY4/JetKYCdzeh0dGsEpGFTc/0ZZxmcVzWY4JT/6o64bmzjSCcqUI+8k=
+	t=1707856629; cv=none; b=mmTKTjNX/s3EszBKzUDYbK2yROoM/uzuLJaQjzq5krnnERFuaZyQUWRzubKwnbGRYICrdU7SDz7U5nkeuaDbwyt2plWat9N76bYcwlsX9howPszagFNVcmeco0TDBEZ0Hp7B2WAx7TJdEt15C3hIwLDCv55t9x36lehE3ctuy2M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707856568; c=relaxed/simple;
-	bh=K9D4qGuuA1Pd2OZ8Xm7w1unlLMJ+//w1S3I2+iF6HmE=;
-	h=MIME-Version:Message-Id:In-Reply-To:References:Date:From:To:Cc:
-	 Subject:Content-Type; b=ejoWgn7zgqPB9YyEWLXac21VfvHNzmMUQUOLM1uN+YXQ/m2m7K6a2dlgP1u6ELFS+BVZafJaXOpoBFElVlUMK1LwDUUFSOZvJjuOTc4fNbwAM+ADiV4JGmjSHovvzar8QmUuWrNYlrTe7T41Gt5DSUQ1wJ4KU6Qf9pe/ZVoaO9o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=khaugsbakk.name; spf=pass smtp.mailfrom=khaugsbakk.name; dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b=UAw19nUs; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=K5Yi6Yvh; arc=none smtp.client-ip=64.147.123.156
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=khaugsbakk.name
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=khaugsbakk.name
+	s=arc-20240116; t=1707856629; c=relaxed/simple;
+	bh=FGYjEIKUxCE74SB78VWFSYii3zRaq4KSKjzvxQNQDaA=;
+	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
+	 To:Cc:Content-Type; b=H9nnM5SB+0YR5zM8Z62cHBM8mlqg89DyS05V+MdXegG1nQNfQlZGpOcJjqtEhTtylup0AltTsjs28K+DH7iyDlDGQOoU0mdPr3erF8e8XwdebqkM99MLJs7/NS+9hKmVLFoWI+ILzw06rAPyd6qNmRBIahC/4CcO1O1VeJdPB2Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--linusa.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=0BuE1otu; arc=none smtp.client-ip=209.85.219.202
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--linusa.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b="UAw19nUs";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="K5Yi6Yvh"
-Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
-	by mailfhigh.west.internal (Postfix) with ESMTP id 7CDC618000C5;
-	Tue, 13 Feb 2024 15:36:05 -0500 (EST)
-Received: from imap49 ([10.202.2.99])
-  by compute1.internal (MEProxy); Tue, 13 Feb 2024 15:36:05 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=khaugsbakk.name;
-	 h=cc:cc:content-transfer-encoding:content-type:content-type
-	:date:date:from:from:in-reply-to:in-reply-to:message-id
-	:mime-version:references:reply-to:subject:subject:to:to; s=fm2;
-	 t=1707856565; x=1707942965; bh=riGmIVSAm6efDbezDr/xl5mpjEH6gXk1
-	dYLL3jcrByA=; b=UAw19nUsN+G0c71AFKqX0AegUoJLIGpCK1A0MhiqvLFB6oUK
-	KDMg8bKvkAY8W+H8jl2qaMCkHji6nMCOsKFdkPIxf9kyS8cfQx2ertpbriZAt6rD
-	+NaP2yMpicwqFqFUIpQXsEryNRIlgt8fmbObkuIu8ahddP968m/aOZCBIXCR6yGi
-	IVhcAVWe2meAZT+dPqR9cPEXQ/xKtDQFmexyVhBjzhraF7CoNGbyQFzsCSHO5m+g
-	C4xzFWcmCqnKiwzJRx2T+OXvP4cm9jaOvjXicATvjaSaalIkplD3Y82BqTTxFFNI
-	A6+SEmj+irRqkaAIy6MZoGm1EL7yCYawgpi4JA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1707856565; x=
-	1707942965; bh=riGmIVSAm6efDbezDr/xl5mpjEH6gXk1dYLL3jcrByA=; b=K
-	5Yi6Yvhsxyy6gqh18fk85LpeVUc+uKlSvixbXomO8z08BIUmXYeNVK+Ea3lUh60w
-	zQe+aUiSyulgR2QFQm1g7xU0tJO8yEkbiP55Kj2LPXZQC675CaqHIWWW/DlYQquN
-	hy863/er1DngTziwRT8zfu3kl5Zfqj1O0kLiGAkqAykfwCvMc17QjF6oCZ1B25K9
-	0wMrtVFljKGrEPUXXhHkadyvTBR7Df3T5YVXXa1e+R6mx7v3hqyXZ6Nw6nhtTqZU
-	PERaZ/Cr2zD6a6Rz3GBD14ww3Db4/c+C+Yxt+HxS6crVK84Y8z5YOiqKV4/Mmk94
-	SpxMB3EneW4Et4F1LpcvA==
-X-ME-Sender: <xms:tNLLZWO4FpNdKiKs05LozztNV-cTErB8fU3nrmIx6_iEDDIYGhnW-2g>
-    <xme:tNLLZU-Qjyf6uzgeiZ0mQoDoWBdaWdUPAH8fITVX_P-HerWN8Orh2nie1FLvDZH1-
-    pdUY-Ii3nAlQK6-DA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrudehgddufeejucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    cujfgurhepofgfggfkjghffffhvfevufgtgfesthhqredtreerjeenucfhrhhomhepfdfm
-    rhhishhtohhffhgvrhcujfgruhhgshgsrghkkhdfuceotghouggvsehkhhgruhhgshgsrg
-    hkkhdrnhgrmhgvqeenucggtffrrghtthgvrhhnpedvveehiedufeehffdvteeuveekhefh
-    leeigfektdeifeduteeuheeufeetffefudenucevlhhushhtvghrufhiiigvpedunecurf
-    grrhgrmhepmhgrihhlfhhrohhmpegtohguvgeskhhhrghughhssggrkhhkrdhnrghmvg
-X-ME-Proxy: <xmx:tNLLZdTD-1U46PqnYmx8JPeWaPGecCPXM6JVNB9TRJkGkH8SpoDV9g>
-    <xmx:tNLLZWtFdnLpHYrTCo-APeYC17hA8dnGeX-cPYwRSsVChWIKoZmecw>
-    <xmx:tNLLZed0oQO8slIbFI6GurNAmj8k_QjBDrFGFmhvPRN_HeoJuJ_AFw>
-    <xmx:tdLLZfqXmdq-hbSHMgBhFIgiPlicGmgRvoqoPPwhytGi1DFmSdeqZQjwR_U>
-Feedback-ID: i2671468f:Fastmail
-Received: by mailuser.nyi.internal (Postfix, from userid 501)
-	id B927C15A0093; Tue, 13 Feb 2024 15:36:04 -0500 (EST)
-X-Mailer: MessagingEngine.com Webmail Interface
-User-Agent: Cyrus-JMAP/3.11.0-alpha0-144-ge5821d614e-fm-20240125.002-ge5821d61
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="0BuE1otu"
+Received: by mail-yb1-f202.google.com with SMTP id 3f1490d57ef6-dc64e0fc7c8so6796263276.2
+        for <git@vger.kernel.org>; Tue, 13 Feb 2024 12:37:07 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1707856627; x=1708461427; darn=vger.kernel.org;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:from:to:cc:subject:date:message-id:reply-to;
+        bh=+0wER0y8FcruUBL5Ule9aLntURhP9WxfuTZUpeUg7W8=;
+        b=0BuE1otuM33PqlnQITSuy/OXQydUcxtnb/In42le+VlZWBYRHMw1smuImpUVBEt6DR
+         hzjLAtR1dErn0l+sP6YyIri9edvK1ldv+fQkhrwy7OMuDBOYEoK0HEoYxsptDYfTTPZy
+         zsCTIF1pnKQqG4AeWsSCx+YHaURbRFPlUFalh7RYex7Xv6l3/5Vy+z1TaN9kd2wis3tu
+         G8ljn6511B08OWLbqXlslKka3FWHp3XlJW74pmEBBQVqdizvdaXc2nkP6ZwCF5nDforE
+         9MbRx0QQnz6V0o8S0ajs5tWHHNT3gx1+808XhpzVDH5kQX4/ST3ARDu8bsHNmdhwu+L5
+         LbMg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1707856627; x=1708461427;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=+0wER0y8FcruUBL5Ule9aLntURhP9WxfuTZUpeUg7W8=;
+        b=Tpbm7Nzo5nDYoTnfl8nF0d8fF63Fwm17B85RLi9WVkWVxB28jx76xW9qQAE+IDnmC6
+         C3+uHVwsw+84HLffJYUbAiFDv5UDBum4+NtHK8Eaqe601vcXlvuRFUgI55DBpNgnKm78
+         A+hUj62NQRkfenkCTXJIpJagbZ+Ecp3DSyoMG50Vt3jxtInoOxE9XmKuFefKhNLR1p1t
+         217M3s+o3xUjhSoaqnaa/IdpEF7EYxHPMWUVCUNGnRHKWR7q2497dCoXxzwWdlS5btW6
+         g/VLU2RcczapRpam5aP89Pf4Q+lqB5JOEZd87Vg0O91WyQeASoNURvHMfU87CmrB30tl
+         2sFw==
+X-Forwarded-Encrypted: i=1; AJvYcCXVBrwHJ1rp/6Yrb/+H6OUUsAnN4iKdIxAu8fH0LgNE74N6VlZ3fUCFsXuQu9iRA6EUcGpxdZp2ggXMwiSlkNtgBcY4
+X-Gm-Message-State: AOJu0YwnvY3XT91logr37YtSkKWLFDp51ykh21bE9Js7hAQ9cg0Hxxhi
+	zOFalVrx9s/59Dwb4psWFXI0NReycR/TU2wRaxK6Kl8+YFDZJS59cvfb6TqXN1heWbd6QoJSEcD
+	WqQ==
+X-Google-Smtp-Source: AGHT+IFfo7Y/+lcJcVqeesstXhkk4L65rOrFTs2y873Rpvb0sEzBm1ANnX6/SqxSB6aA46lXhTSDgpWJ/qs=
+X-Received: from fine.c.googlers.com ([fda3:e722:ac3:cc00:7f:e700:c0a8:2221])
+ (user=linusa job=sendgmr) by 2002:a05:6902:1029:b0:dcc:79ab:e522 with SMTP id
+ x9-20020a056902102900b00dcc79abe522mr19332ybt.11.1707856627010; Tue, 13 Feb
+ 2024 12:37:07 -0800 (PST)
+Date: Tue, 13 Feb 2024 12:37:05 -0800
+In-Reply-To: <owlyr0hg9kr3.fsf@fine.c.googlers.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Message-Id: <6446a48c-4b9a-4095-9083-071f95ce3b84@app.fastmail.com>
-In-Reply-To: <b9ca1ab7-f8f6-4fe0-885a-51728d9ec708@gmail.com>
-References: 
- <1c959378cf495d7a3d70d0c7bdf08cc501ed6e5d.1707679627.git.code@khaugsbakk.name>
- <cover.1707839454.git.code@khaugsbakk.name>
- <9355fc98e3dac5768ecaf9e179be2f7a0e74d633.1707839454.git.code@khaugsbakk.name>
- <xmqqcyt08fa1.fsf@gitster.g> <69f60c3a-ff47-4cb9-a229-6c5a36e7d9fa@gmail.com>
- <xmqqle7o5f34.fsf@gitster.g> <b9ca1ab7-f8f6-4fe0-885a-51728d9ec708@gmail.com>
-Date: Tue, 13 Feb 2024 21:35:44 +0100
-From: "Kristoffer Haugsbakk" <code@khaugsbakk.name>
-To: =?UTF-8?Q?Rub=C3=A9n_Justo?= <rjusto@gmail.com>
-Cc: git@vger.kernel.org, "Junio C Hamano" <gitster@pobox.com>
-Subject: Re: [PATCH v3 2/2] column: guard against negative padding
-Content-Type: text/plain;charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Mime-Version: 1.0
+References: <xmqq1q9mmtpw.fsf@gitster.g> <owlyr0hg9kr3.fsf@fine.c.googlers.com>
+Message-ID: <owlyo7ck9k3y.fsf@fine.c.googlers.com>
+Subject: Re: [PATCH] git: --no-lazy-fetch option
+From: Linus Arver <linusa@google.com>
+To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Cc: Christian Couder <chriscool@tuxfamily.org>
+Content-Type: text/plain; charset="UTF-8"
 
-On Tue, Feb 13, 2024, at 20:56, Rub=C3=A9n Justo wrote:
-> On 13-feb-2024 11:39:11, Junio C Hamano wrote:
->> Rub=C3=A9n Justo <rjusto@gmail.com> writes:
->> The point of BUG() is to help developers catch the silly breakage
->> before it excapes from the lab, and we can expect these careless
->> developers to ignore the return value.  But "column --padding=3D-1"
->> invoked as a subprocess will show a human-readable error message
->> to such a developer, so it is less important than the BUG() in the
->> other place.
->>
->> There is no black or white decision, but this one is much less
->> darker gray than the other one is.
+Linus Arver <linusa@google.com> writes:
+
+> Junio C Hamano <gitster@pobox.com> writes:
 >
-> I've checked this, without that BUG(), and the result has not been
-> pretty:
+>> Sometimes, especially during tests of low level machinery, it is
+>> handy to have a way to disable lazy fetching of objects.  This
+>> allows us to say, for example, "git cat-file -e <object-name>", to
+>> see if the object is locally available.
 >
-> diff --git a/builtin/tag.c b/builtin/tag.c
-> index 37473ac21f..e15dfa73d2 100644
-> --- a/builtin/tag.c
-> +++ b/builtin/tag.c
-> @@ -529,7 +529,7 @@ int cmd_tag(int argc, const char **argv, const cha=
-r *prefix)
->                 if (column_active(colopts)) {
->                         struct column_options copts;
->                         memset(&copts, 0, sizeof(copts));
-> -                       copts.padding =3D 2;
-> +                       copts.padding =3D -1;
->                         run_column_filter(colopts, &copts);
->                 }
->                 filter.name_patterns =3D argv;
->
-> I can imagine a future change that opens that current "2" to the user.
-> And the possible report from a user who tries "-1" would not be easy.
->
-> But I agree with you, that BUG() does not leave a good taste in the
-> mouth.
->
-> Maybe we should refactor run_column_filter(), I don't know, but I think
-> that is outside of the scope of this series.
+> Nit: perhaps s/locally/already locally/ is better?
 
-Thanks for trying that out=E2=80=94some very topical testing!
+I forgot to mention that the new flag is missing a documentation entry
+in Documentation/git.txt. Perhaps something like
 
-I will take the night to think about v4. But I will defer to the
-reviewers=E2=80=99 judgement on the scope of this series/change.
+    --no-lazy-fetch::
+        Do not fetch missing objects. Useful together with `git cat-file -e
+        <object-name>`, for example, to see if the object is already
+        locally available.
 
-(All I know is that it can be tricky balancing such defensive checks
-with readability and maintanability.)
-
-Thanks
-
---=20
-Kristoffer Haugsbakk
-
+?
