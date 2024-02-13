@@ -1,101 +1,168 @@
-Received: from mail-wr1-f42.google.com (mail-wr1-f42.google.com [209.85.221.42])
+Received: from mail-ed1-f47.google.com (mail-ed1-f47.google.com [209.85.208.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9164D17CD
-	for <git@vger.kernel.org>; Tue, 13 Feb 2024 02:24:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AA8133E1
+	for <git@vger.kernel.org>; Tue, 13 Feb 2024 02:48:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707791059; cv=none; b=bDeJQhaEqQ0NAuFRdAMNYUV3PM2awWUaXsDbnsM4XORYRFrMnOUCLmn3vEv/nskgQtgcWedOGvtNODCS/4vRZ9wJLd9GFkbQAiDtiWe6x+9yqfJZvEyVo4RZzRmpBQoXQbX+ytGi3RHaniPZlJ/gNXtXy5DnKYtJogB9ZmXkViE=
+	t=1707792525; cv=none; b=rE7prQ2JtmBTI7CRBQSkH2XetwdAlgneWbt4FB8Sf09FFICWNai5dXvADLkIVp5u9+XDjmpF/lRDkE7Qd7HmMqVVha4dhVWm73lrLc2+O+2//vhWXHdXvCzwiL2mV2NicZYyOEyGG80/ASSD9KknYKTJwRc13xP3zCoQf4pKCWc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707791059; c=relaxed/simple;
-	bh=VRDF12S/WmvinvQYjVEO8ZAW+7vEK0HA1LM4HPzyQ8Y=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=dOt2WNzPDaxsHZ6PFxhu0sTNx9FMYA0TngZLJhCgpUtRQhjenH4Opp2wA+R75E0jiGRRc81bCcfJWhJsyWrlbYQ/wapm8tClwgarMaDrr9UZCUDoTU2ZFjCNdgBFwEyqVZcN8pSxY7GabIol9EplWoc+2XIz0at1RA386goE6+4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Hv+KQECs; arc=none smtp.client-ip=209.85.221.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1707792525; c=relaxed/simple;
+	bh=p8pjSLJSr9e/rd5t4s7ub5GLezIzQpZxPrGkveWxrp8=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=psKA8Hr9PUDa2hqApC6T0HW5Cq6HwLJuZjAw9KhexGM9METwlcwdtCyoGwkQub/huiS5sfLkET3CPeixIIifGnYYJVBlflxk/Lpkkw1gpucKXkK0Z9Q4/C/pI9sM3YcA/u6y6MAdtuLXrj7a3qx1IS4gnTGmA3X5cExwVhrgwGo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=0dfmeZHr; arc=none smtp.client-ip=209.85.208.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Hv+KQECs"
-Received: by mail-wr1-f42.google.com with SMTP id ffacd0b85a97d-3392b045e0aso2639534f8f.2
-        for <git@vger.kernel.org>; Mon, 12 Feb 2024 18:24:17 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="0dfmeZHr"
+Received: by mail-ed1-f47.google.com with SMTP id 4fb4d7f45d1cf-55ad2a47b7aso620554a12.3
+        for <git@vger.kernel.org>; Mon, 12 Feb 2024 18:48:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1707791055; x=1708395855; darn=vger.kernel.org;
-        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=wQw8xGiYCwSmEJDjeKW/KgiaPX0LsjocCKtzjDnZNr8=;
-        b=Hv+KQECsDaghS7bK4J54JmsyN6efCo2STPLDaAju8tnIXQT3jk8SSmy1Km44p/uy0Q
-         iziyuucxRWDJgvuYtQNpA8or85loijHIfPgteahTCsrc79BZVXYDvCOcmjldAnm266Fg
-         glUSzJfInHK9BkDXVPXxsygqTLD32EWlgAHGDHaSR6Poye+bLjVulJrkOYjfeZnxag/l
-         fCKgsIqntf3f+9Ms1+b8aI33+MwY4GmFztY4wrRXJAH5BHfMegGMksWHovidR0WWcBla
-         +1HjkDDVy/MQdk6S6JWdNWaquqIXpVoy8w0btgfu6D2ijjYuxi5DTjhdFmXc/KPIvl+j
-         bdcg==
+        d=google.com; s=20230601; t=1707792522; x=1708397322; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=NMuLmFYrr146KyuiNyb7xysnUctSlTSZ3bXl82K1LOQ=;
+        b=0dfmeZHrUg3KzNwTC+erw4RQYtbpUpJ9tODITjW69/dG8JEVH9+nUrAOPvPHHQCSbn
+         sHQpq+dCbzyQdeupwEPCKnYvas1pGs+2gOKljpaG7Mbo47iVCcGT5WPaQACSucIwM7D4
+         Vw7h/iN8f6iiz6Sw+gnjoEmedyVwBGdRN7YCDo2Y0dVCxT15AK1XNvpY7VuR9Mpr+oCu
+         CJBysQWxh+JIStLwViW5Unrgg4umLbvDuBfSCwN4NwO0m+HtKUqXzg30rfzG4gYYwH63
+         bbBRIlNh6nv9p3+a04bBqV0MPU6AxcIDWBPCywyVgejMPX/T4Fu25lPuOvqrYuNIWRZe
+         IZVw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1707791055; x=1708395855;
-        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=wQw8xGiYCwSmEJDjeKW/KgiaPX0LsjocCKtzjDnZNr8=;
-        b=VeYyxL55qcRT9rObYdWpcPgLdnY9zMoXgXXEDTEXZvaASsO6Rj+/CZ58QZXRIFIhKz
-         07ycGHK89kvLtGz6R7HUidhHd6Z0qp+9arH4l4/bFbq9ROAhjwistC1WaAtLiC/I58tV
-         RNUwKELeWsxOx2S1iqbair0LxHOSsGuxDedLq6aMLzRWzKKhQUoOZCvoD6lREdK3ZLoK
-         47AaiwA1lEmdUwKClEmdUKdxU8yyCdkY1k4URMT6MaKpC6ypgQvuMQpAmQpaSp3MquE5
-         xI/P31gk8S/09Tu/VQggZ4IlrrsF2+LeIzUFrYLm4vlVggoPBEg8NsbopaMpL24HizY6
-         y4FA==
-X-Gm-Message-State: AOJu0YxYcfyJB11ZXoTT2QzLXHLULL4+/Lxe1BzLKFXt0OQISR8RANcT
-	l7QRx6R3F1+Ep96MC3jQi3snf5vQ1nG1mmdMeMmDS3XBJLTG8A7L3Z2ql8uYUqZWB/GKbkSmuC1
-	kogu0re01PNqtjsowooM8lboBfy8eZKjWTg==
-X-Google-Smtp-Source: AGHT+IHj+CmJwk9qOn3KRUfm8owhX4AQIehd3bRu4MPewXtb5ZslmpeVdggeMbzSOQQzjoDuc9PRFoysRN+oqOzhXg4=
-X-Received: by 2002:a5d:658a:0:b0:33b:366f:f816 with SMTP id
- q10-20020a5d658a000000b0033b366ff816mr6605200wru.67.1707791055418; Mon, 12
- Feb 2024 18:24:15 -0800 (PST)
+        d=1e100.net; s=20230601; t=1707792522; x=1708397322;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=NMuLmFYrr146KyuiNyb7xysnUctSlTSZ3bXl82K1LOQ=;
+        b=xOIINMJTMcCaYmGBdKo/51z+Ibea2Syvf+Mv3tRKqpXE36WVU1Zik0EA5lmIRf7M6O
+         3QMWMrzMpX6XgyjxV3ugXrKQcJKeGxz6EVdvYfViNmzbB4zhpKJLONq07rb0pz00nmbh
+         oPxlx/WdshrQ0qPe32er+wlt7UV+ENlSmjr14f6Sf5g0h5MbOgFyLxtaIHKFQiPYx3G8
+         dxBN5CYf/hxdQh776UrpZ9Z8Dtxzi7lWmbK6a+RJMeEo1KdPJeakj/7wDaqvbQnzrYnA
+         zgt03w9Y+5SQZOCBS+9FX8gx8tCq6FMLWscFb7U/5VyFIvTeQeG4SWA/n5cFJkRh64OJ
+         sL9g==
+X-Gm-Message-State: AOJu0Yw43ZOPCIp4k4e/F9Ao7UzBVsL3Mwwo5aErUPe2uWKo/Z9dsPCJ
+	/k5KUZBsxoBseYw/NIa8qm9gOHb1clKHu983dkjOjGqGNLitYecmSY0DdPUqxgxP53CVDam89i4
+	oZTxQrLKbQbj1ud0ZAVU3GLEIIvZGVRMg9RT9rScmvHJcP8HIsBCI
+X-Google-Smtp-Source: AGHT+IHdczrMAC4DSdCB8BI5vjgMRf2e5dcDuE+QYrc3VGiyfnMEhYq3teSA9Dp+WPxXvq8FbmATuucPvkVZ8L11Krw=
+X-Received: by 2002:a17:906:cf9b:b0:a37:4765:658 with SMTP id
+ um27-20020a170906cf9b00b00a3747650658mr4951060ejb.34.1707792522285; Mon, 12
+ Feb 2024 18:48:42 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: Groboclown <groboclown@gmail.com>
-Date: Mon, 12 Feb 2024 20:24:04 -0600
-Message-ID: <CAEfaiTSX8kh1WMQDtT0XFUC2o3Ldu9r75F0kB9qUuby5VcrZcQ@mail.gmail.com>
-Subject: Possible bug with 'diff --cc' report
-To: git@vger.kernel.org
+References: <CAO_smVji5aGjx1V-EGbumRRpOuGY0SkXZUn9g4LxKmMO3aw=Sg@mail.gmail.com>
+ <xmqqil2ximxq.fsf@gitster.g>
+In-Reply-To: <xmqqil2ximxq.fsf@gitster.g>
+From: Kyle Lippincott <spectral@google.com>
+Date: Mon, 12 Feb 2024 18:48:26 -0800
+Message-ID: <CAO_smVizKLL2NHFBpszJn+ieJhCEZyvvOT-BWv6Oz5pGiafPVg@mail.gmail.com>
+Subject: Re: libification: how to avoid symbol collisions?
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-While testing out the report parser for the gitleaks go-gitdiff
-library against a repository, I encountered output in the form:
+On Fri, Feb 9, 2024 at 9:10=E2=80=AFAM Junio C Hamano <gitster@pobox.com> w=
+rote:
+>
+> Kyle Lippincott <spectral@google.com> writes:
+>
+> > If I'm right that this is an issue, does this imply that we'd need to
+> > rename every non-static function in the git codebase that's part of a
+> > library to have a `git_` prefix, even if it won't be used outside of
+> > the git project's own .c files? Is there a solution that doesn't
+> > involve making it so that we have to type `git_` a billion times a day
+> > that's also maintainable? We could try to guess at how likely a name
+> > collision would be and only do this for ones where it's obviously
+> > going to collide, but if we get it wrong, I'm concerned that we'll run
+> > into subtle ODR violations that *at best* erode confidence in our
+> > library, and can actually cause outages, data corruption, and
+> > security/privacy issues.
+>
+> If you end up with a helper function name "foo" that is defined in
+> our X.c and used by our Y.c but is not part of the published "git
+> library API", we may want to rename it so that such a common name
+> can be used by programs that link with the "git library".  We may
+> choose to rename it to "GitLib_foo".
 
-@@@ -229,4 -229,18446744073709551615 +228,3 @@@ Comment
+If it's internal, we may want to name it with a different prefix than
+GitLib, if we expect the exposed API of the library to have this
+prefix, just as a signal to readers where the internal/external
+boundaries are.
 
-The '18446744073709551615' value is interesting, in that it's a uint64
-value storing a signed int64 -1.  Along with this, the number of
-changed lines in the output was actually 5 / 0 / 4 (as opposed to 4 /
--1 / 3).  I found the '-1' value as the first, second, and third line
-counts (the code only used at most 2 parents per commit).
+>
+> Do we want to keep the source of our library code, which defines the
+> helper function "foo" in X.c and calls it in Y.c, intact so that the
+> helper is still named "foo" as far as we are concerned?  Or do we
+> "bite the bullet" and bulk modify both the callers and the callee?
+>
+> I'd imagine that we would rather avoid such a churn at all cost [*].
+> After all, "foo" is *not* supposed to be callable by any human
+> written code, and that is why we rename it to a name "GitLib_foo"
+> that is unlikely to overlap with any sane human would use.
+>
+>         Side note: if a public API function that we want our library
+>         clients to call is misnamed, we want to rename it so that we
+>         would both internally and externally use the same public
+>         name, I would imagine.
+>
+> The mechanics to rename should be a solved problem, I think, as we
+> are obviously not the first project that wants to build a library.
+>
+> If the names are all simple, we could do this in CPP,
 
-At first I thought this to only happen on some 0 line change
-instances, but I also found a diff result that looked like (I added a
-' mark before each line to make the spacing obvious):
+At first I thought you meant C++, and I was like "Yeah, that's a
+possible solution: when building a library, compile it as C++ with
+name mangling, except for the symbols we intend to export!" -- this
+was not what you meant, though. Kind of amusingly, that idea might
+work, and might even be maintainable once we got to that state, but
+getting to that state would be a lot of cleanup because of C++'s
+stricter type system (`char *p =3D ptr;`, where `ptr` is a `void*` for
+example; maybe this is a call to malloc or similar). Since the git
+libraries don't exist yet, there's technically no worries about
+backwards compatibility with requiring a C++ compiler.
 
-'@@@ -225,4 -237,2 +225,6 @@@ Comment
-' +line 1
-' +line 2
-' +line 3
-' +line 4
-'- line 5
-'++line 6
-'++line 7
-'+ line 8
-' -line 9
-' -line 10
+> i.e. invent a
+> header file that has bunch of such renames like
+>
+>     #define foo GitLib_foo
+>
+> and include it in both X.c and Y.c.  But "foo" may also appear as
+> the name of a type, a member in a structure, etc., where we may not
+> want to touch, so in a project larger than toy scale, this approach
+> may not work well.
 
-The reported line counts doesn't match the actual output.  Based on
-other examples plus the documentation, it looks like these are also
-off by 1 - by my count, it should be 5 / 3 / 7, rather than 4 / 2 / 6.
+Glancing at the tags file, it looks like there's a small number of
+cases where this would be problematic, and they're mostly things where
+there's a function named the same thing as either a struct variable
+storing the result of the function. So it could work, but there's over
+3,500 symbols (if I did my filtering of the tags file correctly) that
+are not scoped to a specific file (i.e. static), or
+struct/enum/typedef/union names. That's going to be quite annoying to
+maintain; even if we don't end up having to do all 3,500 symbols, for
+the files that are part of some public library, we'd add maintenance
+burden because we'd need to remember to either make every new function
+be static, or add it to this list. I assume we could create a test
+that would enforce this ("static, named with <prefix>, or added to
+<list>"), so the issue is catchable, but it will be exceedingly
+annoying every time one encounters this.
 
-System information:
+>
+> "objcopy --redefine-sym" would probably be a better way.  I haven't
+> written a linker script, but I heard rumors that there is RENAME()
+> to rename symbols, and using that might be another avenue.
+>
+>
 
-git version 2.43.0
-cpu: x86_64
-sizeof-long: 8
-sizeof-size_t: 8
-uname: Linux 5.15.146.1-microsoft-standard-WSL2
-compiler info: gnuc: 13.2
-libc info: glibc: 2.39
+I'd thought of linker scripts, but rejected the idea due to
+assumptions I made about their portability - this could be mitigated
+by having a linker-script-generator step in the build process, but
+this seems difficult to maintain. It also implies the same maintenance
+burden as the #defines, where when introducing a new function to X.c
+that is called from Y.c we'd have to edit the list of "symbols to
+rename".
