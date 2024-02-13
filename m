@@ -1,92 +1,136 @@
-Received: from mail-ej1-f41.google.com (mail-ej1-f41.google.com [209.85.218.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 570305F54E
-	for <git@vger.kernel.org>; Tue, 13 Feb 2024 17:25:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F4065EE81
+	for <git@vger.kernel.org>; Tue, 13 Feb 2024 17:26:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707845121; cv=none; b=XzS2M19AkT02DEZpw7sYAMAp3PsLhvX9bmAmDLIh1KO1SUMGRMoBjDMCgFQaqI6RraBnIVOip7w5Se4L/ZkmTS2ExPkGT5MsRbZYDv0gghb/BV3wrdQlLxZde3JTY+Aa1fncW/q8stUk9UMx6RFwhibiJ31LSfcANtNyrTXo8ew=
+	t=1707845212; cv=none; b=lu0NvTEagxTOpwwNu33fefZwZAgEWkssRfHj6MugSHb0q2mc2pke3eMgBeNLmb77QfdHCgx+CR/Dfbtwe/z3EYKnbtyjja2N1IBgqDjciowYZUctcW8WQ5ZXnF6EKDI+0AF2Q8cBxwXBn157kvAGlAiR7EZe6RtUJuqnf/KG47o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707845121; c=relaxed/simple;
-	bh=PP4bsqy6ndS9ddSnsvxwSgvNY8Yto/q1j17O7m3qoVY=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=JNZvoGtvPmpz9afoXKVfAfhNaGafAMMcP1tpqagiFXE5M29OloeytoaRRiIKAyUjreWhqLlpPHm/+IwaCzUOwf1S98jF71OX8Gg/ORSzNx48zWK4obJHnMNBIgVAIH4AL+jB8W6/95nq5aNUPJCqQ8LiOetvyzobJiiW8HWtwFs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Htg5x94k; arc=none smtp.client-ip=209.85.218.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1707845212; c=relaxed/simple;
+	bh=MgoNcI8VzIrG8EqB5PSdiaVsUvxg69Zvr7EEV9ugisY=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=ME0DgB2CgJ+EhYbp2qpL1SQzXKVY7HaoR1pwMBmkmQPmE4cOz52VOe+dMLtIJgE+VXV3J1KLqnWlrKgn+josJdBoMh3USdUnmb+jjrrKmHvXJXpUIFDU4TkmfiN5xQv86vEU2+dzDGStFQf6xlKuaGvDF4SsBPyQ3zwdgCf4gxM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=ttvwgBdI; arc=none smtp.client-ip=64.147.108.70
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Htg5x94k"
-Received: by mail-ej1-f41.google.com with SMTP id a640c23a62f3a-a2a17f3217aso596745466b.2
-        for <git@vger.kernel.org>; Tue, 13 Feb 2024 09:25:19 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1707845118; x=1708449918; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=PP4bsqy6ndS9ddSnsvxwSgvNY8Yto/q1j17O7m3qoVY=;
-        b=Htg5x94kQJ1n/6G5awLm/aF/sL1jntjYpeby1bf89QRINjlC+x8L/QAavCYtjFQNhG
-         i22NpkaGGoH+i9xzUU4uxfoH21DqQqcu53saSlZ4K0cEvqBDsYkA7B40e1qTrZ9G0XSj
-         gldZCTBe/lsDZI/TlXEQND+Qz4MXIEViYwcvDpJjw6ZAtE5y/slf7o3ikSg6uwKkI998
-         brk8pgLLDmo+HKS8qsZzUcIlVcPEwmMHToqW0RS+Jxfgigu2FrDntALTXceFS/pKkL/g
-         3vYUCjuon/w1Y/t9btGdEPZOZwW/ZZxcDW6Xc+knglheY27CvWtZ/58+D4/halZqt9ta
-         Iq3w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1707845118; x=1708449918;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=PP4bsqy6ndS9ddSnsvxwSgvNY8Yto/q1j17O7m3qoVY=;
-        b=s77YtfH7KSJ5ESDOJHttLcZ2hGmR6E0OQyx5W9RxWqQNRrqZLN8Ce/6vVewEzgdQjw
-         GY7ldX6NqeT/T25qejGPOxPTGyx0Rnobz1jB1eilHitlyhj4hzzE2/psnCxps1Mm4xtg
-         HwRM+KKf3wmihKpFiGE24R37LH3Ogk84rFlyW34WQpV9j8lSbqnJUC5BdPa9djuH3R1G
-         Pvn1ijLtawGJ6+Uu3YYxqCAfJBXkuhorvRZVa/wxTp9ZQmq5IXzYo+lWOxq7UpIB2VQy
-         /wRMk2z5M7oMm8H8OcSRjFpiaA9GA1dd8SNNC3ojJ2/5SX8WDh5LKHKJhIjfp52S4dbY
-         Regw==
-X-Forwarded-Encrypted: i=1; AJvYcCUZn5QZRUODioiO9+VFJv6+P5W76trJeBUp3lPbwJgt//gbdcA/X6SScuR8F0dvzrr7aD9QUl2Q/kcjqm0hHM11GsQl
-X-Gm-Message-State: AOJu0YzyvaTtlFUTWf/et37WF1a6NnzJmXLOLhkKpfyHnNfhOh7WF7jH
-	wWqrfhg8ihWdhxD1BzV3+NimPXOpIbcCmpVrRnHDKmMFAeabVgt4s+BuWq5aH7N29ORP1MEbv1z
-	gWEuu5TDbQvoiFxrN9QS91tblRGX89ohp
-X-Google-Smtp-Source: AGHT+IHSUQ5S1mkXhavKrhzyNB3p4P0qjIPs+vk/SM72mxHGm7qC5kKvbtI1iFJ8eh237CXv2JEfuGVddZFmaLqiDd8=
-X-Received: by 2002:a17:906:370e:b0:a38:215c:89b with SMTP id
- d14-20020a170906370e00b00a38215c089bmr7647538ejc.73.1707845118258; Tue, 13
- Feb 2024 09:25:18 -0800 (PST)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="ttvwgBdI"
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 0898C1C53EA;
+	Tue, 13 Feb 2024 12:26:49 -0500 (EST)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=MgoNcI8VzIrG8EqB5PSdiaVsUvxg69Zvr7EEV9
+	ugisY=; b=ttvwgBdIs4/3TtQuFgy8WtCLAPs4m3SnWR7h3AxG+9fSEJ2s/ehZVP
+	iEEg8iwllx6OCrxdH8ve8qYy8Ij0G6qiWo7qfiJAIACYduOdO+1/o/CI75u2DwBa
+	2xF0LzJvCTqPhPK1Vw0+YYeMlmcWTzHAZ4xoTV2Uljj5MhicK+i8A=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id F3EAC1C53E9;
+	Tue, 13 Feb 2024 12:26:48 -0500 (EST)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.165.85])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 657201C53E7;
+	Tue, 13 Feb 2024 12:26:48 -0500 (EST)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Phillip Wood <phillip.wood123@gmail.com>
+Cc: Xiaoguang WANG <wxiaoguang@gmail.com>,  Taylor Blau <me@ttaylorr.com>,
+  Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,  Chandra Pratap
+ <chandrapratap3519@gmail.com>,  git@vger.kernel.org
+Subject: Re: Bug report: Incorrect GIT_FLUSH behavior in 2.43.1 (regression
+ and breaking)
+In-Reply-To: <c243c260-b346-4b53-b8a2-685389ad344e@gmail.com> (Phillip Wood's
+	message of "Tue, 13 Feb 2024 11:07:58 +0000")
+References: <CABn0oJvg3M_kBW-u=j3QhKnO=6QOzk-YFTgonYw_UvFS1NTX4g@mail.gmail.com>
+	<xmqq8r3p7glr.fsf@gitster.g>
+	<c243c260-b346-4b53-b8a2-685389ad344e@gmail.com>
+Date: Tue, 13 Feb 2024 09:26:47 -0800
+Message-ID: <xmqqle7o6zs8.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.1632.v3.git.1706664144.gitgitgadget@gmail.com>
- <pull.1632.v4.git.1707196348.gitgitgadget@gmail.com> <ba1f387747b08a7270f7387beddd75dc4a8eddfe.1707196348.git.gitgitgadget@gmail.com>
- <CAP8UFD3u+QDx2LqpO2ZpeHQszwjMAsQ90qqbE7Om=t1vPRQ==w@mail.gmail.com> <owlyr0hgb7qg.fsf@fine.c.googlers.com>
-In-Reply-To: <owlyr0hgb7qg.fsf@fine.c.googlers.com>
-From: Christian Couder <christian.couder@gmail.com>
-Date: Tue, 13 Feb 2024 18:25:06 +0100
-Message-ID: <CAP8UFD0nmK4ZigW9LcWOr_POEX5LX7m+T=Jq9rK34YL5C6xatw@mail.gmail.com>
-Subject: Re: [PATCH v4 15/28] format_trailer_info(): avoid double-printing the separator
-To: Linus Arver <linusa@google.com>
-Cc: Linus Arver via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
-	Christian Couder <chriscool@tuxfamily.org>, Junio C Hamano <gitster@pobox.com>, 
-	Emily Shaffer <nasamuffin@google.com>, Josh Steadmon <steadmon@google.com>, 
-	"Randall S. Becker" <rsbecker@nexbridge.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 114D948A-CA95-11EE-8FC1-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
 
-On Tue, Feb 13, 2024 at 6:21=E2=80=AFPM Linus Arver <linusa@google.com> wro=
-te:
->
-> Christian Couder <christian.couder@gmail.com> writes:
->
-> > On Tue, Feb 6, 2024 at 6:12=E2=80=AFAM Linus Arver via GitGitGadget
-> > <gitgitgadget@gmail.com> wrote:
+Phillip Wood <phillip.wood123@gmail.com> writes:
 
-> > Also I wonder why it was not possible to modify format_trailer_info()
-> > like it is done in this patch before using it to replace
-> > format_trailers().
->
-> The artificial organization apparent in this patch was deliberate, in
-> order to make it painfully obvious exactly what was being replaced and
-> how. See https://lore.kernel.org/git/xmqqjzno13ev.fsf@gitster.g/
+> Given we're in a rc-period a minimal fix like this looks appropriate
+> (though it is missing some braces according to our coding
+> guidelines). The interaction of "skip_stdout_flush" and git_env_bool()
+> is unfortunate, It might be clearer if we changed to having
+> "force_stdout_flush" instead but that would be a more invasive change.
 
-As for the previous patch, I would have thought that it would be
-better not to break the tests.
+I admit that I did find the polarity of the existing variable
+annoying, and it does make sense to flip it like you did here.
+
+Unfortunately the minimum fix is already in 'next', so let me turn
+what you wrote into an update relative to that.  I'll assume your
+patch in the discussion is signed-off already?
+
+------- >8 ------------- >8 ------------- >8 -------
+From: Phillip Wood <phillip.wood123@gmail.com>
+Subject: maybe_flush_or_die(): flip the polarity of an internal variable
+
+We take GIT_FLUSH that tells us if we want to flush (or not) from
+the outside, but internally use a variable that tells us to skip (or
+not) the flushing operation, which makes the code flow unnecessarily
+confusing to read.
+
+With the understanding of the original motivation behind "skip" in
+06f59e9f (Don't fflush(stdout) when it's not helpful, 2007-06-29),
+we can sympathize with the current naming (we wanted to avoid
+useless flushing of stdout by default, with an escape hatch to
+always flush), but it is still not a good excuse.
+
+Retire the "skip_stdout_flush" variable and replace it with "flush_stdout"
+that tells if we do or do not want to run fflush().
+
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ write-or-die.c | 17 +++++++----------
+ 1 file changed, 7 insertions(+), 10 deletions(-)
+
+diff --git c/write-or-die.c w/write-or-die.c
+index 3ecb9e2af5..01a9a51fa2 100644
+--- c/write-or-die.c
++++ w/write-or-die.c
+@@ -18,23 +18,20 @@
+  */
+ void maybe_flush_or_die(FILE *f, const char *desc)
+ {
+-	static int skip_stdout_flush = -1;
+-
+ 	if (f == stdout) {
+-		if (skip_stdout_flush < 0) {
+-			int flush_setting = git_env_bool("GIT_FLUSH", -1);
++		static int force_flush_stdout = -1;
+ 
+-			if (0 <= flush_setting)
+-				skip_stdout_flush = !flush_setting;
+-			else {
++		if (force_flush_stdout < 0) {
++			force_flush_stdout = git_env_bool("GIT_FLUSH", -1);
++			if (force_flush_stdout < 0) {
+ 				struct stat st;
+ 				if (fstat(fileno(stdout), &st))
+-					skip_stdout_flush = 0;
++					force_flush_stdout = 1;
+ 				else
+-					skip_stdout_flush = S_ISREG(st.st_mode);
++					force_flush_stdout = !S_ISREG(st.st_mode);
+ 			}
+ 		}
+-		if (skip_stdout_flush && !ferror(f))
++		if (!force_flush_stdout && !ferror(f))
+ 			return;
+ 	}
+ 	if (fflush(f)) {
