@@ -1,62 +1,62 @@
-Received: from mail-wr1-f48.google.com (mail-wr1-f48.google.com [209.85.221.48])
+Received: from mail-lj1-f177.google.com (mail-lj1-f177.google.com [209.85.208.177])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F1CF612EC
-	for <git@vger.kernel.org>; Tue, 13 Feb 2024 20:52:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D99661664
+	for <git@vger.kernel.org>; Tue, 13 Feb 2024 20:52:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707857546; cv=none; b=nPEhRxd6YEA2JGkjdsj46KFSPqIDUSnexA24TSif5W6sY5/J8ZyHj5Ai0pPbzuLtbcXZAUMpOASvXZfEKEowvUZnpeGuyDgn0kpSt7Cnh7c7FtiQegy8NbgW+XG3D6R8jt+lUa4v8fOPvWzAXwzFzLBIAJOin1N5VPen1u8o+qc=
+	t=1707857548; cv=none; b=UvBFel2zxEFhI4TTgSu9kaAAER4An+asgwqP433uGs3glmwcm/l4nsobg3PoeBxD888hm+dB312R+jrfzcVCZe2cntGLpzdb5yyYDjk7RXFZsnSmfDzSJwa177r6nbfFbwtT/ep9S+cnBwVCdRYRcOScxu6Bfg5OB7PUTZafe9M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707857546; c=relaxed/simple;
-	bh=EUc5rgoq4yi8o5yD46T49ngtB9a6K3EdLV7gMQcfuEc=;
+	s=arc-20240116; t=1707857548; c=relaxed/simple;
+	bh=IR8eqPDa/F5VetSJPo06qDYzDIC2LWswTrMTPwfxyFc=;
 	h=Message-ID:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=G6xLmfmDCMBF4tBqSqILp2nXE6t//j/gDiS+sOzdLlbM5rhOQvmcClWiMuQM4LmBpOXCVdKOs4Ia5ASap7x/q6l/pSJraDTFCbpc0w9W4q9pQzyStGKsbIaJ+TFt3mtb+nWNvGfNCxgLNSek3irq+a8ug8mBZVchh9I2hSCmiW8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=m0dbxaAT; arc=none smtp.client-ip=209.85.221.48
+	 MIME-Version:To:Cc; b=dTO6dTHSL7fZVbI+d0sOOksYTm+yNdgE3qADxdEy+QorFWZTlyn6xDN7QVKqb8Dk8N+ChrgQRPtPizz+Q6mWzMxtQYoXa3ft5Pxp2nJcRmskGoDHAHNCagxQFDZHoGk8LEQCHfebQz5gj4fkQNmZ2YXIajNCK+eaXGkjR5dAULs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JikCt7La; arc=none smtp.client-ip=209.85.208.177
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="m0dbxaAT"
-Received: by mail-wr1-f48.google.com with SMTP id ffacd0b85a97d-33b2960ff60so73148f8f.1
-        for <git@vger.kernel.org>; Tue, 13 Feb 2024 12:52:25 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JikCt7La"
+Received: by mail-lj1-f177.google.com with SMTP id 38308e7fff4ca-2d0c7e6b240so65756401fa.0
+        for <git@vger.kernel.org>; Tue, 13 Feb 2024 12:52:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1707857543; x=1708462343; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1707857544; x=1708462344; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=0v57pdx67w0xZeq4XL1V/YbQqa+hYrAiuY6uDw3GUhs=;
-        b=m0dbxaATQw7SZwzdXxUocdwc09ePc/aGPKWnlbVgfE8YO5SwAE5rc5QYXVfBFiAn2z
-         oXKwe0GjZWCXArqGvsdzjx1a+KqOC9Ke/VaNkDzHzhOIVRNNH54xH/TNiuG/l1JSdD8P
-         zf6tyX9gK4je1LmlIFEdvIhLZBApNLM0aHxuuL/nX5qbi3nxiAD8h536BaWmBJvhAlA9
-         Cmb60B02qUHcunRQxKN8tRJfgezeYDU2uIQXOCzQL+8ugvm/Q/khkT+wyopjrZ8kZxE5
-         yAVEx0ya+3PuY4IpfbngiTSBz4v23kKX3j/MXnd9TqBveDYHUjEXW/7FR9P5oTs5KwLa
-         LWPA==
+        bh=8FfJ8OLbW0SLI3KnEqx8Hdgwz9ENLAvM+QmJC0JSTDs=;
+        b=JikCt7LaFFxXYL6RYjyV5zRmVthsMe2I1bIlHPr3bmFWNYS77rvmLw5ZwqA7uvTswm
+         zUkCT1Qm8OGC97Lk5gZy7toQph6Mvjc/5ELOhPoxonyFQnz6Pqp2YSjQVa6FWi0oE29Q
+         KLYYiR8wXX843LONkHwPBgQjrHFV8xMqGwfXtjTV9XT9TvEEG1DoHex30z2SCicSXfFr
+         n0g1Np4EMZDDHO1DhSDXxTXkRu5xazarFc1wl1TeTONqhREdOOT2B2gXK8sJsJpY/0Om
+         POhjoEYvQNG8sCfLB8Oy4+PWyNOSqYB1T1eoNhvp41YqDzSkJokVdzrTqvuESK6iVvUP
+         a81Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1707857543; x=1708462343;
+        d=1e100.net; s=20230601; t=1707857544; x=1708462344;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=0v57pdx67w0xZeq4XL1V/YbQqa+hYrAiuY6uDw3GUhs=;
-        b=TF+cwXCP8wwkuvGtznPY2DxUMssLCASshuMUojTuYIPvhy7Cn1jvu0BAOOPdtIrcP0
-         Orz0FExfC+6mX+R0Z0OZtBi5oqcmSY2K1Qs6AIIlmFkeeX7wCTCVTH9dsCey/7Xk8AHt
-         VZo3eeFSr3Kv3fAnQWc5dQiPuou9bh9kRigxBvnM+GqgA2cdi40XMU3zZk+nsuG6LE4B
-         PKwHdEOFJudJZuwhGap4XNh3LGTgPAoOexcu7432KJQSZRuZN3frWSJN0cMssUa5XCGP
-         c/9vg239cIZIOWIC3WLCpSJHJfo/k9yUZ1Mo9+lBwqWw6kDGdBhqM8jPS1Aqy/tKFjDw
-         iQeQ==
-X-Gm-Message-State: AOJu0YyEaxQPkFg9IzUXg4sJr1zPNcRaRjCwKDxfTL98HuowLIx45SL1
-	Qhtm+fPmy9+dHQiH5CmNxRn2FKl4GtfLeUE6IItRSpor6wEmlIXIbDdQKWwL
-X-Google-Smtp-Source: AGHT+IGmD1GTgZS0dCHh+vmQAV2STg7GYGXEo4ffszzBRW8ASfMbRPLrPFjCL5+NGNzXuqk5UAb8Ow==
-X-Received: by 2002:a5d:45d0:0:b0:33c:d852:8e55 with SMTP id b16-20020a5d45d0000000b0033cd8528e55mr2126wrs.1.1707857543212;
-        Tue, 13 Feb 2024 12:52:23 -0800 (PST)
+        bh=8FfJ8OLbW0SLI3KnEqx8Hdgwz9ENLAvM+QmJC0JSTDs=;
+        b=RMM2c8He9XsrsizuvxLOVlyxP7uSzR5ndgyCTkJj5DjD9F0BTRz1TjVcDxjglmAC0e
+         EwAHBJkl0YZx8ELrct/kSqgcUDLkWd54iAq8gSUTx9+K5AtcZIOIrJwCIxEPSj9ZOn4V
+         Fw4dRZ89jAiLYCdOK8xztrcSk328y674PlZVyQ3YHqOB8ppsytbg+TMj6bQsuVvIXdQY
+         bmzG7DyFwGB6fQCvYcZTcaD2LDg6IVDaN1/QrOcLpmQVI6BM4FkluYogznZfB3WIrvSF
+         NsbLCTQby/ko0keDGKIaL4Xi9NK6EjNKlDXs8QDGKXTIGRqu6W+iOm7wuQ2NPex3lgc8
+         Q/Vg==
+X-Gm-Message-State: AOJu0YwxJAzK1sPBlFqzeNY8gr+gCFPYCGOS6v+BBY6JIZEhlnjG86U/
+	bk3OV34zqaMJU2SGGJsl+Iv8PAK9zzYYlQEXVpWeOa+yMmZG1e5BVuDERDzi
+X-Google-Smtp-Source: AGHT+IG8/wsXwGlfdOXMvwcrA2it7RBLwZ38CE857dXTpg7DDIGlNCclLAd7HU5YCx1gfo3Ntk7ycw==
+X-Received: by 2002:a2e:8e2f:0:b0:2d0:de6f:c697 with SMTP id r15-20020a2e8e2f000000b002d0de6fc697mr462739ljk.13.1707857544103;
+        Tue, 13 Feb 2024 12:52:24 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id s8-20020adfecc8000000b0033b671f079dsm10344367wro.115.2024.02.13.12.52.22
+        by smtp.gmail.com with ESMTPSA id dn7-20020a05600c654700b00411b7c91470sm2961404wmb.12.2024.02.13.12.52.23
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Tue, 13 Feb 2024 12:52:23 -0800 (PST)
-Message-ID: <6f81e2e30609c70d4dcdbe9d4f11c4f6b5173c77.1707857541.git.gitgitgadget@gmail.com>
+Message-ID: <3464545fe3feceb08408618c77a70cc95745bfe9.1707857541.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1662.git.1707857541.gitgitgadget@gmail.com>
 References: <pull.1662.git.1707857541.gitgitgadget@gmail.com>
 From: "Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Tue, 13 Feb 2024 20:52:10 +0000
-Subject: [PATCH 01/12] sparse-index: pass string length to index_file_exists()
+Date: Tue, 13 Feb 2024 20:52:11 +0000
+Subject: [PATCH 02/12] name-hash: add index_dir_exists2()
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -72,51 +72,64 @@ Cc: Jeff Hostetler <jeffhostetler@github.com>,
 
 From: Jeff Hostetler <jeffhostetler@github.com>
 
-The call to index_file_exists() in the loop in expand_to_path() passes
-the wrong string length.  Let's fix that.
+Create a new version of index_dir_exists() to return the canonical
+spelling of the matched directory prefix.
 
-The loop in expand_to_path() searches the name-hash for each
-sub-directory prefix in the provided pathname. That is, by searching
-for "dir1/" then "dir1/dir2/" then "dir1/dir2/dir3/" and so on until
-it finds a cache-entry representing a sparse directory.
+The existing index_dir_exists() returns a boolean to indicate if
+there is a case-insensitive match in the directory name-hash, but
+it doesn't tell the caller the exact spelling of that match.
 
-The code creates "strbuf path_mutable" to contain the working pathname
-and modifies the buffer in-place by temporarily replacing the character
-following each successive "/" with NUL for the duration of the call to
-index_file_exists().
-
-It does not update the strbuf.len during this substitution.
-
-Pass the patched length of the prefix path instead.
+The new version also copies the matched spelling to a provided strbuf.
+This lets the caller, for example, then call index_name_pos() with the
+correct case to search the cache-entry array for the real insertion
+position.
 
 Signed-off-by: Jeff Hostetler <jeffhostetler@github.com>
 ---
- sparse-index.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ name-hash.c | 16 ++++++++++++++++
+ name-hash.h |  2 ++
+ 2 files changed, 18 insertions(+)
 
-diff --git a/sparse-index.c b/sparse-index.c
-index 3578feb2837..e48e40cae71 100644
---- a/sparse-index.c
-+++ b/sparse-index.c
-@@ -579,8 +579,9 @@ void expand_to_path(struct index_state *istate,
- 		replace++;
- 		temp = *replace;
- 		*replace = '\0';
-+		substr_len = replace - path_mutable.buf;
- 		if (index_file_exists(istate, path_mutable.buf,
--				      path_mutable.len, icase)) {
-+				      substr_len, icase)) {
- 			/*
- 			 * We found a parent directory in the name-hash
- 			 * hashtable, because only sparse directory entries
-@@ -593,7 +594,6 @@ void expand_to_path(struct index_state *istate,
- 		}
+diff --git a/name-hash.c b/name-hash.c
+index 251f036eef6..d735c81acb3 100644
+--- a/name-hash.c
++++ b/name-hash.c
+@@ -694,6 +694,22 @@ int index_dir_exists(struct index_state *istate, const char *name, int namelen)
+ 	dir = find_dir_entry(istate, name, namelen);
+ 	return dir && dir->nr;
+ }
++int index_dir_exists2(struct index_state *istate, const char *name, int namelen,
++		      struct strbuf *canonical_path)
++{
++	struct dir_entry *dir;
++
++	strbuf_init(canonical_path, namelen+1);
++
++	lazy_init_name_hash(istate);
++	expand_to_path(istate, name, namelen, 0);
++	dir = find_dir_entry(istate, name, namelen);
++
++	if (dir && dir->nr)
++		strbuf_add(canonical_path, dir->name, dir->namelen);
++
++	return dir && dir->nr;
++}
  
- 		*replace = temp;
--		substr_len = replace - path_mutable.buf;
- 	}
+ void adjust_dirname_case(struct index_state *istate, char *name)
+ {
+diff --git a/name-hash.h b/name-hash.h
+index b1b4b0fb337..2fcac5c4870 100644
+--- a/name-hash.h
++++ b/name-hash.h
+@@ -5,6 +5,8 @@ struct cache_entry;
+ struct index_state;
  
- cleanup:
+ int index_dir_exists(struct index_state *istate, const char *name, int namelen);
++int index_dir_exists2(struct index_state *istate, const char *name, int namelen,
++		      struct strbuf *canonical_path);
+ void adjust_dirname_case(struct index_state *istate, char *name);
+ struct cache_entry *index_file_exists(struct index_state *istate, const char *name, int namelen, int igncase);
+ 
 -- 
 gitgitgadget
 
