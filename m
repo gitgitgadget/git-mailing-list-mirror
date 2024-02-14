@@ -1,168 +1,180 @@
-Received: from mail-pj1-f45.google.com (mail-pj1-f45.google.com [209.85.216.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91D1454729
-	for <git@vger.kernel.org>; Wed, 14 Feb 2024 15:13:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF86960273
+	for <git@vger.kernel.org>; Wed, 14 Feb 2024 16:46:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707923588; cv=none; b=Q0WlDSuqzocBvjvmnMGv5sgiPygllmyH0a7caT2HK6QcCNHhm/CVoESZE0yVpqO17e2uLv+T//aWgYmrh05gShmeNah0F9otIi7CJ2wjtIe94W92VGIjIwoXNPsqZ9P5AUoAiN9U5dI9TMbq/tlREilx/0itxsfpKLz5Sptge94=
+	t=1707929170; cv=none; b=SArSS5kp68fBrBje+rrRvJwRWzXsCda5k9fiyZKFtSwbKUCpT4OTiSlh4VdnD2zOrggFFSdp+COiTsO6v2n4mYuXh0WRKWGRxN0DupL3C5LRfwToOiwS0gbdqPkd0yIqbfppg+870dC8+vqYnjcLJREQ3Op8lLlks3mFAboW8Iw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707923588; c=relaxed/simple;
-	bh=DZVPvsrif51NuxD12MRbSRtMOpPvsUdwP3iOHZ2kmqk=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Jl4/tArT2R0vHwUsNrJHV7oIxE7g0f+KMukBQlP57Sv0Vi8moiIcUrNtxRUMEI/bXXpbd/E8GcWlFB6gkbnX/rjjByJONRaBGZHYJ+Ulg+i/u9B5EE/8c85ecHkJByz4HNGugQKaTMK7zi9xwi4SlCj5/3qxMTGThk35HBQ8DPA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hafFRlDs; arc=none smtp.client-ip=209.85.216.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1707929170; c=relaxed/simple;
+	bh=IFEuEcivG0C0Y2tD292tkqju1Mf4F1E/p2LOxxvtVjw=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=cf5ApUv928n7Ru9tg87PfZ32Qs2GMZzfvmYNKJNqQi8Xg055QjRjm+vG1xNcoeEKDeqGWr3vSKNiBLzipo9flurRHJ8KxUsvpi5veSbChMPKJYKGiln8qJ7T/3EyATKJ/iAiHZtQymT0ymlZCqHVftvqMRlz6vgd/SyJcxgEUpU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=IMZeBQJ3; arc=none smtp.client-ip=173.228.157.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hafFRlDs"
-Received: by mail-pj1-f45.google.com with SMTP id 98e67ed59e1d1-290fb65531eso1535285a91.2
-        for <git@vger.kernel.org>; Wed, 14 Feb 2024 07:13:06 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1707923586; x=1708528386; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=w79wKeJG8mYRd8m0r6CB2J1lg+RDREz+y/17LZ+tu28=;
-        b=hafFRlDsc8TLk2/jo95SPqzSDTl+kJMGJOfCjFzERolbTxgL4QVUUiRY8RKuorXx41
-         CjVORows8GR5suRGHRUoN5i7xGoXNr8nDRwH3PZwPblUvZ865oMDSYLf66wJ9/5wbijb
-         Bj0RsuX8fT3VGx8k5odVb53u3mFW7QwhaUjgRkNCpW4cGH8QDeGriPh1nu7xIgVKas8y
-         DWuoJe4iWuiUForNLKnCm/uN3ITUaSU8XyaYr0RMT1wvWtExfmE52iMWBbdFWJE+ZopX
-         XMA7f7rcimTAyWCoIkMrQAJ5uISvGTWRZZ8BJhgUhkMMoygywFsImeE5UsJ1rT9CVZ4u
-         mwLQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1707923586; x=1708528386;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=w79wKeJG8mYRd8m0r6CB2J1lg+RDREz+y/17LZ+tu28=;
-        b=JpyIDemH1QiMv/ZgX7r2Qbw0v9TMI/lBSKu9Xo+lK+zgL7Y59jYrK56wHhjocXpkgk
-         n1xma94tsRGVHh8nZSf3B894tZxIoh531jZGVFyk3zu7ZdTqfEnOAv6dP/r8uswGEls3
-         PHAAyuIk6xqd7WxrcJzXoOl+6RlxzC15+Vj9pM0p9j5uAEkw3vnC7AfYPDaLLaqqvrnk
-         IdMY6x/OEvB+4GiUfiGMnuUfcS+ElE/2rlANQep31kQ/6KV0sUzclLiRTIChLiHIVWin
-         eC3RE9RT4eBFhadxcnYu3j8NYM8iE4PpzO4AgQmDnHWJAYjdpRWRhNHrzDJJkH6p8N4r
-         ZS6Q==
-X-Gm-Message-State: AOJu0YzD1ofiVH54g2W08hrCePcbClcUv8G55FeBNVK4hII108ggz9bN
-	uIbXaOrF9H8MUeIiBhpO2XOVIYK1ujzYdCC2C1HoehZEgst5tg40qFTAgi/qRXSEn46ckXSu/F2
-	oyHuF1RCQmcGLQVYr+bwiLrKkE+Y=
-X-Google-Smtp-Source: AGHT+IGeALb3KytPkp26wHgqEFG9A3jUHztUq33oYzyFr+zIfQbLq7IadxpFsn1xSqHS20vzdtU8bU4ljRgsoZ5Fuv8=
-X-Received: by 2002:a17:90a:ea13:b0:298:9dd6:5f3c with SMTP id
- w19-20020a17090aea1300b002989dd65f3cmr2690098pjy.42.1707923585681; Wed, 14
- Feb 2024 07:13:05 -0800 (PST)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="IMZeBQJ3"
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id 0D5982225D;
+	Wed, 14 Feb 2024 11:46:06 -0500 (EST)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=IFEuEcivG0C0Y2tD292tkqju1Mf4F1E/p2LOxx
+	vtVjw=; b=IMZeBQJ3FeSV7TrAZgmlgh6FZu4t6zHfBFy5ZLESy6GZW9pFI4yBKH
+	vC4faXCeBW0dmExO1X4gi5k5SaLCgsfBqO9vq+8jqs8JdeTVXLJnbai5Kn8zs1St
+	vnaNU1oj1g8pg9bF/MlONEuYyfsC4pLcPZuXen3IY8dSHgSqRN3rM=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id 06E572225C;
+	Wed, 14 Feb 2024 11:46:06 -0500 (EST)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.165.85])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 0E9E022259;
+	Wed, 14 Feb 2024 11:46:02 -0500 (EST)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Jeff Hostetler <jeffhostetler@github.com>
+Subject: Re: [PATCH 07/12] fsmonitor: refactor untracked-cache invalidation
+In-Reply-To: <1df4019931c29824b174defb75e09823d604219e.1707857541.git.gitgitgadget@gmail.com>
+	(Jeff Hostetler via GitGitGadget's message of "Tue, 13 Feb 2024
+	20:52:16 +0000")
+References: <pull.1662.git.1707857541.gitgitgadget@gmail.com>
+	<1df4019931c29824b174defb75e09823d604219e.1707857541.git.gitgitgadget@gmail.com>
+Date: Wed, 14 Feb 2024 08:46:00 -0800
+Message-ID: <xmqqo7cjxad3.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <cover.1703063544.git.ps@pks.im> <cover.1704262787.git.ps@pks.im> <1dc8ddf04a112c38f41d573a48dac3f99b4b51e9.1704262787.git.ps@pks.im>
-In-Reply-To: <1dc8ddf04a112c38f41d573a48dac3f99b4b51e9.1704262787.git.ps@pks.im>
-From: Han-Wen Nienhuys <hanwenn@gmail.com>
-Date: Wed, 14 Feb 2024 16:12:54 +0100
-Message-ID: <CAOw_e7b72HVQob_hiV0gtRhGWsb=rz40WL=oaV63t7oOmEA-mw@mail.gmail.com>
-Subject: Re: [PATCH v3 1/8] reftable/stack: do not overwrite errors when compacting
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 89932996-CB58-11EE-A0EE-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
 
-Good catch!
+"Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-Sorry for messing this up.
-
-> In the worst case,
-> this can lead to a compacted stack that is missing records.
-
-Yeah, that would be an insidious corruption. Have you considered
-writing a test to reproduce this (and thus verify that the fix really
-fixes the problem?)
-
-I think it wouldn't be too difficult: you could create a custom
-blocksource wrapper that returns I/O error on the Nth read, and then
-create a reftable with two ref blocks (could just be 2 records if you
-use a small blocksize and a large refname) and two log blocks.  Merge
-that with an empty table, and see if the compacted result is what you
-got in. Loop over N to get coverage for all error paths.
-
-On Wed, Jan 3, 2024 at 7:22=E2=80=AFAM Patrick Steinhardt <ps@pks.im> wrote=
-:
+> From: Jeff Hostetler <jeffhostetler@github.com>
 >
-> In order to compact multiple stacks we iterate through the merged ref
-> and log records. When there is any error either when reading the records
-> from the old merged table or when writing the records to the new table
-> then we break out of the respective loops. When breaking out of the loop
-> for the ref records though the error code will be overwritten, which may
-> cause us to inadvertently skip over bad ref records. In the worst case,
-> this can lead to a compacted stack that is missing records.
->
-> Fix the code by using `goto done` instead so that any potential error
-> codes are properly returned to the caller.
->
-> Signed-off-by: Patrick Steinhardt <ps@pks.im>
+> Signed-off-by: Jeff Hostetler <jeffhostetler@github.com>
 > ---
->  reftable/stack.c | 20 ++++++++------------
->  1 file changed, 8 insertions(+), 12 deletions(-)
->
-> diff --git a/reftable/stack.c b/reftable/stack.c
-> index 16bab82063..8729508dc3 100644
-> --- a/reftable/stack.c
-> +++ b/reftable/stack.c
-> @@ -801,18 +801,16 @@ static int stack_write_compact(struct reftable_stac=
-k *st,
->                         err =3D 0;
->                         break;
->                 }
-> -               if (err < 0) {
-> -                       break;
-> -               }
-> +               if (err < 0)
-> +                       goto done;
->
->                 if (first =3D=3D 0 && reftable_ref_record_is_deletion(&re=
-f)) {
->                         continue;
->                 }
->
->                 err =3D reftable_writer_add_ref(wr, &ref);
-> -               if (err < 0) {
-> -                       break;
-> -               }
-> +               if (err < 0)
-> +                       goto done;
->                 entries++;
->         }
->         reftable_iterator_destroy(&it);
-> @@ -827,9 +825,8 @@ static int stack_write_compact(struct reftable_stack =
-*st,
->                         err =3D 0;
->                         break;
->                 }
-> -               if (err < 0) {
-> -                       break;
-> -               }
-> +               if (err < 0)
-> +                       goto done;
->                 if (first =3D=3D 0 && reftable_log_record_is_deletion(&lo=
-g)) {
->                         continue;
->                 }
-> @@ -845,9 +842,8 @@ static int stack_write_compact(struct reftable_stack =
-*st,
->                 }
->
->                 err =3D reftable_writer_add_log(wr, &log);
-> -               if (err < 0) {
-> -                       break;
-> -               }
-> +               if (err < 0)
-> +                       goto done;
->                 entries++;
->         }
->
-> --
-> 2.43.GIT
->
+>  fsmonitor.c | 38 ++++++++++++++++++++++++++------------
+>  1 file changed, 26 insertions(+), 12 deletions(-)
+
+Sorry, but the proposed commit log is way lacking for this
+particular step.  Readers have already understood, after reading
+steps like [04/12] and [05/12], that you use the verb "refactor" in
+its usual sense, i.e. reorganize the code around without changing
+behaviour in order to enhance readability and to make it easier for
+code reuse in future steps, and these two steps did exactly that:
+helper functions are split out of larger functions, presumably
+either to allow adding new callers to the helpers, or to make the
+result of adding more code to the caller easier to follow [*].
+
+However, the changes in this step look vastly different, and it is
+not even clear if this change intends to keep the behaviour before
+and after it the same, or if it does, how they are the same.
+
+I can sort-of see that the original code made a call to
+untracked_cache_invalidate_path() at the very end of the
+fsmonitor_refresh_callback(), but the updated code no longer does
+so.  Why?  Is it because it is the root cause of an unstated bug
+that we don't do so until the end in the current code?  Is it
+because the order does not matter (how and why?) and the resulting
+code becomes better (how?  simpler to follow? more performant?
+avoids duplicated work?  something else)?
+
+It does not help to call a new helper function with a cryptic "my_"
+name, either.
+
+Please try again?  Thanks.
 
 
---=20
-Han-Wen Nienhuys - hanwenn@gmail.com - http://www.xs4all.nl/~hanwen
+[Footnote] 
+
+ * These two are vastly different goals, and there may be other
+   reasons why you are doing such refactoring.  It would have been
+   nicer if such a preliminary refactoring steps had explained what
+   the intended course of evolution for the code involved in the
+   refactoring is.
+
+
+
+>
+> diff --git a/fsmonitor.c b/fsmonitor.c
+> index 754fe20cfd0..14585b6c516 100644
+> --- a/fsmonitor.c
+> +++ b/fsmonitor.c
+> @@ -183,11 +183,35 @@ static int query_fsmonitor_hook(struct repository *r,
+>  	return result;
+>  }
+>  
+> +/*
+> + * Invalidate the untracked cache for the given pathname.  Copy the
+> + * buffer to a proper null-terminated string (since the untracked
+> + * cache code does not use (buf, len) style argument).  Also strip any
+> + * trailing slash.
+> + */
+> +static void my_invalidate_untracked_cache(
+> +	struct index_state *istate, const char *name, int len)
+> +{
+> +	struct strbuf work_path = STRBUF_INIT;
+> +
+> +	if (!len)
+> +		return;
+> +
+> +	if (name[len-1] == '/')
+> +		len--;
+> +
+> +	strbuf_add(&work_path, name, len);
+> +	untracked_cache_invalidate_path(istate, work_path.buf, 0);
+> +	strbuf_release(&work_path);
+> +}
+> +
+>  static void fsmonitor_refresh_callback_unqualified(
+>  	struct index_state *istate, const char *name, int len, int pos)
+>  {
+>  	int i;
+>  
+> +	my_invalidate_untracked_cache(istate, name, len);
+> +
+>  	if (pos >= 0) {
+>  		/*
+>  		 * We have an exact match for this path and can just
+> @@ -253,6 +277,8 @@ static int fsmonitor_refresh_callback_slash(
+>  	int i;
+>  	int nr_in_cone = 0;
+>  
+> +	my_invalidate_untracked_cache(istate, name, len);
+> +
+>  	if (pos < 0)
+>  		pos = -pos - 1;
+>  
+> @@ -278,21 +304,9 @@ static void fsmonitor_refresh_callback(struct index_state *istate, char *name)
+>  
+>  	if (name[len - 1] == '/') {
+>  		fsmonitor_refresh_callback_slash(istate, name, len, pos);
+> -
+> -		/*
+> -		 * We need to remove the traling "/" from the path
+> -		 * for the untracked cache.
+> -		 */
+> -		name[len - 1] = '\0';
+>  	} else {
+>  		fsmonitor_refresh_callback_unqualified(istate, name, len, pos);
+>  	}
+> -
+> -	/*
+> -	 * Mark the untracked cache dirty even if it wasn't found in the index
+> -	 * as it could be a new untracked file.
+> -	 */
+> -	untracked_cache_invalidate_path(istate, name, 0);
+>  }
+>  
+>  /*
