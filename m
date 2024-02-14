@@ -1,146 +1,109 @@
-Received: from mail-pj1-f73.google.com (mail-pj1-f73.google.com [209.85.216.73])
+Received: from mail-pf1-f201.google.com (mail-pf1-f201.google.com [209.85.210.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9F1D111B0
-	for <git@vger.kernel.org>; Wed, 14 Feb 2024 07:20:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.73
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83BF4111A4
+	for <git@vger.kernel.org>; Wed, 14 Feb 2024 07:36:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707895233; cv=none; b=uXMs0vKX35f7ksxZuBJEiv7daakuP3zjPr2QpzuP1NN93O3CErKIGpMzHETlcL24ajFIlbDs8XgO3Df/gLum7URMe2dVrinP2tnXos5r5UHgbTOxKueBSY0tvP781FQDa0jjQq3TXRoKf/9J6lCzTfNYXH95Pt03/R0rCqKFiFY=
+	t=1707896166; cv=none; b=FL2Nj1XqukGlheTo8aq6gOL9sNQVi7FyJGe5izHVP0QkOSzBHMLf91BfAUZHbBeYTHj4TCoo4d0g/JFLTI0eNZnNRMWknlGWexyX2M4gzwmem31XOYXrgKE808jmz0bD75BRZnR1jg+zwFWLECvkkQtwYywL5Maafl6taSUnw/o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707895233; c=relaxed/simple;
-	bh=9yYHFnE5KD2+9IE4UTS6DjwA5iFUhVnVIPiWM7Apr0M=;
+	s=arc-20240116; t=1707896166; c=relaxed/simple;
+	bh=wg5TmZsdZonVrZHdeLtEc7IgjGCjUnojpvYumbJaAEo=;
 	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
-	 To:Cc:Content-Type; b=twlDVVpmZVThZvdg21x+h+sJcLLjr5Erfsn3EXJEcJBhzseoLG7wTLwkyXEjCt8Td3H039GWSG6pLRxSnEcauT5Sp0An2SAmQMZRBCunRAZB7+3KywslOCzbgiM4ckVUyLvGl+ROkXoQWjL6K4XbKQuTK2fOaa1CJc0Sn3UyL/o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--linusa.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=3xaomb4V; arc=none smtp.client-ip=209.85.216.73
+	 To:Cc:Content-Type; b=ApvjEUoThIoUo9UljO6KlQQeNkk2DyvDgJrLyPSE2KzBw9j46NP3c31T57ddIBl5/yXx2vJXASc2UCljuGioq5bP2Qw8AFb9D8lsc0OWDQ9YyzCs68m41SnlxS0kCotbXeZHer3sCK0SoAxH5Q/JZ7yjBHXn9B3Z6awD5VM3Kwo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--linusa.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=S/DBIxOM; arc=none smtp.client-ip=209.85.210.201
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--linusa.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="3xaomb4V"
-Received: by mail-pj1-f73.google.com with SMTP id 98e67ed59e1d1-295b119823aso4169094a91.1
-        for <git@vger.kernel.org>; Tue, 13 Feb 2024 23:20:31 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="S/DBIxOM"
+Received: by mail-pf1-f201.google.com with SMTP id d2e1a72fcca58-6e0a646ce8cso2355185b3a.3
+        for <git@vger.kernel.org>; Tue, 13 Feb 2024 23:36:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1707895231; x=1708500031; darn=vger.kernel.org;
+        d=google.com; s=20230601; t=1707896165; x=1708500965; darn=vger.kernel.org;
         h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
          :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=v1p/clRGWvNt8bNYO6d1P2nK0ustUtme0X29VEyNSxw=;
-        b=3xaomb4V/eeA1XSzQI7KHHqGkx+gCR2LSoTfGRVdBoyf1cqBR7evDCYARayCFkjtWT
-         NQEG9VfZcIPsz2t66WYIdlDK1Rih46cD5c2inRSk4CkwUIhmR4iJ9GKzweoRgijxFge0
-         8Qm3hjffWXoa00Vd+9fmU/xEoEqjyHn8Fz2oPcF6gPDRoXzkw97HjdJwej+FiFBnGRbM
-         M43YQ2W7ZcVzsN6Ol813OE166kLfcdccMV/sP9oVtpPVz+sYkQEqes7sE9mFg9vqbDG2
-         h31PpfTcZ99ruEyFIA1LFMUsLEXHqgqDMewvos5Z5zGwLZOIXEj8oXsUw+IZXvhPWhtF
-         R9zA==
+        bh=iFfrswpGejwZYTvovnhgndCPbRW/4YFLB1cJ9mYr3tU=;
+        b=S/DBIxOMs/w8EmcTcp1H8BejRfX5C0dr+Gp7Degz2DAOMkNP4fyfSmYPEOH4NYI8Fg
+         wnAHbKANpo7B8+jlxrWPkAKXSBa9sbRDXa1Ylr/dL4STnitCJzhY9KZpd6eat57n3f8Y
+         s/qnxZHD1fexKb5YX0uEwyqwTUfMovw7tDcUWUaA8u78i8bsbxLBZu7Y78J56NPpCpkV
+         TPqsB/1NtbbozW9LXu6+95h95hQZove514ssqQNckat3bJrr2TRz9In6fb05LINXDpQb
+         pbTCm8CKpYSqdqbGsyEvcVplWPp4IxcVkY2VFYjk9LcbPmE63uq2RAPH38YsyhV0bpJG
+         j7LA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1707895231; x=1708500031;
+        d=1e100.net; s=20230601; t=1707896165; x=1708500965;
         h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
          :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=v1p/clRGWvNt8bNYO6d1P2nK0ustUtme0X29VEyNSxw=;
-        b=vJ3zM7le9RltR+Xy77b4cIxCknamMHck/Q5oIQsfM+hwdZyZjgdSMXjJWACUCjZPB4
-         BEUJk/oIdRs4qAMrQlZ3IgCeEx6TEQU2fFMsSc9GedNk6PqOgwlSvFVnPtytpQT2+MWf
-         0ej7f5QJfbhBqLwbMflC0WwbcNmwxR4YSLjQpcvodtcY+bNH/GOUiG4vc6KbnqsbQLXw
-         SuPGufW8F7K3P14sFgfPbmHVpAw77PGgyfFsLBQ0Mwjkqn0x5caFL85WWmL2P6rktNmm
-         bPW92e0OHaaFTglgJ4A9CJ0boKpksvvd3RbYOxhdigrZkhFH5GqvAERFt/jxZecx3oFm
-         kAjw==
-X-Gm-Message-State: AOJu0Yw3B6zfNDrWV+XOzglkG8ZEzftiLgkBN9hiyqkku+ErO5iJbnv3
-	NeI+qxU/6IArq4qCGCiST8ZZE3XbWcKP/iHKqnr7Y2iiWDHB977JJ89hb4b/nvNfFx2/hOclDXb
-	oJg==
-X-Google-Smtp-Source: AGHT+IE6UYgPrT/7vpSIl096mUDNEnig+9gu2uke5wGws1xQ21Wrc7LnbGkoY8eV2aBh15li78Q/PYrDbpg=
+        bh=iFfrswpGejwZYTvovnhgndCPbRW/4YFLB1cJ9mYr3tU=;
+        b=J6cUC82+XMq+6REtgGTE4dwZvDu/pgdRGfEyyj7envYYxQSnSBHcHMpy4UVmUxfGiI
+         j+P2xlz+3IKYoFfrkPeQpjwZcb+MGDzkvtADsibGaZ7MdTJnwaDt+8YqKx2XmwDfaN3p
+         eKrQXbL9IlEjUHH3JXFr+gn1DC8u/6eBTB92CfbasdEaLCalsmq/l8ggCbfT2OZu+AYL
+         1eVqHvZ3GGy1p9xhuA5vSPUVSBJIoIpt+DpTPmwV2+kGcsOc9IQ6mGzHbvK4zoJHpBDP
+         YqmPoAe03s2paYokMKJwjrMHZwmnrBMmT0llbnZEc0jO7ffQF+Bvb4t+zsDpngHd+bmS
+         BiBg==
+X-Forwarded-Encrypted: i=1; AJvYcCUZp/3pSOyTnWv10LrM7FEhWuTaMvMivbzDKkf439Qjyjm7YH35x3PeyEvbUsHF44a309qFAVQ2GeKCbbiWXdHryFuR
+X-Gm-Message-State: AOJu0YxvKeppSe1gjXLcy6tZf3TvKL3aqchJTw9FZkE7vepxyPcCexfE
+	7hdEeqPtjDjEwewXHXdXG0E0rWUpx4zdyVq06aVxZ0x9kB6h2Dk3Ffm6nccDy/2ySLN5tWPvyfQ
+	k0w==
+X-Google-Smtp-Source: AGHT+IH2K/zikoI0YZj6C5gSyIq8mMJXQgTDXgI2X7ZmujGSanx0W8T7hozZFD2SYVlVf/EmnlSJdvH1X5Y=
 X-Received: from fine.c.googlers.com ([fda3:e722:ac3:cc00:7f:e700:c0a8:2221])
- (user=linusa job=sendgmr) by 2002:a17:902:c948:b0:1d9:7ebe:ef7 with SMTP id
- i8-20020a170902c94800b001d97ebe0ef7mr19279pla.1.1707895231100; Tue, 13 Feb
- 2024 23:20:31 -0800 (PST)
-Date: Tue, 13 Feb 2024 23:20:29 -0800
-In-Reply-To: <20231002024034.2611-5-ebiederm@gmail.com>
+ (user=linusa job=sendgmr) by 2002:a05:6a00:2d81:b0:6e0:f62e:eb0f with SMTP id
+ fb1-20020a056a002d8100b006e0f62eeb0fmr83593pfb.1.1707896164710; Tue, 13 Feb
+ 2024 23:36:04 -0800 (PST)
+Date: Tue, 13 Feb 2024 23:36:03 -0800
+In-Reply-To: <owlymssbn6qa.fsf@fine.c.googlers.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 Mime-Version: 1.0
-References: <878r8l929e.fsf@gmail.froward.int.ebiederm.org> <20231002024034.2611-5-ebiederm@gmail.com>
-Message-ID: <owlybk8ja4w2.fsf@fine.c.googlers.com>
-Subject: Re: [PATCH v2 05/30] loose: add a mapping between SHA-1 and SHA-256
- for loose objects
+References: <87jzsbjt0a.fsf@gmail.froward.int.ebiederm.org>
+ <878r8l929e.fsf@gmail.froward.int.ebiederm.org> <xmqqv86z5359.fsf@gitster.g> <owlymssbn6qa.fsf@fine.c.googlers.com>
+Message-ID: <owly7cj7a464.fsf@fine.c.googlers.com>
+Subject: Re: [PATCH v2 00/30] initial support for multiple hash functions
 From: Linus Arver <linusa@google.com>
-To: "Eric W. Biederman" <ebiederm@gmail.com>, Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, "brian m. carlson" <sandals@crustytoothpaste.net>, 
+To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Cc: "Eric W. Biederman" <ebiederm@gmail.com>, "brian m. carlson" <sandals@crustytoothpaste.net>, 
 	Eric Sunshine <sunshine@sunshineco.com>, "Eric W. Biederman" <ebiederm@xmission.com>
 Content-Type: text/plain; charset="UTF-8"
 
-"Eric W. Biederman" <ebiederm@gmail.com> writes:
+Linus Arver <linusa@google.com> writes:
 
-> From: "brian m. carlson" <sandals@crustytoothpaste.net>
+> Junio C Hamano <gitster@pobox.com> writes:
 >
-> As part of the transition plan, we'd like to add a file in the .git
-> directory that maps loose objects between SHA-1 and SHA-256.  Let's
-> implement the specification in the transition plan and store this data
-> on a per-repository basis in struct repository.
-
-Could you explain a bit what the specification is, exactly? That would
-save reviewers the trouble of comparing the large chunk of new code here
-with the transition plan (which I assume is still
-Documentation/technical/hash-function-transition.txt.
-
-Also, are there any slight deviations from the specification for reasons
-that may not be obvious to reviewers?
-
-I would prefer if this patch is split up into smaller preparatory
-patches, starting with the core essentials and then building it up
-piece-by-piece to make it easier to review.
-
-> Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
-> Signed-off-by: Eric W. Biederman <ebiederm@xmission.com>
-> ---
->  Makefile              |   1 +
->  loose.c               | 246 ++++++++++++++++++++++++++++++++++++++++++
->  loose.h               |  22 ++++
->  object-file-convert.c |  14 ++-
->  object-store-ll.h     |   3 +
->  object.c              |   2 +
->  repository.c          |   6 ++
->  7 files changed, 293 insertions(+), 1 deletion(-)
->  create mode 100644 loose.c
->  create mode 100644 loose.h
+>> "Eric W. Biederman" <ebiederm@gmail.com> writes:
+>>
+>>> This addresses all of the known test failures from v1 of this set of
+>>> changes.  In particular I have reworked commit_tree_extended which
+>>> was flagged by smatch, -Werror=array-bounds, and the leak detector.
+>>>
+>>> One functional bug was fixed in repo_for_each_abbrev where it was
+>>> mistakenly displaying too many ambiguous oids.
+>>>
+>>> I am posting this so that people review and testing of this patchset
+>>> won't be distracted by the known and fixed issues.
+>>
+>> We haven't seen any reviews on this second round, and have had it
+>> outside 'next' for too long.  I am tempted to say that we merge it
+>> to 'next' and see if anybody screams at this point.
 >
-> diff --git a/Makefile b/Makefile
-> index f7e824f25cda..3c18664def9a 100644
-> --- a/Makefile
-> +++ b/Makefile
-> @@ -1053,6 +1053,7 @@ LIB_OBJS += list-objects-filter.o
->  LIB_OBJS += list-objects.o
->  LIB_OBJS += lockfile.o
->  LIB_OBJS += log-tree.o
-> +LIB_OBJS += loose.o
+> FWIW out of all the "Needs review" topics this one seemed like the most
+> deserving of another pair of eyes, and I was planning to review some of
+> the patches here this week + the weekend. If my review takes too long
+> (taking longer than this weekend) I can give another update next week
+> saying "too hard for me, please don't wait for me" to unblock you from
+> merging to next.
+>
+> Thanks.
 
-The name "loose" appears to be a bit too generic for something with such
-a specialized role (_mapping_ of loose objects). Would
-"loose-object-map" be a better name?
+Unfortunately I don't think I can finish reviewing the rest of the
+series (after all this time I've only been able to review just 4 out of
+30 patches). I'm also stuck on trying to understand patch 5, as there is
+a lot going on there.
 
->  LIB_OBJS += ls-refs.o
->  LIB_OBJS += mailinfo.o
->  LIB_OBJS += mailmap.o
-> diff --git a/loose.c b/loose.c
-> new file mode 100644
-> index 000000000000..6ba73cc84dca
-> --- /dev/null
-> +++ b/loose.c
-> @@ -0,0 +1,246 @@
-> +#include "git-compat-util.h"
-> +#include "hash.h"
-> +#include "path.h"
-> +#include "object-store.h"
-> +#include "hex.h"
-> +#include "wrapper.h"
-> +#include "gettext.h"
-> +#include "loose.h"
-> +#include "lockfile.h"
-> +
-> +static const char *loose_object_header = "# loose-object-idx\n";
+FWIW a lot (perhaps all?) of my comments so far were around readability
+and not material to the actual design or approach of anything AFAICS.
+So, it's time for me to say "don't bother waiting for me" as I said
+(predicted?) earlier.
 
-IDK what the "loose-object-idx" is vs the "loose-object-map", but I
-guess I need to read more of the code.
-
-But also, I am at my limits here and am unable to review this patch as
-is (too big for me to chew at once, sorry).
-
-I'll pause my review of this series here to give Eric B some time to
-respond. Thanks.
+Don't bother waiting for me. Thanks.
