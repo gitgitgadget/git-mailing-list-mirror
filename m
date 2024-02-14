@@ -1,107 +1,158 @@
-Received: from mail-oa1-f50.google.com (mail-oa1-f50.google.com [209.85.160.50])
+Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA204182BB
-	for <git@vger.kernel.org>; Wed, 14 Feb 2024 10:29:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17ECA18EA2
+	for <git@vger.kernel.org>; Wed, 14 Feb 2024 10:57:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707906553; cv=none; b=l3Ca69BHXzc57OZVVFYTzlwy7Hsgz6y6oTE1i0fY+CRV+uDF5fNkenjyDC0UH7wbW4SZKSifaEg2VuBtjcWfqVqucj4QxEkx9+cWVnCrXyZ+RUFBQjgVgCtFLiovRfMOHsiH+ZK0F4oSivjlprnj3xuXD7L3dIrR4cc7no7lDIc=
+	t=1707908265; cv=none; b=EenR/9JG7xb+orrfpheoSKVeVoQZRsCCTqIDs8+vNKf69pFA3kp0eEFnNBUoJeT1MRXNEPzl+QOv3pibHhfDtoBghSH0oH7qrh2Jq5r4xN1fjXNIXzebtoxUYS4ebo3aLLlHrMwIFuRBjE+FwlLkcq8Qi2a8BV9xRKeQDDMPRPY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707906553; c=relaxed/simple;
-	bh=HaUy+P6640w9uxBrNfp6FSmsODaGhwn2J3KbEpyhCWI=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=PB7+G+6dvCsvBenzeikYeDrwmtmHM8ZmKIOLtBEvBwXJ589Bx+NbIRRITY9f7A2H03F9RRXsOKRPXWVPOkrC8zbezS3Vn/9VXeCfJS6dLoRf+K66Fz8RQkN0FBPesi5YbgYlPbyrp/ln3Ku9T/GHv6BChyqb3DlYXmIsJyVBI8A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jo9/dNL5; arc=none smtp.client-ip=209.85.160.50
+	s=arc-20240116; t=1707908265; c=relaxed/simple;
+	bh=/7PqvRHiSnNFKTLMeR1xQ3NW/kqRSFm13NyAxVZnsnY=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=ZdbWRO/WH3hwHICPOs1sSIcxZr7uQH43WHlL1tHHePMR1zkKIv0JOHgaaI1p/KCrRavOfOp55G0oqBbEatKyEHUYaLBehcFKCKmQW325sUAvWbc75OPTGAc5OPvkgBzQCB81eF6wPqYNGTMfw/fRTAc0gGkj0eW8cmUAPXwzMK4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=AJC+bz3x; arc=none smtp.client-ip=209.85.128.48
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jo9/dNL5"
-Received: by mail-oa1-f50.google.com with SMTP id 586e51a60fabf-21922481a2fso3709812fac.0
-        for <git@vger.kernel.org>; Wed, 14 Feb 2024 02:29:11 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AJC+bz3x"
+Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-411d253098eso8459275e9.3
+        for <git@vger.kernel.org>; Wed, 14 Feb 2024 02:57:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1707906551; x=1708511351; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=fasvEnqHRq7BMVF5cxURa2Zl9w8sC4IgOadk4K+slow=;
-        b=jo9/dNL5Fr4VClb7T1c0mDhqMH0Wj2khpMWV66nGLTKPjLqBtFLaP8k7UM5OTXgPZr
-         UD3reEdUnzpvk3PhoUwUOswTJYrYp0yu64/RPwVlMY8jU3BZcA2xW7BDXEyhva5L/YBy
-         /OjUP9Mk+IRCJQ+Y6NJQMkxMJmLayqmSoyuakuffQes9GHulY7wZxD17T0fd38o3YPlB
-         206ZQngZ7ss0ByvoO+HdjmB57w+xX/RdaGEFMa2So0HPSniFGFtmWjK3olfk0EQiquFU
-         u9WnGd2ARg0OVdW3oQ6Z2fKBIw6jD3CTYC0p31n+dhzDZM6frQIV24GGjFqIS5rdK/Rn
-         O9PA==
+        d=gmail.com; s=20230601; t=1707908259; x=1708513059; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=IJ6VEAXZ0oYNzZTQZGoPSM34Q+Oh1aDmgu2dUI9a6Ms=;
+        b=AJC+bz3x5hmXIbsiUpRQLb9vTfIZ5Anh4EJ3Lc4CtNSP1nvQHnto2m8Br2a4Gi99+s
+         H+8Msf8aB89JI0g0A48pv0dcNkc0V/PhFTBGbizH1xWzGfBvROaV/NvKlI1TdZvzTEEi
+         SpNAQVPTeDbgqVIZDHsl8t+3Zv6Eyf9uRR5neJPi+uGcion4Eq+5+M3+cv/SxPtQvo8m
+         ZRDoJJom3ZHrMtdRnZCZKZ5vq6Nu569YWv3NId/m7CJwhZNybj3975FrqckjkprgnEYa
+         9tHoFH+bJaD+puaPQvzqUX5yg9fih+E7qCiIRqS2tnEuKu5srJVAE4vHdFjN2NCs/WKo
+         VGiQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1707906551; x=1708511351;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=fasvEnqHRq7BMVF5cxURa2Zl9w8sC4IgOadk4K+slow=;
-        b=UoTdM5GjQB/g9dozsmpMmlyQd/GvNK4mppIQHeRzIpq9Mfhp5SM6GIaqmckaWGT7gt
-         APJNryICVvYpUqliOk+bhXThsHEKv9LLyc1iMpLLZnfZtO3dj79XpF/iiXYXyDc5UTEE
-         7/b/Cn7fK03AcXjCjFJlXOrzkPyy2T18zfP+Ge3fJJFiqlx2GX+0PMvRjMn1bnsruCzV
-         doiuxhYpagC2BY8qb16oPseTh8WeQ0oBxqEEgJmMmDpgW0XDFzEH9iOKQOUfsze61wu0
-         iRS1n0y1ddmAWmX9ddukoMd8Lhv5h9YnaBeqU+EhU9VCe/bgfa7uNuA84F4gHa2T4vPP
-         titg==
-X-Forwarded-Encrypted: i=1; AJvYcCXefN8WlchL9wifmCaCFQxZeV9RYRg0yCNXH1jkmbYuQVbvVTQwSKhauBX3qXXeH+Af1VmJNcLKGtbKASGVozmnLIxc
-X-Gm-Message-State: AOJu0YyDN6E4lTwO/t9SdffwRFGMkBcHJ/q+bQR0ORCc5/BuTdJC0boj
-	kY37Xokp9Yew+Atm4qbZpNhwybGy2Qbbl0A0d9EiH+u/Qvtxg7hE0cRWZm/WzW7m3t+Q7NiXEj7
-	xA4I6VosCkVfHADvGbneBz9YzD00=
-X-Google-Smtp-Source: AGHT+IH+82bz8RJuiDlG1xk0XC20GQ9+4UtzUDY+fJ4uRxU+r5SxfRU+/5qNUh9VXLEWDqnHFWfSD4lt5NlJ+sekeBw=
-X-Received: by 2002:a05:6871:3230:b0:219:69df:67fd with SMTP id
- mo48-20020a056871323000b0021969df67fdmr1593949oac.46.1707906550661; Wed, 14
- Feb 2024 02:29:10 -0800 (PST)
+        d=1e100.net; s=20230601; t=1707908259; x=1708513059;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=IJ6VEAXZ0oYNzZTQZGoPSM34Q+Oh1aDmgu2dUI9a6Ms=;
+        b=Es6KBw3wScWJlbTqRPAMCnkEognznLYmSfOHaGPZ0zEPWVzfO00dWsB4dPNAK5WtQo
+         qCupm5zsk5knBNwisyoCJKwGLDSCxak/iZBLkpI1XrkugG/nHePNHfWsUP0JcZg/ciiT
+         IjbyiLh4psJ8X011EkZuruWzJBEH190Fo/+pI0K0aQSrYmYkpyOnTZJWURsTH7dghpSm
+         rXxvCrLSBfK6WZvnsVsXsFp3inkRu+JkFiedNeiZfFKW7NwuCN3gtaA0SdLxDS3vbMJv
+         DO7fw41saAo61NnIkwseSihZ/aSqpEDrLH/OtEhTQE3cr9IH9dttny/bOnH1r9hj3yYA
+         RO1g==
+X-Forwarded-Encrypted: i=1; AJvYcCXq7HMH/mEbnLDbxw9s9UNZ3xmfLZVUYvQivgEnDlmdIi8CRnLgiP4HCx48cyvoe8bxl/vE4Xos242mpTC53CUU+Nms
+X-Gm-Message-State: AOJu0YwlDyk+vJdiB3INxp/pi5ElwA0kZQ3yOZT7GyD0KFFUkJXC7e7K
+	lMk0i4Owi12gOxzjOzeLkFCwG2266CaqRww476yKT4sgJX2Ywh9e
+X-Google-Smtp-Source: AGHT+IGoAZxkUL3lY/u64j4Yp0s2rWO0lX/pcpItzo4a2vO1b4Ir8F9eltIlsFRcRb5D0mNY6Wwyuw==
+X-Received: by 2002:a05:600c:138b:b0:410:c804:e891 with SMTP id u11-20020a05600c138b00b00410c804e891mr1959329wmf.16.1707908258643;
+        Wed, 14 Feb 2024 02:57:38 -0800 (PST)
+X-Forwarded-Encrypted: i=1; AJvYcCXgDSwmU0PQKxH4MyRrzadrw+xoFxOfZVGbypx7v9xObaSeADaJIhIi13mOhZkK0EFND5gNCt/hMhjpi+KYXz7LdHECGcUohQ+QsI9MMWq/9pIzRnhWBpzUiomUCuvfWcnMlfyGv3KnKXkdKuhqAqSWY4cqmpEEv7wt/RyThIZOfQ==
+Received: from ?IPV6:2a0a:ef40:62e:a901:d2c6:37ff:fef6:7b1? ([2a0a:ef40:62e:a901:d2c6:37ff:fef6:7b1])
+        by smtp.googlemail.com with ESMTPSA id h14-20020a05600c314e00b00411ee1dd5afsm1196183wmo.16.2024.02.14.02.57.38
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 14 Feb 2024 02:57:38 -0800 (PST)
+Message-ID: <bc0bf723-ccde-469d-853e-4a94531ea60b@gmail.com>
+Date: Wed, 14 Feb 2024 10:57:38 +0000
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240119142705.139374-1-karthik.188@gmail.com>
- <20240211183923.131278-1-karthik.188@gmail.com> <20240211183923.131278-2-karthik.188@gmail.com>
- <ZcoTbRxIaGmTd4fJ@tanuki> <xmqqh6ic5ex3.fsf@gitster.g>
-In-Reply-To: <xmqqh6ic5ex3.fsf@gitster.g>
-From: Karthik Nayak <karthik.188@gmail.com>
-Date: Wed, 14 Feb 2024 11:28:44 +0100
-Message-ID: <CAOLa=ZQN17Nyxo-uv7CytO1RkaPu9TPfeVHANvV=tycCGpy+Ng@mail.gmail.com>
-Subject: Re: [PATCH v4 1/5] refs: introduce `is_pseudoref()` and `is_headref()`
+User-Agent: Mozilla Thunderbird
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: Bug report: Incorrect GIT_FLUSH behavior in 2.43.1 (regression
+ and breaking)
 To: Junio C Hamano <gitster@pobox.com>
-Cc: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org, phillip.wood123@gmail.com, 
-	Jeff King <peff@peff.net>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Cc: Xiaoguang WANG <wxiaoguang@gmail.com>, Taylor Blau <me@ttaylorr.com>,
+ =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>,
+ Chandra Pratap <chandrapratap3519@gmail.com>, git@vger.kernel.org
+References: <CABn0oJvg3M_kBW-u=j3QhKnO=6QOzk-YFTgonYw_UvFS1NTX4g@mail.gmail.com>
+ <xmqq8r3p7glr.fsf@gitster.g> <c243c260-b346-4b53-b8a2-685389ad344e@gmail.com>
+ <xmqqle7o6zs8.fsf@gitster.g> <xmqqbk8k5eo0.fsf@gitster.g>
+Content-Language: en-US
+From: Phillip Wood <phillip.wood123@gmail.com>
+In-Reply-To: <xmqqbk8k5eo0.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Hello,
+Hi Junio
 
-On Tue, Feb 13, 2024 at 8:42=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
-wrote:
->
-> Patrick Steinhardt <ps@pks.im> writes:
->
-> > I wonder whether we can maybe consolidate the interface into one or
-> > maybe even two functions where the behaviour can be tweaked with a flag
-> > field. Something like `refname_is_valid()` with a bunch of flags:
-> >
-> >   - REFNAME_ACCEPT_HEAD to accept "HEAD"
-> >   - REFNAME_ACCEPT_PSEUDOREF to accept all of the refs ending with
-> >     "_HEAD" or being one of the irregular pseudorefs.
-> >   - REFNAME_ACCEPT_INVALID_BUT_SAFE to accept refnames which aren't
-> >     valid, but which would pass `refname_is_safe()`.
->
-> I am certain we _can_, but it will take an actual patch to see if
-> such a refactoring makes the callers easier to follow, which is the
-> real test.  FWIW, I am much less skeptical than hopeful in this
-> particular case.
+On 13/02/2024 19:48, Junio C Hamano wrote:
+> Junio C Hamano <gitster@pobox.com> writes:
+> 
+>> Unfortunately the minimum fix is already in 'next', so let me turn
+>> what you wrote into an update relative to that.  I'll assume your
+>> patch in the discussion is signed-off already?
+> 
+> Nah, my mistake.  The topic still is outside 'next', so I'll replace
+> it with the attached while queuing.
+ >
+> Thanks.
+> 
+> ------- >8 ------------- >8 ------------- >8 -------
+> Subject: [PATCH] write-or-die: fix the polarity of GIT_FLUSH environment variable
+> 
+> When GIT_FLUSH is set to 1, true, on, yes, then we should disable
+> skip_stdout_flush, but the conversion somehow did the opposite.
+> 
+> With the understanding of the original motivation behind "skip" in
+> 06f59e9f (Don't fflush(stdout) when it's not helpful, 2007-06-29),
+> we can sympathize with the current naming (we wanted to avoid
+> useless flushing of stdout by default, with an escape hatch to
+> always flush), but it is still not a good excuse.
+> 
+> Retire the "skip_stdout_flush" variable and replace it with "flush_stdout"
+> that tells if we do or do not want to run fflush().
 
-I was trying to implement this and realized that the changes sprawl
-multiple files and
-and have a fair bit of complexity since `check_refname_format()`
-implements its own
-flags. Overall, adding it to this patch series would overshadow what
-we're trying to do here.
+I think the patch looks good and the commit message nicely explains why 
+we want to change the name of the variable.
 
-I think it would be best to tackle this problem after this series has lande=
-d.
+Best Wishes
 
-Junio, let me know if you want me to reroll for the whitespace issues.
-Otherwise, I'll wait
-for reviews here.
+Phillip
+
+> Reported-by: Xiaoguang WANG <wxiaoguang@gmail.com>
+> Helped-by: Phillip Wood <phillip.wood@dunelm.org.uk>
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> ---
+>   write-or-die.c | 16 ++++++++--------
+>   1 file changed, 8 insertions(+), 8 deletions(-)
+> 
+> diff --git a/write-or-die.c b/write-or-die.c
+> index 3942152865..01a9a51fa2 100644
+> --- a/write-or-die.c
+> +++ b/write-or-die.c
+> @@ -18,20 +18,20 @@
+>    */
+>   void maybe_flush_or_die(FILE *f, const char *desc)
+>   {
+> -	static int skip_stdout_flush = -1;
+> -
+>   	if (f == stdout) {
+> -		if (skip_stdout_flush < 0) {
+> -			skip_stdout_flush = git_env_bool("GIT_FLUSH", -1);
+> -			if (skip_stdout_flush < 0) {
+> +		static int force_flush_stdout = -1;
+> +
+> +		if (force_flush_stdout < 0) {
+> +			force_flush_stdout = git_env_bool("GIT_FLUSH", -1);
+> +			if (force_flush_stdout < 0) {
+>   				struct stat st;
+>   				if (fstat(fileno(stdout), &st))
+> -					skip_stdout_flush = 0;
+> +					force_flush_stdout = 1;
+>   				else
+> -					skip_stdout_flush = S_ISREG(st.st_mode);
+> +					force_flush_stdout = !S_ISREG(st.st_mode);
+>   			}
+>   		}
+> -		if (skip_stdout_flush && !ferror(f))
+> +		if (!force_flush_stdout && !ferror(f))
+>   			return;
+>   	}
+>   	if (fflush(f)) {
+
