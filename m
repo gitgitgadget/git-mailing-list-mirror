@@ -1,54 +1,54 @@
-Received: from mail-ej1-f44.google.com (mail-ej1-f44.google.com [209.85.218.44])
+Received: from mail-ed1-f54.google.com (mail-ed1-f54.google.com [209.85.208.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2842A5A785
-	for <git@vger.kernel.org>; Wed, 14 Feb 2024 14:38:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A412B54FAD
+	for <git@vger.kernel.org>; Wed, 14 Feb 2024 14:40:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707921528; cv=none; b=U9tjHgashhsDpeu7SJV1IyK5t5HnPfCJqiXrWfoXNY7K4JJawQt5czRmlkBgkWV/Ct5KhNqIFsC+ARlzHxJut5qbOt77v5gAeSZzZRYCe9Qv9W4byTtMDmvzRfUxkVerltJeELN6KFFhfnVvOwe/cYpzBvOEmXdshV+PsMKKlOc=
+	t=1707921606; cv=none; b=uWBaXlaDNfAHPZ4cUHjVqR3LgEXA/5+yQMSdBo6l9Nwor13FnehvPQmwKprW/uDBRe0QuXeONS14gubUhL0Er0tOyj4c/LOcB4Zz740s7dNbEc6RZJ92jSwGR/N6vORM9wIkAMAsU7rWOWa0BRfrQNySOpcBMB3IctBwNoevFE4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707921528; c=relaxed/simple;
-	bh=AqbTjcd+E2XKoNofSl2w0CdB5MmPNsxPmf6A+uRaJ2Y=;
+	s=arc-20240116; t=1707921606; c=relaxed/simple;
+	bh=9Yak3Ql6KdwHc1pgrDvCiWfTZtwN0EkalQUU0QT0gGo=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=YlilS9ZubhmWjBHbOVvqO5W78vODK3Bi1epn9DE88+sgtzYJSBciJkirfV6K8EAqr9Tp+1w3iC0H1Ss73ziTzdJSeLxhAwBWrC3ox58pX/i3YqPxzGdTLj59ObGQtgemZlyo+aB+agbZsEGSsw2eROA7FmBgspI5L3UwbprtNVU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dqUlvBgR; arc=none smtp.client-ip=209.85.218.44
+	 To:Cc:Content-Type; b=ApNFQeGZPl0L3OAqF6EZjrSmk2PzwVoqGd/IuYNoBlGB9PEEqP0o223bOXheJcyasD5cdyNn1HAapz101NjYf1chXY9nu58x+Bk5XEwJtsGiDQu/7kcz31KsIw6pM7LcTAjzC5FSBM+uum/PpKlqGyPEkKi8KHqfKR6gTGhE4Oo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=WL3vox4w; arc=none smtp.client-ip=209.85.208.54
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dqUlvBgR"
-Received: by mail-ej1-f44.google.com with SMTP id a640c23a62f3a-a3566c0309fso682939066b.1
-        for <git@vger.kernel.org>; Wed, 14 Feb 2024 06:38:45 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WL3vox4w"
+Received: by mail-ed1-f54.google.com with SMTP id 4fb4d7f45d1cf-55f279dca99so8987739a12.3
+        for <git@vger.kernel.org>; Wed, 14 Feb 2024 06:40:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1707921524; x=1708526324; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1707921603; x=1708526403; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=ubtfpm1iraYPnM9Iiirsyc1mrB3zxo10iEF4M5UD5Fo=;
-        b=dqUlvBgRyrHjwC4hHGGlkpTS/Ov4i2M1ofIzZj7u34Gy/TzzyIx3KsEblqbqAvEhf3
-         +pFhw2JGvWJ0brCLnoxfWWoVYmqBavu2d8mKgjdHUFvT3ukJMthZiownswG7+P9PAUkR
-         MykasBNp3Wq58ZhpbtWWjxCEf3m5x/odzZ/PkM/TjUzANn598kSZgIsyh37M+Ch8Hr0P
-         mDH0cXyLxLMuYSRAiNrlfrSu5sB+A1DKqNFFFkVBPHs8K0xD602UH/qtd82oAXZexKoE
-         MkBTwOiMF/7E3b7j8EzwPAPmyhfFR5EBlAAby0gRmfW0fjO2LOjKkb4uI55/2c1878AY
-         cKgg==
+        bh=Cz4l//ZIJ6oDFhy0b9zAWeZo93JhyjPgo2RZgbslvrE=;
+        b=WL3vox4wj3jLCwgmuYV/5hOpMiR3sK6+auQPMZwNjghk3JkWw2wArhMpdDnLe+04Ft
+         OqFHbe3zhKA5EVKOFD/ABE7ZlGWfCedSiui8nJ8+phYAncitQTPy59HkOttjNwWdz7nF
+         qkNMc29J8WRPAFcWp56Ool9X0aK0RjLgaHmR5jES64Mz2KjIclLv7n6O1O8sVDLBY5ro
+         fMB+KuzxLlWYDC7GJdwXHZM9sFiuNU2EeFWD5FC+DcyYlWB5FLWdRDmMSzWWpmvs6PJ5
+         wd1vXhu39IOdXEymI8Mo7Z55Bc++xkLYRxFCemgSvZarUAR6RlUcwDxmJ5l8Lw4u6zNf
+         88IA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1707921524; x=1708526324;
+        d=1e100.net; s=20230601; t=1707921603; x=1708526403;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=ubtfpm1iraYPnM9Iiirsyc1mrB3zxo10iEF4M5UD5Fo=;
-        b=IbGWCxYsFKz/otWrgoO3z6g9gfswX1RspAXm8xUSMuEGVAELz+pQjqNxpFHaj0ELli
-         lqW+U+ZOnduqqXUPoSp+ekM7l47hQj6lZkX5pJHu59agT4POdPElCgAr1A8C39nmIhg9
-         x6DZyHEXUl8UfBYB00jjHUSdEuUeLKQr1QSi5s2oyWdOsVV47rTbGu0vlmdQhnoAjUR0
-         +12mF4Z+OvP+DJX3ajKJEmGdEfACVO0FbmNixUKq3f+4b3HwReeJouTVCP6Yh/P7FT7h
-         TS5xcScEw7yH5KUzE640O2x1gJypnwEJE9JPWLPwNHoqBZHDPyS/dm8t8IBRUboRyGIE
-         dzvw==
-X-Gm-Message-State: AOJu0YxU81sGi1ppSRGn5HScU/GE0nfXhqSRr6t2zDC4oJZGbTLzPNk2
-	IUfMOZY1bDePGbyuqCOAQYm8XeEQePHZrbXoWxgHB3ZCXb7LW/NzVVsjkc3OrbJv/+IwS7l2Mvu
-	WrXjy5bWyR0+o0TeXoe33+vjqT3Q=
-X-Google-Smtp-Source: AGHT+IEzZ+cYiX3zQNUIRknnDkJlw8NMHaDDk1ilRGp0qQfNTUcbVpBLDsdqhel/jciJBYMqPaoRrsqLFE1FW7WFiL8=
-X-Received: by 2002:a17:906:4e91:b0:a3d:47dc:e3a8 with SMTP id
- v17-20020a1709064e9100b00a3d47dce3a8mr1486498eju.3.1707921524116; Wed, 14 Feb
- 2024 06:38:44 -0800 (PST)
+        bh=Cz4l//ZIJ6oDFhy0b9zAWeZo93JhyjPgo2RZgbslvrE=;
+        b=kVLEAjDlHr7G5ao63k6j/Z1Szoshwq3A6lrQuW0bSalmq5ptFG0wgVr86M0ax6HUCL
+         UUow4F9v7TsrcRtkyGJBlYx245cuAohtxGr3niTiD0U0pLlacQ9k6lPWyrhJSAWvDiJc
+         QBuCOULhRduz6nHsWnSH3ent85ac2MfL1oQ9SBgV/qJJ0i8dbYDlw3/cnw7ihpEPjImP
+         DCUbquVHCsG3shy9TWZrLJuagBodqkaSQ57zD6roi2Vsol+nAlRHY+Wss0je/SQVM8Pn
+         ZlLHM6gXJa/vpnJh/EhgpjI6al5q/6jUpcOnlP4BBwnFDgR54qpXTfeykiB5hDdM9ooC
+         bmnw==
+X-Gm-Message-State: AOJu0YyAxyLr5PnVx61gnbETD/FWgGlyXEBkZGNejHFMXHmHBNZBfQ1f
+	SizwzeJPWyMp+mjm+JQbJiP0CBjBgwdL2bdDd9c54yGjJuZbb7GNgNzHeEfd7RNrOoQcb5eaa+L
+	K+iFjYmSLqd8S3af7nY5sGKBF6zE=
+X-Google-Smtp-Source: AGHT+IHvsypK65NkPOQjDr9BNPPCmTj7Qdg3eJRY0zsicEzOGbnOGLcnuScL19YFAkcIy2PdmS7SN41e0Nl9nI7TfxM=
+X-Received: by 2002:a17:906:5956:b0:a3d:1994:d3b2 with SMTP id
+ g22-20020a170906595600b00a3d1994d3b2mr1859854ejr.74.1707921602735; Wed, 14
+ Feb 2024 06:40:02 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -56,121 +56,23 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 References: <20240208135055.2705260-1-christian.couder@gmail.com>
- <20240208135055.2705260-5-christian.couder@gmail.com> <owlyil2s9eq6.fsf@fine.c.googlers.com>
-In-Reply-To: <owlyil2s9eq6.fsf@fine.c.googlers.com>
+ <20240208135055.2705260-5-christian.couder@gmail.com> <xmqqeddmonq0.fsf@gitster.g>
+In-Reply-To: <xmqqeddmonq0.fsf@gitster.g>
 From: Christian Couder <christian.couder@gmail.com>
-Date: Wed, 14 Feb 2024 15:38:32 +0100
-Message-ID: <CAP8UFD3N8h4FnfvFYYWrV54a7WcOwHY862DjxxPKSKr4jEwU7Q@mail.gmail.com>
+Date: Wed, 14 Feb 2024 15:39:51 +0100
+Message-ID: <CAP8UFD1mNJn-aQnx9m8HNeEB8etuYaJoZB2zBXUPQVMcJhTUCg@mail.gmail.com>
 Subject: Re: [PATCH v2 4/4] rev-list: allow missing tips with --missing=[print|allow*]
-To: Linus Arver <linusa@google.com>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>, 
-	John Cai <johncai86@gmail.com>, Christian Couder <chriscool@tuxfamily.org>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>, John Cai <johncai86@gmail.com>, 
+	Linus Arver <linusa@google.com>, Christian Couder <chriscool@tuxfamily.org>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Tue, Feb 13, 2024 at 11:33=E2=80=AFPM Linus Arver <linusa@google.com> wr=
-ote:
+On Thu, Feb 8, 2024 at 6:44=E2=80=AFPM Junio C Hamano <gitster@pobox.com> w=
+rote:
 >
 > Christian Couder <christian.couder@gmail.com> writes:
 
-> > We could introduce a new option to make it work like this, but most
-> > users are likely to prefer the command to have this behavior as the
-> > default one. Introducing a new option would require another dumb loop
-> > to look for that options early, which isn't nice.
->
-> s/options/option
-
-Fixed in the V3 I just sent.
-
-> > Also we made `git rev-list` work with missing commits very recently
-> > and the command is most often passed commits as arguments. So let's
-> > consider this as a bug fix related to these previous change.
->
-> s/previous change/recent changes
-
-Fixed in V3, thanks.
-
-> > While at it let's add a NEEDSWORK comment to say that we should get
-> > rid of the existing ugly dumb loops that parse the
-> > `--exclude-promisor-objects` and `--missing=3D...` options early.
-
-> > @@ -1019,6 +1019,10 @@ Unexpected missing objects will raise an error.
-> >  +
-> >  The form '--missing=3Dprint' is like 'allow-any', but will also print =
-a
-> >  list of the missing objects.  Object IDs are prefixed with a ``?'' cha=
-racter.
-> > ++
-> > +If some tips passed to the traversal are missing, they will be
-> > +considered as missing too, and the traversal will ignore them. In case
-> > +we cannot get their Object ID though, an error will be raised.
->
-> The only other mention of the term "tips" is for the "--alternate-refs"
-> flag on line 215 which uses "ref tips". Perhaps this is obvious to
-> veteran Git developers but I do wonder if we need to somehow define it
-> (however briefly) the first time we mention it (either in the document
-> as a whole, or just within this newly added paragraph).
-
-I did a quick grep in Documentation/git*.txt and found more than 130
-instances of the 'tip' word. So I think it is quite common in the
-whole Git documentation and our glossary would likely be the right
-place to document it if we decide to do so. Anyway I think that topic
-is independent from this small series.
-
-> Here's an alternate wording
->
->     Ref tips given on the command line are a special case.
-
-`git rev-list` has a `--stdin` mode which makes it accept tips from
-stdin, so talking about the command line is not enough. Also maybe one
-day some config option could be added that makes the command include
-additional tips.
-
-> They are
->     first dereferenced to Object IDs (if this is not possible, an error
->     will be raised). Then these IDs are checked to see if the objects
->     they refer to exist. If so, the traversal happens starting with
->     these tips. Otherwise, then such tips will not be used for
->     traversal.
->
->     Even though such missing tips won't be included for traversal, for
->     purposes of the `--missing` flag they will be treated the same way
->     as those objects that did get traversed (and were determined to be
->     missing). For example, if `--missing=3Dprint` is given then the Objec=
-t
->     IDs of these tips will be printed just like all other missing
->     objects encountered during traversal.
-
-Your wording describes what happens correctly, but I don't see much
-added value for this specific patch compared to my wording which is
-shorter.
-
-Here I think, we only need to describe the result of the command in
-the special case that the patch is fixing. We don't need to go into
-details of how the command or even --missing works. It could be
-interesting to go into details of how things work, but I think it's a
-separate topic. Or perhaps it's even actually counter productive to go
-into too much detail as it could prevent us from finding other ways to
-make it work better. Anyway it seems to me to be a separate topic to
-discuss.
-
-> But also, I realize that these documentation touch-ups might be better
-> served by an overall pass over the whole document, so it's fine if we
-> decide not to take this suggestion at this time.
-
-Right, I agree. Thanks for telling this.
-
-> Aside: unfortunately we don't seem to define the relationship between
-> ref tips (e.g., "HEAD"), object IDs (40-char hex string), and the actual
-> objects (the real data that we traverse over). It's probably another
-> thing that could be fixed up in the docs in the future.
-
-Yeah, and for rev-list a tip could also be a tree or a blob. It
-doesn't need to be a "ref tip". (Even though a ref can point to a tree
-or a blog, it's very rare in practice.)
-
-> >  --exclude-promisor-objects::
-> >       (For internal use only.)  Prefilter object traversal at
 > > diff --git a/builtin/rev-list.c b/builtin/rev-list.c
 > > index b3f4783858..ec9556f135 100644
 > > --- a/builtin/rev-list.c
@@ -182,24 +84,30 @@ t char *prefix)
 > >        */
 > > +     /*
 > > +      * NEEDSWORK: These dump loops to look for some options early
-> > +      * are ugly.
+> > +      * are ugly. We really need setup_revisions() to have a
 >
-> I agree with Junio's suggestion to use more objective language.
+> I would drop the "dump" and "ugly" from here.  It OK to make value
+> judgement with such words in casual conversations on a proposed
+> patch, but when we make a request to future developers to fix our
+> mess, we should be more objective and stick to the techincal facts,
+> so that they have better understanding on why we think this area
+> needs more work.
 >
-> > We really need setup_revisions() to have a
+> Perhaps something like:
+>
+>     These loops that attempt to find presence of options without
+>     understanding what the options they are skipping are broken
+>     (e.g., it would not know "--grep --exclude-promisor-objects" is
+>     not triggering "--exclude-promisor-objects" option).
+
+I have used what you suggest in V3, except for s/what/that/.
+
+> Everything after "We really need" is good (modulo possible grammos),
+> I think.  Thanks for writing it.
+>
 > > +      * mechanism to allow and disallow some sets of options for
 > > +      * different commands (like rev-list, replay, etc). Such
->
-> s/Such/Such a
-
-Fixed in V3
-
 > > +      * mechanism should do an early parsing of option and be able
->
-> s/option/options
-
-Fixed in V3, thanks.
-
 > > +      * to manage the `--exclude-promisor-objects` and `--missing=3D..=
 .`
 > > +      * options below.
@@ -207,73 +115,23 @@ Fixed in V3, thanks.
 > >       for (i =3D 1; i < argc; i++) {
 > >               const char *arg =3D argv[i];
 > >               if (!strcmp(arg, "--exclude-promisor-objects")) {
+> > @@ -753,8 +762,12 @@ int cmd_rev_list(int argc, const char **argv, cons=
+t char *prefix)
 > >
-> > [...]
-> >
-> > @@ -2178,13 +2183,18 @@ static int handle_revision_arg_1(const char *ar=
-g_, struct rev_info *revs, int fl
-> >       if (revarg_opt & REVARG_COMMITTISH)
-> >               get_sha1_flags |=3D GET_OID_COMMITTISH;
-> >
-> > +     /*
-> > +      * Even if revs->do_not_die_on_missing_objects is set, we
-> > +      * should error out if we can't even get an oid, ...
-> > +      */
+> >       if (arg_print_omitted)
+> >               oidset_init(&omitted_objects, DEFAULT_OIDSET_SIZE);
+> > -     if (arg_missing_action =3D=3D MA_PRINT)
+> > +     if (arg_missing_action =3D=3D MA_PRINT) {
+> >               oidset_init(&missing_objects, DEFAULT_OIDSET_SIZE);
+> > +             /* Already add missing tips */
+> > +             oidset_insert_from_set(&missing_objects, &revs.missing_co=
+mmits);
+> > +             oidset_clear(&revs.missing_commits);
+> > +     }
 >
-> Perhaps this wording is more precise?
->
->     If we can't even get an oid, we are forced to error out (regardless
->     of revs->do_not_die_on_missing_objects) because a valid traversal
->     must start from *some* valid oid. OTOH we ignore the ref tip
->     altogether with revs->ignore_missing.
+> It is unclear what "already" here refers to, at least to me.
 
-This uses "valid oid" and "valid traversal", but I am not sure it's
-easy to understand what "valid" means in both of these expressions.
+I removed it and changed the comment to just "/* Add missing tips */"
+in the V3 I just sent.
 
-Also if all the tips passed to the command are missing, the traversal
-doesn't need to actually start. The command, assuming
-`--missing=3Dprint` is passed, just needs to output the oids of the tips
-as missing oids.
-
-I also think that "ref tip" might be misleading as trees and blos can
-be passed as tips.
-
-So I prefer to keep the wording I used.
-
-> > +      * ... as
-> > +      * `--missing=3Dprint` should be able to report missing oids.
->
-> I think this comment would be better placed ...
->
-> >       if (get_oid_with_context(revs->repo, arg, get_sha1_flags, &oid, &=
-oc))
-> >               return revs->ignore_missing ? 0 : -1;
-> >       if (!cant_be_filename)
-> >               verify_non_filename(revs->prefix, arg);
-> >       object =3D get_reference(revs, arg, &oid, flags ^ local_flags);
->
-> ... around here.
-
-In a previous round, I was asked to put such a comment before `if
-(get_oid_with_context(...))`. So I prefer to avoid some back and forth
-here.
-
-> > +++ b/t/t6022-rev-list-missing.sh
-> > @@ -78,4 +78,60 @@ do
-> >       done
-> >  done
-> >
-> > +for missing_tip in "HEAD~1" "HEAD~1^{tree}" "HEAD:1.t"
-> > +do
-> > +     # We want to check that things work when both
-> > +     #   - all the tips passed are missing (case existing_tip =3D ""),=
- and
-> > +     #   - there is one missing tip and one existing tip (case existin=
-g_tip =3D "HEAD")
-> > +     for existing_tip in "" "HEAD"
-> > +     do
->
-> Though I am biased, these new variable names do make this test that much
-> easier to read. Thanks.
-
-Thanks for suggesting them and for your reviews.
+Thanks.
