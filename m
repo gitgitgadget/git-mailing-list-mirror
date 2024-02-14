@@ -1,129 +1,362 @@
-Received: from mout.gmx.net (mout.gmx.net [212.227.15.19])
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29AE4145344
-	for <git@vger.kernel.org>; Wed, 14 Feb 2024 22:37:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.19
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 775401DDC1
+	for <git@vger.kernel.org>; Wed, 14 Feb 2024 22:48:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707950238; cv=none; b=GeknlNJy06y6L9RTuNf9SK7iaH/RumX91ClQkSc6wEq+JdvQ40wwZENVosQ3LRxiR1MViAHy6OakKztR69PaXzjB6rqOYUe1yrpTCO8bGifraw2jvEwZ9por1IhoGgf+RN2/pz6XNEbgSO2SB5IDabreomCaaAHcgeWq/JMHgSI=
+	t=1707950890; cv=none; b=iGhKm+TpNbmbCrSZ3cNL7xf82Ukuy5g0BuHtCDOokVGX5nnAQkG1Gl8oEAuiPAxVFrAUzxS5aa6bFpuAZM82t/V3OH6vpJD+sli/LE/cc9tFIF5A/bh+cl+Iz2H+OQEcB6b1AdRqE0KMEen/k0Vo1XMYsWn6iWc5loBp69QDHF0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707950238; c=relaxed/simple;
-	bh=or42E000obSXwT47C3PHfLs2gxUOB1nAXt8cHpDmj9c=;
-	h=From:To:Cc:Subject:Date:Message-ID:Content-Type:MIME-Version; b=fo9uXrZDGq6ZBoxe6zPwb5+ssTePNhsRyCR6lWanLSK5hwrxbTQu9xUhwNGR4vl87tVQzej9otYx/IZofHmT5vUr7lVtfTf70XEObeCW12NgIq+Fx9asjUllwGM+bn1uGIq9N8aXo3yx+Y55S/puhdlwRvXtuxWz9brbfXbNP50=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b=oqFYwrhD; arc=none smtp.client-ip=212.227.15.19
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
+	s=arc-20240116; t=1707950890; c=relaxed/simple;
+	bh=B02E5aJZdlfUxFaFH5XaknHvBZyWZP8Syg/QlGTGbB0=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=Z8cgdZMKLn+jYVUcQWvN8H3ZhdNWs1j+wWCEUPs26U6eEvOZyJxdiVmNckplsB1WnWraqq0O9vSWFUh9Nc4bwgRJoFS1HoEyLsIk1eCOEqVn8i4G3QkdxaYjObVnYgnOKUojJi/Ai2okxzwP2lYYMK6/GGy/iMx+xBlaYnicopg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=WtPt62RZ; arc=none smtp.client-ip=64.147.108.70
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b="oqFYwrhD"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.de; s=s31663417;
-	t=1707950232; x=1708555032; i=johannes.schindelin@gmx.de;
-	bh=or42E000obSXwT47C3PHfLs2gxUOB1nAXt8cHpDmj9c=;
-	h=X-UI-Sender-Class:From:To:Cc:Subject:Date;
-	b=oqFYwrhDtZkm3ps7JgF6zvxrXTXEy8cvm7noDptavuMcSiN1Iny6vRoCU2+Hhlnq
-	 huSToR4a3oKoga3o6DNvRuW2dIsiliaqpzgfYdCefmzUBGZYUDqrCxJcR7mMw4mHs
-	 ChOOUIMdghHwZvLGTFc3E7cSlfQTcsPOWQ8YMC36CaQddYijTF30S0HoONivPhHft
-	 XoPOtKE8fOvjZP1WKjGbWqJ5KOTGDeyJOimnXAuFV7EslXtq8vltSteyhvZ8foR6G
-	 G2ECIFrgxHTJo7lH9lL2ol6jwF7gSOc35PM2T7BJYFQ7R399HWpKfcwopRUbxZ+mH
-	 jzctRvhmtkbi7jjrEw==
-X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from
- fv-az1251-410.04bx5wyvw5tenjekzxp54pa3vd.cx.internal.cloudapp.net
- ([40.67.141.243]) by mail.gmx.net (mrgmx004 [212.227.17.190]) with ESMTPSA
- (Nemesis) id 1M3UUy-1raw6k0t8s-000bMa; Wed, 14 Feb 2024 23:37:12 +0100
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
-To: git-for-windows@googlegroups.com,
-	git@vger.kernel.org,
-	git-packagers@googlegroups.com
-Cc: Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: [ANNOUNCE] Git for Windows 2.44.0-rc1
-Date: Wed, 14 Feb 2024 22:37:10 +0000
-Message-ID: <20240214223710.3664-1-johannes.schindelin@gmx.de>
-X-Mailer: git-send-email 2.43.0
-Content-Type: text/plain; charset=UTF-8
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="WtPt62RZ"
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 1B6F81D497A;
+	Wed, 14 Feb 2024 17:45:40 -0500 (EST)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=B02E5aJZdlfUxFaFH5XaknHvBZyWZP8Syg/QlG
+	TGbB0=; b=WtPt62RZ8AlzZUeXBdGDlLjebRDTGLP+xvF4mij1+6Efuvz2q3O9Ht
+	CAHah6c6mYytWQS4d0dhSkIUuRaw6dDjxQsdxnzv04f3qv9V8bdJkD/oMa+/4flY
+	tSxlWWzfpjnMUAA9xAtIj/vpfiUfXGq/w+rgYVwhvYLYt6CFTI48s=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 141DC1D4978;
+	Wed, 14 Feb 2024 17:45:40 -0500 (EST)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.165.85])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 79E4C1D4977;
+	Wed, 14 Feb 2024 17:45:39 -0500 (EST)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 1/7] t: move tests exercising the "files" backend
+In-Reply-To: <2eca90234f60b5f48e444e8be212bd70b9ebf924.1707463221.git.ps@pks.im>
+	(Patrick Steinhardt's message of "Fri, 9 Feb 2024 08:23:09 +0100")
+References: <cover.1707463221.git.ps@pks.im>
+	<2eca90234f60b5f48e444e8be212bd70b9ebf924.1707463221.git.ps@pks.im>
+Date: Wed, 14 Feb 2024 14:45:38 -0800
+Message-ID: <xmqqr0heu0kt.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Fcc: Sent
-X-Provags-ID: V03:K1:tl0DQN7XilIvJg6yPOfx4E6iFUHZ7mQ3YpjSLgvCgoAvSsEGEZt
- Ug/zjJmddz26uoUqrvFd5wJ3/nt9mWzSE7GHkxq+SzEic6il4TsGhkMr0CZSiep/eqlYKnI
- ZZ0nBzohRAOuADDpn/rcaEqxD57dZYonuHWNamjwdxwjDtAIVIyrOTgYeX3JhflH+7FxEzC
- QFKCAgKA3jr2Hnily6v6A==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:ZFWW8jBT/iQ=;xWInumylxZpvSsDE1vozavMuAKo
- w1wFtw77osSp5E2S2DEodDYpyRdTfo68Cdiqr0F0n12jrTImQRJffH9HvN+19KFC7TD65HqzY
- rF0+mpusSNUsyWUY5XGT0JFyoaR+9poYnSuIEOlfFQe5yX1XG/2foTcCnVWKUUgQR408VLAtJ
- hiKVpk4SehM0nQoxL4Jgwp3vtyzsWUJc/gmxxcg4NUujWs697z7kNSd7jgSOmXslBAqbPNhqG
- cR2hFGj7jOf3o/8l2ez47Sn/YdEDQ9gwaGez7okLFDFiOh6v85RNrYBxvdIwC/fvpbaQoaXZ4
- 57qNNmzkVx1eY6n4AMHlPvIQ7rE3+Z80g4aEkOnn42tTsEmwtWGkNYAEFtAwce+0Kssk3fVfM
- 8xW5lxvTbXaApeR+MnbH2AxujgYUe6JQI/6zEGnrN7ogIKU0XoYNDXKLAV+GXHPOrbx3Q9EjS
- tylj9ZOQIfkp76lMrWDtHBa3xBjsX38FhFVQryawqkfAnjPznaewb9oVDLym3Wsr686AGed3m
- QW/mg8ZNAH0Oe80FGu4esejOsHx+SbsVUEiBm5pr6kBzLqdH+LxeX41G/EfDK+xUb6G0vLfHI
- +ucppBHfG0z/zFM5B4a7mH42yY2YqsxHqmauwuiEgvl4N1WzelKysfHguYPWCIoKvJ8WsoPx8
- uCFRe23GKGQsEqXWAlxHYs/nsdTr5fuhXYZCRhkx0yuAUPXB0cy8FRpEmPQQZWEYbqctmlALx
- R8mDzpB4etQLnj+zayl+ac5DY30XpPUy8QcuiHlvb+b7IAP+3NqdUQ9OKL+3Lp6pZEsm6HiwX
- 8Q4CvVZg8GAm67jjg/vihUvgH9BlJfnFyGXJJTyf1PE1c=
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ C6BB18D8-CB8A-11EE-8079-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
 
-Dear Git users,
+Patrick Steinhardt <ps@pks.im> writes:
 
-I hereby announce that Git for Windows 2.44.0-rc1 is available from:
+> We still have a bunch of tests scattered across our test suites that
+> exercise on-disk files of the "files" backend directly:
+>
+>   - t1301 exercises permissions of reflog files when the config
+>     "core.sharedRepository" is set.
+>
+>   - t1400 exercises whether empty directories in the ref store are
+>     handled correctly.
+>
+>   - t3200 exercises what happens when there are symlinks in the ref
+>     store.
+>
+>   - t3400 also exercises what happens when ".git/logs" is a symlink.
+>
+> All of these are inherently low-level tests specific to the "files"
+> backend. Move them into "t0600-reffiles-backend.sh" to reflect this.
 
-    https://github.com/git-for-windows/git/releases/tag/v2.44.0-rc1.windows.1
+Makes sense, and they look like straight code movements.
 
-Changes since Git for Windows v2.43.0 (November 20th 2023)
+> diff --git a/t/t0600-reffiles-backend.sh b/t/t0600-reffiles-backend.sh
+> index e6a5f1868f..485481d6b4 100755
+> --- a/t/t0600-reffiles-backend.sh
+> +++ b/t/t0600-reffiles-backend.sh
+> @@ -381,4 +381,95 @@ test_expect_success 'log diagnoses bogus HEAD symref' '
+>  	test_grep broken stderr
+>  '
 
-Git for Windows for Windows v2.44 is the last version to support for
-Windows 7 and for Windows 8, see MSYS2's corresponding deprecation
-announcement (Git for Windows relies on MSYS2 for components such as
-Bash and Perl).
+These two are from t1400.
 
-Please also note that the 32-bit variant of Git for Windows is
-deprecated; Its last official release is planned for 2025.
+> +test_expect_success 'empty directory removal' '
+> +	git branch d1/d2/r1 HEAD &&
+> +	git branch d1/r2 HEAD &&
+> +	test_path_is_file .git/refs/heads/d1/d2/r1 &&
+> +	test_path_is_file .git/logs/refs/heads/d1/d2/r1 &&
+> +	git branch -d d1/d2/r1 &&
+> +	test_must_fail git show-ref --verify -q refs/heads/d1/d2 &&
+> +	test_must_fail git show-ref --verify -q logs/refs/heads/d1/d2 &&
+> +	test_path_is_file .git/refs/heads/d1/r2 &&
+> +	test_path_is_file .git/logs/refs/heads/d1/r2
+> +'
+> +
+> +test_expect_success 'symref empty directory removal' '
+> +	git branch e1/e2/r1 HEAD &&
+> +	git branch e1/r2 HEAD &&
+> +	git checkout e1/e2/r1 &&
+> +	test_when_finished "git checkout main" &&
+> +	test_path_is_file .git/refs/heads/e1/e2/r1 &&
+> +	test_path_is_file .git/logs/refs/heads/e1/e2/r1 &&
+> +	git update-ref -d HEAD &&
+> +	test_must_fail git show-ref --verify -q refs/heads/e1/e2 &&
+> +	test_must_fail git show-ref --verify -q logs/refs/heads/e1/e2 &&
+> +	test_path_is_file .git/refs/heads/e1/r2 &&
+> +	test_path_is_file .git/logs/refs/heads/e1/r2 &&
+> +	test_path_is_file .git/logs/HEAD
+> +'
 
-New Features
+Luckily there aren't refs that were created at this point by earlier
+tests that would contradict/block the creation of the new refs this
+moved tests would want to create.
 
-  * Comes with Git v2.44.0-rc1.
-  * Comes with libfido2 v1.14.0.
-  * Comes with the MSYS2 runtime (Git for Windows flavor) based on
-    Cygwin v3.4.10.
-  * Comes with Perl v5.38.2.
-  * Git for Windows learned to detect and use native Windows support
-    for ANSI sequences, which allows using 24-bit colors in terminal
-    windows.
-  * Comes with Git LFS v3.4.1.
-  * The repository viewer Tig that is included in Git for Windows can
-    now be called also directly from PowerShell/CMD.
-  * Comes with OpenSSH v9.6.P1.
-  * Comes with Bash v5.2.26.
-  * Comes with GNU TLS v3.8.3.
-  * Comes with OpenSSL v3.2.1.
-  * Comes with cURL v8.6.0.
-  * Comes with GNU Privacy Guard v2.4.4.
+> +test_expect_success 'directory not created deleting packed ref' '
+> +	git branch d1/d2/r1 HEAD &&
+> +	git pack-refs --all &&
+> +	test_path_is_missing .git/refs/heads/d1/d2 &&
+> +	git update-ref -d refs/heads/d1/d2/r1 &&
+> +	test_path_is_missing .git/refs/heads/d1/d2 &&
+> +	test_path_is_missing .git/refs/heads/d1
+> +'
 
-Bug Fixes
+And this is from the same t1400 but appears much later in the file.
+Curiously, this tries to create d1/d2/r1 that an earlier test
+already created, and this one passes because the branch gets removed
+in the other test that also created the branch.  Tricky but not a
+fault of this patch.
 
-  * The 32-bit variant of Git for Windows was missing some MSYS2
-    runtime updates, which was addressed; Do note 32-bit support is
-    phased out.
-  * The Git for Windows installer showed cut-off text in some setups.
-    This has been fixed.
-  * The git credential-manager --help command previously would not find
-    a page to display in the web browser, which has been fixed.
-  * A couple of bugs that could cause Git Bash to hang in certain
-    scenarios were fixed.
+> +test_expect_success SYMLINKS 'git branch -m u v should fail when the reflog for u is a symlink' '
+> +	git branch --create-reflog u &&
+> +	mv .git/logs/refs/heads/u real-u &&
+> +	ln -s real-u .git/logs/refs/heads/u &&
+> +	test_must_fail git branch -m u v
+> +'
 
-Git-2.44.0-rc1-64-bit.exe | d8157edf354afc66326db927de04e2dae054f55adbf3035bc9086478a5ecb423
-Git-2.44.0-rc1-32-bit.exe | d53b5043216f5be5b154c5fe79e9cfd8c3d2ef2e6263cf3f3a9d358fc60843a4
-PortableGit-2.44.0-rc1-64-bit.7z.exe | 1ee36ef5676e2536f869e6b89efcede826960b78f83cb1a685b9608f045a1582
-PortableGit-2.44.0-rc1-32-bit.7z.exe | f96a638497b19d9d8c578fe1a6b54cb29c793c08ceaf204cbaa91ecd3583ee07
-MinGit-2.44.0-rc1-64-bit.zip | bf13ebe8626699656e5adf659c905c6306b87917bb664fc52377011054771783
-MinGit-2.44.0-rc1-32-bit.zip | 468b33306aca3f605e9fb64075a45a057ae2b72bb5aae42c2e37cf2a9846e37b
-MinGit-2.44.0-rc1-busybox-64-bit.zip | aa667eb43187b7515d539d70ffdc3f12523a03f9bb546584f46342f6673170fc
-MinGit-2.44.0-rc1-busybox-32-bit.zip | 5f902ec741b3e10dcce1e9cb06ed82f04668c9ea680030f52a194a7d869b2aa3
-Git-2.44.0-rc1-64-bit.tar.bz2 | 7b6481465f1080c70e80df448b1fe7ece09407b3d580a8986f7934b6b3529e60
-Git-2.44.0-rc1-32-bit.tar.bz2 | 8eded6886d07440084ce29dac6ce66dfa31795861d33c1a6aeb56bad0e0b31e6
+This was migrated from t3200 and has no interaction with the new
+context of t0600 as branch 'u' has never been used.  I notice that
+this test is buggy since its inception at 16c2bfbb (rename_ref: use
+lstat(2) when testing for symlink, 2006-11-29) in that we move the
+log for branch 'u' up and then make the log for branch 'u' into a
+dangling symlink, so it probably failed for a wrong reason even
+before 16c2bfbb updated stat() to lstat().  Anyway, the current code
+will see that logs/refs/heads/u is a symbolic link and fails,
+regardless of what the link points at, so we are OK.  In any case,
+not a fault of this patch.
 
-Ciao,
-Johannes
+> +test_expect_success SYMLINKS 'git branch -m with symlinked .git/refs' '
+> +	test_when_finished "rm -rf subdir" &&
+> +	git init --bare subdir &&
+> +
+> +	rm -rfv subdir/refs subdir/objects subdir/packed-refs &&
+> +	ln -s ../.git/refs subdir/refs &&
+> +	ln -s ../.git/objects subdir/objects &&
+> +	ln -s ../.git/packed-refs subdir/packed-refs &&
+> +
+> +	git -C subdir rev-parse --absolute-git-dir >subdir.dir &&
+> +	git rev-parse --absolute-git-dir >our.dir &&
+> +	! test_cmp subdir.dir our.dir &&
+> +
+> +	git -C subdir log &&
+> +	git -C subdir branch rename-src &&
+> +	git rev-parse rename-src >expect &&
+> +	git -C subdir branch -m rename-src rename-dest &&
+> +	git rev-parse rename-dest >actual &&
+> +	test_cmp expect actual &&
+> +	git branch -D rename-dest
+> +'
+
+OK.  As long as it cleans after itself, I won't read deeply into it
+and stop at making sure this came verbatim from t3200.
+
+> +test_expect_success MINGW,SYMLINKS_WINDOWS 'rebase when .git/logs is a symlink' '
+> +	git checkout main &&
+> +	mv .git/logs actual_logs &&
+> +	cmd //c "mklink /D .git\logs ..\actual_logs" &&
+> +	git rebase -f HEAD^ &&
+> +	test -L .git/logs &&
+> +	rm .git/logs &&
+> +	mv actual_logs .git/logs
+> +'
+
+As t0600 forces the default branch to be 'main', having this one
+migrated from t3400 should be safe.
+
+> +test_expect_success POSIXPERM 'git reflog expire honors core.sharedRepository' '
+> +	umask 077 &&
+> +	git config core.sharedRepository group &&
+> +	git reflog expire --all &&
+> +	actual="$(ls -l .git/logs/refs/heads/main)" &&
+> +	case "$actual" in
+> +	-rw-rw-*)
+> +		: happy
+> +		;;
+> +	*)
+> +		echo Ooops, .git/logs/refs/heads/main is not 066x [$actual]
+> +		false
+> +		;;
+> +	esac
+> +'
+
+And this is from t1301, another verbatim copy.
+
+
+>  test_done
+> diff --git a/t/t1301-shared-repo.sh b/t/t1301-shared-repo.sh
+> index 8e2c01e760..b1eb5c01b8 100755
+> --- a/t/t1301-shared-repo.sh
+> +++ b/t/t1301-shared-repo.sh
+> @@ -137,22 +137,6 @@ test_expect_success POSIXPERM 'info/refs respects umask in unshared repo' '
+>  	test_cmp expect actual
+>  '
+>  
+> -test_expect_success REFFILES,POSIXPERM 'git reflog expire honors core.sharedRepository' '
+> -	umask 077 &&
+> -	git config core.sharedRepository group &&
+> -	git reflog expire --all &&
+> -	actual="$(ls -l .git/logs/refs/heads/main)" &&
+> -	case "$actual" in
+> -	-rw-rw-*)
+> -		: happy
+> -		;;
+> -	*)
+> -		echo Ooops, .git/logs/refs/heads/main is not 066x [$actual]
+> -		false
+> -		;;
+> -	esac
+> -'
+> -
+
+The rest of t1301 does not appear to depend on the reflog being
+expired, so this move should be safe.
+
+>  test_expect_success POSIXPERM 'forced modes' '
+>  	test_when_finished "rm -rf new" &&
+>  	mkdir -p templates/hooks &&
+> diff --git a/t/t1400-update-ref.sh b/t/t1400-update-ref.sh
+> index f18843bf7a..3294b7ce08 100755
+> --- a/t/t1400-update-ref.sh
+> +++ b/t/t1400-update-ref.sh
+> @@ -288,33 +288,6 @@ test_expect_success "set $m (logged by touch)" '
+>  	test $A = $(git show-ref -s --verify $m)
+>  '
+>  
+> -test_expect_success REFFILES 'empty directory removal' '
+> -	git branch d1/d2/r1 HEAD &&
+> -	git branch d1/r2 HEAD &&
+> -	test_path_is_file .git/refs/heads/d1/d2/r1 &&
+> -	test_path_is_file .git/logs/refs/heads/d1/d2/r1 &&
+> -	git branch -d d1/d2/r1 &&
+> -	test_must_fail git show-ref --verify -q refs/heads/d1/d2 &&
+> -	test_must_fail git show-ref --verify -q logs/refs/heads/d1/d2 &&
+> -	test_path_is_file .git/refs/heads/d1/r2 &&
+> -	test_path_is_file .git/logs/refs/heads/d1/r2
+> -'
+> -
+> -test_expect_success REFFILES 'symref empty directory removal' '
+> -	git branch e1/e2/r1 HEAD &&
+> -	git branch e1/r2 HEAD &&
+> -	git checkout e1/e2/r1 &&
+> -	test_when_finished "git checkout main" &&
+> -	test_path_is_file .git/refs/heads/e1/e2/r1 &&
+> -	test_path_is_file .git/logs/refs/heads/e1/e2/r1 &&
+> -	git update-ref -d HEAD &&
+> -	test_must_fail git show-ref --verify -q refs/heads/e1/e2 &&
+> -	test_must_fail git show-ref --verify -q logs/refs/heads/e1/e2 &&
+> -	test_path_is_file .git/refs/heads/e1/r2 &&
+> -	test_path_is_file .git/logs/refs/heads/e1/r2 &&
+> -	test_path_is_file .git/logs/HEAD
+> -'
+> -
+>  cat >expect <<EOF
+>  $Z $A $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> 1117150200 +0000	Initial Creation
+>  $A $B $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> 1117150260 +0000	Switch
+> @@ -1668,13 +1641,4 @@ test_expect_success PIPE 'transaction flushes status updates' '
+>  	test_cmp expected actual
+>  '
+>  
+> -test_expect_success REFFILES 'directory not created deleting packed ref' '
+> -	git branch d1/d2/r1 HEAD &&
+> -	git pack-refs --all &&
+> -	test_path_is_missing .git/refs/heads/d1/d2 &&
+> -	git update-ref -d refs/heads/d1/d2/r1 &&
+> -	test_path_is_missing .git/refs/heads/d1/d2 &&
+> -	test_path_is_missing .git/refs/heads/d1
+> -'
+
+I've covered how these removals should be safe for the remaining
+tests in this file already.  Good.
+
+>  test_done
+> diff --git a/t/t3200-branch.sh b/t/t3200-branch.sh
+> index de7d3014e4..e36f4d15f2 100755
+> --- a/t/t3200-branch.sh
+> +++ b/t/t3200-branch.sh
+> @@ -836,35 +836,6 @@ test_expect_success 'renaming a symref is not allowed' '
+>  	test_ref_missing refs/heads/new-topic
+>  '
+>  
+> -test_expect_success SYMLINKS,REFFILES 'git branch -m u v should fail when the reflog for u is a symlink' '
+> -	git branch --create-reflog u &&
+> -	mv .git/logs/refs/heads/u real-u &&
+> -	ln -s real-u .git/logs/refs/heads/u &&
+> -	test_must_fail git branch -m u v
+> -'
+> -
+> -test_expect_success SYMLINKS,REFFILES 'git branch -m with symlinked .git/refs' '
+> -	test_when_finished "rm -rf subdir" &&
+> -	git init --bare subdir &&
+> -
+> -	rm -rfv subdir/refs subdir/objects subdir/packed-refs &&
+> -	ln -s ../.git/refs subdir/refs &&
+> -	ln -s ../.git/objects subdir/objects &&
+> -	ln -s ../.git/packed-refs subdir/packed-refs &&
+> -
+> -	git -C subdir rev-parse --absolute-git-dir >subdir.dir &&
+> -	git rev-parse --absolute-git-dir >our.dir &&
+> -	! test_cmp subdir.dir our.dir &&
+> -
+> -	git -C subdir log &&
+> -	git -C subdir branch rename-src &&
+> -	git rev-parse rename-src >expect &&
+> -	git -C subdir branch -m rename-src rename-dest &&
+> -	git rev-parse rename-dest >actual &&
+> -	test_cmp expect actual &&
+> -	git branch -D rename-dest
+> -'
+
+Likewise.
+
+> diff --git a/t/t3400-rebase.sh b/t/t3400-rebase.sh
+> index 57f1392926..e1c8c5f701 100755
+> --- a/t/t3400-rebase.sh
+> +++ b/t/t3400-rebase.sh
+> @@ -424,16 +424,6 @@ test_expect_success 'refuse to switch to branch checked out elsewhere' '
+>  	test_grep "already used by worktree at" err
+>  '
+>  
+> -test_expect_success REFFILES,MINGW,SYMLINKS_WINDOWS 'rebase when .git/logs is a symlink' '
+> -	git checkout main &&
+> -	mv .git/logs actual_logs &&
+> -	cmd //c "mklink /D .git\logs ..\actual_logs" &&
+> -	git rebase -f HEAD^ &&
+> -	test -L .git/logs &&
+> -	rm .git/logs &&
+> -	mv actual_logs .git/logs
+> -'
+> -
+>  test_expect_success 'rebase when inside worktree subdirectory' '
+>  	git init main-wt &&
+>  	(
+
+Looking good.
+
+Thanks.
