@@ -1,61 +1,61 @@
-Received: from mail-wm1-f53.google.com (mail-wm1-f53.google.com [209.85.128.53])
+Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B5A618E06
-	for <git@vger.kernel.org>; Wed, 14 Feb 2024 11:02:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDDE518E06
+	for <git@vger.kernel.org>; Wed, 14 Feb 2024 11:05:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707908558; cv=none; b=f2OHAN2xmtQvz2WLjNnv5XgpNYEFHryJvWf7m0xaiAvQYsVxqY1LCgsKUpDG9W77a6MmlI6S7W1OMnqqhC8HPHwoUgM5Bh/rsE8qtUM26en1DJ9vI587iF7DJBdAJEOVtEn1UYevPSr1doiIKHZf0Wib6kiYbOy8oGEPX3V46FM=
+	t=1707908712; cv=none; b=XCn0falbdt4fX3Z/1+O/OTteO9PkjlRMhKxVagGodCG2iramPIVP5iyFiQkN8/Ob+2L4a+IhSBPaU+fxcHnY1s3izICkcLy1+UduR02Qvs4DTncddB2+YvPIf/1o45xovUqmX3eL/abqS0irAgICkx2KTXrChNMbgkPyJ6NNXAw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707908558; c=relaxed/simple;
-	bh=Q4MvUBSfgK3eXQJ+sofz6JXMDy/ERtzlRgIpf9tZ5x8=;
+	s=arc-20240116; t=1707908712; c=relaxed/simple;
+	bh=jyBaHu2GhnJnEM2HX8GipjuD8XfGpsHk3e+bPcmF/Kw=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Lb6/8X3CtepHqoKN+vimXnTx8Wuz4X51dAvZmpT5I8sR0l9rtGaWTTgwesq5Jo16ZFX4szVYzeYogrz42U35A3aIeDQWqQgc/yVq6SSGM7xWSxuWze/kS28oAByIlXIY8NzmSGT5ttJc1HJ7zvL+6mrKk1D87PeX4pC8sQ9FlEI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LNPAcR2C; arc=none smtp.client-ip=209.85.128.53
+	 In-Reply-To:Content-Type; b=Khb3KRBq67u5nT58U/HwRExuWXvbDJJeDBVeO6k2nzvovI+qu8aHXtSp8Pue9pK2rFDupwVijLZ2hwlOQNmnreFhYe693hJdb3aVgG7gCcB+PmleQ1WFddTMOSxpr5D3HoFbQi+VA/0WR6l7eXHuDFkQAHp4Hb/tudS38ud9JCU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=DamQ0HOO; arc=none smtp.client-ip=209.85.128.42
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LNPAcR2C"
-Received: by mail-wm1-f53.google.com with SMTP id 5b1f17b1804b1-411a5b8765bso3701675e9.1
-        for <git@vger.kernel.org>; Wed, 14 Feb 2024 03:02:36 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DamQ0HOO"
+Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-411d76c9ce3so8097595e9.3
+        for <git@vger.kernel.org>; Wed, 14 Feb 2024 03:05:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1707908555; x=1708513355; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1707908708; x=1708513508; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:reply-to:user-agent:mime-version:date
          :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=8jaUzM2qMQt1by7QwE9vCJz1MD8M/KvDC3lplIHCVkc=;
-        b=LNPAcR2CUbXzMjNJqiHrYHbyjg62nEgCmxaXrKMAt+nn/CyI4LOWJuu5DALvSfKztM
-         Ul2uTPTZnVd6DToUrXpL5OfkJEOzYaPGIOD+xy6hpF+VWct0cJmTCn/YwMhvHIL/QzmC
-         02CHWh4A0ENO1r8Coji6hGgb1SQeR1Mb7qZT/aBMRxdZIEy0gnPVr9B3pZASvE0wVmyE
-         T+3DEjrNKtnrFDJCUuH86Cl5aH96ED0rstIHwbtmsERDkpuUeJUJxXj1Nalv5LvkT5E5
-         x3e0n/pMP0HOa9AuhrbZjNvXkM+RRQiKWLEW6O0iz/5nmGSW90GtmG2Lf8OvDNneBvSE
-         QEVA==
+        bh=uY0JP+pt3jNXVb3XhyOc1KY58Z/uA+FoNAvQyG+QwWk=;
+        b=DamQ0HOOVmehN0JCAJxHO87FMjd4s9F4ezb7L6Cb1efVHD8s9+G3s1XX/VJva+UCLH
+         i6Z98lX+npk6TkgVYpevM2yqhMZIPbVV+2ERDKIjIOfiryr6RgdMR0f6XtDeV901eoku
+         WGn3bLRG4FuNpUcgHf3LDgGjsMD/S1SDvpBLP4vcIo6FaF17gNv2JfzGA6RfRKDudIwa
+         nXxIl2BX5VBy2lbgNwlV5vPtgzkxlnbrKwNx5eRs9/EG79Q0S2UG8gKGdFOvqPiMQ2+N
+         JL4cKm7bEH9EbBpjLMQBDTdIbQahEYga+xsjtSsrgRBokiXwTYrGHFP7CdNRjuFsHzjl
+         h3kw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1707908555; x=1708513355;
+        d=1e100.net; s=20230601; t=1707908708; x=1708513508;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:reply-to:user-agent:mime-version:date
          :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=8jaUzM2qMQt1by7QwE9vCJz1MD8M/KvDC3lplIHCVkc=;
-        b=NkacDTsIU8bTdiOI0ozW9xlv0Yig3v0nhi7r2NcB48l8VT84ztoRwn8ireTlBla/qq
-         aEqGeOD47ODIHaZ3TzHWwN5h+yhd1U19D3REhAnzE6x31g+uUHb7R0OQnoWIMLLQvO3Q
-         oLbXjGYjCGlZRSuTe/ZYz4xBKyrfPxeGydR9IdUy/y0Wsu7wmVqRAg4zZ2ci4uROigU2
-         F4iQ9coZUW40EscBYbfMEkjIILaAtyBwaCD/pS2VU9yuyLAbBIglhCwmnQrWSV76nFVd
-         KWfaYWrhPbK+HEIWncrcjjBLQCKqfmKJnjKBE2D2HTV+Uy1/Yb+gSsolQcLJfLenDnN/
-         fJBA==
-X-Forwarded-Encrypted: i=1; AJvYcCU9AeFZCGZh4e8Ugappr61utKP7ET1STNoxovzA0U0mfMWAWfN9InpelybF4CXPvjfRClinRncROKD+/6O9cEgEqI65
-X-Gm-Message-State: AOJu0YxLeHnwA6gfnx0xZbm0sBTgFBhFON3bZVlV1Ox+PFj66VdoreRC
-	OadtXTAV+RbPp924KHZl/qYsJvd9VRxzctt+pGD8D/ugDuMMloPW
-X-Google-Smtp-Source: AGHT+IHoUSo5UzZKr0fHhWFsduirW6j4OBJIjvpmtKUyqereL5Idwdts4hm41G/z+VuWkLpEeCqozQ==
-X-Received: by 2002:a05:600c:35c1:b0:410:99ee:d65a with SMTP id r1-20020a05600c35c100b0041099eed65amr1250468wmq.20.1707908555120;
-        Wed, 14 Feb 2024 03:02:35 -0800 (PST)
-X-Forwarded-Encrypted: i=1; AJvYcCWAGkOHFUZOCDnIZZhaK2thkPwxzatUEbHwrZV2m/3H4iCbRDKs5Us9jfVHPdUAEaPxcWaB5hQ5pPzX54ryX/FG3QISkdlsUmLuIocl+aMcDCGeuj7E/7OifZDxSBDuMi92bSqBHsTkkMg/0j37nydrdLw6r+2bEWfWqWhR6ceGd6vMJkxvooUz/cK3Z79N2WSoAfNB7WjnkUwu5RDSiukCcuKha/oJ7pn0RoqANr0QOrWwIg4L+k+8iVMidquKCJc=
+        bh=uY0JP+pt3jNXVb3XhyOc1KY58Z/uA+FoNAvQyG+QwWk=;
+        b=sgIkdjDqRTTLZGHqWYGohqyBiHelPs+zBuDL238BYBvjfIjBua0SZyZwX189DwvzU0
+         S4eG3OKiKEzMRR35FfYJ6o2T3XN3W792KTBfqBYOP3uNqqHYfGt5t974XkE+JfiXViik
+         OYm07gqQXxAkAmaedjQV4d6fsZtanfVhOsqcZAKGSHWDDOTYAtACimGDKWEhqOEoVD6I
+         Nwd/DGPdTWgJpxNSw311/A5LP9Np6+tWn2lZtMFOTxdaX2nyTVTsZI2kN3AjpcGmF8lZ
+         aLD/cAeY+NZ4XDVlVv6vpeJ+4C//eCpVEFjFOHfpjtI30N+ShftJNN0iyBr64n+b0n6T
+         nToQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUI+TRwfY3viFx0Al6RTC+FI+GZDzosn6VPj+Btx8BEAWVa9RdZnoF1Yxqwt8YQzF1iKKEGz0UZQOvwuVlwn6amFYjd
+X-Gm-Message-State: AOJu0Yz9NyMe7asHLUglI4NEuLbt9F0jluO84F7/pWOJDlL+fGxyaS9c
+	EAtiKxG/NGkjsicqrK02xhSKDUaP8g1uZNLU646WVUAB07KRXbB9hc+9DlKl
+X-Google-Smtp-Source: AGHT+IHZmdYq51jpohBy+oCcp8K1arVqTL330VIplWcyAaOSxpE3wPMMvOGlQMy4gYbmiMNiwVQ3IA==
+X-Received: by 2002:a05:600c:4f4f:b0:40f:c655:abd2 with SMTP id m15-20020a05600c4f4f00b0040fc655abd2mr2005841wmq.19.1707908707977;
+        Wed, 14 Feb 2024 03:05:07 -0800 (PST)
+X-Forwarded-Encrypted: i=1; AJvYcCU1DQe/0Eqq5t1ygc4Gy3FxlMRLNMo3tQWn9xoyn45X1KgOJwefRuE849vfh12smXlPHJIodWTmrY0qi+MDFxXB+M8FYnPj+ecuN/n4Buy38xK18inlMk6Hfp5Nog2UfAiE26Q/8swR
 Received: from ?IPV6:2a0a:ef40:62e:a901:d2c6:37ff:fef6:7b1? ([2a0a:ef40:62e:a901:d2c6:37ff:fef6:7b1])
-        by smtp.googlemail.com with ESMTPSA id h14-20020a05600c314e00b00411ee1dd5afsm1196183wmo.16.2024.02.14.03.02.34
+        by smtp.googlemail.com with ESMTPSA id h14-20020a05600c314e00b00411ee1dd5afsm1196183wmo.16.2024.02.14.03.05.07
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 14 Feb 2024 03:02:34 -0800 (PST)
-Message-ID: <568f9c07-0b2c-4d4f-9d35-aeeb6e1e29c4@gmail.com>
-Date: Wed, 14 Feb 2024 11:02:35 +0000
+        Wed, 14 Feb 2024 03:05:07 -0800 (PST)
+Message-ID: <7fc9a39a-f09b-4a81-b987-c5dd0ebca793@gmail.com>
+Date: Wed, 14 Feb 2024 11:05:08 +0000
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -64,84 +64,28 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v4 2/2] revision: implement `git log --merge` also for
- rebase/cherry-pick/revert
+Subject: Re: [PATCH v2 3/8] rebase: update `--empty=ask` to `--empty=drop`
 Content-Language: en-US
-To: Philippe Blain <levraiphilippeblain@gmail.com>,
- phillip.wood@dunelm.org.uk, git@vger.kernel.org
-Cc: Johannes Sixt <j6t@kdbg.org>, Elijah Newren <newren@gmail.com>,
- Michael Lohmann <mial.lohmann@gmail.com>, Patrick Steinhardt <ps@pks.im>,
- Michael Lohmann <mi.al.lohmann@gmail.com>, Junio C Hamano <gitster@pobox.com>
-References: <20240210-ml-log-merge-with-cherry-pick-and-other-pseudo-heads-v4-0-3bc9e62808f4@gmail.com>
- <20240210-ml-log-merge-with-cherry-pick-and-other-pseudo-heads-v4-2-3bc9e62808f4@gmail.com>
- <c5d60b5b-3181-4bb7-a7f8-eb97474526d7@gmail.com>
- <790a3f11-5a8c-42f2-7a35-f2900c0299b4@gmail.com>
+To: Brian Lyles <brianmlyles@gmail.com>, git@vger.kernel.org
+Cc: newren@gmail.com, me@ttaylorr.com, gitster@pobox.com
+References: <17b2b5fb5acd8fad.70b1dd9aae081c6e.203dcd72f6563036@zivdesk>
 From: Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <790a3f11-5a8c-42f2-7a35-f2900c0299b4@gmail.com>
+In-Reply-To: <17b2b5fb5acd8fad.70b1dd9aae081c6e.203dcd72f6563036@zivdesk>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 
-Hi Philippe
+Hi Brian
 
-On 13/02/2024 13:27, Philippe Blain wrote:
-> Le 2024-02-12 à 06:02, Phillip Wood a écrit :
->> Hi Philippe
->> On 10/02/2024 23:35, Philippe Blain wrote:
->>> From: Michael Lohmann <mi.al.lohmann@gmail.com>
->>> diff --git a/Documentation/rev-list-options.txt b/Documentation/rev-list-options.txt
->>> index 2bf239ff03..5b4672c346 100644
->>> --- a/Documentation/rev-list-options.txt
->>> +++ b/Documentation/rev-list-options.txt
->>> @@ -341,8 +341,10 @@ See also linkgit:git-reflog[1].
->>>    Under `--pretty=reference`, this information will not be shown at all.
->>>      --merge::
->>> -    After a failed merge, show refs that touch files having a
->>> -    conflict and don't exist on all heads to merge.
->>> +    Show commits touching conflicted paths in the range `HEAD...$OTHER`,
->>> +    where `$OTHER` is the first existing pseudoref in `MERGE_HEAD`,
->>> +    `CHERRY_PICK_HEAD`, `REVERT_HEAD` or `REBASE_HEAD`. Only works
->>> +    when the index has unmerged entries.
->>
->> Do you know what "and don't exist on all heads to merge" in the original 
-> is referring to? The new text doesn't mention anything that sounds like 
->that but I don't understand what the original was trying to say.
-> 
-> Yes, it took me a while to understand what that meant. I think it is simply
-> describing the range of commits shown. If we substitute "refs" for "commits"
-> and switch the order of the sentence, it reads:
-> 
->      After a failed merge, show commits that don't exist on all heads to merge
->      and that touch files having a conflict.
-> 
-> So it's just describing (a bit awkwardly) the HEAD...MERGE_HEAD range.
+On 11/02/2024 04:54, Brian Lyles wrote:
+> I just noticed that I incorrectly specified `--empty=drop` in the
+> subject of this commit. It should read "rebase: update `--empty=ask` to
+> `--empty=stop`". This will need to be corrected in a v3 reroll.
 
-Ah, that makes sense, thanks for explaining
-
-
->>> +    for (i = 0; i < ARRAY_SIZE(other_head); i++)
->>> +        if (!read_ref_full(other_head[i],
->>> +                RESOLVE_REF_READING | RESOLVE_REF_NO_RECURSE,
->>> +                oid, NULL)) {
->>> +            if (is_null_oid(oid))
->>> +                die("%s is a symbolic ref???", other_head[i]);
->>
->> This would benefit from being translated and I think one '?' would suffice 
->> (I'm not sure we even need that - are there other possible causes of a null 
->> oid here?)
-> 
-> This bit was suggested by Junio upthread in <xmqqzfxa9usx.fsf@gitster.g>.
-> I'm not sure if the are other causes of null oid, as I don't know well this
-> part of the code.
-> I agree that a single '?' would be enough, but I'm not sure about marking
-> this for translation, I think maybe this situation would be best handled with
-> BUG() ?
-
-I think it would be a bug for git to create MERGE_HEAD as a symbolic ref 
-but when we read MERGE_HEAD and find it is a symbolic ref we don't know 
-if git created it or some third-party script so I think we should just 
-report an error.
+Thanks for flagging that, I'm afraid it will probably be next week 
+before I take a proper look at these
 
 Best Wishes
 
 Phillip
+
 
