@@ -1,87 +1,102 @@
-Received: from mail-wr1-f47.google.com (mail-wr1-f47.google.com [209.85.221.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FDA65EE78
-	for <git@vger.kernel.org>; Wed, 14 Feb 2024 18:17:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F23CE1272CD
+	for <git@vger.kernel.org>; Wed, 14 Feb 2024 18:25:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707934635; cv=none; b=W/Ue6v2K+d+0pBZiNaXWoXfz7xugXmaZkd0XflE200RsHr7EfBhnbLranIG1+CMjAgRtsthVFKy/SMsDeax5u6ksNx1MkW3zm/rPIxKz0TruzDQ7KFmh29QOYRTCgzQAxqFhe5liM+qjb2rdQ/VvScLQOuwlj9hjt0aaqUEqtdE=
+	t=1707935118; cv=none; b=rN2Hg6TDW3YhAjBj0xRW8vnmlhr/t/WZmIRNUHeR/keIMf4Oy+0nm35keuAsy3XTMjyF5kcU2F20JwZ86qREv/G22WUJilg88yM37P+ZSoXLFw/FsDtFXGsyk6NmOsYFOIPhmA/25qOBxMZ/ALBARddPfMTgegE5FR6FzKpB4nc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707934635; c=relaxed/simple;
-	bh=umkhLmmYyLOA9mqJ8WPBhsm0bpKI5f1+2NbzhgYNBmE=;
-	h=Message-ID:Date:MIME-Version:From:To:Subject:Content-Type; b=CXQDPlhem/X2SJIdx9gf+SngT2tN0ZWlhm/Gs21eDsJFPPBR9FD7rBajkqb2MagDThfctMAWHKb1u3MWjRKAtD0BewQ6SHGNGOVow0CcPEdBtMffzURD2vwDbMShFuZBljJsvnBtebulvplCxSfj0ZJGM7jM9RRoNqykQDr08Qc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=b/eG8i4n; arc=none smtp.client-ip=209.85.221.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1707935118; c=relaxed/simple;
+	bh=KUtmzoojY6Cc+CFDJKXLaNdTf8sQCAcrnGUlrAOWd5A=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=i4zKYdKfRqu3Xqfy7QGF3bCMga2hIQzsnm4dCwcR48yCQbnmhLM5pDyHzpVL0psV1Vmu8kV4nUI3L7aOjBd+Oiczr3dxIySw8fjBuTfoofVus4S42/lhoGjWcwajdTXHjniYBFw/gTU/zTRlJv+0Y9r1VOGvIa67gQNBG4m8rvM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=FIjwO/Nj; arc=none smtp.client-ip=173.228.157.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="b/eG8i4n"
-Received: by mail-wr1-f47.google.com with SMTP id ffacd0b85a97d-33cec911a31so477944f8f.1
-        for <git@vger.kernel.org>; Wed, 14 Feb 2024 10:17:13 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1707934632; x=1708539432; darn=vger.kernel.org;
-        h=content-transfer-encoding:subject:to:from:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=umkhLmmYyLOA9mqJ8WPBhsm0bpKI5f1+2NbzhgYNBmE=;
-        b=b/eG8i4n8Hwi+otxj1b5Lsm0lcXcUzfXLPZFslmXlD80u+VZBdopABN8UjaURGlLmP
-         vIbZE/RkO4rXUdRv8X31BwqFMaew4gW3uHkaSaiA1Q5u/9aSdWsuz7BppUxZBCtg4eVA
-         gJ203HhM0qZomMS8kpJpw4cPEl7nG+ARQB/ZV7xUHTZCrKCOUU4eutMXM+Y0VNrk1lpH
-         dvLfrfiBZJ8xo2gtOrjT2TYEqvUDt9qEcnSD9fiE+T73Qsg5YxXkHPQBDoa5EudfRi6W
-         qfiMvF17S0WcSvFhsf4efANFl6Wxl4iNo0ApyOOlP8wXNqHiLD8kX+wJQxkiO4vDiVKS
-         q35g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1707934632; x=1708539432;
-        h=content-transfer-encoding:subject:to:from:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=umkhLmmYyLOA9mqJ8WPBhsm0bpKI5f1+2NbzhgYNBmE=;
-        b=PKRRUSQGyLwI+wc3g+7Dru42w7yVQILLq86Oa1j1tpIeM2F6qS12uCMzvysUgdl/P9
-         OOd06Ad6KCswShIeGXvysj26ZKgwbkz3S/SgB4EqjANGJ6EYQ+wwTXlfnD5b5jdtkbfA
-         +AZ3pNAZ8iZ3Hc1SuJWYCjzd89CuXIVl1rzRCD2NwyZuo/o/jw+oZXmnDE8ezG9N1m/+
-         pZg+0bcaggDeglqTHHHLXyykTkPZ7X9vkXDePxiSUqIVbYRCHrL+7VAMLwpDirWW6HDl
-         cjnqeV2rmtBgQthHYuZg3IxVr2eiuF34Y8XlVwgKInzcjMMLoELVjhwvFB/t0X1OooOg
-         qsqg==
-X-Gm-Message-State: AOJu0YzdeawszkNzrVE7vi4rx3EDHXRH0+vC9GkYcAfiFpayrmKI4b2v
-	Hr/TIVV0uHFPol1ETti1Npuy2wtrrTQMKKwpzd0Pv3q1mH5n6/r3zD8BAX9/
-X-Google-Smtp-Source: AGHT+IGQWsaPBHd5+eYX3dLfIcPr26z8uegwhBokDBuk/Jsb3BjvrX11aSXPyALukNkvyse40aULeQ==
-X-Received: by 2002:a5d:53cd:0:b0:33b:14f8:732a with SMTP id a13-20020a5d53cd000000b0033b14f8732amr2358466wrw.45.1707934632021;
-        Wed, 14 Feb 2024 10:17:12 -0800 (PST)
-Received: from DESKTOP-T29D115 ([39.49.135.219])
-        by smtp.gmail.com with ESMTPSA id bp9-20020a5d5a89000000b0033b4796641asm13286576wrb.22.2024.02.14.10.17.11
-        for <git@vger.kernel.org>
-        (version=TLS1 cipher=ECDHE-ECDSA-AES128-SHA bits=128/128);
-        Wed, 14 Feb 2024 10:17:11 -0800 (PST)
-Message-ID: <65cd03a7.5d0a0220.72a87.c501@mx.google.com>
-Date: Wed, 14 Feb 2024 10:17:11 -0800 (PST)
-X-Google-Original-Date: 14 Feb 2024 23:17:12 +0500
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="FIjwO/Nj"
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id 523481F393;
+	Wed, 14 Feb 2024 13:25:16 -0500 (EST)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=KUtmzoojY6Cc+CFDJKXLaNdTf8sQCAcrnGUlrA
+	OWd5A=; b=FIjwO/Nj3ufu7rJ3yRsraMQxcuw3RK34ELcCPozOcnPgpL4JE8zfhK
+	PQgu4jov+GYMhaJaJ91Zbvihu82ghYi0rhaCBuZ1xxasnJpboqkv6+KANyKKEzWl
+	iRCXFUn/KIDMq3uFKAt7/JRb3qDV0/1aMzPxlG0lky7T/s+KjYp70=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id 3E2A81F392;
+	Wed, 14 Feb 2024 13:25:16 -0500 (EST)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.165.85])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id D47A91F38F;
+	Wed, 14 Feb 2024 13:25:12 -0500 (EST)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: "M Hickford via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  M Hickford <mirth.hickford@gmail.com>
+Subject: Re: [PATCH] credential/osxkeychain: store new attributes
+In-Reply-To: <pull.1663.git.1707860618119.gitgitgadget@gmail.com> (M. Hickford
+	via GitGitGadget's message of "Tue, 13 Feb 2024 21:43:38 +0000")
+References: <pull.1663.git.1707860618119.gitgitgadget@gmail.com>
+Date: Wed, 14 Feb 2024 10:25:11 -0800
+Message-ID: <xmqqzfw2vr7c.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: krisbrannon920@gmail.com
-To: git@vger.kernel.org
-Subject: Project Estimates
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: base64
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 64889466-CB66-11EE-8161-A19503B9AAD1-77302942!pb-smtp21.pobox.com
 
-DQpHcmVldGluZ3MsDQoNCkkgaG9wZSB5b3UgYXJlIGhhdmluZyBhIGdyZWF0IGRheS4g
-SSBhbSB3cml0aW5nIHRvIHlvdSB0byBpbnRyb2R1Y2Ugb3VyIGNvbXBhbnkgYW5kIHRo
-ZSBzZXJ2aWNlcyB3ZSBvZmZlciB0aGF0IGNhbiBiZW5lZml0IHlvdXIgYnVzaW5lc3Mu
-DQoNCldlIGFyZSBhIGNvbXBhbnkgdGhhdCBzcGVjaWFsaXplcyBpbiBwcm92aWRpbmcg
-YWNjdXJhdGUgY29zdCBlc3RpbWF0aW5nIGFuZCBhcmNoaXRlY3R1cmUgc2VydmljZXMg
-Zm9yIHZhcmlvdXMgcHJvamVjdHMuIFdlIGhhdmUgYSB0ZWFtIG9mIGV4cGVydHMgd2hv
-IGNhbiBoYW5kbGUgdGhlIGZvbGxvd2luZyBhcmVhcyBvZiBleHBlcnRpc2UNCg0K4oCi
-ICBDb3N0IEVzdGltYXRpbmcgKE1hdGVyaWFsIFRha2VvZmYsIFF1YW50aXR5IFRha2Vv
-ZmYsIENvbXBsZXRlIENvc3QgRXN0aW1hdGUsIE1FUCBFc3RpbWF0ZXMsIEdDJ3MgYW5k
-IFN1YidzIEVzdGltYXRlcykNCg0K4oCiICBBcmNoaXRlY3R1cmFsIFNlcnZpY2VzIChE
-cmFmdGluZywgRGVzaWduaW5nLCAyRCBhbmQgM0QgUmVuZGVyaW5ncywgTUVQIERyYXdp
-bmdzLCBTdHJ1Y3R1cmFsIERyYXdpbmdzLCBIb3VzZSBQbGFucykNCg0KV2Ugd291bGQg
-bG92ZSB0byB3b3JrIHdpdGggeW91IGFuZCBoZWxwIHlvdSBhY2hpZXZlIHlvdXIgZ29h
-bHMuIFBsZWFzZSBsZXQgdXMga25vdyBpZiB5b3UgYXJlIGludGVyZXN0ZWQgaW4gbGVh
-cm5pbmcgbW9yZSBhYm91dCBob3cgd2UgY2FuIHNwZWNpZmljYWxseSBoZWxwIHlvdXIg
-YnVzaW5lc3MuIFdlIGNhbiBzY2hlZHVsZSBhIGZyZWUgY29uc3VsdGF0aW9uIGFuZCBw
-cm92aWRlIHlvdSB3aXRoIGEgcXVvdGUuDQoNCldlIGxvb2sgZm9yd2FyZCB0byBoZWFy
-aW5nIGZyb20geW91IHNvb24uDQoNCkJlc3QgcmVnYXJkcywNCktyaXMgQnJhbm5vbg0K
-TWFya2V0aW5nIE1hbmFnZXINCkNsYXNzaWMgRXN0aW1hdGlvbiBMTEM=
+"M Hickford via GitGitGadget" <gitgitgadget@gmail.com> writes:
+
+> From: M Hickford <mirth.hickford@gmail.com>
+>
+> d208bfd (credential: new attribute password_expiry_utc, 2023-02-18)
+> and a5c76569e7 (credential: new attribute oauth_refresh_token)
+> introduced new credential attributes.
+>
+> Similar to 7144dee3 (credential/libsecret: erase matching creds only,
+> 2023-07-26), we encode the new attributes in the secret, separated by
+> newline:
+>
+>     hunter2
+>     password_expiry_utc=1684189401
+>     oauth_refresh_token=xyzzy
+>
+> This is extensible and backwards compatible. The credential protocol
+> already assumes that attribute values do not contain newlines.
+>
+> Signed-off-by: M Hickford <mirth.hickford@gmail.com>
+> ---
+
+OK, this adds both oauth_refresh_token and password_expiry_utc,
+unlike the recent one for wincred, which already stored the expiry
+but the support for oauth_refresh_token was added with f061959e
+(credential/wincred: store oauth_refresh_token, 2024-01-28).
+
+>     [RFC] contrib/credential/osxkeychain: store new attributes
+>     
+>     Is any keen MacOS user interested in building and testing this RFC
+>     patch? I personally don't have a MacOS machine, so haven't tried
+>     building it. Fixes are surely necessary. Once it builds, you can test
+>     the feature with:
+>     
+>     GIT_TEST_CREDENTIAL_HELPER=osxkeychain ./t0303-credential-external.sh
+>     
+>     
+>     The feature would help git-credential-oauth users on MacOS
+>     https://github.com/hickford/git-credential-oauth/issues/42
+
+I do not use macOS to use this on, so let's see how others can help.
+
+Thanks.  Will queue.
 
