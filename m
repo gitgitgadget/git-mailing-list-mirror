@@ -1,48 +1,48 @@
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 384E57AE72;
-	Wed, 14 Feb 2024 17:14:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B259C7C0B9;
+	Wed, 14 Feb 2024 17:24:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707930851; cv=none; b=FLZUxMii9lQjyCTASUpFb5o/UR2czEyvZFLz/KNcdvccM45XEQYUyn4SoKU1SKmOYswTOm+hsUGZoa3cvqcRRct87KnaSoDmqWOrYVKarqXhSZdRThPu07NSOEgq0go/uHPE7y0/LOf8c8Db93bDLtz7dxwYTr5dgwN0gUVAorU=
+	t=1707931459; cv=none; b=YR8IFQ2aiYs6StIRKN6III/LAXrqMjxZyqIapgGW/Wu5jPq/Kxg9kS8+JCnUU90awkUqQY2NRawvBKpwoRSj6htXTnWQdBdNQa/XvtSTJvnrEsPhxIYrWE2i0znQxrd6hwGHTZhZYdvoHSMktdH8bHKVFcC6x6Eu9FelTGiHN90=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707930851; c=relaxed/simple;
+	s=arc-20240116; t=1707931459; c=relaxed/simple;
 	bh=rtNqnQMrhTZoVIcurqvh/n552z2fKUMA1DuDPbo13Yk=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=q1bl4j2I+zM5+aKl8spxx51rdh6wXssWE72C/xb/u/+ea5jJPqz5W0eWMqBOIZ4IXqMnXkLfJlWV2TeJ/Px48MrSuQdl5WNncJGtDmoZp+gvimTih5XjenDDBqlvW0tHzoBXV1KSle/mfbU0ZrjEAQEA4ZQ3ZHP3EW7ryHO+Pug=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=PXUo5k7T; arc=none smtp.client-ip=64.147.108.71
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=ID/+0feRvKDmwZBMtjoA7DGAgvx5JuCWC44xTo3VHtkcbUK7GFijPfduT9VpVQKXKOQl8f4jfnZeylChvymiN1RiIsn0+Kdz53bWHJK+9tvCIzsDuM14weWXRU06pV94tNmDE6GscSSClbkFjTOY0uiCynx3yFciHOg7u1dAW2w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=qJJVeZI7; arc=none smtp.client-ip=173.228.157.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="PXUo5k7T"
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id D205C1D370E;
-	Wed, 14 Feb 2024 12:14:08 -0500 (EST)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="qJJVeZI7"
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id 01A491EBBE;
+	Wed, 14 Feb 2024 12:24:11 -0500 (EST)
 	(envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:date:message-id:mime-version:content-type
 	:content-transfer-encoding; s=sasl; bh=rtNqnQMrhTZoVIcurqvh/n552
-	z2fKUMA1DuDPbo13Yk=; b=PXUo5k7TZBmhJb6JeLAN9wUBia9bsfVsbWk97C25M
-	K947zuLB7J0SreD74x8gLFkZKw+FyXMExGus2QmNlonijF2mDKRYS1tq1WGTIUYC
-	F3Gw1XRQdMRkvlBhEq3ZZzfPGzie/zQm7MxAKPkJg1+TovyNwVRRJwpAQclPEwCL
-	g0=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id B68591D370D;
-	Wed, 14 Feb 2024 12:14:08 -0500 (EST)
+	z2fKUMA1DuDPbo13Yk=; b=qJJVeZI7zdARELbX7ZSzQBykYxSDSVc1V15EysdW4
+	vX0JQUey2W1HODPMO2gNRQkJ/0NTSyNCiJ7nz13bCFX5n4vAIGbsRYA8xMHsPVCT
+	rSs/TikOC78rjfGpmEjyAXYucwazrCOcNULnxiDwSfV9McsYo38RxLlLXnXTeEDd
+	MU=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id EDC981EBBD;
+	Wed, 14 Feb 2024 12:24:10 -0500 (EST)
 	(envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.125.165.85])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id C49991D370C;
-	Wed, 14 Feb 2024 12:14:07 -0500 (EST)
+	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 9BEB91EBBC;
+	Wed, 14 Feb 2024 12:24:07 -0500 (EST)
 	(envelope-from junio@pobox.com)
 From: Junio C Hamano <gitster@pobox.com>
 To: git@vger.kernel.org
 Cc: Linux Kernel <linux-kernel@vger.kernel.org>,
     git-packagers@googlegroups.com
 Subject: [ANNOUNCE] Git v2.43.2
-Date: Wed, 14 Feb 2024 09:14:06 -0800
-Message-ID: <xmqqo7cjvuht.fsf@gitster.g>
+Date: Wed, 14 Feb 2024 09:24:06 -0800
+Message-ID: <xmqqil2rvu15.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -52,7 +52,7 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 X-Pobox-Relay-ID:
- 7672AF90-CB5C-11EE-935A-25B3960A682E-77302942!pb-smtp2.pobox.com
+ DBE34D3E-CB5D-11EE-9783-A19503B9AAD1-77302942!pb-smtp21.pobox.com
 Content-Transfer-Encoding: quoted-printable
 
 The latest maintenance release Git v2.43.2 is now available at
