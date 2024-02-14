@@ -1,73 +1,72 @@
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail.manjaro.org (mail.manjaro.org [116.203.91.91])
+	(using TLSv1.2 with cipher DHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD93113A862
-	for <git@vger.kernel.org>; Wed, 14 Feb 2024 19:09:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E75F413B2B7
+	for <git@vger.kernel.org>; Wed, 14 Feb 2024 19:20:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=116.203.91.91
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707937797; cv=none; b=J646bU8y/OyIbvB6B2CGvseYT72fvN/b10bLcC/8eUgkquu7rw1tsW6yo8PmxNLiLme3kA1VzF7T1N05NcsUhy71CQdRHcw8qEyIOYggLO1vaB79ts3MvlyYIiBQMUgC6ZjbVtKHjodKTg+ypvZonTZ//JfBfFOVR0lwcQ89QcU=
+	t=1707938407; cv=none; b=HGbySuKFf6AILbaQemfHZR+DdZcGnczi1TAhmXB07quVqhIbOy/FfKjDiiTveFh705E6TuIU6p3eY+BprfDkQtgz8mHq/2j3k+Rbs/yGLL6wvyMq/4iztPKvHxb/p/9DS26PgWcla96pkbdqRyo5k8FDk5a8IZVQwk4Nm7riUKg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707937797; c=relaxed/simple;
-	bh=krPw6OfnIMko8gSnjAmcbLeeH9PDO9jnDqmypcHzGLg=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=Tr4UUkpf3jmLklvGAWXCWEdak9ysWXidSdcPV+62foAqtIW2VBJfsPSbPz0+RcN9ODjD79BSz2I80Jys8KSAn/bjDKPPNh6AFqgtvFNhKsnmb6a2fFF/DtVNcn4KWo2cXfZVb+3Z66eCEz3+Sj8KBYAh7gx9H63UVzTbv49AiTg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=VIIMmYE6; arc=none smtp.client-ip=173.228.157.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1707938407; c=relaxed/simple;
+	bh=TgdHgxdSj/Im7fPw1BS8y2RIMcwJIBG+gQfG2t0mWWU=;
+	h=MIME-Version:Date:From:To:Cc:Subject:In-Reply-To:References:
+	 Message-ID:Content-Type; b=lANY9PfLjuMX2Pmpk0gJfRmX3pxrk1+WmzQk1NvTvAEcF0MhNnrZmfwiiEvDQD2qctdHGZrdH1t7TrRS+/a09ab0471Pi1uwU/DX4hjVqhMYwYgGGwdcz0E429UllHwXaUurYTl8SnfJTdmt+wryicf+o8p+FIZpVKu4gUOZRw8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org; spf=pass smtp.mailfrom=manjaro.org; dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b=wY0S1hte; arc=none smtp.client-ip=116.203.91.91
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=manjaro.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="VIIMmYE6"
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 1E856233F7;
-	Wed, 14 Feb 2024 14:09:55 -0500 (EST)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=krPw6OfnIMko8gSnjAmcbLeeH9PDO9jnDqmypc
-	HzGLg=; b=VIIMmYE6uiUgDJIiDq2fJAPUPAHSeAvcBO/xn3dI5PkY8y5GHPuUyi
-	MuOvQAeRpgZF/7rufsjeHbJ4oJHdehUVTmDoMjkI75g5B3zzhzOzdXXzBWiYJS83
-	QNhs5TTsudFfPwqlpQGm4WdfXJayKzz5Z8O8IFkjfQhgZXPA8ToAE=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 1567F233F6;
-	Wed, 14 Feb 2024 14:09:55 -0500 (EST)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.165.85])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id B1108233F4;
-	Wed, 14 Feb 2024 14:09:51 -0500 (EST)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Dragan Simic <dsimic@manjaro.org>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH] doc: add shortcut to "am --whitespace=<action>"
-In-Reply-To: <c329d3ed43f852453ad78ba430363416@manjaro.org> (Dragan Simic's
-	message of "Wed, 14 Feb 2024 20:01:06 +0100")
-References: <xmqqplwyvqby.fsf@gitster.g>
-	<c329d3ed43f852453ad78ba430363416@manjaro.org>
-Date: Wed, 14 Feb 2024 11:09:50 -0800
-Message-ID: <xmqqle7mvp4x.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b="wY0S1hte"
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- A141B936-CB6C-11EE-959F-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=manjaro.org; s=2021;
+	t=1707938402;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=x3Y3k0ten+ZOTdZqHMEzXU+LlZMOVYSYF1lzoTX2QgY=;
+	b=wY0S1hte0VusgX3Ix+mcVIKW+qqdVMuwDVPb1duaSYRCuyAnRTNAKCWLviJZpmR8RPqOB7
+	aF+5suT/STUuWMaUJXcSMB0cXDN+BNVx8b0DxvYqffXfVQRaQRnY8ECQHgsxCZHTfTSDAh
+	f7dFu5+MN21HEofrUgfhC7xxBu/lvIU10rYTo93GzhyP4TbCet6PzcyRmHPYTJ7Hzk+hv8
+	2L7GZOLqufgeoIc3UJlCGJgOZwy03AoS3TldhN2cdQ7k0E9HTpgomJEl9KoRuVjAtb3xck
+	ZPt0t1WbclohubTGNngQUtOZgo9VRbahA5pf2QIfMig2edLVa/hUb/ON6E+RVw==
+Date: Wed, 14 Feb 2024 20:20:02 +0100
+From: Dragan Simic <dsimic@manjaro.org>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH] doc: add shortcut to "am --whitespace=<action>"
+In-Reply-To: <xmqqle7mvp4x.fsf@gitster.g>
+References: <xmqqplwyvqby.fsf@gitster.g>
+ <c329d3ed43f852453ad78ba430363416@manjaro.org> <xmqqle7mvp4x.fsf@gitster.g>
+Message-ID: <31285decfdd9390cfea5cfdd558dbbed@manjaro.org>
+X-Sender: dsimic@manjaro.org
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Authentication-Results: ORIGINATING;
+	auth=pass smtp.auth=dsimic@manjaro.org smtp.mailfrom=dsimic@manjaro.org
 
-Dragan Simic <dsimic@manjaro.org> writes:
+On 2024-02-14 20:09, Junio C Hamano wrote:
+> Dragan Simic <dsimic@manjaro.org> writes:
+> 
+>>> @@ -128,6 +128,9 @@ include::rerere-options.txt[]
+>>>  	These flags are passed to the 'git apply' (see 
+>>> linkgit:git-apply[1])
+>>>  	program that applies
+>>>  	the patch.
+>> 
+>> It would be nice to, while there, move "the patch." to the line above.
+> 
+> It belongs to a separate topic.  These files are sources that will
+> be line filled by AsciiDoc, so there is no reason to make such a
+> change unless the topic of your change were to make the source
+> "prettier", which is not the focus of this patch.  Having such a
+> change in the same patch will be distracting.
 
->> @@ -128,6 +128,9 @@ include::rerere-options.txt[]
->>  	These flags are passed to the 'git apply' (see linkgit:git-apply[1])
->>  	program that applies
->>  	the patch.
->
-> It would be nice to, while there, move "the patch." to the line above.
-
-It belongs to a separate topic.  These files are sources that will
-be line filled by AsciiDoc, so there is no reason to make such a
-change unless the topic of your change were to make the source
-"prettier", which is not the focus of this patch.  Having such a
-change in the same patch will be distracting.
+Makes sense, it can become distracting, especially in a short patch
+like this one.  It's better to stick to the patch topic, and leave
+small cleanups to a separate patch.
