@@ -1,150 +1,101 @@
-Received: from mail-wr1-f50.google.com (mail-wr1-f50.google.com [209.85.221.50])
+Received: from mail-wr1-f49.google.com (mail-wr1-f49.google.com [209.85.221.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2C0869D39
-	for <git@vger.kernel.org>; Thu, 15 Feb 2024 10:29:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 428F412BEB7
+	for <git@vger.kernel.org>; Thu, 15 Feb 2024 11:09:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707992991; cv=none; b=nidPK/D3MNrq7t12E54IlHDCYFDgsPS9n4VY4LXgumWK+tf6/ospf7qmEX5eWq95R2MBHh7f/Heo+c7bcfTJVjH+xvPtCAd4XiT8jaw/3rqnHeLUIAVl7gv+uFwPqqysipciNPxG05Wh5D6CJg7OT8PVOxscapjsZMHJATYB9lA=
+	t=1707995391; cv=none; b=MWa9lZTn2q8FogL9bCLpcX7Z5r9WGfFJZmk+70N9eZbnHx6vuiv9fcc8JbEpO3mw9VavbQ0juJJMbU11w4OO+nke7e5EWJ6xJEUI85zPelaiRj5fDi9kx9Wg8IRKvd/fo3682CV6p6xCdZfCIQNKs/GHQRYDKIyG/hRPbbtX5mo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707992991; c=relaxed/simple;
-	bh=8pHLxVwWfAKIVN+fYTYk15Ex0JhwyVUgbaNDr/IqWH8=;
-	h=Message-ID:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=ush9usFUZA3REX1EP0KiCaoHZ4GNyG6ComcOsGkjT7EB+xov1psJVW3kXIzSLI1HcAwLSU9KkrPdKMlxRsNWmYELJji/4twqtsQ+cJ2qV28E2mLLREaKmPT/DuvoFmDBQqgf1HFcKHnOhpWqq3KNXbFy06jrzZMfIALVCY0YUF0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NeOHjSP9; arc=none smtp.client-ip=209.85.221.50
+	s=arc-20240116; t=1707995391; c=relaxed/simple;
+	bh=lkXRbvtbwYnVrlFQK393gZ1nDxz43vrnrQrzou/H8c4=;
+	h=From:Content-Type:Mime-Version:Subject:Message-Id:Date:To; b=nnb2DCjlHap6gwzX1AOv79bst+H/4fr+jSXUDvMCXKRJD4zS/gHGKiOfkD25vWdv86fjiP4yrNW0baq57YeYQLoSgqpDHpoUCDY7bxwBbwdZ4L5WCb/U12xlPrQo2T9drI107C4lgGiBfvexoQWkDXGmYWwsk5L2VVwmks9IE60=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hLB0lTJZ; arc=none smtp.client-ip=209.85.221.49
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NeOHjSP9"
-Received: by mail-wr1-f50.google.com with SMTP id ffacd0b85a97d-337d05b8942so442492f8f.3
-        for <git@vger.kernel.org>; Thu, 15 Feb 2024 02:29:48 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hLB0lTJZ"
+Received: by mail-wr1-f49.google.com with SMTP id ffacd0b85a97d-33b29b5ea96so349291f8f.0
+        for <git@vger.kernel.org>; Thu, 15 Feb 2024 03:09:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1707992987; x=1708597787; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=e61PsnXiBlPenJ5EHXw7RgYMWWV8uQLSlMKi3SdABuM=;
-        b=NeOHjSP9TFMGEHs29jF6/1/PzB7wrlA2EgsvJLBKNyvOtLO03YdfzmpdQ1lm9EOl/6
-         fllUzhcqR8Qq4de9P8UylfHXXMgYZibLndZTVyxLcWqrWwESnRGfxdYgZYjUzO5mUf4h
-         6ONzxTUnNzWhop60fLPCkx19LqxuHZyRDBuG8bNV5KIsZG+ewbJMKhyXGDXwvn65nmpq
-         0FHKqTaovTlP94K93Z/D39XjpUTai7MOZOTmAQ0oLa0R344a4OZugaWkDWWllKuNJcHP
-         t0zCTqCnwDBBeIZHICC4E3bFvXvWhZeNaep8sSa1z0uuN1wHF6DgVF1b7tbQ3eYfC5FA
-         97gQ==
+        d=gmail.com; s=20230601; t=1707995388; x=1708600188; darn=vger.kernel.org;
+        h=to:date:message-id:subject:mime-version:content-transfer-encoding
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=lkXRbvtbwYnVrlFQK393gZ1nDxz43vrnrQrzou/H8c4=;
+        b=hLB0lTJZdJbsIkgGISkGoXlMoB+K93dJ6SFUe7IRSogZz5QqiMvBDQEldtsD6ZQybR
+         dwtl0qvU/AIzpYPcmTocL4WcfGlOF4h9mjIEwNmf9ajNUL+xdZDNgY6maFDlM4eZsEdf
+         1lLzelmd3+aErHUpUzuKlexI77owgekFmvXGKsLdxlilH+Ju4KtM6neYHUtyjRJyLBDW
+         waPhX+lznWDGnH1RltjbOasEvxdRlr9gcm+BUBHCJV31cm21qb1SSS5/ZfACuW1h7qLS
+         beXLhq/ieT+0H282/NWmBHwPdk+jqlUTLDUXjzur0F8e2BssAS5ujfBKPNNLpXnv1fgr
+         JNSQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1707992987; x=1708597787;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=e61PsnXiBlPenJ5EHXw7RgYMWWV8uQLSlMKi3SdABuM=;
-        b=bWguG4rqrCfz+wqVh3XqFFSxZ/KVUsHEXxv0U65q/36nN8GwHHOjcAV2rcQKXzfUSQ
-         7qGbPkPvgAGAtozE8sUvzdfN4h7idgTHBSGOk5Gcj7jAyzL2tQ7siluXHVNDa84P0m4r
-         tyuo3N+GFxCbjgpjBSX/EXxkWfsQJxO3rTBArMZRp658JJR/gXU9Vv10dFjlfi4mXCjW
-         xKecwrx/lo+udGQjSZMNoVqfS+qAS0nK5w6PXK9YdvOhSUPijMVnkVB6QBVqe1xhYzhv
-         eQj28y+76vihTtuKH7zhAkyqu7UoMWaHk1ZIQ9ZwOl2+Qj4/8lu+pKh4OUCYtFb0NAFC
-         4Bjg==
-X-Gm-Message-State: AOJu0Yz94atLD687S5UlLdBZoR6tQsgKQJxHWK9nkv2OpMUTn2nGvFYj
-	RaK+ug5g4pQn9r71JtUx/ho7gwhDW9Pi1r8gTMblDSiC6gMUIx9ETAfV/aMA
-X-Google-Smtp-Source: AGHT+IENKmCOV/A759SaBrhFtxwREKpCqs0ENMiwbA6FLB1gqraNZF0k3Xo2ULrQsP2xhSfny0/SzQ==
-X-Received: by 2002:adf:f50d:0:b0:33b:4649:a1e0 with SMTP id q13-20020adff50d000000b0033b4649a1e0mr1010265wro.15.1707992986673;
-        Thu, 15 Feb 2024 02:29:46 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id bs22-20020a056000071600b0033cfb525bf4sm1377408wrb.82.2024.02.15.02.29.46
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 15 Feb 2024 02:29:46 -0800 (PST)
-Message-ID: <02aee716a0ed83bef55eadc04ed5d8f9c0ac2c03.1707992978.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1667.git.git.1707992978.gitgitgadget@gmail.com>
-References: <pull.1667.git.git.1707992978.gitgitgadget@gmail.com>
-From: "Eric DeCosta via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Thu, 15 Feb 2024 10:29:37 +0000
-Subject: [PATCH 6/7] fsmonitor: update doc for Linux
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        d=1e100.net; s=20230601; t=1707995388; x=1708600188;
+        h=to:date:message-id:subject:mime-version:content-transfer-encoding
+         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=lkXRbvtbwYnVrlFQK393gZ1nDxz43vrnrQrzou/H8c4=;
+        b=hZBZj+1pf0s+lh6RfPkcWzpCacVAhC9uWcMeLWB+amXtCcFlq8aXTXt9Cg+obM1+5j
+         dtNJP7Qs60jBZafXC07nTq7r7c4fQzGxRut1MjT2yAHlf9xmDGT5q/32TzGEU2njH9U4
+         Ay3a15yb5MT22GxclJmfaE+gO8xnWZs7E0ILypcnYAaqgBoLQmgeq5GakSEj3OslUjTZ
+         NGKc93WF3zN5jjVJVwYyKw3GE1pUzJbhQyhLsWd37/0O9Sl2DsjdfXZ6t8W1nJl+nBnO
+         VHSkPP3EbAVhvN6CLf5lh6SYrS3o7Ih3iTZDSNHFtpm7+Tr5HTIIOZ1j/MGPkQejkMHw
+         4EGw==
+X-Gm-Message-State: AOJu0Yz16ASnT+N4TftPUeROrYH4yeNzMQYRjCRf74aup4Lma/2Spb2g
+	phx5Ss2sQvgERNRrNXAYLukUTiTaVzRL8buH+xXe+pI29T3KqKGZ4WgvKYYQ
+X-Google-Smtp-Source: AGHT+IHSW4z5RW8qcRDNi7jYBfFZW5sSr1+nxgnO2oXHzRqs8mRJJGxsEKJTVKe0gCGtHNlS6yxjVg==
+X-Received: by 2002:a5d:4c49:0:b0:33c:e306:bba5 with SMTP id n9-20020a5d4c49000000b0033ce306bba5mr1065268wrt.1.1707995387493;
+        Thu, 15 Feb 2024 03:09:47 -0800 (PST)
+Received: from smtpclient.apple (laptop-ipv6-2001-660-6101-403-1-c1.labri.fr. [2001:660:6101:403::1:c1])
+        by smtp.gmail.com with ESMTPSA id bh8-20020a05600005c800b0033b888a0a63sm1551803wrb.0.2024.02.15.03.09.46
+        for <git@vger.kernel.org>
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 15 Feb 2024 03:09:46 -0800 (PST)
+From: =?utf-8?Q?Jean-R=C3=A9my_Falleri?= <jr.falleri@gmail.com>
+Content-Type: text/plain;
+	charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3774.400.31\))
+Subject: Git difftool: interaction between --dir-diff and --trust-exit-code
+Message-Id: <976C9BF2-CB82-429A-B9FA-6A14BCFFCA3D@gmail.com>
+Date: Thu, 15 Feb 2024 12:09:35 +0100
 To: git@vger.kernel.org
-Cc: "Eric Sunshine [ ]" <sunshine@sunshineco.com>,
-    "=?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason [ ]" <avarab@gmail.com>,
-    "Glen Choo [ ]" <chooglen@google.com>,
-    "Johannes Schindelin [ ]" <Johannes.Schindelin@gmx.de>,
-    "Taylor Blau [ ]" <me@ttaylorr.com>,
-    marzi <m.ispare63@gmail.com>,
-    Eric DeCosta <edecosta@mathworks.com>
+X-Mailer: Apple Mail (2.3774.400.31)
 
-From: Eric DeCosta <edecosta@mathworks.com>
+Hi all and thanks for the amazing work you do on Git.
 
-Update the documentation for Linux.
+It seems that the =E2=80=94trust-exit-code option from git-difftool is =
+not working when one use =E2=80=94dir-diff.
 
-Signed-off-by: Eric DeCosta <edecosta@mathworks.com>
+As an example I have set up the following configuration :
+
+[difftool "false"]
+cmd =3D false
+
+And when I launch git-difftool in normal mode with =E2=80=94trust-exit-cod=
+e, it works fine:
+$ git difftool -y -t false --trust-exit-code HEAD HEAD~1
+$ echo $?
+> 128
+
+However the same command in dir-diff mode is not working :
+$ git difftool -t false -d --trust-exit-code HEAD HEAD~1
+$ echo $?
+> 0
+
+=46rom what I read in git/git-difftool=E2=80=94helper.sh it seems to not =
+forward the exit status when $GIT_DIFFTOOL_DIRDIFF is on.
+
+I believe there is nothing in the documentation about this interaction. =
+Maybe this is intended but I find that this could be useful to have this =
+option working on dir-diff mode too. For instance in my use case I would =
+want to signal an error when I detect breaking changes with the breaking =
+change detector we are working on, that is hooked as a difftool.
+
+Best regards!
 ---
- Documentation/config/fsmonitor--daemon.txt |  4 ++--
- Documentation/git-fsmonitor--daemon.txt    | 26 ++++++++++++++--------
- 2 files changed, 19 insertions(+), 11 deletions(-)
-
-diff --git a/Documentation/config/fsmonitor--daemon.txt b/Documentation/config/fsmonitor--daemon.txt
-index 671f9b94628..4ca92536286 100644
---- a/Documentation/config/fsmonitor--daemon.txt
-+++ b/Documentation/config/fsmonitor--daemon.txt
-@@ -4,8 +4,8 @@ fsmonitor.allowRemote::
-     behavior.  Only respected when `core.fsmonitor` is set to `true`.
- 
- fsmonitor.socketDir::
--    This Mac OS-specific option, if set, specifies the directory in
-+    Mac OS and Linux-specific option. If set, specifies the directory in
-     which to create the Unix domain socket used for communication
-     between the fsmonitor daemon and various Git commands. The directory must
--    reside on a native Mac OS filesystem.  Only respected when `core.fsmonitor`
-+    reside on a native filesystem.  Only respected when `core.fsmonitor`
-     is set to `true`.
-diff --git a/Documentation/git-fsmonitor--daemon.txt b/Documentation/git-fsmonitor--daemon.txt
-index 8585d19f4d8..ebdc4aec3c0 100644
---- a/Documentation/git-fsmonitor--daemon.txt
-+++ b/Documentation/git-fsmonitor--daemon.txt
-@@ -76,23 +76,31 @@ repositories; this may be overridden by setting `fsmonitor.allowRemote` to
- correctly with all network-mounted repositories, so such use is considered
- experimental.
- 
--On Mac OS, the inter-process communication (IPC) between various Git
-+On Linux and Mac OS, the inter-process communication (IPC) between various Git
- commands and the fsmonitor daemon is done via a Unix domain socket (UDS) -- a
--special type of file -- which is supported by native Mac OS filesystems,
--but not on network-mounted filesystems, NTFS, or FAT32.  Other filesystems
--may or may not have the needed support; the fsmonitor daemon is not guaranteed
--to work with these filesystems and such use is considered experimental.
-+special type of file -- which is supported by many native Linux and Mac OS
-+filesystems, but not on network-mounted filesystems, NTFS, or FAT32.  Other
-+filesystems may or may not have the needed support; the fsmonitor daemon is not
-+guaranteed to work with these filesystems and such use is considered
-+experimental.
- 
- By default, the socket is created in the `.git` directory.  However, if the
- `.git` directory is on a network-mounted filesystem, it will instead be
- created at `$HOME/.git-fsmonitor-*` unless `$HOME` itself is on a
--network-mounted filesystem, in which case you must set the configuration
--variable `fsmonitor.socketDir` to the path of a directory on a Mac OS native
-+network-mounted filesystem in which case you must set the configuration
-+variable `fsmonitor.socketDir` to the path of a directory on a native
- filesystem in which to create the socket file.
- 
- If none of the above directories (`.git`, `$HOME`, or `fsmonitor.socketDir`)
--is on a native Mac OS file filesystem the fsmonitor daemon will report an
--error that will cause the daemon and the currently running command to exit.
-+is on a native Linux or Mac OS filesystem the fsmonitor daemon will report
-+an error that will cause the daemon to exit and the currently running command
-+to issue a warning.
-+
-+On Linux, the fsmonitor daemon registers a watch for each directory in the
-+repository.  The default per-user limit for the number of watches on most Linux
-+systems is 8192.  This may not be sufficient for large repositories or if
-+multiple instances of the fsmonitor daemon are running.
-+See https://watchexec.github.io/docs/inotify-limits.html[Linux inotify limits] for more information.
- 
- CONFIGURATION
- -------------
--- 
-gitgitgadget
+Jean-R=C3=A9my Falleri (http://www.labri.fr/~falleri)
 
