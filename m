@@ -1,96 +1,85 @@
-Received: from email1.sber.ru (email1.sber.ru [84.252.146.118])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f51.google.com (mail-ed1-f51.google.com [209.85.208.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47136CA4E
-	for <git@vger.kernel.org>; Thu, 15 Feb 2024 07:10:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=84.252.146.118
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C160F64A
+	for <git@vger.kernel.org>; Thu, 15 Feb 2024 07:41:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707981004; cv=none; b=oIVzwXPRRTQVA89ESf2OfgClI41N4LG0fmwTYhxrqKfhGZ3rJIdkAlKtOzO0E17mMsi5ZXtywC7nQgx49QuilmPCtOHeaKFTS2MFpSULtJjKT/dYLF2d6QmkAMD9veHTxb9ZPzr2dF7UcS19t/SwUCxZcs0nJT+bPXHqJvYj24s=
+	t=1707982902; cv=none; b=I/wJIyatvUIrnRrqx/HRuGvWwUFlONKIn/L67FRlfblAJqLxoGenM1UAdaF/o4g/OPTbzj2QOpRBMzxUH18DifRkao2yAUGKRbzaoJLnA0u97VNIfXso8B8p62ECuvcQUV5C6VDYKkhTAgjDDG7ktp+woqmog9QnJe5sipcLCtg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707981004; c=relaxed/simple;
-	bh=G/QTxNQQCe03EtDcsn+cewycxJ89cBRgZ563gQI7bQM=;
-	h=Content-Type:From:To:Subject:Date:Message-ID:MIME-Version; b=hdhjGN5Woi/V130R7a/Ut/Jw8/GXfLOQlBGZTXdDjLnN1e81Olwli1c/8GpE5kpF2oEMWBLljVRg+KUwJLj7hJw+UDw+YNbMNZqa9yPLAuuLLp1rzWF03lVoCzAE/LxIn/oVppQ+LFHVeeUiNcm9ZtENRRDEWz95x7UDczUyaJ8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=sberbank.ru; spf=pass smtp.mailfrom=sberbank.ru; dkim=pass (2048-bit key) header.d=sberbank.ru header.i=@sberbank.ru header.b=LkAlm3M8; arc=none smtp.client-ip=84.252.146.118
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=sberbank.ru
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=sberbank.ru
+	s=arc-20240116; t=1707982902; c=relaxed/simple;
+	bh=X9QSKEpwZaiCFsj1B5VZNpxoPQZKs2vVOsV4ZOENg94=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=ONuRgFI807wgyWmUpSt4nwkx431G/ls1yPJI9ouYUYehLLRUURPBZw1dxqUy30japS0y9oixbIlEh8H95314XfPzB8YY0WoXiwZGL6x1ayD4UaWyDhtwbmX6WTegxqobfCONxVOsZ1TJ1rpb2n8jvQuT7s0luBJ2UtJWqkR29BI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=eLj1eNMs; arc=none smtp.client-ip=209.85.208.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=sberbank.ru header.i=@sberbank.ru header.b="LkAlm3M8"
-Content-Language: ru-RU
-Content-Type: text/plain; charset="utf-8"
-Content-ID: <1AFCD8C175CD6E4DA90B21ECC43A1153@sberbank.ru>
-Content-Transfer-Encoding: base64
-DKIM-Signature: v=1; a=rsa-sha256; d=sberbank.ru; s=dkim; c=relaxed/relaxed;
-	t=1707980927; h=from:subject:to:date:message-id;
-	bh=G/QTxNQQCe03EtDcsn+cewycxJ89cBRgZ563gQI7bQM=;
-	b=LkAlm3M80zudHCtHQX2olGkog7AdRyeTonmvD7gYULwAJZHfCgbrRLbG846u0pKsXmr3NW4urGL
-	dCaKLJNPGERv5obcS8MbLYP0GyQmYW567TtmoPeVA+cqPX3WFea8OiMeVwaF8db6Q8bMFGG48+Xgp
-	/mTwdpy4lAfR//YT3F3alc0gIQRCqMe4doyABb+IotPBzkUHUY+PPLCX/y5nuBbYAeuqDPtbNFm/F
-	3U2nhRMYxwUJNtGUKAOO+9SUJzj2IsvncCuel15vfKBL34KWdx8Y/QvX3gF2YZeFWNR7/MFTb/aMl
-	7TCDV+44lI25W5NgO7JBXK6nWQY2MusMps5g==
-From: =?utf-8?B?0JrQvtC90L7QvdC+0LIg0JjQs9C90LDRgtC40Lkg0JDQu9C10LrRgdCw0L0=?=
- =?utf-8?B?0LTRgNC+0LLQuNGH?= <IAlKononov@sberbank.ru>
-To: "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: The repository is broken due to the overflow of the disk space
- without the possibility of restoration
-Thread-Topic: The repository is broken due to the overflow of the disk space
- without the possibility of restoration
-Thread-Index: AQHaX93KjeO9q8rDLk6+AfstbxDkzQ==
-Date: Thu, 15 Feb 2024 07:08:35 +0000
-Message-ID: <8B9D836A-CEE5-4057-887F-91ECDFB2BE9E@sberbank.ru>
-Accept-Language: en-US
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="eLj1eNMs"
+Received: by mail-ed1-f51.google.com with SMTP id 4fb4d7f45d1cf-561f78f1ba1so549895a12.0
+        for <git@vger.kernel.org>; Wed, 14 Feb 2024 23:41:40 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1707982899; x=1708587699; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=Ere+cnH/eLmqMrJFjA+95D7N50oh1pwMQe+JIvy4nLI=;
+        b=eLj1eNMsw2a8a94eE2qISFtDxYtDKsaNRl/k6wDOFWFLoj2OaMuOqcjSBABYD83plV
+         HMe/4Dt+IJW4LTVUCb0JYUDtBvJZdiPN61UZa2lKbHT0RaZYU0S1rMy1dfZX3/aFe2S1
+         cxyCciPXJECJgYn74V9PAHmq34mPdc3FZ6iRQ2ciaWYaQBlO4Z/S1wW6kYVVHX3e16Qr
+         aTz3oej2Q+QFTUEiofW2pXA4FcE53B6QQ4VfcoKfCC9mnKE6UlTTp+5zR7UvpnWvDGsk
+         46CaY72rLcGA5Kckd5247hMqYsbMG0e4tNYZTsUtx9N4CaYfAJmGKF5brA6bNX++aXoH
+         4lMQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1707982899; x=1708587699;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Ere+cnH/eLmqMrJFjA+95D7N50oh1pwMQe+JIvy4nLI=;
+        b=uWzYPWPeihr5Yzpb3SnjujYbu6ljqKxQM/LvCZCR71dD0RfXamj7DZGzqcr6Reek23
+         0B57/6LrV9a0/3sVunrDMcK3Zi2O5A6iqL0KSDOOPCknWacjmXLutlVp9ibUH9D+PpTM
+         md4uqg3pJPgeCp+DMeQetuPldfuOtUPPxOH19TqYYOjlCkLPGYYvC2Sm5mixJr4++UZU
+         doxnN4Y2ozgXHjlqHxm7BpReTruWIME7NxK4evQZhdBZMBB8SpY0nqA297yInmCk5fIi
+         FSrUJU+zWNi6g0cCMoq307yucAizKopsvalSq5brGHO8k9OS+PZCL55Snkc89vxdwogA
+         Xlrw==
+X-Gm-Message-State: AOJu0Yw/jZk8BqlPi4YtpVUr+202DxD+cC+1NQDuB35Wx76+uANZO8uz
+	zVQaJ5j1+USx9vyd9Ccagwb/Rt1YmENig8lHcXs/DwcQnIVjH+jJVFSeQPiAT5GdqFhe+DSjZpI
+	l8Cg9YiFszDGOMGh5dcicmVMFZMs=
+X-Google-Smtp-Source: AGHT+IHF7cl9eSlC0mHAyNcIwsszCaZt4bNMLNwTWjz6gdKx6vK60aHBTf2rwbyUiEkzPaPHmZrTaUxVFH19czRT2f0=
+X-Received: by 2002:a05:6402:12d0:b0:55f:a309:172f with SMTP id
+ k16-20020a05640212d000b0055fa309172fmr860025edx.15.1707982898865; Wed, 14 Feb
+ 2024 23:41:38 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+References: <20240205204932.16653-1-maarten.bosmans@vortech.nl>
+ <20240205204932.16653-2-maarten.bosmans@vortech.nl> <xmqqil32l0i6.fsf@gitster.g>
+ <CA+CvcKTtcHCCKucQ0h1dnaDAMNfErJ+a1CXEVi=ZE5dv57Tb3A@mail.gmail.com> <xmqqy1bxiiop.fsf@gitster.g>
+In-Reply-To: <xmqqy1bxiiop.fsf@gitster.g>
+From: Maarten Bosmans <mkbosmans@gmail.com>
+Date: Thu, 15 Feb 2024 08:41:22 +0100
+Message-ID: <CA+CvcKSpjB6Js3H49yvjNves53STj0keW3BvoREhdnDHzZ7VjQ@mail.gmail.com>
+Subject: Re: [PATCH 1/4] notes: print note blob to stdout directly
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, Teng Long <dyroneteng@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 
-VGhhbmsgeW91IGZvciBmaWxsaW5nIG91dCBhIEdpdCBidWcgcmVwb3J0IQ0KUGxlYXNlIGFuc3dl
-ciB0aGUgZm9sbG93aW5nIHF1ZXN0aW9ucyB0byBoZWxwIHVzIHVuZGVyc3RhbmQgeW91ciBpc3N1
-ZS4NCg0KV2hhdCBkaWQgeW91IGRvIGJlZm9yZSB0aGUgYnVnIGhhcHBlbmVkPyAoU3RlcHMgdG8g
-cmVwcm9kdWNlIHlvdXIgaXNzdWUpDQpUaGUgb3ZlcmZsb3cgb2YgZGlzayBzcGFjZSBvbiB0aGUg
-R0lUIHNlcnZlciAob3ZlcmZsb3cgaXMgY2F1c2VkIGJ5IG90aGVyIHJlcG8gcGFyYWxsZWwgdG8g
-dGhpcykuDQpXaGF0IGRpZCB5b3UgZXhwZWN0IHRvIGhhcHBlbj8gKEV4cGVjdGVkIGJlaGF2aW9y
-KQ0KVGhlIHBvc3NpYmlsaXR5IG9mIHJlc3RvcmluZyB0aGUgcmVwb3NpdG9yeSB3aXRoIHJlZ3Vs
-YXIgbWVhbnMuDQpXaGF0IGhhcHBlbmVkIGluc3RlYWQ/IChBY3R1YWwgYmVoYXZpb3IpDQpUaGUg
-cmVwb3NpdG9yeSBjYW5ub3QgYmUgcmVzdG9yZWQgd2l0aCByZWd1bGFyIG1lYW5zLCB0aGUgTlVM
-TCBPYmplY3Qgd2l0aG91dCBhIHR5cGUgdGhhdCBibG9ja3MgYW55IEdDIG9yIGluZGV4IG9wZXJh
-dGlvbnMuDQpXaGF0J3MgZGlmZmVyZW50IGJldHdlZW4gd2hhdCB5b3UgZXhwZWN0ZWQgYW5kIHdo
-YXQgYWN0dWFsbHkgaGFwcGVuZWQ/DQppVGhlIHJlcG9zaXRvcnkgY2FuIG9ubHkgYmUgcmVzdG9y
-ZWQgYnkgYSBiYWNrdXAuDQpBbnl0aGluZyBlbHNlIHlvdSB3YW50IHRvIGFkZDoNCg0KUGxlYXNl
-IHJldmlldyB0aGUgcmVzdCBvZiB0aGUgYnVnIHJlcG9ydCBiZWxvdy4NCllvdSBjYW4gZGVsZXRl
-IGFueSBsaW5lcyB5b3UgZG9uJ3Qgd2lzaCB0byBzaGFyZS4NCg0KDQpbU3lzdGVtIEluZm9dDQpn
-aXQgdmVyc2lvbjoNCmdpdCB2ZXJzaW9uIDIuNDEuMA0KY3B1OiBhcm02NA0Kbm8gY29tbWl0IGFz
-c29jaWF0ZWQgd2l0aCB0aGlzIGJ1aWxkDQpzaXplb2YtbG9uZzogOA0Kc2l6ZW9mLXNpemVfdDog
-OA0Kc2hlbGwtcGF0aDogL2Jpbi9zaA0KZmVhdHVyZTogZnNtb25pdG9yLS1kYWVtb24NCnVuYW1l
-OiBEYXJ3aW4gMjIuNi4wIERhcndpbiBLZXJuZWwgVmVyc2lvbiAyMi42LjA6IFRodSBOb3YgIDIg
-MDc6NDM6NTcgUERUIDIwMjM7IHJvb3Q6eG51LTg3OTYuMTQxLjMuNzAxLjE3fjYvUkVMRUFTRV9B
-Uk02NF9UNjAwMCBhcm02NA0KY29tcGlsZXIgaW5mbzogY2xhbmc6IDE0LjAuMyAoY2xhbmctMTQw
-My4wLjIyLjE0LjEpDQpsaWJjIGluZm86IG5vIGxpYmMgaW5mb3JtYXRpb24gYXZhaWxhYmxlDQok
-U0hFTEwgKHR5cGljYWxseSwgaW50ZXJhY3RpdmUgc2hlbGwpOiAvYmluL3pzaA0KDQoNCltFbmFi
-bGVkIEhvb2tzXQ0KDQrQo9CS0JXQlNCe0JzQm9CV0J3QmNCVINCeINCa0J7QndCk0JjQlNCV0J3Q
-ptCY0JDQm9Cs0J3QntCh0KLQmDog0K3RgtC+INGN0LvQtdC60YLRgNC+0L3QvdC+0LUg0YHQvtC+
-0LHRidC10L3QuNC1INC4INC70Y7QsdGL0LUg0LTQvtC60YPQvNC10L3RgtGLLCDQv9GA0LjQu9C+
-0LbQtdC90L3Ri9C1INC6INC90LXQvNGDLCDRgdC+0LTQtdGA0LbQsNGCINC60L7QvdGE0LjQtNC1
-0L3RhtC40LDQu9GM0L3Rg9GOINC40L3RhNC+0YDQvNCw0YbQuNGOLiDQndCw0YHRgtC+0Y/RidC4
-0Lwg0YPQstC10LTQvtC80LvRj9C10Lwg0JLQsNGBINC+INGC0L7QvCwg0YfRgtC+INC10YHQu9C4
-INGN0YLQviDRgdC+0L7QsdGJ0LXQvdC40LUg0L3QtSDQv9GA0LXQtNC90LDQt9C90LDRh9C10L3Q
-viDQktCw0LwsINC40YHQv9C+0LvRjNC30L7QstCw0L3QuNC1LCDQutC+0L/QuNGA0L7QstCw0L3Q
-uNC1LCDRgNCw0YHQv9GA0L7RgdGC0YDQsNC90LXQvdC40LUg0LjQvdGE0L7RgNC80LDRhtC40Lgs
-INGB0L7QtNC10YDQttCw0YnQtdC50YHRjyDQsiDQvdCw0YHRgtC+0Y/RidC10Lwg0YHQvtC+0LHR
-idC10L3QuNC4LCDQsCDRgtCw0LrQttC1INC+0YHRg9GJ0LXRgdGC0LLQu9C10L3QuNC1INC70Y7Q
-sdGL0YUg0LTQtdC50YHRgtCy0LjQuSDQvdCwINC+0YHQvdC+0LLQtSDRjdGC0L7QuSDQuNC90YTQ
-vtGA0LzQsNGG0LjQuCwg0YHRgtGA0L7Qs9C+INC30LDQv9GA0LXRidC10L3Qvi4g0JXRgdC70Lgg
-0JLRiyDQv9C+0LvRg9GH0LjQu9C4INGN0YLQviDRgdC+0L7QsdGJ0LXQvdC40LUg0L/QviDQvtGI
-0LjQsdC60LUsINC/0L7QttCw0LvRg9C50YHRgtCwLCDRgdC+0L7QsdGJ0LjRgtC1INC+0LEg0Y3R
-gtC+0Lwg0L7RgtC/0YDQsNCy0LjRgtC10LvRjiDQv9C+INGN0LvQtdC60YLRgNC+0L3QvdC+0Lkg
-0L/QvtGH0YLQtSDQuCDRg9C00LDQu9C40YLQtSDRjdGC0L4g0YHQvtC+0LHRidC10L3QuNC1LiBD
-T05GSURFTlRJQUxJVFkgTk9USUNFOiBUaGlzIGVtYWlsIGFuZCBhbnkgZmlsZXMgYXR0YWNoZWQg
-dG8gaXQgYXJlIGNvbmZpZGVudGlhbC4gSWYgeW91IGFyZSBub3QgdGhlIGludGVuZGVkIHJlY2lw
-aWVudCB5b3UgYXJlIG5vdGlmaWVkIHRoYXQgdXNpbmcsIGNvcHlpbmcsIGRpc3RyaWJ1dGluZyBv
-ciB0YWtpbmcgYW55IGFjdGlvbiBpbiByZWxpYW5jZSBvbiB0aGUgY29udGVudHMgb2YgdGhpcyBp
-bmZvcm1hdGlvbiBpcyBzdHJpY3RseSBwcm9oaWJpdGVkLiBJZiB5b3UgaGF2ZSByZWNlaXZlZCB0
-aGlzIGVtYWlsIGluIGVycm9yIHBsZWFzZSBub3RpZnkgdGhlIHNlbmRlciBhbmQgZGVsZXRlIHRo
-aXMgZW1haWwuDQo=
+Op di 6 feb 2024 om 18:52 schreef Junio C Hamano <gitster@pobox.com>:
+> Maarten Bosmans <mkbosmans@gmail.com> writes:
+> > That is also a cool idea. That would probably use the functionality of
+> > the cat-file batch mode, right?
+>
+> Not really.  I was hoping that "git show" that can take multiple
+> objects from its command line would directly be used, or with a new
+> option that gives a separator between these objects.
+
+OK, I need some guidance here. Should I submit a new version of the
+patch that addresses the comments about the code, or should I this
+approach of making a single `git notes show` faster altogether?
+In my view it is worthwhile to eliminate the extra `git show`
+subprocess launch (while still accounting for non-text blob notes, but
+not non-blob notes) and focus on batching later.
+
+Maarten
