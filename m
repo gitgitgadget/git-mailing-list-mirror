@@ -1,78 +1,79 @@
-Received: from fhigh8-smtp.messagingengine.com (fhigh8-smtp.messagingengine.com [103.168.172.159])
+Received: from out3-smtp.messagingengine.com (out3-smtp.messagingengine.com [66.111.4.27])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2B4513AC8
-	for <git@vger.kernel.org>; Thu, 15 Feb 2024 08:25:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D67912B7C
+	for <git@vger.kernel.org>; Thu, 15 Feb 2024 08:25:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=66.111.4.27
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707985552; cv=none; b=sJzErl24diIhfv0FLHRSksDIfkysS4U9T4ZeIby6ZYSxqgrWqU6WUHmntconfJuKz5x/H+UDeRRR1wf2gr0j8gQIp4tHdsBHqMTh9a2bC6XlwJbFKk61MITWyxCh0rk7oTHy9Cr6520Dr0u/5fd+Z4+x5UXZcdCU4XILTl/uzFQ=
+	t=1707985556; cv=none; b=htLsjj+9loPk/asbx2OOeJfyJGltpWwbQf4070N+ApLcuGdnThwHKEbBByCp+EfptqMspQoppJXsCtwTCDouZw8P4CwQLZ2jN4ggG595m/bruj90+Z3Yxi+VdcxA4jYKuSM27BUv1Ck74eJIvjXHwzSCBa+CWYNDmoSvSvBpmjo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707985552; c=relaxed/simple;
-	bh=W7uC73kaEkFfgIiGsN8jHkxxS+YI7WFWol16vsV3VZw=;
+	s=arc-20240116; t=1707985556; c=relaxed/simple;
+	bh=CuewBXxU0lzTsgHWiRaXNk4EpbMjCHo7noH4lzXLjZY=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ZzYrvqk0QZnTBYeC2tbkl7O1e2E+6SRfGQ/3reiFg2HO1rar3FRg4BgWqYmRhYII4SoX8r/iQqF+/x8XPKK+qYceUvX/4W0rm7nCBamYAVLBm+6PM8iO4G5w8O/iWClU7D/UcpeeX73Uxgr29+9Xj7x1cf/NNPOkZis6fp7Xl2Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Wh/0yJXn; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=r2GpxSC5; arc=none smtp.client-ip=103.168.172.159
+	 Content-Type:Content-Disposition:In-Reply-To; b=DXP8dYUB2rVhDjCsCAymBvTBMmwiM3hd5q/SFYOCiyerLyq2BuMWq3f+glWizKXFMQ3Y8gcQsAnmrteSILlkLcNVlgVTzAuLGW8CLyHMhZ3sBsL9N7k4SVoZw5c6DwwyOPI0daB77qcazox3hrimrxG8HXPnbgeiENqcAiiUpq4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=oxn85g9z; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=MxzM4Pzt; arc=none smtp.client-ip=66.111.4.27
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Wh/0yJXn";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="r2GpxSC5"
-Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
-	by mailfhigh.nyi.internal (Postfix) with ESMTP id B41A711400AB;
-	Thu, 15 Feb 2024 03:25:49 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="oxn85g9z";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="MxzM4Pzt"
+Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
+	by mailout.nyi.internal (Postfix) with ESMTP id B49175C00AF;
+	Thu, 15 Feb 2024 03:25:53 -0500 (EST)
 Received: from mailfrontend1 ([10.202.2.162])
-  by compute6.internal (MEProxy); Thu, 15 Feb 2024 03:25:49 -0500
+  by compute1.internal (MEProxy); Thu, 15 Feb 2024 03:25:53 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1707985549; x=1708071949; bh=UmXHXlcwqQ
-	UUgpgQc6MKKXVjhXfguoiTT0++gZT32L0=; b=Wh/0yJXnRMQwqfNFkHc7MYDa/A
-	5eUZo4N3tid7O8TGqvH4rWXvQPE32cnD/XeFwfdUi4kLtKzFii7YdvRSyamLZtzi
-	FLO4U3lZjKQECF2lCNatCpIZS8giPSP/uo9visFNuksKmYkNBz9hJhCKQK3o4oPZ
-	BldMICmR632r4xQtD/dGo+GLhUx0bBG2FGvSkAfgrFv8ywbsAyiCRTVOOat6ybxT
-	wULCZrVSY9ZSoO6h9ks4YdyImOjcdfczym4lx6VPHLPy86Q4TxUaNCsBge/rFCf8
-	SY9juPuELA6iy5KnaRHBU1QePpis93ZJXGI1fmPqheM3gk/Il8Z5kLS3bOGw==
+	:subject:to:to; s=fm1; t=1707985553; x=1708071953; bh=IMGrO2ywS0
+	jimCqZg9sHwGeGR7mHdKGOkTSDfFj0syg=; b=oxn85g9znBjlq0KZGqUzOiI8Ye
+	xoFmzhX54tgiluJH1mnNhSQ9w79x7rJncOWCYHHsLdHu6Jzf4Lb2tv7eDSSCel8l
+	aCOnBWEJ/B8Pk4HMfpChdPrhmzzmbACHPAXpxhGX6h+vOTherWL2fopQHbj7G4uY
+	J0ilvu7wqA1C7YFAaiAoU9gcoIMnlIp3ROODfckhcg/LnWfyBzb2Zo7yagCLTLYj
+	XSswbnc5Ev6tk1inEz1ZTA1Xzw0AjBfRUgBILahHyNRJtqq8IEaXaB1DbYSCG9ga
+	KIiS5JNivOhXGJlTmfNEPXHpGWSVSQLW8oY1+IY5FVMKd0DtqCevbIHxr/yQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1707985549; x=1708071949; bh=UmXHXlcwqQUUgpgQc6MKKXVjhXfg
-	uoiTT0++gZT32L0=; b=r2GpxSC5bRSHeG2M17D5SYjyNGeaO0VDccDU8kpRKnh0
-	6eoN6qy4r9wjaVPPuVSuNDfGh0eJOdS9fSFOoAOtVJ5UGDQai/6xfK8C3w0kC17c
-	abaCFrmZeRJEwmfHK2UdkioyxYuSWy9dhzCFCmS78lIlImBblr+3tcfP2nnOFjZc
-	lmzb8ytbcA+vuqBJoKfs/GByR2y+EbZlUXdJH9pa+2VWgtz4PV9H3quvrTZ9dCXQ
-	k871hQnYuz8UJnv7S9JbyNZFEfb7ox8OAdycOicMXayazI7ElXrq77Yaed5x1bWO
-	cGxOr0XY6roumJq+xw7JyxwjpljhmvrzVfbkjiwuhg==
-X-ME-Sender: <xms:jcrNZegN9DvMWJEgFtMvGlCCpBm5xf9zBtvkmBzYVPZVc9xOB1oJfg>
-    <xme:jcrNZfB3PhWrCRDgyqQ90fP_5wjWFJ4sw_32lnZaH5UI-8Fv44KZDRO1epsDUtFAf
-    Cb_8jb5fttxdnydnw>
-X-ME-Received: <xmr:jcrNZWEJ-9OfG4JOzZQgJnU5J5kZ5DiuWIoshgL5a-py1AQxqNLiKD2S07I_rKdzkXWHydUQCbRNaTAjHctTxstNDing86zDt_-hlz53w0L0>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrudelgdeihecutefuodetggdotefrodftvf
+	fm1; t=1707985553; x=1708071953; bh=IMGrO2ywS0jimCqZg9sHwGeGR7mH
+	dKGOkTSDfFj0syg=; b=MxzM4PztdmOaO+rXR/jH4OWkRC/ALke/E7Lhh3sRn/4n
+	WBRakh65SVxRefWC3bsOtGbFCRlO6i9AYmCKvU3vfkii85uy/zgMRy707V7H/L4W
+	FGR5S2EWuwietJZdJ7jv7RD41BzmMsj2/TmeALHxI7gn3hSipvec7+qKnSj/oS6P
+	2J/ucH9XpXPV1yMijBWuSOhvi9gl91vPRdGIbZu5zbWEKzV9xiQRNFxSYKubENN8
+	kM5NysZMRddV5TzB2gw2mNz99N+ACfDzspkGhB+xc3xxmm6cTZ3ejnFm4PMyzbX8
+	6E4YYFjJX2sp/Cep4movJS4lWd917bmu1qGkfMxqlw==
+X-ME-Sender: <xms:kcrNZV-Ky5hKOpFrAGR1rSob7EbgfFTuksEcd3MSh9U3hRy-c7qLvA>
+    <xme:kcrNZZtghSaK0n4_e-jI92UZZzMCCBaqa_7pxx4ojtHA296bT-IC8Pg4Iwpml9lGY
+    Im-igkvIwn8U-hOpw>
+X-ME-Received: <xmr:kcrNZTC82auMQrv4rVZtPGHiymT4grRmybiLT-tFiF-i_tF4ZI7rGSHxABIpfaQLqAJ7t7hIixP3LBLtuVeDEMczqTRvH6V_D7YXSdk1CQM7>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrudelgdeigecutefuodetggdotefrodftvf
     curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
     uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
     fjughrpeffhffvvefukfhfgggtuggjsehgtderredttddvnecuhfhrohhmpefrrghtrhhi
     tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
     hnpeeukedtvedtffevleejtefgheehieegkeeluddvfeefgeehgfeltddtheejleffteen
-    ucevlhhushhtvghrufhiiigvpeefnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
+    ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
     hkshdrihhm
-X-ME-Proxy: <xmx:jcrNZXSQn9SdJl0U8c3dzoXWiYfCa1I7FhuXQ_JWV8z0Mo7tYtoZqw>
-    <xmx:jcrNZbx97OIzm3OPfDxn0MUc1Zgb5l3EYfgsmSleICDYGNIQkvhhJQ>
-    <xmx:jcrNZV4N34nMQjTpeLzHE8AniY3vsOXKZByfBwleDVR9Ews6BkjqqQ>
-    <xmx:jcrNZb-ATIWxPMQd4MIABBNZTLJxF1Dzz58qH-Ru0txUBqjoPnqZoQ>
+X-ME-Proxy: <xmx:kcrNZZes6ysm-7DjJ5EcgeyiPD7KhmyWB2weCaWFG6jZ_GgLZt7uUA>
+    <xmx:kcrNZaPq37knI82ybaFXj57eTw-7ajD7FSLW9cq0OvPSZ4wNXMBoAQ>
+    <xmx:kcrNZbn1T3o5n7BIh4nWMaf617yHLWQ6Yt5f58hMvO3XUj4zLLIzpQ>
+    <xmx:kcrNZTaJ8uuq5FuaiRhVtKc67-U65hdoFHQPhbIru967Wupj_89aBA>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 15 Feb 2024 03:25:48 -0500 (EST)
+ 15 Feb 2024 03:25:52 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 127e216f (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 15 Feb 2024 08:21:56 +0000 (UTC)
-Date: Thu, 15 Feb 2024 09:25:47 +0100
+	by vm-mail (OpenSMTPD) with ESMTPSA id 0aaeea14 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 15 Feb 2024 08:22:01 +0000 (UTC)
+Date: Thu, 15 Feb 2024 09:25:51 +0100
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
 Cc: Karthik Nayak <karthik.188@gmail.com>,
 	Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v2 5/7] t1405: remove unneeded cleanup step
-Message-ID: <67d6aede63bb1088d2d2eb86d4eb13b9ea702bda.1707985173.git.ps@pks.im>
+Subject: [PATCH v2 6/7] t2011: exercise D/F conflicts with HEAD with the
+ reftable backend
+Message-ID: <24051cc246b9d515ee2ea0418e751e47629d7662.1707985173.git.ps@pks.im>
 References: <cover.1707463221.git.ps@pks.im>
  <cover.1707985173.git.ps@pks.im>
 Precedence: bulk
@@ -82,76 +83,110 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="2G6daeMzpiSRh56u"
+	protocol="application/pgp-signature"; boundary="bp13yGi/ikpLuabD"
 Content-Disposition: inline
 In-Reply-To: <cover.1707985173.git.ps@pks.im>
 
 
---2G6daeMzpiSRh56u
+--bp13yGi/ikpLuabD
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-In 5e00514745 (t1405: explictly delete reflogs for reftable, 2022-01-31)
-we have added a test that explicitly deletes the reflog when not using
-the "files" backend. This was required because back then, the "reftable"
-backend didn't yet delete reflogs when deleting their corresponding
-branches, and thus subsequent tests would fail because some unexpected
-reflogs still exist.
+Some of the tests in t2011 exercise whether it is possible to move away
+=66rom a symbolic HEAD ref whose target ref has a directory-file conflict
+with another, preexisting ref. These tests don't use git-symbolic-ref(1)
+but manually write HEAD. This is supposedly done to avoid using logic
+that we're about to exercise, but it makes it impossible to verify
+whether the logic also works for ref backends other than "files".
 
-The "reftable" backend was eventually changed though so that it behaves
-the same as the "files" backend and deletes reflogs when deleting refs.
-This was done to make the "reftable" backend behave like the "files"
-backend as closely as possible so that it can act as a drop-in
-replacement.
-
-The cleanup-style test is thus not required anymore. Remove it.
+Refactor the code to use git-symbolic-ref(1) instead so that the tests
+work with the "reftable" backend, as well. We already have lots of tests
+in t1404 that ensure that both git-update-ref(1) and git-symbolic-ref(1)
+work in such a scenario, so it should be safe to rely on it here.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- t/t1405-main-ref-store.sh | 6 ------
- 1 file changed, 6 deletions(-)
+ t/t2011-checkout-invalid-head.sh | 17 +++++++----------
+ 1 file changed, 7 insertions(+), 10 deletions(-)
 
-diff --git a/t/t1405-main-ref-store.sh b/t/t1405-main-ref-store.sh
-index 976bd71efb..1183232a72 100755
---- a/t/t1405-main-ref-store.sh
-+++ b/t/t1405-main-ref-store.sh
-@@ -33,12 +33,6 @@ test_expect_success 'delete_refs(FOO, refs/tags/new-tag)=
-' '
- 	test_must_fail git rev-parse refs/tags/new-tag --
+diff --git a/t/t2011-checkout-invalid-head.sh b/t/t2011-checkout-invalid-he=
+ad.sh
+index 3c8135831b..04f53b1ea1 100755
+--- a/t/t2011-checkout-invalid-head.sh
++++ b/t/t2011-checkout-invalid-head.sh
+@@ -29,36 +29,33 @@ test_expect_success REFFILES 'checkout notices failure =
+to lock HEAD' '
+ 	test_must_fail git checkout -b other
  '
 =20
--# In reftable, we keep the reflogs around for deleted refs.
--test_expect_success !REFFILES 'delete-reflog(FOO, refs/tags/new-tag)' '
--	$RUN delete-reflog FOO &&
--	$RUN delete-reflog refs/tags/new-tag
--'
+-test_expect_success REFFILES 'create ref directory/file conflict scenario'=
+ '
++test_expect_success 'create ref directory/file conflict scenario' '
+ 	git update-ref refs/heads/outer/inner main &&
 -
- test_expect_success 'rename_refs(main, new-main)' '
- 	git rev-parse main >expected &&
- 	$RUN rename-ref refs/heads/main refs/heads/new-main &&
+-	# do not rely on symbolic-ref to get a known state,
+-	# as it may use the same code we are testing
+ 	reset_to_df () {
+-		echo "ref: refs/heads/outer" >.git/HEAD
++		git symbolic-ref HEAD refs/heads/outer
+ 	}
+ '
+=20
+-test_expect_success REFFILES 'checkout away from d/f HEAD (unpacked, to br=
+anch)' '
++test_expect_success 'checkout away from d/f HEAD (unpacked, to branch)' '
+ 	reset_to_df &&
+ 	git checkout main
+ '
+=20
+-test_expect_success REFFILES 'checkout away from d/f HEAD (unpacked, to de=
+tached)' '
++test_expect_success 'checkout away from d/f HEAD (unpacked, to detached)' '
+ 	reset_to_df &&
+ 	git checkout --detach main
+ '
+=20
+-test_expect_success REFFILES 'pack refs' '
++test_expect_success 'pack refs' '
+ 	git pack-refs --all --prune
+ '
+=20
+-test_expect_success REFFILES 'checkout away from d/f HEAD (packed, to bran=
+ch)' '
++test_expect_success 'checkout away from d/f HEAD (packed, to branch)' '
+ 	reset_to_df &&
+ 	git checkout main
+ '
+=20
+-test_expect_success REFFILES 'checkout away from d/f HEAD (packed, to deta=
+ched)' '
++test_expect_success 'checkout away from d/f HEAD (packed, to detached)' '
+ 	reset_to_df &&
+ 	git checkout --detach main
+ '
 --=20
 2.44.0-rc0
 
 
---2G6daeMzpiSRh56u
+--bp13yGi/ikpLuabD
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmXNyooACgkQVbJhu7ck
-PpTJPA/9FbvE/QAE9A6Z9dcu/uCbjhrUpxnyp2o2yQmSDFM9l+Pw0DvV1ohLGtgB
-Ocuco4xlDf5ZLoDCZHRD5L+gPKR8TlXRIBZktizENHuJYn7Oai5+aOWFYRVOI9lP
-IQ/HoBrn/085TKLwAEXp3QNLjPc6D4y6nvpbU2yXHed3Sold5JweENt6oknU6UyE
-1WhjMoak8ZgWziWNBm848BZ8IwCXz6ZJnkjqiqhtN/P4Z5YpqlooWz1PjIDoJ1Md
-rupdH0tMall91YrlB3rVj1C2cW7y8ygoVUX/a+Fq12mT6C5qZJ40RQMelC1mS18d
-uU8lqrS9E4nncM6jxgvP0bGKRFOyPUOlqxVh0a2S98cVXl6Vv+R9KKo6Zawy983B
-zT1yBkbUsqnFUnS1NdKx/I9ITP+qAwFvOgjJoB1+Dv/kCJzTTgTc7e//oQYZLYvh
-TUTN79DScX45r1Zj0JcgwKKD8V2l2ksZIaNhghy2sYzBiTkRsdJoAkGp5SBFxkx6
-mI6Xp4KFa65evJA0ZwHH5L4hL+MwArd+wVfmHhL7wS060dHy2nGIXYF30ad31jBk
-wTv2k42DboLANJip0GpoUH9hFKq2wubw/MKKkiF2pIJRUkn64OfKfy2lVyTt/SDu
-SYvYS9AjpTDgATwf1kzEBrwjEiw8QTPBs1tGOfJ46jsakt6TMsM=
-=rLR3
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmXNyo4ACgkQVbJhu7ck
+PpRO+w/6AxGpeRn2+UEj2cnzlgmPiBLklkZfcVHS6vifSJSFb2mCil5Bc1bqFfK9
+4FKQM7x2ejzTbJw1UpWc9Fvs1zDFA/ze+O7cv8O0gHJKDKZMYB3FISzUXUzxAm3A
+aSEPVu9ndsPIEEMq6dIDPzWG7lmiiuf3tghZBwIFxo3ocW5LtZ3+LigSft55U1c5
+7mMu5r4uiWiJ15dtwCH5iVrG9vR0T9A1inypDstjxpFWMVGo3eZWCZKjzgsw8Ukk
+P56Qwj8HbglfZ3gRSmeT150FpJRgErQDbahY6huBq9ZQmJh6ZwztzsZr5dQrxSo9
+1x0ww/74gnR0YNAWBYZMvxnyRGL0g/cAzQCIwR3Or/7Y4c0WbpdttcrpiQTADZWJ
+GJ93jA/6lWV52lGRTT+eIxZ4Gp1LlQDh/J7etJo03v2Sj78Jbr2mtsKx4QmjwLSb
+dDLOXy4BlENxjDj3iYzySgDYjaXxl6bgYevnV+5BMn4YYTtTH3ijFeq4REO+c+5Q
+B9hO5508Ht9e/Xrv0D8OzC4A8FC74l4hVchzc1WWshc5Yik/fw5UFMfiqQdo/mHA
+7bQc7rBOMWUtFb+6APvtedhAUX03j6OFfKajEM5eKof60r2cTtckA8zWjkFJd4Bk
+J/IPIbiG4M/ZZbqrKPKTX0VN4TSdcUSbJRkb/q8o5SeEZ9CN/Dc=
+=mpXZ
 -----END PGP SIGNATURE-----
 
---2G6daeMzpiSRh56u--
+--bp13yGi/ikpLuabD--
