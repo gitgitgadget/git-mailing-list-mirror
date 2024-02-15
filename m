@@ -1,58 +1,62 @@
-Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
+Received: from mail-lf1-f47.google.com (mail-lf1-f47.google.com [209.85.167.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A789B67E7C
-	for <git@vger.kernel.org>; Thu, 15 Feb 2024 10:29:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 928B167E8B
+	for <git@vger.kernel.org>; Thu, 15 Feb 2024 10:29:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707992984; cv=none; b=aDOfZZu38HJFKpbWdKteKp5n7BQL5U7XpnVolwV0OSgSpwAHZ5EXsvKLIUkNa2MafrHPpjCirYJyDvkMCZWir+EcKJCg9IXaVQ1W4vmegdus62n7LNQQy4KfbwU4edoM49MVcB0uY2PAeTQ6TXrHPXz5r1+PoIweD15ZDc0ODd8=
+	t=1707992985; cv=none; b=rb1AUkcG2wsgs1hTEYL+qmnECu79bchKiBRDkuV2UxLHTz6x0vyz6Ta8ctURw48UEN+5wlU+5pYqOV6f4ugF3qAOppJXkoEXaIUaUdMiJbZaN3/iwNKBfNKhPI88CigTRZOHshzQDGK24LP1ks66IukbWRXJ2kZZqv+l7uidemI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707992984; c=relaxed/simple;
-	bh=0VzQh58mSJ6P9Z8CVAzroirwUkIQ/btmWlkawhaszRg=;
-	h=Message-ID:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=JwePw+1yCEztJj8WUtzYkZAHtouvLQ9X0jMhFzvlMvs+WTAcDw1aaXyN3yPoz9isfsjvjbOJpXOg5NSbdmcIy29P+NkozJ0r8d4BV6JkHA5Nvyl7FxXFbgFLV6cMnj0cAiG+UMHRmC6wg0oJYYpmnmQyHZeLjz4WRsfko7fW1CA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OzLOG2E5; arc=none smtp.client-ip=209.85.128.47
+	s=arc-20240116; t=1707992985; c=relaxed/simple;
+	bh=t8KWApBpQqCyUO351NTSTy0SVWndYeQKS63dUZxx9Oc=;
+	h=Message-ID:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=X5IdMPhDrymsNDoF2RoEb7Jnk0z2AJ7pZukD9y0FNxXuC9t6cTOxxfvQGG0wIEuZdx8naD/u81c9cwVksxop/b08VWG8LEinww+7UZzQ1TnY7UGt3hIrzsAUH9mUSZe67F+YlawmKN9iJoVctIM0d7WKvAaAnkEQALCCKRRiNbE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hfRGFwu4; arc=none smtp.client-ip=209.85.167.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OzLOG2E5"
-Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-411e71d8a2bso5052015e9.1
-        for <git@vger.kernel.org>; Thu, 15 Feb 2024 02:29:42 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hfRGFwu4"
+Received: by mail-lf1-f47.google.com with SMTP id 2adb3069b0e04-511ac32fe38so1097822e87.1
+        for <git@vger.kernel.org>; Thu, 15 Feb 2024 02:29:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1707992980; x=1708597780; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1707992981; x=1708597781; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=EU9XDB7nWUzqXS1qvQ5GyD1k0yFzMKOLGoaZ9v5lxBw=;
-        b=OzLOG2E5RPwV+62NmYlJ+7E5rsUdIoXp9BZz9CnneDBnPHzudtnfnMUPwzINxsUzms
-         q/nOh8bYAqNH3Z+afQ4vFqG/dZ2kjEtVwOMKJj8VzhVKjFeJy3t3P3T+JDBxzO5cfrmb
-         1GBW9dJ5/GPEbb8DwdqZnXNfSJMxYUwMPrgY1r7j4FcOLm/5XsNAmdJ8ktHVPFXPZI73
-         TgR021fC5m2lMB8Y6RC1pS1GHENllL9ADcIh5sMFbPTpafYToDN04KDD1paWeUppVozq
-         SXnH0jFAJDDxLummXISNrVX6KLmch+gsPWUt4s4QpfZefVfFtMrPsuQhpkrBVxXBtRi5
-         GF5A==
+         :references:in-reply-to:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=3WOZYu1ABQvI0PZXp/i2IDZ9BkIUgU3t3A1/nH+ofTY=;
+        b=hfRGFwu4ns1E+52wLLT/M4jtWvg2Rhd+Ah7oQmCqn8rluAjRN35xg+0DyDCF8oNmsu
+         RxNzoBTRgMpVb5H54UD3wT67zLB/nitDFTJMDhluUkSfPvkoYqGZfwJbAZiBaE2ZaePQ
+         vtC+ivt+XIfLtMU7K9jjrRzncGHNk6sGEPn5D5COnYTOnPnBiblsCPGPyt6JLS2oBeaP
+         WtfZqVA/UgdBFZzd3qqTDv7ItZr4iCVpHLvKIBQMV7SeT5jpUwNHuswWMhs187ojlaf0
+         OTJYhvwnLL450ZUYEdtjgTABSLENJGLJdMvSJcj0ffPNATKCKxQQE7JVliML5goYlyg2
+         FhGg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1707992980; x=1708597780;
+        d=1e100.net; s=20230601; t=1707992981; x=1708597781;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=EU9XDB7nWUzqXS1qvQ5GyD1k0yFzMKOLGoaZ9v5lxBw=;
-        b=wrWJciJEOuGFHiZAqsS7Bjv161rzMI5x8FkPUBcPtiWKBhUlurBhoiXrMwG5O+6jbj
-         1ABcaofvkvOL7Ci0fkaego7dpwXA6BaargzJJQ023CCxPJh6FN4UrN3s8sQS031GO48t
-         eWlB7hUBm7hv2QYdwww+pFWJmUFDnHG68pE4b3WeIWN39nA15FOkTdd8yEelVgaNfmZl
-         ORVgCsI9ovjerg+D9uMZNQ5W9odwlVdcj3sVkfxCbo5csKS35YndPAoCP5nU2u0AzC8Y
-         yF0Ezaj75Cd/6VT5PofYVkYOrbct9CXCtAJ7GNwU0VjAlxyyBqLxeSSeJPQph5TGp4Kv
-         uxeg==
-X-Gm-Message-State: AOJu0YzUpvjz5cBbU1WSDdZSmcgCvtcxPgBPG8eSRSMt7c0LKlHSwdZX
-	salztq0Kl1b+IqS8W8swZSjjI4TgzXiOO7p2vwI128sh8TwSW5y4kUrKtXKy
-X-Google-Smtp-Source: AGHT+IG4ItAFS5IHOQrCpF58+1glMUXUkczUNax5KbzCts97sVgbS+78NGa+4TdE79JvCEvUwHwOdA==
-X-Received: by 2002:a05:600c:46d0:b0:410:bb99:af83 with SMTP id q16-20020a05600c46d000b00410bb99af83mr908584wmo.23.1707992979925;
-        Thu, 15 Feb 2024 02:29:39 -0800 (PST)
+         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=3WOZYu1ABQvI0PZXp/i2IDZ9BkIUgU3t3A1/nH+ofTY=;
+        b=OlPwq5lsLOzEOOyiGwWeFuQQprIIncysf++HTolcVdOl72j6O+qMiRdlK1cuUZVJVg
+         u1oHrH++m79+yc6tp2BGhFyyPoRMGYDGiB0IIIBf2gNHeFO1CWzefbRu0PqD2kgw5bnk
+         sPxMKwnS2xRwBENrT8eccE3V3fLqj++DLCeveIgU8RneUoWk+fLeV1/kzBQNKdcoNe54
+         LFr2LScXUcpWK8Xp83JCmtw9LeMsiUdfARQYsMUEVgGpkaCZwnF6+VBKHA+rfuR9TId+
+         WMgQdvh+s40qspnHsyRS9tZe5OxUcj7yWbLZCbNvpgZqcdgW5Ry+3U/tgKBUfSiIWkUc
+         UMtA==
+X-Gm-Message-State: AOJu0YzuQEVtpAjoxoUpP3vGdkEnM4bhiRlEM5A7Mhvyo9/dH1AWK96D
+	tvlekbWYiRcaWMddX/neUEKNmcKJAIKIknOcUzbwHDEIBaNWHN8gs0aB/+Ez
+X-Google-Smtp-Source: AGHT+IGASUNnChhOj+iYzErwY/2RD2EFBRWppn1M4D9gZt1g71tQM+VozLAGDCLUYRqvJy8//3HEFg==
+X-Received: by 2002:a05:6512:312c:b0:511:ab37:b2ae with SMTP id p12-20020a056512312c00b00511ab37b2aemr1109909lfd.20.1707992980588;
+        Thu, 15 Feb 2024 02:29:40 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id a8-20020a056000100800b0033cef5812f6sm1333296wrx.109.2024.02.15.02.29.39
+        by smtp.gmail.com with ESMTPSA id b20-20020a05600c4e1400b00411a595d56bsm1596966wmq.14.2024.02.15.02.29.40
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 15 Feb 2024 02:29:39 -0800 (PST)
-Message-ID: <pull.1667.git.git.1707992978.gitgitgadget@gmail.com>
-From: "marzi via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Thu, 15 Feb 2024 10:29:31 +0000
-Subject: [PATCH 0/7] fsmonitor: completing a stale patch that Implements fsmonitor for Linux
+        Thu, 15 Feb 2024 02:29:40 -0800 (PST)
+Message-ID: <5973bbe18aeecf486d8256cc402285665c45e66a.1707992978.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1667.git.git.1707992978.gitgitgadget@gmail.com>
+References: <pull.1667.git.git.1707992978.gitgitgadget@gmail.com>
+From: "Eric DeCosta via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Thu, 15 Feb 2024 10:29:32 +0000
+Subject: [PATCH 1/7] fsmonitor: rebase with master
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -68,64 +72,329 @@ Cc: "Eric Sunshine [ ]" <sunshine@sunshineco.com>,
     "Glen Choo [ ]" <chooglen@google.com>,
     "Johannes Schindelin [ ]" <Johannes.Schindelin@gmx.de>,
     "Taylor Blau [ ]" <me@ttaylorr.com>,
-    marzi <m.ispare63@gmail.com>
+    marzi <m.ispare63@gmail.com>,
+    Eric DeCosta <edecosta@mathworks.com>
 
-The goal in the original pull is to deliver fsmonitor for Linux that works
-similar to fsmonitor for Windows and Mac OS.
+From: Eric DeCosta <edecosta@mathworks.com>
 
-The original stale patch : https://github.com/git/git/pull/1352
-
-This patch set builds upon previous work for done for Windows and Mac OS to
-implement a fsmonitor back-end for Linux based on the Linux inotify API.
-inotify differs significantly from the equivalent Windows and Mac OS APIs in
-that a watch must be registered for every directory of interest (rather than
-a singular watch at the root of the directory tree) and special care must be
-taken to handle directory renames correctly.
-
-More information about inotify:
-https://man7.org/linux/man-pages/man7/inotify.7.html
-
-Eric DeCosta (6):
-  fsmonitor: rebase with master
-  fsmonitor: determine if filesystem is local or remote
-  fsmonitor: implement filesystem change listener for Linux
-  fsmonitor: enable fsmonitor for Linux
-  fsmonitor: test updates
-  fsmonitor: update doc for Linux
-
-marzi.esipreh (1):
-  fsmonitor: addressed comments for patch 1352
-
- Documentation/config/fsmonitor--daemon.txt |   4 +-
- Documentation/git-fsmonitor--daemon.txt    |  26 +-
- Makefile                                   |   4 +
- compat/fsmonitor/fsm-health-linux.c        |  24 +
- compat/fsmonitor/fsm-ipc-darwin.c          |  57 +-
- compat/fsmonitor/fsm-ipc-linux.c           |   1 +
- compat/fsmonitor/fsm-ipc-unix.c            |  55 ++
- compat/fsmonitor/fsm-listen-linux.c        | 678 +++++++++++++++++++++
- compat/fsmonitor/fsm-path-utils-linux.c    | 196 ++++++
- compat/fsmonitor/fsm-path-utils-linux.h    |  91 +++
- compat/fsmonitor/fsm-settings-darwin.c     |  64 +-
- compat/fsmonitor/fsm-settings-linux.c      |   1 +
- compat/fsmonitor/fsm-settings-unix.c       |  64 ++
- config.mak.uname                           |  11 +
- contrib/buildsystems/CMakeLists.txt        |  11 +-
- t/t7527-builtin-fsmonitor.sh               | 138 ++++-
- 16 files changed, 1262 insertions(+), 163 deletions(-)
+rebased with master, and resolved conflicts
+Signed-off-by: Eric DeCosta <edecosta@mathworks.com>
+---
+ compat/fsmonitor/fsm-health-linux.c    | 24 ++++++++++
+ compat/fsmonitor/fsm-ipc-darwin.c      | 57 +----------------------
+ compat/fsmonitor/fsm-ipc-linux.c       |  1 +
+ compat/fsmonitor/fsm-ipc-unix.c        | 53 +++++++++++++++++++++
+ compat/fsmonitor/fsm-settings-darwin.c | 64 +-------------------------
+ compat/fsmonitor/fsm-settings-linux.c  |  1 +
+ compat/fsmonitor/fsm-settings-unix.c   | 61 ++++++++++++++++++++++++
+ 7 files changed, 142 insertions(+), 119 deletions(-)
  create mode 100644 compat/fsmonitor/fsm-health-linux.c
  create mode 100644 compat/fsmonitor/fsm-ipc-linux.c
  create mode 100644 compat/fsmonitor/fsm-ipc-unix.c
- create mode 100644 compat/fsmonitor/fsm-listen-linux.c
- create mode 100644 compat/fsmonitor/fsm-path-utils-linux.c
- create mode 100644 compat/fsmonitor/fsm-path-utils-linux.h
  create mode 100644 compat/fsmonitor/fsm-settings-linux.c
  create mode 100644 compat/fsmonitor/fsm-settings-unix.c
 
-
-base-commit: 4fc51f00ef18d2c0174ab2fd39d0ee473fd144bd
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1667%2Fmaryis%2Ffsmonitor_linux-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1667/maryis/fsmonitor_linux-v1
-Pull-Request: https://github.com/git/git/pull/1667
+diff --git a/compat/fsmonitor/fsm-health-linux.c b/compat/fsmonitor/fsm-health-linux.c
+new file mode 100644
+index 00000000000..b9f709e8548
+--- /dev/null
++++ b/compat/fsmonitor/fsm-health-linux.c
+@@ -0,0 +1,24 @@
++#include "cache.h"
++#include "config.h"
++#include "fsmonitor.h"
++#include "fsm-health.h"
++#include "fsmonitor--daemon.h"
++
++int fsm_health__ctor(struct fsmonitor_daemon_state *state)
++{
++	return 0;
++}
++
++void fsm_health__dtor(struct fsmonitor_daemon_state *state)
++{
++	return;
++}
++
++void fsm_health__loop(struct fsmonitor_daemon_state *state)
++{
++	return;
++}
++
++void fsm_health__stop_async(struct fsmonitor_daemon_state *state)
++{
++}
+diff --git a/compat/fsmonitor/fsm-ipc-darwin.c b/compat/fsmonitor/fsm-ipc-darwin.c
+index 6f3a95410cc..4c3c92081ee 100644
+--- a/compat/fsmonitor/fsm-ipc-darwin.c
++++ b/compat/fsmonitor/fsm-ipc-darwin.c
+@@ -1,56 +1 @@
+-#include "git-compat-util.h"
+-#include "config.h"
+-#include "gettext.h"
+-#include "hex.h"
+-#include "path.h"
+-#include "repository.h"
+-#include "strbuf.h"
+-#include "fsmonitor-ll.h"
+-#include "fsmonitor-ipc.h"
+-#include "fsmonitor-path-utils.h"
+-
+-static GIT_PATH_FUNC(fsmonitor_ipc__get_default_path, "fsmonitor--daemon.ipc")
+-
+-const char *fsmonitor_ipc__get_path(struct repository *r)
+-{
+-	static const char *ipc_path = NULL;
+-	git_SHA_CTX sha1ctx;
+-	char *sock_dir = NULL;
+-	struct strbuf ipc_file = STRBUF_INIT;
+-	unsigned char hash[GIT_MAX_RAWSZ];
+-
+-	if (!r)
+-		BUG("No repository passed into fsmonitor_ipc__get_path");
+-
+-	if (ipc_path)
+-		return ipc_path;
+-
+-
+-	/* By default the socket file is created in the .git directory */
+-	if (fsmonitor__is_fs_remote(r->gitdir) < 1) {
+-		ipc_path = fsmonitor_ipc__get_default_path();
+-		return ipc_path;
+-	}
+-
+-	git_SHA1_Init(&sha1ctx);
+-	git_SHA1_Update(&sha1ctx, r->worktree, strlen(r->worktree));
+-	git_SHA1_Final(hash, &sha1ctx);
+-
+-	repo_config_get_string(r, "fsmonitor.socketdir", &sock_dir);
+-
+-	/* Create the socket file in either socketDir or $HOME */
+-	if (sock_dir && *sock_dir) {
+-		strbuf_addf(&ipc_file, "%s/.git-fsmonitor-%s",
+-					sock_dir, hash_to_hex(hash));
+-	} else {
+-		strbuf_addf(&ipc_file, "~/.git-fsmonitor-%s", hash_to_hex(hash));
+-	}
+-	free(sock_dir);
+-
+-	ipc_path = interpolate_path(ipc_file.buf, 1);
+-	if (!ipc_path)
+-		die(_("Invalid path: %s"), ipc_file.buf);
+-
+-	strbuf_release(&ipc_file);
+-	return ipc_path;
+-}
++#include "fsm-ipc-unix.c"
+diff --git a/compat/fsmonitor/fsm-ipc-linux.c b/compat/fsmonitor/fsm-ipc-linux.c
+new file mode 100644
+index 00000000000..4c3c92081ee
+--- /dev/null
++++ b/compat/fsmonitor/fsm-ipc-linux.c
+@@ -0,0 +1 @@
++#include "fsm-ipc-unix.c"
+diff --git a/compat/fsmonitor/fsm-ipc-unix.c b/compat/fsmonitor/fsm-ipc-unix.c
+new file mode 100644
+index 00000000000..eb25123fa12
+--- /dev/null
++++ b/compat/fsmonitor/fsm-ipc-unix.c
+@@ -0,0 +1,53 @@
++#include "cache.h"
++#include "config.h"
++#include "hex.h"
++#include "strbuf.h"
++#include "fsmonitor.h"
++#include "fsmonitor-ipc.h"
++#include "fsmonitor-path-utils.h"
++
++static GIT_PATH_FUNC(fsmonitor_ipc__get_default_path, "fsmonitor--daemon.ipc")
++
++const char *fsmonitor_ipc__get_path(struct repository *r)
++{
++	static const char *ipc_path = NULL;
++	git_SHA_CTX sha1ctx;
++	char *sock_dir = NULL;
++	struct strbuf ipc_file = STRBUF_INIT;
++	unsigned char hash[GIT_MAX_RAWSZ];
++
++	if (!r)
++		BUG("No repository passed into fsmonitor_ipc__get_path");
++
++	if (ipc_path)
++		return ipc_path;
++
++
++	/* By default the socket file is created in the .git directory */
++	if (fsmonitor__is_fs_remote(r->gitdir) < 1) {
++		ipc_path = fsmonitor_ipc__get_default_path();
++		return ipc_path;
++	}
++
++	git_SHA1_Init(&sha1ctx);
++	git_SHA1_Update(&sha1ctx, r->worktree, strlen(r->worktree));
++	git_SHA1_Final(hash, &sha1ctx);
++
++	repo_config_get_string(r, "fsmonitor.socketdir", &sock_dir);
++
++	/* Create the socket file in either socketDir or $HOME */
++	if (sock_dir && *sock_dir) {
++		strbuf_addf(&ipc_file, "%s/.git-fsmonitor-%s",
++					sock_dir, hash_to_hex(hash));
++	} else {
++		strbuf_addf(&ipc_file, "~/.git-fsmonitor-%s", hash_to_hex(hash));
++	}
++	free(sock_dir);
++
++	ipc_path = interpolate_path(ipc_file.buf, 1);
++	if (!ipc_path)
++		die(_("Invalid path: %s"), ipc_file.buf);
++
++	strbuf_release(&ipc_file);
++	return ipc_path;
++}
+diff --git a/compat/fsmonitor/fsm-settings-darwin.c b/compat/fsmonitor/fsm-settings-darwin.c
+index a3825906351..14baf9f0603 100644
+--- a/compat/fsmonitor/fsm-settings-darwin.c
++++ b/compat/fsmonitor/fsm-settings-darwin.c
+@@ -1,63 +1 @@
+-#include "git-compat-util.h"
+-#include "config.h"
+-#include "fsmonitor-ll.h"
+-#include "fsmonitor-ipc.h"
+-#include "fsmonitor-settings.h"
+-#include "fsmonitor-path-utils.h"
+-
+- /*
+- * For the builtin FSMonitor, we create the Unix domain socket for the
+- * IPC in the .git directory.  If the working directory is remote,
+- * then the socket will be created on the remote file system.  This
+- * can fail if the remote file system does not support UDS file types
+- * (e.g. smbfs to a Windows server) or if the remote kernel does not
+- * allow a non-local process to bind() the socket.  (These problems
+- * could be fixed by moving the UDS out of the .git directory and to a
+- * well-known local directory on the client machine, but care should
+- * be taken to ensure that $HOME is actually local and not a managed
+- * file share.)
+- *
+- * FAT32 and NTFS working directories are problematic too.
+- *
+- * The builtin FSMonitor uses a Unix domain socket in the .git
+- * directory for IPC.  These Windows drive formats do not support
+- * Unix domain sockets, so mark them as incompatible for the daemon.
+- *
+- */
+-static enum fsmonitor_reason check_uds_volume(struct repository *r)
+-{
+-	struct fs_info fs;
+-	const char *ipc_path = fsmonitor_ipc__get_path(r);
+-	struct strbuf path = STRBUF_INIT;
+-	strbuf_add(&path, ipc_path, strlen(ipc_path));
+-
+-	if (fsmonitor__get_fs_info(dirname(path.buf), &fs) == -1) {
+-		strbuf_release(&path);
+-		return FSMONITOR_REASON_ERROR;
+-	}
+-
+-	strbuf_release(&path);
+-
+-	if (fs.is_remote ||
+-		!strcmp(fs.typename, "msdos") ||
+-		!strcmp(fs.typename, "ntfs")) {
+-		free(fs.typename);
+-		return FSMONITOR_REASON_NOSOCKETS;
+-	}
+-
+-	free(fs.typename);
+-	return FSMONITOR_REASON_OK;
+-}
+-
+-enum fsmonitor_reason fsm_os__incompatible(struct repository *r, int ipc)
+-{
+-	enum fsmonitor_reason reason;
+-
+-	if (ipc) {
+-		reason = check_uds_volume(r);
+-		if (reason != FSMONITOR_REASON_OK)
+-			return reason;
+-	}
+-
+-	return FSMONITOR_REASON_OK;
+-}
++#include "fsm-settings-unix.c"
+diff --git a/compat/fsmonitor/fsm-settings-linux.c b/compat/fsmonitor/fsm-settings-linux.c
+new file mode 100644
+index 00000000000..14baf9f0603
+--- /dev/null
++++ b/compat/fsmonitor/fsm-settings-linux.c
+@@ -0,0 +1 @@
++#include "fsm-settings-unix.c"
+diff --git a/compat/fsmonitor/fsm-settings-unix.c b/compat/fsmonitor/fsm-settings-unix.c
+new file mode 100644
+index 00000000000..d16dca89416
+--- /dev/null
++++ b/compat/fsmonitor/fsm-settings-unix.c
+@@ -0,0 +1,61 @@
++#include "fsmonitor.h"
++#include "fsmonitor-ipc.h"
++#include "fsmonitor-path-utils.h"
++
++ /*
++ * For the builtin FSMonitor, we create the Unix domain socket for the
++ * IPC in the .git directory.  If the working directory is remote,
++ * then the socket will be created on the remote file system.  This
++ * can fail if the remote file system does not support UDS file types
++ * (e.g. smbfs to a Windows server) or if the remote kernel does not
++ * allow a non-local process to bind() the socket.  (These problems
++ * could be fixed by moving the UDS out of the .git directory and to a
++ * well-known local directory on the client machine, but care should
++ * be taken to ensure that $HOME is actually local and not a managed
++ * file share.)
++ *
++ * FAT32 and NTFS working directories are problematic too.
++ *
++ * The builtin FSMonitor uses a Unix domain socket in the .git
++ * directory for IPC.  These Windows drive formats do not support
++ * Unix domain sockets, so mark them as incompatible for the daemon.
++ *
++ */
++static enum fsmonitor_reason check_uds_volume(struct repository *r)
++{
++	struct fs_info fs;
++	const char *ipc_path = fsmonitor_ipc__get_path(r);
++	struct strbuf path = STRBUF_INIT;
++	strbuf_addstr(&path, ipc_path);
++
++	if (fsmonitor__get_fs_info(dirname(path.buf), &fs) == -1) {
++		free(fs.typename);
++		strbuf_release(&path);
++		return FSMONITOR_REASON_ERROR;
++	}
++
++	strbuf_release(&path);
++
++	if (fs.is_remote ||
++		!strcmp(fs.typename, "msdos") ||
++		!strcmp(fs.typename, "ntfs")) {
++		free(fs.typename);
++		return FSMONITOR_REASON_NOSOCKETS;
++	}
++
++	free(fs.typename);
++	return FSMONITOR_REASON_OK;
++}
++
++enum fsmonitor_reason fsm_os__incompatible(struct repository *r, int ipc)
++{
++	enum fsmonitor_reason reason;
++
++	if (ipc) {
++		reason = check_uds_volume(r);
++		if (reason != FSMONITOR_REASON_OK)
++			return reason;
++	}
++
++	return FSMONITOR_REASON_OK;
++}
 -- 
 gitgitgadget
+
