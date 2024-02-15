@@ -1,80 +1,80 @@
-Received: from out1-smtp.messagingengine.com (out1-smtp.messagingengine.com [66.111.4.25])
+Received: from fhigh1-smtp.messagingengine.com (fhigh1-smtp.messagingengine.com [103.168.172.152])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 781DD1BC3C
-	for <git@vger.kernel.org>; Thu, 15 Feb 2024 09:32:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=66.111.4.25
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D1DC1798C
+	for <git@vger.kernel.org>; Thu, 15 Feb 2024 09:32:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707989569; cv=none; b=bcJ8/U1Mkk3yfWqYBF1IqjPDf9Ted2+CWv2ksNIT6nDzrYtvfHxgai7oZ3h7PTUF8+sU2taRUdoJfxcuWEcmmOXmZwlkq8B8pLmsbu+kRLHe1EiB5Ql6zIamsmFMWYZVtdf96OIIp7ihT5D6lRf4o5zWKuOlDMIpdUalGsnQaXs=
+	t=1707989576; cv=none; b=eB15/GQI75JPm08XUzvdnmqscFrmHKPTLCBgUs/8J4L3geF20tZCobWgmrStjA1opGHn2wpSDPZQXVHXsMZ6dtSWn2KPwUJnfP4YecQG9opCHl+BL5NjSY7tFdGG0wrz5V3LqdkKaN4JXEyxwDVlc+4weV2vmCkKTNmszcAHWHQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707989569; c=relaxed/simple;
-	bh=VS+YRNR8G+iSK5scxHPYctWYQdA7UZmOrhQk2aiNXAE=;
+	s=arc-20240116; t=1707989576; c=relaxed/simple;
+	bh=lzzK396y4yjRTLBpJtQvnx58liBbRydKWQjO3fFLzEc=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=YCxR8lIljqHhK5o27X76ZoKOBVV+oLqhFL8N3KzXL67nCvMMSq0kSI2HHpytxWyxWGSq4LcFsMNDPmNRJE1U5Qmfqw/QOTpajIxyKJ1F045TsZsSXubEkrffgvDEOwJ8SJsdUf5OOX1AKNonbpDupATtB0Oy7gcmp6wFE4qVuxs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=cJTd/7iV; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=SFIXul3b; arc=none smtp.client-ip=66.111.4.25
+	 Content-Type:Content-Disposition:In-Reply-To; b=aCy5m+x8LnqKe3Jc0Qn3He5P9wIbKjeXegLh7VYPBpqNVCo9tFw8LRM4JzqmcTDCJVNSmpYH0H+71QDRpF8H/HL1bASA/6o1GUQPmH1TEDjgC50upjsmrU3EyS5PXooa6HxkfNDnDNgvAPibYDbxpFIFGFT2ZMlOw6OqWsRmh1E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=eagiglCS; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=GEc8d8NU; arc=none smtp.client-ip=103.168.172.152
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="cJTd/7iV";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="SFIXul3b"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="eagiglCS";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="GEc8d8NU"
 Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
-	by mailout.nyi.internal (Postfix) with ESMTP id 4F4055C0099;
-	Thu, 15 Feb 2024 04:32:46 -0500 (EST)
+	by mailfhigh.nyi.internal (Postfix) with ESMTP id 4E67311400AA;
+	Thu, 15 Feb 2024 04:32:54 -0500 (EST)
 Received: from mailfrontend2 ([10.202.2.163])
-  by compute6.internal (MEProxy); Thu, 15 Feb 2024 04:32:46 -0500
+  by compute6.internal (MEProxy); Thu, 15 Feb 2024 04:32:54 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1707989566; x=1708075966; bh=cmeVBixhdS
-	9uZdETyu86Yc7y+foAXCMvHoc6ie3tSQI=; b=cJTd/7iVgL/uHNbfMLK7QGojBY
-	cy6ddSsgUC442mtlsUWLi6VkaO695XI6e4wJ5mQOfIucxsE0iSZ8BAPCw4MAuony
-	zTuu1Hwo0QwOKNEfnzFRDbhuBgzuYDZneD+l+Y7BCl95tv8b6dAl19KwOeiFe87Y
-	QtK2e5VjvbDTQkrtTGUXb+4/NioYyt1l0Y6/u9gqZ7DGITc8iZQyLnxQyUEBWlig
-	WBfataHfGGuYThYsFO/JhsmMPMdU+q3v0N7WyUVvtjbqK+1FwBfWUvExjT1nwPzC
-	5VegVzbCb7QEfI2Poiib+1rjCXMzF8Z9YDeXPZE4XgC6GQdlT/fdBQRHuxqw==
+	:subject:to:to; s=fm1; t=1707989574; x=1708075974; bh=Tdxwly+Apo
+	v+N4ennORATWMlzz1EzaAbORbA1dcAyvY=; b=eagiglCSvgQyq2Txf3CIvfam0y
+	NcfwTZPbG1C991KR7LA7T4HjfChXjJh68MWauTFksdkJzackkb3r5KE27swE1CcY
+	KPNEmqYodRLNNMDGCmswRUASU8vFqzoQUuKNBohYLaKb6rrgWM/ZWPzA2mmNT09S
+	fyfWVVh+dMMJPWSBHDVacGtJwVkg15scG+vLUuEx0Xfhy5U6hyX5SNjR4fMQqEjR
+	+lpVMKLTzjygaBIQS0LypYAfggDNgNFzXsOabjEZGCKdp6RVxx8je0c1wXZFZ1ks
+	+rgf9v4wU1ruP/iLVTZHpoAGzSqV5jUE9bH1lN/kJLaHIWEfpG2Hs3IGUgeQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1707989566; x=1708075966; bh=cmeVBixhdS9uZdETyu86Yc7y+foA
-	XCMvHoc6ie3tSQI=; b=SFIXul3bPH1olrxCgogOuxEhdoiJ6qgsr+ahGTAIFzdT
-	y9BlN0EKKCJDvNOHciDR1Wo+sCuGbMrzSKdr/qDj4uqI9t0ToQDXFY+YD7TgFUJh
-	3ga/glAc5G/txRklgpaK3Spt+Q7YyFKVHcqAZYqnh4iM6Cd/5EhfIm4zTbpjHFfK
-	TtGOUzqw/xdw8g7XaPL7RufpzYU6smSPRZYUMPOJZwalKAMIcvp+cNbslPple5sP
-	4YLxBkGMtOB52UmzqCji+Siy3GjAUaJKYlYBtQAU1LmsXHMR1Q5eIXd/YPJ7eInc
-	a7GMDlTEhmGDgelzweSACgG83C8cTZ09ptIx3QaDuQ==
-X-ME-Sender: <xms:PtrNZaZKhIacpSYpH1Ob9PGRECLDk3tK6PYVDAwQRqqembFrx1aaoQ>
-    <xme:PtrNZdYIYy5V8LH_mIgadBix1VsXj7DjViJXvKNrnGNbAsdhQ8NwbC6_eLccjxVTt
-    nQaD7bGLLCBYqNNQw>
-X-ME-Received: <xmr:PtrNZU9fw2odfeHQjSGWkbWLtsG3OGQlUhowC6Xn0XfbM62RphkHdjvA7y9O4TrfBu-ETeTFWGJcDvVA5UUUkaa1Shb5Uj8yKnMolDZfe0JL>
+	fm1; t=1707989574; x=1708075974; bh=Tdxwly+Apov+N4ennORATWMlzz1E
+	zaAbORbA1dcAyvY=; b=GEc8d8NUTcnCVxDGBKM/FsAZ4+Pf+u2Zmm85VIAQdPe2
+	0E8i4bOJu48+WgYr1UN97ld7driFDmfWmChB2xV6Hs2n45XsmEhuaRwcso7K+Riv
+	YGc9ISVTM50647am3cnHbo4c4GMXkbRqYh+sbWq0//nJtElCcEHnlgmf2LBPY8Ud
+	4UfUn7sXwlguHLRckecBlkPartWyXo8RzTvfS7c69A5tVa4EH2ztB9sfuPRvw3MQ
+	4VoNQWMdBYhCSeDoNK8OSezUkpzXCzZplY9323yeZ+e7UbT/eeW9rtvDzcaxpYml
+	r0y0knIZmDEyj65w65e0NyIuKSGqUOCwcEUR3+I62A==
+X-ME-Sender: <xms:RtrNZVURg5H3cbo4XiH_LM7EXKQKp_nTelnF-Drh_eB7M7AFadPIKA>
+    <xme:RtrNZVnbsq49UIV_rQwKEfmEw6Gpi0dYiNXJbTAuFoV-9DYwm0fIH84UVHec1A6qW
+    S1MNoUID4Jb0t8XyQ>
+X-ME-Received: <xmr:RtrNZRazpW4xJEBzn68wpVg3nJpdUxmOIoByQy0z7RiZLzA12k2KJ0oH3pOC3LQRqAZHzfJ_QpdW2JS0PfG1ik7JmWCV5tBrVInC_YW7MLOC>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvddtgddtgecutefuodetggdotefrodftvf
     curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
     uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
     fjughrpeffhffvvefukfhfgggtuggjsehgtderredttddvnecuhfhrohhmpefrrghtrhhi
     tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
     hnpeeukedtvedtffevleejtefgheehieegkeeluddvfeefgeehgfeltddtheejleffteen
-    ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
+    ucevlhhushhtvghrufhiiigvpedunecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
     hkshdrihhm
-X-ME-Proxy: <xmx:PtrNZcr6h6Dwh5QC7XKjs-Kngo1hJj8X8a7eWie0s-msUo2C_ubE6Q>
-    <xmx:PtrNZVoIsx-5DSeMRJFDrH8CpPexuHLxUgJXV56Cmepuy1XQ8S0zog>
-    <xmx:PtrNZaQGmpgRtiXOn25usgvKfXO0KFnmZyxaI9jNSBF8ZMFJ3wy_Kw>
-    <xmx:PtrNZc0GESDfksmyAxAPrxjmOlzGXaYM8AOQMi21AJKG8GixrQFvYA>
+X-ME-Proxy: <xmx:RtrNZYVwnmxwVc1WFv3OGSxDMK3K_79ILOihqQ0FKYb0W5Lm1YkMUg>
+    <xmx:RtrNZfkqbeWAQmdgRu80tU-gCfZiRm_RwCv8yJvYJdEIWArf_TmajA>
+    <xmx:RtrNZVeeidBHwMjg6-MEZ3VYoJ01A3rJe2PRY5xgCpDpZaMpwzhEdw>
+    <xmx:RtrNZdjXUCzsi3accdUf33f21ySR-v81wdIZjM_vQwmVkSNA6pJv2Q>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 15 Feb 2024 04:32:45 -0500 (EST)
+ 15 Feb 2024 04:32:53 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 1722c28e (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 15 Feb 2024 09:28:53 +0000 (UTC)
-Date: Thu, 15 Feb 2024 10:32:43 +0100
+	by vm-mail (OpenSMTPD) with ESMTPSA id d3358f7f (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 15 Feb 2024 09:29:01 +0000 (UTC)
+Date: Thu, 15 Feb 2024 10:32:51 +0100
 From: Patrick Steinhardt <ps@pks.im>
 To: Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>
 Cc: git@vger.kernel.org, Jeff Hostetler <jeffhostetler@github.com>
-Subject: Re: [PATCH 08/12] fsmonitor: support case-insensitive directory
- events
-Message-ID: <Zc3aO95bvuXXENLj@tanuki>
+Subject: Re: [PATCH 11/12] fsmonitor: refactor bit invalidation in refresh
+ callback
+Message-ID: <Zc3aQ2qoK15w9dkp@tanuki>
 References: <pull.1662.git.1707857541.gitgitgadget@gmail.com>
- <e0029a2aad68a60f672e74368a384f68a343e21c.1707857541.git.gitgitgadget@gmail.com>
+ <7775de735f41bdc601318cd15c3414f12b361a0c.1707857541.git.gitgitgadget@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -82,275 +82,119 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="nKi5+5xSRMA3qPnG"
+	protocol="application/pgp-signature"; boundary="P+pIvqn+89pnjiSg"
 Content-Disposition: inline
-In-Reply-To: <e0029a2aad68a60f672e74368a384f68a343e21c.1707857541.git.gitgitgadget@gmail.com>
+In-Reply-To: <7775de735f41bdc601318cd15c3414f12b361a0c.1707857541.git.gitgitgadget@gmail.com>
 
 
---nKi5+5xSRMA3qPnG
+--P+pIvqn+89pnjiSg
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Tue, Feb 13, 2024 at 08:52:17PM +0000, Jeff Hostetler via GitGitGadget w=
+On Tue, Feb 13, 2024 at 08:52:20PM +0000, Jeff Hostetler via GitGitGadget w=
 rote:
 > From: Jeff Hostetler <jeffhostetler@github.com>
 >=20
-> Teach fsmonitor_refresh_callback() to handle case-insensitive
-> lookups if case-sensitive lookups fail on case-insensitive systems.
-> This can cause 'git status' to report stale status for files if there
-> are case issues/errors in the worktree.
+> Refactor code in the fsmonitor_refresh_callback() call chain dealing
+> with invalidating the CE_FSMONITOR_VALID bit and add a trace message.
 >=20
-> The FSMonitor daemon sends FSEvents using the observed spelling
-> of each pathname.  On case-insensitive file systems this may be
-> different than the expected case spelling.
+> During the refresh, we clear the CE_FSMONITOR_VALID bit in response to
+> data from the FSMonitor daemon (so that a later phase will lstat() and
+> verify the true state of the file).
 >=20
-> The existing code uses index_name_pos() to find the cache-entry for
-> the pathname in the FSEvent and clear the CE_FSMONITOR_VALID bit so
-> that the worktree scan/index refresh will revisit and revalidate the
-> path.
+> Create a new function to clear the bit and add some unique tracing for
+> it to help debug edge cases.
 >=20
-> On a case-insensitive file system, the exact match lookup may fail
-> to find the associated cache-entry. This causes status to think that
-> the cached CE flags are correct and skip over the file.
->=20
-> Update the handling of directory-style FSEvents (ones containing a
-> path with a trailing slash) to optionally use the name-hash if the
-> case-correct search does not find a match.
->=20
-> (The FSMonitor daemon can send directory FSEvents if the OS provides
-> that information.)
+> This is similar to the existing `mark_fsmonitor_invalid()` function,
+> but we don't need the extra stuff that it does.
 >=20
 > Signed-off-by: Jeff Hostetler <jeffhostetler@github.com>
 > ---
->  fsmonitor.c | 122 +++++++++++++++++++++++++++++++++++++++++++++++++++-
->  1 file changed, 120 insertions(+), 2 deletions(-)
+>  fsmonitor.c | 20 +++++++++++++++++---
+>  1 file changed, 17 insertions(+), 3 deletions(-)
 >=20
 > diff --git a/fsmonitor.c b/fsmonitor.c
-> index 14585b6c516..73e6ac82af7 100644
+> index a7847f07a40..75c7f73f68d 100644
 > --- a/fsmonitor.c
 > +++ b/fsmonitor.c
-> @@ -5,6 +5,7 @@
->  #include "ewah/ewok.h"
->  #include "fsmonitor.h"
->  #include "fsmonitor-ipc.h"
-> +#include "name-hash.h"
->  #include "run-command.h"
->  #include "strbuf.h"
->  #include "trace2.h"
-> @@ -183,6 +184,9 @@ static int query_fsmonitor_hook(struct repository *r,
->  	return result;
->  }
-> =20
-> +static int fsmonitor_refresh_callback_slash(
-> +	struct index_state *istate, const char *name, int len, int pos);
-> +
->  /*
->   * Invalidate the untracked cache for the given pathname.  Copy the
->   * buffer to a proper null-terminated string (since the untracked
-> @@ -205,6 +209,84 @@ static void my_invalidate_untracked_cache(
+> @@ -209,6 +209,20 @@ static void my_invalidate_untracked_cache(
 >  	strbuf_release(&work_path);
 >  }
 > =20
 > +/*
-> + * Use the name-hash to lookup the pathname.
-> + *
-> + * Returns the number of cache-entries that we invalidated.
+> + * Invalidate the FSM bit on this CE.  This is like mark_fsmonitor_inval=
+id()
+> + * but we've already handled the untracked-cache and I want a different
+> + * trace message.
 > + */
-
-The function not only looks up the path name, but also invalidates the
-corresponding cache entry. You imply this with the second sentence, but
-this could be a bit more explicit.
-
-> +static int my_callback_name_hash(
-> +	struct index_state *istate, const char *name, int len)
-
-I find the naming conventions here to be weird with the `my_` prefix.
-
+> +static void my_invalidate_ce_fsm(struct cache_entry *ce)
 > +{
-> +	struct cache_entry *ce =3D NULL;
-> +
-> +	ce =3D index_file_exists(istate, name, len, 1);
-> +	if (!ce)
-> +		return 0;
-
-Okay, `index_file_exists()` is called with `icase =3D=3D 1` here. But is
-that the correct thing to do on case-sensitive platforms? I would have
-expected us to honor `core.ignoreCase` here.
-
-Turns out, we only end up calling this function when `ignore_case` is
-set, so we already do. I think this can be clarified both by giving the
-function a better name and by documenting this in the comment. Also,
-neither of this or the next function really are callbacks -- they only
-happen to be called by a callback function.
-
-I'd think something like `lookup_and_invalidate_path_icase()` and
-`lookup_and_invalidate_dir_icase()` could help to clarify intent.
-
-> +	/*
-> +	 * The index contains a case-insensitive match for the pathname.
-> +	 * This could either be a regular file or a sparse-index directory.
-> +	 *
-> +	 * We should not have seen FSEvents for a sparse-index directory,
-> +	 * but we handle it just in case.
-> +	 *
-> +	 * Either way, we know that there are not any cache-entries for
-> +	 * children inside the cone of the directory, so we don't need to
-> +	 * do the usual scan.
-> +	 */
-> +	trace_printf_key(&trace_fsmonitor,
-> +			 "fsmonitor_refresh_callback map '%s' '%s'",
-> +			 name, ce->name);
-> +
-> +	my_invalidate_untracked_cache(istate, ce->name, ce->ce_namelen);
-> +
+> +	if (ce->ce_flags & CE_FSMONITOR_VALID)
+> +		trace_printf_key(&trace_fsmonitor,
+> +				 "fsmonitor_refresh_cb_invalidate '%s'",
+> +				 ce->name);
 > +	ce->ce_flags &=3D ~CE_FSMONITOR_VALID;
-> +	return 1;
 > +}
-> +
-> +/*
-> + * Use the directory name-hash to find the correct-case spelling
-> + * of the directory.  Use the canonical spelling to invalidate all
-> + * of the cache-entries within the matching cone.
-> + *
-> + * The pathname MUST NOT have a trailing slash.
-> + *
-> + * Returns the number of cache-entries that we invalidated.
-> + */
-> +static int my_callback_dir_name_hash(
-> +	struct index_state *istate, const char *name, int len)
-> +{
-> +	struct strbuf canonical_path =3D STRBUF_INIT;
-> +	int pos;
-> +	int nr_in_cone;
-> +
-> +	if (!index_dir_exists2(istate, name, len, &canonical_path))
-> +		return 0; /* name is untracked */
-> +	if (!memcmp(name, canonical_path.buf, len)) {
-> +		strbuf_release(&canonical_path);
-> +		return 0; /* should not happen */
-> +	}
 
-So in other words, this function should only be called when we know that
-casing differs, and thus the passed-in name and the canonical name
-should never be the same? If this case shouldn't ever happen, shouldn't
-we report this as an error or use `BUG()` instead of silently ignoring
-this mismatch of expectations?
+Same comment here regarding the `my_` prefix.
 
 Patrick
 
-> +	trace_printf_key(&trace_fsmonitor,
-> +			 "fsmonitor_refresh_callback map '%s' '%s'",
-> +			 name, canonical_path.buf);
 > +
-> +	/*
-> +	 * The directory name-hash only tells us the corrected
-> +	 * spelling of the prefix.  We have to use this canonical
-> +	 * path to do a lookup in the cache-entry array so that we
-> +	 * we repeat the original search using the case-corrected
-> +	 * spelling.
-> +	 */
-> +	strbuf_addch(&canonical_path, '/');
-> +	pos =3D index_name_pos(istate, canonical_path.buf,
-> +			     canonical_path.len);
-> +	nr_in_cone =3D fsmonitor_refresh_callback_slash(
-> +		istate, canonical_path.buf, canonical_path.len, pos);
-> +	strbuf_release(&canonical_path);
-> +	return nr_in_cone;
-> +}
-> +
->  static void fsmonitor_refresh_callback_unqualified(
->  	struct index_state *istate, const char *name, int len, int pos)
->  {
-> @@ -269,7 +351,10 @@ static void fsmonitor_refresh_callback_unqualified(
+>  /*
+>   * Use the name-hash to lookup the pathname.
 >   *
->   * Return the number of cache-entries that we invalidated.  We will
->   * use this later to determine if we need to attempt a second
-> - * case-insensitive search.
-> + * case-insensitive search.  That is, if a observed-case search yields
-> + * any results, we assume the prefix is case-correct.  If there are
-> + * no matches, we still don't know if the observed path is simply
-> + * untracked or case-incorrect.
->   */
->  static int fsmonitor_refresh_callback_slash(
->  	struct index_state *istate, const char *name, int len, int pos)
-> @@ -293,17 +378,50 @@ static int fsmonitor_refresh_callback_slash(
->  	return nr_in_cone;
+> @@ -240,7 +254,7 @@ static int my_callback_name_hash(
+> =20
+>  	my_invalidate_untracked_cache(istate, ce->name, ce->ce_namelen);
+> =20
+> -	ce->ce_flags &=3D ~CE_FSMONITOR_VALID;
+> +	my_invalidate_ce_fsm(ce);
+>  	return 1;
 >  }
 > =20
-> +/*
-> + * On a case-insensitive FS, use the name-hash and directory name-hash
-> + * to map the case of the observed path to the canonical case expected
-> + * by the index.
-> + *
-> + * The given pathname includes the trailing slash.
-> + *
-> + * Return the number of cache-entries that we invalidated.
-> + */
-> +static int fsmonitor_refresh_callback_slash_icase(
-> +	struct index_state *istate, const char *name, int len)
-> +{
-> +	int nr_in_cone;
-> +
-> +	/*
-> +	 * Look for a case-incorrect sparse-index directory.
-> +	 */
-> +	nr_in_cone =3D my_callback_name_hash(istate, name, len);
-> +	if (nr_in_cone)
-> +		return nr_in_cone;
-> +
-> +	/*
-> +	 * (len-1) because we do not include the trailing slash in the
-> +	 * pathname.
-> +	 */
-> +	nr_in_cone =3D my_callback_dir_name_hash(istate, name, len-1);
-> +	return nr_in_cone;
-> +}
-> +
->  static void fsmonitor_refresh_callback(struct index_state *istate, char =
-*name)
->  {
->  	int len =3D strlen(name);
->  	int pos =3D index_name_pos(istate, name, len);
-> +	int nr_in_cone;
-> +
-> =20
->  	trace_printf_key(&trace_fsmonitor,
->  			 "fsmonitor_refresh_callback '%s' (pos %d)",
->  			 name, pos);
-> =20
->  	if (name[len - 1] =3D=3D '/') {
-> -		fsmonitor_refresh_callback_slash(istate, name, len, pos);
-> +		nr_in_cone =3D fsmonitor_refresh_callback_slash(istate, name, len, pos=
-);
-> +		if (ignore_case && !nr_in_cone)
-> +			fsmonitor_refresh_callback_slash_icase(istate, name, len);
+> @@ -312,7 +326,7 @@ static int fsmonitor_refresh_callback_unqualified(
+>  		 * cache-entry with the same pathname, nor for a cone
+>  		 * at that directory. (That is, assume no D/F conflicts.)
+>  		 */
+> -		istate->cache[pos]->ce_flags &=3D ~CE_FSMONITOR_VALID;
+> +		my_invalidate_ce_fsm(istate->cache[pos]);
+>  		return 1;
 >  	} else {
->  		fsmonitor_refresh_callback_unqualified(istate, name, len, pos);
+>  		int nr_in_cone;
+> @@ -412,7 +426,7 @@ static int fsmonitor_refresh_callback_slash(
+>  	for (i =3D pos; i < istate->cache_nr; i++) {
+>  		if (!starts_with(istate->cache[i]->name, name))
+>  			break;
+> -		istate->cache[i]->ce_flags &=3D ~CE_FSMONITOR_VALID;
+> +		my_invalidate_ce_fsm(istate->cache[i]);
+>  		nr_in_cone++;
 >  	}
+> =20
 > --=20
 > gitgitgadget
 >=20
 >=20
 
---nKi5+5xSRMA3qPnG
+--P+pIvqn+89pnjiSg
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmXN2joACgkQVbJhu7ck
-PpQDBA/9G//87Q0J7mcfgVyZARrlcAsaBbv/jN6lNo1fXEK02hFfZs2RU7NM0wWP
-nHWRfmu/YwAJmZ29VvQLpvyBLf7cZSWI6xtHeVV6RVPo1bFsZT9GRzfmOQ9vKCN4
-EXnQkyWdnrnk4g6SopRy0s+hY+9+8AHz8vyzz4BNYO1p9rF7yX/pIWk0eQurUV99
-ZsZuo14OHLhfcnsyY7lPa9wPKMZwt21Lo9vxzdwu9P01Mpw+3O+iKscFr/QpV4hp
-ojYd8WqTYFM873XjfQxW2STi5q2mfH7JY/TxZ7vvbZnYQrNCRYEX2/PGTVzMwx88
-PbuWjr//OGkgRryfLrW14J6oq4msyLEKjwbyjNuQSxiF6xdjasezk5lvoINPgeY0
-qCcXX6pTJdeE3MSLhQIB6nFYt41pCdliaEPN7sgVXj8YuSwJHgZw5ppdaqqTfqwr
-e8bWK5Ox0YHP9xTnAnNapUwkP/zFoSbjt0WqB8JfdWYYw6VgmHgDEJ5euHxMkIeL
-rM3y5wcoUCo6yKAUkwnONmyHVUcsWUEPUiKqE3s+nb+mgYS4dMM9mkhCRmcaSVKa
-570sAiK7xxwKDWMYXzzaQ1kUxQjZOW+rFGoqAwZBSg6SnWJLFoDvgP59dcqHlv+T
-pvMcqO/LQU/VPzWRFi6lBM2oC9JTjCWsM7uruM/gtrM+ttwiufg=
-=M876
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmXN2kIACgkQVbJhu7ck
+PpQQRRAArFc7s2Ywbx0I6vRvIMRmsXgG/Usf2RKOGE0nKBXZPUkKTsD9eXVEBIGO
+1eHhWu7sGovPVlN/vf5rec4H7+rzRhM07iOWrv/nW1cO4E9SDNKkBLiJEyMg6e2O
+Fa1y78GZUotS7XF7blOf2A6OuGzAGUAd+iRFVPfM2sz3+VyFmxZlVoqW4XISIrqe
+FZ7RIaUUFF//jkGyae9eWIiMG91JzvYOXJAiHPcK4ER79tKrFRrimPBaa6Reo0ue
+VSH5qIyLq1xC+nRSEVadXHW16KKzftVX22V/0fXHRRmHYRy8DIDzUdVg2yG2o+61
+PPsaFLf00Rz9SDZOcd6sBlyLha8zBBT8Zgv+7xxZUdoclhH3pqOolVs2r2Xg+N3n
+62e2b5Hi2g/p841oQG7gA3cfEB6CEWrB4lmQ7NYjf9UoxM8+VuWrhPiYKkiwIogu
+lNG5V+t1wCPZeSAUVkwoN+dlSgcHpqK7ZWha/w3GR2GKK0CQWGWoYzdblEEhkwkl
+yQjIjNPx+uaHJU9VyGl1FFb0/RUdqx0WIcTPsxUbdkHzo3yOxyEhQROFZv9zv8RC
+1FiTqxw+pPg4MqeVTDWbh07hwZ00I81R1bHzGzVba6OCAbZMKe7cXL1zFEiKl61Y
+EgewJtZviiPMiNxzGvyKksg6jEwHldAcNDbxhyidlhGpjV/eb6g=
+=RBb0
 -----END PGP SIGNATURE-----
 
---nKi5+5xSRMA3qPnG--
+--P+pIvqn+89pnjiSg--
