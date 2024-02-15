@@ -1,53 +1,53 @@
-Received: from fhigh2-smtp.messagingengine.com (fhigh2-smtp.messagingengine.com [103.168.172.153])
+Received: from out1-smtp.messagingengine.com (out1-smtp.messagingengine.com [66.111.4.25])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45C4953369
-	for <git@vger.kernel.org>; Thu, 15 Feb 2024 11:21:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A880117581
+	for <git@vger.kernel.org>; Thu, 15 Feb 2024 11:21:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=66.111.4.25
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707996116; cv=none; b=on1I86quuLii+71x5vauODLz7o6LcEwKxVXAx2pyLWCOIEGTXG60G4z5esvIE9FUUzsx1h53SuVxd9/dslmYuf6Rt252fgsi2kFtfGMEHy4KMRwS9sLGGOVCL4a+H2qrb2R20NaifrAAiR1rl4bXrFBunIwwwVwlUC8uJAFoZ60=
+	t=1707996117; cv=none; b=Dz7jVTDlA+Fpsz7sMzSs32voaNrEJIo07N+jnyuc3/MwTlifmNwLH2pPbOpnS5H5HBsj7iirRucAv0MHFollai5IqOtlDVg+otSJODzsl+8iTHUykPxpUXtV5trS2iex1nk9b3Q1jBhjhCBukOEt3m9h7SRlkkqPnMwZ/b7BmJw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707996116; c=relaxed/simple;
-	bh=Wmr+8O6sgaCefZWL7vPTbGS+SmOoF1incfOwoaV9iYU=;
+	s=arc-20240116; t=1707996117; c=relaxed/simple;
+	bh=xz87ssKUbqXcEtlLbUu1QaMPzpmmNs8uzPYk/pgnEjI=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=fL8WzbpRvCynT9mqR5NjPBLue/zZ7cAoyvz6ExtHiPeeCWfcZ39WH0IriwVjEyFMk4C0kBrokb9rH3nfk5xHbX/jYsf24LIpSgjlOkwBDN8JSIj/z2twZRvJSNu2cDpXoWay2V8yrIKj8nO9k22vPqd0eG6VjrAz+0J7ZHCnldo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=tdYoihwL; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=iuI558V1; arc=none smtp.client-ip=103.168.172.153
+	 Content-Type:Content-Disposition:In-Reply-To; b=EMo3FPpZIU0oP+itqVKpaDYZi49z++gpWhBYl9fvOM7R3whCpR8kr1viqu/groVWBPAoX1ZDEQorXP5rwXIwRaQunry52mjGRzxhPxxYXHeDE4f2AlbbQ8U3LiKURdDswqwdaQctbBX/GCKCvgGgvRkKykYpeYm+JsySdNTIr2o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=PyRKL+br; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=PrbIV8yz; arc=none smtp.client-ip=66.111.4.25
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="tdYoihwL";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="iuI558V1"
-Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
-	by mailfhigh.nyi.internal (Postfix) with ESMTP id 2A49711400B7;
-	Thu, 15 Feb 2024 06:21:53 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="PyRKL+br";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="PrbIV8yz"
+Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
+	by mailout.nyi.internal (Postfix) with ESMTP id 989725C00C6;
+	Thu, 15 Feb 2024 06:21:54 -0500 (EST)
 Received: from mailfrontend2 ([10.202.2.163])
-  by compute5.internal (MEProxy); Thu, 15 Feb 2024 06:21:53 -0500
+  by compute6.internal (MEProxy); Thu, 15 Feb 2024 06:21:54 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1707996113; x=1708082513; bh=Gy1A+lAblb
-	9iFz+QcbBa8Q7NiiZ5ciKd+6hKgTG4nLM=; b=tdYoihwL3pBN9+DWiFa9Vm++Lh
-	gbYiy/XOOvKq0XSHeoZaofT/NZeyaPX1P93g/em+sCkwaDHUlSzkuIMUhEngaKS0
-	ALAKMugubhPlJxens1xK4oXeE1wq8dGaEqHpiq4muk0g9ru9NZeC6HwA9EUNZFf9
-	31PvqW3oIzYRFls4aEn7AFc2rFih8W1ttkg866PCWOBHTmoeCR256hRJ7NkzMpGd
-	9RQ4gvkS+kmXPPLfMCXD1Go8DqW9ne7GYyDfbLs3Tb5wiUDscDJpUfsuB87OJ5Lm
-	3KI0GQxOtKblQrvUG0owjDqE32BUIQQHcvcmt7G9uZJPr245lXgFkDgMaINA==
+	:subject:to:to; s=fm1; t=1707996114; x=1708082514; bh=5eFNBn77E4
+	Miy+CYG65m5P4+Js6uwNtgP6W6vPNxwZo=; b=PyRKL+br00rr7PlLSiVh/tQSDv
+	IeCCZltOguRLKUrptggbgIPvpUQtzz/yVpsUtvL+dc6kLPjrVf+2gSEiIUBhyfbb
+	irEDhgIiX04JXKT8ERv/yNDhSrjlN/Z9UKrpIyItU0uQ9dbi5WeoEU32TAhmxOUX
+	91V5U6NLWXjXeK3Zpmmn8ZKRMbCJRQMUpVxLazzbo4svSzBeRL51fljXwAShraOA
+	YcZRLEmr804glv71JBKBbRzlOZZTnYd7aqpZIe6DhKXLeA1KS8SL1ef+eC+vaYPn
+	z2CPZMKEjGvD3E3+W20NPvhEMhDZaUpmHEqYNgKJk/6QfpdkuHOdV0uUaMdQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1707996113; x=1708082513; bh=Gy1A+lAblb9iFz+QcbBa8Q7NiiZ5
-	ciKd+6hKgTG4nLM=; b=iuI558V1A4piOKqasfwfqE0eH15RZa6eeqtQS8HbyKZn
-	+oLWAq+waM4BWU8nPCVUY5TvLh9781QyMbLch2vSEq0jV/ehFO2oTKD+R4xnqfyy
-	dtP2FL2mO2hc91nHbkm/Z7N476LQqn8vkLxRtPE9QG4FKBiBQV24YMpScTs4h8E+
-	OlRcVAHUbV/wBdUFKK/1Rti+9DV5Pceo+2V3y1kPWrRUd92PvnmSWVntbYIrGBsG
-	CyLqLBVZ5x48J5jAuk7i/t2hwZKaiSsRFnkzWh9/TRbXTA5en+Hd35vdBmkhWmFb
-	FgWlf/BPU1YjTEc3Ti2aduD/rNDRWs7GBbiT734CQg==
-X-ME-Sender: <xms:0PPNZWCuhQCtpK-9LphA90_QkHXBU4uZkEfoBpDqfa-zqk2odZQPZw>
-    <xme:0PPNZQibC5yge7czaaoBSwj7r-pyBYZpq_wb8V9DvaJ2P_X7odJQV-PeQEXxVcgxh
-    sFR1sqz9SuzOFnDYQ>
-X-ME-Received: <xmr:0PPNZZmK-rDMk67lA3-YURnhFxhJlNhu4J3oZjLUMdKLQ8ReqFcjIc-TpVz5zr__hFlfxDo0CWZ7kRByIvuUWLAvMExbGiKmU0H2ZcRinXMM>
+	fm1; t=1707996114; x=1708082514; bh=5eFNBn77E4Miy+CYG65m5P4+Js6u
+	wNtgP6W6vPNxwZo=; b=PrbIV8yz2qy2gBsU6iG3WDSXBLWVGCEb9LA0dAuKbyvY
+	dVVp90pAePCZXKn8icpRvN+hii/MyZeVMdFeItwZl/f/0ywWGi/2vwqY5cfqL5tx
+	2XESE4jIv8gkk6RUrn4ZDVdhw14qPbYFR7ZJN5JTRg6xhfZCLuP4J+Ty4fxKENlW
+	44ItqDjDr5kHz7XlaUIqRH8Zt98rmM8d+1XCFRcmcqBpO92JJRrcja3y0JwLgw/s
+	k3LABDKc6rsxq3jri7RNp9/AoQYsqvzSF1UKhq3RbvPq4Iz6svgwHwHN8zRCLu2K
+	ms5YisXc0iY6o7ZOp0sr8s5/ZXK6VTGRwE8IZs2/bg==
+X-ME-Sender: <xms:0vPNZWghY81cg2NDL0JiaF0XklUxaE-sa8bpRV-eKEH1avvCCedD1A>
+    <xme:0vPNZXDFDsdCHsfD-tv3DZFFt2t0M1nhDI05bE2MPbph7waAdKHRmamLaj-wdUjD-
+    6AkYhCeVanLpCozGw>
+X-ME-Received: <xmr:0vPNZeEITSEYf3Oc45akldkY-UBu_8gu9ZL4_cPkEszlJfHlrpfDTd9svgd4McNPZgq66PzohMY36V4grEWREUboVlcwcfY2GQhIUP02lYUK>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvddtgddvjecutefuodetggdotefrodftvf
     curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
     uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
@@ -56,28 +56,28 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvddtgddvjecutefuodetggdote
     hnpeeukedtvedtffevleejtefgheehieegkeeluddvfeefgeehgfeltddtheejleffteen
     ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
     hkshdrihhm
-X-ME-Proxy: <xmx:0PPNZUzlISsemvxJDLzIXk9Gmq96Vnnnb2iUyRwvTqRKKXUnRsxUIg>
-    <xmx:0PPNZbStxFfE6sDluc4d2dWOGa2V-SVu0nRt77CNFX9XNicP1ZvZYg>
-    <xmx:0PPNZfZJpM0zXF7IOZ2D7G-jTW0Ui3j0QTmr4XeraCp4mKmutkSgBA>
-    <xmx:0fPNZaFrO9z1QWdZjwlBUwSYCrL70W4jjJ0vN5IM4prBj_FwUPruUg>
+X-ME-Proxy: <xmx:0vPNZfRZFvZ4AaN_JTEXyHoSP9qA4VGgdhX2FwgEYLgTEfJmzyjTWQ>
+    <xmx:0vPNZTxJiZ0KiUEQnvsDWhkPakm7EqnytA0lUWySPSD6VpYTCG9ixQ>
+    <xmx:0vPNZd6ydnd84i_bwaGrkjPJy84DLAz1Mcr-pwz3dpVRn539MxJ87Q>
+    <xmx:0vPNZeroVEoeApzFIba-o9bKh_5uTIRpFtQwDN4cxjPxXCt6KAI_lA>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 15 Feb 2024 06:21:51 -0500 (EST)
+ 15 Feb 2024 06:21:53 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id d33a749d (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 15 Feb 2024 11:17:56 +0000 (UTC)
-Date: Thu, 15 Feb 2024 12:21:46 +0100
+	by vm-mail (OpenSMTPD) with ESMTPSA id accc8eed (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 15 Feb 2024 11:18:00 +0000 (UTC)
+Date: Thu, 15 Feb 2024 12:21:51 +0100
 From: Patrick Steinhardt <ps@pks.im>
 To: "Eric W. Biederman" <ebiederm@gmail.com>
 Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
 	"brian m. carlson" <sandals@crustytoothpaste.net>,
 	Eric Sunshine <sunshine@sunshineco.com>,
 	"Eric W. Biederman" <ebiederm@xmission.com>
-Subject: Re: [PATCH v2 01/30] object-file-convert: stubs for converting from
- one object format to another
-Message-ID: <Zc3zyi42slXWGJTC@tanuki>
+Subject: Re: [PATCH v2 02/30] oid-array: teach oid-array to handle multiple
+ kinds of oids
+Message-ID: <Zc3zz0hJFShTZp3M@tanuki>
 References: <878r8l929e.fsf@gmail.froward.int.ebiederm.org>
- <20231002024034.2611-1-ebiederm@gmail.com>
+ <20231002024034.2611-2-ebiederm@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -85,211 +85,102 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="0d2jsmHzWzUs0dl1"
+	protocol="application/pgp-signature"; boundary="74Lh5T7F7BPMPPWD"
 Content-Disposition: inline
-In-Reply-To: <20231002024034.2611-1-ebiederm@gmail.com>
+In-Reply-To: <20231002024034.2611-2-ebiederm@gmail.com>
 
 
---0d2jsmHzWzUs0dl1
+--74Lh5T7F7BPMPPWD
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Sun, Oct 01, 2023 at 09:40:05PM -0500, Eric W. Biederman wrote:
+On Sun, Oct 01, 2023 at 09:40:06PM -0500, Eric W. Biederman wrote:
 > From: "Eric W. Biederman" <ebiederm@xmission.com>
 >=20
-> Two basic functions are provided:
-> - convert_object_file Takes an object file it's type and hash algorithm
->   and converts it into the equivalent object file that would
->   have been generated with hash algorithm "to".
+> While looking at how to handle input of both SHA-1 and SHA-256 oids in
+> get_oid_with_context, I realized that the oid_array in
+> repo_for_each_abbrev might have more than one kind of oid stored in it
+> simultaneously.
 >=20
->   For blob objects there is no conversation to be done and it is an
->   error to use this function on them.
+> Update to oid_array_append to ensure that oids added to an oid array
+> always have an algorithm set.
 >=20
->   For commit, tree, and tag objects embedded oids are replaced by the
->   oids of the objects they refer to with those objects and their
->   object ids reencoded in with the hash algorithm "to".  Signatures
->   are rearranged so that they remain valid after the object has
->   been reencoded.
+> Update void_hashcmp to first verify two oids use the same hash algorithm
+> before comparing them to each other.
 >=20
-> - repo_oid_to_algop which takes an oid that refers to an object file
->   and returns the oid of the equivalent object file generated
->   with the target hash algorithm.
->=20
-> The pair of files object-file-convert.c and object-file-convert.h are
-> introduced to hold as much of this logic as possible to keep this
-> conversion logic cleanly separated from everything else and in the
-> hopes that someday the code will be clean enough git can support
-> compiling out support for sha1 and the various conversion functions.
+> With that oid-array should be safe to use with different kinds of
+> oids simultaneously.
 >=20
 > Signed-off-by: "Eric W. Biederman" <ebiederm@xmission.com>
 > ---
->  Makefile              |  1 +
->  object-file-convert.c | 57 +++++++++++++++++++++++++++++++++++++++++++
->  object-file-convert.h | 24 ++++++++++++++++++
->  3 files changed, 82 insertions(+)
->  create mode 100644 object-file-convert.c
->  create mode 100644 object-file-convert.h
+>  oid-array.c | 12 ++++++++++--
+>  1 file changed, 10 insertions(+), 2 deletions(-)
 >=20
-> diff --git a/Makefile b/Makefile
-> index 577630936535..f7e824f25cda 100644
-> --- a/Makefile
-> +++ b/Makefile
-> @@ -1073,6 +1073,7 @@ LIB_OBJS +=3D notes-cache.o
->  LIB_OBJS +=3D notes-merge.o
->  LIB_OBJS +=3D notes-utils.o
->  LIB_OBJS +=3D notes.o
-> +LIB_OBJS +=3D object-file-convert.o
->  LIB_OBJS +=3D object-file.o
->  LIB_OBJS +=3D object-name.o
->  LIB_OBJS +=3D object.o
-> diff --git a/object-file-convert.c b/object-file-convert.c
-> new file mode 100644
-> index 000000000000..4777aba83636
-> --- /dev/null
-> +++ b/object-file-convert.c
-> @@ -0,0 +1,57 @@
-> +#include "git-compat-util.h"
-> +#include "gettext.h"
-> +#include "strbuf.h"
-> +#include "repository.h"
-> +#include "hash-ll.h"
-> +#include "object.h"
-> +#include "object-file-convert.h"
-> +
-> +int repo_oid_to_algop(struct repository *repo, const struct object_id *s=
-rc,
-> +		      const struct git_hash_algo *to, struct object_id *dest)
-> +{
-> +	/*
-> +	 * If the source algorithm is not set, then we're using the
-> +	 * default hash algorithm for that object.
-> +	 */
-> +	const struct git_hash_algo *from =3D
-> +		src->algo ? &hash_algos[src->algo] : repo->hash_algo;
-> +
-> +	if (from =3D=3D to) {
-> +		if (src !=3D dest)
-> +			oidcpy(dest, src);
-> +		return 0;
-> +	}
-> +	return -1;
-> +}
+> diff --git a/oid-array.c b/oid-array.c
+> index 8e4717746c31..1f36651754ed 100644
+> --- a/oid-array.c
+> +++ b/oid-array.c
+> @@ -6,12 +6,20 @@ void oid_array_append(struct oid_array *array, const st=
+ruct object_id *oid)
+>  {
+>  	ALLOC_GROW(array->oid, array->nr + 1, array->alloc);
+>  	oidcpy(&array->oid[array->nr++], oid);
+> +	if (!oid->algo)
+> +		oid_set_algo(&array->oid[array->nr - 1], the_hash_algo);
 
-In it's current form, `repo_oid_to_algop()` basically never does
-anything except for copying over the object ID because we do not handle
-the case where object hashes are different. I assume this is intended,
-as we basically only provide stubs in this commit. But still, it would
-help to document this in-code as well with a comment.
+I feel like it's a design wart that `oid_array_append()` now started to
+depend on repository discovery, adding an external dependency to it that
+may cause very confusing behaviour. Are there for example ever cases
+where we populate such an OID array before we have discovered the repo?
+Can it happen that we use OID arrays in the context of a submodule that
+has a different object ID than the main repository?
 
-> +int convert_object_file(struct strbuf *outbuf,
-> +			const struct git_hash_algo *from,
-> +			const struct git_hash_algo *to,
-> +			const void *buf, size_t len,
-> +			enum object_type type,
-> +			int gentle)
-> +{
+>  	array->sorted =3D 0;
+>  }
+> =20
+> -static int void_hashcmp(const void *a, const void *b)
+> +static int void_hashcmp(const void *va, const void *vb)
+>  {
+> -	return oidcmp(a, b);
+> +	const struct object_id *a =3D va, *b =3D vb;
 > +	int ret;
-> +
-> +	/* Don't call this function when no conversion is necessary */
-> +	if ((from =3D=3D to) || (type =3D=3D OBJ_BLOB))
-> +		BUG("Refusing noop object file conversion");
+> +	if (a->algo =3D=3D b->algo)
+> +		ret =3D oidcmp(a, b);
+> +	else
+> +		ret =3D a->algo > b->algo ? 1 : -1;
 
-The extra braces around comparisons are unneeded and to the best of my
-knowledge not customary in our code base. Also, error messages should
-start with a lower-case letter.
-
-> +	switch (type) {
-> +	case OBJ_COMMIT:
-> +	case OBJ_TREE:
-> +	case OBJ_TAG:
-> +	default:
-> +		/* Not implemented yet, so fail. */
-> +		ret =3D -1;
-> +		break;
-> +	}
-
-It's a bit weird that we handle all object types except for blobs
-separately, and then still have a `default` statement. I would've
-thought that we should handle the object types specifically and set `ret
-=3D -1` for all of them, and then the `default` case would instead call
-`BUG()` due to an unknown object type.
-
-> +	if (!ret)
-> +		return 0;
-> +	if (gentle) {
-> +		strbuf_release(outbuf);
-> +		return ret;
-> +	}
-
-Do you really intend to call `strbuf_release()` on the caller provided
-buffer, or should this rather be `strbuf_reset()`? Memory management of
-such an in/out parameter should typically be handled by the caller, not
-the callee.
-
-> +	die(_("Failed to convert object from %s to %s"),
-> +		from->name, to->name);
-> +}
-
-The error message should start with a lower-case letter.
-
-> diff --git a/object-file-convert.h b/object-file-convert.h
-> new file mode 100644
-> index 000000000000..a4f802aa8eea
-> --- /dev/null
-> +++ b/object-file-convert.h
-> @@ -0,0 +1,24 @@
-> +#ifndef OBJECT_CONVERT_H
-> +#define OBJECT_CONVERT_H
-> +
-> +struct repository;
-> +struct object_id;
-> +struct git_hash_algo;
-> +struct strbuf;
-> +#include "object.h"
-> +
-> +int repo_oid_to_algop(struct repository *repo, const struct object_id *s=
-rc,
-> +		      const struct git_hash_algo *to, struct object_id *dest);
-> +
-> +/*
-> + * Convert an object file from one hash algorithm to another algorithm.
-> + * Return -1 on failure, 0 on success.
-> + */
-> +int convert_object_file(struct strbuf *outbuf,
-> +			const struct git_hash_algo *from,
-> +			const struct git_hash_algo *to,
-> +			const void *buf, size_t len,
-> +			enum object_type type,
-> +			int gentle);
-
-It would be nice to document what `gentle` does.
+Okay, so we basically end up sorting first by the algorithm, and then we
+sort all object IDs of a specific algorithm relative to each other.
 
 Patrick
 
-> +#endif /* OBJECT_CONVERT_H */
+> +	return ret;
+>  }
+> =20
+>  void oid_array_sort(struct oid_array *array)
 > --=20
 > 2.41.0
 >=20
 
---0d2jsmHzWzUs0dl1
+--74Lh5T7F7BPMPPWD
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmXN88kACgkQVbJhu7ck
-PpQ0xw/7BgkaiZO0akew+EkRrzz3wlXk7Pobm1nAzYZTvlaZA/d+BnahUBcEqaCD
-0Abcoo1f67TXFBjm8S98/GmgDiGD2WfkUSXdJ7JciKyjih29ScqqaIX7w0e6exNV
-0PYTm52m+VXONdvujuwbn922HQOLWRwwMBdc/rBBmi4GCmAmlEM2n/097+sJyjEB
-N4BrtX0+GrX1XYPkfilo1tGgi0mDwgUd1M6SpWOqg3eXYxNZlLvczDtWE3Y0/w3G
-JeMA7QH/8vN8buhCgz3LymbgzGBetKZc8azLm0+QiZlnaBnCBQuUrHjV7cwNJUcp
-1kw9lZ4fgLIfuaaBUkX16FAf0kmc6lv+ynpKTXKAtooRrCcaUtF3n2v1SHoCgjTp
-Ao3MxY+QmVt57E4G4nwDNfCR6OnY4rgBRTrvREyoTWuOwhJuiGroEerVMxErWRCz
-nDuypygwLmzRsOVt+eMFZfe/5flfZwn8N/dPBsDaVFEibNH/sJuh94HcuhaRKc5K
-V4Nh6LT1DsAH6P+gIm3o3mjQ6Nd0H4XYBEsnaHdlHzl9LpACAIHyMwlK1BaGb3Zv
-Epm6jyV38QBJUAQOdhT8pPdUuiHV/idqt2riJgO9cmvaL2I+kdlHIZAaDiR6ka4P
-fNsfN4/ojXlFr8H9UcH5mL0e3cDtfbGIRZ0py1dXHZIHWCTleyo=
-=RZdl
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmXN884ACgkQVbJhu7ck
+PpTt2hAAoWbyCM/9pl2DcUY8u0wEJeOBMWZ/4slMkuSGa51jljMy0rToVv4WxNNy
+5V5G3BRKL+ARIiktF4MahEjX3sTaY1q2D1pm+QUhBef3QWhVS14Tjm4CA39sNJbi
+9oOPPoH8zhTIqF+dKG+nxKUXoQsze9harv4hSahl5X7x1mwnHUGFFX2pHYgspnyr
+7W5jzOKCce/R1pa6ZdCB15NjejJP0tCRDtCjqEwZ5ifwHzQA9njPzo32EI/zwOcY
+rKZr3lEuQUrhIOMH2Fx1sl4OZ9Zi5Vjt5/hkwqD/M5eP1ZcnZthPvv8tXYFP2fda
+p9sqlfO4GrI1ceqjcO8w0n2a0QEnKmjGmafDTv+55qWF0EsPNof+yyhuJO+QlHxc
+1m95K78tE6uqzUXpk4Asdeb40WQG8cESppJMvyo527bk61U8vLsQYaHe20vKyNT4
+jhhLVLMUzsNxK17XvOI0TXPyNNBeIIycyr32oqit45EiRLiFhVOtzdwZ5C8mexnp
+q9hTVAdKooMOYstPwAbTdiDhAdPg0ps5RcYTSijl+lzlqImvVGsKra31PKGR2ylQ
+i4lXfe7y8+tXyCSLueJgMux0e3dt3Fat+fIafbvtAT9Xp8PxujTs16Il73ifAgl5
+P5ijYEGy7Y4YOCt6C/14bjnxXl3+kpSCapOnuQRVX16Bf7GrLxo=
+=KS82
 -----END PGP SIGNATURE-----
 
---0d2jsmHzWzUs0dl1--
+--74Lh5T7F7BPMPPWD--
