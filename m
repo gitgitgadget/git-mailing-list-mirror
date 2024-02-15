@@ -1,117 +1,117 @@
-Received: from ring.crustytoothpaste.net (ring.crustytoothpaste.net [172.105.110.227])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f43.google.com (mail-wm1-f43.google.com [209.85.128.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1896855E7F
-	for <git@vger.kernel.org>; Thu, 15 Feb 2024 23:12:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.110.227
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25934145B3E
+	for <git@vger.kernel.org>; Thu, 15 Feb 2024 23:15:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708038777; cv=none; b=TI2kZRZ7+U+hJLtjjLwkogMCVgrP6yXBiYzudqfO1HpfzB0YtDk12NW9zEJmmQgYRpL7BZN/Fq3H6iHzngYX4uGb85jAnA6oL9L8FyOBfAtipKpi2EFtm6wrZmIPWIZ/WjSJ5twfgHSD1hEvyfbBkeFV3s+NnCvD81UnSR617HU=
+	t=1708038931; cv=none; b=Flnfy0vunyHBa9CYf6UFLULegKJ+W+hTZZFbot4FBNxr3jZLM9fxP0dcs3LGNFtrgLTfoeJ08L9XDVRogbySZWkh2eYQSMcvjwNHY5VXaZ5YeF9iuUvhEA0d6HPu9ufnp28OCgoWvImxyhg1wnOHS6W7cKaV7iBpRb5nEUImZHc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708038777; c=relaxed/simple;
-	bh=7gAZGSxb9DiYKlDJ33fT54TVrjW3K/YLHybT5WqCm00=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=DEmsdKQm/yFqrAiQxNaAEJQ8umgprw0Yas0aVsat2nWp94mWtSsQ77vSmho0Mf6QWW40rOImXiIMVc/EYFRVfh+3fBbehCqwAAy+JjfEY/wRJmiQBpG6pMgXN92MU0dHNVgZN7EXM8NdWXDkKNB7olCoUHL4+uHCKiYw2GMMtfM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=xquTFZsc; arc=none smtp.client-ip=172.105.110.227
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
+	s=arc-20240116; t=1708038931; c=relaxed/simple;
+	bh=NUMPKSybnUGleLkQIyEos81R9/mtsjghGnkatHTWOyY=;
+	h=Message-ID:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=m6wOpKglST6YocvP0zEwdonP1Bx/jNdh+ddXJWElTGE7pwMnhd2vGXcelBUpLxGnDWbx6urCP+OB75N6XjHPpe7nzwxJ1p8pQHCieLzozq+6YrhkyKsbDUgTZh3fSY3BswciYysejaMpSb24ROIgygpK5kMpTM/yYNbQygx/Rm8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=KMUlTqQI; arc=none smtp.client-ip=209.85.128.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="xquTFZsc"
-Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:e59a:3ed0:5f5c:31f3])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (P-256) server-signature RSA-PSS (3072 bits) server-digest SHA256)
-	(No client certificate requested)
-	by ring.crustytoothpaste.net (Postfix) with ESMTPSA id D71FA5B2EF;
-	Thu, 15 Feb 2024 23:12:46 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1708038766;
-	bh=7gAZGSxb9DiYKlDJ33fT54TVrjW3K/YLHybT5WqCm00=;
-	h=Date:From:To:Cc:Subject:References:Content-Type:
-	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-	 Content-Type:Content-Disposition;
-	b=xquTFZscYcDN/PmfHel+3+ILMdhUI9x7/Nbix5LpQVZtkUF378d+0aJH+sXEQeH6c
-	 OzYlrF3US7x7HzNpFqxwk2S1QMxNLujkweQvMB1k5v/TD95AfvKlJ0mMKzkbQP+upC
-	 dDNHF00k38JY3LOpjeluJXZrp477wZRobdrPTmHXBkBKOvazN9A1jKMW3lZlbRc9pF
-	 L5bAoHOSR8Kd00kTPSMo1kHPD2Yzha//xRP1wTQ05mY2YZ+4GaILNjIG5Wgzqe8Yj7
-	 LRl7g8OIP/y/IxMiTLPKR5PJnt0JuVlb5HO0G6QLdUyyKvysth6/J7gXrvxCLGq2Ig
-	 Gw/N9+pEB3Mdn4lVyk23XpATFLJ9zz5lyU5Uy3O+oZA6DbrZ46QzeQvOWUd2AynFdC
-	 WRLlzirQsqTHwuHeFQKNSqWsIyTb/xKrRuV6WHbvCju2G5iU6dA1j0ge1XZnQnrKIq
-	 a8AkMVVCx2tmwDGX6CrLmZB4KOxou4TSQGhqmSs+Npvmy2YHIK5
-Date: Thu, 15 Feb 2024 23:12:44 +0000
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Elia Pinto <gitter.spiros@gmail.com>, git@vger.kernel.org
-Subject: Re: [PATCH] use C99 declaration of variable in for() loop
-Message-ID: <Zc6abO6RV9RwpABR@tapette.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Junio C Hamano <gitster@pobox.com>,
-	Elia Pinto <gitter.spiros@gmail.com>, git@vger.kernel.org
-References: <20240215094243.147057-1-gitter.spiros@gmail.com>
- <xmqqcysxskd9.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KMUlTqQI"
+Received: by mail-wm1-f43.google.com with SMTP id 5b1f17b1804b1-412393ea2a0so850595e9.2
+        for <git@vger.kernel.org>; Thu, 15 Feb 2024 15:15:27 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1708038926; x=1708643726; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=fCpx2iTB+knlFxESDE5zPJS9nO4Nsk3QAatLPdDaj/c=;
+        b=KMUlTqQIpCqqK/qgDcjzkpRGxHPFvDmj3H6Q6bkUVSgcHDBnX6V+Ekce1HkTi40puF
+         iRNamn3v/Ke1t96rvvBrRLVpRHBxs6t2M2EiHoE81XDaBWsIKmgIC+boxN1qFn5ry7XU
+         79gqRQCGJo/NroLth6aTLiGdpmLrFib8IyajebmiHn+RNKx4YgGJTqoBo08e3ChGCsV6
+         Fa6iKCyogH/0jbPvRkWhddq36VQYxBd3UaonVdRJupBc4KV9gA0evvA7w5Bk/4jfnYjG
+         3bE13UrCyZmKhhBxFAQI5fgCwjDXIu8s0S/Fidi1UaNiycfpUqLZR3GpjgcVywXDUAmo
+         NIEw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1708038926; x=1708643726;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=fCpx2iTB+knlFxESDE5zPJS9nO4Nsk3QAatLPdDaj/c=;
+        b=jNFtXH6INZKcWznIp43fgm4UGmgwQMGv1ldMpPPCiI/hwL/5p3Skj6OORuA/S37sVg
+         zTjXHrrAp8A2Ya39ruKy4or5xQ3rBU+h30OVKbEY03TMKaJ9mTSyNJVHlGgqh0fn5brO
+         LWP0j0O8imMJwx2c9a9CHUqrq7FnPehQfkVpEtyHbqTA9hh1diMKFnYreghRjks5XdKX
+         nnVaX8J03IkNEHA34uIZBgHEHuXODEj5+i3CEz4lVdLafRF3AkgGox/1iJ54E0rDkpZK
+         peK9DrLaaPSwORJOnfHJPVyt+jMlntueQAqo1bknPF5tdFLbpVguLm6P2eoSOzSuX61q
+         CXZg==
+X-Gm-Message-State: AOJu0Yziq5e0QzpOJFH9vt/23nJpA66DEY3EnVhype2VBzsSbm7/xKdR
+	MSDMZR9eOVudibU55QuctSJQCHsWG+jhLpP0vI4Wf9XzKggxnR39kbgaRB2T
+X-Google-Smtp-Source: AGHT+IE9hvcsf1ViVzuUJqOoL2Uy5n4p/eqYbLEZ0XjfEZsOdxYWq42Zw3Lvuyz94KH8rLM2pUmunQ==
+X-Received: by 2002:a05:600c:3b86:b0:410:bd9e:c6 with SMTP id n6-20020a05600c3b8600b00410bd9e00c6mr2291952wms.17.1708038925479;
+        Thu, 15 Feb 2024 15:15:25 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id x11-20020adff64b000000b0033d157bb26esm444866wrp.32.2024.02.15.15.15.25
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 15 Feb 2024 15:15:25 -0800 (PST)
+Message-ID: <pull.1666.git.1708038924522.gitgitgadget@gmail.com>
+From: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Thu, 15 Feb 2024 23:15:24 +0000
+Subject: [PATCH] cmake: let `test-tool` run the unit tests, too
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="1ZO4ymscPUPJVDQZ"
-Content-Disposition: inline
-In-Reply-To: <xmqqcysxskd9.fsf@gitster.g>
-User-Agent: Mutt/2.2.12 (2023-09-09)
+To: git@vger.kernel.org
+Cc: Josh Steadmon <steadmon@google.com>,
+    Johannes Schindelin <johannes.schindelin@gmx.de>,
+    Johannes Schindelin <johannes.schindelin@gmx.de>
 
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
---1ZO4ymscPUPJVDQZ
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+The `test-tool` recently learned to run the unit tests. To this end, it
+needs to link with `test-lib.c`, which was done in the `Makefile`, and
+this patch does it in the CMake definition, too.
 
-On 2024-02-15 at 17:33:22, Junio C Hamano wrote:
-> Elia Pinto <gitter.spiros@gmail.com> writes:
->=20
-> > With the exception of cbtree.c, which would need initial
-> > reworking to remove the usage of goto, it expands the
-> > use of variable scope reduction in for loops as
-> > permitted by the C99 standard, which was first introduced
-> > in the git codebase with commit 44ba10d6.
->=20
-> Thanks, but ...
->=20
-> Our test balloon may have proven that nobody will be inconvenienced,
-> and it does mean we can be liberal using it when we add new code or
-> update existing loops "while at it", but I personally do not think
-> such a code churn is very welcome.
+This is a companion of 44400f58407e (t0080: turn t-basic unit test into
+a helper, 2024-02-02).
 
-I will also say that sending one giant patch for this may be a bit hard
-to review.  While I will defer to Junio's opinion as the maintainer, I
-would be more inclined to review this kind of series if it came in in
-smaller patches, a few at a time, in which case I would find it a
-welcome improvement.
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+    cmake: let test-tool run the unit tests, too
+    
+    The test-tool recently learned to run the unit tests. To this end, it
+    needs to link with test-lib.c, which was done in the Makefile, and this
+    patch does it in the CMake definition, too.
+    
+    This is a companion of 44400f58407e (t0080: turn t-basic unit test into
+    a helper, 2024-02-02), and is based on js/unit-test-suite-runner.
 
-Since my time to work on Git is relatively limited, having, say, a
-five-patch series where we each update a single file would let me review
-these changes in a relatively short amount of time, which I would be
-more likely to be able to find time for.  Looking at the large patch,
-I'd be worried that I wouldn't be able to get through the entire thing
-in one sitting.
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1666%2Fgit-for-windows%2Fjs%2Funit-test-suite-runner-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1666/git-for-windows/js/unit-test-suite-runner-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/1666
 
-Of course, if you bring in a nice Coccinelle patch for it, then that may
-make a longer (but still one-file-per-commit) series more viable, since
-it will help reviewers have more confidence in your change.
---=20
-brian m. carlson (he/him or they/them)
-Toronto, Ontario, CA
+ contrib/buildsystems/CMakeLists.txt | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---1ZO4ymscPUPJVDQZ
-Content-Type: application/pgp-signature; name="signature.asc"
+diff --git a/contrib/buildsystems/CMakeLists.txt b/contrib/buildsystems/CMakeLists.txt
+index 804629c525b..2f9c33585c6 100644
+--- a/contrib/buildsystems/CMakeLists.txt
++++ b/contrib/buildsystems/CMakeLists.txt
+@@ -1005,10 +1005,11 @@ endforeach()
+ 
+ #test-tool
+ parse_makefile_for_sources(test-tool_SOURCES "TEST_BUILTINS_OBJS")
++add_library(test-lib OBJECT ${CMAKE_SOURCE_DIR}/t/unit-tests/test-lib.c)
+ 
+ list(TRANSFORM test-tool_SOURCES PREPEND "${CMAKE_SOURCE_DIR}/t/helper/")
+ add_executable(test-tool ${CMAKE_SOURCE_DIR}/t/helper/test-tool.c ${test-tool_SOURCES} ${test-reftable_SOURCES})
+-target_link_libraries(test-tool common-main)
++target_link_libraries(test-tool test-lib common-main)
+ 
+ set_target_properties(test-fake-ssh test-tool
+ 			PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/t/helper)
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.4.3 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZc6aawAKCRB8DEliiIei
-gX7zAP98K4pyej8jQZMmiih65w8Z3IbTvH1JUF5EIHkWuCyCnQD/aKSzVRBfuq0h
-bzwbpEn9+HWzEgIFxGxnXtvLDe5ynAo=
-=QVtL
------END PGP SIGNATURE-----
-
---1ZO4ymscPUPJVDQZ--
+base-commit: b3b269c2d8931642c4b9f03b9ce9e81c20995eb8
+-- 
+gitgitgadget
