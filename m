@@ -1,90 +1,96 @@
-Received: from mail-il1-f178.google.com (mail-il1-f178.google.com [209.85.166.178])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from email1.sber.ru (email1.sber.ru [84.252.146.118])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 630007484
-	for <git@vger.kernel.org>; Thu, 15 Feb 2024 06:24:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47136CA4E
+	for <git@vger.kernel.org>; Thu, 15 Feb 2024 07:10:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=84.252.146.118
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707978288; cv=none; b=V2PK3yCnRkFbY5BT68bQuSCJ7pprICBP8kDSXwiX9XaC3EYAnj8oslnpFeI4nM6uQFsy0kOD+xLOgOrhKhKlpt7v8xMzy8z6of2NVSIZ3N/AIP5YdK1JLkeedA1JdPNyR3dr+l7l8ugVZlcVeOMd38EP9FXyxiB5gh8BUG4+xQA=
+	t=1707981004; cv=none; b=oIVzwXPRRTQVA89ESf2OfgClI41N4LG0fmwTYhxrqKfhGZ3rJIdkAlKtOzO0E17mMsi5ZXtywC7nQgx49QuilmPCtOHeaKFTS2MFpSULtJjKT/dYLF2d6QmkAMD9veHTxb9ZPzr2dF7UcS19t/SwUCxZcs0nJT+bPXHqJvYj24s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707978288; c=relaxed/simple;
-	bh=EMMZxHUDq4YEX7eTbWr3EhXcLDKNJfqsGK7cFxTScf4=;
-	h=From:To:Cc:Subject:References:Date:In-Reply-To:Message-ID:
-	 MIME-Version:Content-Type; b=p5RwIfayHDPCSFmW269XcrXqV0Lc1KlCvqDM69bLOvxXNxvvynoQzAk2lmAk8bZooj/lHbWR/IxWT939tqz00cPo/3VuFFaXgDIlLf/7dY8k8Zt9pShSPc/0qd4dKyXl5vD3ggUFqQqJce3W35rberXe+JHOCmRJW/uBvjOM4v8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NVZNfGr6; arc=none smtp.client-ip=209.85.166.178
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1707981004; c=relaxed/simple;
+	bh=G/QTxNQQCe03EtDcsn+cewycxJ89cBRgZ563gQI7bQM=;
+	h=Content-Type:From:To:Subject:Date:Message-ID:MIME-Version; b=hdhjGN5Woi/V130R7a/Ut/Jw8/GXfLOQlBGZTXdDjLnN1e81Olwli1c/8GpE5kpF2oEMWBLljVRg+KUwJLj7hJw+UDw+YNbMNZqa9yPLAuuLLp1rzWF03lVoCzAE/LxIn/oVppQ+LFHVeeUiNcm9ZtENRRDEWz95x7UDczUyaJ8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=sberbank.ru; spf=pass smtp.mailfrom=sberbank.ru; dkim=pass (2048-bit key) header.d=sberbank.ru header.i=@sberbank.ru header.b=LkAlm3M8; arc=none smtp.client-ip=84.252.146.118
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=sberbank.ru
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=sberbank.ru
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NVZNfGr6"
-Received: by mail-il1-f178.google.com with SMTP id e9e14a558f8ab-364adc689bdso1582715ab.3
-        for <git@vger.kernel.org>; Wed, 14 Feb 2024 22:24:47 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1707978286; x=1708583086; darn=vger.kernel.org;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=EMMZxHUDq4YEX7eTbWr3EhXcLDKNJfqsGK7cFxTScf4=;
-        b=NVZNfGr6Oc30nUrcMvdsm9YaPqbKs5I5KaN2gL9MrsybrfrAeMMhwUaoPQhCBcPIO4
-         q2tvxUX8nk6rpgyUbH9c2LZ56DoDd6dbPQARIwVbSC0tW0If8LzRgHqSzNfekEaS8SKl
-         f3I/pKydxhpZv3wnapb1JSh6qrpvVkbHJ8303TeicA/ha6lNCJ1Bu9OvKFvOzHXBmgAV
-         23CyhfbuA1FSeutFFLFc470/8YDDakzxImldspawIccyoZw8d+3kcgfGrZ56GyKbPT9l
-         EuJz0AK9LSTliMPMhDekVfbgL2JdgCb9pUr6ucvEA328rSSNQ7l7cIdLR3hNUGVSKKoz
-         /uFA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1707978286; x=1708583086;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=EMMZxHUDq4YEX7eTbWr3EhXcLDKNJfqsGK7cFxTScf4=;
-        b=ZdKguNM/YFXP7jTtlXLr+iTf3Xc0kKgQdMm6KBOS+o3hv2lEjSON+Sj8I58H4oZ9+u
-         hsqLDbAzNenWQ/nT+tXhkZK3bVZVzuQuliKhA7z66xyqlQ9E9i/BesS7kcPEGDM25MLK
-         kg2T81T/bE5WHPqkVgLY9PSPQjaCY3niqqliVvoNaG5lQYzl8ghuwo9vxVBvJbT1KR/H
-         3nrowqIg3b2+VZHLMTQ0GLxzdgB07H3n1yck/Wo//ZYLZJTKC207iQPc2eFNJopsFiTr
-         +cU9qXe6xFEsGNLcPX+UchhTXnpW8gAGZPE5Js4t00Gd3E3f/4S5le7bwrrVH1BHwDfW
-         rgbA==
-X-Gm-Message-State: AOJu0Yw78eFvuGaS5p+k/TBPOR1POPlIDR+WP9+nf/Cyk/pblvmAAR26
-	J5lY8oerNYu6A81Gkw/WJv5uWSWUSPb8CNWngrAnLES8pNPLJJ38
-X-Google-Smtp-Source: AGHT+IFDD2bO6SpT2FxceSDb7MxL9sDJ31thGR+2LLUlSD4rssaiFWZBEWjKW9NepBbUD5cBMkvAVw==
-X-Received: by 2002:a05:6e02:788:b0:362:9250:df39 with SMTP id q8-20020a056e02078800b003629250df39mr749885ils.21.1707978286570;
-        Wed, 14 Feb 2024 22:24:46 -0800 (PST)
-Received: from gmail.froward.int.ebiederm.org.gmail.com (ip68-227-168-167.om.om.cox.net. [68.227.168.167])
-        by smtp.gmail.com with ESMTPSA id v14-20020a92c6ce000000b00364f35b5546sm194917ilm.28.2024.02.14.22.24.45
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 14 Feb 2024 22:24:46 -0800 (PST)
-From: "Eric W. Biederman" <ebiederm@gmail.com>
-To: "Kristoffer Haugsbakk" <code@khaugsbakk.name>
-Cc: git@vger.kernel.org,  "brian m. carlson" <sandals@crustytoothpaste.net>,
-  "Eric Sunshine" <sunshine@sunshineco.com>,  "Eric W. Biederman"
- <ebiederm@xmission.com>,  "Junio C Hamano" <gitster@pobox.com>
-Subject: Re: [PATCH v2 02/30] oid-array: teach oid-array to handle multiple
- kinds of oids
-References: <878r8l929e.fsf@gmail.froward.int.ebiederm.org>
-	<20231002024034.2611-2-ebiederm@gmail.com>
-	<023394e2-5f64-4a59-af96-b77dafb20051@app.fastmail.com>
-Date: Thu, 15 Feb 2024 00:24:45 -0600
-In-Reply-To: <023394e2-5f64-4a59-af96-b77dafb20051@app.fastmail.com>
-	(Kristoffer Haugsbakk's message of "Tue, 13 Feb 2024 09:31:22 +0100")
-Message-ID: <87v86qkzwy.fsf@gmail.froward.int.ebiederm.org>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
+	dkim=pass (2048-bit key) header.d=sberbank.ru header.i=@sberbank.ru header.b="LkAlm3M8"
+Content-Language: ru-RU
+Content-Type: text/plain; charset="utf-8"
+Content-ID: <1AFCD8C175CD6E4DA90B21ECC43A1153@sberbank.ru>
+Content-Transfer-Encoding: base64
+DKIM-Signature: v=1; a=rsa-sha256; d=sberbank.ru; s=dkim; c=relaxed/relaxed;
+	t=1707980927; h=from:subject:to:date:message-id;
+	bh=G/QTxNQQCe03EtDcsn+cewycxJ89cBRgZ563gQI7bQM=;
+	b=LkAlm3M80zudHCtHQX2olGkog7AdRyeTonmvD7gYULwAJZHfCgbrRLbG846u0pKsXmr3NW4urGL
+	dCaKLJNPGERv5obcS8MbLYP0GyQmYW567TtmoPeVA+cqPX3WFea8OiMeVwaF8db6Q8bMFGG48+Xgp
+	/mTwdpy4lAfR//YT3F3alc0gIQRCqMe4doyABb+IotPBzkUHUY+PPLCX/y5nuBbYAeuqDPtbNFm/F
+	3U2nhRMYxwUJNtGUKAOO+9SUJzj2IsvncCuel15vfKBL34KWdx8Y/QvX3gF2YZeFWNR7/MFTb/aMl
+	7TCDV+44lI25W5NgO7JBXK6nWQY2MusMps5g==
+From: =?utf-8?B?0JrQvtC90L7QvdC+0LIg0JjQs9C90LDRgtC40Lkg0JDQu9C10LrRgdCw0L0=?=
+ =?utf-8?B?0LTRgNC+0LLQuNGH?= <IAlKononov@sberbank.ru>
+To: "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: The repository is broken due to the overflow of the disk space
+ without the possibility of restoration
+Thread-Topic: The repository is broken due to the overflow of the disk space
+ without the possibility of restoration
+Thread-Index: AQHaX93KjeO9q8rDLk6+AfstbxDkzQ==
+Date: Thu, 15 Feb 2024 07:08:35 +0000
+Message-ID: <8B9D836A-CEE5-4057-887F-91ECDFB2BE9E@sberbank.ru>
+Accept-Language: en-US
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
 
-"Kristoffer Haugsbakk" <code@khaugsbakk.name> writes:
-
-> On Mon, Oct 2, 2023, at 04:40, Eric W. Biederman wrote:
->> Signed-off-by: "Eric W. Biederman" <ebiederm@xmission.com>
->
-> Most of your patches have this sign-off line with your name quoted.
-
-At least for email syntax from which Signed-off-by syntax descends
-having a period after my middle initial requires the name to be in
-quotes.
-
-Eric
-
-
-
+VGhhbmsgeW91IGZvciBmaWxsaW5nIG91dCBhIEdpdCBidWcgcmVwb3J0IQ0KUGxlYXNlIGFuc3dl
+ciB0aGUgZm9sbG93aW5nIHF1ZXN0aW9ucyB0byBoZWxwIHVzIHVuZGVyc3RhbmQgeW91ciBpc3N1
+ZS4NCg0KV2hhdCBkaWQgeW91IGRvIGJlZm9yZSB0aGUgYnVnIGhhcHBlbmVkPyAoU3RlcHMgdG8g
+cmVwcm9kdWNlIHlvdXIgaXNzdWUpDQpUaGUgb3ZlcmZsb3cgb2YgZGlzayBzcGFjZSBvbiB0aGUg
+R0lUIHNlcnZlciAob3ZlcmZsb3cgaXMgY2F1c2VkIGJ5IG90aGVyIHJlcG8gcGFyYWxsZWwgdG8g
+dGhpcykuDQpXaGF0IGRpZCB5b3UgZXhwZWN0IHRvIGhhcHBlbj8gKEV4cGVjdGVkIGJlaGF2aW9y
+KQ0KVGhlIHBvc3NpYmlsaXR5IG9mIHJlc3RvcmluZyB0aGUgcmVwb3NpdG9yeSB3aXRoIHJlZ3Vs
+YXIgbWVhbnMuDQpXaGF0IGhhcHBlbmVkIGluc3RlYWQ/IChBY3R1YWwgYmVoYXZpb3IpDQpUaGUg
+cmVwb3NpdG9yeSBjYW5ub3QgYmUgcmVzdG9yZWQgd2l0aCByZWd1bGFyIG1lYW5zLCB0aGUgTlVM
+TCBPYmplY3Qgd2l0aG91dCBhIHR5cGUgdGhhdCBibG9ja3MgYW55IEdDIG9yIGluZGV4IG9wZXJh
+dGlvbnMuDQpXaGF0J3MgZGlmZmVyZW50IGJldHdlZW4gd2hhdCB5b3UgZXhwZWN0ZWQgYW5kIHdo
+YXQgYWN0dWFsbHkgaGFwcGVuZWQ/DQppVGhlIHJlcG9zaXRvcnkgY2FuIG9ubHkgYmUgcmVzdG9y
+ZWQgYnkgYSBiYWNrdXAuDQpBbnl0aGluZyBlbHNlIHlvdSB3YW50IHRvIGFkZDoNCg0KUGxlYXNl
+IHJldmlldyB0aGUgcmVzdCBvZiB0aGUgYnVnIHJlcG9ydCBiZWxvdy4NCllvdSBjYW4gZGVsZXRl
+IGFueSBsaW5lcyB5b3UgZG9uJ3Qgd2lzaCB0byBzaGFyZS4NCg0KDQpbU3lzdGVtIEluZm9dDQpn
+aXQgdmVyc2lvbjoNCmdpdCB2ZXJzaW9uIDIuNDEuMA0KY3B1OiBhcm02NA0Kbm8gY29tbWl0IGFz
+c29jaWF0ZWQgd2l0aCB0aGlzIGJ1aWxkDQpzaXplb2YtbG9uZzogOA0Kc2l6ZW9mLXNpemVfdDog
+OA0Kc2hlbGwtcGF0aDogL2Jpbi9zaA0KZmVhdHVyZTogZnNtb25pdG9yLS1kYWVtb24NCnVuYW1l
+OiBEYXJ3aW4gMjIuNi4wIERhcndpbiBLZXJuZWwgVmVyc2lvbiAyMi42LjA6IFRodSBOb3YgIDIg
+MDc6NDM6NTcgUERUIDIwMjM7IHJvb3Q6eG51LTg3OTYuMTQxLjMuNzAxLjE3fjYvUkVMRUFTRV9B
+Uk02NF9UNjAwMCBhcm02NA0KY29tcGlsZXIgaW5mbzogY2xhbmc6IDE0LjAuMyAoY2xhbmctMTQw
+My4wLjIyLjE0LjEpDQpsaWJjIGluZm86IG5vIGxpYmMgaW5mb3JtYXRpb24gYXZhaWxhYmxlDQok
+U0hFTEwgKHR5cGljYWxseSwgaW50ZXJhY3RpdmUgc2hlbGwpOiAvYmluL3pzaA0KDQoNCltFbmFi
+bGVkIEhvb2tzXQ0KDQrQo9CS0JXQlNCe0JzQm9CV0J3QmNCVINCeINCa0J7QndCk0JjQlNCV0J3Q
+ptCY0JDQm9Cs0J3QntCh0KLQmDog0K3RgtC+INGN0LvQtdC60YLRgNC+0L3QvdC+0LUg0YHQvtC+
+0LHRidC10L3QuNC1INC4INC70Y7QsdGL0LUg0LTQvtC60YPQvNC10L3RgtGLLCDQv9GA0LjQu9C+
+0LbQtdC90L3Ri9C1INC6INC90LXQvNGDLCDRgdC+0LTQtdGA0LbQsNGCINC60L7QvdGE0LjQtNC1
+0L3RhtC40LDQu9GM0L3Rg9GOINC40L3RhNC+0YDQvNCw0YbQuNGOLiDQndCw0YHRgtC+0Y/RidC4
+0Lwg0YPQstC10LTQvtC80LvRj9C10Lwg0JLQsNGBINC+INGC0L7QvCwg0YfRgtC+INC10YHQu9C4
+INGN0YLQviDRgdC+0L7QsdGJ0LXQvdC40LUg0L3QtSDQv9GA0LXQtNC90LDQt9C90LDRh9C10L3Q
+viDQktCw0LwsINC40YHQv9C+0LvRjNC30L7QstCw0L3QuNC1LCDQutC+0L/QuNGA0L7QstCw0L3Q
+uNC1LCDRgNCw0YHQv9GA0L7RgdGC0YDQsNC90LXQvdC40LUg0LjQvdGE0L7RgNC80LDRhtC40Lgs
+INGB0L7QtNC10YDQttCw0YnQtdC50YHRjyDQsiDQvdCw0YHRgtC+0Y/RidC10Lwg0YHQvtC+0LHR
+idC10L3QuNC4LCDQsCDRgtCw0LrQttC1INC+0YHRg9GJ0LXRgdGC0LLQu9C10L3QuNC1INC70Y7Q
+sdGL0YUg0LTQtdC50YHRgtCy0LjQuSDQvdCwINC+0YHQvdC+0LLQtSDRjdGC0L7QuSDQuNC90YTQ
+vtGA0LzQsNGG0LjQuCwg0YHRgtGA0L7Qs9C+INC30LDQv9GA0LXRidC10L3Qvi4g0JXRgdC70Lgg
+0JLRiyDQv9C+0LvRg9GH0LjQu9C4INGN0YLQviDRgdC+0L7QsdGJ0LXQvdC40LUg0L/QviDQvtGI
+0LjQsdC60LUsINC/0L7QttCw0LvRg9C50YHRgtCwLCDRgdC+0L7QsdGJ0LjRgtC1INC+0LEg0Y3R
+gtC+0Lwg0L7RgtC/0YDQsNCy0LjRgtC10LvRjiDQv9C+INGN0LvQtdC60YLRgNC+0L3QvdC+0Lkg
+0L/QvtGH0YLQtSDQuCDRg9C00LDQu9C40YLQtSDRjdGC0L4g0YHQvtC+0LHRidC10L3QuNC1LiBD
+T05GSURFTlRJQUxJVFkgTk9USUNFOiBUaGlzIGVtYWlsIGFuZCBhbnkgZmlsZXMgYXR0YWNoZWQg
+dG8gaXQgYXJlIGNvbmZpZGVudGlhbC4gSWYgeW91IGFyZSBub3QgdGhlIGludGVuZGVkIHJlY2lw
+aWVudCB5b3UgYXJlIG5vdGlmaWVkIHRoYXQgdXNpbmcsIGNvcHlpbmcsIGRpc3RyaWJ1dGluZyBv
+ciB0YWtpbmcgYW55IGFjdGlvbiBpbiByZWxpYW5jZSBvbiB0aGUgY29udGVudHMgb2YgdGhpcyBp
+bmZvcm1hdGlvbiBpcyBzdHJpY3RseSBwcm9oaWJpdGVkLiBJZiB5b3UgaGF2ZSByZWNlaXZlZCB0
+aGlzIGVtYWlsIGluIGVycm9yIHBsZWFzZSBub3RpZnkgdGhlIHNlbmRlciBhbmQgZGVsZXRlIHRo
+aXMgZW1haWwuDQo=
