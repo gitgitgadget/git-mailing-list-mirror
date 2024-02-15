@@ -1,78 +1,78 @@
-Received: from fout6-smtp.messagingengine.com (fout6-smtp.messagingengine.com [103.168.172.149])
+Received: from fhigh8-smtp.messagingengine.com (fhigh8-smtp.messagingengine.com [103.168.172.159])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6FB9134CC
-	for <git@vger.kernel.org>; Thu, 15 Feb 2024 08:25:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE10B13AC8
+	for <git@vger.kernel.org>; Thu, 15 Feb 2024 08:25:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707985540; cv=none; b=NDHkrxbuR0I2sUHVubxQwfqOaVD1m/N2iqbEvaURfHLBB467owS0NdB7I75yOHaRxWRbj20OySOHMvHNDHQ2E5oC/0nlCZ3Ls57R6qo8gCbWk78thM8fWJYF1LdvWdqVKhEkUxc2leBPB2HJ6gH2kN4oMvHUJk+90LDgkmsMlMI=
+	t=1707985544; cv=none; b=ZOj52gw1HJyRYVzyN//cfuekiUKGL2bzvxkEEEsW5f1jSSJQlQBRGRlSZXrAOcK5E9AOdrVDwNNf7iUZzTRxeNNsJG54cDQQKK5cb/yMi2C52bkro2rmguPaO+dDZXNXJMI98mxRqSV3SmmA4ZIs8Zsxl32q/fdBjMbmq+fYu4s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707985540; c=relaxed/simple;
-	bh=1FbRW2BUER9MhVnivjqEi1viFH9E67KE+xkZ1ookr9g=;
+	s=arc-20240116; t=1707985544; c=relaxed/simple;
+	bh=FRCSHu3KDkFIJArb1qreYFGt5wPC900nWAPrFJl68CY=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=QCNlmHe1i1S3iJ3GVz3JUEFKT+MgL3m6BK5yZB1Tranmsq6e3iLS88aMumw/EoOk/m3Icds3ExVALbu5mTd2KFxxMYeglMVKT8cRuELwM9wHrhlJDIMpmEA0LDzGz8wgjQAbePxeLFZjrfr/zQ/k/tDZx37Wsq8TSyy4Dh4Doyo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=bk2Fvtr2; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=N8vQFDY6; arc=none smtp.client-ip=103.168.172.149
+	 Content-Type:Content-Disposition:In-Reply-To; b=DfDagDdp105NwUAhuLo3iZSiPHT3wns2NsVy51dNcsYITTJGaqIKC1/4YVo8usFiSs15MlhfyhIkWD87q/OBedU9k88v0cFw+/efMbvujSv4nddMyD/eEJPGVucA2yG1kF+Ja2IA9LBy9qPA3q9FHpT4+XLR4g1ou+dh35swrEw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=mB0B5IQL; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=LH0zILAE; arc=none smtp.client-ip=103.168.172.159
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="bk2Fvtr2";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="N8vQFDY6"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="mB0B5IQL";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="LH0zILAE"
 Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
-	by mailfout.nyi.internal (Postfix) with ESMTP id A2F8213800E8;
-	Thu, 15 Feb 2024 03:25:37 -0500 (EST)
+	by mailfhigh.nyi.internal (Postfix) with ESMTP id A28861140094;
+	Thu, 15 Feb 2024 03:25:41 -0500 (EST)
 Received: from mailfrontend1 ([10.202.2.162])
-  by compute4.internal (MEProxy); Thu, 15 Feb 2024 03:25:37 -0500
+  by compute4.internal (MEProxy); Thu, 15 Feb 2024 03:25:41 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1707985537; x=1708071937; bh=K3wgQYVEqW
-	NliaVt1m44FsXq1WsYguJUG0yTnEEBdIM=; b=bk2Fvtr2gL5wAfh5UL9I1hdehp
-	62S+9ZpjsmBfJLYoV6/5dhqrEposNbNs6nIr1jXfVsuePZSEUHyFeRDTaIXVDnOm
-	IN/EL5b+RkI/zeuax23nxwk/zWssh8UfvTZKU7Xgt5Bz6nHoSbR4nqRZ72lo7Ju/
-	web+5z3zbb8jm6AkgCMueTkbS3gZyXncUr+4MRd8EAhLr/gnks+ma2ZXE8wX4r4+
-	v55bM24n2nTDDk8Uh3tzk5Xy4t4KPWRvO8+2k9deygP34GA5B7JG/QNrYnxURZLW
-	dIjTcMNAc2aNc/zIMDrGpptJUAxl/Ppt3EONxtwtZOwRR+HyNRFzsNBPObgg==
+	:subject:to:to; s=fm1; t=1707985541; x=1708071941; bh=EkczgDjwNy
+	xr4LM68CkLzkYZcAPhZe26gz2ynNXzfdo=; b=mB0B5IQLI7hbKNHEFWfFB+/Yhk
+	gSXEvyhEFZrf0sFDBv/cdexkfojO6G7feoNIVvBgtOi9QVc1h9M3Uytnz204W0my
+	gbxYxNp0zVnd4jpcNa6EqfZUyjWtNDgu7fsc+2EQP5avJSZtJpKSNxAFNw2OXmA2
+	cZzlh+s7Qq2rl9+zxieuejTH4OzjyA1Q+yQjckYEubkZnZWWWmm83+E6/4MlZGpg
+	GNBgIhvIb9lRisVOAVz0cKj90VpF1jmMUkWGihoec7CHA9O2xtQ9gpFO9/5d2fnp
+	RX1bBHUNZxaNymxy/llXqdK+R85Dz63NSI+0m+GwWwBYteV6eb3oXYDHD6kA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1707985537; x=1708071937; bh=K3wgQYVEqWNliaVt1m44FsXq1WsY
-	guJUG0yTnEEBdIM=; b=N8vQFDY64ys7PXsOw/Lr2SGCQ5+EIg6AiOLcyLta+XpN
-	gZXipfwMSUAvE5F/PO1XRAw8R0XKlzof6Xe5KmPdsR/n3GHcffztOwdylzjd9GcP
-	F0pVsbKXGnd64qAP2XKmZlx6pnNbbpoqCutEw1NHHJylpMii9+Gordz06Qg0Wgu3
-	PXuYdhLzlnn8o1T1oJBqVsIYlf1HaaA6Lmit8l7vspl44nXQgEmMD0e+a9OIhljA
-	vCuMq5A3dvreSjlSoJYZJkm901r4QFtpQfVpfGZnSzYyI0pIxuZRsGRew6YPv/z5
-	ieCG8oRrsACJATFKoz1PTjtNrx2xaTC+tzDj6F6TDA==
-X-ME-Sender: <xms:gcrNZeKrhE82eG6tu5DdptWnO7D2EPnKIqHqNzDXp_pLYkt2hcw64g>
-    <xme:gcrNZWJXOMb85DkuO8x-mzn3xFbDextzlyN345CQx2h7EXeJfYj2fHvPlyr9eVop4
-    tbtshyVjBrUSiSQMA>
-X-ME-Received: <xmr:gcrNZeuYN4Zzgr671r0YqksgyX9ulvHHWIKQ_QDyULNtxzstqzfK0pSrXAXsn0NnXvSW-bJazA2ikrwqrpULXIZ8WeIqKnz_QVWk0HvZiIMC>
+	fm1; t=1707985541; x=1708071941; bh=EkczgDjwNyxr4LM68CkLzkYZcAPh
+	Ze26gz2ynNXzfdo=; b=LH0zILAEZfoKn9D7Wfax9NGUs0vGS2w0G8b3HFTnB1q7
+	fr0kDzGR5W1RSXO1K3EIKvLi8VKQgws7zA/w/zLh27Pv6rX3tCn1j+hg1wyavBuf
+	d3w7sCWNFqJD0ZJHG3VHTxhT5ZFG1rezcrL021hXztMjI3sWaPjaHQgFHFFtuJui
+	OOMf/7QMfqUMbV/7Xdp5XOZQw35+QhutPlSPoW+iTOaI06RTo0g8XCDsEEj73kl5
+	2G1tM0Swgs1QbCzX7nJt2X1F0fqeKTG8S26i2Ro3UsU8RyEt4QB/1OZmye09Xld3
+	oEhO8uSqdaAvKAxR8pMlcHi6WlzCRtqNyKC1Zbhj+Q==
+X-ME-Sender: <xms:hcrNZY_8jU2y0EkRnxXEIJAEsNXEq0hy1T7ec75UPeAkUQWDDozl3w>
+    <xme:hcrNZQsfJ7QVSs3uWpoAEVm8HhBmKuDRGg3czGV7VL1cJSAMWVfzn_G4s05N5IFcR
+    mty6U31wmm6fxuaWg>
+X-ME-Received: <xmr:hcrNZeBxEPq1pLq-gPMo70jn8yy-w7MFjo96YqaHOIm0tywjyMAg5ZuVTVSo5JlJqC6TPYWwG-f9v5s-S15PL-c02r0yXgI_NrkXAqpYuKx_>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrudelgdeihecutefuodetggdotefrodftvf
     curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
     uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
     fjughrpeffhffvvefukfhfgggtuggjsehgtderredttddvnecuhfhrohhmpefrrghtrhhi
     tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
     hnpeeukedtvedtffevleejtefgheehieegkeeluddvfeefgeehgfeltddtheejleffteen
-    ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
+    ucevlhhushhtvghrufhiiigvpedunecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
     hkshdrihhm
-X-ME-Proxy: <xmx:gcrNZTaqliAnth-nzrONuzo5zuSm7Aof4Nz53Ek4hxkHVbZl016W7A>
-    <xmx:gcrNZVbBHjfB4rQBbIOl2qr6Y_ov2sYRixx7OrDP9PI6KohslnkFsw>
-    <xmx:gcrNZfAx-mn-swkHKAxNtgAAAPAdycUvuxO98fn_dNk9u2frU7BoKg>
-    <xmx:gcrNZZHlnDvjjCjebqiN-AWtz_gXRh1anSRGOIAJ1O8L7P-jdM6XsQ>
+X-ME-Proxy: <xmx:hcrNZYcos749vokhR2I-CLJo_ihtZZhfyPbaiUnbxt9A_HiKlIGuRA>
+    <xmx:hcrNZdNPadP7w90_lzVUwG7kqgFvrolSFWJYHROILbVDakKIp-ZDLQ>
+    <xmx:hcrNZSkr-bK91Gw2KN_XIXz0pik3mZeATg2RQXggtFXJwZeK8MQ_fA>
+    <xmx:hcrNZepsgm2y4XyJgK_bai59Hc-1ZZ5Q02k4Ye-mUueh0SP6tkg6Rg>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 15 Feb 2024 03:25:36 -0500 (EST)
+ 15 Feb 2024 03:25:40 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 3324e75a (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 15 Feb 2024 08:21:44 +0000 (UTC)
-Date: Thu, 15 Feb 2024 09:25:34 +0100
+	by vm-mail (OpenSMTPD) with ESMTPSA id dc9837de (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 15 Feb 2024 08:21:48 +0000 (UTC)
+Date: Thu, 15 Feb 2024 09:25:38 +0100
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
 Cc: Karthik Nayak <karthik.188@gmail.com>,
 	Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v2 2/7] t0410: convert tests to use DEFAULT_REPO_FORMAT prereq
-Message-ID: <2dd87f3126cedd39cb5b113053c90ee35ae0e5ff.1707985173.git.ps@pks.im>
+Subject: [PATCH v2 3/7] t1400: exercise reflog with gaps with reftable backend
+Message-ID: <ed57913eb95e4031ef3319b37aa0972c8c1ee89a.1707985173.git.ps@pks.im>
 References: <cover.1707463221.git.ps@pks.im>
  <cover.1707985173.git.ps@pks.im>
 Precedence: bulk
@@ -82,83 +82,80 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="wLQkrdE2vUAY2qP/"
+	protocol="application/pgp-signature"; boundary="nPwgyMhSieW8OZX8"
 Content-Disposition: inline
 In-Reply-To: <cover.1707985173.git.ps@pks.im>
 
 
---wLQkrdE2vUAY2qP/
+--nPwgyMhSieW8OZX8
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-In t0410 we have two tests which exercise how partial clones behave in
-the context of a repository with extensions. These tests are marked to
-require a repository using SHA1 and the "files" backend because we
-explicitly set the repository format version to 0, and setting up either
-the "objectFormat" or "refStorage" extensions requires a repository
-format version of 1.
+In t1400, we have a test that exercises whether we print a warning
+message as expected when the reflog contains entries which have a gap
+between the old entry's new object ID and the new entry's old object ID.
+While the logic should apply to all ref backends, the test setup writes
+into `.git/logs` directly and is thus "files"-backend specific.
 
-We have recently introduced a new DEFAULT_REPO_FORMAT prerequisite.
-Despite capturing the intent more directly, it also has the added
-benefit that it can easily be extended in the future in case we add new
-repository extensions. Adapt the tests to use it.
+Refactor the test to instead use `git reflog delete` to create the gap
+and drop the REFFILES prerequisite.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- t/t0410-partial-clone.sh | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ t/t1400-update-ref.sh | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
-diff --git a/t/t0410-partial-clone.sh b/t/t0410-partial-clone.sh
-index 6b6424b3df..0f98b21be8 100755
---- a/t/t0410-partial-clone.sh
-+++ b/t/t0410-partial-clone.sh
-@@ -49,7 +49,7 @@ test_expect_success 'convert shallow clone to partial clo=
-ne' '
- 	test_cmp_config -C client 1 core.repositoryformatversion
- '
+diff --git a/t/t1400-update-ref.sh b/t/t1400-update-ref.sh
+index bf37763bd6..6ebc3ef945 100755
+--- a/t/t1400-update-ref.sh
++++ b/t/t1400-update-ref.sh
+@@ -426,15 +426,15 @@ test_expect_success 'Query "main@{2005-05-28}" (past =
+end of history)' '
+ rm -f expect
+ git update-ref -d $m
 =20
--test_expect_success SHA1,REFFILES 'convert to partial clone with noop exte=
-nsion' '
-+test_expect_success DEFAULT_REPO_FORMAT 'convert to partial clone with noo=
-p extension' '
- 	rm -fr server client &&
- 	test_create_repo server &&
- 	test_commit -C server my_commit 1 &&
-@@ -60,7 +60,7 @@ test_expect_success SHA1,REFFILES 'convert to partial clo=
-ne with noop extension'
- 	git -C client fetch --unshallow --filter=3D"blob:none"
- '
+-test_expect_success REFFILES 'query reflog with gap' '
++test_expect_success 'query reflog with gap' '
+ 	test_when_finished "git update-ref -d $m" &&
 =20
--test_expect_success SHA1,REFFILES 'converting to partial clone fails with =
-unrecognized extension' '
-+test_expect_success DEFAULT_REPO_FORMAT 'converting to partial clone fails=
- with unrecognized extension' '
- 	rm -fr server client &&
- 	test_create_repo server &&
- 	test_commit -C server my_commit 1 &&
+-	git update-ref $m $F &&
+-	cat >.git/logs/$m <<-EOF &&
+-	$Z $A $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> 1117150320 -0500
+-	$A $B $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> 1117150380 -0500
+-	$D $F $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> 1117150680 -0500
+-	EOF
++	GIT_COMMITTER_DATE=3D"1117150320 -0500" git update-ref $m $A &&
++	GIT_COMMITTER_DATE=3D"1117150380 -0500" git update-ref $m $B &&
++	GIT_COMMITTER_DATE=3D"1117150480 -0500" git update-ref $m $C &&
++	GIT_COMMITTER_DATE=3D"1117150580 -0500" git update-ref $m $D &&
++	GIT_COMMITTER_DATE=3D"1117150680 -0500" git update-ref $m $F &&
++	git reflog delete $m@{2} &&
+=20
+ 	git rev-parse --verify "main@{2005-05-26 23:33:01}" >actual 2>stderr &&
+ 	echo "$B" >expect &&
 --=20
 2.44.0-rc0
 
 
---wLQkrdE2vUAY2qP/
+--nPwgyMhSieW8OZX8
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmXNyn0ACgkQVbJhu7ck
-PpSrFw//caGwvvCOLBlsWRDOEcLxAiDhdPFGLKzvQu1qCMBDvpkVdP8+jDQ8TsxC
-hzNu1/k08itOtwNQouu9J2aFk1r3gdZXK2l7ju0Dk2Faz1wobd41I6KOXblPHu5Y
-HCk+lwIJEFQVSyXnqxSY9YjCXVLMPs6QcfFpMtcVJrMjTaAIYJjU1awHqSjZZLL5
-YGF4nRvksUFvOBHtEB/TcJEwcahV5e1Ohc7J5vTjnHvV/cOR4p0iABpFUZBKcQyh
-a9+6PNnL1tiBrpjaFr0LrpRIOlKRrRWbziesnM3AhiimSB8TPcBhkxpdT2mVRht5
-otWK50cQAkzVvYWeHyR1Eq5bDQezvbMHXd/LezBImQtRQt1o0bUbmcneIe2i/AiP
-y0Zqd2tceVQXFKMBNkuMJIcu/B0nTO5u/u7S8neoezKwHkaF8MJ4NxMILOmQzSmk
-/Rz4sDSq1LrS1iNCGZxTiCdRvWl9yQeuF9Y0t7D3jrbBQW6FYpwbZ05IWbFRr/Aa
-35azxbjzer55rK+yiMQrhogFYf1/o9T6iMFWyz/lOei73nYJDuGaO1QdIpWXUSxy
-F1wki//xb3Htqw0YoslYM7XU/xZRdQwKD5aPYSY2QuntNPyZXvZ3KuDzNh6VtzPR
-5rpsP7Mrk8Uhlw7iNzjn6kiw1vHFi9MNMwz6b2RPHrlqPR0MTPU=
-=nHZF
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmXNyoEACgkQVbJhu7ck
+PpQhSA//XafytE/h+kWwcd+phSpyTkFwNwazRjUy3neiJx60XQ8QD2v6Fig4tyNP
+Fu5JboZ9mIfX5EW5cWzuXlq9W1uwVOoWa/IEjckOc5KUbXMhv3KK4C02zzLac9Eq
+tHqZcNVr+HgPjwv+d2opBYWdP4AgUGA8MnE2BBd0WCHP/nXrndJNfzc/86G9HuT1
+huH+Ne/vkb1mmdNtR5hHjjvyLCe/H+1lzZ6UfTG0dewfFMgB7qBtcaKpzCnqS/gw
+h85BiP1Kftwgd17qEYYCakPkssn/NX1k8eTuBjOJMbaeC8Z9tk4Hg8RH5m11g7EH
+M1DaXyLrtzkdsyLFfMBv0D2OODnj617kVYoss85QE7cCPDPbyY3YSC7ADjCsYXHu
+ODhy+kDpHuP8HWPYRQoFKNMcdPEv5mkBy58fX6FimEphV+evXY99lKzbCgRVzZI9
+O0UgZlQvbJ/y+lukz5VvKQqapEALvJLllEtS4PXNyzJGkzI0jjXYUox3e59TLavs
+0gqkuVT53LmfvxpexFWtirrv3eRFaT4N2lEF7WvPoyDfSK6ir+pTnE8gA9H5ipuo
+9bR02RdHjGJdLg85stg88GPTCTpkUt1+AeSt97ilykITrniCaMkTg492Yq/mRrbl
+ox2G6HBE9UkvK+DSQVPwExb6QPfmorkPu+ZnuDD0Kqh7MYQjZRE=
+=/65i
 -----END PGP SIGNATURE-----
 
---wLQkrdE2vUAY2qP/--
+--nPwgyMhSieW8OZX8--
