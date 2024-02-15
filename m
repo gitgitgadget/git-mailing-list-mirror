@@ -1,217 +1,198 @@
-Received: from NAM12-BN8-obe.outbound.protection.outlook.com (mail-bn8nam12on2114.outbound.protection.outlook.com [40.107.237.114])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f54.google.com (mail-wr1-f54.google.com [209.85.221.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF8686A349
-	for <git@vger.kernel.org>; Thu, 15 Feb 2024 21:40:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.237.114
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708033253; cv=fail; b=RKDqLMmVd6oFrnxRUfYLnU/FoZYmrlO80a9QlUz3x4OU0CBQLATJtnDiqyblsuEUBbfAlKJx1iwUvQIwk3pEKExVnkL51KwOAY92SuxSy7e8/qdxaCZewZiBPoumuN13aRvTknHlT0SPd6d3UXEb2yfQ6qRlhEgjgbDb1dtbZfQ=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708033253; c=relaxed/simple;
-	bh=WyKWKIZjldp66KaLYXufjbEbQWuGdr6fN2Rs9PyiaT0=;
-	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
-	 Content-Type:MIME-Version; b=MqGQF7MaOr1ZDJyOfo6h9n5Kpgkc6/JU5/K5A7+UtLPK0Vk4/ibtmK0QRRb7mR6PeVWsN2/6yraJyd5E3IGudC2/Fh6OAyJSMb5Q40pTVHBdo5u5FfinGyP0/SvFHeok7yupKj84QLBERzaGSbR5skEzNn6MsNpkrwGqgc/HcL4=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=dlhcorp.com; spf=pass smtp.mailfrom=dlhcorp.com; arc=fail smtp.client-ip=40.107.237.114
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=dlhcorp.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=dlhcorp.com
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=TJxLyrAGNuRGsxO/QqTKq57eZnQ8S1M27ouJ8hjSTUPKjlQXduDa5iTqOjp1m0tyyIBDLi4qay5qKIwmg4KTuAIQnYTBX6eCgxacFo33Um44z3sWpi6NcrUnkuo1VMB9P/0jrLjmBxX1PWm3ekm7HGbDLlpYQAOOuxlZ7EpeC1Oz/qmSbHmYYFmqK3vM8E9FyaqeUUjCdfx5jWc085WW+qzeXHwR7nuxs89USm/SFwLoZ8AdqJ/PmkekGX9agn92yd3z9EWG+rBTzdlBy2oVY2ka+Nyxw5Iz5hHy1wUBu/qSt5m6037/6l0GQYEh9Pn4I4u/wO6sbZ5s8k+WmqKfbQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=/5cr6sHj+CaNC50GqejZE0Brz1015pu4YK8Nh9XmfG8=;
- b=JkqJ2zC5qEzIOnBSU6iMV+u1OmOfHgtyWsjmGImfWG/WnoqX1FOAHruxRrED729lo/C4GLGfFaotltllIIBghDu01FX7Uo0artR4KS+pAP1Gk8z3qsoWI3oL4ME60rPao0AI+/xyYW4ztTyf63/Ken2/WoG5DlzrlCgRvjvGofPcZbkGzUFiO9E95PzIlHx2iFu6/LawUXYulNZv8bv2YK/g7CRqQzlSY0f6ytcWmmyni9cJgLURXG8NR/6JUi3x4A6f5DvAJ+7J2h4DOvyskTEY33XqUSxpWecdWOr13X1o8Hqe3DouQNF7SHQZZ/BVH/P73jdjakq1Yz5Y7VchGQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=dlhcorp.com; dmarc=pass action=none header.from=dlhcorp.com;
- dkim=pass header.d=dlhcorp.com; arc=none
-Received: from LV8PR13MB6560.namprd13.prod.outlook.com (2603:10b6:408:22a::12)
- by PH0PR13MB4940.namprd13.prod.outlook.com (2603:10b6:510:a0::13) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7270.39; Thu, 15 Feb
- 2024 21:40:47 +0000
-Received: from LV8PR13MB6560.namprd13.prod.outlook.com
- ([fe80::738c:4313:3c3f:7aea]) by LV8PR13MB6560.namprd13.prod.outlook.com
- ([fe80::738c:4313:3c3f:7aea%5]) with mapi id 15.20.7292.027; Thu, 15 Feb 2024
- 21:40:47 +0000
-From: Christian Castro <christian.castro@dlhcorp.com>
-To: =?iso-8859-1?Q?Matthias_A=DFhauer?= <mha1993@live.de>
-CC: "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: RE: Hello question on Git for Windows 2.43.0 - GUID and/or SWID tag
- for this title
-Thread-Topic: Hello question on Git for Windows 2.43.0 - GUID and/or SWID tag
- for this title
-Thread-Index: AdpWBxy+1+dpg/5hSeqyrICsnZ7mywF7UPCAARh0jaA=
-Date: Thu, 15 Feb 2024 21:40:47 +0000
-Message-ID:
- <LV8PR13MB65609D60ACB8A6EADFBFE3459C4D2@LV8PR13MB6560.namprd13.prod.outlook.com>
-References:
- <LV8PR13MB6560538530A2A7D1C1FD89C19C422@LV8PR13MB6560.namprd13.prod.outlook.com>
- <DB9P250MB06926B4A6997EF6F866296ADA54A2@DB9P250MB0692.EURP250.PROD.OUTLOOK.COM>
-In-Reply-To:
- <DB9P250MB06926B4A6997EF6F866296ADA54A2@DB9P250MB0692.EURP250.PROD.OUTLOOK.COM>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=dlhcorp.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: LV8PR13MB6560:EE_|PH0PR13MB4940:EE_
-x-ms-office365-filtering-correlation-id: 434d4da4-6350-470c-e07c-08dc2e6ec55f
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info:
- eL9b4ZsbKiIx3LERGpWN2tkL81De5pKDkstAFtart9DW7Nf9T9dAPcopS15P/d3NeYDfN/zWqJ7GUZ/UsVq+7lQZUFRCFbldcRpxCcKLV9N0QYULNHXyYbAqKyqIiPf3vz5MfAVEZDLQbYTcX4Q7dNeqpeYw7Suz2a7NnaJnHoepj23QIkwVxpaBDmEz2CqXZc8HDRGcZmmnuEPAtNO/IayrtF+HR9/ZnHzsiGIyWDYjWMVGUf3OByidO2TebNv6pxqO40sYAMowNdURFwLESyjw6rKHTP8hosNXBBmb+eDzNx9sDEzDTBCbWqfrckR4trhfXLh/22tYVNqzoaB1q3wxrNiqFC+pjY6ZDIK3ZnyiTX+cfL5fCVg5N/mX8dr18Cey8dMkv4MBZQ8NCiAxxZUa9SJmD6g+wOTilB3HM2A9sC699Kf1RupGB+BUaqcmwyGskKxt9T7SgAXKMRixkzQRGyYPQHqPLM/m9QZ8MEZKeYxZMvVhtJSUu83UT5tVLsJxn4IEoxtMWoFv0G25aSX8Hb6FqhDZbvxVC1/W0UPo0CbHqj4GRuWs0mkeDsznMQNCTBVce4nrSmWR34wM8lyS8DsbEicb+RGBOFUfKCYC0zashr6gppXkg14kYA8S
-x-forefront-antispam-report:
- CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LV8PR13MB6560.namprd13.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230031)(39850400004)(366004)(376002)(396003)(346002)(136003)(230273577357003)(230473577357003)(230922051799003)(451199024)(1800799012)(186009)(64100799003)(122000001)(33656002)(9686003)(52536014)(71200400001)(6916009)(2906002)(86362001)(53546011)(478600001)(7696005)(38100700002)(966005)(5660300002)(6506007)(4326008)(8936002)(8676002)(66446008)(66946007)(45080400002)(64756008)(41300700001)(83380400001)(66574015)(26005)(316002)(44832011)(76116006)(66476007)(66556008)(38070700009)(40140700001)(55016003);DIR:OUT;SFP:1102;
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0:
- =?iso-8859-1?Q?1JlojJneoGXzqoxSfNKxyKsh/6FEP7UxC1XvQvpf+4sN84zXH5dehkWoRi?=
- =?iso-8859-1?Q?JroWjVc2IuxGCsP86DmTmBCRkDMv4Pn8PJsTLZTHFccBD4X2pivRXAXq42?=
- =?iso-8859-1?Q?HjIpbpBJiBJkuNTh7CTC+5s4JmcYrH9F+FRtLIuoHAOxPbwDlKPFEuD5Q2?=
- =?iso-8859-1?Q?knLQXYsRTotomfkcCvHBdPp8GBKFeNshiOYzKWMz9PitXTGpK3JYQvIDtb?=
- =?iso-8859-1?Q?gWGOW5G4rhQ+RQwuUq5/hSvWe8R3prsmR8yZ8Bv0gRONU0OTayXQcsp1hu?=
- =?iso-8859-1?Q?NkB1O5n96pn3Zbb+Rms3PLpwtm00GyXvA0tGxuqIagMqDAZjVw3mOP2vkJ?=
- =?iso-8859-1?Q?jdBLU4L3iZL5HrNENi6LVdGEwuZofCGoKKbCjn6nW2Gkid+VO58Zjuubom?=
- =?iso-8859-1?Q?zV1BPFIc0IMhFSDJFxR1EeIEsmTgmbKChjM3n/eGn9oW1KwykY7tpIRqI1?=
- =?iso-8859-1?Q?xneqWyGNJvSgw0cFVzz/LL77F3DnHX1fBDwqGJ8fWaBiY4F/t5qe52wqac?=
- =?iso-8859-1?Q?Scg5ii3m9hiRvL6aJ+fPO4p8b12c6rbFxf1xJMfnYmd1K6jp7WHp77Uhtf?=
- =?iso-8859-1?Q?YKrqKYnQf1J6kWnsQrL7/NC0zyEPka2mJrlwExEnwrdqeHTt6YCHgHgrpV?=
- =?iso-8859-1?Q?C9ItikbbszJwkyiCqb5ZQdp8+vReUmDydnYsB72+DHIHYz858ogEw+A5wo?=
- =?iso-8859-1?Q?vTs7Cv8c7msmUCBOs0il9xqYDC1Makx3tkun6wL2cJAlml1cjdb1KwAhVM?=
- =?iso-8859-1?Q?9MWmN7IAToXmGk3LOswouIEmmWTeQQ7z2rdOqUa7BH7uhcGceGkovpJmFK?=
- =?iso-8859-1?Q?pUdTz3EfMONssu+rbbTm1d0rpJkeNh9xlVQTGk8FxeJJkeEKe6CRQU3MVi?=
- =?iso-8859-1?Q?DuHY32y5AfSmCl109d/hQRSbrbEF4Hc5g9NrPFRWJve2i5bBTZbIgZyoZK?=
- =?iso-8859-1?Q?ASE7qLqfeEMSu19C0lnq4OKvPPNBgX8ksoyHhXVcK8LtQ5K2USv9pL9NAv?=
- =?iso-8859-1?Q?DHYcXkEwG0QM0iDPh3O+2BK+fix2CF8uPWMBItgPp0E+X+bERvJX5abX31?=
- =?iso-8859-1?Q?ZMm6otDECTxywqssT6Dw588YLQGl8k0oafnylblsGuoeqBwCLpGUP2WWJy?=
- =?iso-8859-1?Q?70cYtvDFlBjAdByLnO2gU7/4ZUXvPQLQlnAPDx+YlzLIiW4TkNI8ioUoha?=
- =?iso-8859-1?Q?LXqdFPnLD9w/x3QfUcSC30DqTHHq4mtHMKTk5qj0rGdysUHJzuJPBqbutM?=
- =?iso-8859-1?Q?y4mAOT1kaQbNfMBfL4CwkKgcSny6mBprUO53rhvS0+6Jv5bUuACM0kZ0IF?=
- =?iso-8859-1?Q?0fFq9D0qftHXEf1/8J1RsZMOGWWwzBl8nfS6ib4R/Mw4YiVck76IDJ37Bz?=
- =?iso-8859-1?Q?OQ6B1SvrXZuwRcyjQPb0yPR5uycebGFJnrWjX22olbIW8eSUp7XkPhTfQ0?=
- =?iso-8859-1?Q?b1jsTuBNQM7V7hLC15xKQ2UFqjnmsTlsi6ABf3+dQBj02iR3ZEqwN+SmNS?=
- =?iso-8859-1?Q?aG3jYrI2A0duCau5RXjLn/pBwUiMvaUvjqKmjO96c8XHWo4Vu1KL+kiYEm?=
- =?iso-8859-1?Q?2pftqJ/L24oHNecyoohQf+I+uRvaz1XEzLUm+f1sgmpicrRQc4t3EJHqL3?=
- =?iso-8859-1?Q?5JCDwE/5vC+FZG27+PW0WfEmXZd1SH0Y359Du5MUrwD1DZGfrakoBwFw?=
- =?iso-8859-1?Q?=3D=3D?=
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E0832595
+	for <git@vger.kernel.org>; Thu, 15 Feb 2024 21:52:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.54
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1708033967; cv=none; b=bSzSAJHyPK+Y9/AwgPUq41ZlOyS9BhJ4RQ+E/5jvCnOXP5DyfSNMpampuw27uJ7uYBBXAu20zrOyXOHYeDEDf9B8rbt9f6ZpHYXvfEmNpYZtLfSDCW896Gpw5gDfrhqqbRIWS0RT0UHh5CcgHwIIIznmR8Sb4oCTyYFaQ/zalFE=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1708033967; c=relaxed/simple;
+	bh=va1z3xUxG+pczTfWn6/Jd73fWtgOC/yqlqAGJYqrOa0=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=QZzNXf9RtQ0bkctWXneJnj2MQ7nSs/8vl5DbrjGAC4F91y8qmA9hMbwv1rzPEXzWjCJu0ybhSvjsUEZRQNgJ0spa18m1dJu1etU6nWI66jKLijMOHUdzIVmp0Nxey/xMz/TO3d3RtLSUdjJDQEFG5LC53k21ga088S2AUMfafzE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Iws1IhR8; arc=none smtp.client-ip=209.85.221.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Iws1IhR8"
+Received: by mail-wr1-f54.google.com with SMTP id ffacd0b85a97d-3394b892691so962353f8f.1
+        for <git@vger.kernel.org>; Thu, 15 Feb 2024 13:52:45 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1708033963; x=1708638763; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:to:subject:user-agent:mime-version:date:message-id:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=A3GWi+kOv8h1GCHHXRWNaTMbMvHnl9NYWnHuGVHVNQU=;
+        b=Iws1IhR8p+ZU7uHWEJU670eHmrHkNzXvD16m44dX8qaPf/GGcGAQJHCXvwEDpJS0dv
+         WqkT/1bcxk5NO3B0Sulr1sAhaGIap1uGhLFy8cM4WY0Eok9JrHnueVS8JXXGDED5QO9D
+         9k8pDKZCNYzo3H85IbDdMat88LxWvniMiRJN79Bud8b0wuRXn0u0SvZqiVNJTnlBCzta
+         B02yae7i1ct8Y1AQalQmpy4hZgJphWQbrbwHDJJ4GAX2osox6A+QVVctQ0hCcQ/YRpIq
+         s3B+ZcCvbGGRRjpx/3Ph+9GKLJ2iBksMYd5ISjBjG+JhDwZaSDgQ2kLIDLqHezHb7gvQ
+         UWbw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1708033963; x=1708638763;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=A3GWi+kOv8h1GCHHXRWNaTMbMvHnl9NYWnHuGVHVNQU=;
+        b=gja6oKBCqdTD/drymsY7zWqSEvvh99GyWD6zGjh3xub5z53YlA3uO2JNl6/whWM4hw
+         LWSUbvp8m+Z/zs5LExTKdWjCgzDztA8eYdOIFhJIPJBQxR3nC51vD6sem/tHCxEarKt7
+         o95G1Tq5fd9WHU/mUgZddINKshg5NGWPtSTUT2T0Im7cYSNGhbQmQcteV+BS1KpHguVo
+         yujwyGrv9G1If7Q/qfSWL1OBbeG/E4lcNSI3XYhmDCCUE+dAoHRSEwbOZbXDy+SEav5b
+         ss9kCFh6XpMHRKeE37NNU8yQZn/cMsUeHs2kFOAq8UcvRPCL/AmQFfgIHo0XxqC+3Ce3
+         ERig==
+X-Forwarded-Encrypted: i=1; AJvYcCVkukOlD6Mwm1p5QOBT6vE5VCA97iSaCo4jyQB85vZ8A474AUPuAq1JSEA92gjdfKNFNO/MTP3asLFLGk/nQBLnFpGr
+X-Gm-Message-State: AOJu0YxXRanJOf2KA9xaEoclJexGUd5DP83uZqBkVdh5iZKRgNhok9t2
+	xz8uYtf3UMH6gQuUlwhxjqNN0MPgIyL4uE4zfUbfHYDYb0ay9C4d
+X-Google-Smtp-Source: AGHT+IGufogjarDaqb8c1O+XlAUJogSgp/Q3FgCq6y0GlQanyJVakci+QYD1/ow3IPiLQ63Pi8O4XA==
+X-Received: by 2002:adf:a458:0:b0:33d:1bc3:83c4 with SMTP id e24-20020adfa458000000b0033d1bc383c4mr15988wra.12.1708033963353;
+        Thu, 15 Feb 2024 13:52:43 -0800 (PST)
+Received: from gmail.com (15.red-88-14-198.dynamicip.rima-tde.net. [88.14.198.15])
+        by smtp.gmail.com with ESMTPSA id o11-20020adfcf0b000000b0033b4dae972asm308467wrj.37.2024.02.15.13.52.42
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 15 Feb 2024 13:52:42 -0800 (PST)
+Message-ID: <e8fdd057-2670-4c93-b362-202a339d5f49@gmail.com>
+Date: Thu, 15 Feb 2024 22:52:36 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-OriginatorOrg: dlhcorp.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: LV8PR13MB6560.namprd13.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 434d4da4-6350-470c-e07c-08dc2e6ec55f
-X-MS-Exchange-CrossTenant-originalarrivaltime: 15 Feb 2024 21:40:47.0865
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 6b3df673-4d3c-4327-9918-0c35b6a50da3
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: GF2VRtWRNWHQNTLVtywLLNVqZGjGkGU3uE/jP9nxP5ehZzmBak8YvW0qFbmEG37G2eG0LVHavKkwa2N0ZXExabgqS8zTRbVEEnzy0sKVmKY=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH0PR13MB4940
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] branch: rework the descriptions of rename and copy
+ operations
+To: Dragan Simic <dsimic@manjaro.org>, git@vger.kernel.org
+References: <3cbc78bb5729f304b30bf37a18d1762af553aa00.1708022441.git.dsimic@manjaro.org>
+From: =?UTF-8?Q?Rub=C3=A9n_Justo?= <rjusto@gmail.com>
+Content-Language: en-US
+In-Reply-To: <3cbc78bb5729f304b30bf37a18d1762af553aa00.1708022441.git.dsimic@manjaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-Hello Matthias,
+On 15-feb-2024 19:42:32, Dragan Simic wrote:
 
+> Move the descriptions of the <oldbranch> and <newbranch> arguments to the
+> descriptions of the branch rename and copy operations, where they naturally
+> belong.
 
-Thank you for your reply.
+Thank you Dragan for working on this.
 
-Question: Are you a Git for Windows developer, open-source contributor or ?=
- I ask because I will contact the manufacturer of our inventory product and=
- provide them your feedback. But I'd like to know what your role is with Gi=
-t for Windows for as of now I just have a reply from someone named Matthias=
- from a live.de email domain. I hope you understand. Truly no offense meant=
- on my part.
+Let me chime in just to say that maybe another terms could be considered
+here;  like: "<branchname>" and "<newbranchname>" (maybe too long...) or
+so.
 
-Therefore, please let me know what your role is with Git for Windows so I c=
-an send this feedback accordingly and continue working on with our software=
- inventory vendor on the issue.
+I have no problem with the current terms, but "<branchname>" can be a
+sensible choice here as it is already being used for other commands
+where, and this may help overall, the consideration: "if ommited, the
+current branch is considered" also applies.
 
-
-Best regards,
-
-Christian
-
-
------Original Message-----
-From: Matthias A=DFhauer <mha1993@live.de>
-Sent: Saturday, February 10, 2024 2:40 AM
-To: Christian Castro <christian.castro@dlhcorp.com>
-Cc: git@vger.kernel.org
-Subject: Re: Hello question on Git for Windows 2.43.0 - GUID and/or SWID ta=
-g for this title
-
-[You don't often get email from mha1993@live.de. Learn why this is importan=
-t at https://aka.ms/LearnAboutSenderIdentification ]
-
-On Fri, 2 Feb 2024, Christian Castro wrote:
-
-> Hello Git for Windows,
->
->
-> I have a question on the GUID and/or SWID tag for Git for Windows 2.43.0.
->
-> Can you tell me where in the product the GUID and/or SWID tag would be st=
-ored in Windows for Git for Windows 2.43.0?
-> Our scanning software has detected both 2.39.2 and 2.43.0 on the same Win=
-dows but this is not so, only 2.43.0 is installed.
-> This was an upgrade from 2.39.2 though so not sure if that is messed up t=
-he results somehow.
->
-> I've looked in C:\ProgramData and there are no regid folders not regid.xy=
-z files exist for this product (for the SWID tag).
->
-> The Windows registry also does not have a GUID information for this produ=
-ct located under:
-> HKLM\Software\GitForWindows
-> HKLM\Software\Microsoft\Windows\CurrentVersion\Uninstall\Git_is1
->
->
-> If you've included a GUID and/or SWID tag for your product somewhere in t=
-he installation process, can you please tell me where these are stored unde=
-r Windows so I can fix? I'd appreciate it.
->
-
-Neither of those things really exist in Git for Windows. Well there are GUI=
-Ds, but no GUID that is used in the way you'd expect from an MSI installer.
-
-The Git for Windows installer is an innosetup based EXE installer.
-Innosetup doesn't have these concepts. There have been efforts to introduce=
- an MSI installer over the years, but they've all fizzled out.
-
-As for SWID tags, you're the first person to mention them in almost 15 year=
-s of ISO/IEC 19770-2 existing.
-
->
-> Thank you,
->
-> Christian Castro
-> Sr. Systems Administrator
-> Office:  301-628-3551
-> DLHcorp.com
->
->
->
-> ****WARNING**** This email message (including any attachments) are to be =
-treated as confidential/proprietary and may contain copyrighted or other le=
-gally protected information. It is intended only for the addressee(s) ident=
-ified above. If you are not the addressee(s), or an employee or agent of th=
-e addressee(s), please note that any dissemination, distribution, or copyin=
-g of this communication is strictly prohibited. If you have received this i=
-nformation in error, please destroy the information and notify the sender o=
-f the error. Thank you.
->
-
-****WARNING**** This email message (including any attachments) are to be tr=
-eated as confidential/proprietary and may contain copyrighted or other lega=
-lly protected information. It is intended only for the addressee(s) identif=
-ied above. If you are not the addressee(s), or an employee or agent of the =
-addressee(s), please note that any dissemination, distribution, or copying =
-of this communication is strictly prohibited. If you have received this inf=
-ormation in error, please destroy the information and notify the sender of =
-the error. Thank you.
+> Also, improve the descriptions of these two branch operations and,
+> for completeness, describe the outcomes of forced operations.
+> 
+> Describing the arguments together with their respective operations, instead
+> of describing them separately in a rather unfortunate attempt to squeeze more
+> meaning out of fewer words, flows much better and makes the git-branch(1)
+> man page significantly more usable.
+> 
+> The subsequent improvements shall continue this approach by either dissolving
+> as many sentences from the "Description" section into the "Options" section,
+> or by having those sentences converted into some kind of more readable and
+> better flowing prose, as already discussed and outlined. [1][2]
+> 
+> [1] https://lore.kernel.org/git/xmqqttmmlahf.fsf@gitster.g/T/#u
+> [2] https://lore.kernel.org/git/xmqq8r4zln08.fsf@gitster.g/T/#u
+> 
+> Signed-off-by: Dragan Simic <dsimic@manjaro.org>
+> ---
+> 
+> Notes:
+>     This patch was originally named "branch: clarify <oldbranch> and <newbranch>
+>     terms further", submitted and discussed in another thread, [3] but the nature
+>     of the patch has changed, causing the patch subject to be adjusted to match.
+>     
+>     Consequently, this is effectively version 2 of the patch, which includes
+>     detailed feedback from Kyle and Junio, who suggested moving/adding the
+>     argument descriptions to their respective commands.  This resulted in more
+>     significant changes to the contents of the git-branch(1) man page, in an
+>     attempt to make it more readable.
+>     
+>     [3] https://lore.kernel.org/git/e2eb777bca8ffeec42bdd684837d28dd52cfc9c3.1707136999.git.dsimic@manjaro.org/T/#u
+> 
+>  Documentation/git-branch.txt | 44 +++++++++++++++---------------------
+>  1 file changed, 18 insertions(+), 26 deletions(-)
+> 
+> diff --git a/Documentation/git-branch.txt b/Documentation/git-branch.txt
+> index 0b0844293235..370ea43c0380 100644
+> --- a/Documentation/git-branch.txt
+> +++ b/Documentation/git-branch.txt
+> @@ -72,16 +72,6 @@ the remote-tracking branch. This behavior may be changed via the global
+>  overridden by using the `--track` and `--no-track` options, and
+>  changed later using `git branch --set-upstream-to`.
+>  
+> -With a `-m` or `-M` option, <oldbranch> will be renamed to <newbranch>.
+> -If <oldbranch> had a corresponding reflog, it is renamed to match
+> -<newbranch>, and a reflog entry is created to remember the branch
+> -renaming. If <newbranch> exists, -M must be used to force the rename
+> -to happen.
+> -
+> -The `-c` and `-C` options have the exact same semantics as `-m` and
+> -`-M`, except instead of the branch being renamed, it will be copied to a
+> -new name, along with its config and reflog.
+> -
+>  With a `-d` or `-D` option, `<branchname>` will be deleted.  You may
+>  specify more than one branch for deletion.  If the branch currently
+>  has a reflog then the reflog will also be deleted.
+> @@ -128,18 +118,28 @@ Note that 'git branch -f <branchname> [<start-point>]', even with '-f',
+>  refuses to change an existing branch `<branchname>` that is checked out
+>  in another worktree linked to the same repository.
+>  
+> --m::
+> ---move::
+> -	Move/rename a branch, together with its config and reflog.
+> +-m [<oldbranch>] <newbranch>::
+> +--move [<oldbranch>] <newbranch>::
+> +	Rename an existing branch <oldbranch>, which if not specified defaults
+> +	to the current branch, to <newbranch>.  The configuration variables
+> +	for the <oldbranch> branch and its reflog are also renamed appropriately
+> +	to be used with <newbranch>.  Renaming fails if branch <newbranch>
+> +	already exists, but you can use `-M` or `--move --force` to overwrite
+> +	the files in existing branch <newbranch> while renaming.
+>  
+> --M::
+> +-M [<oldbranch>] <newbranch>::
+>  	Shortcut for `--move --force`.
+>  
+> --c::
+> ---copy::
+> -	Copy a branch, together with its config and reflog.
+> +-c [<oldbranch>] <newbranch>::
+> +--copy [<oldbranch>] <newbranch>::
+> +	Copy an existing branch <oldbranch>, which if not specified defaults
+> +	to the current branch, to <newbranch>.  The configuration variables
+> +	for the <oldbranch> branch and its reflog are also copied appropriately
+> +	to be used with <newbranch>.  Copying fails if branch <newbranch>
+> +	already exists, but you can use `-C` or `--copy --force` to overwrite
+> +	the files in existing branch <newbranch> while copying.
+>  
+> --C::
+> +-C [<oldbranch>] <newbranch>::
+>  	Shortcut for `--copy --force`.
+>  
+>  --color[=<when>]::
+> @@ -311,14 +311,6 @@ superproject's "origin/main", but tracks the submodule's "origin/main".
+>  	given as a branch name, a commit-id, or a tag.  If this
+>  	option is omitted, the current HEAD will be used instead.
+>  
+> -<oldbranch>::
+> -	The name of an existing branch.  If this option is omitted,
+> -	the name of the current branch will be used instead.
+> -
+> -<newbranch>::
+> -	The new name for an existing branch. The same restrictions as for
+> -	<branchname> apply.
+> -
+>  --sort=<key>::
+>  	Sort based on the key given. Prefix `-` to sort in descending
+>  	order of the value. You may use the --sort=<key> option
