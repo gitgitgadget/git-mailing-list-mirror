@@ -1,62 +1,62 @@
-Received: from mail-wr1-f52.google.com (mail-wr1-f52.google.com [209.85.221.52])
+Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com [209.85.128.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE18769D0C
-	for <git@vger.kernel.org>; Thu, 15 Feb 2024 10:29:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FE3569D34
+	for <git@vger.kernel.org>; Thu, 15 Feb 2024 10:29:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707992989; cv=none; b=g6O7wSAwl2X/n/dzHS9dhxmx6HbMQsQyUTIuW0eRP+/c/EXI81w94nOXNM17EHx33W/KIVNAosRxoXyh76bEKgI9767ln3kW9Hl/fpsQEWVrlLPB8tKbJxO8UmNxzeEkVRst4JmXqalRbzlpPBO92wvnqwkcFwk+hyG4NLX2Zlo=
+	t=1707992991; cv=none; b=MDQOUa+5zD7jevpONL5XTWpX1D24uQA3zqkuQTQ1CDFf+qOuITWU/ycAAaWzu+dsl8eCFnyp8DSCiMo77kcbTNStREQOuacad7C1Knj2uObvkLA1Q7JvJrJvCZWkG9OqyZMDBzkRPnL8w2nO8B8XI9g0jQds7cFhuyy1hXhU3RI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707992989; c=relaxed/simple;
-	bh=jPXFang1srJw4bZQSVknjo7OMOpzQSB7SbkHK3M3VwM=;
+	s=arc-20240116; t=1707992991; c=relaxed/simple;
+	bh=nXQ9VvGpqjK3Uc7GAGaSN5daE5jlPhL1iIQuhanR8Ew=;
 	h=Message-ID:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=OjFt3ztFP/Slt9g4a71wr0oI+STuVVv1EtSj2blNu3JSyMO1DzKJ1gn0szb4nO2k/A0e82wWxaqhpzdfUZAGJqT8G2Or5J9AWs2KHCp0Sxg753Njn45e4GNCLuYnDMZ3pWdDMLbbTxbXmoFtHK8VT4tplSZdy6OD8O6V5jFp3ho=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=b/p4bL6p; arc=none smtp.client-ip=209.85.221.52
+	 MIME-Version:To:Cc; b=K8RXntmY681r3MkAQg+u8Vf4ugFaV/nUbOYZrPIlh96fNwOehlIyoaA+muEmSCnTQjfGyFQXw6POE+i7R4naTPZ7oopln8INrbUCga+p+6iHphaKuRIDKI8KBwTpuJiFmibkUWHd3WRQMI95llWtysAE7d71B32IY2LA2U0TD0M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JQJ6ekh0; arc=none smtp.client-ip=209.85.128.46
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="b/p4bL6p"
-Received: by mail-wr1-f52.google.com with SMTP id ffacd0b85a97d-33d118a181fso9705f8f.1
-        for <git@vger.kernel.org>; Thu, 15 Feb 2024 02:29:47 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JQJ6ekh0"
+Received: by mail-wm1-f46.google.com with SMTP id 5b1f17b1804b1-40fd72f7125so5867365e9.1
+        for <git@vger.kernel.org>; Thu, 15 Feb 2024 02:29:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1707992986; x=1708597786; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1707992987; x=1708597787; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=eFFlXaXhSVzkM+vKU3wWW4HNf9XxRFU91f9yeZk+K6g=;
-        b=b/p4bL6pLQ/DAIH8su6m3EsrPTiGPgIq2LYQIXSx0Ltc7Qd8N+X5t5aV0vWQfJpYl8
-         uzgcpvl+qvBLtZXy1yLPbjZnup9irQTzgVEzCX+NwpkgioW54W81mDhPudWMt4Qj8xdN
-         MDdOBxfmcARyseRh5l7/DVs8ssf3MouQUnxyOYzvk1qgl8LMFX+LmbO5e51TrSyGcMQQ
-         eBNL0ZNP07nBpdgRX8nPOSKWgEKLaS55DFBAbBN3iRH+AHCPFCqX08VF22SoU3BbMSp3
-         xuL4OHIrbOShVM88GqZMz0AAT1r1/qRfNNXGzYuJ9W12wESRSqEtwxHMWH5P4qM20PKl
-         f3EQ==
+        bh=PpwII30pFsHq6LzWmfSIj9WqnFhvkGsh+DhS9dmzDIo=;
+        b=JQJ6ekh02Vsn7wI3jkLnIvhzEZ1S7CyXQHyXyno9YU2hNJv3bZMErspQaxTB8bMmC3
+         6PM8jpTfJ1PW5wc7+MgqBCSeQPV9xO2emDY21en8y/7PTbhrAxaThc9fLhgiBJN+/9H7
+         0RgSysd7EmBiuFVgrfJ2qEFw1mHZfRhVyReexBu/i4owyKP0oq3FTjnj5uwPOm079LHK
+         rk7URb7k+ixp+mkFwDM2Y4YiiNYZQjqZH3LsogAmtWlkxAcz6a6v4fgPDdHptHQpmkgk
+         dMM5gbiGxIpHIVkiYSOpP+2qiMqvsmp5A5EkroMWCdCMe4Yz6FG/D6AQ4YeRWz5jwHbD
+         2kTA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1707992986; x=1708597786;
+        d=1e100.net; s=20230601; t=1707992987; x=1708597787;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=eFFlXaXhSVzkM+vKU3wWW4HNf9XxRFU91f9yeZk+K6g=;
-        b=sDvVjbmhrjiaqGj19PGIINg8cSBQZWMuD4MyFKsWKvm5ZBD+7t6K0AAo2+1UY5qDgU
-         rGBBFxPI1mvazTgDTMXMP5LHo4SgFIYPA3WC0U6DBrvujggQVju3eiyDYoOpRXjwfGff
-         W/StfFFk+iF89wmpKA7O6RgDPTD+79Agbo1fWTJ3+M11GVMgQalbQ5JuMMcA0WolKFP9
-         D4j1ttZLoV1TMIBQwcHsJ9if+5HXR9zxbj9HeLoczGq4Qni+pZBFIrLqc25WKoZ/N2q1
-         YOgy/IsT+s2P5uq8o6PBc3yyMZmGsFb/eKe5NpOqPukrb98/mnXunrD9k1pMkU37E8Be
-         2+0Q==
-X-Gm-Message-State: AOJu0YysHHENsb9iaCOMIWBiQ3NMMssmV2I+nJnsbgQmkuxy9aOmfjkk
-	h15xxjb9vXHgG+FK+mcyjBYcFLbL/XBFVVvVGKysA9H2cjvt9wk5TCdC1Y4V
-X-Google-Smtp-Source: AGHT+IETMSaVfRiQUX3n6xAl5dzRxqBXKeknq5lYZd/iQVEjdt6UMGF+VHCKizndLQ7RSOnZCP9WQQ==
-X-Received: by 2002:a5d:6a8b:0:b0:33b:4d13:3e91 with SMTP id s11-20020a5d6a8b000000b0033b4d133e91mr945618wru.45.1707992985877;
-        Thu, 15 Feb 2024 02:29:45 -0800 (PST)
+        bh=PpwII30pFsHq6LzWmfSIj9WqnFhvkGsh+DhS9dmzDIo=;
+        b=LqtzWarx18yAupLdwzCtooQd3ugOinrNdD2SjFk5TCi3csAmq3CbSLbV4BqlOMcZ7v
+         BtnKQNMTz6gQWJlkmuTHpwZBZbb26nClZBkg97T8zLbDVArk8k1VC66eWRc+lQY4cXkB
+         gcVyQVjH5PFbXwAP50g9gQ8LyYwkgwGCzKJNt684aArsx6NeKNgqRn4m05erg0+5QErK
+         myPBxk0MzshgyiIwfUTthPhg2DIGcpWH9ZIDJ+CLT9j3QfwVeUYcEEkm6bTQ2m9Fd3BB
+         IErzoPdgzqQVcVvFC1wVO5VAxntVJVzyf/iZXVnm0ETH3O/1rzqtBDbf9T9qinWZ4rsV
+         0cew==
+X-Gm-Message-State: AOJu0YxLzFmXAktlY1HGL/axw5rtLN1ENQsgCigW+svH4jY+iImIeCiX
+	s3xc2moW0oOGqVw7Hs3/G+TxyCvoi0ykdWOPnq+wSCfXYesweOuA1ZOMD3Yn
+X-Google-Smtp-Source: AGHT+IGMb1uwR7YoQug9cvFmPZI6ud2g0TQRq5f9eFslPtfKnlAZ2mtEvVGY8LJhWMwq1whHs4o0+Q==
+X-Received: by 2002:a05:600c:1d26:b0:411:da90:89c0 with SMTP id l38-20020a05600c1d2600b00411da9089c0mr1071537wms.10.1707992987226;
+        Thu, 15 Feb 2024 02:29:47 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id k2-20020adff282000000b0033b8808355fsm1345545wro.28.2024.02.15.02.29.44
+        by smtp.gmail.com with ESMTPSA id n2-20020a05600c3b8200b00410c449f25asm4938615wms.6.2024.02.15.02.29.46
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 15 Feb 2024 02:29:45 -0800 (PST)
-Message-ID: <2550a7824832ab4f570b82ec452bd12e315ea7f5.1707992978.git.gitgitgadget@gmail.com>
+        Thu, 15 Feb 2024 02:29:47 -0800 (PST)
+Message-ID: <74a4fa335a7c2014a35be8556887170169360b36.1707992978.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1667.git.git.1707992978.gitgitgadget@gmail.com>
 References: <pull.1667.git.git.1707992978.gitgitgadget@gmail.com>
-From: "Eric DeCosta via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Thu, 15 Feb 2024 10:29:36 +0000
-Subject: [PATCH 5/7] fsmonitor: test updates
+From: "marzi.esipreh via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Thu, 15 Feb 2024 10:29:38 +0000
+Subject: [PATCH 7/7] fsmonitor: addressed comments for patch 1352
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -73,319 +73,365 @@ Cc: "Eric Sunshine [ ]" <sunshine@sunshineco.com>,
     "Johannes Schindelin [ ]" <Johannes.Schindelin@gmx.de>,
     "Taylor Blau [ ]" <me@ttaylorr.com>,
     marzi <m.ispare63@gmail.com>,
-    Eric DeCosta <edecosta@mathworks.com>
+    "marzi.esipreh" <marzi.esipreh@uber.com>
 
-From: Eric DeCosta <edecosta@mathworks.com>
+From: "marzi.esipreh" <marzi.esipreh@uber.com>
 
-t7527-builtin-fsmonitor was leaking fsmonitor--daemon processes in some
-cases.
+addressed comments on 1352, rebased, resolved conflicts
 
-Accomodate slight difference in the number of events generated on Linux.
-
-On lower-powered systems, spin a little to give the daemon time
-to respond to and log filesystem events.
-
-Signed-off-by: Eric DeCosta <edecosta@mathworks.com>
+Signed-off-by: Marzieh Esipreh <m.ispare63@gmail.com>
 ---
- t/t7527-builtin-fsmonitor.sh | 138 +++++++++++++++++++++++++++--------
- 1 file changed, 106 insertions(+), 32 deletions(-)
+ compat/fsmonitor/fsm-health-linux.c     |   2 +-
+ compat/fsmonitor/fsm-ipc-unix.c         |   6 +-
+ compat/fsmonitor/fsm-listen-linux.c     | 170 ++++++++++++------------
+ compat/fsmonitor/fsm-path-utils-linux.c |   1 +
+ compat/fsmonitor/fsm-settings-unix.c    |   3 +
+ 5 files changed, 95 insertions(+), 87 deletions(-)
 
-diff --git a/t/t7527-builtin-fsmonitor.sh b/t/t7527-builtin-fsmonitor.sh
-index 363f9dc0e41..1d33e418015 100755
---- a/t/t7527-builtin-fsmonitor.sh
-+++ b/t/t7527-builtin-fsmonitor.sh
-@@ -13,7 +13,7 @@ fi
- stop_daemon_delete_repo () {
- 	r=$1 &&
- 	test_might_fail git -C $r fsmonitor--daemon stop &&
--	rm -rf $1
-+	rm -rf $r
+diff --git a/compat/fsmonitor/fsm-health-linux.c b/compat/fsmonitor/fsm-health-linux.c
+index b9f709e8548..4c291f8a066 100644
+--- a/compat/fsmonitor/fsm-health-linux.c
++++ b/compat/fsmonitor/fsm-health-linux.c
+@@ -1,4 +1,4 @@
+-#include "cache.h"
++#include "git-compat-util.h"
+ #include "config.h"
+ #include "fsmonitor.h"
+ #include "fsm-health.h"
+diff --git a/compat/fsmonitor/fsm-ipc-unix.c b/compat/fsmonitor/fsm-ipc-unix.c
+index eb25123fa12..70afddfd298 100644
+--- a/compat/fsmonitor/fsm-ipc-unix.c
++++ b/compat/fsmonitor/fsm-ipc-unix.c
+@@ -1,10 +1,12 @@
+-#include "cache.h"
++#include "git-compat-util.h"
+ #include "config.h"
+ #include "hex.h"
+ #include "strbuf.h"
+ #include "fsmonitor.h"
+ #include "fsmonitor-ipc.h"
+ #include "fsmonitor-path-utils.h"
++#include "gettext.h"
++#include "path.h"
+ 
+ static GIT_PATH_FUNC(fsmonitor_ipc__get_default_path, "fsmonitor--daemon.ipc")
+ 
+@@ -17,7 +19,7 @@ const char *fsmonitor_ipc__get_path(struct repository *r)
+ 	unsigned char hash[GIT_MAX_RAWSZ];
+ 
+ 	if (!r)
+-		BUG("No repository passed into fsmonitor_ipc__get_path");
++		BUG("no repository passed into fsmonitor_ipc__get_path");
+ 
+ 	if (ipc_path)
+ 		return ipc_path;
+diff --git a/compat/fsmonitor/fsm-listen-linux.c b/compat/fsmonitor/fsm-listen-linux.c
+index e8548e4e009..84d8fb28d5d 100644
+--- a/compat/fsmonitor/fsm-listen-linux.c
++++ b/compat/fsmonitor/fsm-listen-linux.c
+@@ -1,7 +1,10 @@
+-#include "cache.h"
++#include "git-compat-util.h"
++#include "config.h"
+ #include "fsmonitor.h"
+ #include "fsm-listen.h"
+ #include "fsmonitor--daemon.h"
++#include "gettext.h"
++#include "simple-ipc.h"
+ #include <dirent.h>
+ #include <fcntl.h>
+ #include <sys/inotify.h>
+@@ -129,15 +132,15 @@ static void remove_watch(struct watch_entry *w,
+ 	hashmap_entry_init(&k1.ent, memhash(&w->wd, sizeof(int)));
+ 	w1 = hashmap_remove_entry(&data->watches, &k1, ent, NULL);
+ 	if (!w1)
+-		BUG("Double remove of watch for '%s'", w->dir);
++		BUG("double remove of watch for '%s'", w->dir);
+ 
+ 	if (w1->cookie)
+-		BUG("Removing watch for '%s' which has a pending rename", w1->dir);
++		BUG("removing watch for '%s' which has a pending rename", w1->dir);
+ 
+ 	hashmap_entry_init(&k2.ent, memhash(w->dir, strlen(w->dir)));
+ 	w2 = hashmap_remove_entry(&data->revwatches, &k2, ent, NULL);
+ 	if (!w2)
+-		BUG("Double remove of reverse watch for '%s'", w->dir);
++		BUG("double remove of reverse watch for '%s'", w->dir);
+ 
+ 	/* w1->dir and w2->dir are interned strings, we don't own them */
+ 	free(w1);
+@@ -187,7 +190,7 @@ static void add_dir_rename(uint32_t cookie, const char *path,
+ 	hashmap_entry_init(&k.ent, memhash(path, strlen(path)));
+ 	w = hashmap_get_entry(&data->revwatches, &k, ent, NULL);
+ 	if (!w) /* should never happen */
+-		BUG("No watch for '%s'", path);
++		BUG("no watch for '%s'", path);
+ 	w->cookie = cookie;
+ 
+ 	/* add the pending rename to match against later */
+@@ -224,10 +227,10 @@ static void rename_dir(uint32_t cookie, const char *path,
+ 			remove_watch(w, data);
+ 			add_watch(path, data);
+ 		} else {
+-			BUG("No matching watch");
++			BUG("no matching watch");
+ 		}
+ 	} else {
+-		BUG("No matching cookie");
++		BUG("no matching cookie");
+ 	}
  }
  
- start_daemon () {
-@@ -72,6 +72,34 @@ start_daemon () {
- 	)
+@@ -249,7 +252,7 @@ static int register_inotify(const char *path,
+ 	if (!dir)
+ 		return error_errno("opendir('%s') failed", path);
+ 
+-	while ((de = readdir_skip_dot_and_dotdot(dir)) != NULL) {
++	while ((de = readdir_skip_dot_and_dotdot(dir))) {
+ 		strbuf_reset(&current);
+ 		strbuf_addf(&current, "%s/%s", path, de->d_name);
+ 		if (lstat(current.buf, &fs)) {
+@@ -353,7 +356,7 @@ static void log_mask_set(const char *path, u_int32_t mask)
+ 	if (mask & IN_IGNORED)
+ 		strbuf_addstr(&msg, "IN_IGNORED|");
+ 	if (mask & IN_ISDIR)
+-		strbuf_addstr(&msg, "IN_ISDIR|");
++		strbuf_addstr(&msg, "IN_ISDIR");
+ 
+ 	trace_printf_key(&trace_fsmonitor, "inotify_event: '%s', mask=%#8.8x %s",
+ 				path, mask, msg.buf);
+@@ -373,8 +376,10 @@ int fsm_listen__ctor(struct fsmonitor_daemon_state *state)
+ 	data->shutdown = SHUTDOWN_ERROR;
+ 
+ 	fd = inotify_init1(O_NONBLOCK);
+-	if (fd < 0)
++	if (fd < 0) {
++		FREE_AND_NULL(data);
+ 		return error_errno("inotify_init1() failed");
++	}
+ 
+ 	data->fd_inotify = fd;
+ 
+@@ -386,12 +391,10 @@ int fsm_listen__ctor(struct fsmonitor_daemon_state *state)
+ 		ret = -1;
+ 	else if (register_inotify(state->path_worktree_watch.buf, state, NULL))
+ 		ret = -1;
+-	else if (state->nr_paths_watching > 1) {
+-		if (add_watch(state->path_gitdir_watch.buf, data))
+-			ret = -1;
+-		else if (register_inotify(state->path_gitdir_watch.buf, state, NULL))
+-			ret = -1;
+-	}
++	else if (state->nr_paths_watching > 1 &&
++		 (add_watch(state->path_gitdir_watch.buf, data) ||
++		  register_inotify(state->path_gitdir_watch.buf, state, NULL)))
++		ret = -1;
+ 
+ 	if (!ret) {
+ 		state->listen_error_code = 0;
+@@ -449,80 +452,80 @@ static int process_event(const char *path,
+ 	const char *last_sep;
+ 
+ 	switch (fsmonitor_classify_path_absolute(state, path)) {
+-		case IS_INSIDE_DOT_GIT_WITH_COOKIE_PREFIX:
+-		case IS_INSIDE_GITDIR_WITH_COOKIE_PREFIX:
+-			/* Use just the filename of the cookie file. */
+-			last_sep = find_last_dir_sep(path);
+-			string_list_append(cookie_list,
+-					last_sep ? last_sep + 1 : path);
+-			break;
+-		case IS_INSIDE_DOT_GIT:
+-		case IS_INSIDE_GITDIR:
+-			break;
+-		case IS_DOT_GIT:
+-		case IS_GITDIR:
+-			/*
+-			* If .git directory is deleted or renamed away,
+-			* we have to quit.
+-			*/
+-			if (em_dir_deleted(event->mask)) {
+-				trace_printf_key(&trace_fsmonitor,
+-						"event: gitdir removed");
+-				state->listen_data->shutdown = SHUTDOWN_FORCE;
+-				goto done;
+-			}
++	case IS_INSIDE_DOT_GIT_WITH_COOKIE_PREFIX:
++	case IS_INSIDE_GITDIR_WITH_COOKIE_PREFIX:
++		/* Use just the filename of the cookie file. */
++		last_sep = find_last_dir_sep(path);
++		string_list_append(cookie_list,
++				last_sep ? last_sep + 1 : path);
++		break;
++	case IS_INSIDE_DOT_GIT:
++	case IS_INSIDE_GITDIR:
++		break;
++	case IS_DOT_GIT:
++	case IS_GITDIR:
++		/*
++		* If .git directory is deleted or renamed away,
++		* we have to quit.
++		*/
++		if (em_dir_deleted(event->mask)) {
++			trace_printf_key(&trace_fsmonitor,
++					"event: gitdir removed");
++			state->listen_data->shutdown = SHUTDOWN_FORCE;
++			goto done;
++		}
+ 
+-			if (em_dir_renamed(event->mask)) {
+-				trace_printf_key(&trace_fsmonitor,
+-						"event: gitdir renamed");
+-				state->listen_data->shutdown = SHUTDOWN_FORCE;
+-				goto done;
+-			}
+-			break;
+-		case IS_WORKDIR_PATH:
+-			/* normal events in the working directory */
+-			if (trace_pass_fl(&trace_fsmonitor))
+-				log_mask_set(path, event->mask);
++		if (em_dir_renamed(event->mask)) {
++			trace_printf_key(&trace_fsmonitor,
++					"event: gitdir renamed");
++			state->listen_data->shutdown = SHUTDOWN_FORCE;
++			goto done;
++		}
++		break;
++	case IS_WORKDIR_PATH:
++		/* normal events in the working directory */
++		if (trace_pass_fl(&trace_fsmonitor))
++			log_mask_set(path, event->mask);
+ 
+-			rel = path + state->path_worktree_watch.len + 1;
+-			fsmonitor_batch__add_path(batch, rel);
++		rel = path + state->path_worktree_watch.len + 1;
++		fsmonitor_batch__add_path(batch, rel);
+ 
+-			if (em_dir_deleted(event->mask))
+-				break;
++		if (em_dir_deleted(event->mask))
++			break;
+ 
+-			/* received IN_MOVE_FROM, add tracking for expected IN_MOVE_TO */
+-			if (em_rename_dir_from(event->mask))
+-				add_dir_rename(event->cookie, path, state->listen_data);
++		/* received IN_MOVE_FROM, add tracking for expected IN_MOVE_TO */
++		if (em_rename_dir_from(event->mask))
++			add_dir_rename(event->cookie, path, state->listen_data);
+ 
+-			/* received IN_MOVE_TO, update watch to reflect new path */
+-			if (em_rename_dir_to(event->mask)) {
+-				rename_dir(event->cookie, path, state->listen_data);
+-				if (register_inotify(path, state, batch)) {
+-					state->listen_data->shutdown = SHUTDOWN_ERROR;
+-					goto done;
+-				}
++		/* received IN_MOVE_TO, update watch to reflect new path */
++		if (em_rename_dir_to(event->mask)) {
++			rename_dir(event->cookie, path, state->listen_data);
++			if (register_inotify(path, state, batch)) {
++				state->listen_data->shutdown = SHUTDOWN_ERROR;
++				goto done;
+ 			}
++		}
+ 
+-			if (em_dir_created(event->mask)) {
+-				if (add_watch(path, state->listen_data)) {
+-					state->listen_data->shutdown = SHUTDOWN_ERROR;
+-					goto done;
+-				}
+-				if (register_inotify(path, state, batch)) {
+-					state->listen_data->shutdown = SHUTDOWN_ERROR;
+-					goto done;
+-				}
++		if (em_dir_created(event->mask)) {
++			if (add_watch(path, state->listen_data)) {
++				state->listen_data->shutdown = SHUTDOWN_ERROR;
++				goto done;
+ 			}
+-			break;
+-		case IS_OUTSIDE_CONE:
+-		default:
+-			trace_printf_key(&trace_fsmonitor,
+-					"ignoring '%s'", path);
+-			break;
++			if (register_inotify(path, state, batch)) {
++				state->listen_data->shutdown = SHUTDOWN_ERROR;
++				goto done;
++			}
++		}
++		break;
++	case IS_OUTSIDE_CONE:
++	default:
++		trace_printf_key(&trace_fsmonitor,
++				"ignoring '%s'", path);
++		break;
+ 	}
+ 	return 0;
+-done:
+-	return -1;
++	done:
++		return -1;
  }
  
-+IMPLICIT_TIMEOUT=5
-+
-+wait_for_update () {
-+	func=$1 &&
-+	file=$2 &&
-+	sz=$(wc -c < "$file") &&
-+	last=0 &&
-+	$func &&
-+	k=0 &&
-+	while test "$k" -lt $IMPLICIT_TIMEOUT
-+	do
-+		nsz=$(wc -c < "$file")
-+		if test "$nsz" -gt "$sz"
-+		then
-+			if test "$last" -eq "$nsz"
-+			then
-+				cat "$file" &&
-+				return 0
-+			fi
-+			last=$nsz
-+		fi
-+		sleep 1
-+		k=$(( $k + 1 ))
-+	done &&
-+	cat "$file" &&
-+	return 0
-+}
-+
- # Is a Trace2 data event present with the given catetory and key?
- # We do not care what the value is.
- #
-@@ -137,7 +165,6 @@ test_expect_success 'implicit daemon start' '
- # machines (where it might take a moment to wake and reschedule the
- # daemon process) to avoid false alarms during test runs.)
- #
--IMPLICIT_TIMEOUT=5
+ /*
+@@ -531,7 +534,7 @@ static int process_event(const char *path,
+  */
+ static void handle_events(struct fsmonitor_daemon_state *state)
+ {
+-	 /* See https://man7.org/linux/man-pages/man7/inotify.7.html */
++	/* See https://man7.org/linux/man-pages/man7/inotify.7.html */
+ 	char buf[4096]
+ 		__attribute__ ((aligned(__alignof__(struct inotify_event))));
  
- verify_implicit_shutdown () {
- 	r=$1 &&
-@@ -373,6 +400,15 @@ create_files () {
- 	echo 3 >dir2/new
- }
+@@ -539,13 +542,12 @@ static void handle_events(struct fsmonitor_daemon_state *state)
+ 	struct fsmonitor_batch *batch = NULL;
+ 	struct string_list cookie_list = STRING_LIST_INIT_DUP;
+ 	struct watch_entry k, *w;
+-	struct strbuf path;
+ 	const struct inotify_event *event;
+ 	int fd = state->listen_data->fd_inotify;
+ 	ssize_t len;
+ 	char *ptr, *p;
  
-+rename_directory () {
-+	mv dirtorename dirrenamed
-+}
-+
-+rename_directory_file () {
-+	mv dirtorename dirrenamed &&
-+	echo 1 > dirrenamed/new
-+}
-+
- rename_files () {
- 	mv rename renamed &&
- 	mv dir1/rename dir1/renamed &&
-@@ -427,10 +463,12 @@ test_expect_success 'edit some files' '
+-	strbuf_init(&path, PATH_MAX);
++	struct strbuf path = STRBUF_INIT;
  
- 	start_daemon --tf "$PWD/.git/trace" &&
+ 	for(;;) {
+ 		len = read(fd, buf, sizeof(buf));
+@@ -581,7 +583,7 @@ static void handle_events(struct fsmonitor_daemon_state *state)
  
--	edit_files &&
-+	wait_for_update edit_files "$PWD/.git/trace" &&
+ 			w = hashmap_get_entry(&watches, &k, ent, NULL);
+ 			if (!w) /* should never happen */
+-				BUG("No watch for '%s'", event->name);
++				BUG("no watch for '%s'", event->name);
  
- 	test-tool fsmonitor-client query --token 0 &&
+ 			/* directory watch was removed */
+ 			if (em_remove_watch(event->mask)) {
+diff --git a/compat/fsmonitor/fsm-path-utils-linux.c b/compat/fsmonitor/fsm-path-utils-linux.c
+index c21d1349532..0e3b33ffa48 100644
+--- a/compat/fsmonitor/fsm-path-utils-linux.c
++++ b/compat/fsmonitor/fsm-path-utils-linux.c
+@@ -3,6 +3,7 @@
+ #include "fsmonitor.h"
+ #include "fsmonitor-path-utils.h"
+ #include "fsm-path-utils-linux.h"
++#include "gettext.h"
+ #include <errno.h>
+ #include <mntent.h>
+ #include <sys/mount.h>
+diff --git a/compat/fsmonitor/fsm-settings-unix.c b/compat/fsmonitor/fsm-settings-unix.c
+index d16dca89416..c9b75aa44fe 100644
+--- a/compat/fsmonitor/fsm-settings-unix.c
++++ b/compat/fsmonitor/fsm-settings-unix.c
+@@ -1,6 +1,9 @@
++#include "git-compat-util.h"
++#include "config.h"
+ #include "fsmonitor.h"
+ #include "fsmonitor-ipc.h"
+ #include "fsmonitor-path-utils.h"
++#include <stdint.h>
  
-+	test_might_fail git fsmonitor--daemon stop &&
-+
- 	grep "^event: dir1/modified$"  .git/trace &&
- 	grep "^event: dir2/modified$"  .git/trace &&
- 	grep "^event: modified$"       .git/trace &&
-@@ -442,10 +480,12 @@ test_expect_success 'create some files' '
- 
- 	start_daemon --tf "$PWD/.git/trace" &&
- 
--	create_files &&
-+	wait_for_update create_files "$PWD/.git/trace" &&
- 
- 	test-tool fsmonitor-client query --token 0 &&
- 
-+	test_might_fail git fsmonitor--daemon stop &&
-+
- 	grep "^event: dir1/new$" .git/trace &&
- 	grep "^event: dir2/new$" .git/trace &&
- 	grep "^event: new$"      .git/trace
-@@ -456,10 +496,12 @@ test_expect_success 'delete some files' '
- 
- 	start_daemon --tf "$PWD/.git/trace" &&
- 
--	delete_files &&
-+	wait_for_update delete_files "$PWD/.git/trace" &&
- 
- 	test-tool fsmonitor-client query --token 0 &&
- 
-+	test_might_fail git fsmonitor--daemon stop &&
-+
- 	grep "^event: dir1/delete$" .git/trace &&
- 	grep "^event: dir2/delete$" .git/trace &&
- 	grep "^event: delete$"      .git/trace
-@@ -470,10 +512,12 @@ test_expect_success 'rename some files' '
- 
- 	start_daemon --tf "$PWD/.git/trace" &&
- 
--	rename_files &&
-+	wait_for_update rename_files "$PWD/.git/trace" &&
- 
- 	test-tool fsmonitor-client query --token 0 &&
- 
-+	test_might_fail git fsmonitor--daemon stop &&
-+
- 	grep "^event: dir1/rename$"  .git/trace &&
- 	grep "^event: dir2/rename$"  .git/trace &&
- 	grep "^event: rename$"       .git/trace &&
-@@ -487,23 +531,42 @@ test_expect_success 'rename directory' '
- 
- 	start_daemon --tf "$PWD/.git/trace" &&
- 
--	mv dirtorename dirrenamed &&
-+	wait_for_update rename_directory "$PWD/.git/trace" &&
- 
- 	test-tool fsmonitor-client query --token 0 &&
- 
-+	test_might_fail git fsmonitor--daemon stop &&
-+
- 	grep "^event: dirtorename/*$" .git/trace &&
- 	grep "^event: dirrenamed/*$"  .git/trace
- '
- 
-+test_expect_success 'rename directory file' '
-+	test_when_finished clean_up_repo_and_stop_daemon &&
-+
-+	start_daemon --tf "$PWD/.git/trace" &&
-+
-+	wait_for_update rename_directory_file "$PWD/.git/trace" &&
-+
-+	test-tool fsmonitor-client query --token 0 &&
-+
-+	test_might_fail git fsmonitor--daemon stop &&
-+
-+	grep "^event: dirtorename/*$" .git/trace &&
-+	grep "^event: dirrenamed/*$"  .git/trace &&
-+	grep "^event: dirrenamed/new$"  .git/trace
-+'
- test_expect_success 'file changes to directory' '
- 	test_when_finished clean_up_repo_and_stop_daemon &&
- 
- 	start_daemon --tf "$PWD/.git/trace" &&
- 
--	file_to_directory &&
-+	wait_for_update file_to_directory "$PWD/.git/trace" &&
- 
- 	test-tool fsmonitor-client query --token 0 &&
- 
-+	test_might_fail git fsmonitor--daemon stop &&
-+
- 	grep "^event: delete$"     .git/trace &&
- 	grep "^event: delete/new$" .git/trace
- '
-@@ -513,10 +576,12 @@ test_expect_success 'directory changes to a file' '
- 
- 	start_daemon --tf "$PWD/.git/trace" &&
- 
--	directory_to_file &&
-+	wait_for_update directory_to_file "$PWD/.git/trace" &&
- 
- 	test-tool fsmonitor-client query --token 0 &&
- 
-+	test_might_fail git fsmonitor--daemon stop &&
-+
- 	grep "^event: dir1$" .git/trace
- '
- 
-@@ -561,7 +626,7 @@ test_expect_success 'flush cached data' '
- 	test-tool -C test_flush fsmonitor-client query --token "builtin:test_00000002:0" >actual_2 &&
- 	nul_to_q <actual_2 >actual_q2 &&
- 
--	grep "^builtin:test_00000002:0Q$" actual_q2 &&
-+	grep "^builtin:test_00000002:[0-1]Q$" actual_q2 &&
- 
- 	>test_flush/file_3 &&
- 
-@@ -732,7 +797,8 @@ u_values="$u1 $u2"
- for u in $u_values
- do
- 	test_expect_success "unicode in repo root path: $u" '
--		test_when_finished "stop_daemon_delete_repo $u" &&
-+		test_when_finished \
-+		"stop_daemon_delete_repo `echo "$u" | sed 's:x:\\\\\\\\\\\\\\x:g'`" &&
- 
- 		git init "$u" &&
- 		echo 1 >"$u"/file1 &&
-@@ -823,8 +889,7 @@ test_expect_success 'submodule setup' '
- '
- 
- test_expect_success 'submodule always visited' '
--	test_when_finished "git -C super fsmonitor--daemon stop; \
--			    rm -rf super; \
-+	test_when_finished "rm -rf super; \
- 			    rm -rf sub" &&
- 
- 	create_super super &&
-@@ -871,10 +936,29 @@ test_expect_success 'submodule always visited' '
- # the submodule, and someone does a `git submodule absorbgitdirs`
- # in the super, Git will recursively invoke `git submodule--helper`
- # to do the work and this may try to read the index.  This will
--# try to start the daemon in the submodule.
-+# try to start the daemon in the submodule *and* pass (either
-+# directly or via inheritance) the `--super-prefix` arg to the
-+# `git fsmonitor--daemon start` command inside the submodule.
-+# This causes a warning because fsmonitor--daemon does take that
-+# global arg (see the table in git.c)
-+#
-+# This causes a warning when trying to start the daemon that is
-+# somewhat confusing.  It does not seem to hurt anything because
-+# the fsmonitor code maps the query failure into a trivial response
-+# and does the work anyway.
-+#
-+# It would be nice to silence the warning, however.
- 
--test_expect_success "submodule absorbgitdirs implicitly starts daemon" '
--	test_when_finished "rm -rf super; \
-+have_t2_error_event () {
-+	log=$1
-+	msg="fsmonitor--daemon doesnQt support --super-prefix" &&
-+
-+	tr '\047' Q <$1 | grep -e "$msg"
-+}
-+
-+test_expect_success "stray submodule super-prefix warning" '
-+	test_when_finished "git -C super/dir_1/dir_2/sub fsmonitor--daemon stop; \
-+			    rm -rf super; \
- 			    rm -rf sub;   \
- 			    rm super-sub.trace" &&
- 
-@@ -891,31 +975,21 @@ test_expect_success "submodule absorbgitdirs implicitly starts daemon" '
- 
- 	test_path_is_dir super/dir_1/dir_2/sub/.git &&
- 
--	cwd="$(cd super && pwd)" &&
--	cat >expect <<-EOF &&
--	Migrating git directory of '\''dir_1/dir_2/sub'\'' from
--	'\''$cwd/dir_1/dir_2/sub/.git'\'' to
--	'\''$cwd/.git/modules/dir_1/dir_2/sub'\''
--	EOF
- 	GIT_TRACE2_EVENT="$PWD/super-sub.trace" \
--		git -C super submodule absorbgitdirs >out 2>actual &&
--	test_cmp expect actual &&
--	test_must_be_empty out &&
-+		git -C super submodule absorbgitdirs &&
- 
--	# Confirm that the trace2 log contains a record of the
--	# daemon starting.
--	test_subcommand git fsmonitor--daemon start <super-sub.trace
-+	! have_t2_error_event super-sub.trace
- '
- 
- # On a case-insensitive file system, confirm that the daemon
- # notices when the .git directory is moved/renamed/deleted
--# regardless of how it is spelled in the FS event.
-+# regardless of how it is spelled in the the FS event.
- # That is, does the FS event receive the spelling of the
- # operation or does it receive the spelling preserved with
- # the file/directory.
- #
- test_expect_success CASE_INSENSITIVE_FS 'case insensitive+preserving' '
--	test_when_finished "stop_daemon_delete_repo test_insensitive" &&
-+#	test_when_finished "stop_daemon_delete_repo test_insensitive" &&
- 
- 	git init test_insensitive &&
- 
-@@ -927,8 +1001,8 @@ test_expect_success CASE_INSENSITIVE_FS 'case insensitive+preserving' '
- 	test_path_is_dir test_insensitive/.git &&
- 	test_path_is_dir test_insensitive/.GIT &&
- 
--	# Rename .git using an alternate spelling to verify that
--	# the daemon detects it and automatically shuts down.
-+	# Rename .git using an alternate spelling to verify that that
-+	# daemon detects it and automatically shuts down.
- 	mv test_insensitive/.GIT test_insensitive/.FOO &&
- 
- 	# See [1] above.
+  /*
+  * For the builtin FSMonitor, we create the Unix domain socket for the
 -- 
 gitgitgadget
-
