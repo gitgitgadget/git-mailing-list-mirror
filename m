@@ -1,120 +1,84 @@
-Received: from mail-wm1-f54.google.com (mail-wm1-f54.google.com [209.85.128.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 437F88833
-	for <git@vger.kernel.org>; Thu, 15 Feb 2024 23:38:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E576A145B14
+	for <git@vger.kernel.org>; Thu, 15 Feb 2024 23:43:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708040323; cv=none; b=D2eB0NzuFT043AnUMtiijHB86LU7NbQ/W22cPAjq9GVJkVSh8dtQHYq65a3NDs4Am5CJjUYQgufsOU1q7J6ijZkzFiqLRX9hMjfouKtdsCTz6P2kxNQZ/GugpaWmUwTdZuXMEB+7PM2dy51kcT7tvDrq+NbW7aGpiJDoeNGC9hA=
+	t=1708040615; cv=none; b=BIA6XxSfRuoqa9pvTDU6owIsaEwbpoogsBsCrOIlG8ZhXPRSK/XqfwcnUvbgPm8bFXGQusrp7hUdefRoJ7Q4rCCk777E/6jFSkzxmvBKcOg+/qm6YKzISeY4/QqVMmM08BEUjprqbkHQMG26ZOLoE+1lXAl+JzDdYlPO6EudSSo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708040323; c=relaxed/simple;
-	bh=es3Zvq+e3rfnHhnTFamYOtXI9TJnZhzUnYSlokt3HZM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=lVBBtFfY+/zL9TG3U14EbJH85bhPUXZECeDMDOzUTWHAmKzrfiuzNwghNMwGeMd6pru2SjsaUvxj8L7vSr4M0adpsio2lct8wiHnQBPsGtq9pVc1bpom6agLVHQsclj2idRWPidfZlnMCt4vGCFb5HsIGMdF7xu0zz2r99sw9Tw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SUTLIpm2; arc=none smtp.client-ip=209.85.128.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1708040615; c=relaxed/simple;
+	bh=lZkBuize0G7Z3x14msflb8wbgHiMKCRmWkgoX6jbhJI=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=tJ1RNSttZKoffujpoHotmwNLXPkWKh29KffSryV6t+9blFSqKCsJKs/YzNi6tt0J6Hqa/4DwHeqzQnDI+cYdOoAn8VQj91bP6KO0eec9I6gyYg7Owavi2bbXSaiFsuUmDnZLo4hurMap1ZrMh/0StlLyzaxC0NzknCBEJG0+kck=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=NcTf9VBU; arc=none smtp.client-ip=173.228.157.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SUTLIpm2"
-Received: by mail-wm1-f54.google.com with SMTP id 5b1f17b1804b1-41242adfdd7so376175e9.1
-        for <git@vger.kernel.org>; Thu, 15 Feb 2024 15:38:41 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1708040319; x=1708645119; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=EMl4kX49ju47cBt7eIipERuS1Z8nXBGK3+MwWNlM0jc=;
-        b=SUTLIpm2E7cTFru4mu7bpnYNyVIYnilSYBu3b5wQPf8KpnwbRIJiqMYy8T/z4GY6dE
-         n58Ja6Jyr3ULIz/tb2l0pnm9BJCo3Yzk+M0lDMpxLCeB7v06FFHDQxvyVTwk2AM1jtEm
-         2eGfmd68fIiqeo2KekV5jMgJAe20G4fEVHT1lYkIZm5pPWSS6x36pb3+ElZopj7bDQjv
-         DB+fO02OGOfIUIBX1R3LaTgVuaYmf3PA6PO299OKXe+RE62hKn7GDOaFFS7N6xnSATEg
-         Lf3sE8XsM5kKSo81ONOdlDzpTeg5mHjFTM3z+t09aFlsUqb/TPIybn5O6DXn4k5n7HJY
-         1I0g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1708040319; x=1708645119;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=EMl4kX49ju47cBt7eIipERuS1Z8nXBGK3+MwWNlM0jc=;
-        b=myKTqnaaTPQjmSQ6lNKGBmiAzGlnnsoofacUyQ1kJSDxtLYJalH+mR6d7I7MJEY5da
-         lFAuiM6nzUY5lyjxirOyv1gSLgSjO6Mt+mFeLDmU717ltCRd8DU+Kjjo8AlubaIqKMld
-         7GKMuLvVJEZCRQQWajBV/cQRxUVi9tkTbpEL1BAxAdP/ADzUL9dwBXGkWd336XzS+XkB
-         HUMoZK4nQGbPoVv7NY0gndb5BYe/HPvyTD+RT9f407ZeiUHa4R0WEDUR0mOFksjloxGr
-         y1d0bmSrcYDiIy964vTvMIGRDrEJ57yT743gP5lmwZqbZ4FVPtlL6WSUlNHXPnyNN0bN
-         AOMw==
-X-Gm-Message-State: AOJu0Yz/cfC+xW2t5MXQzYcn9fp0cbN/16vhX9tU6wWO2XSxcXGXxO76
-	BiL9pabEuTsC+WjiMr88t2l86CqYFBxdju7C9owl8lTdtG+zXfsZ
-X-Google-Smtp-Source: AGHT+IG6YZmNLRhdFxAslNjg0Aj/YdzbAV/Mk4lwIncU5CkaYKln/HzIHcoqJ8ak3SR9YxBgZh2jTw==
-X-Received: by 2002:a05:600c:b8a:b0:410:c64e:6e2b with SMTP id fl10-20020a05600c0b8a00b00410c64e6e2bmr2250232wmb.12.1708040319478;
-        Thu, 15 Feb 2024 15:38:39 -0800 (PST)
-Received: from gmail.com (15.red-88-14-198.dynamicip.rima-tde.net. [88.14.198.15])
-        by smtp.gmail.com with ESMTPSA id e25-20020a05600c219900b0040fe4b733f4sm548453wme.26.2024.02.15.15.38.38
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 15 Feb 2024 15:38:39 -0800 (PST)
-Message-ID: <210ae8b5-05cc-42ef-a82e-40fe7b41399b@gmail.com>
-Date: Fri, 16 Feb 2024 00:38:33 +0100
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="NcTf9VBU"
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id 1D28D2A990;
+	Thu, 15 Feb 2024 18:43:33 -0500 (EST)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=lZkBuize0G7Z3x14msflb8wbgHiMKCRmWkgoX6
+	jbhJI=; b=NcTf9VBUWMJN7CgO1j3/5bCpJ0cwcCceVuBjUJdhhFLvkMOhUzhoXP
+	v83vq+dkpl0yt3lRN2hWeJ65b6tp+bqWnqFgvwND9LYmMaXDR5edAsxaim6RmvFa
+	Bh6Fvb0hj2fN7rlYgcF64oB+5yRrr3zmo3hUXHcJ0zwWD8yGn2Las=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id 0EB622A98F;
+	Thu, 15 Feb 2024 18:43:33 -0500 (EST)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.165.85])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id A6E7F2A98D;
+	Thu, 15 Feb 2024 18:43:29 -0500 (EST)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc: Elia Pinto <gitter.spiros@gmail.com>,  git@vger.kernel.org
+Subject: Re: [PATCH] use C99 declaration of variable in for() loop
+In-Reply-To: <Zc6abO6RV9RwpABR@tapette.crustytoothpaste.net> (brian
+	m. carlson's message of "Thu, 15 Feb 2024 23:12:44 +0000")
+References: <20240215094243.147057-1-gitter.spiros@gmail.com>
+	<xmqqcysxskd9.fsf@gitster.g>
+	<Zc6abO6RV9RwpABR@tapette.crustytoothpaste.net>
+Date: Thu, 15 Feb 2024 15:43:27 -0800
+Message-ID: <xmqqa5o1mgyo.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] branch: rework the descriptions of rename and copy
- operations
-Content-Language: en-US
-To: Dragan Simic <dsimic@manjaro.org>
-Cc: git@vger.kernel.org
-References: <3cbc78bb5729f304b30bf37a18d1762af553aa00.1708022441.git.dsimic@manjaro.org>
- <e8fdd057-2670-4c93-b362-202a339d5f49@gmail.com>
- <6caad50252bac7f75da8de7e3728a45e@manjaro.org>
-From: =?UTF-8?Q?Rub=C3=A9n_Justo?= <rjusto@gmail.com>
-In-Reply-To: <6caad50252bac7f75da8de7e3728a45e@manjaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 058895DC-CC5C-11EE-8147-A19503B9AAD1-77302942!pb-smtp21.pobox.com
 
-On 15-feb-2024 23:27:59, Dragan Simic wrote:
-> Hello Ruben and Junio,
-> 
-> On 2024-02-15 22:52, Rubén Justo wrote:
-> > On 15-feb-2024 19:42:32, Dragan Simic wrote:
-> > 
-> > > Move the descriptions of the <oldbranch> and <newbranch> arguments
-> > > to the
-> > > descriptions of the branch rename and copy operations, where they
-> > > naturally
-> > > belong.
-> > 
-> > Thank you Dragan for working on this.
-> 
-> Thank you, and everyone else, for the reviews and suggestions.
-> 
-> > Let me chime in just to say that maybe another terms could be considered
-> > here;  like: "<branchname>" and "<newbranchname>" (maybe too long...) or
-> > so.
-> > 
-> > I have no problem with the current terms, but "<branchname>" can be a
-> > sensible choice here as it is already being used for other commands
-> > where, and this may help overall, the consideration: "if ommited, the
-> > current branch is considered" also applies.
-> 
-> Actually, I'd agree with Junio's reply that suggested using even
-> shorter terms.
+"brian m. carlson" <sandals@crustytoothpaste.net> writes:
 
-Me too :-)
+> I will also say that sending one giant patch for this may be a bit hard
+> to review.  While I will defer to Junio's opinion as the maintainer, I
+> would be more inclined to review this kind of series if it came in in
+> smaller patches, a few at a time, in which case I would find it a
+> welcome improvement.
 
-> Just like "<oldbranch>" and "<newbranch>" can safely
-> be shortened to "<old>" and "<new>", respectively, "<branchname>"
-> can also be shortened to "<name>".
-> 
-> It's all about the context, which is improved by moving the descriptions
-> of the arguments closer to the descriptions of the commands.
+True.  As to the specific topic of using "for (int i = 0; ...)",
+it is tedious to review for mistakes and 17000+ lines of patch is
+not a way to do so.  I do not think I would be able to spot a change
+in behaviour caused by a hunk like this
 
-Your series is an improvement in that respect.  Thank you.
+	int i = 3;
+	... after some operations ...
+-	for (i = 0; i < 5; i++)
++	for (int i = 0; i < 5; i++)
+		if (condition_on_i(i))
+			break;
+	... after some operations ...
+	return i;
 
-> 
-> Though, I'd prefer that we keep "<oldbranch>" and "<newbranch>" (and
-> "<branchname>") for now, for the sake of consistency, and I'd get them
-> shortened in the future patches.
-
-Nice!
+after scanning similar changes for 1000+ times in a single huge
+patch.
