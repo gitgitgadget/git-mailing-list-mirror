@@ -1,153 +1,155 @@
-Received: from fout6-smtp.messagingengine.com (fout6-smtp.messagingengine.com [103.168.172.149])
+Received: from renault.us.lt (renault.us.lt [79.98.26.146])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8C4014002
-	for <git@vger.kernel.org>; Thu, 15 Feb 2024 08:25:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADE15182BF
+	for <git@vger.kernel.org>; Thu, 15 Feb 2024 09:01:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=79.98.26.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707985560; cv=none; b=la7sOwkNGh6SknEZ7LTbWJs+H5ezBay98eMkBUJ49VWy07PEciIr/kUn4r2I+Nfurcs14KMpcoDOTUZ7nIANpoDAMAPhBdcnMJtd4eY5RVywcXWsNy1HjR+pADTyyDrezb1m03ai3r8A7JK7/Zcmw0fYIjDFQ7HfZMLyEm6WXqA=
+	t=1707987668; cv=none; b=BEkei0naSL23GGk8IcY/XOxTjUDUvl/e8wJ4pjcK8gPQu5TmysKmpYLeZ46zVTmXptfrzjLO1K/wE8IDFsmota7hpqXslWY10zullayhczvPOQJY4TSnT4MVupjyymsSYdN39EJBMqw8+rVbRBrU1z+9jdNIljB9dcUT6zE/0M0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707985560; c=relaxed/simple;
-	bh=X15oyPW34DPJLaU+4ODY1+rASEZxHwUEkNhQjfOebD8=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=lkg6Sj9/8LpPAqRDz+HNcsyqPnZ7RI0ts7CihhIhhqPwHFlAsO1YjPxg2NMQ5oe9wnUHefLWRaSxb4HQSM+ZQ/F2zkBZ4kHfhSUUGn5muMlscRDRyR9UlvzqAUwA1pIiP+7AipziM6w+ZByI3mHor+bQ6Slet62gaEdcaBz+2gs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=i/qvWkxA; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=NfdTDM9N; arc=none smtp.client-ip=103.168.172.149
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="i/qvWkxA";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="NfdTDM9N"
-Received: from compute7.internal (compute7.nyi.internal [10.202.2.48])
-	by mailfout.nyi.internal (Postfix) with ESMTP id A8F1013800B0;
-	Thu, 15 Feb 2024 03:25:57 -0500 (EST)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute7.internal (MEProxy); Thu, 15 Feb 2024 03:25:57 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1707985557; x=1708071957; bh=20P3PiEWmH
-	udXQQfqGoB4cSiEj7sk26CMyIu0K/FCJc=; b=i/qvWkxACqwOpOI9wALZip4C10
-	CTPid2SRzZJZVRcxup+1ZpPrI3GNono01zRzh8N8kWq+KWH5IPnRAWsZs4+kdblD
-	iSgZg/Yf81Z8T6Hcj0z2vWCFRVAfHD1wX+6lZMPYyeoBb+fXtoY7Y6jaiLgB12Du
-	Xtu2VpJWznM0txxKHZQJ5xsRWkIouxQrb9vm9RSB3hKuZfSKCxGqUA3xN0VuCNlZ
-	ZOdq2QDnjUmislNbdFzzQP6buyS/gHSYbUmAS8oYIkmayZdDKnYzV5lDn3ubk2Rs
-	UTIBrep7fC1WBAWh3Z3UrJVNfDjfQ/C9F4CL8yY14YYjwcTLWwpqnkWXAfOQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1707985557; x=1708071957; bh=20P3PiEWmHudXQQfqGoB4cSiEj7s
-	k26CMyIu0K/FCJc=; b=NfdTDM9NnZIUQ7EqzOycwvnxTcbveHvjreaQ/zReofsE
-	Y3zaA7ZV2yeJbbV1JqZfk0I4uL3llykwuvBNHIXvprELO0ohvgaRbwWz59xkSvKj
-	Bd68DYT2kla1H/ECHJ+jGj9D/UFbzV8gzPxzGXwI3aZRlDp6jtloV3v39S3PIgoy
-	uei4oOGNYxfrvMCvc25XtFqA6lcgpILKtJEqns6Esd3BDW/cD7cdm0+kQ37trmkn
-	w4JyudL3b25WnCIyIfax0UgYstnFSn2ZqV5IyEHil2PSxzDDcxc8SxGylM0SvMTo
-	Y9RysVWpp8HXNePV3xvVjNhbLgEfHkxU1cL72FdbVw==
-X-ME-Sender: <xms:lcrNZWoND4JytzWRUO5l7XdjqaxZsVej7jgufGzf3adrvHVDQzgzKA>
-    <xme:lcrNZUoOJHh1GkCAyeMAZfUL062Fw4UQ7JThuXUJd1f9B084lteGJdcMERTT-LYTC
-    jWQRoDy6taDm0K6rw>
-X-ME-Received: <xmr:lcrNZbPpyNv3cFpMwe1lHQJtRHIMqOmAtETuAaOr_UnC7yKuOGUpeHk2LdfEylxW6kesUk7b6lWnQS8eLutL7f_M2NqsRe6CRDBAnS06G-Kl>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrudelgdeihecutefuodetggdotefrodftvf
-    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
-    uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
-    fjughrpeffhffvvefukfhfgggtuggjsehgtderredttddvnecuhfhrohhmpefrrghtrhhi
-    tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
-    hnpeeukedtvedtffevleejtefgheehieegkeeluddvfeefgeehgfeltddtheejleffteen
-    ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
-    hkshdrihhm
-X-ME-Proxy: <xmx:lcrNZV6_aQaGFrfbO-c47qnokUJM2uGVjPPx-_uhO9WCJsCV2_3OEA>
-    <xmx:lcrNZV6z4Ocei-fEkYR_FW2F5ZW7LXSe7o9mEJmmS7CRLTzgIlMkHA>
-    <xmx:lcrNZVhvYftWPxUM22M-s1a8iTgZu0pOgzObiBS9vYVtspRSpf8u3w>
-    <xmx:lcrNZflnF5Hv5Aofe6DZ5KhFP5PPGJUUhDaLOD67tgmnnS9rGAeW7Q>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 15 Feb 2024 03:25:56 -0500 (EST)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id a09d9a0d (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 15 Feb 2024 08:22:05 +0000 (UTC)
-Date: Thu, 15 Feb 2024 09:25:55 +0100
-From: Patrick Steinhardt <ps@pks.im>
+	s=arc-20240116; t=1707987668; c=relaxed/simple;
+	bh=N/V3c344thzzwzeIl1i2y3U4Qhbf4TDaY3Kd47GA4Rk=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=Lm811XoOL2FORGumFzVyg9bMwTJTAh/WG1Jpkcdlun2xwrvwJNvq+6kewtBzcMTlzcsjzbeJNiCVnA201t++GZFJJSqwpMbCUkOSk3w0qg0zf2/PaV0sRM89YdOW+Lt9Ohqu6Vz90ZjMNu7UvmaAcyERyyZFdXSah/LlwgsFl24=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kipras.org; spf=pass smtp.mailfrom=kipras.org; arc=none smtp.client-ip=79.98.26.146
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kipras.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kipras.org
+Received: from [157.230.0.129] (helo=localhost.localdomain)
+	by renault.us.lt with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
+	(Exim 4.94.2)
+	(envelope-from <kipras@kipras.org>)
+	id 1raXHY-0008EE-2q; Thu, 15 Feb 2024 10:39:48 +0200
+From: Kipras Melnikovas <kipras@kipras.org>
 To: git@vger.kernel.org
-Cc: Karthik Nayak <karthik.188@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v2 7/7] t7003: ensure filter-branch prunes reflogs with the
- reftable backend
-Message-ID: <8fb6de37ce20bedcea6df9018e5a8a75eefb48c8.1707985173.git.ps@pks.im>
-References: <cover.1707463221.git.ps@pks.im>
- <cover.1707985173.git.ps@pks.im>
+Cc: greenfoo@u92.eu,
+	Kipras Melnikovas <kipras@kipras.org>
+Subject: [PATCH] mergetools: vimdiff: use correct tool's name when reading mergetool config
+Date: Thu, 15 Feb 2024 10:39:18 +0200
+Message-ID: <20240215083917.98218-2-kipras@kipras.org>
+X-Mailer: git-send-email 2.43.1
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="25DWyXi/6bpuujep"
-Content-Disposition: inline
-In-Reply-To: <cover.1707985173.git.ps@pks.im>
+Content-Transfer-Encoding: 8bit
+X-Antivirus-Scanner: Clean mail though you should still use an Antivirus
+X-Authenticated-Id: kipras
 
+I was curious why layout customizations, such as the multi-tab layout,
+worked fine with vimdiff, but when changing to nvimdiff, it wouldn't anymore,
+and instead showed the default view.
 
---25DWyXi/6bpuujep
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+I was testing with the following config, everything was fine:
 
-In t7003 we conditionally check whether the reflog for branches pruned
-by git-filter-branch(1) get deleted based on whether or not we use the
-"files" backend. Same as with the preceding commit, this condition was
-added because in its initial iteration the "reftable" backend did not
-delete reflogs when their corresponding ref was deleted. Since then, the
-backend has been aligned to behave the same as the "files" backend
-though, which makes this check unnecessary.
+```conf
+[merge]
+	tool = vimdiff
 
-Remove it.
+[mergetool "vimdiff"]
+	layout = local,base,remote / merged + base,local + base,remote + (local/base/remote),merged
+```
 
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
+```sh
+git mergetool # opens vim w/ the custom 4-tab layout
+```
+
+But then I'd swap the tool to nvimdiff:
+
+```diff
+[merge]
+-	tool = vimdiff
++	tool = nvimdiff
+
+-[mergetool "vimdiff"]
++[mergetool "nvimdiff"]
+	layout = local,base,remote / merged + base,local + base,remote + (local/base/remote),merged
+```
+
+and I'd get only the default 1-tab layout in neovim.
+
+At first I thought that unlike vim,
+neovim was somehow unable to launch multiple tabs.. Not the case.
+
+Turns out, the /mergetools/vimdiff script, which handles both vimdiff, nvimdiff
+and gvimdiff mergetools (the latter 2 simply source the vimdiff script), had a
+function merge_cmd() which read the layout variable from git config, and it
+would always read the value of mergetool.**vimdiff**.layout, instead of the
+mergetool being currently used (vimdiff or nvimdiff or gvimdiff).
+
+It looks like in 7b5cf8be18 (vimdiff: add tool documentation, 2022-03-30),
+we explained the current behavior in Documentation/config/mergetool.txt:
+
 ---
- t/t7003-filter-branch.sh | 5 +----
- 1 file changed, 1 insertion(+), 4 deletions(-)
+mergetool.vimdiff.layout::
+	The vimdiff backend uses this variable to control how its split
+	windows look like. Applies even if you are using Neovim (`nvim`) or
+	gVim (`gvim`) as the merge tool. See BACKEND SPECIFIC HINTS section
+---
 
-diff --git a/t/t7003-filter-branch.sh b/t/t7003-filter-branch.sh
-index f6aebe92ff..5ab4d41ee7 100755
---- a/t/t7003-filter-branch.sh
-+++ b/t/t7003-filter-branch.sh
-@@ -396,10 +396,7 @@ test_expect_success '--prune-empty is able to prune en=
-tire branch' '
- 	git branch prune-entire B &&
- 	git filter-branch -f --prune-empty --index-filter "git update-index --rem=
-ove A.t B.t" prune-entire &&
- 	test_must_fail git rev-parse refs/heads/prune-entire &&
--	if test_have_prereq REFFILES
--	then
--		test_must_fail git reflog exists refs/heads/prune-entire
--	fi
-+	test_must_fail git reflog exists refs/heads/prune-entire
- '
-=20
- test_expect_success '--remap-to-ancestor with filename filters' '
---=20
-2.44.0-rc0
+which makes sense why it's explained this way - the vimdiff backend is used by
+gvim and nvim. But the mergetool's configuration should be separate for each tool,
+and indeed that's confirmed in same commit at Documentation/mergetools/vimdiff.txt:
 
+---
+Variants
 
---25DWyXi/6bpuujep
-Content-Type: application/pgp-signature; name="signature.asc"
+Instead of `--tool=vimdiff`, you can also use one of these other variants:
+  * `--tool=gvimdiff`, to open gVim instead of Vim.
+  * `--tool=nvimdiff`, to open Neovim instead of Vim.
 
------BEGIN PGP SIGNATURE-----
+When using these variants, in order to specify a custom layout you will have to
+set configuration variables `mergetool.gvimdiff.layout` and
+`mergetool.nvimdiff.layout` instead of `mergetool.vimdiff.layout`
+---
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmXNypIACgkQVbJhu7ck
-PpST3w/8CkSgXYH87AA4g3aRm0T+jTDLTxivwY2ZJu+otdFbuSOmGCePpohqH9b0
-D6mE88938pl3qJChDc2CWz2GDnH+7ZsYcrQodjtR407LArX6Ik//SHe+5qZOKG5O
-CPy60wr5P5A5Bcbt+YZtiuEyo3uRqzy6y38f+I/zZAEkzL2+3HN2VPw31ntZYzF4
-DhHQvaa8PzJctzoeWODAd2rDb0wgHFc0Eh9Ct5JnfpAqoCaszaDxJa0TbdnHgJ9J
-67uzQkk81ZmD2WbsGKs4FO+xzWxTplC2aqAPHgdKRqlau3bcjCoCYDAMWI15awfJ
-yDxXSXF+03O0TPKTQH4EoPqctSbd3SWQiAHJPwHZ4CnY0yNsCMCQF9XhRU0XXkTq
-CRAbFlDuMIC5EMG8Wd2+CuDLoS1hjWaCyyz7R04QhYcfz4yzaJAcQsuozqBtvYt2
-k3Omo/IREn5bANys6OLOlOpeS4B5QFyY+NrKz3ny5uA86sBIRmVUwM+3gjujqY7m
-CJnyNbCUSY3oZNBGmGNDNbvT9qYkI4TL1Mf8mu17gWd91rdA9w6l+sFDb5I20l5F
-oVF2J/BMd+ah9l7ttbmyc6dNZBZfTdjLshHdWJPVm/RG2IXfmtQYB11cGmsbTA5W
-BNzX2sZSYMMdh2lRcy4OhXYTYaDbc8XyRDedDy7hubaUkdAE57U=
-=tur6
------END PGP SIGNATURE-----
+So it looks like we just forgot to update the 1 part of the vimdiff script
+that read the config variable. Cheers.
 
---25DWyXi/6bpuujep--
+Signed-off-by: Kipras Melnikovas <kipras@kipras.org>
+---
+ Documentation/config/mergetool.txt | 9 +++++----
+ mergetools/vimdiff                 | 6 ++++--
+ 2 files changed, 9 insertions(+), 6 deletions(-)
+
+diff --git a/Documentation/config/mergetool.txt b/Documentation/config/mergetool.txt
+index 294f61efd1..8e3d321a57 100644
+--- a/Documentation/config/mergetool.txt
++++ b/Documentation/config/mergetool.txt
+@@ -45,10 +45,11 @@ mergetool.meld.useAutoMerge::
+ 	value of `false` avoids using `--auto-merge` altogether, and is the
+ 	default value.
+ 
+-mergetool.vimdiff.layout::
+-	The vimdiff backend uses this variable to control how its split
+-	windows appear. Applies even if you are using Neovim (`nvim`) or
+-	gVim (`gvim`) as the merge tool. See BACKEND SPECIFIC HINTS section
++mergetool.{g,n,}vimdiff.layout::
++	The vimdiff backend uses this variable to control how its split windows
++	appear. Use `mergetool.vimdiff` for regular Vim, `mergetool.nvimdiff` for
++	Neovim and `mergetool.gvimdiff` for gVim to configure the merge tool. See
++	BACKEND SPECIFIC HINTS section
+ ifndef::git-mergetool[]
+ 	in linkgit:git-mergetool[1].
+ endif::[]
+diff --git a/mergetools/vimdiff b/mergetools/vimdiff
+index 06937acbf5..dd6bc411d9 100644
+--- a/mergetools/vimdiff
++++ b/mergetools/vimdiff
+@@ -371,9 +371,11 @@ diff_cmd_help () {
+ 
+ 
+ merge_cmd () {
+-	layout=$(git config mergetool.vimdiff.layout)
++	TOOL=$1
+ 
+-	case "$1" in
++	layout=$(git config mergetool.$TOOL.layout)
++
++	case "$TOOL" in
+ 	*vimdiff)
+ 		if test -z "$layout"
+ 		then
+-- 
+2.43.1
+
