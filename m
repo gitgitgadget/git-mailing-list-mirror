@@ -1,117 +1,134 @@
-Received: from mail-wm1-f43.google.com (mail-wm1-f43.google.com [209.85.128.43])
+Received: from mail-wm1-f52.google.com (mail-wm1-f52.google.com [209.85.128.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25934145B3E
-	for <git@vger.kernel.org>; Thu, 15 Feb 2024 23:15:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 178088833
+	for <git@vger.kernel.org>; Thu, 15 Feb 2024 23:34:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708038931; cv=none; b=Flnfy0vunyHBa9CYf6UFLULegKJ+W+hTZZFbot4FBNxr3jZLM9fxP0dcs3LGNFtrgLTfoeJ08L9XDVRogbySZWkh2eYQSMcvjwNHY5VXaZ5YeF9iuUvhEA0d6HPu9ufnp28OCgoWvImxyhg1wnOHS6W7cKaV7iBpRb5nEUImZHc=
+	t=1708040079; cv=none; b=O+jMsTyPUq+2FcH4REcE5KE8FkZc6boCvzEbzHyvDDfNRLDCUr5PYbwOyPo5hdpu/LBk2ClNTQiG6V5a2nSA36EgaKTNYyLm2NEJbXfEPKL2sX1kuzr7clxDeBtOL5KSIGvwC6jXLJSlRzORvae9WyLWNq6fEldn5cDQkob/LuA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708038931; c=relaxed/simple;
-	bh=NUMPKSybnUGleLkQIyEos81R9/mtsjghGnkatHTWOyY=;
-	h=Message-ID:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=m6wOpKglST6YocvP0zEwdonP1Bx/jNdh+ddXJWElTGE7pwMnhd2vGXcelBUpLxGnDWbx6urCP+OB75N6XjHPpe7nzwxJ1p8pQHCieLzozq+6YrhkyKsbDUgTZh3fSY3BswciYysejaMpSb24ROIgygpK5kMpTM/yYNbQygx/Rm8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=KMUlTqQI; arc=none smtp.client-ip=209.85.128.43
+	s=arc-20240116; t=1708040079; c=relaxed/simple;
+	bh=QI5jOLOEeOIfdIJl+GrOxN9U7AY9sbDGMvBTR5hmbtM=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=jEKoocrMRXXpN02wkACq9SJljMULnkKFKmzJxp3OXzttMe0nHHJYkkm9KqPDOZRSLlA1Rw9PbfJxaJ5m8+h1ZlIQS8wQnoHQ1Uoa6/V/28mhYQGWUocBr+nB1PDCf9c5bKJijUy3XUkqRvTeFZOnGdULV3nOwoKqkF6lKgngHMc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=cznlFC8R; arc=none smtp.client-ip=209.85.128.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KMUlTqQI"
-Received: by mail-wm1-f43.google.com with SMTP id 5b1f17b1804b1-412393ea2a0so850595e9.2
-        for <git@vger.kernel.org>; Thu, 15 Feb 2024 15:15:27 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cznlFC8R"
+Received: by mail-wm1-f52.google.com with SMTP id 5b1f17b1804b1-4124158f6e7so398825e9.0
+        for <git@vger.kernel.org>; Thu, 15 Feb 2024 15:34:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1708038926; x=1708643726; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=fCpx2iTB+knlFxESDE5zPJS9nO4Nsk3QAatLPdDaj/c=;
-        b=KMUlTqQIpCqqK/qgDcjzkpRGxHPFvDmj3H6Q6bkUVSgcHDBnX6V+Ekce1HkTi40puF
-         iRNamn3v/Ke1t96rvvBrRLVpRHBxs6t2M2EiHoE81XDaBWsIKmgIC+boxN1qFn5ry7XU
-         79gqRQCGJo/NroLth6aTLiGdpmLrFib8IyajebmiHn+RNKx4YgGJTqoBo08e3ChGCsV6
-         Fa6iKCyogH/0jbPvRkWhddq36VQYxBd3UaonVdRJupBc4KV9gA0evvA7w5Bk/4jfnYjG
-         3bE13UrCyZmKhhBxFAQI5fgCwjDXIu8s0S/Fidi1UaNiycfpUqLZR3GpjgcVywXDUAmo
-         NIEw==
+        d=gmail.com; s=20230601; t=1708040076; x=1708644876; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=F+Yn9ZCA8c9Jb029rxWPqe9eVM2ykQOGbQ0q0wM00rs=;
+        b=cznlFC8RDUUTNoCtQwkrYBqqdId0yO5RX3+7BrVSXZVva5h/F0XvRryKew55Qq/lq6
+         l6BA/kCHCvmj4OTdbUUvZQHAyL8FOVdcljEx/k1JRJOyUyulCwpqIUTPWbAM+H8QqgXK
+         FiJT6ftw4r3HE4MUYTnAtjR7p/xhbZPiTaElH3TnFJ+ErVafU2pGoUFuXhz//Oue/PTi
+         XppRXjB0vUKNTBIfhza7EEYwzRPpCHW30dATaX44NNSu8gtdDHhZaTStP05E3M4jSC6K
+         E3BwdK848r8cz/7FcA0jNo7sDH/zB3x6W9PgkGnCnQVW2ufvQnwmpq1o5xZiBChUH6Y4
+         R73A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1708038926; x=1708643726;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=fCpx2iTB+knlFxESDE5zPJS9nO4Nsk3QAatLPdDaj/c=;
-        b=jNFtXH6INZKcWznIp43fgm4UGmgwQMGv1ldMpPPCiI/hwL/5p3Skj6OORuA/S37sVg
-         zTjXHrrAp8A2Ya39ruKy4or5xQ3rBU+h30OVKbEY03TMKaJ9mTSyNJVHlGgqh0fn5brO
-         LWP0j0O8imMJwx2c9a9CHUqrq7FnPehQfkVpEtyHbqTA9hh1diMKFnYreghRjks5XdKX
-         nnVaX8J03IkNEHA34uIZBgHEHuXODEj5+i3CEz4lVdLafRF3AkgGox/1iJ54E0rDkpZK
-         peK9DrLaaPSwORJOnfHJPVyt+jMlntueQAqo1bknPF5tdFLbpVguLm6P2eoSOzSuX61q
-         CXZg==
-X-Gm-Message-State: AOJu0Yziq5e0QzpOJFH9vt/23nJpA66DEY3EnVhype2VBzsSbm7/xKdR
-	MSDMZR9eOVudibU55QuctSJQCHsWG+jhLpP0vI4Wf9XzKggxnR39kbgaRB2T
-X-Google-Smtp-Source: AGHT+IE9hvcsf1ViVzuUJqOoL2Uy5n4p/eqYbLEZ0XjfEZsOdxYWq42Zw3Lvuyz94KH8rLM2pUmunQ==
-X-Received: by 2002:a05:600c:3b86:b0:410:bd9e:c6 with SMTP id n6-20020a05600c3b8600b00410bd9e00c6mr2291952wms.17.1708038925479;
-        Thu, 15 Feb 2024 15:15:25 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id x11-20020adff64b000000b0033d157bb26esm444866wrp.32.2024.02.15.15.15.25
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 15 Feb 2024 15:15:25 -0800 (PST)
-Message-ID: <pull.1666.git.1708038924522.gitgitgadget@gmail.com>
-From: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Thu, 15 Feb 2024 23:15:24 +0000
-Subject: [PATCH] cmake: let `test-tool` run the unit tests, too
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        d=1e100.net; s=20230601; t=1708040076; x=1708644876;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=F+Yn9ZCA8c9Jb029rxWPqe9eVM2ykQOGbQ0q0wM00rs=;
+        b=iA5ZwUey5XgWcZUcSb3CZI4yRhY6DnrefLNymmDGm6JyVIfDOKkfPJylMEQdIkmtKr
+         3LN9K39Lvk8i/om0rjkZooX1CDYO5nUcogqVsPkvveSNdJlKLkbYizB/PuuyGPc1glgw
+         GTo+XjbDTw4+CbrIrGsPHPKWOhgWcv5yaZaknxhgR6xmJie6OEwr3E2oZrp+MqTeqemK
+         tE8lxDZzPjSxSGdB5810W/9TZ7iUevUBpH8ocaNZAb+47MNtlA+wd3yR86V2Tev3ARPZ
+         EMBsesw8zIvVd7+gvxHIX6eWiKAOl6MYUGhxtii0dPTlw7mfrDlt65KYDCCs/mQmXw3y
+         9wlg==
+X-Forwarded-Encrypted: i=1; AJvYcCVjg5coB6PEv5w2BzBSETt3Hh3Lsf3BVorVIDfHIJA0QarF5bAY8LTgMesVDJXll+sGnl13ArRyNFmAfWnY5jxG22K1
+X-Gm-Message-State: AOJu0Yy7n3uuXp4w8oWML2m7xdtLUegOkQn2F5eF1fNvhNagZnhPmHJ8
+	KvHOWl417+BGTa522QkWRBvWiJMrXnERD37D0r+iTaXfEp71mFGdzTNZByqa
+X-Google-Smtp-Source: AGHT+IHcDjz3ELoPlnDGMVFeRbxikuOj/5WZ73dEeanXjYI2g0yj+U5sa+qXj7OsRy1+A7nPKcGXtA==
+X-Received: by 2002:a05:600c:1d81:b0:412:107d:cd69 with SMTP id p1-20020a05600c1d8100b00412107dcd69mr2913292wms.1.1708040076085;
+        Thu, 15 Feb 2024 15:34:36 -0800 (PST)
+Received: from gmail.com (15.red-88-14-198.dynamicip.rima-tde.net. [88.14.198.15])
+        by smtp.gmail.com with ESMTPSA id z19-20020a7bc7d3000000b00411e1574f7fsm523768wmk.44.2024.02.15.15.34.32
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 15 Feb 2024 15:34:35 -0800 (PST)
+Message-ID: <2a4de8c4-4955-4891-859c-58730a41e5af@gmail.com>
+Date: Fri, 16 Feb 2024 00:34:28 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Josh Steadmon <steadmon@google.com>,
-    Johannes Schindelin <johannes.schindelin@gmx.de>,
-    Johannes Schindelin <johannes.schindelin@gmx.de>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] branch: rework the descriptions of rename and copy
+ operations
+Content-Language: en-US
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Dragan Simic <dsimic@manjaro.org>, git@vger.kernel.org
+References: <3cbc78bb5729f304b30bf37a18d1762af553aa00.1708022441.git.dsimic@manjaro.org>
+ <e8fdd057-2670-4c93-b362-202a339d5f49@gmail.com> <xmqq8r3lnzp0.fsf@gitster.g>
+From: =?UTF-8?Q?Rub=C3=A9n_Justo?= <rjusto@gmail.com>
+In-Reply-To: <xmqq8r3lnzp0.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
+On 15-feb-2024 14:13:31, Junio C Hamano wrote:
+> Rubén Justo <rjusto@gmail.com> writes:
+> 
+> > On 15-feb-2024 19:42:32, Dragan Simic wrote:
+> >
+> >> Move the descriptions of the <oldbranch> and <newbranch> arguments to the
+> >> descriptions of the branch rename and copy operations, where they naturally
+> >> belong.
+> >
+> > Thank you Dragan for working on this.
+> >
+> > Let me chime in just to say that maybe another terms could be considered
+> > here;  like: "<branchname>" and "<newbranchname>" (maybe too long...) or
+> > so.
+> >
+> > I have no problem with the current terms, but "<branchname>" can be a
+> > sensible choice here as it is already being used for other commands
+> > where, and this may help overall, the consideration: "if ommited, the
+> > current branch is considered" also applies.
+> 
+> Actually, we should go in the opposite direction.  When the use of
+> names are localized in a narrower context, they can be shortened
+> without losing clarity.
 
-The `test-tool` recently learned to run the unit tests. To this end, it
-needs to link with `test-lib.c`, which was done in the `Makefile`, and
-this patch does it in the CMake definition, too.
+I did not mean to have longer terms, sorry for that.
 
-This is a companion of 44400f58407e (t0080: turn t-basic unit test into
-a helper, 2024-02-02).
+I was thinking more in the synopsis:
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
-    cmake: let test-tool run the unit tests, too
-    
-    The test-tool recently learned to run the unit tests. To this end, it
-    needs to link with test-lib.c, which was done in the Makefile, and this
-    patch does it in the CMake definition, too.
-    
-    This is a companion of 44400f58407e (t0080: turn t-basic unit test into
-    a helper, 2024-02-02), and is based on js/unit-test-suite-runner.
+    'git branch' (--set-upstream-to=<upstream> | -u <upstream>) [<branchname>]
+    'git branch' --unset-upstream [<branchname>]
+    'git branch' (-m | -M) [<branchname>] <new>
+    'git branch' (-c | -C) [<branchname>] <new>
+    'git branch' (-d | -D) [-r] <branchname>...
+    'git branch' --edit-description [<branchname>]
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1666%2Fgit-for-windows%2Fjs%2Funit-test-suite-runner-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1666/git-for-windows/js/unit-test-suite-runner-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/1666
+To have more uniformity in the terms, which can be beneficial to the
+user.
 
- contrib/buildsystems/CMakeLists.txt | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+We don't say that "--edit-description" defaults to the current branch;
+It is assumed.  Perhaps we can take advantage of that assumption in
+-m|-c too.
 
-diff --git a/contrib/buildsystems/CMakeLists.txt b/contrib/buildsystems/CMakeLists.txt
-index 804629c525b..2f9c33585c6 100644
---- a/contrib/buildsystems/CMakeLists.txt
-+++ b/contrib/buildsystems/CMakeLists.txt
-@@ -1005,10 +1005,11 @@ endforeach()
- 
- #test-tool
- parse_makefile_for_sources(test-tool_SOURCES "TEST_BUILTINS_OBJS")
-+add_library(test-lib OBJECT ${CMAKE_SOURCE_DIR}/t/unit-tests/test-lib.c)
- 
- list(TRANSFORM test-tool_SOURCES PREPEND "${CMAKE_SOURCE_DIR}/t/helper/")
- add_executable(test-tool ${CMAKE_SOURCE_DIR}/t/helper/test-tool.c ${test-tool_SOURCES} ${test-reftable_SOURCES})
--target_link_libraries(test-tool common-main)
-+target_link_libraries(test-tool test-lib common-main)
- 
- set_target_properties(test-fake-ssh test-tool
- 			PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/t/helper)
+Of course, there is no need (perhaps counterproductive) to say "branch"
+if the context makes it clear it is referring to a branch.
 
-base-commit: b3b269c2d8931642c4b9f03b9ce9e81c20995eb8
--- 
-gitgitgadget
+> For example:
+> 
+>     -m [<old>] <new>::
+> 	rename the <old> branch (defaults to the current one) to
+> 	<new>.
+> 
+> is just as clear as the same description with <oldbranch> and
+> <newbranch>.  With the original text without any of the suggested
+> changes, <oldbranch> and <newbranch> appeared very far from the
+> context they are used in (i.e. the description for -m and -c), and
+> it may have helped readers to tell that these are names of branches.
+> But if the context is clear that we are talking about "renaming"
+> branches, there is not as much added benefit to say "branch" in
+> these names as in the current text.
