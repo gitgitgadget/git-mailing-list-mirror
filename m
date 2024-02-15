@@ -1,81 +1,79 @@
-Received: from fout5-smtp.messagingengine.com (fout5-smtp.messagingengine.com [103.168.172.148])
+Received: from fhigh8-smtp.messagingengine.com (fhigh8-smtp.messagingengine.com [103.168.172.159])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F0D1134C7
-	for <git@vger.kernel.org>; Thu, 15 Feb 2024 07:59:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91A7613AD1
+	for <git@vger.kernel.org>; Thu, 15 Feb 2024 07:59:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707983987; cv=none; b=ePFGWE1O8TQGaZvK6GmCjcJUE6IAFuhNiATSkl4BAec6wUZ0SkbmX07uxMh5vb19UcLYAX7uFCbPxWJAWYL3z3tQdNg0NCEbPLvQWV2nCMneFkb7q+vYjeuugav9xpSQytQBj9FQkhqdy1ZrCG+ISy8O5+qPESfhXL7CmVg/LfY=
+	t=1707983994; cv=none; b=cNY9Wr57ISYEpR6UGEFfnml9LOHnKwkBw02ePTJxnLPHAQ1XvF4UgYQisH3qntZqgt7crF6xQcyeSrSD+0PFFQPH/Wm3yn8yU99SszC+nVoxg34H4wklLHKbO4TxaF/m3mNmjyeQ9Vv9Wla3ag5BzvHsg/2WJlZp/LPj1iICzwA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707983987; c=relaxed/simple;
-	bh=/nslBpJaDu6IypgL/agD9r7+ZuqYMx3PniiSa/WlTFo=;
+	s=arc-20240116; t=1707983994; c=relaxed/simple;
+	bh=xmYY8GDmU0HbvI5YDTsFOnqN/F7pAvI1jgRAzLZnGDQ=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=N5QWMhbmjp+rTqpZXeZG9KFyjD64qH0LfovlRWM6Eb+cGbyeGYSIzDTR0JTTGZ4S3po663nDvWm8NMrZb8+abvXSsxVDzWAtvn1eqFHfFRvXASfEDE+gO//e5w0rIgIKy/CVYIGDVGOh7jdv7VW6tmM1AbXxVqIjcNJS4twgSRU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=ade++boM; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=EyWSrnWw; arc=none smtp.client-ip=103.168.172.148
+	 Content-Type:Content-Disposition:In-Reply-To; b=FEGkF94UugyECWG9jvrR1jxqzyNeS0w4Q3oXSEEd5cZozStUj9VP6eNoz9jZctWcMrPqC0czB/AaDSxTppJaTTWM6H8ZodF19GDWXRzBVrcRHzGvRzWHAUPBq1x6ykmoMlKTc44CtgVXi5ywpPyl/mdAqv1/hHOR1uxy3qLflFE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=joB/iGN6; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=jL4r/nU+; arc=none smtp.client-ip=103.168.172.159
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="ade++boM";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="EyWSrnWw"
-Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
-	by mailfout.nyi.internal (Postfix) with ESMTP id 920B913800DF;
-	Thu, 15 Feb 2024 02:59:44 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="joB/iGN6";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="jL4r/nU+"
+Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
+	by mailfhigh.nyi.internal (Postfix) with ESMTP id 76D8611400E7;
+	Thu, 15 Feb 2024 02:59:51 -0500 (EST)
 Received: from mailfrontend1 ([10.202.2.162])
-  by compute2.internal (MEProxy); Thu, 15 Feb 2024 02:59:44 -0500
+  by compute5.internal (MEProxy); Thu, 15 Feb 2024 02:59:51 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1707983984; x=1708070384; bh=i4T4BT5C1a
-	2TlYMBG0IzYYwAx7TLZHxULtD6yCbjIFI=; b=ade++boMewmE2yR5BBy0q8rS5U
-	j8ShwW46fLNfsi195AwnAaFl+Q1XvjwNvbHh/N9dsqI9kxJs7FE7LO2CMKHKX7Sa
-	Y5yGE7H4tMJONIeoYKTJtvUsH6WA8mRBEuuRF1FOossiL4Ltx1iu80v6okMsgpAU
-	UJRytjJmqtiTMrKSNDe0g8WuAESDORnjIYY+N8SVwq32o7kpkPOTFmsr94HJMeJA
-	v1ov5H+/2JNYTUocuc92FiFKamn22SPp4R4SeIRCUvqSqJ1bLIXMNVC1x/RTHObp
-	JocxCsydnSCnaiwJcsgLXNg4SgAXqa5Hvtui4Sr2Pi+7uIYpcsRNdNm3ro7g==
+	:subject:to:to; s=fm1; t=1707983991; x=1708070391; bh=jpQaMuWMQh
+	m56HKdX4lFVYltZ1i9sG0boiLzGiVz+YU=; b=joB/iGN6dzb0zsQYzvo8rkLeAs
+	2JLiCO7YeVBTKFwbb/gdBprN4q8Li5JXi4cqUhfhCyHrad7z5e1i7tK/zwH5reFQ
+	RI6KTPuglh7i6cPL8LzRD2jUVT+N4pzgz6k3ZwXc6SKhVjoDq9NtlUqs/+1xFM13
+	fd6QsslfKQ8Guq/CjW959tV+2CEdOJU4Jnh4LQ9NSzFUbertzzTH05IBLa6IEHY6
+	PgFpWttZpwnApb/doq91hmjrc9fQ9NXyDB6kpHK5XsetG8BWjHvlMvNO8AG4ZBeG
+	SkIuzw0aoE3sLxMfu/sqW/W5fbwxZljxHG1iAQuXcX9Ax10lqqscBX0jkwMQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1707983984; x=1708070384; bh=i4T4BT5C1a2TlYMBG0IzYYwAx7TL
-	ZHxULtD6yCbjIFI=; b=EyWSrnWwihgfXSsOOM6VWB3UY0KqaSwkGNuRKqHdiA6G
-	yHTl3K79LXDvB1C5gIOq3os9ajdyBZQDm4s0dH9/PWkq3v0QZyv+jBfg6hFfbUlb
-	cP8nD63E/9XZ8JgIB02dqFu/hD7z3V5uAMjcwxe/4ULqVIytAabZRFQ2i9WWQgRo
-	WEsOvck9sH9xPjIDiymQrt6k0OrYJkABT5A0cAM8WGwcI7Uuh0vZ40BAKJgpNm0/
-	2ul/Rt/I+RecEACqSq9M5irEQqL2sD320U8eEmBDDh48cFY77l6cFJaj8Nu1CVXg
-	JCljuNBCVH8Qz0trpB+UwzQpd9vv8pJdFbg1tkWAQg==
-X-ME-Sender: <xms:cMTNZfklZhqcPJNs0xRW-n-YY4jAIYfVESk523vz1_xJS8WKHAdn9Q>
-    <xme:cMTNZS39HTvfSpbbZQGRKJKbObieWbQFok8QmS2rj4EkMV7tZsCdzK2Am_rDEdElM
-    GTBDLqwXxuGjenX1Q>
-X-ME-Received: <xmr:cMTNZVqSF4ClHV9cBRf8YUTXYjZWQj9qqcFeFdZHoTLmRVNO8yrdBeOphHn6VIMXuDNYeUX0w5jWlBuqyzI5fr630922Ka9x6UcmM93swVcC>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrudelgdehlecutefuodetggdotefrodftvf
+	fm1; t=1707983991; x=1708070391; bh=jpQaMuWMQhm56HKdX4lFVYltZ1i9
+	sG0boiLzGiVz+YU=; b=jL4r/nU+XgjXeLZYXwJZZSTCmGDsEOfcSCMuGvmAcph1
+	LEltSdR4DQblLLvfZxzoka5PfAXEuvEVzuSvWqXIUCjaNNlVo0Iv1o9f1fNkKX/L
+	IcS3aTn1mAFBcY3wwqDvsSGqplSwsDp+EeWAilrEdViXHhzG3kvwQKHr668XSjgP
+	LZuxZkEqpeyUAZyOWTodtQNj6jG/mUqrGakGLBm6tdSIJVy/qpUzQQjChXPZlF3P
+	Vmc8V/8Gbz8nVavw5HGU/It83ozUhmErBro37X7Cts7DFQEnIRYdEpNej8AOdHe5
+	lTbnGa30ENzN5wP/nmLN15fd6Q/4YbRVCPt5teMfMA==
+X-ME-Sender: <xms:d8TNZVS8wUgZePY8KfdVlkMjrDR7Xzm03I-eCEr8Hdn3hFgLLVcYLQ>
+    <xme:d8TNZezDFsesOJWS00iVaCCCbGsVjgKs3cxBGHvRehvVz3kNhwrf9YDczh0R3Oc1m
+    cuOWBJx7Mz5GN_KUg>
+X-ME-Received: <xmr:d8TNZa3Lp3UF95_g_xU2X9G_GeBcdzpKHktzgCH_8QmfgALSpuMBDqs38zTKP5Qk9T7XYUYIxGyl3lwehq0a0_mnhEksqVp4hlJEVlrgk5r8>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrudelgdeitdcutefuodetggdotefrodftvf
     curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
-    uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
-    fjughrpeffhffvvefukfhfgggtuggjsehgtderredttddvnecuhfhrohhmpefrrghtrhhi
-    tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
-    hnpeeukedtvedtffevleejtefgheehieegkeeluddvfeefgeehgfeltddtheejleffteen
-    ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
-    hkshdrihhm
-X-ME-Proxy: <xmx:cMTNZXmYYfO9nSnoVtq1ZammcoLtROWcsvM6fewrv35H6r1PoUXYtg>
-    <xmx:cMTNZd1lWglKNeCiqqSfGp5ao3P6gZqdJ5Yynt1NhycnFaasxJyHMQ>
-    <xmx:cMTNZWuJpEGnsWoJXBjlI9MLESXJvcjGrB1H2i8br2IhcBOEox2DnA>
-    <xmx:cMTNZWyRrt7i6_rNfL7wXknsgYRo1ac6GLY0elul7Pk6RZxP7JmnzA>
+    uegrihhlohhuthemuceftddtnecunecujfgurhepfffhvfevuffkfhggtggujgesghdtre
+    ertddtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehp
+    khhsrdhimheqnecuggftrfgrthhtvghrnhepueektdevtdffveeljeetgfehheeigeekle
+    duvdeffeeghefgledttdehjeelffetnecuvehluhhsthgvrhfuihiivgeptdenucfrrghr
+    rghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimh
+X-ME-Proxy: <xmx:d8TNZdCSzufQsbcpmyiwrCbQyM_xtlG4JtZhyatwS58iibHfBOqfaw>
+    <xmx:d8TNZegm3z7p6JkYeDxd0DHFb8zL1w3QVYGLxB8GYsig9HvFc2f3pQ>
+    <xmx:d8TNZRqdvtDerVxCf-SMP6no0RUvD3fZMkIPCyw33pwUATOfapnO-Q>
+    <xmx:d8TNZRspQShmTRW0ucZBdWUnDtH2nbnpRVPsoCg2adf9Q-kgZjOa0Q>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 15 Feb 2024 02:59:43 -0500 (EST)
+ 15 Feb 2024 02:59:50 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id aff74b54 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 15 Feb 2024 07:55:50 +0000 (UTC)
-Date: Thu, 15 Feb 2024 08:59:40 +0100
+	by vm-mail (OpenSMTPD) with ESMTPSA id add47018 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 15 Feb 2024 07:55:58 +0000 (UTC)
+Date: Thu, 15 Feb 2024 08:59:48 +0100
 From: Patrick Steinhardt <ps@pks.im>
 To: Junio C Hamano <gitster@pobox.com>
-Cc: Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org
-Subject: Re: [PATCH 2/7] t0410: enable tests with extensions with non-default
- repo format
-Message-ID: <Zc3EbCXFdG8E7_v2@tanuki>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 5/7] t1405: remove unneeded cleanup step
+Message-ID: <Zc3EdG7K0NqV61rC@tanuki>
 References: <cover.1707463221.git.ps@pks.im>
- <feef6a3e6cd0d9096816d0a8a5789837fb784517.1707463221.git.ps@pks.im>
- <xmqqle7mu00c.fsf@gitster.g>
+ <25cf00c36f715edc6b4e86001a36a093f4c4b2e0.1707463221.git.ps@pks.im>
+ <xmqq4jeatz3n.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -83,65 +81,77 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="qmsdSyO6BABfu25u"
+	protocol="application/pgp-signature"; boundary="7+fSUXtKx/HBY7H6"
 Content-Disposition: inline
-In-Reply-To: <xmqqle7mu00c.fsf@gitster.g>
+In-Reply-To: <xmqq4jeatz3n.fsf@gitster.g>
 
 
---qmsdSyO6BABfu25u
+--7+fSUXtKx/HBY7H6
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Wed, Feb 14, 2024 at 02:57:55PM -0800, Junio C Hamano wrote:
+On Wed, Feb 14, 2024 at 03:17:32PM -0800, Junio C Hamano wrote:
 > Patrick Steinhardt <ps@pks.im> writes:
 >=20
-> > In t0410 we have two tests which exercise how partial clones behave in
-> > the context of a repository with extensions. These tests are marked to
-> > require a default repository using SHA1 and the "files" backend because
-> > we explicitly set the repository format version to 0.
+> > In 5e00514745 (t1405: explictly delete reflogs for reftable, 2022-01-31)
+> > we have added a test that explicitly deletes the reflog when not using
+> > the "files" backend. This was required because back then, the "reftable"
+> > backend didn't yet delete reflogs when deleting their corresponding
+> > branches, and thus subsequent tests would fail because some unexpected
+> > reflogs still exist.
 > >
-> > Changing the repository format version to 0 is not needed though. The
-> > "noop" extension is ignored as expected regardless of what the version
-> > is set to, same as the "nonsense" extension leads to failure regardless
-> > of the version.
+> > The "reftable" backend was eventually changed though so that it behaves
+> > the same as the "files" backend and deletes reflogs when deleting refs.
+> > This was done to make the "reftable" backend behave like the "files"
+> > backend as closely as possible so that it can act as a drop-in
+> > replacement.
+> >
+> > The cleanup-style test is thus not required anymore. Remove it.
+> >
+> > Signed-off-by: Patrick Steinhardt <ps@pks.im>
+> > ---
+> >  t/t1405-main-ref-store.sh | 6 ------
+> >  1 file changed, 6 deletions(-)
 >=20
-> Isn't the reason why 11664196 kept the forcing of the format version
-> because it wanted to see noop ignored and nonsense failed even if
-> the format version is 0 to ensure the regression it fixed will stay
-> fixed?  IOW, we force version 0 not because we do not want to test
-> with anything but SHA1 and REFFILES; we pretty much assume that with
-> the default version, noop and nonsense will be handled sensibly, and
-> we want to make sure they will be with version 0 as well.
+> Again, makes sense.
 >=20
-> And once we force to version 0, we have trouble running with
-> anything other than SHA1 and REFFILES, hence these prerequisites.
+> This is a tangent, but artificial limitations we imposed on reftable
+> to be more similar to files backend may be something we would want
+> to reconsider once reftable hits mainline and people actively start
+> using it.  Not having to lose the reflog only because you removed a
+> branch by mistake would be a powerful thing, as it would allow you
+> to resurrect the branch as well as its log.  Being able to have a
+> branch 'foo', with work related to 'foo' kept inbranches 'foo/arc1'
+> 'foo/arc2', etc., would be a very nice organizational tool.
 >=20
-> So, I dunno.
+> But it is a good idea to start limited and later making it looser.
+> These two limitations are something all users are already familiar
+> with, so it is not as cripplingly bad as it smells anyway.
 
-Hum, I guess that's fair. Let me adapt the test case to instead use the
-DEFAULT_REPO_FORMAT prerequisite then.
+Yeah, I very much agree with what you say here. We have it in our
+backlog to change this behaviour once the initial dust has settled.
 
 Patrick
 
---qmsdSyO6BABfu25u
+--7+fSUXtKx/HBY7H6
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmXNxGsACgkQVbJhu7ck
-PpQZqw//bSQ/05ga+Vq2+aOeHsLOFK2bliz3iU2Y3uYqiV6dPfdCZPCRU0Qi6HT7
-c368xVjyb8LiesSAn7+OSmCDceQ3qWIR7/N/smVK3NMW8kC62wRpbcYz88pup7FR
-30InABucXzOxOH6XyU3AzhG1tMZpmHi9eOnJq98tvaecdawsne/nyRKVx7DkeBCm
-LiwENqIEtgHwsbjPHIQUvwvmPTjRV5S/67ow1gb2f1UXM9rgSAIZK8o4Xyj+Mq4R
-rbG1G+uHIV8pLcuxxkpWBXMhqcmnoXKc9Mlac9B9jFbfkcxcylZBXYqAJWO4z7Ie
-jiDGxTtibVlQO+GYkNsfuzOr5/kqJBGzlou/FQKO5+Ta3Ap8DeMcCx/aIHdxPRn2
-44gF+QotsR/PXeZqVUrHhxjaySkojbmQ8RtvVBIzAMlL64qlPjguRaH9Qb0g2B6o
-7BA85pALVNdU4xO/iXJSz5PBUMgICaL/IXQHhagL/UO0yV+il501HWgzc7jH+DYG
-OKcm2S2twrcJETUVWzpDA9K0jkwOBU2Vm+nQyoA3AmBJY9q+9W0cUz0FCYs4Nwk4
-4Tzg464B+F3xhj4YZyjTYRwjdSma8/UYgl1XYiaU3+Ir7Zl4RQozSQBUDmyTkyCq
-8o17UAUsVcH9Z+Vr+aaDZirP2KEW8Br2kvII4NJhZjPqeaG9U7o=
-=ezW2
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmXNxHMACgkQVbJhu7ck
+PpTzcBAAq4z0irK/iWHzQNYc4VghVda6S2poKOCEqSIKpVDRmp5go+sBcpP834i/
+5MxX8871dZMR1Vg+CDEqSTLQb3WgcJDtmDqfvKksn9UajhsbbyIgjo7IeCcUe8/m
+r88P+o4mBX1QhWj0rNAifn26wcRgpL8bLQSHp9NnI9zIk9qRb92pw7PiOEX+HOns
+HDxmApzcoIOqETf7qKLtl+9N1x44hbK1L0Fa63YRzSXba2VhJK48fYKb8f6k8KbC
+/K/E2HhNtgTAuoUjac0f9icpQJdCb3BVy13gD8GdniUIp+O1FE2KwQPYcARJVJZd
+mmqwfegsSTtHeABOTptH0GhT0XyzCPitF5MJ+CYD6p4tIwjImOxraiwHda8jJUpK
+xvtUalXUbzEujapnBmQm3msmqLufIMwrHDuKNyB260tbnIT6+F4aov7+u1b7WyJy
+2fG+aiuA80TfRWrmxFqktujrihSwQ1wOO4ghELjrxEsNbCdOcZY5pivLryTizEGt
+dYIUqLCYZEAYzWg8F6JuglDY7ViZd01Gmhl7Wem+vKCBvnuUpF4G9By0HTfBayWn
+gPHjUi93JcEAOk32ktthqafiKv9p8SCoONT0hBwiU/pSb6Y+f+2HtJTPSFvKv2hx
+yQeZIyFsdHkL6Wn9DpSno6rav6Lskv4xCCtyJhIuhbCAMNMGKcM=
+=1ubv
 -----END PGP SIGNATURE-----
 
---qmsdSyO6BABfu25u--
+--7+fSUXtKx/HBY7H6--
