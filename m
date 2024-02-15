@@ -1,83 +1,82 @@
-Received: from fhigh2-smtp.messagingengine.com (fhigh2-smtp.messagingengine.com [103.168.172.153])
+Received: from fout8-smtp.messagingengine.com (fout8-smtp.messagingengine.com [103.168.172.151])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 020E317581
-	for <git@vger.kernel.org>; Thu, 15 Feb 2024 11:21:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF9D112AAE5
+	for <git@vger.kernel.org>; Thu, 15 Feb 2024 11:22:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1707996121; cv=none; b=mUNKVqYznl8GhZraO0++ygxtu2pAg8aqwvoCQgIXaMMnDGf/qCi4hGtxNGg8Tf1wUDQVE8ILxUg+ttRcla8GMDKNiQs/r13Kt3FwVnKxeOCR+t8WieiPxhT22BkPFam20rlzcyZcssJ+6spOt28jpFFe3Ocj6ifkt1uaf8IQ5ew=
+	t=1707996126; cv=none; b=HJh0gA+EtDlPtsYKc8jjJ16qXVfLl1cMP6DU5Fl7vdcWYNFoNsdvn7h0x64Fimap8lu46AuF6KeigLvQSZF8tgjNo7eipAY6ReLE7PaJvfNMlsAsKsnKiT4CYQuDU1fZFd31Gmrg3GTFHKIxrghyIx43aO8JZuZeHWHLgd5xYpI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1707996121; c=relaxed/simple;
-	bh=zk3DFgVNS6cQGyd7LtkkLfVwizA8jjpgmeDj4p8shGc=;
+	s=arc-20240116; t=1707996126; c=relaxed/simple;
+	bh=QCLxVzUW6YwwKlUsagfyYdICB07zV+tsT57enpnbCHM=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=fudimerLhLdFwdmhe+9aKCq2I4dDCl389bwccFp2ZlDVq9S26ffsQzESo6wVZevD2qMth5blWyl4uBeL5Bvjy62j/F3U5AWf8IOChdqQr8nTDliCaLGTs1fSSu4msgNB4E2ikpEXW7pSQxiowGvhssQN3yieES890kjpc8ENJz0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=PQ5M6eF5; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=U5NAPHML; arc=none smtp.client-ip=103.168.172.153
+	 Content-Type:Content-Disposition:In-Reply-To; b=CWqwGI7MX0oIKKOSYsf2ecIrdrtI/C3au+bmd+7SJdEYiAxdgzJl1TsRx2TyvDQovkRjPUK99EpPJVh9IZ+CJjMEyuOmlOPMdR3F2Th4tkiYJKC9AwvmL5xY4gQHC5oDz27gAaWBT+NugDENhNqu47QvCYzEb1ej9BcaCmfGWBo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=nkh+qVb3; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=dxF7/r3U; arc=none smtp.client-ip=103.168.172.151
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="PQ5M6eF5";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="U5NAPHML"
-Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
-	by mailfhigh.nyi.internal (Postfix) with ESMTP id EE8BB11400B9;
-	Thu, 15 Feb 2024 06:21:58 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="nkh+qVb3";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="dxF7/r3U"
+Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
+	by mailfout.nyi.internal (Postfix) with ESMTP id 6200A13800CE;
+	Thu, 15 Feb 2024 06:22:03 -0500 (EST)
 Received: from mailfrontend2 ([10.202.2.163])
-  by compute5.internal (MEProxy); Thu, 15 Feb 2024 06:21:58 -0500
+  by compute2.internal (MEProxy); Thu, 15 Feb 2024 06:22:03 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1707996118; x=1708082518; bh=VOgvkYvxpn
-	W8XvQxmtMkLhrLq2ZY90ZMHyc7BcEl+6g=; b=PQ5M6eF5XYp4vEiyrMGg5BU0GI
-	Ouw8yTkA5p3awpsTfYdYnhT70G5ILazA1Pnw7D2q8m0xOhe9AeBOIjNbh0lVJI3h
-	ef1z1z1EcdczDy93c+blGHgLDsR6glM+Z84bk0KMZQESu1YKdy917NdxSoZA/1Ia
-	QVzDZp/As3oNKdE+SaMy97LkUodp6aBg0bsoeseYQYS6WGNP8Ba67I07l7QdZicR
-	evUfBkTM9hhVGYJ1F4568OZ3FZJvM8woFJanPxIDQAH6kwzezNjpM5ufQhbqfIlb
-	t/jnBbbhU4TUZn8uT8W7YqoTeyE+/pJx7/zc3ZvUR3eUsZTymvgYhb1m5MDA==
+	:subject:to:to; s=fm1; t=1707996123; x=1708082523; bh=KIJJ59hjWi
+	KKMCRH1IdVaygVkr1yIj7HSFmrwS2XDdI=; b=nkh+qVb317IWziGenePinJiWPj
+	dLNNBHeiIWBooBUhhOGWvOy9vkOsPMfLRJN+XCrW5H3DQ12tI4UDju5VVpoRKVMN
+	NRijAi45yxFpBNzJrZvYqL3c932+0Q7iVWMkpTp8b51wBp7wf/Xer7oQlZPnK4g9
+	Xth6P+0DI4pI7CK2nh41B9CHtYVrC2rW4Enn8lzrQDGQr5OS3XbCgrYVnu8KQeBr
+	xD/ytyFXXPxcfgZ4xFITLseQL63qVTrGqP3IA8gsNt/Wph1F8FuYYxOIeM7jsFxI
+	DgJD0YnUxhEF7xC0cPGaypGyijTkkAOZcnslwgWDOplnpUc598+nd6STdmlw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1707996118; x=1708082518; bh=VOgvkYvxpnW8XvQxmtMkLhrLq2ZY
-	90ZMHyc7BcEl+6g=; b=U5NAPHMLwM7wXjpQ+grUhpGn/MfzyzIlODtqFokNBjxC
-	/eZRKa6kkUkVAQ/QJnkcQ8h7jGg0X1n0wqSOzOM5sRebiyhCbvl+FdOr2u42Fx9Y
-	AK0CFKyurn+gT1Wt/m5g8iv0w2CPeK6y8/FMP2+Gi76bX6GErFsomtaA+y4gifL+
-	NcmewzuiJGu9MKnaODQkfj1hyDZkkg7COKqozSzRn/G91rRg9sBFYvBczh0IH1oh
-	ZBdXGipGGbvUUFGvLiJPst/7pVIhBukmbFREcAUtruyE8Z9F7nLhn+pzzZpOfrs2
-	CKkE8xkR5z6mkK9hL0Ni56qiZ2vTgHB5oZAYQQpL8w==
-X-ME-Sender: <xms:1vPNZbIZa2TOZLFe3G3FX2SzbIuOGVRi7n-sljLsGLmhgwMKMupMTg>
-    <xme:1vPNZfL4vU6Wgk3vEfFFeMU3SZb_gWySof1S7djYx1QHG_YTvQVsaTketkpBzpWam
-    U5aY1n34Vi3FViutw>
-X-ME-Received: <xmr:1vPNZTvDBIeQ-WDoD7v4ja566pnCTrTc3yImJfL49RStiTqDzVqk9z6NkbDrF2paBoFsORWWZLG0fKLFKGzENwYe6zSm_SC-EgQwkbsQbFaL>
+	fm1; t=1707996123; x=1708082523; bh=KIJJ59hjWiKKMCRH1IdVaygVkr1y
+	Ij7HSFmrwS2XDdI=; b=dxF7/r3U12EIVJLEkD5PCyZMs6IW/vP3PyRJQbKnkruA
+	Pb1Su8Uwt06/YAiY6n8v/M1ZZ8ye6MrlWV+v/WhASRedmztcpBMb4yNPQ128T14u
+	wi2Sn0O3FhgE6uUfyb5T3Xlo39teaHHAfxALgkWNHltnPQYnjzC8CV0tDqjYwJgJ
+	Y07vcgZZOdaRWYP1I2JohkytJxcGxGoxwTjpbQEP7MTW439mnA4FeK1RbJxPr19V
+	4ghUY+tIg4/jfZxa4lodupOwiB13hRbVpHNwS46RCx0TrrhGC0nIZTK1F99iqZgm
+	fP7XsB1NpftXYjoX47HJeyDpj512oyK09M2QjmzVHg==
+X-ME-Sender: <xms:2_PNZWjG8WCquDly-eQcrX9_CF5lBFg2Mrg2uVHBA2ULQ3onzTyctA>
+    <xme:2_PNZXAGCd-AyjfQpzQldTy80cVnrN3hZi-isXuoZQIZlpzOx4eDH2Y82suB1eJx2
+    mdwHZ9WSl-1u1ZBJQ>
+X-ME-Received: <xmr:2_PNZeG1QBm4CC5DOKxwaITsLBweW77ApCe8NeF0Y67rCWFzEAnYUWNmg9XuOoJSkcUDOjlBsQhiPMG6w4Oz9GSBps0hcteB2rAeOSSCNIE3>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvddtgddvjecutefuodetggdotefrodftvf
     curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
     uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
     fjughrpeffhffvvefukfhfgggtuggjsehgtderredttddvnecuhfhrohhmpefrrghtrhhi
     tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
     hnpeeukedtvedtffevleejtefgheehieegkeeluddvfeefgeehgfeltddtheejleffteen
-    ucevlhhushhtvghrufhiiigvpedunecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
+    ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
     hkshdrihhm
-X-ME-Proxy: <xmx:1vPNZUaOtS1bC-BFyrx3B08gS-V9S0kCQiYqnSmVTM8YDgG63GdDfg>
-    <xmx:1vPNZSY87KwubziVOS4J0Xt6DyUe2eddnobc-JMGwOhxtm7Egmo9Dw>
-    <xmx:1vPNZYBcjsb9lP7U3ERi03iYh2wQQbS-RVMJNHbehq6_XarEfPrfgg>
-    <xmx:1vPNZXNPemVHHf6CuOJqcxPDf1bjlH_ymTm0oUFkxpcxj_9CxvmF8A>
+X-ME-Proxy: <xmx:2_PNZfQCRfIFV8FhqRVku1_wtA9ihp_FZM1IZhXKYnVVqsJjUHC57g>
+    <xmx:2_PNZTw-PbUEQ78UJHwtNQ5-mWf7wPILcpD-VptbdZsBgnbtr9Lidg>
+    <xmx:2_PNZd4DNBnENe8dLAcEx9t3k5pPhx4bk40vGCG1KOhj15UTXW6Dtw>
+    <xmx:2_PNZamVfRNw6JNFaP_BHuGPHvWV4Ls9HM77p6r5ygEpGJNo_0VWQA>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 15 Feb 2024 06:21:57 -0500 (EST)
+ 15 Feb 2024 06:22:02 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 66bf1fb9 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 15 Feb 2024 11:18:05 +0000 (UTC)
-Date: Thu, 15 Feb 2024 12:21:55 +0100
+	by vm-mail (OpenSMTPD) with ESMTPSA id e6e55461 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 15 Feb 2024 11:18:09 +0000 (UTC)
+Date: Thu, 15 Feb 2024 12:22:00 +0100
 From: Patrick Steinhardt <ps@pks.im>
 To: "Eric W. Biederman" <ebiederm@gmail.com>
 Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
 	"brian m. carlson" <sandals@crustytoothpaste.net>,
 	Eric Sunshine <sunshine@sunshineco.com>,
 	"Eric W. Biederman" <ebiederm@xmission.com>
-Subject: Re: [PATCH v2 03/30] object-names: support input of oids in any
- supported hash
-Message-ID: <Zc3z09woCStanYlP@tanuki>
+Subject: Re: [PATCH v2 04/30] repository: add a compatibility hash algorithm
+Message-ID: <Zc3z2F7r2oMSlOW-@tanuki>
 References: <878r8l929e.fsf@gmail.froward.int.ebiederm.org>
- <20231002024034.2611-3-ebiederm@gmail.com>
+ <20231002024034.2611-4-ebiederm@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -85,318 +84,150 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="QthQH+SCsvXoGPBL"
+	protocol="application/pgp-signature"; boundary="ogKb1uTUzkJZrsAU"
 Content-Disposition: inline
-In-Reply-To: <20231002024034.2611-3-ebiederm@gmail.com>
+In-Reply-To: <20231002024034.2611-4-ebiederm@gmail.com>
 
 
---QthQH+SCsvXoGPBL
+--ogKb1uTUzkJZrsAU
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Sun, Oct 01, 2023 at 09:40:07PM -0500, Eric W. Biederman wrote:
+On Sun, Oct 01, 2023 at 09:40:08PM -0500, Eric W. Biederman wrote:
 > From: "Eric W. Biederman" <ebiederm@xmission.com>
 >=20
-> Support short oids encoded in any algorithm, while ensuring enough of
-> the oid is specified to disambiguate between all of the oids in the
-> repository encoded in any algorithm.
+> We currently have support for using a full stage 4 SHA-256
+> implementation.
+
+What is a "full stage 4 SHA-256 implementation"? I was assuming that you
+referred to "Documentation/technical/hash-function-transition.txt", but
+it does not mention stages either.
+
+> However, we'd like to support interoperability with
+> SHA-1 repositories as well.  The transition plan anticipates a
+> compatibility hash algorithm configuration option that we can use to
+> implement support for this.  Let's add an element to the repository
+> structure that indicates the compatibility hash algorithm so we can use
+> it when we need to consider interoperability between algorithms.
 >=20
-> By default have the code continue to only accept oids specified in the
-> storage hash algorithm of the repository, but when something is
-> ambiguous display all of the possible oids from any accepted oid
-> encoding.
+> Add a helper function repo_set_compat_hash_algo that takes a
+> compatibility hash algorithm and sets "repo->compat_hash_algo".  If
+> GIT_HASH_UNKNOWN is passed as the compatibility hash algorithm
+> "repo->compat_hash_algo" is set to NULL.
 >=20
-> A new flag is added GET_OID_HASH_ANY that when supplied causes the
-> code to accept oids specified in any hash algorithm, and to return the
-> oids that were resolved.
+> For now, the code results in "repo->compat_hash_algo" always being set
+> to NULL, but that will change once a configuration option is added.
 >=20
-> This implements the functionality that allows both SHA-1 and SHA-256
-> object names, from the "Object names on the command line" section of
-> the hash function transition document.
->=20
-> Care is taken in get_short_oid so that when the result is ambiguous
-> the output remains the same if GIT_OID_HASH_ANY was not supplied.  If
-> GET_OID_HASH_ANY was supplied objects of any hash algorithm that match
-> the prefix are displayed.
->=20
-> This required updating repo_for_each_abbrev to give it a parameter so
-> that it knows to look at all hash algorithms.
->=20
-> Signed-off-by: "Eric W. Biederman" <ebiederm@xmission.com>
+> Inspired-by: brian m. carlson <sandals@crustytoothpaste.net>
+> Signed-off-by: Eric W. Biederman <ebiederm@xmission.com>
 > ---
->  builtin/rev-parse.c |  2 +-
->  hash-ll.h           |  1 +
->  object-name.c       | 46 ++++++++++++++++++++++++++++++++++-----------
->  object-name.h       |  3 ++-
->  4 files changed, 39 insertions(+), 13 deletions(-)
+>  repository.c | 8 ++++++++
+>  repository.h | 4 ++++
+>  setup.c      | 3 +++
+>  3 files changed, 15 insertions(+)
 >=20
-> diff --git a/builtin/rev-parse.c b/builtin/rev-parse.c
-> index fde8861ca4e0..43e96765400c 100644
-> --- a/builtin/rev-parse.c
-> +++ b/builtin/rev-parse.c
-> @@ -882,7 +882,7 @@ int cmd_rev_parse(int argc, const char **argv, const =
-char *prefix)
->  				continue;
->  			}
->  			if (skip_prefix(arg, "--disambiguate=3D", &arg)) {
-> -				repo_for_each_abbrev(the_repository, arg,
-> +				repo_for_each_abbrev(the_repository, arg, the_hash_algo,
->  						     show_abbrev, NULL);
->  				continue;
->  			}
-> diff --git a/hash-ll.h b/hash-ll.h
-> index 10d84cc20888..2cfde63ae1cf 100644
-> --- a/hash-ll.h
-> +++ b/hash-ll.h
-> @@ -145,6 +145,7 @@ struct object_id {
->  #define GET_OID_RECORD_PATH     0200
->  #define GET_OID_ONLY_TO_DIE    04000
->  #define GET_OID_REQUIRE_PATH  010000
-> +#define GET_OID_HASH_ANY      020000
+> diff --git a/repository.c b/repository.c
+> index a7679ceeaa45..80252b79e93e 100644
+> --- a/repository.c
+> +++ b/repository.c
+> @@ -104,6 +104,13 @@ void repo_set_hash_algo(struct repository *repo, int=
+ hash_algo)
+>  	repo->hash_algo =3D &hash_algos[hash_algo];
+>  }
 > =20
->  #define GET_OID_DISAMBIGUATORS \
->  	(GET_OID_COMMIT | GET_OID_COMMITTISH | \
-> diff --git a/object-name.c b/object-name.c
-> index 0bfa29dbbfe9..7dd6e5e47566 100644
-> --- a/object-name.c
-> +++ b/object-name.c
-> @@ -25,6 +25,7 @@
->  #include "midx.h"
->  #include "commit-reach.h"
->  #include "date.h"
-> +#include "object-file-convert.h"
-> =20
->  static int get_oid_oneline(struct repository *r, const char *, struct ob=
-ject_id *, struct commit_list *);
-> =20
-> @@ -49,6 +50,7 @@ struct disambiguate_state {
-> =20
->  static void update_candidates(struct disambiguate_state *ds, const struc=
-t object_id *current)
->  {
-> +	/* The hash algorithm of current has already been filtered */
->  	if (ds->always_call_fn) {
->  		ds->ambiguous =3D ds->fn(ds->repo, current, ds->cb_data) ? 1 : 0;
->  		return;
-> @@ -134,6 +136,8 @@ static void unique_in_midx(struct multi_pack_index *m,
->  {
->  	uint32_t num, i, first =3D 0;
->  	const struct object_id *current =3D NULL;
-> +	int len =3D ds->len > ds->repo->hash_algo->hexsz ?
-> +		ds->repo->hash_algo->hexsz : ds->len;
-
-`hexsz` is not an `int`, but a `size_t`. `match_hash()` of course uses
-a third type `unsigned` instead, adding to the confusion.
-
->  	num =3D m->num_objects;
-> =20
->  	if (!num)
-> @@ -149,7 +153,7 @@ static void unique_in_midx(struct multi_pack_index *m,
->  	for (i =3D first; i < num && !ds->ambiguous; i++) {
->  		struct object_id oid;
->  		current =3D nth_midxed_object_oid(&oid, m, i);
-> -		if (!match_hash(ds->len, ds->bin_pfx.hash, current->hash))
-> +		if (!match_hash(len, ds->bin_pfx.hash, current->hash))
->  			break;
->  		update_candidates(ds, current);
->  	}
-> @@ -159,6 +163,8 @@ static void unique_in_pack(struct packed_git *p,
->  			   struct disambiguate_state *ds)
->  {
->  	uint32_t num, i, first =3D 0;
-> +	int len =3D ds->len > ds->repo->hash_algo->hexsz ?
-> +		ds->repo->hash_algo->hexsz : ds->len;
-> =20
->  	if (p->multi_pack_index)
->  		return;
-> @@ -177,7 +183,7 @@ static void unique_in_pack(struct packed_git *p,
->  	for (i =3D first; i < num && !ds->ambiguous; i++) {
->  		struct object_id oid;
->  		nth_packed_object_id(&oid, p, i);
-> -		if (!match_hash(ds->len, ds->bin_pfx.hash, oid.hash))
-> +		if (!match_hash(len, ds->bin_pfx.hash, oid.hash))
->  			break;
->  		update_candidates(ds, &oid);
->  	}
-> @@ -188,6 +194,10 @@ static void find_short_packed_object(struct disambig=
-uate_state *ds)
->  	struct multi_pack_index *m;
->  	struct packed_git *p;
-> =20
-> +	/* Skip, unless oids from the storage hash algorithm are wanted */
-> +	if (ds->bin_pfx.algo && (&hash_algos[ds->bin_pfx.algo] !=3D ds->repo->h=
-ash_algo))
-> +		return;
+> +void repo_set_compat_hash_algo(struct repository *repo, int algo)
+> +{
+> +	if (hash_algo_by_ptr(repo->hash_algo) =3D=3D algo)
+> +		BUG("hash_algo and compat_hash_algo match");
+> +	repo->compat_hash_algo =3D algo ? &hash_algos[algo] : NULL;
+> +}
 > +
->  	for (m =3D get_multi_pack_index(ds->repo); m && !ds->ambiguous;
->  	     m =3D m->next)
->  		unique_in_midx(m, ds);
-> @@ -326,11 +336,12 @@ int set_disambiguate_hint_config(const char *var, c=
-onst char *value)
+>  /*
+>   * Attempt to resolve and set the provided 'gitdir' for repository 'repo=
+'.
+>   * Return 0 upon success and a non-zero value upon failure.
+> @@ -184,6 +191,7 @@ int repo_init(struct repository *repo,
+>  		goto error;
 > =20
->  static int init_object_disambiguation(struct repository *r,
->  				      const char *name, int len,
-> +				      const struct git_hash_algo *algo,
->  				      struct disambiguate_state *ds)
->  {
->  	int i;
+>  	repo_set_hash_algo(repo, format.hash_algo);
+> +	repo_set_compat_hash_algo(repo, GIT_HASH_UNKNOWN);
+>  	repo->repository_format_worktree_config =3D format.worktree_config;
 > =20
-> -	if (len < MINIMUM_ABBREV || len > the_hash_algo->hexsz)
-> +	if (len < MINIMUM_ABBREV || len > GIT_MAX_HEXSZ)
->  		return -1;
+>  	/* take ownership of format.partial_clone */
+> diff --git a/repository.h b/repository.h
+> index 5f18486f6465..bf3fc601cc53 100644
+> --- a/repository.h
+> +++ b/repository.h
+> @@ -160,6 +160,9 @@ struct repository {
+>  	/* Repository's current hash algorithm, as serialized on disk. */
+>  	const struct git_hash_algo *hash_algo;
+> =20
+> +	/* Repository's compatibility hash algorithm. */
+> +	const struct git_hash_algo *compat_hash_algo;
+> +
+>  	/* A unique-id for tracing purposes. */
+>  	int trace2_repo_id;
+> =20
+> @@ -199,6 +202,7 @@ void repo_set_gitdir(struct repository *repo, const c=
+har *root,
+>  		     const struct set_gitdir_args *extra_args);
+>  void repo_set_worktree(struct repository *repo, const char *path);
+>  void repo_set_hash_algo(struct repository *repo, int algo);
+> +void repo_set_compat_hash_algo(struct repository *repo, int compat_algo);
+>  void initialize_the_repository(void);
+>  RESULT_MUST_BE_USED
+>  int repo_init(struct repository *r, const char *gitdir, const char *work=
+tree);
+> diff --git a/setup.c b/setup.c
+> index 18927a847b86..aa8bf5da5226 100644
+> --- a/setup.c
+> +++ b/setup.c
+> @@ -1564,6 +1564,8 @@ const char *setup_git_directory_gently(int *nongit_=
+ok)
+>  		}
+>  		if (startup_info->have_repository) {
+>  			repo_set_hash_algo(the_repository, repo_fmt.hash_algo);
+> +			repo_set_compat_hash_algo(the_repository,
+> +						  GIT_HASH_UNKNOWN);
+>  			the_repository->repository_format_worktree_config =3D
+>  				repo_fmt.worktree_config;
+>  			/* take ownership of repo_fmt.partial_clone */
+> @@ -1657,6 +1659,7 @@ void check_repository_format(struct repository_form=
+at *fmt)
+>  	check_repository_format_gently(get_git_dir(), fmt, NULL);
+>  	startup_info->have_repository =3D 1;
+>  	repo_set_hash_algo(the_repository, fmt->hash_algo);
+> +	repo_set_compat_hash_algo(the_repository, GIT_HASH_UNKNOWN);
+>  	the_repository->repository_format_worktree_config =3D
+>  		fmt->worktree_config;
+>  	the_repository->repository_format_partial_clone =3D
 
-Isn't this loosening things up a bit too much? I'd have expected that we
-would compare with `algo->hexsz`, unless `GET_OID_HASH_ANY` is set and
-thus `algo =3D=3D NULL`.
+There's also `init_db()`, where we call `repo_set_hash_algo()`. Would we
+have to call `repo_set_compat_hash_algo()` there, too? There are some
+other locations when handling remotes or clones, but I don't think those
+are relevant right now.
 
 Patrick
 
->  	memset(ds, 0, sizeof(*ds));
-> @@ -357,6 +368,7 @@ static int init_object_disambiguation(struct reposito=
-ry *r,
->  	ds->len =3D len;
->  	ds->hex_pfx[len] =3D '\0';
->  	ds->repo =3D r;
-> +	ds->bin_pfx.algo =3D algo ? hash_algo_by_ptr(algo) : GIT_HASH_UNKNOWN;
->  	prepare_alt_odb(r);
->  	return 0;
->  }
-> @@ -491,9 +503,10 @@ static int repo_collect_ambiguous(struct repository =
-*r UNUSED,
->  	return collect_ambiguous(oid, data);
->  }
-> =20
-> -static int sort_ambiguous(const void *a, const void *b, void *ctx)
-> +static int sort_ambiguous(const void *va, const void *vb, void *ctx)
->  {
->  	struct repository *sort_ambiguous_repo =3D ctx;
-> +	const struct object_id *a =3D va, *b =3D vb;
->  	int a_type =3D oid_object_info(sort_ambiguous_repo, a, NULL);
->  	int b_type =3D oid_object_info(sort_ambiguous_repo, b, NULL);
->  	int a_type_sort;
-> @@ -503,8 +516,12 @@ static int sort_ambiguous(const void *a, const void =
-*b, void *ctx)
->  	 * Sorts by hash within the same object type, just as
->  	 * oid_array_for_each_unique() would do.
->  	 */
-> -	if (a_type =3D=3D b_type)
-> -		return oidcmp(a, b);
-> +	if (a_type =3D=3D b_type) {
-> +		if (a->algo =3D=3D b->algo)
-> +			return oidcmp(a, b);
-> +		else
-> +			return a->algo > b->algo ? 1 : -1;
-> +	}
-> =20
->  	/*
->  	 * Between object types show tags, then commits, and finally
-> @@ -533,8 +550,12 @@ static enum get_oid_result get_short_oid(struct repo=
-sitory *r,
->  	int status;
->  	struct disambiguate_state ds;
->  	int quietly =3D !!(flags & GET_OID_QUIETLY);
-> +	const struct git_hash_algo *algo =3D r->hash_algo;
-> +
-> +	if (flags & GET_OID_HASH_ANY)
-> +		algo =3D NULL;
-> =20
-> -	if (init_object_disambiguation(r, name, len, &ds) < 0)
-> +	if (init_object_disambiguation(r, name, len, algo, &ds) < 0)
->  		return -1;
-> =20
->  	if (HAS_MULTI_BITS(flags & GET_OID_DISAMBIGUATORS))
-> @@ -588,7 +609,7 @@ static enum get_oid_result get_short_oid(struct repos=
-itory *r,
->  		if (!ds.ambiguous)
->  			ds.fn =3D NULL;
-> =20
-> -		repo_for_each_abbrev(r, ds.hex_pfx, collect_ambiguous, &collect);
-> +		repo_for_each_abbrev(r, ds.hex_pfx, algo, collect_ambiguous, &collect);
->  		sort_ambiguous_oid_array(r, &collect);
-> =20
->  		if (oid_array_for_each(&collect, show_ambiguous_object, &out))
-> @@ -610,13 +631,14 @@ static enum get_oid_result get_short_oid(struct rep=
-ository *r,
->  }
-> =20
->  int repo_for_each_abbrev(struct repository *r, const char *prefix,
-> +			 const struct git_hash_algo *algo,
->  			 each_abbrev_fn fn, void *cb_data)
->  {
->  	struct oid_array collect =3D OID_ARRAY_INIT;
->  	struct disambiguate_state ds;
->  	int ret;
-> =20
-> -	if (init_object_disambiguation(r, prefix, strlen(prefix), &ds) < 0)
-> +	if (init_object_disambiguation(r, prefix, strlen(prefix), algo, &ds) < =
-0)
->  		return -1;
-> =20
->  	ds.always_call_fn =3D 1;
-> @@ -787,10 +809,12 @@ void strbuf_add_unique_abbrev(struct strbuf *sb, co=
-nst struct object_id *oid,
->  int repo_find_unique_abbrev_r(struct repository *r, char *hex,
->  			      const struct object_id *oid, int len)
->  {
-> +	const struct git_hash_algo *algo =3D
-> +		oid->algo ? &hash_algos[oid->algo] : r->hash_algo;
->  	struct disambiguate_state ds;
->  	struct min_abbrev_data mad;
->  	struct object_id oid_ret;
-> -	const unsigned hexsz =3D r->hash_algo->hexsz;
-> +	const unsigned hexsz =3D algo->hexsz;
-> =20
->  	if (len < 0) {
->  		unsigned long count =3D repo_approximate_object_count(r);
-> @@ -826,7 +850,7 @@ int repo_find_unique_abbrev_r(struct repository *r, c=
-har *hex,
-> =20
->  	find_abbrev_len_packed(&mad);
-> =20
-> -	if (init_object_disambiguation(r, hex, mad.cur_len, &ds) < 0)
-> +	if (init_object_disambiguation(r, hex, mad.cur_len, algo, &ds) < 0)
->  		return -1;
-> =20
->  	ds.fn =3D repo_extend_abbrev_len;
-> diff --git a/object-name.h b/object-name.h
-> index 9ae522307148..064ddc97d1fe 100644
-> --- a/object-name.h
-> +++ b/object-name.h
-> @@ -67,7 +67,8 @@ enum get_oid_result get_oid_with_context(struct reposit=
-ory *repo, const char *st
-> =20
-> =20
->  typedef int each_abbrev_fn(const struct object_id *oid, void *);
-> -int repo_for_each_abbrev(struct repository *r, const char *prefix, each_=
-abbrev_fn, void *);
-> +int repo_for_each_abbrev(struct repository *r, const char *prefix,
-> +			 const struct git_hash_algo *algo, each_abbrev_fn, void *);
-> =20
->  int set_disambiguate_hint_config(const char *var, const char *value);
-> =20
-> --=20
-> 2.41.0
->=20
-
---QthQH+SCsvXoGPBL
+--ogKb1uTUzkJZrsAU
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmXN89IACgkQVbJhu7ck
-PpRU2BAArjP9DI5a1ferbgIlNSIDvndd+T1VFQOeNLJiWg176c4tPS70Ni3Dl7FW
-AH2AruFwggm2mBBThDDOHoJAdMx2lFi32OJfi7slGle3p+88pzTEedHK3O46j+uC
-2ld6w6eSEYYb8yBOqsOZmH0c40C+CthKiwhs6V+rafYHbXC4VSg8ZFV3KxzDFQa3
-ePQuczh7zcRiV+YdDaDHCvZ3C1TbE6ZO7Yek+lUvsDNTKs85cCXB0WrAtD4XGpil
-qlLF8WzEuqmLTAgnatAhf3vY0md9gwa/+h6DERa3M98Ylv3bKrBFRMSjSgk+tu3G
-fo15RQqUsVJjP7niGtF5P77fWeS3JCYbAufVY156/0V5z5KLpXMjVMAxZfNMfNae
-IYDAp6O0NtjqPEjejstcZl+xFKD3b78hhcr6HHCBvxgzU9tJIBK/S+ZGVg+aTHLw
-UL8UQD8p608NRKuUK72gKrFJA+X5jUch1ZK/XX+elqa3qPNJAIkcusBG9TihnMQ6
-i634d6iwCjdcpJC58RTtJsk/FDgxGkRBAxZKRURnSjJSKs/QOE+tfVvs6TxoYtpq
-ovJj369IwSKxIi6JO1yzdUT19jBweiMjqMQx5/5XVZsucrM1sgTfI2EgeJ2nivFO
-2vt40jQEq125pLjVi1yKovv/k4kGohOEQttgznrWhhZ299ctGgg=
-=3yTP
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmXN89cACgkQVbJhu7ck
+PpQKqA//dwj6UUcyO4xrmihJBUFT1GowTvWZfyMauJtr0DKYCZPyiaiGgw4mUBO6
+feom9EwZLZTJvsPq1/sTllNI6sCvyBMiiwqfQhgyAgWqbWAC+8ZCtSo2eRtT79VF
+oAXqnzD33+P08Rq9mk4s6q4ztw9k/ULj25qR4U8djCp/5L+kxsw1lh+rGqIfw2E4
+qvUwx/CN4BNICTTVxotjqvpck6Sfkn9klL/pdXoiAtM5h/RCTNQ1rvFaNROJ4k3v
+x8DvKOdjzFy4swwhacnOQzlQoNnJHZCNRJvu2SHo1GjtApBLJP0s8KTC7stqZbU1
+RSkorRn2YbZ2rUWCBKGijENATbkxl9+aI5PM9g6Uc7PfuegT8WzSrIzAw9TCfjI+
+oblkaPM5kGaxHRF2fUClARUfpmn/AayaR2KE5Ax47bgEAiG/t0WT1+OA0RR8M2d/
+YsVKexSXtUBZsdn9hnIW82QbGl+ZtcsqviOhafww8pceHTgXtSj4C9MFvL8UbU9y
+TzGEczZxbAW1/jhKR5q60ojqu+Ki05PrE7QtuYsH6e+SuL6P9shtJ9c9/xMd2qGj
+abCoy3LQSFdqp+FNu9Evi67wbnnZbsKO93bJzrHmV5ku5CeN1x0wthu3QpTXaoXg
+P7J3qxVLswqpR/V3PfbI5L5heNna+qkHhyvgWM/GehmmSinASZM=
+=f8rM
 -----END PGP SIGNATURE-----
 
---QthQH+SCsvXoGPBL--
+--ogKb1uTUzkJZrsAU--
