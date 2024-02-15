@@ -1,72 +1,72 @@
-Received: from wout3-smtp.messagingengine.com (wout3-smtp.messagingengine.com [64.147.123.19])
+Received: from wfhigh7-smtp.messagingengine.com (wfhigh7-smtp.messagingengine.com [64.147.123.158])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23EFD12FF88
-	for <git@vger.kernel.org>; Thu, 15 Feb 2024 13:49:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.19
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60F06131735
+	for <git@vger.kernel.org>; Thu, 15 Feb 2024 13:49:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708004973; cv=none; b=K4gp2YygREi//YPAot/B1EZfR74AVxcvUNXrGvvdNBuGMxusaEs1I6Pjj1F/v60ZZRV415ySSgAwRsuyzms2TCPvv8wAHTWmKV8HliS4e+EycMWncdl1Go0L4MINi7Luph6JbIsEQ8t3oYQgcY+JWQapySaxBLkbM29U9apGVIQ=
+	t=1708004975; cv=none; b=eNlDc/xmi9af4XhoUobjpF1DyBCCLRhn65vii3VhKdBXU3W/y8tPgKCvK43odfCuSpPh9GQstIXiLls5RCny9KRKhW+mz7VbpdjanZdjBuF+zU042+YylZ3tO38SQd7s5npnLYiBFOZOe+P0k7PcygWM9Cv1smk+yF5XO/3dY10=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708004973; c=relaxed/simple;
-	bh=mitcJGeHhF99UspNid+5OZR83m9bOcpFLmkzL6Murq8=;
+	s=arc-20240116; t=1708004975; c=relaxed/simple;
+	bh=8WuuG49eUi7l7iBQ9ycoCYDRA57eYFQiTfGCfbFkUiY=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=W4gL2pzoOmz658z59E9haEFZmWIQq+qfWEXtndTsWnv5y7sq4quqDXRqjJvKFg7qrDZdktXI26RWoCsSGierB2dR0jytqp4/DZZkH0cTo5XaDPpADlY3fRcRH8h533RMWvlA7U2bxShXHaMHG0KuXwLzqOQnQ9nrfSwYxqopuo4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=HR7Zw75t; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=GSl+f3en; arc=none smtp.client-ip=64.147.123.19
+	 Content-Type:Content-Disposition:In-Reply-To; b=e1lgAnIoMbkk3Hkp+VynpRX0GTc0oZNrXNr6vYi/7i5EmV3jASTYJjhLcwoItD1Ht0Hwxsf47bMZl1WufGcVKhyC0h17dgEEzKQ6c1KRFHSWLVjhHbjj0samEhAo+q32hrl0iX41rUy+pDhXnyPRFXvFsQLRGabQhOGdSmmJYYE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=mSqkzqHK; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ZkZKRQSZ; arc=none smtp.client-ip=64.147.123.158
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="HR7Zw75t";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="GSl+f3en"
-Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
-	by mailout.west.internal (Postfix) with ESMTP id 74F2C320024A;
-	Thu, 15 Feb 2024 08:49:28 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="mSqkzqHK";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ZkZKRQSZ"
+Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
+	by mailfhigh.west.internal (Postfix) with ESMTP id BD25218000A7;
+	Thu, 15 Feb 2024 08:49:31 -0500 (EST)
 Received: from mailfrontend2 ([10.202.2.163])
-  by compute6.internal (MEProxy); Thu, 15 Feb 2024 08:49:29 -0500
+  by compute5.internal (MEProxy); Thu, 15 Feb 2024 08:49:32 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1708004967; x=1708091367; bh=br8UJS65Kw
-	7phBzf40bajp1ZZS9zpsmAbEyH7fMxlco=; b=HR7Zw75tzIw0SAp+uFoJQqKwLp
-	urrCQNgDJwfVIhWJ1hi2QZcSedQEUKxoxf26Sx7UtMu0O61oCG0CtcWe1aVaAKtH
-	t9r7s78So3GjpZVdmS7ViAvUQOpcOHjSzBxs4PVTXoJ5UK2DRNkNLdw9SokUFP/8
-	1PIBJQ+NcStW0HhKzodBsbOojORHgQnMoHsm7J7zewdhKDR4eiTYDwxJAgh2qMfI
-	B5AyeXOkcmrA1zicw7+Rt6qD88bT+BZuKjE/qDTcw2yIdAmTHqt/iJshe47cAAAp
-	21c//7bat77AYMg80pof51S+ft50CioU33PEDgJZ4Pp90skIfuCm7kqBUNOw==
+	:subject:to:to; s=fm1; t=1708004971; x=1708091371; bh=xs+gLYk3cA
+	JaWkJUgNE9qCVUTBqdYKNAHacycjJeHG0=; b=mSqkzqHKo5KOgjFhYCX8eP4h9o
+	RPxI3C8BW06x8aEv+UoSljgeQj7rQsh44hy2OrdVjw/U9TypWPUCcmf2mux2r3Aa
+	Zqxqq83wjEEDEZPr3PiJ135pevV8TKxfcUXIptuOXv1u0Uofqj8EZUqDKXVcvsma
+	tMf7JYtiRT6SvEMDqDtlG1tLLcz7zA1QT8DmYjgPUjNcG323x8xRaX4VgYZ355Yh
+	ndPNBJQTRX0QWakmr+8NqOpGxQ7LW7O+Ds+GHpf88/Ph3NI5Lw+E2QvA0+M+CK0i
+	S7CgdpUvhy5v2f9AGpIrOz6W/uFDV/tQ6Fev2mRrzioKWEjKV2GH4Ej7T7DA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1708004967; x=1708091367; bh=br8UJS65Kw7phBzf40bajp1ZZS9z
-	psmAbEyH7fMxlco=; b=GSl+f3enaTdBuK/D8du1bFqo2xVfGUoR0COodHjt/z4F
-	jCMfZtfnYmV8CgSpR3N2i0L3MOskn/ihqx8m4mdjZRnKO/E/A4oKf1UwiexBci2x
-	zfrJPRFHdysZG7jahpSt9/e1kacBFOh6FsWpK2GDWhHVJTK15boffKLy93d/5ApL
-	VxfbOHYu4bJTSsbrk9v8Bdugp4ZaX/L6wIVEeh09FHgQTKtm/rp0hX7w0ImhgB2j
-	Z42yMf+4ZA74rD4QbSlQkRNtzR93C1yj/uFacsZT/0Jpp/wzskl8yiR6GVtRW6nu
-	dtJ5Cd4JS2R4dSiPTCib/N45voLvCdtiiEJ90wkgtw==
-X-ME-Sender: <xms:ZxbOZSJA4ASNDEXmBkXhusScOyENkR1xzGweMlsOt_JNuGkbHJgoYA>
-    <xme:ZxbOZaL2Z3CFo_nyQ6t-hTP8yldAdWCTDcER8GjOUPAcrxVdNb8yJMTN-FGrViv38
-    f3tByK_ol62u1ZsIA>
-X-ME-Received: <xmr:ZxbOZSvnkRTdOc9aEv_IyXdP1Eag7vi6JAP4JvHLnMRb4PVqnST9tI0htCm4BnvApPN-6Kj3lZeLOwCA-gmnEpqQxmiTnHv8IJxv_8jKQLr1>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvddtgdehiecutefuodetggdotefrodftvf
+	fm1; t=1708004971; x=1708091371; bh=xs+gLYk3cAJaWkJUgNE9qCVUTBqd
+	YKNAHacycjJeHG0=; b=ZkZKRQSZEW+/qAbGRyHOfo2PX0f/EJrTpCBVuVINeM91
+	/Vn49H1D/12C7+gki855giAE9roCbkt7g7uNqTxITNTuYIrLAS8Dd4h34NHf3K+G
+	KmSuXebt0z4e5mvgS9l65OhlvHwX4517QmlQC4fM2A36PvEgksFReyq2EuIpWzBN
+	PMeB4Sr/B1F2iYY7EqtBYV28uuE/JyanjVBtFGeaxmr0cET2w0M1iZbvL5t13Lps
+	dZvd2lrQh3bWdnsLR9M+Efgy5U7KqrHWUWybQogn5+aPKTVt7njYUJfus2APucwC
+	GRhoZV42HULeFOnSCwlIc3AEZHpHjIHq3U3gwe4A2g==
+X-ME-Sender: <xms:ahbOZfBZiaH4SmhF-3BNmJ435UoIIGOzK-X3ORsLYds_NHFP4b8Lkw>
+    <xme:ahbOZVgHf38mr-w0TMZ8l3KWgOqlr6G6GADceekf0ztn-nu_EMER5lUo43yAVL-Tj
+    lOTab3WkE1jNeIGiQ>
+X-ME-Received: <xmr:ahbOZamIL3aVKVglEt7rESngZ49-LaXeOzV4WP8zKIsBlUjH2kVQPHStPDO3PPLnS-NIk2uoqdc109_s0KOFROpq4HKAGEksVeSd_sZrVF9M>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvddtgdehjecutefuodetggdotefrodftvf
     curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
     uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
     fjughrpeffhffvvefukfhfgggtuggjsehgtderredttddvnecuhfhrohhmpefrrghtrhhi
     tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
-    hnpeeukedtvedtffevleejtefgheehieegkeeluddvfeefgeehgfeltddtheejleffteen
-    ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
-    hkshdrihhm
-X-ME-Proxy: <xmx:ZxbOZXZ7V4LgXSIm0rpzCKrXq0xOlgUYfUCg5Qnq4KXHsXlpMovzuQ>
-    <xmx:ZxbOZZZZN3kg_Z5i01zvghkml0MTqUIvHqZO2Kytrd1K94pihvO88A>
-    <xmx:ZxbOZTCFPILdFp-i7gLn24O4ajxTsZwL8XAAsv0u1PkDyjQA5QEvbA>
-    <xmx:ZxbOZXPwBHSHLDA8Zy_tvI8OzWP6Lw1ucIqCC3X_Ixl1Tio8SPDqqQ>
+    hnpeefgeeggfekfeeiieeiieduleeuheetgeelheeljeekjeffueeuudetvefgffetleen
+    ucffohhmrghinhepmhgrnhejrdhorhhgnecuvehluhhsthgvrhfuihiivgeptdenucfrrg
+    hrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimh
+X-ME-Proxy: <xmx:axbOZRxytNUXork3DVuucXzqicjvT9Ai5UQL7t1TLe9nB8DTcE2Z6w>
+    <xmx:axbOZUSCbdK70t-bY7BJ4r7h2lxmWwQ45z5cT27Tvmd8f0BPaROD_w>
+    <xmx:axbOZUYrQItBZtNNG_RUFLPZB6kVDaXrQIHd77_MTFcuPk7xuDDsEw>
+    <xmx:axbOZd9Rev2wNU0HdWDluViOreeQ0x5Gi7K9-l0S2qTw50JLvFQQ_E5bLRY>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 15 Feb 2024 08:49:26 -0500 (EST)
+ 15 Feb 2024 08:49:29 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id c26d605e (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 15 Feb 2024 13:45:31 +0000 (UTC)
-Date: Thu, 15 Feb 2024 14:49:22 +0100
+	by vm-mail (OpenSMTPD) with ESMTPSA id fd7d2449 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 15 Feb 2024 13:45:36 +0000 (UTC)
+Date: Thu, 15 Feb 2024 14:49:27 +0100
 From: Patrick Steinhardt <ps@pks.im>
 To: Eric DeCosta via GitGitGadget <gitgitgadget@gmail.com>
 Cc: git@vger.kernel.org, "Eric Sunshine [ ]" <sunshine@sunshineco.com>,
@@ -75,10 +75,10 @@ Cc: git@vger.kernel.org, "Eric Sunshine [ ]" <sunshine@sunshineco.com>,
 	"Johannes Schindelin [ ]" <Johannes.Schindelin@gmx.de>,
 	"Taylor Blau [ ]" <me@ttaylorr.com>, marzi <m.ispare63@gmail.com>,
 	Eric DeCosta <edecosta@mathworks.com>
-Subject: Re: [PATCH 1/7] fsmonitor: rebase with master
-Message-ID: <Zc4WYrozXIJ41xtW@tanuki>
+Subject: Re: [PATCH 2/7] fsmonitor: determine if filesystem is local or remote
+Message-ID: <Zc4WZ2EkrVrHzs43@tanuki>
 References: <pull.1667.git.git.1707992978.gitgitgadget@gmail.com>
- <5973bbe18aeecf486d8256cc402285665c45e66a.1707992978.git.gitgitgadget@gmail.com>
+ <d26de10866662a5bcd16d562cd1063dedd21cf02.1707992978.git.gitgitgadget@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -86,398 +86,415 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="AAqU0H4QVnW9TIQv"
+	protocol="application/pgp-signature"; boundary="DxEZM6cXx6pmhlrh"
 Content-Disposition: inline
-In-Reply-To: <5973bbe18aeecf486d8256cc402285665c45e66a.1707992978.git.gitgitgadget@gmail.com>
+In-Reply-To: <d26de10866662a5bcd16d562cd1063dedd21cf02.1707992978.git.gitgitgadget@gmail.com>
 
 
---AAqU0H4QVnW9TIQv
+--DxEZM6cXx6pmhlrh
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Thu, Feb 15, 2024 at 10:29:32AM +0000, Eric DeCosta via GitGitGadget wro=
+On Thu, Feb 15, 2024 at 10:29:33AM +0000, Eric DeCosta via GitGitGadget wro=
 te:
 > From: Eric DeCosta <edecosta@mathworks.com>
 >=20
-> rebased with master, and resolved conflicts
+> Compare the given path to the mounted filesystems. Find the mount that is
+> the longest prefix of the path (if any) and determine if that mount is on=
+ a
+> local or remote filesystem.
 
-It would be a lot more useful if you adopted the original phrasing of
-the commit:
-
-```
-fsmonitor: prepare to share code between Mac OS and Linux=20
-
-Linux and Mac OS can share some of the code originally developed for Mac OS.
-
-Mac OS and Linux can share fsm-ipc-unix.c and fsm-settings-unix.c
-
-Signed-off-by: Eric DeCosta <edecosta@mathworks.com>
-```
-
-Depending on whether or not you have made significant changes during the
-rebase I'd also convert the trailers to:
-
-Patch-originally-by: Eric DeCoste <edecosta@mathworks.com>
-Signed-off-by: Marzieh Esipreh <m.ispare63@gmail.com>
-
-Furthermore, I think it would be useful if this commit was split up even
-further than it already is. Having a preparatory patch that moves around
-shareable code is a different topic than introducing the code skeleton
-for Linux support, and as far as I can see the shared code does not end
-up requiring anything from the new "*-linux.c" files.
-
-Patrick
+It would be nice to motivate this change in the commit message. Right
+now it only explains what the commit does, but it does not mention at
+all why that would be a good idea in the first place. Explaining that
+this is part of the interface that the existing fsmonitor infrastructure
+expects to exist would help.
 
 > Signed-off-by: Eric DeCosta <edecosta@mathworks.com>
 > ---
->  compat/fsmonitor/fsm-health-linux.c    | 24 ++++++++++
->  compat/fsmonitor/fsm-ipc-darwin.c      | 57 +----------------------
->  compat/fsmonitor/fsm-ipc-linux.c       |  1 +
->  compat/fsmonitor/fsm-ipc-unix.c        | 53 +++++++++++++++++++++
->  compat/fsmonitor/fsm-settings-darwin.c | 64 +-------------------------
->  compat/fsmonitor/fsm-settings-linux.c  |  1 +
->  compat/fsmonitor/fsm-settings-unix.c   | 61 ++++++++++++++++++++++++
->  7 files changed, 142 insertions(+), 119 deletions(-)
->  create mode 100644 compat/fsmonitor/fsm-health-linux.c
->  create mode 100644 compat/fsmonitor/fsm-ipc-linux.c
->  create mode 100644 compat/fsmonitor/fsm-ipc-unix.c
->  create mode 100644 compat/fsmonitor/fsm-settings-linux.c
->  create mode 100644 compat/fsmonitor/fsm-settings-unix.c
+>  Makefile                                |   4 +
+>  compat/fsmonitor/fsm-path-utils-linux.c | 195 ++++++++++++++++++++++++
+>  compat/fsmonitor/fsm-path-utils-linux.h |  91 +++++++++++
+>  config.mak.uname                        |  11 ++
+>  4 files changed, 301 insertions(+)
+>  create mode 100644 compat/fsmonitor/fsm-path-utils-linux.c
+>  create mode 100644 compat/fsmonitor/fsm-path-utils-linux.h
 >=20
-> diff --git a/compat/fsmonitor/fsm-health-linux.c b/compat/fsmonitor/fsm-h=
-ealth-linux.c
-> new file mode 100644
-> index 00000000000..b9f709e8548
-> --- /dev/null
-> +++ b/compat/fsmonitor/fsm-health-linux.c
-> @@ -0,0 +1,24 @@
-> +#include "cache.h"
-> +#include "config.h"
-> +#include "fsmonitor.h"
-> +#include "fsm-health.h"
-> +#include "fsmonitor--daemon.h"
+> diff --git a/Makefile b/Makefile
+> index 78e874099d9..0f36a0fd83a 100644
+> --- a/Makefile
+> +++ b/Makefile
+> @@ -2088,6 +2088,10 @@ ifdef HAVE_CLOCK_GETTIME
+>  	BASIC_CFLAGS +=3D -DHAVE_CLOCK_GETTIME
+>  endif
+> =20
+> +ifdef HAVE_LINUX_MAGIC_H
+> +	BASIC_CFLAGS +=3D -DHAVE_LINUX_MAGIC_H
+> +endif
 > +
-> +int fsm_health__ctor(struct fsmonitor_daemon_state *state)
+>  ifdef HAVE_CLOCK_MONOTONIC
+>  	BASIC_CFLAGS +=3D -DHAVE_CLOCK_MONOTONIC
+>  endif
+> diff --git a/compat/fsmonitor/fsm-path-utils-linux.c b/compat/fsmonitor/f=
+sm-path-utils-linux.c
+> new file mode 100644
+> index 00000000000..c21d1349532
+> --- /dev/null
+> +++ b/compat/fsmonitor/fsm-path-utils-linux.c
+> @@ -0,0 +1,195 @@
+> +#include "git-compat-util.h"
+> +#include "abspath.h"
+> +#include "fsmonitor.h"
+> +#include "fsmonitor-path-utils.h"
+> +#include "fsm-path-utils-linux.h"
+> +#include <errno.h>
+> +#include <mntent.h>
+> +#include <sys/mount.h>
+> +#include <sys/vfs.h>
+> +#include <sys/statvfs.h>
+> +
+> +static int is_remote_fs(const char *path)
+> +{
+> +	struct statfs fs;
+> +
+> +	if (statfs(path, &fs))
+> +		return error_errno(_("statfs('%s') failed"), path);
+> +
+> +	switch (fs.f_type) {
+> +	case ACFS_SUPER_MAGIC:
+> +	case AFS_SUPER_MAGIC:
+> +	case CEPH_SUPER_MAGIC:
+> +	case CIFS_SUPER_MAGIC:
+> +	case CODA_SUPER_MAGIC:
+> +	case FHGFS_SUPER_MAGIC:
+> +	case GFS_SUPER_MAGIC:
+> +	case GPFS_SUPER_MAGIC:
+> +	case IBRIX_SUPER_MAGIC:
+> +	case KAFS_SUPER_MAGIC:
+> +	case LUSTRE_SUPER_MAGIC:
+> +	case NCP_SUPER_MAGIC:
+> +	case NFS_SUPER_MAGIC:
+> +	case NFSD_SUPER_MAGIC:
+> +	case OCFS2_SUPER_MAGIC:
+> +	case PANFS_SUPER_MAGIC:
+> +	case SMB_SUPER_MAGIC:
+> +	case SMB2_SUPER_MAGIC:
+> +	case SNFS_SUPER_MAGIC:
+> +	case VMHGFS_SUPER_MAGIC:
+> +	case VXFS_SUPER_MAGIC:
+> +		return 1;
+> +	default:
+> +		return 0;
+> +	}
+> +}
+
+This list doesn't feel all that maintainable to me, but so be it if
+there is no better interface available.
+
+> +static int find_mount(const char *path, const struct statvfs *fs,
+> +			struct mntent *entry)
+
+I don't quite understand why `find_mount()` is required in the first
+place. Why can't we statfs(2) the path directly? This syscall provides
+the fsid and should be sufficient for us to fill in `struct fs_info`.
+
+Explaining details like this in the commit message would help guide the
+reader's expectations.
+
+Patrick
+
+> +{
+> +	const char *const mounts =3D "/proc/mounts";
+> +	char *rp =3D real_pathdup(path, 1);
+> +	struct mntent *ment =3D NULL;
+> +	struct statvfs mntfs;
+> +	FILE *fp;
+> +	int found =3D 0;
+> +	int ret =3D 0;
+> +	size_t dlen, plen, flen =3D 0;
+> +
+> +	entry->mnt_fsname =3D NULL;
+> +	entry->mnt_dir =3D NULL;
+> +	entry->mnt_type =3D NULL;
+> +
+> +	fp =3D setmntent(mounts, "r");
+>=20
+> +	if (!fp) {
+> +		free(rp);
+> +		return error_errno(_("setmntent('%s') failed"), mounts);
+> +	}
+> +
+> +	plen =3D strlen(rp);
+> +
+> +	/* read all the mount information and compare to path */
+> +	while ((ment =3D getmntent(fp))) {
+> +		if (statvfs(ment->mnt_dir, &mntfs)) {
+> +			switch (errno) {
+> +			case EPERM:
+> +			case ESRCH:
+> +			case EACCES:
+> +				continue;
+> +			default:
+> +				error_errno(_("statvfs('%s') failed"), ment->mnt_dir);
+> +				ret =3D -1;
+> +				goto done;
+> +			}
+> +		}
+> +
+> +		/* is mount on the same filesystem and is a prefix of the path */
+> +		if ((fs->f_fsid =3D=3D mntfs.f_fsid) &&
+> +			!strncmp(ment->mnt_dir, rp, strlen(ment->mnt_dir))) {
+> +			dlen =3D strlen(ment->mnt_dir);
+> +			if (dlen > plen)
+> +				continue;
+> +			/*
+> +			 * look for the longest prefix (including root)
+> +			 */
+> +			if (dlen > flen &&
+> +				((dlen =3D=3D 1 && ment->mnt_dir[0] =3D=3D '/') ||
+> +				 (!rp[dlen] || rp[dlen] =3D=3D '/'))) {
+> +				flen =3D dlen;
+> +				found =3D 1;
+> +
+> +				/*
+> +				 * https://man7.org/linux/man-pages/man3/getmntent.3.html
+> +				 *
+> +				 * The pointer points to a static area of memory which is
+> +				 * overwritten by subsequent calls to getmntent().
+> +				 */
+> +				free(entry->mnt_fsname);
+> +				free(entry->mnt_dir);
+> +				free(entry->mnt_type);
+> +				entry->mnt_fsname =3D xstrdup(ment->mnt_fsname);
+> +				entry->mnt_dir =3D xstrdup(ment->mnt_dir);
+> +				entry->mnt_type =3D xstrdup(ment->mnt_type);
+> +			}
+> +		}
+> +	}
+> +
+> +done:
+> +	free(rp);
+> +	endmntent(fp);
+> +
+> +	if (!found)
+> +		return -1;
+> +
+> +	return ret;
+> +}
+> +
+> +int fsmonitor__get_fs_info(const char *path, struct fs_info *fs_info)
+> +{
+> +	int ret =3D 0;
+> +	struct mntent entry;
+> +	struct statvfs fs;
+> +
+> +	fs_info->is_remote =3D -1;
+> +	fs_info->typename =3D NULL;
+> +
+> +	if (statvfs(path, &fs))
+> +		return error_errno(_("statvfs('%s') failed"), path);
+> +
+> +	if (find_mount(path, &fs, &entry) < 0) {
+> +		ret =3D -1;
+> +		goto done;
+> +	}
+> +
+> +	trace_printf_key(&trace_fsmonitor,
+> +			 "statvfs('%s') [flags 0x%08lx] '%s' '%s'",
+> +			 path, fs.f_flag, entry.mnt_type, entry.mnt_fsname);
+> +
+> +	fs_info->is_remote =3D is_remote_fs(entry.mnt_dir);
+> +	fs_info->typename =3D xstrdup(entry.mnt_fsname);
+> +
+> +	if (fs_info->is_remote < 0)
+> +		ret =3D -1;
+> +
+> +	trace_printf_key(&trace_fsmonitor,
+> +				"'%s' is_remote: %d",
+> +				path, fs_info->is_remote);
+> +
+> +done:
+> +	free(entry.mnt_fsname);
+> +	free(entry.mnt_dir);
+> +	free(entry.mnt_type);
+> +	return ret;
+> +}
+> +
+> +int fsmonitor__is_fs_remote(const char *path)
+> +{
+> +	int ret =3D 0;
+> +	struct fs_info fs;
+> +
+> +	if (fsmonitor__get_fs_info(path, &fs))
+> +		ret =3D -1;
+> +	else
+> +		ret =3D fs.is_remote;
+> +
+> +	free(fs.typename);
+> +
+> +	return ret;
+> +}
+> +
+> +/*
+> + * No-op for now.
+> + */
+> +int fsmonitor__get_alias(const char *path, struct alias_info *info)
 > +{
 > +	return 0;
 > +}
 > +
-> +void fsm_health__dtor(struct fsmonitor_daemon_state *state)
-> +{
-> +	return;
-> +}
-> +
-> +void fsm_health__loop(struct fsmonitor_daemon_state *state)
-> +{
-> +	return;
-> +}
-> +
-> +void fsm_health__stop_async(struct fsmonitor_daemon_state *state)
-> +{
-> +}
-> diff --git a/compat/fsmonitor/fsm-ipc-darwin.c b/compat/fsmonitor/fsm-ipc=
--darwin.c
-> index 6f3a95410cc..4c3c92081ee 100644
-> --- a/compat/fsmonitor/fsm-ipc-darwin.c
-> +++ b/compat/fsmonitor/fsm-ipc-darwin.c
-> @@ -1,56 +1 @@
-> -#include "git-compat-util.h"
-> -#include "config.h"
-> -#include "gettext.h"
-> -#include "hex.h"
-> -#include "path.h"
-> -#include "repository.h"
-> -#include "strbuf.h"
-> -#include "fsmonitor-ll.h"
-> -#include "fsmonitor-ipc.h"
-> -#include "fsmonitor-path-utils.h"
-> -
-> -static GIT_PATH_FUNC(fsmonitor_ipc__get_default_path, "fsmonitor--daemon=
-=2Eipc")
-> -
-> -const char *fsmonitor_ipc__get_path(struct repository *r)
-> -{
-> -	static const char *ipc_path =3D NULL;
-> -	git_SHA_CTX sha1ctx;
-> -	char *sock_dir =3D NULL;
-> -	struct strbuf ipc_file =3D STRBUF_INIT;
-> -	unsigned char hash[GIT_MAX_RAWSZ];
-> -
-> -	if (!r)
-> -		BUG("No repository passed into fsmonitor_ipc__get_path");
-> -
-> -	if (ipc_path)
-> -		return ipc_path;
-> -
-> -
-> -	/* By default the socket file is created in the .git directory */
-> -	if (fsmonitor__is_fs_remote(r->gitdir) < 1) {
-> -		ipc_path =3D fsmonitor_ipc__get_default_path();
-> -		return ipc_path;
-> -	}
-> -
-> -	git_SHA1_Init(&sha1ctx);
-> -	git_SHA1_Update(&sha1ctx, r->worktree, strlen(r->worktree));
-> -	git_SHA1_Final(hash, &sha1ctx);
-> -
-> -	repo_config_get_string(r, "fsmonitor.socketdir", &sock_dir);
-> -
-> -	/* Create the socket file in either socketDir or $HOME */
-> -	if (sock_dir && *sock_dir) {
-> -		strbuf_addf(&ipc_file, "%s/.git-fsmonitor-%s",
-> -					sock_dir, hash_to_hex(hash));
-> -	} else {
-> -		strbuf_addf(&ipc_file, "~/.git-fsmonitor-%s", hash_to_hex(hash));
-> -	}
-> -	free(sock_dir);
-> -
-> -	ipc_path =3D interpolate_path(ipc_file.buf, 1);
-> -	if (!ipc_path)
-> -		die(_("Invalid path: %s"), ipc_file.buf);
-> -
-> -	strbuf_release(&ipc_file);
-> -	return ipc_path;
-> -}
-> +#include "fsm-ipc-unix.c"
-> diff --git a/compat/fsmonitor/fsm-ipc-linux.c b/compat/fsmonitor/fsm-ipc-=
-linux.c
-> new file mode 100644
-> index 00000000000..4c3c92081ee
-> --- /dev/null
-> +++ b/compat/fsmonitor/fsm-ipc-linux.c
-> @@ -0,0 +1 @@
-> +#include "fsm-ipc-unix.c"
-> diff --git a/compat/fsmonitor/fsm-ipc-unix.c b/compat/fsmonitor/fsm-ipc-u=
-nix.c
-> new file mode 100644
-> index 00000000000..eb25123fa12
-> --- /dev/null
-> +++ b/compat/fsmonitor/fsm-ipc-unix.c
-> @@ -0,0 +1,53 @@
-> +#include "cache.h"
-> +#include "config.h"
-> +#include "hex.h"
-> +#include "strbuf.h"
-> +#include "fsmonitor.h"
-> +#include "fsmonitor-ipc.h"
-> +#include "fsmonitor-path-utils.h"
-> +
-> +static GIT_PATH_FUNC(fsmonitor_ipc__get_default_path, "fsmonitor--daemon=
-=2Eipc")
-> +
-> +const char *fsmonitor_ipc__get_path(struct repository *r)
-> +{
-> +	static const char *ipc_path =3D NULL;
-> +	git_SHA_CTX sha1ctx;
-> +	char *sock_dir =3D NULL;
-> +	struct strbuf ipc_file =3D STRBUF_INIT;
-> +	unsigned char hash[GIT_MAX_RAWSZ];
-> +
-> +	if (!r)
-> +		BUG("No repository passed into fsmonitor_ipc__get_path");
-> +
-> +	if (ipc_path)
-> +		return ipc_path;
-> +
-> +
-> +	/* By default the socket file is created in the .git directory */
-> +	if (fsmonitor__is_fs_remote(r->gitdir) < 1) {
-> +		ipc_path =3D fsmonitor_ipc__get_default_path();
-> +		return ipc_path;
-> +	}
-> +
-> +	git_SHA1_Init(&sha1ctx);
-> +	git_SHA1_Update(&sha1ctx, r->worktree, strlen(r->worktree));
-> +	git_SHA1_Final(hash, &sha1ctx);
-> +
-> +	repo_config_get_string(r, "fsmonitor.socketdir", &sock_dir);
-> +
-> +	/* Create the socket file in either socketDir or $HOME */
-> +	if (sock_dir && *sock_dir) {
-> +		strbuf_addf(&ipc_file, "%s/.git-fsmonitor-%s",
-> +					sock_dir, hash_to_hex(hash));
-> +	} else {
-> +		strbuf_addf(&ipc_file, "~/.git-fsmonitor-%s", hash_to_hex(hash));
-> +	}
-> +	free(sock_dir);
-> +
-> +	ipc_path =3D interpolate_path(ipc_file.buf, 1);
-> +	if (!ipc_path)
-> +		die(_("Invalid path: %s"), ipc_file.buf);
-> +
-> +	strbuf_release(&ipc_file);
-> +	return ipc_path;
-> +}
-> diff --git a/compat/fsmonitor/fsm-settings-darwin.c b/compat/fsmonitor/fs=
-m-settings-darwin.c
-> index a3825906351..14baf9f0603 100644
-> --- a/compat/fsmonitor/fsm-settings-darwin.c
-> +++ b/compat/fsmonitor/fsm-settings-darwin.c
-> @@ -1,63 +1 @@
-> -#include "git-compat-util.h"
-> -#include "config.h"
-> -#include "fsmonitor-ll.h"
-> -#include "fsmonitor-ipc.h"
-> -#include "fsmonitor-settings.h"
-> -#include "fsmonitor-path-utils.h"
-> -
-> - /*
-> - * For the builtin FSMonitor, we create the Unix domain socket for the
-> - * IPC in the .git directory.  If the working directory is remote,
-> - * then the socket will be created on the remote file system.  This
-> - * can fail if the remote file system does not support UDS file types
-> - * (e.g. smbfs to a Windows server) or if the remote kernel does not
-> - * allow a non-local process to bind() the socket.  (These problems
-> - * could be fixed by moving the UDS out of the .git directory and to a
-> - * well-known local directory on the client machine, but care should
-> - * be taken to ensure that $HOME is actually local and not a managed
-> - * file share.)
-> - *
-> - * FAT32 and NTFS working directories are problematic too.
-> - *
-> - * The builtin FSMonitor uses a Unix domain socket in the .git
-> - * directory for IPC.  These Windows drive formats do not support
-> - * Unix domain sockets, so mark them as incompatible for the daemon.
-> - *
-> - */
-> -static enum fsmonitor_reason check_uds_volume(struct repository *r)
-> -{
-> -	struct fs_info fs;
-> -	const char *ipc_path =3D fsmonitor_ipc__get_path(r);
-> -	struct strbuf path =3D STRBUF_INIT;
-> -	strbuf_add(&path, ipc_path, strlen(ipc_path));
-> -
-> -	if (fsmonitor__get_fs_info(dirname(path.buf), &fs) =3D=3D -1) {
-> -		strbuf_release(&path);
-> -		return FSMONITOR_REASON_ERROR;
-> -	}
-> -
-> -	strbuf_release(&path);
-> -
-> -	if (fs.is_remote ||
-> -		!strcmp(fs.typename, "msdos") ||
-> -		!strcmp(fs.typename, "ntfs")) {
-> -		free(fs.typename);
-> -		return FSMONITOR_REASON_NOSOCKETS;
-> -	}
-> -
-> -	free(fs.typename);
-> -	return FSMONITOR_REASON_OK;
-> -}
-> -
-> -enum fsmonitor_reason fsm_os__incompatible(struct repository *r, int ipc)
-> -{
-> -	enum fsmonitor_reason reason;
-> -
-> -	if (ipc) {
-> -		reason =3D check_uds_volume(r);
-> -		if (reason !=3D FSMONITOR_REASON_OK)
-> -			return reason;
-> -	}
-> -
-> -	return FSMONITOR_REASON_OK;
-> -}
-> +#include "fsm-settings-unix.c"
-> diff --git a/compat/fsmonitor/fsm-settings-linux.c b/compat/fsmonitor/fsm=
--settings-linux.c
-> new file mode 100644
-> index 00000000000..14baf9f0603
-> --- /dev/null
-> +++ b/compat/fsmonitor/fsm-settings-linux.c
-> @@ -0,0 +1 @@
-> +#include "fsm-settings-unix.c"
-> diff --git a/compat/fsmonitor/fsm-settings-unix.c b/compat/fsmonitor/fsm-=
-settings-unix.c
-> new file mode 100644
-> index 00000000000..d16dca89416
-> --- /dev/null
-> +++ b/compat/fsmonitor/fsm-settings-unix.c
-> @@ -0,0 +1,61 @@
-> +#include "fsmonitor.h"
-> +#include "fsmonitor-ipc.h"
-> +#include "fsmonitor-path-utils.h"
-> +
-> + /*
-> + * For the builtin FSMonitor, we create the Unix domain socket for the
-> + * IPC in the .git directory.  If the working directory is remote,
-> + * then the socket will be created on the remote file system.  This
-> + * can fail if the remote file system does not support UDS file types
-> + * (e.g. smbfs to a Windows server) or if the remote kernel does not
-> + * allow a non-local process to bind() the socket.  (These problems
-> + * could be fixed by moving the UDS out of the .git directory and to a
-> + * well-known local directory on the client machine, but care should
-> + * be taken to ensure that $HOME is actually local and not a managed
-> + * file share.)
-> + *
-> + * FAT32 and NTFS working directories are problematic too.
-> + *
-> + * The builtin FSMonitor uses a Unix domain socket in the .git
-> + * directory for IPC.  These Windows drive formats do not support
-> + * Unix domain sockets, so mark them as incompatible for the daemon.
-> + *
+> +/*
+> + * No-op for now.
 > + */
-> +static enum fsmonitor_reason check_uds_volume(struct repository *r)
+> +char *fsmonitor__resolve_alias(const char *path,
+> +		const struct alias_info *info)
 > +{
-> +	struct fs_info fs;
-> +	const char *ipc_path =3D fsmonitor_ipc__get_path(r);
-> +	struct strbuf path =3D STRBUF_INIT;
-> +	strbuf_addstr(&path, ipc_path);
-> +
-> +	if (fsmonitor__get_fs_info(dirname(path.buf), &fs) =3D=3D -1) {
-> +		free(fs.typename);
-> +		strbuf_release(&path);
-> +		return FSMONITOR_REASON_ERROR;
-> +	}
-> +
-> +	strbuf_release(&path);
-> +
-> +	if (fs.is_remote ||
-> +		!strcmp(fs.typename, "msdos") ||
-> +		!strcmp(fs.typename, "ntfs")) {
-> +		free(fs.typename);
-> +		return FSMONITOR_REASON_NOSOCKETS;
-> +	}
-> +
-> +	free(fs.typename);
-> +	return FSMONITOR_REASON_OK;
+> +	return NULL;
 > +}
+> diff --git a/compat/fsmonitor/fsm-path-utils-linux.h b/compat/fsmonitor/f=
+sm-path-utils-linux.h
+> new file mode 100644
+> index 00000000000..49bdb3c4728
+> --- /dev/null
+> +++ b/compat/fsmonitor/fsm-path-utils-linux.h
+> @@ -0,0 +1,91 @@
+> +#ifndef FSM_PATH_UTILS_LINUX_H
+> +#define FSM_PATH_UTILS_LINUX_H
+> +#endif
 > +
-> +enum fsmonitor_reason fsm_os__incompatible(struct repository *r, int ipc)
-> +{
-> +	enum fsmonitor_reason reason;
+> +#ifdef HAVE_LINUX_MAGIC_H
+> +#include <linux/magic.h>
+> +#endif
 > +
-> +	if (ipc) {
-> +		reason =3D check_uds_volume(r);
-> +		if (reason !=3D FSMONITOR_REASON_OK)
-> +			return reason;
-> +	}
+> +#ifndef ACFS_SUPER_MAGIC
+> +#define ACFS_SUPER_MAGIC 0x61636673
+> +#endif
 > +
-> +	return FSMONITOR_REASON_OK;
-> +}
+> +#ifndef AFS_SUPER_MAGIC
+> +#define AFS_SUPER_MAGIC 0x5346414f
+> +#endif
+> +
+> +#ifndef CEPH_SUPER_MAGIC
+> +#define CEPH_SUPER_MAGIC 0x00c36400
+> +#endif
+> +
+> +#ifndef CIFS_SUPER_MAGIC
+> +#define CIFS_SUPER_MAGIC 0xff534d42
+> +#endif
+> +
+> +#ifndef CODA_SUPER_MAGIC
+> +#define CODA_SUPER_MAGIC 0x73757245
+> +#endif
+> +
+> +#ifndef FHGFS_SUPER_MAGIC
+> +#define FHGFS_SUPER_MAGIC 0x19830326
+> +#endif
+> +
+> +#ifndef GFS_SUPER_MAGIC
+> +#define GFS_SUPER_MAGIC 0x1161970
+> +#endif
+> +
+> +#ifndef GPFS_SUPER_MAGIC
+> +#define GPFS_SUPER_MAGIC 0x47504653
+> +#endif
+> +
+> +#ifndef IBRIX_SUPER_MAGIC
+> +#define IBRIX_SUPER_MAGIC 0x013111a8
+> +#endif
+> +
+> +#ifndef KAFS_SUPER_MAGIC
+> +#define KAFS_SUPER_MAGIC 0x6b414653
+> +#endif
+> +
+> +#ifndef LUSTRE_SUPER_MAGIC
+> +#define LUSTRE_SUPER_MAGIC 0x0bd00bd0
+> +#endif
+> +
+> +#ifndef NCP_SUPER_MAGIC
+> +#define NCP_SUPER_MAGIC 0x564c
+> +#endif
+> +
+> +#ifndef NFS_SUPER_MAGIC
+> +#define NFS_SUPER_MAGIC 0x6969
+> +#endif
+> +
+> +#ifndef NFSD_SUPER_MAGIC
+> +#define NFSD_SUPER_MAGIC 0x6e667364
+> +#endif
+> +
+> +#ifndef OCFS2_SUPER_MAGIC
+> +#define OCFS2_SUPER_MAGIC 0x7461636f
+> +#endif
+> +
+> +#ifndef PANFS_SUPER_MAGIC
+> +#define PANFS_SUPER_MAGIC 0xaad7aaea
+> +#endif
+> +
+> +#ifndef SMB_SUPER_MAGIC
+> +#define SMB_SUPER_MAGIC 0x517b
+> +#endif
+> +
+> +#ifndef SMB2_SUPER_MAGIC
+> +#define SMB2_SUPER_MAGIC 0xfe534d42
+> +#endif
+> +
+> +#ifndef SNFS_SUPER_MAGIC
+> +#define SNFS_SUPER_MAGIC 0xbeefdead
+> +#endif
+> +
+> +#ifndef VMHGFS_SUPER_MAGIC
+> +#define VMHGFS_SUPER_MAGIC 0xbacbacbc
+> +#endif
+> +
+> +#ifndef VXFS_SUPER_MAGIC
+> +#define VXFS_SUPER_MAGIC 0xa501fcf5
+> +#endif
+> diff --git a/config.mak.uname b/config.mak.uname
+> index dacc95172dc..80d7e2a2e68 100644
+> --- a/config.mak.uname
+> +++ b/config.mak.uname
+> @@ -68,6 +68,17 @@ ifeq ($(uname_S),Linux)
+>  	ifneq ($(findstring .el7.,$(uname_R)),)
+>  		BASIC_CFLAGS +=3D -std=3Dc99
+>  	endif
+> +	ifeq ($(shell test -f /usr/include/linux/magic.h && echo y),y)
+> +		HAVE_LINUX_MAGIC_H =3D YesPlease
+> +	endif
+> +	# The builtin FSMonitor on Linux builds upon Simple-IPC.  Both require
+> +	# Unix domain sockets and PThreads.
+> +	ifndef NO_PTHREADS
+> +	ifndef NO_UNIX_SOCKETS
+> +	FSMONITOR_DAEMON_BACKEND =3D linux
+> +	FSMONITOR_OS_SETTINGS =3D linux
+> +	endif
+> +	endif
+>  endif
+>  ifeq ($(uname_S),GNU/kFreeBSD)
+>  	HAVE_ALLOCA_H =3D YesPlease
 > --=20
 > gitgitgadget
 >=20
 >=20
 
---AAqU0H4QVnW9TIQv
+--DxEZM6cXx6pmhlrh
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmXOFmEACgkQVbJhu7ck
-PpStgg/+LDPYBXjrJxTwTwMn8MkIxerPW+4BzDarW3u/3xI00o18V3U8TSCltk7Z
-DyajFk5tHduspftCqtbzCSOwGGdEefMVNsvFBXPKaEPsSrZ8FWshAYX9+iDzFXrV
-L3cagwWasGwlEXkOMTm2+LUxkgeMgX2880F542cI8QSTruulXqBxUaN9TLi7FwgK
-cGkXjSHBVLr5jnzZLo3DwehDLem6AvnWWhM1zYs/fE6iRz4uhLrPqYQ26FnsAO51
-F0uIfUwQRciXn6vk31iuNCHKofxG3Z4v+b5aNjhdBA0LdgXde1UrXbnaiFXvfeeP
-1sMBB8trFnLWz71ojT5CYT7Yk8XC/3SjKCDyltI6FMsDt/E4NDzzJHrPbQlxHjvu
-W9xLfkLEhDLbUI0MDAI35gdNRJtqkfXO2JQS5h/gkmxwZPPsLISAoBCGlTS8rV01
-W3Moix4dZoDcuVbXepRxev5VvsyuxmIPhKNosJUJ+1r/euaRYP+nPlBKOeHolQPJ
-P7qhmD1HXi7GjysEltsEKwXHkNPulhDh1t/j6JcBOGsa+w1f765rRwFoglX2UAim
-3o20Gs1+1Rwex9EHgXxKA+ngm9BqMlPajMdlbtM6iggUaV3o9KxFA8fVR5f9+iyE
-Ur9gWtzB90Ji281RBrQMtpjR6K16poFWITw4FwWpkt9yB1Ha2Qo=
-=WVhG
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmXOFmYACgkQVbJhu7ck
+PpQbwBAAncDepd4vLrBmiqv5xiOQHAITHtrXRWlM45hdNAhsmvFSUHTvYtbPgFcK
+UZLrEvWFOlD7IejSGt/oJ2PYoReRUM1RmbmsJHSE8hv7lcJyUzhN7DLM9nu6T0Kk
+KrD/eJaUuI4l2L26X7xr4Exh/Nst0gNzIpF6i8uVIu2ZhriF/Zy+Q4QKjSpNWC7K
+FV9tx6XN0RLcSSUk+LlNnK4u0DJXxFXThOCzA73Fwm9w/m+YvczcDLeGfe+GTxy3
+B3IR98CAlsSTWBHvH7Iei0TthUkgnG7AwI0/aGcQGmwfFjwWCkBrsdsttA1/zSBL
+172ttlwYqMeWm4ybR0Wt2rWHr/FYNfSd/gFIoi4a6GVeYbpPSvJSjXo6RUi95v9W
+zuo1PhLI4S9oUnjqxwIO9S6pC44E+AqmGgLGBpbhDMGv5nGGobeLmxVExJ1J8DU5
+WBGyAbUhECctsoVUpiwVlwvOzGbGiJDOFzAG0fJ7i+c9+P1SZ18BBzxbKrFuqKEQ
+n6CZtaRqO5IIIqxgX8tRDPdsGOo3Cfr6tVyVXB9UbRNAqCT13HfmJDSY3EBoF/jn
+Hei7udYRhZFhuUX+5Uy8qBnCwRVbu9C2xGgMejHFoqedvBU6NneaTh1QC9zCcEL4
+c07xxWX9PvLjoal1MWbGRq6ZYUiAzDN4b8FQ5rlRt4mTeSfcrKE=
+=9rvU
 -----END PGP SIGNATURE-----
 
---AAqU0H4QVnW9TIQv--
+--DxEZM6cXx6pmhlrh--
