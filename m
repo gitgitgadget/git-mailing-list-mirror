@@ -1,72 +1,72 @@
-Received: from wfhigh7-smtp.messagingengine.com (wfhigh7-smtp.messagingengine.com [64.147.123.158])
+Received: from wout3-smtp.messagingengine.com (wout3-smtp.messagingengine.com [64.147.123.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60F06131735
-	for <git@vger.kernel.org>; Thu, 15 Feb 2024 13:49:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.158
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A284013248B
+	for <git@vger.kernel.org>; Thu, 15 Feb 2024 13:49:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.19
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708004975; cv=none; b=eNlDc/xmi9af4XhoUobjpF1DyBCCLRhn65vii3VhKdBXU3W/y8tPgKCvK43odfCuSpPh9GQstIXiLls5RCny9KRKhW+mz7VbpdjanZdjBuF+zU042+YylZ3tO38SQd7s5npnLYiBFOZOe+P0k7PcygWM9Cv1smk+yF5XO/3dY10=
+	t=1708004981; cv=none; b=rbIOGfKgbSfQENzULno/9Dx+ADtlu+1L16Udrpl7BNsPbxuXVGKI+arR96hBhEYgz4W3Vn/MjEAEM8BhOEi25tQf4IIVGvyIiGvOCQRiBNJ7D0X4v34AGWNBR4Mnc0U6rLkZv4L5AQLnDq+nl5DdqF3pwexorJlFWtBapX5QZ0M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708004975; c=relaxed/simple;
-	bh=8WuuG49eUi7l7iBQ9ycoCYDRA57eYFQiTfGCfbFkUiY=;
+	s=arc-20240116; t=1708004981; c=relaxed/simple;
+	bh=MJJPkYmPv3UeH8B6iLAoWajl9TMfUpRizD7kR472bJg=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=e1lgAnIoMbkk3Hkp+VynpRX0GTc0oZNrXNr6vYi/7i5EmV3jASTYJjhLcwoItD1Ht0Hwxsf47bMZl1WufGcVKhyC0h17dgEEzKQ6c1KRFHSWLVjhHbjj0samEhAo+q32hrl0iX41rUy+pDhXnyPRFXvFsQLRGabQhOGdSmmJYYE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=mSqkzqHK; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ZkZKRQSZ; arc=none smtp.client-ip=64.147.123.158
+	 Content-Type:Content-Disposition:In-Reply-To; b=iQEygHd2gGpQcFRZLTPdevDjKSM0nlu7mkuP7K5e/WXIWsr48dDOWdmhsWDq+ij9K/wa/PiEc3Nk1he0u+tFb2zS6ECD0XTmNpz8rjqVJn8Xy6KheVJl0i6jHwSyKVFjEtrtBTcj/9rBadwsfTxJi6Yy0NwXX2KMsQDC8GT6n+8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=PROEfJhD; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=BfoLSxJt; arc=none smtp.client-ip=64.147.123.19
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="mSqkzqHK";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ZkZKRQSZ"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="PROEfJhD";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="BfoLSxJt"
 Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
-	by mailfhigh.west.internal (Postfix) with ESMTP id BD25218000A7;
-	Thu, 15 Feb 2024 08:49:31 -0500 (EST)
+	by mailout.west.internal (Postfix) with ESMTP id 0C6883200A76;
+	Thu, 15 Feb 2024 08:49:36 -0500 (EST)
 Received: from mailfrontend2 ([10.202.2.163])
-  by compute5.internal (MEProxy); Thu, 15 Feb 2024 08:49:32 -0500
+  by compute5.internal (MEProxy); Thu, 15 Feb 2024 08:49:37 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1708004971; x=1708091371; bh=xs+gLYk3cA
-	JaWkJUgNE9qCVUTBqdYKNAHacycjJeHG0=; b=mSqkzqHKo5KOgjFhYCX8eP4h9o
-	RPxI3C8BW06x8aEv+UoSljgeQj7rQsh44hy2OrdVjw/U9TypWPUCcmf2mux2r3Aa
-	Zqxqq83wjEEDEZPr3PiJ135pevV8TKxfcUXIptuOXv1u0Uofqj8EZUqDKXVcvsma
-	tMf7JYtiRT6SvEMDqDtlG1tLLcz7zA1QT8DmYjgPUjNcG323x8xRaX4VgYZ355Yh
-	ndPNBJQTRX0QWakmr+8NqOpGxQ7LW7O+Ds+GHpf88/Ph3NI5Lw+E2QvA0+M+CK0i
-	S7CgdpUvhy5v2f9AGpIrOz6W/uFDV/tQ6Fev2mRrzioKWEjKV2GH4Ej7T7DA==
+	:subject:to:to; s=fm1; t=1708004976; x=1708091376; bh=0hG2Ld8N8U
+	MXdKcE2jq1XF2MHyVE7J/O6qYb7YbtCSQ=; b=PROEfJhDViuSmcP1SL4/VGsHNH
+	HUeHonv11vHbLtrfSvEKmgxR+TUAraGq1/JRkwKvdur+t+ZhlNhfXfkmlG4qrmDN
+	gFTCY0+QT3vATUyYAbullfDEtZ9HrF4tA6tc96YzrEts3ExaBWw53M3xV1ioi2VI
+	q3HD9kSmcZt7wO98V241ilca20raw/cW5qtCXVVZDkSJ6vMOn6uzh4pRtU8pSHPY
+	31h3Dzgf7LAZHspbyIJhz7BgW42fAhvD2Yzt+Ojl//3diuLEkn5+A2Rm4WqVghjl
+	91lNUUv93eB2yZo0VppUde86vFTANUQdGBe4pzsA2tUTRDA0+OhOmLjxqQ+Q==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1708004971; x=1708091371; bh=xs+gLYk3cAJaWkJUgNE9qCVUTBqd
-	YKNAHacycjJeHG0=; b=ZkZKRQSZEW+/qAbGRyHOfo2PX0f/EJrTpCBVuVINeM91
-	/Vn49H1D/12C7+gki855giAE9roCbkt7g7uNqTxITNTuYIrLAS8Dd4h34NHf3K+G
-	KmSuXebt0z4e5mvgS9l65OhlvHwX4517QmlQC4fM2A36PvEgksFReyq2EuIpWzBN
-	PMeB4Sr/B1F2iYY7EqtBYV28uuE/JyanjVBtFGeaxmr0cET2w0M1iZbvL5t13Lps
-	dZvd2lrQh3bWdnsLR9M+Efgy5U7KqrHWUWybQogn5+aPKTVt7njYUJfus2APucwC
-	GRhoZV42HULeFOnSCwlIc3AEZHpHjIHq3U3gwe4A2g==
-X-ME-Sender: <xms:ahbOZfBZiaH4SmhF-3BNmJ435UoIIGOzK-X3ORsLYds_NHFP4b8Lkw>
-    <xme:ahbOZVgHf38mr-w0TMZ8l3KWgOqlr6G6GADceekf0ztn-nu_EMER5lUo43yAVL-Tj
-    lOTab3WkE1jNeIGiQ>
-X-ME-Received: <xmr:ahbOZamIL3aVKVglEt7rESngZ49-LaXeOzV4WP8zKIsBlUjH2kVQPHStPDO3PPLnS-NIk2uoqdc109_s0KOFROpq4HKAGEksVeSd_sZrVF9M>
+	fm1; t=1708004976; x=1708091376; bh=0hG2Ld8N8UMXdKcE2jq1XF2MHyVE
+	7J/O6qYb7YbtCSQ=; b=BfoLSxJtnKJlLd1HWEzbYmoADZHFO58KRoZkVrv8KPih
+	/U93r7e3H6MHw9iNM+NeuK4yHuDlnTL/JhMcgtVn+wNQp3EamRDsQygLHHQwr/aB
+	mnU8BcoJCZjxgP8ZOrjazia/HhqsiUEqcAwY6CxPsb7Nq6EmHXoSp7fahnpFgVGN
+	awQml8w/JI+PCazeq4LuWTvO+7+Vh0FowVjij48L9thlBlQK1gzeyGgXVrojYVJr
+	oXNqX6phcy3GOmYrlIzWHXF+q/kQKzn3hWkYUrPnlmlvnS3TzNX6RocPeW75lMJG
+	8BesmAW0jCqwAe1S+YqBxvHXSMAIx3c4pu/VkWjfug==
+X-ME-Sender: <xms:cBbOZXytSeEZ86RGzc_HSzh-R8xjDCAD3Hv-CAHpnQ9gmDCxL3ot3Q>
+    <xme:cBbOZfRhgtwZaEsOXCHtz6OFk6Ydb6CcFheXQRW53A0EEA403Wd1N_pFo8IdVPN0a
+    _n5s6luNa9t2jyQBg>
+X-ME-Received: <xmr:cBbOZRVF1eM6AGSOoczMzYLGW3YF9pOOVaTbL3Q0WyvUoKfZrUIEDz66L8e5rZZXRpOGV_SRxM9xu2CG2bm7l-ep09Nx9DOApTbnrwu-PCda>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvddtgdehjecutefuodetggdotefrodftvf
     curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
     uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
     fjughrpeffhffvvefukfhfgggtuggjsehgtderredttddvnecuhfhrohhmpefrrghtrhhi
     tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
     hnpeefgeeggfekfeeiieeiieduleeuheetgeelheeljeekjeffueeuudetvefgffetleen
-    ucffohhmrghinhepmhgrnhejrdhorhhgnecuvehluhhsthgvrhfuihiivgeptdenucfrrg
+    ucffohhmrghinhepmhgrnhejrdhorhhgnecuvehluhhsthgvrhfuihiivgepudenucfrrg
     hrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimh
-X-ME-Proxy: <xmx:axbOZRxytNUXork3DVuucXzqicjvT9Ai5UQL7t1TLe9nB8DTcE2Z6w>
-    <xmx:axbOZUSCbdK70t-bY7BJ4r7h2lxmWwQ45z5cT27Tvmd8f0BPaROD_w>
-    <xmx:axbOZUYrQItBZtNNG_RUFLPZB6kVDaXrQIHd77_MTFcuPk7xuDDsEw>
-    <xmx:axbOZd9Rev2wNU0HdWDluViOreeQ0x5Gi7K9-l0S2qTw50JLvFQQ_E5bLRY>
+X-ME-Proxy: <xmx:cBbOZRi0HsjKbh28xM6gvJNqZYV3zW-ZygsAlrpvrKaBPcrGbs1i6A>
+    <xmx:cBbOZZACRN3mBY9hIES6LycEyeEmT0cup4QNRmlz7gUmiypfmEVeUA>
+    <xmx:cBbOZaIT6Q3KjJKI4kY33oRJnTgrXWerPEq2Q5QOjpJCEUcbzeh_LQ>
+    <xmx:cBbOZd2c4-hboLaSDY3jZkSB8gmL6C2ZNqd_AVSvatmGpgQ3XIlO9w>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 15 Feb 2024 08:49:29 -0500 (EST)
+ 15 Feb 2024 08:49:34 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id fd7d2449 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 15 Feb 2024 13:45:36 +0000 (UTC)
-Date: Thu, 15 Feb 2024 14:49:27 +0100
+	by vm-mail (OpenSMTPD) with ESMTPSA id a2ab7651 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 15 Feb 2024 13:45:42 +0000 (UTC)
+Date: Thu, 15 Feb 2024 14:49:33 +0100
 From: Patrick Steinhardt <ps@pks.im>
 To: Eric DeCosta via GitGitGadget <gitgitgadget@gmail.com>
 Cc: git@vger.kernel.org, "Eric Sunshine [ ]" <sunshine@sunshineco.com>,
@@ -75,10 +75,11 @@ Cc: git@vger.kernel.org, "Eric Sunshine [ ]" <sunshine@sunshineco.com>,
 	"Johannes Schindelin [ ]" <Johannes.Schindelin@gmx.de>,
 	"Taylor Blau [ ]" <me@ttaylorr.com>, marzi <m.ispare63@gmail.com>,
 	Eric DeCosta <edecosta@mathworks.com>
-Subject: Re: [PATCH 2/7] fsmonitor: determine if filesystem is local or remote
-Message-ID: <Zc4WZ2EkrVrHzs43@tanuki>
+Subject: Re: [PATCH 3/7] fsmonitor: implement filesystem change listener for
+ Linux
+Message-ID: <Zc4Wbc1EIbVRCkad@tanuki>
 References: <pull.1667.git.git.1707992978.gitgitgadget@gmail.com>
- <d26de10866662a5bcd16d562cd1063dedd21cf02.1707992978.git.gitgitgadget@gmail.com>
+ <5fad429b4d53dee4eb509f0db98ef860762436fc.1707992978.git.gitgitgadget@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -86,415 +87,816 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="DxEZM6cXx6pmhlrh"
+	protocol="application/pgp-signature"; boundary="8TCCcnyCXBQBR8AO"
 Content-Disposition: inline
-In-Reply-To: <d26de10866662a5bcd16d562cd1063dedd21cf02.1707992978.git.gitgitgadget@gmail.com>
+In-Reply-To: <5fad429b4d53dee4eb509f0db98ef860762436fc.1707992978.git.gitgitgadget@gmail.com>
 
 
---DxEZM6cXx6pmhlrh
+--8TCCcnyCXBQBR8AO
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Thu, Feb 15, 2024 at 10:29:33AM +0000, Eric DeCosta via GitGitGadget wro=
+On Thu, Feb 15, 2024 at 10:29:34AM +0000, Eric DeCosta via GitGitGadget wro=
 te:
 > From: Eric DeCosta <edecosta@mathworks.com>
 >=20
-> Compare the given path to the mounted filesystems. Find the mount that is
-> the longest prefix of the path (if any) and determine if that mount is on=
- a
-> local or remote filesystem.
+> Implement a filesystem change listener for Linux based on the inotify API:
+> https://man7.org/linux/man-pages/man7/inotify.7.html
+>=20
+> inotify requires registering a watch on every directory in the worktree a=
+nd
+> special handling of moves/renames.
 
-It would be nice to motivate this change in the commit message. Right
-now it only explains what the commit does, but it does not mention at
-all why that would be a good idea in the first place. Explaining that
-this is part of the interface that the existing fsmonitor infrastructure
-expects to exist would help.
+I assume that fsmonitor is especially important in the context of repos
+with large trees, and to the best of my knowledge inotify(7) does not
+scale well when installing many watches. I thus have to wonder whether
+fanotify(7) would be a better match to implement this nowadays, and what
+the considerations were to pick one over the other.
 
 > Signed-off-by: Eric DeCosta <edecosta@mathworks.com>
 > ---
->  Makefile                                |   4 +
->  compat/fsmonitor/fsm-path-utils-linux.c | 195 ++++++++++++++++++++++++
->  compat/fsmonitor/fsm-path-utils-linux.h |  91 +++++++++++
->  config.mak.uname                        |  11 ++
->  4 files changed, 301 insertions(+)
->  create mode 100644 compat/fsmonitor/fsm-path-utils-linux.c
->  create mode 100644 compat/fsmonitor/fsm-path-utils-linux.h
+>  compat/fsmonitor/fsm-listen-linux.c | 676 ++++++++++++++++++++++++++++
+>  1 file changed, 676 insertions(+)
+>  create mode 100644 compat/fsmonitor/fsm-listen-linux.c
 >=20
-> diff --git a/Makefile b/Makefile
-> index 78e874099d9..0f36a0fd83a 100644
-> --- a/Makefile
-> +++ b/Makefile
-> @@ -2088,6 +2088,10 @@ ifdef HAVE_CLOCK_GETTIME
->  	BASIC_CFLAGS +=3D -DHAVE_CLOCK_GETTIME
->  endif
-> =20
-> +ifdef HAVE_LINUX_MAGIC_H
-> +	BASIC_CFLAGS +=3D -DHAVE_LINUX_MAGIC_H
-> +endif
-> +
->  ifdef HAVE_CLOCK_MONOTONIC
->  	BASIC_CFLAGS +=3D -DHAVE_CLOCK_MONOTONIC
->  endif
-> diff --git a/compat/fsmonitor/fsm-path-utils-linux.c b/compat/fsmonitor/f=
-sm-path-utils-linux.c
+> diff --git a/compat/fsmonitor/fsm-listen-linux.c b/compat/fsmonitor/fsm-l=
+isten-linux.c
 > new file mode 100644
-> index 00000000000..c21d1349532
+> index 00000000000..e8548e4e009
 > --- /dev/null
-> +++ b/compat/fsmonitor/fsm-path-utils-linux.c
-> @@ -0,0 +1,195 @@
-> +#include "git-compat-util.h"
-> +#include "abspath.h"
+> +++ b/compat/fsmonitor/fsm-listen-linux.c
+> @@ -0,0 +1,676 @@
+> +#include "cache.h"
 > +#include "fsmonitor.h"
-> +#include "fsmonitor-path-utils.h"
-> +#include "fsm-path-utils-linux.h"
-> +#include <errno.h>
-> +#include <mntent.h>
-> +#include <sys/mount.h>
-> +#include <sys/vfs.h>
-> +#include <sys/statvfs.h>
+> +#include "fsm-listen.h"
+> +#include "fsmonitor--daemon.h"
+> +#include <dirent.h>
+> +#include <fcntl.h>
+> +#include <sys/inotify.h>
+> +#include <sys/stat.h>
 > +
-> +static int is_remote_fs(const char *path)
+> +/*
+> + * Safe value to bitwise OR with rest of mask for
+> + * kernels that do not support IN_MASK_CREATE
+> + */
+> +#ifndef IN_MASK_CREATE
+> +#define IN_MASK_CREATE 0x00000000
+> +#endif
+> +
+> +enum shutdown_reason {
+> +	SHUTDOWN_CONTINUE =3D 0,
+> +	SHUTDOWN_STOP,
+> +	SHUTDOWN_ERROR,
+> +	SHUTDOWN_FORCE
+> +};
+> +
+> +struct watch_entry {
+> +	struct hashmap_entry ent;
+> +	int wd;
+> +	uint32_t cookie;
+> +	const char *dir;
+> +};
+> +
+> +struct rename_entry {
+> +	struct hashmap_entry ent;
+> +	time_t whence;
+> +	uint32_t cookie;
+> +	const char *dir;
+> +};
+> +
+> +struct fsm_listen_data {
+> +	int fd_inotify;
+> +	enum shutdown_reason shutdown;
+> +	struct hashmap watches;
+> +	struct hashmap renames;
+> +	struct hashmap revwatches;
+> +};
+> +
+> +static int watch_entry_cmp(const void *cmp_data,
+> +			  const struct hashmap_entry *eptr,
+> +			  const struct hashmap_entry *entry_or_key,
+> +			  const void *keydata)
 > +{
-> +	struct statfs fs;
+> +	const struct watch_entry *e1, *e2;
 > +
-> +	if (statfs(path, &fs))
-> +		return error_errno(_("statfs('%s') failed"), path);
-> +
-> +	switch (fs.f_type) {
-> +	case ACFS_SUPER_MAGIC:
-> +	case AFS_SUPER_MAGIC:
-> +	case CEPH_SUPER_MAGIC:
-> +	case CIFS_SUPER_MAGIC:
-> +	case CODA_SUPER_MAGIC:
-> +	case FHGFS_SUPER_MAGIC:
-> +	case GFS_SUPER_MAGIC:
-> +	case GPFS_SUPER_MAGIC:
-> +	case IBRIX_SUPER_MAGIC:
-> +	case KAFS_SUPER_MAGIC:
-> +	case LUSTRE_SUPER_MAGIC:
-> +	case NCP_SUPER_MAGIC:
-> +	case NFS_SUPER_MAGIC:
-> +	case NFSD_SUPER_MAGIC:
-> +	case OCFS2_SUPER_MAGIC:
-> +	case PANFS_SUPER_MAGIC:
-> +	case SMB_SUPER_MAGIC:
-> +	case SMB2_SUPER_MAGIC:
-> +	case SNFS_SUPER_MAGIC:
-> +	case VMHGFS_SUPER_MAGIC:
-> +	case VXFS_SUPER_MAGIC:
-> +		return 1;
-> +	default:
-> +		return 0;
-> +	}
-> +}
-
-This list doesn't feel all that maintainable to me, but so be it if
-there is no better interface available.
-
-> +static int find_mount(const char *path, const struct statvfs *fs,
-> +			struct mntent *entry)
-
-I don't quite understand why `find_mount()` is required in the first
-place. Why can't we statfs(2) the path directly? This syscall provides
-the fsid and should be sufficient for us to fill in `struct fs_info`.
-
-Explaining details like this in the commit message would help guide the
-reader's expectations.
-
-Patrick
-
-> +{
-> +	const char *const mounts =3D "/proc/mounts";
-> +	char *rp =3D real_pathdup(path, 1);
-> +	struct mntent *ment =3D NULL;
-> +	struct statvfs mntfs;
-> +	FILE *fp;
-> +	int found =3D 0;
-> +	int ret =3D 0;
-> +	size_t dlen, plen, flen =3D 0;
-> +
-> +	entry->mnt_fsname =3D NULL;
-> +	entry->mnt_dir =3D NULL;
-> +	entry->mnt_type =3D NULL;
-> +
-> +	fp =3D setmntent(mounts, "r");
->=20
-> +	if (!fp) {
-> +		free(rp);
-> +		return error_errno(_("setmntent('%s') failed"), mounts);
-> +	}
-> +
-> +	plen =3D strlen(rp);
-> +
-> +	/* read all the mount information and compare to path */
-> +	while ((ment =3D getmntent(fp))) {
-> +		if (statvfs(ment->mnt_dir, &mntfs)) {
-> +			switch (errno) {
-> +			case EPERM:
-> +			case ESRCH:
-> +			case EACCES:
-> +				continue;
-> +			default:
-> +				error_errno(_("statvfs('%s') failed"), ment->mnt_dir);
-> +				ret =3D -1;
-> +				goto done;
-> +			}
-> +		}
-> +
-> +		/* is mount on the same filesystem and is a prefix of the path */
-> +		if ((fs->f_fsid =3D=3D mntfs.f_fsid) &&
-> +			!strncmp(ment->mnt_dir, rp, strlen(ment->mnt_dir))) {
-> +			dlen =3D strlen(ment->mnt_dir);
-> +			if (dlen > plen)
-> +				continue;
-> +			/*
-> +			 * look for the longest prefix (including root)
-> +			 */
-> +			if (dlen > flen &&
-> +				((dlen =3D=3D 1 && ment->mnt_dir[0] =3D=3D '/') ||
-> +				 (!rp[dlen] || rp[dlen] =3D=3D '/'))) {
-> +				flen =3D dlen;
-> +				found =3D 1;
-> +
-> +				/*
-> +				 * https://man7.org/linux/man-pages/man3/getmntent.3.html
-> +				 *
-> +				 * The pointer points to a static area of memory which is
-> +				 * overwritten by subsequent calls to getmntent().
-> +				 */
-> +				free(entry->mnt_fsname);
-> +				free(entry->mnt_dir);
-> +				free(entry->mnt_type);
-> +				entry->mnt_fsname =3D xstrdup(ment->mnt_fsname);
-> +				entry->mnt_dir =3D xstrdup(ment->mnt_dir);
-> +				entry->mnt_type =3D xstrdup(ment->mnt_type);
-> +			}
-> +		}
-> +	}
-> +
-> +done:
-> +	free(rp);
-> +	endmntent(fp);
-> +
-> +	if (!found)
-> +		return -1;
-> +
-> +	return ret;
+> +	e1 =3D container_of(eptr, const struct watch_entry, ent);
+> +	e2 =3D container_of(eptr, const struct watch_entry, ent);
+> +	return e1->wd !=3D e2->wd;
 > +}
 > +
-> +int fsmonitor__get_fs_info(const char *path, struct fs_info *fs_info)
+> +static int revwatches_entry_cmp(const void *cmp_data,
+> +			  const struct hashmap_entry *eptr,
+> +			  const struct hashmap_entry *entry_or_key,
+> +			  const void *keydata)
 > +{
-> +	int ret =3D 0;
-> +	struct mntent entry;
-> +	struct statvfs fs;
+> +	const struct watch_entry *e1, *e2;
 > +
-> +	fs_info->is_remote =3D -1;
-> +	fs_info->typename =3D NULL;
-> +
-> +	if (statvfs(path, &fs))
-> +		return error_errno(_("statvfs('%s') failed"), path);
-> +
-> +	if (find_mount(path, &fs, &entry) < 0) {
-> +		ret =3D -1;
-> +		goto done;
-> +	}
-> +
-> +	trace_printf_key(&trace_fsmonitor,
-> +			 "statvfs('%s') [flags 0x%08lx] '%s' '%s'",
-> +			 path, fs.f_flag, entry.mnt_type, entry.mnt_fsname);
-> +
-> +	fs_info->is_remote =3D is_remote_fs(entry.mnt_dir);
-> +	fs_info->typename =3D xstrdup(entry.mnt_fsname);
-> +
-> +	if (fs_info->is_remote < 0)
-> +		ret =3D -1;
-> +
-> +	trace_printf_key(&trace_fsmonitor,
-> +				"'%s' is_remote: %d",
-> +				path, fs_info->is_remote);
-> +
-> +done:
-> +	free(entry.mnt_fsname);
-> +	free(entry.mnt_dir);
-> +	free(entry.mnt_type);
-> +	return ret;
+> +	e1 =3D container_of(eptr, const struct watch_entry, ent);
+> +	e2 =3D container_of(eptr, const struct watch_entry, ent);
+> +	return strcmp(e1->dir, e2->dir);
 > +}
 > +
-> +int fsmonitor__is_fs_remote(const char *path)
+> +static int rename_entry_cmp(const void *cmp_data,
+> +			  const struct hashmap_entry *eptr,
+> +			  const struct hashmap_entry *entry_or_key,
+> +			  const void *keydata)
 > +{
-> +	int ret =3D 0;
-> +	struct fs_info fs;
+> +	const struct rename_entry *e1, *e2;
 > +
-> +	if (fsmonitor__get_fs_info(path, &fs))
-> +		ret =3D -1;
-> +	else
-> +		ret =3D fs.is_remote;
-> +
-> +	free(fs.typename);
-> +
-> +	return ret;
+> +	e1 =3D container_of(eptr, const struct rename_entry, ent);
+> +	e2 =3D container_of(eptr, const struct rename_entry, ent);
+> +	return e1->cookie !=3D e2->cookie;
 > +}
 > +
 > +/*
-> + * No-op for now.
+> + * Register an inotify watch, add watch descriptor to path mapping
+> + * and the reverse mapping.
 > + */
-> +int fsmonitor__get_alias(const char *path, struct alias_info *info)
+> +static int add_watch(const char *path, struct fsm_listen_data *data)
 > +{
+> +	const char *interned =3D strintern(path);
+> +	struct watch_entry *w1, *w2;
+> +
+> +	/* add the inotify watch, don't allow watches to be modified */
+> +	int wd =3D inotify_add_watch(data->fd_inotify, interned,
+> +				(IN_ALL_EVENTS | IN_ONLYDIR | IN_MASK_CREATE)
+> +				^ IN_ACCESS ^ IN_CLOSE ^ IN_OPEN);
+> +	if (wd < 0)
+> +		return error_errno("inotify_add_watch('%s') failed", interned);
+> +
+> +	/* add watch descriptor -> directory mapping */
+> +	CALLOC_ARRAY(w1, 1);
+> +	w1->wd =3D wd;
+> +	w1->dir =3D interned;
+> +	hashmap_entry_init(&w1->ent, memhash(&w1->wd, sizeof(int)));
+> +	hashmap_add(&data->watches, &w1->ent);
+> +
+> +	/* add directory -> watch descriptor mapping */
+> +	CALLOC_ARRAY(w2, 1);
+> +	w2->wd =3D wd;
+> +	w2->dir =3D interned;
+> +	hashmap_entry_init(&w2->ent, memhash(w2->dir, strlen(w2->dir)));
+> +	hashmap_add(&data->revwatches, &w2->ent);
+> +
 > +	return 0;
 > +}
 > +
 > +/*
-> + * No-op for now.
+> + * Remove the inotify watch, the watch descriptor to path mapping
+> + * and the reverse mapping.
 > + */
-> +char *fsmonitor__resolve_alias(const char *path,
-> +		const struct alias_info *info)
+> +static void remove_watch(struct watch_entry *w,
+> +	struct fsm_listen_data *data)
 > +{
-> +	return NULL;
+> +	struct watch_entry k1, k2, *w1, *w2;
+> +
+> +	/* remove watch, ignore error if kernel already did it */
+> +	if (inotify_rm_watch(data->fd_inotify, w->wd) && errno !=3D EINVAL)
+> +		error_errno("inotify_rm_watch() failed");
+> +
+> +	hashmap_entry_init(&k1.ent, memhash(&w->wd, sizeof(int)));
+> +	w1 =3D hashmap_remove_entry(&data->watches, &k1, ent, NULL);
+> +	if (!w1)
+> +		BUG("Double remove of watch for '%s'", w->dir);
+> +
+> +	if (w1->cookie)
+> +		BUG("Removing watch for '%s' which has a pending rename", w1->dir);
+> +
+> +	hashmap_entry_init(&k2.ent, memhash(w->dir, strlen(w->dir)));
+> +	w2 =3D hashmap_remove_entry(&data->revwatches, &k2, ent, NULL);
+> +	if (!w2)
+> +		BUG("Double remove of reverse watch for '%s'", w->dir);
+> +
+> +	/* w1->dir and w2->dir are interned strings, we don't own them */
+> +	free(w1);
+> +	free(w2);
 > +}
-> diff --git a/compat/fsmonitor/fsm-path-utils-linux.h b/compat/fsmonitor/f=
-sm-path-utils-linux.h
-> new file mode 100644
-> index 00000000000..49bdb3c4728
-> --- /dev/null
-> +++ b/compat/fsmonitor/fsm-path-utils-linux.h
-> @@ -0,0 +1,91 @@
-> +#ifndef FSM_PATH_UTILS_LINUX_H
-> +#define FSM_PATH_UTILS_LINUX_H
-> +#endif
 > +
-> +#ifdef HAVE_LINUX_MAGIC_H
-> +#include <linux/magic.h>
-> +#endif
+> +/*
+> + * Check for stale directory renames.
+> + *
+> + * https://man7.org/linux/man-pages/man7/inotify.7.html
+> + *
+> + * Allow for some small timeout to account for the fact that insertion o=
+f the
+> + * IN_MOVED_FROM+IN_MOVED_TO event pair is not atomic, and the possibili=
+ty that
+> + * there may not be any IN_MOVED_TO event.
+> + *
+> + * If the IN_MOVED_TO event is not received within the timeout then even=
+ts have
+> + * been missed and the monitor is in an inconsistent state with respect =
+to the
+> + * filesystem.
+> + */
+> +static int check_stale_dir_renames(struct hashmap *renames, time_t max_a=
+ge)
+> +{
+> +	struct rename_entry *re;
+> +	struct hashmap_iter iter;
 > +
-> +#ifndef ACFS_SUPER_MAGIC
-> +#define ACFS_SUPER_MAGIC 0x61636673
-> +#endif
+> +	hashmap_for_each_entry(renames, &iter, re, ent) {
+> +		if (re->whence <=3D max_age)
+> +			return -1;
+> +	}
+> +	return 0;
+> +}
 > +
-> +#ifndef AFS_SUPER_MAGIC
-> +#define AFS_SUPER_MAGIC 0x5346414f
-> +#endif
+> +/*
+> + * Track pending renames.
+> + *
+> + * Tracking is done via a event cookie to watch descriptor mapping.
+> + *
+> + * A rename is not complete until matching a IN_MOVED_TO event is receiv=
+ed
+> + * for a corresponding IN_MOVED_FROM event.
+> + */
+> +static void add_dir_rename(uint32_t cookie, const char *path,
+> +	struct fsm_listen_data *data)
+
+Nit: `add_dir_rename()` and the below `rename_dir()` sound as if we
+actually perform the rename ourselves. How about `track_dir_rename()`
+and `finalize_dir_rename()`?
+
+> +{
+> +	struct watch_entry k, *w;
+> +	struct rename_entry *re;
 > +
-> +#ifndef CEPH_SUPER_MAGIC
-> +#define CEPH_SUPER_MAGIC 0x00c36400
-> +#endif
+> +	/* lookup the watch descriptor for the given path */
+> +	hashmap_entry_init(&k.ent, memhash(path, strlen(path)));
+> +	w =3D hashmap_get_entry(&data->revwatches, &k, ent, NULL);
+> +	if (!w) /* should never happen */
+> +		BUG("No watch for '%s'", path);
+
+Error message should start with lower-case character.
+
+> +	w->cookie =3D cookie;
 > +
-> +#ifndef CIFS_SUPER_MAGIC
-> +#define CIFS_SUPER_MAGIC 0xff534d42
-> +#endif
+> +	/* add the pending rename to match against later */
+> +	CALLOC_ARRAY(re, 1);
+> +	re->dir =3D w->dir;
+> +	re->cookie =3D w->cookie;
+> +	re->whence =3D time(NULL);
+> +	hashmap_entry_init(&re->ent, memhash(&re->cookie, sizeof(uint32_t)));
+> +	hashmap_add(&data->renames, &re->ent);
+> +}
 > +
-> +#ifndef CODA_SUPER_MAGIC
-> +#define CODA_SUPER_MAGIC 0x73757245
-> +#endif
+> +/*
+> + * Handle directory renames
+> + *
+> + * Once a IN_MOVED_TO event is received, lookup the rename tracking info=
+rmation
+> + * via the event cookie and use this information to update the watch.
+> + */
+> +static void rename_dir(uint32_t cookie, const char *path,
+> +	struct fsm_listen_data *data)
+> +{
+> +	struct rename_entry rek, *re;
+> +	struct watch_entry k, *w;
 > +
-> +#ifndef FHGFS_SUPER_MAGIC
-> +#define FHGFS_SUPER_MAGIC 0x19830326
-> +#endif
+> +	/* lookup a pending rename to match */
+> +	rek.cookie =3D cookie;
+> +	hashmap_entry_init(&rek.ent, memhash(&rek.cookie, sizeof(uint32_t)));
+> +	re =3D hashmap_get_entry(&data->renames, &rek, ent, NULL);
+> +	if (re) {
+> +		k.dir =3D re->dir;
+> +		hashmap_entry_init(&k.ent, memhash(k.dir, strlen(k.dir)));
+> +		w =3D hashmap_get_entry(&data->revwatches, &k, ent, NULL);
+> +		if (w) {
+> +			w->cookie =3D 0; /* rename handled */
+> +			remove_watch(w, data);
+> +			add_watch(path, data);
+> +		} else {
+> +			BUG("No matching watch");
+> +		}
+> +	} else {
+> +		BUG("No matching cookie");
+
+The above two bugs should start with a lower-case letter.
+
+> +	}
+> +}
 > +
-> +#ifndef GFS_SUPER_MAGIC
-> +#define GFS_SUPER_MAGIC 0x1161970
-> +#endif
+> +/*
+> + * Recursively add watches to every directory under path
+> + */
+> +static int register_inotify(const char *path,
+> +	struct fsmonitor_daemon_state *state,
+> +	struct fsmonitor_batch *batch)
+> +{
+> +	DIR *dir;
+> +	const char *rel;
+> +	struct strbuf current =3D STRBUF_INIT;
+> +	struct dirent *de;
+> +	struct stat fs;
+> +	int ret =3D -1;
 > +
-> +#ifndef GPFS_SUPER_MAGIC
-> +#define GPFS_SUPER_MAGIC 0x47504653
-> +#endif
+> +	dir =3D opendir(path);
+> +	if (!dir)
+> +		return error_errno("opendir('%s') failed", path);
 > +
-> +#ifndef IBRIX_SUPER_MAGIC
-> +#define IBRIX_SUPER_MAGIC 0x013111a8
-> +#endif
+> +	while ((de =3D readdir_skip_dot_and_dotdot(dir)) !=3D NULL) {
+> +		strbuf_reset(&current);
+> +		strbuf_addf(&current, "%s/%s", path, de->d_name);
+> +		if (lstat(current.buf, &fs)) {
+> +			error_errno("lstat('%s') failed", current.buf);
+
+Missing `_()` translation marker.
+
+> +			goto failed;
+> +		}
 > +
-> +#ifndef KAFS_SUPER_MAGIC
-> +#define KAFS_SUPER_MAGIC 0x6b414653
-> +#endif
+> +		/* recurse into directory */
+> +		if (S_ISDIR(fs.st_mode)) {
+> +			if (add_watch(current.buf, state->listen_data))
+> +				goto failed;
+> +			if (register_inotify(current.buf, state, batch))
+> +				goto failed;
+> +		} else if (batch) {
+> +			rel =3D current.buf + state->path_worktree_watch.len + 1;
+> +			trace_printf_key(&trace_fsmonitor, "explicitly adding '%s'", rel);
+> +			fsmonitor_batch__add_path(batch, rel);
+> +		}
+> +	}
+> +	ret =3D 0;
 > +
-> +#ifndef LUSTRE_SUPER_MAGIC
-> +#define LUSTRE_SUPER_MAGIC 0x0bd00bd0
-> +#endif
+> +failed:
+> +	strbuf_release(&current);
+> +	if (closedir(dir) < 0)
+> +		return error_errno("closedir('%s') failed", path);
+
+Missing `_()` translation marker.
+
+> +	return ret;
+> +}
 > +
-> +#ifndef NCP_SUPER_MAGIC
-> +#define NCP_SUPER_MAGIC 0x564c
-> +#endif
+> +static int em_rename_dir_from(u_int32_t mask)
+> +{
+> +	return ((mask & IN_ISDIR) && (mask & IN_MOVED_FROM));
+> +}
 > +
-> +#ifndef NFS_SUPER_MAGIC
-> +#define NFS_SUPER_MAGIC 0x6969
-> +#endif
+> +static int em_rename_dir_to(u_int32_t mask)
+> +{
+> +	return ((mask & IN_ISDIR) && (mask & IN_MOVED_TO));
+> +}
 > +
-> +#ifndef NFSD_SUPER_MAGIC
-> +#define NFSD_SUPER_MAGIC 0x6e667364
-> +#endif
+> +static int em_remove_watch(u_int32_t mask)
+> +{
+> +	return (mask & IN_DELETE_SELF);
+> +}
 > +
-> +#ifndef OCFS2_SUPER_MAGIC
-> +#define OCFS2_SUPER_MAGIC 0x7461636f
-> +#endif
+> +static int em_dir_renamed(u_int32_t mask)
+> +{
+> +	return ((mask & IN_ISDIR) && (mask & IN_MOVE));
+> +}
 > +
-> +#ifndef PANFS_SUPER_MAGIC
-> +#define PANFS_SUPER_MAGIC 0xaad7aaea
-> +#endif
+> +static int em_dir_created(u_int32_t mask)
+> +{
+> +	return ((mask & IN_ISDIR) && (mask & IN_CREATE));
+> +}
 > +
-> +#ifndef SMB_SUPER_MAGIC
-> +#define SMB_SUPER_MAGIC 0x517b
-> +#endif
+> +static int em_dir_deleted(uint32_t mask)
+> +{
+> +	return ((mask & IN_ISDIR) && (mask & IN_DELETE));
+> +}
 > +
-> +#ifndef SMB2_SUPER_MAGIC
-> +#define SMB2_SUPER_MAGIC 0xfe534d42
-> +#endif
+> +static int em_force_shutdown(u_int32_t mask)
+> +{
+> +	return (mask & IN_UNMOUNT) || (mask & IN_Q_OVERFLOW);
+> +}
 > +
-> +#ifndef SNFS_SUPER_MAGIC
-> +#define SNFS_SUPER_MAGIC 0xbeefdead
-> +#endif
+> +static int em_ignore(u_int32_t mask)
+> +{
+> +	return (mask & IN_IGNORED) || (mask & IN_MOVE_SELF);
+> +}
 > +
-> +#ifndef VMHGFS_SUPER_MAGIC
-> +#define VMHGFS_SUPER_MAGIC 0xbacbacbc
-> +#endif
+> +static void log_mask_set(const char *path, u_int32_t mask)
+> +{
+> +	struct strbuf msg =3D STRBUF_INIT;
 > +
-> +#ifndef VXFS_SUPER_MAGIC
-> +#define VXFS_SUPER_MAGIC 0xa501fcf5
-> +#endif
-> diff --git a/config.mak.uname b/config.mak.uname
-> index dacc95172dc..80d7e2a2e68 100644
-> --- a/config.mak.uname
-> +++ b/config.mak.uname
-> @@ -68,6 +68,17 @@ ifeq ($(uname_S),Linux)
->  	ifneq ($(findstring .el7.,$(uname_R)),)
->  		BASIC_CFLAGS +=3D -std=3Dc99
->  	endif
-> +	ifeq ($(shell test -f /usr/include/linux/magic.h && echo y),y)
-> +		HAVE_LINUX_MAGIC_H =3D YesPlease
-> +	endif
-> +	# The builtin FSMonitor on Linux builds upon Simple-IPC.  Both require
-> +	# Unix domain sockets and PThreads.
-> +	ifndef NO_PTHREADS
-> +	ifndef NO_UNIX_SOCKETS
-> +	FSMONITOR_DAEMON_BACKEND =3D linux
-> +	FSMONITOR_OS_SETTINGS =3D linux
-> +	endif
-> +	endif
->  endif
->  ifeq ($(uname_S),GNU/kFreeBSD)
->  	HAVE_ALLOCA_H =3D YesPlease
+> +	if (mask & IN_ACCESS)
+> +		strbuf_addstr(&msg, "IN_ACCESS|");
+> +	if (mask & IN_MODIFY)
+> +		strbuf_addstr(&msg, "IN_MODIFY|");
+> +	if (mask & IN_ATTRIB)
+> +		strbuf_addstr(&msg, "IN_ATTRIB|");
+> +	if (mask & IN_CLOSE_WRITE)
+> +		strbuf_addstr(&msg, "IN_CLOSE_WRITE|");
+> +	if (mask & IN_CLOSE_NOWRITE)
+> +		strbuf_addstr(&msg, "IN_CLOSE_NOWRITE|");
+> +	if (mask & IN_OPEN)
+> +		strbuf_addstr(&msg, "IN_OPEN|");
+> +	if (mask & IN_MOVED_FROM)
+> +		strbuf_addstr(&msg, "IN_MOVED_FROM|");
+> +	if (mask & IN_MOVED_TO)
+> +		strbuf_addstr(&msg, "IN_MOVED_TO|");
+> +	if (mask & IN_CREATE)
+> +		strbuf_addstr(&msg, "IN_CREATE|");
+> +	if (mask & IN_DELETE)
+> +		strbuf_addstr(&msg, "IN_DELETE|");
+> +	if (mask & IN_DELETE_SELF)
+> +		strbuf_addstr(&msg, "IN_DELETE_SELF|");
+> +	if (mask & IN_MOVE_SELF)
+> +		strbuf_addstr(&msg, "IN_MOVE_SELF|");
+> +	if (mask & IN_UNMOUNT)
+> +		strbuf_addstr(&msg, "IN_UNMOUNT|");
+> +	if (mask & IN_Q_OVERFLOW)
+> +		strbuf_addstr(&msg, "IN_Q_OVERFLOW|");
+> +	if (mask & IN_IGNORED)
+> +		strbuf_addstr(&msg, "IN_IGNORED|");
+> +	if (mask & IN_ISDIR)
+> +		strbuf_addstr(&msg, "IN_ISDIR|");
+
+Doesn't this end up with one trailing '|' in `msg`? You could use
+`strbuf_strip_suffix(msg, "|")` to drop it.
+
+> +	trace_printf_key(&trace_fsmonitor, "inotify_event: '%s', mask=3D%#8.8x =
+%s",
+> +				path, mask, msg.buf);
+> +
+> +	strbuf_release(&msg);
+> +}
+> +
+> +int fsm_listen__ctor(struct fsmonitor_daemon_state *state)
+> +{
+> +	int fd;
+> +	int ret =3D 0;
+> +	struct fsm_listen_data *data;
+> +
+> +	CALLOC_ARRAY(data, 1);
+> +	state->listen_data =3D data;
+> +	state->listen_error_code =3D -1;
+> +	data->shutdown =3D SHUTDOWN_ERROR;
+> +
+> +	fd =3D inotify_init1(O_NONBLOCK);
+> +	if (fd < 0)
+> +		return error_errno("inotify_init1() failed");
+> +
+> +	data->fd_inotify =3D fd;
+> +
+> +	hashmap_init(&data->watches, watch_entry_cmp, NULL, 0);
+> +	hashmap_init(&data->renames, rename_entry_cmp, NULL, 0);
+> +	hashmap_init(&data->revwatches, revwatches_entry_cmp, NULL, 0);
+> +
+> +	if (add_watch(state->path_worktree_watch.buf, data))
+> +		ret =3D -1;
+> +	else if (register_inotify(state->path_worktree_watch.buf, state, NULL))
+> +		ret =3D -1;
+> +	else if (state->nr_paths_watching > 1) {
+> +		if (add_watch(state->path_gitdir_watch.buf, data))
+> +			ret =3D -1;
+> +		else if (register_inotify(state->path_gitdir_watch.buf, state, NULL))
+> +			ret =3D -1;
+> +	}
+
+Style: if one of the branches requires braces then all of them should.
+
+> +
+> +	if (!ret) {
+> +		state->listen_error_code =3D 0;
+> +		data->shutdown =3D SHUTDOWN_CONTINUE;
+> +	}
+> +
+> +	return ret;
+> +}
+> +
+> +void fsm_listen__dtor(struct fsmonitor_daemon_state *state)
+> +{
+> +	struct fsm_listen_data *data;
+> +	struct hashmap_iter iter;
+> +	struct watch_entry *w;
+> +	int fd;
+> +
+> +	if (!state || !state->listen_data)
+> +		return;
+> +
+> +	data =3D state->listen_data;
+> +	fd =3D data->fd_inotify;
+> +
+> +	hashmap_for_each_entry(&data->watches, &iter, w, ent) {
+> +		w->cookie =3D 0; /* ignore any pending renames */
+> +		remove_watch(w, data);
+> +	}
+> +	hashmap_clear(&data->watches);
+> +
+> +	hashmap_clear(&data->revwatches); /* remove_watch freed the entries */
+> +
+> +	hashmap_clear_and_free(&data->renames, struct rename_entry, ent);
+> +
+> +	FREE_AND_NULL(state->listen_data);
+
+The empty lines between all these cleanups  can probably be removed.
+
+> +
+> +	if (fd && (close(fd) < 0))
+> +		error_errno(_("closing inotify file descriptor failed"));
+> +}
+> +
+> +void fsm_listen__stop_async(struct fsmonitor_daemon_state *state)
+> +{
+> +	if (!state->listen_data->shutdown)
+> +		state->listen_data->shutdown =3D SHUTDOWN_STOP;
+> +}
+> +
+> +/*
+> + * Process a single inotify event and queue for publication.
+> + */
+> +static int process_event(const char *path,
+> +	const struct inotify_event *event,
+> +	struct fsmonitor_batch *batch,
+> +	struct string_list *cookie_list,
+> +	struct fsmonitor_daemon_state *state)
+> +{
+> +	const char *rel;
+> +	const char *last_sep;
+> +
+> +	switch (fsmonitor_classify_path_absolute(state, path)) {
+> +		case IS_INSIDE_DOT_GIT_WITH_COOKIE_PREFIX:
+> +		case IS_INSIDE_GITDIR_WITH_COOKIE_PREFIX:
+> +			/* Use just the filename of the cookie file. */
+> +			last_sep =3D find_last_dir_sep(path);
+> +			string_list_append(cookie_list,
+> +					last_sep ? last_sep + 1 : path);
+> +			break;
+> +		case IS_INSIDE_DOT_GIT:
+> +		case IS_INSIDE_GITDIR:
+> +			break;
+> +		case IS_DOT_GIT:
+> +		case IS_GITDIR:
+> +			/*
+> +			* If .git directory is deleted or renamed away,
+> +			* we have to quit.
+> +			*/
+> +			if (em_dir_deleted(event->mask)) {
+> +				trace_printf_key(&trace_fsmonitor,
+> +						"event: gitdir removed");
+> +				state->listen_data->shutdown =3D SHUTDOWN_FORCE;
+> +				goto done;
+> +			}
+> +
+> +			if (em_dir_renamed(event->mask)) {
+> +				trace_printf_key(&trace_fsmonitor,
+> +						"event: gitdir renamed");
+> +				state->listen_data->shutdown =3D SHUTDOWN_FORCE;
+> +				goto done;
+> +			}
+> +			break;
+> +		case IS_WORKDIR_PATH:
+> +			/* normal events in the working directory */
+> +			if (trace_pass_fl(&trace_fsmonitor))
+> +				log_mask_set(path, event->mask);
+> +
+> +			rel =3D path + state->path_worktree_watch.len + 1;
+> +			fsmonitor_batch__add_path(batch, rel);
+> +
+> +			if (em_dir_deleted(event->mask))
+> +				break;
+> +
+> +			/* received IN_MOVE_FROM, add tracking for expected IN_MOVE_TO */
+> +			if (em_rename_dir_from(event->mask))
+> +				add_dir_rename(event->cookie, path, state->listen_data);
+> +
+> +			/* received IN_MOVE_TO, update watch to reflect new path */
+> +			if (em_rename_dir_to(event->mask)) {
+> +				rename_dir(event->cookie, path, state->listen_data);
+> +				if (register_inotify(path, state, batch)) {
+> +					state->listen_data->shutdown =3D SHUTDOWN_ERROR;
+> +					goto done;
+> +				}
+> +			}
+> +
+> +			if (em_dir_created(event->mask)) {
+> +				if (add_watch(path, state->listen_data)) {
+> +					state->listen_data->shutdown =3D SHUTDOWN_ERROR;
+> +					goto done;
+> +				}
+> +				if (register_inotify(path, state, batch)) {
+> +					state->listen_data->shutdown =3D SHUTDOWN_ERROR;
+> +					goto done;
+> +				}
+> +			}
+> +			break;
+> +		case IS_OUTSIDE_CONE:
+> +		default:
+> +			trace_printf_key(&trace_fsmonitor,
+> +					"ignoring '%s'", path);
+> +			break;
+> +	}
+> +	return 0;
+> +done:
+> +	return -1;
+> +}
+> +
+> +/*
+> + * Read the inotify event stream and pre-process events before further
+> + * processing and eventual publishing.
+> + */
+> +static void handle_events(struct fsmonitor_daemon_state *state)
+> +{
+> +	 /* See https://man7.org/linux/man-pages/man7/inotify.7.html */
+> +	char buf[4096]
+> +		__attribute__ ((aligned(__alignof__(struct inotify_event))));
+> +
+> +	struct hashmap watches =3D state->listen_data->watches;
+> +	struct fsmonitor_batch *batch =3D NULL;
+> +	struct string_list cookie_list =3D STRING_LIST_INIT_DUP;
+> +	struct watch_entry k, *w;
+> +	struct strbuf path;
+> +	const struct inotify_event *event;
+> +	int fd =3D state->listen_data->fd_inotify;
+> +	ssize_t len;
+> +	char *ptr, *p;
+
+I think many of the variables could be moved into deeper scopes. Makes
+it easier to assess what is being used where.
+
+> +
+> +	strbuf_init(&path, PATH_MAX);
+> +
+> +	for(;;) {
+> +		len =3D read(fd, buf, sizeof(buf));
+> +		if (len =3D=3D -1 && errno !=3D EAGAIN) {
+
+Wouldn't we also have to handle EINTR here?
+
+> +			error_errno(_("reading inotify message stream failed"));
+> +			state->listen_data->shutdown =3D SHUTDOWN_ERROR;
+> +			goto done;
+> +		}
+> +
+> +		/* nothing to read */
+> +		if (len <=3D 0)
+> +			goto done;
+> +
+> +		/* Loop over all events in the buffer. */
+> +		for (ptr =3D buf; ptr < buf + len;
+> +			 ptr +=3D sizeof(struct inotify_event) + event->len) {
+
+Nit: there's an additional whitespace here.
+
+> +
+> +			event =3D (const struct inotify_event *) ptr;
+> +
+> +			if (em_ignore(event->mask))
+> +				continue;
+> +
+> +			/* File system was unmounted or event queue overflowed */
+> +			if (em_force_shutdown(event->mask)) {
+> +				if (trace_pass_fl(&trace_fsmonitor))
+> +					log_mask_set("Forcing shutdown", event->mask);
+> +				state->listen_data->shutdown =3D SHUTDOWN_FORCE;
+> +				goto done;
+> +			}
+> +
+> +			hashmap_entry_init(&k.ent, memhash(&event->wd, sizeof(int)));
+> +			k.wd =3D event->wd;
+> +
+> +			w =3D hashmap_get_entry(&watches, &k, ent, NULL);
+> +			if (!w) /* should never happen */
+> +				BUG("No watch for '%s'", event->name);
+
+Error messages should start with a lower-case letter.
+
+> +
+> +			/* directory watch was removed */
+> +			if (em_remove_watch(event->mask)) {
+> +				remove_watch(w, state->listen_data);
+> +				continue;
+> +			}
+> +
+> +			strbuf_reset(&path);
+> +			strbuf_add(&path, w->dir, strlen(w->dir));
+> +			strbuf_addch(&path, '/');
+> +			strbuf_addstr(&path, event->name);
+
+The above three lines can be simplified to:
+
+```
+strbuf_addf("%s/%s", w->dir, event->name);
+```
+
+> +
+> +			p =3D fsmonitor__resolve_alias(path.buf, &state->alias);
+> +			if (!p)
+> +				p =3D strbuf_detach(&path, NULL);
+> +
+> +			if (!batch)
+> +				batch =3D fsmonitor_batch__new();
+> +
+> +			if (process_event(p, event, batch, &cookie_list, state)) {
+> +				free(p);
+> +				goto done;
+> +			}
+> +			free(p);
+> +		}
+> +		strbuf_reset(&path);
+> +		fsmonitor_publish(state, batch, &cookie_list);
+> +		string_list_clear(&cookie_list, 0);
+> +		batch =3D NULL;
+> +	}
+> +done:
+> +	strbuf_release(&path);
+> +	fsmonitor_batch__free_list(batch);
+> +	string_list_clear(&cookie_list, 0);
+> +}
+> +
+> +/*
+> + * Non-blocking read of the inotify events stream. The inotify fd is pol=
+led
+> + * frequently to help minimize the number of queue overflows.
+> + */
+> +void fsm_listen__loop(struct fsmonitor_daemon_state *state)
+> +{
+> +	int poll_num;
+> +	const int interval =3D 1000;
+
+You could rename the variable to `interval_ms` to clarify its unit.
+
+> +	time_t checked =3D time(NULL);
+> +	struct pollfd fds[1];
+> +	fds[0].fd =3D state->listen_data->fd_inotify;
+> +	fds[0].events =3D POLLIN;
+> +
+> +	for(;;) {
+
+Nit: `while (1)`
+
+> +		switch (state->listen_data->shutdown) {
+> +			case SHUTDOWN_CONTINUE:
+> +				poll_num =3D poll(fds, 1, 1);
+
+Why do you pick a timeout of 1 millisecond here? I'd have expected us to
+instruct poll(3p) to either not block at all (0) or to block for
+`interval`.
+
+> +				if (poll_num =3D=3D -1) {
+> +					if (errno =3D=3D EINTR)
+> +						continue;
+
+Wouldn't we also have to handle EAGAIN here?
+
+Patrick
+
+> +					error_errno(_("polling inotify message stream failed"));
+> +					state->listen_data->shutdown =3D SHUTDOWN_ERROR;
+> +					continue;
+> +				}
+> +
+> +				if ((time(NULL) - checked) >=3D interval) {
+> +					checked =3D time(NULL);
+> +					if (check_stale_dir_renames(&state->listen_data->renames,
+> +						checked - interval)) {
+> +						trace_printf_key(&trace_fsmonitor,
+> +							"Missed IN_MOVED_TO events, forcing shutdown");
+> +						state->listen_data->shutdown =3D SHUTDOWN_FORCE;
+> +						continue;
+> +					}
+> +				}
+> +
+> +				if (poll_num > 0 && (fds[0].revents & POLLIN))
+> +					handle_events(state);
+> +
+> +				continue;
+> +			case SHUTDOWN_ERROR:
+> +				state->listen_error_code =3D -1;
+> +				ipc_server_stop_async(state->ipc_server_data);
+> +				break;
+> +			case SHUTDOWN_FORCE:
+> +				state->listen_error_code =3D 0;
+> +				ipc_server_stop_async(state->ipc_server_data);
+> +				break;
+> +			case SHUTDOWN_STOP:
+> +			default:
+> +				state->listen_error_code =3D 0;
+> +				break;
+> +		}
+> +		return;
+> +	}
+> +}
 > --=20
 > gitgitgadget
 >=20
 >=20
 
---DxEZM6cXx6pmhlrh
+--8TCCcnyCXBQBR8AO
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmXOFmYACgkQVbJhu7ck
-PpQbwBAAncDepd4vLrBmiqv5xiOQHAITHtrXRWlM45hdNAhsmvFSUHTvYtbPgFcK
-UZLrEvWFOlD7IejSGt/oJ2PYoReRUM1RmbmsJHSE8hv7lcJyUzhN7DLM9nu6T0Kk
-KrD/eJaUuI4l2L26X7xr4Exh/Nst0gNzIpF6i8uVIu2ZhriF/Zy+Q4QKjSpNWC7K
-FV9tx6XN0RLcSSUk+LlNnK4u0DJXxFXThOCzA73Fwm9w/m+YvczcDLeGfe+GTxy3
-B3IR98CAlsSTWBHvH7Iei0TthUkgnG7AwI0/aGcQGmwfFjwWCkBrsdsttA1/zSBL
-172ttlwYqMeWm4ybR0Wt2rWHr/FYNfSd/gFIoi4a6GVeYbpPSvJSjXo6RUi95v9W
-zuo1PhLI4S9oUnjqxwIO9S6pC44E+AqmGgLGBpbhDMGv5nGGobeLmxVExJ1J8DU5
-WBGyAbUhECctsoVUpiwVlwvOzGbGiJDOFzAG0fJ7i+c9+P1SZ18BBzxbKrFuqKEQ
-n6CZtaRqO5IIIqxgX8tRDPdsGOo3Cfr6tVyVXB9UbRNAqCT13HfmJDSY3EBoF/jn
-Hei7udYRhZFhuUX+5Uy8qBnCwRVbu9C2xGgMejHFoqedvBU6NneaTh1QC9zCcEL4
-c07xxWX9PvLjoal1MWbGRq6ZYUiAzDN4b8FQ5rlRt4mTeSfcrKE=
-=9rvU
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmXOFmwACgkQVbJhu7ck
+PpRDmA/9GxOfIA3G2h3c9AFJ2xJ0rYz+L2i/zKxhOgnDt00GAV/1bodnefIPLeAQ
+86ElbntA8yLZP93ljPXnkG77lLNCIph8ZutzwHUY6sGuOp32Kx5WM1RT9h00JJwr
+zGRKnYTn61NNSqny4PEV+Ic68kC8+SGwgqLNhY71GPVTjEM75hlzvriOa38AQ+S0
+w0HLsQYtfG3P1m/KrWL2H5+EWpugiIEWfEnFpw165TZGCtNoHb7nw/JnVU3+4XbO
+WfWJlugM9Wgj5X5USLAeU2CSIWu44OkgVb16T9jLWxQ7W+zFY4X9+mZT+bgN0umS
+hYgF/VulA/rvT1JohYeh8tg3rtyTBijEbMq/21LJRryrpPUvvmtEPpqXcjmlxIm1
+iEEBRWRvo7ZwzrIuAXmxNNbPDJV9/rHTpl4tsRWVPvurSJ+qQaTt9hkB+QU8kiWm
+XTHX3uHYyNu5VlR9hWOKplLAA0ew48K2t8e8JafLAzHjvJ608Y5PK7ZVHqNU/RmD
+hSeGVWpfvYUtxpAvzDfAZVqpg1404/P4JPv3r/N3B0j6NpKj2cYZZG5fkve7G9Oj
+pkVrwPn/5oTsb+i5y14TYbm+C4LemCgzE+3YfZUBMvJGcMdrUPvGG/slfbR0xjgu
+u2U4K58G8y9kJgqo/mNnHkm8Fop23h4IcHt6pzxAUTA6ZJxGQs0=
+=aGWq
 -----END PGP SIGNATURE-----
 
---DxEZM6cXx6pmhlrh--
+--8TCCcnyCXBQBR8AO--
