@@ -1,184 +1,121 @@
-Received: from mail.manjaro.org (mail.manjaro.org [116.203.91.91])
-	(using TLSv1.2 with cipher DHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9195D125CD
-	for <git@vger.kernel.org>; Fri, 16 Feb 2024 05:20:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=116.203.91.91
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46ED01426E
+	for <git@vger.kernel.org>; Fri, 16 Feb 2024 06:25:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708060809; cv=none; b=IYFqdMiNx28ZPQDfSWTkhvqqXPqYARcs1yuIyPi7g/eM2lo5u1/bSz7Anh7IufXMPkaCSJYDtXhhnnS+ZGyaK4sxv9qgA5TyAlqyQOrXj0Hdzy8iKdtfdF8NcV1msJcL0iIdZDVPKDXTqbsqNh4Q8sQOx/5UrAtxwsO/VJN2B9E=
+	t=1708064752; cv=none; b=bJrhtK7gUxLwKwYAZjrkywnOvh9yBGBqY2ubgOl6llNjGHp9I17iaalmP8Aqmpq4dw82kw7t641MJcwJZa7BzNkKDaACI5KQBuRZMslsjxCBK7t3i1RVSoxx3XSw8p9RpAInKxQXTolSqe93Bac7EfGGN+FTDYe91m4gHtTvzfc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708060809; c=relaxed/simple;
-	bh=TO38z4iptMeFcm4vYzvirVR9FAt9+tfZiUB1RFOWnts=;
-	h=From:To:Subject:Date:Message-Id:MIME-Version; b=r/OMLsCmNTj3Aqe2pg034yCLzctBBMZktQvYr1K/dAaBIPWmHYvzk0RodaUX9/4iZzI3h+Q9yQdGZcD1xRdPNy6VIhOsr45ihnO1H3TVMDMIUWhJ0ImyI8Tgn3AcQEZR/FW9tfoe25qqPnsznN7g9k/X4fTobzAFqPX4jxM5hw0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org; spf=pass smtp.mailfrom=manjaro.org; dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b=sz2tk6ch; arc=none smtp.client-ip=116.203.91.91
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=manjaro.org
+	s=arc-20240116; t=1708064752; c=relaxed/simple;
+	bh=9lucYi/w9iHM6gVCjAAuOxpu3Oz+Y1dk2uWaSyIg+6k=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=ql6h/cnSdKoBnZq4EMUAKETcQv/I+QVyh9pW1ealRaj1Bkb5mPo6q8HQXjRWarX1QZCJUip3WKeW5MCqTKAfK2o/dE5RvdHKM/3GrUaXAy1UQJCR5uZ2Av0OIDffCibXHo4ML1JmV+qOOvP1Bglyrn5wrdJIakwnoXZtQQzU+mQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=uurCpy7A; arc=none smtp.client-ip=173.228.157.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b="sz2tk6ch"
-From: Dragan Simic <dsimic@manjaro.org>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=manjaro.org; s=2021;
-	t=1708060802;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding;
-	bh=OLqG/RludB6m6BfY3qsf8ZmcvgObBDk9tmexntDSiqc=;
-	b=sz2tk6chMIRtL4HWm7dApQnnu4ICSwD/4t8cwXCgyeQEj79/8llnRtF2LQBt/qfyEe1Eiw
-	I3HHmw7Br2/n6ZaepH8j6PqHqctW7ocIIe9N3Z3HMO5JwH0lkybPYXSDu1NEqz3v+gb+pQ
-	Q5BjJNqUQ+P+WfgxQ0HsbMdLGqQiywbmmGK9WouvMDVVwIgbikywlNBJ+0/81Ngct7q2xt
-	eFufU0JawTm7m3ddQ87jsIJle6n2u8h/CD2IQTQ20hayrA8T3MewSt6xPfyd9DtTJu/XgH
-	mgbuAcVOZeHQFyZGndXBhkRKIqI1xbMqcZ0FWj9UOY7px8WXe0TXqkaz07ZQzA==
-To: git@vger.kernel.org
-Subject: [PATCH] documentation: send-email: use camel case consistently
-Date: Fri, 16 Feb 2024 06:19:56 +0100
-Message-Id: <b0577267402f6177d8ba5646e12d7691437e6e8f.1708060779.git.dsimic@manjaro.org>
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="uurCpy7A"
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id 98E2E31003;
+	Fri, 16 Feb 2024 01:25:50 -0500 (EST)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=9lucYi/w9iHM6gVCjAAuOxpu3Oz+Y1dk2uWaSy
+	Ig+6k=; b=uurCpy7AwiBcHF2+tNNFaeziVedB6D7rgiP1KKO183yFnL4aGXlIfS
+	qOPSzGNRMluOFPiYVFL0e/7ZuRW4vt/R9WNtxW+8UXZN6P3nvF4Vos4PXfogiN/t
+	X9T+lu61xhU4vg9SPQGOyMPCYMA3S26al2fH4AQAvfbOUIaDn6ehk=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id 909C331001;
+	Fri, 16 Feb 2024 01:25:50 -0500 (EST)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.165.85])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 3323D30FF2;
+	Fri, 16 Feb 2024 01:25:47 -0500 (EST)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Jeff King <peff@peff.net>
+Cc: Maarten Bosmans <mkbosmans@gmail.com>,  git@vger.kernel.org,  Teng Long
+ <dyroneteng@gmail.com>,  Maarten Bosmans <maarten.bosmans@vortech.nl>
+Subject: Re: [PATCH 1/4] notes: print note blob to stdout directly
+In-Reply-To: <20240215052640.GC2821179@coredump.intra.peff.net> (Jeff King's
+	message of "Thu, 15 Feb 2024 00:26:40 -0500")
+References: <20240205204932.16653-1-maarten.bosmans@vortech.nl>
+	<20240205204932.16653-2-maarten.bosmans@vortech.nl>
+	<xmqqil32l0i6.fsf@gitster.g>
+	<CA+CvcKTtcHCCKucQ0h1dnaDAMNfErJ+a1CXEVi=ZE5dv57Tb3A@mail.gmail.com>
+	<xmqqy1bxiiop.fsf@gitster.g>
+	<20240213080014.GB2225494@coredump.intra.peff.net>
+	<xmqq5xys6zdr.fsf@gitster.g>
+	<20240215052640.GC2821179@coredump.intra.peff.net>
+Date: Thu, 15 Feb 2024 22:25:45 -0800
+Message-ID: <xmqqcysxkjrq.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Authentication-Results: ORIGINATING;
-	auth=pass smtp.auth=dsimic@manjaro.org smtp.mailfrom=dsimic@manjaro.org
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 389F5E50-CC94-11EE-809B-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
 
-Correct a few random "sendemail.*" configuration parameter names in the
-documentation that, for some reason, didn't use camel case format.
+Jeff King <peff@peff.net> writes:
 
-There's only one "Fixes" tag, while there should actually be a whole bunch
-of them to cover all the patches that introduced the configuration parameter
-names fixed by this patch.  I think we're fine with just one.
+> On Tue, Feb 13, 2024 at 09:35:28AM -0800, Junio C Hamano wrote:
+>
+>> Remind me if you can if we (1) had plans to allow non-blob objects
+>> as notes, or (2) actively support to have non-text blob objects as
+>> notes.  I _think_ we do assume people may try to add non-text blob
+>> as notes (while they accept that they cannot merge two such notes on
+>> the same object), but I do not recall if we planned to allow them to
+>> store trees and commits.
+>
+> Short answer: no for (1) and yes for (2).
+>
+> In my head non-blob notes were always something we'd eventually allow.
+> But I don't think the "git notes" tool really helps you at all (it
+> insists on being fed message content and makes the blob itself, rather
+> than letting you specify an oid).
 
-Fixes: 0ee42c86cf71 ("config.txt: move sendemail-config.txt to config/")
-Signed-off-by: Dragan Simic <dsimic@manjaro.org>
----
- Documentation/config/sendemail.txt | 12 ++++++------
- Documentation/git-send-email.txt   | 18 +++++++++---------
- 2 files changed, 15 insertions(+), 15 deletions(-)
+OK, that makes my worry about dropping "git show" from the codepath
+quite a lot.  At least we only have to worry about blobs.
 
-diff --git a/Documentation/config/sendemail.txt b/Documentation/config/sendemail.txt
-index 7fc770ee9e69..bfdf1a633cae 100644
---- a/Documentation/config/sendemail.txt
-+++ b/Documentation/config/sendemail.txt
-@@ -8,7 +8,7 @@ sendemail.smtpEncryption::
- 	See linkgit:git-send-email[1] for description.  Note that this
- 	setting is not subject to the 'identity' mechanism.
- 
--sendemail.smtpsslcertpath::
-+sendemail.smtpSslCertPath::
- 	Path to ca-certificates (either a directory or a single file).
- 	Set it to an empty string to disable certificate verification.
- 
-@@ -62,27 +62,27 @@ sendemail.chainReplyTo::
- sendemail.envelopeSender::
- sendemail.from::
- sendemail.headerCmd::
--sendemail.signedoffbycc::
-+sendemail.signedOffByCc::
- sendemail.smtpPass::
--sendemail.suppresscc::
-+sendemail.suppressCc::
- sendemail.suppressFrom::
- sendemail.to::
--sendemail.tocmd::
-+sendemail.toCmd::
- sendemail.smtpDomain::
- sendemail.smtpServer::
- sendemail.smtpServerPort::
- sendemail.smtpServerOption::
- sendemail.smtpUser::
- sendemail.thread::
- sendemail.transferEncoding::
- sendemail.validate::
- sendemail.xmailer::
- 	These configuration variables all provide a default for
- 	linkgit:git-send-email[1] command-line options. See its
- 	documentation for details.
- 
--sendemail.signedoffcc (deprecated)::
--	Deprecated alias for `sendemail.signedoffbycc`.
-+sendemail.signedOffCc (deprecated)::
-+	Deprecated alias for `sendemail.signedOffByCc`.
- 
- sendemail.smtpBatchSize::
- 	Number of messages to be sent per connection, after that a relogin
-diff --git a/Documentation/git-send-email.txt b/Documentation/git-send-email.txt
-index d1ef6a204e68..31acfa186457 100644
---- a/Documentation/git-send-email.txt
-+++ b/Documentation/git-send-email.txt
-@@ -138,7 +138,7 @@ Note that no attempts whatsoever are made to validate the encoding.
- 
- --compose-encoding=<encoding>::
- 	Specify encoding of compose message. Default is the value of the
--	'sendemail.composeencoding'; if that is unspecified, UTF-8 is assumed.
-+	'sendemail.composeEncoding'; if that is unspecified, UTF-8 is assumed.
- 
- --transfer-encoding=(7bit|8bit|quoted-printable|base64|auto)::
- 	Specify the transfer encoding to be used to send the message over SMTP.
-@@ -174,7 +174,7 @@ Sending
- 	Specify a command to run to send the email. The command should
- 	be sendmail-like; specifically, it must support the `-i` option.
- 	The command will be executed in the shell if necessary.  Default
--	is the value of `sendemail.sendmailcmd`.  If unspecified, and if
-+	is the value of `sendemail.sendmailCmd`.  If unspecified, and if
- 	--smtp-server is also unspecified, git-send-email will search
- 	for `sendmail` in `/usr/sbin`, `/usr/lib` and $PATH.
- 
-@@ -269,7 +269,7 @@ must be used for each option.
- 	certificates concatenated together: see verify(1) -CAfile and
- 	-CApath for more information on these). Set it to an empty string
- 	to disable certificate verification. Defaults to the value of the
--	`sendemail.smtpsslcertpath` configuration variable, if set, or the
-+	`sendemail.smtpSslCertPath` configuration variable, if set, or the
- 	backing SSL library's compiled-in default otherwise (which should
- 	be the best choice on most platforms).
- 
-@@ -313,7 +313,7 @@ Automating
- 	Specify a command to execute once per patch file which
- 	should generate patch file specific "To:" entries.
- 	Output of this command must be single email address per line.
--	Default is the value of 'sendemail.tocmd' configuration value.
-+	Default is the value of 'sendemail.toCmd' configuration value.
- 
- --cc-cmd=<command>::
- 	Specify a command to execute once per patch file which
-@@ -348,19 +348,19 @@ Automating
- 
- --[no-]signed-off-by-cc::
- 	If this is set, add emails found in the `Signed-off-by` trailer or Cc: lines to the
--	cc list. Default is the value of `sendemail.signedoffbycc` configuration
-+	cc list. Default is the value of `sendemail.signedOffByCc` configuration
- 	value; if that is unspecified, default to --signed-off-by-cc.
- 
- --[no-]cc-cover::
- 	If this is set, emails found in Cc: headers in the first patch of
- 	the series (typically the cover letter) are added to the cc list
--	for each email set. Default is the value of 'sendemail.cccover'
-+	for each email set. Default is the value of 'sendemail.ccCover'
- 	configuration value; if that is unspecified, default to --no-cc-cover.
- 
- --[no-]to-cover::
- 	If this is set, emails found in To: headers in the first patch of
- 	the series (typically the cover letter) are added to the to list
--	for each email set. Default is the value of 'sendemail.tocover'
-+	for each email set. Default is the value of 'sendemail.toCover'
- 	configuration value; if that is unspecified, default to --no-to-cover.
- 
- --suppress-cc=<category>::
-@@ -384,7 +384,7 @@ Automating
- - 'all' will suppress all auto cc values.
- --
- +
--Default is the value of `sendemail.suppresscc` configuration value; if
-+Default is the value of `sendemail.suppressCc` configuration value; if
- that is unspecified, default to 'self' if --suppress-from is
- specified, as well as 'body' if --no-signed-off-cc is specified.
- 
-@@ -471,7 +471,7 @@ Information
- 	Instead of the normal operation, dump the shorthand alias names from
- 	the configured alias file(s), one per line in alphabetical order. Note
- 	that this only includes the alias name and not its expanded email addresses.
--	See 'sendemail.aliasesfile' for more information about aliases.
-+	See 'sendemail.aliasesFile' for more information about aliases.
- 
- 
- CONFIGURATION
+> Non-text blob objects, on the other hand, should be easy to do with "git
+> notes add -F". Interestingly, the display code (in format_note() again)
+> converts embedded NULs into newlines. I think this is an accidental
+> behavior due to the use of strchrnul().
+>
+> Of course it's reasonable to also store notes that aren't meant to be
+> displayed via git-log, etc, at all. The textconv-caching machinery
+> stores its results in a separate notes ref. Those should generally be
+> text (since the point is to come up with something diff-able). But I
+> think it would be perfectly reasonable for another mechanism to make use
+> of notes in the same way and store binary goo.
+
+Yup.  
+
+The question is if our current use of "git show" allows creative use
+of such binary data attached as notes.  The patch in question will
+break such users, as it would become impossible once we start
+bypassing the "git show" and emitting the binary data directly to
+the standard output stream.
+
+Because the pathname a note blob is stored at is unpredictable and
+not under end-user control, it would not be practical to define
+different smudge filters per note object using the attribute
+mechanism, but if you limit the types of binary data you store in
+your notes (e.g., refs/notes/thumbnail may be a note ref whose
+contents are all jpeg thumbnail images, where your main history is
+your photo archive), you might be able to convince the "git show"
+invocation we use to show the note object to show that thumbnail
+image by using something involving "display" (from imagemagick---of
+course you could use other programs that allows you to view the
+image on different platforms) in your smudge filter.  Bypassing "git
+show" and sending the blob contents directly to the standard output
+would be a grave regression for such a user.
+
