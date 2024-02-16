@@ -1,57 +1,57 @@
-Received: from mail-pf1-f202.google.com (mail-pf1-f202.google.com [209.85.210.202])
+Received: from mail-pg1-f201.google.com (mail-pg1-f201.google.com [209.85.215.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA5E01772D
-	for <git@vger.kernel.org>; Fri, 16 Feb 2024 01:10:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.202
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 306FF5382
+	for <git@vger.kernel.org>; Fri, 16 Feb 2024 01:24:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708045845; cv=none; b=s61Nnidu5wfv+DSfKH53NO0Ucz2wKZnSPY5jIQDIztR71hlSq0E+8s3l5lYLM3p8ZF9UxymkFwW4+xgVKpGoYx9MFcejX6ZWXa4QmNQZ1Db0U+aiD1rglil3dyp8I4leY9MuCjgCay4WlXC5cHzhWyCK6x3BJs9/59cDlGjyaWk=
+	t=1708046690; cv=none; b=rIxjkcp+cYaDxC1JWG2/48iibR4nw6P2yxgCw4NmUCv4upeNwR/MP076k8fod5+F3Ph7IrJukdYZ82K4hC/5pBTQIYftUuNVITo/0xouyEg+V8veNka/kfuu9Do5X7ME4WZORTJmQ6Ng89BqA45tjJydRNRSMkg6h9zZXAHR7/w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708045845; c=relaxed/simple;
-	bh=Kax+vRGLATXKQdwYWVE4kpRZqrNC9HjcCvyZXADymaE=;
+	s=arc-20240116; t=1708046690; c=relaxed/simple;
+	bh=IHRf6rPYofwsyEBgYBejVeai4EX3u6HO6t1DaxbXITk=;
 	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
-	 To:Cc:Content-Type; b=cmPpGq96hPJdIg6MbAGlNldoG0GifVlFEtwRDKs3ZVBgh4sgLPRkOlbwHSs4BYzOtIvxqBZmxUFG3TvGZ8zMPZ6iapPzl6uWu56VP8BgdwH9p/iL+PbcMgCOw+3F9Y7+lhJ7y5EaWv7TMfAai+pdUUu4gN09SsLcRMiQaObZW9s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--linusa.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=D2OX03Qr; arc=none smtp.client-ip=209.85.210.202
+	 To:Cc:Content-Type; b=IQ/8Yj02khV5IOWH/Z9N/SBGVQyXz2B4Z41ZQHf/yLu8FAjP5N3Y6c9IZ9kSbnojC+2xcFEAHgRBeT/MNo2+M4HSCJAn76ai8HNoonPJJPzqodGxlMhh9GOg2rKpN8H3RYsK39wjdtIxt92IySlJ52x6LouF7LnMB2jjUsuNfZc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--linusa.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=l+E6AQal; arc=none smtp.client-ip=209.85.215.201
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--linusa.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="D2OX03Qr"
-Received: by mail-pf1-f202.google.com with SMTP id d2e1a72fcca58-6e0eed3a0feso1701227b3a.2
-        for <git@vger.kernel.org>; Thu, 15 Feb 2024 17:10:43 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="l+E6AQal"
+Received: by mail-pg1-f201.google.com with SMTP id 41be03b00d2f7-5dca5c631ffso1723995a12.2
+        for <git@vger.kernel.org>; Thu, 15 Feb 2024 17:24:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1708045843; x=1708650643; darn=vger.kernel.org;
+        d=google.com; s=20230601; t=1708046688; x=1708651488; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:from:subject:message-id:references
          :mime-version:in-reply-to:date:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=EghtN5GTWosuLPZC6vdlieKUb2Rjd1U59JoJ/dL9NiE=;
-        b=D2OX03QrL9Lt8AORQPGwIAsHRjrSifJew5FJBujuQdCQCIs/TdzTV9/YbBqhwOPTqG
-         9+cX/SynTdti2CWVY7hydP/Pr0iT5Yv8qwTG1OBM1hjwbH3JSFM4aRgWyFrf4JHxpTXI
-         hLc19T/f8R0FNsq3YFY90dwl1iU7l/a3bbCDv7EYwzvPdhdg4d/8XIzORd+wjeFawEUo
-         eTDHqPnepzeVfW3ST+i+AsLH0D1KURHNXEHzdh0lUvD4E+zilCKWhUsOM2UYAy2lRHns
-         eoyHDrwPNf6GaSwGsYjumuUKEeBfFTuVga9VLyp7+s89sNfx1VZj7b884LCcRER8MeKz
-         vJNA==
+        bh=RvQLd8Y6ySdSpXC5RDi8ctmeHsdGCw31J5Co4XO4Sq4=;
+        b=l+E6AQalqBRDj/Y2OX4LJkG1bFsfKtTqxhnivw5mPBW+Qs93C1Vzfy9hbNQ87PBEQi
+         Qtp9Gn+B1+THcPM/XhOF3q6HJMMUaeutclGuybpKDkp9RSgU6+lVlvGMmQsheUK42ZJF
+         v41t+HSDBgAd/SeaWaQzr6wpm4Qt2KgLSa4LpjdrH00Zqi7nD96uwOkuOCXkPACg2yoR
+         dnbImV3EnnvWxd7of52CXsTXcshcQ9bG6SbyQXpFrr//9vUSg4xzeq3YfhGU9A51yTez
+         H7e6Vcg3KtdumbO8Ss38fmylEAB/a5IHkU8+pef7E8bQ8NJj2YtD5a3XALqWheg8AV8U
+         VAaw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1708045843; x=1708650643;
+        d=1e100.net; s=20230601; t=1708046688; x=1708651488;
         h=content-transfer-encoding:cc:to:from:subject:message-id:references
          :mime-version:in-reply-to:date:x-gm-message-state:from:to:cc:subject
          :date:message-id:reply-to;
-        bh=EghtN5GTWosuLPZC6vdlieKUb2Rjd1U59JoJ/dL9NiE=;
-        b=BRPEdW/gUMvKDAHtJYSssJHTpoyl1Ql8Rhswnha5qla2xSdcCYUB4l+FbMl+Q8fW5N
-         27L9dA7hexgk4FFUdNaMzz0OdyqZLKQ4GEAHJHa6ZzoSZfsj1I8UTcUxzjBfczXTUkPT
-         041qWwyzWD3OatekustR3Zv0/E6E428PbjuH9IO1lJrLMiSt3bbSyqDbWXhVza+Pb6vx
-         ivM7N7yVdWnFNiIf1SVqNVY6SMRdQBEF5PPNG2AG+n4fqlatL+D9fcIyfjVjROb0h+yt
-         tLoOGtCwfiiH1W5RkIWre5NJH1PhxjarMb7m7XWEnrrlz1Gdkim0wPCcGU4YZkNQ6IgY
-         uurQ==
-X-Gm-Message-State: AOJu0YzfBv3qvNfvg6PVjBztS+9bU79DyHhQPtxdDvrUD+fPF+R3aL72
-	CiRg5q1keGWJTaOoVl/lNNUqb86No/dS8EIIQhhn21HruxAF+8xtI/Qg/j8HZwGvA8wrAAdX5sJ
-	tKA==
-X-Google-Smtp-Source: AGHT+IE4YtW45Fjt+091y4+HmL8LVX/hl0DWTSPb2/1UXNWMnWBKAGsPPKxVM3XyZXDVZPVs7rsQnNcOTSE=
+        bh=RvQLd8Y6ySdSpXC5RDi8ctmeHsdGCw31J5Co4XO4Sq4=;
+        b=mh8lwzRqD2rSfmoUBzHuP2xa5n2Lp9zG7db5tYTJsihrV06+SAyhAOb+LvePh5/3G/
+         GbvReb2H5DyEYg9njdoPO9CtS5XzUgrGzAfa+YGjkH4aqNefSgOqujYa+evPyye0nfsB
+         kEM3GpzFAvqMWI95YzVdTvfv+o8khq5TtKwGudFwXDxk+aYGX2rlF8oOUHwneBo1x5MG
+         hZRQKlcEMQJeIFtQQPwcp7PUuJrcXXD8B5JmSV85CNuRBDSSwwi+Bqq201vyVSmgtH1V
+         ZMFrYR0z1g8f2nq5eRA5fFsr1PeWGB0pYqZzqu34p8jVLV+JSNxJYiiitZuj6m/mlxrA
+         Lu5Q==
+X-Gm-Message-State: AOJu0Yxj4Z/5//y9yQTZBrkC5sShewHBhM1UEBiUTCPRAfejHu1yEO4i
+	MSWr2w9eS8tEFd3TgWgfLVulzDdzyW1Dbxfc3CVfFgKVjVp+CQQxh2wh8q2iFPCVLbI+40VDQS1
+	UCg==
+X-Google-Smtp-Source: AGHT+IGx2ATJaQsN41y+L1HraI8d8r5O5mtxXbmHiIVH1D4zgmHcQrrjxV4czle9W9hOyvPbq7vEyvrQ3jo=
 X-Received: from fine.c.googlers.com ([fda3:e722:ac3:cc00:7f:e700:c0a8:2221])
- (user=linusa job=sendgmr) by 2002:a05:6a00:99d:b0:6e0:ab5f:caf2 with SMTP id
- u29-20020a056a00099d00b006e0ab5fcaf2mr179838pfg.6.1708045843225; Thu, 15 Feb
- 2024 17:10:43 -0800 (PST)
-Date: Thu, 15 Feb 2024 17:10:41 -0800
-In-Reply-To: <CAP8UFD1aJD5i68ekHuq0UG14X19y=Eo6qKPianF8MKNf6iZ_WQ@mail.gmail.com>
+ (user=linusa job=sendgmr) by 2002:a05:6a02:990:b0:5dc:97e:6981 with SMTP id
+ cl16-20020a056a02099000b005dc097e6981mr10125pgb.3.1708046688208; Thu, 15 Feb
+ 2024 17:24:48 -0800 (PST)
+Date: Thu, 15 Feb 2024 17:24:46 -0800
+In-Reply-To: <CAP8UFD3N8h4FnfvFYYWrV54a7WcOwHY862DjxxPKSKr4jEwU7Q@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -59,10 +59,10 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 Mime-Version: 1.0
 References: <20240208135055.2705260-1-christian.couder@gmail.com>
- <20240208135055.2705260-3-christian.couder@gmail.com> <owlyle7o9iyf.fsf@fine.c.googlers.com>
- <CAP8UFD1aJD5i68ekHuq0UG14X19y=Eo6qKPianF8MKNf6iZ_WQ@mail.gmail.com>
-Message-ID: <owlyy1bl8b8u.fsf@fine.c.googlers.com>
-Subject: Re: [PATCH v2 2/4] oidset: refactor oidset_insert_from_set()
+ <20240208135055.2705260-5-christian.couder@gmail.com> <owlyil2s9eq6.fsf@fine.c.googlers.com>
+ <CAP8UFD3N8h4FnfvFYYWrV54a7WcOwHY862DjxxPKSKr4jEwU7Q@mail.gmail.com>
+Message-ID: <owlyv86p8ald.fsf@fine.c.googlers.com>
+Subject: Re: [PATCH v2 4/4] rev-list: allow missing tips with --missing=[print|allow*]
 From: Linus Arver <linusa@google.com>
 To: Christian Couder <christian.couder@gmail.com>
 Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>, 
@@ -72,170 +72,193 @@ Content-Transfer-Encoding: quoted-printable
 
 Christian Couder <christian.couder@gmail.com> writes:
 
-> On Tue, Feb 13, 2024 at 10:02=E2=80=AFPM Linus Arver <linusa@google.com> =
+> On Tue, Feb 13, 2024 at 11:33=E2=80=AFPM Linus Arver <linusa@google.com> =
 wrote:
 >>
 >> Christian Couder <christian.couder@gmail.com> writes:
->>
->> > In a following commit, we will need to add all the oids from a set int=
-o
->> > another set. In "list-objects-filter.c", there is already a static
->> > function called add_all() to do that.
->>
->> Nice find.
->>
->> > Let's rename this function oidset_insert_from_set() and move it into
->> > oidset.{c,h} to make it generally available.
->>
->> At some point (I don't ask for it in this series) we should add unit
->> tests for this newly-exposed function. Presumably the stuff around
->> object/oid handling is stable enough to receive unit tests.
+>> > While at it let's add a NEEDSWORK comment to say that we should get
+>> > rid of the existing ugly dumb loops that parse the
+>> > `--exclude-promisor-objects` and `--missing=3D...` options early.
 >
-> Yeah, ideally there should be unit tests for oidset and all its
-> features, but it seems to me that there aren't any. Also oidset is
-> based on khash.h which was originally imported from
-> https://github.com/attractivechaos/klib/ without tests. So I think
-> it's a different topic to add tests from scratch to oidset, khash.h or
-> both.
+>> > @@ -1019,6 +1019,10 @@ Unexpected missing objects will raise an error.
+>> >  +
+>> >  The form '--missing=3Dprint' is like 'allow-any', but will also print=
+ a
+>> >  list of the missing objects.  Object IDs are prefixed with a ``?'' ch=
+aracter.
+>> > ++
+>> > +If some tips passed to the traversal are missing, they will be
+>> > +considered as missing too, and the traversal will ignore them. In cas=
+e
+>> > +we cannot get their Object ID though, an error will be raised.
+>>
+>> The only other mention of the term "tips" is for the "--alternate-refs"
+>> flag on line 215 which uses "ref tips". Perhaps this is obvious to
+>> veteran Git developers but I do wonder if we need to somehow define it
+>> (however briefly) the first time we mention it (either in the document
+>> as a whole, or just within this newly added paragraph).
 >
-> Actually after taking another look, it looks like khash.h or some of
-> its features are tested through "helper/test-oidmap.c" and
-> "t0016-oidmap.sh". I still think it's another topic to test oidset.
+> I did a quick grep in Documentation/git*.txt and found more than 130
+> instances of the 'tip' word. So I think it is quite common in the
+> whole Git documentation and our glossary would likely be the right
+> place to document it if we decide to do so.
+
+SGTM.
+
+> Anyway I think that topic
+> is independent from this small series.
 
 Agreed.
 
->> > +void oidset_insert_from_set(struct oidset *dest, struct oidset *src)
->> > +{
->> > +     struct oidset_iter iter;
->> > +     struct object_id *src_oid;
->> > +
->> > +     oidset_iter_init(src, &iter);
->> > +     while ((src_oid =3D oidset_iter_next(&iter)))
+>> Here's an alternate wording
 >>
->> Are the extra parentheses necessary?
+>>     Ref tips given on the command line are a special case.
 >
-> Yes. Without them gcc errors out with:
->
-> oidset.c: In function =E2=80=98oidset_insert_from_set=E2=80=99:
-> oidset.c:32:16: error: suggest parentheses around assignment used as
-> truth value [-Werror=3Dparentheses]
->   32 |         while (src_oid =3D oidset_iter_next(&iter))
->      |                ^~~~~~~
->
-> Having extra parentheses is a way to tell the compiler that we do want
-> to use '=3D' and not '=3D=3D'. This helps avoid the very common mistake o=
-f
-> using '=3D' where '=3D=3D' was intended.
+> `git rev-list` has a `--stdin` mode which makes it accept tips from
+> stdin
 
-Ah, so it is a "please trust me gcc, I know what I am doing" thing and
-not a "this is required in C" thing. Makes sense, thanks for clarifying.
+Ah, thanks for the context.
 
-Sorry for the noise.
+> , so talking about the command line is not enough. Also maybe one
+> day some config option could be added that makes the command include
+> additional tips.
 
->> > +/**
->> > + * Insert all the oids that are in set 'src' into set 'dest'; a copy
->> > + * is made of each oid inserted into set 'dest'.
->> > + */
+>> They are
+>>     first dereferenced to Object IDs (if this is not possible, an error
+>>     will be raised). Then these IDs are checked to see if the objects
+>>     they refer to exist. If so, the traversal happens starting with
+>>     these tips. Otherwise, then such tips will not be used for
+>>     traversal.
 >>
->> Just above in oid_insert() there is already a comment about needing to
->> copy each oid.
+>>     Even though such missing tips won't be included for traversal, for
+>>     purposes of the `--missing` flag they will be treated the same way
+>>     as those objects that did get traversed (and were determined to be
+>>     missing). For example, if `--missing=3Dprint` is given then the Obje=
+ct
+>>     IDs of these tips will be printed just like all other missing
+>>     objects encountered during traversal.
 >
-> (It's "oidset_insert()" not "oid_insert()".)
+> Your wording describes what happens correctly, but I don't see much
+> added value for this specific patch compared to my wording which is
+> shorter.
+>
+> Here I think, we only need to describe the result of the command in
+> the special case that the patch is fixing. We don't need to go into
+> details of how the command or even --missing works. It could be
+> interesting to go into details of how things work, but I think it's a
+> separate topic. Or perhaps it's even actually counter productive to go
+> into too much detail as it could prevent us from finding other ways to
+> make it work better. Anyway it seems to me to be a separate topic to
+> discuss.
 
-Oops, yes, sorry for the typo.
+Fair enough.
 
->>     /**
->>      * Insert the oid into the set; a copy is made, so "oid" does not ne=
-ed
->>      * to persist after this function is called.
->>      *
->>      * Returns 1 if the oid was already in the set, 0 otherwise. This ca=
-n be used
->>      * to perform an efficient check-and-add.
->>      */
+>> But also, I realize that these documentation touch-ups might be better
+>> served by an overall pass over the whole document, so it's fine if we
+>> decide not to take this suggestion at this time.
+>
+> Right, I agree. Thanks for telling this.
+>
+>> Aside: unfortunately we don't seem to define the relationship between
+>> ref tips (e.g., "HEAD"), object IDs (40-char hex string), and the actual
+>> objects (the real data that we traverse over). It's probably another
+>> thing that could be fixed up in the docs in the future.
+>
+> Yeah, and for rev-list a tip could also be a tree or a blob. It
+> doesn't need to be a "ref tip". (Even though a ref can point to a tree
+> or a blog, it's very rare in practice.)
+
+Interesting, thanks for the info.
+
+BTW I appreciate you (and others on the list too) taking the time to
+explain such subtleties. Although I've been using Git since 2008 a lot
+of the terms used around in the codebase can feel quite foreign to me.
+So, thanks again.
+
+>> > +      * to manage the `--exclude-promisor-objects` and `--missing=3D.=
+..`
+>> > +      * options below.
+>> > +      */
+>> >       for (i =3D 1; i < argc; i++) {
+>> >               const char *arg =3D argv[i];
+>> >               if (!strcmp(arg, "--exclude-promisor-objects")) {
+>> >
+>> > [...]
+>> >
+>> > @@ -2178,13 +2183,18 @@ static int handle_revision_arg_1(const char *a=
+rg_, struct rev_info *revs, int fl
+>> >       if (revarg_opt & REVARG_COMMITTISH)
+>> >               get_sha1_flags |=3D GET_OID_COMMITTISH;
+>> >
+>> > +     /*
+>> > +      * Even if revs->do_not_die_on_missing_objects is set, we
+>> > +      * should error out if we can't even get an oid, ...
+>> > +      */
 >>
->> so perhaps the following wording is simpler?
+>> Perhaps this wording is more precise?
 >>
->>     Like oid_insert(), but insert all oids found in 'src'. Calls
->>     oid_insert() internally.
+>>     If we can't even get an oid, we are forced to error out (regardless
+>>     of revs->do_not_die_on_missing_objects) because a valid traversal
+>>     must start from *some* valid oid. OTOH we ignore the ref tip
+>>     altogether with revs->ignore_missing.
 >
-> (What you suggest would need s/oid_insert/oidset_insert/)
+> This uses "valid oid" and "valid traversal", but I am not sure it's
+> easy to understand what "valid" means in both of these expressions.
 >
-> Yeah, it's a bit simpler and shorter, but on the other hand a reader
-> might have to read both this and the oidset_insert() doc, so in the
-> end I am not sure it's a big win for readability. And if they don't
-> read the oidset_insert() doc, they might miss the fact that we are
-> copying the oids we insert, which might result in a bug.
-
-When functions are built on top of other functions, I think it is good
-practice to point readers to those underlying functions. In this case
-the new function is a wrapper around oidset_insert() which does all the
-real work. Plus the helper function already has some documentation about
-copying behavior that we already thought was important enough to call
-out explicitly.
-
-So, tying this definition to that (foundational) helper function sounds
-like a good idea to me in terms of readability. IOW we can inform
-readers "hey, we're just a wrapper around this other important function
---- go there if you're curious about internals" and emphasizing that
-sort of relationship which may not be immediately obvious to those not
-familiar with this area would be nice.
-
-Alternatively, we could repeat the same comment WRT copying here but
-that seems redundant and prone to maintenance burdens down the road (if
-we ever change this behavior we have to change the comment in multiple
-functions, possibly).
-
-> Also your wording ties the implementation with oidset_insert(), which
-> we might not want if we could find something more performant. See
-> Junio's comment on this patch saying his initial reaction was that
-> copying underlying bits may even be more efficient.
+> Also if all the tips passed to the command are missing, the traversal
+> doesn't need to actually start. The command, assuming
+> `--missing=3Dprint` is passed, just needs to output the oids of the tips
+> as missing oids.
 >
-> So I prefer not to change this.
+> I also think that "ref tip" might be misleading as trees and blos can
+> be passed as tips.
+>
+> So I prefer to keep the wording I used.
 
-OK.
+Makes sense, SGTM.
 
->> > +void oidset_insert_from_set(struct oidset *dest, struct oidset *src);
+>> > +      * ... as
+>> > +      * `--missing=3Dprint` should be able to report missing oids.
 >>
->> Perhaps "oidset_insert_all" would be a simpler name? I generally prefer
->> to reuse any descriptors in comments to guide the names. Plus this
->> function used to be called "add_all()" so keeping the "all" naming style
->> feels right.
+>> I think this comment would be better placed ...
+>>
+>> >       if (get_oid_with_context(revs->repo, arg, get_sha1_flags, &oid, =
+&oc))
+>> >               return revs->ignore_missing ? 0 : -1;
+>> >       if (!cant_be_filename)
+>> >               verify_non_filename(revs->prefix, arg);
+>> >       object =3D get_reference(revs, arg, &oid, flags ^ local_flags);
+>>
+>> ... around here.
 >
-> We already have other related types like 'struct oid-array' and
-> 'struct oidmap' to store oids, as well as code that inserts many oids
-> into an oidset from a 'struct ref *' linked list or array in a tight
-> loop.
+> In a previous round, I was asked to put such a comment before `if
+> (get_oid_with_context(...))`.
 
-Thank you for the additional context I was not aware of.
+Sorry, I missed that.
 
-> So if we want to add functions inserting all the oids from
-> instances of such types, how should we call them?
+> So I prefer to avoid some back and forth
+> here.
+
+SGTM.
+
+>> > +++ b/t/t6022-rev-list-missing.sh
+>> > @@ -78,4 +78,60 @@ do
+>> >       done
+>> >  done
+>> >
+>> > +for missing_tip in "HEAD~1" "HEAD~1^{tree}" "HEAD:1.t"
+>> > +do
+>> > +     # We want to check that things work when both
+>> > +     #   - all the tips passed are missing (case existing_tip =3D "")=
+, and
+>> > +     #   - there is one missing tip and one existing tip (case existi=
+ng_tip =3D "HEAD")
+>> > +     for existing_tip in "" "HEAD"
+>> > +     do
+>>
+>> Though I am biased, these new variable names do make this test that much
+>> easier to read. Thanks.
 >
-> I would say we should use suffixes like: "_from_set", "_from_map",
-> "from_array", "_from_ref_list", "_from_ref_array", etc.
+> Thanks for suggesting them and for your reviews.
 
-I agree.
-
-However, I would like to point out that the function being added in this
-patch is a bit special: it is inserting from one "oidset" into another
-"oidset". IOW the both the dest and src types are the same.
-
-For the cases where the types are different, I totally agree that using
-the suffixes (to encode the type information of the src into the
-function name itself) is a good idea.
-
-So I think it's still fine to use "oidset_insert_all" because the only
-type in the parameter list is an oidset.
-
-BUT, maybe in our codebase we already use suffixes like this even for
-cases where the types are the same? I don't know the answer to this
-question. However if we really wanted to be consistent then maybe we
-should be using the name oidset_insert_from_oidset() and not
-oidset_insert_from_set().
-
-> If we start using just "_all" for oidset, then what should we use for
-> the other types? I don't see a good answer to that, so I prefer to
-> stick with "_from_set" for oidset.
->
-> Thanks.
+You're welcome!
