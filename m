@@ -1,86 +1,73 @@
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f202.google.com (mail-pf1-f202.google.com [209.85.210.202])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D8521353E4
-	for <git@vger.kernel.org>; Fri, 16 Feb 2024 21:45:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B722F1468F6
+	for <git@vger.kernel.org>; Fri, 16 Feb 2024 21:56:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.202
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708119933; cv=none; b=muJeGTaxUesSwUoYiDDkn5or4e1WFUPvmLwvpV3xm6MnO1Km730FNi89y9C/DiTutEydKuIlL2Pw26c0jtKvMoOlFdrWSeqks+Kcg68StPzxPqYB1fcomx/ubR6y/MQOKvKvXnX6jzOQ/CPge4KVVGLI4jR6eKTlhvOtwLvJ8Eo=
+	t=1708120575; cv=none; b=tikX3Z2CvZjoXKUuAxrRPkQAzVxAVqPBmkGyvBe2S7bFlXAcQuWr2t+PY/Fw2VobKseJkaaqX0ME3jwM3ReRi+xTEcz7dEPFa9tiFdVfQGTGI5UE4ceWkgMKXuVIOt422O1Kl47/FHNnEadF8Qhmq2e+lWSd21hhAUb3F3J0aEk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708119933; c=relaxed/simple;
-	bh=qYJE69/lCZX0JVq+71rsUHWvKZv8mv1LLuuEq6EA9Ps=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=t1Jo1ZlU8oe5dFe6ZER3Ak5bA9739qBqUCC4Kq+BwHGIM2/gJRanUYwKmkttaCOZ/z7cGs81wo2cDPau8jk1Y4qRPPJymhQtYXnuZNDV3VnY2xxWQEgj3oZVYGi38hSzFKjpIjhMZ7mnopUzaSjNQumtIC8ObuaqMOccvM8hkKk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=It/Qj/pg; arc=none smtp.client-ip=173.228.157.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1708120575; c=relaxed/simple;
+	bh=2b9elxHYcJaN25zlGzqTIeOhWl5mjNrKy3866nm1y6Y=;
+	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
+	 To:Cc:Content-Type; b=YJzT4QWDXkemOUB1XQsK5lYx/t/gngruurKn+K9s3z4ce7D4nLbAcucYE/z4C/e7M+ngM6m55dUhQlULo7WZvUZUgn+7Udm3cJsC9nU/K0ULkW/IBmFJiZ07xysfA4ssHSf3/G5uAVvfyJRDT5SGf0TTbd6Or5vAzp0nWTmAF3k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--linusa.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=mOsJmQtr; arc=none smtp.client-ip=209.85.210.202
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--linusa.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="It/Qj/pg"
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 05819366B2;
-	Fri, 16 Feb 2024 16:45:32 -0500 (EST)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=qYJE69/lCZX0JVq+71rsUHWvKZv8mv1LLuuEq6
-	EA9Ps=; b=It/Qj/pg/MLaRdaIPPB5Kmv4sa2L3zOYqpC5kyTeXl+4/jt1F4fUOa
-	sZi9f1qtAV0uQfMbpniNbNCKyprlNS6vl8dpHmf/2hZkL5kMIKKt5nQxh1J/NPU1
-	hEidFRBF/zu1S1uCuKit+DZpcY4fvaRh+OERrE3LKiXI3jMwKtMHA=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id F18B0366B1;
-	Fri, 16 Feb 2024 16:45:31 -0500 (EST)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.165.85])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 92548366B0;
-	Fri, 16 Feb 2024 16:45:28 -0500 (EST)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Dragan Simic <dsimic@manjaro.org>
-Cc: git@vger.kernel.org,  code@khaugsbakk.name,  rjusto@gmail.com,
-  spectral@google.com
-Subject: Re: [PATCH v2] branch: rework the descriptions of rename and copy
- operations
-In-Reply-To: <608b4e81d71a95c820f1e4068382d391@manjaro.org> (Dragan Simic's
-	message of "Fri, 16 Feb 2024 22:20:02 +0100")
-References: <6e1c3f2c5816f09aab561bc7dec2b7455d70aaec.1708087213.git.dsimic@manjaro.org>
-	<xmqq1q9ci3jt.fsf@gitster.g>
-	<608b4e81d71a95c820f1e4068382d391@manjaro.org>
-Date: Fri, 16 Feb 2024 13:45:27 -0800
-Message-ID: <xmqqh6i8gk20.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="mOsJmQtr"
+Received: by mail-pf1-f202.google.com with SMTP id d2e1a72fcca58-6e13dd7e985so1269046b3a.1
+        for <git@vger.kernel.org>; Fri, 16 Feb 2024 13:56:13 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1708120573; x=1708725373; darn=vger.kernel.org;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:from:to:cc:subject:date:message-id:reply-to;
+        bh=2b9elxHYcJaN25zlGzqTIeOhWl5mjNrKy3866nm1y6Y=;
+        b=mOsJmQtrkbKridTrM4KlGm1hEBw+jeKjFC5JII8973YQ6uHWz3jFVLXCB3uzqPvibk
+         puYTKM4T0rEgWOVuL564xzm+6RiKpMuPTId9sGNu0ViF+ciceytig+F/gwVBQb5HQikF
+         L5IsyKk+TIr4Hf/d4UwcztpOLLM51Ibx1kjOVo6KlzF2XVOGTaLgL204/RMbORCSYDPb
+         TtUEfPdj+Sn6fIb/51vwOjqkrxeaalBGZHu0lMgIAFkkRrR4knhCab6FtTY088bxb6Eo
+         owpsJwn1/NjvqakfQiqu+KULK3dtY6ljYooXCt5GLgTaVF414gLOUlfbm7tQ9o3VGqxr
+         3GeA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1708120573; x=1708725373;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=2b9elxHYcJaN25zlGzqTIeOhWl5mjNrKy3866nm1y6Y=;
+        b=hjs8R0ZA02yeYOeDgr++cxQ6n0Ee07IXMlxQbys9DQiDNo2DfRyJZloRLsdvh+yQPU
+         35GhSaw8JddjszJ/xnTRxwZxJweijvqXBOt/Bi9GQ3vrONWc6Ct3Z6sNF27loFRFXIW9
+         vN/eXAue2kGVSFQ8sUEtD2JB/LXZ05tx/ovtO4Khesy8ELJ0TAyRhMgirLv7JMQHojnU
+         01ey2UvzEcNFb4EiwJrmw+orjsN+bff0Up9+zkosqhPLNa9VmXPvnojfeOUIyuO7I/Rt
+         HL1UsZDoUisT2sonjRn2VsFknzztoRmJE9UNr04U3KSeK/Kn4K0OzcIU9jofMUMZ6rz2
+         RLtA==
+X-Forwarded-Encrypted: i=1; AJvYcCWDIa00n7W2QubupaE2mvLG1K9YT422c5yKBirdjjhwI9Egs9foPOKc/hpu5h3BeRRWPeZ1wb5/CVzU2obKUuYFNfQy
+X-Gm-Message-State: AOJu0Yw6uffvuBMHwXVK35OEnmVgln3v5fkVJNroyJImzmnR6+W/0GML
+	BB7PKkn+NvBO/lY1DBy/KTeammt4ZFohj48ssntk0BOFKwenB/wqjewdyKEEZozqhaEzq6xu176
+	j5w==
+X-Google-Smtp-Source: AGHT+IFqCoseCTW10xiGBM6uQGH1lA3qXMVIRWuLP5ZxKugta34KjtmpqB5WiHJB9aiaco+7x46iDJ3SPX0=
+X-Received: from fine.c.googlers.com ([fda3:e722:ac3:cc00:7f:e700:c0a8:2221])
+ (user=linusa job=sendgmr) by 2002:a05:6a00:1788:b0:6e1:642:3922 with SMTP id
+ s8-20020a056a00178800b006e106423922mr406703pfg.6.1708120572995; Fri, 16 Feb
+ 2024 13:56:12 -0800 (PST)
+Date: Fri, 16 Feb 2024 13:56:11 -0800
+In-Reply-To: <20240214142513.4002639-1-christian.couder@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- B34B0430-CD14-11EE-8FD1-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
+Mime-Version: 1.0
+References: <20240208135055.2705260-1-christian.couder@gmail.com> <20240214142513.4002639-1-christian.couder@gmail.com>
+Message-ID: <owlyjzn4845g.fsf@fine.c.googlers.com>
+Subject: Re: [PATCH v3 0/5] rev-list: allow missing tips with --missing
+From: Linus Arver <linusa@google.com>
+To: Christian Couder <christian.couder@gmail.com>, git@vger.kernel.org
+Cc: Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>, John Cai <johncai86@gmail.com>, 
+	Eric Sunshine <sunshine@sunshineco.com>, Christian Couder <christian.couder@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 
-Dragan Simic <dsimic@manjaro.org> writes:
+This v3 LGTM.
 
->> But the halfway modification to the description section in this
->> patch is not an improvement.  It makes some options described there
->> while -m and -c are completely missing now, making the section
->> incomplete and coverage of the operating modes of the command
->> uneven.
->
-> If I got it right, you'd prefer this patch not to be accepted
-> separately, but as part of the future series that would rework the
-> entire git-branch(1) man page?  I'm fine with that as well.
+Reviewed-by: Linus Arver <linusa@google.com>
 
-Not necessarily.  If you wanted to this this in multiple steps, we
-can first whip the OPTIONS part into a good shape, and then fix the
-DESCRIPTION part.
-
-What we want to avoid (not limited to this topic) is to say "this
-temporarily makes things worse here, but trust me it will eventually
-become perfect".  Removing only -m/-c from the description section
-makes the description section worse than before the patch---we'd be
-better off leaving the original as-is if we are not revamping the
-entire section.
-
-
+Thanks!
