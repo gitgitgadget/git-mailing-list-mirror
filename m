@@ -1,323 +1,82 @@
-Received: from fhigh7-smtp.messagingengine.com (fhigh7-smtp.messagingengine.com [103.168.172.158])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f172.google.com (mail-lj1-f172.google.com [209.85.208.172])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EACAD1BC58
-	for <git@vger.kernel.org>; Fri, 16 Feb 2024 08:39:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90F5418645
+	for <git@vger.kernel.org>; Fri, 16 Feb 2024 08:43:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708072769; cv=none; b=sLdBam0uQ2XDJ+8y6jXywOl24kxcK3oLHnFYm4n+kLnn645GIZu0kdzvbcKODCSyBCc6N1vAy1/urtbOcnsBgGzHQFhGebTM6SGekYVtXfIg0LXsuzTo1B5GoJ3IJQfU551ui45Ox772jwovlM2Ydg+ckUW4Da1aLPC2vZZwrus=
+	t=1708073014; cv=none; b=PIIFUutJTgl95WBcebs50SRqQy52FUaqxHLinitVwQGNvZsC3iHNzjG9vSUcFtyvq/J8bIs5+OAX86ioQJeKoGPtj6sXMbNbORO0Kf5kGWiifwTCS1Y1rwmSrwhYQVnhlZbO5evSxPDjfQ5i4LRiB4jDW6XPAKramZ9Wm66LIXs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708072769; c=relaxed/simple;
-	bh=UPp0K8/4/VIK9C4/stNLFQK8O9UAe9iWfNGeeKf3lr8=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=iA7mH9+dCg9i7rup0Hb3XMXipISdhrvYx3kLJACxlsk5wRTDhHjSFnw7XT1jVQyc9XozQnZHc7PbxWoQ4vw3mSDJH7uXb08eTRfCIRzaNHH7ol7iy8dxUy7fzwttK4YA05NYQiOzpDPejK5XlhntKKoN+DVqlQgxxoutA5bG484=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=OTV1ra/A; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=QqojTLQa; arc=none smtp.client-ip=103.168.172.158
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1708073014; c=relaxed/simple;
+	bh=NyukEHyAKip7BavLmoK1714O0IqcQUjbem2YNaRmRQM=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=YtLa93gVCGVaaB9Ob7N3zx2xjt573Csc/cHkPZsmpPUbal6imPvjZrSmIbmxItMaZlNnd//tUBLQJXfqHK0jvr8FYrCC9EEGK/1aY9Aue63NkK2XcxoSTVrlGC3w3izQMf/dXpzznScBNS9cZN3fFfu/lxtlOaxnakmBfBEUuoc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=iABNbzfk; arc=none smtp.client-ip=209.85.208.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="OTV1ra/A";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="QqojTLQa"
-Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
-	by mailfhigh.nyi.internal (Postfix) with ESMTP id 95AC5114010D;
-	Fri, 16 Feb 2024 03:39:24 -0500 (EST)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute6.internal (MEProxy); Fri, 16 Feb 2024 03:39:24 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1708072764; x=1708159164; bh=PaVpRe+erB
-	UFMUebhsH15qGUTCoRRvuHsMEUn2+d+VI=; b=OTV1ra/A/ncR2wnZYcegvQ8qYw
-	riKr23PbSwwhndgQw7W1+cgy8aBfLfaTOtAHD6DuV4DoHx2mLO7dZN9HmA/nxT6V
-	upEjcvg2dKrqnKO24ShBOSVIp8nwecE4w3UvBR7qIf3CJXozg1ENxmT56CFZUZM6
-	X31fzMMvqpiybxF+gAFkRl1yAOaH5fgWOxNW+gOQIDaSFbi6TWMkzrh1KQ5goEXr
-	EiYQMk0Kq1BMVBIyg4se/tvp5uXx98feWUBiyHH5pui9QFobjKmM+UVGgBnB1tRN
-	V/U8Vp66++fBsO/IeNeMjzfFmaFC2rP5eIjdh7Yq+UJvxFF076807aHkcBhw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1708072764; x=1708159164; bh=PaVpRe+erBUFMUebhsH15qGUTCoR
-	RvuHsMEUn2+d+VI=; b=QqojTLQaeLVyQ5aOMf7kjqeoE6BlrIdysGUKgty2PD3V
-	oY/mj1zkwXgNM6b6rF6VaGPrTGv6DKVZuzPed/+lF4BWIVEKRXs+PN8+3kmEd+Kv
-	8445l2tQDYV4wihr0CI7FLcd9OnAHx4DasFDEwzzGFmej/c6SnmTt+OoLzJ/io9/
-	wjk7Hj/4TSQMtRYmVtM08AsvBunqfFa4WCUijehbkrBy1PnIx9O1RjJ0xIgPyxEZ
-	8QH+HafDLbSBefUE+i7lHr4pYNHkb84STCkvOv+xFr6zT0JSHtQSddRnnHFPagRf
-	W//CeUofHQYiBUODYGBTxyI7ctT1qrDjQwd9om3/9Q==
-X-ME-Sender: <xms:PB_PZYIKOGMzJ1uZ0y_9edoJop8DWrakwdysT30JccnVLtuuEkApDQ>
-    <xme:PB_PZYJhG0wzb_mOX3zV6ynhqCKlLJhMJhw-KZf-tHRbPgYB58DQSSQ434hFHb2AY
-    YAX072e0nQahs2N6w>
-X-ME-Received: <xmr:PB_PZYuoe5jRuCYO4xMmEf81mnT0g1TY2wuJu5fBV5At_FBFEAIfEmiI3K1eLPznePrrjKOL0qKAeFXMwCZe7I99qOMQXCcIzhT2w7dvCnIjawU>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvddugdduvdegucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    cujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtudenucfhrhhomheprfgrthhr
-    ihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvg
-    hrnhepfedvleefueetgeeitdekheelffekkefgffduhfduvdefffdtheekiefhkeejkeeh
-    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
-    hpkhhsrdhimh
-X-ME-Proxy: <xmx:PB_PZVYRGzXn0zd-UX7ynZV-SQwyNApBluWRF7N8sqqIF3KAerOf2A>
-    <xmx:PB_PZfZppbmw0wXBAtjaWIo4X5XQv1cdKAxB0MhqAkcqsUK_F46ioQ>
-    <xmx:PB_PZRC-TyyJSCZWtJY_BUpzxu7e-YjBSju0M-YFPPKxwX4NGFnA6Q>
-    <xmx:PB_PZel_e4L84HSZV_J-Na1ogvHUxe54PyHlYuBalFTQ32u5E1Mj_g>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 16 Feb 2024 03:39:23 -0500 (EST)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 279c6c4b (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 16 Feb 2024 08:35:26 +0000 (UTC)
-Date: Fri, 16 Feb 2024 09:39:18 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: git@vger.kernel.org
-Cc: =?iso-8859-1?Q?Jean-R=E9my?= Falleri <jr.falleri@gmail.com>
-Subject: [PATCH] git-difftool--helper: honor `--trust-exit-code` with
- `--dir-diff`
-Message-ID: <c071e44c52171b9b19a04d91666be48d762d19bf.1708072576.git.ps@pks.im>
-References: <976C9BF2-CB82-429A-B9FA-6A14BCFFCA3D@gmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="iABNbzfk"
+Received: by mail-lj1-f172.google.com with SMTP id 38308e7fff4ca-2d0cdbd67f0so24599661fa.3
+        for <git@vger.kernel.org>; Fri, 16 Feb 2024 00:43:32 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1708073010; x=1708677810; darn=vger.kernel.org;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=NyukEHyAKip7BavLmoK1714O0IqcQUjbem2YNaRmRQM=;
+        b=iABNbzfkFKa0uLZNjAXAxH44GuH1jg+Sx6f+lz/rSQFiM72DtjH1bCnAyW4TTjb3yl
+         dwwkkyFDvt+9YAi+FE8CGDhGWteP+K/yqfdt9OH2K0bGJ/BLPt/fdq2phO7RGhnMeuDI
+         +LI5xPfGlgNZ4aoRmlSQ/dJGsuk2tpta7RAAVv58gthQJD6Ftu+ZRkFBSZ1/dltkC6x5
+         fnJZ4+GPRMu4CP2EgWaSpZx8yNBRR+sqTinmF5/IoFvDLA3i03hEiP3zDnOHkAaypLjQ
+         FDjGpQXCbNRyUqsHFyt8sNcNWmfemSGkdi63d8QL3js0Jx4q47xXecUhOtEs2XUC9N1f
+         nZmA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1708073010; x=1708677810;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=NyukEHyAKip7BavLmoK1714O0IqcQUjbem2YNaRmRQM=;
+        b=USXPXeiyeGBma52nwDPsBnEhk+GTQhmTn9KgTGMNVMxV65IK3b1tKWfoXlCCz141Fv
+         6AEoysYjMpBMr6pgmftTJFSA7Lva3QNRCuvhErS0AKwqKf0Ms4rAanY8uzaSBp6qrbFt
+         nRAOs4dzmtlaFF7Ek2zzfpOraOU+SDXXberzCVdOgk23FoyKPNudMJ7HrU2hHthTcYmT
+         MsSBEeQ73OVRt1Hj/e+Jbp0W61OQ0PnflstlZFLowiFM2Vx4dHpGhNz2JCCSPzTVLll3
+         kgA653Vf9wFo5LclTvVH1qEQY356V0plM0S/ggApwGIv1o+068k6WEu1DYPohYwysApX
+         RR3Q==
+X-Gm-Message-State: AOJu0YzH2VLCcbKLDjtvRj6EwPXofxv6rvHlpikbAUv8wxABo8McGhO5
+	e5IA7EMVJdp0Cda5PHxmMPYT6hdj0fHaS2V+Ryt0Am8ky7edT++qrgPQ8H7+5FPCBpZLaJumwsF
+	WkUYlpcOqhvIFn4zeEYJig1reXB5HdbPh/Kc=
+X-Google-Smtp-Source: AGHT+IHzVibFRguUe47a3GfUtX5dxOW+B6WmYqqaTaOEG0jn2eQFMI9S4pLapU99UjWCAwUxMzDi5rXsbikSWdfchdU=
+X-Received: by 2002:a2e:8ecb:0:b0:2d1:1462:f133 with SMTP id
+ e11-20020a2e8ecb000000b002d11462f133mr3335778ljl.4.1708073009984; Fri, 16 Feb
+ 2024 00:43:29 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="X+D9FvV87VbVL/ll"
-Content-Disposition: inline
-In-Reply-To: <976C9BF2-CB82-429A-B9FA-6A14BCFFCA3D@gmail.com>
+From: Xuancong Wang <xuancong84@gmail.com>
+Date: Fri, 16 Feb 2024 16:43:18 +0800
+Message-ID: <CA+prNOo56SkNohZ6qgh1TLsDxGr-OTbeP0FhzrJK80Hr4SzKyA@mail.gmail.com>
+Subject: Enhancement: `git pull` fails with merge conflict even if the local
+ copy is modified in the same manner
+To: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
+Dear Git developers,
 
---X+D9FvV87VbVL/ll
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+I would like to report a bug or defect in git.
 
-The `--trust-exit-code` option for git-diff-tool(1) was introduced via
-2b52123fcf (difftool: add support for --trust-exit-code, 2014-10-26).
-When set, it makes us return the exit code of the invoked diff tool when
-diffing multiple files. This patch didn't change the code path where
-`--dir-diff` was passed because we already returned the exit code of the
-diff tool unconditionally in that case.
+I am in charge of running a real-life study. Very often, I copy the
+source files to the working folder and test running the pipeline to
+make sure that it does not crash. At the same time, I push my code to
+my branch and create a merge request. After my branch gets merged to
+the master branch (which takes some time), I run `git pull -f` in the
+working folder (which always contains the latest version of my code
+manually copied in). This pull operation will fail with conflict
+because the source file gets modified both locally and in the updated
+repository, even though the final file content is the same.
 
-This was changed a month later via c41d3fedd8 (difftool--helper: add
-explicit exit statement, 2014-11-20), where an explicit `exit 0` was
-added to the end of git-difftool--helper.sh. While the stated intent of
-that commit was merely a cleanup, it had the consequence that we now
-to ignore the exit code of the diff tool when `--dir-diff` was set. This
-change in behaviour is thus very likely an unintended side effect of
-this patch.
+So my suggestion is that would you make Git a bit smarter so that if
+the same file gets modified in the same way both locally and remotely,
+would you allow the pull operation to pass? Thanks!
 
-Now there are two ways to fix this:
-
-  - We can either restore the original behaviour, which unconditionally
-    returned the exit code of the diffing tool when `--dir-diff` is
-    passed.
-
-  - Or we can make the `--dir-diff` case respect the `--trust-exit-code`
-    flag.
-
-The fact that we have been ignoring exit codes for 7 years by now makes
-me rather lean towards the latter option. Furthermore, respecting the
-flag in one case but not the other would needlessly make the user
-interface more complex.
-
-Fix the bug so that we also honor `--trust-exit-code` for dir diffs and
-adjust the documentation accordingly.
-
-Reported-by: Jean-R=E9my Falleri <jr.falleri@gmail.com>
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
----
- Documentation/git-difftool.txt |  1 -
- git-difftool--helper.sh        | 14 +++++
- t/t7800-difftool.sh            | 99 ++++++++++++++++++----------------
- 3 files changed, 68 insertions(+), 46 deletions(-)
-
-diff --git a/Documentation/git-difftool.txt b/Documentation/git-difftool.txt
-index c05f97aca9..a616f8b2e6 100644
---- a/Documentation/git-difftool.txt
-+++ b/Documentation/git-difftool.txt
-@@ -105,7 +105,6 @@ instead.  `--no-symlinks` is the default on Windows.
- 	`merge.tool` until a tool is found.
-=20
- --[no-]trust-exit-code::
--	'git-difftool' invokes a diff tool individually on each file.
- 	Errors reported by the diff tool are ignored by default.
- 	Use `--trust-exit-code` to make 'git-difftool' exit when an
- 	invoked diff tool returns a non-zero exit code.
-diff --git a/git-difftool--helper.sh b/git-difftool--helper.sh
-index e4e820e680..09d8542917 100755
---- a/git-difftool--helper.sh
-+++ b/git-difftool--helper.sh
-@@ -91,6 +91,20 @@ then
- 	# ignore the error from the above --- run_merge_tool
- 	# will diagnose unusable tool by itself
- 	run_merge_tool "$merge_tool" false
-+
-+	status=3D$?
-+	if test $status -ge 126
-+	then
-+		# Command not found (127), not executable (126) or
-+		# exited via a signal (>=3D 128).
-+		exit $status
-+	fi
-+
-+	if test "$status" !=3D 0 &&
-+		test "$GIT_DIFFTOOL_TRUST_EXIT_CODE" =3D true
-+	then
-+		exit $status
-+	fi
- else
- 	# Launch the merge tool on each path provided by 'git diff'
- 	while test $# -gt 6
-diff --git a/t/t7800-difftool.sh b/t/t7800-difftool.sh
-index 6a36be1e63..96ae5d5880 100755
---- a/t/t7800-difftool.sh
-+++ b/t/t7800-difftool.sh
-@@ -91,58 +91,67 @@ test_expect_success 'difftool forwards arguments to dif=
-f' '
- 	rm for-diff
- '
-=20
--test_expect_success 'difftool ignores exit code' '
--	test_config difftool.error.cmd false &&
--	git difftool -y -t error branch
--'
-+for opt in '' '--dir-diff'
-+do
-+	test_expect_success "difftool ${opt} ignores exit code" "
-+		test_config difftool.error.cmd false &&
-+		git difftool ${opt} -y -t error branch
-+	"
-=20
--test_expect_success 'difftool forwards exit code with --trust-exit-code' '
--	test_config difftool.error.cmd false &&
--	test_must_fail git difftool -y --trust-exit-code -t error branch
--'
-+	test_expect_success "difftool ${opt} forwards exit code with --trust-exit=
--code" "
-+		test_config difftool.error.cmd false &&
-+		test_must_fail git difftool ${opt} -y --trust-exit-code -t error branch
-+	"
-=20
--test_expect_success 'difftool forwards exit code with --trust-exit-code fo=
-r built-ins' '
--	test_config difftool.vimdiff.path false &&
--	test_must_fail git difftool -y --trust-exit-code -t vimdiff branch
--'
-+	test_expect_success "difftool ${opt} forwards exit code with --trust-exit=
--code for built-ins" "
-+		test_config difftool.vimdiff.path false &&
-+		test_must_fail git difftool ${opt} -y --trust-exit-code -t vimdiff branch
-+	"
-=20
--test_expect_success 'difftool honors difftool.trustExitCode =3D true' '
--	test_config difftool.error.cmd false &&
--	test_config difftool.trustExitCode true &&
--	test_must_fail git difftool -y -t error branch
--'
-+	test_expect_success "difftool ${opt} honors difftool.trustExitCode =3D tr=
-ue" "
-+		test_config difftool.error.cmd false &&
-+		test_config difftool.trustExitCode true &&
-+		test_must_fail git difftool ${opt} -y -t error branch
-+	"
-=20
--test_expect_success 'difftool honors difftool.trustExitCode =3D false' '
--	test_config difftool.error.cmd false &&
--	test_config difftool.trustExitCode false &&
--	git difftool -y -t error branch
--'
-+	test_expect_success "difftool ${opt} honors difftool.trustExitCode =3D fa=
-lse" "
-+		test_config difftool.error.cmd false &&
-+		test_config difftool.trustExitCode false &&
-+		git difftool ${opt} -y -t error branch
-+	"
-=20
--test_expect_success 'difftool ignores exit code with --no-trust-exit-code'=
- '
--	test_config difftool.error.cmd false &&
--	test_config difftool.trustExitCode true &&
--	git difftool -y --no-trust-exit-code -t error branch
--'
-+	test_expect_success "difftool ${opt} ignores exit code with --no-trust-ex=
-it-code" "
-+		test_config difftool.error.cmd false &&
-+		test_config difftool.trustExitCode true &&
-+		git difftool ${opt} -y --no-trust-exit-code -t error branch
-+	"
-=20
--test_expect_success 'difftool stops on error with --trust-exit-code' '
--	test_when_finished "rm -f for-diff .git/fail-right-file" &&
--	test_when_finished "git reset -- for-diff" &&
--	write_script .git/fail-right-file <<-\EOF &&
--	echo failed
--	exit 1
--	EOF
--	>for-diff &&
--	git add for-diff &&
--	test_must_fail git difftool -y --trust-exit-code \
--		--extcmd .git/fail-right-file branch >actual &&
--	test_line_count =3D 1 actual
--'
-+	test_expect_success "difftool ${opt} stops on error with --trust-exit-cod=
-e" "
-+		test_when_finished 'rm -f for-diff .git/fail-right-file' &&
-+		test_when_finished 'git reset -- for-diff' &&
-+		write_script .git/fail-right-file <<-\EOF &&
-+		echo failed
-+		exit 1
-+		EOF
-+		>for-diff &&
-+		git add for-diff &&
-+		test_must_fail git difftool ${opt} -y --trust-exit-code \
-+			--extcmd .git/fail-right-file branch >actual &&
-+		test_line_count =3D 1 actual
-+	"
-=20
--test_expect_success 'difftool honors exit status if command not found' '
--	test_config difftool.nonexistent.cmd i-dont-exist &&
--	test_config difftool.trustExitCode false &&
--	test_must_fail git difftool -y -t nonexistent branch
--'
-+	test_expect_success "difftool ${opt} honors exit status if command not fo=
-und" "
-+		test_config difftool.nonexistent.cmd i-dont-exist &&
-+		test_config difftool.trustExitCode false &&
-+		if test "${opt}" =3D '--dir-diff'
-+		then
-+			expected_code=3D127
-+		else
-+			expected_code=3D128
-+		fi &&
-+		test_expect_code \${expected_code} git difftool ${opt} -y -t nonexistent=
- branch
-+	"
-+done
-=20
- test_expect_success 'difftool honors --gui' '
- 	difftool_test_setup &&
---=20
-2.44.0-rc1
-
-
---X+D9FvV87VbVL/ll
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmXPHzEACgkQVbJhu7ck
-PpSCOA//bBRYgXvTcMy2GspMJJx0qIWiTebur+R2olmRs4NgaNPMQ+GaS3Dom0uq
-sviNZfDgQAp5dcwG7BvUIgRbQcBLSx+5mgG2mZHD+WOYi+fF9ZZAmovErGzcsRZJ
-vaB6XJUcf72DaMlayZvoiIlntS9MLHilB2k1cISmOnKHcErp/1UcjywF9fUvx69b
-Q+4U7JWKE8bouXdHJNBEQUS9C3AR/HBV2ZP/dPJrWCbRZxxSU/XBrC768FeyOWna
-7GIctfAeGsyPPBycv+3NhNVZhYq+ooSYRQzu4ivlKbapNX3kPuNJyokQ4Sjkpav6
-3mXthoFidKVzAInL4Yat346b0Yq0Pd7giPzsMBit7nzF6J0lCrLiKzgdKD75giGh
-CcjxhWWWCj+CycTUtRibVdrJsk9TqBssLVQNdF/nnxcTqPNrtqyW96vRp6kp0u1p
-y+HvChhhMK8nwZt3ZCO/41IwaF4LhkUkuqmr5rK1+gKSL18qCt5v5131lR7UHyHw
-wqmjbIFBIsZpTcrLuci3PzuZnXKZc84sefJqPv4IfxdS3OcVf62ZfUgtpWoih7ja
-aFXjmKGdCKLj24geIXP7NJ7IdjOQzcXJ+6TQ2XpnKsF7IcAbQ6deT6NhJnNqHC9Z
-zWxyoWPdZ05cz8DqRyTXTetq9Lk0Whqhb+lJaqXrU6XSdj6bajA=
-=XAO0
------END PGP SIGNATURE-----
-
---X+D9FvV87VbVL/ll--
+Best regards,
+Xuancong
