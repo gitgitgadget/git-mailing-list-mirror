@@ -1,136 +1,158 @@
-Received: from out4-smtp.messagingengine.com (out4-smtp.messagingengine.com [66.111.4.28])
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFA9612CDA5
-	for <git@vger.kernel.org>; Fri, 16 Feb 2024 19:46:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=66.111.4.28
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76AFC44369
+	for <git@vger.kernel.org>; Fri, 16 Feb 2024 19:59:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708112810; cv=none; b=rRWYq0cK2ziws4dkHpX6nUK9rIzh7ZUtDd1vpDZz8Hf3eLD+/+OS+aLEf+/sH7JN52au6Zh8N8NXtTM5omwOJ9TZJIWyvFAUkCAfzyfhRYO9RTn1cp21Hta/UBCBOx+SQSNYEDm3qXZLa+39aT7V7QC6aTHrHyFwm6pLtIhOYX4=
+	t=1708113548; cv=none; b=Ou+bWAAGkWMhSW/ZKQyRXuyCrSL2ILuZh8OZcXvvFw358EL+/1uB/daConCE/0zqfqU20QK/jeOzOE0exlrxdG09BGMYJK/NlkynFZhpiqah5sHZCC1bIxAP3BoM/gJDb3oc5dRSSSIESJmNMKc7pHI3NzFQZCo33MgG9wlQDEg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708112810; c=relaxed/simple;
-	bh=TzElAG58Sr0XV0Nm3BNq56chJ7c7Ho4UIHfnZhjli74=;
-	h=MIME-Version:Message-Id:In-Reply-To:References:Date:From:To:Cc:
-	 Subject:Content-Type; b=Y7pJwM9yfhr6EOez03JXgWxADsYimFkwohmqEjLJ6On21qS0sJd43fUnlJmB1IuEsyj9Id8bHb7Du6IdqL/elEr5msqmhySh86QwvZkr1s8pWaQF2VhchqDyUWatVq15x5irNJCIqT+xLd1Q6XUPSsgPepnRHIjIA3Allfi5k24=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=khaugsbakk.name; spf=pass smtp.mailfrom=khaugsbakk.name; dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b=SlWqvZj9; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=LDE7D0Gh; arc=none smtp.client-ip=66.111.4.28
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=khaugsbakk.name
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=khaugsbakk.name
+	s=arc-20240116; t=1708113548; c=relaxed/simple;
+	bh=SMdWQ8pT4lr9FHonVGD6Q2poktpix+bXuv0QlrYpA/w=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=eQcIKdwpvYYl1EDKvGwP1ufAp/TqJXCJeScUrenVdoDlbgchwlJD6JFGlHacXYoh/z3q9fz8ga2Lt87SahjEhG2WnSQ8HUlqzF518R/YCBhfIbV7aS9MHPHgi4ggwuLWjvprS72lbG7xJE5Py3+oKVs4UJQ2v9mboXAAIrx4yNQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=hOKMz9o1; arc=none smtp.client-ip=64.147.108.71
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b="SlWqvZj9";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="LDE7D0Gh"
-Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
-	by mailout.nyi.internal (Postfix) with ESMTP id 9BB105C0086;
-	Fri, 16 Feb 2024 14:46:46 -0500 (EST)
-Received: from imap49 ([10.202.2.99])
-  by compute1.internal (MEProxy); Fri, 16 Feb 2024 14:46:46 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=khaugsbakk.name;
-	 h=cc:cc:content-transfer-encoding:content-type:content-type
-	:date:date:from:from:in-reply-to:in-reply-to:message-id
-	:mime-version:references:reply-to:subject:subject:to:to; s=fm3;
-	 t=1708112806; x=1708199206; bh=TzElAG58Sr0XV0Nm3BNq56chJ7c7Ho4U
-	IHfnZhjli74=; b=SlWqvZj9IYSHJKiSFa/9wkxfpWpUpFYpF+8vHtqxVKTmu0ol
-	pNoGlJEYdSBDibuY9wOJUMQiS8MhY/rZh1IvIzYJgVSzVTpvrUIvbv3a4/ypaD/+
-	/AiVd7y99Hsh86xUJB8AHr3AydHw3iVGDYJeLm7W2Hz0LlnSLPXkr1puOAig/hHS
-	LQTPKs7eO3criups7EiPZnI1OeABARAN7tlAMqWjUMGRpHnRUDN5llGvqE9Qsd7d
-	E7NTjfr7eqQHEoLT5d6d6EXdB1n3Z5FFJyB0mwWKBZAUXEWGTJM3N/VTwrgWtA06
-	E+9f2dEKstNp5aSUpoy0+C6p1KJ+BgKp94BBLw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1708112806; x=
-	1708199206; bh=TzElAG58Sr0XV0Nm3BNq56chJ7c7Ho4UIHfnZhjli74=; b=L
-	DE7D0GhWpOYwfRFX2fAVuqePcBkmiHCP7ZGL08849n4ufYTbdADpKg60jaiASZfu
-	TU3jsPDMD6U/0uCgxiGOS+dHa6bzp5bTkKd6l/UDmfkklLg5Cfzu59psjeZG30Z2
-	PUB+rVw2qFUcFaVqbexrHaZCSx0lrDazJAVMAxJqAnfT+Zz4LAjCC+XxUdP8D7wm
-	LEZJNM9DaCSyt3wDHzXMOy4eH4ZxADR0kE3SH4mjmmPY8DXf8yjk3WUxC/g2TTmV
-	ZBe3K5WRuA7TrhJxlzPMiXcOGPNBWRCG4mK2dZ9fqKHFH6bBJGc6s6GUxEH+H+L4
-	uXKbaAoVG4aoB292Ce8SA==
-X-ME-Sender: <xms:prvPZWe3cm2Lww8-KQJuyqjhb-B7cQDYqE9YybM0RDzRTSQeslO6cv0>
-    <xme:prvPZQO9iFfiX24KtFN2eWLCBMhP-a4AyFBvnFsQ8vVDNWTLsqR9MNgBP9o7cJMhi
-    jY74x7XqLcbUulIkA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvddvgdduvdejucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    cujfgurhepofgfggfkjghffffhvfevufgtgfesthhqredtreerjeenucfhrhhomhepfdfm
-    rhhishhtohhffhgvrhcujfgruhhgshgsrghkkhdfuceotghouggvsehkhhgruhhgshgsrg
-    hkkhdrnhgrmhgvqeenucggtffrrghtthgvrhhnpedvveehiedufeehffdvteeuveekhefh
-    leeigfektdeifeduteeuheeufeetffefudenucevlhhushhtvghrufhiiigvpedtnecurf
-    grrhgrmhepmhgrihhlfhhrohhmpegtohguvgeskhhhrghughhssggrkhhkrdhnrghmvg
-X-ME-Proxy: <xmx:prvPZXiELe-aPRRDZfrTLlUUs9WH5uQ6TBwk1cx6ZDBudbKaHbGLHg>
-    <xmx:prvPZT-j6C5AbWNqHBjGUB8Xjj0c4zSCoD4IFbaNcEgWkt0zKSqn6w>
-    <xmx:prvPZSvgD1jpKNuFTdajrS78wblNJ7RKghxMRemggjICg9rBbnMYog>
-    <xmx:prvPZY24ye_BAz9sl3irmSWPQJQBXuupQMbyh7_xh0h425ftaCcnhw>
-Feedback-ID: i2671468f:Fastmail
-Received: by mailuser.nyi.internal (Postfix, from userid 501)
-	id 5704815A0092; Fri, 16 Feb 2024 14:46:46 -0500 (EST)
-X-Mailer: MessagingEngine.com Webmail Interface
-User-Agent: Cyrus-JMAP/3.11.0-alpha0-144-ge5821d614e-fm-20240125.002-ge5821d61
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="hOKMz9o1"
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 265B01E7A28;
+	Fri, 16 Feb 2024 14:59:05 -0500 (EST)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=SMdWQ8pT4lr9FHonVGD6Q2poktpix+bXuv0Qlr
+	YpA/w=; b=hOKMz9o1tCOJhaoSqC345YALsOCRU9SUosk2z7sgDlVgfMAT4vwhvY
+	/2ETEpXwR6gO6FuAxOAI9css2TDNVbejOH9SJuWPsnI2BVbl21HwIMnhjPfENBb2
+	lmBg1nGXB2eNDH34kI/DtCtUVG2DIR5XJA099h5fPJpDjhpiUAzCc=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 1E22C1E7A27;
+	Fri, 16 Feb 2024 14:59:05 -0500 (EST)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.165.85])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 707001E7A25;
+	Fri, 16 Feb 2024 14:59:04 -0500 (EST)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Dragan Simic <dsimic@manjaro.org>
+Cc: git@vger.kernel.org,  code@khaugsbakk.name,  rjusto@gmail.com,
+  spectral@google.com
+Subject: Re: [PATCH v2] branch: rework the descriptions of rename and copy
+ operations
+In-Reply-To: <6e1c3f2c5816f09aab561bc7dec2b7455d70aaec.1708087213.git.dsimic@manjaro.org>
+	(Dragan Simic's message of "Fri, 16 Feb 2024 13:44:19 +0100")
+References: <6e1c3f2c5816f09aab561bc7dec2b7455d70aaec.1708087213.git.dsimic@manjaro.org>
+Date: Fri, 16 Feb 2024 11:59:02 -0800
+Message-ID: <xmqq1q9ci3jt.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Message-Id: <6965c59e-8edd-4d91-81da-3600a61569a3@app.fastmail.com>
-In-Reply-To: 
- <CAL=1hhwreG_W_Ch-B5DXioqjUsfkgjayNZbkCk7uOv3vc=TBSQ@mail.gmail.com>
-References: 
- <CAL=1hhwreG_W_Ch-B5DXioqjUsfkgjayNZbkCk7uOv3vc=TBSQ@mail.gmail.com>
-Date: Fri, 16 Feb 2024 20:46:11 +0100
-From: "Kristoffer Haugsbakk" <code@khaugsbakk.name>
-To: "Gabor Urban" <urbangabo@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: Question about migrating a repository
-Content-Type: text/plain;charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ D60D7B74-CD05-11EE-8561-25B3960A682E-77302942!pb-smtp2.pobox.com
 
-On Fri, Feb 16, 2024, at 20:34, Gabor Urban wrote:
-> Hi guys,
->
-> I need a bit help.
->
-> I have migrated my git repository from my old computer using a bundle.
-> (The repo was local with no clones.) That computer will be dismantled
-> and thrown away.
->
-> I checked and verything is working fine till I get a git status
-> report. The most relevant part is:
->
-> On branch master
-> Your branch is up to date with 'origin/master'.
->
-> I would like to make THIS repository to be the "origin". (The other
-> will be destroyed.) How could I do that?
->
-> Thanks for any help in advance,
+Dragan Simic <dsimic@manjaro.org> writes:
 
-`origin/master` is a =E2=80=9Cremote-tracking branch=E2=80=9D. It points=
- to `master` on
-the `origin` remote. Or to be precise: it points to a ref that you use
-to track this branch from that remote. A remote is some other repository
-that you have a link to, like a URL.
-
-That ref (reference) was updated with a command like `git fetch`.
-
-You can get the link to that remote with
-
-```
-git remote get-url origin
-```
-
-Your own local repository is never a remote like `origin`. You don=E2=80=
-=99t
-have to make your own repository into a remote.
-
-Your repository is fine. There=E2=80=99s nothing that you need to do.
-
+> Move the descriptions of the <oldbranch> and <newbranch> arguments to the
+> descriptions of the branch rename and copy operations, where they naturally
+> belong.  Also, improve the descriptions of these two branch operations and,
+> for completeness, describe the outcomes of forced operations.
 >
->
-> --
-> Urb=C3=A1n G=C3=A1bor
->
-> Linux is like a wigwam: no Gates, no Windows and an Apache inside.
+> Describing the arguments together with their respective operations, instead
+> of describing them separately in a rather unfortunate attempt to squeeze more
+> meaning out of fewer words, flows much better and makes the git-branch(1)
+> man page significantly more usable.
 
---=20
-Kristoffer Haugsbakk
+The intention to remove non-option from the OPTIONS enumeration,
+and to explain <new> and <old> used as arguments to -m and -c where
+these options are described, are both very good (heh, after all,
+they are parts of what I envisioned to be the way to go in the
+longer term ;-).
+
+>  overridden by using the `--track` and `--no-track` options, and
+>  changed later using `git branch --set-upstream-to`.
+>  
+> -With a `-m` or `-M` option, <oldbranch> will be renamed to <newbranch>.
+> -If <oldbranch> had a corresponding reflog, it is renamed to match
+> -<newbranch>, and a reflog entry is created to remember the branch
+> -renaming. If <newbranch> exists, -M must be used to force the rename
+> -to happen.
+> -
+> -The `-c` and `-C` options have the exact same semantics as `-m` and
+> -`-M`, except instead of the branch being renamed, it will be copied to a
+> -new name, along with its config and reflog.
+> -
+>  With a `-d` or `-D` option, `<branchname>` will be deleted.  You may
+>  specify more than one branch for deletion.  If the branch currently
+>  has a reflog then the reflog will also be deleted.
+
+But the halfway modification to the description section in this
+patch is not an improvement.  It makes some options described there
+while -m and -c are completely missing now, making the section
+incomplete and coverage of the operating modes of the command
+uneven.  
+
+> +-m [<oldbranch>] <newbranch>::
+> +--move [<oldbranch>] <newbranch>::
+> +	Rename an existing branch `<oldbranch>` to `<newbranch>`;  if left
+> +	unspecified, `<oldbranch>` defaults to the current branch.  The
+> +	configuration variables for the `<oldbranch>` branch and its reflog
+> +	are also renamed appropriately to be used with `<newbranch>`.  In
+> +	addition, a reflog entry is created to remember the branch renaming.
+> +	Renaming fails if branch `<newbranch>` already exists, but `-M`
+> +	or `--move --force` can be used to overwrite the contents of the
+> +	existing branch `<newbranch>` while renaming.
+
+OK.  This is way more readable than the previous attempts we made.
+
+The description of the single failure mode still worries me (see my
+previous message on this).  Here is my attempt:
+
+	When the command fails due to an existing '<newbranch>', you
+	can use `-M` (or `--move --force`) to force overwriting it.
+
+to hint that there may be other ways for the command to fail, and
+hint that `-M` may not always resolve issues, but I do not know how
+successful it is.  I could add
+
+	Note that `-M <old> <new>` will not resolve an error if the
+	reason why `-m` fails is to protect the other worktree that
+	checks out (or otherwise uses) <old> and <new> points at a
+	different commit.
+
+but we do not necessarily want to appear to be exhaustive here, so,
+I dunno.
+
+> +-M [<oldbranch>] <newbranch>::
+>  	Shortcut for `--move --force`.
+
+OK.
+
+> +--copy [<oldbranch>] <newbranch>::
+> +	Copy an existing branch `<oldbranch>` to `<newbranch>`;  if left
+> +	unspecified, `<oldbranch>` defaults to the current branch.  The
+> +	configuration variables for the `<oldbranch>` branch and its reflog
+> +	are also copied appropriately to be used with `<newbranch>`.
+> +	Copying fails if branch `<newbranch>` already exists, but `-C`
+> +	or `--copy --force` can be used to overwrite the contents of the
+> +	existing branch `<newbranch>` while copying.
+
+Exactly the same comment on "other failure modes" applies here.
+
+> -<oldbranch>::
+> -	The name of an existing branch.  If this option is omitted,
+> -	the name of the current branch will be used instead.
+> -
+> -<newbranch>::
+> -	The new name for an existing branch. The same restrictions as for
+> -	<branchname> apply.
+> -
+
+Removals of these lines are very pleasing ;-).
