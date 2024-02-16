@@ -1,103 +1,112 @@
-Received: from mail-yb1-f201.google.com (mail-yb1-f201.google.com [209.85.219.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mail.manjaro.org (mail.manjaro.org [116.203.91.91])
+	(using TLSv1.2 with cipher DHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29364DF58
-	for <git@vger.kernel.org>; Fri, 16 Feb 2024 02:25:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AADE646
+	for <git@vger.kernel.org>; Fri, 16 Feb 2024 03:32:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=116.203.91.91
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708050330; cv=none; b=YL9sOWiBhHhgcsHwrMOVX0V4ps96wCSR0D3pTA7+w8gL/AxqrjWRkSgnbe/4YBAgutBTNhwjGANI1/nETka9oY1w+bAdZQjUAfNgH62D/jgiP/hFtqVigTwcVqcZqPkkOk6GlzJmB0L33yJDoaPfUjJi7Ye6R5B2EQpJmRAEL5I=
+	t=1708054337; cv=none; b=WMTWE4IstNgrxbfWG4iptuy+/3QsFWNDPWwuYFSf5042bgwCMSytGrV7fLvbjve1yV9E60s0ee2/xLGwA3JhU8wGSJypzALqylHmkiBjGyIaVFke1AswAOyW/GMZyMrq6CsTiLWyEgE51rLhWRc2oPXaxX3j3aVcEqfdlbLzWNo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708050330; c=relaxed/simple;
-	bh=rGbudE/nTo+8Zyv4kR7aC7q5v01EuyHXdv3tJj5mi6E=;
-	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
-	 To:Cc:Content-Type; b=s20aty7hsQEzPyfe1rwemnkYXoAJaPlM5fDjxB6x/49dDbf9uWdqOzMDMCjaBvb4UNrbvQARRREdSmKmafsVmjpViCcHoaazltYMGb3qLt11I2bBoSqLxVML0dLFw4sJ3Cu2IMKrJVpAchu37x0Oc/pRIKdD8RCj3dnnccMQW+s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--linusa.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=i8dIeDd4; arc=none smtp.client-ip=209.85.219.201
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--linusa.bounces.google.com
+	s=arc-20240116; t=1708054337; c=relaxed/simple;
+	bh=T9H1e0cW0Ipo4aHaPI6RL49mf/aSmguTwe7oF2AuKio=;
+	h=MIME-Version:Date:From:To:Cc:Subject:In-Reply-To:References:
+	 Message-ID:Content-Type; b=fU5J63NMGA36z3zPlqwi3XgvPRVQ2io5A07q51GX7cTbGMnsFSMo+Dzpu/9vGxt6ngod2/49tcbED6jwjGpTECQAOCfXaXdF4ONV8MQIXduCWWKs1Mb75aueEYEEl1GjiPOqsho0etiJJzrUafkboQF7hrOk4dMAHYh9fd/Qngg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org; spf=pass smtp.mailfrom=manjaro.org; dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b=pVfIZ+f8; arc=none smtp.client-ip=116.203.91.91
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=manjaro.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="i8dIeDd4"
-Received: by mail-yb1-f201.google.com with SMTP id 3f1490d57ef6-dc64e0fc7c8so2126450276.2
-        for <git@vger.kernel.org>; Thu, 15 Feb 2024 18:25:28 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1708050328; x=1708655128; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:from:subject:message-id:references
-         :mime-version:in-reply-to:date:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=AcSJW1BPmPZgNfQbsWB31R59daQJBMSveegokU+U+68=;
-        b=i8dIeDd4jAzRhbHRpnMdUHLAvmja3C0vetEnu4aMwZCTrWnpGUWTPOoQHcg/JaWOrH
-         Jn5Ow42MQ/ySodORQQBRxunprl46z0EHUggRFY9d9ZaQNiUu3/EJEXG9bIVVQLlOWgmz
-         +kfEtpzQSwCkhcejBVDzh2glC+4VCK6/6j0p3tf29pAbePxiTUmZrw2BSOvzpfLDoXoj
-         dHaAWnBhGTS4vrQw5kYW1h7cu44wIiZxs0OlKPhXyOS29KXWIINyGojkolJdvRi9ffzA
-         ztA17+OZ/57C6hho8pNCglkQ8Oh1LVYpx4vSpzgolm/ZwIh8djEifQ/P5pFPV22FSYeb
-         IT+A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1708050328; x=1708655128;
-        h=content-transfer-encoding:cc:to:from:subject:message-id:references
-         :mime-version:in-reply-to:date:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=AcSJW1BPmPZgNfQbsWB31R59daQJBMSveegokU+U+68=;
-        b=PFspjdCRYqj3BFvm1kDHJKNtotad9jY12d0yrTNjvPmjbyZYxK6cqKm2x4FB0yoJqs
-         oN7vfmihVDjCStp3bNAnPgekC5lWxZ1iH6OpUA+VMOqot6cpayS+J4YSZcHBMKKqEOAB
-         nPVkAPs6h/YezYiG07usIVXCDTfu6Yu9xRpgQDLcVk84aL3StlaimMQXi4BfQgEDBnTB
-         sbXhbB4RrPoSPjZkYXxqUjpcj1R3YbPFU6VjXklqmwquYbpjv9FeepDySMKK0jHvO3d1
-         CaYXpfgKiFmawhqo5kXTbfd2akJc2Oyo2V/Tx/2hxdkGmffd+EmjiONScMS5+jzEelv+
-         8K/A==
-X-Forwarded-Encrypted: i=1; AJvYcCWGGUfrgMi9aBu3OvRsFgF8CILoO6ZwBGiMy5LGAVxybGN1pZOufsZaFHt5PJMLhKU5aiufHwc6HCY6CGSmNkOhumse
-X-Gm-Message-State: AOJu0YxcDp3kSX8qt93B13CajcY6tDbAL9BSU+Jevw7Mrata/t6Qfqek
-	w9ngUIcrcMOmWszHcMuHbMPKGFdBBknIHXPtOLJnVLPr4Zf60Rq9IFIbXHmP8bc7UY5sPYWLhJG
-	9WQ==
-X-Google-Smtp-Source: AGHT+IE2TZC+FH57iHvkfcx67NAxrnmUDcLT6gZnyiME8HQPZ205dP2w8gYUC3hPYSPWOCvBFAckuAmQafo=
-X-Received: from fine.c.googlers.com ([fda3:e722:ac3:cc00:7f:e700:c0a8:2221])
- (user=linusa job=sendgmr) by 2002:a05:6902:1001:b0:dcc:79ab:e522 with SMTP id
- w1-20020a056902100100b00dcc79abe522mr142151ybt.11.1708050328120; Thu, 15 Feb
- 2024 18:25:28 -0800 (PST)
-Date: Thu, 15 Feb 2024 18:25:26 -0800
-In-Reply-To: <CAP8UFD08F0V13X0+CJ1uhMPzPWVMs2okGVMJch0DkQg5M3BWLA@mail.gmail.com>
+	dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b="pVfIZ+f8"
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-References: <pull.1632.v3.git.1706664144.gitgitgadget@gmail.com>
- <pull.1632.v4.git.1707196348.gitgitgadget@gmail.com> <CAP8UFD3qLGua5PTA+i29N+yJH8iKVBPwUn=S606B2E+s959JFQ@mail.gmail.com>
- <xmqqjzn94404.fsf@gitster.g> <CAP8UFD0C37qdTUvCpRFe6_zAeAcssoySY6tobw+AO8hpA8iAfg@mail.gmail.com>
- <xmqqa5o46zla.fsf@gitster.g> <CAP8UFD08F0V13X0+CJ1uhMPzPWVMs2okGVMJch0DkQg5M3BWLA@mail.gmail.com>
-Message-ID: <owlyplwx87s9.fsf@fine.c.googlers.com>
-Subject: Re: [PATCH v4 00/28] Enrich Trailer API
-From: Linus Arver <linusa@google.com>
-To: Christian Couder <christian.couder@gmail.com>, Junio C Hamano <gitster@pobox.com>
-Cc: Linus Arver via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
-	Christian Couder <chriscool@tuxfamily.org>, Emily Shaffer <nasamuffin@google.com>, 
-	Josh Steadmon <steadmon@google.com>, "Randall S. Becker" <rsbecker@nexbridge.com>
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=manjaro.org; s=2021;
+	t=1708054331;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=J2F0MQ1cF5XyLLMuVHVKlnNybUJQQUczk4Dj/OXDi9o=;
+	b=pVfIZ+f8Jz5lRbnEx2SVoMXRHJ0HhLVTtvyzQvQHTJmCGgOV+RkpxxF/jTndtL6RAURkBJ
+	tUwXcNJPG2GIDmJYqJUWMcAci/jmSUXK4FMujdMUmip32oQy6p9v4YISDMzKVQwHcbi0fB
+	pp7uBgCc4mgDHIpFJFyCidfjNwPdZwIXm0wkrE6uIYVkVB7ZKoI6nQlB+lqsTrZmgBCZ1y
+	gKG7YvNCSABAuNr8AU87fuNADoOZ3lw8uTbIcd9BB1X+8bCyQSD65dC/NduIHSIWUCBruQ
+	W2thqf74yV+5UzCsvSk1kPQQ/L0quW1pHOY1BVQ5j71V824HidgVMKkdL+8/hQ==
+Date: Fri, 16 Feb 2024 04:32:10 +0100
+From: Dragan Simic <dsimic@manjaro.org>
+To: =?UTF-8?Q?Rub=C3=A9n_Justo?= <rjusto@gmail.com>
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Subject: Re: [PATCH] branch: rework the descriptions of rename and copy
+ operations
+In-Reply-To: <2a4de8c4-4955-4891-859c-58730a41e5af@gmail.com>
+References: <3cbc78bb5729f304b30bf37a18d1762af553aa00.1708022441.git.dsimic@manjaro.org>
+ <e8fdd057-2670-4c93-b362-202a339d5f49@gmail.com>
+ <xmqq8r3lnzp0.fsf@gitster.g>
+ <2a4de8c4-4955-4891-859c-58730a41e5af@gmail.com>
+Message-ID: <ea15a49aed7b5a74cd9b1bf8a5351df9@manjaro.org>
+X-Sender: dsimic@manjaro.org
+Content-Type: text/plain; charset=UTF-8;
+ format=flowed
+Content-Transfer-Encoding: 8bit
+Authentication-Results: ORIGINATING;
+	auth=pass smtp.auth=dsimic@manjaro.org smtp.mailfrom=dsimic@manjaro.org
 
-Christian Couder <christian.couder@gmail.com> writes:
+On 2024-02-16 00:34, Rubén Justo wrote:
+> On 15-feb-2024 14:13:31, Junio C Hamano wrote:
+>> Rubén Justo <rjusto@gmail.com> writes:
+>>> On 15-feb-2024 19:42:32, Dragan Simic wrote:
+>>> Let me chime in just to say that maybe another terms could be 
+>>> considered
+>>> here;  like: "<branchname>" and "<newbranchname>" (maybe too long...) 
+>>> or
+>>> so.
+>>> 
+>>> I have no problem with the current terms, but "<branchname>" can be a
+>>> sensible choice here as it is already being used for other commands
+>>> where, and this may help overall, the consideration: "if ommited, the
+>>> current branch is considered" also applies.
+>> 
+>> Actually, we should go in the opposite direction.  When the use of
+>> names are localized in a narrower context, they can be shortened
+>> without losing clarity.
+> 
+> I did not mean to have longer terms, sorry for that.
+> 
+> I was thinking more in the synopsis:
+> 
+>     'git branch' (--set-upstream-to=<upstream> | -u <upstream>) 
+> [<branchname>]
+>     'git branch' --unset-upstream [<branchname>]
+>     'git branch' (-m | -M) [<branchname>] <new>
+>     'git branch' (-c | -C) [<branchname>] <new>
+>     'git branch' (-d | -D) [-r] <branchname>...
+>     'git branch' --edit-description [<branchname>]
+> 
+> To have more uniformity in the terms, which can be beneficial to the
+> user.
 
-> (Sorry for sending this previously to Junio only)
->
-> On Tue, Feb 13, 2024 at 6:30=E2=80=AFPM Junio C Hamano <gitster@pobox.com=
-> wrote:
->>
->> Christian Couder <christian.couder@gmail.com> writes:
->
->> >> I presume that [01-09/28] would be the first part, nothing
->> >> controversial and consisting of obvious clean-ups?  I do not mind
->> >> merging that part down to remove the future review load if everybody
->> >> agrees.
->> >
->> > Yeah, patches [01-09/28] look good to me.
->>
->> I was hoping that you'll give us more details of what the other 3 or
->> more you would envision the series to be, actually.
->
-> I think the next one could be [10-16/28], so until "trailer: finish
-> formatting unification".
->
-> Then I am not sure about the next one, perhaps [17-20/28] or [17-21/28].
->
-> The rest would depend on the splitting of the big patches towards the
-> end of the series.
+Here's what I think the example from above should eventually look like:
 
-Ack, I'll try to group them like this. Thanks.
+      'git branch' (--set-upstream-to=<upstream> | -u <upstream>) 
+[<name>]
+      'git branch' --unset-upstream [<name>]
+      'git branch' (-m | -M) [<old>] <new>
+      'git branch' (-c | -C) [<old>] <new>
+      'git branch' (-d | -D) [-r] <name>...
+      'git branch' --edit-description [<name>]
+
+Though, it's something to be left for future patches, which will move
+more argument descriptions to the respective command descriptions.
+
+> We don't say that "--edit-description" defaults to the current branch;
+> It is assumed.  Perhaps we can take advantage of that assumption in
+> -m|-c too.
+
+We don't say that yet, :) because the description of the command for
+editing branch descriptions is detached from the description of its
+arguments.  The plan is to move all of them together.
+
+> Of course, there is no need (perhaps counterproductive) to say "branch"
+> if the context makes it clear it is referring to a branch.
