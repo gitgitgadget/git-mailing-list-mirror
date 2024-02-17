@@ -1,82 +1,106 @@
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f52.google.com (mail-wm1-f52.google.com [209.85.128.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3688E6D1AC
-	for <git@vger.kernel.org>; Sat, 17 Feb 2024 23:31:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B8741E861
+	for <git@vger.kernel.org>; Sat, 17 Feb 2024 23:34:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708212672; cv=none; b=ZjdC/q5mSgQf88aAszpABwshi0g5FyeBcKWDzUu6OuHHpa7Z9jZIXqljPSBHOdfFjE4PlP2Z+xm90HMqZl4EnfRMcYDyKsVetYRTXjQlunN0c1mPqEgnAg0FLNnzkuGTZZdcbq+jpG6KmQerKe9BeNFoLzpRbVEQC7ivKco1VKY=
+	t=1708212901; cv=none; b=BMuYqs5YyOup0hJZZ5Ad15dWpTgI0EQhrFhoPIVj54Udk5CWf6Be0tu+3njMYqZcnSNmBQs5/NahKZsf+e03uIxNrAUMziLE+mmXDJJWSFgiMfRCcg9UimiQXXNMqfaY+CvTAevx1vfLy8N32T2k8O8XNbgoqaGHC+XTiUfg+OE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708212672; c=relaxed/simple;
-	bh=L+nYPuMdM7/tWgBl1mVgEzoMVHuKYiEebMSzefVc6Z0=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=GNeipf/WqTM4cqBO5bXNEvta3cz26x9Qx9xVCzcP7bXx899ULHS8a0fG3yLZYOdtw7xBQK7sG4n9A5ZVjKc7SrzEijeX8fWIPmodDyvRHzOX1SP8GC8L0vA2mz8yLbrbg6XM4KY4OtgdegUc9yHnsC1rBbYPcOpIWAfq6DYCDYM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=XjuvrIJz; arc=none smtp.client-ip=64.147.108.71
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1708212901; c=relaxed/simple;
+	bh=+qBuyqFMegYUtuKNcFkrikKzN75aDXZZT3e6wmRlBl0=;
+	h=Message-ID:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=iqaSxKb8oOUyR/5C57DQa9il/L+dnFYTPdPz05HHLmZjFBykj9QdN1p1L1xtj6sooa3JXetTbKn+RzjNflzI7JCk6YaMHbcVAlFEiU/bcdUfN1P09XfbTQx4fqkzi41e1BE2n2I+4TcLxEHmO+4q3crJvc6cwmDpbtE3VcY5f1M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Hgr2tfla; arc=none smtp.client-ip=209.85.128.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="XjuvrIJz"
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 4E0C51C07CE;
-	Sat, 17 Feb 2024 18:31:03 -0500 (EST)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=L+nYPuMdM7/tWgBl1mVgEzoMVHuKYiEebMSzef
-	Vc6Z0=; b=XjuvrIJzEMcI3DQ+8VfaX+GxlVNCM2ANXbyVO0FAEjkmcv8BhujBvL
-	AP4JLjd2OujzyHZ1r5mbaAhBnJgIwL8DSuoUL/x1IYU62jX7Ts4GyukmKe6byU2l
-	kjEB0x7gUx9uz0Cc+yx4u2ZZl5vcEz9MvpK8PTfa+jvf4kUkwtsZw=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 461391C07CD;
-	Sat, 17 Feb 2024 18:31:03 -0500 (EST)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.165.85])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 833E21C07CB;
-	Sat, 17 Feb 2024 18:31:02 -0500 (EST)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Jens Schmidt <farblos@vodafonemail.de>
-Cc: git@vger.kernel.org
-Subject: Re: Calling "gpg --sign" with loopback pinentry in some scenarios,
- but not always
-In-Reply-To: <de38341b-f69f-4d3b-a4c2-4443e1ec1f6f@vodafonemail.de> (Jens
-	Schmidt's message of "Sat, 17 Feb 2024 23:51:43 +0100")
-References: <de38341b-f69f-4d3b-a4c2-4443e1ec1f6f@vodafonemail.de>
-Date: Sat, 17 Feb 2024 15:31:01 -0800
-Message-ID: <xmqqle7ifz2i.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Hgr2tfla"
+Received: by mail-wm1-f52.google.com with SMTP id 5b1f17b1804b1-41260adfea7so1652725e9.2
+        for <git@vger.kernel.org>; Sat, 17 Feb 2024 15:34:59 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1708212898; x=1708817698; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=pq5e30m3oqX2UdC+k9aPVrVnQkr/XEs8F6NfAVTstcA=;
+        b=Hgr2tflai4SKulLRwpW17XT7y9MdNEn93OxzHBEzFCYodAy9teI7gj5jV+rIhcHqGC
+         C0g2mgz9mmvM9h0gib3MucepITKZTThzgABVcEaYfDZOWgVqyd5iS0LysnvB6sbbHTUn
+         WoSitRX3RpuH0ANg7zNj9ZCTUlrbQ9R5ikwcJ8RmO2mORfbIabZSPg9ERv4hl+9Wyvrr
+         F3hPbIVi9GNFBFyWDtU0W/SrG/9PDl7e3Y9LY+fHtIWgtgIhcRm1EAjaO8mS7ED4wYB9
+         T7l3G274Nex1NtOD2c7RafZZ3UTKrX7T6ln3woKBSemg6I1IyV4TtEGJuynoAacVL9AW
+         O1UQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1708212898; x=1708817698;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=pq5e30m3oqX2UdC+k9aPVrVnQkr/XEs8F6NfAVTstcA=;
+        b=mO2kY/2XF00mAfpkklKYFBFvq7lb75ExLoxrAtKOci7IeO9Na/hCfgEIgXfyvwj3wN
+         R2X+7Z2tphyR2DBPx0a8C40RA4dagRkHXCL/5g4kYsKN44Kg/L8OI9GztVe4fQ+7gchk
+         jLUUXkMKoF2vzIAUKw/gsrS6Qu2s0aZz2uDD3pNLccvW/kiY9ZVKF4qJru8BHotXocnk
+         peZl/tW97LA7YL9CJPSCpbkhQoKTsAiIW1GCjUchDZJx49ccVZQhWksHFsBurbRTu1Xq
+         isBHwtziztMGokZ5P7S8xcqAsMo+0vZZnSYaCgdi+i5+9HMm2N7EKAKlgrEWi+i6wB4M
+         FaVg==
+X-Gm-Message-State: AOJu0Yzoq9YArlFAZGYsCOVF23Q78ei3lpj9qKADfB/a3Tz3cLGpgFk1
+	q/4mjewjnRcjbxobCGWZcvVW+Vx745kxDtXpYRBkQ0pfbQVAaTYANb2dsnuz
+X-Google-Smtp-Source: AGHT+IFICyaD1anJDQJUBo0lUxvqY429cp89uwu5Mw2U9uFhZrx+/eyB0JP17wxlqsHcHQqnRH+Zqw==
+X-Received: by 2002:a05:600c:3788:b0:410:c148:2a4b with SMTP id o8-20020a05600c378800b00410c1482a4bmr7329215wmr.37.1708212897523;
+        Sat, 17 Feb 2024 15:34:57 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id l14-20020a7bc44e000000b00411d1ce4f9dsm6423702wmi.34.2024.02.17.15.34.57
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 17 Feb 2024 15:34:57 -0800 (PST)
+Message-ID: <pull.1667.git.1708212896.gitgitgadget@gmail.com>
+From: "Bo Anderson via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Sat, 17 Feb 2024 23:34:52 +0000
+Subject: [PATCH 0/4] osxkeychain: bring in line with other credential helpers
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- 9D07533A-CDEC-11EE-B629-25B3960A682E-77302942!pb-smtp2.pobox.com
+To: git@vger.kernel.org
+Cc: Bo Anderson <mail@boanderson.me>
 
-Jens Schmidt <farblos@vodafonemail.de> writes:
+git-credential-osxkeychain has largely fallen behind other external
+credential helpers in the features it supports, and hasn't received any
+functional changes since 2013. As it stood, osxkeychain failed seven tests
+in the external credential helper test suite:
 
-> It seems that "git" does not have any hooks to pass arbitrary
-> additional parameters to "gpg", right?  So my only reasonable
-> option would be a Emacs/Magit-specific "gpg"-wrapper that adds
-> command line parameter "--pinentry-mode loopback" to the wrapped
-> "gpg" executable.
+not ok 8 - helper (osxkeychain) overwrites on store
+not ok 9 - helper (osxkeychain) can forget host
+not ok 11 - helper (osxkeychain) does not erase a password distinct from input
+not ok 15 - helper (osxkeychain) erases all matching credentials
+not ok 18 - helper (osxkeychain) gets password_expiry_utc
+not ok 19 - helper (osxkeychain) overwrites when password_expiry_utc changes
+not ok 21 - helper (osxkeychain) gets oauth_refresh_token
 
-Correct.  You can point your gpg.program configuration variable at
-your wrapper, perhaps
 
-    $ cat >"$HOME/bin/mygpg-with-pinentry" <<\EOF
-    #!/bin/sh
-    exec gpg --pinentry-mode loopback "$@"
-    EOF
-    $ chmod +x "$HOME/bin/mygpg-with-pinentry"
-    $ git config gpg.openpgp.program "$HOME/bin/mygpg-with-pinentry"
+osxkeychain also made use of macOS APIs that had been deprecated since 2014.
+Replacement API was able to be used without regressing the minimum supported
+macOS established in 5747c8072b (contrib/credential: avoid fixed-size buffer
+in osxkeychain, 2023-05-01).
 
-or something like that.  It is unfortunate that
+After this set of patches, osxkeychain passes all tests in the external
+credential helper test suite.
 
-    $ git config gpg.openpgp.program "gpg --pinentry-mode loopback"
+Bo Anderson (4):
+  osxkeychain: replace deprecated SecKeychain API
+  osxkeychain: erase all matching credentials
+  osxkeychain: erase matching passwords only
+  osxkeychain: store new attributes
 
-does not work.
+ contrib/credential/osxkeychain/Makefile       |   3 +-
+ .../osxkeychain/git-credential-osxkeychain.c  | 376 ++++++++++++++----
+ 2 files changed, 310 insertions(+), 69 deletions(-)
+
+
+base-commit: 3e0d3cd5c7def4808247caf168e17f2bbf47892b
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1667%2FBo98%2Fosxkeychain-update-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1667/Bo98/osxkeychain-update-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/1667
+-- 
+gitgitgadget
