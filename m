@@ -1,226 +1,189 @@
-Received: from renault.us.lt (renault.us.lt [79.98.26.146])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f48.google.com (mail-ed1-f48.google.com [209.85.208.48])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7637F1CD15
-	for <git@vger.kernel.org>; Sat, 17 Feb 2024 07:44:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=79.98.26.146
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F24E69DE7
+	for <git@vger.kernel.org>; Sat, 17 Feb 2024 12:45:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708155872; cv=none; b=nT0e3RyDwb00bgcB7hZbaK2hqXL+0zsrnASbLWm8WBtFtfo9RkP2ld5hyB3Sl1KIp/JSjD4p34YvpUJEdRYtmdFltkPHdIrDQ9dh0tEEkRuD1+JuvmLMw7hWys++bePgRaxxUL6nlFaX37PSwQb1BOu6h/WeDvxjs3tCcmUVMfU=
+	t=1708173959; cv=none; b=sGTQrkgCMb5C0xsih0Km1tqtcVTw85DiWN4zs+7J4T9/nVgiAlyQ0BjN5X3nhS5VO35Di8cVX77YrBZKpDP42UpHz3lS17BsttMr2yzGqI1aEsLG6hlh2vMvWmgMUooK8OyXCyHB9QXMPQSzi+i9Fi2P0PAdw8Vk9RzM1Aj+FuY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708155872; c=relaxed/simple;
-	bh=q01T5+JXuB2fq6CXFmOWWJM2dHTX7xyKFwGP2gDcYrk=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sJx6fDk5kU1Lxr1DrwCQ25i18AnYHk691A4OEPZ2NRsNAeXALonzElUR9Q70ow6jQpY/hrYxEOTOKwY4ZgAI81/Xie4m7cuOsA/vvQpfB+dPsnZe5BRBct+Gb42bit518Byv8dju/RuER0J9x7+DryUK9yMk/opLmFIBsMRvpaA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kipras.org; spf=pass smtp.mailfrom=kipras.org; arc=none smtp.client-ip=79.98.26.146
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kipras.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kipras.org
-Received: from [157.230.0.129] (helo=localhost.localdomain)
-	by renault.us.lt with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
-	(Exim 4.94.2)
-	(envelope-from <kipras@kipras.org>)
-	id 1rbFMs-0002Rr-E9; Sat, 17 Feb 2024 09:44:15 +0200
-From: Kipras Melnikovas <kipras@kipras.org>
-To: git@vger.kernel.org
-Cc: gitster@pobox.com,
-	greenfoo@u92.eu,
-	Kipras Melnikovas <kipras@kipras.org>
-Subject: [PATCH v3] mergetools: vimdiff: use correct tool's name when reading mergetool config
-Date: Sat, 17 Feb 2024 09:43:43 +0200
-Message-ID: <20240217074343.12608-1-kipras@kipras.org>
-X-Mailer: git-send-email 2.43.1
-In-Reply-To: <20240215142002.36870-1-kipras@kipras.org>
-References: <20240215142002.36870-1-kipras@kipras.org>
+	s=arc-20240116; t=1708173959; c=relaxed/simple;
+	bh=ZxDfctFJNp1zAX1B6Z6EjUTIcr7EyEZNr/1j6D4/Rn8=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=u53S+OUL6TNe307eZCSwMwBVyWeF052CqiGT5/sCjMcbv7EZDjsdc4O614QU4yY2nJACwAc26FJ7yBVT1Rs9+Lna8bsm7b/WesHx63Z/xj/YaAJPqlFYH1VyXY4uwF/AaUvIQxlJYsT4IyU0OiB1F2+FBQlN+7RZni4crX2V7iQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=faXJnBbn; arc=none smtp.client-ip=209.85.208.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="faXJnBbn"
+Received: by mail-ed1-f48.google.com with SMTP id 4fb4d7f45d1cf-563d696ce87so2896127a12.0
+        for <git@vger.kernel.org>; Sat, 17 Feb 2024 04:45:57 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1708173956; x=1708778756; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=jURYZMEL6sKlOMkhdXZ3ReWl/LavQ2AW5sLJBKPx4KQ=;
+        b=faXJnBbnur7ItbgIUlSx9qzpHszxZWO5Kintn84CEloSrpfNj+PUVEh1ShBOdg57fe
+         M40mlKwJGISZcGOQhbmN/vD/hfuIkX9ZjjWeUgRz2Q4ed0WpCPVVcZ4t9yx44XkLVCFP
+         oqTd/u3M3kL4B7wrKyElQv8vORLh5NbRnBS3eyAo/qxP/gkyPcGlPk6yNiVuIMFkOW5c
+         Ue7iWU6hFsSanL/ytooUHBZcZPeb1XOqikukoVGWpzSa0fBNZU4oe4fAF/TMzxTsl8pH
+         YDBuoQDU2FXUAHJ2frMz7wVBGrxxnj+mOkOBXDrRUW6lo72d0O7BiB/ny8+jcA8+Dxb9
+         WtEw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1708173956; x=1708778756;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=jURYZMEL6sKlOMkhdXZ3ReWl/LavQ2AW5sLJBKPx4KQ=;
+        b=XXJ1ADSedu9k1tRiPIQ/dAYYV747TO8AWeeT1AeNreK3fuWSPlGiWx+sGP+AC5lZht
+         U8kQVFjvggY8uhfrAtV0dOawa9ARdZhcYcbFhIFqgCK9b/bxdybID0CbkdTO5E0YY1NV
+         4Jsi/OifFqtpiQc5xpqqR/E84F9/rHK50UOZLdTBOYY6Tx5FMPfGXwvcZDO4d7lCFI5s
+         /cxtj2bFf6wErLJ270Tn9iwKGNisiE7ySVf0dIb8u7/Eedkz5HaRT8rl5GEuhiiH5D3B
+         UDwhsss75kpy4O1OIGy4tVoE+GbKLTrjrHK+1EDJHIR44fJDiOLK6tMEdiDdcSn//I3L
+         babA==
+X-Forwarded-Encrypted: i=1; AJvYcCWPOz5zXyjDJn8Z+AROXIl9+mUmmQ9m9QIRLt4zgTmR+Jm6oWZVQc3jQmIwEYbkIimGxgeVxYUucKeayPxhCJoSw6cW
+X-Gm-Message-State: AOJu0YwvVE1vZ4yLACMs8pxsOjQ5yxsaJOnk7G9AzV+zMXoXLqWO3Q5/
+	7lRu7W8y9tHcGnCkFDzUa8nbSrRVZuVdY8OkmhWc1dNJ8NrZMvmEKZkBcjbt7IIjisTSUsBOK4o
+	RKmEwV/CIviUxYiPyDAFuzddTVWw=
+X-Google-Smtp-Source: AGHT+IEtSDxg/vqUrhrdeGNVJFyZiX0NbYze9QA7wNKxSFPmaQhkEib9RhUW0qg81L5RCXKrHfMz9goFWmGOCzbN4hk=
+X-Received: by 2002:a05:6402:2b8f:b0:561:3704:329c with SMTP id
+ fj15-20020a0564022b8f00b005613704329cmr10401237edb.8.1708173955592; Sat, 17
+ Feb 2024 04:45:55 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Antivirus-Scanner: Clean mail though you should still use an Antivirus
-X-Authenticated-Id: kipras
+References: <20240205204932.16653-1-maarten.bosmans@vortech.nl>
+ <20240205204932.16653-2-maarten.bosmans@vortech.nl> <xmqqil32l0i6.fsf@gitster.g>
+ <CA+CvcKTtcHCCKucQ0h1dnaDAMNfErJ+a1CXEVi=ZE5dv57Tb3A@mail.gmail.com>
+ <xmqqy1bxiiop.fsf@gitster.g> <20240213080014.GB2225494@coredump.intra.peff.net>
+ <CA+CvcKR9sH=qZB4oZvX9RWd+4H3Bq8WV_qUOiSj_Tsf=Dr_Xvw@mail.gmail.com> <20240215150430.GA3453@coredump.intra.peff.net>
+In-Reply-To: <20240215150430.GA3453@coredump.intra.peff.net>
+From: Maarten Bosmans <mkbosmans@gmail.com>
+Date: Sat, 17 Feb 2024 13:45:39 +0100
+Message-ID: <CA+CvcKSQCUukfLNnRkmTp=K=aXBRaxQnattfL+QexgOsYX18nA@mail.gmail.com>
+Subject: Re: [PATCH 1/4] notes: print note blob to stdout directly
+To: Jeff King <peff@peff.net>
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org, 
+	Teng Long <dyroneteng@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 
-The /mergetools/vimdiff script, which handles both vimdiff, nvimdiff
-and gvimdiff mergetools (the latter 2 simply source the vimdiff script), has a
-function merge_cmd() which read the layout variable from git config, and it
-would always read the value of mergetool.**vimdiff**.layout, instead of the
-mergetool being currently used (vimdiff or nvimdiff or gvimdiff).
+Op do 15 feb 2024 om 16:04 schreef Jeff King <peff@peff.net>:
+>
+> On Thu, Feb 15, 2024 at 08:46:02AM +0100, Maarten Bosmans wrote:
+>
+> > > How about:
+> > >
+> > >   cat some_commit_ids |
+> > >   git show --stdin -s -z --format='%H%n%N'
+> > >
+> > Wouldn't that fail horribly with non-text blobs?
+>
+> Yes, if you have NULs embedded in your notes then it won't work. Any
+> batch output format would require byte counts, then. If we wanted to add
+> a feature to support that, I would suggest one of:
+>
+>   - teach the pretty-print formatter a new placeholder to output the
+>     number of bytes in an element. Then you could do something like
+>     "%H %(size:%N)%n%N", but it would be generally useful for other
+>     cases, too.
+>
+>   - teach the pretty-print formatter a variant of %N that outputs only
+>     the oid of the note, note the note content itself. And then you
+>     could do something like:
+>
+>       git log --format='%(note:oid) %H' |
+>       git cat-file --batch='%(objectname) %(objectsize) %(rest)'
+>
+>     to get the usual cat-file output of each note blob, but associated
+>     with the commit it's attached to (the "%(rest)" placeholder for
+>     cat-file just relays any text found after the object name of each
+>     line). You might need to do some scripting between the two to handle
+>     commits with no note.
+>
+> Of the two, I'd guess that the second one is a lot less work to
+> implement (on the Git side; on the reading side it's a little more
+> involved, but still should be a constant number of processes).
 
-It looks like in 7b5cf8be18 (vimdiff: add tool documentation, 2022-03-30),
-we explained the current behavior in Documentation/config/mergetool.txt:
+The second one is attractive for another reason than implementation
+simplicity. While the first one offers more flexibility, the second
+reuses the existing cat-file batch format, so the interface between
+git and scripts is familiar and consistent.
 
-```
-mergetool.vimdiff.layout::
-	The vimdiff backend uses this variable to control how its split
-	windows look like. Applies even if you are using Neovim (`nvim`) or
-	gVim (`gvim`) as the merge tool. See BACKEND SPECIFIC HINTS section
-```
+> One variant of the second one is to use "git notes list". For example,
+> you can get all notes via cat-file like this right now:
+>
+>   git notes list |
+>   git cat-file --batch='%(objectname) %(objectsize) %(rest)'
 
-which makes sense why it's explained this way - the vimdiff backend is used by
-gvim and nvim. But the mergetool's configuration should be separate for each tool,
-and indeed that's confirmed in same commit at Documentation/mergetools/vimdiff.txt:
+So the cat-file batch output is suitable for blobs containing newline
+or NUL characters. But I struggle a bit with what would be an easy way
+of using this format in a shell script. Something with multiple read
+and read -N commands reading from the output, I guess.
+The git codebase has `extract_batch_output()` in t1006. This uses a
+separate perl invocation to parse the cat-file output, which confirms
+my suspicion there isn't a straight-forward way to do this in e.g.
+just a bash script.
 
-```
-Variants
+That was why my first steps were to accept that a launching a separate
+process per note in a bash loop is a pretty clear and well understood
+idiom in shell scripts and try to make the git part of that a bit more
+efficient.
 
-Instead of `--tool=vimdiff`, you can also use one of these other variants:
-  * `--tool=gvimdiff`, to open gVim instead of Vim.
-  * `--tool=nvimdiff`, to open Neovim instead of Vim.
+> You can get individual notes by asking for "git notes list <commit>",
+> but it will only take one at a time. So another easy patch would be
+> something like (indentation left funny to make the diff more readable):
+>
+> diff --git a/builtin/notes.c b/builtin/notes.c
+> index e65cae0bcf..5fdad5fb8f 100644
+> --- a/builtin/notes.c
+> +++ b/builtin/notes.c
+> @@ -446,22 +446,22 @@ static int list(int argc, const char **argv, const char *prefix)
+>                 argc = parse_options(argc, argv, prefix, options,
+>                                      git_notes_list_usage, 0);
+>
+> -       if (1 < argc) {
+> -               error(_("too many arguments"));
+> -               usage_with_options(git_notes_list_usage, options);
+> -       }
+> -
+>         t = init_notes_check("list", 0);
+>         if (argc) {
+> -               if (repo_get_oid(the_repository, argv[0], &object))
+> -                       die(_("failed to resolve '%s' as a valid ref."), argv[0]);
+> +               retval = 0;
+> +               while (*++argv) {
+> +               if (repo_get_oid(the_repository, *argv, &object))
+> +                       die(_("failed to resolve '%s' as a valid ref."), *argv);
+>                 note = get_note(t, &object);
+>                 if (note) {
+> -                       puts(oid_to_hex(note));
+> -                       retval = 0;
+> +                       if (argc > 1)
+> +                               printf("%s %s\n", oid_to_hex(note), oid_to_hex(&object));
+> +                       else
+> +                               puts(oid_to_hex(note));
+>                 } else
+> -                       retval = error(_("no note found for object %s."),
+> +                       retval |= error(_("no note found for object %s."),
+>                                        oid_to_hex(&object));
+> +               }
+>         } else
+>                 retval = for_each_note(t, 0, list_each_note, NULL);
+>
+>
+> That would allow:
+>
+>   git rev-list ... |
+>   xargs git notes list |
+>   git cat-file --batch='%(objectname) %(objectsize) %(rest)'
+>
+> We could even add a "--stdin" mode to avoid the use of xargs.
 
-When using these variants, in order to specify a custom layout you will have to
-set configuration variables `mergetool.gvimdiff.layout` and
-`mergetool.nvimdiff.layout` instead of `mergetool.vimdiff.layout`
-```
+Yes, a --stdin mode for `git notes list` would be a useful building
+block for scripting indeed.
+I'll probably give it a try when this patch series succeeds.
 
-So it looks like we just forgot to update the 1 part of the vimdiff script
-that read the config variable. Cheers.
-
-Though, for backward compatibility, I've kept the mergetool.vimdiff
-fallback, so that people who unknowingly relied on it, won't have their
-setup broken now.
-
-Signed-off-by: Kipras Melnikovas <kipras@kipras.org>
----
-
-Here's some variants I considered for mergetool.<vimdiff variant>.layout
-in Documentation/config/mergetool.txt, but discarded for a shorter
-version. Feel free to pick & edit the final.
-
-a)
-	The `<vimdiff variant>` is any of `vimdiff`, `nvimdiff`, `gvimdiff`. When
-	you run `git mergetool` with `--tool=<vimdiff variant>`, Git will consult
-	`mergetool.<vimdiff variant>.layout` to determine the tool's layout. If it's
-	not specified, `vimdiff`'s is used as fallback. If that too is not available,
-	a default layout with 4 windows is used. See BACKEND SPECIFIC HINTS section
-ifndef::git-mergetool[]
-	in linkgit:git-mergetool[1]
-endif::[]
-	for details.
-
-b)
-	Configure a custom layout for your mergetool. The `<variant>` is any
-	of `vimdiff`, `nvimdiff`, `gvimdiff`.
-
-	Upon launching `git mergetool` with `--tool=<variant>` (or without
-	`--tool` if `merge.tool` is configured as `<variant>`), Git
-	will consult `mergetool.<vimdiff variant>.layout` to determine the tool's
-	layout.  If the variant-specific config is not available, `vimdiff`'s is
-	used as fallback. If that too is not available, a default layout with 4
-	windows will be used. See BACKEND SPECIFIC HINTS section
-ifndef::git-mergetool[]
-	in linkgit:git-mergetool[1]
-endif::[]
-	for details.
-
-
-The ifdef + ifndef is used to avoid an extra space before the final "."
-
-
-Range-diff against v2:
-1:  070280d95d ! 1:  60be87c3d5 mergetools: vimdiff: use correct tool's name when reading mergetool config
-    @@ Documentation/config/mergetool.txt: mergetool.meld.useAutoMerge::
-     -	The vimdiff backend uses this variable to control how its split
-     -	windows appear. Applies even if you are using Neovim (`nvim`) or
-     -	gVim (`gvim`) as the merge tool. See BACKEND SPECIFIC HINTS section
-    -+mergetool.{g,n,}vimdiff.layout::
-    -+	The vimdiff backend uses this variable to control how its split windows
-    -+	appear. Use `mergetool.vimdiff` for regular Vim, `mergetool.nvimdiff` for
-    -+	Neovim and `mergetool.gvimdiff` for gVim to configure the merge tool. See
-    -+	BACKEND SPECIFIC HINTS section
-    - ifndef::git-mergetool[]
-    - 	in linkgit:git-mergetool[1].
-    +-ifndef::git-mergetool[]
-    +-	in linkgit:git-mergetool[1].
-    ++mergetool.<vimdiff variant>.layout::
-    ++	Git's vimdiff backend uses this variable to control how the split windows of
-    ++	`<vimdiff variant>` appear. Here `<vimdiff variant>` is any of `vimdiff`,
-    ++	`nvimdiff`, `gvimdiff`. To configure the layout and use the tool, see the
-    ++	`BACKEND SPECIFIC HINTS`
-    ++ifdef::git-mergetool[]
-    ++	section.
-    ++endif::[]
-    ++ifndef::git-mergetool[]
-    ++	section in linkgit:git-mergetool[1].
-      endif::[]
-    +-	for details.
-    + 
-    + mergetool.hideResolved::
-    + 	During a merge, Git will automatically resolve as many conflicts as
-     
-      ## mergetools/vimdiff ##
-     @@ mergetools/vimdiff: diff_cmd_help () {
-    @@ mergetools/vimdiff: diff_cmd_help () {
-     +	TOOL=$1
-      
-     -	case "$1" in
-    -+	layout=$(git config mergetool.$TOOL.layout)
-    ++	layout=$(git config "mergetool.$TOOL.layout")
-     +
-    -+	# backwards-compatibility:
-    ++	# backward compatibility:
-     +	if test -z "$layout"
-     +	then
-     +		layout=$(git config mergetool.vimdiff.layout)
-
- Documentation/config/mergetool.txt | 17 ++++++++++-------
- mergetools/vimdiff                 | 12 ++++++++++--
- 2 files changed, 20 insertions(+), 9 deletions(-)
-
-diff --git a/Documentation/config/mergetool.txt b/Documentation/config/mergetool.txt
-index 294f61efd1..f79c798b74 100644
---- a/Documentation/config/mergetool.txt
-+++ b/Documentation/config/mergetool.txt
-@@ -45,14 +45,17 @@ mergetool.meld.useAutoMerge::
- 	value of `false` avoids using `--auto-merge` altogether, and is the
- 	default value.
- 
--mergetool.vimdiff.layout::
--	The vimdiff backend uses this variable to control how its split
--	windows appear. Applies even if you are using Neovim (`nvim`) or
--	gVim (`gvim`) as the merge tool. See BACKEND SPECIFIC HINTS section
--ifndef::git-mergetool[]
--	in linkgit:git-mergetool[1].
-+mergetool.<vimdiff variant>.layout::
-+	Git's vimdiff backend uses this variable to control how the split windows of
-+	`<vimdiff variant>` appear. Here `<vimdiff variant>` is any of `vimdiff`,
-+	`nvimdiff`, `gvimdiff`. To configure the layout and use the tool, see the
-+	`BACKEND SPECIFIC HINTS`
-+ifdef::git-mergetool[]
-+	section.
-+endif::[]
-+ifndef::git-mergetool[]
-+	section in linkgit:git-mergetool[1].
- endif::[]
--	for details.
- 
- mergetool.hideResolved::
- 	During a merge, Git will automatically resolve as many conflicts as
-diff --git a/mergetools/vimdiff b/mergetools/vimdiff
-index 06937acbf5..97e376329b 100644
---- a/mergetools/vimdiff
-+++ b/mergetools/vimdiff
-@@ -371,9 +371,17 @@ diff_cmd_help () {
- 
- 
- merge_cmd () {
--	layout=$(git config mergetool.vimdiff.layout)
-+	TOOL=$1
- 
--	case "$1" in
-+	layout=$(git config "mergetool.$TOOL.layout")
-+
-+	# backward compatibility:
-+	if test -z "$layout"
-+	then
-+		layout=$(git config mergetool.vimdiff.layout)
-+	fi
-+
-+	case "$TOOL" in
- 	*vimdiff)
- 		if test -z "$layout"
- 		then
-
-base-commit: 3e0d3cd5c7def4808247caf168e17f2bbf47892b
--- 
-2.43.1
-
+Maarten
