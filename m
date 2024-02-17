@@ -1,62 +1,62 @@
-Received: from mail-lj1-f178.google.com (mail-lj1-f178.google.com [209.85.208.178])
+Received: from mail-wr1-f47.google.com (mail-wr1-f47.google.com [209.85.221.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A7C380042
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B508A8004A
 	for <git@vger.kernel.org>; Sat, 17 Feb 2024 23:35:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.178
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708212903; cv=none; b=YCUAOvGCyp/qqVrdkZS/yo6h172NzE+zbpgEMkuKVWaqLx4i7m1zz3/TFuYsN1lXDeZzsV206xTh9VPuwqeIpkbx5LlsqIbdYoHhkRu9cpDH1PFIpp87g0REm20yokb0tDyT0X3OaCm5nOM/JkbSsS8CfwlTHYptUUCd+rkw2Kk=
+	t=1708212904; cv=none; b=JfjlimHOgYW4tl63IOEgCjtwNbE1vOetUh3ZKN3hbHeFfj/bD0QQ1N2ZUnhHlEYb2irhOW8mHTeXFI0kNRp/+nCZ1i0uZnaEXqLzIdZGTKqm2+iF8yeMlDFsGanmar/m8OglWpHjsrS5c1TJXJx5e+Sf9RbmnVqqh5Mo3iHwe2g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708212903; c=relaxed/simple;
-	bh=gs6nnzFRGCUkPVsUkhaMnRYwHqjo2+l7oRX6zD+wDCA=;
+	s=arc-20240116; t=1708212904; c=relaxed/simple;
+	bh=F1NycC4EbjBByTSH5lB0vzLaycThwC2dpbQy+fLogFs=;
 	h=Message-ID:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=jKl3olQOMXwn1/RoRmOeAHWRGZWAPENWFMKxKjoZf9w5oMqEX9H0TeFzDLCDA563U8JJeSvc4rstWSp3os9zazvGEHyJrnqYYMuIAWeqNLanFHbPUwuDVGJJlmvRwUQ1xVv3orlMXXk3yO9/kvUM0rfSY4hNxMeYuCW4tt8Q2GI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=nBSRwuMg; arc=none smtp.client-ip=209.85.208.178
+	 MIME-Version:To:Cc; b=sZrJdU2MHWccCXdOZvNfo/Ihreetmiz2Ei/TMbEJ0gVoQr8iGjfqaktDeyAt78ZP148AiKr5Pv25RSB6MVn/yta+NKUSE2xZMwE29ktWtRHwAK+2pBrGD8fQaYQSkMl7DzhNJdrU0NIHFMsIhQBmqnzuRV8I0r/r5qYwRSSlnBI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=IfAXApXn; arc=none smtp.client-ip=209.85.221.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nBSRwuMg"
-Received: by mail-lj1-f178.google.com with SMTP id 38308e7fff4ca-2d1094b5568so42894651fa.1
-        for <git@vger.kernel.org>; Sat, 17 Feb 2024 15:35:01 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IfAXApXn"
+Received: by mail-wr1-f47.google.com with SMTP id ffacd0b85a97d-33d44d78e5fso6659f8f.1
+        for <git@vger.kernel.org>; Sat, 17 Feb 2024 15:35:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20230601; t=1708212900; x=1708817700; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=ym+cgvQe/zgPnTgRyIPa1VB8AyqUW1kZLwDJyJ3v8LQ=;
-        b=nBSRwuMgDyiwCyI/bEJxI2IdRmj1An+2jb5xPIVQ7nDaWLqOqxQ00fwpvrtrAiuOIA
-         kGe8cV9kxCODXR47EjvZRxj+R7YtyUuD/PJahIielEU4XLiw1XpCTSkDPnj4omNXNlpc
-         E6TMsaiSX433MhSQO0uf+ouMvJ8bNJTK72agmNM7hQRdvpjydvu7bTs3mFza4SfgmN/A
-         QcICEWMxkxoenqcMBPvmHlLwicrNgYIdAPmYUTWz0NXXgJn8mJGvNa/MYVkDGnyElf5u
-         Xr8ahf2ilzjNJob9ebpAaP7+v2k8baqN4P9sBTMHSO31/Q41sCbqZgMK+jQ1dY4105ge
-         hmhg==
+        bh=l6cJKvxkeDZHNTPChkIA6Cm3kCYYihCcNkZPxmSdbj8=;
+        b=IfAXApXn924hic4Pr/egFf5Zb3i+1+izGVSDihmoCaYpt6w8+dUSs6cnJSBkq4jIRB
+         8pD/CJSzfkGBMASjP3P0zg5dbwmssw/ZcXSxW4AZ35v8EGrTU6PvWmyow1YCK9qSqRcz
+         Ky1zjQyEEPdzCEz4/JzsAFkKp52/H1q0y+ib7vwI1MelQP5ZCzbFKv3+CK+8q6vC2GY7
+         0Jx5G1RHWzUXRPWbwdmbNdM6fO8f4z95orsxJnkfukXCERmCrviFgTt76ef42G3283wj
+         JN2rHgCk4rqS476QrPAmMktuvMsSjpSG7zTNvc3y7ofjdD04bv8ujbkvcm8dFBuTpSHg
+         gWUw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20230601; t=1708212900; x=1708817700;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=ym+cgvQe/zgPnTgRyIPa1VB8AyqUW1kZLwDJyJ3v8LQ=;
-        b=xU5N3OV7A6TC+zWS9N2hjUWW6boH+B3A+hYa4zezAoMi5MVGW3o1/yjVz7oRXAHRF9
-         UJkmT4ZokIs+p6/ByNcIr+6qu1ZWbYaLYlHbZbKZFxF05X5iDolmr46frbwqitwHdGg/
-         yGz+tGCPdxXVXBoysK6EwK9P15+FAKGGQrNzhLVZX22P4dtEgLgIXWe21g9CnTmYh9iw
-         fpitiJrGLlQSwggdW7k6dIH+9GC7NI/k//JoU/vr17uTpl4AaABYZflUi3l3JDw55Avl
-         wl2T6J3qcu8nWWsXHttPZkmPbbgh6Qv4Yd6cQJLLeqPjVpAu/Hs81WAl84jLdrHmnr8J
-         LboQ==
-X-Gm-Message-State: AOJu0YzCjUZHi/qO77dXinnBTHLkZSoSt1XNKapnTX1e5HmPL9MzAW17
-	dm7aJqu/mJanW7sMfXpR+fSaXiITQx8weGmaXc/npiJr/cENvJgtKEgY9Kj6
-X-Google-Smtp-Source: AGHT+IGOqdFw0koXGOW2RicQSx6s/ASv/ePU/i1JFeXCvXZPHt4wbkFpjFFbglhcFxgGNbE0yZHMDQ==
-X-Received: by 2002:a2e:2243:0:b0:2d2:298a:dfc8 with SMTP id i64-20020a2e2243000000b002d2298adfc8mr1431561lji.47.1708212899488;
-        Sat, 17 Feb 2024 15:34:59 -0800 (PST)
+        bh=l6cJKvxkeDZHNTPChkIA6Cm3kCYYihCcNkZPxmSdbj8=;
+        b=URJIDQr8FQTQ/aHKaN29WCE8YuvClJe2/Tiw8Mq7SSRnoqpyf5Frbq9DNpEP4K7zvN
+         hRmGzLmUVZjq1GAFppfNRQZA6PdgwSWjokDB+OZwuqge0pjpASVPnChT4y8vPkPiUbOQ
+         rzJ88v2OTOonEIJU69K9AMbUHWnWFza6wfPYxXqEri2kiNZzx6Vgp+2L5kh0MbGjbuXz
+         +9+verYRgI/WXEh5YkHu0rsy0A5y4RuWobJRzlRkuoq10wkzXlKBZKKGSKQSSK9XVgXs
+         yM0B8WuN7z35QdJq2kIrKVu7wo2pBuKNKHoK9T8hp2U2+w0pC9Dv3N/aT7tv7mlBF3as
+         yBFg==
+X-Gm-Message-State: AOJu0YyfjbEqxDL/B1JFz5rKubySAn5Y0j83r9s1qxL9+BrmQZBie1uA
+	uf++lavdHtTcnzhQa0iApPA1ND5kYHwEoAvD5QnIVRPpnFfHLcsvxIzEXeMd
+X-Google-Smtp-Source: AGHT+IG0MDxLgcaFqwb++nTBtb10EZCqCKpslv9htcUlef5BvmYuunZKGGJKE+xRl2QCq1a0JEc/QQ==
+X-Received: by 2002:a5d:4c85:0:b0:33d:3cea:847e with SMTP id z5-20020a5d4c85000000b0033d3cea847emr293400wrs.21.1708212900029;
+        Sat, 17 Feb 2024 15:35:00 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 6-20020a05600c22c600b004120537210esm6460538wmg.46.2024.02.17.15.34.58
+        by smtp.gmail.com with ESMTPSA id cc13-20020a5d5c0d000000b0033d20b430c3sm5251447wrb.115.2024.02.17.15.34.59
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 17 Feb 2024 15:34:58 -0800 (PST)
-Message-ID: <08284fa8e845e28da3c9a85d06475d5fbeb5cfcb.1708212896.git.gitgitgadget@gmail.com>
+        Sat, 17 Feb 2024 15:34:59 -0800 (PST)
+Message-ID: <f7ac228aae69941032d904c3c6222216786c1d0e.1708212896.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1667.git.1708212896.gitgitgadget@gmail.com>
 References: <pull.1667.git.1708212896.gitgitgadget@gmail.com>
 From: "Bo Anderson via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Sat, 17 Feb 2024 23:34:54 +0000
-Subject: [PATCH 2/4] osxkeychain: erase all matching credentials
+Date: Sat, 17 Feb 2024 23:34:55 +0000
+Subject: [PATCH 3/4] osxkeychain: erase matching passwords only
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -72,30 +72,104 @@ Cc: Bo Anderson <mail@boanderson.me>,
 
 From: Bo Anderson <mail@boanderson.me>
 
-Other credential managers erased all matching credentials, as indicated
-by a test case that osxkeychain failed:
+Other credential helpers support deleting credentials that match a
+specified password. See 7144dee3ec (credential/libsecret: erase matching
+creds only, 2023-07-26) and cb626f8e5c (credential/wincred: erase
+matching creds only, 2023-07-26).
 
-    15 - helper (osxkeychain) erases all matching credentials
+Support this in osxkeychain too by extracting, decrypting and comparing
+the stored password before deleting.
+
+Fixes the following test failure with osxkeychain:
+
+    11 - helper (osxkeychain) does not erase a password distinct from
+    input
 
 Signed-off-by: Bo Anderson <mail@boanderson.me>
 ---
- contrib/credential/osxkeychain/git-credential-osxkeychain.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ .../osxkeychain/git-credential-osxkeychain.c  | 56 ++++++++++++++++++-
+ 1 file changed, 55 insertions(+), 1 deletion(-)
 
 diff --git a/contrib/credential/osxkeychain/git-credential-osxkeychain.c b/contrib/credential/osxkeychain/git-credential-osxkeychain.c
-index dc294ae944a..e9cee3aed45 100644
+index e9cee3aed45..9e742796336 100644
 --- a/contrib/credential/osxkeychain/git-credential-osxkeychain.c
 +++ b/contrib/credential/osxkeychain/git-credential-osxkeychain.c
-@@ -182,7 +182,8 @@ static OSStatus delete_internet_password(void)
- 	if (!protocol || !host)
+@@ -169,9 +169,55 @@ static OSStatus find_internet_password(void)
+ 	return result;
+ }
+ 
++static OSStatus delete_ref(const void *itemRef)
++{
++	CFArrayRef item_ref_list;
++	CFDictionaryRef delete_query;
++	OSStatus result;
++
++	item_ref_list = CFArrayCreate(kCFAllocatorDefault,
++				      &itemRef,
++				      1,
++				      &kCFTypeArrayCallBacks);
++	delete_query = create_dictionary(kCFAllocatorDefault,
++					 kSecClass, kSecClassInternetPassword,
++					 kSecMatchItemList, item_ref_list,
++					 NULL);
++
++	if (password) {
++		/* We only want to delete items with a matching password */
++		CFIndex capacity;
++		CFMutableDictionaryRef query;
++		CFDataRef data;
++
++		capacity = CFDictionaryGetCount(delete_query) + 1;
++		query = CFDictionaryCreateMutableCopy(kCFAllocatorDefault,
++						      capacity,
++						      delete_query);
++		CFDictionarySetValue(query, kSecReturnData, kCFBooleanTrue);
++		result = SecItemCopyMatching(query, (CFTypeRef *)&data);
++		if (!result) {
++			if (CFEqual(data, password))
++				result = SecItemDelete(delete_query);
++
++			CFRelease(data);
++		}
++
++		CFRelease(query);
++	} else {
++		result = SecItemDelete(delete_query);
++	}
++
++	CFRelease(delete_query);
++	CFRelease(item_ref_list);
++
++	return result;
++}
++
+ static OSStatus delete_internet_password(void)
+ {
+ 	CFDictionaryRef attrs;
++	CFArrayRef refs;
+ 	OSStatus result;
+ 
+ 	/*
+@@ -183,10 +229,18 @@ static OSStatus delete_internet_password(void)
  		return -1;
  
--	attrs = CREATE_SEC_ATTRIBUTES(NULL);
-+	attrs = CREATE_SEC_ATTRIBUTES(kSecMatchLimit, kSecMatchLimitAll,
-+				      NULL);
- 	result = SecItemDelete(attrs);
+ 	attrs = CREATE_SEC_ATTRIBUTES(kSecMatchLimit, kSecMatchLimitAll,
++				      kSecReturnRef, kCFBooleanTrue,
+ 				      NULL);
+-	result = SecItemDelete(attrs);
++	result = SecItemCopyMatching(attrs, (CFTypeRef *)&refs);
  	CFRelease(attrs);
  
++	if (!result) {
++		for (CFIndex i = 0; !result && i < CFArrayGetCount(refs); i++)
++			result = delete_ref(CFArrayGetValueAtIndex(refs, i));
++
++		CFRelease(refs);
++	}
++
+ 	/* We consider not found to not be an error */
+ 	if (result == errSecItemNotFound)
+ 		result = errSecSuccess;
 -- 
 gitgitgadget
 
