@@ -1,148 +1,228 @@
-Received: from fhigh8-smtp.messagingengine.com (fhigh8-smtp.messagingengine.com [103.168.172.159])
+Received: from sender4-of-o52.zoho.com (sender4-of-o52.zoho.com [136.143.188.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD78937140
-	for <git@vger.kernel.org>; Sun, 18 Feb 2024 13:03:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708261387; cv=none; b=nXw26Dd7a2DqKmgz2ia0O8EHsbnCpoPwiKlLjJNOq6unZO+L+xcWeqw7uZDf00fX2fOU0gZDzRvF3i3CBfMYvwl9oRt/HrkWidMN92CKk0oIZu+ife7eOJOOf61TomBJbg4j1as++by8rFHtRKJZrIiMyFCiLHIF9JaFEwYoap8=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708261387; c=relaxed/simple;
-	bh=UvSGfRXWsb4rVQdyDDBh0urX04SUfo7fDAej0O9kpbk=;
-	h=MIME-Version:Message-Id:In-Reply-To:References:Date:From:To:Cc:
-	 Subject:Content-Type; b=kx38KNHNR76Pc6ZN7SQUaMWi+O/IR3tXwJGTwAp73ntWoc6uKhL7q/slA2FlkN1VR97bz1ZgZVR9cU4y2tf5FY1orFT6V76q9YVgpeypKPvruaXvVH2Q5dxPEc4QAg6AtUJwKVtiTuxikqu6hUW0CgADpzwFY8WdLF5Ugsijteo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=khaugsbakk.name; spf=pass smtp.mailfrom=khaugsbakk.name; dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b=TqbM4ALf; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=HlQqFcOD; arc=none smtp.client-ip=103.168.172.159
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=khaugsbakk.name
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=khaugsbakk.name
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05AE96BFB1
+	for <git@vger.kernel.org>; Sun, 18 Feb 2024 14:48:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.52
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1708267741; cv=pass; b=Hie5v2ZTMpyj0FS+1oy+eG+p89xu9qknAa8vVPsWPXL9a7+PH/hFBnZSPrOjlxfrdLvrBk28QJd+CXOcUI0piRf7BunB9HxQAxP+8t5LOz6icMUgGT6RYcyDEjij+OlhlhdNEgXLPadwfGPjU0MLDCVEl336FOY4f3Z9E6553RY=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1708267741; c=relaxed/simple;
+	bh=N2h14mZhBrfg4DXBH9nzCvrQzMy2GQ4OvhXCiBCq6lw=;
+	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Date:Cc:
+	 Message-Id:References:To; b=ucPp/6tD/8Obf6jrxLB+RGZrsr3LNYdXFXuYPIgbgOAdv22UhHxyPmHZlhPgx0tVBjoZ6Zl8/R5F3ZYIlUj0nwTZxYujRv4k2Y/zjBgDTDpHBemCz7aug0JrMa6SouPwZA+v/0qUfrgJ3GU3lD193mMBuo1HOFw5gaOxjc5MVsQ=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=boanderson.me; spf=pass smtp.mailfrom=boanderson.me; dkim=pass (1024-bit key) header.d=boanderson.me header.i=mail@boanderson.me header.b=dnXTNAdI; arc=pass smtp.client-ip=136.143.188.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=boanderson.me
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=boanderson.me
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b="TqbM4ALf";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="HlQqFcOD"
-Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
-	by mailfhigh.nyi.internal (Postfix) with ESMTP id AADED114009C;
-	Sun, 18 Feb 2024 08:03:04 -0500 (EST)
-Received: from imap49 ([10.202.2.99])
-  by compute1.internal (MEProxy); Sun, 18 Feb 2024 08:03:04 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=khaugsbakk.name;
-	 h=cc:cc:content-transfer-encoding:content-type:content-type
-	:date:date:from:from:in-reply-to:in-reply-to:message-id
-	:mime-version:references:reply-to:subject:subject:to:to; s=fm3;
-	 t=1708261384; x=1708347784; bh=As4T3C86BU8K/aIQ5vJOTiSRWy8HczQ2
-	TF5LRdpybOM=; b=TqbM4ALf4k9r7MTIahsWYcGvXCXbwCadLxffWzwqS1oB2ym3
-	plI748a/uJGfPtHfVeNXJpt46qmoxJKu5kTcyS68H2qFBeNY1ydEnEX2+YyR7k77
-	zbQ4Xz11i9GgxJQ/9PUdY721UDW/2yMvLY4j/nGyYN3L3a2HVhKRu1UWnXvHy8HF
-	ZanJM4EXGepWSRXojKMLjFiFTBwBigK8KA8ff4iN8TRMgGHU4AD6Mmp2JMbtQX/+
-	h6KymkSEIRAUVgXx+ux8BmHwJqf4YFr2TBN4t34Ju0Dk2Z7MWfrpv+68RQJ2tG8j
-	U+UZJc0fPjd347eYyJvIRL4MtYigXHgulP8u6g==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1708261384; x=
-	1708347784; bh=As4T3C86BU8K/aIQ5vJOTiSRWy8HczQ2TF5LRdpybOM=; b=H
-	lQqFcODtrOIiWGeRxMWOkSJkmoH4651gV9e2ZqXUT57CQlYV2JD1fTtb3BNVc4Cj
-	cJPaf+PKz2xUNeRerOu93jWkxwaoMv2jp/BD25BknRHDQeeL0Rabjzw77P7nwc/R
-	YgGOoaFyOAauHQQoXu8sZvEQ24FCEhscjohwuUJJxB5l1mAjemIKukRF/EAjoLrM
-	11ctLMkKoOkyNnzGaCYaeDQJtbWDqF0IvMbL2gTlRVEFmbXKqtG5HX3dc0uJ1x7D
-	tadxAlgfkJeXzMyqzRk0ciliMepr78KQNmWzQdtga8W2QTW1Dpol5TiUycodatrO
-	YDMepKReKY7Qhyg7RFVJA==
-X-ME-Sender: <xms:CADSZSYU111OI4c6i99cjGM2sIh2f7akMjt-WSkKUL_wugHql8ETyHo>
-    <xme:CADSZVbUq_9b0cweXzbFsxncrgcG3eezB5vJJxtSSHWuFV2FY8M7SRVCcBTNxSeVM
-    1iVSuFbwqP1stbUyw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdeigdegkecutefuodetggdotefrodftvf
-    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
-    uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
-    fjughrpefofgggkfgjfhffhffvvefutgfgsehtqhertderreejnecuhfhrohhmpedfmfhr
-    ihhsthhofhhfvghrucfjrghughhssggrkhhkfdcuoegtohguvgeskhhhrghughhssggrkh
-    hkrdhnrghmvgeqnecuggftrfgrthhtvghrnhepvdevheeiudefheffvdetueevkeehhfel
-    iefgkedtieefudetueehueeftefffedunecuvehluhhsthgvrhfuihiivgeptdenucfrrg
-    hrrghmpehmrghilhhfrhhomheptghouggvsehkhhgruhhgshgsrghkkhdrnhgrmhgv
-X-ME-Proxy: <xmx:CADSZc8El4fTGtb2bxHpti8yOol1VSm7mo-51dg0ZmoJ2rWcNjhCqA>
-    <xmx:CADSZUpyVp9xwd9KkPZwNfJ8i5r2WCMix4bGP-biRR2h7PLDADVD6g>
-    <xmx:CADSZdrp-EYH-3ElGa1MFZJxDFQRkJSQtwqEw99akxmrxhxqnDxcQQ>
-    <xmx:CADSZeC8KdHHNi0RE0ITdXL_EaadGZxE9vhrKcj-_ikeY1vNTRYjhw>
-Feedback-ID: i2671468f:Fastmail
-Received: by mailuser.nyi.internal (Postfix, from userid 501)
-	id 4396C15A0092; Sun, 18 Feb 2024 08:03:04 -0500 (EST)
-X-Mailer: MessagingEngine.com Webmail Interface
-User-Agent: Cyrus-JMAP/3.11.0-alpha0-144-ge5821d614e-fm-20240125.002-ge5821d61
+	dkim=pass (1024-bit key) header.d=boanderson.me header.i=mail@boanderson.me header.b="dnXTNAdI"
+ARC-Seal: i=1; a=rsa-sha256; t=1708267735; cv=none; 
+	d=zohomail.com; s=zohoarc; 
+	b=ZRibY4/X8tQbt6Mw4KxTbAcQJ4G+s26oXiquKRRhRcm+PfEw+BAOHSlCNpFPX0y0YyRUlzX4V9mdpWbQ8joknULFoKU3B+sxSIHpQa02KyLwNisAadKa4C0crWY9bD9EFUzWi+AzR5O+O+qNcX8oW01Yt7Nhgnip2v0LFe6fr9s=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
+	t=1708267735; h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=WOwpDzTJmqO3MGho9e1V5H7sUUSD5dtz3S5D76NCZkA=; 
+	b=ZToWmt+VetO24C3CP1uriF+2TGHPg3uNLpze0pCIxIbVKPZKrDeL7tbF0fWEas5LPbjNLcJ3Wx/lmxeODy3FT1TZecXrahMxFoqam4LJXIxkuW+9TuYYd4IhyqGEbXnk/2NnZq7N2GaLWJ4hAM2uZHRZzeUSwmkJiaMB9hj5Sqw=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+	dkim=pass  header.i=boanderson.me;
+	spf=pass  smtp.mailfrom=mail@boanderson.me;
+	dmarc=pass header.from=<mail@boanderson.me>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1708267735;
+	s=zoho; d=boanderson.me; i=mail@boanderson.me;
+	h=Content-Type:Mime-Version:Subject:Subject:From:From:In-Reply-To:Date:Date:Cc:Cc:Content-Transfer-Encoding:Message-Id:Message-Id:References:To:To:Reply-To;
+	bh=WOwpDzTJmqO3MGho9e1V5H7sUUSD5dtz3S5D76NCZkA=;
+	b=dnXTNAdIYVs5hX7Pgg/a/DHxmNm5n+Q4yNs6JqsJSqxAQhbAo6yGdnUHnq8Jna9r
+	aBFaRGIsuw2NNJ/WWT08IBqu+LnDDnC+vJGbHYCGokTo2jqTIPqA9VH943NpF2MAy21
+	EjRguIvUQjCjU3foMTcLyidJHwI5s5ccCd+sGSho=
+Received: from smtpclient.apple (w-65.cust-u5093.ip.static.uno.uk.net [212.105.168.65]) by mx.zohomail.com
+	with SMTPS id 1708267733608397.459673733846; Sun, 18 Feb 2024 06:48:53 -0800 (PST)
+Content-Type: text/plain;
+	charset=utf-8
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Message-Id: <2359c888-a061-44ed-9d69-2aea9e1d3d80@app.fastmail.com>
-In-Reply-To: <20240218114936.1121077-1-marcel@roethke.info>
-References: <20240218114936.1121077-1-marcel@roethke.info>
-Date: Sun, 18 Feb 2024 14:02:42 +0100
-From: "Kristoffer Haugsbakk" <code@khaugsbakk.name>
-To: =?UTF-8?Q?Marcel_R=C3=B6thke?= <marcel@roethke.info>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH] rerere: fix crash in during clear
-Content-Type: text/plain;charset=utf-8
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3774.400.31\))
+Subject: Re: [PATCH 1/4] osxkeychain: replace deprecated SecKeychain API
+From: Bo Anderson <mail@boanderson.me>
+In-Reply-To: <CAPig+cR_XYjArdYpU-qm+Wont=yEEXe5hANRyz+YRdhv=UZf=Q@mail.gmail.com>
+Date: Sun, 18 Feb 2024 14:48:41 +0000
+Cc: Bo Anderson via GitGitGadget <gitgitgadget@gmail.com>,
+ git@vger.kernel.org
 Content-Transfer-Encoding: quoted-printable
+Message-Id: <AFC4D25B-D6ED-4706-A804-CA0183B84604@boanderson.me>
+References: <pull.1667.git.1708212896.gitgitgadget@gmail.com>
+ <f7031316a043b36fac10ecf784d2294894967e7b.1708212896.git.gitgitgadget@gmail.com>
+ <CAPig+cR_XYjArdYpU-qm+Wont=yEEXe5hANRyz+YRdhv=UZf=Q@mail.gmail.com>
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-Mailer: Apple Mail (2.3774.400.31)
+X-ZohoMailClient: External
 
-Hi
+> On 18 Feb 2024, at 06:08, Eric Sunshine <sunshine@sunshineco.com> =
+wrote:
+>=20
+> I haven't studied the SecItem API, so I can't comment on the meat of
+> the patch, but I can make a few generic observations...
 
-> rerere: fix crash in during clear
+Thanks for taking a look!
 
-=E2=80=9Cin during clear=E2=80=9D? Did you mean =E2=80=9Cduring clear=E2=
-=80=9D?
+>> diff --git =
+a/contrib/credential/osxkeychain/git-credential-osxkeychain.c =
+b/contrib/credential/osxkeychain/git-credential-osxkeychain.c
+>> @@ -3,14 +3,39 @@
+>> -__attribute__((format (printf, 1, 2)))
+>> +#define ENCODING kCFStringEncodingUTF8
+>> +static CFStringRef protocol; /* Stores constant strings - not memory =
+managed */
+>> +static CFStringRef host;
+>> [...]
+>> +
+>> +static void clear_credential(void)
+>> +{
+>> +       if (host) {
+>> +               CFRelease(host);
+>> +               host =3D NULL;
+>> +       }
+>> +       [...]
+>> +}
+>> +
+>> +__attribute__((format (printf, 1, 2), __noreturn__))
+>=20
+> The addition of `__noreturn__` to the `__attribute__` seems unrelated
+> to the stated purpose of this patch. As such, it typically would be
+> placed in its own patch. If it really is too minor for a separate
+> patch, mentioning it in the commit message as a "While at it..." would
+> be helpful.
 
-On Sun, Feb 18, 2024, at 12:49, Marcel R=C3=B6thke wrote:
-> When rerere_clear is called, for instance when aborting a rebase, and
-> the current conflict does not have a pre or postimage recorded git
-> crashes with a SEGFAULT in has_rerere_resolution when accessing the
-> status member of struct rerere_dir. This happens because scan_rerere_d=
-ir
-> only allocates the status field in struct rerere_dir when a post or
-> preimage was found. In some cases a segfault may happen even if a post
-> or preimage was recorded if it was not for the variant of interest and
-> the number of the variant that is present is lower than the variant of
-> interest.
->
-> This patch solves this by making sure the status field is large enough
+Acknowledged. It is indeed a bit of a nothing change that doesn=E2=80=99t =
+really do much on its own, but when paired with the port variable =
+reorder could potentially make a =E2=80=9Cminor code cleanup=E2=80=9D =
+commit.
 
-You can simplify =E2=80=9CThis patch solves this=E2=80=9D to =E2=80=9CSo=
-lve this=E2=80=9D; see
-`SubmittingPatches` under =E2=80=9Cimperative-mood=E2=80=9D.
+>> +       va_start(args, allocator);
+>> +       while ((key =3D va_arg(args, const void *)) !=3D NULL) {
+>> +               const void *value;
+>> +               value =3D va_arg(args, const void *);
+>> +               if (value)
+>> +                       CFDictionarySetValue(result, key, value);
+>> +       }
+>> +       va_end(args);
+>=20
+> A couple related comments...
+>=20
+> If va_arg() ever returns NULL for `value`, the next iteration of the
+> loop will call va_arg() again, but calling va_arg() again after it has
+> already returned NULL is likely undefined behavior. At minimum, I
+> would have expected this to be written as:
+>=20
+> while (...) {
+>     ...
+>     if (!value)
+>         break;
+>     CFDictionarySetValue(...);
+> }
+>=20
+> However, isn't it a programmer error if va_arg() returns NULL for
+> `value`? If so, I'd think we'd want to scream loudly about that rather
+> than silently ignoring it. So, perhaps something like this:
+>=20
+> while (...) {
+>     ...
+>     if (!value) {
+>         fprintf(stderr, "BUG: ...");
+>         abort();
+>     }
+>     CFDictionarySetValue(...);
+> }
+>=20
+> Or, perhaps just call the existing die() function in this file with a
+> suitable "BUG ..." message.
+>=20
 
-> to accommodate for the variant of interest so it can be accesses witho=
-ut
-> checking if it is large enough.
+In this case it=E2=80=99s by design to accept and check for NULL values =
+as it greatly simplifies the code. Inputs to the credential helpers have =
+various optional fields, such as port and path. It is programmer error =
+to pass NULL to the SecItem API (runtime crash) so in order to simplify =
+having to check each individual field in all of the callers (and =
+probably ditch varargs since you can=E2=80=99t really do dynamic =
+varargs), I check the value here instead. That means you can do =
+something like:
 
-=E2=80=9Caccessed=E2=80=9D
+ create_dictionary(kCFAllocatorDefault,
+     kSecAttrServer, host,
+     kSecAttrPath, path, \
+     kSecAttrPort, port,
+     NULL)
 
->
-> An alternative solution would be to always check before accessing the
-> status field, but I think the chosen solution aligns better with the
-> assumptions made elsewhere in the code.
->
-> Signed-off-by: Marcel R=C3=B6thke <marcel@roethke.info>
-> ---
->  rerere.c | 3 +++
->  1 file changed, 3 insertions(+)
->
-> diff --git a/rerere.c b/rerere.c
-> index ca7e77ba68..3973ccce37 100644
-> --- a/rerere.c
-> +++ b/rerere.c
-> @@ -219,6 +219,9 @@ static void read_rr(struct repository *r, struct
-> string_list *rr)
->  		buf.buf[hexsz] =3D '\0';
->  		id =3D new_rerere_id_hex(buf.buf);
->  		id->variant =3D variant;
-> +		/* make sure id->collection->status has enough space
-> +		 * for the variant we are interested in */
+And it will only include the key-value pairs that have non-NULL values.
 
-Multi-line comments should have the delimiters on separate lines from
-the text. See `CodingGuidelines` under =E2=80=9CMulti-line comments=E2=80=
-=9D.
+It would indeed be programmer error to not pass key-value pairs, though =
+it is equally programmer error to not have a terminating NULL.
 
-> +		fit_variant(id->collection, variant);
->  		string_list_insert(rr, path)->util =3D id;
->  	}
->  	strbuf_release(&buf);
-> --
-> 2.43.2
+>> +       username_buf =3D (char *)CFStringGetCStringPtr(account_ref, =
+ENCODING);
+>> +       if (username_buf)
+>> +       {
+>> +               write_item("username", username_buf, =
+strlen(username_buf));
+>>             return;
+>> +       }
+>=20
+> According to the documentation for CFStringGetCStringPtr(), the
+> returned C-string is not newly-allocated, so the caller does not have
+> to free it. Therefore, can `username_buf` be declared `const char *`
+> rather than `char *` to make it clear to readers that nothing is being
+> leaked here? Same comment about the `(char *)` cast.
+>=20
+>> +       /* If we can't get a CString pointer then
+>> +        * we need to allocate our own buffer */
+>=20
+> Style:
+>=20
+> /*
+>  * Multi-line comments
+>  * are formatted like this.
+>  */
+>=20
+>> +       buffer_len =3D CFStringGetMaximumSizeForEncoding(
+>> +                       CFStringGetLength(account_ref), ENCODING) + =
+1;
+>> +       username_buf =3D xmalloc(buffer_len);
+>> +       if (CFStringGetCString(account_ref,
+>> +                               username_buf,
+>> +                               buffer_len,
+>> +                               ENCODING)) {
+>> +               write_item("username", username_buf, buffer_len - 1);
+>> +       }
+>> +       free(username_buf);
+>=20
+> Okay, this explains why `username_buf` is declared `char *` rather
+> than `const char *`. Typically, when we have a situation in which a
+> value may or may not need freeing, we use a `to_free` variable like
+> this:
+>=20
+> const char *username_buf;
+> char *to_free =3D NULL;
+> ...
+> username_buf =3D (const char *)CFStringGetCStringPtr(...);
+> if (username_buf) {
+>     ...
+>     return;
+> }
+> ...
+> username_buf =3D to_free =3D xmalloc(buffer_len);
+> if (CFStringGetCString(...))
+>     ...
+> free(to_free);
+>=20
+> But that may be overkill for this simple case, and what you have here
+> may be "good enough" for anyone already familiar with the API and who
+> knows that the `return` after CFStringGetCStringPtr() isn't leaking.
+
+Would it make sense to just have a comment paired with the =
+CFStringGetCStringPtr return explaining why it doesn=E2=80=99t need to =
+be freed there? I=E2=80=99m OK with the to_free variable however if =
+that=E2=80=99s clearer. Idea in my mind was pairing it based on =
+`xmalloc` but I can see why pairing based on variable is clearer.
+
