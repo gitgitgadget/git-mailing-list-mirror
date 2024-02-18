@@ -1,138 +1,153 @@
-Received: from DEU01-FR2-obe.outbound.protection.outlook.com (mail-fr2deu01on2119.outbound.protection.outlook.com [40.107.135.119])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qk1-f177.google.com (mail-qk1-f177.google.com [209.85.222.177])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 597956BB41
-	for <git@vger.kernel.org>; Sun, 18 Feb 2024 15:37:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.135.119
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708270654; cv=fail; b=p/tVIjkakbRPw5CpyAWzSL45s0eKW6Iap2kQzH7jtvxZwLCw5Ya2eYnJfz+xDNzs6mv5/GZUI9IEAhuGteORQ0S/X3S04WInLSy9HNMnW2u+Sl0xyxTLdPBYuMAxWDBhOwJkz77qU6KJdAmcOlfVydQYTbk0b7OQlRE80tbmn9A=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708270654; c=relaxed/simple;
-	bh=ch60xJhGxRhyQ5JfhnRNjhLlErTc65urTFxev6GcSdQ=;
-	h=From:To:Subject:Date:Message-ID:Content-Type:MIME-Version; b=S9HZ5q+uVELSVuSP4+T4CN1AIlgyWmqSnBJsDAWBP3djgt8leog39uUz4Ky1dUCqSKV995GeS4VOI52PtQ9bAEShQImDxa2GurtbDj5hzpFsYwf689bf250Lywc0BSWJc4A1eqRU1kWMWzxLHVt7VrfVR17ZZbhFI1d2UFwOdVI=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastec.de; spf=pass smtp.mailfrom=fastec.de; dkim=pass (1024-bit key) header.d=fastecgmbh.onmicrosoft.com header.i=@fastecgmbh.onmicrosoft.com header.b=Bzmrzxgn; arc=fail smtp.client-ip=40.107.135.119
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastec.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastec.de
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 390D8CA6B
+	for <git@vger.kernel.org>; Sun, 18 Feb 2024 17:54:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.177
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1708278891; cv=none; b=rBrj3BAen/PWEGhZDOMDZ2njQK7qpnrcUbTcwZeI6ekyhGDL7Z7eatYmm3fAkihquMu4IEvgwg8ytrcXOUvl1splkWOXCFr5b7WrC/Dt35MwEq6Uf4gHCYV5CpahbUBg77TDR9WWj6DUmMTtujDtmbvinuSRzMESvqDYecDeJ7I=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1708278891; c=relaxed/simple;
+	bh=nJ4lMZKcdd5J0OlooNytOZrWOUV2ooTfC64eWewkcEY=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=FtQ37mILH5dk/TayjnwKo2dAQhLVplxn4mI7gPRhsFl+pRdx3BS7vKlG1Cacfepmzu7aiFsisnpeV9vSR5P0wSSvCre8w6rQI8iquqC31gYISAb8oN2u1SQtnu7uQApXJl+nfEsalgOKHsz/A3IBICacJN3ypjwhheuHkvtt1Mg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=K2KO8CRI; arc=none smtp.client-ip=209.85.222.177
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=fastecgmbh.onmicrosoft.com header.i=@fastecgmbh.onmicrosoft.com header.b="Bzmrzxgn"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=mBfPQp/xM6SumfV45gQMoRfh/aH1w7EhNAWYC2yG/l7Kute2tO71hJW1JLlUIfGk+PVELhAcIPa5saqgtNcmAjgKjQMxDs7iGi7Y3Hf+xc6Y/ttDkPjGRg5WaJwQv/UWaJPr6M23bGydH2U+PAsRxktVRdgbkiYGi3cL0FX/qSHAwT56kt/h10dVUDXGJ1BlKlZNP0qX0J28WgzHfYDvD+Oz4DtmA7Jgsf73nrGINJehvm9G6SLtFwvdzHIZ4XRQD1c5eECzu+OJOoIRMVilCXZxgdCeH7FzJ9Get3BMau6ED14DtJ960XRidyiHVh6wIyHh/8nzNpJzlSjE+pvYpQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=ch60xJhGxRhyQ5JfhnRNjhLlErTc65urTFxev6GcSdQ=;
- b=aBsxYh/nFpQ3fkzrKhEg8rEEcOxelZjj+CBkdGiy89zT4dFQbdhKrvOGv1+xGd1YBxVa6pVtQZk0bxGAoEaq8r5eypVEO6bK3g86RbxQfnSYTqEpfZg1+6nzIUbQXIjLLg03oawteQrzGtCBtFRgiCit3DEZNCeX+61dv3MTm85wgyFC8gnRlhYukdpWtV/7Fw5d6wUBj9ACyTcJ5gOyo+oqsPN2FZBIp8QGSFZwzVJDsVZm5j/DoRu2xgX7fhXaRhCbTfrgYrT4aEhKjTYq4l8mkHxnMXRnUmIQNebiW3WekJbDaiWLeWszKoa6aKtiiqkKva5BDQ/yyd9izXLipQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=fastec.de; dmarc=pass action=none header.from=fastec.de;
- dkim=pass header.d=fastec.de; arc=none
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="K2KO8CRI"
+Received: by mail-qk1-f177.google.com with SMTP id af79cd13be357-7874a96a120so79380985a.3
+        for <git@vger.kernel.org>; Sun, 18 Feb 2024 09:54:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=fastecgmbh.onmicrosoft.com; s=selector1-fastecgmbh-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=ch60xJhGxRhyQ5JfhnRNjhLlErTc65urTFxev6GcSdQ=;
- b=Bzmrzxgnp81oSs+IaQ4hGh+AbCO8lnXARv28IOxhXj/L5qV1PO6G7/DkC84mCXZncli6kmnVZfO03BeJ5jZ2jc6IQlbIL6Njlt9BWZiekie+SkS+SSAeHjB4Rsa+NZJ1OMe150b3tRj/fC+v9QSyukcPL1UUheX8wkPNDR22yZQ=
-Received: from FR2P281MB1686.DEUP281.PROD.OUTLOOK.COM (2603:10a6:d10:8e::8) by
- BEUP281MB3619.DEUP281.PROD.OUTLOOK.COM (2603:10a6:b10:9b::11) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.7292.37; Sun, 18 Feb 2024 15:37:30 +0000
-Received: from FR2P281MB1686.DEUP281.PROD.OUTLOOK.COM
- ([fe80::6cc0:4279:43dd:b928]) by FR2P281MB1686.DEUP281.PROD.OUTLOOK.COM
- ([fe80::6cc0:4279:43dd:b928%3]) with mapi id 15.20.7292.033; Sun, 18 Feb 2024
- 15:37:29 +0000
-From: Dominik von Haller <vonhaller@fastec.de>
-To: "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Why does the includeif woks how it does?
-Thread-Topic: Why does the includeif woks how it does?
-Thread-Index: AdpigFX4rY/DF1D1RvOx6v4IWkYvIA==
-Date: Sun, 18 Feb 2024 15:37:29 +0000
-Message-ID:
- <FR2P281MB1686B7258CFB60A0F33FE108BA522@FR2P281MB1686.DEUP281.PROD.OUTLOOK.COM>
-Accept-Language: en-US, en-GB
-Content-Language: en-US
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=fastec.de;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: FR2P281MB1686:EE_|BEUP281MB3619:EE_
-x-ms-office365-filtering-correlation-id: 579e5d4e-d37e-4274-cd29-08dc30978462
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info:
- BfPEb3+VeEQD978dnft7+sgu3fBABUSLH7lZ9GGs1iQlR7DYuEPVGLL3id3i2Tr3TfQeaRgGi8OoofrCnrzPXfF5+w3/BT+grXeDxAdvreusf31/3HYfy8uobjcSDxFvINNA1BVnO9N9Z4zE701MnZDFIn8CsHfpOV+YeHahoLr53FIU8+qEQ6gheHpo275w/+26je3axEnSfC0a9+ABj7Vb1j2uiZlX3G/MCiUw0YD1KubtME4I1C8pVn/D2N7+tCC+Ws031DObQfGFzSZbaB9X1eWvcecNBIilU5QS5vtjhOtlTNsNwrEAgkds3RbTnr1rGzBH4D2evPOrwEizNbqFh0zPbqPhZsojFQlcCLfIya4VQVZ5bgCBB9vbi1ou3XxrW3eg0/kKsKFEFA2Gyt4RcjtBoQokojYNORULst30PT9Ri8u8cc+cqENIb+eZO+SdYzxnQdXukSSArjrSb1QnqEcyOyI68fuheb4REgO1Q5MpK91lxd25UCrlnuSoOco464Vp9tmMuDJ3J6HThu4My56OVyMXWUEgJCmcaCQdZ3x4x3iAVf0B6Ihu1cuGvMe4RvTY9BFPxa7hmYyzF8SJZG9NLUbo8EQtYf1qn6w=
-x-forefront-antispam-report:
- CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:FR2P281MB1686.DEUP281.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(13230031)(39830400003)(366004)(396003)(376002)(346002)(136003)(230922051799003)(64100799003)(451199024)(186009)(1800799012)(33656002)(83380400001)(86362001)(38070700009)(71200400001)(41300700001)(316002)(6506007)(7696005)(5660300002)(4744005)(9686003)(478600001)(2906002)(52536014)(64756008)(76116006)(66946007)(66556008)(66476007)(66446008)(966005)(8936002)(8676002)(6916009)(55016003)(122000001)(38100700002);DIR:OUT;SFP:1102;
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0:
- =?us-ascii?Q?WiGinV8ul4t1382MT8HgxSRLTTZ27tvKhKy1FQiCgji69QDmyy/lNGf2nGxg?=
- =?us-ascii?Q?Ibe/TRKUJaSD+TjlEHPL8B0QPO8cGnrE0RMFijVdDcVzWIpllBB9M8bkANhz?=
- =?us-ascii?Q?7MCkaHMn+Y2BaEHx/E7ZF4dUsp9WlTGtwbURfhLxINjP64fsPgunxVUn9zM6?=
- =?us-ascii?Q?wctZ9YbaY4E9mStvywtWVGqP+gdBRxLEbflChexjRIQ5e8l0WNvhtgROLC31?=
- =?us-ascii?Q?42o9z07VN5h5sG1Xe2VxiNDb4zrrqWHsRvMeTsyA4ZIR9tK67rolHaTpsc0s?=
- =?us-ascii?Q?+LpPqmca39GmEMBDwk16dU0QD82qIkI+aHakeehLaadSx9lWPWqeAs9nxKq0?=
- =?us-ascii?Q?1rndw6ZdzUatVjPaNHhDYYV71Om/1Ty0q6f1QwmfiGBpKurgvHVWv02Gyy/X?=
- =?us-ascii?Q?a+nTiH8kzIn7VUkOEUGK0Xk92fj1zEfveSuMx6KEUw20ABRPlyHx3j2nKtcg?=
- =?us-ascii?Q?nM5aW/YDe1Lby38smEkNzVUkd1228PM7Cf8pB6fCxqt5y9XiWoak4I8MHiiT?=
- =?us-ascii?Q?7lgQFEvvz9IjzNFQpjFPQV3eCUOe/IOb9rUHAQFItdUIKXzioVLhQikLSSYX?=
- =?us-ascii?Q?Sc55hveirFqu8dEm5dYuNPMr4fUIdTYgDfrxTvQ7Daxofp0EW5vGxGSSujRp?=
- =?us-ascii?Q?106xiegm19l6Pypb1rYyyl/L9yk9FKHRrZiTikN5bsPnUx8LXwh5gfXO+Yix?=
- =?us-ascii?Q?/Ap5T+yUmZMpWl3WAL2mDingITc/c5nSDVheExNWEh/fMjzzHLdySKAYs04/?=
- =?us-ascii?Q?alJYZbliv9McgyGgiyksfSUxGinSSDWKHx6eLwm7IID1Mptga9kcjrYVcTzk?=
- =?us-ascii?Q?vOzwOgZD7iYEX5gIeRY4SOFMYdff0IgGv8GDlr9YtIo6+NqJMkCzvK2RhyMP?=
- =?us-ascii?Q?RKo9IbNTLy6IoLyvmhsN4NwZsUuMPASVNIAGv3NiWEGpc87Gg4cJc5eROi3y?=
- =?us-ascii?Q?GIx0fHiErNXxXt2urumxGWVgs3VI1pq968SfLAMxG+XnJg2vzprO8murPCMx?=
- =?us-ascii?Q?upSq2489YZimH/JxxkE1armNvXYSMpiW3YMYY37BjJsl2ofuuitlaD9Ahapt?=
- =?us-ascii?Q?CNZB4xTLD1lNoLeBn2C30J0uaSyERaQXfTrtJC0zO8RDemDLyy2jxBU7lXWZ?=
- =?us-ascii?Q?m7frfCVaMC8VGIIyUSN8svuFLYoO/U4vYmhuzBZOVBX7BWaETz4s8mYxZyJX?=
- =?us-ascii?Q?Qh8m1Jtbhm5IZU0cep7o7SdV5I4xYkszYTwqV/oTE3mYWY8vhJj10omZTfUS?=
- =?us-ascii?Q?BYxRK9QxBI8/tA/Fw8dn3BFpQOPO1IoUQf0PAFmuVam7pChpyyn78xnAahmS?=
- =?us-ascii?Q?2w4aj3ENGBYH2UPf8MkhuHAy15JIuPKMX6XQlOg61iDstt3P+rMIUYuDns69?=
- =?us-ascii?Q?uok80OdrZ18UzxPjI0fGUhSRYxeMus7Kwt6NvAXuagb4+XMHGau6Rx2VxG+w?=
- =?us-ascii?Q?73G1M//uPMU5KoNxny0EQXEBJhNnitqKimhGRsP39NZNKbSY4ExT7b9IDTGP?=
- =?us-ascii?Q?vNCGv/jZnfhDUxFtcLEpsWYB+RBJN74P4m5Uupxfv/5hkfpsZvTit8SkLVT9?=
- =?us-ascii?Q?1xS3jz6s5Qdb/bkBBup4Y22+WJqbOJmw+JXYX48vWPYMFfa22Dlp8JKGRtEc?=
- =?us-ascii?Q?y5kksZkCOmQGOzGrQ7aLn+p9TCwTFGUbNBOc/5dNbKnZ?=
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+        d=gmail.com; s=20230601; t=1708278889; x=1708883689; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:to:subject:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=qpYzEWDtL49jCIf4wC0wBZav3tPo1rM8ilQZXLika0g=;
+        b=K2KO8CRITbLjy6DoUiH7Cfge16hp1LoiGQ5qNkWniP25l0PUSiLG8q+CQcgc+l8yj2
+         y9Sg9UxZK+ZYAMcEvyxpk8gyPTtnjP+L0QXvzUDoEugnvF7SlL6N7GibcdqKwktZ0yYx
+         jkdJ31gxQ3L1zVniHu5DfzivmdvsTVtxltw0cKDt2wNZ1WWiIuy+DJswLQ2bhaHt5MWs
+         iCLfW9/VKOWb3V7xi7EsomQdJFUPW7yE1fAxHnVFW6yrDwH7agYDvZZBbpjwV3M5Ebo/
+         wk1UVbsiL4Ig5mv+LV0ZJgSI+eBss3/4Fqe15ltAdFWgVbjIpBw7En2aG3Wyc3ln4s+J
+         H1Xw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1708278889; x=1708883689;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:to:subject:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=qpYzEWDtL49jCIf4wC0wBZav3tPo1rM8ilQZXLika0g=;
+        b=RUHghnY+h4HGupVvNCwexuODmNt4I9gDu4dmkA6wxV6DY4WeRT5l560ztcULk2mat5
+         gIdkKLPMZ24R4uSg5iJKAZeYYeGjhWpD4p1mL6fZgJW1LJ9YK+iIr3tLavWXT4gzkJgU
+         hc2iSwIbRAOp1sDzJUEo86kfl57tA0gr+XAMPzUO1oZvx3I7lcBFhwDnaNJ2S/srNzIZ
+         0gJV9TGRNOv1DPYI3Y7iNVYqZatmXOx7AM4Op6O4pePdLcvkcaNMeW1rKOrkxUbVnLe8
+         9jgpbuxPwU8E5duDr23t+oOuUU2pQmy4kU440p453l6rBAhmGIza0CUJNKkkETbafLfP
+         r7rQ==
+X-Forwarded-Encrypted: i=1; AJvYcCX/Vx1y2kuK14gQtVuQjpYxgw46iGJerk1vZ+rHNPj8z1+1uI20hEB5w1k3Ztiht+G4lyviwJB44g2KER2pUAkiMgD6
+X-Gm-Message-State: AOJu0Yx0BZGqX8ie7ibnKp43dSvYbuD9cX/qYquZZF54c6iyg2XKpgYu
+	ceLbr3r+vNvK6FCpmXM85qC1NsopD2z7SD7uP+hpyEx3oDBUXy+OupVHLJpQ6TY=
+X-Google-Smtp-Source: AGHT+IEOERsPMSi2V+8VUzLCe+QoMN+3Jz+b6+gwkwXIo06ZA3zbhcgOLYfDY5Ps27gCnPkiQ3d9bQ==
+X-Received: by 2002:a05:620a:199f:b0:787:1602:9c74 with SMTP id bm31-20020a05620a199f00b0078716029c74mr14622072qkb.54.1708278889153;
+        Sun, 18 Feb 2024 09:54:49 -0800 (PST)
+Received: from [10.197.96.0] ([152.3.43.40])
+        by smtp.gmail.com with ESMTPSA id z4-20020ae9c104000000b007874e64c879sm1515863qki.116.2024.02.18.09.54.48
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 18 Feb 2024 09:54:48 -0800 (PST)
+Message-ID: <df020dcc-afe8-4dd8-b476-4ca032206214@gmail.com>
+Date: Sun, 18 Feb 2024 12:54:48 -0500
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-OriginatorOrg: fastec.de
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: FR2P281MB1686.DEUP281.PROD.OUTLOOK.COM
-X-MS-Exchange-CrossTenant-Network-Message-Id: 579e5d4e-d37e-4274-cd29-08dc30978462
-X-MS-Exchange-CrossTenant-originalarrivaltime: 18 Feb 2024 15:37:29.8794
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 1f95ea7c-9a3d-4add-988c-01b7cee9a358
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: 5fiyN6KpQ4ushEQLyZekWICAHoZ3hxxBKX55M8KoNB/sYnbdHgusrW/GO7RZFR5lujqPBZrUnsbhB/+MxUHUzA==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: BEUP281MB3619
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] builtin/stash: configs keepIndex, includeUntracked
+To: phillip.wood@dunelm.org.uk, git@vger.kernel.org
+References: <20240218033146.372727-2-rpc01234@gmail.com>
+ <99346639-5a36-4c2e-a5d7-035c3c1fda8b@gmail.com>
+Content-Language: en-US
+From: Ricardo C <rpc01234@gmail.com>
+Autocrypt: addr=rpc01234@gmail.com; keydata=
+ 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
+ jjbjCH/5+g==
+In-Reply-To: <99346639-5a36-4c2e-a5d7-035c3c1fda8b@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-Hi,
+Hi Phillip,
 
+On 2/18/24 05:32, Phillip Wood wrote:
+> How does "stash.keepIndex" interact with "git rebase --autostash" and "git 
+> merge --autostash"? I think both those commands expect a clean index after 
+> running "git stash". They could just override the config setting but it might 
+> get a bit confusing if some commands respect the config and others don't.
 
-I have been playing around with the includeif from the .gitconfig. It did n=
-ot work for me at first, but after some help, I did get it to work.
+Both `git rebase --autostash` and `git merge --autostash` seem to be hardcoded 
+to clean the index, regardless of the configuration or CLI flags. They do not 
+use regular `git stash` to do so, but rather `git stash create`. This is 
+unaffected by my changes, since it follows a different code path and does not 
+accept `--keep-index` nor `--include-untracked`. I'll add some tests for `git 
+rebase --autostash` and `git merge --autostash`, just in case this behavior is 
+changed in the future and causes breakage.
 
-If you are curious. My Problem and what else was discussed here: https://gi=
-thub.com/git-for-windows/git/issues/4823
+> I've only given the patch a very quick scan, but it looked sensible. The only 
+> thing that jumped out at me was that quite a few tests seem to do
+> 
+>      git init repo &&
+>      (
+>          cd repo &&
+>          # test things
+>      ) &&
+> 
+> Our normal practice is to run all the tests in the same file in the same 
+> repository rather than setting up a new one each time.
 
-Anyway. So, I was trying to access the email property which was set through=
- an includeif config. It did not work because I was in a non git directory.=
- Yes, I do know that the property set in includeif is named gitdir, but it =
-was not obvious to me that you need to be in a git tracked directory for it=
- to work.
+I was doing this because it makes comparing different commands easier, but 
+looking through other tests again, it seems like I should be comparing the 
+outputs to hardcoded files anyway.
 
-I am trying to understand why it must be this way. Why does it not work in =
-non git tracked directories?
+Thank you,
 
-I am not sure if I am conveying my Question correctly. Please read the mess=
-ages in the github issue if the content of this email was confusing.
-
-
-Best regards
-Dominik von Haller
+Ricardo
