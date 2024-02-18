@@ -1,197 +1,90 @@
-Received: from mail.manjaro.org (mail.manjaro.org [116.203.91.91])
-	(using TLSv1.2 with cipher DHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f45.google.com (mail-wr1-f45.google.com [209.85.221.45])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F81C1DFC6
-	for <git@vger.kernel.org>; Sun, 18 Feb 2024 20:39:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=116.203.91.91
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B72CD1D696
+	for <git@vger.kernel.org>; Sun, 18 Feb 2024 20:40:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708288746; cv=none; b=o74ZFvSeCQNyRa04o+k/TK9gBgPSAXgnyNsBLSsomXU7fvfIbItaEMozR6InYC3TtXk5TtkoiTQ/Zm0rHvkTub1XVcMIoi58AbZUiEVmMA5g4AS9UbJ9QYi8nOP17I25+nzKNbVBnUf3z+wIXv/zoBL3BY5K8psD+JMB8JgUaaM=
+	t=1708288850; cv=none; b=RDqQkdRONEH1BhE4/stwDy10h8vclsuC1T+7r37q6xfYNZyZ3HxCtcol1QDsZvKFNrk1DBm0TqFqV/226jNd9QUlxNVxJNkXFmElqvr6ADN7HRhKE/WAcMsp4e2bqYMl8c02m/M4YzbLr5w/FdoMPBvvh7n5v788Du2Fwa904Qo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708288746; c=relaxed/simple;
-	bh=J2SzcQBdv8vLiJ4ZxgN1uZAOmBHubbh2kmod8eD8UJo=;
-	h=MIME-Version:Date:From:To:Cc:Subject:In-Reply-To:References:
-	 Message-ID:Content-Type; b=UJYtW1Y0o/WQ0CLaR8q3oYeCJDAW+qlwEg40U4xYjjpE7mdgQ58v9lF8I4EdKTLpBPHiwjEd0VgSOJMfIaHNh4eDe6My+d0CvmVOfkAGtxtjoXzYA9nzwuxozuQCJv6PQLW7EdcSItwIWdkm0N+ljhgl5uqZ0PxDh0WEPBaccLU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org; spf=pass smtp.mailfrom=manjaro.org; dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b=h0fmE2HB; arc=none smtp.client-ip=116.203.91.91
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=manjaro.org
+	s=arc-20240116; t=1708288850; c=relaxed/simple;
+	bh=U8qkQ+vDmNldWCyVZB++kbciamgNToyD4IqkrJNl7uM=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version; b=ANR4KuIH+cfa3658PZsTWm25R2AL4tbnYZry1ottqLmMK7ns8QlcOKlBOxhPsIGERdAmzDOLoo3Zd2n3qN6GgqzAnxjJA7kUL7tHdRsIx3xpltz8MCRjD2jx2OeauxraOPxkoR775Y4RUawgMe2KZT8SRuYWqkjEpPF4eZSGNyc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=K1AKLxCe; arc=none smtp.client-ip=209.85.221.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b="h0fmE2HB"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="K1AKLxCe"
+Received: by mail-wr1-f45.google.com with SMTP id ffacd0b85a97d-33cd57b7eabso1918724f8f.2
+        for <git@vger.kernel.org>; Sun, 18 Feb 2024 12:40:48 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1708288847; x=1708893647; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=asXl0+B/W5Xr2pFZdJp+Uj32keMOV6eT9at6YhBA0VU=;
+        b=K1AKLxCeL4PB/+uahuxXwM8QgLndK8Ia/wDCd7lwT7sJv9i1G00/JBrNko++ujfXw0
+         pZ+eeZXYbDwodeQQR7d4uCvbSItjFJL+UhTV70pokX/U0JhEMEpHYhBn1TBJBqh9W1p6
+         pXnEFVgIZ4MtP+WVW4Zf34kV6LuP2EiaVPz1yc9v3uLO2kiBnf/LXiWB3wFe6WOLr+G4
+         jUCkjF/PCVu19qXpLQ3ySPokS80gtp3//nlqObgWreOPJoyYZEmSSsca9PYsNLFFXfyg
+         qKNTP1IkmbE7QSNPiTlfVAVCEhdqEo0wZ1Tu42EUevE+zTrNQzpwLsFrYLV/16nbcQrn
+         zoCQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1708288847; x=1708893647;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=asXl0+B/W5Xr2pFZdJp+Uj32keMOV6eT9at6YhBA0VU=;
+        b=jvO5Medo9tZ9K8sluYSMxGVcKKYATYGe4MV5OzN9GtuLHgvisOlssv54c3PmiyjjU/
+         D8UMWtJzbPHitmo6uxpRlQj+kuPdY7Diqv/9NCWhhsx3i1sxu1qN5TJa3gKiH8/OOg/K
+         vZNXTR7NbXGtyno1Fhe+4LUBwuHQ3wZ5B4xGis3qfEPlwtVbKTapWGRkCsXj5vb6slv7
+         Nczs7x70j5Z7X6/LvC6SBFt1gAL3sgkrezukQKbePEHA5QY31r/IanHSMWWAu/f6RV3W
+         6jjd4PYjmEVch/wUh1zI0ORXtmBznl+XhHCpJ9D2ra16omzQUpHA83iZurEA9vrBeTzk
+         NjGA==
+X-Gm-Message-State: AOJu0YzVZWPfSDDRdrL3zcMppXh+y/6PswzQSUbG5+gizNuFs83XLn1f
+	KGoENFU/YaED+xk/oRyDLedZuYDimwfabviMZE4X/JXMavsH1tfkJ3L5xUcl
+X-Google-Smtp-Source: AGHT+IEkrGbUQFFgs+IZuilbovyORb0RdCqxijQF0O3uYTrbz1CL9KlYn5WinWJalcB3f7lq2wad+Q==
+X-Received: by 2002:a5d:43c4:0:b0:33d:3566:b5c8 with SMTP id v4-20020a5d43c4000000b0033d3566b5c8mr2799290wrr.13.1708288846877;
+        Sun, 18 Feb 2024 12:40:46 -0800 (PST)
+Received: from penguin.lxd ([2.26.197.149])
+        by smtp.gmail.com with ESMTPSA id i13-20020a5d55cd000000b0033b198efbedsm8294283wrw.15.2024.02.18.12.40.46
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 18 Feb 2024 12:40:46 -0800 (PST)
+From: M Hickford <mirth.hickford@gmail.com>
+To: gitgitgadget@gmail.com
+Cc: git@vger.kernel.org,
+	mail@boanderson.me
+Subject: Re: [PATCH 0/4] osxkeychain: bring in line with other credential helpers
+Date: Sun, 18 Feb 2024 20:40:44 +0000
+Message-Id: <20240218204044.11365-1-mirth.hickford@gmail.com>
+X-Mailer: git-send-email 2.39.2
+In-Reply-To: <pull.1667.git.1708212896.gitgitgadget@gmail.com>
+References: <pull.1667.git.1708212896.gitgitgadget@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=manjaro.org; s=2021;
-	t=1708288734;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=Iru0nlu5SNIlIG2yTzjp9K81U2TR15bk/VC7BA4Puyg=;
-	b=h0fmE2HB7tKb5DdfRU4fGTcmOXDSUhLhHN9BGIu1GRk7TFNxbKMENuiBn4p/+L3mHAnjhe
-	R66TJuKZ8VG/jQY+at5JxcVpHWSdq6Oz7EYe0XAZjcCoNH70qZO0H9kdWroDRF3H+Bhw+L
-	5OLy5IPDoFctO6miU1/aPfarOM9wn6lpYpqsqpUQ6KYxSqZ/mYXwcU/NzyRrHmjuKVv1/D
-	eB3+HdBxMdyKZ4NB4NM56W3XZxoGZG+JvixL7vH6eEVPsIXzI8YkF4KnQSG3Us6dYlnt5n
-	bfUa9kI9z62rUv4p8+THJXM7ypPuIR9FEnWDupl2xtju+Vo20KgFm5PfIXR0DQ==
-Date: Sun, 18 Feb 2024 21:38:54 +0100
-From: Dragan Simic <dsimic@manjaro.org>
-To: =?UTF-8?Q?Rub=C3=A9n_Justo?= <rjusto@gmail.com>
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Subject: Re: [PATCH] branch: rework the descriptions of rename and copy
- operations
-In-Reply-To: <c00f6efe-d1f4-4f2c-99cc-ac7a6d93c9ff@gmail.com>
-References: <3cbc78bb5729f304b30bf37a18d1762af553aa00.1708022441.git.dsimic@manjaro.org>
- <e8fdd057-2670-4c93-b362-202a339d5f49@gmail.com>
- <xmqq8r3lnzp0.fsf@gitster.g>
- <2a4de8c4-4955-4891-859c-58730a41e5af@gmail.com>
- <ea15a49aed7b5a74cd9b1bf8a5351df9@manjaro.org>
- <c00f6efe-d1f4-4f2c-99cc-ac7a6d93c9ff@gmail.com>
-Message-ID: <be91f3ad9305366c1385c2da4881537e@manjaro.org>
-X-Sender: dsimic@manjaro.org
-Content-Type: text/plain; charset=UTF-8;
- format=flowed
 Content-Transfer-Encoding: 8bit
-Authentication-Results: ORIGINATING;
-	auth=pass smtp.auth=dsimic@manjaro.org smtp.mailfrom=dsimic@manjaro.org
 
-Hello Ruben,
-
-On 2024-02-17 15:58, Rubén Justo wrote:
-> On 16-feb-2024 04:32:10, Dragan Simic wrote:
->> Here's what I think the example from above should eventually look 
->> like:
->> 
->>      'git branch' (--set-upstream-to=<upstream> | -u <upstream>) 
->> [<name>]
->>      'git branch' --unset-upstream [<name>]
+> git-credential-osxkeychain has largely fallen behind other external
+> credential helpers in the features it supports, and hasn't received any
+> functional changes since 2013. As it stood, osxkeychain failed seven tests
+> in the external credential helper test suite:
 > 
-> Well, my point was not about new terms in this series, but to see if 
-> the
-> idea of reusing an existing one might be of interest.
+> not ok 8 - helper (osxkeychain) overwrites on store
+> not ok 9 - helper (osxkeychain) can forget host
+> not ok 11 - helper (osxkeychain) does not erase a password distinct from input
+> not ok 15 - helper (osxkeychain) erases all matching credentials
+> not ok 18 - helper (osxkeychain) gets password_expiry_utc
+> not ok 19 - helper (osxkeychain) overwrites when password_expiry_utc changes
+> not ok 21 - helper (osxkeychain) gets oauth_refresh_token
+>
+> After this set of patches, osxkeychain passes all tests in the external
+credential helper test suite.
 
-Good point, ensuring such consistency would be really good.
+Great work!
 
-> I find it interesting to have common terms like "<commit>" "<path>",
-> "<envvar>"...
-
-... or "<branch>". :)
-
-> This builds intuition in the user, making it easier to grasp the 
-> meaning
-> of a term, which refers to a similar /thing/, regardless of being used
-> in different contexts.  And in turn, it can also help to better
-> understand the context.
-
-Agreed, consistency is good.
-
->      Side note:  My gut tells me that my patch 5aea3955bc (branch:
->      clarify <oldbranch> term, 2024-01-06) which was originated by a
->      report [1] of a user who found the documentation confusing, would
->      have been less likely to happen (the report and consequently my
->      patch) if "<branchname>" had been used instead of "<oldbranch>" in
->      the documentation.  Not because "<branchname>" is a better name,
->      but because it is already being used in other commands with a
->      clearer meaning of: "if not specified it defaults to the current
->      branch".  And because of that a user might have be able to fill 
-> the
->      gaps in -m|-c.  Of course this is based on my intuition, which I
->      know is seriously biased.
-> 
->      [1] 
-> https://lore.kernel.org/git/pull.1613.git.git.1701303891791.gitgitgadget@gmail.com/
-
-After thinking a bit more about the whole thing, I think that using
-"<branch>" instead of "<name>" or "<branchname>" would be our best
-choice.  It would be simple, direct and clear.
-
-Regarding the branch copy and rename operations and their argument
-names, perhaps the following would be a good choice:
-
-     --copy [<branch>] <destination>
-     --move [<branch>] <destination>
-
-It would clearly reflect the nature of the performed operations, while
-still using "<branch>" consistently, this time to refer to the source
-branch.  Using "<destination>" to select the destination name should
-be pretty much self-descriptive, if you agree.
-
-Of course, I'll get back to this later in this message.
-
-> And not only can it be of help to the user, but also to developers (or
-> reviewers) when documenting new commands or options;  because there is
-> no need to search for a, maybe new, name if there is one that is
-> consolidated.
-> 
-> Perhaps, less names can also improve the lives of translators by making
-> it easier to reuse some of the translations.
-
-Perhaps.  That should be another example of the long-term benefits
-achieved through improved consistency.
-
->>      'git branch' (-m | -M) [<old>] <new>
->>      'git branch' (-c | -C) [<old>] <new>
->>      'git branch' (-d | -D) [-r] <name>...
->>      'git branch' --edit-description [<name>]
-> 
-> So, to your proposal:  it does not make things worse, and it reuses
-> terms that are already used elsewhere:
-> 
-> 	$ for a in '<new>' '<old>' '<name>'; do echo $a $(git grep
-> --no-line-number -E "$a" v2.44.0-rc1 -- Documentation/git-*.txt | wc
-> -l); done
-> 	<new> 7
-> 	<old> 7
-> 	<name> 147
-> 
-> But based on the idea I've just described, IMHO the user might not
-> easily find the similarities in <old> with <name>:
-
-I agree after thinking about the whole thing a bit more.
-
-> And it won't be easy either with <name> and other man pages.  For
-> example we have:
-> 
-> 	$ git grep -E 'git checkout.*(new-)?branch' 
-> Documentation/git-checkout.txt
-> 	Documentation/git-checkout.txt:'git checkout' [-q] [-f] [-m] 
-> [<branch>]
-> 	Documentation/git-checkout.txt:'git checkout' [-q] [-f] [-m] --detach
-> [<branch>]
-> 	Documentation/git-checkout.txt:'git checkout' [-q] [-f] [-m]
-> [[-b|-B|--orphan] <new-branch>] [<start-point>]
-> 	Documentation/git-checkout.txt:'git checkout' [<branch>]::
-> 	Documentation/git-checkout.txt:$ git checkout -b <branch> --track
-> <remote>/<branch>
-> 	Documentation/git-checkout.txt:'git checkout' -b|-B <new-branch>
-> [<start-point>]::
-> 	Documentation/git-checkout.txt:$ git checkout <branch>
-> 	Documentation/git-checkout.txt:'git checkout' --detach [<branch>]::
-> 	Documentation/git-checkout.txt:     "git branch" with "-f" followed
-> by "git checkout" of that branch;
-> 	Documentation/git-checkout.txt:$ git checkout -b <branch> --track
-> <remote>/<branch>
-
-I'd say this solidifies "<branch>" as, hopefully, our best choice,
-as already proposed above.
-
-> On the names chosen, the risk of bikesheeding is high and there is
-> nothing wrong here, so it is way better to let you work.  You have 
-> taken
-> the initiative from Junios's response to my patch, so thank you for
-> that.
-
-I hope we'll eventually produce a great git-branch(1) man page together.
-After that's completed, I have some more plans for improving git-branch,
-by introducing some additional operations.
-
->> > We don't say that "--edit-description" defaults to the current branch;
->> > It is assumed.  Perhaps we can take advantage of that assumption in
->> > -m|-c too.
->> 
->> We don't say that yet, :)
-> 
-> Yeah, but maybe we can do it without writing it down :)
-
-Maybe, :) but again, spending a few additional words to describe that
-might actually be beneficial.  We'll see how it goes.
+Could these tests run as part of macOS CI?
