@@ -1,58 +1,63 @@
-Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
+Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A5CFCA6B
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 217A5CA78
 	for <git@vger.kernel.org>; Sun, 18 Feb 2024 07:33:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.48
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708241618; cv=none; b=Z66kiLdTm/2LuBF2DmJi4Zh8VexhmdA10XaScHgDiz4i1hidcmCRH6gaNGsUbLx49o6QK686B6OoGoPoEHwwW+Mlref2iQTPxkj67tOOiZbFdX3LvTckZPBnM1Tmax5qv5D+kTh/o1sbmaCaRfuGpFuVhVl8aZPVVNmMAKyKwsQ=
+	t=1708241618; cv=none; b=GE95Syp+CTLrEBjWE39JGvqMbmPtES16wRrqjJ8os9eMqV3Au+oU2lmY/POdcgfgIWRPNBmq7pnloFyZVx3UVicJGTsx5IwqtUumKWSGDu7XPFCBHikfQkHDmwggRE6TuQnA6oz0KgTaaHV7xFL2tmz3EFMu8m4L8/aECPMaFMM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1708241618; c=relaxed/simple;
-	bh=GGKJM45aHjxiaKTJ+TAeExEflCIPElTkQ1Dh8adruFw=;
-	h=Message-ID:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=VbL6lYIAwSJISPXUWMEHUV12BRr7c0iENL+3n/Dv/5959MwAsvij16rj5w7e/9Lzk4Ba2ZkAdChy1cp0hLT8u9hiLwoMCCfTaSwrNc6nOmCCTbJI8Th6Fgf1lOSJ0IsJVnqTcaxZhR8uY1OpslyKJ8crAWjYeFArHzY3l+3lFSM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hNSappv5; arc=none smtp.client-ip=209.85.128.48
+	bh=WmRXm0pyTve36e6rjfLfHzYUICBZ2BLp7os0+yR3V/M=;
+	h=Message-ID:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=eBJLWk86DlK4U2mRfkK9Qotv7PkvrYjPO1I2JGdhL0Z7kn9RgrW/YHc5o1fhL853bPiYMDEHR6yIV4AYNR55AyVcfqHFfjXNCNdz5iALIIWjhJw1oHqJC0Ybn/DJbYhLzA2gadSQl3PfuuKPPmKqhF99dRnxHNUbOgfipk03BFA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=BZXwRi8/; arc=none smtp.client-ip=209.85.128.50
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hNSappv5"
-Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-4125edd1433so5284275e9.3
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BZXwRi8/"
+Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-4125df90568so5642765e9.3
         for <git@vger.kernel.org>; Sat, 17 Feb 2024 23:33:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20230601; t=1708241614; x=1708846414; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=Wt5NH7Sr8t1H4pQG1YWH1gxDrmplpRF4qPZTpWifI4g=;
-        b=hNSappv5p4iAGqHdCJeoVEy79p/hmInKbNUXZvi6hzUnGxtX+nPsoV3jexu5jOHXWR
-         tx5Glu7Mq01NSdm3UzYHrmDWuOkHJPeDbkIG/UDagd1oAj3X11Hs6iiDmkrheWqv9V/r
-         50CooOyINPucitmB0GeYjqFkCJHyEjrZbCto1qtdEKMeA+1fVV1A79JsIWkc65J9elCM
-         vNrFp+iPY5oZbUmpuqdUgfuEkg9/D+Xks4n2t7Z4GNhczCgNfUD2/ftSUBoNPfjbg6qX
-         g+MNmWjW3ox66qOfEltDxRt/ZWSqiEVep9gKo0s5TXkGQUjNn0sP+mvbRKfrFHG4wVjM
-         2h8g==
+         :references:in-reply-to:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=W2NJS1iYua1VoPGj2sUOPIRhK5uD2Oq+lB71D0E+IZg=;
+        b=BZXwRi8/PuihmVrkoFMyNhvGrA8h4/taZWUsoqoyjJLicPuGpTPiHdD2FZgZx33sw+
+         nysqk2aSqWk/cMwWd3sXE5xh3IU36O5TPpj3MpEN7kjhUtsvTSphJXKBN39jyD4vw3bt
+         BNmCPwaY8uoBriJkuezewzYwd1DVZsSuQOgEafFTOnrl2u7W9HkYWNDNDhcuurzOnirN
+         FEl9oaztsyZ8lUY1jX+HndOA8adbk9MG9JcktVgiBzYBl/AR6xiphHbVYcDmNojXhhjG
+         a2bVI9wifIvIW8uJZRnrjA2l3f6fxdm0/vSdCK8qBVNmicHrawbCaIb7ZjXYdEI1WjgI
+         arjw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20230601; t=1708241614; x=1708846414;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=Wt5NH7Sr8t1H4pQG1YWH1gxDrmplpRF4qPZTpWifI4g=;
-        b=uapOXkOBQFdrPktQ9NtUCNQ9Lodmzv1uf/4v/acT1LCwsAL/F+0W88gPtd5q7QkqGJ
-         GySQHOwsTuIW8kj7r4XqE2P75pBitOzDDrN/ZGLY/5wsHDWuZaf7j8ir17ZC7xgn6nDz
-         TyFsJMA5EqsVmDGZ9fsju3dUYUNwZKuWAJE7fZygFzKS3FBR23ZbhwwwR6bad5L4lMHe
-         UV9apnsWTQBnsLKUn+Ts2eF4icHH8CdzHcPss4lx37CzKkmatMrdfPcnspKVeCHAYQRZ
-         GonFRFtrMcTuDnhrFJyIsLjj22J5mj+jkL2iYLVd67UiKo+VTNjmpexNOPoGcklFsmt/
-         GPAQ==
-X-Gm-Message-State: AOJu0YxE/pRkAKSyM0CXRYvFzH6oBI/nfTd0LRd7Xby9AckdTWuvPUK9
-	9LH5K6Da+zWXUnyUerjxmdCZan47ku3Fgo8F6xpAm3QM7hVHzaFBkg3LyqY1
-X-Google-Smtp-Source: AGHT+IEFmr6bTC5S56NWlCzhlWk5Rfw/XQ7vLC/ui4XNMA6rlL854jjmlFyDLeVcVyxLQ5LUwqi+oA==
-X-Received: by 2002:a7b:c4d7:0:b0:411:3632:8184 with SMTP id g23-20020a7bc4d7000000b0041136328184mr5959342wmk.40.1708241613929;
-        Sat, 17 Feb 2024 23:33:33 -0800 (PST)
+         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=W2NJS1iYua1VoPGj2sUOPIRhK5uD2Oq+lB71D0E+IZg=;
+        b=aTJxbiEvGJbV2S/pMBh9zQxs3zaCGFNU5SzqLcpCq2s+fi8iorm/FawPSXyy9hXp7l
+         gb9EWi0ZIh66v0a6Ze+NtlcMLmbyPXAyI812PMZJTsP8GdTgyUozsLu+scM6OEck+lnE
+         ev+EIehdHZVXPYzeDbjyzICMdD8i56Hkh54Y91Hdw23U+M0bGwNdgNyM2c2xaBo6/Miq
+         3qLftu/4VG1r+kqwF2NAVnBmImRL9g+y1hecWJzHzS7SQwZRAGHfZAcqH69UXKh5qhvw
+         IEPIwr+m+LzfKw5asV7p/ICagMMZDOGOEZriAXxtu4oL1sd197qXz3GqqokvxuAApHKP
+         pxTA==
+X-Gm-Message-State: AOJu0Yy++/mT8mvNuCpp+nxnnCNOJPU88c0bdnfWQOsCw2p1POxVB5yr
+	pQN28yOzZwWvY1eU+G1jeVbCWlsH9ptDN8pY3c/u5/oT9jpfkyC0YncV9FQ8
+X-Google-Smtp-Source: AGHT+IFiwzg89qEFTqGGarvnsTXZYhvY+A4DS0i4BMeXWT9tp2aGRSb90i2Fs+W4AiGtbdtIHNafmA==
+X-Received: by 2002:a5d:49cc:0:b0:33d:827:145d with SMTP id t12-20020a5d49cc000000b0033d0827145dmr5346009wrs.42.1708241614530;
+        Sat, 17 Feb 2024 23:33:34 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id co22-20020a0560000a1600b0033d2848046asm4115511wrb.95.2024.02.17.23.33.33
+        by smtp.gmail.com with ESMTPSA id b7-20020adfe647000000b0033b406bc689sm6789072wrn.75.2024.02.17.23.33.34
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 17 Feb 2024 23:33:33 -0800 (PST)
-Message-ID: <pull.1666.git.git.1708241612.gitgitgadget@gmail.com>
+        Sat, 17 Feb 2024 23:33:34 -0800 (PST)
+Message-ID: <be270db2ff5c63612356c4ef2fafdbe1724b5b71.1708241613.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1666.git.git.1708241612.gitgitgadget@gmail.com>
+References: <pull.1666.git.git.1708241612.gitgitgadget@gmail.com>
 From: "Philip Peterson via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Sun, 18 Feb 2024 07:33:27 +0000
-Subject: [PATCH 0/5] promise: introduce promises to track success or error
+Date: Sun, 18 Feb 2024 07:33:28 +0000
+Subject: [PATCH 1/5] promise: add promise pattern to track success/error from
+ operations
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -65,128 +70,213 @@ MIME-Version: 1.0
 To: git@vger.kernel.org
 Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
     Emily Shaffer <nasamuffin@google.com>,
+    Philip Peterson <philip.c.peterson@gmail.com>,
     Philip Peterson <philip.c.peterson@gmail.com>
 
-Hello all, this is my first patchset so thank you for being patient with me
-as I learn the process and conventions of your very fine project. These
-patches are intended as part of the Libification effort, to show how we
-could use a Promise structure to help return values from functions.
+From: Philip Peterson <philip.c.peterson@gmail.com>
 
+Introduce a promise paradigm. A promise starts off in the pending state,
+and represents an asynchronous (or synchronous) action that will
+eventually end in either a successful result or a failure result. If a
+failure result, an error message may be provided.
 
-Problems
-========
+This allows us to represent tasks which may fail, while deferring any
+control flow actions or error printing that may occur in relation to
+said task.
 
-We seek to make libification easier by establishing a pattern for tracking
-whether a function errored in a rich way. Currently, any given function
-could immediately die(), or use error() to print directly to the console,
-bypassing any relevant verbosity checks. The use of die() currently makes
-use of Git as a library inconvenient since it is not graceful.
-
-Additionally, returning using return error(...) (as is commonly done) always
-just returns a generic error value, -1, which provides little information.
-
-
-Approach
-========
-
-I solve this problem by splitting the single return value into two return
-values: error, and message. However, managing two output variables can
-require some coordination, and this coordination can be abstracted away by
-use of an existing pattern named Promise.
-
-
-Promise Concept
-===============
-
-A promise is a contract representing "some task" that will eventually
-complete. Initially a promise is considered in a pending state. When it
-completes, one of two codepaths will eventually be entered: reject, or
-resolve. Once resolved or rejected, the promise enters a different state
-representing the result. Reject or resolve may only be called once on a
-given promise.
-
-Until now, everything I described up to this point is consistent with other
-implementations, such as the ECMAScript standard for promises. However, this
-implementation departs from the complexity of those promises. In this
-implementation, promises are simple and canNOT be chained using .then(...)
-and do NOT have any notion of automatic bubbling (via re-entering the
-pending state).
-
-
-Sample output and reproduction
-==============================
-
-During an error, we can have richer feedback as to what caused the problem.
-
-% git apply garbage.patch
-error: 
-    could not find header
-caused by:
-    patch fragment without header at line 1: @@ -2 +2 @@
-
-
-To reproduce this output, you can use the following patch (garbage.patch):
-
-@@ -2 +2 @@
-
-
-
-Goals
-=====
-
-I would love to get feedback on this approach. This patchset is kept small,
-so as to serve as a minimal proof of concept. It is intended to abstract to
-asynchronous use-cases even though this is only a synchronous one.
-Eventually, any top-level function, such as apply_all_patches(...) would
-return its output via a promise to make the library interface as clean as
-possible, but this patchset does not accomplish this goal. Hopefully it can
-provide a direction to go in to achieve that.
-
-
-Diversion
-=========
-
-While building this patchset, I noted a bug that may not have a concrete
-repro case in the master branch. The bug is that when invoking git am, it
-can call out to git apply, passing many flags but interestingly not the
---quiet flag. I included a fix for this issue in the patchset.
-
-
-Potential Issue
-===============
-
-There is one difficulty with this approach, which is the high level of
-repetition in the code required. Tracking which promise is which is its own
-source of complexity and may make mistakes more prone to happen. If anyone
-has suggestions for how to make the code cleaner, I would love to hear.
-
-Thank you, Philip
-
-Philip Peterson (5):
-  promise: add promise pattern to track success/error from operations
-  apply: use new promise structures in git-apply logic as a proving
-    ground
-  apply: update t4012 test suite
-  apply: pass through quiet flag to fix t4150
-  am: update test t4254 by adding the new error text
-
- Makefile               |   1 +
- apply.c                | 133 +++++++++++++++++++++++++++--------------
- apply.h                |   9 ++-
- builtin/am.c           |   5 ++
- promise.c              |  89 +++++++++++++++++++++++++++
- promise.h              |  71 ++++++++++++++++++++++
- range-diff.c           |  14 +++--
- t/t4012-diff-binary.sh |   4 +-
- t/t4254-am-corrupt.sh  |   9 ++-
- 9 files changed, 279 insertions(+), 56 deletions(-)
+Signed-off-by: Philip Peterson <philip.c.peterson@gmail.com>
+---
+ Makefile  |  1 +
+ promise.c | 89 +++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ promise.h | 71 ++++++++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 161 insertions(+)
  create mode 100644 promise.c
  create mode 100644 promise.h
 
-
-base-commit: 2996f11c1d11ab68823f0939b6469dedc2b9ab90
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1666%2Fphilip-peterson%2Fpeterson%2Femail-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1666/philip-peterson/peterson/email-v1
-Pull-Request: https://github.com/git/git/pull/1666
+diff --git a/Makefile b/Makefile
+index 78e874099d9..4851eb2d822 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1109,6 +1109,7 @@ LIB_OBJS += preload-index.o
+ LIB_OBJS += pretty.o
+ LIB_OBJS += prio-queue.o
+ LIB_OBJS += progress.o
++LIB_OBJS += promise.o
+ LIB_OBJS += promisor-remote.o
+ LIB_OBJS += prompt.o
+ LIB_OBJS += protocol.o
+diff --git a/promise.c b/promise.c
+new file mode 100644
+index 00000000000..58ed8b67880
+--- /dev/null
++++ b/promise.c
+@@ -0,0 +1,89 @@
++/*
++ * Generic implementation of callbacks with await checking.
++ */
++#include "promise.h"
++
++void promise_assert_finished(struct promise_t *p) {
++	if (p->state == PROMISE_UNRESOLVED) {
++		BUG("expected promise to have been resolved/rejected");
++	}
++}
++
++void promise_assert_failure(struct promise_t *p) {
++	if (p->state != PROMISE_FAILURE) {
++		BUG("expected promise to have been rejected");
++	}
++}
++
++void promise_resolve(struct promise_t *p, int status) {
++	if (p->state != PROMISE_UNRESOLVED) {
++		BUG("promise was already resolved/rejected");
++		return;
++	}
++	p->result.success_result = status;
++	p->state = PROMISE_SUCCESS;
++}
++
++void promise_reject(struct promise_t *p, int status, const char* fmt, ...) {
++	va_list args;
++	if (p->state != PROMISE_UNRESOLVED) {
++		BUG("promise was already resolved/rejected");
++		return;
++	}
++	p->result.failure_result.status = status;
++
++	strbuf_init(&p->result.failure_result.message, 0);
++
++	va_start(args, fmt);
++	strbuf_vaddf(&p->result.failure_result.message, fmt, args);
++	va_end(args);
++
++	p->state = PROMISE_FAILURE;
++}
++
++struct promise_t *promise_init(void) {
++	// Promises are allocated on the heap, because they represent potentially long-running tasks,
++	// and a stack-allocated value might not live long enough.
++	struct promise_t *new_promise = xmalloc(sizeof(struct promise_t));
++	struct failure_result_t failure_result;
++
++	new_promise->state = PROMISE_UNRESOLVED;
++	failure_result.status = 0;
++	new_promise->result.failure_result = failure_result;
++
++	return new_promise;
++}
++
++/**
++ * Outputs an error message and size from a failed promise. The error message must be
++ * free()'ed by the caller. Calling this function is not allowed if the promise is not
++ * failed.
++ *
++ * Argument `size` may be omitted by passing in NULL.
++ *
++ * Note that although *error_message is null-terminated, its size may be larger
++ * than the terminated string, and its actual size is indicated by *size.
++ */
++void promise_copy_error(struct promise_t *p, char **error_message, size_t *size) {
++	size_t local_size;
++	promise_assert_failure(p);
++
++	*error_message = strbuf_detach(&p->result.failure_result.message, &local_size);
++	if (size) {
++		*size = local_size;
++	}
++
++	// We are only doing a copy, not a consume, so we need to put the error message back
++	// the way we found it.
++	strbuf_add(&p->result.failure_result.message, *error_message, strlen(*error_message));
++}
++
++/**
++ * Fully deallocates the promise as well as the error message, if any.
++ */
++void promise_release(struct promise_t *p) {
++	if (p->state == PROMISE_FAILURE) {
++		strbuf_release(&p->result.failure_result.message);
++	}
++	free(p);
++}
+diff --git a/promise.h b/promise.h
+new file mode 100644
+index 00000000000..c5500eba986
+--- /dev/null
++++ b/promise.h
+@@ -0,0 +1,71 @@
++#ifndef PROMISE_H
++#define PROMISE_H
++
++#include "git-compat-util.h"
++#include "strbuf.h"
++
++enum promise_state {
++	PROMISE_UNRESOLVED = 0,
++	PROMISE_SUCCESS = 1,
++	PROMISE_FAILURE = 2,
++};
++
++typedef int success_result_t;
++
++struct failure_result_t {
++	int status;
++	struct strbuf message;
++};
++
++struct promise_t {
++	enum promise_state state;
++	union {
++		success_result_t success_result;
++		struct failure_result_t failure_result;
++	} result;
++};
++
++// Function to assert that a promise has been resolved
++void promise_assert_finished(struct promise_t *p);
++
++// Function to assert that a promise has been rejected
++void promise_assert_failure(struct promise_t *p);
++
++// Function to resolve a promise with a success result
++void promise_resolve(struct promise_t *p, int status);
++
++// Function to reject a promise with a failure result and an optional formatted error message
++void promise_reject(struct promise_t *p, int status, const char* fmt, ...);
++
++// Function to create a new promise
++struct promise_t *promise_init(void);
++
++// Copies the error out of a failed promise
++void promise_copy_error(struct promise_t *promise, char **error_message, size_t *size);
++
++// Fully deallocates the promise
++void promise_release(struct promise_t *promise);
++
++#define PROMISE_SUCCEED(p, errcode) do { \
++	promise_resolve(p, errcode); \
++	return; \
++} while (0)
++
++#define PROMISE_THROW(p, errcode, ...) do { \
++	promise_reject(p, errcode, __VA_ARGS__); \
++	return; \
++} while (0)
++
++#define PROMISE_BUBBLE_UP(dst, src, ...) do { \
++	if (strlen(src->result.failure_result.message.buf) != 0) { \
++		strbuf_insertf(&src->result.failure_result.message, 0, "\n\t"); \
++		strbuf_insertf(&src->result.failure_result.message, 0, _("caused by:")); \
++		strbuf_insertf(&src->result.failure_result.message, 0, "\n"); \
++		strbuf_insertf(&src->result.failure_result.message, 0, __VA_ARGS__); \
++	} \
++	promise_reject(dst, src->result.failure_result.status, "%s", src->result.failure_result.message.buf); \
++	promise_release(src); \
++	return; \
++} while (0)
++
++#endif
 -- 
 gitgitgadget
+
