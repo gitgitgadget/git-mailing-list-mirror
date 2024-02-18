@@ -1,101 +1,115 @@
-Received: from mout.gmx.net (mout.gmx.net [212.227.17.20])
+Received: from mout.gmx.net (mout.gmx.net [212.227.17.21])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8397C745EE
-	for <git@vger.kernel.org>; Sun, 18 Feb 2024 21:58:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.20
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FDF66F07C
+	for <git@vger.kernel.org>; Sun, 18 Feb 2024 22:06:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.21
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708293516; cv=none; b=otd1aY3IZ8nm80E6oIfpUbm9DiJ81PnTmkarb/hQzyjwopUWmOtMQfQr0k8HCkR3PvNcY4YsPdEDuVLqdDorwkykA2+oxr8XANSkwrZw72flokuj5dwOA/ikHONnBZvUFxSmO7ccOh/1CQlR6ma1XQSHedJByEnGwRLJo4YskI0=
+	t=1708293969; cv=none; b=Cb5K1kWrIvpHl6f22V/529awSDlyTDubNonjlRC4dKc6sUdm/K8xvR88wdSvUAeO23VBE497MbLudaK7uLFVoc6J26E2Dn0ovNmxmWlvPx8kV1V0rAoAtLHtVFLRcc75MMC7ce28Gv2NY+r7D3090dyWNkliqszfNFT1yw4TY+w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708293516; c=relaxed/simple;
-	bh=aryqtwSaqkqwubO6r06gevmyxTCtV4dP3nb75MEzHwg=;
+	s=arc-20240116; t=1708293969; c=relaxed/simple;
+	bh=dqF/EQalFTJm+jX7F3a7lb9oHPr87oKnSzcXYa3NQFQ=;
 	h=Date:From:To:cc:Subject:In-Reply-To:Message-ID:References:
-	 MIME-Version:Content-Type; b=udTk4xs9++q/QD9lrbJ1sn+MldOB/OcGQqtZBcJT8zFvXBtqB5SoGR8J8GOzaXo9PD0uyRpEYqBCc2euqL+FAGKpBoFSZO00O8lRe8iT9GwlMDU4KinHByuu/kBZ4MKCU7/fJO1BUDNYJ3sHMsRmdMdB8Q60V7wwoPP0a+ADWBY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b=aaXLfXLr; arc=none smtp.client-ip=212.227.17.20
+	 MIME-Version:Content-Type; b=tU/b5vmtB/jj+raeRU1c4Hqy5KyisHdtm/SPzWW+4b+m1QbKsOq/QIeJn+EJpFJn3gSGdepqBx5rrtyqJx9Wmrcg8cfCo4udnHOjWBDHja7RPeDHeOguUbRHXbQM4DqRRz9quCMRTVmruCXKlcBHwI7DB2vbwcHZxk2M+NNQimU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b=tG4LW4UM; arc=none smtp.client-ip=212.227.17.21
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b="aaXLfXLr"
+	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b="tG4LW4UM"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.de; s=s31663417;
-	t=1708293502; x=1708898302; i=johannes.schindelin@gmx.de;
-	bh=aryqtwSaqkqwubO6r06gevmyxTCtV4dP3nb75MEzHwg=;
+	t=1708293965; x=1708898765; i=johannes.schindelin@gmx.de;
+	bh=dqF/EQalFTJm+jX7F3a7lb9oHPr87oKnSzcXYa3NQFQ=;
 	h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:
 	 References;
-	b=aaXLfXLrBJB8IUUQ9dPhI25TeXaZkT+upAxxqG332VbEd+t9K0Xnb18/+1kJ91Ta
-	 04LSfSQkIUyL9eQgJZRVLK8wQ+A1e7cVXySdOH54wU+8Ruxrqct2h5X7DzifiOtpJ
-	 oH7KjS8/gTG97S+nnqqUFd5RN3HDomes2Fm7YElEBtdyaWU3fTZSTgIBaI6UrXFMU
-	 5ViAwHuj11jFvXQDm0mnRxrdENkbSiF4PgVgzPuO2BVP1ItP7tbh6CwGL9kpzOiC0
-	 M7PonqD+JGmTbNNYhCEUdEP5g8UfXIdqorMjz/zdv6BvIGkt6hkt7VQlfAmZZVFwa
-	 0MHc8eFfjxBYKwg6eA==
+	b=tG4LW4UM6YAqRbNzmnhm7kgYtPOYk5oxwCvmPE62L0YeOZjppkZvjIOCfBBz7s84
+	 zrbdf3vLDuPiukABtjmW5ZiltPr9IV3QFM7GlCb71B+8FWOTyjaohZHk/7iHoOcej
+	 ju7KoA9MjwKvm3T8JhUmsF23GsDpMcTLpifD7Q+WX+J+9NOvCOShw1eElxB8mR4JU
+	 HhAOzbDUEPuWkldDpHEd1W0zsxSjEMqOdzU4+J29g0pLnZWyi1hJJYv5GNSY6JHj1
+	 BDNk9Hts0pIJnp/9CtdF1x48AyjhgRm0B6LMVV7UyC9Cfbe2Nfw9mf4hiXIj+JDbr
+	 J4flflP6sqFv/nKYWw==
 X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from [172.23.242.68] ([213.196.214.170]) by mail.gmx.net (mrgmx105
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MIMfc-1rhGg60yPs-00ENv1; Sun, 18
- Feb 2024 22:58:22 +0100
-Date: Sun, 18 Feb 2024 22:58:20 +0100 (CET)
+Received: from [172.23.242.68] ([213.196.214.170]) by mail.gmx.net (mrgmx104
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MCsQ4-1rkajt0Wdk-008vEK; Sun, 18
+ Feb 2024 23:06:05 +0100
+Date: Sun, 18 Feb 2024 23:06:03 +0100 (CET)
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Beat Bolli <dev+git@drbeat.li>
-cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org, 
-    Philippe Blain <levraiphilippeblain@gmail.com>, 
-    =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= <avarab@gmail.com>
-Subject: Re: [PATCH] completion: use awk for filtering the config entries
-In-Reply-To: <4a1d3618-cebe-4c20-89ce-c5dab51af21a@drbeat.li>
-Message-ID: <aa3e36a1-52d3-0c15-b70b-83c6664757f5@gmx.de>
-References: <20240216171046.927552-1-dev+git@drbeat.li> <xmqqr0hcjorg.fsf@gitster.g> <4a1d3618-cebe-4c20-89ce-c5dab51af21a@drbeat.li>
+To: Konstantin Khomoutov <kostix@bswap.ru>
+cc: "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: Hello question on Git for Windows 2.43.0 - GUID and/or SWID tag
+ for this title
+In-Reply-To: <20240216110041.dqz2n5dz43mqtq25@carbon>
+Message-ID: <7ddaadd4-cfa6-00b3-1aee-34f5c57f4e7a@gmx.de>
+References: <LV8PR13MB6560538530A2A7D1C1FD89C19C422@LV8PR13MB6560.namprd13.prod.outlook.com> <DB9P250MB06926B4A6997EF6F866296ADA54A2@DB9P250MB0692.EURP250.PROD.OUTLOOK.COM> <LV8PR13MB65609D60ACB8A6EADFBFE3459C4D2@LV8PR13MB6560.namprd13.prod.outlook.com>
+ <20240216110041.dqz2n5dz43mqtq25@carbon>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:ASlGIBmazxc/XTwKgZUQpiy52fAlljnGfeNq3MwemfWElVMFR0d
- qFn1dfWiECF/4pX5F/7thc99PQPo/noH7/n+6LSsoRw4Ly8f+Pl9fZJrKtX2oeZHwbMsSZ9
- a5Y+qGnYYvmqiCFG4jubshXNIJOgyRvSwQx6NWzdHK2V7j6/OypZAtTrREghdcXP/zosxyp
- ZxeDhLbwVw7xBOwbVPqIg==
+Content-Type: multipart/mixed; boundary="8323328-284384438-1708293965=:504"
+X-Provags-ID: V03:K1:IpXVYqRjyr2yg82aFMXm6tCM0IMx+BpnH41PREGqFm1COWDMljw
+ hu4ehr8pAhFuPArAQCGMAJ31uR6CYlWk5vDAYaeYCDa/KV2Ab0gKe8HGWhCjo1/CDEq3sw/
+ DaWyZ39oNQJ87vnwsqR7SMmh5dK5Wt0yjBNvHzSUL/bupLYjiNfmkKYjRB5y6DZx0pakypc
+ wePfpf3gILOM2ug0fpmMA==
 X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:IB1/XgJBLuU=;MTyWmWo630QmwDDBbZl1HowFmv6
- 7JvsmSA8MAWMEhJUnHMoTOabFjY6rHiKQtj+EMBzZtugx22eeKFApbQqw7mJ8PCMXXmpAVKXi
- QXW2QOX4n7yWVEl1N1cS9YbA9Iz3Ck2F/OXntgfjJwXAJSa07Gwb+gYJpmIFmw4A3HJ6xgkha
- gw0zQyipP9H5TwJ3zaYsfNYkpaj6RFUNZuM60DEgTaO+vfwFyi5Lt2u3ZLAHzrbvJqTrhJylJ
- lgjfpjW4fjTCctgRx6JUXccnrW7nb8SLkrfSFR0i9y2g+hVNFIoyqDZZyyY5tPV4aK15KxAAU
- E2EJKR5OMdFFGYES/ppWC73Qq7INjLnNdjmr9r1QFtXcnjl0ArcqGvuR4qlv+IFt4h3XTnhJ8
- i67bqQ2K9aWUWV1AUDd0dgAMEV1p7Jq0ak6TY9U5kuKBUgMLltckqLh7KTQT0R/O1+e8ZHt8u
- LRTUAjuQOuRF4wmABSFzkQKIq9383qb7wWNUEWkq4xiy70DMF0DFY8niZLMgwspLdIcYItkQn
- Ufrjn3ieCnXHeiy1oEHfjgR3XitfNAEJoAL6F8XIyKFwrEN+tCKLpw0WktieOM5NKDTaMPFQu
- +FPRafQGy4uQ94wNpkbnI9JTZ5mSz5O7roGTDreS5pKK7l2HEnp1J4CbrzJLgbxkXPkVyUA6W
- y915K/bL7RW1EStWus3lNAYp+uG4+yo7+QMDHWTR3G1M8gqc+W9QUL+61WXXsr7fia/h1VsYx
- 5K5ILzfIkty9HgqVnDvAOeSDc0kri8KxWlXsH6Ca6w0BmLFUjJgXSEgZRA53TCgVd6pzFdguE
- GrGhI9jOu20eSOHZbj9OVxpBaOAfl/6HrhysRU7AgDGb0=
+UI-OutboundReport: notjunk:1;M01:P0:sLe2Co04dBs=;owQdrA37Z1csukCWrwFJCEdA7SS
+ +vzbxe2RTyeVA9v2oQFpjwLwZ9ORTnp29mSmA6wJ6EJtKzoa/7yH0tP52DBcIXTd5LtLoXyWK
+ ADSEperujdJjPXoeM3zSjNEUtNkVewsHZXMYnZm1vhgfMh6+2l0lFISp92u+Ks/yHmq5iPFJ3
+ XQr41MhVXJXh9jYLcMHPCg5weqkcns/PlH5RLjt4E48qQWnBrdly/y0hpEKieEFa7F2cOW3Gb
+ bTHvdA1ltNBe1+UtlPtt26Hjrp5a+Kp5PXckFXzvH1+NI7hXgEWLFjReGKTIb3cvIwtRnfE6X
+ cIIxYQilyfXtR0ooiVlJ4wUSlcT0aknqxOlT3dYVpjBB8laRlpmF9mInNDIi7hgWCvsW2+xyu
+ gCmVxZG/cnoNlfuNX9lHJ1RdQCouKT08r+yXtNxLU6qdpmzg5AmA0yr9nPesvxedBiEoua/0B
+ ZERbzz0GJtSe1RqjIly4G0mFbNiivyQsYhzf6Qu5QfHAXKK5BCaCLViBPhQEbooZgWpYfTt80
+ vgsraubh7qjyKIjxngOE7v7sVjLroTG6gyu5zwJSWN9CA97y8qN0wItwbnsWQJFZ9Kri5fCT3
+ jeUZndwftApdmWqOJWmleGaYO2DCsjUvFMYaZK7D+FZJI5Te3jiEV5epNPAB/BHHldLiknlfA
+ gud/MR0Ti3/2aPaG2aQolizGqgl+UGKxvE9jhz6ultTNvWhKvQuYIWNjKUZqMCwUVtNN6aF0Q
+ bkW1CnWA/Wr2qZ8TATJKvewD7apUE7YU7FmNDhTsHx8CJ5VI4RabiFV5VduNFc+qWY8gIYdKt
+ HyXIaBU6raH41RbW9Ccu3GJnvXfmdWD1VcKCUJOnwxTXw=
+
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
+
+--8323328-284384438-1708293965=:504
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
 
-Hi Beat,
+Hi,
 
-On Fri, 16 Feb 2024, Beat Bolli wrote:
+On Fri, 16 Feb 2024, Konstantin Khomoutov wrote:
 
-> On 16.02.24 18:35, Junio C Hamano wrote:
-> > Beat Bolli <dev+git@drbeat.li> writes:
-> >
-> > > Commits 1e0ee4087e (completion: add and use
-> > > __git_compute_first_level_config_vars_for_section, 2024-02-10) and
-> > > 6e32f718ff (completion: add and use
-> > > __git_compute_second_level_config_vars_for_section, 2024-02-10)
-> > > introduced new helpers for config completion.
-> > >
-> > > Both helpers use a pipeline of grep and awk to filter the list of co=
-nfig
-> > > entries. awk is perfectly capable of filtering, so let's eliminate t=
-he
-> > > grep process and move the filtering into the awk script.
-> >
-> > Makes sense.  I wonder if we can have some simple script sanity
-> > checker that catches things like this, e.g., catting a single file
-> > into pipe, grep appearing upstream of awk or sed, etc.
+> On Thu, Feb 15, 2024 at 09:40:47PM +0000, Christian Castro wrote:
 >
-> Yes, there are quite a few cases of these in t/. I'm not sure if it's wo=
-rth
-> the churn, though. At least it would make the tests faster on Windows...
+> >>> I have a question on the GUID and/or SWID tag for Git for Windows 2.=
+43.0.
+>
+> > Question: Are you a Git for Windows developer, open-source contributor=
+ or?
+> > I ask because I will contact the manufacturer of our inventory product=
+ and
+> > provide them your feedback. But I'd like to know what your role is wit=
+h Git
+> > for Windows for as of now I just have a reply from someone named Matth=
+ias
+> > from a live.de email domain. I hope you understand. Truly no offense m=
+eant
+> > on my part.
+> >
+> > Therefore, please let me know what your role is with Git for Windows s=
+o I
+> > can send this feedback accordingly and continue working on with our so=
+ftware
+> > inventory vendor on the issue.
+>
+> I would say the chief Git-for-Windows maintainer is Johannes Schindelin =
+[1].
 
-Thank you for caring about the speed on Windows!
+It is: https://gitforwindows.org/governance-model.html
+
+Matthias A=C3=9Fhauer is a trusted Git for Windows contributor with write
+permissions on the repositories, so what he says has a ton of weight.
 
 Ciao,
 Johannes
+
+--8323328-284384438-1708293965=:504--
