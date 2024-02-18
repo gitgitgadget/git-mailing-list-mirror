@@ -1,402 +1,291 @@
-Received: from mail-qk1-f178.google.com (mail-qk1-f178.google.com [209.85.222.178])
+Received: from mail-qk1-f173.google.com (mail-qk1-f173.google.com [209.85.222.173])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E06A17F0
-	for <git@vger.kernel.org>; Sun, 18 Feb 2024 03:33:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E993D5221
+	for <git@vger.kernel.org>; Sun, 18 Feb 2024 06:09:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708227197; cv=none; b=BnhPNBDsBXuPtfoMLaOlU9Z5sD56wvRGl+rLwG1DtxcPbOs4XifuuXathwDx1C/7COPk8lRgHTTOVU/semFrfpbqen/0KihWsTRNZ1+KFho7hle8Y00+rNrV+K8yq0hKdEMy3xP7OGQ+is5v1hDki9DAPfPPNGbZKDhmtUz2MsE=
+	t=1708236543; cv=none; b=NPMRaqlNhPlZ+mGHXX3tsUksPQMYZ4NcQTrk16GNgzHcelWYKEqHFTa0ot0EkR5WenGZh+Pyb9Y/rrHp2ld0m8oLmdnCcNoFaO6isskBsKo8o8ekhX/kJLEbOeVqwEkASObsCaOkHKyZy7NWJYMD9RgJrQ63ozK9rZpOVXnvH7A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708227197; c=relaxed/simple;
-	bh=vwLMm264DreVcMhSrfA/o+W6cvdBWXp/bew4fXom4Cc=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=nhPjE26oU+Cm4aPWgyD53uJrQvJU3vu//hOlOq6Ol/mllUC6g6NkelstbnFSPHEEMjgsxCYDCmPh/7xHoQNwH5GLJYYrh1zRJNxZHr9AJt/yaM0aVAqI/MQeO4AZU0+pnoZ4Qq7j7i4flzTctP2kwfeQTKhIRONmAeyMhX1jL3M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=lD2g03vf; arc=none smtp.client-ip=209.85.222.178
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+	s=arc-20240116; t=1708236543; c=relaxed/simple;
+	bh=bHRG3TRdwOjMuILoYhxvHVzZiLrkLjUUk6Wadl0qHZA=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=gmPCE3yKTX3lbBsss6fUZqnt/JRWasINDwtVAF06nUWvC/FCcNNzUn03j68GDAF/JmY94/43rPjSRv46d5GQgQXU7b/GC/4+EfeBSV8F9/J5dvmG38UxG5RfyzF866n1yWEAbexVrVu8/XHHJzZk272eSYyX10uRL3kbsvK689I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.222.173
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lD2g03vf"
-Received: by mail-qk1-f178.google.com with SMTP id af79cd13be357-785d57056b0so193579185a.0
-        for <git@vger.kernel.org>; Sat, 17 Feb 2024 19:33:14 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1708227194; x=1708831994; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=ejjlnJI3fE4CbxDo56yk7ELYjq1BcQKFUl04oMBursE=;
-        b=lD2g03vfNwRdikDpYBydzHSex+gTJWirUjZjDxlY9dUq4Jc5qBQp/ecX+ZgFIDEs6b
-         SpHJhmpWuYG4t7w9EvvsRHvMXTXBZZbImVxT+3LNCzUmxnYkTHdfYCQSp+FXLlJ5Z1Er
-         wRhlkUe9TdlMsD4qudKKZU8uDptDkYKvFoZs8KuVGpJfCXWpwGcMQwdwOYjPtsB2F5z0
-         TdK51vyN0L61B72AlLfEbBib0kDoqdteclYCJGbGGa5Tbgc2LK0uS2Kz9OQLMR0Sn3Ld
-         8fneVLUVmW003Fc7QjcLRe45w2ZWviQ1P1B4K13E3zkmnxrbacMXHRxRTxUDiZNSD12e
-         A2MA==
+Received: by mail-qk1-f173.google.com with SMTP id af79cd13be357-78717221b97so247754485a.0
+        for <git@vger.kernel.org>; Sat, 17 Feb 2024 22:09:00 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1708227194; x=1708831994;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=ejjlnJI3fE4CbxDo56yk7ELYjq1BcQKFUl04oMBursE=;
-        b=hlJeMRQdY0UMMkJAtwXZj0fb5ETuqu5Hd0psNLX2nnKLUsBYai/hXSrbYvhpZa6bP6
-         tnpbRx0KPuAHXbilM9zu1setew29bLfdhnzao/4YcRdizSLDS+kYwrBvnaG34FR/UKvl
-         zOeXTpAr/EP/nncY/ffEHzidO0U8Bg5orRiZUdzBLT/yndxXyIbzTXAOHr7jiP+Nd7H/
-         g+MAWsd/KxUsTRFRHdkNiC1/7gjCyvwns1WYfFtyFwnWa62qtl7wuiJy7ri2lKL7hTrS
-         72oaj2A0uZIR4pMlaIlXSfNEOLGsTjklFXAs4onxY0Jr+KPbkADEz+/a+AxSRu6nFz3E
-         6oKQ==
-X-Gm-Message-State: AOJu0YxxqGVI4rynD46WSil/b/DYgOvPLBpNBFinei/PE+zrbNVaG9dX
-	YHAzj2e3GcCzfjDY6FLfqCtgURm1XsPtojw1gKNTdfVmwV+OwHUPLwPpIoKfKS8=
-X-Google-Smtp-Source: AGHT+IH7bMmko8D0271f500ej8wyVJolhtxLjSXtDIStrFQN8qaExo5rvy/En05TH+Uu4OLzE9uL+g==
-X-Received: by 2002:a05:620a:29d2:b0:787:3f0e:ee22 with SMTP id s18-20020a05620a29d200b007873f0eee22mr8948656qkp.55.1708227193608;
-        Sat, 17 Feb 2024 19:33:13 -0800 (PST)
-Received: from apollonius.localdomain ([152.3.43.40])
-        by smtp.gmail.com with ESMTPSA id q26-20020ae9e41a000000b00783ce19f9e6sm1314223qkc.57.2024.02.17.19.33.13
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 17 Feb 2024 19:33:13 -0800 (PST)
-From: MithicSpirit <rpc01234@gmail.com>
-To: git@vger.kernel.org
-Cc: MithicSpirit <rpc01234@gmail.com>
-Subject: [PATCH] builtin/stash: configs keepIndex, includeUntracked
-Date: Sat, 17 Feb 2024 22:30:46 -0500
-Message-ID: <20240218033146.372727-2-rpc01234@gmail.com>
-X-Mailer: git-send-email 2.43.2
+        d=1e100.net; s=20230601; t=1708236540; x=1708841340;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=YW2G8dcSwU1ISrIe35BcrBujmG/w1eFzyrM8u1MMSRc=;
+        b=R75zmGx6/kCnZo1D88F0raWJ96csCjcnQ4ArNYXjtWKSp6z5Zd7hplUPp9SCaFghEM
+         e4blQmIwHesCeEhiw2a3xhWmjBfd0Ig9qRc2VWSlkC1tjxl0sRJ63xWBOuHO5ZBy8Zuc
+         sagM7qpQC2t5/tDvuXG6IwZ8KHepKdurGzFeHmrX8BdqJw0AziYT4zWeugkOdki0bgDd
+         eAxYO1e2lE1ITRuSh7E9dKtJVvVtmoAgDD/jwC8vzLP+j+xyJK+YJQIYNt/NMapzrfdb
+         HpXBiZMFeX4MZvrnjz3hN4ePuSOZsaOEpYzapM53ApP6SZN+qBbwQu79p4cLWCNxHkeM
+         aysg==
+X-Gm-Message-State: AOJu0YzfyFfLZCqMGbzA2G3OOe7YenopTOxFP6CH8y/nntIAbVmyT1xT
+	QjN7MHMEUZaC6c4XQeTQlLMOnoIGMi9Z0abe+44xJKdQ+vhlWX/a/dlQ2o2lKG8m+wNdoRNDMf8
+	YP0tiFDN9dz9n7+9ZUicEN8LFIwYlLpOCyQc=
+X-Google-Smtp-Source: AGHT+IHjeyZ98VymvgTM6Hmtkn2urdTLyyDZTwgiZQJLp8vJzpGbyIinbD3SYs/wgRprT9ijzvnjAcB50OX5H2jeBmw=
+X-Received: by 2002:a05:6214:20c3:b0:68f:3295:2457 with SMTP id
+ 3-20020a05621420c300b0068f32952457mr10703882qve.43.1708236539744; Sat, 17 Feb
+ 2024 22:08:59 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <pull.1667.git.1708212896.gitgitgadget@gmail.com> <f7031316a043b36fac10ecf784d2294894967e7b.1708212896.git.gitgitgadget@gmail.com>
+In-Reply-To: <f7031316a043b36fac10ecf784d2294894967e7b.1708212896.git.gitgitgadget@gmail.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Date: Sun, 18 Feb 2024 01:08:48 -0500
+Message-ID: <CAPig+cR_XYjArdYpU-qm+Wont=yEEXe5hANRyz+YRdhv=UZf=Q@mail.gmail.com>
+Subject: Re: [PATCH 1/4] osxkeychain: replace deprecated SecKeychain API
+To: Bo Anderson via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, Bo Anderson <mail@boanderson.me>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Adds options `stash.keepIndex` and `stash.includeUntracked`, which
-enable `--keep-index` and `--include-untracked` by default (unless it
-would conflict with another option). This is done to facilitate the
-workflow where a user:
+On Sat, Feb 17, 2024 at 6:35=E2=80=AFPM Bo Anderson via GitGitGadget
+<gitgitgadget@gmail.com> wrote:
+> The SecKeychain API was deprecated in macOS 10.10, nearly 10 years ago.
+> The replacement SecItem API however is available as far back as macOS
+> 10.6.
+>
+> While supporting older macOS was perhaps prevously a concern,
+> git-credential-osxkeychain already requires a minimum of macOS 10.7
+> since 5747c8072b (contrib/credential: avoid fixed-size buffer in
+> osxkeychain, 2023-05-01) so using the newer API should not regress the
+> range of macOS versions supported.
+>
+> Adapting to use the newer SecItem API also happens to fix two test
+> failures in osxkeychain:
+>
+>     8 - helper (osxkeychain) overwrites on store
+>     9 - helper (osxkeychain) can forget host
+>
+> The new API is compatible with credentials saved with the older API.
+>
+> Signed-off-by: Bo Anderson <mail@boanderson.me>
 
-. Makes modifications;
-. Selectively adds them with `git add -p`; and
-. Stashes the unadded changes to run tests with only the current
-  modifications.
+I haven't studied the SecItem API, so I can't comment on the meat of
+the patch, but I can make a few generic observations...
 
-`stash.keepIndex` is especially important for this, as otherwise the
-work done in `git add -p` is lost since applying the stash does not
-restore the index. This problem could also be solved by adding
-functionality to the stash to restore the index specifically, but this
-would create much more complexity and still wouldn't be as convenient
-for that workflow.
+> diff --git a/contrib/credential/osxkeychain/git-credential-osxkeychain.c =
+b/contrib/credential/osxkeychain/git-credential-osxkeychain.c
+> @@ -3,14 +3,39 @@
+> -__attribute__((format (printf, 1, 2)))
+> +#define ENCODING kCFStringEncodingUTF8
+> +static CFStringRef protocol; /* Stores constant strings - not memory man=
+aged */
+> +static CFStringRef host;
+> [...]
+> +
+> +static void clear_credential(void)
+> +{
+> +       if (host) {
+> +               CFRelease(host);
+> +               host =3D NULL;
+> +       }
+> +       [...]
+> +}
+> +
+> +__attribute__((format (printf, 1, 2), __noreturn__))
 
-Signed-off-by: Ricardo Prado Cunha (MithicSpirit) <rpc01234@gmail.com>
----
-This is my first patch to git and my first time using mailing lists for this
-kind of stuff. Please do let me know of any mistakes or gaffes I've made.
+The addition of `__noreturn__` to the `__attribute__` seems unrelated
+to the stated purpose of this patch. As such, it typically would be
+placed in its own patch. If it really is too minor for a separate
+patch, mentioning it in the commit message as a "While at it..." would
+be helpful.
 
- Documentation/config/stash.txt |  13 ++++
- builtin/stash.c                |  65 ++++++++++++------
- t/t3903-stash.sh               | 119 +++++++++++++++++++++++++++++++++
- 3 files changed, 178 insertions(+), 19 deletions(-)
+> @@ -19,70 +44,135 @@ static void die(const char *err, ...)
+> +static CFDictionaryRef create_dictionary(CFAllocatorRef allocator, ...)
+> +{
+> +       va_list args;
+> +       const void *key;
+> +       CFMutableDictionaryRef result;
+> +
+> +       result =3D CFDictionaryCreateMutable(allocator,
+> +                                          0,
+> +                                          &kCFTypeDictionaryKeyCallBacks=
+,
+> +                                          &kCFTypeDictionaryValueCallBac=
+ks);
+> +
+> +
 
-diff --git a/Documentation/config/stash.txt b/Documentation/config/stash.txt
-index ec1edaeba6..d6d9ea7daa 100644
---- a/Documentation/config/stash.txt
-+++ b/Documentation/config/stash.txt
-@@ -1,6 +1,19 @@
-+stash.includeUntracked::
-+	Boolean option that configures whether the `git stash push` and `git
-+	stash save` commands also stash untracked files by default. This option
-+	is ignored if `--include-untracked`, `--no-include-untracked`, `--all`,
-+	`--patch`, or `--staged` are used. Defaults to `false`. See
-+	linkgit:git-stash[1].
-+
-+stash.keepIndex::
-+	Boolean option that configures whether the `git stash push` and `git
-+	stash save` commands also stash changes that have been added to the
-+	index. This option is ignored if `--keep-index`, `--no-keep-index`, or
-+	`--patch` are used. Defaults to `false`. See linkgit:git-stash[1].
-+
- stash.showIncludeUntracked::
- 	If this is set to true, the `git stash show` command will show
- 	the untracked files of a stash entry.  Defaults to false. See
- 	the description of the 'show' command in linkgit:git-stash[1].
+Style: one blank line is preferred over two
 
- stash.showPatch::
-diff --git a/builtin/stash.c b/builtin/stash.c
-index 7fb355bff0..c591a2bf4b 100644
---- a/builtin/stash.c
-+++ b/builtin/stash.c
-@@ -836,12 +836,14 @@ static int list_stash(int argc, const char **argv, const char *prefix)
- 	return run_command(&cp);
- }
+> +       va_start(args, allocator);
+> +       while ((key =3D va_arg(args, const void *)) !=3D NULL) {
+> +               const void *value;
+> +               value =3D va_arg(args, const void *);
+> +               if (value)
+> +                       CFDictionarySetValue(result, key, value);
+> +       }
+> +       va_end(args);
 
- static int show_stat = 1;
- static int show_patch;
- static int show_include_untracked;
-+static int default_keep_index;
-+static int default_include_untracked;
+A couple related comments...
 
- static int git_stash_config(const char *var, const char *value,
- 			    const struct config_context *ctx, void *cb)
- {
- 	if (!strcmp(var, "stash.showstat")) {
- 		show_stat = git_config_bool(var, value);
-@@ -852,12 +854,20 @@ static int git_stash_config(const char *var, const char *value,
- 		return 0;
- 	}
- 	if (!strcmp(var, "stash.showincludeuntracked")) {
- 		show_include_untracked = git_config_bool(var, value);
- 		return 0;
- 	}
-+	if (!strcmp(var, "stash.keepindex")) {
-+		default_keep_index = git_config_bool(var, value);
-+		return 0;
-+	}
-+	if (!strcmp(var, "stash.includeuntracked")) {
-+		default_include_untracked = git_config_bool(var, value);
-+		return 0;
-+	}
- 	return git_diff_basic_config(var, value, ctx, cb);
- }
+If va_arg() ever returns NULL for `value`, the next iteration of the
+loop will call va_arg() again, but calling va_arg() again after it has
+already returned NULL is likely undefined behavior. At minimum, I
+would have expected this to be written as:
 
- static void diff_include_untracked(const struct stash_info *info, struct diff_options *diff_opt)
- {
- 	const struct object_id *oid[] = { &info->w_commit, &info->u_tree };
-@@ -1509,33 +1519,50 @@ static int do_push_stash(const struct pathspec *ps, const char *stash_msg, int q
- 	int ret = 0;
- 	struct stash_info info = STASH_INFO_INIT;
- 	struct strbuf patch = STRBUF_INIT;
- 	struct strbuf stash_msg_buf = STRBUF_INIT;
- 	struct strbuf untracked_files = STRBUF_INIT;
+    while (...) {
+        ...
+        if (!value)
+            break;
+        CFDictionarySetValue(...);
+    }
 
--	if (patch_mode && keep_index == -1)
--		keep_index = 1;
--
--	if (patch_mode && include_untracked) {
--		fprintf_ln(stderr, _("Can't use --patch and --include-untracked"
--				     " or --all at the same time"));
--		ret = -1;
--		goto done;
-+	if (keep_index == -1) {
-+		if (patch_mode)
-+			keep_index = 1;
-+		else
-+			keep_index = default_keep_index;
- 	}
+However, isn't it a programmer error if va_arg() returns NULL for
+`value`? If so, I'd think we'd want to scream loudly about that rather
+than silently ignoring it. So, perhaps something like this:
 
--	/* --patch overrides --staged */
--	if (patch_mode)
-+	if (patch_mode) {
-+		if (include_untracked == -1)
-+			include_untracked = 0;
-+		else if (include_untracked) {
-+			fprintf_ln(stderr,
-+				   _("Can't use --patch and --include-untracked"
-+				     " or --all at the same time"));
-+			ret = -1;
-+			goto done;
-+		}
-+
-+		/* --patch overrides --staged */
- 		only_staged = 0;
--
--	if (only_staged && include_untracked) {
--		fprintf_ln(stderr, _("Can't use --staged and --include-untracked"
--				     " or --all at the same time"));
--		ret = -1;
--		goto done;
- 	}
+    while (...) {
+        ...
+        if (!value) {
+            fprintf(stderr, "BUG: ...");
+            abort();
+        }
+        CFDictionarySetValue(...);
+   }
 
-+	if (only_staged) {
-+		if (include_untracked == -1)
-+			include_untracked = 0;
-+		else if (include_untracked) {
-+			fprintf_ln(
-+				stderr,
-+				_("Can't use --staged and --include-untracked"
-+				  " or --all at the same time"));
-+			ret = -1;
-+			goto done;
-+		}
-+	}
-+
-+	if (include_untracked == -1)
-+		include_untracked = default_include_untracked;
-+
- 	repo_read_index_preload(the_repository, NULL, 0);
- 	if (!include_untracked && ps->nr) {
- 		int i;
- 		char *ps_matched = xcalloc(ps->nr, 1);
+Or, perhaps just call the existing die() function in this file with a
+suitable "BUG ..." message.
 
- 		/* TODO: audit for interaction with sparse-index. */
-@@ -1688,13 +1715,13 @@ static int do_push_stash(const struct pathspec *ps, const char *stash_msg, int q
- 				fprintf_ln(stderr, _("Cannot remove "
- 						     "worktree changes"));
- 			ret = -1;
- 			goto done;
- 		}
+> +static void find_username_in_item(CFDictionaryRef item)
+>  {
+> +       CFStringRef account_ref;
+> +       char *username_buf;
+> +       CFIndex buffer_len;
+>
+> +       account_ref =3D CFDictionaryGetValue(item, kSecAttrAccount);
+> +       if (!account_ref)
+> +       {
+> +               write_item("username", "", 0);
+> +               return;
+> +       }
 
--		if (keep_index < 1) {
-+		if (!keep_index) {
- 			struct child_process cp = CHILD_PROCESS_INIT;
+Style: opening brace sticks to the `if` line:
 
- 			cp.git_cmd = 1;
- 			strvec_pushl(&cp.args, "reset", "-q", "--refresh", "--",
- 				     NULL);
- 			add_pathspecs(&cp.args, ps);
-@@ -1718,13 +1745,13 @@ static int push_stash(int argc, const char **argv, const char *prefix,
- 		      int push_assumed)
- {
- 	int force_assume = 0;
- 	int keep_index = -1;
- 	int only_staged = 0;
- 	int patch_mode = 0;
--	int include_untracked = 0;
-+	int include_untracked = -1;
- 	int quiet = 0;
- 	int pathspec_file_nul = 0;
- 	const char *stash_msg = NULL;
- 	const char *pathspec_from_file = NULL;
- 	struct pathspec ps;
- 	struct option options[] = {
-@@ -1798,13 +1825,13 @@ static int push_stash_unassumed(int argc, const char **argv, const char *prefix)
+    if !(account_ref) {
+        ...
+    }
 
- static int save_stash(int argc, const char **argv, const char *prefix)
- {
- 	int keep_index = -1;
- 	int only_staged = 0;
- 	int patch_mode = 0;
--	int include_untracked = 0;
-+	int include_untracked = -1;
- 	int quiet = 0;
- 	int ret = 0;
- 	const char *stash_msg = NULL;
- 	struct pathspec ps;
- 	struct strbuf stash_msg_buf = STRBUF_INIT;
- 	struct option options[] = {
-diff --git a/t/t3903-stash.sh b/t/t3903-stash.sh
-index 00db82fb24..4ffcca742c 100755
---- a/t/t3903-stash.sh
-+++ b/t/t3903-stash.sh
-@@ -1565,7 +1565,126 @@ test_expect_success 'stash apply reports a locked index' '
- 		EOF
- 		test_must_fail git stash apply 2>err &&
- 		test_cmp expect err
- 	)
- '
+Same comment applies to the `if` below.
 
-+setup_dirty() {
-+	echo a >tracked &&
-+	echo b >added-modified &&
-+	git add tracked added-modified &&
-+	git commit -m initial &&
-+	echo 1 >>tracked &&
-+	echo 2 >>added-modified &&
-+	echo c >added-new &&
-+	echo d >untracked &&
-+	git add added-modified added-new
-+}
-+
-+test_expect_success 'stash.includeuntracked equivalent to --include-untracked' '
-+	git init using_opt &&
-+	test_when_finished rm -rf using_opt &&
-+	(
-+		cd using_opt &&
-+		setup_dirty &&
-+		git stash push &&
-+		git stash show -u --patch >../using-opt
-+	) &&
-+
-+	test_config stash.includeuntracked true &&
-+	git init using_config &&
-+	test_when_finished rm -rf using_config &&
-+	(
-+		cd using_config &&
-+		setup_dirty &&
-+		git stash push &&
-+		git stash show -u --patch >../using-config
-+	) &&
-+
-+	test_cmp using-opt using-config
-+'
-+
-+test_expect_success 'stash.includeuntracked yields to --no-include-untracked' '
-+	git init no_config &&
-+	test_when_finished rm -rf no_config &&
-+	(
-+		cd no_config &&
-+		setup_dirty &&
-+		git stash push --no-include-untracked &&
-+		git stash show -u --patch >../no-config
-+	) &&
-+
-+	test_config stash.includeuntracked true &&
-+	git init using_config &&
-+	test_when_finished rm -rf using_config &&
-+	(
-+		cd using_config &&
-+		setup_dirty &&
-+		git stash push --no-include-untracked &&
-+		git stash show -u --patch >../using-config
-+	) &&
-+
-+	test_cmp no-config using-config
-+'
-+
-+test_expect_success 'stash.includeuntracked succeeds with --patch' '
-+	test_config stash.includeuntracked true &&
-+	git stash --patch
-+'
-+
-+test_expect_success 'stash.includeuntracked succeeds with --staged' '
-+	test_config stash.includeuntracked true &&
-+	git stash --staged
-+'
-+
-+test_expect_success 'stash.keepindex equivalent to --keep-index' '
-+	git init using_opt &&
-+	test_when_finished rm -rf using_opt &&
-+	(
-+		cd using_opt &&
-+		setup_dirty &&
-+		git stash push &&
-+		git stash show -u --patch >../using-opt
-+	) &&
-+
-+	test_config stash.keepindex true &&
-+	git init using_config &&
-+	test_when_finished rm -rf using_config &&
-+	(
-+		cd using_config &&
-+		setup_dirty &&
-+		git stash push &&
-+		git stash show -u --patch >../using-config
-+	) &&
-+
-+	test_cmp using-opt using-config
-+'
-+
-+test_expect_success 'stash.keepindex yields to --no-keep-index' '
-+	git init no_config &&
-+	test_when_finished rm -rf no_config &&
-+	(
-+		cd no_config &&
-+		setup_dirty &&
-+		git stash push --no-keep-index &&
-+		git stash show -u --patch >../no-config
-+	) &&
-+
-+	test_config stash.keepindex true &&
-+	git init using_config &&
-+	test_when_finished rm -rf using_config &&
-+	(
-+		cd using_config &&
-+		setup_dirty &&
-+		git stash push --no-keep-index &&
-+		git stash show -u --patch >../using-config
-+	) &&
-+
-+	test_cmp no-config using-config
-+'
-+
-+test_expect_success 'stash.keepindex succeeds with --patch' '
-+	test_config stash.keepindex true &&
-+	git stash --patch
-+'
-+
- test_done
---
-2.43.2
+> +       username_buf =3D (char *)CFStringGetCStringPtr(account_ref, ENCOD=
+ING);
+> +       if (username_buf)
+> +       {
+> +               write_item("username", username_buf, strlen(username_buf)=
+);
+>                 return;
+> +       }
+
+According to the documentation for CFStringGetCStringPtr(), the
+returned C-string is not newly-allocated, so the caller does not have
+to free it. Therefore, can `username_buf` be declared `const char *`
+rather than `char *` to make it clear to readers that nothing is being
+leaked here? Same comment about the `(char *)` cast.
+
+> +       /* If we can't get a CString pointer then
+> +        * we need to allocate our own buffer */
+
+Style:
+
+    /*
+     * Multi-line comments
+     * are formatted like this.
+     */
+
+> +       buffer_len =3D CFStringGetMaximumSizeForEncoding(
+> +                       CFStringGetLength(account_ref), ENCODING) + 1;
+> +       username_buf =3D xmalloc(buffer_len);
+> +       if (CFStringGetCString(account_ref,
+> +                               username_buf,
+> +                               buffer_len,
+> +                               ENCODING)) {
+> +               write_item("username", username_buf, buffer_len - 1);
+> +       }
+> +       free(username_buf);
+
+Okay, this explains why `username_buf` is declared `char *` rather
+than `const char *`. Typically, when we have a situation in which a
+value may or may not need freeing, we use a `to_free` variable like
+this:
+
+    const char *username_buf;
+    char *to_free =3D NULL;
+    ...
+    username_buf =3D (const char *)CFStringGetCStringPtr(...);
+    if (username_buf) {
+        ...
+        return;
+    }
+    ...
+    username_buf =3D to_free =3D xmalloc(buffer_len);
+    if (CFStringGetCString(...))
+        ...
+    free(to_free);
+
+But that may be overkill for this simple case, and what you have here
+may be "good enough" for anyone already familiar with the API and who
+knows that the `return` after CFStringGetCStringPtr() isn't leaking.
+
+> +static OSStatus find_internet_password(void)
+>  {
+> +       CFDictionaryRef attrs;
+> +       [...]
+>
+> +       attrs =3D CREATE_SEC_ATTRIBUTES(kSecMatchLimit, kSecMatchLimitOne=
+,
+> +                                     kSecReturnAttributes, kCFBooleanTru=
+e,
+> +                                     kSecReturnData, kCFBooleanTrue,
+> +                                     NULL);
+> +       result =3D SecItemCopyMatching(attrs, (CFTypeRef *)&item);
+> +       if (result) {
+> +               goto out;
+> +       }
+
+We omit braces when the body is a single statement:
+
+    if (result)
+        goto out;
+
+(Same comment applies to other code in this patch.)
+
+> +       data =3D CFDictionaryGetValue(item, kSecValueData);
+> +       [...]
+> +
+> +out:
+> +       CFRelease(attrs);
+
+Good, `attrs` is released in all cases.
+
+> +static OSStatus add_internet_password(void)
+>  {
+> +       [...]
+> +       attrs =3D CREATE_SEC_ATTRIBUTES(kSecValueData, password,
+> +                                     NULL);
+> +       result =3D SecItemAdd(attrs, NULL);
+> +       if (result =3D=3D errSecDuplicateItem) {
+> +               CFDictionaryRef query;
+> +               query =3D CREATE_SEC_ATTRIBUTES(NULL);
+> +               result =3D SecItemUpdate(query, attrs);
+> +               CFRelease(query);
+> +       }
+> +       CFRelease(attrs);
+> +       return result;
+>  }
+
+Good, `attrs` and `query` are released in all cases.
