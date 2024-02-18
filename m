@@ -1,122 +1,94 @@
-Received: from mail-ot1-f42.google.com (mail-ot1-f42.google.com [209.85.210.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.roethke.info (smtp.roethke.info [46.232.251.167])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CC79433D8
-	for <git@vger.kernel.org>; Sun, 18 Feb 2024 11:37:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9AD04EB55
+	for <git@vger.kernel.org>; Sun, 18 Feb 2024 12:05:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=46.232.251.167
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708256243; cv=none; b=VhLXT/gKGm09bu9V0NC8EQY0IdSVnhFevoZHOQYCFgZM2NE1/HFWqPBwpF928qbvwMAifC8YA/E50CJZh1oDRQEvKnR0yWI/FmbLasFso1YO7GaxeQzAQxgDLakMb2x2qs9/pnPTdAs1tAALy7zGrC1Q1XLuMpd057i/KuMzVg4=
+	t=1708257915; cv=none; b=iB2KQvO9EkmoC/j/MWsI90zHNFZQWExRxy2mIRkv3AFFeDaUQGfkY52DQxEx3p0RDBNex4FjXOYGqWfHJDlmDrKMr2g2vlfdwuxDwnLqnsFkK+cT5uGsGZ3HzY9L5TAlnSv8XroCBE8915RbVREdwSApQ4oPML798419rbG2MuU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708256243; c=relaxed/simple;
-	bh=dJjYmZA0vT2HNd5jbk5dgzXSL+BVOOKHicthkNPgetE=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=nwzPkfh7PupEvglCa30pJTaF438VzZONP1DlM6x42qOJXYSV/8s+JY37R9B8+Rw03ckzqZVLqmWQTWwzXL5VsREg4tJlziME4mhHaRP2KvyYc5Q1hR+R0qHLrtdA3qFyGRvoYH2N7W3oiIEHB5GaTY1HCYXKhVuCCF4hjmH2iHY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=KM8oLamf; arc=none smtp.client-ip=209.85.210.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1708257915; c=relaxed/simple;
+	bh=lulFLmkhtUFkvGC4gwqOLSGwaV+Yqg3U6INMYW+1jy0=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=UeUO6PZBWWxF8qyWZ4AFKIBEhYGcL8gHjPkAe6bfAHZfs5JgJlDiCeiXFNhnVd6bcReyR9WchlZhUTOJ6Wwj7ivEaddXx5u4yzgVc7Qf0xg/rAcjbDVYfz9ePQUvMzx+m+Y3Ln6M2G+PcS0acp9fd6I6wHvNI+uV7vPh3kxjb2o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=roethke.info; spf=pass smtp.mailfrom=roethke.info; dkim=pass (4096-bit key) header.d=roethke.info header.i=@roethke.info header.b=ODU+oWBL; arc=none smtp.client-ip=46.232.251.167
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=roethke.info
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=roethke.info
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KM8oLamf"
-Received: by mail-ot1-f42.google.com with SMTP id 46e09a7af769-6e2fb9263a6so769460a34.1
-        for <git@vger.kernel.org>; Sun, 18 Feb 2024 03:37:21 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1708256241; x=1708861041; darn=vger.kernel.org;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=xJnqGQkelK+HIT3g+5eE2MBbkTqfN3N3BJV2BR8qsWM=;
-        b=KM8oLamfCiBGxX3cas6RABoeMPlOjfQx/yuAzXmrpSx3N61EAlHII/SCq87bMcT+3W
-         laMsXB13pyFPU7Uvj/I8gD4mrZkrLKF5agW5PvXiQM3qBW+GQr3qBNWNNJoTgp0fGua5
-         cDJwUQaO+jvuVmb6r2r7WOm8xUgIbbbxSxzed36Yregr7hNs9IXPOUHM0tcVPdEjfPV9
-         lG4tbJoYPbWU7GzJNftkKyapx1rB3MaPbSOI0sxdgbmBIUol3uMyllaZYEKD3GucDk88
-         b5XD2+vNXlwE154cU8cIwpkPm6eOwwPNruDgv2Ffq1iDOeIPeRPoMtSnBYUDTb4zRN66
-         TKZA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1708256241; x=1708861041;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=xJnqGQkelK+HIT3g+5eE2MBbkTqfN3N3BJV2BR8qsWM=;
-        b=ACQzg+HTfh9e6A2M8YRnuGbyPCkKJNc23Y9P/A7j0YQlfsZDbg7MJLtqwdmAsUtgKz
-         Wk8rXEGNZfhtgIsDRj0VMbNHsuiMCqphf1UcqX+0OBBeAKPGGpmnE4hVT06VYddkhR0e
-         pXppTF7Bq77KVrVwzQKPNcUvI7G+LIPlyl84zC7G8mhbfgMeHaj6WvPHd4OePB7pkpET
-         ZtZTcHsEuGXmldqqgJ3mbCM5ZpWdWl02N59qKAdJJJbsm8h/tvmx5feTqf7dE6qGUedG
-         V3k+mF+WBbXNfNsxd7+UYyIB9AJposg1auYpXWm8jaP4kKBFvfyCGSb9DgXgxRwX7r3H
-         jbZA==
-X-Gm-Message-State: AOJu0YxPTNXEha//M2GhIX6NjVLg4gmKYmUUxrCes5FtaL/1p2in1Uxu
-	440U/A71izyJvxN7WmFJj2JpTQShaFGddr6d5CBsTetebKCI4HXANevVx/H2iCPz3H/5qOa1Lts
-	FzwVhZD+/+PXZqZN3wyjPdomrf+QqCuL4MGE=
-X-Google-Smtp-Source: AGHT+IGQ35VoTKJfyJ+CPcHdFQsKJxobXj4FfTVyY7WnP/7yh40GMCqNGiwfQRyHztcxGSg0c4kMw7Wh691zuCAtIho=
-X-Received: by 2002:a05:6830:328e:b0:6e4:423b:623e with SMTP id
- m14-20020a056830328e00b006e4423b623emr3510453ott.11.1708256240946; Sun, 18
- Feb 2024 03:37:20 -0800 (PST)
+	dkim=pass (4096-bit key) header.d=roethke.info header.i=@roethke.info header.b="ODU+oWBL"
+Received: from localhost (unknown [IPv6:2a01:41e1:283b:1000:bb91:34f7:c1e1:8a6d])
+	by smtp.roethke.info (Postfix) with ESMTPA id 5E32C1E0004A;
+	Sun, 18 Feb 2024 11:57:24 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=roethke.info;
+	s=20200807; t=1708257445;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=hMhjzd+5Py9IhZDCwodhxXZ6q5GgbN4b0z4pr+8tOJI=;
+	b=ODU+oWBLYWSJa+4weBZ14uM1pMeB//5Usc5/CVu8lTKqTZqz5Y6HFkUGtuFccWYx7fSdsi
+	hiRRsDwZgU4qVhC46KLE87EtGMMA1DTdxGSY4M0zAYfEJ9ptpwH4BnCqBDPmATnE132SqO
+	DVbBdVGsH6BsBsYFMbPy9XhMONGcQtnxJCUy5dn2d3nk4JvEWGHQ0yERTLb9wir4GujNID
+	CsrvZlE81IxuE63HwWsifJA1fDI3k+GBNUytpfD0rsaTj4TUyw9tdWmQEzHfEpae208kd4
+	XRsUfi+2EA74X7dUpbQJarFeQz/4kSQ09D2D9iiu923LZh1raEIiIJzx+KkgLkQCqAWSkI
+	tTqneiOw7tMUsvCMywgswgwqva6phwWvgHl+jK37v9cO+AScOQLsEjEYH/y3rGrlp+np1Y
+	LYGuyyTYWN0f7oUW+0N/cQl21+dg91QbuoTFJRBK6vax5/fVf5cs1Cu9Z+JqON9eA7378X
+	4jqiLGyqtH39XLpieSGnj3o7d7ZC1hEo/4bxpda2aX8IYfBLpXpKuT15sqxfEQlI3m8Krl
+	tAzQJkaSbX2dWDg+nVAMYCg98WbvYHM4GhcTK0Wjci2uDrBAuCOYPrhQ8sda1MGiav74jA
+	pz9JXq4wFoXDZPRgq+XntmzdbhmDpN8g+HdbAFtAhs2RoP7efy8+g=
+Authentication-Results: ORIGINATING;
+	auth=pass smtp.auth=marcel@roethke.info smtp.mailfrom=marcel@roethke.info
+From: =?UTF-8?q?Marcel=20R=C3=B6thke?= <marcel@roethke.info>
+To: git@vger.kernel.org
+Cc: =?UTF-8?q?Marcel=20R=C3=B6thke?= <marcel@roethke.info>
+Subject: [PATCH] rerere: fix crash in during clear
+Date: Sun, 18 Feb 2024 12:49:36 +0100
+Message-ID: <20240218114936.1121077-1-marcel@roethke.info>
+X-Mailer: git-send-email 2.43.2
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: eugenio gigante <giganteeugenio2@gmail.com>
-Date: Sun, 18 Feb 2024 12:36:57 +0100
-Message-ID: <CAFJh0PTiN18LcKP6LW0d1u2gkodBD2cOJRBzU_subBaFpzM=CA@mail.gmail.com>
-Subject: [GSoC] Use unsigned integral type for collection of bits
-To: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-Hi all,
-I was looking around the codebase for some field of a structure that
-stores collections of bits with signed int type.
-I used this simple grep command to search for it:
+When rerere_clear is called, for instance when aborting a rebase, and
+the current conflict does not have a pre or postimage recorded git
+crashes with a SEGFAULT in has_rerere_resolution when accessing the
+status member of struct rerere_dir. This happens because scan_rerere_dir
+only allocates the status field in struct rerere_dir when a post or
+preimage was found. In some cases a segfault may happen even if a post
+or preimage was recorded if it was not for the variant of interest and
+the number of the variant that is present is lower than the variant of
+interest.
 
-$ grep -r -n "\tsigned int" .
-> ./diffcore.h:63:     signed int is_binary : 2;
+This patch solves this by making sure the status field is large enough
+to accommodate for the variant of interest so it can be accesses without
+checking if it is large enough.
 
-The struct in question is "diff_filespec" and Junio commented the
-declaration of the field as following:
+An alternative solution would be to always check before accessing the
+status field, but I think the chosen solution aligns better with the
+assumptions made elsewhere in the code.
 
-/* data should be considered "binary"; -1 means "don't know yet" */
+Signed-off-by: Marcel Röthke <marcel@roethke.info>
+---
+ rerere.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-So, if I understood it correctly, possible values are:
- 1 -> 01
- 2 -> 10
--1 -> 11
-On the other, by changing it to unsigned values would be:
-1 -> 01
-2 -> 10
-3 -> 11
+diff --git a/rerere.c b/rerere.c
+index ca7e77ba68..3973ccce37 100644
+--- a/rerere.c
++++ b/rerere.c
+@@ -219,6 +219,9 @@ static void read_rr(struct repository *r, struct string_list *rr)
+ 		buf.buf[hexsz] = '\0';
+ 		id = new_rerere_id_hex(buf.buf);
+ 		id->variant = variant;
++		/* make sure id->collection->status has enough space
++		 * for the variant we are interested in */
++		fit_variant(id->collection, variant);
+ 		string_list_insert(rr, path)->util = id;
+ 	}
+ 	strbuf_release(&buf);
+-- 
+2.43.2
 
-I read somewhere that one should always prefer unsigned integral type over
-
-signed integral type for a couple of reasons [1].
-
-These involve operations like Modulus, Shifting and Overflow.
-
-I didn't dig too much into how the field is used and if there are cases in =
-which
-
-the mentioned operations are involved (I would like the community
-opinion about this topic before).
-
-
-Moreover, I don=E2=80=99t know if such a change breaks too much code and if
-it=E2=80=99s worth it.
-
-Probably it's not that tragic since the header 'diffcore.h' is only
-included in two other files,
-
-but maybe I'm missing something. For sure, various If conditions used
-by the function
-
-'diff_filespec_is_binary' inside 'diff.c' would have to be changed.
-
-
-Besides, it's possible that my grep command is not enough and maybe
-more "signed int" can be spotted.
-
-Thanks!
-Eugenio Gigante.
-P.S. I was insecure about how to send this email since it does not
-include a commit.
-I decide not to use git-send-email. Hoping I didn't mess up the format.
-
-[1]
-https://embeddedgurus.com/stack-overflow/2009/05/signed-versus-unsigned-int=
-egers/
