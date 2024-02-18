@@ -1,52 +1,52 @@
-Received: from mail-ej1-f51.google.com (mail-ej1-f51.google.com [209.85.218.51])
+Received: from mail-ej1-f41.google.com (mail-ej1-f41.google.com [209.85.218.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C890C71B4A
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADFD271B48
 	for <git@vger.kernel.org>; Sun, 18 Feb 2024 19:59:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.51
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708286384; cv=none; b=l2b8I+xxTVrzQ7hPILTn6+QBrepZ2xx5s/WxZsy+73UgRvzjzvPlmnJxy8CJbrgCpEyqMdrQODHHok6un2UemC7sqBu9W5exkBeZjU/G+MEkPuG2yK5EbIDjlfMhM06i8OtDU54F8PMhu3pKj0WdTLk/ke3JgKOUXHoeHEdi+pw=
+	t=1708286384; cv=none; b=cuZ3TTAYJhd3mcmyo5ELiB8mpRcHqXGbu8vtOhrRjo9U2blRLKKvuLXGlEhkefNxz5MqulxdFwX0+uPlcVEJCSxfH50blmsfjdgEF9qsiRotPxDZBc96MRk7geQLtYfx4lizfglPJ/zekblupUlAP2kGLiJQnfpuTVC1Wy4nGnk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1708286384; c=relaxed/simple;
-	bh=FmPAJoncZifGIK+ki6+imjE16pCm3iqm1RJxRBQaHZ8=;
+	bh=Hhr7H8Bd48wQ6dQCXW4zPuaI3vLBzF52Nu9/OLVRej4=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=m7S7txe5CtRu2uPF2aMKoF9R5f5ewynaQdGI2uzg75kqcXgVO/fnnrwH5SvOFkh8bdvp+nAWihiOWloUQS5Jymzpg9yAURUMCkJ6xLYFSBWPsqWqTcdpKCliDilNTVKFJkwLwI1WoVimRNfp7H+DDp+IUS64u7Go5nO7V4VwXb0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=h3CgzqUb; arc=none smtp.client-ip=209.85.218.51
+	 MIME-Version; b=b1yXhTjLjkn8ajiP1m2TLOse5201drm2G87rwF+TP+gqoZZrAgxAcJFOvZuzzfaGzJmyKoTh2Xcx91PvgEt/cfVf7CJ7Y5DucHXAfwCafPcttSldoK8SHH9p/YalM/PLa5B74rxej4L9z4ZSUkbXgm+4f8sJbNNLfKZ2oatIQmA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=UfC1mMWJ; arc=none smtp.client-ip=209.85.218.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="h3CgzqUb"
-Received: by mail-ej1-f51.google.com with SMTP id a640c23a62f3a-a3e82664d53so44413766b.3
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UfC1mMWJ"
+Received: by mail-ej1-f41.google.com with SMTP id a640c23a62f3a-a26ed1e05c7so498253866b.2
         for <git@vger.kernel.org>; Sun, 18 Feb 2024 11:59:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20230601; t=1708286381; x=1708891181; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=kp2n/AxMm4iMLySdN2e8I0yh8tEWJx3SZZyloE9mgi0=;
-        b=h3CgzqUbfRkBKWAMSGU551P3BPS5LsGdV5GwhqZCJ2yOJYkPc4Zwrfm3QKQRsffJPU
-         5EA0dL3RX9dPZC+TWdPPW1pN7DA03zEreyWUr+PJw0eJXBExmGwDc55X5YyNHuTVy8x3
-         4PlBy8WI9mzmnBNyPKr29Cam7yoJXK3/fIH0jH2/rUNfHyJcmBgzU6n6DafablUmchex
-         7/PzYmEd8BbxMYQvuZw665CNZ6gism6BnBZpyH2BKwtXGLqt2OikUgjpok8hEFmYfgBJ
-         wjMBu6inZf3daX15KlZhtEhc6T15iqdulIRs3GZ8HUTEEKc0t89ek5U2KB7HStBqweBb
-         breQ==
+        bh=qaU3EAwEomF6Aj6BbZNDZDsZcoaXMFfYG6mbHdqh29M=;
+        b=UfC1mMWJ5EVhm/+JfD+Fha5cWOhjLuchhfVbgzIb42U2CioJ+xXVVWPJptxRXmFiZo
+         d3+J/HCtV6fEz9nEJatv9jWLT07Fp4M/2fnO5O4WBbzXQZEvmyHEYh5YLZv+iB0uH3BE
+         LNKPn5xzKc2A8JY2y9eiTUIqJDSYSHeO1Wi0B762EpFJfK+NajJVvYYU1Qcd1ZVfGYZ3
+         Hf68bujrJlH5iZsD+pive3TnPCqpWWWXdQyA5jN44oOeEFnU+VhLymm741sdz1gqOdU3
+         XhgP4KRtmiDNAWB26H6o/CCAXTe+eR5sebiyaH/pDfeyLfNFzPsrGgklVZOtmMTpjMe5
+         jZaQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20230601; t=1708286381; x=1708891181;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=kp2n/AxMm4iMLySdN2e8I0yh8tEWJx3SZZyloE9mgi0=;
-        b=G76WUVQpPpNM/iBohKX13IzKEHt/RrspmQ8ZnaePuIz26c0UQfpbzLclDvJZ6epmQA
-         lA9juHQdCt/F1tt8h/2K3J+JpkeHei1ajMoKfAicldOa+VxyRgTPquY95gfXngThq3kx
-         h2eHQFR4EopqpGY8UYgAUCqoyHwZ2Wf9DCiK0S8yk6yr4hzuDZBQo+fLYIN4CA4013uE
-         85l8mSuWg2N0adrEZeU0AmqlJav/OxFG9dLA0UEoYJi1i+jTELSD4rJeKf5ie6fDdRJo
-         2/lVHiyVJ8sM2KijAnIq7Pveb41v81SAvV0SzG6LGE93EP9sM4qw0863jcDOB4slRM76
-         WLLg==
-X-Gm-Message-State: AOJu0YzvP8HXELbAk7Ue8AsTAAtcrEBn+gbW7/OUj3lluIJGm5IZhk4O
-	z0nCTmJWfLSkFR5T+4DP74gPh71H4QvVjWVCxeNpWPiwhfAB6bHUBk8g8QJE
-X-Google-Smtp-Source: AGHT+IEpyaGSUdSqZd7DUxOB3nzj0+TjM9OzSYxI49m8IUXHRzx0+7MMWmAbMqJ6R7+fGsb0nYB8nw==
-X-Received: by 2002:a17:906:3b94:b0:a3d:26b2:94f4 with SMTP id u20-20020a1709063b9400b00a3d26b294f4mr7445516ejf.73.1708286381089;
-        Sun, 18 Feb 2024 11:59:41 -0800 (PST)
+        bh=qaU3EAwEomF6Aj6BbZNDZDsZcoaXMFfYG6mbHdqh29M=;
+        b=E3sUcy8/wKspJuTFzkMUyqL2Z8gSeEi+3VCaVyEk831e/doBiax3AQXSK9nAaDdVfu
+         jCRF2F2hFfYwIfizkj9EBOdyjEs5Bj5kBn9iG/389h2gk+P2DKbnmdjUw8+BOnUB0+xg
+         E4razJ9lZxHVToPEARJrbSp27PZv/2VzEiTKgfjjrDEnQWRvFgoqcOFG0gSjDp3UbWyA
+         IpyHbzMugh23PZ5JburXmZr5jhoBucIz7wHhW8vg7cQ2M2FsXj4jddGP8OPlLYPJlgSz
+         yfmlGunbEnEwPKb7Ulm2IIMCB8ZsOpISQrCjeNVGBgYXUQ/T1spX/FGOD0GzmQES6o+/
+         zDeA==
+X-Gm-Message-State: AOJu0YyRzQfjVueYzyaJPkk/UQZxpmIcxb7zNwt8b/0yHgJokf0mg6Dl
+	7+gm+upSyK2kk4Flis4bDdoGc+HTS2ocNVj75OD9VBaltkQqYm0B53Hw9siU
+X-Google-Smtp-Source: AGHT+IE7UImvPB3MkwumY99bE0BNnxp9JGjbF2cMno0Sjr93IsezfEF3BrauTgXLXrvob9/w6f+V7Q==
+X-Received: by 2002:a17:906:780f:b0:a3d:cf66:51ff with SMTP id u15-20020a170906780f00b00a3dcf6651ffmr4735063ejm.13.1708286380652;
+        Sun, 18 Feb 2024 11:59:40 -0800 (PST)
 Received: from mkb-desktop.bosmans (89-224-201-31.ftth.glasoperator.nl. [31.201.224.89])
         by smtp.gmail.com with ESMTPSA id dt14-20020a170907728e00b00a3cbbaf5981sm2206999ejc.51.2024.02.18.11.59.40
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
@@ -55,9 +55,9 @@ From: Maarten Bosmans <mkbosmans@gmail.com>
 X-Google-Original-From: Maarten Bosmans <maarten.bosmans@vortech.nl>
 To: git@vger.kernel.org
 Cc: Maarten Bosmans <maarten.bosmans@vortech.nl>
-Subject: [PATCH v2 5/5] notes: use strbuf_attach to take ownership of the object contents
-Date: Sun, 18 Feb 2024 20:59:38 +0100
-Message-Id: <20240218195938.6253-6-maarten.bosmans@vortech.nl>
+Subject: [PATCH v2 4/5] notes: do not clean up right before calling die()
+Date: Sun, 18 Feb 2024 20:59:37 +0100
+Message-Id: <20240218195938.6253-5-maarten.bosmans@vortech.nl>
 X-Mailer: git-send-email 2.35.3
 In-Reply-To: <20240218195938.6253-1-maarten.bosmans@vortech.nl>
 References: <20240205204932.16653-1-maarten.bosmans@vortech.nl>
@@ -74,43 +74,31 @@ From: Maarten Bosmans <mkbosmans@gmail.com>
 
 From: Maarten Bosmans <maarten.bosmans@vortech.nl>
 
-Avoid an extra allocation in the strbuf when pushing the string into it.
+For consistency with the other uses of die() in the same function.
 
 Signed-off-by: Maarten Bosmans <maarten.bosmans@vortech.nl>
 ---
- builtin/notes.c | 7 ++-----
- 1 file changed, 2 insertions(+), 5 deletions(-)
+ builtin/notes.c | 6 +-----
+ 1 file changed, 1 insertion(+), 5 deletions(-)
 
 diff --git a/builtin/notes.c b/builtin/notes.c
-index 6863935d03..5be24a9c58 100644
+index 184a92d0c1..6863935d03 100644
 --- a/builtin/notes.c
 +++ b/builtin/notes.c
-@@ -314,10 +314,8 @@ static int parse_reuse_arg(const struct option *opt, const char *arg, int unset)
- 	if (type != OBJ_BLOB)
+@@ -311,12 +311,8 @@ static int parse_reuse_arg(const struct option *opt, const char *arg, int unset)
+ 		die(_("failed to resolve '%s' as a valid ref."), arg);
+ 	if (!(value = repo_read_object_file(the_repository, &object, &type, &len)))
+ 		die(_("failed to read object '%s'."), arg);
+-	if (type != OBJ_BLOB) {
+-		strbuf_release(&msg->buf);
+-		free(value);
+-		free(msg);
++	if (type != OBJ_BLOB)
  		die(_("cannot read note data from non-blob object '%s'."), arg);
+-	}
  
--	strbuf_add(&msg->buf, value, len);
--	free(value);
-+	strbuf_attach(&msg->buf, value, len, len + 1);
- 
--	msg->buf.len = len;
- 	ALLOC_GROW_BY(d->messages, d->msg_nr, 1, d->msg_alloc);
- 	d->messages[d->msg_nr - 1] = msg;
- 	msg->stripspace = NO_STRIPSPACE;
-@@ -705,12 +703,11 @@ static int append_edit(int argc, const char **argv, const char *prefix)
- 		if (!prev_buf)
- 			die(_("unable to read %s"), oid_to_hex(note));
- 		if (size)
--			strbuf_add(&buf, prev_buf, size);
-+			strbuf_attach(&buf, prev_buf, size, size + 1);
- 		if (d.buf.len && size)
- 			append_separator(&buf);
- 		strbuf_insert(&d.buf, 0, buf.buf, buf.len);
- 
--		free(prev_buf);
- 		strbuf_release(&buf);
- 	}
- 
+ 	strbuf_add(&msg->buf, value, len);
+ 	free(value);
 -- 
 2.35.3
 
