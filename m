@@ -1,136 +1,133 @@
-Received: from smtp.roethke.info (smtp.roethke.info [46.232.251.167])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f46.google.com (mail-ej1-f46.google.com [209.85.218.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE7061E86E
-	for <git@vger.kernel.org>; Sun, 18 Feb 2024 19:46:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=46.232.251.167
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40B7271B35
+	for <git@vger.kernel.org>; Sun, 18 Feb 2024 19:59:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708285575; cv=none; b=XlgQ7yIulBy2OUwBh13sO3t9aHuwRPgpkpqhlZu9VLTBAH/9aA7J6uuHtBSLQQlQGo/ShJ6ZF4O1GCuG0+l0AOOscyVCiMD1YIx0O61FYsJl9J0JeymgoSvqd+3V9Nsoqg1PNEurp0qj1lYtiNLUmw2tSK7H9QoThsvcMw6Tjqk=
+	t=1708286383; cv=none; b=hbDpI4x/Opq4wf5ElCksVSHifnUFlaZWEXzSupnoWhOTROe8J+ela9z+w/BFTa+DbyasO7IvvmbkqZqjGusmrwISwfIVxmU/cvWn7/4NRsp2dEKZIse/okpe+8eKllTt6sKH7Y51bsqx5HmS/lyMWHJesTo1aYb4jPs+Or+7tTA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708285575; c=relaxed/simple;
-	bh=zSON0zpX92sN/aKytPMrUQU6B34WEf+46rzC6z82zzo=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=r9Sn/xZO2UmFNdCBTwxeygaPHbGiGAnzDUfMWuxjZAtJSMHDlVT1aWsIGRCbNZQifPXHlzXPkiN2b8AukMQcZmWbPP2ex7mPssDcqMcQZ+oqdur0qeNGhj+56RuTXJu0DIbVDQfGIJs1+OEAd912LQxEx0paKpDe+7uJIzK9+1k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=roethke.info; spf=pass smtp.mailfrom=roethke.info; dkim=pass (4096-bit key) header.d=roethke.info header.i=@roethke.info header.b=cFoQIpfr; arc=none smtp.client-ip=46.232.251.167
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=roethke.info
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=roethke.info
+	s=arc-20240116; t=1708286383; c=relaxed/simple;
+	bh=Z2bDYhksL+CXRB/xETwRFAWKPKVYFSD9KvVdD7WWdIE=;
+	h=From:To:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version; b=o9nZy85xn7doz2sK//x3dDg2pehQEEIotSoqsuYF2V5EcybGXuoCjZK6QEYohr45alcDHMlqNw1zmAtRobEsa8rUHTkq6SzEFosqznmyRGDgnU4Aekt6vZ/sV2FR6KV9DS36pmYFrzr9RjXIJdwLIYvZNZOKSxU81gZBuL0GLpc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=KaAEwHQT; arc=none smtp.client-ip=209.85.218.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (4096-bit key) header.d=roethke.info header.i=@roethke.info header.b="cFoQIpfr"
-Received: from localhost (unknown [IPv6:2a01:41e1:283b:1000:bb91:34f7:c1e1:8a6d])
-	by smtp.roethke.info (Postfix) with ESMTPA id 9328B1E0004A;
-	Sun, 18 Feb 2024 19:46:11 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=roethke.info;
-	s=20200807; t=1708285571;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=pQ1DjjC7k70vP8adyqUNAVkMl9mmlFy66qcTKe6cEpI=;
-	b=cFoQIpfrxK28kvNZTFJlM6g/zkU4ohcexWFIaJB6zIQqftmKiT2kuVNuEX9BSfZ8gTpXoB
-	Q9uHqzZuUlWW5+onKSN6ip+2ZiW5PzCdFv4EPLMZTCMZ41Ebm1WD9k1UBW3QNuw/tiUpSp
-	1RUH0JmWPVQGTRAoB30aM9QXZ90IdDfgN8o4h3xLifqlqu/F4LFoq2Mi+Rf0kCpbiJOz2s
-	Jew4gPBn3ZGCPnIBuBx2Zt982moTnbzhwkOJXa1uIUAd+FBvzQ90tP93gSmFGgs3v9ttGp
-	mmdY4Mz9XtrfioOBB0SaH63g3R5ivDTr8NEIPygowzUI/H+y9iVn3ZB20fy7bly3H7vQtR
-	Z/Z+/W8hxOj0q8ayw/PHravBM7BkSplQd/oWlqTtCMpuZiRhE/8rxP4vvPBACfTgnZhEBA
-	0VgX96KXvfe9gOSkVpxpXzQzHQLycnokmy7vfdmb+c12SpNjLoHZCIjm5Ru9o57hCgnq5R
-	0mVZgOM3y71o9UrPggDcN/Sc1Whj8g9Z1GVWg+E5+mmEOnOmfw31sjQXklRxWtAef4otPF
-	QgO8OHmV+va+lTvzkXNT8urlLxWxXQojjRS5OFM+R3RJdHYQq04GQf4jekF3+2X/FKDCa7
-	KwSaB0cQw8NDIzXIQ4ixQH1JloT++a9WKr926Cdr0W2QP3Q0fekco=
-Authentication-Results: ORIGINATING;
-	auth=pass smtp.auth=marcel@roethke.info smtp.mailfrom=marcel@roethke.info
-From: =?UTF-8?q?Marcel=20R=C3=B6thke?= <marcel@roethke.info>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KaAEwHQT"
+Received: by mail-ej1-f46.google.com with SMTP id a640c23a62f3a-a3566c0309fso423531366b.1
+        for <git@vger.kernel.org>; Sun, 18 Feb 2024 11:59:40 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1708286379; x=1708891179; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=1WxpU1FDDdP6HDRe7xxrukEYGAYhx3my3zFELDMGBzU=;
+        b=KaAEwHQTjcoX3MdZ1mCp8Jd4r3Y7jj7noBNByb+KherKdo6+mg1RYN0OVUgIghEZTW
+         V3lAVQt3rHIMn5lsdUMwqAIgWEWTbnku6wM+34oU5KetLEa2vxxRp4eHYkJ2IVu6wyqh
+         mt33LFVM8IGZ0Zz7OJFPsBx2/ewLQUPDnG3EymJgsojMg25pCKb4ggBBHah261jBWnpj
+         XhJjzfu3oQ0ZAfDBummNjDpz/lHoAXCiwoM+015Gb8ZvC1w7hQdn4OiIm5jJ0U5OQtjR
+         1kb5SnxwTrgExgZbi39MmeKBdYX8xRVpnOGAEg/E1UPBKqYYpXIBlc9uQlzVUXN1NtqG
+         YZEA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1708286379; x=1708891179;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=1WxpU1FDDdP6HDRe7xxrukEYGAYhx3my3zFELDMGBzU=;
+        b=GlnFIWzu7F4nqtQ2k9YvOZg3eajlZX24zsm3yyIwhZAKFPve03sYaeFJjmERrIOVof
+         fl1vhczuyrtT0MMxmlkbrn1wrgs6mFw81WrlNmh/lbYarniVyN0M4EV1kKsfCDKQq3xF
+         jXzmE34cgKFytmJYc76WBI1pRwy61oRJW50ueJEeWpo3pGwUO9iuNT7yBblkFlkZ5sP6
+         qGcXEERQHKiV/cz1vdX76JmZ6XAzNVg0mBybWts62lW7VgBOGyBp88/RD8umD3is6gt2
+         WvxgJCTELEViAhlVYUAOP5m5M6svw826dfMEfV3VHMZdoSfv0Pyq0/6FTLeu/CQfaXK/
+         tZlQ==
+X-Gm-Message-State: AOJu0Yx4feO4XBvaFhFTHbreVZn33t41qbyhIqORmvmPVJKJk4bQEmJY
+	Vqx9rbJ5lc+G1v5qPZiAEPToK5IrGGA6dCtF56mgie/zfFfXuWjcXPKHr2TB
+X-Google-Smtp-Source: AGHT+IEFVgZmryrIyFlvGr1FMUdFfEuIj8IDZO+hlmGqwB8jDs7100/caYoRadTmwRmcdmQiTOYp8w==
+X-Received: by 2002:a17:906:1988:b0:a3d:5406:a437 with SMTP id g8-20020a170906198800b00a3d5406a437mr6218018ejd.28.1708286379341;
+        Sun, 18 Feb 2024 11:59:39 -0800 (PST)
+Received: from mkb-desktop.bosmans (89-224-201-31.ftth.glasoperator.nl. [31.201.224.89])
+        by smtp.gmail.com with ESMTPSA id dt14-20020a170907728e00b00a3cbbaf5981sm2206999ejc.51.2024.02.18.11.59.38
+        for <git@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 18 Feb 2024 11:59:39 -0800 (PST)
+From: Maarten Bosmans <mkbosmans@gmail.com>
+X-Google-Original-From: Maarten Bosmans <maarten.bosmans@vortech.nl>
 To: git@vger.kernel.org
-Cc: =?UTF-8?q?Marcel=20R=C3=B6thke?= <marcel@roethke.info>
-Subject: [PATCH v2] rerere: fix crash during clear
-Date: Sun, 18 Feb 2024 20:46:03 +0100
-Message-ID: <20240218194603.1210895-1-marcel@roethke.info>
-X-Mailer: git-send-email 2.43.2
-In-Reply-To: <20240218114936.1121077-1-marcel@roethke.info>
-References: <20240218114936.1121077-1-marcel@roethke.info>
+Subject: [PATCH v2 0/5] Speed up git-notes show
+Date: Sun, 18 Feb 2024 20:59:33 +0100
+Message-Id: <20240218195938.6253-1-maarten.bosmans@vortech.nl>
+X-Mailer: git-send-email 2.35.3
+In-Reply-To: <20240205204932.16653-1-maarten.bosmans@vortech.nl>
+References: <20240205204932.16653-1-maarten.bosmans@vortech.nl>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-When rerere_clear is called, for instance when aborting a rebase, and
-the current conflict does not have a pre or postimage recorded git
-crashes with a SEGFAULT in has_rerere_resolution when accessing the
-status member of struct rerere_dir. This happens because scan_rerere_dir
-only allocates the status field in struct rerere_dir when a post or
-preimage was found. In some cases a segfault may happen even if a post
-or preimage was recorded if it was not for the variant of interest and
-the number of the variant that is present is lower than the variant of
-interest.
+First time contributor here, trying my first git.git patch series.
 
-Solve this by making sure the status field is large enough to
-accommodate for the variant of interest so it can be accessed without
-checking if it is large enough.
+BACKGROUND
+  We have a script that runs a range of build tests for all new commits in the
+  repository and adds a line to the commit note with the result from the test.
+  Something along the lines of:
+      occa-build-jit-gnu-cuda-develop: PASSED (<hostname>, 2024-01-01 00:00:00+01:00)
+  Pretty useful to quickly check that all commits at least build, not only for
+  master, but also in progress feature branches.  (a passing test suite is
+  generally only required at the merge point)
 
-An alternative solution would be to always check before accessing the
-status field, but I think the chosen solution aligns better with the
-assumptions made elsewhere in the code.
+PROBLEM
+  The bash script loops over all remote refs and lists the commits newer than
+  <N> days ago.  For each commit its note is read and grep'ed for an existing
+  test name to see whether the build test needs to run again.  The `git note show`
+  command that is in this loop nest only takes 14ms to execute, but as it is in
+  a loop, those times add up.
 
-Signed-off-by: Marcel Röthke <marcel@roethke.info>
----
-Range-diff against v1:
-1:  93f982d170 ! 1:  68178298fe rerere: fix crash in during clear
-    @@ Metadata
-     Author: Marcel Röthke <marcel@roethke.info>
-     
-      ## Commit message ##
-    -    rerere: fix crash in during clear
-    +    rerere: fix crash during clear
-     
-         When rerere_clear is called, for instance when aborting a rebase, and
-         the current conflict does not have a pre or postimage recorded git
-    @@ Commit message
-         the number of the variant that is present is lower than the variant of
-         interest.
-     
-    -    This patch solves this by making sure the status field is large enough
-    -    to accommodate for the variant of interest so it can be accesses without
-    +    Solve this by making sure the status field is large enough to
-    +    accommodate for the variant of interest so it can be accessed without
-         checking if it is large enough.
-     
-         An alternative solution would be to always check before accessing the
-    @@ rerere.c: static void read_rr(struct repository *r, struct string_list *rr)
-      		buf.buf[hexsz] = '\0';
-      		id = new_rerere_id_hex(buf.buf);
-      		id->variant = variant;
-    -+		/* make sure id->collection->status has enough space
-    -+		 * for the variant we are interested in */
-    ++		/*
-    ++		 * make sure id->collection->status has enough space
-    ++		 * for the variant we are interested in
-    ++		 */
-     +		fit_variant(id->collection, variant);
-      		string_list_insert(rr, path)->util = id;
-      	}
+ANALYSIS
+  When asked to show a note for a specific commit, git looks up the blob hash
+  for the note and executes `git show` with that hash.  That of course adds
+  the child process overhead, but also causes the initialization of a lot of
+  log related configuration, such as for decorations or the mailmap.  Simply
+  outputting the blob directly in the main process reduces the run time by
+  almost halve.
 
- rerere.c | 5 +++++
- 1 file changed, 5 insertions(+)
+When looking through the git show implementation for useful stuff that command
+does that should also be done when showing a note, I could only find the
+`setup_pager()` call and some optional textconv stuff.
 
-diff --git a/rerere.c b/rerere.c
-index ca7e77ba68..4683d6cbb1 100644
---- a/rerere.c
-+++ b/rerere.c
-@@ -219,6 +219,11 @@ static void read_rr(struct repository *r, struct string_list *rr)
- 		buf.buf[hexsz] = '\0';
- 		id = new_rerere_id_hex(buf.buf);
- 		id->variant = variant;
-+		/*
-+		 * make sure id->collection->status has enough space
-+		 * for the variant we are interested in
-+		 */
-+		fit_variant(id->collection, variant);
- 		string_list_insert(rr, path)->util = id;
- 	}
- 	strbuf_release(&buf);
+The second commit is the main one fixing performance. The others are just
+eliminating some overhead I noticed when going through the git notes code.
+
+
+CHANGES WRT V1
+  Sharing of the show_blob_object() function from log.c. The intention here is
+  to have `git notes show` behave the same as `git show` when in the future the
+  latter might be changed to have more sophisticated behaviour for some blobs,
+  e.g. launching an image viewer for PNG blobs.  Non-blob notes are still not
+  handled, just like in V1.  Current master does handle that, but that is not
+  deemed a case worth handling.
+
+
+Maarten Bosmans (5):
+  log: Move show_blob_object() to log.c
+  notes: avoid launching a child process to show a note blob
+  notes: use existing function stream_blob_to_fd
+  notes: do not clean up right before calling die()
+  notes: use strbuf_attach to take ownership of the object contents
+
+ Makefile        |  1 +
+ builtin/log.c   | 39 +++++----------------------------------
+ builtin/notes.c | 38 +++++++++++---------------------------
+ log.c           | 41 +++++++++++++++++++++++++++++++++++++++++
+ log.h           | 11 +++++++++++
+ 5 files changed, 69 insertions(+), 61 deletions(-)
+ create mode 100644 log.c
+ create mode 100644 log.h
+
 -- 
-2.43.2
+2.35.3
 
