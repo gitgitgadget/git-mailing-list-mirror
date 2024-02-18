@@ -1,228 +1,138 @@
-Received: from sender4-of-o52.zoho.com (sender4-of-o52.zoho.com [136.143.188.52])
+Received: from DEU01-FR2-obe.outbound.protection.outlook.com (mail-fr2deu01on2119.outbound.protection.outlook.com [40.107.135.119])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05AE96BFB1
-	for <git@vger.kernel.org>; Sun, 18 Feb 2024 14:48:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 597956BB41
+	for <git@vger.kernel.org>; Sun, 18 Feb 2024 15:37:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.135.119
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708267741; cv=pass; b=Hie5v2ZTMpyj0FS+1oy+eG+p89xu9qknAa8vVPsWPXL9a7+PH/hFBnZSPrOjlxfrdLvrBk28QJd+CXOcUI0piRf7BunB9HxQAxP+8t5LOz6icMUgGT6RYcyDEjij+OlhlhdNEgXLPadwfGPjU0MLDCVEl336FOY4f3Z9E6553RY=
+	t=1708270654; cv=fail; b=p/tVIjkakbRPw5CpyAWzSL45s0eKW6Iap2kQzH7jtvxZwLCw5Ya2eYnJfz+xDNzs6mv5/GZUI9IEAhuGteORQ0S/X3S04WInLSy9HNMnW2u+Sl0xyxTLdPBYuMAxWDBhOwJkz77qU6KJdAmcOlfVydQYTbk0b7OQlRE80tbmn9A=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708267741; c=relaxed/simple;
-	bh=N2h14mZhBrfg4DXBH9nzCvrQzMy2GQ4OvhXCiBCq6lw=;
-	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Date:Cc:
-	 Message-Id:References:To; b=ucPp/6tD/8Obf6jrxLB+RGZrsr3LNYdXFXuYPIgbgOAdv22UhHxyPmHZlhPgx0tVBjoZ6Zl8/R5F3ZYIlUj0nwTZxYujRv4k2Y/zjBgDTDpHBemCz7aug0JrMa6SouPwZA+v/0qUfrgJ3GU3lD193mMBuo1HOFw5gaOxjc5MVsQ=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=boanderson.me; spf=pass smtp.mailfrom=boanderson.me; dkim=pass (1024-bit key) header.d=boanderson.me header.i=mail@boanderson.me header.b=dnXTNAdI; arc=pass smtp.client-ip=136.143.188.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=boanderson.me
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=boanderson.me
+	s=arc-20240116; t=1708270654; c=relaxed/simple;
+	bh=ch60xJhGxRhyQ5JfhnRNjhLlErTc65urTFxev6GcSdQ=;
+	h=From:To:Subject:Date:Message-ID:Content-Type:MIME-Version; b=S9HZ5q+uVELSVuSP4+T4CN1AIlgyWmqSnBJsDAWBP3djgt8leog39uUz4Ky1dUCqSKV995GeS4VOI52PtQ9bAEShQImDxa2GurtbDj5hzpFsYwf689bf250Lywc0BSWJc4A1eqRU1kWMWzxLHVt7VrfVR17ZZbhFI1d2UFwOdVI=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastec.de; spf=pass smtp.mailfrom=fastec.de; dkim=pass (1024-bit key) header.d=fastecgmbh.onmicrosoft.com header.i=@fastecgmbh.onmicrosoft.com header.b=Bzmrzxgn; arc=fail smtp.client-ip=40.107.135.119
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastec.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastec.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=boanderson.me header.i=mail@boanderson.me header.b="dnXTNAdI"
-ARC-Seal: i=1; a=rsa-sha256; t=1708267735; cv=none; 
-	d=zohomail.com; s=zohoarc; 
-	b=ZRibY4/X8tQbt6Mw4KxTbAcQJ4G+s26oXiquKRRhRcm+PfEw+BAOHSlCNpFPX0y0YyRUlzX4V9mdpWbQ8joknULFoKU3B+sxSIHpQa02KyLwNisAadKa4C0crWY9bD9EFUzWi+AzR5O+O+qNcX8oW01Yt7Nhgnip2v0LFe6fr9s=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-	t=1708267735; h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
-	bh=WOwpDzTJmqO3MGho9e1V5H7sUUSD5dtz3S5D76NCZkA=; 
-	b=ZToWmt+VetO24C3CP1uriF+2TGHPg3uNLpze0pCIxIbVKPZKrDeL7tbF0fWEas5LPbjNLcJ3Wx/lmxeODy3FT1TZecXrahMxFoqam4LJXIxkuW+9TuYYd4IhyqGEbXnk/2NnZq7N2GaLWJ4hAM2uZHRZzeUSwmkJiaMB9hj5Sqw=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
-	dkim=pass  header.i=boanderson.me;
-	spf=pass  smtp.mailfrom=mail@boanderson.me;
-	dmarc=pass header.from=<mail@boanderson.me>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1708267735;
-	s=zoho; d=boanderson.me; i=mail@boanderson.me;
-	h=Content-Type:Mime-Version:Subject:Subject:From:From:In-Reply-To:Date:Date:Cc:Cc:Content-Transfer-Encoding:Message-Id:Message-Id:References:To:To:Reply-To;
-	bh=WOwpDzTJmqO3MGho9e1V5H7sUUSD5dtz3S5D76NCZkA=;
-	b=dnXTNAdIYVs5hX7Pgg/a/DHxmNm5n+Q4yNs6JqsJSqxAQhbAo6yGdnUHnq8Jna9r
-	aBFaRGIsuw2NNJ/WWT08IBqu+LnDDnC+vJGbHYCGokTo2jqTIPqA9VH943NpF2MAy21
-	EjRguIvUQjCjU3foMTcLyidJHwI5s5ccCd+sGSho=
-Received: from smtpclient.apple (w-65.cust-u5093.ip.static.uno.uk.net [212.105.168.65]) by mx.zohomail.com
-	with SMTPS id 1708267733608397.459673733846; Sun, 18 Feb 2024 06:48:53 -0800 (PST)
-Content-Type: text/plain;
-	charset=utf-8
+	dkim=pass (1024-bit key) header.d=fastecgmbh.onmicrosoft.com header.i=@fastecgmbh.onmicrosoft.com header.b="Bzmrzxgn"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=mBfPQp/xM6SumfV45gQMoRfh/aH1w7EhNAWYC2yG/l7Kute2tO71hJW1JLlUIfGk+PVELhAcIPa5saqgtNcmAjgKjQMxDs7iGi7Y3Hf+xc6Y/ttDkPjGRg5WaJwQv/UWaJPr6M23bGydH2U+PAsRxktVRdgbkiYGi3cL0FX/qSHAwT56kt/h10dVUDXGJ1BlKlZNP0qX0J28WgzHfYDvD+Oz4DtmA7Jgsf73nrGINJehvm9G6SLtFwvdzHIZ4XRQD1c5eECzu+OJOoIRMVilCXZxgdCeH7FzJ9Get3BMau6ED14DtJ960XRidyiHVh6wIyHh/8nzNpJzlSjE+pvYpQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=ch60xJhGxRhyQ5JfhnRNjhLlErTc65urTFxev6GcSdQ=;
+ b=aBsxYh/nFpQ3fkzrKhEg8rEEcOxelZjj+CBkdGiy89zT4dFQbdhKrvOGv1+xGd1YBxVa6pVtQZk0bxGAoEaq8r5eypVEO6bK3g86RbxQfnSYTqEpfZg1+6nzIUbQXIjLLg03oawteQrzGtCBtFRgiCit3DEZNCeX+61dv3MTm85wgyFC8gnRlhYukdpWtV/7Fw5d6wUBj9ACyTcJ5gOyo+oqsPN2FZBIp8QGSFZwzVJDsVZm5j/DoRu2xgX7fhXaRhCbTfrgYrT4aEhKjTYq4l8mkHxnMXRnUmIQNebiW3WekJbDaiWLeWszKoa6aKtiiqkKva5BDQ/yyd9izXLipQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=fastec.de; dmarc=pass action=none header.from=fastec.de;
+ dkim=pass header.d=fastec.de; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=fastecgmbh.onmicrosoft.com; s=selector1-fastecgmbh-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=ch60xJhGxRhyQ5JfhnRNjhLlErTc65urTFxev6GcSdQ=;
+ b=Bzmrzxgnp81oSs+IaQ4hGh+AbCO8lnXARv28IOxhXj/L5qV1PO6G7/DkC84mCXZncli6kmnVZfO03BeJ5jZ2jc6IQlbIL6Njlt9BWZiekie+SkS+SSAeHjB4Rsa+NZJ1OMe150b3tRj/fC+v9QSyukcPL1UUheX8wkPNDR22yZQ=
+Received: from FR2P281MB1686.DEUP281.PROD.OUTLOOK.COM (2603:10a6:d10:8e::8) by
+ BEUP281MB3619.DEUP281.PROD.OUTLOOK.COM (2603:10a6:b10:9b::11) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.7292.37; Sun, 18 Feb 2024 15:37:30 +0000
+Received: from FR2P281MB1686.DEUP281.PROD.OUTLOOK.COM
+ ([fe80::6cc0:4279:43dd:b928]) by FR2P281MB1686.DEUP281.PROD.OUTLOOK.COM
+ ([fe80::6cc0:4279:43dd:b928%3]) with mapi id 15.20.7292.033; Sun, 18 Feb 2024
+ 15:37:29 +0000
+From: Dominik von Haller <vonhaller@fastec.de>
+To: "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Why does the includeif woks how it does?
+Thread-Topic: Why does the includeif woks how it does?
+Thread-Index: AdpigFX4rY/DF1D1RvOx6v4IWkYvIA==
+Date: Sun, 18 Feb 2024 15:37:29 +0000
+Message-ID:
+ <FR2P281MB1686B7258CFB60A0F33FE108BA522@FR2P281MB1686.DEUP281.PROD.OUTLOOK.COM>
+Accept-Language: en-US, en-GB
+Content-Language: en-US
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=fastec.de;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: FR2P281MB1686:EE_|BEUP281MB3619:EE_
+x-ms-office365-filtering-correlation-id: 579e5d4e-d37e-4274-cd29-08dc30978462
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info:
+ BfPEb3+VeEQD978dnft7+sgu3fBABUSLH7lZ9GGs1iQlR7DYuEPVGLL3id3i2Tr3TfQeaRgGi8OoofrCnrzPXfF5+w3/BT+grXeDxAdvreusf31/3HYfy8uobjcSDxFvINNA1BVnO9N9Z4zE701MnZDFIn8CsHfpOV+YeHahoLr53FIU8+qEQ6gheHpo275w/+26je3axEnSfC0a9+ABj7Vb1j2uiZlX3G/MCiUw0YD1KubtME4I1C8pVn/D2N7+tCC+Ws031DObQfGFzSZbaB9X1eWvcecNBIilU5QS5vtjhOtlTNsNwrEAgkds3RbTnr1rGzBH4D2evPOrwEizNbqFh0zPbqPhZsojFQlcCLfIya4VQVZ5bgCBB9vbi1ou3XxrW3eg0/kKsKFEFA2Gyt4RcjtBoQokojYNORULst30PT9Ri8u8cc+cqENIb+eZO+SdYzxnQdXukSSArjrSb1QnqEcyOyI68fuheb4REgO1Q5MpK91lxd25UCrlnuSoOco464Vp9tmMuDJ3J6HThu4My56OVyMXWUEgJCmcaCQdZ3x4x3iAVf0B6Ihu1cuGvMe4RvTY9BFPxa7hmYyzF8SJZG9NLUbo8EQtYf1qn6w=
+x-forefront-antispam-report:
+ CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:FR2P281MB1686.DEUP281.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(13230031)(39830400003)(366004)(396003)(376002)(346002)(136003)(230922051799003)(64100799003)(451199024)(186009)(1800799012)(33656002)(83380400001)(86362001)(38070700009)(71200400001)(41300700001)(316002)(6506007)(7696005)(5660300002)(4744005)(9686003)(478600001)(2906002)(52536014)(64756008)(76116006)(66946007)(66556008)(66476007)(66446008)(966005)(8936002)(8676002)(6916009)(55016003)(122000001)(38100700002);DIR:OUT;SFP:1102;
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0:
+ =?us-ascii?Q?WiGinV8ul4t1382MT8HgxSRLTTZ27tvKhKy1FQiCgji69QDmyy/lNGf2nGxg?=
+ =?us-ascii?Q?Ibe/TRKUJaSD+TjlEHPL8B0QPO8cGnrE0RMFijVdDcVzWIpllBB9M8bkANhz?=
+ =?us-ascii?Q?7MCkaHMn+Y2BaEHx/E7ZF4dUsp9WlTGtwbURfhLxINjP64fsPgunxVUn9zM6?=
+ =?us-ascii?Q?wctZ9YbaY4E9mStvywtWVGqP+gdBRxLEbflChexjRIQ5e8l0WNvhtgROLC31?=
+ =?us-ascii?Q?42o9z07VN5h5sG1Xe2VxiNDb4zrrqWHsRvMeTsyA4ZIR9tK67rolHaTpsc0s?=
+ =?us-ascii?Q?+LpPqmca39GmEMBDwk16dU0QD82qIkI+aHakeehLaadSx9lWPWqeAs9nxKq0?=
+ =?us-ascii?Q?1rndw6ZdzUatVjPaNHhDYYV71Om/1Ty0q6f1QwmfiGBpKurgvHVWv02Gyy/X?=
+ =?us-ascii?Q?a+nTiH8kzIn7VUkOEUGK0Xk92fj1zEfveSuMx6KEUw20ABRPlyHx3j2nKtcg?=
+ =?us-ascii?Q?nM5aW/YDe1Lby38smEkNzVUkd1228PM7Cf8pB6fCxqt5y9XiWoak4I8MHiiT?=
+ =?us-ascii?Q?7lgQFEvvz9IjzNFQpjFPQV3eCUOe/IOb9rUHAQFItdUIKXzioVLhQikLSSYX?=
+ =?us-ascii?Q?Sc55hveirFqu8dEm5dYuNPMr4fUIdTYgDfrxTvQ7Daxofp0EW5vGxGSSujRp?=
+ =?us-ascii?Q?106xiegm19l6Pypb1rYyyl/L9yk9FKHRrZiTikN5bsPnUx8LXwh5gfXO+Yix?=
+ =?us-ascii?Q?/Ap5T+yUmZMpWl3WAL2mDingITc/c5nSDVheExNWEh/fMjzzHLdySKAYs04/?=
+ =?us-ascii?Q?alJYZbliv9McgyGgiyksfSUxGinSSDWKHx6eLwm7IID1Mptga9kcjrYVcTzk?=
+ =?us-ascii?Q?vOzwOgZD7iYEX5gIeRY4SOFMYdff0IgGv8GDlr9YtIo6+NqJMkCzvK2RhyMP?=
+ =?us-ascii?Q?RKo9IbNTLy6IoLyvmhsN4NwZsUuMPASVNIAGv3NiWEGpc87Gg4cJc5eROi3y?=
+ =?us-ascii?Q?GIx0fHiErNXxXt2urumxGWVgs3VI1pq968SfLAMxG+XnJg2vzprO8murPCMx?=
+ =?us-ascii?Q?upSq2489YZimH/JxxkE1armNvXYSMpiW3YMYY37BjJsl2ofuuitlaD9Ahapt?=
+ =?us-ascii?Q?CNZB4xTLD1lNoLeBn2C30J0uaSyERaQXfTrtJC0zO8RDemDLyy2jxBU7lXWZ?=
+ =?us-ascii?Q?m7frfCVaMC8VGIIyUSN8svuFLYoO/U4vYmhuzBZOVBX7BWaETz4s8mYxZyJX?=
+ =?us-ascii?Q?Qh8m1Jtbhm5IZU0cep7o7SdV5I4xYkszYTwqV/oTE3mYWY8vhJj10omZTfUS?=
+ =?us-ascii?Q?BYxRK9QxBI8/tA/Fw8dn3BFpQOPO1IoUQf0PAFmuVam7pChpyyn78xnAahmS?=
+ =?us-ascii?Q?2w4aj3ENGBYH2UPf8MkhuHAy15JIuPKMX6XQlOg61iDstt3P+rMIUYuDns69?=
+ =?us-ascii?Q?uok80OdrZ18UzxPjI0fGUhSRYxeMus7Kwt6NvAXuagb4+XMHGau6Rx2VxG+w?=
+ =?us-ascii?Q?73G1M//uPMU5KoNxny0EQXEBJhNnitqKimhGRsP39NZNKbSY4ExT7b9IDTGP?=
+ =?us-ascii?Q?vNCGv/jZnfhDUxFtcLEpsWYB+RBJN74P4m5Uupxfv/5hkfpsZvTit8SkLVT9?=
+ =?us-ascii?Q?1xS3jz6s5Qdb/bkBBup4Y22+WJqbOJmw+JXYX48vWPYMFfa22Dlp8JKGRtEc?=
+ =?us-ascii?Q?y5kksZkCOmQGOzGrQ7aLn+p9TCwTFGUbNBOc/5dNbKnZ?=
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3774.400.31\))
-Subject: Re: [PATCH 1/4] osxkeychain: replace deprecated SecKeychain API
-From: Bo Anderson <mail@boanderson.me>
-In-Reply-To: <CAPig+cR_XYjArdYpU-qm+Wont=yEEXe5hANRyz+YRdhv=UZf=Q@mail.gmail.com>
-Date: Sun, 18 Feb 2024 14:48:41 +0000
-Cc: Bo Anderson via GitGitGadget <gitgitgadget@gmail.com>,
- git@vger.kernel.org
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <AFC4D25B-D6ED-4706-A804-CA0183B84604@boanderson.me>
-References: <pull.1667.git.1708212896.gitgitgadget@gmail.com>
- <f7031316a043b36fac10ecf784d2294894967e7b.1708212896.git.gitgitgadget@gmail.com>
- <CAPig+cR_XYjArdYpU-qm+Wont=yEEXe5hANRyz+YRdhv=UZf=Q@mail.gmail.com>
-To: Eric Sunshine <sunshine@sunshineco.com>
-X-Mailer: Apple Mail (2.3774.400.31)
-X-ZohoMailClient: External
+MIME-Version: 1.0
+X-OriginatorOrg: fastec.de
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: FR2P281MB1686.DEUP281.PROD.OUTLOOK.COM
+X-MS-Exchange-CrossTenant-Network-Message-Id: 579e5d4e-d37e-4274-cd29-08dc30978462
+X-MS-Exchange-CrossTenant-originalarrivaltime: 18 Feb 2024 15:37:29.8794
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 1f95ea7c-9a3d-4add-988c-01b7cee9a358
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: 5fiyN6KpQ4ushEQLyZekWICAHoZ3hxxBKX55M8KoNB/sYnbdHgusrW/GO7RZFR5lujqPBZrUnsbhB/+MxUHUzA==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BEUP281MB3619
 
-> On 18 Feb 2024, at 06:08, Eric Sunshine <sunshine@sunshineco.com> =
-wrote:
->=20
-> I haven't studied the SecItem API, so I can't comment on the meat of
-> the patch, but I can make a few generic observations...
+Hi,
 
-Thanks for taking a look!
 
->> diff --git =
-a/contrib/credential/osxkeychain/git-credential-osxkeychain.c =
-b/contrib/credential/osxkeychain/git-credential-osxkeychain.c
->> @@ -3,14 +3,39 @@
->> -__attribute__((format (printf, 1, 2)))
->> +#define ENCODING kCFStringEncodingUTF8
->> +static CFStringRef protocol; /* Stores constant strings - not memory =
-managed */
->> +static CFStringRef host;
->> [...]
->> +
->> +static void clear_credential(void)
->> +{
->> +       if (host) {
->> +               CFRelease(host);
->> +               host =3D NULL;
->> +       }
->> +       [...]
->> +}
->> +
->> +__attribute__((format (printf, 1, 2), __noreturn__))
->=20
-> The addition of `__noreturn__` to the `__attribute__` seems unrelated
-> to the stated purpose of this patch. As such, it typically would be
-> placed in its own patch. If it really is too minor for a separate
-> patch, mentioning it in the commit message as a "While at it..." would
-> be helpful.
+I have been playing around with the includeif from the .gitconfig. It did n=
+ot work for me at first, but after some help, I did get it to work.
 
-Acknowledged. It is indeed a bit of a nothing change that doesn=E2=80=99t =
-really do much on its own, but when paired with the port variable =
-reorder could potentially make a =E2=80=9Cminor code cleanup=E2=80=9D =
-commit.
+If you are curious. My Problem and what else was discussed here: https://gi=
+thub.com/git-for-windows/git/issues/4823
 
->> +       va_start(args, allocator);
->> +       while ((key =3D va_arg(args, const void *)) !=3D NULL) {
->> +               const void *value;
->> +               value =3D va_arg(args, const void *);
->> +               if (value)
->> +                       CFDictionarySetValue(result, key, value);
->> +       }
->> +       va_end(args);
->=20
-> A couple related comments...
->=20
-> If va_arg() ever returns NULL for `value`, the next iteration of the
-> loop will call va_arg() again, but calling va_arg() again after it has
-> already returned NULL is likely undefined behavior. At minimum, I
-> would have expected this to be written as:
->=20
-> while (...) {
->     ...
->     if (!value)
->         break;
->     CFDictionarySetValue(...);
-> }
->=20
-> However, isn't it a programmer error if va_arg() returns NULL for
-> `value`? If so, I'd think we'd want to scream loudly about that rather
-> than silently ignoring it. So, perhaps something like this:
->=20
-> while (...) {
->     ...
->     if (!value) {
->         fprintf(stderr, "BUG: ...");
->         abort();
->     }
->     CFDictionarySetValue(...);
-> }
->=20
-> Or, perhaps just call the existing die() function in this file with a
-> suitable "BUG ..." message.
->=20
+Anyway. So, I was trying to access the email property which was set through=
+ an includeif config. It did not work because I was in a non git directory.=
+ Yes, I do know that the property set in includeif is named gitdir, but it =
+was not obvious to me that you need to be in a git tracked directory for it=
+ to work.
 
-In this case it=E2=80=99s by design to accept and check for NULL values =
-as it greatly simplifies the code. Inputs to the credential helpers have =
-various optional fields, such as port and path. It is programmer error =
-to pass NULL to the SecItem API (runtime crash) so in order to simplify =
-having to check each individual field in all of the callers (and =
-probably ditch varargs since you can=E2=80=99t really do dynamic =
-varargs), I check the value here instead. That means you can do =
-something like:
+I am trying to understand why it must be this way. Why does it not work in =
+non git tracked directories?
 
- create_dictionary(kCFAllocatorDefault,
-     kSecAttrServer, host,
-     kSecAttrPath, path, \
-     kSecAttrPort, port,
-     NULL)
+I am not sure if I am conveying my Question correctly. Please read the mess=
+ages in the github issue if the content of this email was confusing.
 
-And it will only include the key-value pairs that have non-NULL values.
 
-It would indeed be programmer error to not pass key-value pairs, though =
-it is equally programmer error to not have a terminating NULL.
-
->> +       username_buf =3D (char *)CFStringGetCStringPtr(account_ref, =
-ENCODING);
->> +       if (username_buf)
->> +       {
->> +               write_item("username", username_buf, =
-strlen(username_buf));
->>             return;
->> +       }
->=20
-> According to the documentation for CFStringGetCStringPtr(), the
-> returned C-string is not newly-allocated, so the caller does not have
-> to free it. Therefore, can `username_buf` be declared `const char *`
-> rather than `char *` to make it clear to readers that nothing is being
-> leaked here? Same comment about the `(char *)` cast.
->=20
->> +       /* If we can't get a CString pointer then
->> +        * we need to allocate our own buffer */
->=20
-> Style:
->=20
-> /*
->  * Multi-line comments
->  * are formatted like this.
->  */
->=20
->> +       buffer_len =3D CFStringGetMaximumSizeForEncoding(
->> +                       CFStringGetLength(account_ref), ENCODING) + =
-1;
->> +       username_buf =3D xmalloc(buffer_len);
->> +       if (CFStringGetCString(account_ref,
->> +                               username_buf,
->> +                               buffer_len,
->> +                               ENCODING)) {
->> +               write_item("username", username_buf, buffer_len - 1);
->> +       }
->> +       free(username_buf);
->=20
-> Okay, this explains why `username_buf` is declared `char *` rather
-> than `const char *`. Typically, when we have a situation in which a
-> value may or may not need freeing, we use a `to_free` variable like
-> this:
->=20
-> const char *username_buf;
-> char *to_free =3D NULL;
-> ...
-> username_buf =3D (const char *)CFStringGetCStringPtr(...);
-> if (username_buf) {
->     ...
->     return;
-> }
-> ...
-> username_buf =3D to_free =3D xmalloc(buffer_len);
-> if (CFStringGetCString(...))
->     ...
-> free(to_free);
->=20
-> But that may be overkill for this simple case, and what you have here
-> may be "good enough" for anyone already familiar with the API and who
-> knows that the `return` after CFStringGetCStringPtr() isn't leaking.
-
-Would it make sense to just have a comment paired with the =
-CFStringGetCStringPtr return explaining why it doesn=E2=80=99t need to =
-be freed there? I=E2=80=99m OK with the to_free variable however if =
-that=E2=80=99s clearer. Idea in my mind was pairing it based on =
-`xmalloc` but I can see why pairing based on variable is clearer.
-
+Best regards
+Dominik von Haller
