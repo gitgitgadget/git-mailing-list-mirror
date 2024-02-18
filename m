@@ -1,90 +1,101 @@
-Received: from mail-wr1-f45.google.com (mail-wr1-f45.google.com [209.85.221.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mout.gmx.net (mout.gmx.net [212.227.17.20])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B72CD1D696
-	for <git@vger.kernel.org>; Sun, 18 Feb 2024 20:40:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8397C745EE
+	for <git@vger.kernel.org>; Sun, 18 Feb 2024 21:58:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.20
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708288850; cv=none; b=RDqQkdRONEH1BhE4/stwDy10h8vclsuC1T+7r37q6xfYNZyZ3HxCtcol1QDsZvKFNrk1DBm0TqFqV/226jNd9QUlxNVxJNkXFmElqvr6ADN7HRhKE/WAcMsp4e2bqYMl8c02m/M4YzbLr5w/FdoMPBvvh7n5v788Du2Fwa904Qo=
+	t=1708293516; cv=none; b=otd1aY3IZ8nm80E6oIfpUbm9DiJ81PnTmkarb/hQzyjwopUWmOtMQfQr0k8HCkR3PvNcY4YsPdEDuVLqdDorwkykA2+oxr8XANSkwrZw72flokuj5dwOA/ikHONnBZvUFxSmO7ccOh/1CQlR6ma1XQSHedJByEnGwRLJo4YskI0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708288850; c=relaxed/simple;
-	bh=U8qkQ+vDmNldWCyVZB++kbciamgNToyD4IqkrJNl7uM=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=ANR4KuIH+cfa3658PZsTWm25R2AL4tbnYZry1ottqLmMK7ns8QlcOKlBOxhPsIGERdAmzDOLoo3Zd2n3qN6GgqzAnxjJA7kUL7tHdRsIx3xpltz8MCRjD2jx2OeauxraOPxkoR775Y4RUawgMe2KZT8SRuYWqkjEpPF4eZSGNyc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=K1AKLxCe; arc=none smtp.client-ip=209.85.221.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1708293516; c=relaxed/simple;
+	bh=aryqtwSaqkqwubO6r06gevmyxTCtV4dP3nb75MEzHwg=;
+	h=Date:From:To:cc:Subject:In-Reply-To:Message-ID:References:
+	 MIME-Version:Content-Type; b=udTk4xs9++q/QD9lrbJ1sn+MldOB/OcGQqtZBcJT8zFvXBtqB5SoGR8J8GOzaXo9PD0uyRpEYqBCc2euqL+FAGKpBoFSZO00O8lRe8iT9GwlMDU4KinHByuu/kBZ4MKCU7/fJO1BUDNYJ3sHMsRmdMdB8Q60V7wwoPP0a+ADWBY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b=aaXLfXLr; arc=none smtp.client-ip=212.227.17.20
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="K1AKLxCe"
-Received: by mail-wr1-f45.google.com with SMTP id ffacd0b85a97d-33cd57b7eabso1918724f8f.2
-        for <git@vger.kernel.org>; Sun, 18 Feb 2024 12:40:48 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1708288847; x=1708893647; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=asXl0+B/W5Xr2pFZdJp+Uj32keMOV6eT9at6YhBA0VU=;
-        b=K1AKLxCeL4PB/+uahuxXwM8QgLndK8Ia/wDCd7lwT7sJv9i1G00/JBrNko++ujfXw0
-         pZ+eeZXYbDwodeQQR7d4uCvbSItjFJL+UhTV70pokX/U0JhEMEpHYhBn1TBJBqh9W1p6
-         pXnEFVgIZ4MtP+WVW4Zf34kV6LuP2EiaVPz1yc9v3uLO2kiBnf/LXiWB3wFe6WOLr+G4
-         jUCkjF/PCVu19qXpLQ3ySPokS80gtp3//nlqObgWreOPJoyYZEmSSsca9PYsNLFFXfyg
-         qKNTP1IkmbE7QSNPiTlfVAVCEhdqEo0wZ1Tu42EUevE+zTrNQzpwLsFrYLV/16nbcQrn
-         zoCQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1708288847; x=1708893647;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=asXl0+B/W5Xr2pFZdJp+Uj32keMOV6eT9at6YhBA0VU=;
-        b=jvO5Medo9tZ9K8sluYSMxGVcKKYATYGe4MV5OzN9GtuLHgvisOlssv54c3PmiyjjU/
-         D8UMWtJzbPHitmo6uxpRlQj+kuPdY7Diqv/9NCWhhsx3i1sxu1qN5TJa3gKiH8/OOg/K
-         vZNXTR7NbXGtyno1Fhe+4LUBwuHQ3wZ5B4xGis3qfEPlwtVbKTapWGRkCsXj5vb6slv7
-         Nczs7x70j5Z7X6/LvC6SBFt1gAL3sgkrezukQKbePEHA5QY31r/IanHSMWWAu/f6RV3W
-         6jjd4PYjmEVch/wUh1zI0ORXtmBznl+XhHCpJ9D2ra16omzQUpHA83iZurEA9vrBeTzk
-         NjGA==
-X-Gm-Message-State: AOJu0YzVZWPfSDDRdrL3zcMppXh+y/6PswzQSUbG5+gizNuFs83XLn1f
-	KGoENFU/YaED+xk/oRyDLedZuYDimwfabviMZE4X/JXMavsH1tfkJ3L5xUcl
-X-Google-Smtp-Source: AGHT+IEkrGbUQFFgs+IZuilbovyORb0RdCqxijQF0O3uYTrbz1CL9KlYn5WinWJalcB3f7lq2wad+Q==
-X-Received: by 2002:a5d:43c4:0:b0:33d:3566:b5c8 with SMTP id v4-20020a5d43c4000000b0033d3566b5c8mr2799290wrr.13.1708288846877;
-        Sun, 18 Feb 2024 12:40:46 -0800 (PST)
-Received: from penguin.lxd ([2.26.197.149])
-        by smtp.gmail.com with ESMTPSA id i13-20020a5d55cd000000b0033b198efbedsm8294283wrw.15.2024.02.18.12.40.46
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 18 Feb 2024 12:40:46 -0800 (PST)
-From: M Hickford <mirth.hickford@gmail.com>
-To: gitgitgadget@gmail.com
-Cc: git@vger.kernel.org,
-	mail@boanderson.me
-Subject: Re: [PATCH 0/4] osxkeychain: bring in line with other credential helpers
-Date: Sun, 18 Feb 2024 20:40:44 +0000
-Message-Id: <20240218204044.11365-1-mirth.hickford@gmail.com>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <pull.1667.git.1708212896.gitgitgadget@gmail.com>
-References: <pull.1667.git.1708212896.gitgitgadget@gmail.com>
+	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b="aaXLfXLr"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.de; s=s31663417;
+	t=1708293502; x=1708898302; i=johannes.schindelin@gmx.de;
+	bh=aryqtwSaqkqwubO6r06gevmyxTCtV4dP3nb75MEzHwg=;
+	h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:
+	 References;
+	b=aaXLfXLrBJB8IUUQ9dPhI25TeXaZkT+upAxxqG332VbEd+t9K0Xnb18/+1kJ91Ta
+	 04LSfSQkIUyL9eQgJZRVLK8wQ+A1e7cVXySdOH54wU+8Ruxrqct2h5X7DzifiOtpJ
+	 oH7KjS8/gTG97S+nnqqUFd5RN3HDomes2Fm7YElEBtdyaWU3fTZSTgIBaI6UrXFMU
+	 5ViAwHuj11jFvXQDm0mnRxrdENkbSiF4PgVgzPuO2BVP1ItP7tbh6CwGL9kpzOiC0
+	 M7PonqD+JGmTbNNYhCEUdEP5g8UfXIdqorMjz/zdv6BvIGkt6hkt7VQlfAmZZVFwa
+	 0MHc8eFfjxBYKwg6eA==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from [172.23.242.68] ([213.196.214.170]) by mail.gmx.net (mrgmx105
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MIMfc-1rhGg60yPs-00ENv1; Sun, 18
+ Feb 2024 22:58:22 +0100
+Date: Sun, 18 Feb 2024 22:58:20 +0100 (CET)
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Beat Bolli <dev+git@drbeat.li>
+cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org, 
+    Philippe Blain <levraiphilippeblain@gmail.com>, 
+    =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= <avarab@gmail.com>
+Subject: Re: [PATCH] completion: use awk for filtering the config entries
+In-Reply-To: <4a1d3618-cebe-4c20-89ce-c5dab51af21a@drbeat.li>
+Message-ID: <aa3e36a1-52d3-0c15-b70b-83c6664757f5@gmx.de>
+References: <20240216171046.927552-1-dev+git@drbeat.li> <xmqqr0hcjorg.fsf@gitster.g> <4a1d3618-cebe-4c20-89ce-c5dab51af21a@drbeat.li>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:ASlGIBmazxc/XTwKgZUQpiy52fAlljnGfeNq3MwemfWElVMFR0d
+ qFn1dfWiECF/4pX5F/7thc99PQPo/noH7/n+6LSsoRw4Ly8f+Pl9fZJrKtX2oeZHwbMsSZ9
+ a5Y+qGnYYvmqiCFG4jubshXNIJOgyRvSwQx6NWzdHK2V7j6/OypZAtTrREghdcXP/zosxyp
+ ZxeDhLbwVw7xBOwbVPqIg==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:IB1/XgJBLuU=;MTyWmWo630QmwDDBbZl1HowFmv6
+ 7JvsmSA8MAWMEhJUnHMoTOabFjY6rHiKQtj+EMBzZtugx22eeKFApbQqw7mJ8PCMXXmpAVKXi
+ QXW2QOX4n7yWVEl1N1cS9YbA9Iz3Ck2F/OXntgfjJwXAJSa07Gwb+gYJpmIFmw4A3HJ6xgkha
+ gw0zQyipP9H5TwJ3zaYsfNYkpaj6RFUNZuM60DEgTaO+vfwFyi5Lt2u3ZLAHzrbvJqTrhJylJ
+ lgjfpjW4fjTCctgRx6JUXccnrW7nb8SLkrfSFR0i9y2g+hVNFIoyqDZZyyY5tPV4aK15KxAAU
+ E2EJKR5OMdFFGYES/ppWC73Qq7INjLnNdjmr9r1QFtXcnjl0ArcqGvuR4qlv+IFt4h3XTnhJ8
+ i67bqQ2K9aWUWV1AUDd0dgAMEV1p7Jq0ak6TY9U5kuKBUgMLltckqLh7KTQT0R/O1+e8ZHt8u
+ LRTUAjuQOuRF4wmABSFzkQKIq9383qb7wWNUEWkq4xiy70DMF0DFY8niZLMgwspLdIcYItkQn
+ Ufrjn3ieCnXHeiy1oEHfjgR3XitfNAEJoAL6F8XIyKFwrEN+tCKLpw0WktieOM5NKDTaMPFQu
+ +FPRafQGy4uQ94wNpkbnI9JTZ5mSz5O7roGTDreS5pKK7l2HEnp1J4CbrzJLgbxkXPkVyUA6W
+ y915K/bL7RW1EStWus3lNAYp+uG4+yo7+QMDHWTR3G1M8gqc+W9QUL+61WXXsr7fia/h1VsYx
+ 5K5ILzfIkty9HgqVnDvAOeSDc0kri8KxWlXsH6Ca6w0BmLFUjJgXSEgZRA53TCgVd6pzFdguE
+ GrGhI9jOu20eSOHZbj9OVxpBaOAfl/6HrhysRU7AgDGb0=
+Content-Transfer-Encoding: quoted-printable
 
-> git-credential-osxkeychain has largely fallen behind other external
-> credential helpers in the features it supports, and hasn't received any
-> functional changes since 2013. As it stood, osxkeychain failed seven tests
-> in the external credential helper test suite:
-> 
-> not ok 8 - helper (osxkeychain) overwrites on store
-> not ok 9 - helper (osxkeychain) can forget host
-> not ok 11 - helper (osxkeychain) does not erase a password distinct from input
-> not ok 15 - helper (osxkeychain) erases all matching credentials
-> not ok 18 - helper (osxkeychain) gets password_expiry_utc
-> not ok 19 - helper (osxkeychain) overwrites when password_expiry_utc changes
-> not ok 21 - helper (osxkeychain) gets oauth_refresh_token
+Hi Beat,
+
+On Fri, 16 Feb 2024, Beat Bolli wrote:
+
+> On 16.02.24 18:35, Junio C Hamano wrote:
+> > Beat Bolli <dev+git@drbeat.li> writes:
+> >
+> > > Commits 1e0ee4087e (completion: add and use
+> > > __git_compute_first_level_config_vars_for_section, 2024-02-10) and
+> > > 6e32f718ff (completion: add and use
+> > > __git_compute_second_level_config_vars_for_section, 2024-02-10)
+> > > introduced new helpers for config completion.
+> > >
+> > > Both helpers use a pipeline of grep and awk to filter the list of co=
+nfig
+> > > entries. awk is perfectly capable of filtering, so let's eliminate t=
+he
+> > > grep process and move the filtering into the awk script.
+> >
+> > Makes sense.  I wonder if we can have some simple script sanity
+> > checker that catches things like this, e.g., catting a single file
+> > into pipe, grep appearing upstream of awk or sed, etc.
 >
-> After this set of patches, osxkeychain passes all tests in the external
-credential helper test suite.
+> Yes, there are quite a few cases of these in t/. I'm not sure if it's wo=
+rth
+> the churn, though. At least it would make the tests faster on Windows...
 
-Great work!
+Thank you for caring about the speed on Windows!
 
-Could these tests run as part of macOS CI?
+Ciao,
+Johannes
