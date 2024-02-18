@@ -1,45 +1,44 @@
-Received: from mout.gmx.net (mout.gmx.net [212.227.15.15])
+Received: from mout.gmx.net (mout.gmx.net [212.227.15.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B081EAD3
-	for <git@vger.kernel.org>; Sun, 18 Feb 2024 22:36:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.15
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A36B7568A
+	for <git@vger.kernel.org>; Sun, 18 Feb 2024 22:38:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708295800; cv=none; b=PmiKpfZMJh7vxsuKZt4no6jDYslk3YXEIKrUZc26MscJgvypTsl3zvqU+pf5ZKvl+X4+yz0uLrZVjdF91ARbR14HHrUbNMXjZZnqKQdx6btNfXhSZH1H/P0swyuN052uh20skaFD3a3s79gHvN/VcQaTfWXap5pk2tG4h8dKRv4=
+	t=1708295894; cv=none; b=rA8+gExc/SyfAx/hIhZifje/0OYI97eqBiJwDHFcdFiFMNr7o2TMUQtpZy6bYdIHbH6KbVXtFhq383SPKH1oQAmXCY6gW8IBLBRrvY1YkERndIBAKYKeJ5GjvyMRPnLP5cNkaJsL7S4NoTWUMt5r65KnEtjVmACVG1mcgmmcRKQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708295800; c=relaxed/simple;
-	bh=SJBW2rZH9cAiIIVo6Bjo9/jfAGmM6KWDdEcdssZTLQk=;
+	s=arc-20240116; t=1708295894; c=relaxed/simple;
+	bh=V8VLo16SNUoLwcGctoz8QzwBoLR2v0Jx2qDEw9WZ0ZQ=;
 	h=Date:From:To:cc:Subject:In-Reply-To:Message-ID:References:
-	 MIME-Version:Content-Type; b=RXLkc/wIrHJjcZHlHNPJhUrghX3cb5md0KZPYsUlQFXyn8Vct5Np8Qx/PiTDqRi4kUreCUxU8kDZJ6IRc2pa09FPMdfmmlqrcMi2r2jyxuiv/DJylXi/f5lbjyT2wU2C/fT/l/J7eYzcteZBnwVhR+HRlmyW5Xz8RguJFhBKfj8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b=bqAkTyo+; arc=none smtp.client-ip=212.227.15.15
+	 MIME-Version:Content-Type; b=Ke0CSJcbjqw+pWAm/fUhbEjuBveGk9qi2cdLrkOSsGjNYbWlZ4qCWMdF1dh51kWEzxx+SgYhYwXjhTGWtEDYgZYjzcWy07aIH0nHAjpxg9jCFTkRKvnRqAwY/rV9M5JloNATeZhkz+WO8Grkg52Qt9qlMlplPC9gxPhvu1ve4AM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b=JNQVD+kT; arc=none smtp.client-ip=212.227.15.18
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b="bqAkTyo+"
+	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b="JNQVD+kT"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.de; s=s31663417;
-	t=1708295795; x=1708900595; i=johannes.schindelin@gmx.de;
-	bh=SJBW2rZH9cAiIIVo6Bjo9/jfAGmM6KWDdEcdssZTLQk=;
+	t=1708295886; x=1708900686; i=johannes.schindelin@gmx.de;
+	bh=V8VLo16SNUoLwcGctoz8QzwBoLR2v0Jx2qDEw9WZ0ZQ=;
 	h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:
 	 References;
-	b=bqAkTyo+dX74PXIGKVjVlQWysOCdfXCShmVkDL2ajbmwNASJYVpRpCIMXIkbmCqR
-	 tBZ2rEc20sWUop0m9VW8yQ3DnexM9hBOk4EM/ysqMWgt53JXAieW9mHxov5jPUgRm
-	 c91poBS8Vn3De2LSpCdPhnDowrVp0l+FOFPcmCyQSqm2F4aINDCMVMpSYoNR57H9W
-	 mgGCY2v3Rbv4uUlbiXSrrAVQ/VCuZwDdVDfEg4sr4lSjLZVwU71NGysmCKTDBM+0I
-	 XQd3nVjHbA8EBtNfTOH9UHjzhhFNA6wrsLWmVjlzlP3M2eXraphxFIkSleVdrZJv4
-	 RkNOSM2s1aWE8D7Rvw==
+	b=JNQVD+kTL4IY/NJRuj83/5+7rot8A1jUhnhx2PuY3fCzj3tS4VT5+/ZKBT5No+QP
+	 ypOJP9tnOPBo1if+y8pI84BhiavET3CRjOen5BHm0uuwaCMtERHyOWL05s4oI59Lb
+	 G0XvF9ri8u37tSot4zhTJRVETbfG3QRgwctvTmBqsQhrzBHlAlRlxeUfrnUd1TOEq
+	 +gzWeAYOIObZPYnDME3A1sSqCQmc3GbF0v2wNLUv4RfLeZKNIR5NwFu3ljDbKc1tC
+	 qLpoENZT+WmoLdEUs7Dy04+p2tu2llTclKBfxAtCGSmsHQx5VmDesufn6v2K87gQ7
+	 B+yt5WLBWqOYbu0Acg==
 X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from [172.23.242.68] ([213.196.214.170]) by mail.gmx.net (mrgmx004
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1M2wGs-1rf8d50uXk-003LDI; Sun, 18
- Feb 2024 23:36:35 +0100
-Date: Sun, 18 Feb 2024 23:36:33 +0100 (CET)
+Received: from [172.23.242.68] ([213.196.214.170]) by mail.gmx.net (mrgmx005
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MMXQ5-1rL7iz2Xmp-00Jce8; Sun, 18
+ Feb 2024 23:38:06 +0100
+Date: Sun, 18 Feb 2024 23:38:04 +0100 (CET)
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Teng Long <dyroneteng@gmail.com>
-cc: gitgitgadget@gmail.com, git@vger.kernel.org
-Subject: Re: [PATCH] Always check the return value of
- `repo_read_object_file()`
-In-Reply-To: <20240216064326.89551-1-tenglong.tl@alibaba-inc.com>
-Message-ID: <63f7fc07-56b3-a271-e469-e9e230c9c2ae@gmx.de>
-References: <pull.1650.git.1707143753726.gitgitgadget@gmail.com> <20240216064326.89551-1-tenglong.tl@alibaba-inc.com>
+To: Junio C Hamano <gitster@pobox.com>
+cc: git@vger.kernel.org
+Subject: Re: [PATCH v4 0/3] apply with core.filemode=false
+In-Reply-To: <xmqqzfwb53a9.fsf@gitster.g>
+Message-ID: <fd8264c0-3080-c9d9-cac5-51115b9909a5@gmx.de>
+References: <pull.1620.v3.git.1703066893657.gitgitgadget@gmail.com> <20231226233218.472054-1-gitster@pobox.com> <xmqqzfwb53a9.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -47,56 +46,61 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:QV2CDUOz2xQvimdGecvc1CSXxHCimkcPGlaw9qQrlhM+DeGVsVM
- +JZQPNCDgAUHzq0sETxB8R8CGvF31JxpmcA8kml6GWPamY5xsFK74cctdpQmX4b7V41lkJz
- cSOd3VJDEjTn3pQPn2ZHHGz3p+Y1MXWsIpEKhvwRe6cY7dyJXuitbG6w4zq4QKRv4W7Sui/
- wtEkI9aEovngljZFWJGEA==
+X-Provags-ID: V03:K1:yiV2/9gjqKGntHbu2uRYbF8WlwENh/1Q794ri8OXlexj7i4wPW+
+ 10zC5g8xdBeUYgJnbvXDy8wmU/QDYG1nbDyJZt07tScSYV0yPIB7RkBbUVu5s88OQLFLR7o
+ m4wuR6cmu+r25pPJTwpSiL/u4+JSjgKoPBCKjZ40GHKyPeI5rojHmulTAzmWP5pp1IXcWJJ
+ A8AuGBJQgSNwCpRAJmoOQ==
 X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:nY5w2bpe/lE=;AvMutVTbwgz9G1f4IXBh9NWDfta
- 3y2p7w5r/8+FHFdpbziY1HOx8FTvLdeCWZoGde0IOmZ3egbgB29Y4ikVtPdUPailPX+ZE1MLx
- 87k2hModDk+mdF6BzYVjvHSrCuZcHrE6idV9TtM8iourpXRRBR4JZnHriIX3mMlARR0412iE5
- mcItxZd84BiTi2pSGO/PsjUTHSdvGhJ9j9x1Nt5nzu1ZxmlJQi0YqVp3QwYRMSh7p90AJUlht
- 6Hcdsll+h/OG+q9S/cYuvgRloRXWiZZCCdiN3nCzke9GJpMiSK6WxXJtWNUgLgAAW4sJ5xu3Q
- u6VdqN4YVWKh+D5nnRhD/b5muM9sQCM2LQRqE6ObHQverioS82B/fFGOzl+MkRILfI/k34Aim
- FDDkns9Jcj+LrlNu2O+PLnWoSvjpa5LbGkYR0LCmWApfgK/lFF7oJ7i3VuQ7Oixu6P6MUwV8U
- l31ASrc/mKeVB8zXzIwf55HYMHhnUZfxB51ZzJtOqgAxeNieU8PM9LJjJKbyC0PhMD03VjBKk
- Eq3YR/nOhpAcjJAe2oY7b2UZMo/W3xRbWJOYMb4PdH2Okd7HwdO81WzGdcUgXhY7BtdBNVymL
- pB+itmwPyDfaWXKD4HJLbGgRcKX6HmER8frczWRH+Ll00pa76CDy06GBeCERl7QVDEJz7gRqf
- qT9Axst0l++dLDWqO1h+AKiDVuaeKHT5waHTZjvKt4VXucvSZc3fHorSb6e6SxUGGMIc9b5XU
- Ds/muWAKVFmpUh4T+XWzl3j0vkxUx/NFBdFuISziVW2CukS6HzyvpyT3QbuyaNxuEZTLoO5QK
- R6F6/ytegH7svS6nEZNxa+dPTdqH96XFUdbLgEnpmnHVU=
+UI-OutboundReport: notjunk:1;M01:P0:0Cd/z+Iio3Q=;a0dEqAAU+QKfbRnyvKfCbsliIux
+ wjO4PCXNZRD3h+wEoNEv3jxqwPP7cLto34iZfp534jaH1y4x8JWScqinc/dCEK4d6eCCm+nUT
+ bNnrcREpxxXWq1XOm4RwrURLx+Cw5swB7Qm+TdC/eb2kZ5nNmO4jhYq8hkIKTq17t8CW3KG6e
+ 1bw8614NwQhwbs+yx/Ugb07myv9awnj/1REFknaRuDmYSMdNoOGDXeVxe49qJKS6Hp16WhaPl
+ BlDR8+J1HQJ2c1+6XXtW7AKVHvppoE6bSl6bbcyAaPTPxjt3QS/nnQVP2IhHiiE0DYT1njrQl
+ UjrhfhwJalqeo4tRRHAwCDLo521RmMl1NYt5Hi5cVPvxKjebk/r+V56R4EgfAbKF1W6ngzsPr
+ t5WLSWdDoQ+i1vrLgQqNQaMb6Xn1uNHEL2diBroNubP4ltQu24vXXQyncpZclJhtXkpSisurK
+ xLj0ovG2QT2omijSWhrkHWfhlGJzWkCZiQZ1CkdOwCSVx9ezfik9PP7sJOH+Z/yOOtIuIjTCC
+ 6iesaIgVEcoS/8Sz+6MA15p76zmJSf/k8hNBKyqSvgYyMCmpnNUuWO1yDdlKG09uQbIZnTM/K
+ z5zF3xH1FDa57FcWZ/VJx1A+5HrMFZVUOyUJl8GJd51ZCB0iEnF8lBY7ky2S2jt+MyM6X1a84
+ VMNAETn2UWzmNvr2rdOeSK7HwoszBE14EqAjY/Rs8aJAU9yRCiOw0pI4nq7eyv3r4Z3dCoWD/
+ lUPgniWIwm33dZPL2/k1iPxvDBNluAf3VEzEIS85/0ZpuYGhWYHu8w2/V8waxcPXZvNYNAXTS
+ yb03daiWZf1+3h+5LgLEk5YXx3/Z/OS+z8MLxWc8FP73k=
 Content-Transfer-Encoding: quoted-printable
 
-Hi,
+Hi Junio,
 
-On Fri, 16 Feb 2024, Teng Long wrote:
+On Wed, 7 Feb 2024, Junio C Hamano wrote:
 
-> Johannes Schindelin <johannes.schindelin@gmx.de> wrote on Mon, 05 Feb 20=
-24:
+> Junio C Hamano <gitster@pobox.com> writes:
 >
-> Hi, when I do zh_CN l10n work for 2.44, I found some check changes like:
+> > Chandra Pratap noticed that "git apply" on a filesystem without
+> > executable bit support gives a warning when applying a patch that
+> > expects the preimage file to have executable bit on.  Dscho noticed
+> > that the initial fix by Chandra did not work well when applying a
+> > patch in reverse.  It turns out that apply.c:reverse_patches()
+> > invalidates the "a patch that does not change mode bits have the
+> > mode bits in .old_mode member and not in .new_mode member" invariant
+> > we rely on.
+> >
+> > Here is the result of concerted effort.
+> >
+> > Chandra Pratap (1):
+> >   apply: ignore working tree filemode when !core.filemode
+> >
+> > Junio C Hamano (2):
+> >   apply: correctly reverse patch's pre- and post-image mode bits
+> >   apply: code simplification
+> >
+> >  apply.c                   | 16 +++++++++++++---
+> >  t/t4129-apply-samemode.sh | 27 +++++++++++++++++++++++++++
+> >  2 files changed, 40 insertions(+), 3 deletions(-)
 >
->     die(_("unable to read tree %s")
->
-> in patchset, some old code for this like work is similar but with parent=
-heses
-> surrounded with the OID parameter:
->
->    die(_("unable to read tree (%s)")
+> Anybody wants to offer a review on this?  I actually am fairly
+> confortable with these without any additional review, but since I am
+> sweeping the "Needs review" topics in the What's cooking report, I
+> thought I would ask for this one, too.
 
-FWIW I copied the error message from
-https://github.com/git/git/blob/v2.43.0/tree-walk.c#L103, but only now
-realized that it is untranslated.
-
-> I think it's really a small nit, I don't think it's a requirement to imm=
-ediately
-> optimize, they're just some small printing consistency formatting issues=
-, so make
-> some small tips here.
-
-Thank you for paying attention. I agree that it would be good to make
-Git's error messages consistent, even if I sadly won't be able to focus on
-that due to changes at my dayjob.
+I just had a look over all three of the patches, and to me, they look good
+to go.
 
 Ciao,
 Johannes
