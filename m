@@ -1,115 +1,102 @@
-Received: from mout.gmx.net (mout.gmx.net [212.227.17.21])
+Received: from mout.gmx.net (mout.gmx.net [212.227.15.15])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FDF66F07C
-	for <git@vger.kernel.org>; Sun, 18 Feb 2024 22:06:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.21
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B081EAD3
+	for <git@vger.kernel.org>; Sun, 18 Feb 2024 22:36:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.15
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708293969; cv=none; b=Cb5K1kWrIvpHl6f22V/529awSDlyTDubNonjlRC4dKc6sUdm/K8xvR88wdSvUAeO23VBE497MbLudaK7uLFVoc6J26E2Dn0ovNmxmWlvPx8kV1V0rAoAtLHtVFLRcc75MMC7ce28Gv2NY+r7D3090dyWNkliqszfNFT1yw4TY+w=
+	t=1708295800; cv=none; b=PmiKpfZMJh7vxsuKZt4no6jDYslk3YXEIKrUZc26MscJgvypTsl3zvqU+pf5ZKvl+X4+yz0uLrZVjdF91ARbR14HHrUbNMXjZZnqKQdx6btNfXhSZH1H/P0swyuN052uh20skaFD3a3s79gHvN/VcQaTfWXap5pk2tG4h8dKRv4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708293969; c=relaxed/simple;
-	bh=dqF/EQalFTJm+jX7F3a7lb9oHPr87oKnSzcXYa3NQFQ=;
+	s=arc-20240116; t=1708295800; c=relaxed/simple;
+	bh=SJBW2rZH9cAiIIVo6Bjo9/jfAGmM6KWDdEcdssZTLQk=;
 	h=Date:From:To:cc:Subject:In-Reply-To:Message-ID:References:
-	 MIME-Version:Content-Type; b=tU/b5vmtB/jj+raeRU1c4Hqy5KyisHdtm/SPzWW+4b+m1QbKsOq/QIeJn+EJpFJn3gSGdepqBx5rrtyqJx9Wmrcg8cfCo4udnHOjWBDHja7RPeDHeOguUbRHXbQM4DqRRz9quCMRTVmruCXKlcBHwI7DB2vbwcHZxk2M+NNQimU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b=tG4LW4UM; arc=none smtp.client-ip=212.227.17.21
+	 MIME-Version:Content-Type; b=RXLkc/wIrHJjcZHlHNPJhUrghX3cb5md0KZPYsUlQFXyn8Vct5Np8Qx/PiTDqRi4kUreCUxU8kDZJ6IRc2pa09FPMdfmmlqrcMi2r2jyxuiv/DJylXi/f5lbjyT2wU2C/fT/l/J7eYzcteZBnwVhR+HRlmyW5Xz8RguJFhBKfj8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b=bqAkTyo+; arc=none smtp.client-ip=212.227.15.15
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b="tG4LW4UM"
+	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b="bqAkTyo+"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.de; s=s31663417;
-	t=1708293965; x=1708898765; i=johannes.schindelin@gmx.de;
-	bh=dqF/EQalFTJm+jX7F3a7lb9oHPr87oKnSzcXYa3NQFQ=;
+	t=1708295795; x=1708900595; i=johannes.schindelin@gmx.de;
+	bh=SJBW2rZH9cAiIIVo6Bjo9/jfAGmM6KWDdEcdssZTLQk=;
 	h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:
 	 References;
-	b=tG4LW4UM6YAqRbNzmnhm7kgYtPOYk5oxwCvmPE62L0YeOZjppkZvjIOCfBBz7s84
-	 zrbdf3vLDuPiukABtjmW5ZiltPr9IV3QFM7GlCb71B+8FWOTyjaohZHk/7iHoOcej
-	 ju7KoA9MjwKvm3T8JhUmsF23GsDpMcTLpifD7Q+WX+J+9NOvCOShw1eElxB8mR4JU
-	 HhAOzbDUEPuWkldDpHEd1W0zsxSjEMqOdzU4+J29g0pLnZWyi1hJJYv5GNSY6JHj1
-	 BDNk9Hts0pIJnp/9CtdF1x48AyjhgRm0B6LMVV7UyC9Cfbe2Nfw9mf4hiXIj+JDbr
-	 J4flflP6sqFv/nKYWw==
+	b=bqAkTyo+dX74PXIGKVjVlQWysOCdfXCShmVkDL2ajbmwNASJYVpRpCIMXIkbmCqR
+	 tBZ2rEc20sWUop0m9VW8yQ3DnexM9hBOk4EM/ysqMWgt53JXAieW9mHxov5jPUgRm
+	 c91poBS8Vn3De2LSpCdPhnDowrVp0l+FOFPcmCyQSqm2F4aINDCMVMpSYoNR57H9W
+	 mgGCY2v3Rbv4uUlbiXSrrAVQ/VCuZwDdVDfEg4sr4lSjLZVwU71NGysmCKTDBM+0I
+	 XQd3nVjHbA8EBtNfTOH9UHjzhhFNA6wrsLWmVjlzlP3M2eXraphxFIkSleVdrZJv4
+	 RkNOSM2s1aWE8D7Rvw==
 X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from [172.23.242.68] ([213.196.214.170]) by mail.gmx.net (mrgmx104
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MCsQ4-1rkajt0Wdk-008vEK; Sun, 18
- Feb 2024 23:06:05 +0100
-Date: Sun, 18 Feb 2024 23:06:03 +0100 (CET)
+Received: from [172.23.242.68] ([213.196.214.170]) by mail.gmx.net (mrgmx004
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1M2wGs-1rf8d50uXk-003LDI; Sun, 18
+ Feb 2024 23:36:35 +0100
+Date: Sun, 18 Feb 2024 23:36:33 +0100 (CET)
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Konstantin Khomoutov <kostix@bswap.ru>
-cc: "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: Hello question on Git for Windows 2.43.0 - GUID and/or SWID tag
- for this title
-In-Reply-To: <20240216110041.dqz2n5dz43mqtq25@carbon>
-Message-ID: <7ddaadd4-cfa6-00b3-1aee-34f5c57f4e7a@gmx.de>
-References: <LV8PR13MB6560538530A2A7D1C1FD89C19C422@LV8PR13MB6560.namprd13.prod.outlook.com> <DB9P250MB06926B4A6997EF6F866296ADA54A2@DB9P250MB0692.EURP250.PROD.OUTLOOK.COM> <LV8PR13MB65609D60ACB8A6EADFBFE3459C4D2@LV8PR13MB6560.namprd13.prod.outlook.com>
- <20240216110041.dqz2n5dz43mqtq25@carbon>
+To: Teng Long <dyroneteng@gmail.com>
+cc: gitgitgadget@gmail.com, git@vger.kernel.org
+Subject: Re: [PATCH] Always check the return value of
+ `repo_read_object_file()`
+In-Reply-To: <20240216064326.89551-1-tenglong.tl@alibaba-inc.com>
+Message-ID: <63f7fc07-56b3-a271-e469-e9e230c9c2ae@gmx.de>
+References: <pull.1650.git.1707143753726.gitgitgadget@gmail.com> <20240216064326.89551-1-tenglong.tl@alibaba-inc.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-284384438-1708293965=:504"
-X-Provags-ID: V03:K1:IpXVYqRjyr2yg82aFMXm6tCM0IMx+BpnH41PREGqFm1COWDMljw
- hu4ehr8pAhFuPArAQCGMAJ31uR6CYlWk5vDAYaeYCDa/KV2Ab0gKe8HGWhCjo1/CDEq3sw/
- DaWyZ39oNQJ87vnwsqR7SMmh5dK5Wt0yjBNvHzSUL/bupLYjiNfmkKYjRB5y6DZx0pakypc
- wePfpf3gILOM2ug0fpmMA==
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:QV2CDUOz2xQvimdGecvc1CSXxHCimkcPGlaw9qQrlhM+DeGVsVM
+ +JZQPNCDgAUHzq0sETxB8R8CGvF31JxpmcA8kml6GWPamY5xsFK74cctdpQmX4b7V41lkJz
+ cSOd3VJDEjTn3pQPn2ZHHGz3p+Y1MXWsIpEKhvwRe6cY7dyJXuitbG6w4zq4QKRv4W7Sui/
+ wtEkI9aEovngljZFWJGEA==
 X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:sLe2Co04dBs=;owQdrA37Z1csukCWrwFJCEdA7SS
- +vzbxe2RTyeVA9v2oQFpjwLwZ9ORTnp29mSmA6wJ6EJtKzoa/7yH0tP52DBcIXTd5LtLoXyWK
- ADSEperujdJjPXoeM3zSjNEUtNkVewsHZXMYnZm1vhgfMh6+2l0lFISp92u+Ks/yHmq5iPFJ3
- XQr41MhVXJXh9jYLcMHPCg5weqkcns/PlH5RLjt4E48qQWnBrdly/y0hpEKieEFa7F2cOW3Gb
- bTHvdA1ltNBe1+UtlPtt26Hjrp5a+Kp5PXckFXzvH1+NI7hXgEWLFjReGKTIb3cvIwtRnfE6X
- cIIxYQilyfXtR0ooiVlJ4wUSlcT0aknqxOlT3dYVpjBB8laRlpmF9mInNDIi7hgWCvsW2+xyu
- gCmVxZG/cnoNlfuNX9lHJ1RdQCouKT08r+yXtNxLU6qdpmzg5AmA0yr9nPesvxedBiEoua/0B
- ZERbzz0GJtSe1RqjIly4G0mFbNiivyQsYhzf6Qu5QfHAXKK5BCaCLViBPhQEbooZgWpYfTt80
- vgsraubh7qjyKIjxngOE7v7sVjLroTG6gyu5zwJSWN9CA97y8qN0wItwbnsWQJFZ9Kri5fCT3
- jeUZndwftApdmWqOJWmleGaYO2DCsjUvFMYaZK7D+FZJI5Te3jiEV5epNPAB/BHHldLiknlfA
- gud/MR0Ti3/2aPaG2aQolizGqgl+UGKxvE9jhz6ultTNvWhKvQuYIWNjKUZqMCwUVtNN6aF0Q
- bkW1CnWA/Wr2qZ8TATJKvewD7apUE7YU7FmNDhTsHx8CJ5VI4RabiFV5VduNFc+qWY8gIYdKt
- HyXIaBU6raH41RbW9Ccu3GJnvXfmdWD1VcKCUJOnwxTXw=
-
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
-
---8323328-284384438-1708293965=:504
-Content-Type: text/plain; charset=UTF-8
+UI-OutboundReport: notjunk:1;M01:P0:nY5w2bpe/lE=;AvMutVTbwgz9G1f4IXBh9NWDfta
+ 3y2p7w5r/8+FHFdpbziY1HOx8FTvLdeCWZoGde0IOmZ3egbgB29Y4ikVtPdUPailPX+ZE1MLx
+ 87k2hModDk+mdF6BzYVjvHSrCuZcHrE6idV9TtM8iourpXRRBR4JZnHriIX3mMlARR0412iE5
+ mcItxZd84BiTi2pSGO/PsjUTHSdvGhJ9j9x1Nt5nzu1ZxmlJQi0YqVp3QwYRMSh7p90AJUlht
+ 6Hcdsll+h/OG+q9S/cYuvgRloRXWiZZCCdiN3nCzke9GJpMiSK6WxXJtWNUgLgAAW4sJ5xu3Q
+ u6VdqN4YVWKh+D5nnRhD/b5muM9sQCM2LQRqE6ObHQverioS82B/fFGOzl+MkRILfI/k34Aim
+ FDDkns9Jcj+LrlNu2O+PLnWoSvjpa5LbGkYR0LCmWApfgK/lFF7oJ7i3VuQ7Oixu6P6MUwV8U
+ l31ASrc/mKeVB8zXzIwf55HYMHhnUZfxB51ZzJtOqgAxeNieU8PM9LJjJKbyC0PhMD03VjBKk
+ Eq3YR/nOhpAcjJAe2oY7b2UZMo/W3xRbWJOYMb4PdH2Okd7HwdO81WzGdcUgXhY7BtdBNVymL
+ pB+itmwPyDfaWXKD4HJLbGgRcKX6HmER8frczWRH+Ll00pa76CDy06GBeCERl7QVDEJz7gRqf
+ qT9Axst0l++dLDWqO1h+AKiDVuaeKHT5waHTZjvKt4VXucvSZc3fHorSb6e6SxUGGMIc9b5XU
+ Ds/muWAKVFmpUh4T+XWzl3j0vkxUx/NFBdFuISziVW2CukS6HzyvpyT3QbuyaNxuEZTLoO5QK
+ R6F6/ytegH7svS6nEZNxa+dPTdqH96XFUdbLgEnpmnHVU=
 Content-Transfer-Encoding: quoted-printable
 
 Hi,
 
-On Fri, 16 Feb 2024, Konstantin Khomoutov wrote:
+On Fri, 16 Feb 2024, Teng Long wrote:
 
-> On Thu, Feb 15, 2024 at 09:40:47PM +0000, Christian Castro wrote:
+> Johannes Schindelin <johannes.schindelin@gmx.de> wrote on Mon, 05 Feb 20=
+24:
 >
-> >>> I have a question on the GUID and/or SWID tag for Git for Windows 2.=
-43.0.
+> Hi, when I do zh_CN l10n work for 2.44, I found some check changes like:
 >
-> > Question: Are you a Git for Windows developer, open-source contributor=
- or?
-> > I ask because I will contact the manufacturer of our inventory product=
- and
-> > provide them your feedback. But I'd like to know what your role is wit=
-h Git
-> > for Windows for as of now I just have a reply from someone named Matth=
-ias
-> > from a live.de email domain. I hope you understand. Truly no offense m=
-eant
-> > on my part.
-> >
-> > Therefore, please let me know what your role is with Git for Windows s=
-o I
-> > can send this feedback accordingly and continue working on with our so=
-ftware
-> > inventory vendor on the issue.
+>     die(_("unable to read tree %s")
 >
-> I would say the chief Git-for-Windows maintainer is Johannes Schindelin =
-[1].
+> in patchset, some old code for this like work is similar but with parent=
+heses
+> surrounded with the OID parameter:
+>
+>    die(_("unable to read tree (%s)")
 
-It is: https://gitforwindows.org/governance-model.html
+FWIW I copied the error message from
+https://github.com/git/git/blob/v2.43.0/tree-walk.c#L103, but only now
+realized that it is untranslated.
 
-Matthias A=C3=9Fhauer is a trusted Git for Windows contributor with write
-permissions on the repositories, so what he says has a ton of weight.
+> I think it's really a small nit, I don't think it's a requirement to imm=
+ediately
+> optimize, they're just some small printing consistency formatting issues=
+, so make
+> some small tips here.
+
+Thank you for paying attention. I agree that it would be good to make
+Git's error messages consistent, even if I sadly won't be able to focus on
+that due to changes at my dayjob.
 
 Ciao,
 Johannes
-
---8323328-284384438-1708293965=:504--
