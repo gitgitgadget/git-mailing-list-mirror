@@ -1,63 +1,63 @@
-Received: from mail-ed1-f53.google.com (mail-ed1-f53.google.com [209.85.208.53])
+Received: from mail-ej1-f52.google.com (mail-ej1-f52.google.com [209.85.218.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A420771B3B
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16CC36F060
 	for <git@vger.kernel.org>; Sun, 18 Feb 2024 19:59:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.53
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708286383; cv=none; b=josIYf9y8Deuzo2elUVBXa5bfBjBy/kX98gMj4UUlbpYN7bZ63xP7UIXDtxWa6CzZDAU7As7QxdsVJG69Bf9xCOOvGiDkz7xFw1nJm+F9DGwnNDBRbbFpp59XzRkyuTlseWlF9j66tnrxIBZecE376Zs5abq8O1+EQHOcwO3P7Q=
+	t=1708286383; cv=none; b=uTh/4MH65uOm28vplINRy8QAXjk4PGaXQ3dUVRszQwsdQ+586tWqi/OKF9bGiePi/LSzRrymEG/GCd4H94GP7XJtyids6JB2yNHCKVWlvp2goD81iCEPb7luUUmRg4j0nMRcUzjgx8ACmsD3PSEiGrodjXnivIldyI3SsiyUHYA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1708286383; c=relaxed/simple;
-	bh=31eouZfqOINtJL4W0zdUaBYkP11FA0yNXh4TpRHK/oY=;
+	bh=q4HNwjHQbuFVx7YiOirFuLKlK6Gfrn8yRqp7V3DdQmQ=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=eGbR5nYza+fxMxSLvvHrAP18EOZywApzWbYGpXDPOI08EuHvYxGZaUBB3CeNJb3uTm6b2SaIyDb9d4JppgVQwlzSFept5MY9mmKnjE7jYaXO9YiAVe/sU2lTiFYuZwX6ZxGr4UdSRhNl5SkawtvTPnV1wxTuFL+dmlfdIjJeQBk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=lfYd2Wbx; arc=none smtp.client-ip=209.85.208.53
+	 MIME-Version; b=G4zgPZBlmuCtnl7AvhfoFjIbL116oXeo5RYGpXEeZbDciTIg++Plj5lMgn7HdF1HjfIVWPWcZvEZgM8ONygqsxoMV6chEVdfJzuBmz+QBRQ3WDlRoiFsEGsUWyyesZFusKGDa3O8dTEw4l62B3KjLCZ75ZNSmawnmSFVtidC+C4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Uaun69lK; arc=none smtp.client-ip=209.85.218.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lfYd2Wbx"
-Received: by mail-ed1-f53.google.com with SMTP id 4fb4d7f45d1cf-563c2b2bddbso4589228a12.1
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Uaun69lK"
+Received: by mail-ej1-f52.google.com with SMTP id a640c23a62f3a-a3e6f79e83dso62412866b.2
         for <git@vger.kernel.org>; Sun, 18 Feb 2024 11:59:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20230601; t=1708286380; x=1708891180; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=rI/HPdGTW0agng8WQoR+PVh9x7Bb6vN39q4/Ah2hrFs=;
-        b=lfYd2WbxKkVTNhz7Uk2GYTscxKFzdzpfk+yE9yI+03vZiEM9wRc37/tCCVel+T3LiY
-         ly4ZKrDJUvfXSc5oQVB1grbVnzIF0N24c/2Mwyb49YdLhHQ3Laj0aUDzefEhCcEyjwtn
-         OlaUcd4XgXiLBKqEiKgzTFiWsd/doTJwqPs4xUYeCIm+DmOKgaQSic4DAFJuYCXmtI0/
-         nKTWxhaKjLuR6Od45CxD526PD9+wnE4xWmyOiyttbS7RshSQJ5+DGkpmFa1RhV7D5urI
-         HMqFROOevE2U9R3D7vId996ADdm8t0NLrLpGmTsrZr3S5rKVUYRmwTr8lkdHz3+F2PLR
-         NTzA==
+        bh=0WMkDZAUmARPHaKnkyRvSfhcVpNQuiWa75v8pxHdkxU=;
+        b=Uaun69lKl9a133MWk0+Fss+E2DZC69I5lOCWfPltW5ntdXL6au0DUsSdvz1629xFPB
+         fWxDdghKp+RC88DpFfyrE7yT4UDCpW3aY4ZReegBU5PNj0jgQN1JGmjlG6M0DOJ1YxPT
+         W32pWYKBChO0SgZh8iJs/piJtFqLUQg6K2oDED2zGutLhjcFNAoCmF1RPH/Rb9UIYbhO
+         2zAvria6cRs+tmYS5fBjiRydmZWXCln5fYclbU18dT3RgPDS4o1R8Vx3Fwx1hQIRdowD
+         X/z3cdpPqk23FdGlq9WIljrEoni83Vt1lUTittfzQk/cjefrb7SgFc9h+Dmi6QLT6ngC
+         PfzQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20230601; t=1708286380; x=1708891180;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=rI/HPdGTW0agng8WQoR+PVh9x7Bb6vN39q4/Ah2hrFs=;
-        b=HTm4Ji0zw4h9NgAvB6gOXnzdNV962ubnsTt3yv9U0OjMrq4Srlrvp6YyXA+JUYJv6j
-         mbOx9AgZ/4LTvjU4kQKuFD1aEABbSGOVD/WFUb7me92AYgC+QBH+0FpYDav8O454Cjl2
-         i0T0mq5bcyV04AKqUJvGk9iDS2kITZIkzDLtt6p0aScfZ/z6dnWZfi6k4FR2+K0BIDwQ
-         ZW4BeYMdE4HX6iGFGkKYNk6D/qHgjt9JxQ1rur+hXbdc1jzmMkgbGb/kcAeu3sh9Pg/f
-         iH0g4zmc34gurR6GrCQpWRLQxmi3L+oh/uU3pe+9qg121EAnco7s0ukUzHHEhnI2YpLo
-         rdwQ==
-X-Gm-Message-State: AOJu0YwXe0eczMXWlY9DaG2ykmWkG8XZchTjCqRAflBlavW6goISHEQT
-	yHkY9g2FYbgsYQ+PgQyV0Af/6ITvxLfk4EB0xZ5DXiqTv5LcDcAmUUIW5RxB
-X-Google-Smtp-Source: AGHT+IGmplhMORVPBnx/7DtWmKL+q7ZTc3bG10pj0NiYIRSNPOLf8HJz/aqG9vAtVGHjmV3FMWOa7w==
-X-Received: by 2002:a17:906:d86:b0:a3d:7559:6ed1 with SMTP id m6-20020a1709060d8600b00a3d75596ed1mr7133954eji.4.1708286379688;
-        Sun, 18 Feb 2024 11:59:39 -0800 (PST)
+        bh=0WMkDZAUmARPHaKnkyRvSfhcVpNQuiWa75v8pxHdkxU=;
+        b=W3pIa2I0xv4Z3Pn7RSBeIBWvs3kvuHKDuu4zA0YW+b3ehCe1JbKvsI9B94VXJJJAgt
+         2uxanFk6sH7030L0vAqAsL/1H406dZm+vtqGPRRyleICGX9K/7+2Waoj8QzMo9QV5Lmo
+         VuMD0rGtF6gzr98kOfgVmNe5iPAdk63WKKcTM5riPC70qoQ50D9WFIjj5VM4gWnn4gs2
+         LhW5+SHIpkKf4QpMINFw6cAiRzIH1P93fF/JR2oqv0VmXnlHDLIx98eWTGCuO6ORN3qA
+         XtYCsBvJX10URBDSP3GWyOj7ST/euAfja4QIRTO5q2bJyIeObQXYz1oFIOVyXrrLZRlZ
+         kd8A==
+X-Gm-Message-State: AOJu0Yyv0IRmGCjGRb0wDyHfzQ9I5M5DbUS0bAl0Y+w5r0PD4hQ3MF+z
+	nO3/b7TCw1AF16lvGmV7rdL7JzaWIV1M2YuRnVpMlud7jz3J+qDI8JI2AIrj
+X-Google-Smtp-Source: AGHT+IHycKNZ225WhWd2kD0W+dVrhO81xSYTMX8T0QXUG4zWVZ3hPV5gRWZlwj5UTaYSQ4Ww6xdj9w==
+X-Received: by 2002:a17:906:af09:b0:a3d:3aef:2311 with SMTP id lx9-20020a170906af0900b00a3d3aef2311mr7856927ejb.35.1708286380357;
+        Sun, 18 Feb 2024 11:59:40 -0800 (PST)
 Received: from mkb-desktop.bosmans (89-224-201-31.ftth.glasoperator.nl. [31.201.224.89])
-        by smtp.gmail.com with ESMTPSA id dt14-20020a170907728e00b00a3cbbaf5981sm2206999ejc.51.2024.02.18.11.59.39
+        by smtp.gmail.com with ESMTPSA id dt14-20020a170907728e00b00a3cbbaf5981sm2206999ejc.51.2024.02.18.11.59.40
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 18 Feb 2024 11:59:39 -0800 (PST)
+        Sun, 18 Feb 2024 11:59:40 -0800 (PST)
 From: Maarten Bosmans <mkbosmans@gmail.com>
 X-Google-Original-From: Maarten Bosmans <maarten.bosmans@vortech.nl>
 To: git@vger.kernel.org
 Cc: Maarten Bosmans <maarten.bosmans@vortech.nl>
-Subject: [PATCH v2 1/5] log: Move show_blob_object() to log.c
-Date: Sun, 18 Feb 2024 20:59:34 +0100
-Message-Id: <20240218195938.6253-2-maarten.bosmans@vortech.nl>
+Subject: [PATCH v2 3/5] notes: use existing function stream_blob_to_fd
+Date: Sun, 18 Feb 2024 20:59:36 +0100
+Message-Id: <20240218195938.6253-4-maarten.bosmans@vortech.nl>
 X-Mailer: git-send-email 2.35.3
 In-Reply-To: <20240218195938.6253-1-maarten.bosmans@vortech.nl>
 References: <20240205204932.16653-1-maarten.bosmans@vortech.nl>
@@ -74,166 +74,58 @@ From: Maarten Bosmans <mkbosmans@gmail.com>
 
 From: Maarten Bosmans <maarten.bosmans@vortech.nl>
 
-This way it can be used outside of builtin/log.c.
-The next commit will make builtin/notes.c use it.
+Use functionality from streaming.c and remove the copy_obj_to_fd()
+function local to notes.c.
+
+Streaming the blob to stdout instead of copying through an
+intermediate buffer might also be more efficient, but at the
+size a typical note is, this is unlikely to matter a lot.
 
 Signed-off-by: Maarten Bosmans <maarten.bosmans@vortech.nl>
 ---
- Makefile      |  1 +
- builtin/log.c | 39 +++++----------------------------------
- log.c         | 41 +++++++++++++++++++++++++++++++++++++++++
- log.h         | 11 +++++++++++
- 4 files changed, 58 insertions(+), 34 deletions(-)
- create mode 100644 log.c
- create mode 100644 log.h
+ builtin/notes.c | 15 ++-------------
+ 1 file changed, 2 insertions(+), 13 deletions(-)
 
-diff --git a/Makefile b/Makefile
-index 78e874099d..1c19d5c0f3 100644
---- a/Makefile
-+++ b/Makefile
-@@ -1059,6 +1059,7 @@ LIB_OBJS += list-objects-filter-options.o
- LIB_OBJS += list-objects-filter.o
- LIB_OBJS += list-objects.o
- LIB_OBJS += lockfile.o
-+LIB_OBJS += log.o
- LIB_OBJS += log-tree.o
- LIB_OBJS += ls-refs.o
- LIB_OBJS += mailinfo.o
-diff --git a/builtin/log.c b/builtin/log.c
-index db1808d7c1..587a4c374d 100644
---- a/builtin/log.c
-+++ b/builtin/log.c
-@@ -32,7 +32,6 @@
+diff --git a/builtin/notes.c b/builtin/notes.c
+index 2a31da6c97..184a92d0c1 100644
+--- a/builtin/notes.c
++++ b/builtin/notes.c
+@@ -22,6 +22,7 @@
+ #include "refs.h"
+ #include "pager.h"
+ #include "log.h"
++#include "streaming.h"
+ #include "run-command.h"
  #include "parse-options.h"
- #include "line-log.h"
- #include "branch.h"
--#include "streaming.h"
- #include "version.h"
- #include "mailmap.h"
- #include "progress.h"
-@@ -42,7 +41,7 @@
- #include "range-diff.h"
- #include "tmp-objdir.h"
- #include "tree.h"
--#include "write-or-die.h"
-+#include "log.h"
- 
- #define MAIL_DEFAULT_WRAP 72
- #define COVER_FROM_AUTO_MAX_SUBJECT_LEN 100
-@@ -653,37 +652,6 @@ static void show_tagger(const char *buf, struct rev_info *rev)
- 	strbuf_release(&out);
+ #include "string-list.h"
+@@ -149,18 +150,6 @@ static int list_each_note(const struct object_id *object_oid,
+ 	return 0;
  }
  
--static int show_blob_object(const struct object_id *oid, struct rev_info *rev, const char *obj_name)
+-static void copy_obj_to_fd(int fd, const struct object_id *oid)
 -{
--	struct object_id oidc;
--	struct object_context obj_context;
--	char *buf;
 -	unsigned long size;
--
--	fflush(rev->diffopt.file);
--	if (!rev->diffopt.flags.textconv_set_via_cmdline ||
--	    !rev->diffopt.flags.allow_textconv)
--		return stream_blob_to_fd(1, oid, NULL, 0);
--
--	if (get_oid_with_context(the_repository, obj_name,
--				 GET_OID_RECORD_PATH,
--				 &oidc, &obj_context))
--		die(_("not a valid object name %s"), obj_name);
--	if (!obj_context.path ||
--	    !textconv_object(the_repository, obj_context.path,
--			     obj_context.mode, &oidc, 1, &buf, &size)) {
--		free(obj_context.path);
--		return stream_blob_to_fd(1, oid, NULL, 0);
+-	enum object_type type;
+-	char *buf = repo_read_object_file(the_repository, oid, &type, &size);
+-	if (buf) {
+-		if (size)
+-			write_or_die(fd, buf, size);
+-		free(buf);
 -	}
--
--	if (!buf)
--		die(_("git show %s: bad file"), obj_name);
--
--	write_or_die(1, buf, size);
--	free(obj_context.path);
--	return 0;
 -}
 -
- static int show_tag_object(const struct object_id *oid, struct rev_info *rev)
+ static void write_commented_object(int fd, const struct object_id *object)
  {
- 	unsigned long size;
-@@ -770,7 +738,10 @@ int cmd_show(int argc, const char **argv, const char *prefix)
- 		const char *name = rev.pending.objects[i].name;
- 		switch (o->type) {
- 		case OBJ_BLOB:
--			ret = show_blob_object(&o->oid, &rev, name);
-+			fflush(rev.diffopt.file);
-+			bool do_textconv = rev.diffopt.flags.textconv_set_via_cmdline &&
-+				rev.diffopt.flags.allow_textconv;
-+			ret = show_blob_object(&o->oid, name, do_textconv);
- 			break;
- 		case OBJ_TAG: {
- 			struct tag *t = (struct tag *)o;
-diff --git a/log.c b/log.c
-new file mode 100644
-index 0000000000..5c77707385
---- /dev/null
-+++ b/log.c
-@@ -0,0 +1,41 @@
-+#include "git-compat-util.h"
-+#include "gettext.h"
-+#include "diff.h"
-+#include "log.h"
-+#include "notes.h"
-+#include "object-name.h"
-+#include "repository.h"
-+#include "streaming.h"
-+#include "write-or-die.h"
-+
-+/*
-+ * Print blob contents to stdout.
-+ */
-+int show_blob_object(const struct object_id *oid, const char *obj_name, bool do_textconv)
-+{
-+	struct object_id oidc;
-+	struct object_context obj_context;
-+	char *buf;
-+	unsigned long size;
-+
-+	if (!do_textconv)
-+		return stream_blob_to_fd(1, oid, NULL, 0);
-+
-+	if (get_oid_with_context(the_repository, obj_name,
-+				 GET_OID_RECORD_PATH,
-+				 &oidc, &obj_context))
-+		die(_("not a valid object name %s"), obj_name);
-+	if (!obj_context.path ||
-+	    !textconv_object(the_repository, obj_context.path,
-+			     obj_context.mode, &oidc, 1, &buf, &size)) {
-+		free(obj_context.path);
-+		return stream_blob_to_fd(1, oid, NULL, 0);
-+	}
-+
-+	if (!buf)
-+		die(_("git show %s: bad file"), obj_name);
-+
-+	write_or_die(1, buf, size);
-+	free(obj_context.path);
-+	return 0;
-+}
-diff --git a/log.h b/log.h
-new file mode 100644
-index 0000000000..464cca52ff
---- /dev/null
-+++ b/log.h
-@@ -0,0 +1,11 @@
-+#ifndef LOG_H
-+#define LOG_H
-+
-+struct object_id;
-+
-+/*
-+ * Print blob contents to stdout.
-+ */
-+int show_blob_object(const struct object_id *oid, const char *obj_name, bool do_textconv);
-+
-+#endif
+ 	struct child_process show = CHILD_PROCESS_INIT;
+@@ -205,7 +194,7 @@ static void prepare_note_data(const struct object_id *object, struct note_data *
+ 		if (d->given)
+ 			write_or_die(fd, d->buf.buf, d->buf.len);
+ 		else if (old_note)
+-			copy_obj_to_fd(fd, old_note);
++			stream_blob_to_fd(fd, old_note, NULL, 0);
+ 
+ 		strbuf_addch(&buf, '\n');
+ 		strbuf_add_commented_lines(&buf, "\n", strlen("\n"), comment_line_char);
 -- 
 2.35.3
 
