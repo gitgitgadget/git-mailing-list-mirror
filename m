@@ -1,59 +1,60 @@
-Received: from mail-ed1-f51.google.com (mail-ed1-f51.google.com [209.85.208.51])
+Received: from mail-wr1-f41.google.com (mail-wr1-f41.google.com [209.85.221.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB57420B00
-	for <git@vger.kernel.org>; Mon, 19 Feb 2024 08:04:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8951237155
+	for <git@vger.kernel.org>; Mon, 19 Feb 2024 14:25:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708329875; cv=none; b=sbCyMC46Cdu2bzztXmcqLKGCb3C26Ytqe5A7FMwhY7K5sbgU/hnkSGHmklvLiyxqTMPfsHxYbNksASaUOARQNyddSyhxmfyvJlqHydn86Nu3aEorN2hLAXBNpLrHDeX8UMmeXvLK5FxHGmIrfQ+L5YvGGgMUXMqtmNaeAV/Tm5Y=
+	t=1708352735; cv=none; b=i+5vdKZu0vGbErkjcsqqqve8aHDOG8EAbKw0I08/0Oo+skj6M3gLJpagEP4RYa96E2K2GRo0kloFOxDqIqXSeWDP1lRgcuh4sktTeofe19yOHoB1mvrW9atlsLuyME5HuzUVz7olXCR1OE8ninSoto3fMpd3Rggf+bQkKfgDacs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708329875; c=relaxed/simple;
-	bh=7gvuS4hCYg3h2Mb9XYH9G+Ywvd09y86o5cNQOvY81Co=;
-	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=AUaa9DuL7lYiPktpvmeQrCogrYc7FrVUyFxBBN59SP77Y93Ht/vJTitK8jZ50Mf+b3tofVnbDhEddMG1XjaheIHlK5IFVZRzUPBsTRXuSLo1kziDj+8NbAoQ6IpLOSM/LXq69U/ADhmuiAjCeqvl6nr5vQ3faV/aIwgzAc5Us+k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=lfYyAbte; arc=none smtp.client-ip=209.85.208.51
+	s=arc-20240116; t=1708352735; c=relaxed/simple;
+	bh=anbdT+pQEUB1jzI/nixKb6FXzNwtKpRGr2rudeJPi0E=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=ROdIzmHebuvggxj5MqeJBllDT9Q35SErqFFsCDmfut10Njfm7tJmLFB467HxhfENl81Z3pXnLTWf8MkdEGMOv/Fd6mfbYiQJTqG1HVt0ejebgQF7QBze7ZX1D27PCClBoHI7Y6qk8BNV97708QyT6kdQcIX2+oGYKVc+nUrDDQQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VVpXqjTW; arc=none smtp.client-ip=209.85.221.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lfYyAbte"
-Received: by mail-ed1-f51.google.com with SMTP id 4fb4d7f45d1cf-5645960cd56so1131970a12.1
-        for <git@vger.kernel.org>; Mon, 19 Feb 2024 00:04:32 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VVpXqjTW"
+Received: by mail-wr1-f41.google.com with SMTP id ffacd0b85a97d-3394ca0c874so2143488f8f.2
+        for <git@vger.kernel.org>; Mon, 19 Feb 2024 06:25:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1708329871; x=1708934671; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:to:subject:user-agent:mime-version:date:message-id:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=bQubGDDlnFDYynrOP8h/V5sNqkVStCEz48/s5PIjPgU=;
-        b=lfYyAbtemI3UjEmUt8kVYULFdZG3GRNGQRE5JLAd1JYPd7XQUwEuvNW4amUFPuY8wO
-         uXinsoCvM5u91a0AWEJmM0X1CUVG0fdq+/QQrcs5c5uQmoGDodUOcLVapAL02qgbaXdI
-         bmH7h562Qf3QWdX/Q9lz7dKNNp7opONU2tICCZFSkwOXvU4icMSVbgeZqGIjpHkjSSBR
-         asXbc92p8EuPotI89TGXdaN8PinqpQvMz+AaYZ2s6v8bsP1i4usYFs2Yp2lYBQvpiHv8
-         Bpsq+DAzzMZzNq4pwJ6zuEKbq3MSRPfSUXLTOPSYEKtlv5xn17aTtXER9wQLEr9YUTdc
-         RY5A==
+        d=gmail.com; s=20230601; t=1708352732; x=1708957532; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=Rk9TCOeePg4oq2gb7Bra8hsY9UaaHbp/rgfMdY7phbo=;
+        b=VVpXqjTWmpf/JuSRut7E6G2CJIR3TsT9Rv2UrcyRC4J+m4iJVteE75L88IXKs2QTJc
+         rtQlbtaHIN5+uZ85+dgrTkwGqVxg4Y5tNp9QWYicsflHnBO1ityRjdAQ/FYR6i1AIkCg
+         8izxn3mC7s0aGm2S8cZCH0grDCCFTxaHvEJPCJQx952v9ORULGM33+L6DEAK/rDmnyZF
+         E7MN+5nzgAbWPudNmwOQXO1C+Fmlpeye68Ujg2Rlw+u3Se2GYen6zvJ7uNzwkAVAW6jy
+         1/kYUmAlhIJX5dq6FihUJMj8rxc9IIlngFT5Eaq4Lzf4EcZ3gtQBC8Ww7yQXyTJfuXy8
+         CAcg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1708329871; x=1708934671;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=bQubGDDlnFDYynrOP8h/V5sNqkVStCEz48/s5PIjPgU=;
-        b=XUQbtCv9HdYXZpAAs4yTEgD9FyWwUdxPbBddNtuzQtkKrNR5FLDuO7f60jrSQ3+jA/
-         FSjK/HNL/AkbMmOrjIjL9OPNwYdf2wCVBPTsqAG8SymGoIyg+qP/Ipri03P0Nqmsijy7
-         VhwuwICJhkbzF0KqG1+LXdhFbxXxxiqIILYRaNabvUPv7prI1wWzZOSVIHGgHUYyp8pu
-         4B2uale1g+QHrD2Wdyd3vH53/JFZrqF0JUAkB8cgyE51j2RkUsnHyyCxlckBdYRkzQbx
-         53qWFcHtihQu18R1CMZJQTbiv4p5L2movnHkZFlFTxsyur4/qQYG0liXAd6K0OjEFiMa
-         9pbw==
-X-Forwarded-Encrypted: i=1; AJvYcCUpSKeZ2c9jqJUIupML5Q6HN0INvOehfHJSa6QWy3yum2z26ePwP49YqXC31dtiMTqHX/+n/+RjbTkEZeLhNwo+2o/F
-X-Gm-Message-State: AOJu0YzI9g9gUNml9nb8bxIFYd3rvIKCVL+QCTp/OYLRwAESh0TeQDi8
-	QOMdDmxH/H54+YSoMtgdbtQZyRAxfKnygwOndYt9tzmdazHoAOCsdavQFzQF
-X-Google-Smtp-Source: AGHT+IGEcVgBUgVNK6spZZBvd/fwIKm9rwa84s6SOULro6oGMK5bmygJZlz+zfJb8v63gv0PKerJuA==
-X-Received: by 2002:a17:906:c7d6:b0:a3e:b726:20ef with SMTP id dc22-20020a170906c7d600b00a3eb72620efmr530367ejb.34.1708329870552;
-        Mon, 19 Feb 2024 00:04:30 -0800 (PST)
-Received: from [192.168.3.191] ([92.173.128.58])
-        by smtp.googlemail.com with ESMTPSA id th8-20020a1709078e0800b00a3d3b68e504sm2640125ejc.202.2024.02.19.00.04.29
+        d=1e100.net; s=20230601; t=1708352732; x=1708957532;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Rk9TCOeePg4oq2gb7Bra8hsY9UaaHbp/rgfMdY7phbo=;
+        b=SvP73itf7amm5k9gDCExWGJwv/9PF9qJYKrvuf/1nzGhPuRCoD8Jl9rS0y3n3szsIb
+         CcJnUmGSZIXmrWgR20jC5CXZLsj7i5gSdRgPxbr61N8uAF9VfyCGiAFEedD8K8BIg2oB
+         Mk+nO64bewrd8mUPVFvjFHCiBCLY0riGtbDV0SFAEyGL0WxGwex4S4zVGedg1XYh/DPj
+         ZN9AkFp1+eBPCshSRdcKAA0FX55Ee7ARPF1ElqIIAAsDyJkHGODoFZ9ZMvYgId4zMFy7
+         LHQ3ICxh63UgH1yPAp9VVX5cTbwfoWYy4QkrGyx68ROESCKmWVPMvT9LxFuHWjAs+6/M
+         KznQ==
+X-Forwarded-Encrypted: i=1; AJvYcCXeEXRcAjIS72cWhe5DzOt8yKQdWSWkFM6xv0E43ct1drTV9Qlq5s0lZrhL8Vw0q1rvDle9RoCrZ6Yi4PoJsewQApOH
+X-Gm-Message-State: AOJu0YyxgiAE1VlEOpdgTSqoiHuy8mQw2blNmEzEFNGgt+VBhAdxQpym
+	CO+l5JWN6Exp8PHvUKOy5cmIiWonUzve157Y5Yd7Dg1GswcvMFdP
+X-Google-Smtp-Source: AGHT+IHFtdCpOUXG5ClwkAqO1bkJxxjMlDYImu6jFWILXHDo0J8yDun+PTQt3eFGE3MDGGXNsRTMtg==
+X-Received: by 2002:a5d:64c2:0:b0:33d:3098:c1f with SMTP id f2-20020a5d64c2000000b0033d30980c1fmr3978313wri.44.1708352731372;
+        Mon, 19 Feb 2024 06:25:31 -0800 (PST)
+Received: from ?IPV6:2a0a:ef40:62e:a901:d2c6:37ff:fef6:7b1? ([2a0a:ef40:62e:a901:d2c6:37ff:fef6:7b1])
+        by smtp.googlemail.com with ESMTPSA id b4-20020a05600003c400b0033d22852483sm9500137wrg.62.2024.02.19.06.25.30
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 19 Feb 2024 00:04:29 -0800 (PST)
-Message-ID: <fc7a8c46-61e4-4b5d-b625-cbc845b81590@gmail.com>
-Date: Mon, 19 Feb 2024 09:04:28 +0100
+        Mon, 19 Feb 2024 06:25:31 -0800 (PST)
+Message-ID: <bd340a27-bfb4-41b2-a1fa-356ab7dbbd36@gmail.com>
+Date: Mon, 19 Feb 2024 14:25:29 +0000
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -61,360 +62,214 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] builtin/stash: configs keepIndex, includeUntracked
-To: MithicSpirit <rpc01234@gmail.com>, git@vger.kernel.org
-References: <20240218033146.372727-2-rpc01234@gmail.com>
-From: =?UTF-8?Q?Jean-No=C3=ABl_Avila?= <avila.jn@gmail.com>
-Content-Language: fr
-In-Reply-To: <20240218033146.372727-2-rpc01234@gmail.com>
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH 0/5] promise: introduce promises to track success or error
+To: Philip Peterson via GitGitGadget <gitgitgadget@gmail.com>,
+ git@vger.kernel.org
+Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
+ Emily Shaffer <nasamuffin@google.com>,
+ Philip Peterson <philip.c.peterson@gmail.com>
+References: <pull.1666.git.git.1708241612.gitgitgadget@gmail.com>
+Content-Language: en-US
+From: Phillip Wood <phillip.wood123@gmail.com>
+In-Reply-To: <pull.1666.git.git.1708241612.gitgitgadget@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 
-Hello,
+Hi Philip
 
-Le 18/02/2024 à 04:30, MithicSpirit a écrit :
-> Adds options `stash.keepIndex` and `stash.includeUntracked`, which
-> enable `--keep-index` and `--include-untracked` by default (unless it
-> would conflict with another option). This is done to facilitate the
-> workflow where a user:
-> 
-> . Makes modifications;
-> . Selectively adds them with `git add -p`; and
-> . Stashes the unadded changes to run tests with only the current
->    modifications.
-> 
-> `stash.keepIndex` is especially important for this, as otherwise the
-> work done in `git add -p` is lost since applying the stash does not
-> restore the index. This problem could also be solved by adding
-> functionality to the stash to restore the index specifically, but this
-> would create much more complexity and still wouldn't be as convenient
-> for that workflow.
-> 
-> Signed-off-by: Ricardo Prado Cunha (MithicSpirit) <rpc01234@gmail.com>
-> ---
-> This is my first patch to git and my first time using mailing lists for this
-> kind of stuff. Please do let me know of any mistakes or gaffes I've made.
-> 
->   Documentation/config/stash.txt |  13 ++++
->   builtin/stash.c                |  65 ++++++++++++------
->   t/t3903-stash.sh               | 119 +++++++++++++++++++++++++++++++++
->   3 files changed, 178 insertions(+), 19 deletions(-)
-> 
-> diff --git a/Documentation/config/stash.txt b/Documentation/config/stash.txt
-> index ec1edaeba6..d6d9ea7daa 100644
-> --- a/Documentation/config/stash.txt
-> +++ b/Documentation/config/stash.txt
-> @@ -1,6 +1,19 @@
-> +stash.includeUntracked::
-> +	Boolean option that configures whether the `git stash push` and `git
-> +	stash save` commands also stash untracked files by default. This option
-> +	is ignored if `--include-untracked`, `--no-include-untracked`, `--all`,
-> +	`--patch`, or `--staged` are used. Defaults to `false`. See
-> +	linkgit:git-stash[1].
-> +
-> +stash.keepIndex::
-> +	Boolean option that configures whether the `git stash push` and `git
-> +	stash save` commands also stash changes that have been added to the
-> +	index. This option is ignored if `--keep-index`, `--no-keep-index`, or
-> +	`--patch` are used. Defaults to `false`. See linkgit:git-stash[1].
-> +
->   stash.showIncludeUntracked::
->   	If this is set to true, the `git stash show` command will show
->   	the untracked files of a stash entry.  Defaults to false. See
->   	the description of the 'show' command in linkgit:git-stash[1].
-> 
->   stash.showPatch::
-> diff --git a/builtin/stash.c b/builtin/stash.c
-> index 7fb355bff0..c591a2bf4b 100644
-> --- a/builtin/stash.c
-> +++ b/builtin/stash.c
-> @@ -836,12 +836,14 @@ static int list_stash(int argc, const char **argv, const char *prefix)
->   	return run_command(&cp);
->   }
-> 
->   static int show_stat = 1;
->   static int show_patch;
->   static int show_include_untracked;
-> +static int default_keep_index;
-> +static int default_include_untracked;
-> 
->   static int git_stash_config(const char *var, const char *value,
->   			    const struct config_context *ctx, void *cb)
->   {
->   	if (!strcmp(var, "stash.showstat")) {
->   		show_stat = git_config_bool(var, value);
-> @@ -852,12 +854,20 @@ static int git_stash_config(const char *var, const char *value,
->   		return 0;
->   	}
->   	if (!strcmp(var, "stash.showincludeuntracked")) {
->   		show_include_untracked = git_config_bool(var, value);
->   		return 0;
->   	}
-> +	if (!strcmp(var, "stash.keepindex")) {
-> +		default_keep_index = git_config_bool(var, value);
-> +		return 0;
-> +	}
-> +	if (!strcmp(var, "stash.includeuntracked")) {
-> +		default_include_untracked = git_config_bool(var, value);
-> +		return 0;
-> +	}
->   	return git_diff_basic_config(var, value, ctx, cb);
->   }
-> 
->   static void diff_include_untracked(const struct stash_info *info, struct diff_options *diff_opt)
->   {
->   	const struct object_id *oid[] = { &info->w_commit, &info->u_tree };
-> @@ -1509,33 +1519,50 @@ static int do_push_stash(const struct pathspec *ps, const char *stash_msg, int q
->   	int ret = 0;
->   	struct stash_info info = STASH_INFO_INIT;
->   	struct strbuf patch = STRBUF_INIT;
->   	struct strbuf stash_msg_buf = STRBUF_INIT;
->   	struct strbuf untracked_files = STRBUF_INIT;
-> 
-> -	if (patch_mode && keep_index == -1)
-> -		keep_index = 1;
-> -
-> -	if (patch_mode && include_untracked) {
-> -		fprintf_ln(stderr, _("Can't use --patch and --include-untracked"
-> -				     " or --all at the same time"));
-> -		ret = -1;
-> -		goto done;
-> +	if (keep_index == -1) {
-> +		if (patch_mode)
-> +			keep_index = 1;
-> +		else
-> +			keep_index = default_keep_index;
->   	}
-> 
-> -	/* --patch overrides --staged */
-> -	if (patch_mode)
-> +	if (patch_mode) {
-> +		if (include_untracked == -1)
-> +			include_untracked = 0;
-> +		else if (include_untracked) {
-> +			fprintf_ln(stderr,
-> +				   _("Can't use --patch and --include-untracked"
-> +				     " or --all at the same time"));
-> +			ret = -1;
-> +			goto done;
-> +		}
-> +
-> +		/* --patch overrides --staged */
->   		only_staged = 0;
-> -
-> -	if (only_staged && include_untracked) {
-> -		fprintf_ln(stderr, _("Can't use --staged and --include-untracked"
-> -				     " or --all at the same time"));
-> -		ret = -1;
-> -		goto done;
->   	}
-> 
-> +	if (only_staged) {
-> +		if (include_untracked == -1)
-> +			include_untracked = 0;
-> +		else if (include_untracked) {
-> +			fprintf_ln(
-> +				stderr,
-> +				_("Can't use --staged and --include-untracked"
-> +				  " or --all at the same time"));
-> +			ret = -1;
-> +			goto done;
-> +		}
-> +	}
-> +
-> +	if (include_untracked == -1)
-> +		include_untracked = default_include_untracked;
-> +
+On 18/02/2024 07:33, Philip Peterson via GitGitGadget wrote:
+> Hello all, this is my first patchset so thank you for being patient with me
+> as I learn the process and conventions of your very fine project. These
+> patches are intended as part of the Libification effort, to show how we
+> could use a Promise structure to help return values from functions.
 
-I'm not sure this would be better, but instead of mixing option 
-compatibility and actually building your logic, why not use a series of
-die_for_incompatible_opt3 and the like in order to clear the option 
-lists, then build your action logic without resorting to special values?
+I agree that we could do with a better way of propagating errors ups the 
+call-chain that (a) allows us to pass more detailed information about 
+the error to the caller and (b) add useful context to the error message 
+as the stack in unwound. I'm afraid I do not think that the promise 
+implementation in this patch series is a good way forward for several 
+reasons.
+
+1) It is hard to see how we can wrap the return value of the function in 
+a promise and preserve type safety. Even if we used some  kind of union 
+the compiler will not warn us if the caller reads a different member to 
+the one that the callee set.
+
+2) It obscures the return type of the function and forces callers to 
+unpack the value from the promise adding complexity to the calling code.
+
+3) It imposes a cost in terms of dynamic memory allocation on code that 
+is called synchronously and therefore does not need to allocate the 
+promise on the heap. This adds complexity and is sure to result in 
+memory leaks.
+
+4) If the function fails we need to propagate the error using 
+PROMISE_BUBBLE_UP() which forces the caller to add more context to the 
+error message even if it does covey anything useful to the user. For 
+example in patch 5 we see
+
+     error:
+	could not find header
+     caused by:
+	could not find file diff header
+     caused by:
+	git diff header lacks filename information (line 4)" >expected
+
+The error message starts by saying it couldn't find the header and ends 
+by saying it did actually find the header but it could not parse it.
+
+5) The cover letter talks about adding asynchronous examples in the 
+future but it is not clear what part of the git code base it is 
+referring to.
+
+I think we'd be better served by some kind of structured error type like 
+the failure_result in this patch series that is allocated on the stack 
+by the caller at the entry point to the library and passed down the call 
+chain. That avoids the need for lots of dynamic allocations and allows 
+us to continue allocating "out" parameters on the stack. For example
+
+     int f(struct repository *r) {
+	struct object_id oid;
+
+	if (repo_get_oid(r, "HEAD", &oid))
+		return error(_("could not parse HEAD"))
+
+	/* use oid here */
+     }
+
+would become
+     int f(struct repository *r, struct error *err) {
+	struct object_id oid;
+
+	if (repo_get_oid(r, "HEAD", &oid))
+		return error(&err, _("could not parse HEAD"))
+
+	/* use oid here */
+     }
+
+I'm sure this has been discussed in the past but I didn't manage to turn 
+anything up with a quick search of the archive on lore.kernel.org.
+
+Best Wishes
+
+Phillip
 
 
->   	repo_read_index_preload(the_repository, NULL, 0);
->   	if (!include_untracked && ps->nr) {
->   		int i;
->   		char *ps_matched = xcalloc(ps->nr, 1);
+
+> Problems
+> ========
 > 
->   		/* TODO: audit for interaction with sparse-index. */
-> @@ -1688,13 +1715,13 @@ static int do_push_stash(const struct pathspec *ps, const char *stash_msg, int q
->   				fprintf_ln(stderr, _("Cannot remove "
->   						     "worktree changes"));
->   			ret = -1;
->   			goto done;
->   		}
+> We seek to make libification easier by establishing a pattern for tracking
+> whether a function errored in a rich way. Currently, any given function
+> could immediately die(), or use error() to print directly to the console,
+> bypassing any relevant verbosity checks. The use of die() currently makes
+> use of Git as a library inconvenient since it is not graceful.
 > 
-> -		if (keep_index < 1) {
-> +		if (!keep_index) {
->   			struct child_process cp = CHILD_PROCESS_INIT;
+> Additionally, returning using return error(...) (as is commonly done) always
+> just returns a generic error value, -1, which provides little information.
 > 
->   			cp.git_cmd = 1;
->   			strvec_pushl(&cp.args, "reset", "-q", "--refresh", "--",
->   				     NULL);
->   			add_pathspecs(&cp.args, ps);
-> @@ -1718,13 +1745,13 @@ static int push_stash(int argc, const char **argv, const char *prefix,
->   		      int push_assumed)
->   {
->   	int force_assume = 0;
->   	int keep_index = -1;
->   	int only_staged = 0;
->   	int patch_mode = 0;
-> -	int include_untracked = 0;
-> +	int include_untracked = -1;
->   	int quiet = 0;
->   	int pathspec_file_nul = 0;
->   	const char *stash_msg = NULL;
->   	const char *pathspec_from_file = NULL;
->   	struct pathspec ps;
->   	struct option options[] = {
-> @@ -1798,13 +1825,13 @@ static int push_stash_unassumed(int argc, const char **argv, const char *prefix)
 > 
->   static int save_stash(int argc, const char **argv, const char *prefix)
->   {
->   	int keep_index = -1;
->   	int only_staged = 0;
->   	int patch_mode = 0;
-> -	int include_untracked = 0;
-> +	int include_untracked = -1;
->   	int quiet = 0;
->   	int ret = 0;
->   	const char *stash_msg = NULL;
->   	struct pathspec ps;
->   	struct strbuf stash_msg_buf = STRBUF_INIT;
->   	struct option options[] = {
-> diff --git a/t/t3903-stash.sh b/t/t3903-stash.sh
-> index 00db82fb24..4ffcca742c 100755
-> --- a/t/t3903-stash.sh
-> +++ b/t/t3903-stash.sh
-> @@ -1565,7 +1565,126 @@ test_expect_success 'stash apply reports a locked index' '
->   		EOF
->   		test_must_fail git stash apply 2>err &&
->   		test_cmp expect err
->   	)
->   '
+> Approach
+> ========
 > 
-> +setup_dirty() {
-> +	echo a >tracked &&
-> +	echo b >added-modified &&
-> +	git add tracked added-modified &&
-> +	git commit -m initial &&
-> +	echo 1 >>tracked &&
-> +	echo 2 >>added-modified &&
-> +	echo c >added-new &&
-> +	echo d >untracked &&
-> +	git add added-modified added-new
-> +}
-> +
-> +test_expect_success 'stash.includeuntracked equivalent to --include-untracked' '
-> +	git init using_opt &&
-> +	test_when_finished rm -rf using_opt &&
-> +	(
-> +		cd using_opt &&
-> +		setup_dirty &&
-> +		git stash push &&
-> +		git stash show -u --patch >../using-opt
-> +	) &&
-> +
-> +	test_config stash.includeuntracked true &&
-> +	git init using_config &&
-> +	test_when_finished rm -rf using_config &&
-> +	(
-> +		cd using_config &&
-> +		setup_dirty &&
-> +		git stash push &&
-> +		git stash show -u --patch >../using-config
-> +	) &&
-> +
-> +	test_cmp using-opt using-config
-> +'
-> +
-> +test_expect_success 'stash.includeuntracked yields to --no-include-untracked' '
-> +	git init no_config &&
-> +	test_when_finished rm -rf no_config &&
-> +	(
-> +		cd no_config &&
-> +		setup_dirty &&
-> +		git stash push --no-include-untracked &&
-> +		git stash show -u --patch >../no-config
-> +	) &&
-> +
-> +	test_config stash.includeuntracked true &&
-> +	git init using_config &&
-> +	test_when_finished rm -rf using_config &&
-> +	(
-> +		cd using_config &&
-> +		setup_dirty &&
-> +		git stash push --no-include-untracked &&
-> +		git stash show -u --patch >../using-config
-> +	) &&
-> +
-> +	test_cmp no-config using-config
-> +'
-> +
-> +test_expect_success 'stash.includeuntracked succeeds with --patch' '
-> +	test_config stash.includeuntracked true &&
-> +	git stash --patch
-> +'
-> +
-> +test_expect_success 'stash.includeuntracked succeeds with --staged' '
-> +	test_config stash.includeuntracked true &&
-> +	git stash --staged
-> +'
-> +
-> +test_expect_success 'stash.keepindex equivalent to --keep-index' '
-> +	git init using_opt &&
-> +	test_when_finished rm -rf using_opt &&
-> +	(
-> +		cd using_opt &&
-> +		setup_dirty &&
-> +		git stash push &&
-> +		git stash show -u --patch >../using-opt
-> +	) &&
-> +
-> +	test_config stash.keepindex true &&
-> +	git init using_config &&
-> +	test_when_finished rm -rf using_config &&
-> +	(
-> +		cd using_config &&
-> +		setup_dirty &&
-> +		git stash push &&
-> +		git stash show -u --patch >../using-config
-> +	) &&
-> +
-> +	test_cmp using-opt using-config
-> +'
-> +
-> +test_expect_success 'stash.keepindex yields to --no-keep-index' '
-> +	git init no_config &&
-> +	test_when_finished rm -rf no_config &&
-> +	(
-> +		cd no_config &&
-> +		setup_dirty &&
-> +		git stash push --no-keep-index &&
-> +		git stash show -u --patch >../no-config
-> +	) &&
-> +
-> +	test_config stash.keepindex true &&
-> +	git init using_config &&
-> +	test_when_finished rm -rf using_config &&
-> +	(
-> +		cd using_config &&
-> +		setup_dirty &&
-> +		git stash push --no-keep-index &&
-> +		git stash show -u --patch >../using-config
-> +	) &&
-> +
-> +	test_cmp no-config using-config
-> +'
-> +
-> +test_expect_success 'stash.keepindex succeeds with --patch' '
-> +	test_config stash.keepindex true &&
-> +	git stash --patch
-> +'
-> +
->   test_done
-> --
-> 2.43.2
+> I solve this problem by splitting the single return value into two return
+> values: error, and message. However, managing two output variables can
+> require some coordination, and this coordination can be abstracted away by
+> use of an existing pattern named Promise.
 > 
+> 
+> Promise Concept
+> ===============
+> 
+> A promise is a contract representing "some task" that will eventually
+> complete. Initially a promise is considered in a pending state. When it
+> completes, one of two codepaths will eventually be entered: reject, or
+> resolve. Once resolved or rejected, the promise enters a different state
+> representing the result. Reject or resolve may only be called once on a
+> given promise.
+> 
+> Until now, everything I described up to this point is consistent with other
+> implementations, such as the ECMAScript standard for promises. However, this
+> implementation departs from the complexity of those promises. In this
+> implementation, promises are simple and canNOT be chained using .then(...)
+> and do NOT have any notion of automatic bubbling (via re-entering the
+> pending state).
+> 
+> 
+> Sample output and reproduction
+> ==============================
+> 
+> During an error, we can have richer feedback as to what caused the problem.
+> 
+> % git apply garbage.patch
+> error:
+>      could not find header
+> caused by:
+>      patch fragment without header at line 1: @@ -2 +2 @@
+> 
+> 
+> To reproduce this output, you can use the following patch (garbage.patch):
+> 
+> @@ -2 +2 @@
+> 
+> 
+> 
+> Goals
+> =====
+> 
+> I would love to get feedback on this approach. This patchset is kept small,
+> so as to serve as a minimal proof of concept. It is intended to abstract to
+> asynchronous use-cases even though this is only a synchronous one.
+> Eventually, any top-level function, such as apply_all_patches(...) would
+> return its output via a promise to make the library interface as clean as
+> possible, but this patchset does not accomplish this goal. Hopefully it can
+> provide a direction to go in to achieve that.
+> 
+> 
+> Diversion
+> =========
+> 
+> While building this patchset, I noted a bug that may not have a concrete
+> repro case in the master branch. The bug is that when invoking git am, it
+> can call out to git apply, passing many flags but interestingly not the
+> --quiet flag. I included a fix for this issue in the patchset.
+> 
+> 
+> Potential Issue
+> ===============
+> 
+> There is one difficulty with this approach, which is the high level of
+> repetition in the code required. Tracking which promise is which is its own
+> source of complexity and may make mistakes more prone to happen. If anyone
+> has suggestions for how to make the code cleaner, I would love to hear.
+> 
+> Thank you, Philip
+> 
+> Philip Peterson (5):
+>    promise: add promise pattern to track success/error from operations
+>    apply: use new promise structures in git-apply logic as a proving
+>      ground
+>    apply: update t4012 test suite
+>    apply: pass through quiet flag to fix t4150
+>    am: update test t4254 by adding the new error text
+> 
+>   Makefile               |   1 +
+>   apply.c                | 133 +++++++++++++++++++++++++++--------------
+>   apply.h                |   9 ++-
+>   builtin/am.c           |   5 ++
+>   promise.c              |  89 +++++++++++++++++++++++++++
+>   promise.h              |  71 ++++++++++++++++++++++
+>   range-diff.c           |  14 +++--
+>   t/t4012-diff-binary.sh |   4 +-
+>   t/t4254-am-corrupt.sh  |   9 ++-
+>   9 files changed, 279 insertions(+), 56 deletions(-)
+>   create mode 100644 promise.c
+>   create mode 100644 promise.h
+> 
+> 
+> base-commit: 2996f11c1d11ab68823f0939b6469dedc2b9ab90
+> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1666%2Fphilip-peterson%2Fpeterson%2Femail-v1
+> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1666/philip-peterson/peterson/email-v1
+> Pull-Request: https://github.com/git/git/pull/1666
 
