@@ -1,72 +1,101 @@
-Received: from mail-lf1-f48.google.com (mail-lf1-f48.google.com [209.85.167.48])
+Received: from mail-wr1-f54.google.com (mail-wr1-f54.google.com [209.85.221.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB3FAEDD
-	for <git@vger.kernel.org>; Mon, 19 Feb 2024 01:40:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE9261CA98
+	for <git@vger.kernel.org>; Mon, 19 Feb 2024 04:45:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708306850; cv=none; b=GfPz6qWvzblERlVhQ6LsSRx0ylOrOXacAULQO2DqEQg1xp7kblezhIDLDqTMnyhPxheqFP6VMMjqDNTUlLaeyb4puSbjfr6YalNSl+M4hAHAdgA3YCovJGoZpSRtyu+fufQMxQ+x1hGcV3u6WHXznYowPmdu8QfAILf+ZyAj7Gg=
+	t=1708317943; cv=none; b=IwPFkNlTDmp15QsMN1z7qKX0rZfkh5iOVM8vES7VjXANuaYKX6WvIeEW/Q2mt8CYNMVxvJettc5Sqy5cVEZAMQzc+JuOHsdRm0Eul0jZeb8gKpSF253YhMS1rkYP+D/9urz/+TxKePUB3ptQ86lonPdVvEGSrjV1vyMcV64ctSw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708306850; c=relaxed/simple;
-	bh=lpnq5AG7RknmRp13Z1V/TvMoNqZe9kTyc7u9Zp4lP4Q=;
-	h=From:Message-ID:To:Subject:Date:MIME-Version:Content-Type; b=E7EbnJk6vyNCGXDXe+Xx08trPVXJwSrtFmWJb8BEPif5Ll7ISKvXZG+q6U4143Ebcmq0HeGgaTPtSrT66+aenQ/vgMUXlYih0P7ynEt4URAdVXFQos2kVCgXTPuiUTCJmh4ig8SPCnKsFvZv7MmxfygdQteb/k208teE9csSR20=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LHr2KkXn; arc=none smtp.client-ip=209.85.167.48
+	s=arc-20240116; t=1708317943; c=relaxed/simple;
+	bh=PdGZxgtpN44VEG2Ru2pXOAoEYgnaWzpzmYWCvQztwAc=;
+	h=Message-ID:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=upitahEm2GBgPmhI/2OPNiOrJ8AahmEfosR3Qw9EjTLzaoP+381ZGT1zseepoAs4U6Gaf5xNQauskm215O4Dw7y9KTveFzqKx1JiSxgjwyrJ4DW84pxlXYpaf2aOE5BaRSKAizRr1oO29xPgut7Hwz6K55rvWFOoXk9X0eyPD3g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OZAsAYRB; arc=none smtp.client-ip=209.85.221.54
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LHr2KkXn"
-Received: by mail-lf1-f48.google.com with SMTP id 2adb3069b0e04-511ac32fe38so5662849e87.1
-        for <git@vger.kernel.org>; Sun, 18 Feb 2024 17:40:48 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OZAsAYRB"
+Received: by mail-wr1-f54.google.com with SMTP id ffacd0b85a97d-33d4c11bd34so477258f8f.3
+        for <git@vger.kernel.org>; Sun, 18 Feb 2024 20:45:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1708306847; x=1708911647; darn=vger.kernel.org;
-        h=mime-version:date:subject:to:reply-to:message-id:from:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=lpnq5AG7RknmRp13Z1V/TvMoNqZe9kTyc7u9Zp4lP4Q=;
-        b=LHr2KkXnUzRZwgUVtu2wbH1oQeW5M9BnEoSC9ZxIa0vwHes9QsWRQNoB8Qp8IJ+SNc
-         IvMNSuwph9T8OmTbxrBqBUHrQrpAiox6ZOi+cVPFDuTBR8FlZufMVSkoLuaYKokdcJgU
-         /P4K+z5Ogc4Hgk7uAF3BlBMUAqQc/G5YDxzWPj8/dF+LMtV3goEaJA46ltz2nyiFecXD
-         8o2EK2dsCCx2kMuGQKz/lazFfchRiaDCAor8NYH+Z3Zzz5hlYKkogf+65+wwPn4mBfpR
-         ZA4eQoqNpMLcLfX9yIFJiApX3s9k+GWAex4kf7VRrAqhbvIcqrXXyZFpsJNGJgn05i8/
-         xmDg==
+        d=gmail.com; s=20230601; t=1708317939; x=1708922739; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=04AWro/l2GSoxnlpL3TgY0+7O4VEhtza7wOD/pSUzqA=;
+        b=OZAsAYRBAE390+iUAjq9mgxFJOdTwyA0QAzdE9qa4AEJERYXNEZ8BQ0wUpUpfDhdcQ
+         I6brHXZsXT0iz0XOI448okM812IoXxo6lszNAY75ZCGf6A+pH27PYfgp02OMHhInL+o4
+         D2INb/LscSBJtFn/eHBLvsJ6YUxDVvUY3WHJo6MzfMdnFMavRFj691dbxw2wx4WIteYh
+         eKw8gDSace/hg/sBOkbIap/dic0+K0yCgr9LO4X3GVCfbTD1fij79G4fJBwJkPRXbWOW
+         e14x2Xd4xUx1rQqHVHpmA/zKlobTG0x665MxS7c4s+Coxe01RiqM5nh/9L3aSRgM5JmT
+         u7ew==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1708306847; x=1708911647;
-        h=mime-version:date:subject:to:reply-to:message-id:from
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=lpnq5AG7RknmRp13Z1V/TvMoNqZe9kTyc7u9Zp4lP4Q=;
-        b=vbTZNkX8wBWpmwbrU2KDIUrW3ceSpZHp1i5hRHy+zvZzve2PkwbqbqJvkC0cPCjJVg
-         qzCoSqMgVXh99MjUsH8GS/oTWqV9B3twKiNfdTdN5e6/yw3mHHELQYkhyh/3fz4fyU6q
-         Cj/gfrq8YvxU9W9MxGLo7H1mJmklrDHRUMQ4tBmEqEGzBUsdAUmDwwJSmiCI5WZZC5D2
-         P4e5ABhuZVdYQILJv3d4w9OLjFeR+gK9sOkCE+cCnDLow3u60neFw95HStXewrDyH9og
-         cR7TPHVFWhqqeWQce4vtd8yCCa/VS3RX+IyWuzj96DNjd9188XGNRbVWyPmhWkF3roEE
-         64BA==
-X-Gm-Message-State: AOJu0YxtZP1at2ntX7STutZAA3fUkRso/JR/cZO/tC0V5J8q60GzOnxx
-	rGwWbYlCFMUHutfcPNgTKLUxmvFwP6+l7eOhaIp3VqzmXWEqYwTbsI4sXOeJ
-X-Google-Smtp-Source: AGHT+IEspPP6+rUCLUmksMA/Vg4X+YjuGBqRKU/ZlLwAOS1manfIa1STMi+eQhqcZ9ZiXe8jXZPz/Q==
-X-Received: by 2002:a05:6512:234a:b0:512:b1b7:a285 with SMTP id p10-20020a056512234a00b00512b1b7a285mr1869334lfu.51.1708306846815;
-        Sun, 18 Feb 2024 17:40:46 -0800 (PST)
-Received: from [185.222.58.100] ([185.222.58.100])
-        by smtp.gmail.com with ESMTPSA id hu13-20020a170907a08d00b00a3dfafb264fsm2425113ejc.7.2024.02.18.17.40.46
-        for <git@vger.kernel.org>
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 18 Feb 2024 17:40:46 -0800 (PST)
-From: Sarenaa Fuller <zdndaba99@gmail.com>
-X-Google-Original-From: Sarenaa Fuller <castillom551@outlook.com>
-Message-ID: <6d7b3e4d719a80d936bb98f1b48dd6995cfc23712bc5c1edfef77cb9e7c0a62f@mx.google.com>
-Reply-To: sarenaa.fuller@outlook.com
-To: git@vger.kernel.org
-Subject: Acoustic Instrument
-Date: Mon, 19 Feb 2024 02:40:45 +0100
+        d=1e100.net; s=20230601; t=1708317939; x=1708922739;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=04AWro/l2GSoxnlpL3TgY0+7O4VEhtza7wOD/pSUzqA=;
+        b=sPj1KcgwhcZ9Fv2MvO0UuId8In+WO7J/077r6SINdrL7UY+rAd/FDFVQG63bv9tXpx
+         BcyP3AvBJO1rtRfNaLXBavpJZz4mArWyhYvXqtnrGhvqXSBk65oJN277QEx+HLx80do4
+         JD5MdV+eESPttSC1fCHL5gsLSZyWT67pTZSyueWR4X32NiGmTX0s+LfQY+z5RKRGXjlo
+         4eynfxcut6jkML/p64RJt0kVqnIUTGjmCpTjsUjoxULgvFnZ+qfjwT2ZYHET9sV29ypC
+         5c+nNGWD73hrHwoHQq51sKnmg0qR5G3bPZlZccJNpJVdMxTNXDj+ZXT+nsi5fBGXt0dH
+         empA==
+X-Gm-Message-State: AOJu0YyTJhAsTN6VEwoFJGQeVdF7tiJfwSa0RnYqLHu0BjP95dyXfjp4
+	1gB9HCWR+6yGyqnRlC6lbGVSUVSNyHreOb1Ck12aOQraEO5DNuAtxEbu8nws
+X-Google-Smtp-Source: AGHT+IHQ4Yu6fe44T/LzvHVqhDoz1svx086ky5R5qjYxcP8xyHj6CxJYAS6ZdThgS4KGSz2PwE8fug==
+X-Received: by 2002:a5d:4b0c:0:b0:33d:1416:7149 with SMTP id v12-20020a5d4b0c000000b0033d14167149mr7878400wrq.66.1708317939598;
+        Sun, 18 Feb 2024 20:45:39 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id k1-20020adfe3c1000000b0033afc81fc00sm9068506wrm.41.2024.02.18.20.45.39
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 18 Feb 2024 20:45:39 -0800 (PST)
+Message-ID: <pull.1677.git.git.1708317938.gitgitgadget@gmail.com>
+From: "Philip Peterson via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Mon, 19 Feb 2024 04:45:36 +0000
+Subject: [PATCH 0/2] apply: add unit tests for parse_range
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+Cc: Philip Peterson <philip.c.peterson@gmail.com>
 
-Hello,
+Hello all,
 
-I'm giving out my late husband's Yamaha Baby Grand Piano to any passionate instrument lover. Let me know if you are interested or have someone who would like to have the instrument.
+This patchset adds unit tests for apply's parse_range function. Also renames
+parse_range to parse_fragment_range.
 
-Thanks,
-Sarenaa Fuller
+It was necessary to make the function be non-internal linkage in order to
+expose it to the unit testing framework. Because there is another function
+in the codebase also called parse_range, I changed this one to a more
+specific name as well: parse_fragment_range. There are also several test
+cases added (both positive and negative) for the function.
+
+Thank you for your help,
+
+Philip
+
+Philip Peterson (2):
+  apply: add unit tests for parse_range and rename to
+    parse_fragment_range
+  apply: rewrite unit tests with structured cases
+
+ Makefile               |   1 +
+ apply.c                |   8 ++--
+ apply.h                |   4 ++
+ t/unit-tests/t-apply.c | 100 +++++++++++++++++++++++++++++++++++++++++
+ 4 files changed, 109 insertions(+), 4 deletions(-)
+ create mode 100644 t/unit-tests/t-apply.c
+
+
+base-commit: 186b115d3062e6230ee296d1ddaa0c4b72a464b5
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1677%2Fphilip-peterson%2Fpeterson%2Funit-tests-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1677/philip-peterson/peterson/unit-tests-v1
+Pull-Request: https://github.com/git/git/pull/1677
+-- 
+gitgitgadget
