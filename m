@@ -1,54 +1,54 @@
-Received: from mail-ej1-f48.google.com (mail-ej1-f48.google.com [209.85.218.48])
+Received: from mail-lf1-f53.google.com (mail-lf1-f53.google.com [209.85.167.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB4255466C
-	for <git@vger.kernel.org>; Mon, 19 Feb 2024 21:32:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BD4C54BC5
+	for <git@vger.kernel.org>; Mon, 19 Feb 2024 21:32:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708378330; cv=none; b=b7DbAX4Zhnd0RskcYW+mqejneEPS3qjHoCj1nurxOKFjErgrGBs8yUGBYbARBknAuVuABdLHFGi/iZ3ErOJPpufJys2XJa8BgQTvkuPO3KqMqsXrWMk0D5AVj+6ZcT767WMeCdaJ6eKUOW5QN95m/Y5qSRSith6Xa4FzrRqQjdk=
+	t=1708378344; cv=none; b=g8ZJWIXFD5xJoMzsqrNkXUvq41V09WTvI6P9KFnOIyx6+R4HTeNjd/h4RoheQYSqmN+S79uawZit0ygsVXwBSV/2XU9XYP4lfPuMZOHCK14Flrlb3Q1Mok6N+KJMKpqrBfAReFVwjrueH5yQYZWlBwLxEnyoJgZL1yDfi+v0nXc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708378330; c=relaxed/simple;
-	bh=JVDAioJN0PaLle+Q8aSneT2X2aRZ5bwPkTPnQ4ZqvKU=;
+	s=arc-20240116; t=1708378344; c=relaxed/simple;
+	bh=KUe/rpQxgCiAdl0ZA0eoOWHySpfziUsGrRP9lalc87M=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=mD2JZBH/9r25pynTyOGdEd+pm/SG8+i4a4WvMxUdOkUjKI+jJ2h4WsVFqIpShTgyDYUvxd9H74DprEcWUC3uPf7GMNFol5gaLQlt2I0mELrsIAt5v3DTM0AHZ1fsIZig3vwxfLbfeaAMESynbZNSeYPYlK+usppND6QQZd96fvc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LJgncXrA; arc=none smtp.client-ip=209.85.218.48
+	 To:Cc:Content-Type; b=YuMqUStLZlk4YyYFBm9uA21Q+x1CWU59LgrJPaDsiXNfSS2rFU9xGttFTgef4x3eWS2xI4FhRuMovNkjYZZ42/9Lo4OuvnG007NL3zoSf1CqrIjOsWK3fqoWk02JFRsyXuI9mpjK+xJkuUEq94uu9u6DnInCLjxSUsc4ZqGV+u8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dJp/6Ti7; arc=none smtp.client-ip=209.85.167.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LJgncXrA"
-Received: by mail-ej1-f48.google.com with SMTP id a640c23a62f3a-a3e550ef31cso191300666b.3
-        for <git@vger.kernel.org>; Mon, 19 Feb 2024 13:32:08 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dJp/6Ti7"
+Received: by mail-lf1-f53.google.com with SMTP id 2adb3069b0e04-512a9ae6c02so2576389e87.2
+        for <git@vger.kernel.org>; Mon, 19 Feb 2024 13:32:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1708378327; x=1708983127; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1708378341; x=1708983141; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=xk6z9H1wvYO3I/mZiJQxUJWusV8BEPMSdE9fFCWOU/8=;
-        b=LJgncXrAHWfABIWCYrPU5GOtdO3I9ZeF/1Rt9i2blSjKDFNKqGZtqN8u6x7fKyAigR
-         7hQCNg54MXY6fqt7KAaD6o6IdhkvoItSXOXv7KYfW8wGnrmqLaLz8VNdnAitJfue70dD
-         nJDWGiBZSmqjil/3tj3AFklqj16948PxejvxYGEA1/o/FS5U31n9sdNuzamgqkfNtinT
-         /R5J9i2io855J024+7eQvZAcLjJRwO6owg+DqN96Dz2cOcRgrPeUivdXh0qIUunDOR/K
-         sPGGQhsAaH+l0z1ez9LQN6e2IlCSxI116FLThwEk0QFJRngN3BQBQ+eli0hPGbR0s+eg
-         P6/w==
+        bh=KUe/rpQxgCiAdl0ZA0eoOWHySpfziUsGrRP9lalc87M=;
+        b=dJp/6Ti77i7toKywQe9uDM3V6DP6cUu840uxaHD1mtH6lhxgGFy7kydhdQ41aBtGe8
+         x7/aj3q+Kd3gC8l740cTbwcMwXoUyOF3Pw7gJB3yoqF0KpozZ1/vC0fQp6hxMuNX2wRr
+         9txZ+Hz2a2xhcDLjmJmiXK/fOjIdLksU/7/yP3BWNkO6qyv7VLFMAEVSx55c5SJHs5yB
+         6KAcrn7wBxmHxGbtLPz2vlkzqG+KCOH7LepUEZFveiOiaA93KwC+OAdwQ31lqVQYReAc
+         WiMpxjoZsS5cUARalbhj0NdALPzb0Bxz2cEYKBHjDJRKniXgpKD2VHFDyeyKFT4ZF7L+
+         MQug==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1708378327; x=1708983127;
+        d=1e100.net; s=20230601; t=1708378341; x=1708983141;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=xk6z9H1wvYO3I/mZiJQxUJWusV8BEPMSdE9fFCWOU/8=;
-        b=Wb6Crm4wMUDupyLF4Vyo7nZSqtSA3qh3Oks9/+4TMZ8ToGtq07G/kqvtsMACT1TXxs
-         ozqTC+c8oaAjnbtA0rbLw8MmawyuVZ/+91D3ev6f+hq2Es1aY25JJ0VYZ5UyuOQ+NQae
-         x+E99nV3qloZCeT7+YmSHCHwX7rkfE+wRo8KQ5/Qx1oW8jU+HyUMLXsE9lNC31aZ2bX4
-         Bvdrio0qmhaMkIYFbY6ZL67jkaoHEqczeanO78i4K0v+urMlOgD+qe7h7PC9gNt/xqIg
-         dlZKooIrhv6w2VZOQ8LRMqReRalKLBmyqHF/Q34NXK2GZ9AWFTfvJCqP3e9BwpUVuX2l
-         UA4A==
-X-Gm-Message-State: AOJu0YwtX3S2Ihczj4AnlgZ/sQ+ueMZp/0+oMGpTAfZOoFqWQMpaqMj/
-	PTwLW4wQZw+vGutwR6HUk6jAo5Jpi/ggLCcEPncWu8VOHYOYtHUKDiUAjBC0kAnn+u+YZIBwyaM
-	YA8Rn2CJ/6+U+QaYf6PJ+2O4eZ1s=
-X-Google-Smtp-Source: AGHT+IHcLzEqaqR8To9kUpg1oJoyFtwQAdYQElGfbaOX6ibm7+lXNaRpQA7x7je9zRxsxiPDdCydsbC4JcZ+iNnst9E=
-X-Received: by 2002:a17:906:b0d9:b0:a38:63d4:2273 with SMTP id
- bk25-20020a170906b0d900b00a3863d42273mr9526079ejb.35.1708378327153; Mon, 19
- Feb 2024 13:32:07 -0800 (PST)
+        bh=KUe/rpQxgCiAdl0ZA0eoOWHySpfziUsGrRP9lalc87M=;
+        b=tE3MEfESq/IN6vQLfPCME3frq1QzDEyxjKVNsLdfqH2HuDBxg1Dqv4i2cqczRsJ+2D
+         +cOXRdDyUwoOgGmEDi07in6M1VKCLnVocozBKQMUjfCHgW6M7IG1sosca10rnIbcLpVA
+         1IxJGLGOQfSN7tKIkGGUkMzz4Md/CyUhKuZGzbC1/8mdjduWt/982NPlzl2iWPqlRxsD
+         0eqvzjsk/tuiFMgx7cQKoB6LCp8FgG9vAK+lYi2Qn48eREqmMCZjGZ3Zk43ZrIvu47Qw
+         2uWOGNlXr4s2Fb/FfCBJXIT6I/eHyxgncEREWlbdfC5NoVQWq/+rfj2vChmFAtTEVWF3
+         6CaA==
+X-Gm-Message-State: AOJu0YzbrmS+t6M6cwNNwjvrZ2ScAeGe8gDDU8lrDMyrggmm1sSza6RL
+	r/hCa+co239CUduZtZOpRuzFVjoyY9a287fBhiMReDZn4EU+/ozTY5Zu+9nuIUotTmZPs6+5K7V
+	z9EP7hQhBj4znKKet2RtpNXI5J9o=
+X-Google-Smtp-Source: AGHT+IEZPraOX0Yh2HGrlOM3Z7WqcZD9iec4v/FrmHyxhR5jl+Evy7NhzJSQQ7pIEafYWMUaH0RLaiT6R5VYVs/a+dQ=
+X-Received: by 2002:a05:6512:23a4:b0:512:8a75:6ae4 with SMTP id
+ c36-20020a05651223a400b005128a756ae4mr11187708lfv.66.1708378340290; Mon, 19
+ Feb 2024 13:32:20 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -56,12 +56,12 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 References: <pull.1632.v4.git.1707196348.gitgitgadget@gmail.com>
- <pull.1632.v5.git.1708124950.gitgitgadget@gmail.com> <b2a0f7829a1c5f2822e9a896ffe3744587ff1298.1708124951.git.gitgitgadget@gmail.com>
-In-Reply-To: <b2a0f7829a1c5f2822e9a896ffe3744587ff1298.1708124951.git.gitgitgadget@gmail.com>
+ <pull.1632.v5.git.1708124950.gitgitgadget@gmail.com> <7c656b3f77546ae917ff192031c62d4521d9df8c.1708124951.git.gitgitgadget@gmail.com>
+In-Reply-To: <7c656b3f77546ae917ff192031c62d4521d9df8c.1708124951.git.gitgitgadget@gmail.com>
 From: Christian Couder <christian.couder@gmail.com>
-Date: Mon, 19 Feb 2024 22:31:55 +0100
-Message-ID: <CAP8UFD3KbbRApC3ktgegsi_oBDpzX_89v0QGvWoHQ057hKjbbg@mail.gmail.com>
-Subject: Re: [PATCH v5 5/9] trailer: start preparing for formatting unification
+Date: Mon, 19 Feb 2024 22:32:07 +0100
+Message-ID: <CAP8UFD0JV8VEC-MDu86Mzrya9G7JBZaP2vXjFKwcKddEkh=y5g@mail.gmail.com>
+Subject: Re: [PATCH v5 9/9] format_trailers_from_commit(): indirectly call trailer_info_get()
 To: Linus Arver via GitGitGadget <gitgitgadget@gmail.com>
 Cc: git@vger.kernel.org, Christian Couder <chriscool@tuxfamily.org>, 
 	Junio C Hamano <gitster@pobox.com>, Emily Shaffer <nasamuffin@google.com>, 
@@ -75,65 +75,26 @@ On Sat, Feb 17, 2024 at 12:09=E2=80=AFAM Linus Arver via GitGitGadget
 >
 > From: Linus Arver <linusa@google.com>
 >
-> Currently there are two functions for formatting trailers in
-> <trailer.h>:
+> This is another preparatory refactor to unify the trailer formatters.
 >
->     void format_trailers(const struct process_trailer_options *,
->                          struct list_head *trailers, FILE *outfile);
->
->     void format_trailers_from_commit(struct strbuf *out, const char *msg,
->                                      const struct process_trailer_options=
- *opts);
->
-> and although they are similar enough (even taking the same
-> process_trailer_options struct pointer) they are used quite differently.
-> One might intuitively think that format_trailers_from_commit() builds on
-> top of format_trailers(), but this is not the case. Instead
-> format_trailers_from_commit() calls format_trailer_info() and
-> format_trailers() is never called in that codepath.
->
-> This is a preparatory refactor to help us deprecate format_trailers() in
-> favor of format_trailer_info() (at which point we can rename the latter
-> to the former). When the deprecation is complete, both
-> format_trailers_from_commit(), and the interpret-trailers builtin will
-> be able to call into the same helper function (instead of
-> format_trailers() and format_trailer_info(), respectively). Unifying the
-> formatters is desirable because it simplifies the API.
->
-> Reorder parameters for format_trailers_from_commit() to prefer
->
->     const struct process_trailer_options *opts
->
-> as the first parameter, because these options are intimately tied to
-> formatting trailers. And take
->
->     struct strbuf *out
->
-> last, because it's an "out parameter" (something that the caller wants
-> to use as the output of this function).
+> Instead of calling trailer_info_get() directly, call parse_trailers()
+> which already calls trailer_info_get(). This change is a NOP because
+> format_trailer_info() only looks at the "trailers" string array, not the
+> trailer_item objects which parse_trailers() populates.
 
-Here also I think the subject could be more specific like for example:
+Is the extra processing done by parse_trailers() compared to
+trailer_info_get() impacting performance?
 
-"trailer: reorder format_trailers_from_commit() parameters"
+Also when looking only at the patch, it's a bit difficult to
+understand that the "trailers" string array is the `char **trailers`
+field in `struct trailer_info` and that the trailer_item objects are
+the elements of the `struct list_head *head` linked list. It could
+also be confusing because the patch is adding a new 'trailers'
+variable with `LIST_HEAD(trailers);`. So a few more details could help
+understand what's going on.
 
-> diff --git a/trailer.c b/trailer.c
-> index d23afa0a65c..5025be97899 100644
-> --- a/trailer.c
-> +++ b/trailer.c
-> @@ -1083,10 +1083,10 @@ void trailer_info_release(struct trailer_info *in=
-fo)
->         free(info->trailers);
->  }
->
-> -static void format_trailer_info(struct strbuf *out,
-> +static void format_trailer_info(const struct process_trailer_options *op=
-ts,
->                                 const struct trailer_info *info,
->                                 const char *msg,
-> -                               const struct process_trailer_options *opt=
-s)
-> +                               struct strbuf *out)
+> In a future patch, we'll change format_trailer_info() to use the parsed
+> trailer_item objects instead of the string array.
 
-Ok, so it's not just format_trailers_from_commit() parameters that are
-reordered, but also format_trailer_info() parameters. It would be nice
-if the commit message mentioned it.
+Ok, so I guess the possible performance issue would disappear then, as
+populating the trailer_item objects will be useful.
