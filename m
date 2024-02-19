@@ -1,96 +1,181 @@
-Received: from sender4-of-o50.zoho.com (sender4-of-o50.zoho.com [136.143.188.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f53.google.com (mail-pj1-f53.google.com [209.85.216.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBD471DFF3
-	for <git@vger.kernel.org>; Sun, 18 Feb 2024 23:24:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.50
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708298656; cv=pass; b=jko6NuI5DIMxycRtGdMBbfXNAJTksLcE+RlR9A7a0p8me7pTXZMmV5bD4fR2DuTPhgqdbzE5cwNUjBjkfar7MkdfayUq+7TKtj3ejuVeBxxuYCWnDJUEfpd9emYkTwb0B08B1ytX9kltowjF5VeCP61hguFGYN/9pMVSB/msjvs=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708298656; c=relaxed/simple;
-	bh=ZM4eDc+woePQnfM013xuyPJPR/9IOmCGgNGSSd7CTL8=;
-	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Date:Cc:
-	 Message-Id:References:To; b=jmAzO9Lwj0RYBv9Fha/08OQVOkcHcfAnqsNNYPneZm4x3pCvdk8GQSFOJMqsFApAzMEFTwbo1uT2m01D2g7f5e8Eop/LFKhX5Xso6VuP4l7lbmB89oWdJNULqb2nt2SrYAEvosnbsAmwydPCzBDM4pIxX3S+Y77W02dFg8JwqFo=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=boanderson.me; spf=pass smtp.mailfrom=boanderson.me; dkim=pass (1024-bit key) header.d=boanderson.me header.i=mail@boanderson.me header.b=KVjZiMah; arc=pass smtp.client-ip=136.143.188.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=boanderson.me
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=boanderson.me
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D213C37A
+	for <git@vger.kernel.org>; Mon, 19 Feb 2024 01:01:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.53
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1708304512; cv=none; b=Cjmg4x55HdeCZ7uyNAv3Hwx1sY6RuXtrBsDkcl6YrhuHX7Hagm205OflV+kQ6j52F3vp9fZQyDtdXVakNXxeIWIucX3uebU5yqS+F+y7QR5aKsPp279jhYlYznkqKcwwM9zXmlUlzsfFpyr0TybCFsp8OOO/U34Fve2W1YagEGs=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1708304512; c=relaxed/simple;
+	bh=1lZPpULqnAkkl1RVUxF4OR9XlNu/s6dEEUE/od0MgwM=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version:Content-Type; b=NvQMIrrSAaadkA2ip0sWGwY37ocUTt/52jOLg1NxRXz4oryXggVrprLtX7EGjBEOdCmi6TmwSqjmqEDtPaY3SA/62FLxI4A1o1e3QkMonJctzfO6EvV3P1x/1GeZhZbHkRw990cxeTyq0/zYg0y+Jyq8f7PyjEtL0UJ9/2WpsnA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=cUv+nYZi; arc=none smtp.client-ip=209.85.216.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=boanderson.me header.i=mail@boanderson.me header.b="KVjZiMah"
-ARC-Seal: i=1; a=rsa-sha256; t=1708298652; cv=none; 
-	d=zohomail.com; s=zohoarc; 
-	b=TWQja6eBe6+0QmmAdAbkzY/EGq1y9AyMnDXok11YS3r+yFRdV0/jF8WLtJZcyyTYc0SPJVSVa8oAYzScLoT+mt6Q0WoFWQRlL62ZdAyEFyvVBonoDRvy58c7dNtH34rCoHDpFQm11fzzi7gGoI/LLmHOJjPUn9pYpGKWxoRP7I8=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-	t=1708298652; h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
-	bh=ZM4eDc+woePQnfM013xuyPJPR/9IOmCGgNGSSd7CTL8=; 
-	b=XxjBLIOwFluJ+oLmIJM04AIBryWORz8OQFyZv1g5Y2AX/9jH10HQeU+VC15QA7gu6rJUau5acStIorg71xk4jvp5BtY80ZfaY8nOMnXzfsRg9H0oEq2I4EqCe/ViJN8Iur2bBXh1GjiOTodFAr2tHIZdwCENSFtSwJgm4DT8+J4=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
-	dkim=pass  header.i=boanderson.me;
-	spf=pass  smtp.mailfrom=mail@boanderson.me;
-	dmarc=pass header.from=<mail@boanderson.me>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1708298652;
-	s=zoho; d=boanderson.me; i=mail@boanderson.me;
-	h=Content-Type:Mime-Version:Subject:Subject:From:From:In-Reply-To:Date:Date:Cc:Cc:Content-Transfer-Encoding:Message-Id:Message-Id:References:To:To:Reply-To;
-	bh=ZM4eDc+woePQnfM013xuyPJPR/9IOmCGgNGSSd7CTL8=;
-	b=KVjZiMah8ZwnNN10DtqAu43n6kWioN4n02bB3W0LWxYRy7iy7BTexYSoS3pEVieC
-	8PB7+u6P7bSKzU0vcw75BKxw42mDVo2mrtP70h0eKHkCBZZEJW1iZl2SLjUsejBWbFU
-	MbHDBN3bx/tU7cRSgiC5c7pD2PsIjrL80Z3bBHto=
-Received: from smtpclient.apple (w-65.cust-u5093.ip.static.uno.uk.net [212.105.168.65]) by mx.zohomail.com
-	with SMTPS id 1708298650653108.12754326046775; Sun, 18 Feb 2024 15:24:10 -0800 (PST)
-Content-Type: text/plain;
-	charset=us-ascii
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cUv+nYZi"
+Received: by mail-pj1-f53.google.com with SMTP id 98e67ed59e1d1-296df89efd2so2018250a91.0
+        for <git@vger.kernel.org>; Sun, 18 Feb 2024 17:01:50 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1708304510; x=1708909310; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=Mc7xyhF8fbB2siG5huQMcHG53qJpmZ75zI0F4zwwfoQ=;
+        b=cUv+nYZiLnR82hkGmg+FIQ7VZ2bw7OH1w00TE2DjTAvPJMrOBnpl8cF1T9Yt6ldzN2
+         4v7HzjWOy9h0pmowfl4ieFn7elaUtHxDrk894wfjB9O8ROXTja54gwjumU1JyYZ8WjkV
+         2Nlop4/ujrMYsYJHXKoQb5sLxwhL5q3lA9ioAq5INV5yrzVcoLQQHz4g9Ua7KDDr03Uu
+         wkKwI5qY6w15TeROLNri8PpnI4Gji5h2vnmdMDRzNCMVJV9Bq3hBqYB9nuUTn6NS2Nb5
+         QSU8rE3uVvto+bU7vwVh0CKZ44Mt0pUsMebe7gbnjW05bgQJeStRO7dDS4pvKCe5ZXqe
+         YPpg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1708304510; x=1708909310;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Mc7xyhF8fbB2siG5huQMcHG53qJpmZ75zI0F4zwwfoQ=;
+        b=gDktMXmZqAHKSNkXfANXoOZ0E5qAzna5XAZct2mI4IloNv7VHV0e8LU+t5stMc6YCJ
+         k4AxqDlkeNIziDLkqHNmdUeKYxLFBBkihWTOzg+MpZ1s6euilA3gi7pf9biln63rfdCe
+         bNR/bu0nlIFHy/yZzpM9TO4++1ZZmZ9I2malX1q2X2hgHC/Vtjdul0ZqV/6zrmX69DDs
+         cLeR6Lcf+qaQcsNaddHaphv58wH8hKEneMlmGERLhGrLYocihG+GjVrdWDneaxLoJie7
+         mXiZXJJEJVbZbQXhnxMWhwfA5XP6FL8u81XIk4CDaaOi6lKlbEsNqKxNZPSdC6+HyrfN
+         l8jQ==
+X-Forwarded-Encrypted: i=1; AJvYcCXYFdYBOZvnvCf24Xyvhax/79HxudOJIY4P4HIN8xCCzZ1EXZ9D0G25+Mns9FK2PKDs83K0PSP6Qis+4FUFwwobIAUl
+X-Gm-Message-State: AOJu0YwYvvxGi85XQVmRE3+bSilEVKu2aXs8WB3AqOYGDwKVd/HHrGsq
+	yKsit1Z5mI1N8PHYgEP69ZQ8UnHYyaJUSd39z48fXOD8cO9lv6AP
+X-Google-Smtp-Source: AGHT+IFw6mbF17RPQ4VuNtvMj0TejIkWI+ucnwNuMNcDkJ6wIozxoZ1vRfBgxa+sNaaAAJ1PWP4arQ==
+X-Received: by 2002:a17:90a:9f95:b0:299:5fed:bcae with SMTP id o21-20020a17090a9f9500b002995fedbcaemr2815664pjp.5.1708304510004;
+        Sun, 18 Feb 2024 17:01:50 -0800 (PST)
+Received: from tigtog-proxy.localdomain.localdomain (144.34.163.219.16clouds.com. [144.34.163.219])
+        by smtp.gmail.com with ESMTPSA id sb5-20020a17090b50c500b0029724370ea9sm3858756pjb.47.2024.02.18.17.01.48
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Sun, 18 Feb 2024 17:01:49 -0800 (PST)
+From: Jiang Xin <worldhello.net@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>,
+	Git l10n discussion group <git-l10n@googlegroups.com>
+Cc: Jiang Xin <worldhello.net@gmail.com>,
+	Git List <git@vger.kernel.org>,
+	Alexander Shopov <ash@kambanaria.org>,
+	Arkadii Yakovets <ark@cho.red>,
+	Bagas Sanjaya <bagasdotme@gmail.com>,
+	Emir SARI <emir_sari@icloud.com>,
+	=?UTF-8?q?Jean-No=C3=ABl=20Avila?= <jn.avila@free.fr>,
+	Johannes Schindelin <johannes.schindelin@gmx.de>,
+	Jordi Mas <jmas@softcatala.org>,
+	Peter Krefting <peter@softwolves.pp.se>,
+	Ralf Thielow <ralf.thielow@gmail.com>,
+	Teng Long <dyroneteng@gmail.com>,
+	Yi-Jyun Pan <pan93412@gmail.com>
+Subject: [GIT PULL] l10n updates for 2.44.0 round 3
+Date: Mon, 19 Feb 2024 09:01:41 +0800
+Message-Id: <20240219010141.5616-1-worldhello.net@gmail.com>
+X-Mailer: git-send-email 2.32.0.rc3
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3774.400.31\))
-Subject: Re: [PATCH 0/4] osxkeychain: bring in line with other credential
- helpers
-From: Bo Anderson <mail@boanderson.me>
-In-Reply-To: <20240218204044.11365-1-mirth.hickford@gmail.com>
-Date: Sun, 18 Feb 2024 23:23:58 +0000
-Cc: Bo Anderson via GitGitGadget <gitgitgadget@gmail.com>,
- git@vger.kernel.org
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <CFC1A507-A9EF-4330-8C98-34C2B73BC036@boanderson.me>
-References: <pull.1667.git.1708212896.gitgitgadget@gmail.com>
- <20240218204044.11365-1-mirth.hickford@gmail.com>
-To: M Hickford <mirth.hickford@gmail.com>
-X-Mailer: Apple Mail (2.3774.400.31)
-X-ZohoMailClient: External
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-> On 18 Feb 2024, at 20:40, M Hickford <mirth.hickford@gmail.com> wrote:
->=20
->> git-credential-osxkeychain has largely fallen behind other external
->> credential helpers in the features it supports, and hasn't received =
-any
->> functional changes since 2013. As it stood, osxkeychain failed seven =
-tests
->> in the external credential helper test suite:
->>=20
->> not ok 8 - helper (osxkeychain) overwrites on store
->> not ok 9 - helper (osxkeychain) can forget host
->> not ok 11 - helper (osxkeychain) does not erase a password distinct =
-from input
->> not ok 15 - helper (osxkeychain) erases all matching credentials
->> not ok 18 - helper (osxkeychain) gets password_expiry_utc
->> not ok 19 - helper (osxkeychain) overwrites when password_expiry_utc =
-changes
->> not ok 21 - helper (osxkeychain) gets oauth_refresh_token
->>=20
->> After this set of patches, osxkeychain passes all tests in the =
-external
-> credential helper test suite.
->=20
-> Great work!
->=20
-> Could these tests run as part of macOS CI?
+Hi Junio,
 
-Do we do so for any of the other external credential helpers?
+Please pull the following l10n updates for Git 2.44.0.
 
-It definitely makes sense in principle. Though the concern perhaps will =
-be that any new features added to the credential helpers and thus its =
-test suite would need adding to each credential helper simultaneously to =
-avoid failing CI. Ideally we would do exactly that, though that requires =
-knowledge on each of the keystore APIs used in each of the credential =
-helpers.=
+The following changes since commit 3e0d3cd5c7def4808247caf168e17f2bbf47892b:
+
+  Merge branch 'jx/dirstat-parseopt-help' (2024-02-15 15:14:48 -0800)
+
+are available in the Git repository at:
+
+  git@github.com:git-l10n/git-po.git tags/l10n-2.44.0-rnd3
+
+for you to fetch changes up to 5fdd5b989cbe5096d44e89861a92b2dd47c279d9:
+
+  l10n: zh_TW: Git 2.44 (2024-02-18 21:03:43 +0800)
+
+----------------------------------------------------------------
+l10n-2.44.0-rnd3
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCAAdFiEE37vMEzKDqYvVxs51k24VDd1FMtUFAmXSpeoACgkQk24VDd1F
+MtX7RA/9HXk19TQPI/8YHL2Z29Yax2yPcgy+kq/UzXJ3YbNAsEBZyLwqfkv1bi6h
+S67Ggc0tmQdE0BDDAwG54+kzCUnRh6WFzHXyU0Mazena+7kxRuyCdmKNj9a9W7Jn
+2NLiS37a8KB83nlUn7coIrbFfs7P80J50Ax6oJFSPTEqZM8unNw/QEitufodaju2
+XdAbO8wofZZDn+i+HiCQnUT3loV8XxJdCk/ZM7RMtLRLzxKx78GsazLjkbYG1ci1
+4yAw3A6M+w1AvppplToZiH4JYvpMg7Box4tow0EKcYL5yOMk9tx2kVAbc26Mpm4Q
+IrADtuilhyHr8UI/VrD1frkNW+BByaE3WAJ2IgSzFmOv2eqe2aVtvkmga0DG1zyl
+P0ZGAKjfH0cSpEvuG16XGHYQjqp/ulWDedx9bdFJg2iFnjHj7F2DEubm08tUW7OG
+cNs6uYGTyfq9VLtvc4qIHFQNtMrUtnYETNK1Sn++11CYWoYpFzdUk75oEB8SkxYq
+JPn9xFbhzz5K9vKE1jAp1XIYLaKwD1up71VPCL6bhHyOwvgJ1RcWtbK+h58xqGAw
+n+w5epstdOGeKkmtrpYC1R6Y/ejckdk++/K8ml5owFeQ7u1l1zNsonpf9qtjnBLI
+utf3YmfkfBd767kAqfeqdcjV9+hLgpaegl8ElWChRLOushfhj18=
+=ZD+B
+-----END PGP SIGNATURE-----
+
+----------------------------------------------------------------
+Alexander Shopov (1):
+      l10n: bg.po: Updated Bulgarian translation (5610t)
+
+Arkadii Yakovets (3):
+      l10n: uk: v2.44 localization update
+      l10n: uk: v2.44 update (round 2)
+      l10n: uk: v2.44 update (round 3)
+
+Bagas Sanjaya (1):
+      l10n: po-id for 2.44 (round 1)
+
+Emir SARI (1):
+      l10n: tr: Update Turkish translations for 2.44
+
+Jean-Noël Avila (1):
+      l10n: fr.po: v2.44.0 round 3
+
+Jiang Xin (12):
+      Merge branch 'master' of github.com:git/git
+      Merge branch 'master' of github.com:git/git
+      l10n: ci: remove unused param for add-pr-comment@v2
+      l10n: ci: disable cache for setup-go to suppress warnings
+      Merge branch 'master' of github.com:nafmo/git-l10n-sv
+      Merge branch 'catalan-l10n' of github.com:Softcatala/git-po
+      Merge branch 'fr_2.44.0' of github.com:jnavila/git
+      Merge branch 'tr-l10n' of github.com:bitigchi/git-po
+      Merge branch 'master' of github.com:alshopov/git-po
+      Merge branch '2.44-uk-update' of github.com:arkid15r/git-ukrainian-l10n
+      Merge branch 'po-id' of github.com:bagasme/git-po
+      Merge branch 'master' of github.com:ralfth/git
+
+Johannes Schindelin (1):
+      l10n: bump Actions versions in l10n.yml
+
+Jordi Mas (1):
+      l10n: Update Catalan translation
+
+Peter Krefting (1):
+      l10n: sv.po: Update Swedish translation
+
+Ralf Thielow (1):
+      l10n: Update German translation
+
+Teng Long (1):
+      l10n: zh_CN: for git 2.44 rounds
+
+Yi-Jyun Pan (1):
+      l10n: zh_TW: Git 2.44
+
+ .github/workflows/l10n.yml |   6 +-
+ po/bg.po                   | 391 +++++++++++++++++++++-----------
+ po/ca.po                   | 466 ++++++++++++++++++++++++---------------
+ po/de.po                   | 392 +++++++++++++++++++++------------
+ po/fr.po                   | 427 +++++++++++++++++++++++++----------
+ po/id.po                   | 485 ++++++++++++++++++++++++++--------------
+ po/sv.po                   | 358 ++++++++++++++++++++----------
+ po/tr.po                   | 380 +++++++++++++++++++++-----------
+ po/uk.po                   | 429 +++++++++++++++++++++++-------------
+ po/zh_CN.po                | 538 ++++++++++++++++++++++++++++-----------------
+ po/zh_TW.po                | 531 ++++++++++++++++++++++++++++++--------------
+ 11 files changed, 2894 insertions(+), 1509 deletions(-)
+
+--
+Jiang Xin
