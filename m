@@ -1,116 +1,289 @@
-Received: from wout2-smtp.messagingengine.com (wout2-smtp.messagingengine.com [64.147.123.25])
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 894F555E4A
-	for <git@vger.kernel.org>; Mon, 19 Feb 2024 22:04:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.25
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7475D3C36
+	for <git@vger.kernel.org>; Mon, 19 Feb 2024 23:39:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708380286; cv=none; b=t4bzlQapedBgJNTmmPRQfgppVuhSB5VNKZAdcUQCRajeDc2fl2v0OJ7BBoUATwCV73yR6mJO5Kz1rAJbkriXmM/jv2gIKcEE7ccPffza/OgCjsS+5JhvjRPBdHtGG8UKObLbHEdxY3jHhFEyy+02XIZzlEN307axPzvz2ktT8jY=
+	t=1708385961; cv=none; b=SVP8WMBRx3sOPGMkmTC7hOhjyNliu9fukucOaPXtWFSZ8Rfv88nL9ncfF+q6xJUpGwdaYQrdlNXIYszgb+cDjS96KiwIxqMFDAyK1h0pCLrbTFGOoRmIDzZJ724QDU8SK8wTUkfmn5hfX34SUmiFswT0/EHqCuwv8R6yd7wallE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708380286; c=relaxed/simple;
-	bh=rQSJS0amdlR1Lvz/7gfTjFNJSez9G/tT+r3Fdkf8ikg=;
-	h=MIME-Version:Message-Id:In-Reply-To:References:Date:From:To:Cc:
-	 Subject:Content-Type; b=ruFMeNUn+FytWXKmLcPf37r/OVYli1Qm99YZvbh1b7NNeHsfE4hSX6pv2XTu0RhuHL0yH0kIYiFqhw2g6kk2m3DiB7QcY2/WvTjl5dx88YpSeGy9E1BHlxZJdMZhyxW+qBtqo1y/pysF2d6YgOfArotN61DTT7GWhp8IDoifFJI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=khaugsbakk.name; spf=pass smtp.mailfrom=khaugsbakk.name; dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b=WSJRylEt; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=L8HgM8Ju; arc=none smtp.client-ip=64.147.123.25
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=khaugsbakk.name
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=khaugsbakk.name
+	s=arc-20240116; t=1708385961; c=relaxed/simple;
+	bh=cjYPC41RmFjL6O05GnJ5InySvAxhgOguHuV1hijUZRg=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=MU0l7tyguhZSdCSA0ZUHYGlzVdVjDFaBxM1A1YJle5neTeH3TmKbwZRGKIS/BZNvzNFtDe9WSH0ksiNfO3GhQeR56DBtTNG22aSRQbYYDwCPdYENiQR9ejNm9Pa2EekMpCta7Uifo7dZx/xtXYC0nSdONnzYogvDmpKnW4MuLfg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=gcrcr1xr; arc=none smtp.client-ip=173.228.157.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b="WSJRylEt";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="L8HgM8Ju"
-Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
-	by mailout.west.internal (Postfix) with ESMTP id 648AB3200A64;
-	Mon, 19 Feb 2024 17:04:43 -0500 (EST)
-Received: from imap49 ([10.202.2.99])
-  by compute1.internal (MEProxy); Mon, 19 Feb 2024 17:04:43 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=khaugsbakk.name;
-	 h=cc:cc:content-transfer-encoding:content-type:content-type
-	:date:date:from:from:in-reply-to:in-reply-to:message-id
-	:mime-version:references:reply-to:subject:subject:to:to; s=fm3;
-	 t=1708380282; x=1708466682; bh=V7Rq/tJqI1quEE6mSo4a+nr9r4ivHc90
-	I49mJN+XhVI=; b=WSJRylEtaOuPugBf+Ihpiplw+kMJxNeA0ISnGal9rXZSh5x/
-	lNburNbZUtVXx3Hv3NXQpXZNRLZZmZ3No7gqKBar1boP18K6Giws/xNLH8pbVNac
-	LZnyY+7uVoParKY0TbeN1/oCP1cvgESCuBtqX4hRFIXWIqO3D2ZMAZz/Q4URYEHF
-	+7Tk4PuhADhnigkhn56iFRKWg2uPgigZ4RdFkbA34t8ipxh6Wd1Oa/6c+EZ/Eb9B
-	0ZxRhe2+eblHePGef2sizSgFeVWkm55XXyur/hlageREpm/PCAGNK3VwIrcrMs/n
-	mmBqFKmUvbTXkYm+kofX+1l1Ag2t3DgjGEp8yA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1708380282; x=
-	1708466682; bh=V7Rq/tJqI1quEE6mSo4a+nr9r4ivHc90I49mJN+XhVI=; b=L
-	8HgM8JujNitHe22NmKePEBd6yHyoN6KxABGCq2X2WBLkuNClBf9hSBk/iKzQGeHs
-	tVxg4fjHieewQr7g3keNnINCGDIPy+tlNAqqj0bPh/3BVT5PVFurf4xcJ80f97J2
-	9+W7+CrsX+QfZOX8I8Xx4cLTkKU6iBhohprjRPiQ5taQAOli9pIBW8IYLnH+diXu
-	vDLEQqI/O27heaszpRYAeXzsYcCHP598ZJ/mSvcw4V/mKxkd06ZsAEQK2jLg7LHc
-	ZITfyc1Doh7DnS1poxF00Skk/idy780Pxz+lCjvekltf4HqglgwXvgFxBhHEN37f
-	FHSnc1S37yAjEtBfYgHDA==
-X-ME-Sender: <xms:etDTZYNfGyRKvIiUnVVpDkFNAzW2yaD0lMbBfCqogg8Xm4W6dMqDvds>
-    <xme:etDTZe94Mea-3CcbTgwqUEymetOWex1gTMskJjParuG1CWtwX5xotlXJE1WJnMRbQ
-    Ay1SSNBZYqh8LgxXA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdekgdduheegucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    cujfgurhepofgfggfkjghffffhvfevufgtgfesthhqredtreerjeenucfhrhhomhepfdfm
-    rhhishhtohhffhgvrhcujfgruhhgshgsrghkkhdfuceotghouggvsehkhhgruhhgshgsrg
-    hkkhdrnhgrmhgvqeenucggtffrrghtthgvrhhnpedvveehiedufeehffdvteeuveekhefh
-    leeigfektdeifeduteeuheeufeetffefudenucevlhhushhtvghrufhiiigvpedtnecurf
-    grrhgrmhepmhgrihhlfhhrohhmpegtohguvgeskhhhrghughhssggrkhhkrdhnrghmvg
-X-ME-Proxy: <xmx:etDTZfSPayvtNBk7XWoPxHtbLu9vtez3QM6O23ZF30zweG0KMrkoxQ>
-    <xmx:etDTZQvv9LFSrIZN_kdxyrhMjW9uu6Xo4by_Dcr6Nm8P37oQ4B4GIw>
-    <xmx:etDTZQdudfhaeGOYm2ZwsOFbE_hpJNlb3rUjh0aVIgPy4EvXwHPFpQ>
-    <xmx:etDTZcGw-I0cato-vrXczm9s8tO2VBQKszHZ5Lg7kJp_ZnPyGPxuSQ>
-Feedback-ID: i2671468f:Fastmail
-Received: by mailuser.nyi.internal (Postfix, from userid 501)
-	id 9852F15A0093; Mon, 19 Feb 2024 17:04:42 -0500 (EST)
-X-Mailer: MessagingEngine.com Webmail Interface
-User-Agent: Cyrus-JMAP/3.11.0-alpha0-144-ge5821d614e-fm-20240125.002-ge5821d61
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="gcrcr1xr"
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id C7F3B21407;
+	Mon, 19 Feb 2024 18:39:13 -0500 (EST)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=cjYPC41RmFjL6O05GnJ5InySvAxhgOguHuV1hi
+	jUZRg=; b=gcrcr1xrtplFG7u9exSGKh6xiSJOD2XeFIW/C8/klGGqAafGrAwH6q
+	K8Nj4eMnufeP1mpHksjgiAYG9uAEK7rdpphmjLLiBfS9W40EUv4JxegR3piUisYx
+	c5dSOr/T1U6q6kVGBSU8Ezxh3ePgkfI7SCvQpHfrqiLId+72mij+c=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id B8DCE21406;
+	Mon, 19 Feb 2024 18:39:13 -0500 (EST)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.165.85])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 624E321405;
+	Mon, 19 Feb 2024 18:39:10 -0500 (EST)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 2/6] dir-iterator: support iteration in sorted order
+In-Reply-To: <8a588175dbf23d1938db45507812aad8f3793dbb.1708353264.git.ps@pks.im>
+	(Patrick Steinhardt's message of "Mon, 19 Feb 2024 15:35:22 +0100")
+References: <cover.1708353264.git.ps@pks.im>
+	<8a588175dbf23d1938db45507812aad8f3793dbb.1708353264.git.ps@pks.im>
+Date: Mon, 19 Feb 2024 15:39:08 -0800
+Message-ID: <xmqq8r3g10tf.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Message-Id: <423c4144-56dd-4897-9b81-badf67e22420@app.fastmail.com>
-In-Reply-To: 
- <7dab12ab7b8af3e6a0778fc1a01dd1479990bcff.1708317938.git.gitgitgadget@gmail.com>
-References: <pull.1677.git.git.1708317938.gitgitgadget@gmail.com>
- <7dab12ab7b8af3e6a0778fc1a01dd1479990bcff.1708317938.git.gitgitgadget@gmail.com>
-Date: Mon, 19 Feb 2024 23:04:19 +0100
-From: "Kristoffer Haugsbakk" <code@khaugsbakk.name>
-To: "Josh Soref" <gitgitgadget@gmail.com>
-Cc: "Philip Peterson" <philip.c.peterson@gmail.com>, git@vger.kernel.org
-Subject: Re: [PATCH 2/2] apply: rewrite unit tests with structured cases
-Content-Type: text/plain;charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 14A50B1E-CF80-11EE-98EF-A19503B9AAD1-77302942!pb-smtp21.pobox.com
 
-On Mon, Feb 19, 2024, at 05:45, Philip Peterson via GitGitGadget wrote:
-> From: Philip Peterson <philip.c.peterson@gmail.com>
+Patrick Steinhardt <ps@pks.im> writes:
+
+> The `struct dir_iterator` is a helper that allows us to iterate through
+> directory entries. This iterator returns entries in the exact same order
+> as readdir(3P) does -- or in other words, it guarantees no specific
+> order at all.
 >
-> The imperative format was a little hard to read, so I rewrote the test=
- cases
-> in a declarative style by defining a common structure for each test ca=
-se and
-> its assertions.
+> This is about to become problematic as we are introducing a new reflog
+> subcommand to list reflogs. As the "files" backend uses the directory
+> iterator to enumerate reflogs, returning reflog names and exposing them
+> to the user would inherit the indeterministic ordering. Naturally, it
+> would make for a terrible user interface to show a list with no
+> discernible order. While this could be handled at a higher level by the
+> new subcommand itself by collecting and ordering the reflogs, this would
+> be inefficient and introduce latency when there are many reflogs.
+
+I do not quite understand this argument.  Why is sorting at higher
+level less (or more, for that matter) efficient than doing so at
+lower level?  We'd need to sort somewhere no matter what, and I of
+course have no problem in listing in a deterministic order.
+
+> Instead, introduce a new option into the directory iterator that asks
+> for its entries to be yielded in lexicographical order. If set, the
+> iterator will read all directory entries greedily end sort them before
+> we start to iterate over them.
+
+"end" -> "and".  And of course without such sorting option, this
+codepath is allowed to yield entries in any order that is the
+easiest to produce?  That makes sense.
+
+> While this will of course also incur overhead as we cannot yield the
+> directory entries immediately, it should at least be more efficient than
+> having to sort the complete list of reflogs as we only need to sort one
+> directory at a time.
+
+True.  The initial latency before we see the first byte of the
+output often matters more in perceived performance the throughput.
+As we need to sort to give a reasonable output, that cannot be
+avoided.
+
+> This functionality will be used in a follow-up commit.
 >
-> Signed-off-by: Philip Peterson <philip.c.peterson@gmail.com>
+> Signed-off-by: Patrick Steinhardt <ps@pks.im>
+> ---
+>  dir-iterator.c | 87 ++++++++++++++++++++++++++++++++++++++++----------
+>  dir-iterator.h |  3 ++
+>  2 files changed, 73 insertions(+), 17 deletions(-)
+>
+> diff --git a/dir-iterator.c b/dir-iterator.c
+> index f58a97e089..396c28178f 100644
+> --- a/dir-iterator.c
+> +++ b/dir-iterator.c
+> @@ -2,9 +2,12 @@
+>  #include "dir.h"
+>  #include "iterator.h"
+>  #include "dir-iterator.h"
+> +#include "string-list.h"
+>  
+>  struct dir_iterator_level {
+>  	DIR *dir;
+> +	struct string_list entries;
+> +	size_t entries_idx;
 
-IMO in general you can just assert that X and Y in the commit message.
+Does it deserve a comment that "dir == NULL" is used as a signal
+that we have read the level and sorted its contents into the
+"entries" list (and also we have already called closedir(), of
+course)?
 
-  =E2=80=9C The imperative format is hard to read. Rewrite the test case=
-s =E2=80=A6
+> @@ -72,6 +75,40 @@ static int push_level(struct dir_iterator_int *iter)
+>  		return -1;
+>  	}
+>  
+> +	string_list_init_dup(&level->entries);
+> +	level->entries_idx = 0;
+> +
+> +	/*
+> +	 * When the iterator is sorted we read and sort all directory entries
+> +	 * directly.
+> +	 */
+> +	if (iter->flags & DIR_ITERATOR_SORTED) {
+> +		while (1) {
+> +			struct dirent *de;
+> +
+> +			errno = 0;
+> +			de = readdir(level->dir);
+> +			if (!de) {
+> +				if (errno && errno != ENOENT) {
+> +					warning_errno("error reading directory '%s'",
+> +						      iter->base.path.buf);
+> +					return -1;
+> +				}
+> +
+> +				break;
+> +			}
+> +
+> +			if (is_dot_or_dotdot(de->d_name))
+> +				continue;
 
-If your patch passes review and is merged then that=E2=80=99s the truth =
-as
-determined by you and the reviewers.
+The condition to skip an entry currently is simple enough that "."
+and ".." are the only ones that are skipped, but it must be kept in
+sync with the condition in dir_iterator_advance().
 
-More subjective-sounding =E2=80=9CThis was hard to read=E2=80=9D and may=
-be anecdotes
-like =E2=80=9Cthis tripped me up when reading=E2=80=9D can go outside th=
-e commit message
-like the cover letter or the free-form space between the commit message
-and the patch (after the three-hyphen/three-dash lines).
+If it becomes more complex than it is now (e.g., we may start to
+skip any name that begins with a dot, like ".git" or ".dummy"), it
+probably is a good idea *not* to add the same filtering logic here
+and in dir_iterator_advance().  Instead, keep the filtering here to
+an absolute minumum, and filter the name, whether it came from
+readdir() or from the .entries string list, in a single copy of
+filtering logic in dir_iterator_advance() function.
 
---=20
-Kristoffer Haugsbakk
+We could drop the dot-or-dotdot filter here, too, if we want to
+ensure that unified filtering will be correctly done over there.
+
+> +			string_list_append(&level->entries, de->d_name);
+> +		}
+> +		string_list_sort(&level->entries);
+> +
+> +		closedir(level->dir);
+> +		level->dir = NULL;
+> +	}
+> +
+>  	return 0;
+>  }
+>  
+> @@ -88,6 +125,7 @@ static int pop_level(struct dir_iterator_int *iter)
+>  		warning_errno("error closing directory '%s'",
+>  			      iter->base.path.buf);
+>  	level->dir = NULL;
+> +	string_list_clear(&level->entries, 0);
+>  
+>  	return --iter->levels_nr;
+>  }
+
+It is somewhat interesting that the original code already has
+conditional call to closedir() and prepares .dir to be NULL,
+so that we do not have to make it conditional here.
+
+> @@ -136,30 +174,43 @@ int dir_iterator_advance(struct dir_iterator *dir_iterator)
+>  
+>  	/* Loop until we find an entry that we can give back to the caller. */
+>  	while (1) {
+> -		struct dirent *de;
+>  		struct dir_iterator_level *level =
+>  			&iter->levels[iter->levels_nr - 1];
+> +		struct dirent *de;
+> +		const char *name;
+
+Not a huge deal but this is an unnecessary reordering, right?
+
+>  		strbuf_setlen(&iter->base.path, level->prefix_len);
+> +
+> +		if (level->dir) {
+> +			errno = 0;
+> +			de = readdir(level->dir);
+> +			if (!de) {
+> +				if (errno) {
+> +					warning_errno("error reading directory '%s'",
+> +						      iter->base.path.buf);
+> +					if (iter->flags & DIR_ITERATOR_PEDANTIC)
+> +						goto error_out;
+> +				} else if (pop_level(iter) == 0) {
+> +					return dir_iterator_abort(dir_iterator);
+> +				}
+> +				continue;
+>  			}
+>  
+> +			if (is_dot_or_dotdot(de->d_name))
+> +				continue;
+
+This is the target of the "if we will end up filtering even more in
+the future, it would probably be a good idea not to duplicate the
+logic to decide what gets filtered in this function and in
+push_level()" comment.  If we wanted to go that route, we can get
+rid of the filtering from push_level(), and move this filter code
+outside this if/else before calling prepare_next_entry_data().
+
+The fact that .entries.nr represents the number of entries that are
+shown is unusable (because there is an unsorted codepath that does
+not even populate .entries), so I am not worried about correctness
+gotchas caused by including names in .entries to be filtered out.
+But an obvious downside is that the size of the list to be sorted
+will become larger.
+
+Or we could introduce a shared helper function that takes a name and
+decides if it is to be included, and replace the is_dot_or_dotdot()
+call here and in the push_level() with calls to that helper.
+
+In any case, that is primarily a maintainability issue.  The code
+posted as-is is correct.
+
+> +			name = de->d_name;
+> +		} else {
+> +			if (level->entries_idx >= level->entries.nr) {
+> +				if (pop_level(iter) == 0)
+> +					return dir_iterator_abort(dir_iterator);
+> +				continue;
+> +			}
+> +
+> +			name = level->entries.items[level->entries_idx++].string;
+> +		}
+> +
+> +		if (prepare_next_entry_data(iter, name)) {
+>  			if (errno != ENOENT && iter->flags & DIR_ITERATOR_PEDANTIC)
+>  				goto error_out;
+>  			continue;
+> @@ -188,6 +239,8 @@ int dir_iterator_abort(struct dir_iterator *dir_iterator)
+>  			warning_errno("error closing directory '%s'",
+>  				      iter->base.path.buf);
+>  		}
+> +
+> +		string_list_clear(&level->entries, 0);
+>  	}
+>  
+>  	free(iter->levels);
+> diff --git a/dir-iterator.h b/dir-iterator.h
+> index 479e1ec784..6d438809b6 100644
+> --- a/dir-iterator.h
+> +++ b/dir-iterator.h
+> @@ -54,8 +54,11 @@
+>   *   and ITER_ERROR is returned immediately. In both cases, a meaningful
+>   *   warning is emitted. Note: ENOENT errors are always ignored so that
+>   *   the API users may remove files during iteration.
+> + *
+> + * - DIR_ITERATOR_SORTED: sort directory entries alphabetically.
+>   */
+>  #define DIR_ITERATOR_PEDANTIC (1 << 0)
+> +#define DIR_ITERATOR_SORTED   (1 << 1)
+>  
+>  struct dir_iterator {
+>  	/* The current path: */
