@@ -1,58 +1,63 @@
-Received: from mail-wr1-f54.google.com (mail-wr1-f54.google.com [209.85.221.54])
+Received: from mail-wr1-f41.google.com (mail-wr1-f41.google.com [209.85.221.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE9261CA98
-	for <git@vger.kernel.org>; Mon, 19 Feb 2024 04:45:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 229B03C26
+	for <git@vger.kernel.org>; Mon, 19 Feb 2024 04:45:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708317943; cv=none; b=IwPFkNlTDmp15QsMN1z7qKX0rZfkh5iOVM8vES7VjXANuaYKX6WvIeEW/Q2mt8CYNMVxvJettc5Sqy5cVEZAMQzc+JuOHsdRm0Eul0jZeb8gKpSF253YhMS1rkYP+D/9urz/+TxKePUB3ptQ86lonPdVvEGSrjV1vyMcV64ctSw=
+	t=1708317945; cv=none; b=gJptFhV2UATXxtF6/qQD8OyeTi8IV0z/P5VImEzj92s73z/7Ov9Cj2pOwmJi6JivyLO23oFHR0grZs+POqWL2bVVh/TB3HU5Fp5qV/f+OpJcsJz4UC9yMCbNX6rxpNAzpDGOM6r2vK3yWZuW+Sev0amQkFkEjNJDkX5ZCtY0P+E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708317943; c=relaxed/simple;
-	bh=PdGZxgtpN44VEG2Ru2pXOAoEYgnaWzpzmYWCvQztwAc=;
-	h=Message-ID:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=upitahEm2GBgPmhI/2OPNiOrJ8AahmEfosR3Qw9EjTLzaoP+381ZGT1zseepoAs4U6Gaf5xNQauskm215O4Dw7y9KTveFzqKx1JiSxgjwyrJ4DW84pxlXYpaf2aOE5BaRSKAizRr1oO29xPgut7Hwz6K55rvWFOoXk9X0eyPD3g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OZAsAYRB; arc=none smtp.client-ip=209.85.221.54
+	s=arc-20240116; t=1708317945; c=relaxed/simple;
+	bh=0VZQZ4uO2euqBbzwRlk8/twwEFaLOKHkoJMEPCjyLVo=;
+	h=Message-ID:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=Udhd79bQUW06Zl86eEnhsGkuR6MVPmdbx0tK2w9CIZNKvCIMtS3hqeM6ZDaOok4FqI5faR6+iwPEsgeCbEiFeQAmgWdLQlVD73F4dgJNsvHKtTJZIoRkFdq7ZypeTYFVG/OcH2DqMZRFI16xDUeTrpI6B4UyvSdP9wWUtThjol8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=MwJknduC; arc=none smtp.client-ip=209.85.221.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OZAsAYRB"
-Received: by mail-wr1-f54.google.com with SMTP id ffacd0b85a97d-33d4c11bd34so477258f8f.3
-        for <git@vger.kernel.org>; Sun, 18 Feb 2024 20:45:41 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MwJknduC"
+Received: by mail-wr1-f41.google.com with SMTP id ffacd0b85a97d-33d18931a94so1693699f8f.1
+        for <git@vger.kernel.org>; Sun, 18 Feb 2024 20:45:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1708317939; x=1708922739; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1708317941; x=1708922741; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=04AWro/l2GSoxnlpL3TgY0+7O4VEhtza7wOD/pSUzqA=;
-        b=OZAsAYRBAE390+iUAjq9mgxFJOdTwyA0QAzdE9qa4AEJERYXNEZ8BQ0wUpUpfDhdcQ
-         I6brHXZsXT0iz0XOI448okM812IoXxo6lszNAY75ZCGf6A+pH27PYfgp02OMHhInL+o4
-         D2INb/LscSBJtFn/eHBLvsJ6YUxDVvUY3WHJo6MzfMdnFMavRFj691dbxw2wx4WIteYh
-         eKw8gDSace/hg/sBOkbIap/dic0+K0yCgr9LO4X3GVCfbTD1fij79G4fJBwJkPRXbWOW
-         e14x2Xd4xUx1rQqHVHpmA/zKlobTG0x665MxS7c4s+Coxe01RiqM5nh/9L3aSRgM5JmT
-         u7ew==
+         :references:in-reply-to:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=4EdHh2OzjiRjZwya1ZQbkXFQUUSOrqE5ZRIvk8EBr9M=;
+        b=MwJknduCHHbIwIoU7oL4tLXztozSetp6CWT27JWYbc2rsAdKksF5c1vdn0RAm26UQu
+         ERZkbf/ZJX6qzrOk5v5atNmkMnghVG5nQG5Oy+C0u0h7CoFP8mmWX5Q0EbeBgRIwftUU
+         xiESGlFg7/8Ygvt7d4oNYL0hPqK5vqdFdYO2TfXTtvG2gfI3I3UnuhnOsoiKN+j7wy9t
+         v20rmYJzYL6/N546NhPxHJ1ujrRzi8ebI9x5T7zWcgTO04awMEHFBTjNMfHO8eB1fyby
+         SmvPIZyvUJGuSGZDD9r0OKQ/JskoipNAjs7ihGikBbjeJPvUaZvSD/NRDrYmKs5tlJcr
+         0Wsg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1708317939; x=1708922739;
+        d=1e100.net; s=20230601; t=1708317941; x=1708922741;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=04AWro/l2GSoxnlpL3TgY0+7O4VEhtza7wOD/pSUzqA=;
-        b=sPj1KcgwhcZ9Fv2MvO0UuId8In+WO7J/077r6SINdrL7UY+rAd/FDFVQG63bv9tXpx
-         BcyP3AvBJO1rtRfNaLXBavpJZz4mArWyhYvXqtnrGhvqXSBk65oJN277QEx+HLx80do4
-         JD5MdV+eESPttSC1fCHL5gsLSZyWT67pTZSyueWR4X32NiGmTX0s+LfQY+z5RKRGXjlo
-         4eynfxcut6jkML/p64RJt0kVqnIUTGjmCpTjsUjoxULgvFnZ+qfjwT2ZYHET9sV29ypC
-         5c+nNGWD73hrHwoHQq51sKnmg0qR5G3bPZlZccJNpJVdMxTNXDj+ZXT+nsi5fBGXt0dH
-         empA==
-X-Gm-Message-State: AOJu0YyTJhAsTN6VEwoFJGQeVdF7tiJfwSa0RnYqLHu0BjP95dyXfjp4
-	1gB9HCWR+6yGyqnRlC6lbGVSUVSNyHreOb1Ck12aOQraEO5DNuAtxEbu8nws
-X-Google-Smtp-Source: AGHT+IHQ4Yu6fe44T/LzvHVqhDoz1svx086ky5R5qjYxcP8xyHj6CxJYAS6ZdThgS4KGSz2PwE8fug==
-X-Received: by 2002:a5d:4b0c:0:b0:33d:1416:7149 with SMTP id v12-20020a5d4b0c000000b0033d14167149mr7878400wrq.66.1708317939598;
-        Sun, 18 Feb 2024 20:45:39 -0800 (PST)
+         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=4EdHh2OzjiRjZwya1ZQbkXFQUUSOrqE5ZRIvk8EBr9M=;
+        b=sfWH0U3SppKoQG3lGV91HaxScupdR+tV4h2kfp7vT0IMTo+WtAncc2GzAr99JrP+BY
+         YPCglrDpn5dDJIAp0eMKWBUAwGHGl4OJG3go3Buo2qicuH50wAzH6bv3wuNU6Bf+/Hul
+         jGTsaG5J6t3DKZiuNizin3i0QRbg/OH4yeEd58olA79572+dP4t7pLRhiZXiAmR2KjC4
+         9AY7msC2x0jQDlMEYNuLu+A+AgnoEHFdcf/KNHvZTQwHwcIkX8eNtdNcdDeEs/aZGHHG
+         e3Fp7rIxE+RNStld6BZY3C4LV/oBVFLnNZDagrnKvukVrsT91K+CQK8s0PovOIF9lXei
+         I1hQ==
+X-Gm-Message-State: AOJu0YxfHky/+CTsR5cdUGDn+9lFwjUTz1cDIBhrtcrooKqR4YrswltZ
+	ohYRoIUsSbDu8Asqvrmo58Iesr0wT2MK23dpqXQvg93oLCc/tbuatsAr1y1N
+X-Google-Smtp-Source: AGHT+IGDLpkPODCYl6ADPWmtXqEvqkK/Nfpe5sl7GWzSs+YREbdxGlu2emmvmn2Jg5LbgkLEedQgrw==
+X-Received: by 2002:a5d:4a49:0:b0:33d:11a2:42 with SMTP id v9-20020a5d4a49000000b0033d11a20042mr6114993wrs.47.1708317940766;
+        Sun, 18 Feb 2024 20:45:40 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id k1-20020adfe3c1000000b0033afc81fc00sm9068506wrm.41.2024.02.18.20.45.39
+        by smtp.gmail.com with ESMTPSA id y21-20020a05600c20d500b0041044e130bfsm9951557wmm.33.2024.02.18.20.45.39
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Sun, 18 Feb 2024 20:45:39 -0800 (PST)
-Message-ID: <pull.1677.git.git.1708317938.gitgitgadget@gmail.com>
+Message-ID: <2c60c4406d4eb1307a32f23604f3ef8e34ad56d6.1708317938.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1677.git.git.1708317938.gitgitgadget@gmail.com>
+References: <pull.1677.git.git.1708317938.gitgitgadget@gmail.com>
 From: "Philip Peterson via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Mon, 19 Feb 2024 04:45:36 +0000
-Subject: [PATCH 0/2] apply: add unit tests for parse_range
+Date: Mon, 19 Feb 2024 04:45:37 +0000
+Subject: [PATCH 1/2] apply: add unit tests for parse_range and rename to
+ parse_fragment_range
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -63,39 +68,149 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 To: git@vger.kernel.org
-Cc: Philip Peterson <philip.c.peterson@gmail.com>
+Cc: Philip Peterson <philip.c.peterson@gmail.com>,
+    Philip Peterson <philip.c.peterson@gmail.com>
 
-Hello all,
+From: Philip Peterson <philip.c.peterson@gmail.com>
 
-This patchset adds unit tests for apply's parse_range function. Also renames
-parse_range to parse_fragment_range.
+This patchset makes the parse_range function in apply be non-internal
+linkage in order to expose to the unit testing framework. In so doing,
+because there is another function called parse_range, I gave this one a more
+specific name, parse_fragment_range. Other than that, this commit adds
+several test cases (positive and negative) for the function.
 
-It was necessary to make the function be non-internal linkage in order to
-expose it to the unit testing framework. Because there is another function
-in the codebase also called parse_range, I changed this one to a more
-specific name as well: parse_fragment_range. There are also several test
-cases added (both positive and negative) for the function.
-
-Thank you for your help,
-
-Philip
-
-Philip Peterson (2):
-  apply: add unit tests for parse_range and rename to
-    parse_fragment_range
-  apply: rewrite unit tests with structured cases
-
- Makefile               |   1 +
- apply.c                |   8 ++--
- apply.h                |   4 ++
- t/unit-tests/t-apply.c | 100 +++++++++++++++++++++++++++++++++++++++++
- 4 files changed, 109 insertions(+), 4 deletions(-)
+Signed-off-by: Philip Peterson <philip.c.peterson@gmail.com>
+---
+ Makefile               |  1 +
+ apply.c                |  8 ++---
+ apply.h                |  4 +++
+ t/unit-tests/t-apply.c | 67 ++++++++++++++++++++++++++++++++++++++++++
+ 4 files changed, 76 insertions(+), 4 deletions(-)
  create mode 100644 t/unit-tests/t-apply.c
 
-
-base-commit: 186b115d3062e6230ee296d1ddaa0c4b72a464b5
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1677%2Fphilip-peterson%2Fpeterson%2Funit-tests-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1677/philip-peterson/peterson/unit-tests-v1
-Pull-Request: https://github.com/git/git/pull/1677
+diff --git a/Makefile b/Makefile
+index 15990ff3122..369092aedfe 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1339,6 +1339,7 @@ THIRD_PARTY_SOURCES += compat/regex/%
+ THIRD_PARTY_SOURCES += sha1collisiondetection/%
+ THIRD_PARTY_SOURCES += sha1dc/%
+ 
++UNIT_TEST_PROGRAMS += t-apply
+ UNIT_TEST_PROGRAMS += t-basic
+ UNIT_TEST_PROGRAMS += t-mem-pool
+ UNIT_TEST_PROGRAMS += t-strbuf
+diff --git a/apply.c b/apply.c
+index 7608e3301ca..199a1150df6 100644
+--- a/apply.c
++++ b/apply.c
+@@ -1430,8 +1430,8 @@ static int parse_num(const char *line, unsigned long *p)
+ 	return ptr - line;
+ }
+ 
+-static int parse_range(const char *line, int len, int offset, const char *expect,
+-		       unsigned long *p1, unsigned long *p2)
++int parse_fragment_range(const char *line, int len, int offset, const char *expect,
++			 unsigned long *p1, unsigned long *p2)
+ {
+ 	int digits, ex;
+ 
+@@ -1530,8 +1530,8 @@ static int parse_fragment_header(const char *line, int len, struct fragment *fra
+ 		return -1;
+ 
+ 	/* Figure out the number of lines in a fragment */
+-	offset = parse_range(line, len, 4, " +", &fragment->oldpos, &fragment->oldlines);
+-	offset = parse_range(line, len, offset, " @@", &fragment->newpos, &fragment->newlines);
++	offset = parse_fragment_range(line, len, 4, " +", &fragment->oldpos, &fragment->oldlines);
++	offset = parse_fragment_range(line, len, offset, " @@", &fragment->newpos, &fragment->newlines);
+ 
+ 	return offset;
+ }
+diff --git a/apply.h b/apply.h
+index 7cd38b1443c..bbc5e3caeb5 100644
+--- a/apply.h
++++ b/apply.h
+@@ -187,3 +187,7 @@ int apply_all_patches(struct apply_state *state,
+ 		      int options);
+ 
+ #endif
++
++
++int parse_fragment_range(const char *line, int len, int offset, const char *expect,
++		       unsigned long *p1, unsigned long *p2);
+diff --git a/t/unit-tests/t-apply.c b/t/unit-tests/t-apply.c
+new file mode 100644
+index 00000000000..ff0abfb2e0b
+--- /dev/null
++++ b/t/unit-tests/t-apply.c
+@@ -0,0 +1,67 @@
++#include "test-lib.h"
++#include "apply.h"
++
++#define FAILURE -1
++
++static void setup_static(const char *line, int len, int offset,
++						 const char *expect, int assert_result,
++						 unsigned long assert_p1,
++						 unsigned long assert_p2)
++{
++	unsigned long p1 = 9999;
++	unsigned long p2 = 9999;
++	int result = parse_fragment_range(line, len, offset, expect, &p1, &p2);
++	check_int(result, ==, assert_result);
++	check_int(p1, ==, assert_p1);
++	check_int(p2, ==, assert_p2);
++}
++
++int cmd_main(int argc, const char **argv)
++{
++	char* text;
++	int expected_result;
++
++	/* Success */
++	text = "@@ -4,4 +";
++	expected_result = 9;
++	TEST(setup_static(text, strlen(text), 4, " +", expected_result, 4, 4),
++		 "well-formed range");
++
++	text = "@@ -4 +8 @@";
++	expected_result = 7;
++	TEST(setup_static(text, strlen(text), 4, " +", expected_result, 4, 1),
++		 "non-comma range");
++
++	/* Failure */
++	text = "@@ -X,4 +";
++	expected_result = FAILURE;
++	TEST(setup_static(text, strlen(text), 4, " +", expected_result, 9999, 9999),
++		 "non-digit range (first coordinate)");
++
++	text = "@@ -4,X +";
++	expected_result = FAILURE;
++	TEST(setup_static(text, strlen(text), 4, " +", expected_result, 4, 1), // p2 is 1, a little strange but not catastrophic
++		 "non-digit range (second coordinate)");
++
++	text = "@@ -4,4 -";
++	expected_result = FAILURE;
++	TEST(setup_static(text, strlen(text), 4, " +", expected_result, 4, 4),
++		 "non-expected trailing text");
++
++	text = "@@ -4,4";
++	expected_result = FAILURE;
++	TEST(setup_static(text, strlen(text), 4, " +", expected_result, 4, 4),
++		 "not long enough for expected trailing text");
++
++	text = "@@ -4,4";
++	expected_result = FAILURE;
++	TEST(setup_static(text, strlen(text), 7, " +", expected_result, 9999, 9999),
++		 "not long enough for offset");
++
++	text = "@@ -4,4";
++	expected_result = FAILURE;
++	TEST(setup_static(text, strlen(text), -1, " +", expected_result, 9999, 9999),
++		 "negative offset");
++
++	return test_done();
++}
 -- 
 gitgitgadget
+
