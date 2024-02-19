@@ -1,100 +1,134 @@
-Received: from mail-lf1-f53.google.com (mail-lf1-f53.google.com [209.85.167.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BD4C54BC5
-	for <git@vger.kernel.org>; Mon, 19 Feb 2024 21:32:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E183853E08
+	for <git@vger.kernel.org>; Mon, 19 Feb 2024 21:35:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708378344; cv=none; b=g8ZJWIXFD5xJoMzsqrNkXUvq41V09WTvI6P9KFnOIyx6+R4HTeNjd/h4RoheQYSqmN+S79uawZit0ygsVXwBSV/2XU9XYP4lfPuMZOHCK14Flrlb3Q1Mok6N+KJMKpqrBfAReFVwjrueH5yQYZWlBwLxEnyoJgZL1yDfi+v0nXc=
+	t=1708378534; cv=none; b=coBSSIX6W7jNUl4vOBivgRiVLlOWB04AIkWHHsoVvtdM89r9RburH7AJXE9j0CVoNM2FFItYDQZXCqvqQ1NXX60k9zNM6G08X9tv2kcat36FZcRD7qc1AzamgzqwADxYUkEGO/FO3e/Q6mZGC5pAHZEfF6akUNRETQvanXrW8FQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708378344; c=relaxed/simple;
-	bh=KUe/rpQxgCiAdl0ZA0eoOWHySpfziUsGrRP9lalc87M=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=YuMqUStLZlk4YyYFBm9uA21Q+x1CWU59LgrJPaDsiXNfSS2rFU9xGttFTgef4x3eWS2xI4FhRuMovNkjYZZ42/9Lo4OuvnG007NL3zoSf1CqrIjOsWK3fqoWk02JFRsyXuI9mpjK+xJkuUEq94uu9u6DnInCLjxSUsc4ZqGV+u8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dJp/6Ti7; arc=none smtp.client-ip=209.85.167.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1708378534; c=relaxed/simple;
+	bh=4YmyNipfzMiGjbfGn3aJRWUVyN2csxL51w3w3P4lWGI=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=lw8U1yymJguuIJD5eTaRP1Exw8XY5J2zWHOxfa13ltlkeTUNEu9um135MFoisFmbM9GRho+56mvFI85Xc6qY8jMGI4CJuSX0eygfSs7t5KpXmsvQw+FHbYgkS9hyDlE5nVggVwDNMaoW79Z+dkLs7/EFPOk2K5winXbwX0q3iV0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=XMrm7Dz3; arc=none smtp.client-ip=64.147.108.70
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dJp/6Ti7"
-Received: by mail-lf1-f53.google.com with SMTP id 2adb3069b0e04-512a9ae6c02so2576389e87.2
-        for <git@vger.kernel.org>; Mon, 19 Feb 2024 13:32:22 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1708378341; x=1708983141; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=KUe/rpQxgCiAdl0ZA0eoOWHySpfziUsGrRP9lalc87M=;
-        b=dJp/6Ti77i7toKywQe9uDM3V6DP6cUu840uxaHD1mtH6lhxgGFy7kydhdQ41aBtGe8
-         x7/aj3q+Kd3gC8l740cTbwcMwXoUyOF3Pw7gJB3yoqF0KpozZ1/vC0fQp6hxMuNX2wRr
-         9txZ+Hz2a2xhcDLjmJmiXK/fOjIdLksU/7/yP3BWNkO6qyv7VLFMAEVSx55c5SJHs5yB
-         6KAcrn7wBxmHxGbtLPz2vlkzqG+KCOH7LepUEZFveiOiaA93KwC+OAdwQ31lqVQYReAc
-         WiMpxjoZsS5cUARalbhj0NdALPzb0Bxz2cEYKBHjDJRKniXgpKD2VHFDyeyKFT4ZF7L+
-         MQug==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1708378341; x=1708983141;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=KUe/rpQxgCiAdl0ZA0eoOWHySpfziUsGrRP9lalc87M=;
-        b=tE3MEfESq/IN6vQLfPCME3frq1QzDEyxjKVNsLdfqH2HuDBxg1Dqv4i2cqczRsJ+2D
-         +cOXRdDyUwoOgGmEDi07in6M1VKCLnVocozBKQMUjfCHgW6M7IG1sosca10rnIbcLpVA
-         1IxJGLGOQfSN7tKIkGGUkMzz4Md/CyUhKuZGzbC1/8mdjduWt/982NPlzl2iWPqlRxsD
-         0eqvzjsk/tuiFMgx7cQKoB6LCp8FgG9vAK+lYi2Qn48eREqmMCZjGZ3Zk43ZrIvu47Qw
-         2uWOGNlXr4s2Fb/FfCBJXIT6I/eHyxgncEREWlbdfC5NoVQWq/+rfj2vChmFAtTEVWF3
-         6CaA==
-X-Gm-Message-State: AOJu0YzbrmS+t6M6cwNNwjvrZ2ScAeGe8gDDU8lrDMyrggmm1sSza6RL
-	r/hCa+co239CUduZtZOpRuzFVjoyY9a287fBhiMReDZn4EU+/ozTY5Zu+9nuIUotTmZPs6+5K7V
-	z9EP7hQhBj4znKKet2RtpNXI5J9o=
-X-Google-Smtp-Source: AGHT+IEZPraOX0Yh2HGrlOM3Z7WqcZD9iec4v/FrmHyxhR5jl+Evy7NhzJSQQ7pIEafYWMUaH0RLaiT6R5VYVs/a+dQ=
-X-Received: by 2002:a05:6512:23a4:b0:512:8a75:6ae4 with SMTP id
- c36-20020a05651223a400b005128a756ae4mr11187708lfv.66.1708378340290; Mon, 19
- Feb 2024 13:32:20 -0800 (PST)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="XMrm7Dz3"
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id A5D431E1C3B;
+	Mon, 19 Feb 2024 16:35:31 -0500 (EST)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=4YmyNipfzMiGjbfGn3aJRWUVyN2csxL51w3w3P
+	4lWGI=; b=XMrm7Dz3l4i7ZU8VJZ7IPssOiR+k1vU0vQjktn7KNPKJ+myql6v/Pr
+	whdwy1o0MIT8PJ2E5XS9r/3QwwVUFHBy+Bvx47koPHov6Q47HvLvR0Q12PKW8eH9
+	iFmkK6d2I65Rq0cHes4WLOi0cbjJ+Xu/KIhZAnU5y/mBHEVYFWyFM=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 9E3451E1C3A;
+	Mon, 19 Feb 2024 16:35:31 -0500 (EST)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.165.85])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 7DF5E1E1C39;
+	Mon, 19 Feb 2024 16:35:30 -0500 (EST)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Philip Peterson via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Philip Peterson <philip.c.peterson@gmail.com>
+Subject: Re: [PATCH 1/2] apply: add unit tests for parse_range and rename to
+ parse_fragment_range
+In-Reply-To: <2c60c4406d4eb1307a32f23604f3ef8e34ad56d6.1708317938.git.gitgitgadget@gmail.com>
+	(Philip Peterson via GitGitGadget's message of "Mon, 19 Feb 2024
+	04:45:37 +0000")
+References: <pull.1677.git.git.1708317938.gitgitgadget@gmail.com>
+	<2c60c4406d4eb1307a32f23604f3ef8e34ad56d6.1708317938.git.gitgitgadget@gmail.com>
+Date: Mon, 19 Feb 2024 13:35:29 -0800
+Message-ID: <xmqqil2k5e8u.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.1632.v4.git.1707196348.gitgitgadget@gmail.com>
- <pull.1632.v5.git.1708124950.gitgitgadget@gmail.com> <7c656b3f77546ae917ff192031c62d4521d9df8c.1708124951.git.gitgitgadget@gmail.com>
-In-Reply-To: <7c656b3f77546ae917ff192031c62d4521d9df8c.1708124951.git.gitgitgadget@gmail.com>
-From: Christian Couder <christian.couder@gmail.com>
-Date: Mon, 19 Feb 2024 22:32:07 +0100
-Message-ID: <CAP8UFD0JV8VEC-MDu86Mzrya9G7JBZaP2vXjFKwcKddEkh=y5g@mail.gmail.com>
-Subject: Re: [PATCH v5 9/9] format_trailers_from_commit(): indirectly call trailer_info_get()
-To: Linus Arver via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, Christian Couder <chriscool@tuxfamily.org>, 
-	Junio C Hamano <gitster@pobox.com>, Emily Shaffer <nasamuffin@google.com>, 
-	Josh Steadmon <steadmon@google.com>, "Randall S. Becker" <rsbecker@nexbridge.com>, 
-	Kristoffer Haugsbakk <code@khaugsbakk.name>, Linus Arver <linusa@google.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ CE0BF30E-CF6E-11EE-83B1-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
 
-On Sat, Feb 17, 2024 at 12:09=E2=80=AFAM Linus Arver via GitGitGadget
-<gitgitgadget@gmail.com> wrote:
+"Philip Peterson via GitGitGadget" <gitgitgadget@gmail.com> writes:
+
+> From: Philip Peterson <philip.c.peterson@gmail.com>
 >
-> From: Linus Arver <linusa@google.com>
->
-> This is another preparatory refactor to unify the trailer formatters.
->
-> Instead of calling trailer_info_get() directly, call parse_trailers()
-> which already calls trailer_info_get(). This change is a NOP because
-> format_trailer_info() only looks at the "trailers" string array, not the
-> trailer_item objects which parse_trailers() populates.
+> This patchset makes the parse_range function in apply be non-internal
+> linkage in order to expose to the unit testing framework. In so doing,
+> because there is another function called parse_range, I gave this one a more
+> specific name, parse_fragment_range. Other than that, this commit adds
+> several test cases (positive and negative) for the function.
 
-Is the extra processing done by parse_trailers() compared to
-trailer_info_get() impacting performance?
+We do not write "I did this, I did that" in our proposed log
+message.  In addition, guidance on the proposed commit log in a
+handful of sections in Documentation/SubmittingPatches would be
+helpful.
 
-Also when looking only at the patch, it's a bit difficult to
-understand that the "trailers" string array is the `char **trailers`
-field in `struct trailer_info` and that the trailer_item objects are
-the elements of the `struct list_head *head` linked list. It could
-also be confusing because the patch is adding a new 'trailers'
-variable with `LIST_HEAD(trailers);`. So a few more details could help
-understand what's going on.
+It may probably be a good idea to split this into a preliminary
+patch that makes a symbol extern (and doing nothing else), and
+the main patch that adds external caller(s) to the function from
+a new unit test.
 
-> In a future patch, we'll change format_trailer_info() to use the parsed
-> trailer_item objects instead of the string array.
+It certainly is better than doing nothing and just make it extern,
+but I am not sure "fragment" is specific enough to make the symbol
+clearly belong to "apply" API.
 
-Ok, so I guess the possible performance issue would disappear then, as
-populating the trailer_item objects will be useful.
+> diff --git a/apply.c b/apply.c
+> index 7608e3301ca..199a1150df6 100644
+> --- a/apply.c
+> +++ b/apply.c
+> @@ -1430,8 +1430,8 @@ static int parse_num(const char *line, unsigned long *p)
+>  	return ptr - line;
+>  }
+>  
+> -static int parse_range(const char *line, int len, int offset, const char *expect,
+> -		       unsigned long *p1, unsigned long *p2)
+> +int parse_fragment_range(const char *line, int len, int offset, const char *expect,
+> +			 unsigned long *p1, unsigned long *p2)
+>  {
+>  	int digits, ex;
+
+Alternatively we could do something like this to make the blast
+radius of this patch smaller.
+
+    -static int parse_range(const char *line, int len, int offset, const char *expect,
+    +#define apply_parse_fragment_range parse_range
+    +int parse_range(const char *line, int len, int offset, const char *expect,
+                           unsigned long *p1, unsigned long *p2)
+
+If not for unit-test, this function has no reason to be extern with
+such a long name, so it is better to allow internal callers to refer
+to it with the name that has been good enough for them for the past
+19 years since it was introduced in fab2c257 (git-apply: make the
+diffstat output happen for "--stat" only., 2005-05-26).
+
+> diff --git a/apply.h b/apply.h
+> index 7cd38b1443c..bbc5e3caeb5 100644
+> --- a/apply.h
+> +++ b/apply.h
+> @@ -187,3 +187,7 @@ int apply_all_patches(struct apply_state *state,
+>  		      int options);
+>  
+>  #endif
+> +
+> +
+> +int parse_fragment_range(const char *line, int len, int offset, const char *expect,
+> +		       unsigned long *p1, unsigned long *p2);
+
+This is wrong.  The #endif is about avoiding double inclusion of
+this header file and any new declaration must go before it.
+
+> diff --git a/t/unit-tests/t-apply.c b/t/unit-tests/t-apply.c
+> new file mode 100644
+
+This should go to the next patch.
