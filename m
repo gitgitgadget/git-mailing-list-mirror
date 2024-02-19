@@ -1,75 +1,123 @@
-Received: from mail-ej1-f50.google.com (mail-ej1-f50.google.com [209.85.218.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from ring.crustytoothpaste.net (ring.crustytoothpaste.net [172.105.110.227])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9FAE524B1
-	for <git@vger.kernel.org>; Mon, 19 Feb 2024 20:00:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 025FA1F952
+	for <git@vger.kernel.org>; Mon, 19 Feb 2024 20:10:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.110.227
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708372846; cv=none; b=C60Tl97eNQsZ4C+0iEyD2D5A4EHpFSgOR/F+ggmWvfUXde74GgNHZC86kSAgR5nHT8jQ1itt6e3lUHJzMYFjC1BCNINLul7MbFeb1ixtdEx+IXmdoJ08Pzh0yu41SDSMDN4zrnFtQ/0K7YJPx5+xOiMhgdj7HAFUld6HMXkCrBM=
+	t=1708373420; cv=none; b=FR8pUe/GllOjQHTGuy+vZk9N/S+r41YDLqkQZqajvUzQXsf+45QzMH6D9YPa2Yl7HprG7iD0PEylhsu20DT4AYzl8aUouLD5oUJ5C4aUKbWBoE2S6stbKlr/RYh9EWceK8Jb2ejlzroFZK2EltmXr9kEQN2bwvhGSUM85XSQVn4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708372846; c=relaxed/simple;
-	bh=t2+Mfoy1l8Elbv4J10BN4iLVJNKhxs9CluX4b2jRQBs=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=QclNjOocxM8mIglMuSfw4FGTqvocObgKBGqXaLh/yNL8mEaN9CcisOYLARTRkMvWK3uDOi+UIAUrIiqU02rYOKZRtLaL+hq5V5CTyXDiOO/qiHYU9cmZko19rWZ6KJ9K3ng6cJB8dAqcVUZ4+erauymI/8755Z4rR/3zYWkG+7Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=K9W3NYS/; arc=none smtp.client-ip=209.85.218.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1708373420; c=relaxed/simple;
+	bh=GUSj4uy8dzA6I30xRBulDMj1oHMa6gBK5h2yaGj2lns=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=sKy0ko83NOHNJPrhexgFsNzgmS4RhnfSmRmOz9PD2krjqGlIYXfYDyOCSYAT5vELnxgMZfPTWgFkaX6XhAn1e0osH7pqrEcxjZRxQu9JjB4+26OOI9NJTBFjMSjEECFxDe2S3+rAdgdit2MJEcvvSGh0znIk5uXsktcPaqXGgRo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=zuh8MDVo; arc=none smtp.client-ip=172.105.110.227
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="K9W3NYS/"
-Received: by mail-ej1-f50.google.com with SMTP id a640c23a62f3a-a3e82664d53so193474666b.3
-        for <git@vger.kernel.org>; Mon, 19 Feb 2024 12:00:44 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1708372843; x=1708977643; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=YV+7RJVYP/5sOomg9cRq+RTlJDVzwNIk00E2B7e4dRE=;
-        b=K9W3NYS/fvb9JdQasMlorcrY8+j4A5rOg5rJIrol2Wua6H2t8kpuzskdAbjRLGz+rM
-         aSgf9tOgku5QzbukUWDHIFVET5X6RhzmKwN32OSuzBJc0MGHSFOBntPiSt+jARZYJ6j7
-         k6Uo3X+lzd/YwcwBvjS/4r6e97iWzrv93UyGdf84xM07fso3Pjq815TxNS+7je4ZzHlK
-         5rNmh0oZdfoEtBLY6r0RU7VTGQFJ0Pt4HsojRnCvKYrSkIJjllZFvnyEcAR1FaX9kCtB
-         8WPprJ5P5dUR1acS1X9HEzv2pKkt6tUo0SvnOtO5l9kRV8TnASQBWhHKXy6IDBv+DCDm
-         YCow==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1708372843; x=1708977643;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=YV+7RJVYP/5sOomg9cRq+RTlJDVzwNIk00E2B7e4dRE=;
-        b=vpixvyLReE9R3QxzW7F88A40Lvbn3VzoADw7AQj+NUBUWy7I/32W7SI3dHnQK8KYw2
-         3WI+zlfrtxU1umJMIF0SCorHPIb3BzhGY4hMUoV1ZqaXzZmCSpM6V+mCbEVmuyroUs4M
-         6kai/SuHVVdVPuoV7GESqAeJzI/b91hYFLrXPsDlVacNRiOoGOvwCkYvK7QNJVMAK4BT
-         BQh5VSmrclKYy9KLnLIwqxLGeg3IgPz5X0AvtHwwjfX084dcLaOUgbXg1ur+LyHd9YfY
-         NFr2TM7hQnFHnUQ2spa+NSLv9cQ8AlbUFz7R0NoS/UpJCtmiQJzCTDFghlkUPQTFao8Y
-         nZ0w==
-X-Forwarded-Encrypted: i=1; AJvYcCVv8WZiOKfL+A3Ns7KZqHQcF/iEGkfZKwghO5Lkye3dbkUsRYlcGWLU/Cfg9QCY6BQdsWS6iXKsWnlfsy5gaiRwj5CL
-X-Gm-Message-State: AOJu0YyEbAvaHhd48WhMx+ZjXH635QO5HbwajApnt6/uEv9L/9yXatto
-	f1oTTLI16fKOZjy5cX0Zj7AovBBLgzlx0CwnqE1gK/0DQ1mxN5OiJKhtp4cKXOE+KphtF3WpDKe
-	gfnsszO9tFQ5BDZW4oxo392nGUkE=
-X-Google-Smtp-Source: AGHT+IGdDhgQkLRh1CZQ6Cz/JEhx4lF8FJ2rnD79KbIwoJ0xLAtbCtJ8ZdzIrR/4Xn5VYWlKUEa19dN7F9dmYMbM/T0=
-X-Received: by 2002:a17:906:b0d1:b0:a3d:4ed8:f5bf with SMTP id
- bk17-20020a170906b0d100b00a3d4ed8f5bfmr10004037ejb.2.1708372842616; Mon, 19
- Feb 2024 12:00:42 -0800 (PST)
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="zuh8MDVo"
+Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:e59a:3ed0:5f5c:31f3])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (P-256) server-signature RSA-PSS (3072 bits) server-digest SHA256)
+	(No client certificate requested)
+	by ring.crustytoothpaste.net (Postfix) with ESMTPSA id A37995B31E;
+	Mon, 19 Feb 2024 20:10:10 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1708373410;
+	bh=GUSj4uy8dzA6I30xRBulDMj1oHMa6gBK5h2yaGj2lns=;
+	h=Date:From:To:Cc:Subject:References:Content-Type:
+	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+	 Content-Type:Content-Disposition;
+	b=zuh8MDVozvSD57iex+E+CIPtcGdUt06EpUXwqVfU1L7NMPiaj9cWFHWhIkESaEOKu
+	 320K0NzxG9RR6IxEpKcjxc+HWXPU0RrhEE0jlrnNHZVKMvF5ZbAFLVBEab5/9T9lOp
+	 ZF72rIHUzc8Xdq445sLyarcVwo48hhh1lQUKNwYRWBEQ3ZkhIZdfAVIlL9d+LeX48f
+	 xKlIeETuj3W1yMiri7vgbZG6wiTkfERZ8T1rufe+ELevrh3o8Vgu0iNuA+eIhwsWZj
+	 b0u77NgvUAphCU80HdN5Qn8QQ29W6+7Y3UNOfLGiV6zhp7ihoPLASHps/s+MuOFeMW
+	 y/tN2bwCjCCPsRIezHlpDPnly0GUaE6zGygnep4UunsYWNgbHfc8emjhusp+xqsyyy
+	 HVpOMrdmnKniwtcExr1W+6WfuFDd5eNFE+sVb4sGn/hXUYvW4ljBFshg208HRrnfHv
+	 C13WbAB1H8O4rIWYzr55A3nOS37wRLvyWaR9ifElpKBZaXXB3Tl
+Date: Mon, 19 Feb 2024 20:10:08 +0000
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+To: Dominik von Haller <vonhaller@fastec.de>
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: Why does the includeif woks how it does?
+Message-ID: <ZdO1oL73SF5ZKOJT@tapette.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Dominik von Haller <vonhaller@fastec.de>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+References: <FR2P281MB1686B7258CFB60A0F33FE108BA522@FR2P281MB1686.DEUP281.PROD.OUTLOOK.COM>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.1676.git.git.1708296694988.gitgitgadget@gmail.com> <ZdLweyFLDtdMAq2x@tanuki>
-In-Reply-To: <ZdLweyFLDtdMAq2x@tanuki>
-From: M Hickford <mirth.hickford@gmail.com>
-Date: Mon, 19 Feb 2024 20:00:00 +0000
-Message-ID: <CAGJzqsmwpHu7sMNs6C7k-V5JtpPtdYmXEp2uk-x-ZKLZ8S6jCA@mail.gmail.com>
-Subject: Re: [PATCH] libsecret: retrieve empty password
-To: Patrick Steinhardt <ps@pks.im>
-Cc: M Hickford via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
-	M Hickford <mirth.hickford@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="6y3L7fVVOo94eYP4"
+Content-Disposition: inline
+In-Reply-To: <FR2P281MB1686B7258CFB60A0F33FE108BA522@FR2P281MB1686.DEUP281.PROD.OUTLOOK.COM>
+User-Agent: Mutt/2.2.12 (2023-09-09)
 
-> > +                             g_free(c->password);
-> > +                             c->password = strdup("");
->
-> Shouldn't we use `g_strdup()` here, like we do everywhere else in this
-> credential helper?
 
-You're right. I'll correct in patch v2.
+--6y3L7fVVOo94eYP4
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+On 2024-02-18 at 15:37:29, Dominik von Haller wrote:
+> I have been playing around with the includeif from the .gitconfig. It did=
+ not work for me at first, but after some help, I did get it to work.
+>=20
+> If you are curious. My Problem and what else was discussed here: https://=
+github.com/git-for-windows/git/issues/4823
+>=20
+> Anyway. So, I was trying to access the email property which was set throu=
+gh an includeif config. It did not work because I was in a non git director=
+y. Yes, I do know that the property set in includeif is named gitdir, but i=
+t was not obvious to me that you need to be in a git tracked directory for =
+it to work.
+>=20
+> I am trying to understand why it must be this way. Why does it not work i=
+n non git tracked directories?
+
+The main reason it works this way is because the goal is to adjust
+configuration based on the location of a repository.  Thus, if I have
+`~/checkouts/work/` with my work code and `~/checkouts/personal/` with
+my personal code, I can set options that are appropriate in each case
+(e.g., `user.email`, `user.signingkey`, `credential.helper`, etc.).
+
+Also, except for reading and writing with `git config`, the
+configuration is typically not used unless you're in a repository.
+There are only a handful of Git commands that don't use a repository at
+all, so usually setting configuration outside of a repository isn't very
+useful.
+
+Note that if it didn't require a repository, then it would have to work
+on the current working directory.  But, it should be noted, the gitdir
+option specifically does not operate on the current working directory.
+While it is customary to have one's working directory be inside the
+repository, you can be elsewhere and use `git -C` to change into the
+repository (internally, Git does indeed change the working directory,
+but that's an implementation detail).
+
+That's not to say a feature couldn't be added that operated based on the
+current working directory (or some related constraint) instead, but no
+such feature has been added.
+--=20
+brian m. carlson (he/him or they/them)
+Toronto, Ontario, CA
+
+--6y3L7fVVOo94eYP4
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.4.3 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZdO1nwAKCRB8DEliiIei
+gTzIAQCs/ceBg7AeSf/8lIVJX9d8BYMsSXoTLdCsqropUt5c+gEA9P9RNTl68qiH
+HEZtxi5qtnlIl7OtoXrnWeIDogqxLQU=
+=glci
+-----END PGP SIGNATURE-----
+
+--6y3L7fVVOo94eYP4--
