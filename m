@@ -1,76 +1,76 @@
-Received: from fout5-smtp.messagingengine.com (fout5-smtp.messagingengine.com [103.168.172.148])
+Received: from fhigh8-smtp.messagingengine.com (fhigh8-smtp.messagingengine.com [103.168.172.159])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69290381C4
-	for <git@vger.kernel.org>; Mon, 19 Feb 2024 14:35:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F330381C4
+	for <git@vger.kernel.org>; Mon, 19 Feb 2024 14:35:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708353341; cv=none; b=FeN/VWf2LpnKKLegib66Q7JeLCUdLk3n/UV6BehJELA6XzQpGDZ6KQoUHGdAjZxK8zL0s9+Bm1ybnSxwdtcyOfkV4oAOICEpV5zbSPmbIkttLzi2+r8FnfjDYBae8nc1c0p87r5liEspyRZyfwhsEhf6SYZJRDVgvFNMisxfcl0=
+	t=1708353345; cv=none; b=IS+9s/Ue1RZY+UCE46b22qdLSxmq9pWArkpfHB5YvNKw5mE932VW8g6ZqMYH5GFKzjxiVSVFbkh1K5SFh5g6Y7Rm1MA5Yaee1vMvxUUFyfvoTmvkc6YRorezfeef2CCmkZlJE7Bw4nNmQ6ePmNRxUVxExHuBYBXZCtMwPaVfeYo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708353341; c=relaxed/simple;
-	bh=eXy+2bSZ7umEt5iD9+ghuADYQunMbWrfhgewcZywWW4=;
+	s=arc-20240116; t=1708353345; c=relaxed/simple;
+	bh=p9eLD1HclpFDsFKQxNXatqzXu5haaqKrA2YMk1ChIus=;
 	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=mm2s3ZGzsY5QodV+dOaRSoZrk6j5CHtyXHBoZL98sFP/wZ3+3E3zqm1spfwbcYq2yLRMUfspswZg34RZ1QoFFxGZ7rSXFI4vpaoUv51LiNSXYeP8CNNT+iKiiXhYiga1MLN4iiVWVQwjMHWZ+Zn6Ait3SZoCEDI22UoH+DxR9d8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=YnjoSNvt; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=oV+I1x/B; arc=none smtp.client-ip=103.168.172.148
+	 Content-Type:Content-Disposition:In-Reply-To; b=LLHyZNfJ+jb9Oha5VtxllZDAY9Xr642jnpMxZ9wLHxRqrcE7AvY5ft3+8G+cT5Ica6D902sD8AbhFgI7imsBA8EQYH+ZoBgQrtGwWSvGvr+SoRVhcGxaUU5AqSMBmfGRXA8EJM+KerZZtr6/Jzhl0a5KFduk6ctkwLTLo7HfddA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Eb/mfYb/; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=keB9Ldmi; arc=none smtp.client-ip=103.168.172.159
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="YnjoSNvt";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="oV+I1x/B"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Eb/mfYb/";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="keB9Ldmi"
 Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
-	by mailfout.nyi.internal (Postfix) with ESMTP id 51A00138010B
-	for <git@vger.kernel.org>; Mon, 19 Feb 2024 09:35:38 -0500 (EST)
+	by mailfhigh.nyi.internal (Postfix) with ESMTP id 2BC9F11400D7
+	for <git@vger.kernel.org>; Mon, 19 Feb 2024 09:35:43 -0500 (EST)
 Received: from mailfrontend1 ([10.202.2.162])
-  by compute2.internal (MEProxy); Mon, 19 Feb 2024 09:35:38 -0500
+  by compute2.internal (MEProxy); Mon, 19 Feb 2024 09:35:43 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1708353338; x=1708439738; bh=AWuO8oFE0F
-	Qm4KfiBNjXHokUwQTV98xDeP+sN/RV8ag=; b=YnjoSNvtQydZNoczpXuLif1Ok7
-	75eZxgrkzywBSJNOJ7tg6YsW0kWbPDeQhj+AVwykndPQiXq6G71//quaUqx3w1Dx
-	qK5+KsfjjGKzPMbo7efbwsxBZ9xjkp5f9F4yn39WCCkH9gDsiV5w/AGDN1ZTn/Tr
-	KHUb6W5Vilc0u1wHnknjWfqS1GHIG5MJzIjAx1aENeQCo8tQjVny1TzKR9ZvgDk5
-	rhNRlUryOfvQca0/vA3ey2C4RARfjjAUsNahHiWrifYTeydChd/JImeIP0yPP0RL
-	PtRh+km+/D6M+Qi75BytF9F6gzBzxYg+bd1IMjNUkUs5Hp4c5Zske6CERbOw==
+	:subject:to:to; s=fm1; t=1708353343; x=1708439743; bh=segsBc6Mw5
+	ZHwo2eIOfTAdXkpeQ/xRY4CPHDshzH2hw=; b=Eb/mfYb/Ry//7hwc39JL8I6QWC
+	UTW7ep6Da6wI+r30k03WFgRqDxnAelZqBhZuhBKDEolq4js4XJMXbPOixyw9DMQ7
+	3n5Fr6Q3VO0V+kysH53l9lfftWwNw8QJKfnMrJ6UG1Fe6S9udVfyvvmojRsnoKOT
+	JvhFcBbRHWdwrm1586kufaADtmnDMS3rYY7/LNJsNkrJ+psdRg10NdFzvnvTTiuz
+	239N7WUObjpo5Vn6GSKF5P3mMoUxM64qg9cSJtSmlrDAzr9rJmDBAelxiKUqocE4
+	B0mrbbzjmonbIKyrOnstgs/lBxV8urUvX+Bumuzx40h5I+vQRkmgmTIS4/Ag==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1708353338; x=1708439738; bh=AWuO8oFE0FQm4KfiBNjXHokUwQTV
-	98xDeP+sN/RV8ag=; b=oV+I1x/BPwT+M382ghwPZNs3iBZrGb/AsZQ96BpHgGPs
-	XBSXZ6aQF3D5JznADIPlxTL6Rj7M8yciQwFNQqyscaJ32oJ3mtLuyW8QQBeeDwsv
-	s8ykLXtYohg/cOChdq0IjwqYyKKIoSkwv0ZxDzdwlQ+2XVaup9gIGCudkik0+ku4
-	4BmhZ1R3KWwGGMa4E4r2S45Go3J2Cd2TrC6oqXy7IrKmU93ZrKrM5VRJHh/ah9ID
-	TCIc6w/X7lR/ulPvOY2AkQfIlC4d4B0f6+qz6Fj6jbeCODX9lZqTAuMsb+86r4h9
-	ySDolfEsjOuqOSFUnbIsUP/nuSA1giZRf/sBAzuwmg==
-X-ME-Sender: <xms:OmfTZZLhcUGycHL_EhXq-N6BBdvxzXAJGMhFlXPD28xhCOskotjDGA>
-    <xme:OmfTZVJTtATnBqDEQIMSdqD72GOsGQduS5Tx8hwNQUkHTWfBzqC0Ece0u1-a8iczK
-    SKngwDB9Ft9XYRaYA>
-X-ME-Received: <xmr:OmfTZRt-m-amfVdTgVtEzceYRtGhfTvqWVHfpmnulS1ENuaOSIk0iMzS1jIK1acQajaXfMn9ncYPaP0jjebZhzspk6hYF18URqUAyGaQ5W4d8PzS>
+	fm1; t=1708353343; x=1708439743; bh=segsBc6Mw5ZHwo2eIOfTAdXkpeQ/
+	xRY4CPHDshzH2hw=; b=keB9Ldmip4+IMoJhqjza+pQ+fafFnDbIRHvIxWIbHW8R
+	V09AE8WonPVmZSux3d6MpGXqNmn3C3TvHKwf2VxUysDl7kuxY7sVbekI2iE3p5Fa
+	TDjb+aQ+pqB8CLhp9ce2FbF/oOGNVu6bYtT/he75tGhMrMoY5a4WE2fZ7X+T9mln
+	8c7IN1zGhDfbv6Ai4FMZ5YoJWg41TWhKmaYiGPWYJwmEAQa6R63xorB5MSBxtg1E
+	vtj1C8g6NqIioqzUw3SzcGrAxjKVetpNR8l2jcdhm6WeTOugMRee4LszOi/qqTzo
+	O3Lg5JLU4LCNCOUqadBix4OJIX38mUz1C0Gk5ibPuw==
+X-ME-Sender: <xms:PmfTZdKRUJiblLgr9MN6A0Nx5aUYb3MAZQK4mfT_a1uk2PvMpIEc7g>
+    <xme:PmfTZZLe3g7YtmfEiIwHybfFsS4sOu0fJkJ1yW9NpvhacX1rxJDgKhxFvQTdXWx6n
+    Wx7W5yD_JBFJ3EWfA>
+X-ME-Received: <xmr:PmfTZVtI1FLXhBvzWN9d97pmJf8DNBacAhVDg6Hfvg6CXkBIY9fCKEVIxmngy3GqSCvvbBx82zhA4uKPTiwXoCCS3ICXDK0ORdXbjfnU0AMMG6uk>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdekgdeihecutefuodetggdotefrodftvf
     curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
     uegrihhlohhuthemuceftddtnecunecujfgurhepfffhvffukfhfgggtuggjsehgtderre
     dttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhk
     shdrihhmqeenucggtffrrghtthgvrhhnpeehgefhtdefueffheekgfffudelffejtdfhvd
-    ejkedthfehvdelgfetgfdvtedthfenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgr
+    ejkedthfehvdelgfetgfdvtedthfenucevlhhushhtvghrufhiiigvpedunecurfgrrhgr
     mhepmhgrihhlfhhrohhmpehpshesphhkshdrihhm
-X-ME-Proxy: <xmx:OmfTZaZfSNMZrOr2u8pDM0EShBkV0a9L_m6c1NnboPCmmvxML_B3mw>
-    <xmx:OmfTZQaiC1luV3ILcyi9fKMRHDMeSfg1oL-ZG2AnDHKn-_63jvz2FQ>
-    <xmx:OmfTZeD8828PaGkSe4TKP-6wmZO41SaphkuZa7akKAZsWGSBATrb4A>
-    <xmx:OmfTZbx5EThNT3bTGIH3PQN0wVFEZEMNCLkSqON4Tv-cf_vnW1gYWw>
+X-ME-Proxy: <xmx:P2fTZeb8K-BjdOIULn7w8HNWgy5PI4vZfw0Y2HY2pFnwEZAwtagdYg>
+    <xmx:P2fTZUYWPcwqFmklwoqTiCEEjy0DGpHMJ79xTpABJd6_6SBu6merHg>
+    <xmx:P2fTZSD8c5UMR2Kjdja3O-BaZS2AhwN8iBi90nRdQMGgXJsRHEjLlw>
+    <xmx:P2fTZfx-U7oQSDrgGsl_Z-kG3hLEoKpzPd2t3xUegwpc8y99LdOchQ>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Mon, 19 Feb 2024 09:35:37 -0500 (EST)
+ <git@vger.kernel.org>; Mon, 19 Feb 2024 09:35:42 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 5b9765d2 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	by vm-mail (OpenSMTPD) with ESMTPSA id 78eae9a2 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
 	for <git@vger.kernel.org>;
-	Mon, 19 Feb 2024 14:31:37 +0000 (UTC)
-Date: Mon, 19 Feb 2024 15:35:35 +0100
+	Mon, 19 Feb 2024 14:31:42 +0000 (UTC)
+Date: Mon, 19 Feb 2024 15:35:40 +0100
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
-Subject: [PATCH 5/6] refs: stop resolving ref corresponding to reflogs
-Message-ID: <a7459b9483660d1a44df500aaee85ad38146eb02.1708353264.git.ps@pks.im>
+Subject: [PATCH 6/6] builtin/reflog: introduce subcommand to list reflogs
+Message-ID: <cddb2de9394a07e405682e9ccdfdf5de92bb9092.1708353264.git.ps@pks.im>
 References: <cover.1708353264.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -79,122 +79,238 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="YmuXj31R0eaBRnmK"
+	protocol="application/pgp-signature"; boundary="SR1iqY/gf7/39r02"
 Content-Disposition: inline
 In-Reply-To: <cover.1708353264.git.ps@pks.im>
 
 
---YmuXj31R0eaBRnmK
+--SR1iqY/gf7/39r02
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-The reflog iterator tries to resolve the corresponding ref for every
-reflog that it is about to yield. Historically, this was done due to
-multiple reasons:
+While the git-reflog(1) command has subcommands to show reflog entries
+or check for reflog existence, it does not have any subcommands that
+would allow the user to enumerate all existing reflogs. This makes it
+quite hard to discover which reflogs a repository has. While this can
+be worked around with the "files" backend by enumerating files in the
+".git/logs" directory, users of the "reftable" backend don't enjoy such
+a luxury.
 
-  - It ensures that the refname is safe because we end up calling
-    `check_refname_format()`. Also, non-conformant refnames are skipped
-    altogether.
-
-  - The iterator used to yield the resolved object ID as well as its
-    flags to the callback. This info was never used though, and the
-    corresponding parameters were dropped in the preceding commit.
-
-  - When a ref is corrupt then the reflog is not emitted at all.
-
-We're about to introduce a new `git reflog list` subcommand that will
-print all reflogs that the refdb knows about. Skipping over reflogs
-whose refs are corrupted would be quite counterproductive in this case
-as the user would have no way to learn about reflogs which may still
-exist in their repository to help and rescue such a corrupted ref. Thus,
-the only remaining reason for why we'd want to resolve the ref is to
-verify its refname.
-
-Refactor the code to call `check_refname_format()` directly instead of
-trying to resolve the ref. This is significantly more efficient given
-that we don't have to hit the object database anymore to list reflogs.
-And second, it ensures that we end up showing reflogs of broken refs,
-which will help to make the reflog more useful.
-
-Note that this really only impacts the case where the corresponding ref
-is corrupt. Reflogs for nonexistent refs would have been returned to the
-caller beforehand already as we did not pass `RESOLVE_REF_READING` to
-the function, and thus `refs_resolve_ref_unsafe()` would have returned
-successfully in that case.
+Introduce a new subcommand `git reflog list` that lists all reflogs the
+repository knows of to fill this gap.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- refs/files-backend.c    | 12 ++----------
- refs/reftable-backend.c |  6 ++----
- 2 files changed, 4 insertions(+), 14 deletions(-)
+ Documentation/git-reflog.txt |  3 ++
+ builtin/reflog.c             | 34 ++++++++++++++++++
+ t/t1410-reflog.sh            | 69 ++++++++++++++++++++++++++++++++++++
+ 3 files changed, 106 insertions(+)
 
-diff --git a/refs/files-backend.c b/refs/files-backend.c
-index 2b3c99b00d..741148087d 100644
---- a/refs/files-backend.c
-+++ b/refs/files-backend.c
-@@ -2130,17 +2130,9 @@ static int files_reflog_iterator_advance(struct ref_=
-iterator *ref_iterator)
- 	while ((ok =3D dir_iterator_advance(diter)) =3D=3D ITER_OK) {
- 		if (!S_ISREG(diter->st.st_mode))
- 			continue;
--		if (diter->basename[0] =3D=3D '.')
-+		if (check_refname_format(diter->basename,
-+					 REFNAME_ALLOW_ONELEVEL))
- 			continue;
--		if (ends_with(diter->basename, ".lock"))
--			continue;
--
--		if (!refs_resolve_ref_unsafe(iter->ref_store,
--					     diter->relative_path, 0,
--					     NULL, NULL)) {
--			error("bad ref for %s", diter->path.buf);
--			continue;
--		}
+diff --git a/Documentation/git-reflog.txt b/Documentation/git-reflog.txt
+index ec64cbff4c..a929c52982 100644
+--- a/Documentation/git-reflog.txt
++++ b/Documentation/git-reflog.txt
+@@ -10,6 +10,7 @@ SYNOPSIS
+ --------
+ [verse]
+ 'git reflog' [show] [<log-options>] [<ref>]
++'git reflog list'
+ 'git reflog expire' [--expire=3D<time>] [--expire-unreachable=3D<time>]
+ 	[--rewrite] [--updateref] [--stale-fix]
+ 	[--dry-run | -n] [--verbose] [--all [--single-worktree] | <refs>...]
+@@ -39,6 +40,8 @@ actions, and in addition the `HEAD` reflog records branch=
+ switching.
+ `git reflog show` is an alias for `git log -g --abbrev-commit
+ --pretty=3Doneline`; see linkgit:git-log[1] for more information.
 =20
- 		iter->base.refname =3D diter->relative_path;
- 		return ITER_OK;
-diff --git a/refs/reftable-backend.c b/refs/reftable-backend.c
-index 889bb1f1ba..efbbf23c72 100644
---- a/refs/reftable-backend.c
-+++ b/refs/reftable-backend.c
-@@ -1659,11 +1659,9 @@ static int reftable_reflog_iterator_advance(struct r=
-ef_iterator *ref_iterator)
- 		if (iter->last_name && !strcmp(iter->log.refname, iter->last_name))
- 			continue;
++The "list" subcommand lists all refs which have a corresponding reflog.
++
+ The "expire" subcommand prunes older reflog entries. Entries older
+ than `expire` time, or entries older than `expire-unreachable` time
+ and not reachable from the current tip, are removed from the reflog.
+diff --git a/builtin/reflog.c b/builtin/reflog.c
+index 3a0c4d4322..63cd4d8b29 100644
+--- a/builtin/reflog.c
++++ b/builtin/reflog.c
+@@ -7,11 +7,15 @@
+ #include "wildmatch.h"
+ #include "worktree.h"
+ #include "reflog.h"
++#include "refs.h"
+ #include "parse-options.h"
 =20
--		if (!refs_resolve_ref_unsafe(&iter->refs->base, iter->log.refname,
--					     0, NULL, NULL)) {
--			error(_("bad ref for %s"), iter->log.refname);
-+		if (check_refname_format(iter->log.refname,
-+					 REFNAME_ALLOW_ONELEVEL))
- 			continue;
--		}
+ #define BUILTIN_REFLOG_SHOW_USAGE \
+ 	N_("git reflog [show] [<log-options>] [<ref>]")
 =20
- 		free(iter->last_name);
- 		iter->last_name =3D xstrdup(iter->log.refname);
++#define BUILTIN_REFLOG_LIST_USAGE \
++	N_("git reflog list")
++
+ #define BUILTIN_REFLOG_EXPIRE_USAGE \
+ 	N_("git reflog expire [--expire=3D<time>] [--expire-unreachable=3D<time>]=
+\n" \
+ 	   "                  [--rewrite] [--updateref] [--stale-fix]\n" \
+@@ -29,6 +33,11 @@ static const char *const reflog_show_usage[] =3D {
+ 	NULL,
+ };
+=20
++static const char *const reflog_list_usage[] =3D {
++	BUILTIN_REFLOG_LIST_USAGE,
++	NULL,
++};
++
+ static const char *const reflog_expire_usage[] =3D {
+ 	BUILTIN_REFLOG_EXPIRE_USAGE,
+ 	NULL
+@@ -46,6 +55,7 @@ static const char *const reflog_exists_usage[] =3D {
+=20
+ static const char *const reflog_usage[] =3D {
+ 	BUILTIN_REFLOG_SHOW_USAGE,
++	BUILTIN_REFLOG_LIST_USAGE,
+ 	BUILTIN_REFLOG_EXPIRE_USAGE,
+ 	BUILTIN_REFLOG_DELETE_USAGE,
+ 	BUILTIN_REFLOG_EXISTS_USAGE,
+@@ -238,6 +248,29 @@ static int cmd_reflog_show(int argc, const char **argv=
+, const char *prefix)
+ 	return cmd_log_reflog(argc, argv, prefix);
+ }
+=20
++static int show_reflog(const char *refname, void *cb_data UNUSED)
++{
++	printf("%s\n", refname);
++	return 0;
++}
++
++static int cmd_reflog_list(int argc, const char **argv, const char *prefix)
++{
++	struct option options[] =3D {
++		OPT_END()
++	};
++	struct ref_store *ref_store;
++
++	argc =3D parse_options(argc, argv, prefix, options, reflog_list_usage, 0);
++	if (argc)
++		return error(_("%s does not accept arguments: '%s'"),
++			     "list", argv[0]);
++
++	ref_store =3D get_main_ref_store(the_repository);
++
++	return refs_for_each_reflog(ref_store, show_reflog, NULL);
++}
++
+ static int cmd_reflog_expire(int argc, const char **argv, const char *pref=
+ix)
+ {
+ 	struct cmd_reflog_expire_cb cmd =3D { 0 };
+@@ -417,6 +450,7 @@ int cmd_reflog(int argc, const char **argv, const char =
+*prefix)
+ 	parse_opt_subcommand_fn *fn =3D NULL;
+ 	struct option options[] =3D {
+ 		OPT_SUBCOMMAND("show", &fn, cmd_reflog_show),
++		OPT_SUBCOMMAND("list", &fn, cmd_reflog_list),
+ 		OPT_SUBCOMMAND("expire", &fn, cmd_reflog_expire),
+ 		OPT_SUBCOMMAND("delete", &fn, cmd_reflog_delete),
+ 		OPT_SUBCOMMAND("exists", &fn, cmd_reflog_exists),
+diff --git a/t/t1410-reflog.sh b/t/t1410-reflog.sh
+index d2f5f42e67..6d8d5a253d 100755
+--- a/t/t1410-reflog.sh
++++ b/t/t1410-reflog.sh
+@@ -436,4 +436,73 @@ test_expect_success 'empty reflog' '
+ 	test_must_be_empty err
+ '
+=20
++test_expect_success 'list reflogs' '
++	test_when_finished "rm -rf repo" &&
++	git init repo &&
++	(
++		cd repo &&
++		git reflog list >actual &&
++		test_must_be_empty actual &&
++
++		test_commit A &&
++		cat >expect <<-EOF &&
++		HEAD
++		refs/heads/main
++		EOF
++		git reflog list >actual &&
++		test_cmp expect actual &&
++
++		git branch b &&
++		cat >expect <<-EOF &&
++		HEAD
++		refs/heads/b
++		refs/heads/main
++		EOF
++		git reflog list >actual &&
++		test_cmp expect actual
++	)
++'
++
++test_expect_success 'reflog list returns error with additional args' '
++	cat >expect <<-EOF &&
++	error: list does not accept arguments: ${SQ}bogus${SQ}
++	EOF
++	test_must_fail git reflog list bogus 2>err &&
++	test_cmp expect err
++'
++
++test_expect_success 'reflog for symref with unborn target can be listed' '
++	test_when_finished "rm -rf repo" &&
++	git init repo &&
++	(
++		cd repo &&
++		test_commit A &&
++		git symbolic-ref HEAD refs/heads/unborn &&
++		cat >expect <<-EOF &&
++		HEAD
++		refs/heads/main
++		EOF
++		git reflog list >actual &&
++		test_cmp expect actual
++	)
++'
++
++test_expect_success 'reflog with invalid object ID can be listed' '
++	test_when_finished "rm -rf repo" &&
++	git init repo &&
++	(
++		cd repo &&
++		test_commit A &&
++		test-tool ref-store main update-ref msg refs/heads/missing \
++			$(test_oid deadbeef) "$ZERO_OID" REF_SKIP_OID_VERIFICATION &&
++		cat >expect <<-EOF &&
++		HEAD
++		refs/heads/main
++		refs/heads/missing
++		EOF
++		git reflog list >actual &&
++		test_cmp expect actual
++	)
++'
++
+ test_done
 --=20
 2.44.0-rc1
 
 
---YmuXj31R0eaBRnmK
+--SR1iqY/gf7/39r02
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmXTZzYACgkQVbJhu7ck
-PpTjeBAApz/zGE+cTstVKZ0spSZoEwCsxqo42MMn2PFN/oHU3/Da3fsKIG1MTAJ6
-EwnAbgdGMGmRfhwFCFiXU++bY+j7Ea3lIFDAL4s8+j/oRE6TIfwXanV8oA7Aw9Tu
-Mvn0EIbF/q86SH3vDClJM+jvqIt39vfKI3MaRwPdklkDq/AHRYjd2G2tolUYJEzr
-D0+TuUWBM5iQMb6Tj+mE+Pz8keONvtETHpgB8p7ioYCLFZCXDmkMb6JhLMcdNtq7
-uEpH4CI3+aCUDud5uOI9/h/egrPywdzrf2wKzzP0KBt0rsq8uSEzVEIx0MSzwRPG
-ypmQsO4J/CMIVQMV5njdBGdKoowbAnGy1LCJMX/EU/cobyt7wPN2IIefZJGmShSS
-S2K0VtdKqZ3+YTotb4XgXD7nlRceFwBua8ee4LBKS+xG68X5oSfpemmC180baYhx
-ke6o5P8P0ejVRA/1fSHdZ1DvVQzmPp8r7z2N6RtaJKKPGC1bX4ZQIGXcm6aHH5Bn
-wpuTQX2htCQKdqFZMQRuCobdqlZctdEjh9K6YHZ3RSysJj1BEISl9JcGhYen/C7Z
-7hzDTEqpYTMf0Y8Wr7BPspCKlXt8SGBrzzhQXuz2YpD6DBynKz1ivkTVthyeUQj+
-/N/gFq4Y/CJKOMx88m7PSoikQIDnQNzFyoBTEd4unEHZbNhfVSY=
-=LYRN
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmXTZzsACgkQVbJhu7ck
+PpQKChAAroVrz3kB5MDw3YK2h4TFzbTkyRnMBS3URWUYSECsM7Bc18id9FxbXbWA
+IBxyZXrc04ut9vkOmljRzaqdMccF/xJtUyKBuEQuSTE1ftR0OLsvhuyhPxid1rcb
+vNt8KXaZDInkCuCtN/6pJ9GcdFwgXcgOqbEIW1WatITFJE0DmIXqnxRy3gjp3P2y
+NxZhdGyKc55HjWCBldRWb/Ixl/xNbgQRRvPJHU0G3qeuFgJwJdX9bSYucbz4bB6C
+zD44Z5yGM2dQ/9huqL2mwYV4zceCJw4FISJWWvXxvqL57Lfp6zPKdOfPVJZe6HYn
+erLo+nZwXkm2IoJwzN6RcxA2GQt2lZRSIbhz9HTCA78y2QKTslyFK2jLrH53wyLn
+V2tOWxW8IXMV0PDVI1/O7dSV2Nh7E0haMDrZpIUbefpDmm7Zn+rzAGGjLFJWYh+Q
+HX62qy/k9dJWs4RNNwvjtOMNqeYwDbydn/zKdJDiS9m7xSnD7etl0pcMFyewfhFH
+8oGM5MXNztFGVOkDxxQHPVAogZNoaT6Uqipy3C4BJ2W+EPKVGYh1vF9YrptrO9Qf
+WDOdJpjbLzvuB9EVddcnOsiJalq4VDSe2XlDYfZaAWKUt5zpEf9AOE7Ib7KMuXQP
+1tFth9CoAOVbP20ItYGYfMWdxNXB6W/Jv/pkAB1sRm0gy0bQr7M=
+=Yh21
 -----END PGP SIGNATURE-----
 
---YmuXj31R0eaBRnmK--
+--SR1iqY/gf7/39r02--
