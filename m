@@ -1,147 +1,187 @@
-Received: from DEU01-FR2-obe.outbound.protection.outlook.com (mail-fr2deu01on2112.outbound.protection.outlook.com [40.107.135.112])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail.manjaro.org (mail.manjaro.org [116.203.91.91])
+	(using TLSv1.2 with cipher DHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC9872D79D
-	for <git@vger.kernel.org>; Tue, 20 Feb 2024 06:54:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.135.112
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708412088; cv=fail; b=DCScj+seI2f9m3Aq9mNAGzgAS5y3BslFaf/+oSIxOqmcdSyEIqzaz1h0f9LPB02hzkVtVJfHgIiDnl1nf4tLZDR0iJAeESCMa2ziVT5wqXS84Ih+ySIpF0pr8uzc0/foVTtRquSJAxQ3eYoE1+11dV8GhOhNzY8RsUryP+zHf1w=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708412088; c=relaxed/simple;
-	bh=hjN+CvGcGZHSpdnZTDu5M9/h4fMvj8egL+0Z42OabDk=;
-	h=From:To:CC:Subject:Date:Message-ID:Content-Type:MIME-Version; b=mW9EZQEaiRMmdOPW2c8nE9WcHxY3J+jaVEQMGvj7N/Dt8qhBkSPs26qkhS8dXub6NrprYwSwM4anfLEUg9m9UtW655fWDdFfLBDCvoqrOHWkBUxpSN3nLUdZNUdc1TzdD8LgfsKN/BITnEfuFQ6l1SEoj/smDZtmyLWtoQwsP4U=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastec.de; spf=pass smtp.mailfrom=fastec.de; dkim=pass (1024-bit key) header.d=fastecgmbh.onmicrosoft.com header.i=@fastecgmbh.onmicrosoft.com header.b=Ch7u/VW4; arc=fail smtp.client-ip=40.107.135.112
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastec.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastec.de
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 447695B5C1
+	for <git@vger.kernel.org>; Tue, 20 Feb 2024 07:05:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=116.203.91.91
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1708412704; cv=none; b=CUS9VlElv8MQ4Z3SS3OaWSzM5Pk04CJIkegUOGot3bUmsyrRTJ2yTcfVJUOcjGeIiltH4T5OhSXg6DArpnx1VxmPvalbh7EmXgs0YT5ClWJSnM475aaSHB0bhjszAoOHNjqVZOzmrKb7rDBp+hDYWZC9jgemmnj5O47gt2EGFCk=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1708412704; c=relaxed/simple;
+	bh=IVQfKT0DFVY8eZIAArOG3UIuxNu9j6lTZaidnhdNoEs=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=Kn++6s2LGm1ZQ8c1o6JB7QRPMJLRQMw+zL8pVpP3pHdMt7FZdkNppuifPobHVLw6jrpDyATpOghePLrqy5y7NIMqgfk79TqRI1jRz+JFZc5Trus8XpdTnQd0u0yZxKeyE4XkhnighLBD6CpmqG7DvwWKQEN6AxMeR1VPrWLcGIw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org; spf=pass smtp.mailfrom=manjaro.org; dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b=CUhOnwaY; arc=none smtp.client-ip=116.203.91.91
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=manjaro.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=fastecgmbh.onmicrosoft.com header.i=@fastecgmbh.onmicrosoft.com header.b="Ch7u/VW4"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=L2ze3DiBiY8U39WLbknv3hWw0zBJ2zYhCHB8vd67VdzO3TFTmd2DJodzhaLxnj7bsJCScbde/d1bsxvssovC8AiYrzghfMQ+W4EIGxVFRGdrmQjheJObaHCQ3uVhiiaI0raF/49JtSSgsQPb1NIal6LrT2Xu0UnCc7B+7DlxbKLAKXm6Ecbyh8dE2HTqNkrS6dVY+vghbU+J84N4HL956dQFZEuOVuCHQel1ZoSqJXKl53abbCJc8zmYj8hj++UOqr0vHV7nqEFbxi7MmKAdB/l3iN4Y6IqlTRjys8MhMHw6CkRIPIKPr87IypE4F5OUjtGbDnzdz6i9/qly7HfqZw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=hjN+CvGcGZHSpdnZTDu5M9/h4fMvj8egL+0Z42OabDk=;
- b=WS5GC9ZHhfztlcs06y75HFXW1xfPpFZIag5f4naIEaP8bITYnfqube8R2tZ97GEp0nsn826iYOH25hWWCYnLMUcyjQNIeQZioH/2lgDavQ4SiVTpkVejy/ylRLgVJQwXyCa+/dGROkO0Er9diFfLdcBqWQR4H4ic2vtHshpeGT7vfzEQ0ZlZ+MTGKctlIoMbrt8NzIStfsSjE/4toE7WxuG5SamefHwATJGVW9FrdJf63uzzDNUILkPN3l9qKrh1lF09Qt994p7WQpR0lNQ2+QMiK8bBdBpFXMp9K6pvFtiYoCEYAJ+erVtzobVukE4CYsZxOGVG1g/fmC6l0xJuaw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=fastec.de; dmarc=pass action=none header.from=fastec.de;
- dkim=pass header.d=fastec.de; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=fastecgmbh.onmicrosoft.com; s=selector1-fastecgmbh-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=hjN+CvGcGZHSpdnZTDu5M9/h4fMvj8egL+0Z42OabDk=;
- b=Ch7u/VW4NN2hiuF3iZHYwPo3qifuipB7CXanB/+bl2pDVtf+pjEJhcrxd3L8C63mMqpWrVPjT+Fgb8WmgzXXIiKf46o7lNt/zHGX1EDnoCF6zKh+RnPgnnuOtWzuiIKbtJ4eaWWrsDQQXEsQM/hpIQPeNSzFWRlmPhypZZZ/GcQ=
-Received: from FR2P281MB1686.DEUP281.PROD.OUTLOOK.COM (2603:10a6:d10:8e::8) by
- FR2P281MB1494.DEUP281.PROD.OUTLOOK.COM (2603:10a6:d10:8d::8) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.7292.38; Tue, 20 Feb 2024 06:54:42 +0000
-Received: from FR2P281MB1686.DEUP281.PROD.OUTLOOK.COM
- ([fe80::6cc0:4279:43dd:b928]) by FR2P281MB1686.DEUP281.PROD.OUTLOOK.COM
- ([fe80::6cc0:4279:43dd:b928%3]) with mapi id 15.20.7292.033; Tue, 20 Feb 2024
- 06:54:42 +0000
-From: Dominik von Haller <vonhaller@fastec.de>
-To: Junio C Hamano <gitster@pobox.com>
-CC: "brian m. carlson" <sandals@crustytoothpaste.net>, "git@vger.kernel.org"
-	<git@vger.kernel.org>, "rsbecker@nexbridge.com" <rsbecker@nexbridge.com>
-Subject: Re: Why does the includeif woks how it does?
-Thread-Topic: Re: Why does the includeif woks how it does?
-Thread-Index: AdpjxirXp/OKv1/PSCSFyDBXCDgpSg==
-Date: Tue, 20 Feb 2024 06:54:42 +0000
-Message-ID:
- <FR2P281MB16867E5D8C722A787F6CFEDABA502@FR2P281MB1686.DEUP281.PROD.OUTLOOK.COM>
-Accept-Language: en-US, en-GB
-Content-Language: en-US
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=fastec.de;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: FR2P281MB1686:EE_|FR2P281MB1494:EE_
-x-ms-office365-filtering-correlation-id: 1a144a80-44b0-4d54-801d-08dc31e0d0dc
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info:
- 8wUcRAVRf1CrSETSNuaRsQ7QdHnM5bvlIW9j+LDDhRbk7LTx7icXHPWofkLYmCkpt4vcrippGxZ+UOCa+QHvxLkrpfvIYc8lS0qyjgJaO8Ckb8valA724TaYFK5kD418JQ1we8+ufz1my7JeYeY15t/roYqebJU1hhac+Z27skcLClsiHlE8D2SVaUGcGhHds3B07EJJKi3cWHEmrSCjvDXVRl9Z8A4XJ465xnvCJrZ52MUNiH8lONI5JpL4WQSd8sWbIqatz7qSWDHUdyIhzdIGL/08h/OxHE7x2trg2ZBCZx7gZSQoocPgJUZ96D0UEgxeVf5QdaQSKtZ2Ll6cEFbbOYEa/QeGuqv2V/1nVT8/prJbganBR5hYSVZSRHLLJCnkoiJgQ/sPyg7ZuTtHyuCyVREHs480RzDuIzbFzqvbbdi5mj4QrekTfh+dVsVh0UQoIsAf8okoPcvYGSGrRWCfBMkZVXQ/Kk/qYsDFZAMZ4Y/aPL9jcr0jrcJ2QjCxFNjm+tFe7mWJARihH/pqlGJcqVY3LpLvRMavRCtFJ1KRdQE0HLUv4PlM5kQwLN/QxxcRt+7Kurf+jOvzOQQiBC3X7fUF5GggFlvTW/Zo4HNfFjxOlvFYh0dTDWHbVoVh
-x-forefront-antispam-report:
- CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:FR2P281MB1686.DEUP281.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(13230031)(38070700009);DIR:OUT;SFP:1102;
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0:
- =?iso-8859-1?Q?xPrtrK8swgohtWYDwMMFdH5154A58/qeb/bYAWXUhfCtrq1Z/PlPlnofUX?=
- =?iso-8859-1?Q?pQAzza/L4XqrFbFOAIr24GdXzRaIVX2ypKBfE+4lD+RY/U9j2FAvQl/SBt?=
- =?iso-8859-1?Q?ZZAngXuFe+rR+ojxb9Hzq9dG8Czad0xABSHZVBGFfupXkCOvzEkaCgYgLu?=
- =?iso-8859-1?Q?njE1xcP6aWxU6ohgfgGYn1zjxczfkF5a935QSQgLUlqoxGEh+u1D4WRiN2?=
- =?iso-8859-1?Q?J6eOM7T3egdyGxCUAbPf1H80Vhz88m32SzP18RMXVCa93M64lYpopeE1+3?=
- =?iso-8859-1?Q?kR82MomZ+1/gm1N7kFUsstef224kl66E7osEuSvBaMxsaZgeFsQGvu1d9Y?=
- =?iso-8859-1?Q?BdZg4J9eTWdC+qhjuxP7Ogim7Q+42Myjp0+dDkcoYVCsQDHnJTTggbiWfW?=
- =?iso-8859-1?Q?uNlvjWOP0eSKepM5B97WgkYZGMxoyJbAF27/I4ncKzrbUuixHu9lD/T7I5?=
- =?iso-8859-1?Q?y/8aslTa6EwTCH4l5MYITD04mYFilevYyBfNmULvgrj2XgGli2tvXrmkzs?=
- =?iso-8859-1?Q?B90JT+WoAGIMEsGxL7LQwqlB+yJveg7xU7YpXKzZf1cBOCsozGxtjGJsMM?=
- =?iso-8859-1?Q?NcrD/669rJkANoC4akcs9QPKxTcEe3kI+rx0PdvJQ871LxMN3E0YzcG3d8?=
- =?iso-8859-1?Q?esoz8iQk3NbzeRE7hWls8Ajo1rKJ1WvugHsT9ZRoD7DbMVwyKyCMXYyDM+?=
- =?iso-8859-1?Q?U6Ln6qI0HwWtQYoNEYto6ivRwGcilUo5DoqtwZ40BgiMCwcnIygC8Ev55f?=
- =?iso-8859-1?Q?r21b+DlAJZFtb+dJSe0SARjrLGTEGmrMBU4iXvqn3uT/CSDpnNGX28Xy5o?=
- =?iso-8859-1?Q?0Url28ij4+OlWPjC7vsy82iFMGtC0epmb5Hn0t615NaPc+mlocZo6bKtYI?=
- =?iso-8859-1?Q?SHnHccaJKTGEKdWZf++GyQHwSjKNmK1pKvBMAiMXV/iAVd2GwqBJU0+uzO?=
- =?iso-8859-1?Q?awEmP3rWgLQBZJYT803L97flq2TPktKq4zBVC8a8/hDXK1KKwFj+SLct+i?=
- =?iso-8859-1?Q?KG6jNRWb1nMN9CGPyTdI2Rp1GbIu2TqayOj7pchVBwzbn32Wwl9ewL7QL6?=
- =?iso-8859-1?Q?m42falqJbupD50/ZGhj759+AhTjvyXsnq9/yvG86+OWLVVGWdtb4nb9Yz2?=
- =?iso-8859-1?Q?YFusIcUdAEn3TuOWFzSRiHVBdpNpHOGRfMDbjMasixeDdPDTorbQ4kA8yr?=
- =?iso-8859-1?Q?W1VtwJ//AD9IWD7e3exUrJQ7G6XEt/qtE4CSpofpEO+4EcJv+3wGdyKQhj?=
- =?iso-8859-1?Q?saD9wo53etuWCCX+4C8X/WW9Um9p531I0c1ZFRkZAYW8lusehNTA3uKwQU?=
- =?iso-8859-1?Q?esegkp57yF8yk6s42FQ9r0IeruLrQnNZHVn307V8BUTm3wYn8YyPjhds/d?=
- =?iso-8859-1?Q?XhYfAMDm6p5BEWIp+Lo+604yCiBIKnQsFloUSWvd7nQOJBAbVPoc1KvgEv?=
- =?iso-8859-1?Q?kbcmFUsqRNXU1UiE7R0Qy3Qqve9ZPBQSGQZGlAc+1Z/8i7VUKTR7g2BFPy?=
- =?iso-8859-1?Q?5soo95Z96YaBU+Sa6M4x6I/Z7M4j/idcyYFv2Dm/tfxXWCtHss21bCxNAM?=
- =?iso-8859-1?Q?iX80OAuRFsbY9XN/J8Ifsw1jpWlecpvIfQzzCm0GXnjjrbv6DFprc5dTSJ?=
- =?iso-8859-1?Q?rD82PK9qSxEJsHH+aLnlj66EN8Ac4odGI/nWpmFs/TvDpXNWw75Ofk3KsQ?=
- =?iso-8859-1?Q?pjyRlFmWN69xj753FgWOEZ26SGAVifpFYtUV2lAI?=
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
+	dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b="CUhOnwaY"
+From: Dragan Simic <dsimic@manjaro.org>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=manjaro.org; s=2021;
+	t=1708412698;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=Yy9qBYU7oOPGGj9DAV1HXLImqJX8VPLn7pBUnHnmL+M=;
+	b=CUhOnwaYZGlR8nn/JRWVfjtSybtOVhhJF6Y+rUrSlSf+fAZBb/Fxhre4ukis2I4F4V9K44
+	gL02z1lnqCIRu+0PZGmyL2KfmNjWK9+NARROe07bIarngXXVYBpg+GdYLZpHqqpfbYEOw9
+	MopxeXdMjtOFE+vvud8i4zdPW6e4Z9xcLEhmerwU7/UNzqio/LLGbnWrv9kwFHozLnPTPC
+	ndOkWRn/hHF2SYw4Qjr7Y0WAdFtx2d3YH+eihhemKixGo1GxzvHmL/T5KbMTa8G822Zisz
+	ULV5HiYaY2awf+uKHRqIuoZcHeNaoe0Trc49CMWL4lZG0Qx+YaB5zWYgUNNa0Q==
+To: git@vger.kernel.org
+Cc: gitster@pobox.com
+Subject: [PATCH v2] documentation: send-email: use camel case consistently
+Date: Tue, 20 Feb 2024 08:04:52 +0100
+Message-Id: <180f597d4587d700f48017ae22b3b0ad06ad011f.1708412193.git.dsimic@manjaro.org>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-OriginatorOrg: fastec.de
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: FR2P281MB1686.DEUP281.PROD.OUTLOOK.COM
-X-MS-Exchange-CrossTenant-Network-Message-Id: 1a144a80-44b0-4d54-801d-08dc31e0d0dc
-X-MS-Exchange-CrossTenant-originalarrivaltime: 20 Feb 2024 06:54:42.5778
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 1f95ea7c-9a3d-4add-988c-01b7cee9a358
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: KO7Vo2ZrVGS0AA2ZhsOOmZawPxWBlkEj7vACrJjsVoVaqEjDMTnSAXb6gM36X6R6Yuk04YSPhgQlealKAECXEQ==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: FR2P281MB1494
+Content-Transfer-Encoding: 8bit
+Authentication-Results: ORIGINATING;
+	auth=pass smtp.auth=dsimic@manjaro.org smtp.mailfrom=dsimic@manjaro.org
 
-Thanks, you all for your insights. <3
+Correct a few random "sendemail.*" configuration parameter names in the
+documentation that, for some reason, didn't use camel case format.
 
+Signed-off-by: Dragan Simic <dsimic@manjaro.org>
+---
 
-So to summarize, it was implemented through a gitdir because of possible co=
-nfusions with the working directory. And there is no other implementation b=
-ecause the use case is not there.
+Notes:
+    The version 2 includes feedback from Junio, by changing "Ssl" to "SSL"
+    in a couple of places where "sendemail.smtpSSLCertPath" is mentioned.
+    There are already instances of "SSL" being used, for example in various
+    "http.proxySSL*" configuration parameter names.
 
-For the new implementation I would always use the working directory. If set=
- with git -C than use that. Should also not be a Problem because the workin=
-g directory it is set internally anyway.
+ Documentation/config/sendemail.txt | 12 ++++++------
+ Documentation/git-send-email.txt   | 18 +++++++++---------
+ 2 files changed, 15 insertions(+), 15 deletions(-)
 
-
-As far as the possible implementation of this goes, I would prefer an inclu=
-deif with an extra option dir instead of gitdir. This would prevent confusi=
-on between includewhere and includeif.
-
-The mentioned Problems seem to be easily figured out.
-Every includeif =3D=3D true will get included. Every more specific path wil=
-l overwrite properties if set before. Gitdir is more specific than just dir=
-.
-Somewhat like that I would say is very intuitive.
-
-Another possible approach which I would also say is logical is a top-down a=
-pproach. Every Includeif would be executed from top to bottom. Every true i=
-ncludeif will be included and as before would overwrite properties if neces=
-sary.=20
-
-
-Best regards
-Dominik von Haller=A0
+diff --git a/Documentation/config/sendemail.txt b/Documentation/config/sendemail.txt
+index 7fc770ee9e69..6a869d67eb90 100644
+--- a/Documentation/config/sendemail.txt
++++ b/Documentation/config/sendemail.txt
+@@ -8,7 +8,7 @@ sendemail.smtpEncryption::
+ 	See linkgit:git-send-email[1] for description.  Note that this
+ 	setting is not subject to the 'identity' mechanism.
+ 
+-sendemail.smtpsslcertpath::
++sendemail.smtpSSLCertPath::
+ 	Path to ca-certificates (either a directory or a single file).
+ 	Set it to an empty string to disable certificate verification.
+ 
+@@ -62,27 +62,27 @@ sendemail.chainReplyTo::
+ sendemail.envelopeSender::
+ sendemail.from::
+ sendemail.headerCmd::
+-sendemail.signedoffbycc::
++sendemail.signedOffByCc::
+ sendemail.smtpPass::
+-sendemail.suppresscc::
++sendemail.suppressCc::
+ sendemail.suppressFrom::
+ sendemail.to::
+-sendemail.tocmd::
++sendemail.toCmd::
+ sendemail.smtpDomain::
+ sendemail.smtpServer::
+ sendemail.smtpServerPort::
+ sendemail.smtpServerOption::
+ sendemail.smtpUser::
+ sendemail.thread::
+ sendemail.transferEncoding::
+ sendemail.validate::
+ sendemail.xmailer::
+ 	These configuration variables all provide a default for
+ 	linkgit:git-send-email[1] command-line options. See its
+ 	documentation for details.
+ 
+-sendemail.signedoffcc (deprecated)::
+-	Deprecated alias for `sendemail.signedoffbycc`.
++sendemail.signedOffCc (deprecated)::
++	Deprecated alias for `sendemail.signedOffByCc`.
+ 
+ sendemail.smtpBatchSize::
+ 	Number of messages to be sent per connection, after that a relogin
+diff --git a/Documentation/git-send-email.txt b/Documentation/git-send-email.txt
+index d1ef6a204e68..8264f8738093 100644
+--- a/Documentation/git-send-email.txt
++++ b/Documentation/git-send-email.txt
+@@ -138,7 +138,7 @@ Note that no attempts whatsoever are made to validate the encoding.
+ 
+ --compose-encoding=<encoding>::
+ 	Specify encoding of compose message. Default is the value of the
+-	'sendemail.composeencoding'; if that is unspecified, UTF-8 is assumed.
++	'sendemail.composeEncoding'; if that is unspecified, UTF-8 is assumed.
+ 
+ --transfer-encoding=(7bit|8bit|quoted-printable|base64|auto)::
+ 	Specify the transfer encoding to be used to send the message over SMTP.
+@@ -174,7 +174,7 @@ Sending
+ 	Specify a command to run to send the email. The command should
+ 	be sendmail-like; specifically, it must support the `-i` option.
+ 	The command will be executed in the shell if necessary.  Default
+-	is the value of `sendemail.sendmailcmd`.  If unspecified, and if
++	is the value of `sendemail.sendmailCmd`.  If unspecified, and if
+ 	--smtp-server is also unspecified, git-send-email will search
+ 	for `sendmail` in `/usr/sbin`, `/usr/lib` and $PATH.
+ 
+@@ -269,7 +269,7 @@ must be used for each option.
+ 	certificates concatenated together: see verify(1) -CAfile and
+ 	-CApath for more information on these). Set it to an empty string
+ 	to disable certificate verification. Defaults to the value of the
+-	`sendemail.smtpsslcertpath` configuration variable, if set, or the
++	`sendemail.smtpSSLCertPath` configuration variable, if set, or the
+ 	backing SSL library's compiled-in default otherwise (which should
+ 	be the best choice on most platforms).
+ 
+@@ -313,7 +313,7 @@ Automating
+ 	Specify a command to execute once per patch file which
+ 	should generate patch file specific "To:" entries.
+ 	Output of this command must be single email address per line.
+-	Default is the value of 'sendemail.tocmd' configuration value.
++	Default is the value of 'sendemail.toCmd' configuration value.
+ 
+ --cc-cmd=<command>::
+ 	Specify a command to execute once per patch file which
+@@ -348,19 +348,19 @@ Automating
+ 
+ --[no-]signed-off-by-cc::
+ 	If this is set, add emails found in the `Signed-off-by` trailer or Cc: lines to the
+-	cc list. Default is the value of `sendemail.signedoffbycc` configuration
++	cc list. Default is the value of `sendemail.signedOffByCc` configuration
+ 	value; if that is unspecified, default to --signed-off-by-cc.
+ 
+ --[no-]cc-cover::
+ 	If this is set, emails found in Cc: headers in the first patch of
+ 	the series (typically the cover letter) are added to the cc list
+-	for each email set. Default is the value of 'sendemail.cccover'
++	for each email set. Default is the value of 'sendemail.ccCover'
+ 	configuration value; if that is unspecified, default to --no-cc-cover.
+ 
+ --[no-]to-cover::
+ 	If this is set, emails found in To: headers in the first patch of
+ 	the series (typically the cover letter) are added to the to list
+-	for each email set. Default is the value of 'sendemail.tocover'
++	for each email set. Default is the value of 'sendemail.toCover'
+ 	configuration value; if that is unspecified, default to --no-to-cover.
+ 
+ --suppress-cc=<category>::
+@@ -384,7 +384,7 @@ Automating
+ - 'all' will suppress all auto cc values.
+ --
+ +
+-Default is the value of `sendemail.suppresscc` configuration value; if
++Default is the value of `sendemail.suppressCc` configuration value; if
+ that is unspecified, default to 'self' if --suppress-from is
+ specified, as well as 'body' if --no-signed-off-cc is specified.
+ 
+@@ -471,7 +471,7 @@ Information
+ 	Instead of the normal operation, dump the shorthand alias names from
+ 	the configured alias file(s), one per line in alphabetical order. Note
+ 	that this only includes the alias name and not its expanded email addresses.
+-	See 'sendemail.aliasesfile' for more information about aliases.
++	See 'sendemail.aliasesFile' for more information about aliases.
+ 
+ 
+ CONFIGURATION
