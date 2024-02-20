@@ -1,89 +1,74 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2E895786D
-	for <git@vger.kernel.org>; Tue, 20 Feb 2024 02:57:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE04F2E63B
+	for <git@vger.kernel.org>; Tue, 20 Feb 2024 03:03:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708397845; cv=none; b=sL8WAJ+Jv+hYRZhQh6Ve/vhsj7O+ksqwo0QWSpk0neFhivE8J6+b9oUfaABOnOms/rp1a+qyWpLa11AWvEJci4/L14xeIk+dxJWmHikzCeuOyfxUvJPrE/3mJYzoAjH8UQRN92XNp1WjAYpz+/PQiRmKcUT8GeR8vh64vHSxAGI=
+	t=1708398214; cv=none; b=AzApPKm4B4H54Rxch2XGmJ3dPmiSONV5LUwRzonoPaZR37d+qTY2Uv1RKP1k5lsmYI/briRElmNPce+Y3qydEnINek4+PGZ7oowaJIuTjNrvuWAqOAk2eSu6zeYpuNfHe7CA2qdaV1i7Pvmx8J02jv21MQ0xfDkQI4uok4ZJ2ho=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708397845; c=relaxed/simple;
-	bh=Ypshan5Qy11ShtlMmsxWLZraCKujbLICi23Ae6XGElY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=qb/0s0y6h+MSKdY6d+eM3rJmTcBtaZTEX6xuw+TflbWf+i6zS1hRBYqEqQhL7aBdesp0hSSizIZBN4BtKGvI4ioZtIyzAQI//AqEEhM/iqz7GnzUy4KD2rAOx8OHutc982nENK7YllS/LGGSGNgIfhIgCs3uBxAmJJ0DRARK4ik=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
-Received: (qmail 23501 invoked by uid 109); 20 Feb 2024 02:57:23 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 20 Feb 2024 02:57:23 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 19077 invoked by uid 111); 20 Feb 2024 02:57:25 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 19 Feb 2024 21:57:25 -0500
-Authentication-Results: peff.net; auth=none
-Date: Mon, 19 Feb 2024 21:57:22 -0500
-From: Jeff King <peff@peff.net>
-To: phillip.wood@dunelm.org.uk
-Cc: Philip Peterson via GitGitGadget <gitgitgadget@gmail.com>,
-	git@vger.kernel.org,
-	Johannes Schindelin <johannes.schindelin@gmx.de>,
-	Emily Shaffer <nasamuffin@google.com>,
-	Philip Peterson <philip.c.peterson@gmail.com>
-Subject: Re: [PATCH 0/5] promise: introduce promises to track success or error
-Message-ID: <20240220025722.GE2713741@coredump.intra.peff.net>
-References: <pull.1666.git.git.1708241612.gitgitgadget@gmail.com>
- <bd340a27-bfb4-41b2-a1fa-356ab7dbbd36@gmail.com>
+	s=arc-20240116; t=1708398214; c=relaxed/simple;
+	bh=W3+E/HIQNm61CkHdMUbU0YxR2AieVhg0HiJ47q/22io=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=saJjxjaBGq/2BG1lMh9MuEufqnCLBdn4ZbgX2plPGxvtJIFfDviUUrQjOe4WYfzrVZKwjjqKMDa+XcoazjRUKrU4ZJ3ORhcOESNZoFx7uxBhuo/UZVd1oiWuGqrbX+iU0ZOUOUN9plag9XEbESVrVDuih43yNWUcbix0VY1SJYw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=UJrCXScj; arc=none smtp.client-ip=173.228.157.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="UJrCXScj"
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id 3760F27A75;
+	Mon, 19 Feb 2024 22:03:31 -0500 (EST)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=W3+E/HIQNm61CkHdMUbU0YxR2AieVhg0HiJ47q
+	/22io=; b=UJrCXScj9djyA5dA+Eh1pASfSlLEQWLMLDUgJvvbg+nipyD/E2gUQ9
+	FxZzmjuwiaFzbhZdhXOCIcFAaonWaQff8d3KcvFCFvMn3nJ0kURxXsa5CEqQCWks
+	IA88yvH5X0mG63JgcIvma+VB1rG2xxzQLPmvnL5gcuf0JIH8StI6o=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id 2FF3F27A74;
+	Mon, 19 Feb 2024 22:03:31 -0500 (EST)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.165.85])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 9407727A73;
+	Mon, 19 Feb 2024 22:03:27 -0500 (EST)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Jeff King <peff@peff.net>
+Cc: Maarten Bosmans <mkbosmans@gmail.com>,  git@vger.kernel.org,  Maarten
+ Bosmans <maarten.bosmans@vortech.nl>
+Subject: Re: [PATCH v2 1/5] log: Move show_blob_object() to log.c
+In-Reply-To: <20240220015928.GB2713741@coredump.intra.peff.net> (Jeff King's
+	message of "Mon, 19 Feb 2024 20:59:28 -0500")
+References: <20240205204932.16653-1-maarten.bosmans@vortech.nl>
+	<20240218195938.6253-1-maarten.bosmans@vortech.nl>
+	<20240218195938.6253-2-maarten.bosmans@vortech.nl>
+	<xmqqjzn0x72z.fsf@gitster.g>
+	<20240220015928.GB2713741@coredump.intra.peff.net>
+Date: Mon, 19 Feb 2024 19:03:26 -0800
+Message-ID: <xmqqy1bfx2f5.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <bd340a27-bfb4-41b2-a1fa-356ab7dbbd36@gmail.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 9E820D8E-CF9C-11EE-87E1-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
 
-On Mon, Feb 19, 2024 at 02:25:29PM +0000, Phillip Wood wrote:
+Jeff King <peff@peff.net> writes:
 
-> I think we'd be better served by some kind of structured error type like the
-> failure_result in this patch series that is allocated on the stack by the
-> caller at the entry point to the library and passed down the call chain.
-> That avoids the need for lots of dynamic allocations and allows us to
-> continue allocating "out" parameters on the stack. For example
-> 
->     int f(struct repository *r) {
-> 	struct object_id oid;
-> 
-> 	if (repo_get_oid(r, "HEAD", &oid))
-> 		return error(_("could not parse HEAD"))
-> 
-> 	/* use oid here */
->     }
-> 
-> would become
->     int f(struct repository *r, struct error *err) {
-> 	struct object_id oid;
-> 
-> 	if (repo_get_oid(r, "HEAD", &oid))
-> 		return error(&err, _("could not parse HEAD"))
-> 
-> 	/* use oid here */
->     }
-> 
-> I'm sure this has been discussed in the past but I didn't manage to turn
-> anything up with a quick search of the archive on lore.kernel.org.
+> All that said, I'm not sure based on our previous discussion why we
+> can't just call stream_blob_to_fd(). Looking at show_blob_object(), most
+> of the logic is about recording the tree-context of the given name and
+> using it for textconv. But since we know we are feeding a bare oid,
+> that would never kick in. So I don't know if there's any value in
+> sharing this function more widely in the first place.
 
-There's some discussion in this sub-thread:
-
-  https://lore.kernel.org/git/20171103191309.sth4zjokgcupvk2e@sigill.intra.peff.net/
-
-that also references this earlier thread:
-
-  https://lore.kernel.org/git/20160927191955.mympqgylrxhkp24n@sigill.intra.peff.net/
-
-I still think this is a reasonable way to go. At one point I had a
-proof-of-concept conversion of some of the ref code, but I don't think I
-have it any more.
-
--Peff
+It is very nice that we do not need to touch this code move at all.
+Thanks, as usual, for a dose of sanity.
