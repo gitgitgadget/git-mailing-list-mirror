@@ -1,72 +1,104 @@
-Received: from mail-oi1-f170.google.com (mail-oi1-f170.google.com [209.85.167.170])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DAC028DBD
-	for <git@vger.kernel.org>; Tue, 20 Feb 2024 22:40:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 698D3154C07
+	for <git@vger.kernel.org>; Tue, 20 Feb 2024 22:50:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708468802; cv=none; b=IK+Om2B4wQ+7rrX0j0hf9V81SvzgWxZyelobZodWuXKC52mc+EdDVhJGzUJrA1gunBkXUvrGa8bKa9H8494dIOSWfit2L5OhZNhpkBynd1HAuVx0P94EU9zaWwtkNtyyFMWudhBQIHyLiSq8y6dQwgK7EaKuYcSmNdDHZx7995Y=
+	t=1708469451; cv=none; b=gVIymVKpBnX9Y0s99FNhGHXbujC0r9RGg4pCPoU7kmSlvb8hJJ/74yG8anEg/5uJSRbr1vBBsj+PC2NMNiqbkoHHwKOeARrxz2WSeJ95mCPfD+oQ37OVTTPG0iaxh32reDWoHUmtASNhm8qHylCyZ5bn5H0lZIPok8w3m2PoJ5k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708468802; c=relaxed/simple;
-	bh=N+LcXl2c4ZQ/j0yG4MEb2WwKyW+N8/SwEBtkSzc6oig=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=LLe65STOK3wbMiB1ZFG19jmUdDVLX9mys856JbS+EamHE1OxZdUX2yeX6KpMohWSdvWK15mcBaaaER4fedPGu8K68HPkzGh03MWVIK7xKTRcAkCTlpHzfJSd29UuGukQty2P8+cN6rT6+M2FzYkIJ04Kf1wR7vtuoJETYxiwM/Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.167.170
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-oi1-f170.google.com with SMTP id 5614622812f47-3bd4e6a7cb0so4213135b6e.3
-        for <git@vger.kernel.org>; Tue, 20 Feb 2024 14:40:00 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1708468799; x=1709073599;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=N+LcXl2c4ZQ/j0yG4MEb2WwKyW+N8/SwEBtkSzc6oig=;
-        b=duAr7CUIMKA9cqqklZLZ6Do/hDOriZZYoExlRZnSVUafEIRqWxUWQqAQELMjIOOfe7
-         6OuzboQkC5GX96zIZ3zOC48UBV8aWhHMrCt59l6XHTr56G4Gy0rg+qhGUQsA/N3wP8i4
-         h3q8hYnK+3Xr/S5tzmHkFvj2GtBXqj5aMbjCRZe/28cWn9oFMu55vziYx6NF/Mj7/ZoH
-         dS4uRDalUxefXAohtygFZEB3DjiKP+doG8QDkP56XULFXYPuHfd6gFRpSp6HQ+KedI5y
-         w2OGD1AORtNa5oEeXwp7DrSa0SXh2up9bVMQ3ITy4Q6/ukQUFBzkI/xCA2DIJRjH50od
-         U73g==
-X-Gm-Message-State: AOJu0YzktdHgH+6YA1Kr6nM7bZkHXEXSjW8xyo85//yTp7AhsgdrN++H
-	Xscr0uuONz6vi/h7t4vupF+Vvz+3H3+y93Q9tX9cthlkROoFna9yBVokwYnFfxruIx42NGajfh5
-	FMSX7W+yzOMwILMa5qTmNTYQWCvY=
-X-Google-Smtp-Source: AGHT+IEra9BlGaKzjz4mwWktLjY2I3UG3y3QKYdvAvHdQhipwzLo/NIoFn04TFHMpQzK2OGK63qoeouzmc6kRBoSTPo=
-X-Received: by 2002:a05:6808:2f11:b0:3c1:5d20:179b with SMTP id
- gu17-20020a0568082f1100b003c15d20179bmr8295053oib.9.1708468799554; Tue, 20
- Feb 2024 14:39:59 -0800 (PST)
+	s=arc-20240116; t=1708469451; c=relaxed/simple;
+	bh=r7+AQYq9V9TPfXzzi27hklH29F90NiU0AvbFfXabQZk=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=TQU9l1dOwP0WidSHPiz98bx7KzCPXawMMDLQIjdTB1CHk0z8EG3uVWgi1s1Wzcb2FRZF4DgM6unDiCdJ8iHyAdCa063tXyb4z+3TfE6kI7j6KB66neMxf4SoRhxKLILVxnl0OfMdqGj4MEwllNQLKqZnfRufMZz313PPWguZP5U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=nJbm4A6V; arc=none smtp.client-ip=64.147.108.70
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="nJbm4A6V"
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 365F21EB8B3;
+	Tue, 20 Feb 2024 17:50:49 -0500 (EST)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=r7+AQYq9V9TP
+	fXzzi27hklH29F90NiU0AvbFfXabQZk=; b=nJbm4A6V5G5NJfZ/8t7ZeMiOZ1N1
+	so165w1X7vR+adpImOreWMVH/t1/0F3huLHgiziomq7dMUsj3/kAIHSKskWfIz3M
+	wfRwxrdq5dE98nn0oWezmNHHCrmYT47UNyYBpxuRkcXr3d3c6IVhEmfiQvyM6HhJ
+	odcM5Vnsc5p3E+U=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 2F0EB1EB8B2;
+	Tue, 20 Feb 2024 17:50:49 -0500 (EST)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.165.85])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 891541EB8B1;
+	Tue, 20 Feb 2024 17:50:48 -0500 (EST)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: =?utf-8?Q?Jean-No=C3=ABl_Avila_via_GitGitGadget?=
+ <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  =?utf-8?Q?Jean-No=C3=ABl?= Avila
+ <jn.avila@free.fr>
+Subject: Re: [PATCH 3/3] doc: add some missing sentence dots.
+In-Reply-To: <1faa934a152d2eedc8949c1e17aff787614770e2.1708468374.git.gitgitgadget@gmail.com>
+	(=?utf-8?Q?=22Jean-No=C3=ABl?= Avila via GitGitGadget"'s message of "Tue,
+ 20 Feb 2024
+	22:32:54 +0000")
+References: <pull.1670.git.1708468374.gitgitgadget@gmail.com>
+	<1faa934a152d2eedc8949c1e17aff787614770e2.1708468374.git.gitgitgadget@gmail.com>
+Date: Tue, 20 Feb 2024 14:50:47 -0800
+Message-ID: <xmqqzfvulph4.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.1670.git.1708468374.gitgitgadget@gmail.com> <7d85bfe6c5511d3918dd84365249797abe6fa04b.1708468374.git.gitgitgadget@gmail.com>
-In-Reply-To: <7d85bfe6c5511d3918dd84365249797abe6fa04b.1708468374.git.gitgitgadget@gmail.com>
-From: Eric Sunshine <sunshine@sunshineco.com>
-Date: Tue, 20 Feb 2024 17:39:48 -0500
-Message-ID: <CAPig+cSFK_sVZn5p3Bw12HOEF4Z99niPGMHp1Dp2w2EUjjZ4zw@mail.gmail.com>
-Subject: Re: [PATCH 2/3] doc: git-clone fix missing placeholder end carret
-To: =?UTF-8?Q?Jean=2DNo=C3=ABl_Avila_via_GitGitGadget?= <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, =?UTF-8?Q?Jean=2DNo=C3=ABl_Avila?= <jn.avila@free.fr>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID:
+ 7D6CEA14-D042-11EE-8B80-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
 Content-Transfer-Encoding: quoted-printable
 
-On Tue, Feb 20, 2024 at 5:33=E2=80=AFPM Jean-No=C3=ABl Avila via GitGitGadg=
-et
-<gitgitgadget@gmail.com> wrote:
-> doc: git-clone fix missing placeholder end carret
+"Jean-No=C3=ABl Avila via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-I believe you meant: s/carret/caret/
+> Subject: Re: [PATCH 3/3] doc: add some missing sentence dots.
 
-In English, I think this symbol is typically called an "angle bracket".
+"sentence dots." -> "full stop at the end of sentence" or something?
 
-Either way, probably not worth a reroll since it's just a commit-message ni=
-t.
+> diff --git a/Documentation/config/diff.txt b/Documentation/config/diff.=
+txt
+> index bd5ae0c3378..6c7e09a1ef5 100644
+> --- a/Documentation/config/diff.txt
+> +++ b/Documentation/config/diff.txt
+> @@ -223,5 +223,5 @@ diff.colorMoved::
+> =20
+>  diff.colorMovedWS::
+>  	When moved lines are colored using e.g. the `diff.colorMoved` setting=
+,
+> -	this option controls the `<mode>` how spaces are treated
+> -	for details of valid modes see '--color-moved-ws' in linkgit:git-diff=
+[1].
+> +	this option controls the `<mode>` how spaces are treated.
+> +	For details of valid modes see '--color-moved-ws' in linkgit:git-diff=
+[1].
 
-> Signed-off-by: Jean-No=C3=ABl Avila <jn.avila@free.fr>
->
-> diff --git a/Documentation/git-clone.txt b/Documentation/git-clone.txt
-> @@ -311,7 +311,7 @@ or `--mirror` is given)
-> ---ref-format=3D<ref-format::
-> +--ref-format=3D<ref-format>::
+Very good.  Thanks for spotting this one.
+
+> diff --git a/Documentation/git-fast-export.txt b/Documentation/git-fast=
+-export.txt
+> index 4643ddbe68f..752e4b9b01d 100644
+> --- a/Documentation/git-fast-export.txt
+> +++ b/Documentation/git-fast-export.txt
+> @@ -48,7 +48,7 @@ When asking to 'abort' (which is the default), this p=
+rogram will die
+>  when encountering such a tag.  With 'drop' it will omit such tags from
+>  the output.  With 'rewrite', if the tagged object is a commit, it will
+>  rewrite the tag to tag an ancestor commit (via parent rewriting; see
+> -linkgit:git-rev-list[1])
+> +linkgit:git-rev-list[1]).
+
+Ditto.
