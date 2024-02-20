@@ -1,40 +1,54 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A042D17E1
-	for <git@vger.kernel.org>; Tue, 20 Feb 2024 01:09:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 222631DFFE
+	for <git@vger.kernel.org>; Tue, 20 Feb 2024 01:22:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708391387; cv=none; b=JQ6ObAwNrTEJdA+u4EsaGkBnuN4SVm8q4ni77JAx67EyQp4um73nwtr64NqxwHVHd4ceGzukKhwoc8NiI4/n05tcM8VqBforB4ZrkYKWZqlJA+No3/PoJuZ5NSRBcj59g14LBtn+SRjmlF5QIlbQN5DwxldiXGqpP61X7jA6Qhw=
+	t=1708392168; cv=none; b=qtsjW0v+1+tu9Lu/ErlMlZSjGRupFD1X6jbiHFi5UYyYs9bWE7n2IFikRQ7VHnF1yOJ1HmXTm1W/Ye9ffb0CZGkkGO5SnrvLSRo5v5RyTQ+dcPjoS1qiiba63vPfRbNWRg+a5iHQjpg5g+NG1y1Vpy1Wd6qWmBFbvPfTbeV8TY4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708391387; c=relaxed/simple;
-	bh=tRW8YKpr7do/45E6dbnCHBNjDKPsFPug3JLOhvOXZMk=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=On2Pa9GTK64sucJyJt9gfeGJ8LzBLZHa+U7M3fH6exRHNVYUM/LPlptgr6asECMqBRmxfCLT+E3jL8QmNEpiQAZUdT01Tv+fkMlVy6490KdQLRgaz1hBmpLVnw6klJziAMi+OiyVxpwDd0hVxPNu5/+XQo1OMfTLtwnS6JgT2uk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
-Received: (qmail 22996 invoked by uid 109); 20 Feb 2024 01:09:37 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 20 Feb 2024 01:09:37 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 18125 invoked by uid 111); 20 Feb 2024 01:09:39 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 19 Feb 2024 20:09:39 -0500
-Authentication-Results: peff.net; auth=none
-Date: Mon, 19 Feb 2024 20:09:36 -0500
-From: Jeff King <peff@peff.net>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Philippe Blain <levraiphilippeblain@gmail.com>,
-	Linus Arver <linusa@google.com>,
-	Git mailing list <git@vger.kernel.org>
-Subject: [PATCH] trailer: fix comment/cut-line regression with
- opts->no_divider
-Message-ID: <20240220010936.GA1793660@coredump.intra.peff.net>
-References: <8b4738ad-62cd-789e-712e-bd45a151b4ac@gmail.com>
- <20240217060434.GE539459@coredump.intra.peff.net>
- <ca6a73d3-58b4-e65c-4a8f-e6ddb3e86902@gmail.com>
- <xmqqfrxo9ty2.fsf@gitster.g>
+	s=arc-20240116; t=1708392168; c=relaxed/simple;
+	bh=48Crpw3giws8JL/Iwp97Gsn4y+wgdt1fbIsBiUA5jL0=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=K5kCgORC1GsJFpa03PSJkWCyGa6yIqUSyoGZ1lP1umOX5dAInvQnTRW/9T/VVsoI+HZCYqNUhCy1XPFGSlrB3t9tZ2i21+2gevwUdVzNUkUbq9buT/8RvtHitDAdlOcExCLmTtnOwwzmzPPj7RxD2TSRIb8KsCawf9MmuNgnkI0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=Y/qhSVNR; arc=none smtp.client-ip=64.147.108.71
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="Y/qhSVNR"
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id EE3B41D4806;
+	Mon, 19 Feb 2024 20:22:44 -0500 (EST)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=48Crpw3giws8
+	JL/Iwp97Gsn4y+wgdt1fbIsBiUA5jL0=; b=Y/qhSVNR91iT9g0wh7fQt2IsNDrf
+	HDWroOmMY0vlBoEb4IrJHVAL5O2kt1A1oauxlx2hRI4f9OGdSCKJp9Z8ZHVr/rSQ
+	tz/7kePUtLUv5SHzawvnVJM2hlTEuoSWBxKqd62vL+K6PUk0Xo7VElXoBr9CO2oO
+	dwwZQHB8/8ht8N0=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id E71421D4804;
+	Mon, 19 Feb 2024 20:22:44 -0500 (EST)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.165.85])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 57B9B1D4803;
+	Mon, 19 Feb 2024 20:22:44 -0500 (EST)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Marcel =?utf-8?Q?R=C3=B6thke?= <marcel@roethke.info>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH v2] rerere: fix crash during clear
+In-Reply-To: <20240218194603.1210895-1-marcel@roethke.info> ("Marcel
+ =?utf-8?Q?R=C3=B6thke=22's?=
+	message of "Sun, 18 Feb 2024 20:46:03 +0100")
+References: <20240218114936.1121077-1-marcel@roethke.info>
+	<20240218194603.1210895-1-marcel@roethke.info>
+Date: Mon, 19 Feb 2024 17:22:43 -0800
+Message-ID: <xmqqplwsx730.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -42,145 +56,47 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqfrxo9ty2.fsf@gitster.g>
+X-Pobox-Relay-ID:
+ 8C734FDA-CF8E-11EE-96BE-25B3960A682E-77302942!pb-smtp2.pobox.com
+Content-Transfer-Encoding: quoted-printable
 
-On Mon, Feb 19, 2024 at 10:42:45AM -0800, Junio C Hamano wrote:
+Marcel R=C3=B6thke <marcel@roethke.info> writes:
 
-> Thanks, both, for finding a rather unfortunate regression.  Perhaps
-> it is worth delaying 2.44 final by a week or so to include a fix (or
-> a revert if it comes to it).
+> When rerere_clear is called, for instance when aborting a rebase, and
+> the current conflict does not have a pre or postimage recorded git
+> crashes with a SEGFAULT in has_rerere_resolution when accessing the
+> status member of struct rerere_dir.
 
-Hmm, I had thought this was pre-2.44, but it was actually in the 2.43.x
-maintenance series (so it is not a regression going from 2.43.2 to
-2.44.0, but it is from 2.43.0 to 2.44.0).
+I had to read this twice before realizing the reason why I found it
+hard to grok was because of a missing comma between "recorded" and
+"git".
 
-Anyway, the fix is pretty simple, so I think it may be OK to apply it
-for 2.44.0-rc2. Here it is (prepared on top of la/trailer-cleanups, so
-it could also be merged down for a v2.43.3 if you want to).
+> This happens because scan_rerere_dir
+> only allocates the status field in struct rerere_dir when a post or
+> preimage was found.
 
--- >8 --
-Subject: trailer: fix comment/cut-line regression with opts->no_divider
+But that is not really the root cause, no?  Readers following the
+above text are probably wondering why the preimage was not recorded,
+when a conflict resulted in stopping a mergy-command and invoking
+rerere machinery, before rerere_clear() got called.  Is that
+something that usually happen?  How?  Do we have a reproduction
+sequence of such a state that we can make it into a new test in
+t4200 where we already have tests for "git rerere clear" and its
+friends?
 
-Commit 97e9d0b78a (trailer: find the end of the log message, 2023-10-20)
-combined two code paths for finding the end of the log message. For the
-"no_divider" case, we used to use find_trailer_end(), and that has now
-been rolled into find_end_of_log_message(). But there's a regression;
-that function returns early when no_divider is set, returning the whole
-string.
+> In some cases a segfault may happen even if a post
+> or preimage was recorded if it was not for the variant of interest and
+> the number of the variant that is present is lower than the variant of
+> interest.
 
-That's not how find_trailer_end() behaved. Although it did skip the
-"---" processing (which is what "no_divider" is meant to do), we should
-still respect ignored_log_message_bytes(), which covers things like
-comments, "commit -v" cut lines, and so on.
+Ditto.  What sequence of events would lead to such a state?
 
-The bug is actually in the interpret-trailers command, but the obvious
-way to experience it is by running "commit -v" with a "--trailer"
-option. The new trailer will be added at the end of the verbose diff,
-rather than before it (and consequently will be ignored entirely, since
-everything after the diff's intro scissors line is thrown away).
+The answer *can* be ".git/rr-cache being a normal directory, the
+user can poke around, removing files randomly, which can create such
+a problematic situation", and the reproduction test *can* also be to
+simulate such an end-user action, but I am asking primarily because
+I want to make sure that we are *not* losing or failing to create
+necessary preimage files, causing this problem to users who do not
+muck with files in .git/rr-cache themselves.
 
-I've added two tests here: one for interpret-trailers directly, which
-shows the bug via the parsing routines, and one for "commit -v".
-
-The fix itself is pretty simple: instead of returning early, no_divider
-just skips the "---" handling but still calls ignored_log_message_bytes().
-
-Reported-by: Philippe Blain <levraiphilippeblain@gmail.com>
-Signed-off-by: Jeff King <peff@peff.net>
----
-Viewing the diff with "-w" makes the change a little more obvious.
-
- t/t7502-commit-porcelain.sh   | 18 ++++++++++++++++++
- t/t7513-interpret-trailers.sh | 19 +++++++++++++++++++
- trailer.c                     | 15 +++++++--------
- 3 files changed, 44 insertions(+), 8 deletions(-)
-
-diff --git a/t/t7502-commit-porcelain.sh b/t/t7502-commit-porcelain.sh
-index b5bf7de7cd..d8e216613f 100755
---- a/t/t7502-commit-porcelain.sh
-+++ b/t/t7502-commit-porcelain.sh
-@@ -485,6 +485,24 @@ test_expect_success 'commit --trailer not confused by --- separator' '
- 	test_cmp expected actual
- '
- 
-+test_expect_success 'commit --trailer with --verbose' '
-+	cat >msg <<-\EOF &&
-+	subject
-+
-+	body
-+	EOF
-+	GIT_EDITOR=: git commit --edit -F msg --allow-empty \
-+		--trailer="my-trailer: value" --verbose &&
-+	{
-+		cat msg &&
-+		echo &&
-+		echo "my-trailer: value"
-+	} >expected &&
-+	git cat-file commit HEAD >commit.msg &&
-+	sed -e "1,/^\$/d" commit.msg >actual &&
-+	test_cmp expected actual
-+'
-+
- test_expect_success 'multiple -m' '
- 
- 	>negative &&
-diff --git a/t/t7513-interpret-trailers.sh b/t/t7513-interpret-trailers.sh
-index 97f10905d2..3343ad0eb6 100755
---- a/t/t7513-interpret-trailers.sh
-+++ b/t/t7513-interpret-trailers.sh
-@@ -1560,4 +1560,23 @@ test_expect_success 'suppress --- handling' '
- 	test_cmp expected actual
- '
- 
-+test_expect_success 'suppressing --- does not disable cut-line handling' '
-+	echo "real-trailer: before the cut" >expected &&
-+
-+	git interpret-trailers --parse --no-divider >actual <<-\EOF &&
-+	subject
-+
-+	This input has a cut-line in it; we should stop parsing when we see it
-+	and consider only trailers before that line.
-+
-+	real-trailer: before the cut
-+
-+	# ------------------------ >8 ------------------------
-+	# Nothing below this line counts as part of the commit message.
-+	not-a-trailer: too late
-+	EOF
-+
-+	test_cmp expected actual
-+'
-+
- test_done
-diff --git a/trailer.c b/trailer.c
-index 816f8b28a9..009ee80dee 100644
---- a/trailer.c
-+++ b/trailer.c
-@@ -837,16 +837,15 @@ static size_t find_end_of_log_message(const char *input, int no_divider)
- 	/* Assume the naive end of the input is already what we want. */
- 	end = strlen(input);
- 
--	if (no_divider)
--		return end;
--
- 	/* Optionally skip over any patch part ("---" line and below). */
--	for (s = input; *s; s = next_line(s)) {
--		const char *v;
-+	if (!no_divider) {
-+		for (s = input; *s; s = next_line(s)) {
-+			const char *v;
- 
--		if (skip_prefix(s, "---", &v) && isspace(*v)) {
--			end = s - input;
--			break;
-+			if (skip_prefix(s, "---", &v) && isspace(*v)) {
-+				end = s - input;
-+				break;
-+			}
- 		}
- 	}
- 
--- 
-2.44.0.rc1.413.gdc9df0ba3d
-
+Thanks.
