@@ -1,80 +1,91 @@
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail.manjaro.org (mail.manjaro.org [116.203.91.91])
+	(using TLSv1.2 with cipher DHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 918D312EBEC
-	for <git@vger.kernel.org>; Tue, 20 Feb 2024 19:34:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D9FC36135
+	for <git@vger.kernel.org>; Tue, 20 Feb 2024 19:38:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=116.203.91.91
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708457675; cv=none; b=Tt7mZqZP7UTjXC7uORt/KqYIAgQjChkfLZtZAPFW33g2rugkEex/klibFYrPp64hOHDeJgWb6S+MFpb8ZmoX7Zjo3TrwCh2QAL2pdqWCj4PAd8KZYSRZ4B3AMxIlx/KP51EePTV8y8z1EgWkAS3bX+hPUp/LKysRnFUo5kgFq5w=
+	t=1708457911; cv=none; b=ogcuwlKSFA1wruSzTBXfcB8ojCbQMfjwuDzKekm9pm295qLs4W0ObLl81lR3LQta6ZjvsnoXPt0rQElKvlA/fMcUeO+BI58Ns+tyaRFnFDyI+kmB/P3FmuRNd4fWnSiVfBBW/0prvntX8yuciteyOwEDVONpOsnlD0HghGmWXgg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708457675; c=relaxed/simple;
-	bh=RJQihOIOUpKYSYCdxx3ZlxLu5XkVbzAYF45neR5YzyM=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=fzZNEud27k81wydNxR0dnjCZNfzJYd9OgJFiyfeAG3F2n9lQaBvpNiaT2P0SIQsymkfr95bU2Mm8VM8SHRGVjXfmrvqFOMoD61wMuVHfWICaWU54sKS6+uEd4+Kfx/6NiUqp++GA9cbMKAas2Rk6vOVhntfAEki14Ad3Iqpdnv8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=WlYXYVpI; arc=none smtp.client-ip=64.147.108.71
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1708457911; c=relaxed/simple;
+	bh=DRz/CNBi31Og0Zp0L2vXT2FqRD95KJbM/HDcA+njTOE=;
+	h=MIME-Version:Date:From:To:Cc:Subject:In-Reply-To:References:
+	 Message-ID:Content-Type; b=RfHQGQTL0hA9LzUpGiWarrIPiD7Hc7RJxkPF+gdFa9AnqJSuCQk8F6FM5/H2rhFPZVkiNjsU94YPYoq9a84hhrHTjs7Pe3QDh5+2xVhNF9J1uGuWdmgGbRirHhMQgH004seJ35oqYxBobAUMPg/Uv5UBazH7AfO6hjRJfinW8So=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org; spf=pass smtp.mailfrom=manjaro.org; dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b=hPt7CXa2; arc=none smtp.client-ip=116.203.91.91
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=manjaro.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="WlYXYVpI"
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 1F4B81DBA0F;
-	Tue, 20 Feb 2024 14:34:27 -0500 (EST)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=RJQihOIOUpKYSYCdxx3ZlxLu5XkVbzAYF45neR
-	5YzyM=; b=WlYXYVpIganefNxzA6+ROelFeD+jOQ8f8XaP1ounOR5t+oZehibowQ
-	swrYTDrBDt/rm0VL9dUO7Qiur8JI0PH0Ke0E6tseT4kvrA0Iaw9ZvKT/pWe6FdD1
-	A8gM/J3C9DXs7OL+971JDmyKcepfGxv8odQKi2lcOtgVblPWVvHMY=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 151551DBA0E;
-	Tue, 20 Feb 2024 14:34:27 -0500 (EST)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.165.85])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 6AC891DBA0D;
-	Tue, 20 Feb 2024 14:34:26 -0500 (EST)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Jeff Hostetler <git@jeffhostetler.com>
-Cc: Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>,
-  git@vger.kernel.org,  Jeff Hostetler <jeffhostetler@github.com>
-Subject: Re: [PATCH 02/12] name-hash: add index_dir_exists2()
-In-Reply-To: <1913ed1b-a145-e641-6601-d8a55a2a8fec@jeffhostetler.com> (Jeff
-	Hostetler's message of "Tue, 20 Feb 2024 12:38:26 -0500")
-References: <pull.1662.git.1707857541.gitgitgadget@gmail.com>
-	<3464545fe3feceb08408618c77a70cc95745bfe9.1707857541.git.gitgitgadget@gmail.com>
-	<xmqqeddg2g7j.fsf@gitster.g>
-	<1913ed1b-a145-e641-6601-d8a55a2a8fec@jeffhostetler.com>
-Date: Tue, 20 Feb 2024 11:34:25 -0800
-Message-ID: <xmqqedd7nd4u.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b="hPt7CXa2"
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- 0EBBDB40-D027-11EE-8668-25B3960A682E-77302942!pb-smtp2.pobox.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=manjaro.org; s=2021;
+	t=1708457907;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=kmCK2/l8wKPgRF3e+YWH+rvBI1LRlPEzXeAW2EqPnl4=;
+	b=hPt7CXa2pHcEqRrphtmeeywOjNkf8ht32q8rudHN3fcO8TIlC+dUd4Omq6m9g+077hLbhD
+	L8nZx2FViWApOamIGkp5S9dblHBzq7ixxwL6w/a74wPCtkMLnqc3n6Or1V881m2y5Lb1h8
+	RaftRZxSaDegO4DEPTCPFnqIIxxpmWjbKFbhf7N2fKZxqzvR85AGR8z/mbJWdVKWsAzWCW
+	VnHw7g7SaE3sdIAXyaxS+kDCqyusqJk5P1bKfgEDY7pI2+Lnbt1JuBYlXz9JCZ7ITrT5En
+	a4BBAnoG1xXjZq0pWCmeZtaT4rnGOXeQgaaW9DAgitNUDxS4KhAxOQEBZQJHbA==
+Date: Tue, 20 Feb 2024 20:38:26 +0100
+From: Dragan Simic <dsimic@manjaro.org>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH] documentation: send-email: use camel case consistently
+In-Reply-To: <xmqq8r3foup4.fsf@gitster.g>
+References: <b0577267402f6177d8ba5646e12d7691437e6e8f.1708060779.git.dsimic@manjaro.org>
+ <xmqqv86kx8h0.fsf@gitster.g> <33abb630c1d089e39ff48f04e586b1c0@manjaro.org>
+ <xmqqo7cbt8a0.fsf@gitster.g> <9d0022ba5666223af94bbf450909b1ba@manjaro.org>
+ <a766ba7eb27f663eee34214714f6076d@manjaro.org> <xmqq8r3foup4.fsf@gitster.g>
+Message-ID: <db01d88aa08d33f366b836170e4eb605@manjaro.org>
+X-Sender: dsimic@manjaro.org
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Authentication-Results: ORIGINATING;
+	auth=pass smtp.auth=dsimic@manjaro.org smtp.mailfrom=dsimic@manjaro.org
 
-Jeff Hostetler <git@jeffhostetler.com> writes:
+On 2024-02-20 19:29, Junio C Hamano wrote:
+> Dragan Simic <dsimic@manjaro.org> writes:
+> 
+>> If you insist on using "CC", I'd be fine with that, but frankly, I 
+>> think
+>> that would actually be confusing to the users.
+> 
+> I do not insist; my job is to just reject what is not correct.
+> 
+> In this particular case, I do not think Cc is outright wrong; it
+> is near the borderline, but I do not know which side of that line it
+> sits.
+> 
+> I gave you one possible rule to decide what to capitalize (namely,
+> acronyms are spelled in all caps and that is how we capitalize
+> http.proxySSLCert and imap.preformattedHTML) and if we adopt that
+> rule, then sendemail.supressCc would be incorrect, simply because
+> carbon-copy should be spelled CC.
 
-> I'm always a little hesitant to change the signature of an existing
-> function and chasing all of the callers in the middle of another
-> task.  It can sometimes be distracting to reviewers.
+Please, let me remind you that I already fully agreed with using
+"SSL".  The same applies to "HTML", for example, but "Cc" should be
+an exception to that rule, IMHO.
 
-Of course we all should be hesitant.  In addition to reviewers,
-there are topics in flight and topics people are cooking but not
-posted that will be affected.  So it is perfectly fine to introduce
-an enhanced version as needed under different name (but let's not
-give it a meaningless name like "foo2" where it is totally unclear
-and unexplained what its difference from "foo" is from the name),
-but if it is meant as an enhanced version, we should aim to share
-the code and rewrite the original in terms of the enhanced one,
-instead of simply duplicating to risk unnecessary divergence of the
-two functions in the future.
+> You need to give an alternative criteria that is easy to understand
+> for future developers and follow, and explain your choice in the
+> proposed commit log message: "We spell acronyms in all caps like
+> HTML and SSL, but in the case of carbon-copy, we spell it as Cc
+> because ...".
+> 
+> You need to fill that "..." is in your proposed log message to
+> explain the choice you made in your patch text.  More importantly,
+> it is to help future developers so that they can easily follow the
+> same rule to spell the variable names they invented in a way
+> consistent with the rule you followed in this patch.
 
-Thanks.
+Agreed, I'll provide a detailed rationale for using "Cc" vs. "SSL"
+in the commit description for v3, with a few references.
