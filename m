@@ -1,50 +1,55 @@
 Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC158154C08
-	for <git@vger.kernel.org>; Tue, 20 Feb 2024 22:57:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A9B36BB28
+	for <git@vger.kernel.org>; Tue, 20 Feb 2024 23:01:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708469853; cv=none; b=LQs7vG6pMnHJY7KZHgklxcdmQ3GWMypr2NYI+FUX9vaJPmHqdTtZNJh4l23CVluYC1zTQw4+0yMFdvh65j+n4d4yV5MeyjOfxFiHTnlVeDgBkpFWFn6zwzkBGv40NUZgcKPuhOHepltfZVrDYlWVPWWhlO3Rg/5QwI+sMU8OxTQ=
+	t=1708470106; cv=none; b=gIX9zE2YJxLfecIO2z4Vlqn57b8CfaINomWF7ll+C9Pm8tU+N+e0ooiY0fojXqJuplswgKO5GxB+efWa3ofGdn0wxWCXyzc7DUPQk+RNianE0qoz0NTP6wfJzZnHGTg/1hdGlvl25FlpWZ8aWe8OAgcaFjuIVkfSRUYu99zJPPg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708469853; c=relaxed/simple;
-	bh=zgQhwOSrzE8NbLjXZbLVc24Bi9lkjiXsZhkPi5V3/6g=;
+	s=arc-20240116; t=1708470106; c=relaxed/simple;
+	bh=Zq1W1BWvcONtuuxlJ5vNr0NqKNDpYX0nw1TJ1l/HUU8=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=iHRssqFbs3Hlu4H2UY+/GoVSk2ZIzDRoppiRDzh/XmJvyttqx6mxutiKvyajZvxNU53HL0UD8/FwlHLRT6iRnHYfWKkJSGJJRrhE5S7wfvG4Oee38rSNk/Sn4ctPqwLY0CT6K3egs3RvzJvQffpWJgzkem0a6LniNpw09eHFCBc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=cKwKHs/2; arc=none smtp.client-ip=173.228.157.52
+	 MIME-Version:Content-Type; b=cl2ogzQy/tDxSFLDkbrePJX0mHHLvqrGh5gmxO8l433iMsacp7AmCQexFRq+EZatLq6L9g4PucWu4FFvUThKE2Naw5eJjnfePwvNEiHpmzqwQ6tI0jwd2wqH7m5Twko2z/d0Z+RHgOJYO4p0X2ErVycmsQ9iOpok68w0libP7D4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=troziScd; arc=none smtp.client-ip=173.228.157.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="cKwKHs/2"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="troziScd"
 Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 50F9D2EF3D;
-	Tue, 20 Feb 2024 17:57:31 -0500 (EST)
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id C65FC2F03C;
+	Tue, 20 Feb 2024 18:01:44 -0500 (EST)
 	(envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=zgQhwOSrzE8NbLjXZbLVc24Bi9lkjiXsZhkPi5
-	V3/6g=; b=cKwKHs/2NGgeEz94EWN18ashksOj+BM1WMuCwDr0HmZ0dH4foSXOSl
-	Hz2J8y1wnwHsgkOvbRrTj9zN+YruPu2x3hVMIbXPzEUCcor7ASt0LhKAQh33XNsz
-	hTmHKBFh80O3re134jhMojuT0/rGimlCoAtC1SG4/mcfnwY37HNmg=
+	:content-type:content-transfer-encoding; s=sasl; bh=Zq1W1BWvcONt
+	uuxlJ5vNr0NqKNDpYX0nw1TJ1l/HUU8=; b=troziScdBWgRkQcofZewn0ck0+2T
+	fZt3Sawx1CT/IKqg8hSw7Djg8C87bMl+W7WJUOKF7OUgy45WvGJ8HZ5dnPW9PGVC
+	N+rQ34JOXqbE2ClFQwnsu2m5E6+lZpknA4q4tB5ojuiHXVCsp35dn2wVKBKmJmQh
+	r39ygGErmMtFYYw=
 Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 4926E2EF3C;
-	Tue, 20 Feb 2024 17:57:31 -0500 (EST)
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id BFBA22F03B;
+	Tue, 20 Feb 2024 18:01:44 -0500 (EST)
 	(envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.125.165.85])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 333AF2EF3A;
-	Tue, 20 Feb 2024 17:57:27 -0500 (EST)
+	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 5C7ED2F03A;
+	Tue, 20 Feb 2024 18:01:41 -0500 (EST)
 	(envelope-from junio@pobox.com)
 From: Junio C Hamano <gitster@pobox.com>
-To: Dragan Simic <dsimic@manjaro.org>
-Cc: git@vger.kernel.org,  code@khaugsbakk.name
-Subject: Re: [PATCH v4] documentation: send-email: use camel case consistently
-In-Reply-To: <88f1fe08c3047e14090957093ee8d98b0f60cb6c.1708467601.git.dsimic@manjaro.org>
-	(Dragan Simic's message of "Tue, 20 Feb 2024 23:22:51 +0100")
-References: <88f1fe08c3047e14090957093ee8d98b0f60cb6c.1708467601.git.dsimic@manjaro.org>
-Date: Tue, 20 Feb 2024 14:57:25 -0800
-Message-ID: <xmqqle7elp62.fsf@gitster.g>
+To: Eric Sunshine <sunshine@sunshineco.com>
+Cc: =?utf-8?Q?Jean-No=C3=ABl?= Avila via GitGitGadget
+ <gitgitgadget@gmail.com>,
+  git@vger.kernel.org,  =?utf-8?Q?Jean-No=C3=ABl?= Avila <jn.avila@free.fr>
+Subject: Re: [PATCH 2/3] doc: git-clone fix missing placeholder end carret
+In-Reply-To: <CAPig+cSFK_sVZn5p3Bw12HOEF4Z99niPGMHp1Dp2w2EUjjZ4zw@mail.gmail.com>
+	(Eric Sunshine's message of "Tue, 20 Feb 2024 17:39:48 -0500")
+References: <pull.1670.git.1708468374.gitgitgadget@gmail.com>
+	<7d85bfe6c5511d3918dd84365249797abe6fa04b.1708468374.git.gitgitgadget@gmail.com>
+	<CAPig+cSFK_sVZn5p3Bw12HOEF4Z99niPGMHp1Dp2w2EUjjZ4zw@mail.gmail.com>
+Date: Tue, 20 Feb 2024 15:01:39 -0800
+Message-ID: <xmqqh6i2loz0.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -52,90 +57,28 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
 X-Pobox-Relay-ID:
- 6B09D57A-D043-11EE-BE00-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
+ 02890EDE-D044-11EE-8BD0-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
+Content-Transfer-Encoding: quoted-printable
 
-Dragan Simic <dsimic@manjaro.org> writes:
+Eric Sunshine <sunshine@sunshineco.com> writes:
 
-> -sendemail.smtpsslcertpath::
-> +sendemail.smtpSSLCertPath::
-> -sendemail.signedoffbycc::
-> +sendemail.signedOffByCc::
-> -sendemail.suppresscc::
-> +sendemail.suppressCc::
-> -sendemail.tocmd::
-> +sendemail.toCmd::
-> -sendemail.signedoffcc (deprecated)::
-> -	Deprecated alias for `sendemail.signedoffbycc`.
-> +sendemail.signedOffCc (deprecated)::
-> +	Deprecated alias for `sendemail.signedOffByCc`.
+> On Tue, Feb 20, 2024 at 5:33=E2=80=AFPM Jean-No=C3=ABl Avila via GitGit=
+Gadget
+> <gitgitgadget@gmail.com> wrote:
+>> doc: git-clone fix missing placeholder end carret
+>
+> I believe you meant: s/carret/caret/
+>
+> In English, I think this symbol is typically called an "angle bracket".
 
-All look good. 
+Yes, caret is "^".
 
-> diff --git a/Documentation/git-send-email.txt b/Documentation/git-send-email.txt
-> index d1ef6a204e68..8264f8738093 100644
-> --- a/Documentation/git-send-email.txt
-> +++ b/Documentation/git-send-email.txt
-> @@ -138,7 +138,7 @@ Note that no attempts whatsoever are made to validate the encoding.
->  
->  --compose-encoding=<encoding>::
->  	Specify encoding of compose message. Default is the value of the
-> -	'sendemail.composeencoding'; if that is unspecified, UTF-8 is assumed.
-> +	'sendemail.composeEncoding'; if that is unspecified, UTF-8 is assumed.
+>> diff --git a/Documentation/git-clone.txt b/Documentation/git-clone.txt
+>> @@ -311,7 +311,7 @@ or `--mirror` is given)
+>> ---ref-format=3D<ref-format::
+>> +--ref-format=3D<ref-format>::
 
-Good.
-
-> @@ -174,7 +174,7 @@ Sending
->  	Specify a command to run to send the email. The command should
->  	be sendmail-like; specifically, it must support the `-i` option.
->  	The command will be executed in the shell if necessary.  Default
-> -	is the value of `sendemail.sendmailcmd`.  If unspecified, and if
-> +	is the value of `sendemail.sendmailCmd`.  If unspecified, and if
-
-Good.
-
-> @@ -269,7 +269,7 @@ must be used for each option.
->  	certificates concatenated together: see verify(1) -CAfile and
->  	-CApath for more information on these). Set it to an empty string
->  	to disable certificate verification. Defaults to the value of the
-> -	`sendemail.smtpsslcertpath` configuration variable, if set, or the
-> +	`sendemail.smtpSSLCertPath` configuration variable, if set, or the
-
-Good.
-
-> @@ -313,7 +313,7 @@ Automating
->  	Specify a command to execute once per patch file which
->  	should generate patch file specific "To:" entries.
->  	Output of this command must be single email address per line.
-> -	Default is the value of 'sendemail.tocmd' configuration value.
-> +	Default is the value of 'sendemail.toCmd' configuration value.
-
-Good.
-
-> -	cc list. Default is the value of `sendemail.signedoffbycc` configuration
-> +	cc list. Default is the value of `sendemail.signedOffByCc` configuration
-
-Good.
-
-> -	for each email set. Default is the value of 'sendemail.cccover'
-> +	for each email set. Default is the value of 'sendemail.ccCover'
-
-Good.
-
-> -	for each email set. Default is the value of 'sendemail.tocover'
-> +	for each email set. Default is the value of 'sendemail.toCover'
-
-Good.
-
-> -Default is the value of `sendemail.suppresscc` configuration value; if
-> +Default is the value of `sendemail.suppressCc` configuration value; if
-
-Good.
-
-> -	See 'sendemail.aliasesfile' for more information about aliases.
-> +	See 'sendemail.aliasesFile' for more information about aliases.
-
-Good.
-
-This version looks very good to me.  Thanks.  Will queue.
+A closing angle bracket is what is missing there.  Thanks for
+reading carefully.
