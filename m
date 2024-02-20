@@ -1,76 +1,77 @@
-Received: from wout5-smtp.messagingengine.com (wout5-smtp.messagingengine.com [64.147.123.21])
+Received: from wfout6-smtp.messagingengine.com (wfout6-smtp.messagingengine.com [64.147.123.149])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36EAA5FEE8
-	for <git@vger.kernel.org>; Tue, 20 Feb 2024 09:06:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.21
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3E7C62146
+	for <git@vger.kernel.org>; Tue, 20 Feb 2024 09:06:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708420001; cv=none; b=sXhPWDWTg2E3ah0fkkgu8p9KanQNR1dmaeiP4Jy5cB9mrgR2jmQ7mrre25zEhR8E4NfPQl2QdQBu1hHnb7mt0k2rfmDgSEjDDxKwdgu55zeViB9xf5oM9i3aPN/KRHbiZrbcS0ZxtNxYoz0csdX6x7woSubJ3YUeTlrbPKuK79U=
+	t=1708420004; cv=none; b=mNbkqfe0iakpJH4wLoNEUM/414Sh4qTJFZlrck0B75lxEfRQzpU2fhH/mFTzOzCePTHu9/xyCMcSGbNeqatV8NE5jb7zJ82iNKKDOj0Et43+nVicun1xkjvFbTV33h952uGYcJ1T4FoDKyqmLHJYXYRXkju259/nk4+zskLkwCY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708420001; c=relaxed/simple;
-	bh=27splBBxv+Rm1rrabkraoC3LsmhqeltPw9NRFGcqP9c=;
+	s=arc-20240116; t=1708420004; c=relaxed/simple;
+	bh=Gvz/qCwq0k8EBjt5nZvIvl4ov1DVxzY3hhZDMzdnfwU=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=CwCBi6fQoROfx2JGNA3mM/sHy3Gv97ELL0aa0nu568+MyjFNNLSACtg3uPcN6U0h69+A1bAzw0mCdDcYGCcom4OAYRoatX8foRGoVX7JB9rylL87dwCsC8of3ho/wH89m//Efx4iP4jLiV+LgnZ29W746t1FX1hgJXGeLDsFIBE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=ndHdETb4; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=bedp0OSo; arc=none smtp.client-ip=64.147.123.21
+	 Content-Type:Content-Disposition:In-Reply-To; b=FWav6ArZ5cB08pR/Pu9ozwJUbCd94NveBO7hWyXBLkH7ILK1BDMVJ7hjekk0bvtU6vVXB0wb2f3rJGutyYOrhAQ8reO4LVu1aNYPkdpiJiMujp6eEMqQCBZ7VllXWVjpzJaBY/8PLzEIVLLf4TQLSjnW+LhcRe1/KSZNf+YzF28=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=M4HDw0EG; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=hzVYxulC; arc=none smtp.client-ip=64.147.123.149
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="ndHdETb4";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="bedp0OSo"
-Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
-	by mailout.west.internal (Postfix) with ESMTP id 165093200A17;
-	Tue, 20 Feb 2024 04:06:38 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="M4HDw0EG";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="hzVYxulC"
+Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
+	by mailfout.west.internal (Postfix) with ESMTP id E779E1C00095;
+	Tue, 20 Feb 2024 04:06:41 -0500 (EST)
 Received: from mailfrontend1 ([10.202.2.162])
-  by compute2.internal (MEProxy); Tue, 20 Feb 2024 04:06:38 -0500
+  by compute6.internal (MEProxy); Tue, 20 Feb 2024 04:06:42 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1708419997; x=1708506397; bh=JKCrXjctYw
-	f4q1bugWTdiTBEhwmZuIOZO3Q0GEXZAnQ=; b=ndHdETb4eyhpF4S4K7hgiSUnHL
-	6V+uC7/YxanoeLRyquSrbMJq1R91TWJ+GHm7jS9jKYMq4eFaVw33yZI6stAf03Sd
-	JYZFbYzIXKm9/rqurdYG8PA6/5/ffTRkQ/NiNQa6bdrQU3l7Ox64W7wUktgIkxPT
-	52DuKZoq2VEHPsvJFWk7zw5X7OHw776HuoUIA8IsywBSBMVLhWv+7dhe8jIt0g2H
-	ayPkrsfoSE6C5teOat/Hp8qGuXY0jscviqiD+YxgIYqZAqn6UxWHERmNWY5yyp8J
-	nUUfJDCzm2x/yhPQ2jB4Qk0lD0j5dpMlj1IgXagjz7BtvQT8/UtGPsUA47cw==
+	:subject:to:to; s=fm1; t=1708420001; x=1708506401; bh=MDW4MsVM2Z
+	MCvM709H8pwuvaLhrBXH0VlkWz1p2CpFI=; b=M4HDw0EGIpfUGgs/gKp0l4vnYm
+	QCjeZ1KE3lv8ZdmMZsWGZmwnElPpMB+/vb9i+82tRiLQBF0MS6e2ptb/29TIKvoB
+	lVPX9Tfpgp4i8lUtNHN0G2SycrrTittNkW964gUvi4qQb2C1LJGsTwJiTjhJ1a04
+	3bVxOFo3sgds0dxmDzcfIUKvREmQjynHRXz25nULPI1IKEzgFgGFCsp52jEH85d4
+	dAHI68Up6Yk22/YOIk0sHUH8bgvhp/Y3tBsNC0l1WJ41GlB9FSrXEWChFA5YcuHO
+	knORs4x6lIF7d1fFbYlX4x3d/An0MNFLiLfxurRrQhRXJjjEVzExDPR8s5kw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1708419997; x=1708506397; bh=JKCrXjctYwf4q1bugWTdiTBEhwmZ
-	uIOZO3Q0GEXZAnQ=; b=bedp0OSoN/u43JnhqazHRIUqxjx66rlLrxH4Tlfn6ik/
-	LXsC0zTXF6+aTNlifIFmS3xJlo2DpfL6QgOQ+ngefLEnzmfe8HyhsMB/yiKlOoNP
-	yYpucWQNpPfTpECKT34nBn7p2nBESONk0Mbilo6bLrsSPPg9uHwdRXvrcz90jSNR
-	dhEIMycP7aU43B1NPv3n8Tsn0OUq7pTSrqYYxzblnxboAmF7iTJzaq6/hybwu9pt
-	GOMguQMBjLvqcoki9rrD9aJJ1d0rqFd26fzz7tbOCbelpVrMTw5WYODmBgnVU3UD
-	yTcXhVlvA/jszdXys8xVO/aiuTqZ3PVb4H5YoohLfg==
-X-ME-Sender: <xms:nWvUZX6O0ou1b3V5sZnGAERRRuwemtemIvMz7HfGW7vksd1hQr-Ybw>
-    <xme:nWvUZc77yZwcLp8Wib_zICrFeP6jpCHnK8Dr4gKIseniXj_se-iK6JiF2V6pA9hXh
-    pCQCJEE4RwHV28jgQ>
-X-ME-Received: <xmr:nWvUZeeig_cfhK_vchBJ4GLuNA3WaQrwIT0GT3ztAdumWhiTYlgPxmBapP0gYaetz2I2KGi60r8_uNx5JMYCIMAT0dbtJjUrIUf_tEl-mzE6Yg>
+	fm1; t=1708420001; x=1708506401; bh=MDW4MsVM2ZMCvM709H8pwuvaLhrB
+	XH0VlkWz1p2CpFI=; b=hzVYxulCYybQfaTkE/pnjT7y6G9L92wVCWPS5F2jcq2x
+	r6zPf6tlMMlw9uBfhshIt5CPb5vsnzWOPbLM4lUl+xKdBQWbqG6djRijslLD9ka4
+	HPm02ACb49gU/KM/bqSmWKVYHKyMg8dompgK4ECq21Arg9ayw6hthj1Mw/UNq0iU
+	b+ZOnzBb9dHkxbhtMKUUVjrOXmqHH6cxgaIMtWZu/DqobO5PbzMlMFykKqxulkx2
+	+XPqXGW7kedrL8njchsO6vu7xPV8OtOofLoseCJi6cBdAWuGOiwzg7KxdlUGa8qS
+	4BLF2F9yU6Jed20YVQa3mg/yyBss78uZJBqSFW7NmQ==
+X-ME-Sender: <xms:oWvUZVMcvsVLDZWqHHNSX1YyKk7MtZ2ftxXps96R7ERYKqB_z2Twtw>
+    <xme:oWvUZX-93l2faTraNN7BIozPcPvpN_BZLPjv0z6q3hzTujHOPBKNMd1CjQpCUYCIR
+    azwU_USkL-fw5-rXA>
+X-ME-Received: <xmr:oWvUZUQhi-DI_tG8VDPTleCnyxNbvTBWZTryngfYDcZGYFNtagSDywuhBDuFVNyqiavUcCXHHWO39OBaqcD-hCZCM5mmKlahFttGGBy9qlX5bA>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrfedtucetufdoteggodetrfdotffvucfrrh
     hofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgenuceurghi
     lhhouhhtmecufedttdenucenucfjughrpeffhffvvefukfhfgggtuggjsehgtderredttd
     dvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdr
     ihhmqeenucggtffrrghtthgvrhhnpeeukedtvedtffevleejtefgheehieegkeeluddvfe
-    efgeehgfeltddtheejleffteenucevlhhushhtvghrufhiiigvpedunecurfgrrhgrmhep
+    efgeehgfeltddtheejleffteenucevlhhushhtvghrufhiiigvpedvnecurfgrrhgrmhep
     mhgrihhlfhhrohhmpehpshesphhkshdrihhm
-X-ME-Proxy: <xmx:nWvUZYJSP2si41BOFltK7HJzmTkCJwi20OXJNeCoGMKv-tsr1V2AGQ>
-    <xmx:nWvUZbKxMpavwTaPVi7pwcuAcpBYgYJOi_7FG5yfd85U3o5-DgjFHQ>
-    <xmx:nWvUZRwxOiwSkewJK6Oiy_IuyWJLRK0FDK53tNPB2Yhx5HybJoBwOg>
-    <xmx:nWvUZRhsie2yA5zLbB3k40nlZLLtD0msj4-sfv6EizYFK8ZFATjZIg>
+X-ME-Proxy: <xmx:oWvUZRuus4KvpEeqLG67Yuo0GybdekZsQ8JJRUg_Xzrq_O1F_EYCAg>
+    <xmx:oWvUZdcnFTzPLHjXLgTaloHbkKAb-kmWVZM3Ta02IK8pwfXPk22DxA>
+    <xmx:oWvUZd2850OvaePvRTHMxf53ItqNqVebNQuWeLSXZXSBZnv98pgxuw>
+    <xmx:oWvUZeq4VuqW9Yr_6DzQZss7xVZTmQ3gIsB23c1wkIeIOjOjUNr6HZ4nRtw>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 20 Feb 2024 04:06:36 -0500 (EST)
+ 20 Feb 2024 04:06:40 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id d18f331f (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 20 Feb 2024 09:02:34 +0000 (UTC)
-Date: Tue, 20 Feb 2024 10:06:34 +0100
+	by vm-mail (OpenSMTPD) with ESMTPSA id 2afaf932 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 20 Feb 2024 09:02:38 +0000 (UTC)
+Date: Tue, 20 Feb 2024 10:06:39 +0100
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
 Cc: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v2 4/7] refs: always treat iterators as ordered
-Message-ID: <4254f23fd40076857ec093365a8adbb860803a72.1708418805.git.ps@pks.im>
+Subject: [PATCH v2 5/7] refs: drop unused params from the reflog iterator
+ callback
+Message-ID: <240334df6c7d0e95f67fdeddb8b8a381a59245fa.1708418805.git.ps@pks.im>
 References: <cover.1708353264.git.ps@pks.im>
  <cover.1708418805.git.ps@pks.im>
 Precedence: bulk
@@ -80,347 +81,424 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="V2V5xAc06i4E6KmQ"
+	protocol="application/pgp-signature"; boundary="/I0/70X96IfGrOii"
 Content-Disposition: inline
 In-Reply-To: <cover.1708418805.git.ps@pks.im>
 
 
---V2V5xAc06i4E6KmQ
+--/I0/70X96IfGrOii
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-In the preceding commit we have converted the reflog iterator of the
-"files" backend to be ordered, which was the only remaining ref iterator
-that wasn't ordered. Refactor the ref iterator infrastructure so that we
-always assume iterators to be ordered, thus simplifying the code.
+The ref and reflog iterators share much of the same underlying code to
+iterate over the corresponding entries. This results in some weird code
+because the reflog iterator also exposes an object ID as well as a flag
+to the callback function. Neither of these fields do refer to the reflog
+though -- they refer to the corresponding ref with the same name. This
+is quite misleading. In practice at least the object ID cannot really be
+implemented in any other way as a reflog does not have a specific object
+ID in the first place. This is further stressed by the fact that none of
+the callbacks except for our test helper make use of these fields.
+
+Split up the infrastucture so that ref and reflog iterators use separate
+callback signatures. This allows us to drop the nonsensical fields from
+the reflog iterator.
+
+Note that internally, the backends still use the same shared infra to
+iterate over both types. As the backends should never end up being
+called directly anyway, this is not much of a problem and thus kept
+as-is for simplicity's sake.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- refs.c                  |  4 ----
- refs/debug.c            |  3 +--
- refs/files-backend.c    |  7 +++----
- refs/iterator.c         | 26 ++++++++------------------
- refs/packed-backend.c   |  2 +-
- refs/ref-cache.c        |  2 +-
- refs/refs-internal.h    | 18 ++----------------
- refs/reftable-backend.c |  8 ++++----
- 8 files changed, 20 insertions(+), 50 deletions(-)
+ builtin/fsck.c                 |  4 +---
+ builtin/reflog.c               |  3 +--
+ refs.c                         | 23 +++++++++++++++++++----
+ refs.h                         | 11 +++++++++--
+ refs/files-backend.c           |  8 +-------
+ refs/reftable-backend.c        |  8 +-------
+ revision.c                     |  4 +---
+ t/helper/test-ref-store.c      | 18 ++++++++++++------
+ t/t0600-reffiles-backend.sh    | 24 ++++++++++++------------
+ t/t1405-main-ref-store.sh      |  8 ++++----
+ t/t1406-submodule-ref-store.sh |  8 ++++----
+ 11 files changed, 65 insertions(+), 54 deletions(-)
 
-diff --git a/refs.c b/refs.c
-index fff343c256..dc25606a82 100644
---- a/refs.c
-+++ b/refs.c
-@@ -1594,10 +1594,6 @@ struct ref_iterator *refs_ref_iterator_begin(
- 	if (trim)
- 		iter =3D prefix_ref_iterator_begin(iter, "", trim);
-=20
--	/* Sanity check for subclasses: */
--	if (!iter->ordered)
--		BUG("reference iterator is not ordered");
--
- 	return iter;
+diff --git a/builtin/fsck.c b/builtin/fsck.c
+index a7cf94f67e..f892487c9b 100644
+--- a/builtin/fsck.c
++++ b/builtin/fsck.c
+@@ -509,9 +509,7 @@ static int fsck_handle_reflog_ent(struct object_id *ooi=
+d, struct object_id *noid
+ 	return 0;
  }
 =20
-diff --git a/refs/debug.c b/refs/debug.c
-index 634681ca44..c7531b17f0 100644
---- a/refs/debug.c
-+++ b/refs/debug.c
-@@ -181,7 +181,6 @@ static int debug_ref_iterator_advance(struct ref_iterat=
-or *ref_iterator)
- 		trace_printf_key(&trace_refs, "iterator_advance: %s (0)\n",
- 			diter->iter->refname);
-=20
--	diter->base.ordered =3D diter->iter->ordered;
- 	diter->base.refname =3D diter->iter->refname;
- 	diter->base.oid =3D diter->iter->oid;
- 	diter->base.flags =3D diter->iter->flags;
-@@ -222,7 +221,7 @@ debug_ref_iterator_begin(struct ref_store *ref_store, c=
-onst char *prefix,
- 		drefs->refs->be->iterator_begin(drefs->refs, prefix,
- 						exclude_patterns, flags);
- 	struct debug_ref_iterator *diter =3D xcalloc(1, sizeof(*diter));
--	base_ref_iterator_init(&diter->base, &debug_ref_iterator_vtable, 1);
-+	base_ref_iterator_init(&diter->base, &debug_ref_iterator_vtable);
- 	diter->iter =3D res;
- 	trace_printf_key(&trace_refs, "ref_iterator_begin: \"%s\" (0x%x)\n",
- 			 prefix, flags);
-diff --git a/refs/files-backend.c b/refs/files-backend.c
-index a7b7cdef36..51d57d98d2 100644
---- a/refs/files-backend.c
-+++ b/refs/files-backend.c
-@@ -879,8 +879,7 @@ static struct ref_iterator *files_ref_iterator_begin(
-=20
- 	CALLOC_ARRAY(iter, 1);
- 	ref_iterator =3D &iter->base;
--	base_ref_iterator_init(ref_iterator, &files_ref_iterator_vtable,
--			       overlay_iter->ordered);
-+	base_ref_iterator_init(ref_iterator, &files_ref_iterator_vtable);
- 	iter->iter0 =3D overlay_iter;
- 	iter->repo =3D ref_store->repo;
- 	iter->flags =3D flags;
-@@ -2202,7 +2201,7 @@ static struct ref_iterator *reflog_iterator_begin(str=
-uct ref_store *ref_store,
- 	CALLOC_ARRAY(iter, 1);
- 	ref_iterator =3D &iter->base;
-=20
--	base_ref_iterator_init(ref_iterator, &files_reflog_iterator_vtable, 1);
-+	base_ref_iterator_init(ref_iterator, &files_reflog_iterator_vtable);
- 	iter->dir_iterator =3D diter;
- 	iter->ref_store =3D ref_store;
- 	strbuf_release(&sb);
-@@ -2246,7 +2245,7 @@ static struct ref_iterator *files_reflog_iterator_beg=
-in(struct ref_store *ref_st
- 		return reflog_iterator_begin(ref_store, refs->gitcommondir);
- 	} else {
- 		return merge_ref_iterator_begin(
--			1, reflog_iterator_begin(ref_store, refs->base.gitdir),
-+			reflog_iterator_begin(ref_store, refs->base.gitdir),
- 			reflog_iterator_begin(ref_store, refs->gitcommondir),
- 			reflog_iterator_select, refs);
- 	}
-diff --git a/refs/iterator.c b/refs/iterator.c
-index 6b680f610e..f9a9a808e0 100644
---- a/refs/iterator.c
-+++ b/refs/iterator.c
-@@ -25,11 +25,9 @@ int ref_iterator_abort(struct ref_iterator *ref_iterator)
- }
-=20
- void base_ref_iterator_init(struct ref_iterator *iter,
--			    struct ref_iterator_vtable *vtable,
--			    int ordered)
-+			    struct ref_iterator_vtable *vtable)
+-static int fsck_handle_reflog(const char *logname,
+-			      const struct object_id *oid UNUSED,
+-			      int flag UNUSED, void *cb_data)
++static int fsck_handle_reflog(const char *logname, void *cb_data)
  {
- 	iter->vtable =3D vtable;
--	iter->ordered =3D !!ordered;
- 	iter->refname =3D NULL;
- 	iter->oid =3D NULL;
- 	iter->flags =3D 0;
-@@ -74,7 +72,7 @@ struct ref_iterator *empty_ref_iterator_begin(void)
- 	struct empty_ref_iterator *iter =3D xcalloc(1, sizeof(*iter));
- 	struct ref_iterator *ref_iterator =3D &iter->base;
+ 	struct strbuf refname =3D STRBUF_INIT;
 =20
--	base_ref_iterator_init(ref_iterator, &empty_ref_iterator_vtable, 1);
-+	base_ref_iterator_init(ref_iterator, &empty_ref_iterator_vtable);
- 	return ref_iterator;
- }
-=20
-@@ -207,7 +205,6 @@ static struct ref_iterator_vtable merge_ref_iterator_vt=
-able =3D {
+diff --git a/builtin/reflog.c b/builtin/reflog.c
+index a5a4099f61..3a0c4d4322 100644
+--- a/builtin/reflog.c
++++ b/builtin/reflog.c
+@@ -60,8 +60,7 @@ struct worktree_reflogs {
+ 	struct string_list reflogs;
  };
 =20
- struct ref_iterator *merge_ref_iterator_begin(
--		int ordered,
- 		struct ref_iterator *iter0, struct ref_iterator *iter1,
- 		ref_iterator_select_fn *select, void *cb_data)
+-static int collect_reflog(const char *ref, const struct object_id *oid UNU=
+SED,
+-			  int flags UNUSED, void *cb_data)
++static int collect_reflog(const char *ref, void *cb_data)
  {
-@@ -222,7 +219,7 @@ struct ref_iterator *merge_ref_iterator_begin(
- 	 * references through only if they exist in both iterators.
- 	 */
-=20
--	base_ref_iterator_init(ref_iterator, &merge_ref_iterator_vtable, ordered);
-+	base_ref_iterator_init(ref_iterator, &merge_ref_iterator_vtable);
- 	iter->iter0 =3D iter0;
- 	iter->iter1 =3D iter1;
- 	iter->select =3D select;
-@@ -271,12 +268,9 @@ struct ref_iterator *overlay_ref_iterator_begin(
- 	} else if (is_empty_ref_iterator(back)) {
- 		ref_iterator_abort(back);
- 		return front;
--	} else if (!front->ordered || !back->ordered) {
--		BUG("overlay_ref_iterator requires ordered inputs");
- 	}
-=20
--	return merge_ref_iterator_begin(1, front, back,
--					overlay_iterator_select, NULL);
-+	return merge_ref_iterator_begin(front, back, overlay_iterator_select, NUL=
-L);
+ 	struct worktree_reflogs *cb =3D cb_data;
+ 	struct worktree *worktree =3D cb->worktree;
+diff --git a/refs.c b/refs.c
+index dc25606a82..f9261267f0 100644
+--- a/refs.c
++++ b/refs.c
+@@ -2512,18 +2512,33 @@ int refs_verify_refname_available(struct ref_store =
+*refs,
+ 	return ret;
  }
 =20
- struct prefix_ref_iterator {
-@@ -315,16 +309,12 @@ static int prefix_ref_iterator_advance(struct ref_ite=
-rator *ref_iterator)
+-int refs_for_each_reflog(struct ref_store *refs, each_ref_fn fn, void *cb_=
+data)
++struct do_for_each_reflog_help {
++	each_reflog_fn *fn;
++	void *cb_data;
++};
++
++static int do_for_each_reflog_helper(struct repository *r UNUSED,
++				     const char *refname,
++				     const struct object_id *oid UNUSED,
++				     int flags,
++				     void *cb_data)
++{
++	struct do_for_each_reflog_help *hp =3D cb_data;
++	return hp->fn(refname, hp->cb_data);
++}
++
++int refs_for_each_reflog(struct ref_store *refs, each_reflog_fn fn, void *=
+cb_data)
+ {
+ 	struct ref_iterator *iter;
+-	struct do_for_each_ref_help hp =3D { fn, cb_data };
++	struct do_for_each_reflog_help hp =3D { fn, cb_data };
 =20
- 		if (cmp > 0) {
- 			/*
--			 * If the source iterator is ordered, then we
-+			 * As the source iterator is ordered, we
- 			 * can stop the iteration as soon as we see a
- 			 * refname that comes after the prefix:
- 			 */
--			if (iter->iter0->ordered) {
--				ok =3D ref_iterator_abort(iter->iter0);
--				break;
--			} else {
--				continue;
--			}
-+			ok =3D ref_iterator_abort(iter->iter0);
-+			break;
+ 	iter =3D refs->be->reflog_iterator_begin(refs);
+=20
+ 	return do_for_each_repo_ref_iterator(the_repository, iter,
+-					     do_for_each_ref_helper, &hp);
++					     do_for_each_reflog_helper, &hp);
+ }
+=20
+-int for_each_reflog(each_ref_fn fn, void *cb_data)
++int for_each_reflog(each_reflog_fn fn, void *cb_data)
+ {
+ 	return refs_for_each_reflog(get_main_ref_store(the_repository), fn, cb_da=
+ta);
+ }
+diff --git a/refs.h b/refs.h
+index 303c5fac4d..895579aeb7 100644
+--- a/refs.h
++++ b/refs.h
+@@ -534,12 +534,19 @@ int for_each_reflog_ent(const char *refname, each_ref=
+log_ent_fn fn, void *cb_dat
+ /* youngest entry first */
+ int for_each_reflog_ent_reverse(const char *refname, each_reflog_ent_fn fn=
+, void *cb_data);
+=20
++/*
++ * The signature for the callback function for the {refs_,}for_each_reflog=
+()
++ * functions below. The memory pointed to by the refname argument is only
++ * guaranteed to be valid for the duration of a single callback invocation.
++ */
++typedef int each_reflog_fn(const char *refname, void *cb_data);
++
+ /*
+  * Calls the specified function for each reflog file until it returns nonz=
+ero,
+  * and returns the value. Reflog file order is unspecified.
+  */
+-int refs_for_each_reflog(struct ref_store *refs, each_ref_fn fn, void *cb_=
+data);
+-int for_each_reflog(each_ref_fn fn, void *cb_data);
++int refs_for_each_reflog(struct ref_store *refs, each_reflog_fn fn, void *=
+cb_data);
++int for_each_reflog(each_reflog_fn fn, void *cb_data);
+=20
+ #define REFNAME_ALLOW_ONELEVEL 1
+ #define REFNAME_REFSPEC_PATTERN 2
+diff --git a/refs/files-backend.c b/refs/files-backend.c
+index 51d57d98d2..48cc60d71b 100644
+--- a/refs/files-backend.c
++++ b/refs/files-backend.c
+@@ -2115,10 +2115,8 @@ static int files_for_each_reflog_ent(struct ref_stor=
+e *ref_store,
+=20
+ struct files_reflog_iterator {
+ 	struct ref_iterator base;
+-
+ 	struct ref_store *ref_store;
+ 	struct dir_iterator *dir_iterator;
+-	struct object_id oid;
+ };
+=20
+ static int files_reflog_iterator_advance(struct ref_iterator *ref_iterator)
+@@ -2129,8 +2127,6 @@ static int files_reflog_iterator_advance(struct ref_i=
+terator *ref_iterator)
+ 	int ok;
+=20
+ 	while ((ok =3D dir_iterator_advance(diter)) =3D=3D ITER_OK) {
+-		int flags;
+-
+ 		if (!S_ISREG(diter->st.st_mode))
+ 			continue;
+ 		if (diter->basename[0] =3D=3D '.')
+@@ -2140,14 +2136,12 @@ static int files_reflog_iterator_advance(struct ref=
+_iterator *ref_iterator)
+=20
+ 		if (!refs_resolve_ref_unsafe(iter->ref_store,
+ 					     diter->relative_path, 0,
+-					     &iter->oid, &flags)) {
++					     NULL, NULL)) {
+ 			error("bad ref for %s", diter->path.buf);
+ 			continue;
  		}
 =20
- 		if (iter->trim) {
-@@ -396,7 +386,7 @@ struct ref_iterator *prefix_ref_iterator_begin(struct r=
-ef_iterator *iter0,
- 	CALLOC_ARRAY(iter, 1);
- 	ref_iterator =3D &iter->base;
+ 		iter->base.refname =3D diter->relative_path;
+-		iter->base.oid =3D &iter->oid;
+-		iter->base.flags =3D flags;
+ 		return ITER_OK;
+ 	}
 =20
--	base_ref_iterator_init(ref_iterator, &prefix_ref_iterator_vtable, iter0->=
-ordered);
-+	base_ref_iterator_init(ref_iterator, &prefix_ref_iterator_vtable);
-=20
- 	iter->iter0 =3D iter0;
- 	iter->prefix =3D xstrdup(prefix);
-diff --git a/refs/packed-backend.c b/refs/packed-backend.c
-index a499a91c7e..4e826c05ff 100644
---- a/refs/packed-backend.c
-+++ b/refs/packed-backend.c
-@@ -1111,7 +1111,7 @@ static struct ref_iterator *packed_ref_iterator_begin(
-=20
- 	CALLOC_ARRAY(iter, 1);
- 	ref_iterator =3D &iter->base;
--	base_ref_iterator_init(ref_iterator, &packed_ref_iterator_vtable, 1);
-+	base_ref_iterator_init(ref_iterator, &packed_ref_iterator_vtable);
-=20
- 	if (exclude_patterns)
- 		populate_excluded_jump_list(iter, snapshot, exclude_patterns);
-diff --git a/refs/ref-cache.c b/refs/ref-cache.c
-index a372a00941..9f9797209a 100644
---- a/refs/ref-cache.c
-+++ b/refs/ref-cache.c
-@@ -486,7 +486,7 @@ struct ref_iterator *cache_ref_iterator_begin(struct re=
-f_cache *cache,
-=20
- 	CALLOC_ARRAY(iter, 1);
- 	ref_iterator =3D &iter->base;
--	base_ref_iterator_init(ref_iterator, &cache_ref_iterator_vtable, 1);
-+	base_ref_iterator_init(ref_iterator, &cache_ref_iterator_vtable);
- 	ALLOC_GROW(iter->levels, 10, iter->levels_alloc);
-=20
- 	iter->levels_nr =3D 1;
-diff --git a/refs/refs-internal.h b/refs/refs-internal.h
-index 83e0f0bba3..1e8a9f9f13 100644
---- a/refs/refs-internal.h
-+++ b/refs/refs-internal.h
-@@ -312,13 +312,6 @@ enum do_for_each_ref_flags {
-  */
- struct ref_iterator {
- 	struct ref_iterator_vtable *vtable;
--
--	/*
--	 * Does this `ref_iterator` iterate over references in order
--	 * by refname?
--	 */
--	unsigned int ordered : 1;
--
- 	const char *refname;
- 	const struct object_id *oid;
- 	unsigned int flags;
-@@ -390,11 +383,9 @@ typedef enum iterator_selection ref_iterator_select_fn(
-  * Iterate over the entries from iter0 and iter1, with the values
-  * interleaved as directed by the select function. The iterator takes
-  * ownership of iter0 and iter1 and frees them when the iteration is
-- * over. A derived class should set `ordered` to 1 or 0 based on
-- * whether it generates its output in order by reference name.
-+ * over.
-  */
- struct ref_iterator *merge_ref_iterator_begin(
--		int ordered,
- 		struct ref_iterator *iter0, struct ref_iterator *iter1,
- 		ref_iterator_select_fn *select, void *cb_data);
-=20
-@@ -423,8 +414,6 @@ struct ref_iterator *overlay_ref_iterator_begin(
-  * As an convenience to callers, if prefix is the empty string and
-  * trim is zero, this function returns iter0 directly, without
-  * wrapping it.
-- *
-- * The resulting ref_iterator is ordered if iter0 is.
-  */
- struct ref_iterator *prefix_ref_iterator_begin(struct ref_iterator *iter0,
- 					       const char *prefix,
-@@ -435,14 +424,11 @@ struct ref_iterator *prefix_ref_iterator_begin(struct=
- ref_iterator *iter0,
- /*
-  * Base class constructor for ref_iterators. Initialize the
-  * ref_iterator part of iter, setting its vtable pointer as specified.
-- * `ordered` should be set to 1 if the iterator will iterate over
-- * references in order by refname; otherwise it should be set to 0.
-  * This is meant to be called only by the initializers of derived
-  * classes.
-  */
- void base_ref_iterator_init(struct ref_iterator *iter,
--			    struct ref_iterator_vtable *vtable,
--			    int ordered);
-+			    struct ref_iterator_vtable *vtable);
-=20
- /*
-  * Base class destructor for ref_iterators. Destroy the ref_iterator
 diff --git a/refs/reftable-backend.c b/refs/reftable-backend.c
-index a14f2ad7f4..70a16dfb9e 100644
+index 70a16dfb9e..5247e09d58 100644
 --- a/refs/reftable-backend.c
 +++ b/refs/reftable-backend.c
-@@ -479,7 +479,7 @@ static struct reftable_ref_iterator *ref_iterator_for_s=
-tack(struct reftable_ref_
- 	int ret;
+@@ -1637,7 +1637,6 @@ struct reftable_reflog_iterator {
+ 	struct reftable_ref_store *refs;
+ 	struct reftable_iterator iter;
+ 	struct reftable_log_record log;
+-	struct object_id oid;
+ 	char *last_name;
+ 	int err;
+ };
+@@ -1648,8 +1647,6 @@ static int reftable_reflog_iterator_advance(struct re=
+f_iterator *ref_iterator)
+ 		(struct reftable_reflog_iterator *)ref_iterator;
 =20
- 	iter =3D xcalloc(1, sizeof(*iter));
--	base_ref_iterator_init(&iter->base, &reftable_ref_iterator_vtable, 1);
-+	base_ref_iterator_init(&iter->base, &reftable_ref_iterator_vtable);
- 	iter->prefix =3D prefix;
- 	iter->base.oid =3D &iter->oid;
- 	iter->flags =3D flags;
-@@ -575,7 +575,7 @@ static struct ref_iterator *reftable_be_iterator_begin(=
-struct ref_store *ref_sto
- 	 * single iterator.
- 	 */
- 	worktree_iter =3D ref_iterator_for_stack(refs, refs->worktree_stack, pref=
-ix, flags);
--	return merge_ref_iterator_begin(1, &worktree_iter->base, &main_iter->base,
-+	return merge_ref_iterator_begin(&worktree_iter->base, &main_iter->base,
- 					iterator_select, NULL);
- }
+ 	while (!iter->err) {
+-		int flags;
+-
+ 		iter->err =3D reftable_iterator_next_log(&iter->iter, &iter->log);
+ 		if (iter->err)
+ 			break;
+@@ -1663,7 +1660,7 @@ static int reftable_reflog_iterator_advance(struct re=
+f_iterator *ref_iterator)
+ 			continue;
 =20
-@@ -1723,7 +1723,7 @@ static struct reftable_reflog_iterator *reflog_iterat=
+ 		if (!refs_resolve_ref_unsafe(&iter->refs->base, iter->log.refname,
+-					     0, &iter->oid, &flags)) {
++					     0, NULL, NULL)) {
+ 			error(_("bad ref for %s"), iter->log.refname);
+ 			continue;
+ 		}
+@@ -1671,8 +1668,6 @@ static int reftable_reflog_iterator_advance(struct re=
+f_iterator *ref_iterator)
+ 		free(iter->last_name);
+ 		iter->last_name =3D xstrdup(iter->log.refname);
+ 		iter->base.refname =3D iter->log.refname;
+-		iter->base.oid =3D &iter->oid;
+-		iter->base.flags =3D flags;
+=20
+ 		break;
+ 	}
+@@ -1725,7 +1720,6 @@ static struct reftable_reflog_iterator *reflog_iterat=
 or_for_stack(struct reftabl
- 	int ret;
-=20
  	iter =3D xcalloc(1, sizeof(*iter));
--	base_ref_iterator_init(&iter->base, &reftable_reflog_iterator_vtable, 1);
-+	base_ref_iterator_init(&iter->base, &reftable_reflog_iterator_vtable);
+ 	base_ref_iterator_init(&iter->base, &reftable_reflog_iterator_vtable);
  	iter->refs =3D refs;
- 	iter->base.oid =3D &iter->oid;
+-	iter->base.oid =3D &iter->oid;
 =20
-@@ -1758,7 +1758,7 @@ static struct ref_iterator *reftable_be_reflog_iterat=
-or_begin(struct ref_store *
-=20
- 	worktree_iter =3D reflog_iterator_for_stack(refs, refs->worktree_stack);
-=20
--	return merge_ref_iterator_begin(1, &worktree_iter->base, &main_iter->base,
-+	return merge_ref_iterator_begin(&worktree_iter->base, &main_iter->base,
- 					iterator_select, NULL);
+ 	ret =3D refs->err;
+ 	if (ret)
+diff --git a/revision.c b/revision.c
+index 2424c9bd67..ac45c6d8f2 100644
+--- a/revision.c
++++ b/revision.c
+@@ -1686,9 +1686,7 @@ static int handle_one_reflog_ent(struct object_id *oo=
+id, struct object_id *noid,
+ 	return 0;
  }
 =20
+-static int handle_one_reflog(const char *refname_in_wt,
+-			     const struct object_id *oid UNUSED,
+-			     int flag UNUSED, void *cb_data)
++static int handle_one_reflog(const char *refname_in_wt, void *cb_data)
+ {
+ 	struct all_refs_cb *cb =3D cb_data;
+ 	struct strbuf refname =3D STRBUF_INIT;
+diff --git a/t/helper/test-ref-store.c b/t/helper/test-ref-store.c
+index 702ec1f128..7a0f6cac53 100644
+--- a/t/helper/test-ref-store.c
++++ b/t/helper/test-ref-store.c
+@@ -221,15 +221,21 @@ static int cmd_verify_ref(struct ref_store *refs, con=
+st char **argv)
+ 	return ret;
+ }
+=20
++static int each_reflog(const char *refname, void *cb_data UNUSED)
++{
++	printf("%s\n", refname);
++	return 0;
++}
++
+ static int cmd_for_each_reflog(struct ref_store *refs,
+ 			       const char **argv UNUSED)
+ {
+-	return refs_for_each_reflog(refs, each_ref, NULL);
++	return refs_for_each_reflog(refs, each_reflog, NULL);
+ }
+=20
+-static int each_reflog(struct object_id *old_oid, struct object_id *new_oi=
+d,
+-		       const char *committer, timestamp_t timestamp,
+-		       int tz, const char *msg, void *cb_data UNUSED)
++static int each_reflog_ent(struct object_id *old_oid, struct object_id *ne=
+w_oid,
++			   const char *committer, timestamp_t timestamp,
++			   int tz, const char *msg, void *cb_data UNUSED)
+ {
+ 	printf("%s %s %s %" PRItime " %+05d%s%s", oid_to_hex(old_oid),
+ 	       oid_to_hex(new_oid), committer, timestamp, tz,
+@@ -241,14 +247,14 @@ static int cmd_for_each_reflog_ent(struct ref_store *=
+refs, const char **argv)
+ {
+ 	const char *refname =3D notnull(*argv++, "refname");
+=20
+-	return refs_for_each_reflog_ent(refs, refname, each_reflog, refs);
++	return refs_for_each_reflog_ent(refs, refname, each_reflog_ent, refs);
+ }
+=20
+ static int cmd_for_each_reflog_ent_reverse(struct ref_store *refs, const c=
+har **argv)
+ {
+ 	const char *refname =3D notnull(*argv++, "refname");
+=20
+-	return refs_for_each_reflog_ent_reverse(refs, refname, each_reflog, refs);
++	return refs_for_each_reflog_ent_reverse(refs, refname, each_reflog_ent, r=
+efs);
+ }
+=20
+ static int cmd_reflog_exists(struct ref_store *refs, const char **argv)
+diff --git a/t/t0600-reffiles-backend.sh b/t/t0600-reffiles-backend.sh
+index 4f860285cc..56a3196b83 100755
+--- a/t/t0600-reffiles-backend.sh
++++ b/t/t0600-reffiles-backend.sh
+@@ -287,23 +287,23 @@ test_expect_success 'for_each_reflog()' '
+ 	mkdir -p     .git/worktrees/wt/logs/refs/bisect &&
+ 	echo $ZERO_OID > .git/worktrees/wt/logs/refs/bisect/wt-random &&
+=20
+-	$RWT for-each-reflog | cut -d" " -f 2- >actual &&
++	$RWT for-each-reflog >actual &&
+ 	cat >expected <<-\EOF &&
+-	HEAD 0x1
+-	PSEUDO-WT 0x0
+-	refs/bisect/wt-random 0x0
+-	refs/heads/main 0x0
+-	refs/heads/wt-main 0x0
++	HEAD
++	PSEUDO-WT
++	refs/bisect/wt-random
++	refs/heads/main
++	refs/heads/wt-main
+ 	EOF
+ 	test_cmp expected actual &&
+=20
+-	$RMAIN for-each-reflog | cut -d" " -f 2- >actual &&
++	$RMAIN for-each-reflog >actual &&
+ 	cat >expected <<-\EOF &&
+-	HEAD 0x1
+-	PSEUDO-MAIN 0x0
+-	refs/bisect/random 0x0
+-	refs/heads/main 0x0
+-	refs/heads/wt-main 0x0
++	HEAD
++	PSEUDO-MAIN
++	refs/bisect/random
++	refs/heads/main
++	refs/heads/wt-main
+ 	EOF
+ 	test_cmp expected actual
+ '
+diff --git a/t/t1405-main-ref-store.sh b/t/t1405-main-ref-store.sh
+index cfb583f544..3eee758bce 100755
+--- a/t/t1405-main-ref-store.sh
++++ b/t/t1405-main-ref-store.sh
+@@ -74,11 +74,11 @@ test_expect_success 'verify_ref(new-main)' '
+ '
+=20
+ test_expect_success 'for_each_reflog()' '
+-	$RUN for-each-reflog | cut -d" " -f 2- >actual &&
++	$RUN for-each-reflog >actual &&
+ 	cat >expected <<-\EOF &&
+-	HEAD 0x1
+-	refs/heads/main 0x0
+-	refs/heads/new-main 0x0
++	HEAD
++	refs/heads/main
++	refs/heads/new-main
+ 	EOF
+ 	test_cmp expected actual
+ '
+diff --git a/t/t1406-submodule-ref-store.sh b/t/t1406-submodule-ref-store.sh
+index 40332e23cc..c01f0f14a1 100755
+--- a/t/t1406-submodule-ref-store.sh
++++ b/t/t1406-submodule-ref-store.sh
+@@ -63,11 +63,11 @@ test_expect_success 'verify_ref(new-main)' '
+ '
+=20
+ test_expect_success 'for_each_reflog()' '
+-	$RUN for-each-reflog | cut -d" " -f 2- >actual &&
++	$RUN for-each-reflog >actual &&
+ 	cat >expected <<-\EOF &&
+-	HEAD 0x1
+-	refs/heads/main 0x0
+-	refs/heads/new-main 0x0
++	HEAD
++	refs/heads/main
++	refs/heads/new-main
+ 	EOF
+ 	test_cmp expected actual
+ '
 --=20
 2.44.0-rc1
 
 
---V2V5xAc06i4E6KmQ
+--/I0/70X96IfGrOii
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmXUa5kACgkQVbJhu7ck
-PpSg8xAAgw8Ss6Giq+h1nUBfVzmFYe7l9PZpYT/IeBLKkbPpq5+G7mRbwkRC1ir6
-qTyeVNYryEn7EGwBXba7qGePF5mvObaplAARpyKF6qjuDXrHmNjwSSnJl3KcEq/n
-Oq57tCToGTf6WZId+EJjr7WtfpQw6YT+X5PGHFMmwr7p3+6P+HenF4vIDtE0jl9p
-d6Ta7Gy5TbhTCTn9j7pHB9Dd62x9tBL5xpYYrYua7fQEmQSQJn5izrR+X6SKw/QC
-4EbSsE6YTc/C3+9Ul+X2fpHsTaTOADPLMLbsWR05aXfBSYdjzRWjLHFydvGneXxG
-VEWBkTWpe6boaeDd4kxp1xukhCbtt992RKREdzzTzRk35IPdzJAW1NPyNBAqozDV
-T29k9yPog2pyWY8cL+qfvwQ8Pr7H5hGLt0d73eBpvWiyMSAnsjP4p8B6Lwq+/iaa
-7+384OmFabAb4jFkddQUeBpBAfvDpjTuUaROsu7ObhsNwudy0Lt6LHb8RHgzrwzk
-EDEqUtPy6dPyob0ZqjPN4Kwr5k4pqEx6iIOQkSqjm6aKYVkt9I1s2oA3LaRZrzmG
-oK8ERNJdhd9E2IH+Y5mWy5Be1ER0/uof4hskq9AyUqLUF18g/QRUeJqG/AFCGn9z
-BS/72cEwRBIokTOveXE/F0m0VBjXBih8lH0nC0Giiu35ggD4CRc=
-=IBp/
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmXUa54ACgkQVbJhu7ck
+PpRr3Q//Wgrq3s4mQU/Wqj5pXw3Ve34Xk7sNKgAuS3YAvm+OjxK2S5RVfmS1OLho
+pDwHA11TRNL1jgR2GXu9J55Yvouh31suht9dSK6pVS1XBVcPyGrc4MGMLhWkdOUG
+cvzdd95VvnHeXXmIprtaJvuyHULBsTLJPW4yrjWwsBQBN6l0KLCvjsrZBDp5Mci7
+eAFO9cVUhwF7ziGYnim40tZlzsn1OFPMoSfT7Lf32GwTtFgRiHGsqSeWimWYh/1C
+0QY5Z6zY638VTWWC52oJKberHQ7qTnCBlxDOryfosEsfcni9gn4b0Qp1Otm2i+Vn
+2c6C0AEYrfm4QJyXwyiLcNlAxKuGJfpb6zAKJc3+m8B189Sru5pCCF6z9eIjsI94
+mCeOK/3cNvxrd2zzBEOVCuYPknjr48njcPL4mA+xYorwsJbphfwfxtNYY36qSyHB
+vYKvesqboDw9/NdgFf8d73t7YxKRmzF+fqa/XXqz69zfeJgg/SG28uEKG4saCnpH
+mqX1w/bM9BMqb2X2vPMYC/LwXelc0Nm4xxqwOaYwBuwAvenX/jvWcHVPNZEUJIE3
+0Qh8FFzkrU16HNSwunXzHN6vI06jeEcgJOfgMiXQ7GKEnMfOTEMACqzzNZlZ/Vxe
+ZOgO+OEUne3a9DH8AKFShyCfBShAr761aU4oE8LtzKzkP3N0JZg=
+=Djej
 -----END PGP SIGNATURE-----
 
---V2V5xAc06i4E6KmQ--
+--/I0/70X96IfGrOii--
