@@ -1,53 +1,53 @@
 Received: from wfout6-smtp.messagingengine.com (wfout6-smtp.messagingengine.com [64.147.123.149])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3E7C62146
-	for <git@vger.kernel.org>; Tue, 20 Feb 2024 09:06:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B64395F554
+	for <git@vger.kernel.org>; Tue, 20 Feb 2024 09:06:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708420004; cv=none; b=mNbkqfe0iakpJH4wLoNEUM/414Sh4qTJFZlrck0B75lxEfRQzpU2fhH/mFTzOzCePTHu9/xyCMcSGbNeqatV8NE5jb7zJ82iNKKDOj0Et43+nVicun1xkjvFbTV33h952uGYcJ1T4FoDKyqmLHJYXYRXkju259/nk4+zskLkwCY=
+	t=1708420009; cv=none; b=nz2b6Lslv2MeWm/fG3DOZ0NtGLIRMCRPJ7oF514cRGmKeB/FFHm7Ckj1XOozLH8hu8A/jyvbEO7x3M0SygYmClHOsCL7FxoGKkiSSyBtERmHpVR2hKWTlLwkZZah8YIgssxeOISh4+1d2xmn4l04HHJvjrWfLp+KkZ8Egj7xIWM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708420004; c=relaxed/simple;
-	bh=Gvz/qCwq0k8EBjt5nZvIvl4ov1DVxzY3hhZDMzdnfwU=;
+	s=arc-20240116; t=1708420009; c=relaxed/simple;
+	bh=4U0Du7RuKPhNCkZfjheXWtJB/Dhxm+ijOZvL+g7/MPY=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=FWav6ArZ5cB08pR/Pu9ozwJUbCd94NveBO7hWyXBLkH7ILK1BDMVJ7hjekk0bvtU6vVXB0wb2f3rJGutyYOrhAQ8reO4LVu1aNYPkdpiJiMujp6eEMqQCBZ7VllXWVjpzJaBY/8PLzEIVLLf4TQLSjnW+LhcRe1/KSZNf+YzF28=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=M4HDw0EG; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=hzVYxulC; arc=none smtp.client-ip=64.147.123.149
+	 Content-Type:Content-Disposition:In-Reply-To; b=Cs8+LhMHDpApUwD/AG7ySuPTbxpllwGV0+1lU5pb2XQymUPV8/0cZkSZyKAmuuGvsrvHG+4b/ECFU4uiP2yJI9EOf9303B6qTgt4wtvbSoKMmRjQhwfUS11VvYdSHimrWu0W0V45NYT0Kg6eS/2YMp5NLWXGYzJ4pEtGtG0VZgQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=ntB7cFk7; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=VCI7sn7M; arc=none smtp.client-ip=64.147.123.149
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="M4HDw0EG";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="hzVYxulC"
-Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
-	by mailfout.west.internal (Postfix) with ESMTP id E779E1C00095;
-	Tue, 20 Feb 2024 04:06:41 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="ntB7cFk7";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="VCI7sn7M"
+Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
+	by mailfout.west.internal (Postfix) with ESMTP id BFE281C00096;
+	Tue, 20 Feb 2024 04:06:46 -0500 (EST)
 Received: from mailfrontend1 ([10.202.2.162])
-  by compute6.internal (MEProxy); Tue, 20 Feb 2024 04:06:42 -0500
+  by compute2.internal (MEProxy); Tue, 20 Feb 2024 04:06:46 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1708420001; x=1708506401; bh=MDW4MsVM2Z
-	MCvM709H8pwuvaLhrBXH0VlkWz1p2CpFI=; b=M4HDw0EGIpfUGgs/gKp0l4vnYm
-	QCjeZ1KE3lv8ZdmMZsWGZmwnElPpMB+/vb9i+82tRiLQBF0MS6e2ptb/29TIKvoB
-	lVPX9Tfpgp4i8lUtNHN0G2SycrrTittNkW964gUvi4qQb2C1LJGsTwJiTjhJ1a04
-	3bVxOFo3sgds0dxmDzcfIUKvREmQjynHRXz25nULPI1IKEzgFgGFCsp52jEH85d4
-	dAHI68Up6Yk22/YOIk0sHUH8bgvhp/Y3tBsNC0l1WJ41GlB9FSrXEWChFA5YcuHO
-	knORs4x6lIF7d1fFbYlX4x3d/An0MNFLiLfxurRrQhRXJjjEVzExDPR8s5kw==
+	:subject:to:to; s=fm1; t=1708420006; x=1708506406; bh=1P2fekKHlu
+	WRGEtM4D5bbxqudF6kwIO9Eb7+LxzUMcE=; b=ntB7cFk7c5Ep9HQj44T2dgESwD
+	taaYZ+OR+bv1FvyV43PtAGeuG0bJwD/WfnBzyyEXzwf0NDGq99FEPNzcBom1dY7B
+	bQcKyrdtzdAHuXEjXt3+Ao8R6ceK3JlRmIkmUXdQdKyjxkOsfW/WpELUV5S9WLaV
+	mZKDp+TfInLcBOPUh4d1CNJWJUK0u1SXOyKSspEaA21M/5MqSgOrYf/ZmuM36pk5
+	eDIk8lYcsReRLhVOY0VJKwkWsh90ZKoyThiSrVU1lNUIKHy+cX7taCTkjA00RPri
+	jY4vxBKqLc9t/YGT3QGanYmT0K19krbLa+7RcKEdKD4Zx00wi7FMQHoYHHCw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1708420001; x=1708506401; bh=MDW4MsVM2ZMCvM709H8pwuvaLhrB
-	XH0VlkWz1p2CpFI=; b=hzVYxulCYybQfaTkE/pnjT7y6G9L92wVCWPS5F2jcq2x
-	r6zPf6tlMMlw9uBfhshIt5CPb5vsnzWOPbLM4lUl+xKdBQWbqG6djRijslLD9ka4
-	HPm02ACb49gU/KM/bqSmWKVYHKyMg8dompgK4ECq21Arg9ayw6hthj1Mw/UNq0iU
-	b+ZOnzBb9dHkxbhtMKUUVjrOXmqHH6cxgaIMtWZu/DqobO5PbzMlMFykKqxulkx2
-	+XPqXGW7kedrL8njchsO6vu7xPV8OtOofLoseCJi6cBdAWuGOiwzg7KxdlUGa8qS
-	4BLF2F9yU6Jed20YVQa3mg/yyBss78uZJBqSFW7NmQ==
-X-ME-Sender: <xms:oWvUZVMcvsVLDZWqHHNSX1YyKk7MtZ2ftxXps96R7ERYKqB_z2Twtw>
-    <xme:oWvUZX-93l2faTraNN7BIozPcPvpN_BZLPjv0z6q3hzTujHOPBKNMd1CjQpCUYCIR
-    azwU_USkL-fw5-rXA>
-X-ME-Received: <xmr:oWvUZUQhi-DI_tG8VDPTleCnyxNbvTBWZTryngfYDcZGYFNtagSDywuhBDuFVNyqiavUcCXHHWO39OBaqcD-hCZCM5mmKlahFttGGBy9qlX5bA>
+	fm1; t=1708420006; x=1708506406; bh=1P2fekKHluWRGEtM4D5bbxqudF6k
+	wIO9Eb7+LxzUMcE=; b=VCI7sn7M+m1wxTD/m5QPAeipbptlNkwyNc1oeAtIhU7+
+	xXvuMt/5DaQxi7RRsmDxnOox9XDP4MXMZDfjWfBhGif8itx9seqG+dBigBoLdGhn
+	YGsucpntiJHXANp4Co8Kj8DPRIj+iG3lUAQIQ4l39z56ltJRxyNKZGbae7KbdPv7
+	n8D3uuMhAIr0gg8KD4nroKSfdPtm/xEjIifNzT3wvoMKdMLduOylSoX6XmEqgTR5
+	itdONR8kAN1cemUQ0tzfn8amo1XPs6b3KYGKMhJhoJgwSfz5Sx2KwuxscbBD+4CC
+	lL3hdFD+NgtrMsg67D3/0RBFjlD8o1o423mIvYdOuw==
+X-ME-Sender: <xms:pmvUZfVRhKAtsbwjRGEBNfqIq2p4cB6oZpmul3AbLTTcCq7944Pocg>
+    <xme:pmvUZXkfy4VlkiJL_mCN8kxLcH-ky813cgDQza2SV3XO4q3RYr0BnPkiY0fgStTNc
+    hxDaiWioJq_EVvcYQ>
+X-ME-Received: <xmr:pmvUZbZ0r17J1MrH8mt0RS4QDRHNiElLJqBBpZchAZkvFNIIkBxxZtQi360kCNKfLVs5fbuJrWKOci303XxMupQIhkku4uDnF_1ZQvOZAlGgHA>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrfedtucetufdoteggodetrfdotffvucfrrh
     hofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgenuceurghi
     lhhouhhtmecufedttdenucenucfjughrpeffhffvvefukfhfgggtuggjsehgtderredttd
@@ -55,23 +55,22 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrfedtucetufdoteggodetrfdotf
     ihhmqeenucggtffrrghtthgvrhhnpeeukedtvedtffevleejtefgheehieegkeeluddvfe
     efgeehgfeltddtheejleffteenucevlhhushhtvghrufhiiigvpedvnecurfgrrhgrmhep
     mhgrihhlfhhrohhmpehpshesphhkshdrihhm
-X-ME-Proxy: <xmx:oWvUZRuus4KvpEeqLG67Yuo0GybdekZsQ8JJRUg_Xzrq_O1F_EYCAg>
-    <xmx:oWvUZdcnFTzPLHjXLgTaloHbkKAb-kmWVZM3Ta02IK8pwfXPk22DxA>
-    <xmx:oWvUZd2850OvaePvRTHMxf53ItqNqVebNQuWeLSXZXSBZnv98pgxuw>
-    <xmx:oWvUZeq4VuqW9Yr_6DzQZss7xVZTmQ3gIsB23c1wkIeIOjOjUNr6HZ4nRtw>
+X-ME-Proxy: <xmx:pmvUZaWhO6TwUk0ATZbfhn-YevhP8u2ow_JdLaKtoXApoLY3UmRJgg>
+    <xmx:pmvUZZnV_dZMKl9Q_qDTcg7X3GD-nQ-OoHI5xNW2X7he67EbUp3afg>
+    <xmx:pmvUZXcE7q848GzyqyfmyP1B_bFeFwvz6ijq-N48-xGLBEj6Vlm3yw>
+    <xmx:pmvUZeycSgE5_rWQrju7KBIRUwkABNNPu_r_5Q_FqvGQGG9riv4D-lEiyw8>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 20 Feb 2024 04:06:40 -0500 (EST)
+ 20 Feb 2024 04:06:45 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 2afaf932 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 20 Feb 2024 09:02:38 +0000 (UTC)
-Date: Tue, 20 Feb 2024 10:06:39 +0100
+	by vm-mail (OpenSMTPD) with ESMTPSA id 2386328e (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 20 Feb 2024 09:02:42 +0000 (UTC)
+Date: Tue, 20 Feb 2024 10:06:43 +0100
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
 Cc: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v2 5/7] refs: drop unused params from the reflog iterator
- callback
-Message-ID: <240334df6c7d0e95f67fdeddb8b8a381a59245fa.1708418805.git.ps@pks.im>
+Subject: [PATCH v2 6/7] refs: stop resolving ref corresponding to reflogs
+Message-ID: <7928661318a635022b65db543bd551018057c11f.1708418805.git.ps@pks.im>
 References: <cover.1708353264.git.ps@pks.im>
  <cover.1708418805.git.ps@pks.im>
 Precedence: bulk
@@ -81,424 +80,122 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="/I0/70X96IfGrOii"
+	protocol="application/pgp-signature"; boundary="zTJIlHoHnESGHB+L"
 Content-Disposition: inline
 In-Reply-To: <cover.1708418805.git.ps@pks.im>
 
 
---/I0/70X96IfGrOii
+--zTJIlHoHnESGHB+L
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-The ref and reflog iterators share much of the same underlying code to
-iterate over the corresponding entries. This results in some weird code
-because the reflog iterator also exposes an object ID as well as a flag
-to the callback function. Neither of these fields do refer to the reflog
-though -- they refer to the corresponding ref with the same name. This
-is quite misleading. In practice at least the object ID cannot really be
-implemented in any other way as a reflog does not have a specific object
-ID in the first place. This is further stressed by the fact that none of
-the callbacks except for our test helper make use of these fields.
+The reflog iterator tries to resolve the corresponding ref for every
+reflog that it is about to yield. Historically, this was done due to
+multiple reasons:
 
-Split up the infrastucture so that ref and reflog iterators use separate
-callback signatures. This allows us to drop the nonsensical fields from
-the reflog iterator.
+  - It ensures that the refname is safe because we end up calling
+    `check_refname_format()`. Also, non-conformant refnames are skipped
+    altogether.
 
-Note that internally, the backends still use the same shared infra to
-iterate over both types. As the backends should never end up being
-called directly anyway, this is not much of a problem and thus kept
-as-is for simplicity's sake.
+  - The iterator used to yield the resolved object ID as well as its
+    flags to the callback. This info was never used though, and the
+    corresponding parameters were dropped in the preceding commit.
+
+  - When a ref is corrupt then the reflog is not emitted at all.
+
+We're about to introduce a new `git reflog list` subcommand that will
+print all reflogs that the refdb knows about. Skipping over reflogs
+whose refs are corrupted would be quite counterproductive in this case
+as the user would have no way to learn about reflogs which may still
+exist in their repository to help and rescue such a corrupted ref. Thus,
+the only remaining reason for why we'd want to resolve the ref is to
+verify its refname.
+
+Refactor the code to call `check_refname_format()` directly instead of
+trying to resolve the ref. This is significantly more efficient given
+that we don't have to hit the object database anymore to list reflogs.
+And second, it ensures that we end up showing reflogs of broken refs,
+which will help to make the reflog more useful.
+
+Note that this really only impacts the case where the corresponding ref
+is corrupt. Reflogs for nonexistent refs would have been returned to the
+caller beforehand already as we did not pass `RESOLVE_REF_READING` to
+the function, and thus `refs_resolve_ref_unsafe()` would have returned
+successfully in that case.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- builtin/fsck.c                 |  4 +---
- builtin/reflog.c               |  3 +--
- refs.c                         | 23 +++++++++++++++++++----
- refs.h                         | 11 +++++++++--
- refs/files-backend.c           |  8 +-------
- refs/reftable-backend.c        |  8 +-------
- revision.c                     |  4 +---
- t/helper/test-ref-store.c      | 18 ++++++++++++------
- t/t0600-reffiles-backend.sh    | 24 ++++++++++++------------
- t/t1405-main-ref-store.sh      |  8 ++++----
- t/t1406-submodule-ref-store.sh |  8 ++++----
- 11 files changed, 65 insertions(+), 54 deletions(-)
+ refs/files-backend.c    | 12 ++----------
+ refs/reftable-backend.c |  6 ++----
+ 2 files changed, 4 insertions(+), 14 deletions(-)
 
-diff --git a/builtin/fsck.c b/builtin/fsck.c
-index a7cf94f67e..f892487c9b 100644
---- a/builtin/fsck.c
-+++ b/builtin/fsck.c
-@@ -509,9 +509,7 @@ static int fsck_handle_reflog_ent(struct object_id *ooi=
-d, struct object_id *noid
- 	return 0;
- }
-=20
--static int fsck_handle_reflog(const char *logname,
--			      const struct object_id *oid UNUSED,
--			      int flag UNUSED, void *cb_data)
-+static int fsck_handle_reflog(const char *logname, void *cb_data)
- {
- 	struct strbuf refname =3D STRBUF_INIT;
-=20
-diff --git a/builtin/reflog.c b/builtin/reflog.c
-index a5a4099f61..3a0c4d4322 100644
---- a/builtin/reflog.c
-+++ b/builtin/reflog.c
-@@ -60,8 +60,7 @@ struct worktree_reflogs {
- 	struct string_list reflogs;
- };
-=20
--static int collect_reflog(const char *ref, const struct object_id *oid UNU=
-SED,
--			  int flags UNUSED, void *cb_data)
-+static int collect_reflog(const char *ref, void *cb_data)
- {
- 	struct worktree_reflogs *cb =3D cb_data;
- 	struct worktree *worktree =3D cb->worktree;
-diff --git a/refs.c b/refs.c
-index dc25606a82..f9261267f0 100644
---- a/refs.c
-+++ b/refs.c
-@@ -2512,18 +2512,33 @@ int refs_verify_refname_available(struct ref_store =
-*refs,
- 	return ret;
- }
-=20
--int refs_for_each_reflog(struct ref_store *refs, each_ref_fn fn, void *cb_=
-data)
-+struct do_for_each_reflog_help {
-+	each_reflog_fn *fn;
-+	void *cb_data;
-+};
-+
-+static int do_for_each_reflog_helper(struct repository *r UNUSED,
-+				     const char *refname,
-+				     const struct object_id *oid UNUSED,
-+				     int flags,
-+				     void *cb_data)
-+{
-+	struct do_for_each_reflog_help *hp =3D cb_data;
-+	return hp->fn(refname, hp->cb_data);
-+}
-+
-+int refs_for_each_reflog(struct ref_store *refs, each_reflog_fn fn, void *=
-cb_data)
- {
- 	struct ref_iterator *iter;
--	struct do_for_each_ref_help hp =3D { fn, cb_data };
-+	struct do_for_each_reflog_help hp =3D { fn, cb_data };
-=20
- 	iter =3D refs->be->reflog_iterator_begin(refs);
-=20
- 	return do_for_each_repo_ref_iterator(the_repository, iter,
--					     do_for_each_ref_helper, &hp);
-+					     do_for_each_reflog_helper, &hp);
- }
-=20
--int for_each_reflog(each_ref_fn fn, void *cb_data)
-+int for_each_reflog(each_reflog_fn fn, void *cb_data)
- {
- 	return refs_for_each_reflog(get_main_ref_store(the_repository), fn, cb_da=
-ta);
- }
-diff --git a/refs.h b/refs.h
-index 303c5fac4d..895579aeb7 100644
---- a/refs.h
-+++ b/refs.h
-@@ -534,12 +534,19 @@ int for_each_reflog_ent(const char *refname, each_ref=
-log_ent_fn fn, void *cb_dat
- /* youngest entry first */
- int for_each_reflog_ent_reverse(const char *refname, each_reflog_ent_fn fn=
-, void *cb_data);
-=20
-+/*
-+ * The signature for the callback function for the {refs_,}for_each_reflog=
-()
-+ * functions below. The memory pointed to by the refname argument is only
-+ * guaranteed to be valid for the duration of a single callback invocation.
-+ */
-+typedef int each_reflog_fn(const char *refname, void *cb_data);
-+
- /*
-  * Calls the specified function for each reflog file until it returns nonz=
-ero,
-  * and returns the value. Reflog file order is unspecified.
-  */
--int refs_for_each_reflog(struct ref_store *refs, each_ref_fn fn, void *cb_=
-data);
--int for_each_reflog(each_ref_fn fn, void *cb_data);
-+int refs_for_each_reflog(struct ref_store *refs, each_reflog_fn fn, void *=
-cb_data);
-+int for_each_reflog(each_reflog_fn fn, void *cb_data);
-=20
- #define REFNAME_ALLOW_ONELEVEL 1
- #define REFNAME_REFSPEC_PATTERN 2
 diff --git a/refs/files-backend.c b/refs/files-backend.c
-index 51d57d98d2..48cc60d71b 100644
+index 48cc60d71b..4726b04baa 100644
 --- a/refs/files-backend.c
 +++ b/refs/files-backend.c
-@@ -2115,10 +2115,8 @@ static int files_for_each_reflog_ent(struct ref_stor=
-e *ref_store,
-=20
- struct files_reflog_iterator {
- 	struct ref_iterator base;
--
- 	struct ref_store *ref_store;
- 	struct dir_iterator *dir_iterator;
--	struct object_id oid;
- };
-=20
- static int files_reflog_iterator_advance(struct ref_iterator *ref_iterator)
-@@ -2129,8 +2127,6 @@ static int files_reflog_iterator_advance(struct ref_i=
-terator *ref_iterator)
- 	int ok;
-=20
+@@ -2129,17 +2129,9 @@ static int files_reflog_iterator_advance(struct ref_=
+iterator *ref_iterator)
  	while ((ok =3D dir_iterator_advance(diter)) =3D=3D ITER_OK) {
--		int flags;
--
  		if (!S_ISREG(diter->st.st_mode))
  			continue;
- 		if (diter->basename[0] =3D=3D '.')
-@@ -2140,14 +2136,12 @@ static int files_reflog_iterator_advance(struct ref=
-_iterator *ref_iterator)
-=20
- 		if (!refs_resolve_ref_unsafe(iter->ref_store,
- 					     diter->relative_path, 0,
--					     &iter->oid, &flags)) {
-+					     NULL, NULL)) {
- 			error("bad ref for %s", diter->path.buf);
+-		if (diter->basename[0] =3D=3D '.')
++		if (check_refname_format(diter->basename,
++					 REFNAME_ALLOW_ONELEVEL))
  			continue;
- 		}
+-		if (ends_with(diter->basename, ".lock"))
+-			continue;
+-
+-		if (!refs_resolve_ref_unsafe(iter->ref_store,
+-					     diter->relative_path, 0,
+-					     NULL, NULL)) {
+-			error("bad ref for %s", diter->path.buf);
+-			continue;
+-		}
 =20
  		iter->base.refname =3D diter->relative_path;
--		iter->base.oid =3D &iter->oid;
--		iter->base.flags =3D flags;
  		return ITER_OK;
- 	}
-=20
 diff --git a/refs/reftable-backend.c b/refs/reftable-backend.c
-index 70a16dfb9e..5247e09d58 100644
+index 5247e09d58..f3200a1886 100644
 --- a/refs/reftable-backend.c
 +++ b/refs/reftable-backend.c
-@@ -1637,7 +1637,6 @@ struct reftable_reflog_iterator {
- 	struct reftable_ref_store *refs;
- 	struct reftable_iterator iter;
- 	struct reftable_log_record log;
--	struct object_id oid;
- 	char *last_name;
- 	int err;
- };
-@@ -1648,8 +1647,6 @@ static int reftable_reflog_iterator_advance(struct re=
-f_iterator *ref_iterator)
- 		(struct reftable_reflog_iterator *)ref_iterator;
-=20
- 	while (!iter->err) {
--		int flags;
--
- 		iter->err =3D reftable_iterator_next_log(&iter->iter, &iter->log);
- 		if (iter->err)
- 			break;
-@@ -1663,7 +1660,7 @@ static int reftable_reflog_iterator_advance(struct re=
-f_iterator *ref_iterator)
+@@ -1659,11 +1659,9 @@ static int reftable_reflog_iterator_advance(struct r=
+ef_iterator *ref_iterator)
+ 		if (iter->last_name && !strcmp(iter->log.refname, iter->last_name))
  			continue;
 =20
- 		if (!refs_resolve_ref_unsafe(&iter->refs->base, iter->log.refname,
--					     0, &iter->oid, &flags)) {
-+					     0, NULL, NULL)) {
- 			error(_("bad ref for %s"), iter->log.refname);
+-		if (!refs_resolve_ref_unsafe(&iter->refs->base, iter->log.refname,
+-					     0, NULL, NULL)) {
+-			error(_("bad ref for %s"), iter->log.refname);
++		if (check_refname_format(iter->log.refname,
++					 REFNAME_ALLOW_ONELEVEL))
  			continue;
- 		}
-@@ -1671,8 +1668,6 @@ static int reftable_reflog_iterator_advance(struct re=
-f_iterator *ref_iterator)
+-		}
+=20
  		free(iter->last_name);
  		iter->last_name =3D xstrdup(iter->log.refname);
- 		iter->base.refname =3D iter->log.refname;
--		iter->base.oid =3D &iter->oid;
--		iter->base.flags =3D flags;
-=20
- 		break;
- 	}
-@@ -1725,7 +1720,6 @@ static struct reftable_reflog_iterator *reflog_iterat=
-or_for_stack(struct reftabl
- 	iter =3D xcalloc(1, sizeof(*iter));
- 	base_ref_iterator_init(&iter->base, &reftable_reflog_iterator_vtable);
- 	iter->refs =3D refs;
--	iter->base.oid =3D &iter->oid;
-=20
- 	ret =3D refs->err;
- 	if (ret)
-diff --git a/revision.c b/revision.c
-index 2424c9bd67..ac45c6d8f2 100644
---- a/revision.c
-+++ b/revision.c
-@@ -1686,9 +1686,7 @@ static int handle_one_reflog_ent(struct object_id *oo=
-id, struct object_id *noid,
- 	return 0;
- }
-=20
--static int handle_one_reflog(const char *refname_in_wt,
--			     const struct object_id *oid UNUSED,
--			     int flag UNUSED, void *cb_data)
-+static int handle_one_reflog(const char *refname_in_wt, void *cb_data)
- {
- 	struct all_refs_cb *cb =3D cb_data;
- 	struct strbuf refname =3D STRBUF_INIT;
-diff --git a/t/helper/test-ref-store.c b/t/helper/test-ref-store.c
-index 702ec1f128..7a0f6cac53 100644
---- a/t/helper/test-ref-store.c
-+++ b/t/helper/test-ref-store.c
-@@ -221,15 +221,21 @@ static int cmd_verify_ref(struct ref_store *refs, con=
-st char **argv)
- 	return ret;
- }
-=20
-+static int each_reflog(const char *refname, void *cb_data UNUSED)
-+{
-+	printf("%s\n", refname);
-+	return 0;
-+}
-+
- static int cmd_for_each_reflog(struct ref_store *refs,
- 			       const char **argv UNUSED)
- {
--	return refs_for_each_reflog(refs, each_ref, NULL);
-+	return refs_for_each_reflog(refs, each_reflog, NULL);
- }
-=20
--static int each_reflog(struct object_id *old_oid, struct object_id *new_oi=
-d,
--		       const char *committer, timestamp_t timestamp,
--		       int tz, const char *msg, void *cb_data UNUSED)
-+static int each_reflog_ent(struct object_id *old_oid, struct object_id *ne=
-w_oid,
-+			   const char *committer, timestamp_t timestamp,
-+			   int tz, const char *msg, void *cb_data UNUSED)
- {
- 	printf("%s %s %s %" PRItime " %+05d%s%s", oid_to_hex(old_oid),
- 	       oid_to_hex(new_oid), committer, timestamp, tz,
-@@ -241,14 +247,14 @@ static int cmd_for_each_reflog_ent(struct ref_store *=
-refs, const char **argv)
- {
- 	const char *refname =3D notnull(*argv++, "refname");
-=20
--	return refs_for_each_reflog_ent(refs, refname, each_reflog, refs);
-+	return refs_for_each_reflog_ent(refs, refname, each_reflog_ent, refs);
- }
-=20
- static int cmd_for_each_reflog_ent_reverse(struct ref_store *refs, const c=
-har **argv)
- {
- 	const char *refname =3D notnull(*argv++, "refname");
-=20
--	return refs_for_each_reflog_ent_reverse(refs, refname, each_reflog, refs);
-+	return refs_for_each_reflog_ent_reverse(refs, refname, each_reflog_ent, r=
-efs);
- }
-=20
- static int cmd_reflog_exists(struct ref_store *refs, const char **argv)
-diff --git a/t/t0600-reffiles-backend.sh b/t/t0600-reffiles-backend.sh
-index 4f860285cc..56a3196b83 100755
---- a/t/t0600-reffiles-backend.sh
-+++ b/t/t0600-reffiles-backend.sh
-@@ -287,23 +287,23 @@ test_expect_success 'for_each_reflog()' '
- 	mkdir -p     .git/worktrees/wt/logs/refs/bisect &&
- 	echo $ZERO_OID > .git/worktrees/wt/logs/refs/bisect/wt-random &&
-=20
--	$RWT for-each-reflog | cut -d" " -f 2- >actual &&
-+	$RWT for-each-reflog >actual &&
- 	cat >expected <<-\EOF &&
--	HEAD 0x1
--	PSEUDO-WT 0x0
--	refs/bisect/wt-random 0x0
--	refs/heads/main 0x0
--	refs/heads/wt-main 0x0
-+	HEAD
-+	PSEUDO-WT
-+	refs/bisect/wt-random
-+	refs/heads/main
-+	refs/heads/wt-main
- 	EOF
- 	test_cmp expected actual &&
-=20
--	$RMAIN for-each-reflog | cut -d" " -f 2- >actual &&
-+	$RMAIN for-each-reflog >actual &&
- 	cat >expected <<-\EOF &&
--	HEAD 0x1
--	PSEUDO-MAIN 0x0
--	refs/bisect/random 0x0
--	refs/heads/main 0x0
--	refs/heads/wt-main 0x0
-+	HEAD
-+	PSEUDO-MAIN
-+	refs/bisect/random
-+	refs/heads/main
-+	refs/heads/wt-main
- 	EOF
- 	test_cmp expected actual
- '
-diff --git a/t/t1405-main-ref-store.sh b/t/t1405-main-ref-store.sh
-index cfb583f544..3eee758bce 100755
---- a/t/t1405-main-ref-store.sh
-+++ b/t/t1405-main-ref-store.sh
-@@ -74,11 +74,11 @@ test_expect_success 'verify_ref(new-main)' '
- '
-=20
- test_expect_success 'for_each_reflog()' '
--	$RUN for-each-reflog | cut -d" " -f 2- >actual &&
-+	$RUN for-each-reflog >actual &&
- 	cat >expected <<-\EOF &&
--	HEAD 0x1
--	refs/heads/main 0x0
--	refs/heads/new-main 0x0
-+	HEAD
-+	refs/heads/main
-+	refs/heads/new-main
- 	EOF
- 	test_cmp expected actual
- '
-diff --git a/t/t1406-submodule-ref-store.sh b/t/t1406-submodule-ref-store.sh
-index 40332e23cc..c01f0f14a1 100755
---- a/t/t1406-submodule-ref-store.sh
-+++ b/t/t1406-submodule-ref-store.sh
-@@ -63,11 +63,11 @@ test_expect_success 'verify_ref(new-main)' '
- '
-=20
- test_expect_success 'for_each_reflog()' '
--	$RUN for-each-reflog | cut -d" " -f 2- >actual &&
-+	$RUN for-each-reflog >actual &&
- 	cat >expected <<-\EOF &&
--	HEAD 0x1
--	refs/heads/main 0x0
--	refs/heads/new-main 0x0
-+	HEAD
-+	refs/heads/main
-+	refs/heads/new-main
- 	EOF
- 	test_cmp expected actual
- '
 --=20
 2.44.0-rc1
 
 
---/I0/70X96IfGrOii
+--zTJIlHoHnESGHB+L
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmXUa54ACgkQVbJhu7ck
-PpRr3Q//Wgrq3s4mQU/Wqj5pXw3Ve34Xk7sNKgAuS3YAvm+OjxK2S5RVfmS1OLho
-pDwHA11TRNL1jgR2GXu9J55Yvouh31suht9dSK6pVS1XBVcPyGrc4MGMLhWkdOUG
-cvzdd95VvnHeXXmIprtaJvuyHULBsTLJPW4yrjWwsBQBN6l0KLCvjsrZBDp5Mci7
-eAFO9cVUhwF7ziGYnim40tZlzsn1OFPMoSfT7Lf32GwTtFgRiHGsqSeWimWYh/1C
-0QY5Z6zY638VTWWC52oJKberHQ7qTnCBlxDOryfosEsfcni9gn4b0Qp1Otm2i+Vn
-2c6C0AEYrfm4QJyXwyiLcNlAxKuGJfpb6zAKJc3+m8B189Sru5pCCF6z9eIjsI94
-mCeOK/3cNvxrd2zzBEOVCuYPknjr48njcPL4mA+xYorwsJbphfwfxtNYY36qSyHB
-vYKvesqboDw9/NdgFf8d73t7YxKRmzF+fqa/XXqz69zfeJgg/SG28uEKG4saCnpH
-mqX1w/bM9BMqb2X2vPMYC/LwXelc0Nm4xxqwOaYwBuwAvenX/jvWcHVPNZEUJIE3
-0Qh8FFzkrU16HNSwunXzHN6vI06jeEcgJOfgMiXQ7GKEnMfOTEMACqzzNZlZ/Vxe
-ZOgO+OEUne3a9DH8AKFShyCfBShAr761aU4oE8LtzKzkP3N0JZg=
-=Djej
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmXUa6IACgkQVbJhu7ck
+PpTS0g/9EHiUtEX0mzh3fQmzEhQsXRwWtYPHuw8KAwIZudsVmYJ5M4mEhff3BFgl
+CAcEN0sfOfUTzIXttRpw8JZpcMTg6wvqEUTtLv6efrTiN4wMIp1/6KVp3e4vpW/k
+YHeXw5FrFaSTOfYwVysn/2RdX2/6yO3Vbct6kT+7ZyVmkN9NN1t/qx1Imo3aebQf
+QzkzWsiSXmobFxY313B9FbmsWJKIRphw5JQphtBEaLttOnr6IE4Rq+9TXXs8WIlg
+A1W5TYjpG+bkgipaFtaO13QFOrCe4sGFIf0tBfMi3Fdbcol/JHZ6cbLk+OJezG1C
+W4INBN0RCgI2HOm2liVZ9DYHfuDVuDGQlFE52phdgUCqLZVoIjOjGHd0UGtxJ1dm
++bi+8J8kD0EnsR5F2BlZ1JfXbscDaGx/CsivZd5Cl/rInwQBtVtcI9g9vGhddgO9
+5yT1KyH/1KcBHoJoxRy9/AQt9kNpIVcL+hrk7OJraFWLIvuTFFTmdlfrn9LWP2MY
+Zfd7wYiAgiMTyuJnpqE6aAo3TLSNMFKDxKA/F5vkmh/SFjQqImH1yoJPILRXyVBL
+8CoiP6i/mKen/WAoGsVoIc1FlmJ7X8Yx18BFly1z630EfQmiutuCPwtW0bPzZmB3
+Oii2ZPmujsjb0KNAGbhxffPD4fevWdn4hnuUrXtUX23S1fTatQ4=
+=I9GH
 -----END PGP SIGNATURE-----
 
---/I0/70X96IfGrOii--
+--zTJIlHoHnESGHB+L--
