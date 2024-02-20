@@ -1,66 +1,70 @@
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail.manjaro.org (mail.manjaro.org [116.203.91.91])
+	(using TLSv1.2 with cipher DHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8F7F76907
-	for <git@vger.kernel.org>; Tue, 20 Feb 2024 16:22:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA81067C4D
+	for <git@vger.kernel.org>; Tue, 20 Feb 2024 16:29:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=116.203.91.91
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708446174; cv=none; b=Tqko96rFLagHvZ5G9TB4Dfe5Kaedu9gs6+W68Iib4rDUyznGzJ8OVc6tazBokcnT3hYrk6uVdHOpInFkxnfUK40xVR1qdlk2lU/pw3QRSiVlZptsKegA/35V9/IMqWfzo5wPBbWQX6ve411y7ZvdY49Zma5W+NaH+7oOrEcyXZU=
+	t=1708446587; cv=none; b=TreIUkSiAZ8Y/phyUc23aQyYjDEo69WG1nPPUfM/7tJSAqb3iqT2ToicH4CLoHEOnPidehXN7CVHG7ibvZYeV2dA9kqpF2H22YFdGuHVwXUQYMhWqc3vJJKbq+UQGLrB7tq2tRLva+jRqnm96WdvlrWf9v8oWmHkcidPjU9ipu4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708446174; c=relaxed/simple;
-	bh=YbAmTI4dxr5K5SZCfJmQoxSzOSSeeb7U5Lov8rV1dFk=;
-	h=From:To:Subject:In-Reply-To:References:CC:Date:Message-ID:
-	 MIME-Version:Content-Type; b=p2Q8OCuZBcU0N52FEO2TQQCqh28rNcJ/X6la3hY0+DWAKicHwiF9sQmI/bkNsUp8mn6402IUcUd2vejVgohTx1FaCz/w5Hgig6K74Vkj/RDqCnhjm12AqasE0gf8W6IBlCxGH/FtrcCEdAAjT+yNuodPd/FTmvKviWlJSwkMaG0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=MMjsNfYN; arc=none smtp.client-ip=173.228.157.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1708446587; c=relaxed/simple;
+	bh=6XtqfnBF4B8pQUD1o70SVgF/FpaadOutD1c3ZVD13Zg=;
+	h=MIME-Version:Date:From:To:Cc:Subject:In-Reply-To:References:
+	 Message-ID:Content-Type; b=NyglXxADxn+w2F0BHcJilsox92BzaxihS7IracWehghsxXNUwcbm2eHVwgwJ0MLdJ6Vi5SEJh8LullH3CuBWCeU5DvVNNch6YbnyaAs8XfG3bddrp7kbYythhZLxlAYF7tVq4xsj1nWquHQW3eGNjOEMcxZs2yu5FavPD1kvkhk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org; spf=pass smtp.mailfrom=manjaro.org; dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b=BR0a8rt1; arc=none smtp.client-ip=116.203.91.91
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=manjaro.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="MMjsNfYN"
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 394F12C2E7;
-	Tue, 20 Feb 2024 11:22:52 -0500 (EST)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to
-	:subject:in-reply-to:references:cc:date:message-id:mime-version
-	:content-type; s=sasl; bh=YbAmTI4dxr5K5SZCfJmQoxSzOSSeeb7U5Lov8r
-	V1dFk=; b=MMjsNfYN/d+u9k8RbBBmSwTJeOSDb2o6B1uRPvy3dY3PgWdPG8pkl0
-	C10eHeiYz08qHR34M5EhtVSPeDkwspQX4NjzVsVKxj1nIA0aEqtFAkChaowOje2Z
-	T8zqPSVqpU+OIg323CQQMa3Uu8s5Q4/aVtL1/TozZp4/7F61Nxnbw=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 31E032C2E4;
-	Tue, 20 Feb 2024 11:22:52 -0500 (EST)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.165.85])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id BFAFB2C2E3;
-	Tue, 20 Feb 2024 11:22:48 -0500 (EST)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Dragan Simic <dsimic@manjaro.org>
-Subject: Re: [PATCH] documentation: send-email: use camel case consistently
-In-Reply-To: <33abb630c1d089e39ff48f04e586b1c0@manjaro.org> (Dragan Simic's
-	message of "Tue, 20 Feb 2024 07:41:29 +0100")
-References: <b0577267402f6177d8ba5646e12d7691437e6e8f.1708060779.git.dsimic@manjaro.org>
-	<xmqqv86kx8h0.fsf@gitster.g>
-	<33abb630c1d089e39ff48f04e586b1c0@manjaro.org>
-CC: git@vger.kernel.org
-Date: Tue, 20 Feb 2024 08:22:47 -0800
-Message-ID: <xmqqo7cbt8a0.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b="BR0a8rt1"
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- 4998C7DE-D00C-11EE-AF59-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=manjaro.org; s=2021;
+	t=1708446582;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=Vp/4XzEIkgoFEF3t9PF7I0H63esSQMpTgfU2e4AOEfE=;
+	b=BR0a8rt10hvBeOvhY36l3dmGZlKrUx6rkBHqER9/kn9cvCw+LujdPJntzqWeJfkevDpRSp
+	oZHLKAopJPF8c1pvtMQvBS4zxwYfxO2iSFCXH2nT+kJG3qZUX0fgAkYvNDqE+tkznNvUZR
+	OJY6ERp4wLKzt3V9tsVMySgxX119zx/gqvovZyQKVH8lfbgMU00z7l6Nkk3/ozICc/oIQ0
+	9Gqt2Wajgq+EjWnvIIqDM5IWCE/5vr/dUO952EZSzuHyWz5KKWZh6Pqsg2tn5f32Ozc3LH
+	6cEJkajJ5lpufp/GFLDMJGK8cTnj6ejITtMfCyfeGF4MQV/KctyBa6SjpgaaoQ==
+Date: Tue, 20 Feb 2024 17:29:42 +0100
+From: Dragan Simic <dsimic@manjaro.org>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH] documentation: send-email: use camel case consistently
+In-Reply-To: <xmqqo7cbt8a0.fsf@gitster.g>
+References: <b0577267402f6177d8ba5646e12d7691437e6e8f.1708060779.git.dsimic@manjaro.org>
+ <xmqqv86kx8h0.fsf@gitster.g> <33abb630c1d089e39ff48f04e586b1c0@manjaro.org>
+ <xmqqo7cbt8a0.fsf@gitster.g>
+Message-ID: <9d0022ba5666223af94bbf450909b1ba@manjaro.org>
+X-Sender: dsimic@manjaro.org
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Authentication-Results: ORIGINATING;
+	auth=pass smtp.auth=dsimic@manjaro.org smtp.mailfrom=dsimic@manjaro.org
 
-Dragan Simic <dsimic@manjaro.org> writes:
+On 2024-02-20 17:22, Junio C Hamano wrote:
+> Dragan Simic <dsimic@manjaro.org> writes:
+> 
+>> Though, "CC" should remain written as "Cc", because it's the way email
+>> headers are capitalized, which "Cc" refers to.
+> 
+> E-mail headers are case insensitive, though.  See above ;-).
 
-> Though, "CC" should remain written as "Cc", because it's the way email
-> headers are capitalized, which "Cc" refers to.
+I've never ever seen anyone referring to email headers as "TO", "CC" or
+"BCC".  It's always referred to as "To", "Cc" and "Bcc".
 
-E-mail headers are case insensitive, though.  See above ;-).
+Moreover, RFC2076 [1] refers to them as "To", "cc" and "bcc".  This
+makes it debatable whether "Cc" and "Bcc" are formally the right forms
+to use in regular conversations, but also makes it clear they aren't
+to be treated as abbreviations.
+
+[1] https://datatracker.ietf.org/doc/html/rfc2076
