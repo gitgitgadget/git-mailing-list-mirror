@@ -1,74 +1,102 @@
-Received: from mail.manjaro.org (mail.manjaro.org [116.203.91.91])
-	(using TLSv1.2 with cipher DHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from fhigh3-smtp.messagingengine.com (fhigh3-smtp.messagingengine.com [103.168.172.154])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B25D8152E10
-	for <git@vger.kernel.org>; Tue, 20 Feb 2024 22:17:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=116.203.91.91
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB96167C72
+	for <git@vger.kernel.org>; Tue, 20 Feb 2024 22:18:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708467439; cv=none; b=mFh8TgpnAPxzBaF2H0MOUnq6wb2ccmv5+Xhnb9ICFIBvS4W9Ic7Vsl19S54mLGJ2qH0PbvhBEcmI5AP+D3FT0l3Sf/Pabmm3Eu1vi+HupXIcqMZs9kQ9KDgl2J6qViwywQAC2l4C0j1BIbNC9WWcFFpbMuIHaBsJenMUh1MSWcs=
+	t=1708467491; cv=none; b=a5Jfi7Zxr8g9e6DFflzj+wnzhYKgGPHq/tTuFwTWLZppnUUj9jU0PRxiodJ4WcSEHQU4S/no4PY6G3guHOzbEt6IpTryPN0SBkQ0F6JGvYao0LsxNbFavAluT+9gS3TBjB47LLKnb/C2a6stx9D3mvU7Z1Vq4OwYyiSJ46aMxpQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708467439; c=relaxed/simple;
-	bh=6XYLk0Yo+/QnFZCKmsxnmfzUiSi2DjiqlkcuACal2Zk=;
-	h=MIME-Version:Date:From:To:Cc:Subject:In-Reply-To:References:
-	 Message-ID:Content-Type; b=OecOsYqTOTJrvQD0YDZN/taFnHQVOBW4dyZWF+uC83cZW4XPxfckVfg2wGDzIZ8rUYTADDlYIEukbG5Z5R3R0lDd/8tNHf2LHn9qsExJGu5gFgZlexzh9a2W2nezaLAkkRlPsTtoWVZrILS7VYBIHPtMazpgKcWjZJoH1U6NHfQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org; spf=pass smtp.mailfrom=manjaro.org; dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b=AD1uu/9X; arc=none smtp.client-ip=116.203.91.91
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=manjaro.org
+	s=arc-20240116; t=1708467491; c=relaxed/simple;
+	bh=6eA/IsvdI6lpqt8QMhhPvFs2aYkWmn1hgmT30i8ZKMc=;
+	h=MIME-Version:Message-Id:In-Reply-To:References:Date:From:To:Cc:
+	 Subject:Content-Type; b=WsSajrRI5v6Yiv1KCezByc71q7UJMPJSUlUSxNRUbxr6JuZ9x1Jf5VL2RkSLtb0poFTWZ2241ccAsO7syfaLmNYn1jmxy7N0p8BYW78qi1lfoxeV6RNjqgamzU/byrWeg2S/+f9AHtpDmd8lkz5P0jqrwFkBY87NxRlhETTN4m8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=khaugsbakk.name; spf=pass smtp.mailfrom=khaugsbakk.name; dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b=GcHMttIj; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=CUZZh/lI; arc=none smtp.client-ip=103.168.172.154
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=khaugsbakk.name
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=khaugsbakk.name
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b="AD1uu/9X"
+	dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b="GcHMttIj";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="CUZZh/lI"
+Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
+	by mailfhigh.nyi.internal (Postfix) with ESMTP id AEF1D11400F1;
+	Tue, 20 Feb 2024 17:18:07 -0500 (EST)
+Received: from imap49 ([10.202.2.99])
+  by compute1.internal (MEProxy); Tue, 20 Feb 2024 17:18:07 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=khaugsbakk.name;
+	 h=cc:cc:content-transfer-encoding:content-type:content-type
+	:date:date:from:from:in-reply-to:in-reply-to:message-id
+	:mime-version:references:reply-to:subject:subject:to:to; s=fm3;
+	 t=1708467487; x=1708553887; bh=6eA/IsvdI6lpqt8QMhhPvFs2aYkWmn1h
+	gmT30i8ZKMc=; b=GcHMttIj2uWJT6ez3DuNH3FUDp1XSVcES6fK8+ZUHVgZPb7V
+	KfGXuQGVVyX/YEzVuWWZXZSX4y5cCYIJ6nPgVDDBpyqOBRpwJ0T7WiChItg0Jnlq
+	DtOQPwfrvuip52BR553wPxC1iehXoagZkvCTObc6oorEAtUMoT33BHMFM9jyj5f9
+	q43dz8mZKs8he/g00W6KsFHnZ6eqFrzgwXtKvGrOPdIZ+ojGgeJWZGPn2T9wh6hH
+	QSyPEOypDUqUVtx9VLM3YT70+q/Tw6Z+PQeEVUPomuyBcqe46obVAJQ52Aj/zdBz
+	Ltshy0WqHBtuO9u5e5qN2RobuemxQDCZ8kfx6w==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1708467487; x=
+	1708553887; bh=6eA/IsvdI6lpqt8QMhhPvFs2aYkWmn1hgmT30i8ZKMc=; b=C
+	UZZh/lIpHQkjhG9edRkCuJeB35vBbi77xIy5rc56NeqEJVzWYDPC2nra4RkZOTz0
+	u8FdE8GXAK5HbHEjZddEXx4nLJtM5N0eFxHUP16rwfcgyqYavcfaRqRpZ0KFBjqM
+	li0PCpub22GKO3+YfW0uZiLW7YAOlTzIvrwUGjK+lb5609TEsjJ8Q3Qz+EPGViA5
+	MjUxoDk5eLm5Ia2KugbLBi96brdNE6R0dLP+yFf5tUFtFMs0q6VTYWHiOdBBL7fl
+	bpmCJHQbTsmUWgcKr7k89x4+7nc+jB/2Rk7XIKF7PoEh+XAZZWuFWvbLITwyCags
+	a2ad2YEqO83OLA3l9hbLg==
+X-ME-Sender: <xms:HyXVZWzma6dMa3u9DN2Y-_tqbrC7lmzDVxGO74weP1yU7zkzlg2QvsY>
+    <xme:HyXVZSRAfJWPVyf0l3Gcxo2fAOjrW2i_KfXKh0hu0zOM-v-rNnEiWvz82VFp8w-7s
+    AiooDexemJGJ-Md2A>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrfedtgdduiedtucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+    cujfgurhepofgfggfkjghffffhvfevufgtgfesthhqredtreerjeenucfhrhhomhepfdfm
+    rhhishhtohhffhgvrhcujfgruhhgshgsrghkkhdfuceotghouggvsehkhhgruhhgshgsrg
+    hkkhdrnhgrmhgvqeenucggtffrrghtthgvrhhnpedvveehiedufeehffdvteeuveekhefh
+    leeigfektdeifeduteeuheeufeetffefudenucevlhhushhtvghrufhiiigvpedtnecurf
+    grrhgrmhepmhgrihhlfhhrohhmpegtohguvgeskhhhrghughhssggrkhhkrdhnrghmvg
+X-ME-Proxy: <xmx:HyXVZYX_F5gq6QYzDLNos0sa0Z0mYMpCRfQ-yVjl1YtOmMZGNPkusQ>
+    <xmx:HyXVZci1SHuVYV91_g5KWZqET6NkcDNFPDvMDIVV71R8Sxx36835wA>
+    <xmx:HyXVZYDa6hH5u3p9eIeYSBAVSsAoPGBPcsrj-75l5hDPdHzcjoZwrw>
+    <xmx:HyXVZbO3Rv6k44NzjfowWFikz0dNDrM4Z3TrsAHALEDcC3D5pv_HtQ>
+Feedback-ID: i2671468f:Fastmail
+Received: by mailuser.nyi.internal (Postfix, from userid 501)
+	id 5FFB715A0092; Tue, 20 Feb 2024 17:18:07 -0500 (EST)
+X-Mailer: MessagingEngine.com Webmail Interface
+User-Agent: Cyrus-JMAP/3.11.0-alpha0-153-g7e3bb84806-fm-20240215.007-g7e3bb848
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=manjaro.org; s=2021;
-	t=1708467434;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=7zDN9tOZI0ZFJZt2PO6DePZ8x63teNrDKfz96IbzvPE=;
-	b=AD1uu/9XmviWP2v7iq6OLFwLPd/8+Kubp/1EbfT32y4HpYPzOokvN4nvwPvouliJf2A8j/
-	HcoqpG+fYnYkes011v6DsvS5RRsAi7DHujCgNsWmGr/fdbTqcrXXv2wsvlVCrUY6g1YptS
-	9Rva6VjRy7jOWW1HsRPBl4GjvEzZvHhoe4mcoiJcKHoJJJv/7c9F6ku9dGXMIR5+3R8Z2B
-	4REIDFnfqemy+D3HeAzs/GGblTpZTG5gMfxBdim5Ow65zrXV/CyUgahg4uEAfzE5EtK0P0
-	araFPDHcK5/YTBPW1oJvjYYy3iNVajQHPnAPTJYu//U26UXv2bjT9Wh0yDY0wA==
-Date: Tue, 20 Feb 2024 23:17:14 +0100
-From: Dragan Simic <dsimic@manjaro.org>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org
+Message-Id: <37c0c025-7120-49f3-bc2f-f35249339f3a@app.fastmail.com>
+In-Reply-To: 
+ <877b5bec11caa8a328ee0d4f226fe0666fd35a10.1708466383.git.dsimic@manjaro.org>
+References: 
+ <877b5bec11caa8a328ee0d4f226fe0666fd35a10.1708466383.git.dsimic@manjaro.org>
+Date: Tue, 20 Feb 2024 23:17:47 +0100
+From: "Kristoffer Haugsbakk" <code@khaugsbakk.name>
+To: "Dragan Simic" <dsimic@manjaro.org>
+Cc: "Junio C Hamano" <gitster@pobox.com>, git@vger.kernel.org
 Subject: Re: [PATCH v3] documentation: send-email: use camel case consistently
-In-Reply-To: <xmqq1q96okkb.fsf@gitster.g>
-References: <877b5bec11caa8a328ee0d4f226fe0666fd35a10.1708466383.git.dsimic@manjaro.org>
- <xmqq1q96okkb.fsf@gitster.g>
-Message-ID: <59cb804a0221038626f16a4b0138e3eb@manjaro.org>
-X-Sender: dsimic@manjaro.org
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Authentication-Results: ORIGINATING;
-	auth=pass smtp.auth=dsimic@manjaro.org smtp.mailfrom=dsimic@manjaro.org
+Content-Type: text/plain;charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-On 2024-02-20 23:08, Junio C Hamano wrote:
-> Dragan Simic <dsimic@manjaro.org> writes:
-> 
->> general rule for making abbreviations, with some exceptions.  For 
->> example,
->> one rather well-known exception to this general rule is "SoC", which 
->> is the
->> abbreviation for "system-on-chip". [2]
-> 
-> I am not opposed to say "we allow spelling 'carbon copy' as 'Cc'
-> because too many people mistakenly use that capitalization pattern",
-> which is what you earlier said, though.  As I said, I do not insist
-> one or the other capitalization, as long as it is backed by solid
-> reasoning that would not confuse future developers.
-> 
-> It is very common to omit upcasing prepositions, articles, etc. when
-> spelling acronyms in all capital, so "SoC" would not count as a good
-> example of an exception.  That's the kind of bogus justification of
-> giving an exception to "Cc" I would rather want to avoid.  It really
-> is only "Cc" that needs to justify exception in your patch.
+On Tue, Feb 20, 2024, at 23:01, Dragan Simic wrote:
+> Correct a few random "sendemail.*" configuration parameter names in the
+> documentation that, for some unknown reason and contrary to the expect=
+ed,
+> didn't use camel case format.
 
-Alright, let's try v4 with no such examples.
+Interesting. Consistency is good. Nice work.
+
+PS: Please keep me on CC. I=E2=80=99m not subscribed to the list.
+
+PPS: =F0=9F=98=89
+
+--=20
+Kristoffer Haugsbakk
+
