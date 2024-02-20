@@ -1,115 +1,102 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from wfhigh6-smtp.messagingengine.com (wfhigh6-smtp.messagingengine.com [64.147.123.157])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 760075D8E4
-	for <git@vger.kernel.org>; Tue, 20 Feb 2024 09:30:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D90B3605C1
+	for <git@vger.kernel.org>; Tue, 20 Feb 2024 09:36:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708421420; cv=none; b=GLWTzo3wTTxVQK6qVYuJAYmrah1ksIfNKl8F6l7rbYYoc8370T6nDVLRnHYHeG2CvpGxhVEu3z0SkLFKyxh+C/2Azagcny8x9Q5NUZ0qRm57qVQxosxEEuqRyEg7OizCSoD7RbFFRGjdY8x/EhY4TwPXH+o9sbU+tBlJIvvuGek=
+	t=1708421787; cv=none; b=AxApW0FEqvL5bqw0Xp1ZPvMY5WIl4CSHLsMegZHj+VHwrbFqeU59fVAq05zQz8mqX3BZ/S8xPovLXvctUoJlwq1cMf0OImoJhgSEeWd1etQZODfYuWDHszQ1TzvPHuyCshzGL0MHs7vcHQR82p8Q6va6pXoaq7VHzhV4LNa6fuk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708421420; c=relaxed/simple;
-	bh=e/9RM3coxggO4aMEOrhaFMwgi2RC0PKUicmqaVIW0WM=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=ZofHIWlBt79jmAW/TnClJ9evnGTIMn1tl3Cw/a0iSoUayaxExJMwQiUmNLvVCNOyyToexXuy1I9uYW5CvBxNYumqnbGi4rTG9jHFoTUAXJULnaLOJbeu2Lx98er5hXKaqZDUllfY7+CDwDFY0qmRiyyNIvuzSja4+3zvvvQb1ok=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GNsifNdY; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1708421787; c=relaxed/simple;
+	bh=32XzmmfBzGDVxjf4o5mEnJhKhslKUahRy9LaW4ha+kk=;
+	h=MIME-Version:Message-Id:In-Reply-To:References:Date:From:To:Cc:
+	 Subject:Content-Type; b=LdhVrVUyDiXHS3+vS8p5U+dojN1yYfVoQpuxlRCPZ4bhMPqEhz/s04hKsuKr3FCH1QL1iqDOArdE5i3S8LpaKqAoPyyUpIODx7jZ7IBEXTu1XIXPg0Kd3v8IgO78N02ecpGT84XnfzX1NTIdnnj5ZR94BffgeYsSCiwrHiRU5x4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=khaugsbakk.name; spf=pass smtp.mailfrom=khaugsbakk.name; dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b=KjqVQqP4; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=c7lefLFa; arc=none smtp.client-ip=64.147.123.157
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=khaugsbakk.name
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=khaugsbakk.name
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GNsifNdY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E01ACC433C7;
-	Tue, 20 Feb 2024 09:30:18 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1708421420;
-	bh=e/9RM3coxggO4aMEOrhaFMwgi2RC0PKUicmqaVIW0WM=;
-	h=From:To:Cc:Subject:Date:From;
-	b=GNsifNdYuoix/uXb5sjx+e1AH74ChihoDLzAvC2ftBbj9+p0lkfp3yum4bWQpbm/U
-	 3bw/wTldrVys9QtYjP5GA5qL4MLLksnPQfeiUH7I4XvZC4Ra1IXc8G8Jsg4xEOOYj2
-	 8bTkgjgNGKCHTF/R3Wqca4ImjELh7UvqyP5VnDvBPCnG0mIbf6gFMXo+a57bm8mbOA
-	 FVPepDjjbEfThIctvHIQ/kd6KE46YwtS2WAOSenTMEAab84RGH/a5yAWIUcsk2gBVr
-	 R/KoLtftLcddDWcfWSI9fXDEITiXkwSXcXmN5zQj9QgmHQc4LfXoO3ptGJ5LgrIVGa
-	 O0XBy2HUwnNSg==
-From: "Matthieu Baerts (NGI0)" <matttbe@kernel.org>
-To: git@vger.kernel.org
-Cc: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= <pclouds@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>
-Subject: [PATCH] Revert "Declare both git-switch and git-restore experimental"
-Date: Tue, 20 Feb 2024 10:29:51 +0100
-Message-ID: <20240220092957.1296283-2-matttbe@kernel.org>
-X-Mailer: git-send-email 2.43.0
+	dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b="KjqVQqP4";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="c7lefLFa"
+Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
+	by mailfhigh.west.internal (Postfix) with ESMTP id 9D42D180008F;
+	Tue, 20 Feb 2024 04:36:23 -0500 (EST)
+Received: from imap49 ([10.202.2.99])
+  by compute1.internal (MEProxy); Tue, 20 Feb 2024 04:36:24 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=khaugsbakk.name;
+	 h=cc:cc:content-transfer-encoding:content-type:content-type
+	:date:date:from:from:in-reply-to:in-reply-to:message-id
+	:mime-version:references:reply-to:subject:subject:to:to; s=fm3;
+	 t=1708421783; x=1708508183; bh=32XzmmfBzGDVxjf4o5mEnJhKhslKUahR
+	y9LaW4ha+kk=; b=KjqVQqP4qO3fszTlwf8lR0k9qxCPhjqwXpJ1whTWq6UK8TL2
+	BOchCiFt9G8O84wOfqa3tkrIz536t/EFM1Vt0D24g3YMQAmEUsqp0WdCjqCI2tXo
+	Rl59LEGbRaBLudXz+1IwLTyhXpbG9yEY59PxGtHB/r56KU1BLgmvVkPRUwX1KJT6
+	LKLNJ1o2e4q2LFKtnQYpX7KjPoYQPFEqU7pJ+2Ogd4kKq+4NFuYLCa1+SKWtNqAE
+	J4FtA0R4XxshUUgaR0sFEgR5ldur03/bILBW7wOb3du6PyAjnxDUtNzkwMJXVTle
+	d1hgWGNrINz93BUmK3hyw4Yu2i1jjV5/z1dvFQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1708421783; x=
+	1708508183; bh=32XzmmfBzGDVxjf4o5mEnJhKhslKUahRy9LaW4ha+kk=; b=c
+	7lefLFaf8ZzGpkW4xADfmpomBnF1qsDLqZb4l2SpC96d1+r838rSfZTEOCH0czdD
+	BAQLA+gUVCorS1zw4Pyyie/pGcW32qZOuV+83x/rD9xOgTJn8VXx9goQgDXNZGyE
+	o1P5pMKyQGVCv7nC5ZrYaMb5HmEQmtdOvOjJko12u2jgDdIAVaJVSTLQl8OSNfIE
+	9bBr0jNcUBStqXBrZvDCBL6H4a0+RT2TObKxH6bt3Ofk89b+Xrd43L6MxUR5usvB
+	YUs81frsb83It7ZTExR/BGgmQu3BAQqjwJaB3sfyXQdH829LtXHexvw3uXZZMS8p
+	lZU/g5QFQQfPGJAGDKghA==
+X-ME-Sender: <xms:lnLUZQrHqJptzNff3HxOZgL27gXMjAjFidfPK-_LU_eWSAXnBfrYyD0>
+    <xme:lnLUZWrX3e2soLPyEBlBGczgprQM-u10F3iPZcf-TVLrbGB1yq9CZHeqiSgm9yYu5
+    9oU3gWfDVrT5hTFWA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrfedtgddthecutefuodetggdotefrodftvf
+    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
+    uegrihhlohhuthemuceftddtnecunecujfgurhepofgfggfkjghffffhvfevufgtgfesth
+    hqredtreerjeenucfhrhhomhepfdfmrhhishhtohhffhgvrhcujfgruhhgshgsrghkkhdf
+    uceotghouggvsehkhhgruhhgshgsrghkkhdrnhgrmhgvqeenucggtffrrghtthgvrhhnpe
+    dvveehiedufeehffdvteeuveekhefhleeigfektdeifeduteeuheeufeetffefudenucev
+    lhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpegtohguvgeskh
+    hhrghughhssggrkhhkrdhnrghmvg
+X-ME-Proxy: <xmx:lnLUZVNMFhA0HCOfBUvvI26fj9XAxRc__ZpLcQqAcJQ94hhCOlorfg>
+    <xmx:lnLUZX59eH1NUQKtpLj8GLAKqKMwui4C18IJNYrvmeN1xxiTXEh0HQ>
+    <xmx:lnLUZf5meN08lre-8Mom4eT3Y7ubWDrajZH6ByQtzAagmwbDitx5lQ>
+    <xmx:l3LUZRnnEAy2i17as7DQ4XtXqYWCfU6UM-2HiXpOKvzOUjWX0yFgoON1gg4>
+Feedback-ID: i2671468f:Fastmail
+Received: by mailuser.nyi.internal (Postfix, from userid 501)
+	id D2F9515A0092; Tue, 20 Feb 2024 04:36:22 -0500 (EST)
+X-Mailer: MessagingEngine.com Webmail Interface
+User-Agent: Cyrus-JMAP/3.11.0-alpha0-153-g7e3bb84806-fm-20240215.007-g7e3bb848
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2552; i=matttbe@kernel.org; h=from:subject; bh=e/9RM3coxggO4aMEOrhaFMwgi2RC0PKUicmqaVIW0WM=; b=owEBbQKS/ZANAwAIAfa3gk9CaaBzAcsmYgBl1HEVlS9u8RA01gmOiyKjGwH14+EjCjK0sUSpV ey08qQvv8WJAjMEAAEIAB0WIQToy4X3aHcFem4n93r2t4JPQmmgcwUCZdRxFQAKCRD2t4JPQmmg c1OdD/kBJDfocUJJYIp47QCTaHPSJMlothOzPARxmJIGvR5fy6OlKnsXxNtbI0Lb2nV2Q9uFMlr voYjY2NctGKdRZ5imgJmt+YQY1bwQ4tJd9oRCLj+Cz7ey7Zo+/bWWHmv7gQpcC+36l+rz+2lGZC 4XnImJxJqMfbKLpuWQQbDiqQ6bU6hsezxp3MUoOeQaaq9/zTksWMGBaTPUh0dFc/52MM4Bgn0gt P7+GjdKTGX0sCS60OonvQlxtXAA1Nj8KBeqXVxlg8QRp2vaMVMlLzTwfLz4Pww0IWm4dgBw5KXY 18kS5bSc2xDD85DYQXiwYKJq923gGEuCXXmtK4/uzmX6y/gdW7+jM9UnkLA+9yPx/MBAup1hLJ7 JDRCuUQzfpwyPIkdb5zOHtt4mA41dQp4uuB0BoS4u6TF8rxHkdGD/neOkwAPz1qHKBg8wmmXlEe 3x8hgOAZ6A5EE8Y3kY0yCa4l6roEnG+VB4MVAIz6bFuqRthGffOR7LMvL7XdqlKJiAH/Mx1SEXe uu2SABcK/UQ6y0U9WcJJ5UWr60Ug+2Yraa6NYHOt6IqoQPxMNYhg6CE0WkTct+Tq698CTH0btSy WiTbNY9gw0+a5ucMmnpqG3prP75daEbwQGNzCbzR1mfPS4yyQAbNFa1VccOGuD1He4NJ3bdLM+0 Th/oqZY+y4DDtTA==
-X-Developer-Key: i=matttbe@kernel.org; a=openpgp; fpr=E8CB85F76877057A6E27F77AF6B7824F4269A073
-Content-Transfer-Encoding: 8bit
+Message-Id: <3523e325-98bf-4d2d-847b-28e5c4a85ec5@app.fastmail.com>
+In-Reply-To: <20240220092957.1296283-2-matttbe@kernel.org>
+References: <20240220092957.1296283-2-matttbe@kernel.org>
+Date: Tue, 20 Feb 2024 10:36:02 +0100
+From: "Kristoffer Haugsbakk" <code@khaugsbakk.name>
+To: "Matthieu Baerts (NGI0)" <matttbe@kernel.org>
+Cc: 
+ =?UTF-8?Q?Nguy=E1=BB=85n_Th=C3=A1i_Ng=E1=BB=8Dc_Duy?= <pclouds@gmail.com>,
+ "Junio C Hamano" <gitster@pobox.com>, git@vger.kernel.org
+Subject: Re: [PATCH] Revert "Declare both git-switch and git-restore experimental"
+Content-Type: text/plain;charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-This reverts commit 4e43b7ff1ea4b6f16b93a432b6718e9ab38749bd.
+On Tue, Feb 20, 2024, at 10:29, Matthieu Baerts (NGI0) wrote:
+> This reverts commit 4e43b7ff1ea4b6f16b93a432b6718e9ab38749bd.
+> Version 2.44 is approaching, almost 5 years after the introduction of
+> these two commands, it then looks safe to remove this experimental
+> status.
 
-Recently, I wanted to recommend the use of git-switch and git-restore
-instead of git-checkout in new documentation pages. But then, I found
-out that these two commands were still marked as experimental in the
-documentation. git-switch and git-restore have been marked as such since
-their introduction, in version 2.23.
+Is this only based on the amount of time passed? Has there been any
+relevant discussions on the mailing list that discuss how mature these
+commands are and if they should be changed (with presumably a =E2=80=9Cn=
+o=E2=80=9D to
+the question about being changed)?
 
-That was for good reasons, according to the reverted commit:
-
-> These two commands are basically redesigned git-checkout. We will not
-> have that many opportunities to redo (because we run out of verbs, and
-> that would also increase maintenance cost).
-
-The reverted commit also mentions this:
-
-> To play it safe, let's declare the two commands experimental in one or
-> two releases. If there is a serious flaw in the UI, we could still fix
-> it. If everything goes well and nobody complains loudly, we can remove
-> the experimental status by reverting this patch.
-
-Version 2.44 is approaching, almost 5 years after the introduction of
-these two commands, it then looks safe to remove this experimental
-status.
-
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
----
-
-Notes:
-    Here is a simple 'git revert', as suggested in 4e43b7ff1e ("Declare both
-    git-switch and git-restore experimental"), without any conflicts to
-    resolve.
-    
-    BTW, thank you very much for maintaining and still improving this great
-    tool!
-
- Documentation/git-restore.txt | 2 --
- Documentation/git-switch.txt  | 2 --
- 2 files changed, 4 deletions(-)
-
-diff --git a/Documentation/git-restore.txt b/Documentation/git-restore.txt
-index 975825b44a..4f5531c440 100644
---- a/Documentation/git-restore.txt
-+++ b/Documentation/git-restore.txt
-@@ -28,8 +28,6 @@ otherwise from the index. Use `--source` to restore from a different commit.
- See "Reset, restore and revert" in linkgit:git[1] for the differences
- between the three commands.
- 
--THIS COMMAND IS EXPERIMENTAL. THE BEHAVIOR MAY CHANGE.
--
- OPTIONS
- -------
- -s <tree>::
-diff --git a/Documentation/git-switch.txt b/Documentation/git-switch.txt
-index f38e4c8afa..96cfd9ba52 100644
---- a/Documentation/git-switch.txt
-+++ b/Documentation/git-switch.txt
-@@ -29,8 +29,6 @@ Switching branches does not require a clean index and working tree
- however if the operation leads to loss of local changes, unless told
- otherwise with `--discard-changes` or `--merge`.
- 
--THIS COMMAND IS EXPERIMENTAL. THE BEHAVIOR MAY CHANGE.
--
- OPTIONS
- -------
- <branch>::
--- 
-2.43.0
+--=20
+Kristoffer Haugsbakk
 
