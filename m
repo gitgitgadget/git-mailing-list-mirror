@@ -1,93 +1,147 @@
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51EDA7605F
-	for <git@vger.kernel.org>; Tue, 20 Feb 2024 18:29:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B61CF76049
+	for <git@vger.kernel.org>; Tue, 20 Feb 2024 18:39:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708453788; cv=none; b=TOfKpOzWZSEblvXaAstzFGYwnyltPwB9aH0nxAEfyJbm/rouEhb2/krAl++wPRsyiNNm5Ldw+SIdetEm7vCjtIH6V5JqGadTPm/Yfx8gT5eyoIdWqer3hT1DWK1lLW2J5PLks+Yfs1YJGOkAjDIfeflTwMmhuA4lnsVtnhktLTY=
+	t=1708454376; cv=none; b=CyOPkps7XcAOW+hjjerlN6z4BAicINmWRXY986I/hx9ILQWnBNYG694zmzelWZWz0iYEIzZHJgg/WbBrvNK1CQJbaq9rL5ux7TwuuLuIQ+/pWJ1AZIaPC/1BjXMqKwAZGxSCF1/lz/NyQ33UKbMMWAv1eTx/2vVoy1EcudyEAWc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708453788; c=relaxed/simple;
-	bh=yptZwoRoF7tWHtYcOH48ZwhpoYE+AWA4jHqCJR/wUq0=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=aMDSkFFZFs8w+ich1XFDqQA+XY0W8iJyGoXcXeyVMEpRyMdoD/bnncd+r3zRTgyzMbF1s+FpY7Q4hS/Dr6NcmxfWHEb0kU55gUsBMmAtU0vg/Cx+j/9iUCYxUjZi62iq41SeWXCPY/m9JGSS0IJ8W7j66ZdoG0UdJJRLfxq6rFU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=uEeFGoqK; arc=none smtp.client-ip=64.147.108.70
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1708454376; c=relaxed/simple;
+	bh=nUwWqKvfHJcqnJr3SpSO1g7jH+gC5H0ZN6BTDEkInD4=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=DuxbSR448Cd0J1Tk2tFIfrZpdTcAjZGuRbqCufmDosP2kZQgdBfs4YjuWuGrH8Kp3kfy3TwbZbJcQ2akr7I6qGdsR3EzrW2PVvxXx4Fjsjssl3+j1lYdV80nD68AOn+2sLSc7Dqy7ezxWiacKuBeV0UOrkuxHvuhuC6Kj/k195M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=AcfvZYAR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="uEeFGoqK"
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 4CC431E9A53;
-	Tue, 20 Feb 2024 13:29:45 -0500 (EST)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=yptZwoRoF7tWHtYcOH48ZwhpoYE+AWA4jHqCJR
-	/wUq0=; b=uEeFGoqKB6sUHRRwVajIQsdTAvNV09o131BKeP8FqzTdDcoj1qZSMn
-	lfVkoOxd2POk3a1XHv2MqG0ehOX+pIVf5Ma8GJ345ydBsYCKpxeasHsV1qS3msun
-	kUtuexq0ZfIIkybEB2PSgmjAxCchtOhoBILXDS3Nv+VF0Ugu6OhLQ=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 4491C1E9A52;
-	Tue, 20 Feb 2024 13:29:45 -0500 (EST)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.165.85])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id B26261E9A51;
-	Tue, 20 Feb 2024 13:29:44 -0500 (EST)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Dragan Simic <dsimic@manjaro.org>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH] documentation: send-email: use camel case consistently
-In-Reply-To: <a766ba7eb27f663eee34214714f6076d@manjaro.org> (Dragan Simic's
-	message of "Tue, 20 Feb 2024 17:50:41 +0100")
-References: <b0577267402f6177d8ba5646e12d7691437e6e8f.1708060779.git.dsimic@manjaro.org>
-	<xmqqv86kx8h0.fsf@gitster.g>
-	<33abb630c1d089e39ff48f04e586b1c0@manjaro.org>
-	<xmqqo7cbt8a0.fsf@gitster.g>
-	<9d0022ba5666223af94bbf450909b1ba@manjaro.org>
-	<a766ba7eb27f663eee34214714f6076d@manjaro.org>
-Date: Tue, 20 Feb 2024 10:29:43 -0800
-Message-ID: <xmqq8r3foup4.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="AcfvZYAR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C459C433C7;
+	Tue, 20 Feb 2024 18:39:35 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1708454376;
+	bh=nUwWqKvfHJcqnJr3SpSO1g7jH+gC5H0ZN6BTDEkInD4=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=AcfvZYARSgvM8E2gOrI6w6kQ+Mv27IzSRLTkuYJ5kI/Eb5a7aRnPEe1MPQJLx5B+l
+	 9fmim7XpB3fikS4mHeM5Nm/Trv8upjWtSy0wdvHuM6BMEeYrmR6pqr/7WdLptLB4Pv
+	 +XLWcBjhgmlDIxFoOKh1TmKyyiKGfCTpn1i5vJr3g9VuCqMt5lhDvgw1Oe5NEKzvW9
+	 iXVXYCjZfUGWBS1/DidvIqVYhRWycv81w4oWzcJ5DrxmfdWOxOaP6ml6P6SPbe2b1X
+	 vnLdDIQu6DuCPT45BuZEvo++uzEVwaq+jiuieK/MEliJGWGq88N+SWYfgdbG1kH7V2
+	 gSfoRS/sOSQHQ==
+Message-ID: <0174d19e-abc4-4d2e-a60d-e7df52b74d0b@kernel.org>
+Date: Tue, 20 Feb 2024 19:39:33 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- 050E075C-D01E-11EE-BF23-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] Revert "Declare both git-switch and git-restore
+ experimental"
+Content-Language: en-GB, fr-BE
+To: Junio C Hamano <gitster@pobox.com>,
+ Kristoffer Haugsbakk <code@khaugsbakk.name>
+Cc: =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= <pclouds@gmail.com>,
+ git@vger.kernel.org
+References: <20240220092957.1296283-2-matttbe@kernel.org>
+ <3523e325-98bf-4d2d-847b-28e5c4a85ec5@app.fastmail.com>
+ <95eb92cb-7954-41c0-b542-5169ed5f9892@kernel.org>
+ <920a0f61-d30b-49f1-87b3-fb947cb3c33d@app.fastmail.com>
+ <xmqqzfvvovva.fsf@gitster.g>
+From: Matthieu Baerts <matttbe@kernel.org>
+Autocrypt: addr=matttbe@kernel.org; keydata=
+ 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
+ lzVbFe7fduHbABmYz9cefQpO7wDE/Q==
+Organization: NGI0 Core
+In-Reply-To: <xmqqzfvvovva.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-Dragan Simic <dsimic@manjaro.org> writes:
+Hi Junio,
 
-> If you insist on using "CC", I'd be fine with that, but frankly, I think
-> that would actually be confusing to the users.
+Thank you for your reply!
 
-I do not insist; my job is to just reject what is not correct.
+On 20/02/2024 7:04 pm, Junio C Hamano wrote:
+> "Kristoffer Haugsbakk" <code@khaugsbakk.name> writes:
+> 
+>> The only reason why I ask is because I was vaguely aware of some
+>> discussions (don’t know how long ago) where someone was skeptical about
+>> changing one of the two experimental commands, and then someone else in
+>> turn expressed some frustration about this concern since they are after
+>> all marked experimental. And the context was some UI/UX problems with
+>> the command.
+> 
+> There was a discussion to further make "switch" deviate from
+> "checkout" by taking advantage of its experimental status [*1*], for
+> example.
 
-In this particular case, I do not think Cc is outright wrong; it
-is near the borderline, but I do not know which side of that line it
-sits.
+I appreciate the references, thank you! It is interesting to note
+changes have been proposed a few years ago, but none have been applied.
 
-I gave you one possible rule to decide what to capitalize (namely,
-acronyms are spelled in all caps and that is how we capitalize
-http.proxySSLCert and imap.preformattedHTML) and if we adopt that
-rule, then sendemail.supressCc would be incorrect, simply because
-carbon-copy should be spelled CC.
+> Being marked as "EXPERIMENTAL" allows us to redefine the behaviour
+> in a way that would break existing users, like changing what the
+> "-c" option means completely (so that folks who are used to say
+> "switch -c blah" will be surprised next time they type that command,
+> but they cannot complain).
 
-You need to give an alternative criteria that is easy to understand
-for future developers and follow, and explain your choice in the
-proposed commit log message: "We spell acronyms in all caps like
-HTML and SSL, but in the case of carbon-copy, we spell it as Cc
-because ...".
+Personally, I think I would complain, and go back to git-checkout :-)
 
-You need to fill that "..." is in your proposed log message to
-explain the choice you made in your patch text.  More importantly,
-it is to help future developers so that they can easily follow the
-same rule to spell the variable names they invented in a way
-consistent with the rule you followed in this patch.
+> Once you remove the label, you no longer
+> have such a freedom to even imagine departing from the existing
+> behaviour (I wrote essentially the same thing before [*2*]).  Are we
+> ready to paint us into such a corner yet?
 
-Thanks.
+I'm not involved in this project, but I think after a few versions /
+years, it is hard to still keep this experimental status. I understand
+it is tempting to keep it, but I think it is now too late. Despite the
+now old label, you probably already no longer have such freedom to
+radically change their behaviours, no?
+
+> Is "switch/restore" perfect
+> and do not need departing changes anymore?
+To me, they don't need departing changes. If they are still experimental
+after 5 years, it is hard to recommend them :)
+
+Cheers,
+Matt
+-- 
+Sponsored by the NGI0 Core fund.
