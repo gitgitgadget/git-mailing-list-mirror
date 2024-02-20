@@ -1,116 +1,147 @@
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+Received: from siwi.pair.com (siwi.pair.com [209.68.5.199])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 809C76BB3C
-	for <git@vger.kernel.org>; Tue, 20 Feb 2024 17:29:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E9A977631
+	for <git@vger.kernel.org>; Tue, 20 Feb 2024 17:38:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.68.5.199
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708450160; cv=none; b=o3Q9JhHZ1P4sR754thZxs2sWG4VNNdK2WBcfiJqJDrJSBs+axO39KDNDBCS1wd/n9gpNUUVydzOSD5G6JJRuMDVM9GWgcScALPwm7etyoWgDCAb17jrbzWR/KJUyZspAD7MMChkFbsain29V6nDhqX8wBANFKXoMSqHb7pZgxCA=
+	t=1708450711; cv=none; b=Brk5eLIY9yxiRRvFrsSvPFIyKCmAUqEnBr0JI01r2tpz8TVLmtx+0tfR8kMrTirqHq1Krnqjqk80cJBxXI42JGniIaeYVkp/maDegDtJu8kGkx0/sy6T9ZGNJhcsDw7DfTYcPM3icyjkNL+3Lav5pcuYYdcVZrt2z4ljuj5+9Pk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708450160; c=relaxed/simple;
-	bh=I4giwaWcXy6l4ZOWsaLRH7fwnCRKEh+8LQI1zpAlbm0=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=ERuOkEovDwHMB3PMRRg5/kUGa10TTtU1JcwVqyZevM39Q5vff8LsE3eIdTSOfhggoWvs82duzKiqUHaRisFg26WOX4zmUQCCVFrqo8a+50beqFdscJeM1qBaoC0ZrS6Y1BiFWUBXn1uES2BTJnqNIkway8YImVa9086gtojOpA4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=gHjFBIVz; arc=none smtp.client-ip=173.228.157.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="gHjFBIVz"
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 001BA2CA6E;
-	Tue, 20 Feb 2024 12:29:17 -0500 (EST)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=I4giwaWcXy6l4ZOWsaLRH7fwnCRKEh+8LQI1zp
-	Albm0=; b=gHjFBIVzjl8Z3nTDcP/NpFzhxyN/5aJHnRDou8Vxu7t8eW5HW2Cw/6
-	pZGMF4oFJm07l4Yjc461PdD6W0ZxnnSb4WN2r5XIWFrzxR7/l1YgAdP8DSka91bv
-	WvVQu3dPj7I+9YWv8+3VgZfM71i27AA4YX35MkJDkbd6aypQdZ/gw=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id EC9332CA6D;
-	Tue, 20 Feb 2024 12:29:17 -0500 (EST)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.165.85])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	s=arc-20240116; t=1708450711; c=relaxed/simple;
+	bh=XMhsa4/T8HXE0a1ZNHKf4ZLW/BYCDlQjxO2pF7/0OkM=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=eCzkzNb1b5xPudlwW9ASo0cpVc/dIkFXBXXeYPLbS41q6h3e3QguUnq5xQfbR3UwC5m1lcfrMn12QpvG7OcifxapqlMZ/meZ+CqBVvuFcUK9b9EE6lIpSDFSGtrnlT4BMwiQu1A2UGAng1HezOzzF/PPwlmfpg/oqSvui5BQwTo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=jeffhostetler.com; spf=fail smtp.mailfrom=jeffhostetler.com; arc=none smtp.client-ip=209.68.5.199
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=jeffhostetler.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=jeffhostetler.com
+Received: from siwi.pair.com (localhost [127.0.0.1])
+	by siwi.pair.com (Postfix) with ESMTP id 38474CA125B;
+	Tue, 20 Feb 2024 12:38:27 -0500 (EST)
+Received: from [IPV6:2600:1700:840:e768:61e9:e43c:2400:ab1c] (unknown [IPv6:2600:1700:840:e768:61e9:e43c:2400:ab1c])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits))
 	(No client certificate requested)
-	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 9A1A42CA6C;
-	Tue, 20 Feb 2024 12:29:14 -0500 (EST)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Harmen Stoppels via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Harmen Stoppels <me@harmenstoppels.nl>
-Subject: Re: [PATCH] rebase: make warning less passive aggressive
-In-Reply-To: <pull.1669.git.1708442603395.gitgitgadget@gmail.com> (Harmen
-	Stoppels via GitGitGadget's message of "Tue, 20 Feb 2024 15:23:21
-	+0000")
-References: <pull.1669.git.1708442603395.gitgitgadget@gmail.com>
-Date: Tue, 20 Feb 2024 09:29:13 -0800
-Message-ID: <xmqqv86jqc2e.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	by siwi.pair.com (Postfix) with ESMTPSA id E70E3CC83B3;
+	Tue, 20 Feb 2024 12:38:26 -0500 (EST)
+Message-ID: <1913ed1b-a145-e641-6601-d8a55a2a8fec@jeffhostetler.com>
+Date: Tue, 20 Feb 2024 12:38:26 -0500
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- 91586B34-D015-11EE-9426-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
+ Gecko/20100101 Thunderbird/102.15.1
+Subject: Re: [PATCH 02/12] name-hash: add index_dir_exists2()
+Content-Language: en-US
+To: Junio C Hamano <gitster@pobox.com>,
+ Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, Jeff Hostetler <jeffhostetler@github.com>
+References: <pull.1662.git.1707857541.gitgitgadget@gmail.com>
+ <3464545fe3feceb08408618c77a70cc95745bfe9.1707857541.git.gitgitgadget@gmail.com>
+ <xmqqeddg2g7j.fsf@gitster.g>
+From: Jeff Hostetler <git@jeffhostetler.com>
+In-Reply-To: <xmqqeddg2g7j.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: mailmunge 3.11 on 209.68.5.199
 
-"Harmen Stoppels via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> From: Harmen Stoppels <me@harmenstoppels.nl>
->
-> When you run `git rebase --continue` when no rebase is in progress, git
-> outputs `fatal: no rebase in progress?` which is not a question but a
-> statement. This commit makes it appear as a statement.
 
-"This commit makes it appear" -> "Make it appear" (see
-SubmittingPatches).
+On 2/13/24 4:43 PM, Junio C Hamano wrote:
+> "Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com> writes:
+> 
+>> From: Jeff Hostetler <jeffhostetler@github.com>
+>>
+>> Create a new version of index_dir_exists() to return the canonical
+>> spelling of the matched directory prefix.
+>>
+>> The existing index_dir_exists() returns a boolean to indicate if
+>> there is a case-insensitive match in the directory name-hash, but
+>> it doesn't tell the caller the exact spelling of that match.
+>>
+>> The new version also copies the matched spelling to a provided strbuf.
+>> This lets the caller, for example, then call index_name_pos() with the
+>> correct case to search the cache-entry array for the real insertion
+>> position.
+>>
+>> Signed-off-by: Jeff Hostetler <jeffhostetler@github.com>
+>> ---
+>>   name-hash.c | 16 ++++++++++++++++
+>>   name-hash.h |  2 ++
+>>   2 files changed, 18 insertions(+)
+>>
+>> diff --git a/name-hash.c b/name-hash.c
+>> index 251f036eef6..d735c81acb3 100644
+>> --- a/name-hash.c
+>> +++ b/name-hash.c
+>> @@ -694,6 +694,22 @@ int index_dir_exists(struct index_state *istate, const char *name, int namelen)
+>>   	dir = find_dir_entry(istate, name, namelen);
+>>   	return dir && dir->nr;
+>>   }
+>> +int index_dir_exists2(struct index_state *istate, const char *name, int namelen,
+>> +		      struct strbuf *canonical_path)
+>> +{
+>> +	struct dir_entry *dir;
+>> +
+>> +	strbuf_init(canonical_path, namelen+1);
+>> +
+>> +	lazy_init_name_hash(istate);
+>> +	expand_to_path(istate, name, namelen, 0);
+>> +	dir = find_dir_entry(istate, name, namelen);
+>> +
+>> +	if (dir && dir->nr)
+>> +		strbuf_add(canonical_path, dir->name, dir->namelen);
+>> +
+>> +	return dir && dir->nr;
+>> +}
+>>   
+>>   void adjust_dirname_case(struct index_state *istate, char *name)
+> 
+> Missing inter-function blank line, before the new function.
+> 
+> I wonder if we can avoid such repetition---the body of
+> index_dir_exists() is 100% shared with this new function.
+> 
+> Isn't it extremely unusual to receive "struct strbuf *" and call
+> strbuf_init() on it?  It means that the caller is expected to have a
+> strbuf and pass a pointer to it, but also it is expected to leave
+> the strbuf uninitialized.
+> 
+> I'd understand if it calls strbuf_reset(), but it may not even be
+> necessary, if we make it responsibility of the caller to pass a
+> valid strbuf to be appended into.
+> 
+> 	int index_dir_find(struct index_state *istate,
+> 			   const char *name, int namelen,
+> 			   struct strbuf *canonical_path)
+> 	{
+>                  struct dir_entry *dir;
+> 
+>                  lazy_init_name_hash(istate);
+>                  expand_to_path(istate, name, namelen, 0);
+>                  dir = find_dir_entry(istate, name, namelen);
+> 
+>                  if (canonical_path && dir && dir->nr) {
+> 			// strbuf_reset(canonical_path); ???
+>                  	strbuf_add(canonical_path, dir->name, dir->namelen);
+> 		}
+>                  return dir && dir->nr;
+> 	}
+> 
+> Then we can do
+> 
+> 	#define index_dir_exists(i, n, l) index_dir_find((i), (n), (l), NULL)
+> 
+> in the header for existing callers.
+> 
 
->  builtin/rebase.c | 2 +-
+I'm always a little hesitant to change the signature of an existing
+function and chasing all of the callers in the middle of another
+task.  It can sometimes be distracting to reviewers.
 
-This change is very good, but a commit that touches code should not
-touch po/ localizations in this project.  They are updated to match
-the code change by respective language teams.
+I like your macro approach here. I'll do that in the next version.
 
->  po/bg.po         | 2 +-
->  po/ca.po         | 2 +-
->  po/de.po         | 2 +-
->  po/el.po         | 2 +-
->  po/es.po         | 2 +-
->  po/fr.po         | 2 +-
->  po/id.po         | 2 +-
->  po/it.po         | 2 +-
->  po/ko.po         | 2 +-
->  po/pl.po         | 2 +-
->  po/pt_PT.po      | 2 +-
->  po/ru.po         | 2 +-
->  po/sv.po         | 2 +-
->  po/tr.po         | 2 +-
->  po/uk.po         | 2 +-
->  po/vi.po         | 2 +-
->  po/zh_CN.po      | 2 +-
->  po/zh_TW.po      | 2 +-
->  19 files changed, 19 insertions(+), 19 deletions(-)
->
-> diff --git a/builtin/rebase.c b/builtin/rebase.c
-> index 5b086f651a6..415783c4a21 100644
-> --- a/builtin/rebase.c
-> +++ b/builtin/rebase.c
-> @@ -1254,7 +1254,7 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
->  		die(_("options '%s' and '%s' cannot be used together"), "--root", "--fork-point");
->  
->  	if (options.action != ACTION_NONE && !in_progress)
-> -		die(_("No rebase in progress?"));
-> +		die(_("No rebase in progress"));
->  
->  	if (options.action == ACTION_EDIT_TODO && !is_merge(&options))
->  		die(_("The --edit-todo action can only be used during "
-
-Interestingly this change does not break any test in t/ directory,
-which means we have a gap in test coverage.  It should not be any
-part of this patch, but we may want to add a test to exercise this
-codepath (#leftoverbits).
-
-Thanks.
+Thanks
+Jeff
