@@ -1,187 +1,110 @@
-Received: from mail.manjaro.org (mail.manjaro.org [116.203.91.91])
-	(using TLSv1.2 with cipher DHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f48.google.com (mail-ed1-f48.google.com [209.85.208.48])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 447695B5C1
-	for <git@vger.kernel.org>; Tue, 20 Feb 2024 07:05:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=116.203.91.91
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C39E55A4DE
+	for <git@vger.kernel.org>; Tue, 20 Feb 2024 07:42:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708412704; cv=none; b=CUS9VlElv8MQ4Z3SS3OaWSzM5Pk04CJIkegUOGot3bUmsyrRTJ2yTcfVJUOcjGeIiltH4T5OhSXg6DArpnx1VxmPvalbh7EmXgs0YT5ClWJSnM475aaSHB0bhjszAoOHNjqVZOzmrKb7rDBp+hDYWZC9jgemmnj5O47gt2EGFCk=
+	t=1708414953; cv=none; b=QsORM4IFazQLB+7aqQAPWXWh8dlStJOVp5/KYoFufZoRuP9OnbJlZmVg2F2GOXENpBuK1c66cc9HTmQVZKdTXHAYaPfkVsySvF6ItcoT/rNO6nNvpgcxZEwt7ZaDwT2mpoB7fS1Dy29i6D+k5xKKHuIQddm8Oy/9W41ezJ3tpmU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708412704; c=relaxed/simple;
-	bh=IVQfKT0DFVY8eZIAArOG3UIuxNu9j6lTZaidnhdNoEs=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=Kn++6s2LGm1ZQ8c1o6JB7QRPMJLRQMw+zL8pVpP3pHdMt7FZdkNppuifPobHVLw6jrpDyATpOghePLrqy5y7NIMqgfk79TqRI1jRz+JFZc5Trus8XpdTnQd0u0yZxKeyE4XkhnighLBD6CpmqG7DvwWKQEN6AxMeR1VPrWLcGIw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org; spf=pass smtp.mailfrom=manjaro.org; dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b=CUhOnwaY; arc=none smtp.client-ip=116.203.91.91
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=manjaro.org
+	s=arc-20240116; t=1708414953; c=relaxed/simple;
+	bh=72VsNvcfMnUtcYLffKcmrrX5Bi0V/sEA9AZh7GpN0hA=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=Iq9hQphVSepxzSoGxbQg/YyuZXV+nh+RdZiPM/UtAMpiElqR8hJJK6muE3rBHrbqJXHy4rquwf/ytNh6vwJCxKEeXEFuK932hFgC/6+Z2TEsD0OUJllNWKBExaP5ILwybaDjq5UnxL2aWRAcbr0oXLpgWXNV+ZWA+YUAQMyJfOs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=TwYb5dFH; arc=none smtp.client-ip=209.85.208.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b="CUhOnwaY"
-From: Dragan Simic <dsimic@manjaro.org>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=manjaro.org; s=2021;
-	t=1708412698;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding;
-	bh=Yy9qBYU7oOPGGj9DAV1HXLImqJX8VPLn7pBUnHnmL+M=;
-	b=CUhOnwaYZGlR8nn/JRWVfjtSybtOVhhJF6Y+rUrSlSf+fAZBb/Fxhre4ukis2I4F4V9K44
-	gL02z1lnqCIRu+0PZGmyL2KfmNjWK9+NARROe07bIarngXXVYBpg+GdYLZpHqqpfbYEOw9
-	MopxeXdMjtOFE+vvud8i4zdPW6e4Z9xcLEhmerwU7/UNzqio/LLGbnWrv9kwFHozLnPTPC
-	ndOkWRn/hHF2SYw4Qjr7Y0WAdFtx2d3YH+eihhemKixGo1GxzvHmL/T5KbMTa8G822Zisz
-	ULV5HiYaY2awf+uKHRqIuoZcHeNaoe0Trc49CMWL4lZG0Qx+YaB5zWYgUNNa0Q==
-To: git@vger.kernel.org
-Cc: gitster@pobox.com
-Subject: [PATCH v2] documentation: send-email: use camel case consistently
-Date: Tue, 20 Feb 2024 08:04:52 +0100
-Message-Id: <180f597d4587d700f48017ae22b3b0ad06ad011f.1708412193.git.dsimic@manjaro.org>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TwYb5dFH"
+Received: by mail-ed1-f48.google.com with SMTP id 4fb4d7f45d1cf-564d780d55fso72510a12.3
+        for <git@vger.kernel.org>; Mon, 19 Feb 2024 23:42:31 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1708414950; x=1709019750; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=DwHySQccz2J03HsMnamw66EkLmUPrar31NbSD1ezo0s=;
+        b=TwYb5dFHjSLClna19oCaroaLc/89PGCWUSmcHkMMVK9IyDs55FyOMKFZPuiCfaptr/
+         Y2bHTCkVFyGsIEhyYv3zs1vheIUBOm6a+DXY4xEuZu5TLhGryRfn/fj4YP71zeN4KYjq
+         Wufu3bmmQHTheJO6UH9IS4WYer+DbzgcVYW4E6f/d66OoDvnP/3vuhDU4HQa29MbncI+
+         kj20IRwtV0pLTHOWeNBEb7obqlk2rDo/XSQ18c3mcU09IMq1RJXvzSVizeiToeNn9qxy
+         IQg1sRab0Oez5J4v1NmTjTCpCSqbK2Gjxh3lq9r5NDH9gtHXd3ywJAMkEb21KX52jOUA
+         oHZg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1708414950; x=1709019750;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=DwHySQccz2J03HsMnamw66EkLmUPrar31NbSD1ezo0s=;
+        b=WkWy1ir0b5Jpn9QrMrXWVsYBuf9qkKOwvVqCOO+sVTAAY7pxA7pYYY/4eqzOty/dyF
+         kp+iJn27cjDsB27F5iEvZLCyGEJYm8Rt1GC+15xTJPiM9rSjkXGg3y7wD1AE2Dyo6cLJ
+         5VEvUesCFU5DgNSE7s7b2JQBshpyucknyV2yMQLyyEvzz8fceuNkQyczzvZVqA269i1p
+         IfTUkBiQPADmEjkproG5WOjP222MpB/+4ECV1RlGpl8yt8RPZBKvZr559rn/oxSUpjbJ
+         N6J64FBORzBnEK3uUNHUukx6XfePdUKPTBnnXNqNGAehTuwvHHRUH9K4QeTpBA00zZ2z
+         Uz8Q==
+X-Gm-Message-State: AOJu0Yyxxl+micR1oB2Ma7bfAmQEHBf/k8L3Mhl7Es84imw3kp8RcWHH
+	WZXpE0S8KCMwECpnoetUvmt86trgKW6OSHSGDY1IwdTYhMygqf93puzp+ba1DQvWR37f5mHxWAk
+	sgIA1Mf43XvM73GMzUXKtDEqeiFU=
+X-Google-Smtp-Source: AGHT+IFWF00uwUMmljsR49MhlAs9VXymIgQTvng68GEIgDwJ0Hu8viJL5Cjc68SoZTqw21lJyKQxYgA96cCZAvSdRjg=
+X-Received: by 2002:a05:6402:1655:b0:564:9019:d9b1 with SMTP id
+ s21-20020a056402165500b005649019d9b1mr1870346edx.40.1708414949820; Mon, 19
+ Feb 2024 23:42:29 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Authentication-Results: ORIGINATING;
-	auth=pass smtp.auth=dsimic@manjaro.org smtp.mailfrom=dsimic@manjaro.org
+References: <20240205204932.16653-1-maarten.bosmans@vortech.nl>
+ <20240218195938.6253-1-maarten.bosmans@vortech.nl> <20240218195938.6253-6-maarten.bosmans@vortech.nl>
+ <20240220021220.GC2713741@coredump.intra.peff.net>
+In-Reply-To: <20240220021220.GC2713741@coredump.intra.peff.net>
+From: Maarten Bosmans <mkbosmans@gmail.com>
+Date: Tue, 20 Feb 2024 08:42:13 +0100
+Message-ID: <CA+CvcKQyXu5JzhTnfQ7W2uaJNk_aP-2bh0HqP3npsfwUJn0Cew@mail.gmail.com>
+Subject: Re: [PATCH v2 5/5] notes: use strbuf_attach to take ownership of the
+ object contents
+To: Jeff King <peff@peff.net>
+Cc: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-Correct a few random "sendemail.*" configuration parameter names in the
-documentation that, for some reason, didn't use camel case format.
+Op di 20 feb 2024 om 03:12 schreef Jeff King <peff@peff.net>:
+>
+> On Sun, Feb 18, 2024 at 08:59:38PM +0100, Maarten Bosmans wrote:
+>
+> > @@ -705,12 +703,11 @@ static int append_edit(int argc, const char **argv, const char *prefix)
+> >               if (!prev_buf)
+> >                       die(_("unable to read %s"), oid_to_hex(note));
+> >               if (size)
+> > -                     strbuf_add(&buf, prev_buf, size);
+> > +                     strbuf_attach(&buf, prev_buf, size, size + 1);
+> >               if (d.buf.len && size)
+> >                       append_separator(&buf);
+> >               strbuf_insert(&d.buf, 0, buf.buf, buf.len);
+> >
+> > -             free(prev_buf);
+> >               strbuf_release(&buf);
+> >       }
+>
+> Is it possible for "size" to be 0, but prev_buf to be non-NULL? I assume
+> it is so if the previous note is the empty object (and anyway, we'd have
+> died earlier if prev_buf was NULL). In that case your patch introduces a
+> leak (we do not attach prev_buf to buf, but we no longer free prev_buf).
 
-Signed-off-by: Dragan Simic <dsimic@manjaro.org>
----
+You are right. I think the `if (size)` is not needed and removing it
+would remove the potential for a leak.
 
-Notes:
-    The version 2 includes feedback from Junio, by changing "Ssl" to "SSL"
-    in a couple of places where "sendemail.smtpSSLCertPath" is mentioned.
-    There are already instances of "SSL" being used, for example in various
-    "http.proxySSL*" configuration parameter names.
+> I'm a little skeptical that this is actually increasing the speed of the
+> command in a measurable way, though. It's one allocation/copy, right
+> next to a big old strbuf_insert() that is going to splice into an
+> existing array.
 
- Documentation/config/sendemail.txt | 12 ++++++------
- Documentation/git-send-email.txt   | 18 +++++++++---------
- 2 files changed, 15 insertions(+), 15 deletions(-)
+Yeah, I was doubting this patch a bit too. The simple idiom of
+starting with an empty strbuf and appending strings to it seems pretty
+nice and clear, so may be there's value in leaving it at that.
+The speed increase is not measurable of course. I was simply operating
+in full on lets-eliminate-all-sources-of-overhead mode while profiling
+the notes show code.
 
-diff --git a/Documentation/config/sendemail.txt b/Documentation/config/sendemail.txt
-index 7fc770ee9e69..6a869d67eb90 100644
---- a/Documentation/config/sendemail.txt
-+++ b/Documentation/config/sendemail.txt
-@@ -8,7 +8,7 @@ sendemail.smtpEncryption::
- 	See linkgit:git-send-email[1] for description.  Note that this
- 	setting is not subject to the 'identity' mechanism.
- 
--sendemail.smtpsslcertpath::
-+sendemail.smtpSSLCertPath::
- 	Path to ca-certificates (either a directory or a single file).
- 	Set it to an empty string to disable certificate verification.
- 
-@@ -62,27 +62,27 @@ sendemail.chainReplyTo::
- sendemail.envelopeSender::
- sendemail.from::
- sendemail.headerCmd::
--sendemail.signedoffbycc::
-+sendemail.signedOffByCc::
- sendemail.smtpPass::
--sendemail.suppresscc::
-+sendemail.suppressCc::
- sendemail.suppressFrom::
- sendemail.to::
--sendemail.tocmd::
-+sendemail.toCmd::
- sendemail.smtpDomain::
- sendemail.smtpServer::
- sendemail.smtpServerPort::
- sendemail.smtpServerOption::
- sendemail.smtpUser::
- sendemail.thread::
- sendemail.transferEncoding::
- sendemail.validate::
- sendemail.xmailer::
- 	These configuration variables all provide a default for
- 	linkgit:git-send-email[1] command-line options. See its
- 	documentation for details.
- 
--sendemail.signedoffcc (deprecated)::
--	Deprecated alias for `sendemail.signedoffbycc`.
-+sendemail.signedOffCc (deprecated)::
-+	Deprecated alias for `sendemail.signedOffByCc`.
- 
- sendemail.smtpBatchSize::
- 	Number of messages to be sent per connection, after that a relogin
-diff --git a/Documentation/git-send-email.txt b/Documentation/git-send-email.txt
-index d1ef6a204e68..8264f8738093 100644
---- a/Documentation/git-send-email.txt
-+++ b/Documentation/git-send-email.txt
-@@ -138,7 +138,7 @@ Note that no attempts whatsoever are made to validate the encoding.
- 
- --compose-encoding=<encoding>::
- 	Specify encoding of compose message. Default is the value of the
--	'sendemail.composeencoding'; if that is unspecified, UTF-8 is assumed.
-+	'sendemail.composeEncoding'; if that is unspecified, UTF-8 is assumed.
- 
- --transfer-encoding=(7bit|8bit|quoted-printable|base64|auto)::
- 	Specify the transfer encoding to be used to send the message over SMTP.
-@@ -174,7 +174,7 @@ Sending
- 	Specify a command to run to send the email. The command should
- 	be sendmail-like; specifically, it must support the `-i` option.
- 	The command will be executed in the shell if necessary.  Default
--	is the value of `sendemail.sendmailcmd`.  If unspecified, and if
-+	is the value of `sendemail.sendmailCmd`.  If unspecified, and if
- 	--smtp-server is also unspecified, git-send-email will search
- 	for `sendmail` in `/usr/sbin`, `/usr/lib` and $PATH.
- 
-@@ -269,7 +269,7 @@ must be used for each option.
- 	certificates concatenated together: see verify(1) -CAfile and
- 	-CApath for more information on these). Set it to an empty string
- 	to disable certificate verification. Defaults to the value of the
--	`sendemail.smtpsslcertpath` configuration variable, if set, or the
-+	`sendemail.smtpSSLCertPath` configuration variable, if set, or the
- 	backing SSL library's compiled-in default otherwise (which should
- 	be the best choice on most platforms).
- 
-@@ -313,7 +313,7 @@ Automating
- 	Specify a command to execute once per patch file which
- 	should generate patch file specific "To:" entries.
- 	Output of this command must be single email address per line.
--	Default is the value of 'sendemail.tocmd' configuration value.
-+	Default is the value of 'sendemail.toCmd' configuration value.
- 
- --cc-cmd=<command>::
- 	Specify a command to execute once per patch file which
-@@ -348,19 +348,19 @@ Automating
- 
- --[no-]signed-off-by-cc::
- 	If this is set, add emails found in the `Signed-off-by` trailer or Cc: lines to the
--	cc list. Default is the value of `sendemail.signedoffbycc` configuration
-+	cc list. Default is the value of `sendemail.signedOffByCc` configuration
- 	value; if that is unspecified, default to --signed-off-by-cc.
- 
- --[no-]cc-cover::
- 	If this is set, emails found in Cc: headers in the first patch of
- 	the series (typically the cover letter) are added to the cc list
--	for each email set. Default is the value of 'sendemail.cccover'
-+	for each email set. Default is the value of 'sendemail.ccCover'
- 	configuration value; if that is unspecified, default to --no-cc-cover.
- 
- --[no-]to-cover::
- 	If this is set, emails found in To: headers in the first patch of
- 	the series (typically the cover letter) are added to the to list
--	for each email set. Default is the value of 'sendemail.tocover'
-+	for each email set. Default is the value of 'sendemail.toCover'
- 	configuration value; if that is unspecified, default to --no-to-cover.
- 
- --suppress-cc=<category>::
-@@ -384,7 +384,7 @@ Automating
- - 'all' will suppress all auto cc values.
- --
- +
--Default is the value of `sendemail.suppresscc` configuration value; if
-+Default is the value of `sendemail.suppressCc` configuration value; if
- that is unspecified, default to 'self' if --suppress-from is
- specified, as well as 'body' if --no-signed-off-cc is specified.
- 
-@@ -471,7 +471,7 @@ Information
- 	Instead of the normal operation, dump the shorthand alias names from
- 	the configured alias file(s), one per line in alphabetical order. Note
- 	that this only includes the alias name and not its expanded email addresses.
--	See 'sendemail.aliasesfile' for more information about aliases.
-+	See 'sendemail.aliasesFile' for more information about aliases.
- 
- 
- CONFIGURATION
+I'll drop the patch, in order to keep focus in this series.
+
+Maarten
