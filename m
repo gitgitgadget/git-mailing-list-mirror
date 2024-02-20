@@ -1,92 +1,115 @@
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2328D2F48
-	for <git@vger.kernel.org>; Tue, 20 Feb 2024 01:42:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BA228465
+	for <git@vger.kernel.org>; Tue, 20 Feb 2024 01:51:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708393370; cv=none; b=QlMrI4qbG/ue/q7+gXaZeYfY0R+Li9oI1GeAgg8zYHSFgwk/aDJQ9l9LOm1+7LjFirhPfasr2+L2ut3CU19uRuSEE3W3C1PQzUhUOneLN2jJaOCWfIVcLemp9Ln2wKyFOl0R06GeGDUkt0WrWOkFvn21eCKqNkuK2Zj5DPr0kh4=
+	t=1708393897; cv=none; b=rLsMvxxYjqtQey6VankcWcirXEgIw0xLVa/hwm5VQO4n/s279BrGma25AnZsz1y1C/CRSzbn0YTT+klpe2AhiE7n2hjIlVCOsAo8UFy9dG6RhyJ3ZZPjTY8L7Ap6jXIqF9lbpu2irYf1QN/jrjKs+SJqVFMQll57QicmcKOHlz8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708393370; c=relaxed/simple;
-	bh=APagHZNFFAcckpoLmA63TYGPQ9NRc6iHtcCmCEnudn4=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=eDZKzilP6cn5AQYT7K2/N2w4VLrT2G3yLlq2j/nUC5KA6tyw3TibgF1IDTsJsj/nYhUFe9HWYsIEmF5+u1XHxnkFLJQcBUQJQawORU/ZFtTU9ABCj9HOdhjjfPA7Sm9Jf6ltomjjgEUpiEI96BVyMn78CXGCWojbue9dzsrqxWE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=Nt5FcJbm; arc=none smtp.client-ip=173.228.157.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="Nt5FcJbm"
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 656DF273F9;
-	Mon, 19 Feb 2024 20:42:48 -0500 (EST)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=APagHZNFFAcckpoLmA63TYGPQ9NRc6iHtcCmCE
-	nudn4=; b=Nt5FcJbmNIdCuoyo/UIzLFLQGl7OU9lA3/OrO/5ctGZ2oNXkAWKh3N
-	AKybjxjVqAS1UYZnKbd+foGm7xa8w8rntbC9E3sqcqCJlqp3jgxdRKM2lYQNnI/A
-	28RoERpAiJALA3rTB4n5qtPt25DZ4s7eCC53dDVCWO47HbRz8UWtw=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 4FC50273F8;
-	Mon, 19 Feb 2024 20:42:48 -0500 (EST)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.165.85])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id C5033273F7;
-	Mon, 19 Feb 2024 20:42:44 -0500 (EST)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: <rsbecker@nexbridge.com>
-Cc: "'brian m. carlson'" <sandals@crustytoothpaste.net>,  "'Dominik von
- Haller'" <vonhaller@fastec.de>,  <git@vger.kernel.org>
-Subject: Re: Why does the includeif woks how it does?
-In-Reply-To: <01d401da6379$635fdb30$2a1f9190$@nexbridge.com>
-	(rsbecker@nexbridge.com's message of "Mon, 19 Feb 2024 16:19:51
-	-0500")
-References: <FR2P281MB1686B7258CFB60A0F33FE108BA522@FR2P281MB1686.DEUP281.PROD.OUTLOOK.COM>
-	<ZdO1oL73SF5ZKOJT@tapette.crustytoothpaste.net>
-	<01d401da6379$635fdb30$2a1f9190$@nexbridge.com>
-Date: Mon, 19 Feb 2024 17:42:43 -0800
-Message-ID: <xmqqedd7ykq4.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	s=arc-20240116; t=1708393897; c=relaxed/simple;
+	bh=oIZ0BcNOnUDGD65hbMPvW96wK9FcP86c3Lkkadsz4Bk=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=ME4iDXy3pVTCrzpqt+ahHoezvU647vzAFxmsfk0Xw/XJ4toEsqgoU4j6sIBpjIp1j13VTC7aQt5Avd9OyD9ykv14XQc5g4yexzBdB9V495otjs4HPzc9wCy+SPFp0E87QyHyNi52uYRMGIo65CgVoLUcvO/VzTvM420KwCQOgAA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+Received: (qmail 23240 invoked by uid 109); 20 Feb 2024 01:51:34 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 20 Feb 2024 01:51:34 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 18529 invoked by uid 111); 20 Feb 2024 01:51:36 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 19 Feb 2024 20:51:36 -0500
+Authentication-Results: peff.net; auth=none
+Date: Mon, 19 Feb 2024 20:51:33 -0500
+From: Jeff King <peff@peff.net>
+To: Maarten Bosmans <mkbosmans@gmail.com>
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Teng Long <dyroneteng@gmail.com>
+Subject: Re: [PATCH 1/4] notes: print note blob to stdout directly
+Message-ID: <20240220015133.GA2713741@coredump.intra.peff.net>
+References: <20240205204932.16653-1-maarten.bosmans@vortech.nl>
+ <20240205204932.16653-2-maarten.bosmans@vortech.nl>
+ <xmqqil32l0i6.fsf@gitster.g>
+ <CA+CvcKTtcHCCKucQ0h1dnaDAMNfErJ+a1CXEVi=ZE5dv57Tb3A@mail.gmail.com>
+ <xmqqy1bxiiop.fsf@gitster.g>
+ <20240213080014.GB2225494@coredump.intra.peff.net>
+ <CA+CvcKR9sH=qZB4oZvX9RWd+4H3Bq8WV_qUOiSj_Tsf=Dr_Xvw@mail.gmail.com>
+ <20240215150430.GA3453@coredump.intra.peff.net>
+ <CA+CvcKSQCUukfLNnRkmTp=K=aXBRaxQnattfL+QexgOsYX18nA@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- 57F93B18-CF91-11EE-A5EB-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CA+CvcKSQCUukfLNnRkmTp=K=aXBRaxQnattfL+QexgOsYX18nA@mail.gmail.com>
 
-<rsbecker@nexbridge.com> writes:
+On Sat, Feb 17, 2024 at 01:45:39PM +0100, Maarten Bosmans wrote:
 
-> I have considered contributing an "includewhere" option that would
-> do that and differentiate from "includeif". I'm not sure it is
-> required, and what would happen with symbolic links.
+> > Of the two, I'd guess that the second one is a lot less work to
+> > implement (on the Git side; on the reading side it's a little more
+> > involved, but still should be a constant number of processes).
+> 
+> The second one is attractive for another reason than implementation
+> simplicity. While the first one offers more flexibility, the second
+> reuses the existing cat-file batch format, so the interface between
+> git and scripts is familiar and consistent.
 
-Other potential gotchas would include how it interacts with
-directory hierarchies.  You may be inside a directory /a/b (where
-none of /, /a, and /a/b is controlled by git) and want your "git
-init" invocation to be affected by some configuration included into
-your $HOME/.gitconfig via include-where mechanism.  Would it work
-recursively?  In other words, if you had
+Agreed.
 
-	[includeIf "gitdir:/a/b"] path = $HOME/gits/a-b-in-repo
+> > One variant of the second one is to use "git notes list". For example,
+> > you can get all notes via cat-file like this right now:
+> >
+> >   git notes list |
+> >   git cat-file --batch='%(objectname) %(objectsize) %(rest)'
+> 
+> So the cat-file batch output is suitable for blobs containing newline
+> or NUL characters. But I struggle a bit with what would be an easy way
+> of using this format in a shell script. Something with multiple read
+> and read -N commands reading from the output, I guess.
+> The git codebase has `extract_batch_output()` in t1006. This uses a
+> separate perl invocation to parse the cat-file output, which confirms
+> my suspicion there isn't a straight-forward way to do this in e.g.
+> just a bash script.
 
-	[includeIf "cwd:/"] path = $HOME/gits/others
-	[includeIf "cwd:/a"] path = $HOME/gits/a
-	[includeIf "cwd:/a/b"] path = $HOME/gits/a-b
+Yes, you could perhaps do it with "read -N". But note that it is a
+bash-ism, and other POSIX shells may not support it. That's one of the
+reasons we do not use it in t1006.
 
-would all of them be included?  Just the last one?  Does the most
-specific one win?
+Also, I suspect that even bash does not retain NUL bytes in shell
+variables. E.g.:
 
-After your "git init" succeeds, the one specified with gitdir: would
-start kicking in.  Would the "cwd:" ones that are meant for cases
-outside any directory under Git control be ignored then?
+  $ printf '\0foo\0bar\0' | cat -A
+  ^@foo^@bar^@
 
-I am not opposed to such a feature existing at all; just pointing
-out there are sources of end-user confusion we need to be careful
-while we design the feature.
+  $ printf '\0foo\0bar\0' | (read -r -N 9 var; echo "var=$var" | cat -A)
+  var=foobar$
 
+So pure shell is probably a losing battle if you want to be binary
+clean. You might be able to do something like using "read" to get the
+header line, and then another tool like "head -c" to read those bytes.
+But now you're back to one process per object. Plus depending on the
+implementation of "head", it might or might not read more bytes from the
+pipe as part of its stdio buffering.
+
+So really, you are probably better off handling the output with a more
+capable language (though again, there's not much Git can do here; the
+complications are from handling binary data, and not Git's output format
+choices).
+
+> That was why my first steps were to accept that a launching a separate
+> process per note in a bash loop is a pretty clear and well understood
+> idiom in shell scripts and try to make the git part of that a bit more
+> efficient.
+
+Yes, I agree it's a simple idiom. And I certainly don't mind any
+speedups we can get there, if they don't come with a cost (and your
+patches looked pretty reasonable to me, though I didn't read them too
+carefully). But I do think anytime you are invoking N+1 processes in a
+shell script, it's kind of a losing battle for performance. :)
+
+-Peff
