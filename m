@@ -1,96 +1,77 @@
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com [209.85.128.45])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76F3377650
-	for <git@vger.kernel.org>; Tue, 20 Feb 2024 18:04:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1F0B76C70
+	for <git@vger.kernel.org>; Tue, 20 Feb 2024 18:06:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708452272; cv=none; b=ChFuyVL495UDAtoz7Kxc58ht7n2gCEEgJCImt3ibvGtmDrRloVpk3P/jBXDNUq8N+Wu88qVPr+voNoQ/Zr3YWsxE5K0Uo6rzhh+i73EcB+57E58fX1NfSZyCmR0EbTpRIm6UlmOl3DRAtFVHUr9mTKBctjqYt7yWx3wVDZPAUTQ=
+	t=1708452370; cv=none; b=fajyJndTuhGpUXjQvRls5z8TjB3gYk2qSN/eppXWVH7Oi5lCc3abM2mXb5a7fDpBcspmCxPZ0U+kDLPOiB14pUwrdR8JbCJcsD/q2mQxwo8nTTeTGOMKKQxjD5EltJZSXA4rN2TU7x7CGf8gBcKs9utCjd2S7RtVkblrNViHk04=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708452272; c=relaxed/simple;
-	bh=68z2Yk54GaH57HHSQPvQ2RZc/6hEb4QZC4fB1LdPddE=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=aXz/FfbeyaN45y3DHsXEYxFFXFaa0P5IXfjsHkbhGpU08BIUpjxK+BrU28Udu13vJC32lK7n961j+nivA+xrw9ofGRiy7VAcG+O1rZZlJX+jE8CFUGoQs4U/zWa0x+MNyJm/XELUzhuA66UHc1Fp693HSVSjSBlJMzoraoKy9F0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=mt4emXXU; arc=none smtp.client-ip=173.228.157.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1708452370; c=relaxed/simple;
+	bh=fdVQuv9TOvpCrN06+pRua4zPgcZKoVjd3pTWNhzCeYQ=;
+	h=Message-ID:Date:MIME-Version:From:To:Subject:Content-Type; b=Jm6GnI4t0dx6+sBYUaqmrtcVX4+dhJ1V2rGVzeege0AelUVOten1FxDKIaJYmoI6gwqbBgmx8QhAmd3Dj0Ftqa4FXNAYRLtWKLfn1rc4KryzMalrt5nUsLqJ7tTuWILhS3lj0UzvkWXAs6BoyoObEW6gCSbbQ6d4RT91gNT2OEA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=S+VVXVQ3; arc=none smtp.client-ip=209.85.128.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="mt4emXXU"
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 4019A2CE3B;
-	Tue, 20 Feb 2024 13:04:30 -0500 (EST)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=68z2Yk54GaH5
-	7HHSQPvQ2RZc/6hEb4QZC4fB1LdPddE=; b=mt4emXXUY1VX1iVoqam04ExUye3E
-	WOwBpMAGNKwdv1EznU1LTJ8q9CXr4UJVKu6XGg3uVhYQ4hHS2H8mu8sKVxQPWZ6h
-	U9T8osAD1fn2OwngcW77+pzjh41jH6/JrBeKp/cncFPvM59elVDABvXKWF+TqL3c
-	Kzyu7T5CUtwG+Ag=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 384902CE3A;
-	Tue, 20 Feb 2024 13:04:30 -0500 (EST)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.165.85])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id CE3D32CE38;
-	Tue, 20 Feb 2024 13:04:26 -0500 (EST)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Kristoffer Haugsbakk" <code@khaugsbakk.name>
-Cc: "Matthieu Baerts (NGI0)" <matttbe@kernel.org>,  =?utf-8?B?Tmd1eeG7hW4g?=
- =?utf-8?B?VGjDoWkgTmfhu41j?= Duy
- <pclouds@gmail.com>,  git@vger.kernel.org
-Subject: Re: [PATCH] Revert "Declare both git-switch and git-restore
- experimental"
-In-Reply-To: <920a0f61-d30b-49f1-87b3-fb947cb3c33d@app.fastmail.com>
-	(Kristoffer Haugsbakk's message of "Tue, 20 Feb 2024 12:36:10 +0100")
-References: <20240220092957.1296283-2-matttbe@kernel.org>
-	<3523e325-98bf-4d2d-847b-28e5c4a85ec5@app.fastmail.com>
-	<95eb92cb-7954-41c0-b542-5169ed5f9892@kernel.org>
-	<920a0f61-d30b-49f1-87b3-fb947cb3c33d@app.fastmail.com>
-Date: Tue, 20 Feb 2024 10:04:25 -0800
-Message-ID: <xmqqzfvvovva.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="S+VVXVQ3"
+Received: by mail-wm1-f45.google.com with SMTP id 5b1f17b1804b1-41264c364fbso19165475e9.1
+        for <git@vger.kernel.org>; Tue, 20 Feb 2024 10:06:08 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1708452367; x=1709057167; darn=vger.kernel.org;
+        h=content-transfer-encoding:subject:to:from:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=fdVQuv9TOvpCrN06+pRua4zPgcZKoVjd3pTWNhzCeYQ=;
+        b=S+VVXVQ3o+iBtIcpFWFIpzK1YD/4xHnfMHx6xgC9pEV9teoC/wygbxyWt7RcNFdm8X
+         ym6lQ+EWztRWoqFMtk3YB6540QvEAPcHxKB68aA89VM9rLOO8fi9nkYQMu8CceLv7LeO
+         1S3PdLawTXJsTymF2HX+e5d6sxO1Ys+JqXSf+ipXHss2JB55LPtB7fI4AgeT/jjwvKAN
+         mlopELlY4aX+7Nqg8YTLlfAAEhfv7X+cEWkU5ENbk64Y9nnARXRSEcABqrXal4LM0OCe
+         su8orCpOYCG2Zd5s9pZwtj819VbjIpASKnMct6VLrvA83TW24bOG3OVyVyD81TzDQbIR
+         fhqQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1708452367; x=1709057167;
+        h=content-transfer-encoding:subject:to:from:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=fdVQuv9TOvpCrN06+pRua4zPgcZKoVjd3pTWNhzCeYQ=;
+        b=RPJKeSL2QH4Tkga77h1CBzB1vXxfkZs2R3wuIWlmHG9/8mklEuuvTYtds4uN5ippkK
+         tMOQchEh980+798ymMAgY/O5+cfsaz1fiFK6FcV90Yl3tFAlWWbl1yueg1o5weoOoAHn
+         UblnD7fLDRGQ5YRsEc+rnzO4c6+UvyeatnM5AHzEtJKJXz5VLVCzPZ4+6sMhLbrLDqwB
+         ZkQ/oQGurw3JLaMm07I3ei6YyAltJWDex3FUGQZ4h6iIeaQEm2/sX303kH5YB5NisJBu
+         hqI5b1vCaFgsNlT0YLLT9n2+X/XaIcdNrABY53Miv3EGa9wj8g/j+1V7SM85SbQldywG
+         ha4Q==
+X-Gm-Message-State: AOJu0Yz+QfIJEn+5cOs9oN6m07H8CYdfGJHGUg1Q5jmjf/tpIfe6bKn2
+	CM13BYDtdL3AAEgK4mFaIjteUMpX78CvIPMTyWINOJitaMmMkEvPDnPJY1ZV
+X-Google-Smtp-Source: AGHT+IG5EdGa6jYRDPX/ylSDzaInm+fdHqLA/S4qmdekzBXxOl0TeqCMcvz6tsFCh/zbqrXDWxUkPg==
+X-Received: by 2002:a05:600c:524c:b0:412:3d0a:a8d5 with SMTP id fc12-20020a05600c524c00b004123d0aa8d5mr8756001wmb.4.1708452366563;
+        Tue, 20 Feb 2024 10:06:06 -0800 (PST)
+Received: from DESKTOP-T29D115 ([39.49.142.88])
+        by smtp.gmail.com with ESMTPSA id u11-20020a7bc04b000000b0041270be311bsm1808498wmc.0.2024.02.20.10.06.05
+        for <git@vger.kernel.org>
+        (version=TLS1 cipher=ECDHE-ECDSA-AES128-SHA bits=128/128);
+        Tue, 20 Feb 2024 10:06:06 -0800 (PST)
+Message-ID: <65d4ea0e.7b0a0220.2b1f3.7d32@mx.google.com>
+Date: Tue, 20 Feb 2024 10:06:06 -0800 (PST)
+X-Google-Original-Date: 20 Feb 2024 23:06:07 +0500
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID:
- 7C53343A-D01A-11EE-966F-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
+From: jeffreyclassicestimation@gmail.com
+To: git@vger.kernel.org
+Subject: New Construction Project
+Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: quoted-printable
 
-"Kristoffer Haugsbakk" <code@khaugsbakk.name> writes:
+Hi, =0D=0A=0D=0AI hope you are doing well.=0D=0A=0D=0AWe provide =
+estimation & quantities takeoff services. We are providing 98-100=
+ percent accuracy in our estimates and take-offs. Please tell us =
+if you need any estimating services regarding your projects.=0D=0A=
+=0D=0ASend over the plans and mention the exact scope of work and=
+ shortly we will get back with a proposal on which our charges an=
+d turnaround time will be mentioned=0D=0A=0D=0AYou may ask for sa=
+mple estimates and take-offs. Thanks.=0D=0A=0D=0ARegards=0D=0AJef=
+frey=0D=0AMarketing Manager=0D=0Aclassic estimation
 
-> The only reason why I ask is because I was vaguely aware of some
-> discussions (don=E2=80=99t know how long ago) where someone was skeptic=
-al about
-> changing one of the two experimental commands, and then someone else in
-> turn expressed some frustration about this concern since they are after
-> all marked experimental. And the context was some UI/UX problems with
-> the command.
-
-There was a discussion to further make "switch" deviate from
-"checkout" by taking advantage of its experimental status [*1*], for
-example.
-
-Being marked as "EXPERIMENTAL" allows us to redefine the behaviour
-in a way that would break existing users, like changing what the
-"-c" option means completely (so that folks who are used to say
-"switch -c blah" will be surprised next time they type that command,
-but they cannot complain).  Once you remove the label, you no longer
-have such a freedom to even imagine departing from the existing
-behaviour (I wrote essentially the same thing before [*2*]).  Are we
-ready to paint us into such a corner yet?  Is "switch/restore" perfect
-and do not need departing changes anymore?
-
-
-[References]
-
-*1* https://lore.kernel.org/git/211021.86wnm6l1ip.gmgdl@evledraar.gmail.c=
-om/
-*2* https://lore.kernel.org/git/xmqqzg6eocmi.fsf@gitster.g/
