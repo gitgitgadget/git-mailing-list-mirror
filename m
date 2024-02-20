@@ -1,96 +1,172 @@
-Received: from ms-10.1blu.de (ms-10.1blu.de [178.254.4.101])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f45.google.com (mail-ed1-f45.google.com [209.85.208.45])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 701A714A4D0
-	for <git@vger.kernel.org>; Tue, 20 Feb 2024 19:57:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=178.254.4.101
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65AE714A0A4
+	for <git@vger.kernel.org>; Tue, 20 Feb 2024 20:02:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708459068; cv=none; b=kcqSmbyKfcZAFfCNHbxgJcEYuttw5cKgrQ5zA1XeFyopLsRfP9VcZ+SO3SejBnL87Tf0qU3bWyxMh01dxAU4FRb78qq0KPIJzw2gVwb8RgIMMN/XcevRwo6maaitJmrQ08j0gBTA3NeSfuZ+Z8I2nbT4xZBImXpPPhbli787pAw=
+	t=1708459334; cv=none; b=G+sp7/CRAabYHcanTUW4XD3+hnFvepAmtAh42OF3KnmZiRYP8laaAm+wKLurd1GaSQNoL/6/pPExkelsAzJvZsWEMeVQmOBlU+NkFrVzkpIQwh5ctYNJdiwBUvrDxntbQODBRTaWUfD9kuJRriYOfxPVfzrTEnnKCahm1T93L0s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708459068; c=relaxed/simple;
-	bh=GRaVF2z9cf7898zhYESemeT3oeXWS4BvxLCjTwXEtTk=;
-	h=Message-ID:Date:MIME-Version:Subject:Cc:References:From:
-	 In-Reply-To:Content-Type; b=CtOU3hB3bmJWsyhjvQYD7sq7NBvO+rYalGpB/SiTvzpoo98v+2v3KGJW+TVQ2AvNRSVePRGt5FvDWjHhKhx4yBPU0uorzDWjM9oImMQbjR+Oc81WA/fPEEHNfNk0y8SdiDvtM8tGXYiY6qxMf3VxbR7EXd3f3qOyrjkpxnOJKEs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=mfriebe.de; spf=pass smtp.mailfrom=mfriebe.de; arc=none smtp.client-ip=178.254.4.101
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=mfriebe.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mfriebe.de
-Received: from [84.163.76.207] (helo=[192.168.2.202])
-	by ms-10.1blu.de with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.95)
-	(envelope-from <lists@mfriebe.de>)
-	id 1rcWFK-004bX4-CE
-	for git@vger.kernel.org;
-	Tue, 20 Feb 2024 20:57:42 +0100
-Message-ID: <86226be8-7a1d-454a-b3dc-7d5921b47329@mfriebe.de>
-Date: Tue, 20 Feb 2024 20:57:42 +0100
+	s=arc-20240116; t=1708459334; c=relaxed/simple;
+	bh=n8QJY//FrW+m9t8o02TMg+E95kTvYSV523Jk8yGGo6U=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=K2uTm7fv3ktqkOhlmvm/466mauq9QTlvkPJ1p/eu9fHTugt30Z9TYhE3PKECMnCClQPA55DwBN+ODX3OcZCu7vSMRvL912AAvmpc6n4QvA52f7ZGQAx0TvvWhYg7qQfvQQLphjIGbwNVNwzdrvFyvuZuQYmWSd7yntLr9okkCU0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=To71Dpow; arc=none smtp.client-ip=209.85.208.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="To71Dpow"
+Received: by mail-ed1-f45.google.com with SMTP id 4fb4d7f45d1cf-563bb51c36eso6543847a12.2
+        for <git@vger.kernel.org>; Tue, 20 Feb 2024 12:02:12 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1708459330; x=1709064130; darn=vger.kernel.org;
+        h=content-transfer-encoding:to:subject:message-id:date:from
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=T//VWm6YXdWhGgLmD3bmm76GKZ6SnnKkef2X77krYgw=;
+        b=To71Dpows/zCBuzb+WkI9RZOeafVF2/stLu9egEe3hnfrShQePJMaOjf7PlC0ybbWH
+         7tBIYfpYMi4NadlZ/MCh9MQWVLY21SYBixPk1OysAcwPibWZA3lM1fCOcMKb2EmRVsY+
+         i5TwGYV5G82v4NfXxGbsN02myejCUBirDKtIkgZefx8hLC9klAV09WGnh9zog+sVBSXr
+         5eeM9tZVQ2q7hi0vpWXslQUjCA0ipPrJndTcmHMsh4xhnOmqJ76eJ9w0oVv0NkFwcxvu
+         DIMSv2ujAjxkPdTSPS7w+xkmC/HaiKP8iLna+N55qq/YmVXyw641qDjISefYNL5NUwd6
+         zMqw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1708459330; x=1709064130;
+        h=content-transfer-encoding:to:subject:message-id:date:from
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=T//VWm6YXdWhGgLmD3bmm76GKZ6SnnKkef2X77krYgw=;
+        b=I/XhIVR2HKBHcgBQbiA3v8PmvHlmYw2HudhOXUfp/5BWk1KfEZYCDl7HkFDGXWMbkg
+         Pyhty6/FaOhcSFt0nvRQBp/nfu5ChjXtJDqCyv6YsW0B78Li2gDPHoXW7zJ23EUslXCm
+         1jdShuV1djbv64k8tzVfV4QG5sO736LK6v6fxpUQPuIOxd+tMsh6jTOyJarTV/5ADdJq
+         dTexNjRrNWQQAzssNtz5560PvFB7DMjapGnIchLIIeyWDmjQhfegYFtU2JyqaRWnV/98
+         qJZDCjxJEZDjFEnEKhrRcJZXPn88nXvkML3g0NRFPDYyrmaOk8Kk16DSzI2zssHA8wds
+         c3hQ==
+X-Gm-Message-State: AOJu0YztRIl4RO2160raF3e9Xgu5hVpSG4109vLIro0RXsj2QvBRedHJ
+	sDywgvWm1kjdq9JdPCWcFoMqdy1QWcGRxZvcFlVR8+HM9PZNmdjdwKaVtqvtkV/2hs6p6Liv4hc
+	uIv4oeAhBXYMrW2Q9D13OIy5xNgQc5sQAS0eBtA==
+X-Google-Smtp-Source: AGHT+IEM4Mj8Xgb24c53zeVCkB/L5U6oRFzuJyLMVw5JoMnEHDP2KMBfF+a109+w3ZgnszaAa6817BnA6EgIycYGT9g=
+X-Received: by 2002:a05:6402:b2a:b0:564:a91e:2b68 with SMTP id
+ bo10-20020a0564020b2a00b00564a91e2b68mr3214193edb.22.1708459330405; Tue, 20
+ Feb 2024 12:02:10 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] Revert "Declare both git-switch and git-restore
- experimental"
-Content-Language: de-DE, en-GB
-Cc: git@vger.kernel.org
-References: <20240220092957.1296283-2-matttbe@kernel.org>
- <3523e325-98bf-4d2d-847b-28e5c4a85ec5@app.fastmail.com>
- <95eb92cb-7954-41c0-b542-5169ed5f9892@kernel.org>
- <920a0f61-d30b-49f1-87b3-fb947cb3c33d@app.fastmail.com>
- <xmqqzfvvovva.fsf@gitster.g>
-From: Martin <lists@mfriebe.de>
-In-Reply-To: <xmqqzfvvovva.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Con-Id: 349877
-X-Con-U: 0-listmfriebede
+From: John Gabo <charleforalia@gmail.com>
+Date: Tue, 20 Feb 2024 21:01:59 +0100
+Message-ID: <CALPZ9FGr8K=AdqOzX2P7A3T8+_V25SOjcHA5kY-Fg5TUFEvh7w@mail.gmail.com>
+Subject: Git rebasing attribute the change to the wrong file [bug]
+To: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 20/02/2024 19:04, Junio C Hamano wrote:
+Hello,
+I think I found a bug in git, where a change get attributed to the
+wrong file when doing a rebasing.
 
-> [References]
-> 
-> *1* https://lore.kernel.org/git/211021.86wnm6l1ip.gmgdl@evledraar.gmail.com/
-> *2* https://lore.kernel.org/git/xmqqzg6eocmi.fsf@gitster.g/
-> 
+# Short summary
+Assume `master_branch`
+```
+.
+=E2=94=94=E2=94=80=E2=94=80 parent_folder
+    =E2=94=9C=E2=94=80=E2=94=80 project_a
+    =E2=94=82   =E2=94=94=E2=94=80=E2=94=80 file.txt
+    =E2=94=94=E2=94=80=E2=94=80 project_b
+        =E2=94=94=E2=94=80=E2=94=80 file.txt # the 2 file.txt have the same=
+ content on master
+```
+Assume `feature_branch` from master
+```
+.
+=E2=94=94=E2=94=80=E2=94=80 parent_folder
+    =E2=94=9C=E2=94=80=E2=94=80 project_a
+    =E2=94=82   =E2=94=94=E2=94=80=E2=94=80 file.txt
+    =E2=94=94=E2=94=80=E2=94=80 project_b
+        =E2=94=94=E2=94=80=E2=94=80 file.txt # this file got modified with =
+a feature
+```
+Assume `refactor_branch` from master
+```
+.
+=E2=94=94=E2=94=80=E2=94=80 refactored_parent_folder # got renamed
+    =E2=94=9C=E2=94=80=E2=94=80 project_a
+    =E2=94=82   =E2=94=94=E2=94=80=E2=94=80 file.txt
+    =E2=94=94=E2=94=80=E2=94=80 project_b
+        =E2=94=94=E2=94=80=E2=94=80 file.txt
+```
+then rebase `feature_branch` on `refactor_branch`,
 
- From 2
-> I think the "switch" was written exactly for such a transition so that folks who
-> wanted a different behaviour do not have to break existing users of "checkout".
+```
+.
+=E2=94=94=E2=94=80=E2=94=80 refactored_parent_folder
+    =E2=94=9C=E2=94=80=E2=94=80 project_a
+    =E2=94=82   =E2=94=94=E2=94=80=E2=94=80 file.txt # the feature got move=
+d here !
+    =E2=94=94=E2=94=80=E2=94=80 project_b
+        =E2=94=94=E2=94=80=E2=94=80 file.txt # instead of here, where it sh=
+ould be !
+```
 
-Yet then the table in link 1 suggests to re-use -c and -m in the old 
-style, the way the currently are used in "git branch"
+# Reproduction bash script
+```
+#!/usr/bin/env bash
 
-"Introducing a new behaviour" is exactly not having to copy old meanings 
-of options...
+# tested on linux, git version 2.34.1, 2.43.2.
 
-As I wrote
-> The flaw here is in "git branch" which by default list branches, but if give a name (and no option to specify an action) "git branch foo" will change its action to "create". 
+set -ex
+# create a master branch
+mkdir -p git_repo
+cd git_repo
+git init
+mkdir -p parent_folder/project_a
+echo -e "1\n2\n3" > parent_folder/project_a/file.txt
+cp -r parent_folder/project_a parent_folder/project_b
+git add .
+git commit -m "initial commit"
+# we create a feature_branch from master
+git branch "feature_branch"
 
-If "git branche" actually had needed an option to change its action to 
-create, what would it have been? --create or -c ?
+# we create a refactoring_branch from master
+git checkout -b "refactoring_branch"
 
-And -n (as suggested in the table) is strongly associated with dry-run. 
-(not only in git)
+git mv parent_folder refactored_parent_folder
+git add .
+git commit -m "refactor"
+
+# we create a new feature in project_b
+git checkout "feature_branch"
+echo -e "1\n2_some_new_feature_in_project_b\n3" >
+parent_folder/project_b/file.txt
+git add .
+git commit -m "new feature"
+
+# we rebase
+git rebase refactoring_branch
+cat refactored_parent_folder/project_a/file.txt
+# refactored_parent_folder/project_a/file.txt contains the line
+2_some_new_feature_in_project_I think I found a bug in gitb, which is
+WRONG !
+# It should have ended  up in refactored_parent_folder/project_b/file.txt
 
 
-If I look at the suggestion to replace -m by --merge, just so that -m 
-can be "move", then I seriously ask, what happens more often:
-- Someone switching to a branch while having modifications in their 
-worktree (needing to merge)
-- Someone creating a new branch, wanting to copy reflog/options
+```
+# ENV
+tested on linux, git version 2.34.1, 2.43.2 are affected
 
-Given not only that switching to a new branch happens more often than 
-creating one (and thereby makes it alt least plausible, that the -m as 
-"merge" is required more often)..., but also that "git switch" is more 
-about switching than creating branches..., I believe that -m as "merge" 
-is entirely the better choice.
 
-For the "git branch" features, if "git switch" should support them, they 
-could easily be made available as
---cc  create and copy
---mv  move
+[System Info]
+git version:
+git version 2.43.2
+cpu: x86_64
+no commit associated with this build
+sizeof-long: 8
+sizeof-size_t: 8
+shell-path: /bin/sh
+uname: Linux 6.5.0-18-generic #18~22.04.1-Ubuntu SMP PREEMPT_DYNAMIC
+Wed Feb  7 11:40:03 UTC 2 x86_64
+compiler info: gnuc: 11.4
+libc info: glibc: 2.35
+$SHELL (typically, interactive shell): /usr/bin/zsh
 
-They - by all likelihood - are used less often, and should be the long 
-options. And a 2 letter long option is still easy to use.
-
+[Enabled Hooks]
