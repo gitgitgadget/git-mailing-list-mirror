@@ -1,79 +1,80 @@
-Received: from wfhigh6-smtp.messagingengine.com (wfhigh6-smtp.messagingengine.com [64.147.123.157])
+Received: from wfout5-smtp.messagingengine.com (wfout5-smtp.messagingengine.com [64.147.123.148])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F5FF5D74D
-	for <git@vger.kernel.org>; Tue, 20 Feb 2024 08:34:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.157
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 604B65D725
+	for <git@vger.kernel.org>; Tue, 20 Feb 2024 08:34:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708418093; cv=none; b=N73hjFkK7xisBejTHp+Bd9CUW/Z0bQcsmzR847KL5foa4M7nR4zVYAEBcQYhjnR/HNqtN/lsPZD9Ifa3VBaWP+2Y+MLQYeAvxVuHzfU2pa1tft83GNxlZCV2W42DMCZu4vKGqkyQzVgOL5gZTfMkKPdyscbjFP16tyDhKOvIRlc=
+	t=1708418101; cv=none; b=IYGBWEomhMjttSe/R6yfvQUSAuoc2H1MiirynqLkzL2uX8wDemrZDgRU6wKsp32Fo+8zfh9G/FcK2crM8jEoZ9E6RMqXF9El7YN25+aA26y4jHjLFx8TfgQqAMU9faaYF04G5a4KqGS/Qf7Z90n2UF6lAUeXCJ31qwHPNFTd9eE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708418093; c=relaxed/simple;
-	bh=q4rWon+nzdENKqPzskdlaTDHrHZ2TfmB1Te4RPsyQLE=;
+	s=arc-20240116; t=1708418101; c=relaxed/simple;
+	bh=RgpUScIlUnl9A31/X1IuXzLd89zeU1xJeHqGg0w08w8=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=DlhLkJVsyMo0+lSrbcpvaN6BPi4D30Qzgu8HbYtmZLs9DeHemOSvLzHrzxfT+aA5t827WZiJDh4V/Dkhfq/Y1uvoHvrrC3kVHo4o0ZKrpqHT2EbJDYfyQ/oiCJR8IuhjY1xy6n2AsgtYDSm6Tc/zyofZMcKZSFSJpQtFneqwIFg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=a6Za2IYR; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=FBU93+1W; arc=none smtp.client-ip=64.147.123.157
+	 Content-Type:Content-Disposition:In-Reply-To; b=X9DtLOX1OY8YLeo38CHFv5BIgdNsGYktkwxQzlByRbSPULTPKWSPIbDqi9suMR6clrrRg7bQni2xL8NgIwKfAZ/Z61ZErD1iCN9njmmlgY2uSWnLxkW/HYcPF/R3rxoSgH4BwNuXYsKnC9+dyon+4RXCbjtKeGne3eDtLlJzuEY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=EfdkdJQ1; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=bCzGHodN; arc=none smtp.client-ip=64.147.123.148
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="a6Za2IYR";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="FBU93+1W"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="EfdkdJQ1";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="bCzGHodN"
 Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
-	by mailfhigh.west.internal (Postfix) with ESMTP id 78B4E1800086;
-	Tue, 20 Feb 2024 03:34:50 -0500 (EST)
+	by mailfout.west.internal (Postfix) with ESMTP id 53A361C0007F;
+	Tue, 20 Feb 2024 03:34:58 -0500 (EST)
 Received: from mailfrontend2 ([10.202.2.163])
-  by compute2.internal (MEProxy); Tue, 20 Feb 2024 03:34:50 -0500
+  by compute2.internal (MEProxy); Tue, 20 Feb 2024 03:34:58 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1708418090; x=1708504490; bh=I6wgVHvozD
-	sE70wnHKJI/xvDjTa7Ti7oDtZfEPXBMik=; b=a6Za2IYRkEo2SjkmBfQN/jCqG7
-	akHrtAWtTuZIXAngHEeb/5Fnfl9yDA+rLVpIp05iPCpqbf0m84U5Kw4QhELK4UOU
-	tvOyCkfmfknfCPCyP7t5bOLOYs1fEC5CJErayGd2xS7WLJ4DhpFNEdakQ0yXCkhN
-	+LagomXecRJb77aMtKnJ9DOyayGlRpceRVLmoVgeQg35Ag873ApIguYvS/Z0wxr2
-	poqAX1Ry3DLoznrKY7+Cvz/hvfj1BKX8N3Cy5xhwn7Wlz0xpWenZHisRbXd3ZWNc
-	QCPR7OhxRw/XeAD2lg8jpHeMF/GX0cgTgfo7OgrnOZYEdNBgbjFNVLCTsIQA==
+	:subject:to:to; s=fm1; t=1708418097; x=1708504497; bh=eqnnPiDswV
+	LdlKAzdxQaAQY0Swsq5Qa1TyRgbEnmoHQ=; b=EfdkdJQ1CIgID3Bqeo2pfgMRHE
+	OUB5hyZHWKTk5Fh6RTqMhtqolT8TAJrn/PlF3aaYm9VLLqx+vyHlfSjZ+peRNv5H
+	Z64qHVfUDwJZNqd4UwE1yLPn2+sXkUECkAOFQsRfHEd7SY2JSOtsQWfN4otyYBtg
+	KYrr2evkrG3s9cKXvHluLOSNTmsOoqxrD4iibPH8m9KsksXnaCrjU2H4Ej3nqM3l
+	B58mSqBk5i5BEpa3eBz5gvs4H/WqZHvnPVJZotLGm51LeeRF65i9oAUuShp24f0P
+	+mrXjLsXoK2CEQSAGvJl7vMyCjGrcwLFMwMe2y9noDGZZcfA1kFsbOBs8Xqw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1708418090; x=1708504490; bh=I6wgVHvozDsE70wnHKJI/xvDjTa7
-	Ti7oDtZfEPXBMik=; b=FBU93+1WRiH5bLogQSBHNpqlsx0/bWTiciGjDIC7ArlG
-	0VIHLJcJ/8pj2tDJ0wHkvX62N0EH0HafOlB4dtvOuRyYBagOsAwCnlmw4GjEkpKO
-	Tl71T2JtfA6udDYN386rcDOO4CTFPuzDk5DgUO5DjjVKgVHq4ATJ1GgdEFJjI8AV
-	TYWEXqnbZSLRdlc4agdnq/64t4cMx5imyglxpKlstW2yGGt3pbobJ6ySHdrPwwOI
-	QBpTqoOimMuuqWB9j0T46N4vSkRbI4C54jNgmgfV6C1uQt3YH0IlI8jJV4JEDpp1
-	aEN2aR3zDKs7xKn6T83SoU/H+8iXIKf51Nkp3Vvusw==
-X-ME-Sender: <xms:KWTUZdFNgBZRxuvL1Iwn220gRvl1YIfrujG2Cz8d_IAhrI7Je1ou_Q>
-    <xme:KWTUZSUELR0IXqOH2cyKfVSJuaTwxhG5i-ttdopk3qU1l7phJx0IaLTVj6tNQ-2f4
-    IesO5L0WIXF5HD7iQ>
-X-ME-Received: <xmr:KWTUZfJZYL1C4bKlHiAs7lmKFrCoUDkFg4is5FuU_4kIL6dZBLAapu80eBy0piQNZ-ommEU_U3_1ym6rPa-VoefPyh3lz1oJMH_J_tXlw69rKg>
+	fm1; t=1708418097; x=1708504497; bh=eqnnPiDswVLdlKAzdxQaAQY0Swsq
+	5Qa1TyRgbEnmoHQ=; b=bCzGHodNoBGNj6dSPOpvStZSmLglKEzufzr0tpSJglmZ
+	0XpF1DfPZriG85TATi0KUbz6ZKq6zuFMhMCJWRGz0VEK1R3NGqb6xTfhOdSSBmql
+	tV80WMpnsY0NrkBipb0WnsRBB2Lmt8gTiRGw3p7u7pCkE8CM1+bqHG6B+uZVLORg
+	nKBUUl64UiQsBdhwSi69N8XpFYYj19xZoGAdud4Zq3t1tgHUxneKBgdna6JZDGqP
+	ip+//wNmjIrtXKrbWi5CT/Iolx/1JPpenWYdoG0StpJezOTCpV/AIPp+QgRUZZO4
+	CmXplCqCBAGuVaHSOyjuCKf1tWnSWgUrmXEaEbtMMw==
+X-ME-Sender: <xms:MWTUZc6X0OKY0ufy-PpJr9K1cbTr8QjFdJN8iF6mg1g-SPiRwnX4Mw>
+    <xme:MWTUZd7SEdlhQDRgdNcnWT55-HZ-CbbPReJkZWyVANkJXoDZQBbqvPDla7dmi6CGK
+    YuWL2jV2uimnXQlhQ>
+X-ME-Received: <xmr:MWTUZbeUElDOTFyqEnsgMOvwge8PUjAxsTjzK4ylfHUDRvOSrEjt7c3-Oxqw0kD8boXZihWBrGkjX29gGZrodsdwwxVqBiKrs_AhP_W_OjX7JQ>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrvdelgdduvdduucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
     uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvvefukfhfgggtuggjsehgtd
     erredttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshes
     phhkshdrihhmqeenucggtffrrghtthgvrhhnpeeukedtvedtffevleejtefgheehieegke
-    eluddvfeefgeehgfeltddtheejleffteenucevlhhushhtvghrufhiiigvpedunecurfgr
+    eluddvfeefgeehgfeltddtheejleffteenucevlhhushhtvghrufhiiigvpedvnecurfgr
     rhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhm
-X-ME-Proxy: <xmx:KWTUZTEk0T7eIwnvCtIoYKasYtx9G46XPy-STzNMVVY9Yv4nZEFQ_w>
-    <xmx:KWTUZTUzAL0rAjQZjTjtbKKa539QhXyTDxnr_03OWTw_1khnA0AcJA>
-    <xmx:KWTUZeMH2lKinE0HZw68MQ84VSA9sCX_juc6-nG5DIMXEKwPoqt_2A>
-    <xmx:KmTUZQiSSItbeUtzXVz3dq2E8OkoQlEAS9isFWAdARaJJRrkxE70KQ-BJv4>
+X-ME-Proxy: <xmx:MWTUZRIoHdmzQNVLdNyF2iiRZCVOetNciQB2hrdfi7zBiVJJdFy8yQ>
+    <xmx:MWTUZQIARmz0zikc4yyAOc5JxkMwHyy9JWerisJoSxEGx2Jw_cmESQ>
+    <xmx:MWTUZSxpjjyL25DpinYJnEoW4Ju2V-8Ir4x23RP-_R3S2KSFYrk_4A>
+    <xmx:MWTUZXVLHGqnkQfemnkCN2dQu6oKsqthwwvqHHIvwr_asTyeGxqsMwV_43E>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 20 Feb 2024 03:34:49 -0500 (EST)
+ 20 Feb 2024 03:34:57 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 1b461e99 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 20 Feb 2024 08:30:46 +0000 (UTC)
-Date: Tue, 20 Feb 2024 09:34:46 +0100
+	by vm-mail (OpenSMTPD) with ESMTPSA id 7bf12652 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 20 Feb 2024 08:30:54 +0000 (UTC)
+Date: Tue, 20 Feb 2024 09:34:55 +0100
 From: Patrick Steinhardt <ps@pks.im>
 To: Junio C Hamano <gitster@pobox.com>
 Cc: git@vger.kernel.org
-Subject: Re: [PATCH 6/6] builtin/reflog: introduce subcommand to list reflogs
-Message-ID: <ZdRkJkhBp-7hAJzZ@tanuki>
+Subject: Re: [PATCH 3/6] refs/files: sort reflogs returned by the reflog
+ iterator
+Message-ID: <ZdRkLylHKj44tstQ@tanuki>
 References: <cover.1708353264.git.ps@pks.im>
- <cddb2de9394a07e405682e9ccdfdf5de92bb9092.1708353264.git.ps@pks.im>
- <xmqq7cj0ynys.fsf@gitster.g>
+ <e4e4fac05c7f4bcac8ef96bdebb8a68eef40ead4.1708353264.git.ps@pks.im>
+ <xmqq34to0znj.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -81,153 +82,93 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="YxsUuU37MllXWHOh"
+	protocol="application/pgp-signature"; boundary="4DytrztpiUI1eNNa"
 Content-Disposition: inline
-In-Reply-To: <xmqq7cj0ynys.fsf@gitster.g>
+In-Reply-To: <xmqq34to0znj.fsf@gitster.g>
 
 
---YxsUuU37MllXWHOh
+--4DytrztpiUI1eNNa
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Mon, Feb 19, 2024 at 04:32:43PM -0800, Junio C Hamano wrote:
+On Mon, Feb 19, 2024 at 04:04:16PM -0800, Junio C Hamano wrote:
 > Patrick Steinhardt <ps@pks.im> writes:
 >=20
-> > diff --git a/t/t1410-reflog.sh b/t/t1410-reflog.sh
-> > index d2f5f42e67..6d8d5a253d 100755
-> > --- a/t/t1410-reflog.sh
-> > +++ b/t/t1410-reflog.sh
-> > @@ -436,4 +436,73 @@ test_expect_success 'empty reflog' '
-> >  	test_must_be_empty err
-> >  '
+> > We use a directory iterator to return reflogs via the reflog iterator.
+> > This iterator returns entries in the same order as readdir(3P) would and
+> > will thus yield reflogs with no discernible order.
+> >
+> > Set the new `DIR_ITERATOR_SORTED` flag that was introduced in the
+> > preceding commit so that the order is deterministic. While the effect of
+> > this can only been observed in a test tool, a subsequent commit will
+> > start to expose this functionality to users via a new `git reflog list`
+> > subcommand.
+> >
+> > Signed-off-by: Patrick Steinhardt <ps@pks.im>
+> > ---
+> >  refs/files-backend.c           | 4 ++--
+> >  t/t0600-reffiles-backend.sh    | 4 ++--
+> >  t/t1405-main-ref-store.sh      | 2 +-
+> >  t/t1406-submodule-ref-store.sh | 2 +-
+> >  4 files changed, 6 insertions(+), 6 deletions(-)
+> >
+> > diff --git a/refs/files-backend.c b/refs/files-backend.c
+> > index 75dcc21ecb..2ffc63185f 100644
+> > --- a/refs/files-backend.c
+> > +++ b/refs/files-backend.c
+> > @@ -2193,7 +2193,7 @@ static struct ref_iterator *reflog_iterator_begin=
+(struct ref_store *ref_store,
 > > =20
-> > +test_expect_success 'list reflogs' '
-> > +	test_when_finished "rm -rf repo" &&
-> > +	git init repo &&
-> > +	(
-> > +		cd repo &&
-> > +		git reflog list >actual &&
-> > +		test_must_be_empty actual &&
-> > +
-> > +		test_commit A &&
-> > +		cat >expect <<-EOF &&
-> > +		HEAD
-> > +		refs/heads/main
-> > +		EOF
-> > +		git reflog list >actual &&
-> > +		test_cmp expect actual &&
-> > +
-> > +		git branch b &&
-> > +		cat >expect <<-EOF &&
-> > +		HEAD
-> > +		refs/heads/b
-> > +		refs/heads/main
-> > +		EOF
-> > +		git reflog list >actual &&
-> > +		test_cmp expect actual
-> > +	)
-> > +'
+> >  	strbuf_addf(&sb, "%s/logs", gitdir);
+> > =20
+> > -	diter =3D dir_iterator_begin(sb.buf, 0);
+> > +	diter =3D dir_iterator_begin(sb.buf, DIR_ITERATOR_SORTED);
+> >  	if (!diter) {
+> >  		strbuf_release(&sb);
+> >  		return empty_ref_iterator_begin();
+> > @@ -2202,7 +2202,7 @@ static struct ref_iterator *reflog_iterator_begin=
+(struct ref_store *ref_store,
+> >  	CALLOC_ARRAY(iter, 1);
+> >  	ref_iterator =3D &iter->base;
+> > =20
+> > -	base_ref_iterator_init(ref_iterator, &files_reflog_iterator_vtable, 0=
+);
+> > +	base_ref_iterator_init(ref_iterator, &files_reflog_iterator_vtable, 1=
+);
 >=20
-> OK.  This is a quite boring baseline.
->=20
-> > +test_expect_success 'reflog list returns error with additional args' '
-> > +	cat >expect <<-EOF &&
-> > +	error: list does not accept arguments: ${SQ}bogus${SQ}
-> > +	EOF
-> > +	test_must_fail git reflog list bogus 2>err &&
-> > +	test_cmp expect err
-> > +'
->=20
-> Makes sense.
->=20
-> > +test_expect_success 'reflog for symref with unborn target can be liste=
-d' '
-> > +	test_when_finished "rm -rf repo" &&
-> > +	git init repo &&
-> > +	(
-> > +		cd repo &&
-> > +		test_commit A &&
-> > +		git symbolic-ref HEAD refs/heads/unborn &&
-> > +		cat >expect <<-EOF &&
-> > +		HEAD
-> > +		refs/heads/main
-> > +		EOF
-> > +		git reflog list >actual &&
-> > +		test_cmp expect actual
-> > +	)
-> > +'
->=20
-> Should this be under REFFILES?  Ah, no, "git symbolic-ref" is valid
-> under reftable as well, so there is no need to.
->=20
-> Without [5/6], would it have failed to show the reflog for HEAD?
+> This caught my attention.  Once we apply this patch, the only way
+> base_ref_iterator_init() can receive 0 for its last parameter
+> (i.e. 'ordered') is via the merge_ref_iterator_begin() call in
+> files_reflog_iterator_begin() that passes 0 as 'ordered'.  If we
+> force files_reflog_iterator_begin() to ask for an ordered
+> merge_ref_iterator, then we will have no unordered ref iterators.
+> Am I reading the code right?
 
-I initially thought so, but no. `refs_resolve_ref_unsafe()` is weird as
-it returns successfully even if a symref cannot be resolved unless you
-pass `RESOLVE_REF_READING`, which we didn't.
-
-The case where it does make a difference is if we had a corrupt ref. So
-if you "echo garbage >.git/refs/heads/branch", then the corresponding
-reflog would not have been listed. Even worse, even after this patch
-series it's still impossible to `git reflog show` the reflog because we
-fail to resolve the ref itself, which basically breaks the whole point
-of the reflog.
-
-This is something that I plan to address in a follow-up patch series.
-
-> > +test_expect_success 'reflog with invalid object ID can be listed' '
-> > +	test_when_finished "rm -rf repo" &&
-> > +	git init repo &&
-> > +	(
-> > +		cd repo &&
-> > +		test_commit A &&
-> > +		test-tool ref-store main update-ref msg refs/heads/missing \
-> > +			$(test_oid deadbeef) "$ZERO_OID" REF_SKIP_OID_VERIFICATION &&
-> > +		cat >expect <<-EOF &&
-> > +		HEAD
-> > +		refs/heads/main
-> > +		refs/heads/missing
-> > +		EOF
-> > +		git reflog list >actual &&
-> > +		test_cmp expect actual
-> > +	)
-> > +'
->=20
-> OK.
->=20
-> >  test_done
->=20
-> It would have been "interesting" to see an example of "there is a
-> reflog but the underlying ref for it is missing" case, but I think
-> that falls into a minor repository corruption category, so lack of
-> such a test is also fine.
-
-The reason why I didn't include such a test is that it's by necessity
-specific to the backend: we don't have any way to delete a ref without
-also deleting the corresponding reflog. So we'd have to manually delete
-it, which only works with the REFFILES backend.
+Ah, true indeed. The "files" reflog iterator was the only remaining
+iterator that wasn't ordered. I'll include an additional patch on top
+that drops the `ordered` bit altogether.
 
 Patrick
 
---YxsUuU37MllXWHOh
+--4DytrztpiUI1eNNa
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmXUZCUACgkQVbJhu7ck
-PpTtPw//YIZA95KnUEMzy6te41LEjyuHAxjPUxFDwDtuhvCtPs+6AGyr/TL/RmBI
-IzwRK6ZRy8wl7Gb7nkoVOT9DpsQqtXBJqPXivfFtZtu/HwTE3i0SQSBIT/ryvybW
-GWaosdnhfq16rPyqjuCnUjnlxhMBuQk5/KGes362ePYCE7oU5CiQ/3g77PGQubEe
-4x/E7Biu4g/3dnI02zIPik0BXcU9ThGg1v9rqHmK64vrIy4uEz0wH9a3fZenp97S
-zUYgr/Iu64vu/IsI4WUNZdGaAAaKj5bbzFB2q813P/8rN4dPvFbhyyxwjnsnd/Zs
-SQcsteengUx1E3Pq79qS41BOPM538ysOTqchiehmUpOv5u1Xhjqfkvh+QX6gqhy3
-r9gRa1n4w4i0gv9KqGVzQG89Hk9QYdxeeQWRyLRAiOoD+UJjFFNZfgFdboB7SZE4
-5mHoj4aTa/DJ1UnAKQiLkjKOo5/NdBmDTKtI0XMFKcUUXI3EFNisDDZK78KHjMId
-AT7zwd3Zg0h9WyrHr2ev8klS3azDxQUvW4iBeO8gJB/7MW8se0MUuNXswDmOKBqY
-nXzM5ptbn+LXHTNFkRAoAR4jR6pd62dg3NSIfUd6sXhOZNzXPuNd2Q14DTWhl6Lx
-Yu9VKAPfTbZAaZy+HUroc5l8+rz8zhZFwMXFgWx4I6S8q3WLtPw=
-=3xMZ
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmXUZC4ACgkQVbJhu7ck
+PpT7Gg/+O6ncYUMox5tnxag2P71G96aGIbcaMrUz0285V8atoyjVjI5Z7YyP2Wyj
+Ef6ybHugf9USUWiIxAKwBCViVpQpoLAR6onk7VHu7dkF3ftKcwoxJScnA8oqjU4B
+pmKG3Xo+Wr6nFo/j6pFYF+pVls+mWgblKmxAxTdU8UjoIi2skXKnI+J/LYU6EHu+
+2D4RTOiGFDBilbQb/T0q7hATzoCED5/EbnAV2Eg1GcmG1DztzPtsdVD1d+0x5oiA
+yfPcl/5TzKPOx2FH20AZpvaCebK4ochtXAnonDwk5ovASbXQyV+gCOr5vk540Quw
+b3OZDDojrKT31H0TuFSy6P8mGapd0FpZ+xLAz5akiMDr4mnocpnjLvVZJgYn8fpS
+cDtEzMb4l4xaK83sUAEUxR4JZm9Pa/yprMw/bM8Vixcv1XCM73lSpTTFu+M0PWFV
+H1n+z4ABvjQjI6iFihJVXIhYFUoNZbips1+04Zh6WGfXvVEI6OzaQrl9q9WwzaU7
+uLcWIrfnmGcwCgls5HK2Tc5W0ATA2qBAbpbqZU6bVjc3to3fgMUb2eZiCTHgSbd2
+i+WU6sNVk9P18kSOAQppgZT2VQVlktgTpWuxowAdBXorKkH1A4fseoeYDs3h8KI3
+qUPiwc46WKIRGEQbVdekt5l63TXX24ooJP3Ta1TbbZP9Fz2b6oE=
+=58XK
 -----END PGP SIGNATURE-----
 
---YxsUuU37MllXWHOh--
+--4DytrztpiUI1eNNa--
