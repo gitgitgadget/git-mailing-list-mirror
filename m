@@ -1,100 +1,70 @@
-Received: from mail.manjaro.org (mail.manjaro.org [116.203.91.91])
-	(using TLSv1.2 with cipher DHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from smtpout1.mo529.mail-out.ovh.net (smtpout1.mo529.mail-out.ovh.net [178.32.125.2])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E862A3BB30
-	for <git@vger.kernel.org>; Wed, 21 Feb 2024 07:51:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=116.203.91.91
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1CED3C491
+	for <git@vger.kernel.org>; Wed, 21 Feb 2024 08:42:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=178.32.125.2
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708501872; cv=none; b=EpcOZtxa7Qc20czQpZYM4NSyp/B3zYEEGPxk1BaHfnJnP4hMAQC3tFNZb7FQ2WU3MM194ojLJy6ElXHdJbIIJT8tSxW8LD/9Rs7QGeZBbKfdybGJNI81/79R/5j+WkBMnhhmikhK++WXXuVk/DFYnfkSfD3pBh0KAImsQX4WXBw=
+	t=1708504928; cv=none; b=reImWid86e/gX8edc+tiBuSzjfn+rONa6QUCWOP9OaaH56vKwXmlqUmy5YgFBaTEaOajW0c20RTl287y/qhCsamvOUmLavuMkwkzxNnjB0iObqEi6MgjoSKyuFZCSHg7XfGLDYbauNiCb9qSgiTmE6UBGTFonstrp1lZy9s8/VI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708501872; c=relaxed/simple;
-	bh=7tMuJP60BzAdJh+ILCnOJKPG8+ul3sYOsDUeQO9iruQ=;
-	h=MIME-Version:Date:From:To:Cc:Subject:In-Reply-To:References:
-	 Message-ID:Content-Type; b=IwpoE+EXinfmiv9V6H3dqyBtWeKgK0BdpAee8Iy9GKhhTR0Q+kC2TDEVijkIzkQGfVmL8LWYYWLyUlQJdwAcpyDSd7U/qWvUsbaVjbJGINJim0JBSJ3aO26WMfe3w2sn/bVrrq1kbIjfJnyVZq4YlfB8joQtd9ATvSwXpCQGYGY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org; spf=pass smtp.mailfrom=manjaro.org; dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b=PosB6wvG; arc=none smtp.client-ip=116.203.91.91
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=manjaro.org
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b="PosB6wvG"
+	s=arc-20240116; t=1708504928; c=relaxed/simple;
+	bh=EqVAOShsPIjWAxv9KMI26i3em+HreHc9C7sOMHkOJnA=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=rHDNOoae4ZSR6hXluJOG0U5JSsQVB30kuy8tDo7w1auZbUX7vTZXzW1UHHsA5zueJ7SyBv3T5xwW2pqVY3jKEjgLhp5CyS20s7VMTr4PXbR4SG1vEcBl86xmiMcacSc6Vi6HFOz5fhrLPO/v2L5VGvMBWjQj5aO2nDApCtjNbJg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=jwilk.net; spf=pass smtp.mailfrom=jwilk.net; arc=none smtp.client-ip=178.32.125.2
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=jwilk.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=jwilk.net
+Received: from mxplan6.mail.ovh.net (unknown [10.109.139.146])
+	by mo529.mail-out.ovh.net (Postfix) with ESMTPS id 4TfqP36GqxzyxR;
+	Wed, 21 Feb 2024 08:36:07 +0000 (UTC)
+Received: from jwilk.net (37.59.142.102) by DAG4EX1.mxp6.local (172.16.2.31)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.35; Wed, 21 Feb
+ 2024 09:35:58 +0100
+Authentication-Results: garm.ovh; auth=pass (GARM-102R0045309486c-c6d4-490a-9500-6c85b7f5b21b,
+                    CA228C6536E6D62ADD890D81204F06B0F3EAA207) smtp.auth=jwilk@jwilk.net
+X-OVh-ClientIp: 5.172.255.235
+From: Jakub Wilk <jwilk@jwilk.net>
+To: <git@vger.kernel.org>
+CC: Junio C Hamano <gitster@pobox.com>, Abhradeep Chakraborty
+	<chakrabortyabhradeep79@gmail.com>
+Subject: [PATCH] git-remote.txt: fix typo
+Date: Wed, 21 Feb 2024 09:35:54 +0100
+Message-ID: <20240221083554.5255-1-jwilk@jwilk.net>
+X-Mailer: git-send-email 2.39.2
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=manjaro.org; s=2021;
-	t=1708501860;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=nuSIZjtCbHX4NFAK07FmVtqbhqUkItZYRqjH8tS+dWI=;
-	b=PosB6wvGNaFm9AYFlkO2cij9Wf/ccXo9u/Xz4XTlTaDIkjppIFFXRjyBdf1I1RvNnI9Kig
-	mNRKFE59M/Qjg7NsLVwsRll05IDQXQZG6xbbxigMg3kbdELkb8+CGiyVu5dBb/ZpC7JYo1
-	msRen0BOkyDBk6xF8xiGPY/Q7PC2dZPZcPE5WPSMwzq0rJknXeX/KK3wQ2ss9IWxWlOnJl
-	/QCg1t2OAu0O9GnYYfj/IQlgERIk51hQcDhlSZ7AJlp6xk7vwAggcuMeUGL/HlEWxlV1cn
-	oZscWwbjAwOYZLmZ1cYLa/k/x1HSxFlI0abZV00M5Xomnq6NYisEN8ukFNQ9LQ==
-Date: Wed, 21 Feb 2024 08:50:59 +0100
-From: Dragan Simic <dsimic@manjaro.org>
-To: Chris Torek <chris.torek@gmail.com>
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Subject: Re: [PATCH] documentation: send-email: use camel case consistently
-In-Reply-To: <CAPx1GvcGhZLqHVz9=ZW-w+ebP64-8FpPSb_ef7ygXzDDTze2bA@mail.gmail.com>
-References: <b0577267402f6177d8ba5646e12d7691437e6e8f.1708060779.git.dsimic@manjaro.org>
- <xmqqv86kx8h0.fsf@gitster.g> <33abb630c1d089e39ff48f04e586b1c0@manjaro.org>
- <xmqqo7cbt8a0.fsf@gitster.g> <9d0022ba5666223af94bbf450909b1ba@manjaro.org>
- <CAPx1GvcGhZLqHVz9=ZW-w+ebP64-8FpPSb_ef7ygXzDDTze2bA@mail.gmail.com>
-Message-ID: <d2239d5a88ccf9806cf2873f00adc336@manjaro.org>
-X-Sender: dsimic@manjaro.org
-Content-Type: text/plain; charset=UTF-8;
- format=flowed
 Content-Transfer-Encoding: 8bit
-Authentication-Results: ORIGINATING;
-	auth=pass smtp.auth=dsimic@manjaro.org smtp.mailfrom=dsimic@manjaro.org
+Content-Type: text/plain
+X-ClientProxiedBy: DAG4EX2.mxp6.local (172.16.2.32) To DAG4EX1.mxp6.local
+ (172.16.2.31)
+X-Ovh-Tracer-GUID: 155b08f4-cb22-4c55-84f5-beed35fbb504
+X-Ovh-Tracer-Id: 13111948842909358045
+X-VR-SPAMSTATE: OK
+X-VR-SPAMSCORE: -100
+X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrgedvledrfedugdduvdduucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuqfggjfdpvefjgfevmfevgfenuceurghilhhouhhtmecuhedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujfgurhephffvvefufffkofgggfgtihesthekredtredttdenucfhrhhomheplfgrkhhusgcuhghilhhkuceojhifihhlkhesjhifihhlkhdrnhgvtheqnecuggftrfgrthhtvghrnhepfefhteffhfffheetudefvdefheffgfduleejheeiteeihfefffejveeljeevheeinecukfhppeduvdejrddtrddtrddupdefjedrheelrddugedvrddutddvpdehrddujedvrddvheehrddvfeehnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehinhgvthepuddvjedrtddrtddruddpmhgrihhlfhhrohhmpehjfihilhhksehjfihilhhkrdhnvghtpdhnsggprhgtphhtthhopeefpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtoheptghhrghkrhgrsghorhhthigrsghhrhgruggvvghpjeelsehgmhgrihhlrdgtohhmpdfovfetjfhoshhtpehmohehvdelpdhmohguvgepshhmthhpohhuth
 
-On 2024-02-21 01:43, Chris Torek wrote:
-> On Tue, Feb 20, 2024 at 8:42 AM Dragan Simic <dsimic@manjaro.org> 
-> wrote:
->> I've never ever seen anyone referring to email headers as "TO", "CC" 
->> or
->> "BCC".  It's always referred to as "To", "Cc" and "Bcc".
-> 
-> I used some email system (back in the early 1980s) that did that.  It
-> felt weird even then. I can't remember if it was some CSMail (CSNet)
-> or MH(Rand Mail Handler) version that did it.
+Signed-off-by: Jakub Wilk <jwilk@jwilk.net>
+---
+ Documentation/git-remote.txt | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-That's interesting, it shows that different variants were used in the
-very early days of email.  Maybe even the all-lowercase "cc" and "bcc"
-variants were used somewhere, at least because RFC2076 (better said,
-the RFCs that predate it) specifies them.
+diff --git a/Documentation/git-remote.txt b/Documentation/git-remote.txt
+index 1dec314834..932a5c3ea4 100644
+--- a/Documentation/git-remote.txt
++++ b/Documentation/git-remote.txt
+@@ -35,7 +35,7 @@ OPTIONS
+ -v::
+ --verbose::
+ 	Be a little more verbose and show remote url after name.
+-	For promisor remotes, also show which filter (`blob:none` etc.)
++	For promisor remotes, also show which filters (`blob:none` etc.)
+ 	are configured.
+ 	NOTE: This must be placed between `remote` and subcommand.
+ 
+-- 
+2.39.2
 
->> Thus, "cc" stems from the old age of literal carbon copies ...
-> 
-> That's correct.  However:
-> 
->> and "bcc" was seemingly coined when email took over.
-> 
-> "Blind Carbon Copies" predated email, but required adding the
-> notation separately, if it was to be added at all. (I'm just old enough
-> to remember using carbon copies myself, but not old enough to
-> know what Standard Office Practice was at that time.)
-
-Thanks for the correction.  You're right, I was lazy enough not to
-check that blind carbon copies predate the age of email. [1]
-
-I'm also old enough to remember the literal carbon copies, I even made
-a few dozens of them myself on a mechanical typewriter.  They usually
-left me with dirty fingertips. :)  Though, I'm also not old enough to
-know what the common office practice was like back then.
-
-> Whether adding a "bcc" notation was common I don't know;
-> it seems it would be easier to leave it off if you made, say, one
-> original and a total of 2 copies, one "blinded".
-> 
-> (As your Wikipedia link notes, there was a practical limit to how
-> many carbon copies one could make in the first place.)
-
-Exactly, it was the limitation of mechanical typewriters.  Perhaps the
-limit was around four or five carbon copies.
-
-[1] https://en.wikipedia.org/wiki/Blind_carbon_copy
