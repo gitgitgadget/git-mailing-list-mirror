@@ -1,171 +1,151 @@
-Received: from fhigh1-smtp.messagingengine.com (fhigh1-smtp.messagingengine.com [103.168.172.152])
+Received: from smtp5-g21.free.fr (smtp5-g21.free.fr [212.27.42.5])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41ACD364BC
-	for <git@vger.kernel.org>; Wed, 21 Feb 2024 07:14:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D5CF3AC34
+	for <git@vger.kernel.org>; Wed, 21 Feb 2024 07:41:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.27.42.5
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708499665; cv=none; b=j1Fx5sErKEC5/tE0F24z/aqwPUBBv7oYiasqmo5UOu1//o5u2vNvOZDsQajVOd9uset2yH7o/LkPE633BBfUSNP9gR+XY+/4RQJy018BJTuK317U5/9OcPJv1WUr7Z4nt2Lcv+d65/stu+BxiFplfzV4LIh618Le3OakymC4ORU=
+	t=1708501322; cv=none; b=WtzCG11Sq8lG2B1LiHRQZQqujnzJzEgPMZivkYWoie1S0wjMJuSvXyUxHGgw3s1+iQr824biomTjol4O5O7ufpl33YYXvYRwM75oMVP4G1F5ZD5jok/Z/TRh4ESTDrqw92xcwIqMsMKM1dOGfXgBVTkhSR4uFF7QSY+rz0fFHTY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708499665; c=relaxed/simple;
-	bh=XMRotAjLw28P0eEVJhYejD3Pb4N1DQODWsRewdhkFC8=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=B5s+Zg75DROum7fwe8ewMfScS4JG/ICD7hjkFS+evvJGFrhOMGyJ6tEboBphKE1riIgfaoWOfY+wV4gkdL7LsYZmgdCJyORA+dcseEi5AYsPBq7F5ToqXNWgVjZNXZNH45gAH4S16vUk+/azVd3HDudTEj/PDdRK+C9L8tNdVuc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=X5IVzRKm; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=hayHsk+I; arc=none smtp.client-ip=103.168.172.152
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1708501322; c=relaxed/simple;
+	bh=n4qBTKMqMhYdQsPTxKUC2qs7u4ly146QPdprQ59splY=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=jyOC136lGZ0Z9hjNsD3an5UGeXxvDF8rJPBI+I5ALdop4EyRfF+13fNIY93o6xd+/oVi5T/QSrUqSkfv10J28/6chHath9TAY5xGIvg19Jz+Myl0VBUI9yYqTa9pPkTgmzKyqZr6yQpv3y8nzlzs7Q0ox9WuGXywLLX1sjQXXFw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=free.fr; spf=pass smtp.mailfrom=free.fr; dkim=pass (2048-bit key) header.d=free.fr header.i=@free.fr header.b=cN9GgDlX; arc=none smtp.client-ip=212.27.42.5
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=free.fr
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=free.fr
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="X5IVzRKm";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="hayHsk+I"
-Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
-	by mailfhigh.nyi.internal (Postfix) with ESMTP id 3733D11400B7;
-	Wed, 21 Feb 2024 02:14:22 -0500 (EST)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute6.internal (MEProxy); Wed, 21 Feb 2024 02:14:22 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1708499662; x=1708586062; bh=x3agpx1mG+
-	LCk1RsnR0nDRueP6zl0jF8DnryZ8EON68=; b=X5IVzRKmoYXHrVKYqgWmevSsfA
-	yhtPT3E+c+1ipi/PzoZdMTrUOT8rPQ4Q4PETT8cFqmhhlJJvNJlXBsgZrxERZu07
-	S1OFCOCR0tvfCCbbK3i+6GxcKkcjvY7vq9zoDAetR5jjtEWf/YW2vnDKgYNxdpjh
-	OOMbf5Dnjusha+CTBtpKKO9es8NxcMbTC6q55F+b+lbXhtCUQR2DYhxcLGU1lPfC
-	VtEsuY78Av0hyxbs9kmc99IOtaLidQS+hcm3SimgeR4GQyzlowdb4RZM5acCxrsz
-	zqPEUwToDjfWK8wdI6VYIdZWU7zAUFXZmdA1HnCXbqID7MnY3LTGgUKlZVRQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1708499662; x=1708586062; bh=x3agpx1mG+LCk1RsnR0nDRueP6zl
-	0jF8DnryZ8EON68=; b=hayHsk+IeqWF7igmUFuaBHdhJ6Cmn+WlPBEQuJP8CjY4
-	w1GEYx2QhEpiUJjHlEB5GhJuidLdVE8BbrFyLKhH9FFr610LfdTjNUR+v+mCb4JN
-	5tibqydWJKLpV1QSr/9TRiOF/80lFR6NX6mQGQMdK/pAygZTNWS8uHh3F75WJYO8
-	gq6K13ME8qS60fH8JAvbewxTiDhJVHURzLQ8u9JTWNkNRoYzVtlL3vCcyaI5//Pn
-	SbBuGIMY7FThLsNeidUdvSXvSz6bjmF8DEIUykXV+GskFGO9IfRYAlFDCyodqaUb
-	j6hZH7J7WvJTmXyCFaLhHZCNjV1gfS2x4YORlw8y+w==
-X-ME-Sender: <xms:zaLVZS_Pu_xBIddRXI7NsAhC02zjNhnggPLVlFgEFFz4olwrsr6v5g>
-    <xme:zaLVZSuNZWEIXljTfJIfajeYle7owzXUEX_ng2U4uLQ19e_7sPq1Lu9Kx5GY0KrqO
-    JONWPDlmTV0IjVwUg>
-X-ME-Received: <xmr:zaLVZYAVFhp0gc57tvoDGS6XXbXcEFQP6wvbGUqLzCel9GowBbXMPN9QVyIo4qEB_uS7CuITr2dxZH7yeqZVHH-dohVMRNoMWfpbQeHEdkxO>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrfedugddutdehucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    cujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtvdenucfhrhhomheprfgrthhr
-    ihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvg
-    hrnhepleejteffveehgeegteekteeiudeiieeigeeigedtffehgeekhfejheefkefhveel
-    necuffhomhgrihhnpehgihhthhhusgdrtghomhenucevlhhushhtvghrufhiiigvpedtne
-    curfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhm
-X-ME-Proxy: <xmx:zaLVZaeTmwmSccJ0Ou6yvVhr1d-cIPztvOBusKcnAE2RRIlCt1EtCQ>
-    <xmx:zaLVZXOsHQpRdvBwDTn-j_qgwwopFuQ2aegccA0kFDH8naSJl_mbfA>
-    <xmx:zaLVZUlbfCxyHi_9cK6wUgvVsmN-Nc75BkFD27qf5wVjGnfxgmAsAg>
-    <xmx:zqLVZQqB72aKWIuJkC4TpOrv0Ku3Q9ay0u5SB0eJm72OtAAOf3SbZA>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 21 Feb 2024 02:14:21 -0500 (EST)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 851025ff (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 21 Feb 2024 07:10:15 +0000 (UTC)
-Date: Wed, 21 Feb 2024 08:14:17 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: Harmen Stoppels via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, Harmen Stoppels <me@harmenstoppels.nl>
-Subject: Re: [PATCH] rebase: make warning less passive aggressive
-Message-ID: <ZdWiyYhKAB3_P6_k@tanuki>
-References: <pull.1669.git.1708442603395.gitgitgadget@gmail.com>
+	dkim=pass (2048-bit key) header.d=free.fr header.i=@free.fr header.b="cN9GgDlX"
+Received: from [192.168.3.191] (unknown [92.173.128.58])
+	(Authenticated sender: jn.avila@free.fr)
+	by smtp5-g21.free.fr (Postfix) with ESMTPSA id CB5CB5FFB7;
+	Wed, 21 Feb 2024 08:41:49 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=free.fr;
+	s=smtp-20201208; t=1708501312;
+	bh=n4qBTKMqMhYdQsPTxKUC2qs7u4ly146QPdprQ59splY=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=cN9GgDlXxgWmHJph1FK9nYOn/2daXMsEdT0HVJp+VGFAbMVnHfo1sdMdzSo5tgvDt
+	 YIEyL1wwFYtmPYWLkY/FI2NigC6hciF6cabRCLI94pRL0AD/HZWfrWOvPYdSKhZk/f
+	 U+/SqQ8ZJoUr9HKiwiDJI8DLYK8bukt0k5X9zKC6+5gBIVVsJbMo6Z5sfr69tn9+cQ
+	 HRBA5cv60QefgbcMTmE3dgAmtfMmDoVrW9obHJsjtKDoP3Grq4aSSvkyR8COYszhv+
+	 yeiUIYJGSZNvB1QK5Gw7Br2MKfimOOEG/KQGUun/VWRifR9W82RS8lNQkSkjRyZ9AZ
+	 4egq7bRBHGpqw==
+Message-ID: <67dca173-3048-430b-88a1-d3b5d853f84b@free.fr>
+Date: Wed, 21 Feb 2024 08:41:48 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="G14VVutlkuRltS7a"
-Content-Disposition: inline
-In-Reply-To: <pull.1669.git.1708442603395.gitgitgadget@gmail.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/3] doc: git-rev-parse: enforce command-line description
+ syntax
+Content-Language: fr
+To: Junio C Hamano <gitster@pobox.com>,
+ =?UTF-8?Q?Jean-No=C3=ABl_Avila_via_GitGitGadget?= <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org
+References: <pull.1670.git.1708468374.gitgitgadget@gmail.com>
+ <17b0284c379e62a756e1bba008f4671f6afc0ad9.1708468374.git.gitgitgadget@gmail.com>
+ <xmqqsf1mlp6f.fsf@gitster.g>
+From: =?UTF-8?Q?Jean-No=C3=ABl_Avila?= <jn.avila@free.fr>
+In-Reply-To: <xmqqsf1mlp6f.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
+Le 20/02/2024 à 23:57, Junio C Hamano a écrit :
+> "Jean-Noël Avila via GitGitGadget" <gitgitgadget@gmail.com> writes:
+> 
+>>   [verse]
+>> -'git rev-parse' [<options>] <args>...
+>> +'git rev-parse' [<options>] <arg>...
+> 
+> Good.  The "or more" is signalled by the ellipsis, not "args" being
+> plural.
+> 
+>> ---short[=length]::
+>> +--short[=<length>]::
+>>   	Same as `--verify` but shortens the object name to a unique
+>>   	prefix with at least `length` characters. The minimum length
+> 
+> This same comment applies throughout this patch, but in other places
+> when we use <placeholder> in the option argument description, don't
+> we use the same <placeholder> in text as well?  I am wondering if
+> the `length` (typeset in fixed-width) should become <length>.  What
+> do other recent[*] documentation pages commonly do?
 
---G14VVutlkuRltS7a
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+This is another part of the inconsistences in documentation that I'd 
+like to tackle (hopefully, not in another life).
 
-On Tue, Feb 20, 2024 at 03:23:21PM +0000, Harmen Stoppels via GitGitGadget =
-wrote:
-> From: Harmen Stoppels <me@harmenstoppels.nl>
->=20
-> When you run `git rebase --continue` when no rebase is in progress, git
-> outputs `fatal: no rebase in progress?` which is not a question but a
-> statement. This commit makes it appear as a statement.
->=20
-> Signed-off-by: Harmen Stoppels <me@harmenstoppels.nl>
-> ---
->     rebase: make warning less passive aggressive
->=20
-> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1669%2F=
-haampie%2Ffix%2Fpassive-agressive-message-v1
-> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1669/haamp=
-ie/fix/passive-agressive-message-v1
-> Pull-Request: https://github.com/gitgitgadget/git/pull/1669
->=20
->  builtin/rebase.c | 2 +-
->  po/bg.po         | 2 +-
->  po/ca.po         | 2 +-
->  po/de.po         | 2 +-
->  po/el.po         | 2 +-
->  po/es.po         | 2 +-
->  po/fr.po         | 2 +-
->  po/id.po         | 2 +-
->  po/it.po         | 2 +-
->  po/ko.po         | 2 +-
->  po/pl.po         | 2 +-
->  po/pt_PT.po      | 2 +-
->  po/ru.po         | 2 +-
->  po/sv.po         | 2 +-
->  po/tr.po         | 2 +-
->  po/uk.po         | 2 +-
->  po/vi.po         | 2 +-
->  po/zh_CN.po      | 2 +-
->  po/zh_TW.po      | 2 +-
->  19 files changed, 19 insertions(+), 19 deletions(-)
->=20
-> diff --git a/builtin/rebase.c b/builtin/rebase.c
-> index 5b086f651a6..415783c4a21 100644
-> --- a/builtin/rebase.c
-> +++ b/builtin/rebase.c
-> @@ -1254,7 +1254,7 @@ int cmd_rebase(int argc, const char **argv, const c=
-har *prefix)
->  		die(_("options '%s' and '%s' cannot be used together"), "--root", "--f=
-ork-point");
-> =20
->  	if (options.action !=3D ACTION_NONE && !in_progress)
-> -		die(_("No rebase in progress?"));
-> +		die(_("No rebase in progress"));
+Using angle brackets for placeholders everywhere they appear is a visual 
+link to the preceding syntax description, but may feel a bit heavy on 
+some cases. Anyway, I'm all for applying the rule everywhere, for the 
+sake of consistency.
 
-While we're at it changing this message, do we also want to convert it
-to start with a lower-case letter so that it aligns with our error
-message style?
+Backticks and single quotes are used indistinctively (by the way, 
+asciidoctor does not process single quotes as markup) and are not used 
+everywhere they should. Using backticks is also a good hint for 
+translators to mean "verbatim, do not translate". Obviously, the 
+placeholders ask for translation, so the backtick rule should not apply 
+to them, even if another formating would be welcome : _<placeholder>_ 
+for instance?
 
-Patrick
+> 
+> 	Side note: I say "recent" because rev-parse doc is one of
+> 	the oldest ones that did not get typesetting attention they
+> 	deserve, compared to more recent ones that got nitpicked
+> 	while they were written and updated.
+> 
+>> ---branches[=pattern]::
+>> ---tags[=pattern]::
+>> ---remotes[=pattern]::
+>> +--branches[=<pattern>]::
+>> +--tags[=<pattern>]::
+>> +--remotes[=<pattern>]::
+>>   	Show all branches, tags, or remote-tracking branches,
+>>   	respectively (i.e., refs found in `refs/heads`,
+>>   	`refs/tags`, or `refs/remotes`, respectively).
+> 
+> Ditto.  We see `pattern` that may want to become <pattern> in the
+> description (after the post context of this hunk).
+> 
+>> ---glob=pattern::
+>> +--glob=<pattern>::
+>>   	Show all refs matching the shell glob pattern `pattern`. If
+>>   	the pattern does not start with `refs/`, this is automatically
+>>   	prepended.  If the pattern does not contain a globbing
+> 
+> Ditto.
+> 
+>> ---exclude-hidden=[fetch|receive|uploadpack]::
+>> +--exclude-hidden=(fetch|receive|uploadpack)::
+>>   	Do not include refs that would be hidden by `git-fetch`,
+>>   	`git-receive-pack` or `git-upload-pack` by consulting the appropriate
+>>   	`fetch.hideRefs`, `receive.hideRefs` or `uploadpack.hideRefs`
+> 
+> Good.
+> 
+>> ---since=datestring::
+>> ---after=datestring::
+>> +--since=<datestring>::
+>> +--after=<datestring>::
+>>   	Parse the date string, and output the corresponding
+>>   	--max-age= parameter for 'git rev-list'.
+> 
+> Good, modulo possibly "date string" -> "<datestring>".
+> 
+>> ---until=datestring::
+>> ---before=datestring::
+>> +--until=<datestring>::
+>> +--before=<datestring>::
+>>   	Parse the date string, and output the corresponding
+>>   	--min-age= parameter for 'git rev-list'.
+> 
+> Ditto.
+> 
+>> -<args>...::
+>> +<arg>...::
+>>   	Flags and parameters to be parsed.
+> 
+> Good.
 
---G14VVutlkuRltS7a
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmXVosgACgkQVbJhu7ck
-PpRvLA//TyqpslTe5pcczZJ1UAxJ5ty0iq2s+HqCFrr82Ex29dRh6P2fogPIsOKE
-eg32M5gIwhCdcvJiS8spRldQg5A5/k7bh0VnzCqDHfevQ4qzKZCNgKSth3H1xLeh
-qxPR3fLy+44Rk8DD1S5s0AL/89uWWra/cZ5AEIfmEob+ZGTTnVc+nab6Nvsb3JBF
-K2g1Nwh5OQPZPCYxcwWHHkqY8rom9ppi4yuSFwKJ5+eI5dHEnUPlyPE9t5lZ2yhs
-imMIpHgPQ3Xm7oobuNXX7elwFbry1d7u8l2UJ9vzQvr6Zoit1r41LmETSfYRjCAC
-F3j4DjEFjE0Ai/tn/Adp0OTYPopLsyHENBNsdq6rt+s4nWdky2E5rCfSBWfuUSID
-W2ATMJLg3VgaoSmtQbE+4725PNrqgVNyKFsyEG1owKDrNvqMs28K0iZDe9wVdGg0
-FEYJtHdR3FVE7lW3vQ4Jjsq/bnLvjrnVv1dJoJ7fp3Va5JV2vEcdtmNOpH1Sn66X
-lAFcUL7eRuVN2/L0htcX5xWqHgViQkH2LoDhnef1l0oqV8EB2AxR6w8CvDfbgmJX
-VIfBp3DkiJblblPhQEj3ZAvgk/ejpZLxWm9wptuxw73c4tj4C5rVaU2ja/AP6gTz
-OQleuR83MoHRNSDW0atEY0U+qM+21n/sXWHcm4Ld92yFifFLcY4=
-=3AQH
------END PGP SIGNATURE-----
-
---G14VVutlkuRltS7a--
