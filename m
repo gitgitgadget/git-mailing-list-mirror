@@ -1,84 +1,92 @@
-Received: from mail-ot1-f52.google.com (mail-ot1-f52.google.com [209.85.210.52])
+Received: from mail-pg1-f177.google.com (mail-pg1-f177.google.com [209.85.215.177])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F399E79DAE
-	for <git@vger.kernel.org>; Wed, 21 Feb 2024 14:25:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E8C138398
+	for <git@vger.kernel.org>; Wed, 21 Feb 2024 15:07:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708525502; cv=none; b=GUpvSulic35temxXMhK3NxbP8vZ9PfNxzB9PVfkZfc3AgTR9or47s6u0UYjzD7WfA1nbbYb1Co4pVKnH2oiQLZ+YALERhXmOp4ILl873/75wsxhdmDDm29NYY29wmLX0kBrEfk2KskUlCKa8tB33nRO4I452/sV/gNPWqAr6yHw=
+	t=1708528069; cv=none; b=QKd8NEE8pxQ8YpEqG7xIYNXtBVxchTcgKzpk4+tX99HTreq9V2sAekvMC+Yqmdl58+KwE+R9fQUSBQvU65pJTcTxCAR3bKpMXkd2CxX0PpqNQBWElgqYMceJ8dXnOMS6ly9AE+i6YdR+211kxBCiyyKEF2RGgpqfyEOkCOknWbI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708525502; c=relaxed/simple;
-	bh=YKBBT5Wsmhb9IdprSnORXg8dX4QMNrOoFzRdZhepRN8=;
-	h=References:From:To:Cc:Subject:Date:In-reply-to:Message-ID:
-	 MIME-Version:Content-Type; b=DrjcscCOmdaCfIZCdJL10FXRwbgjxapxX34byDoLck20jO3VCwcpFH48wM0OWs22cuWkaox2EfkA6lPtfQx1uOcb9wXEfm63a96V1mTAXSoYrhV+23tB4K5oGvfLTLkgDUWF6zbOl2b8NPntb5bWGzPjTsOcM2j2rZJAu2bf+KI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=b6rHC1qJ; arc=none smtp.client-ip=209.85.210.52
+	s=arc-20240116; t=1708528069; c=relaxed/simple;
+	bh=B26YoLjXZHjgLgqaRQXa/3Tz0A6maOusKDNyULI1ums=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=sk9ejQxdCfbASOYvJa1X9CJ4X//kVugCWHv0TNzveFT73ZGIa80C7qByxvODyd38Jl/YseK1AVdCgrxhkMvhBzeI/fwKjmtlDKD5m5kn1WoDcE7v9wUNC/4Iqd8uL7pYopudlSrNp5QXDmzgU12WK573PzChWYsxu1KPc6eutt0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=I/w8wlQh; arc=none smtp.client-ip=209.85.215.177
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="b6rHC1qJ"
-Received: by mail-ot1-f52.google.com with SMTP id 46e09a7af769-6e45439925aso603091a34.1
-        for <git@vger.kernel.org>; Wed, 21 Feb 2024 06:25:00 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="I/w8wlQh"
+Received: by mail-pg1-f177.google.com with SMTP id 41be03b00d2f7-5dc20645871so4306968a12.1
+        for <git@vger.kernel.org>; Wed, 21 Feb 2024 07:07:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1708525500; x=1709130300; darn=vger.kernel.org;
-        h=mime-version:message-id:in-reply-to:date:subject:cc:to:from
-         :user-agent:references:from:to:cc:subject:date:message-id:reply-to;
-        bh=YKBBT5Wsmhb9IdprSnORXg8dX4QMNrOoFzRdZhepRN8=;
-        b=b6rHC1qJxOqhRn2ZLu+jXFbaxZC303YTZyAhWyjOvEjms1OscgOd6FSDHQp4JZvDFM
-         Rbgqbe3dMEtuhLG/NQ16jJhKFRVnwU9G9TQV6K37wi34in2mJjBGNAF75+2iOrITCcXk
-         0Fi+0UlpkrrYMzsrCJexLTmg3G9t3B93/gnM9r/OZYAOaE38V1GzYG+WjRt0jMR8vuqk
-         +TfuQsOpyICx1ZnkTuX69rwgC2OBqjZwLSt1s/Wf69IdXKpygqGJ73ih/J2cOOCZ46Xg
-         PkvzQPAgQhJtzDEI0CYsYhGfNn79J8JGJGCMajWN/5/cWuS2F+ZwFhsgeXgvEPHggNC2
-         9RIg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1708525500; x=1709130300;
-        h=mime-version:message-id:in-reply-to:date:subject:cc:to:from
-         :user-agent:references:x-gm-message-state:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1708528067; x=1709132867; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=YKBBT5Wsmhb9IdprSnORXg8dX4QMNrOoFzRdZhepRN8=;
-        b=aJSx93lcYW4TWobsLUTlyz28qIPg5TtT5ssKcOUIvO+y9+w+l77F8Wkg0rDQnkt5FW
-         0uNxgtK+g8aVPP4DI6U2lUyDqtl/gdTd+317LbyFxTSubQbHHy6An4AxwUimcSxbctKP
-         Fhzuvg1MLOBVBxe1gxodha7FbucxtM+craST+xIRzGHnLhqTFk+F19nQW2+M0FE2V0DR
-         97aunlnstlyEtvm31sd9ix3DY7n7oos7C+4pwPjJX3e4Ypsq7wNMlSUFHMvem0CWKbcm
-         lNpjNq2ZT2Tu3uvKgC2UHXVnQTuyGJFJX0c4wz9DYYTlL15YXqywAUgvENY97UNom8V6
-         bV3w==
-X-Forwarded-Encrypted: i=1; AJvYcCVsZFHMtoHTf4LBNNxmuRo5l5Coxz2IBnS9sSHHfs1ew44C7sl/qffsYC9M1B2Rf7WVagz1L0r85FWJEVrwozCg6e9N
-X-Gm-Message-State: AOJu0YygmaQ6qD4dPtGFL/aRVwnHXfifKwZZ/OpRz3CxbIjq+hAo8vI3
-	w5BOC5+N4oEgAriWf2JSwQ7ZEf363TQB6JEv2ZDX9cHOlg6ciZnXhTnTzFzs
-X-Google-Smtp-Source: AGHT+IEaYqlDihv6MJXN4oUvFaRV7MegHm7HeqwhqLXYF9fj0BL+xf9CiEuMYMlFeBp10v9fHlMGug==
-X-Received: by 2002:a05:6870:e244:b0:21e:636a:b96c with SMTP id d4-20020a056870e24400b0021e636ab96cmr15938469oac.1.1708525499507;
-        Wed, 21 Feb 2024 06:24:59 -0800 (PST)
-Received: from epic96565.epic.com (pat-verona-h.epic.com. [199.204.56.213])
-        by smtp.gmail.com with ESMTPSA id k20-20020ac84794000000b0042c70c153f6sm4367815qtq.91.2024.02.21.06.24.58
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 21 Feb 2024 06:24:59 -0800 (PST)
-References: <CAB=tB2vB0LbP=DznSqTFYHCRxDxd6U=Q+P33yeBzGssq2eK1vA@mail.gmail.com>
- <9c52ea4e-f84e-4c64-977d-14a468236c80@app.fastmail.com>
- <CAB=tB2tgbLjBPvgBQDoNJi7e8+LMzxHSbg6D2jKUSJXPmQFrxA@mail.gmail.com>
-User-agent: mu4e 1.10.8; emacs 29.1
-From: Sean Allred <allred.sean@gmail.com>
-To: Maarten Ackermans <maarten.ackermans@gmail.com>
-Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>, git@vger.kernel.org
-Subject: Re: Breaking change with "git log -n" since 2.43
-Date: Wed, 21 Feb 2024 08:24:26 -0600
-In-reply-to: <CAB=tB2tgbLjBPvgBQDoNJi7e8+LMzxHSbg6D2jKUSJXPmQFrxA@mail.gmail.com>
-Message-ID: <m04je1dhdx.fsf@epic96565.epic.com>
+        bh=B26YoLjXZHjgLgqaRQXa/3Tz0A6maOusKDNyULI1ums=;
+        b=I/w8wlQhG0ogwwMKIKUmcLiOQb5Aanjuy/Gto8pdJoxKM+YBvEWXtBT9+9YuQ/JNmk
+         yh71IOxpNOOjk5ASvhNGttI5skJ/cFTmSG1ku3MiCIcHXGTt6OxuwldvgMnD/3N5Wm6Z
+         PORkd62Pmu+nDjjV9eijyJYbsGBhM4DYl2hS9L0PcdN8q6pkuPvrUzspFySi/nY6qXHF
+         Xj85uwAmUgJn2/G69i/ZzH1BAdvld9D01uJ7qYN9gVyMGvYeS+p10Y995ycK66kYUIgI
+         uCQayOYWakzFMrT6OwxHuzSSAs/9sD7mbTOyrNIrA3rPM5ki+b/LFDrzuSXTr4dFWhZS
+         uGkw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1708528067; x=1709132867;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=B26YoLjXZHjgLgqaRQXa/3Tz0A6maOusKDNyULI1ums=;
+        b=MkTXSbIu6DYSfYdcC0xIx1nT1SoG1nP/V5m7F2ykHLsZ7LR3uaF3aCGrHaZCeOzEIj
+         +jHglka02MnafmR6j15zF+2BAFXayNjH7U0H0B4Nd5doMVELtWGTUcP0QFj8/ti9x3rO
+         wt8vwHrjXQ1yo69Ak0vYnYtEaR089J3fIN+5ucX295NDvT+jL002ReOGWB4TiZmcgWHO
+         n3FU2Pyj5S9pgbW+m1tVj8tWw2yYMEvK0K74xhITppFeYTbNlW31r93+6pTU36lazhB3
+         2YZ5MtD9FqQspjz8IUXBUKSYfdQbzeqJW2O2nD2vzu8JpX4/biBx0WecXR6V5BpJHTHh
+         scsg==
+X-Forwarded-Encrypted: i=1; AJvYcCVZMlnFFdaJE7gh2Pq1EOFq9/835kR3f9m6nYX56hHjlquIKND54zCdudHXNG6IWmBQQqzq6ki8/o6wVGaz0OwzKKhl
+X-Gm-Message-State: AOJu0YyUkgcL2goBBpUS5/djoX89AUI5pZKI4wzu+tBKtzIQk6ANWxMJ
+	HQJViz6l6xatDWVJNwhojr77vL12qDZPUFnVmHVQtfiYhTm6V8xMtZYFqyksYZjO539GM/tzsT7
+	WfkgsvmCVj4pce5feXTkYRldpCeU0RpAP
+X-Google-Smtp-Source: AGHT+IHkFVAJSqAlbMTq/hOr4HhgnMz1ucv52iQm/qj3L21sF+fKnMD66cqcd7Vxs90HLwsGEhgT8GAimClkN+SwU3o=
+X-Received: by 2002:a17:90b:3713:b0:29a:72b:df85 with SMTP id
+ mg19-20020a17090b371300b0029a072bdf85mr4402712pjb.7.1708528067415; Wed, 21
+ Feb 2024 07:07:47 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <CAB=tB2vB0LbP=DznSqTFYHCRxDxd6U=Q+P33yeBzGssq2eK1vA@mail.gmail.com>
+ <9c52ea4e-f84e-4c64-977d-14a468236c80@app.fastmail.com> <CAB=tB2tgbLjBPvgBQDoNJi7e8+LMzxHSbg6D2jKUSJXPmQFrxA@mail.gmail.com>
+ <m04je1dhdx.fsf@epic96565.epic.com>
+In-Reply-To: <m04je1dhdx.fsf@epic96565.epic.com>
+From: Maarten Ackermans <maarten.ackermans@gmail.com>
+Date: Wed, 21 Feb 2024 22:07:35 +0700
+Message-ID: <CAB=tB2uZb+8QLmrk_tK5PKJtDE=RmBr=eBBb7U7ygSmkFoXvWg@mail.gmail.com>
+Subject: Re: Breaking change with "git log -n" since 2.43
+To: Sean Allred <allred.sean@gmail.com>
+Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
+I would suggest displaying a warning in case of invalid input (such as
+this out of range error), and to fall back to output all as if the
+"-n" flag was unspecified. If more strict handling is still desired,
+it could instead be a deprecation warning with a grace period, giving
+applications some time to update their git usage.
 
-Maarten Ackermans <maarten.ackermans@gmail.com> writes:
-> Applications that have been relying on undocumented features and
-> limits since they were introduced, now face a hard crash: "fatal:
-> '9007199254740991': not an integer". Regardless of whether this is an
-> improvement for future implementations, a crash in existing ones is a
-> suboptimal experience at the least.
-
-What behavior would you propose instead?
-
---
-Sean Allred
+On Wed, Feb 21, 2024 at 9:25=E2=80=AFPM Sean Allred <allred.sean@gmail.com>=
+ wrote:
+>
+>
+> Maarten Ackermans <maarten.ackermans@gmail.com> writes:
+> > Applications that have been relying on undocumented features and
+> > limits since they were introduced, now face a hard crash: "fatal:
+> > '9007199254740991': not an integer". Regardless of whether this is an
+> > improvement for future implementations, a crash in existing ones is a
+> > suboptimal experience at the least.
+>
+> What behavior would you propose instead?
+>
+> --
+> Sean Allred
