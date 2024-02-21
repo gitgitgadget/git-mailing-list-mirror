@@ -1,83 +1,122 @@
-Received: from mail-pf1-f172.google.com (mail-pf1-f172.google.com [209.85.210.172])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from out2-smtp.messagingengine.com (out2-smtp.messagingengine.com [66.111.4.26])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08E757BAF8
-	for <git@vger.kernel.org>; Wed, 21 Feb 2024 13:32:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95E0055E5E
+	for <git@vger.kernel.org>; Wed, 21 Feb 2024 13:55:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=66.111.4.26
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708522380; cv=none; b=sDU2iZY312lfYkbcnYzciMvlcMqUYZ6Einc8u5fv7WRswaQoLEZIEM7CAVU6t4t9xw/t/graoa4ZVQztnDrZA9GVPPU2s+kmjC9aBTonWDM3Nd68ZZiNI7sySnIkSieNoRb617D7YyqTaCxNWsSbC7SqPJP3QkCda46kbUjgCAo=
+	t=1708523743; cv=none; b=B0cm0p2Bxc2QKcJ8X1dAQlZgtoFWPI3FUYhkPDYxbF7ma8YNfwT6VB0/aZ25f1seZEspOheUYZsSTFfEKR/vPHNBCdX3FXmnBCyhORgbzOR9YEAnEqc0lROswOR8mde2MjklZd5Fl+xHU0IY+9nwhgj31M+NwomYyWVtP0svmHc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708522380; c=relaxed/simple;
-	bh=5XtRh62SJX+TXl1q1XhjatfL4EE6RgD5vNxynAOJ5IY=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=AM7pjGwmFHC176XMQqsrtU+y5XR8Tg0+zPywqBmpAYZgKHj76OG6ndkFufnXM0R5N3mpH2iLHzBQot28bEq8QPmCNSMd+JPHNBSPyX3cCw6EcunlPdm/QWp023LgB2J5tpcXfwRn/Xg/jFV8pgqio3j3eVT3bOVgse0J0+UaB2U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CzRrjn43; arc=none smtp.client-ip=209.85.210.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1708523743; c=relaxed/simple;
+	bh=DdT80pDIpii+mVl2xZwf0h+l74HWGIDcBQm/FbUX8FE=;
+	h=MIME-Version:Message-Id:In-Reply-To:References:Date:From:To:Cc:
+	 Subject:Content-Type; b=TWsme83XIOEoV4QzZ25sKJJfYWoXUrF4K8h9IXXRttCGnbpnE79Nk0xyIUaYMuYz5am7NEt/SDSw1TZ34EJ8wpm1NcfH0t4Q5yCd+AZV/aLVh43Tee5sVDvKM9ZZ/GZ9oLMvv36kaFdA/Gz/GJDhHRaY7FK+cYSGo0HVCsX5g9M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=khaugsbakk.name; spf=pass smtp.mailfrom=khaugsbakk.name; dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b=ahbYQFOV; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=g6XMKCRq; arc=none smtp.client-ip=66.111.4.26
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=khaugsbakk.name
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=khaugsbakk.name
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CzRrjn43"
-Received: by mail-pf1-f172.google.com with SMTP id d2e1a72fcca58-6e43ee3f6fbso3616016b3a.3
-        for <git@vger.kernel.org>; Wed, 21 Feb 2024 05:32:58 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1708522378; x=1709127178; darn=vger.kernel.org;
-        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=5XtRh62SJX+TXl1q1XhjatfL4EE6RgD5vNxynAOJ5IY=;
-        b=CzRrjn43Mco9Q8xYcxFzhfOTZYz26JRxz3zyyVNIL7C0/4Rmp6bKIMQWdqGbuKHh5v
-         tjKFxeISwlq5kJUctQDz2vt1KsITkvX4XLfSnCRjTuTxAMIF5cbQBDTgFXZkKJtyssAS
-         2qoVNbne3lLGaYo6UKf+N11dR67m1K5ZuiCtvGuqPvq50akChR8K6lmG4dfxz9UslEvF
-         NU7x++1gu9KkQphpjRpCBNDrhxrCRtc2Lw77irrk1IkoFJ8SbJn57utq3b24/m7ETQXB
-         M1fs7lAyXMbpXl/QqaM1KB0E4G34m5e0Xw7MbU2c85GcvdzbNSZEvhu1uRzo3GAABhpn
-         z6dA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1708522378; x=1709127178;
-        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=5XtRh62SJX+TXl1q1XhjatfL4EE6RgD5vNxynAOJ5IY=;
-        b=Z3GLvKqEk8n8KwiJCd3VTDjJT972jFpnYky/ba7+irBPPSx8ZEZvc9siKFVl1kkDcg
-         IZ7dNdCe8zeVXVMH9tplWrFktRIAwjqt0xfCAgqJu22s4DWVypZlutmqP+dEdi64rXXu
-         tI8TXzDIMhH4iSqY5OfSSW7aKsIcsC/KR5reqixnNGIOkZ1R6Qli2etUgSqnrgtqd0pa
-         zyHI0l6gtajbktiW91cHutPjfYNWjXrUGgNdrnxNtyNrcCqEo7NgbBmhSezpZYdcCxiZ
-         8f3gyDg/Lwy2Kbg2d1C3sl2CvvZuw1WsXyk4bLbVQGrYQKplApJtfb84/UOfZZNQfWCA
-         Ao3Q==
-X-Gm-Message-State: AOJu0YxX0yBlvMKkes3f3T7ZuSpF84q8ZxGpClJ7WRVALg/C6i7khst+
-	gqagugcBZi5W2NWa9JxoR7Kjf4irsj7tDeNyHon/7D2jqr3rInERLe9YQ8X4EO1tAwgI6NfqXVy
-	PbP4rfX/aS38LP59ZzX4WLKsYn1xHYp6s85I=
-X-Google-Smtp-Source: AGHT+IF2Qd29hUOV1iC+tYhuzfBgVHca9d2oko0CNNrnM1dZBsXeQ6UZvPEyT/ANHF0z75OvKNJ3gdw42eIWqnFHulo=
-X-Received: by 2002:a05:6a21:8ccc:b0:1a0:6f51:edee with SMTP id
- ta12-20020a056a218ccc00b001a06f51edeemr22828731pzb.56.1708522377927; Wed, 21
- Feb 2024 05:32:57 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b="ahbYQFOV";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="g6XMKCRq"
+Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
+	by mailout.nyi.internal (Postfix) with ESMTP id 9645C5C0097;
+	Wed, 21 Feb 2024 08:55:39 -0500 (EST)
+Received: from imap49 ([10.202.2.99])
+  by compute1.internal (MEProxy); Wed, 21 Feb 2024 08:55:39 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=khaugsbakk.name;
+	 h=cc:cc:content-transfer-encoding:content-type:content-type
+	:date:date:from:from:in-reply-to:in-reply-to:message-id
+	:mime-version:references:reply-to:subject:subject:to:to; s=fm3;
+	 t=1708523739; x=1708610139; bh=DdT80pDIpii+mVl2xZwf0h+l74HWGIDc
+	BQm/FbUX8FE=; b=ahbYQFOVO8nFEoVZootW70VCMeCW/7KfaDzvVQ7ZFBEqmu6o
+	PyVGS7/sSg0ER9wDhWFTUTb6i1Ps0SxUv05GDHeHf8UkTJ5XCsPW9S2Apak08w7O
+	Yt+VptfvcaKcpE0eD7Kca6kikpv8fad81hU2X8GaNR7JJcqGZQpb4m3RxhZHYYZw
+	5OsviixfoMsDEbOV8eaC9YFtMErgcajcQGF/szqRCRgT5myAohidtl60WfdpmVwd
+	2qgxJUJTlpsUNPhgS4ccqmSzRjKtDOf8YYahiUD9oNio8/6kvcJfthGKx0Rp03gl
+	SWjdZXPcT8TsNNacfyJR39E5tpXisBl7Wo2XxQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1708523739; x=
+	1708610139; bh=DdT80pDIpii+mVl2xZwf0h+l74HWGIDcBQm/FbUX8FE=; b=g
+	6XMKCRqhi5K1XtRUJ1Uo9BPQMnE1RpLBHhIjDmLJVT2HH7UzQ8nqibtG+kkjU1Jc
+	gCTVqujft7R493ChwGQ+ppl2VFc0A1P3a/crXHFL/869saCbgX88yg689Yl6oHTP
+	tJl89UUq5pj0t5obrTwRBBn5ZAc/YoQGJJjw0c+E9sfwWVDf6RaK1VbgHsP38Gv0
+	sD1epbvrLB+/+cIqsAbzNnYFx6TpomF0xw6pDq85gaRj5syYry6wcgrU89L44Sed
+	vosfLSiTBgFB/dCAEFi2YZKWgZdBFCjeQelTVgryvrpazF/g93m46CJvdJpYxj9q
+	Bnh+wWLLI1MNJ9P5BMMOA==
+X-ME-Sender: <xms:2wDWZWVvv0keH3_yE5BxZoVEPgXGWl9EhtWtEvQ-6U-MCSrB1cdbBfc>
+    <xme:2wDWZSlIqfObiMLAlCCJaf9XOMNbfiYsNF7qvVm1TOTrw_DXBMl9VDkTt5vFjFefS
+    uO2cWz2M8eCs_k4EQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrfedvgdehjecutefuodetggdotefrodftvf
+    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
+    uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
+    fjughrpefofgggkfgjfhffhffvvefutgfgsehtqhertderreejnecuhfhrohhmpedfmfhr
+    ihhsthhofhhfvghrucfjrghughhssggrkhhkfdcuoegtohguvgeskhhhrghughhssggrkh
+    hkrdhnrghmvgeqnecuggftrfgrthhtvghrnhepvddvhfekkeejhedujeefueetleejleeu
+    geefieehffehieduveeljeefheehueeunecuffhomhgrihhnpehgihhthhhusgdrtghomh
+    dpmhhoiihilhhlrgdrohhrghenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhep
+    mhgrihhlfhhrohhmpegtohguvgeskhhhrghughhssggrkhhkrdhnrghmvg
+X-ME-Proxy: <xmx:2wDWZabnFOFVL8vS073ppuNUbTYLc_be2IyAV_mvzeVC1Y08wNG4TA>
+    <xmx:2wDWZdUx8WPWaPOtWcLRR1JpGdCGHBgomVW7SNf-gUV6AMr3JtwcKQ>
+    <xmx:2wDWZQlaFyOblG5u5UvV2z9IcRn9XNyvSvIFyB19LEb6Q-gXoaalxw>
+    <xmx:2wDWZXsT3bxFlw-Jr69TLuf0ezFXGkknLkPrH41U4ySfTKsnAoRj3g>
+Feedback-ID: i2671468f:Fastmail
+Received: by mailuser.nyi.internal (Postfix, from userid 501)
+	id 3916B15A0092; Wed, 21 Feb 2024 08:55:39 -0500 (EST)
+X-Mailer: MessagingEngine.com Webmail Interface
+User-Agent: Cyrus-JMAP/3.11.0-alpha0-153-g7e3bb84806-fm-20240215.007-g7e3bb848
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: Maarten Ackermans <maarten.ackermans@gmail.com>
-Date: Wed, 21 Feb 2024 20:32:46 +0700
-Message-ID: <CAB=tB2vB0LbP=DznSqTFYHCRxDxd6U=Q+P33yeBzGssq2eK1vA@mail.gmail.com>
-Subject: Breaking change with "git log -n" since 2.43
-To: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Message-Id: <9c52ea4e-f84e-4c64-977d-14a468236c80@app.fastmail.com>
+In-Reply-To: 
+ <CAB=tB2vB0LbP=DznSqTFYHCRxDxd6U=Q+P33yeBzGssq2eK1vA@mail.gmail.com>
+References: 
+ <CAB=tB2vB0LbP=DznSqTFYHCRxDxd6U=Q+P33yeBzGssq2eK1vA@mail.gmail.com>
+Date: Wed, 21 Feb 2024 14:55:18 +0100
+From: "Kristoffer Haugsbakk" <code@khaugsbakk.name>
+To: "Maarten Ackermans" <maarten.ackermans@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: Breaking change with "git log -n" since 2.43
+Content-Type: text/plain;charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-Hi all,
+On Wed, Feb 21, 2024, at 14:32, Maarten Ackermans wrote:
+> Hi all,
+>
+> I would like to report a breaking change with "git log -n" introduced
+> in 2.43 that's causing some trouble:
+> https://github.com/git/git/commit/71a1e94821666909b7b2bd62a36244c601f8=
+430e#diff-380c4eac267b5af349ace88c78a2b004a16ed20c2b605c76827981063924bb=
+f9R2222
+>
+> To reproduce, the command `git log -n 9007199254740991` fails on
+> 2.43.2, whereas it didn't on 2.42.0. This specific number corresponds
+> to the Number.MAX_SAFE_INTEGER (2^53 - 1) in JavaScript (docs:
+> https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Glob=
+al_Objects/Number/MAX_SAFE_INTEGER).
+> The max value that is supported now is a signed 32-bit integer (2^31 -
+> 1).
+>
+> I suppose git simply ignored the extra digits of the number, as the
+> commit message describes.
+>
+> See https://github.com/intuit/auto/issues/2425#issuecomment-1956557071
+> for the impact.
+>
+> Best regards,
+>
+> Maarten Ackermans
 
-I would like to report a breaking change with "git log -n" introduced
-in 2.43 that's causing some trouble:
-https://github.com/git/git/commit/71a1e94821666909b7b2bd62a36244c601f8430e#diff-380c4eac267b5af349ace88c78a2b004a16ed20c2b605c76827981063924bbf9R2222
+I don=E2=80=99t see how this is a breaking change considering the range =
+is not
+documented.
 
-To reproduce, the command `git log -n 9007199254740991` fails on
-2.43.2, whereas it didn't on 2.42.0. This specific number corresponds
-to the Number.MAX_SAFE_INTEGER (2^53 - 1) in JavaScript (docs:
-https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number/MAX_SAFE_INTEGER).
-The max value that is supported now is a signed 32-bit integer (2^31 -
-1).
+--=20
+Kristoffer Haugsbakk
 
-I suppose git simply ignored the extra digits of the number, as the
-commit message describes.
-
-See https://github.com/intuit/auto/issues/2425#issuecomment-1956557071
-for the impact.
-
-Best regards,
-
-Maarten Ackermans
