@@ -1,122 +1,137 @@
-Received: from mail-wr1-f49.google.com (mail-wr1-f49.google.com [209.85.221.49])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp2-g21.free.fr (smtp2-g21.free.fr [212.27.42.2])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0015C7CF03
-	for <git@vger.kernel.org>; Wed, 21 Feb 2024 21:19:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED72783A1F
+	for <git@vger.kernel.org>; Wed, 21 Feb 2024 21:52:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.27.42.2
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708550344; cv=none; b=rV46IQooK7DdY11hw1OeOrOCc0V5LMgd/So7hBE4HduN5BDj9zdWQMWQ9vjZ3yae7KpLxj3CqWI4pjFqP3rF1RVQTIGE4Xn3SzgupPupTlYkz0BwmHTrEbfThn2zcqZOx975M66NgMbsk3Sj3RpmaEHCtVw6BAVhrfA7C3rah6E=
+	t=1708552339; cv=none; b=XmDhisl9T4LyveNj0K2Jmfu4sRhjQ80DCLNC4X67lJPVcTDpMerH/n4bX5OZjEunGYbxXSvxN8RtEL0Ziq8KLxF2yNaQYgVe1qlOiS8HEBy57iTwMJKrjmgv3MZyg1dnVYa80DznV5JE7zSoOLtCCN4OpKEAipEaAr/qjVzum/8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708550344; c=relaxed/simple;
-	bh=dQIJl429XOO6e55cDcOonNO3ab9IH9KrriZGuhI/ZhA=;
-	h=Message-ID:From:Date:Subject:MIME-Version:Content-Type:To:Cc; b=UhkWgNFjEy4zJuYRnOFhaWLHx6FE9m1aGaUg57PIS4KwBZzo0AGPxevjRD1JUvCZ28D/4oEQe1KhULV/4qGn9GRHA6mIp89S749j160cghHf0L5v7omHWdMcI/IkzQXSs6uX1LYVtB0o8fNcDy0Rzv9EptZBAt/VngWO5mSZyTI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=AfLwZobD; arc=none smtp.client-ip=209.85.221.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1708552339; c=relaxed/simple;
+	bh=l9h0k2h3x4syCvSmT+zzCF1WjO2T+r9fvLxHdBiyRtk=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=H8pMHw9ObaGx+qs+Qq8U2gtHKL0+dl4m5u2Npl67ZZC4LNLqE0ELeppBObDejKwMfmqkXuSp6206SoiemlHteDDxsRiU3gt71VaDcpPaFFFUfaGFYkgU+fLkYmcgrAKIgOWgqWaXjw1SdhKyiaPgw62k5Pau6FERHWIv+h1wFgM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=free.fr; spf=pass smtp.mailfrom=free.fr; dkim=pass (2048-bit key) header.d=free.fr header.i=@free.fr header.b=Lr0fq9C2; arc=none smtp.client-ip=212.27.42.2
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=free.fr
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=free.fr
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AfLwZobD"
-Received: by mail-wr1-f49.google.com with SMTP id ffacd0b85a97d-33d6fe64a9bso1790254f8f.0
-        for <git@vger.kernel.org>; Wed, 21 Feb 2024 13:19:02 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1708550341; x=1709155141; darn=vger.kernel.org;
-        h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=o+uCZCnGPRR67gtTKigIkub+JniIl8THLGtPHFp7P/0=;
-        b=AfLwZobDjjpC/JChznh14Cxe92i8QXUmwLyWNFguO42nAyFqPdGeXUDJZLeEivFMsI
-         3rORnbGTo4aHhg+USOaMHewypLwkRS9qvMX6U2ePoJcrKMx0PnglPsVaol8MFDdCs+/C
-         HMYQ0ihqbzDdFIpXu1J8DNjl2+QEyMBwU0kSohaPFnqpFxz7VrWn2r75R97aIuFK7yVL
-         Vp+waozO3dsbJ9WkyAU4IYk3fv7EqhPMW9IwGrYMNfbnUuX1jFTr0Pknclxi92s8EvwM
-         9e+LTHFwYuHcK0BdVBsACq5y5Dt28GmnJHa6h7aKghlbiryRasEmlYpKOGUW0hkSZeMe
-         4ngg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1708550341; x=1709155141;
-        h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=o+uCZCnGPRR67gtTKigIkub+JniIl8THLGtPHFp7P/0=;
-        b=GhV4QzCrFwfvlTGvJkQx0OTWLnPhtC939VjCDMxSB7J8epcF+RgvhRUTzKl9JPpN6J
-         yaQ1zflyYw7J0Dwit/qb9YuhJ/rEmoYynDwqet2UuwkVqtdh5jQEdeNVfYw+/xe95TfI
-         TjRixG+X3ehJDTqc4iH7KeSIfP47ta835tApe8bCe4BnZfvEdT58KZc5ELAtRJX4vu+j
-         bAvsI/WMGlUjRbM8sGuZWQNmWl+HL67oPK1+1J3DQUplGYspV2ULglCpWG31bnDdN+ws
-         nycldRbmoQbjxn02/BWzSGhvN5ZUw2i1HnKmv/1gkjDO/IXswkRG81vYZt5puzGCIJk+
-         oFOg==
-X-Gm-Message-State: AOJu0YzCpL+yZYqGSZkiKt8bqO8jrCUb8CUAk6aBA6yjH5Sw4hZ/0n0F
-	gmaSyfEfm+KIwvV9/Ii8f04yKzsBicT+HEBpfMSmBLWtF6NsGEOoKgaRg3aV
-X-Google-Smtp-Source: AGHT+IFxcvd3RQMUPfQSDzLA7lT6cTzcsp/4p28Hsk6/2UnAUumNv6MNpPCrww3dxbV0zF9nlAH9Kw==
-X-Received: by 2002:a05:6000:1c8:b0:33d:3067:d96b with SMTP id t8-20020a05600001c800b0033d3067d96bmr11205510wrx.2.1708550340824;
-        Wed, 21 Feb 2024 13:19:00 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id w4-20020adfee44000000b0033d8ce120f2sm71065wro.95.2024.02.21.13.19.00
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 21 Feb 2024 13:19:00 -0800 (PST)
-Message-ID: <pull.1671.git.1708550340094.gitgitgadget@gmail.com>
-From: "=?UTF-8?Q?Jean-No=C3=ABl?= Avila via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Wed, 21 Feb 2024 21:18:59 +0000
-Subject: [PATCH] doc: clarify the format of placeholders
+	dkim=pass (2048-bit key) header.d=free.fr header.i=@free.fr header.b="Lr0fq9C2"
+Received: from cayenne.localnet (unknown [IPv6:2a01:e0a:d1:f360:9bca:a380:8169:3a3f])
+	(Authenticated sender: jn.avila@free.fr)
+	by smtp2-g21.free.fr (Postfix) with ESMTPSA id 53D552003AE;
+	Wed, 21 Feb 2024 22:52:07 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=free.fr;
+	s=smtp-20201208; t=1708552329;
+	bh=l9h0k2h3x4syCvSmT+zzCF1WjO2T+r9fvLxHdBiyRtk=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=Lr0fq9C2WjHwGPyGyBmu7S5plQDJ4LfgBMmYVzLC+Ne/Mpg6o91cJSEQav/p5snMu
+	 0wJkXNw92G98l/PJzHZU6ATtKIHx2POFge9eoF0icdkSUjickto/kZAhfKTBMiKkpF
+	 yT/QLGAOftvAtYciOLNLKm0RN32YPGDRafNFg7TRcfL4GQfY0REoSRNan4NJd6Xns7
+	 ELDJTGQeZQOt1t1F6CMWIaWilYej3xZBXAv4kTvlXcoDsIJlfSNr8NV4S0l1ixCmmU
+	 +ZYGaHBSYn4/S8HzUDcSNxkseSQf8DLQWJ3USzPeBWkSwj9IWCAMDoQvIxQQkd+ysK
+	 7UEpC1PdEacTQ==
+From: =?ISO-8859-1?Q?Jean=2DNo=EBl?= AVILA <jn.avila@free.fr>
+To: Junio C Hamano <gitster@pobox.com>
+Cc:
+ =?ISO-8859-1?Q?Jean=2DNo=EBl?= Avila via GitGitGadget
+ <gitgitgadget@gmail.com>, git@vger.kernel.org
+Subject:
+ Re: [PATCH 1/3] doc: git-rev-parse: enforce command-line description syntax
+Date: Wed, 21 Feb 2024 22:52:06 +0100
+Message-ID: <5764785.DvuYhMxLoT@cayenne>
+In-Reply-To: <xmqqfrxlpvv1.fsf@gitster.g>
+References:
+ <pull.1670.git.1708468374.gitgitgadget@gmail.com>
+ <67dca173-3048-430b-88a1-d3b5d853f84b@free.fr> <xmqqfrxlpvv1.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Fcc: Sent
-To: git@vger.kernel.org
-Cc: =?UTF-8?Q?Jean-No=C3=ABl?= Avila <jn.avila@free.fr>,
-    =?UTF-8?q?Jean-No=C3=ABl=20Avila?= <jn.avila@free.fr>
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="iso-8859-1"
 
-From: =?UTF-8?q?Jean-No=C3=ABl=20Avila?= <jn.avila@free.fr>
+On Wednesday, 21 February 2024 18:31:30 CET Junio C Hamano wrote:
+> Jean-No=EBl Avila <jn.avila@free.fr> writes:
+>=20
+> >>> ---short[=3Dlength]::
+> >>> +--short[=3D<length>]::
+> >>>   	Same as `--verify` but shortens the object name to a unique
+> >>>   	prefix with at least `length` characters. The minimum length
+> >> This same comment applies throughout this patch, but in other places
+> >> when we use <placeholder> in the option argument description, don't
+> >> we use the same <placeholder> in text as well?  I am wondering if
+> >> the `length` (typeset in fixed-width) should become <length>.  What
+> >> do other recent[*] documentation pages commonly do?
+> >
+> > This is another part of the inconsistences in documentation that I'd
+> > like to tackle (hopefully, not in another life).
+> >
+> > Using angle brackets for placeholders everywhere they appear is a
+> > visual link to the preceding syntax description, but may feel a bit
+> > heavy on some cases. Anyway, I'm all for applying the rule everywhere,
+> > for the sake of consistency.
+>=20
+> I agree that if <placeholder> is not an appropriate way to spell
+> them in the explanation text, we would want to change them
+> consistently everywhere, and until then, using the angle-bracketted
+> <placeholder> that is common would be better.  The text will be
+> modified again when we decide to switch from <placeholder> to
+> something else, so updating them now may be a wasted effort, but (1)
+> we may decide that <placeholder> is good enough after all, or (2) it
+> may make it easier to mechanically identify words whose mark-up
+> should be converted if we consistently use <placeholder> now, even
+> if we know it won't be the final mark-up.
+>=20
+> So I am inclined to say that we should first do `length` -> <length>
+> in the body text in the short term.  But I also think we should
+> *not* do so as part of this patch, whose focus is how the option
+> enumeration header should mark up the option arguments.
+>=20
+> > Backticks and single quotes are used indistinctively (by the way,
+> > asciidoctor does not process single quotes as markup) and are not used
+> > everywhere they should. Using backticks is also a good hint for
+> > translators to mean "verbatim, do not translate". Obviously, the
+> > placeholders ask for translation, so the backtick rule should not
+> > apply to them, even if another formating would be welcome :
+> > _<placeholder>_ for instance?
+>=20
+> Yes.  The way AsciiDoc renders (at least HTML) an unadorned <placeholder>
+> is not so great.
+>=20
+> In "git-add.html" manual page, we see these examples.  The first one
+> (unadorned) does not make the placeholder word stand out enough; the
+> second one that does `<file>` makes it stand out better, but as you
+> said, the `verbatim` mark-up is semantically wrong.
+>=20
+> https://git.github.io/htmldocs/git-add.html#:~:text=3DFor%20more%20detail=
+s%20about%20the%20%3Cpathspec%3E%20syntax
+>=20
+> https://git.github.io/htmldocs/git-add.html#:~:text=3DPathspec%20is%20pas=
+sed%20in%20%3Cfile%3E%20instead%20of%20commandline%20args.%20If%20%3Cfile%3=
+E%20is%20exactly%20%2D%20then%20standard%20input%20is%20used.%20Pathspec
+>=20
+> The last part of the Documentation/CodingGuidelines document talks
+> about how to mark up placeholders but it does not go beyond saying
+> that they are written as <hyphen-in-between-words-in-angle-braket>.
+> Whatever mark-up rule we decide to use, we should document it there.
+>=20
+> Thanks.
+>=20
+>=20
+>=20
+>=20
 
-Add the new format rule when using placeholders in the description of
-commands and options.
+Hi,
 
-Signed-off-by: Jean-Noël Avila <jn.avila@free.fr>
----
-    doc: clarify the format of placeholders
-    
-    Following the patch "Doc placeholders", there was a question about
-    adding a formal rule on writing placeholders in description paragraphs.
-    
-    One agreed output was that the placeholders in paragraph must be
-    surrounded by angle brackets and not set in literal with backticks.
-    
-    A new rule, to be accepted, is to force placeholders in paragraphs to be
-    italicized.
+I just saw that you pushed this series to 'next'. That's embarrassing becau=
+se I missed other spots in the file were the formating was not correct. I w=
+as also preparing the changes of placeholders in paragraphs as suggested.
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1671%2Fjnavila%2Fplaceholders_document_guidelines-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1671/jnavila/placeholders_document_guidelines-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/1671
+Should I prepare another PR?
 
- Documentation/CodingGuidelines | 7 +++++++
- 1 file changed, 7 insertions(+)
+Thanks
 
-diff --git a/Documentation/CodingGuidelines b/Documentation/CodingGuidelines
-index 578587a4715..a6a965609b5 100644
---- a/Documentation/CodingGuidelines
-+++ b/Documentation/CodingGuidelines
-@@ -666,6 +666,11 @@ Writing Documentation:
-    <new-branch-name>
-    --template=<template-directory>
- 
-+ When a placeholder is cited in text paragraph, it is enclosed in angle
-+ brackets to remind the reader the reference in the synopsis section.
-+ For better visibility, the placeholder is typeset in italics:
-+   The _<file>_ to be added.
-+
-  Possibility of multiple occurrences is indicated by three dots:
-    <file>...
-    (One or more of <file>.)
-@@ -751,6 +756,8 @@ Writing Documentation:
-    Incorrect:
-       `\--pretty=oneline`
- 
-+A placeholder is not enclosed in backticks, as it is not a literal.
-+
-  If some place in the documentation needs to typeset a command usage
-  example with inline substitutions, it is fine to use +monospaced and
-  inline substituted text+ instead of `monospaced literal text`, and with
 
-base-commit: 5fdd5b989cbe5096d44e89861a92b2dd47c279d9
--- 
-gitgitgadget
+
