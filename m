@@ -1,105 +1,114 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f53.google.com (mail-wm1-f53.google.com [209.85.128.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9D267BB00
-	for <git@vger.kernel.org>; Wed, 21 Feb 2024 18:03:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 110357BB00
+	for <git@vger.kernel.org>; Wed, 21 Feb 2024 18:06:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708538637; cv=none; b=FTxXEGJQRUsU2fHioNLvFJSQZl/o1LL5oXNl+SaNds7fG2sP8BaJu5qiu4tYRtjoycTfAv+KnqFkBsj5TW7h7GOU9nrw7RmiGObmvMJv9Z8lrDvTanYCTabYYSR4c60g2i/x37NVe65VQ9tF5/PsbJS0QQFFhIKcXynIZAw4EyU=
+	t=1708538802; cv=none; b=PNN/2KiLH891vvzNnPMvE+JEI6s1/vCbcV3631bH3s6OeUUTqt73bi7Sl1bGotq7FpyeJq3axpxXSBui5KAzN8rKKtBppU0nkl+CnEW0d1ErKfGEpXM9KWizNr9dGGJNj2BXwbL0MFIgB+ep9+jwNMPZbmeZNcazVavK1/Byjw4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708538637; c=relaxed/simple;
-	bh=k16oBuOCHrAgO7ArjYH5JOj1zUkhvXUhZJrnfvTgoQY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=QZPXhHIFe+SslJtfguvome9gPypdLt2mux50PBy4dQtMc5KCfYhKu83O8xPuXNvLuiyUqF5YvWqaE9rgroSXDOcG9tH1DD4k6AfsfuX7ycNVY/NMbo+KOq3Ps4uYYu71hxr85NVQ8Y8VYlv8YNIGmqMyC883OhEFmP2T8a4DFKA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
-Received: (qmail 7807 invoked by uid 109); 21 Feb 2024 18:03:55 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 21 Feb 2024 18:03:55 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 6506 invoked by uid 111); 21 Feb 2024 18:03:55 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 21 Feb 2024 13:03:55 -0500
-Authentication-Results: peff.net; auth=none
-Date: Wed, 21 Feb 2024 13:03:54 -0500
-From: Jeff King <peff@peff.net>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: phillip.wood@dunelm.org.uk,
-	Philip Peterson via GitGitGadget <gitgitgadget@gmail.com>,
-	git@vger.kernel.org,
-	Johannes Schindelin <johannes.schindelin@gmx.de>,
-	Emily Shaffer <nasamuffin@google.com>,
-	Philip Peterson <philip.c.peterson@gmail.com>
-Subject: Re: [PATCH 0/5] promise: introduce promises to track success or error
-Message-ID: <20240221180354.GE634809@coredump.intra.peff.net>
-References: <pull.1666.git.git.1708241612.gitgitgadget@gmail.com>
- <bd340a27-bfb4-41b2-a1fa-356ab7dbbd36@gmail.com>
- <20240220025722.GE2713741@coredump.intra.peff.net>
- <70a81f5a-32d8-4517-83ea-8019be5f97d5@gmail.com>
- <ZdSYxF3Hd6Zqt3Wd@tanuki>
+	s=arc-20240116; t=1708538802; c=relaxed/simple;
+	bh=BCb5aHDhjTVBwAIlbGoEVotILz+3mnfPGZS3Q340VEM=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=XWa2joNI/MXJYQok2sA9tG81I23GKxupvpDSsfSWjmQwNbU6pFrMk9edjW2NSzF5U7M5nU4N9TkKRXouCofkwdIA9MzMQD5majuzhlwamlBm4glfaRkGuX2jFVOna+OZA57oaKfcRQU8l5ELJWLk5GJFvdC0ZvMSHKtHYLEUrtQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=BlN9sERh; arc=none smtp.client-ip=209.85.128.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BlN9sERh"
+Received: by mail-wm1-f53.google.com with SMTP id 5b1f17b1804b1-4127a0d8ae1so2619995e9.2
+        for <git@vger.kernel.org>; Wed, 21 Feb 2024 10:06:40 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1708538799; x=1709143599; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=1rok7Lo+/V4RrNXD1wWinOl4D3/aaX97D5F2RCuGtcE=;
+        b=BlN9sERhfJM1ZVtzp/T5D18kmywa+fXFZan9afPdx7guTn9DSXeQ53cd5hhppoIP4/
+         BxQduz0oBHTVEMVmldbyagzvHyRWk6qCrXUAvOGV6HII2u34E+kYxf+akZqx1TzKaffC
+         gv9eDjfNO+dDJPbXAxNT84kejF2kSQ/veigVV7UvuIV3K15aazLeL7ZSel6H/ni4cKxd
+         sE1rhuspcCfnpPvcnh6WAL83Lcn9N9wnzx6xVSTyVD4HPPuAxF95BrHZyxFEHhGVTUeA
+         F0vaAz2JIpRE/UcBDUHhX7QPXIwmZblwMS8tnolCkcjNj38xgGdgeM1YuU8QAv4mSgDY
+         fLhg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1708538799; x=1709143599;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=1rok7Lo+/V4RrNXD1wWinOl4D3/aaX97D5F2RCuGtcE=;
+        b=UMQyrVmHARL7K0iNPaJPYoEOhtsE9Lvt34xBm3N/nvyQmfm7hdwXvRLepBU9F+Njso
+         vorhqt+i/797WpZvs+5ADXhhmYkdxss1W8VdKFoatJAharjIIHwv69xNLY8VxJ90r2LJ
+         FsHUB5qQeJUaZbAu7SdKf+5B79PvsyXaxD93AhUqzmjtvBecAfv0sfq0l3/w/QaGjR98
+         Cqh9lEvJkkrZugUT1GnKdkVarlOkrhswL5eVEWpw06JtwpAHpXtMNPuu4o0EFWeKk44J
+         66BGMfdrZq/VqRX/QyF+RkI6moDpoK3/OJlO8sJTRNcR9JbHlcmL/E/BgR8lAvRKqfCf
+         tLyA==
+X-Gm-Message-State: AOJu0Yzm27wj7mMifq1D8Ccc7ZK9nb06RtO9ji9g6s4nWhFx60eY3mf4
+	cylXztQ7F6xNJPmETM/xz1ekpFVlXZ00dkbYTVrrEWwyWZPilVpd
+X-Google-Smtp-Source: AGHT+IFuYQ7DHP9ld1UBWKuFkelAxoSE4tZBzxgBFYSTfFLp8NqlXCkCqnOqGEtaVYiQff5skfO4EQ==
+X-Received: by 2002:a05:600c:4506:b0:412:6488:bbff with SMTP id t6-20020a05600c450600b004126488bbffmr7424763wmo.30.1708538799177;
+        Wed, 21 Feb 2024 10:06:39 -0800 (PST)
+Received: from gmail.com (198.red-88-14-62.dynamicip.rima-tde.net. [88.14.62.198])
+        by smtp.gmail.com with ESMTPSA id 13-20020a05600c230d00b00411d640085csm18622426wmo.43.2024.02.21.10.06.38
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 21 Feb 2024 10:06:38 -0800 (PST)
+Message-ID: <abe1c96d-48f7-4355-8688-e1fb05c67448@gmail.com>
+Date: Wed, 21 Feb 2024 19:06:36 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <ZdSYxF3Hd6Zqt3Wd@tanuki>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 3/4] completion: reflog with implicit "show"
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Git List <git@vger.kernel.org>
+References: <98daf977-dbad-4d3b-a293-6a769895088f@gmail.com>
+ <5991b58c-770c-4aaa-bce5-f396d9f7f16f@gmail.com> <xmqq8r4cnfju.fsf@gitster.g>
+ <dd106d87-3363-426a-90a2-16e1f2d04661@gmail.com> <xmqqwmqyr3mb.fsf@gitster.g>
+Content-Language: en-US
+From: =?UTF-8?Q?Rub=C3=A9n_Justo?= <rjusto@gmail.com>
+In-Reply-To: <xmqqwmqyr3mb.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Tue, Feb 20, 2024 at 01:19:16PM +0100, Patrick Steinhardt wrote:
+On Tue, Feb 20, 2024 at 17:46:20 -0800, Junio C Hamano wrote:
 
-> While we're already at it throwing ideas around, I also have to wonder
-> whether this would be a long-term solution towards computer-friendly
-> errors. One of the problems we quite frequently hit in Gitaly is that we
-> are forced to parse error messages in order to figure out why exactly
-> something has failed. Needless to say, this is quite fragile and also
-> feels very wrong.
+>     $ git reflog sho<TAB>
+>     shot show
 > 
-> Now if we had a more structured way to pass errors around this might
-> also enable us to convey more meaning to the caller of Git commands. In
-> a hypothetical world where all errors were using an explicit error type,
-> then this error type could eventually become richer and contain more
-> information that is relevant to the calling script. And if such rich
-> error information was available, then it would not be that far fetched
-> to ask Git to emit errors in a computer-parsable format like for example
-> JSON.
+> That is what I would expect.    
 
-I think what I'm proposing (and if I understand correctly what Phillip
-was thinking) is somewhat orthogonal. I agree that structured errors are
-nice for computers to read. But it does open up a pretty big can of
-worms regarding classifying each error, especially as root causes are
-often multi-level.
+Thank you for responding.
 
-For example, imagine that the caller asks to resolve a ref. We might get
-a syscall error opening the loose ref. Or we might get one opening the
-packed-refs file (in a reftable world, you might imagine errors opening
-various other files). What is the structured error? Obviously it is "we
-can't resolve that ref" at some level. But the caller might want to know
-about the failed open (whether it is just ENOENT, or if we ran into
-EPERM or even EIO).
+Of course that's the logical expectation.
 
-Or looking at higher levels; if I ask for the merge base between A and
-B, but one of those can't be resolved, how do we communicate that error?
-It is some sort of "cannot resolve" error, but it needs to be
-parameterized to know which is which.
+However I'm not sure if it is sensible to offer completion for
+sub-commands mixed with branch names.
 
-All of those questions can be answered, of course, but now we are
-developing a micro-format that lets us describe all errors in a
-standardized way. And I think that is going to put a burden on the code
-which is generating the errors (and potentially on the consumers, too,
-if they have to decipher the structure to figure out what they want).
+Furthermore, I am also worried that such an approach implies making the
+user pay, probably unnecessarily many times, for __git_complete_refs in
+cases such as:
 
-Whereas what I was really advocating for is punting on the structured
-thing entirely. We keep our unstructured string errors for the most
-part, but we simply let the caller pass in a context that tells us what
-to do with them. That lets us keep providing specific error messages
-from low-level functions without printing to stderr or exiting, which
-higher-level code (especially lib-ified code) would not want.
+    $ git reflog <TAB><TAB>  ;# the user may be just exploring the sub-commands
+    $ git reflog s<TAB>      ;# the user may be lazy and just want "show "
+    $ git reflog show<TAB>   ;# likewise, to complete the SP
+    $ git reflog expir<TAB>  ;# how often a expir... branch is expected here?
 
-I think it could also be the first building block for making more
-structured errors (since those low-level callers are free to provide
-lots of details), but it doesn't have to be.
+The experienced user, if not most users, should be intuitive enough to
+circumvent the corner cases:
 
--Peff
+    $ git reflog <TAB><TAB>
+    delete expire show
+    ...
+    $ git reflog s<TAB>
+    ...
+    $ git reflog show s<TAB>
+    ...
+    $ git reflog show shot
+
+This is why I choose to fallback to __git_complete_ref only when no
+other option is available.
+
+If you think, or anyone else, that these concerns don't make sense, I'm
+open to make it work as you described.
