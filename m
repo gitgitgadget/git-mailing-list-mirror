@@ -1,114 +1,103 @@
-Received: from mail-wm1-f53.google.com (mail-wm1-f53.google.com [209.85.128.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 110357BB00
-	for <git@vger.kernel.org>; Wed, 21 Feb 2024 18:06:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE48342A8B
+	for <git@vger.kernel.org>; Wed, 21 Feb 2024 18:18:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708538802; cv=none; b=PNN/2KiLH891vvzNnPMvE+JEI6s1/vCbcV3631bH3s6OeUUTqt73bi7Sl1bGotq7FpyeJq3axpxXSBui5KAzN8rKKtBppU0nkl+CnEW0d1ErKfGEpXM9KWizNr9dGGJNj2BXwbL0MFIgB+ep9+jwNMPZbmeZNcazVavK1/Byjw4=
+	t=1708539513; cv=none; b=kZCCFWubwChOmb1nQXA5S3fQPqE/EvvopPd94LvRzoqu5P1olN71AA/IJXjSEMSjSqAP08JQYfrguAETsnt8epXHxNO5gWHI5HcKCvBkkDhEeCBE/pVEXzgRaomUhcFpvnwMeaPdzoaGxsbcTn1g3TO2/6Lz86A6Pk+8lrBes60=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708538802; c=relaxed/simple;
-	bh=BCb5aHDhjTVBwAIlbGoEVotILz+3mnfPGZS3Q340VEM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=XWa2joNI/MXJYQok2sA9tG81I23GKxupvpDSsfSWjmQwNbU6pFrMk9edjW2NSzF5U7M5nU4N9TkKRXouCofkwdIA9MzMQD5majuzhlwamlBm4glfaRkGuX2jFVOna+OZA57oaKfcRQU8l5ELJWLk5GJFvdC0ZvMSHKtHYLEUrtQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=BlN9sERh; arc=none smtp.client-ip=209.85.128.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1708539513; c=relaxed/simple;
+	bh=N205LOpMCaN2kMiSQHJyfm09+TRMlXDBNgoRZumluio=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=LAshSbMjV5DVpCl7L8KcD4jFoD4JTcS7a5jr+u1EtT7y+sQGJnGXP00lm0FIsGfwT5p3VMT93T2FwXfrFpHpHmgTtZBVQ2TRQCzg4a/wiA3VtUxtvGKidmSNURAEKcTMBqhhsWhlYD/YMwcs5d+6caeA+tYvSmpSVtwv6JazFU4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=xhPn31We; arc=none smtp.client-ip=64.147.108.71
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BlN9sERh"
-Received: by mail-wm1-f53.google.com with SMTP id 5b1f17b1804b1-4127a0d8ae1so2619995e9.2
-        for <git@vger.kernel.org>; Wed, 21 Feb 2024 10:06:40 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1708538799; x=1709143599; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=1rok7Lo+/V4RrNXD1wWinOl4D3/aaX97D5F2RCuGtcE=;
-        b=BlN9sERhfJM1ZVtzp/T5D18kmywa+fXFZan9afPdx7guTn9DSXeQ53cd5hhppoIP4/
-         BxQduz0oBHTVEMVmldbyagzvHyRWk6qCrXUAvOGV6HII2u34E+kYxf+akZqx1TzKaffC
-         gv9eDjfNO+dDJPbXAxNT84kejF2kSQ/veigVV7UvuIV3K15aazLeL7ZSel6H/ni4cKxd
-         sE1rhuspcCfnpPvcnh6WAL83Lcn9N9wnzx6xVSTyVD4HPPuAxF95BrHZyxFEHhGVTUeA
-         F0vaAz2JIpRE/UcBDUHhX7QPXIwmZblwMS8tnolCkcjNj38xgGdgeM1YuU8QAv4mSgDY
-         fLhg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1708538799; x=1709143599;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=1rok7Lo+/V4RrNXD1wWinOl4D3/aaX97D5F2RCuGtcE=;
-        b=UMQyrVmHARL7K0iNPaJPYoEOhtsE9Lvt34xBm3N/nvyQmfm7hdwXvRLepBU9F+Njso
-         vorhqt+i/797WpZvs+5ADXhhmYkdxss1W8VdKFoatJAharjIIHwv69xNLY8VxJ90r2LJ
-         FsHUB5qQeJUaZbAu7SdKf+5B79PvsyXaxD93AhUqzmjtvBecAfv0sfq0l3/w/QaGjR98
-         Cqh9lEvJkkrZugUT1GnKdkVarlOkrhswL5eVEWpw06JtwpAHpXtMNPuu4o0EFWeKk44J
-         66BGMfdrZq/VqRX/QyF+RkI6moDpoK3/OJlO8sJTRNcR9JbHlcmL/E/BgR8lAvRKqfCf
-         tLyA==
-X-Gm-Message-State: AOJu0Yzm27wj7mMifq1D8Ccc7ZK9nb06RtO9ji9g6s4nWhFx60eY3mf4
-	cylXztQ7F6xNJPmETM/xz1ekpFVlXZ00dkbYTVrrEWwyWZPilVpd
-X-Google-Smtp-Source: AGHT+IFuYQ7DHP9ld1UBWKuFkelAxoSE4tZBzxgBFYSTfFLp8NqlXCkCqnOqGEtaVYiQff5skfO4EQ==
-X-Received: by 2002:a05:600c:4506:b0:412:6488:bbff with SMTP id t6-20020a05600c450600b004126488bbffmr7424763wmo.30.1708538799177;
-        Wed, 21 Feb 2024 10:06:39 -0800 (PST)
-Received: from gmail.com (198.red-88-14-62.dynamicip.rima-tde.net. [88.14.62.198])
-        by smtp.gmail.com with ESMTPSA id 13-20020a05600c230d00b00411d640085csm18622426wmo.43.2024.02.21.10.06.38
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 21 Feb 2024 10:06:38 -0800 (PST)
-Message-ID: <abe1c96d-48f7-4355-8688-e1fb05c67448@gmail.com>
-Date: Wed, 21 Feb 2024 19:06:36 +0100
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="xhPn31We"
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id A1CA71E56A4;
+	Wed, 21 Feb 2024 13:18:30 -0500 (EST)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=N205LOpMCaN2kMiSQHJyfm09+TRMlXDBNgoRZu
+	mluio=; b=xhPn31WeaU4mXzbWcAXrqNpLENTF77yNxNnBzE+lXl70lv7Nkkrhzp
+	BRnHyFVvgFbo7NvIW8a56q/3AUUBqvQSCqPkhgIO3uVZXFma0xyHsPoiggQix3Mc
+	CsgLzBXoWNVN+oda48Ufjinf+p5i5V6Q1cq+xslAqimCbyo4VrjeA=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 999D41E56A3;
+	Wed, 21 Feb 2024 13:18:30 -0500 (EST)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.176.30])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 091DC1E56A2;
+	Wed, 21 Feb 2024 13:18:29 -0500 (EST)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Jakub Wilk <jwilk@jwilk.net>
+Cc: <git@vger.kernel.org>,  Abhradeep Chakraborty
+ <chakrabortyabhradeep79@gmail.com>
+Subject: Re: [PATCH] git-remote.txt: fix typo
+In-Reply-To: <20240221083554.5255-1-jwilk@jwilk.net> (Jakub Wilk's message of
+	"Wed, 21 Feb 2024 09:35:54 +0100")
+References: <20240221083554.5255-1-jwilk@jwilk.net>
+Date: Wed, 21 Feb 2024 10:18:28 -0800
+Message-ID: <xmqqfrxlof4b.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/4] completion: reflog with implicit "show"
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Git List <git@vger.kernel.org>
-References: <98daf977-dbad-4d3b-a293-6a769895088f@gmail.com>
- <5991b58c-770c-4aaa-bce5-f396d9f7f16f@gmail.com> <xmqq8r4cnfju.fsf@gitster.g>
- <dd106d87-3363-426a-90a2-16e1f2d04661@gmail.com> <xmqqwmqyr3mb.fsf@gitster.g>
-Content-Language: en-US
-From: =?UTF-8?Q?Rub=C3=A9n_Justo?= <rjusto@gmail.com>
-In-Reply-To: <xmqqwmqyr3mb.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 9D520294-D0E5-11EE-9789-25B3960A682E-77302942!pb-smtp2.pobox.com
 
-On Tue, Feb 20, 2024 at 17:46:20 -0800, Junio C Hamano wrote:
+Jakub Wilk <jwilk@jwilk.net> writes:
 
->     $ git reflog sho<TAB>
->     shot show
-> 
-> That is what I would expect.    
+> Signed-off-by: Jakub Wilk <jwilk@jwilk.net>
+> ---
+>  Documentation/git-remote.txt | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/Documentation/git-remote.txt b/Documentation/git-remote.txt
+> index 1dec314834..932a5c3ea4 100644
+> --- a/Documentation/git-remote.txt
+> +++ b/Documentation/git-remote.txt
+> @@ -35,7 +35,7 @@ OPTIONS
+>  -v::
+>  --verbose::
+>  	Be a little more verbose and show remote url after name.
+> -	For promisor remotes, also show which filter (`blob:none` etc.)
+> +	For promisor remotes, also show which filters (`blob:none` etc.)
+>  	are configured.
+>  	NOTE: This must be placed between `remote` and subcommand.
 
-Thank you for responding.
+When you give more than one filters to "git clone", they are used to
+create a single "combined" filter, so strictly speaking, "also show
+which filter is configured" is a grammatically valid that might be
+more technically correct.  E.g. the user may see
 
-Of course that's the logical expectation.
+    $ git clone --filter=blob:none --filter=tree:2 $there sample-repo
+    $ git -C sample-repo remote -v show
+    origin ... (fetch) [combine:blob:none+tree:2]
+    origin ... (push)
 
-However I'm not sure if it is sensible to offer completion for
-sub-commands mixed with branch names.
+in the output.  It may not be a bad idea to update the code to show
+the filter information in a way that is more clear that we are
+seeing a list of filters (perhaps showing the above as "[blob:none
+tree:2]" might be a good starting point, as a totally separate topic
+(#leftoverbits).
 
-Furthermore, I am also worried that such an approach implies making the
-user pay, probably unnecessarily many times, for __git_complete_refs in
-cases such as:
+After taking your patch as-is, that is.  In user's mind, they
+consider they gave two filters, and making a single combined filter
+is something Git did without being asked for its own convenience,
+so "which filters are configured" is, while it may be technically
+less correct, much closer to what the end-user perceives.
 
-    $ git reflog <TAB><TAB>  ;# the user may be just exploring the sub-commands
-    $ git reflog s<TAB>      ;# the user may be lazy and just want "show "
-    $ git reflog show<TAB>   ;# likewise, to complete the SP
-    $ git reflog expir<TAB>  ;# how often a expir... branch is expected here?
+Thanks.
 
-The experienced user, if not most users, should be intuitive enough to
-circumvent the corner cases:
-
-    $ git reflog <TAB><TAB>
-    delete expire show
-    ...
-    $ git reflog s<TAB>
-    ...
-    $ git reflog show s<TAB>
-    ...
-    $ git reflog show shot
-
-This is why I choose to fallback to __git_complete_ref only when no
-other option is available.
-
-If you think, or anyone else, that these concerns don't make sense, I'm
-open to make it work as you described.
