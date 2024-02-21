@@ -1,151 +1,100 @@
-Received: from smtp5-g21.free.fr (smtp5-g21.free.fr [212.27.42.5])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail.manjaro.org (mail.manjaro.org [116.203.91.91])
+	(using TLSv1.2 with cipher DHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D5CF3AC34
-	for <git@vger.kernel.org>; Wed, 21 Feb 2024 07:41:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.27.42.5
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E862A3BB30
+	for <git@vger.kernel.org>; Wed, 21 Feb 2024 07:51:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=116.203.91.91
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708501322; cv=none; b=WtzCG11Sq8lG2B1LiHRQZQqujnzJzEgPMZivkYWoie1S0wjMJuSvXyUxHGgw3s1+iQr824biomTjol4O5O7ufpl33YYXvYRwM75oMVP4G1F5ZD5jok/Z/TRh4ESTDrqw92xcwIqMsMKM1dOGfXgBVTkhSR4uFF7QSY+rz0fFHTY=
+	t=1708501872; cv=none; b=EpcOZtxa7Qc20czQpZYM4NSyp/B3zYEEGPxk1BaHfnJnP4hMAQC3tFNZb7FQ2WU3MM194ojLJy6ElXHdJbIIJT8tSxW8LD/9Rs7QGeZBbKfdybGJNI81/79R/5j+WkBMnhhmikhK++WXXuVk/DFYnfkSfD3pBh0KAImsQX4WXBw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708501322; c=relaxed/simple;
-	bh=n4qBTKMqMhYdQsPTxKUC2qs7u4ly146QPdprQ59splY=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=jyOC136lGZ0Z9hjNsD3an5UGeXxvDF8rJPBI+I5ALdop4EyRfF+13fNIY93o6xd+/oVi5T/QSrUqSkfv10J28/6chHath9TAY5xGIvg19Jz+Myl0VBUI9yYqTa9pPkTgmzKyqZr6yQpv3y8nzlzs7Q0ox9WuGXywLLX1sjQXXFw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=free.fr; spf=pass smtp.mailfrom=free.fr; dkim=pass (2048-bit key) header.d=free.fr header.i=@free.fr header.b=cN9GgDlX; arc=none smtp.client-ip=212.27.42.5
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=free.fr
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=free.fr
+	s=arc-20240116; t=1708501872; c=relaxed/simple;
+	bh=7tMuJP60BzAdJh+ILCnOJKPG8+ul3sYOsDUeQO9iruQ=;
+	h=MIME-Version:Date:From:To:Cc:Subject:In-Reply-To:References:
+	 Message-ID:Content-Type; b=IwpoE+EXinfmiv9V6H3dqyBtWeKgK0BdpAee8Iy9GKhhTR0Q+kC2TDEVijkIzkQGfVmL8LWYYWLyUlQJdwAcpyDSd7U/qWvUsbaVjbJGINJim0JBSJ3aO26WMfe3w2sn/bVrrq1kbIjfJnyVZq4YlfB8joQtd9ATvSwXpCQGYGY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org; spf=pass smtp.mailfrom=manjaro.org; dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b=PosB6wvG; arc=none smtp.client-ip=116.203.91.91
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=manjaro.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=free.fr header.i=@free.fr header.b="cN9GgDlX"
-Received: from [192.168.3.191] (unknown [92.173.128.58])
-	(Authenticated sender: jn.avila@free.fr)
-	by smtp5-g21.free.fr (Postfix) with ESMTPSA id CB5CB5FFB7;
-	Wed, 21 Feb 2024 08:41:49 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=free.fr;
-	s=smtp-20201208; t=1708501312;
-	bh=n4qBTKMqMhYdQsPTxKUC2qs7u4ly146QPdprQ59splY=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=cN9GgDlXxgWmHJph1FK9nYOn/2daXMsEdT0HVJp+VGFAbMVnHfo1sdMdzSo5tgvDt
-	 YIEyL1wwFYtmPYWLkY/FI2NigC6hciF6cabRCLI94pRL0AD/HZWfrWOvPYdSKhZk/f
-	 U+/SqQ8ZJoUr9HKiwiDJI8DLYK8bukt0k5X9zKC6+5gBIVVsJbMo6Z5sfr69tn9+cQ
-	 HRBA5cv60QefgbcMTmE3dgAmtfMmDoVrW9obHJsjtKDoP3Grq4aSSvkyR8COYszhv+
-	 yeiUIYJGSZNvB1QK5Gw7Br2MKfimOOEG/KQGUun/VWRifR9W82RS8lNQkSkjRyZ9AZ
-	 4egq7bRBHGpqw==
-Message-ID: <67dca173-3048-430b-88a1-d3b5d853f84b@free.fr>
-Date: Wed, 21 Feb 2024 08:41:48 +0100
+	dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b="PosB6wvG"
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/3] doc: git-rev-parse: enforce command-line description
- syntax
-Content-Language: fr
-To: Junio C Hamano <gitster@pobox.com>,
- =?UTF-8?Q?Jean-No=C3=ABl_Avila_via_GitGitGadget?= <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org
-References: <pull.1670.git.1708468374.gitgitgadget@gmail.com>
- <17b0284c379e62a756e1bba008f4671f6afc0ad9.1708468374.git.gitgitgadget@gmail.com>
- <xmqqsf1mlp6f.fsf@gitster.g>
-From: =?UTF-8?Q?Jean-No=C3=ABl_Avila?= <jn.avila@free.fr>
-In-Reply-To: <xmqqsf1mlp6f.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=manjaro.org; s=2021;
+	t=1708501860;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=nuSIZjtCbHX4NFAK07FmVtqbhqUkItZYRqjH8tS+dWI=;
+	b=PosB6wvGNaFm9AYFlkO2cij9Wf/ccXo9u/Xz4XTlTaDIkjppIFFXRjyBdf1I1RvNnI9Kig
+	mNRKFE59M/Qjg7NsLVwsRll05IDQXQZG6xbbxigMg3kbdELkb8+CGiyVu5dBb/ZpC7JYo1
+	msRen0BOkyDBk6xF8xiGPY/Q7PC2dZPZcPE5WPSMwzq0rJknXeX/KK3wQ2ss9IWxWlOnJl
+	/QCg1t2OAu0O9GnYYfj/IQlgERIk51hQcDhlSZ7AJlp6xk7vwAggcuMeUGL/HlEWxlV1cn
+	oZscWwbjAwOYZLmZ1cYLa/k/x1HSxFlI0abZV00M5Xomnq6NYisEN8ukFNQ9LQ==
+Date: Wed, 21 Feb 2024 08:50:59 +0100
+From: Dragan Simic <dsimic@manjaro.org>
+To: Chris Torek <chris.torek@gmail.com>
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Subject: Re: [PATCH] documentation: send-email: use camel case consistently
+In-Reply-To: <CAPx1GvcGhZLqHVz9=ZW-w+ebP64-8FpPSb_ef7ygXzDDTze2bA@mail.gmail.com>
+References: <b0577267402f6177d8ba5646e12d7691437e6e8f.1708060779.git.dsimic@manjaro.org>
+ <xmqqv86kx8h0.fsf@gitster.g> <33abb630c1d089e39ff48f04e586b1c0@manjaro.org>
+ <xmqqo7cbt8a0.fsf@gitster.g> <9d0022ba5666223af94bbf450909b1ba@manjaro.org>
+ <CAPx1GvcGhZLqHVz9=ZW-w+ebP64-8FpPSb_ef7ygXzDDTze2bA@mail.gmail.com>
+Message-ID: <d2239d5a88ccf9806cf2873f00adc336@manjaro.org>
+X-Sender: dsimic@manjaro.org
+Content-Type: text/plain; charset=UTF-8;
+ format=flowed
 Content-Transfer-Encoding: 8bit
+Authentication-Results: ORIGINATING;
+	auth=pass smtp.auth=dsimic@manjaro.org smtp.mailfrom=dsimic@manjaro.org
 
-Le 20/02/2024 à 23:57, Junio C Hamano a écrit :
-> "Jean-Noël Avila via GitGitGadget" <gitgitgadget@gmail.com> writes:
+On 2024-02-21 01:43, Chris Torek wrote:
+> On Tue, Feb 20, 2024 at 8:42 AM Dragan Simic <dsimic@manjaro.org> 
+> wrote:
+>> I've never ever seen anyone referring to email headers as "TO", "CC" 
+>> or
+>> "BCC".  It's always referred to as "To", "Cc" and "Bcc".
 > 
->>   [verse]
->> -'git rev-parse' [<options>] <args>...
->> +'git rev-parse' [<options>] <arg>...
-> 
-> Good.  The "or more" is signalled by the ellipsis, not "args" being
-> plural.
-> 
->> ---short[=length]::
->> +--short[=<length>]::
->>   	Same as `--verify` but shortens the object name to a unique
->>   	prefix with at least `length` characters. The minimum length
-> 
-> This same comment applies throughout this patch, but in other places
-> when we use <placeholder> in the option argument description, don't
-> we use the same <placeholder> in text as well?  I am wondering if
-> the `length` (typeset in fixed-width) should become <length>.  What
-> do other recent[*] documentation pages commonly do?
+> I used some email system (back in the early 1980s) that did that.  It
+> felt weird even then. I can't remember if it was some CSMail (CSNet)
+> or MH(Rand Mail Handler) version that did it.
 
-This is another part of the inconsistences in documentation that I'd 
-like to tackle (hopefully, not in another life).
+That's interesting, it shows that different variants were used in the
+very early days of email.  Maybe even the all-lowercase "cc" and "bcc"
+variants were used somewhere, at least because RFC2076 (better said,
+the RFCs that predate it) specifies them.
 
-Using angle brackets for placeholders everywhere they appear is a visual 
-link to the preceding syntax description, but may feel a bit heavy on 
-some cases. Anyway, I'm all for applying the rule everywhere, for the 
-sake of consistency.
+>> Thus, "cc" stems from the old age of literal carbon copies ...
+> 
+> That's correct.  However:
+> 
+>> and "bcc" was seemingly coined when email took over.
+> 
+> "Blind Carbon Copies" predated email, but required adding the
+> notation separately, if it was to be added at all. (I'm just old enough
+> to remember using carbon copies myself, but not old enough to
+> know what Standard Office Practice was at that time.)
 
-Backticks and single quotes are used indistinctively (by the way, 
-asciidoctor does not process single quotes as markup) and are not used 
-everywhere they should. Using backticks is also a good hint for 
-translators to mean "verbatim, do not translate". Obviously, the 
-placeholders ask for translation, so the backtick rule should not apply 
-to them, even if another formating would be welcome : _<placeholder>_ 
-for instance?
+Thanks for the correction.  You're right, I was lazy enough not to
+check that blind carbon copies predate the age of email. [1]
 
-> 
-> 	Side note: I say "recent" because rev-parse doc is one of
-> 	the oldest ones that did not get typesetting attention they
-> 	deserve, compared to more recent ones that got nitpicked
-> 	while they were written and updated.
-> 
->> ---branches[=pattern]::
->> ---tags[=pattern]::
->> ---remotes[=pattern]::
->> +--branches[=<pattern>]::
->> +--tags[=<pattern>]::
->> +--remotes[=<pattern>]::
->>   	Show all branches, tags, or remote-tracking branches,
->>   	respectively (i.e., refs found in `refs/heads`,
->>   	`refs/tags`, or `refs/remotes`, respectively).
-> 
-> Ditto.  We see `pattern` that may want to become <pattern> in the
-> description (after the post context of this hunk).
-> 
->> ---glob=pattern::
->> +--glob=<pattern>::
->>   	Show all refs matching the shell glob pattern `pattern`. If
->>   	the pattern does not start with `refs/`, this is automatically
->>   	prepended.  If the pattern does not contain a globbing
-> 
-> Ditto.
-> 
->> ---exclude-hidden=[fetch|receive|uploadpack]::
->> +--exclude-hidden=(fetch|receive|uploadpack)::
->>   	Do not include refs that would be hidden by `git-fetch`,
->>   	`git-receive-pack` or `git-upload-pack` by consulting the appropriate
->>   	`fetch.hideRefs`, `receive.hideRefs` or `uploadpack.hideRefs`
-> 
-> Good.
-> 
->> ---since=datestring::
->> ---after=datestring::
->> +--since=<datestring>::
->> +--after=<datestring>::
->>   	Parse the date string, and output the corresponding
->>   	--max-age= parameter for 'git rev-list'.
-> 
-> Good, modulo possibly "date string" -> "<datestring>".
-> 
->> ---until=datestring::
->> ---before=datestring::
->> +--until=<datestring>::
->> +--before=<datestring>::
->>   	Parse the date string, and output the corresponding
->>   	--min-age= parameter for 'git rev-list'.
-> 
-> Ditto.
-> 
->> -<args>...::
->> +<arg>...::
->>   	Flags and parameters to be parsed.
-> 
-> Good.
+I'm also old enough to remember the literal carbon copies, I even made
+a few dozens of them myself on a mechanical typewriter.  They usually
+left me with dirty fingertips. :)  Though, I'm also not old enough to
+know what the common office practice was like back then.
 
+> Whether adding a "bcc" notation was common I don't know;
+> it seems it would be easier to leave it off if you made, say, one
+> original and a total of 2 copies, one "blinded".
+> 
+> (As your Wikipedia link notes, there was a practical limit to how
+> many carbon copies one could make in the first place.)
+
+Exactly, it was the limitation of mechanical typewriters.  Perhaps the
+limit was around four or five carbon copies.
+
+[1] https://en.wikipedia.org/wiki/Blind_carbon_copy
