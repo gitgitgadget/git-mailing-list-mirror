@@ -1,232 +1,97 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f43.google.com (mail-ej1-f43.google.com [209.85.218.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 379583CF41
-	for <git@vger.kernel.org>; Wed, 21 Feb 2024 08:42:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EB693A28E
+	for <git@vger.kernel.org>; Wed, 21 Feb 2024 08:43:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708504982; cv=none; b=msrI57mKN9p9/bJxFGiwGRsOOR6XhE62PWJ2X2l4TlypvuBliiunGNAsYx8zuzDKz79bK73IAcvc/XgEe3hv83bIEQ/EOg6VcUEjyZcYnwXVgrfKUp7QfXnMEc0MhKFa42zeQbMHzgplvwhRj9vqbPnASQm+RMRzr/BJAyKU04g=
+	t=1708505008; cv=none; b=FUuEiUtuKMJ9zktyKPUAHpGzT1TYl1a7t2FLovvmr2k92cUpTSvcRVAojH1pmaXKCTYk042U9y4iCpgxyedNHYYYwffkLnPkHkcqbR6u1yuQmb15lZZgAwIwoLFqWAAFnGohxQ0t/SAwBm0GMj/Gcy0TyS5Vt0S43d4ybDvdjsc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708504982; c=relaxed/simple;
-	bh=nLkWAOtu5GVOEwPCqcoQQxKGJUNc1Zqi5B+7WcpMXAo=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ZrYmHcXs+PW/ygb9ocSHMRF22G46Vy97i75+YUMbLh56dsUVVoJ+zMUAP/IL62416S1QSFOPEordtCjjgHYoqiC+baus2JXzt6CWq7tZBd3DiLoA5QjmD0szjkkHUcCxeHhJ7GYEH7jB7TzMn+j8UjvGPxLt40KjhR7Ihk735pA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
-Received: (qmail 2531 invoked by uid 109); 21 Feb 2024 08:42:52 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 21 Feb 2024 08:42:52 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 511 invoked by uid 111); 21 Feb 2024 08:42:56 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 21 Feb 2024 03:42:55 -0500
-Authentication-Results: peff.net; auth=none
-Date: Wed, 21 Feb 2024 03:42:50 -0500
-From: Jeff King <peff@peff.net>
-To: Yasushi SHOJI <yasushi.shoji@gmail.com>
-Cc: Denton Liu <liu.denton@gmail.com>, Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>
-Subject: Re: Segfault: git show-branch --reflog refs/pullreqs/1
-Message-ID: <20240221084250.GA25385@coredump.intra.peff.net>
-References: <CAELBRWK-bZTV0qx6_34HAgpmYwy+5Zo2E0M+4B6yZJJ3CqweTw@mail.gmail.com>
+	s=arc-20240116; t=1708505008; c=relaxed/simple;
+	bh=eeu9r3wkeZ69eSpp+3heNxXyxiiSGwPCuGU5y92iyrI=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=fZKZVZroW3RIPkopSoW0wNaSNIPDgKd/7KBxyRMH6tw9HsQfzKu+mO2Wr3nIXWltZi8G4cd0F4xB4vXYjxOXnWi0kaFnnzcTW+X85RiPeJ7SuSSe6tJntwTOMy5e6Q+sECFco110ln+ohdnYJi/DIePe5q2hGY8ohsLObS8rTTI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hb4JkRzg; arc=none smtp.client-ip=209.85.218.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hb4JkRzg"
+Received: by mail-ej1-f43.google.com with SMTP id a640c23a62f3a-a3ee69976c9so289715466b.0
+        for <git@vger.kernel.org>; Wed, 21 Feb 2024 00:43:26 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1708505005; x=1709109805; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=eeu9r3wkeZ69eSpp+3heNxXyxiiSGwPCuGU5y92iyrI=;
+        b=hb4JkRzgC4UF2XGhabCF4JceETrcXdAJEb+21u1eDNQTlohYNhyXSx5rZ7g23gWSN2
+         K39YNaegfWRnSvI+X1SK7t+IriZQKVyq36wSyBgQHaiaovUdlJhGBTmvJabfECIMkNEW
+         D+vLz6VsMavP0fMM9YWgZPnQSXs59f6FqW5s8wzcfDImtj/2oYNZcjdGAwbgUW1TCJRR
+         vRFuQ7ymtB0HEyE60FO+4/DVLeF1TvwVDU/bR3zwxKwcK/xLcAoiJYErKKdI+hwHTU1H
+         TKkwayO2p3ylI1PMYgiN70gKMOZggbwJpMNoZGJ06CER7w1L81oQf89ul4Xwfd9IEbV2
+         n8kA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1708505005; x=1709109805;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=eeu9r3wkeZ69eSpp+3heNxXyxiiSGwPCuGU5y92iyrI=;
+        b=H9gUpnHiiEPNGJ9v1DQd9WPo+S+rVFmqn1KymeeLnCeO82RBJza0bpkFvuPTw5/tv1
+         T3RmkHEErtWWGRgN2isdoZT+QoOSKXjzsfxKiZ2Q7eT0NxfdKdRjUQGgoTP0CVZEZMrz
+         /Q5rvbsMJUYwVhPVtzixbxthxV5yWdjkzehRjqrY4yFRCGG7zYC4CtgsCJOmmkG7mHXt
+         rpHc/y1ikjzP1w94A3Z/LeAZTW1TnWdNVHCGv2esud3PSA6FgVhd/S4iUj484mvEQtBL
+         jmFeU6BQbUNVTTy2Hl0KTnC4XRJIgFKa+x8R2deoaY2VN4k7eNtAWgHHMXUDbF/X0+za
+         n5Bw==
+X-Forwarded-Encrypted: i=1; AJvYcCUpAXSJPBW2Jx0AvXkGbnBDuR56D5JNv0yrTwb0VzTvzx5ST/BbLWx3vk79HKKEZ8rvEc0JBHnsfA1xGwvlw5HUjap/
+X-Gm-Message-State: AOJu0Yx6uI27jhyzCfBpyBk2TNPIgBYY2FPyxNkEuozGqiPCKS7Xpg+y
+	3syfgn7TBr47jeMpmuqJnpofJ0fDV03mygmpX7uiHuUrNBPRNsfLmKZqL18dpsiFnVda5xAG0RA
+	msjsNRE0ZHhA3MxeoBC0vlU2ZH/4=
+X-Google-Smtp-Source: AGHT+IEmUPkPzl2jrCWQsZYQDX62vxI4LE6svacVxd41mprk4LcYrOsOxLS2My0Is6oLraftVeRm/mCFOeNIsS4PAto=
+X-Received: by 2002:a17:906:f1c6:b0:a3e:5ffa:d564 with SMTP id
+ gx6-20020a170906f1c600b00a3e5ffad564mr6563889ejb.8.1708505004324; Wed, 21 Feb
+ 2024 00:43:24 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CAELBRWK-bZTV0qx6_34HAgpmYwy+5Zo2E0M+4B6yZJJ3CqweTw@mail.gmail.com>
+References: <1de82b27-116a-450e-98c0-52eb65a8f608@gmail.com>
+ <CAP8UFD1VAvnkM6afZvtpdXhA4csDBDwMnF9yUzSx_ut-Ypf+eA@mail.gmail.com>
+ <Zbi8pfvGpYrlZXAu@tanuki> <ZbpGzAd6FGEeTdrh@tanuki> <c61322de-8cd9-42b8-a04b-a8ae47b25c5e@gmail.com>
+ <Zbtmoo8qTmj-yt99@tanuki> <d4797f27-825b-4e2b-85a6-cc30f33934e3@gmail.com>
+ <CAP8UFD3GBT7s1jGOc=fe6XdYGF1c--tMBDiy_sDg1Afsa=drDw@mail.gmail.com>
+ <26cf6320-7ead-4ca0-b4b8-ca7008cae401@gmail.com> <CA+ARAtqicQkhKFcTxoT+GWMhCxnV-BNqd0oOcn2YwznfFnnRPw@mail.gmail.com>
+In-Reply-To: <CA+ARAtqicQkhKFcTxoT+GWMhCxnV-BNqd0oOcn2YwznfFnnRPw@mail.gmail.com>
+From: Christian Couder <christian.couder@gmail.com>
+Date: Wed, 21 Feb 2024 09:43:12 +0100
+Message-ID: <CAP8UFD3fmgcdN-zFVxmMu7mTBdrY=NPSdskj-18aHhpjNmpx_g@mail.gmail.com>
+Subject: Re: Git in GSoC 2024
+To: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+Cc: Patrick Steinhardt <ps@pks.im>, Karthik Nayak <karthik.188@gmail.com>, git <git@vger.kernel.org>, 
+	Taylor Blau <me@ttaylorr.com>, Junio C Hamano <gitster@pobox.com>, Victoria Dye <vdye@github.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Wed, Feb 21, 2024 at 10:48:25AM +0900, Yasushi SHOJI wrote:
+Hi Kaartic,
 
-> Does anyone see a segfault on `git show-branch --reflog refs/pullreqs/1`?
-> 
-> It seems files_reflog_path() creates a wrong path with the above command
-> using REF_WORKTREE_SHARED.
+On Wed, Feb 21, 2024 at 6:02=E2=80=AFAM Kaartic Sivaraam
+<kaartic.sivaraam@gmail.com> wrote:
 
-I can trigger a segfault, but I think the issue is simply a ref that has
-no reflog. Here's a simple reproduction:
+> Christian, could you do the following so that I could add you as an Org
+> Admin for the 2024 program?
 
-  $ git init
-  $ git commit --allow-empty -m foo
-  $ rm -rf .git/logs
-  $ git show-branch --reflog
-  Segmentation fault
+Yeah, sure.
 
-The bug is in read_ref_at(). When asked for the reflog at position "0",
-it calls refs_for_each_reflog_ent_reverse() with a special callback, but
-does not check that it actually found anything! So we return "0" for
-success, but all of the returned fields are garbage (including the
-pointer to reflog message, which is where I see the segfault).
+> "Visit https://g.co/gsoc site, click on the 2024 bar which will display
+> the 2024 Program Rules and Org Member agreement, read and agree to the
+> same."
 
-The bug was introduced by 6436a20284 (refs: allow @{n} to work with
-n-sized reflog, 2021-01-07). Probably the fix is something like:
+Done. My status is now "Accepted", but yeah I think you need to add me
+to the GSoC 2024 program now.
 
-diff --git a/refs.c b/refs.c
-index 03968ad787..c2a48f8188 100644
---- a/refs.c
-+++ b/refs.c
-@@ -945,6 +945,8 @@ static int read_ref_at_ent_newest(struct object_id *ooid, struct object_id *noid
- 
- 	set_read_ref_cutoffs(cb, timestamp, tz, message);
- 	oidcpy(cb->oid, noid);
-+	cb->reccnt++;
-+	cb->found_it = 1;
- 	/* We just want the first entry */
- 	return 1;
- }
-@@ -980,12 +982,10 @@ int read_ref_at(struct ref_store *refs, const char *refname,
- 	cb.cutoff_cnt = cutoff_cnt;
- 	cb.oid = oid;
- 
--	if (cb.cnt == 0) {
-+	if (cb.cnt == 0)
- 		refs_for_each_reflog_ent_reverse(refs, refname, read_ref_at_ent_newest, &cb);
--		return 0;
--	}
--
--	refs_for_each_reflog_ent_reverse(refs, refname, read_ref_at_ent, &cb);
-+	else
-+		refs_for_each_reflog_ent_reverse(refs, refname, read_ref_at_ent, &cb);
- 
- 	if (!cb.reccnt) {
- 		if (flags & GET_OID_QUIETLY)
+> For mentors, as Patrick and Karthik are new to the program, we need to
+> invite them first and only after they've accepted the invitation can we
+> add them to the program.
 
-but that breaks t1508.35, which explicitly tests for branch@{0} to work
-with an empty reflog file (added by that same commit). The code in
-get_oid_basic() to parse reflogs doesn't suffer from the same bugs: it
-checks up front that the reflog file exists, it preloads the output oid
-with the current ref value, and it doesn't look at other fields (like
-the reflog message).
-
-So I'm not sure if read_ref_at() needs to be made safer, or if
-cmd_show_branch() needs to learn the same tricks as get_oid_basic().
-Those are the only two callers of read_ref_at().
-
-Beyond that confusion, I noticed we do not have many tests for
-show-branch, and none for "--reflog". So I thought to add a basic one
-where we _do_ have an actual reflog to show. But wow, this has been
-broken for some time. I found at least two issues trying to run a test
-like:
-
-diff --git a/t/t3207-show-branch-reflog.sh b/t/t3207-show-branch-reflog.sh
-new file mode 100755
-index 0000000000..7f52c8dcb1
---- /dev/null
-+++ b/t/t3207-show-branch-reflog.sh
-@@ -0,0 +1,34 @@
-+#!/bin/sh
-+
-+test_description='show-branch reflog tests'
-+. ./test-lib.sh
-+
-+test_expect_success 'setup' '
-+	test_commit base &&
-+	git checkout -b branch &&
-+	test_commit one &&
-+	git reset --hard HEAD^ &&
-+	test_commit two &&
-+	test_commit three
-+'
-+
-+test_expect_success '--reflog shows reflog entries' '
-+	cat >expect <<-\EOF &&
-+	! [branch@{0}] (0 seconds ago) commit: three
-+	 ! [branch@{1}] (60 seconds ago) commit: two
-+	  ! [branch@{2}] (2 minutes ago) reset: moving to HEAD^
-+	   ! [branch@{3}] (2 minutes ago) commit: one
-+	----
-+	+    [refs/heads/branch@{0}] three
-+	++   [refs/heads/branch@{1}] two
-+	   + [refs/heads/branch@{3}] one
-+	++++ [refs/heads/branch@{2}] base
-+	EOF
-+	# the output always contains relative timestamps; use
-+	# a known time to get deterministic results
-+	GIT_TEST_DATE_NOW=$test_tick \
-+	git show-branch --reflog branch >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_done
-
-The first is that "show-branch" does not print the correct reflog
-message, and you get output like this:
-
-  ! [branch@{0}] (0 seconds ago) (none)
-   ! [branch@{1}] (0 seconds ago) (none)
-    ! [branch@{2}] (60 seconds ago) (none)
-     ! [branch@{3}] (2 minutes ago) (none)
-
-Once upon a time, read_ref_at() returned the whole reflog line, and
-show-branch had to find the tab-separator. But since 4207ed285f (refs.c:
-change read_ref_at to use the reflog iterators, 2014-06-03), it returns
-just the actual message (curiously, with the newline still attached). So
-we need something like this to fix it:
-
-diff --git a/builtin/show-branch.c b/builtin/show-branch.c
-index d6d2dabeca..b678b9fedb 100644
---- a/builtin/show-branch.c
-+++ b/builtin/show-branch.c
-@@ -761,7 +761,7 @@ int cmd_show_branch(int ac, const char **av, const char *prefix)
- 		for (i = 0; i < reflog; i++) {
- 			char *logmsg;
- 			char *nth_desc;
--			const char *msg;
-+			char *eol;
- 			timestamp_t timestamp;
- 			int tz;
- 
-@@ -771,15 +771,13 @@ int cmd_show_branch(int ac, const char **av, const char *prefix)
- 				reflog = i;
- 				break;
- 			}
--			msg = strchr(logmsg, '\t');
--			if (!msg)
--				msg = "(none)";
--			else
--				msg++;
-+			eol = strchr(logmsg, '\n');
-+			if (eol)
-+				*eol = '\0';
- 			reflog_msg[i] = xstrfmt("(%s) %s",
- 						show_date(timestamp, tz,
- 							  DATE_MODE(RELATIVE)),
--						msg);
-+						logmsg);
- 			free(logmsg);
- 
- 			nth_desc = xstrfmt("%s@{%d}", *av, base+i);
-
-Easy enough. But the output is still subtly wrong! Now we're back to
-6436a20284 (refs: allow @{n} to work with n-sized reflog, 2021-01-07)
-again. Before that commit, applying the fix above gives the expected
-output from my test:
-
-  ! [branch@{0}] (0 seconds ago) commit: three
-   ! [branch@{1}] (60 seconds ago) commit: two
-    ! [branch@{2}] (2 minutes ago) reset: moving to HEAD^
-     ! [branch@{3}] (2 minutes ago) commit: one
-
-but afterwards, entries higher than one are all shifted (so 1 is a
-duplicate of 0, 2 is the old 1, and so on):
-
-  ! [branch@{0}] (0 seconds ago) commit: three
-   ! [branch@{1}] (0 seconds ago) commit: three
-    ! [branch@{2}] (60 seconds ago) commit: two
-     ! [branch@{3}] (2 minutes ago) reset: moving to HEAD^
-
-I am still trying to wrap my head around how it can get such wrong
-results for show-branch when asking for "git rev-parse branch@{0}", etc,
-are correct. I think it is that "rev-parse branch@{0}" is only looking
-at the output oid and does not consider the reflog message at all. So I
-think it is subtly broken, but in a way that happens to work for that
-caller. But I'm not sure of the correct fix. At least not at this time
-of night.
-
-Cc-ing folks involved in 6436a20284.
-
--Peff
+Thanks for inviting them!
