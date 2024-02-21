@@ -1,140 +1,106 @@
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yb1-f175.google.com (mail-yb1-f175.google.com [209.85.219.175])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 034311FDD
-	for <git@vger.kernel.org>; Wed, 21 Feb 2024 01:46:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E98E023C9
+	for <git@vger.kernel.org>; Wed, 21 Feb 2024 01:48:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708479985; cv=none; b=Omct3EiM/6s2nXAazEzkleAJanjAjRfdDGA8neAvnX9eINybxJrwE43JcWBkhSl+0HE7FzsIwcEHwDASl1NJfCAg/2WJ8DRsbHmnzHc2ErU0/ebFfQn67RKYW/Z1UHTgQW1MiL5bCBLiSU9PxuG0PuLGidEouh2L+nb/9kmMHSM=
+	t=1708480119; cv=none; b=OAJrnhNn5uFPA5dsvnMAniC59XHo7eBOXnhWCpjbeo9Smh3OeDOVPeCdNVwbW+YDwBTdfxBDS5VnoQd1GeZSOsajLIDambWCZr2FVXfOev3VKIobAIbGC4nbJWvOkUbgYLlORyBMnlBmKzH+2D2RiqY/5Guin87PZAQyYCMVeoc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708479985; c=relaxed/simple;
-	bh=mm95qqBxlipIdTtMRYWqJ66PwbO7y/sgxz+JkuYK8JA=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=Bg5HG9EEzvF1git6CIbKaITKpDGXRGwjeVuDMMapH7vklAGo0OsSPBy4/y1QipUJr0UIm+5aM4+T5NeCSjk1GsfMMTqIOZm0UkZKcvZnD5/XvRo+Vqe6ot0CRl12Kp6lBDdpbZ/27PeIKzJSa2e411/GfqkIfb84V0CKBS1zWB8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=f1HtUlzK; arc=none smtp.client-ip=64.147.108.70
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1708480119; c=relaxed/simple;
+	bh=VB4B3gePK5C7TPw0wYNmzMGjz0J0qqnhhjkSmEcfQGg=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=J1k8wO8fY1+gdd3saaYSSv1kfnicisvJE8mdiOqUR/kieGVS9FSmVhqbhYhR6gMTSWJbvwwwamKtQXcfZL/j4eBK29ZHnSeaE7kcBGhDNEPuQkDdGYFEpm9ej0WCTK3Kl8iN1jjauainui0DuB3KXu/xlIosLxYUAwXEyD1ZoIk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Tjnb4fEW; arc=none smtp.client-ip=209.85.219.175
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="f1HtUlzK"
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id ABAE11ECC8E;
-	Tue, 20 Feb 2024 20:46:22 -0500 (EST)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=mm95qqBxlipI
-	dTtMRYWqJ66PwbO7y/sgxz+JkuYK8JA=; b=f1HtUlzKUn9dzRc9gjiYPnQLE8fb
-	COsdXNLvDQ19SkiKjxKCcU7SRXLPAbfla46YqiKygo1o0RBzOOzBBEJzr/4tEjJO
-	yGMxaTeSEgZOmrqnq4GmNPzVAdSe3xzY+PCovArdRXBhBjHQKvx6Kpa1kzQ0n7kO
-	2GM+oJ9fRV1GhfU=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id A2EE01ECC8D;
-	Tue, 20 Feb 2024 20:46:22 -0500 (EST)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.176.30])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 16E961ECC8C;
-	Tue, 20 Feb 2024 20:46:22 -0500 (EST)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: =?utf-8?Q?Rub=C3=A9n?= Justo <rjusto@gmail.com>
-Cc: Git List <git@vger.kernel.org>
-Subject: Re: [PATCH 3/4] completion: reflog with implicit "show"
-In-Reply-To: <dd106d87-3363-426a-90a2-16e1f2d04661@gmail.com>
- (=?utf-8?Q?=22Rub=C3=A9n?= Justo"'s
-	message of "Fri, 26 Jan 2024 21:20:07 +0100")
-References: <98daf977-dbad-4d3b-a293-6a769895088f@gmail.com>
-	<5991b58c-770c-4aaa-bce5-f396d9f7f16f@gmail.com>
-	<xmqq8r4cnfju.fsf@gitster.g>
-	<dd106d87-3363-426a-90a2-16e1f2d04661@gmail.com>
-Date: Tue, 20 Feb 2024 17:46:20 -0800
-Message-ID: <xmqqwmqyr3mb.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Tjnb4fEW"
+Received: by mail-yb1-f175.google.com with SMTP id 3f1490d57ef6-dc753905f1eso1692548276.1
+        for <git@vger.kernel.org>; Tue, 20 Feb 2024 17:48:37 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1708480117; x=1709084917; darn=vger.kernel.org;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=OriD2WwztGcF77F0z5SypuOlb5O9U5ARVi+6bt3kl3A=;
+        b=Tjnb4fEWvXkFe3Q3FNFwTbt32c8Xow7ZcHvqwT6yUZXB/vZ+rgMIvpXzlLf6G5+Js7
+         WX0h6YxClU9u6aWKJlyUUUbS+PMd52dsWyp8mENbbUBymXijIvWF1OYyYerr0xe7FhC2
+         IEJ3MbErvnpqzxYPQf4E8JIKjyXDETzffvXNpRJaWnSKUHTb2ZewQn+tUpd1J0d7x/hK
+         hQ7ukL0QjrNafmyTk9k/eZ157dfV8Qim6cOz5UcEZPEDRGMDxmePQhFtj+8ziNhaU5Fb
+         oYeXo+t4wu11Vpp4us7ZcvTuSZ4y8Enl3ZDL8WGilHc68EsQP23RD0GHFLg+Forsn1OB
+         aTog==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1708480117; x=1709084917;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=OriD2WwztGcF77F0z5SypuOlb5O9U5ARVi+6bt3kl3A=;
+        b=NiRyKPvqdcCblS1OOp3b5d5eDGQf1JG3Mf3au1C2vPFeJPmE4nmfJmdgzB+jTynSZ5
+         w9pAMsiTOqE7D7TxKbAOTBfe6zOgRY2pB0Mo29lNC8t+W/FtEEGC6npUKxJ8waIqQ4qk
+         Mt96eQWoPdJaoyjcB3OnWvp1ASlY7nguNLWHSyr5HWCu8l9BBaAW/S29SfKKUGkFoTYp
+         3r50gMadVX15U4fxJ1q6tY9UByys1QWwjmipXsT2sAX/X07oE0rDdw1YSnOrcwTOJgRb
+         nhMODjqvF3Qz1NWIb8kyZxt309b6/fRdcUZ/9zgC4i8grDEzernFBPnSiTplUXerlmHp
+         AzRQ==
+X-Gm-Message-State: AOJu0Yy1jpfnMP4YBx+Nxwl/2A9jwHcPi78UJfA2+GMnAH+Vl/virYvo
+	hN6dgWUTM/kwhmK3tIMRxFfW1ijt94q2C3A7OoK7/Bwow1FeAVpGZcxj65cq3tzExCl953LJaLG
+	R5T6W2N+GqJqun1f1UexMybTsjUJlFljay0A=
+X-Google-Smtp-Source: AGHT+IFntmjqPxVhK7zJyXObzhUeZSZ73Gt+/nqDEAZg8Ot343631jfoIbXNAidLDPj1TIZkr1j8+GGmFpI1n0GTyvg=
+X-Received: by 2002:a0d:e806:0:b0:607:ec77:1efc with SMTP id
+ r6-20020a0de806000000b00607ec771efcmr9647253ywe.4.1708480116742; Tue, 20 Feb
+ 2024 17:48:36 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID:
- 03E60F86-D05B-11EE-852E-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
-Content-Transfer-Encoding: quoted-printable
+From: Yasushi SHOJI <yasushi.shoji@gmail.com>
+Date: Wed, 21 Feb 2024 10:48:25 +0900
+Message-ID: <CAELBRWK-bZTV0qx6_34HAgpmYwy+5Zo2E0M+4B6yZJJ3CqweTw@mail.gmail.com>
+Subject: Segfault: git show-branch --reflog refs/pullreqs/1
+To: Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 
-Rub=C3=A9n Justo <rjusto@gmail.com> writes:
+Hi all,
 
->> So, when we see something that could be a subcommand we complete it
->> as a subcommand and return.  In your example, how should
->>=20
->>     $ git reflog def<TAB>
->>=20
->> work?  We try to see if there is a subcommand that begins with
->> "def", we see nothing matching, and then run __git_complete_refs?
->> What if the branch you created earlier were not named "default" but,
->> say, "delmonte", and you did "git reflog del<TAB>"?  Shouldn't the
->> user be offered "delete" and "delmonte" as potential completions?
->>=20
->> >  __git_send_email_confirm_options=3D"always never auto cc compose"
->> > diff --git a/t/t9902-completion.sh b/t/t9902-completion.sh
->> > index aa9a614de3..231e17f378 100755
->> > --- a/t/t9902-completion.sh
->> > +++ b/t/t9902-completion.sh
->> > @@ -2618,6 +2618,14 @@ test_expect_success 'git clone --config=3D - =
-value' '
->> >  	EOF
->> >  '
->> > =20
->> > +test_expect_success 'git reflog show' '
->> > +	test_when_finished "git checkout -" &&
->> > +	git checkout -b shown &&
->> > +	test_completion "git reflog sho" "show " &&
->>=20
->> IOW, shouldn't this offer both show and shown?
->
-> What should we do?
+Does anyone see a segfault on `git show-branch --reflog refs/pullreqs/1`?
 
-I would imagine that we should make the above offer both "show"
-(because it can be what the user meant) and "shown" (because it can
-also be what the user meant)?  But thinking of it again, because
-"show" is a prefix of "shown", this should offer "show" and then
-another <TAB> would offer "show" and "shown".  At least, that is
-what I would expect from the usual bash completion behaviour, which
-would look like:
+It seems files_reflog_path() creates a wrong path with the above command
+using REF_WORKTREE_SHARED.
 
-    $ mkdir /var/tmp/scratch && cd /var/tmp/scratch
-    $ : >show 2>shown
-    $ echo sho<TAB>
+refs/pullreqs is from GitHub if you have the following line in .git/config:
 
-The <TAB> makes the above line expand to
+fetch = +refs/pull/*/head:refs/pullreqs/*
 
-    $ echo show
+(gdb) bt
+#0  __pthread_kill_implementation (threadid=<optimized out>,
+signo=signo@entry=6, no_tid=no_tid@entry=0)
+    at ./nptl/pthread_kill.c:44
+#1  0x00007ffff7e101cf in __pthread_kill_internal (signo=6,
+threadid=<optimized out>) at ./nptl/pthread_kill.c:78
+#2  0x00007ffff7dc2472 in __GI_raise (sig=sig@entry=6) at
+../sysdeps/posix/raise.c:26
+#3  0x00007ffff7dac4b2 in __GI_abort () at ./stdlib/abort.c:79
+#4  0x00007ffff7dad1ed in __libc_message (fmt=fmt@entry=0x7ffff7f1f78c
+"%s\n") at ../sysdeps/posix/libc_fatal.c:150
+#5  0x00007ffff7e19ae5 in malloc_printerr
+(str=str@entry=0x7ffff7f1d22c "free(): invalid pointer") at
+./malloc/malloc.c:5658
+#6  0x00007ffff7e1b864 in _int_free (av=<optimized out>, p=<optimized
+out>, have_lock=have_lock@entry=0) at ./malloc/malloc.c:4432
+#7  0x00007ffff7e1e1df in __GI___libc_free (mem=<optimized out>) at
+./malloc/malloc.c:3367
+#8  0x0000555555625ae2 in cmd_show_branch (ac=<optimized out>,
+av=<optimized out>, prefix=<optimized out>)
+    at builtin/show-branch.c:801
+#9  0x0000555555572250 in run_builtin (argv=0x7fffffffe080, argc=3,
+p=0x5555558ca198 <commands+2712>) at git.c:469
+#10 handle_builtin (argc=3, argv=0x7fffffffe080) at git.c:724
+#11 0x00005555555731b4 in run_argv (argcp=argcp@entry=0x7fffffffde6c,
+argv=argv@entry=0x7fffffffde60) at git.c:788
+#12 0x0000555555573d38 in cmd_main (argc=<optimized out>,
+argc@entry=4, argv=<optimized out>, argv@entry=0x7fffffffe078)
+    at git.c:923
+#13 0x0000555555571f10 in main (argc=4, argv=0x7fffffffe078) at common-main.c:62
 
-and place the curser immediately after 'w' (without a space after it).
-Giving another <TAB> at this point offers two possible candidates.
-
-    $ echo show<TAB>
-    show shown
-
-So, I'd expect a similar completion to happen, i.e.
-
-    $ git reflog sho<TAB>
--->
-    $ git reflog show
-
-because there are two candidates, "show" and "shown", and I can type
-another <TAB> at that point to see the two candidates.
-
-    $ git reflog show<TAB>
-    show shown
-
-If the branch name were "shot" instead of "shown", then the possible
-choices would become "show" and "shot", so we'd skip one step from
-the above and immediately get the two candidates against "sho<TAB>".
-
-    $ git reflog sho<TAB>
-    shot show
-
-That is what I would expect.   =20
-
-Thanks.
+Best,
+-- 
+             yashi
