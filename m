@@ -1,95 +1,88 @@
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f49.google.com (mail-ej1-f49.google.com [209.85.218.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 255A212D756
-	for <git@vger.kernel.org>; Wed, 21 Feb 2024 22:46:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B28225232
+	for <git@vger.kernel.org>; Wed, 21 Feb 2024 22:58:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708555591; cv=none; b=PW1ZH79H3IJxbRyTkRH4GA6nLQSslHWu57qYGZjzqQ3y2e/XO98mF2tvDo+4F93+eolX8b4K6Okh/eugxi1f6oJgkki0mL2Ukb+MoEq+C4aKqa1WAwVSFN2eFwor06xDfYRrv0oP+QN0cMvwIH5vWssJjFABtZqeYgBre1br8Lk=
+	t=1708556291; cv=none; b=NG2ExjqHkLekxM+zYPgQfxoSrqHq3w/1q5XmYVks96kovHER9rz5EsPkZZ/zufFAjLBVKykdNd/bwSyk2S/4e0maRCSHBmlaiEg79aGZPaiLC8eoiBB3BlLjliuRVXxuJD/6CNhaTC3ysJl0+iTp7XnlZJ9bXE77e15k2o4wsZs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708555591; c=relaxed/simple;
-	bh=9UbSAnBVIhAKN4GhN2qOPLJMWVftKF8tPX0EN2ULnVM=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=ExER/bYG0bA950uDcv5G0IEP/XOJYXPAG66i/yveGMY3/JG7qMd7cVsWsoif4n0YB4rJhXCNqUkN9pFkZhp7TMAnSH9WdQRFWWxTJjpDI1bKuukhVRGFygDjvSj8O248AZCB2Abkad6nh6I5CkybHLBvIIJyjjFylELxMZLVFBw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=NLjLZHVR; arc=none smtp.client-ip=64.147.108.71
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1708556291; c=relaxed/simple;
+	bh=s8D0YQhBIOZDDdNu2ZG9PR1pz5U7pamzS2LgLKkXeMk=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=VpIpAzbyU9TBNK3Cb98UwGlltLzUP7Og+kR0veyV2/vpLlbc/54Vp5WLIcbYIxUbjcpH33Z88v1qmbkejuBik5P9c4RJAwuLGhfhtYi6bniMdTtaFvLscxwy83qc9YS9/Sjnph84g+s+kpJxAFUJC1ztONY4vOxJbEB5mo/0G1c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OnJ3saLq; arc=none smtp.client-ip=209.85.218.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="NLjLZHVR"
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id BA5BF1E746E;
-	Wed, 21 Feb 2024 17:46:11 -0500 (EST)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=9UbSAnBVIhAK
-	N4GhN2qOPLJMWVftKF8tPX0EN2ULnVM=; b=NLjLZHVR7N3is5abAVFoVWk+ObKN
-	ceaSQEz4Zfht/mutDLip9rvM5msKVijZEeYV3hDc+bYG/Hx0XC+7guOZc5UR474r
-	zoezK7Us8IoX9sMtPqNOvoZH5QFmmQbz6ueqrMSzCJ57DaN97d7PN2GKyCULO0/z
-	rze+Y3T5jrCXd1k=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id B0E041E746D;
-	Wed, 21 Feb 2024 17:46:11 -0500 (EST)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.176.30])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 225BE1E746C;
-	Wed, 21 Feb 2024 17:46:11 -0500 (EST)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: =?utf-8?Q?Jean-No=C3=ABl?= AVILA <jn.avila@free.fr>
-Cc: Michal =?utf-8?Q?Such=C3=A1nek?= <msuchanek@suse.de>,  Harmen Stoppels
- via GitGitGadget
- <gitgitgadget@gmail.com>,  git@vger.kernel.org,  Harmen Stoppels
- <me@harmenstoppels.nl>
-Subject: Re: [PATCH] rebase: make warning less passive aggressive
-In-Reply-To: <2324063.ElGaqSPkdT@cayenne> (=?utf-8?Q?=22Jean-No=C3=ABl?=
- AVILA"'s message of
-	"Wed, 21 Feb 2024 23:05:56 +0100")
-References: <pull.1669.git.1708442603395.gitgitgadget@gmail.com>
-	<xmqqjzmxofvn.fsf@gitster.g> <20240221183018.GB9696@kitsune.suse.cz>
-	<2324063.ElGaqSPkdT@cayenne>
-Date: Wed, 21 Feb 2024 14:46:10 -0800
-Message-ID: <xmqq4je1mo5p.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OnJ3saLq"
+Received: by mail-ej1-f49.google.com with SMTP id a640c23a62f3a-a34c5ca2537so153143066b.0
+        for <git@vger.kernel.org>; Wed, 21 Feb 2024 14:58:09 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1708556287; x=1709161087; darn=vger.kernel.org;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=JRhLanQriJxLvKus3UJjztxrB88EhAdRkUBvMSPxnGE=;
+        b=OnJ3saLqr73OvEnw4ecjMwIcykx9A0ehmPF8Eby5x2yfvCrHUxPcOQR+Ity2c70hQt
+         JxCwfPP+JtrRHzrxevVFNt4Cscokx5GiFUtxoU7WY4Oc/YRZNONDGTEdQvmUn711imUj
+         pisceuqTnEBql3FLvetBJcMKoAKzDoNoJyZhbqUX1/Hf37TRRf4CbRZXKh+GlUfdFU9n
+         1OT+Pb7YCmKEn+O3PrzmvsAK8sL+3iVqyHU9eKiu/sFq0ZWP2yrA41htYZStiGSwuzGL
+         FsSdhBFzT9ItaFs2bQdkTEwp7/yt9fL7eg1cKnUuHmE+CO4TPXLodKMjFicS1C1C3XMW
+         Ig3w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1708556287; x=1709161087;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=JRhLanQriJxLvKus3UJjztxrB88EhAdRkUBvMSPxnGE=;
+        b=mIfinfzb1oKwahzGBU5DhnKBRLoFeCEDQgVRhvGLRX/AfIhAu727GI8mIzqfmUbKVj
+         LsKygwovJWA3b9KpSOXDYdVqHRIMZFANq5BXO1pIG3zizk/y08E/4IFhLcP8CEDTpsrZ
+         haf7hI7oPswobdNoX//QpIPvFFZNcjupo6qEGZqg4YuDKnk0z9Bt46owb4ZMz60tOvWW
+         EKWTvit/GC9TNZqkOACLEWoJaPOS6gkvvPtNwYmfFlKU6Hfwv8PXfE76LmadHFpkw36t
+         hXxe18Nk4u6K9g7+j+pWOC38Fi5VQkq/VEXldhxeLcsh26BqU1tji2c8D/PF60Gnlose
+         +aEw==
+X-Gm-Message-State: AOJu0YxXKkdlVS/QK3vw8vHsAHYfj75yPijDCS+yb1KjBOBXxe9X/Vp9
+	w91MgO4H7IGgdBF4XdeOvLsZ9ltvmJ5LUvBXUPbmarMdjPSCIyVRzdSTVQ8X6AQ4n76xPRDW7mq
+	GdZR1I7Y9Sg7Z327lBFJmQQMgTXGDBBTHq1A=
+X-Google-Smtp-Source: AGHT+IEVkvW9x8LX2AK+7Oej2IHzbE23L2uD6YshAOQPrVeuGY7yvVSHYgMg4WxBVqyS5n/n8RUQqhQzCSvv57Ppip4=
+X-Received: by 2002:a17:906:1197:b0:a3e:3f42:11a1 with SMTP id
+ n23-20020a170906119700b00a3e3f4211a1mr8280965eja.66.1708556287166; Wed, 21
+ Feb 2024 14:58:07 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID:
- 027CA942-D10B-11EE-A1FD-25B3960A682E-77302942!pb-smtp2.pobox.com
-Content-Transfer-Encoding: quoted-printable
+From: Britton Kerin <britton.kerin@gmail.com>
+Date: Wed, 21 Feb 2024 13:57:55 -0900
+Message-ID: <CAC4O8c-tgDQ42upWorMi3Cw+KdPoHT2YxvZEirt_dtjQXreXAw@mail.gmail.com>
+Subject: script to pre-build all commits in a git-bisect, and use them during testing
+To: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-Jean-No=C3=ABl AVILA <jn.avila@free.fr> writes:
+Problem: it's annoying to have to build each commit when
+git-bisect'ing for something that isn't being tested automatically (so
+no git bisect run).
 
-> As a translator, I'm less bothered by editing a sentence to remove a qu=
-estion=20
-> mark (maybe enforcing a language style and reformulating the sentence b=
-y the=20
-> way), than by translating again and again similar sentences.
+Solution: https://github.com/bkerin/git-batch-bisect
 
-Sure, but if the original in C locale used to be "FOO BAR?" and you
-translated it to "foo bar?" in your language, and then a patch
-updates the string in the source to "FOO BAR", doesn't msgmerge
-notice that the original as a "fuzzy" matching and offer you
-something like
+It has an interface almost exactly like native git-bisect so it's
+super easy to learn but it handles a couple additional commands to
+create worktrees for all the commits, parallel build, and test in
+them.
 
-    # fuzzy
-    msgid "FOO BAR"
-    msgstr "foo bar?"
+From the README:
 
-so that all you have to do is to remove '?' anyway?  So I do not
-think you'd need to translate the "FOO BAR" part again and again.
+     git batch-bisect start bad_commit good_commit
+     git batch-bisect runinall 'autoreconf --install && ./configure && make'
+     git batch-bisect runincurrent ./test_program
+     git batch-bisect good
+     git batch-bisect runincurrent ./test_program
+     git batch-bisect bad
+     # etc.
 
-But the above assumes that for your language, the ONLY thing to turn
-such a rhetorical "passive aggressive" question into grammatically
-correct statement of a fact is to remove the question mark.  It may
-not be universally true for all languages, and for some language,
-even after msgmerge did its job correctly, you may need to do more
-than just removing the question mark to adjust the remaining "foo
-bar" part.
+I'd be grateful for any feedback on this script.  I don't actually
+bisect all that often, so it's only tested on one real-world project
+so far.  I thought it might live in contrib someday if it's useful to
+anyone else.
 
+Britton
