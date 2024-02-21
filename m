@@ -1,54 +1,54 @@
 Received: from fhigh3-smtp.messagingengine.com (fhigh3-smtp.messagingengine.com [103.168.172.154])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2DA94DA00
-	for <git@vger.kernel.org>; Wed, 21 Feb 2024 09:56:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB0843EA77
+	for <git@vger.kernel.org>; Wed, 21 Feb 2024 10:06:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708509406; cv=none; b=BTHaY14G9mVNCn3lPZD+/5HqfsGkGq7KxgKQHQDEel/99OhgIGoGncCzeDixcbiCI9BUa/gwyAIo76KnRQ5IhysFzUo66KgQLNnFyuHfpkpgqwGCjBjoCFThjDKUVpGTv5iP4Zc4y/SfrzW/gQE/GxKx6dTB/r7qTa8ofzx0abc=
+	t=1708509964; cv=none; b=bxA9mRzmPRTyMR1TLaZ9UGwQQbj73qvepRkxnHvu4YLTKxv2rQggAvQfp2uWqT6BazCLf0nbiJt+1ZO0I+FQLYOIaBvGudu2SJPA/XDnmWISY+UGmJ8aKA5knH6M0JL9Scu/CxoegD3Ox5Y5O1PggASq+CF2qDrEOqpGVNedFSs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708509406; c=relaxed/simple;
-	bh=uyXHDKGg8uSihdM3Ef62Q+R8rBSb+i6/T7fp9kpv0uk=;
+	s=arc-20240116; t=1708509964; c=relaxed/simple;
+	bh=ZqklWq9/U1IhSueSbGZnQd0r4xs/om4lbKV1tkUPHd0=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=mfmBLr8pwxL6xzKvbaGf757Amd2RvxcBkjrk/R8djqkBi2+nqj/M1fwWsORv1ynDVEcsUlLB/4exWAtIVJCHPIHjdNt2sFOmB4kXFeVz+TB4tM1CwKruNX8zvYVruqOJo+jbTKrKOxhTmm3XZx4wyExasfQuFel0o7P/J2ttFUY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=EztQ6pPf; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Q2/tujoQ; arc=none smtp.client-ip=103.168.172.154
+	 Content-Type:Content-Disposition:In-Reply-To; b=D2j8DlwdcFSBymXIubS5bGJ/erQ0CYkPCsoDUAPLciCWvZCeJuN/oyygamKMD7F5OxlJNav5kndQ8PflWA2Gcn19Y44YGaTBtyyU5P1SCHqwmLew6dw3HHumUuv5y4+7jlxKELoIv/ZLjzYLzxYBh5hnxTEYGWMe7+2OzC7S/BQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=MujI5Kjx; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=HHy6K4aC; arc=none smtp.client-ip=103.168.172.154
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="EztQ6pPf";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Q2/tujoQ"
-Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
-	by mailfhigh.nyi.internal (Postfix) with ESMTP id C6F1411400C4;
-	Wed, 21 Feb 2024 04:56:43 -0500 (EST)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute2.internal (MEProxy); Wed, 21 Feb 2024 04:56:43 -0500
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="MujI5Kjx";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="HHy6K4aC"
+Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
+	by mailfhigh.nyi.internal (Postfix) with ESMTP id D7456114008A;
+	Wed, 21 Feb 2024 05:06:01 -0500 (EST)
+Received: from mailfrontend1 ([10.202.2.162])
+  by compute6.internal (MEProxy); Wed, 21 Feb 2024 05:06:01 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1708509403; x=1708595803; bh=Oxs1QW0C2h
-	14dEbCMFWqNdLi8ExBe1E+d/JcqAbnaZg=; b=EztQ6pPfz6GD7lfx90LLffs87n
-	8QwkWeIa5q39CC5HPlaucDtM3mgVlKFBVG9B4k6BqjJ0HkHU7SFGfgVJ9WLD/4wy
-	PMLx7rxM5oVQt2RTAXLKipdBUqU6dCcxQ6KwT28shpoHtzmox6/boZQRgiTAoYiP
-	0u/D25ewrANxmf0Uu9mEz9qCqrAh9aWveIL8s4bCpeZW3T4sw7LJwY19Fk6UO8kf
-	OvyHd+hTweBGo8rTQ+R6dyI3ypyewNwc3ov9ntlnwwHXEMJfwAaCDcaa9vMeo+6O
-	8gWMgYxAW42XZGcQ/W5JE9SkjTcWxBo/JoN+GBEfhZqLrRncLyA3pYuJsghA==
+	:subject:to:to; s=fm1; t=1708509961; x=1708596361; bh=ZqklWq9/U1
+	IhSueSbGZnQd0r4xs/om4lbKV1tkUPHd0=; b=MujI5Kjx6S9DKK0j4clyznlF+K
+	mo40Sn9Mw6XBravSrEul2fWBXSxTTA6Mpe78KroxPMs4UvCobHuYjCwZkEWL1kXr
+	jm59uj1Hs58xolx2Dz02qPGYc9jRTDwQaBAUKXsy1pu81s3GtVHQAt+7W2xchOz2
+	Wx4JeJokXt+Or9e9kQe+hnv+0pSwBkDEtqo1+6tHa/IMCbyuqAPXIAx8tSdpfkSh
+	3o0aHQg7f2cht2lWYtAnARxc/68T+3tjtSqd3vmzYhz+EvKPEA2tqwxTVnu38YiR
+	SXnKNCTbTYevComC9GHKFng3pfOR24dLxO88aQ34OtniZT9xISQiE/1IupSw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1708509403; x=1708595803; bh=Oxs1QW0C2h14dEbCMFWqNdLi8ExB
-	e1E+d/JcqAbnaZg=; b=Q2/tujoQBh2in3bv4j47IthbFty8x/EdLqa6X2K24KGp
-	/CJ6eaKqdi8z5zZb7TxmjCOrjeLFjJWs4PxgzZKLF6HaoGS8u2SY3is+cSOVFHDk
-	g+skjH0d+b1cl7qADLsiVaEcEoHvGQw4Q1En/h8KVxqXfyXuqMWTR+3WfJXSSsc2
-	2TW81YvBGf6vDZueT79Gaidh30p9D7VtFqDhvCXS2AjIVBdlAQHZOqY6Lp9A+19w
-	q014395Sx6kRubypgWaUrYwmGCbgQmrYHZYKyLF6zbs7Ngx1mcXKLcDe/mVwlyuZ
-	ZJJTHHDAD/F1AYscZ4QVRcrrj6IRlGfWd+0c1ULfUw==
-X-ME-Sender: <xms:28jVZYb9VpxoXT0vz8v0i3zpzvXc_hoqw-JArbC21ij07BXaDigY1g>
-    <xme:28jVZTZyTuzZaMtrUt3LrInm-eecxL903TqTAuDT3YC7YEaIVHjHkc-OetIY3FeWp
-    kv6F5I2dBQtOd-dGg>
-X-ME-Received: <xmr:28jVZS99Ky1SMiyfL1PFTz4I7EAmJZit6oOxjQ6NYUqpxvJDoQ6gzUHHLKLO8KjrNTnR7cxhicxhRchKIPzVbMqlM-39s9vo0KHBsB-XanMH>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrfedvgddutdcutefuodetggdotefrodftvf
+	fm1; t=1708509961; x=1708596361; bh=ZqklWq9/U1IhSueSbGZnQd0r4xs/
+	om4lbKV1tkUPHd0=; b=HHy6K4aCz3hR2bbyjNJEYWlC5G3fp70IxCh4BomXvAtj
+	chJ4pF4j+H2qYZ4Fc5DyYAM4xIvCXcJQYnPy67BY/zHqwS8snBrEuryBmkzsCHVW
+	fT77PPQc9PH6KiCjHwJD/600lcv42Fd94OPMIVgF2HcULGep1VRq6+RLXQo8JMhV
+	qxesuGYu9/ivlio4FJWXjrbUGEoULjn101ypeUMvZYVVdE9BQU+3HvxpkFK4v2UA
+	Zy0/e9WZqQam+DU0UO7xf7hvXfS9JKONmRVy7x4DPZ41HLxK0Hfofy1JuS36DT3a
+	nPp4G8siCUCoH/sjqrtlBdQj/eAGvLsKdJwjoNj9Tg==
+X-ME-Sender: <xms:CcvVZTH2FTi1KxJ70Qx8nIQu5YEsqOxATxaBlWpwkoKlrow8zg92mg>
+    <xme:CcvVZQX1q1ciT11s6duDtQ-Csc7v6rgqEakEdr5AmGsBKuWdFCfT3aYDv11x_kRkO
+    dVA-oEcQq7ejNJ0JA>
+X-ME-Received: <xmr:CcvVZVIpVgDuAYjdkgtJXYodfb7AuSlB8JP32DbdlZPyi6aUYGFpc5NM79INLBOXv5YX3XneySExpzMAxMeJTQ5rIxlORmkYwmnH6wXVtixj>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrfedvgdduvdcutefuodetggdotefrodftvf
     curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
     uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
     fjughrpeffhffvvefukfhfgggtuggjsehgtderredttddvnecuhfhrohhmpefrrghtrhhi
@@ -56,24 +56,27 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrfedvgddutdcutefuodetggdote
     hnpeeukedtvedtffevleejtefgheehieegkeeluddvfeefgeehgfeltddtheejleffteen
     ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
     hkshdrihhm
-X-ME-Proxy: <xmx:28jVZSrzM7xKlEYDpePNXGwKH_B9ELJUXBK8neeJXBoRSkKeYgtwiQ>
-    <xmx:28jVZToJkqF16Cm32vs5gAsh8-yEkTYo2FuLjx8Tn18Fl7EAq1ZRpg>
-    <xmx:28jVZQSm1k3KfQL6TgqBZPW7sfkmGV0g4ObbHHze2JWLHzwtYSZFZA>
-    <xmx:28jVZa1Du59hav9SmCCACVuht4FIwkAc5AFNJcdlnvINqyVFtG1bUg>
+X-ME-Proxy: <xmx:CcvVZRGwSgZUnkuhKm0vH9Gx7XGQgRQE72HyDNmOOYmvuSiQXuhfuA>
+    <xmx:CcvVZZUB7BGQ-ejDsaXWaJAyK4bTqHmtFoqu0u7fN_j45k7QCds37w>
+    <xmx:CcvVZcMmK9c3cyTrDmr6tCITFuqPq4ozh7dvsxhJuOstxTmL0NaX1w>
+    <xmx:CcvVZXf0qBgedttQrqeWE8aq1OsSlt7YGc16e5jmLVXQ_21_yn-N8A>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 21 Feb 2024 04:56:42 -0500 (EST)
+ 21 Feb 2024 05:06:00 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 38f7da90 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 21 Feb 2024 09:52:38 +0000 (UTC)
-Date: Wed, 21 Feb 2024 10:56:40 +0100
+	by vm-mail (OpenSMTPD) with ESMTPSA id d36caaaf (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 21 Feb 2024 10:01:54 +0000 (UTC)
+Date: Wed, 21 Feb 2024 11:05:56 +0100
 From: Patrick Steinhardt <ps@pks.im>
-To: git@vger.kernel.org
-Cc: Yasushi SHOJI <yasushi.shoji@gmail.com>
-Subject: [PATCH 2/2] builtin/show-branch: detect empty reflogs
-Message-ID: <6107efeffa3a9e87ed95f4fe592d9b480887c510.1708509190.git.ps@pks.im>
+To: Jeff King <peff@peff.net>
+Cc: Yasushi SHOJI <yasushi.shoji@gmail.com>,
+	Denton Liu <liu.denton@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>
+Subject: Re: Segfault: git show-branch --reflog refs/pullreqs/1
+Message-ID: <ZdXLBIv1vLjhQUgx@tanuki>
 References: <CAELBRWK-bZTV0qx6_34HAgpmYwy+5Zo2E0M+4B6yZJJ3CqweTw@mail.gmail.com>
- <cover.1708509190.git.ps@pks.im>
+ <20240221084250.GA25385@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -81,107 +84,65 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="1g3Jih2Ele67T/VU"
+	protocol="application/pgp-signature"; boundary="/E4+M2fzuCGM6pDV"
 Content-Disposition: inline
-In-Reply-To: <cover.1708509190.git.ps@pks.im>
+In-Reply-To: <20240221084250.GA25385@coredump.intra.peff.net>
 
 
---1g3Jih2Ele67T/VU
+--/E4+M2fzuCGM6pDV
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-The `--reflog=3Dn` option for git-show-branch(1) allows the user to list
-the reflog of a specific branch, where `n` specifies how many reflog
-entries to show. When there are less than `n` entries we handle this
-gracefully and simply report less entries.
+On Wed, Feb 21, 2024 at 03:42:50AM -0500, Jeff King wrote:
+> On Wed, Feb 21, 2024 at 10:48:25AM +0900, Yasushi SHOJI wrote:
+>=20
+> > Does anyone see a segfault on `git show-branch --reflog refs/pullreqs/1=
+`?
+> >=20
+> > It seems files_reflog_path() creates a wrong path with the above command
+> > using REF_WORKTREE_SHARED.
+> I am still trying to wrap my head around how it can get such wrong
+> results for show-branch when asking for "git rev-parse branch@{0}", etc,
+> are correct. I think it is that "rev-parse branch@{0}" is only looking
+> at the output oid and does not consider the reflog message at all. So I
+> think it is subtly broken, but in a way that happens to work for that
+> caller. But I'm not sure of the correct fix. At least not at this time
+> of night.
+>=20
+> Cc-ing folks involved in 6436a20284.
 
-There is a special case though when the ref either has no reflog or when
-its reflog is empty. In this case, we end up printing nothing at all
-while returning successfully. This is rather confusing as there is no
-indicator why we didn't print anything.
+Ah, our mails crossed, but we came to the same conclusion. Things indeed
+are subtly broken here and work just by chance because all callers pre
+initialize the object ID. So in the case where the reflog is missing or
+empty we'd use that pre-initialized object ID because `read_ref_at()`
+does not indicate the failure to the callers.
 
-Adapt the behaviour so that we die instead of leaving no user visible
-traces. This change in behaviour should be fine given that this case
-used to segfault before the preceding commit.
+I think that this behaviour is not sensible in the first place. When
+asking for the reflog, we should only ever return object IDs parsed from
+the reflog. Falling back to parsing the ref itself does not make much
+sense. I've thus sent a patch series that changes the behaviour here.
 
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
----
- builtin/show-branch.c  |  2 ++
- t/t3202-show-branch.sh | 25 +++++++++++++++++++++++++
- 2 files changed, 27 insertions(+)
+Patrick
 
-diff --git a/builtin/show-branch.c b/builtin/show-branch.c
-index b01ec761d2..8837415031 100644
---- a/builtin/show-branch.c
-+++ b/builtin/show-branch.c
-@@ -785,6 +785,8 @@ int cmd_show_branch(int ac, const char **av, const char=
- *prefix)
- 			if (read_ref_at(get_main_ref_store(the_repository),
- 					ref, flags, 0, base + i, &oid, &logmsg,
- 					&timestamp, &tz, NULL)) {
-+				if (!i)
-+					die(_("log for %s is empty"), ref);
- 				reflog =3D i;
- 				break;
- 			}
-diff --git a/t/t3202-show-branch.sh b/t/t3202-show-branch.sh
-index 6a98b2df76..e5b74cc55f 100755
---- a/t/t3202-show-branch.sh
-+++ b/t/t3202-show-branch.sh
-@@ -264,4 +264,29 @@ test_expect_success 'error descriptions on orphan bran=
-ch' '
- 	test_branch_op_in_wt -c new-branch
- '
-=20
-+test_expect_success 'show-branch --reflog with empty reflog' '
-+	git checkout -B empty-reflog &&
-+	git reflog expire --expire=3Dnow refs/heads/empty-reflog &&
-+
-+	cat >expect <<-EOF &&
-+	fatal: log for refs/heads/empty-reflog is empty
-+	EOF
-+	test_must_fail git show-branch --reflog=3D1 empty-reflog 2>err &&
-+	test_cmp expect err &&
-+	test_must_fail git show-branch --reflog empty-reflog 2>err &&
-+	test_cmp expect err
-+'
-+
-+test_expect_success 'show-branch --reflog with missing reflog' '
-+	git -c core.logAllRefUpdates=3Dfalse checkout -B missing-reflog &&
-+
-+	cat >expect <<-EOF &&
-+	fatal: log for refs/heads/missing-reflog is empty
-+	EOF
-+	test_must_fail git show-branch --reflog=3D1 missing-reflog 2>err &&
-+	test_cmp expect err &&
-+	test_must_fail git show-branch --reflog missing-reflog 2>err &&
-+	test_cmp expect err
-+'
-+
- test_done
---=20
-2.44.0-rc1
-
-
---1g3Jih2Ele67T/VU
+--/E4+M2fzuCGM6pDV
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmXVyNcACgkQVbJhu7ck
-PpQ9yRAAgXlHKrWuF4HhbY52feWwLg/eOxJ0aIN6duUU/UsF8J5sPQcRcOwGTvEa
-1SkxOyb0iiLDpChMDw+CX1BJhRUBWsJj9jzB8yJvLeXnHYMTJylZ4YPQC8cXNBz+
-sxa/P4igrxHMs6pLSxb8KjXIdjvDSD8Zq1H2tKLt22GGbWhqbpNAJSnOHpsYHSup
-Z2hkghAQt77xwWfepQgQxAeTqUGu9gTYxLLZsfQCq99yfKAu4Osi+uB9digdriev
-8sX8capdEoJYyP0XyWb8vpYUsGWLjeNoX93ABZq2BRPWGBXz50hYx3oXN3u0nePg
-cfroyKws6zOGUDp2L8QUqx0n5Z3ilG13L2Xcj0d1YlHki8zkgFwtZ840ZkQx4ImR
-rZ3zJrqo2cjC1Fa8+AeU/qr+8xRqwjeDNM7Pw29+Y+6gIfvaAiCh+OLF3GILWYPh
-68m3nlwP8Oo+akTw6F2zjhW+EWrq01zHK4fPYgjFQieZxMbriD3Urczzt9ypxL3f
-h5vfdRkuyqik4Am52fWEKPHZfWaZFCV0K1+DrilKuFbKVWE5yGjbz9x0YhX6dzMJ
-V0RGB6aW2Z3fd3smJKwnVJNEfOUp11/XQ82INL6OIOwn8Aw1173FORkHKa/AxqvF
-8rzuiK1q4tTfGDmLm8kOZsFrwRIh29FnuxBiTEQCNg0kLMXHrFQ=
-=Bae9
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmXVywMACgkQVbJhu7ck
+PpRVyA/8CM5EwyUx3MI3JnMihurv1Z+Pn3aAZ7CbsRRMQ9vMGJ8rGSKkIkFHzBrR
+2wXOjMrqnJMsQT1Ws0dVlf3EyEb5zSCcKTRr09/xFGAKSHbSF10lUs89BeoR/lCu
+tMqopJcwJdst1Z0fL49MCU3FJGwYGIDnO3GoOO+dcDYjUzKvC6RxCClKWGQ55m71
+JKrACd8LCe1WdtZ+kY/kPyd32BuGF+jofM3DendCYzr86PYyOhx5bFYc9QiiAIzy
+H+4BiXLcZIj8NG1+X8xxVuMmaprGpjYjZN7xc7InDSY1TSVdDlZVSilim7gg+faX
+JAa2al+vODd2U4yMwtxCfkPk35q52d1ukwCKWC+lEqT8G6dx7QEq+HddulglEXKr
+aNadJoryX+6h4QeXIMaI86EuPtd2T5IbTmh1q/JbGC4jCxcB91Oa+cudEH/p//U+
+mGx1VECyJO7SMMbNZLChtfqstmKviRFkNwpoeCTnu+Z5kt+yP4/M6vgT5fbmIiFr
+C9kXcvcwS1wtb7wuvpg0OVDR/LfZsm7Jybn35bC+MQDWNvEwEZyKPw0r0VdnxWjX
+JBLwFZHEfnsfKKXF7j2AyZg1IEuQMWui/zr7A8DGlu4cGNBwNV9EOzEW6/O2lIzA
+2uIoMpXX6xmAym3EkFxnVyzBbfe4AdsL9RPbuqiUGCSS4ej88gQ=
+=Va7l
 -----END PGP SIGNATURE-----
 
---1g3Jih2Ele67T/VU--
+--/E4+M2fzuCGM6pDV--
