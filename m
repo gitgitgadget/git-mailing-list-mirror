@@ -1,186 +1,83 @@
-Received: from wfout7-smtp.messagingengine.com (wfout7-smtp.messagingengine.com [64.147.123.150])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f172.google.com (mail-pf1-f172.google.com [209.85.210.172])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB6C169D18
-	for <git@vger.kernel.org>; Wed, 21 Feb 2024 12:54:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.150
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08E757BAF8
+	for <git@vger.kernel.org>; Wed, 21 Feb 2024 13:32:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708520085; cv=none; b=Ow5HTG1KYlJZRNX2dJEGQU+a7qh+vrgo35uT6yOnBKl3ezYDGxX0QpL1kwmP6EwSBv950hCn2ixyVBrVfR3cM6x/qjoQCqSCcrUNy2vOxstCOwXWdmB/pIYBBX4Fe+1H5a5sZ3ydNBca8/PnJWQOBFKgI+dI2Sb3BC55GLhhGgo=
+	t=1708522380; cv=none; b=sDU2iZY312lfYkbcnYzciMvlcMqUYZ6Einc8u5fv7WRswaQoLEZIEM7CAVU6t4t9xw/t/graoa4ZVQztnDrZA9GVPPU2s+kmjC9aBTonWDM3Nd68ZZiNI7sySnIkSieNoRb617D7YyqTaCxNWsSbC7SqPJP3QkCda46kbUjgCAo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708520085; c=relaxed/simple;
-	bh=8D+lcDd4WANnqloonE247yisScDk5RsFD6C7iNDfMTQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=hnmGFbCADAAjrcGdwrnQ0dJe90ARbyJfmGYkkMkm6NYFAQjB4bRjCNN6SNIFQFpIcxL/Odpq2Cj98gqKmKuiG84HUxN7yH3nc79WTzuBE3ij677WSgqTgByJ3+/I05pW0rlRYA4amirajKn7WpYNjb/XFGW7EqJKPRNMBdZXhaM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=JR4jzHA0; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=jVoaFW+l; arc=none smtp.client-ip=64.147.123.150
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1708522380; c=relaxed/simple;
+	bh=5XtRh62SJX+TXl1q1XhjatfL4EE6RgD5vNxynAOJ5IY=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=AM7pjGwmFHC176XMQqsrtU+y5XR8Tg0+zPywqBmpAYZgKHj76OG6ndkFufnXM0R5N3mpH2iLHzBQot28bEq8QPmCNSMd+JPHNBSPyX3cCw6EcunlPdm/QWp023LgB2J5tpcXfwRn/Xg/jFV8pgqio3j3eVT3bOVgse0J0+UaB2U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CzRrjn43; arc=none smtp.client-ip=209.85.210.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="JR4jzHA0";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="jVoaFW+l"
-Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
-	by mailfout.west.internal (Postfix) with ESMTP id 406101C0008D;
-	Wed, 21 Feb 2024 07:54:42 -0500 (EST)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute5.internal (MEProxy); Wed, 21 Feb 2024 07:54:42 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1708520081; x=1708606481; bh=hOcQMRWK4h
-	38PdZTQDMJTZcyEvMzc0wq3SnIl1SxG+k=; b=JR4jzHA06cdkiA5AYbVzkqlOqw
-	5/gzWCcIFHSvrP86BlSJt9HjOvjX4tgwY2ugFY17VJCp4xkWps//ThWk/86qdDB6
-	+pB2vf6pFEoFPWNUfQjU+K7ljZug2umC5eF6AMnX6R/BRxzv/znG+Yu0HxxJtmsC
-	YHCx4XvbwYrkLLnumjHR3JI7f0OpX2YOXD8M5k6rBI9fCC0JGFxtmCYdrjebCx4b
-	G7zITVbkm1r1F031zLuObgycK8lUntA8hKhC1KadvOeZKL3WZy7bXdoAUu7MmyWY
-	HcD8cxbpQNPo8TRiYGYJGjKk+FhsAHDigDEAwL7ZN0olyWHOZQbBMjewA+Ew==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1708520081; x=1708606481; bh=hOcQMRWK4h38PdZTQDMJTZcyEvMz
-	c0wq3SnIl1SxG+k=; b=jVoaFW+lf/5invbF9EkaoYvlUu4cWT7BCo3075/NWzE5
-	+BmaqsjgU0VJbeOkZokor6g0Xc4eIlRj6BGb4DJtuAJU9j327zbPeluQq2wVM+Yb
-	18LCKpC9IIVUTpzZg09tC7QdUpMWmsd5Co560P1vA9UZ8rSMdwU++1ZNvp/JW4kb
-	LQthoSGCzmifV0l7eHoTSbpaRlM7o+YsTqUtQOGyvQCpx2KtdbXQd+elBjOZHYnV
-	75Mc4T+7ixVnkx4GQ/tYBQqhqUcjda8XoWyU3v4RT8VSPyWqZM5+4I0iSzCgcE3H
-	1EYutGdWlLl5flXka4NYnPGi3SvP0d8KTqNO+q1Kdw==
-X-ME-Sender: <xms:kfLVZXxmjfcWMBkz5e0qp8g81kefCJLwEtnbwzUHD_Io-nwI1BmBKA>
-    <xme:kfLVZfQmjruAZIN9JmxXkt3uKN6FjQzEBKNR6q5f-h9TDj8U0fyImn6qNuNcEMWjl
-    pg6ZE3KLzGkPiI3bg>
-X-ME-Received: <xmr:kfLVZRUm1gpJ59UUpd41SEn1WNsN-zukrSM38D9MLh5Rcrt4ov1AbMfCJQ41Eu--HzQS7kC6t0pynTMbqSX_bW1XcvM39Xd7UgucI1TsLsb->
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrfedvgdegiecutefuodetggdotefrodftvf
-    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
-    uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
-    fjughrpeffhffvvefukfhfgggtuggjsehgtderredttdejnecuhfhrohhmpefrrghtrhhi
-    tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
-    hnpeetueevhffhudefvdegieeuieelgedthfegfedtueevjeejtdfgjeehudejuedtuden
-    ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
-    hkshdrihhm
-X-ME-Proxy: <xmx:kfLVZRiBpJmuOtjde3P58hctdhFOnZ8u4OASRsXKdQIo39Orm7CsFg>
-    <xmx:kfLVZZBLakWKebqbzZFDZkd46MMWnXVvlMSMcFnLrOzXRHuUYND10w>
-    <xmx:kfLVZaIozBfFOzrgngvZq_05krnAbBkLb3rm9okfBs2lrTyQ-b9z0Q>
-    <xmx:kfLVZU_JiNYiIvkgF58KnAXx9BgfATBPYOw23u8iL4nN2wSSOXJernXTWuA>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 21 Feb 2024 07:54:40 -0500 (EST)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 11770e7b (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 21 Feb 2024 12:50:33 +0000 (UTC)
-Date: Wed, 21 Feb 2024 13:54:35 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: Jeff Hostetler <git@jeffhostetler.com>
-Cc: Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>,
-	git@vger.kernel.org, Jeff Hostetler <jeffhostetler@github.com>
-Subject: Re: [PATCH 04/12] fsmonitor: refactor refresh callback on directory
- events
-Message-ID: <ZdXyi2erhfoW5CMW@tanuki>
-References: <pull.1662.git.1707857541.gitgitgadget@gmail.com>
- <3fb8e0d0a7c0455cc7a5ba28c12736fd4bbbd44e.1707857541.git.gitgitgadget@gmail.com>
- <Zc3aGSbEIFVClRd_@tanuki>
- <3fcb41e4-b17e-48ec-b54c-50452654b28c@jeffhostetler.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CzRrjn43"
+Received: by mail-pf1-f172.google.com with SMTP id d2e1a72fcca58-6e43ee3f6fbso3616016b3a.3
+        for <git@vger.kernel.org>; Wed, 21 Feb 2024 05:32:58 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1708522378; x=1709127178; darn=vger.kernel.org;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=5XtRh62SJX+TXl1q1XhjatfL4EE6RgD5vNxynAOJ5IY=;
+        b=CzRrjn43Mco9Q8xYcxFzhfOTZYz26JRxz3zyyVNIL7C0/4Rmp6bKIMQWdqGbuKHh5v
+         tjKFxeISwlq5kJUctQDz2vt1KsITkvX4XLfSnCRjTuTxAMIF5cbQBDTgFXZkKJtyssAS
+         2qoVNbne3lLGaYo6UKf+N11dR67m1K5ZuiCtvGuqPvq50akChR8K6lmG4dfxz9UslEvF
+         NU7x++1gu9KkQphpjRpCBNDrhxrCRtc2Lw77irrk1IkoFJ8SbJn57utq3b24/m7ETQXB
+         M1fs7lAyXMbpXl/QqaM1KB0E4G34m5e0Xw7MbU2c85GcvdzbNSZEvhu1uRzo3GAABhpn
+         z6dA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1708522378; x=1709127178;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=5XtRh62SJX+TXl1q1XhjatfL4EE6RgD5vNxynAOJ5IY=;
+        b=Z3GLvKqEk8n8KwiJCd3VTDjJT972jFpnYky/ba7+irBPPSx8ZEZvc9siKFVl1kkDcg
+         IZ7dNdCe8zeVXVMH9tplWrFktRIAwjqt0xfCAgqJu22s4DWVypZlutmqP+dEdi64rXXu
+         tI8TXzDIMhH4iSqY5OfSSW7aKsIcsC/KR5reqixnNGIOkZ1R6Qli2etUgSqnrgtqd0pa
+         zyHI0l6gtajbktiW91cHutPjfYNWjXrUGgNdrnxNtyNrcCqEo7NgbBmhSezpZYdcCxiZ
+         8f3gyDg/Lwy2Kbg2d1C3sl2CvvZuw1WsXyk4bLbVQGrYQKplApJtfb84/UOfZZNQfWCA
+         Ao3Q==
+X-Gm-Message-State: AOJu0YxX0yBlvMKkes3f3T7ZuSpF84q8ZxGpClJ7WRVALg/C6i7khst+
+	gqagugcBZi5W2NWa9JxoR7Kjf4irsj7tDeNyHon/7D2jqr3rInERLe9YQ8X4EO1tAwgI6NfqXVy
+	PbP4rfX/aS38LP59ZzX4WLKsYn1xHYp6s85I=
+X-Google-Smtp-Source: AGHT+IF2Qd29hUOV1iC+tYhuzfBgVHca9d2oko0CNNrnM1dZBsXeQ6UZvPEyT/ANHF0z75OvKNJ3gdw42eIWqnFHulo=
+X-Received: by 2002:a05:6a21:8ccc:b0:1a0:6f51:edee with SMTP id
+ ta12-20020a056a218ccc00b001a06f51edeemr22828731pzb.56.1708522377927; Wed, 21
+ Feb 2024 05:32:57 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="rIIvdl2MdeRF/I3q"
-Content-Disposition: inline
-In-Reply-To: <3fcb41e4-b17e-48ec-b54c-50452654b28c@jeffhostetler.com>
+From: Maarten Ackermans <maarten.ackermans@gmail.com>
+Date: Wed, 21 Feb 2024 20:32:46 +0700
+Message-ID: <CAB=tB2vB0LbP=DznSqTFYHCRxDxd6U=Q+P33yeBzGssq2eK1vA@mail.gmail.com>
+Subject: Breaking change with "git log -n" since 2.43
+To: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
+Hi all,
 
---rIIvdl2MdeRF/I3q
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+I would like to report a breaking change with "git log -n" introduced
+in 2.43 that's causing some trouble:
+https://github.com/git/git/commit/71a1e94821666909b7b2bd62a36244c601f8430e#diff-380c4eac267b5af349ace88c78a2b004a16ed20c2b605c76827981063924bbf9R2222
 
-On Tue, Feb 20, 2024 at 01:54:44PM -0500, Jeff Hostetler wrote:
->=20
->=20
-> On 2/15/24 4:32=E2=80=AFAM, Patrick Steinhardt wrote:
-> > On Tue, Feb 13, 2024 at 08:52:13PM +0000, Jeff Hostetler via GitGitGadg=
-et wrote:
-> > > From: Jeff Hostetler <jeffhostetler@github.com>
-> > >=20
-> > > Signed-off-by: Jeff Hostetler <jeffhostetler@github.com>
-> > > ---
-> > >   fsmonitor.c | 52 ++++++++++++++++++++++++++++++--------------------=
---
-> > >   1 file changed, 30 insertions(+), 22 deletions(-)
-> > >=20
-> > > diff --git a/fsmonitor.c b/fsmonitor.c
-> > > index f670c509378..b1ef01bf3cd 100644
-> > > --- a/fsmonitor.c
-> > > +++ b/fsmonitor.c
-> > > @@ -183,6 +183,35 @@ static int query_fsmonitor_hook(struct repositor=
-y *r,
-> > >   	return result;
-> > >   }
-> > > +static void fsmonitor_refresh_callback_slash(
-> > > +	struct index_state *istate, const char *name, int len, int pos)
-> >=20
-> > `len` should be `size_t` as it tracks the length of the name. This is
-> > a preexisting issue already because `fsmonitor_refresh_callback()`
-> > assigns `int len =3D strlen(name)`, which is wrong.
-> >=20
-> > > +{
-> > > +	int i;
-> >=20
-> > `i` is used to iterate through `istate->cache_nr`, which is an `unsigned
-> > int` and not an `int`. I really wish we would compile the Git code base
-> > with `-Wconversion`, but that's a rather big undertaking.
-> >=20
-> > Anyway, none of these issues are new as you merely move the code into a
-> > new function.
-> >=20
-> > Patrick
-> >=20
->=20
-> Yeah, the int types are bit of a mess, but I'd like to defer that to
-> another series.
->=20
-> There are several things going on here as you point out.
->=20
-> (1) 'int len' for the length of a pathname buffer.  This could be fixed,
-> but the odds of Git correctly working with a >2Gb pathname doesn't make
-> this urgent.
->=20
-> (2) 'int i' is signed, but should be unsigned -- but elsewhere in this
-> function we use 'int pos' which an index on the same array and has
-> double duty as the suggested insertion point when negative.  So we can
-> fix the type of 'i', but that just sets us up to hide errors with 'pos',
-> since they'd have different types.  Also, since it is really unlikely
-> for Git to work with >2G cache-entries, I think this one can wait too.
->=20
-> I don't mean to be confrontational, but I think these changes should
-> wait until another series that is focused on just those types of issues.
+To reproduce, the command `git log -n 9007199254740991` fails on
+2.43.2, whereas it didn't on 2.42.0. This specific number corresponds
+to the Number.MAX_SAFE_INTEGER (2^53 - 1) in JavaScript (docs:
+https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number/MAX_SAFE_INTEGER).
+The max value that is supported now is a signed 32-bit integer (2^31 -
+1).
 
-No worries, this doesn't come across as confrontational at all. As I
-said myself, the problems aren't really new to your patch series but are
-are preexisting and run deeper than what you can see in the diffs here.
-So I'm perfectly fine with deferring this.
+I suppose git simply ignored the extra digits of the number, as the
+commit message describes.
 
-Patrick
+See https://github.com/intuit/auto/issues/2425#issuecomment-1956557071
+for the impact.
 
---rIIvdl2MdeRF/I3q
-Content-Type: application/pgp-signature; name="signature.asc"
+Best regards,
 
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmXV8ooACgkQVbJhu7ck
-PpSqsQ/7BFwcSZBs5SFbNp8A2Bg3PbVaitur/dwZjWjr8Bu1cq1zAdNBvqWEO9pL
-u/I4anPC2MmDXEKigkaowKJt57tbY11B7yCoYiSoJ0KpahvW3Oizx6QIiNoMjYv+
-g5B1OWzmwKxg52hXNnZ3XPkIxT9UaxbHbzGbd/GT+Dl4bx7tqCRvH3frL54MapLZ
-YxMir2BUts8vsIifTMftrImIQ6OZZCGRAQtTHFypc6G1cX110JiJjNTkM3YpupXo
-z4ghs42D5h/L+TlY97QAPfPJQitK6fzPR4kVIpz6S61Hk5L2/iiLV0BWrDJki90K
-AUVpRRtyZuNZuIPfLbBqMfwiHxC0aDICC0vUqZ/vRMXXTIoNhwHJJHLpy1Ykqtoj
-qt8dGR3Tj87gyJNpaXud1/JNuslyb/xxNoJr3OBC4873XWjdCDLXsDt6hNmZpx13
-aaEQP0Tv7Uh5vvurYrUi9IU5OiwXrux5nAgcKUni3rdaTiXVklA2N3MIQaTmCXjC
-EyrA7x70O0K6jWHqh+SkcMJYHltjH1yLLmY0pm8z9izKQqJyRtc0hnyb9u7vwuYO
-SEEk5z2l8uTHRNVo0mDsRqC07YWnIgyS4DrLd+OA58yZWon7sGwU1iZ+K77qBYop
-JLTH6rH8i/GLFTq0/HHpVI03EoQaUNMNJ74SczwGOTObEzFmxL8=
-=loqV
------END PGP SIGNATURE-----
-
---rIIvdl2MdeRF/I3q--
+Maarten Ackermans
