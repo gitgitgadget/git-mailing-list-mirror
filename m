@@ -1,275 +1,129 @@
-Received: from mail-wr1-f44.google.com (mail-wr1-f44.google.com [209.85.221.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from out4-smtp.messagingengine.com (out4-smtp.messagingengine.com [66.111.4.28])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BACE53D540
-	for <git@vger.kernel.org>; Wed, 21 Feb 2024 09:14:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BB293EA9F
+	for <git@vger.kernel.org>; Wed, 21 Feb 2024 09:52:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=66.111.4.28
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708506868; cv=none; b=sbHYX/ImbdGhKR1EsGVr2Xc2OnxfsYeNyg6LYRrBEZosgStDMX66LWUO2DahFtzT8bhCgkFikGucN9nA/O+HJpF9xltw987LuyCXU4tq3Rysa0FlfeNdNhGZurHgCw3+hOdNdxcN5fe4G3NsGDTheCC9wJxg0MPrk0HI/AzIpQE=
+	t=1708509160; cv=none; b=JTjaJaxTGlbVvpizyVblzVScUPCsRhDTSeRnTO3jutIfj354p5OVQClKW6qOGT/Hc4Sfxl+8KMkwMubPXcJw5vSFAvnXgjoMTG4xfi3Utzw+2xy24zJS+wXz/BpyC34qAay+6H8ET1fmlZL7PCSZWrkb6YmMQbKm7rIIoJknpzk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708506868; c=relaxed/simple;
-	bh=mf5sT109lzzl8SP0zmKOrfN/KdCJfoeHuHUSxuhGLlE=;
-	h=Message-ID:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=mz8jgeKGTSobPqQjTUENDFn8gDFF7gHOP5sdtBoGSHeJp2RD1Bl2BYPlmLidEiEAR82fiqtbUIeVXFpX8raRWHOxrcULGcpuBpQrnnjoqqQN2GSHu141ZqoFYRhlgrwtMAMkq0TKHu72q6kYMpN6PdRNtVK7nvBGoukE3uyYnGQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=WOJLPuK7; arc=none smtp.client-ip=209.85.221.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1708509160; c=relaxed/simple;
+	bh=/NM9BEfmS7oBVmmEN9BC2wu6j6F21IyH0X4B5+O5xvY=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=puHtK18sHS9NuRVO/VJ9vWOoh9FyhmtO1/JtQE0qh705QzqSxKaq/1Ub31lT5fu4LnaKw2kL6WtGUJSQ/KwlOw62/L6WHHU9asnjzNA6lIMIJvytR5H7UfgJD/o2HZzRra6cgK+b9j4gajgZImSLi4G0UOIbSn85T/Amy4dGNfc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=lSItElIl; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=iPE2FPqe; arc=none smtp.client-ip=66.111.4.28
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WOJLPuK7"
-Received: by mail-wr1-f44.google.com with SMTP id ffacd0b85a97d-33d2710f3acso2914119f8f.0
-        for <git@vger.kernel.org>; Wed, 21 Feb 2024 01:14:26 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1708506864; x=1709111664; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=DlFC7qlHw3JDuw4OfY9EB5sGDRzgiUbxo4YzO21a31w=;
-        b=WOJLPuK7/rcxIN1vuKo1E64lhI+14dcmABVO07tLmhm1h3HNrNjzVj7tXiOQ8jsNDx
-         nZh4RmFqoyJZZx2NM+4u2Hy9Zsp15K6XqPxrIGkbpz7sWPbI3tcWZgNUzbYmTQw/QES5
-         n2LxiUbx7r9ZZ2aRtyXEMT8/cCaK5VvGv0OxSxm+y1+dSTbKqtBNqjetiCgPS/xR1Qpz
-         Ev6D6HcgOFlIx9BfmevaKjiruE7m6TEueNFzkI6gJ2YH3t5s0GuJfdRaFvBGNYRPZpHr
-         3APC8aeKLtvL2mXoN9V5iwwP1kA1fKyN93ww2ka9pxYG0su9jXfa7JaKZbdiTiM7s8Co
-         ByyQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1708506864; x=1709111664;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=DlFC7qlHw3JDuw4OfY9EB5sGDRzgiUbxo4YzO21a31w=;
-        b=fwP7XKCE5RxZpgvhJqhlqzGFoFlLfMnxUpNmX+NGWR6aVN6Ni0SJJtBbh/a7jL7TN7
-         ON3iCtsZmklTv89R+YNokStwxeLLFFoyNBXwmd3Yy8A98Np/02CCWap127UY02RbBetc
-         voBuE1n9yyVPpsusZjQJCk81S3jHEhiwuFcECsUHbLKn+LXG2u40U9CaNQ3oAckLe32V
-         OI7gMiugrAjddS++aXuoFqt/c0AH6AT7BfOTWQ+gUe/02BzNPBoHLP875K7hdFKXlLPj
-         8yGj+ERh5lL17m5F99qRptZRAKsOYmV9facc8HCzAfx6pTSsiWrUHaT27NRyx+BHo+pS
-         0m9g==
-X-Gm-Message-State: AOJu0Yym43QYkIF7c5xsmXnsVqYz4l9za1tKoA9gJBM8F9UyjzP0nZKF
-	kgN+PIZ+ozU62etL7Z8kxm+UxAspWXgohkyoFsQ14KDnSLcyGjKCAy3hk5zr
-X-Google-Smtp-Source: AGHT+IE9d5YQ9jNBjGcVz6bEY7qYgS4WsuO98/M51cLKN80qwddP28DUuwlRJcFpMFrjfN/CCiZ14g==
-X-Received: by 2002:adf:ce0b:0:b0:33d:72e6:ee9c with SMTP id p11-20020adfce0b000000b0033d72e6ee9cmr2459778wrn.29.1708506864168;
-        Wed, 21 Feb 2024 01:14:24 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id k5-20020adfe3c5000000b0033b66c2d61esm16001191wrm.48.2024.02.21.01.14.23
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 21 Feb 2024 01:14:23 -0800 (PST)
-Message-ID: <pull.1681.git.git.1708506863243.gitgitgadget@gmail.com>
-From: "Leslie Cheng via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Wed, 21 Feb 2024 09:14:23 +0000
-Subject: [PATCH] Add unix domain socket support to HTTP transport.
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="lSItElIl";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="iPE2FPqe"
+Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
+	by mailout.nyi.internal (Postfix) with ESMTP id 4471C5C0064;
+	Wed, 21 Feb 2024 04:52:36 -0500 (EST)
+Received: from mailfrontend1 ([10.202.2.162])
+  by compute4.internal (MEProxy); Wed, 21 Feb 2024 04:52:36 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1708509156; x=1708595556; bh=/NM9BEfmS7
+	oBVmmEN9BC2wu6j6F21IyH0X4B5+O5xvY=; b=lSItElIlIKm5mgRiDNd+t5C5AN
+	4XdiDzyrYhVQZZvfed8pHOg3Zz+7kAA4XIq8EVhm2l8H8VmTdg/CIkQTow/zaL+S
+	LFlJMUtO9tlF8vmf60NspcP9YuAn5BIItPuL3LtH5eKvuYlLc8LtUubbRS58usCc
+	2r7ngFNRUpsY4mwjKDSugo8aEH0jeqU818f7cZXv7tAy+panIO7S4KlT+4E+rkNs
+	WrO178J85upc5pFRsuNYAAehcUHntA22LvnrIU1ao5NOIiE71kkv5Nb3NXNsfYmS
+	7E/uBlR8Jx4tVnsTSavsrMl2R3am2rkyBtlDCm167eeeriSMxj5OZSvQqEog==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm1; t=1708509156; x=1708595556; bh=/NM9BEfmS7oBVmmEN9BC2wu6j6F2
+	1IyH0X4B5+O5xvY=; b=iPE2FPqeEVF/UAL1XpOKs3DSbKEt7SKeLGMdCfPFZxnU
+	YXWFyqLJeC+1gfOdWs1r04VzRoP1mOLtYXRcGEYTdQwcpUocLed7wsY7x31NIzyu
+	hFZlefwN7YncO1QXcCReaoCuHKwHGeNrY/0eIGzZbm2X+R5iAoEViCK8+lJoUD4u
+	WxZzfrB0e/rwbAVxRMcx//vO94ybeJtuzUkIdCbX4GzjK3SucuyqZnHd+h2+UWgK
+	Cs8AcCknjgz/ZMWsZ5xQ0whk9MAcELi2D+5pXGDl2yJsj26qnMJaqUj9eeYmAYP6
+	QhjUJM2Wv/t/jhwCCjbd1xuPEpGVn5FRgHqu16eYag==
+X-ME-Sender: <xms:48fVZRILT7SuK4Al4W5rjKPpg4APJ3RWxSuAWKYBSIt11zy27xusKA>
+    <xme:48fVZdL-J-KOox-Uky7Knlc7WvGOmfKxjzbI-rfcI1-9ScCc1nktp1JLqcGRur2vB
+    8sAfxFt4r4pr1blMA>
+X-ME-Received: <xmr:48fVZZuD8DbKZAAQ3swRhG-7LFAYzt5JtGnu8XUfCFbTfNnO5ddDcA3Lu1suSBhmSVPucO7L4tAu1SbD_4yX59i6zdW9ZahmcVyvUq1lkzD6>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrfedvgddtlecutefuodetggdotefrodftvf
+    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
+    uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
+    fjughrpeffhffvvefukfhfgggtuggjsehgtderredttddvnecuhfhrohhmpefrrghtrhhi
+    tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
+    hnpeeukedtvedtffevleejtefgheehieegkeeluddvfeefgeehgfeltddtheejleffteen
+    ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
+    hkshdrihhm
+X-ME-Proxy: <xmx:5MfVZSa3bHysVDbLa6dVLAUPbtLOaHvBfFTtl7GNy-pIaYm3-yr_BA>
+    <xmx:5MfVZYbjIa5omscCUQnLh1R4FWoyMX9oOUuX1aZxs8-ZwTwAcFjbjQ>
+    <xmx:5MfVZWDgRgvoP6OjHLkoG8rPjVPLTrvvKwlptT2wHoMw4TrwgTMvrQ>
+    <xmx:5MfVZTxBmb0htzMJpHmTkb2YK532lcuONROPzLINABfYFtoquHAiQg>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 21 Feb 2024 04:52:35 -0500 (EST)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id b1bc7b38 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 21 Feb 2024 09:48:28 +0000 (UTC)
+Date: Wed, 21 Feb 2024 10:52:31 +0100
+From: Patrick Steinhardt <ps@pks.im>
+To: Yasushi SHOJI <yasushi.shoji@gmail.com>
+Cc: Git Mailing List <git@vger.kernel.org>
+Subject: Re: Segfault: git show-branch --reflog refs/pullreqs/1
+Message-ID: <ZdXH39p_Bh0mCsj3@tanuki>
+References: <CAELBRWK-bZTV0qx6_34HAgpmYwy+5Zo2E0M+4B6yZJJ3CqweTw@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Leslie Cheng <leslie@lc.fyi>,
-    Leslie Cheng <leslie.cheng5@gmail.com>
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="gTK+MmFEYRuDL+CL"
+Content-Disposition: inline
+In-Reply-To: <CAELBRWK-bZTV0qx6_34HAgpmYwy+5Zo2E0M+4B6yZJJ3CqweTw@mail.gmail.com>
 
-From: Leslie Cheng <leslie.cheng5@gmail.com>
 
-This changeset introduces an `http.unixSocket` option so that users can
-proxy their git over HTTP remotes to a unix domain socket. In terms of
-why, since UDS are local and git already has a local protocol: some
-corporate environments use a UDS to proxy requests to internal resources
-(ie. source control), so this change would support those use-cases. This
-proxy can occasionally be necessary to attach MFA tokens or client
-certificates for CLI tools.
+--gTK+MmFEYRuDL+CL
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-The implementation leverages `--unix-socket` option [0] via the
-`CURLOPT_UNIX_SOCKET_PATH` flag available with libcurl [1].
+On Wed, Feb 21, 2024 at 10:48:25AM +0900, Yasushi SHOJI wrote:
+> Hi all,
+>=20
+> Does anyone see a segfault on `git show-branch --reflog refs/pullreqs/1`?
 
-`GIT_CURL_HAVE_CURLOPT_UNIX_SOCKET_PATH` and `NO_UNIX_SOCKETS` were kept
-separate so that we can spit out better error messages for users if git
-was compiled with `NO_UNIX_SOCKETS`.
+TIL. I didn't even know that git-show-branch(1) is a thing.
 
-[0] https://curl.se/docs/manpage.html#--unix-socket
-[1] https://curl.se/libcurl/c/CURLOPT_UNIX_SOCKET_PATH.html
+By default, no refs but "HEAD" and refs starting with "refs/heads/*"
+have a reflog. Thus, your ref "refs/pullreqs/1" won't have a reflog, and
+git-show-branch(1) then happily segfaults when it didn't find a reflog
+at all. This is of course a bug that needs fixing.
 
-Signed-off-by: Leslie Cheng <leslie@lc.fyi>
----
-    Add unix domain socket support to HTTP transport.
+I'll send a patch in a bit, thanks for your report!
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1681%2Flcfyi%2Flcfyi%2Fadd-unix-socket-support-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1681/lcfyi/lcfyi/add-unix-socket-support-v1
-Pull-Request: https://github.com/git/git/pull/1681
+Patrick
 
- Documentation/config/http.txt      |  5 ++
- git-curl-compat.h                  |  7 +++
- http.c                             | 23 +++++++++
- t/t5565-http-unix-domain-socket.sh | 80 ++++++++++++++++++++++++++++++
- 4 files changed, 115 insertions(+)
- create mode 100755 t/t5565-http-unix-domain-socket.sh
+--gTK+MmFEYRuDL+CL
+Content-Type: application/pgp-signature; name="signature.asc"
 
-diff --git a/Documentation/config/http.txt b/Documentation/config/http.txt
-index 2d4e0c9b869..bf48cbd599a 100644
---- a/Documentation/config/http.txt
-+++ b/Documentation/config/http.txt
-@@ -277,6 +277,11 @@ http.followRedirects::
- 	the base for the follow-up requests, this is generally
- 	sufficient. The default is `initial`.
- 
-+http.unixSocket::
-+	Connect through this Unix domain socket via HTTP, instead of using the
-+	network. If set, this config takes precendence over `http.proxy` and
-+	is incompatible with the proxy options (see `curl(1)`).
-+
- http.<url>.*::
- 	Any of the http.* options above can be applied selectively to some URLs.
- 	For a config key to match a URL, each element of the config key is
-diff --git a/git-curl-compat.h b/git-curl-compat.h
-index fd96b3cdffd..f0f3bec0e17 100644
---- a/git-curl-compat.h
-+++ b/git-curl-compat.h
-@@ -74,6 +74,13 @@
- #define GIT_CURL_HAVE_CURLE_SSL_PINNEDPUBKEYNOTMATCH 1
- #endif
- 
-+/**
-+ * CURLOPT_UNIX_SOCKET_PATH was added in 7.40.0, released in January 2015.
-+ */
-+#if LIBCURL_VERSION_NUM >= 0x074000
-+#define GIT_CURL_HAVE_CURLOPT_UNIX_SOCKET_PATH 1
-+#endif
-+
- /**
-  * CURL_HTTP_VERSION_2 was added in 7.43.0, released in June 2015.
-  *
-diff --git a/http.c b/http.c
-index e73b136e589..8cfdcaeac82 100644
---- a/http.c
-+++ b/http.c
-@@ -79,6 +79,9 @@ static const char *http_proxy_ssl_ca_info;
- static struct credential proxy_cert_auth = CREDENTIAL_INIT;
- static int proxy_ssl_cert_password_required;
- 
-+#if defined(GIT_CURL_HAVE_CURLOPT_UNIX_SOCKET_PATH) && !defined(NO_UNIX_SOCKETS)
-+static const char *curl_unix_socket_path;
-+#endif
- static struct {
- 	const char *name;
- 	long curlauth_param;
-@@ -455,6 +458,20 @@ static int http_options(const char *var, const char *value,
- 		return 0;
- 	}
- 
-+	if (!strcmp("http.unixsocket", var)) {
-+#ifdef GIT_CURL_HAVE_CURLOPT_UNIX_SOCKET_PATH
-+#ifndef NO_UNIX_SOCKETS
-+		return git_config_string(&curl_unix_socket_path, var, value);
-+#else
-+		warning(_("Unix socket support unavailable in this build of Git"));
-+		return 0;
-+#endif
-+#else
-+		warning(_("Unix socket support is not supported with cURL < 7.40.0"));
-+		return 0;
-+#endif
-+	}
-+
- 	if (!strcmp("http.cookiefile", var))
- 		return git_config_pathname(&curl_cookie_file, var, value);
- 	if (!strcmp("http.savecookies", var)) {
-@@ -1203,6 +1220,12 @@ static CURL *get_curl_handle(void)
- 	}
- 	init_curl_proxy_auth(result);
- 
-+#if defined(GIT_CURL_HAVE_CURLOPT_UNIX_SOCKET_PATH) && !defined(NO_UNIX_SOCKETS)
-+	if (curl_unix_socket_path) {
-+		curl_easy_setopt(result, CURLOPT_UNIX_SOCKET_PATH, curl_unix_socket_path);
-+	}
-+#endif
-+
- 	set_curl_keepalive(result);
- 
- 	return result;
-diff --git a/t/t5565-http-unix-domain-socket.sh b/t/t5565-http-unix-domain-socket.sh
-new file mode 100755
-index 00000000000..4ebcdfaa515
---- /dev/null
-+++ b/t/t5565-http-unix-domain-socket.sh
-@@ -0,0 +1,80 @@
-+#!/bin/sh
-+
-+test_description="test fetching through http via unix domain socket"
-+
-+. ./test-lib.sh
-+. "$TEST_DIRECTORY"/lib-httpd.sh
-+
-+test -z "$NO_UNIX_SOCKETS" || {
-+	skip_all='skipping http-unix-socket tests, unix sockets not available'
-+	test_done
-+}
-+
-+UDS_TO_TCP_FIFO=uds_to_tcp
-+TCP_TO_UDS_FIFO=tcp_to_uds
-+UDS_PID=
-+TCP_PID=
-+UDS_SOCKET="$(pwd)/uds.sock"
-+UNRESOLVABLE_ENDPOINT=http://localhost:4242
-+
-+start_proxy_unix_to_tcp() {
-+    local socket_path="$UDS_SOCKET"
-+    local host=127.0.0.1
-+    local port=$LIB_HTTPD_PORT
-+
-+    rm -f "$UDS_TO_TCP_FIFO"
-+    rm -f "$TCP_TO_UDS_FIFO"
-+    rm -f "$socket_path"
-+    mkfifo "$UDS_TO_TCP_FIFO"
-+    mkfifo "$TCP_TO_UDS_FIFO"
-+    nc -klU "$socket_path" <tcp_to_uds >uds_to_tcp &
-+    UDS_PID=$!
-+
-+    nc "$host" "$port" >tcp_to_uds <uds_to_tcp &
-+    TCP_PID=$!
-+
-+    test_atexit 'stop_proxy_unix_to_tcp'
-+}
-+
-+stop_proxy_unix_to_tcp() {
-+    kill "$UDS_PID"
-+    kill "$TCP_PID"
-+    rm -f "$UDS_TO_TCP_FIFO"
-+    rm -f "$TCP_TO_UDS_FIFO"
-+}
-+
-+start_httpd
-+start_proxy_unix_to_tcp
-+
-+test_expect_success 'setup repository' '
-+	test_commit foo &&
-+	git init --bare "$HTTPD_DOCUMENT_ROOT_PATH/repo.git" &&
-+	git push --mirror "$HTTPD_DOCUMENT_ROOT_PATH/repo.git"
-+'
-+
-+# sanity check that we can't clone normally
-+test_expect_success 'cloning without UDS fails' '
-+    test_must_fail git clone "$UNRESOLVABLE_ENDPOINT/smart/repo.git" clone
-+'
-+
-+test_expect_success 'cloning with UDS succeeds' '
-+    test_when_finished "rm -rf clone" &&
-+	test_config_global http.unixsocket "$UDS_SOCKET" &&
-+	git clone "$UNRESOLVABLE_ENDPOINT/smart/repo.git" clone
-+'
-+
-+test_expect_success 'cloning with a non-existent http proxy fails' '
-+    git clone $HTTPD_URL/smart/repo.git clone &&
-+    rm -rf clone &&
-+    test_config_global http.proxy 127.0.0.1:0 &&
-+    test_must_fail git clone $HTTPD_URL/smart/repo.git clone
-+'
-+
-+test_expect_success 'UDS socket takes precedence over http proxy' '
-+    test_when_finished "rm -rf clone" &&
-+    test_config_global http.proxy 127.0.0.1:0 &&
-+    test_config_global http.unixsocket "$UDS_SOCKET" &&
-+    git clone $HTTPD_URL/smart/repo.git clone
-+'
-+
-+test_done
+-----BEGIN PGP SIGNATURE-----
 
-base-commit: 3e0d3cd5c7def4808247caf168e17f2bbf47892b
--- 
-gitgitgadget
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmXVx94ACgkQVbJhu7ck
+PpSu+w//UucUoMxfb1B1vtafwnRINhy9v76b6ECV3AE2ZeitvC7aXF59B1FoJEEk
+1dzJswqKVb4/FuGI/vAr8BKqKgosYdNVpk1eTj44cdU0cgh4O+EYDfD2ejthVNYm
+6H2eMXMykzRCQhlQi1r7VaebTZ1A+w7WUtP/D6karRjXs8dgZ8X4Sg6U4DKOXyna
+YhbPUlr0lZV0gmk6OSoEWKD+aphoOpGXcs5x9rvVnH2yQTbbAHIa3fLg0gEHudd4
+/dS0pFtmfuf4WFHMI1TmwgT/HVd27qPv2mtrBQIvasg9V5XByxrRKVDgLvuQdElz
+wB+Gz0revtJHh3Oyh6Ip5SogooR7Tyz2DWOFJcaC8e0HsWP6sF1lHP3pZa/GSXkf
+9F/mRTfkQ6wVvb4L4u/QtAtI6t+I3pUnoTnM9k4HDW2I1STq4dQlXYabXVY8QGLU
+9H7HT+2Vs753ZfVtYabwdkyL06H+5ZPZQdocz3V0EgrFzBmxVesEZzOYfZsPeLJQ
+FanuYoB+KrH/B0rAPRZ1WEcSvcCt/BqtEA9IRyZvS1E7kUf1qw67alWyZv4j+VR3
+pl9sV2DySbNXzHsSL8pAEvgnUMF4aCRUDTESucoWXjh4iR1Xz0lcAiT4Ny1c4yv3
+uNzQ4KgK9HJeg7WS/liJMNJh7ySabBx+cZPC0hkNCTms40DYt7I=
+=aUDV
+-----END PGP SIGNATURE-----
+
+--gTK+MmFEYRuDL+CL--
