@@ -1,53 +1,53 @@
-Received: from wout1-smtp.messagingengine.com (wout1-smtp.messagingengine.com [64.147.123.24])
+Received: from wfout7-smtp.messagingengine.com (wfout7-smtp.messagingengine.com [64.147.123.150])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64DB56994C
-	for <git@vger.kernel.org>; Wed, 21 Feb 2024 12:37:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.24
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 424E669971
+	for <git@vger.kernel.org>; Wed, 21 Feb 2024 12:37:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708519049; cv=none; b=QtJO11TeufnPF/pVGz0VJ/KNsu8SK0F70l0opl14+GvCHa58/hBVCRmAiDsQh/zBH85h9vGd6DFkzaRofQfvqDHy9gLriuX5iSeXDAaRL6coB9KjEg8DS50522ZmNJYNf2OTwxg85B7QQFaJalv05jeIfXyiNS5B3NRZtBH3n64=
+	t=1708519053; cv=none; b=sXTpSF9i3FSfGTDN+U1GCA1r9JEoH+kLepc2iv3/EOIvAVIiJRVeIomk6FPNKuPDWmuHh3qDYbrWH2C3Xcfcp7FLEPcXDCXWy3EU+MwH4olMsSy7u6/RTHUQX/pHIdiSc6ITSezSQouODTADiHO4t8eXUJI0W1RshLSeDtOySLk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708519049; c=relaxed/simple;
-	bh=gWKzqG05lKejl4ibtqOOwmXK32AtkthY/xq4y1MFeLg=;
+	s=arc-20240116; t=1708519053; c=relaxed/simple;
+	bh=lgisssvvaUjbj2bs98HIl2Bz/iC3yfZl5SQqez7b+4g=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=l0EUocO+2voRzT9K70yVKWp0SwhCpwnc1c0GFjV/Pu0wk1oCeXiZYsuw0r8Lvs6CQraBSw3+X6RPVpHZ5F+BoLp+5e1/OWoofTuLzeS/x/gvqADUjGtpslF9XkZt5WcpOQCcjo6qJfektDO8o2lpm9qHDPkCpapUos0LEjeVrK4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=BnfhsLue; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=LufobafL; arc=none smtp.client-ip=64.147.123.24
+	 Content-Type:Content-Disposition:In-Reply-To; b=aCzRBAb59FjeaMLZoO5ikH+lupCb9bokDiXrL0Kv25dixrqz3EraZf6ySKPk2inPRALTRTd0YAaxhm+K4tyehB8kMyxIHqADDnc+aFln+LoQVR2D7+iZVLWuVUtaoZSsRngiOOcUNeRT7M4Ajd8BNtQXc4ZUZuXifnif8rdr1Bg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=TkAtaKlp; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=dr3NXQ2v; arc=none smtp.client-ip=64.147.123.150
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="BnfhsLue";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="LufobafL"
-Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
-	by mailout.west.internal (Postfix) with ESMTP id 582FE3200319;
-	Wed, 21 Feb 2024 07:37:26 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="TkAtaKlp";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="dr3NXQ2v"
+Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
+	by mailfout.west.internal (Postfix) with ESMTP id 41E241C000A9;
+	Wed, 21 Feb 2024 07:37:31 -0500 (EST)
 Received: from mailfrontend2 ([10.202.2.163])
-  by compute5.internal (MEProxy); Wed, 21 Feb 2024 07:37:26 -0500
+  by compute6.internal (MEProxy); Wed, 21 Feb 2024 07:37:31 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1708519045; x=1708605445; bh=EoDoepf75w
-	IJoGdJyhNG1WmDTNjI9Hszak0dqRZq91E=; b=BnfhsLueuTOD8PU2AHt+Dq3iff
-	E2oC6f59mCWq0iJcKe6zDAgfYZPUTgul3trjHuVSAFvwE11rME+Drm6nKToBMzGd
-	zQWFh5nARbQX2xcu9ABPe5uCT/FzEb271aQdOSKktJPSF6m1yMcYbnGMSU137ZO6
-	WbbChfMiSs3AolGR8tzKpBywWql34ZmxIZnL265enIeb5uFgXueEFyyQ4VBP9QjT
-	yPedZ/WL0qc4SN84ijzKLa2hGRL36DvaoaBQlUIqfVwci0yWQoNazDx1dfXtyOPl
-	A9E1fvuuEQQ0bc1qq+5AESL9Ns4WpXVRn5QvqL1ZKgKGlSrfizzx0s86TLcQ==
+	:subject:to:to; s=fm1; t=1708519050; x=1708605450; bh=tuwVlfJtEb
+	lwqlT3SjBBj0z6rzmj55DeyfEOKkaRAko=; b=TkAtaKlpDJRi6mIMAoe0hrCi33
+	QnsBhbVow9sVJSvmZxJ6Oj7hK3Zt60yjFFGrsl2wlubnzlSnROy9GasRBG+XoycG
+	lliAiyDZmXT+9oAV3Jy/vKYlBLyi8fjvMQbiHOTjVEWbkQMLhEoqZKSzV0Lz5JWd
+	LK96V8pkXNU3J91h+qOZB7HLk5cyxyAuCT7HZB2+N4riCMdcp7JxDlj/Vtw5+O00
+	qKWBojiURJGqwfZ0kcz7opUy1CrtzESqRYGlk0IF9IlpPvOTyROK3565mPDSFrHP
+	Pw1qRZ2MVfz43YCNWRZE8RDuMHZvJ5Fj26FNhqWUg81m8zXIr7a+xqPV16zg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1708519045; x=1708605445; bh=EoDoepf75wIJoGdJyhNG1WmDTNjI
-	9Hszak0dqRZq91E=; b=LufobafLJpKSUKOo98Wfp6rMG60pEWplGLYobmU8CPgV
-	wYo6c3qiZvmUMA0J9wfr61O7brFgraadY9LihW5U0EkNxqXQJu8fewm3FJZmldof
-	2u+JikppvGiF80wAy1lpd7l+MJTW/Gk9h4xpEq9/8wDcgZJsX80/+B2emb1O/d08
-	dv2zKM6c8uc6NSNlg1EvjrA6iIpYZSbiWEfC5nvsXOImZ2DRI9oVRJnQeghABiYt
-	+v1GeNPDULIs/7I60QwWFX5uEHv7gZv1ay2ZqMzRPQTtiVIlqR4Uqmmhry1tlOzP
-	eaRVbzrGa05ThKWQ75SP5XJnczJ0zav1pL4sM3QmdQ==
-X-ME-Sender: <xms:he7VZZGmimcmk9jbxCQ1BNm0sUXOnGtxXRugVX-U4k8ti3jX3dH_nQ>
-    <xme:he7VZeVNUTv2KOPDzPBD3yxeC-fjq-r4DLlDT90fZGCoRDuyr-Kky9lpjsDfP2fEA
-    4kk0LsnI2RItG2MDA>
-X-ME-Received: <xmr:he7VZbJAFqp_tlUJFbrf9Z3qD-fRof2WeHoxHbvdCI8Xnpao0ERdOBR7gmPDeuzmmi2baBzfpJXeeB1OxNSB290Rau2b453wM3MZmLyTfiLK>
+	fm1; t=1708519050; x=1708605450; bh=tuwVlfJtEblwqlT3SjBBj0z6rzmj
+	55DeyfEOKkaRAko=; b=dr3NXQ2vhdz3N/Z7hUCHsrHFpGunl70otpiKoc4HfFng
+	jEq/Jh1CIwxq2ihsdaulMpdoHlPUTVMH2MVCi+/qonGSZY0dYr8cEFwjfGsorGIZ
+	3YgsebgLio2A+3y3ljCwZMbZlIvNWYwIn8iCDGbfIXpZ9Jj3FHk9xcyohiSyhDjp
+	awE31+JSOeqr//7euYQNmIdxAJdTnD+h+tIRor94GX6oDQOHHZVKZvajSlR/94tA
+	ympYOpFkTnNKovZSqFefnOZi95G4Wg2bsnBnR5P3741na6NPx7m9fJjqmOmt4NXJ
+	pk+BPHXVwAO4V9DzFfK3kWdZpzEc8momjQO/vsSt4Q==
+X-ME-Sender: <xms:iu7VZZ4_FMCEe579u6rIYA0zzZlOXEEET9sECP5LjKX5lebj6S_ASg>
+    <xme:iu7VZW4mZetSNBTPncxXuZ4jKQjfTPTSBEBKm5HwV_RZq7Nndq3L1yFhiWUxmwxBB
+    JVbg0le07E_NiNlOA>
+X-ME-Received: <xmr:iu7VZQeJYOPha0relvYceMjxzvn1E1rI-Zsk5yrOY1CcjN5qZvezsFXJWspGuQwkiLV47N2zd2A8YAknKLuI3MWQ4Ms5BGWT_y66yVabw5n2>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrfedvgdegvdcutefuodetggdotefrodftvf
     curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
     uegrihhlohhuthemuceftddtnecunecujfgurhepfffhvfevuffkfhggtggujgesghdtre
@@ -55,22 +55,23 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrfedvgdegvdcutefuodetggdote
     khhsrdhimheqnecuggftrfgrthhtvghrnhepueektdevtdffveeljeetgfehheeigeekle
     duvdeffeeghefgledttdehjeelffetnecuvehluhhsthgvrhfuihiivgeptdenucfrrghr
     rghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimh
-X-ME-Proxy: <xmx:he7VZfHjlK5tdab2uiCx_RCg7o6GAo4iXROaGqPcjPdQJlP6DDZfvg>
-    <xmx:he7VZfVXn3ZdVJ5vGX1O-yWMpn84qHkXslViaLTqNS-htSWwFbMePw>
-    <xmx:he7VZaMtobfVhvIxP34T6A0b42lD35ZGpTqOiZosPs5jdbAkXcGziA>
-    <xmx:he7VZWcc8LaYpto05bQ73ptkOM5WaBFjPJ-06ZLoDzAnmDVeQkLAkw>
+X-ME-Proxy: <xmx:iu7VZSIOjjS0GHaITNQyBvG4f2JgMatz88L_iNrJMLa3BxUBdwaTwQ>
+    <xmx:iu7VZdJUysCFn2pwL644Oa-wNxKfVcmdNSaEhyqHZIa3u8dfG_2GRg>
+    <xmx:iu7VZbxl2axzPk7XkIrkT80QCK1jHfEeKW6YOT8u4xvunMFOhQz45Q>
+    <xmx:iu7VZUVq6PF0mSizeJPRk1fFa1nskgLK9H2OHNlndO--6HRA6Y-oNYmdUns>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 21 Feb 2024 07:37:24 -0500 (EST)
+ 21 Feb 2024 07:37:29 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 2cd881e0 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 21 Feb 2024 12:33:20 +0000 (UTC)
-Date: Wed, 21 Feb 2024 13:37:23 +0100
+	by vm-mail (OpenSMTPD) with ESMTPSA id 4dddaf2c (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 21 Feb 2024 12:33:25 +0000 (UTC)
+Date: Wed, 21 Feb 2024 13:37:27 +0100
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
 Cc: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v3 2/8] dir-iterator: support iteration in sorted order
-Message-ID: <89cf960d47026cc1a1527e35b1c069c6598ac3e0.1708518982.git.ps@pks.im>
+Subject: [PATCH v3 3/8] refs/files: sort reflogs returned by the reflog
+ iterator
+Message-ID: <8ad63eb3f6a9819db57cd4523297cda6e4ead341.1708518982.git.ps@pks.im>
 References: <cover.1708353264.git.ps@pks.im>
  <cover.1708518982.git.ps@pks.im>
 Precedence: bulk
@@ -80,249 +81,128 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="3ZPuzfg6/Q6kUbw8"
+	protocol="application/pgp-signature"; boundary="v08557xVDH8w0LrF"
 Content-Disposition: inline
 In-Reply-To: <cover.1708518982.git.ps@pks.im>
 
 
---3ZPuzfg6/Q6kUbw8
+--v08557xVDH8w0LrF
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-The `struct dir_iterator` is a helper that allows us to iterate through
-directory entries. This iterator returns entries in the exact same order
-as readdir(3P) does -- or in other words, it guarantees no specific
-order at all.
+We use a directory iterator to return reflogs via the reflog iterator.
+This iterator returns entries in the same order as readdir(3P) would and
+will thus yield reflogs with no discernible order.
 
-This is about to become problematic as we are introducing a new reflog
-subcommand to list reflogs. As the "files" backend uses the directory
-iterator to enumerate reflogs, returning reflog names and exposing them
-to the user would inherit the indeterministic ordering. Naturally, it
-would make for a terrible user interface to show a list with no
-discernible order.
-
-While this could be handled at a higher level by the new subcommand
-itself by collecting and ordering the reflogs, this would be inefficient
-because we would first have to collect all reflogs before we can sort
-them, which would introduce additional latency when there are many
-reflogs.
-
-Instead, introduce a new option into the directory iterator that asks
-for its entries to be yielded in lexicographical order. If set, the
-iterator will read all directory entries greedily and sort them before
-we start to iterate over them.
-
-While this will of course also incur overhead as we cannot yield the
-directory entries immediately, it should at least be more efficient than
-having to sort the complete list of reflogs as we only need to sort one
-directory at a time.
-
-This functionality will be used in a follow-up commit.
+Set the new `DIR_ITERATOR_SORTED` flag that was introduced in the
+preceding commit so that the order is deterministic. While the effect of
+this can only been observed in a test tool, a subsequent commit will
+start to expose this functionality to users via a new `git reflog list`
+subcommand.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- dir-iterator.c | 99 +++++++++++++++++++++++++++++++++++++++++++-------
- dir-iterator.h |  3 ++
- 2 files changed, 89 insertions(+), 13 deletions(-)
+ refs/files-backend.c           | 4 ++--
+ t/t0600-reffiles-backend.sh    | 4 ++--
+ t/t1405-main-ref-store.sh      | 2 +-
+ t/t1406-submodule-ref-store.sh | 2 +-
+ 4 files changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/dir-iterator.c b/dir-iterator.c
-index f58a97e089..de619846f2 100644
---- a/dir-iterator.c
-+++ b/dir-iterator.c
-@@ -2,10 +2,19 @@
- #include "dir.h"
- #include "iterator.h"
- #include "dir-iterator.h"
-+#include "string-list.h"
+diff --git a/refs/files-backend.c b/refs/files-backend.c
+index 75dcc21ecb..2ffc63185f 100644
+--- a/refs/files-backend.c
++++ b/refs/files-backend.c
+@@ -2193,7 +2193,7 @@ static struct ref_iterator *reflog_iterator_begin(str=
+uct ref_store *ref_store,
 =20
- struct dir_iterator_level {
- 	DIR *dir;
+ 	strbuf_addf(&sb, "%s/logs", gitdir);
 =20
-+	/*
-+	 * The directory entries of the current level. This list will only be
-+	 * populated when the iterator is ordered. In that case, `dir` will be
-+	 * set to `NULL`.
-+	 */
-+	struct string_list entries;
-+	size_t entries_idx;
-+
- 	/*
- 	 * The length of the directory part of path at this level
- 	 * (including a trailing '/'):
-@@ -43,6 +52,31 @@ struct dir_iterator_int {
- 	unsigned int flags;
- };
+-	diter =3D dir_iterator_begin(sb.buf, 0);
++	diter =3D dir_iterator_begin(sb.buf, DIR_ITERATOR_SORTED);
+ 	if (!diter) {
+ 		strbuf_release(&sb);
+ 		return empty_ref_iterator_begin();
+@@ -2202,7 +2202,7 @@ static struct ref_iterator *reflog_iterator_begin(str=
+uct ref_store *ref_store,
+ 	CALLOC_ARRAY(iter, 1);
+ 	ref_iterator =3D &iter->base;
 =20
-+static int next_directory_entry(DIR *dir, const char *path,
-+				struct dirent **out)
-+{
-+	struct dirent *de;
-+
-+repeat:
-+	errno =3D 0;
-+	de =3D readdir(dir);
-+	if (!de) {
-+		if (errno) {
-+			warning_errno("error reading directory '%s'",
-+				      path);
-+			return -1;
-+		}
-+
-+		return 1;
-+	}
-+
-+	if (is_dot_or_dotdot(de->d_name))
-+		goto repeat;
-+
-+	*out =3D de;
-+	return 0;
-+}
-+
- /*
-  * Push a level in the iter stack and initialize it with information from
-  * the directory pointed by iter->base->path. It is assumed that this
-@@ -72,6 +106,35 @@ static int push_level(struct dir_iterator_int *iter)
- 		return -1;
- 	}
+-	base_ref_iterator_init(ref_iterator, &files_reflog_iterator_vtable, 0);
++	base_ref_iterator_init(ref_iterator, &files_reflog_iterator_vtable, 1);
+ 	iter->dir_iterator =3D diter;
+ 	iter->ref_store =3D ref_store;
+ 	strbuf_release(&sb);
+diff --git a/t/t0600-reffiles-backend.sh b/t/t0600-reffiles-backend.sh
+index e6a5f1868f..4f860285cc 100755
+--- a/t/t0600-reffiles-backend.sh
++++ b/t/t0600-reffiles-backend.sh
+@@ -287,7 +287,7 @@ test_expect_success 'for_each_reflog()' '
+ 	mkdir -p     .git/worktrees/wt/logs/refs/bisect &&
+ 	echo $ZERO_OID > .git/worktrees/wt/logs/refs/bisect/wt-random &&
 =20
-+	string_list_init_dup(&level->entries);
-+	level->entries_idx =3D 0;
-+
-+	/*
-+	 * When the iterator is sorted we read and sort all directory entries
-+	 * directly.
-+	 */
-+	if (iter->flags & DIR_ITERATOR_SORTED) {
-+		struct dirent *de;
-+
-+		while (1) {
-+			int ret =3D next_directory_entry(level->dir, iter->base.path.buf, &de);
-+			if (ret < 0) {
-+				if (errno !=3D ENOENT &&
-+				    iter->flags & DIR_ITERATOR_PEDANTIC)
-+					return -1;
-+				continue;
-+			} else if (ret > 0) {
-+				break;
-+			}
-+
-+			string_list_append(&level->entries, de->d_name);
-+		}
-+		string_list_sort(&level->entries);
-+
-+		closedir(level->dir);
-+		level->dir =3D NULL;
-+	}
-+
- 	return 0;
- }
+-	$RWT for-each-reflog | cut -d" " -f 2- | sort >actual &&
++	$RWT for-each-reflog | cut -d" " -f 2- >actual &&
+ 	cat >expected <<-\EOF &&
+ 	HEAD 0x1
+ 	PSEUDO-WT 0x0
+@@ -297,7 +297,7 @@ test_expect_success 'for_each_reflog()' '
+ 	EOF
+ 	test_cmp expected actual &&
 =20
-@@ -88,6 +151,7 @@ static int pop_level(struct dir_iterator_int *iter)
- 		warning_errno("error closing directory '%s'",
- 			      iter->base.path.buf);
- 	level->dir =3D NULL;
-+	string_list_clear(&level->entries, 0);
+-	$RMAIN for-each-reflog | cut -d" " -f 2- | sort >actual &&
++	$RMAIN for-each-reflog | cut -d" " -f 2- >actual &&
+ 	cat >expected <<-\EOF &&
+ 	HEAD 0x1
+ 	PSEUDO-MAIN 0x0
+diff --git a/t/t1405-main-ref-store.sh b/t/t1405-main-ref-store.sh
+index 976bd71efb..cfb583f544 100755
+--- a/t/t1405-main-ref-store.sh
++++ b/t/t1405-main-ref-store.sh
+@@ -74,7 +74,7 @@ test_expect_success 'verify_ref(new-main)' '
+ '
 =20
- 	return --iter->levels_nr;
- }
-@@ -139,27 +203,34 @@ int dir_iterator_advance(struct dir_iterator *dir_ite=
-rator)
- 		struct dirent *de;
- 		struct dir_iterator_level *level =3D
- 			&iter->levels[iter->levels_nr - 1];
-+		const char *name;
+ test_expect_success 'for_each_reflog()' '
+-	$RUN for-each-reflog | sort -k2 | cut -d" " -f 2- >actual &&
++	$RUN for-each-reflog | cut -d" " -f 2- >actual &&
+ 	cat >expected <<-\EOF &&
+ 	HEAD 0x1
+ 	refs/heads/main 0x0
+diff --git a/t/t1406-submodule-ref-store.sh b/t/t1406-submodule-ref-store.sh
+index e6a7f7334b..40332e23cc 100755
+--- a/t/t1406-submodule-ref-store.sh
++++ b/t/t1406-submodule-ref-store.sh
+@@ -63,7 +63,7 @@ test_expect_success 'verify_ref(new-main)' '
+ '
 =20
- 		strbuf_setlen(&iter->base.path, level->prefix_len);
--		errno =3D 0;
--		de =3D readdir(level->dir);
-=20
--		if (!de) {
--			if (errno) {
--				warning_errno("error reading directory '%s'",
--					      iter->base.path.buf);
-+		if (level->dir) {
-+			int ret =3D next_directory_entry(level->dir, iter->base.path.buf, &de);
-+			if (ret < 0) {
- 				if (iter->flags & DIR_ITERATOR_PEDANTIC)
- 					goto error_out;
--			} else if (pop_level(iter) =3D=3D 0) {
--				return dir_iterator_abort(dir_iterator);
-+				continue;
-+			} else if (ret > 0) {
-+				if (pop_level(iter) =3D=3D 0)
-+					return dir_iterator_abort(dir_iterator);
-+				continue;
- 			}
--			continue;
--		}
-=20
--		if (is_dot_or_dotdot(de->d_name))
--			continue;
-+			name =3D de->d_name;
-+		} else {
-+			if (level->entries_idx >=3D level->entries.nr) {
-+				if (pop_level(iter) =3D=3D 0)
-+					return dir_iterator_abort(dir_iterator);
-+				continue;
-+			}
-=20
--		if (prepare_next_entry_data(iter, de->d_name)) {
-+			name =3D level->entries.items[level->entries_idx++].string;
-+		}
-+
-+		if (prepare_next_entry_data(iter, name)) {
- 			if (errno !=3D ENOENT && iter->flags & DIR_ITERATOR_PEDANTIC)
- 				goto error_out;
- 			continue;
-@@ -188,6 +259,8 @@ int dir_iterator_abort(struct dir_iterator *dir_iterato=
-r)
- 			warning_errno("error closing directory '%s'",
- 				      iter->base.path.buf);
- 		}
-+
-+		string_list_clear(&level->entries, 0);
- 	}
-=20
- 	free(iter->levels);
-diff --git a/dir-iterator.h b/dir-iterator.h
-index 479e1ec784..6d438809b6 100644
---- a/dir-iterator.h
-+++ b/dir-iterator.h
-@@ -54,8 +54,11 @@
-  *   and ITER_ERROR is returned immediately. In both cases, a meaningful
-  *   warning is emitted. Note: ENOENT errors are always ignored so that
-  *   the API users may remove files during iteration.
-+ *
-+ * - DIR_ITERATOR_SORTED: sort directory entries alphabetically.
-  */
- #define DIR_ITERATOR_PEDANTIC (1 << 0)
-+#define DIR_ITERATOR_SORTED   (1 << 1)
-=20
- struct dir_iterator {
- 	/* The current path: */
+ test_expect_success 'for_each_reflog()' '
+-	$RUN for-each-reflog | sort | cut -d" " -f 2- >actual &&
++	$RUN for-each-reflog | cut -d" " -f 2- >actual &&
+ 	cat >expected <<-\EOF &&
+ 	HEAD 0x1
+ 	refs/heads/main 0x0
 --=20
 2.44.0-rc1
 
 
---3ZPuzfg6/Q6kUbw8
+--v08557xVDH8w0LrF
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmXV7oIACgkQVbJhu7ck
-PpQ6tQ/8CQEkyqQ7bl4BNw2Y7w0Johb9t/d/WDCyYN7I5oMbFL7ggs4q7wZA0/Fy
-weGhiUqaFF60b2PF7D06PdoVGxprmJc6jngAs7WQWiyG9fbBqOytyvTLMiXJ6Y+g
-ggCNTiWcTvWqFUfvZ6HM4nxuM92sTZAoaHndt617pdWasHXMevCOU8BF67sz73YR
-xlC9tKYGE6X34JbcvtCz6lZ/tpEQq2o+bRZYZppcJZQwKcdh54rJNMXy9sFD9r6Q
-sogyBJZJv/BBrddW2bC4bU1wQnA67e2MS2jPcomcneHN7uS4R7egsf04m3UhTtY+
-53PREw3PORCWD48tCp8BhFsImMeEpVM5mNr8+f/Ea2d2xo1J4TIvTVwBaEQZIhpI
-tjR4GiD09v2Pvq4Stt9rapzen/+pMCqSR+K4KeCd/gDVmAGJS3QwKZMVz0EzmX9+
-L/CsPdtvjlEhVGdwUzrkPJhRJEz7zSKz6GhiVJgnxt63Qt26KAWDKJ82UiKhd++f
-eErsTwAxAaROjTZBq2QYx4T3cIpsiCuSQoMlx4WRuyoGHmoTS/GZLRrYRYpRKmTR
-EQQUkgfTc58jU/GldfI/e+06T52B1LOoxH77AjU/7++WpDqQsti8eLYdbvqb+a6c
-oc/+mUjiSIHrsOWsGFeTslvEosDHcVqOcEXcSy0zwWWRlji8sZ8=
-=evYk
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmXV7oYACgkQVbJhu7ck
+PpSnqw//chMWkxSEcu5O3QEreNZd2jFqzqWa7Etr2wCpK2JWQmWmSuZ69/XbW/f0
+gACnk4RkNqX/9PXfsNN6ICFDl4oUzZJpmB1+rHCXIHxt+1ig/U8hw3tiwrAdzrin
+gb2VcpqNZ8NvkYQ9wYoHyC+HzpRIIgjacrLl2/OwitrwFh8Ten/Owry9MfPvP1ZY
+eCLdqAIJzHPa4Eenks8zpJUq+Dy4i3WnlIkHW0ffsSO03THFz0cVcfj1JibZC5tZ
+If6OdeJZwOzSmW5yz3VZAfeaQb/aTHQiYipc3Ih1hZmODxthX1iN1RwixQ08mADH
+MUqymGzSMQ60bI5zLSigDyAMRhkA+NNYwI2vXUODfViAUoCUsxbikyB4A8Wfzw4L
+J7ccgwYwMEgXtddD1/Yr7hdauD3/oKn7L96F+AVAcNtt1Usq1ed9A+E4A6o7mKJ/
+flinPrDwvsrq9PF2SMxRnmZOA/hzIuxbSObfiJQ99igSwAvFHrFZRVLGmCeQJ/3+
+XCdZCGkPjRyeDZSuQCZzKim+4rIEjSecpaKmoPMdKkNLwPYFu+OUoPrOps2QPg2I
++uflp9spG5IZtC5ymWJthzsioejcPZVEIzatYyldHkXbpGf3oierW/8TGtr0SFJd
+WLlldrrx+vP4VJ30xxd3DxlM7TuTqClczmnuInSb2Egz8PBlzH4=
+=A9LG
 -----END PGP SIGNATURE-----
 
---3ZPuzfg6/Q6kUbw8--
+--v08557xVDH8w0LrF--
