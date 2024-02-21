@@ -1,128 +1,79 @@
-Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.223.130])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7641B84038
-	for <git@vger.kernel.org>; Wed, 21 Feb 2024 17:38:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.130
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29E1584055
+	for <git@vger.kernel.org>; Wed, 21 Feb 2024 17:38:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708537107; cv=none; b=LbSy6U0JkfIcS9+wwKD0MAKU6M/nujzgY2/vg+CN3Nx7IJKcZ5KsRkuOzV7o+XECtt4eyEzppf+SsZOJsZC6O4aJnQbXerEkM8vHJKySHlgdztkRVapoERNu9ubMXPcW8qxIb7deKHwpR68jfbmz0Kg0OrzkK+xTJd7JJxe+bAM=
+	t=1708537122; cv=none; b=IkS56FmOd9TwdAO7uRP7E5pqLPPzYoJJVPAFAxUFGygEDFcQOckPYcxfg96+e6DP/APOdYxz0LurROffmC/EPzSkpplaYrD0u7/C8rzJ3TOMiEB2o3Mb6N0lr/ZatBoyB332zVakSzgmDEvLiBkGyR7Lv8BLQlk8TYihybBuVTo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708537107; c=relaxed/simple;
-	bh=K3lhvHwJxFpZDHP3Vv5c5pA25j/EoqnJxLmRj2xFVco=;
+	s=arc-20240116; t=1708537122; c=relaxed/simple;
+	bh=KZ14Fq7t0lKpYKX8RmreSZdNUdImLNCmUi+DtT/YOzU=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=of5BGHIMAkbDeaEgb5b0Sqd+1i3mFjwFSIKL8ps0IGlOWhBDZKo67GVP1hk9fzvMi1qEThzG+2s0BVqJ1BN9CqYHGbqpRLIgfTEX/wV9qRrL00tAzCFmLJCP1BpI6CqyxdRdds76KhnunUyxkhvchgvlL/PdYrR+nxRNjcSDP/4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de; spf=pass smtp.mailfrom=suse.de; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=lqZodpyJ; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=JehRM0BE; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=lqZodpyJ; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=JehRM0BE; arc=none smtp.client-ip=195.135.223.130
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="lqZodpyJ";
-	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="JehRM0BE";
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="lqZodpyJ";
-	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="JehRM0BE"
-Received: from kitsune.suse.cz (unknown [10.100.12.127])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (P-256) server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by smtp-out1.suse.de (Postfix) with ESMTPS id 7A46B21EF0;
-	Wed, 21 Feb 2024 17:38:23 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1708537103; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=65FdHMzM6Or8su7kpxCJ3i8tAiTTK7i3El2DWO3AbP4=;
-	b=lqZodpyJLuulioUOWZfeLlBhg6wYaJ86OpDNoRvgyKvE8Z41Sjpp7K/vq0naI50HMRK3sN
-	ZjK5KDGVNz0Hd9vh9zpETHRd2lYWUYOMRddeKe9d8a7IxaBT2X+QFjzwmQ3Qb4k1xZNMYB
-	VFM0wP/xTDM9BqGvE4mopttGdsKNxTQ=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1708537103;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=65FdHMzM6Or8su7kpxCJ3i8tAiTTK7i3El2DWO3AbP4=;
-	b=JehRM0BEhTcB44Zfi4P0V4qaWboP1cJlbbQivP9dbsl5Xiq+Y4NWfuj/RBRrreG+H3PZmy
-	Iry1qf1kO/zdc5Aw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1708537103; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=65FdHMzM6Or8su7kpxCJ3i8tAiTTK7i3El2DWO3AbP4=;
-	b=lqZodpyJLuulioUOWZfeLlBhg6wYaJ86OpDNoRvgyKvE8Z41Sjpp7K/vq0naI50HMRK3sN
-	ZjK5KDGVNz0Hd9vh9zpETHRd2lYWUYOMRddeKe9d8a7IxaBT2X+QFjzwmQ3Qb4k1xZNMYB
-	VFM0wP/xTDM9BqGvE4mopttGdsKNxTQ=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1708537103;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=65FdHMzM6Or8su7kpxCJ3i8tAiTTK7i3El2DWO3AbP4=;
-	b=JehRM0BEhTcB44Zfi4P0V4qaWboP1cJlbbQivP9dbsl5Xiq+Y4NWfuj/RBRrreG+H3PZmy
-	Iry1qf1kO/zdc5Aw==
-Date: Wed, 21 Feb 2024 18:38:22 +0100
-From: Michal =?iso-8859-1?Q?Such=E1nek?= <msuchanek@suse.de>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Harmen Stoppels via GitGitGadget <gitgitgadget@gmail.com>,
-	git@vger.kernel.org, Harmen Stoppels <me@harmenstoppels.nl>
-Subject: Re: [PATCH] rebase: make warning less passive aggressive
-Message-ID: <20240221173822.GA9696@kitsune.suse.cz>
-References: <pull.1669.git.1708442603395.gitgitgadget@gmail.com>
- <xmqqv86jqc2e.fsf@gitster.g>
+	 Content-Type:Content-Disposition:In-Reply-To; b=JxOBYrTYqR0NkD3B/6sEmJrU+1fNNeaSWH77qOPs197xD9ui6QaZhk42q5eVLXgMw9QaXzAMCKtz2DXGYdwehPjYnGExhoaivSHcBH2PSv9uX86Jep9Bg02kvAvLLIbcUze3CBSk3y02q7r3dG2Xd4GhcQJ27dE7bjOF/V5ss6Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+Received: (qmail 7453 invoked by uid 109); 21 Feb 2024 17:38:40 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 21 Feb 2024 17:38:40 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 6177 invoked by uid 111); 21 Feb 2024 17:38:41 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 21 Feb 2024 12:38:40 -0500
+Authentication-Results: peff.net; auth=none
+Date: Wed, 21 Feb 2024 12:38:39 -0500
+From: Jeff King <peff@peff.net>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: Yasushi SHOJI <yasushi.shoji@gmail.com>,
+	Denton Liu <liu.denton@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>
+Subject: Re: Segfault: git show-branch --reflog refs/pullreqs/1
+Message-ID: <20240221173839.GC634809@coredump.intra.peff.net>
+References: <CAELBRWK-bZTV0qx6_34HAgpmYwy+5Zo2E0M+4B6yZJJ3CqweTw@mail.gmail.com>
+ <20240221084250.GA25385@coredump.intra.peff.net>
+ <ZdXLBIv1vLjhQUgx@tanuki>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <xmqqv86jqc2e.fsf@gitster.g>
-User-Agent: Mutt/1.10.1 (2018-07-13)
-Authentication-Results: smtp-out1.suse.de;
-	none
-X-Spam-Level: 
-X-Spam-Score: -1.66
-X-Spamd-Result: default: False [-1.66 / 50.00];
-	 ARC_NA(0.00)[];
-	 FROM_HAS_DN(0.00)[];
-	 RCPT_COUNT_THREE(0.00)[4];
-	 FREEMAIL_ENVRCPT(0.00)[gmail.com];
-	 TO_MATCH_ENVRCPT_ALL(0.00)[];
-	 MIME_GOOD(-0.10)[text/plain];
-	 NEURAL_HAM_LONG(-1.00)[-1.000];
-	 TO_DN_SOME(0.00)[];
-	 DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
-	 NEURAL_HAM_SHORT(-0.19)[-0.945];
-	 FUZZY_BLOCKED(0.00)[rspamd.com];
-	 RCVD_COUNT_ZERO(0.00)[0];
-	 FROM_EQ_ENVFROM(0.00)[];
-	 MIME_TRACE(0.00)[0:+];
-	 FREEMAIL_CC(0.00)[gmail.com,vger.kernel.org,harmenstoppels.nl];
-	 BAYES_HAM(-0.37)[76.98%]
-X-Spam-Flag: NO
+In-Reply-To: <ZdXLBIv1vLjhQUgx@tanuki>
 
-On Tue, Feb 20, 2024 at 09:29:13AM -0800, Junio C Hamano wrote:
-> "Harmen Stoppels via GitGitGadget" <gitgitgadget@gmail.com> writes:
+On Wed, Feb 21, 2024 at 11:05:56AM +0100, Patrick Steinhardt wrote:
+
+> > I am still trying to wrap my head around how it can get such wrong
+> > results for show-branch when asking for "git rev-parse branch@{0}", etc,
+> > are correct. I think it is that "rev-parse branch@{0}" is only looking
+> > at the output oid and does not consider the reflog message at all. So I
+> > think it is subtly broken, but in a way that happens to work for that
+> > caller. But I'm not sure of the correct fix. At least not at this time
+> > of night.
+> > 
+> > Cc-ing folks involved in 6436a20284.
 > 
-> > From: Harmen Stoppels <me@harmenstoppels.nl>
-> >
-> > When you run `git rebase --continue` when no rebase is in progress, git
-> > outputs `fatal: no rebase in progress?` which is not a question but a
-> > statement. This commit makes it appear as a statement.
+> Ah, our mails crossed, but we came to the same conclusion. Things indeed
+> are subtly broken here and work just by chance because all callers pre
+> initialize the object ID. So in the case where the reflog is missing or
+> empty we'd use that pre-initialized object ID because `read_ref_at()`
+> does not indicate the failure to the callers.
 > 
-> "This commit makes it appear" -> "Make it appear" (see
-> SubmittingPatches).
-> 
-> >  builtin/rebase.c | 2 +-
-> 
-> This change is very good, but a commit that touches code should not
-> touch po/ localizations in this project.  They are updated to match
-> the code change by respective language teams.
+> I think that this behaviour is not sensible in the first place. When
+> asking for the reflog, we should only ever return object IDs parsed from
+> the reflog. Falling back to parsing the ref itself does not make much
+> sense. I've thus sent a patch series that changes the behaviour here.
 
-Or if it does touch the po files it could as well update the
-translations.
+I left some comments on your patches. But assuming we are OK to change
+the branch@{0} behavior for the empty log, the approach is sound.
 
-There are changes that can be trivially translated without any knowledge
-of the target language.
+That still leaves us with the bug in showing the message (which is
+easily fixed), and the weird off-by-one output caused by 6436a20284.
+Obviously the segfault fix can be taken independently of the rest, but I
+wonder if some deeper refactoring of what 6436a20284 did will be
+necessary.
 
-Thanks
-
-Michal
+-Peff
