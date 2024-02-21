@@ -1,101 +1,93 @@
-Received: from smtp2-g21.free.fr (smtp2-g21.free.fr [212.27.42.2])
+Received: from dcvr.yhbt.net (dcvr.yhbt.net [173.255.242.215])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D64A3C099
-	for <git@vger.kernel.org>; Wed, 21 Feb 2024 22:06:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.27.42.2
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B03C4A1D
+	for <git@vger.kernel.org>; Wed, 21 Feb 2024 22:18:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.255.242.215
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708553168; cv=none; b=koHOrjpDixKpOvOjltOGiS01+S/rLS9qmvqIdbCwaKtnwx6S2h1+QULuVxp6aFNaGK5boAiZmZGlhoA0lG5FqnLLGiUnJH1Mr103QQ8oTu2bbGy3Q/rvOFwAjOmCPSflG7XzbJID/hkhpFj5okBNywWDW4k65LhhwTcGnOY90Ts=
+	t=1708553912; cv=none; b=q6YBd+uZVG1+u4CcKt+targWYRzr+mYP4Sff5XK41tB/ZkoGeugCVL1aLhLDo8cq3YbRjy+QK3XmG3U+bKJtpImY2yO7OPAnhuIbQ5Ev5zt2fryxx7/OboQltzz/UMyKb65KlORsdwZngiSSokZ49zu4Z/i5UcQELoAQqFopdCI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708553168; c=relaxed/simple;
-	bh=M2kYU4okqa+oCwScygnPRQuMmu/VlT0uLApiqs0P2Mw=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=YSGLko+EAqkn5ZiY9NFbvXgUtgtDuH1u5oZxjzOS4+M+9uWPyv4Gfx8OFlh6fDSjMAC6jIgb3RRNhgF3rgVhTr3Ll5DPtamLP5f2nxQ/7nJ2KYSZGP3Sbqec8dI905Cj4PfznJViARZa58vzyu3LnYEkXkABARAOHGst4cQg/cw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=free.fr; spf=pass smtp.mailfrom=free.fr; dkim=pass (2048-bit key) header.d=free.fr header.i=@free.fr header.b=sXjGjS3O; arc=none smtp.client-ip=212.27.42.2
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=free.fr
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=free.fr
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=free.fr header.i=@free.fr header.b="sXjGjS3O"
-Received: from cayenne.localnet (unknown [IPv6:2a01:e0a:d1:f360:9bca:a380:8169:3a3f])
-	(Authenticated sender: jn.avila@free.fr)
-	by smtp2-g21.free.fr (Postfix) with ESMTPSA id 5BC522003CC;
-	Wed, 21 Feb 2024 23:05:57 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=free.fr;
-	s=smtp-20201208; t=1708553161;
-	bh=M2kYU4okqa+oCwScygnPRQuMmu/VlT0uLApiqs0P2Mw=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sXjGjS3OookvANDX3v/SKJ/KdvyHD9hRZHeVVJEDyKf6bCWnDB+bXTCXJufNlLhA1
-	 Jg2joDv5oNF+tHzGhJu9b20Z+WVl637Ru59D/C0JKTkJymIlRL1Sj+yZ3JTspegYaa
-	 lN8TbsWLK40wkZrEbHUrsj86LVeYSihcei3+wT/37BBH2pUreCQ0qKzXjZvh6ZmIm8
-	 ApgDyTHCgnNdGA6FMPdLFgU68nlMrmUWEjCaWCo3VSQQuVzT7yBsdL+Z5CgTP+b6jC
-	 ondildLzin8BY5BxAGv2JeXi8unA2niR8gtjipA8n7TYHMVXHF/AMhxOgA/FTH+D9E
-	 Z5+CcvmZqTB8w==
-From: =?ISO-8859-1?Q?Jean=2DNo=EBl?= AVILA <jn.avila@free.fr>
-To: Junio C Hamano <gitster@pobox.com>,
- Michal =?ISO-8859-1?Q?Such=E1nek?= <msuchanek@suse.de>
-Cc: Harmen Stoppels via GitGitGadget <gitgitgadget@gmail.com>,
- git@vger.kernel.org, Harmen Stoppels <me@harmenstoppels.nl>
-Subject: Re: [PATCH] rebase: make warning less passive aggressive
-Date: Wed, 21 Feb 2024 23:05:56 +0100
-Message-ID: <2324063.ElGaqSPkdT@cayenne>
-In-Reply-To: <20240221183018.GB9696@kitsune.suse.cz>
-References:
- <pull.1669.git.1708442603395.gitgitgadget@gmail.com>
- <xmqqjzmxofvn.fsf@gitster.g> <20240221183018.GB9696@kitsune.suse.cz>
+	s=arc-20240116; t=1708553912; c=relaxed/simple;
+	bh=GaBaq4qvE5S0TiblHrPxkvR16+7fruI51t7p3xuOFPQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=jhQP8yqyhhABe7rFyOIJKGHRnuVtZ9aVT2pGyJzXgAJKAIXlLzSDhiAGXyAga97bpzQIOpfu1Sw2UZa5ioOD24O8kizsBNDxDWVMcbX+S1rYGdrjxatNOqX6aPjHN80zY92qcoOQtJ0mddtzGyebvkFTzKVkfbelFid4mptjL5I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=80x24.org; spf=pass smtp.mailfrom=80x24.org; arc=none smtp.client-ip=173.255.242.215
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=80x24.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=80x24.org
+Received: from localhost (dcvr.yhbt.net [127.0.0.1])
+	by dcvr.yhbt.net (Postfix) with ESMTP id C97721F44D;
+	Wed, 21 Feb 2024 22:09:45 +0000 (UTC)
+Date: Wed, 21 Feb 2024 22:09:45 +0000
+From: Eric Wong <e@80x24.org>
+To: Leslie Cheng via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, Leslie Cheng <leslie@lc.fyi>,
+	Leslie Cheng <leslie.cheng5@gmail.com>
+Subject: Re: [PATCH] Add unix domain socket support to HTTP transport.
+Message-ID: <20240221220945.M686016@dcvr>
+References: <pull.1681.git.git.1708506863243.gitgitgadget@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <pull.1681.git.git.1708506863243.gitgitgadget@gmail.com>
 
-On Wednesday, 21 February 2024 19:30:18 CET Michal Such=C3=A1nek wrote:
-> On Wed, Feb 21, 2024 at 10:02:04AM -0800, Junio C Hamano wrote:
-> > Junio C Hamano <gitster@pobox.com> writes:
-> >=20
-> > > Michal Such=C3=A1nek <msuchanek@suse.de> writes:
-> > >
-> > >> Or if it does touch the po files it could as well update the
-> > >> translations.
-> > >>
-> > >> There are changes that can be trivially translated without any=20
-knowledge
-> > >> of the target language.
-> > >
-> > > You need to know the target language before deciding it is OK and
-> > > sufficient to just remove =CC=89=C2=BF? from around a sentence to mak=
-e it from
-> > > a question to a statement of a fact.  You may know enough, but
-> > > reviewers may not be.  In addition, it would allow bypassing the
-> > > language teams, which is the most serious problem I see in such an
-> > > attitude.
-> >=20
-> > Oops, "attitude" -> "approach".
->=20
-> That's certainly true that even if you know how to remove a question
-> mark you may not find a reviewer who knows how to remove one.
->=20
-> Nonetheless, if you do find both a patch author and a reviewer that know
-> how to remove a question mark what is the problem with not involving
-> several language teams to remove a question mark?
->=20
-> Thanks
->=20
-> Michal
->=20
->=20
+Leslie Cheng via GitGitGadget <gitgitgadget@gmail.com> wrote:
 
-As a translator, I'm less bothered by editing a sentence to remove a questi=
-on=20
-mark (maybe enforcing a language style and reformulating the sentence by th=
-e=20
-way), than by translating again and again similar sentences.
+> Subject: Re: [PATCH] Add unix domain socket support to HTTP transport.
 
-Thanks
+No need for trailing `.' in commit message titles
 
-JN
+<snip>
 
+> @@ -455,6 +458,20 @@ static int http_options(const char *var, const char *value,
+>  		return 0;
+>  	}
+>  
+> +	if (!strcmp("http.unixsocket", var)) {
+> +#ifdef GIT_CURL_HAVE_CURLOPT_UNIX_SOCKET_PATH
+> +#ifndef NO_UNIX_SOCKETS
+> +		return git_config_string(&curl_unix_socket_path, var, value);
+> +#else
+> +		warning(_("Unix socket support unavailable in this build of Git"));
+> +		return 0;
+> +#endif
+> +#else
+> +		warning(_("Unix socket support is not supported with cURL < 7.40.0"));
+> +		return 0;
+> +#endif
+> +	}
 
+Personally, I'd hoist the #ifdef part into a standalone function
+since I find mixing CPP and C conditionals confusing.
 
+disclaimer: I'm an easily confused person and don't usually
+program in C, though.
+
+<snip>
+
+> --- /dev/null
+> +++ b/t/t5565-http-unix-domain-socket.sh
+
+<snip>
+
+> +    nc -klU "$socket_path" <tcp_to_uds >uds_to_tcp &
+> +    UDS_PID=$!
+> +
+> +    nc "$host" "$port" >tcp_to_uds <uds_to_tcp &
+
+`nc' isn't widely installed, its supported flags vary between
+implementations, and our test suite doesn't currently use it.
+I suggest either using a small bit of Perl or writing a t/helper
+program to do its job.
+
+Finally, hard tabs should be used for indentation throughout.
+
+I'll wait on others to comment since I haven't looked at git
+hacking in a while.
+
+Anyways, I think this feature could be useful for me, too :>
+Thanks.
