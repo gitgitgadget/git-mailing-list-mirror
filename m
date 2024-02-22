@@ -1,55 +1,55 @@
-Received: from mail-yw1-f201.google.com (mail-yw1-f201.google.com [209.85.128.201])
+Received: from mail-yw1-f202.google.com (mail-yw1-f202.google.com [209.85.128.202])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D8E1157E97
-	for <git@vger.kernel.org>; Thu, 22 Feb 2024 17:50:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CA311586C8
+	for <git@vger.kernel.org>; Thu, 22 Feb 2024 17:51:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.202
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708624261; cv=none; b=ltDmybb/AN03GVVV2z0pHoIPz7AE+ZdCE9y22wYCbM4rMojVqfgSsyFu06pTntmfJ/QlPtvbVgvHmY9rrkPeI9DFaDEOFLo/6DnJThTJOobzExZl01KaPKAi8p4q6xYL0G35nOVze/8269zzExM9/JdLLp6yk7wwzkSHAG5nv6I=
+	t=1708624263; cv=none; b=Yz2eVkLYxA4qJK2aKup4NY25If/TgZSo7rnjTvnkwEdYQXnDXe5ncLE+XZ84wCLxwD/j0b5srqb4hzkiVecKXmtbTBkxNUj3jAudwHKs8J5Sw6paj3zJdAd9kSEXJD1HXbs0F9bdSovlhy+0yPm373oH9snnUlSVnYncFkghh64=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708624261; c=relaxed/simple;
-	bh=r4PUGIvGvAdZx7rEJcIi664vrC47I8Zk0FztsjCqUn0=;
+	s=arc-20240116; t=1708624263; c=relaxed/simple;
+	bh=04dq8/Aa0gzT2rFNq5nPdY64/2aFPl0R4rbXRuJVpkI=;
 	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
-	 To:Cc:Content-Type; b=Ra0bKYryWfa3wZPv5Oj5ibw+TojgYZN2s1yhzMBfT5C3OEX+YRDYzcuchukv96wXUPC5BVyVB5pSsV19DG9yY6O61ySD8ZQ9hrc157VPfiUG6zrse1Gk7yPBvUS87S64x6IM+tK++XMqywDOgmj0BJx/X6Q9EjJsSESB2qFeAVo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--calvinwan.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=0Qz1yMN0; arc=none smtp.client-ip=209.85.128.201
+	 To:Cc:Content-Type; b=tC5Ng04xqjc1aCRnbkSkz0gBTFf0H6ZJ0ne10MgvfwLQLhhnkLsfhNhR+ViK8d7ZYjYO2Z9bMor17lXDD1hgSukhD5rr70So8w/moic77OQOLOt04bSXo09KT3Gr+z0iyay+d+FBzl2Ubfts/g7DfDxchYCvlUFAhx+25y6bkwc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--calvinwan.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=1LQf4Qcc; arc=none smtp.client-ip=209.85.128.202
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--calvinwan.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="0Qz1yMN0"
-Received: by mail-yw1-f201.google.com with SMTP id 00721157ae682-60770007e52so97580057b3.1
-        for <git@vger.kernel.org>; Thu, 22 Feb 2024 09:50:58 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="1LQf4Qcc"
+Received: by mail-yw1-f202.google.com with SMTP id 00721157ae682-608852fc324so36231677b3.2
+        for <git@vger.kernel.org>; Thu, 22 Feb 2024 09:51:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1708624258; x=1709229058; darn=vger.kernel.org;
+        d=google.com; s=20230601; t=1708624260; x=1709229060; darn=vger.kernel.org;
         h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
          :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=GdVmkS0j3Q6STfJeqvpWE/rPVNdBU7ihxxUrtqOBDHo=;
-        b=0Qz1yMN0B6SjZWoG+JI7lUTfLVgTFEK0To5bmxoE/Doid108tjDzxNknzJsDxIO2pn
-         BfuvCTIOt9nJtaMbiH7iONpzS9geQcAp1bG3muMf1mH9EbOH1Bu9/lhqK8gl4AkpAlIx
-         /wxmcML7D+H+HC4FqUNEgmwqRZiEmywcOcdVxI1U8IbrraC/sAY2GRt+60Y51rHnLTDS
-         OsvvqlSQD70nIrzfoWU/gwELbbmSKT0J+Q0vA3peSGjuPtwa/sVpx5gyRCDxb1/uJNq7
-         xkLHUnZuvOirf88xpC7aKGFaRGbQZHDAuuJtgDlj934Vlc7RhVzNXYo230W6uBExKCls
-         wEzA==
+        bh=xqbeBBLJfu+yQOebvWXcKsAS4nA6/imikXTYExMSSf4=;
+        b=1LQf4QcccKZoIY14kUHc/vVBYpZcjMy4JbVStuQlsW4FWPt2DTJy9riClmVMlr+KCc
+         R4cggmY3OisHixFxaVDowZJTE2x93bx8mQQoaRTl2PQ50Ltz/u/m2UgFecdZCsVPeIMU
+         6Et938rulahKPtVjXbmZo74EiadxX4Snx1r7D9QPqfmCb2oy+jT+YxBEFwmYMdJXuC+K
+         kNiKDZsbAryT9wXLIYlMt9jYKEy44gJMvSTAPQDH6v88m0v6HRxIRt9A9b1j2xrQW710
+         sNx6etKmujyvxQs5m5NJ84POrsRCMd9jPsfIl6Qa8adj8rmWa7GFHllinRuX/nWNOvsr
+         PwAQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1708624258; x=1709229058;
+        d=1e100.net; s=20230601; t=1708624260; x=1709229060;
         h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
          :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=GdVmkS0j3Q6STfJeqvpWE/rPVNdBU7ihxxUrtqOBDHo=;
-        b=Fd3E72sqD2nAqJYs/MI0zjI9aVcS+cVgp6UPysgDvrUpSngzSmwCfLDksQa8PiCufM
-         Bn/2pkjlbJBlLty85vy5I27c/B2+06gjU2M71/zjRmtsdphKsKMfl4+6jy8tcEg5DXI9
-         lHbm7hSmz3ScHfoRWZdjzyhppOkKrN/FVDWBLT1ZFLlAcfnQ9ZYGU3+iYcT6xtktVw6x
-         DBrVkE6mdRa54OYuLop4If/zkZqsI08Sz5SIGZxzMemCVGfii7izJ9rdawGiiH+GtJ9l
-         /9Gfc5KyjjNQthDTfSO9pQR95+1OeRCRuGbNkL+VE80lmrEF91SzT2aylhZO0QN2Grrr
-         39bA==
-X-Gm-Message-State: AOJu0YzJNC/w+rj5kLWqMOV+IJyuA2jVgk6BTyN2MgGPbIRDhRX68Yk9
-	xMh7REDGGSqtcMzXVNJJqhCO6hvRTHq2tiFWOhE4TR6dbBrOlAAinbj89IrPEBY0c2ufhY4ThAD
-	l7j69VTAf1mjh9uYib+iDctfxzv5XCMiJkoHuXelN1h5DSDL/T3j9qbhX4wbnajYZaglqyBaYqx
-	mbuDbigz1WrmUcFtUz1AlgZQoyR92LHthstYbnWeZX+4Og
-X-Google-Smtp-Source: AGHT+IEbcX47ieabCRECUUsk5OguG7orwiUnWA8PxgmE62L1/hjfxoBcvIptKkL1XmpbDo+oTv9LkGek9MWX8i0=
+        bh=xqbeBBLJfu+yQOebvWXcKsAS4nA6/imikXTYExMSSf4=;
+        b=w39a+ipqmLr/WF3QyHPQq8pa+r/z0+deGeqyfwyycEXOSHpGI+Tdd9JqML1y7e71W3
+         +Sy5fyZ5v9iyu8zDF7HRmBe/MehlHwCAsLYLz2mImdG0FZwYp8hFrZDhEzJ4gPbBUCWC
+         GqKtarI3n4G1W/XWi9ORwJREbU1f01Th7ikGEngH1f0vHWRerJy+SkbK8szttPzSNogo
+         sSJy1sfMLurzPRCPv+dyxyNTihauN6WFUcO6Z43ADbP6sq21M0E0kNtK2nJJv0jMYLbg
+         7jYC1V/+jhxVmwDzMcCuJIOFKGO/0Itl3fnzFo8KAJSceY64PqtjaNviZeH6ne3aKl1R
+         Zinw==
+X-Gm-Message-State: AOJu0Yyyx8TEAH7lQCtSAfM5Odu4ulnTiVp//Mz2F0o7MAtl16J27ukm
+	TEcftOmSuk0Ed1e+eL7Qqvtm3rHVooBw3ZmXOF7ws1K4KZnS0jEJ2nLtg2BmMuK2gmr7/H65igB
+	UmD91U7NlXiJhTQ7LGtwWoBuCtpxr/p4jz/xbp1FByQkwVttmaNysadqOvIahyPT6g9SBMK1iA+
+	mRvWbdr81tyw3N0709E8duyEkGxQ5haZe51nOk8FUJCcwG
+X-Google-Smtp-Source: AGHT+IEbiujIzpyc8GbKzgLvZVXCpu9/zxrTKUrgF3Skt3Z3gDpfwQad/65JvWpJppw9vmX4UNhpY6mqkJdcFmM=
 X-Received: from barleywine.c.googlers.com ([fda3:e722:ac3:cc00:7f:e700:c0a8:3bd4])
- (user=calvinwan job=sendgmr) by 2002:a81:ee0a:0:b0:608:66be:2f71 with SMTP id
- l10-20020a81ee0a000000b0060866be2f71mr1424468ywm.9.1708624258084; Thu, 22 Feb
- 2024 09:50:58 -0800 (PST)
-Date: Thu, 22 Feb 2024 17:50:32 +0000
+ (user=calvinwan job=sendgmr) by 2002:a05:6902:1204:b0:dc6:d678:371d with SMTP
+ id s4-20020a056902120400b00dc6d678371dmr796007ybu.3.1708624260402; Thu, 22
+ Feb 2024 09:51:00 -0800 (PST)
+Date: Thu, 22 Feb 2024 17:50:33 +0000
 In-Reply-To: <cover.1696021277.git.jonathantanmy@google.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -59,463 +59,416 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 Mime-Version: 1.0
 References: <cover.1696021277.git.jonathantanmy@google.com>
 X-Mailer: git-send-email 2.44.0.rc0.258.g7320e95886-goog
-Message-ID: <20240222175033.1489723-3-calvinwan@google.com>
-Subject: [PATCH v5 2/3] git-std-lib: introduce Git Standard Library
+Message-ID: <20240222175033.1489723-4-calvinwan@google.com>
+Subject: [PATCH v5 3/3] test-stdlib: show that git-std-lib is independent
 From: Calvin Wan <calvinwan@google.com>
 To: git@vger.kernel.org
 Cc: Calvin Wan <calvinwan@google.com>, Jonathan Tan <jonathantanmy@google.com>, 
 	phillip.wood123@gmail.com, Junio C Hamano <gitster@pobox.com>
 Content-Type: text/plain; charset="UTF-8"
 
-This commit contains:
-- Makefile rules for git-std-lib.a
-- code and Makefile rules for git-stub-lib.a
-- description and rationale of the above in Documentation/
+Add a test file that calls some functions defined in git-std-lib.a
+object files to showcase that they do not reference missing objects and
+that, together with git-stub-lib.a, git-std-lib.a can stand on its own.
 
-Quoting from documentation introduced in this commit:
+As described in test-stdlib.c, this can probably be removed once we have
+unit tests.
 
-  The Git Standard Library intends to serve as the foundational library
-  and root dependency that other libraries in Git will be built off
-  of. That is to say, suppose we have libraries X and Y; a user that
-  wants to use X and Y would need to include X, Y, and this Git Standard
-  Library.
-
-Code demonstrating the use of git-std-lib.a and git-stub-lib.a will be
-in a subsequent commit.
+The variable TEST_PROGRAMS is moved lower in the Makefile after
+NO_POSIX_GOODIES is defined in config.make.uname. TEST_PROGRAMS isn't
+used earlier than that so this change should be safe.
 
 Signed-off-by: Calvin Wan <calvinwan@google.com>
 Helped-by: Phillip Wood <phillip.wood123@gmail.com>
 Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
 ---
- Documentation/Makefile                  |   1 +
- Documentation/technical/git-std-lib.txt | 170 ++++++++++++++++++++++++
- Makefile                                |  48 +++++--
- stubs/misc.c                            |  33 +++++
- stubs/pager.c                           |   6 +
- stubs/trace2.c                          |  27 ++++
- 6 files changed, 274 insertions(+), 11 deletions(-)
- create mode 100644 Documentation/technical/git-std-lib.txt
- create mode 100644 stubs/misc.c
- create mode 100644 stubs/pager.c
- create mode 100644 stubs/trace2.c
+ Makefile               |  23 +++-
+ strbuf.h               |   2 +
+ stubs/misc.c           |   1 +
+ t/helper/.gitignore    |   1 +
+ t/helper/test-stdlib.c | 266 +++++++++++++++++++++++++++++++++++++++++
+ t/t0082-std-lib.sh     |  11 ++
+ 6 files changed, 299 insertions(+), 5 deletions(-)
+ create mode 100644 t/helper/test-stdlib.c
+ create mode 100755 t/t0082-std-lib.sh
 
-diff --git a/Documentation/Makefile b/Documentation/Makefile
-index 3f2383a12c..f1dc673838 100644
---- a/Documentation/Makefile
-+++ b/Documentation/Makefile
-@@ -110,6 +110,7 @@ TECH_DOCS += SubmittingPatches
- TECH_DOCS += ToolsForGit
- TECH_DOCS += technical/bitmap-format
- TECH_DOCS += technical/bundle-uri
-+TECH_DOCS += technical/git-std-lib
- TECH_DOCS += technical/hash-function-transition
- TECH_DOCS += technical/long-running-process-protocol
- TECH_DOCS += technical/multi-pack-index
-diff --git a/Documentation/technical/git-std-lib.txt b/Documentation/technical/git-std-lib.txt
-new file mode 100644
-index 0000000000..3d9aa121ac
---- /dev/null
-+++ b/Documentation/technical/git-std-lib.txt
-@@ -0,0 +1,170 @@
-+= Git Standard Library
-+
-+The Git Standard Library intends to serve as the foundational library
-+and root dependency that other libraries in Git will be built off of.
-+That is to say, suppose we have libraries X and Y; a user that wants to
-+use X and Y would need to include X, Y, and this Git Standard Library.
-+This does not mean that the Git Standard Library will be the only
-+possible root dependency in the future, but rather the most significant
-+and widely used one. Git itself is also built off of the Git Standard
-+Library.
-+
-+== Dependency graph in libified Git
-+
-+Before the introduction of the Git Standard Library, all objects defined
-+in the Git library are compiled and archived into a singular file,
-+libgit.a, which is then linked against by common-main.o with other
-+external dependencies and turned into the Git executable. In other
-+words, the Git executable has dependencies on libgit.a and a couple of
-+external libraries. The libfication of Git slightly alters this build
-+flow by separating out libgit.a into libgit.a and git-std-lib.a. 
-+
-+With our current method of building Git, we can imagine the dependency
-+graph as such:
-+
-+	Git
-+	 /\
-+	/  \
-+       /    \
-+  libgit.a   ext deps
-+
-+We want to separate out potential libraries from libgit.a and have
-+libgit.a depend on them, which would possibly look like:
-+
-+		Git
-+		/\
-+	       /  \
-+	      /    \
-+	  libgit.a  ext deps
-+	     /\
-+	    /  \
-+	   /    \
-+object-store.a  (other lib)
-+      |        /
-+      |       /
-+      |      /
-+      |     /
-+      |    /
-+      |   /
-+      |  /
-+git-std-lib.a
-+
-+Instead of containing all objects in Git, libgit.a would contain objects
-+that are not built by libraries it links against. Consequently, if
-+someone wanted a custom build of Git with a custom implementation of the
-+object store, they would only have to swap out object-store.a rather
-+than do a hard fork of Git.
-+
-+== Rationale behind Git Standard Library
-+
-+The rationale behind the selected object files in the Git Standard
-+Library is the result of two observations within the Git
-+codebase:
-+  1. every file includes git-compat-util.h which defines functions
-+     in a couple of different files
-+  2. wrapper.c + usage.c have difficult-to-separate circular
-+     dependencies with each other and other files.
-+
-+=== Ubiquity of git-compat-util.h and circular dependencies
-+
-+Every file in the Git codebase includes git-compat-util.h. It serves as
-+"a compatibility aid that isolates the knowledge of platform specific
-+inclusion order and what feature macros to define before including which
-+system header" (Junio[1]). Since every file includes git-compat-util.h,
-+and git-compat-util.h includes wrapper.h and usage.h, it would make
-+sense for wrapper.c and usage.c to be a part of the root library. They
-+have difficult to separate circular dependencies with each other so it
-+would impractical for them to be independent libraries. Wrapper.c has
-+dependencies on parse.c, abspath.c, strbuf.c, which in turn also have
-+dependencies on usage.c and wrapper.c - more circular dependencies.
-+
-+=== Tradeoff between swappability and refactoring
-+
-+From the above dependency graph, we can see that git-std-lib.a could be
-+many smaller libraries rather than a singular library. So why choose a
-+singular library when multiple libraries can be individually easier to
-+swap and are more modular? A singular library requires less work to
-+separate out circular dependencies within itself so it becomes a
-+tradeoff question between work and reward. While there may be a point in
-+the future where a file like usage.c would want its own library so that
-+someone can have custom die() or error(), the work required to refactor
-+out the circular dependencies in some files would be enormous due to
-+their ubiquity so therefore I believe it is not worth the tradeoff
-+currently. Additionally, we can in the future choose to do this refactor
-+and change the API for the library if there becomes enough of a reason
-+to do so (remember we are avoiding promising stability of the interfaces
-+of those libraries).
-+
-+=== Reuse of compatibility functions in git-compat-util.h
-+
-+Most functions defined in git-compat-util.h are implemented in compat/
-+and have dependencies limited to strbuf.h and wrapper.h so they can be
-+easily included in git-std-lib.a, which as a root dependency means that
-+higher level libraries do not have to worry about compatibility files in
-+compat/. The rest of the functions defined in git-compat-util.h are
-+implemented in top level files and are hidden behind
-+an #ifdef if their implementation is not in git-std-lib.a.
-+
-+=== Rationale summary
-+
-+The Git Standard Library allows us to get the libification ball rolling
-+with other libraries in Git. By not spending many more months attempting
-+to refactor difficult circular dependencies and instead spending that
-+time getting to a state where we can test out swapping a library out
-+such as config or object store, we can prove the viability of Git
-+libification on a much faster time scale. Additionally the code cleanups
-+that have happened so far have been minor and beneficial for the
-+codebase. It is probable that making large movements would negatively
-+affect code clarity.
-+
-+== Git Standard Library boundary
-+
-+While I have described above some useful heuristics for identifying
-+potential candidates for git-std-lib.a, a standard library should not
-+have a shaky definition for what belongs in it.
-+
-+ - Low-level files (aka operates only on other primitive types) that are
-+   used everywhere within the codebase (wrapper.c, usage.c, strbuf.c)
-+   - Dependencies that are low-level and widely used
-+     (abspath.c, date.c, hex-ll.c, parse.c, utf8.c)
-+ - low-level git/* files with functions defined in git-compat-util.h
-+   (ctype.c)
-+ - compat/*
-+
-+There are other files that might fit this definition, but that does not
-+mean it should belong in git-std-lib.a. Those files should start as
-+their own separate library since any file added to git-std-lib.a loses
-+its flexibility of being easily swappable.
-+
-+Wrapper.c and usage.c have dependencies on pager and trace2 that are
-+possible to remove at the cost of sacrificing the ability for standard Git
-+to be able to trace functions in those files and other files in git-std-lib.a.
-+In order for git-std-lib.a to compile with those dependencies, stubbed out
-+versions of those files are implemented and swapped in during compilation time
-+(see STUB_LIB_OBJS in the Makefile).
-+
-+== Files inside of Git Standard Library
-+
-+The set of files in git-std-lib.a can be found in STD_LIB_OBJS and COMPAT_OBJS
-+in the Makefile.
-+
-+When these files are compiled together with the files in STUB_LIB_OBJS (or
-+user-provided files that provide the same functions), they form a complete
-+library.
-+
-+== Pitfalls
-+
-+There are a small amount of files under compat/* that have dependencies
-+not inside of git-std-lib.a. While those functions are not called on
-+Linux, other OSes might call those problematic functions. I don't see
-+this as a major problem, just moreso an observation that libification in
-+general may also require some minor compatibility work in the future.
-+
-+== Testing
-+
-+Unit tests should catch any breakages caused by changes to files in
-+git-std-lib.a (i.e. introduction of a out of scope dependency) and new
-+functions introduced to git-std-lib.a will require unit tests written
-+for them.
-+
-+[1] https://lore.kernel.org/git/xmqqwn17sydw.fsf@gitster.g/
 diff --git a/Makefile b/Makefile
-index 4e255c81f2..d37ea9d34b 100644
+index d37ea9d34b..1d762ce13a 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -669,6 +669,8 @@ FUZZ_PROGRAMS =
- GIT_OBJS =
- LIB_OBJS =
- SCALAR_OBJS =
-+STD_LIB_OBJS =
-+STUB_LIB_OBJS =
- OBJECTS =
- OTHER_PROGRAMS =
- PROGRAM_OBJS =
-@@ -923,6 +925,8 @@ TEST_SHELL_PATH = $(SHELL_PATH)
+@@ -870,9 +870,7 @@ TEST_BUILTINS_OBJS += test-xml-encode.o
+ # Do not add more tests here unless they have extra dependencies. Add
+ # them in TEST_BUILTINS_OBJS above.
+ TEST_PROGRAMS_NEED_X += test-fake-ssh
+-TEST_PROGRAMS_NEED_X += test-tool
+-
+-TEST_PROGRAMS = $(patsubst %,t/helper/%$X,$(TEST_PROGRAMS_NEED_X))
++TEST_PROGRAMS_NEED_X += $(info tpnxnpg=$(NO_POSIX_GOODIES))test-tool
  
- LIB_FILE = libgit.a
- XDIFF_LIB = xdiff/lib.a
-+STD_LIB_FILE = git-std-lib.a
-+STUB_LIB_FILE = git-stub-lib.a
- REFTABLE_LIB = reftable/libreftable.a
- REFTABLE_TEST_LIB = reftable/libreftable_test.a
+ # List built-in command $C whose implementation cmd_$C() is not in
+ # builtin/$C.o but is linked in as part of some other command.
+@@ -2678,6 +2676,16 @@ REFTABLE_TEST_OBJS += reftable/stack_test.o
+ REFTABLE_TEST_OBJS += reftable/test_framework.o
+ REFTABLE_TEST_OBJS += reftable/tree_test.o
  
-@@ -962,7 +966,6 @@ COCCI_SOURCES = $(filter-out $(THIRD_PARTY_SOURCES),$(FOUND_C_SOURCES))
- 
- LIB_H = $(FOUND_H_SOURCES)
- 
--LIB_OBJS += abspath.o
- LIB_OBJS += add-interactive.o
- LIB_OBJS += add-patch.o
- LIB_OBJS += advice.o
-@@ -1004,8 +1007,6 @@ LIB_OBJS += convert.o
- LIB_OBJS += copy.o
- LIB_OBJS += credential.o
- LIB_OBJS += csum-file.o
--LIB_OBJS += ctype.o
--LIB_OBJS += date.o
- LIB_OBJS += decorate.o
- LIB_OBJS += delta-islands.o
- LIB_OBJS += diagnose.o
-@@ -1046,7 +1047,6 @@ LIB_OBJS += hash-lookup.o
- LIB_OBJS += hashmap.o
- LIB_OBJS += help.o
- LIB_OBJS += hex.o
--LIB_OBJS += hex-ll.o
- LIB_OBJS += hook.o
- LIB_OBJS += ident.o
- LIB_OBJS += json-writer.o
-@@ -1097,7 +1097,6 @@ LIB_OBJS += pack-write.o
- LIB_OBJS += packfile.o
- LIB_OBJS += pager.o
- LIB_OBJS += parallel-checkout.o
--LIB_OBJS += parse.o
- LIB_OBJS += parse-options-cb.o
- LIB_OBJS += parse-options.o
- LIB_OBJS += patch-delta.o
-@@ -1152,7 +1151,6 @@ LIB_OBJS += sparse-index.o
- LIB_OBJS += split-index.o
- LIB_OBJS += stable-qsort.o
- LIB_OBJS += statinfo.o
--LIB_OBJS += strbuf.o
- LIB_OBJS += streaming.o
- LIB_OBJS += string-list.o
- LIB_OBJS += strmap.o
-@@ -1189,21 +1187,32 @@ LIB_OBJS += unpack-trees.o
- LIB_OBJS += upload-pack.o
- LIB_OBJS += url.o
- LIB_OBJS += urlmatch.o
--LIB_OBJS += usage.o
- LIB_OBJS += userdiff.o
--LIB_OBJS += utf8.o
- LIB_OBJS += varint.o
- LIB_OBJS += version.o
- LIB_OBJS += versioncmp.o
- LIB_OBJS += walker.o
- LIB_OBJS += wildmatch.o
- LIB_OBJS += worktree.o
--LIB_OBJS += wrapper.o
- LIB_OBJS += write-or-die.o
- LIB_OBJS += ws.o
- LIB_OBJS += wt-status.o
- LIB_OBJS += xdiff-interface.o
- 
-+STD_LIB_OBJS += abspath.o
-+STD_LIB_OBJS += ctype.o
-+STD_LIB_OBJS += date.o
-+STD_LIB_OBJS += hex-ll.o
-+STD_LIB_OBJS += parse.o
-+STD_LIB_OBJS += strbuf.o
-+STD_LIB_OBJS += usage.o
-+STD_LIB_OBJS += utf8.o
-+STD_LIB_OBJS += wrapper.o
++ifndef NO_POSIX_GOODIES
++TEST_PROGRAMS_NEED_X += test-stdlib
++MY_VAR = not_else
++$(info insideifndefnpg=$(NO_POSIX_GOODIES))
++else
++MY_VAR = else
++endif
 +
-+STUB_LIB_OBJS += stubs/trace2.o
-+STUB_LIB_OBJS += stubs/pager.o
-+STUB_LIB_OBJS += stubs/misc.o
++TEST_PROGRAMS = $(info tptpnx=$(TEST_PROGRAMS_NEED_X) myvar=$(MY_VAR))$(patsubst %,t/helper/%$X,$(TEST_PROGRAMS_NEED_X))
 +
- BUILTIN_OBJS += builtin/add.o
- BUILTIN_OBJS += builtin/am.o
- BUILTIN_OBJS += builtin/annotate.o
-@@ -1352,7 +1361,7 @@ UNIT_TEST_OBJS = $(patsubst %,$(UNIT_TEST_DIR)/%.o,$(UNIT_TEST_PROGRAMS))
- UNIT_TEST_OBJS += $(UNIT_TEST_DIR)/test-lib.o
+ TEST_OBJS := $(patsubst %$X,%.o,$(TEST_PROGRAMS)) $(patsubst %,t/helper/%,$(TEST_BUILTINS_OBJS))
  
- # xdiff and reftable libs may in turn depend on what is in libgit.a
--GITLIBS = common-main.o $(LIB_FILE) $(XDIFF_LIB) $(REFTABLE_LIB) $(LIB_FILE)
-+GITLIBS = common-main.o $(STD_LIB_FILE) $(LIB_FILE) $(XDIFF_LIB) $(REFTABLE_LIB) $(LIB_FILE)
- EXTLIBS =
+ .PHONY: test-objs
+@@ -3204,7 +3212,11 @@ GIT-PYTHON-VARS: FORCE
+             fi
+ endif
  
- GIT_USER_AGENT = git/$(GIT_VERSION)
-@@ -2693,6 +2702,8 @@ OBJECTS += $(XDIFF_OBJS)
- OBJECTS += $(FUZZ_OBJS)
- OBJECTS += $(REFTABLE_OBJS) $(REFTABLE_TEST_OBJS)
- OBJECTS += $(UNIT_TEST_OBJS)
-+OBJECTS += $(STD_LIB_OBJS)
-+OBJECTS += $(STUB_LIB_OBJS)
+-test_bindir_programs := $(patsubst %,bin-wrappers/%,$(BINDIR_PROGRAMS_NEED_X) $(BINDIR_PROGRAMS_NO_X) $(TEST_PROGRAMS_NEED_X))
++test_bindir_programs := $(info tbptpnx=$(TEST_PROGRAMS_NEED_X))$(patsubst %,bin-wrappers/%,$(BINDIR_PROGRAMS_NEED_X) $(BINDIR_PROGRAMS_NO_X) $(TEST_PROGRAMS_NEED_X))
++
++t/helper/test-stdlib$X: t/helper/test-stdlib.o GIT-LDFLAGS $(STD_LIB_FILE) $(STUB_LIB_FILE) $(GITLIBS)
++	$(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) \
++		$< $(STD_LIB_FILE) $(STUB_LIB_FILE) $(EXTLIBS)
  
- ifndef NO_CURL
- 	OBJECTS += http.o http-walker.o remote-curl.o
-@@ -3686,7 +3697,7 @@ clean: profile-clean coverage-clean cocciclean
- 	$(RM) git.res
- 	$(RM) $(OBJECTS)
- 	$(RM) headless-git.o
--	$(RM) $(LIB_FILE) $(XDIFF_LIB) $(REFTABLE_LIB) $(REFTABLE_TEST_LIB)
-+	$(RM) $(LIB_FILE) $(XDIFF_LIB) $(REFTABLE_LIB) $(REFTABLE_TEST_LIB) $(STD_LIB_FILE) $(STUB_LIB_FILE)
- 	$(RM) $(ALL_PROGRAMS) $(SCRIPT_LIB) $(BUILT_INS) $(OTHER_PROGRAMS)
- 	$(RM) $(TEST_PROGRAMS)
- 	$(RM) $(FUZZ_PROGRAMS)
-@@ -3878,3 +3889,18 @@ $(UNIT_TEST_PROGS): $(UNIT_TEST_BIN)/%$X: $(UNIT_TEST_DIR)/%.o $(UNIT_TEST_DIR)/
- build-unit-tests: $(UNIT_TEST_PROGS)
- unit-tests: $(UNIT_TEST_PROGS)
- 	$(MAKE) -C t/ unit-tests
+ all:: $(TEST_PROGRAMS) $(test_bindir_programs) $(UNIT_TEST_PROGS)
+ 
+@@ -3635,7 +3647,8 @@ ifneq ($(INCLUDE_DLLS_IN_ARTIFACTS),)
+ OTHER_PROGRAMS += $(shell echo *.dll t/helper/*.dll t/unit-tests/bin/*.dll)
+ endif
+ 
+-artifacts-tar:: $(ALL_COMMANDS_TO_INSTALL) $(SCRIPT_LIB) $(OTHER_PROGRAMS) \
++# Added an info for debugging
++artifacts-tar:: $(info npg=$(NO_POSIX_GOODIES) cc=$(COMPAT_CFLAGS) tp=$(TEST_PROGRAMS))$(ALL_COMMANDS_TO_INSTALL) $(SCRIPT_LIB) $(OTHER_PROGRAMS) \
+ 		GIT-BUILD-OPTIONS $(TEST_PROGRAMS) $(test_bindir_programs) \
+ 		$(UNIT_TEST_PROGS) $(MOFILES)
+ 	$(QUIET_SUBDIR0)templates $(QUIET_SUBDIR1) \
+diff --git a/strbuf.h b/strbuf.h
+index e959caca87..f775416307 100644
+--- a/strbuf.h
++++ b/strbuf.h
+@@ -1,6 +1,8 @@
+ #ifndef STRBUF_H
+ #define STRBUF_H
+ 
++#include "git-compat-util.h"
 +
-+### Libified Git rules
-+
-+# git-std-lib.a
-+# Programs other than git should compile this with
-+#     make NO_GETTEXT=YesPlease git-std-lib.a
-+# and link against git-stub-lib.a (if the default no-op functionality is fine)
-+# or a custom .a file with the same interface as git-stub-lib.a (if custom
-+# functionality is needed) as well.
-+$(STD_LIB_FILE): $(STD_LIB_OBJS) $(COMPAT_OBJS)
-+	$(QUIET_AR)$(RM) $@ && $(AR) $(ARFLAGS) $@ $^
-+
-+# git-stub-lib.a
-+$(STUB_LIB_FILE): $(STUB_LIB_OBJS)
-+	$(QUIET_AR)$(RM) $@ && $(AR) $(ARFLAGS) $@ $^
+ /*
+  * NOTE FOR STRBUF DEVELOPERS
+  *
 diff --git a/stubs/misc.c b/stubs/misc.c
-new file mode 100644
-index 0000000000..92da76fd46
---- /dev/null
+index 92da76fd46..8d80581e39 100644
+--- a/stubs/misc.c
 +++ b/stubs/misc.c
-@@ -0,0 +1,33 @@
-+#include <assert.h>
-+#include <stdlib.h>
-+
-+#ifndef NO_GETTEXT
-+/*
-+ * NEEDSWORK: This is enough to link our unit tests against
-+ * git-std-lib.a built with gettext support. We don't really support
-+ * programs other than git using git-std-lib.a with gettext support
-+ * yet. To do that we need to start using dgettext() rather than
-+ * gettext() in our code.
-+ */
-+int git_gettext_enabled = 0;
-+#endif
-+
-+int common_exit(const char *file, int line, int code);
-+
-+int common_exit(const char *file, int line, int code)
-+{
-+	exit(code);
-+}
-+
-+#if !defined(__MINGW32__) && !defined(_MSC_VER)
-+int lstat_cache_aware_rmdir(const char *path);
-+
-+int lstat_cache_aware_rmdir(const char *path)
-+{
-+	/*
-+	 * This function should not be called by programs linked
-+	 * against git-stub-lib.a
-+	 */
-+	assert(0);
-+}
-+#endif
-diff --git a/stubs/pager.c b/stubs/pager.c
+@@ -9,6 +9,7 @@
+  * yet. To do that we need to start using dgettext() rather than
+  * gettext() in our code.
+  */
++#include "gettext.h"
+ int git_gettext_enabled = 0;
+ #endif
+ 
+diff --git a/t/helper/.gitignore b/t/helper/.gitignore
+index 8c2ddcce95..5cec3b357f 100644
+--- a/t/helper/.gitignore
++++ b/t/helper/.gitignore
+@@ -1,2 +1,3 @@
+ /test-tool
+ /test-fake-ssh
++/test-stdlib
+diff --git a/t/helper/test-stdlib.c b/t/helper/test-stdlib.c
 new file mode 100644
-index 0000000000..4f575cada7
+index 0000000000..460b472fb4
 --- /dev/null
-+++ b/stubs/pager.c
-@@ -0,0 +1,6 @@
-+#include "pager.h"
++++ b/t/helper/test-stdlib.c
+@@ -0,0 +1,266 @@
++#include "git-compat-util.h"
++#include "abspath.h"
++#include "hex-ll.h"
++#include "parse.h"
++#include "strbuf.h"
++#include "string-list.h"
 +
-+int pager_in_use(void)
-+{
++/*
++ * Calls all functions from git-std-lib
++ * Some inline/trivial functions are skipped
++ *
++ * NEEDSWORK: The purpose of this file is to show that an executable can be
++ * built with git-std-lib.a and git-stub-lib.a, and then executed. If there
++ * is another executable that demonstrates this (for example, a unit test that
++ * takes the form of an executable compiled with git-std-lib.a and git-stub-
++ * lib.a), this file can be removed.
++ */
++
++static void abspath_funcs(void) {
++	struct strbuf sb = STRBUF_INIT;
++
++	fprintf(stderr, "calling abspath functions\n");
++	is_directory("foo");
++	strbuf_realpath(&sb, "foo", 0);
++	strbuf_realpath_forgiving(&sb, "foo", 0);
++	real_pathdup("foo", 0);
++	absolute_path("foo");
++	absolute_pathdup("foo");
++	prefix_filename("foo/", "bar");
++	prefix_filename_except_for_dash("foo/", "bar");
++	is_absolute_path("foo");
++	strbuf_add_absolute_path(&sb, "foo");
++	strbuf_add_real_path(&sb, "foo");
++}
++
++static void hex_ll_funcs(void) {
++	unsigned char c;
++
++	fprintf(stderr, "calling hex-ll functions\n");
++
++	hexval('c');
++	hex2chr("A1");
++	hex_to_bytes(&c, "A1", 1);
++}
++
++static void parse_funcs(void) {
++	intmax_t foo;
++	ssize_t foo1 = -1;
++	unsigned long foo2;
++	int foo3;
++	int64_t foo4;
++
++	fprintf(stderr, "calling parse functions\n");
++
++	git_parse_signed("42", &foo, maximum_signed_value_of_type(int));
++	git_parse_ssize_t("42", &foo1);
++	git_parse_ulong("42", &foo2);
++	git_parse_int("42", &foo3);
++	git_parse_int64("42", &foo4);
++	git_parse_maybe_bool("foo");
++	git_parse_maybe_bool_text("foo");
++	git_env_bool("foo", 1);
++	git_env_ulong("foo", 1);
++}
++
++static int allow_unencoded_fn(char ch) {
 +	return 0;
 +}
-diff --git a/stubs/trace2.c b/stubs/trace2.c
-new file mode 100644
-index 0000000000..7d89482228
++
++static void strbuf_funcs(void) {
++	struct strbuf *sb = xmalloc(sizeof(*sb));
++	struct strbuf *sb2 = xmalloc(sizeof(*sb2));
++	struct strbuf sb3 = STRBUF_INIT;
++	struct string_list list = STRING_LIST_INIT_NODUP;
++	int fd = open("/dev/null", O_RDONLY);
++
++	fprintf(stderr, "calling strbuf functions\n");
++
++	fprintf(stderr, "at line %d\n", __LINE__);
++	starts_with("foo", "bar");
++	fprintf(stderr, "at line %d\n", __LINE__);
++	istarts_with("foo", "bar");
++	fprintf(stderr, "at line %d\n", __LINE__);
++	strbuf_init(sb, 0);
++	fprintf(stderr, "at line %d\n", __LINE__);
++	strbuf_init(sb2, 0);
++	fprintf(stderr, "at line %d\n", __LINE__);
++	strbuf_release(sb);
++	fprintf(stderr, "at line %d\n", __LINE__);
++	strbuf_attach(sb, strbuf_detach(sb, NULL), 0, 0);
++	fprintf(stderr, "at line %d\n", __LINE__);
++	strbuf_swap(sb, sb2);
++	fprintf(stderr, "at line %d\n", __LINE__);
++	strbuf_setlen(sb, 0);
++	fprintf(stderr, "at line %d\n", __LINE__);
++	strbuf_trim(sb);
++	fprintf(stderr, "at line %d\n", __LINE__);
++	strbuf_trim_trailing_dir_sep(sb);
++	fprintf(stderr, "at line %d\n", __LINE__);
++	strbuf_trim_trailing_newline(sb);
++	fprintf(stderr, "at line %d\n", __LINE__);
++	strbuf_reencode(sb, "foo", "bar");
++	fprintf(stderr, "at line %d\n", __LINE__);
++	strbuf_tolower(sb);
++	fprintf(stderr, "at line %d\n", __LINE__);
++	strbuf_add_separated_string_list(sb, " ", &list);
++	fprintf(stderr, "at line %d\n", __LINE__);
++	strbuf_list_free(strbuf_split_buf("foo bar", 8, ' ', -1));
++	fprintf(stderr, "at line %d\n", __LINE__);
++	strbuf_cmp(sb, sb2);
++	fprintf(stderr, "at line %d\n", __LINE__);
++	strbuf_addch(sb, 1);
++	fprintf(stderr, "at line %d\n", __LINE__);
++	strbuf_splice(sb, 0, 1, "foo", 3);
++	fprintf(stderr, "at line %d\n", __LINE__);
++	strbuf_insert(sb, 0, "foo", 3);
++	fprintf(stderr, "at line %d\n", __LINE__);
++	strbuf_insertf(sb, 0, "%s", "foo");
++	fprintf(stderr, "at line %d\n", __LINE__);
++	strbuf_remove(sb, 0, 1);
++	fprintf(stderr, "at line %d\n", __LINE__);
++	strbuf_add(sb, "foo", 3);
++	fprintf(stderr, "at line %d\n", __LINE__);
++	strbuf_addbuf(sb, sb2);
++	fprintf(stderr, "at line %d\n", __LINE__);
++	strbuf_join_argv(sb, 0, NULL, ' ');
++	fprintf(stderr, "at line %d\n", __LINE__);
++	strbuf_addchars(sb, 1, 1);
++	fprintf(stderr, "at line %d\n", __LINE__);
++	strbuf_addstr(sb, "foo");
++	fprintf(stderr, "at line %d\n", __LINE__);
++	strbuf_add_commented_lines(sb, "foo", 3, '#');
++	fprintf(stderr, "at line %d\n", __LINE__);
++	strbuf_commented_addf(sb, '#', "%s", "foo");
++	fprintf(stderr, "at line %d\n", __LINE__);
++	strbuf_addbuf_percentquote(sb, &sb3);
++	fprintf(stderr, "at line %d\n", __LINE__);
++	strbuf_add_percentencode(sb, "foo", STRBUF_ENCODE_SLASH);
++	fprintf(stderr, "at line %d\n", __LINE__);
++	strbuf_fread(sb, 0, stdin);
++	fprintf(stderr, "at line %d\n", __LINE__);
++	strbuf_read(sb, fd, 0);
++	fprintf(stderr, "at line %d\n", __LINE__);
++	strbuf_read_once(sb, fd, 0);
++	fprintf(stderr, "at line %d\n", __LINE__);
++	strbuf_write(sb, stderr);
++	fprintf(stderr, "at line %d\n", __LINE__);
++	strbuf_readlink(sb, "/dev/null", 0);
++	fprintf(stderr, "at line %d\n", __LINE__);
++	strbuf_getcwd(sb);
++	fprintf(stderr, "at line %d\n", __LINE__);
++	strbuf_getwholeline(sb, stderr, '\n');
++	fprintf(stderr, "at line %d\n", __LINE__);
++	strbuf_appendwholeline(sb, stderr, '\n');
++	fprintf(stderr, "at line %d\n", __LINE__);
++	strbuf_getline(sb, stderr);
++	fprintf(stderr, "at line %d\n", __LINE__);
++	strbuf_getline_lf(sb, stderr);
++	fprintf(stderr, "at line %d\n", __LINE__);
++	strbuf_getline_nul(sb, stderr);
++	fprintf(stderr, "at line %d\n", __LINE__);
++	strbuf_getwholeline_fd(sb, fd, '\n');
++	fprintf(stderr, "at line %d\n", __LINE__);
++	strbuf_read_file(sb, "/dev/null", 0);
++	fprintf(stderr, "at line %d\n", __LINE__);
++	strbuf_add_lines(sb, "foo", "bar", 0);
++	fprintf(stderr, "at line %d\n", __LINE__);
++	strbuf_addstr_xml_quoted(sb, "foo");
++	fprintf(stderr, "at line %d\n", __LINE__);
++	strbuf_addstr_urlencode(sb, "foo", allow_unencoded_fn);
++	fprintf(stderr, "at line %d\n", __LINE__);
++	strbuf_humanise_bytes(sb, 42);
++	fprintf(stderr, "at line %d\n", __LINE__);
++	strbuf_humanise_rate(sb, 42);
++	fprintf(stderr, "at line %d\n", __LINE__);
++	printf_ln("%s", sb->buf);
++	fprintf(stderr, "at line %d\n", __LINE__);
++	fprintf_ln(stderr, "%s", sb->buf);
++	fprintf(stderr, "at line %d\n", __LINE__);
++	xstrdup_tolower("foo");
++	fprintf(stderr, "at line %d\n", __LINE__);
++	xstrdup_toupper("foo");
++	fprintf(stderr, "at line %d\n", __LINE__);
++	xstrfmt("%s", "foo");
++	fprintf(stderr, "at line %d\n", __LINE__);
++}
++
++static void error_builtin(const char *err, va_list params) {}
++static void warn_builtin(const char *err, va_list params) {}
++
++static void usage_funcs(void) {
++	fprintf(stderr, "calling usage functions\n");
++	error("foo");
++	error_errno("foo");
++	die_message("foo");
++	die_message_errno("foo");
++	warning("foo");
++	warning_errno("foo");
++
++	get_die_message_routine();
++	set_error_routine(error_builtin);
++	get_error_routine();
++	set_warn_routine(warn_builtin);
++	get_warn_routine();
++}
++
++static void wrapper_funcs(void) {
++	int tmp;
++	void *ptr = xmalloc(1);
++	int fd = open("/dev/null", O_RDONLY);
++	struct strbuf sb = STRBUF_INIT;
++	int mode = 0444;
++	char host[PATH_MAX], path[PATH_MAX], path1[PATH_MAX];
++	xsnprintf(path, sizeof(path), "out-XXXXXX");
++	xsnprintf(path1, sizeof(path1), "out-XXXXXX");
++
++	fprintf(stderr, "calling wrapper functions\n");
++
++	xstrdup("foo");
++	xmalloc(1);
++	xmallocz(1);
++	xmallocz_gently(1);
++	xmemdupz("foo", 3);
++	xstrndup("foo", 3);
++	xrealloc(ptr, 2);
++	xcalloc(1, 1);
++	xsetenv("foo", "bar", 0);
++	xopen("/dev/null", O_RDONLY);
++	xread(fd, &sb, 1);
++	xwrite(fd, &sb, 1);
++	xpread(fd, &sb, 1, 0);
++	xdup(fd);
++	xfopen("/dev/null", "r");
++	xfdopen(fd, "r");
++	tmp = xmkstemp(path);
++	close(tmp);
++	unlink(path);
++	tmp = xmkstemp_mode(path1, mode);
++	close(tmp);
++	unlink(path1);
++	xgetcwd();
++	fopen_for_writing(path);
++	fopen_or_warn(path, "r");
++	xstrncmpz("foo", "bar", 3);
++	xgethostname(host, 3);
++	tmp = git_mkstemps_mode(path, 1, mode);
++	close(tmp);
++	unlink(path);
++	tmp = git_mkstemp_mode(path, mode);
++	close(tmp);
++	unlink(path);
++	read_in_full(fd, &sb, 1);
++	write_in_full(fd, &sb, 1);
++	pread_in_full(fd, &sb, 1, 0);
++}
++
++int main(int argc, const char **argv) {
++	abspath_funcs();
++	hex_ll_funcs();
++	parse_funcs();
++	strbuf_funcs();
++	usage_funcs();
++	wrapper_funcs();
++	fprintf(stderr, "all git-std-lib functions finished calling\n");
++	return 0;
++}
+diff --git a/t/t0082-std-lib.sh b/t/t0082-std-lib.sh
+new file mode 100755
+index 0000000000..0d5a024deb
 --- /dev/null
-+++ b/stubs/trace2.c
-@@ -0,0 +1,27 @@
-+#include "git-compat-util.h"
-+#include "trace2.h"
++++ b/t/t0082-std-lib.sh
+@@ -0,0 +1,11 @@
++#!/bin/sh
 +
-+struct child_process { int stub; };
-+struct repository { int stub; };
-+struct json_writer { int stub; };
++test_description='Test git-std-lib compilation'
 +
-+void trace2_region_enter_fl(const char *file, int line, const char *category,
-+			    const char *label, const struct repository *repo, ...) { }
-+void trace2_region_leave_fl(const char *file, int line, const char *category,
-+			    const char *label, const struct repository *repo, ...) { }
-+void trace2_data_string_fl(const char *file, int line, const char *category,
-+			   const struct repository *repo, const char *key,
-+			   const char *value) { }
-+void trace2_cmd_ancestry_fl(const char *file, int line, const char **parent_names) { }
-+void trace2_cmd_error_va_fl(const char *file, int line, const char *fmt,
-+			    va_list ap) { }
-+void trace2_cmd_name_fl(const char *file, int line, const char *name) { }
-+void trace2_thread_start_fl(const char *file, int line,
-+			    const char *thread_base_name) { }
-+void trace2_thread_exit_fl(const char *file, int line) { }
-+void trace2_data_intmax_fl(const char *file, int line, const char *category,
-+			   const struct repository *repo, const char *key,
-+			   intmax_t value) { }
-+int trace2_is_enabled(void) { return 0; }
-+void trace2_counter_add(enum trace2_counter_id cid, uint64_t value) { }
-+void trace2_collect_process_info(enum trace2_process_info_reason reason) { }
++. ./test-lib.sh
++
++test_expect_success !WINDOWS 'stdlib-test compiles and runs' '
++	test-stdlib
++'
++
++test_done
 -- 
 2.44.0.rc0.258.g7320e95886-goog
 
