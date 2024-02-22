@@ -1,106 +1,176 @@
-Received: from mail-lj1-f171.google.com (mail-lj1-f171.google.com [209.85.208.171])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from wout4-smtp.messagingengine.com (wout4-smtp.messagingengine.com [64.147.123.20])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8706714901F
-	for <git@vger.kernel.org>; Thu, 22 Feb 2024 14:36:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C3D5134CDC
+	for <git@vger.kernel.org>; Thu, 22 Feb 2024 15:52:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.20
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708612615; cv=none; b=QsN7rofPnu34czfxIysUsed/SBuCEbQNYAuip7PxBlCh9wf5aYNX3TXkMcGWyWbb6VmeD+YQ5Wm1GXyZR84RKSppgQvuIA2hEmBpVltBmzlOxO7BFVbK7lpbeewkNc5rlsGNP2am6xLrZRm1kkplKt7zbJnNbNSOOfiP8pUnIPg=
+	t=1708617172; cv=none; b=l7t9VnWbREZ+hJB1H/tQAQpgaD+wkGZXYghhFRLu21dkTzkZ+4rmEpeihSIHeox14OKYc8HZMCaq0/biItJhc7IKYt+fPh//dtzjoqfmy8vOyiLxgFMZjNGQJMSou/XyUvlYEdN/NB8/LhXvZr4f1sqvw+HyxG9qAoV+o3dYY0s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708612615; c=relaxed/simple;
-	bh=QSb/Qh/k/jtO5PpkL3y6lTEdSq/J5NWkFsE0nmeVhaY=;
-	h=Message-ID:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=dHxbK6u1L1i3FqUsHyBZgh0KoWVWflmnqak4n65fmY2UxPRZbl3oe6UkluoEyn4FRjjhSaQ8HCq9LIkq9bWwjD4jFia2Bq0596vSMUZWw1D/4PFT6ad1ZSeJQYLh+H2XsDM3OuYTOpKQG8cB8UoOxZ/24PukYn+T56tGZ9CeAYQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CeEkghhW; arc=none smtp.client-ip=209.85.208.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1708617172; c=relaxed/simple;
+	bh=sSwRG6s8+cO9OGn/QrnbK7st4zhaD1vDBd2mFGnQlX8=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=ZWb8z/PLRZXVqmVf/FhlazQho7dUr7uxCu3+2hiwFFJ3LK1HolIvY2ODgoZscglPEVhdVmtXYHVKeKp3vmJER2UpQ6rCEjuLzKGomXrDWRq3GxY9T8kWAdduwi8PMQVYLEIundlkiFjz7BFfo4qi8VuXF464/AFXJrhnBZcsF3o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=ZwV/f/JU; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=hLlHfRbR; arc=none smtp.client-ip=64.147.123.20
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CeEkghhW"
-Received: by mail-lj1-f171.google.com with SMTP id 38308e7fff4ca-2d220ad10b3so75148751fa.1
-        for <git@vger.kernel.org>; Thu, 22 Feb 2024 06:36:53 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1708612611; x=1709217411; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=y2HklqQzwQdN85hogz+D0Bk5KjHPdNYbw/bviEKo8cw=;
-        b=CeEkghhWb2VStuo18LVW64J4q3XjJlVU3OOQ0IBNmtf5ZYJB5z6Uy4RDdEixm4entA
-         GQ6hTzKwYzBq4guriQ06Y5YYFc5wV6TFQI2j2oDzvTqwKJJ+sMkevTR2kovbH+vCqfsT
-         DiOKfKgMNaJIIL3qrQWrJgxVN6I4CVKsbKKsNn65ADMiCj9LbqHoY9/hGMq8+iVumCSg
-         Nnrtj13dY8puLe5/ugeA8jAvQpy3+NLFA+C5aeklHbk9GH1tKuQSpj0xT7JY7ldUppAb
-         8LKSEdhL0wgi4vvJ3tykYdaqixSCJHna9SwSBtAkQWAA4cSVu+MgZZsFiYVvAwe0cVei
-         4LXw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1708612611; x=1709217411;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=y2HklqQzwQdN85hogz+D0Bk5KjHPdNYbw/bviEKo8cw=;
-        b=YdHUusXo4SOwkxA0dFsU4NYThhswSGJFwrS63HOTOE28eV6ec5pU7NXxu0h6a05Rfn
-         cUa0gkQK+GnBIzM30kFVGmzUobtcqnKY/gPNu4IyChx5UOslQj0Thfux7N4EYWus58++
-         bMhZ5vyI1jxaMd579jREQVKTQVYSd/kFHbQ1yG7IRITTCDIZvoqimZKDzXg8MyvpHFkI
-         rXAlBzVkNEmYq10OfUSf5r5o58s6hH2thsdVR/sDunUL0X5GGL6gRR8I4v5huOhznkoW
-         3vfGOc8n2jx7dWmWximQ59i63CvpFY4PW2gkDHFqNcm6M/KECVY+0fICujpeXkq/SxqR
-         55Wg==
-X-Gm-Message-State: AOJu0YwyWeAhO/gUvOSTgfpjoniQ6smAgAPK2qBwZbbppXY8jrQ350aH
-	LtjBkNkRPXJuAT/xkLsLFwuF5iVri6M2Nbr5K//YGT7vWpJ5n+j8SrE++VCU
-X-Google-Smtp-Source: AGHT+IHmRWqkZ/V88OKcKnlRebD9/DUwFdhx9+IDvfJwiV0+uEtXC2oOz/r56HfyZ1V2FBKI7wliIA==
-X-Received: by 2002:a2e:870a:0:b0:2d2:35af:e8a5 with SMTP id m10-20020a2e870a000000b002d235afe8a5mr9006971lji.24.1708612611179;
-        Thu, 22 Feb 2024 06:36:51 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id bx9-20020a5d5b09000000b0033d202abf01sm5906201wrb.28.2024.02.22.06.36.50
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 22 Feb 2024 06:36:50 -0800 (PST)
-Message-ID: <91dc4ccd04e3a6cc50ed389edb6814e1e7a0c4dc.1708612605.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1651.v3.git.1708612605.gitgitgadget@gmail.com>
-References: <pull.1651.v2.git.1707324461.gitgitgadget@gmail.com>
-	<pull.1651.v3.git.1708612605.gitgitgadget@gmail.com>
-From: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Thu, 22 Feb 2024 14:36:45 +0000
-Subject: [PATCH v3 5/5] cache-tree: avoid an unnecessary check
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="ZwV/f/JU";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="hLlHfRbR"
+Received: from compute7.internal (compute7.nyi.internal [10.202.2.48])
+	by mailout.west.internal (Postfix) with ESMTP id D0A48320094F;
+	Thu, 22 Feb 2024 10:52:47 -0500 (EST)
+Received: from mailfrontend2 ([10.202.2.163])
+  by compute7.internal (MEProxy); Thu, 22 Feb 2024 10:52:48 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1708617167; x=1708703567; bh=sSwRG6s8+c
+	O9OGn/QrnbK7st4zhaD1vDBd2mFGnQlX8=; b=ZwV/f/JUsnu/l6P+F3Re/tQ8ak
+	v5b15h2/NbP66hHvq3MDAinXG1fnTeDfm1QgBeibS38pf3pJWFUu6OkQYy3ZRxr4
+	2hf1u6lmoKNPduloM/2F/Y8ijau34qzqOzlReUvJPmMJTcaa2agnWDBEXJSzYDxN
+	o3pKys5k2DrYlV7DBWkak2ZaQVo8Y9I8zommKidiOY3P6PLKhqlfGHdK0Dzbh8tu
+	hW1HM+CBtjiG2GiFsdWjIogoDdE4i42+uzP/wKgwhlOgiNSnI/ubrsZWxVNFyvGs
+	UGPkYFAmMbOzFYs6VWBOk0i0BAAietLCkOYpDvl9nnhsDLavxR43CvJpynMA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm1; t=1708617167; x=1708703567; bh=sSwRG6s8+cO9OGn/QrnbK7st4zha
+	D1vDBd2mFGnQlX8=; b=hLlHfRbRyzSenWEGAU56lOdK9c+rGK2zZYc4gG/C82fX
+	7lsxTpb4PtUh5r699CHnYCBGJxQvceYgvoW7QO4JgnNFjJbw9NzIIwbTHUSPikhf
+	8jTjFqelXgkzOstdD/YCrQ7WOtMPfqGUxluHTwwtXTZUuWBtIAfcOwzenzKhrRDt
+	kD+ljx/A/MKy2BFzK2ZRf4t5KbIBWqg215KIB7nXtZyTd6TdZhoIL50EXaKunoMo
+	QyfzTcWbqMb4ICAF6lEfV7+jk5zn6o+XqF4N7bIVUuoZTAiGNF14Ik40jZqZBaTP
+	QUL+DLC99iczNQZ/1LWHxVR2owrmRjvxRRHSNkBewA==
+X-ME-Sender: <xms:z23XZRwInorkfdnkbybIiGDdZLDLWnPkcPKiseA4O83QTDTmCDJgbQ>
+    <xme:z23XZRS4WAorXISbc3DfMKFxrcRZxoikdrPnSobyrobnQlB_sCemJ153NH3y9yXkN
+    SHExvyjXD4vHP9byA>
+X-ME-Received: <xmr:z23XZbWw-B57v1JFpj5q3B6INFRDxHWhZrT7lA5a61dI4EUmryGJgXpT00NnSWyEbm7NCm0RhvLJxY6SkIcOsPhOy4YbcF2Q3jfuHbC6gHjbFP_N>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrfeeggdektdcutefuodetggdotefrodftvf
+    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
+    uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
+    fjughrpeffhffvvefukfhfgggtuggjsehgtderredttddvnecuhfhrohhmpefrrghtrhhi
+    tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
+    hnpeejveehueetkeevleevffeffeekffffueetvddvvdegueejgfelveevueevfffgtden
+    ucffohhmrghinhepfihithhhghhoohhglhgvrdgtohhmnecuvehluhhsthgvrhfuihiivg
+    eptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimh
+X-ME-Proxy: <xmx:z23XZThHZcCgKPMdTzWIHOA8vjeK0xLTmc2PTIrL3x1OkN2zY6o8OQ>
+    <xmx:z23XZTBn_1yYR0kSgjLPntDKIk8XqMRkT6rMtnZ23byzgyNc31Yvtg>
+    <xmx:z23XZcKrmlA3YLmQ6x0zCfvcIzLSXLrbmtEQ78kz4ivcrpv3EoFE6g>
+    <xmx:z23XZV2sTUZhbvLq7pnBBunEcay3at2x8JdYQCR31qMmFd3TbzUcuw>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 22 Feb 2024 10:52:45 -0500 (EST)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id 6d5875c1 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 22 Feb 2024 15:48:36 +0000 (UTC)
+Date: Thu, 22 Feb 2024 16:52:41 +0100
+From: Patrick Steinhardt <ps@pks.im>
+To: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+Cc: Christian Couder <christian.couder@gmail.com>,
+	Karthik Nayak <karthik.188@gmail.com>, git <git@vger.kernel.org>,
+	Taylor Blau <me@ttaylorr.com>, Junio C Hamano <gitster@pobox.com>,
+	Victoria Dye <vdye@github.com>
+Subject: Re: Git in GSoC 2024
+Message-ID: <ZddtyZqX1ME741j4@tanuki>
+References: <ZbpGzAd6FGEeTdrh@tanuki>
+ <c61322de-8cd9-42b8-a04b-a8ae47b25c5e@gmail.com>
+ <Zbtmoo8qTmj-yt99@tanuki>
+ <d4797f27-825b-4e2b-85a6-cc30f33934e3@gmail.com>
+ <CAP8UFD3GBT7s1jGOc=fe6XdYGF1c--tMBDiy_sDg1Afsa=drDw@mail.gmail.com>
+ <26cf6320-7ead-4ca0-b4b8-ca7008cae401@gmail.com>
+ <CA+ARAtqicQkhKFcTxoT+GWMhCxnV-BNqd0oOcn2YwznfFnnRPw@mail.gmail.com>
+ <9cec06d8-971b-4c5d-9d85-969021b0dd48@gmail.com>
+ <Zdb8lnUSurutauRa@tanuki>
+ <B6C95613-B316-404F-9076-FAC5955B8890@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Patrick Steinhardt <ps@pks.im>,
-    Eric Sunshine <sunshine@sunshineco.com>,
-    Johannes Schindelin <johannes.schindelin@gmx.de>,
-    Johannes Schindelin <johannes.schindelin@gmx.de>
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="SYEsOqY8g+I8bMbJ"
+Content-Disposition: inline
+In-Reply-To: <B6C95613-B316-404F-9076-FAC5955B8890@gmail.com>
 
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-The first thing the `parse_tree()` function does is to return early if
-the tree has already been parsed. Therefore we do not need to guard the
-`parse_tree()` call behind a check of that flag.
+--SYEsOqY8g+I8bMbJ
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-As of time of writing, there are no other instances of this in Git's
-code bases: whenever the `parsed` flag guards a `parse_tree()` call, it
-guards more than just that call.
+On Thu, Feb 22, 2024 at 07:35:33PM +0530, Kaartic Sivaraam wrote:
+> Hi Patrick, Karthik, Christian and all,
+>=20
+>=20
+> On 22 February 2024 1:19:42 pm IST, Patrick Steinhardt <ps@pks.im> wrote:
+> >On Thu, Feb 22, 2024 at 10:01:54AM +0530, Kaartic Sivaraam wrote:
+> >> Hi Christian, Patrick, Karthik and all,
+> >>=20
+> >> On 21/02/24 10:32, Kaartic Sivaraam wrote:
+> >>=20
+> >> Also, it's official now. Git has been selected as one of the participa=
+ting
+> >> organizations[2] in GSoC 2024!
+> >>=20
+> >> Let's look forward towards a summer with great GSoC contributors who
+> >> hopefully become continued contributors to the community :-)
+> >>=20
+> >> [[ References ]]
+> >>=20
+> >> [1]:
+> >> https://summerofcode.withgoogle.com/organizations/git/programs/2024/ti=
+meline
+> >>=20
+> >> [2]: https://summerofcode.withgoogle.com/programs/2024/organizations/g=
+it
+> >
+> >I can access the second link, but the first one is broken for me. First
+> >it claimed that my Google account wasn't connected to GSoC, and after a
+> >reload it stays blank now.
+> >
+>=20
+> That's strange. Could you possibly try logging into the Summer of code we=
+bsite [3] directly in an incognito window using your GitLab account?
+>=20
+> I've previously faced issues with logging into the summer of code website=
+ due to an add-on blocking access to other Google domains. So, if you have =
+add-ons that might block resources accessed by the website, could you possi=
+bly try disabling them?
+>=20
+> If you face issues despite all this, the only resort is to write to GSoC =
+support about this issue at gsoc-support@google.com
+>=20
+> [3]: https://summerofcode.withgoogle.com/
+>=20
+> Hope this helps,
+> Sivaraam
 
-Suggested-by: Patrick Steinhardt <ps@pks.im>
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- cache-tree.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Things work now after a re-login. Kinda strange, but so be it. Thanks!
 
-diff --git a/cache-tree.c b/cache-tree.c
-index c6508b64a5c..78d6ba92853 100644
---- a/cache-tree.c
-+++ b/cache-tree.c
-@@ -779,7 +779,7 @@ static void prime_cache_tree_rec(struct repository *r,
- 			struct cache_tree_sub *sub;
- 			struct tree *subtree = lookup_tree(r, &entry.oid);
- 
--			if (!subtree->object.parsed && parse_tree(subtree) < 0)
-+			if (parse_tree(subtree) < 0)
- 				exit(128);
- 			sub = cache_tree_sub(it, entry.path);
- 			sub->cache_tree = cache_tree();
--- 
-gitgitgadget
+Patrick
+
+--SYEsOqY8g+I8bMbJ
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmXXbcgACgkQVbJhu7ck
+PpQPEA/+MMKmigD398ESZuDSxaaRLVpbPExqDbmok1yxbojeVBpFBMrfD4Udo+tn
+UrIq9oEOXDSNv1llQRMxuTREx5cTNzcEO73kWY6CdKsrexyscNarEdSDpYu6fQej
+K3tH4ulCtONYsvh+cQIJSC2pXkRUWxaNDNAh9oO7MAaGJMpbyCIJwolitFgS7n/l
+r60fJYyf/SQul3Lik/d1PRRSlBHoowl9fr93WxSUbGNgslhIEBEqSm05CNeKVUlG
+HHhsJsZAk8B/SHFtEph2B79b7ktpuZ1SFOp/EPNnf80ZdxOQu5hPGEygD51suEGc
+7XxXnwCq0vF5do8LUeEyYellrP8fNf6xZsQNz5BE3R2es25lNcCMw7g7vn3hYOlY
+Lf1Qm+llW4/mqvn02K6HjZ6sv+RxZDNFnAl0C/8QE0IEh6ZPktHwj092eFDdxSIR
+yrrvbr6T780EQu0Xh3IwJcsrDMCPxWpnCEg/xGFkANjqmH7HIHuN3WXQBo3/JrSP
+7jdW5bpNx5THiqbMrGPd4/OJ6e9CyoiIkUpdj6IeEADHS9E82YmJNwnikypX1xzU
+XCK6tj2yyNzHbSfrJ5q7odlAmUnNZob4xYe4W0mtmH76/xrozUJD5IQG9RiX0m7C
+kJZsz4K0F/g4mJyEVrBtGcj2awm0ErzPVTu9fz9EKBmxB2E5QXA=
+=0x8y
+-----END PGP SIGNATURE-----
+
+--SYEsOqY8g+I8bMbJ--
