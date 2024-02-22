@@ -1,57 +1,56 @@
 Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8627C12AAE0
-	for <git@vger.kernel.org>; Wed, 21 Feb 2024 23:54:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7233480C
+	for <git@vger.kernel.org>; Thu, 22 Feb 2024 01:43:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708559645; cv=none; b=qQ7clH0Q2aj+TKP8Zbq5aVY3oMoNFXKFnx27Sid1TKn+ymduGVs9nlXqYV30XhVbYkxEuBwnX7PS1HUDqdnmq1HXbzP5Bkfk5ZQmY0ybWcBrrxFQIRrL31g4D4xnGc124EcGh22Axc0Nl0yCG05v4R+dMCPo0PB4esxTMrBdyek=
+	t=1708566197; cv=none; b=SDQmLvc+XIbJk1W3Fl1xd81JNbCE+EBInkL+yNFsjhFK90J18/zObXiVdCp6l28uGLFFKYfNogxNFYeJFEj8lwrKSV5WnZcKGukR7Lm+66nC2xwgJoolfnnfQOV13dBZAGbG5bUqYRx/UFHZXqG3lNSjKlwYLFsEdiXkEzpFm2Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708559645; c=relaxed/simple;
-	bh=qfJJ85SGm+EbwXHDPp9JA/ZwI7W+183+HHnSRkJQH3U=;
+	s=arc-20240116; t=1708566197; c=relaxed/simple;
+	bh=MBRfogY4BRUwgkKhABV9PSxZHnVMh935SDs1HYuMT00=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=VuuepqAHwcJajgULZ4kQBS7EjLgW8F3soOwQ21+mq+zm/KULAsVix4210WGXFTE1Fi+0ipGOKBjjU9N7QexIjNa6AVoF1TC9It8CVqBjAkopY9qVyqCmZL902+kl8XNIBQmvoHSpOGUHQPN9aJ4JQmqFpZn64xrk1EFDnWwzwqA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=ssXqguA7; arc=none smtp.client-ip=173.228.157.53
+	 MIME-Version:Content-Type; b=JIFW2PRyH4ChPwBx8sVl14ru3gQIb1T7H3aSw72r3SSl+kc2ojmvUEad2kMMa8/4KHCvRCQKANuINKUdydUl5UaSa5xhrGXrFSD1ChuBdqiml/C95+FRqVAw7ODremK2I2fsemSdBcoNyN5a2rXTSsjT3MihOYR6Jvfz3TeOOaY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=AhpkG6t7; arc=none smtp.client-ip=173.228.157.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="ssXqguA7"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="AhpkG6t7"
 Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id 25E4D33E0F;
-	Wed, 21 Feb 2024 18:54:04 -0500 (EST)
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id 3CEBC348E3;
+	Wed, 21 Feb 2024 20:43:10 -0500 (EST)
 	(envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=qfJJ85SGm+EbwXHDPp9JA/ZwI7W+183+HHnSRk
-	JQH3U=; b=ssXqguA7ns2E6lqRey6JOJpOwoRH8O6IYrumlKz5gbVZ62M0Rr/ZWq
-	S1bwVt/pQMofAV1QoVhd9Rxq77MXf0rAlzd9JWz9zX53uxHZNTID2TXwJLk9jq6o
-	IiDD79XbK6GtIh9hSoYsvDwkBSpYSC9F6IChtsTq1Zzl0E3NlzPoI=
+	:content-type:content-transfer-encoding; s=sasl; bh=MBRfogY4BRUw
+	gkKhABV9PSxZHnVMh935SDs1HYuMT00=; b=AhpkG6t75Q8Edv5P3Je8Ze+AJhvv
+	sVUqjWYlc/4+IvlYnEjJQFRFGjU8fvH62bu3ghUT1/jfNtwQ8gDqjYohmQFTKP2c
+	6wnGOQ/IizKuEFJYxmxHL/NYukbyaHIsIvbJ/nlG33LifV4YDAJ6yIYmHvwr6dPp
+	VeM7eq6/fIRXNhU=
 Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id 1E6E933E0E;
-	Wed, 21 Feb 2024 18:54:04 -0500 (EST)
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id 35984348E2;
+	Wed, 21 Feb 2024 20:43:10 -0500 (EST)
 	(envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.125.176.30])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id B475E33E0B;
-	Wed, 21 Feb 2024 18:54:00 -0500 (EST)
+	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id D09C6348E1;
+	Wed, 21 Feb 2024 20:43:06 -0500 (EST)
 	(envelope-from junio@pobox.com)
 From: Junio C Hamano <gitster@pobox.com>
-To: Ricardo C <rpc01234@gmail.com>
-Cc: Phillip Wood <phillip.wood123@gmail.com>,  phillip.wood@dunelm.org.uk,
-  git@vger.kernel.org
-Subject: Re: [PATCH] builtin/stash: configs keepIndex, includeUntracked
-In-Reply-To: <xmqq4je1o9yu.fsf@gitster.g> (Junio C. Hamano's message of "Wed,
-	21 Feb 2024 12:09:45 -0800")
-References: <20240218033146.372727-2-rpc01234@gmail.com>
-	<99346639-5a36-4c2e-a5d7-035c3c1fda8b@gmail.com>
-	<df020dcc-afe8-4dd8-b476-4ca032206214@gmail.com>
-	<78a8733b-c74a-4017-8905-d29b2e05adb1@gmail.com>
-	<xmqqjzmzqb85.fsf@gitster.g>
-	<b84e77a1-93e4-4de0-a0cd-4d76a5691a9b@gmail.com>
-	<xmqq4je1o9yu.fsf@gitster.g>
-Date: Wed, 21 Feb 2024 15:53:59 -0800
-Message-ID: <xmqqzfvtjrvs.fsf@gitster.g>
+To: =?utf-8?Q?Jean-No=C3=ABl?= AVILA <jn.avila@free.fr>
+Cc: Michal =?utf-8?Q?Such=C3=A1nek?= <msuchanek@suse.de>,  Harmen Stoppels
+ via GitGitGadget
+ <gitgitgadget@gmail.com>,  git@vger.kernel.org,  Harmen Stoppels
+ <me@harmenstoppels.nl>
+Subject: Re: [PATCH] rebase: make warning less passive aggressive
+In-Reply-To: <xmqq4je1mo5p.fsf@gitster.g> (Junio C. Hamano's message of "Wed,
+	21 Feb 2024 14:46:10 -0800")
+References: <pull.1669.git.1708442603395.gitgitgadget@gmail.com>
+	<xmqqjzmxofvn.fsf@gitster.g> <20240221183018.GB9696@kitsune.suse.cz>
+	<2324063.ElGaqSPkdT@cayenne> <xmqq4je1mo5p.fsf@gitster.g>
+Date: Wed, 21 Feb 2024 17:43:05 -0800
+Message-ID: <xmqqr0h5i89i.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -59,51 +58,92 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
 X-Pobox-Relay-ID:
- 7C271B0C-D114-11EE-B96E-A19503B9AAD1-77302942!pb-smtp21.pobox.com
+ B9F0FCA0-D123-11EE-B427-A19503B9AAD1-77302942!pb-smtp21.pobox.com
+Content-Transfer-Encoding: quoted-printable
 
 Junio C Hamano <gitster@pobox.com> writes:
 
-> Ricardo C <rpc01234@gmail.com> writes:
+> Jean-No=C3=ABl AVILA <jn.avila@free.fr> writes:
 >
->> Permanently enabling keepIndex is mainly intended for people that like
->> to stash their unstaged changes before committing (e.g., for testing
->> them independently of other changes). The main issue with what you
->> recommend is that, if they forget to use `-k`, then the entire state
->> of the index is lost, which is especially problematic if the changes
->> were interactively staged.
+>> As a translator, I'm less bothered by editing a sentence to remove a q=
+uestion=20
+>> mark (maybe enforcing a language style and reformulating the sentence =
+by the=20
+>> way), than by translating again and again similar sentences.
 >
-> Doesn't "git stash pop --index" meant to recover from such a
-> mistake, though?  If you stash, because your "git commit" notices
-> there is no change after you did "git stash" without "-k", your
-> recovery to "pop --index" would apply the changes to the index and
-> to the working tree on top of exactly the same commit, so there is
-> no risk of losing any changes by doing so, right?  IOW, such a pop
-> will always round-trip.
+> Sure, but if the original in C locale used to be "FOO BAR?" and you
+> translated it to "foo bar?" in your language, and then a patch
+> updates the string in the source to "FOO BAR", doesn't msgmerge
+> notice that the original as a "fuzzy" matching and offer you
+> something like
+>
+>     #, fuzzy
+>     msgid "FOO BAR"
+>     msgstr "foo bar?"
+>
+> so that all you have to do is to remove '?' anyway?  So I do not
+> think you'd need to translate the "FOO BAR" part again and again.
+>
+> But the above assumes that for your language, the ONLY thing to turn
+> such a rhetorical "passive aggressive" question into grammatically
+> correct statement of a fact is to remove the question mark.  It may
+> not be universally true for all languages, and for some language,
+> even after msgmerge did its job correctly, you may need to do more
+> than just removing the question mark to adjust the remaining "foo
+> bar" part.
 
-Actually, "git commit" gets into the picture of making and
-recovering from such a mistake a bit more costly than I made it
-sound in the above.  My bad.
+Hopefully the last message on this topic from me.  I just tried this:
 
-The common sequence is
+ * apply v2 of "No rebase in progress?" -> "no rebase in progress"
+   patch from Harmen.  This only changed _("") string, without
+   touching any po/* files.
 
-    $ edit edit edit
-    $ git add -p
-    $ git stash -k
-    $ build what is in the index and test
+ * follow po/README.md and pretend as if I were a po/es.po team
+   member, which involved running the command:
 
-and then when you are happy, conclude it with
+	$ make po-update PO_FILE=3Dpo/es.po
 
-    $ git commit [NO -o/-i/pathspec]
+ * view the resulting po/es.po, which will be the starting point of
+   a new translation.
 
-followed by
+        $ git diff po/es.po
 
-    $ git stash pop
+The last one showed me this snippet:
 
-to continue for the next commit.  So "git commit" should notice if
-your earlier "stash -k" forgot to say "-k", but by that time, you
-would have wasted the whole build and test cycle.  The HEAD wouldn't
-have moved, so the conclusion that "pop --index" would be a good way
-to recover from "stash" without "--keep" does not change, though.
+    -msgid "No rebase in progress?"
+    +#: builtin/rebase.c:1257
+    +#, fuzzy
+    +msgid "no rebase in progress"
+     msgstr "=C2=BFNo hay rebase en progreso?"
 
+The "#, fuzzy" thing is a signal that an old msgid has been updated
+and corresponding msgstr may need to be updated.
+
+The primary problem I had with Harmen's v1 was that it touched po/
+file in the first place (which was corrected in v2), but the updates
+to po files it did looked like so:
+
+    -msgid "No rebase in progress?"
+    +msgid "No rebase in progress"
+     msgstr "=C2=BFNo hay rebase en progreso?"
+
+Notice the lack of "#, fuzzy" marking?  If v1 were accepted with
+these changes, then the "po-update" step I showed earlier would have
+produced something like this instead:
+
+    +#: builtin/rebase.c:1257
+     msgid "no rebase in progress"
+     msgstr "=C2=BFNo hay rebase en progreso?"
+
+As msgid alone was updated already, the "po-update" step has no idea
+that the translated msgstr is out of date.  We do not get the
+helpful "#, fuzzy" comment to tell the translator which msgstr is
+out of date and needs attention.
+
+So it is another reason why we want the developers to concentrate
+only on writing good C-locale messages inside _("") and N_(""),
+without touching po/ directory at all.  It would avoid making
+changes that can confuse toolchain l10n people rely on (like the
+presence of "fuzzy" comments).
