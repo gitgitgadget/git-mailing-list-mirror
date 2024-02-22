@@ -1,143 +1,112 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5374A154BE3
-	for <git@vger.kernel.org>; Thu, 22 Feb 2024 17:22:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FAF718657
+	for <git@vger.kernel.org>; Thu, 22 Feb 2024 17:28:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708622582; cv=none; b=hdlOeNTZIjpB4R3X/wHbmQYwP0HYNUbHPaTyC7SSKkTc/Q0SF6cAo5vzS+/OL+/LAkrl3aZscBKV7aXMYbfZnebbVQbroCHSPYPKnuxlOovlYpOGpe9XHVjo3Fj2mASbqtlT79n42XwMB/ae7i1NCPm3wDtlCyH/izxoaAaMc5o=
+	t=1708622885; cv=none; b=uIQd0l/zanBMqwsyFQsF6Xmmvku3p+zeeBksFOAv+hh9oDL49evGZCs+6reAKzFA1X7TxkQKrGjO0cMQfvHVW1ZVNJkzBuCxNgIlI2KQhFgzw+CTFmOafwAH+z0kqGuqmaCgp0eZgePy+spQt1jrEfHOblLdYjp4fmCaPsuZRdU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708622582; c=relaxed/simple;
-	bh=kLqdPJ4SiWweh6w7v2ftW9RtWN5HjrXRUNbsTqqSehA=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=T24RjXy6COVFvBN2czOmR2so8cEZg1Q4k/6ivDbosGehf2dCvjQ/OQ8LVOP4zTOq9REqejvOpAY+dr5VMwhynjMNVuwQNa6TRuHissFGp0L9z8tj/K8zpwv5IPr4LM0cB2MikA7WB/dKqK9HEAKcdXYXk///HFdoNOj/6picxrQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
-Received: (qmail 25283 invoked by uid 109); 22 Feb 2024 17:22:53 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 22 Feb 2024 17:22:53 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 19416 invoked by uid 111); 22 Feb 2024 17:22:54 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 22 Feb 2024 12:22:54 -0500
-Authentication-Results: peff.net; auth=none
-Date: Thu, 22 Feb 2024 12:22:52 -0500
-From: Jeff King <peff@peff.net>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Patrick Steinhardt <ps@pks.im>, Yasushi SHOJI <yasushi.shoji@gmail.com>,
-	Denton Liu <liu.denton@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-Subject: Re: Segfault: git show-branch --reflog refs/pullreqs/1
-Message-ID: <20240222172252.GA3535450@coredump.intra.peff.net>
-References: <CAELBRWK-bZTV0qx6_34HAgpmYwy+5Zo2E0M+4B6yZJJ3CqweTw@mail.gmail.com>
- <20240221084250.GA25385@coredump.intra.peff.net>
- <xmqqv86hogpi.fsf@gitster.g>
- <ZdcNtxw04MtybTWZ@tanuki>
- <xmqq34tkiho9.fsf@gitster.g>
+	s=arc-20240116; t=1708622885; c=relaxed/simple;
+	bh=VjyslXf5R6Y+kozktvc0GNoCL+YfhN+4TrMduwpp5m8=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=lg0x0bEe5r6T51mLO2SG7cI3WZuIFAaVvoGN2pQcDTsOkqW71lw2OSUnSnzV9mGm9NOmGP/H224zyCLYzluS7X1ws+tGb1sK8tZ40yqYUCtE/UN5X11U2QokGvvTKu3o4Rz8LBfwhFeLgBEoxCLBuEi7OgqV+kf+sJlEiiPZbeU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=lO8bCeWN; arc=none smtp.client-ip=173.228.157.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="lO8bCeWN"
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id A82C11A043;
+	Thu, 22 Feb 2024 12:28:03 -0500 (EST)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=VjyslXf5R6Y+kozktvc0GNoCL+YfhN+4TrMduw
+	pp5m8=; b=lO8bCeWNb2O5DPHTu0ozn9DgzffNCbQa05GkBR39DvyHgHgQc7ac3M
+	8ae+ZxKC3vmnXGeLBIrwwZz2j86hXlThBkd5wbDFDtcTLl2bXbHqPqHw87ge3n9r
+	jJaZm+U9ArqbBPJS84pD4FBg2tiPIrxrin5vNuNzTgM4sCZ5j0QyQ=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id A034C1A042;
+	Thu, 22 Feb 2024 12:28:03 -0500 (EST)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.176.30])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 348F91A03F;
+	Thu, 22 Feb 2024 12:28:00 -0500 (EST)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>,  Eric Sunshine
+ <sunshine@sunshineco.com>,  Johannes Schindelin
+ <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH v3 3/5] t4301: verify that merge-tree fails on missing
+ blob objects
+In-Reply-To: <e82fdf7fbcbf12fffdf4a720927c2f4f006068f8.1708612605.git.gitgitgadget@gmail.com>
+	(Johannes Schindelin via GitGitGadget's message of "Thu, 22 Feb 2024
+	14:36:43 +0000")
+References: <pull.1651.v2.git.1707324461.gitgitgadget@gmail.com>
+	<pull.1651.v3.git.1708612605.gitgitgadget@gmail.com>
+	<e82fdf7fbcbf12fffdf4a720927c2f4f006068f8.1708612605.git.gitgitgadget@gmail.com>
+Date: Thu, 22 Feb 2024 09:27:58 -0800
+Message-ID: <xmqqttm0fly9.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqq34tkiho9.fsf@gitster.g>
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ B9D1DB5C-D1A7-11EE-9536-A19503B9AAD1-77302942!pb-smtp21.pobox.com
 
-On Thu, Feb 22, 2024 at 08:32:06AM -0800, Junio C Hamano wrote:
+"Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+writes:
 
-> > Hum, I dunno. I don't really understand what the benefit of this
-> > fallback is. If a user wants to know the latest object ID of the ref
-> > they shouldn't ask for `foo@{0}`, they should ask for `foo`. On the
-> > other hand, if I want to know "What is the latest entry in the ref's
-> > log", I want to ask for `foo@{0}`.
-> 
-> The usability hack helps small things like "List up to 4 most recent
-> states from a branch", e.g.
-> 
->     for nth in $(seq 0 3)
->     do
-> 	git rev-parse --quiet --verify @$nth || break
-> 	git show -s --format="@$nth %h %s" @$nth
->     done
-> 
-> vs
-> 
->     for rev in HEAD @{1} @{2} @{3}
->     do
-> 	git rev-parse --quiet --verify "$rev" || break
-> 	git show -s --format="$rev %h %s" "$rev"
->     done
-> 
-> by not forcing you to special case the "current".
+> From: Johannes Schindelin <johannes.schindelin@gmx.de>
+>
+> We just fixed a problem where `merge-tree` would not fail on missing
+> tree objects. Let's ensure that that problem does not occur with blob
+> objects (and won't, in the future, either).
+>
+> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> ---
+>  t/t4301-merge-tree-write-tree.sh | 16 ++++++++++++++++
+>  1 file changed, 16 insertions(+)
+>
+> diff --git a/t/t4301-merge-tree-write-tree.sh b/t/t4301-merge-tree-write-tree.sh
+> index 908c9b540c8..d4463a45706 100755
+> --- a/t/t4301-merge-tree-write-tree.sh
+> +++ b/t/t4301-merge-tree-write-tree.sh
+> @@ -962,4 +962,20 @@ test_expect_success 'error out on missing tree objects' '
+>  	test_must_be_empty actual
+>  '
+>  
+> +test_expect_success 'error out on missing blob objects' '
+> +	echo 1 | git hash-object -w --stdin >blob1 &&
+> +	echo 2 | git hash-object -w --stdin >blob2 &&
+> +	echo 3 | git hash-object -w --stdin >blob3 &&
+> +	printf "100644 blob $(cat blob1)\tblob\n" | git mktree >tree1 &&
+> +	printf "100644 blob $(cat blob2)\tblob\n" | git mktree >tree2 &&
+> +	printf "100644 blob $(cat blob3)\tblob\n" | git mktree >tree3 &&
+> +	git init --bare missing-blob.git &&
+> +	cat blob1 blob3 tree1 tree2 tree3 |
+> +	git pack-objects missing-blob.git/objects/pack/side1-whatever-is-missing &&
+> +	test_must_fail git --git-dir=missing-blob.git >actual 2>err \
+> +		merge-tree --merge-base=$(cat tree1) $(cat tree2) $(cat tree3) &&
+> +	test_grep "unable to read blob object $(cat blob2)" err &&
+> +	test_must_be_empty actual
+> +'
 
-In those examples, though, it is useful precisely because you _do_ have
-a reflog, and ref@{0} is conceptually the top entry (which brought us to
-the same state as just "ref").
+It would have been even easier to see that blob2 is what we expect
+to be complained about, if you listed all objects and filtered blob2
+out, but the number of objects involved here is so small, a "cat" of
+all objects we want to keep is OK here.
 
-The question to me is more "is ref@{0} useful on its own, even when you
-do not necessarily have a reflog". That I am less sure of.
+Again, I very much love the way the test repository/object store
+that lack certain objects are constructed without making our hands
+dirty.
 
-> Ideally, "foo@{0}" should have meant "the state immediately before
-> the current state of foo" so that "foo" is the unambiguous and only
-> way to refer to "the current state of foo", but that was not how we
-> implemented the reflog, allowing a subtle repository corruption
-> where the latest state of a branch according to the reflog and the
-> current commit pointed by the branch can diverge.  But that wasn't
-> what we did, and instead both "foo@{0}" and "foo" mean to refer to
-> "the latest state of foo".  We can take advantage of that misdesign
-> and allow "foo@{0}" to refer to the same commit as "foo", at least
-> at the get_oid_basic() level, whether a reflog actually exists or
-> not, and that would make the whole thing more consistent.
-
-I think there is some confusion here between how get_oid_basic() behaves
-and how read_ref_at() is used for something like show-branch. In the
-former case, we only care about getting an oid as output, but in the
-latter we actually want the reflog entry (because we care about its
-timestamp, message, and so on).
-
-So in terms of reflog entries, ref@{0} should refer to the most recent
-entry. And the oid it returns should be the end-result of that entry,
-which (in a non corrupted repository) is identical to the current ref
-value. And that "should" is reinforced by stuff like:
-
-  git log -g "%gd %gs"
-
-which shows the most recent entry as HEAD@{0}.
-
-I think 6436a20284 (refs: allow @{n} to work with n-sized reflog,
-2021-01-07) confused things mightily by having read_ref_at() with a
-count of "n" find entry "n-1" instead, and then return the oid for the
-"old" value. That makes get_oid_basic() work, because it doesn't care
-about which entry we found, only the oid. But for show-branch, now we
-are confused about which reflog entry ref@{1}, etc, refers to (but
-ref@{0} still works because of the weird special-casing done by that
-commit).
-
-I think we should fix that (and I have the start of some patches to do
-so). But in that world-view, having read_ref_at() return anything for a
-count of "0" when there is no reflog does not make sense. There is no
-such entry!
-
-OTOH, we face the same problem when asking about ref@{N} when there are
-only N entries. We can provide an oid (based on the "old" value from the
-oldest entry we did see), but we have to "fake" the reflog entry data
-(like the messsage), since there wasn't one.
-
-So the open questions to me are:
-
-  - should this faking happen in read_ref_at(), just returning a dummy
-    reflog message? Or should we keep read_ref_at() purely about finding
-    the entry, and put the special-casing into get_oid_basic(), which
-    only cares about the oid result?
-
-  - wherever we put the faking, should we only fake ref@{N} when N > 0?
-    Or should we also fake ref@{0} when there is no reflog at all?
-
-If none of this makes sense, it is because I am only now untangling what
-is going on with 6436a20284. ;) I will try to polish my proposed patches
-and hopefully that will explain it a bit more clearly (I may not get to
-it until tomorrow though).
-
--Peff
+I see no need for further comments.  Looking very good.
