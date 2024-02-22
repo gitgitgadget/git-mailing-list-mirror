@@ -1,63 +1,64 @@
 Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com [209.85.128.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B7923E498
-	for <git@vger.kernel.org>; Thu, 22 Feb 2024 14:36:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38F8353364
+	for <git@vger.kernel.org>; Thu, 22 Feb 2024 14:36:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708612611; cv=none; b=MOPu/Phvn3BfVZOyglPgLvkmsKtQNqDBtarTnuMOFV3+dZ/atdK+ySfyu6EGJ9Mfa2WkrNyXAg+WkmCl61zdgunZmgoSjWWFHdFF8bFafih3w4TvzJONL1uD2uL8QQRU+9V6nSExTiiClIlLEXIxZdgCfAK3eX/SEM0rRDNPSqo=
+	t=1708612612; cv=none; b=sD1tvkHIhY8Dbjw04vorV2CJN/aSv24SAxL9TH1gkPu6NhopRFioe4+0hc+m37KkoRL97hgFawOWnvXO79GFq4AScjf+SGqE8mF3rgexigWX0gJJ69vdd3U8OlnSD9BwzKVOIxWQwff3flYjmOBtvIFBrypazqTuIn6/A+ohgf8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708612611; c=relaxed/simple;
-	bh=Xq7WRXhxo0C1kRAmZ99K0pnF6HJm4Bw5bwfBCsQ5cn4=;
+	s=arc-20240116; t=1708612612; c=relaxed/simple;
+	bh=C05rXEareOoDG82WPd99xJmYGLU1fbzABBWmtXJTWMY=;
 	h=Message-ID:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=Yt7hLiUdsYaeOksoroOIK7ivMBKcVUNzxp+nsF/pFJPNQeOZd6/rqZksGRJBEyv4oQq5+zTZieSpiVk8gceuItV70oo0wRJfVAMBc5TBsK42bBTqzbLT9UwDdbp6CrGx5RaJ67MdjE3WnHyhWVqGIjHsYUNIixizygX5Rb/LH3g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ksog571R; arc=none smtp.client-ip=209.85.128.49
+	 MIME-Version:To:Cc; b=P17I7reFWYwbZL/ILGCwFk0msgjcLOMLUWR/24RiDi7rNDstZwWPgaiptNCZ+0jeVSsjcvs3dZpz5huan902B1NkruJMvHr4Tynl804S2+/LcIxPNL2QpuCNn+9CbPwhY64ddNC9aJjHQ8arMZ9B6I65ciUJGfciydBXhSBd9Xk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Tv+A7Pjy; arc=none smtp.client-ip=209.85.128.49
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ksog571R"
-Received: by mail-wm1-f49.google.com with SMTP id 5b1f17b1804b1-4128cfb6c1aso2998555e9.0
-        for <git@vger.kernel.org>; Thu, 22 Feb 2024 06:36:49 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Tv+A7Pjy"
+Received: by mail-wm1-f49.google.com with SMTP id 5b1f17b1804b1-41278553016so13759555e9.2
+        for <git@vger.kernel.org>; Thu, 22 Feb 2024 06:36:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1708612608; x=1709217408; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1708612609; x=1709217409; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=3+i8PkXYJCTRN8cYGZeTF3cwl+HgYBrV1XX86X8PXc4=;
-        b=ksog571R38PSxa+r/UISpZDV5p9U3lJUgSDqksJdJcRDnWvoG20jlBYH8tYyQu6Jaw
-         7lr4VeuaD5SuQrRPlC7wgoq/ZdfnJjf/CWHy0mT3UP1XM1qGaN/0Mful8UD3v+Rz8pfs
-         XS3OfFG3scUuiG61CldXf2EcmkIN/xot3pc+sBdDTyhqcyIMCGFuDArspXsBOkNIOpps
-         R8NOcdna66pbW6TKSc71ypG7nd9GXeBmQM/lbWKQY5aIMxFrBeGLVS5ANpDB23AnTcr7
-         eHAuf9nZGoECXxquU7jMqcTluDZDtQkHROT7oThhc8OoFY0Ls9gyiT20MiulKm1bvCE7
-         ha7A==
+        bh=zzXXrTR1654PTduFx3oEOukzzhnQP7ss3KpbX4fLdqU=;
+        b=Tv+A7Pjyk7MvMa8l5x+sOUmSeBcK5vnRn29CrhyjH5ofuLDwekH2eU8kAc/Ygmro79
+         73/EWIR/WkyWjDOs7PULRcUX/2/q0nv1MM0xN8jsgIF6gYU+nT/f+DWwR8latHZnG06e
+         4CtKnsH9PanzQfN0Wb7JPJmHH6yIF2kcgHvRrzZrZqjGo6YTI3CiOVazTiUqXB/vW3IT
+         Ww4mY/kVqIHNlKqsi8j1/wViz/jE57wcZh549ShbB8Bh1cleBrmZRoC9u+GJgk80fPC9
+         t5l6Cw18z78Juc/KqpVbgfq+jSB5qIdafRNW7FoULOSsh4GqxoSOg+ZBClOsi5bMOlvO
+         NMfg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1708612608; x=1709217408;
+        d=1e100.net; s=20230601; t=1708612609; x=1709217409;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=3+i8PkXYJCTRN8cYGZeTF3cwl+HgYBrV1XX86X8PXc4=;
-        b=J3A1fI2T7U86lqm8gjFHabH4dh72WhfvAzMYUmh7Q6vWcfefcb+hH7t4FPvsgzVUlN
-         YO4WvkST1P134MLEQG+d/mAGt2RrQsiS6FmA7x+EegZPbgAbI1yGNXJoQxgQMUVVC/fW
-         7JqRGfYnAIpfF+2aSk9pI/qgRs0srN8unvYwCDB0H8kDzoXVosyjrI2sVjwAYUj/GPdi
-         rPpT6mVEDBrOIDsojVhT3HgvnCQZpR09v4g60Lp7VBj04ubYNLohlptPzckx1hEl7stm
-         Ja69xi8QHyXY8nbV7HwuCMYXLuRlL2G17jcwA7h3ra9OSpLIpMNqZXvLWFQVF/TMXR/Y
-         lirw==
-X-Gm-Message-State: AOJu0YzrfKpJ5M+dXgT/DKUsAr9pmbix4hBMVJ3qy0s3DxqaZaRwFeQx
-	O+Wc1s9kaCBZg9e48HCMI0TdNRNETwwonTvYb9y1ZwxFGn4zmD2sJNc+khUf
-X-Google-Smtp-Source: AGHT+IFRAF0SPfd+D3ScagUUGz8Dbcucn9fPxLsyJLcazJYeMQ11p0IeCTCgU1gUbEx4TFzL4Yc60A==
-X-Received: by 2002:a05:600c:154b:b0:412:5eba:c155 with SMTP id f11-20020a05600c154b00b004125ebac155mr2516797wmg.11.1708612608326;
-        Thu, 22 Feb 2024 06:36:48 -0800 (PST)
+        bh=zzXXrTR1654PTduFx3oEOukzzhnQP7ss3KpbX4fLdqU=;
+        b=ToSs9pQ5BqeCrHBl1uLM2Olp+1sTQxAOgzMLv/M7qu0GQpSH7sEcoLTTQNsONyphDK
+         ckhh4LMHLX0sNIK4z9/5lqJcSU9AgNUjFjJIC6AToC/FD+gh0Nkhnj4dR9okH1aPb+iv
+         c8cAJD9EV+6M2RAnUGMz4KK+Ljy2gNuKsOSRuDqKyZI7Ege3GpOY5erDx3APn9YMz5mV
+         seTpH9vVtPay4Q9bctksC90ylRM9xuHndbdHR8iFqfVZg/B+6AHGY6S44IG+vHGp54t9
+         w3HfxgUyKx7MWpok7N7yw8dn8oTq3uYYZcaHzq4RlHrxHS/D/Zo/iua3nGICn0cIOlXN
+         N0XQ==
+X-Gm-Message-State: AOJu0YzeEHphic53cWENOeeOgx/I1DD07TYYtPyy++9y5ohA1C5kc9cq
+	9bHYxWtqrS/INoFuCYWE1vcjviPkPodsPiC0tYc8RuQYDhFTwWRKz/lLB/El
+X-Google-Smtp-Source: AGHT+IHkSJZPmXj3Qwr/RZLSrs66Pwmg3IpXPzSm58vcsUr0UQcRAC2C2qHKfHtW7OCzbxUMMyKlLg==
+X-Received: by 2002:a05:600c:314b:b0:412:71fb:7732 with SMTP id h11-20020a05600c314b00b0041271fb7732mr4839559wmo.38.1708612609077;
+        Thu, 22 Feb 2024 06:36:49 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id jw3-20020a05600c574300b0040d5ae2906esm6391819wmb.30.2024.02.22.06.36.48
+        by smtp.gmail.com with ESMTPSA id co3-20020a0560000a0300b0033d70dd0e04sm8625414wrb.8.2024.02.22.06.36.48
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Thu, 22 Feb 2024 06:36:48 -0800 (PST)
-Message-ID: <f01f4eb011b400faeff1c33934775a521dec7a3d.1708612605.git.gitgitgadget@gmail.com>
+Message-ID: <e82fdf7fbcbf12fffdf4a720927c2f4f006068f8.1708612605.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1651.v3.git.1708612605.gitgitgadget@gmail.com>
 References: <pull.1651.v2.git.1707324461.gitgitgadget@gmail.com>
 	<pull.1651.v3.git.1708612605.gitgitgadget@gmail.com>
 From: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Thu, 22 Feb 2024 14:36:42 +0000
-Subject: [PATCH v3 2/5] merge-ort: do check `parse_tree()`'s return value
+Date: Thu, 22 Feb 2024 14:36:43 +0000
+Subject: [PATCH v3 3/5] t4301: verify that merge-tree fails on missing blob
+ objects
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -75,41 +76,40 @@ Cc: Patrick Steinhardt <ps@pks.im>,
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-The previous commit fixed a bug where a missing tree was reported, but
-not treated as an error.
-
-This patch addresses the same issue for the remaining two callers of
-`parse_tree()`.
-
-This change is not accompanied by a regression test because the code in
-question is only reached at the `checkout` stage, i.e. after the merge
-has happened (and therefore the tree objects could only be missing if
-the disk had gone bad in that short time window, or something similarly
-tricky to recreate in the test suite).
+We just fixed a problem where `merge-tree` would not fail on missing
+tree objects. Let's ensure that that problem does not occur with blob
+objects (and won't, in the future, either).
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- merge-ort.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ t/t4301-merge-tree-write-tree.sh | 16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
 
-diff --git a/merge-ort.c b/merge-ort.c
-index c37fc035f13..79d9e18f63d 100644
---- a/merge-ort.c
-+++ b/merge-ort.c
-@@ -4379,9 +4379,11 @@ static int checkout(struct merge_options *opt,
- 	unpack_opts.verbose_update = (opt->verbosity > 2);
- 	unpack_opts.fn = twoway_merge;
- 	unpack_opts.preserve_ignored = 0; /* FIXME: !opts->overwrite_ignore */
--	parse_tree(prev);
-+	if (parse_tree(prev) < 0)
-+		return -1;
- 	init_tree_desc(&trees[0], prev->buffer, prev->size);
--	parse_tree(next);
-+	if (parse_tree(next) < 0)
-+		return -1;
- 	init_tree_desc(&trees[1], next->buffer, next->size);
+diff --git a/t/t4301-merge-tree-write-tree.sh b/t/t4301-merge-tree-write-tree.sh
+index 908c9b540c8..d4463a45706 100755
+--- a/t/t4301-merge-tree-write-tree.sh
++++ b/t/t4301-merge-tree-write-tree.sh
+@@ -962,4 +962,20 @@ test_expect_success 'error out on missing tree objects' '
+ 	test_must_be_empty actual
+ '
  
- 	ret = unpack_trees(2, trees, &unpack_opts);
++test_expect_success 'error out on missing blob objects' '
++	echo 1 | git hash-object -w --stdin >blob1 &&
++	echo 2 | git hash-object -w --stdin >blob2 &&
++	echo 3 | git hash-object -w --stdin >blob3 &&
++	printf "100644 blob $(cat blob1)\tblob\n" | git mktree >tree1 &&
++	printf "100644 blob $(cat blob2)\tblob\n" | git mktree >tree2 &&
++	printf "100644 blob $(cat blob3)\tblob\n" | git mktree >tree3 &&
++	git init --bare missing-blob.git &&
++	cat blob1 blob3 tree1 tree2 tree3 |
++	git pack-objects missing-blob.git/objects/pack/side1-whatever-is-missing &&
++	test_must_fail git --git-dir=missing-blob.git >actual 2>err \
++		merge-tree --merge-base=$(cat tree1) $(cat tree2) $(cat tree3) &&
++	test_grep "unable to read blob object $(cat blob2)" err &&
++	test_must_be_empty actual
++'
++
+ test_done
 -- 
 gitgitgadget
 
