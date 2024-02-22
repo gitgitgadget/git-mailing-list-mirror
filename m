@@ -1,105 +1,128 @@
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f177.google.com (mail-lj1-f177.google.com [209.85.208.177])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A27501D68C
-	for <git@vger.kernel.org>; Thu, 22 Feb 2024 16:38:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6D911474B6
+	for <git@vger.kernel.org>; Thu, 22 Feb 2024 16:39:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708619921; cv=none; b=A7lWzvqX0KkHBWtA6bOOuQOecBbW2bY4mNC/nFWltmdwJxYyR49Z7wUAIOCB6SHGL7ZtkNRrJpXygHva0fbRYJ2uqy1w6OmB2o6+aRu23BHGCeh7QLV6kIi3oWentd35hkn9c5NBn7mBLEO5/F7NHQ88BC4QtxcqE7S8gAcJMO4=
+	t=1708619971; cv=none; b=XpO+fyKQUoDH2N2PtKfHtASvpODKXQxGAe7otZq5U5z8ESQRN8+FVfsQBtv959aNmwGLpP6maJpxnX3FFdVNTsvSo+ucTSSKm8Pve/3oFRTQruqsZ6RJnkQX/gahhqcyJNVTck5p7YqyShr+aF1aY0xCa1O0poyDjuGwUc78uho=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708619921; c=relaxed/simple;
-	bh=5jCqn/7jMP+qgMj9Tt58/ZhdnTXyN82rhf3n94Vxl5E=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=bxrCRbHdSFfKVxPJias8Rt1AqdSphy9MyyebALj5UlWntdWKi65gCzKC7RdbTMnT9JLGcWuCkavO/rea/od1WV9T5TEGf3HEZDL7UE++576lJeAN3d0j8ED3h8zWFdmVKK7T5v1+CP/9LsXuKzamLiN8Yr1zsHXrNGLEJazvAFQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=rfvsB/gX; arc=none smtp.client-ip=64.147.108.70
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1708619971; c=relaxed/simple;
+	bh=9bdj0IPiohYVJ8ZGWvdnIhW2MGMnbK9GHVFEmClRWSk=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=mDmfk01p5z+OVezJrHgK14XXrIGJhQCqnJvWzKc3NM8ErdeoHIv0b/2SW1RG1yYUS+MCpQtsUrL53rJWObJX+7f9K3qM/7fD7coe3mWIc3n+oZjcMLFIYSab8ryG/QUH9lG1LLsClYoGhsB78DH0aGmSx50fqm3c8mHTzIfhJVI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SUO/vMXV; arc=none smtp.client-ip=209.85.208.177
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="rfvsB/gX"
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 77E571D5B4A;
-	Thu, 22 Feb 2024 11:38:38 -0500 (EST)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=5jCqn/7jMP+q
-	gMj9Tt58/ZhdnTXyN82rhf3n94Vxl5E=; b=rfvsB/gXyGtY6m4IqEk8RzJm2YWp
-	enM5xAVXttLil57OUMniP0HplW3EyRrRuhKWEsxLVNmdmJWDJRXTu4R04xazXc83
-	oDe8DxGsf8hnGJnfgspsCMzMjrFQqzts9QJRbDd3URMbvCOnDIiUW6dpOuq6fcoK
-	wGgK9vodUzvRWEM=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 6F4FF1D5B49;
-	Thu, 22 Feb 2024 11:38:38 -0500 (EST)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.176.30])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id D048C1D5B48;
-	Thu, 22 Feb 2024 11:38:37 -0500 (EST)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: =?utf-8?Q?Jean-No=C3=ABl?= AVILA <jn.avila@free.fr>
-Cc: =?utf-8?Q?Jean-No=C3=ABl?= Avila via GitGitGadget
- <gitgitgadget@gmail.com>,
-  git@vger.kernel.org
-Subject: Re: [PATCH 1/3] doc: git-rev-parse: enforce command-line
- description syntax
-In-Reply-To: <2926790.e9J7NaK4W3@cayenne> (=?utf-8?Q?=22Jean-No=C3=ABl?=
- AVILA"'s message of
-	"Thu, 22 Feb 2024 10:07:53 +0100")
-References: <pull.1670.git.1708468374.gitgitgadget@gmail.com>
-	<xmqqfrxlpvv1.fsf@gitster.g> <xmqqbk89molz.fsf@gitster.g>
-	<2926790.e9J7NaK4W3@cayenne>
-Date: Thu, 22 Feb 2024 08:38:36 -0800
-Message-ID: <xmqqr0h4h2sz.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SUO/vMXV"
+Received: by mail-lj1-f177.google.com with SMTP id 38308e7fff4ca-2d22fa5c822so68409781fa.2
+        for <git@vger.kernel.org>; Thu, 22 Feb 2024 08:39:29 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1708619968; x=1709224768; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:references:cc:to
+         :content-language:subject:reply-to:from:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=ODvnpZ5wgtZttrd2DvkOY+bEDOdWXSO1vsdAuBTbfzA=;
+        b=SUO/vMXVzte6Bhua8Tvi4Q2v3bSWKVQ1bkYDfldort+vYEILLU0buI6NPvaSXEp7SD
+         U0LlykwF2aw0fTqrYhLR5j7vYLkKtNC0KE/AxIaAxU43iT7RHp6djIH9UdiI7V2tjzrO
+         hXt+s4mYcx8xGa26WTfzD2ZVjSW8SHJwYZ+1B3TcPBYTxkq7E0AoZz96Iiz1oxy9vaRG
+         H83SJCutqZxxYmoFCj9UCyrpjLiHpX0IzOQex/yxre8Xj0SwkIEK4fass1Yym9oZQd7P
+         ZXaVSHgujv1c9S8EX6Nj2vbnFGsjp0UAkFsdQ8gIFWdk4jTdPFkkEoEnAw+sA5jqk4sH
+         hxOQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1708619968; x=1709224768;
+        h=content-transfer-encoding:in-reply-to:references:cc:to
+         :content-language:subject:reply-to:from:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=ODvnpZ5wgtZttrd2DvkOY+bEDOdWXSO1vsdAuBTbfzA=;
+        b=HVlnujIhWSFLqj0yUSGwn0fG0dFh4+K+mDyfKj26xAhyiUIo5wOWzulBgRo5K/ZIBE
+         9dVS0roTLyQfvU2Rqo45dBL9KCu0OWVFvdOT2qQuGy7yJeDzdoD8S47M9DEH1QZiZoeL
+         8nRRMV8U3UV7bQOJ1SeiS6EwTP7uNROnhcLh5ucWpJpRBgoRqUj67zsMY9GZpKZ13QNv
+         0lzZyu0XYNA7wmuK8XLL+m2niQWVtB7kBEvx7N69kBrCYmm0aG7LFWpJSw/HTcgq2Dw1
+         j1h8iV0MBo69HeUVERpo8ao8cg3NBFURDz/FPSUl+hAIR9l3XXvmCgMLv50Zju4Mz7Dl
+         paNw==
+X-Forwarded-Encrypted: i=1; AJvYcCWcqNckc77nPx9q5NNz9MvAViOb7Dt7v8SyTqhTNMyl/oZaPdc9+9Q03gV2sc2v6PSbAgm4ZZg2qF6IW2x4oFve0Agv
+X-Gm-Message-State: AOJu0Yx9azTDot+YcXRTunrv4fdRsBOanZkOQ+Zmr2UseOTsfsKa7AXo
+	J73pHbipp90SN1y8Ba3i+5uhoqQc5XOQJXA+Umi+ysnSZjOhl2u0
+X-Google-Smtp-Source: AGHT+IE35aJ6jc06bivMy70Q3gSWRcEr248ePySGDsiSjFMrYwDnOuo9DkNPHnpdAvDgtk8CcAt91A==
+X-Received: by 2002:a2e:988a:0:b0:2d2:31ef:361f with SMTP id b10-20020a2e988a000000b002d231ef361fmr11200918ljj.27.1708619967561;
+        Thu, 22 Feb 2024 08:39:27 -0800 (PST)
+Received: from ?IPV6:2a0a:ef40:69d:3501:4b27:339f:196f:f7f9? ([2a0a:ef40:69d:3501:4b27:339f:196f:f7f9])
+        by smtp.gmail.com with ESMTPSA id ay5-20020a5d6f05000000b0033d1ef15821sm21370358wrb.25.2024.02.22.08.39.27
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 22 Feb 2024 08:39:27 -0800 (PST)
+Message-ID: <ad547799-07f1-4def-8e20-7e37a662c58f@gmail.com>
+Date: Thu, 22 Feb 2024 16:39:26 +0000
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID:
- D41C7B18-D1A0-11EE-803E-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+From: phillip.wood123@gmail.com
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v2 0/8] cherry-pick: add `--empty`
+Content-Language: en-US
+To: Brian Lyles <brianmlyles@gmail.com>, git@vger.kernel.org
+Cc: newren@gmail.com, me@ttaylorr.com, gitster@pobox.com
+References: <20240119060721.3734775-2-brianmlyles@gmail.com>
+ <20240210074859.552497-1-brianmlyles@gmail.com>
+In-Reply-To: <20240210074859.552497-1-brianmlyles@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Jean-No=C3=ABl AVILA <jn.avila@free.fr> writes:
+Hi Brian
 
->> So, perhaps we do not have to do a lot of 'word' -> _word_
->> replacements, hopefully?
+On 10/02/2024 07:43, Brian Lyles wrote:
+> The ultimate goal of this series is to allow git-cherry-pick(1) to
+> automatically drop redundant commits. The mechanism chosen is an
+> `--empty` option that provides the same flexibility as the `--empty`
+> options for git-rebase(1) and git-am(1).
+> 
+> Some secondary goals are to improve the consistency in the values and
+> documentation for this option across the three commands.
+> 
+> See "Does extending `--empty` to git-cherry-pick make sense?" [1] for
+> some context for why this option is desired in git-cherry-pick(1).
+> 
+> [1]: https://lore.kernel.org/git/CAHPHrSevBdQF0BisR8VK=jM=wj1dTUYEVrv31gLerAzL9=Cd8Q@mail.gmail.com
+> 
+> Along the way, I (with some help from Elijah and Phillip) found a few
+> other things in the docs and related sequencer code to clean up.
 
-> ... At least, we=20
-> should try to stick as much as possible to the common markup _ for emph=
-asis.
+Thanks for the revised patches - they are looking good and were a 
+pleasant read. I've left a few small comments, my main concern is the 
+change to `--keep-redundant-commits` in patch 6 which I'm not sure is 
+really worth the disruption.
 
-OK, that clears up my confusion.  Thanks.
+Best Wishes
 
-We do not want to rely on an external party indefinitely maintaining
-what they consider backward compatibility wart, so the mark-up migration
-would need to happen before it becomes too late.
+Phillip
 
-> This would have the added benefit of differentiating single quotes from=
-=20
-> backticks, because single quotes would completely disappear in the end,=
- except=20
-> when a real single quote is needed.
-
-Given enough time, yes.  Or we can actively disable AsciiDoctor's
-compatibility mode and/or tweak asciidoc.conf to do the equivalent
-for AsciiDoc, to start early.  Until then, we cannot really use "a
-real single quote", right?
-
-> For the migration to "standard" asciidoc, I would also recommend using =
-"=3D"=20
-> prefix for titles instead of underlines which require changing two line=
-s when=20
-> modifying  a title and are a pain for translators in languages with var=
-iable=20
-> width characters.
-
-I personally strongly prefer the underline format because I care
-about readability of sources, but that is just me.  Is that also
-getting deprecated?
-
-Thanks.
+> Brian Lyles (8):
+>    docs: address inaccurate `--empty` default with `--exec`
+>    docs: clean up `--empty` formatting in git-rebase(1) and git-am(1)
+>    rebase: update `--empty=ask` to `--empty=drop`
+>    sequencer: treat error reading HEAD as unborn branch
+>    sequencer: do not require `allow_empty` for redundant commit options
+>    cherry-pick: decouple `--allow-empty` and `--keep-redundant-commits`
+>    cherry-pick: enforce `--keep-redundant-commits` incompatibility
+>    cherry-pick: add `--empty` for more robust redundant commit handling
+> 
+>   Documentation/git-am.txt                    | 20 ++++---
+>   Documentation/git-cherry-pick.txt           | 30 +++++++---
+>   Documentation/git-rebase.txt                | 26 ++++++---
+>   builtin/rebase.c                            | 16 +++--
+>   builtin/revert.c                            | 40 +++++++++++--
+>   sequencer.c                                 | 65 +++++++++++----------
+>   t/t3424-rebase-empty.sh                     | 55 ++++++++++++++++-
+>   t/t3501-revert-cherry-pick.sh               | 11 ++++
+>   t/t3505-cherry-pick-empty.sh                | 29 ++++++++-
+>   t/t3510-cherry-pick-sequence.sh             | 40 +++++++++++++
+>   t/t3515-cherry-pick-incompatible-options.sh | 48 +++++++++++++++
+>   11 files changed, 312 insertions(+), 68 deletions(-)
+>   create mode 100755 t/t3515-cherry-pick-incompatible-options.sh
+> 
