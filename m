@@ -1,163 +1,111 @@
-Received: from wfout6-smtp.messagingengine.com (wfout6-smtp.messagingengine.com [64.147.123.149])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f43.google.com (mail-wr1-f43.google.com [209.85.221.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB10C45975
-	for <git@vger.kernel.org>; Thu, 22 Feb 2024 13:17:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.149
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A79DE132483
+	for <git@vger.kernel.org>; Thu, 22 Feb 2024 13:21:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708607842; cv=none; b=Ks1Z7I9uuzHqApG7j4A1BjgOeC69b6xy6DtdbrHkeU5o1ESqy8hbnpzOXC8HdJwfPWcCxf+VDOqTCPLnkpJaYHWhTvGnlCQvpfmr2WcXq9VTEeUNfg4UbDoVVVL8NkOP/mlIuNFykPHl+JWy7drVUXzmVgXCNrwepHkIwjZwOZk=
+	t=1708608117; cv=none; b=pnyDpdxl+wJ0fpitHyF3g9XRkN4ZoBZxFu6AuZdn3lDRzmrliI3R5+qlbzlmGBwUj+sTIGfosQxanziv7SdmP0izeGbMcL3HRFZ3rL3wILqUOD6lV7cGb8+PGBl6BvRA0A6CScU/0VHQQFIm+fxKgb5BFiRWew9BgnCi7pc5vzY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708607842; c=relaxed/simple;
-	bh=eUeq3XFhTyqAPcFk9hTCPzOkXa9eVSYd7OyNgVMpLpQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=IJgN+i0rY7/9RcH/MKyMU5IvLiFlisHywb/1WsKRjcbyCcLQg+8eOIQiMQvdflTHPHboFiTiLTtU3V2b3/XR7ON2CEsuFvoU9a0yU9RLTZikBmZvqQGlsKscITC8FPo1Gf6lxqYVaCfIoc95nxDBanT+TmScXdm0qOz9lJ1rWxc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=EuuVuj3M; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=HoQLwUrD; arc=none smtp.client-ip=64.147.123.149
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1708608117; c=relaxed/simple;
+	bh=CIKQ8Bb1sUrqihQ5MJIFUcbno3QB/yb6ILzqtp+yaVo=;
+	h=Message-ID:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=IuXjSxhrLvfxa8nUxv98/kN7p3hbiO0DSDxGJC4s8c3iED91hzEPtiDmSzpxhI9kXFBo8fRdjLw+9++JYPprqHQMQOtjFWrMbVIHmfofjRI/yWFMdjLDH6q8PtRu/i5YWSTCtirPZdkA7XUFpYxLMBuIokGGAsFZewL1pWu58GE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=apHELFcy; arc=none smtp.client-ip=209.85.221.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="EuuVuj3M";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="HoQLwUrD"
-Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
-	by mailfout.west.internal (Postfix) with ESMTP id B0BF01C00086;
-	Thu, 22 Feb 2024 08:17:19 -0500 (EST)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute4.internal (MEProxy); Thu, 22 Feb 2024 08:17:20 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1708607839; x=1708694239; bh=N+VWDXmPpt
-	QRbBziObKZoUQ+oOkMb8xKsLfGv08KTdU=; b=EuuVuj3Mf2Qg96+V5deDKmDhHR
-	guEnAML6gOsgOSM6xO82u4r6Ic1C9IbqprejKQfs3iDeIlcBKyhn+1SukrGNP5J6
-	YCHMMcaVDJ+Hm5zNXrBOs9W7T4Ri/otW4n6VpOReBP9CI16PvHTW2uGH+8NBJZtg
-	4nkZvCXH3NfnBV5RFcdwuB24mzDmaKlUS0+wHLw0H3c9P6bcRYpAyaQ/5DQAdIoC
-	hrUBdEled/x0+xmn+0uWhMAWrhWZji1N6+FszTwFHVv/mFuda52QCutIzKOeeqJR
-	+fU26kLtokMCZW40o1YSVpOK35sN9ZzA6jz7XTMw0h18Krnh9dvv5mldi+Zg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1708607839; x=1708694239; bh=N+VWDXmPptQRbBziObKZoUQ+oOkM
-	b8xKsLfGv08KTdU=; b=HoQLwUrDmH2GIIpdlSJc1MYVYZARW9PHwUzu54FuGQkH
-	5IKyL+d6dY4VJMtZs5+KXXS0YS5xHmOye9BPhaRTN60+WsIlThG+ktLhbkWgluBL
-	ENiQHhWjWhkL9lryImIDbLadI847kIDsqx74V8QuTk7K3hOxT/690pvjBfOAHT/r
-	P+v/eBFGrA+E45koAKstwMRFQLnJdK7gyS83JuDikJHMC8BSyrla2bqvYiFbgBVj
-	VtiM13UcQAdiSy14QNQm/IqqbRyNRIFzhsmZuRcBbA+DC0jEVBMYmRzhU7jDz81i
-	PseigZ4DMgf1e5lwY/vV+OnKxR4iQk/qVkv4uAYUqQ==
-X-ME-Sender: <xms:X0nXZXnwhTAZXXv6obAzzY6RucM4U1XTLmJBWkV1COMlDce9GuaUyw>
-    <xme:X0nXZa01luS-1IuQW84A0kHZwtzJliKUWU8k9Vhp4ec1UjMottCuMvasMR8Fw8wuY
-    4wLPgqV9aPmhTONww>
-X-ME-Received: <xmr:X0nXZdqgCsHWMQY954vPDtev8-UGDUTijmaZZ2npY2Ulycku4JQgDBztBekp7XWVgkzhJk-UneYdrYGLRKHSg_qb9JnvzXD3qz3HwH6TmFyRqc1_>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrfeeggdeglecutefuodetggdotefrodftvf
-    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
-    uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
-    fjughrpeffhffvvefukfhfgggtuggjsehgtderredttddvnecuhfhrohhmpefrrghtrhhi
-    tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
-    hnpeeukedtvedtffevleejtefgheehieegkeeluddvfeefgeehgfeltddtheejleffteen
-    ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
-    hkshdrihhm
-X-ME-Proxy: <xmx:X0nXZfnE5VcMyg7tqW344l6NpwUDzq-GYG7MflnreNusLjugst31BQ>
-    <xmx:X0nXZV1YnJt6_cM-Xu1ik2n2_OgeWIZideqn8OOjRVqhJcincFtktw>
-    <xmx:X0nXZevJl1UucD9oOL_p0Rv4ddGyhIwhhDmHGjDVNMCezmz3p6_X3g>
-    <xmx:X0nXZQRZbE0pROv2YK0fLOoppsfXJbbSPGgX7jeMPdgW0xJb0-8scrkajqw>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 22 Feb 2024 08:17:18 -0500 (EST)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 3e49aef5 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 22 Feb 2024 13:13:09 +0000 (UTC)
-Date: Thu, 22 Feb 2024 14:17:13 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: Karthik Nayak <karthik.188@gmail.com>
-Cc: git@vger.kernel.org, gitster@pobox.com, phillip.wood123@gmail.com
-Subject: Re: [PATCH v4 5/5] for-each-ref: add new option to include root refs
-Message-ID: <ZddJWWrSpxEdI6lS@tanuki>
-References: <20240119142705.139374-1-karthik.188@gmail.com>
- <20240211183923.131278-1-karthik.188@gmail.com>
- <20240211183923.131278-6-karthik.188@gmail.com>
- <ZdcJzs2vNkHJsjyN@tanuki>
- <CAOLa=ZQkqC7ahWUn=9aZksQOietGEY9M9Chj=uLTPHoXm8MuiQ@mail.gmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="apHELFcy"
+Received: by mail-wr1-f43.google.com with SMTP id ffacd0b85a97d-33d153254b7so4113678f8f.0
+        for <git@vger.kernel.org>; Thu, 22 Feb 2024 05:21:55 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1708608113; x=1709212913; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=qTSR9XKJE4GOW6G6lNSpqCjAzTbfFv8qkdL27MvMrxQ=;
+        b=apHELFcySwK2/APY5kr+S/8yLVWO29VXq4aQ3CVeOF2TjuamVk2TeqqC0Q9zH8A1QY
+         J9haCAAcfIVUW91O6gpeOaYdjj/qzHIIu72sAZBgv4/PMSz/q8zEN/buRctjG6ULfTVZ
+         2tlpsgoeu9zJ48VKG5aN/rPGzMC9uY7YktHmR4ErOLllMh+IRAQVTKG8zseXRyCe3T2s
+         G97ISARj8xsmeuRSfNFinYFpX7ZNH0X9BHjfdMIv8/9fAFMZ0otDtlUYphXMBGv5nKgj
+         r895C+4egr6tBtJhs6/TstCTtdgHwW5TEmUhFlrL6h9qZOkwNH63kBaeXHj50GJIk8GZ
+         Ovzw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1708608113; x=1709212913;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=qTSR9XKJE4GOW6G6lNSpqCjAzTbfFv8qkdL27MvMrxQ=;
+        b=Mwfli+YVVNNZ7iNBzl/5j8XwK7BOSROzwhF6bp7a/WUMHSwMYNw3HDITTH3XmquyFB
+         IGy9Ar+B3PPiIOXXskj9fyO0aMsF8e7ZBjHbDxocu6BML0xijnmQs3jS2Dnuc9CN5yIh
+         zNKHi8QcDdfPMn64zPCPm6VrzpjUQ7Zj1Xo6qvtrnnec50XK33JC77119Usom4l1vHPk
+         QWvyFwv10Wa1KsvY+Q7ElwLawG23uzdCxT0/zo7evjObnliYNMUucNnt5G6bn6WQhqb3
+         0gZZPeqz+nhgnJTS4xoomtBDNf9QeDMEy1HsXUemM1EY5+5ZJ4KHPdKvkRceoaqby1vu
+         fEMQ==
+X-Gm-Message-State: AOJu0YyCmo1JRDaavFINywmbxH7GGL/o9gV8cSbHIlJuS21Rv4Xasx1I
+	EozDGVXzl+PylXFva6/iyctMlNmR8jhyxdCOEMGoLaLlMbeV6EG1Wq4p1pC9
+X-Google-Smtp-Source: AGHT+IF0CnRNdi2SmkJaGJv4oHy9lxl3Ap/+TYr61aZCZc3TMQ9UmK6/VN4GATv7EWXPnLvkAm5P4w==
+X-Received: by 2002:adf:e2c2:0:b0:33d:73de:ca3b with SMTP id d2-20020adfe2c2000000b0033d73deca3bmr4469263wrj.52.1708608113249;
+        Thu, 22 Feb 2024 05:21:53 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id b14-20020a05600010ce00b0033d06dfcf84sm20227058wrx.100.2024.02.22.05.21.53
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 22 Feb 2024 05:21:53 -0800 (PST)
+Message-ID: <6e4e409cd43bcf445f811e171958ef4a169a0163.1708608110.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1657.v2.git.1708608110.gitgitgadget@gmail.com>
+References: <pull.1657.git.1707813709.gitgitgadget@gmail.com>
+	<pull.1657.v2.git.1708608110.gitgitgadget@gmail.com>
+From: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Thu, 22 Feb 2024 13:21:40 +0000
+Subject: [PATCH v2 01/11] paint_down_to_common: plug two memory leaks
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="PPf69zsFF8nEdjIT"
-Content-Disposition: inline
-In-Reply-To: <CAOLa=ZQkqC7ahWUn=9aZksQOietGEY9M9Chj=uLTPHoXm8MuiQ@mail.gmail.com>
+To: git@vger.kernel.org
+Cc: Patrick Steinhardt <ps@pks.im>,
+    Johannes Schindelin <johannes.schindelin@gmx.de>,
+    Johannes Schindelin <johannes.schindelin@gmx.de>
 
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
---PPf69zsFF8nEdjIT
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+When a commit is missing, we return early (currently pretending that no
+merge basis could be found in that case). At that stage, it is possible
+that a merge base could have been found already, and added to the
+`result`, which is now leaked.
 
-On Thu, Feb 22, 2024 at 04:57:04AM -0800, Karthik Nayak wrote:
-> Patrick Steinhardt <ps@pks.im> writes:
-> >> @@ -2781,6 +2790,16 @@ static struct ref_array_item *apply_ref_filter(=
-const char *refname, const struct
-> >>
-> >>  	/* Obtain the current ref kind from filter_ref_kind() and ignore unw=
-anted refs. */
-> >>  	kind =3D filter_ref_kind(filter, refname);
-> >> +
-> >> +	/*
-> >> +	 * When printing HEAD with all other refs, we want to apply the same=
- formatting
-> >> +	 * rules as the other refs, so we simply ask it to be treated as a p=
-seudoref.
-> >> +	 */
-> >> +	if (filter->kind =3D=3D FILTER_REFS_KIND_MASK && kind =3D=3D FILTER_=
-REFS_DETACHED_HEAD)
-> >> +		kind =3D FILTER_REFS_PSEUDOREFS;
-> >
-> > I'm not sure why exactly we need to munge the kind here. Would be great
-> > if the comment explained what the actual difference would be.
-> >
->=20
-> So the difference is
->=20
-> $ git for-each-ref --include-root-refs
-> 9eda75497d43f2f9c70c1e14afb865108f9b4b49 commit	FETCH_HEAD
-> ee99ac41aeb4129866710fc5771f11e1c1742dee commit	HEAD
-> 96c8a0712e569dd2812bf4fb5e72113caf326500 commit	ORIG_HEAD
->=20
-> vs
->=20
-> $ git for-each-ref --include-root-refs | grep -v refs/
-> b4b94355057280749620c47999a4b45dc60f2681 commit	(HEAD detached at b4b9435=
-505)
-> 9eda75497d43f2f9c70c1e14afb865108f9b4b49 commit	FETCH_HEAD
-> ee99ac41aeb4129866710fc5771f11e1c1742dee commit	ORIG_HEAD
->=20
-> This is because in `get_refname` we provide head description. But in
-> git-for-each-ref we don't want this, we want the format to be consistent.
+The priority queue has a similar issue: There might still be a commit in
+that queue.
 
-Ah, makes sense, thanks for the explanation! Briefly mentioning this in
-the comment should help readers to understand this a lot faster.
+Let's release both, to address the potential memory leaks.
 
-Patrick
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+ commit-reach.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---PPf69zsFF8nEdjIT
-Content-Type: application/pgp-signature; name="signature.asc"
+diff --git a/commit-reach.c b/commit-reach.c
+index a868a575ea1..7ea916f9ebd 100644
+--- a/commit-reach.c
++++ b/commit-reach.c
+@@ -105,8 +105,11 @@ static struct commit_list *paint_down_to_common(struct repository *r,
+ 			parents = parents->next;
+ 			if ((p->object.flags & flags) == flags)
+ 				continue;
+-			if (repo_parse_commit(r, p))
++			if (repo_parse_commit(r, p)) {
++				clear_prio_queue(&queue);
++				free_commit_list(result);
+ 				return NULL;
++			}
+ 			p->object.flags |= flags;
+ 			prio_queue_put(&queue, p);
+ 		}
+-- 
+gitgitgadget
 
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmXXSVgACgkQVbJhu7ck
-PpSTqw//RXTcoRsJmb1+CkQiVRfBysrKl7azm1yxLNtrYQjaSa66itwXYW5eWXdd
-4p7IW0SMB60xIMTvAoRADSBqgrM3e1sPrj6o/ZKR3RCQ/KMxEs6X2UPvF1eaqcDM
-AfwLY1/t7pB0a4yVuiFGY7wq+l9EV1ld1cPN6pIldPiKCUU6cvshvTFeig1V+xcJ
-TVeCgWZslM53sh8Sre8t3DDLIbammnM3jlzPxqTIDlteGlh0nfcx/d10nu6xZZ1L
-XeTHiy7TbhFKwF+XGaXbyavEYlFSwUIypz7V0BkChWgZRXUTRI4EjyBBC2CDQfE4
-ou/Tutu+FzadwlCtAU3Cez0BC8RJ59jqVJjwOqCsbodniC9XHPWD+lvlOVIX78R3
-nqtd3yKxSfa80HuZEKGNK/bnqtYtZa/Fbhd7hL8HX8AgEuXEOEOhB71Ze0EqgD0V
-vnqncKezS5YWHbyGrq02FkNWqyTvQhkh4Yj5c8mtTdGfw48LT0tV4UokftIihmrm
-9tkrr8JLJRPl3DRW3VgPMQjOJDOzLd4V+Fu8BNHzYhQvCmkP9yyQlJWApYWIG1m5
-mKKri/viHKWFwScjzEwspSP5WWX2fjiUOT0MdBPfIKqVImILKC7AKqA1Wso8Yp67
-rQkgwjM4Sb8BkRZ/ecLkbmYa9pxM+xWlwAVlhfkUV9kODv6hngM=
-=H+WX
------END PGP SIGNATURE-----
-
---PPf69zsFF8nEdjIT--
