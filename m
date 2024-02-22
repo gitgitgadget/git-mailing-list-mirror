@@ -1,108 +1,143 @@
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5163154C0D
-	for <git@vger.kernel.org>; Thu, 22 Feb 2024 17:18:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5374A154BE3
+	for <git@vger.kernel.org>; Thu, 22 Feb 2024 17:22:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708622287; cv=none; b=iX1CslJ5voIx/i6DbFrPDQAdQTq438c0FgBKqaUKTpuC104siwWlVV2G9HXwcM0vZPD5PwbV7WBZgsQDZGZKLU7k6BXadLCV2+Wg16Q5uto6fxOgVs8OKK48jlRtI4P8BZBWXfwkFyajztarsi+vWoywiavYc7hyxq3qwnoFNuo=
+	t=1708622582; cv=none; b=hdlOeNTZIjpB4R3X/wHbmQYwP0HYNUbHPaTyC7SSKkTc/Q0SF6cAo5vzS+/OL+/LAkrl3aZscBKV7aXMYbfZnebbVQbroCHSPYPKnuxlOovlYpOGpe9XHVjo3Fj2mASbqtlT79n42XwMB/ae7i1NCPm3wDtlCyH/izxoaAaMc5o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708622287; c=relaxed/simple;
-	bh=Zyr/i1tH74enJehLfQ4kAH4sOSlyOL3Lg79FIJiSjm0=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=ZJDsuxhUWuKlyyOSsxnSj3h6zlFGKXNtJGTfo2TVwlLWuTEVapC6WcJHd1w1RwLWMLS4F9EacM4LWXyCZTiCgvlMmqFmLgAGguZQyLMQolHKSnBSGmG5APE1Y2laIYQYBKwfyZAWI4Vi+nQXnDmfP3SWxzMWZkt4OKOjMsWEhmU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=SHcVSpc3; arc=none smtp.client-ip=173.228.157.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="SHcVSpc3"
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id 392EE19FDA;
-	Thu, 22 Feb 2024 12:18:05 -0500 (EST)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=Zyr/i1tH74enJehLfQ4kAH4sOSlyOL3Lg79FIJ
-	iSjm0=; b=SHcVSpc3GIq/zb+dvhkBIthQ9zP/bWXJXVUArc9w6LmtiruqVOSnic
-	f0Kwmx255MWw6o2Yy6yN9XfOnazBdKtjxiNgRTr9+WwnpW+jLbeDmKksKpA9GcCj
-	JQNKwV8fRduGm9vc+wcgr1485pWwiDGvF4f84N1AH1Kl9RK+G0nQ0=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id 32F4E19FD9;
-	Thu, 22 Feb 2024 12:18:05 -0500 (EST)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.176.30])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id BB48519FD6;
-	Thu, 22 Feb 2024 12:18:01 -0500 (EST)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>,  Eric Sunshine
- <sunshine@sunshineco.com>,  Johannes Schindelin
- <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH v3 2/5] merge-ort: do check `parse_tree()`'s return value
-In-Reply-To: <f01f4eb011b400faeff1c33934775a521dec7a3d.1708612605.git.gitgitgadget@gmail.com>
-	(Johannes Schindelin via GitGitGadget's message of "Thu, 22 Feb 2024
-	14:36:42 +0000")
-References: <pull.1651.v2.git.1707324461.gitgitgadget@gmail.com>
-	<pull.1651.v3.git.1708612605.gitgitgadget@gmail.com>
-	<f01f4eb011b400faeff1c33934775a521dec7a3d.1708612605.git.gitgitgadget@gmail.com>
-Date: Thu, 22 Feb 2024 09:18:00 -0800
-Message-ID: <xmqqy1bcfmev.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	s=arc-20240116; t=1708622582; c=relaxed/simple;
+	bh=kLqdPJ4SiWweh6w7v2ftW9RtWN5HjrXRUNbsTqqSehA=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=T24RjXy6COVFvBN2czOmR2so8cEZg1Q4k/6ivDbosGehf2dCvjQ/OQ8LVOP4zTOq9REqejvOpAY+dr5VMwhynjMNVuwQNa6TRuHissFGp0L9z8tj/K8zpwv5IPr4LM0cB2MikA7WB/dKqK9HEAKcdXYXk///HFdoNOj/6picxrQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+Received: (qmail 25283 invoked by uid 109); 22 Feb 2024 17:22:53 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 22 Feb 2024 17:22:53 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 19416 invoked by uid 111); 22 Feb 2024 17:22:54 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 22 Feb 2024 12:22:54 -0500
+Authentication-Results: peff.net; auth=none
+Date: Thu, 22 Feb 2024 12:22:52 -0500
+From: Jeff King <peff@peff.net>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Patrick Steinhardt <ps@pks.im>, Yasushi SHOJI <yasushi.shoji@gmail.com>,
+	Denton Liu <liu.denton@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+Subject: Re: Segfault: git show-branch --reflog refs/pullreqs/1
+Message-ID: <20240222172252.GA3535450@coredump.intra.peff.net>
+References: <CAELBRWK-bZTV0qx6_34HAgpmYwy+5Zo2E0M+4B6yZJJ3CqweTw@mail.gmail.com>
+ <20240221084250.GA25385@coredump.intra.peff.net>
+ <xmqqv86hogpi.fsf@gitster.g>
+ <ZdcNtxw04MtybTWZ@tanuki>
+ <xmqq34tkiho9.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- 551D8126-D1A6-11EE-8D0B-A19503B9AAD1-77302942!pb-smtp21.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqq34tkiho9.fsf@gitster.g>
 
-"Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-writes:
+On Thu, Feb 22, 2024 at 08:32:06AM -0800, Junio C Hamano wrote:
 
-> This change is not accompanied by a regression test because the code in
-> question is only reached at the `checkout` stage, i.e. after the merge
-> has happened (and therefore the tree objects could only be missing if
-> the disk had gone bad in that short time window, or something similarly
-> tricky to recreate in the test suite).
+> > Hum, I dunno. I don't really understand what the benefit of this
+> > fallback is. If a user wants to know the latest object ID of the ref
+> > they shouldn't ask for `foo@{0}`, they should ask for `foo`. On the
+> > other hand, if I want to know "What is the latest entry in the ref's
+> > log", I want to ask for `foo@{0}`.
+> 
+> The usability hack helps small things like "List up to 4 most recent
+> states from a branch", e.g.
+> 
+>     for nth in $(seq 0 3)
+>     do
+> 	git rev-parse --quiet --verify @$nth || break
+> 	git show -s --format="@$nth %h %s" @$nth
+>     done
+> 
+> vs
+> 
+>     for rev in HEAD @{1} @{2} @{3}
+>     do
+> 	git rev-parse --quiet --verify "$rev" || break
+> 	git show -s --format="$rev %h %s" "$rev"
+>     done
+> 
+> by not forcing you to special case the "current".
 
-Makes sense.
+In those examples, though, it is useful precisely because you _do_ have
+a reflog, and ref@{0} is conceptually the top entry (which brought us to
+the same state as just "ref").
 
-A complete tangent I wonder is if unit-test-minded folks have clever
-ideas to allow better test coverage, perhaps injecting a failure on
-demand to any codepath (in this case, the codepath to write the
-resulting tree) to simulate a situation where we fail to parse the
-tree.
+The question to me is more "is ref@{0} useful on its own, even when you
+do not necessarily have a reflog". That I am less sure of.
 
-In any case, the patch looks good, of course, and I see no need for
-further comments.
+> Ideally, "foo@{0}" should have meant "the state immediately before
+> the current state of foo" so that "foo" is the unambiguous and only
+> way to refer to "the current state of foo", but that was not how we
+> implemented the reflog, allowing a subtle repository corruption
+> where the latest state of a branch according to the reflog and the
+> current commit pointed by the branch can diverge.  But that wasn't
+> what we did, and instead both "foo@{0}" and "foo" mean to refer to
+> "the latest state of foo".  We can take advantage of that misdesign
+> and allow "foo@{0}" to refer to the same commit as "foo", at least
+> at the get_oid_basic() level, whether a reflog actually exists or
+> not, and that would make the whole thing more consistent.
 
-Thanks.
+I think there is some confusion here between how get_oid_basic() behaves
+and how read_ref_at() is used for something like show-branch. In the
+former case, we only care about getting an oid as output, but in the
+latter we actually want the reflog entry (because we care about its
+timestamp, message, and so on).
 
-> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> ---
->  merge-ort.c | 6 ++++--
->  1 file changed, 4 insertions(+), 2 deletions(-)
->
-> diff --git a/merge-ort.c b/merge-ort.c
-> index c37fc035f13..79d9e18f63d 100644
-> --- a/merge-ort.c
-> +++ b/merge-ort.c
-> @@ -4379,9 +4379,11 @@ static int checkout(struct merge_options *opt,
->  	unpack_opts.verbose_update = (opt->verbosity > 2);
->  	unpack_opts.fn = twoway_merge;
->  	unpack_opts.preserve_ignored = 0; /* FIXME: !opts->overwrite_ignore */
-> -	parse_tree(prev);
-> +	if (parse_tree(prev) < 0)
-> +		return -1;
->  	init_tree_desc(&trees[0], prev->buffer, prev->size);
-> -	parse_tree(next);
-> +	if (parse_tree(next) < 0)
-> +		return -1;
->  	init_tree_desc(&trees[1], next->buffer, next->size);
->  
->  	ret = unpack_trees(2, trees, &unpack_opts);
+So in terms of reflog entries, ref@{0} should refer to the most recent
+entry. And the oid it returns should be the end-result of that entry,
+which (in a non corrupted repository) is identical to the current ref
+value. And that "should" is reinforced by stuff like:
+
+  git log -g "%gd %gs"
+
+which shows the most recent entry as HEAD@{0}.
+
+I think 6436a20284 (refs: allow @{n} to work with n-sized reflog,
+2021-01-07) confused things mightily by having read_ref_at() with a
+count of "n" find entry "n-1" instead, and then return the oid for the
+"old" value. That makes get_oid_basic() work, because it doesn't care
+about which entry we found, only the oid. But for show-branch, now we
+are confused about which reflog entry ref@{1}, etc, refers to (but
+ref@{0} still works because of the weird special-casing done by that
+commit).
+
+I think we should fix that (and I have the start of some patches to do
+so). But in that world-view, having read_ref_at() return anything for a
+count of "0" when there is no reflog does not make sense. There is no
+such entry!
+
+OTOH, we face the same problem when asking about ref@{N} when there are
+only N entries. We can provide an oid (based on the "old" value from the
+oldest entry we did see), but we have to "fake" the reflog entry data
+(like the messsage), since there wasn't one.
+
+So the open questions to me are:
+
+  - should this faking happen in read_ref_at(), just returning a dummy
+    reflog message? Or should we keep read_ref_at() purely about finding
+    the entry, and put the special-casing into get_oid_basic(), which
+    only cares about the oid result?
+
+  - wherever we put the faking, should we only fake ref@{N} when N > 0?
+    Or should we also fake ref@{0} when there is no reflog at all?
+
+If none of this makes sense, it is because I am only now untangling what
+is going on with 6436a20284. ;) I will try to polish my proposed patches
+and hopefully that will explain it a bit more clearly (I may not get to
+it until tomorrow though).
+
+-Peff
