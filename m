@@ -1,112 +1,142 @@
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f201.google.com (mail-pl1-f201.google.com [209.85.214.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FAF718657
-	for <git@vger.kernel.org>; Thu, 22 Feb 2024 17:28:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 432DD3FE2C
+	for <git@vger.kernel.org>; Thu, 22 Feb 2024 17:50:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708622885; cv=none; b=uIQd0l/zanBMqwsyFQsF6Xmmvku3p+zeeBksFOAv+hh9oDL49evGZCs+6reAKzFA1X7TxkQKrGjO0cMQfvHVW1ZVNJkzBuCxNgIlI2KQhFgzw+CTFmOafwAH+z0kqGuqmaCgp0eZgePy+spQt1jrEfHOblLdYjp4fmCaPsuZRdU=
+	t=1708624252; cv=none; b=ewmuBHSYKZ4apifm91tnjgzOOYypB0j4rI0Magr7QYr3PYOKbPRHU1UMo16FFSHCj17+z0aN72HmJzQ0DBO9/PPe8G6nx0azWVd6ehyxLnjaZq0/dSOrkWFloYu7ZYtkW+tExB+XFZtNHvGIsTqobEgbMsrHlSHj20OHX9Uwzd4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708622885; c=relaxed/simple;
-	bh=VjyslXf5R6Y+kozktvc0GNoCL+YfhN+4TrMduwpp5m8=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=lg0x0bEe5r6T51mLO2SG7cI3WZuIFAaVvoGN2pQcDTsOkqW71lw2OSUnSnzV9mGm9NOmGP/H224zyCLYzluS7X1ws+tGb1sK8tZ40yqYUCtE/UN5X11U2QokGvvTKu3o4Rz8LBfwhFeLgBEoxCLBuEi7OgqV+kf+sJlEiiPZbeU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=lO8bCeWN; arc=none smtp.client-ip=173.228.157.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1708624252; c=relaxed/simple;
+	bh=iqRJQ8yzq4j1JGh46btayrfbmG54j+jz5kc8JmK53JU=;
+	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
+	 To:Cc:Content-Type; b=sM8s/N7tE8mdy2GmyVtdIMldsazQXJCC9D2r2Pbt0T7oS3OEcyfCKe+oewqbB8+85VIdFsQKxgfL9+nautONJ1iT6js6yw0KGZTecW3KZfA6Kcv16C/97ifv2qmNiGMen837/ZYQZcsX2alHCsmjq71QZ9D2A+KXx5CiP2bwJCI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--calvinwan.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=Oxx4xS0c; arc=none smtp.client-ip=209.85.214.201
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--calvinwan.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="lO8bCeWN"
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id A82C11A043;
-	Thu, 22 Feb 2024 12:28:03 -0500 (EST)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=VjyslXf5R6Y+kozktvc0GNoCL+YfhN+4TrMduw
-	pp5m8=; b=lO8bCeWNb2O5DPHTu0ozn9DgzffNCbQa05GkBR39DvyHgHgQc7ac3M
-	8ae+ZxKC3vmnXGeLBIrwwZz2j86hXlThBkd5wbDFDtcTLl2bXbHqPqHw87ge3n9r
-	jJaZm+U9ArqbBPJS84pD4FBg2tiPIrxrin5vNuNzTgM4sCZ5j0QyQ=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id A034C1A042;
-	Thu, 22 Feb 2024 12:28:03 -0500 (EST)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.176.30])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 348F91A03F;
-	Thu, 22 Feb 2024 12:28:00 -0500 (EST)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>,  Eric Sunshine
- <sunshine@sunshineco.com>,  Johannes Schindelin
- <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH v3 3/5] t4301: verify that merge-tree fails on missing
- blob objects
-In-Reply-To: <e82fdf7fbcbf12fffdf4a720927c2f4f006068f8.1708612605.git.gitgitgadget@gmail.com>
-	(Johannes Schindelin via GitGitGadget's message of "Thu, 22 Feb 2024
-	14:36:43 +0000")
-References: <pull.1651.v2.git.1707324461.gitgitgadget@gmail.com>
-	<pull.1651.v3.git.1708612605.gitgitgadget@gmail.com>
-	<e82fdf7fbcbf12fffdf4a720927c2f4f006068f8.1708612605.git.gitgitgadget@gmail.com>
-Date: Thu, 22 Feb 2024 09:27:58 -0800
-Message-ID: <xmqqttm0fly9.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="Oxx4xS0c"
+Received: by mail-pl1-f201.google.com with SMTP id d9443c01a7336-1d7465d60b7so163855ad.3
+        for <git@vger.kernel.org>; Thu, 22 Feb 2024 09:50:51 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1708624250; x=1709229050; darn=vger.kernel.org;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:from:to:cc:subject:date:message-id:reply-to;
+        bh=MrSOUfkXo7x+mPp6j0IcKBBc9Bqo7Nu/5KAy1mGgmG0=;
+        b=Oxx4xS0c4kwgMddGBCU6/Cms3Z53j5O2DrflcJH4UfQPRERRQuw2wOleCGYJqah44j
+         2OxsdTdHOITTpDHQ3dnmVgzVLOOkT+0RktbPXyt8S4chN3T+llwtjAKJtGOgtNM0XLhY
+         8htDGjrvLpefXRcy+/0dX/EvG+SGqLTM90kU9cPXpAvmiqDCUbNz9Oh7ItCtZrx7TbWM
+         DIxIKFj0SZ7mokTnnsucpnbq4z0Y3cLSV1wp7OhWyGRci2r4BmGdfgiODD0YI0MDmI5Q
+         nd+Mc/66/EwNtOx6Ae7jP/krVGvYzcmmv6cqUpv9CWZPc05aEPRz4/PBUiyPWtyY8EHD
+         NGuw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1708624250; x=1709229050;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=MrSOUfkXo7x+mPp6j0IcKBBc9Bqo7Nu/5KAy1mGgmG0=;
+        b=WNC2tvfPR1oqbKfQ3ZCipRGeJslwZulk/DVUn5LlMRIiHZDR3syBc8CXhVYq50qkBQ
+         JbUulM6oOdM41RSqVwGdMQ5zcc5E3Kc1WNxyN/fWsUXClvRyqMpg4zzmMsJqShugGvuN
+         R8EfxatWpMKh7MtgznGTKT+jpCgX5F9s1ha8s9VXwRoIP69tbbNtODhGeSgRACbGKcFP
+         6yYIyzEgVbS7pZQp074zeB1yTcj79Z6kYErJ8Z77C77XU/M3sH3QArEgfFmt+J13qy+N
+         wUpHcPIijwYjlvsn6H2az3ZgKRtRK0jtfaVrWPIx0CMlOa1yILlrQaST9I17w0T2KCJz
+         iOog==
+X-Gm-Message-State: AOJu0Yx9D6tDElmgKh4poelyPY2Pwu6rKuLKehs+I+3RkuCPLz8QTqJk
+	ojUuyhDeH44lkjjcPnk6OymIQOKDwVWdI5KNtObIUajEolAQi/fa7KzdMiRLqfest1WOCh1LcNw
+	jeYI9cROaCZs1qyxePsNsJ0+dP+vamQoI/mrTlfHkSPpMG143agQamE1XrIZybrRUq3kXIINwyH
+	QNkYY/PXNCoXDdyCogAAqj9EdBD2Jj/dTDTJiSCQpwgrvV
+X-Google-Smtp-Source: AGHT+IF5OtiXV0zzYz3Za/R7h197IYfHXsHqIMM+vJ/hvD/uLDvkrvr9mGh/HZiGwgh6PNkWtQZOHIzE+uDx74g=
+X-Received: from barleywine.c.googlers.com ([fda3:e722:ac3:cc00:7f:e700:c0a8:3bd4])
+ (user=calvinwan job=sendgmr) by 2002:a17:902:a509:b0:1d8:d705:c4d7 with SMTP
+ id s9-20020a170902a50900b001d8d705c4d7mr779089plq.3.1708624250346; Thu, 22
+ Feb 2024 09:50:50 -0800 (PST)
+Date: Thu, 22 Feb 2024 17:50:30 +0000
+In-Reply-To: <cover.1696021277.git.jonathantanmy@google.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- B9D1DB5C-D1A7-11EE-9536-A19503B9AAD1-77302942!pb-smtp21.pobox.com
+Mime-Version: 1.0
+References: <cover.1696021277.git.jonathantanmy@google.com>
+X-Mailer: git-send-email 2.44.0.rc0.258.g7320e95886-goog
+Message-ID: <20240222175033.1489723-1-calvinwan@google.com>
+Subject: [PATCH v5 0/3] Introduce Git Standard Library
+From: Calvin Wan <calvinwan@google.com>
+To: git@vger.kernel.org
+Cc: Calvin Wan <calvinwan@google.com>, Jonathan Tan <jonathantanmy@google.com>, 
+	phillip.wood123@gmail.com, Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
 
-"Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-writes:
+While it has been a while since the last reroll of this series[1], the
+contents and boundaries of git-std-lib have not changed. The focus for
+this reroll are improvements to the Makefile, test file, and
+documentation. Patch 1 contains a small fix for a missing include
+discovered by Jonathan Tan. Patch 2 introduces the Git Standard Library.
+And patch 3 introduces preliminary testing and usage examples for the
+Git Standard Library.
 
-> From: Johannes Schindelin <johannes.schindelin@gmx.de>
->
-> We just fixed a problem where `merge-tree` would not fail on missing
-> tree objects. Let's ensure that that problem does not occur with blob
-> objects (and won't, in the future, either).
->
-> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> ---
->  t/t4301-merge-tree-write-tree.sh | 16 ++++++++++++++++
->  1 file changed, 16 insertions(+)
->
-> diff --git a/t/t4301-merge-tree-write-tree.sh b/t/t4301-merge-tree-write-tree.sh
-> index 908c9b540c8..d4463a45706 100755
-> --- a/t/t4301-merge-tree-write-tree.sh
-> +++ b/t/t4301-merge-tree-write-tree.sh
-> @@ -962,4 +962,20 @@ test_expect_success 'error out on missing tree objects' '
->  	test_must_be_empty actual
->  '
->  
-> +test_expect_success 'error out on missing blob objects' '
-> +	echo 1 | git hash-object -w --stdin >blob1 &&
-> +	echo 2 | git hash-object -w --stdin >blob2 &&
-> +	echo 3 | git hash-object -w --stdin >blob3 &&
-> +	printf "100644 blob $(cat blob1)\tblob\n" | git mktree >tree1 &&
-> +	printf "100644 blob $(cat blob2)\tblob\n" | git mktree >tree2 &&
-> +	printf "100644 blob $(cat blob3)\tblob\n" | git mktree >tree3 &&
-> +	git init --bare missing-blob.git &&
-> +	cat blob1 blob3 tree1 tree2 tree3 |
-> +	git pack-objects missing-blob.git/objects/pack/side1-whatever-is-missing &&
-> +	test_must_fail git --git-dir=missing-blob.git >actual 2>err \
-> +		merge-tree --merge-base=$(cat tree1) $(cat tree2) $(cat tree3) &&
-> +	test_grep "unable to read blob object $(cat blob2)" err &&
-> +	test_must_be_empty actual
-> +'
+One important piece of feedback I received from the previous series is
+that Git should be the first consumer of its own libraries. Objects in
+git-std-lib.a are no longer contained in LIB_OBJS, but rather directly
+built into git-std-lib.a and then linked into git.a. There is some
+functionality that is used by git-std-lib.a that's not included in
+git-std-lib.a, such as tracing support. These have been stubbed out into
+git-stub-lib.a and can be built with git-std-lib.a to be used
+externally. Thank you to Philip Wood for these suggestions[2]!
 
-It would have been even easier to see that blob2 is what we expect
-to be complained about, if you listed all objects and filtered blob2
-out, but the number of objects involved here is so small, a "cat" of
-all objects we want to keep is OK here.
+The test file and Makefile have been updated to include cleanups
+suggested by Junio. Since git-std-lib.a is now a dependency of Git, the
+test file has also been included as part of the test suite. The series
+has been rebased onto a recent version of `next` and function calls that
+have been added/changed since the last reroll have also been included
+into the test file.
 
-Again, I very much love the way the test repository/object store
-that lack certain objects are constructed without making our hands
-dirty.
+Finally, through our libification syncs, there have been various topics
+and questions brought up that would be better clarified with additional
+documentation in technical/git-std-lib.txt.
 
-I see no need for further comments.  Looking very good.
+[1]
+https://lore.kernel.org/git/20230908174134.1026823-1-calvinwan@google.com/
+[2]
+https://lore.kernel.org/git/98f3edcf-7f37-45ff-abd2-c0038d4e0589@gmail.com/
+
+
+Calvin Wan (2):
+  git-std-lib: introduce Git Standard Library
+  test-stdlib: show that git-std-lib is independent
+
+Jonathan Tan (1):
+  pager: include stdint.h because uintmax_t is used
+
+ Documentation/Makefile                  |   1 +
+ Documentation/technical/git-std-lib.txt | 170 +++++++++++++++
+ Makefile                                |  71 +++++--
+ pager.h                                 |   2 +
+ strbuf.h                                |   2 +
+ stubs/misc.c                            |  34 +++
+ stubs/pager.c                           |   6 +
+ stubs/trace2.c                          |  27 +++
+ t/helper/.gitignore                     |   1 +
+ t/helper/test-stdlib.c                  | 266 ++++++++++++++++++++++++
+ t/t0082-std-lib.sh                      |  11 +
+ 11 files changed, 575 insertions(+), 16 deletions(-)
+ create mode 100644 Documentation/technical/git-std-lib.txt
+ create mode 100644 stubs/misc.c
+ create mode 100644 stubs/pager.c
+ create mode 100644 stubs/trace2.c
+ create mode 100644 t/helper/test-stdlib.c
+ create mode 100755 t/t0082-std-lib.sh
+
+Range-diff against v4:
+1:  2f99eb2ca4 < -:  ---------- hex-ll: split out functionality from hex
+2:  7b2d123628 < -:  ---------- wrapper: remove dependency to Git-specific internal file
+3:  b37beb206a < -:  ---------- config: correct bad boolean env value error message
+4:  3a827cf45c < -:  ---------- parse: create new library for parsing strings and env values
+5:  f8e4ac50a0 < -:  ---------- git-std-lib: introduce git standard library
+6:  7840e1830a < -:  ---------- git-std-lib: add test file to call git-std-lib.a functions
+-:  ---------- > 1:  57b751a497 pager: include stdint.h because uintmax_t is used
+-:  ---------- > 2:  e64f3c73c2 git-std-lib: introduce Git Standard Library
+-:  ---------- > 3:  e2d930f729 test-stdlib: show that git-std-lib is independent
+-- 
+2.44.0.rc0.258.g7320e95886-goog
+
