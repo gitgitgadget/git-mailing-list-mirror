@@ -1,474 +1,294 @@
-Received: from mail-yw1-f202.google.com (mail-yw1-f202.google.com [209.85.128.202])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CA311586C8
-	for <git@vger.kernel.org>; Thu, 22 Feb 2024 17:51:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.202
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F17763DB9A
+	for <git@vger.kernel.org>; Thu, 22 Feb 2024 17:58:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708624263; cv=none; b=Yz2eVkLYxA4qJK2aKup4NY25If/TgZSo7rnjTvnkwEdYQXnDXe5ncLE+XZ84wCLxwD/j0b5srqb4hzkiVecKXmtbTBkxNUj3jAudwHKs8J5Sw6paj3zJdAd9kSEXJD1HXbs0F9bdSovlhy+0yPm373oH9snnUlSVnYncFkghh64=
+	t=1708624717; cv=none; b=FcfXH+nvTasJZfUfcFY95vUtJy293Lqp3H9UljGJmlRrZprNh+h/I3VBG3W9vD+vhG6R1mc2w9F031d4wM6WKMGI05BN+xidbyCR/aFMBPXFhpXk9TkWARZ8k8i/dQXlpJwMuuUqqmtRHN7q+7R3gZDUMRii20QA1rllu7i6G2w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708624263; c=relaxed/simple;
-	bh=04dq8/Aa0gzT2rFNq5nPdY64/2aFPl0R4rbXRuJVpkI=;
-	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
-	 To:Cc:Content-Type; b=tC5Ng04xqjc1aCRnbkSkz0gBTFf0H6ZJ0ne10MgvfwLQLhhnkLsfhNhR+ViK8d7ZYjYO2Z9bMor17lXDD1hgSukhD5rr70So8w/moic77OQOLOt04bSXo09KT3Gr+z0iyay+d+FBzl2Ubfts/g7DfDxchYCvlUFAhx+25y6bkwc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--calvinwan.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=1LQf4Qcc; arc=none smtp.client-ip=209.85.128.202
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--calvinwan.bounces.google.com
+	s=arc-20240116; t=1708624717; c=relaxed/simple;
+	bh=zGKbcE5N0eFdolXA8sJzP8w5xGPi26AcLksgHY+jR8g=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=TxpBZBLU39M3WiqtNdvzMF8wIL+wrX4P5L1HWU3IRUNiJZOVnu57GeaCtldLecNXp0fTqueXSptzchOKwbC7BNG39EQ1dHo4fMDO2dbKNsXtZPnzat/TGpzXMPt0/A1wUsf8xnalIi8j3kMbQHL3cLec0SMT02E53iz1y87GUWI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=QtIn932n; arc=none smtp.client-ip=64.147.108.70
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="1LQf4Qcc"
-Received: by mail-yw1-f202.google.com with SMTP id 00721157ae682-608852fc324so36231677b3.2
-        for <git@vger.kernel.org>; Thu, 22 Feb 2024 09:51:01 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1708624260; x=1709229060; darn=vger.kernel.org;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=xqbeBBLJfu+yQOebvWXcKsAS4nA6/imikXTYExMSSf4=;
-        b=1LQf4QcccKZoIY14kUHc/vVBYpZcjMy4JbVStuQlsW4FWPt2DTJy9riClmVMlr+KCc
-         R4cggmY3OisHixFxaVDowZJTE2x93bx8mQQoaRTl2PQ50Ltz/u/m2UgFecdZCsVPeIMU
-         6Et938rulahKPtVjXbmZo74EiadxX4Snx1r7D9QPqfmCb2oy+jT+YxBEFwmYMdJXuC+K
-         kNiKDZsbAryT9wXLIYlMt9jYKEy44gJMvSTAPQDH6v88m0v6HRxIRt9A9b1j2xrQW710
-         sNx6etKmujyvxQs5m5NJ84POrsRCMd9jPsfIl6Qa8adj8rmWa7GFHllinRuX/nWNOvsr
-         PwAQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1708624260; x=1709229060;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=xqbeBBLJfu+yQOebvWXcKsAS4nA6/imikXTYExMSSf4=;
-        b=w39a+ipqmLr/WF3QyHPQq8pa+r/z0+deGeqyfwyycEXOSHpGI+Tdd9JqML1y7e71W3
-         +Sy5fyZ5v9iyu8zDF7HRmBe/MehlHwCAsLYLz2mImdG0FZwYp8hFrZDhEzJ4gPbBUCWC
-         GqKtarI3n4G1W/XWi9ORwJREbU1f01Th7ikGEngH1f0vHWRerJy+SkbK8szttPzSNogo
-         sSJy1sfMLurzPRCPv+dyxyNTihauN6WFUcO6Z43ADbP6sq21M0E0kNtK2nJJv0jMYLbg
-         7jYC1V/+jhxVmwDzMcCuJIOFKGO/0Itl3fnzFo8KAJSceY64PqtjaNviZeH6ne3aKl1R
-         Zinw==
-X-Gm-Message-State: AOJu0Yyyx8TEAH7lQCtSAfM5Odu4ulnTiVp//Mz2F0o7MAtl16J27ukm
-	TEcftOmSuk0Ed1e+eL7Qqvtm3rHVooBw3ZmXOF7ws1K4KZnS0jEJ2nLtg2BmMuK2gmr7/H65igB
-	UmD91U7NlXiJhTQ7LGtwWoBuCtpxr/p4jz/xbp1FByQkwVttmaNysadqOvIahyPT6g9SBMK1iA+
-	mRvWbdr81tyw3N0709E8duyEkGxQ5haZe51nOk8FUJCcwG
-X-Google-Smtp-Source: AGHT+IEbiujIzpyc8GbKzgLvZVXCpu9/zxrTKUrgF3Skt3Z3gDpfwQad/65JvWpJppw9vmX4UNhpY6mqkJdcFmM=
-X-Received: from barleywine.c.googlers.com ([fda3:e722:ac3:cc00:7f:e700:c0a8:3bd4])
- (user=calvinwan job=sendgmr) by 2002:a05:6902:1204:b0:dc6:d678:371d with SMTP
- id s4-20020a056902120400b00dc6d678371dmr796007ybu.3.1708624260402; Thu, 22
- Feb 2024 09:51:00 -0800 (PST)
-Date: Thu, 22 Feb 2024 17:50:33 +0000
-In-Reply-To: <cover.1696021277.git.jonathantanmy@google.com>
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="QtIn932n"
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 9EEAF1D64C2;
+	Thu, 22 Feb 2024 12:58:34 -0500 (EST)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=zGKbcE5N0eFdolXA8sJzP8w5xGPi26AcLksgHY
+	+jR8g=; b=QtIn932n0kD+Aa/JUUVk5+TJAr3Nk7DgiTXSUMY5sz8TpECRoYf15l
+	HMLk7A+zFGob8wKiFTSte6rRds/gefVBKqpcvHIMWEFF2W2B4MeGW5TZLa55/n9i
+	ALhx/DOh8K7mV7ou1V/Fau34/hOsLgG/FtFNcbm1O189NSEGZ5l1o=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 954F61D64C1;
+	Thu, 22 Feb 2024 12:58:34 -0500 (EST)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.176.30])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 090B71D64C0;
+	Thu, 22 Feb 2024 12:58:33 -0500 (EST)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>,  Eric Sunshine
+ <sunshine@sunshineco.com>,  Johannes Schindelin
+ <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH v3 4/5] Always check `parse_tree*()`'s return value
+In-Reply-To: <9e4dc94ef036882c3ce27208ca9fa545d018f199.1708612605.git.gitgitgadget@gmail.com>
+	(Johannes Schindelin via GitGitGadget's message of "Thu, 22 Feb 2024
+	14:36:44 +0000")
+References: <pull.1651.v2.git.1707324461.gitgitgadget@gmail.com>
+	<pull.1651.v3.git.1708612605.gitgitgadget@gmail.com>
+	<9e4dc94ef036882c3ce27208ca9fa545d018f199.1708612605.git.gitgitgadget@gmail.com>
+Date: Thu, 22 Feb 2024 09:58:32 -0800
+Message-ID: <xmqqplwoe5yv.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-References: <cover.1696021277.git.jonathantanmy@google.com>
-X-Mailer: git-send-email 2.44.0.rc0.258.g7320e95886-goog
-Message-ID: <20240222175033.1489723-4-calvinwan@google.com>
-Subject: [PATCH v5 3/3] test-stdlib: show that git-std-lib is independent
-From: Calvin Wan <calvinwan@google.com>
-To: git@vger.kernel.org
-Cc: Calvin Wan <calvinwan@google.com>, Jonathan Tan <jonathantanmy@google.com>, 
-	phillip.wood123@gmail.com, Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ FEDD1168-D1AB-11EE-B0FB-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
 
-Add a test file that calls some functions defined in git-std-lib.a
-object files to showcase that they do not reference missing objects and
-that, together with git-stub-lib.a, git-std-lib.a can stand on its own.
+"Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+writes:
 
-As described in test-stdlib.c, this can probably be removed once we have
-unit tests.
+> @@ -707,7 +707,8 @@ static int reset_tree(struct tree *tree, const struct checkout_opts *o,
+>  	init_checkout_metadata(&opts.meta, info->refname,
+>  			       info->commit ? &info->commit->object.oid : null_oid(),
+>  			       NULL);
+> -	parse_tree(tree);
+> +	if (parse_tree(tree) < 0)
+> +		return 128;
 
-The variable TEST_PROGRAMS is moved lower in the Makefile after
-NO_POSIX_GOODIES is defined in config.make.uname. TEST_PROGRAMS isn't
-used earlier than that so this change should be safe.
+The other error returned from this function is when unpack_trees()
+fails well before the writeout phase and the value we return is also
+128, so the caller is prepared to act on it.  OK.
 
-Signed-off-by: Calvin Wan <calvinwan@google.com>
-Helped-by: Phillip Wood <phillip.wood123@gmail.com>
-Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
----
- Makefile               |  23 +++-
- strbuf.h               |   2 +
- stubs/misc.c           |   1 +
- t/helper/.gitignore    |   1 +
- t/helper/test-stdlib.c | 266 +++++++++++++++++++++++++++++++++++++++++
- t/t0082-std-lib.sh     |  11 ++
- 6 files changed, 299 insertions(+), 5 deletions(-)
- create mode 100644 t/helper/test-stdlib.c
- create mode 100755 t/t0082-std-lib.sh
+> @@ -786,9 +787,15 @@ static int merge_working_tree(const struct checkout_opts *opts,
+>  		if (new_branch_info->commit)
+>  			BUG("'switch --orphan' should never accept a commit as starting point");
+>  		new_tree = parse_tree_indirect(the_hash_algo->empty_tree);
+> -	} else
+> +		if (!new_tree)
+> +			BUG("unable to read empty tree");
 
-diff --git a/Makefile b/Makefile
-index d37ea9d34b..1d762ce13a 100644
---- a/Makefile
-+++ b/Makefile
-@@ -870,9 +870,7 @@ TEST_BUILTINS_OBJS += test-xml-encode.o
- # Do not add more tests here unless they have extra dependencies. Add
- # them in TEST_BUILTINS_OBJS above.
- TEST_PROGRAMS_NEED_X += test-fake-ssh
--TEST_PROGRAMS_NEED_X += test-tool
--
--TEST_PROGRAMS = $(patsubst %,t/helper/%$X,$(TEST_PROGRAMS_NEED_X))
-+TEST_PROGRAMS_NEED_X += $(info tpnxnpg=$(NO_POSIX_GOODIES))test-tool
- 
- # List built-in command $C whose implementation cmd_$C() is not in
- # builtin/$C.o but is linked in as part of some other command.
-@@ -2678,6 +2676,16 @@ REFTABLE_TEST_OBJS += reftable/stack_test.o
- REFTABLE_TEST_OBJS += reftable/test_framework.o
- REFTABLE_TEST_OBJS += reftable/tree_test.o
- 
-+ifndef NO_POSIX_GOODIES
-+TEST_PROGRAMS_NEED_X += test-stdlib
-+MY_VAR = not_else
-+$(info insideifndefnpg=$(NO_POSIX_GOODIES))
-+else
-+MY_VAR = else
-+endif
-+
-+TEST_PROGRAMS = $(info tptpnx=$(TEST_PROGRAMS_NEED_X) myvar=$(MY_VAR))$(patsubst %,t/helper/%$X,$(TEST_PROGRAMS_NEED_X))
-+
- TEST_OBJS := $(patsubst %$X,%.o,$(TEST_PROGRAMS)) $(patsubst %,t/helper/%,$(TEST_BUILTINS_OBJS))
- 
- .PHONY: test-objs
-@@ -3204,7 +3212,11 @@ GIT-PYTHON-VARS: FORCE
-             fi
- endif
- 
--test_bindir_programs := $(patsubst %,bin-wrappers/%,$(BINDIR_PROGRAMS_NEED_X) $(BINDIR_PROGRAMS_NO_X) $(TEST_PROGRAMS_NEED_X))
-+test_bindir_programs := $(info tbptpnx=$(TEST_PROGRAMS_NEED_X))$(patsubst %,bin-wrappers/%,$(BINDIR_PROGRAMS_NEED_X) $(BINDIR_PROGRAMS_NO_X) $(TEST_PROGRAMS_NEED_X))
-+
-+t/helper/test-stdlib$X: t/helper/test-stdlib.o GIT-LDFLAGS $(STD_LIB_FILE) $(STUB_LIB_FILE) $(GITLIBS)
-+	$(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) \
-+		$< $(STD_LIB_FILE) $(STUB_LIB_FILE) $(EXTLIBS)
- 
- all:: $(TEST_PROGRAMS) $(test_bindir_programs) $(UNIT_TEST_PROGS)
- 
-@@ -3635,7 +3647,8 @@ ifneq ($(INCLUDE_DLLS_IN_ARTIFACTS),)
- OTHER_PROGRAMS += $(shell echo *.dll t/helper/*.dll t/unit-tests/bin/*.dll)
- endif
- 
--artifacts-tar:: $(ALL_COMMANDS_TO_INSTALL) $(SCRIPT_LIB) $(OTHER_PROGRAMS) \
-+# Added an info for debugging
-+artifacts-tar:: $(info npg=$(NO_POSIX_GOODIES) cc=$(COMPAT_CFLAGS) tp=$(TEST_PROGRAMS))$(ALL_COMMANDS_TO_INSTALL) $(SCRIPT_LIB) $(OTHER_PROGRAMS) \
- 		GIT-BUILD-OPTIONS $(TEST_PROGRAMS) $(test_bindir_programs) \
- 		$(UNIT_TEST_PROGS) $(MOFILES)
- 	$(QUIET_SUBDIR0)templates $(QUIET_SUBDIR1) \
-diff --git a/strbuf.h b/strbuf.h
-index e959caca87..f775416307 100644
---- a/strbuf.h
-+++ b/strbuf.h
-@@ -1,6 +1,8 @@
- #ifndef STRBUF_H
- #define STRBUF_H
- 
-+#include "git-compat-util.h"
-+
- /*
-  * NOTE FOR STRBUF DEVELOPERS
-  *
-diff --git a/stubs/misc.c b/stubs/misc.c
-index 92da76fd46..8d80581e39 100644
---- a/stubs/misc.c
-+++ b/stubs/misc.c
-@@ -9,6 +9,7 @@
-  * yet. To do that we need to start using dgettext() rather than
-  * gettext() in our code.
-  */
-+#include "gettext.h"
- int git_gettext_enabled = 0;
- #endif
- 
-diff --git a/t/helper/.gitignore b/t/helper/.gitignore
-index 8c2ddcce95..5cec3b357f 100644
---- a/t/helper/.gitignore
-+++ b/t/helper/.gitignore
-@@ -1,2 +1,3 @@
- /test-tool
- /test-fake-ssh
-+/test-stdlib
-diff --git a/t/helper/test-stdlib.c b/t/helper/test-stdlib.c
-new file mode 100644
-index 0000000000..460b472fb4
---- /dev/null
-+++ b/t/helper/test-stdlib.c
-@@ -0,0 +1,266 @@
-+#include "git-compat-util.h"
-+#include "abspath.h"
-+#include "hex-ll.h"
-+#include "parse.h"
-+#include "strbuf.h"
-+#include "string-list.h"
-+
-+/*
-+ * Calls all functions from git-std-lib
-+ * Some inline/trivial functions are skipped
-+ *
-+ * NEEDSWORK: The purpose of this file is to show that an executable can be
-+ * built with git-std-lib.a and git-stub-lib.a, and then executed. If there
-+ * is another executable that demonstrates this (for example, a unit test that
-+ * takes the form of an executable compiled with git-std-lib.a and git-stub-
-+ * lib.a), this file can be removed.
-+ */
-+
-+static void abspath_funcs(void) {
-+	struct strbuf sb = STRBUF_INIT;
-+
-+	fprintf(stderr, "calling abspath functions\n");
-+	is_directory("foo");
-+	strbuf_realpath(&sb, "foo", 0);
-+	strbuf_realpath_forgiving(&sb, "foo", 0);
-+	real_pathdup("foo", 0);
-+	absolute_path("foo");
-+	absolute_pathdup("foo");
-+	prefix_filename("foo/", "bar");
-+	prefix_filename_except_for_dash("foo/", "bar");
-+	is_absolute_path("foo");
-+	strbuf_add_absolute_path(&sb, "foo");
-+	strbuf_add_real_path(&sb, "foo");
-+}
-+
-+static void hex_ll_funcs(void) {
-+	unsigned char c;
-+
-+	fprintf(stderr, "calling hex-ll functions\n");
-+
-+	hexval('c');
-+	hex2chr("A1");
-+	hex_to_bytes(&c, "A1", 1);
-+}
-+
-+static void parse_funcs(void) {
-+	intmax_t foo;
-+	ssize_t foo1 = -1;
-+	unsigned long foo2;
-+	int foo3;
-+	int64_t foo4;
-+
-+	fprintf(stderr, "calling parse functions\n");
-+
-+	git_parse_signed("42", &foo, maximum_signed_value_of_type(int));
-+	git_parse_ssize_t("42", &foo1);
-+	git_parse_ulong("42", &foo2);
-+	git_parse_int("42", &foo3);
-+	git_parse_int64("42", &foo4);
-+	git_parse_maybe_bool("foo");
-+	git_parse_maybe_bool_text("foo");
-+	git_env_bool("foo", 1);
-+	git_env_ulong("foo", 1);
-+}
-+
-+static int allow_unencoded_fn(char ch) {
-+	return 0;
-+}
-+
-+static void strbuf_funcs(void) {
-+	struct strbuf *sb = xmalloc(sizeof(*sb));
-+	struct strbuf *sb2 = xmalloc(sizeof(*sb2));
-+	struct strbuf sb3 = STRBUF_INIT;
-+	struct string_list list = STRING_LIST_INIT_NODUP;
-+	int fd = open("/dev/null", O_RDONLY);
-+
-+	fprintf(stderr, "calling strbuf functions\n");
-+
-+	fprintf(stderr, "at line %d\n", __LINE__);
-+	starts_with("foo", "bar");
-+	fprintf(stderr, "at line %d\n", __LINE__);
-+	istarts_with("foo", "bar");
-+	fprintf(stderr, "at line %d\n", __LINE__);
-+	strbuf_init(sb, 0);
-+	fprintf(stderr, "at line %d\n", __LINE__);
-+	strbuf_init(sb2, 0);
-+	fprintf(stderr, "at line %d\n", __LINE__);
-+	strbuf_release(sb);
-+	fprintf(stderr, "at line %d\n", __LINE__);
-+	strbuf_attach(sb, strbuf_detach(sb, NULL), 0, 0);
-+	fprintf(stderr, "at line %d\n", __LINE__);
-+	strbuf_swap(sb, sb2);
-+	fprintf(stderr, "at line %d\n", __LINE__);
-+	strbuf_setlen(sb, 0);
-+	fprintf(stderr, "at line %d\n", __LINE__);
-+	strbuf_trim(sb);
-+	fprintf(stderr, "at line %d\n", __LINE__);
-+	strbuf_trim_trailing_dir_sep(sb);
-+	fprintf(stderr, "at line %d\n", __LINE__);
-+	strbuf_trim_trailing_newline(sb);
-+	fprintf(stderr, "at line %d\n", __LINE__);
-+	strbuf_reencode(sb, "foo", "bar");
-+	fprintf(stderr, "at line %d\n", __LINE__);
-+	strbuf_tolower(sb);
-+	fprintf(stderr, "at line %d\n", __LINE__);
-+	strbuf_add_separated_string_list(sb, " ", &list);
-+	fprintf(stderr, "at line %d\n", __LINE__);
-+	strbuf_list_free(strbuf_split_buf("foo bar", 8, ' ', -1));
-+	fprintf(stderr, "at line %d\n", __LINE__);
-+	strbuf_cmp(sb, sb2);
-+	fprintf(stderr, "at line %d\n", __LINE__);
-+	strbuf_addch(sb, 1);
-+	fprintf(stderr, "at line %d\n", __LINE__);
-+	strbuf_splice(sb, 0, 1, "foo", 3);
-+	fprintf(stderr, "at line %d\n", __LINE__);
-+	strbuf_insert(sb, 0, "foo", 3);
-+	fprintf(stderr, "at line %d\n", __LINE__);
-+	strbuf_insertf(sb, 0, "%s", "foo");
-+	fprintf(stderr, "at line %d\n", __LINE__);
-+	strbuf_remove(sb, 0, 1);
-+	fprintf(stderr, "at line %d\n", __LINE__);
-+	strbuf_add(sb, "foo", 3);
-+	fprintf(stderr, "at line %d\n", __LINE__);
-+	strbuf_addbuf(sb, sb2);
-+	fprintf(stderr, "at line %d\n", __LINE__);
-+	strbuf_join_argv(sb, 0, NULL, ' ');
-+	fprintf(stderr, "at line %d\n", __LINE__);
-+	strbuf_addchars(sb, 1, 1);
-+	fprintf(stderr, "at line %d\n", __LINE__);
-+	strbuf_addstr(sb, "foo");
-+	fprintf(stderr, "at line %d\n", __LINE__);
-+	strbuf_add_commented_lines(sb, "foo", 3, '#');
-+	fprintf(stderr, "at line %d\n", __LINE__);
-+	strbuf_commented_addf(sb, '#', "%s", "foo");
-+	fprintf(stderr, "at line %d\n", __LINE__);
-+	strbuf_addbuf_percentquote(sb, &sb3);
-+	fprintf(stderr, "at line %d\n", __LINE__);
-+	strbuf_add_percentencode(sb, "foo", STRBUF_ENCODE_SLASH);
-+	fprintf(stderr, "at line %d\n", __LINE__);
-+	strbuf_fread(sb, 0, stdin);
-+	fprintf(stderr, "at line %d\n", __LINE__);
-+	strbuf_read(sb, fd, 0);
-+	fprintf(stderr, "at line %d\n", __LINE__);
-+	strbuf_read_once(sb, fd, 0);
-+	fprintf(stderr, "at line %d\n", __LINE__);
-+	strbuf_write(sb, stderr);
-+	fprintf(stderr, "at line %d\n", __LINE__);
-+	strbuf_readlink(sb, "/dev/null", 0);
-+	fprintf(stderr, "at line %d\n", __LINE__);
-+	strbuf_getcwd(sb);
-+	fprintf(stderr, "at line %d\n", __LINE__);
-+	strbuf_getwholeline(sb, stderr, '\n');
-+	fprintf(stderr, "at line %d\n", __LINE__);
-+	strbuf_appendwholeline(sb, stderr, '\n');
-+	fprintf(stderr, "at line %d\n", __LINE__);
-+	strbuf_getline(sb, stderr);
-+	fprintf(stderr, "at line %d\n", __LINE__);
-+	strbuf_getline_lf(sb, stderr);
-+	fprintf(stderr, "at line %d\n", __LINE__);
-+	strbuf_getline_nul(sb, stderr);
-+	fprintf(stderr, "at line %d\n", __LINE__);
-+	strbuf_getwholeline_fd(sb, fd, '\n');
-+	fprintf(stderr, "at line %d\n", __LINE__);
-+	strbuf_read_file(sb, "/dev/null", 0);
-+	fprintf(stderr, "at line %d\n", __LINE__);
-+	strbuf_add_lines(sb, "foo", "bar", 0);
-+	fprintf(stderr, "at line %d\n", __LINE__);
-+	strbuf_addstr_xml_quoted(sb, "foo");
-+	fprintf(stderr, "at line %d\n", __LINE__);
-+	strbuf_addstr_urlencode(sb, "foo", allow_unencoded_fn);
-+	fprintf(stderr, "at line %d\n", __LINE__);
-+	strbuf_humanise_bytes(sb, 42);
-+	fprintf(stderr, "at line %d\n", __LINE__);
-+	strbuf_humanise_rate(sb, 42);
-+	fprintf(stderr, "at line %d\n", __LINE__);
-+	printf_ln("%s", sb->buf);
-+	fprintf(stderr, "at line %d\n", __LINE__);
-+	fprintf_ln(stderr, "%s", sb->buf);
-+	fprintf(stderr, "at line %d\n", __LINE__);
-+	xstrdup_tolower("foo");
-+	fprintf(stderr, "at line %d\n", __LINE__);
-+	xstrdup_toupper("foo");
-+	fprintf(stderr, "at line %d\n", __LINE__);
-+	xstrfmt("%s", "foo");
-+	fprintf(stderr, "at line %d\n", __LINE__);
-+}
-+
-+static void error_builtin(const char *err, va_list params) {}
-+static void warn_builtin(const char *err, va_list params) {}
-+
-+static void usage_funcs(void) {
-+	fprintf(stderr, "calling usage functions\n");
-+	error("foo");
-+	error_errno("foo");
-+	die_message("foo");
-+	die_message_errno("foo");
-+	warning("foo");
-+	warning_errno("foo");
-+
-+	get_die_message_routine();
-+	set_error_routine(error_builtin);
-+	get_error_routine();
-+	set_warn_routine(warn_builtin);
-+	get_warn_routine();
-+}
-+
-+static void wrapper_funcs(void) {
-+	int tmp;
-+	void *ptr = xmalloc(1);
-+	int fd = open("/dev/null", O_RDONLY);
-+	struct strbuf sb = STRBUF_INIT;
-+	int mode = 0444;
-+	char host[PATH_MAX], path[PATH_MAX], path1[PATH_MAX];
-+	xsnprintf(path, sizeof(path), "out-XXXXXX");
-+	xsnprintf(path1, sizeof(path1), "out-XXXXXX");
-+
-+	fprintf(stderr, "calling wrapper functions\n");
-+
-+	xstrdup("foo");
-+	xmalloc(1);
-+	xmallocz(1);
-+	xmallocz_gently(1);
-+	xmemdupz("foo", 3);
-+	xstrndup("foo", 3);
-+	xrealloc(ptr, 2);
-+	xcalloc(1, 1);
-+	xsetenv("foo", "bar", 0);
-+	xopen("/dev/null", O_RDONLY);
-+	xread(fd, &sb, 1);
-+	xwrite(fd, &sb, 1);
-+	xpread(fd, &sb, 1, 0);
-+	xdup(fd);
-+	xfopen("/dev/null", "r");
-+	xfdopen(fd, "r");
-+	tmp = xmkstemp(path);
-+	close(tmp);
-+	unlink(path);
-+	tmp = xmkstemp_mode(path1, mode);
-+	close(tmp);
-+	unlink(path1);
-+	xgetcwd();
-+	fopen_for_writing(path);
-+	fopen_or_warn(path, "r");
-+	xstrncmpz("foo", "bar", 3);
-+	xgethostname(host, 3);
-+	tmp = git_mkstemps_mode(path, 1, mode);
-+	close(tmp);
-+	unlink(path);
-+	tmp = git_mkstemp_mode(path, mode);
-+	close(tmp);
-+	unlink(path);
-+	read_in_full(fd, &sb, 1);
-+	write_in_full(fd, &sb, 1);
-+	pread_in_full(fd, &sb, 1, 0);
-+}
-+
-+int main(int argc, const char **argv) {
-+	abspath_funcs();
-+	hex_ll_funcs();
-+	parse_funcs();
-+	strbuf_funcs();
-+	usage_funcs();
-+	wrapper_funcs();
-+	fprintf(stderr, "all git-std-lib functions finished calling\n");
-+	return 0;
-+}
-diff --git a/t/t0082-std-lib.sh b/t/t0082-std-lib.sh
-new file mode 100755
-index 0000000000..0d5a024deb
---- /dev/null
-+++ b/t/t0082-std-lib.sh
-@@ -0,0 +1,11 @@
-+#!/bin/sh
-+
-+test_description='Test git-std-lib compilation'
-+
-+. ./test-lib.sh
-+
-+test_expect_success !WINDOWS 'stdlib-test compiles and runs' '
-+	test-stdlib
-+'
-+
-+test_done
--- 
-2.44.0.rc0.258.g7320e95886-goog
+parse_tree() of the_hash_algo->empty_tree should result in a tree
+object without having to even consult the object store, so BUG(),
+not die(), is very much appropriate here.  OK.
 
+> +	} else {
+>  		new_tree = repo_get_commit_tree(the_repository,
+>  						new_branch_info->commit);
+> +		if (!new_tree)
+> +			return error(_("unable to read tree %s"),
+> +				     oid_to_hex(&new_branch_info->commit->object.oid));
+
+We can help translators by enclosing %s inside a pair of parentheses.
+
+    $ git grep -h 'msgid .*unable to read tree' po | sort | uniq -c
+     18 msgid "unable to read tree (%s)"
+
+FYI, the message with "(%s)" is shared by four places; there is one
+instance of the message without parentheses added very recently that
+forced .po files to have both entries.  We probably should unify them
+to use the one with more existing users.
+
+> @@ -823,7 +830,8 @@ static int merge_working_tree(const struct checkout_opts *opts,
+>  				oid_to_hex(old_commit_oid));
+>  
+>  		init_tree_desc(&trees[0], tree->buffer, tree->size);
+> -		parse_tree(new_tree);
+> +		if (parse_tree(new_tree) < 0)
+> +			exit(128);
+
+There is another exit() in the same else clause this code is in, and
+upon failing to unpack_trees(), that call exits with 128.  This
+parse_tree() is about preparing the input for that call, so it makes
+sense to exit with the same code.  Excellent.
+
+> diff --git a/builtin/clone.c b/builtin/clone.c
+> index c6357af9498..4410b55be98 100644
+> --- a/builtin/clone.c
+> +++ b/builtin/clone.c
+> @@ -736,7 +736,8 @@ static int checkout(int submodule_progress, int filter_submodules)
+>  	tree = parse_tree_indirect(&oid);
+>  	if (!tree)
+>  		die(_("unable to parse commit %s"), oid_to_hex(&oid));
+> -	parse_tree(tree);
+> +	if (parse_tree(tree) < 0)
+> +		exit(128);
+>  	init_tree_desc(&t, tree->buffer, tree->size);
+>  	if (unpack_trees(1, &t, &opts) < 0)
+>  		die(_("unable to checkout working tree"));
+
+Exactly the same reasoning applies, as die() exits with 128.
+
+We may want to "#define EXIT_DIE 128" and use it in appropriate
+places to make such a reasoning/review easier (possibly an entry for
+#leftoverbits)?
+
+> diff --git a/builtin/commit.c b/builtin/commit.c
+> index 781af2e206c..0723f06de7a 100644
+> --- a/builtin/commit.c
+> +++ b/builtin/commit.c
+> @@ -339,7 +339,8 @@ static void create_base_index(const struct commit *current_head)
+>  	tree = parse_tree_indirect(&current_head->object.oid);
+>  	if (!tree)
+>  		die(_("failed to unpack HEAD tree object"));
+> -	parse_tree(tree);
+> +	if (parse_tree(tree) < 0)
+> +		exit(128);
+>  	init_tree_desc(&t, tree->buffer, tree->size);
+>  	if (unpack_trees(1, &t, &opts))
+>  		exit(128); /* We've already reported the error, finish dying */
+
+Ditto.
+
+> diff --git a/builtin/read-tree.c b/builtin/read-tree.c
+> index 8196ca9dd85..5923ed36893 100644
+> --- a/builtin/read-tree.c
+> +++ b/builtin/read-tree.c
+> @@ -263,7 +263,8 @@ int cmd_read_tree(int argc, const char **argv, const char *cmd_prefix)
+>  	cache_tree_free(&the_index.cache_tree);
+>  	for (i = 0; i < nr_trees; i++) {
+>  		struct tree *tree = trees[i];
+> -		parse_tree(tree);
+> +		if (parse_tree(tree) < 0)
+> +			return 128;
+>  		init_tree_desc(t+i, tree->buffer, tree->size);
+>  	}
+>  	if (unpack_trees(nr_trees, t, &opts))
+
+Ditto.  After the post-context we also return 128.
+
+> diff --git a/builtin/reset.c b/builtin/reset.c
+> index 4b018d20e3b..f030f57f4e9 100644
+> --- a/builtin/reset.c
+> +++ b/builtin/reset.c
+> @@ -119,6 +119,10 @@ static int reset_index(const char *ref, const struct object_id *oid, int reset_t
+>  
+>  	if (reset_type == MIXED || reset_type == HARD) {
+>  		tree = parse_tree_indirect(oid);
+> +		if (!tree) {
+> +			error(_("unable to read tree %s"), oid_to_hex(oid));
+> +			goto out;
+> +		}
+>  		prime_cache_tree(the_repository, the_repository->index, tree);
+>  	}
+
+Good.
+
+> diff --git a/cache-tree.c b/cache-tree.c
+> index 641427ed410..c6508b64a5c 100644
+> --- a/cache-tree.c
+> +++ b/cache-tree.c
+> @@ -779,8 +779,8 @@ static void prime_cache_tree_rec(struct repository *r,
+>  			struct cache_tree_sub *sub;
+>  			struct tree *subtree = lookup_tree(r, &entry.oid);
+>  
+> -			if (!subtree->object.parsed)
+> -				parse_tree(subtree);
+> +			if (!subtree->object.parsed && parse_tree(subtree) < 0)
+> +				exit(128);
+>  			sub = cache_tree_sub(it, entry.path);
+>  			sub->cache_tree = cache_tree();
+
+The cache_tree() used to be just an optimization mechanism, but
+there is no other way than fully populating it to write a tree
+object out of the index, so dying here is the only sensible thing to
+do upon unparseable subtree.  Otherwise we would end up silently
+writing a bogus result.  Good.
+
+> diff --git a/merge-recursive.c b/merge-recursive.c
+> index e3beb0801b1..10d41bfd487 100644
+> --- a/merge-recursive.c
+> +++ b/merge-recursive.c
+> @@ -410,7 +410,8 @@ static inline int merge_detect_rename(struct merge_options *opt)
+>  
+>  static void init_tree_desc_from_tree(struct tree_desc *desc, struct tree *tree)
+>  {
+> -	parse_tree(tree);
+> +	if (parse_tree(tree) < 0)
+> +		exit(128);
+>  	init_tree_desc(desc, tree->buffer, tree->size);
+>  }
+
+OK.
+
+> diff --git a/merge.c b/merge.c
+> index b60925459c2..14a7325859d 100644
+> --- a/merge.c
+> +++ b/merge.c
+> @@ -80,7 +80,10 @@ int checkout_fast_forward(struct repository *r,
+>  		return -1;
+>  	}
+>  	for (i = 0; i < nr_trees; i++) {
+> -		parse_tree(trees[i]);
+> +		if (parse_tree(trees[i]) < 0) {
+> +			rollback_lock_file(&lock_file);
+> +			return -1;
+> +		}
+>  		init_tree_desc(t+i, trees[i]->buffer, trees[i]->size);
+>  	}
+
+This handles the error in the same way as the other case earlier
+where any of the tree-ish failed to load.  OK.
+
+> diff --git a/reset.c b/reset.c
+> index 48da0adf851..a93fdbc12e3 100644
+> --- a/reset.c
+> +++ b/reset.c
+> @@ -158,6 +158,11 @@ int reset_head(struct repository *r, const struct reset_head_opts *opts)
+>  	}
+>  
+>  	tree = parse_tree_indirect(oid);
+> +	if (!tree) {
+> +		ret = error(_("unable to read tree %s"), oid_to_hex(oid));
+> +		goto leave_reset_head;
+> +	}
+
+OK, but the _("unable to read tree (%s)") comment applies here, too.
+
+> diff --git a/sequencer.c b/sequencer.c
+> index d584cac8ed9..407473bab28 100644
+> --- a/sequencer.c
+> +++ b/sequencer.c
+> @@ -715,6 +715,8 @@ static int do_recursive_merge(struct repository *r,
+>  	o.show_rename_progress = 1;
+>  
+>  	head_tree = parse_tree_indirect(head);
+> +	if (!head_tree)
+> +		return error(_("unable to read tree %s"), oid_to_hex(head));
+>  	next_tree = next ? repo_get_commit_tree(r, next) : empty_tree(r);
+>  	base_tree = base ? repo_get_commit_tree(r, base) : empty_tree(r);
+
+Ditto.
+
+> @@ -3887,6 +3889,8 @@ static int do_reset(struct repository *r,
+>  	}
+>  
+>  	tree = parse_tree_indirect(&oid);
+> +	if (!tree)
+> +		return error(_("unable to read tree %s"), oid_to_hex(&oid));
+
+Ditto.
+
+>  	prime_cache_tree(r, r->index, tree);
+>  
+>  	if (write_locked_index(r->index, &lock, COMMIT_LOCK) < 0)
+
+Looking good, modulo the additional translator burden.
+
+Thanks.
