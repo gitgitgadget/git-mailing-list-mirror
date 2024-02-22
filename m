@@ -1,59 +1,60 @@
-Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com [209.85.128.45])
+Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11B3D3F9E1
-	for <git@vger.kernel.org>; Thu, 22 Feb 2024 16:34:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE19014C5AB
+	for <git@vger.kernel.org>; Thu, 22 Feb 2024 16:34:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708619668; cv=none; b=tKMsV7dJFOFwpWchQS3MksPm1/W4DTM9+NiKoIq46fM6kMPsDAdTInyzs05U4xbtOxkJHJnNYrdx4JaVWbDR7H1THvB+EsrpFQrvR+kNICftLDYgGDVfFnADjZZ1jLRyg58WoXg1HtxoW99ccPFGCq3jsYd3Mjx7wpr9dKJ/MT4=
+	t=1708619693; cv=none; b=pWr9H7fIVzeFZNjRvb3cz9YwS71P2TLFdgNU3gjLoUDbBTwf+Ozv/p6fDUtP5YO8nbWvehhtwX3cUKDB7eH+iY0g5GngcDWky9uBF0/s6pyobu6+4Nm3xb4K0X56oD3dMQiX0lUthSdt0YV1vaiIIpv0euVngFUxAcZ83Dq8GME=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708619668; c=relaxed/simple;
-	bh=Ef9MxOFhorpPJX63NulKbYZHaM3vFYw+Sc7sQceSOY4=;
+	s=arc-20240116; t=1708619693; c=relaxed/simple;
+	bh=JtQq9OAjcS5PBMo28nw/9yQrQGY2BnrUTti6OfHsnTw=;
 	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=suonWzbrFQ39csaKn5A+go9LP4SGcsyq8mNvC2agDMhoai6C+qDq84k3ku0pYDG71xrUwHxsYKcJui7qgPT8sFLd316q/yE8yXgr1nXkmChXP3jHhTqOz9uO2P2RGanvkCaB2vTUsUHMrCofR3A2QoJStWkXZ1rVyxRayMLRJxI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ZFGQl28Q; arc=none smtp.client-ip=209.85.128.45
+	 In-Reply-To:Content-Type; b=d/I7ZvTFEl8MqajMRDbgm7eOlqNZ+Hro5QFk0RPG3kAlQeopc7E8jQOqU3UFvuDGseuWYkBjGwBuOR6oZ/OYbhDZSXyxtHujJXsVieEf2ChsK+x+gH39pEnRed452MzSMTxqkhGAI5+CpNT5bqP2pMEBWgvWJlfdg4IELMt3t3I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dZumMLdY; arc=none smtp.client-ip=209.85.128.51
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZFGQl28Q"
-Received: by mail-wm1-f45.google.com with SMTP id 5b1f17b1804b1-41273f53c71so15926875e9.1
-        for <git@vger.kernel.org>; Thu, 22 Feb 2024 08:34:25 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dZumMLdY"
+Received: by mail-wm1-f51.google.com with SMTP id 5b1f17b1804b1-4128cfb6c1aso3999215e9.0
+        for <git@vger.kernel.org>; Thu, 22 Feb 2024 08:34:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1708619664; x=1709224464; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=Gt6ziBBcCbgV6iWfojHW4gbhiC0XOC1cApsoEgq7ehk=;
-        b=ZFGQl28QzD3fCbPaWlR7iGzKRElIFJjnYu/MTQXrhiUwhjFgwiOUcjVH2l6y/ydkc7
-         3dUxm7wKo4XMY6Aahz2cPyAMibB7TOyQBT44qQMRagxcXLnK4bRzrnGX96b+em8spL9W
-         3cU1BLv32Orky/Yy4gyKtCwLzeK98m/lfYVklCSqjTOjxgzLnu3Q7g+HeUfq6UBMoydu
-         WJBf8IlYquJaTPeDumrt1JtAUdyz4xDUAZUmn2Xh5yBdMZKEROpm4gF9sOgRuWuh2hwe
-         D/U426OErZnxIWgKbNQSXWA1FbgNjfHZFT7sAvvDLzQlgbgiXK/K3DGhdRZ+2eISoOks
-         v4+A==
+        d=gmail.com; s=20230601; t=1708619689; x=1709224489; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:references:cc:to
+         :content-language:subject:reply-to:from:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=VLOp/bRuHVPAnBAzHAWrDyRi8cAJVx0hCTsvUzXEttU=;
+        b=dZumMLdYLnj9DleMuNHQuuEmAzbOxwEf+hJ4c+mzGKKUHDlH2cdhq7Rtodg3FFJANZ
+         7KTK/Fgu7P1AOm2h4YIKt4jr5RHEE6FBBVo0QY8hZu1I+6woQTFX8fy2BvjAre6+Koen
+         2eK5u4VJ6EdVuzs5sddcdVJdo5/oi/L0Zv+HNupk+uR7yluyo7yDpS7tTxFETMls8ceg
+         dNAjQBDe//MmslDc0KMRGLrb+62gBWiUv/nZF0NR0l3zm6uGFNTZFgMkvRtZ2bYUZcl3
+         eSs5D/fSa8iB4N+mtUG0LhsKJmBC/5axp4Jd7GnJcYYD30WRyZ/ISzczHCv/zyyWryE5
+         zzKA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1708619664; x=1709224464;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Gt6ziBBcCbgV6iWfojHW4gbhiC0XOC1cApsoEgq7ehk=;
-        b=ZMLBCkyhfPC6qRt2PwOQzZl7WR1jEuqcdhDQqGn+HCe798J8eesqCv5kTq6l3Ax+TP
-         VwXoUe/wb1bOXwpidkplO4XDhCq1u+LKqLRucAM5h8hQUqQ5JNcz/FFcpkanS0zJjino
-         TbHdtcjeudZOjXEpmXMW4XCQalGkKYBdMCref8nFdSAf/Milc7fkKPsuczFe09FAWCvi
-         jKDlPCW950QEco1y1Dj+BtJrUp6q2n0MPfmVGscYjuK0l3sRHX3+gWt5xc9kGEUFCgBP
-         zlYWJ/aq47gR9CuUJ3cSB/PCdXbXbaOPuIIUnEV1nQj68MCQUncsG5g0uE+hRmhTPg6f
-         iBXw==
-X-Forwarded-Encrypted: i=1; AJvYcCUnCK27vAt05ZHZyhNweZLwJcsCzh/0Bv7pVKHxUfvqifPCnxVk+afEJlxElHanvHq1K2CmtH253kKyuMbPZVl/Ga/Y
-X-Gm-Message-State: AOJu0YzNM4MoJD19m8xQAk53Czs1mADg5SabQNMtT4U0xS7FSrkqWgv1
-	qGw3mvY8teRI3hbuJum1YkDTXFqfzIf+u7lTYCuVqhatx6QMAP4D
-X-Google-Smtp-Source: AGHT+IH9tyGBrQM9IzHOYCVdoUWnydI4uUOUuduhi3M0WGf19ERyqF/6eXdHk75CaueptvMTFEqzFw==
-X-Received: by 2002:a05:600c:3ba6:b0:411:d89d:d7ba with SMTP id n38-20020a05600c3ba600b00411d89dd7bamr19718427wms.7.1708619663951;
-        Thu, 22 Feb 2024 08:34:23 -0800 (PST)
+        d=1e100.net; s=20230601; t=1708619689; x=1709224489;
+        h=content-transfer-encoding:in-reply-to:references:cc:to
+         :content-language:subject:reply-to:from:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=VLOp/bRuHVPAnBAzHAWrDyRi8cAJVx0hCTsvUzXEttU=;
+        b=ogsfIFPoa99zc8euzPlRfLo8teSoLXEsyYBWIAVXQY5jEtEv3Sca3Xd4AoXCzkMeqv
+         UGkqhvrJgoYFLWwNgmdrRcaQceijbuYoPvnRo7aTU171hVcuZHHG3fw30GbxlbFllGSG
+         OYI8jm0RdJ05+0zJERAsrk02MTmjmdkIyVJjOyulLuMV/K4II+8HJedpo+OqavWt9FVZ
+         jOiByrc/npl1OuAzi/+ZnAqFYho4I3Zf0FZ5SrmCmgMwkBIDN8H06qf7eY+JJpWKkKbc
+         jPhXZIDI45yc64gnWAnPD/ftwEGKMTs6iudRwUkr22MnJzTOm5RhF2dWtLG1DulFBhME
+         BFzw==
+X-Forwarded-Encrypted: i=1; AJvYcCV7ofwRobxAD/l+/cFmtGP7OFxsRvWRv1x3Wg/R/XE+Uh4h729ctYgnDCDxxh3oxdEHawNpuc5qYm2uPgd3q1pdCZnP
+X-Gm-Message-State: AOJu0YzCSWtVWKvGKyN8bdEHXibp3IB8MpZ1Rtsge0ljxndhYXDe2ugG
+	BYB+9qpyFGYPrrc/Av3RQ4gIgLBTJxwd3buzIwEtQqs1T0NSID8TMjhlwqdx
+X-Google-Smtp-Source: AGHT+IH9e3hfmWuW8v7uO4CBf2uIDME60YJn9qpzkyjm7WShZWcYCC5kaQ5YDVkN09NFe9sBYHbA8A==
+X-Received: by 2002:a05:600c:1c9b:b0:412:9008:1f28 with SMTP id k27-20020a05600c1c9b00b0041290081f28mr169101wms.12.1708619689073;
+        Thu, 22 Feb 2024 08:34:49 -0800 (PST)
 Received: from ?IPV6:2a0a:ef40:69d:3501:4b27:339f:196f:f7f9? ([2a0a:ef40:69d:3501:4b27:339f:196f:f7f9])
-        by smtp.gmail.com with ESMTPSA id m20-20020a05600c281400b0041214ff06cesm21901857wmb.42.2024.02.22.08.34.23
+        by smtp.gmail.com with ESMTPSA id m20-20020a05600c281400b0041214ff06cesm21901857wmb.42.2024.02.22.08.34.48
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 22 Feb 2024 08:34:23 -0800 (PST)
-Message-ID: <9f16544e-b6cc-414f-81e5-aac9e076f8df@gmail.com>
-Date: Thu, 22 Feb 2024 16:34:22 +0000
+        Thu, 22 Feb 2024 08:34:48 -0800 (PST)
+Message-ID: <08073d69-18f4-40c9-90a5-23db914c163e@gmail.com>
+Date: Thu, 22 Feb 2024 16:34:48 +0000
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -63,197 +64,77 @@ MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 From: phillip.wood123@gmail.com
 Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v2 3/8] rebase: update `--empty=ask` to `--empty=drop`
-To: Brian Lyles <brianmlyles@gmail.com>, git@vger.kernel.org
-Cc: newren@gmail.com, me@ttaylorr.com, gitster@pobox.com
-References: <20240119060721.3734775-2-brianmlyles@gmail.com>
- <20240210074859.552497-4-brianmlyles@gmail.com>
+Subject: Re: [PATCH v2 4/8] sequencer: treat error reading HEAD as unborn
+ branch
 Content-Language: en-US
-In-Reply-To: <20240210074859.552497-4-brianmlyles@gmail.com>
+To: Brian Lyles <brianmlyles@gmail.com>, git@vger.kernel.org
+Cc: newren@gmail.com, me@ttaylorr.com, gitster@pobox.com,
+ Phillip Wood <phillip.wood@dunelm.org.uk>
+References: <20240119060721.3734775-2-brianmlyles@gmail.com>
+ <20240210074859.552497-5-brianmlyles@gmail.com>
+In-Reply-To: <20240210074859.552497-5-brianmlyles@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
 Hi Brian
 
 On 10/02/2024 07:43, Brian Lyles wrote:
-> When git-am(1) got its own `--empty` option in 7c096b8d61 (am: support
-> --empty=<option> to handle empty patches, 2021-12-09), `stop` was used
-> instead of `ask`. `stop` is a more accurate term for describing what
-> really happens, and consistency is good.
+> When using git-cherry-pick(1) with `--allow-empty` while on an unborn
+> branch, an error is thrown. This is inconsistent with the same
+> cherry-pick when `--allow-empty` is not specified.
 > 
-> Update git-rebase(1) to also use `stop`, while keeping `ask` as a
-> deprecated synonym. Update the tests to primarily use `stop`, but also
-> ensure that `ask` is still allowed.
+> Treat a failure reading HEAD as an unborn branch in
+> `is_index_unchanged`. This is consistent with other sequencer logic such
+> as `do_pick_commit`. When on an unborn branch, use the `empty_tree` as
+> the tree to compare against.
 > 
-> In a future commit, we'll be adding a new `--empty` option for
-> git-cherry-pick(1) as well, making the consistency even more relevant.
-
-I'm sightly nervous of deprecating "ask" as the warnings have the 
-potential to annoy users but it would be good to use consistent 
-terminology so it may well be worth it. This patch the previous ones 
-look good apart from one minor issue ...
-
 > Signed-off-by: Brian Lyles <brianmlyles@gmail.com>
-> Reported-by: Elijah Newren <newren@gmail.com>
+> Helped-by: Phillip Wood <phillip.wood@dunelm.org.uk>
+> ---
+> 
+> This is another new commit that was not present in v1.
+> 
+> See this comment[1] from Phillip for context.
+> 
+> [1]: https://lore.kernel.org/git/b5213705-4cd6-40ef-8c5f-32b214534b8b@gmail.com/
 
-I think we normally put Reported-by: and Helped-by: etc above the patch 
-authors Signed-off-by: trailer.
+Thanks for fixing this and adding a test, I've left a few small comments 
+below.
+
+>   static int is_index_unchanged(struct repository *r)
+>   {
+> -	struct object_id head_oid, *cache_tree_oid;
+> +	struct object_id head_oid, *cache_tree_oid, head_tree_oid;
+
+I think we can make `head_tree_oid` a pointer like cache_tree_oid and 
+avoid de-referencing `the_hash_algo->empty_tree` and the return value of 
+`get_commit_tree_oid()`. I think the only reason to copy it would be if 
+the underlying object had a shorter lifetime than `head_tree_oid` but I 
+don't think that's the case.
+
+> +test_expect_success 'cherry-pick on unborn branch with --allow-empty' '
+> +	git checkout main &&
+
+I'm a bit confused by this - are we already on the branch "unborn" and 
+so need to move away from it to delete it?
+
+> +	git branch -D unborn &&
+> +	git checkout --orphan unborn &&
+> +	git rm --cached -r . &&
+> +	rm -rf * &&
+
+"git switch --orphan" leaves us with an empty index and working copy 
+without having to remove the files ourselves.
+
+> +	git cherry-pick initial --allow-empty &&
+> +	git diff --quiet initial &&
+
+I'd drop "--quiet" here as it makes debugging easier if we can see the 
+diff if the test fails.
+
+> +	test_cmp_rev ! initial HEAD
+> +'
 
 Best Wishes
 
 Phillip
-
-> ---
->   Documentation/git-rebase.txt | 15 ++++++++-------
->   builtin/rebase.c             | 16 ++++++++++------
->   t/t3424-rebase-empty.sh      | 21 ++++++++++++++++-----
->   3 files changed, 34 insertions(+), 18 deletions(-)
-> 
-> diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
-> index 68cdebd2aa..6f64084a95 100644
-> --- a/Documentation/git-rebase.txt
-> +++ b/Documentation/git-rebase.txt
-> @@ -289,23 +289,24 @@ See also INCOMPATIBLE OPTIONS below.
->   +
->   See also INCOMPATIBLE OPTIONS below.
->   
-> ---empty=(ask|drop|keep)::
-> +--empty=(drop|keep|stop)::
->   	How to handle commits that are not empty to start and are not
->   	clean cherry-picks of any upstream commit, but which become
->   	empty after rebasing (because they contain a subset of already
->   	upstream changes):
->   +
->   --
-> -`ask`;;
-> -	The rebase will halt when the commit is applied, allowing you to
-> -	choose whether to drop it, edit files more, or just commit the empty
-> -	changes. This option is implied when `-i`/`--interactive` is
-> -	specified.
->   `drop`;;
->   	The commit will be dropped. This is the default behavior.
->   `keep`;;
->   	The commit will be kept. This option is implied when `--exec` is
->   	specified unless `-i`/`--interactive` is also specified.
-> +`stop`;;
-> +`ask`;;
-> +	The rebase will halt when the commit is applied, allowing you to
-> +	choose whether to drop it, edit files more, or just commit the empty
-> +	changes. This option is implied when `-i`/`--interactive` is
-> +	specified. `ask` is a deprecated synonym of `stop`.
->   --
->   +
->   Note that commits which start empty are kept (unless `--no-keep-empty`
-> @@ -705,7 +706,7 @@ be dropped automatically with `--no-keep-empty`).
->   Similar to the apply backend, by default the merge backend drops
->   commits that become empty unless `-i`/`--interactive` is specified (in
->   which case it stops and asks the user what to do).  The merge backend
-> -also has an `--empty=(ask|drop|keep)` option for changing the behavior
-> +also has an `--empty=(drop|keep|stop)` option for changing the behavior
->   of handling commits that become empty.
->   
->   Directory rename detection
-> diff --git a/builtin/rebase.c b/builtin/rebase.c
-> index 4084a6abb8..3b9bb2fa06 100644
-> --- a/builtin/rebase.c
-> +++ b/builtin/rebase.c
-> @@ -58,7 +58,7 @@ enum empty_type {
->   	EMPTY_UNSPECIFIED = -1,
->   	EMPTY_DROP,
->   	EMPTY_KEEP,
-> -	EMPTY_ASK
-> +	EMPTY_STOP
->   };
->   
->   enum action {
-> @@ -954,10 +954,14 @@ static enum empty_type parse_empty_value(const char *value)
->   		return EMPTY_DROP;
->   	else if (!strcasecmp(value, "keep"))
->   		return EMPTY_KEEP;
-> -	else if (!strcasecmp(value, "ask"))
-> -		return EMPTY_ASK;
-> +	else if (!strcasecmp(value, "stop"))
-> +		return EMPTY_STOP;
-> +	else if (!strcasecmp(value, "ask")) {
-> +		warning(_("--empty=ask is deprecated; use '--empty=stop' instead."));
-> +		return EMPTY_STOP;
-> +	}
->   
-> -	die(_("unrecognized empty type '%s'; valid values are \"drop\", \"keep\", and \"ask\"."), value);
-> +	die(_("unrecognized empty type '%s'; valid values are \"drop\", \"keep\", and \"stop\"."), value);
->   }
->   
->   static int parse_opt_keep_empty(const struct option *opt, const char *arg,
-> @@ -1136,7 +1140,7 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
->   				 "instead of ignoring them"),
->   			      1, PARSE_OPT_HIDDEN),
->   		OPT_RERERE_AUTOUPDATE(&options.allow_rerere_autoupdate),
-> -		OPT_CALLBACK_F(0, "empty", &options, "(drop|keep|ask)",
-> +		OPT_CALLBACK_F(0, "empty", &options, "(drop|keep|stop)",
->   			       N_("how to handle commits that become empty"),
->   			       PARSE_OPT_NONEG, parse_opt_empty),
->   		OPT_CALLBACK_F('k', "keep-empty", &options, NULL,
-> @@ -1553,7 +1557,7 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
->   
->   	if (options.empty == EMPTY_UNSPECIFIED) {
->   		if (options.flags & REBASE_INTERACTIVE_EXPLICIT)
-> -			options.empty = EMPTY_ASK;
-> +			options.empty = EMPTY_STOP;
->   		else if (options.exec.nr > 0)
->   			options.empty = EMPTY_KEEP;
->   		else
-> diff --git a/t/t3424-rebase-empty.sh b/t/t3424-rebase-empty.sh
-> index 73ff35ced2..1ee6b00fd5 100755
-> --- a/t/t3424-rebase-empty.sh
-> +++ b/t/t3424-rebase-empty.sh
-> @@ -72,6 +72,17 @@ test_expect_success 'rebase --merge --empty=keep' '
->   	test_cmp expect actual
->   '
->   
-> +test_expect_success 'rebase --merge --empty=stop' '
-> +	git checkout -B testing localmods &&
-> +	test_must_fail git rebase --merge --empty=stop upstream &&
-> +
-> +	git rebase --skip &&
-> +
-> +	test_write_lines D C B A >expect &&
-> +	git log --format=%s >actual &&
-> +	test_cmp expect actual
-> +'
-> +
->   test_expect_success 'rebase --merge --empty=ask' '
->   	git checkout -B testing localmods &&
->   	test_must_fail git rebase --merge --empty=ask upstream &&
-> @@ -101,9 +112,9 @@ test_expect_success 'rebase --interactive --empty=keep' '
->   	test_cmp expect actual
->   '
->   
-> -test_expect_success 'rebase --interactive --empty=ask' '
-> +test_expect_success 'rebase --interactive --empty=stop' '
->   	git checkout -B testing localmods &&
-> -	test_must_fail git rebase --interactive --empty=ask upstream &&
-> +	test_must_fail git rebase --interactive --empty=stop upstream &&
->   
->   	git rebase --skip &&
->   
-> @@ -112,7 +123,7 @@ test_expect_success 'rebase --interactive --empty=ask' '
->   	test_cmp expect actual
->   '
->   
-> -test_expect_success 'rebase --interactive uses default of --empty=ask' '
-> +test_expect_success 'rebase --interactive uses default of --empty=stop' '
->   	git checkout -B testing localmods &&
->   	test_must_fail git rebase --interactive upstream &&
->   
-> @@ -194,9 +205,9 @@ test_expect_success 'rebase --exec uses default of --empty=keep' '
->   	test_cmp expect actual
->   '
->   
-> -test_expect_success 'rebase --exec --empty=ask' '
-> +test_expect_success 'rebase --exec --empty=stop' '
->   	git checkout -B testing localmods &&
-> -	test_must_fail git rebase --exec "true" --empty=ask upstream &&
-> +	test_must_fail git rebase --exec "true" --empty=stop upstream &&
->   
->   	git rebase --skip &&
->   
