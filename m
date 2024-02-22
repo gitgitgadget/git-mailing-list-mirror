@@ -1,147 +1,99 @@
-Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.223.130])
+Received: from mail-ej1-f53.google.com (mail-ej1-f53.google.com [209.85.218.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23480182D2
-	for <git@vger.kernel.org>; Thu, 22 Feb 2024 11:04:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.130
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44C35405D4
+	for <git@vger.kernel.org>; Thu, 22 Feb 2024 12:02:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708599861; cv=none; b=J9Yvz/jmcOCrp9w9rSfWzGOIdVW2TFyRiSYbYgFRb/zQHiSzVl96nMny1m1XumvRfpv73Zu1fMiUCl+ZvfcWIcdjAa1QgCRdtfAAF8BqmUGtsbp7s9wSw2v+vwKiEkLhShmrAmxYvi+iC8+8DS3kaASNin1lQD70glSqcSjjRR0=
+	t=1708603350; cv=none; b=ELqOREzqAyjPqMu1SIcn7uzK8vy60a/AeWWXeSPGiKcb8/R+i3xwLR9hTBTF3TbveT1tjvBB7PHX/ryKZYLIrTUHmQni5BNJOxowMM7bq5nsT9Pb3oZsZRkxXhbDZ/eBANvDBU5HDx8BOD/Nmv1HfoXc3QqelTKGfISDpG5mNbg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708599861; c=relaxed/simple;
-	bh=OR1xZHPsfrZu1PcnJsg51SNotfNUGsLEcP7RoR0qSDY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=lYIlLXjg4M+ro8Hy/6UM0i1le/LSClA/VpsYI6Ibgldqz01Quf6w76+bKYodBV0Gd5yOwWFpmS77uJKFcTTej2130JGJY9TK/yC32b2vNvGcJTNuHR0jBi3q5N4TY3TH2rM5f4tDkPwRoHeXQHRd6pV4l+S6A7GJs80gMMGpPJk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de; spf=pass smtp.mailfrom=suse.de; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=YASttTng; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=ASgGMZ+4; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=YASttTng; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=ASgGMZ+4; arc=none smtp.client-ip=195.135.223.130
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
+	s=arc-20240116; t=1708603350; c=relaxed/simple;
+	bh=SH13dqbrTjUav6swfCXBWGBtLydk9ckaYNLTbUjrSPk=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=g457ZkSAH9mcU79C0+2XPj9axvU2Thdc+20jk3k7tJWPP6haPHIgzTRZI7WQht0byGmdl81bSujZ9pVnutvB7iAZduWvuIUBNjpQsGWvMDUzk3YY7iwFs1DNFCo8af7a8qvmzTkxjD+f/ijIJBfjJBYr59l6w7nK5RyBs6FWN1k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=m8oT76Zd; arc=none smtp.client-ip=209.85.218.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="YASttTng";
-	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="ASgGMZ+4";
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="YASttTng";
-	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="ASgGMZ+4"
-Received: from kitsune.suse.cz (unknown [10.100.12.127])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (P-256) server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by smtp-out1.suse.de (Postfix) with ESMTPS id 605C321E42;
-	Thu, 22 Feb 2024 11:04:17 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1708599857; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=M434wCxxPOlvC2zVyUbme0VMdz0TNt24HgFWcjDw9vw=;
-	b=YASttTng8kqe5p2JQEc+nN9KXMA4urFuU0r0nI1NzHPhOVCrcJWka4PvvljB4G1y01HZrg
-	PECzyQXTeJYK6zpbhYmKdr8F09qgP1GK64TJnqqJgMZZKVwCXWOjBa9e0AxXB0SRwZhDC0
-	gyiVervORsXw+4izpnJLkYNiKWWOrxk=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1708599857;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=M434wCxxPOlvC2zVyUbme0VMdz0TNt24HgFWcjDw9vw=;
-	b=ASgGMZ+4MAVvEIg1pF29A50GG/VxDf2jo+kecyrWgMidNe5CPel1iynBc3dOR/77Tq8/ut
-	XB/UsEU7JSE20GDA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1708599857; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=M434wCxxPOlvC2zVyUbme0VMdz0TNt24HgFWcjDw9vw=;
-	b=YASttTng8kqe5p2JQEc+nN9KXMA4urFuU0r0nI1NzHPhOVCrcJWka4PvvljB4G1y01HZrg
-	PECzyQXTeJYK6zpbhYmKdr8F09qgP1GK64TJnqqJgMZZKVwCXWOjBa9e0AxXB0SRwZhDC0
-	gyiVervORsXw+4izpnJLkYNiKWWOrxk=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1708599857;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=M434wCxxPOlvC2zVyUbme0VMdz0TNt24HgFWcjDw9vw=;
-	b=ASgGMZ+4MAVvEIg1pF29A50GG/VxDf2jo+kecyrWgMidNe5CPel1iynBc3dOR/77Tq8/ut
-	XB/UsEU7JSE20GDA==
-Date: Thu, 22 Feb 2024 12:04:16 +0100
-From: Michal =?iso-8859-1?Q?Such=E1nek?= <msuchanek@suse.de>
-To: =?iso-8859-1?Q?Jean-No=EBl?= AVILA <jn.avila@free.fr>
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Harmen Stoppels via GitGitGadget <gitgitgadget@gmail.com>,
-	git@vger.kernel.org, Harmen Stoppels <me@harmenstoppels.nl>
-Subject: Re: [PATCH] rebase: make warning less passive aggressive
-Message-ID: <20240222110416.GD9696@kitsune.suse.cz>
-References: <pull.1669.git.1708442603395.gitgitgadget@gmail.com>
- <2324063.ElGaqSPkdT@cayenne>
- <xmqq4je1mo5p.fsf@gitster.g>
- <7633780.EvYhyI6sBW@cayenne>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="m8oT76Zd"
+Received: by mail-ej1-f53.google.com with SMTP id a640c23a62f3a-a3e82664d53so593824766b.3
+        for <git@vger.kernel.org>; Thu, 22 Feb 2024 04:02:29 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1708603347; x=1709208147; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=SH13dqbrTjUav6swfCXBWGBtLydk9ckaYNLTbUjrSPk=;
+        b=m8oT76Zdr+gfdgCOpAZyyqP4T13+DXBYYo15afZwFOyNkInD5QaI1FugG186z8eL2x
+         YlbD2U1P9DNjPv5D5UzpnljlCI/FCrnQPVg6r9AzZuac+E0JN4YWrhGY2uobQi4wQRDc
+         k1ecKPw021+FudPI8dTzMfkEN6NAAndxKptaaXBAYeNNiWWL9TaCSPUUGh9DZIsWYrPS
+         EdZytiufu3ARwdYwZlUzWa61FtUdLrLFzC225ky2NoZKeaNqs2lAQ5pa4ng3LzR4YWlN
+         W6PBJB1BSC6DVCANL51BYUD6SEqeSZJSjN6lm+u5CJzCwAEJk+Cpj7yRmIdbolBhuxc5
+         daAg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1708603347; x=1709208147;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=SH13dqbrTjUav6swfCXBWGBtLydk9ckaYNLTbUjrSPk=;
+        b=RPVhPh2V/cG//9e1V/a3Cfw9qIvjqtxQ8+VG9sUAavy4aFKK04wDJwB0kLIFVKQbv9
+         DZSZt2oT//vZuJVS6eugn828C0ms0nTuhymrWL4Og9LabBDY6DK5vl1wP/LEa9xhZ2J1
+         7MxAxOY772TKbnHYFqi9KGaiLjFS6FzvdUW92/qPY6ZPWGIuaRgRVyySAklDLHcd3oM3
+         9pdpfqWGZM/OecQT2vILnhyKWO8fGVm4sr122Fgd/w/ERSO+fyNgZOMR4byDAhvYOP1r
+         RMN7K1CwJzDK9L5Hb3zXFJKh3YLqMS3edGyekmcPRqJ/iXaY3Sq01p1k9zXI+4U6mtD/
+         OeUw==
+X-Forwarded-Encrypted: i=1; AJvYcCUB/4+MgoP6tFkqm0aOyJ+TGgNPzbFUutP90ypsX/2vtQ7dsUr55kCail/ClEjOtXfDeJdFsb5Dh4nChhOkf2W2HkaA
+X-Gm-Message-State: AOJu0YynOd/RJXXBSGtU4ViKO8zuKvFLWshw8Y7ksLnx8VXC1d2VJK7f
+	Alyfx2z8iLcAG29OfYutMKN4WGNUMm78d69MoAFJqqAW6IWCObbKUOpjMUeGXyprSt7opIqxnvK
+	DXhTkB47R+jYdCIghRrCgiYDGvAw=
+X-Google-Smtp-Source: AGHT+IGN2VkRhfBXfhUs29lBsqLE9z2GjnCTtF/StWCg+yjjmtOjESvrluWJM7daDTmd3foYVwuVisVADQg9BdlpVzU=
+X-Received: by 2002:a17:906:b0d1:b0:a3d:4ed8:f5bf with SMTP id
+ bk17-20020a170906b0d100b00a3d4ed8f5bfmr15763636ejb.2.1708603347347; Thu, 22
+ Feb 2024 04:02:27 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <7633780.EvYhyI6sBW@cayenne>
-User-Agent: Mutt/1.10.1 (2018-07-13)
-Authentication-Results: smtp-out1.suse.de;
-	none
-X-Spamd-Result: default: False [-0.11 / 50.00];
-	 ARC_NA(0.00)[];
-	 FROM_HAS_DN(0.00)[];
-	 TO_DN_SOME(0.00)[];
-	 FREEMAIL_ENVRCPT(0.00)[free.fr,gmail.com];
-	 TO_MATCH_ENVRCPT_ALL(0.00)[];
-	 MIME_GOOD(-0.10)[text/plain];
-	 RCPT_COUNT_FIVE(0.00)[5];
-	 DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
-	 FREEMAIL_TO(0.00)[free.fr];
-	 RCVD_COUNT_ZERO(0.00)[0];
-	 FROM_EQ_ENVFROM(0.00)[];
-	 MIME_TRACE(0.00)[0:+];
-	 FREEMAIL_CC(0.00)[pobox.com,gmail.com,vger.kernel.org,harmenstoppels.nl];
-	 FUZZY_BLOCKED(0.00)[rspamd.com];
-	 BAYES_HAM(-0.01)[48.26%]
-X-Spam-Level: 
-X-Spam-Flag: NO
-X-Spam-Score: -0.11
+References: <CAP8UFD1VAvnkM6afZvtpdXhA4csDBDwMnF9yUzSx_ut-Ypf+eA@mail.gmail.com>
+ <Zbi8pfvGpYrlZXAu@tanuki> <ZbpGzAd6FGEeTdrh@tanuki> <c61322de-8cd9-42b8-a04b-a8ae47b25c5e@gmail.com>
+ <Zbtmoo8qTmj-yt99@tanuki> <d4797f27-825b-4e2b-85a6-cc30f33934e3@gmail.com>
+ <CAP8UFD3GBT7s1jGOc=fe6XdYGF1c--tMBDiy_sDg1Afsa=drDw@mail.gmail.com>
+ <26cf6320-7ead-4ca0-b4b8-ca7008cae401@gmail.com> <CA+ARAtqicQkhKFcTxoT+GWMhCxnV-BNqd0oOcn2YwznfFnnRPw@mail.gmail.com>
+ <9cec06d8-971b-4c5d-9d85-969021b0dd48@gmail.com> <Zdb8lnUSurutauRa@tanuki> <CAOLa=ZSq-X7s2XwFAEu2umrQ5z2fsa=X2ai4EaU5ufyoacncVQ@mail.gmail.com>
+In-Reply-To: <CAOLa=ZSq-X7s2XwFAEu2umrQ5z2fsa=X2ai4EaU5ufyoacncVQ@mail.gmail.com>
+From: Christian Couder <christian.couder@gmail.com>
+Date: Thu, 22 Feb 2024 13:02:14 +0100
+Message-ID: <CAP8UFD2_K-7TfMYSYh0xunWQcfA5bj1MiXSx-6HRGNE8MzjncA@mail.gmail.com>
+Subject: Re: Git in GSoC 2024
+To: Karthik Nayak <karthik.188@gmail.com>
+Cc: Patrick Steinhardt <ps@pks.im>, Kaartic Sivaraam <kaartic.sivaraam@gmail.com>, git <git@vger.kernel.org>, 
+	Taylor Blau <me@ttaylorr.com>, Junio C Hamano <gitster@pobox.com>, Victoria Dye <vdye@github.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Hello,
+On Thu, Feb 22, 2024 at 9:57=E2=80=AFAM Karthik Nayak <karthik.188@gmail.co=
+m> wrote:
+>
+> On Thu, Feb 22, 2024 at 8:49=E2=80=AFAM Patrick Steinhardt <ps@pks.im> wr=
+ote:
+> >
+> > On Thu, Feb 22, 2024 at 10:01:54AM +0530, Kaartic Sivaraam wrote:
+> > > [1]:
+> > > https://summerofcode.withgoogle.com/organizations/git/programs/2024/t=
+imeline
+> > >
+> > > [2]: https://summerofcode.withgoogle.com/programs/2024/organizations/=
+git
+> >
+> > I can access the second link, but the first one is broken for me. First
+> > it claimed that my Google account wasn't connected to GSoC, and after a
+> > reload it stays blank now.
+> >
+>
+> Both links seem to be working now for me.
 
-On Thu, Feb 22, 2024 at 11:01:59AM +0100, Jean-Noël AVILA wrote:
-> On Wednesday, 21 February 2024 23:46:10 CET Junio C Hamano wrote:
-> > Jean-Noël AVILA <jn.avila@free.fr> writes:
-> > 
-> > > As a translator, I'm less bothered by editing a sentence to remove a 
-> question 
-> > > mark (maybe enforcing a language style and reformulating the sentence by 
-> the 
-> > > way), than by translating again and again similar sentences.
+Both links are working for me too.
 
-Indeed, the style part is the key here.
-
-The message that is changed here was quite stylistically poorly written
-which is why only removing the question mark is correct, and it's why
-it's changed in the first place, too.
-
-While this is faithfully reflected in multiple language translations
-there is no saying that's the case for all languages, at least basic
-understanding of the grammar of the language in question is needed to
-verify that.
-
-> > But the above assumes that for your language, the ONLY thing to turn
-> > such a rhetorical "passive aggressive" question into grammatically
-> > correct statement of a fact is to remove the question mark.  It may
-> > not be universally true for all languages, and for some language,
-> > even after msgmerge did its job correctly, you may need to do more
-> > than just removing the question mark to adjust the remaining "foo
-> > bar" part.
-> > 
-> 
-> I perfectly agree with you.
-
-Indeed, and that's why per-language review for such change is needed.
-
-Thanks
-
-Michal
+Thanks!
