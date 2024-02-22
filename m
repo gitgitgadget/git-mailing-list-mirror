@@ -1,90 +1,79 @@
-Received: from fout5-smtp.messagingengine.com (fout5-smtp.messagingengine.com [103.168.172.148])
+Received: from fhigh1-smtp.messagingengine.com (fhigh1-smtp.messagingengine.com [103.168.172.152])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 126A617BA1
-	for <git@vger.kernel.org>; Thu, 22 Feb 2024 07:49:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A59A917BA1
+	for <git@vger.kernel.org>; Thu, 22 Feb 2024 08:15:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708588193; cv=none; b=mPLAoTpg140XwTemrCrFuOM0u3CqTz2rpcvWj4iTZ7e8aovPaRUNlip5vuIVevIunpR3b8DA5IAS68Qy4jyGhzvsoGCEhRfqeb7InPfMSD3xPmugmwUx5+1QcctFXozO463YIftRc3y+3XgY4mfcdlfOM9fmnpQgX5sGEDHMx6E=
+	t=1708589752; cv=none; b=oJ1/TDbSnR2f/q8MCFFmkqnoiSBKEKpHTrXXO9ARHRqLhFteYf3sLmi+fCRT1RI2T623WEBm149JiqFq+5z+Bt0KZrgW6AE/79Mpouko+6DQ6FD3o5zMNYCrBruzmSKQRS9FG96+MWzcXcHxCh2/koFnRUXd3d6Z3jOvytZ7cVs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708588193; c=relaxed/simple;
-	bh=gw8jObA05HNK2NxKk8SmLgIHZ/dyohoQWSxhcGpGgTY=;
+	s=arc-20240116; t=1708589752; c=relaxed/simple;
+	bh=XJKEOV0245tSLBkr+QmT/bAPWUg6ghA6mCHqKTWg9J0=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=P2f1cl4TSeiPBjfZvqcs09nQS5jaNXKbJuLrEkK9blKzspVVVohsvf1E6dbuLaJHOZjhxBh0RudkYrUm+pUBXikVWw6sOXnVC53kdJsf8aWcGh16+xASsU2gMa0Fmwy2qJI4Mm2AIprc0sXR41VT+SGeiVYHpSXjcn/D+Bx2GCY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=ZJN1IjVm; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=nbTDOzOr; arc=none smtp.client-ip=103.168.172.148
+	 Content-Type:Content-Disposition:In-Reply-To; b=td7xpdHcJgpxncL7bsUhqKZb0WYbaoEL/wp33qyMwQ5L3mnOcvGZQishY4RolEBVBPymo+FrAAhgwoiJ4zR1C+VU1p/PrJ3VKAMMFOKtfA6mMEKBHAetd8ZXim1bwO4jpmmkL49yU4gM6IW+y9qUu7cMM2NQwkJYGr9APdPOGlo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=dfNGF7qC; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=qq69GV4i; arc=none smtp.client-ip=103.168.172.152
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="ZJN1IjVm";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="nbTDOzOr"
-Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
-	by mailfout.nyi.internal (Postfix) with ESMTP id A89D313800A2;
-	Thu, 22 Feb 2024 02:49:48 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="dfNGF7qC";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="qq69GV4i"
+Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
+	by mailfhigh.nyi.internal (Postfix) with ESMTP id 74D2B11400AE;
+	Thu, 22 Feb 2024 03:15:48 -0500 (EST)
 Received: from mailfrontend1 ([10.202.2.162])
-  by compute5.internal (MEProxy); Thu, 22 Feb 2024 02:49:48 -0500
+  by compute1.internal (MEProxy); Thu, 22 Feb 2024 03:15:48 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1708588188; x=1708674588; bh=gw8jObA05H
-	NK2NxKk8SmLgIHZ/dyohoQWSxhcGpGgTY=; b=ZJN1IjVm0DIvCQdBmZ9Hv0sJLU
-	fOOuv6ywH0NHIyKzWaIrlamo5/EeP4UsDeL2L+lRy5pAhvD17rByMVKh8lbCGfHb
-	sS0PfjygCvMdjtAeoIxkDQ9Kd2ufxWxEkSATQdhKDg6ltYCU4GKx09IiSMtJZLIP
-	9rsl6haqceJldI5xxfgWvJvTnnL9ZY767dh3KvrOz7xAtluk8gg7JzyI1l0FAu7b
-	M6Rv5jwhGe3fnQp1lBTSc2VNhdPgTTNTUTp8UmRzqo0usVc7mPIIoGA1RUt/ZqKp
-	Npg2HY2OWWOchieT/aAKTi4Tqewls3ypEeCGl2jWyZnI0sGEEnO5x0zm0YFQ==
+	:subject:to:to; s=fm1; t=1708589748; x=1708676148; bh=GGX70G6BeO
+	h1oEjSEnLFe948R6dYC9hEiG/A3YvBGfc=; b=dfNGF7qC6Y4mEm5Kb2QZ1dg0qw
+	Fxv+Ob2J96Uw6dU/ZRpCsVIR2iUd1tT/7Ofcg1n4WGhXlZYCzC2D2wmwAxlZKri9
+	J0wGElwCzUzRSUPgIvlxYXy0JnN/4eKddbD6wWp46SNfqV3Qw2A1bcuLV5ADOXW9
+	24y12hrOwRLtq6V33MbwF8blUmZ+sHL/NkTXB4684siD0JttoM9Eaj84IlV3+AxN
+	NvjUyw4F0I5PqEDTw42EXb/3ZqqzAJLuAEAPuVzZl1Hc413nUmB0J9rLPJYthvum
+	TTQUxBB1HP4l8UGhdXzPNSA4OvGsq3oxnYWoRLx9GTo9Kjm8FSdIiOFd8jEg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1708588188; x=1708674588; bh=gw8jObA05HNK2NxKk8SmLgIHZ/dy
-	ohoQWSxhcGpGgTY=; b=nbTDOzOrh2YULbzAd4hPXoQTsy9EsBU5mr7aNgarBHRv
-	OlotP7SZ0fe073MVPCGd3h69YNxmbwrEvc31t4aaa5kYCC307U0qvUXl6Rjr2ic2
-	48udtwYJUzFpCXWlb1qsfuyS2vKgOHT2U+/NtK1HT9Vt81AzGl7kd2Gy/SdsmWNb
-	YkhbAgjyF9pRiNIvvn1D2zqCZElMLQ60yPhCUJTMx3RYefyfG+GEU0n5z+VzFHLx
-	vOKGEYdjm032jmeIfvau3IXOq2bsu3piIGKIJXEBcCtidGYgDvyEy2qWhpqb6vVP
-	E1KoMSw6Q6wBS64yWafsuCI6W9i9Ix7X+SDfRoEi7g==
-X-ME-Sender: <xms:nPzWZc38uP_pUS7KbjhXNvKPDSvNP3VmLg9gzmUFsDhDd9se45IlHw>
-    <xme:nPzWZXHt1S-nHUlMBdiBBw7E1RDSGoaiM5wpfAXuLOgVTzW0rSvPamLtU_Z9HV0zQ
-    ltzGRwqw138kkSZhg>
-X-ME-Received: <xmr:nPzWZU739WqWgscAiwlwWZ2AkzRj2tysZxsIPw1QXo5Mm5sWlc9m72Ryj-P-P-M1SUBREAGXqFAVt6O-TGmO3M5px9TyR_7IpMGSiAKUaVRdq7df>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrfeefgdduudduucetufdoteggodetrfdotf
+	fm1; t=1708589748; x=1708676148; bh=GGX70G6BeOh1oEjSEnLFe948R6dY
+	C9hEiG/A3YvBGfc=; b=qq69GV4ifuJg1A72NcbzKrmoyX1/92EQrdJQhcnWSYIZ
+	NPemY23Mztm4maBguK72b8zRzsUz9fQqDi7ID2/hYY+KNg0hWmA1Y/gRowbBd5OV
+	jjOUi3x6LVho6EFBldLc6Fo4vaRnDE7bb5VEkT1vXUH8lal08Hu6SXAX1oNnRWy1
+	T8qljJrYwSIJ8HpswTIwdaYLeTQxTo+SPlwvYQyTkYF5IiEl0lmgAJUtmtDqDHAY
+	evqaJINwY8Wu4X91tkyXBGagisovoRvsv+Pvbrw7nGv2Uw3B/Ygg6h+pqb4IpDn/
+	xeHSYkJ9KPKWsd7avSUEduFm1gN5Ftbe1W6Vpz6x5w==
+X-ME-Sender: <xms:tALXZWZ8vwwioZUvUcXuOf__vyVokw2kNYZSV46VpxC09StIHwoI3Q>
+    <xme:tALXZZa3SeGRcCYjNsVWASUTv6kM0fizLzXtUA6mfMWRJFvWB_ENIGmzeyhDvlYYh
+    KupBJQOanNlpVsxLw>
+X-ME-Received: <xmr:tALXZQ9H_HDf-eK-bfe931YZKO_PPGFk2w9fyh2klkNqxVCRQL44hBeoelFS6rPXOXG3qHA_n4myKJiTkAbJV6WrSuOr4Nh2XwED8UO00_rAseIO>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrfeefgdduudehucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
     uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
     cujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtvdenucfhrhhomheprfgrthhr
     ihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvg
-    hrnhepveejtedvleetuefgtedvveeujeekieelhefhfeffueelteevveekffekieffveej
-    necuffhomhgrihhnpehgrdgtohdpfihithhhghhoohhglhgvrdgtohhmnecuvehluhhsth
-    gvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimh
-X-ME-Proxy: <xmx:nPzWZV3MtWtywUOFRfbidOe0LCL2Xn90djTi5u86y9Xmae5e03jKUg>
-    <xmx:nPzWZfFVA3rW-v0jKBee1n_CmGMP0NsM3Hi6F2TGVxqC8yfkZvlfZg>
-    <xmx:nPzWZe-5tKtCf9ddTGXx-Wffcng2U0t56d0jgEyVGVCipiKbyd4gAQ>
-    <xmx:nPzWZe21ybra4ua-tA9ZztgA0STFXwmtbUaSnfq3l0sYDDGBTvB1nA>
+    hrnhepleejteffveehgeegteekteeiudeiieeigeeigedtffehgeekhfejheefkefhveel
+    necuffhomhgrihhnpehgihhthhhusgdrtghomhenucevlhhushhtvghrufhiiigvpedtne
+    curfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhm
+X-ME-Proxy: <xmx:tALXZYon-Yt1VKHlr2v_7fJoW6LodKeHCIp5Mk7ule_uICB9vNXBJQ>
+    <xmx:tALXZRqWF86F6rJFyW5j0DIlaSSHbwZtpcxzS87o0zIWEbHj_Ut1Fg>
+    <xmx:tALXZWThxF21Z3CunXaTR4dPXHsjZiEwa__A1OTpPb4RMLzarRe5fg>
+    <xmx:tALXZYWPevNNx0Hc4zLtkc0VyxnswX6UV_o_EbuMf_efPHSUSY_JTw>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 22 Feb 2024 02:49:46 -0500 (EST)
+ 22 Feb 2024 03:15:47 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id f87d9cc6 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 22 Feb 2024 07:45:38 +0000 (UTC)
-Date: Thu, 22 Feb 2024 08:49:42 +0100
+	by vm-mail (OpenSMTPD) with ESMTPSA id bfb4485a (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 22 Feb 2024 08:11:39 +0000 (UTC)
+Date: Thu, 22 Feb 2024 09:15:43 +0100
 From: Patrick Steinhardt <ps@pks.im>
-To: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-Cc: Christian Couder <christian.couder@gmail.com>,
-	Karthik Nayak <karthik.188@gmail.com>, git <git@vger.kernel.org>,
-	Taylor Blau <me@ttaylorr.com>, Junio C Hamano <gitster@pobox.com>,
-	Victoria Dye <vdye@github.com>
-Subject: Re: Git in GSoC 2024
-Message-ID: <Zdb8lnUSurutauRa@tanuki>
-References: <CAP8UFD1VAvnkM6afZvtpdXhA4csDBDwMnF9yUzSx_ut-Ypf+eA@mail.gmail.com>
- <Zbi8pfvGpYrlZXAu@tanuki>
- <ZbpGzAd6FGEeTdrh@tanuki>
- <c61322de-8cd9-42b8-a04b-a8ae47b25c5e@gmail.com>
- <Zbtmoo8qTmj-yt99@tanuki>
- <d4797f27-825b-4e2b-85a6-cc30f33934e3@gmail.com>
- <CAP8UFD3GBT7s1jGOc=fe6XdYGF1c--tMBDiy_sDg1Afsa=drDw@mail.gmail.com>
- <26cf6320-7ead-4ca0-b4b8-ca7008cae401@gmail.com>
- <CA+ARAtqicQkhKFcTxoT+GWMhCxnV-BNqd0oOcn2YwznfFnnRPw@mail.gmail.com>
- <9cec06d8-971b-4c5d-9d85-969021b0dd48@gmail.com>
+To: Harmen Stoppels via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, Harmen Stoppels <me@harmenstoppels.nl>
+Subject: Re: [PATCH v2] rebase: make warning less passive aggressive
+Message-ID: <ZdcCr2SAFJRgjhYD@tanuki>
+References: <pull.1669.git.1708442603395.gitgitgadget@gmail.com>
+ <pull.1669.v2.git.1708537097448.gitgitgadget@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -92,83 +81,92 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="mBqnNu50PC3NupJV"
+	protocol="application/pgp-signature"; boundary="1BU8nWs1e7yqnTgs"
 Content-Disposition: inline
-In-Reply-To: <9cec06d8-971b-4c5d-9d85-969021b0dd48@gmail.com>
+In-Reply-To: <pull.1669.v2.git.1708537097448.gitgitgadget@gmail.com>
 
 
---mBqnNu50PC3NupJV
+--1BU8nWs1e7yqnTgs
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Thu, Feb 22, 2024 at 10:01:54AM +0530, Kaartic Sivaraam wrote:
-> Hi Christian, Patrick, Karthik and all,
+On Wed, Feb 21, 2024 at 05:38:17PM +0000, Harmen Stoppels via GitGitGadget =
+wrote:
+> From: Harmen Stoppels <me@harmenstoppels.nl>
 >=20
-> On 21/02/24 10:32, Kaartic Sivaraam wrote:
-> >=20
-> > Christian, could you do the following so that I could add you as an Org
-> > Admin for the 2024 program?
-> >=20
-> > "Visit https://g.co/gsoc site, click on the 2024 bar which will display
-> > the 2024 Program Rules and Org Member agreement, read and agree to the
-> > same."
-> >=20
-> > For mentors, as Patrick and Karthik are new to the program, we need to
-> > invite them first and only after they've accepted the invitation can we
-> > add them to the program.
-> >=20
-> > Karthik, I was able to get your Gmail address and have sent an invite to
-> > you. Could you accept the same after reading through the program rules
-> > and member agreement?
-> >=20
-> > Patrick, could you kindly share with me your Gmail address so that I co=
-uld
-> > invite you to the program?
-> >=20
+> When you run `git rebase --continue` when no rebase is in progress, git
+> outputs `fatal: No rebase in progress?` which is not a question but a
+> statement. Make it appear as a statement, and use lowercase to align
+> with error message style.
 >=20
-> Thanks for the quick turnaround all! I've added all of you to the 2024
-> program. I hope you're able to access the program page at [1]. Let me know
-> if you're facing any issues.
->=20
-> Also, it's official now. Git has been selected as one of the participating
-> organizations[2] in GSoC 2024!
->=20
-> Let's look forward towards a summer with great GSoC contributors who
-> hopefully become continued contributors to the community :-)
->=20
-> [[ References ]]
->=20
-> [1]:
-> https://summerofcode.withgoogle.com/organizations/git/programs/2024/timel=
-ine
->=20
-> [2]: https://summerofcode.withgoogle.com/programs/2024/organizations/git
+> Signed-off-by: Harmen Stoppels <me@harmenstoppels.nl>
 
-I can access the second link, but the first one is broken for me. First
-it claimed that my Google account wasn't connected to GSoC, and after a
-reload it stays blank now.
+Got nothing else to add, this looks good to me. Thanks!
 
 Patrick
 
---mBqnNu50PC3NupJV
+> ---
+>     rebase: make warning less passive aggressive
+>    =20
+>     cc: Patrick Steinhardt ps@pks.im
+>=20
+> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1669%2F=
+haampie%2Ffix%2Fpassive-agressive-message-v2
+> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1669/haamp=
+ie/fix/passive-agressive-message-v2
+> Pull-Request: https://github.com/gitgitgadget/git/pull/1669
+>=20
+> Range-diff vs v1:
+>=20
+>  1:  4dfc578da84 < -:  ----------- rebase: make warning less passive aggr=
+essive
+>  -:  ----------- > 1:  a6f7a3a2477 rebase: make warning less passive aggr=
+essive
+>=20
+>=20
+>  builtin/rebase.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>=20
+> diff --git a/builtin/rebase.c b/builtin/rebase.c
+> index 5b086f651a6..6ead9465a42 100644
+> --- a/builtin/rebase.c
+> +++ b/builtin/rebase.c
+> @@ -1254,7 +1254,7 @@ int cmd_rebase(int argc, const char **argv, const c=
+har *prefix)
+>  		die(_("options '%s' and '%s' cannot be used together"), "--root", "--f=
+ork-point");
+> =20
+>  	if (options.action !=3D ACTION_NONE && !in_progress)
+> -		die(_("No rebase in progress?"));
+> +		die(_("no rebase in progress"));
+> =20
+>  	if (options.action =3D=3D ACTION_EDIT_TODO && !is_merge(&options))
+>  		die(_("The --edit-todo action can only be used during "
+>=20
+> base-commit: 96c8a0712e569dd2812bf4fb5e72113caf326500
+> --=20
+> gitgitgadget
+>=20
+
+--1BU8nWs1e7yqnTgs
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmXW/I4ACgkQVbJhu7ck
-PpRUQw//cxQU9Bp2DYBohFolG/J9tR9TrvfI3tjBH0qq2jvbKOzhgtQ+ISNX4dnV
-NRcpCyMRzWNcxUG2wAFwXvCptwNCbYPay1ShFHAU1y9YGpKnu4I3ZbNwG+e1HVvu
-EMeZw75DFS3GepCMrBdu2oa82h37UZYgfHAiAfyNo1/JhnQCC1Xo3Uzd5wcdGuDU
-2uubgwuaLpkbNbTpV40U572muw6GUH8cDSn5IoPeLr9/tQq/2CW8fvoW3lv9JALQ
-1T2JXHQBwEUnnfjMCF4jiiYiJV5lrtO3GRQVJzol8Yvi51EuBfYNR8FDL0rnyA8t
-CY1Jti+E7uEf2MOW4eFa/Pw0zH0zxXK1OZWh/6HDijhFZ+uBi6DcY7PlLW08jj7j
-VjgOM6j4SBQ33d78S/QUMVYurONpuAnXXdEJMN55WN+c+sU9PpKQq+MrKZhdNDcd
-a37aCx37UnmfULszilU9la4LuMXKI0A0kuNru5fdw6qcDigxBiK0XXEu12F+fwaK
-Z02PV4f1nWlCy4lB+ksrGwvUdgFdyKp3otFcfS9UBEVkYm7kTv2wm9ieN7GaCBGk
-/kkOneRJcpbeQNKxdJglDjhhHWr3WHLfkM0s3jUOWSswBer3hhtkJPlG3+3mYwfb
-VCuPZuffzaLPOHGGpNk2xtRXQBbwO9Wc4TtrwWsoWsbvY3kogS8=
-=LPd7
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmXXAq4ACgkQVbJhu7ck
+PpReFg//fAivtJGaVbRs+QZGT8xeawZHs5ZNw+01r9bHcHJ/OFarafXWv9lhYHj9
+b5mjOk5tZjgwJtHpUgBEVF53OHuFf3p61qBN0/YNEhxuDy0OxeGtOQNjBK+xyB57
+JE09ohsZIfEEC80lelgFOdeZwp7Zpp6As1VB4mgUiYRjnFqdzhEBDl13NNZC91vp
+01EZvg/8uAL04r7YSq4lGNmv9av96uhhjIzURSQnKHMW11bxn85A+myEdXMaQfgo
+7OnsKxEKKdc4dfzNGHdcKJR6kYDq6DQoCtBG8Fm4fhbqkwjD6h0m3kSORHZlsWGv
+EhttIEbvyvo1GLbyquTaExj/9jLwi1QBOWOWhJ3OdIF6KiOgW4ZXehAJdBkLHW9l
+EeLp6e/ClA5nC/lb9oTpIyv/UTXS7LQZONyVKcOVtJGZhcBmmSu5xe6mLZ5Lk0aE
+zMVYyEzWdzRlCvAXc6DZ/ta0XjuCWlCyCgcoESH9+6VLZ3fjmntjy3NMAJKWhofI
+LMCu8vIgSDLnkHlMRB7P9Kr+bwa/t8ZmPvoe7mpQoV+DEcgQZysfSIZ9L5oMCq+N
+0EclOVWWDyS8GTCd7x+oCDeW7yc/v1PPSPuoLCLK+youiqQIQNj4DsuTSHutXMH9
+uq39rEeGi8sdhtnXNKpJzuZ3OrI9IYva/mjQ27Kpm3C1qReA9co=
+=mSX7
 -----END PGP SIGNATURE-----
 
---mBqnNu50PC3NupJV--
+--1BU8nWs1e7yqnTgs--
