@@ -1,149 +1,109 @@
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oi1-f178.google.com (mail-oi1-f178.google.com [209.85.167.178])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7233480C
-	for <git@vger.kernel.org>; Thu, 22 Feb 2024 01:43:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99D0D10A05
+	for <git@vger.kernel.org>; Thu, 22 Feb 2024 03:04:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708566197; cv=none; b=SDQmLvc+XIbJk1W3Fl1xd81JNbCE+EBInkL+yNFsjhFK90J18/zObXiVdCp6l28uGLFFKYfNogxNFYeJFEj8lwrKSV5WnZcKGukR7Lm+66nC2xwgJoolfnnfQOV13dBZAGbG5bUqYRx/UFHZXqG3lNSjKlwYLFsEdiXkEzpFm2Q=
+	t=1708571082; cv=none; b=upti79n0heGNuCdYiDuHXca25H6shi1R7eAQyAynPZJBeLVPyvvUVLBxZEecmuxe8UwoHVx3xM1WI78xlpf2GWzw/RU5ewTFivrstx7jls6wKEHOA+7Kn9sN+UtLEsLCEQLvz5njVad4n2rSuORCxjr8ECHhHRF9k1UcEYMIFHs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708566197; c=relaxed/simple;
-	bh=MBRfogY4BRUwgkKhABV9PSxZHnVMh935SDs1HYuMT00=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=JIFW2PRyH4ChPwBx8sVl14ru3gQIb1T7H3aSw72r3SSl+kc2ojmvUEad2kMMa8/4KHCvRCQKANuINKUdydUl5UaSa5xhrGXrFSD1ChuBdqiml/C95+FRqVAw7ODremK2I2fsemSdBcoNyN5a2rXTSsjT3MihOYR6Jvfz3TeOOaY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=AhpkG6t7; arc=none smtp.client-ip=173.228.157.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1708571082; c=relaxed/simple;
+	bh=ZL9rGrmLbMSnk+9Vms+aPa0uLaTXn7mKfNsmF+015zg=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=sNiKhG1L3LMOPrJHQLZnBWgut5fTKN7r8m08F/uPSBJ0WqD81ph7pX2QVsnSFg/RPZB1tc38pQqJQ6xL70Ocjos6LfaodIY8lZbiPVA8qgKSCRtfpy0J0PEtk8ZmpaS2F9ScaS0bAV9nXzGQJ0eDTmJD2ZaXx7aOQfD3vdlmmRE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=eAX7FE7l; arc=none smtp.client-ip=209.85.167.178
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="AhpkG6t7"
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id 3CEBC348E3;
-	Wed, 21 Feb 2024 20:43:10 -0500 (EST)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=MBRfogY4BRUw
-	gkKhABV9PSxZHnVMh935SDs1HYuMT00=; b=AhpkG6t75Q8Edv5P3Je8Ze+AJhvv
-	sVUqjWYlc/4+IvlYnEjJQFRFGjU8fvH62bu3ghUT1/jfNtwQ8gDqjYohmQFTKP2c
-	6wnGOQ/IizKuEFJYxmxHL/NYukbyaHIsIvbJ/nlG33LifV4YDAJ6yIYmHvwr6dPp
-	VeM7eq6/fIRXNhU=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id 35984348E2;
-	Wed, 21 Feb 2024 20:43:10 -0500 (EST)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.176.30])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id D09C6348E1;
-	Wed, 21 Feb 2024 20:43:06 -0500 (EST)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: =?utf-8?Q?Jean-No=C3=ABl?= AVILA <jn.avila@free.fr>
-Cc: Michal =?utf-8?Q?Such=C3=A1nek?= <msuchanek@suse.de>,  Harmen Stoppels
- via GitGitGadget
- <gitgitgadget@gmail.com>,  git@vger.kernel.org,  Harmen Stoppels
- <me@harmenstoppels.nl>
-Subject: Re: [PATCH] rebase: make warning less passive aggressive
-In-Reply-To: <xmqq4je1mo5p.fsf@gitster.g> (Junio C. Hamano's message of "Wed,
-	21 Feb 2024 14:46:10 -0800")
-References: <pull.1669.git.1708442603395.gitgitgadget@gmail.com>
-	<xmqqjzmxofvn.fsf@gitster.g> <20240221183018.GB9696@kitsune.suse.cz>
-	<2324063.ElGaqSPkdT@cayenne> <xmqq4je1mo5p.fsf@gitster.g>
-Date: Wed, 21 Feb 2024 17:43:05 -0800
-Message-ID: <xmqqr0h5i89i.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="eAX7FE7l"
+Received: by mail-oi1-f178.google.com with SMTP id 5614622812f47-3c132695f1bso5600752b6e.2
+        for <git@vger.kernel.org>; Wed, 21 Feb 2024 19:04:40 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1708571079; x=1709175879; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=XW6fDGRb+l2fiv0a57IRA2qKEcdy5V5Ksd97jT2HHV0=;
+        b=eAX7FE7l4UCEdhfA9XInva4dXvXThmjzxhuUv8N7+/bZ2aNWZnh/mcztIWGpg+0J4a
+         sA41ZgTvXCH4l8yHMwVIGVkZ8Y08vnUOfk5S4L+6GWlUt+Imc87iK6a2Af8TMdEtRk91
+         /D9DQxTWk/AEay8UIMkFeOLmbBVfS9odD8JEj3+lExVyuXE3czkVhcy9RVfbqDmJk+nw
+         CVnyT1oqnaW2wpxuiMk+ovKaJ4xP4oXM7dOZIvWh3evmmPhDBV4b2YTYBq1YhXftK8ZD
+         UvCwhc/Dmie1kMMGBVhxbKvoTRp26d5ZR/9g+ixQFI1rq4oFAfd4kCEDZh2feVnzTmXY
+         /ETw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1708571079; x=1709175879;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=XW6fDGRb+l2fiv0a57IRA2qKEcdy5V5Ksd97jT2HHV0=;
+        b=RDL0NpSSd9v2748JRv+0op7F2d2DuthIK/44bM8/4j4CQNsw5ErpH7gNkyU+MRzfVd
+         QRqF8NfNfxbUgJuhY2rr6+5ND4rPom0cFg9uMml7C9hUUf3M1bPGtiXOIBcR0QQglvPR
+         oAdwZi/s/muVbHoMiJJ7ErJDEV7glQHe1CJqLpsRDODUVrkd8HHMD9xyBxnFXMsCbx9s
+         2PkL3c597h/tLze0iNAKUjPSKn/zxBktKYQzxj/Gk/ibRoKn48yASOu/UfW/tLowKz/e
+         jxXjXTgrW9UwZ3mkk6B7MJ00E1UedjpQACrdfMtQf7SjX2WBjdpFhRQFIOojDPbkmUHm
+         hIVA==
+X-Gm-Message-State: AOJu0Yz7UtgZ05snjRbRbwhz0/Gzn4+ZHjZOMtQeTGhv63v++4vbx78k
+	XinbHuzwupOkYO9uXjcXl61WSGNNVKZ3dwLOy9yi8icno4OxbsAo
+X-Google-Smtp-Source: AGHT+IHoedaQRCnrayhBUbkgQT2mMuWVB7qQSY8vI3tn+Or32/7kRAcmTiodxjr/RsS+OKe6F1hGSg==
+X-Received: by 2002:a05:6358:722:b0:17b:6e2c:524a with SMTP id e34-20020a056358072200b0017b6e2c524amr477422rwj.27.1708571079562;
+        Wed, 21 Feb 2024 19:04:39 -0800 (PST)
+Received: from [192.168.1.205] (216-71-219-11.dyn.novuscom.net. [216.71.219.11])
+        by smtp.gmail.com with ESMTPSA id b14-20020a170902650e00b001db2ff16acasm9109936plk.128.2024.02.21.19.04.38
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 21 Feb 2024 19:04:39 -0800 (PST)
+Message-ID: <5a857e76-659d-4d94-ae54-f5c22c9917c6@gmail.com>
+Date: Wed, 21 Feb 2024 19:04:38 -0800
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID:
- B9F0FCA0-D123-11EE-B427-A19503B9AAD1-77302942!pb-smtp21.pobox.com
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] Add unix domain socket support to HTTP transport.
+Content-Language: en-US
+To: Eric Wong <e@80x24.org>,
+ Leslie Cheng via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, Leslie Cheng <leslie@lc.fyi>
+References: <pull.1681.git.git.1708506863243.gitgitgadget@gmail.com>
+ <20240221220945.M686016@dcvr>
+From: Leslie Cheng <leslie.cheng5@gmail.com>
+In-Reply-To: <20240221220945.M686016@dcvr>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Junio C Hamano <gitster@pobox.com> writes:
+> No need for trailing `.' in commit message titles
 
-> Jean-No=C3=ABl AVILA <jn.avila@free.fr> writes:
->
->> As a translator, I'm less bothered by editing a sentence to remove a q=
-uestion=20
->> mark (maybe enforcing a language style and reformulating the sentence =
-by the=20
->> way), than by translating again and again similar sentences.
->
-> Sure, but if the original in C locale used to be "FOO BAR?" and you
-> translated it to "foo bar?" in your language, and then a patch
-> updates the string in the source to "FOO BAR", doesn't msgmerge
-> notice that the original as a "fuzzy" matching and offer you
-> something like
->
->     #, fuzzy
->     msgid "FOO BAR"
->     msgstr "foo bar?"
->
-> so that all you have to do is to remove '?' anyway?  So I do not
-> think you'd need to translate the "FOO BAR" part again and again.
->
-> But the above assumes that for your language, the ONLY thing to turn
-> such a rhetorical "passive aggressive" question into grammatically
-> correct statement of a fact is to remove the question mark.  It may
-> not be universally true for all languages, and for some language,
-> even after msgmerge did its job correctly, you may need to do more
-> than just removing the question mark to adjust the remaining "foo
-> bar" part.
+Will fix in the next patch, sorry!
 
-Hopefully the last message on this topic from me.  I just tried this:
 
- * apply v2 of "No rebase in progress?" -> "no rebase in progress"
-   patch from Harmen.  This only changed _("") string, without
-   touching any po/* files.
+> Personally, I'd hoist the #ifdef part into a standalone function
+> since I find mixing CPP and C conditionals confusing.
+> 
+> disclaimer: I'm an easily confused person and don't usually
+> program in C, though.
 
- * follow po/README.md and pretend as if I were a po/es.po team
-   member, which involved running the command:
+I considered extracting it out, but the other conditionals in this 
+function follow a similar pattern so I didn't want to change it. 
+However, my use here is also the first time there's both an #ifdef and 
+nested #ifndef, which I agree makes it a bit confusing to grok.
 
-	$ make po-update PO_FILE=3Dpo/es.po
+I'm open to changing it, but I'll let it sit and marinate for a bit.
 
- * view the resulting po/es.po, which will be the starting point of
-   a new translation.
 
-        $ git diff po/es.po
+> `nc' isn't widely installed, its supported flags vary between
+> implementations, and our test suite doesn't currently use it.
+> I suggest either using a small bit of Perl or writing a t/helper
+> program to do its job.
+> 
+> Finally, hard tabs should be used for indentation throughout.
+> 
+> I'll wait on others to comment since I haven't looked at git
+> hacking in a while.
+> 
+> Anyways, I think this feature could be useful for me, too :>
+> Thanks.
 
-The last one showed me this snippet:
-
-    -msgid "No rebase in progress?"
-    +#: builtin/rebase.c:1257
-    +#, fuzzy
-    +msgid "no rebase in progress"
-     msgstr "=C2=BFNo hay rebase en progreso?"
-
-The "#, fuzzy" thing is a signal that an old msgid has been updated
-and corresponding msgstr may need to be updated.
-
-The primary problem I had with Harmen's v1 was that it touched po/
-file in the first place (which was corrected in v2), but the updates
-to po files it did looked like so:
-
-    -msgid "No rebase in progress?"
-    +msgid "No rebase in progress"
-     msgstr "=C2=BFNo hay rebase en progreso?"
-
-Notice the lack of "#, fuzzy" marking?  If v1 were accepted with
-these changes, then the "po-update" step I showed earlier would have
-produced something like this instead:
-
-    +#: builtin/rebase.c:1257
-     msgid "no rebase in progress"
-     msgstr "=C2=BFNo hay rebase en progreso?"
-
-As msgid alone was updated already, the "po-update" step has no idea
-that the translated msgstr is out of date.  We do not get the
-helpful "#, fuzzy" comment to tell the translator which msgstr is
-out of date and needs attention.
-
-So it is another reason why we want the developers to concentrate
-only on writing good C-locale messages inside _("") and N_(""),
-without touching po/ directory at all.  It would avoid making
-changes that can confuse toolchain l10n people rely on (like the
-presence of "fuzzy" comments).
+Good catch, I'll fix in the next patch. I've subbed `nc` out for a 
+simple Perl script to pipe back and forth, just making sure CI is happy 
+about this before submitting.
