@@ -1,63 +1,64 @@
 Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8A6310A3B
-	for <git@vger.kernel.org>; Fri, 23 Feb 2024 03:18:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F896111B6
+	for <git@vger.kernel.org>; Fri, 23 Feb 2024 03:18:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708658313; cv=none; b=YEbQuajNyAp8sFuzB0cKUdKO9HKew9/dDLqXVZpyYr4aNUgklpSNNp16n7KwfoDludwoRPdhnnMf8b/zBKbS4Hxf5akCNKcYO02n5HmFbj+I9jr88dUHA4c7JNWn5K3Bb0wtj+WS8nU9B9HWWY3AzhqwOGWbgxivrRGVIflyrJc=
+	t=1708658314; cv=none; b=NM4lqHkUkwmDwziW0HkVBkG30qhqIKmFpmc6iHTGrZteOesgR0ywUK107lM7vO2DLuDn60nMEv8JMGmPLLuaU97Zq7unVAzofF9BvwKAU60sJRxNxlrQge9RfwXT5/3TU7yAzxqO0nNFjhPOO07qr5bx3u535nK+dNkRJVotwHM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708658313; c=relaxed/simple;
-	bh=DnjbJn5SgHmuTQJljNZYrS5EkVANHvKGjY/CNPBUE9A=;
+	s=arc-20240116; t=1708658314; c=relaxed/simple;
+	bh=sUlvd8QxFgxP6Yjnn7Jtk/vpZchrcbfCg8YI4jN7Yk0=;
 	h=Message-ID:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=DIfmH5Uj90j8811cnXys/1dIUqAPErA+T5dhArAJal2zxmgdTWx5evv1uqPo/7A/FnRzHXed4I5/qqJ+rbgfaSQSTjMJzl9Gx1/NXe/ZWmsuP0O7ziiVU5TKdr+MRhOhCXe7rdIQkxzAS+oMSU4wuP0ae/FzYcoImViOHEiP+es=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=kc0UiMAN; arc=none smtp.client-ip=209.85.128.42
+	 MIME-Version:To:Cc; b=rGUI+cEcSR6scl917J0+S2u/K8zgZ3msnMEG8nj0ZmRrxmS/h9UoSe0qhS94P2lQS2swUQ95ZTfrlzfuy6qLoqu5jghPHIuFI2mGc2uYCAA4JuJKFqM66lCOZBgRU7YXRw1SC1bhgDoV/ZoOvKOsMLgImkN+LiIDkwcrVk1i2Mg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=llnCwke2; arc=none smtp.client-ip=209.85.128.42
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kc0UiMAN"
-Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-412748b183aso3021625e9.1
-        for <git@vger.kernel.org>; Thu, 22 Feb 2024 19:18:31 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="llnCwke2"
+Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-412949fd224so229185e9.1
+        for <git@vger.kernel.org>; Thu, 22 Feb 2024 19:18:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1708658309; x=1709263109; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1708658311; x=1709263111; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=fi0NPEODrtkk3ddoQg9K0JweYxe+PjhAUviQ4zCBQzw=;
-        b=kc0UiMANtPDcCqRSQaR5Xl++vblhOIVyYJhv7TKptycqOAU0/QGqn2vVwTlK4oCizt
-         k+omUdUPMknOUYw26+30w4wzj5zFPdlLf94UJCjWvWd27VdNiegipk4wwFZRqsvxwyJW
-         5NUUrkdw8Ri/thL8fGW9TPbjMHOxIXfIYDLJVGGAJIoBMFUsadubzVAuD0qgybBbSBPV
-         GGQ+5dqKJRdFNjxOthgrszFLXuaXvD6cezg4YJA3lrJ+q/9lfMoqQcSwfrXn+J927RU8
-         RU/ZjdM/A28XEiX+ByamMZv/0nwgMKnaYjkuAAgrT7pqKWomSJq1Pk5vYmBkla3z/Jrq
-         Xh3Q==
+        bh=G4Jcgvy7Olro7z6RpSrzXJuYbzSeAvtk6dx39T9KAYI=;
+        b=llnCwke2wkmemHoPWYbwruv29jMNckyt0I7PS9yFm+JxT1twgllFRapMBh4V+KmhWB
+         XRBwXp8LlTD0uH2p+oR1hWmNnXAso2kjQTvFVs5m8zYIJdY8i7HYFTnGFoDXpXc/4lf/
+         iy41EHjOYMVcu5zMMNtmuOpj+9Y4VAseP8ZZG/gCxvwOtAa9encGOTyr5azWuXKsbdEI
+         Mvx96Z1MeKTp6gm0t1HAN8GNGFndEbud8q8RFoJoaqPl362yaNiG3FcOblzXcqw6vob6
+         qlxuEe9XGgTvawY4MiaLdioizIyWTpEfmyf/YzSum+2QKbUP9Zk6LOgkohMXAJSc3Wxa
+         JQlg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1708658309; x=1709263109;
+        d=1e100.net; s=20230601; t=1708658311; x=1709263111;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=fi0NPEODrtkk3ddoQg9K0JweYxe+PjhAUviQ4zCBQzw=;
-        b=oK/rdVN0lKLUbpGbdswwpo8E26yHN++nqlEMOFzwRn8b5UoeQa3QuABSNe0OkiYTqi
-         nJssHlCAMls0c6K/gZQ8D1pFTuS2k1N5F0dOz8nskOSZVrcO1fHqMUs33hfkVUyqDOGJ
-         Qmiv5UYhFuP1iOG1l2UmT0YXeUoyfKbte00wWXeDQT+VHOi3BReCu3KkG8HeY6vBxOWk
-         pw7OwEiAko+coRlqhZcMO8B/Hkk5VdDUsLUgd3PAsQbK4x2AQfpuF8FR3g5O4S5GFo1t
-         1C2p77aV7yZ2Ccyri98CUV5TQMDvaaOtHVhLETn2ZzA5EFGnQ/DaSKKO+h9Rc9o0rGUF
-         r2lg==
-X-Gm-Message-State: AOJu0YzyRBADRRGtBcFqFyDjAcGC23Qc/l81XtGMsrtwM5AVo28pEYBx
-	9qldn4lq9X7o+WZCwjQK0Yd+dTR6emT+Bl9dGY49XHrnyC0C9XPC0+2hsQ+T
-X-Google-Smtp-Source: AGHT+IGTyZ4HiSeB3R6qFn63LRoQ+93By3e4jdF9F4d9wcEmkuw8aA8nD64B1l2y/VlCE/sa9Q5n+w==
-X-Received: by 2002:a05:600c:190e:b0:412:5e41:6f35 with SMTP id j14-20020a05600c190e00b004125e416f35mr264729wmq.10.1708658309677;
-        Thu, 22 Feb 2024 19:18:29 -0800 (PST)
+        bh=G4Jcgvy7Olro7z6RpSrzXJuYbzSeAvtk6dx39T9KAYI=;
+        b=FNMVyHmkPyztwzKBMLsMIWvkMQg1M8mq9zE34DxxBP3aH1IYBey62XfpAWAAADC1gq
+         MfZG63isheQ5yBtnGEKYUFG1mBly23HqMzFzMd/myQ8W6B2XnHdq3vhzI3SaIe9wPMbd
+         U9HZ+zs2wIICdgPL/OF2jp6vnHTaTOhStG2bPg+mm3lylVc+sHJ/a9Efoyc92JgtPQqf
+         66hbtT/DjqvLQSBKmeEQM6dBLI5mhcvJNuEEXlGnRXePzDMA3kSxHAeYH+XFfp+/vcOZ
+         yK+aHz6miNDlQm3M0KL5xeIa3b/46G+HrmvJRT6vZXs60mQKm1zuInQOQ3Csmp8H1oA2
+         WNWw==
+X-Gm-Message-State: AOJu0YwUFtHl4sFt8I8h8dcCqqIlyyyLMnBRKgkQzSTrkt1zbo/+k3so
+	dA+3HkQPjIzhxdDNS52giH9gmglBc0qAe/JIS67xRUMIIfd7ncN3GUBInQTE
+X-Google-Smtp-Source: AGHT+IFZcBhxLw7rsmaefai+b33hye6wnP3BxeQ4aplJqvFfYc9tmcABIxdzIEhWI5gom2Pl3SGkUQ==
+X-Received: by 2002:a05:600c:46c9:b0:412:8cc3:bf67 with SMTP id q9-20020a05600c46c900b004128cc3bf67mr2888024wmo.8.1708658310849;
+        Thu, 22 Feb 2024 19:18:30 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 26-20020a05600c029a00b004128e903b2csm571359wmk.39.2024.02.22.19.18.29
+        by smtp.gmail.com with ESMTPSA id h16-20020a05600c351000b0041294d015fbsm184377wmq.40.2024.02.22.19.18.29
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 22 Feb 2024 19:18:29 -0800 (PST)
-Message-ID: <f2d6765d84ff93a729359e7dcfaddd878f9458e2.1708658300.git.gitgitgadget@gmail.com>
+        Thu, 22 Feb 2024 19:18:30 -0800 (PST)
+Message-ID: <af6f57ab3e6d61036cd969f5fd9256200313aaa9.1708658300.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1662.v2.git.1708658300.gitgitgadget@gmail.com>
 References: <pull.1662.git.1707857541.gitgitgadget@gmail.com>
 	<pull.1662.v2.git.1708658300.gitgitgadget@gmail.com>
 From: "Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Fri, 23 Feb 2024 03:18:12 +0000
-Subject: [PATCH v2 08/16] fsmonitor: refactor untracked-cache invalidation
+Date: Fri, 23 Feb 2024 03:18:13 +0000
+Subject: [PATCH v2 09/16] fsmonitor: move untracked invalidation into helper
+ functions
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -75,50 +76,67 @@ Cc: Patrick Steinhardt <ps@pks.im>,
 
 From: Jeff Hostetler <jeffhostetler@github.com>
 
-Update fsmonitor_refresh_callback() to use the new
-untracked_cache_invalidate_trimmed_path() to invalidate
-the cache using the observed pathname without needing to
-modify the caller's buffer.
+Move the call to invalidate the untracked cache for the FSEvent
+pathname into the two helper functions.
 
-Previously, we modified the caller's buffer when the observed pathname
-contained a trailing slash (and did not restore it).  This wasn't a
-problem for the single use-case caller, but felt dirty nontheless.  In
-a later commit we will want to invalidate case-corrected versions of
-the pathname (using possibly borrowed pathnames from the name-hash or
-dir-name-hash) and we may not want to keep the tradition of altering
-the passed-in pathname.
+In a later commit in this series, we will call these helpers
+from other contexts and it safer to include the UC invalidation
+in the helper than to remember to also add it to each helper
+call-site.
 
 Signed-off-by: Jeff Hostetler <jeffhostetler@github.com>
 ---
- fsmonitor.c | 11 +++--------
- 1 file changed, 3 insertions(+), 8 deletions(-)
+ fsmonitor.c | 26 +++++++++++++++++++-------
+ 1 file changed, 19 insertions(+), 7 deletions(-)
 
 diff --git a/fsmonitor.c b/fsmonitor.c
-index 364198d258f..2787f7ca5d1 100644
+index 2787f7ca5d1..2f58ee2fe5a 100644
 --- a/fsmonitor.c
 +++ b/fsmonitor.c
-@@ -271,21 +271,16 @@ static void fsmonitor_refresh_callback(struct index_state *istate, char *name)
+@@ -188,6 +188,16 @@ static void handle_path_without_trailing_slash(
+ {
+ 	int i;
  
- 	if (name[len - 1] == '/') {
- 		handle_path_with_trailing_slash(istate, name, pos);
--
--		/*
--		 * We need to remove the traling "/" from the path
--		 * for the untracked cache.
--		 */
--		name[len - 1] = '\0';
++	/*
++	 * Mark the untracked cache dirty for this path (regardless of
++	 * whether or not we find an exact match for it in the index).
++	 * Since the path is unqualified (no trailing slash hint in the
++	 * FSEvent), it may refer to a file or directory. So we should
++	 * not assume one or the other and should always let the untracked
++	 * cache decide what needs to invalidated.
++	 */
++	untracked_cache_invalidate_trimmed_path(istate, name, 0);
++
+ 	if (pos >= 0) {
+ 		/*
+ 		 * We have an exact match for this path and can just
+@@ -249,6 +259,15 @@ static void handle_path_with_trailing_slash(
+ {
+ 	int i;
+ 
++	/*
++	 * Mark the untracked cache dirty for this directory path
++	 * (regardless of whether or not we find an exact match for it
++	 * in the index or find it to be proper prefix of one or more
++	 * files in the index), since the FSEvent is hinting that
++	 * there may be changes on or within the directory.
++	 */
++	untracked_cache_invalidate_trimmed_path(istate, name, 0);
++
+ 	if (pos < 0)
+ 		pos = -pos - 1;
+ 
+@@ -274,13 +293,6 @@ static void fsmonitor_refresh_callback(struct index_state *istate, char *name)
  	} else {
  		handle_path_without_trailing_slash(istate, name, pos);
  	}
- 
- 	/*
- 	 * Mark the untracked cache dirty even if it wasn't found in the index
--	 * as it could be a new untracked file.
-+	 * as it could be a new untracked file.  (Let the untracked cache
-+	 * layer silently deal with any trailing slash.)
- 	 */
--	untracked_cache_invalidate_path(istate, name, 0);
-+	untracked_cache_invalidate_trimmed_path(istate, name, 0);
+-
+-	/*
+-	 * Mark the untracked cache dirty even if it wasn't found in the index
+-	 * as it could be a new untracked file.  (Let the untracked cache
+-	 * layer silently deal with any trailing slash.)
+-	 */
+-	untracked_cache_invalidate_trimmed_path(istate, name, 0);
  }
  
  /*
