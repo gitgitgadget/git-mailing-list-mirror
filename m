@@ -1,96 +1,79 @@
-Received: from dd36226.kasserver.com (dd36226.kasserver.com [85.13.153.21])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD10885C7C
-	for <git@vger.kernel.org>; Fri, 23 Feb 2024 21:09:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=85.13.153.21
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35B521F600
+	for <git@vger.kernel.org>; Fri, 23 Feb 2024 22:15:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708722565; cv=none; b=YCP/Sb36SiVUp7WhxYVxC8qWvHjYh6KKB+EKVtRMAZr8SpSqyKlrjKJo2yBw4GhpQjP9RaaEFJ276P6TR14PzMExlEpww2Lpp0Uyhgowb5cEW9RZROuhl+ZKFOP0it0j0Pk7yHK9tXw8IYuRUxYfqExZiY1e5XJ9Ytkxlr2q4Fw=
+	t=1708726520; cv=none; b=rHOSbQDSL1j8mKbLdNGNTBCA8T+cUhdeRNLQ37HwjL9uqP8k2D8scBAod0TrehWZIgSeZ0JDeBrC5HV7uw7r/v8T4X/rJ3XIURa4f8JZsi/MCZaJYprf4ZuXCwBWXtMtz6HY5bKI/UET/SVObsYCTwFOEJzniBhDXrfimBVV27Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708722565; c=relaxed/simple;
-	bh=zYTNVeXBmVVtGfYGBRZRv4tFlvnA0LzqDjlYpAHxXtA=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=JWEdR15BMQ/4mtMMR7vpJts6qafOzAKOJ/o1orBKJhD9eiaV16h6R37lm97Ftd04zNnP9AF97oX9hHCcL8blFZW+EgT3E5UOJ+I2w5Bj8ASoWVlz+uy725AKI3i4zrrRt7AsK80aOAM6qOh5DFNts5US4aBTH95IOcYzIaQ9QtI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=haller-berlin.de; spf=pass smtp.mailfrom=haller-berlin.de; dkim=pass (2048-bit key) header.d=haller-berlin.de header.i=@haller-berlin.de header.b=OfU12MBb; arc=none smtp.client-ip=85.13.153.21
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=haller-berlin.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=haller-berlin.de
+	s=arc-20240116; t=1708726520; c=relaxed/simple;
+	bh=uFo0kSZ+gFExMfrqjFv1FD7kCl3uFetrI9DJOjKSpXc=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=HnfIvobkDCK1bQ5yFdEsG0Y2Oc8BMPWwT+EV78CDEDqpIbi32iX73onlfTC1lXpkIDB/dcTBfgehnd82Kx0sk0HlDxBjNCShzTqDMnPX9CI/KOrV84quG6oJDu1YjJRm/Pv3uz7mNZIzLAcr1f+GGz/K+D14Lh6z+cEBfTsm1ak=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=o5xf57wU; arc=none smtp.client-ip=64.147.108.70
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=haller-berlin.de header.i=@haller-berlin.de header.b="OfU12MBb"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=haller-berlin.de;
-	s=kas202402191026; t=1708721969;
-	bh=O8cS/Tox+KZCFlrR2rZXV2AG+QB1c7ZvgKE5+8MOPE4=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=OfU12MBbjrNtZ6eS2snEvnvKBqdbQfjgoLJSP3w86qXyczRbwgxBIPITqtm1wo+1w
-	 7D+fDOQko2R3k251ZqH6lDqq9fBnSxAFAmK9pxanId2ykUFuJZpQNCpY0yKG0aAtxa
-	 kfoqjnqUdmrhgehQit07ARvbtBH0F5LwD8scy4GXVsCdQK4BpRTeeoKjjRpEGf97Fu
-	 padG7afdmhj9skVOOs9kh2oeyxEz821kyOA2D5fBIIbTlnEmNHDITmjKnAJ9GV2ikb
-	 i4Chb0ke8oX82DMAtnP2wVlJRRnwCF+sOkrfBuNeuuEnOc7QBswoK4TNLqe6PrsjlR
-	 PqhZ+jV6kyP9g==
-Received: from [192.168.42.22] (162-99-142-46.pool.kielnet.net [46.142.99.162])
-	by dd36226.kasserver.com (Postfix) with ESMTPSA id 2C3223C0324;
-	Fri, 23 Feb 2024 21:59:29 +0100 (CET)
-Message-ID: <2739325d-93b1-445c-aac9-3e0ec54a27e4@haller-berlin.de>
-Date: Fri, 23 Feb 2024 21:59:28 +0100
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="o5xf57wU"
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id E77A91E1AAB;
+	Fri, 23 Feb 2024 17:15:17 -0500 (EST)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=uFo0kSZ+gFExMfrqjFv1FD7kCl3uFetrI9DJOj
+	KSpXc=; b=o5xf57wUkuDQboYuPd3kNi/zIXRVGYFpJP+cwMV75xO8YMtKiXGxVd
+	md1nAOorKvDydN7WxpL2m6qtmmJwOndZaGOvUwOVb1RYbozyJPMYLdMXeVA7Yq1M
+	bWS6XSIX8S2m7u5rFtCun4CC2fTS629AkDAFjVDgXJExH0NTV+fXU=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id DF7761E1AAA;
+	Fri, 23 Feb 2024 17:15:17 -0500 (EST)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.176.30])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 4D1BA1E1AA9;
+	Fri, 23 Feb 2024 17:15:17 -0500 (EST)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Taylor Blau <me@ttaylorr.com>
+Cc: git@vger.kernel.org,  Jeff King <peff@peff.net>
+Subject: Re: [PATCH] Documentation/config/pack.txt: fix broken AsciiDoc
+In-Reply-To: <72bb58e5f3b8a5a622394c5ff40426156e122580.1708720255.git.me@ttaylorr.com>
+	(Taylor Blau's message of "Fri, 23 Feb 2024 15:30:58 -0500")
+References: <72bb58e5f3b8a5a622394c5ff40426156e122580.1708720255.git.me@ttaylorr.com>
+Date: Fri, 23 Feb 2024 14:15:16 -0800
+Message-ID: <xmqqr0h2su8b.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: Interactive rebase: using "pick" for merge commits
-Content-Language: de-DE, en-US
-To: phillip.wood@dunelm.org.uk, Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org
-References: <424f2e08-a2ad-4bb2-8a6b-136c426dc127@haller-berlin.de>
- <ad561600-faf6-4d3c-80b2-34b3d1a1b99e@gmail.com>
- <65c65f6b-5ec8-4fa0-a17c-0f2c0d32b390@haller-berlin.de>
- <ZcnFl8kypKRYeLo3@tanuki> <040f142c-7ee2-429e-88eb-d328b01a4b8c@gmail.com>
-From: Stefan Haller <lists@haller-berlin.de>
-In-Reply-To: <040f142c-7ee2-429e-88eb-d328b01a4b8c@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spamd-Bar: /
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 0657EBFA-D299-11EE-80C8-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
 
-On 12.02.24 15:38, Phillip Wood wrote:
-> Hi Patrick and Stefan
-> 
-> On 12/02/2024 07:15, Patrick Steinhardt wrote:
->> On Sat, Feb 10, 2024 at 10:23:16AM +0100, Stefan Haller wrote:
->>> On 09.02.24 17:24, Phillip Wood wrote:
->>> Yes, I'm familiar with all this, but that's not what I mean. I don't
->>> want to maintain the topology here, and I'm also not suggesting that git
->>> itself generates such "pick" entries with -mX arguments (maybe I wasn't
->>> clear on that). What I want to do is to add such entries myself, as a
->>> user, resulting in the equivalent of doing a "break" at that point in
->>> the rebase and doing a "git cherry-pick -mX <hash-of-merge-commit>"
->>> manually.
->>
->> It would be neat indeed if this could be specified in the instruction
->> sheet. We already support options for the "merge" instruction, so
->> extending "pick" to support options isn't that far-fetched. Then it
->> would become possible to say "pick -m1 fa1afe1".
-> 
-> It would certainly be possible to extend the sequencer to do that but
-> I'm not familiar with why people use "git cherry-pick -m" [1] so I'm
-> wondering what this would be used for. It would involve a bit of extra
-> complexity so I think we'd want a compelling reason as to why
-> cherry-picking merges without maintaining the topology is useful
-> especially as one can currently do that via "exec git cherry-pick -m ..."
+Taylor Blau <me@ttaylorr.com> writes:
 
-Ok, I suppose the answer will probably not count as a compelling reason.
-My reason for wanting this is that lazygit currently implements
-cherry-picking in terms of an interactive rebase, rather then calling
-git-cherry-pick. And the reason why it does this is that when you
-cherry-pick multiple commits, and one of them conflicts, then you get
-lazygit's nice visualization of the rebase todo list to show you where
-in the sequence you are, what the conflicting commit is, how many are
-left etc. It just happens to support this well for
-.git/rebase-merge/git-rebase-todo, but not for .git/sequencer/todo.
+> diff --git a/Documentation/config/pack.txt b/Documentation/config/pack.txt
+> index 9c630863e6..da527377fa 100644
+> --- a/Documentation/config/pack.txt
+> +++ b/Documentation/config/pack.txt
+> @@ -34,11 +34,10 @@ pack.allowPackReuse::
+>  	reachability bitmap is available, pack-objects will try to send
+>  	parts of all packs in the MIDX.
+>  +
+> -	If only a single pack bitmap is available, and
+> -	`pack.allowPackReuse` is set to "multi", reuse parts of just the
+> -	bitmapped packfile. This can reduce memory and CPU usage to
+> -	serve fetches, but might result in sending a slightly larger
+> -	pack. Defaults to true.
+> +If only a single pack bitmap is available, and `pack.allowPackReuse`
+> +is set to "multi", reuse parts of just the bitmapped packfile. This
+> +can reduce memory and CPU usage to serve fetches, but might result in
+> +sending a slightly larger pack. Defaults to true.
 
-It probably makes more sense to teach lazygit to visualize the
-.git/sequencer/todo file, and then use git cherry-pick.
-
-See https://github.com/jesseduffield/lazygit/issues/3317
-
--Stefan
+Thanks.
