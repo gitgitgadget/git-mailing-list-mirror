@@ -1,55 +1,55 @@
-Received: from mail-yb1-f201.google.com (mail-yb1-f201.google.com [209.85.219.201])
+Received: from mail-yw1-f201.google.com (mail-yw1-f201.google.com [209.85.128.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 134C714DFF5
-	for <git@vger.kernel.org>; Fri, 23 Feb 2024 23:34:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B53C14E2E3
+	for <git@vger.kernel.org>; Fri, 23 Feb 2024 23:34:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708731246; cv=none; b=ZkX0ZthSd9VUmQAYGCWICnWTDWsjWjMRLnVWzSi130w2PopwgLnCdwR021H2HcX+P8Hk4yByhKL7NlsHAvxypHSD9Ebri5qYugzKBEbJ8UU2P0L138OQk0AiyOKsi7e9QlmjvitxQkpGC1WKIVe2+sSkpaRLEVU+5b8BEzCCiYs=
+	t=1708731248; cv=none; b=cwMp9cK+kVudnFDSCPVRWJtdNvjqFa4tRdKjz0dI9F4pDmBX548ZreCvCuMkt9Vn+pkgUlXJB3PiAZPKdXuGY/k/cmfXJBui/bT/Ycp0+8VbDn2DEJt8ucHMFXAvSfKmH6PIhDhJbul4fH0v6JJ/r3Zbk+q+iZhl5J3zaHQco/g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708731246; c=relaxed/simple;
-	bh=Bdv7ic5XRrwtS4nmoj4Gq5WpG+vEQxsUv37S/uXy1gQ=;
+	s=arc-20240116; t=1708731248; c=relaxed/simple;
+	bh=8+Ur2wDE3s5LH4SggzLj3O7YuVC/e+cLYOdrRxMnCS0=;
 	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
-	 To:Cc:Content-Type; b=cFBEpe03PcEM05gb2yZoi0d+eUg84ko74QQqWZklZCmWN7bfOLotA4ze7V5XaV3wJx9eMHqH1/4IiJyzk5hwNn3ZgR02NXX06ODoHka1JCZNKNx4k7FG016I393HlaQufrDB6U0CJMIS+jhUOGWFMTHrgPo0j5DHfET6K8TdeTk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--steadmon.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=sHN0ovEn; arc=none smtp.client-ip=209.85.219.201
+	 To:Cc:Content-Type; b=FH6ij7vi6FCP7UDanbJEegQ4+6pJB6P5r4fMtQBkiANgIkFUsIcbLwlhUJH47qNz24yt3opSG3GUzp+H+SQPl5eo3lLbQN2DP6NkrjVMnE8Ci2aya2mWCg6Pb5XKIHdJeyms7jG48b9DOU9oJIk/dDY3gfsn8f6RneoUrNn7BoA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--steadmon.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=yY18nXQJ; arc=none smtp.client-ip=209.85.128.201
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--steadmon.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="sHN0ovEn"
-Received: by mail-yb1-f201.google.com with SMTP id 3f1490d57ef6-dcc05887ee9so2186778276.1
-        for <git@vger.kernel.org>; Fri, 23 Feb 2024 15:34:04 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="yY18nXQJ"
+Received: by mail-yw1-f201.google.com with SMTP id 00721157ae682-608ad239f8fso25246467b3.0
+        for <git@vger.kernel.org>; Fri, 23 Feb 2024 15:34:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1708731244; x=1709336044; darn=vger.kernel.org;
+        d=google.com; s=20230601; t=1708731246; x=1709336046; darn=vger.kernel.org;
         h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
          :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=iF5pWFdcom/O/sPsVNJm3DzfcOMbthIOUDSkLmNhSaQ=;
-        b=sHN0ovEnqYodVM42QPUnsWfxPUL8uEJcicQMzqMORzZiIAuKjUcE1l+3j3QINH//zq
-         5PjohQ73V3EQwFiv7FGzyZL3TLTN+FqdiybAN4ajVn2q6UqmrbVmGXLMl5+fSvYMjs97
-         UZoHqBx2olWKkebNdm3lqzgedUise/dR/LoXIit7talOUci46/dYng2sq8FTAAlxeOi2
-         JUug3OyHYXwsMjquamcHl5WXZ9H+wQq2hnJ16OXKyEYwvKBOCnVXyuK73u6kMM7tortf
-         GdiUGCJK7T10ocCE/OFL8HIjI1qzIreUYiZ/EmIIWBQkBIQuJ5pRSWlRs0MT9xGC8KGp
-         5pZA==
+        bh=YS5IgGzKz2ph9H6jWzxteSZ9Z//flJwLlak8BMLty8M=;
+        b=yY18nXQJGOdU6IQdy0xEq8nQ30t5vC+fH8XZ1W2LYvOYY/A+xDnCoGGcRQEeUoN06a
+         kylDR//vPk2FJg6YopxOWVq27CXcmUZF3Wnn7fWXyXW7aQKz8VYaWU16zYzPA9qpMqIE
+         P7mC54DcrcyDq9FEs9axpVqnZpIHleI/fKqYcBPgv1dvMPydQxeTdTaBkm279RxxQbZd
+         8xRuKeL4fyGkIOyIzadDH6tn4SQCcL+j3Q/0Ic8Cli026D2yB26j1S3FpitvkpQ6XNin
+         6p6Lbs49sp3CYW4CS3yKEYGPvCZLl1FdB1g50tP3+1BGjFZuPJgES1QMou/GmNRCHScs
+         l/Iw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1708731244; x=1709336044;
+        d=1e100.net; s=20230601; t=1708731246; x=1709336046;
         h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
          :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=iF5pWFdcom/O/sPsVNJm3DzfcOMbthIOUDSkLmNhSaQ=;
-        b=PPuwFYky9GGXo9mIxdvJJhYFKuvqW+h8ORlcOM2mqG7K8T7yp1KjA8E6HRqxWwiKSz
-         W4U7x/GL54COkzAYAhz0dyeSFRq0IMqPPoo2SD25ijULTeoCthI9LnD3FFPP1uFZs9Ep
-         20BHLetz39OQpvwt1danIpnHjjZYz+dHmNBv2bI2lINngtpPI/ug8dJtCBqy5CI9bIOA
-         e7ZidvlKa8sm0AfU4qultJ2Vv4N+Z+INJAeaH/OX4FSlic895EH+5ETOgVsknYTHGaro
-         Gx53q9TPQGTsfGOQ8S4e90mvzOZ0DZZDgNPczmwyyH/Y9FDSEisOqrZhOj7BXFVLp9qd
-         soAQ==
-X-Gm-Message-State: AOJu0YyQ1Bg7BCKy51FwZ2wgPGU2za363CSzVtMRqLh0LvoLJV6pOwYF
-	FvCu1SVW8ND1Mc54GIFjKmqGyXkhDwBRbOX6cOiiJmSu62u28oZp49rZocyMYs2EfyqAXIG5h4J
-	wloSu25d4FFCV1GPbgSN1kNIQz+8KOL67TjHekKMsrTrhniedzFarBpGr4mXdMkFw/U0y+B0A9h
-	LB7SSapLbGrViV0JIfm6souIws40dQom8r8+QI+oo=
-X-Google-Smtp-Source: AGHT+IF2+aTphCPNUyfVhEGnrmgh9SAjK0nVsRakX8Wr1TgAJXjs4w7UkEVAHSN4qx6abpzpJywXsC9MeJ+wjg==
+        bh=YS5IgGzKz2ph9H6jWzxteSZ9Z//flJwLlak8BMLty8M=;
+        b=f21GmDxe4xpcWFPeibauQ+j5V2IyPppfDmiEm4y76Pt3viogD6oK4I1wXLXEWstjRa
+         aoX4K16a4NagoHJ1ZOQgSjkYQsZJWdRk6t/QP/4DkvQX5QKf1FaLrXPg5P/sLD2gbuLi
+         wrieMpqJPdVa7vyoNPSVVtjTHNwqGzazCoB7hQQ+dH/Ot1RU8jbNszd8L1fHHbzHIEyv
+         yy0zEhXJUYlcjAPrHNAsPhWrXJb8LK/E+RoGhGd3/9MxD1HsTuP7n/UeiUmuQyPO5dm3
+         FuKx4rvRFSUaM3B0LB07b+BLP2H4fski62CGsvD9ow4A7qqK5oIUsKjXDeCkURQTI45R
+         F4sw==
+X-Gm-Message-State: AOJu0YyedgyLkk3vrcjkzuUH3zElCas7cVP/50BS5Nccg6l4IIBf4vWd
+	eizAGSNNoKpiIg/Tioq5IgF4b17DdweTBun5DUm2Cp6dEWhPZriyPn5J3KP/f1d7xY4HSCVi9qN
+	uQiYTOQ8WtjmiePoBYvBcEOI9yI/R6/JS7L5P0VuQh8+uuosmWH2F5IeeNWk2ir6pg+77nC1wns
+	zR1xmKLZrYRF+F6GNEyYZ63F5mdptGZkWpMr9kEPw=
+X-Google-Smtp-Source: AGHT+IEUiyVpL+OhBTINpiAon7M6NqiJNoLbypTBRHcswxDw8Cs3nSBWfU35mjymZIDmDXnor/01U4U3gGqDlg==
 X-Received: from lunarfall.svl.corp.google.com ([2620:15c:2d3:204:2fd9:97d1:a490:26b8])
- (user=steadmon job=sendgmr) by 2002:a25:8a11:0:b0:dc6:b813:5813 with SMTP id
- g17-20020a258a11000000b00dc6b8135813mr39443ybl.9.1708731243802; Fri, 23 Feb
- 2024 15:34:03 -0800 (PST)
-Date: Fri, 23 Feb 2024 15:33:52 -0800
+ (user=steadmon job=sendgmr) by 2002:a0d:d44d:0:b0:607:d016:d85c with SMTP id
+ w74-20020a0dd44d000000b00607d016d85cmr317901ywd.9.1708731245886; Fri, 23 Feb
+ 2024 15:34:05 -0800 (PST)
+Date: Fri, 23 Feb 2024 15:33:53 -0800
 In-Reply-To: <cover.1708728717.git.steadmon@google.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -59,51 +59,94 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 Mime-Version: 1.0
 References: <cover.1705443632.git.steadmon@google.com> <cover.1708728717.git.steadmon@google.com>
 X-Mailer: git-send-email 2.44.0.rc0.258.g7320e95886-goog
-Message-ID: <4a16a3ec241d83b3de424ce835db24eee6e46f0f.1708728717.git.steadmon@google.com>
-Subject: [PATCH v3 3/7] test-tool run-command testsuite: remove hardcoded filter
+Message-ID: <abc9a7afe8c1ab92bfbd2b9eea672bdd9ff3c107.1708728717.git.steadmon@google.com>
+Subject: [PATCH v3 4/7] test-tool run-command testsuite: support unit tests
 From: Josh Steadmon <steadmon@google.com>
 To: git@vger.kernel.org
 Cc: johannes.schindelin@gmx.de, peff@peff.net, phillip.wood@dunelm.org.uk, 
 	gitster@pobox.com
 Content-Type: text/plain; charset="UTF-8"
 
-`test-tool run-command testsuite` currently assumes that it will only be
-running the shell test suite, and therefore filters out anything that
-does not match a hardcoded pattern of "t[0-9][0-9][0-9][0-9]-*.sh".
+Teach the testsuite runner in `test-tool run-command testsuite` how to
+run unit tests: if TEST_SHELL_PATH is not set, run the programs directly
+from CWD, rather than defaulting to "sh" as an interpreter.
 
-Later in this series, we'll adapt `test-tool run-command testsuite` to
-also support unit tests, which do not follow the same naming conventions
-as the shell tests, so this hardcoded pattern is inconvenient.
+With this change, you can now use test-tool to run the unit tests:
+$ make
+$ cd t/unit-tests/bin
+$ ../../helper/test-tool run-command testsuite
 
-Since `testsuite` also allows specifying patterns on the command-line,
-let's just remove this pattern. As noted in [1], there are no longer any
-uses of `testsuite` in our codebase, it should be OK to break backwards
-compatibility in this case. We also add a new filter to avoid trying to
-execute "." and "..", so that users who wish to execute every test in a
-directory can do so without specifying a pattern.
+This should be helpful on Windows to allow running tests without
+requiring Perl (for `prove`), as discussed in [1] and [2].
 
-[1] https://lore.kernel.org/git/850ea42c-f103-68d5-896b-9120e2628686@gmx.de/
+This again breaks backwards compatibility, as it is now required to set
+TEST_SHELL_PATH properly for executing shell scripts, but again, as
+noted in [2], there are no longer any such invocations in our codebase.
+
+[1] https://lore.kernel.org/git/nycvar.QRO.7.76.6.2109091323150.59@tvgsbejvaqbjf.bet/
+[2] https://lore.kernel.org/git/850ea42c-f103-68d5-896b-9120e2628686@gmx.de/
 
 Signed-off-by: Josh Steadmon <steadmon@google.com>
 ---
- t/helper/test-run-command.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ t/helper/test-run-command.c | 17 ++++++++++++++---
+ 1 file changed, 14 insertions(+), 3 deletions(-)
 
 diff --git a/t/helper/test-run-command.c b/t/helper/test-run-command.c
-index a41a54d9cb..e6bd792274 100644
+index e6bd792274..61eb1175fe 100644
 --- a/t/helper/test-run-command.c
 +++ b/t/helper/test-run-command.c
-@@ -175,9 +175,7 @@ static int testsuite(int argc, const char **argv)
- 	while ((d = readdir(dir))) {
- 		const char *p = d->d_name;
+@@ -158,6 +158,8 @@ static int testsuite(int argc, const char **argv)
+ 		.task_finished = test_finished,
+ 		.data = &suite,
+ 	};
++	struct strbuf progpath = STRBUF_INIT;
++	size_t path_prefix_len;
  
--		if (*p != 't' || !isdigit(p[1]) || !isdigit(p[2]) ||
--		    !isdigit(p[3]) || !isdigit(p[4]) || p[5] != '-' ||
--		    !ends_with(p, ".sh"))
-+		if (!strcmp(p, ".") || !strcmp(p, ".."))
- 			continue;
+ 	argc = parse_options(argc, argv, NULL, options,
+ 			testsuite_usage, PARSE_OPT_STOP_AT_NON_OPTION);
+@@ -165,9 +167,13 @@ static int testsuite(int argc, const char **argv)
+ 	if (max_jobs <= 0)
+ 		max_jobs = online_cpus();
+ 
++	/*
++	 * If we run without a shell, execute the programs directly from CWD.
++	 */
+ 	suite.shell_path = getenv("TEST_SHELL_PATH");
+ 	if (!suite.shell_path)
+-		suite.shell_path = "sh";
++		strbuf_addstr(&progpath, "./");
++	path_prefix_len = progpath.len;
+ 
+ 	dir = opendir(".");
+ 	if (!dir)
+@@ -180,13 +186,17 @@ static int testsuite(int argc, const char **argv)
  
  		/* No pattern: match all */
+ 		if (!argc) {
+-			string_list_append(&suite.tests, p);
++			strbuf_setlen(&progpath, path_prefix_len);
++			strbuf_addstr(&progpath, p);
++			string_list_append(&suite.tests, progpath.buf);
+ 			continue;
+ 		}
+ 
+ 		for (i = 0; i < argc; i++)
+ 			if (!wildmatch(argv[i], p, 0)) {
+-				string_list_append(&suite.tests, p);
++				strbuf_setlen(&progpath, path_prefix_len);
++				strbuf_addstr(&progpath, p);
++				string_list_append(&suite.tests, progpath.buf);
+ 				break;
+ 			}
+ 	}
+@@ -213,6 +223,7 @@ static int testsuite(int argc, const char **argv)
+ 
+ 	string_list_clear(&suite.tests, 0);
+ 	string_list_clear(&suite.failed, 0);
++	strbuf_release(&progpath);
+ 
+ 	return ret;
+ }
 -- 
 2.44.0.rc0.258.g7320e95886-goog
 
