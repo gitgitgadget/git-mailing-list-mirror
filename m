@@ -1,129 +1,96 @@
-Received: from mout.gmx.net (mout.gmx.net [212.227.17.21])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from dd36226.kasserver.com (dd36226.kasserver.com [85.13.153.21])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D422F85265
-	for <git@vger.kernel.org>; Fri, 23 Feb 2024 20:58:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.21
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD10885C7C
+	for <git@vger.kernel.org>; Fri, 23 Feb 2024 21:09:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=85.13.153.21
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708721887; cv=none; b=UYiG2INi/F9xECLJF0n2e2HL6pCr+YrrET47MGPFTTLyJX3ACB1X8wLXqQu/DfP86AhVhQB6ZCdBmSKU41HwMUjrIH2e04gcg8EoYva4NdSdpzLpZCkP2ETDiTMGq2Yqgp05dqP2BFyK3//ghaSDu57FZ/zYOCTRwKjv8ysomv0=
+	t=1708722565; cv=none; b=YCP/Sb36SiVUp7WhxYVxC8qWvHjYh6KKB+EKVtRMAZr8SpSqyKlrjKJo2yBw4GhpQjP9RaaEFJ276P6TR14PzMExlEpww2Lpp0Uyhgowb5cEW9RZROuhl+ZKFOP0it0j0Pk7yHK9tXw8IYuRUxYfqExZiY1e5XJ9Ytkxlr2q4Fw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708721887; c=relaxed/simple;
-	bh=lDKsTNSOIyhb+O+HWkpJIHJ8xR51/xQaSz6GOne4RNE=;
-	h=From:To:Cc:Subject:Date:Message-ID:Content-Type:MIME-Version; b=NbUl6kqY0rcWU5BezqfUiWvMvu3O5uz6lgQvBvH7StL5b5mMt0fla6tTFSw2iOp913sE1vkMPyKULYJ7f0Yvv2E4nYTA6zALeUpi5306uY6bDAVLWWuBF3Q0fR+wRfu/B2Bjs1cgQYp6mDFVmjgdj5J28J6fJley7sYtjYf2reg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b=OV2miMi5; arc=none smtp.client-ip=212.227.17.21
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
+	s=arc-20240116; t=1708722565; c=relaxed/simple;
+	bh=zYTNVeXBmVVtGfYGBRZRv4tFlvnA0LzqDjlYpAHxXtA=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=JWEdR15BMQ/4mtMMR7vpJts6qafOzAKOJ/o1orBKJhD9eiaV16h6R37lm97Ftd04zNnP9AF97oX9hHCcL8blFZW+EgT3E5UOJ+I2w5Bj8ASoWVlz+uy725AKI3i4zrrRt7AsK80aOAM6qOh5DFNts5US4aBTH95IOcYzIaQ9QtI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=haller-berlin.de; spf=pass smtp.mailfrom=haller-berlin.de; dkim=pass (2048-bit key) header.d=haller-berlin.de header.i=@haller-berlin.de header.b=OfU12MBb; arc=none smtp.client-ip=85.13.153.21
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=haller-berlin.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=haller-berlin.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b="OV2miMi5"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.de; s=s31663417;
-	t=1708721882; x=1709326682; i=johannes.schindelin@gmx.de;
-	bh=lDKsTNSOIyhb+O+HWkpJIHJ8xR51/xQaSz6GOne4RNE=;
-	h=X-UI-Sender-Class:From:To:Cc:Subject:Date;
-	b=OV2miMi5Ojw9E9jQ6YhsCUB3VxcBA4EM7w1bjAjuze0I6rrJJ3jvfDH7M1oSbNdf
-	 UmZr4I0/Qx73XJoApj7L9maq3MAbcpwOWGIBh64YqT6Sm3HF29AtfTxMjEVl6auv/
-	 HcPUqw8vxj1LJ6nD9kb5dCKRC5sHrxC7DRPPQOfFjSCX+HT5anuEklfu0PSI2l0yW
-	 Q0srsC3cTuPtHOcKFm9tHEk4QTTdlqeA7zip0oOvyTITaLjLqr+ogbevE/Xaote0k
-	 ajcLAe7jrrwFXyVcVSj4oA3rRrO2dSoFMAl/pMrrFNr5jRsHc3UsfaxrsqADy82ln
-	 pHULPnfe/HSNLehDXA==
-X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from
- fv-az1538-722.upsp13a5k4ou3ds4kr34xzh2lh.cx.internal.cloudapp.net
- ([74.249.13.178]) by mail.gmx.net (mrgmx104 [212.227.17.168]) with ESMTPSA
- (Nemesis) id 1MK3Rm-1rLXlf3JTK-00LRtR; Fri, 23 Feb 2024 21:58:02 +0100
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
-To: git-for-windows@googlegroups.com,
-	git@vger.kernel.org,
-	git-packagers@googlegroups.com
-Cc: Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: [ANNOUNCE] Git for Windows 2.44.0
-Date: Fri, 23 Feb 2024 20:57:59 +0000
-Message-ID: <20240223205759.3596-1-johannes.schindelin@gmx.de>
-X-Mailer: git-send-email 2.43.2
-Content-Type: text/plain; charset=UTF-8
+	dkim=pass (2048-bit key) header.d=haller-berlin.de header.i=@haller-berlin.de header.b="OfU12MBb"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=haller-berlin.de;
+	s=kas202402191026; t=1708721969;
+	bh=O8cS/Tox+KZCFlrR2rZXV2AG+QB1c7ZvgKE5+8MOPE4=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=OfU12MBbjrNtZ6eS2snEvnvKBqdbQfjgoLJSP3w86qXyczRbwgxBIPITqtm1wo+1w
+	 7D+fDOQko2R3k251ZqH6lDqq9fBnSxAFAmK9pxanId2ykUFuJZpQNCpY0yKG0aAtxa
+	 kfoqjnqUdmrhgehQit07ARvbtBH0F5LwD8scy4GXVsCdQK4BpRTeeoKjjRpEGf97Fu
+	 padG7afdmhj9skVOOs9kh2oeyxEz821kyOA2D5fBIIbTlnEmNHDITmjKnAJ9GV2ikb
+	 i4Chb0ke8oX82DMAtnP2wVlJRRnwCF+sOkrfBuNeuuEnOc7QBswoK4TNLqe6PrsjlR
+	 PqhZ+jV6kyP9g==
+Received: from [192.168.42.22] (162-99-142-46.pool.kielnet.net [46.142.99.162])
+	by dd36226.kasserver.com (Postfix) with ESMTPSA id 2C3223C0324;
+	Fri, 23 Feb 2024 21:59:29 +0100 (CET)
+Message-ID: <2739325d-93b1-445c-aac9-3e0ec54a27e4@haller-berlin.de>
+Date: Fri, 23 Feb 2024 21:59:28 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Fcc: Sent
-X-Provags-ID: V03:K1:RyrsEgdqe5dihV3hVwI3PT7P1vAHNNua39r4d7q5ZVG9KKbIotU
- W1R//L+u1Tk3cQizPRxiKqj4WpateLQzTEyYph97B/C82TgbdjjkSsoSmMrXWfMnbxvnMXf
- 6Q6P/deoHGFRd4PPnwoX1ml8T2tWmotOBROzpCOBuazrdVeZuYnpaR9EAFtwCTQDA8aZKyv
- 2y3cTbHUwDXhTllpQZqlA==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:BMaV9WxJkvU=;WaxwCOtmegvTDqqhWRd9rr3Pgr4
- IhkQ9W8TN6Jn94HXKLg0RXrf0BHskm6MF2GJx14U0vIhvV2lU/1ZpMy05MyNlm53+QyISIkm1
- op1jODoz5QE6rIHr73WRquT8r4eZCd9V7UNNhpB1qQHxoF78kUvkKO8YRqpstijM4NTr25jhR
- 2Q0EDBYEty39gOQDJ9/8qZbQjCzI1FeOIQt4WMWVx8uQ+Niw9SCMCvM/FZq8XKkAWSWqa8uER
- EezWzDgXNoIfMyIqB7QrJ8MqIPs5JM3f/0B8b9wXqVi6me/NWkZGk+qy3nVzQgw7fVo5gu4HS
- MZMMF0K0SoeelUC6p2GhKN3rjzt02piFnE9sMF6FnCJ3Fl6PdhePSAfcH+mmlvGoCS6jijBZE
- 2ty16hadRssc27nIrg8MQlPqdMh6CTAxuL/dycGH595gIzCMiR/pmT8FnPcD1MUvdkH5QOlxS
- cf7wqMPaRUL/hjAnrr09PPnISA4z5p6Htxlq0P0zco0CKy/k5956T/5ACnN7WbJjPo7BRr/2e
- 7Nfp543c4wDyPnaMKnJ8WO5wM+HDYhRonDFMA9g0P0W9g1KqOstQp8YNjNs5XmsRBs9TGhwCC
- C3F3FX1qDAxtwaTqNGCv1rjBUsR/OVAGF+qDTuZOdIkXYMCMyiCH6GsFxjJ2xVeIh+d5G5VLo
- RGzUJF15kJus4YD7ERkBPkfB61hsU3ymb7ief07XYCNOwG2M83/xkt0pgn51eiBHwetlpmms3
- 7zpmo1ZSYN3WmbakXkc/b5u+j4kTMbCLupFsjBXqXXtwT0D2Uv7+BtUqxl+5qDEbcEKAcdIEL
- S8+HsnlIfgLL0SlYscNXV2eXc2OsTQ87lZgxUQSNBROW8=
+User-Agent: Mozilla Thunderbird
+Subject: Re: Interactive rebase: using "pick" for merge commits
+Content-Language: de-DE, en-US
+To: phillip.wood@dunelm.org.uk, Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org
+References: <424f2e08-a2ad-4bb2-8a6b-136c426dc127@haller-berlin.de>
+ <ad561600-faf6-4d3c-80b2-34b3d1a1b99e@gmail.com>
+ <65c65f6b-5ec8-4fa0-a17c-0f2c0d32b390@haller-berlin.de>
+ <ZcnFl8kypKRYeLo3@tanuki> <040f142c-7ee2-429e-88eb-d328b01a4b8c@gmail.com>
+From: Stefan Haller <lists@haller-berlin.de>
+In-Reply-To: <040f142c-7ee2-429e-88eb-d328b01a4b8c@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spamd-Bar: /
 
-Dear Git users,
+On 12.02.24 15:38, Phillip Wood wrote:
+> Hi Patrick and Stefan
+> 
+> On 12/02/2024 07:15, Patrick Steinhardt wrote:
+>> On Sat, Feb 10, 2024 at 10:23:16AM +0100, Stefan Haller wrote:
+>>> On 09.02.24 17:24, Phillip Wood wrote:
+>>> Yes, I'm familiar with all this, but that's not what I mean. I don't
+>>> want to maintain the topology here, and I'm also not suggesting that git
+>>> itself generates such "pick" entries with -mX arguments (maybe I wasn't
+>>> clear on that). What I want to do is to add such entries myself, as a
+>>> user, resulting in the equivalent of doing a "break" at that point in
+>>> the rebase and doing a "git cherry-pick -mX <hash-of-merge-commit>"
+>>> manually.
+>>
+>> It would be neat indeed if this could be specified in the instruction
+>> sheet. We already support options for the "merge" instruction, so
+>> extending "pick" to support options isn't that far-fetched. Then it
+>> would become possible to say "pick -m1 fa1afe1".
+> 
+> It would certainly be possible to extend the sequencer to do that but
+> I'm not familiar with why people use "git cherry-pick -m" [1] so I'm
+> wondering what this would be used for. It would involve a bit of extra
+> complexity so I think we'd want a compelling reason as to why
+> cherry-picking merges without maintaining the topology is useful
+> especially as one can currently do that via "exec git cherry-pick -m ..."
 
-I hereby announce that Git for Windows 2.44.0 is available from:
+Ok, I suppose the answer will probably not count as a compelling reason.
+My reason for wanting this is that lazygit currently implements
+cherry-picking in terms of an interactive rebase, rather then calling
+git-cherry-pick. And the reason why it does this is that when you
+cherry-pick multiple commits, and one of them conflicts, then you get
+lazygit's nice visualization of the rebase todo list to show you where
+in the sequence you are, what the conflicting commit is, how many are
+left etc. It just happens to support this well for
+.git/rebase-merge/git-rebase-todo, but not for .git/sequencer/todo.
 
-    https://gitforwindows.org/
+It probably makes more sense to teach lazygit to visualize the
+.git/sequencer/todo file, and then use git cherry-pick.
 
-Changes since Git for Windows v2.43.0 (November 20th 2023)
+See https://github.com/jesseduffield/lazygit/issues/3317
 
-Git for Windows for Windows v2.44 is the last version to support for
-Windows 7 and for Windows 8, see MSYS2's corresponding deprecation
-announcement (Git for Windows relies on MSYS2 for components such as
-Bash and Perl).
-
-Please also note that the 32-bit variant of Git for Windows is
-deprecated; Its last official release is planned for 2025.
-
-New Features
-
-  * Comes with Git v2.44.0.
-  * Comes with libfido2 v1.14.0.
-  * Comes with the MSYS2 runtime (Git for Windows flavor) based on
-    Cygwin v3.4.10.
-  * Comes with Perl v5.38.2.
-  * Git for Windows learned to detect and use native Windows support
-    for ANSI sequences, which allows using 24-bit colors in terminal
-    windows.
-  * Comes with Git LFS v3.4.1.
-  * The repository viewer Tig that is included in Git for Windows can
-    now be called also directly from PowerShell/CMD.
-  * Comes with OpenSSH v9.6.P1.
-  * Comes with Bash v5.2.26.
-  * Comes with GNU TLS v3.8.3.
-  * Comes with OpenSSL v3.2.1.
-  * Comes with cURL v8.6.0.
-  * Comes with GNU Privacy Guard v2.4.4.
-
-Bug Fixes
-
-  * The 32-bit variant of Git for Windows was missing some MSYS2
-    runtime updates, which was addressed; Do note 32-bit support is
-    phased out.
-  * The Git for Windows installer showed cut-off text in some setups.
-    This has been fixed.
-  * The git credential-manager --help command previously would not find
-    a page to display in the web browser, which has been fixed.
-  * A couple of bugs that could cause Git Bash to hang in certain
-    scenarios were fixed.
-
-Git-2.44.0-64-bit.exe | 914ffc96cee0631d09049b9d87d4cd8ac9c98ead9a9f9a094d3341348324a9ec
-Git-2.44.0-32-bit.exe | 5ba23d73e861d872416175ac6a05304875d6ec420c08d0217329580ca1ea0fff
-PortableGit-2.44.0-64-bit.7z.exe | 1fc64ca91b9b475ab0ada72c9f7b3addbe69a6c8f520be31425cf21841cca369
-PortableGit-2.44.0-32-bit.7z.exe | e70c80672069907961f6db68b0db5e14ea0447f39c74cfd3c385882f3b934c6f
-MinGit-2.44.0-64-bit.zip | ed4e74e171c59c9c9d418743c7109aa595e0cc0d1c80cac574d69ed5e571ae59
-MinGit-2.44.0-32-bit.zip | 3c946898cd78c5106b1672dd80051953bdb245fb46352a70606f271d8b0233c7
-MinGit-2.44.0-busybox-64-bit.zip | a2377f6e4214f16afa1a5a23d9a291d09a2234bcac67c5aeb36d9cce4b7b4d5b
-MinGit-2.44.0-busybox-32-bit.zip | 83dd7903f8a4b2a035eda510d6d1394acc9ff36ce45b9e55efd7dd48c83471a4
-Git-2.44.0-64-bit.tar.bz2 | d78c40d768eb7af7e14d5cd47dac89a2e50786c89a67be6249e1a041ae5eb20d
-Git-2.44.0-32-bit.tar.bz2 | 14541119fe97b4d34126ee136cbdba8da171b8cbd42543185a259128a3eed6b3
-
-Ciao,
-Johannes
+-Stefan
