@@ -1,99 +1,111 @@
-Received: from mail-yb1-f202.google.com (mail-yb1-f202.google.com [209.85.219.202])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7736E14EFC5
-	for <git@vger.kernel.org>; Fri, 23 Feb 2024 23:34:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.202
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A023A59
+	for <git@vger.kernel.org>; Sat, 24 Feb 2024 00:33:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708731253; cv=none; b=Pc8DP1AyFeKDSZLPbqdagDpCNMI/xzigOGCSu2pGi13ucnr/QgZX3nskJMnwr6M3PM3FFVn/o7bmt6OB3poOqNX0YWsurJWlPRBWkdqxSRwhn2tC/yW66ytGBAYUwNZfDRFe1LKHxX0di+oxFNya9Fp3Q+bAzCYy5ruCDhGTNXo=
+	t=1708734805; cv=none; b=EsbKjxtzG8XKXhE5KEPMV8117XBvjU7D+mCBXTzsrnfI5QbDL+casH0MuUaKTgzdJjt+u2Umd9Olme+BhBpngkfuxmgWIJPELH23f/jJh4nQd2f+oz/MwFpc7C1DkMdrzXSmQ4W8dPJieiEbpagvxURCEtLDVgkxXb1w8Az1BAg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708731253; c=relaxed/simple;
-	bh=f1ffTXZP5UdQksMtO3LZRF/EeihQuS9aNnziH+nzVF4=;
-	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
-	 To:Cc:Content-Type; b=NHi76q5hK71BDwi/wjup6hF1BGXSXUFxs/3GkU5uxlQSaHFTVS/rz236bznIr3YMT7IBoa4VnN0ogAHXXN6Nq6Ik1zp8PPdMHAp4MYQ4b0+ooBBHEopSrZ74VJbbgGLai0tZC/7kRjiMzPqEUxxyPvTZoVCvYlrnAII02hBFw1c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--steadmon.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=D4KfJ2LL; arc=none smtp.client-ip=209.85.219.202
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--steadmon.bounces.google.com
+	s=arc-20240116; t=1708734805; c=relaxed/simple;
+	bh=DfGPnpFEXHtaJNh+L+qqac/3kYcMfTxzFdlLDJyQpJM=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=KZmaDrCtXCqQYcekHUQ4Lqw25yuAnieNKMF9FVsxPIIpTNiqvjZ1eCrqp0/VrrWgRlYaZoSClUxujzkJuiXZuTf5p1VhP00s84mFx7H+ZINr3lTHmCdm3XsUaq2ADZnSvBpJt9MrDNJVXRzHlS9UdMDO7MR4yfRXP6yxYcbOqK0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=ray2Q4CT; arc=none smtp.client-ip=64.147.108.70
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="D4KfJ2LL"
-Received: by mail-yb1-f202.google.com with SMTP id 3f1490d57ef6-dcc4563611cso2379217276.3
-        for <git@vger.kernel.org>; Fri, 23 Feb 2024 15:34:12 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1708731251; x=1709336051; darn=vger.kernel.org;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=K30ED04T/ZQAwsWwVKBues736gTQaJeYTdmH0g3c1rw=;
-        b=D4KfJ2LL20YALk4K8sc69za+6mDB3Fuis/36tQ71cNmUbw8yQDiSjRc77YRcStJrtL
-         IbmJZmwr5pTucbJl6LXHdmJo7gzPETycgZ/95hw7GN8iWDiBq1w2tihxObt8C4yrmMD4
-         CyV8fPVPbTXiDpWpTz8++91ZoWlKuA6VFvpapHtqLiE8wb0FeFW9hUymBZMxSwVlHPMp
-         cyy8Gqg1Da3OxmS4irGBwaQq7LB0wIpV9zMblR7tHB63m9PcOtNFR5vwoqXQK5YMhidP
-         yaQgIC1ksnxE/Dd3/28DgPBoJuIR3MPVDZGPJJcRpk8RtpvzeD9hgN0EzVIKNv1/cFYA
-         STVA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1708731251; x=1709336051;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=K30ED04T/ZQAwsWwVKBues736gTQaJeYTdmH0g3c1rw=;
-        b=ObxkeK9Qk2WqhE/PGTixU3kRfB5sE9yEBawDdFjElWE3N5sykKgFjDHV9p5K26Mz3p
-         DoEDxN0ZhwDya+3YBJQkLB0FUwVpezr8s631WSM/ByqQjIE9NTWk89dLW+cxoCIMibCt
-         AWBK/HiecROFdr9+GgrpsbsFL5wDCbsvepFCiR6jTVKiiCgghEXqyrqeXxzea3qo3Ekz
-         x/qfGTC0u867jsoinIzY2n4gbBcTOGLdBXrXqElKpJeCFEE09hBBZ/bRTr7Tsu3MvDD8
-         tlw+p6SONe+uV304vKQi+He7ng3MiQUq/ZYMra05ml9Nwl7gIp7PvBD2jpQU+tjjaNhd
-         CKHw==
-X-Gm-Message-State: AOJu0Yyr5dDbqwrKZHOmgYgi2KBu5AJe0JtDzohulK6FlV6uYasK6P4W
-	Oey+jodDRo3lITa4fjh/hpyVbWtryVI8/QOwvMT2JUwSgsFywycRHtGgvIULzry1lPZv9vFRWZv
-	w7E5rkmdeZ/8uO1T/KiZxKrcAcBoPQheE80EIPLdNrd7IPB6Anuepi94Gpk4UGKdYcuUtHjUwxs
-	EE6L+gK5FMF++pr+372eIyLehvz9lX+stsD5Q+tb8=
-X-Google-Smtp-Source: AGHT+IEMWaKMclekxZmjG6sY688DdPT5gTHUF2djqJdT7XXa9xf3ySNkwX+18ZS3wMRAmFO9NlvJ70+vsiU3VQ==
-X-Received: from lunarfall.svl.corp.google.com ([2620:15c:2d3:204:2fd9:97d1:a490:26b8])
- (user=steadmon job=sendgmr) by 2002:a05:6902:1009:b0:dc7:5aad:8965 with SMTP
- id w9-20020a056902100900b00dc75aad8965mr346693ybt.0.1708731251439; Fri, 23
- Feb 2024 15:34:11 -0800 (PST)
-Date: Fri, 23 Feb 2024 15:33:56 -0800
-In-Reply-To: <cover.1708728717.git.steadmon@google.com>
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="ray2Q4CT"
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 52ED01E28F3;
+	Fri, 23 Feb 2024 19:33:20 -0500 (EST)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=DfGPnpFEXHtaJNh+L+qqac/3kYcMfTxzFdlLDJ
+	yQpJM=; b=ray2Q4CTOWr+mwSFKwDgq9IeCDcWa/qkbYi7N6NOXjf6Rq7i+Wq0eS
+	z7V1c6n6V72zDed0g3VgXLrrvHyr9tfkpB82PO+KWlZENvZDWIvpZHdf0PFBUmmP
+	LbjjBHAq/hwbL5FedvEdkGFmRLs310yt7haDtHNTSafNju7iDTzA0=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 375281E28F2;
+	Fri, 23 Feb 2024 19:33:20 -0500 (EST)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.176.30])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 8CC5A1E28F1;
+	Fri, 23 Feb 2024 19:33:19 -0500 (EST)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>,  Johannes
+ Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH v2 03/11] Start reporting missing commits in
+ `repo_in_merge_bases_many()`
+In-Reply-To: <4dd214f91d4783f29b03908cc0034156253889a7.1708608110.git.gitgitgadget@gmail.com>
+	(Johannes Schindelin via GitGitGadget's message of "Thu, 22 Feb 2024
+	13:21:42 +0000")
+References: <pull.1657.git.1707813709.gitgitgadget@gmail.com>
+	<pull.1657.v2.git.1708608110.gitgitgadget@gmail.com>
+	<4dd214f91d4783f29b03908cc0034156253889a7.1708608110.git.gitgitgadget@gmail.com>
+Date: Fri, 23 Feb 2024 16:33:18 -0800
+Message-ID: <xmqqle7asnu9.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-References: <cover.1705443632.git.steadmon@google.com> <cover.1708728717.git.steadmon@google.com>
-X-Mailer: git-send-email 2.44.0.rc0.258.g7320e95886-goog
-Message-ID: <cbf37e0ddc0e96361d9be60fce44fd3d250b1abf.1708728717.git.steadmon@google.com>
-Subject: [PATCH v3 7/7] ci: use test-tool as unit test runner on Windows
-From: Josh Steadmon <steadmon@google.com>
-To: git@vger.kernel.org
-Cc: johannes.schindelin@gmx.de, peff@peff.net, phillip.wood@dunelm.org.uk, 
-	gitster@pobox.com
-Content-Type: text/plain; charset="UTF-8"
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 4EF4F232-D2AC-11EE-B319-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
 
-Although the previous commit changed t/Makefile to run unit tests
-alongside shell tests, the Windows CI still needs a separate unit-tests
-step due to how the test sharding works.
+"Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+writes:
 
-We want to avoid using `prove` as a test running on Windows due to
-performance issues [1], so use the new test-tool runner instead.
+> From: Johannes Schindelin <johannes.schindelin@gmx.de>
+>
+> Some functions in Git's source code follow the convention that returning
+> a negative value indicates a fatal error, e.g. repository corruption.
+>
+> Let's use this convention in `repo_in_merge_bases()` to report when one
+> of the specified commits is missing (i.e. when `repo_parse_commit()`
+> reports an error).
+>
+> Also adjust the callers of `repo_in_merge_bases()` to handle such
+> negative return values.
 
-[1] https://lore.kernel.org/git/850ea42c-f103-68d5-896b-9120e2628686@gmx.de/
+All of the above makes sense, but I have to wonder if this hunk
+should rather want to be part of the previous step:
 
-Signed-off-by: Josh Steadmon <steadmon@google.com>
----
- ci/run-test-slice.sh | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+> @@ -486,10 +488,10 @@ int repo_in_merge_bases_many(struct repository *r, struct commit *commit,
+>  	timestamp_t generation, max_generation = GENERATION_NUMBER_ZERO;
+>  
+>  	if (repo_parse_commit(r, commit))
+> -		return ret;
+> +		return ignore_missing_commits ? 0 : -1;
+>  	for (i = 0; i < nr_reference; i++) {
+>  		if (repo_parse_commit(r, reference[i]))
+> -			return ret;
+> +			return ignore_missing_commits ? 0 : -1;
+>  
+>  		generation = commit_graph_generation(reference[i]);
+>  		if (generation > max_generation)
 
-diff --git a/ci/run-test-slice.sh b/ci/run-test-slice.sh
-index ae8094382f..e167e646f7 100755
---- a/ci/run-test-slice.sh
-+++ b/ci/run-test-slice.sh
-@@ -17,7 +17,7 @@ handle_failed_tests
- 
- # We only have one unit test at the moment, so run it in the first slice
- if [ "$1" == "0" ] ; then
--	group "Run unit tests" make --quiet -C t unit-tests-prove
-+	group "Run unit tests" make --quiet -C t unit-tests-test-tool
- fi
- 
- check_unignored_build_artifacts
--- 
-2.44.0.rc0.258.g7320e95886-goog
+as this hunk is not about many callers of repo_in_merge_bases() that
+ignored the return values, which are all fixed by this patch, but
+about returning that error signal back to the caller.
+
+Yes, I know you wrote in [02/11] that it does not change the
+behaviour, and if you move this hunk to [02/11], it might change the
+behaviour, but that is changing for the better.  Besides, adding a
+parameter "ignore_missing" to the function only to be ignored until
+the next patch feels rather incomplete.
+
+The other changes in this patch about its primary theme, fixing the
+callers that used to ignore return values of repo_in_merge_bases(),
+all looked sensible.  This hunk somehow stood out like a sore thumb
+to me.
+
 
