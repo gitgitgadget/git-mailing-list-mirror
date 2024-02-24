@@ -1,119 +1,135 @@
-Received: from vuizook.err.no (vuizook.err.no [178.255.151.162])
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 628704C63D
-	for <git@vger.kernel.org>; Sat, 24 Feb 2024 19:56:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=178.255.151.162
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBDDC487B6
+	for <git@vger.kernel.org>; Sat, 24 Feb 2024 20:22:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708804568; cv=none; b=O5rStAK2pi+0V9vaCKZouvNjSp172EVPrb71zBG8W32UcMRrjMDk4r+T+hLDSi9Y7AvZ6MEb5B8ByEmmtnBNuNRrqUe1DnYw+ssvCrgVWLPTa0E+MYf6FQyfF6NqW+KEs7WnPvFKZcxL5hYKKczUnF2bZvH870OTWbzg7ov2h64=
+	t=1708806179; cv=none; b=kHxOkIERkyro3WQeAxv0x3i6nET4Gbxo3X8Id+4Pp9U5A4610CjujFUIRHxIrAeZVj8hGzfu8hMQEmYhO8jX6He+0b0+szk3AKwwJ82MIhz26+BN7Mr275UI+dDJUUBq0G0XGwq4jTPwiu2bVFiFHsQvqQEBUoCTJh5zoMz4nL0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708804568; c=relaxed/simple;
-	bh=RhMJO/4izJeXMc0Agpv4Mo/eIdMI8iFwBhwYzSBY1kg=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=dqCRF2Z3Ul0ctV6qgjbE4AcMlduVQUTyhmELHVbWJURfFkk69g4AHqDbzCcNKjbhGY5z00oPoWvSZ53hJ0nKhJgeiBoJFHSp387CpllEu96DmcwH75yhWjYa8JS6/Uk6xqQo/u9sa8BAcGR2S0aFFMgie8c4RCjg1lnvd5msEC8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=glandium.org; spf=pass smtp.mailfrom=glandium.org; arc=none smtp.client-ip=178.255.151.162
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=glandium.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=glandium.org
-Received: from p3418120-ipxg00d01tokaisakaetozai.aichi.ocn.ne.jp ([114.171.163.120] helo=glandium.org)
-	by vuizook.err.no with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.96)
-	(envelope-from <mh@glandium.org>)
-	id 1rdy7o-00ASJM-00;
-	Sat, 24 Feb 2024 19:55:56 +0000
-Received: from glandium by goemon.lan with local (Exim 4.96)
-	(envelope-from <mh@glandium.org>)
-	id 1rdy7i-000qFT-0G;
-	Sun, 25 Feb 2024 04:55:50 +0900
-Date: Sun, 25 Feb 2024 04:55:50 +0900
-From: Mike Hommey <mh@glandium.org>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	git-packagers@googlegroups.com
-Subject: Re: [ANNOUNCE] Git v2.44.0
-Message-ID: <20240224195550.ignhzidmdy3ce6q4@glandium.org>
-X-GPG-Fingerprint: 182E 161D 1130 B9FC CD7D  B167 E42A A04F A6AA 8C72
-References: <xmqqbk87w164.fsf@gitster.g>
- <20240224051040.ftuo24smozqugbde@glandium.org>
- <ZdmOZRjJ-mClBR02@framework>
+	s=arc-20240116; t=1708806179; c=relaxed/simple;
+	bh=kHN5fJ27Vmrn3Q99bdwefLkjkGNKJeyuJVSLwNZrqLA=;
+	h=From:To:Subject:CC:Date:Message-ID:MIME-Version:Content-Type; b=KM5HbCBI2qJkD/XwoRAMWCSGxqSnYpe3XkekJ/TRPAm2XLBI0tRzhbn9bReqrFns4CNTfp4syi9FYMf9EQZkoIm5ze0+JElSustgA876Aqomge11lllqffRAM/KiRmy9tfRoOzHCIac5HOgn7OmsMZEqS5F9TyOcE0NlxGxMFgs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=imAg/BG7; arc=none smtp.client-ip=64.147.108.71
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="imAg/BG7"
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id CF1611E8FD3;
+	Sat, 24 Feb 2024 15:22:50 -0500 (EST)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to
+	:subject:cc:date:message-id:mime-version:content-type; s=sasl;
+	 bh=kHN5fJ27Vmrn3Q99bdwefLkjkGNKJeyuJVSLwNZrqLA=; b=imAg/BG7+s5a
+	jDAZDhFBKqOa3673iUNkp2wsbCsfh5lRpEp6MaVatb4MyLJRjGpTe89s4TBibLbk
+	ofGrKlpw2ivD7N22IDPOcmVD3lQfidy347j2XrALDWGgU0sKHlnW/9LbREFZvwMO
+	8KZWiDj+JT7XcsWDOSZbA52IQdtG5FI=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id C79711E8FD2;
+	Sat, 24 Feb 2024 15:22:50 -0500 (EST)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.176.30])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 4034F1E8FD1;
+	Sat, 24 Feb 2024 15:22:50 -0500 (EST)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+Subject: [PATCH] doc: clarify the wording on <git-compat-util.h> requirement
+CC: Kyle Lippincott <spectral@google.com>,
+    Calvin Wan <calvinwan@google.com>,
+    Jonathan Tan <jonathantanmy@google.com>,
+    Elijah Newren <newren@gmail.com>
+Date: Sat, 24 Feb 2024 12:22:49 -0800
+Message-ID: <xmqq4jdxmx2e.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <ZdmOZRjJ-mClBR02@framework>
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 7B333A7E-D352-11EE-85D7-25B3960A682E-77302942!pb-smtp2.pobox.com
 
-On Sat, Feb 24, 2024 at 07:36:21AM +0100, Patrick Steinhardt wrote:
-> Thanks for your report!
-> 
-> This has to be because we now initialize the refdb at a later point. The
-> problem here was that before my change, we initialized the refdb at a
-> point when it wasn't clear what the remote actually used as the object
-> format. The consequence was twofold:
-> 
->   - Cloning a repository with bundles was broken in case the remote uses
->     the SHA256 object format.
-> 
->   - Cloning into a repository that uses reftables when the remote uses
->     the SHA256 object format was broken, too.
-> 
-> Both of these have the same root cause: because we didn't connect to the
-> remote yet we had no idea what object format the remote uses. And as we
-> initialized the refdb early, it was then initialized with the default
-> object format, which is SHA1.
-> 
-> The change was to move initialization of the refdb to a later point in
-> time where we know what object format the remote uses. By necessity,
-> this has to be _after_ we have connected to the remote, because there is
-> no way to learn about it without connecting to it.
-> 
-> One consequence of initializing the refdb at a later point in time is
-> that we have no "HEAD" yet, and a repo without the "HEAD" file is not
-> considered to be a repo. Thus, git-config(1) would now rightfully fail.
-> 
-> I assume that you discovered it via a remote helper that does something
-> more interesting than git-config(1).
+The reason why we insist including the compat-util header as the
+very first thing is because it is our mechanism to absorb the
+differences across platforms, like the order in which system header
+files must be included, and C preprocessor feature macros that are
+needed to trigger certain features we want out of the systems, and
+insulate other headers and sources from such minutiae.
 
-Indeed, my own usecase is a remote helper that uses libgit.a and uses
-is_git_directory indirectly, but I could imagine other remote helpers that
-could be using other git commands that rely on is_git_directory
-returning true.
+Earlier we tried to clarify the rule in the coding guidelines
+document, but the wording was a bit fuzzy that can lead to
+misinterpretations like you can include xdiff/xinclude.h only to
+avoid having to include git-compat-util.h file even if you have
+nothing to do with xdiff implementation, for example.  "You do not
+have to include more than one of these" were also misleading and
+would have been puzzling if you _needed_ to depend on more than one
+of these approved headers (answer: you are allowed to include them
+all if you need the declarations in them for reasons other than that
+you want to avoid including compat-util yourself).
 
-> I have to wonder whether we ever
-> really specified what the environment of a remote helper should look
-> like when used during cloning. Conceptually it doesn't feel _wrong_ to
-> have a not-yet-initialized repo during clone.
+Instead of using the phrase "approved headers", enumerate them as
+exceptions, each labeled with intended audiences, to avoid such
+misinterpretations.  The structure also makes it easier to add new
+exceptions, so add the description of "t/unit-tests/test-lib.h"
+being an exception only for the unit tests implementation as an
+example.
 
-How about this: it should look like what you'd get from
-`git init $repo`.
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
 
-> But on the other hand, regressing functionality like this is of course
-> bad. I was wondering whether we can get around this issue by setting
-> e.g. GIT_DIR explicitly when spawning the remote helper, but I don't
-> think it's as easy as that.
+ * git-std-lib folks CC'ed to show them where to put their exception
+   when things start to stabilize; Elijah CC'ed for his 8bff5ca0
+   (treewide: ensure one of the appropriate headers is sourced
+   first, 2023-02-24) and bc5c5ec0 (cache.h: remove this
+   no-longer-used header, 2023-05-16).
 
-GIT_DIR is already set when spawning the remote helper. My remote helper
-is using setup_git_directory_gently and uses the value of nongit_ok for
-the cases where the executable is used without being wrapped by git (it
-provides extra commands), I guess I could use whether GIT_DIR is set as
-a workaround.
+ Documentation/CodingGuidelines | 30 ++++++++++++++++++++++++------
+ 1 file changed, 24 insertions(+), 6 deletions(-)
 
-> Another idea would be to simply pre-create HEAD regardless of the ref
-> format, pointing to an invalid ref "refs/heads/.invalid". This is the
-> same trick we use for the reftable backend, and should likely address
-> your issue.
-
-The interesting thing is that `git init $repo` does give you an invalid
-HEAD (and that's what would happen during git clone too), with either
-```
-ref: refs/heads/master
-```
-or
-```
-ref: refs/heads/main
-```
-depending on configuration.
-
-Mike
+diff --git c/Documentation/CodingGuidelines w/Documentation/CodingGuidelines
+index 578587a471..b3443dd773 100644
+--- c/Documentation/CodingGuidelines
++++ w/Documentation/CodingGuidelines
+@@ -446,12 +446,30 @@ For C programs:
+    detail.
+ 
+  - The first #include in C files, except in platform specific compat/
+-   implementations and sha1dc/, must be either "git-compat-util.h" or
+-   one of the approved headers that includes it first for you.  (The
+-   approved headers currently include "builtin.h",
+-   "t/helper/test-tool.h", "xdiff/xinclude.h", or
+-   "reftable/system.h".)  You do not have to include more than one of
+-   these.
++   implementations and sha1dc/, must be "git-compat-util.h".  In
++   addition:
++
++   - the implementation of the built-in commands in the "builtin/"
++     directory that include "builtin.h" for the cmd_foo() prototype
++     definition
++
++   - the test helper programs in the "t/helper/" directory that include
++     "t/helper/test-tool.h" for the cmd__foo() prototype definition
++
++   - the xdiff implementation in the "xdiff/" directory that includes
++     "xdiff/xinclude.h" for the xdiff machinery internals
++
++   - the unit test programs in "t/unit-tests/" directory that include
++     "test-lib.h" that gives them the unit-tests framework
++
++   - the source files that implement reftable in the "reftable/"
++     directory that include "reftable/system.h" for the reftable
++     internals
++
++   are allowed to assume that their header file includes
++   "git-compat-util.h", and they do not have to include
++   "git-compat-util.h" themselves.  These headers must be the first
++   header file to be "#include"d in them, though.
+ 
+  - A C file must directly include the header files that declare the
+    functions and the types it uses, except for the functions and types
