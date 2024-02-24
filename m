@@ -1,41 +1,41 @@
 Received: from mout.web.de (mout.web.de [212.227.15.3])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 824E61DFE5
-	for <git@vger.kernel.org>; Sat, 24 Feb 2024 21:31:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA8CC4CDE5
+	for <git@vger.kernel.org>; Sat, 24 Feb 2024 21:31:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.3
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708810288; cv=none; b=EgRLgiuvVRKXzkpT3Yuo+pjUqJctI+yF2pCCvN2/REBDUA0tU6fhEY44hp4lUIW4myzCvTOuo1GHsp+RInI6kWAPx/2lSLY6153g4dD7/4eLtDR+5UlgYLDCzlK7FbB1Sit93jmTmozZALvnfwOEbI2gRJDdjqcIDLk0WZOj2cY=
+	t=1708810289; cv=none; b=dOsQIkJSfDTlfmjPpnpeESaZsfUKSIzuPbf6Eo5l2jFcZaJdOP2u8rMH73ABTVfRiwTrGp6HqTTZpzfqFYZABrDAnlW+TX1vGSwjFUfB1tTTX+9qqz3uwBzh5e3jJgPkswxRZng5J6aM2IOCRXRxAN1CE/leNGEZqRZtALJEc4E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708810288; c=relaxed/simple;
-	bh=tTi9OiaCdyb7jGOMfHR8PP9g/cVdTA2z5CpKid3x+68=;
+	s=arc-20240116; t=1708810289; c=relaxed/simple;
+	bh=gJi2rVxfHwoA8b65uLZpWx3RXhSwm2SHJMx16zn9L/Q=;
 	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=c14FWpUu6QQEIKua0IIbD4kujmthXpE4LBCmxtcMJJ7bps0R6vvX/W0x+uRrtYSQS/eOzycLZY8/wzXqrDMVzX+NVxb5W0Fa1+Avtae9ot/FKp546DOYGIB1OVIOIr5y7Y/yi7BJEZiRREseVMGy3VvvRC9XNUbc1e4ixaYNt9c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b=FPDO73UZ; arc=none smtp.client-ip=212.227.15.3
+	 MIME-Version; b=h3YW5MxCMeoCZUA0DzrdxHdMAa3UvhE2ohn97q2SGI4RxufTEK5E9Ps9R3q1xfVP85+TtvqLtPBkjTd2q7sbfTV7RNiAdqPSNhEsYPYMTPgyySHgowALxyMtqqRwXJIrxYIhQ5y1/Fa63NapT0eMxCxaJvS+2tTipDRP7dnWQVQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b=rifvCcdN; arc=none smtp.client-ip=212.227.15.3
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b="FPDO73UZ"
+	dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b="rifvCcdN"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de; s=s29768273;
 	t=1708810277; x=1709415077; i=l.s.r@web.de;
-	bh=tTi9OiaCdyb7jGOMfHR8PP9g/cVdTA2z5CpKid3x+68=;
+	bh=gJi2rVxfHwoA8b65uLZpWx3RXhSwm2SHJMx16zn9L/Q=;
 	h=X-UI-Sender-Class:From:To:Subject:Date:In-Reply-To:References;
-	b=FPDO73UZJKNSoWvShuQcHvL2Wt6r6/2IGC4Bs7yHXVmjWn1iVIVybXVb2Joefoca
-	 gfcydbbC4/UahmWxVBj0Y7orKZSNhm6sPp5ciQQzFCjfXyfjOs3CeESbtm1mg4UoX
-	 tyj34QXeZsxGz5BSYcW3cLD2VpXd1dgx/LS9pdVpci/zcFk7XCusdUkOrmh1WtPIB
-	 2D8NyXTrE4RMwwJZUB7nNnILxuj/8WAw/cnHc0BIxVHuVQS9hZQUQTGqF8FyaqKaR
-	 eWfV8bAm54N5wNjijlNFZy+n3YiErhENtVru0Fp0dOKs2Xn8CYJhFlNWQedBG+MB5
-	 5V+Z5TE86dOCaB2I6A==
+	b=rifvCcdNxZpHIcgK6iZKeH+3Y0p0vzIp2BMVZzfbThMvaX4UlfxyNoZasmLNZi9J
+	 vZFnZ3+TWkwpQwG3LzLZ1xPhI7YD2cwC53HueW49BK1NM7vaBH84ScE3M2Mqcwfac
+	 gcDZd9Gy+KfmJvrLJrxuNOEwOMUMj842Tkubq1c9QQwapaeA677A6rrFAB/+TtgUP
+	 onz8LYAIe5JbT9bh5iKbe9/58h4eHPlRT4iyyeelUiT3Vzxer9El2QWeszwoadONx
+	 OfrHx5iT08xqpHBNhJNWx9NKclqPKSy+DlFioBcQ561ch6oY9NclYcBDIWB/ZItgP
+	 iqW8GtVwoA5GRLfAqw==
 X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
 Received: from Mini-von-Rene.fritz.box ([79.203.19.211]) by smtp.web.de
  (mrweb006 [213.165.67.108]) with ESMTPSA (Nemesis) id
- 1MHmq2-1rivp50kAI-00EuCC for <git@vger.kernel.org>; Sat, 24 Feb 2024 22:31:17
+ 1MdwNW-1r5UPL356M-00azSu for <git@vger.kernel.org>; Sat, 24 Feb 2024 22:31:17
  +0100
 From: =?UTF-8?q?Ren=C3=A9=20Scharfe?= <l.s.r@web.de>
 To: git@vger.kernel.org
-Subject: [PATCH 1/6] parse-options: recognize abbreviated negated option with arg
-Date: Sat, 24 Feb 2024 22:29:48 +0100
-Message-ID: <20240224212953.44026-2-l.s.r@web.de>
+Subject: [PATCH 5/6] parse-options: normalize arg and long_name before comparison
+Date: Sat, 24 Feb 2024 22:29:52 +0100
+Message-ID: <20240224212953.44026-6-l.s.r@web.de>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240224212953.44026-1-l.s.r@web.de>
 References: <20240224212953.44026-1-l.s.r@web.de>
@@ -46,109 +46,120 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:0xNsPr0SfdfzTVIzT6aS2YLXIS5VdTK3YZqEMNDsIwFINKE/O1C
- l93ngNspKv9fiVtL9KEyCtY7wBf7DRYdC5mrju81jEhZcNK0lE7oa9/+8zG6WxljY/cQR3u
- Ju1T3pgwIHt3YuneEcnQ4/FZUYBgABXab9AsA9iP8kLvjegfgRV940uhG39v7/gmLTADodd
- WdG830z2UV8ewxa7+CWjw==
+X-Provags-ID: V03:K1:GvnvA/q7me6hbj7Ucjch7xQPFimJICOqdOflRvwINWMgHUf0t4c
+ MqQ7wEd4A/YFp6WVAdCIYEHj6gU7DPdyL6bJW68CRcbbEctPXw08Cw+5LjuA/Ph048zocW8
+ PJA2jGqsl4NFh97uNGpF4wJ/ErCpICa1AgwrQkKB4J1viW1H6hYzdHmiTJI1iKUL0CXO3iX
+ w9T4QWmjp1YNTY5AZHyhQ==
 X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:HeFCa/JL7mg=;WQAnXHJ/aLUCwt0QlP2oO65O32e
- Ny2ZcO8kHXAADMUe2WqCC/KveOGWPx0yRAs/aKUeV1Ew0zozWvXM7jknC77znCpVnudJ/oE4j
- vRi77uWAiosJusmAcF5vaz+Hz/UPMjTWpzsoLVNdNXHHRJDiv0da11Pct9C6LNONhzeTTYczD
- HB9FISX12FSvFrXlrPEdfsEMYfWx6UHvq2WhNgNH7PEEc3uobQlPo2mYj0MLbMSC4PPNxiGMw
- 9toQpErIwl2vId2phbPQzYnRM11yXqJtfR/qYfli180IyOS/FsHWrMmQx5tR3++FPIINUxLco
- L8FsyGhEsnqJvzLVS7ZH6Vsoz/T0ToOg+f/cFAF+vgmSjbI9Kk9o5Vu6x3XITSdGl8+fWyYfV
- BOotKcTzVlWC+Y1wTM1UsOSVLtplfuToctV5m3+EW28ENmMSbcNkQ4OxVejLUCEkrVPoJ7hlj
- OnX8Vz0Tbp6VeOHa+7pZtStTWNT3yAseKyS65jJhgIVL44R6REFcZwfE/P6SJQh3u99AU/Dlk
- Jh6PbHjDuTsyJoyRI3x1rtCKMeRD0Zynw0x+I3AmyXFz63bLpuauuGsi3z6L08GJ33AvzTa4Y
- AqtCV9mx7Rsyyys3Sk+yToqnE6ykWbXeybcbdAXJIElgMAJ83xvUu41K1P8i8UyY2N0anlzWn
- ScQ7zGwlqui411Y+xNvOogZxstfWAiH7BmIa8VEmyROI/Dvmk14//zHTdict/XxCiLo1e1cZj
- SkO+QqHmXkm6OfJdXT+adjE5+tmW2OkjEP2AzuRGDB9iUIDbcgohBcrr6QvWUEB8+Q+CiqQUG
- GqrRX4oESZdOr8JVYSDNFmyzeYt7sJ4166uDtXhdOOmqw=
+UI-OutboundReport: notjunk:1;M01:P0:Bk/NNM03I3Q=;FCxIpSWRMV97v6EGnt1x7cf9r9y
+ WnjE8onyCLN81YsLmlHb+gaqBNah5/A9/2RMbEDxteKKosrJyWR6lloh4rugYwA8NtWK0jURT
+ uBKBfbBVqjAoSJrIHmA9hhGVwPbhbLPoUM0affCZDcQbB6PtLuD4bh+pv6OZZ/ORPCFzoXSrR
+ 6qzI35GG7qYlcX69b3Tie0TsJpJfSpOPAfNQ3hHko/q1uFgmkqygb+j7974CAlehidzdgsAwl
+ YijKXOp0ktdojP6ak8pYgeUIDsJly3WVV8qx+dkK9Itvj7WTSsHOJdGmxlH2uTJGRdNd1c5tz
+ 2GtPtyodfG6n5wgd97e5jLQ/CFBCp1NSpHNAQjQMHbtGqc+qbtqg/JaGfZ4Uz9ePT/Wcmh+OI
+ EPG+517UJVGdpXV0UxI9tMz3fylLWLzNWv4xXTPApQbnCUCjdqf9hOYkaKevYFO8cRKpTEjcS
+ KfbnoutZ8WUqvCy1fAEgEBDc4+jT9KzklPz5lb6YNHWuxtSTb5f7MlnVZhAhrxq6PFte60ryz
+ gzHqHR3/0usf8CprbRPryVox9z1QhdYWjAj7EKY92vDZYbeyRLRuW93aTYPULGd9/aqQg2pUw
+ v+1tFaR2tIGAWBNjpxfbtSlYEZMoMl6FQWYv7FUbCPAbw+k7H9MPjVzbOg7FZ7Qg/XRKg7CHR
+ QcZqr0FkvSO0juRHh19ztu2glnRRIgUI/1IfTa4iUV1zYySkOQEdggP74buWr8VXtVUTjlY/3
+ t+lh5V8dRqN4aK0T/oa6b+B9JPhV+7RLFAh/GKSEXHKL3kG1RWq4xme1Hh5YyW5sytYL7dRIQ
+ ObF9YWGLrxs/MiN5R15AE6YXUAF+r8Fof8KR36oiavgHU=
 
-Giving an argument to an option that doesn't take one causes Git to
-report that error specifically:
+Strip "no-" from arg and long_name before comparing them.  This way we
+no longer have to repeat the comparison with an offset of 3 for negated
+arguments.
 
-   $ git rm --dry-run=3Dbogus
-   error: option `dry-run' takes no value
-
-The same is true when the option is negated or abbreviated:
-
-   $ git rm --no-dry-run=3Dbogus
-   error: option `no-dry-run' takes no value
-
-   $ git rm --dry=3Dbogus
-   error: option `dry-run' takes no value
-
-Not so when doing both, though:
-
-   $ git rm --no-dry=3Dbogus
-   error: unknown option `no-dry=3Dbogus'
-   usage: git rm [-f | --force] [-n] [-r] [--cached] [--ignore-unmatch]
-
-(Rest of the usage message omitted.)
-
-Improve consistency and usefulness of the error message by recognizing
-abbreviated negated options even if they have a (most likely bogus)
-argument.  With this patch we get:
-
-   $ git rm --no-dry=3Dbogus
-   error: option `no-dry-run' takes no value
+Note that we must not modify the "flags" value, which tracks whether arg
+is negated, inside the loop.  When registering "--n", "--no" or "--no-"
+as abbreviation for any negative option, we used to OR it with OPT_UNSET
+and end the loop.  We can simply hard-code OPT_UNSET and leave flags
+unchanged instead.
 =2D--
- parse-options.c          |  5 +++--
- t/t0040-parse-options.sh | 16 ++++++++++++++++
- 2 files changed, 19 insertions(+), 2 deletions(-)
+ parse-options.c | 44 ++++++++++++++++++++++----------------------
+ 1 file changed, 22 insertions(+), 22 deletions(-)
 
 diff --git a/parse-options.c b/parse-options.c
-index 63a99dea6e..e4ce33ea48 100644
+index 008c0f32cf..d45efa4e5c 100644
 =2D-- a/parse-options.c
 +++ b/parse-options.c
-@@ -391,7 +391,7 @@ static enum parse_opt_result parse_long_opt(
- 					ambiguous_option =3D abbrev_option;
- 					ambiguous_flags =3D abbrev_flags;
- 				}
--				if (!(flags & OPT_UNSET) && *arg_end)
-+				if (*arg_end)
- 					p->opt =3D arg_end + 1;
- 				abbrev_option =3D options;
- 				abbrev_flags =3D flags ^ opt_flags;
-@@ -412,7 +412,8 @@ static enum parse_opt_result parse_long_opt(
- 			if (!skip_prefix(arg + 3, long_name, &rest)) {
- 				/* abbreviated and negated? */
- 				if (allow_abbrev &&
--				    starts_with(long_name, arg + 3))
-+				    !strncmp(long_name, arg + 3,
-+					     arg_end - arg - 3))
- 					goto is_abbreviated;
- 				else
- 					continue;
-diff --git a/t/t0040-parse-options.sh b/t/t0040-parse-options.sh
-index ec974867e4..8bb2a8b453 100755
-=2D-- a/t/t0040-parse-options.sh
-+++ b/t/t0040-parse-options.sh
-@@ -210,6 +210,22 @@ test_expect_success 'superfluous value provided: bool=
-ean' '
- 	test_cmp expect actual
- '
+@@ -382,28 +382,42 @@ static enum parse_opt_result parse_long_opt(
+ 	const struct option *options)
+ {
+ 	const char *arg_end =3D strchrnul(arg, '=3D');
++	const char *arg_start =3D arg;
++	enum opt_parsed flags =3D OPT_LONG;
++	int arg_starts_with_no_no =3D 0;
+ 	struct parsed_option abbrev =3D { .option =3D NULL, .flags =3D OPT_LONG =
+};
+ 	struct parsed_option ambiguous =3D { .option =3D NULL, .flags =3D OPT_LO=
+NG };
 
-+test_expect_success 'superfluous value provided: boolean, abbreviated' '
-+	cat >expect <<-\EOF &&
-+	error: option `yes'\'' takes no value
-+	EOF
-+	test_expect_code 129 env GIT_TEST_DISALLOW_ABBREVIATED_OPTIONS=3Dfalse \
-+	test-tool parse-options --ye=3Dhi 2>actual &&
-+	test_cmp expect actual &&
++	if (skip_prefix(arg_start, "no-", &arg_start)) {
++		if (skip_prefix(arg_start, "no-", &arg_start))
++			arg_starts_with_no_no =3D 1;
++		else
++			flags |=3D OPT_UNSET;
++	}
 +
-+	cat >expect <<-\EOF &&
-+	error: option `no-yes'\'' takes no value
-+	EOF
-+	test_expect_code 129 env GIT_TEST_DISALLOW_ABBREVIATED_OPTIONS=3Dfalse \
-+	test-tool parse-options --no-ye=3Dhi 2>actual &&
-+	test_cmp expect actual
-+'
+ 	for (; options->type !=3D OPTION_END; options++) {
+ 		const char *rest, *long_name =3D options->long_name;
+-		enum opt_parsed flags =3D OPT_LONG, opt_flags =3D OPT_LONG;
++		enum opt_parsed opt_flags =3D OPT_LONG;
++		int allow_unset =3D !(options->flags & PARSE_OPT_NONEG);
+
+ 		if (options->type =3D=3D OPTION_SUBCOMMAND)
+ 			continue;
+ 		if (!long_name)
+ 			continue;
+
+-		if (!starts_with(arg, "no-") &&
+-		    !(options->flags & PARSE_OPT_NONEG) &&
+-		    skip_prefix(long_name, "no-", &long_name))
++		if (skip_prefix(long_name, "no-", &long_name))
+ 			opt_flags |=3D OPT_UNSET;
++		else if (arg_starts_with_no_no)
++			continue;
 +
- test_expect_success 'superfluous value provided: cmdmode' '
- 	cat >expect <<-\EOF &&
- 	error: option `mode1'\'' takes no value
++		if (((flags ^ opt_flags) & OPT_UNSET) && !allow_unset)
++			continue;
+
+-		if (!skip_prefix(arg, long_name, &rest))
++		if (!skip_prefix(arg_start, long_name, &rest))
+ 			rest =3D NULL;
+ 		if (!rest) {
+ 			/* abbreviated? */
+-			if (!strncmp(long_name, arg, arg_end - arg)) {
++			if (!strncmp(long_name, arg_start, arg_end - arg_start)) {
+ 				register_abbrev(p, options, flags ^ opt_flags,
+ 						&abbrev, &ambiguous);
+ 			}
+@@ -412,24 +426,10 @@ static enum parse_opt_result parse_long_opt(
+ 				continue;
+ 			/* negated and abbreviated very much? */
+ 			if (starts_with("no-", arg)) {
+-				flags |=3D OPT_UNSET;
+-				register_abbrev(p, options, flags ^ opt_flags,
++				register_abbrev(p, options, OPT_UNSET ^ opt_flags,
+ 						&abbrev, &ambiguous);
+-				continue;
+-			}
+-			/* negated? */
+-			if (!starts_with(arg, "no-"))
+-				continue;
+-			flags |=3D OPT_UNSET;
+-			if (!skip_prefix(arg + 3, long_name, &rest)) {
+-				/* abbreviated and negated? */
+-				if (!strncmp(long_name, arg + 3,
+-					     arg_end - arg - 3))
+-					register_abbrev(p, options,
+-							flags ^ opt_flags,
+-							&abbrev, &ambiguous);
+-				continue;
+ 			}
++			continue;
+ 		}
+ 		if (*rest) {
+ 			if (*rest !=3D '=3D')
 =2D-
 2.44.0
 
