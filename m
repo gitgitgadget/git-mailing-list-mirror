@@ -1,199 +1,178 @@
-Received: from fhigh5-smtp.messagingengine.com (fhigh5-smtp.messagingengine.com [103.168.172.156])
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59C8538C
-	for <git@vger.kernel.org>; Sat, 24 Feb 2024 06:36:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B62A13FEA
+	for <git@vger.kernel.org>; Sat, 24 Feb 2024 07:58:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708756591; cv=none; b=m63cfLQCChdVW2YyJdccfY61LbfHtQsYqwB2lEc+ecwEiDqP7y1UbPr7+xoXXaAendL2SNykaOzUvZu3MnsfzjJRSsNVtVY3bciuqgEEOTx9k7jmGA0HtBcTO77tpLsWjYukE+rnerad+7lQpTRPpshczdMQPT7TZLnlX41vGo8=
+	t=1708761534; cv=none; b=upjOHfo/uqCCUQrfLYmxhBPlrHB0iv5r4ylpj4g7v+nO8enV69d5bAI+m/kOnWQ4ixL8GsH+W8Txp/HMa7uK4l+s55J4tYf1i/xtfuFenYJGnwty984VFAsdiNwS/XtKCdM0S/aUpN8TSCKlVxgoK5BIV1qkGnYeDoD4t9rjK3A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708756591; c=relaxed/simple;
-	bh=hPY79wZDVPWr8b5OmqYMKVq5xn3Z1FO9KfUE6/TRFsI=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=IeH1dKEAGeFQLt16xOYg9binrjIQioqCffv3Z0MPkcC+LZrUZNlW0cC4MDGCru0LTettwrplwJtiMN10fCrsKWoCE/yuaxG/8PMptA6mos7kQNoEF+R7BG90b/CcICa6lwIRd7RtksFbrYeYqCCdb6qBKwkR3sM7V87ONeOHqeo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=BnQ6vtqR; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=efDa2cTF; arc=none smtp.client-ip=103.168.172.156
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1708761534; c=relaxed/simple;
+	bh=WhDnskvfkplvQVMnb7gJowI4MUx15DDVe+W/k7l47xI=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=M0jDL81alxFy4iTQDOaEHkHFqrm10jaYVGkzRYh771uKE6/VJk9ADsIQSYI1agd24CEvflphgGHceftZWJj5fsZ0NcOZOTdIqFXbz5uCJnqMnt6Vhb66by0UACMbMusHfZsCV0nkZrbWQ9q6D9lBC+eJF6pzrqEQfWW3tzejBoM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=CaJIx+Tq; arc=none smtp.client-ip=173.228.157.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="BnQ6vtqR";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="efDa2cTF"
-Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
-	by mailfhigh.nyi.internal (Postfix) with ESMTP id 38D7011400D5;
-	Sat, 24 Feb 2024 01:36:27 -0500 (EST)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute1.internal (MEProxy); Sat, 24 Feb 2024 01:36:27 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1708756587; x=1708842987; bh=W0+smJsRtZ
-	FacO10MdjGipaBthjwKTvq//7WJHveJRo=; b=BnQ6vtqRByODgThp8y+MDJV5my
-	H4x92NrrViCdY1Vr2sXLSoh9psPauhRcs7YY7BwHdydFdFj2KjxyjKJ1UAkgQeDb
-	kmNjT5cq3LAKxkG5pdn8CPJenv2XhUCCRLAIJri7MjwQ8bNHcjtz9udn3D5CxB3f
-	54xOu9QuPOWXQ+PIv4R0npGTUfPG5xzwSMYgzyayY5+k+4BE+C7UjlY5k8z/hH0O
-	aIRr+7mjqx7crV7L89nI2wcSITdcq/b3mBfhg60jLSHHY2/7pAQt96ZXi6MizeMF
-	VGCsLyXXzIUa8qUZadkmP7sEaZg3heFYvNb+sd9wlaQZpiotZyWo3b+x7amg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1708756587; x=1708842987; bh=W0+smJsRtZFacO10MdjGipaBthjw
-	KTvq//7WJHveJRo=; b=efDa2cTFdvVCIK4CF8tmRZ+Tkj+hu1T1sCe4BE33WzXu
-	uZkez0GTbX+bHy2JzgOEus0BdNnt96PNZFyQ49iCx6SB1COt9nCYvcR8NzyvFgmF
-	E11Em7ihSm4isSjJAGVOKh2mmh4bbNrkqGfWz1mzhiGqzvKsESz4PHkVaz4vRqpn
-	fgZte5X6c5jbMSoOBHmP8MtEGd7lSKn6mxRQnCf5EkeRD9ZVDlVUWZU4TKpzt664
-	vG1cp4/JwwZv1hRePsmQlcNzQi+UjHOIZWv5IKqv2JIvkkE7uNklI54L7Yiqhqml
-	zNyTIoQYmfwB8BwvsfO0JRg/5RhlzN2LQ+uFZHg2Mg==
-X-ME-Sender: <xms:a47ZZdz7Az5X8PyAy-NaD1dS5zL6_2h0sBgqFgW0VNrFFW4YRA5C4A>
-    <xme:a47ZZdQAwDrx9ANe2XveX_e4or0qu0gePHExZ43Sv5nGaQfFIbTtEGlYvdHK0Pp6o
-    bfAPL_raZ7fWXc87A>
-X-ME-Received: <xmr:a47ZZXUqTxevURMzinn_ITOd7A5ZT9llnG3WEiurRXqqjS3-oRbn7Q-B5CG6UMWoCCoA9Feq2HM_2FDTrmOUUp6UbDqtHFxd-nnzASpHilPzLqBl>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrfeejgdeliecutefuodetggdotefrodftvf
-    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
-    uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
-    fjughrpeffhffvvefukfhfgggtuggjsehgtderredttddvnecuhfhrohhmpefrrghtrhhi
-    tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
-    hnpeeukedtvedtffevleejtefgheehieegkeeluddvfeefgeehgfeltddtheejleffteen
-    ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
-    hkshdrihhm
-X-ME-Proxy: <xmx:a47ZZfidmes_W9_Si3p4fjC8wOpSKnyV09-vsAMheRVR0dM_NE5fFg>
-    <xmx:a47ZZfDWOEEHPuaamS1UEZGH0wiH-8wZioALMWj-7YonWDQMpWUUsQ>
-    <xmx:a47ZZYLAdZyv3Xl6Jxpx9XbURd7X1iY9qpInwT94hMKgKeRPSssjBg>
-    <xmx:a47ZZa-fQIJdynaOKrots-a6dzjWYfLI1KA3uBqvycaS7MR1P3ymcg>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
- 24 Feb 2024 01:36:26 -0500 (EST)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id e59091ea (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Sat, 24 Feb 2024 06:32:13 +0000 (UTC)
-Date: Sat, 24 Feb 2024 07:36:21 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: Mike Hommey <mh@glandium.org>
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	git-packagers@googlegroups.com
-Subject: Re: [ANNOUNCE] Git v2.44.0
-Message-ID: <ZdmOZRjJ-mClBR02@framework>
-References: <xmqqbk87w164.fsf@gitster.g>
- <20240224051040.ftuo24smozqugbde@glandium.org>
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="CaJIx+Tq"
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id 83C4427BAA;
+	Sat, 24 Feb 2024 02:58:47 -0500 (EST)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=WhDnskvfkplvQVMnb7gJowI4MUx15DDVe+W/k7
+	l47xI=; b=CaJIx+TquuzchMp0H8njXz6K19wmv0Tt0roWyu83APREI87XsKVfH+
+	FJo2fs/Kdh6Uaxo02dZw6xSTlqjPLkRirxvukbz5nLYZMBWKaL8Kar5mWBCH9zNb
+	nl/k5kdBIih1FOAt0Tfue9U40v7pLhKAKbaqVWXBkRlQEdm308j0g=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id 6FB4627BA9;
+	Sat, 24 Feb 2024 02:58:47 -0500 (EST)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.176.30])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 00CE727BA8;
+	Sat, 24 Feb 2024 02:58:43 -0500 (EST)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Kyle Lippincott <spectral@google.com>
+Cc: Calvin Wan <calvinwan@google.com>,  git@vger.kernel.org,  Jonathan Tan
+ <jonathantanmy@google.com>,  phillip.wood123@gmail.com
+Subject: Re: [PATCH v5 1/3] pager: include stdint.h because uintmax_t is used
+In-Reply-To: <CAO_smVh6PyxbnXfo0K1aDjEFPc3jTF4X_grerkxNZJdQe8V3sg@mail.gmail.com>
+	(Kyle Lippincott's message of "Fri, 23 Feb 2024 17:33:02 -0800")
+References: <cover.1696021277.git.jonathantanmy@google.com>
+	<20240222175033.1489723-2-calvinwan@google.com>
+	<CAO_smVh6PyxbnXfo0K1aDjEFPc3jTF4X_grerkxNZJdQe8V3sg@mail.gmail.com>
+Date: Fri, 23 Feb 2024 23:58:42 -0800
+Message-ID: <xmqqv86eqonh.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="InqMLgLNVfxIuQNA"
-Content-Disposition: inline
-In-Reply-To: <20240224051040.ftuo24smozqugbde@glandium.org>
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 87F4E0B8-D2EA-11EE-8A0D-A19503B9AAD1-77302942!pb-smtp21.pobox.com
+
+Kyle Lippincott <spectral@google.com> writes:
+
+> As far as I can tell, we need pager.h because of the `pager_in_use`
+> symbol. We need that symbol because of its use in date.c's
+> `parse_date_format`. I wonder if we can side step the `#include
+> <stdint.h>` concerns by splitting pager.h into pager.h and
+> pager_in_use.h, and have pager.h include pager_in_use.h instead. This
+> way pager.h (and its [unused] forward declarations) aren't part of
+> git-std-lib at all.
+
+Step back a bit.  Why do you even need to touch pager.h in the first
+place?  Whatever thing that needs to define a mock version of
+pager_in_use() would need to be able to find out that it is supposed
+to take nothing as arguments and return an integer, and it can
+include <pager.h> without modification.  Just like everybody else,
+it has to include <git-compat-util.h> so that the system header that
+gives us uintmax_t gets include appropriately in platform-dependent
+way, no?  Why do we even need to butcher pager.h into two pieces in
+the first place?
+
+If you just include <git-compat-util.h> and then <pager.h> in
+stubs/pager.c and you're OK, no?
+
+If anything, as I already said, I think it is more reasonable to
+tweak what <git-compat-util.h> does.  For example, it might be
+unwieldy for gitstdlib's purpose that it unconditionally overrides
+exit(), in which case it may be OK to introduce some conditional
+compilation macros to omit that override when building stub code.
+Or even split parts of the <git-compat-util.h> that both Git's use
+and gitstdlib's purpose are OK with into a separate header file
+<git-compat-core.h>, while leaving (hopefully a very minor) other
+parts in <git-compat-util.h> *and* include <git-compat-core.h> in
+<git-compat-util.h>.  That way, the sources of Git can continue
+including <git-compat-util.h> while stub code can include
+<git-compat-core.h>, and we will get system library symbols and
+system defined types like uintmax_t in a consistent way, both in Git
+itself and in gitstdlib.
+
+But once such a sanitization is done on the compat-util header,
+other "ordinary" header files that should not have to care about
+portability (because they can assume that inclusion of
+git-compat-util.h will give them access to system types and symbols
+without having to worry about portability issues) and should not
+have to include system header files themselves.
+
+At least, that is the idea behind <git-compat-util.h> in the first
+place.  Including any system headers directly in ordinary headers,
+or splitting ordinary headers at an arbitrary and artificial
+boundary, should not be necessary.  I'd have to say that such
+changes are tail wagging the dog.
+
+I do not have sufficient cycles to spend actually splitting
+git-compat-util.h into two myself, but as an illustration, here is
+how I would tweak cw/git-std-lib topic to make it build without
+breaking our headers and including system header files directly.
+
+ git-compat-util.h | 2 ++
+ pager.h           | 2 --
+ stubs/misc.c      | 4 ++--
+ stubs/pager.c     | 1 +
+ 4 files changed, 5 insertions(+), 4 deletions(-)
+
+diff --git c/git-compat-util.h w/git-compat-util.h
+index 7c2a6538e5..981d526d18 100644
+--- c/git-compat-util.h
++++ w/git-compat-util.h
+@@ -1475,12 +1475,14 @@ static inline int is_missing_file_error(int errno_)
+ 
+ int cmd_main(int, const char **);
+ 
++#ifndef _GIT_NO_OVERRIDE_EXIT
+ /*
+  * Intercept all calls to exit() and route them to trace2 to
+  * optionally emit a message before calling the real exit().
+  */
+ int common_exit(const char *file, int line, int code);
+ #define exit(code) exit(common_exit(__FILE__, __LINE__, (code)))
++#endif
+ 
+ /*
+  * You can mark a stack variable with UNLEAK(var) to avoid it being
+diff --git c/pager.h w/pager.h
+index 015bca95e3..b77433026d 100644
+--- c/pager.h
++++ w/pager.h
+@@ -1,8 +1,6 @@
+ #ifndef PAGER_H
+ #define PAGER_H
+ 
+-#include <stdint.h>
+-
+ struct child_process;
+ 
+ const char *git_pager(int stdout_is_tty);
+diff --git c/stubs/misc.c w/stubs/misc.c
+index 8d80581e39..d0379dcb69 100644
+--- c/stubs/misc.c
++++ w/stubs/misc.c
+@@ -1,5 +1,5 @@
+-#include <assert.h>
+-#include <stdlib.h>
++#define _GIT_NO_OVERRIDE_EXIT
++#include <git-compat-util.h>
+ 
+ #ifndef NO_GETTEXT
+ /*
+diff --git c/stubs/pager.c w/stubs/pager.c
+index 4f575cada7..04517aad4c 100644
+--- c/stubs/pager.c
++++ w/stubs/pager.c
+@@ -1,3 +1,4 @@
++#include <git-compat-util.h>
+ #include "pager.h"
+ 
+ int pager_in_use(void)
 
 
---InqMLgLNVfxIuQNA
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-On Sat, Feb 24, 2024 at 02:10:40PM +0900, Mike Hommey wrote:
-> Hi,
->=20
-> On Fri, Feb 23, 2024 at 09:17:07AM -0800, Junio C Hamano wrote:
-> > Patrick Steinhardt (139):
-> >       builtin/clone: create the refdb with the correct object format
->=20
-> I haven't analyzed how/why exactly yet, but I've bisected a regression
-> in the behavior of is_git_directory() during a clone to originate from
-> this change.
->=20
-> Here's a way to reproduce the problem:
->=20
-> ```
-> $ cat > git-remote-foo <<EOF
-> #!/bin/sh
-> git config --local -l >&2
-> exit 1
-> EOF
-> $ chmod +x git-remote-foo
-> $ PATH=3D$PWD:$PATH git clone foo::bar
-> ```
->=20
-> With versions < 2.44.0, it displays the local configuration, e.g.:
-> ```
-> core.repositoryformatversion=3D0
-> core.filemode=3Dtrue
-> core.bare=3Dfalse
-> core.logallrefupdates=3Dtrue
-> remote.origin.url=3Dfoo::bar
-> ```
->=20
-> but with 2.44.0, it fails with:
-> ```
-> fatal: --local can only be used inside a git repository
-> ```
-
-Thanks for your report!
-
-This has to be because we now initialize the refdb at a later point. The
-problem here was that before my change, we initialized the refdb at a
-point when it wasn't clear what the remote actually used as the object
-format. The consequence was twofold:
-
-  - Cloning a repository with bundles was broken in case the remote uses
-    the SHA256 object format.
-
-  - Cloning into a repository that uses reftables when the remote uses
-    the SHA256 object format was broken, too.
-
-Both of these have the same root cause: because we didn't connect to the
-remote yet we had no idea what object format the remote uses. And as we
-initialized the refdb early, it was then initialized with the default
-object format, which is SHA1.
-
-The change was to move initialization of the refdb to a later point in
-time where we know what object format the remote uses. By necessity,
-this has to be _after_ we have connected to the remote, because there is
-no way to learn about it without connecting to it.
-
-One consequence of initializing the refdb at a later point in time is
-that we have no "HEAD" yet, and a repo without the "HEAD" file is not
-considered to be a repo. Thus, git-config(1) would now rightfully fail.
-
-I assume that you discovered it via a remote helper that does something
-more interesting than git-config(1). I have to wonder whether we ever
-really specified what the environment of a remote helper should look
-like when used during cloning. Conceptually it doesn't feel _wrong_ to
-have a not-yet-initialized repo during clone.
-
-But on the other hand, regressing functionality like this is of course
-bad. I was wondering whether we can get around this issue by setting
-e.g. GIT_DIR explicitly when spawning the remote helper, but I don't
-think it's as easy as that.
-
-Another idea would be to simply pre-create HEAD regardless of the ref
-format, pointing to an invalid ref "refs/heads/.invalid". This is the
-same trick we use for the reftable backend, and should likely address
-your issue.
-
-I will have a deeper look on Tuesday and send a patch.
-
-Patrick
-
---InqMLgLNVfxIuQNA
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmXZjmAACgkQVbJhu7ck
-PpTY7w//eUbqRXOuVqracVkaDQ9Bg3wqC8vxBhxoUpRWUtkVIzLUh9R4hnW4+DV+
-Si6zKozUIHDhVyepR8lzreIVnmIz1XZUkATkpy4LDqP/EG6Viqt4ECFQACyPnWE5
-EXf2weTr8UneIDxZVaz5CLQ5hJ7dX9U5M8xagxtI3iZnL5dVIyuBbwHK4BvDK3bl
-v+2EkyQtrzbx00zjpHXTUvVyXQivpg4gPp9dfldOWknfrknrNUK+3yI8+UxjBYyV
-TFuw/n3ImVjHz63WGgq46kqVR4L1GHoHlaYdvRXWqrtzXxhYZlZqC9aFdDQJAbo9
-aKzIkNH85EJzCi/gAOUwGjv0oqrG2IMldUn2pFE+7p1xypspwNcNeTPwuTKvAbBH
-cBC483L4d4P4865qNDBfmer4qK2mAjvBg8wsPXq1/ev5AWqZ+YpQk3AHIR3Su3iP
-9pokZyI/wLkMRZSG1Aka1VRTAeUebponUqq7fF34wbIIagt36CoYYBJTWaKOFv6y
-SuDAuno4WZPMHnTXiLd/csMIzev4b9htRlcVXtrGy/3Znw96/BUZtfl6jCxzavth
-ILppQIiNhNO2EbADQM9t9jemQN4ZIJmd++jZXzAqVXlHsmnbd/JCzPPQrXpcJUyQ
-ZC4X0MMGD5FOzLD9EWJZtZFeJjh+cZAPArpozeDX/aBg45NaWPE=
-=tURc
------END PGP SIGNATURE-----
-
---InqMLgLNVfxIuQNA--
