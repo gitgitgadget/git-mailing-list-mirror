@@ -1,185 +1,119 @@
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+Received: from vuizook.err.no (vuizook.err.no [178.255.151.162])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD6B513FF6
-	for <git@vger.kernel.org>; Sat, 24 Feb 2024 19:04:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 628704C63D
+	for <git@vger.kernel.org>; Sat, 24 Feb 2024 19:56:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=178.255.151.162
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708801500; cv=none; b=EKQgEkgO92AVPqdqeSuOjveTC3NvInKEgG+fcxhRxqgglaTQYC0oB2mUfgUC3dBLiJh80TzRLCzuYp0+ufLcO6T+wsche9a5J/CMGQEW/J0B7Hk28K4/nxp0XE6gcz4vYuT8lSGbUmqx4xWgLy2Hd6Nq3w37dPpAKwAvYXa7hFA=
+	t=1708804568; cv=none; b=O5rStAK2pi+0V9vaCKZouvNjSp172EVPrb71zBG8W32UcMRrjMDk4r+T+hLDSi9Y7AvZ6MEb5B8ByEmmtnBNuNRrqUe1DnYw+ssvCrgVWLPTa0E+MYf6FQyfF6NqW+KEs7WnPvFKZcxL5hYKKczUnF2bZvH870OTWbzg7ov2h64=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708801500; c=relaxed/simple;
-	bh=IjuzTlKsquQBAvBJmSkriHPKGIoaNYEVmowJrxaZb0s=;
-	h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type; b=EEKmvA73ZuhfVjUmu+Eu9+ulpy6at/2fk0/SCOvepiqJ+eoegByub1ZoO39HnPx3vzaDAci6b2jwQlBkjNgzZKmK5YFRQCZq7wH0KOttE2g4bFNPlniAQqIcIa7NDuzWhw5LlF1VZyxRncgzOygU15s8zkGSPmUjApLqis+vQno=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=cVH06CH2; arc=none smtp.client-ip=173.228.157.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="cVH06CH2"
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id 60A702B3B5;
-	Sat, 24 Feb 2024 14:04:57 -0500 (EST)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to
-	:subject:date:message-id:mime-version:content-type; s=sasl; bh=I
-	juzTlKsquQBAvBJmSkriHPKGIoaNYEVmowJrxaZb0s=; b=cVH06CH27vsVhmB1p
-	8NgWEEadf7gWQQLiAutEwcHHOhAXJkK6jcTmvXcq59gHGgWCQx1AOQ/puozUJJay
-	0bK3tmI9cOyvIOiGRF4eUmC0UM+xvWodfbr7l//nFxrek0QDbnlzFVc6SdqUBwSo
-	uw5cbQd89UWGRDLUqQYNoG1xRA=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id 58D5B2B3B4;
-	Sat, 24 Feb 2024 14:04:57 -0500 (EST)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.176.30])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 022A82B3B3;
-	Sat, 24 Feb 2024 14:04:53 -0500 (EST)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-Subject: [RFD] should "git log --graph -g" work and if so how?
-Date: Sat, 24 Feb 2024 11:04:52 -0800
-Message-ID: <xmqqo7c5n0ob.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	s=arc-20240116; t=1708804568; c=relaxed/simple;
+	bh=RhMJO/4izJeXMc0Agpv4Mo/eIdMI8iFwBhwYzSBY1kg=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=dqCRF2Z3Ul0ctV6qgjbE4AcMlduVQUTyhmELHVbWJURfFkk69g4AHqDbzCcNKjbhGY5z00oPoWvSZ53hJ0nKhJgeiBoJFHSp387CpllEu96DmcwH75yhWjYa8JS6/Uk6xqQo/u9sa8BAcGR2S0aFFMgie8c4RCjg1lnvd5msEC8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=glandium.org; spf=pass smtp.mailfrom=glandium.org; arc=none smtp.client-ip=178.255.151.162
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=glandium.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=glandium.org
+Received: from p3418120-ipxg00d01tokaisakaetozai.aichi.ocn.ne.jp ([114.171.163.120] helo=glandium.org)
+	by vuizook.err.no with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.96)
+	(envelope-from <mh@glandium.org>)
+	id 1rdy7o-00ASJM-00;
+	Sat, 24 Feb 2024 19:55:56 +0000
+Received: from glandium by goemon.lan with local (Exim 4.96)
+	(envelope-from <mh@glandium.org>)
+	id 1rdy7i-000qFT-0G;
+	Sun, 25 Feb 2024 04:55:50 +0900
+Date: Sun, 25 Feb 2024 04:55:50 +0900
+From: Mike Hommey <mh@glandium.org>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	git-packagers@googlegroups.com
+Subject: Re: [ANNOUNCE] Git v2.44.0
+Message-ID: <20240224195550.ignhzidmdy3ce6q4@glandium.org>
+X-GPG-Fingerprint: 182E 161D 1130 B9FC CD7D  B167 E42A A04F A6AA 8C72
+References: <xmqqbk87w164.fsf@gitster.g>
+ <20240224051040.ftuo24smozqugbde@glandium.org>
+ <ZdmOZRjJ-mClBR02@framework>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- 97EF2A52-D347-11EE-AB52-A19503B9AAD1-77302942!pb-smtp21.pobox.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <ZdmOZRjJ-mClBR02@framework>
 
-Outside work, I keep one repository that keeps copies of a subset of
-what is available elsewhere (but that is not version controlled in
-any way), and in this repository, I do either one of two operations:
+On Sat, Feb 24, 2024 at 07:36:21AM +0100, Patrick Steinhardt wrote:
+> Thanks for your report!
+> 
+> This has to be because we now initialize the refdb at a later point. The
+> problem here was that before my change, we initialized the refdb at a
+> point when it wasn't clear what the remote actually used as the object
+> format. The consequence was twofold:
+> 
+>   - Cloning a repository with bundles was broken in case the remote uses
+>     the SHA256 object format.
+> 
+>   - Cloning into a repository that uses reftables when the remote uses
+>     the SHA256 object format was broken, too.
+> 
+> Both of these have the same root cause: because we didn't connect to the
+> remote yet we had no idea what object format the remote uses. And as we
+> initialized the refdb early, it was then initialized with the default
+> object format, which is SHA1.
+> 
+> The change was to move initialization of the refdb to a later point in
+> time where we know what object format the remote uses. By necessity,
+> this has to be _after_ we have connected to the remote, because there is
+> no way to learn about it without connecting to it.
+> 
+> One consequence of initializing the refdb at a later point in time is
+> that we have no "HEAD" yet, and a repo without the "HEAD" file is not
+> considered to be a repo. Thus, git-config(1) would now rightfully fail.
+> 
+> I assume that you discovered it via a remote helper that does something
+> more interesting than git-config(1).
 
- * I "fetch" the latest state of the things I keep track of from
-   that "elsewhere", and then record that state as a "snapshot".
+Indeed, my own usecase is a remote helper that uses libgit.a and uses
+is_git_directory indirectly, but I could imagine other remote helpers that
+could be using other git commands that rely on is_git_directory
+returning true.
 
- * I update the "subset" I keep track of from that "elsewhere",
-   download that new part of the subset, and then record the result
-   as a commit with messages like "add 'foo'" or "drop 'bar'".
+> I have to wonder whether we ever
+> really specified what the environment of a remote helper should look
+> like when used during cloning. Conceptually it doesn't feel _wrong_ to
+> have a not-yet-initialized repo during clone.
 
-One curiosity is that I do not care too much about "snapshot"; the
-latest state is often enough, so when the topmost one is a snapshot,
-I may "amend" it when making a new "snapshot", instead of making two
-or more consecutive "snapshot" commits (when the topmost "snapshot"
-is too old, I may choose to add a new shapshot on top of it, but
-let's ignore that for simplicity).
+How about this: it should look like what you'd get from
+`git init $repo`.
 
-    if I am doing a snapshot
-    then
-	fetch what I've been tracking from "elsewhere"
-	"git add ."
-	if the topmost commit is an earlier "snapshot"
-	then
-		"git commit --amend -m 'snapshot as of ...'"
-	else
-		"git commit -m 'snapshot as of ...'"
-	fi
-    elif I am adding new things to be tracked
-    then
-	fetch the new part of "elsewhere"
-	"git add ."
-	"git commit -m 'add ...'
-    fi
+> But on the other hand, regressing functionality like this is of course
+> bad. I was wondering whether we can get around this issue by setting
+> e.g. GIT_DIR explicitly when spawning the remote helper, but I don't
+> think it's as easy as that.
 
-After I started from empty, started tracking 'foo' and then a few
-days later started tracking 'bar', and then started taking snapshots
-on 2024-02-22 and took one every day, I may end up with a history
-that "git show-branch -g" may give me something like this:
+GIT_DIR is already set when spawning the remote helper. My remote helper
+is using setup_git_directory_gently and uses the value of nongit_ok for
+the cases where the executable is used without being wrapped by git (it
+provides extra commands), I guess I could use whether GIT_DIR is set as
+a workaround.
 
-    $ git show-branch -g5
-    ! [master@{0}] (24 minutes ago) commit {amend}: snapshot as of 2024-02-24
-     ! [master@{1}] (1 day ago) commit (amend): snapshot as of 2024-02-23
-      ! [master@{2}] (2 days ago) commit: snapshot as of 2024-02-22
-       ! [master@{3}] (3 days ago) commit: add 'bar'
-        ! [master@{4}] (7 days ago) commit: add 'foo'
-    -----
-    +     [master@{0}] snapshot as of 2024-02-24
-     +    [master@{1}] snapshot as of 2024-02-23
-      +   [master@{2}] snapshot as of 2024-02-22
-    ++++  [master@{3}] add 'bar'
-    +++++ [master@{4}] add 'foo'
+> Another idea would be to simply pre-create HEAD regardless of the ref
+> format, pointing to an invalid ref "refs/heads/.invalid". This is the
+> same trick we use for the reftable backend, and should likely address
+> your issue.
 
-and that output is sort-of readable (if you have seen and know how
-to read what show-branch produces, that is), but the command way
-predates commit slabs and uses the usual object flag bits, so it is
-limited to show only 25 or so commits [*1*].
+The interesting thing is that `git init $repo` does give you an invalid
+HEAD (and that's what would happen during git clone too), with either
+```
+ref: refs/heads/master
+```
+or
+```
+ref: refs/heads/main
+```
+depending on configuration.
 
-Now, if I could run
-
-    $ git log --oneline --graph -g --since=2024-02-20 --boundary
-
-on the result, such a history might look like this:
-
-    * snapshot as of 2024-02-24 (HEAD)
-    | * snapshot as of 2024-02-23 (HEAD@{1})
-    |/
-    | * snapshot as of 2024-02-22 (HEAD@{2})
-    |/
-    * add 'bar' (HEAD~1)
-    o add 'foo' (HEAD~2)
-
-to show the same history.
-
-Unfortunately, "--graph" and "-g" does not mix X-<.
-
-So, the RFD is,
-
- (1) Should "git log" learn a trick to show a history like this in a
-     readable way?  Does it have utility outside this use case of
-     mine?  I am not interested in adding a new feature just for
-     myself ;-)
-
- (2) The use case requires a solution to look at reflog entries, but
-     it does not need to "walk" reflog [*2*].  Should such a feature
-     still be tied to the "-g" flag, or should we want a separate
-     flag?
-
- (3) What should the UI and the implementation look like?  "Show me
-     what happened to this branch since 2024-02-20, including what
-     is in reflog" that results in:
-
-     - we first enumerate commits on the reflog of this branch that
-       were made since the given date.
-
-     - we then pretend as if all of these commits were given on the
-       command line of "git log --oneline --graph", with some other
-       commits that probably are ancestors of these commits marked
-       as UNINTERESTING.
-
-     may be a promising approach to go.  In the sample history
-     depicted above, we would want an equivalent to
-
-       $ git log --oneline --graph HEAD HEAD@{1} HEAD@{2} --not HEAD~2
-
-     where the positive commits are gathered by inspecting the
-     reflog for commits newer than 2024-02-20, and then list of
-     negative commits (HEAD~2 in this case) is somehow computed to
-     stop the usual "git log" traversal from these positive commits
-     after showing all of them (and before showing other commits not
-     in that initial set).
-
-Thoughts?
-
-
-[Footnotes]
-
- *1* It may be an interesting side project to teach show-branch to
-     store the bits it uses to paint commits in commit slabs,
-     instead of using the object flags, to lift this limitation.
-     I'll not put the l e f t o v e r b i t s label on this item, as
-     it certainly is an interesting exercise but its usefulness is
-     rather dubious.
-
- *2* "walking" reflog stresses the fact that HEAD@{2} came
-     immediately before HEAD@{1} which came immediately before
-     HEAD@{0} (or HEAD, which are equivalents), but in this use
-     case, it is equally (if not more) important that the snapshots
-     taken on 2024-02-22, 2024-02-23, and on 2024-02-24 are more or
-     less equals, with the latest one a bit more important than
-     others because it is on the branch while the other ones are not
-     and merely appear in the reflog.
+Mike
