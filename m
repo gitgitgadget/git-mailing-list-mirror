@@ -1,98 +1,123 @@
-Received: from mail-ed1-f43.google.com (mail-ed1-f43.google.com [209.85.208.43])
+Received: from mail-il1-f179.google.com (mail-il1-f179.google.com [209.85.166.179])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55E4211190
-	for <git@vger.kernel.org>; Sat, 24 Feb 2024 11:27:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C81811701
+	for <git@vger.kernel.org>; Sat, 24 Feb 2024 17:34:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708774078; cv=none; b=BM0YHSoFcCZXx+d0rXQuB/3OrUpy5ZPAnR9RDK3cs5YUznOXS4fZb17cs34ZnNBWGo8X9ccOYnBPoyzeBDFCYvNA945OosZg+hwnbCUnsQkG2BlD5TvgvnNm5cVn73gxsmUsc1yAVpBG5XJGKjFRSWPYZrXgwHcJC/7wQA2iY0I=
+	t=1708796075; cv=none; b=XUbqV9Tp+ETbybfA9nnTg3IstchE4LE7+ydMyO02ZkTTPB/lO6kYj3GRq7sqC5A1S0Dym+eAUU4oWxhk1Bm44tD4n4qTnXEn02r85ehE0y9yTdvYO+KLUC08HRtRPLJ5ED9k9uwzfUMapmy2w722dBTwczaj/dDhSQucBbo3Ops=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708774078; c=relaxed/simple;
-	bh=SfT4UdvkEXGhWa3qKX2hto9LQZyEMT75eCuH8sqfNDI=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jiJDFRqmGG1Qb+tGhXUaWbtotPmzyB5VCWuWNWYIqGqOTyI+5Oshs8ilSUE626vMdCxUKXV/xWmDY6ovQh3dWLNrceBL5vY1GI7nHkwEqQNxdMNlfzhvQLAS2DuXA0EG+ZY2Y6+Sg3PlJeFv/t6QJavsFtyxS/wA1rcjJ8jUFt8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=G4K21bwR; arc=none smtp.client-ip=209.85.208.43
+	s=arc-20240116; t=1708796075; c=relaxed/simple;
+	bh=eZjj2QO4oEI196jBMGNhvPpYPjCBVH19vluj5ou0MW0=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=j9ya16r7w/iQbdItzRP4/2VsqXgYsHNVeUAk6FnupQSV2fCxYsJPD2vObmXcdUT4Y6eRzteeT4ruwekqPr/i40bCWxSEWC/pIHd//UeyDvCEjGLCpbC8WNw/56YxQrLP2+a1xZOjtzoYgSIjQLEQmU8G2XQJj7OQcxlK9fphQh0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=F0Sg81t5; arc=none smtp.client-ip=209.85.166.179
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="G4K21bwR"
-Received: by mail-ed1-f43.google.com with SMTP id 4fb4d7f45d1cf-564fd9eea75so1675970a12.3
-        for <git@vger.kernel.org>; Sat, 24 Feb 2024 03:27:57 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="F0Sg81t5"
+Received: by mail-il1-f179.google.com with SMTP id e9e14a558f8ab-365124888a5so5101665ab.1
+        for <git@vger.kernel.org>; Sat, 24 Feb 2024 09:34:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1708774075; x=1709378875; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1708796073; x=1709400873; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=bTvQoK4G3hhcyt3MWngXmiyhZw8QOQBtFdTnT1Z/njo=;
-        b=G4K21bwRhC7AMRbb4jUDpjyezSNmrPQEQZF4rP2QmgIq39ttKbyo3yEnmZczJ+WyjD
-         YntyrWPVGqf6XndU1bc34FVr4BFROazMWMpTbM2VvHY7cCqGCqX4z3o6gDMSPqrSJZJX
-         hP+gSBgUjyzutLDXSHgbKSYWl/mXlLtXyWRyOM8BH3rfdN52xjlO/E0KpnXEOADjltfC
-         j7DSULi78abGw4axld5dXwr1K4bYg2dhdRF2s+Ghp6jHvO/DKMMypUr/Qz9IaK1Oi0U6
-         Bv8nSAcBeLs3hkt7QDZT856YonxPTLScwphWct+7rTFoXRAn9CQahOSYivnAurv7IvtS
-         M05w==
+        bh=eZjj2QO4oEI196jBMGNhvPpYPjCBVH19vluj5ou0MW0=;
+        b=F0Sg81t53FAnQt2Dt0oW12hYMzVVG+6oGKmcAKJaCmSYscZQw/4ygMQBPTZZteoRMo
+         MiPEivaykpddopKVXdwMbDGr1Rl8Lx0wO4ZNBtbi1SYvklSvpDMFi3tPO7fZJUC90260
+         +GRlV9uGZwQH3UQjSubEers4rAnuY4EYHOr3uRjMJPONvkqwFgjVf53LdqEKdEt8ahhC
+         iGUintF+M24pxnXn4M7ccw3wPdD+4IvXjRvSSOmE9JQO55R9184BSG3ChAIHFnwtb8SR
+         gMa79lr9xhpXhEz1lfql3Lt9TtQS+KNaVYD3wrkabScir8TDcXwtzPfmauN5OWjyKaja
+         c60A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1708774075; x=1709378875;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+        d=1e100.net; s=20230601; t=1708796073; x=1709400873;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=bTvQoK4G3hhcyt3MWngXmiyhZw8QOQBtFdTnT1Z/njo=;
-        b=kSc1SLaaXV7xpkICYDcgSNNCGg1sjoH9EBmgDNH+zc0H5nNbNOyzWySEel772zElky
-         sYDqB1ynuPgNYB7LU5FDBC48Sk+qXr8ZRQe8G8KFngIzGLMuiWNtQO0hId2/7gPkYqT1
-         IXXOmVdbFOM5BGvGIJsDLnPT2drlFcFqWDfycQL3IPmEJ/h0zrQxoH68R3MuXD2r0Oqa
-         0Ggs5vKdLx7BgiUUzqbwocLSVxU0VMfDhf5MpNFyJI3BHPPxV+QfKvKVrn1G+zPoGFMm
-         2obKXeVqXy19PmqT7YcgKgAxvL+09rN+FLL4IcYj7W5fX5xy+EiDV1F+w2nBKANqUTei
-         LEjQ==
-X-Gm-Message-State: AOJu0Yywbe1M36ZCdeQAQkWIMkEMc/0vTCfTb9l1s9S/k/sryFQmR3YZ
-	dgPbylB2OL9/QE/NkFQgv3MQVRXB9w9NMip0aHxNrnXSlRKRPL6GZ7jfNmFgAWk=
-X-Google-Smtp-Source: AGHT+IF3qrt43q+inYCX1W2dro3h5DSQYRD+ZM2qHPoo6dDduUCU0+2xoWm7M/GP+9Xks/0jrcgR3A==
-X-Received: by 2002:aa7:d513:0:b0:564:aa72:78e1 with SMTP id y19-20020aa7d513000000b00564aa7278e1mr1394800edq.9.1708774075195;
-        Sat, 24 Feb 2024 03:27:55 -0800 (PST)
-Received: from eugenios-Air.homenet.telecomitalia.it.homenet.telecomitalia.it (host-95-235-237-78.retail.telecomitalia.it. [95.235.237.78])
-        by smtp.gmail.com with ESMTPSA id c17-20020aa7c991000000b0055edfb81384sm449477edt.60.2024.02.24.03.27.54
-        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Sat, 24 Feb 2024 03:27:54 -0800 (PST)
-From: Eugenio Gigante <giganteeugenio2@gmail.com>
-To: git@vger.kernel.org
-Cc: sunshine@sunshineco.com,
-	gitster@pobox.com,
-	Eugenio Gigante <giganteeugenio2@gmail.com>
-Subject: [GSoC][PATCH 1/1] add: use unsigned type for collection of bits
-Date: Sat, 24 Feb 2024 12:26:38 +0100
-Message-ID: <20240224112638.72257-2-giganteeugenio2@gmail.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240224112638.72257-1-giganteeugenio2@gmail.com>
-References: <20240224112638.72257-1-giganteeugenio2@gmail.com>
+        bh=eZjj2QO4oEI196jBMGNhvPpYPjCBVH19vluj5ou0MW0=;
+        b=oXeQWD59ZmX+xu8+sL78w6IUJLH5i4NdGYuPZUL5SEzgLaY17HBLKEuQ8WJBj+BN/f
+         lMoPtPOZ5J0KZGmvjRztrUrphAQaASvJz8jWrURkxLG/XgNw6WCQYhx3xszA1Ur0WFK/
+         AHHEQ5Bt0/H2KvbVhLMLNcIskeY3lnP9WMTJEuRyYswKjAKDzu2GdpPxGtLiHI+33lsg
+         FL8obQAlHCrWTkfhXaYriJN67ZE2LfIGgoyMaxVAauq4hL8P5eCDv0gmrqjPzkLhzfPN
+         voI4rGXZ2HCsBl30HeXo1QSY1Ff+A5GPuzPIX+7Jf+AihaXy6yV0fW2LpGYH3+6USwQs
+         uCPA==
+X-Forwarded-Encrypted: i=1; AJvYcCXVxPWorDA8abMmWZG/ichSnY/wzyQBQ1S/f0vZZ/TvCOdcgmMcgwBYbjbr8bxDHYKGhrgHgOcu5MQEpr0hz1zeeQuu
+X-Gm-Message-State: AOJu0Yy5icRallVQChTbIXY1ucvIsNuvjrl/TBQjYKuxPg855bMBdDig
+	UrmyEewqK2ciXcA4AVx1BhR3JLf8LrFt4hr8UAZN4OaWpeVfgs8O2xH5yZ5x/CEDFBcuRbWz9Y/
+	ptF3pUS3zzY3cADtpn6hGVcIlQhc=
+X-Google-Smtp-Source: AGHT+IGpZrHMl7ODJ1xeE1Xm954+4fgyC93wDpGFTi4SbhRIXmuoDieJw6TaP4T+lu1LWY+66QtaDGcPy5hPBj7FkUs=
+X-Received: by 2002:a05:6e02:ed2:b0:365:2ffc:b747 with SMTP id
+ i18-20020a056e020ed200b003652ffcb747mr2852503ilk.17.1708796073304; Sat, 24
+ Feb 2024 09:34:33 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <ZbpGzAd6FGEeTdrh@tanuki> <c61322de-8cd9-42b8-a04b-a8ae47b25c5e@gmail.com>
+ <Zbtmoo8qTmj-yt99@tanuki> <d4797f27-825b-4e2b-85a6-cc30f33934e3@gmail.com>
+ <CAP8UFD3GBT7s1jGOc=fe6XdYGF1c--tMBDiy_sDg1Afsa=drDw@mail.gmail.com>
+ <26cf6320-7ead-4ca0-b4b8-ca7008cae401@gmail.com> <CA+ARAtqicQkhKFcTxoT+GWMhCxnV-BNqd0oOcn2YwznfFnnRPw@mail.gmail.com>
+ <9cec06d8-971b-4c5d-9d85-969021b0dd48@gmail.com> <Zdb8lnUSurutauRa@tanuki>
+ <B6C95613-B316-404F-9076-FAC5955B8890@gmail.com> <ZddtyZqX1ME741j4@tanuki>
+In-Reply-To: <ZddtyZqX1ME741j4@tanuki>
+From: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+Date: Sat, 24 Feb 2024 23:04:21 +0530
+Message-ID: <CA+ARAtoeG0hoW0=eH50SCN_weUVoLYV8Cguxf-agz62Vbbfhjg@mail.gmail.com>
+Subject: Re: Git in GSoC 2024
+To: Patrick Steinhardt <ps@pks.im>
+Cc: Christian Couder <christian.couder@gmail.com>, Karthik Nayak <karthik.188@gmail.com>, 
+	git <git@vger.kernel.org>, Taylor Blau <me@ttaylorr.com>, 
+	Junio C Hamano <gitster@pobox.com>, Victoria Dye <vdye@github.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-The function 'refresh' in 'builtin/add.c' declares 'flags' as signed,
-while the function 'refresh_index' defined in 'read-cache-ll.h' expects an unsigned value.
-Since in this case 'flags' represents a bag of bits, whose MSB is not used in special ways,
-this commit changes the type of 'flags' to unsigned.
+Hi Patrick, Karthik and Christian
 
-Signed-off-by: Eugenio Gigante <giganteeugenio2@gmail.com>
----
- builtin/add.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+On Thu, Feb 22, 2024 at 9:22=E2=80=AFPM Patrick Steinhardt <ps@pks.im> wrot=
+e:
+>
+> On Thu, Feb 22, 2024 at 07:35:33PM +0530, Kaartic Sivaraam wrote:
+> > Hi Patrick, Karthik, Christian and all,
+> >
+> >
+> > That's strange. Could you possibly try logging into the Summer of code =
+website [3] directly in an incognito window using your GitLab account?
+> >
+> > I've previously faced issues with logging into the summer of code websi=
+te due to an add-on blocking access to other Google domains. So, if you hav=
+e add-ons that might block resources accessed by the website, could you pos=
+sibly try disabling them?
+> >
+> > If you face issues despite all this, the only resort is to write to GSo=
+C support about this issue at gsoc-support@google.com
+> >
+> > [3]: https://summerofcode.withgoogle.com/
+>
+> Things work now after a re-login. Kinda strange, but so be it. Thanks!
+>
 
-diff --git a/builtin/add.c b/builtin/add.c
-index ada7719561..393c10cbcf 100644
---- a/builtin/add.c
-+++ b/builtin/add.c
-@@ -115,7 +115,7 @@ static int refresh(int verbose, const struct pathspec *pathspec)
- 	int i, ret = 0;
- 	char *skip_worktree_seen = NULL;
- 	struct string_list only_match_skip_worktree = STRING_LIST_INIT_NODUP;
--	int flags = REFRESH_IGNORE_SKIP_WORKTREE |
-+	unsigned int flags = REFRESH_IGNORE_SKIP_WORKTREE |
- 		    (verbose ? REFRESH_IN_PORCELAIN : REFRESH_QUIET);
- 
- 	seen = xcalloc(pathspec->nr, 1);
--- 
-2.43.0
+That's good to know! So, I suppose we're all set with adding Org Admins
+and mentors for this year :-)
 
+Just in case anyone hasn't come across it before, there are a few good
+resources related to GSoC mentorship that Google has put up:
+
+Google Summer of Code Mentor Guide [mentor-guide]
+
+Mentor Roles and Responsibilities [mentor-responsibilities]
+
+Feel free to check them out.
+
+[[ References ]]
+
+[mentor-guide]: https://google.github.io/gsocguides/mentor/index
+
+[mentor-responsibilities]:
+https://developers.google.com/open-source/gsoc/help/responsibilities#mentor=
+_responsibilitie
+
+--=20
+Sivaraam
