@@ -1,92 +1,86 @@
-Received: from smtp.roethke.info (smtp.roethke.info [46.232.251.167])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f43.google.com (mail-ed1-f43.google.com [209.85.208.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85E13250EB
-	for <git@vger.kernel.org>; Sat, 24 Feb 2024 11:25:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=46.232.251.167
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFA461B59B
+	for <git@vger.kernel.org>; Sat, 24 Feb 2024 11:26:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708773917; cv=none; b=AeKYzi/603lkFylTuaVFJI9UL0Q0NiaD0KXCEm/gBedXqmCzJAkdvtryUI3yBy+FGocoWoCBAD3Y3clHcuO/W1ziXudvgrV+DBTfs70mwuFQL2tiJGPod9x0F/7cNeNPT+Y1IjS4FMs34RXOYlX8+Ew68KJoIjGmT83h8qqO0Y4=
+	t=1708774016; cv=none; b=aM3rOE3inTbxEAvaV0861X8GXGeZQscNNkd5S8otK3AdhZxR+TAbO2hP+gDU3/ZTI0el9yQRRGVnf6A8UD3vsPAeEuPImPdGE45vwRxEBXEk6FngMpH6RVItzBeuU8wsFokoz9Nn2zM326obo2qTDbJ5Ymr0l2+bGUlzZOOTpV0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708773917; c=relaxed/simple;
-	bh=IhXHopy0w4V5W67cs6r5daQJNVXhk6l8CJSOaJBiT3E=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=uM/ncUbjDhzzGOmM4cVvfoZrHWsVeU/ZoHFj5GR1/NjeLmv8zNBaPVjeEb342xpRHpFJlxlM/mP5+rElsDkZaqLnvNFYjiFGbucUMejmjrr5rQUonJKFJ7WK6XYCOiVKqJzkBwqznMAtgjYwq7kRXeO9/nYI9WX+o078ZVEEoqo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=roethke.info; spf=pass smtp.mailfrom=roethke.info; dkim=pass (4096-bit key) header.d=roethke.info header.i=@roethke.info header.b=kARB5434; arc=none smtp.client-ip=46.232.251.167
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=roethke.info
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=roethke.info
+	s=arc-20240116; t=1708774016; c=relaxed/simple;
+	bh=7pXpqWs7ZbrLBIJN+1KfY3B6lQeKtYAwiPqrOcv94CU=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=CrqKAOMcBS9zN791jlcOUTrwlQrn/irkWQvnc6p/wfkuUzinpHm+mEw4bfqesRTSVTB9Yv/9AN0d0nTLMFVoiZojZ+qxRm1wuvqX/xPahI3erCciyd0iC2njRoze/K+rT3MYg7tVCXnasy4Ps2tOUyDqRbRPgK+2xE3w033z7Dw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LrDL+oG7; arc=none smtp.client-ip=209.85.208.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (4096-bit key) header.d=roethke.info header.i=@roethke.info header.b="kARB5434"
-Received: from localhost (unknown [IPv6:2a01:41e1:2925:e400:c8f3:9e80:357b:9b24])
-	by smtp.roethke.info (Postfix) with ESMTPA id ED3771E0004A;
-	Sat, 24 Feb 2024 11:25:06 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=roethke.info;
-	s=20200807; t=1708773907;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=BvzoSFe08SRBWf9h16ysQJlaSDzmzyNRGw9nuyo/Tq4=;
-	b=kARB5434/dwxF4J2pu+lXVNWJE8zKWu7/px2otcP+VQf7nffGy93XnjYbCWb4f7N2L4JEl
-	2EloZEo9Q2o5FDxKOHFMlEfYFjbIKzeFiCxL7wqRQ1oFNr7ph5w9FMYg17xqtZ0GhdXQIx
-	sIMv3X8AVD59xLLk9MP9+35zMAP2z3L6l8+QFmJaG1Na7nlQ+IfebXtfYlZ+zUx1g3efKI
-	warGhZ1OPW3kcdqPML7n+1oH5LZAxmNoxFmXWPc/slI0onR02bOnSjXD/HGw6J2STVKyNH
-	UCsyRa97kuzZhR47COsEK5OWXKq6fYUXRBnRGWwW+orfibP0lLD+TYsx4sVd8b+ELiCla1
-	fsBZuBq0aDD2rKVN6aAhRuaRmaWh8mnSUVQmWaD5SAr1ko6GjKwncLErW57Qb8lXmafuze
-	ae/D7hmMUCthTyBqHadoyfCUDhhe0Mx0YqdApfz4yNn5LkEeuCMDgZ7HAQUDFN7TsK0J5/
-	f8E/Er9eQ3so2EnyWpW5aUSlx9jyTitvKWR5WglE8q1mN60Upo9vofOp3ArWV4XjpkUfvg
-	+PyKbfjc9IWbhyc8g6q2B4K1Y9lnH5cF2kMjDoJRqNiKAEkQqyPWjvksjhOskU83VYk5O/
-	pz0mEur+CKgmzG8YNuWweyGIUbGr7o6vtVi3emxTY9qKJeyX/9Lnc=
-Authentication-Results: ORIGINATING;
-	auth=pass smtp.auth=marcel@roethke.info smtp.mailfrom=marcel@roethke.info
-Date: Sat, 24 Feb 2024 12:25:04 +0100
-From: Marcel =?utf-8?Q?R=C3=B6thke?= <marcel@roethke.info>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH v2] rerere: fix crash during clear
-Message-ID: <ZdnSEFgLdev3L2qs@roethke.info>
-References: <20240218114936.1121077-1-marcel@roethke.info>
- <20240218194603.1210895-1-marcel@roethke.info>
- <xmqqplwsx730.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LrDL+oG7"
+Received: by mail-ed1-f43.google.com with SMTP id 4fb4d7f45d1cf-564fe0273e4so1222873a12.2
+        for <git@vger.kernel.org>; Sat, 24 Feb 2024 03:26:54 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1708774013; x=1709378813; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=y7UP4dL7cxIVooSMCzadnepZWZbtp8e1yoeiWD5jSKY=;
+        b=LrDL+oG7nNCgZ8ZpD2nyuytt89RWYvEiMs0tHnWAbbdyrL8SSLruPvFIXBgpWzRJzK
+         2GzxVEoLxvktIkk+sDk1XSOYb8Tehcy4uwmu6btcbrINW2lzncSD/h2euJfwNfmr75q2
+         LojTiNSwJ2VfJa50JNKE13hLZaH8cXWLVC19+kXCMChrdKhSST5BKOguKxK0hzt/bT0i
+         aEtmKB019280AycaevgDJgZpMEjmRTYqOFLsOq/CXhQxLWhe1sFs+p/jJ+S1X8VP70e/
+         duD1/E3fElDgjvsRBGYSGncLjNJ39o0aWLrmDyHvVxbVro64VbJ7nh5lNouWwQEzFVqq
+         u9pw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1708774013; x=1709378813;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=y7UP4dL7cxIVooSMCzadnepZWZbtp8e1yoeiWD5jSKY=;
+        b=O0k2iAA7SVe39dx25bi95aXVVyltTrTn/PC0vvtyRbki4BefU3hN4NYdrKmvmLqxh0
+         4kSR0IlJc4jcteeJeP07XYN6I996KcWMSmyPASNp7fLoFuowJnfzMRj4U/LmBlyVVqMJ
+         /eM8rBDyE2NgZ5/nEUI6gIJQRz6g7UXF3ZvA4qwp3gPtRw7C7a9PT52GDpkDJ1xc7Als
+         MSCt6geVKcOeJiy3wrVI5VOpqXaOxUbnpoAdTwdUcHAIYnDjwRUeTlj+TJUnXpOLfGRb
+         38jSaVaymPLmXjFyavdF+Dhw6uKmdER04+bLLjpM8NhdCUbsXQg60aFvr036LqJ1STIj
+         rYFg==
+X-Gm-Message-State: AOJu0Yy1nf4gqv9UdjisqIRfHZzO0wU26yTzmDTzReCLNyG/26oDMULE
+	Wv2N+jk03Kcx8jFnSF7YnRF1dMgL+vgjqTwS9S/6XnYMwNFgtdg1EJlkPGB5s+A=
+X-Google-Smtp-Source: AGHT+IEDVJnZKMQZE4aZ6mspFAdlJxHydD0cyyHi09G9oEFg/nnovyXuwSvX2bADJHaV6zbX45GbWw==
+X-Received: by 2002:a50:ed87:0:b0:565:bb26:545c with SMTP id h7-20020a50ed87000000b00565bb26545cmr74030edr.13.1708774012728;
+        Sat, 24 Feb 2024 03:26:52 -0800 (PST)
+Received: from eugenios-Air.homenet.telecomitalia.it.homenet.telecomitalia.it (host-95-235-237-78.retail.telecomitalia.it. [95.235.237.78])
+        by smtp.gmail.com with ESMTPSA id c17-20020aa7c991000000b0055edfb81384sm449477edt.60.2024.02.24.03.26.51
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Sat, 24 Feb 2024 03:26:52 -0800 (PST)
+From: Eugenio Gigante <giganteeugenio2@gmail.com>
+To: git@vger.kernel.org
+Cc: sunshine@sunshineco.com,
+	gitster@pobox.com,
+	Eugenio Gigante <giganteeugenio2@gmail.com>
+Subject: [GSoC][PATCH 0/1] Use unsigned integral type for collection of bits.
+Date: Sat, 24 Feb 2024 12:26:37 +0100
+Message-ID: <20240224112638.72257-1-giganteeugenio2@gmail.com>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <xmqqplwsx730.fsf@gitster.g>
 
-On 2024-02-19 17:22:43, Junio C Hamano wrote:
-> Marcel Röthke <marcel@roethke.info> writes:
->
-> > When rerere_clear is called, for instance when aborting a rebase, and
-> > the current conflict does not have a pre or postimage recorded git
-> > crashes with a SEGFAULT in has_rerere_resolution when accessing the
-> > status member of struct rerere_dir.
->
-> I had to read this twice before realizing the reason why I found it
-> hard to grok was because of a missing comma between "recorded" and
-> "git".
+One of the suggested microprojects for the GSoC is to pick a field
+of signed integral type that is used as as collection of bits, and
+change its type to unsigned in case the code does not take advantage
+of its MSb.
+This patch finds an example in 'builtin/add.c'.
 
-fixed
 
-> > This happens because scan_rerere_dir
-> > only allocates the status field in struct rerere_dir when a post or
-> > preimage was found.
->
-> But that is not really the root cause, no?  Readers following the
-> above text are probably wondering why the preimage was not recorded,
-> when a conflict resulted in stopping a mergy-command and invoking
-> rerere machinery, before rerere_clear() got called.  Is that
-> something that usually happen?  How?  Do we have a reproduction
-> sequence of such a state that we can make it into a new test in
-> t4200 where we already have tests for "git rerere clear" and its
-> friends?
+Eugenio Gigante (1):
+  add: use unsigned type for collection of bits
 
-I'm unfortunately not sure how it happened. I do have the initial state
-of the repository and I think I know the commands that were executed,
-but I could not reproduce it.
+ builtin/add.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-I will look into adding a test case though.
+
+base-commit: 2a540e432fe5dff3cfa9d3bf7ca56db2ad12ebb9
+-- 
+2.43.0
+
