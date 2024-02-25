@@ -1,59 +1,59 @@
-Received: from mail-ej1-f44.google.com (mail-ej1-f44.google.com [209.85.218.44])
+Received: from mail-ed1-f44.google.com (mail-ed1-f44.google.com [209.85.208.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C1721B963
-	for <git@vger.kernel.org>; Sun, 25 Feb 2024 16:57:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E739D1862F
+	for <git@vger.kernel.org>; Sun, 25 Feb 2024 16:57:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708880238; cv=none; b=sMUr4B1Q09yDSw85BXtCdarK8WSvKhtHteJlLwDdWvt6ABONcAod12eDlpPw2GYBqfGUn1ILXmmJe+o9ewyJwtXnp9SpGGbngUUD5eDlwY15OnHq/c4R9lTK76yE0Y2BzyvCmUmJDKm6TdYNC70dMq4890CljQ8/L0M26NzRYV8=
+	t=1708880264; cv=none; b=XBqHYrdSYav2DB9dNbYSdPxVM2zBwvaFgVlknVlRQaFLa86GGXngA0yjJUb0E9QMHI4rfLqYreHMkM06lGR36e2C8kxE0jfV3RJ8MzXp+6arvQWXkJ9UPEsn8+54EbpnbgmvUvH7eJlz4bR5OcHGjsSKjojCy7/IIvDNpRG09lo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708880238; c=relaxed/simple;
-	bh=/apecLknMc6itSRc2bdxZM6X0ORtvVsAaD6s67NFOlU=;
+	s=arc-20240116; t=1708880264; c=relaxed/simple;
+	bh=j/iQGk1VyePBjsW25PZM1QLYG0KGqORSPz9KYBYXqjQ=;
 	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=uDJYGfHEhaDLogUtXz91nfZUAlBNJvR22BC+/GhXdmZYFBVBbxnuMT0KVAUGI/JnnjderVQO7QwsoBsK7FcRXAs//Jee20SjVRnTQh5pjBwVyH0JJrWe9NuALT/DPzMXxEzjs/UGF2wFQOd6jTtram1Vw+0xCtNHMCZmnBtf1U4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=GitwB22/; arc=none smtp.client-ip=209.85.218.44
+	 In-Reply-To:Content-Type; b=LHM6bEo/I1PcYBMQKewPMUnkiRHUg/Q9L5oADaIky2mxefXy8xGUoER2iVMwhXaKt7MssUnT9n8FWmiJAySnl+YA8NlGkexPYVuJdSHzT8/edV1/XO5KhT1J9TlnWmXviZBzlLSz3L+dy33DVJ4406WjaF78bu1p+ap5GCe1eJM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=STft7VsI; arc=none smtp.client-ip=209.85.208.44
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GitwB22/"
-Received: by mail-ej1-f44.google.com with SMTP id a640c23a62f3a-a34c5ca2537so315013866b.0
-        for <git@vger.kernel.org>; Sun, 25 Feb 2024 08:57:15 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="STft7VsI"
+Received: by mail-ed1-f44.google.com with SMTP id 4fb4d7f45d1cf-563f675be29so2217634a12.0
+        for <git@vger.kernel.org>; Sun, 25 Feb 2024 08:57:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1708880234; x=1709485034; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1708880261; x=1709485061; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:references:cc:to
          :content-language:subject:reply-to:from:user-agent:mime-version:date
          :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=C9/19eTeZfRr+P+kEPDZ4vlojquThTJFzMOfoL0HJUk=;
-        b=GitwB22/4sM4OxV80x55IUho22u6T/JoBhgUOI046VkHxO0+lfTro4f7s/Cz9247mH
-         JMp71C24qmtEn1b7Hh9ihwoSYhV9FTn6M+gDLoJ2x0XalVmPBNhX4B52nNyuSPbSOqkQ
-         hfnJxwWFvVf/0o/ZpsNGMfaUgPnwfuUVtINGZ39cOCCuwc1ORRIAvHH2jU5Zm69t5aeY
-         PZRq7v9Dun+rbcONRKdtqZgC56ZbA7mScCg2IxmFWxR4/dhqKPPVbOAwsfj0ApQ418rN
-         qLAQPf8lbCexmxBUqJ07KrSEQajRuipnrU4x5xtkxJyLHTb4aXaO/UXpD/IBPcK2SKZP
-         iwMQ==
+        bh=NjQTkUbJ0ZiHo+PRP2xQYHjDByrhBcW8QqgcWzTlY2U=;
+        b=STft7VsIV8M8ck55cr0zFmf+Aj4zxAX3D06G3gjJhV2DcJmFRv2cFZTTOoArSR14ML
+         6npsEKipOCwzYeGsQJEcMVfrN8TdZta+mrl9Ac92tGLW0OqaRgAQgJOmGCuX+gmRGooi
+         T2LIGjYKXpWVSC7j5jbALXvJYJHfjh3w9Hx2HM+wG6ugpG06fa0nwzLEPeCutctKF/1w
+         7egdNCY/bzWGlWcU6PflSnIpD/T3rvOcQWsGIzoNYkOt+7IXsOECKMxuCOhDfi4aeakr
+         HPqyMqkF+UwUvULKWes99RVvLcxcOVjQnjqe5mXHXvtB09UxJMoikr6nQuQK+tOEB5to
+         wIyg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1708880234; x=1709485034;
+        d=1e100.net; s=20230601; t=1708880261; x=1709485061;
         h=content-transfer-encoding:in-reply-to:references:cc:to
          :content-language:subject:reply-to:from:user-agent:mime-version:date
          :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=C9/19eTeZfRr+P+kEPDZ4vlojquThTJFzMOfoL0HJUk=;
-        b=sM/HybDjCbGIvxzp4tebLA/RP7m2YebBFa27i46gQJ0a6KFbE/ku5xi+Y1SsXJYIQM
-         Rn8mT1aj/ca03IvzjzwCZG7QN7d2fxMU7uBTwke8sPu7brU7p0i8hpSvj4YeQZhgNfnf
-         5eicRCdh0TR+dKvlXI+9kvESmh2otmVqbG7ZDFOXAR259Sg+pmmjDIU6/szNE2QgnT1u
-         DMkyMTQ//+ij4kuPEQ+ZXFiNKebztLAkBdctTwy3/Bo+hPXxDdUF08VOwd02Zq0t3DUD
-         7zFXmKOK7NqHJmonsZG/VeaS+A/21zx/62rbUEnoAcMoIOylVcxJBZK3yKerBIFNbVmT
-         EEZA==
-X-Gm-Message-State: AOJu0Yz4M7cNyHDtzcXcAWoliZVYrcF/jHky8NYX23f/9WEhiY3OYg7H
-	vQIV8gdLn+RFAHlcYPU+OLwxCS+nqSJpkEVscxMOh4AQcZDYJYbS
-X-Google-Smtp-Source: AGHT+IFnu/DY1eOgcGwThbiwut6jyWltduPIBQnFjUhaiKe7LGpKyLG05nqVpSlGi4RjodJrz0h1ZA==
-X-Received: by 2002:a17:906:5910:b0:a3f:583c:b00c with SMTP id h16-20020a170906591000b00a3f583cb00cmr3193922ejq.43.1708880234295;
-        Sun, 25 Feb 2024 08:57:14 -0800 (PST)
+        bh=NjQTkUbJ0ZiHo+PRP2xQYHjDByrhBcW8QqgcWzTlY2U=;
+        b=KWnLQa8ymtF0CJMmL89Z8f2FlK82BswX57/Ua9UmZyudCzw6mOYBV+ehB+awYjqETn
+         nl8c/MCAMQPo9IToyTVCIV2QBE7FphB4HvIzVkjkB8JNt/mEEY2zzbjHkVtRD/i1jhsG
+         Arxofnlga+yVNfNnIW63E9/K2yrKRUj2dBhQlq7CLLxI7lBP8yMB2vhbd9TXauBj+O8A
+         +4d2CJFx8cuiBzUBAr/4n6aNFU7Irwqusj1Jifgcs+XC/njm2O5uL5Fe9pQSEWVrfgnA
+         fycKW5XHElRP5GQDqlLj+/WtRJ8d1wRRIMxvWdAwopaA/9EOQngCJqfsfhcWboYNnMom
+         +dTg==
+X-Gm-Message-State: AOJu0YzJoXsENx4kHCy37hPEAqK+OVzTZdLpKD2AflS+rcDo7DdHmzH5
+	wcyLNgA3C9e43ft4JvApWgtn5tZjm2whDNZu6gs8Bjax+yWBzhJq/lMOnzpl
+X-Google-Smtp-Source: AGHT+IFHaBawJKAHpEOr5oABNg84Io2cUZ4oYvyq8iRnyPRdqsF13pL3h6twgHtvhZaxdfT8nxbGVg==
+X-Received: by 2002:a17:906:852:b0:a3e:3bc0:64f5 with SMTP id f18-20020a170906085200b00a3e3bc064f5mr3203423ejd.64.1708880261123;
+        Sun, 25 Feb 2024 08:57:41 -0800 (PST)
 Received: from ?IPV6:2a0a:ef40:69d:3501:4b27:339f:196f:f7f9? ([2a0a:ef40:69d:3501:4b27:339f:196f:f7f9])
-        by smtp.gmail.com with ESMTPSA id jw4-20020a17090776a400b00a434cae86ebsm179788ejc.219.2024.02.25.08.57.13
+        by smtp.gmail.com with ESMTPSA id jw4-20020a17090776a400b00a434cae86ebsm179788ejc.219.2024.02.25.08.57.40
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 25 Feb 2024 08:57:13 -0800 (PST)
-Message-ID: <62247a1c-0249-4ce1-8626-fe97b89c23dc@gmail.com>
-Date: Sun, 25 Feb 2024 16:57:09 +0000
+        Sun, 25 Feb 2024 08:57:40 -0800 (PST)
+Message-ID: <83070e02-8e6b-43d2-819d-2272fe895c75@gmail.com>
+Date: Sun, 25 Feb 2024 16:57:37 +0000
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -63,88 +63,92 @@ MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 From: phillip.wood123@gmail.com
 Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v2 4/8] sequencer: treat error reading HEAD as unborn
- branch
+Subject: Re: [PATCH v2 8/8] cherry-pick: add `--empty` for more robust
+ redundant commit handling
 Content-Language: en-US
 To: Brian Lyles <brianmlyles@gmail.com>, phillip.wood@dunelm.org.uk
 Cc: git@vger.kernel.org, newren@gmail.com, me@ttaylorr.com, gitster@pobox.com
-References: <17b666ca6c4b7561.70b1dd9aae081c6e.203dcd72f6563036@zivdesk>
-In-Reply-To: <17b666ca6c4b7561.70b1dd9aae081c6e.203dcd72f6563036@zivdesk>
+References: <17b66baf4d8c4255.70b1dd9aae081c6e.203dcd72f6563036@zivdesk>
+In-Reply-To: <17b66baf4d8c4255.70b1dd9aae081c6e.203dcd72f6563036@zivdesk>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 
 Hi Brian
 
-On 23/02/2024 05:28, Brian Lyles wrote:
-> On Thu, Feb 22, 2024 at 10:34 AM <phillip.wood123@gmail.com> wrote:
->>> +test_expect_success 'cherry-pick on unborn branch with --allow-empty' '
->>> +	git checkout main &&
+On 23/02/2024 06:58, Brian Lyles wrote:
+> 
+> On Thu, Feb 22, 2024 at 10:36 AM <phillip.wood123@gmail.com> wrote:
+> 
+>> I'm leaning towards leaving `--keep-redundant-commits` alone. That
+>> introduces an inconsistency between `--keep-redundant-commits` and
+>> `--empty=keep` as the latter does not imply `--allow-empty` but it does
+>> avoid breaking existing users. We could document
+>> `--keep-redundant-commits` as predating `--empty` and behaving like
+>> `--empty=keep --allow-empty`. The documentation and implementation of
+>> the new option look good modulo the typo that has already been pointed
+>> out and a couple of small comments below.
+> 
+> I think I'm on board with leaving `--keep-redundant-commits` alone. I'm
+> on the fence about having `--empty=keep` imply `--allow-empty` after
+> seeing Junio's concerns. I laid out the options that I see in a reply to
+> patch 6/8[1] and would appreciate input there. I'll adjust the details
+> of this commit in v3 based on what we decide there.
+
+I'll take a look at that in the next couple of days
+
+> [1]: https://lore.kernel.org/git/17b666ca6c4b7561.70b1dd9aae081c6e.203dcd72f6563036@zivdesk/
 >>
->> I'm a bit confused by this - are we already on the branch "unborn" and
->> so need to move away from it to delete it?
-> 
-> Yes, the previous test leaves us on that branch. In v3, I will update
-> this to instead just use `git checkout --detach`, as that does seem a
-> little less confusing than switching to some other branch that is only
-> relevant because it's not `unborn`. If there is a cleaner way to do
-> this, I'd be happy to switch to it.
-
-I think "git checkout --detach" is probably the best we can do. It would 
-be nice to be able to do "git switch -C --orphan unborn" but "-C" does 
-not work with "--orphan"
-
->>> +	git branch -D unborn &&
->>> +	git checkout --orphan unborn &&
->>> +	git rm --cached -r . &&
->>> +	rm -rf * &&
+>>> +enum empty_action {
+>>> +	EMPTY_COMMIT_UNSPECIFIED = 0,
 >>
->> "git switch --orphan" leaves us with an empty index and working copy
->> without having to remove the files ourselves.
+>> We tend to use -1 for unspecified options
 > 
-> Thanks for pointing this out. Using git-switch(1) here instead of
-> git-checkout(1) allows us to drop the `rm -rf *` call form both the
-> existing 'cherry-pick on unborn branch' test as well as my new test. It
-> appears that the `git rm --cached -r .` call is still necessary in the
-> existing test.
-
-It looks like the previous test 'revert forbidden on dirty working tree' 
-fails to clean up properly and so "git switch" is carrying the 
-uncommitted changes across to the new orphan branch. I think that "git 
-switch --discard-changes --orphan unborn" ought to clean the worktree 
-and index but it doesn't seem to work.
-
->>> +	git cherry-pick initial --allow-empty &&
->>> +	git diff --quiet initial &&
+> Thanks, I'll update this in v3.
+> 
+>>> +test_expect_success 'cherry-pick persists --empty=stop correctly' '
+>>> +	pristine_detach initial &&
+>>> +	# to make sure that the session to cherry-pick a sequence
+>>> +	# gets interrupted, use a high-enough number that is larger
+>>> +	# than the number of parents of any commit we have created
+>>> +	mainline=4 &&
+>>> +	test_expect_code 128 git cherry-pick -s -m $mainline --empty=stop initial..anotherpick &&
+>>> +	test_path_is_file .git/sequencer/opts &&
+>>> +	test_must_fail git config --file=.git/sequencer/opts --get-all options.keep-redundant-commits &&
+>>> +	test_must_fail git config --file=.git/sequencer/opts --get-all options.drop-redundant-commits
+>>> +'
 >>
->> I'd drop "--quiet" here as it makes debugging easier if we can see the
->> diff if the test fails.
+>> Thanks for adding these tests to check that the --empty option persists.
+>> Usually for tests like this we prefer to check the user visible behavior
+>> rather than the implementation details (I suspect we have some older
+>> tests that do the latter). To check the behavior we usually arrange for
+>> a merge conflict but using -m is a creative alternative, then we'd run
+>> "git cherry-pick --continue" and check that the commits that become
+>> empty have been preserved or dropped or that the cherry-pick stops.
 > 
-> This makes sense. In v3, I will update this new test as well as the
-> existing test to not use `--quiet`.
-> 
-> Combining the above suggestions, here's the version of the existing and
-> new tests that I intend to use in v3. Let me know if this isn't what you
-> had in mind!
-> 
->      test_expect_success 'cherry-pick on unborn branch' '
->      	git switch --orphan unborn &&
->      	git rm --cached -r . &&
->      	git cherry-pick initial &&
->      	git diff initial &&
->      	test_cmp_rev ! initial HEAD
->      '
->      
->      test_expect_success 'cherry-pick on unborn branch with --allow-empty' '
->      	git checkout --detach &&
->      	git branch -D unborn &&
->      	git switch --orphan unborn &&
->      	git cherry-pick initial --allow-empty &&
->      	git diff initial &&
->      	test_cmp_rev ! initial HEAD
->      '
+> Indeed, I was modelling these new tests after other existing tests in
+> this file. While I agree with you in theory, I am hesitant to make these
+> new tests drastically different from the existing tests that are testing
+> the same mechanisms (and appear to be very intentionally testing that
+> the options are persisted in that config file). I'm also hesitant to
+> update the existing tests as part of this series (primarily due to a
+> lack of familiarity, and partially to avoid scope creep of the series).
 
-These look good
+I certainly don't think it should be up to you to update the existing 
+tests. I'm not sure adding more tests in the same pattern is a good idea 
+though. Apart from the fact that they are testing an implementation 
+detail rather than the user facing behavior they don't actually check 
+that the option is respected by "git cherry-pick --continue", only that 
+we save it when stopping for a conflict resolution.
 
-Thanks
+> How concerned are you about the current implementation? Does it make
+> sense to you to defer this suggestion to a future series that cleans up
+> the tests to do more user-oriented checks?
+
+I think adding tests that follow a pattern we want to change is just 
+storing up work for the future and makes it less likely we'll improve 
+things because it will be more work to do so.
+
+Best Wishes
 
 Phillip
+
