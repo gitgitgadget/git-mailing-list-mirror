@@ -1,89 +1,145 @@
-Received: from mail-qt1-f181.google.com (mail-qt1-f181.google.com [209.85.160.181])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mout.web.de (mout.web.de [212.227.17.12])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E141418B1B
-	for <git@vger.kernel.org>; Sun, 25 Feb 2024 18:05:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 935F118AF9
+	for <git@vger.kernel.org>; Sun, 25 Feb 2024 18:24:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.12
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708884347; cv=none; b=RYCArn/web4XqbjBjjyYjLVHZcyPb0YyOfw73raZV1UkCk9wikm06u0eMJbGLFDvorYsGyaH36fJxMv9QqxkAaYQl7Ab4esSCMWJhO+7NLKLLkaUbyDqR+pjLbanvxP1eOhvoo7zF+acD/nb3se/Qs6JztPlZUJKB+I0sN4FLSM=
+	t=1708885490; cv=none; b=BNv7fpgOi3LP3K3M0YYLAyrDS0CbhW7XRKR45tbgOceX8g40EkeL1xVwduZatTDy+JAiu9YqZJo71BNrQGj88N9amqoqfMwTGQAfYeO9QtVl6YLbhGMBvm9weK5wOF5uOZ8e7FHoWbX05N4EsNMwETjaws/EO1xijnBMBaWjyJ0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708884347; c=relaxed/simple;
-	bh=33Dha4NqW7wPIi9i6ZblJv+QNFHAtPPdH6Q7y1IxC4U=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=CXAI3fUJWqqIkjzjhDLhbRSVsdwlfFrxscmIIAw29EszRmZyDRYfOG1E07yFccGekGgR8jqlE3vcCIKWy3fzffzDr8SsXbQ7wQuKgyxP7rLWlfnEtP936MlY7u+UG5ZC3Sx1fmDnJtqN+sdZMyo4kYHgHAXjfu9Dzv/F+rxswjw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.160.181
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-qt1-f181.google.com with SMTP id d75a77b69052e-429f53f0b0bso18183321cf.2
-        for <git@vger.kernel.org>; Sun, 25 Feb 2024 10:05:44 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1708884344; x=1709489144;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=gbLo5AKPzyv6VAbAG5m8cl4lPN87WbBERZ6HJZLJyEM=;
-        b=ZNwl9Bb6tauu65+EaAdHbHQG26RohD7D/e8m/5wCLBmCcKq8woJN4Pvu5Wolwz5wHE
-         zBsp6WFX14mw4Vr1usKjRUp1n/gqV+wfyECBFkXWGQNdsoUBtswk6XYMnSRM+0lTOM+p
-         SegHKHqe5dUlW9h2PNMYJbzyYengeKn78PEtlQXjWuBA6bxbtsj1Y7Du03exFWuCB0tP
-         e/jkbhvVfVLKhinkMkA7ULeXZLmXzLD5TFQj2nSBz+zR3ZsP5KSlB6TJwlT530B31B7U
-         STZVVAAEiyC1VfggIrEXIjyEiolasfS4s7SDmRldDZHHnxPJE57lEGzwXWIaGC6ai0An
-         QXRA==
-X-Gm-Message-State: AOJu0Yw7BuvR4iSObVx9N1DbmuftYivfkLzJNTbEzTUxWm66bCO314bF
-	BFX4ZoWjrOAUQhY5CrUUTRnHKeRqBWhaviM5VScZWvRkp3nMrRx06PXEScCdG7YGKVT3T72O3vR
-	e168HqC7FfX2ORJZTWike/rr0aXM=
-X-Google-Smtp-Source: AGHT+IFwIIpegDDl35ao/Dc152M0X9Qbg6thVVHEEGGDVknUgXUhRWvYS+ePg/etC44dxwtNIQUybG/Wb1tFbPzz0ek=
-X-Received: by 2002:a0c:cb8b:0:b0:68f:b5ee:140a with SMTP id
- p11-20020a0ccb8b000000b0068fb5ee140amr1698525qvk.7.1708884343892; Sun, 25 Feb
- 2024 10:05:43 -0800 (PST)
+	s=arc-20240116; t=1708885490; c=relaxed/simple;
+	bh=EVt3x/92a/lZBoPGP/zmEOqlAd2d2CzJuFGlNm7ez3Y=;
+	h=Message-ID:Date:MIME-Version:To:From:Subject:Content-Type; b=OcwFmZxeRcAyrp1cjlmgpsc+F18UKSqmHxMxZ92eOHnn7f1LyEbZNJnqZZkgwwXE8i6AJXItTBd4kqOr1golBLyBZEtLUlbNMhjCV2Ka9i4cxfqMvFGjTRNFl6FJdekK+9knn4fSGIAvnlhu/9eGCSWrDrQaBRE7x8VPnRYbhWM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b=uiIzgZ1U; arc=none smtp.client-ip=212.227.17.12
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b="uiIzgZ1U"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de; s=s29768273;
+	t=1708885480; x=1709490280; i=l.s.r@web.de;
+	bh=EVt3x/92a/lZBoPGP/zmEOqlAd2d2CzJuFGlNm7ez3Y=;
+	h=X-UI-Sender-Class:Date:To:From:Subject;
+	b=uiIzgZ1UD386rT2WjRpzuuTO/ParBz3pH9reZBhbqhyS9b+o3rgeuzLj5Q59P4MR
+	 TuZxh/GRIpBHbVmSDoctUIefATcDrAzXuL2VgjP2Dzgmdur33aN0b2etlnUX+u4fR
+	 aq1IJyEK0ZHNgTJZrvJB1q05jY0pH0kvUFMYmxShhu5kB6PTmgFDngBmdT0RSD9Vt
+	 c54/WJGcVYpByZqNZp64E6aqR4PpxMZyawLeX+vZnsXismtC3/cP0URmFf/46ATDA
+	 h5pppZN7mgVpqWFcq20F+kahw+wXnYR0a8Q0liABh1ipVFh5TeGovM0swP+TMSach
+	 28szOeHhrYY9sjpicA==
+X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
+Received: from [192.168.178.29] ([79.203.19.211]) by smtp.web.de (mrweb106
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 1MSZHv-1rT90L08Px-00SnQw for
+ <git@vger.kernel.org>; Sun, 25 Feb 2024 19:24:40 +0100
+Message-ID: <8cd983fb-32b9-41c6-a9e7-a485b190488c@web.de>
+Date: Sun, 25 Feb 2024 19:24:39 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240225112722.89221-1-l.s.r@web.de> <20240225112722.89221-2-l.s.r@web.de>
-In-Reply-To: <20240225112722.89221-2-l.s.r@web.de>
-From: Eric Sunshine <sunshine@sunshineco.com>
-Date: Sun, 25 Feb 2024 13:05:32 -0500
-Message-ID: <CAPig+cTvs7Ckg=k1T+N3N=yT840xM2DYf3LV9NZhii8+c1nkbw@mail.gmail.com>
-Subject: Re: [PATCH 1/3] t-ctype: allow NUL anywhere in the specification string
-To: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
-Cc: git@vger.kernel.org, Phillip Wood <phillip.wood123@gmail.com>, 
-	Josh Steadmon <steadmon@google.com>, Achu Luma <ach.lumap@gmail.com>, 
-	Christian Couder <christian.couder@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla Thunderbird
+Content-Language: en-US
+To: Git List <git@vger.kernel.org>
+From: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
+Subject: [PATCH] submodule: use strvec_pushf() for --submodule-prefix
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:2fHVHL6X+Tk7ih+XnlxAuJB09Uo0PBj3frs4XbGa/jJDULsnyuV
+ wGnsCGJRldO2hTVgudkuRv2Rn6UdvddO1+O2npVORrfnIRalBi+CrYFeiKC5qDb60R3ZhfN
+ SvmzPVA8/WzWYXQsAkSkatevicQYzxsxsceLsu3+BGthlOdROr4Aayn6qGpbh3aECJutUt5
+ xQL5GNl/WC6IWxPVdv2hg==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:G7dsZRwJet8=;v9EGNSfsGQtdutS3qEBw62V/1HB
+ u0s7MqOl2EMELaXzOToxsbwqndqv9GYOVXT0NtwD/Hyb4Er6tuzQoPbLiX8yqS0YecXUb9VMA
+ 3yQEieCOi5zQlkCXIPkx9LjwHpsegOQLa7ltJ1Z0BvFfib6x3s9k6RXZU4sjrQFIFh2xQrVmS
+ bppXSDLmKo7kWpkqzpDhkm3Vg1OxsipujzMnk3pk2cqFE33+5ib8Ws+XvZAAGLzYA5YyGwHXv
+ 5jMahUGXVb8mBjR2e1gyC1u2MmuyldgzMsp4uwormfT4JtaTpmOHDzxcaobcLgmLb5gXEPKL7
+ 51ZrxNB+DMCsNqJK0FCP5n8E5ai4HBEVMl/WyffZNQFfq9DoF3058EOpfjzcfH8cVTGMo5w2O
+ l+y1tAV+Bfkm9mTnKjrA/Wla1yVxeNV7Y04W7j7MTM2nISG/j3Lme+OnPoPOjiDoTmvkB2Qzg
+ sJ/mJTuRmWSw0rQOxXZLFHOrb3hDt7jrJDEi2cv/YVHjcROKAvC6D33I7051xEjOxffz7zaDK
+ a5Nqtd18dqp8+sOGzm3MwXTZWcnGmOi+iLF3DhnId9zaVYVgy5Gn2V1+MzgZDHHeVWuajN0Pz
+ r/D2kTYOpMEYGflLKEUWmNwXjU6jgK3Z1tQOth2Hu8RlojLW2It4ZnASJ6DNIdgY08mFSVOW6
+ wsEvz1c2IL+OiW4e5iTanL3YdrCf/Z2eg56ar27Eq1dZN0Nw5BJYOe3LpGA+LPqMDZGhR5QUz
+ EZ33JZKque3V0hl2kWpkXrLPbWFXs0zCyXgrMUKh1UB/soHihLDVnuTA/W2Nq+hWEakHGYOi1
+ IhfQMd7jeODNFFnz7j7Q/Y/7rxaDqgr1r4gpZBi6Zv44M=
 
-On Sun, Feb 25, 2024 at 6:27=E2=80=AFAM Ren=C3=A9 Scharfe <l.s.r@web.de> wr=
-ote:
-> Replace the custom function is_in() for looking up a character in the
-> specification string with memchr(3) and sizeof.  This is shorter,
-> simpler and allows NUL anywhere in the string, which may come in handy
-> if we ever want to support more character classes that contain it.
->
-> Getting the string size using sizeof only works in a macro and with a
-> string constant, but that's exactly what we have and I don't see it
-> changing anytime soon.
->
-> Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
-> ---
-> diff --git a/t/unit-tests/t-ctype.c b/t/unit-tests/t-ctype.c
-> @@ -1,23 +1,11 @@
->  /* Macro to test a character type */
->  #define TEST_CTYPE_FUNC(func, string) \
+Add the option --submodule-prefix and its argument directly using
+strvec_pushf() instead of via a detour through a strbuf.  This is
+shorter, easier to read and doesn't require any explicit cleanup
+afterwards.
 
-Taking into consideration the commit message warning about string
-constants, would it make sense to update the comment to mention that
-limitation?
+Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
+=2D--
+ submodule.c | 19 ++++---------------
+ 1 file changed, 4 insertions(+), 15 deletions(-)
 
-    /* Test a character type. (Only use with string constants.) */
-    #define TEST_CTYPE_FUNC(func, string) \
+diff --git a/submodule.c b/submodule.c
+index 213da79f66..40f13a3685 100644
+=2D-- a/submodule.c
++++ b/submodule.c
+@@ -1687,8 +1687,6 @@ static int get_next_submodule(struct child_process *=
+cp, struct strbuf *err,
+ 		task =3D get_fetch_task_from_changed(spf, err);
 
->  static void test_ctype_##func(void) { \
->         for (int i =3D 0; i < 256; i++) { \
-> -               if (!check_int(func(i), =3D=3D, is_in(string, i))) \
-> +               int expect =3D !!memchr(string, i, sizeof(string) - 1); \
-> +               if (!check_int(func(i), =3D=3D, expect)) \
->                         test_msg("       i: 0x%02x", i); \
->         } \
->         if (!check(!func(EOF))) \
+ 	if (task) {
+-		struct strbuf submodule_prefix =3D STRBUF_INIT;
+-
+ 		child_process_init(cp);
+ 		cp->dir =3D task->repo->gitdir;
+ 		prepare_submodule_repo_env_in_gitdir(&cp->env);
+@@ -1698,15 +1696,11 @@ static int get_next_submodule(struct child_process=
+ *cp, struct strbuf *err,
+ 			strvec_pushv(&cp->args, task->git_args.v);
+ 		strvec_pushv(&cp->args, spf->args.v);
+ 		strvec_push(&cp->args, task->default_argv);
+-		strvec_push(&cp->args, "--submodule-prefix");
++		strvec_pushf(&cp->args, "--submodule-prefix=3D%s%s/",
++			     spf->prefix, task->sub->path);
+
+-		strbuf_addf(&submodule_prefix, "%s%s/",
+-						spf->prefix,
+-						task->sub->path);
+-		strvec_push(&cp->args, submodule_prefix.buf);
+ 		*task_cb =3D task;
+
+-		strbuf_release(&submodule_prefix);
+ 		string_list_insert(&spf->seen_submodule_names, task->sub->name);
+ 		return 1;
+ 	}
+@@ -1714,12 +1708,8 @@ static int get_next_submodule(struct child_process =
+*cp, struct strbuf *err,
+ 	if (spf->oid_fetch_tasks_nr) {
+ 		struct fetch_task *task =3D
+ 			spf->oid_fetch_tasks[spf->oid_fetch_tasks_nr - 1];
+-		struct strbuf submodule_prefix =3D STRBUF_INIT;
+ 		spf->oid_fetch_tasks_nr--;
+
+-		strbuf_addf(&submodule_prefix, "%s%s/",
+-			    spf->prefix, task->sub->path);
+-
+ 		child_process_init(cp);
+ 		prepare_submodule_repo_env_in_gitdir(&cp->env);
+ 		cp->git_cmd =3D 1;
+@@ -1728,8 +1718,8 @@ static int get_next_submodule(struct child_process *=
+cp, struct strbuf *err,
+ 		strvec_init(&cp->args);
+ 		strvec_pushv(&cp->args, spf->args.v);
+ 		strvec_push(&cp->args, "on-demand");
+-		strvec_push(&cp->args, "--submodule-prefix");
+-		strvec_push(&cp->args, submodule_prefix.buf);
++		strvec_pushf(&cp->args, "--submodule-prefix=3D%s%s/",
++			     spf->prefix, task->sub->path);
+
+ 		/* NEEDSWORK: have get_default_remote from submodule--helper */
+ 		strvec_push(&cp->args, "origin");
+@@ -1737,7 +1727,6 @@ static int get_next_submodule(struct child_process *=
+cp, struct strbuf *err,
+ 					  append_oid_to_argv, &cp->args);
+
+ 		*task_cb =3D task;
+-		strbuf_release(&submodule_prefix);
+ 		return 1;
+ 	}
+
+=2D-
+2.44.0
