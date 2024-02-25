@@ -1,170 +1,84 @@
-Received: from out-186.mta0.migadu.com (out-186.mta0.migadu.com [91.218.175.186])
+Received: from mout.web.de (mout.web.de [212.227.15.4])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49B7EF9EA
-	for <git@vger.kernel.org>; Sun, 25 Feb 2024 10:34:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.186
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00AEF101DA
+	for <git@vger.kernel.org>; Sun, 25 Feb 2024 11:27:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.4
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708857302; cv=none; b=WGRamJKBFjdZf6KTHJ0L9RefbTyUgS4ZVagIcWlqTcPlayo4wGzELITqn44gFNscd45RSQBZORQeSzZ11Ku2nRLv0WE5zuNkLjVGfUawkXzOBMHFe4585feg+x2q/jzMsciJyKn8JUtjbywIpW7glBs4ull3rVzZLaV9qdpWMC8=
+	t=1708860457; cv=none; b=LUJ4BaHqs48QFWyyhVn+XE42qs3Yt0VhiDwuW/UiAWRuJJ5hLDp6O7ACOvacSMcAKKB74HZ4J1xAin6a/S/mzyVSqzzjeTY+M4TACFdWIVPZd/JQF832CCMO2EmaWHR5PBgGnmhTtZ9x9TrrbT4VaWcE0QnxzodT2mv+7U8pgQA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708857302; c=relaxed/simple;
-	bh=7FA7/wR+SwrgkOIOCIbP5nH+Y8vnqrq2V4HHf0Z2oAA=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=MU1VSADRRndUm/wZd8BdSgNdxCrZKOLwM2vxdnSmRQzUQUpAGYcQBspmaNDsqErD1g6tpDxgmBSpmWlO16rdsKFvd1ROULDcytEJof2SpyCWw9VaX2RfVx3St3Ynhsus3VOdab4qZy9ZY7I05o7xMhgrnwL7JsIU//SMshtFuhQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=swagemakers.org; spf=pass smtp.mailfrom=swagemakers.org; dkim=pass (1024-bit key) header.d=swagemakers.org header.i=@swagemakers.org header.b=ZVJUqrg+; arc=none smtp.client-ip=91.218.175.186
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=swagemakers.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=swagemakers.org
+	s=arc-20240116; t=1708860457; c=relaxed/simple;
+	bh=qWfM/AJw1sXlo8kLMBbOWl6z8Mc2EVc+YcyYyhS1ZUs=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=qKTAAIIZ+xGSj6VOIxzZfrErXCQY3Z70THrhyhjDDZnARkd6UjzjcX0IeA6H5e45toAcsZzQU97POaE/6FUWNeNxtP40ytZsvohMP0Ni4YbW6LH65W8NmEAW2iilfKYLWJgkLNnUuv50bXbf8zYO/u55Tp7t7rs+OzDPsRiGSXQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b=lrdmd5MH; arc=none smtp.client-ip=212.227.15.4
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=swagemakers.org header.i=@swagemakers.org header.b="ZVJUqrg+"
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=swagemakers.org;
-	s=key1; t=1708857293;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding;
-	bh=Hm3A9Zn+ee2Cy3gKki935CSCR5JZ+Wy3CrMNwJ77U0k=;
-	b=ZVJUqrg+C4c9wdvG97rZaflKrp4vt1W1WMSh2opKmZdFqD2RS/+QZYIYE9SDc+vcSzg53Q
-	+Czlh7BGLBTwd40hOlVgkbea0Zt/v8vJ1BCOqc95pETkTx+Q0MNqoMoJg1cQQBAecUyxQ4
-	8Kp0oCcLFapVNlnXxuFoCwJDNSIlOBM=
-From: Julian Swagemakers <julian@swagemakers.org>
+	dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b="lrdmd5MH"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de; s=s29768273;
+	t=1708860451; x=1709465251; i=l.s.r@web.de;
+	bh=qWfM/AJw1sXlo8kLMBbOWl6z8Mc2EVc+YcyYyhS1ZUs=;
+	h=X-UI-Sender-Class:From:To:Cc:Subject:Date;
+	b=lrdmd5MHtCLj2l+sTS/KeM/e5B5ZO2PSEaClkFxDUdX85xVCZVoKXH4IQ16zot91
+	 hdduq7SzXyneLeaYAzHWgCl1k2KWayff/igZlv3uKw/IVYDz27aMKYqXzsWmwbc45
+	 PXLNiEpFdkJ8gOd3q8E0s4G7yl79jZLR4cLgnnCPyMIB3yOt9KcjWO0ftOJbJYTnc
+	 DnInscIAxxDoSsHDE5xpld2kdqj7DsT/EAkxIomWkS8yKfvQyeDOP7rgEa+cOoRCn
+	 dm+vxnSUJjtZRPEoqgwheqhFtNJtfpNq6dLjAICl6NbvQ1GRtZXPXi12k7DppBAQL
+	 6M1x7MJ2oQLeW2aT0Q==
+X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
+Received: from Mini-von-Rene.fritz.box ([79.203.19.211]) by smtp.web.de
+ (mrweb005 [213.165.67.108]) with ESMTPSA (Nemesis) id
+ 1MftC1-1qyIPa1lG5-00gCcC; Sun, 25 Feb 2024 12:27:31 +0100
+From: =?UTF-8?q?Ren=C3=A9=20Scharfe?= <l.s.r@web.de>
 To: git@vger.kernel.org
-Cc: Julian Swagemakers <julian@swagemakers.org>
-Subject: [PATCH] send-email: implement SMTP bearer authentication
-Date: Sun, 25 Feb 2024 11:34:13 +0100
-Message-ID: <20240225103413.9845-1-julian@swagemakers.org>
+Cc: Phillip Wood <phillip.wood123@gmail.com>,
+	Josh Steadmon <steadmon@google.com>,
+	Achu Luma <ach.lumap@gmail.com>,
+	Christian Couder <christian.couder@gmail.com>
+Subject: [PATCH 0/3] t-ctype: simplify unit test definitions
+Date: Sun, 25 Feb 2024 12:27:17 +0100
+Message-ID: <20240225112722.89221-1-l.s.r@web.de>
+X-Mailer: git-send-email 2.44.0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Migadu-Flow: FLOW_OUT
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:Zo5ge99zYySLrHg4cDhq/fEdB3OsqfnB0QniLvOPHS03hQ68C70
+ D9nf5fjyeJtPE04CFiX6JPYQXXuTKTwllAX0hGafAZokRqzojaEdbD63IYO+pzqStb3ynwO
+ AMtodpqCtyLMEYdu9XSKj+9mvp3dy/gRULExG/GbY8OaigtPf9FoQlOos0qiv/B4GLpn5o2
+ wZSxNB6szS9Ji/T0YL9nw==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:8D3f5NoyDdI=;yZ8ynq3guJblWghYCZ+GArQP9hJ
+ bqW5jdGKQbAOoHHb358QK6TSajoO4A/N1MkaHn04qKdPf1byMalDOSdrEAAF716kMpLUGMR77
+ HqMSA9uv7TNlvyKu67Rdchr1DaD+6KOlMvSuc4cF7uZIw2B3X5fIr1jYIwhmlZtRXKPeZokhy
+ DxPhw9QYnrlErtZZj5aFjz2oxuQxd6/EwZjBr4CkCQw/TQEwpfUIjCOLV5Kt5mBXEmXCkLQkX
+ CBpkGT0NeMuWuyfsbWrF48hXq4jWN1CrO16SOXpKQwWq584KKImLpt8YReLc7PklmVO4F8n9f
+ JX20bJIrvmdS/x45O6T7XedTFwc8P9Ws3gUM9TA+qLcaDWqmF3RyFkoMU78ciB+k9v7PSzmh6
+ lm+OrEI2rgv3lBhGATgEx3QycOc1vtdcwc1587mTHexNPolQK16lOAOFdIfdblyk+yzMhn0cE
+ bcMtX1brk+rv3jLJ4HZpzo22e5/Geq9fZCJPnUVIqJHdqbgBc/+v3UYVZX8oi0tJe7dYVxRcl
+ zpdgg6EZqMaWp2yjYpVKIDRr/6P1/wqxRS9tMRq3CK66zfzn8BhxISOAofru5l1IiokoYWyfk
+ u9ucuBZ4Qr5SGzb0ZdkKRYbodaaa6dfMCGFnGOXI4BZ0ZVwsqE8s13IoSAqz8+RBxoMf7syyj
+ 1VFpxsASFuxOnY75RgEfzR7cwU+91/19hGwoUVlQeb/rVsL9CbKOK8fvRLGJdCwB7KgiOTKFf
+ eOgGs6uKmeBe1kpygZDhlYh2gGFpq8BiKpAYDWY54EG1aSQh2CZu2caWDgppnlZA1o6n8zDqX
+ EaLkgh0e4NrLAbWoFtILRJ9loFSA1aygwPXD+PyReSz8w=
 
-Manually send SMTP AUTH command for auth type OAUTHBEARER and XOAUTH2.
-This is necessary since they are currently not supported by the Perls
-Authen::SASL module.
+Simplify the ctype unit tests to allow combining specification strings
+in any order and no longer require repeating class names.  Patch 3 gets
+rid of aggregation by class and implements the tests in arguably the
+most basic and straight-forward way for the unit test framework, at the
+cost of producing raw and lengthy output.
 
-The bearer token needs to be passed in as the password. This can be done
-with git-credential-oauth[0] after minor modifications[1]. Which will
-allow using git send-email with Gmail and oauth2 authentication:
+  t-ctype: allow NUL anywhere in the specification string
+  t-ctype: avoid duplicating class names
+  t-ctype: do one test per class and char
 
-```
-[credential]
-	helper = cache --timeout 7200	# two hours
-	helper = oauth
-[sendemail]
-    smtpEncryption = tls
-    smtpServer = smtp.gmail.com
-    smtpUser = example@gmail.com
-    smtpServerPort = 587
-    smtpauth = OAUTHBEARER
-```
+ t/unit-tests/t-ctype.c | 73 ++++++++++++------------------------------
+ 1 file changed, 20 insertions(+), 53 deletions(-)
 
-As well as Office 365 accounts:
-
-```
-[credential]
-	helper = cache --timeout 7200	# two hours
-	helper = oauth
-[sendemail]
-    smtpEncryption = tls
-    smtpServer = smtp.office365.com
-    smtpUser = example@example.com
-    smtpServerPort = 587
-    smtpauth = XOAUTH2
-```
-
-[0] https://github.com/hickford/git-credential-oauth
-[1] https://github.com/hickford/git-credential-oauth/issues/48
-
-Signed-off-by: Julian Swagemakers <julian@swagemakers.org>
----
- git-send-email.perl | 65 +++++++++++++++++++++++++++++++++++++++++++--
- 1 file changed, 63 insertions(+), 2 deletions(-)
-
-diff --git a/git-send-email.perl b/git-send-email.perl
-index 821b2b3a13..72d378f6fd 100755
---- a/git-send-email.perl
-+++ b/git-send-email.perl
-@@ -1359,6 +1359,63 @@ sub smtp_host_string {
- 	}
- }
- 
-+sub generate_oauthbearer_string {
-+	# This will generate the oauthbearer string used for authentication.
-+	#
-+	# "n,a=" {User} ",^Ahost=" {Host} "^Aport=" {Port} "^Aauth=Bearer " {Access Token} "^A^A
-+	#
-+	# The first part `n,a=" {User} ",` is the gs2 header described in RFC5801.
-+	# * gs2-cb-flag `n` -> client does not support CB
-+	# * gs2-authzid `a=" {User} "`
-+	#
-+	# The second part are key value pairs containing host, port and auth as
-+	# described in RFC7628.
-+	#
-+	# https://datatracker.ietf.org/doc/html/rfc5801
-+	# https://datatracker.ietf.org/doc/html/rfc7628
-+	my $username = shift;
-+	my $token = shift;
-+	return "n,a=$username,\001port=$smtp_server_port\001auth=Bearer $token\001\001";
-+}
-+
-+sub generate_xoauth2_string {
-+	# "user=" {User} "^Aauth=Bearer " {Access Token} "^A^A"
-+	# https://developers.google.com/gmail/imap/xoauth2-protocol#initial_client_response
-+	my $username = shift;
-+	my $token = shift;
-+	return "user=$username\001auth=Bearer $token\001\001";
-+}
-+
-+sub smtp_bearer_auth {
-+	my $username = shift;
-+	my $token = shift;
-+	my $auth_string;
-+	if ($smtp_encryption ne "tls") {
-+		# As described in RFC7628 TLS is required and will be will
-+		# be enforced at this point.
-+		#
-+		# https://datatracker.ietf.org/doc/html/rfc7628#section-3
-+		die __("For $smtp_auth TLS is required.")
-+	}
-+	if ($smtp_auth eq "OAUTHBEARER") {
-+		$auth_string = generate_oauthbearer_string($username, $token);
-+	} elsif ($smtp_auth eq "XOAUTH2") {
-+		$auth_string = generate_xoauth2_string($username, $token);
-+	}
-+	my $encoded_auth_string = MIME::Base64::encode($auth_string, "");
-+	$smtp->command("AUTH $smtp_auth $encoded_auth_string\r\n");
-+	use Net::Cmd qw(CMD_OK);
-+	if ($smtp->response() == CMD_OK){
-+		return 1;
-+	} else {
-+		# Send dummy request on authentication failure according to rfc7628.
-+		# https://datatracker.ietf.org/doc/html/rfc7628#section-3.2.3
-+		$smtp->command(MIME::Base64::encode("\001"));
-+		$smtp->response();
-+		return 0;
-+	}
-+}
-+
- # Returns 1 if authentication succeeded or was not necessary
- # (smtp_user was not specified), and 0 otherwise.
- 
-@@ -1392,8 +1449,12 @@ sub smtp_auth_maybe {
- 		'password' => $smtp_authpass
- 	}, sub {
- 		my $cred = shift;
--
--		if ($smtp_auth) {
-+		if ($smtp_auth eq "OAUTHBEARER" or $smtp_auth eq "XOAUTH2") {
-+			# Since Authen:SASL does not support XOAUTH2 nor OAUTHBEARER we will
-+			# manuall authenticate for tese types. The password field should
-+			# contain the auth token at this point.
-+			return smtp_bearer_auth($cred->{'username'}, $cred->{'password'});
-+		} elsif ($smtp_auth) {
- 			my $sasl = Authen::SASL->new(
- 				mechanism => $smtp_auth,
- 				callback => {
--- 
-2.43.2
+=2D-
+2.44.0
 
