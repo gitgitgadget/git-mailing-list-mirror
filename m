@@ -1,198 +1,250 @@
-Received: from mail-qv1-f52.google.com (mail-qv1-f52.google.com [209.85.219.52])
+Received: from mail-ed1-f48.google.com (mail-ed1-f48.google.com [209.85.208.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89D131B950
-	for <git@vger.kernel.org>; Sun, 25 Feb 2024 21:56:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CE051B951
+	for <git@vger.kernel.org>; Sun, 25 Feb 2024 22:15:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708898201; cv=none; b=nBwsokmk5NNBI58iihkRNlaOo/GJGtzszayOWo8XqUvn1+jrLIwIfxIKRBvPs/vLb4e3whRqlhH7VOMdB6LBydX6xeLn99IyzEC7vU/Eu3xnED+2akI+v6szGWkGfyOL0Tl4amhsytXju3yp2BJYEWrUK+lrWFu/6K0apFL5Aec=
+	t=1708899329; cv=none; b=GDVvPMVGVdcZ3X++Bh+DrT2qSDqKpvgnqarAh2zvBz5ezAzvrOEJvh52c5AlHEruDuokLvqFYeuVpacg/4gJQL3em1sf02d1cbS3EFcEgkkAu6NuXqzzYVebVSMw1ymBGlxPTajlNBjzYijweBiD9OumEQXuXrGILIxVbGxvKl8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708898201; c=relaxed/simple;
-	bh=rXSh5lCW9cMFLJlGcW9p/2rJf3+MKsNiqgac1qDlSgk=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=U/xNaNzWzRjDD2JT3NTUUPRv1LSW9N0iLqCMLjKRJ4NVeYdOTJhxXuwDzICueZGnzYlK8bCXxmOnATevghXDIl3BbALhEAtS+RcJscIOw9SrpFRkOptip+dY7n1EiwHS3Q9OjSqz5HM214prpFZdLATZXHtUQ9kr+Uk0X1Hdp6g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=O/jQYzdH; arc=none smtp.client-ip=209.85.219.52
+	s=arc-20240116; t=1708899329; c=relaxed/simple;
+	bh=CK/lgOb5fBUat8qDOYLsXTy8emoMgXTyaeOTutx9MqQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=WMhkT1dXvdO8hdiP2iLXxcE+yKojNqH4pv2uIPnVlNz8a3dam7ZTtkiCaJ4AsXfMttZ/Y+qJ8c6drkXZSgFy1M+jXzi6kFLQDBFHiYrSBo8+TZBoT79IvOOP1qxlyaUH/bs1rHqmZXeo4HGpg4oKFG0HYHNkMs8MwPP2JmUmgIQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=IqDBHXUT; arc=none smtp.client-ip=209.85.208.48
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="O/jQYzdH"
-Received: by mail-qv1-f52.google.com with SMTP id 6a1803df08f44-68f74fb38a8so11094196d6.3
-        for <git@vger.kernel.org>; Sun, 25 Feb 2024 13:56:39 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IqDBHXUT"
+Received: by mail-ed1-f48.google.com with SMTP id 4fb4d7f45d1cf-5648d92919dso3114086a12.1
+        for <git@vger.kernel.org>; Sun, 25 Feb 2024 14:15:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1708898198; x=1709502998; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=WVeY0Yy/THv7VUdM9oGcYQ6+BZVdyZ2HrLAOspdJPA0=;
-        b=O/jQYzdHvnST/xWq/KiTvUP7yVN5D8IPIUs+IhSlZFk85FMuhiLaECLIHgZN5rq6GX
-         s4jtXvQmWRiAtedwbr0UowUrfiVg3jZBuHsFyPqx5IplFwov/ZpVIx8OdcjzcmwzNXHz
-         lXesBtyoUiSLXjIhgyJJLW3wQhmZ4qTkdHZRGEJleOUAHVo++gllVKniIawDOYYIYY1G
-         61dEhvPxpfHAho9upcG5evOTHZzOoTe/Ym4KP0gcaK7naukqjRlzrZuM0kEUwESM4kf3
-         EznLjgfcjeaZghyZNmonc27PmNQJniS4v/+ZsihfwIAFA09HIhpH8P/erttl0Ps68PgT
-         FBzg==
+        d=gmail.com; s=20230601; t=1708899326; x=1709504126; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=JBBD4FjAEl9UKbO4PZvRIe1x8TIkAl6wqbClynRk314=;
+        b=IqDBHXUTcjkVUyEYT3UZTNesITmGpp2qVM0dgGFGnEDBVet3U25MT78UeJ/2lVrtA2
+         a1Sbe6tH7QkjrM7MINOChp21K6f9NSez47SCy1raHeATzrPw+FVWnbMDXv7ofwKcYLcz
+         3NwQIKcFOWU50NFwyjupZk6+DW+w5+oisc5Cm6P79tP+yKxJV+xObbmX7eyVVEOBX51D
+         PQ0hc+xfQrn82makf9qLzV+4u//s9QjUpqZF+lxI/MsskWDe/hbbFnGUrGCqr24ZZotZ
+         AzhymQgKcfYRuHSX/qEEoIJIIT1okTyX7OqEv1B5YOO2yv0ITtxtdrYPIXTFH044+lwJ
+         v0WA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1708898198; x=1709502998;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=WVeY0Yy/THv7VUdM9oGcYQ6+BZVdyZ2HrLAOspdJPA0=;
-        b=HP3SF9ge18dzltRa941b8JpBr7Mgzmmp1Lq3VQCDVcbI6tb/1zwFq3faz+OtqMxEjY
-         /P/rqKh7dCpaEl3w6jrTVFE541gCTfaE0DejVLrfkQixgFI5rP1gHsymMd0g7uzMygsV
-         M+nGnqWGE4XTsgw6b6Ub6jITS+U1J+5VYCc+Z+iYOtypzkPGgs8YYeWLVwHHCkz6mlsn
-         FcAYRAx0gsXoxNhIIPNCtr0XoJf5TqP3KZG+/UVoa8HvHqunX0f5uVo3HHs94/I/ZXM+
-         R1bwE0VKX57l2/rpbX1OfMtRvWcdYXW2y1g7EBxgjIxYVNV+eK+ITWXZBC3uEaMIlDlj
-         OwRA==
-X-Gm-Message-State: AOJu0Yw8ppmiQoA0BaP1QBYJopWFVgYP3NadQubzoiTGNEUFPtBmYiFl
-	mYOh/jihPrCdMGT1bCDxpUT9Fd24Lv8Yjl5ZVFihTOFeWosQwQxX
-X-Google-Smtp-Source: AGHT+IHjnoHU7qPUs7TOQbPY8AecYSddqKf7hpZLsDyFtwI1XDHKSn3otGloi9Io5Es3Hdfk5DHoiA==
-X-Received: by 2002:a0c:e08c:0:b0:68f:2c76:38dc with SMTP id l12-20020a0ce08c000000b0068f2c7638dcmr6544356qvk.57.1708898198478;
-        Sun, 25 Feb 2024 13:56:38 -0800 (PST)
-Received: from [127.0.0.1] ([2606:6d00:11:ff90:6090:e182:bd61:ebff])
-        by smtp.gmail.com with ESMTPSA id qh27-20020a0562144c1b00b0068fb940bc92sm2126129qvb.144.2024.02.25.13.56.37
+        d=1e100.net; s=20230601; t=1708899326; x=1709504126;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=JBBD4FjAEl9UKbO4PZvRIe1x8TIkAl6wqbClynRk314=;
+        b=EAY2fUyVF0GcU9wGXHUJ+AOhGsDp8FBnjXl6HHciaQMFumXd58V3r9akIT3snYOyjQ
+         Um+VjkMPrJd+BG2aCX9c6dnEKr4W1TfiudLjml+mD7KvNjeD4uSJ34cUc/j+5UamKQmS
+         tqx4klF6uYcwxF+Ykzh9oW9G33Ct8+c0VFcI4wdbzyIFytqBWcWOKpF35AYEqirwDjlQ
+         cRcfKaQLwXsIKkZrD3GzUBtMGXHJNU8SrNQiQRiRdYHUe92e9blUKkOecB/09gUSwM5f
+         rB0czEnmMxnhoMZgAgx99fxrmWkqlvDdNnhmz795/YhEYRHMtqYu8xt0hbez7fmouNze
+         woLA==
+X-Gm-Message-State: AOJu0YzvMNyOVXgta4Lti7HIhqGjWSwiwkiZcJxWWEMo0dgSv59bcj6O
+	ILvmKMGzqECHXVEXm2wjgX1zgrX32TQhaI9a3JITVdIBBwj8JZMN
+X-Google-Smtp-Source: AGHT+IEW+BOHbNd9U8wzeTmieWVMnP2gsU65YmIwvSjZlEJ0THvSUateAIiifTHjU7g9RxCn9lhwbA==
+X-Received: by 2002:a05:6402:40d2:b0:565:e030:2d2c with SMTP id z18-20020a05640240d200b00565e0302d2cmr1165549edb.36.1708899325622;
+        Sun, 25 Feb 2024 14:15:25 -0800 (PST)
+Received: from localhost (94-21-146-251.pool.digikabel.hu. [94.21.146.251])
+        by smtp.gmail.com with ESMTPSA id s8-20020a056402164800b005652f6a9533sm1753439edx.74.2024.02.25.14.15.24
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 25 Feb 2024 13:56:38 -0800 (PST)
-From: Philippe Blain <levraiphilippeblain@gmail.com>
-Date: Sun, 25 Feb 2024 16:56:17 -0500
-Subject: [PATCH v5 2/2] revision: implement `git log --merge` also for
- rebase/cherry-pick/revert
+        Sun, 25 Feb 2024 14:15:25 -0800 (PST)
+Date: Sun, 25 Feb 2024 23:15:24 +0100
+From: SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To: Taylor Blau <me@ttaylorr.com>
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
+	Junio C Hamano <gitster@pobox.com>,
+	Jonathan Tan <jonathantanmy@google.com>
+Subject: Re: [PATCH v6 13/16] commit-graph: new Bloom filter version that
+ fixes murmur3
+Message-ID: <20240225221524.GA1940392@szeder.dev>
+References: <cover.1706741516.git.me@ttaylorr.com>
+ <d2f11c082d3bf10d9127c330a7d59b7e47ac4f21.1706741516.git.me@ttaylorr.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20240225-ml-log-merge-with-cherry-pick-and-other-pseudo-heads-v5-2-af1ef2d9e44d@gmail.com>
-References: <20240225-ml-log-merge-with-cherry-pick-and-other-pseudo-heads-v5-0-af1ef2d9e44d@gmail.com>
-In-Reply-To: <20240225-ml-log-merge-with-cherry-pick-and-other-pseudo-heads-v5-0-af1ef2d9e44d@gmail.com>
-To: git@vger.kernel.org
-Cc: Johannes Sixt <j6t@kdbg.org>, Elijah Newren <newren@gmail.com>, 
- Michael Lohmann <mial.lohmann@gmail.com>, 
- Phillip Wood <phillip.wood@dunelm.org.uk>, Patrick Steinhardt <ps@pks.im>, 
- Junio C Hamano <gitster@pobox.com>, 
- Michael Lohmann <mi.al.lohmann@gmail.com>, 
- Philippe Blain <levraiphilippeblain@gmail.com>
-X-Mailer: b4 0.14-dev
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <d2f11c082d3bf10d9127c330a7d59b7e47ac4f21.1706741516.git.me@ttaylorr.com>
 
-From: Michael Lohmann <mi.al.lohmann@gmail.com>
+On Wed, Jan 31, 2024 at 05:52:54PM -0500, Taylor Blau wrote:
+> diff --git a/t/t4216-log-bloom.sh b/t/t4216-log-bloom.sh
+> index 93b8d096cf..a7bf3a7dca 100755
+> --- a/t/t4216-log-bloom.sh
+> +++ b/t/t4216-log-bloom.sh
+> @@ -485,6 +485,33 @@ test_expect_success 'merge graph layers with incompatible Bloom settings' '
+>  	test_must_be_empty err
+>  '
+>  
+> +test_expect_success 'ensure Bloom filter with incompatible versions are ignored' '
+> +	rm "$repo/$graph" &&
+> +
+> +	git -C $repo log --oneline --no-decorate -- $CENT >expect &&
 
-'git log' learned in ae3e5e1ef2 (git log -p --merge [[--] paths...],
-2006-07-03) to show commits touching conflicted files in the range
-HEAD...MERGE_HEAD, an addition documented in d249b45547 (Document
-rev-list's option --merge, 2006-08-04).
+The $CENT variable is not set at this point in the test script.
+However, even if it were, the repository used in this test case
+doesn't contain any file with that name.
 
-It can be useful to look at the commit history to understand what lead
-to merge conflicts also for other mergy operations besides merges, like
-cherry-pick, revert and rebase.
+> +
+> +	# Compute v1 Bloom filters for commits at the bottom.
+> +	git -C $repo rev-parse HEAD^ >in &&
+> +	git -C $repo commit-graph write --stdin-commits --changed-paths \
+> +		--split <in &&
+> +
+> +	# Compute v2 Bloomfilters for the rest of the commits at the top.
+> +	git -C $repo rev-parse HEAD >in &&
+> +	git -C $repo -c commitGraph.changedPathsVersion=2 commit-graph write \
+> +		--stdin-commits --changed-paths --split=no-merge <in &&
+> +
+> +	test_line_count = 2 $repo/$chain &&
+> +
+> +	git -C $repo log --oneline --no-decorate -- $CENT >actual 2>err &&
+> +	test_cmp expect actual &&
+> +
+> +	layer="$(head -n 1 $repo/$chain)" &&
+> +	cat >expect.err <<-EOF &&
+> +	warning: disabling Bloom filters for commit-graph layer $SQ$layer$SQ due to incompatible settings
+> +	EOF
+> +	test_cmp expect.err err
 
-For rebases and cherry-picks, an interesting range to look at is
-HEAD...{REBASE_HEAD,CHERRY_PICK_HEAD}, since even if all the commits
-included in that range are not directly part of the 3-way merge,
-conflicts encountered during these operations can indeed be caused by
-changes introduced in preceding commits on both sides of the history.
+The variable $repo is used 9 times in this test case.  I think it
+would be simpler and easier follow if it used a ( cd $repo && ... )
+subshell, like many of the previous tests in this test script, 
 
-For revert, as we are (most likely) reversing changes from a previous
-commit, an appropriate range is REVERT_HEAD..HEAD, which is equivalent
-to REVERT_HEAD...HEAD and to HEAD...REVERT_HEAD, if we keep HEAD and its
-parents on the left side of the range.
+> +'
+> +
+>  get_first_changed_path_filter () {
+>  	test-tool read-graph bloom-filters >filters.dat &&
+>  	head -n 1 filters.dat
+> @@ -536,6 +563,120 @@ test_expect_success 'version 1 changed-path used when version 1 requested' '
+>  	)
+>  '
+>  
+> +test_expect_success 'version 1 changed-path not used when version 2 requested' '
+> +	(
+> +		cd highbit1 &&
+> +		git config --add commitgraph.changedPathsVersion 2 &&
+> +		test_bloom_filters_not_used "-- another$CENT"
+> +	)
+> +'
+> +
+> +test_expect_success 'version 1 changed-path used when autodetect requested' '
+> +	(
+> +		cd highbit1 &&
+> +		git config --add commitgraph.changedPathsVersion -1 &&
+> +		test_bloom_filters_used "-- another$CENT"
+> +	)
+> +'
+> +
+> +test_expect_success 'when writing another commit graph, preserve existing version 1 of changed-path' '
+> +	test_commit -C highbit1 c1double "$CENT$CENT" &&
+> +	git -C highbit1 commit-graph write --reachable --changed-paths &&
+> +	(
+> +		cd highbit1 &&
+> +		git config --add commitgraph.changedPathsVersion -1 &&
+> +		echo "options: bloom(1,10,7) read_generation_data" >expect &&
+> +		test-tool read-graph >full &&
+> +		grep options full >actual &&
+> +		test_cmp expect actual
+> +	)
+> +'
+> +
+> +test_expect_success 'set up repo with high bit path, version 2 changed-path' '
+> +	git init highbit2 &&
+> +	git -C highbit2 config --add commitgraph.changedPathsVersion 2 &&
+> +	test_commit -C highbit2 c2 "$CENT" &&
+> +	git -C highbit2 commit-graph write --reachable --changed-paths
+> +'
+> +
+> +test_expect_success 'check value of version 2 changed-path' '
+> +	(
+> +		cd highbit2 &&
+> +		echo "c01f" >expect &&
+> +		get_first_changed_path_filter >actual &&
+> +		test_cmp expect actual
+> +	)
+> +'
+> +
+> +test_expect_success 'setup make another commit' '
+> +	# "git log" does not use Bloom filters for root commits - see how, in
+> +	# revision.c, rev_compare_tree() (the only code path that eventually calls
+> +	# get_bloom_filter()) is only called by try_to_simplify_commit() when the commit
+> +	# has one parent. Therefore, make another commit so that we perform the tests on
+> +	# a non-root commit.
+> +	test_commit -C highbit2 anotherc2 "another$CENT"
+> +'
+> +
+> +test_expect_success 'version 2 changed-path used when version 2 requested' '
+> +	(
+> +		cd highbit2 &&
+> +		test_bloom_filters_used "-- another$CENT"
+> +	)
+> +'
+> +
+> +test_expect_success 'version 2 changed-path not used when version 1 requested' '
+> +	(
+> +		cd highbit2 &&
+> +		git config --add commitgraph.changedPathsVersion 1 &&
+> +		test_bloom_filters_not_used "-- another$CENT"
+> +	)
+> +'
+> +
+> +test_expect_success 'version 2 changed-path used when autodetect requested' '
+> +	(
+> +		cd highbit2 &&
+> +		git config --add commitgraph.changedPathsVersion -1 &&
+> +		test_bloom_filters_used "-- another$CENT"
+> +	)
+> +'
+> +
+> +test_expect_success 'when writing another commit graph, preserve existing version 2 of changed-path' '
+> +	test_commit -C highbit2 c2double "$CENT$CENT" &&
+> +	git -C highbit2 commit-graph write --reachable --changed-paths &&
+> +	(
+> +		cd highbit2 &&
+> +		git config --add commitgraph.changedPathsVersion -1 &&
+> +		echo "options: bloom(2,10,7) read_generation_data" >expect &&
+> +		test-tool read-graph >full &&
+> +		grep options full >actual &&
+> +		test_cmp expect actual
+> +	)
+> +'
+> +
+> +test_expect_success 'when writing commit graph, do not reuse changed-path of another version' '
+> +	git init doublewrite &&
+> +	test_commit -C doublewrite c "$CENT" &&
+> +	git -C doublewrite config --add commitgraph.changedPathsVersion 1 &&
+> +	git -C doublewrite commit-graph write --reachable --changed-paths &&
+> +	for v in -2 3
+> +	do
+> +		git -C doublewrite config --add commitgraph.changedPathsVersion $v &&
+> +		git -C doublewrite commit-graph write --reachable --changed-paths 2>err &&
+> +		cat >expect <<-EOF &&
+> +		warning: attempting to write a commit-graph, but ${SQ}commitgraph.changedPathsVersion${SQ} ($v) is not supported
+> +		EOF
+> +		test_cmp expect err || return 1
+> +	done &&
+> +	git -C doublewrite config --add commitgraph.changedPathsVersion 2 &&
+> +	git -C doublewrite commit-graph write --reachable --changed-paths &&
 
-As such, adjust the code in prepare_show_merge so it constructs the
-range HEAD...$OTHER for OTHER={MERGE_HEAD, CHERRY_PICK_HEAD, REVERT_HEAD
-or REBASE_HEAD}. Note that we try these pseudorefs in order, so keep
-REBASE_HEAD last since the three other operations can be performed
-during a rebase. Note also that in the uncommon case where $OTHER and
-HEAD do not share a common ancestor, this will show the complete
-histories of both sides since their root commits, which is the same
-behaviour as currently happens in that case for HEAD and MERGE_HEAD.
+The path 'doublewrite' is used 8 times in this test case before
+finally cd-ing into that directory in a subshell...
 
-Adjust the documentation of this option accordingly.
-
-Co-authored-by: Johannes Sixt <j6t@kdbg.org>
-Co-authored-by: Philippe Blain <levraiphilippeblain@gmail.com>
-Signed-off-by: Michael Lohmann <mi.al.lohmann@gmail.com>
-[jc: tweaked in j6t's precedence fix that tries REBASE_HEAD last]
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
-Signed-off-by: Philippe Blain <levraiphilippeblain@gmail.com>
----
- Documentation/rev-list-options.txt |  7 +++++--
- revision.c                         | 31 +++++++++++++++++++++++--------
- 2 files changed, 28 insertions(+), 10 deletions(-)
-
-diff --git a/Documentation/rev-list-options.txt b/Documentation/rev-list-options.txt
-index 2bf239ff03..9ce7a5eedc 100644
---- a/Documentation/rev-list-options.txt
-+++ b/Documentation/rev-list-options.txt
-@@ -341,8 +341,11 @@ See also linkgit:git-reflog[1].
- Under `--pretty=reference`, this information will not be shown at all.
- 
- --merge::
--	After a failed merge, show refs that touch files having a
--	conflict and don't exist on all heads to merge.
-+	Show commits touching conflicted paths in the range `HEAD...<other>`,
-+	where `<other>` is the first existing pseudoref in `MERGE_HEAD`,
-+	`CHERRY_PICK_HEAD`, `REVERT_HEAD` or `REBASE_HEAD`. Only works
-+	when the index has unmerged entries. This option can be used to show
-+	relevant commits when resolving conflicts from a 3-way merge.
- 
- --boundary::
- 	Output excluded boundary commits. Boundary commits are
-diff --git a/revision.c b/revision.c
-index ee26988cc6..a90a6f861b 100644
---- a/revision.c
-+++ b/revision.c
-@@ -1961,11 +1961,31 @@ static void add_pending_commit_list(struct rev_info *revs,
- 	}
- }
- 
-+static const char *lookup_other_head(struct object_id *oid)
-+{
-+	int i;
-+	static const char *const other_head[] = {
-+		"MERGE_HEAD", "CHERRY_PICK_HEAD", "REVERT_HEAD", "REBASE_HEAD"
-+	};
-+
-+	for (i = 0; i < ARRAY_SIZE(other_head); i++)
-+		if (!read_ref_full(other_head[i],
-+				RESOLVE_REF_READING | RESOLVE_REF_NO_RECURSE,
-+				oid, NULL)) {
-+			if (is_null_oid(oid))
-+				die(_("%s is a symbolic ref?"), other_head[i]);
-+			return other_head[i];
-+		}
-+
-+	die(_("--merge requires one of the pseudorefs MERGE_HEAD, CHERRY_PICK_HEAD, REVERT_HEAD or REBASE_HEAD"));
-+}
-+
- static void prepare_show_merge(struct rev_info *revs)
- {
- 	struct commit_list *bases;
- 	struct commit *head, *other;
- 	struct object_id oid;
-+	const char *other_name;
- 	const char **prune = NULL;
- 	int i, prune_num = 1; /* counting terminating NULL */
- 	struct index_state *istate = revs->repo->index;
-@@ -1973,15 +1993,10 @@ static void prepare_show_merge(struct rev_info *revs)
- 	if (repo_get_oid(the_repository, "HEAD", &oid))
- 		die("--merge without HEAD?");
- 	head = lookup_commit_or_die(&oid, "HEAD");
--	if (read_ref_full("MERGE_HEAD",
--			RESOLVE_REF_READING | RESOLVE_REF_NO_RECURSE,
--			&oid, NULL))
--		die("--merge without MERGE_HEAD?");
--	if (is_null_oid(&oid))
--		die(_("MERGE_HEAD is a symbolic ref?"));
--	other = lookup_commit_or_die(&oid, "MERGE_HEAD");
-+	other_name = lookup_other_head(&oid);
-+	other = lookup_commit_or_die(&oid, other_name);
- 	add_pending_object(revs, &head->object, "HEAD");
--	add_pending_object(revs, &other->object, "MERGE_HEAD");
-+	add_pending_object(revs, &other->object, other_name);
- 	bases = repo_get_merge_bases(the_repository, head, other);
- 	add_rev_cmdline_list(revs, bases, REV_CMD_MERGE_BASE, UNINTERESTING | BOTTOM);
- 	add_pending_commit_list(revs, bases, UNINTERESTING | BOTTOM);
-
--- 
-2.39.1
-
+> +	(
+> +		cd doublewrite &&
+> +		echo "c01f" >expect &&
+> +		get_first_changed_path_filter >actual &&
+> +		test_cmp expect actual
+> +	)
+> +'
+> +
+>  corrupt_graph () {
+>  	test_when_finished "rm -rf $graph" &&
+>  	git commit-graph write --reachable --changed-paths &&
+> -- 
+> 2.43.0.509.g253f65a7fc
+> 
