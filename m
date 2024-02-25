@@ -1,96 +1,165 @@
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f53.google.com (mail-wm1-f53.google.com [209.85.128.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE71F4E1BD
-	for <git@vger.kernel.org>; Sat, 24 Feb 2024 23:45:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42D197484
+	for <git@vger.kernel.org>; Sun, 25 Feb 2024 06:10:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708818337; cv=none; b=KXeWPWHYsd6FKv+VRM7ZC2M3tUQUVyz4FAstX8i9LIMOt/RhqG2y40Z5JjOkK4+J1OFTfmEjJRn4HqIFWt1yGUcSO8+JRwVq7oYwU3z1XftL244sv2Pa1dJcnSfWxpeI24MrU8ZlVPxlMhzYgjTmz/cPOUqh3kuqq4fMglVsFd8=
+	t=1708841445; cv=none; b=CB5W/OyI8gE0wW13metObFYyDT4m/CASviTRARcaEH6wacpa/EsXwXYdnBiUWfdOgYeuZ5D2N3+jFYFRpA9nxbx62EkwTMmfWhNKP6zvattPXawa78QHFdHe4uUZbzimbiG+j8PBtLDg80bI3K7RUBrG+JbVaWgCAMOjZlBpYwQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708818337; c=relaxed/simple;
-	bh=lP9YAp6gKyU+GhvogzP4fhw9J6iT5lWbJ4r6Yn7cIWs=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=l4WuJLxLSQZgb373VHPGjNt1VcWNBwjvfF8wm3Rz3S6ZNU2+co09+Um+c6GyD/LwJW89lHbjyGhR1eLxZG/w+cjKxjg3uqIbIdR3FutGSzNXKaNhKEXVl20lbSM9BvZAzSZJCbQuJ6mj0I+vv4SCKlatRfRxth++mwGGrEnpixE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=F/rSI7CF; arc=none smtp.client-ip=173.228.157.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1708841445; c=relaxed/simple;
+	bh=RFyol+nf3zrwrkQNUwmC3ru4XLg0mvFbJmB9EOcPj5c=;
+	h=Message-ID:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=txJ4eH+XkfciyZXwL5E9y82BS0NjOnjqaTDhjK238BF53WnBoTdFTMwLrKkrqlBpxVBF/dd0m2E9zNcyz+Fyd+W8qV8+NxUAxIU06KB/QSXS/8VhNWxLBWHPqltCdZQ+bg1NsP2bNhDppTkph0/VVkLyp0tbMRtQRjoMgW+M8ZQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=FqGL3GzA; arc=none smtp.client-ip=209.85.128.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="F/rSI7CF"
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id 13F292CD39;
-	Sat, 24 Feb 2024 18:45:35 -0500 (EST)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=lP9YAp6gKyU+
-	GhvogzP4fhw9J6iT5lWbJ4r6Yn7cIWs=; b=F/rSI7CF91P+WT6unIzRBzBs5332
-	RioxiVR55m4Tzky2ReRSaAdB9FcYNfZtQqOtEyjnlx8221Fm+FyHJ6NiHUWxr+vD
-	P+xbypsgJ0uBh9gTz8zOSn2c/K+Cc7+mlHQ8Q+tzkH5jScOwGDHIxvljIX/NybAi
-	pruDHFms+CivDZ4=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id 0B9602CD38;
-	Sat, 24 Feb 2024 18:45:35 -0500 (EST)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.176.30])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id E7AAC2CD37;
-	Sat, 24 Feb 2024 18:45:29 -0500 (EST)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
-Cc: Git List <git@vger.kernel.org>
-Subject: Re: [PATCH] fetch: convert strncmp() with strlen() to starts_with()
-In-Reply-To: <cb94b938-03f9-4dd3-84c1-f5244ca81be3@web.de> (=?utf-8?Q?=22R?=
- =?utf-8?Q?en=C3=A9?= Scharfe"'s
-	message of "Sat, 24 Feb 2024 22:47:06 +0100")
-References: <cb94b938-03f9-4dd3-84c1-f5244ca81be3@web.de>
-Date: Sat, 24 Feb 2024 15:45:28 -0800
-Message-ID: <xmqqfrxhjujr.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FqGL3GzA"
+Received: by mail-wm1-f53.google.com with SMTP id 5b1f17b1804b1-412a3716284so683855e9.1
+        for <git@vger.kernel.org>; Sat, 24 Feb 2024 22:10:42 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1708841441; x=1709446241; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=qZL/TyrUUSKdCf72nrrg+enfXL1BZp3BAd8ieHtVpH4=;
+        b=FqGL3GzAxEHkvXxDkhczyUTrM2CB8qJJF0gB0CX/oQzXqkbJGji1DSL4XhpcobjG3w
+         kUV3Zq3sCuydfXfzDNtTJZjMIoDX/kqgWPT1zEwtWrjanBw02d1yriEyu0ptJOGatOOI
+         MIytZt38XGBCqJgaslzQONlRAP//JLyg9OJt0YD0yjiQudefEWpioWE9lv5emKhwAT56
+         si5nfUwTfru4tTpUQHtWUiAvORagT9BnRXtUFd/AKqNvG1uHCedF/sUgmxdWVXSkI8Dg
+         4U09AWd6AL0b0TGxq647XYLRrlS8rgBtg4xpmOGcM19jZSK6zKYEX0RBIFGuM1Wv7u1V
+         QefQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1708841441; x=1709446241;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=qZL/TyrUUSKdCf72nrrg+enfXL1BZp3BAd8ieHtVpH4=;
+        b=ljdpNvuAKEobxVaSPQn4VkyiGArs64bIY7ZFCUYBSjyK3z4MjHWQpyV6/K0iHoXGQA
+         9DwmaZhlax8jJQuazpAyBNraN4OjJnT6nY7MuvDUtGlts0BAdvdGamYYnO6wQDB6EJg+
+         yOVLQe0CF2e0IuoXZABUyrGU/I8xWNtMuqW83zVHCIKCeeSDdtWrfd6SgrqevKp+4Xon
+         1zKEsJb6cQfxKLpzOi2go9wh7ilGXdhKtsgqmJgWJ1tG7ChfWVjNPNAb0b2Egn+WMvFo
+         UN5chglyN0TNIRIAV8kYusqSdeBzFPebwuUmNFLlH6n4WT+/VUrtOmct/AqLymPp0Q08
+         d3wA==
+X-Gm-Message-State: AOJu0YxhOOpUrpIB7N9BxqggbGMVBDRdMPrFG2W4Uri37F3HRit8E54j
+	cBHM8i2V4KXlZThZe8OnOgs2oWaq3OtdXlt95l7Y6KKPl7oPSLk5Bw1EBDHR
+X-Google-Smtp-Source: AGHT+IGuSge/iOkiD16c2BiSyIhCHw7//T5PXwcVW4/4IApUYJyTzGSFynP48A+Qo4UB2ychV/y44Q==
+X-Received: by 2002:a05:600c:1554:b0:412:9fd5:2488 with SMTP id f20-20020a05600c155400b004129fd52488mr1172720wmg.36.1708841440842;
+        Sat, 24 Feb 2024 22:10:40 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id v13-20020a05600c444d00b0041294d015fbsm4226185wmn.40.2024.02.24.22.10.40
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 24 Feb 2024 22:10:40 -0800 (PST)
+Message-ID: <pull.1663.v3.git.git.1708841439516.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1663.v2.git.git.1708660111.gitgitgadget@gmail.com>
+References: <pull.1663.v2.git.git.1708660111.gitgitgadget@gmail.com>
+From: "Haritha  via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Sun, 25 Feb 2024 06:10:39 +0000
+Subject: [PATCH v3] build: support z/OS (OS/390).
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID:
- CAEFBCCE-D36E-11EE-A319-A19503B9AAD1-77302942!pb-smtp21.pobox.com
-Content-Transfer-Encoding: quoted-printable
+To: git@vger.kernel.org
+Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>,
+    Haritha  <harithamma.d@ibm.com>,
+    Haritha D <harithamma.d@ibm.com>
 
-Ren=C3=A9 Scharfe <l.s.r@web.de> writes:
+From: Haritha D <harithamma.d@ibm.com>
 
-> Using strncmp() and strlen() to check whether a string starts with
-> another one requires repeating the prefix candidate.  Use starts_with()
-> instead, which reduces repetition and is more readable.
->
-> Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
-> ---
->  builtin/fetch.c | 5 ++---
->  1 file changed, 2 insertions(+), 3 deletions(-)
->
-> diff --git a/builtin/fetch.c b/builtin/fetch.c
-> index 3aedfd1bb6..0a7a1a3476 100644
-> --- a/builtin/fetch.c
-> +++ b/builtin/fetch.c
-> @@ -448,9 +448,8 @@ static void filter_prefetch_refspec(struct refspec =
-*rs)
->  			continue;
->  		if (!rs->items[i].dst ||
->  		    (rs->items[i].src &&
-> -		     !strncmp(rs->items[i].src,
-> -			      ref_namespace[NAMESPACE_TAGS].ref,
-> -			      strlen(ref_namespace[NAMESPACE_TAGS].ref)))) {
-> +		     starts_with(rs->items[i].src,
-> +				 ref_namespace[NAMESPACE_TAGS].ref))) {
+Since the z/OS linker does not support searching dynamic libraries,
+and the current setting of CC_LD_DYNPATH results in a directory
+to be supplied to the link step with no option as the suffix,
+it causes a linker error because the z/OS LD linker
+does not accept directories as input.
+Therefore, -L option is added.
+Also introduced z/OS (OS/390) as a platform in config.mak.uname
 
-The original tries to check that "namespace" fully matches the
-initial part of .src string, which is exactly what starts_with()
-does.  Makes sense.
+Signed-off-by: Haritha D <harithamma.d@ibm.com>
+---
+    This PR enables a successful git build on z/OS.
+    
+    Since the z/OS linker does not support searching dynamic libraries, and
+    the current setting of CC_LD_DYNPATH results in a directory to be
+    supplied to the link step with no option as the suffix, it causes a
+    linker error because the z/OS LD linker does not accept directories as
+    input. Therefore, we workaround this by adding the -L option. And,
+    Introduced z/OS (OS/390) as a platform in config.mak.uname
+    
+    Thanks for taking the time to contribute to Git! Please be advised that
+    the Git community does not use github.com for their contributions.
+    Instead, we use a mailing list (git@vger.kernel.org) for code
+    submissions, code reviews, and bug reports. Nevertheless, you can use
+    GitGitGadget (https://gitgitgadget.github.io/) to conveniently send your
+    Pull Requests commits to our mailing list.
+    
+    Please read the "guidelines for contributing" linked above!
 
->  			int j;
->
->  			free(rs->items[i].src);
-> --
-> 2.44.0
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1663%2FHarithaIBM%2Fzos-v3
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1663/HarithaIBM/zos-v3
+Pull-Request: https://github.com/git/git/pull/1663
+
+Range-diff vs v2:
+
+ 1:  53e211d7a65 ! 1:  2f1ad41bc14 build: support z/OS (OS/390).
+     @@ config.mak.uname: ifeq ($(uname_S),NONSTOP_KERNEL)
+      +        NO_MEMMEM = YesPlease
+      +        NO_GECOS_IN_PWENT = YesPlease
+      +        HAVE_STRINGS_H = YesPlease
+     -+        NEEDS_MODE_TRANSLATION = YesPlease
+     ++       NEEDS_MODE_TRANSLATION = YesPlease
+      +endif
+       ifeq ($(uname_S),MINGW)
+       	ifeq ($(shell expr "$(uname_R)" : '1\.'),2)
+       		$(error "Building with MSys is no longer supported")
+     -
+     - ## configure.ac ##
+     -@@ configure.ac: else
+     -             CC_LD_DYNPATH=-Wl,+b,
+     -           else
+     -              CC_LD_DYNPATH=
+     -+	     if test "$(uname -s)" = "OS/390"; then
+     -+		     CC_LD_DYNPATH=-L
+     -+	     fi
+     -              AC_MSG_WARN([linker does not support runtime path to dynamic libraries])
+     -           fi
+     -       fi
+ 2:  05df5d7e2d5 < -:  ----------- an improvement: removed configure.ac changes
+
+
+ config.mak.uname | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
+
+diff --git a/config.mak.uname b/config.mak.uname
+index dacc95172dc..03ee2b74525 100644
+--- a/config.mak.uname
++++ b/config.mak.uname
+@@ -638,6 +638,18 @@ ifeq ($(uname_S),NONSTOP_KERNEL)
+ 	SANE_TOOL_PATH = /usr/coreutils/bin:/usr/local/bin
+ 	SHELL_PATH = /usr/coreutils/bin/bash
+ endif
++ifeq ($(uname_S),OS/390)
++        NO_SYS_POLL_H = YesPlease
++        NO_STRCASESTR = YesPlease
++        NO_REGEX = YesPlease
++        NO_MMAP = YesPlease
++        NO_NSEC = YesPlease
++        NO_STRLCPY = YesPlease
++        NO_MEMMEM = YesPlease
++        NO_GECOS_IN_PWENT = YesPlease
++        HAVE_STRINGS_H = YesPlease
++       NEEDS_MODE_TRANSLATION = YesPlease
++endif
+ ifeq ($(uname_S),MINGW)
+ 	ifeq ($(shell expr "$(uname_R)" : '1\.'),2)
+ 		$(error "Building with MSys is no longer supported")
+
+base-commit: f41f85c9ec8d4d46de0fd5fded88db94d3ec8c11
+-- 
+gitgitgadget
