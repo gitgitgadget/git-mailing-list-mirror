@@ -1,48 +1,41 @@
-Received: from mout.web.de (mout.web.de [212.227.15.3])
+Received: from mout.web.de (mout.web.de [212.227.17.12])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95F99101EE
-	for <git@vger.kernel.org>; Sun, 25 Feb 2024 11:27:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.3
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97583FC0B
+	for <git@vger.kernel.org>; Sun, 25 Feb 2024 11:40:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.12
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708860458; cv=none; b=g5x65F0O1bboRqgjNc+L2VdQdl81oENnAHB+QcufqSZFgjdlCt5Wk3k7E2y4N5KoYTMkkuldmKTuvmEgUW2w/kGQJQ+nooGqkNpQdYETTemgCUrpi33H8E3u9WmUQLzhfFyjeY8PZqNGcAXek3Tl9avDGieGQPZKxDWZJhDhLa0=
+	t=1708861203; cv=none; b=awxl11KDBDqWshGNPfrnurRR8K4y8zK9NjJaL9sjdEkT9BsK74gw1iKQ673iBjOQycUlsW52kKt7behOdEMrLVLAZX0auuelDnxCtin1nBoKQonO5ZkWmCa/lEVt6B7Ez0FAQgKUp/lI9M0BTgc+NehrpFzo2aZPncgX3ZsU0XU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708860458; c=relaxed/simple;
-	bh=8komURkiaR9Lmpi+htOmIqA0N8A/Rv9UquYHy0Yf6ac=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=b6JN2YUgr/QMGysltQWwJOsz1qU3iNVqh3fNqWuQEw3XJW9l8j4LyfgpfB/AzOH7BX6pcgjGdMztga+G+/zBXmytAj0AV18tTeuOH5ZpQ74s8qglTzdfOm6P0XnUNDNkCd3nYNavyWAN80X8RQ2ZSlAgx7BAsqzzSC47KXSs9vI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b=SbwcEzqk; arc=none smtp.client-ip=212.227.15.3
+	s=arc-20240116; t=1708861203; c=relaxed/simple;
+	bh=yG40nsX5B2a9ENyVUOuhRU4SgAQfMqZXMUU1E0pru1A=;
+	h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type; b=b3C0ramN0Srm5QfAyZMGWdc/BzkNpAbezTbcHdXaKCP7ZdP9PgZr9LGx58vZn6gCf9Cr0gf8j6vTaW+IltMyeqS92NW6ryIP3zR4ywr8+M37EBLqGkUYbFoWqTrqVpEKC/nM+F7EObGT3KEklXaTw8hBlrrlH39PTREL8ezB6P0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b=BbarhAYO; arc=none smtp.client-ip=212.227.17.12
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b="SbwcEzqk"
+	dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b="BbarhAYO"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de; s=s29768273;
-	t=1708860452; x=1709465252; i=l.s.r@web.de;
-	bh=8komURkiaR9Lmpi+htOmIqA0N8A/Rv9UquYHy0Yf6ac=;
-	h=X-UI-Sender-Class:From:To:Cc:Subject:Date:In-Reply-To:
-	 References;
-	b=SbwcEzqkE83goZpuJegBEsNs2jG7unXlzEh+Ijqx9bgtBMwrLbzyW8Dyj9mxojna
-	 3HP9TpGUFSv48EPttGZ0QUhN7FU1MpUlw1hILMuCVJUv8B+W9z44yGph3NDYOrqxb
-	 Jv3oCaHDAd5FVAidj9WThjdNX9jwglGPKAd7mj6vDdn+a1t//vmad+YaCw4IpB7AU
-	 SoBndj7ssfN3BmuyHuhYHjH0lMBm/niRKfJ7R3lLu6QH3gf/VM8ycF8rY8JbhA2p5
-	 aLrVjiIyJ7Eu8wrzyJyKwqTJ2qNyWCphnKHNWCtwpOvsdefrMnZr4frTygkoMJoUZ
-	 IjEVPth7AZQDu6nkjw==
+	t=1708861198; x=1709465998; i=l.s.r@web.de;
+	bh=yG40nsX5B2a9ENyVUOuhRU4SgAQfMqZXMUU1E0pru1A=;
+	h=X-UI-Sender-Class:From:To:Subject:Date;
+	b=BbarhAYOpm/g+X/J25qLmdbXvxE6fa9lv/kXIiwtWr1ZhuN1+oHYNh///2ag1KcV
+	 +IZZfeDzSMpf6zX3CkOgymZxQXG18q5LMzPOlG9bGrT3eBCfIAwZRaY0PdQRP54/k
+	 CPNasF55GOA+3LI+AKPW0wLQ0GVUScaIpnte1MT+Q198eZ1qC1QN7A9TbOPqMMZi3
+	 OKEfwkJyKQFCj6D1Zsh5WYqq7yZHZBJ2vitFVPniDUieOipP0Kuy5FHRJuRgMJ3kz
+	 3mvoIF/7AGWmIN/QxmZeugQ2GCb1SvU1sKV2ZIJdvjhpAK+0MQs2MY0RGq7CJdhdg
+	 g7HA8UwVvRAu8QNQow==
 X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
 Received: from Mini-von-Rene.fritz.box ([79.203.19.211]) by smtp.web.de
- (mrweb005 [213.165.67.108]) with ESMTPSA (Nemesis) id
- 1MKuOP-1rLIu90Pj3-00LMPs; Sun, 25 Feb 2024 12:27:32 +0100
+ (mrweb106 [213.165.67.124]) with ESMTPSA (Nemesis) id
+ 1MMGyK-1rNDho1cBC-00JgaB for <git@vger.kernel.org>; Sun, 25 Feb 2024 12:39:58
+ +0100
 From: =?UTF-8?q?Ren=C3=A9=20Scharfe?= <l.s.r@web.de>
 To: git@vger.kernel.org
-Cc: Phillip Wood <phillip.wood123@gmail.com>,
-	Josh Steadmon <steadmon@google.com>,
-	Achu Luma <ach.lumap@gmail.com>,
-	Christian Couder <christian.couder@gmail.com>
-Subject: [PATCH 3/3] t-ctype: do one test per class and char
-Date: Sun, 25 Feb 2024 12:27:20 +0100
-Message-ID: <20240225112722.89221-4-l.s.r@web.de>
+Subject: [PATCH 0/2] name-rev: use memory pool for name strings
+Date: Sun, 25 Feb 2024 12:39:43 +0100
+Message-ID: <20240225113947.89357-1-l.s.r@web.de>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240225112722.89221-1-l.s.r@web.de>
-References: <20240225112722.89221-1-l.s.r@web.de>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -51,62 +44,36 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:TwuEsTkzKDSEOMMh+rWPf3fOVbOkKjj36/u9jZWYw0BUcxUzgEe
- ByVJ6KXJ/W1hrxIYT0ZaE/ZAbRZo/cVHgEll0ANdu5e9He8njY38uxcbO1fkgqK1GnYDKFB
- e0N+M3yvhYtgo5BRl0TVwk4dS2sect7WZueekiz/ftmeSL4G5ciYZxVX8BraLDBJutIkdwm
- 0fUWF/UstZA3QzrxHqRWg==
+X-Provags-ID: V03:K1:l7Cc6H8SCzYOtlQlzJMb59UCAyp634StZtfTossqNg8XY46JXg+
+ K86QwUFFYReTbRG/dIe8Z+EoGwwK9c1ezB5tZ1UhPKmgJ0tW6gy3cHDcjsk7RIjKlhUSP5S
+ fIgsUbrRoBtTPinlfHbPe6ixT0QRC2SAKn8AvXJpg6Lj5G0mtiFltfveSpP0LfnbMdFuCP0
+ u2mJYY1Q1Lpd4SO2tIe4A==
 X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:CTCvJ6E4qR8=;QO3UhwEY64il3Hr8GP89krcfVpQ
- PhBPQQFT/UHKjipH6GMT4NEFaBoVGv6LOvrWrocUcnLDmUSs1McyT6Ii4URFJ2Mz/rmuY5NFI
- o9oxKgWRqWyhwia2OD1Lpfi45sY07B8ipsjfsZZLD7yoYdoP5Wi0lUIwP68ZlaPB4XyZrll9C
- MSt4rPx4R9bBA8UDhlDHtLWc9yWeu8IsupMpLBZiDz5pwH3AxvMOjupt2xV6K0UO7pFCLtAlM
- S/cbGcFSJMcGKLk42s824FtaFFJyTuHLNgkgHxeP9aPkT4+BJrjTSMbfvrIOybWmALIYUbKof
- d82ETv8WwqlXOYCTYg8lRyPZAWmLbvyScttmDs/O6ewUtMGz69eF8etRoMc+bckjY8ETfm7mA
- 6hCyctODXcn/jf1xZgrm2E3lwZ0Gb8DP8Sr9zwwWyOzCT8N/L61JIN/FGyzjxzkzYsVntd0xy
- Pw1qisJeSjNdSd2nw26rHPRQl5NwZdK5A9JewER722Oo77HhLs4bX74D5nmErzcZqPX+tz5YB
- +6zWrg4S/3vUMD0TWFtcIlzEgkrAf0xK7pDL5Ds3n6jBqHzHjCcR6A7H2fxyw+5ELCfd1R1CB
- iumMiIaQowN5cL4ZWpbNkyGlZtvNvLBEn/zGE+1schQxg9zU8EMwbYfFb+7Csw24xMFg8oLCK
- r7Bmy/nzIsSg3nz0NZIIKyAxHT5iLaa6HnW8AAlETFXkGtonxhK/eH+x822qV4zK5aZmEKgyB
- XHolRuUq5UBrVjTrW+jATEQAnw2a/mOhSTpRz3VOyDftn/vYO9rR4fXXmmtc2H4bAMW/OV9tq
- xWAdSC9x5VPpImmtGnVO5BYFxNMA/n6Br4Ge0vseridgc=
+UI-OutboundReport: notjunk:1;M01:P0:pV2lT+G9d9A=;IBEmoOXirJRTZ/KAcXCoiczRhZn
+ du1nymalC0gy0YfxUnOeitOCyXXSwdCgskFks+KU55Zyo2SQ3m9FUi2r4dexAlAoQahdnQOKI
+ Tg/HMBm3JTARh4i8Y9z5nTUycw1YZ9F71HhO68WtLHOVi/QUyTXRnoT+VScNxsmlIohPZmVDM
+ raJodMXqu5k0s9u+2dV+RRiKABTudqK38C1wPwvWK1YIyZp/iWjHBmUOmNt6PuYEOwX/aV8VX
+ nUb86MFIKb7ETp4AW0wF4FCq6qbUHHfO5uSS4kpeqTSANbEZVN4GqyDsTB0gNETF8QjkdCZTM
+ 8H3Rpbko3CJ2kATPB9lbVpMGBp14Wyv26zOzKUMAt00DIVSzjq7JT4NqjkG1lI+g/i1eqXwCz
+ qfdJNiUjOPmqAyYFDaDqFprMvwLiqYewXfdGkUb9Qv8BO2Gn2+cOAggELtbFDCgI0vmQj8+rn
+ W3Oz1o56kt4CbJnh/Y6hUiGm22cLxG6zIlZwFFCQbvGNzVW8Vt/P/QibpL80UKboGyLtGHqgy
+ vRAa/r0wPkhVcyp+pI2Orv8pDaj3dlmjzGU2K64wwepDcGsPrjYrwIcsNCv5oBTKVe3amPQ6G
+ 1LUZ5v7wDxiN7j3+0Mlyr6EET/1WOtvxvOu0l0WNSzRHMeiSpKrUvu3l/uqp5U7s6p8eRcqJv
+ jw5UuACymwQYXBRf3c+iG+cByuaMBIDliTnJ+xwjZQq2Kc7u0ZI3yzOoSzRl2ONbwQZWs7VzB
+ KPw6FtYf8NGgC/S1yTI86yz7rsuWSG3rVdIU0wrKeaVlKhQKOIVnPX/wiFYugdUAw2E1D6mm1
+ vpkgn1+XRoNRz4UzahoVv7IvrUfR0BiAH8SlgxdXJCrSo=
 
-Simplify TEST_CHAR_CLASS by using TEST for each character separately.
-This increases the number of tests to 3598, but avoids the need for
-using internal functions and test_msg() for custom messages.  The
-resulting macro has minimal test setup overhead.
+Avoid awkward string buffer pre-sizing by adding and using an efficient
+mem-pool-backed string format function.
 
-Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
-=2D--
- t/unit-tests/t-ctype.c | 15 +++++----------
- 1 file changed, 5 insertions(+), 10 deletions(-)
+  mem-pool: add mem_pool_strfmt()
+  name-rev: use mem_pool_strfmt()
 
-diff --git a/t/unit-tests/t-ctype.c b/t/unit-tests/t-ctype.c
-index 56dfefb68e..aa728175a6 100644
-=2D-- a/t/unit-tests/t-ctype.c
-+++ b/t/unit-tests/t-ctype.c
-@@ -1,17 +1,12 @@
- #include "test-lib.h"
+ builtin/name-rev.c | 39 ++++++++++++++++++++-------------------
+ mem-pool.c         | 39 +++++++++++++++++++++++++++++++++++++++
+ mem-pool.h         |  5 +++++
+ 3 files changed, 64 insertions(+), 19 deletions(-)
 
- #define TEST_CHAR_CLASS(class, string) do { \
--	int skip =3D test__run_begin(); \
--	if (!skip) { \
--		for (int i =3D 0; i < 256; i++) { \
--			int expect =3D !!memchr(string, i, sizeof(string) - 1); \
--			if (!check_int(class(i), =3D=3D, expect)) \
--				test_msg("       i: 0x%02x", i); \
--		} \
--		if (!check(!class(EOF))) \
--			test_msg("      i: 0x%02x (EOF)", EOF); \
-+	for (int i =3D 0; i < 256; i++) { \
-+		int expect =3D !!memchr(string, i, sizeof(string) - 1); \
-+		TEST(check_int(class(i), =3D=3D, expect), \
-+		     #class "(0x%02x) works", i); \
- 	} \
--	test__run_end(!skip, TEST_LOCATION(), #class " works"); \
-+	TEST(check(!class(EOF)), #class "(EOF) works"); \
- } while (0)
-
- #define DIGIT "0123456789"
 =2D-
 2.44.0
 
