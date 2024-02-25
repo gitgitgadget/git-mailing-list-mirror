@@ -1,165 +1,177 @@
-Received: from mail-wm1-f53.google.com (mail-wm1-f53.google.com [209.85.128.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from out4-smtp.messagingengine.com (out4-smtp.messagingengine.com [66.111.4.28])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42D197484
-	for <git@vger.kernel.org>; Sun, 25 Feb 2024 06:10:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0320D512
+	for <git@vger.kernel.org>; Sun, 25 Feb 2024 07:09:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=66.111.4.28
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708841445; cv=none; b=CB5W/OyI8gE0wW13metObFYyDT4m/CASviTRARcaEH6wacpa/EsXwXYdnBiUWfdOgYeuZ5D2N3+jFYFRpA9nxbx62EkwTMmfWhNKP6zvattPXawa78QHFdHe4uUZbzimbiG+j8PBtLDg80bI3K7RUBrG+JbVaWgCAMOjZlBpYwQ=
+	t=1708844998; cv=none; b=Ypoq4bPmTpoBTMQmmhtUl+uIIDbgEXrM2oSw1sYgLkdJ0h1ABa2RWt42bSRrw696h7mGShv2W/KefiK5HAWXIjTDmBcIn2q7eSiT67lnednJ0CS0KaQx5Fz7cwOeb7qLKtgLEfAsIj/cw5iSHKq+IB6cByEdiH9Ar+P5v8m9QlE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708841445; c=relaxed/simple;
-	bh=RFyol+nf3zrwrkQNUwmC3ru4XLg0mvFbJmB9EOcPj5c=;
-	h=Message-ID:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=txJ4eH+XkfciyZXwL5E9y82BS0NjOnjqaTDhjK238BF53WnBoTdFTMwLrKkrqlBpxVBF/dd0m2E9zNcyz+Fyd+W8qV8+NxUAxIU06KB/QSXS/8VhNWxLBWHPqltCdZQ+bg1NsP2bNhDppTkph0/VVkLyp0tbMRtQRjoMgW+M8ZQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=FqGL3GzA; arc=none smtp.client-ip=209.85.128.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1708844998; c=relaxed/simple;
+	bh=b1YpdyPyufgcMHab/WjX/Iy+ilxtlVljvBCRfPxca3c=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=FPeMpHg/3Gse43XRFn66Qnw1SC8AVzGjWmqCzQ+OwsbovQ6ltY2xPPpLj2mUflg72AdeEnmNj9PvsuYi7h/qVDsC3JiwPDlzHLWLQoJbLcwzF0UF4KB8lsxbzSA4gSV3qaX9ttPaXMRDAckr7lkoHXU/4BOdXZEkKC1KzdOhxc4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=PKF+h3vN; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=oCkj6Ja7; arc=none smtp.client-ip=66.111.4.28
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FqGL3GzA"
-Received: by mail-wm1-f53.google.com with SMTP id 5b1f17b1804b1-412a3716284so683855e9.1
-        for <git@vger.kernel.org>; Sat, 24 Feb 2024 22:10:42 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1708841441; x=1709446241; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=qZL/TyrUUSKdCf72nrrg+enfXL1BZp3BAd8ieHtVpH4=;
-        b=FqGL3GzAxEHkvXxDkhczyUTrM2CB8qJJF0gB0CX/oQzXqkbJGji1DSL4XhpcobjG3w
-         kUV3Zq3sCuydfXfzDNtTJZjMIoDX/kqgWPT1zEwtWrjanBw02d1yriEyu0ptJOGatOOI
-         MIytZt38XGBCqJgaslzQONlRAP//JLyg9OJt0YD0yjiQudefEWpioWE9lv5emKhwAT56
-         si5nfUwTfru4tTpUQHtWUiAvORagT9BnRXtUFd/AKqNvG1uHCedF/sUgmxdWVXSkI8Dg
-         4U09AWd6AL0b0TGxq647XYLRrlS8rgBtg4xpmOGcM19jZSK6zKYEX0RBIFGuM1Wv7u1V
-         QefQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1708841441; x=1709446241;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=qZL/TyrUUSKdCf72nrrg+enfXL1BZp3BAd8ieHtVpH4=;
-        b=ljdpNvuAKEobxVaSPQn4VkyiGArs64bIY7ZFCUYBSjyK3z4MjHWQpyV6/K0iHoXGQA
-         9DwmaZhlax8jJQuazpAyBNraN4OjJnT6nY7MuvDUtGlts0BAdvdGamYYnO6wQDB6EJg+
-         yOVLQe0CF2e0IuoXZABUyrGU/I8xWNtMuqW83zVHCIKCeeSDdtWrfd6SgrqevKp+4Xon
-         1zKEsJb6cQfxKLpzOi2go9wh7ilGXdhKtsgqmJgWJ1tG7ChfWVjNPNAb0b2Egn+WMvFo
-         UN5chglyN0TNIRIAV8kYusqSdeBzFPebwuUmNFLlH6n4WT+/VUrtOmct/AqLymPp0Q08
-         d3wA==
-X-Gm-Message-State: AOJu0YxhOOpUrpIB7N9BxqggbGMVBDRdMPrFG2W4Uri37F3HRit8E54j
-	cBHM8i2V4KXlZThZe8OnOgs2oWaq3OtdXlt95l7Y6KKPl7oPSLk5Bw1EBDHR
-X-Google-Smtp-Source: AGHT+IGuSge/iOkiD16c2BiSyIhCHw7//T5PXwcVW4/4IApUYJyTzGSFynP48A+Qo4UB2ychV/y44Q==
-X-Received: by 2002:a05:600c:1554:b0:412:9fd5:2488 with SMTP id f20-20020a05600c155400b004129fd52488mr1172720wmg.36.1708841440842;
-        Sat, 24 Feb 2024 22:10:40 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id v13-20020a05600c444d00b0041294d015fbsm4226185wmn.40.2024.02.24.22.10.40
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 24 Feb 2024 22:10:40 -0800 (PST)
-Message-ID: <pull.1663.v3.git.git.1708841439516.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1663.v2.git.git.1708660111.gitgitgadget@gmail.com>
-References: <pull.1663.v2.git.git.1708660111.gitgitgadget@gmail.com>
-From: "Haritha  via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Sun, 25 Feb 2024 06:10:39 +0000
-Subject: [PATCH v3] build: support z/OS (OS/390).
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="PKF+h3vN";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="oCkj6Ja7"
+Received: from compute7.internal (compute7.nyi.internal [10.202.2.48])
+	by mailout.nyi.internal (Postfix) with ESMTP id C6C195C0072;
+	Sun, 25 Feb 2024 02:09:53 -0500 (EST)
+Received: from mailfrontend1 ([10.202.2.162])
+  by compute7.internal (MEProxy); Sun, 25 Feb 2024 02:09:53 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1708844993; x=1708931393; bh=b1YpdyPyuf
+	gcMHab/WjX/Iy+ilxtlVljvBCRfPxca3c=; b=PKF+h3vNaALcrbR3BLgZD9A29O
+	3ZEE9fHZDQs0iR6rKs4aeq4j3BjLtUJPfMm4qoajPUvWfxh0gUxs5Xr71KCDxzv7
+	RsPVVgnGKXvaT+QfQD7aWH3hJL1uJFEX5g/XV2oak54PRBDlN+v9D5ZxJbjh/EEG
+	bfqWQyBXfpIpYBBjDEI6mnXcFc9It3Y4ECgTld1RFnuzMWQtKfGmpe91ZtKIjgcS
+	+NoTqnSSr4lLTQmBXQG8RbwOeV0tCSMLQCoN8K5oqEAa4C4ALdhn+CQ4fjzxyj7L
+	j7+IAuiWAoxraFfWtUA6ebWJBM77KWRpMZHWwkN9PKHS4AAirwu31pH2ycCQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm1; t=1708844993; x=1708931393; bh=b1YpdyPyufgcMHab/WjX/Iy+ilxt
+	lVljvBCRfPxca3c=; b=oCkj6Ja7G4XxvpQUWPljjEaCqean+MuBCaR38pHefZgQ
+	oVqyzneyT4sczzcWjHh+P7B2atJSVT1eiRWLiwwFIEF/vdMK51cgf8RqByUdigSL
+	+Ci/JznGvkUXwG7h6gdHuUpNZGVHhgN6lx38ohUA8a0WwYWHhYxr5xQxYigdyzbU
+	hnEZdkC4/t6N30A9vf+kC/JrZZ24fBkJSiARFwTdSA2UI00aTIQzilYZ/61Z3xxl
+	1EtIOpdH3MpureaBH/9fODkM2A4CVoVpIbs5wPaFl1AGgl8vnZm2xXNYkNJL+/MR
+	qbWSXcS8jHK59xT/GYL1O5pbivvABQ5TU00ubZZbmw==
+X-ME-Sender: <xms:wefaZf68OVL5iGmfXvsdZUZ0-8NnL-o03FdiTxjhZUG9-rVkK2HI-A>
+    <xme:wefaZU7If6jj0Hv1gAOQVtSmdozbFyDn-z1PBH88mSrY7kOk4BohoSLnQq3PHRf6g
+    14o3iVIaEfqS2Pv4w>
+X-ME-Received: <xmr:wefaZWe1ps8OTITlexGLGBGEwNrJQ5p2jY-5JvMSTyCVVQhRzQiOeT_A-1amWM81GE6EPkevKmd1hewqwEo0xQfvQIVbSfscm1va7A7DUCtzgoUk>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrfeelgddutdefucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+    cujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtvdenucfhrhhomheprfgrthhr
+    ihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvg
+    hrnhepueektdevtdffveeljeetgfehheeigeekleduvdeffeeghefgledttdehjeelffet
+    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
+    hpkhhsrdhimh
+X-ME-Proxy: <xmx:wefaZQIzzQKKtLkT-N4BmpJsAR_C_hCObjhfRi7uiXc5jJ74byPKkg>
+    <xmx:wefaZTJITov4-2bKS3vF_nPcqh6C5bDsN6ZWKSK9ExvcE8rhSczyfA>
+    <xmx:wefaZZxFMBAxvISsrqFrGvr7RTffdPqxaWH7c6chlbi6tax8oL7gGw>
+    <xmx:wefaZb1Cqep9BLMyg0-VTL7suVsltWniemVTxgfe-tSnjlex-4BXiw>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
+ 25 Feb 2024 02:09:52 -0500 (EST)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id 1a0dff1c (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Sun, 25 Feb 2024 07:05:38 +0000 (UTC)
+Date: Sun, 25 Feb 2024 08:09:48 +0100
+From: Patrick Steinhardt <ps@pks.im>
+To: Mike Hommey <mh@glandium.org>
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	git-packagers@googlegroups.com
+Subject: Re: [ANNOUNCE] Git v2.44.0
+Message-ID: <ZdrnvKRl8oGPJxOD@framework>
+References: <xmqqbk87w164.fsf@gitster.g>
+ <20240224051040.ftuo24smozqugbde@glandium.org>
+ <ZdmOZRjJ-mClBR02@framework>
+ <20240224195550.ignhzidmdy3ce6q4@glandium.org>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>,
-    Haritha  <harithamma.d@ibm.com>,
-    Haritha D <harithamma.d@ibm.com>
-
-From: Haritha D <harithamma.d@ibm.com>
-
-Since the z/OS linker does not support searching dynamic libraries,
-and the current setting of CC_LD_DYNPATH results in a directory
-to be supplied to the link step with no option as the suffix,
-it causes a linker error because the z/OS LD linker
-does not accept directories as input.
-Therefore, -L option is added.
-Also introduced z/OS (OS/390) as a platform in config.mak.uname
-
-Signed-off-by: Haritha D <harithamma.d@ibm.com>
----
-    This PR enables a successful git build on z/OS.
-    
-    Since the z/OS linker does not support searching dynamic libraries, and
-    the current setting of CC_LD_DYNPATH results in a directory to be
-    supplied to the link step with no option as the suffix, it causes a
-    linker error because the z/OS LD linker does not accept directories as
-    input. Therefore, we workaround this by adding the -L option. And,
-    Introduced z/OS (OS/390) as a platform in config.mak.uname
-    
-    Thanks for taking the time to contribute to Git! Please be advised that
-    the Git community does not use github.com for their contributions.
-    Instead, we use a mailing list (git@vger.kernel.org) for code
-    submissions, code reviews, and bug reports. Nevertheless, you can use
-    GitGitGadget (https://gitgitgadget.github.io/) to conveniently send your
-    Pull Requests commits to our mailing list.
-    
-    Please read the "guidelines for contributing" linked above!
-
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1663%2FHarithaIBM%2Fzos-v3
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1663/HarithaIBM/zos-v3
-Pull-Request: https://github.com/git/git/pull/1663
-
-Range-diff vs v2:
-
- 1:  53e211d7a65 ! 1:  2f1ad41bc14 build: support z/OS (OS/390).
-     @@ config.mak.uname: ifeq ($(uname_S),NONSTOP_KERNEL)
-      +        NO_MEMMEM = YesPlease
-      +        NO_GECOS_IN_PWENT = YesPlease
-      +        HAVE_STRINGS_H = YesPlease
-     -+        NEEDS_MODE_TRANSLATION = YesPlease
-     ++       NEEDS_MODE_TRANSLATION = YesPlease
-      +endif
-       ifeq ($(uname_S),MINGW)
-       	ifeq ($(shell expr "$(uname_R)" : '1\.'),2)
-       		$(error "Building with MSys is no longer supported")
-     -
-     - ## configure.ac ##
-     -@@ configure.ac: else
-     -             CC_LD_DYNPATH=-Wl,+b,
-     -           else
-     -              CC_LD_DYNPATH=
-     -+	     if test "$(uname -s)" = "OS/390"; then
-     -+		     CC_LD_DYNPATH=-L
-     -+	     fi
-     -              AC_MSG_WARN([linker does not support runtime path to dynamic libraries])
-     -           fi
-     -       fi
- 2:  05df5d7e2d5 < -:  ----------- an improvement: removed configure.ac changes
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="skYHJWw+A1jf+H1z"
+Content-Disposition: inline
+In-Reply-To: <20240224195550.ignhzidmdy3ce6q4@glandium.org>
 
 
- config.mak.uname | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+--skYHJWw+A1jf+H1z
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-diff --git a/config.mak.uname b/config.mak.uname
-index dacc95172dc..03ee2b74525 100644
---- a/config.mak.uname
-+++ b/config.mak.uname
-@@ -638,6 +638,18 @@ ifeq ($(uname_S),NONSTOP_KERNEL)
- 	SANE_TOOL_PATH = /usr/coreutils/bin:/usr/local/bin
- 	SHELL_PATH = /usr/coreutils/bin/bash
- endif
-+ifeq ($(uname_S),OS/390)
-+        NO_SYS_POLL_H = YesPlease
-+        NO_STRCASESTR = YesPlease
-+        NO_REGEX = YesPlease
-+        NO_MMAP = YesPlease
-+        NO_NSEC = YesPlease
-+        NO_STRLCPY = YesPlease
-+        NO_MEMMEM = YesPlease
-+        NO_GECOS_IN_PWENT = YesPlease
-+        HAVE_STRINGS_H = YesPlease
-+       NEEDS_MODE_TRANSLATION = YesPlease
-+endif
- ifeq ($(uname_S),MINGW)
- 	ifeq ($(shell expr "$(uname_R)" : '1\.'),2)
- 		$(error "Building with MSys is no longer supported")
+On Sun, Feb 25, 2024 at 04:55:50AM +0900, Mike Hommey wrote:
+> On Sat, Feb 24, 2024 at 07:36:21AM +0100, Patrick Steinhardt wrote:
+> > I have to wonder whether we ever
+> > really specified what the environment of a remote helper should look
+> > like when used during cloning. Conceptually it doesn't feel _wrong_ to
+> > have a not-yet-initialized repo during clone.
+>=20
+> How about this: it should look like what you'd get from
+> `git init $repo`.
 
-base-commit: f41f85c9ec8d4d46de0fd5fded88db94d3ec8c11
--- 
-gitgitgadget
+The problem is that it can't. With git-init(1) you already know how the
+repo should look like as you specify parameters like SHA1 vs SHA256 via
+parameters. But with git-clone(1) it's a different story, as you only
+learn about how the repo should look like _after_ you have connected to
+the remote. And thus, after you have executed the remote helper.
+
+This has never been a problem with the old "files" backend because it
+does not encode the object format in the refdb. But the "reftable"
+backend does, and thus we can only creat the refdb after we have learned
+about the object format. Future refdb implementations are likely to do
+similar things.
+
+> > Another idea would be to simply pre-create HEAD regardless of the ref
+> > format, pointing to an invalid ref "refs/heads/.invalid". This is the
+> > same trick we use for the reftable backend, and should likely address
+> > your issue.
+>=20
+> The interesting thing is that `git init $repo` does give you an invalid
+> HEAD (and that's what would happen during git clone too), with either
+> ```
+> ref: refs/heads/master
+> ```
+> or
+> ```
+> ref: refs/heads/main
+> ```
+> depending on configuration.
+
+HEAD in your example is not invalid, it's unborn. That's a difference
+because creating the branch would succeed just fine. In the case of
+"refs/heads/.invalid", creating the branch will fail because the ref
+name would be refused.
+
+With the reftable backend, we are forced to create HEAD exactly due to
+the problem you have just encountered: a repo would not be discovered if
+it did not exist. But its value shouldn't ever be read, because it is in
+part of the reftables in "reftable/".
+
+So as a safety mechanism, we want to make sure that the value of HEAD
+cannot be interpreted like a "proper" ref. Clients that do not
+understand the reftable format should not see a HEAD ref pointing to
+"refs/heads/main" and then happily create or access such a branch.
+That's why we want it to be an invalid ref.
+
+That's ultimately the reason why I don't want HEAD to look like a proper
+ref. But doing the "refs/heads/.invalid" workaround shouldn't be too bad,
+I guess.
+
+Patrick
+
+--skYHJWw+A1jf+H1z
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmXa57YACgkQVbJhu7ck
+PpTnKQ/9HVMukwEQIIwkZXKAhebUKlJmVq7DiMEDJlPCKQW8xop6qYsiTlQktsVN
+5L6rfTK9e+oGwGnC9SCAsVG61vozloLrJrWGRWffxc0XbkJEIZeMN4WVXUqzT8Wl
+mTgkRIDX2eR68mPo4N8PwwieQXbRdnMeAeYWCUSIoTcny+TQr/eSDlpbMzKgdna4
+luvZvdkXf4kbbLltz6nqVeW71JxGxys9wehdQmhsQzIR5EWgqLfq+2xeWPMCh3C3
+kODYumr213ex5qARBcqXEckXdDfOt3ToQGtY7Zn3Lw+0cAX4SvIafVf6cxWKfCRq
+PYKZEsQ7dRt6nSJjB9u67daJyjEjYGSHmzif2WFXzRzUUgjVa+6ndoMZ1xmdBGE+
+jHthcaCKSIGMHuBZlF9RssA8BahOv/GtzyndeiYBBrf71K7BcDPttJ+kuTJDyr3B
+W8NWXIWT1U2x7+TvK56R6w9MY5Lxt5ThmXeVCqJUo/ok4ArTRfhDuqnrYsNinVQx
+ZIOwCNnzU+t4UStIMkBEkCMUoDQK2vfUjVS/XuL4c8t/WIm4cGC8l/F8DnA0d0nQ
+Md2UQM4nsqBYuH0wdz/psclUws4UT0VVjh+pY/U3wvCdj8QyuGC8HvFluSNc3Li1
+MWQb2ZWQ5gPtUqynMEXUAuT/mA07AU/AdQLHDdxznSAoMu6ucMw=
+=c3g+
+-----END PGP SIGNATURE-----
+
+--skYHJWw+A1jf+H1z--
