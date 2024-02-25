@@ -1,90 +1,160 @@
-Received: from mail-pg1-f174.google.com (mail-pg1-f174.google.com [209.85.215.174])
+Received: from mail-wm1-f52.google.com (mail-wm1-f52.google.com [209.85.128.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 530799450
-	for <git@vger.kernel.org>; Sun, 25 Feb 2024 23:10:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA29828EC
+	for <git@vger.kernel.org>; Sun, 25 Feb 2024 23:53:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708902649; cv=none; b=bNTMYCsuzScWRCiNcLQSvv2BLjHpgCN95Fh8JZ+C2ro1hNmBDApZtMFL3ljlJy3ph4VdKZrSfwNr9eXOEeCz0EC8NfQtTkhxmqOyfQmhgFBOEqqGTELFBGQZApL38+FX/BaP4sTFMygS9XHtqmiwrHHEVdVL+N86Q3sJdahX35Q=
+	t=1708905222; cv=none; b=S0rlOrHPiUDaaRjFXjccXzy7u9thnAbgDbpmuFD2x8aeu386StBAU665BaJ+h0AYU9USuPIxcyX2h/zQEOQzFlGdZz2BqWZ+mn1q8N5M7uHFRqRIUMHtY0DcL7zSLIqZtQ97psJofJi/uBWmQx1S2o5KIr/BchIqFxLqkVPyV/c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708902649; c=relaxed/simple;
-	bh=ZD/HL0cTs6Sh/prnwwZqAJ/Q2ff9hfN9ZtfV2DVZ5nU=;
-	h=From:Content-Type:Mime-Version:Subject:Message-Id:Date:To; b=sZi6TpQKzpq+/FttCLHE6Q5HUyw+KXM3JJNVMCt9ir9wGYwkSxX2PtRkbTpixs67QR86qPlV57zjHYK6vvXi051qdttWQy8XI7DSkkwhyYQy2C/GgPuscKURbZcRvIbi6rModH08dW/SzEvOauDxX9Yc3EqnXw1trQTiWWX5/cY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=l/Z6uXsi; arc=none smtp.client-ip=209.85.215.174
+	s=arc-20240116; t=1708905222; c=relaxed/simple;
+	bh=P3Yo1cHeXNK3pSxdOkAOAo5PZY3rxqvSIHJAF4IFcT8=;
+	h=Message-ID:Date:MIME-Version:Subject:From:To:References:
+	 In-Reply-To:Content-Type; b=X+zUjpl7xUhvlcWVgGgYdl9UkkoIuSK0YhLNvbr2ruCo15YrkWtxC259ZI3R5vgcWeo5zEPC9QAic1wQRI7OHReLf903fXdZiXrPpE3BvsNF5LU+8fuw5r2lT7pcnlE8oFDjc2CAVgP2zZ2Gw3+MNjBJ4asEbOJjQ7tJTx7kwdA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=C1R6Cb46; arc=none smtp.client-ip=209.85.128.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="l/Z6uXsi"
-Received: by mail-pg1-f174.google.com with SMTP id 41be03b00d2f7-5cedfc32250so2485639a12.0
-        for <git@vger.kernel.org>; Sun, 25 Feb 2024 15:10:48 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="C1R6Cb46"
+Received: by mail-wm1-f52.google.com with SMTP id 5b1f17b1804b1-412a4a932f4so3061265e9.0
+        for <git@vger.kernel.org>; Sun, 25 Feb 2024 15:53:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1708902647; x=1709507447; darn=vger.kernel.org;
-        h=to:date:message-id:subject:mime-version:content-transfer-encoding
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=ZD/HL0cTs6Sh/prnwwZqAJ/Q2ff9hfN9ZtfV2DVZ5nU=;
-        b=l/Z6uXsibBMJ5cdSDbxpX44hb9hrcml6k/7vZjyJL08tq17wNSUaRf0eb5lNvG0Kqy
-         mpqVcNszlr5sqQ5St0DWQShYy7b68ePzwZtmzEZsHQwYPaR4KKbLA/27Y3oAVYKDBeOD
-         QhCxN70fqk5/hkNnTvKjzfRzodJco59gqycog4SB9qiOfJbcAFex6pNVaaPKl8qVspKA
-         k7TDQvbtt2LipWm57UPnu6lLs1hUrctP2tznmnewvF4aDMpjmPnwjTsH53m9knyhX0dq
-         uVrmKPJU3rbLe0hYF+1EZoQZN2ZmO0ts6LGSCqZVp52qC7EdJ5bXpBYswRzuyKwWamog
-         +v7w==
+        d=gmail.com; s=20230601; t=1708905219; x=1709510019; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :to:from:subject:user-agent:mime-version:date:message-id:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=d7p6MLF+lf/yqHgK3IhuSGHFGsD4soiPB11aMOr2fUs=;
+        b=C1R6Cb46iXGNBRdDrOHI7aWKE0volrjZ46ggOCibg51V/Fjbm1f6NqtuYgLtRdCHOP
+         QuMKu4vCqPjmrAjfmNTY0gBW2Ecx5CscixsREsZ2B9XI0SRZyP4nl7aY+zPUPFvbCJvW
+         VxURN9DN8tWzNmyBXcWQcOEpVBC7fGKrlD2gqWtOF9eT1bKJ3WGbXtsVB/sP3duS7g35
+         a0aLlImOSZMBvhnWM1YM2mB9buc+edGiPqL1aUXXolja9PMEkAQSwMBIkyoitNb1w36u
+         EZbER63zZ7CLbCAt75GTDhAWPwLq1qOSO0ptBqV4zgjGB3HdjWnyCAFkKWR+bdiIEkvs
+         rEVA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1708902647; x=1709507447;
-        h=to:date:message-id:subject:mime-version:content-transfer-encoding
-         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=ZD/HL0cTs6Sh/prnwwZqAJ/Q2ff9hfN9ZtfV2DVZ5nU=;
-        b=mnwNg5BstFnBBB6bsaIEJr9obz/u/5iuelnCfTiBQXVJuU/+Y42QmROSMQJ4K0XMp3
-         4ZFX9Rqxl9SqChsrgpOBgkGVjienqqVrD8mI6OqAGPjeUVBaN3+5O3k6ArNqBJCqi5HO
-         9JA++bMvQPaAjFnBZBohId2oiXkRMwxarsSACvsMU47CW81XBAVkmkYuWNEe5M5e4T/X
-         yayAZpl2bTEvVyp4HuBYBWocwqvoXUuS/5pXcCf4bUx1H3GvnZVlyliqbenOojdPm3J+
-         //3nRTmN3avvOOV9FjJYS4sWq8khxKO9GjOAqtOSA3FkSbJwexSn3UJiNgGkT+5qoRiw
-         Gvuw==
-X-Gm-Message-State: AOJu0YwnbF9hsoxAjbfGXxgSYYTW0KPdVp1m66JWfdwXodwdG9e3AOOk
-	VHJGxt0KkVgSbjiE7dIEmIkQNeNRg9QOb6brO7jJMiCQCxwExIMiYDaot6PW2kI=
-X-Google-Smtp-Source: AGHT+IFtekgviFWL+ADtP4VLg2beHodF9xfrDroo8j/nx8RIEZ4B0uRpeIaVz7P8QQRZtgG4MxuMrQ==
-X-Received: by 2002:a17:903:258e:b0:1db:6722:5b3d with SMTP id jb14-20020a170903258e00b001db67225b3dmr4480571plb.21.1708902647147;
-        Sun, 25 Feb 2024 15:10:47 -0800 (PST)
-Received: from smtpclient.apple ([14.194.174.54])
-        by smtp.gmail.com with ESMTPSA id kq6-20020a170903284600b001dc63fd39c0sm2690860plb.225.2024.02.25.15.10.46
+        d=1e100.net; s=20230601; t=1708905219; x=1709510019;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :to:from:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=d7p6MLF+lf/yqHgK3IhuSGHFGsD4soiPB11aMOr2fUs=;
+        b=uf6w8xH2qhCO4Sm9mjtdvzg6sn3JoS2sanf03LwoK43CI/rAwJVdzN4FjEzbpnfFbF
+         lOtCqswYv6Wo/Yoxm39zgqbE1NFzIl0k3/awfIEmpvgSI9JxDEWnvUX+HXNCkRT4SPnv
+         CnNFU1uphu6E33tcRqBT/NhA5NUkhF0FmNCfgxvB2cp7vjgz3475SPlc7RBWla3SCe3Y
+         LrZAw0FsA5BzL+eC/wlX1BTRrLVUbTYkMEWCxeoDLcTXnMNR7Q2hWvsKj0L9PmFpqKLv
+         SLYLIiItkMc+sTIcdt6Gy9s9GZ7L+924B+6+w9rz5MiNqkm+f7zHL4Ul2yRB/5N81kv2
+         DFEg==
+X-Gm-Message-State: AOJu0Yz5pSeqLJKGAv1Mcc6cYAarhZ0OR+gNiXOyaucSu0EtwU0RazmE
+	CfdpoPHz8yItpR/px5fZDhkj3oWf0glwoo7q5sLAa1iLQB5tjfEydiadFuj0
+X-Google-Smtp-Source: AGHT+IHHulONeD1en8/7xwWcA7S4xEMzklEKx4FWhJC+lUW/+GgywzRBcduGOP22q94p+j7/ieNLNQ==
+X-Received: by 2002:a05:600c:49a7:b0:412:96ee:a67d with SMTP id h39-20020a05600c49a700b0041296eea67dmr3604691wmp.39.1708905218981;
+        Sun, 25 Feb 2024 15:53:38 -0800 (PST)
+Received: from gmail.com (198.red-88-14-62.dynamicip.rima-tde.net. [88.14.62.198])
+        by smtp.gmail.com with ESMTPSA id 19-20020a05600c249300b00411e1574f7fsm9966930wms.44.2024.02.25.15.53.36
         for <git@vger.kernel.org>
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 25 Feb 2024 15:10:46 -0800 (PST)
-From: Akhilesh Kumar Yadav <akacademic05@gmail.com>
-Content-Type: text/plain;
-	charset=us-ascii
-Content-Transfer-Encoding: quoted-printable
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 25 Feb 2024 15:53:38 -0800 (PST)
+Message-ID: <eaf3649e-30cf-4eba-befa-5be826c828a8@gmail.com>
+Date: Mon, 26 Feb 2024 00:53:31 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3774.400.31\))
-Subject: Interest in Future Collaboration for GSoC 2024
-Message-Id: <39C00ED0-2EA9-4BCA-8662-AAEC5A108D49@gmail.com>
-Date: Mon, 26 Feb 2024 04:40:36 +0530
-To: git@vger.kernel.org
-X-Mailer: Apple Mail (2.3774.400.31)
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: [PATCH v2] completion: fix __git_complete_worktree_paths
+From: =?UTF-8?Q?Rub=C3=A9n_Justo?= <rjusto@gmail.com>
+To: Git List <git@vger.kernel.org>
+References: <a1561e02-40dc-4ac3-ae7a-666db0f810ed@gmail.com>
+Content-Language: en-US
+In-Reply-To: <a1561e02-40dc-4ac3-ae7a-666db0f810ed@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+Use __git to invoke "worktree list" in __git_complete_worktree_paths, to
+respect any "-C" and "--git-dir" options present on the command line.
+
+Signed-off-by: Rubén Justo <rjusto@gmail.com>
+---
+
+I stumbled upon this in a situation like:
+
+   $ git init /tmp/foo && cd /tmp/foo
+   $ git worktree add --orphan foo_wt
+
+   $ git init /tmp/bar && cd /tmp/bar
+   $ git worktree add --orphan bar_wt
+
+   $ cd /tmp/foo
+   $ git -C /tmp/bar worktree remove <TAB>
+   ... expecting /tmp/bar/wt, but ...
+   $ git -C /tmp/bar worktree remove /tmp/foo_wt
+
+In this iteration, v2, some tests are included.
+
+The function __git was introduced in 1cd23e9e05 (completion: don't use
+__gitdir() for git commands, 2017-02-03).  It is a small function, so
+I'll include here to ease the review of this patch:
+
+	# Runs git with all the options given as argument, respecting any
+	# '--git-dir=<path>' and '-C <path>' options present on the command line
+	__git ()
+	{
+		git ${__git_C_args:+"${__git_C_args[@]}"} \
+			${__git_dir:+--git-dir="$__git_dir"} "$@" 2>/dev/null
+	}
 
 
-Greetings!
+ contrib/completion/git-completion.bash |  2 +-
+ t/t9902-completion.sh                  | 24 ++++++++++++++++++++++++
+ 2 files changed, 25 insertions(+), 1 deletion(-)
 
-I hope this message finds you well. I am writing to express my =
-admiration for the innovative technology that your organization is =
-working on for GSoC 2024. I have been following your work and find it =
-truly amazing.=20
-
-Currently, I am committed to another organisation and may not be able to =
-contribute to your projects at this time. However, I noticed that your =
-organisation sometimes faces a shortage of proposals. If such a =
-situation arises, please consider this email as an expression of my =
-interest.
-
-I hold a strong interest in your organisation and would be more than =
-willing to submit a comprehensive proposal should the need arise. I have =
-also been an active contribution at open source projects and have decent =
-programming experience.=20
-
-Thank you. I look forward to the possibility of future interactions.
-
-Best regards,=20
-Akhilesh.=
+diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+index 444b3efa63..86e55dc67f 100644
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -3571,7 +3571,7 @@ __git_complete_worktree_paths ()
+ 	# Generate completion reply from worktree list skipping the first
+ 	# entry: it's the path of the main worktree, which can't be moved,
+ 	# removed, locked, etc.
+-	__gitcomp_nl "$(git worktree list --porcelain |
++	__gitcomp_nl "$(__git worktree list --porcelain |
+ 		sed -n -e '2,$ s/^worktree //p')"
+ }
+ 
+diff --git a/t/t9902-completion.sh b/t/t9902-completion.sh
+index b16c284181..7c0f82f31a 100755
+--- a/t/t9902-completion.sh
++++ b/t/t9902-completion.sh
+@@ -1263,6 +1263,30 @@ test_expect_success '__git_complete_fetch_refspecs - fully qualified & prefix' '
+ 	test_cmp expected out
+ '
+ 
++test_expect_success '__git_complete_worktree_paths' '
++	test_when_finished "git worktree remove other_wt" &&
++	git worktree add --orphan other_wt &&
++	run_completion "git worktree remove " &&
++	grep other_wt out
++'
++
++test_expect_success '__git_complete_worktree_paths - not a git repository' '
++	(
++		cd non-repo &&
++		GIT_CEILING_DIRECTORIES="$ROOT" &&
++		export GIT_CEILING_DIRECTORIES &&
++		test_completion "git worktree remove " "" 2>err &&
++		test_must_be_empty err
++	)
++'
++
++test_expect_success '__git_complete_worktree_paths with -C' '
++	test_when_finished "rm -rf to_delete" &&
++	git -C otherrepo worktree add --orphan otherrepo_wt &&
++	run_completion "git -C otherrepo worktree remove " &&
++	grep otherrepo_wt out
++'
++
+ test_expect_success 'git switch - with no options, complete local branches and unique remote branch names for DWIM logic' '
+ 	test_completion "git switch " <<-\EOF
+ 	branch-in-other Z
+-- 
+2.44.0.1.g0da3aa8f7f
