@@ -1,45 +1,45 @@
-Received: from mout.web.de (mout.web.de [212.227.15.14])
+Received: from mout.web.de (mout.web.de [212.227.15.3])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF228FC1C
-	for <git@vger.kernel.org>; Sun, 25 Feb 2024 11:27:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.14
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28C36101E6
+	for <git@vger.kernel.org>; Sun, 25 Feb 2024 11:27:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.3
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708860458; cv=none; b=VINe46kJGeppD6Z5JpIR7Ak6cBC3BghPYQu/SP28R6RWJoualeAU5K8oYaG62GtGFaIdGBgTmhSTSyxazAwBt7rmh38BMMDKHyCzG/qLTI4L2JtNFyb8Z/2dehXzDjV828k434oDaNSNKIHWF/Lk9NisZbC8RrCRgXBoz40fDqs=
+	t=1708860458; cv=none; b=sbdNKzylEL5aG4djThlNlpfYXjVbv4+bcSgQnSOaTtzlvE65irlNJ4e8vKwvgl5C2fBqd3pVDHs3kvmiFgznYzAR2F9q1DFxN9sVAEtz2ahOiES8SakvfJnpP6+E5zeqOkWbtwu1Zzo7i1U1aBomiZvAP/fC8oirNN7R/P6ipSI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1708860458; c=relaxed/simple;
-	bh=CrkFY6UkGwl6MP7KJS6PYC1d6QmOqzJQmeXT/9tQbmI=;
+	bh=cplDe8+3sbJRXNxyopiCIeGZJKUUvDWSPNcDZLgjC1Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=oqq/aGJ73dFR4QkJjP0CiwsVqI5vL4jLTlrt0HIpAtmulWLfp5xfX2fX3TWXX1ftlKMMfYK0OApJaCjfRZ5+j8k6wLZ2wZjzoRzPpIn0rmQRklpBWXRtyyFfiHSTe1hCRQ+OZUoeiVnevpZqzdGBGWFFo2EeBoxEhW79kC7eUZ4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b=u5DbrjnS; arc=none smtp.client-ip=212.227.15.14
+	 MIME-Version:Content-Type; b=C3KNNW8rCJMfHJLL4iPL1mzz3QdkvToJ9gXkHjOXtr+JN2fmMkV8y4y3ELnG4Vq6FtuDQml4ywD5i/4a9v04GmtR0bFQ/93/INyqb+m/Mfjq7oEdVw555f7WfFSKOLVk4nXoezFd3XDrK9HhRnxmTOlO6+II3rDudtLSYRUJueM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b=aoFg+ZaF; arc=none smtp.client-ip=212.227.15.3
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b="u5DbrjnS"
+	dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b="aoFg+ZaF"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de; s=s29768273;
-	t=1708860451; x=1709465251; i=l.s.r@web.de;
-	bh=CrkFY6UkGwl6MP7KJS6PYC1d6QmOqzJQmeXT/9tQbmI=;
+	t=1708860452; x=1709465252; i=l.s.r@web.de;
+	bh=cplDe8+3sbJRXNxyopiCIeGZJKUUvDWSPNcDZLgjC1Q=;
 	h=X-UI-Sender-Class:From:To:Cc:Subject:Date:In-Reply-To:
 	 References;
-	b=u5DbrjnS7muSt096cchJl6R+tBGb50w+WNEayPfsjydY9chtmlOkvvfX25JCC7gy
-	 3gfXvacFPsOya3mN8CkiFi+ATb5jjSGhr6uCO2w/CDTJmYEXSCdpJkkWOf0fEnrHw
-	 2rmIJYWqfXb25ve6jzD0cZyCLSQQiz7XXP4QzYlsnG0NqVumI4tnGz7P7Wc6XLgNn
-	 H0QzOk2R9+Rinb+mYy1U86csVMFtdWhSFtOD0CK1t043OpnrVYRw3yj03dkjrbQ1+
-	 uI5fkIGutElAAgnNcLJ2CgaMICzhNorn/aC6n1hlpACgiWc4V1psFAWV9kFSLFXcG
-	 7Ls5x7AWiHfEzyNqNQ==
+	b=aoFg+ZaFL7DJBBCDW+33VSF/CAu0bRJxAEbhL9NDMihKzVSFgsosVOIzRvdTIEbj
+	 XBx94yZGX0ezjuSUcTk/YnFMDWtaObmTmJ+Kcp3/k77uJ+LDGJPjGxRqJua6WxQa6
+	 tVxqtQkGtBL/AZCEkeKIcyhUqYeajPSAoT6S6x6yr6TR8glNXUg9pcWK4gIVVXsSx
+	 xAZa7WvkwfmgwLTHPP6RMAq7JCJN0MQhTn6+gF9yCUOKvuuGf8PB8EXZDCDf3mzZo
+	 GdFeCBGEWTYqkQTIfOc9xQPJmY73etJEWZJOt91ElMNzzacJ3nExUtLDhHmf3gHle
+	 F0PNeGcrPkytpDc0rw==
 X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
 Received: from Mini-von-Rene.fritz.box ([79.203.19.211]) by smtp.web.de
  (mrweb005 [213.165.67.108]) with ESMTPSA (Nemesis) id
- 1MWi5s-1rOrff2j7Y-00XAEz; Sun, 25 Feb 2024 12:27:31 +0100
+ 1MHEXc-1riaNX3gEy-00DQQz; Sun, 25 Feb 2024 12:27:31 +0100
 From: =?UTF-8?q?Ren=C3=A9=20Scharfe?= <l.s.r@web.de>
 To: git@vger.kernel.org
 Cc: Phillip Wood <phillip.wood123@gmail.com>,
 	Josh Steadmon <steadmon@google.com>,
 	Achu Luma <ach.lumap@gmail.com>,
 	Christian Couder <christian.couder@gmail.com>
-Subject: [PATCH 1/3] t-ctype: allow NUL anywhere in the specification string
-Date: Sun, 25 Feb 2024 12:27:18 +0100
-Message-ID: <20240225112722.89221-2-l.s.r@web.de>
+Subject: [PATCH 2/3] t-ctype: avoid duplicating class names
+Date: Sun, 25 Feb 2024 12:27:19 +0100
+Message-ID: <20240225112722.89221-3-l.s.r@web.de>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240225112722.89221-1-l.s.r@web.de>
 References: <20240225112722.89221-1-l.s.r@web.de>
@@ -51,69 +51,132 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:Agw/MSAws2DaOdm09NdfesyS1MqGzXdrH9uK95iXp59f23Dj9YT
- T2/YRKU6gncxMdgxT1FJAlCd9QQJN5P9FX4Ij/66dQsWJNl7SEo7jFrm2BE0ytRRm3IMvFR
- gq+V04c4PHxd1htaTDwJMxFCHXCnuF8hWH6XlKIPEc2dA4y4VEzN5Dhb7FspSEE9q/G3qfT
- QbbrcCOQFEfs93sv7wtQQ==
+X-Provags-ID: V03:K1:doGiVtemON0tgJW3dQ3OSP7ueAAfMYpWXtBICLZ8MuU0Eqtv4QD
+ I9OwjbDG778cS7qmjDM8MkbMA6zFTiOZVRQV6rBotO9fb2MyvQfn+CPxXOOkJ4HFIZ3UKJ/
+ 9JWAhC4M/SOG9gbdCPT+Tuxlovb1OkAO6J+mv8Qx2CTopbgw40LdfixdrQ+tkbyCS+eUt7I
+ V7KI5o4QbkEfMEu6BGaSA==
 X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:NvE+9q1eoKQ=;6RqpSSZxmsfxv/9YRjX9tCYYy4x
- uqDPmqsow863ORjERLygvUHTzGnp7eoJn5I6E8xtBPP49ZWw2FxTPFJY3QYq7TnO+AbmQY3DN
- crgGZLeU7gyoCoKWC4mVKuvFIPiTDHHi7GLlRQ5MVLOrzt6MhdiZa++GAy6T5KUlD/FUHDPay
- N43qULxF02vidsHc/Xy1RtRgjXmEDo2YP7tf72+SL48XKVHkjhtJt8J9l4WSTcRM7uRlS+k4M
- Dh0r7lf4WREMy3GKt7+r3mkpbVYx0wdyiQixzlSn0c4rr3rF5hHxCjIjBsDTQev5UnBb6X20m
- u8F1pGy8KjLWm9eYrpcu9X+l7E0mdKh4dVYDW+Ub5cpvOsYg9Qnunr54IJd8QwU0FNt4XdNEu
- OB/BS9dciLEPDitUX7csbMofAIwaWaAjeIg7YQ+jjwIjpvuxu3WafmyA6SAtNE9OHn7ntQewc
- 7wS4toDaNVYu+7DOCTQro0Fbph8f7YL1Nj/iljOXFGnVzn18No7NEQELsuK6pMXlsNZUHcs4o
- t83h+IvbxuMAp6ta4a2VSHAaNmM79AE5djEGUDvhKfNTR1QVw28mk9Q6Zt8YA0dcLtkPt/Lt3
- nSDsv3PlutG2Ur7XXBue1AvCqacSjkLmm5nntOsv8KUMLgOOv1US/CFJMxYuHmtcr8g7mVM38
- iK8wVqkG6ARHRE7hEX5rREPncgN4YcLi9wBLKAoid+wljKgwGIo8bA0On0RnGTVwyNttN4l1t
- RcwIhMPBdWLXyAIBf2Uq2UrDSikJETtnmYzadOaAW3pS+TpH9V+LSKMwVputzcFfyJLSc52v+
- oHlPq3CIkD2B+5cznz6tm9b8pce38RKLnSgnn5sCdB8eU=
+UI-OutboundReport: notjunk:1;M01:P0:dBIwU8Hw4oU=;aGvgLzf2AsNy1grgcDEdCYe1xqe
+ 4ogpG+xhjF5Yt1PqEJ8FpOJ1M8LNR+coY0hZDMwhn4c5qt/YwaRtP0ldXOeIhjq/CodVyCxR4
+ T2jSN5PRUz10677SphQUUaVh+prJRr8nBNsEUsMANxEgQwucxFulZSWO4yHmHhqEgx8VU/jAf
+ 8dtF7/rnZr+nRHxhRhqtHj7tM7kkSzjQyiZg/sMqmGSQObUXktPMBjkSQamd1N9HBfOH04T/H
+ W5D5lXB/7zqJPui7zhsP6Yzf1ehaVLR6Wl+xjqfvs/l2QiHurcF8HQ3Q3aInxLf9+qV6baPme
+ qut3N/tckuVlmwpFShAOSARgiYSN9A31r7ASISJv02PzRKIBsoEHJnwjGAMxdQNEUQVGJdeeD
+ jTq9Es8zlxgVoz4/gAJ0lXN6uSKDER7yxHc2dsnO4VvVaC1FI8nsVIXy3MHTK1lcHipOWZN/a
+ CrInqWiIG7bgA2r5V7M9zdz8DQtBN/La8RiDRl7QbG9G35B/GMGWM9JMgkij4xZ4nG7Rk8DZI
+ /mLHaROM2Upsm2ZL8NFFFTx1UIx5LF+4Y4qg+7U9aaqep4YzBn2vqNeuwUTNqZdbMH5UK4pc1
+ Xauz+3jhbDiVEx2IAd9OyoDaPbP5ySIo96vN2pzKwFRS7NAioNlzl80Xo4DptnTKmG+U4OXFx
+ jzPEQ0w1ROJRpEX3icQ+EXUD+AjRNhAIwKQ4NBOOVeCAKFKOVtWQWB4aQtHLj4RfY9/NgAtQB
+ DXYKzhXe/yLzbSGFbs5Qu9lItcaiXzkIqEFmR6iQhnLlyNc358CGxPV9Hj+YWv3thebTT/siA
+ U41My2BdLu39CzEJRWE0seHAZGzygk6WxGIu9jgDe2xmM=
 
-Replace the custom function is_in() for looking up a character in the
-specification string with memchr(3) and sizeof.  This is shorter,
-simpler and allows NUL anywhere in the string, which may come in handy
-if we ever want to support more character classes that contain it.
+TEST_CTYPE_FUNC defines a function for testing a character classifier,
+TEST_CHAR_CLASS calls it, causing the class name to be mentioned twice.
 
-Getting the string size using sizeof only works in a macro and with a
-string constant, but that's exactly what we have and I don't see it
-changing anytime soon.
+Avoid the need to define a class-specific function by letting
+TEST_CHAR_CLASS do all the work.  This is done by using the internal
+functions test__run_begin() and test__run_end(), but they do exist to be
+used in test macros after all.
+
+Alternatively we could unroll the loop to provide a very long expression
+that tests all 256 characters and EOF and hand that to TEST, but that
+seems awkward and hard to read.
+
+No change of behavior or output intended.
 
 Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
 =2D--
- t/unit-tests/t-ctype.c | 16 ++--------------
- 1 file changed, 2 insertions(+), 14 deletions(-)
+ t/unit-tests/t-ctype.c | 68 ++++++++++++++++--------------------------
+ 1 file changed, 26 insertions(+), 42 deletions(-)
 
 diff --git a/t/unit-tests/t-ctype.c b/t/unit-tests/t-ctype.c
-index f315489984..64d7186258 100644
+index 64d7186258..56dfefb68e 100644
 =2D-- a/t/unit-tests/t-ctype.c
 +++ b/t/unit-tests/t-ctype.c
-@@ -1,23 +1,11 @@
+@@ -1,18 +1,18 @@
  #include "test-lib.h"
 
--static int is_in(const char *s, int ch)
--{
--	/*
--	 * We can't find NUL using strchr. Accept it as the first
--	 * character in the spec -- there are no empty classes.
--	 */
--	if (ch =3D=3D '\0')
--		return ch =3D=3D *s;
--	if (*s =3D=3D '\0')
--		s++;
--	return !!strchr(s, ch);
+-/* Macro to test a character type */
+-#define TEST_CTYPE_FUNC(func, string) \
+-static void test_ctype_##func(void) { \
+-	for (int i =3D 0; i < 256; i++) { \
+-		int expect =3D !!memchr(string, i, sizeof(string) - 1); \
+-		if (!check_int(func(i), =3D=3D, expect)) \
+-			test_msg("       i: 0x%02x", i); \
+-	} \
+-	if (!check(!func(EOF))) \
++#define TEST_CHAR_CLASS(class, string) do { \
++	int skip =3D test__run_begin(); \
++	if (!skip) { \
++		for (int i =3D 0; i < 256; i++) { \
++			int expect =3D !!memchr(string, i, sizeof(string) - 1); \
++			if (!check_int(class(i), =3D=3D, expect)) \
++				test_msg("       i: 0x%02x", i); \
++		} \
++		if (!check(!class(EOF))) \
+ 			test_msg("      i: 0x%02x (EOF)", EOF); \
 -}
 -
- /* Macro to test a character type */
- #define TEST_CTYPE_FUNC(func, string) \
- static void test_ctype_##func(void) { \
- 	for (int i =3D 0; i < 256; i++) { \
--		if (!check_int(func(i), =3D=3D, is_in(string, i))) \
-+		int expect =3D !!memchr(string, i, sizeof(string) - 1); \
-+		if (!check_int(func(i), =3D=3D, expect)) \
- 			test_msg("       i: 0x%02x", i); \
- 	} \
- 	if (!check(!func(EOF))) \
+-#define TEST_CHAR_CLASS(class) TEST(test_ctype_##class(), #class " works"=
+)
++	} \
++	test__run_end(!skip, TEST_LOCATION(), #class " works"); \
++} while (0)
+
+ #define DIGIT "0123456789"
+ #define LOWER "abcdefghijklmnopqrstuvwxyz"
+@@ -32,37 +32,21 @@ static void test_ctype_##func(void) { \
+ 	"\x10\x11\x12\x13\x14\x15\x16\x17\x18\x19\x1a\x1b\x1c\x1d\x1e\x1f" \
+ 	"\x7f"
+
+-TEST_CTYPE_FUNC(isdigit, DIGIT)
+-TEST_CTYPE_FUNC(isspace, " \n\r\t")
+-TEST_CTYPE_FUNC(isalpha, LOWER UPPER)
+-TEST_CTYPE_FUNC(isalnum, LOWER UPPER DIGIT)
+-TEST_CTYPE_FUNC(is_glob_special, "*?[\\")
+-TEST_CTYPE_FUNC(is_regex_special, "$()*+.?[\\^{|")
+-TEST_CTYPE_FUNC(is_pathspec_magic, "!\"#%&',-/:;<=3D>@_`~")
+-TEST_CTYPE_FUNC(isascii, ASCII)
+-TEST_CTYPE_FUNC(islower, LOWER)
+-TEST_CTYPE_FUNC(isupper, UPPER)
+-TEST_CTYPE_FUNC(iscntrl, CNTRL)
+-TEST_CTYPE_FUNC(ispunct, PUNCT)
+-TEST_CTYPE_FUNC(isxdigit, DIGIT "abcdefABCDEF")
+-TEST_CTYPE_FUNC(isprint, LOWER UPPER DIGIT PUNCT " ")
+-
+ int cmd_main(int argc, const char **argv) {
+-	/* Run all character type tests */
+-	TEST_CHAR_CLASS(isspace);
+-	TEST_CHAR_CLASS(isdigit);
+-	TEST_CHAR_CLASS(isalpha);
+-	TEST_CHAR_CLASS(isalnum);
+-	TEST_CHAR_CLASS(is_glob_special);
+-	TEST_CHAR_CLASS(is_regex_special);
+-	TEST_CHAR_CLASS(is_pathspec_magic);
+-	TEST_CHAR_CLASS(isascii);
+-	TEST_CHAR_CLASS(islower);
+-	TEST_CHAR_CLASS(isupper);
+-	TEST_CHAR_CLASS(iscntrl);
+-	TEST_CHAR_CLASS(ispunct);
+-	TEST_CHAR_CLASS(isxdigit);
+-	TEST_CHAR_CLASS(isprint);
++	TEST_CHAR_CLASS(isspace, " \n\r\t");
++	TEST_CHAR_CLASS(isdigit, DIGIT);
++	TEST_CHAR_CLASS(isalpha, LOWER UPPER);
++	TEST_CHAR_CLASS(isalnum, LOWER UPPER DIGIT);
++	TEST_CHAR_CLASS(is_glob_special, "*?[\\");
++	TEST_CHAR_CLASS(is_regex_special, "$()*+.?[\\^{|");
++	TEST_CHAR_CLASS(is_pathspec_magic, "!\"#%&',-/:;<=3D>@_`~");
++	TEST_CHAR_CLASS(isascii, ASCII);
++	TEST_CHAR_CLASS(islower, LOWER);
++	TEST_CHAR_CLASS(isupper, UPPER);
++	TEST_CHAR_CLASS(iscntrl, CNTRL);
++	TEST_CHAR_CLASS(ispunct, PUNCT);
++	TEST_CHAR_CLASS(isxdigit, DIGIT "abcdefABCDEF");
++	TEST_CHAR_CLASS(isprint, LOWER UPPER DIGIT PUNCT " ");
+
+ 	return test_done();
+ }
 =2D-
 2.44.0
 
