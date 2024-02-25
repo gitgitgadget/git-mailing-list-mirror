@@ -1,111 +1,90 @@
-Received: from mail-ed1-f51.google.com (mail-ed1-f51.google.com [209.85.208.51])
+Received: from mail-pg1-f174.google.com (mail-pg1-f174.google.com [209.85.215.174])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42F371BC46
-	for <git@vger.kernel.org>; Sun, 25 Feb 2024 22:59:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 530799450
+	for <git@vger.kernel.org>; Sun, 25 Feb 2024 23:10:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708901962; cv=none; b=J/sCM0s/eYoTRim8l9N6S3vaLPhfTXu8rIZuReY4v/Dy1MELuvgTblxxP4o2Z05o+c0BPH26pyKO8YqXitSejsTDnYdeLWBXwt6ctfXLYOiNh30NI66JNefFIFTaVnup6WhlGMxHQb5vnOv1dMD30sPH/P81u3QQX1wXwfNaEU8=
+	t=1708902649; cv=none; b=bNTMYCsuzScWRCiNcLQSvv2BLjHpgCN95Fh8JZ+C2ro1hNmBDApZtMFL3ljlJy3ph4VdKZrSfwNr9eXOEeCz0EC8NfQtTkhxmqOyfQmhgFBOEqqGTELFBGQZApL38+FX/BaP4sTFMygS9XHtqmiwrHHEVdVL+N86Q3sJdahX35Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708901962; c=relaxed/simple;
-	bh=NqUI35p5cVwKjJ+ANQ4QinMiii2Hl9fOy+5cLEyRKBs=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=SNRUpmVofIhvUOpBloVwfzSBnXbl/rvvlUpFucnzrSGY2bUHImulVidk206Le7d7cL1WAc33LKIWJtJgvTgJsLDk7m6FYDVW2K29mdbckJCTowbWFMfGG6ml76i54P7yqjKsCyq9eUcbmbkbcWp1Fagg5haE67/WU09hbio+FYA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VbHjhvL9; arc=none smtp.client-ip=209.85.208.51
+	s=arc-20240116; t=1708902649; c=relaxed/simple;
+	bh=ZD/HL0cTs6Sh/prnwwZqAJ/Q2ff9hfN9ZtfV2DVZ5nU=;
+	h=From:Content-Type:Mime-Version:Subject:Message-Id:Date:To; b=sZi6TpQKzpq+/FttCLHE6Q5HUyw+KXM3JJNVMCt9ir9wGYwkSxX2PtRkbTpixs67QR86qPlV57zjHYK6vvXi051qdttWQy8XI7DSkkwhyYQy2C/GgPuscKURbZcRvIbi6rModH08dW/SzEvOauDxX9Yc3EqnXw1trQTiWWX5/cY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=l/Z6uXsi; arc=none smtp.client-ip=209.85.215.174
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VbHjhvL9"
-Received: by mail-ed1-f51.google.com with SMTP id 4fb4d7f45d1cf-565ef8af2f5so379502a12.3
-        for <git@vger.kernel.org>; Sun, 25 Feb 2024 14:59:21 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="l/Z6uXsi"
+Received: by mail-pg1-f174.google.com with SMTP id 41be03b00d2f7-5cedfc32250so2485639a12.0
+        for <git@vger.kernel.org>; Sun, 25 Feb 2024 15:10:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1708901959; x=1709506759; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=YZbcTuczF07NB/G0cyEn17sqyjxndfhZZ2KT92n+JDc=;
-        b=VbHjhvL9+Dx4x1BQfxZvxCrQDLHS72K+OLS9Rgj7gLbbSsMpbvjzZZTo8j1B3SHNG6
-         FQq4vot8dGhyX+GgWhApuMQwnLgKFjIgp0mnVVFYQ0I70NkT8tXhvMBwasEMY6myI2aV
-         4eYyz2Jdg6EcymkJmP20iK7NGS7LPdqxmW/C48cNZHeQyWPTCw6QlthuGmzBNZBoHefa
-         P/JCUsuW0jDb13uf0cTvHy730xBDI3i/PEHDVqJKVT+hhSNMVlHTYiZ+0/PgT4RXM909
-         D+whr5fwcuGKRYa3aeS/f7xmXwH6IBs5mD/Q//OYyX72/NLjls3siowHfhK6FyT0t8Al
-         tW7Q==
+        d=gmail.com; s=20230601; t=1708902647; x=1709507447; darn=vger.kernel.org;
+        h=to:date:message-id:subject:mime-version:content-transfer-encoding
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=ZD/HL0cTs6Sh/prnwwZqAJ/Q2ff9hfN9ZtfV2DVZ5nU=;
+        b=l/Z6uXsibBMJ5cdSDbxpX44hb9hrcml6k/7vZjyJL08tq17wNSUaRf0eb5lNvG0Kqy
+         mpqVcNszlr5sqQ5St0DWQShYy7b68ePzwZtmzEZsHQwYPaR4KKbLA/27Y3oAVYKDBeOD
+         QhCxN70fqk5/hkNnTvKjzfRzodJco59gqycog4SB9qiOfJbcAFex6pNVaaPKl8qVspKA
+         k7TDQvbtt2LipWm57UPnu6lLs1hUrctP2tznmnewvF4aDMpjmPnwjTsH53m9knyhX0dq
+         uVrmKPJU3rbLe0hYF+1EZoQZN2ZmO0ts6LGSCqZVp52qC7EdJ5bXpBYswRzuyKwWamog
+         +v7w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1708901959; x=1709506759;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=YZbcTuczF07NB/G0cyEn17sqyjxndfhZZ2KT92n+JDc=;
-        b=QC/Ow7HbZYMD52ebM2Cp5w9Krbh7LMqfIr8NG5UQl/6G8HjpMp4gLtksmO2jP0xVg6
-         ErsQcsyBroC+rbifgjQAdYAXkC662id3kYDoexPLTMGoWC+uHo1/tZ/7nwF8HquYa25t
-         /7+Ivzj4C2dTEpHTHMqS5C/dIPWD5hSV6T7Q9joOm68pTzG5bXKr2qaegswrNnb9+7WH
-         JAaLso8uxEhEtosaGMJCnZ5ZC9dyqrVeADkcgwHyOMROT7uneHG0wl/JS8wlgm0dXHv/
-         nlwdMnodvLDnsj0Zs22thcp++63Bi9oC8nzavGc7PeX126ISaT+gaoSzLm196uwwbOKH
-         Pi8w==
-X-Forwarded-Encrypted: i=1; AJvYcCWt0eHMxC23ad355Czy3EHp4nauvSAB8SpMKpQxvgxVNly933mfGfbbJJgdBveJN/Ut1/NqxJCcj/erb2SNfy0p80lx
-X-Gm-Message-State: AOJu0YweWNC0oLQg4AyYviTRZa2/AHKovUpLcQqv4s10guSm475vL+K1
-	4Q1BxJs2UVDkYbiqnd+mzb6k3ASp0k8IZle84LNfWGvYqakkenXYHGs8hXyK
-X-Google-Smtp-Source: AGHT+IHh3Ew3k+ylnnkcc/gnbFUs1n98tQ8/riudw5Wpj/l2xB55LOqRBMhp/JqwFOnk5028yLBddQ==
-X-Received: by 2002:a17:906:a046:b0:a43:35f1:944e with SMTP id bg6-20020a170906a04600b00a4335f1944emr1415144ejb.22.1708901959584;
-        Sun, 25 Feb 2024 14:59:19 -0800 (PST)
-Received: from localhost (94-21-146-251.pool.digikabel.hu. [94.21.146.251])
-        by smtp.gmail.com with ESMTPSA id z22-20020a1709060ad600b00a3d125b9c0asm1820419ejf.81.2024.02.25.14.59.18
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 25 Feb 2024 14:59:19 -0800 (PST)
-Date: Sun, 25 Feb 2024 23:59:18 +0100
-From: SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To: Taylor Blau <me@ttaylorr.com>
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Jan 2024, #01; Tue, 2)
-Message-ID: <20240225225918.GB1940392@szeder.dev>
-References: <xmqq5y0bcjpw.fsf@gitster.g>
- <ZZWOtnP2IHNldcy6@nand.local>
- <xmqqa5pm9tnx.fsf@gitster.g>
- <20240113183544.GA3000857@szeder.dev>
- <ZaMJU6MJ5wZxyLeM@nand.local>
- <20240113234134.GE3000857@szeder.dev>
- <ZabpBHBB1TXIXJLr@nand.local>
+        d=1e100.net; s=20230601; t=1708902647; x=1709507447;
+        h=to:date:message-id:subject:mime-version:content-transfer-encoding
+         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=ZD/HL0cTs6Sh/prnwwZqAJ/Q2ff9hfN9ZtfV2DVZ5nU=;
+        b=mnwNg5BstFnBBB6bsaIEJr9obz/u/5iuelnCfTiBQXVJuU/+Y42QmROSMQJ4K0XMp3
+         4ZFX9Rqxl9SqChsrgpOBgkGVjienqqVrD8mI6OqAGPjeUVBaN3+5O3k6ArNqBJCqi5HO
+         9JA++bMvQPaAjFnBZBohId2oiXkRMwxarsSACvsMU47CW81XBAVkmkYuWNEe5M5e4T/X
+         yayAZpl2bTEvVyp4HuBYBWocwqvoXUuS/5pXcCf4bUx1H3GvnZVlyliqbenOojdPm3J+
+         //3nRTmN3avvOOV9FjJYS4sWq8khxKO9GjOAqtOSA3FkSbJwexSn3UJiNgGkT+5qoRiw
+         Gvuw==
+X-Gm-Message-State: AOJu0YwnbF9hsoxAjbfGXxgSYYTW0KPdVp1m66JWfdwXodwdG9e3AOOk
+	VHJGxt0KkVgSbjiE7dIEmIkQNeNRg9QOb6brO7jJMiCQCxwExIMiYDaot6PW2kI=
+X-Google-Smtp-Source: AGHT+IFtekgviFWL+ADtP4VLg2beHodF9xfrDroo8j/nx8RIEZ4B0uRpeIaVz7P8QQRZtgG4MxuMrQ==
+X-Received: by 2002:a17:903:258e:b0:1db:6722:5b3d with SMTP id jb14-20020a170903258e00b001db67225b3dmr4480571plb.21.1708902647147;
+        Sun, 25 Feb 2024 15:10:47 -0800 (PST)
+Received: from smtpclient.apple ([14.194.174.54])
+        by smtp.gmail.com with ESMTPSA id kq6-20020a170903284600b001dc63fd39c0sm2690860plb.225.2024.02.25.15.10.46
+        for <git@vger.kernel.org>
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Sun, 25 Feb 2024 15:10:46 -0800 (PST)
+From: Akhilesh Kumar Yadav <akacademic05@gmail.com>
+Content-Type: text/plain;
+	charset=us-ascii
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <ZabpBHBB1TXIXJLr@nand.local>
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3774.400.31\))
+Subject: Interest in Future Collaboration for GSoC 2024
+Message-Id: <39C00ED0-2EA9-4BCA-8662-AAEC5A108D49@gmail.com>
+Date: Mon, 26 Feb 2024 04:40:36 +0530
+To: git@vger.kernel.org
+X-Mailer: Apple Mail (2.3774.400.31)
 
-On Tue, Jan 16, 2024 at 03:37:24PM -0500, Taylor Blau wrote:
-> Hi Gábor,
-> 
-> On Sun, Jan 14, 2024 at 12:41:34AM +0100, SZEDER Gábor wrote:
-> > > In any case, here's the patch on top (with a lightly modified version of
-> > > the test you wrote in <20230830200218.GA5147@szeder.dev>:
-> >
-> > I certainly hope that I'm just misunderstanding, and you don't
-> > actually imply that this one test in its current form would qualify as
-> > thorough testing... :)
-> 
-> I hear what you're saying, though I think that the interesting behavior
-> that would be most likely to regress is the transition between different
-> Bloom filter settings/hash-version across split commit-graph layers.
-> 
-> We have extensive tests on either "side" of this transition for both v1
-> and v2 Bloom filters, so I'm not sure what we'd want to add there. Like
-> I said, the transition is the primary (previously-)untested area of this
-> code that I would want to ensure is covered to protect against
-> regressions.
-> 
-> I think that the most recent round of this series accomplishes that
-> goal.
 
-It's great that we finally have test cases for different Bloom filter
-settings in different commit-graph layers, including a test case that
-merges those layers, but that test case doesn't check that the
-resulting merged commit-graph file contains the right settings.  And
-there is still no test case that merges layers with different Bloom
-filter versions.
-I think adding these would be the bare minimum...  and would need more
-for due diligence.
+Greetings!
 
+I hope this message finds you well. I am writing to express my =
+admiration for the innovative technology that your organization is =
+working on for GSoC 2024. I have been following your work and find it =
+truly amazing.=20
+
+Currently, I am committed to another organisation and may not be able to =
+contribute to your projects at this time. However, I noticed that your =
+organisation sometimes faces a shortage of proposals. If such a =
+situation arises, please consider this email as an expression of my =
+interest.
+
+I hold a strong interest in your organisation and would be more than =
+willing to submit a comprehensive proposal should the need arise. I have =
+also been an active contribution at open source projects and have decent =
+programming experience.=20
+
+Thank you. I look forward to the possibility of future interactions.
+
+Best regards,=20
+Akhilesh.=
