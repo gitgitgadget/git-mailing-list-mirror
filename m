@@ -1,177 +1,106 @@
-Received: from out4-smtp.messagingengine.com (out4-smtp.messagingengine.com [66.111.4.28])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f42.google.com (mail-wr1-f42.google.com [209.85.221.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0320D512
-	for <git@vger.kernel.org>; Sun, 25 Feb 2024 07:09:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=66.111.4.28
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EE22CA6F
+	for <git@vger.kernel.org>; Sun, 25 Feb 2024 08:16:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708844998; cv=none; b=Ypoq4bPmTpoBTMQmmhtUl+uIIDbgEXrM2oSw1sYgLkdJ0h1ABa2RWt42bSRrw696h7mGShv2W/KefiK5HAWXIjTDmBcIn2q7eSiT67lnednJ0CS0KaQx5Fz7cwOeb7qLKtgLEfAsIj/cw5iSHKq+IB6cByEdiH9Ar+P5v8m9QlE=
+	t=1708848983; cv=none; b=FwieJPae5Gbqzr5pAtK1UHz+x93USYKzvAHNfyC0thcNhKxqx+m+W4B4GA1ovvexp3h8qfqgiYqqqakMpuceke3EuQkZI1eQhGaO/6NppvT0TbjpoDzGKmB2m4L3jmpAZXhwTZAhoE02xzGLaIDxOhkEkd+KjryfUT2YpJBjFgY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708844998; c=relaxed/simple;
-	bh=b1YpdyPyufgcMHab/WjX/Iy+ilxtlVljvBCRfPxca3c=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=FPeMpHg/3Gse43XRFn66Qnw1SC8AVzGjWmqCzQ+OwsbovQ6ltY2xPPpLj2mUflg72AdeEnmNj9PvsuYi7h/qVDsC3JiwPDlzHLWLQoJbLcwzF0UF4KB8lsxbzSA4gSV3qaX9ttPaXMRDAckr7lkoHXU/4BOdXZEkKC1KzdOhxc4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=PKF+h3vN; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=oCkj6Ja7; arc=none smtp.client-ip=66.111.4.28
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1708848983; c=relaxed/simple;
+	bh=A/peRN89BMipA3RFhGrjCfVyakEm84glq0GwHtr+RqY=;
+	h=Message-ID:Date:MIME-Version:From:To:Subject:Content-Type; b=e9jCtHbOHB7oEYYJMN+G5yf9h1X52m7UnE/ZIY7CGRUTjFMMnYCrQfrZNFuHL2lg89regdkrSxj0KgL0Ms2PB49Dh+2XrDDFyPDrh+xOYAxVNAOXlDqhJPTkxslJFSVAbJ7qnrHicTPeIA5xlneFzLdBAFZ1KupOfVJR1fLn5cM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=D0vuZr2L; arc=none smtp.client-ip=209.85.221.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="PKF+h3vN";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="oCkj6Ja7"
-Received: from compute7.internal (compute7.nyi.internal [10.202.2.48])
-	by mailout.nyi.internal (Postfix) with ESMTP id C6C195C0072;
-	Sun, 25 Feb 2024 02:09:53 -0500 (EST)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute7.internal (MEProxy); Sun, 25 Feb 2024 02:09:53 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1708844993; x=1708931393; bh=b1YpdyPyuf
-	gcMHab/WjX/Iy+ilxtlVljvBCRfPxca3c=; b=PKF+h3vNaALcrbR3BLgZD9A29O
-	3ZEE9fHZDQs0iR6rKs4aeq4j3BjLtUJPfMm4qoajPUvWfxh0gUxs5Xr71KCDxzv7
-	RsPVVgnGKXvaT+QfQD7aWH3hJL1uJFEX5g/XV2oak54PRBDlN+v9D5ZxJbjh/EEG
-	bfqWQyBXfpIpYBBjDEI6mnXcFc9It3Y4ECgTld1RFnuzMWQtKfGmpe91ZtKIjgcS
-	+NoTqnSSr4lLTQmBXQG8RbwOeV0tCSMLQCoN8K5oqEAa4C4ALdhn+CQ4fjzxyj7L
-	j7+IAuiWAoxraFfWtUA6ebWJBM77KWRpMZHWwkN9PKHS4AAirwu31pH2ycCQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1708844993; x=1708931393; bh=b1YpdyPyufgcMHab/WjX/Iy+ilxt
-	lVljvBCRfPxca3c=; b=oCkj6Ja7G4XxvpQUWPljjEaCqean+MuBCaR38pHefZgQ
-	oVqyzneyT4sczzcWjHh+P7B2atJSVT1eiRWLiwwFIEF/vdMK51cgf8RqByUdigSL
-	+Ci/JznGvkUXwG7h6gdHuUpNZGVHhgN6lx38ohUA8a0WwYWHhYxr5xQxYigdyzbU
-	hnEZdkC4/t6N30A9vf+kC/JrZZ24fBkJSiARFwTdSA2UI00aTIQzilYZ/61Z3xxl
-	1EtIOpdH3MpureaBH/9fODkM2A4CVoVpIbs5wPaFl1AGgl8vnZm2xXNYkNJL+/MR
-	qbWSXcS8jHK59xT/GYL1O5pbivvABQ5TU00ubZZbmw==
-X-ME-Sender: <xms:wefaZf68OVL5iGmfXvsdZUZ0-8NnL-o03FdiTxjhZUG9-rVkK2HI-A>
-    <xme:wefaZU7If6jj0Hv1gAOQVtSmdozbFyDn-z1PBH88mSrY7kOk4BohoSLnQq3PHRf6g
-    14o3iVIaEfqS2Pv4w>
-X-ME-Received: <xmr:wefaZWe1ps8OTITlexGLGBGEwNrJQ5p2jY-5JvMSTyCVVQhRzQiOeT_A-1amWM81GE6EPkevKmd1hewqwEo0xQfvQIVbSfscm1va7A7DUCtzgoUk>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrfeelgddutdefucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    cujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtvdenucfhrhhomheprfgrthhr
-    ihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvg
-    hrnhepueektdevtdffveeljeetgfehheeigeekleduvdeffeeghefgledttdehjeelffet
-    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhsse
-    hpkhhsrdhimh
-X-ME-Proxy: <xmx:wefaZQIzzQKKtLkT-N4BmpJsAR_C_hCObjhfRi7uiXc5jJ74byPKkg>
-    <xmx:wefaZTJITov4-2bKS3vF_nPcqh6C5bDsN6ZWKSK9ExvcE8rhSczyfA>
-    <xmx:wefaZZxFMBAxvISsrqFrGvr7RTffdPqxaWH7c6chlbi6tax8oL7gGw>
-    <xmx:wefaZb1Cqep9BLMyg0-VTL7suVsltWniemVTxgfe-tSnjlex-4BXiw>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
- 25 Feb 2024 02:09:52 -0500 (EST)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 1a0dff1c (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Sun, 25 Feb 2024 07:05:38 +0000 (UTC)
-Date: Sun, 25 Feb 2024 08:09:48 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: Mike Hommey <mh@glandium.org>
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	git-packagers@googlegroups.com
-Subject: Re: [ANNOUNCE] Git v2.44.0
-Message-ID: <ZdrnvKRl8oGPJxOD@framework>
-References: <xmqqbk87w164.fsf@gitster.g>
- <20240224051040.ftuo24smozqugbde@glandium.org>
- <ZdmOZRjJ-mClBR02@framework>
- <20240224195550.ignhzidmdy3ce6q4@glandium.org>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="D0vuZr2L"
+Received: by mail-wr1-f42.google.com with SMTP id ffacd0b85a97d-33d118a181fso1422474f8f.1
+        for <git@vger.kernel.org>; Sun, 25 Feb 2024 00:16:21 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1708848980; x=1709453780; darn=vger.kernel.org;
+        h=content-transfer-encoding:subject:to:content-language:from
+         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=XHYcswmxIbOwQy1ENUxvFxUS/CSlzUZd2wOAG6Vxr6A=;
+        b=D0vuZr2Lz2Ro7lDrZmhRMu9KMLggWDVgT6lbImmM9IgLody6+Qsd0mG8naqbgJ5tcy
+         nZnUe0qbJQN4P7fon8HMXQA89wr9hPPdqRqo/tUW8AyjuLhAc2zZK/yM3XSgJEn8B/z9
+         Mh3VCxALV1fVMVdOPJcz6QU4Ry/mqLcXQAnMQ1rvonW5ZykksC7pP64P5wpIkW2q5G+B
+         7OLuZ8/hdME4NJ37CuuTPyXlurkHMcv5F1/LHgd6IsiGk5QwEmltPK/kHJ4NYqfxtzqc
+         IMgqR1yvKZAWzPugNMFjTiRxfml+czWVueNTkLy1nFIwMy3nOpQZFNV2dBZZhgVTqkGj
+         7nDA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1708848980; x=1709453780;
+        h=content-transfer-encoding:subject:to:content-language:from
+         :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=XHYcswmxIbOwQy1ENUxvFxUS/CSlzUZd2wOAG6Vxr6A=;
+        b=lbbOGEJmcPEzdthX3CCU35vhFQmLyy8MEbZaI0zBs2xPskYtoxf2lSdbjiEmYVQsUD
+         2NH/STsoKEPmebIcm8hlPKC8/CtW2TMORhY5kQDF8yF9btCBIIMFUe47KbPh6tBfJJbL
+         QwjvSiwOrtaGSpIS0kl3sHBr0Ue/pt/2T1ikvO9BhSW4QH4F/nuiLDYd1x8N9hEWcILt
+         q/vaYz7IG7d4IXhvDAaU+xokgCCiLvkK4KDS2+jyzBUrpdElgvb3Wz146albGvw2bxRv
+         ShFVWuDg1WIfq6VZ0dwTbafOTdTYgQs/xFSEheQ4X7D/ayeLXubT7ClaZ2k7kE1YljTP
+         k3fg==
+X-Gm-Message-State: AOJu0Ywoa8UOLubJC1kGa89JHv4IztOmGUR9MCBU4waxWGHLnUDfX/+u
+	fOfg3fGCra3HOyifA2QnXL8GAvW1d9mbuR3QdD4/LgxnG5LihZuQSW4sd1TF
+X-Google-Smtp-Source: AGHT+IGLN/r/qjCCOT55psQWkEusb7Dm+HCMO2uxr0Ui+XymXDhDisrjaCHwxd6ffVGvPqXTaunE4A==
+X-Received: by 2002:a5d:4242:0:b0:33d:c217:e8a4 with SMTP id s2-20020a5d4242000000b0033dc217e8a4mr1829001wrr.14.1708848980250;
+        Sun, 25 Feb 2024 00:16:20 -0800 (PST)
+Received: from gmail.com (198.red-88-14-62.dynamicip.rima-tde.net. [88.14.62.198])
+        by smtp.gmail.com with ESMTPSA id j3-20020a5d4523000000b0033cfa00e497sm4407020wra.64.2024.02.25.00.16.19
+        for <git@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 25 Feb 2024 00:16:19 -0800 (PST)
+Message-ID: <a1561e02-40dc-4ac3-ae7a-666db0f810ed@gmail.com>
+Date: Sun, 25 Feb 2024 09:16:15 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="skYHJWw+A1jf+H1z"
-Content-Disposition: inline
-In-Reply-To: <20240224195550.ignhzidmdy3ce6q4@glandium.org>
+User-Agent: Mozilla Thunderbird
+From: =?UTF-8?Q?Rub=C3=A9n_Justo?= <rjusto@gmail.com>
+Content-Language: en-US
+To: Git List <git@vger.kernel.org>
+Subject: [PATCH] completion: fix __git_complete_worktree_paths
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
+Use __git to invoke "worktree list" in __git_complete_worktree_paths, to
+respect any "-C" and "--git-dir" options present on the command line.
 
---skYHJWw+A1jf+H1z
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Signed-off-by: Rubén Justo <rjusto@gmail.com>
+---
 
-On Sun, Feb 25, 2024 at 04:55:50AM +0900, Mike Hommey wrote:
-> On Sat, Feb 24, 2024 at 07:36:21AM +0100, Patrick Steinhardt wrote:
-> > I have to wonder whether we ever
-> > really specified what the environment of a remote helper should look
-> > like when used during cloning. Conceptually it doesn't feel _wrong_ to
-> > have a not-yet-initialized repo during clone.
->=20
-> How about this: it should look like what you'd get from
-> `git init $repo`.
+I stumbled upon this in a situation like:
 
-The problem is that it can't. With git-init(1) you already know how the
-repo should look like as you specify parameters like SHA1 vs SHA256 via
-parameters. But with git-clone(1) it's a different story, as you only
-learn about how the repo should look like _after_ you have connected to
-the remote. And thus, after you have executed the remote helper.
+   $ git init /tmp/foo && cd /tmp/foo
+   $ git worktree add --orphan foo_wt
 
-This has never been a problem with the old "files" backend because it
-does not encode the object format in the refdb. But the "reftable"
-backend does, and thus we can only creat the refdb after we have learned
-about the object format. Future refdb implementations are likely to do
-similar things.
+   $ git init /tmp/bar && cd /tmp/bar
+   $ git worktree add --orphan bar_wt
 
-> > Another idea would be to simply pre-create HEAD regardless of the ref
-> > format, pointing to an invalid ref "refs/heads/.invalid". This is the
-> > same trick we use for the reftable backend, and should likely address
-> > your issue.
->=20
-> The interesting thing is that `git init $repo` does give you an invalid
-> HEAD (and that's what would happen during git clone too), with either
-> ```
-> ref: refs/heads/master
-> ```
-> or
-> ```
-> ref: refs/heads/main
-> ```
-> depending on configuration.
+   $ cd /tmp/foo
+   $ git -C /tmp/bar worktree remove <TAB>
+   ... expecting /tmp/bar/wt, but ...
+   $ git -C /tmp/bar worktree remove /tmp/foo_wt
 
-HEAD in your example is not invalid, it's unborn. That's a difference
-because creating the branch would succeed just fine. In the case of
-"refs/heads/.invalid", creating the branch will fail because the ref
-name would be refused.
+ contrib/completion/git-completion.bash | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-With the reftable backend, we are forced to create HEAD exactly due to
-the problem you have just encountered: a repo would not be discovered if
-it did not exist. But its value shouldn't ever be read, because it is in
-part of the reftables in "reftable/".
-
-So as a safety mechanism, we want to make sure that the value of HEAD
-cannot be interpreted like a "proper" ref. Clients that do not
-understand the reftable format should not see a HEAD ref pointing to
-"refs/heads/main" and then happily create or access such a branch.
-That's why we want it to be an invalid ref.
-
-That's ultimately the reason why I don't want HEAD to look like a proper
-ref. But doing the "refs/heads/.invalid" workaround shouldn't be too bad,
-I guess.
-
-Patrick
-
---skYHJWw+A1jf+H1z
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmXa57YACgkQVbJhu7ck
-PpTnKQ/9HVMukwEQIIwkZXKAhebUKlJmVq7DiMEDJlPCKQW8xop6qYsiTlQktsVN
-5L6rfTK9e+oGwGnC9SCAsVG61vozloLrJrWGRWffxc0XbkJEIZeMN4WVXUqzT8Wl
-mTgkRIDX2eR68mPo4N8PwwieQXbRdnMeAeYWCUSIoTcny+TQr/eSDlpbMzKgdna4
-luvZvdkXf4kbbLltz6nqVeW71JxGxys9wehdQmhsQzIR5EWgqLfq+2xeWPMCh3C3
-kODYumr213ex5qARBcqXEckXdDfOt3ToQGtY7Zn3Lw+0cAX4SvIafVf6cxWKfCRq
-PYKZEsQ7dRt6nSJjB9u67daJyjEjYGSHmzif2WFXzRzUUgjVa+6ndoMZ1xmdBGE+
-jHthcaCKSIGMHuBZlF9RssA8BahOv/GtzyndeiYBBrf71K7BcDPttJ+kuTJDyr3B
-W8NWXIWT1U2x7+TvK56R6w9MY5Lxt5ThmXeVCqJUo/ok4ArTRfhDuqnrYsNinVQx
-ZIOwCNnzU+t4UStIMkBEkCMUoDQK2vfUjVS/XuL4c8t/WIm4cGC8l/F8DnA0d0nQ
-Md2UQM4nsqBYuH0wdz/psclUws4UT0VVjh+pY/U3wvCdj8QyuGC8HvFluSNc3Li1
-MWQb2ZWQ5gPtUqynMEXUAuT/mA07AU/AdQLHDdxznSAoMu6ucMw=
-=c3g+
------END PGP SIGNATURE-----
-
---skYHJWw+A1jf+H1z--
+diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+index 444b3efa63..86e55dc67f 100644
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -3571,7 +3571,7 @@ __git_complete_worktree_paths ()
+ 	# Generate completion reply from worktree list skipping the first
+ 	# entry: it's the path of the main worktree, which can't be moved,
+ 	# removed, locked, etc.
+-	__gitcomp_nl "$(git worktree list --porcelain |
++	__gitcomp_nl "$(__git worktree list --porcelain |
+ 		sed -n -e '2,$ s/^worktree //p')"
+ }
+ 
+-- 
+2.44.0
