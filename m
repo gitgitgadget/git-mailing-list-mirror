@@ -1,256 +1,150 @@
-Received: from mout.web.de (mout.web.de [212.227.15.3])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f44.google.com (mail-ej1-f44.google.com [209.85.218.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7278879D3
-	for <git@vger.kernel.org>; Sun, 25 Feb 2024 13:10:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.3
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C1721B963
+	for <git@vger.kernel.org>; Sun, 25 Feb 2024 16:57:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708866635; cv=none; b=W+5LSjLgmv8cbInYXO+gJXU2N6Ye0HsrJWjsY82lRFvAvCOo0jpaOkWaMrn5hI2UTWbI/ds6DhvqU7rb/SORVDYBa//hh0fz9prHTcruJ5CYpEMAfldROJ/mmafFmOEu1uoub1UpZ97qSNRmvYmySmljfs7PHWA0OtaIrAb+l3w=
+	t=1708880238; cv=none; b=sMUr4B1Q09yDSw85BXtCdarK8WSvKhtHteJlLwDdWvt6ABONcAod12eDlpPw2GYBqfGUn1ILXmmJe+o9ewyJwtXnp9SpGGbngUUD5eDlwY15OnHq/c4R9lTK76yE0Y2BzyvCmUmJDKm6TdYNC70dMq4890CljQ8/L0M26NzRYV8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708866635; c=relaxed/simple;
-	bh=xu8nVgEGtU0i36MlK5ubcE2YZqkXHr3EfcSd4sBoCEg=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=deKWmVQ0lf262Mtc+WjepD0JEcnVHqROz9+d1IV4osXMRYN4kzp+4G6RoU7GEFiK0mg5+Yc/3nAnziKLGqN6vv/Q2ITLEWqsMz2GdxVKWE1FhHEroiIUnte05hmQzDBSCvvCi5i3B8QOWephG3SNPdKxhpU7zKnSBViLif3NwPU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=tboegi@web.de header.b=gVPHo7il; arc=none smtp.client-ip=212.227.15.3
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
+	s=arc-20240116; t=1708880238; c=relaxed/simple;
+	bh=/apecLknMc6itSRc2bdxZM6X0ORtvVsAaD6s67NFOlU=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=uDJYGfHEhaDLogUtXz91nfZUAlBNJvR22BC+/GhXdmZYFBVBbxnuMT0KVAUGI/JnnjderVQO7QwsoBsK7FcRXAs//Jee20SjVRnTQh5pjBwVyH0JJrWe9NuALT/DPzMXxEzjs/UGF2wFQOd6jTtram1Vw+0xCtNHMCZmnBtf1U4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=GitwB22/; arc=none smtp.client-ip=209.85.218.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=web.de header.i=tboegi@web.de header.b="gVPHo7il"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de; s=s29768273;
-	t=1708866624; x=1709471424; i=tboegi@web.de;
-	bh=xu8nVgEGtU0i36MlK5ubcE2YZqkXHr3EfcSd4sBoCEg=;
-	h=X-UI-Sender-Class:Date:From:To:Cc:Subject:References:
-	 In-Reply-To;
-	b=gVPHo7ils1R1zDx501Km2ODhL8H62Yxsnpda57FnCTSKsNnaYVJuJUub7gp0ZcD+
-	 qn8BvyziqCgaQBkETOSTUMeR76dZiGYB4FHcRLfyVFI/rxhcUAu9yFS7VmVY9KwGp
-	 05C2YMRLfXVxMAWDkFiBfONpckvVx/A9MA0TU4UkEM+do2Vq3XfAsYsQFaEO8TyK1
-	 4ibyZAsOkD+ZdlTZOaFRCVZgg8M1YLDFr0kvVBnJRPDP/IfmybjxwXB7hObEr0z6p
-	 cdwODR+2zc7VnV4v9oLmZiahGfQuzZrmvDXsYxjAoj3VGh8WlQAxi0p1qjvblWghg
-	 ufLhTSJX9RVAijnWDg==
-X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
-Received: from localhost ([195.198.253.159]) by smtp.web.de (mrweb006
- [213.165.67.108]) with ESMTPSA (Nemesis) id 1MA4fW-1rkEpO0y54-00Balc; Sun, 25
- Feb 2024 14:10:24 +0100
-Date: Sun, 25 Feb 2024 14:10:23 +0100
-From: Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
-To: Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>,
-	Jeff Hostetler <git@jeffhostetler.com>,
-	Jeff Hostetler <jeffhostetler@github.com>
-Subject: Re: [PATCH v2 14/16] fsmonitor: support case-insensitive events
-Message-ID: <20240225131023.GC1952@tb-raspi4>
-References: <pull.1662.git.1707857541.gitgitgadget@gmail.com>
- <pull.1662.v2.git.1708658300.gitgitgadget@gmail.com>
- <288f3f4e54e98a68d72e97125b1520605c138c3c.1708658300.git.gitgitgadget@gmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GitwB22/"
+Received: by mail-ej1-f44.google.com with SMTP id a640c23a62f3a-a34c5ca2537so315013866b.0
+        for <git@vger.kernel.org>; Sun, 25 Feb 2024 08:57:15 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1708880234; x=1709485034; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:references:cc:to
+         :content-language:subject:reply-to:from:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=C9/19eTeZfRr+P+kEPDZ4vlojquThTJFzMOfoL0HJUk=;
+        b=GitwB22/4sM4OxV80x55IUho22u6T/JoBhgUOI046VkHxO0+lfTro4f7s/Cz9247mH
+         JMp71C24qmtEn1b7Hh9ihwoSYhV9FTn6M+gDLoJ2x0XalVmPBNhX4B52nNyuSPbSOqkQ
+         hfnJxwWFvVf/0o/ZpsNGMfaUgPnwfuUVtINGZ39cOCCuwc1ORRIAvHH2jU5Zm69t5aeY
+         PZRq7v9Dun+rbcONRKdtqZgC56ZbA7mScCg2IxmFWxR4/dhqKPPVbOAwsfj0ApQ418rN
+         qLAQPf8lbCexmxBUqJ07KrSEQajRuipnrU4x5xtkxJyLHTb4aXaO/UXpD/IBPcK2SKZP
+         iwMQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1708880234; x=1709485034;
+        h=content-transfer-encoding:in-reply-to:references:cc:to
+         :content-language:subject:reply-to:from:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=C9/19eTeZfRr+P+kEPDZ4vlojquThTJFzMOfoL0HJUk=;
+        b=sM/HybDjCbGIvxzp4tebLA/RP7m2YebBFa27i46gQJ0a6KFbE/ku5xi+Y1SsXJYIQM
+         Rn8mT1aj/ca03IvzjzwCZG7QN7d2fxMU7uBTwke8sPu7brU7p0i8hpSvj4YeQZhgNfnf
+         5eicRCdh0TR+dKvlXI+9kvESmh2otmVqbG7ZDFOXAR259Sg+pmmjDIU6/szNE2QgnT1u
+         DMkyMTQ//+ij4kuPEQ+ZXFiNKebztLAkBdctTwy3/Bo+hPXxDdUF08VOwd02Zq0t3DUD
+         7zFXmKOK7NqHJmonsZG/VeaS+A/21zx/62rbUEnoAcMoIOylVcxJBZK3yKerBIFNbVmT
+         EEZA==
+X-Gm-Message-State: AOJu0Yz4M7cNyHDtzcXcAWoliZVYrcF/jHky8NYX23f/9WEhiY3OYg7H
+	vQIV8gdLn+RFAHlcYPU+OLwxCS+nqSJpkEVscxMOh4AQcZDYJYbS
+X-Google-Smtp-Source: AGHT+IFnu/DY1eOgcGwThbiwut6jyWltduPIBQnFjUhaiKe7LGpKyLG05nqVpSlGi4RjodJrz0h1ZA==
+X-Received: by 2002:a17:906:5910:b0:a3f:583c:b00c with SMTP id h16-20020a170906591000b00a3f583cb00cmr3193922ejq.43.1708880234295;
+        Sun, 25 Feb 2024 08:57:14 -0800 (PST)
+Received: from ?IPV6:2a0a:ef40:69d:3501:4b27:339f:196f:f7f9? ([2a0a:ef40:69d:3501:4b27:339f:196f:f7f9])
+        by smtp.gmail.com with ESMTPSA id jw4-20020a17090776a400b00a434cae86ebsm179788ejc.219.2024.02.25.08.57.13
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 25 Feb 2024 08:57:13 -0800 (PST)
+Message-ID: <62247a1c-0249-4ce1-8626-fe97b89c23dc@gmail.com>
+Date: Sun, 25 Feb 2024 16:57:09 +0000
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <288f3f4e54e98a68d72e97125b1520605c138c3c.1708658300.git.gitgitgadget@gmail.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
-X-Provags-ID: V03:K1:LjoRTJTqSRxIeh4riDFd7IHgZ4NU9z278t12isfrkiECFzdXjGp
- QvpQyuxVmlrE3KcOf2yqkQEttW5n7PwH7rTfT+7VBL+GosbMuRlChoKm2MIpnm7OfRYVPAd
- 4VboZd967u2AMOXeJ/inoVGmqUvdgN6VO/NUkCkkoPWM+iNOFiqBAOWHqa0JQL2qe6arqNu
- F3sKppT+HYF7EOO3XAOkg==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:hW5FOISHiwM=;Sg3sSYXcg6X0OJVDcFrpgy59A6V
- OAc949KeuU9g/eTnlA+krIJsX9/BFn3EctFqe4Wdsi9GJT7ef7zLbiBH5zvdU588+3do1soSC
- YMWI6rokbMobj7i8fJ/FzGhQK0N5VlKsjY5/1PZFYOXgoSDcX8f3jyl6Xi0pRj7leeubh35Kl
- VkS/ZK8Z0maRBSjn2gUXzJoj719PIzFE8vZdScEqiAtH/7ZHVlQSBdkstDzT6aFBCgatSv7JO
- Kw1yfXL5XVr5gQeGVEhakputL1Vws4JwbZ83i20f79GaMveDXwKy4zuu2cID3bgM+s2UJCTG/
- fdm6EeCrjZetxLY89ynx5t8He9zSr33lgqB4/xEXEMcAj9cb7dL+0CWgwOXn7+GPeWJCm4VFA
- 7pSxLbTDufKwnIlRhe4H/BEs9o21485PAEJJoD9n5SsYwrAMOhMwbHIoWjyTKJhS2IDUtpMQV
- PepGiV49YDweqmolxXFknhPggc2Eb6aAivMLiSds+JJuFg6XUS7J2BD5MfOHjqB3aAyZc3/dc
- VYEFD1QQAz0BxtieFKa08Xg81YcmtozZnwxZSj1vNsHgvSmKSy/RqhQ22GpsePklS/5wPCro0
- 5TqrBmM2f5l2U/EAOF6ChuArpCMFBe4YfGzm6pYBgNPVSN0hJNyX+z3l9jgjsyGK4+iHa2sGo
- QmvmBNFF7SQDGnqaZ/9cUcHZGYnYVrxMOp5uaj7PVVqJm8K4ecp2JocOD9aFVJ7VMf4zWFy41
- ML0xLWgCOmL3NwCtjw5585KXZxdoKdEd9iSOvy451SD2W4Oz39R4P8IQE22c7T9dTr3IwyuZ8
- t73UZ3qzvOzAHLej5PWHLkL0DCq/eR1G9m3kUw88vYe28=
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+From: phillip.wood123@gmail.com
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v2 4/8] sequencer: treat error reading HEAD as unborn
+ branch
+Content-Language: en-US
+To: Brian Lyles <brianmlyles@gmail.com>, phillip.wood@dunelm.org.uk
+Cc: git@vger.kernel.org, newren@gmail.com, me@ttaylorr.com, gitster@pobox.com
+References: <17b666ca6c4b7561.70b1dd9aae081c6e.203dcd72f6563036@zivdesk>
+In-Reply-To: <17b666ca6c4b7561.70b1dd9aae081c6e.203dcd72f6563036@zivdesk>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-On Fri, Feb 23, 2024 at 03:18:18AM +0000, Jeff Hostetler via GitGitGadget =
-wrote:
-> From: Jeff Hostetler <jeffhostetler@github.com>
->
-> Teach fsmonitor_refresh_callback() to handle case-insensitive
-> lookups if case-sensitive lookups fail on case-insensitive systems.
-> This can cause 'git status' to report stale status for files if there
-> are case issues/errors in the worktree.
->
-> The FSMonitor daemon sends FSEvents using the observed spelling
-> of each pathname.  On case-insensitive file systems this may be
-> different than the expected case spelling.
->
-> The existing code uses index_name_pos() to find the cache-entry for
-> the pathname in the FSEvent and clear the CE_FSMONITOR_VALID bit so
-> that the worktree scan/index refresh will revisit and revalidate the
-> path.
->
-> On a case-insensitive file system, the exact match lookup may fail
-> to find the associated cache-entry. This causes status to think that
-> the cached CE flags are correct and skip over the file.
->
-> Update event handling to optionally use the name-hash and dir-name-hash
-> if necessary.
->
-> Signed-off-by: Jeff Hostetler <jeffhostetler@github.com>
-> ---
->  fsmonitor.c | 110 ++++++++++++++++++++++++++++++++++++++++++++++++++++
->  1 file changed, 110 insertions(+)
->
-> diff --git a/fsmonitor.c b/fsmonitor.c
-> index 739ddbf7aca..ac638a61c00 100644
-> --- a/fsmonitor.c
-> +++ b/fsmonitor.c
-> @@ -5,6 +5,7 @@
->  #include "ewah/ewok.h"
->  #include "fsmonitor.h"
->  #include "fsmonitor-ipc.h"
-> +#include "name-hash.h"
->  #include "run-command.h"
->  #include "strbuf.h"
->  #include "trace2.h"
-> @@ -186,6 +187,102 @@ static int query_fsmonitor_hook(struct repository =
-*r,
->  static size_t handle_path_with_trailing_slash(
->  	struct index_state *istate, const char *name, int pos);
->
-> +/*
-> + * Use the name-hash to do a case-insensitive cache-entry lookup with
-> + * the pathname and invalidate the cache-entry.
-> + *
-> + * Returns the number of cache-entries that we invalidated.
-> + */
-> +static size_t handle_using_name_hash_icase(
-> +	struct index_state *istate, const char *name)
-> +{
-> +	struct cache_entry *ce =3D NULL;
-> +
-> +	ce =3D index_file_exists(istate, name, strlen(name), 1);
-> +	if (!ce)
-> +		return 0;
-> +
-> +	/*
-> +	 * A case-insensitive search in the name-hash using the
-> +	 * observed pathname found a cache-entry, so the observed path
-> +	 * is case-incorrect.  Invalidate the cache-entry and use the
-> +	 * correct spelling from the cache-entry to invalidate the
-> +	 * untracked-cache.  Since we now have sparse-directories in
-> +	 * the index, the observed pathname may represent a regular
-> +	 * file or a sparse-index directory.
-> +	 *
-> +	 * Note that we should not have seen FSEvents for a
-> +	 * sparse-index directory, but we handle it just in case.
-> +	 *
-> +	 * Either way, we know that there are not any cache-entries for
-> +	 * children inside the cone of the directory, so we don't need to
-> +	 * do the usual scan.
-> +	 */
-> +	trace_printf_key(&trace_fsmonitor,
-> +			 "fsmonitor_refresh_callback MAP: '%s' '%s'",
-> +			 name, ce->name);
-> +
-> +	untracked_cache_invalidate_trimmed_path(istate, ce->name, 0);
-> +
-> +	ce->ce_flags &=3D ~CE_FSMONITOR_VALID;
-> +	return 1;
-> +}
-> +
-> +/*
-> + * Use the dir-name-hash to find the correct-case spelling of the
-> + * directory.  Use the canonical spelling to invalidate all of the
-> + * cache-entries within the matching cone.
-> + *
-> + * Returns the number of cache-entries that we invalidated.
-> + */
-> +static size_t handle_using_dir_name_hash_icase(
-> +	struct index_state *istate, const char *name)
-> +{
-> +	struct strbuf canonical_path =3D STRBUF_INIT;
-> +	int pos;
-> +	size_t len =3D strlen(name);
-> +	size_t nr_in_cone;
-> +
-> +	if (name[len - 1] =3D=3D '/')
-> +		len--;
-> +
-> +	if (!index_dir_find(istate, name, len, &canonical_path))
-> +		return 0; /* name is untracked */
-> +
-> +	if (!memcmp(name, canonical_path.buf, canonical_path.len)) {
-> +		strbuf_release(&canonical_path);
-> +		/*
-> +		 * NEEDSWORK: Our caller already tried an exact match
-> +		 * and failed to find one.  They called us to do an
-> +		 * ICASE match, so we should never get an exact match,
-> +		 * so we could promote this to a BUG() here if we
-> +		 * wanted to.  It doesn't hurt anything to just return
-> +		 * 0 and go on becaus we should never get here.  Or we
-> +		 * could just get rid of the memcmp() and this "if"
-> +		 * clause completely.
-> +		 */
-> +		return 0; /* should not happen */
+Hi Brian
 
-In very very theory, there may be a race-condition,
-when a directory is renamed very fast, more than once.
-I don't think, that the "it did not match exactly, but
-now it matches" is a problem.
-Question: Does it make sense to just remove this ?
-And, may be, find out that the "corrected spelling (tm)"
-of "DIR1" is not "dir1", neither "Dir1", but, exactly, "DIR1" ?
-Would that be a problem ?
+On 23/02/2024 05:28, Brian Lyles wrote:
+> On Thu, Feb 22, 2024 at 10:34 AM <phillip.wood123@gmail.com> wrote:
+>>> +test_expect_success 'cherry-pick on unborn branch with --allow-empty' '
+>>> +	git checkout main &&
+>>
+>> I'm a bit confused by this - are we already on the branch "unborn" and
+>> so need to move away from it to delete it?
+> 
+> Yes, the previous test leaves us on that branch. In v3, I will update
+> this to instead just use `git checkout --detach`, as that does seem a
+> little less confusing than switching to some other branch that is only
+> relevant because it's not `unborn`. If there is a cleaner way to do
+> this, I'd be happy to switch to it.
 
+I think "git checkout --detach" is probably the best we can do. It would 
+be nice to be able to do "git switch -C --orphan unborn" but "-C" does 
+not work with "--orphan"
 
-> +	}
-> +
-> +	trace_printf_key(&trace_fsmonitor,
-> +			 "fsmonitor_refresh_callback MAP: '%s' '%s'",
-> +			 name, canonical_path.buf);
-> +
-> +	/*
-> +	 * The dir-name-hash only tells us the corrected spelling of
-> +	 * the prefix.  We have to use this canonical path to do a
-> +	 * lookup in the cache-entry array so that we repeat the
-> +	 * original search using the case-corrected spelling.
-> +	 */
-> +	strbuf_addch(&canonical_path, '/');
-> +	pos =3D index_name_pos(istate, canonical_path.buf,
-> +			     canonical_path.len);
-> +	nr_in_cone =3D handle_path_with_trailing_slash(
-> +		istate, canonical_path.buf, pos);
-> +	strbuf_release(&canonical_path);
-> +	return nr_in_cone;
-> +}
-> +
->  /*
->   * The daemon sent an observed pathname without a trailing slash.
->   * (This is the normal case.)  We do not know if it is a tracked or
-> @@ -319,6 +416,19 @@ static void fsmonitor_refresh_callback(struct index=
-_state *istate, char *name)
->  	else
->  		nr_in_cone =3D handle_path_without_trailing_slash(istate, name, pos);
->
-> +	/*
-> +	 * If we did not find an exact match for this pathname or any
-> +	 * cache-entries with this directory prefix and we're on a
-> +	 * case-insensitive file system, try again using the name-hash
-> +	 * and dir-name-hash.
-> +	 */
-> +	if (!nr_in_cone && ignore_case) {
-> +		nr_in_cone =3D handle_using_name_hash_icase(istate, name);
-> +		if (!nr_in_cone)
-> +			nr_in_cone =3D handle_using_dir_name_hash_icase(
-> +				istate, name);
-> +	}
-> +
->  	if (nr_in_cone)
->  		trace_printf_key(&trace_fsmonitor,
->  				 "fsmonitor_refresh_callback CNT: %d",
-> --
-> gitgitgadget
->
->
+>>> +	git branch -D unborn &&
+>>> +	git checkout --orphan unborn &&
+>>> +	git rm --cached -r . &&
+>>> +	rm -rf * &&
+>>
+>> "git switch --orphan" leaves us with an empty index and working copy
+>> without having to remove the files ourselves.
+> 
+> Thanks for pointing this out. Using git-switch(1) here instead of
+> git-checkout(1) allows us to drop the `rm -rf *` call form both the
+> existing 'cherry-pick on unborn branch' test as well as my new test. It
+> appears that the `git rm --cached -r .` call is still necessary in the
+> existing test.
+
+It looks like the previous test 'revert forbidden on dirty working tree' 
+fails to clean up properly and so "git switch" is carrying the 
+uncommitted changes across to the new orphan branch. I think that "git 
+switch --discard-changes --orphan unborn" ought to clean the worktree 
+and index but it doesn't seem to work.
+
+>>> +	git cherry-pick initial --allow-empty &&
+>>> +	git diff --quiet initial &&
+>>
+>> I'd drop "--quiet" here as it makes debugging easier if we can see the
+>> diff if the test fails.
+> 
+> This makes sense. In v3, I will update this new test as well as the
+> existing test to not use `--quiet`.
+> 
+> Combining the above suggestions, here's the version of the existing and
+> new tests that I intend to use in v3. Let me know if this isn't what you
+> had in mind!
+> 
+>      test_expect_success 'cherry-pick on unborn branch' '
+>      	git switch --orphan unborn &&
+>      	git rm --cached -r . &&
+>      	git cherry-pick initial &&
+>      	git diff initial &&
+>      	test_cmp_rev ! initial HEAD
+>      '
+>      
+>      test_expect_success 'cherry-pick on unborn branch with --allow-empty' '
+>      	git checkout --detach &&
+>      	git branch -D unborn &&
+>      	git switch --orphan unborn &&
+>      	git cherry-pick initial --allow-empty &&
+>      	git diff initial &&
+>      	test_cmp_rev ! initial HEAD
+>      '
+
+These look good
+
+Thanks
+
+Phillip
