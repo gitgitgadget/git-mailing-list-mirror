@@ -1,98 +1,74 @@
-Received: from mail-ej1-f45.google.com (mail-ej1-f45.google.com [209.85.218.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BCAC1BC27
-	for <git@vger.kernel.org>; Mon, 26 Feb 2024 09:59:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C5215339B
+	for <git@vger.kernel.org>; Mon, 26 Feb 2024 10:00:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708941561; cv=none; b=tBknCMj/8OCBHrBSmZpjCR87QI+eEVXck9bayZ1L9aV4y+WFFolLWxUOoqtusy8NvgRaMm4VcSJ8oZCQn3gutRZ1eyqLCRZYTMwl6eUd+gt4XsCBS7LEkixDxlgfPZZHgpUy+5/elSXToMzydphCiMeUbx0gfMDVdnqzFVS5gpM=
+	t=1708941614; cv=none; b=kjbmXnh5f5TgwFUBxaSdPyZHlFBglQEs70Bd0oSJgdyJkTadd+fX+Y4dwGXW3HW7wi6OHTN1iSFFGZl4yK5+wjpbG7bLcB0bfWQnxtNrXH40+Uj8K8C3Ne4GJvpgHIEp3qCDlhTqiVgn09V9/PxcEEFMsKEdBJdneymvOGuaE2c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708941561; c=relaxed/simple;
-	bh=sG2PlmoQD1xJvZaFiF9KoTACp5h0bewcxwbt8NqOsKo=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=YOIHVN31RPUXNZYVqnTI8tZ6O/Mdyokm811bLNEsOJ1a3CGYNex7Q7bVYihZKDswEY0xfl2HHAOKv4BWBqMtBvTszsj8b8bN4b/C4XOrxqWwKEHSjkkSOv9cjBsmZqMBgFhi9nU8u1AfK0Y7FfFtyVuT/dQEs5HTBf7yZUUgD44=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=apMOVPrl; arc=none smtp.client-ip=209.85.218.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="apMOVPrl"
-Received: by mail-ej1-f45.google.com with SMTP id a640c23a62f3a-a3e6f79e83dso298768266b.2
-        for <git@vger.kernel.org>; Mon, 26 Feb 2024 01:59:19 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1708941558; x=1709546358; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=vZoFZOZMUR6aUFKunR+Kv+CxH7joKxA1fUjC6AkvJQA=;
-        b=apMOVPrlj2MKBVgDNTfXle3dc4VvIvdEjZpNeCoOAkQ6brj3ouOCKFJvm8We4XGtqV
-         8Ajybi+I0WqIP8m3Samgx4UaIKVAzRwWENaJQ9bfBbwEj2wXKXrTGss1hF44StPJ2XKa
-         z1IgCsIHGdmgmPGTk98xo00zsS1PD1AnAoajCovw1LtPVtERDWYMLxjWKZrkrMPUuzQt
-         Lcc6JCea0ywChA3DUN9srMFCDahEX3nFiuzrZs8OqSsXpmDNDtkAY0QlyTRHt8CEYEzs
-         2W77BahWTVYPVV0iHjThWhBGwU8lT6XnVXS8gdJ8PAPT7TlTpxGv9Ir5SKs4CO46gw3G
-         3HNQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1708941558; x=1709546358;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=vZoFZOZMUR6aUFKunR+Kv+CxH7joKxA1fUjC6AkvJQA=;
-        b=qAYzMn7IAV6+JTxv+3cvWgrXE5nm0LpA5n+ujv6bGZmpoSeFgu4pULLekOG2cGiw1I
-         kZqe4ApQVQs8LMJKdPd28MEFoX73VbmBCGkhNEd6ioSuXclLMtQHTWdaVa9lWDrmCN+g
-         vFxs+5DO0EjAMu1ETZ4hJXVHhTumCxytte7lwu2vGHtTDWiwjRlHai8MYUzS0jHgij0M
-         2OLw+bMbJwkGaOLD1vYKK4csT7qbrrcsj3p7lO8UEgqmbaW1OXonH5WUXnJU7jFZqx4g
-         4FHhgbMTy0mGZ3VKHiXqH1yaimHOGbthxs4R7ryaNtUMkr0H6AXdSf5qBFCG5h8TKDzY
-         EM4A==
-X-Gm-Message-State: AOJu0Yzb8k8gcG+M9SaMrVx+z6i8dHXmRHPrNDlCdbjGF8CG7aC9LK1V
-	4oGs+RpRvUsb5aNBDUwSBS2SUCo5llvV6lGBajosDy10BiK/b7gKYv1fcj0/BH3x9fLRYSCQt3q
-	zC/F80Drk6EmQduRBagiakUhuZII=
-X-Google-Smtp-Source: AGHT+IHWB9EX2ysJ4S6sSpDaWzkXXmX4+YBXqkpU8vQTkuDCqbggNfxZIZuv2ng15KR/P1K5C2xlnKSwzCvdGUBhHLE=
-X-Received: by 2002:a17:906:39c1:b0:a3f:1139:13bc with SMTP id
- i1-20020a17090639c100b00a3f113913bcmr3736836eje.74.1708941557564; Mon, 26 Feb
- 2024 01:59:17 -0800 (PST)
+	s=arc-20240116; t=1708941614; c=relaxed/simple;
+	bh=m1Ly8jkmhCkTA1TfqR6t6IYeotphnzpEw7FUTR6lvzE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=qtjqRe5W+d4WoKq68QDwhh/yos9c0gLocTa3lKkJJCT5ESc+VU8cnC+2Vhx6DngtNHEWLSJm9XQHKkXV4D+aNTVFbbi4Bchx/dlglDIITZH0ag+VMMdAsJcWbZnqzFxk11uCdMjrUOXkOxbeb9JQ/TC0OGetBqPEsYK07GH0U74=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+Received: (qmail 21847 invoked by uid 109); 26 Feb 2024 10:00:11 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 26 Feb 2024 10:00:11 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 13720 invoked by uid 111); 26 Feb 2024 10:00:15 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 26 Feb 2024 05:00:15 -0500
+Authentication-Results: peff.net; auth=none
+Date: Mon, 26 Feb 2024 05:00:10 -0500
+From: Jeff King <peff@peff.net>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Patrick Steinhardt <ps@pks.im>, Yasushi SHOJI <yasushi.shoji@gmail.com>,
+	Denton Liu <liu.denton@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+Subject: [PATCH 0/3] show-branch --reflog fixes
+Message-ID: <20240226100010.GA1214708@coredump.intra.peff.net>
+References: <CAELBRWK-bZTV0qx6_34HAgpmYwy+5Zo2E0M+4B6yZJJ3CqweTw@mail.gmail.com>
+ <20240221084250.GA25385@coredump.intra.peff.net>
+ <xmqqv86hogpi.fsf@gitster.g>
+ <ZdcNtxw04MtybTWZ@tanuki>
+ <xmqq34tkiho9.fsf@gitster.g>
+ <20240222172252.GA3535450@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240224112638.72257-1-giganteeugenio2@gmail.com> <20240224112638.72257-2-giganteeugenio2@gmail.com>
-In-Reply-To: <20240224112638.72257-2-giganteeugenio2@gmail.com>
-From: Christian Couder <christian.couder@gmail.com>
-Date: Mon, 26 Feb 2024 10:59:05 +0100
-Message-ID: <CAP8UFD3qR8E0gvUQtzzkLPWv4Db45kFS4pEqHKQr5siciVJ-zQ@mail.gmail.com>
-Subject: Re: [GSoC][PATCH 1/1] add: use unsigned type for collection of bits
-To: Eugenio Gigante <giganteeugenio2@gmail.com>
-Cc: git@vger.kernel.org, sunshine@sunshineco.com, gitster@pobox.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20240222172252.GA3535450@coredump.intra.peff.net>
 
-On Sat, Feb 24, 2024 at 12:28=E2=80=AFPM Eugenio Gigante
-<giganteeugenio2@gmail.com> wrote:
->
-> The function 'refresh' in 'builtin/add.c' declares 'flags' as signed,
-> while the function 'refresh_index' defined in 'read-cache-ll.h' expects a=
-n unsigned value.
+On Thu, Feb 22, 2024 at 12:22:52PM -0500, Jeff King wrote:
 
-It's not clear from the patch that refresh() passes 'flags' as an
-argument to refresh_index(), so it might help reviewers a bit if you
-could tell that.
+> If none of this makes sense, it is because I am only now untangling what
+> is going on with 6436a20284. ;) I will try to polish my proposed patches
+> and hopefully that will explain it a bit more clearly (I may not get to
+> it until tomorrow though).
 
-> Since in this case 'flags' represents a bag of bits, whose MSB is not use=
-d in special ways,
-> this commit changes the type of 'flags' to unsigned.
+OK, so here's what I came up with. One thing I did not realize, as I
+was writing my patches directly atop 6436a20284, is that we actually
+fixed the reflog message bug back in f2463490c4 (show-branch: show
+reflog message, 2021-12-02). And several tests have been added since
+then.
 
-We prefer to use "let's change this and that" or just "change this and
-that" rather than "this commit changes this and that", see
-https://git-scm.com/docs/SubmittingPatches/#imperative-mood.
+So I gave up on trying to build on top of the source of the bug, and
+just rebased onto the tip of master. It should apply to recent "maint"
+as well, I'd think.
 
-It might help if you could add a bit more explanation about why it's a
-good thing to use an unsigned variable instead of a signed one. For
-example you could say that it documents that we are not doing anything
-funny with the MSB.
+  [1/3]: Revert "refs: allow @{n} to work with n-sized reflog"
+  [2/3]: get_oid_basic(): special-case ref@{n} for oldest reflog entry
+  [3/3]: read_ref_at(): special-case ref@{0} for an empty reflog
 
-> Signed-off-by: Eugenio Gigante <giganteeugenio2@gmail.com>
-> ---
->  builtin/add.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-
-The patch looks correct, thanks!
+ object-name.c          |  9 ++++++
+ refs.c                 | 65 +++++++++++++++++++-----------------------
+ refs.h                 | 15 +++++++++-
+ t/t3202-show-branch.sh | 49 +++++++++++++++++++++----------
+ 4 files changed, 87 insertions(+), 51 deletions(-)
