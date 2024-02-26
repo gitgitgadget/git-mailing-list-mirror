@@ -1,108 +1,178 @@
-Received: from mail-qk1-f182.google.com (mail-qk1-f182.google.com [209.85.222.182])
+Received: from mail-ed1-f44.google.com (mail-ed1-f44.google.com [209.85.208.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 839D8131E23
-	for <git@vger.kernel.org>; Mon, 26 Feb 2024 14:44:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08985605C8
+	for <git@vger.kernel.org>; Mon, 26 Feb 2024 15:11:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708958697; cv=none; b=UqBWzQNz4KMGQ56TNufIGP0AuqB8keS1n346HvmabGO/ZUw6uN6Cs8ZL234SO2Lr+5VSM+JAWGDXW8Objn+piF+nyll6APCGN25pOWQc/uZIk2RXQUmgpGOnpLBgClnMD6tqMg0s9mK3NtrdLKvSov2pFK/i+hhIUOQUHE3TH60=
+	t=1708960309; cv=none; b=VAd4JTC5nMrpMC4N1Gvm8AL7V1xEL06VVIlQQavE4S9A5Y9Jku1NZk11onCj/syfXaA4rQK1/gVBTK8a1v2TmzHGjQHqM+CdG2+dGurBSRIzWwSnkNDF1frH8sbr2HvhHB15sJUkpIJnGaa9DStHodbrMz/RqWpYLi06eokCFmc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708958697; c=relaxed/simple;
-	bh=cigvC6pfgcoPIsrTJ7NbmWdd90NmpkF65U0dK68E6/c=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=RLNI2JY3J+8Nlub77RjWk5LGfXXmlCCmprrT1KQfQ8pIhgnWhU5UwwvdokdF3y2Lw7lhhJTKvhqVgS/OjMyo4RsMivHnCKzNvp8873RL+yM0LjGwnkXfHEzBLnzKzJ9VSgCkDir42kidFlkTSQxI8qFrkJL/wCrsDsdp7UEvwLE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=none smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=TuAQVRC7; arc=none smtp.client-ip=209.85.222.182
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ttaylorr.com
+	s=arc-20240116; t=1708960309; c=relaxed/simple;
+	bh=xOQQiEH66Wf3HM4gD42ipoI612C0inHP9U3YsDmEbI0=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=vCBpP8HKxXoQq/gyEPMzkziBKhEPZ/6h66IJWB0DwVoeRVqAK0OCy0OEz4Y5jUfOeBSUCjw2oUH2eWiwAp6xavLwrsdr4a/nR5kcHxAudPAMfPlgufCRU8ZaEsvQCGXoxfmm0MoBVac6jBK1G0fI8xtakrTersqJqeOEMDZx1uk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OGK4wSAJ; arc=none smtp.client-ip=209.85.208.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="TuAQVRC7"
-Received: by mail-qk1-f182.google.com with SMTP id af79cd13be357-787b5c68253so221347885a.2
-        for <git@vger.kernel.org>; Mon, 26 Feb 2024 06:44:55 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OGK4wSAJ"
+Received: by mail-ed1-f44.google.com with SMTP id 4fb4d7f45d1cf-5656e5754ccso3940761a12.0
+        for <git@vger.kernel.org>; Mon, 26 Feb 2024 07:11:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1708958694; x=1709563494; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=brzYdzVN4L/TpNcqJdCy0dkJou2Bgo0B7riPmzO3vTI=;
-        b=TuAQVRC7Es8p4COk4hd9t1G0kLLk+GEeh3DQwDg88X9E0uyBmLGcdEZMCftSxxpeo9
-         Ir0dF4I6QkzZO6/dkDk15kh4dGfgBu+SSi69HPinbi+vInxfHF2ViQesBwILaHmdbbXH
-         LJu7xUMf/3t6qVOpLSbtqni/cx/sIyBnc0qe8GKHob02np/WDMM+A5Obut6IgDE4gtv7
-         KXdenzjgcVcFkWe60ZfLaaEJPpqU8CvtO0OnZypXc1SkvIJD4Bt1W7CJmh84tzLnWBHv
-         z/0CmnS0IK4gDuy/J5MjLHOIVCT/n6QNCSNr7JsOjEweVC0nW8XBxVVxSY6/A0/pFo56
-         p0wQ==
+        d=gmail.com; s=20230601; t=1708960305; x=1709565105; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=q2Am78WMmF4GeU/sUV4lbH1ViJHr9NndU+EYqQu0oCE=;
+        b=OGK4wSAJDGVJEDxCZyqujgurg5NCNNOMD2Ynl/7QPFejtupFxdazL+L5515GHqxq7G
+         AVYYWAhwETfzVrfm388kYRZOdwQ5J33RiDtwrYoC7mVr68BMKzs7/9vuln6talkVfvyl
+         ul70FbO0YOt6uGzaXpaG2PS//eOHa70REVoD6763F4oyj+t1JOq1GLYQVMgbded4YoZR
+         LAirTPfvCXBigXi9ROIK9t6SsBD7BWfVHsL9KxWda/J+xvKZgvDI8aKXKvMWHjv+HHZ6
+         ucmUaTyr7vzJPkD58BM0SekQEFhpoNzN3m2Wu2cNOgSKFkLNx7QrowP3hoyqKa2H/Lgi
+         nE/w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1708958694; x=1709563494;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=brzYdzVN4L/TpNcqJdCy0dkJou2Bgo0B7riPmzO3vTI=;
-        b=k2cxL4ee/EnyWyNxqTRSVcAERCtcg2vw8kdTwLFaNfTF1jrCKxXu1sSbf286/apNZv
-         XG3fM7AzgipPRSg7pIY+4WtkwFw6odI3mj+oknRe6WVEb7hR9sAjZri4vest+6x0pAw3
-         ux6Y8EwKGcTqIi++NHUh04Bi33RHVWjVdp1R8f1dHES+XwgE42XDb2ahVjSqnjR/eA1U
-         ZvaCOnpZ1nbmwdJr7UbbVLReUnVWDtd6W0H22N2pxWNIe0jDs6kyrbNr3CJtW0yWTK5b
-         uYol09FQ6blUZ0vRxDI4yowN+NRqOTKleq7vqqH5boCSYuYgT2fYxNFrdrR+MKPqjTC0
-         eYKw==
-X-Forwarded-Encrypted: i=1; AJvYcCUh3pjPyEZzakHeltMvubgH1UFMO6AM2L0npZZ1Etq+PgPGD0AlOf8QYniV2HuogrNbn1Mf6pYIoCBl36VKbGoc9wGf
-X-Gm-Message-State: AOJu0Yx/vlmXtBClwTHvn5qBHx+AYFZxDn5v96jTnY0KlT2zLmdgGDk4
-	avj82Yhoc5snBhI0m3L0chbdaFv41yzAZU7B36AFBJrUN3xAJRL4Nc7nKRLRMT6nJDSFux6harX
-	XPjE=
-X-Google-Smtp-Source: AGHT+IEjn+UrVUHH4RhU2aPDTjfkYlv7f6CHMZAp8OhQt787Og4Ru9QvxGhkWLEZ75WvrJdTixs6+A==
-X-Received: by 2002:ae9:e408:0:b0:785:812a:aed3 with SMTP id q8-20020ae9e408000000b00785812aaed3mr7151758qkc.78.1708958694394;
-        Mon, 26 Feb 2024 06:44:54 -0800 (PST)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id bj30-20020a05620a191e00b00787db370253sm391651qkb.92.2024.02.26.06.44.53
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 26 Feb 2024 06:44:53 -0800 (PST)
-Date: Mon, 26 Feb 2024 09:44:53 -0500
-From: Taylor Blau <me@ttaylorr.com>
-To: SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Jan 2024, #01; Tue, 2)
-Message-ID: <Zdyj5RsW59b5kC7m@nand.local>
-References: <xmqq5y0bcjpw.fsf@gitster.g>
- <ZZWOtnP2IHNldcy6@nand.local>
- <xmqqa5pm9tnx.fsf@gitster.g>
- <20240113183544.GA3000857@szeder.dev>
- <ZaMJU6MJ5wZxyLeM@nand.local>
- <20240113234134.GE3000857@szeder.dev>
- <ZabpBHBB1TXIXJLr@nand.local>
- <20240225225918.GB1940392@szeder.dev>
+        d=1e100.net; s=20230601; t=1708960305; x=1709565105;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=q2Am78WMmF4GeU/sUV4lbH1ViJHr9NndU+EYqQu0oCE=;
+        b=Pi8daEw43cx6Wvph4Nk9ifIGVctm3nDNro4Nh1VEMXFkNnopqzcr3NuPIZMAnRSEjq
+         KzWiZVTcpKOVLnTh86fiD9cBf7U2t3RVuz6gG5F4jGebbWR4Lcsvt4HiXOzCwqtZK7OJ
+         M9mkoVPsZ26axMAo6u3kUVHpAaVXIGlsv6H20/+mUmsZng4DLJ6R5GKwQTu4n+w74YXK
+         xApCK9VTalUwE71vwrvy2JXC5+2+m/y72SMpe8Dy2dPFwf0cob88B6Jfnm2FOiRHlqld
+         DT9nvc97wAe/2mch0jmY1ciDyv+rdPX7vcIxA26zEmZgPeeD68SQJ1jxLvsK1LurkVFw
+         sVlw==
+X-Gm-Message-State: AOJu0Yw2HwGZhejClyAHiXojvGUCpUc6MSqfOrPaD1/0hrV2TJmCcEIC
+	oh9E0i/35EcBw2mZf0bCOg5U+GNxK0Fn7IkenX3EFGrF0vhCP5KfwmAEMDVxBBQkl4P1qY5EDPm
+	C7sxYlUFg4B+sZj8eHnRCZHc4FSwU0PBtpiE=
+X-Google-Smtp-Source: AGHT+IEiFcv3SF31t3CZIpZMlcFqjXDsOYVb+GomMfqQXrM0IlMf0XmDSag//VVK7RDYX4BfbYE+2xusXz2ky9eqnEs=
+X-Received: by 2002:a17:906:5fce:b0:a3e:73c9:7acc with SMTP id
+ k14-20020a1709065fce00b00a3e73c97accmr4569891ejv.33.1708960304879; Mon, 26
+ Feb 2024 07:11:44 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20240225225918.GB1940392@szeder.dev>
+References: <20240223193257.9222-1-shyamthakkar001@gmail.com>
+In-Reply-To: <20240223193257.9222-1-shyamthakkar001@gmail.com>
+From: Christian Couder <christian.couder@gmail.com>
+Date: Mon, 26 Feb 2024 16:11:32 +0100
+Message-ID: <CAP8UFD088GRkVQWjrBFk04_HFfiEk64Saxm2toYsci36oHgkdA@mail.gmail.com>
+Subject: Re: [PATCH] unit-tests: convert t/helper/test-oid-array.c to unit-tests
+To: Ghanshyam Thakkar <shyamthakkar001@gmail.com>
+Cc: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Hi SZEDER,
+On Fri, Feb 23, 2024 at 8:33=E2=80=AFPM Ghanshyam Thakkar
+<shyamthakkar001@gmail.com> wrote:
+>
+> Migrate t/helper/test-oid-array.c and t/t0064-oid-array.sh to the
+> recently added unit testing framework. This would improve runtime
+> performance and provide better debugging via displaying array content,
+> index at which the test failed etc. directly to stdout.
 
-On Sun, Feb 25, 2024 at 11:59:18PM +0100, SZEDER Gábor wrote:
-> It's great that we finally have test cases for different Bloom filter
-> settings in different commit-graph layers, including a test case that
-> merges those layers, but that test case doesn't check that the
-> resulting merged commit-graph file contains the right settings.  And
-> there is still no test case that merges layers with different Bloom
-> filter versions.
+It might not be a good idea to start working on a GSoC project we
+propose (Move existing tests to a unit testing framework) right now.
+You can work on it as part of your GSoC application, to show an
+example of how you would do it, and we might review that as part of
+reviewing your application. But for such a project if many candidates
+started working on it and sent patches to the mailing list before they
+get selected, then the project might be nearly finished before the
+GSoC even starts.
 
-Thanks for reviewing.
+So I think it would be better to work on other things instead, like
+perhaps reviewing other people's work or working on other bug fixes or
+features. Anyway now that this is on the mailing list, I might as well
+review it as it could help with your application. But please consider
+working on other things.
 
-I'm happy to produce another round of this series that would address
-what you've added here.
+> There is only one change in the new testing approach. In the previous
+> testing method, a new repo gets initialized for the test according to
+> GIT_TEST_DEFAULT_HASH algorithm.
 
-Are there any other specific things you'd like to see addressed in a
-subsequent round? I want to make sure that I'm addressing all of your
-concerns, and avoid the need for yet another round of this series that
-addresses things that I could have done in the first place.
+It looks like this happens in "t/test-lib-functions.sh", right?
+Telling a bit more about how and where that happens might help
+reviewers who would like to take a look.
 
-> I think adding these would be the bare minimum...  and would need more
-> for due diligence.
+> In unit testing however, we do not
+> need to initialize the repo. We can set the length of the hexadecimal
+> strbuf according to the algorithm used directly.
 
-As I said above, I'm happy to add these things in, but please do let me
-know if there are others.
+So is your patch doing that or not? It might be better to be explicit.
+Also if 'strbuf's are used, then is it really worth it to set their
+length in advance, instead of just letting them grow to the right
+length as we add hex to them?
 
-Thanks,
-Taylor
+> Signed-off-by: Ghanshyam Thakkar <shyamthakkar001@gmail.com>
+> ---
+> [RFC]: I recently saw a series by Eric W. Biederman [1] which enables
+> the use of oid's with different hash algorithms into the same
+> oid_array safely. However, there were no tests added for this. So, I
+> am wondering if we should have a input format which allows us to
+> specify hash algo for each oid with its hex value. i.e. "sha1:55" or
+> "sha256:55", instead of just "55" and relying on GIT_TEST_DEFAULT_HASH
+> for algo. So far, I tried to imitate the existing tests but I suppose
+> this may be useful in the future if that series gets merged.
+
+The fact that there is a series touching the same area might also hint
+that it might not be the right time to work on this.
+
+> diff --git a/t/unit-tests/t-oid-array.c b/t/unit-tests/t-oid-array.c
+> new file mode 100644
+> index 0000000000..b4f43c025d
+> --- /dev/null
+> +++ b/t/unit-tests/t-oid-array.c
+> @@ -0,0 +1,222 @@
+> +#include "test-lib.h"
+> +#include "hex.h"
+> +#include "oid-array.h"
+> +#include "strbuf.h"
+> +
+> +#define INPUT "88", "44", "aa", "55"
+> +#define INPUT_DUP \
+> +       "88", "44", "aa", "55", "88", "44", "aa", "55", "88", "44", "aa",=
+ "55"
+
+Can you reuse INPUT in INPUT_DUP?
+
+> +#define INPUT_ONLY_DUP "55", "55"
+> +#define ENUMERATION_RESULT_SORTED "44", "55", "88", "aa"
+> +
+> +/*
+> + * allocates the memory based on the hash algorithm used and sets the le=
+ngth to
+> + * it.
+> + */
+> +static void hex_strbuf_init(struct strbuf *hex)
+> +{
+> +       static int sz =3D -1;
+> +
+> +       if (sz =3D=3D -1) {
+> +               char *algo_env =3D getenv("GIT_TEST_DEFAULT_HASH");
+> +               if (algo_env && !strcmp(algo_env, "sha256"))
+> +                       sz =3D GIT_SHA256_HEXSZ;
+> +               else
+> +                       sz =3D GIT_SHA1_HEXSZ;
+> +       }
+> +
+> +       strbuf_init(hex, sz);
+> +       strbuf_setlen(hex, sz);
+> +}
+
+A strbuf can grow when we add stuff to it. We don't need to know its
+size in advance. So I am not sure this function is actually useful.
+
+> +/* fills the hex strbuf with alternating characters from 'c' */
+> +static void fill_hex_strbuf(struct strbuf *hex, char *c)
+> +{
+> +       size_t i;
+> +       for (i =3D 0; i < hex->len; i++)
+> +               hex->buf[i] =3D (i & 1) ? c[1] : c[0];
+
+There is strbuf_addch() to add a single char to a strbuf, or
+strbuf_add() and strbuf_addstr() to add many chars at once.
+
+> +}
