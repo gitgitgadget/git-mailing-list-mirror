@@ -1,88 +1,73 @@
-Received: from siwi.pair.com (siwi.pair.com [209.68.5.199])
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7133130E3A
-	for <git@vger.kernel.org>; Mon, 26 Feb 2024 20:47:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.68.5.199
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EB23130E3E
+	for <git@vger.kernel.org>; Mon, 26 Feb 2024 21:18:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708980466; cv=none; b=bjtPA+4vItYyqn/jwJor74ESXBIx2An6kgPOWC+PjK3aVB0hYHdy4bfIfNngVnybe+g5yjoFhQHIyupbb0Vng0A/E3vZWn06kSAKtgLABMoCvCodcA49p1py57R/oAr5WPMC52O9gHSVdUKxtzhJ8+NuhA7OpoJUevdP7DC/+rU=
+	t=1708982304; cv=none; b=Pit1vt8SPpZG/Y7D34Y58P112F3WXL7LPM5jQFzc8vPdlYdNeyE9T4Hgcgea2XY346UxdSkxLZoYvCKbLRrn9AOoFMO71BIitJlzBTPqq1Hn6D3Na41XgNRbizntlexIqdzqG/iUBtjymGfU6k0l7FJYSMse6/rHIfl2MKDf8RA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708980466; c=relaxed/simple;
-	bh=gCIvTA7ig6c3DMdJycI0cWdo8oj29/w3Rx+MXnEeEFQ=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=RwgUKiyTzuUWBDjgtJZxoRBvX31JfU2SSj31CwU5DNQijbbNK+s04v/EMu/94kXQdMtY0FoCj5mKNM8Bxlh8qe6v+1FhWO/VBeecjW31/Fte2JQ9GnSLvhyt9iwJKyiEnlFDS1I678oYeddgD9e8gTUx+LITAYeX0wFPRr/RsFM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=jeffhostetler.com; spf=fail smtp.mailfrom=jeffhostetler.com; arc=none smtp.client-ip=209.68.5.199
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=jeffhostetler.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=jeffhostetler.com
-Received: from siwi.pair.com (localhost [127.0.0.1])
-	by siwi.pair.com (Postfix) with ESMTP id CEBBFCA1276;
-	Mon, 26 Feb 2024 15:47:42 -0500 (EST)
-Received: from [IPV6:2600:1700:840:e768:b846:2f3e:cac1:b0eb] (unknown [IPv6:2600:1700:840:e768:b846:2f3e:cac1:b0eb])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits))
+	s=arc-20240116; t=1708982304; c=relaxed/simple;
+	bh=0WFfV2nl6FZ6ZYS53LXERiRpSMAQwHe3PPsmX7G7pCA=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=bQGUkpNx6H2GRxRW3+Yq/0ODhZkuxqvIMKT1eIBehXkWJCKy+Z5KE84Qz/UxH1cGw1Td+NUOY4utCBFsZYnV7lAgJtQhCgcqp5CYh2lghX/AWYQjGwPmFtqi5Zg3Pf/HkDn/7pEMf88xIsoFjcFSYDVg6Me7U2MsuGLrSjHHiis=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=AJmv9Rg3; arc=none smtp.client-ip=64.147.108.71
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="AJmv9Rg3"
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id DF9351C8B31;
+	Mon, 26 Feb 2024 16:18:20 -0500 (EST)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=0WFfV2nl6FZ6ZYS53LXERiRpSMAQwHe3PPsmX7
+	G7pCA=; b=AJmv9Rg30muLM3xydawC6fBr7QS2fWVTf5mcDL4vbwrc0rurF7LSPc
+	CM2ueAFyajQsgDJhg/Qc7cKHhJSkHZ2QmQvnITN+91Y7zf6kWjRxNpadV7TSlrQ6
+	k+KBYNpHW18dBLvnjPRCF0TCscxUTwKNznt4pMsf99mD1phSsSFFA=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id D6A781C8B2F;
+	Mon, 26 Feb 2024 16:18:20 -0500 (EST)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.176.30])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by siwi.pair.com (Postfix) with ESMTPSA id 8A45CCC83BB;
-	Mon, 26 Feb 2024 15:47:42 -0500 (EST)
-Message-ID: <aaf53a10-2965-0284-120d-c59685c5090c@jeffhostetler.com>
-Date: Mon, 26 Feb 2024 15:47:41 -0500
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 45E6D1C8B2E;
+	Mon, 26 Feb 2024 16:18:20 -0500 (EST)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Jeff Hostetler <git@jeffhostetler.com>
+Cc: Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>,
+  git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>,  Jeff Hostetler
+ <jeffhostetler@github.com>
+Subject: Re: [PATCH v2 14/16] fsmonitor: support case-insensitive events
+In-Reply-To: <b6cfe94a-adcf-04fa-2ed8-dfd4f0fdc77a@jeffhostetler.com> (Jeff
+	Hostetler's message of "Mon, 26 Feb 2024 15:41:08 -0500")
+References: <pull.1662.git.1707857541.gitgitgadget@gmail.com>
+	<pull.1662.v2.git.1708658300.gitgitgadget@gmail.com>
+	<288f3f4e54e98a68d72e97125b1520605c138c3c.1708658300.git.gitgitgadget@gmail.com>
+	<xmqqjzmvt5d3.fsf@gitster.g>
+	<b6cfe94a-adcf-04fa-2ed8-dfd4f0fdc77a@jeffhostetler.com>
+Date: Mon, 26 Feb 2024 13:18:19 -0800
+Message-ID: <xmqqy1b6kjqc.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
- Gecko/20100101 Thunderbird/102.15.1
-Subject: Re: [PATCH v2 14/16] fsmonitor: support case-insensitive events
-Content-Language: en-US
-To: =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>,
- Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>,
- Jeff Hostetler <jeffhostetler@github.com>
-References: <pull.1662.git.1707857541.gitgitgadget@gmail.com>
- <pull.1662.v2.git.1708658300.gitgitgadget@gmail.com>
- <288f3f4e54e98a68d72e97125b1520605c138c3c.1708658300.git.gitgitgadget@gmail.com>
- <20240225131023.GC1952@tb-raspi4>
-From: Jeff Hostetler <git@jeffhostetler.com>
-In-Reply-To: <20240225131023.GC1952@tb-raspi4>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: mailmunge 3.11 on 209.68.5.199
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 90E0D49E-D4EC-11EE-B001-25B3960A682E-77302942!pb-smtp2.pobox.com
 
+Jeff Hostetler <git@jeffhostetler.com> writes:
 
+> I'm not happy about this (and no, I haven't had time to measure the
+> perf hit we'll take), but right now I'm just worried about the
+> correctness -- I've had several reports of stale/incomplete status
+> when IDE tools change file/directory case in unexpected ways....
 
-On 2/25/24 8:10 AM, Torsten Bögershausen wrote:
->> +	if (!memcmp(name, canonical_path.buf, canonical_path.len)) {
->> +		strbuf_release(&canonical_path);
->> +		/*
->> +		 * NEEDSWORK: Our caller already tried an exact match
->> +		 * and failed to find one.  They called us to do an
->> +		 * ICASE match, so we should never get an exact match,
->> +		 * so we could promote this to a BUG() here if we
->> +		 * wanted to.  It doesn't hurt anything to just return
->> +		 * 0 and go on becaus we should never get here.  Or we
->> +		 * could just get rid of the memcmp() and this "if"
->> +		 * clause completely.
->> +		 */
->> +		return 0; /* should not happen */
-> 
-> In very very theory, there may be a race-condition,
-> when a directory is renamed very fast, more than once.
-> I don't think, that the "it did not match exactly, but
-> now it matches" is a problem.
-> Question: Does it make sense to just remove this ?
-> And, may be, find out that the "corrected spelling (tm)"
-> of "DIR1" is not "dir1", neither "Dir1", but, exactly, "DIR1" ?
-> Would that be a problem ?
-> 
-
-I just meant that the dir-name-hash that we computed when
-we loaded the index found an exact-case match here that
-wasn't found when called index_name_pos() and the negative
-"pos" didn't point to this exact-case prefix.  This should
-not happen.
-
-Yeah I didn't think it should be a fatal condition, but
-since it shouldn't happen, we can make it a BUG() and see.
-
-Jeff
+Of course, it is a good discipline, and I fully support the
+direction, to focus on the correctness first.
