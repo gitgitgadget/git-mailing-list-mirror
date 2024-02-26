@@ -1,150 +1,98 @@
-Received: from mout.gmx.net (mout.gmx.net [212.227.15.15])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f45.google.com (mail-ej1-f45.google.com [209.85.218.45])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8183C1CAAF
-	for <git@vger.kernel.org>; Mon, 26 Feb 2024 09:34:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.15
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BCAC1BC27
+	for <git@vger.kernel.org>; Mon, 26 Feb 2024 09:59:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708940098; cv=none; b=J218drQX4My3DYoxK2Bs0Av0t6Mz4spgjukgBMp5imgwOyAnaSLvFEJ9fxNGQGuCi5eDSrpz7m1ynBek3xw3X5PSlkKGApFfPAWra/BNCCG9c8lIn0RUgnLCz1k1FRoZI8QWmChjkJstxR8yiAF5gZgTu0c21lqYQWL0GayMD4s=
+	t=1708941561; cv=none; b=tBknCMj/8OCBHrBSmZpjCR87QI+eEVXck9bayZ1L9aV4y+WFFolLWxUOoqtusy8NvgRaMm4VcSJ8oZCQn3gutRZ1eyqLCRZYTMwl6eUd+gt4XsCBS7LEkixDxlgfPZZHgpUy+5/elSXToMzydphCiMeUbx0gfMDVdnqzFVS5gpM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708940098; c=relaxed/simple;
-	bh=0+/QMiUQEjnKKc5br4yOllxQkl9DcjsPIKpt/c/YvHo=;
-	h=Date:From:To:cc:Subject:In-Reply-To:Message-ID:References:
-	 MIME-Version:Content-Type; b=ILUZ9twGMaqx4my7dkSK9De1A/jxFEyQXQOi5IYrfah2ygtohc/2PkcUypcHSqcoTpthQ73pn82+KX/we5SEQ6+IG6LJgNuAeyMVWWXwzFJU4PVaHg7e7w6rSPrJreqNhOzxLsAsW3eCTKXyLta4vhzfq+p6uAS2UAukZdWwE+Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b=mKsu5fiy; arc=none smtp.client-ip=212.227.15.15
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
+	s=arc-20240116; t=1708941561; c=relaxed/simple;
+	bh=sG2PlmoQD1xJvZaFiF9KoTACp5h0bewcxwbt8NqOsKo=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=YOIHVN31RPUXNZYVqnTI8tZ6O/Mdyokm811bLNEsOJ1a3CGYNex7Q7bVYihZKDswEY0xfl2HHAOKv4BWBqMtBvTszsj8b8bN4b/C4XOrxqWwKEHSjkkSOv9cjBsmZqMBgFhi9nU8u1AfK0Y7FfFtyVuT/dQEs5HTBf7yZUUgD44=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=apMOVPrl; arc=none smtp.client-ip=209.85.218.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b="mKsu5fiy"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.de; s=s31663417;
-	t=1708940086; x=1709544886; i=johannes.schindelin@gmx.de;
-	bh=0+/QMiUQEjnKKc5br4yOllxQkl9DcjsPIKpt/c/YvHo=;
-	h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:
-	 References;
-	b=mKsu5fiyVK3Q8TRU3yF56KS4QafGIeUrf7w8SOqfjiAUCpsDEmkjZMBzXJCMuFKt
-	 UTmvmjN0aXYnNqgMeTs5BwBLeNHzwP/nnYPfEcx/5T3XQQWJQHPbUFnzkiXWidmU1
-	 YQzqvJQT7YkIkVhwQCtt0D4Pm7hdcQ2Ka58RTrueWrp9YhTwFgm6a/jmFSQP85JPJ
-	 BtG/s3O0qnJkhaAiZbwJuNx4FAhXakkQx1Rr+/4kvHcs6WnLFZfIHK7p/hBuYHx7x
-	 o4UMeA4/LZCBXVLFu2BVfUIdc4h6TmNI5LnZsE7TkpPFvTsPIAyR8MQ9cJiYpPnG9
-	 str9fqad+BnGQ/mikw==
-X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from [172.23.242.68] ([213.196.214.170]) by mail.gmx.net (mrgmx005
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1Mzhj9-1qjfR12mjx-00vhtk; Mon, 26
- Feb 2024 10:34:46 +0100
-Date: Mon, 26 Feb 2024 10:34:44 +0100 (CET)
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Junio C Hamano <gitster@pobox.com>
-cc: Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>, 
-    git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>
-Subject: Re: [PATCH v2 03/11] Start reporting missing commits in
- `repo_in_merge_bases_many()`
-In-Reply-To: <xmqqle7asnu9.fsf@gitster.g>
-Message-ID: <c27015da-0867-f417-4cd6-f4eaad3b66a9@gmx.de>
-References: <pull.1657.git.1707813709.gitgitgadget@gmail.com> <pull.1657.v2.git.1708608110.gitgitgadget@gmail.com> <4dd214f91d4783f29b03908cc0034156253889a7.1708608110.git.gitgitgadget@gmail.com> <xmqqle7asnu9.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="apMOVPrl"
+Received: by mail-ej1-f45.google.com with SMTP id a640c23a62f3a-a3e6f79e83dso298768266b.2
+        for <git@vger.kernel.org>; Mon, 26 Feb 2024 01:59:19 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1708941558; x=1709546358; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=vZoFZOZMUR6aUFKunR+Kv+CxH7joKxA1fUjC6AkvJQA=;
+        b=apMOVPrlj2MKBVgDNTfXle3dc4VvIvdEjZpNeCoOAkQ6brj3ouOCKFJvm8We4XGtqV
+         8Ajybi+I0WqIP8m3Samgx4UaIKVAzRwWENaJQ9bfBbwEj2wXKXrTGss1hF44StPJ2XKa
+         z1IgCsIHGdmgmPGTk98xo00zsS1PD1AnAoajCovw1LtPVtERDWYMLxjWKZrkrMPUuzQt
+         Lcc6JCea0ywChA3DUN9srMFCDahEX3nFiuzrZs8OqSsXpmDNDtkAY0QlyTRHt8CEYEzs
+         2W77BahWTVYPVV0iHjThWhBGwU8lT6XnVXS8gdJ8PAPT7TlTpxGv9Ir5SKs4CO46gw3G
+         3HNQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1708941558; x=1709546358;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=vZoFZOZMUR6aUFKunR+Kv+CxH7joKxA1fUjC6AkvJQA=;
+        b=qAYzMn7IAV6+JTxv+3cvWgrXE5nm0LpA5n+ujv6bGZmpoSeFgu4pULLekOG2cGiw1I
+         kZqe4ApQVQs8LMJKdPd28MEFoX73VbmBCGkhNEd6ioSuXclLMtQHTWdaVa9lWDrmCN+g
+         vFxs+5DO0EjAMu1ETZ4hJXVHhTumCxytte7lwu2vGHtTDWiwjRlHai8MYUzS0jHgij0M
+         2OLw+bMbJwkGaOLD1vYKK4csT7qbrrcsj3p7lO8UEgqmbaW1OXonH5WUXnJU7jFZqx4g
+         4FHhgbMTy0mGZ3VKHiXqH1yaimHOGbthxs4R7ryaNtUMkr0H6AXdSf5qBFCG5h8TKDzY
+         EM4A==
+X-Gm-Message-State: AOJu0Yzb8k8gcG+M9SaMrVx+z6i8dHXmRHPrNDlCdbjGF8CG7aC9LK1V
+	4oGs+RpRvUsb5aNBDUwSBS2SUCo5llvV6lGBajosDy10BiK/b7gKYv1fcj0/BH3x9fLRYSCQt3q
+	zC/F80Drk6EmQduRBagiakUhuZII=
+X-Google-Smtp-Source: AGHT+IHWB9EX2ysJ4S6sSpDaWzkXXmX4+YBXqkpU8vQTkuDCqbggNfxZIZuv2ng15KR/P1K5C2xlnKSwzCvdGUBhHLE=
+X-Received: by 2002:a17:906:39c1:b0:a3f:1139:13bc with SMTP id
+ i1-20020a17090639c100b00a3f113913bcmr3736836eje.74.1708941557564; Mon, 26 Feb
+ 2024 01:59:17 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:s3RZc22fPk6/FkKAFaLUfTOcRQfiQ30N3TEhS/Xxpk/VYklP81L
- 1Gti0IOZAprqUP/Lordtxx3HW38sEeNvsrSVg2Jm3u+V88IpC4zWpxs32c82D2lwZenC2J3
- XLBXrVTZKH4PQIHS3hGPpgzNuZoUgs8KWVAmmUokw2aWpXiShTZIZYN1O/uoU0TvE4fXmdD
- 5gCSwE3Qpe0kvAhgD2Oxg==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:I/MgPS2qPOE=;LVMXdPzRViuiajQXaQYv9yGq7gf
- GW3eOdSB7zL8YAoEy1zsgpZ8ZvFrYi746B0MQdwAQ2+PW2xhR2D1cQzOuEtxANmV28DQBd9IF
- CWk/T1IOAsmL8soQoak4Mw4+hi8PQMe02p0nLTW2+y1RdVAjuZuXEzh0ifL8obVkuCUp9cAk3
- jLbmyvM+VQ7fQaC9ZvcSegXUaaeQjBBDBiTm6ZdY2KRaDSquqc9OzhfKTZmEXIFUFzBAgcHs8
- 6A26a55T/Tj8Vo4vYLeAHD/YBzoK1EJF3ERUD0P3laEXFDP8XVUp1ExY0OkYO38Bn3KGZAKTk
- U3f/6hZFm2c9wadiSnDkJ6Obx1mC11p1HNmKiiTrgG22CDEVGOZ6ejlAbCppGrD2450pVk59t
- LKucwF9z819hVIeHxDAwT2lF+7QeNpePUY1/Tny+fgYOTuRO/W+1aHIjziviTm+l33bkA/RXU
- jDzkQc9NfaK+F6/dbwhAFS9zoI99VPrL1zURX9HntqAJwMIf9lGehON8PqBWjv46Jq4Dpct5U
- mcouW/Ry6oK1GppGijSG7Nt3YR9EnlB5i4cq5VudD/YiavklTqP3qk9gxpAOZn9S1+3DIoMvb
- iIFzKxQ/CoZPeCjijsW3HBCeayQFJxaD3HjFJyEBBvJP+0C1cKseGEJAo7yRO+Fmfbi5T1OUR
- YC6IlnAgZoVoivTHEUg8vysvbjc0IKITPuTHYvaChNzipeSaMRKJ8H7B/EXKmMiQr2F8/7vyL
- PDoH8shOuaTzocqGrb0HcuoQZNF44sYCD3MjVZFvxEbKlD5F6xHEaQZD/96khCnL2YTaGLJCp
- /mD9eygcarRY2p/qTEyD0tIZSyfU1l5CbST+tj5VqBXEY=
+References: <20240224112638.72257-1-giganteeugenio2@gmail.com> <20240224112638.72257-2-giganteeugenio2@gmail.com>
+In-Reply-To: <20240224112638.72257-2-giganteeugenio2@gmail.com>
+From: Christian Couder <christian.couder@gmail.com>
+Date: Mon, 26 Feb 2024 10:59:05 +0100
+Message-ID: <CAP8UFD3qR8E0gvUQtzzkLPWv4Db45kFS4pEqHKQr5siciVJ-zQ@mail.gmail.com>
+Subject: Re: [GSoC][PATCH 1/1] add: use unsigned type for collection of bits
+To: Eugenio Gigante <giganteeugenio2@gmail.com>
+Cc: git@vger.kernel.org, sunshine@sunshineco.com, gitster@pobox.com
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-Hi Junio,
-
-On Fri, 23 Feb 2024, Junio C Hamano wrote:
-
-> "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-> writes:
+On Sat, Feb 24, 2024 at 12:28=E2=80=AFPM Eugenio Gigante
+<giganteeugenio2@gmail.com> wrote:
 >
-> > From: Johannes Schindelin <johannes.schindelin@gmx.de>
-> >
-> > Some functions in Git's source code follow the convention that returni=
-ng
-> > a negative value indicates a fatal error, e.g. repository corruption.
-> >
-> > Let's use this convention in `repo_in_merge_bases()` to report when on=
-e
-> > of the specified commits is missing (i.e. when `repo_parse_commit()`
-> > reports an error).
-> >
-> > Also adjust the callers of `repo_in_merge_bases()` to handle such
-> > negative return values.
->
-> All of the above makes sense, but I have to wonder if this hunk
-> should rather want to be part of the previous step:
->
-> > @@ -486,10 +488,10 @@ int repo_in_merge_bases_many(struct repository *=
-r, struct commit *commit,
-> >  	timestamp_t generation, max_generation =3D GENERATION_NUMBER_ZERO;
-> >
-> >  	if (repo_parse_commit(r, commit))
-> > -		return ret;
-> > +		return ignore_missing_commits ? 0 : -1;
-> >  	for (i =3D 0; i < nr_reference; i++) {
-> >  		if (repo_parse_commit(r, reference[i]))
-> > -			return ret;
-> > +			return ignore_missing_commits ? 0 : -1;
-> >
-> >  		generation =3D commit_graph_generation(reference[i]);
-> >  		if (generation > max_generation)
->
-> as this hunk is not about many callers of repo_in_merge_bases() that
-> ignored the return values, which are all fixed by this patch, but
-> about returning that error signal back to the caller.
->
-> Yes, I know you wrote in [02/11] that it does not change the
-> behaviour, and if you move this hunk to [02/11], it might change the
-> behaviour, but that is changing for the better.
+> The function 'refresh' in 'builtin/add.c' declares 'flags' as signed,
+> while the function 'refresh_index' defined in 'read-cache-ll.h' expects a=
+n unsigned value.
 
-I wanted 2/11 to be trivial to review, and therefore specifically wanted
-behavior not to change just yet: At least when I review patches, this
-information helps me assess the correctness of the patch because I have a
-different pair of glasses on, so to say.
+It's not clear from the patch that refresh() passes 'flags' as an
+argument to refresh_index(), so it might help reviewers a bit if you
+could tell that.
 
-> Besides, adding a parameter "ignore_missing" to the function only to be
-> ignored until the next patch feels rather incomplete.
+> Since in this case 'flags' represents a bag of bits, whose MSB is not use=
+d in special ways,
+> this commit changes the type of 'flags' to unsigned.
 
-By that reasoning, the entire patch series should be squashed into a
-single patch, as the missing commits will only be handled properly if all
-11 patches are applied ;-)
+We prefer to use "let's change this and that" or just "change this and
+that" rather than "this commit changes this and that", see
+https://git-scm.com/docs/SubmittingPatches/#imperative-mood.
 
-Seriously again, I designed this patch series in a way where it builds up
-incrementally, adding preparations here and there, in as easily reviewable
-a shape as I could, until the final patch wraps everything in a bow.
+It might help if you could add a bit more explanation about why it's a
+good thing to use an unsigned variable instead of a signed one. For
+example you could say that it documents that we are not doing anything
+funny with the MSB.
 
-I did this mostly to be able to convince myself of the correctness of the
-patches because I sense such a vast opportunity for bugs to creep in.
+> Signed-off-by: Eugenio Gigante <giganteeugenio2@gmail.com>
+> ---
+>  builtin/add.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 
-> The other changes in this patch about its primary theme, fixing the
-> callers that used to ignore return values of repo_in_merge_bases(),
-> all looked sensible.  This hunk somehow stood out like a sore thumb
-> to me.
-
-I have an idea. How about pulling out this hunk into its own patch? And
-insert it between 2/11 and 3/11? That would probably make most sense, as
-it would make the patch series still (relatively) easy to review, and it
-would not conflate the purpose of this hunk with the rest of 3/11's hunks.
-
-What do you think?
-
-Ciao,
-Johannes
+The patch looks correct, thanks!
