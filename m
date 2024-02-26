@@ -1,93 +1,117 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ua1-f53.google.com (mail-ua1-f53.google.com [209.85.222.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAD431BC22
-	for <git@vger.kernel.org>; Mon, 26 Feb 2024 07:02:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AADD51BDCF
+	for <git@vger.kernel.org>; Mon, 26 Feb 2024 07:03:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708930981; cv=none; b=No3GgbCJZTk/bxMn32KIZYyerK1qA5lMiNGvyDjosO/j6/w8RdfCGA2P41qLne43GCesr5UFbduR4z3WURASWMJEGcJkwAE/ZKZUonXdGz1exdPb0eHDl6gjyC5a2RJYfIIa+v6ORh5WiWeZgdTpwnFLLGAsCiUzaurVu+z74W0=
+	t=1708930994; cv=none; b=OETdFg41VM9P3U7+1aXA2sScK/PKOn5SwP7uxiC9RYEx7pnMdQ0pqxXH7m9yvkIeGi1mHl8J9DhqIUN2VEnFZ/fI0/OwehpNqXrlc0AxGKPuDcy0dKjlDYZg9/h6ujFCcGFPa+smR2ZEtf1wLZV/JXrdtkM7k90bZEwWGwjrjLc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708930981; c=relaxed/simple;
-	bh=kTdi25PvIdHR1YbeeCEbTTqhbOdWx8lHtFMb5Qs+CUU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=iTjU+lgQGrGl2imom7z4B8uCDhyLOIQ7KF9EyAZJH5GDF7Pw+8XzgJVR7nXth1MyNxDnu4dbjMCnri5sWUDFojFQXkrGvU4vXL3IcVhJZS3ynMjJTLCCtS5xP4/ypQnXyrJJPYqJN1G0sDVqN0AAsgvUZCLwZZiyWXhHEpam4ps=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
-Received: (qmail 19222 invoked by uid 109); 26 Feb 2024 07:02:57 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 26 Feb 2024 07:02:57 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 32706 invoked by uid 111); 26 Feb 2024 07:03:00 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 26 Feb 2024 02:03:00 -0500
-Authentication-Results: peff.net; auth=none
-Date: Mon, 26 Feb 2024 02:02:55 -0500
-From: Jeff King <peff@peff.net>
-To: "Chen, Boyang" <Boyang.Chen@amd.com>
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: CR position changed in exported patch file subject section
-Message-ID: <20240226070255.GA780982@coredump.intra.peff.net>
-References: <IA0PR12MB822711B89738EDA0E2F25150EF5A2@IA0PR12MB8227.namprd12.prod.outlook.com>
- <IA0PR12MB822712F1B3E5205711493D55EF5A2@IA0PR12MB8227.namprd12.prod.outlook.com>
+	s=arc-20240116; t=1708930994; c=relaxed/simple;
+	bh=/LJy9HmBbqprCh+f1CIi/Vhi9IM5NIRiH5zrCLD+G7Q=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=LbWlO9eucaWeDlEFRF1s34o8ZuOqgZIEvmWcimi0skoAbm5t1CRypVDZ4/3M+F8ZVrCTuWitGLqUu1GxfceEoMXqlK2pcufM3r3jgXATQ4ncmAgOrVo7jxBMjgLoi2Aa/lZhRlgMfYbc9+tZ04g8+bXttOgd07Cn+wt76fvT/NU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XB+Z0vTm; arc=none smtp.client-ip=209.85.222.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XB+Z0vTm"
+Received: by mail-ua1-f53.google.com with SMTP id a1e0cc1a2514c-7ce603b9051so1923744241.2
+        for <git@vger.kernel.org>; Sun, 25 Feb 2024 23:03:12 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1708930991; x=1709535791; darn=vger.kernel.org;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=6F0uDijYnPqaglB1dDOc2H0EPkRK5ChV40X2q6hCJhw=;
+        b=XB+Z0vTmQ82Fb7tuvBmxQUQPpLnQpzvc7BDovYbgXTSvEXbzAZXTAKPSK/ZiRkaAIy
+         yhKZlzj290wSWi20E7/FRsjZGLY5UhAOW8C1TjQADvkMeK23U5EywwBNyYTPvZ00oFQL
+         JZp5Iek/ayRbPUi8ABPKU2oG09QMsL/tBx1TJ2mYNz9GYOLD6LQJTm2/UL+LVSkQ9VlH
+         uIUbL7MYQB8r1T1Lt4sU7C+JutJ3fBKUw7YxcAdBcHWy8+PQnS37n/5UoO/sI9z4wLPO
+         ScpG6Mn0MiNri0vjs9MDmEWkQk2iWt4Z6kSBz7mgSiXHjHmPKUCL4YkpVl6jmJjZDTZJ
+         rDiA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1708930991; x=1709535791;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=6F0uDijYnPqaglB1dDOc2H0EPkRK5ChV40X2q6hCJhw=;
+        b=gC7bbwPfKEdKdbOj5/iYM9z2pfvWMTcRpzEQT8hAO+Mdkv7+r8tfxz+N2ufNcglMjL
+         g5lclle/aBlxoKZ9jfuE8Cww2kezFvQQ2FZB+Kfd+dBF4hgiq72djMKhgolJMOqHjxh1
+         Cpulnth7mwh0zNRMhG1nXb6Sm+JliuNd35P9G/iBaPBLNl7J7OJeYu9oh18k6lY0J+F/
+         /99u66QDi9kiT8aLC2vl8g/+oVTP7e2eTmpCiACRYKJRCeZ+Qny6IIV4y8VjAFAqryhD
+         8xo6d0Nt7dhn+d1Y1oZiGbZijk2wryQvVCTF9e5u/7Ny4/FVnvaOSijupeOPri5yXNC9
+         jlhA==
+X-Gm-Message-State: AOJu0YwuIddnpa8nnPLx8ahjCIwTur4GxMfn+jBYOfjNuimMATuktJSh
+	5raNMdEezayFYgLlZnLChUStfx68EHyjyL3N7A1u7JXlcKzuprll8m61Hh+Ru7zpWEwcRhG5LXy
+	dkbF5MwfXc58yp6AMu1XUX54aL19KnjNuPqU=
+X-Google-Smtp-Source: AGHT+IGPR5RcorHzJU4797BPQTnCyk+3BD4olIH3Al2+Rmpqbd2e+Bh8nR8u5FxO5j9fQqzOwwfWvkK2gWhE6INUe+o=
+X-Received: by 2002:a1f:cac1:0:b0:4cb:277d:9d22 with SMTP id
+ a184-20020a1fcac1000000b004cb277d9d22mr2558607vkg.16.1708930991453; Sun, 25
+ Feb 2024 23:03:11 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <IA0PR12MB822712F1B3E5205711493D55EF5A2@IA0PR12MB8227.namprd12.prod.outlook.com>
+From: =?UTF-8?Q?Pawe=C5=82_Dominiak?= <dominiak.pawel@gmail.com>
+Date: Mon, 26 Feb 2024 08:03:04 +0100
+Message-ID: <CACeVQwQ4MELjB8nZyeu9QDTtgwhhw0oOsL8BHdm_rxTj1vMy+A@mail.gmail.com>
+Subject: Bug: diff --no-index with cachetextconv crashes
+To: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-On Mon, Feb 26, 2024 at 05:53:19AM +0000, Chen, Boyang wrote:
+Hey!
 
-> D:\Source\CustomerRepoTest\Platform1>git log -3 commit 0c9f8555c55c73fd4e5392c8f8516c389f362d17 (HEAD -> test)
-> Author: Boyang Chen
-> Date:   Mon Feb 26 11:16:00 2024 +0800
-> 
->     Add a file to test, make make sure that the message is a bit long but in a single line
-> 
-> We can confirm that the commit message is in a single line in the output of git log command(pls refer to above output).
-> 
-> And use below command to generate a patch file.
-> git format-patch -3 --stdout  >  exported_3.patch
-> 
-> We can observe that the commit message's CR position is changed in the
-> exported patch, the subject section is split to two lines(pls refer to
-> below output).
+That's my first bug report for git and my first email to a mailing
+list in general, I hope for understanding :)
 
-This is expected. The format-patch command is generating an email, and
-rfc2822 says:
+[Steps to reproduce your issue]
 
-   Each line of characters MUST be no more than 998 characters, and
-   SHOULD be no more than 78 characters, excluding the CRLF.
+Global .gitattributes:
 
-But we can make the subject arbitrarily long by using header
-continuation; the line after the "Subject:" should start with
-whitespace, which indicates to a parser that it is a continuation of the
-previous header.
+*.txt diff=test
 
-You don't show that here:
+Global .gitconfig:
 
-> From 0c9f8555c55c73fd4e5392c8f8516c389f362d17 Mon Sep 17 00:00:00 2001
-> From: Boyang Chen
-> Date: Mon, 26 Feb 2024 11:16:00 +0800
-> Subject: [PATCH 3/3] Add a file to test, make make sure that the message is a
-> bit long but in a single line
+[diff "test"]
+    textconv = cat
+    cachetextconv = true
 
-but I'm not sure if it's really missing, or if the whitespace got munged
-as you sent it. Assuming it is, then everything is working as designed.
+Called command:
 
-That said, I have sometimes been annoyed at this myself, because I want
-to process the mails with tools that are quite capable of handling long
-lines (e.g., mutt). And doing hacky processing with perl, etc, becomes
-harder because you have to actually parse the mail correctly rather than
-just grepping for "^Subject:". ;)
+git --no-pager diff --no-index foo.txt bar.txt
 
-So I have wondered if it would be useful to have a --no-wrap-email
-option. Or perhaps the existing --no-encode-email-headers should be used
-as a hint that the user prefers easy-to-parse output over strict rfc
-compliance.
+[Expected behavior]
 
--Peff
+diff --git a/foo.txt b/bar.txt
+index f6a4b70..2b24d27 100644
+--- a/foo.txt
++++ b/bar.txt
+@@ -1 +1 @@
+-Foo bar baz
++Foo bar qux
+
+[Actual behavior]
+
+BUG: refs.c:2095: attempting to get main_ref_store outside of repository
+
+The command works as expected if cachetextconv is disabled:
+
+git --no-pager -c diff.test.cachetextconv=false diff --no-index foo.txt bar.txt
+
+[System Info]
+git version 2.44.0.windows.1
+cpu: x86_64
+built from commit: ad0bbfffa543db6979717be96df630d3e5741331
+sizeof-long: 4
+sizeof-size_t: 8
+shell-path: /bin/sh
+feature: fsmonitor--daemon
+uname: Windows 10.0 19045
+compiler info: gnuc: 13.2
+libc info: no libc information available
+$SHELL (typically, interactive shell): C:\Program Files\Git\usr\bin\bash.exe
+
+[Enabled Hooks]
+not run from a git repository - no hooks to show
+
+Pawel
