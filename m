@@ -1,111 +1,120 @@
-Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout3-smtp.messagingengine.com (fout3-smtp.messagingengine.com [103.168.172.146])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7742A1D54D
-	for <git@vger.kernel.org>; Mon, 26 Feb 2024 11:32:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEDC280049
+	for <git@vger.kernel.org>; Mon, 26 Feb 2024 13:16:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708947144; cv=none; b=mzmWiTeF7FOrn25KC2I6/sRsWaz+GQKOnvYAkwZ6V028o1+LRyzV6ImOGEAXKo0CAE1kw+gxVvOuNdYkJRs9/tHeNxYMoeeNgtkPepgO36ZoGy0mhuoXRSz2AdkNzTcykXmxyKjiViLeU8o5k9j+m8jE8Fty3lcVrONLwfKPwRE=
+	t=1708953391; cv=none; b=HndUUYF6wytEc8pOOWSYHrJvlrEH+fU02VpLHfCRgLPvECp6NYUmP6Mh18SDImrZj7OYUvxWFaVPiTgifs6wSXvaT3RJ7F8ggDQlAI6AbpjKprBYlBg16RUcn2ogtDh2oIJyyHOuL9R97EMi9J76z2ePYyY3+kR57CajO1RXHkU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708947144; c=relaxed/simple;
-	bh=1/MQR/0jcjn9DRjlIrWbMIOUPKNZkF+CAYMXFalwl0k=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=ODpnzh4inc6duJwlwimr+aLEl7MAqIpS4lShx1glVcfOeVDYl/jmlUoiejJR2FqDbVKu4GUDJgghMy6x/HPvTNSwWKeXluKN5qCanIBOg4iEh68GbC+tWTPxHp0SLRAVThUqtEGHAiLkHjUrBRGuISPjNRCiV3JUpUamWk2WwUI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Ea1N9QeE; arc=none smtp.client-ip=209.85.128.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1708953391; c=relaxed/simple;
+	bh=Wq6+6jpqMTnwTPgP6aRA8dG7nrC1f07mP2VbrEWtp9w=;
+	h=MIME-Version:Message-Id:In-Reply-To:References:Date:From:To:Cc:
+	 Subject:Content-Type; b=tbKibccMezUx9C7Cekafhnv9hKBBqH3b9AG+QeUog/1irVcrKl1LCmasNliUn8oj0vB08W0HCTWulk4EZrPbuCW0u2EN16Wbl5o0kFumcPfupT5qXUQmIkfMv8foE/nEQBRo5r3Fp/eSBdNX+2DXi6fGQ06mCAp7Cr4SyncvuA4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=khaugsbakk.name; spf=pass smtp.mailfrom=khaugsbakk.name; dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b=USqOgbXw; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=DWUA6mSS; arc=none smtp.client-ip=103.168.172.146
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=khaugsbakk.name
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=khaugsbakk.name
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Ea1N9QeE"
-Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-412a588c8b4so4221295e9.0
-        for <git@vger.kernel.org>; Mon, 26 Feb 2024 03:32:22 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1708947141; x=1709551941; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=752i568WfZl4sRAC7PCZl5P0a1N32XPl43kJISHp/cw=;
-        b=Ea1N9QeEMsJSLsEfn9x1nlL2SQGzgTfG/Ed8E2cYmXD/+Fyhm0GhwpcrNHfWjP9S4V
-         cvuMj+p7Nf6iTW/TmO20FfBgxC2WPWcNqpP5H6jE28eujMckeTtNoaVsnnMGDi8K5m1F
-         Jz00UPooHIASJ5yRthPwWVJEHm5atxk3ZGP5xrs43v83tO0IEZrN625McsOOSZ4e4P0m
-         ugTsALe/9Ccb5HNqeIYvFmc/tJiMTmWzomshMX9UXMTe0amLWz5do+voZiPmqQ6UHFSX
-         F0pILH3ODckyJXFozvCNC8ZseFesjIlqmoZkgc6XbDCMyJ1XyqRZw1TuvH2n6wUS512a
-         qwVQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1708947141; x=1709551941;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=752i568WfZl4sRAC7PCZl5P0a1N32XPl43kJISHp/cw=;
-        b=ZD/6DG5Azyzu1EQfwgApeAWcfk/7Ooei9RYy9PxtuY8iC60//ZR4jXzSI3+fUZDtmJ
-         7yY05EUZQetQWIgp2s4kEbBitrysCEOrkjHfuORKoFNWG6LfgtE1KFiyOU3kS2zgkLmu
-         BNO7FsXuH52OK84k68Tq9LN67MWDfdwqzluvbABcdEf31ns+qeOc8LsyZGZ3BXy1ys77
-         9FYMw70EL3HO6bTegQwSyBSnNq0/N8KE15rAgMuQPFN29oYvQ93+IKGl2zNzrkMYdSss
-         cc+LCg1LEiQXBAPlA6jDic1SwLrD2zSkV4jvoNvJ9SB5paVCNjdVQGT5RY7juYkXD9wQ
-         dGCw==
-X-Forwarded-Encrypted: i=1; AJvYcCWzrjQDYeD7HD25Uajo2dywHrjXXvU1UqZVytslS4Fr8mtdiAObJvwh14HC7ZFXJk8i68aCJvxhhkdMvBMIjnbELtSr
-X-Gm-Message-State: AOJu0YxwhNePl40+YYzzOg0h/k+7gKq8MpXF/FQ33Hu+R0DMdjS6izQr
-	DfhSF/fPZVUuiBs5R1gSp15ZFnBmvWPfK4G4b/0d1C5hgrktgPmDYUbgm6Jp
-X-Google-Smtp-Source: AGHT+IHh9vnuxIzOFqlcc7RFStgL32U1uHDCogcfqjydnS0Hf2XjSNtRoq0JInJHFuxKJ4avvNuAfw==
-X-Received: by 2002:a05:600c:3151:b0:412:a0bb:55df with SMTP id h17-20020a05600c315100b00412a0bb55dfmr3570857wmo.15.1708947140586;
-        Mon, 26 Feb 2024 03:32:20 -0800 (PST)
-Received: from localhost.localdomain ([2a01:e34:ec0c:62c0:a3b:6b59:debb:debf])
-        by smtp.gmail.com with ESMTPSA id h13-20020a05600c314d00b00412a466f0c3sm3543379wmo.15.2024.02.26.03.32.20
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 26 Feb 2024 03:32:20 -0800 (PST)
-From: Gabriel de Perthuis <g2p.code@gmail.com>
-To: g2p.code@gmail.com,
-	git@vger.kernel.org
-Cc: Elijah Newren <newren@gmail.com>
-Subject: [PATCH] replay: Fix documentation of the --contained flag
-Date: Mon, 26 Feb 2024 12:32:15 +0100
-Message-ID: <20240226-fix-replay-docs-v1-1-a5f8bf08414a@gmail.com>
-X-Mailer: git-send-email 2.44.0
+	dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b="USqOgbXw";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="DWUA6mSS"
+Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
+	by mailfout.nyi.internal (Postfix) with ESMTP id CCD60138009B;
+	Mon, 26 Feb 2024 08:16:27 -0500 (EST)
+Received: from imap49 ([10.202.2.99])
+  by compute1.internal (MEProxy); Mon, 26 Feb 2024 08:16:27 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=khaugsbakk.name;
+	 h=cc:cc:content-transfer-encoding:content-type:content-type
+	:date:date:from:from:in-reply-to:in-reply-to:message-id
+	:mime-version:references:reply-to:subject:subject:to:to; s=fm3;
+	 t=1708953387; x=1709039787; bh=Wq6+6jpqMTnwTPgP6aRA8dG7nrC1f07m
+	P2VbrEWtp9w=; b=USqOgbXwAdTmgSLbOgryewUpZtVWNaUKXpk4z6o9jXMTNAjd
+	LnB83cGwHm+/KcUB8RG/bnUT/0mRsesP3dQoKekVV2rdJopdsF3VIz69mz80FSkX
+	ZFFEo7sO1AK/ZI2P+WW9D4vjcjDRpD4wk3vv3wz7dR/RTky5f4owFBjhwiQpjzIn
+	wrFZTOF/YSdI/cVrFo6nROJoEis7LcLgSUJm1tc2Tr7zhxfVHjXdPFf6TkOMT920
+	kx9aTtuQULxFKuzxRBQn9JhHeCwp135qAD/yORUbRlWbQifoIT0unuJNgaw0H1tL
+	dfHLP+nnabR/SQz0h8bGGpDI0nxN1otbelMp7g==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1708953387; x=
+	1709039787; bh=Wq6+6jpqMTnwTPgP6aRA8dG7nrC1f07mP2VbrEWtp9w=; b=D
+	WUA6mSSaRSVZzxnJvKxVkA9BnNoM5IlIagkaWCfdScqEODtfCFkaRJJhfj3MqsdZ
+	LqP4t+CmXBtwF7QQ+tPAhYZstrylSJ8DIkqTMR1yEh3ORqur0zemRfV355XrAfIO
+	FH7lmWQsnVfYcgY5Wi2qPvw6Z1vJrFju3rgMGDHf9HkjNsLJaQvg3t8qixT9mTSj
+	6xHAqrFP1I60YbJ23ZAPXW3kBrvf2okzsKYX2CAE7KmSHQ/vKDs+uCJc9VjD8oje
+	IKqdDXUWkqZiL9/zu6Mx0oK2OphlUE59RLKkiJCpUoycU9gDLjZpykV3qMd2Caoh
+	EBDDY55fsfNv++S3w/jUw==
+X-ME-Sender: <xms:K4_cZc1rClUoetIZ8maUZiVU5y-pDVzA2pzBg_shx20Ee5uWepOKvgo>
+    <xme:K4_cZXEwPAGLwMndJfV1qAs58f7cuSRlIBk4SB1lmpYnT2275FW1ATkgRLooKZ9Pi
+    t6shoZ8dNzdXjAN-g>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrgedvgdegkecutefuodetggdotefrodftvf
+    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
+    uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
+    fjughrpefofgggkfgjfhffhffvvefutgfgsehtqhertderreejnecuhfhrohhmpedfmfhr
+    ihhsthhofhhfvghrucfjrghughhssggrkhhkfdcuoegtohguvgeskhhhrghughhssggrkh
+    hkrdhnrghmvgeqnecuggftrfgrthhtvghrnhepvdevheeiudefheffvdetueevkeehhfel
+    iefgkedtieefudetueehueeftefffedunecuvehluhhsthgvrhfuihiivgeptdenucfrrg
+    hrrghmpehmrghilhhfrhhomheptghouggvsehkhhgruhhgshgsrghkkhdrnhgrmhgv
+X-ME-Proxy: <xmx:K4_cZU5-sjeS-4zkE9RjDO755SQlAkNfIxDViVFpWz50HsTfePLaRA>
+    <xmx:K4_cZV1HRW3QwPo8VGsGABOkEZhcDuv0u7GAYD9ASz5rEVxkbr5gEQ>
+    <xmx:K4_cZfG0nHC3ZARUSzcrOJ6PZI4VhBx2iFui9qVSLvTMXlEn7pmDog>
+    <xmx:K4_cZTj82zhlCjz3OGUy3ad59lP4lziK1AMii3mt8ZKD96_MDbcQ-Q>
+Feedback-ID: i2671468f:Fastmail
+Received: by mailuser.nyi.internal (Postfix, from userid 501)
+	id 818B815A0092; Mon, 26 Feb 2024 08:16:27 -0500 (EST)
+X-Mailer: MessagingEngine.com Webmail Interface
+User-Agent: Cyrus-JMAP/3.11.0-alpha0-153-g7e3bb84806-fm-20240215.007-g7e3bb848
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-X-Mailer: b4 0.13.0
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1708946205; l=1457; i=g2p.code@gmail.com; s=20240226; h=from:subject:message-id; bh=1/MQR/0jcjn9DRjlIrWbMIOUPKNZkF+CAYMXFalwl0k=; b=UyB2XGO8X0QXUpx0hedUkh2X0At8Dk26NvRUYihl3UtdLab9NQNIBdkbaNzVwr4xdWzCupD+X xUieJTtYhwdDvxzor4d0ocFpVts6RNi34S6ENmC2b+4Z6vImfzSyiqa
-X-Developer-Key: i=g2p.code@gmail.com; a=ed25519; pk=iNCUUSsYvx8i030j8RjSUXbvD9xNTnyXfNZ/i7Y+cQk=
-Content-Transfer-Encoding: 8bit
+Message-Id: <11783b8e-472d-4b75-bb48-88138daf16ae@app.fastmail.com>
+In-Reply-To: 
+ <CAOLTT8SQyBSWC=aqB2SRYmp3kR6RZ+L_-9yckWQf-X9rbzeNBw@mail.gmail.com>
+References: 
+ <CAOLTT8SQyBSWC=aqB2SRYmp3kR6RZ+L_-9yckWQf-X9rbzeNBw@mail.gmail.com>
+Date: Mon, 26 Feb 2024 14:16:06 +0100
+From: "Kristoffer Haugsbakk" <code@khaugsbakk.name>
+To: "ZheNing Hu" <adlternative@gmail.com>
+Cc: "Junio C Hamano" <gitster@pobox.com>,
+ "Christian Couder" <christian.couder@gmail.com>,
+ "Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
+ "Git List" <git@vger.kernel.org>
+Subject: Re: [Question] How to parse range-diff output
+Content-Type: text/plain;charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-There was a paragraph describing the behaviour of that flag (which
-affects branches and refs), but referring to it as --onto.
---contained is used with --onto but it is a more specific flag.
---onto by itself refers to a commit and does not have the described
-effect on branches.
+On Mon, Feb 26, 2024, at 08:25, ZheNing Hu wrote:
+> Hi,
+>
+> I am currently looking to implement a service that provides a version
+> range comparison based on git range-diff. I can easily parse out
+> commit pair headers like "3: 0bf6289 ! 3: a076e88 dev5," but I am
+> unsure how to parse the details in the subsequent diff patch body.
+>
+> It is not a standard diff output where one can parse out the filename
+> from the diff header, It should be called a diff of diffs. We can see
+> various headers with file names such as "@@ File1 (new)", "## File2
+> (new) ##", or "@@ File3: function3" in different formats. This is
+> confusing. How should we correctly parse a range-diff patch, and do
+> you have any good suggestions?
+>
+> Thanks for any help.
+> --
+> ZheNing Hu
 
-Signed-off-by: Gabriel de Perthuis <g2p.code@gmail.com>
----
- Documentation/git-replay.txt | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+Hi
 
-diff --git a/Documentation/git-replay.txt b/Documentation/git-replay.txt
-index f6c269c62d..ab28e86a4a 100644
---- a/Documentation/git-replay.txt
-+++ b/Documentation/git-replay.txt
-@@ -27,12 +27,12 @@ OPTIONS
- 
- --onto <newbase>::
- 	Starting point at which to create the new commits.  May be any
- 	valid commit, and not just an existing branch name.
- +
--When `--onto` is specified, the update-ref command(s) in the output will
--update the branch(es) in the revision range to point at the new
-+When `--contained` is specified, the update-ref command(s) in the output will
-+update any branch(es) pointing within the revision range to point at the new
- commits, similar to the way how `git rebase --update-refs` updates
- multiple branches in the affected range.
- 
- --advance <branch>::
- 	Starting point at which to create the new commits; must be a
+Note that =E2=80=9COutput Stability=E2=80=9D says that this output is no=
+t meant to be
+machine-readable. It=E2=80=99s for human consumption. It=E2=80=99s not t=
+extually stable.
 
----
-base-commit: 3c2a3fdc388747b9eaf4a4a4f2035c1c9ddb26d0
-change-id: 20240226-fix-replay-docs-70a54ea9e3c8
+So a new version of Git might break your implementation without warning.
 
-Best regards,
--- 
-Gabriel de Perthuis
-
+--=20
+Kristoffer Haugsbakk
