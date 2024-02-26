@@ -1,63 +1,63 @@
-Received: from mail-qt1-f181.google.com (mail-qt1-f181.google.com [209.85.160.181])
+Received: from mail-ot1-f41.google.com (mail-ot1-f41.google.com [209.85.210.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73473131E23
-	for <git@vger.kernel.org>; Mon, 26 Feb 2024 22:05:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32C9B131E31
+	for <git@vger.kernel.org>; Mon, 26 Feb 2024 22:05:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708985154; cv=none; b=ue34S5WdQ00vsJU0Sroh6nI9Pio66umC3xyprlVdQ2EnToc24Tmr9LJY6czf4w66sbbakallk3B4dcm/AaLSgP2/RKfH6WihRK2N71FyDiTXveZtMDFegJ0JnjIy3bQ8/EBunxk+9FhQsuPib8cA7B/B5d5OKj6dboV5mr4O/ZM=
+	t=1708985155; cv=none; b=g1X/FEjn5lRomeXu0SwKAYpUBlEdNpXudRIKQySfricvjj0aptLiqUsDb+g6cQTf7OkzWddpRPCnLoMpg+BiY2mcE1cETCNKEyEYJyLmjsW9lFZRp1DF9cnTgslebkG9ITMFncMo9lUCO8vqbxKS+OJ9/s4batVTNJNNbTrBais=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708985154; c=relaxed/simple;
-	bh=CQcMUA/sRB/QWbihFlxacVElu+NSy2DRwHBvVJHcNiE=;
+	s=arc-20240116; t=1708985155; c=relaxed/simple;
+	bh=z20G1D/ingtEHs8n4ErdU8YD7D1M1aoKrhlupSXwVSo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Bqp7gE1ki2HAGgiiIF9hhDy+nNXJs7ouk3Rs74o8owM00DzW5R2mimEp2wzkkZfSkE1mtGdS/R2PAMEFZC9nvB7djwqzIoFucxtIhfr0myKl30+pv0gO+fsxsLN9QJQsaooWVbxvF+pNJLF4D1t7fOZLKJ2fOwmupLlOllDONog=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LmTg/gUB; arc=none smtp.client-ip=209.85.160.181
+	 MIME-Version; b=LKVtriUIlO6jk4RzJL6S2XYIItfYtpxHj1HYbtFj67kbi5oyPtHLa9C+tMvr8uThGfoKf2N9CGNFqTJHN0hoz6tv6WIV+gS5hBzYQYVvah1F7hq3V07P3jNR9k1FPq+9fuI5ZQtv+salwI3YjjVJelCb89tlekcycVV8+C24ylI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Y4T45uzx; arc=none smtp.client-ip=209.85.210.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LmTg/gUB"
-Received: by mail-qt1-f181.google.com with SMTP id d75a77b69052e-42e8e85a969so5302611cf.2
-        for <git@vger.kernel.org>; Mon, 26 Feb 2024 14:05:53 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Y4T45uzx"
+Received: by mail-ot1-f41.google.com with SMTP id 46e09a7af769-6e432514155so1786369a34.1
+        for <git@vger.kernel.org>; Mon, 26 Feb 2024 14:05:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1708985152; x=1709589952; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1708985153; x=1709589953; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=XOSgXZwzZutIsH9W50mGIJbV21EIOpTYplCjJ+NKEqw=;
-        b=LmTg/gUBDJsTCzRWYnR3RU6UlxIM7NHbt8r+0EEqDXGxduirT9xrDWXOIbswcLYMC4
-         EvyCntoee6SaobQEbphZydGzCg7nmaHvbqJltBzFxwCe37619tyeS4OljEUr7g8Eb/9O
-         /dgLzUwNkmdHSia/jSTQbnFtBZNqhnMpaqGN2NxHHSZgOaY1gPJX8vm26a/3ueSYRrix
-         Bj3+GoeieOrWQDygl6cUZGWXCgda+zTzDKKYqKwQTyWRBxsOK17hEtnBTh8rZfA2BBI0
-         X4cKcV1NCxSAwNdKpg4YIwavFhb9i2vAaRvVxjIXrOrHOnr76ADOkkjt1HtfqYaj4OHi
-         9tvg==
+        bh=3565OIASkrgH1GqfUgs+5HfDtKha1mUbalh4b8nEKKo=;
+        b=Y4T45uzxPYTWtgDu2cqzM7KKKmKQVvJvh0owB8KjJvJMGiTQ/qW6KfxK5kLbhmrWQO
+         jVpLudA/DByqxT269jCo9BYbf4qTz5LaQ7yEKaYj4fSl/F/K4pinI0+q8L1tpJCw7bE5
+         yO3FB1T+U5ENtW9sKGU4s0xbL/V+M2zMyVnl5ua7GguMgdAUsEqefN0iqZ9pkbXtzMr/
+         D6vZScex38OkeLrF2nkM5Vn0pTC+CWuaeuIiYCGmc9DAkDV52Rxw4EgUW3Ywb3/6EZyj
+         CY6NPNu2tPfTrCche5Xzk6bpSVcvig9qs6Ngy4wjKhDU2lB1F1hhqJbqUPq1QTyuNfDe
+         KSXQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1708985152; x=1709589952;
+        d=1e100.net; s=20230601; t=1708985153; x=1709589953;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=XOSgXZwzZutIsH9W50mGIJbV21EIOpTYplCjJ+NKEqw=;
-        b=ieFjACFsesw+anzIQGynxqWXCoXAJm8agsOGxayfXBbQNHDKjN3+3NTo88FJRw4LRP
-         GfQyWCwMoTuolQGTNCCwAtrVdzMC7LaVF712IYnfzBFCakEKinXcrIKBsHTJ3Wt/kKL8
-         t5vRnBACtO48LA97jEso34m+5osJYWepuktnqq+8AszH8E6XQRXuI8Wgs/DxW04JcJLy
-         6BMAq7W7tyDPB+kc3Mo7HGTrJtXzR+vazFutuVnymP4W2ER1fWovP00Zt89MLbEJEYb+
-         +WEIYA6evsa98gXBE/gD4NEjPfloOCn6+1I/VDtp+p5aacFfL1NW7xBGCVv7dXdnp2ZH
-         UrUw==
-X-Gm-Message-State: AOJu0Yw06C+21XIleCH4yfsfm7B/kua2h3RFLP/Eo3WpIVlkYI/S6v7v
-	+2/yYfUU26zzrX1tPSaYdlCGUY6GPHfeAgqBGAyKZzxbtlk6nmWstNz0Kigs
-X-Google-Smtp-Source: AGHT+IHAi7RJyRz8WQi1b0fvF8qFH0cdGF5gtCgWixAubNwon4ByMmx93DDVIB6tAuXspTZZKjIgdw==
-X-Received: by 2002:ac8:5a95:0:b0:42e:7de0:cf28 with SMTP id c21-20020ac85a95000000b0042e7de0cf28mr5164546qtc.68.1708985152059;
-        Mon, 26 Feb 2024 14:05:52 -0800 (PST)
+        bh=3565OIASkrgH1GqfUgs+5HfDtKha1mUbalh4b8nEKKo=;
+        b=w65frnPRXnAxPDadB19HeaymetGAQq7RQtLBrlv6ZUo453Vc6FRafz2RBORNSOLSpN
+         za3br/gNkpQDTr431zQzWB++z7VKTUIw702lrGafxw3iJWBzNUxC166bSCMvmc0qzZpg
+         BmcojZKCc9ylQUCC0cjkMmWL7aHXWWFcnruY9lMPVp5nuJedXetoZTsth62nGztYxSTk
+         1Br2tdL2CnsfhiR5O4jG2/CD3Y9WZW0BOuatmc64zEts5AL2JT4VeQrIgMvZuYh9ZxEU
+         Wn7up7HBIPxvgnqevyN34GGyCydkYjHaHzWO29rnLGT0O8Pfccr5wuw/YPVikOJg3NKm
+         AKEA==
+X-Gm-Message-State: AOJu0YzZtsHnR+AMLFNf7vuNWCILPQciEtwnjc00aEVC5xXFpTlsa6xg
+	5t9pO8NQMMqsx9aHaqiI5oGNzI6oeUIyUKUwT/2DXyW2KLQ882Pscj1y7jne
+X-Google-Smtp-Source: AGHT+IHqY7x5rMjf0FEyvi07LBf/hJj+ETe/j9DVFa3+vuSXIqsAz+lpa8GtJpzw7bocnYFAq9cJmg==
+X-Received: by 2002:a9d:7acb:0:b0:6e4:512e:e0ab with SMTP id m11-20020a9d7acb000000b006e4512ee0abmr9402912otn.6.1708985153117;
+        Mon, 26 Feb 2024 14:05:53 -0800 (PST)
 Received: from localhost.localdomain ([2607:fea8:3fa9:4200:ad2d:24a1:4eaf:e903])
-        by smtp.gmail.com with ESMTPSA id b6-20020ac87546000000b0042dce775a4bsm2911696qtr.3.2024.02.26.14.05.51
+        by smtp.gmail.com with ESMTPSA id b6-20020ac87546000000b0042dce775a4bsm2911696qtr.3.2024.02.26.14.05.52
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 26 Feb 2024 14:05:51 -0800 (PST)
+        Mon, 26 Feb 2024 14:05:52 -0800 (PST)
 From: "Randall S. Becker" <the.n.e.key@gmail.com>
 X-Google-Original-From: "Randall S. Becker" <randall.becker@nexbridge.ca>
 To: git@vger.kernel.org
 Cc: "Randall S. Becker" <rsbecker@nexbridge.com>
-Subject: [PATCH v1 1/4] builtin/index-pack.c: change xwrite to write_in_full to allow large sizes.
-Date: Mon, 26 Feb 2024 17:05:35 -0500
-Message-ID: <20240226220539.3494-2-randall.becker@nexbridge.ca>
+Subject: [PATCH v1 2/4] builtin/receive-pack.c: change xwrite to write_in_full to allow large sizes.
+Date: Mon, 26 Feb 2024 17:05:36 -0500
+Message-ID: <20240226220539.3494-3-randall.becker@nexbridge.ca>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20240226220539.3494-1-randall.becker@nexbridge.ca>
 References: <20240226220539.3494-1-randall.becker@nexbridge.ca>
@@ -77,22 +77,25 @@ maximum single I/O size possible for the destination device.
 
 Signed-off-by: Randall S. Becker <rsbecker@nexbridge.com>
 ---
- builtin/index-pack.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ builtin/receive-pack.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/builtin/index-pack.c b/builtin/index-pack.c
-index a3a37bd215..f80b8d101a 100644
---- a/builtin/index-pack.c
-+++ b/builtin/index-pack.c
-@@ -1571,7 +1571,7 @@ static void final(const char *final_pack_name, const char *curr_pack_name,
- 		 * the last part of the input buffer to stdout.
- 		 */
- 		while (input_len) {
--			err = xwrite(1, input_buffer + input_offset, input_len);
-+			err = write_in_full(1, input_buffer + input_offset, input_len);
- 			if (err <= 0)
- 				break;
- 			input_len -= err;
+diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
+index db65607485..5064f3d300 100644
+--- a/builtin/receive-pack.c
++++ b/builtin/receive-pack.c
+@@ -455,8 +455,9 @@ static void report_message(const char *prefix, const char *err, va_list params)
+ 
+ 	if (use_sideband)
+ 		send_sideband(1, 2, msg, sz, use_sideband);
+-	else
+-		xwrite(2, msg, sz);
++	else {
++		write_in_full(2, msg, sz);
++	}
+ }
+ 
+ __attribute__((format (printf, 1, 2)))
 -- 
 2.42.1
 
