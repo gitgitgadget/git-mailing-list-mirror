@@ -1,91 +1,127 @@
-Received: from mail-lj1-f169.google.com (mail-lj1-f169.google.com [209.85.208.169])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBCEB5CDF5
-	for <git@vger.kernel.org>; Mon, 26 Feb 2024 10:13:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2504063B
+	for <git@vger.kernel.org>; Mon, 26 Feb 2024 10:27:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708942409; cv=none; b=nQtqtg4eO/gCQF5oO/vu59bCqssBhWNE2CJ7mGq/KScPLAanyDpvLcMlHmClw+adRBr6g8fcKwgfP6ihgZ9n0vXlZOPv/1X7zQS94WVV+3xS+cL0KY4IaURzdQW9lA4bYD16skdM9Dl6Gz8iz2wQiQxWqQBMN6Yk0XLWZDz5HiM=
+	t=1708943252; cv=none; b=HmiUBnu7alz0Bw/2GFQneFl0+6SOPk+MY8hOhUluYwctXd/239cCikOeGoi4QChUQXo57GLvWhDld5VBsNQt3heklW7z7bbAH8T0i+IzsaGB4e3Nd8RJiltoBD5ZjgoN1CJvsWTNvg7wXIxNIZgDld7x0X065bzAnldCEvVgbtg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708942409; c=relaxed/simple;
-	bh=h+E3U9FxQHGn7EbtzRFic1ybgF5UhcJ/LJctZkNcgI4=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=IhTFGBztB64wMmdvuTvpYClVldyvAVJMgmGn1Hq9dPBtF8LGDjDK4+PFONlQP3Pq9Tw2dscn68/FykzzwuNOdF/wOvJlEHm/p502tFHakz2fmhEFh11ntI6I6Bq1U3SXrsOC32f4QVEyR7/7a/2ZDcpFpKQFAutqox+B4yMAavo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=N7FQ2slr; arc=none smtp.client-ip=209.85.208.169
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="N7FQ2slr"
-Received: by mail-lj1-f169.google.com with SMTP id 38308e7fff4ca-2d24a727f78so41017281fa.0
-        for <git@vger.kernel.org>; Mon, 26 Feb 2024 02:13:27 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1708942406; x=1709547206; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=h+E3U9FxQHGn7EbtzRFic1ybgF5UhcJ/LJctZkNcgI4=;
-        b=N7FQ2slrkn9TO61CF5Vb2BuvXChyFUdjl6guyoDqj38Z7eHlfDtmuSsEMx3QCHdpdt
-         zsl2Yd58x9+w2dNOJ2kUkJ1en5sjy6iJwkei8V0RYk/9B1AdPXWjz/XJZ8lC/3w5JC9q
-         U71su+T2MbmYnj2oh+h//lQlSGJgB+F0joIxHOiNg7PRkKApO3kFD3SyO6aMohwqO1bf
-         dbJkJH6iQzZzj9fHVVO8H3GsWrs54PWaBB++NJMRNtyyFPOLXF+7sSL26W6NfPwrNsJ1
-         dCg4j/68qqDPv5axILoyWS28mC0HQzuUtW6RPegxuzE+EsjZ5VbvssgSSZU3wSl3KqlW
-         tt+Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1708942406; x=1709547206;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=h+E3U9FxQHGn7EbtzRFic1ybgF5UhcJ/LJctZkNcgI4=;
-        b=HV0jh3m0qBFv5aVZJd+wRC3IQg5NdBIpw4M3gI4PgtMvtX5W0PERieqxRaBj79k5P2
-         m4Z6E2OdSFHydYXXJoP8xn3m5fDcZfwq+8o7szrT5ER9v32ou1vR25l04Br4igRFQOme
-         Gr0aVT/Cu1tILlrCrPlgyoDNDE4dEm9dnRTa6MLI4c1q6cKldKRw9crU3wM7QEptVo4M
-         Yx2qKOE4mSeDcnPM5KqS/v/EqaviJQaNXzPf6WSEhAhW2+SL4rjbjzmgbdkTTcU3xV3T
-         yi7sIFTVWHizy46mdhEDNQ4RC7SAVtVQelvn8c40Ey5WHlYIbNEkNuN9Q+sO3dz3oLpC
-         H2sQ==
-X-Gm-Message-State: AOJu0Yx6Am+mmUEkFu2GSR3bYhpRkNzi969CF3SgrEO3doQoiRdhCOFm
-	79IHB9kCshBfw+NoaV2vS0UCW3N0VUicaLpoLbULi6jK2xiaf6xuetyEwqMuV4Lh8y0QtI2JWu+
-	WOI3Eur1X1E4E5cPveXgmlw2bucctneudBzA=
-X-Google-Smtp-Source: AGHT+IEpe/TcLgHPDzlWhoXwAIpvFe/m0cXl16qV29g/YndT53lVcMOhZKdnCg/KQsQ7ySa9K2VTTyLerNQ97VU4hCQ=
-X-Received: by 2002:ac2:46c4:0:b0:512:fcc2:16b3 with SMTP id
- p4-20020ac246c4000000b00512fcc216b3mr1707318lfo.31.1708942405643; Mon, 26 Feb
- 2024 02:13:25 -0800 (PST)
+	s=arc-20240116; t=1708943252; c=relaxed/simple;
+	bh=+GLdpOIj4TxM6tu4hArbBVZz+FXbLInEBui1g6V/ftM=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=C4TVn54byOTnTQySeaOsstttalKHpayxbBaHdQgWKclDAFvK0zwhyHJiJzgDbKKEaINrzK4kCWRUDZOecu88jTWZP1Z3FOq8pUS7apher7jeaMKE4xw/8LI3NswvtP7TVzJDolC9AI8Lk//Wv3PH4BJU8V9yPubHG5zo2rwei4o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+Received: (qmail 22277 invoked by uid 109); 26 Feb 2024 10:27:30 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 26 Feb 2024 10:27:30 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 18246 invoked by uid 111); 26 Feb 2024 10:27:34 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 26 Feb 2024 05:27:34 -0500
+Authentication-Results: peff.net; auth=none
+Date: Mon, 26 Feb 2024 05:27:29 -0500
+From: Jeff King <peff@peff.net>
+To: =?utf-8?B?UGF3ZcWC?= Dominiak <dominiak.pawel@gmail.com>
+Cc: git@vger.kernel.org
+Subject: [PATCH] userdiff: skip textconv caching when not in a repository
+Message-ID: <20240226102729.GB2685773@coredump.intra.peff.net>
+References: <CACeVQwQ4MELjB8nZyeu9QDTtgwhhw0oOsL8BHdm_rxTj1vMy+A@mail.gmail.com>
+ <20240226072248.GC780982@coredump.intra.peff.net>
+ <CACeVQwRkoJejrWvym_BAZE-OWi+q3RZfyEpwAwA+0hGUBCeD=Q@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240219172214.7644-1-vincenzo.mezzela@gmail.com> <20240219172214.7644-2-vincenzo.mezzela@gmail.com>
-In-Reply-To: <20240219172214.7644-2-vincenzo.mezzela@gmail.com>
-From: Christian Couder <christian.couder@gmail.com>
-Date: Mon, 26 Feb 2024 11:13:13 +0100
-Message-ID: <CAP8UFD3153ZMEeEU3yPdBQZMzJxqgtX5YdxKwWfnVVwZKqHn-Q@mail.gmail.com>
-Subject: Re: [GSOC][RFC PATCH 1/1] t: t7301-clean-interactive: Use test_path_is_(missing|file)
-To: Vincenzo Mezzela <vincenzo.mezzela@gmail.com>
-Cc: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CACeVQwRkoJejrWvym_BAZE-OWi+q3RZfyEpwAwA+0hGUBCeD=Q@mail.gmail.com>
 
-About the subject, instead of "t: t7301-clean-interactive: Use ...",
-something like "t7301-clean-interactive: use ..." or "t7301: use ..."
-would be better. First because there is no need for both "t:" and
-"t7301-clean-interactive:" for the "area" part of the subject. Only
-one "area" part is enough. Second because the first word after the
-"area" part should not be capitalized. See:
-https://git-scm.com/docs/SubmittingPatches/#summary-section
+On Mon, Feb 26, 2024 at 08:56:09AM +0100, Paweł Dominiak wrote:
 
-On Mon, Feb 19, 2024 at 6:22=E2=80=AFPM Vincenzo Mezzela
-<vincenzo.mezzela@gmail.com> wrote:
->
-> Replace test -(f|e) with the appropriate helper functions provided by
-> test-lib-functions.sh
+> But it seems like something git should handle on its own, so that diff
+> would accommodate use in different circumstances with the same config.
 
-I think your commit message should explain why it's better to use
-test_path_is_(missing|file) instead of test -(f|e).
+Yes, definitely. Here's my patch with a commit message and a test.
 
-Also replacing `test ! -f` with `test_path_is_missing` might be wrong
-if it's Ok to have a directory instead of a file (in which case the
-latter would fail while the former would work). So a few words about
-why it's Ok to do it here would be nice.
+-- >8 --
+Subject: userdiff: skip textconv caching when not in a repository
 
-Thanks!
+The textconv caching system uses git-notes to store its cache entries.
+But if you're using "diff --no-index" outside of a repository, then
+obviously that isn't going to work.
+
+Since caching is just an optimization, it's OK for us to skip it.
+However, the current behavior is much worse: we call notes_cache_init()
+which tries to look up the ref, and the low-level ref code hits a BUG(),
+killing the program. Instead, we should notice before setting up the
+cache that it there's no repository, and just silently skip it.
+
+Reported-by: Paweł Dominiak <dominiak.pawel@gmail.com>
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ t/t4042-diff-textconv-caching.sh | 22 ++++++++++++++++++++++
+ userdiff.c                       |  4 +++-
+ 2 files changed, 25 insertions(+), 1 deletion(-)
+
+diff --git a/t/t4042-diff-textconv-caching.sh b/t/t4042-diff-textconv-caching.sh
+index bf33aedf4b..8ebfa3c1be 100755
+--- a/t/t4042-diff-textconv-caching.sh
++++ b/t/t4042-diff-textconv-caching.sh
+@@ -118,4 +118,26 @@ test_expect_success 'log notes cache and still use cache for -p' '
+ 	git log --no-walk -p refs/notes/textconv/magic HEAD
+ '
+ 
++test_expect_success 'caching is silently ignored outside repo' '
++	mkdir -p non-repo &&
++	echo one >non-repo/one &&
++	echo two >non-repo/two &&
++	echo "* diff=test" >attr &&
++	test_expect_code 1 \
++	nongit git -c core.attributesFile="$PWD/attr" \
++		   -c diff.test.textconv="tr a-z A-Z <" \
++		   -c diff.test.cachetextconv=true \
++		   diff --no-index one two >actual &&
++	cat >expect <<-\EOF &&
++	diff --git a/one b/two
++	index 5626abf..f719efd 100644
++	--- a/one
++	+++ b/two
++	@@ -1 +1 @@
++	-ONE
++	+TWO
++	EOF
++	test_cmp expect actual
++'
++
+ test_done
+diff --git a/userdiff.c b/userdiff.c
+index e399543823..fce3a31efa 100644
+--- a/userdiff.c
++++ b/userdiff.c
+@@ -3,6 +3,7 @@
+ #include "userdiff.h"
+ #include "attr.h"
+ #include "strbuf.h"
++#include "environment.h"
+ 
+ static struct userdiff_driver *drivers;
+ static int ndrivers;
+@@ -460,7 +461,8 @@ struct userdiff_driver *userdiff_get_textconv(struct repository *r,
+ 	if (!driver->textconv)
+ 		return NULL;
+ 
+-	if (driver->textconv_want_cache && !driver->textconv_cache) {
++	if (driver->textconv_want_cache && !driver->textconv_cache &&
++	    have_git_dir()) {
+ 		struct notes_cache *c = xmalloc(sizeof(*c));
+ 		struct strbuf name = STRBUF_INIT;
+ 
+-- 
+2.44.0.rc2.424.gbdbf4d014b
+
