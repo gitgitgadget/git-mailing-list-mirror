@@ -1,62 +1,66 @@
-Received: from mail-oi1-f169.google.com (mail-oi1-f169.google.com [209.85.167.169])
+Received: from mail-qt1-f181.google.com (mail-qt1-f181.google.com [209.85.160.181])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61175131733
-	for <git@vger.kernel.org>; Mon, 26 Feb 2024 22:05:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73473131E23
+	for <git@vger.kernel.org>; Mon, 26 Feb 2024 22:05:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708985153; cv=none; b=U72Mz9kcBKkD6X6b0/ouZqlOFsh/4j+/D75NDlEM86Xz76w0saNH7nwo+gIQyQKS1JhYJHdxk8KdEGSfE3KNfYbrwPRyoRNxL26PF2vIycrj0msfm4LdTaIE0f7rhILnFW6dPEMZDaqCJYKqgZHVIAwNh5+kKB91DNRq9jGfG98=
+	t=1708985154; cv=none; b=ue34S5WdQ00vsJU0Sroh6nI9Pio66umC3xyprlVdQ2EnToc24Tmr9LJY6czf4w66sbbakallk3B4dcm/AaLSgP2/RKfH6WihRK2N71FyDiTXveZtMDFegJ0JnjIy3bQ8/EBunxk+9FhQsuPib8cA7B/B5d5OKj6dboV5mr4O/ZM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708985153; c=relaxed/simple;
-	bh=2v1iMLle8ffKSutgp5WlsOBmQnZU4iYrNrfhRVMBI7s=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=JdU6Ha89qv6P29NrCzO66PSCjGSqkI0WgmokZ506+ChhNeVasuyuEEkTMicsn9nAQjj3mbI5m/VcnuerHoccCNw02cgGGsNUQEqg68jG4IX8MnAD88bj0kbp4WFYwzxoAz516Ef0uYTnr+ex/z9/GAegTGiZrFFiL8nkUIlNJOw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=k9rkyA9h; arc=none smtp.client-ip=209.85.167.169
+	s=arc-20240116; t=1708985154; c=relaxed/simple;
+	bh=CQcMUA/sRB/QWbihFlxacVElu+NSy2DRwHBvVJHcNiE=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=Bqp7gE1ki2HAGgiiIF9hhDy+nNXJs7ouk3Rs74o8owM00DzW5R2mimEp2wzkkZfSkE1mtGdS/R2PAMEFZC9nvB7djwqzIoFucxtIhfr0myKl30+pv0gO+fsxsLN9QJQsaooWVbxvF+pNJLF4D1t7fOZLKJ2fOwmupLlOllDONog=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LmTg/gUB; arc=none smtp.client-ip=209.85.160.181
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="k9rkyA9h"
-Received: by mail-oi1-f169.google.com with SMTP id 5614622812f47-3c19dd9ade5so629756b6e.3
-        for <git@vger.kernel.org>; Mon, 26 Feb 2024 14:05:52 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LmTg/gUB"
+Received: by mail-qt1-f181.google.com with SMTP id d75a77b69052e-42e8e85a969so5302611cf.2
+        for <git@vger.kernel.org>; Mon, 26 Feb 2024 14:05:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1708985151; x=1709589951; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=IdCP8yoDpS+QXsAhHn7phc5p8zsguEvYdaGFyoFNXd0=;
-        b=k9rkyA9hEylx47qsU3w0RY4XD4NTj14d8shih/IIgSaPDm4EDF9MWGWSHZ5Qye3lU/
-         nb8K3Gy/njtpRrQDVmGEpEyZOCdDJ8BmBpbbNRstLMeZec5Je1wnxYilnIpQoeemoEWO
-         kCXJ7bEwhKlprRapGZEJzTehfeXlJQKoEYY0QLmt3Sc0A9Ox34sXXGsqxgn4pRdDTTuv
-         mfJNC89A0FTDOgadvohrK00vfY+IupDql33YQNydIcFG7H4YnWz8jpE2UVEa4q0vMzSX
-         VBDA/XlH8SFJ1MCvgGCGGIeWEIXIXBgu33KcPYR8YwDq4b4nQwvAvZCcpvT6DLDaUcLs
-         Gxtg==
+        d=gmail.com; s=20230601; t=1708985152; x=1709589952; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=XOSgXZwzZutIsH9W50mGIJbV21EIOpTYplCjJ+NKEqw=;
+        b=LmTg/gUBDJsTCzRWYnR3RU6UlxIM7NHbt8r+0EEqDXGxduirT9xrDWXOIbswcLYMC4
+         EvyCntoee6SaobQEbphZydGzCg7nmaHvbqJltBzFxwCe37619tyeS4OljEUr7g8Eb/9O
+         /dgLzUwNkmdHSia/jSTQbnFtBZNqhnMpaqGN2NxHHSZgOaY1gPJX8vm26a/3ueSYRrix
+         Bj3+GoeieOrWQDygl6cUZGWXCgda+zTzDKKYqKwQTyWRBxsOK17hEtnBTh8rZfA2BBI0
+         X4cKcV1NCxSAwNdKpg4YIwavFhb9i2vAaRvVxjIXrOrHOnr76ADOkkjt1HtfqYaj4OHi
+         9tvg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1708985151; x=1709589951;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=IdCP8yoDpS+QXsAhHn7phc5p8zsguEvYdaGFyoFNXd0=;
-        b=OPyMjxNB/WPoN/Ro8mknr7x3c5AuBL8wsviURcAwYz6moI1wfcmB8ZPYmVELAKLGyI
-         PfRgdNVPyph9U1uVjNC07St+BTC0PTd5l5ukIUKV39jEj0WzBr7SaGu3ebnFDbhGbfWX
-         9e2BhMf9PiholOSFPrYcBgXfU2BMRTC9bln+vc/Arim4qKuaJbuC852NJX9rsU83jT6u
-         8aQagTcUG+sSyCaovLhROB+qYvCqaOKa+ZTMcvre1AyunfPoFBcNa3P6HOyOkRyFxsGr
-         +KFw+x/ug4f0alvt3/BfYuQsylyY71tEsiiiQXtrCqhCiwBxWZExywYaiHS3s3FuJ1Ck
-         KXPw==
-X-Gm-Message-State: AOJu0YxaHvTpQgzcwmiDDXkFjhescpdZhJgT20BJpgMCpfiw9noxvhe8
-	A43GcptJ/YW+vJGrKEXq/rdOYdE5vth72GfOtmz/KvfcWDkACR2DvlLBapXg0KI=
-X-Google-Smtp-Source: AGHT+IFEyoEOSlhqkuNhj4dDoDlzO1PELaK1aSRrPVVie+E/mNy8NAV3iN50AFI1u3M2nCA583fV0A==
-X-Received: by 2002:a05:6808:22a1:b0:3c0:35db:683e with SMTP id bo33-20020a05680822a100b003c035db683emr473567oib.32.1708985151322;
-        Mon, 26 Feb 2024 14:05:51 -0800 (PST)
+        d=1e100.net; s=20230601; t=1708985152; x=1709589952;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=XOSgXZwzZutIsH9W50mGIJbV21EIOpTYplCjJ+NKEqw=;
+        b=ieFjACFsesw+anzIQGynxqWXCoXAJm8agsOGxayfXBbQNHDKjN3+3NTo88FJRw4LRP
+         GfQyWCwMoTuolQGTNCCwAtrVdzMC7LaVF712IYnfzBFCakEKinXcrIKBsHTJ3Wt/kKL8
+         t5vRnBACtO48LA97jEso34m+5osJYWepuktnqq+8AszH8E6XQRXuI8Wgs/DxW04JcJLy
+         6BMAq7W7tyDPB+kc3Mo7HGTrJtXzR+vazFutuVnymP4W2ER1fWovP00Zt89MLbEJEYb+
+         +WEIYA6evsa98gXBE/gD4NEjPfloOCn6+1I/VDtp+p5aacFfL1NW7xBGCVv7dXdnp2ZH
+         UrUw==
+X-Gm-Message-State: AOJu0Yw06C+21XIleCH4yfsfm7B/kua2h3RFLP/Eo3WpIVlkYI/S6v7v
+	+2/yYfUU26zzrX1tPSaYdlCGUY6GPHfeAgqBGAyKZzxbtlk6nmWstNz0Kigs
+X-Google-Smtp-Source: AGHT+IHAi7RJyRz8WQi1b0fvF8qFH0cdGF5gtCgWixAubNwon4ByMmx93DDVIB6tAuXspTZZKjIgdw==
+X-Received: by 2002:ac8:5a95:0:b0:42e:7de0:cf28 with SMTP id c21-20020ac85a95000000b0042e7de0cf28mr5164546qtc.68.1708985152059;
+        Mon, 26 Feb 2024 14:05:52 -0800 (PST)
 Received: from localhost.localdomain ([2607:fea8:3fa9:4200:ad2d:24a1:4eaf:e903])
-        by smtp.gmail.com with ESMTPSA id b6-20020ac87546000000b0042dce775a4bsm2911696qtr.3.2024.02.26.14.05.50
+        by smtp.gmail.com with ESMTPSA id b6-20020ac87546000000b0042dce775a4bsm2911696qtr.3.2024.02.26.14.05.51
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 26 Feb 2024 14:05:50 -0800 (PST)
+        Mon, 26 Feb 2024 14:05:51 -0800 (PST)
 From: "Randall S. Becker" <the.n.e.key@gmail.com>
 X-Google-Original-From: "Randall S. Becker" <randall.becker@nexbridge.ca>
 To: git@vger.kernel.org
 Cc: "Randall S. Becker" <rsbecker@nexbridge.com>
-Subject: [PATCH v1 0/4] Change xwrite() to write_in_full() in builtins.
-Date: Mon, 26 Feb 2024 17:05:34 -0500
-Message-ID: <20240226220539.3494-1-randall.becker@nexbridge.ca>
+Subject: [PATCH v1 1/4] builtin/index-pack.c: change xwrite to write_in_full to allow large sizes.
+Date: Mon, 26 Feb 2024 17:05:35 -0500
+Message-ID: <20240226220539.3494-2-randall.becker@nexbridge.ca>
 X-Mailer: git-send-email 2.42.1
+In-Reply-To: <20240226220539.3494-1-randall.becker@nexbridge.ca>
+References: <20240226220539.3494-1-randall.becker@nexbridge.ca>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -67,29 +71,28 @@ Content-Transfer-Encoding: 8bit
 
 From: "Randall S. Becker" <rsbecker@nexbridge.com>
 
-This series replaces xwrite to write_in_full in builtins/. The change is
-required to fix critical problems that prevent full writes to be
-processed by on platforms where xwrite may be limited to a platform size
-limit. Further changes outside of builtins/ may be required but do not
-appear to be as urgent as this change, which causes test breakage in
-t7704. A separate series will be contributed for changes outside of
-builtins/ at a later date.
+This change is required because some platforms do not support file writes of
+arbitrary sizes (e.g, NonStop). xwrite ends up truncating the output to the
+maximum single I/O size possible for the destination device.
 
-Randall S. Becker (4):
-  builtin/index-pack.c: change xwrite to write_in_full to allow large
-    sizes.
-  builtin/receive-pack.c: change xwrite to write_in_full to allow large
-    sizes.
-  builtin/repack.c: change xwrite to write_in_full to allow large sizes.
-  builtin/unpack-objects.c: change xwrite to write_in_full to allow
-    large sizes.
+Signed-off-by: Randall S. Becker <rsbecker@nexbridge.com>
+---
+ builtin/index-pack.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
- builtin/index-pack.c     | 2 +-
- builtin/receive-pack.c   | 5 +++--
- builtin/repack.c         | 9 +++++++--
- builtin/unpack-objects.c | 2 +-
- 4 files changed, 12 insertions(+), 6 deletions(-)
-
+diff --git a/builtin/index-pack.c b/builtin/index-pack.c
+index a3a37bd215..f80b8d101a 100644
+--- a/builtin/index-pack.c
++++ b/builtin/index-pack.c
+@@ -1571,7 +1571,7 @@ static void final(const char *final_pack_name, const char *curr_pack_name,
+ 		 * the last part of the input buffer to stdout.
+ 		 */
+ 		while (input_len) {
+-			err = xwrite(1, input_buffer + input_offset, input_len);
++			err = write_in_full(1, input_buffer + input_offset, input_len);
+ 			if (err <= 0)
+ 				break;
+ 			input_len -= err;
 -- 
 2.42.1
 
