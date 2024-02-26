@@ -1,103 +1,126 @@
-Received: from mail-oa1-f51.google.com (mail-oa1-f51.google.com [209.85.160.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mout.web.de (mout.web.de [212.227.15.4])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A87F512F388
-	for <git@vger.kernel.org>; Mon, 26 Feb 2024 18:14:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 540B612EBEE
+	for <git@vger.kernel.org>; Mon, 26 Feb 2024 18:17:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.4
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708971252; cv=none; b=EQf4M9r9eJMXPPmIBzpN6Mc8odf+hp2k4JGu6wQBSAN3v0JJPkaKGcuGLSQ6nmoTFJlx/vbkg9qMOsjbwziEZUNqlKgMFFvIaIWeYdSnYvmMUijv0Pckt8Su7nC4iB21iIkdozBx3DhAvXzTQmE0ZJSQH0uuAhjS/HVuCKNSOQ8=
+	t=1708971439; cv=none; b=KRINnM6HBjJ6l9itdeloKCd8USA0t6xBtAqgi7SqKC5LCN4r71VrnBhsXrVxF2yYncYLY6Uc6OEjVkbAjgA1ApOoJ5pdjTGMkEDSqD+IxgGx/xS7sxks2Tdz6T42bEbXLsad1lOjOkGijhjgWZeSVTo7jByBxUxokPw2DL9AW4k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708971252; c=relaxed/simple;
-	bh=rF0OO2hjvkW6bAJIPNmwQ8x+C66NyDk5HvrubyJetIc=;
-	h=Subject:To:Cc:References:From:Message-ID:Date:MIME-Version:
-	 In-Reply-To:Content-Type; b=cG9y9aWYj0vbj7A2mTCfncNlrQpZDmzMmDeL0FXTZ50jWY7EIVi5WsuJ6XHknHDHv2ppw3OXEaCksRYVdRnjG5lKfeJ70REbTKFyFi1AoX0zO9hrw9Q5PFKexg6vNq+8tn6yVY69CvQXfQioM3tLVt18Tk7Cm+ktAxVQpJmtyH0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fKPQf3j+; arc=none smtp.client-ip=209.85.160.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1708971439; c=relaxed/simple;
+	bh=/zrKp1I1xtoLdpGqFqcdZgU8Xu0WjJgdQo1MHjhsnHA=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=kZ/BPgJ8N+uzh9b0W55NZdxK7aaMDVsdc5ii6FcZQ3YvlO+jD29fQLjpQVDBBMQ7n7JygEXZikCTZ5Mtw+Ce1E4KbJHo6nZr/GzOdRUatIXYaNb7y4EMOGrA76rlCErjICYDlb3dkZFSjLmvIiI3ZteNQITlQ5yhe7QfTfOiSB4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b=jdimQ4hd; arc=none smtp.client-ip=212.227.15.4
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fKPQf3j+"
-Received: by mail-oa1-f51.google.com with SMTP id 586e51a60fabf-21fd5eb7161so1299881fac.0
-        for <git@vger.kernel.org>; Mon, 26 Feb 2024 10:14:10 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1708971250; x=1709576050; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-language:in-reply-to:mime-version
-         :user-agent:date:message-id:from:references:cc:to:subject:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=EYHbqXRbY+9N3XLStRPMvt6DFtxyfdQ+r684BQYSIaM=;
-        b=fKPQf3j+CJ8qPWAjoFj0GlwE4W2Ax0/DwvuyWTXuRtnHsKGgmiuFqYMofumOPwaHz3
-         JffEMQ2fpeTS82btImcba5ONt/FQ1tBa6cMJLFWZs1uRU7Niru3xrHfLmiXi4eCOwQxo
-         zo2iQm2g1sP2Ajg6dKkrpZV4e7FK+swngB0NNQFKqBAn+elkRYBfi19gr89EgsbZZjvc
-         JJNL+IEfNJRi6owlkAopCX3W/4tI7REiWrfpm2PjHRU0i0jWxTt6XAjkV8/Clk4Wpd0y
-         wE8N5uon/CLo3+0PNvpBiwrOwmWu+NQlA/cJL1fSkkJjWi9CV6d6LiCxFylbAS6tRIUF
-         2g4A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1708971250; x=1709576050;
-        h=content-transfer-encoding:content-language:in-reply-to:mime-version
-         :user-agent:date:message-id:from:references:cc:to:subject
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=EYHbqXRbY+9N3XLStRPMvt6DFtxyfdQ+r684BQYSIaM=;
-        b=OcFIbp/7KpKiazyxuS88k8va4sp4SlyGOarC7TpDvZEfOYqA+J3cJP+ZbMu9xwYCnz
-         YlQPYIEQvJh5zr17KNRBhR+b4cnyHXklVU1caGe496TJ0dC2P7aRvPBQ7LKZhsGFM519
-         s1iK7uK6/lXOeRe8Yq8/yjj2QImH0in4mIc9ALeLG5HKBPQLbPcTqn1h0EqvKGGMd7cI
-         LOg25k/jnI9fvE3J9f8M9ZHPEQxqXKK3PC2EvIYZ4ddbNvEBP4vFH1/TpFTJxzraRf8y
-         KuAY7IjmE/kfqxXB4iY7szg2UzHF+LH9L0+HBcEIDC1fbS/vGF8FDYanNhbSNCW1KU5k
-         mukg==
-X-Gm-Message-State: AOJu0Yzl1jUaCr0WuO/46Am/9IdZvzFNKbTTyrFkK0w5ktS17fxy5KcZ
-	iJ/qqDCy48i68AULWnZDLACOCJSPszqO4W0yvKBSdySP4GpTzi3F
-X-Google-Smtp-Source: AGHT+IEXY4G9dFR2/sbwltYJQtvGwZHTIFhFgjfuPyTzCAjC/wGhN6jhFn5w9cHXdY10m9UShnOxpg==
-X-Received: by 2002:a05:6870:93ca:b0:218:9e23:6826 with SMTP id c10-20020a05687093ca00b002189e236826mr8860344oal.3.1708971249762;
-        Mon, 26 Feb 2024 10:14:09 -0800 (PST)
-Received: from ?IPv6:2606:6d00:11:ff90:6db2:683e:23c:87ed? ([2606:6d00:11:ff90:6db2:683e:23c:87ed])
-        by smtp.gmail.com with ESMTPSA id p10-20020a05620a112a00b00787549c6ff3sm2712945qkk.68.2024.02.26.10.14.09
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 26 Feb 2024 10:14:09 -0800 (PST)
-Subject: Re: [PATCH v2] merge-ort: turn submodule conflict suggestions into an
- advice
-To: Junio C Hamano <gitster@pobox.com>,
- Philippe Blain via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, Calvin Wan <calvinwan@google.com>,
- Glen Choo <glencbz@gmail.com>, Elijah Newren <newren@gmail.com>,
- =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-References: <pull.1661.git.git.1706534968589.gitgitgadget@gmail.com>
- <pull.1661.v2.git.git.1708954048301.gitgitgadget@gmail.com>
- <xmqqh6hvfb6c.fsf@gitster.g>
-From: Philippe Blain <levraiphilippeblain@gmail.com>
-Message-ID: <c00617b0-b673-b52c-db15-278a67370e75@gmail.com>
-Date: Mon, 26 Feb 2024 13:14:08 -0500
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:78.0)
- Gecko/20100101 Thunderbird/78.14.0
+	dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b="jdimQ4hd"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de; s=s29768273;
+	t=1708971421; x=1709576221; i=l.s.r@web.de;
+	bh=/zrKp1I1xtoLdpGqFqcdZgU8Xu0WjJgdQo1MHjhsnHA=;
+	h=X-UI-Sender-Class:Date:Subject:To:Cc:References:From:
+	 In-Reply-To;
+	b=jdimQ4hda4ngPVzdUQaNQJBvaLQ9CBP82RgJZuL36CtHyK4EHf7YNiUglJ180sth
+	 WAFjsrViH+pscvjdypdHd+Uj/fFlfUxgeJL/EEWnyj+7FbpA5M/RVL8K2+ViYeR4D
+	 ZuuYIkH5KOZzaJbKdguU9oGzQafpVjFylIBFwTd/6l2qLCb4+vbl5HZv6uEiNXnWA
+	 n9ApaGhsABAZ+endbw8aktqWU1c89Nt2ptaNt2/MFkjKdTancFWDa9ittP/Ju8EAk
+	 jOCct/DrJuHiJC88pFM+4GPRpFtzY0hwWdMLPM2HSvdeTeA7VlmHHKajoDSCiUFuM
+	 8EOJ87NRNoGzoiYybA==
+X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
+Received: from [192.168.178.29] ([79.203.19.211]) by smtp.web.de (mrweb006
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 1MHEbk-1rj5O03XaC-00DFo8; Mon, 26
+ Feb 2024 19:17:00 +0100
+Message-ID: <1868c502-b915-42fd-8cb2-efe90429f9b7@web.de>
+Date: Mon, 26 Feb 2024 19:17:00 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-In-Reply-To: <xmqqh6hvfb6c.fsf@gitster.g>
-Content-Type: text/plain; charset=utf-8
-Content-Language: fr
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/2] mem-pool: add mem_pool_strfmt()
+Content-Language: en-US
+To: Jeff King <peff@peff.net>
+Cc: git@vger.kernel.org
+References: <20240225113947.89357-1-l.s.r@web.de>
+ <20240225113947.89357-2-l.s.r@web.de>
+ <20240226070844.GB780982@coredump.intra.peff.net>
+From: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
+In-Reply-To: <20240226070844.GB780982@coredump.intra.peff.net>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:wDn3E0vblpB0TUPYvT71gAvBeb+CpjeHaswcb/TrocuuV5Jw8Vi
+ tf4lnnF5zLhIps2cD6obXi1LlLMVlOOvIcdDXQs8ompse1bvLgJoW7ljnI16+IGv4CKIBIX
+ 3+pmryH9dWHolm4cZqD4sOsSS/P+wxXylAf2tHIjCg+142+p/zK5xNv8iadsZHYUMeHe1EA
+ kQ0HK5K79wFkrYiSC1yuA==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:A+XFDPlc48s=;4qJuQMGT0U2hr2R7RAjzV09W62r
+ nG0xLEyjMN9M90r+YrqRw4gt9wiVnv6LwpxdWz7tG26zNtcX3RtLYXbC+xKu7jz/PxR5OAqdX
+ lC836B+tYt2Kc5jiBPPlzuZKo7CUkcQrzyMDZKUgPFMhTPnXaD+yjjTWKqvaY7/H8BuVJGyUa
+ Vy6JNMUQGFzKxySqSULfdwmT59s08y5ZdqIpu9hPskDik1Mw7zl8HBbIgakur9R3iW9yUn0Ux
+ P28sQNRjF0caq2U+8LByRGbvwyldjU+/cUHM0euOV9Du3N6GXlMfwqvd0U8ohBjGNQveJ0a+S
+ 4HJAKiGJN3/5kyeFiKfHP4I6qR3VYKeF9ykyUlvGF2fUOOwCLw7kbk7CfB/nSmwhSf6JCl5Zx
+ Ss9dgGtdwbHtvbltJfKBF49PZLSe6sGSWxPa0o6Z0tg/3EKjlIBT6NsKJoPX2+SVCRkjjjDxf
+ lVlDZijxVBmCez7lLIz1JUVlXH3Zn6Bi2VATdEGmQVg/7sGz0czOUK4IPZ64cwK7EKJmm5L7+
+ FFgGSqdkoSGm+jDMuujFDeW4cnib55P1dYL+bDz5I/Ab9P0Z2UsZWIMM3h2oX6lZeQyi3xw0j
+ MI0v/GBKPZ9+Lh0A9RxW+OV0eqktfbwTpCpwFlQa2cii3SQQKKe9vmt/gIFcgHe0OWwE+Y7KV
+ AZXs7/hGD2gxYdhYVigHMtehxD7roMm5vd0KBXsARALXBS/f0dv4FIGh8v4ylBNt8TjOE9fjX
+ U/euLMatzoIXNuAOFPQC4BbZ+yd6q4+uopebXHfCYmL8hSpFaBQL+6oNV5ZG/1lgDuugCRcYT
+ 02UGS4sbbvd6T9AVItG294yMp7f9fYRA6mUyibbAGMG3Q=
 
-Hi Junio,
+Am 26.02.24 um 08:08 schrieb Jeff King:
+> On Sun, Feb 25, 2024 at 12:39:44PM +0100, Ren=C3=A9 Scharfe wrote:
+>
+>> +static char *mem_pool_strvfmt(struct mem_pool *pool, const char *fmt,
+>> +			      va_list ap)
+>> +{
+>> +	struct mp_block *block =3D pool->mp_block;
+>> +	char *next_free =3D block ? block->next_free : NULL;
+>> +	size_t available =3D block ? block->end - block->next_free : 0;
+>> +	va_list cp;
+>> +	int len, len2;
+>> +	char *ret;
+>> +
+>> +	va_copy(cp, ap);
+>> +	len =3D vsnprintf(next_free, available, fmt, cp);
+>> +	va_end(cp);
+>> +	if (len < 0)
+>> +		BUG("your vsnprintf is broken (returned %d)", len);
+>> +
+>> +	ret =3D mem_pool_alloc(pool, len + 1);  /* 1 for NUL */
+>> +
+>> +	/* Shortcut; relies on mem_pool_alloc() not touching buffer contents.=
+ */
+>> +	if (ret =3D=3D next_free)
+>> +		return ret;
+>> +
+>> +	len2 =3D vsnprintf(ret, len + 1, fmt, ap);
+>> +	if (len2 !=3D len)
+>> +		BUG("your vsnprintf is broken (returns inconsistent lengths)");
+>> +	return ret;
+>> +}
+>
+> This is pulling heavily from strbuf_vaddf(). This might be a dumb idea,
+> but... would it be reasonable to instead push a global flag that causes
+> xmalloc() to use a memory pool instead of the regular heap?
+>
+> Then you could do something like:
+>
+>   push_mem_pool(pool);
+>   str =3D xstrfmt("%.*s~%d^%d", ...etc...);
+>   pop_mem_pool(pool);
+>
+> It's a little more involved at the caller, but it means that it now
+> works for all allocations, not just this one string helper.
 
-Le 2024-02-26 à 11:22, Junio C Hamano a écrit :
-> "Philippe Blain via GitGitGadget" <gitgitgadget@gmail.com> writes:
-> 
->> From: Philippe Blain <levraiphilippeblain@gmail.com>
->>
->> Add a new advice type 'submoduleMergeConflict' for the error message
->> shown when a non-trivial submodule conflict is encountered, which was
->> added in 4057523a40 (submodule merge: update conflict error message,
->> 2022-08-04). That commit mentions making this message an advice as
->> possible future work. Only show the advice if it is enabled.
-> 
-> When specifically called out like this, it makes it sound as if this
-> one is disabled by default, while everybody else is enabled unless it
-> is disabled.
+That would allow to keep track of allocations that would otherwise leak.
+We can achieve that more easily by pushing the pointer to a global array
+and never freeing it.  Hmm.
 
-Yes, re-reading myself, this did not come out as I wanted. I'll update
-the message to read more like "Adjust merge-ort.c::print_submodule_conflict_suggestion 
-to use the advice API" or something like this.
+It would not allow the shortcut of using the vast pool as a scratch
+space to format the string with a single vsnprintf call in most cases.
+Or am I missing something?
 
-Thanks,
-Philippe.
-
+Ren=C3=A9
