@@ -1,128 +1,156 @@
-Received: from siwi.pair.com (siwi.pair.com [209.68.5.199])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f54.google.com (mail-ed1-f54.google.com [209.85.208.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60200132461
-	for <git@vger.kernel.org>; Mon, 26 Feb 2024 17:12:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.68.5.199
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79B3812CD96
+	for <git@vger.kernel.org>; Mon, 26 Feb 2024 17:15:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708967562; cv=none; b=RpiH+G3mt+FPuuZ4ZVN5SgdRrZwjJuhUQx92off3HWKShyfXMK3wE/DXaKxB5kwA3kcd9ll9MxJjRI4TrdcmfyvM35rVuwbzUkf5RTp7Voe4/eATbq2gKUxXYSFyccvZLhLLUlO+z/lq94b146ZmvE4IImbGg+V57pk53NhLE94=
+	t=1708967741; cv=none; b=sy3h84UTbyFrOTksiPNoEkvrJOjyWW4bUIhgei7y1X+r0hdnvA3V5HPAQm3N1v55qbVwbeGNteriyrNd1RXIlO2BylYprEdp18cbFRDTOFyFby/kywAzmKlgZkHSuQK/eR9vfGutRBDVUB6DS6Ycr4cZcVfpAyuWZvc8PKzhou0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708967562; c=relaxed/simple;
-	bh=nxW1Q58Gn/oNvmKL+QRhpCbLRcR4ENUEulOU8j53Wqk=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=d16TrlDN7l4m8BUDFBmWmq8w54ssAGNuGXyG9fQhCUOk/xcZJmoc9BHcKPCy2Fs6BOIBRfSP+6BOMF2Cd5RNSXyRrDiS95eHG6mOZgtqneDNNtZzNM7xkRj8uRtWzCUfYtPv4evwtCGOB8uauen3eXI8YcIpGbuyNXEKprCNHdk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=jeffhostetler.com; spf=fail smtp.mailfrom=jeffhostetler.com; arc=none smtp.client-ip=209.68.5.199
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=jeffhostetler.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=jeffhostetler.com
-Received: from siwi.pair.com (localhost [127.0.0.1])
-	by siwi.pair.com (Postfix) with ESMTP id 39243CA1291;
-	Mon, 26 Feb 2024 12:12:32 -0500 (EST)
-Received: from [IPV6:2600:1700:840:e768:b846:2f3e:cac1:b0eb] (unknown [IPv6:2600:1700:840:e768:b846:2f3e:cac1:b0eb])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	by siwi.pair.com (Postfix) with ESMTPSA id EBED0CC83B7;
-	Mon, 26 Feb 2024 12:12:31 -0500 (EST)
-Message-ID: <e622183b-23ce-3aad-0918-9690d9ba4d56@jeffhostetler.com>
-Date: Mon, 26 Feb 2024 12:12:31 -0500
+	s=arc-20240116; t=1708967741; c=relaxed/simple;
+	bh=60XzTBOmh818EJGbovoS4RiJR6JkSNEB8UJpKJ8f/Fc=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=AV65+pfvgn0gZ3wcWPA5wfTdQMHSH//qADAHh8cimbdNx3XMsP73KbnFewAHQyyuHziRjztqy+Kfum4oknQHQ6MoZOT3nSaznj6y4dOaJCc3M/IZ/uLARQULh1z9zuXnMGEC7k+O1dCGtfodsrVUapuIqgDeFdVz2xhvgYyMYAA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jV+br8fa; arc=none smtp.client-ip=209.85.208.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jV+br8fa"
+Received: by mail-ed1-f54.google.com with SMTP id 4fb4d7f45d1cf-563c0f13cabso4296146a12.3
+        for <git@vger.kernel.org>; Mon, 26 Feb 2024 09:15:39 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1708967738; x=1709572538; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=IgrO6uyzsOlkwtowYZhkUci/T3S8jz7bBHSYakcLAhk=;
+        b=jV+br8fadOC6Os+q7AIvHzHbaSHKPcg7WHhXJC0nT2Gd3gz1mO2r9Xh64kWgQIb99l
+         T9C4k4SjVrNbm6QKilq598TG+0xDTIRY2SPVs8Jj4mgsCp3bi8La9wB17YDBNoxv6asZ
+         8iBtcAK8BqKvDLEOAJM2mRvOsUDixoUFvOOZ2L3R0Ao/ArmKx+FzXb9RlYuw1jMXa347
+         rROFe+XOmWgQ51Kduvzd1t/EpCJK3xy+eJpXgAPcpv6goMpfdQQEghIf8tUSipUmxc23
+         4sNvTwfraUxYPAtUKoxAgLaPUvoojUyegNxnQUKMR0oklYPDdjwYNMsj9Q7JSdA+84c6
+         fxmg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1708967738; x=1709572538;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=IgrO6uyzsOlkwtowYZhkUci/T3S8jz7bBHSYakcLAhk=;
+        b=HXI6RSiM62KjSToGuDmEfYeegb3OMLRi8+MPv3/S0pBenqUbBIl8aNBaSFVyNcP786
+         JxT9OaoBcSCmLJwMVtV5RkB/3vtxuCv7BZAP1hJETwGhwW7XknjJSwET/6OCAd+iMNDS
+         fj6PP5AjDlFBnMXlj82xXZoW2pWmkckUeVD3LAMD+Zk5fKOnie29rS4i4OGcdetKZifz
+         pIv6+kvFJP87iVsCUpIxEvLvKoMTGzX031VwUjjKFBuMXb+3opMsICQ4leq6jHwcBbAS
+         KzCsINgi+ZIKuUivxDKoLM5RpvJ9+HUBjoPY81cYPSe+K0Ad4uFuDGMOEBZxdNRFGjYN
+         3j1w==
+X-Forwarded-Encrypted: i=1; AJvYcCWqW3NWUimloIPN3mUxHEFoCyfZRA0FUGsunIsxS7oi5LsAdqFoBVM62p17yvO+65Z6HnDvKn5N5oh/wNnD4PJMNSA1
+X-Gm-Message-State: AOJu0YwqReo1S8l25NIvy71UafW1wxmeYcvnqwcKoKogzRGZWgMXD/69
+	UWE7Gr8bjwhX+rEknepta1/xu2vglnj6yvN9zZTl3lVe0Qb8M2a8pJgB5ahJWXgP9zYze6m3MB8
+	Tpx7xwlL1A22zN+ErkhXpKpSZ1HdDxG8FP1E=
+X-Google-Smtp-Source: AGHT+IF4wSlj/KIU+TlqzHlfWvVVmaHmqKhUYsaZ62E15CRyUiqcb7S5BlHxMw/RJ7lNzDLezyZIABFKTjiJcVHXKko=
+X-Received: by 2002:a17:906:66d9:b0:a3f:c3bc:f6db with SMTP id
+ k25-20020a17090666d900b00a3fc3bcf6dbmr5300966ejp.76.1708967737519; Mon, 26
+ Feb 2024 09:15:37 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
- Gecko/20100101 Thunderbird/102.15.1
-Subject: Re: [PATCH v2 03/16] t7527: temporarily disable case-insensitive
- tests
-Content-Language: en-US
-To: Junio C Hamano <gitster@pobox.com>,
- Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>,
- Jeff Hostetler <jeffhostetler@github.com>
-References: <pull.1662.git.1707857541.gitgitgadget@gmail.com>
- <pull.1662.v2.git.1708658300.gitgitgadget@gmail.com>
- <dad079ade7f8817f235d59c5339b82aecf4a17db.1708658300.git.gitgitgadget@gmail.com>
- <xmqqh6hz1tmx.fsf@gitster.g>
-From: Jeff Hostetler <git@jeffhostetler.com>
-In-Reply-To: <xmqqh6hz1tmx.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: mailmunge 3.11 on 209.68.5.199
+References: <20240226143350.3596-1-ach.lumap@gmail.com> <xmqqil2bdvsy.fsf@gitster.g>
+In-Reply-To: <xmqqil2bdvsy.fsf@gitster.g>
+From: Christian Couder <christian.couder@gmail.com>
+Date: Mon, 26 Feb 2024 18:15:25 +0100
+Message-ID: <CAP8UFD0Qhy78=v9+hCekMJPkcH2KmeZeQ0xUx8kqrByQ4PO3Xg@mail.gmail.com>
+Subject: Re: [Outreachy][PATCH 1/2] strbuf: introduce strbuf_addstrings() to
+ repeatedly add a string
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Achu Luma <ach.lumap@gmail.com>, git@vger.kernel.org, 
+	Christian Couder <chriscool@tuxfamily.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
+On Mon, Feb 26, 2024 at 5:39=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
+wrote:
+>
+> Achu Luma <ach.lumap@gmail.com> writes:
+>
+> > In a following commit we are going to port code from
+> > "t/helper/test-sha256.c", t/helper/test-hash.c and "t/t0015-hash.sh" to
+> > a new "t/unit-tests/t-hash.c" file using the recently added unit test
+> > framework.
+> >
+> > To port code like: perl -e "$| =3D 1; print q{aaaaaaaaaa} for 1..100000=
+;"
+> > we are going to need a new strbuf_addstrings() function that repeatedly
+> > adds the same string a number of times to a buffer.
+>
+> We do not need to call such a function "addstrings", though.  The
+> name on the subject line made me expect a varargs function:
+>
+>  (bad)  strbuf_addstrings(&sb, "foo", "bar", "baz", NULL);
+>
+> It would have been clearer if the name hinted what it does, clearer
+> than just a single "s" that says it is talking about plural.  What
+> would be a good name that hints "n times add a single same string"?
+> I dunno.
+>
+> I also would have expected that the order of parameters are
+> repeat-count followed by what gets repeated.
+>
+> Having said all of the above, we already have "addchars" that is
+> equally strange, so let's let it pass ;-).
 
+Yeah, we thought about naming it strbuf_repeatstr() first, but then
+seeing addchars() I thought it would be better to imitate it.
 
-On 2/23/24 3:17 AM, Junio C Hamano wrote:
-> "Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com> writes:
-> 
->> From: Jeff Hostetler <jeffhostetler@github.com>
->>
->> Add non-existent "SKIPME" prereq to the case-insensitive tests.
->>
->> The previous commit added test cases to demonstrate an error where
->> FSMonitor can get confused on a case-insensitive file system when the
->> on-disk spelling of a file or directory is wrong.  Let's disable those
->> tests before we incrementally teach Git to properly recognize and
->> handle those types of problems (so that a bisect between here and the
->> final commit in this patch series won't throw a false alarm).
-> 
-> You talk about bisection, but hasn't the previous step already
-> broken bisection without these SKIPME prerequisites?  IOW, shouldn't
-> this step squashed into the previous?
-> 
-> Also, it is much more common to replace "test_expect_success" with
-> "test_expect_failure" to indicate that the steps are broken.  Was
-> there a reason why we choose to do it differently?
+> > diff --git a/strbuf.c b/strbuf.c
+> > index 7827178d8e..eb2b3299ce 100644
+> > --- a/strbuf.c
+> > +++ b/strbuf.c
+> > @@ -302,6 +302,17 @@ void strbuf_add(struct strbuf *sb, const void *dat=
+a, size_t len)
+> >       strbuf_setlen(sb, sb->len + len);
+> >  }
+> >
+> > +void strbuf_addstrings(struct strbuf *sb, const char *s, size_t n)
+> > +{
+> > +     size_t len =3D strlen(s);
+>
+> Let's have a blank line here to separate decls from the first
+> statement.
 
-In step 2 I created test with individual step failures baked into
-the "! grep -q" steps in the bottom of each test.  I didn't want a
-failure in the 50-60 lines of setup code to cause a false alarm.
-So the step 2 test "succeeds" by detecting that the output is
-incomplete/wrong.
+Yeah, right.
 
-I wanted to use a "test_must_fail" on those individual grep lines
-rather than a negated grep, but something complained about that
-function only worked on "git" commands.
+> > +     if (unsigned_mult_overflows(len, n))
+> > +             die("you want to use way too much memory");
+> > +     strbuf_grow(sb, len * n);
+>
+> The error message given by
+>
+>         strbuf_grow(sb, st_mult(len, n));
+>
+> would be equally informative and takes only a single line.
 
-I added the SKIPME here in step 3 so that I could fix the series
-in small steps and without worrying about which of the small steps
-caused the file or directory case to stop being broken (which might
-cause confusion if someone were bisecting in this part of the history.
+It seems that the pattern in strbuf.c, for example in strbuf_splice()
+and strbuf_vinsertf(), is to do a check first using an *_overflows()
+function, die if the check fails, and only then call strbuf_grow(). So
+we did the same. I am fine with using your suggestion though.
 
-Let me try again with the normal "test_expect_failure" in step 2,
-drop step 3, and smash step 16 into step 14.  With the rearranging
-that I did in V2, both directories and files should be fixed in the
-same final step -- rather than in separate steps.
+> > +     for (size_t i =3D 0; i < n; i++)
+> > +             memcpy(sb->buf + sb->len + len * i, s, len);
+>
+> Wouldn't it be sufficient to run strbuf_add() n times at this point,
+> as we have already called strbuf_grow() to avoid repeated
+> reallocation?
 
-Thanks
-Jeff
+Unfortunately strbuf_add() calls strbuf_grow() itself which is not
+needed as we have already called strbuf_grow() to avoid repeated
+reallocation.
 
+>  Repeated manual memcpy() that involves manual offset
+> computation makes me nervous.
 
-> 
->> Signed-off-by: Jeff Hostetler <jeffhostetler@github.com>
->> ---
->>   t/t7527-builtin-fsmonitor.sh | 4 ++--
->>   1 file changed, 2 insertions(+), 2 deletions(-)
->>
->> diff --git a/t/t7527-builtin-fsmonitor.sh b/t/t7527-builtin-fsmonitor.sh
->> index 3d21295f789..4acb547819c 100755
->> --- a/t/t7527-builtin-fsmonitor.sh
->> +++ b/t/t7527-builtin-fsmonitor.sh
->> @@ -1051,7 +1051,7 @@ test_expect_success 'split-index and FSMonitor work well together' '
->>   #
->>   # The setup is a little contrived.
->>   #
->> -test_expect_success CASE_INSENSITIVE_FS 'fsmonitor subdir case wrong on disk' '
->> +test_expect_success SKIPME,CASE_INSENSITIVE_FS 'fsmonitor subdir case wrong on disk' '
->>   	test_when_finished "stop_daemon_delete_repo subdir_case_wrong" &&
->>   
->>   	git init subdir_case_wrong &&
->> @@ -1128,7 +1128,7 @@ test_expect_success CASE_INSENSITIVE_FS 'fsmonitor subdir case wrong on disk' '
->>   	! grep -q " M dir1/dir2/dir3/file3" "$PWD/subdir_case_wrong.out"
->>   '
->>   
->> -test_expect_success CASE_INSENSITIVE_FS 'fsmonitor file case wrong on disk' '
->> +test_expect_success SKIPME,CASE_INSENSITIVE_FS 'fsmonitor file case wrong on disk' '
->>   	test_when_finished "stop_daemon_delete_repo file_case_wrong" &&
->>   
->>   	git init file_case_wrong &&
+I would have prefered to avoid it too, but didn't find a good way to do it.
+
+> > +     strbuf_setlen(sb, sb->len + len * n);
+> > +}
