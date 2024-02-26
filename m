@@ -1,64 +1,64 @@
-Received: from mail-wr1-f42.google.com (mail-wr1-f42.google.com [209.85.221.42])
+Received: from mail-wr1-f48.google.com (mail-wr1-f48.google.com [209.85.221.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15DEE131E21
-	for <git@vger.kernel.org>; Mon, 26 Feb 2024 21:39:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA8FC131E3A
+	for <git@vger.kernel.org>; Mon, 26 Feb 2024 21:39:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708983574; cv=none; b=nhNRFCVV21JRX068umeuN+iS+9l9DKuW69QeoS/iXOP2FpKLtH/DPc46QHcfBJaKvwDTGw9aYG1BqeNlCBD92HvQ1OF4LyiZUX8KlcimEOCnCTG4vUdJI5DYh/aEwA868tq18ir07I4eOCP80fkqvXDgdblkagLSRAvzI/VdBtU=
+	t=1708983575; cv=none; b=jCevzkZQiYEPf1OH8KZn8ACi81d8M9jzfbqHQP4gHfhTz/FafhDxiGkQbdiPCKSI5/Wak+WO33Tuzyq1aEV5TO4YLxeWxKtjGImgF7tSMS1W0QYViTgY+y98LFF6w6aHKcNoc3WBHCiRoLzotqAPgoaaQTVYOkQxv1V+8MlSBU0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708983574; c=relaxed/simple;
-	bh=yUFjxGXoa9Iu5ABIv8e5hSygDvEud2XumKI6i0VwrCo=;
+	s=arc-20240116; t=1708983575; c=relaxed/simple;
+	bh=vLaZBMjrvVg999vONXdYrb0Ew9pRcJ3/fnEw03SQqT0=;
 	h=Message-ID:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=HCFZ0dCyEWKxT3p+decVOgN6CCcFCji6nalrlBOOsBMv8OCFTjVrNhESrEeSRaiXAdqiwQ311lKCUs2U7R4bSxLUgSpG8aq42Oo7X20j9Ur+U+PJodyc61w9tN08DUmdpDRIe2NcaMI0jwRn7N9kU+GqSFatt2vsbWEGOHq8yMM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VsCjPl/X; arc=none smtp.client-ip=209.85.221.42
+	 MIME-Version:To:Cc; b=pBd/dOxPyIY7K9048pd/hH7EmYtVCoAqxlBdkU/w8I5M9VmHEf6Zy2h5Yg/JGeF5hYdVJjI8GX+cw3IAE9GGWbG9ONzzpo70zPJ2E8tARqzYH/8WNU5LNqdZgbWTPNv38AmMH6vJLhRizDJomwmS9uOf94jTC6tj2HowUEH60As=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=AXoCSEJx; arc=none smtp.client-ip=209.85.221.48
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VsCjPl/X"
-Received: by mail-wr1-f42.google.com with SMTP id ffacd0b85a97d-33d26da3e15so1996859f8f.1
-        for <git@vger.kernel.org>; Mon, 26 Feb 2024 13:39:32 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AXoCSEJx"
+Received: by mail-wr1-f48.google.com with SMTP id ffacd0b85a97d-33d754746c3so2436144f8f.1
+        for <git@vger.kernel.org>; Mon, 26 Feb 2024 13:39:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1708983571; x=1709588371; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1708983572; x=1709588372; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=tj66rkJA3Q9yHv6pTHD9ZT5In/BWmtsX624blZGveos=;
-        b=VsCjPl/XcWQCzm7Ud/Kf0UKmSJn4qH0vBFJg3g/b6hMOnxhp9QsTWhudD5EsjyIrUD
-         cB9p0yRt+GX+GWbrrgbkFzbbDcflGSZtUpsQKPNkFDcTqa+aX45zOdkKIoAiS02vTqok
-         a7qKnhbRLZNLN3RtENKTs2DqUo3C+yQy06hpD0VqGDJTX1dMMtU+WBv+SQe4E9Uy/6in
-         X1gAS/IsTb8CQBm4m9qXXkN6YZ7DhG3MTl/PxGK1aKdbz81si5rGIoe66F9N4lp94hj1
-         7YVXZ5kyHo2Ui6f0x583ngKAozkReDfEPjlky3JWY1c1ZGrFy5Jn3NmGp5b1Vh2zIHFk
-         I/UA==
+        bh=Rg+rmbAbdVTzdJr+bM0adr1ATCJ2MMLlOmTLVcUc8eA=;
+        b=AXoCSEJx5QGb1cXPUYQTByJIkCNQOM6dFlb+Y7j6MhSAjF+r4VdL4c31AX2l6teJ/b
+         koN4cBLOix0CZ9JTqLGfQbB999hlR/XAaxt7TV2KvMhtvrB0mU9XBMOiOpYBePoM2esG
+         r8VkrGUMvDAygeOFOK9BbpnMDNUublSv5adeVOF5MSSHewf5u/IXfJRPeo+XFbjuu3zd
+         BcJOvHRpSib9i1kGWksY7b+Z3ieT515COQtJaCvn1R7S0Egw69q65MU1mmyqepGhI1YM
+         DeWpe/CVyDJ66eoLc1O6duhDZoCczWgcbRpGJkbAJEj9oM+rTiRzULdFeqCtq0xK2XZh
+         AaDA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1708983571; x=1709588371;
+        d=1e100.net; s=20230601; t=1708983572; x=1709588372;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=tj66rkJA3Q9yHv6pTHD9ZT5In/BWmtsX624blZGveos=;
-        b=voOGz9nJBSXidxYYw10wnSn/cIN8lN38tKG6kzhsc6xCbrWl636zeXFrtqO79n3j8r
-         CQzeBh1rhAywPGCRVs6f1Qc9D1d1ws9/z3Q+anxpLDCvW2+/obcYHijhexqIuCCktqQz
-         0Cx9laHqiiuyH2cNROYUv70Z+D3OKO4hCUjWkhs2fFT4UBSvD/JgxjLnWzxDDXD8O6cU
-         1JeC3smPdL2rT2xn3bGO9oZ+Vp1FRHqeZSuQ7VFkR/VqFtE8904WI3WCh9qKEFExmE2X
-         UEogCoZQMwfL3wIWZsRoNpNYv/GtMDlLol3EB1TBb3426bqSkMlxLrrO3PUz9gD9aVRK
-         wiBg==
-X-Gm-Message-State: AOJu0YzNPDmRwJwJZ0uepjzcZCa5YLYA9lF9/8OJKK+y1R/9eqXsn1lP
-	PCGzpkqvYbmD3Vnqz48xRfiblq552TPtcXa3Jglpk8v1OfTP+e8e+RmOaqTK
-X-Google-Smtp-Source: AGHT+IGiEwRoBhnHyqPO92BoPaYH4erKvdOEPZXoqSZSH6myQlDH1nEyGIdv3J5OVskaMkEjSKxVMg==
-X-Received: by 2002:a5d:6d82:0:b0:33d:c0c3:fe08 with SMTP id l2-20020a5d6d82000000b0033dc0c3fe08mr7698983wrs.0.1708983571163;
+        bh=Rg+rmbAbdVTzdJr+bM0adr1ATCJ2MMLlOmTLVcUc8eA=;
+        b=skAc2MShZEbA7tfrwPToFFCvORo1wyC5UMl/lBx7qd3rgUqgk2bxtreX0/SISDyx0k
+         1RnwwbOcY/B5B4UbnjjG8FMdw7zCrz0chnitux4+3ADGYVkmcJTGV20HfCI5po4KX0zm
+         SRYfSARaf7h8NPKnXKbkMErXHeT5TETj8XR074v194q0hWJlhbJcZ/58emjxjZoJQyvr
+         9iraaSneC6akDlhPw11ph7V8AgWbvbcEbzFXMwbdGnUH0jNCVpLri2C4YciPTXeJuu3P
+         biGjlw92xAEUbXHZDQn/9pZP6c/op67SMAoqi5xzcXlpHP3OvzmF6zixDGn4l30f1IM8
+         bA/A==
+X-Gm-Message-State: AOJu0YzEFVJQyfpbV6kbuVGe27+QmBiFXKmljnMgYmPo4MTXcezxZFw7
+	0kMF/x+9YzjFBW77JU2Kx8wNc+gz5WP5oE18Iq/EPUajiMyFHUNHALUOu8Hs
+X-Google-Smtp-Source: AGHT+IF0pu2yM/dVNyzx6lgYAN86AZIMUQ8ffrVciAGVs5V4/ibL/zDq0IQHajdHeQHGu7KHi5t9bA==
+X-Received: by 2002:adf:f78d:0:b0:33d:1656:21fa with SMTP id q13-20020adff78d000000b0033d165621famr6844761wrp.24.1708983571864;
         Mon, 26 Feb 2024 13:39:31 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id bn23-20020a056000061700b0033d1f25b798sm9512878wrb.82.2024.02.26.13.39.30
+        by smtp.gmail.com with ESMTPSA id bs23-20020a056000071700b0033d5f5571b4sm9471196wrb.44.2024.02.26.13.39.31
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 26 Feb 2024 13:39:30 -0800 (PST)
-Message-ID: <9a4b5bf990bcddb2707207b7a523f0b9945d84a0.1708983566.git.gitgitgadget@gmail.com>
+        Mon, 26 Feb 2024 13:39:31 -0800 (PST)
+Message-ID: <348b9b0c94e23d82f1df69b0b24b70d6cfb48a19.1708983566.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1662.v3.git.1708983565.gitgitgadget@gmail.com>
 References: <pull.1662.v2.git.1708658300.gitgitgadget@gmail.com>
 	<pull.1662.v3.git.1708983565.gitgitgadget@gmail.com>
 From: "Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Mon, 26 Feb 2024 21:39:15 +0000
-Subject: [PATCH v3 04/14] fsmonitor: clarify handling of directory events in
- callback helper
+Date: Mon, 26 Feb 2024 21:39:16 +0000
+Subject: [PATCH v3 05/14] fsmonitor: refactor refresh callback for
+ non-directory events
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -77,67 +77,107 @@ Cc: Patrick Steinhardt <ps@pks.im>,
 
 From: Jeff Hostetler <jeffhostetler@github.com>
 
-Improve documentation of the refresh callback helper function
-used for directory FSEvents.
+Move the code that handles unqualified FSEvents (without a trailing
+slash) into a helper function.
 
 Signed-off-by: Jeff Hostetler <jeffhostetler@github.com>
 ---
- fsmonitor.c | 37 ++++++++++++++++++++++++-------------
- 1 file changed, 24 insertions(+), 13 deletions(-)
+ fsmonitor.c | 67 +++++++++++++++++++++++++++++++----------------------
+ 1 file changed, 39 insertions(+), 28 deletions(-)
 
 diff --git a/fsmonitor.c b/fsmonitor.c
-index 6fecae9aeb2..29cce32d81c 100644
+index 29cce32d81c..364198d258f 100644
 --- a/fsmonitor.c
 +++ b/fsmonitor.c
-@@ -183,24 +183,35 @@ static int query_fsmonitor_hook(struct repository *r,
+@@ -183,6 +183,43 @@ static int query_fsmonitor_hook(struct repository *r,
  	return result;
  }
  
-+/*
-+ * The daemon can decorate directory events, such as a move or rename,
-+ * by adding a trailing slash to the observed name.  Use this to
-+ * explicitly invalidate the entire cone under that directory.
-+ *
-+ * The daemon can only reliably do that if the OS FSEvent contains
-+ * sufficient information in the event.
-+ *
-+ * macOS FSEvents have enough information.
-+ *
-+ * Other platforms may or may not be able to do it (and it might
-+ * depend on the type of event (for example, a daemon could lstat() an
-+ * observed pathname after a rename, but not after a delete)).
-+ *
-+ * If we find an exact match in the index for a path with a trailing
-+ * slash, it means that we matched a sparse-index directory in a
-+ * cone-mode sparse-checkout (since that's the only time we have
-+ * directories in the index).  We should never see this in practice
-+ * (because sparse directories should not be present and therefore
-+ * not generating FS events).  Either way, we can treat them in the
-+ * same way and just invalidate the cache-entry and the untracked
-+ * cache (and in this case, the forward cache-entry scan won't find
-+ * anything and it doesn't hurt to let it run).
-+ */
- static void handle_path_with_trailing_slash(
- 	struct index_state *istate, const char *name, int pos)
++static void handle_path_without_trailing_slash(
++	struct index_state *istate, const char *name, int pos)
++{
++	int i;
++
++	if (pos >= 0) {
++		/*
++		 * We have an exact match for this path and can just
++		 * invalidate it.
++		 */
++		istate->cache[pos]->ce_flags &= ~CE_FSMONITOR_VALID;
++	} else {
++		/*
++		 * The path is not a tracked file -or- it is a
++		 * directory event on a platform that cannot
++		 * distinguish between file and directory events in
++		 * the event handler, such as Windows.
++		 *
++		 * Scan as if it is a directory and invalidate the
++		 * cone under it.  (But remember to ignore items
++		 * between "name" and "name/", such as "name-" and
++		 * "name.".
++		 */
++		int len = strlen(name);
++		pos = -pos - 1;
++
++		for (i = pos; i < istate->cache_nr; i++) {
++			if (!starts_with(istate->cache[i]->name, name))
++				break;
++			if ((unsigned char)istate->cache[i]->name[len] > '/')
++				break;
++			if (istate->cache[i]->name[len] == '/')
++				istate->cache[i]->ce_flags &= ~CE_FSMONITOR_VALID;
++		}
++	}
++}
++
+ /*
+  * The daemon can decorate directory events, such as a move or rename,
+  * by adding a trailing slash to the observed name.  Use this to
+@@ -225,7 +262,7 @@ static void handle_path_with_trailing_slash(
+ 
+ static void fsmonitor_refresh_callback(struct index_state *istate, char *name)
  {
- 	int i;
+-	int i, len = strlen(name);
++	int len = strlen(name);
+ 	int pos = index_name_pos(istate, name, len);
  
--	/*
--	 * The daemon can decorate directory events, such as
--	 * moves or renames, with a trailing slash if the OS
--	 * FS Event contains sufficient information, such as
--	 * MacOS.
--	 *
--	 * Use this to invalidate the entire cone under that
--	 * directory.
--	 *
--	 * We do not expect an exact match because the index
--	 * does not normally contain directory entries, so we
--	 * start at the insertion point and scan.
--	 */
- 	if (pos < 0)
- 		pos = -pos - 1;
+ 	trace_printf_key(&trace_fsmonitor,
+@@ -240,34 +277,8 @@ static void fsmonitor_refresh_callback(struct index_state *istate, char *name)
+ 		 * for the untracked cache.
+ 		 */
+ 		name[len - 1] = '\0';
+-	} else if (pos >= 0) {
+-		/*
+-		 * We have an exact match for this path and can just
+-		 * invalidate it.
+-		 */
+-		istate->cache[pos]->ce_flags &= ~CE_FSMONITOR_VALID;
+ 	} else {
+-		/*
+-		 * The path is not a tracked file -or- it is a
+-		 * directory event on a platform that cannot
+-		 * distinguish between file and directory events in
+-		 * the event handler, such as Windows.
+-		 *
+-		 * Scan as if it is a directory and invalidate the
+-		 * cone under it.  (But remember to ignore items
+-		 * between "name" and "name/", such as "name-" and
+-		 * "name.".
+-		 */
+-		pos = -pos - 1;
+-
+-		for (i = pos; i < istate->cache_nr; i++) {
+-			if (!starts_with(istate->cache[i]->name, name))
+-				break;
+-			if ((unsigned char)istate->cache[i]->name[len] > '/')
+-				break;
+-			if (istate->cache[i]->name[len] == '/')
+-				istate->cache[i]->ce_flags &= ~CE_FSMONITOR_VALID;
+-		}
++		handle_path_without_trailing_slash(istate, name, pos);
+ 	}
  
+ 	/*
 -- 
 gitgitgadget
 
