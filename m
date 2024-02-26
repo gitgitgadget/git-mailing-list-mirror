@@ -1,98 +1,106 @@
-Received: from mail-qt1-f178.google.com (mail-qt1-f178.google.com [209.85.160.178])
+Received: from mail-ua1-f50.google.com (mail-ua1-f50.google.com [209.85.222.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21D1E131E5A
-	for <git@vger.kernel.org>; Mon, 26 Feb 2024 22:05:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A78EB134722
+	for <git@vger.kernel.org>; Mon, 26 Feb 2024 22:38:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708985157; cv=none; b=rahfihSSwG+4R0sumtEMmhjDKjpGFm6ajGqxlTzd85EdbIoGeOnwCKLkpG4bC88aMYT/0MM3yCmNFsm1pw5xWUkEzCQOtQiE3xrLEsSSuRwxVmHV2pBcCqSgNsyvijTd2q9R107qVHxxbgOuwDuUaCELIy27nJfMgLDoGfnxCc4=
+	t=1708987121; cv=none; b=ITIK8cYIWzUF88GOEigG7kKRw2HokIJHndg1PZO+RyjwdC5FRuSXDjbKxiz0P86AOxqtg+HENcp8iYQAjhbCspM9PEnXRxlYoJpPB66TLH/C1jJXVYIBIhGDfFpg6EH5zY6nO2a1926nhC/my9YOS68SBHo5OP/ik7ykZVH87rw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708985157; c=relaxed/simple;
-	bh=F2DABo68YA6h+iO0327kr6Cdg8vWdEdwSfhGnoc54qk=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VQdxi8/xd8L0y1T4OV7zmaZdNWKA6yN8ml218qNdi0exuZoTYk7CPEm6/nSb4L9EA2RVwRLT9itj5Zt3fmq1vmyN28kuCuuocIMUiyTbZsrB85Q6Tn2E07kBpzQnp7VSx1wf//QrprvXMdBfuQnPDRnt07IGcZwFLkN+NdWCMOk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=S2h1gpWJ; arc=none smtp.client-ip=209.85.160.178
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1708987121; c=relaxed/simple;
+	bh=XeWR0wmtO4NjQ1rAk/XKZcfmohvkzYKlZe+vpbe/t6Y=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=FvYvrU0vVS432kta4HsKGEkcyTGg5UAhob5kK1Q4q9BK3UY8H/f18Jd+37PZnYTpyvCVxxdb4ELoQiFtxvivVdvIftx6ZpAJtB15fe0XIld6CTXFP1GJIaitL4X7cGlpymAhIEgdpGErHrWPKWdkxo48b2iNQ47mHJNqkptMV14=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=none smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=tWGhUyae; arc=none smtp.client-ip=209.85.222.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="S2h1gpWJ"
-Received: by mail-qt1-f178.google.com with SMTP id d75a77b69052e-42e7ed64b5fso6461381cf.1
-        for <git@vger.kernel.org>; Mon, 26 Feb 2024 14:05:55 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="tWGhUyae"
+Received: by mail-ua1-f50.google.com with SMTP id a1e0cc1a2514c-7ce603b9051so2549409241.2
+        for <git@vger.kernel.org>; Mon, 26 Feb 2024 14:38:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1708985155; x=1709589955; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=FlcuZrkEu3L2vyc03QFqijscR9qs1gNw5FIB7vTxre4=;
-        b=S2h1gpWJWFxMPZYSyCZsd5KqfM6yxcFsdQ83f1mLoX56Db8fYkJYTUdMdKGwI+UEc6
-         qoiPHJAUo3a9VFPoryU+vfW/pdFaeSP8OYgBpiS1hWnQztE0/hPc8vqRM7feQBDztUuz
-         lFhweddYe2hGZNtsAn8YfC1LfrN7G5S+ly25uNpqwYa/IxFevTH60ZEgorxvwv+rNscq
-         zGsWpJAvKhFjycLOZgWoXVOy8UQCDrdocXVdFuEMALJtbi7eMyRWdyN3k+aW460SdYzU
-         2+Afdsvs+8VNAUXJsquVQs0wxpjpd+r3ig+ABBPXoW4cZ/rcLuofFpvEyoJCPkCULNS/
-         4siw==
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1708987118; x=1709591918; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=2ynS685YhyvgOfkVSvHOV+lumDt8xxP8SNLyW1Hc1kM=;
+        b=tWGhUyaeW3pmB93x1jNj4Gmt+imPRvh2EmJEexN/V3pEf1sw2P6bQGBIrb44cBn7Jo
+         2UKwJDGAyh4lBSXBURTvm4O7OCVnTt7h4RUAH97Oh542edBv1jXVWy/Gzm3QpGoY5nvd
+         ZLeUeVInMeJuS76kzkWZo7mQ+V6R9f463ssNNrrP6z1rVvoKZw636wVGbpYVMRPdOfdD
+         4Kw61BbPXbzZMdqYyxci055xHx4gEOiPFJTiLnIGvcIU54noTYQil46f8pFWuk+iBXqq
+         gRE6lVkZEbXZ2zayapiT8Tco+6MGJkFEdAC7KsWU5KeXb6QQPgknWQYzy6Ve3xDXLipE
+         yV3g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1708985155; x=1709589955;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=FlcuZrkEu3L2vyc03QFqijscR9qs1gNw5FIB7vTxre4=;
-        b=ZtEICvMihkf9ZXZd3wnz9RgZMwpJRgSLcLrPwlYi2RX9lK+FJ9+Wu3GphuuAKTCJLL
-         REtloXj/MOUJ1D3sxB83N4qq2ymavKDiXSGCGxyHEiE8yC7esy4h9PFm2udFuHcE6on4
-         TlyQpUy92Cx5aopLyghzPXyLe2pdhMWm/gPwiMzSOJILlBRq+fhOWmVUbYIub0dpImlZ
-         wM7/8VKoZeqRLvfg1YW1lJGFea2N72kNqAPfRntbfh+pc9igDb9rr7oNvbBDBSjhkjLg
-         YYkQIrOoVHRKLLmuYJKxuzqOxgkfiNwgZNIQHvUFtWS3Q7dZw4qWD2lTXpRx3aZGHK4e
-         lfSw==
-X-Gm-Message-State: AOJu0YwhMFiTD3lAnN2/w0I3A0RUojduid132v1lDg2X7ePN7SaXRmSb
-	/bUcfJwFcNbrmAMfotJck/mpFy03Dk1JkOledSK6vhNSjG4+YbmOngxKApRJ
-X-Google-Smtp-Source: AGHT+IE5Vy8sFZFwNSBwVIBWdhgt3iFOPsogcTFMOGnJhp2mFg/JuETXITkctgdiZYcFvOktNbggCw==
-X-Received: by 2002:a05:622a:14c9:b0:42e:4340:735a with SMTP id u9-20020a05622a14c900b0042e4340735amr9482858qtx.64.1708985154828;
-        Mon, 26 Feb 2024 14:05:54 -0800 (PST)
-Received: from localhost.localdomain ([2607:fea8:3fa9:4200:ad2d:24a1:4eaf:e903])
-        by smtp.gmail.com with ESMTPSA id b6-20020ac87546000000b0042dce775a4bsm2911696qtr.3.2024.02.26.14.05.54
+        d=1e100.net; s=20230601; t=1708987118; x=1709591918;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=2ynS685YhyvgOfkVSvHOV+lumDt8xxP8SNLyW1Hc1kM=;
+        b=OJgiJs5YS7WhAQ8LJAicLqErtcfB0vxCCL656QDiTjmU4fcz6Ix2kgkknuMv5DIuOg
+         IdhuSKLwCsM/o80tvACbxVhFV9H9hr8nd9FyHiMesXDeE6a129ekFLqlowJPljRhThB9
+         nikfjXhZRizTQ/wv0QqN84ZuB6zfkrICdVrdpeSAibHASOmiOgic2v4qXeztAlRI+9Yd
+         gQWYx+KXS3q52H9rbTu6ZzFTU6DUKeFe39HhfQDo+m/UTPKM7gz7l0ycEg8VDtCHJgte
+         lL4PZD8gi+1h2aBPHzUbCrjrq7RCiiEoFAvOxRJWokmQOzcien3+x8eBh7cVoCdy1eEn
+         GZmw==
+X-Gm-Message-State: AOJu0Yym6RJjjIslT8Gts5geUET3bh8V6VoDGoYKn2IxWlu0KPqFg6wZ
+	H4+mFej43at6dAQlzJwinc+wOaRkFy7yD2MZ93/LcdSQRGn2jtgehhjTZt3EhUstNUZaf8/2VTS
+	SzVY=
+X-Google-Smtp-Source: AGHT+IEZybv5pb/FV2KKqBnMEbtQo7jKzQqBfz4U5rCyswSrWaB4OMvegJ1xhjrERAakZTQqqISn/Q==
+X-Received: by 2002:a05:6102:83b:b0:471:e045:2a0c with SMTP id k27-20020a056102083b00b00471e0452a0cmr4226422vsb.5.1708987118555;
+        Mon, 26 Feb 2024 14:38:38 -0800 (PST)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id p8-20020a05620a22e800b00787ada1ebafsm2968449qki.21.2024.02.26.14.38.37
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 26 Feb 2024 14:05:54 -0800 (PST)
-From: "Randall S. Becker" <the.n.e.key@gmail.com>
-X-Google-Original-From: "Randall S. Becker" <randall.becker@nexbridge.ca>
-To: git@vger.kernel.org
-Cc: "Randall S. Becker" <rsbecker@nexbridge.com>
-Subject: [PATCH v1 4/4] builtin/unpack-objects.c: change xwrite to write_in_full to allow large sizes.
-Date: Mon, 26 Feb 2024 17:05:38 -0500
-Message-ID: <20240226220539.3494-5-randall.becker@nexbridge.ca>
-X-Mailer: git-send-email 2.42.1
-In-Reply-To: <20240226220539.3494-1-randall.becker@nexbridge.ca>
+        Mon, 26 Feb 2024 14:38:38 -0800 (PST)
+Date: Mon, 26 Feb 2024 17:38:37 -0500
+From: Taylor Blau <me@ttaylorr.com>
+To: "Randall S. Becker" <the.n.e.key@gmail.com>
+Cc: git@vger.kernel.org, "Randall S. Becker" <rsbecker@nexbridge.com>
+Subject: Re: [PATCH v1 1/4] builtin/index-pack.c: change xwrite to
+ write_in_full to allow large sizes.
+Message-ID: <Zd0S7aUIG1bhGkaX@nand.local>
 References: <20240226220539.3494-1-randall.becker@nexbridge.ca>
+ <20240226220539.3494-2-randall.becker@nexbridge.ca>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20240226220539.3494-2-randall.becker@nexbridge.ca>
 
-From: "Randall S. Becker" <rsbecker@nexbridge.com>
+On Mon, Feb 26, 2024 at 05:05:35PM -0500, Randall S. Becker wrote:
+> From: "Randall S. Becker" <rsbecker@nexbridge.com>
+>
+> This change is required because some platforms do not support file writes of
+> arbitrary sizes (e.g, NonStop). xwrite ends up truncating the output to the
+> maximum single I/O size possible for the destination device.
 
-This change is required because some platforms do not support file writes of
-arbitrary sizes (e.g, NonStop). xwrite ends up truncating the output to the
-maximum single I/O size possible for the destination device.
+Hmm. I'm not sure I understand what NonStop's behavior is here...
 
-Signed-off-by: Randall S. Becker <rsbecker@nexbridge.com>
----
- builtin/unpack-objects.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+> diff --git a/builtin/index-pack.c b/builtin/index-pack.c
+> index a3a37bd215..f80b8d101a 100644
+> --- a/builtin/index-pack.c
+> +++ b/builtin/index-pack.c
+> @@ -1571,7 +1571,7 @@ static void final(const char *final_pack_name, const char *curr_pack_name,
+>  		 * the last part of the input buffer to stdout.
+>  		 */
+>  		while (input_len) {
+> -			err = xwrite(1, input_buffer + input_offset, input_len);
+> +			err = write_in_full(1, input_buffer + input_offset, input_len);
+>  			if (err <= 0)
+>  				break;
+>  			input_len -= err;
+> --
+> 2.42.1
 
-diff --git a/builtin/unpack-objects.c b/builtin/unpack-objects.c
-index e0a701f2b3..6935c4574e 100644
---- a/builtin/unpack-objects.c
-+++ b/builtin/unpack-objects.c
-@@ -680,7 +680,7 @@ int cmd_unpack_objects(int argc, const char **argv, const char *prefix UNUSED)
- 
- 	/* Write the last part of the buffer to stdout */
- 	while (len) {
--		int ret = xwrite(1, buffer + offset, len);
-+		int ret = write_in_full(1, buffer + offset, len);
- 		if (ret <= 0)
- 			break;
- 		len -= ret;
--- 
-2.42.1
+The code above loops while input_len is non-zero, and correctly
+decrements it by the number of bytes written by xwrite() after each
+iteration.
 
+Assuming that xwrite()/write(2) works how I think it does on NonStop,
+I'm not sure I understand why this change is necessary.
+
+Thanks,
+Taylor
