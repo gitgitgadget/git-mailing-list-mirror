@@ -1,107 +1,80 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f51.google.com (mail-ed1-f51.google.com [209.85.208.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 071931BC4A
-	for <git@vger.kernel.org>; Mon, 26 Feb 2024 07:22:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBD2A1BDD5
+	for <git@vger.kernel.org>; Mon, 26 Feb 2024 07:25:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708932172; cv=none; b=Wxnrgg5fznsU6xFdoT0xB8yNjCZKRTne0qun+l+Mz2rJa0Eh8UD3+mKStg7AiwWcp+x3/SCApk4h1oGKX2XW+P0aVOfeMPaUxJW036lJQHwR2jIXHRrpx5wsohRbxhbcgeY685xK3yHHVJBL8hEsBYGn1X8tKaTNUlv2f8iNcmg=
+	t=1708932331; cv=none; b=lnFxwQaA9mwiB0dufWYsarmgAkTDUp8sk9pUrDyAjDf54lF44iQNKVIG74hNozMFoMXyp9ayW9zkW9A7++fzSe6PjFL8n98NHgDCvpCVlxE5VFceLs+BRUN2cp+tHln1aQcousBGWqy8Xw0RPYAErc3MunS9HZS3yfVoaPifmgQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708932172; c=relaxed/simple;
-	bh=89lI9sdqijFJ38iDmG2XhSYrLmgYlE6jZfezSWrK8sM=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=IPfkGpZ8rGxpa2HHtC+EoqpyGH7f2TY1nPuVoe0L40ifzRqZWEhCj/hEg9pz2T9J172J7y9SjdJMhOoolHXgVw4uVdejZn9hOI4SXLv10fA7y22gNuN0vk6tUppKzyUmruBn2PVwOB9KoHZHByOg2ZiSKGaBAKcxe5qNJGU1jmI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
-Received: (qmail 19417 invoked by uid 109); 26 Feb 2024 07:22:49 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 26 Feb 2024 07:22:49 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 374 invoked by uid 111); 26 Feb 2024 07:22:53 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 26 Feb 2024 02:22:53 -0500
-Authentication-Results: peff.net; auth=none
-Date: Mon, 26 Feb 2024 02:22:48 -0500
-From: Jeff King <peff@peff.net>
-To: =?utf-8?B?UGF3ZcWC?= Dominiak <dominiak.pawel@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: Bug: diff --no-index with cachetextconv crashes
-Message-ID: <20240226072248.GC780982@coredump.intra.peff.net>
-References: <CACeVQwQ4MELjB8nZyeu9QDTtgwhhw0oOsL8BHdm_rxTj1vMy+A@mail.gmail.com>
+	s=arc-20240116; t=1708932331; c=relaxed/simple;
+	bh=t7lpW1YgTci/yUf3H3h7d0Z5V0kxWZlxPTSiokX1g48=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Cc:Content-Type; b=k8Y13X+9xGWbdK/8E1ssrcS+ArHHhV0ilxpkeZrDDtf9H1LH1oCLoWNvivt7TtGRwcG3LqCTzM/chQYoOX5anqN4ic1sCeoZjSqYjAZ44Yx4t6uAwswn87Sy1moPpnvdCmB4uiboqvDgrOhYB1Rskucel2cbaQd1WoJt2bPKyb4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Q0FmHrOT; arc=none smtp.client-ip=209.85.208.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Q0FmHrOT"
+Received: by mail-ed1-f51.google.com with SMTP id 4fb4d7f45d1cf-55f50cf2021so4118663a12.1
+        for <git@vger.kernel.org>; Sun, 25 Feb 2024 23:25:29 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1708932328; x=1709537128; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=t7lpW1YgTci/yUf3H3h7d0Z5V0kxWZlxPTSiokX1g48=;
+        b=Q0FmHrOT2nPlwyOhr4t8n+zXteoEE49wJElCCG62Zec2+dmFcPaxjX495PwZyKijzx
+         6+lP8Rv2c01xStln8CcOS9III2UGub3VNP3l/SK/dVgZN3aRS8Un5c2p9sGOjAKkpDWz
+         bVEahWagNwb9mh1NFNOzmUf90bAmjXxA01Wwbqra+q8HjqLpjjJmO7MyKIHB4uBIMXhq
+         5IB9Ev27dTJupAkwBEo5iK+Wouny/X6S56q3KFEy2qNowezxnHSEe+fIoXWdtyEY4TaM
+         oggTWvLG+oj0tzEarrAogkU2/yTRYGvsKfgVPK7yy5DvmGl8kMYmjGYyRBnT9gO8HBzG
+         qqyw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1708932328; x=1709537128;
+        h=cc:to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=t7lpW1YgTci/yUf3H3h7d0Z5V0kxWZlxPTSiokX1g48=;
+        b=m9c7LfyPEUX9wVIe0GBL+twzpi8XD0mp7BdAnOIQVSEuqvwUnzyP/BsDTo74KkDVzm
+         HhBrk5QgdqIUibWAqiRbgTN7oLdFyC7ulxccKLAppyYR7J9gQbSgZlULE0D10ibllR4P
+         bGMRCFTMFm1qPmLSr1Wjk1hr+j4ItivrySESGPhAfnzqyiJTyLCz6usJxZiD+g5w2830
+         NCLcNRD59pDAeGgQtPqrNL2k9rpANTs1KcCWjG88nicY+TmDyO6u0+gufamwlRNualgW
+         0VDP/HEPnLh4djR+MIia4GWd8fbNyuHSvROJn2RoHLNnn+07wOIC7LTPTISLUDCXAobg
+         d06A==
+X-Gm-Message-State: AOJu0Yz34231qldzyzGmK3f3S56qFOlc9dcWl3hTnLcbZOI3frtv0zBX
+	xDJjlh2fjY4FP9AU8IF9tpUKdnzX9cM0GyqpS624XTtcTeAl3t+gwQ33jDmdqEN01bAY8XimJDw
+	1xOXgFEK0xg7b9ewISggk/YMmwA0nYUvhUmtj6w==
+X-Google-Smtp-Source: AGHT+IHNHStn9mWRyaMhHIq4M7OZOfgt7kunLHaLgrlBJ1jVlVoTroi4AZXix/Ya4B3FQ9VdJtxyNVPsHGvtb76wwIY=
+X-Received: by 2002:a05:6402:713:b0:566:7a9:70bb with SMTP id
+ w19-20020a056402071300b0056607a970bbmr508900edx.24.1708932327874; Sun, 25 Feb
+ 2024 23:25:27 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CACeVQwQ4MELjB8nZyeu9QDTtgwhhw0oOsL8BHdm_rxTj1vMy+A@mail.gmail.com>
+From: ZheNing Hu <adlternative@gmail.com>
+Date: Mon, 26 Feb 2024 15:25:16 +0800
+Message-ID: <CAOLTT8SQyBSWC=aqB2SRYmp3kR6RZ+L_-9yckWQf-X9rbzeNBw@mail.gmail.com>
+Subject: [Question] How to parse range-diff output
+To: Git List <git@vger.kernel.org>
+Cc: Junio C Hamano <gitster@pobox.com>, Christian Couder <christian.couder@gmail.com>, 
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Content-Type: text/plain; charset="UTF-8"
 
-On Mon, Feb 26, 2024 at 08:03:04AM +0100, Paweł Dominiak wrote:
+Hi,
 
-> That's my first bug report for git and my first email to a mailing
-> list in general, I hope for understanding :)
+I am currently looking to implement a service that provides a version
+range comparison based on git range-diff. I can easily parse out
+commit pair headers like "3: 0bf6289 ! 3: a076e88 dev5," but I am
+unsure how to parse the details in the subsequent diff patch body.
 
-Hi, welcome, and thanks for a clear bug report. :)
+It is not a standard diff output where one can parse out the filename
+from the diff header, It should be called a diff of diffs. We can see
+various headers with file names such as "@@ File1 (new)", "## File2
+(new) ##", or "@@ File3: function3" in different formats. This is
+confusing. How should we correctly parse a range-diff patch, and do
+you have any good suggestions?
 
-> [Steps to reproduce your issue]
-> 
-> Global .gitattributes:
-> 
-> *.txt diff=test
-> 
-> Global .gitconfig:
-> 
-> [diff "test"]
->     textconv = cat
->     cachetextconv = true
-> 
-> Called command:
-> 
-> git --no-pager diff --no-index foo.txt bar.txt
-
-OK, I would say that this failing is semi-expected. :) The caching
-system works using "git notes", which are stored in refs in the
-repository. And since you are running "diff --no-index" outside of a
-repository, there is nowhere to put them.
-
-And so this BUG call makes sense:
-
-> BUG: refs.c:2095: attempting to get main_ref_store outside of repository
-
-We tried to load notes but there's no ref store at all, and the
-low-level ref code caught this.
-
-Of course any time we see a BUG something has gone wrong. What I think
-_should_ happen is that we should quietly disable the caching (which,
-after all, is just an optimization) and otherwise complete the command.
-
-So we'd probably want something like this:
-
-diff --git a/userdiff.c b/userdiff.c
-index e399543823..fce3a31efa 100644
---- a/userdiff.c
-+++ b/userdiff.c
-@@ -3,6 +3,7 @@
- #include "userdiff.h"
- #include "attr.h"
- #include "strbuf.h"
-+#include "environment.h"
- 
- static struct userdiff_driver *drivers;
- static int ndrivers;
-@@ -460,7 +461,8 @@ struct userdiff_driver *userdiff_get_textconv(struct repository *r,
- 	if (!driver->textconv)
- 		return NULL;
- 
--	if (driver->textconv_want_cache && !driver->textconv_cache) {
-+	if (driver->textconv_want_cache && !driver->textconv_cache &&
-+	    have_git_dir()) {
- 		struct notes_cache *c = xmalloc(sizeof(*c));
- 		struct strbuf name = STRBUF_INIT;
- 
-
--Peff
+Thanks for any help.
+--
+ZheNing Hu
