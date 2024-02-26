@@ -1,91 +1,110 @@
-Received: from secure.elehost.com (secure.elehost.com [185.209.179.11])
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D181212F394
-	for <git@vger.kernel.org>; Mon, 26 Feb 2024 22:51:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.209.179.11
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3208B1E878
+	for <git@vger.kernel.org>; Mon, 26 Feb 2024 22:58:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1708987879; cv=none; b=ClfOxrnmUxF+jYyV0+nu71IQY4JMNi/dBB19GxiquU/iRzczGnP0UR+qV0Y/IaDBJ9HDac1Xjaqp/WGGdy6gF/WOV2nEZ3mAcgfCEIlrj1A+788kLAX2BeksFfSNCKlLfuYF+q4yZ4sSND1MW9JRFwE9miVfttkWXYiOYI9QmYs=
+	t=1708988326; cv=none; b=EA3xGqe47Eu8E+HWRUsMmixNvZrl+XVRayz4yIebWPwbsWB1JVEXSCcNTMhOqUHH8Bfs2QP+2nz+NSLt3MgcTWyULJB3ifq0suTMKRN80OR+8m2K7+/+xjRsoqg2ywVraE+5/ud26cqZSmScTHBIgHrvC80GqavmzswUiTimkQ4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1708987879; c=relaxed/simple;
-	bh=JwrSmCV09sQ0jB7XQrn+i1ZtWmtDhVXh+SXoxSapKtw=;
-	h=From:To:Cc:References:In-Reply-To:Subject:Date:Message-ID:
-	 MIME-Version:Content-Type; b=rngoeDjq1zXPJqXsdFPDkK1J9/lCO6WF9M6pIu3t7Io9NgSKXNRGu+1iDkoSLWK3UA/UUKDmU9K5KS5iQmM2Zd06oAKPAS7eZh+Uib1vo8b8kBwP0s+AArfcBz8qdKe+tiToSXqS6/IbLJFdgtr1oAywxZXBq2SOEgpJHwTTytw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com; spf=pass smtp.mailfrom=nexbridge.com; arc=none smtp.client-ip=185.209.179.11
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nexbridge.com
-X-Virus-Scanned: Debian amavisd-new at secure.elehost.com
-Received: from Mazikeen (cpebc4dfb928313-cmbc4dfb928310.cpe.net.cable.rogers.com [99.228.251.108] (may be forged))
-	(authenticated bits=0)
-	by secure.elehost.com (8.15.2/8.15.2/Debian-22ubuntu3) with ESMTPSA id 41QMpEVG2231692
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 26 Feb 2024 22:51:15 GMT
-Reply-To: <rsbecker@nexbridge.com>
-From: <rsbecker@nexbridge.com>
-To: "'Taylor Blau'" <me@ttaylorr.com>,
-        "'Randall S. Becker'" <the.n.e.key@gmail.com>
-Cc: <git@vger.kernel.org>
-References: <20240226220539.3494-1-randall.becker@nexbridge.ca> <20240226220539.3494-2-randall.becker@nexbridge.ca> <Zd0S7aUIG1bhGkaX@nand.local>
-In-Reply-To: <Zd0S7aUIG1bhGkaX@nand.local>
-Subject: RE: [PATCH v1 1/4] builtin/index-pack.c: change xwrite to write_in_full to allow large sizes.
-Date: Mon, 26 Feb 2024 17:51:09 -0500
-Organization: Nexbridge Inc.
-Message-ID: <026b01da6906$4d96f530$e8c4df90$@nexbridge.com>
+	s=arc-20240116; t=1708988326; c=relaxed/simple;
+	bh=2blFGWKzez/glmyl1BkaKgeekBvRKKKnENWHMbxKzfg=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=t9BJVXXwGpfTWk3U/mRWsWODZnnmR+rAzlNeOHyH+35QWIov1YtdINgc2cN/0xNTelgEhKtJ9EpdsfjC2yFhMKE6OCBCrFaJ0LeAKPy6AkWTsDsLi7wTAYXNwrO7FgukKqb9vjxohS+WLIcqV0feSh4vnLCWG6XJp6PkFZ5Pyog=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=JgG5lV8e; arc=none smtp.client-ip=173.228.157.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="JgG5lV8e"
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id 84DE220177;
+	Mon, 26 Feb 2024 17:58:44 -0500 (EST)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=2blFGWKzez/g
+	lmyl1BkaKgeekBvRKKKnENWHMbxKzfg=; b=JgG5lV8eBNcoeWWzM2FXgB9dmm7o
+	TTST2kBcn4OMDJ0CJz4o16vH8o+frR35PZPABnb8AzrF0qvYbstdPgwr2G/TaYHQ
+	wH4y2Iic8oMi5BYjyHbLU4+hWMp0ILusqTrepLik3eBNQ5s+m8mEsMbGFN34fYTJ
+	3ZpeRVeG6ADddog=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id 7E6B020176;
+	Mon, 26 Feb 2024 17:58:44 -0500 (EST)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.176.30])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id D600620175;
+	Mon, 26 Feb 2024 17:58:40 -0500 (EST)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Christian Couder <christian.couder@gmail.com>
+Cc: Eugenio Gigante <giganteeugenio2@gmail.com>,  git@vger.kernel.org,
+  sunshine@sunshineco.com
+Subject: Re: [GSoC][PATCH 1/1] add: use unsigned type for collection of bits
+In-Reply-To: <CAP8UFD3qR8E0gvUQtzzkLPWv4Db45kFS4pEqHKQr5siciVJ-zQ@mail.gmail.com>
+	(Christian Couder's message of "Mon, 26 Feb 2024 10:59:05 +0100")
+References: <20240224112638.72257-1-giganteeugenio2@gmail.com>
+	<20240224112638.72257-2-giganteeugenio2@gmail.com>
+	<CAP8UFD3qR8E0gvUQtzzkLPWv4Db45kFS4pEqHKQr5siciVJ-zQ@mail.gmail.com>
+Date: Mon, 26 Feb 2024 14:58:39 -0800
+Message-ID: <xmqqsf1ekf34.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain;
-	charset="utf-8"
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID:
+ 956D289C-D4FA-11EE-8096-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
 Content-Transfer-Encoding: quoted-printable
-X-Mailer: Microsoft Outlook 16.0
-Content-Language: en-ca
-Thread-Index: AQFCEXZVVjijNd8r2UxZXOALnJerBgHno3IKAhKWxEKyLhcRMA==
 
-On Monday, February 26, 2024 5:39 PM, Taylor Blau wrote:
->On Mon, Feb 26, 2024 at 05:05:35PM -0500, Randall S. Becker wrote:
->> From: "Randall S. Becker" <rsbecker@nexbridge.com>
+Christian Couder <christian.couder@gmail.com> writes:
+
+> On Sat, Feb 24, 2024 at 12:28=E2=80=AFPM Eugenio Gigante
+> <giganteeugenio2@gmail.com> wrote:
 >>
->> This change is required because some platforms do not support file
->> writes of arbitrary sizes (e.g, NonStop). xwrite ends up truncating
->> the output to the maximum single I/O size possible for the =
-destination device.
+>> The function 'refresh' in 'builtin/add.c' declares 'flags' as
+>> signed, while the function 'refresh_index' defined in
+>> 'read-cache-ll.h' expects an unsigned value.
 >
->Hmm. I'm not sure I understand what NonStop's behavior is here...
->
->> diff --git a/builtin/index-pack.c b/builtin/index-pack.c index
->> a3a37bd215..f80b8d101a 100644
->> --- a/builtin/index-pack.c
->> +++ b/builtin/index-pack.c
->> @@ -1571,7 +1571,7 @@ static void final(const char *final_pack_name, =
-const char *curr_pack_name,
->>  		 * the last part of the input buffer to stdout.
->>  		 */
->>  		while (input_len) {
->> -			err =3D xwrite(1, input_buffer + input_offset, input_len);
->> +			err =3D write_in_full(1, input_buffer + input_offset, input_len);
->>  			if (err <=3D 0)
->>  				break;
->>  			input_len -=3D err;
->> --
->> 2.42.1
->
->The code above loops while input_len is non-zero, and correctly =
-decrements it by the number of bytes written by xwrite() after each
->iteration.
->
->Assuming that xwrite()/write(2) works how I think it does on NonStop, =
-I'm not sure I understand why this change is necessary.
+> It's not clear from the patch that refresh() passes 'flags' as an
+> argument to refresh_index(), so it might help reviewers a bit if you
+> could tell that.
 
-NonStop has a limited SSIZE_MAX. xwrite only handles that much so =
-anything beyond that gets dropped (not in the above code but in other =
-builtins); hence the critical nature of getting this fix out. This =
-particular change probably could be tightened up on a re-roll to just =
-call write_in_full instead of the while loop. I can fix that for v2. The =
-goal suggested by Phillip W was to change xwrite to write_in_full, so I =
-guess I went a little too far.=20
+Perhaps.
+
+>> Since in this case 'flags' represents a bag of bits, whose MSB is
+>> not used in special ways, this commit changes the type of 'flags'
+>> to unsigned.
+>
+> We prefer to use "let's change this and that" or just "change this and
+> that" rather than "this commit changes this and that", see
+> https://git-scm.com/docs/SubmittingPatches/#imperative-mood.
+
+Very true.
+
+> It might help if you could add a bit more explanation about why it's a
+> good thing to use an unsigned variable instead of a signed one. For
+> example you could say that it documents that we are not doing anything
+> funny with the MSB.
+
+But doesn't the proposed log message already say so?
+
+In any case, it would very much help to fold long lines and have a
+blank line in between paragraphs to make the log message more
+readable.
+
+Thanks, both.
 
 
 
+>
+>> Signed-off-by: Eugenio Gigante <giganteeugenio2@gmail.com>
+>> ---
+>>  builtin/add.c | 2 +-
+>>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> The patch looks correct, thanks!
