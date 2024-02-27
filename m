@@ -1,151 +1,98 @@
-Received: from mout.web.de (mout.web.de [212.227.15.4])
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2982547A7D
-	for <git@vger.kernel.org>; Tue, 27 Feb 2024 17:58:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.4
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 118A0145346
+	for <git@vger.kernel.org>; Tue, 27 Feb 2024 18:08:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709056719; cv=none; b=b3+WpvIUe9LK6vZJRot5YiCZDHXEWeJvVGbVbnb43yvWiZ9ujYw/xLL3/QIingQZZZlGgqby3agHSMRW8fiO0MY7yeBEgOUzMKRC6jW79jmMlalx5VVNr2tr5Lk4AIY76sbPAijJht9DH7qmG916ryIhhBtKP4sxe5G8Rz7CWLA=
+	t=1709057299; cv=none; b=QWdWa0VD0NE76fRzsAOrj+9kFwsFj8pbZlENCX+ggx3J2G2BH2Kn/01oMbViYODYlVQjw33u3GlYM5unTOPQkMD8sKDvAENMbQIMSRWHjUcoPaos+7tpmXr596iSBfn3j6DUxk7wZvhT+nXuUCcqiM1loFWUOrA1mJGYGNltfi0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709056719; c=relaxed/simple;
-	bh=BJK6MOynDR2haXG9JXWbWlQ5ytUQ0lMf8pgEL0u1FgY=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=lT81jeTr+7xIaT4Tcyc3DObNzNQa2AUq5m9CbuEJBKnbzZhCD8OM9hkdWPf2oiGzANfy/4Y4BLBIYK5yFZqjDor7n1iDC0vSIndvioqX/j/QB660IVRCK073+Awbvt58xrG5RbdhPnXL8buZs4SwcYvY7/oLPt+WkuvnMLb5zF8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b=mpdCZmF8; arc=none smtp.client-ip=212.227.15.4
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
+	s=arc-20240116; t=1709057299; c=relaxed/simple;
+	bh=YIvCR2X3zIY9wq8jfNNrkLgDVMqrK1li0rEiEGzrf9E=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=jC7oXGwRrRwZtvuRYSo/BpE/A/10ngsbRQzR/NAHH9i4VxKa2yvOSh0vqPsd0vA7Q08zmooSeJseMhcYkI0Qyn9wWjXKyxBQoZIm+hXQyBH38F5GoIGbZNSV/pCf1wafJHkPvIdYmHrO8WLjnemBOHPbYuqyWioNZehp7yrXHFc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=bNibdFQ3; arc=none smtp.client-ip=173.228.157.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b="mpdCZmF8"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de; s=s29768273;
-	t=1709056707; x=1709661507; i=l.s.r@web.de;
-	bh=BJK6MOynDR2haXG9JXWbWlQ5ytUQ0lMf8pgEL0u1FgY=;
-	h=X-UI-Sender-Class:Date:Subject:To:Cc:References:From:
-	 In-Reply-To;
-	b=mpdCZmF8GdOCrSXV6/Wacoaxo1Dtt81CVvbu5vwgfoFyESmGg81X5wxhfxfMVSTV
-	 ++6r58ET90xPRE+oUWvOuToAHQsuNjko78kPxt6YqQKIQaLx1i/sYLBuFxkomgKvq
-	 TdioJqIpgaCfHjdykEl4R3SenLO+QBhxuG0N/tWkGLv5tQk/edbgk2U9SUPaStOyI
-	 xFFAnyx7OnMLKcZj4mzq6IvxpMKL9KOYhx62oFQB2JtVphaOfHTuHDUM130m4U4/2
-	 rC+RjaOh96zeBKTuSAEdsXNRU4l3amca4h+frxgwsD3PopM0dau/Gg2TbkSuqm8L7
-	 YgMHsCIAg1j2bdtBBQ==
-X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
-Received: from [192.168.178.29] ([79.203.19.211]) by smtp.web.de (mrweb005
- [213.165.67.108]) with ESMTPSA (Nemesis) id 1Mhnvw-1r1aEt0X8S-00dicx; Tue, 27
- Feb 2024 18:58:27 +0100
-Message-ID: <3aed87d0-4789-4e96-8c6c-31cab2d996cc@web.de>
-Date: Tue, 27 Feb 2024 18:58:26 +0100
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="bNibdFQ3"
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id 35154247A2;
+	Tue, 27 Feb 2024 13:08:17 -0500 (EST)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=YIvCR2X3zIY9wq8jfNNrkLgDVMqrK1li0rEiEG
+	zrf9E=; b=bNibdFQ3kwtd41IxJgnhpzxen6ntsxjqebob5mpwmi4z5jUIPrZMm5
+	AIVc70NfLSrQPktDRRj7DelGmBGd07VhJVvOW3LueoCgVpw20zbPjZFqtScHxOaQ
+	s7pfgv5OeVaq3yb/LTn1BatMvuP44Jo/KSPS0N8ZrnXOiAmn1fq8M=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id 2E02724799;
+	Tue, 27 Feb 2024 13:08:17 -0500 (EST)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.176.30])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 589C524796;
+	Tue, 27 Feb 2024 13:08:13 -0500 (EST)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc: Dirk Gouders <dirk@gouders.net>,  Johannes Schindelin via GitGitGadget
+ <gitgitgadget@gmail.com>,  git@vger.kernel.org,  Patrick Steinhardt
+ <ps@pks.im>
+Subject: Re: [PATCH v3 04/11] Prepare `paint_down_to_common()` for handling
+ shallow commits
+In-Reply-To: <79914d16-f58d-7ab0-5c25-f29870a73402@gmx.de> (Johannes
+	Schindelin's message of "Tue, 27 Feb 2024 16:00:46 +0100 (CET)")
+References: <pull.1657.v2.git.1708608110.gitgitgadget@gmail.com>
+	<pull.1657.v3.git.1709040497.gitgitgadget@gmail.com>
+	<84e7fbc07e08956e6c493baf499fee455887b16c.1709040499.git.gitgitgadget@gmail.com>
+	<gha5nmnex4.fsf@gouders.net>
+	<79914d16-f58d-7ab0-5c25-f29870a73402@gmx.de>
+Date: Tue, 27 Feb 2024 10:08:11 -0800
+Message-ID: <xmqqcyshu6es.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] mem-pool: add mem_pool_strfmt()
-To: Jeff King <peff@peff.net>
-Cc: git@vger.kernel.org
-References: <20240225113947.89357-1-l.s.r@web.de>
- <20240225113947.89357-2-l.s.r@web.de>
- <20240226070844.GB780982@coredump.intra.peff.net>
- <1868c502-b915-42fd-8cb2-efe90429f9b7@web.de>
- <20240227075350.GE3263678@coredump.intra.peff.net>
-Content-Language: en-US
-From: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
-In-Reply-To: <20240227075350.GE3263678@coredump.intra.peff.net>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:t7e1rNalMC1//stVWQF8CT1Xfac3b3GQjSOD0Q7ch0NIFSKPEaK
- YPBhc8kqKaikQAOI0MXqCNoeZkG956Y+6lf44Hgg537H7YN15b937SCWXKoWK/2sQUjyKDQ
- mwj2O3A3TRa6/z04EuJ2TOPF0SF4qr73VRExlBgAiRSV2MEs8rvyBc9P2hAK8hCqiyop8xU
- D93tSA12h4xUzicw82FcA==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:GSOtyw03Cyw=;dzq/ZFJUqKmz2l8qeihPJw5QV1q
- BLWJT9UlxBZBRH4voLIsq4K+HMGAZiHPv22rMKgeb7mrs8CsyWNxA59rLX5Al600iipQ8cOx1
- Lb9x2XkSIWNgAey5hMcMd/rDRP4CBN8Pw0MFspU5wiWTsom4WxnjHgZEdIHbonpiqZ0D4A4OT
- DaXVCD34eAsFoefi8Ebnmz189ZGqBv/oSAPuwnMcG5KbeEuZUdL446uSOa8zlE9+QslwUCapJ
- Y9iUTF/IaPVql/fUQ0IP0kypbokXS2F3BS33swR3nm1NHnkjbzNfYpBZSdBnnTtVaMH0AfC/d
- eUsfyf51eODzU0+s1LTXipGT0l0aFe1vp6kqAMHR9QO34Quczw4ptiY5sUYKrq7HLYSth2Zhh
- 42ff4KvOhkN6zmkdj4KEBDj//Y2E9ofehweOwP5HAKs4YJG/kHs9N65+pVYmiEO/6rAHz8que
- hPC0rKBADT2BtsgeluL9tkCdLQ67r4Hz2Sb2Irhsjpbd5GfIE8kTXgdYbjj5Bw95t/oq0iBxy
- FQs1tICm2YZSNX8yWADD9gtxxxjKo5O3Z/ITi8HMQw/xxn4ycj/Vu3oJdRW2dzAEEksBzMzSU
- Oa375jM2dCUxxT+aP7keJuFEH0XM0ocZBijb37ypiDlX93/Xaxv8ygX0eq9ewKvUrEOWt9HDe
- fJYmkes/3aTUygs1aAn5vmY3tci8fUDnejIYGb6BS7qf2Xe9CFhw79Eb8aB9wDOPTG9t1qIHg
- nHtftTfnaAjk0i4pJ1gdRdo6e2H4oYa0qXO+5N0H7CR7vRVcDtE0cgh9rsWZGxgjdT1H+Tbpw
- gNboetAfIYjZnrJKYzWuP464VAqaC0cNEhoH1PzCkwEXg=
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 2C3B5DFC-D59B-11EE-AE31-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
 
-Am 27.02.24 um 08:53 schrieb Jeff King:
-> On Mon, Feb 26, 2024 at 07:17:00PM +0100, Ren=C3=A9 Scharfe wrote:
->
->>> This is pulling heavily from strbuf_vaddf(). This might be a dumb idea=
-,
->>> but... would it be reasonable to instead push a global flag that cause=
-s
->>> xmalloc() to use a memory pool instead of the regular heap?
->>>
->>> Then you could do something like:
->>>
->>>   push_mem_pool(pool);
->>>   str =3D xstrfmt("%.*s~%d^%d", ...etc...);
->>>   pop_mem_pool(pool);
->>>
->>> It's a little more involved at the caller, but it means that it now
->>> works for all allocations, not just this one string helper.
->>
->> That would allow to keep track of allocations that would otherwise leak=
-.
->> We can achieve that more easily by pushing the pointer to a global arra=
-y
->> and never freeing it.  Hmm.
->
-> I see two uses for memory pools:
->
->   1. You want to optimize allocations (either locality or per-allocation
->      overhead).
->
->   2. You want to make a bunch of allocations with the same lifetime
->      without worrying about their lifetime otherwise. And then you can
->      free them all in one swoop at the end.
->
-> And my impression is that you were interested in (2) here. If what
-> you're saying is that another way to do that is:
->
->   str =3D xstrfmt(...whatever...);
->   attach_to_pool(pool, str);
->
->   ...much later...
->   free_pool(pool);
->
-> then yeah, I'd agree. And that is a lot less tricky / invasive than what
-> I suggested.
->
->> It would not allow the shortcut of using the vast pool as a scratch
->> space to format the string with a single vsnprintf call in most cases.
->> Or am I missing something?
->
-> So here it sounds like you do care about some of the performance
-> aspects. So no, it would not allow that. You'd be using the vast pool of
-> heap memory provided by malloc(), and trusting that a call to malloc()
-> is not that expensive in practice. I don't know how true that is, or how
-> much it matters for this case.
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-In the specific use case we can look at three cases:
+> 	Currently, that logic pretends that a commit whose parent
+> 	commit is missing is a root commit (and likewise merge commits
+> 	with missing parent commits are handled incorrectly, too).
+> 	However, for the purpose of `--update-shallow` that is exactly
+> 	what we need to do (and only then).
 
-1. xstrfmt() [before 1c56fc2084]
-2. size calculation + pre-size + strbuf_addf() [1c56fc2084]
-3. mem_pool_strfmt() [this patch]
+I suspect that what made it harder to follow in the original
+construct is that we called the behaviour "incorrect" upfront and
+then come back with "that incorrectness is what we want".  I wonder
+if it makes it easier to follow by flipping them around.
 
-The performance of 2 and 3 is basically the same, 1 was worse.
+    For the purpose of `--update-shallow`, when some of the parent
+    commits of a commit are missing from the repository, we need to
+    treat as if the parents of the commit are only the ones that do
+    exist in the repository and these missing commits have no
+    ancestry relationship with it.  If all its parent commits are
+    missing, the commit needs to be treated as if it were a root
+    commit.
 
-xstrfmt() and strbuf_addf() both wrap strbuf_vaddf(), which uses
-malloc() and vsnprintf().  My conclusion is that malloc() is fast
-enough, but running vsnprintf() twice is slow (first time to determine
-the allocation size, second time to actually build the string).  With a
-memory pool we almost always only need to call it once per string, and
-that's why I use it here.
+    Add a flag to optionally ask for such a behaviour, while
+    detecting missing objects as a repository corruption error by
+    default ...
 
-The benefit of this patch (to me) is better code readability (no more
-manual pre-sizing) without sacrificing performance.
+or something?
 
-The ability to clear (or UNLEAK) all these strings in one go is just a
-bonus.
-
-Ren=C3=A9
+> 	Therefore [...]
+>
+> Better?
+>
+> Ciao,
+> Johannes
