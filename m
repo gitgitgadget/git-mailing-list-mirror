@@ -1,100 +1,105 @@
-Received: from mail-pl1-f171.google.com (mail-pl1-f171.google.com [209.85.214.171])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 752D51487DC
-	for <git@vger.kernel.org>; Tue, 27 Feb 2024 19:21:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4BDE50A68
+	for <git@vger.kernel.org>; Tue, 27 Feb 2024 19:25:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709061703; cv=none; b=jqF9w9Kj6XOZRzzdaOH9PlJPtyv4IcD1InRNqYGXsiuOmyQnIy7JuG7aB7uKjGXosjddEKnPQPL1LD6ertvV+liIOhQmCC1WDdyb73dLRGFkwFqIXurGbpjTLNBFuiElxfqcwTgWyrxjgEzVnfEepdNaDpuMnpaz+CxlE2/0AuQ=
+	t=1709061935; cv=none; b=Zs53YuAWOl33/WAoJc9xK4oxkTX+/u+3Ja1im6j+zML97/BUJrkPQpTBUesf0KlMaTG3lh1sT7UkPQ2SLXid2FCcEQHhMrIB6AftHwwOR9l9MBaoKn0kBe7k25JgsIUSjGV122qu1veETAEL9TozU6Fx981rITaRV/s5TSUhVUY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709061703; c=relaxed/simple;
-	bh=Wm48VFf/RIx7ltBQe8Kem7AKPbp5oXj0IahrgA51dvY=;
-	h=Message-ID:Date:MIME-Version:Subject:To:References:Cc:From:
-	 In-Reply-To:Content-Type; b=KK7OV/fHgOYSL79bETWEHUY2c6j18UbY/RnJZDdAYTX6pWvbOZakO0CY/x6VExXchLxwd9in5ilYrmLFpbka6xo9mJVeisgJKJ+ruKKjJ/F1o31R8nzKP5vrSEvSCHnUIub/I6pQfEe/qpcxQSzXhKZPywJrXGBj+NvDnO+Zk3o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ERV5A7ul; arc=none smtp.client-ip=209.85.214.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ERV5A7ul"
-Received: by mail-pl1-f171.google.com with SMTP id d9443c01a7336-1dca3951ad9so23445295ad.3
-        for <git@vger.kernel.org>; Tue, 27 Feb 2024 11:21:42 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1709061702; x=1709666502; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:cc:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=5JrfhVLV15ajoZLTURiTDp8SeYbx0o+AzpKEOPPfOIM=;
-        b=ERV5A7uls5bz0SWfOuo7fgqRGvQJjGGrLbJ6J659yCqmVboY43Bj/bngsRDS3ubM/A
-         cK4AHAD+WBE+ghRR1kGq1kRi98Q/h4LhARxpXw65MijD99IQcw3W8KTa+NbvAHdn0TM9
-         7imBs5ZpeLN1zdaE9PyKNmXLId52Tpui6+zXR/3hBlBlepT5dW7E6kd/MQOQdG+h54Ut
-         YQuRTsOKAyslGrL+N2vwp5RhhTHg9hLTcgGivY5sikqqAQoHC6rm39H+sp5+/4989XA7
-         x/X7fQejFn4NJ3P5IxFIo5hweCFyKOQUHm4lMt+YV+hAMuLaCvrz7faPMeaZvfqPWS2f
-         spfg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1709061702; x=1709666502;
-        h=content-transfer-encoding:in-reply-to:from:cc:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=5JrfhVLV15ajoZLTURiTDp8SeYbx0o+AzpKEOPPfOIM=;
-        b=Od1JCyADGWvLvmo56pN3KF3OMttwqaJxOcFvJxodYvVHyRVvHQUTxzPNqiHpi18nLl
-         +U8q3gL6q8ZUC2PI/S9miMl/7x2fyvnItW9L9QCxqPLN51lrB8L2wo4fBkJExqOtIGlc
-         mS89D0fSNzTvtv2bQt0ExXMd3RAIjczNel0p2kypjFXcisRUHr2YrbJPSO/+Q1tBlkPf
-         Wq9m/sUMuhoE/JTCkedhW6+ExXkAE4NDfJeRUGuF9x9Djpi0PJsGq3ON1KpJI77PA0Z0
-         KEpOLnF4qLnCmPGQBrrOn35wWilx6djFT3P1ZwiwRyNaBXb4wBXpoRe6FNbiliN9Mtz+
-         Pj5Q==
-X-Gm-Message-State: AOJu0YwhyzdJyzySpa2SWVpA0VdSH1Gai9piyi/o2mStIGh2ocTsgmDQ
-	CTBscC/GMElngajWo2jZMG3xVcvMQbrAa69lztIQzOdoRIjq1RBz
-X-Google-Smtp-Source: AGHT+IFMjSSYtDP7gwDPV3Zts2uvLxlZOe192rUl0iMUdRJVskiohAh2oFCG2ns6DBdxq8jG0W+zTg==
-X-Received: by 2002:a17:902:e5c5:b0:1dc:4bf6:7eb4 with SMTP id u5-20020a170902e5c500b001dc4bf67eb4mr14661672plf.31.1709061701632;
-        Tue, 27 Feb 2024 11:21:41 -0800 (PST)
-Received: from [192.168.208.87] ([106.51.151.98])
-        by smtp.gmail.com with ESMTPSA id li6-20020a170903294600b001db616fa11dsm1886380plb.238.2024.02.27.11.21.40
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 27 Feb 2024 11:21:41 -0800 (PST)
-Message-ID: <691bf66d-668f-438f-b115-bd3497f92dae@gmail.com>
-Date: Wed, 28 Feb 2024 00:51:38 +0530
+	s=arc-20240116; t=1709061935; c=relaxed/simple;
+	bh=06eAoGO5s9OtrzgBUp0Ev7npw5pO8UloY2RyBcE+PDc=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=WDJhByg51FLKqIkHdbdEGFry8GB5GEiGCNHliH5P8BYmuXz74sSSvdzwqWaH+2TmY9wgJslq/DunBjbx9QzLy+RRng8h0bCXgJV5FpNc2BBWZaoqtuSbBDXgk0IKWPvdGHF4tGwNEezRoLQQ2J9JfyKoqCjJbvvxk6HLsRRIWeY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+Received: (qmail 16597 invoked by uid 109); 27 Feb 2024 19:25:31 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 27 Feb 2024 19:25:31 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 13269 invoked by uid 111); 27 Feb 2024 19:25:32 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 27 Feb 2024 14:25:32 -0500
+Authentication-Results: peff.net; auth=none
+Date: Tue, 27 Feb 2024 14:25:30 -0500
+From: Jeff King <peff@peff.net>
+To: rsbecker@nexbridge.com
+Cc: 'Junio C Hamano' <gitster@pobox.com>,
+	"'Randall S. Becker'" <the.n.e.key@gmail.com>, git@vger.kernel.org
+Subject: Re: [PATCH v2 3/3] builtin/unpack-objects.c: change xwrite to
+ write_in_full avoid truncation.
+Message-ID: <20240227192530.GD3784114@coredump.intra.peff.net>
+References: <20240227150934.7950-1-randall.becker@nexbridge.ca>
+ <20240227150934.7950-4-randall.becker@nexbridge.ca>
+ <xmqq1q8xspht.fsf@gitster.g>
+ <03be01da69af$d8366e10$88a34a30$@nexbridge.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: Interest in Future Collaboration for GSoC 2024
-Content-Language: en-US
-To: Akhilesh Kumar Yadav <akacademic05@gmail.com>
-References: <39C00ED0-2EA9-4BCA-8662-AAEC5A108D49@gmail.com>
-Cc: git@vger.kernel.org
-From: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-In-Reply-To: <39C00ED0-2EA9-4BCA-8662-AAEC5A108D49@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <03be01da69af$d8366e10$88a34a30$@nexbridge.com>
 
-Hi Akhilesh,
+On Tue, Feb 27, 2024 at 02:04:46PM -0500, rsbecker@nexbridge.com wrote:
 
-Thank you for your interest!
+> >> diff --git a/builtin/unpack-objects.c b/builtin/unpack-objects.c index
+> >> e0a701f2b3..6935c4574e 100644
+> >> --- a/builtin/unpack-objects.c
+> >> +++ b/builtin/unpack-objects.c
+> >> @@ -680,7 +680,7 @@ int cmd_unpack_objects(int argc, const char
+> >> **argv, const char *prefix UNUSED)
+> >>
+> >>  	/* Write the last part of the buffer to stdout */
+> >>  	while (len) {
+> >> -		int ret = xwrite(1, buffer + offset, len);
+> >> +		int ret = write_in_full(1, buffer + offset, len);
+> >>  		if (ret <= 0)
+> >>  			break;
+> >>  		len -= ret;
+> [...]
+> I experimented with using write_in_full vs. keeping xwrite. With xwrite in
+> this loop, t7704.9 consistently fails as described in the other thread. With
+> write_in_full, the code works correctly. I assume there are side-effects
+> that are present. This change is critical to having the code work on
+> NonStop. Otherwise git seems to be at risk of actually being seriously
+> broken if unpack does not work correctly. I am happy to have my series
+> ignored as long as the problem is otherwise corrected.
 
-Kindly check out our mentor programming guide[1] and SoC ideas page[2].
-Completing microprojects is a requirement for selection. The more active 
-you are with your contributions, the more you learn and higher the 
-chance of selection :-)
+I'm somewhat skeptical that this code is to blame, as it should be run
+very rarely at all; it is just dumping any content in the pack stream
+after the end of the checksum to stdout. But in normal use by Git, there
+is no such content in the first place.
 
-[1]: https://git.github.io/Mentoring-Program-Guide/
+If I do this:
 
-[2]: https://git.github.io/SoC-2024-Ideas/
+diff --git a/builtin/unpack-objects.c b/builtin/unpack-objects.c
+index e0a701f2b3..affe55035d 100644
+--- a/builtin/unpack-objects.c
++++ b/builtin/unpack-objects.c
+@@ -680,11 +680,7 @@ int cmd_unpack_objects(int argc, const char **argv, const char *prefix UNUSED)
+ 
+ 	/* Write the last part of the buffer to stdout */
+ 	while (len) {
+-		int ret = xwrite(1, buffer + offset, len);
+-		if (ret <= 0)
+-			break;
+-		len -= ret;
+-		offset += ret;
++		BUG("cruft at the end of the pack!");
+ 	}
+ 
+ 	/* All done */
 
-On 26/02/24 04:40, Akhilesh Kumar Yadav wrote:
-> 
-> I hope this message finds you well. I am writing to express my admiration for the innovative technology that your organization is working on for GSoC 2024. I have been following your work and find it truly amazing.
-> 
-> Currently, I am committed to another organisation and may not be able to contribute to your projects at this time. However, I noticed that your organisation sometimes faces a shortage of proposals. If such a situation arises, please consider this email as an expression of my interest.
-> 
-> I hold a strong interest in your organisation and would be more than willing to submit a comprehensive proposal should the need arise. I have also been an active contribution at open source projects and have decent programming experience.
-> 
-> Thank you. I look forward to the possibility of future interactions.
-> 
-> Best regards,
-> Akhilesh.
+then t7704 still passes, as it does not run this code at all. In fact,
+nothing in the test suite fails. Which is not to say we should get rid
+of those code. If we were writing today we might flag it as an error,
+but we should keep it for historical compatibility.
 
--- 
-Sivaraam
+But I do not see any bug in the code, and nor do I think it could
+contribute to a test failure.
+
+-Peff
