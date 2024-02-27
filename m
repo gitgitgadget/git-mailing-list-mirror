@@ -1,125 +1,147 @@
-Received: from mail-wm1-f43.google.com (mail-wm1-f43.google.com [209.85.128.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from wfout2-smtp.messagingengine.com (wfout2-smtp.messagingengine.com [64.147.123.145])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9039713F016
-	for <git@vger.kernel.org>; Tue, 27 Feb 2024 14:25:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7F84145FF9
+	for <git@vger.kernel.org>; Tue, 27 Feb 2024 14:27:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709043961; cv=none; b=tzv2vxLG2oA/ugkuk4gU0YaSHYsys2TUXrQuUreEf99t+Hu6oOpGu6/+Ya0TaODEWXATt12wWkXdxQ8mFt93GwuzINXLQNfmT6gUjWSxcmU2T59molNqk32MDbX54hETo1wGMm5B+nkkdmjXhu2jG+gEYJNOjqtDkiKZ4FfoRy8=
+	t=1709044061; cv=none; b=ENMFP1iULV/K2gNRKMvBlT1Gpx3b6v8WOIM70gNDjliyWFiEfla5WARyE1F9b2w76uHtCis+Gw9QIfZz3CxucplpP7I7jvMyJ8ypANz7pMbD4XIqW3ZlPSXzKXAX3FU5qp0KZCC/3VgIeyAr95OEbECfxTurLc5Ffoglw7YA67w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709043961; c=relaxed/simple;
-	bh=WQP4SVmnPYY1pNODPkAQmPZ+70EERLfPesotpQgk8xk=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pv6DUQ4MSEYLrqW7Us9pyN54UUgjjRDqrVwCcTck5OFYHvS0wSK64A6svsvUvQRHeWkMLIoDPy+pDVwL55nqA9cU1RBhllfQwWvbcNnFio8zPT/PNNuwcZayU5hR0FAAOznpwbYs0tK5VaW695QP17gggviC+fGFMHdpkL1irhI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=aRTBhBaw; arc=none smtp.client-ip=209.85.128.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1709044061; c=relaxed/simple;
+	bh=r+cUeqiqu5YOxPPdxa7ufRyWLgvZxk3PDr6SNonKfmg=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition; b=kqbMrxneItSoZMwUMG+Y1olt+hSDjBA8qKeUG9OOcvCC5F8e6Pr0vCPnrxXswYTIGaqE6yuV1orVg0cSUjeFAFlZRXElZyVLyk/y/dFIejlApYcIeH+1fMPdnzPIx5AqIsAglwClAqd+JrL7onFL+DPAD445X2UBSElpc0cshuM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=P7ItG0Oc; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=pAlGNiRR; arc=none smtp.client-ip=64.147.123.145
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="aRTBhBaw"
-Received: by mail-wm1-f43.google.com with SMTP id 5b1f17b1804b1-412af574659so3502835e9.2
-        for <git@vger.kernel.org>; Tue, 27 Feb 2024 06:25:59 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1709043958; x=1709648758; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=k3ZVwX/Tnt0iQUJkcUBRAuTTatfyAkULK9qOPPp02T4=;
-        b=aRTBhBaw8pKvVMfHInDamakt7O+Orv0nRuaDCC/oCWqiBeD9QJCxWS4qSzmd3h5ooT
-         K8DED81M2V41aO4QLbIe7eqjbjj34/pyiOITf569uzjM+aqnUAa2UJzdGWLfPujHVYup
-         gFqPk1G11GRt+kZV+pT2LasQg8bsdBDu3CKz86Z6Ipe8CJeVk0E8NshkUaJVz2/BSaNW
-         UOWz6Jwc5n0SywqhHp5a06EETmEs+0m35xJZierHtlpBASxyFhMVyQ3PjDyY/1dRET7O
-         N6KFsemv6YFoXOY/fyxTsyemNcGknepdsHedIIZC8Ty8FZWDXD8JdLAxRKS5fpJg7959
-         EOdA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1709043958; x=1709648758;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=k3ZVwX/Tnt0iQUJkcUBRAuTTatfyAkULK9qOPPp02T4=;
-        b=qeqtF/2TOQvB6wrCUSMTwWDnP3nh0dcYheMEHt/ohefBVKkEDTklT+1BrXYakKeN3Y
-         Tv94aI+99WejcPOzMRdCHRr0Xd+TRR3XJ5fpKmDtOk4p8a9mfIPiS5xAkcYY8XKadKL2
-         UWEC881UY2x6hhHDoLwIQXQw0ZHCLyz9bGrVsTkIi4jCg12fGCmPTNfNhqCTHnuDZ4qX
-         kN1WWCiKi/D9xaEKG4iUzf9SPf84qSlCV7kcFqu2qyaO1Dh6+39WODN+hVWI7fe48gKf
-         wwz4a4KM9q6La/Xo+d6dFRxXo0p0Slld2R8b5A4rQsDWHlWRvj9fL8TxDKeReeMRjl7r
-         mKiA==
-X-Gm-Message-State: AOJu0YyO4DyCje2asmEaQZ7fRGrue+3YHE5W0EnQSN2omCPF7q6xtRd5
-	ceIAap7gvPQY0nRQklq+B5VldGAhbZn2j1N5n0seDD7mvQR/s5RL
-X-Google-Smtp-Source: AGHT+IG1T7DD/W+EddGsFNednuh8PjI97/F3ykGSHGFxroG5ysAuQ7PqzSqQtTjLsbtOvHivU1IZ1A==
-X-Received: by 2002:a05:600c:4ed4:b0:412:a48c:139a with SMTP id g20-20020a05600c4ed400b00412a48c139amr3921085wmq.6.1709043957957;
-        Tue, 27 Feb 2024 06:25:57 -0800 (PST)
-Received: from host-sergy.. ([154.72.153.213])
-        by smtp.gmail.com with ESMTPSA id t17-20020a05600c451100b00412a2060d5esm8459255wmo.23.2024.02.27.06.25.55
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 27 Feb 2024 06:25:57 -0800 (PST)
-From: Sergius Nyah <sergiusnyah@gmail.com>
-X-Google-Original-From: Sergius Nyah <74214119+Sergius-Nyah@users.noreply.github.com>
-To: christian.couder@gmail.com,
-	pk@pks.im
-Cc: git@vger.kernel.org,
-	Sergius Justus Chesami Nyah <74214119+Sergius-Nyah@users.noreply.github.com>
-Subject: [PATCH 2/2] Subject:[GSOC] [RFC PATCH 2/2] Add test for JavaScript function detection in Git diffs
-Date: Tue, 27 Feb 2024 15:25:39 +0100
-Message-ID: <20240227142540.73972-3-74214119+Sergius-Nyah@users.noreply.github.com>
-X-Mailer: git-send-email 2.43.2
-In-Reply-To: <20240227142540.73972-1-74214119+Sergius-Nyah@users.noreply.github.com>
-References: <CANAnif-OganZLi0Cu_uq=nveC+u5n14c=o_DQHT-wFOqQ9Vs0Q@mail.gmail.com>
- <20240227142540.73972-1-74214119+Sergius-Nyah@users.noreply.github.com>
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="P7ItG0Oc";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="pAlGNiRR"
+Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
+	by mailfout.west.internal (Postfix) with ESMTP id DE0871C0007F;
+	Tue, 27 Feb 2024 09:27:38 -0500 (EST)
+Received: from mailfrontend1 ([10.202.2.162])
+  by compute1.internal (MEProxy); Tue, 27 Feb 2024 09:27:39 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:message-id:mime-version:reply-to:subject:subject:to:to; s=fm1;
+	 t=1709044058; x=1709130458; bh=YwDUiSNmVQkHTDjBHf+sDHUL1vcvnOg8
+	5w2YOkYbBq4=; b=P7ItG0OcDEN+Sn5KgAwl+6Zj9qWmJJ3rFTnV2wRxEWgrXizv
+	wNebm2SVSSriUOwuBTdN78rLD9wPlMfpZj9rc3IhIc7jIRS6ugIwzQ6zdJbrEHOI
+	t+5J4qsn2fwpz4SdHnZbw5faYsjo0pP+JwqlBfAAYPgC5Pd/NnfXSLuU7abEvl7m
+	1XsVEdl8zESpHXDCEft1qRP0/uY7AmC44+zgDfwAgLUz4Q5pUxKzAjLoajI5liks
+	1K8/hqpniPqyA+/A3sDmBK6mbeDiL5MZ3NSJk/dI43YH7ElXxRrpEi2lW0pzWtMX
+	nXPlF42TVG5zazqBxShSyWqIrsznH/qtq1qQ1Q==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:message-id
+	:mime-version:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1709044058; x=1709130458; bh=YwDUiSNmVQkHTDjBHf+sDHUL1vcvnOg85w2
+	YOkYbBq4=; b=pAlGNiRRk/Cw2dF+bPDS+Ol7HfBIIlcP2Od0jQoGP1sc+UPLAli
+	qRlZ8Mlw9lEnLCH7/Z0fdpZedhOfcr/sawjjvKjCqgkd7wGd/RtdRMDtx2VRyQzL
+	BFeojBA5J2PzcOT2AkH6yGw9cGBU2TjB1WtX0pwzlSrF7+s29Lb/pEgzXsVcbw1f
+	o+3055WVg0mxY1DfMs2/Gbg9qP43VLhhgV7x1IVFWYOvsYftvPlHQK4vMKFM9Yrd
+	gDxY9z/QjZIcBQkAfgOW8525S6bBjVfzAOm5kVZe6gpjvnFQTJh+v3Nxdyi2g7jt
+	/9UrABLU543D5JK6HRCoxwpco/3OW0oRkeQ==
+X-ME-Sender: <xms:WvHdZbIjqh4Ow_j4t-nrYJ2mBYN_HWN2BiAYkaHhDwx9FUPx_xI3Mg>
+    <xme:WvHdZfI6kXbxUvcGQAl_nORDoMv9L2Cyo52CTYiW768DZIKDuTts0IoC3IpTOxCXv
+    fCS4YbevP_ouhwlng>
+X-ME-Received: <xmr:WvHdZTvdQyFFTpNfg1JfIuxHq60QYvjCiqk1gjFzMcFAqa4DdZF0RaOOW2lsb9AqUDJQk8pXmXka1zrGT8YSaHpLqQxaWZPfPPpKvYoPwhsQSycD>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrgeehgdegtdcutefuodetggdotefrodftvf
+    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
+    uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
+    fjughrpeffhffvvefukfggtggusehgtderredttddvnecuhfhrohhmpefrrghtrhhitghk
+    ucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpe
+    eugfeutdeuieehteelveegudejkeejheeljeejhffhgffhvefgkeeukeejtdeijeenucev
+    lhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhksh
+    drihhm
+X-ME-Proxy: <xmx:WvHdZUag74PaeJKa4fmhO2iIevpEIAEje1fPSJaL3C0ES0L4clm3Hg>
+    <xmx:WvHdZSbm0SeWkv4jT-rarKksk5MOYdGr1InVJuGnIpmvqWJZ3HYKmg>
+    <xmx:WvHdZYC-EykOiSYWsrkLmefG1Vpt9z7LWFkz205usvGlfIbH5U6dPw>
+    <xmx:WvHdZSF0BX1KbxXyCZ8XHfAkFhNUHIKtMXRWbfUklW77Ioru1ei6kHXr7mM>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 27 Feb 2024 09:27:37 -0500 (EST)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id 53469f67 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 27 Feb 2024 14:23:19 +0000 (UTC)
+Date: Tue, 27 Feb 2024 15:27:34 +0100
+From: Patrick Steinhardt <ps@pks.im>
+To: git@vger.kernel.org
+Cc: Junio C Hamano <gitster@pobox.com>, Mike Hommey <mh@glandium.org>
+Subject: [PATCH 0/2] builtin/clone: allow remote helpers to detect repo
+Message-ID: <cover.1709041721.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="f+wwjf3s3XLxedMq"
+Content-Disposition: inline
 
-From: Sergius Justus Chesami Nyah <74214119+Sergius-Nyah@users.noreply.github.com>
 
-This commit introduces a new test case in t4018-diff-funcname.sh to verify the enhanced JavaScript function detection in Git diffs. The test creates a JavaScript file with function declarations and expressions, modifies them, and then checks the output of git diff to ensure that the changes are correctly identified. This test validates the changes made to userdiff.c for improved JavaScript function detection.
----
- t/t4018-diff-funcname.sh | 25 +++++++++++++++++++++++--
- 1 file changed, 23 insertions(+), 2 deletions(-)
+--f+wwjf3s3XLxedMq
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-diff --git a/t/t4018-diff-funcname.sh b/t/t4018-diff-funcname.sh
-index e026fac1f4..e88e63bd1f 100755
---- a/t/t4018-diff-funcname.sh
-+++ b/t/t4018-diff-funcname.sh
-@@ -11,7 +11,7 @@ test_expect_success 'setup' '
- 	# a non-trivial custom pattern
- 	git config diff.custom1.funcname "!static
- !String
--[^ 	].*s.*" &&
-+[^ 	].*s.*" && 
- 
- 	# a custom pattern which matches to end of line
- 	git config diff.custom2.funcname "......Beer\$" &&
-@@ -119,4 +119,25 @@ do
- 	"
- done
- 
--test_done
-+test_expect_success 'identify builtin patterns in Javascript' '
-+    # setup
-+    echo "function myFunction() { return true; }" > test.js &&
-+    echo "var myVar = function() { return false; }" >> test.js &&
-+    git add test.js &&
-+    git commit -m "add test.js" &&
-+
-+    # modify the file
-+    echo "function myFunction() { return false; }" > test.js &&
-+    echo "var myVar = function() { return true; }" >> test.js &&
-+
-+    # command under test
-+    git diff >output &&
-+
-+    # check results
-+    test_i18ngrep "function myFunction() { return true; }" output &&
-+    test_i18ngrep "function myFunction() { return false; }" output &&
-+    test_i18ngrep "var myVar = function() { return false; }" output &&
-+    test_i18ngrep "var myVar = function() { return true; }" output
-+'
-+
-+test_done 
-\ No newline at end of file
--- 
-2.43.2
+Hi,
 
+this patch series addresses a regression reported by Mike in Git v2.44
+where remote helpers cannot access the Git repository anymore when
+running git-clone(1).
+
+The root cause of this is that we have started to initialize the refdb
+at a later point, after the helper is spawned. This is required such
+that we can initialize it with the correct object format, which fixes
+clones of SHA256 repositories with the reftable format and when using
+bundles.
+
+The proposed fix here is to partially initialize the refdb with just
+enough data such that it can be discovered. The fix isn't pretty, but
+addresses the issue. I also couldn't come up with a better idea than
+this.
+
+Patrick
+
+Patrick Steinhardt (2):
+  refs/reftable: don't fail empty transactions in repo without HEAD
+  builtin/clone: allow remote helpers to detect repo
+
+ builtin/clone.c            | 46 ++++++++++++++++++++++++++++++++++++++
+ refs/reftable-backend.c    |  1 +
+ setup.c                    |  9 +++++++-
+ t/t0610-reftable-basics.sh | 13 +++++++++++
+ t/t5801/git-remote-testgit |  5 +++++
+ 5 files changed, 73 insertions(+), 1 deletion(-)
+
+
+base-commit: a2082dbdd315aa4dd3f315545e5b3ab3b3e2d894
+--=20
+2.44.0
+
+
+--f+wwjf3s3XLxedMq
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmXd8VYACgkQVbJhu7ck
+PpTN4g//S+iS86/KgnL16Rn9hg0uoXHBOesf9JPSpH2QCmDBxhoTLOlde1ms96p5
+aLNcUgIIbFY+56nb98Rs66sSrskMTt3sni5ImkbG1cQyP8mp4iPjhsKlrTD/MTV5
+E500FWeLmFBrq8ckTUscSVW6aZV2+uI++DltIQY54567/rxRSBAE6FigjL2+YSsA
+4eA4+3foCcn4qvMbcWmdO2ZxC5+qaapPm8JgeALL7Jj9oB8niwBMItH6l1TId8pv
+Nu7438L0p11ANrOnYovEn+iOuSZ6CfMfoJi9SjfKd9PoBq8b2yP21DJpApGshpgE
+sV02TOE+iwlyc9dADr67K8XLwyYOtA6Pyu92Tnr62ndZ/VtHGQ1gU7SsCAGmNJPw
+UcFwFiP8f091TlEHwxiO5xJkMZ3xynqTjMbeRmfvw3ya5+Hsar19DnPhKRKjBBQB
+1l43dJh0jxbpvatAGuameJwGotb6LvIaf0kowG5FK0nK3PIEarW+aHzAZB+n6Fs1
+vMw0Qh5lXQTix9xCwrGSaC7avDQI8mHzjOtIcQlFvFf2B6gNHkxjIEqsqi1Nwb+T
+ElXkQAa0bMbYqooy6IgHJ5Azfn3yN+8beGlPu954YzllS3tinMo71RrbwqohdTLl
+8KHQXE0QszvIX7J27dLCoEG0z2OVm+2MxIgDFkO5PCj2aYjlSpg=
+=7s4D
+-----END PGP SIGNATURE-----
+
+--f+wwjf3s3XLxedMq--
