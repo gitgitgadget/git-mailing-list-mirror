@@ -1,76 +1,98 @@
-Received: from secure.elehost.com (secure.elehost.com [185.209.179.11])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f47.google.com (mail-lf1-f47.google.com [209.85.167.47])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 319D216423
-	for <git@vger.kernel.org>; Tue, 27 Feb 2024 14:11:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.209.179.11
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1E5F78B61
+	for <git@vger.kernel.org>; Tue, 27 Feb 2024 14:19:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709043071; cv=none; b=I9u742Y7PFY1ejE4jcwLkNa83AhmVxqnP65iJMB++p+RHjZrsrQpKDAq9rKL86PQiQivD1BHi64ClAILAjFQoS1Hr9NWa/yR8AqXotQdTpHsF31PfxTpHTteIs3kpGPhIrZecEF0XSKwTNLwOprosxOWICowGwfSt1xm0Fs4qnw=
+	t=1709043598; cv=none; b=t5dJGtzmVaP9Y2b461b8O05iDw2LLDF8uL5LJsQpydmXdgBLHQ0YEqE9za2VBXexyeszdnc87FhBCuGrZNQQ3XRt5HN+OtdVhSPGKU3465tiqNJlo/TEhaB+3PqQflMoTP/tH0uP5sdTpriWkiO71AzL3DEOgZk37w5reolqBBk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709043071; c=relaxed/simple;
-	bh=krZ2fROC+0fIyv9Z7gPpkoJcjyrFbhWFMULNfXv8Xak=;
-	h=From:To:Cc:References:In-Reply-To:Subject:Date:Message-ID:
-	 MIME-Version:Content-Type; b=Z6vtk5vxSIWtez9EXRpACUPdGXLzlRsaWyVUFnaA5usdAt2zycUa/S/M/cGC0mxNt8FpEbqRMUW1vzfiglCJnJWNJ3KT0/ZD6q7JpFXT005AweFgOwuWJs3IigVZ6JOyy0D9CAgpdGDl/OjY9HXkpzIGUp5Jk6vku7JcLwmn4w4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com; spf=pass smtp.mailfrom=nexbridge.com; arc=none smtp.client-ip=185.209.179.11
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nexbridge.com
-X-Virus-Scanned: Debian amavisd-new at secure.elehost.com
-Received: from Mazikeen (cpebc4dfb928313-cmbc4dfb928310.cpe.net.cable.rogers.com [99.228.251.108] (may be forged))
-	(authenticated bits=0)
-	by secure.elehost.com (8.15.2/8.15.2/Debian-22ubuntu3) with ESMTPSA id 41REB0Y22354871
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 27 Feb 2024 14:11:01 GMT
-Reply-To: <rsbecker@nexbridge.com>
-From: <rsbecker@nexbridge.com>
-To: "'Patrick Steinhardt'" <ps@pks.im>, <phillip.wood@dunelm.org.uk>
-Cc: "=?iso-8859-1?Q?'Torsten_B=F6gershausen'?=" <tboegi@web.de>,
-        <git@vger.kernel.org>
-References: <01bd01da681a$b8d70a70$2a851f50$@nexbridge.com> <01be01da681e$0c349090$249db1b0$@nexbridge.com> <20240225191954.GA28646@tb-raspi4> <01ca01da682a$5f6a7b60$1e3f7220$@nexbridge.com> <5e807c1c-20a0-407b-9fc2-acd38521ba45@gmail.com> <Zd2hMmIzHKQ7JE45@tanuki>
-In-Reply-To: <Zd2hMmIzHKQ7JE45@tanuki>
-Subject: RE: [BUG] 2.44.0 t7704.9 Fails on NonStop ia64
-Date: Tue, 27 Feb 2024 09:10:55 -0500
-Organization: Nexbridge Inc.
-Message-ID: <02c501da6986$cb7c5c30$62751490$@nexbridge.com>
+	s=arc-20240116; t=1709043598; c=relaxed/simple;
+	bh=ps8vlwXFHsU7qCXXZzqsCV53qUaRhrLWQI4Ttarbb8k=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=b2nzKOn6+04O5IxirrypGz6V4c6QbF3BpSiUqFWwpGc67W0xgKjZJykLx3LPuFSG1N34m2gcSWp5RUfSoIjd18HI6LYkZA93PYq81to+BMuUSKQpd7BJzUAToU9yXx5jOIJHqS+nKpWR163JgvF05oO3Gcsho7nXkqbw+KujuZA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=FJ+9GY6S; arc=none smtp.client-ip=209.85.167.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FJ+9GY6S"
+Received: by mail-lf1-f47.google.com with SMTP id 2adb3069b0e04-512a65cd2c7so5944179e87.0
+        for <git@vger.kernel.org>; Tue, 27 Feb 2024 06:19:56 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1709043595; x=1709648395; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=kdooa3LzjwUrnvNzdigz7bMVs3sVljNeXHivJXGkO14=;
+        b=FJ+9GY6SJ1oODvX1kqcF2uOnaqEsg3HASINnux3l/hBfpjiJeUuuuljd00Pp5DsjTW
+         0tK58Aow4oN8qGC6Bk5tub+vTnnZjF4jlLSSwbfG20Swz9BbCkshkEqcNP8Efy8OO3QF
+         NNQgfFm+1c6oh9et1BthQUqQjskYeUOvYyJry9zp5JkTjewgECSoNi0dMdf/sojRSkod
+         H/1TWY8w3hHcAfa4D4yDA8t1Dm8Bh6mNbkP3LXqaKbknPZNPZZOsp16Fa1bAgaIWL1k3
+         ZSEvoeBjbZEv6ci7LwvaThbvetkrl9scxqak0zxhnpXQpnqeUvrWPWkV/Fre3SsatXpJ
+         jLOQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1709043595; x=1709648395;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=kdooa3LzjwUrnvNzdigz7bMVs3sVljNeXHivJXGkO14=;
+        b=o2x8S4xoAMkVEZYB/1oZVpHAfSJf5mx77vDxLyseScIx/bDnj0yKugbzuS9YuPiMzo
+         CdR2rW0AA28bQweud/RnCuX1uhlCe9KGqTSFa4p/1z6glqg7WdorJApRar9/CRgmj+13
+         QVQFvuB2LrBgvhl3tRdntCC1pKT2I4sOq5FoG9I+5O14usr4TvHyOys5ho3lRVpGSPYA
+         vxl/qXR35Qy9mXdJTp4aw6q+WIXxJN73t/Uvgj7YtzRhkt4bjx+UklCNDXERuGvcV2r/
+         gDi1GyZW6bfwSkVt5/soXUCLkn/s9rtQZomAgONcmM9MQjvsHdY2V4Mim4WlHp5OHxJL
+         h1bw==
+X-Gm-Message-State: AOJu0Yz1HouRW1UCI8OmTPh1tuMBtv8zelC+s54H4O8rATOP5Wq5zsnX
+	32O4yp7ysM9pGNCLNtI/4HS9lklOg16xLHLJlM9Fr09D+nhZNBnn
+X-Google-Smtp-Source: AGHT+IHhh7nPhnjP/I/ZPBPUPLynwnUZbJv6JiZohbu/OtFl3gr3UN572P5A0z20n9jbMtY0YThseA==
+X-Received: by 2002:a05:6512:2314:b0:512:e394:bfb1 with SMTP id o20-20020a056512231400b00512e394bfb1mr8001953lfu.43.1709043594758;
+        Tue, 27 Feb 2024 06:19:54 -0800 (PST)
+Received: from host-sergy.. ([154.72.153.222])
+        by smtp.gmail.com with ESMTPSA id s24-20020a170906bc5800b00a3efa4e033asm805915ejv.151.2024.02.27.06.19.52
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 27 Feb 2024 06:19:54 -0800 (PST)
+From: Sergius Nyah <sergiusnyah@gmail.com>
+X-Google-Original-From: Sergius Nyah <74214119+Sergius-Nyah@users.noreply.github.com>
+To: christian.couder@gmail.com,
+	pk@pks.im
+Cc: git@vger.kernel.org,
+	Sergius Nyah <74214119+Sergius-Nyah@users.noreply.github.com>
+Subject: [GSOC][PATCH 0/2] Add builtin patterns for userdiff in JavaScript, as Microproject.
+Date: Tue, 27 Feb 2024 15:19:45 +0100
+Message-ID: <20240227141947.71447-1-74214119+Sergius-Nyah@users.noreply.github.com>
+X-Mailer: git-send-email 2.43.2
+In-Reply-To: <CANAnif-OganZLi0Cu_uq=nveC+u5n14c=o_DQHT-wFOqQ9Vs0Q@mail.gmail.com>
+References: <CANAnif-OganZLi0Cu_uq=nveC+u5n14c=o_DQHT-wFOqQ9Vs0Q@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain;
-	charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-X-Mailer: Microsoft Outlook 16.0
-Content-Language: en-ca
-Thread-Index: AQH6KeHXK3ktIx6cNmAt1sL267+NoQLej1jbAXwNbRICuPECnQG1wVidALQjrBCwks2s8A==
+Content-Transfer-Encoding: 8bit
 
-On Tuesday, February 27, 2024 3:46 AM, Patrick Steinhardt wrote:
->On Mon, Feb 26, 2024 at 03:32:14PM +0000, Phillip Wood wrote:
->> Hi Randal
->>
->> [cc'ing Patrick for the reftable writer]
->>
->> > The question is which call is bad? The cruft stuff is relatively new
->> > and I don't know the code.
->> >
->> > > > reftable/writer.c:              int n = w->write(w->write_arg,
-zeroed,
->> > > > w->pending_padding);
->> > > > reftable/writer.c:      n = w->write(w->write_arg, data, len);
->>
->> Neither of these appear to check for short writes and
->> reftable_fd_write() is a thin wrapper around write(). Maybe
->> reftable_fd_write() should be using write_in_full()?
->
->It already does starting with 85a8c899ce (reftable: handle interrupted
-writes, 2023-12-11):
->
->```
->static ssize_t reftable_fd_write(void *arg, const void *data, size_t sz) {
->	int *fdp = (int *)arg;
->	return write_in_full(*fdp, data, sz);
->}
+Firstly, I'm so sorry for the delay between selecting the Microproject and sending the patch series.
+Learning about regular expressions took me a bit longer than I expected, but it was all worth it.
+I'm very grateful for the opportunity to work on this project and I'm looking forward to contributing more to Git.
 
-Unfortunately, this fix is included in what I am testing but does not impact
-the issue I am seeing one way or another, but thank you. 
+This patch series adds builtin patterns for JavaScript function detection in userdiff, as 
+my Microproject for GSOC. The first patch adds a regular expression for detecting JavaScript
+functions in Git diffs while the second adds a test for JavaScript function detection in Git diffs.
+This new pattern looks for lines that start with optional whitespace, followed by 'function' and any 
+characters (for function declarations), or valid JavaScript identifiers, equals sign '=', 'function'
+keyword and any characters (for function expressions). It also considers functions defined inside blocks with '{...}'.
+
+
+ t/t4018-diff-funcname.sh | 25 +++++++++++++++++++++++--
+ userdiff.c               | 17 +++++++++++++++--
+ 2 files changed, 38 insertions(+), 4 deletions(-)
+ 
+
+base-commit: c5b454771e6b086f60c7f1f139025f174bcedac9
+-- 
+2.43.2
+
+I would greatly appreciate any feedback on the patch series.
+Best, 
+Sergius.
 
