@@ -1,233 +1,300 @@
-Received: from mail-ed1-f52.google.com (mail-ed1-f52.google.com [209.85.208.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B86DB4CE17
-	for <git@vger.kernel.org>; Tue, 27 Feb 2024 22:29:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A6E855C32
+	for <git@vger.kernel.org>; Tue, 27 Feb 2024 23:07:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709072983; cv=none; b=UmUUz4/Re5tSH900GHxkLxnWGzdnB8pZNjoV6s5moHN1HFYgbKkwOgtaAawIsIPCjiamd4CS44C6n2/bUfK2kGBxSa+hiQ7rVFAWNn/QwabswQG/MMp/PFK2L9AdaAldLvJ/CCohke3+NJ4xOf54oP2/6SJJOoQNGOdh7aDUMDc=
+	t=1709075250; cv=none; b=bj7LV45N3EBHz6QstslJg9i8KTADo5gxLBcAqYGJ8wzEtVqjDSMzn7pOu9YMs1X4hN3sXppI24n1WXwC3b+GZ020n4uqxGJvIBqqm7/EwEas1Cbnnbs3de7PlCkMyHsE4+v1G6pinGWKxwx25H1GUVWXAjdP9DfisxRm/vrXYXg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709072983; c=relaxed/simple;
-	bh=61pJURtrC5Djq85WSqth2yseOxibgYb1aVo50vYZ4gM=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=NGsYwlgNrKbK4fDT8+NHwlC6yGqco4DRRJYY8o4wETYAMD3akH0ZKsphg/wIutCj88tBjt8kNhW0xWcSw3PBntW6rnjcfko3nOiZeda+JdNbVnLkTvb+gFsWDAubQ81bEv+59RjdCqJI4dUlXEvwd/I3cl99UvosntmvCCPZl14=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=M8/BzNnI; arc=none smtp.client-ip=209.85.208.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	s=arc-20240116; t=1709075250; c=relaxed/simple;
+	bh=qpGg9BNkm6fqQzYf6b42I+1HLVPdN8GgSm98iKsGgM8=;
+	h=From:To:Subject:cc:Date:Message-ID:MIME-Version:Content-Type; b=EZXZ/JUvc2/tJ7Xz+SQf6i+2+TprO1l78xVPgnhPDavoWtjAnJtS6QRwZu/3gWdHkhyPb4GCfuye6y3Gv6C3HoElGorjNY+fwUqGkAv9exyCB/QXoxnc2Nqqz2tfCGVRYuUCfWv6aNeJ0/OY6zZEwVOe0vERSM4yg7LGaZecha0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=LpPNRa74; arc=none smtp.client-ip=173.228.157.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="M8/BzNnI"
-Received: by mail-ed1-f52.google.com with SMTP id 4fb4d7f45d1cf-55a8fd60af0so6652269a12.1
-        for <git@vger.kernel.org>; Tue, 27 Feb 2024 14:29:41 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1709072980; x=1709677780; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=jS4MrqZaFKUCYW9QP/4eI8hlXDXIKiX0H/aNVbgdF/E=;
-        b=M8/BzNnI0HgbME7pTc5xqf3FcZGqK2UlKUYHiGW6V3xv4h3fgIsQanpaQ9HyBLg+c4
-         DLHGLG+SFXYQSvOXT15Rg5662mJDVhwpLDcpzXgRvCmUppNR9A42WrDrGQi6Ifw9vPSs
-         U/xG4Svs6f+CVXY61vGQbyMlipzgnMCiUM33rrE/J45aNN63hvcavuE3+v8a6rpFAzrm
-         gULjiJD+QLQNTJkXRiqo5v8nAlgBeYB39HigEsaY3QTI+PjMs5t42Gsb6l+AQ0JiWlbq
-         J5PeFhhuTZs9XYr0ZMkGlgJSoLWz0a9q7K2r18dCtg8K8jOq4ZO7kqXO9+zbbmsZj06d
-         iTFA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1709072980; x=1709677780;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=jS4MrqZaFKUCYW9QP/4eI8hlXDXIKiX0H/aNVbgdF/E=;
-        b=vYbLEmW9q2iMCHjZ2/DFQTH+Jhs9i02sbgV+hoqDxE3Y/c53Zjf8JH2o5pi57lVfTL
-         1GUSVmtV8IcvcIfLUzdNp+oY+4cCQtN5IPI/314EVapUJe+SHdDFKQrYYWh1m/erNbBZ
-         VRnua69LnKVwDN1OoDcdiSA22aMnt8gfsX9qywsmAZcNxAhyd2k1RVG7PNWgfbOuWV8n
-         jbcF/PhIe6kTQdO6Pyh8ZEiOMf9iCTmwoGQHTwN02+mqHMRP9ywlqa+SW4VK0Mncejtf
-         J49Xx1UdCmCajWMsQ1b6TP+RfqjVDlPXRXPmTRVK5p5BanBV5fgpVDFJBwXf6/2+AJ3t
-         MX7w==
-X-Forwarded-Encrypted: i=1; AJvYcCV8ojRMvs127BbEgdRzQjqErPsUynGk417WEu1a8lJb+1QwAqADNtdQAAvmoO/QB1eTo8F+A2617sa5qFMCAGC6Qwqd
-X-Gm-Message-State: AOJu0YznPKBSDYyWfXGVfYIjaf+23FFUpeBPjIMGd2n6D0YL0U0feIPS
-	7s3SZ7I8qAG6//1Jh+p9fVEpD1MF2+ZnTDBGhkFTbMsviWwUgeR3KVOlkMf+MRQhnGAnS1UawlX
-	S23XskGXnwTTt9XXDO7UsijHUOXDKrhbvKiB9
-X-Google-Smtp-Source: AGHT+IFrnndImqajHfbOJzN5NR8UOxofHNRyFXlOIGJSTk5hsJrv8cJlynK0ZCSfLCHBAWHcBSNZDgg8umWmzOXsd2U=
-X-Received: by 2002:a17:906:f0cb:b0:a3e:c2de:2b9e with SMTP id
- dk11-20020a170906f0cb00b00a3ec2de2b9emr6863968ejb.39.1709072979744; Tue, 27
- Feb 2024 14:29:39 -0800 (PST)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="LpPNRa74"
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id CFC1E266AE;
+	Tue, 27 Feb 2024 18:07:24 -0500 (EST)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to
+	:subject:cc:date:message-id:mime-version:content-type; s=sasl;
+	 bh=qpGg9BNkm6fqQzYf6b42I+1HLVPdN8GgSm98iKsGgM8=; b=LpPNRa746lVI
+	z5dnJYWVZDMT4qNYqlveO50T3XKiOE8mURWMFUnPk/QECM/Gf28ch/0RywNPgUj4
+	VSoVqeAtgd/J0hjLyqzw4XVyXYeb4nZ8C8NKFrqMxB1h2Bw0zpWW7PkDvjdeyg8n
+	rCTj0UtaixCKcCNVjz+JnHn2N2Gt26o=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id C699E266AD;
+	Tue, 27 Feb 2024 18:07:24 -0500 (EST)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.176.30])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id EA016266A9;
+	Tue, 27 Feb 2024 18:07:20 -0500 (EST)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+Subject: Uses of xwrite() in the codebase
+cc: "Randall S. Becker" <randall.becker@nexbridge.ca>
+Date: Tue, 27 Feb 2024 15:07:19 -0800
+Message-ID: <xmqqil29o6ag.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <cover.1696021277.git.jonathantanmy@google.com>
- <20240222175033.1489723-2-calvinwan@google.com> <xmqqh6i0cgyo.fsf@gitster.g>
- <CAO_smVi76TbmHd5w2rpBEEYbaw46SNTrekFHE-ohDC6-=dk6DA@mail.gmail.com>
- <xmqqle76iwqw.fsf@gitster.g> <CAO_smVjeNYFTgh4MZjRM9U1coY=UJxo-E6bD9OfdS1A1Xf6vcQ@mail.gmail.com>
- <xmqqzfvmhbfs.fsf@gitster.g>
-In-Reply-To: <xmqqzfvmhbfs.fsf@gitster.g>
-From: Kyle Lippincott <spectral@google.com>
-Date: Tue, 27 Feb 2024 14:29:23 -0800
-Message-ID: <CAO_smVgmaXvyZZ7zp6RCFD_6kpL2pHKC9gMDeg+yXBb9R4rR5w@mail.gmail.com>
-Subject: Re: [PATCH v5 1/3] pager: include stdint.h because uintmax_t is used
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Calvin Wan <calvinwan@google.com>, git@vger.kernel.org, 
-	Jonathan Tan <jonathantanmy@google.com>, phillip.wood123@gmail.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ F5D4FBB8-D5C4-11EE-9A29-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
 
-On Mon, Feb 26, 2024 at 6:45=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
-wrote:
->
-> Kyle Lippincott <spectral@google.com> writes:
->
-> >> In any case, your sources should not include a standard library
-> >> header directly yourself, period.  Instead let <git-compat-util.h>
-> >> take care of the details of how we need to obtain what we need out
-> >> of the system on various platforms.
-> >
-> > I disagree with this statement. We _can't_ use a magic compatibility
-> > header file in the library interfaces, for the reasons I outlined
-> > further below in my previous message. For those headers, the ones that
-> > might be included by code that's not under the Git project's control,
-> > they need to be self-contained, minimal, and maximally compatible.
->
-> Note that I am not talking about your random outside program that
-> happens to link with gitstdlib.a; it would want to include a header
-> file <gitstdlib.h> that comes with the library.
+There aren't too many places that we make calls to xwrite(), so
+let's audit all.
 
-I agree with this.
+I'll show something that looks like patch, but I won't be applying
+any of them myself, at least not as a part of this message.
 
->
-> Earlier I suggested that you may want to take a subset of
-> <git-compat-util.h>, because <git-compat-util.h> may have a lot more
-> than what is minimally necessary to allow our sources to be
-> insulated from details of platform dependence.  You can think of
-> that subset as a good starting point to build the <gitstdlib.h>
-> header file to be given to the library customers.
->
-> But the sources that go to the library, as gitstdlib.a is supposed
-> to serve as a subset of gitlib.a to our internal codebase when
-> building the git binary, should still follow our header inclusion
-> rules.
+First, some ground rules:
 
-If I'm understanding this correctly, I agree with it. The .c files
-still include <git-compat-util.h>, and don't change. The internal-only
-.h files (ones that a pre-built-library consumer doesn't need to even
-have in the filesystem) still assume that <git-compat-util.h> was
-included, and don't change. <pager.h> falls into this category.
+ * Calling xwrite() relieves us from worrying about interrupted
+   system call returning with EINTR or EAGAIN without writing
+   anything.  If we were using write(2), we need to be calling it
+   again with the same arguments, but xwrite() retries that call for
+   us.  That is the _only_ thing it does.
 
->
-> Because we would want to make sure that the sources that are made
-> into gitstdlib.a, the sources to the rest of libgit.a, and the
-> sources to the rest of git, all agree on what system features we ask
-> from the system, feature macros that must be defined to certain
-> values before we include system library files (like _XOPEN_SOURCE
-> and _FILE_OFFSET_BITS) must be defined consistently across all of
-> these three pieces.  One way to do so may be to ensure that the
-> definition of them would be migrated to <gitstdlib.h> when we
-> separate a subset out of <git-compat-util.h> to it (and of course,
-> we make <git-compat-util.h> to include <gitstdlib.h> so that it
-> would be still sufficient for our in-tree users to include the
-> <git-compat-util.h>)
->
-> <gitstdlib.h> may have to expose an API function that uses some
-> extended types only available by including system header files,
-> e.g. some function may return ssize_t as its value or take an off_t
-> value as its argument.
+ * Specifically, when write(2) returns after writing less than what
+   it was asked to (called "short write"), xwrite() returns the
+   number of bytes written, just like the underlying write(2) does,
+   and it is not an error.
 
-I agree that these types will be necessary (specifically ssize_t and
-int##_t, but less so off_t) in the "external" (used by projects other
-than Git) library interfaces.
+ * Errors xwrite() internally handles are only the ones that are
+   related to an interrupted system call that needs retrying.  Other
+   errors are responsibility of the caller to handle.  If a platform
+   raises an error when passed a very large buffer to write out,
+   instead of just making a short write and returning the number of
+   writes written, the platform port should protect itself from such
+   an error by limiting MAX_IO_SIZE, so that xwrite() does not even
+   attempt to make such a large write(2) call.
 
->
-> If our header should include system headers to make these types
-> available to our definitions is probably open to discussion.  It is
-> harder to do so portably, unless your world is limited to POSIX.1
-> and ISO C, than making it the responsibility of library users.
+Now, I'll go through "git grep -W -e 'xwrite('" output and annotate
+it.
 
-I think I'm probably missing the nuance here, and may be making this
-discussion much harder because of it. My understanding is that Git is
-using C99; is that different from ISO C? There's something at the top
-of <git-compat-util.h> that enforces that we're using C99. Therefore,
-I'm assuming that any compiler that claims to be C99 and passes that
-check at the top of <git-compat-util.h> will support inttypes.h,
-stdint.h, stdbool.h, and other files defined by the C99 standard to
-include types that we need in our .h files are able to be included
-without reservation. To flip it around: any compiler/platform that's
-missing inttypes.h, or is missing stdint.h, or raises errors if both
-are included, or requires other headers to be included before them
-_isn't a C99 compiler_, and _isn't supported_. I'm picking on these
-files because I think they will be necessary for the external library
-interfaces. I'm intentionally ignoring any file not mentioned in the
-C99 standard, because those are platform specific. I acknowledge that
-there may be some functionality in these files that's only enabled if
-certain #defines are set. Our external interfaces should strive to not
-use that functionality, and only do so if we are able to test for this
-functionality and refuse to compile if it's not available. I have an
-example with uintmax_t below.
+--------------------
+builtin/index-pack.c:final() is prepared to see and handle a short
+write(2) itself.  It is a correct implementation that does not need
+to be touched, but we could replace the loop with a single call to
+write_in_full().
 
->
-> But if the platform headers and libraries support feature macros
-> that allows you to tweak these sizes (e.g. the size of off_t may be
-> controlled by setting the _FILE_OFFSET_BITS to an appropriate
-> value), it may be irresponsible to leave that to the library users,
-> as they MUST make sure to define such feature macros exactly the
-> same way as we define for our code, which currently is done in
-> <git-compat-util.h>, before they include their system headers to
-> obtain off_t so that they can use <gitstdlib.h>.
+diff --git c/builtin/index-pack.c w/builtin/index-pack.c
+index a3a37bd215..a54cb07a35 100644
+--- c/builtin/index-pack.c
++++ w/builtin/index-pack.c
+@@ -1570,13 +1570,7 @@ static void final(const char *final_pack_name, const char *curr_pack_name,
+ 		 * Let's just mimic git-unpack-objects here and write
+ 		 * the last part of the input buffer to stdout.
+ 		 */
+-		while (input_len) {
+-			err = xwrite(1, input_buffer + input_offset, input_len);
+-			if (err <= 0)
+-				break;
+-			input_len -= err;
+-			input_offset += err;
+-		}
++		write_in_full(1, input_buffer + input_offset, input_len);
+ 	}
+ 
+ 	strbuf_release(&rev_index_name);
 
-I think the only viable solution to this is to not use these types
-that depend on #defines in the interface available to non-git
-projects. We can't set _FILE_OFFSET_BITS in the library's external
-(used by non-Git projects) interface header, as there's a high
-likelihood that it's either too late (external project #included
-something that relies on _FILE_OFFSET_BITS already), or, if not, we
-create the "off_t is a different size" problem for their code.
 
-This means that we can't use off_t in these external interface headers
-(and in the .c files that support them, if any). We can't use `struct
-stat`. We likely need to limit ourselves to just the typedefs from
-stdint.h, and probably will need some additional checks that enforce
-that we have the types and sizes we expect (ex: I could imagine that
-some platforms define uintmax_t as 32-bit. or 128-bit. Either we can't
-use it in these external interfaces, or we have to enforce somehow
-that the simplest file we can imagine (#include <stdint.h>) gets a
-definition of uintmax_t that is the exact same as the one we'd get if
-we included <git-compat-util.h>). The external interface headers don't
-need to be as platform-compatible as the rest of the git code base,
-because not every platform is going to be a supported target for using
-the library in non-git projects, especially at first. The external
-interface headers _do_ need to be as tolerant and well behaved as
-possible when being included by external projects, which I'm asserting
-means they need to be self-contained and minimal. If that means these
-external interfaces don't get to use off_t at all, so be it. If it
-means they can only be included if sizeof(off_t) =3D=3D 64, and we have a
-way of enforcing that at compile time, that's fine with me too. But we
-can't #define _FILE_OFFSET_BITS ourselves in this external interface
-to get that behavior, because it just doesn't work.
+--------------------
+builtin/receive-pack.c:report_message() has a call to xwrite() that
+will lead to message truncation if the underlying write(2) returns
+early.
 
-I'm making some assumptions here. I'm assuming that the git binary
-uses a different interface to a hypothetical libgitobjstore.a than an
-external project would (i.e. that there'd be some
-git-obj-store-interface.h that gets included by non-Git projects, but
-not by git itself). Is git-std-lib an obvious counterexample to this
-assumption? Yes and no. No one (besides Git itself) is going to
-include libgitstdlib.a in their project any time soon, so there's no
-real "external interface" to define right now. Eventually, having
-git-std-lib types in the hypothetical git-obj-store-interface.h _may_
-happen, or it may not. I don't know.
+diff --git c/builtin/receive-pack.c w/builtin/receive-pack.c
+index 56d8a77ed7..4d8ed3f7a3 100644
+--- c/builtin/receive-pack.c
++++ w/builtin/receive-pack.c
+@@ -456,7 +456,7 @@ static void report_message(const char *prefix, const char *err, va_list params)
+ 	if (use_sideband)
+ 		send_sideband(1, 2, msg, sz, use_sideband);
+ 	else
+-		xwrite(2, msg, sz);
++		write_in_full(2, msg, sz);
+ }
+ 
+ __attribute__((format (printf, 1, 2)))
 
-...
 
-But I think we're in agreement that pager.h isn't part of
-git-std-lib's (currently undefined/non-existent) external interface,
-and so doesn't need to be self-contained, and this patch should
-probably be dropped?
->
-> So the rules for library clients (random outside programs that
-> happen to link with gitstdlib.a) may not be that they must include
-> <git-compat-util.h> as the first thing, but they probably still have
-> to include <gitstdlib.h> fairly early before including any of their
-> system headers, I would suspect, unless they are willing to accept
-> such responsibility fully to ensure they compile the same way as the
-> gitstdlib library, I would think.
->
->
->
+
+--------------------
+builtin/repack.c:write_oid() feeds a line with an object name on it
+to a subprocess, but it can suffer from a short write(2).
+
+diff --git c/builtin/repack.c w/builtin/repack.c
+index ede36328a3..1a516a6bed 100644
+--- c/builtin/repack.c
++++ w/builtin/repack.c
+@@ -314,8 +314,10 @@ static int write_oid(const struct object_id *oid,
+ 			die(_("could not start pack-objects to repack promisor objects"));
+ 	}
+ 
+-	xwrite(cmd->in, oid_to_hex(oid), the_hash_algo->hexsz);
+-	xwrite(cmd->in, "\n", 1);
++	if (write_in_full(cmd->in, oid_to_hex(oid), the_hash_algo->hexsz) ||
++	    write_in_full(cmd->in, "\n", 1))
++		die(_("failed to feed promisor objects to pack-objects"));
++
+ 	return 0;
+ }
+ 
+
+--------------------
+builtin/unpack-objects.c:cmd_unpack_objects() has the same xwrite()
+loop as we saw in builtin/index-pack.c:final().  It is a correct
+implementation that does not need to be touched, but we could
+replace the loop with a single call to write_in_full().
+
+diff --git i/builtin/unpack-objects.c w/builtin/unpack-objects.c
+index e0a701f2b3..f1c85a00ae 100644
+--- i/builtin/unpack-objects.c
++++ w/builtin/unpack-objects.c
+@@ -679,13 +679,7 @@ int cmd_unpack_objects(int argc, const char **argv, const char *prefix UNUSED)
+ 	use(the_hash_algo->rawsz);
+ 
+ 	/* Write the last part of the buffer to stdout */
+-	while (len) {
+-		int ret = xwrite(1, buffer + offset, len);
+-		if (ret <= 0)
+-			break;
+-		len -= ret;
+-		offset += ret;
+-	}
++	write_in_full(1, buffer + offset, len);
+ 
+ 	/* All done */
+ 	return has_errors;
+
+
+--------------------
+http.c:fwrite_sha1_file() has xwrite() loop that is prepared to see
+a short write(2).  The loop could be replaced with write_in_full() but
+the semantics of the value returned upon failure could become different,
+so I'd rather not to touch it.
+
+http.c-	do {
+http.c:		ssize_t retval = xwrite(freq->localfile,
+http.c-					(char *) ptr + posn, size - posn);
+http.c-		if (retval < 0)
+http.c-			return posn / eltsize;
+http.c-		posn += retval;
+http.c-	} while (posn < size);
+
+--------------------
+sideband.c:demultiplex_sideband() uses xwrite() that does not retry
+for its progress eye-candy.  write_in_full() may be overkill for
+them, I suspect.
+
+sideband.c-			strbuf_addch(scratch, *brk);
+sideband.c:			xwrite(2, scratch->buf, scratch->len);
+sideband.c-			strbuf_reset(scratch);
+sideband.c ...
+sideband.c-	if (scratch->len) {
+sideband.c-		strbuf_addch(scratch, '\n');
+sideband.c:		xwrite(2, scratch->buf, scratch->len);
+sideband.c-	}
+
+
+--------------------
+streaming.c:stream_blob_to_fd() keeps track of the "hole" at the end
+of the output file by refraining from writing series of NULs, and
+instead uses lseek() to move the write pointer to 1-byte before the
+desired end of file, and then uses xwrite() to write a single NUL at
+the end.  This should not result in a short write(2), and it handles
+write error correctly already, but it would be OK to update it to
+write_in_full() for consistency.
+
+diff --git c/streaming.c w/streaming.c
+index 10adf625b2..38925ea9fd 100644
+--- c/streaming.c
++++ w/streaming.c
+@@ -538,7 +538,7 @@ int stream_blob_to_fd(int fd, const struct object_id *oid, struct stream_filter
+ 			goto close_and_exit;
+ 	}
+ 	if (kept && (lseek(fd, kept - 1, SEEK_CUR) == (off_t) -1 ||
+-		     xwrite(fd, "", 1) != 1))
++		     write_in_full(fd, "", 1) != 1))
+ 		goto close_and_exit;
+ 	result = 0;
+ 
+--------------------
+t/helper/test-genzeros.c:cmd__genzeros() runs xwrite() and dies if
+it got an error.  It does handle short write(2) correctly.
+
+(1) If asked to write an infinite stream of NUL, it just feeds
+zeros[] array without caring how many NUL bytes have actually been
+written by a single xwrite() call.  It just stops when it sees an
+error.
+
+t/helper/test-genzeros.c-	/* Writing out individual NUL bytes is slow... */
+t/helper/test-genzeros.c-	while (count < 0)
+t/helper/test-genzeros.c:		if (xwrite(1, zeros, ARRAY_SIZE(zeros)) < 0)
+t/helper/test-genzeros.c-			die_errno("write error");
+
+(2) If asked to write a specific number of NUL bytes, it does a loop
+that handles short write(2) correctly.
+
+t/helper/test-genzeros.c-	while (count > 0) {
+t/helper/test-genzeros.c:		n = xwrite(1, zeros,
+t/helper/test-genzeros.c-			   count < ARRAY_SIZE(zeros)
+t/helper/test-genzeros.c-			   ? count : ARRAY_SIZE(zeros));
+t/helper/test-genzeros.c-
+t/helper/test-genzeros.c-		if (n < 0)
+t/helper/test-genzeros.c-			die_errno("write error");
+t/helper/test-genzeros.c-
+t/helper/test-genzeros.c-		count -= n;
+t/helper/test-genzeros.c-	}
+
+--------------------
+transport-helper.c:disconnect_helper() has a call to xwrite() of a
+single byte that does not care about errors, whose rationale is
+given in a well written comment.
+
+--------------------
+transport-helper.c:udt_do_write() has a call to xwrite() that makes
+a non-zero progress per a call to it, and its caller is prepared to
+call it until the buffer is drained fully, prepared to handle a
+short write(2) correctly.  There is nothing to fix there.
+
+--------------------
+upload-pack.c:send_client_data() calls unchecked xwrite() on fd #2
+to show an error message, but this happens only when the sideband is
+not in use, so I do not know offhand how much this matters these
+days.  When the sideband is in use, the data is passed to
+send_sideband() that does write_or_die(), so I guess for consistency
+it might want to become write_in_full().  
+
+HOWEVER, there is a comment that reads "are we happy to lose stuff
+here?" left by 93822c22 (short i/o: fix calls to write to use xwrite
+or write_in_full, 2007-01-08), which was an earlier audit of this
+exact issue that turned many unchecked xwrite() into write_in_full(),
+so, I dunno.
+
+upload-pack.c-	if (use_sideband) {
+upload-pack.c-		send_sideband(1, fd, data, sz, use_sideband);
+upload-pack.c-		return;
+upload-pack.c-	}
+upload-pack.c-	if (fd == 3)
+upload-pack.c-		/* emergency quit */
+upload-pack.c-		fd = 2;
+upload-pack.c-	if (fd == 2) {
+upload-pack.c-		/* XXX: are we happy to lose stuff here? */
+upload-pack.c:		xwrite(fd, data, sz);
+upload-pack.c-		return;
+upload-pack.c-	}
+upload-pack.c-	write_or_die(fd, data, sz);
+upload-pack.c-}
