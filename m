@@ -1,157 +1,96 @@
-Received: from mail-lf1-f52.google.com (mail-lf1-f52.google.com [209.85.167.52])
+Received: from mail-lj1-f180.google.com (mail-lj1-f180.google.com [209.85.208.180])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 107671448D7
-	for <git@vger.kernel.org>; Tue, 27 Feb 2024 13:28:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C09F41419A6
+	for <git@vger.kernel.org>; Tue, 27 Feb 2024 14:00:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709040514; cv=none; b=Xi2pEmsqMu5EEeeGrx10yllNSNgDlFL5fuiF5FTycD2jYS643e6wOwb1GUVkq3xESGQxngh1HorUgm0MpOAnc26TkZwaY+uMNSMr/E5FgsOgBdmz5D9ZQrDkmmjsy0WsGlhv7f0DvFEmAm4LHbD5YYRmGwhOH/+6o0TopGl+gD8=
+	t=1709042427; cv=none; b=WePQNDOjKVpbhnaovLAHHKj1arEIP4j0S9GXDNkqUZZf3E3RRCeKjwTcAe9TTjChrT0+/qKbZ6M0sqsvK6nZYQrdBOHGcmcGu2WQ5bb7DA4mTtn7W71nHKFhKIGubMb/+4fSuxXEgX1GQmGo/n2dGZxGhJ78Cw7QLou3mbPnkCY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709040514; c=relaxed/simple;
-	bh=ycRcJNh4RBH0q+Ha2b1dfdCgivn8LOTTSA25a7ks9Io=;
-	h=Message-ID:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=bGht+Fpu0/YLKY5Y2sQv2ENAuTboZNdJJhjIe3ElOGngxM38fE8qyuoT7Bs5nKvLWWNT1838QFq9gTXR83iJYIFjQ3kY6lrWZUC9mJXqFRBEBy3pkk4Ugoxd/Ni/vWFWfgMDwG5W6c7Ct66tQ1yj7yOpk073+P3rFvRnS88H0WA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Y1GozOOX; arc=none smtp.client-ip=209.85.167.52
+	s=arc-20240116; t=1709042427; c=relaxed/simple;
+	bh=QZCjF6+NTm4cmpaW5WJpBTEYskwfQMRv6Baavn2F780=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=B3C3sdUf2RYmYiK3rfoxeFbCRchcYl16yfOPsIIGJKI7OsL+B8QQWmWJyWwPxNTNwMrnXl89UUaZ32H7W0XRduRkQPmOdg+1/k4l3akA0iCE5cyKmQYig0aqi8aO/0Q7PfFUo77H1Dtr9f0oXk4UgnoXaX4eDKhv7ms2Fqm4CUY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=emczSbm1; arc=none smtp.client-ip=209.85.208.180
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Y1GozOOX"
-Received: by mail-lf1-f52.google.com with SMTP id 2adb3069b0e04-512fd840142so2657744e87.2
-        for <git@vger.kernel.org>; Tue, 27 Feb 2024 05:28:32 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="emczSbm1"
+Received: by mail-lj1-f180.google.com with SMTP id 38308e7fff4ca-2d240d8baf6so54025331fa.3
+        for <git@vger.kernel.org>; Tue, 27 Feb 2024 06:00:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1709040511; x=1709645311; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=8ATFgjL2j9vsAkuTtdOxufbw4oIBU/BIZVTdpWAvcts=;
-        b=Y1GozOOXlJyGnoV8Ewinxwijvwl5rBXEWcRk+DwhmezCg1wt+goyuUuGU+GLXAh1rW
-         aadfo7yMw68Hl0RKqoSZiak5ihGdBGmExhPlvIixwhaVhYQjPDzMt5PQjAqMJf2FdWlr
-         OlVz5FbKW6HMXh5bdoW+3+TqYSMcDaDI1aXQoG0d2VD/j2cOCz0vUaIkvQyllxXQw8MI
-         cFT3i8fQSUEDc9J5k9ce3kZ5ATXwWjEgEjdH35Malo7FIUGe36BFs7m+WZ5GgIsiNl6I
-         REK6HqHURaLUl+wt+skgQGW6sBlG+/tzVHnzdxJS9uV6BBL/RNL5SuarI/oebC22MD/I
-         TD+w==
+        d=gmail.com; s=20230601; t=1709042424; x=1709647224; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=nUItxhYbIuS2ugqBRgOcLtHAc/kXBcGvnV3qU9yTOmA=;
+        b=emczSbm13ZsUNgsD1IkH676yj1Oixg3NL8eQZKG0zmreXJ1n2e5MuTn789KeSoCvZr
+         zYRDAzi99/DJIue1vP9issdxWNcyR+gfttxNShk+5UlEvxKUUw08ezHEp1xRlzZJGKIz
+         blP5p8uDs1w1G2t7bo6+iv0UR2xBHHgMGCcg/O9x1VswtFxybUrgYWUlivdAJlh0k75f
+         c+0x93TrQtCOhwD4YbQMQe944LV1g/NWvmIFMV9tr15yihX9QwZOZZNCfnl+NsiiO3dU
+         IcZcmgvl1oeisT1+sbKPnmKfAKPrA4cgCyCJaKH5yJH/k111XDmc14BUnNoRHe4A7bf9
+         mjAw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1709040511; x=1709645311;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=8ATFgjL2j9vsAkuTtdOxufbw4oIBU/BIZVTdpWAvcts=;
-        b=Vq3M/bwoc9sRQoB0L2IInMRjwA54+byAkBY7jrRKDevsZHyDvEF2Zhzb9fyBBjTmBE
-         a6vgQer2GYhCAIs3wDFmbvrQ3+7ZIKsB3WqMR0Fd6X37Qjz2cSusJe0m21u9wnlrtoIV
-         zZQ1AvNd3yIzDclAnSU5gEG1czAsC43W0HBiTs1n66cj8mL2kQFFu8iFyx20SymkmpZB
-         gnQPO/n73dI2tBrIGqsQPnLFS95L/tT7daPHubHWbWbz7Tr2tlgB7UBF0dee7l5Vjli0
-         mjQlMdkHWoQvN/6+9hzojUn7HNz9IHWEWVbfGF84xP7AfQ8JzdnQ7Qzew8lA6CH8W3a5
-         daHg==
-X-Gm-Message-State: AOJu0YyycUvjsl99sqFprlEMLX6J7VVMucyFt96Jxv9o8Cv/WIYy/GFf
-	xrp/u+/XHGN2uU+lh9n+KX9OPI4vopffr5QVWWulxyRGwpMuhzlUYgGbc57w
-X-Google-Smtp-Source: AGHT+IHEeDmPphvscRK+VSJHilRUV8iWW0QR7zVxWAz/+IYdbkrgLZ+R6yP9zLWfS53kefiaHjlp6A==
-X-Received: by 2002:ac2:5468:0:b0:513:14a2:c3b7 with SMTP id e8-20020ac25468000000b0051314a2c3b7mr321519lfn.69.1709040511076;
-        Tue, 27 Feb 2024 05:28:31 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id i10-20020a05600c290a00b0040fccf7e8easm14990739wmd.36.2024.02.27.05.28.30
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 27 Feb 2024 05:28:30 -0800 (PST)
-Message-ID: <bdbf47ae505400b34fb41ab977d08938bb644fd0.1709040499.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1657.v3.git.1709040497.gitgitgadget@gmail.com>
-References: <pull.1657.v2.git.1708608110.gitgitgadget@gmail.com>
-	<pull.1657.v3.git.1709040497.gitgitgadget@gmail.com>
-From: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Tue, 27 Feb 2024 13:28:17 +0000
-Subject: [PATCH v3 11/11] repo_get_merge_bases_many_dirty(): pass on errors
- from `merge_bases_many()`
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        d=1e100.net; s=20230601; t=1709042424; x=1709647224;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:reply-to:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=nUItxhYbIuS2ugqBRgOcLtHAc/kXBcGvnV3qU9yTOmA=;
+        b=hQXdt+hzcqXZeEMr7ySpBSAtjELZBWW9TSUoTiV5NSGqrP1GwSj1Hol3uVT2jM++0E
+         V+6+p2DtJBv3EcQydSQGjsFBHd2y1svCFxhuJ5exp6U61Zo6yA3y8KdI/QwtDBRsYSIY
+         y7tHfjKJXbbPiW8yiBXwN9ywrxkH4DkebMWEwZzgfNgqwg7Cs/vy7zJh1h3nH0HT5KhJ
+         3FfJhrCxhH2cNtWT9SpIGNhn1FEjHf6oHwMR6htrd2RLN84eprGIbR6gF1up+e0uGwY4
+         NNd/4C0TrDELqKoKhx+k61dQVBmrvqhFVniAN4lRzSwKULNPxz387JfTy0FpjKSnAFoE
+         yEZA==
+X-Forwarded-Encrypted: i=1; AJvYcCX1DOgvrm+Gbwifdy0FdYlsvUjs4J8CcAECsxYUAH1iYsuZbgR8P+4Gi6jCYzYe548ghDtKlOS6wJvFIRtQmtgyoocm
+X-Gm-Message-State: AOJu0YyOGnAn86oow7ZwrlDwTDikhowKDIodPTE2GLnFhG7Qn9MPpCXo
+	/KNFUl/3Qp+51oZMKK5G9iUEtAVAzO7G1fbX1XGUa5ePKggB/I/O
+X-Google-Smtp-Source: AGHT+IG0pU4OE1JWp+8IQW8wzGUcotXVYQfJOVKlUj7zMmNa2t6qjGFM8DYcgTP92heNvQiNVlMh6A==
+X-Received: by 2002:a2e:9793:0:b0:2d2:36ea:e2c5 with SMTP id y19-20020a2e9793000000b002d236eae2c5mr5789740lji.13.1709042423716;
+        Tue, 27 Feb 2024 06:00:23 -0800 (PST)
+Received: from ?IPV6:2a0a:ef40:69d:3501:d2c6:37ff:fef6:7b1? ([2a0a:ef40:69d:3501:d2c6:37ff:fef6:7b1])
+        by smtp.googlemail.com with ESMTPSA id w21-20020a05600c015500b004128da16dddsm14855454wmm.15.2024.02.27.06.00.23
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 27 Feb 2024 06:00:23 -0800 (PST)
+Message-ID: <ff5a3954-4e7a-42b7-988e-f306b45918bf@gmail.com>
+Date: Tue, 27 Feb 2024 14:00:22 +0000
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Patrick Steinhardt <ps@pks.im>,
-    Johannes Schindelin <johannes.schindelin@gmx.de>,
-    Johannes Schindelin <johannes.schindelin@gmx.de>
+User-Agent: Mozilla Thunderbird
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v5 0/2] Implement `git log --merge` also for
+ rebase/cherry-pick/revert
+Content-Language: en-US
+To: Philippe Blain <levraiphilippeblain@gmail.com>, git@vger.kernel.org
+Cc: Johannes Sixt <j6t@kdbg.org>, Elijah Newren <newren@gmail.com>,
+ Michael Lohmann <mial.lohmann@gmail.com>,
+ Phillip Wood <phillip.wood@dunelm.org.uk>, Patrick Steinhardt <ps@pks.im>,
+ Junio C Hamano <gitster@pobox.com>, Michael Lohmann <mi.al.lohmann@gmail.com>
+References: <20240210-ml-log-merge-with-cherry-pick-and-other-pseudo-heads-v4-0-3bc9e62808f4@gmail.com>
+ <20240225-ml-log-merge-with-cherry-pick-and-other-pseudo-heads-v5-0-af1ef2d9e44d@gmail.com>
+From: Phillip Wood <phillip.wood123@gmail.com>
+In-Reply-To: <20240225-ml-log-merge-with-cherry-pick-and-other-pseudo-heads-v5-0-af1ef2d9e44d@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
+On 25/02/2024 21:56, Philippe Blain wrote:
+> Changes in v5:
+> - Marked error messages for translation and tweaked them as suggested by Phillip
+> - Reworded the message of 2/2 as suggested by Phillip
+> - Removed the change to gitk's doc in 2/2 as pointed out by Johannes
+> - Fixed the trailers in 2/2
+> - Improved the doc in 2/2 as suggested by Phillip and Jean-Noël
 
-The `merge_bases_many()` function was just taught to indicate parsing
-errors, and now the `repo_get_merge_bases_many_dirty()` function is
-aware of that, too.
+These changes look good, thanks for making them. I agree with the other 
+reviewers that it would be nice to improve the wording of the error 
+message when we find a symbolic ref. Everything else looks good to me.
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- builtin/merge-base.c |  9 ++++++---
- commit-reach.c       | 16 ++++++----------
- commit-reach.h       |  7 ++++---
- 3 files changed, 16 insertions(+), 16 deletions(-)
+Thanks
 
-diff --git a/builtin/merge-base.c b/builtin/merge-base.c
-index 2edffc5487e..a8a1ca53968 100644
---- a/builtin/merge-base.c
-+++ b/builtin/merge-base.c
-@@ -13,10 +13,13 @@
- 
- static int show_merge_base(struct commit **rev, int rev_nr, int show_all)
- {
--	struct commit_list *result, *r;
-+	struct commit_list *result = NULL, *r;
- 
--	result = repo_get_merge_bases_many_dirty(the_repository, rev[0],
--						 rev_nr - 1, rev + 1);
-+	if (repo_get_merge_bases_many_dirty(the_repository, rev[0],
-+					    rev_nr - 1, rev + 1, &result) < 0) {
-+		free_commit_list(result);
-+		return -1;
-+	}
- 
- 	if (!result)
- 		return 1;
-diff --git a/commit-reach.c b/commit-reach.c
-index 954a05399f1..2c69cb83d6f 100644
---- a/commit-reach.c
-+++ b/commit-reach.c
-@@ -471,17 +471,13 @@ int repo_get_merge_bases_many(struct repository *r,
- 	return get_merge_bases_many_0(r, one, n, twos, 1, result);
- }
- 
--struct commit_list *repo_get_merge_bases_many_dirty(struct repository *r,
--						    struct commit *one,
--						    int n,
--						    struct commit **twos)
-+int repo_get_merge_bases_many_dirty(struct repository *r,
-+				    struct commit *one,
-+				    int n,
-+				    struct commit **twos,
-+				    struct commit_list **result)
- {
--	struct commit_list *result = NULL;
--	if (get_merge_bases_many_0(r, one, n, twos, 0, &result) < 0) {
--		free_commit_list(result);
--		return NULL;
--	}
--	return result;
-+	return get_merge_bases_many_0(r, one, n, twos, 0, result);
- }
- 
- int repo_get_merge_bases(struct repository *r,
-diff --git a/commit-reach.h b/commit-reach.h
-index 458043f4d58..bf63cc468fd 100644
---- a/commit-reach.h
-+++ b/commit-reach.h
-@@ -18,9 +18,10 @@ int repo_get_merge_bases_many(struct repository *r,
- 			      struct commit **twos,
- 			      struct commit_list **result);
- /* To be used only when object flags after this call no longer matter */
--struct commit_list *repo_get_merge_bases_many_dirty(struct repository *r,
--						    struct commit *one, int n,
--						    struct commit **twos);
-+int repo_get_merge_bases_many_dirty(struct repository *r,
-+				    struct commit *one, int n,
-+				    struct commit **twos,
-+				    struct commit_list **result);
- 
- int get_octopus_merge_bases(struct commit_list *in, struct commit_list **result);
- 
--- 
-gitgitgadget
+Phillip
+
