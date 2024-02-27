@@ -1,87 +1,163 @@
-Received: from mail-ej1-f47.google.com (mail-ej1-f47.google.com [209.85.218.47])
+Received: from mail-lj1-f169.google.com (mail-lj1-f169.google.com [209.85.208.169])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4368613699F
-	for <git@vger.kernel.org>; Tue, 27 Feb 2024 10:07:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C6D943AAF
+	for <git@vger.kernel.org>; Tue, 27 Feb 2024 10:39:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709028480; cv=none; b=eYq5cIwJnjeFVeusgck9s2WUNlSDuWsU0+1V3LHPsK2z33t8Js9EIkAk3JLMmFKlf2lPJ7VmWNP5fHh66LuGa5+pIh2aXZI11Q5+kqB2VJVCcGJ4OC7xJq/y9d0+9vAuzeXUttO++26J6UgST/GBQ6J0eYAp9EgBILnu4BOvcFY=
+	t=1709030380; cv=none; b=Iz/Vg9B4V+e+x+XUsKojdxhKoucrF216YzuH3Pig/tnUlpRpyYmZ6NZ2AIs5JmuM57/7/Lr4F/jfKh2JCsE7VigVGu3ZuJTnLoz/rNP3f5W3QSf2pLX1jvvZgHdtqExm3G5znL9+U4kcmghBBuZOnX7hrxlNn7LhBTrA+rkMhms=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709028480; c=relaxed/simple;
-	bh=GlGgu8i8PEOuS1+zry3l242ePo8SWFYyNwSJpvpVOxQ=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=D9QuIOH5cnSQp91bcIdMZ5VuTD0s22v19CdfOTecgpvu0j5bO3zxYMW2IVOXeESm/Tj39fqAyA+g/3RsX8C57uhRNTttS2/DXV/5l8K52jAao/C/Q7AbYzbEzZdctUcTDV/5C4Vn4iKSgM0acwwJa5CUS7f9zjyV9Kl7+yO8AJY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HWIFBuPh; arc=none smtp.client-ip=209.85.218.47
+	s=arc-20240116; t=1709030380; c=relaxed/simple;
+	bh=Mlqn4viRLpDllLBm/vQaFoQEkTGKSg4pxamkB7lqr6Y=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=ZIwjy5hXzSpuKCh8J2KbC/BUThiX6iTgqLnzc++L/jebLusSIC5QmWawYc7kcTK2quB09o37RUYfmrskYLSLMfw6oEXiVeY3mMJ1x3BO43iXkftIOPVssRxh1k+W4goxw2y/vJ0ui+DWUrzh4hXjdFVDE4hK65Edu41Z0DoQoFM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Ol880N41; arc=none smtp.client-ip=209.85.208.169
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HWIFBuPh"
-Received: by mail-ej1-f47.google.com with SMTP id a640c23a62f3a-a3e5d82ad86so567656066b.2
-        for <git@vger.kernel.org>; Tue, 27 Feb 2024 02:07:59 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Ol880N41"
+Received: by mail-lj1-f169.google.com with SMTP id 38308e7fff4ca-2d220e39907so64829311fa.1
+        for <git@vger.kernel.org>; Tue, 27 Feb 2024 02:39:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1709028477; x=1709633277; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=LE6IDu9XwEcVVehl3CWEHM8jJM7dfBqxX+LI/q/Yfpo=;
-        b=HWIFBuPhdsEYn+Jl2vwCaQFqkTfj+Glg72FhJjsuvQ6fByPx0Mn4me9gJcQ8jF5We5
-         M0VhrYle8uLDvErl7nLddQjT3hvDW85btoMmoDxl60Z24n9a/IOf5BTMe+2Oxa+t4nfI
-         9ztKCpiqJOU/SrcwYTsMJXuZSx7CitSYTXchiMN8v/a6T3GNDg/DJSEez7b/fSm8cAwI
-         Ht7/pmZ1W21lNQ9ahz0ExRl5txrNC8RfWG/aHkfG8St9MYqagCTQ3DJUIMRyLMnEmoRK
-         t2s9NRep0mjPz3e99iaBfEAkx5sxX74DxevkuobYhZBC7gB7hIzomaWBKdNJT+Ho+bw4
-         drGw==
+        d=gmail.com; s=20230601; t=1709030377; x=1709635177; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:references:cc:to
+         :content-language:subject:reply-to:from:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=scHDxWLUoDfyuCwSyPDQpNzWrp4UAxVyxSS3G9JrEis=;
+        b=Ol880N41tp1ORcorXvKRLgL43XV7QsrZb3avN15Qv815lxIZP9C9LDuvWgrpAXly1e
+         jwnLM609+wBrHj5qud+lRiRbC1If0S7ocpkYhyhTvkI3XUXt68Gmp71ThhbyPqcqNwLe
+         NRj+8tlicG7UobADWN/+fxbK85pkHhp5M2ApKJps40ynpoPgsdxjez0jylVtXYVLgn+1
+         1SxO2T4wo39BFTsso33ESBurrzazQlYXB5z8oBpiS9/jlBdhuOMcibYsVzdNOm/A4eJU
+         +vzPLs2KGKhWuFPrf5ZVUMo3vOZ3fzORBoPuUCsugSfA6V7QWBuJBI24f4fi60/TcfIf
+         fnLQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1709028477; x=1709633277;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=LE6IDu9XwEcVVehl3CWEHM8jJM7dfBqxX+LI/q/Yfpo=;
-        b=fPkZ7roeB3Oo5xyCIYrybRsfSsLQ5Loe0StQByLI2j9Vp9FfX3y52XkCxYx9pcd2KE
-         NFkG3cXWmU5fNPb/5GpiuSl7YAJ+5Jhpv2afylDLL0ghblNLD6ReHjxzP/pm8LrsxSMX
-         gZzsVVHpn6qOmyRjOizLvpanZBGnNGTXJX2GGJx1lwBKIj1sIjG1RcMcALrvbJCyBPlf
-         lDJWmVH5K1hw4e26722Oq0FDkm75LhMCO28v7LI6X1ri20YYJJvKVaRShmjvzrE04OPE
-         gveNWrEu+YLm2T4JG5LQ5dD0Bla7Bx/gZN6jNN7tBBsAL8KZVbFtQtiAzjTPV9tgYqy0
-         23Ug==
-X-Forwarded-Encrypted: i=1; AJvYcCV1fO1gUHIabMJR/z+oREAQYuhIDlJ6Wm71yoBkN9A1CpWOHYUBOH53XWZDPhrLIsbnz/YZ/Szy7zOellKS0khna6VY
-X-Gm-Message-State: AOJu0Yw1m1SvGyRNnfXkT29L3bL5OqNSb3WtLS/Ej1tWRpYXyNk7duyX
-	pLXEovZ1+Q9zWwvfqqD4Q9jUUPEa8xdpjNBITYyRUcGprBEL4F5GxmRXgHJMb7Af9KO98W7a+D5
-	fMhorWusurB+AQNvvtypeYI6kKH8=
-X-Google-Smtp-Source: AGHT+IH0tZDiwgmR5UtYYXqxGR8JQKy+fshcHUjXEI3kPWyOudbxQi6yXwIiAVE41ML+Wmzfob+6QqXvia50sioPcOE=
-X-Received: by 2002:a17:906:aac3:b0:a3f:1cb6:fb00 with SMTP id
- kt3-20020a170906aac300b00a3f1cb6fb00mr7128293ejb.69.1709028477624; Tue, 27
- Feb 2024 02:07:57 -0800 (PST)
+        d=1e100.net; s=20230601; t=1709030377; x=1709635177;
+        h=content-transfer-encoding:in-reply-to:references:cc:to
+         :content-language:subject:reply-to:from:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=scHDxWLUoDfyuCwSyPDQpNzWrp4UAxVyxSS3G9JrEis=;
+        b=ImO1eWQUlNHu9RNXFfB4NCuNrqsuHW0DiBwklhtBS5bwEwu64/3QndkKM0i3VxfTt/
+         4h6QlRx1GmATKJM7rDxuP+jjrP46Oy7zc72G+z8/KiDH1SYGZd2U+N5nLDbEfnywuaSN
+         7rGWCKY56cKGZabgJwWb4TmUeM+rMTPUL9vuh/X4tvZUWECyoYJLb4PX5d7wdELUSsyy
+         xXyYNh1cl9wApBxr94vpWsdV4nYicqQmy5KeWMPGjRCMghWCG1mtQqXkqf+vyBJb72b8
+         GHZlyjhWHxEYkiprNP02epJ0noMmbPqglel+SEAmyLVVMU/RGe9PG05MPGwubCSubYWJ
+         yXyg==
+X-Gm-Message-State: AOJu0YxKeDAVFN6PHGivInfzHeAp3HMyKgL1DUWExyIEw5y0ElWcgH3l
+	ZrI7iC751Qrn+qIr9LrTq9Y95OCtvRFQCzz9CitPcqcy1bG5Y1cwNL3F9S1+
+X-Google-Smtp-Source: AGHT+IEDpUHEkDmCgWaP6H8PrI1IBCqh8Pzbobb+ygu9xTZzwwNF5FWcO1N4Wr5YByHvyHU/G49XWQ==
+X-Received: by 2002:a19:f018:0:b0:512:abe6:2905 with SMTP id p24-20020a19f018000000b00512abe62905mr5593420lfc.50.1709030376898;
+        Tue, 27 Feb 2024 02:39:36 -0800 (PST)
+Received: from ?IPV6:2a0a:ef40:69d:3501:4b27:339f:196f:f7f9? ([2a0a:ef40:69d:3501:4b27:339f:196f:f7f9])
+        by smtp.gmail.com with ESMTPSA id fa20-20020a05600c519400b00412acb0b323sm1612065wmb.26.2024.02.27.02.39.36
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 27 Feb 2024 02:39:36 -0800 (PST)
+Message-ID: <1004c565-ee6c-4aa4-8226-47d0ef7c8631@gmail.com>
+Date: Tue, 27 Feb 2024 10:39:33 +0000
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240226143350.3596-1-ach.lumap@gmail.com> <xmqqil2bdvsy.fsf@gitster.g>
- <CAP8UFD0Qhy78=v9+hCekMJPkcH2KmeZeQ0xUx8kqrByQ4PO3Xg@mail.gmail.com> <xmqq7cirnlkg.fsf@gitster.g>
-In-Reply-To: <xmqq7cirnlkg.fsf@gitster.g>
-From: Christian Couder <christian.couder@gmail.com>
-Date: Tue, 27 Feb 2024 11:07:45 +0100
-Message-ID: <CAP8UFD034evNrUHTomPXwbnFx=VG-ZNpwoLZspJK1pCoOjkc6Q@mail.gmail.com>
-Subject: Re: [Outreachy][PATCH 1/2] strbuf: introduce strbuf_addstrings() to
- repeatedly add a string
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Achu Luma <ach.lumap@gmail.com>, git@vger.kernel.org, 
-	Christian Couder <chriscool@tuxfamily.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+From: phillip.wood123@gmail.com
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v2 8/8] cherry-pick: add `--empty` for more robust
+ redundant commit handling
+Content-Language: en-US
+To: Brian Lyles <brianmlyles@gmail.com>, phillip.wood@dunelm.org.uk,
+ gitster@pobox.com
+Cc: git@vger.kernel.org, newren@gmail.com, me@ttaylorr.com
+References: <17b74c2ffa1884ed.70b1dd9aae081c6e.203dcd72f6563036@zivdesk>
+In-Reply-To: <17b74c2ffa1884ed.70b1dd9aae081c6e.203dcd72f6563036@zivdesk>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-On Mon, Feb 26, 2024 at 7:10=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
-wrote:
->
-> Christian Couder <christian.couder@gmail.com> writes:
->
-> > Unfortunately strbuf_add() calls strbuf_grow() itself which is not
-> > needed as we have already called strbuf_grow() to avoid repeated
-> > reallocation.
->
-> Why is it unfortunate?  If the current allocation is sufficient, it
-> is a cheap no-op, isn't it (if not, we should make it so)?
+Hi Brian
 
-Yeah, I agree that we don't need to be extra efficient and calling
-strbuf_grow() doesn't add much overhead. So let's just use
-strbuf_add() repeatedly after calling it once.
+On 26/02/2024 03:32, Brian Lyles wrote:
+> Hi Phillip and Junio
+> On Fri, Feb 23, 2024 at 12:08 AM Brian Lyles <brianmlyles@gmail.com> wrote:
+>>
+>> On Thu, Feb 22, 2024 at 10:35 AM Phillip Wood <phillip.wood123@gmail.com> wrote:
+>>
+>>> I agree that if we were starting from scratch there would be no reason
+>>> to tie --apply-empty and --keep-redundant-commits together but I'm not
+>>> sure it is worth the disruption of changing it now. We're about to add
+>>> empty=keep which won't imply --allow-empty for anyone who wants that
+>>> behavior and I still tend to think the practical effect of implying
+>>> --allow-empty with --keep-redundant-commits is largely beneficial as I'm
+>>> skeptical that users want to keep commits that become empty but not the
+>>> ones that started empty.
+>>
+>> I think that's fair. I am okay dropping this potentially disruptive
+>> change.
+>>
+>> It sounds like you are on board with `--empty=keep` not having the same
+>> implication?
+
+Yes indeed
+
+>> That said...
+>>
+>> On Thu, Feb 22, 2024 at 12:41 PM Junio C Hamano <gitster@pobox.com> wrote:
+>>
+>>> I do not quite see a good reason to do the opposite, dropping
+>>> commits that started out as empty but keeping the ones that have
+>>> become empty.  Such a behaviour has additional downside that after
+>>> such a cherry-pick, when you cherry-pick the resulting history onto
+>>> yet another base, your precious "were not empty but have become so
+>>> during the initial cherry-pick" commits will appear as commits that
+>>> were empty from the start.  So I do not see much reason to allow the
+>>> decoupling, even with the new "empty=keep" thing that does not imply
+>>> "allow-empty".
+>>
+>> Junio -- can you clarify this part?
+>>
+>>> So I do not see much reason to allow the decoupling, even with the new
+>>> "empty=keep" thing that does not imply "allow-empty"
+>>
+>> I'm not 100% sure if you are saying that you want `--empty=keep` to
+>> *also* imply `--allow-empty`, or that you simply want
+>> `--keep-redundant-commits` to continue implying `--allow-empty`
+>> *despite* the new `--empty=keep` no implying the same.
+
+FWIW I read it as the latter, but I can't claim to know what was in 
+Junio's mind when he wrote it.
+
+>> On the one hand, I agree with Phillip's sentiment of "if we were
+>> starting from scratch there would be no reason to tie --apply-empty and
+>> --keep-redundant-commits together" (though your points perhaps provide
+>> such a reason). On the other, if both `--keep-redundant-commits` and
+>> `--empty=keep` behave the same way, it makes sense to soft-deprecate
+>> `--keep-redundant-commits` as I have currently done later in this
+>> series. If they do not behave the same way, that deprecation makes less
+>> sense and we have two very similar (but not quite identical) options.
+>>
+>> Just to make sure we're on the same page, the options I see are:
+>>
+>> - (A): Neither `--keep-redundant-commits` nor `--empty=keep` imply
+>>    `--allow-empty`, `--keep-redundant-commits` is soft-deprecated
+>> - (B): Both `--keep-redundant-commits` and `--empty=keep` imply
+>>    `--allow-empty`, `--keep-redundant-commits` is soft-deprecated
+>> - (C): Both `--keep-redundant-commits` and `--empty=keep` imply
+>>    `--allow-empty`, `--keep-redundant-commits` is *not* soft-deprecated
+>>    as it is more descriptive as noted by Junio here[1]
+>> - (D): `--keep-redundant-commits` continues to imply `--allow-empty` but
+>>    `--empty=keep` does not. `--keep-redundant-commits` is *not*
+>>    soft-deprecated as it behaves differently.
+>>
+>> (A) represents this v2 of the patch.
+>>
+>> I'm coming around to (B) based on Junio's workflow concerns, but to be
+>> honest I am fine with any of these options. Junio, I *think* you're
+>> saying you'd prefer (B) or (C)? Phillip, it sounds like you are okay
+>> with (D) based on your response -- how do you feel about (B)?
+
+Yes, I'd prefer (D) as I think it gets confusing if some values of 
+--empty imply --allow-empty and others don't. I could live with (B) though.
+
+Best Wishes
+
+Phillip
