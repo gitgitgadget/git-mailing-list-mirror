@@ -1,77 +1,79 @@
-Received: from out4-smtp.messagingengine.com (out4-smtp.messagingengine.com [66.111.4.28])
+Received: from fhigh2-smtp.messagingengine.com (fhigh2-smtp.messagingengine.com [103.168.172.153])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 809C854F82
-	for <git@vger.kernel.org>; Tue, 27 Feb 2024 07:31:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=66.111.4.28
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6AB554672
+	for <git@vger.kernel.org>; Tue, 27 Feb 2024 07:39:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709019099; cv=none; b=conlVNCcUVr1Nemf2pOa7WOEvswMcVj2pz1mCzfYm6jBkAip2Nrz+I9DTehfdawk5g+13k/k7eZosmP1zmR7d0wnOJ4Lsu1jI1OwI3vKgpG1hyr8PlM+6dJtpD1GZ+TiGSA0H4Q/hXoQiT2SI3ZWUf4s3Sb3BOA1Vmh1bcTLgEg=
+	t=1709019587; cv=none; b=fhhvcO5M2F+41XymFNJN/fmzNZ0UH87mGz9tFS4FwxUYzCzDaUUAFaQH09868Ng3nNtVaTWxRiMZjoGADNL1n826BcNwTcvXT58Qr1qne9fcY4Q0Z2xvdKPyOLaHeGXABw2xEMTD7yqkMKxDKQ3ymbZUN5cFTgnSmPWSJDl5A2A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709019099; c=relaxed/simple;
-	bh=LPz4FKA16H5N5fLKhwmclvXLz7zycToodx+hg0jrOm0=;
+	s=arc-20240116; t=1709019587; c=relaxed/simple;
+	bh=O6Ofz7dUwX2dTSg6X0lYLmlePTwxjqfU/UZ9TrduW7s=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=XIB3ho9V53w2YqjouSUExNyOeCAfqOfd/LO/4uCdfsb9RMdpOlHInQFZRzfs8VxfOswRzs67A0GzDMpPzN2dEw5TaXiUptS1y5RbAJji1tkxBTmpIe+ygrIWkCE2pqZNG4qtJL5uhqA4DcC1IEsRWKlBkPy9zwz7B/T0l0oZi1w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=T0wNP0yr; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Injzg8dW; arc=none smtp.client-ip=66.111.4.28
+	 Content-Type:Content-Disposition:In-Reply-To; b=hxcuffRzTy5wKtrAbgh7SZnlBJ6HyK2ci8GoUVPVhZ2StXTnBvj6QESJ7dNBP5k4ryPZ5m+jOC1yRzRYNLeXtX6GB7Swzcw3npoY8puFnG3GmIfs28PqgcIytpckKxFbWKmOJQf+Bl1BHlzLLPLWwZiBEK/1LsAQELJGoNuLg4g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=OsN2ZOQG; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=FvQF5WpK; arc=none smtp.client-ip=103.168.172.153
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="T0wNP0yr";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Injzg8dW"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="OsN2ZOQG";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="FvQF5WpK"
 Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
-	by mailout.nyi.internal (Postfix) with ESMTP id 972B55C005B;
-	Tue, 27 Feb 2024 02:31:35 -0500 (EST)
+	by mailfhigh.nyi.internal (Postfix) with ESMTP id D8AA211400B9;
+	Tue, 27 Feb 2024 02:39:43 -0500 (EST)
 Received: from mailfrontend1 ([10.202.2.162])
-  by compute2.internal (MEProxy); Tue, 27 Feb 2024 02:31:35 -0500
+  by compute2.internal (MEProxy); Tue, 27 Feb 2024 02:39:43 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1709019095; x=1709105495; bh=8ibrrTC1cw
-	H8NT3Xa82+b1ThL20KGtCJ/oqZVzDI9hs=; b=T0wNP0yrSf5XcTPcQRkjf9qDiN
-	hYss1bmNo903saDvnuAM5fvnPiXfkjsFwckA+LKxpMybDXMJr0IeHAVV9fXiHVuN
-	cAxoQIwTVpgTgb6JgUgAA8Krvxi9bOZOFqErI0axHHf9MGW+GD7p4m4G4QfDKLxt
-	j6w5DAZV05WIvSe3IE5tfFAhEOXwE+KMLlWrhrriHwfwd46RDHHnLeSAImHLxEph
-	Y9Rpa7ZCEl94nDlooGxXTs5m3gp6XYZZyk1loBkZYRyICBSt8KFYXW+bVPTveu3U
-	5A68h2bqOkbHsbx3jX2olKURtXdACxDM1q6u8/PJuu1o4PAOZEbA8fX56ZyQ==
+	:subject:to:to; s=fm1; t=1709019583; x=1709105983; bh=w+QWYR85X6
+	y7IA48fTWkGZVwpcX7YTVYRez1uZlWCts=; b=OsN2ZOQGWGWJbDDsUgbqu0i510
+	W74VATQAIX+LfoYz/gVh6GiPLa/GGYNgeC2Zbk4r3J97IWoW2hXaxfFyxycBAXfl
+	S5sCMd8FzNhfMLyn7b825MYJ5p0aGWTAD88RQJF3wGbW+XfR/zFOE/F5YZHXfkxy
+	b8YHlQ/nkhxc5+dWiiLC34tU8b3jHwpF4dt3ak0E31v2VkO/UrB5C0+N6EmGJsYI
+	tUrCTVbYhLfZ5OalohfOHznzsaG68ZumcBPNjXZIaCGQZsoxnzLTTcyjk81KqzlL
+	jwABG012rkfgZ9UaQsz0lo377bzsIpIHd/4IOR/PXaZYPpIj65w6cul8cyBQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1709019095; x=1709105495; bh=8ibrrTC1cwH8NT3Xa82+b1ThL20K
-	GtCJ/oqZVzDI9hs=; b=Injzg8dWfdXsTchrOlE3je19aPpyQUHaXd/L8GwNhYjt
-	bI6IMuZKIqTncFBYBughj3NGSqegpUwhYp98H16zz2RCfDmcLZ8mewT2yfOZXBL2
-	Sf/hQ6b+B9DocJSkNjkHuG4M0RJW5T/cd3RTAVSA3dNvi1M9wBM3pD4R5KF4IS8x
-	DVFue7vi9rypvmvGVqnFKhS30iCGpQ2qnbwkfBm9fnZkgdmYMApAkOcK0V5rHMjn
-	boTOjoBkivjoH/AEb8pAJDna/zHm1ivP5ONbD59lB7vukgPfMsy2HuaU160Ggf41
-	DKqWw7OdY3A9xhP1ToyqGvk0gcSuff8+fZSOgV70KQ==
-X-ME-Sender: <xms:14_dZTzASi36KPfpHWbXs0UZ_NouwBAQGQrs2uexxel3KKID5VxfQw>
-    <xme:14_dZbTdz_g5Fl9Nb6_s3BcD1a4crOzGp8bP9Fn2SWoODFTe__jTfyjnyk-Eb5EK1
-    XKgEOMymrBBbkgmtw>
-X-ME-Received: <xmr:14_dZdV1ASNbxA5-bJYggqnPxFmPWIm2fkxK2KmHJD01Lz8-93UJVRDTASpc6Ox19Ur-mR2l_aiE0FXkToxV5_wNLr6WjC2Nyvjm8lE_EKZLmfE6>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrgeefgddutdejucetufdoteggodetrfdotf
+	fm1; t=1709019583; x=1709105983; bh=w+QWYR85X6y7IA48fTWkGZVwpcX7
+	YTVYRez1uZlWCts=; b=FvQF5WpK+lh5THw2UwJctB3KEebnE/emkBqlMbm78PU6
+	Kuw8DDYr9Ef+qsZ4kiIqhgihcfFY9v41mzQMsBMnk7hB1eJsFyNiohvilAUGdF6i
+	PajXCfeRJ7dWLPGIenTLrfOoqSNJPTju+3uYIGXGAb6jq8TJ3e6Q6IMpMf/R4TE2
+	Fz891CZKE9iFnwbNizFdh0JVxcao5x+pnM34DB+kspirbUpHtBQfq596lYxHeCdh
+	/1T+rTKkh00HAa0icsYlp+ocuxf7mzl9gcqqOj0cb6PLRZ2vJyXK4m+aOZ55vg2b
+	gtyjPGKdWtyMsN6g7Yy94z6feh3mzJwx8NYyZFL+ZQ==
+X-ME-Sender: <xms:v5HdZaN_vk7Q0H4cZz5FHJe9mGnMJdYb0Tsh9kJpG_ho39lKQ2k0YQ>
+    <xme:v5HdZY_mAvrfykg6sULj7ahHwnoHZLbG_IAV80lg4zLA3cCaeTjBzKA3FIc1yspug
+    aOGgqGMTeSiBXg4TA>
+X-ME-Received: <xmr:v5HdZRT9lJMXlcirVsH-0EoMisu2bLW46v2ow9VddDxOng0JhvT9yGIHgcZGb7dahIxpP1u-OLgmGU9i9rzJvPPh_z4WLsAYNCuO_vONGf_Fwooe>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrgeefgddutdekucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvvefukfhfgggtuggjsehgtd
-    erredttddunecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshes
-    phhkshdrihhmqeenucggtffrrghtthgvrhhnpeefvdelfeeuteegiedtkeehleffkeekgf
-    ffudfhuddvfefftdehkeeihfekjeekheenucevlhhushhtvghrufhiiigvpedtnecurfgr
-    rhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhm
-X-ME-Proxy: <xmx:14_dZdj1u9L12F51LwtiIdLRobaiH0DtmrBOzBSDTODHOnfDKdc4MA>
-    <xmx:14_dZVCBS8iTuoZMbZrytHSLYzI_Zoun4n85MRrTToXnQPidiIqtEw>
-    <xmx:14_dZWKL-jQYVIFfkopmFPCgcRnXjVP1VtQfWSl2JKx4BueZnomviA>
-    <xmx:14_dZS7kerNkaxS0ujh8NaBwNTzz4XEMksg9RVxmTOyPRLC4bNqozQ>
+    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+    cujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtvdenucfhrhhomheprfgrthhr
+    ihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvg
+    hrnhepieevkedtgffgleeugfdvledvfedthfegueegfeevjeelueefkeegfeffhefglefg
+    necuffhomhgrihhnpehkvghrnhgvlhdrohhrghenucevlhhushhtvghrufhiiigvpedtne
+    curfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhm
+X-ME-Proxy: <xmx:v5HdZaslI53DOglnhVflys_mTk5jBilz4etH-fLQzqd43RBopC3CVQ>
+    <xmx:v5HdZSdwtrt0fm9xgrBg4QxODqDy4OeB7IgNW2HIT1UJjPXfLcaCqw>
+    <xmx:v5HdZe1mS4wO__mgcEvDZ_QRacGA0__w7nbx6mEZtZ7__Zt1IedaYw>
+    <xmx:v5HdZR4gh-Hp6letzeu8_DqxogkaiKt7oxttXGCmhFpr0fO9oR6BJQ>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 27 Feb 2024 02:31:34 -0500 (EST)
+ 27 Feb 2024 02:39:42 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id f04f39b3 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 27 Feb 2024 07:27:16 +0000 (UTC)
-Date: Tue, 27 Feb 2024 08:31:30 +0100
+	by vm-mail (OpenSMTPD) with ESMTPSA id b8aff23a (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 27 Feb 2024 07:35:25 +0000 (UTC)
+Date: Tue, 27 Feb 2024 08:39:39 +0100
 From: Patrick Steinhardt <ps@pks.im>
-To: =?iso-8859-1?Q?Ren=E9?= Scharfe <l.s.r@web.de>
-Cc: Git List <git@vger.kernel.org>
-Subject: Re: [PATCH] submodule: use strvec_pushf() for --submodule-prefix
-Message-ID: <Zd2P0irjsaeiSapJ@tanuki>
-References: <8cd983fb-32b9-41c6-a9e7-a485b190488c@web.de>
+To: Karthik Nayak <karthik.188@gmail.com>
+Cc: git@vger.kernel.org, gitster@pobox.com, phillip.wood123@gmail.com
+Subject: Re: [PATCH v5 0/5] for-each-ref: add '--include-root-refs' option
+Message-ID: <Zd2Ru7LWYyGprvcr@tanuki>
+References: <20240119142705.139374-1-karthik.188@gmail.com>
+ <20240223100112.44127-1-karthik.188@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -79,121 +81,189 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="YbsGuGctCxGkEiF+"
+	protocol="application/pgp-signature"; boundary="z/tfvLpm3g9S7hG2"
 Content-Disposition: inline
-In-Reply-To: <8cd983fb-32b9-41c6-a9e7-a485b190488c@web.de>
+In-Reply-To: <20240223100112.44127-1-karthik.188@gmail.com>
 
 
---YbsGuGctCxGkEiF+
-Content-Type: text/plain; charset=iso-8859-1
+--z/tfvLpm3g9S7hG2
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Sun, Feb 25, 2024 at 07:24:39PM +0100, Ren=E9 Scharfe wrote:
-> Add the option --submodule-prefix and its argument directly using
-> strvec_pushf() instead of via a detour through a strbuf.  This is
-> shorter, easier to read and doesn't require any explicit cleanup
-> afterwards.
+On Fri, Feb 23, 2024 at 11:01:07AM +0100, Karthik Nayak wrote:
+> This is the fifth version of my patch series to print root refs
+> in git-for-each-ref(1).
+>=20
+> With the introduction of the reftable backend, it becomes ever
+> so important to provide the necessary tooling for printing all refs
+> associated with a worktree.
+>=20
+> While regular refs stored within the "refs/" namespace are currently
+> supported by multiple commands like git-for-each-ref(1),
+> git-show-ref(1). Neither support printing root refs within the worktree.
+>=20
+> This patch series is a follow up to the RFC/discussion we had earlier on
+> the list [1].
+>=20
+> The first 4 commits add the required functionality to ensure we can print
+> all refs (regular, pseudo, HEAD). The 5th commit modifies the
+> git-for-each-ref(1) command to add the "--include-root-refs" command which
+> will include HEAD and pseudorefs with regular "refs/" refs.
+>=20
+> [1]: https://lore.kernel.org/git/20231221170715.110565-1-karthik.188@gmai=
+l.com/#t
+>=20
+> Changes from v4:
+> 1. Fixed erratic whitespace
+> 2. Remove braces from single line block
+> 3. Starting the comments with a capital and also adding more context.
+> 4. Removed a duplicate check.
+>=20
+> Thanks for the reviews.
+>=20
+> Range diff against v4:
 
-This looks obviously good to me. Thanks for this nice simplification!
+The range-diff looks as expected, so this patch series looks good to me.
+Thanks!
 
 Patrick
 
-> Signed-off-by: Ren=E9 Scharfe <l.s.r@web.de>
-> ---
->  submodule.c | 19 ++++---------------
->  1 file changed, 4 insertions(+), 15 deletions(-)
+> 1:  98130a7ad7 ! 1:  6016042965 refs: introduce `is_pseudoref()` and `is_=
+headref()`
+>     @@ refs.c: static int is_pseudoref_syntax(const char *refname)
+>      +
+>      +	if (ends_with(refname, "_HEAD")) {
+>      +		refs_resolve_ref_unsafe(refs, refname,
+>     -+   					RESOLVE_REF_READING | RESOLVE_REF_NO_RECURSE,
+>     -+   					&oid, NULL);
+>     -+   		return !is_null_oid(&oid);
+>     ++					RESOLVE_REF_READING | RESOLVE_REF_NO_RECURSE,
+>     ++					&oid, NULL);
+>     ++		return !is_null_oid(&oid);
+>      +	}
+>      +
+>      +	for (i =3D 0; i < ARRAY_SIZE(irregular_pseudorefs); i++)
+>      +		if (!strcmp(refname, irregular_pseudorefs[i])) {
+>      +			refs_resolve_ref_unsafe(refs, refname,
+>     -+   						RESOLVE_REF_READING | RESOLVE_REF_NO_RECURSE,
+>     -+   						&oid, NULL);
+>     ++						RESOLVE_REF_READING | RESOLVE_REF_NO_RECURSE,
+>     ++						&oid, NULL);
+>      +			return !is_null_oid(&oid);
+>      +		}
+>      +
+> 2:  060ab08af5 =3D 2:  acaa014841 refs: extract out `loose_fill_ref_dir_r=
+egular_file()`
+> 3:  40d2375ad9 =3D 3:  f51c5bc307 refs: introduce `refs_for_each_include_=
+root_refs()`
+> 4:  b4b9435505 =3D 4:  7c004db6e7 ref-filter: rename 'FILTER_REFS_ALL' to=
+ 'FILTER_REFS_REGULAR'
+> 5:  ee99ac41ae ! 5:  53f6c0a6db for-each-ref: add new option to include r=
+oot refs
+>     @@ builtin/for-each-ref.c: int cmd_for_each_ref(int argc, const char =
+**argv, const
+>       		filter.name_patterns =3D argv;
+>       	}
+>      =20
+>     -+	if (include_root_refs) {
+>     ++	if (include_root_refs)
+>      +		flags |=3D FILTER_REFS_ROOT_REFS;
+>     -+	}
+>      +
+>       	filter.match_as_path =3D 1;
+>      -	filter_and_format_refs(&filter, FILTER_REFS_REGULAR, sorting, &for=
+mat);
+>     @@ ref-filter.c: static int for_each_fullref_in_pattern(struct ref_fi=
+lter *filter,
+>       				       void *cb_data)
+>       {
+>      +	if (filter->kind =3D=3D FILTER_REFS_KIND_MASK) {
+>     -+		/* in this case, we want to print all refs including root refs. */
+>     ++		/* In this case, we want to print all refs including root refs. */
+>      +		return refs_for_each_include_root_refs(get_main_ref_store(the_rep=
+ository),
+>      +						       cb, cb_data);
+>      +	}
+>     @@ ref-filter.c: static struct ref_array_item *apply_ref_filter(const=
+ char *refname
+>      =20
+>       	/* Obtain the current ref kind from filter_ref_kind() and ignore u=
+nwanted refs. */
+>       	kind =3D filter_ref_kind(filter, refname);
+>     +-	if (!(kind & filter->kind))
+>      +
+>      +	/*
+>     -+	 * When printing HEAD with all other refs, we want to apply the sa=
+me formatting
+>     -+	 * rules as the other refs, so we simply ask it to be treated as a=
+ pseudoref.
+>     ++	 * Generally HEAD refs are printed with special description denoti=
+ng a rebase,
+>     ++	 * detached state and so forth. This is useful when only printing =
+the HEAD ref
+>     ++	 * But when it is being printed along with other pseudorefs, it ma=
+kes sense to
+>     ++	 * keep the formatting consistent. So we mask the type to act like=
+ a pseudoref.
+>      +	 */
+>      +	if (filter->kind =3D=3D FILTER_REFS_KIND_MASK && kind =3D=3D FILTE=
+R_REFS_DETACHED_HEAD)
+>      +		kind =3D FILTER_REFS_PSEUDOREFS;
+>      +	else if (!(kind & filter->kind))
+>     -+		return NULL;
+>     -+
+>     - 	if (!(kind & filter->kind))
+>       		return NULL;
+>      =20
+>     + 	if (!filter_pattern_match(filter, refname))
+>      @@ ref-filter.c: static int do_filter_refs(struct ref_filter *filter=
+, unsigned int type, each_ref
+>       			ret =3D for_each_fullref_in("refs/tags/", fn, cb_data);
+>       		else if (filter->kind & FILTER_REFS_REGULAR)
 >=20
-> diff --git a/submodule.c b/submodule.c
-> index 213da79f66..40f13a3685 100644
-> --- a/submodule.c
-> +++ b/submodule.c
-> @@ -1687,8 +1687,6 @@ static int get_next_submodule(struct child_process =
-*cp, struct strbuf *err,
->  		task =3D get_fetch_task_from_changed(spf, err);
 >=20
->  	if (task) {
-> -		struct strbuf submodule_prefix =3D STRBUF_INIT;
-> -
->  		child_process_init(cp);
->  		cp->dir =3D task->repo->gitdir;
->  		prepare_submodule_repo_env_in_gitdir(&cp->env);
-> @@ -1698,15 +1696,11 @@ static int get_next_submodule(struct child_proces=
-s *cp, struct strbuf *err,
->  			strvec_pushv(&cp->args, task->git_args.v);
->  		strvec_pushv(&cp->args, spf->args.v);
->  		strvec_push(&cp->args, task->default_argv);
-> -		strvec_push(&cp->args, "--submodule-prefix");
-> +		strvec_pushf(&cp->args, "--submodule-prefix=3D%s%s/",
-> +			     spf->prefix, task->sub->path);
+> Karthik Nayak (5):
+>   refs: introduce `is_pseudoref()` and `is_headref()`
+>   refs: extract out `loose_fill_ref_dir_regular_file()`
+>   refs: introduce `refs_for_each_include_root_refs()`
+>   ref-filter: rename 'FILTER_REFS_ALL' to 'FILTER_REFS_REGULAR'
+>   for-each-ref: add new option to include root refs
 >=20
-> -		strbuf_addf(&submodule_prefix, "%s%s/",
-> -						spf->prefix,
-> -						task->sub->path);
-> -		strvec_push(&cp->args, submodule_prefix.buf);
->  		*task_cb =3D task;
+>  Documentation/git-for-each-ref.txt |   5 +-
+>  builtin/for-each-ref.c             |  10 ++-
+>  ref-filter.c                       |  30 ++++++-
+>  ref-filter.h                       |   7 +-
+>  refs.c                             |  48 +++++++++++
+>  refs.h                             |   9 ++
+>  refs/files-backend.c               | 127 +++++++++++++++++++++--------
+>  refs/refs-internal.h               |   6 ++
+>  refs/reftable-backend.c            |  11 ++-
+>  t/t6302-for-each-ref-filter.sh     |  31 +++++++
+>  10 files changed, 237 insertions(+), 47 deletions(-)
 >=20
-> -		strbuf_release(&submodule_prefix);
->  		string_list_insert(&spf->seen_submodule_names, task->sub->name);
->  		return 1;
->  	}
-> @@ -1714,12 +1708,8 @@ static int get_next_submodule(struct child_process=
- *cp, struct strbuf *err,
->  	if (spf->oid_fetch_tasks_nr) {
->  		struct fetch_task *task =3D
->  			spf->oid_fetch_tasks[spf->oid_fetch_tasks_nr - 1];
-> -		struct strbuf submodule_prefix =3D STRBUF_INIT;
->  		spf->oid_fetch_tasks_nr--;
->=20
-> -		strbuf_addf(&submodule_prefix, "%s%s/",
-> -			    spf->prefix, task->sub->path);
-> -
->  		child_process_init(cp);
->  		prepare_submodule_repo_env_in_gitdir(&cp->env);
->  		cp->git_cmd =3D 1;
-> @@ -1728,8 +1718,8 @@ static int get_next_submodule(struct child_process =
-*cp, struct strbuf *err,
->  		strvec_init(&cp->args);
->  		strvec_pushv(&cp->args, spf->args.v);
->  		strvec_push(&cp->args, "on-demand");
-> -		strvec_push(&cp->args, "--submodule-prefix");
-> -		strvec_push(&cp->args, submodule_prefix.buf);
-> +		strvec_pushf(&cp->args, "--submodule-prefix=3D%s%s/",
-> +			     spf->prefix, task->sub->path);
->=20
->  		/* NEEDSWORK: have get_default_remote from submodule--helper */
->  		strvec_push(&cp->args, "origin");
-> @@ -1737,7 +1727,6 @@ static int get_next_submodule(struct child_process =
-*cp, struct strbuf *err,
->  					  append_oid_to_argv, &cp->args);
->=20
->  		*task_cb =3D task;
-> -		strbuf_release(&submodule_prefix);
->  		return 1;
->  	}
->=20
-> --
-> 2.44.0
+> --=20
+> 2.43.GIT
 >=20
 
---YbsGuGctCxGkEiF+
+--z/tfvLpm3g9S7hG2
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmXdj9EACgkQVbJhu7ck
-PpSFKA/9HixQytqjCrokmTVKuzGZJb9h7dmvCVC+4D+uCpfVzRADbPU99y6UDZj9
-1JyCQh/CmqNl23R+VwrrrYjxaJCqOtHKAYSj9PeKaKpiI3QLQcpfXAWs0PkNW3EY
-SVZv563g9D0b5Py8DD8HELae4RYwQ4EoqFvnObvDiuwE+FPzsWdsgFCOqyVSiwXi
-1zCX0n4GcKTrNjR3l6VVsgExqAFwy0ME+N3xTyuRxtK3qAOat5CIo2FHuTKj43c9
-7AWrLFV88gQD6kepTWrOQRMS/TyMjUj2ZaoDf9Od/tZkXFASWINMgscyJTYUC9DQ
-lcpLOSQ1DhUUD6Nanl3IWripsiXx7/K5HcQLjwpzQc+kgdonMZrNy9PvmTIudJgN
-GjaM9d9RJPlsY2ntUVpJrIRVYWqc4oF/HhJYRQBIdt65hoYxsg8NH6NIRSj+bOBC
-ucmcumqQoag8sQf57xSJJ4hnZe8wScXw4wxgChrhJc9ce02pKitJoQ4LeidUhL1J
-FPTMk37ViwCWRa+m7SVvJEmds5ns3M205kFzrX56+hL8pnNB/3DZ0UAlzcQtrCGf
-/+IbYXTTnT4o/7/BB86+I0DKc1OCN6TW0cXqTuUOYMK3PyCZ15YPAG5XVdIQYlab
-16Zmj3zTWBXH3BS91yC3h/Vg+9DOE0BJ9mVPR4IW2luNai6PWi8=
-=1WVR
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmXdkboACgkQVbJhu7ck
+PpQ+oxAAkPQJx8hI31IDS8VHdV4WbgVIIV98fOmdTZR2/gv0uKSOvbomVG7chk4F
+s183kndYah/mMmsYbLxtpQJVq93uXuwqsDxPmeXS12JAl4zGXPGZcXQigcvI/XyT
+cnqJda1cnunY5XtBqfxdTDuB/tZ3kNmAhL/PDVG/Yyjzb1v97dWF0MYp8Hvc0Du2
+i08C/1iz0WaXqHUnt4oV5UdhtUCh9BdFzJoAT6Z1hOmS0zpr6ZX0vS2Ww5wzxrtA
+Dyd/48DtMdA4Yv6qrkS9IzINRDnZdQaLz9FocfPXeoFm1eSPOL2QbqGWoppYu++6
+ZwailXiteRwgRsuVGf+hqEUoj6KDVXlhyMhD16PKLqxXsMn1IbcFEX9qoN6xG2oq
++/jhlCJ/mJdwUio3R9Nss3J9EjKPZoVvmZyKj3SXjAZnVW2h8BkOOgg5YIbXV6zC
+U8yUHW7W90dMt3eD/I7dmTL5m2V0rQoWy6arQCOoAWqP4hjQnR8+xVDcxKmEF6wd
+/NNqZiRBFGLcHKSjjPgHQcM8MYVijg93bCWlMRBXQMuGN/XgzYxlB7MJyiTK+3hk
+fbgLVoq/iTxnatdiOKidGhy+c3cn8sApeglp/9mXPpc1IbB8VbXZgZNxcwNQygSP
+Uv+sQmxWPg9CGUcAZdug/WOdz+q5CNTMuaUK/3AFqO4Eq5fl7QE=
+=LiWI
 -----END PGP SIGNATURE-----
 
---YbsGuGctCxGkEiF+--
+--z/tfvLpm3g9S7hG2--
