@@ -1,58 +1,57 @@
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FD9B148FE1
-	for <git@vger.kernel.org>; Tue, 27 Feb 2024 18:10:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 616F7249EB
+	for <git@vger.kernel.org>; Tue, 27 Feb 2024 18:24:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709057419; cv=none; b=ULRPvGqH8vHfg1qxn+aEN+/Ob3NoBfLcwdOvLpUJEtJF23eAveQmMNNLGH1kmA089njbbAwE/qZnYsEZu8QpPcTXujuVkpVW+DGjUi8FOeiXWqDVQYtt7rk73wqgVjJEUe/mOJ80sPpRxtYMoZ0LDgFTkEYudHVnuP/GMWx3cyM=
+	t=1709058299; cv=none; b=Smz2h0hInasdYMXgofhTWL6XZMgWR5eUv19JX5aCi2Z4aLH96v4gRVxwfOqFDuncX5AS0P6+XPxcjFPjmxVkMi1UmOe++UYh+6/++5k4Jr2uU7XgHGxotbbc5mIb3r/185vcdKE1nmqHemP7NgVk0tHezdsLysvio+QNe1Hom6Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709057419; c=relaxed/simple;
-	bh=+O/XqtfcbQgzbKVwqWXR28+j6c4rCjR+Iz3HXNl03O8=;
+	s=arc-20240116; t=1709058299; c=relaxed/simple;
+	bh=Y07zL2aciJt7R5NAC43GgIdFSHWraX3S1V7x9uRo2n8=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=lBSUoIOkPHHdSe7nTLvhIDGoOW/EG2Gc+QuVeudf0Sh2yDU2Zsp5MNzRB6hRIEju4Gicsxa2GBK4yMCpl9jxgCFyClm5t76wUKPKARAxqg3TLcbYbFLtev9eEasJJMcxCZdgntDE/SVeC8JiQpgsxsJDDzOVnxZkda0KZYVvFHQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=a/tZ8KNc; arc=none smtp.client-ip=173.228.157.52
+	 MIME-Version:Content-Type; b=nnr4pROMC1Lp4NXWyWlJMXQ5AG31k9dW4jdG03pK6wCPtL/i+UKRWPwm8iDljT6cxrQqidVq1GA1j+g0XXjGEHheVLU+/o3zsBMteSRq2NqSpZrH/9jEbPvVAp/ac2RGJ6dpd3Ml+XIBqLO4R0ZbxUYFPBVUDuENWamnXyCnsJY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=I57bLJe/; arc=none smtp.client-ip=64.147.108.71
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="a/tZ8KNc"
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id AD6AF2480E;
-	Tue, 27 Feb 2024 13:10:17 -0500 (EST)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="I57bLJe/"
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id DA2481D1882;
+	Tue, 27 Feb 2024 13:24:49 -0500 (EST)
 	(envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=+O/XqtfcbQgzbKVwqWXR28+j6c4rCjR+Iz3HXN
-	l03O8=; b=a/tZ8KNcNSjfLr4TS+f6IuKX18w5K7mLm0mxoWelN02RAc2QQDA2sK
-	aS3Ab8IMwQcCAKZATdnFkPI+7dHXjRV0oN8sXP5lzhZql0/bZIKjvsqlZqxOac+J
-	MUdTdb+NvP7pAylq4fgazD3pgoqpF6g8SIFVQg2QMGbXX9SFk25eg=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id A5AF72480D;
-	Tue, 27 Feb 2024 13:10:17 -0500 (EST)
+	:content-type; s=sasl; bh=Y07zL2aciJt7R5NAC43GgIdFSHWraX3S1V7x9u
+	Ro2n8=; b=I57bLJe/KdEFfSjy/6XGX/vESkZEJwHRK7EL2hDFDDQXilagU7uVFJ
+	aRpqoYeI9u6hJkM2D527bkKaE6jKpVjDFfnBIJRjBv2GONhfay39wkjVF9QSugwK
+	sNlSyI6jhcxcdPcTLKnP04nx4ld2+ALm3rohraj3/ibtByyQUuqOw=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id CEE081D1881;
+	Tue, 27 Feb 2024 13:24:49 -0500 (EST)
 	(envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.125.176.30])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id D3FFC2480C;
-	Tue, 27 Feb 2024 13:10:13 -0500 (EST)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 338031D1880;
+	Tue, 27 Feb 2024 13:24:49 -0500 (EST)
 	(envelope-from junio@pobox.com)
 From: Junio C Hamano <gitster@pobox.com>
 To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Cc: Dirk Gouders <dirk@gouders.net>,  Johannes Schindelin via GitGitGadget
  <gitgitgadget@gmail.com>,  git@vger.kernel.org,  Patrick Steinhardt
  <ps@pks.im>
-Subject: Re: [PATCH v3 04/11] Prepare `paint_down_to_common()` for handling
- shallow commits
-In-Reply-To: <xmqqcyshu6es.fsf@gitster.g> (Junio C. Hamano's message of "Tue,
-	27 Feb 2024 10:08:11 -0800")
+Subject: Re: [PATCH v3 05/11] commit-reach: start reporting errors in
+ `paint_down_to_common()`
+In-Reply-To: <fa8ebbfd-e01f-fbde-c851-54c162b610ff@gmx.de> (Johannes
+	Schindelin's message of "Tue, 27 Feb 2024 16:08:16 +0100 (CET)")
 References: <pull.1657.v2.git.1708608110.gitgitgadget@gmail.com>
 	<pull.1657.v3.git.1709040497.gitgitgadget@gmail.com>
-	<84e7fbc07e08956e6c493baf499fee455887b16c.1709040499.git.gitgitgadget@gmail.com>
-	<gha5nmnex4.fsf@gouders.net>
-	<79914d16-f58d-7ab0-5c25-f29870a73402@gmx.de>
-	<xmqqcyshu6es.fsf@gitster.g>
-Date: Tue, 27 Feb 2024 10:10:12 -0800
-Message-ID: <xmqq8r35u6bf.fsf@gitster.g>
+	<85332b58c37717b5b8b6c826a2a3388dce3b0daa.1709040499.git.gitgitgadget@gmail.com>
+	<gh34tenefb.fsf@gouders.net>
+	<fa8ebbfd-e01f-fbde-c851-54c162b610ff@gmx.de>
+Date: Tue, 27 Feb 2024 10:24:48 -0800
+Message-ID: <xmqqwmqpsr2n.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -62,15 +61,28 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 X-Pobox-Relay-ID:
- 740EA68E-D59B-11EE-888C-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
+ 7DCE12E8-D59D-11EE-BEDB-25B3960A682E-77302942!pb-smtp2.pobox.com
 
-Junio C Hamano <gitster@pobox.com> writes:
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-> I suspect that what made it harder to follow in the original
-> construct is that we called the behaviour "incorrect" upfront and
-> then come back with "that incorrectness is what we want".
+> Is it lazy to omit the `< 0` here? Not actually, the reason why I omitted
+> it here was to stay under 80 columns per line.
+>
+> Good eyes, though. If `paint_down_to_common()` _did_ return values other
+> than -1 and 0, in particular positive ones that would not indicate a fatal
+> error, the hunk under discussion would have introduced a problematic bug.
 
-Oh, I forgot to say that lack of "<area>: " on the title of the
-earlier parts of the series were a bit uncomfortable to read.
+The same patch does compare the returned value with '< 0' in another
+function (that is far from this place), which probably made the hunk
+stand out during a review, I suspect.
 
+After having fixed a bug elsewhere about a codepath that mixed the
+"non-zero is an error" and "negative is an error" conventions during
+the last cycle, I would have to say that being consistent would be
+nice.  I think we at the end decided to make the callee be more
+strict (returning negative to signal an error) while allowing the
+caller to be more lenient (taking non-zero as an error) in that
+case.
+
+Thanks.
 
