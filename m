@@ -1,54 +1,50 @@
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0A2714A0A2
-	for <git@vger.kernel.org>; Tue, 27 Feb 2024 20:13:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D0981D6A8
+	for <git@vger.kernel.org>; Tue, 27 Feb 2024 20:58:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709064832; cv=none; b=kHMWmjpCZsxbLkfOrjbLt+iJ60dVSoCGb6ugttx6aDafY+rMO+2HH4AdOU0mPilo+YwfKa7/2DfMNU/IXAxrPoKNBNlPKwzrI+cIjZBIH3HbIbyR+FHpbKMYKLMzi/Bdn4Jv3Pk+45guuZDCpgVSYBrHsCu0RkJRpDmTFVvAw7o=
+	t=1709067496; cv=none; b=CsdwjJUdN3+5mGWPKsIiW4eV5n6wxISoFzl3EB/rIUqtUPYxUkyF8MdWzmMDCr3ayRkobyycYSiSekKA1xqdRe5m7v4YEn8QAclFK8LPX3QEIQMQvfM5DB204VF1nHVbUOzaxMkyoMPt8hsSQ4hY42tjLKO6+UWXBkIfLPPLBFo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709064832; c=relaxed/simple;
-	bh=hbBJq65qB5YOlmalW7ntFPLJYQifUynv6bnjna0DgVo=;
+	s=arc-20240116; t=1709067496; c=relaxed/simple;
+	bh=kzqASAfFy/1dXfpTU64bGFGYJqOgDZ1hdRsUNYaePz0=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=cuCXQxPXYjudQyVOgm5B85yZ+VFvyrak59DFDEI8L4O+YUgItagWRjYkTZOy/H5OW7MBpi13kvmT03nYBlUYfhW5ga04GA1mykcKPGzO9x5p4A4eijD4xkWV4OaW1bevo1AxTCmbJVDP6PjGz2NtiUdvSwDJ14vhIGdn3FoEhHo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=TWf2FANM; arc=none smtp.client-ip=64.147.108.70
+	 MIME-Version:Content-Type; b=QLsdBlDIsWGWtV+Uge1wLQLQX3emyX1Zdu3JbWTlR4s22eZ8aqEmfVZ74aszSubCJMt/bqGtv4WWxO/RBQEn8aYiZ4bmUfb2v/P+IgDD73xAHPtDncMJP594keTnvi2mz3f0vx1uAFYARsEcTSS9ah0qZE23u/4TaxdgBhAp5mM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=hMOxMTZ+; arc=none smtp.client-ip=173.228.157.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="TWf2FANM"
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 646D61DDEAA;
-	Tue, 27 Feb 2024 15:13:49 -0500 (EST)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="hMOxMTZ+"
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id 8E66725920;
+	Tue, 27 Feb 2024 15:58:14 -0500 (EST)
 	(envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=hbBJq65qB5YOlmalW7ntFPLJYQifUynv6bnjna
-	0DgVo=; b=TWf2FANM6QwpPvRC1QZLC/woxtfXkYSALJtSjIuxoz3l+XnfDS7cJz
-	TZxVqlofgWtnNLHidwa49gtS4yHc/SuIkWNiASO9+adAwATJKVT16YNs5mhivtJM
-	Ac4n8LvXvLxn3jYYxEx0aY05pS6JzNrbeoXuqqsXns8dO7wTU3CCU=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 5C62C1DDEA9;
-	Tue, 27 Feb 2024 15:13:49 -0500 (EST)
+	:content-type; s=sasl; bh=kzqASAfFy/1dXfpTU64bGFGYJqOgDZ1hdRsUNY
+	aePz0=; b=hMOxMTZ+hkvTTQY3752ugdfHmLTKdTB0YgUeAqcE9oIAlbMXq4W7xD
+	CFyIbup8QFGMcDX7lv7VfHSxFkqFxKJ/2L3rbsIJcHYoAWcOLXmrtCb7I0G3cHhZ
+	+5yxsxWgdFtwaD4khIY1MkPEisQopnbJWaape4pgnA6NN5OEMb37M=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id 873AD2591F;
+	Tue, 27 Feb 2024 15:58:14 -0500 (EST)
 	(envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.125.176.30])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id C92901DDEA7;
-	Tue, 27 Feb 2024 15:13:48 -0500 (EST)
+	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 29CDD2591C;
+	Tue, 27 Feb 2024 15:58:11 -0500 (EST)
 	(envelope-from junio@pobox.com)
 From: Junio C Hamano <gitster@pobox.com>
-To: M Hickford <mirth.hickford@gmail.com>, Bo Anderson <mail@boanderson.me>
-Cc: M Hickford via GitGitGadget <gitgitgadget@gmail.com>,
-  git@vger.kernel.org,  Jeff King <peff@peff.net>
-Subject: Re: [PATCH] credential/osxkeychain: store new attributes
-In-Reply-To: <CAGJzqsknN_RmYeT0xcn4cTLcJhsxSOUC6ppRVepxMDf3day5Fw@mail.gmail.com>
-	(M. Hickford's message of "Tue, 27 Feb 2024 20:00:00 +0000")
-References: <pull.1663.git.1707860618119.gitgitgadget@gmail.com>
-	<xmqqzfw2vr7c.fsf@gitster.g>
-	<CAGJzqsmSzMqEG1OU9dH6CORV6=L7qUAFNJSmi41Lqrajf9mSew@mail.gmail.com>
-	<CAGJzqsknN_RmYeT0xcn4cTLcJhsxSOUC6ppRVepxMDf3day5Fw@mail.gmail.com>
-Date: Tue, 27 Feb 2024 12:13:47 -0800
-Message-ID: <xmqqsf1dr7gk.fsf@gitster.g>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org,  Mike Hommey <mh@glandium.org>
+Subject: Re: [PATCH 0/2] builtin/clone: allow remote helpers to detect repo
+In-Reply-To: <cover.1709041721.git.ps@pks.im> (Patrick Steinhardt's message of
+	"Tue, 27 Feb 2024 15:27:34 +0100")
+References: <cover.1709041721.git.ps@pks.im>
+Date: Tue, 27 Feb 2024 12:58:09 -0800
+Message-ID: <xmqqcyshr5em.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -58,24 +54,21 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 X-Pobox-Relay-ID:
- B7B71C52-D5AC-11EE-946B-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
+ EA994EA0-D5B2-11EE-8110-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
 
-M Hickford <mirth.hickford@gmail.com> writes:
+Patrick Steinhardt <ps@pks.im> writes:
 
-> On Wed, 14 Feb 2024 at 22:35, M Hickford <mirth.hickford@gmail.com> wrote:
->>
->> > Thanks.  Will queue.
->>
->> A first-time contributor contacted me to say they are working on a
->> more comprehensive patch to credential-osxkeychain, so let's wait for
->> that instead. https://github.com/gitgitgadget/git/pull/1663#issuecomment-1942763116
+> Hi,
 >
-> Please disregard my patch and look at Bo Anderson's instead
-> https://lore.kernel.org/git/pull.1667.git.1708212896.gitgitgadget@gmail.com/
+> this patch series addresses a regression reported by Mike in Git v2.44
+> where remote helpers cannot access the Git repository anymore when
+> running git-clone(1).
+> ...
+>  builtin/clone.c            | 46 ++++++++++++++++++++++++++++++++++++++
+>  refs/reftable-backend.c    |  1 +
 
-Will drop mh/credential-oauth-refresh-token-with-osxkeychain topic.
-The other one seemed to have got some reviews and I think the
-current status of the series is that it is Bo's turn to respond with
-a new iteration of the series.
+Sorry, but this confuses me.  Was a regression really in v2.44.0,
+where refs/reftable-backend.c did not even exist?  If so why does a
+fix for it need to touch that file?
 
 Thanks.
