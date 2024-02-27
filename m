@@ -1,53 +1,53 @@
 Received: from wfhigh2-smtp.messagingengine.com (wfhigh2-smtp.messagingengine.com [64.147.123.153])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18840145B0D
-	for <git@vger.kernel.org>; Tue, 27 Feb 2024 15:06:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B733C13DBA4
+	for <git@vger.kernel.org>; Tue, 27 Feb 2024 15:06:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709046393; cv=none; b=pvleiBc0QYf86K1n4UosDTg2LWKOVqh+A961sXCL8eQZbZ0VcXn2HY9NdEnflXZTT4CmbnJZqX6W/juKmkYaExHQuwBDmskgivzG6RBid4TBHpPeCSacXtaagiXvaskiavd+jzYVMBnHoISTNuQvtMuePHbhWrutdEhwZWzy+Ks=
+	t=1709046396; cv=none; b=GPwtTtvstEIKBvECPSYc6CWLqTrcJwWQOHmP0kEVGwcBMMBB7Ou5e9gtgV91RxZWWBnTV9NRv/DHlHhQNYU+uFH/vTsE6xap2gCYtY2udiGIm/tcVepekO+VwLcmfH9Vc/5dfjsNS7W6ePFAx4rQzPcjhWF1NkVBVuDkIQcrxEg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709046393; c=relaxed/simple;
-	bh=wJoBN961lcxswmi/ceQBsLpu4GFYvh0D4mtPYOMo98o=;
+	s=arc-20240116; t=1709046396; c=relaxed/simple;
+	bh=CfQkbiHkB6hgWmOA5iFICoi8TGCMW/4YHwJD9UTxP6c=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=FL7PD4ImAOA++YS4hfQB1QTIKSjcoijF3qO+x1WcZrZN9U5ZCXkRLuz1mqHQV1GVKA/PFBTKRASy53OhKvAsIJFLWHa8rWoHYo1awvhDjULFLXgVqV8QpqGebmYIkysxNWdHk+21VX7VXPddGVH3+ZDwO6aG/5Cf6FoZr2cix54=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=awzQ88gm; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=XRNyZlKF; arc=none smtp.client-ip=64.147.123.153
+	 Content-Type:Content-Disposition:In-Reply-To; b=KdaB1kwZepOXONub+Uibxif21jmULKVJlze3lvjTvILdI35+rOoj5hPrfC47E9OAe6jVdOi5N1JVVQaCZMkPWr1AgdKT/lkfQTNB+LLVw1JaRsWtOTixQbZRGYlOn+AOIElJlxMISvXo3JtOgZjsOdFUQ57hGPYkrf1/QjG8tlg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=YuePP/c3; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=WO6gFY5E; arc=none smtp.client-ip=64.147.123.153
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="awzQ88gm";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="XRNyZlKF"
-Received: from compute7.internal (compute7.nyi.internal [10.202.2.48])
-	by mailfhigh.west.internal (Postfix) with ESMTP id 1326618000B4;
-	Tue, 27 Feb 2024 10:06:29 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="YuePP/c3";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="WO6gFY5E"
+Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
+	by mailfhigh.west.internal (Postfix) with ESMTP id 09ECD18000B4;
+	Tue, 27 Feb 2024 10:06:33 -0500 (EST)
 Received: from mailfrontend1 ([10.202.2.162])
-  by compute7.internal (MEProxy); Tue, 27 Feb 2024 10:06:30 -0500
+  by compute6.internal (MEProxy); Tue, 27 Feb 2024 10:06:34 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1709046389; x=1709132789; bh=UkXWnT48tL
-	JPGrkW3f2G9afzcV3NwBACLd8XL1v07fU=; b=awzQ88gmikUx72LEkrQoXaqbF0
-	OdPdKeL+ybe77hY6AVTSwIrQuCQG9/GFvPGE1vQr2RSaJYPBRwZKdCTY5b7MB0YS
-	NiSAbYoePkY8rM1nGfFehTaaHQSN1zeLvaZs6JJQv3mLc8zq4NNGCpgyLLBX8BYy
-	NsCvIK3HksgK2AfTlVRsX2NcQzRhwaRWajm2cu1twBs0tMPvyN2HQovmQ/fVrJSD
-	NiRoksj1Q3IZQjlPrPcZr0+DxzgITEbECXYUicbFMrqG9FG8Z/djxr8CqPkxLxhk
-	q6+YuKH0UZ4/L8NP8RusmfefhVbEkvOzlVpEfev7s52lOovXWt5nbkr6jXTQ==
+	:subject:to:to; s=fm1; t=1709046393; x=1709132793; bh=E0mIhroanH
+	1ECWqPiT972MS1bImEnKHQoRIJx3I8kNU=; b=YuePP/c3Pzd4yhniXsLPNv1Fvk
+	erC+jufpdN99wLHySSKzScvudVPBbxq4xhfjd7sSvCMBa72jgkLjG/CFvNmwX4f9
+	UKclB/tUXAiWa53bwA3uwaPNAZFjFWgYKsXN9tg+FtTlKUblIdtA6/TywVLWjaRk
+	+DJ3ZXpCq0kCZ5bSIc3F1UsbZO47JWTCxfuizX2pcQDg/hWg8cPZgvIlX17Zwb09
+	AM7B2UaDzW4mxSaiDMbTvjtoYYYstNhyrTJ8JlMYiSzKq13DLXRlf3OpAFYjjF8J
+	M4cKuHOTPz2AkXgynu/dPtkgryKHWz8icHor5TCj9pMiVZauf19eJ3Ur+Djw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1709046389; x=1709132789; bh=UkXWnT48tLJPGrkW3f2G9afzcV3N
-	wBACLd8XL1v07fU=; b=XRNyZlKFqaiN13k/iq/J0ydiP40qkcmQA15/0BUXuzpX
-	/i2TMKvQKxiHsifohMPA9vXU1E9IU1O6qotd8OrI2QlFosSMyEzkZXHVU/dowDri
-	/PbrLuCqLotY0KIgQ9MK7j6L4LIx6NX36/CCS/SosH5U2a7yTZS5vAQVMvoxRhZp
-	KGb38/T2Db402q4l/v5kg6NchotRFxGnwoxKI3VWUw/8qdkWmOPAhtmy9ICa7G7L
-	DQ17OrP9h3ISTv0c6Br6mSY0RdPxuVpC/cdgT7QV9sAQlDYKMGH/Kbs83HHq4HOi
-	c/tHIvklW7uu71DdC0FJLb+vvRf6deEs8PxRJNtcNA==
-X-ME-Sender: <xms:dfrdZQYCYCRM-9fdHW_a9rmnue0C3lDCPwARewH-1BRo0wKnbsCGQw>
-    <xme:dfrdZbZcMBj0vLclhn9rTNAjMJvHuQXwQT5o54QJM2zabnlyryaKroZljTjyP7naB
-    lj1e_zD4MpbepgVpA>
-X-ME-Received: <xmr:dfrdZa9VCwNUSkxDGi4KlACmZUqA_9qWxgyy7jKNsUb0pkcKs5mJ3Af9LscjwDXidxvjXIvG1Dc62ix6ZfDjsJDYterNAapDz1HhfDxmPQpSiPPw>
+	fm1; t=1709046393; x=1709132793; bh=E0mIhroanH1ECWqPiT972MS1bImE
+	nKHQoRIJx3I8kNU=; b=WO6gFY5EfJL22hbl8IBbneVSs1sKDv2+EwB3cXeG0d9V
+	ceVke4wEJn0r1QKeb4KGnAxkYxEr3+h4sH5gcaq+urC8hvBZkV9RYjxYjjGLPpSg
+	9PI2+JYPzVpYWbAsh8f0fxGWBce1aZZwqFaXXWtUMBkmhiTyE2/ZAB1GeXw+kINe
+	ppSdcM6SD5Osa0VDE3CWIVh4Yijt3A1XULLz+evThZwR6X4yENS8nJ5Zw5JncWll
+	u9J2+y/StYuWvuuHECLUDswKrBBijCfkum3IN6WI8isdCDW+pFSkB3RW0rFNkeLz
+	ZEaaWaDiFqcZF9ywFJtVovbRnpAnhD+MLSaWNzFgZQ==
+X-ME-Sender: <xms:efrdZSuWrvsFUhCXZYBf8SUnsfSPB_8GOzt6gTdnPZFPInPZ8SfMEw>
+    <xme:efrdZXeu2gVyduq5ltvIOrdIOZos-8ucoTQhjd_GBrOgOmvzlGGe92rfHDSpPlPpn
+    2YaU0BY4aMov8FccA>
+X-ME-Received: <xmr:efrdZdyK7_XR_E5Br2_aCGN4bK7f-cCUvROdkwNwV1pkh8AxXH6Ifle-5hbcHYHAjhulkugiSu_SCgl8QKs67mCl1bpPTTQ2ijo2sajZQmPviZbn>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrgeehgdegkecutefuodetggdotefrodftvf
     curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
     uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
@@ -56,23 +56,22 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrgeehgdegkecutefuodetggdote
     hnpeetueevhffhudefvdegieeuieelgedthfegfedtueevjeejtdfgjeehudejuedtuden
     ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
     hkshdrihhm
-X-ME-Proxy: <xmx:dfrdZaohBn8-kglA1hTQPQD9LOoQr0Alxgq4mup5cPbEewrGlxFYtg>
-    <xmx:dfrdZbrV1khYPm2IvDvzdMiOJDC3yjbSACj8NrIR2rQu8ATphFPiUg>
-    <xmx:dfrdZYS43NsjDji9eAhABhqC4WvdRmGaF3DMXnb7fVMcZyu9w-XY7A>
-    <xmx:dfrdZS0gHfnffPZVGxJUMFgOrQgvueDQJzw8zk2wz5c4npvLnOoZCnildLg>
+X-ME-Proxy: <xmx:efrdZdMzc_1SxTr1xKRK6uCyW6hITH_fL2CBg27ybMBLZGs54G3wCA>
+    <xmx:efrdZS9nZGeWHLc-Qlvu_q8DsEAENyH25MmJJFOrUiNy8WGaVVeEDg>
+    <xmx:efrdZVXFrpxHCXre_YepRh39a2tb3f14q0QRsp-FdT97fZNuDqBiHQ>
+    <xmx:efrdZUKLnYd4QHcIRYAAXC-vLYnAHo8Pdq7CDp1ECnw9Ps01yDT1FHXIuC0>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 27 Feb 2024 10:06:28 -0500 (EST)
+ 27 Feb 2024 10:06:32 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 201f2797 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 27 Feb 2024 15:02:11 +0000 (UTC)
-Date: Tue, 27 Feb 2024 16:06:26 +0100
+	by vm-mail (OpenSMTPD) with ESMTPSA id 95210f4c (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 27 Feb 2024 15:02:15 +0000 (UTC)
+Date: Tue, 27 Feb 2024 16:06:30 +0100
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
 Cc: Justin Tobler <jltobler@gmail.com>
-Subject: [PATCH v2 03/13] reftable/merged: advance subiter on subsequent
- iteration
-Message-ID: <0e327e5fe360560b4de8c5098879581bbde2baa9.1709045927.git.ps@pks.im>
+Subject: [PATCH v2 04/13] reftable/merged: make subiters own their records
+Message-ID: <494d74deffcc9d473431c238b713d65015305fa4.1709045927.git.ps@pks.im>
 References: <cover.1707895758.git.ps@pks.im>
  <cover.1709045927.git.ps@pks.im>
 Precedence: bulk
@@ -82,164 +81,332 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="54ootfkn6oXQnjNJ"
+	protocol="application/pgp-signature"; boundary="juElkCulAjgIIxZe"
 Content-Disposition: inline
 In-Reply-To: <cover.1709045927.git.ps@pks.im>
 
 
---54ootfkn6oXQnjNJ
+--juElkCulAjgIIxZe
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-When advancing the merged iterator, we pop the topmost entry from its
-priority queue and then advance the sub-iterator that the entry belongs
-to, adding the result as a new entry. This is quite sensible in the case
-where the merged iterator is used to actually iterate through records.
-But the merged iterator is also used when we look up a single record,
-only, so advancing the sub-iterator is wasted effort because we would
-never even look at the result.
+For each subiterator, the merged table needs to track their current
+record. This record is owned by the priority queue though instead of by
+the merged iterator. This is not optimal performance-wise.
 
-Instead of immediately advancing the sub-iterator, we can also defer
-this to the next iteration of the merged iterator by storing the
-intent-to-advance. This results in a small speedup when reading many
-records. The following benchmark creates 10000 refs, which will also end
-up with many ref lookups:
+For one, we need to move around records whenever we add or remove a
+record from the priority queue. Thus, the bigger the entries the more
+bytes we need to copy around. And compared to pointers, a reftable
+record is rather on the bigger side. The other issue is that this makes
+it harder to reuse the records.
 
-    Benchmark 1: update-ref: create many refs (revision =3D HEAD~)
-      Time (mean =C2=B1 =CF=83):     337.2 ms =C2=B1   7.3 ms    [User: 200=
-=2E1 ms, System: 136.9 ms]
-      Range (min =E2=80=A6 max):   329.3 ms =E2=80=A6 373.2 ms    100 runs
+Refactor the code so that the merged iterator tracks ownership of the
+records per-subiter. Instead of having records in the priority queue, we
+can now use mere pointers to the per-subiter records. This also allows
+us to swap records between the caller and the per-subiter record instead
+of doing an actual copy via `reftable_record_copy_from()`, which removes
+the need to release the caller-provided record.
 
-    Benchmark 2: update-ref: create many refs (revision =3D HEAD)
-      Time (mean =C2=B1 =CF=83):     332.5 ms =C2=B1   5.9 ms    [User: 197=
-=2E2 ms, System: 135.1 ms]
-      Range (min =E2=80=A6 max):   327.6 ms =E2=80=A6 359.8 ms    100 runs
+This results in a noticeable speedup when iterating through many refs.
+The following benchmark iterates through 1 million refs:
 
-    Summary
-      update-ref: create many refs (revision =3D HEAD) ran
-        1.01 =C2=B1 0.03 times faster than update-ref: create many refs (re=
-vision =3D HEAD~)
+  Benchmark 1: show-ref: single matching ref (revision =3D HEAD~)
+    Time (mean =C2=B1 =CF=83):     145.5 ms =C2=B1   4.5 ms    [User: 142.5=
+ ms, System: 2.8 ms]
+    Range (min =E2=80=A6 max):   141.3 ms =E2=80=A6 177.0 ms    1000 runs
 
-While this speedup alone isn't really worth it, this refactoring will
-also allow two additional optimizations in subsequent patches. First, it
-will allow us to special-case when there is only a single sub-iter left
-to circumvent the priority queue altogether. And second, it makes it
-easier to avoid copying records to the caller.
+  Benchmark 2: show-ref: single matching ref (revision =3D HEAD)
+    Time (mean =C2=B1 =CF=83):     139.0 ms =C2=B1   4.7 ms    [User: 136.1=
+ ms, System: 2.8 ms]
+    Range (min =E2=80=A6 max):   134.2 ms =E2=80=A6 182.2 ms    1000 runs
+
+  Summary
+    show-ref: single matching ref (revision =3D HEAD) ran
+      1.05 =C2=B1 0.05 times faster than show-ref: single matching ref (rev=
+ision =3D HEAD~)
+
+This refactoring also allows a subsequent refactoring where we start
+reusing memory allocated by the reftable records because we do not need
+to release the caller-provided record anymore.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- reftable/merged.c | 26 ++++++++++++--------------
- 1 file changed, 12 insertions(+), 14 deletions(-)
+ reftable/merged.c  | 54 ++++++++++++++++++++++++----------------------
+ reftable/pq.c      |  8 ++-----
+ reftable/pq.h      |  2 +-
+ reftable/pq_test.c | 41 ++++++++++++++++-------------------
+ 4 files changed, 49 insertions(+), 56 deletions(-)
 
 diff --git a/reftable/merged.c b/reftable/merged.c
-index 12ebd732e8..9b1ccfff00 100644
+index 9b1ccfff00..ae74234472 100644
 --- a/reftable/merged.c
 +++ b/reftable/merged.c
-@@ -19,11 +19,12 @@ license that can be found in the LICENSE file or at
+@@ -17,8 +17,13 @@ license that can be found in the LICENSE file or at
+ #include "reftable-error.h"
+ #include "system.h"
 =20
++struct merged_subiter {
++	struct reftable_iterator iter;
++	struct reftable_record rec;
++};
++
  struct merged_iter {
- 	struct reftable_iterator *stack;
-+	struct merged_iter_pqueue pq;
+-	struct reftable_iterator *stack;
++	struct merged_subiter *subiters;
+ 	struct merged_iter_pqueue pq;
  	uint32_t hash_id;
  	size_t stack_len;
- 	uint8_t typ;
- 	int suppress_deletions;
--	struct merged_iter_pqueue pq;
-+	ssize_t advance_index;
- };
+@@ -32,16 +37,18 @@ static int merged_iter_init(struct merged_iter *mi)
+ 	for (size_t i =3D 0; i < mi->stack_len; i++) {
+ 		struct pq_entry e =3D {
+ 			.index =3D i,
++			.rec =3D &mi->subiters[i].rec,
+ 		};
+ 		int err;
 =20
- static int merged_iter_init(struct merged_iter *mi)
-@@ -96,13 +97,17 @@ static int merged_iter_next_entry(struct merged_iter *m=
-i,
- 	struct pq_entry entry =3D { 0 };
- 	int err =3D 0;
+-		reftable_record_init(&e.rec, mi->typ);
+-		err =3D iterator_next(&mi->stack[i], &e.rec);
++		reftable_record_init(&mi->subiters[i].rec, mi->typ);
++		err =3D iterator_next(&mi->subiters[i].iter,
++				    &mi->subiters[i].rec);
+ 		if (err < 0)
+ 			return err;
+ 		if (err > 0) {
+-			reftable_iterator_destroy(&mi->stack[i]);
+-			reftable_record_release(&e.rec);
++			reftable_iterator_destroy(&mi->subiters[i].iter);
++			reftable_record_release(&mi->subiters[i].rec);
+ 			continue;
+ 		}
 =20
-+	if (mi->advance_index >=3D 0) {
-+		err =3D merged_iter_advance_subiter(mi, mi->advance_index);
-+		if (err < 0)
-+			return err;
-+		mi->advance_index =3D -1;
+@@ -56,9 +63,11 @@ static void merged_iter_close(void *p)
+ 	struct merged_iter *mi =3D p;
+=20
+ 	merged_iter_pqueue_release(&mi->pq);
+-	for (size_t i =3D 0; i < mi->stack_len; i++)
+-		reftable_iterator_destroy(&mi->stack[i]);
+-	reftable_free(mi->stack);
++	for (size_t i =3D 0; i < mi->stack_len; i++) {
++		reftable_iterator_destroy(&mi->subiters[i].iter);
++		reftable_record_release(&mi->subiters[i].rec);
 +	}
-+
- 	if (merged_iter_pqueue_is_empty(mi->pq))
- 		return 1;
++	reftable_free(mi->subiters);
+ }
 =20
- 	entry =3D merged_iter_pqueue_remove(&mi->pq);
--	err =3D merged_iter_advance_subiter(mi, entry.index);
--	if (err < 0)
--		return err;
+ static int merged_iter_advance_nonnull_subiter(struct merged_iter *mi,
+@@ -66,17 +75,16 @@ static int merged_iter_advance_nonnull_subiter(struct m=
+erged_iter *mi,
+ {
+ 	struct pq_entry e =3D {
+ 		.index =3D idx,
++		.rec =3D &mi->subiters[idx].rec,
+ 	};
+ 	int err;
 =20
- 	/*
- 	  One can also use reftable as datacenter-local storage, where the ref
-@@ -116,14 +121,6 @@ static int merged_iter_next_entry(struct merged_iter *=
-mi,
+-	reftable_record_init(&e.rec, mi->typ);
+-	err =3D iterator_next(&mi->stack[idx], &e.rec);
++	err =3D iterator_next(&mi->subiters[idx].iter, &mi->subiters[idx].rec);
+ 	if (err < 0)
+ 		return err;
+-
+ 	if (err > 0) {
+-		reftable_iterator_destroy(&mi->stack[idx]);
+-		reftable_record_release(&e.rec);
++		reftable_iterator_destroy(&mi->subiters[idx].iter);
++		reftable_record_release(&mi->subiters[idx].rec);
+ 		return 0;
+ 	}
+=20
+@@ -86,7 +94,7 @@ static int merged_iter_advance_nonnull_subiter(struct mer=
+ged_iter *mi,
+=20
+ static int merged_iter_advance_subiter(struct merged_iter *mi, size_t idx)
+ {
+-	if (iterator_is_null(&mi->stack[idx]))
++	if (iterator_is_null(&mi->subiters[idx].iter))
+ 		return 0;
+ 	return merged_iter_advance_nonnull_subiter(mi, idx);
+ }
+@@ -121,25 +129,19 @@ static int merged_iter_next_entry(struct merged_iter =
+*mi,
  		struct pq_entry top =3D merged_iter_pqueue_top(mi->pq);
  		int cmp;
 =20
--		/*
--		 * When the next entry comes from the same queue as the current
--		 * entry then it must by definition be larger. This avoids a
--		 * comparison in the most common case.
--		 */
--		if (top.index =3D=3D entry.index)
--			break;
--
- 		cmp =3D reftable_record_cmp(&top.rec, &entry.rec);
+-		cmp =3D reftable_record_cmp(&top.rec, &entry.rec);
++		cmp =3D reftable_record_cmp(top.rec, entry.rec);
  		if (cmp > 0)
  			break;
-@@ -137,6 +134,7 @@ static int merged_iter_next_entry(struct merged_iter *m=
-i,
 =20
- 	reftable_record_release(rec);
- 	*rec =3D entry.rec;
-+	mi->advance_index =3D entry.index;
+ 		merged_iter_pqueue_remove(&mi->pq);
+ 		err =3D merged_iter_advance_subiter(mi, top.index);
+ 		if (err < 0)
+-			goto done;
+-		reftable_record_release(&top.rec);
++			return err;
+ 	}
 =20
- done:
- 	if (err)
-@@ -160,9 +158,8 @@ static int merged_iter_next(struct merged_iter *mi, str=
-uct reftable_record *rec)
- static int merged_iter_next_void(void *p, struct reftable_record *rec)
- {
- 	struct merged_iter *mi =3D p;
--	if (merged_iter_pqueue_is_empty(mi->pq))
-+	if (merged_iter_pqueue_is_empty(mi->pq) && mi->advance_index < 0)
- 		return 1;
+-	reftable_record_release(rec);
+-	*rec =3D entry.rec;
+ 	mi->advance_index =3D entry.index;
 -
- 	return merged_iter_next(mi, rec);
+-done:
+-	if (err)
+-		reftable_record_release(&entry.rec);
+-	return err;
++	SWAP(*rec, *entry.rec);
++	return 0;
  }
 =20
-@@ -255,6 +252,7 @@ static int merged_table_seek_record(struct reftable_mer=
-ged_table *mt,
- 		.typ =3D reftable_record_type(rec),
- 		.hash_id =3D mt->hash_id,
- 		.suppress_deletions =3D mt->suppress_deletions,
-+		.advance_index =3D -1,
- 	};
+ static int merged_iter_next(struct merged_iter *mi, struct reftable_record=
+ *rec)
+@@ -257,10 +259,10 @@ static int merged_table_seek_record(struct reftable_m=
+erged_table *mt,
  	struct merged_iter *p;
  	int err;
+=20
+-	REFTABLE_CALLOC_ARRAY(merged.stack, mt->stack_len);
++	REFTABLE_CALLOC_ARRAY(merged.subiters, mt->stack_len);
+ 	for (size_t i =3D 0; i < mt->stack_len; i++) {
+ 		err =3D reftable_table_seek_record(&mt->stack[i],
+-						 &merged.stack[merged.stack_len], rec);
++						 &merged.subiters[merged.stack_len].iter, rec);
+ 		if (err < 0)
+ 			goto out;
+ 		if (!err)
+diff --git a/reftable/pq.c b/reftable/pq.c
+index e0ccce2b97..0074d6bc43 100644
+--- a/reftable/pq.c
++++ b/reftable/pq.c
+@@ -14,7 +14,7 @@ license that can be found in the LICENSE file or at
+=20
+ int pq_less(struct pq_entry *a, struct pq_entry *b)
+ {
+-	int cmp =3D reftable_record_cmp(&a->rec, &b->rec);
++	int cmp =3D reftable_record_cmp(a->rec, b->rec);
+ 	if (cmp =3D=3D 0)
+ 		return a->index > b->index;
+ 	return cmp < 0;
+@@ -82,10 +82,6 @@ void merged_iter_pqueue_add(struct merged_iter_pqueue *p=
+q, const struct pq_entry
+=20
+ void merged_iter_pqueue_release(struct merged_iter_pqueue *pq)
+ {
+-	int i =3D 0;
+-	for (i =3D 0; i < pq->len; i++) {
+-		reftable_record_release(&pq->heap[i].rec);
+-	}
+ 	FREE_AND_NULL(pq->heap);
+-	pq->len =3D pq->cap =3D 0;
++	memset(pq, 0, sizeof(*pq));
+ }
+diff --git a/reftable/pq.h b/reftable/pq.h
+index 9e25a43a36..ce23972c16 100644
+--- a/reftable/pq.h
++++ b/reftable/pq.h
+@@ -13,7 +13,7 @@ license that can be found in the LICENSE file or at
+=20
+ struct pq_entry {
+ 	size_t index;
+-	struct reftable_record rec;
++	struct reftable_record *rec;
+ };
+=20
+ struct merged_iter_pqueue {
+diff --git a/reftable/pq_test.c b/reftable/pq_test.c
+index c202eff848..b7d3c80cc7 100644
+--- a/reftable/pq_test.c
++++ b/reftable/pq_test.c
+@@ -27,48 +27,43 @@ void merged_iter_pqueue_check(struct merged_iter_pqueue=
+ pq)
+=20
+ static void test_pq(void)
+ {
+-	char *names[54] =3D { NULL };
+-	int N =3D ARRAY_SIZE(names) - 1;
+-
+ 	struct merged_iter_pqueue pq =3D { NULL };
++	struct reftable_record recs[54];
++	int N =3D ARRAY_SIZE(recs) - 1, i;
+ 	char *last =3D NULL;
+=20
+-	int i =3D 0;
+ 	for (i =3D 0; i < N; i++) {
+-		char name[100];
+-		snprintf(name, sizeof(name), "%02d", i);
+-		names[i] =3D xstrdup(name);
++		struct strbuf refname =3D STRBUF_INIT;
++		strbuf_addf(&refname, "%02d", i);
++
++		reftable_record_init(&recs[i], BLOCK_TYPE_REF);
++		recs[i].u.ref.refname =3D strbuf_detach(&refname, NULL);
+ 	}
+=20
+ 	i =3D 1;
+ 	do {
+-		struct pq_entry e =3D { .rec =3D { .type =3D BLOCK_TYPE_REF,
+-					       .u.ref =3D {
+-						       .refname =3D names[i],
+-					       } } };
++		struct pq_entry e =3D {
++			.rec =3D &recs[i],
++		};
++
+ 		merged_iter_pqueue_add(&pq, &e);
+ 		merged_iter_pqueue_check(pq);
++
+ 		i =3D (i * 7) % N;
+ 	} while (i !=3D 1);
+=20
+ 	while (!merged_iter_pqueue_is_empty(pq)) {
+ 		struct pq_entry e =3D merged_iter_pqueue_remove(&pq);
+-		struct reftable_record *rec =3D &e.rec;
+ 		merged_iter_pqueue_check(pq);
+=20
+-		EXPECT(reftable_record_type(rec) =3D=3D BLOCK_TYPE_REF);
+-		if (last) {
+-			EXPECT(strcmp(last, rec->u.ref.refname) < 0);
+-		}
+-		/* this is names[i], so don't dealloc. */
+-		last =3D rec->u.ref.refname;
+-		rec->u.ref.refname =3D NULL;
+-		reftable_record_release(rec);
+-	}
+-	for (i =3D 0; i < N; i++) {
+-		reftable_free(names[i]);
++		EXPECT(reftable_record_type(e.rec) =3D=3D BLOCK_TYPE_REF);
++		if (last)
++			EXPECT(strcmp(last, e.rec->u.ref.refname) < 0);
++		last =3D e.rec->u.ref.refname;
+ 	}
+=20
++	for (i =3D 0; i < N; i++)
++		reftable_record_release(&recs[i]);
+ 	merged_iter_pqueue_release(&pq);
+ }
+=20
 --=20
 2.44.0
 
 
---54ootfkn6oXQnjNJ
+--juElkCulAjgIIxZe
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmXd+nEACgkQVbJhu7ck
-PpQe7A/+J5CSszH1+In0brakhJqJPqV55yg5bLLQgdi/Y4j2faZOLShf3I1EL/sD
-7svpfJT+GelPgFAfmg3SN7XBg4lIYZ4yDJ6o9FpEHqZFnkyZe/ln6D9q2LsabIrS
-gL+g0OQntDTEdaQi9AHHDtgsc9XjRh9F6T4zTjqbAd0oY0r5e85OXb3SxHVEwRZh
-dLemiCtkF6GXjwTWeFXba2ycHRqxzBd4yUsqsht5p1HWQVTa0Ys/ZQbnJn7fPXH8
-7ILgPmsdZhQXX9EfRUczRiU0CXBCL3Mcy47caK7plwwJBKxSyiVl+arAXLoKr0Ip
-SQN0rW5WWNOM9Qhd3Vd28XmzV44uGoKqp8/pBsAy8d0ERl52A4o57km+QEP67ync
-VeKJ06pTuIBYVArsG7w5ROMoMKN6XUtCruFq0NkiFGFnD85gDbT4IuYIPIMsyNun
-IjzAms4apfsmH9IoMBaLT316HF6lxpCB3hZNQxblkjMTfmtjCoKAdLnyBvmniORR
-aPy3tqtzoY+dI8PoUxoSXccxyok9mZR8nyCW4bPYR7H40CQJXdDsBx9E1MRF4q9Z
-SYDmEPY9kz+Jtn44/kdf6gSObJHTDS+0LPsxXn9zvyMPRlOCa3mVwAJUAHxQMhBe
-89VYj146E9SEKUgRaw46IY1Q4MdCXvh8dovLSpfUPQJPRbDoqso=
-=JhNF
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmXd+nUACgkQVbJhu7ck
+PpTlYg/+IJc/t/qhngGEaKaMY27M1+LBeml5vf62SCZihQHbX1G5mIAvSwQiwDUk
+/ug757Bg8em2h739Hu4LM22KsDHrjyjmTIOXHH4NitQLfndH2qD+R9pbQILfkLG1
+RvyUf2HodN7cDnA9Chiwp+MJBssILoDdf6PwqT81ZIRNoPpS4Z1pLoIorikiKMjU
+S15WUiJWjM+7NPMwiRsZCoqZbQYywl3aUVbqG+Ry4QoNSsLgUf1UKuWiWAC9WjmP
+5ZQmXhmRg8UseIh8LCX7a7H1Ll7NK6i3QfYMS3Gr1hEMR20W4+dl71WHEu/uM9P1
+aX4nyYE9wJiGCdGWgOXXf6v94qABzV8i41xCiHv0/1b5quyOGXX037e3siaIjZOS
+FIDhwMEgH2sMa6NzmxB+9f0Wkodlio4wMKzbJGP5rQBfbDi5grgEtGItVqsmRfGP
+WM149JdcgyD8Ir7Pe1RvVvhuibBUy4257cjZj99gsEAuUnKeBvgcaXT+hzTrVQdf
+Wgg6AWSxEZ1FRTFeCPcaPUzgf6oEAUrh1Y0VHcbEW0sbZBbai6F0PWQsSZ4e9CQd
+aeKzPoeIENtyfLM1oxByo+3NYmMfTB32IOQQr3FSpphzd/D2s7YDW+UysupRH9AX
+Mdt3+ePraRDeRw8+Q4IwB4Dg6adCbmi9/r/I06Byo81RxBkb5Ug=
+=+e+Z
 -----END PGP SIGNATURE-----
 
---54ootfkn6oXQnjNJ--
+--juElkCulAjgIIxZe--
