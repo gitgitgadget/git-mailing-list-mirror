@@ -1,107 +1,107 @@
-Received: from mail-ej1-f41.google.com (mail-ej1-f41.google.com [209.85.218.41])
+Received: from mail-ed1-f47.google.com (mail-ed1-f47.google.com [209.85.208.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 311F752F95
-	for <git@vger.kernel.org>; Tue, 27 Feb 2024 09:59:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5536D137C34
+	for <git@vger.kernel.org>; Tue, 27 Feb 2024 10:04:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709027963; cv=none; b=bUUSr8JlaZtu+a9EoHcNYvaS+xv2E6rG34dVwYxZIu4OlQqLBbNgKK5BuU2tZ4bQjJfpACJDvb4jafFxEYFuSyvzJbOTb0d/qtO8mGExnZmpX4uTvW6p9f9wuMu845Z4GqUbJRgKg3KUTcuHxYGNCoKfOmuGzxDPHZG+yP6kBNY=
+	t=1709028256; cv=none; b=EesZmLGjMPjQxdl5MoP6mkn5DFfHLtlYwrw01tTs8DNnn1AKFnHerKA1a7RJdRpxKLnf9vA33H5I+cxZeNxLq4qhcg+QeQEShRiwo4XHQ6F1vcxA3z+k9Otyex1QWiE2VXnk/jfvmUSOiYM8nQv0vAtUehAy9tDKmUcGmBUiuZk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709027963; c=relaxed/simple;
-	bh=JFwcXqdT/6jLTkHB2xyEf/KTMyH3URDcHkVFf1RAf3I=;
+	s=arc-20240116; t=1709028256; c=relaxed/simple;
+	bh=lwiXxhIA2L1eaLcgg2K0/qpZdJUiyzuF84Tf0hoFXRg=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=V4cFfYZX5iEvQ0Wxx/OXeeeoMrBdFuY7Lcj/AsNx4P2RH3nzMyWs/bjE+O2lLYJXn3ePtQp5YHqepmZ+ubYJ74e+IFByYnh8JjZnFZHHr2M+ubUwSgqTjif8Ew53oAYvarwKsLJDjZcRRiJo007Q3H2DG1ZeQ/QFTDM5xB+hEKQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=FMkw45WS; arc=none smtp.client-ip=209.85.218.41
+	 To:Content-Type; b=VdL3qonj2EA5Eq4iwGi5l1nBfIVGcIpDZcnqePeQ/DgI7/7RGOmV9JHdKk0g5UBUqhEp7yz91jIH+tnN8H0BnVUokop17Lz1/JS9pOmQw0IuHPLisc9POCDNdgwP8u1y45EaBGlwp1I7Sm7Ryefd/uJ6skaPq5fueXjT/jCwQwY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=k0wcJ9rT; arc=none smtp.client-ip=209.85.208.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FMkw45WS"
-Received: by mail-ej1-f41.google.com with SMTP id a640c23a62f3a-a4396b785b8so114151466b.3
-        for <git@vger.kernel.org>; Tue, 27 Feb 2024 01:59:21 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="k0wcJ9rT"
+Received: by mail-ed1-f47.google.com with SMTP id 4fb4d7f45d1cf-563f675be29so4284908a12.0
+        for <git@vger.kernel.org>; Tue, 27 Feb 2024 02:04:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1709027960; x=1709632760; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+        d=gmail.com; s=20230601; t=1709028253; x=1709633053; darn=vger.kernel.org;
+        h=content-transfer-encoding:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=JFwcXqdT/6jLTkHB2xyEf/KTMyH3URDcHkVFf1RAf3I=;
-        b=FMkw45WS1e7MkCWmk5Wy6eAiU6j26AXQEQIHg/m9Kr4s6TuzYz8OGd5hfy32/brMkb
-         r+p4836DLRawt6S7AancYE1VcNEOsuyOu0B5tDTA/LGe6RyxnPsel6pOWCllyKzKRe8/
-         RefOOMaOuRu1NT6AGsBY1D+k11VKxvZUYKW0FK7UCvr5Xce2ejmu0EgxrcWdu7HHoola
-         cdixaTBSIJ66ynsluHM8VGGQ4qz0ljIw1Q8DCuZb0/2RECazKMt925Mi9gCMLbP+n08y
-         QTm4PY7JA8fsxWXgJCEWXt3UR+/mVf2mOjLlj0pDD3SNPgYf5vh5wx/8Pa6Q4WhoP1Sl
-         /1Ng==
+        bh=WOQxWKHUkN0MFc6siHoAIh1RABW4GZ5oUcNq4lTiqAg=;
+        b=k0wcJ9rTnBCrSgMSE19haj2owl2O9hQ3TQ98SQFrLt+GgN2jJFC2eDuRmJRRPz18No
+         3eFyndVA6GfpFqJ1Mz9J2fUZYQE3ZsKEaOhWWUxaIjPc1lMmcXLMJBSCe2eU4/Pm4sGu
+         wrKCywVVhz+RYvBziRVT26o/kPV8B1VSG84nE1YWnbjyJwMfgqnZNNcyr7SgAygnnWa+
+         rL3zubZr9JUmu+ZAR/gwk4ExKpvE6JM8vUab7F/uOe/cQocnTj1OjEwSdDypfcO0hpCV
+         70+Vzz/VzpoXpF7aiFR/woNC3dRu8213yCn+FQOyGzG3iHLYlV9ak9rJ2Ec/FxUWiIPB
+         4Dmw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1709027960; x=1709632760;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+        d=1e100.net; s=20230601; t=1709028253; x=1709633053;
+        h=content-transfer-encoding:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=JFwcXqdT/6jLTkHB2xyEf/KTMyH3URDcHkVFf1RAf3I=;
-        b=kkvKERk2HAma14ugSKIvQnJlZ2KjpXdSzq8hG75SnfM4FNNetWDS1XmMfAxT6UDFXh
-         Ko3p5MI2eL5hnlRYmMllvUsfZZ4wgZQdWW8DlNprun8elMaOje/F1Dfa4hUDmERl5Ik3
-         aa+8GKkMDpi0lmUbSo3spM/ixy0uZXEi+8I/e/Q/n/SMlZdJP6ML5sS6VyqVpWBqbNBZ
-         o9VURkBedp5tcmfpnpONNhEcVYzMs8Wy8pQwh4jODtWfaGoyPZwlpDBoiL1RUYTc6qv1
-         RB+kQmo5yQs5YyE43SjKmv6b1vGFzQgve1yyBSKhiwhIPsYCLmEpP3RY9QmNsn47MPob
-         /9nw==
-X-Gm-Message-State: AOJu0Yy17k3jvhOQmZ1V0ItRRrYlfwuXrm1u45GjUHu0IgvAe1Rgmvp0
-	V0Asfv63f8BQTfYLsmjtCUHQnxbO2tCno7wWHmfzmOAls/OJNlUuvnwMMBz67EGIw5glaCfJteb
-	iu8AwZX/PXzSCMiOqMD+kiWkIhXKk6UPLgMY=
-X-Google-Smtp-Source: AGHT+IE3Oy0f6aIZonLTZc9zp0UNKW3DzAd+SYu5101yW95X8Yv3wZ5HaS+aE/HFMEKDOubJqsbQ8E8RAllZL1ERIVk=
-X-Received: by 2002:a17:906:3811:b0:a3f:2ffd:c68b with SMTP id
- v17-20020a170906381100b00a3f2ffdc68bmr7069954ejc.6.1709027960193; Tue, 27 Feb
- 2024 01:59:20 -0800 (PST)
+        bh=WOQxWKHUkN0MFc6siHoAIh1RABW4GZ5oUcNq4lTiqAg=;
+        b=FelnxoMf5T0NvUU8O53fRurMp0YURc+H7r78fuouMQqme5JrrnUHCCO2E9ByFIwf3q
+         wRroOKuhuxKBxgBmLrgiSKUcZEstYxr2CAtv08Ako9Y92+ShLdKsolFjjAkacYatcUzJ
+         MRBvgNJ+6Jn5KtSDGFdkaThh7Q0UfQ8ZyVUc76uPqXHiUf/urBozM09Xtn9Ku58qnNvI
+         vk2MLToF+Le1FAjWG/ZeFm7z/RTsLBsNE4SYBLbJBEcZ24PFAxtwaitWk/lVBLwCyW6G
+         j42nC/8O2LWgXvQs9VjAwQQu3i9wTF0chKRlMZVeQB6w+PVwxRSOME8Bb+HpwFg4nUMo
+         Vdmw==
+X-Forwarded-Encrypted: i=1; AJvYcCW7auW0X6Q8uGYH4fmxABVif4tjwoPWCetLmXoUIOH+PWLR9pnGQA1/B3oYrsFSAXBYu3Rz0BkpTFPEkNXUpBEaQ0ED
+X-Gm-Message-State: AOJu0YyfknGGR4oeOJelkn3w5kSBigUFAVSrhiGbOx4S/y297TV2ddGd
+	FV0dd/gQnSoNBoENJ2NfN8GvqPMndQDGLGIL7yetnk0G9KrcQk8+KUviRxNpgU0nufxjjA1KWT+
+	fk2N90wBTIvRUZdbQLqPnZQDduaiKu4IfRfE=
+X-Google-Smtp-Source: AGHT+IFUz2VdQNvB9Hb/QeSxpZm0AJUaBAmi/HmHM3LhH2UBi+34//Ci/7qQDlxlI+1FBJNwDgwELsl/1apKZ4+8BHk=
+X-Received: by 2002:a17:906:57c8:b0:a43:7c1b:3542 with SMTP id
+ u8-20020a17090657c800b00a437c1b3542mr2357901ejr.73.1709028252400; Tue, 27 Feb
+ 2024 02:04:12 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240223193257.9222-1-shyamthakkar001@gmail.com>
- <CAP8UFD088GRkVQWjrBFk04_HFfiEk64Saxm2toYsci36oHgkdA@mail.gmail.com> <CZF8YROS9RVC.9H2EKYCF08VK@gmail.com>
-In-Reply-To: <CZF8YROS9RVC.9H2EKYCF08VK@gmail.com>
+References: <20240225112722.89221-1-l.s.r@web.de> <20240225112722.89221-4-l.s.r@web.de>
+ <CAP8UFD0Wi3ot-t0Q7ruMauwj4zkMfd89Xr9SmxYa4eQ3=2VKOw@mail.gmail.com>
+ <d96aaf45-f073-42d0-b69c-703393634848@web.de> <ZdzfYPim2SP22eeS@google.com>
+In-Reply-To: <ZdzfYPim2SP22eeS@google.com>
 From: Christian Couder <christian.couder@gmail.com>
-Date: Tue, 27 Feb 2024 10:59:06 +0100
-Message-ID: <CAP8UFD0yOXPyTvRCXxhoWXASW+HP230jVMCDzipg5PLAyVXJUA@mail.gmail.com>
-Subject: Re: [PATCH] unit-tests: convert t/helper/test-oid-array.c to unit-tests
-To: Ghanshyam Thakkar <shyamthakkar001@gmail.com>
-Cc: git@vger.kernel.org
+Date: Tue, 27 Feb 2024 11:04:00 +0100
+Message-ID: <CAP8UFD2t1KRo01eenK_RVndyVx5Vp9F4FepTgnR+mwhTGTvXnw@mail.gmail.com>
+Subject: Re: [PATCH 3/3] t-ctype: do one test per class and char
+To: Josh Steadmon <steadmon@google.com>, =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>, 
+	Christian Couder <christian.couder@gmail.com>, git@vger.kernel.org, 
+	Phillip Wood <phillip.wood123@gmail.com>, Achu Luma <ach.lumap@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Mon, Feb 26, 2024 at 8:11=E2=80=AFPM Ghanshyam Thakkar
-<shyamthakkar001@gmail.com> wrote:
+On Mon, Feb 26, 2024 at 7:58=E2=80=AFPM Josh Steadmon <steadmon@google.com>=
+ wrote:
 >
-> On Mon Feb 26, 2024 at 8:41 PM IST, Christian Couder wrote:
+> On 2024.02.26 18:26, Ren=C3=A9 Scharfe wrote:
 
-> > So I think it would be better to work on other things instead, like
-> > perhaps reviewing other people's work or working on other bug fixes or
-> > features. Anyway now that this is on the mailing list, I might as well
-> > review it as it could help with your application. But please consider
-> > working on other things.
->
-> I understand and will work on other things.
-
-Thanks!
-
-> > > In unit testing however, we do not
-> > > need to initialize the repo. We can set the length of the hexadecimal
-> > > strbuf according to the algorithm used directly.
+> > The output is clean as well, but there's a lot of it.  Perhaps too much=
+.
+> > The success messages are boring, though, and if all checks pass then th=
+e
+> > only useful information is the status code.  A TAP harness like prove
+> > summarizes that nicely:
 > >
-> > So is your patch doing that or not? It might be better to be explicit.
-> > Also if 'strbuf's are used, then is it really worth it to set their
-> > length in advance, instead of just letting them grow to the right
-> > length as we add hex to them?
+> >    $ prove t/unit-tests/bin/t-ctype
+> >    t/unit-tests/bin/t-ctype .. ok
+> >    All tests successful.
+> >    Files=3D1, Tests=3D3598,  0 wallclock secs ( 0.08 usr +  0.00 sys =
+=3D  0.08 CPU)
+> >    Result: PASS
+> >
+> > Filtering out passing checks e.g. with "| grep -v ^ok" would help when
+> > debugging a test failure. I vaguely miss the --immediate switch from th=
+e
+> > regular test library, however.
 >
-> I thought of it like this: If we were to just let them grow, then we
-> would need separate logic for reusing that strbuf or use a different
-> one everytime since it always grows. By separating allocation
-> (hex_strbuf_init) and manipulation (fill_hex_strbuf), that same strbuf
-> can be reused for different hex values.
->
-> But, none of the test currently need to reuse the same strbuf, so I
-> suppose it is better to just let it grow and even if the need arises we
-> can use strbuf_splice().
+> Yeah, I agree here. It's a lot of output but it's almost always going to
+> be consumed by a test harness rather than a human, and it's easy to
+> filter out the noise if someone does need to do some manual debugging.
 
-It's not a problem to use a new strbuf for each different hex value.
-Tests don't need a lot of performance as they are used mostly by
-developers, not by everyone using Git. Also if you want to reuse a
-strbuf, you can just use strbuf_reset() on it and then reuse it.
+Yeah, I know about TAP harnesses like prove, but the most
+straightforward way to run the unit tests is still `make unit-tests`
+in the t/ directory. Also when you add or change some tests, it's a
+good idea to run `make unit-tests` to see what the output is, so you
+still have to see that output quite often when you work on tests and
+going through 3598 of mostly useless output instead of just 14 isn't
+nice.
