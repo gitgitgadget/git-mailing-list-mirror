@@ -1,64 +1,64 @@
-Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
+Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50B0013B2B4
-	for <git@vger.kernel.org>; Tue, 27 Feb 2024 13:28:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 645B113DBA4
+	for <git@vger.kernel.org>; Tue, 27 Feb 2024 13:28:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709040509; cv=none; b=h8ZetrIA99iDje+5+xcpfgYEGqmXqaWMlajhq358lR+TZJlddCLfUJDJkHHFdsM18V9XzV+OH3uwLmnvyn0QDRHzQubrR7yObFOyYt6jkcWUoPyr1tS3K0xosKqAIczf7CiMv4VMk+5udnLbRugdDj4ogAh7LrEvf1kMWYbDOfU=
+	t=1709040510; cv=none; b=Jj+Mw7bVYf29r7KrHydMxx2yt4gAtt8la1OHPL5jFFHgjdgb7+Nr96nAAE5XD22KXS5GAIPvHnThMgSPr8DPgF2YpAyasYKKtoFN5GibSuiC36lz8ZbTctBr0Z3gYw2OcNr25YUgjBf3FAZKF0uY/KqdK06bauHPPUzsL/qkiFk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709040509; c=relaxed/simple;
-	bh=vXE57pDk8M69L2XGEl/tCkoyxKi7Kf/uknYfneuYc5g=;
+	s=arc-20240116; t=1709040510; c=relaxed/simple;
+	bh=PUvI8mflEWOq2BwZiRa/nQDGYx9iFMV5Pd34ga33pGg=;
 	h=Message-ID:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=XGj06BOjcXNLhnM24Cldu7p9YlsEdrtuErmHAbvzKZzo2HNPNIaDV1N+vLf21+7n7lNnbQosdzv6qptr9+4MNK/KVPPvu6U7gFNu9hi8Z9jeKdiGsJSFzNLWi6vCZ+IwPnQXQ3Tgj5La+6JVUDjvuCVaq1Tlhyf78pgGeFt2R1M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ESysz0cm; arc=none smtp.client-ip=209.85.128.47
+	 MIME-Version:To:Cc; b=GUTfNPbAETfxb4iMdpPihxEYDuFNVbMRQB4vINZ+CccMy9BVpu/G75v18WOkemiKDkctEDUU55/p/gwZarlcQiiHkOrefZbZ3wLdE1WZDmTjDZM5YI8lmLbCN/GT8MaFtVffozvyZmmjYsuQbyNadqYiREYLTP7RYW26XvyHC2Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VE7U0P9l; arc=none smtp.client-ip=209.85.128.51
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ESysz0cm"
-Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-412a3ebad2aso17344305e9.1
-        for <git@vger.kernel.org>; Tue, 27 Feb 2024 05:28:26 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VE7U0P9l"
+Received: by mail-wm1-f51.google.com with SMTP id 5b1f17b1804b1-412a9457b2eso9126625e9.1
+        for <git@vger.kernel.org>; Tue, 27 Feb 2024 05:28:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1709040504; x=1709645304; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1709040506; x=1709645306; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=TAaq5IldZBAjC8wZRYEnJr7vZQ9Gqj/HdJtn6SyaIN8=;
-        b=ESysz0cmTHRLwWnj4XsmkPwe5/A0isrjKeZoHUEyhDoiC64+GhcjPwyIiOsflQ0F0B
-         GXe0f9wSqGeijVmxz78ocUoM9IBAM/+MsO6f8KhMZ7qu+y8zclGv3AKncRy89bMbSL/w
-         6p8VCLmUbMTjIcPKnAlwTj/g6Ny4SIOGL9BiURJ8/tkd4CRRLBnWv8YoU8prpkIe3c+4
-         jFgkJaeQ732adN7gjsc/dgFTSijUhrS7NEFmOFu7gQsexuL6qOkNCv+RfhHapuY8facY
-         Nvj8YN7gN1DNPaq1PiycdkR6YS2HX0P90rLJg0ZPbyQR8P6ZpIKRfdsI7pVfJgpYfMPf
-         qTTQ==
+        bh=ls2gfG7/KzRPf3br5sgCg2MiCtFeXyjXvkeYAyegKIQ=;
+        b=VE7U0P9l7DB52gUl3oUAxzi7mh0VN4qaTYp+JQ3qldoMbim8CbzZwFuS1I06IlBF+R
+         fIaSqgHUFvDRQpE/ZAZ889iEHcM9OvaCDfX8QB2ZcojGykoDTXeFYsPWNpDSg01GtZNy
+         9gSWghwux3+sy4f1Hf3Ld8+cbdo77LY0LafP6FPre2ez9+Tx2aCQU4sCEvNEaTRq0+OO
+         ydwLR7494Zh6sI+5Opkuu9d7Kwz9bdzCwN97Eo1W0xWSj3yBehqRzO2DGlBBa12ef1G7
+         4CEOb4vDrHNxAM6S3hoiyL3k9DNLNtw5P4Zw5QJlENKPZFhRQGg+nxacHX0XeqNQwc0d
+         BIuQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1709040504; x=1709645304;
+        d=1e100.net; s=20230601; t=1709040506; x=1709645306;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=TAaq5IldZBAjC8wZRYEnJr7vZQ9Gqj/HdJtn6SyaIN8=;
-        b=eQc72/7g2Ln/QW4FAXCCvbi77oTMcKgYnY3lIpEVBN5+F58aeXFrIYdoWsu/MO4khg
-         1cdQ7t7ZdWNwApUldMfa+/TEukwK8GfLYIRLvT1VMv4NCRUK0j/rWHMr2IdM6Yt+goDE
-         NyEbTU65V1yCKKVFofxLNv7Te3zhgSDhePzGBXC9Gp/jQ6jOeqYtqJmubQpQUB/EiFM4
-         38npvisJOkztJX5Wb6O7YwSgBkECu/kcQ+AMIWvOuwpeMBRMK0+pJYQd2/4x12k1C8V9
-         HP/okUI9xJfC/OFPoL4xWBOrljuHod6Bl9pVowy0YehqCMbSy/rIdZ1NsrFPsdSUwUvm
-         kRdg==
-X-Gm-Message-State: AOJu0Yz5bHBhaUY2HG8TKhOGGfaY/7Pi0cPuq4X+6L6JzZNp0N13Lnid
-	8vYoFCMH99QEaFkEy5aN4fQww+2KwGm4v/CF8Eqw3FyBRDLZJkPow8fZ9Jlg
-X-Google-Smtp-Source: AGHT+IE9FVORZwqljdlQkZZZRi7z7dCpTH5B6FZ0ELHHbhjQAHh2wnyzUL/pchTyhw0Nr2GlSN6sUQ==
-X-Received: by 2002:a05:600c:1f82:b0:412:7489:c8c0 with SMTP id je2-20020a05600c1f8200b004127489c8c0mr6774506wmb.34.1709040504224;
-        Tue, 27 Feb 2024 05:28:24 -0800 (PST)
+        bh=ls2gfG7/KzRPf3br5sgCg2MiCtFeXyjXvkeYAyegKIQ=;
+        b=DRbjjaQEnZNllAFnsurCBBAGSa8zxSTogIhoeRgwrGti1SB4N9ScMnPCumd1HDIf6/
+         9WCwXAOeraOl2lW/AFuzys1WXKCrTd1xwQIh7CcphIEpgmxx+lL/DdqnPQSFMcHWSrDa
+         qhuxdtANSNSAc9hmWEO26JUK8sz539mUwofoAvJgMjkRk9iIR9Il3HjtMdFKR5TfVh+n
+         otg9OyHrUfHsrNFv5XrSasjn2WSBKOCVG96Z2MFSCThvUmQXbK+PdqBtyiKINNjNLLNW
+         oci7cQVbXNsQM/7cIQQtSEWJ9kK9gj5Zd4hWpf3t5hL79Wz5sHMNqBazlsyerUFPwOPh
+         e+lA==
+X-Gm-Message-State: AOJu0YyGysFY17HnvGKuRqMg94ZNLmMjBKwSVNhLqcbpMx7xg0ke+06m
+	bDY+49QgZcfDyfcoXBPmcSIge91APsytCcvjAykikeeoTustAx+rKk2mfHlv
+X-Google-Smtp-Source: AGHT+IF+OX9B5Tgy0rNpllNmLyzkd+0Yb7HxTTNq16qM+FPyejsS5r2vPhgEq0DMD1GPuUpIQOnDow==
+X-Received: by 2002:a05:600c:1c1c:b0:412:952f:ca35 with SMTP id j28-20020a05600c1c1c00b00412952fca35mr9176918wms.14.1709040506176;
+        Tue, 27 Feb 2024 05:28:26 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id g14-20020a05600c310e00b00412a3420e71sm7725640wmo.0.2024.02.27.05.28.23
+        by smtp.gmail.com with ESMTPSA id 10-20020a05600c028a00b004122aba0008sm11159483wmk.11.2024.02.27.05.28.25
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 27 Feb 2024 05:28:23 -0800 (PST)
-Message-ID: <0aaa224b5db2e78c1848ab76f5b8b73331fe9cc9.1709040499.git.gitgitgadget@gmail.com>
+        Tue, 27 Feb 2024 05:28:25 -0800 (PST)
+Message-ID: <2ae6a54dd596c3192b5be32f0e4e2605f4aac6bd.1709040499.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1657.v3.git.1709040497.gitgitgadget@gmail.com>
 References: <pull.1657.v2.git.1708608110.gitgitgadget@gmail.com>
 	<pull.1657.v3.git.1709040497.gitgitgadget@gmail.com>
 From: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Tue, 27 Feb 2024 13:28:09 +0000
-Subject: [PATCH v3 03/11] Start reporting missing commits in
- `repo_in_merge_bases_many()`
+Date: Tue, 27 Feb 2024 13:28:12 +0000
+Subject: [PATCH v3 06/11] merge_bases_many(): pass on errors from
+ `paint_down_to_common()`
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -75,533 +75,104 @@ Cc: Patrick Steinhardt <ps@pks.im>,
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-Some functions in Git's source code follow the convention that returning
-a negative value indicates a fatal error, e.g. repository corruption.
+The `paint_down_to_common()` function was just taught to indicate
+parsing errors, and now the `merge_bases_many()` function is aware of
+that, too.
 
-Let's use this convention in `repo_in_merge_bases()` to report when one
-of the specified commits is missing (i.e. when `repo_parse_commit()`
-reports an error).
+One tricky aspect is that `merge_bases_many()` parses commits of its
+own, but wants to gracefully handle the scenario where NULL is passed as
+a merge head, returning the empty list of merge bases. The way this was
+handled involved calling `repo_parse_commit(NULL)` and relying on it to
+return an error. This has to be done differently now so that we can
+handle missing commits correctly by producing a fatal error.
 
-Also adjust the callers of `repo_in_merge_bases()` to handle such
-negative return values.
-
-Note: As of this patch, errors are returned only if any of the specified
-merge heads is missing. Over the course of the next patches, missing
-commits will also be reported by the `paint_down_to_common()` function,
-which is called by `repo_in_merge_bases_many()`, and those errors will
-be properly propagated back to the caller at that stage.
+Next step: adjust the caller of `merge_bases_many()`:
+`get_merge_bases_many_0()`.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- builtin/branch.c       | 12 +++++--
- builtin/fast-import.c  |  6 +++-
- builtin/fetch.c        |  2 ++
- builtin/log.c          |  7 ++--
- builtin/merge-base.c   |  6 +++-
- builtin/pull.c         |  4 +++
- builtin/receive-pack.c |  6 +++-
- commit-reach.c         |  8 +++--
- http-push.c            |  5 ++-
- merge-ort.c            | 81 ++++++++++++++++++++++++++++++++++++------
- merge-recursive.c      | 54 +++++++++++++++++++++++-----
- shallow.c              | 18 ++++++----
- 12 files changed, 173 insertions(+), 36 deletions(-)
+ commit-reach.c | 35 ++++++++++++++++++++++-------------
+ 1 file changed, 22 insertions(+), 13 deletions(-)
 
-diff --git a/builtin/branch.c b/builtin/branch.c
-index e7ee9bd0f15..7f9e79237f3 100644
---- a/builtin/branch.c
-+++ b/builtin/branch.c
-@@ -161,6 +161,8 @@ static int branch_merged(int kind, const char *name,
- 
- 	merged = reference_rev ? repo_in_merge_bases(the_repository, rev,
- 						     reference_rev) : 0;
-+	if (merged < 0)
-+		exit(128);
- 
- 	/*
- 	 * After the safety valve is fully redefined to "check with
-@@ -169,9 +171,13 @@ static int branch_merged(int kind, const char *name,
- 	 * any of the following code, but during the transition period,
- 	 * a gentle reminder is in order.
- 	 */
--	if ((head_rev != reference_rev) &&
--	    (head_rev ? repo_in_merge_bases(the_repository, rev, head_rev) : 0) != merged) {
--		if (merged)
-+	if (head_rev != reference_rev) {
-+		int expect = head_rev ? repo_in_merge_bases(the_repository, rev, head_rev) : 0;
-+		if (expect < 0)
-+			exit(128);
-+		if (expect == merged)
-+			; /* okay */
-+		else if (merged)
- 			warning(_("deleting branch '%s' that has been merged to\n"
- 				"         '%s', but not yet merged to HEAD"),
- 				name, reference_name);
-diff --git a/builtin/fast-import.c b/builtin/fast-import.c
-index 444f41cf8ca..14c2efa88fc 100644
---- a/builtin/fast-import.c
-+++ b/builtin/fast-import.c
-@@ -1625,6 +1625,7 @@ static int update_branch(struct branch *b)
- 		oidclr(&old_oid);
- 	if (!force_update && !is_null_oid(&old_oid)) {
- 		struct commit *old_cmit, *new_cmit;
-+		int ret;
- 
- 		old_cmit = lookup_commit_reference_gently(the_repository,
- 							  &old_oid, 0);
-@@ -1633,7 +1634,10 @@ static int update_branch(struct branch *b)
- 		if (!old_cmit || !new_cmit)
- 			return error("Branch %s is missing commits.", b->name);
- 
--		if (!repo_in_merge_bases(the_repository, old_cmit, new_cmit)) {
-+		ret = repo_in_merge_bases(the_repository, old_cmit, new_cmit);
-+		if (ret < 0)
-+			exit(128);
-+		if (!ret) {
- 			warning("Not updating %s"
- 				" (new tip %s does not contain %s)",
- 				b->name, oid_to_hex(&b->oid),
-diff --git a/builtin/fetch.c b/builtin/fetch.c
-index fd134ba74d9..0584a1f8b64 100644
---- a/builtin/fetch.c
-+++ b/builtin/fetch.c
-@@ -978,6 +978,8 @@ static int update_local_ref(struct ref *ref,
- 		uint64_t t_before = getnanotime();
- 		fast_forward = repo_in_merge_bases(the_repository, current,
- 						   updated);
-+		if (fast_forward < 0)
-+			exit(128);
- 		forced_updates_ms += (getnanotime() - t_before) / 1000000;
- 	} else {
- 		fast_forward = 1;
-diff --git a/builtin/log.c b/builtin/log.c
-index ba775d7b5cf..1705da71aca 100644
---- a/builtin/log.c
-+++ b/builtin/log.c
-@@ -1623,7 +1623,7 @@ static struct commit *get_base_commit(const char *base_commit,
- {
- 	struct commit *base = NULL;
- 	struct commit **rev;
--	int i = 0, rev_nr = 0, auto_select, die_on_failure;
-+	int i = 0, rev_nr = 0, auto_select, die_on_failure, ret;
- 
- 	switch (auto_base) {
- 	case AUTO_BASE_NEVER:
-@@ -1723,7 +1723,10 @@ static struct commit *get_base_commit(const char *base_commit,
- 		rev_nr = DIV_ROUND_UP(rev_nr, 2);
- 	}
- 
--	if (!repo_in_merge_bases(the_repository, base, rev[0])) {
-+	ret = repo_in_merge_bases(the_repository, base, rev[0]);
-+	if (ret < 0)
-+		exit(128);
-+	if (!ret) {
- 		if (die_on_failure) {
- 			die(_("base commit should be the ancestor of revision list"));
- 		} else {
-diff --git a/builtin/merge-base.c b/builtin/merge-base.c
-index e68b7fe45d7..0308fd73289 100644
---- a/builtin/merge-base.c
-+++ b/builtin/merge-base.c
-@@ -103,12 +103,16 @@ static int handle_octopus(int count, const char **args, int show_all)
- static int handle_is_ancestor(int argc, const char **argv)
- {
- 	struct commit *one, *two;
-+	int ret;
- 
- 	if (argc != 2)
- 		die("--is-ancestor takes exactly two commits");
- 	one = get_commit_reference(argv[0]);
- 	two = get_commit_reference(argv[1]);
--	if (repo_in_merge_bases(the_repository, one, two))
-+	ret = repo_in_merge_bases(the_repository, one, two);
-+	if (ret < 0)
-+		exit(128);
-+	if (ret)
- 		return 0;
- 	else
- 		return 1;
-diff --git a/builtin/pull.c b/builtin/pull.c
-index be2b2c9ebc9..e6f2942c0c5 100644
---- a/builtin/pull.c
-+++ b/builtin/pull.c
-@@ -931,6 +931,8 @@ static int get_can_ff(struct object_id *orig_head,
- 	merge_head = lookup_commit_reference(the_repository, orig_merge_head);
- 	ret = repo_is_descendant_of(the_repository, merge_head, list);
- 	free_commit_list(list);
-+	if (ret < 0)
-+		exit(128);
- 	return ret;
- }
- 
-@@ -955,6 +957,8 @@ static int already_up_to_date(struct object_id *orig_head,
- 		commit_list_insert(theirs, &list);
- 		ok = repo_is_descendant_of(the_repository, ours, list);
- 		free_commit_list(list);
-+		if (ok < 0)
-+			exit(128);
- 		if (!ok)
- 			return 0;
- 	}
-diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
-index 8c4f0cb90a9..956fea6293e 100644
---- a/builtin/receive-pack.c
-+++ b/builtin/receive-pack.c
-@@ -1546,6 +1546,7 @@ static const char *update(struct command *cmd, struct shallow_info *si)
- 	    starts_with(name, "refs/heads/")) {
- 		struct object *old_object, *new_object;
- 		struct commit *old_commit, *new_commit;
-+		int ret2;
- 
- 		old_object = parse_object(the_repository, old_oid);
- 		new_object = parse_object(the_repository, new_oid);
-@@ -1559,7 +1560,10 @@ static const char *update(struct command *cmd, struct shallow_info *si)
- 		}
- 		old_commit = (struct commit *)old_object;
- 		new_commit = (struct commit *)new_object;
--		if (!repo_in_merge_bases(the_repository, old_commit, new_commit)) {
-+		ret2 = repo_in_merge_bases(the_repository, old_commit, new_commit);
-+		if (ret2 < 0)
-+			exit(128);
-+		if (!ret2) {
- 			rp_error("denying non-fast-forward %s"
- 				 " (you should pull first)", name);
- 			ret = "non-fast-forward";
 diff --git a/commit-reach.c b/commit-reach.c
-index 5c1b5256598..5ff71d72d51 100644
+index 9148a7dcbc0..2c74583c8e0 100644
 --- a/commit-reach.c
 +++ b/commit-reach.c
-@@ -464,11 +464,13 @@ int repo_is_descendant_of(struct repository *r,
- 	} else {
- 		while (with_commit) {
- 			struct commit *other;
-+			int ret;
- 
- 			other = with_commit->item;
- 			with_commit = with_commit->next;
--			if (repo_in_merge_bases_many(r, other, 1, &commit, 0))
--				return 1;
-+			ret = repo_in_merge_bases_many(r, other, 1, &commit, 0);
-+			if (ret)
-+				return ret;
- 		}
- 		return 0;
- 	}
-@@ -598,6 +600,8 @@ int ref_newer(const struct object_id *new_oid, const struct object_id *old_oid)
- 	commit_list_insert(old_commit, &old_commit_list);
- 	ret = repo_is_descendant_of(the_repository,
- 				    new_commit, old_commit_list);
-+	if (ret < 0)
-+		exit(128);
- 	free_commit_list(old_commit_list);
- 	return ret;
- }
-diff --git a/http-push.c b/http-push.c
-index a704f490fdb..24c16a4f5ff 100644
---- a/http-push.c
-+++ b/http-push.c
-@@ -1576,8 +1576,11 @@ static int verify_merge_base(struct object_id *head_oid, struct ref *remote)
- 	struct commit *head = lookup_commit_or_die(head_oid, "HEAD");
- 	struct commit *branch = lookup_commit_or_die(&remote->old_oid,
- 						     remote->name);
-+	int ret = repo_in_merge_bases(the_repository, branch, head);
- 
--	return repo_in_merge_bases(the_repository, branch, head);
-+	if (ret < 0)
-+		exit(128);
-+	return ret;
+@@ -131,41 +131,49 @@ static int paint_down_to_common(struct repository *r,
+ 	return 0;
  }
  
- static int delete_remote_branch(const char *pattern, int force)
-diff --git a/merge-ort.c b/merge-ort.c
-index 6491070d965..9f3af46333a 100644
---- a/merge-ort.c
-+++ b/merge-ort.c
-@@ -544,6 +544,7 @@ enum conflict_and_info_types {
- 	CONFLICT_SUBMODULE_HISTORY_NOT_AVAILABLE,
- 	CONFLICT_SUBMODULE_MAY_HAVE_REWINDS,
- 	CONFLICT_SUBMODULE_NULL_MERGE_BASE,
-+	CONFLICT_SUBMODULE_CORRUPT,
- 
- 	/* Keep this entry _last_ in the list */
- 	NB_CONFLICT_TYPES,
-@@ -596,7 +597,9 @@ static const char *type_short_descriptions[] = {
- 	[CONFLICT_SUBMODULE_MAY_HAVE_REWINDS] =
- 		"CONFLICT (submodule may have rewinds)",
- 	[CONFLICT_SUBMODULE_NULL_MERGE_BASE] =
--		"CONFLICT (submodule lacks merge base)"
-+		"CONFLICT (submodule lacks merge base)",
-+	[CONFLICT_SUBMODULE_CORRUPT] =
-+		"CONFLICT (submodule corrupt)"
- };
- 
- struct logical_conflict_info {
-@@ -1710,7 +1713,14 @@ static int find_first_merges(struct repository *repo,
- 		die("revision walk setup failed");
- 	while ((commit = get_revision(&revs)) != NULL) {
- 		struct object *o = &(commit->object);
--		if (repo_in_merge_bases(repo, b, commit))
-+		int ret = repo_in_merge_bases(repo, b, commit);
-+
-+		if (ret < 0) {
-+			object_array_clear(&merges);
-+			release_revisions(&revs);
-+			return ret;
-+		}
-+		if (ret > 0)
- 			add_object_array(o, NULL, &merges);
- 	}
- 	reset_revision_walk();
-@@ -1725,9 +1735,17 @@ static int find_first_merges(struct repository *repo,
- 		contains_another = 0;
- 		for (j = 0; j < merges.nr; j++) {
- 			struct commit *m2 = (struct commit *) merges.objects[j].item;
--			if (i != j && repo_in_merge_bases(repo, m2, m1)) {
--				contains_another = 1;
--				break;
-+			if (i != j) {
-+				int ret = repo_in_merge_bases(repo, m2, m1);
-+				if (ret < 0) {
-+					object_array_clear(&merges);
-+					release_revisions(&revs);
-+					return ret;
-+				}
-+				if (ret > 0) {
-+					contains_another = 1;
-+					break;
-+				}
- 			}
- 		}
- 
-@@ -1749,7 +1767,7 @@ static int merge_submodule(struct merge_options *opt,
+-static struct commit_list *merge_bases_many(struct repository *r,
+-					    struct commit *one, int n,
+-					    struct commit **twos)
++static int merge_bases_many(struct repository *r,
++			    struct commit *one, int n,
++			    struct commit **twos,
++			    struct commit_list **result)
  {
- 	struct repository subrepo;
- 	struct strbuf sb = STRBUF_INIT;
--	int ret = 0;
-+	int ret = 0, ret2;
- 	struct commit *commit_o, *commit_a, *commit_b;
- 	int parent_count;
- 	struct object_array merges;
-@@ -1796,8 +1814,26 @@ static int merge_submodule(struct merge_options *opt,
- 	}
+ 	struct commit_list *list = NULL;
+-	struct commit_list *result = NULL;
+ 	int i;
  
- 	/* check whether both changes are forward */
--	if (!repo_in_merge_bases(&subrepo, commit_o, commit_a) ||
--	    !repo_in_merge_bases(&subrepo, commit_o, commit_b)) {
-+	ret2 = repo_in_merge_bases(&subrepo, commit_o, commit_a);
-+	if (ret2 < 0) {
-+		path_msg(opt, CONFLICT_SUBMODULE_CORRUPT, 0,
-+			 path, NULL, NULL, NULL,
-+			 _("Failed to merge submodule %s "
-+			   "(repository corrupt)"),
-+			 path);
-+		goto cleanup;
-+	}
-+	if (ret2 > 0)
-+		ret2 = repo_in_merge_bases(&subrepo, commit_o, commit_b);
-+	if (ret2 < 0) {
-+		path_msg(opt, CONFLICT_SUBMODULE_CORRUPT, 0,
-+			 path, NULL, NULL, NULL,
-+			 _("Failed to merge submodule %s "
-+			   "(repository corrupt)"),
-+			 path);
-+		goto cleanup;
-+	}
-+	if (!ret2) {
- 		path_msg(opt, CONFLICT_SUBMODULE_MAY_HAVE_REWINDS, 0,
- 			 path, NULL, NULL, NULL,
- 			 _("Failed to merge submodule %s "
-@@ -1807,7 +1843,16 @@ static int merge_submodule(struct merge_options *opt,
- 	}
- 
- 	/* Case #1: a is contained in b or vice versa */
--	if (repo_in_merge_bases(&subrepo, commit_a, commit_b)) {
-+	ret2 = repo_in_merge_bases(&subrepo, commit_a, commit_b);
-+	if (ret2 < 0) {
-+		path_msg(opt, CONFLICT_SUBMODULE_CORRUPT, 0,
-+			 path, NULL, NULL, NULL,
-+			 _("Failed to merge submodule %s "
-+			   "(repository corrupt)"),
-+			 path);
-+		goto cleanup;
-+	}
-+	if (ret2 > 0) {
- 		oidcpy(result, b);
- 		path_msg(opt, INFO_SUBMODULE_FAST_FORWARDING, 1,
- 			 path, NULL, NULL, NULL,
-@@ -1816,7 +1861,16 @@ static int merge_submodule(struct merge_options *opt,
- 		ret = 1;
- 		goto cleanup;
- 	}
--	if (repo_in_merge_bases(&subrepo, commit_b, commit_a)) {
-+	ret2 = repo_in_merge_bases(&subrepo, commit_b, commit_a);
-+	if (ret2 < 0) {
-+		path_msg(opt, CONFLICT_SUBMODULE_CORRUPT, 0,
-+			 path, NULL, NULL, NULL,
-+			 _("Failed to merge submodule %s "
-+			   "(repository corrupt)"),
-+			 path);
-+		goto cleanup;
-+	}
-+	if (ret2 > 0) {
- 		oidcpy(result, a);
- 		path_msg(opt, INFO_SUBMODULE_FAST_FORWARDING, 1,
- 			 path, NULL, NULL, NULL,
-@@ -1841,6 +1895,13 @@ static int merge_submodule(struct merge_options *opt,
- 	parent_count = find_first_merges(&subrepo, path, commit_a, commit_b,
- 					 &merges);
- 	switch (parent_count) {
-+	case -1:
-+		path_msg(opt, CONFLICT_SUBMODULE_CORRUPT, 0,
-+			 path, NULL, NULL, NULL,
-+			 _("Failed to merge submodule %s "
-+			   "(repository corrupt)"),
-+			 path);
-+		break;
- 	case 0:
- 		path_msg(opt, CONFLICT_SUBMODULE_FAILED_TO_MERGE, 0,
- 			 path, NULL, NULL, NULL,
-diff --git a/merge-recursive.c b/merge-recursive.c
-index e3beb0801b1..0d931cc14ad 100644
---- a/merge-recursive.c
-+++ b/merge-recursive.c
-@@ -1144,7 +1144,13 @@ static int find_first_merges(struct repository *repo,
- 		die("revision walk setup failed");
- 	while ((commit = get_revision(&revs)) != NULL) {
- 		struct object *o = &(commit->object);
--		if (repo_in_merge_bases(repo, b, commit))
-+		int ret = repo_in_merge_bases(repo, b, commit);
-+		if (ret < 0) {
-+			object_array_clear(&merges);
-+			release_revisions(&revs);
-+			return ret;
+ 	for (i = 0; i < n; i++) {
+-		if (one == twos[i])
++		if (one == twos[i]) {
+ 			/*
+ 			 * We do not mark this even with RESULT so we do not
+ 			 * have to clean it up.
+ 			 */
+-			return commit_list_insert(one, &result);
++			*result = commit_list_insert(one, result);
++			return 0;
 +		}
-+		if (ret)
- 			add_object_array(o, NULL, &merges);
  	}
- 	reset_revision_walk();
-@@ -1159,9 +1165,17 @@ static int find_first_merges(struct repository *repo,
- 		contains_another = 0;
- 		for (j = 0; j < merges.nr; j++) {
- 			struct commit *m2 = (struct commit *) merges.objects[j].item;
--			if (i != j && repo_in_merge_bases(repo, m2, m1)) {
--				contains_another = 1;
--				break;
-+			if (i != j) {
-+				int ret = repo_in_merge_bases(repo, m2, m1);
-+				if (ret < 0) {
-+					object_array_clear(&merges);
-+					release_revisions(&revs);
-+					return ret;
-+				}
-+				if (ret > 0) {
-+					contains_another = 1;
-+					break;
-+				}
- 			}
- 		}
  
-@@ -1197,7 +1211,7 @@ static int merge_submodule(struct merge_options *opt,
- 			   const struct object_id *b)
++	if (!one)
++		return 0;
+ 	if (repo_parse_commit(r, one))
+-		return NULL;
++		return error(_("could not parse commit %s"),
++			     oid_to_hex(&one->object.oid));
+ 	for (i = 0; i < n; i++) {
++		if (!twos[i])
++			return 0;
+ 		if (repo_parse_commit(r, twos[i]))
+-			return NULL;
++			return error(_("could not parse commit %s"),
++				     oid_to_hex(&twos[i]->object.oid));
+ 	}
+ 
+ 	if (paint_down_to_common(r, one, n, twos, 0, 0, &list) < 0) {
+ 		free_commit_list(list);
+-		return NULL;
++		return -1;
+ 	}
+ 
+ 	while (list) {
+ 		struct commit *commit = pop_commit(&list);
+ 		if (!(commit->object.flags & STALE))
+-			commit_list_insert_by_date(commit, &result);
++			commit_list_insert_by_date(commit, result);
+ 	}
+-	return result;
++	return 0;
+ }
+ 
+ struct commit_list *get_octopus_merge_bases(struct commit_list *in)
+@@ -410,10 +418,11 @@ static struct commit_list *get_merge_bases_many_0(struct repository *r,
  {
- 	struct repository subrepo;
--	int ret = 0;
-+	int ret = 0, ret2;
- 	struct commit *commit_base, *commit_a, *commit_b;
- 	int parent_count;
- 	struct object_array merges;
-@@ -1234,14 +1248,29 @@ static int merge_submodule(struct merge_options *opt,
- 	}
+ 	struct commit_list *list;
+ 	struct commit **rslt;
+-	struct commit_list *result;
++	struct commit_list *result = NULL;
+ 	int cnt, i;
  
- 	/* check whether both changes are forward */
--	if (!repo_in_merge_bases(&subrepo, commit_base, commit_a) ||
--	    !repo_in_merge_bases(&subrepo, commit_base, commit_b)) {
-+	ret2 = repo_in_merge_bases(&subrepo, commit_base, commit_a);
-+	if (ret2 < 0) {
-+		output(opt, 1, _("Failed to merge submodule %s (repository corrupt)"), path);
-+		goto cleanup;
-+	}
-+	if (ret2 > 0)
-+		ret2 = repo_in_merge_bases(&subrepo, commit_base, commit_b);
-+	if (ret2 < 0) {
-+		output(opt, 1, _("Failed to merge submodule %s (repository corrupt)"), path);
-+		goto cleanup;
-+	}
-+	if (!ret2) {
- 		output(opt, 1, _("Failed to merge submodule %s (commits don't follow merge-base)"), path);
- 		goto cleanup;
- 	}
- 
- 	/* Case #1: a is contained in b or vice versa */
--	if (repo_in_merge_bases(&subrepo, commit_a, commit_b)) {
-+	ret2 = repo_in_merge_bases(&subrepo, commit_a, commit_b);
-+	if (ret2 < 0) {
-+		output(opt, 1, _("Failed to merge submodule %s (repository corrupt)"), path);
-+		goto cleanup;
-+	}
-+	if (ret2) {
- 		oidcpy(result, b);
- 		if (show(opt, 3)) {
- 			output(opt, 3, _("Fast-forwarding submodule %s to the following commit:"), path);
-@@ -1254,7 +1283,12 @@ static int merge_submodule(struct merge_options *opt,
- 		ret = 1;
- 		goto cleanup;
- 	}
--	if (repo_in_merge_bases(&subrepo, commit_b, commit_a)) {
-+	ret2 = repo_in_merge_bases(&subrepo, commit_b, commit_a);
-+	if (ret2 < 0) {
-+		output(opt, 1, _("Failed to merge submodule %s (repository corrupt)"), path);
-+		goto cleanup;
-+	}
-+	if (ret2) {
- 		oidcpy(result, a);
- 		if (show(opt, 3)) {
- 			output(opt, 3, _("Fast-forwarding submodule %s to the following commit:"), path);
-@@ -1402,6 +1436,8 @@ static int merge_mode_and_contents(struct merge_options *opt,
- 							&o->oid,
- 							&a->oid,
- 							&b->oid);
-+			if (result->clean < 0)
-+				return -1;
- 		} else if (S_ISLNK(a->mode)) {
- 			switch (opt->recursive_variant) {
- 			case MERGE_VARIANT_NORMAL:
-diff --git a/shallow.c b/shallow.c
-index dfcc1f86a7f..f71496f35c3 100644
---- a/shallow.c
-+++ b/shallow.c
-@@ -795,12 +795,16 @@ static void post_assign_shallow(struct shallow_info *info,
- 		if (!*bitmap)
- 			continue;
- 		for (j = 0; j < bitmap_nr; j++)
--			if (bitmap[0][j] &&
--			    /* Step 7, reachability test at commit level */
--			    !repo_in_merge_bases_many(the_repository, c, ca.nr, ca.commits, 1)) {
--				update_refstatus(ref_status, info->ref->nr, *bitmap);
--				dst++;
--				break;
-+			if (bitmap[0][j]) {
-+				/* Step 7, reachability test at commit level */
-+				int ret = repo_in_merge_bases_many(the_repository, c, ca.nr, ca.commits, 1);
-+				if (ret < 0)
-+					exit(128);
-+				if (!ret) {
-+					update_refstatus(ref_status, info->ref->nr, *bitmap);
-+					dst++;
-+					break;
-+				}
- 			}
- 	}
- 	info->nr_ours = dst;
-@@ -830,6 +834,8 @@ int delayed_reachability_test(struct shallow_info *si, int c)
- 							    si->nr_commits,
- 							    si->commits,
- 							    1);
-+		if (si->reachable[c] < 0)
-+			exit(128);
- 		si->need_reachability_test[c] = 0;
- 	}
- 	return si->reachable[c];
+-	result = merge_bases_many(r, one, n, twos);
++	if (merge_bases_many(r, one, n, twos, &result) < 0)
++		return NULL;
+ 	for (i = 0; i < n; i++) {
+ 		if (one == twos[i])
+ 			return result;
 -- 
 gitgitgadget
 
