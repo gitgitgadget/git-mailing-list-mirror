@@ -1,59 +1,59 @@
-Received: from mail-lj1-f169.google.com (mail-lj1-f169.google.com [209.85.208.169])
+Received: from mail-lf1-f48.google.com (mail-lf1-f48.google.com [209.85.167.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C6D943AAF
-	for <git@vger.kernel.org>; Tue, 27 Feb 2024 10:39:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C727553376
+	for <git@vger.kernel.org>; Tue, 27 Feb 2024 10:42:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709030380; cv=none; b=Iz/Vg9B4V+e+x+XUsKojdxhKoucrF216YzuH3Pig/tnUlpRpyYmZ6NZ2AIs5JmuM57/7/Lr4F/jfKh2JCsE7VigVGu3ZuJTnLoz/rNP3f5W3QSf2pLX1jvvZgHdtqExm3G5znL9+U4kcmghBBuZOnX7hrxlNn7LhBTrA+rkMhms=
+	t=1709030526; cv=none; b=ch2kPEN6lOz+8T2ilQckVySuTSoIFRgNFLiO0fNlRZ5hdY9fCOMzQ+SIKqSDywh9kEOU5EPR2SNy9bFF9CTXWMLBp+hZbJ84QRmoiZatIylDdXJlt30hOCTxaEFweDgSv9Fbzg2+FjG36MUlHr25WgspB37OQGbGE+ONbVKgQTw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709030380; c=relaxed/simple;
-	bh=Mlqn4viRLpDllLBm/vQaFoQEkTGKSg4pxamkB7lqr6Y=;
+	s=arc-20240116; t=1709030526; c=relaxed/simple;
+	bh=tYtUxs8MDCeEHLyKe1yHslx4nGY7x4AqJNrEToGvpAM=;
 	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=ZIwjy5hXzSpuKCh8J2KbC/BUThiX6iTgqLnzc++L/jebLusSIC5QmWawYc7kcTK2quB09o37RUYfmrskYLSLMfw6oEXiVeY3mMJ1x3BO43iXkftIOPVssRxh1k+W4goxw2y/vJ0ui+DWUrzh4hXjdFVDE4hK65Edu41Z0DoQoFM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Ol880N41; arc=none smtp.client-ip=209.85.208.169
+	 In-Reply-To:Content-Type; b=dd59+2hE+aXUwpFFg/RD3O6xhXBgKV2F55fjVmbaHkZog878Ic0+gpL7/eYo23fypieBCPmmgE0zv6Zr6o9IP6s1yfv+hNbIVdY+u4Sjvr+f219FnsbqTyYIJvhMzaBrT/7oqCRNG9joggA4PzByxQRM/zTGlTMwYE16zaRODnU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=kgKi8IVw; arc=none smtp.client-ip=209.85.167.48
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Ol880N41"
-Received: by mail-lj1-f169.google.com with SMTP id 38308e7fff4ca-2d220e39907so64829311fa.1
-        for <git@vger.kernel.org>; Tue, 27 Feb 2024 02:39:38 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kgKi8IVw"
+Received: by mail-lf1-f48.google.com with SMTP id 2adb3069b0e04-512f7332252so3321104e87.0
+        for <git@vger.kernel.org>; Tue, 27 Feb 2024 02:42:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1709030377; x=1709635177; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1709030523; x=1709635323; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:references:cc:to
          :content-language:subject:reply-to:from:user-agent:mime-version:date
          :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=scHDxWLUoDfyuCwSyPDQpNzWrp4UAxVyxSS3G9JrEis=;
-        b=Ol880N41tp1ORcorXvKRLgL43XV7QsrZb3avN15Qv815lxIZP9C9LDuvWgrpAXly1e
-         jwnLM609+wBrHj5qud+lRiRbC1If0S7ocpkYhyhTvkI3XUXt68Gmp71ThhbyPqcqNwLe
-         NRj+8tlicG7UobADWN/+fxbK85pkHhp5M2ApKJps40ynpoPgsdxjez0jylVtXYVLgn+1
-         1SxO2T4wo39BFTsso33ESBurrzazQlYXB5z8oBpiS9/jlBdhuOMcibYsVzdNOm/A4eJU
-         +vzPLs2KGKhWuFPrf5ZVUMo3vOZ3fzORBoPuUCsugSfA6V7QWBuJBI24f4fi60/TcfIf
-         fnLQ==
+        bh=Bbo/Nh/eeCd4hyCTeSmGwFUAX80qplClo0BDURI70/o=;
+        b=kgKi8IVwtiqMCtuvyp2HTBoecpM5YEb+hSZ91qJ8JGLS5PkQ2jpWUnCSJlMVZnfdC9
+         mtgJTJf9twPW7eql9ggXvbLOYM5iSIEn3s/IPu1T7uXDNm/C+BzMXm007/hYVL9mq8qc
+         Lj7wyZXgz7JsI+zr9o5saR7I2YnsB1oEYnUBQgYb3bdlwcqMsPblT3u8ZkiKq9ld08gE
+         PxUyqMHz5CKwPhziFP9xn1+kfgdejIW+e4kUnztCnrR99Qpcq6RZIl605iqgDaBf34Vw
+         Exyfe8b4Jq3P6hbQEcjUVmvJGQHOPOtQiLF9nm3lilH38ZARMQcXvZj49ef5d3cqgeL3
+         cWog==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1709030377; x=1709635177;
+        d=1e100.net; s=20230601; t=1709030523; x=1709635323;
         h=content-transfer-encoding:in-reply-to:references:cc:to
          :content-language:subject:reply-to:from:user-agent:mime-version:date
          :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=scHDxWLUoDfyuCwSyPDQpNzWrp4UAxVyxSS3G9JrEis=;
-        b=ImO1eWQUlNHu9RNXFfB4NCuNrqsuHW0DiBwklhtBS5bwEwu64/3QndkKM0i3VxfTt/
-         4h6QlRx1GmATKJM7rDxuP+jjrP46Oy7zc72G+z8/KiDH1SYGZd2U+N5nLDbEfnywuaSN
-         7rGWCKY56cKGZabgJwWb4TmUeM+rMTPUL9vuh/X4tvZUWECyoYJLb4PX5d7wdELUSsyy
-         xXyYNh1cl9wApBxr94vpWsdV4nYicqQmy5KeWMPGjRCMghWCG1mtQqXkqf+vyBJb72b8
-         GHZlyjhWHxEYkiprNP02epJ0noMmbPqglel+SEAmyLVVMU/RGe9PG05MPGwubCSubYWJ
-         yXyg==
-X-Gm-Message-State: AOJu0YxKeDAVFN6PHGivInfzHeAp3HMyKgL1DUWExyIEw5y0ElWcgH3l
-	ZrI7iC751Qrn+qIr9LrTq9Y95OCtvRFQCzz9CitPcqcy1bG5Y1cwNL3F9S1+
-X-Google-Smtp-Source: AGHT+IEDpUHEkDmCgWaP6H8PrI1IBCqh8Pzbobb+ygu9xTZzwwNF5FWcO1N4Wr5YByHvyHU/G49XWQ==
-X-Received: by 2002:a19:f018:0:b0:512:abe6:2905 with SMTP id p24-20020a19f018000000b00512abe62905mr5593420lfc.50.1709030376898;
-        Tue, 27 Feb 2024 02:39:36 -0800 (PST)
+        bh=Bbo/Nh/eeCd4hyCTeSmGwFUAX80qplClo0BDURI70/o=;
+        b=hCuWnV/dZgCkbt/q7HnYtkcE7btIgwzRspW4rSRCxhm4e2hWZqDMEKaP22jx9+x6uV
+         XZ5/SdZxkPWi1BfJ7HKT7H/qrB9zLqqEc1pKcvReqt9J8kl+1BeM/cvJfj0aDwF1Ed0s
+         AAaJ7Z1lCLBrCxxz8cUQ8Kvu36sHNj0diyk3r5a4P1KrMNA866eKz/0JEW9P1AXEDP3r
+         WDLva6rkAA25HX8rRkaKcCgGfjzf8bRm0wV6EgVP8mbL/UUmJILdzGZWSrKL0LyF2uih
+         pPSMieqvLB6UNJUCEFVS97w0o2H2tKGjSsW//xGxrSxecno086jy1gDdzIgqjP678IZN
+         s8eg==
+X-Gm-Message-State: AOJu0Yw2xpPfACFrz9X2jbSqUt1cQexY45Ot6porVncavjD+heh9lly/
+	rkX8rJOpkJwiv7KTczM//OMhC+0l2aiau8r2MN3AFyIVQQWNmtqn
+X-Google-Smtp-Source: AGHT+IFxjX6nRDWU1F5UKQA+wLysdOK8AEy0fV7awucCkllvJJ34OWsrGSfKzjmqrsViIqpbmXh4rw==
+X-Received: by 2002:ac2:4102:0:b0:513:f34:f4c1 with SMTP id b2-20020ac24102000000b005130f34f4c1mr570327lfi.20.1709030522649;
+        Tue, 27 Feb 2024 02:42:02 -0800 (PST)
 Received: from ?IPV6:2a0a:ef40:69d:3501:4b27:339f:196f:f7f9? ([2a0a:ef40:69d:3501:4b27:339f:196f:f7f9])
-        by smtp.gmail.com with ESMTPSA id fa20-20020a05600c519400b00412acb0b323sm1612065wmb.26.2024.02.27.02.39.36
+        by smtp.gmail.com with ESMTPSA id u9-20020a056000038900b0033cffd1a302sm7717629wrf.57.2024.02.27.02.42.02
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 27 Feb 2024 02:39:36 -0800 (PST)
-Message-ID: <1004c565-ee6c-4aa4-8226-47d0ef7c8631@gmail.com>
-Date: Tue, 27 Feb 2024 10:39:33 +0000
+        Tue, 27 Feb 2024 02:42:02 -0800 (PST)
+Message-ID: <2f749aae-697b-4d35-a6ed-7d2a2faa596a@gmail.com>
+Date: Tue, 27 Feb 2024 10:41:54 +0000
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -63,101 +63,50 @@ MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 From: phillip.wood123@gmail.com
 Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v2 8/8] cherry-pick: add `--empty` for more robust
- redundant commit handling
+Subject: Re: Interactive rebase: using "pick" for merge commits
 Content-Language: en-US
-To: Brian Lyles <brianmlyles@gmail.com>, phillip.wood@dunelm.org.uk,
- gitster@pobox.com
-Cc: git@vger.kernel.org, newren@gmail.com, me@ttaylorr.com
-References: <17b74c2ffa1884ed.70b1dd9aae081c6e.203dcd72f6563036@zivdesk>
-In-Reply-To: <17b74c2ffa1884ed.70b1dd9aae081c6e.203dcd72f6563036@zivdesk>
+To: Stefan Haller <lists@haller-berlin.de>, phillip.wood@dunelm.org.uk,
+ Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org
+References: <424f2e08-a2ad-4bb2-8a6b-136c426dc127@haller-berlin.de>
+ <ad561600-faf6-4d3c-80b2-34b3d1a1b99e@gmail.com>
+ <65c65f6b-5ec8-4fa0-a17c-0f2c0d32b390@haller-berlin.de>
+ <ZcnFl8kypKRYeLo3@tanuki> <040f142c-7ee2-429e-88eb-d328b01a4b8c@gmail.com>
+ <2739325d-93b1-445c-aac9-3e0ec54a27e4@haller-berlin.de>
+ <b4781808-f722-4be5-906f-4c3409c3295c@gmail.com>
+ <6a557891-ffcd-4c42-9768-ec2da0fce92a@haller-berlin.de>
+In-Reply-To: <6a557891-ffcd-4c42-9768-ec2da0fce92a@haller-berlin.de>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 
-Hi Brian
+On 26/02/2024 19:07, Stefan Haller wrote:
+> On 26.02.24 11:56, Phillip Wood wrote:
+>>> It probably makes more sense to teach lazygit to visualize the
+>>> .git/sequencer/todo file, and then use git cherry-pick.
+>>
+>> If lazygit is generating the todo list for the cherry-pick could it
+>> check if the commit is a merge and insert "exec cherry-pick -m ..." for
+>> those commits?
+> 
+> That's a good idea, but it wouldn't buy us very much. We'd still have to
+> add support for conflicts during a cherry-pick; when there's a conflict
+> during a rebase, lazygit has this nice visualization of the conflicting
+> commit (we talked about that in [1], and it turned out to be working
+> extremely well), so it would have to learn to do the same thing for a
+> conflicting cherry-pick (although this does seem to be a lot easier).
+> And then it would have to learn to call "cherry-pick --continue" rather
+> than "rebase --continue" after resolving. But if we do all these things,
+> then we're not so far away from being able to just call git cherry-pick
+> ourselves.
 
-On 26/02/2024 03:32, Brian Lyles wrote:
-> Hi Phillip and Junio
-> On Fri, Feb 23, 2024 at 12:08 AM Brian Lyles <brianmlyles@gmail.com> wrote:
->>
->> On Thu, Feb 22, 2024 at 10:35 AM Phillip Wood <phillip.wood123@gmail.com> wrote:
->>
->>> I agree that if we were starting from scratch there would be no reason
->>> to tie --apply-empty and --keep-redundant-commits together but I'm not
->>> sure it is worth the disruption of changing it now. We're about to add
->>> empty=keep which won't imply --allow-empty for anyone who wants that
->>> behavior and I still tend to think the practical effect of implying
->>> --allow-empty with --keep-redundant-commits is largely beneficial as I'm
->>> skeptical that users want to keep commits that become empty but not the
->>> ones that started empty.
->>
->> I think that's fair. I am okay dropping this potentially disruptive
->> change.
->>
->> It sounds like you are on board with `--empty=keep` not having the same
->> implication?
-
-Yes indeed
-
->> That said...
->>
->> On Thu, Feb 22, 2024 at 12:41 PM Junio C Hamano <gitster@pobox.com> wrote:
->>
->>> I do not quite see a good reason to do the opposite, dropping
->>> commits that started out as empty but keeping the ones that have
->>> become empty.  Such a behaviour has additional downside that after
->>> such a cherry-pick, when you cherry-pick the resulting history onto
->>> yet another base, your precious "were not empty but have become so
->>> during the initial cherry-pick" commits will appear as commits that
->>> were empty from the start.  So I do not see much reason to allow the
->>> decoupling, even with the new "empty=keep" thing that does not imply
->>> "allow-empty".
->>
->> Junio -- can you clarify this part?
->>
->>> So I do not see much reason to allow the decoupling, even with the new
->>> "empty=keep" thing that does not imply "allow-empty"
->>
->> I'm not 100% sure if you are saying that you want `--empty=keep` to
->> *also* imply `--allow-empty`, or that you simply want
->> `--keep-redundant-commits` to continue implying `--allow-empty`
->> *despite* the new `--empty=keep` no implying the same.
-
-FWIW I read it as the latter, but I can't claim to know what was in 
-Junio's mind when he wrote it.
-
->> On the one hand, I agree with Phillip's sentiment of "if we were
->> starting from scratch there would be no reason to tie --apply-empty and
->> --keep-redundant-commits together" (though your points perhaps provide
->> such a reason). On the other, if both `--keep-redundant-commits` and
->> `--empty=keep` behave the same way, it makes sense to soft-deprecate
->> `--keep-redundant-commits` as I have currently done later in this
->> series. If they do not behave the same way, that deprecation makes less
->> sense and we have two very similar (but not quite identical) options.
->>
->> Just to make sure we're on the same page, the options I see are:
->>
->> - (A): Neither `--keep-redundant-commits` nor `--empty=keep` imply
->>    `--allow-empty`, `--keep-redundant-commits` is soft-deprecated
->> - (B): Both `--keep-redundant-commits` and `--empty=keep` imply
->>    `--allow-empty`, `--keep-redundant-commits` is soft-deprecated
->> - (C): Both `--keep-redundant-commits` and `--empty=keep` imply
->>    `--allow-empty`, `--keep-redundant-commits` is *not* soft-deprecated
->>    as it is more descriptive as noted by Junio here[1]
->> - (D): `--keep-redundant-commits` continues to imply `--allow-empty` but
->>    `--empty=keep` does not. `--keep-redundant-commits` is *not*
->>    soft-deprecated as it behaves differently.
->>
->> (A) represents this v2 of the patch.
->>
->> I'm coming around to (B) based on Junio's workflow concerns, but to be
->> honest I am fine with any of these options. Junio, I *think* you're
->> saying you'd prefer (B) or (C)? Phillip, it sounds like you are okay
->> with (D) based on your response -- how do you feel about (B)?
-
-Yes, I'd prefer (D) as I think it gets confusing if some values of 
---empty imply --allow-empty and others don't. I could live with (B) though.
+Oh I'd forgotten about handling conflicts - that does make my proposal 
+less attractive.
 
 Best Wishes
 
 Phillip
+
+> -Stefan
+> 
+> [1] <https://public-inbox.org/git/
+>       961e68d7-5f43-c385-10fa-455b8e2f32d0@haller-berlin.de/>
