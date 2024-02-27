@@ -1,142 +1,107 @@
-Received: from out2-smtp.messagingengine.com (out2-smtp.messagingengine.com [66.111.4.26])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f41.google.com (mail-ej1-f41.google.com [209.85.218.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB178135A6A
-	for <git@vger.kernel.org>; Tue, 27 Feb 2024 09:17:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=66.111.4.26
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 311F752F95
+	for <git@vger.kernel.org>; Tue, 27 Feb 2024 09:59:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709025461; cv=none; b=FnmRvN8eLjtBScm+Kgt/JUDnBO5NnQpJUgVwg1rmeAxcy+hORdzzdgUNSojylTtFh3U059K8bGuioSvNGFOPl/2cnppN06WbynhfutJBcRie0RNkREqxbmfpo/ZCJD1eBbvdBWgMxAeNUNFSmTfBb61SEqcS6ON9SBqMx4+H1wM=
+	t=1709027963; cv=none; b=bUUSr8JlaZtu+a9EoHcNYvaS+xv2E6rG34dVwYxZIu4OlQqLBbNgKK5BuU2tZ4bQjJfpACJDvb4jafFxEYFuSyvzJbOTb0d/qtO8mGExnZmpX4uTvW6p9f9wuMu845Z4GqUbJRgKg3KUTcuHxYGNCoKfOmuGzxDPHZG+yP6kBNY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709025461; c=relaxed/simple;
-	bh=gJzYYURtOPWrw4NO2nGwgewlQXqmE4MmIfLPpJykbaI=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=JlcLtPzLz6pc4MT2dVjsSfOBvJ5/fb+Bkru1+Xwk3z04KnLjv1RPD9OtBkC2LYgwufr+xb6T44ETdPVBy9BkSX132886hcn8LljxzYyKcfO7EvfaQJO89BlklDGxcwNl16SQnKsMJqbbr0oJKPKGLvmrQRoiF3TjGqUDTT5q1cE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=joshtriplett.org; spf=pass smtp.mailfrom=joshtriplett.org; dkim=pass (2048-bit key) header.d=joshtriplett.org header.i=@joshtriplett.org header.b=eQtk91p5; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=aznaYZh2; arc=none smtp.client-ip=66.111.4.26
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=joshtriplett.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=joshtriplett.org
+	s=arc-20240116; t=1709027963; c=relaxed/simple;
+	bh=JFwcXqdT/6jLTkHB2xyEf/KTMyH3URDcHkVFf1RAf3I=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=V4cFfYZX5iEvQ0Wxx/OXeeeoMrBdFuY7Lcj/AsNx4P2RH3nzMyWs/bjE+O2lLYJXn3ePtQp5YHqepmZ+ubYJ74e+IFByYnh8JjZnFZHHr2M+ubUwSgqTjif8Ew53oAYvarwKsLJDjZcRRiJo007Q3H2DG1ZeQ/QFTDM5xB+hEKQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=FMkw45WS; arc=none smtp.client-ip=209.85.218.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=joshtriplett.org header.i=@joshtriplett.org header.b="eQtk91p5";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="aznaYZh2"
-Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
-	by mailout.nyi.internal (Postfix) with ESMTP id 118DC5C00BC;
-	Tue, 27 Feb 2024 04:17:38 -0500 (EST)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute1.internal (MEProxy); Tue, 27 Feb 2024 04:17:38 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	joshtriplett.org; h=cc:cc:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1709025458;
-	 x=1709111858; bh=temUcWyBzm3OjpdyHumKRCKV8CPbF7DI39UrSJPSQpA=; b=
-	eQtk91p530f58Fic8HP/8PdbY9BR9S8PgP//IdGnRZkazEVy96cSQubPoMIQgbGv
-	0qgUpQZORN9n0144kSHL2ZnxYJQ0L3ujz8eH66GEjqoYyCEM/DwDJsQAkiLlMO4I
-	wT9RLi+YA2SbJ34z2VT5WgsC1jUwswhjRbCwT7UMVwk/iYTC0YKxHiB5NQBC1gmM
-	GC2G3pEQziuYLGyvxKgrA2KamGW3nidhS8qxNVhLXUDm5lhgneRn/wFD75BiFrga
-	BLPjtqgUoTb1u//nLVLlyeED6E+H7n8WQf8zjzjtlkb+R9iETqAv87xFaxTt/K99
-	WsibSlO6IlOTZ67/qPd2ug==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1709025458; x=1709111858; bh=temUcWyBzm3OjpdyHumKRCKV8CPb
-	F7DI39UrSJPSQpA=; b=aznaYZh2RClmtpB6Z0ZCJ/suV0nM7I6XBm9MemDqrFds
-	gxtgkoDrIWKZZ8ZjqN39yqbQmOeEI6ZW8ir1emrgHozEXXb5Vpajt7FVTTWEd7kf
-	YJW9rt9vk2XF2FJxzXHU3RYU01hT5annaxwGMh6UeJZ1RI8uVpYoTZ28+8Mwj9fB
-	r3tqhBpW1s7RAkir8W3Ac6lPm4K1SA5yzlYpR8XkIoNsiXqARRd1PWC4XioEopii
-	BuQCWMZ6tqYBrHqs8RnS7Rvhq8ip2bgXV7Eud21Kuf47uBog7BxS4txLiAbLg0a5
-	KquOyIduvh211gSo7w1PEpesFemhAM/L6XWNHCI9bw==
-X-ME-Sender: <xms:sajdZbsx29hFb_9zrW8FS0jwqEI0axVGYGSz0QjByv7j0mc_TvaMew>
-    <xme:sajdZcdKXI557Dz4IcJHMeGSCqJcI2IpYwVMmn0YNCUwsH2QRoiLS0xY0iIuhTrev
-    UCKEVgJ9XXvpawHseE>
-X-ME-Received: <xmr:sajdZez4TgHQ1REbeIre8GvNIYFWZIkh3JYmdyBi2Ki39cZOgj3uSl0h2Q>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrgeeggddtvdcutefuodetggdotefrodftvf
-    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
-    uegrihhlohhuthemuceftddtnecunecujfgurhepfffhvfevuffkfhggtggujgesthdtre
-    dttddtvdenucfhrhhomheplfhoshhhucfvrhhiphhlvghtthcuoehjohhshhesjhhoshhh
-    thhrihhplhgvthhtrdhorhhgqeenucggtffrrghtthgvrhhnpeduieegheeijeeuvdetud
-    efvedtjeefgeeufefghfekgfelfeetteelvddtffetgfenucevlhhushhtvghrufhiiigv
-    pedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehjohhshhesjhhoshhhthhrihhplhgvth
-    htrdhorhhg
-X-ME-Proxy: <xmx:sajdZaNwt-idl0Xk9QJr28YAS-EbeHM-KYgOf1rnofH9pdg3P_hoOg>
-    <xmx:sajdZb8r1VHrgu0RorbVk2TcxyDx369zfduMmKCw5tkOEpIXZ38TGQ>
-    <xmx:sajdZaXWC9RIgpMENxEN3foYtPMj0lfwtucPJJDrxD84YLUQVj_Khw>
-    <xmx:sqjdZVnNgI7XmC8tvT2rkI09MzGlfUm-cr7kwXY24Fdwm-kJhtTOow>
-Feedback-ID: i83e94755:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 27 Feb 2024 04:17:37 -0500 (EST)
-Date: Tue, 27 Feb 2024 01:17:36 -0800
-From: Josh Triplett <josh@joshtriplett.org>
-To: git@vger.kernel.org
-Cc: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v2 2/2] commit: Unify logic to avoid multiple scissors lines
- when merging
-Message-ID: <553c8692e9f0f0159bfba5b15e0abb3190a6f5f3.1709025354.git.josh@joshtriplett.org>
-References: <9c09cea2679e14258720ee63e932e3b9459dbd8c.1708921369.git.josh@joshtriplett.org>
- <xmqqbk83nlw5.fsf@gitster.g>
- <Zd2eLxPelxvP8FDk@localhost>
- <4f97933f173220544a5be2bf05c2bee2b044d2b1.1709024540.git.josh@joshtriplett.org>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FMkw45WS"
+Received: by mail-ej1-f41.google.com with SMTP id a640c23a62f3a-a4396b785b8so114151466b.3
+        for <git@vger.kernel.org>; Tue, 27 Feb 2024 01:59:21 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1709027960; x=1709632760; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=JFwcXqdT/6jLTkHB2xyEf/KTMyH3URDcHkVFf1RAf3I=;
+        b=FMkw45WS1e7MkCWmk5Wy6eAiU6j26AXQEQIHg/m9Kr4s6TuzYz8OGd5hfy32/brMkb
+         r+p4836DLRawt6S7AancYE1VcNEOsuyOu0B5tDTA/LGe6RyxnPsel6pOWCllyKzKRe8/
+         RefOOMaOuRu1NT6AGsBY1D+k11VKxvZUYKW0FK7UCvr5Xce2ejmu0EgxrcWdu7HHoola
+         cdixaTBSIJ66ynsluHM8VGGQ4qz0ljIw1Q8DCuZb0/2RECazKMt925Mi9gCMLbP+n08y
+         QTm4PY7JA8fsxWXgJCEWXt3UR+/mVf2mOjLlj0pDD3SNPgYf5vh5wx/8Pa6Q4WhoP1Sl
+         /1Ng==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1709027960; x=1709632760;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=JFwcXqdT/6jLTkHB2xyEf/KTMyH3URDcHkVFf1RAf3I=;
+        b=kkvKERk2HAma14ugSKIvQnJlZ2KjpXdSzq8hG75SnfM4FNNetWDS1XmMfAxT6UDFXh
+         Ko3p5MI2eL5hnlRYmMllvUsfZZ4wgZQdWW8DlNprun8elMaOje/F1Dfa4hUDmERl5Ik3
+         aa+8GKkMDpi0lmUbSo3spM/ixy0uZXEi+8I/e/Q/n/SMlZdJP6ML5sS6VyqVpWBqbNBZ
+         o9VURkBedp5tcmfpnpONNhEcVYzMs8Wy8pQwh4jODtWfaGoyPZwlpDBoiL1RUYTc6qv1
+         RB+kQmo5yQs5YyE43SjKmv6b1vGFzQgve1yyBSKhiwhIPsYCLmEpP3RY9QmNsn47MPob
+         /9nw==
+X-Gm-Message-State: AOJu0Yy17k3jvhOQmZ1V0ItRRrYlfwuXrm1u45GjUHu0IgvAe1Rgmvp0
+	V0Asfv63f8BQTfYLsmjtCUHQnxbO2tCno7wWHmfzmOAls/OJNlUuvnwMMBz67EGIw5glaCfJteb
+	iu8AwZX/PXzSCMiOqMD+kiWkIhXKk6UPLgMY=
+X-Google-Smtp-Source: AGHT+IE3Oy0f6aIZonLTZc9zp0UNKW3DzAd+SYu5101yW95X8Yv3wZ5HaS+aE/HFMEKDOubJqsbQ8E8RAllZL1ERIVk=
+X-Received: by 2002:a17:906:3811:b0:a3f:2ffd:c68b with SMTP id
+ v17-20020a170906381100b00a3f2ffdc68bmr7069954ejc.6.1709027960193; Tue, 27 Feb
+ 2024 01:59:20 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <4f97933f173220544a5be2bf05c2bee2b044d2b1.1709024540.git.josh@joshtriplett.org>
+References: <20240223193257.9222-1-shyamthakkar001@gmail.com>
+ <CAP8UFD088GRkVQWjrBFk04_HFfiEk64Saxm2toYsci36oHgkdA@mail.gmail.com> <CZF8YROS9RVC.9H2EKYCF08VK@gmail.com>
+In-Reply-To: <CZF8YROS9RVC.9H2EKYCF08VK@gmail.com>
+From: Christian Couder <christian.couder@gmail.com>
+Date: Tue, 27 Feb 2024 10:59:06 +0100
+Message-ID: <CAP8UFD0yOXPyTvRCXxhoWXASW+HP230jVMCDzipg5PLAyVXJUA@mail.gmail.com>
+Subject: Re: [PATCH] unit-tests: convert t/helper/test-oid-array.c to unit-tests
+To: Ghanshyam Thakkar <shyamthakkar001@gmail.com>
+Cc: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-prepare_to_commit has some logic to figure out whether merge already
-added a scissors line, and therefore it shouldn't add another. Now that
-wt_status_add_cut_line has built-in state for whether it has
-already added a previous line, just set that state instead, and then
-remove that condition from subsequent calls to wt_status_add_cut_line.
+On Mon, Feb 26, 2024 at 8:11=E2=80=AFPM Ghanshyam Thakkar
+<shyamthakkar001@gmail.com> wrote:
+>
+> On Mon Feb 26, 2024 at 8:41 PM IST, Christian Couder wrote:
 
-Signed-off-by: Josh Triplett <josh@joshtriplett.org>
----
-v2: New patch.
+> > So I think it would be better to work on other things instead, like
+> > perhaps reviewing other people's work or working on other bug fixes or
+> > features. Anyway now that this is on the mailing list, I might as well
+> > review it as it could help with your application. But please consider
+> > working on other things.
+>
+> I understand and will work on other things.
 
- builtin/commit.c | 8 +++-----
- 1 file changed, 3 insertions(+), 5 deletions(-)
+Thanks!
 
-diff --git a/builtin/commit.c b/builtin/commit.c
-index e0a6d43179..142f54ea7c 100644
---- a/builtin/commit.c
-+++ b/builtin/commit.c
-@@ -737,7 +737,6 @@ static int prepare_to_commit(const char *index_file, const char *prefix,
- 	const char *hook_arg2 = NULL;
- 	int clean_message_contents = (cleanup_mode != COMMIT_MSG_CLEANUP_NONE);
- 	int old_display_comment_prefix;
--	int merge_contains_scissors = 0;
- 	int invoked_hook;
- 
- 	/* This checks and barfs if author is badly specified */
-@@ -841,7 +840,7 @@ static int prepare_to_commit(const char *index_file, const char *prefix,
- 		    wt_status_locate_end(sb.buf + merge_msg_start,
- 					 sb.len - merge_msg_start) <
- 				sb.len - merge_msg_start)
--			merge_contains_scissors = 1;
-+			s->added_cut_line = 1;
- 	} else if (!stat(git_path_squash_msg(the_repository), &statbuf)) {
- 		if (strbuf_read_file(&sb, git_path_squash_msg(the_repository), 0) < 0)
- 			die_errno(_("could not read SQUASH_MSG"));
-@@ -924,8 +923,7 @@ static int prepare_to_commit(const char *index_file, const char *prefix,
- 			  " yourself if you want to.\n"
- 			  "An empty message aborts the commit.\n");
- 		if (whence != FROM_COMMIT) {
--			if (cleanup_mode == COMMIT_MSG_CLEANUP_SCISSORS &&
--				!merge_contains_scissors)
-+			if (cleanup_mode == COMMIT_MSG_CLEANUP_SCISSORS)
- 				wt_status_add_cut_line(s);
- 			status_printf_ln(
- 				s, GIT_COLOR_NORMAL,
-@@ -946,7 +944,7 @@ static int prepare_to_commit(const char *index_file, const char *prefix,
- 		if (cleanup_mode == COMMIT_MSG_CLEANUP_ALL)
- 			status_printf(s, GIT_COLOR_NORMAL, hint_cleanup_all, comment_line_char);
- 		else if (cleanup_mode == COMMIT_MSG_CLEANUP_SCISSORS) {
--			if (whence == FROM_COMMIT && !merge_contains_scissors)
-+			if (whence == FROM_COMMIT)
- 				wt_status_add_cut_line(s);
- 		} else /* COMMIT_MSG_CLEANUP_SPACE, that is. */
- 			status_printf(s, GIT_COLOR_NORMAL, hint_cleanup_space, comment_line_char);
--- 
-2.43.0
+> > > In unit testing however, we do not
+> > > need to initialize the repo. We can set the length of the hexadecimal
+> > > strbuf according to the algorithm used directly.
+> >
+> > So is your patch doing that or not? It might be better to be explicit.
+> > Also if 'strbuf's are used, then is it really worth it to set their
+> > length in advance, instead of just letting them grow to the right
+> > length as we add hex to them?
+>
+> I thought of it like this: If we were to just let them grow, then we
+> would need separate logic for reusing that strbuf or use a different
+> one everytime since it always grows. By separating allocation
+> (hex_strbuf_init) and manipulation (fill_hex_strbuf), that same strbuf
+> can be reused for different hex values.
+>
+> But, none of the test currently need to reuse the same strbuf, so I
+> suppose it is better to just let it grow and even if the need arises we
+> can use strbuf_splice().
+
+It's not a problem to use a new strbuf for each different hex value.
+Tests don't need a lot of performance as they are used mostly by
+developers, not by everyone using Git. Also if you want to reuse a
+strbuf, you can just use strbuf_reset() on it and then reuse it.
