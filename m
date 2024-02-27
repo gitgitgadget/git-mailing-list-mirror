@@ -1,125 +1,160 @@
-Received: from mail-lj1-f180.google.com (mail-lj1-f180.google.com [209.85.208.180])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from wfout2-smtp.messagingengine.com (wfout2-smtp.messagingengine.com [64.147.123.145])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20B7B13B2B8
-	for <git@vger.kernel.org>; Tue, 27 Feb 2024 14:21:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41E4D13B2B4
+	for <git@vger.kernel.org>; Tue, 27 Feb 2024 14:22:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709043701; cv=none; b=bT+wrHFJIlVPBWbvUHjQivvV51mTpNXHDhY4VvK3D8Ecj+S0BxGO9uGT52UJCO42m9oWGQ7VGbFIYMv7lDGeuvcPKomz33j24to8Y25VfDc0aHKKore7DCCKL1SHcFCjky+/eMwioerPqjIDMjoqKqiL16oxst8+ec7TkNNpRtI=
+	t=1709043743; cv=none; b=Hin2Iftpo/l6iXOabr+60Qpscmc0hUcAT7+8U0LrgTLZ53K4JFu4KVJes9mxVC8up80I1fjICOEsoP98gNQZY7ue75AEcxZDgD1LuDAz5V7Tr0oS3NqQvTfHGvSEAC+PeVsKbVfetpW4yj9Q4PrQWBMxaAAdlp3J+s0N0uyiVk0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709043701; c=relaxed/simple;
-	bh=WQP4SVmnPYY1pNODPkAQmPZ+70EERLfPesotpQgk8xk=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ChDOordsOY3KuanYgHiPZ1YVBqR6cs2XrA3Y3A208DpxsPhTD40sQs05AiSUuL28wD4fm131HcqO0KmZcQMwkosQ8l1glKanbDrZH85a4OYvEztgPmSRLDjBFWUXWUVPIxaEtk5D9KlMO2oQHJC4cv3YonZdq1bkpHkV5Y6L/4Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=EZy2Gl73; arc=none smtp.client-ip=209.85.208.180
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1709043743; c=relaxed/simple;
+	bh=dRmx+cDDlr64rBjCPWlKM7xfDal1LwdUk8rhIt7iRe8=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=k8b0udmfjvSdXVPsd6pTKi02lJO3IT9WEvspTmdToBPYU7TkrXFBHklonNNg7hP5Pve51e78ub4bEEccU8ehEQ7Y7VCvKSQdOs3VtiQIPRFbgZc0cktjqwi1FsQdv+tlGkK4zlYH7Ji+Wgt8SdPAzlGMTVnsco3iD6Ycux3OR/w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=fPg+iB8M; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=q2OEIO58; arc=none smtp.client-ip=64.147.123.145
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EZy2Gl73"
-Received: by mail-lj1-f180.google.com with SMTP id 38308e7fff4ca-2d2533089f6so51079831fa.1
-        for <git@vger.kernel.org>; Tue, 27 Feb 2024 06:21:39 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1709043698; x=1709648498; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=k3ZVwX/Tnt0iQUJkcUBRAuTTatfyAkULK9qOPPp02T4=;
-        b=EZy2Gl737Hm8yxTgwlI8PPHse93HoMrsy+k9IwdkDbnoXcYO74SGTsfoDkOdiQ/EHt
-         yinCblDJ3B8YZZ/JQ0esCcjwqtVPk4yCgoew1BwYxT2ck3k57B5oLm5Au0aEzSpkU1gc
-         rb75fyqvMtIekZvgl+RQdI4JDXRaH27eKxUDEmrPLPPvtA9RUkBjEKmFtPphIBcUwmXm
-         cte/Xmbi5I7BuhspjD60vMNo/vlthDdTEJjpIBvNJ7SQpgTXhIS9SHWdPspNrY8UC9EE
-         rhNyC+uKVE0EkhAWTEZ7nDycXVf5UwTPHN3kX4axmae6/Vr7bOVxJuTPCjU70zWREijS
-         kLnA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1709043698; x=1709648498;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=k3ZVwX/Tnt0iQUJkcUBRAuTTatfyAkULK9qOPPp02T4=;
-        b=SRdb6sO256zZLGNONqoEs+fn07f1wyoy6j6KmVoeLP5Daz9FQFIswKpk5D52PvMikz
-         Q6LZ8pUJ2v0KgRVpZrEnhD04bAlu3CbJVzjR+oqWDrIAAMc1bYQC6urd0jrmdYs7RZEf
-         t7WwulvK3Ta5jqjqNzHmOjT0udsJcMayMzCbSnkyRz4j4xBVMX+NcqhkrMDhZ/Lv7ZZd
-         emjHOpvFoimUZasjj/lBHUybN6Ep1iQgR3hLy56yFakSAzE8pdAb6aQcWbx4cGygwtBX
-         plCYaDNg6wlDM0Yti8yTQu+4pQpzhlncf+VXxj0QCyrbuGYIkiAeoq/2SP4ejNFmle0X
-         ehbg==
-X-Gm-Message-State: AOJu0YzJTPPs4LI9Pi0SB6x0mhstl73KlRnMVu3gVi/Xm8+50uggGu1i
-	U31gcRM0vCOd6XmvfszV7JjZEptgIiPnR5bKs6Y2vPhlY1klW1824fbW23N6svU=
-X-Google-Smtp-Source: AGHT+IFfpt7KdZAOcXccNO2o8g0SHk9QCTD+iGupOogLUiJFcWkL9zp8AR547L3GRCQ5n8hpCQH2Cw==
-X-Received: by 2002:a05:6512:39c4:b0:513:ed7:32a1 with SMTP id k4-20020a05651239c400b005130ed732a1mr1169677lfu.69.1709043698363;
-        Tue, 27 Feb 2024 06:21:38 -0800 (PST)
-Received: from host-sergy.. ([154.72.153.222])
-        by smtp.gmail.com with ESMTPSA id lh11-20020a170906f8cb00b00a3fb62260e3sm810127ejb.72.2024.02.27.06.21.36
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 27 Feb 2024 06:21:38 -0800 (PST)
-From: Sergius Nyah <sergiusnyah@gmail.com>
-X-Google-Original-From: Sergius Nyah <74214119+Sergius-Nyah@users.noreply.github.com>
-To: christian.couder@gmail.com,
-	pk@pks.im
-Cc: git@vger.kernel.org,
-	Sergius Justus Chesami Nyah <74214119+Sergius-Nyah@users.noreply.github.com>
-Subject: [PATCH 2/2] Subject:[GSOC] [RFC PATCH 2/2] Add test for JavaScript function detection in Git diffs
-Date: Tue, 27 Feb 2024 15:21:21 +0100
-Message-ID: <20240227142121.72518-3-74214119+Sergius-Nyah@users.noreply.github.com>
-X-Mailer: git-send-email 2.43.2
-In-Reply-To: <20240227142121.72518-1-74214119+Sergius-Nyah@users.noreply.github.com>
-References: <CANAnif-OganZLi0Cu_uq=nveC+u5n14c=o_DQHT-wFOqQ9Vs0Q@mail.gmail.com>
- <20240227142121.72518-1-74214119+Sergius-Nyah@users.noreply.github.com>
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="fPg+iB8M";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="q2OEIO58"
+Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
+	by mailfout.west.internal (Postfix) with ESMTP id 0CD961C00095;
+	Tue, 27 Feb 2024 09:22:19 -0500 (EST)
+Received: from mailfrontend1 ([10.202.2.162])
+  by compute6.internal (MEProxy); Tue, 27 Feb 2024 09:22:20 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1709043739; x=1709130139; bh=9ShbGtwUKK
+	DddLYHS5lWOEAQWiLwK07qCTDxsKjcKFQ=; b=fPg+iB8MRWOiafLkSfraxTzdBD
+	Rn5WGLZyUAWfJOPqAnb8xf96WFTu/p+NQGBQCGKoa2OdUrDZvaI7Xd6XXA9HqWZu
+	HydndGkEzVtvhssmau7VqMRzkaGpdw1CoVqpXu+AEmTSLUnfEPh7oa7TcCAbEZvv
+	YSXooeKn621KXH9EmVMQP3mTBfzCQhHJSSp8/RWo0OYEcNdK8YKhjycuwJLGp+1I
+	vC5pr81mBm+ukMXoThl6dy9Vcfxy39bDEaL3p3o/sucMBZqKsRZjOpcx/ay3JGls
+	353MKhEhFVGc2TpGn/0G/4q8gkHgasnY3EIrnAk1c8SgdHzauj6EChGGIHUA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm1; t=1709043739; x=1709130139; bh=9ShbGtwUKKDddLYHS5lWOEAQWiLw
+	K07qCTDxsKjcKFQ=; b=q2OEIO58N+ioD/4rhH2f+wIW5rplUQ3FHJF57+OXLyQS
+	51bL3ntpd/4oZFbHwof+WesMbE778pjgw7TnGTIMt4f2xuAFSYoueigp5ZWx1kB/
+	gOkntIN+g8wdkRqYYsuF5kMC8y38WWp/Cu55/GuuGRVzJhDJ8sUcY6P5brLIbTpb
+	RvGIYxRzq+rZ1PMEEB2VeXbyjDvB3ho7yvHN8CGvOtFwORCDs/8M8X5PfmY9VKBx
+	Ql4Tvmnu3XZqfSiaBajR6qfu7F9hb8ikNYVOem36vLGHjUx1DmX0BZDWZXXc3B+R
+	suFxp5LKOYd3oUwxjHrr6P7IQ5cnzcWmqS2jrC0PCg==
+X-ME-Sender: <xms:G_DdZQybuxBzTWdoVfgHNl6W8Dki4lkTuka2hftbCi961nEEtLqJ1w>
+    <xme:G_DdZUToM0zC1s5_riB5Zr1fpvgRoPo0v_U-M-ZaU1zlksg1ktQyPjSqkZw1jP3M5
+    MuyYiwFJ5dyz4Jkzg>
+X-ME-Received: <xmr:G_DdZSVV1yKvo1DhRhMUnNFetBrkEef9n60fn-YbdhnN84JgoSWWhGRID_tYZPn90jsB-iCwUvHAIziGjmIJi-ngr73r55fT-8Q4zLV2xSIAwuwR>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrgeehgdeflecutefuodetggdotefrodftvf
+    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
+    uegrihhlohhuthemuceftddtnecunecujfgurhepfffhvfevuffkfhggtggujgesghdtre
+    ertddtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehp
+    khhsrdhimheqnecuggftrfgrthhtvghrnhepueektdevtdffveeljeetgfehheeigeekle
+    duvdeffeeghefgledttdehjeelffetnecuvehluhhsthgvrhfuihiivgepudenucfrrghr
+    rghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimh
+X-ME-Proxy: <xmx:G_DdZejqLSUzUmLDOsS14OmCPUM-nGjEi-J7Dg9in9abuGma_LzxxA>
+    <xmx:G_DdZSA5vQ9ft9Y009VPXh2UN9M_tnhaGnPEQCnA95aoZkxtP76G6Q>
+    <xmx:G_DdZfKuSp-J3i3RR-KKmyg6v_CiaqlBslC_aSQkeBtUGhmTXHnlYg>
+    <xmx:G_DdZV_LfzB5hQ8vBHrTdRx0tIlGarT07dZcsBzYJjxd3rAM11JJcQFcslY>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 27 Feb 2024 09:22:18 -0500 (EST)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id 65e32ca0 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 27 Feb 2024 14:18:01 +0000 (UTC)
+Date: Tue, 27 Feb 2024 15:22:16 +0100
+From: Patrick Steinhardt <ps@pks.im>
+To: rsbecker@nexbridge.com
+Cc: phillip.wood@dunelm.org.uk,
+	'Torsten =?iso-8859-1?Q?B=F6gershausen'?= <tboegi@web.de>,
+	git@vger.kernel.org
+Subject: Re: [BUG] 2.44.0 t7704.9 Fails on NonStop ia64
+Message-ID: <Zd3wGKaDIEztGrsn@tanuki>
+References: <01bd01da681a$b8d70a70$2a851f50$@nexbridge.com>
+ <01be01da681e$0c349090$249db1b0$@nexbridge.com>
+ <20240225191954.GA28646@tb-raspi4>
+ <01ca01da682a$5f6a7b60$1e3f7220$@nexbridge.com>
+ <5e807c1c-20a0-407b-9fc2-acd38521ba45@gmail.com>
+ <Zd2hMmIzHKQ7JE45@tanuki>
+ <02c501da6986$cb7c5c30$62751490$@nexbridge.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="YATTjtzpkYxIF30r"
+Content-Disposition: inline
+In-Reply-To: <02c501da6986$cb7c5c30$62751490$@nexbridge.com>
 
-From: Sergius Justus Chesami Nyah <74214119+Sergius-Nyah@users.noreply.github.com>
 
-This commit introduces a new test case in t4018-diff-funcname.sh to verify the enhanced JavaScript function detection in Git diffs. The test creates a JavaScript file with function declarations and expressions, modifies them, and then checks the output of git diff to ensure that the changes are correctly identified. This test validates the changes made to userdiff.c for improved JavaScript function detection.
----
- t/t4018-diff-funcname.sh | 25 +++++++++++++++++++++++--
- 1 file changed, 23 insertions(+), 2 deletions(-)
+--YATTjtzpkYxIF30r
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-diff --git a/t/t4018-diff-funcname.sh b/t/t4018-diff-funcname.sh
-index e026fac1f4..e88e63bd1f 100755
---- a/t/t4018-diff-funcname.sh
-+++ b/t/t4018-diff-funcname.sh
-@@ -11,7 +11,7 @@ test_expect_success 'setup' '
- 	# a non-trivial custom pattern
- 	git config diff.custom1.funcname "!static
- !String
--[^ 	].*s.*" &&
-+[^ 	].*s.*" && 
- 
- 	# a custom pattern which matches to end of line
- 	git config diff.custom2.funcname "......Beer\$" &&
-@@ -119,4 +119,25 @@ do
- 	"
- done
- 
--test_done
-+test_expect_success 'identify builtin patterns in Javascript' '
-+    # setup
-+    echo "function myFunction() { return true; }" > test.js &&
-+    echo "var myVar = function() { return false; }" >> test.js &&
-+    git add test.js &&
-+    git commit -m "add test.js" &&
-+
-+    # modify the file
-+    echo "function myFunction() { return false; }" > test.js &&
-+    echo "var myVar = function() { return true; }" >> test.js &&
-+
-+    # command under test
-+    git diff >output &&
-+
-+    # check results
-+    test_i18ngrep "function myFunction() { return true; }" output &&
-+    test_i18ngrep "function myFunction() { return false; }" output &&
-+    test_i18ngrep "var myVar = function() { return false; }" output &&
-+    test_i18ngrep "var myVar = function() { return true; }" output
-+'
-+
-+test_done 
-\ No newline at end of file
--- 
-2.43.2
+On Tue, Feb 27, 2024 at 09:10:55AM -0500, rsbecker@nexbridge.com wrote:
+> On Tuesday, February 27, 2024 3:46 AM, Patrick Steinhardt wrote:
+> >On Mon, Feb 26, 2024 at 03:32:14PM +0000, Phillip Wood wrote:
+> >> Hi Randal
+> >>
+> >> [cc'ing Patrick for the reftable writer]
+> >>
+> >> > The question is which call is bad? The cruft stuff is relatively new
+> >> > and I don't know the code.
+> >> >
+> >> > > > reftable/writer.c:              int n =3D w->write(w->write_arg,
+> zeroed,
+> >> > > > w->pending_padding);
+> >> > > > reftable/writer.c:      n =3D w->write(w->write_arg, data, len);
+> >>
+> >> Neither of these appear to check for short writes and
+> >> reftable_fd_write() is a thin wrapper around write(). Maybe
+> >> reftable_fd_write() should be using write_in_full()?
+> >
+> >It already does starting with 85a8c899ce (reftable: handle interrupted
+> writes, 2023-12-11):
+> >
+> >```
+> >static ssize_t reftable_fd_write(void *arg, const void *data, size_t sz)=
+ {
+> >	int *fdp =3D (int *)arg;
+> >	return write_in_full(*fdp, data, sz);
+> >}
+>=20
+> Unfortunately, this fix is included in what I am testing but does not imp=
+act
+> the issue I am seeing one way or another, but thank you.=20
 
+I didn't expect it to :) The mentioned commit only fixes things with the
+reftable backend, which is not tested by default. I assume that you
+didn't run tests with GIT_TEST_DEFAULT_REF_FORMAT=3Dreftable, and thus
+t7704 wouldn't use the reftable code in the first place.
+
+Patrick
+
+--YATTjtzpkYxIF30r
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmXd8BcACgkQVbJhu7ck
+PpQdFA/+JdpK7JU51UfrfCBAGJUzc1oy0J1GvBxo9r5adXya7BDXvacxB6OK58tK
+lfNPDZYcNCW37BHlWEIpaYpWk9zNBQbt3oEvfooFNpyf05BHSdgtHV+xKrZIcNvj
+gsU/1Kqf0A0OS2xjLRqEr//vIrQFk99eOuadDtkcXKcJX68cYOi4jzKWu9kG8gkS
+zSA/9xzx5U9Qe7KZKFKOjQsUq9/L0iVsrRoPfz6cGfEH8koJ+2ReijBnAkcxJbmD
+Rsp8GmkiyvtElAff0DvYum7rxoZd5mQvoEEcG/t6xHE+RwA6b5iFubD7Zd1Kir4n
+jDGjOPXZcY7P3S7i+p4ryKv/drVlPwsdZP7IIhiMzaep7yN4JMSl0gQ/4uI8eS49
++MTXmpQo9w8/2SukDrH1EpGY43HY3DAMdFGh5OPmNOFvDzS5Mltl5fHAoRZ2PL6b
+6GtTL5y83/IqEo/IFDjsZ833zj6/bRF48QzAuA8HkQB3l10A17CkXUZ7+HWXaxUQ
+eGO55Tcn/2j3jg7K6UY/R1lvxxiD2G49d8Ao+rB/V9Sz/bgjPWnNZubVTBagbL2H
+DfGu6NXizZRr/ZA704aYgF8Nu+HUkeaMvfp4YN/Ud5g4gbypDa5CEnoSJmhZXiyi
+mzMFEewM8K2x9M20EucYDa4C39SW0UwcA9wJegtj7NXcJxOtgNQ=
+=3K3H
+-----END PGP SIGNATURE-----
+
+--YATTjtzpkYxIF30r--
