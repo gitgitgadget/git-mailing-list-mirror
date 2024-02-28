@@ -1,154 +1,90 @@
-Received: from mail-oa1-f43.google.com (mail-oa1-f43.google.com [209.85.160.43])
+Received: from mail-qv1-f54.google.com (mail-qv1-f54.google.com [209.85.219.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C6DB12EBF0
-	for <git@vger.kernel.org>; Wed, 28 Feb 2024 11:32:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B4E914AD07
+	for <git@vger.kernel.org>; Wed, 28 Feb 2024 13:38:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709119960; cv=none; b=MyJdvCrCQUB/kTjBZueZJ3iV/l1H62OC85h1lmIXcCrCBVgU50uEcYzfKcIkIKoaXSHeD+0tqeRlk7/sQtmdf376UrQe2CE95aR6svSzTRPsC/JIyeNYr86dAi+kpMnY3hjyIYHwZLbKgsQ70uE2mbH4qMBPOd7j9bsPxzYnPI0=
+	t=1709127523; cv=none; b=oyqtfvrzMLXvligctsZUxP8wwn0CYL004zgAbv0+UUGPDZXVj2y6YBtgp3K79+CVflP+p81Fn0yFQm4QXk9FlUfZB4dQ/s1Q+LKKWMmoXqR/vAh+I/oT+I3p4lSo6xpsssWBkpNdNhPx0bXvcTgBUqnwDGpCKymkxG5nZoVR4E4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709119960; c=relaxed/simple;
-	bh=pZMjF0EMWbtKsJhZNXS/ukFxB4TUN3C52Q5ePl5EuI0=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=qOafYa84wcWoCvJydH+IKwEk2j44iwkrktnixwG9q2tJgYelh4VNpAnnclGun+slDWGozL4GSB7eQ4ZAkEhJ/6fbvwiZVsSt4MesP05DfNmDlhC+HFburX1uJL5/dwZyj6gLaUjAF0oeGSgsZtotfPOth9zvQ3XGIyx2J925Aug=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ZEJXYejG; arc=none smtp.client-ip=209.85.160.43
+	s=arc-20240116; t=1709127523; c=relaxed/simple;
+	bh=ijfFJw4pavqaKIg+gF0lwppuBinr3Y1aDsHszPCnSKA=;
+	h=Subject:To:References:From:Message-ID:Date:MIME-Version:
+	 In-Reply-To:Content-Type; b=Wp7qyDnwaPhSrXbbTITeerbcAeo36BFfsc2pNL6UeIDpqsAQo17xjZLeSNF452J433Fc9YNOZncf8VgwuXyot2sv16HgZrZdmw08bO204bnofbHgzYUem4xQcK0bXIMMAv0zkMde3HYeTDY2fMPfTWDrYT4m3KWUFtfe91Rh1qw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=GIMp82IJ; arc=none smtp.client-ip=209.85.219.54
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZEJXYejG"
-Received: by mail-oa1-f43.google.com with SMTP id 586e51a60fabf-21f0c82e97fso3577333fac.2
-        for <git@vger.kernel.org>; Wed, 28 Feb 2024 03:32:36 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GIMp82IJ"
+Received: by mail-qv1-f54.google.com with SMTP id 6a1803df08f44-68f5cdca7a3so6150526d6.1
+        for <git@vger.kernel.org>; Wed, 28 Feb 2024 05:38:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1709119956; x=1709724756; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=L6QadjBe8Qy6U0AUScNSkQwphGV3CYiqYXYMWis4COs=;
-        b=ZEJXYejGU5a/yeaKu9gofP0nGlpN0zQksuw2y62T6PdA6q8x1G6//nKsl7UYaNw8xY
-         Ep05K/Ndh/L3AtwmHWIP3R0f3S2SI3TJPHP74X6URIZZEclaznDDH1GEap2zBcVmxm7x
-         RIKWwVRmBYWOcx7XXaFXZzL8dQd2MGix1//VgxHSfgQEJkj5NEde1AFOgA7q6KHd8GaS
-         lP0ODzEzrnRUpJ/reEmQv4WN/FinrtoS4YU9DsKk4fCjDmKd2KhHeGkWcJfR0VkxANr3
-         vR5n6IZF2K+lsRNW0eOvPWMlQJorFh6wdwAMgabaskYyJhdf8fj4gUcnnZWwVX+mr8mq
-         +N6Q==
+        d=gmail.com; s=20230601; t=1709127520; x=1709732320; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-language:in-reply-to:mime-version
+         :user-agent:date:message-id:from:references:to:subject:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=XXMZF22yt1Vx0+U+Hgn4ZsIlDFFXkmibfHLAmYRQPtc=;
+        b=GIMp82IJZFDXBSBKbNNUqHrLMOErcPVUB8pGkmHQ5cj+m2vugIWPmU9H9HsLfKv8vZ
+         gwHeVhE+G8ReCWkSDcmIjD+JidSacPwVDAmGtXEago/G3vVEnvSpLqeAo1ohDapIc9F/
+         ARsKymGzKWoHQsXYpY/isOkBn7Sdihlh6IDwKah1k82NJRZI5N3GLiL3V9kdg20LSJAq
+         uf2xO8O7dirVMYGL5IoNk047Bvj1o33d76k61kc1BzCy8KVtpetWLqX2vwLa65Zj6gFH
+         3Ma9k5RYu8gi3TTPWjzPDlk0woVjzU6XgFB9uPSsLrWAz+Y6MMmcqvB2mnuLXWUmqMMI
+         4sSg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1709119956; x=1709724756;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=L6QadjBe8Qy6U0AUScNSkQwphGV3CYiqYXYMWis4COs=;
-        b=rjnDQmvfWVGLd46q5nlKET1uFxuEVNlJOn2FQltgoIeZzIqRURebpPP4YJlTKA3RAo
-         o/kggo7PDEVRnQmF24z0o6A2IDqbI0bL3EiVfQMm2TDVAVQjVlrkoNZbDN5rD+zTCT45
-         n01VwjFr4ro8gFScYoZpz1dbyJbr3iUV8PEssu0Iw7YE78Knk8W/bjkEKZB5zNevyYlR
-         N0VELpm/oOYeyP5+8DMENKSqK2hefPDP7fi9nnjJqxbo1gxGs1A0nVXlF08ghdkWWzfW
-         OM9wA91zrBBc94hhOJB0m7VhdYzsf0P6Qhe/FHvsusCu5wg61hA9i2ohA3GuogI9G4B6
-         hPIw==
-X-Forwarded-Encrypted: i=1; AJvYcCXuMtXL7M2OwFgO2RJEI+/ZndPzIrqShTUZvJbdYupR4pDaIFANHGDF23nwvyCnQ5c+AWikhwo2DVjwF4OwTuUS2fqP
-X-Gm-Message-State: AOJu0YwR8RK1+/q3T1FOZ3LS1S2Qw/jwLTqbFjOp8qvN3xrx3c96+SG4
-	wj80NHt/bULq1/QEAxeM7icniNhaOb+yosWR2JdOE8BB6JvljwDgv5mfF5SDf0YwFFEnZYr8pzv
-	Qtwu46iyQTQrT/BPOG5GjNS3YYZt1XHK0GVE=
-X-Google-Smtp-Source: AGHT+IHYJg/waoujPfKLCwzoPRWgEAPoixw3X/jgx9rXQRB7/FHZ4i/g3FClC+eS9K3cGS4zPGvhxvUQ6BTnAuiEgkc=
-X-Received: by 2002:a05:6870:524f:b0:21e:6d57:81f7 with SMTP id
- o15-20020a056870524f00b0021e6d5781f7mr15248736oai.17.1709119956023; Wed, 28
- Feb 2024 03:32:36 -0800 (PST)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Wed, 28 Feb 2024 03:32:35 -0800
-From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <95be968e10bd02c64448786e690bbefe5c082577.1709041721.git.ps@pks.im>
-References: <cover.1709041721.git.ps@pks.im> <95be968e10bd02c64448786e690bbefe5c082577.1709041721.git.ps@pks.im>
+        d=1e100.net; s=20230601; t=1709127520; x=1709732320;
+        h=content-transfer-encoding:content-language:in-reply-to:mime-version
+         :user-agent:date:message-id:from:references:to:subject
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=XXMZF22yt1Vx0+U+Hgn4ZsIlDFFXkmibfHLAmYRQPtc=;
+        b=Tue8RDJqwhDRZUbeAZ7RRRfX2ruXPYH4T797u2Ix/2t4UKVkq6UlgPZjLn7E7LRQ7f
+         hFcCpQz4TRGNNbmxVqiM0Xpek+31xrmG9+kPKUYy2Q9+1Das9CF+aZak3Bl6gmcebWUr
+         Ufaw6eUxX0VcQGuJC9dgbMlTy+SPtkmGEABMJJkxrzJ5gY0HM61HG37R63r+/WEow3on
+         hgWQAAXMKRlm87m8ITB99+1Y1V/F0XWSY4b0bIBEY1XumnXvEUlz+C3vORxLu3ZwmTfM
+         bhlidWU55neaHyTpsOaUhvm5FQPUy5lqbhgxqkS03HhI13D04P7GdwHnXlfrLSdyaV2z
+         7bCA==
+X-Forwarded-Encrypted: i=1; AJvYcCXJX77/3PRpYbzeglS0SCsjebg3fcG6kFQlykLuDLS/ZicmCAlnTxdAY6vr+OSkPzQfvvP9w3sotLpsuf6fIIjF4lE0
+X-Gm-Message-State: AOJu0Yxwzi7FW0N6uraoeJowLlfVSMSKIG0qy/ST3ZqFq23KPyXsiDxI
+	HvuiIGD4WhQenVzpW3CTwfIZKk4cwGsxz4ZkbGJg86y+cwSaglU1fYzvpqYz
+X-Google-Smtp-Source: AGHT+IGtm2sjZ6XZYrUCrK+GdTkvvdWI436lww9z04xoGyDD7P5C3XU9uVzseMKwX0k/0UE+Jq8XxA==
+X-Received: by 2002:a05:6214:449c:b0:690:20bd:7abf with SMTP id on28-20020a056214449c00b0069020bd7abfmr4732877qvb.4.1709127519985;
+        Wed, 28 Feb 2024 05:38:39 -0800 (PST)
+Received: from ?IPv6:2606:6d00:11:ff90:f134:2d0a:620a:ef80? ([2606:6d00:11:ff90:f134:2d0a:620a:ef80])
+        by smtp.gmail.com with ESMTPSA id g7-20020ac80707000000b0042dfa55a3d5sm4546529qth.25.2024.02.28.05.38.39
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 28 Feb 2024 05:38:39 -0800 (PST)
+Subject: Re: What's cooking in git.git (Feb 2024, #09; Tue, 27)
+To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+References: <xmqqjzmpm9b8.fsf@gitster.g>
+From: Philippe Blain <levraiphilippeblain@gmail.com>
+Message-ID: <dbfc2788-1a02-2b5f-bee0-6fae747ac92e@gmail.com>
+Date: Wed, 28 Feb 2024 08:38:38 -0500
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:78.0)
+ Gecko/20100101 Thunderbird/78.14.0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Wed, 28 Feb 2024 03:32:35 -0800
-Message-ID: <CAOLa=ZSycN0iYbBP-rXKW5=tNJLaSd0q8+Vm=CzNfsP2nR0sJg@mail.gmail.com>
-Subject: Re: [PATCH 1/2] refs/reftable: don't fail empty transactions in repo
- without HEAD
-To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
-Cc: Junio C Hamano <gitster@pobox.com>, Mike Hommey <mh@glandium.org>
-Content-Type: multipart/mixed; boundary="000000000000db95e506126f7f09"
+In-Reply-To: <xmqqjzmpm9b8.fsf@gitster.g>
+Content-Type: text/plain; charset=utf-8
+Content-Language: fr
+Content-Transfer-Encoding: 8bit
 
---000000000000db95e506126f7f09
-Content-Type: text/plain; charset="UTF-8"
+Hi Junio,
 
-Patrick Steinhardt <ps@pks.im> writes:
+Le 2024-02-28 à 00:44, Junio C Hamano a écrit :
+> * ml/log-merge-with-cherry-pick-and-other-pseudo-heads (2024-02-27) 2 commits
+>  - revision: implement `git log --merge` also for rebase/cherry-pick/revert
+>  - revision: ensure MERGE_HEAD is a ref in prepare_show_merge
+> 
+>  "git log --merge" learned to pay attention to CHERRY_PICK_HEAD and
+>  other kinds of *_HEAD pseudorefs.
+> 
+>  Will merge to 'next'?
+>  source: <20240225-ml-log-merge-with-cherry-pick-and-other-pseudo-heads-v5-0-af1ef2d9e44d@gmail.com>
 
-> Under normal circumstances, it shouldn't ever happen that a repository
-> has no HEAD reference. In fact, git-update-ref(1) would fail any request
-> to delete the HEAD reference, and a newly initialized repository always
-> pre-creates it, too.
->
-> But in the next commit, we are going to change git-clone(1) to partially
-> initialize the refdb just up to the point where remote helpers can find
-> the repository. With that change, we are going to run into a situation
-> where repositories have no refs at all.
->
-> Now there is a very particular edge case in this situation: when
-> preparing an empty ref transacton, we end up returning whatever value
-> `read_ref_without_reload()` returned to the caller. Under normal
-> conditions this would be fine: "HEAD" should usually exist, and thus the
-> function would return `0`. But if "HEAD" doesn't exist, the function
-> returns a positive value which we end up returning to the caller.
->
-> Fix this bug by resetting the return code to `0` and add a test.
->
-> Signed-off-by: Patrick Steinhardt <ps@pks.im>
-> ---
->  refs/reftable-backend.c    |  1 +
->  t/t0610-reftable-basics.sh | 13 +++++++++++++
->  2 files changed, 14 insertions(+)
->
-> diff --git a/refs/reftable-backend.c b/refs/reftable-backend.c
-> index a14f2ad7f4..45568818f0 100644
-> --- a/refs/reftable-backend.c
-> +++ b/refs/reftable-backend.c
-> @@ -821,6 +821,7 @@ static int reftable_be_transaction_prepare(struct ref_store *ref_store,
->  				      &head_referent, &head_type);
->  	if (ret < 0)
->  		goto done;
-> +	ret = 0;
->
+I'll send a new version with a reworked error message, so best to wait.
 
-So this is not really a problem in this function, it's more of that
-`refs.c:ref_transaction_prepare` checks if `ret` is non-zero.
-
-Nit: would be nice to have a comment about why overriding this value is
-ok.
-
->  	for (i = 0; i < transaction->nr; i++) {
->  		struct ref_update *u = transaction->updates[i];
-> diff --git a/t/t0610-reftable-basics.sh b/t/t0610-reftable-basics.sh
-> index 6a131e40b8..c5f4d23433 100755
-> --- a/t/t0610-reftable-basics.sh
-> +++ b/t/t0610-reftable-basics.sh
-> @@ -328,6 +328,19 @@ test_expect_success 'ref transaction: writes are synced' '
->  	EOF
->  '
->
-> +test_expect_success 'ref transaction: empty transaction in empty repo' '
-> +	test_when_finished "rm -rf repo" &&
-> +	git init repo &&
-> +	test_commit -C repo --no-tag A &&
-> +	COMMIT=$(git -C repo rev-parse HEAD) &&
-
-why do we do this?
-
---000000000000db95e506126f7f09
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: 20fca8a2a1227b28_0.1
-
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1YZkdkRVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mMlpqQy85aGd5eGxnY2RFQzBselBHTGo5ZVdzaEYxZgpiUjN4dCtmQnJl
-QWRVQUNJYVd5QjZsTjVsL2Y0aCtLbVFqWDd2TWh4TU8wR3FHTWJDditwczloS0JKZ1czcmMwClRB
-V3YwZVZWMWtvSHphK1l1NTFJaFNwcS9UQ2puRHdNQXZFQWJtNXEzUWMyN0dHTEJTcGdhVmtUMTlR
-Q2R6YmcKNVo1Y2c4RlV4c0tiOTRva2ZtMVRQVXJJTGJ2bVk0TWppcXRHK1E0a0Nldk9aeTlKb2ZZ
-ZHJaVXNWK1FTQXlSRwpZcW9idHI0NFRDQUpja0xtQlNOaTZYRGZNZzBROXQxZDhPTkp5UWNWaHgy
-ODZKV3JuOUgzS3NleWdkdXVGZVVPCnZtTHk1SDBVY09UM2dEbCt5R2RMb2N4V0VCY2Rvb2hFVi9z
-dDZSYjlkYThRQmdSOFYxd2xnUHN2UEMvN0Q0ZzUKenRvZXg2OTErSVczZmlEK0RpRE5LRUx6cndy
-ZHRucnljTklFZEpuSGp1UlAvWmNYaXdVNXhNb29NTEFndUROegp1VklsYTRBQVQ4VndjN09pdUJi
-OVFjZEFLR01ZTm9VeHNhSzFZeDJSS0hTR2E4Z0lTS0E1ZWcxSWpaV1VCbFNnCnk0VS9GTkdvZVhn
-cHpNQ1Vzb1I1Zm96VnpKelFQNzNzVjNxQWZZWT0KPVE5S3MKLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---000000000000db95e506126f7f09--
+Thanks,
+Philippe.
