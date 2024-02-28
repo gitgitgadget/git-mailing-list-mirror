@@ -1,64 +1,64 @@
-Received: from mail-lj1-f177.google.com (mail-lj1-f177.google.com [209.85.208.177])
+Received: from mail-wm1-f53.google.com (mail-wm1-f53.google.com [209.85.128.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1844A3838F
-	for <git@vger.kernel.org>; Wed, 28 Feb 2024 09:44:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1796339BD
+	for <git@vger.kernel.org>; Wed, 28 Feb 2024 09:44:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709113475; cv=none; b=fuAzO39ShI9W88ylxt4sx7fiLUiayPsZNrZ/JGqbGWsqstgQXWhIDGlC0NOplNW4U3sHrIZaE5NJUjurZhwVMDtqpzD8RTbQuRxQEGxzrEJA7HichSSaODxemj6cWh2/07i2gp7QZ1o9q5+n8PtxV9UCaGvw6eBiIGputBg/stc=
+	t=1709113475; cv=none; b=fZeXthaUY3doj4ZqBhipavRTKnQukrcoYQzYMo3Wd88gebY/GDXsHZvAed6SC9dr+LzUplB4+2l7qTi70JI9Ysi+k62Jp0bjsz2iw/XRsK86otGSa2jUWhGhKsu/YnfMai3SX75ZynAvcUSRfswWQ/yp7UQORmXqA0tezAWRo34=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1709113475; c=relaxed/simple;
-	bh=053G4gyJCDPXvy4KaKrU+xs7Huyanhwp3MVf7KCDwr4=;
+	bh=uUOOMmadKz5Nnd5Z0oW6BKF780M3ENnI44pPgvMX92A=;
 	h=Message-ID:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=c/+QWnD/mhQc74TXOykBqNrIqOeHreTMpHTUbgv06nNlie53TKj0DX2o3UDqGqHGHzBIrgAeeJB8FdOQjC9S5SVEYsvNI/xYDkVpYGNDF5UGKrQKLvewm9rHYo2bFvL56jhNtoTsEbI9HntLuiR0CZHQJv8ccRDlbM7NmqNKBJI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=QiV9zWAj; arc=none smtp.client-ip=209.85.208.177
+	 MIME-Version:To:Cc; b=ptSG2IBuT+5dHsaZ73WMFuwSDTt+fMTbxfaqA4SOvLuf6al6DMFtLgTokt7liJjDCTaW0T9arlQAmbpRT3BNPpAiFeqo05++iebEkuxCw1F2VAYEQ4nNZSGkvCjd+c2NdfMKSHa9z0mTCyfvsOSbEv0olJV6+rLgvXtfbOgWEe8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=bw4CmT/J; arc=none smtp.client-ip=209.85.128.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QiV9zWAj"
-Received: by mail-lj1-f177.google.com with SMTP id 38308e7fff4ca-2d28e465655so40582821fa.0
-        for <git@vger.kernel.org>; Wed, 28 Feb 2024 01:44:32 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bw4CmT/J"
+Received: by mail-wm1-f53.google.com with SMTP id 5b1f17b1804b1-412b493ed27so2435555e9.2
+        for <git@vger.kernel.org>; Wed, 28 Feb 2024 01:44:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20230601; t=1709113471; x=1709718271; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=MAjm8UNz8yTNpUODr4WHFqUZbJI+oy7Hb6vSSq2LznE=;
-        b=QiV9zWAjP3wu58xM9z1ZLDokJDWtZ1fIgiHwGgvmJSel4IBKJ+VmRvWi+d9MTaQaBX
-         7JWwJtpH7xRdKEjjh5eTrvPUIID5gpqOiiqzmWH9wWwgRrmQGpIUUbDDt7IUwuIF3bRc
-         Tw4VUKZxG3cuKRJ2QY6UtB1GtN3qmTsGVpee2jxMB2PQtblA9FYOEolVeI0bQydmYRdo
-         GoIWT7Hni6bROgehN4U9KkoUX1lsnsEOmpOhHfOU6f+a07H8CF43J2Ud3M4tuhXNahpC
-         TWwiuiz4mymwwaFY7p6GxBAp1DmivdP6Kao7HGfZWkX6qgAL/dILycsRbmynLC6tqCpq
-         StNA==
+        bh=gbBNM9tJUa+ssc+h+r45IX2A/AFl7A8NJ+LiTOCxob0=;
+        b=bw4CmT/J1/8slA7dg7VxLzb/6YiL4mgzsjPAphd+v/H9mU80r4MWJv84iLPVnnbQKR
+         Z5jKsveYCwheEn5PC3+IOiQhOSATEAL6X+GFNfun4bViCTPhnpjKffEw7acPpnxcS79v
+         46xjBGDn5ecFuO4QN5ahgmoZaknJDk4gc+YGhWuMlRT3lboIu4hQSsEEHABgKEMJYqjv
+         fPFhdvwSn7P4D+wgLzT5kG8VQQ2fxlSgyfW5vb1RJUyZaeAQMWGqql+KfjaYz87qP0Um
+         JXeL0n+i5csj6aBuSL70YLepXINMBYy4seaJ7ZKIs6HaZnWiGi3nzjf96OUO3ZxJzjP6
+         QHvg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20230601; t=1709113471; x=1709718271;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=MAjm8UNz8yTNpUODr4WHFqUZbJI+oy7Hb6vSSq2LznE=;
-        b=TSyD8nTbkIyTyhsiWh3AvHZ+Gd0TrZBoO2mqGH/j3aasCjgj6XgmQ9IP8/Eaijo+UD
-         qLkfWPsPjbI7Hw/hcUgcOOCexwbntJW7D1DUzsKbbkPBOOB7cxuPohmFt6Ryn8Xls/Ah
-         pw9dt6A3idcrngRBLBapCKKkCbT3TZHFbi34fNmZY3q3iKXPEZKAEzTqsbqTm1jrMXlq
-         IQYcz1oTIkYC/caHtWVodTzOm6CeJsXxvLWihD96yXMNgoAG/BC3lOcpLlQepmdfwcXM
-         fsNWyU4gAnrrMSQiNR00bM+1P2yQChhi+yRIoTPUTGsfMN4JjbxQglXAP7GgAY3HKgwB
-         ZSqg==
-X-Gm-Message-State: AOJu0YwZ7HxJBbzABydYVSwOSRdczds8/9vw6/YvMiGBq+nrXMXFpT6k
-	nVOQxWr7x09r8N68MbPAkX7SE9j+NbZlNHLtOsE8Xruwl309vkyQdkWYKLGI
-X-Google-Smtp-Source: AGHT+IH1stcaUwdiq9kaBBU60905HHID4iPZ3jvnhHR/q1ccwduun2RIa5iDqnHI5DZ75bamRSpptA==
-X-Received: by 2002:a2e:9ada:0:b0:2d2:37e6:501b with SMTP id p26-20020a2e9ada000000b002d237e6501bmr7027251ljj.43.1709113470755;
-        Wed, 28 Feb 2024 01:44:30 -0800 (PST)
+        bh=gbBNM9tJUa+ssc+h+r45IX2A/AFl7A8NJ+LiTOCxob0=;
+        b=BZ7h8UFKbHx4RMhGdJdgvVZqU0Zdpk16KcOTNJT6hQHI6LG/vtNwg+X1mzfsJD00mM
+         YWVvJX+t21aFqdesjmTUSCQhXCtJxS8lHr80AQ+O7h+ZpjVZ1tnVO02CQqec/0SxDXDl
+         zZIrG2lndsS1z/6Hml2+8oRXxRztd7T/IFPCsqi2gtC7zfqcBD0Ms08XtaMQWxPWWbTN
+         g5CngTluB+8a4kASZMnFBwU2sO7juqYfSCbZit/N9iCb5t69wQOraPBJAM87e5jazxZy
+         BKtH+xi0pfYnr20+UzKTKLeMtsNFoyKiCEPldm3Ni/9BoDKvciHvIPG8yZJ6rVvT50Ke
+         7otQ==
+X-Gm-Message-State: AOJu0Yx3BQ/gI7Mt2l8w1ZYqpCJJh3d+E8cCJhTI4HTzqB7qyILKMbjZ
+	WRLXEUPc7DS5h8RyI+uApxenFNy7a4DqfWt7YBlL8KEgCIWP3D1qBu/aPXGh
+X-Google-Smtp-Source: AGHT+IGAaJ+3ILw6MT9IbKzm1w9kwPqrHB6qJKUf6FPPyFUOdA6N+bSQunVVuIvoGvHp3dgcdHYrAQ==
+X-Received: by 2002:a05:6000:1243:b0:33d:b32a:8acb with SMTP id j3-20020a056000124300b0033db32a8acbmr9107187wrx.23.1709113471596;
+        Wed, 28 Feb 2024 01:44:31 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id o30-20020a05600c511e00b0041294d015fbsm1565769wms.40.2024.02.28.01.44.29
+        by smtp.gmail.com with ESMTPSA id q16-20020adffed0000000b0033ce06c303csm13950234wrs.40.2024.02.28.01.44.31
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 28 Feb 2024 01:44:30 -0800 (PST)
-Message-ID: <32587b3caa701cf548de08ddf8a32a80e7de2325.1709113459.git.gitgitgadget@gmail.com>
+        Wed, 28 Feb 2024 01:44:31 -0800 (PST)
+Message-ID: <05de9f2444477dd38b7e1cf67d8d233ce6e0e68b.1709113459.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1657.v4.git.1709113457.gitgitgadget@gmail.com>
 References: <pull.1657.v3.git.1709040497.gitgitgadget@gmail.com>
 	<pull.1657.v4.git.1709113457.gitgitgadget@gmail.com>
 From: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Wed, 28 Feb 2024 09:44:16 +0000
-Subject: [PATCH v4 10/11] commit-reach(repo_get_merge_bases_many): pass on
- "missing commits" errors
+Date: Wed, 28 Feb 2024 09:44:17 +0000
+Subject: [PATCH v4 11/11] commit-reach(repo_get_merge_bases_many_dirty): pass
+ on errors
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -76,165 +76,87 @@ Cc: Patrick Steinhardt <ps@pks.im>,
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
+(Actually, this commit is only about passing on "missing commits"
+errors, but adding that to the commit's title would have made it too
+long.)
+
 The `merge_bases_many()` function was just taught to indicate parsing
-errors, and now the `repo_get_merge_bases_many()` function is aware of
-that, too.
-
-Naturally, there are a lot of callers that need to be adjusted now, too.
-
-Next stop: `repo_get_merge_bases_dirty()`.
+errors, and now the `repo_get_merge_bases_many_dirty()` function is
+aware of that, too.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- bisect.c              |  7 ++++---
- builtin/log.c         | 13 +++++++------
- commit-reach.c        | 16 ++++++----------
- commit-reach.h        |  7 ++++---
- commit.c              |  7 ++++---
- t/helper/test-reach.c |  9 ++++++---
- 6 files changed, 31 insertions(+), 28 deletions(-)
+ builtin/merge-base.c |  9 ++++++---
+ commit-reach.c       | 16 ++++++----------
+ commit-reach.h       |  7 ++++---
+ 3 files changed, 16 insertions(+), 16 deletions(-)
 
-diff --git a/bisect.c b/bisect.c
-index 1be8e0a2711..2018466d69f 100644
---- a/bisect.c
-+++ b/bisect.c
-@@ -851,10 +851,11 @@ static void handle_skipped_merge_base(const struct object_id *mb)
- static enum bisect_error check_merge_bases(int rev_nr, struct commit **rev, int no_checkout)
+diff --git a/builtin/merge-base.c b/builtin/merge-base.c
+index 2edffc5487e..a8a1ca53968 100644
+--- a/builtin/merge-base.c
++++ b/builtin/merge-base.c
+@@ -13,10 +13,13 @@
+ 
+ static int show_merge_base(struct commit **rev, int rev_nr, int show_all)
  {
- 	enum bisect_error res = BISECT_OK;
--	struct commit_list *result;
-+	struct commit_list *result = NULL;
+-	struct commit_list *result, *r;
++	struct commit_list *result = NULL, *r;
  
--	result = repo_get_merge_bases_many(the_repository, rev[0], rev_nr - 1,
--					   rev + 1);
-+	if (repo_get_merge_bases_many(the_repository, rev[0], rev_nr - 1,
-+				      rev + 1, &result) < 0)
-+		exit(128);
+-	result = repo_get_merge_bases_many_dirty(the_repository, rev[0],
+-						 rev_nr - 1, rev + 1);
++	if (repo_get_merge_bases_many_dirty(the_repository, rev[0],
++					    rev_nr - 1, rev + 1, &result) < 0) {
++		free_commit_list(result);
++		return -1;
++	}
  
- 	for (; result; result = result->next) {
- 		const struct object_id *mb = &result->item->object.oid;
-diff --git a/builtin/log.c b/builtin/log.c
-index befafd6ae04..c75790a7cec 100644
---- a/builtin/log.c
-+++ b/builtin/log.c
-@@ -1656,7 +1656,7 @@ static struct commit *get_base_commit(const char *base_commit,
- 		struct branch *curr_branch = branch_get(NULL);
- 		const char *upstream = branch_get_upstream(curr_branch, NULL);
- 		if (upstream) {
--			struct commit_list *base_list;
-+			struct commit_list *base_list = NULL;
- 			struct commit *commit;
- 			struct object_id oid;
- 
-@@ -1667,11 +1667,12 @@ static struct commit *get_base_commit(const char *base_commit,
- 					return NULL;
- 			}
- 			commit = lookup_commit_or_die(&oid, "upstream base");
--			base_list = repo_get_merge_bases_many(the_repository,
--							      commit, total,
--							      list);
--			/* There should be one and only one merge base. */
--			if (!base_list || base_list->next) {
-+			if (repo_get_merge_bases_many(the_repository,
-+						      commit, total,
-+						      list,
-+						      &base_list) < 0 ||
-+			    /* There should be one and only one merge base. */
-+			    !base_list || base_list->next) {
- 				if (die_on_failure) {
- 					die(_("could not find exact merge base"));
- 				} else {
+ 	if (!result)
+ 		return 1;
 diff --git a/commit-reach.c b/commit-reach.c
-index 288d3d896a2..0aeaef25343 100644
+index 0aeaef25343..202776b29e9 100644
 --- a/commit-reach.c
 +++ b/commit-reach.c
-@@ -462,17 +462,13 @@ static int get_merge_bases_many_0(struct repository *r,
- 	return 0;
+@@ -471,17 +471,13 @@ int repo_get_merge_bases_many(struct repository *r,
+ 	return get_merge_bases_many_0(r, one, n, twos, 1, result);
  }
  
--struct commit_list *repo_get_merge_bases_many(struct repository *r,
--					      struct commit *one,
--					      int n,
--					      struct commit **twos)
-+int repo_get_merge_bases_many(struct repository *r,
-+			      struct commit *one,
-+			      int n,
-+			      struct commit **twos,
-+			      struct commit_list **result)
+-struct commit_list *repo_get_merge_bases_many_dirty(struct repository *r,
+-						    struct commit *one,
+-						    int n,
+-						    struct commit **twos)
++int repo_get_merge_bases_many_dirty(struct repository *r,
++				    struct commit *one,
++				    int n,
++				    struct commit **twos,
++				    struct commit_list **result)
  {
 -	struct commit_list *result = NULL;
--	if (get_merge_bases_many_0(r, one, n, twos, 1, &result) < 0) {
+-	if (get_merge_bases_many_0(r, one, n, twos, 0, &result) < 0) {
 -		free_commit_list(result);
 -		return NULL;
 -	}
 -	return result;
-+	return get_merge_bases_many_0(r, one, n, twos, 1, result);
++	return get_merge_bases_many_0(r, one, n, twos, 0, result);
  }
  
- struct commit_list *repo_get_merge_bases_many_dirty(struct repository *r,
+ int repo_get_merge_bases(struct repository *r,
 diff --git a/commit-reach.h b/commit-reach.h
-index 4690b6ecd0c..458043f4d58 100644
+index 458043f4d58..bf63cc468fd 100644
 --- a/commit-reach.h
 +++ b/commit-reach.h
-@@ -13,9 +13,10 @@ int repo_get_merge_bases(struct repository *r,
- 			 struct commit *rev1,
- 			 struct commit *rev2,
- 			 struct commit_list **result);
--struct commit_list *repo_get_merge_bases_many(struct repository *r,
--					      struct commit *one, int n,
--					      struct commit **twos);
-+int repo_get_merge_bases_many(struct repository *r,
-+			      struct commit *one, int n,
-+			      struct commit **twos,
-+			      struct commit_list **result);
+@@ -18,9 +18,10 @@ int repo_get_merge_bases_many(struct repository *r,
+ 			      struct commit **twos,
+ 			      struct commit_list **result);
  /* To be used only when object flags after this call no longer matter */
- struct commit_list *repo_get_merge_bases_many_dirty(struct repository *r,
- 						    struct commit *one, int n,
-diff --git a/commit.c b/commit.c
-index 8405d7c3fce..00add5d81c6 100644
---- a/commit.c
-+++ b/commit.c
-@@ -1054,7 +1054,7 @@ struct commit *get_fork_point(const char *refname, struct commit *commit)
- {
- 	struct object_id oid;
- 	struct rev_collect revs;
--	struct commit_list *bases;
-+	struct commit_list *bases = NULL;
- 	int i;
- 	struct commit *ret = NULL;
- 	char *full_refname;
-@@ -1079,8 +1079,9 @@ struct commit *get_fork_point(const char *refname, struct commit *commit)
- 	for (i = 0; i < revs.nr; i++)
- 		revs.commit[i]->object.flags &= ~TMP_MARK;
+-struct commit_list *repo_get_merge_bases_many_dirty(struct repository *r,
+-						    struct commit *one, int n,
+-						    struct commit **twos);
++int repo_get_merge_bases_many_dirty(struct repository *r,
++				    struct commit *one, int n,
++				    struct commit **twos,
++				    struct commit_list **result);
  
--	bases = repo_get_merge_bases_many(the_repository, commit, revs.nr,
--					  revs.commit);
-+	if (repo_get_merge_bases_many(the_repository, commit, revs.nr,
-+				      revs.commit, &bases) < 0)
-+		exit(128);
+ int get_octopus_merge_bases(struct commit_list *in, struct commit_list **result);
  
- 	/*
- 	 * There should be one and only one merge base, when we found
-diff --git a/t/helper/test-reach.c b/t/helper/test-reach.c
-index aa816e168ea..84ee9da8681 100644
---- a/t/helper/test-reach.c
-+++ b/t/helper/test-reach.c
-@@ -117,9 +117,12 @@ int cmd__reach(int ac, const char **av)
- 	else if (!strcmp(av[1], "is_descendant_of"))
- 		printf("%s(A,X):%d\n", av[1], repo_is_descendant_of(r, A, X));
- 	else if (!strcmp(av[1], "get_merge_bases_many")) {
--		struct commit_list *list = repo_get_merge_bases_many(the_repository,
--								     A, X_nr,
--								     X_array);
-+		struct commit_list *list = NULL;
-+		if (repo_get_merge_bases_many(the_repository,
-+					      A, X_nr,
-+					      X_array,
-+					      &list) < 0)
-+			exit(128);
- 		printf("%s(A,X):\n", av[1]);
- 		print_sorted_commit_ids(list);
- 	} else if (!strcmp(av[1], "reduce_heads")) {
 -- 
 gitgitgadget
-
