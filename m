@@ -1,79 +1,86 @@
-Received: from mail-wr1-f50.google.com (mail-wr1-f50.google.com [209.85.221.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D85422F1E
-	for <git@vger.kernel.org>; Wed, 28 Feb 2024 17:53:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8473F4084F
+	for <git@vger.kernel.org>; Wed, 28 Feb 2024 18:20:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709142814; cv=none; b=VU1MIg4h6Sm6u7Rv9JuC8+yu3L8Mo0jw+lmOwPeLOhnAsJ+7Zbs5HfRuwXp6nt0/n8U0XOgr8V/x3TuOQWeC2C4pCrMq0hj0hfqyRBBBdUkGiE6O3HiNtKN7qJ8oTOR1eqX7rWEksqoQ8ggkuJz09yG5z/tFavWQJz0HbI9P25I=
+	t=1709144407; cv=none; b=VlbvaqHjFj7g3Tv/nt8xT/7XmoCSX9tMPkfpcqcKb8/QRIiFO7vgmKSC5jhTgoxAmo7ABA56p/DcQ5GUbyQ2qlM7mlyjPdU7zzFCSV+LoRhSkMOhUCatLkGbtmsJsedQkxE3AsNqHcKQtt06GQ8hLzSFrm/pJWiYW6441vPiBlc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709142814; c=relaxed/simple;
-	bh=20mhjGFRnIwoO7ihnhPqrzqou0z9XnEAhjdkdr/vuS4=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=T/46/cV0L/008MRFpkkftpAPDdqgYqQBVUSluZS2FIcCVEFH2KOh7DOFeRI+BZyAZcfvCJc49LHiAdgqEKU6h1vgezge9hRp0NaT/ynWHmmqH7RTCXztcquSF1eBlMKWZE9+fmr4m7XTiMApHb/uNr0ys1CEFDNHyW8sVCUXOz8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NsvtzTBe; arc=none smtp.client-ip=209.85.221.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1709144407; c=relaxed/simple;
+	bh=NLBfkSv9lof2Mr5x+p0VLeEMuHKFADiaSSPKZCFy2IM=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=r8B2ltEAIFRhg7tGaIpaWmMJ4+VbfzGgptnViNeizFtxIgE9xOyxSARi6YVbFFBaytIP0jW82OJp5Wgi5wXNJio6mlV3ISJxcYQLNzYl7G95pSH9niTOTpy+Duj3UJ8iD8lvnssrO9U504poQIuN71o22ftGi7b4JX2yWSUyRAc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=yIBrooQ1; arc=none smtp.client-ip=64.147.108.71
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NsvtzTBe"
-Received: by mail-wr1-f50.google.com with SMTP id ffacd0b85a97d-33ddd1624beso6967f8f.1
-        for <git@vger.kernel.org>; Wed, 28 Feb 2024 09:53:33 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1709142812; x=1709747612; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=20mhjGFRnIwoO7ihnhPqrzqou0z9XnEAhjdkdr/vuS4=;
-        b=NsvtzTBef88BJlGnOT3QrRKR5FhiD6mQzZ6hJ9T+0qHjCya7Pni1i7IBry71arjmxD
-         ykGI1IdMw8StxvGyaXQ3Ff8BM9CF66rH8QZFY2dMBM2vh7lg1+8rc+8ypVFrUjbIKl12
-         Ch0JFe04udv6QT13CNPBWBuTHtuGvl2qmZxNpP2coGU+fqujRGely6G8pCRdUlx6C7jR
-         fD6d1hhUGCDDsK6Yzy5kOd4KeomaYvqsCOrW52hkEb8YeTZ3lc6yTBOJkR36Jc3NiNbu
-         uy++NwHnLcxaABb/8SzkVTMmPqXtLjsd2QqGUid4LxxtuF/1Moohw1WN0OxGH9IEiU2Q
-         +csQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1709142812; x=1709747612;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=20mhjGFRnIwoO7ihnhPqrzqou0z9XnEAhjdkdr/vuS4=;
-        b=Jm98v41DQUyG1kc38jDq2m4xZLhTMoARsnlfyqhD+jDHf0zAeobuiHNC5dzT35Jolp
-         jWbHU9Dni3noxPlmW4PIX2j6BvUqlnIw47+Hj3/3ka9YI40zS/OOzZyZdo0/S1yiLky2
-         SQoZf/2GP25QAtxFQZoQ5AXE+MgC+awpHcJvYaIQdpmZyQt2YjDoNWB/5MVS1ZtnggDi
-         YTwhPAXmcSIFu2oNQAh0PLBavZJZnVJlzic2GXpMdTGX3J334PQ6SNgwxSnktUnUY9pt
-         jI3OqBD5OuK/1kSKpqHoimzm9rEE79xvWo+7MJ/kglUHpSahALfPbmWEhBWVQKWHORrw
-         JCvQ==
-X-Gm-Message-State: AOJu0Yz9Evfvk4zyJ5PIRqnJZW+DKfB7DdRpHVs/48hCZshcFd0ptAk1
-	icnd79kG7O2AcKUzhFZWbDsAryVdhCBuThBV+tfnTNA5arUBdLceLpxL+AQ6
-X-Google-Smtp-Source: AGHT+IFD/elQ03C883sHKsIdp1K3XzHrIJ4lSiyL/2PNT/YWS3hVewCQeBGFG5+K97nSWNIulhvCFQ==
-X-Received: by 2002:adf:ae42:0:b0:33e:6e0:cc1f with SMTP id u2-20020adfae42000000b0033e06e0cc1fmr227487wrd.15.1709142811449;
-        Wed, 28 Feb 2024 09:53:31 -0800 (PST)
-Received: from penguin.lxd ([2.26.197.149])
-        by smtp.gmail.com with ESMTPSA id p13-20020a7bcc8d000000b00412a5b6ac5csm2718562wma.36.2024.02.28.09.53.30
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 28 Feb 2024 09:53:31 -0800 (PST)
-From: M Hickford <mirth.hickford@gmail.com>
-To: julian@swagemakers.org
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH] send-email: implement SMTP bearer authentication
-Date: Wed, 28 Feb 2024 17:53:29 +0000
-Message-ID: <20240228175329.3371-1-mirth.hickford@gmail.com>
-X-Mailer: git-send-email 2.44.0.rc1.44.g96c8a0712e
-In-Reply-To: <20240225103413.9845-1-julian@swagemakers.org>
-References: <20240225103413.9845-1-julian@swagemakers.org>
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="yIBrooQ1"
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 820FE1DBC04;
+	Wed, 28 Feb 2024 13:19:59 -0500 (EST)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=NLBfkSv9lof2Mr5x+p0VLeEMuHKFADiaSSPKZC
+	Fy2IM=; b=yIBrooQ110mwN+j6BJ1AVgOuoyZBbRtaX2mKVNskHeDiLzJe878PAN
+	TG2RAc7ZQoLyGri4tPFGGh/U3zc2pyEIB91DwNeCLyEkPBMmvsmAQ5SvZ2TOY9JA
+	3Xz/iRPM00c5HZ7TYAmFPOJKsSZABMmmJlvX3+zD9Ipnr5ts8qlXw=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 76CD21DBC03;
+	Wed, 28 Feb 2024 13:19:59 -0500 (EST)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.176.30])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id DD93B1DBC02;
+	Wed, 28 Feb 2024 13:19:58 -0500 (EST)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Sergius Nyah <sergiusnyah@gmail.com>
+Cc: git@vger.kernel.org,  christian.couder@gmail.com,  pk@pks.im,
+  shyamthakkar001@gmail.com
+Subject: Re: [GSOC][PATCH] Userdiff: add builtin patterns for JavaScript.
+In-Reply-To: <20240228150034.313196-1-sergiusnyah@gmail.com> (Sergius Nyah's
+	message of "Wed, 28 Feb 2024 16:00:34 +0100")
+References: <CANAnif-OganZLi0Cu_uq=nveC+u5n14c=o_DQHT-wFOqQ9Vs0Q@mail.gmail.com>
+	<20240228150034.313196-1-sergiusnyah@gmail.com>
+Date: Wed, 28 Feb 2024 10:19:57 -0800
+Message-ID: <xmqqttlsjvsi.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ FB2F1C28-D665-11EE-9EE0-25B3960A682E-77302942!pb-smtp2.pobox.com
 
-Neat idea. I recall it was awkward to configure git-send-email to send with
-Gmail. I had to configure a security-compromising 'app password' [1][2].
+Sergius Nyah <sergiusnyah@gmail.com> writes:
 
-OAuth is a great improvement.
+> This commit introduces builtin patterns for JavaScript in userdiff and adds a new test
+> case in t4018-diff-funcname.sh to verify the enhanced JavaScript function detection in Git diffs.
+> Signed-off-by: Sergius Justus Chesami Nyah <sergiusnyah@gmail.com>
+> ---
+> ...-PATCH-1-2-Add-builtin-patterns-for-.patch | 53 ++++++-------------
+> t/t4018-diff-funcname.sh                      | 25 ++++++++-
+> 2 files changed, 38 insertions(+), 40 deletions(-)
 
-[1] https://support.google.com/mail/answer/185833
-[2] https://security.google.com/settings/security/apppasswords
+You apparently have done "git add" of a file that is a format-patch
+output, which led to ...
 
+> diff --git a/Pattern/0001-Subject-GSOC-RFC-PATCH-1-2-Add-builtin-patterns-for-.patch b/Pattern/0001-Subject-GSOC-RFC-PATCH-1-2-Add-builtin-patterns-for-.patch
+> index 43593866bc..9c3b80665e 100644
+> --- a/Pattern/0001-Subject-GSOC-RFC-PATCH-1-2-Add-builtin-patterns-for-.patch
+> +++ b/Pattern/0001-Subject-GSOC-RFC-PATCH-1-2-Add-builtin-patterns-for-.patch
 
+... this thing.
+
+Wrap the proposed commit log message to a reasonable length and have
+a blank line before your sign-off.  Other pieces of advice about
+formatting and contents found in Documentation/SubmittingPatches are
+also helpful.
+
+Thanks.
