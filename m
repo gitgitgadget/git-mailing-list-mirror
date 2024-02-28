@@ -1,60 +1,59 @@
-Received: from mail-lj1-f177.google.com (mail-lj1-f177.google.com [209.85.208.177])
+Received: from mail-lf1-f46.google.com (mail-lf1-f46.google.com [209.85.167.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF59F145351
-	for <git@vger.kernel.org>; Wed, 28 Feb 2024 14:40:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D38B3149E0B
+	for <git@vger.kernel.org>; Wed, 28 Feb 2024 14:45:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709131211; cv=none; b=RE9bp3zoOknm3wxSTX+KZsh9FVwPgpp+cGFf2/S1++Q7cSXAwt6Y3OCa1LirP9kNbX5FCoUT53Klu09fLhHv5iDy10zWmrUS3aNEq/uM20N81p9o9O1jkr+bjv0fZdN3pdEJM0JNjpunhS846k0Fzz+qRtSw7Ol+Z2FQzQNsOJw=
+	t=1709131545; cv=none; b=gkWrxAk+JaCZAX6hNuBBWVW3yUaacDxXKPMKAmESkobqO8FxYWymQlfLlWBA5Odf9UYxuwRW3lsCQ1aAobKHN0y2tq+JViIAQRp9MejbN9FLI+YM3APk4wOVf83mgJ06DkHawPAV99QqSZm+4GJesYNs8RElftIKfnXHtskxBGo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709131211; c=relaxed/simple;
-	bh=M0Xlb9l/NEjYxJWE6SkNEjMZzXDo8VS8DghI5UYuQ6Y=;
+	s=arc-20240116; t=1709131545; c=relaxed/simple;
+	bh=cxvI7dAqHLx6sLsvlXC3FzX7oH2r26TlAX/pqVv/PBw=;
 	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=n7NZSMN1oyAXr5YmEonNf4OfpEufNRaCHF+ZbLJk1ZlzKAbCEkjDXXARAlnyDnLqkYGQZ7GE6XglvMejrOWA5Mubr04IkaO0x5TjG3qZQnBaKwcTZgdg1MnN1dxfbk6Ma02y3T8PKIkOMHBLs/rrmWmCk2CFUKYzP9WS1RfalfY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mVpoQUVP; arc=none smtp.client-ip=209.85.208.177
+	 In-Reply-To:Content-Type; b=UZaZsR9cgB1fFX6x1PFkIUk/ulHWsjQHAjJxZa7a4PhNk8/a6qJoQHU+QRIbPJagnsNhUH5y1DwFY9YNZFE4Gx4WHwP+zHuYlbzwyIUPdikpGOaVHJ8E9QhGbVgruE9HuTcL798fqeyM3rOilnKFSZIUrKI3myVCA7ecHDtYacc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Nm0TUXYP; arc=none smtp.client-ip=209.85.167.46
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mVpoQUVP"
-Received: by mail-lj1-f177.google.com with SMTP id 38308e7fff4ca-2d1094b5568so65266631fa.1
-        for <git@vger.kernel.org>; Wed, 28 Feb 2024 06:40:09 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Nm0TUXYP"
+Received: by mail-lf1-f46.google.com with SMTP id 2adb3069b0e04-513173e8191so1755125e87.1
+        for <git@vger.kernel.org>; Wed, 28 Feb 2024 06:45:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1709131208; x=1709736008; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1709131542; x=1709736342; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:references:cc:to
          :content-language:subject:reply-to:from:user-agent:mime-version:date
          :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=WqjpZRmV7SbgxpVgXVLhwrgxAFPg5oC3icRyfG+GQBg=;
-        b=mVpoQUVPHKAjPR/cl4UJwUwrqrSfG9qrLfvP0SNO/9WE5/PqcQv0QuLKIFiQSyT+ND
-         PqCogqNN2757yzZ1E92pwGUFjzutUZENOeVb5RTsU4t1+ITrQX7mpD5/hCDttMVcvbbQ
-         Y3f/DURcKaXx8f50L9m6UecV3jlL3vIkldgyTQkNKu4kCQ71TYnG2qD4yRtP7u/iIGdy
-         iMYxgNYp6kAl18aorax6cDC2fWv69ikqBSNzhfzgC3s7dWEUH3ImznFafka9Hq9Xm3lz
-         a5TJ8s2oV9L6ljPx9LdgrRARSAcJHS8pHm1+5CN2I/6TMAFNWEjKx8wsTpALBzf0a6Wz
-         j47Q==
+        bh=zJBzHbVbgmcoHCyYjQR2zrRXZpANI93wEBsALmzJ9Mo=;
+        b=Nm0TUXYPM9ey3qj6NHOwfKN+FuTUwCEZhYnLQIY5JEORcClquX4d3UGDucGwztFD7l
+         Sk3g5IeJRiiU48Xxb4OUzUX4F8lk+QHiRO3dPibOkH2Hia0JsNmqemPM9PZ7wYBgLRCg
+         uEtOvIHjl/9JYRic+Dwqze28EMmqsKsP0VH4F8CIukySFLdfHsTBGObMI0fDvX8m2UbB
+         BanHJ/V0HHDGvY/NQDBZdYptSFES9ZaDs5hYaCMEH7Uy6+dkHVCZ4z4mxELHgQGPYDWm
+         891HONP8MAA0rsKlGtX0REyiNguTKI2R+7616SvQlhxkQ4DLT/ox+hWb8ywncHJ3AWoO
+         PjPQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1709131208; x=1709736008;
+        d=1e100.net; s=20230601; t=1709131542; x=1709736342;
         h=content-transfer-encoding:in-reply-to:references:cc:to
          :content-language:subject:reply-to:from:user-agent:mime-version:date
          :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=WqjpZRmV7SbgxpVgXVLhwrgxAFPg5oC3icRyfG+GQBg=;
-        b=cgmg8/ljMHqbnO6VFDwB399kb7q6gj/yO3V2dElJXtJIk97Rw/D9jf12RREzBo/oy+
-         QphIWHVWcZAIPMwg+bIWX3mpllbf0LGM0UGHZDPInWF4SORP3VUB9cJ0cIZn2HR4mtO1
-         NJlTJX8FHGTJTspg49cIygYYjxeKFALUJRcpmEEMIVQaTbJ0QfK6I2tAq5dCmVGuOiqM
-         ufbz8mIVx0C2Ybkh4CS42yoQLELxiO3BFHgF1ItQeyPSSnqcM71bWga5aMBr9iISRFmz
-         OZLAARHMmWuf5XWULEczBg28EOueKq5p47kIYTfDrNIaFOxr+PYkr7O+aZDMTrUH/R5t
-         CBQg==
-X-Forwarded-Encrypted: i=1; AJvYcCUdRkBpFsYBu5LdkgdSmAj6ZQPoWsV2npMJN6h2WCv9WGFYRuBy5BhbtdkmMu59Sg+UlotZP8LDvW7l44fkeWv8BlJZ
-X-Gm-Message-State: AOJu0YyJUOcHHGE71XLkQ+lT/OHOWHiZVzM93ygBAbmZlAAvUPxQ2vf2
-	lt/yTTm4negU8ghewaviFqP4BZqytL+D7UKQTT6URwRPB6qbLPzr
-X-Google-Smtp-Source: AGHT+IE42hJ979w1byZFG4PTveeDeaqVWeFQ4c9zMKdS1lC/HYIVdq1WyXQag7y/3egcMToTaPRV2g==
-X-Received: by 2002:a2e:9009:0:b0:2d2:d85f:79e3 with SMTP id h9-20020a2e9009000000b002d2d85f79e3mr897024ljg.21.1709131207720;
-        Wed, 28 Feb 2024 06:40:07 -0800 (PST)
+        bh=zJBzHbVbgmcoHCyYjQR2zrRXZpANI93wEBsALmzJ9Mo=;
+        b=OQuR4qpbpBPOAzBJWoRSLA/Z7QAZEE0u94bQpDc93lVgMH4E8gdljaHDSfjtuj1MXK
+         AX9h/dDdUJ3PuLqIaO1V2MLpZqWTNFtuT6bxeP6CXY2t4W4j/jtD6tAweeiOWJ82lFhN
+         JqqIcgxT8MY5owSfWIXveiYODTQADt0mcx/4qmry5+hWj6D3YTbZLVF9lDIRVHPyihJp
+         TRJ5+la2MYOhr4/VjoQAL+54xhKIsCzgtHFgHZMPD4gGNM0f9mkrNxQrVeR/12bR4dU6
+         3m2eA8+HMPKL6MXMn8ZOGcAglLKxpj9pnSR8EV9PzBk8bnTLY2j1RqgraSXxZjprmQ9/
+         7l5A==
+X-Gm-Message-State: AOJu0YwZuBsy8a0YzoFpo5aUW4eLPzS720McTLYqzpcVfjZVssvhxwl3
+	7zBg2ScjHWNDG7BcP9ukKW8dd4oZR4ISjZcQLcg6CXvgXnKTrilP
+X-Google-Smtp-Source: AGHT+IGBOuo858XBWhs1rIMjYuXtpesd6L31amW6So+F39+T2iXZCarn8pbCv6HLW9c0iqO66k+rNg==
+X-Received: by 2002:ac2:5182:0:b0:513:19e0:8c9a with SMTP id u2-20020ac25182000000b0051319e08c9amr1460031lfi.22.1709131541641;
+        Wed, 28 Feb 2024 06:45:41 -0800 (PST)
 Received: from ?IPV6:2a0a:ef40:69d:3501:4b27:339f:196f:f7f9? ([2a0a:ef40:69d:3501:4b27:339f:196f:f7f9])
-        by smtp.gmail.com with ESMTPSA id bq1-20020a5d5a01000000b0033e053577b7sm525701wrb.80.2024.02.28.06.40.06
+        by smtp.gmail.com with ESMTPSA id iw1-20020a05600c54c100b00412b0e51ef9sm2315819wmb.31.2024.02.28.06.45.41
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 28 Feb 2024 06:40:07 -0800 (PST)
-Message-ID: <3875a0dc-6ef2-4bd3-9852-c180043464c3@gmail.com>
-Date: Wed, 28 Feb 2024 14:40:02 +0000
+        Wed, 28 Feb 2024 06:45:41 -0800 (PST)
+Message-ID: <a11e3e0a-23a7-422f-9f3b-ab673860f1f8@gmail.com>
+Date: Wed, 28 Feb 2024 14:45:36 +0000
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -64,78 +63,76 @@ MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 From: phillip.wood123@gmail.com
 Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v6 0/2] Implement `git log --merge` also for
- rebase/cherry-pick/revert
+Subject: Re: [PATCH] rebase -i: stop setting GIT_CHERRY_PICK_HELP
 Content-Language: en-US
-To: Philippe Blain <levraiphilippeblain@gmail.com>, git@vger.kernel.org
-Cc: Johannes Sixt <j6t@kdbg.org>, Elijah Newren <newren@gmail.com>,
- Michael Lohmann <mial.lohmann@gmail.com>,
- Phillip Wood <phillip.wood@dunelm.org.uk>, Patrick Steinhardt <ps@pks.im>,
- Junio C Hamano <gitster@pobox.com>, Michael Lohmann <mi.al.lohmann@gmail.com>
-References: <20240225-ml-log-merge-with-cherry-pick-and-other-pseudo-heads-v5-0-af1ef2d9e44d@gmail.com>
- <20240228-ml-log-merge-with-cherry-pick-and-other-pseudo-heads-v6-0-8ec34c052b39@gmail.com>
-In-Reply-To: <20240228-ml-log-merge-with-cherry-pick-and-other-pseudo-heads-v6-0-8ec34c052b39@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>,
+ Phillip Wood via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+ Phillip Wood <phillip.wood@dunelm.org.uk>
+References: <pull.1678.git.1709042783847.gitgitgadget@gmail.com>
+ <xmqqil29sqfp.fsf@gitster.g>
+In-Reply-To: <xmqqil29sqfp.fsf@gitster.g>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-Hi Philippe
-
-On 28/02/2024 13:54, Philippe Blain wrote:
-> Range-diff versus v5:
+On 27/02/2024 18:38, Junio C Hamano wrote:
+> "Phillip Wood via GitGitGadget" <gitgitgadget@gmail.com> writes:
 > 
-> 1:  c9536431d1 ! 1:  363657561c revision: ensure MERGE_HEAD is a ref in prepare_show_merge
->      @@ Commit message
->           (2) obtain the oid without any prefixing by refs.c:repo_dwim_ref()
->           (3) error out when MERGE_HEAD is a symref.
->       
->      +    Note that we avoid marking the new error message for translation as it
->      +    will be done in the next commit when the message is generalized to other
->      +    special refs.
+>> Note that we retain the changes in e4301f73fff (sequencer: unset
+>> GIT_CHERRY_PICK_HELP for 'exec' commands, 2024-02-02) just in case
+>> GIT_CHERRY_PICK_HELP is set in the environment when "git rebase" is
+>> run.
+> 
+> Is this comment about this part of the code?
 
-Looking at the change below, the new message is in fact marked for 
-translation. I don't think this matters (other than the commit message 
-being confusing) as the translators will only see the final version of 
-the massage.
+No, it is about
 
->           Helped-by: Junio C Hamano <gitster@pobox.com>
->           Signed-off-by: Michael Lohmann <mi.al.lohmann@gmail.com>
->           Signed-off-by: Junio C Hamano <gitster@pobox.com>
->      @@ revision.c: static void prepare_show_merge(struct rev_info *revs)
->       +			&oid, NULL))
->        		die("--merge without MERGE_HEAD?");
->       +	if (is_null_oid(&oid))
->      -+		die(_("MERGE_HEAD is a symbolic ref?"));
->      ++		die(_("MERGE_HEAD exists but is a symbolic ref"));
+         strvec_push(&cmd.env, "GIT_CHERRY_PICK_HELP");
 
-The new message is marked with _(...) so will be translated.
+in do_exec() which clears GIT_CHERRY_PICK_HELP in the child environment 
+when running an exec command so that "exec git cherry-pick ..." retains 
+the correct author information.
 
->        	other = lookup_commit_or_die(&oid, "MERGE_HEAD");
->        	add_pending_object(revs, &head->object, "HEAD");
->        	add_pending_object(revs, &other->object, "MERGE_HEAD");
-> 2:  1641c4be81 ! 2:  749abadc04 revision: implement `git log --merge` also for rebase/cherry-pick/revert
->      @@ revision.c: static void add_pending_commit_list(struct rev_info *revs,
->       +				RESOLVE_REF_READING | RESOLVE_REF_NO_RECURSE,
->       +				oid, NULL)) {
->       +			if (is_null_oid(oid))
->      -+				die(_("%s is a symbolic ref?"), other_head[i]);
->      ++				die(_("%s exists but is a symbolic ref"), other_head[i]);
+>> +	const char *msg;
+>> +
+>> +	if (is_rebase_i(opts))
+>> +		msg = rebase_resolvemsg;
+>> +	else
+>> +		msg = getenv("GIT_CHERRY_PICK_HELP");
+> 
+> Testing is_rebase_i() first means we ignore the environment
+> unconditionally and use our own message always in "rebase -i", no?
 
-The second patch updates the message and this new version retains the _(...)
+Yes, this matches the existing behavior in builtin/rebase.c where we call
+
+	setenv("GIT_CHERRY_PICK_HELP", resolvemsg, 1);
+
+to set GIT_CHERRY_PICK_HELP even if it is already set in the environment.
+
+> Not that I think we should honor the environment variable and let it
+> override our message.  I just found the description a bit confusing.
+
+I should have been clearer what that it was talking about - i.e. it is 
+still worth clearing GIT_CHERRY_PICK_HELP in the environment when 
+running exec commands.
 
 Best Wishes
 
 Phillip
 
->       +			return other_head[i];
->       +		}
->       +
->      @@ revision.c: static void prepare_show_merge(struct rev_info *revs)
->       -			&oid, NULL))
->       -		die("--merge without MERGE_HEAD?");
->       -	if (is_null_oid(&oid))
->      --		die(_("MERGE_HEAD is a symbolic ref?"));
->      +-		die(_("MERGE_HEAD exists but is a symbolic ref"));
->       -	other = lookup_commit_or_die(&oid, "MERGE_HEAD");
->       +	other_name = lookup_other_head(&oid);
->       +	other = lookup_commit_or_die(&oid, other_name);
+
+>> diff --git a/sequencer.h b/sequencer.h
+>> index dcef7bb99c0..437eabd38af 100644
+>> --- a/sequencer.h
+>> +++ b/sequencer.h
+>> @@ -14,6 +14,8 @@ const char *rebase_path_todo(void);
+>>   const char *rebase_path_todo_backup(void);
+>>   const char *rebase_path_dropped(void);
+>>   
+>> +extern const char *rebase_resolvemsg;
 > 
+> This is more library-ish part of the system than a random file in
+> the builtin/ directory.  This place as the final location for the
+> string makes sense to me.
+> 
+> Thanks.
