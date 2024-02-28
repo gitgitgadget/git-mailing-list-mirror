@@ -1,64 +1,64 @@
-Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
+Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com [209.85.128.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC90C36B0E
-	for <git@vger.kernel.org>; Wed, 28 Feb 2024 09:44:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBA283715E
+	for <git@vger.kernel.org>; Wed, 28 Feb 2024 09:44:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709113469; cv=none; b=JZ4AZsaG9VfocG/MEgq+922MX4I8fd0wLRPNtUV5p8uRflYuae3S7lNEWh/vLabPJQjAsSK5pjIPYm9LwXT2/tOCa1tbvHCVzBMXXUeaOiuHz+WTBbbbHDwm+bTt93lV4G+MzY2ucft/IuTyU3u2S/cK8xrFFCJpaHpdKQLvVjs=
+	t=1709113470; cv=none; b=MyxPhEzGrrlTTkMWBxxlK63bT30BwafAgSWzx4+M5AhS1hYDvHmAk9Jn2kuQ0jUJp4HVO0PUXCqcnJ7siIdkVS/0fxvesVU5qibnnJYJF7vqSUlK+MgPUnSz/UtWlDXuHreDl5DSD9ajG4rdW7kFVV65gKODLDYyxjJdwY+x5qM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709113469; c=relaxed/simple;
-	bh=51ySa4HRTmbfzAx+3m0FkYsYG9NeqXVV2Gt2Q7BiPDk=;
+	s=arc-20240116; t=1709113470; c=relaxed/simple;
+	bh=xxTPOAubrM/wp9qyFuK3vFEIPUvWzFnD62bEAnM2No4=;
 	h=Message-ID:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=iOohPwk9RCLnURbaRLdiTTII7JBVMRkWqlj+pC5NFDFO7Wn2HD1RJSIYKgEyxfooJl5xSEIRbXGmhZ0ei7jcxrm/x9ksgsMuaGtNSnfUoC1oq74MQ+jLN45K4saAze/LrQl5IHzkkLR+V3himy3NUU3AelTZ6rwyhlpghjFVqE0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=D4WgLdBV; arc=none smtp.client-ip=209.85.128.50
+	 MIME-Version:To:Cc; b=g9J6aYSXhLWlckJ3UZS7fMck/14vdW69t4LFBrlmlytvI8R+OXLs9bbikFDtus1ifimnFRdOwlD1BrjTKvyI6h4gCbMdAWz9/SY6GusjhiH6sA1F9UF3hYsUE220rrtzd8POPeg+IwGbe+lUsTQtTr8NTRcKxU/3OtXwkg6V0sY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hD/UkoN6; arc=none smtp.client-ip=209.85.128.49
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="D4WgLdBV"
-Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-412a588c8b4so21014935e9.0
-        for <git@vger.kernel.org>; Wed, 28 Feb 2024 01:44:27 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hD/UkoN6"
+Received: by mail-wm1-f49.google.com with SMTP id 5b1f17b1804b1-412a9e9c776so3739115e9.0
+        for <git@vger.kernel.org>; Wed, 28 Feb 2024 01:44:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1709113466; x=1709718266; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1709113467; x=1709718267; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=PkhpT+ucp6WzLyC55CcklHZz3GJAYR7x1HfXvhtUwr8=;
-        b=D4WgLdBVqgQCH4OIJHLBiBg4TOT45CeVqp4WJR0Jh6m2PSYB/KQFozWKSl5R8uKl3w
-         3SNBjoztBTDxFP2Eu/ZMo/VGA8dr6g4szko3cGdis5gKabz0OCjUO3tHB2hUUx5Zvm7P
-         jp0TOTUEbuyZpBmmD+3lB2cXIAWpW6VxaykoHyn8Xmz/eaG8xofmRepmR3vHCdZslrs8
-         b2VgFjjh1SbPkh6piOPK1NfM+GBtFkdTlFi2b1jQy/ZDC6kcsRSUvWh+cgG9lsMv7FMR
-         8dJ20fZilacbSqHysDqJFy5gHFugh1hCuUhOCUJMUqJM8BsBhb27WtFUlEQHIectSgkr
-         t2Mw==
+        bh=We3Sgt4JHA6aTvCpGEBIN6pAwmTwAf7XFQoin0EiPGQ=;
+        b=hD/UkoN6Cu6G9ms4LKxI8qDNRJyFgRCF1Zi+db3WCMoJT5imFm/nsXRH12oRd188T0
+         8KzsksvQpsXZNgti0U/EPAimQ2vroJgsN8sALJlOsZyGLGGf5i5YO1df94C5F/cRtEo1
+         RMaugnHmVmf9GSTGKe3hvf7Fd4f3ym2vZpSdODI6jVq2IzujqMv+geQeZAe5UD/lnVuu
+         zT8dSEVsbK0Cl9NEmRoQK/LIr3oEankeFs9Vr+dxI1zGp34Z8Oa50sp2VD8FpS1yPEXL
+         FNBEhXqKakahSj4eochfGZIxLByBiSwS3zOQakuip3QobinXlInA2gZjE82gNPkxk6vT
+         2xdA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1709113466; x=1709718266;
+        d=1e100.net; s=20230601; t=1709113467; x=1709718267;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=PkhpT+ucp6WzLyC55CcklHZz3GJAYR7x1HfXvhtUwr8=;
-        b=LmTc3hzlQcXiReTv3X9HUyEnGnSftSjx0dvg/7XnPq+o5MsL3+Gg438i4PIOMOzVLb
-         D9Di5uvrPZSwKkzVdKnlkWgZUs+yprI6NwAYNGvyL9iiBtOfeGui41eosgg3sr33Br+H
-         hieHkPoYYtrBui1Hn6a+bcOI6/0NOqSuakecGejdB8Ingpkb1sWaYqi6kTgsd5LoBw2j
-         E6u+96QVANjCD3MBOEso5wbej6+TYCwdcqSYZ5w4E2xc4/f9S0Cx4d+9NV+hpCRpq5X8
-         IJnNFQdMPDA6wPdnI0TBbt7wPUsSjtnCDaU7yk9TG1FtQEI2TQ79yaeCrnZ5h2gyRMKf
-         sRSQ==
-X-Gm-Message-State: AOJu0YzkbbF8c3gxeTQju5HxMjAUedb1J+7Ii90eXiJV/ogdiOnzKg0Z
-	S+tGFyHIApshVAEhyKiD4J0IwCcjTd3pq3at2c9GX9xhksGE4lOhX2mrvZMV
-X-Google-Smtp-Source: AGHT+IH1vdXONk8zosf8Rmf9uQTNV2l67xPFkBlLQgvdT4mgklSm4k624zvBZ48MXqsyiNXg94Z+zw==
-X-Received: by 2002:a5d:4fcf:0:b0:33d:2710:b424 with SMTP id h15-20020a5d4fcf000000b0033d2710b424mr8725966wrw.22.1709113465937;
-        Wed, 28 Feb 2024 01:44:25 -0800 (PST)
+        bh=We3Sgt4JHA6aTvCpGEBIN6pAwmTwAf7XFQoin0EiPGQ=;
+        b=b0nVr8Tz+L7/fxJ9zhxTnETg2NUkHE3KnllhhNYanwzFA8qNXW1BrHf7oPuggHoIMi
+         kSoEzQGTa4vkZ5U6ZFP8T24AtHWiO0UzClNOssrHPcrQ5zmbYNbRTSWgEFNTEunazHn2
+         UfBTHMbXwVqiR9pEwlEaQes/X/k+0mL4C4noSQtWJhSjtlBZ7TQ7iV4gg4T4iYS48Rbk
+         cJSsVgJtKLcXaYMCs+34biMnlcscnsozF4Auww0lp3gn5sTMT/8YKZn9a7KEu21sI1BC
+         BRP1UE3lCb6prB9ePw0e96lEdlaO7TGWpmMNvdnJlUrdwndgAJgQwpplk8Nj7wzHxN0k
+         4p+g==
+X-Gm-Message-State: AOJu0YwVnbYiRzfccudNbk4RvFopcnIlcN4KJqRDp7YzMWEjCw4gHHON
+	1s1ZRgnP7C3nuwXucqWXq5jLM/2P/PBtTQ9+IQuY01OE+FYLyewLpo9pv+ja
+X-Google-Smtp-Source: AGHT+IFdXnxOnMbGwzxaYd6I8d6T+hCcluTpMWLMx7ijmh6AP/hcRS0yi7MX2/uHjr0MJFi/fnC9RA==
+X-Received: by 2002:a05:600c:524f:b0:412:9739:717a with SMTP id fc15-20020a05600c524f00b004129739717amr1711237wmb.12.1709113466698;
+        Wed, 28 Feb 2024 01:44:26 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id q1-20020adffec1000000b0033cf80ad6f5sm13898814wrs.60.2024.02.28.01.44.25
+        by smtp.gmail.com with ESMTPSA id k7-20020a7bc407000000b004126e26f756sm1525546wmi.43.2024.02.28.01.44.26
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 28 Feb 2024 01:44:25 -0800 (PST)
-Message-ID: <b978b5d233a3ccc4f498f9e7d48fae0ce651db49.1709113458.git.gitgitgadget@gmail.com>
+        Wed, 28 Feb 2024 01:44:26 -0800 (PST)
+Message-ID: <0f1ce130ce6fa868ea35ee7e96fa00aa52cc1435.1709113458.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1657.v4.git.1709113457.gitgitgadget@gmail.com>
 References: <pull.1657.v3.git.1709040497.gitgitgadget@gmail.com>
 	<pull.1657.v4.git.1709113457.gitgitgadget@gmail.com>
 From: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Wed, 28 Feb 2024 09:44:11 +0000
-Subject: [PATCH v4 05/11] commit-reach(paint_down_to_common): start reporting
- errors
+Date: Wed, 28 Feb 2024 09:44:12 +0000
+Subject: [PATCH v4 06/11] commit-reach(merge_bases_many): pass on "missing
+ commits" errors
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -76,185 +76,104 @@ Cc: Patrick Steinhardt <ps@pks.im>,
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-If a commit cannot be parsed, it is currently ignored when looking for
-merge bases. That's undesirable as the operation can pretend success in
-a corrupt repository, even though the command should fail with an error
-message.
+The `paint_down_to_common()` function was just taught to indicate
+parsing errors, and now the `merge_bases_many()` function is aware of
+that, too.
 
-Let's start at the bottom of the stack by teaching the
-`paint_down_to_common()` function to return an `int`: if negative, it
-indicates fatal error, if 0 success.
+One tricky aspect is that `merge_bases_many()` parses commits of its
+own, but wants to gracefully handle the scenario where NULL is passed as
+a merge head, returning the empty list of merge bases. The way this was
+handled involved calling `repo_parse_commit(NULL)` and relying on it to
+return an error. This has to be done differently now so that we can
+handle missing commits correctly by producing a fatal error.
 
-This requires a couple of callers to be adjusted accordingly.
+Next step: adjust the caller of `merge_bases_many()`:
+`get_merge_bases_many_0()`.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- commit-reach.c | 66 ++++++++++++++++++++++++++++++++++----------------
- 1 file changed, 45 insertions(+), 21 deletions(-)
+ commit-reach.c | 35 ++++++++++++++++++++++-------------
+ 1 file changed, 22 insertions(+), 13 deletions(-)
 
 diff --git a/commit-reach.c b/commit-reach.c
-index 7112b10eeea..9ad5f9db4f7 100644
+index 9ad5f9db4f7..ddfec5289dd 100644
 --- a/commit-reach.c
 +++ b/commit-reach.c
-@@ -50,14 +50,14 @@ static int queue_has_nonstale(struct prio_queue *queue)
+@@ -131,41 +131,49 @@ static int paint_down_to_common(struct repository *r,
+ 	return 0;
  }
  
- /* all input commits in one and twos[] must have been parsed! */
--static struct commit_list *paint_down_to_common(struct repository *r,
--						struct commit *one, int n,
--						struct commit **twos,
--						timestamp_t min_generation,
--						int ignore_missing_commits)
-+static int paint_down_to_common(struct repository *r,
-+				struct commit *one, int n,
-+				struct commit **twos,
-+				timestamp_t min_generation,
-+				int ignore_missing_commits,
-+				struct commit_list **result)
+-static struct commit_list *merge_bases_many(struct repository *r,
+-					    struct commit *one, int n,
+-					    struct commit **twos)
++static int merge_bases_many(struct repository *r,
++			    struct commit *one, int n,
++			    struct commit **twos,
++			    struct commit_list **result)
  {
- 	struct prio_queue queue = { compare_commits_by_gen_then_commit_date };
+ 	struct commit_list *list = NULL;
 -	struct commit_list *result = NULL;
  	int i;
- 	timestamp_t last_gen = GENERATION_NUMBER_INFINITY;
  
-@@ -66,8 +66,8 @@ static struct commit_list *paint_down_to_common(struct repository *r,
+ 	for (i = 0; i < n; i++) {
+-		if (one == twos[i])
++		if (one == twos[i]) {
+ 			/*
+ 			 * We do not mark this even with RESULT so we do not
+ 			 * have to clean it up.
+ 			 */
+-			return commit_list_insert(one, &result);
++			*result = commit_list_insert(one, result);
++			return 0;
++		}
+ 	}
  
- 	one->object.flags |= PARENT1;
- 	if (!n) {
--		commit_list_append(one, &result);
--		return result;
-+		commit_list_append(one, result);
++	if (!one)
 +		return 0;
- 	}
- 	prio_queue_put(&queue, one);
- 
-@@ -95,7 +95,7 @@ static struct commit_list *paint_down_to_common(struct repository *r,
- 		if (flags == (PARENT1 | PARENT2)) {
- 			if (!(commit->object.flags & RESULT)) {
- 				commit->object.flags |= RESULT;
--				commit_list_insert_by_date(commit, &result);
-+				commit_list_insert_by_date(commit, result);
- 			}
- 			/* Mark parents of a found merge stale */
- 			flags |= STALE;
-@@ -108,7 +108,8 @@ static struct commit_list *paint_down_to_common(struct repository *r,
- 				continue;
- 			if (repo_parse_commit(r, p)) {
- 				clear_prio_queue(&queue);
--				free_commit_list(result);
-+				free_commit_list(*result);
-+				*result = NULL;
- 				/*
- 				 * At this stage, we know that the commit is
- 				 * missing: `repo_parse_commit()` uses
-@@ -116,7 +117,10 @@ static struct commit_list *paint_down_to_common(struct repository *r,
- 				 * corrupt commits would already have been
- 				 * dispatched with a `die()`.
- 				 */
--				return NULL;
-+				if (ignore_missing_commits)
-+					return 0;
-+				return error(_("could not parse commit %s"),
-+					     oid_to_hex(&p->object.oid));
- 			}
- 			p->object.flags |= flags;
- 			prio_queue_put(&queue, p);
-@@ -124,7 +128,7 @@ static struct commit_list *paint_down_to_common(struct repository *r,
+ 	if (repo_parse_commit(r, one))
+-		return NULL;
++		return error(_("could not parse commit %s"),
++			     oid_to_hex(&one->object.oid));
+ 	for (i = 0; i < n; i++) {
++		if (!twos[i])
++			return 0;
+ 		if (repo_parse_commit(r, twos[i]))
+-			return NULL;
++			return error(_("could not parse commit %s"),
++				     oid_to_hex(&twos[i]->object.oid));
  	}
  
- 	clear_prio_queue(&queue);
+ 	if (paint_down_to_common(r, one, n, twos, 0, 0, &list)) {
+ 		free_commit_list(list);
+-		return NULL;
++		return -1;
+ 	}
+ 
+ 	while (list) {
+ 		struct commit *commit = pop_commit(&list);
+ 		if (!(commit->object.flags & STALE))
+-			commit_list_insert_by_date(commit, &result);
++			commit_list_insert_by_date(commit, result);
+ 	}
 -	return result;
 +	return 0;
  }
  
- static struct commit_list *merge_bases_many(struct repository *r,
-@@ -151,7 +155,10 @@ static struct commit_list *merge_bases_many(struct repository *r,
- 			return NULL;
- 	}
- 
--	list = paint_down_to_common(r, one, n, twos, 0, 0);
-+	if (paint_down_to_common(r, one, n, twos, 0, 0, &list)) {
-+		free_commit_list(list);
-+		return NULL;
-+	}
- 
- 	while (list) {
- 		struct commit *commit = pop_commit(&list);
-@@ -205,7 +212,7 @@ static int remove_redundant_no_gen(struct repository *r,
- 	for (i = 0; i < cnt; i++)
- 		repo_parse_commit(r, array[i]);
- 	for (i = 0; i < cnt; i++) {
--		struct commit_list *common;
-+		struct commit_list *common = NULL;
- 		timestamp_t min_generation = commit_graph_generation(array[i]);
- 
- 		if (redundant[i])
-@@ -221,8 +228,16 @@ static int remove_redundant_no_gen(struct repository *r,
- 			if (curr_generation < min_generation)
- 				min_generation = curr_generation;
- 		}
--		common = paint_down_to_common(r, array[i], filled,
--					      work, min_generation, 0);
-+		if (paint_down_to_common(r, array[i], filled,
-+					 work, min_generation, 0, &common)) {
-+			clear_commit_marks(array[i], all_flags);
-+			clear_commit_marks_many(filled, work, all_flags);
-+			free_commit_list(common);
-+			free(work);
-+			free(redundant);
-+			free(filled_index);
-+			return -1;
-+		}
- 		if (array[i]->object.flags & PARENT2)
- 			redundant[i] = 1;
- 		for (j = 0; j < filled; j++)
-@@ -422,6 +437,10 @@ static struct commit_list *get_merge_bases_many_0(struct repository *r,
- 	clear_commit_marks_many(n, twos, all_flags);
- 
- 	cnt = remove_redundant(r, rslt, cnt);
-+	if (cnt < 0) {
-+		free(rslt);
-+		return NULL;
-+	}
- 	result = NULL;
- 	for (i = 0; i < cnt; i++)
- 		commit_list_insert_by_date(rslt[i], &result);
-@@ -491,7 +510,7 @@ int repo_in_merge_bases_many(struct repository *r, struct commit *commit,
- 			     int nr_reference, struct commit **reference,
- 			     int ignore_missing_commits)
+ struct commit_list *get_octopus_merge_bases(struct commit_list *in)
+@@ -410,10 +418,11 @@ static struct commit_list *get_merge_bases_many_0(struct repository *r,
  {
--	struct commit_list *bases;
-+	struct commit_list *bases = NULL;
- 	int ret = 0, i;
- 	timestamp_t generation, max_generation = GENERATION_NUMBER_ZERO;
+ 	struct commit_list *list;
+ 	struct commit **rslt;
+-	struct commit_list *result;
++	struct commit_list *result = NULL;
+ 	int cnt, i;
  
-@@ -510,10 +529,11 @@ int repo_in_merge_bases_many(struct repository *r, struct commit *commit,
- 	if (generation > max_generation)
- 		return ret;
- 
--	bases = paint_down_to_common(r, commit,
--				     nr_reference, reference,
--				     generation, ignore_missing_commits);
--	if (commit->object.flags & PARENT2)
-+	if (paint_down_to_common(r, commit,
-+				 nr_reference, reference,
-+				 generation, ignore_missing_commits, &bases))
-+		ret = -1;
-+	else if (commit->object.flags & PARENT2)
- 		ret = 1;
- 	clear_commit_marks(commit, all_flags);
- 	clear_commit_marks_many(nr_reference, reference, all_flags);
-@@ -566,6 +586,10 @@ struct commit_list *reduce_heads(struct commit_list *heads)
- 		}
- 	}
- 	num_head = remove_redundant(the_repository, array, num_head);
-+	if (num_head < 0) {
-+		free(array);
+-	result = merge_bases_many(r, one, n, twos);
++	if (merge_bases_many(r, one, n, twos, &result) < 0)
 +		return NULL;
-+	}
- 	for (i = 0; i < num_head; i++)
- 		tail = &commit_list_insert(array[i], tail)->next;
- 	free(array);
+ 	for (i = 0; i < n; i++) {
+ 		if (one == twos[i])
+ 			return result;
 -- 
 gitgitgadget
 
