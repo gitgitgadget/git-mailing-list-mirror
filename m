@@ -1,64 +1,64 @@
-Received: from mail-wm1-f43.google.com (mail-wm1-f43.google.com [209.85.128.43])
+Received: from mail-wr1-f47.google.com (mail-wr1-f47.google.com [209.85.221.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CFDF339BD
-	for <git@vger.kernel.org>; Wed, 28 Feb 2024 09:44:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18546364DC
+	for <git@vger.kernel.org>; Wed, 28 Feb 2024 09:44:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709113467; cv=none; b=bIgF2UGuWrpvZfc+svje0SeL+vRkYwpRQFRSbK2NtYLxiiY4YtQKu+4ennOo1wvaB52atVIMICQ9lAJOH68oBMNxVH569Xddqmv/ujivaRgCaXkTMIq6vwzdwyouu0Zg57frtT/unwIV8clCL9fqi8KGBlUnMBoHQHJa6QZYCO4=
+	t=1709113468; cv=none; b=SJAZS0gvww721REvU0zIeAXNkD81vq34szaH8/sJZtLugpfyZv2YLFv7MmhylZgxE+dz36/X1+vzix8fXEHTJpZ454efgC4vdgztan/Tbb6C5olW94e752aQwpl1FTdXOI9eRhgYZvnCoLm3do4CHopyA4Ns+QGaMbjIOxMSyJs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709113467; c=relaxed/simple;
-	bh=Yb5I4d4X0STAz8HVRFsE5uLAsM9osTqtn183H3EGqBE=;
+	s=arc-20240116; t=1709113468; c=relaxed/simple;
+	bh=4MhjPZCuKVpNh0EyRH5/rOo2hBA243eDsP43+gwPevU=;
 	h=Message-ID:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=LhUFNQPTPvugVPuMM/pvoGysCM6SW3+Vk20hlBaUM4XytRS7xuVeSdN2rFnSs9aCuq2tGvJqC4iqRlX5g7RUxAIKIWCujHw/VySbjN9cXfSUgtj8ft3zvg3LgEvRd2C+wuH3GX279w9tDRzKfD1n5P1pNpFuo/KOSb45WrfExcQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=WJuHs3ji; arc=none smtp.client-ip=209.85.128.43
+	 MIME-Version:To:Cc; b=kgDlHy6fPri9mOaB1mpLhMsduwmXGU2+XgMLnHpkhKkcuztQoJRmHtwiJBB7LtahSHtufPdedCjpzW4zSVHdNcP23sAW8IpDbSIxiuay+YbTKzg8MPJCJkoKGmCQtryrLMryxXUNMCRS5K4whkQpZW1UPQb1xxB4a6hOU9MjOEE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fWIaCzuG; arc=none smtp.client-ip=209.85.221.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WJuHs3ji"
-Received: by mail-wm1-f43.google.com with SMTP id 5b1f17b1804b1-412a3ebad2aso24550475e9.1
-        for <git@vger.kernel.org>; Wed, 28 Feb 2024 01:44:24 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fWIaCzuG"
+Received: by mail-wr1-f47.google.com with SMTP id ffacd0b85a97d-33d18931a94so3948730f8f.1
+        for <git@vger.kernel.org>; Wed, 28 Feb 2024 01:44:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1709113463; x=1709718263; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1709113465; x=1709718265; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=zAPyFrwfCmVzEDacD+j6dAGnCBdXEXmFNhgtGhf5Hoc=;
-        b=WJuHs3jijxxmW//ZAYcIRopK0oy/TMDAmoTsCpUZMZ1VDt38ZiMDa7rDRicaz/PkZb
-         C8s7UIzCJlhVLVSLsa5/PROK44p7dJ0EKU13DPXxZ/l67T7SpF/d68ty1/skTuoI4zZ3
-         k5hdTfEm1zSJWsykK1rDHnFSscq24ycJYgUB/4oTVlThNJokRIXRjEsRndYKSl/7nCJ+
-         b5+j2oo9raDopb1eqGNz1GKGbnDofrB6mhPz/UrPyAH6HwN30XhD0Yc3k2LcftwMFEO8
-         VkvlsHO33Jr755vxxQA5IRmmQZ6VOabMby/klRCL4MQTT8ecGLlcr24/Qa8TDtZF+N86
-         8MoQ==
+        bh=NnIxzez0lIanLyqGuOlIkiD3HmL+wsRoVicOjde7vUU=;
+        b=fWIaCzuGBGLB0E8ik9XFHs2prH96LbpBG4cgf7FXWohKVHpEEHgYg8Hl/7k/xVq0lf
+         +ocSKukXV/wggP15aBH9adQClMfbjbwNef4KkTwmZ4OjPMAh6sdg8SOZWSY5UuFIYs+e
+         Cs0iEKy4VFKN6mwXkp8Ib3OLo8YvdNqfn/+cQh+brzmq/gVK+XB0cfe+0nYIvGMMgv1y
+         atfiN8mHeMsZSbsYQnbDzxzEi0bSc2tkfyC/B3sq/9bKBCTmRUgM3xMBm/K0XTCwATSJ
+         17gqjp9aV/3yMY5WpeYm0JIPmonAnslbOYRTRTrBJHB8+tlzVjBuqbbbLbO9V7tqssRN
+         pO+w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1709113463; x=1709718263;
+        d=1e100.net; s=20230601; t=1709113465; x=1709718265;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=zAPyFrwfCmVzEDacD+j6dAGnCBdXEXmFNhgtGhf5Hoc=;
-        b=B9181kyxP0dSjtCQ5m14Bjq82N0ZIygAIRvWU6qepuUCma9BpNwFyr6AzGpiwmBUKS
-         wcu/HllAmy5ZA259Qe7lXV52LccPEnIJNlMecfcShSadR088FNDZpANLhUW94iA1ymIR
-         IFXZjLQktxZbz+5W0JMmVevMTyGqHnhWbN0iyw+wQWe8483hAPostV6NUI7DhKuoeYtL
-         eUQdZmUUjHndXS3khed/XaN5UgMaFr3iH7iUKQbJPXzeZkur7se/9nX09jBgPDPGB+O0
-         m4//XfLhvN60o6O/zHluHbL/lYEoaJ4qsmotfgFou4fYsqZEOguTHOxOtvbmF07N9GU7
-         OUFg==
-X-Gm-Message-State: AOJu0YxUcKqSJ8LmBqKD+zdx8Aw0MrpubjOontUHqJYFFr81spMLu9HQ
-	eefZh/yUZiA/mVcMvDbuFMEw7rXe9UhWhnxVb8IcXgW7wRYo5ysW/oMLSyKb
-X-Google-Smtp-Source: AGHT+IE8W2A24JArQRjw5+sdmLMOkOHQ5lzrohk6YG9htbYwCbKwopEgtvBH7rQxWZ4ne/lW4EcqHg==
-X-Received: by 2002:a05:600c:4505:b0:410:4a4:6cd0 with SMTP id t5-20020a05600c450500b0041004a46cd0mr11100735wmo.33.1709113462763;
-        Wed, 28 Feb 2024 01:44:22 -0800 (PST)
+        bh=NnIxzez0lIanLyqGuOlIkiD3HmL+wsRoVicOjde7vUU=;
+        b=f9GbdrWIhMQIAkTlfWvCpHwWtupKfF9O0GfmL4h3uJq6btmzOZGJKeNR6PfolAzDDF
+         aispnnGDHUJ2OSXlEj9AogIr6lCj/xtliiU4+1WtZI2/lsQyjQ0wv0HKqkXKbgyIZa7T
+         5M4rGzjPab8WX1fnDjveZ3hfxVPI6f8jtNvwf5GUdxFOdiFWy+PsXr/DwJPxAx6Xxm4g
+         uc7VtIdxkwJjqVD2uiS20PlX8Z8g48FBo3tCLZsacfcvDUIAzH7dK8GPt3sT4S/x0c3B
+         L3CHdQJWv3ST1/KxN4noZVgCTxH2jes+jAlezj2ICyeY89cliavNmms7p7eo7xBdhfzX
+         BWQQ==
+X-Gm-Message-State: AOJu0YyIJoktRnhTm2i05FpaHDV0Z2h68safolOfEvCEqX+U1qw8klkX
+	+vFZ/I+JaKR78piJLFHzWmi6wzsEZhR96+tHcvbOhWqxIy2dAfuLKrdxAWJt
+X-Google-Smtp-Source: AGHT+IGJFNzCiNj86LvoxpMBxohDN4hxHgChmEGCquIdK0CP2Z0S0T5Y8eRrzu+7vNqsY4D8rFbsVw==
+X-Received: by 2002:adf:e0c6:0:b0:33b:8358:2694 with SMTP id m6-20020adfe0c6000000b0033b83582694mr8040430wri.5.1709113464748;
+        Wed, 28 Feb 2024 01:44:24 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id fs11-20020a05600c3f8b00b004129f71b80dsm1534962wmb.28.2024.02.28.01.44.21
+        by smtp.gmail.com with ESMTPSA id cl7-20020a5d5f07000000b0033dc931eb06sm11384429wrb.0.2024.02.28.01.44.23
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 28 Feb 2024 01:44:21 -0800 (PST)
-Message-ID: <48e69bf7229bdbf8c944cd8440a54a0ce003ab44.1709113458.git.gitgitgadget@gmail.com>
+        Wed, 28 Feb 2024 01:44:23 -0800 (PST)
+Message-ID: <837aa5a89c640427a5de064da93f1de4934d8212.1709113458.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1657.v4.git.1709113457.gitgitgadget@gmail.com>
 References: <pull.1657.v3.git.1709040497.gitgitgadget@gmail.com>
 	<pull.1657.v4.git.1709113457.gitgitgadget@gmail.com>
 From: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Wed, 28 Feb 2024 09:44:08 +0000
-Subject: [PATCH v4 02/11] commit-reach(repo_in_merge_bases_many): optionally
- expect missing commits
+Date: Wed, 28 Feb 2024 09:44:10 +0000
+Subject: [PATCH v4 04/11] commit-reach(paint_down_to_common): prepare for
+ handling shallow commits
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -76,136 +76,105 @@ Cc: Patrick Steinhardt <ps@pks.im>,
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-Currently this function treats unrelated commit histories the same way
-as commit histories with missing commit objects.
+When `git fetch --update-shallow` needs to test for commit ancestry, it
+can naturally run into a missing object (e.g. if it is a parent of a
+shallow commit). For the purpose of `--update-shallow`, this needs to be
+treated as if the child commit did not even have that parent, i.e. the
+commit history needs to be clamped.
 
-Typically, missing commit objects constitute a corrupt repository,
-though, and should be reported as such. The next commits will make it
-so, but there is one exception: In `git fetch --update-shallow` we
-_expect_ commit objects to be missing, and we do want to treat the
-now-incomplete commit histories as unrelated.
+For all other scenarios, clamping the commit history is actually a bug,
+as it would hide repository corruption (for an analysis regarding
+shallow and partial clones, see the analysis further down).
 
-To allow for that, let's introduce an additional parameter that is
-passed to `repo_in_merge_bases_many()` to trigger this behavior, and use
-it in the two callers in `shallow.c`.
+Add a flag to optionally ask the function to ignore missing commits, as
+`--update-shallow` needs it to, while detecting missing objects as a
+repository corruption error by default.
 
-This commit changes behavior slightly: unless called from the
-`shallow.c` functions that set the `ignore_missing_commits` bit, any
-non-existing tip commit that is passed to `repo_in_merge_bases_many()`
-will now result in an error.
+This flag is needed, and cannot replaced by `is_repository_shallow()` to
+indicate that situation, because that function would return 0 in the
+`--update-shallow` scenario: There is not actually a `shallow` file in
+that scenario, as demonstrated e.g. by t5537.10 ("add new shallow root
+with receive.updateshallow on") and t5538.4 ("add new shallow root with
+receive.updateshallow on").
 
-Note: When encountering missing commits while traversing the commit
-history in search for merge bases, with this commit there won't be a
-change in behavior just yet, their children will still be interpreted as
-root commits. This bug will get fixed by follow-up commits.
+Note: shallow commits' parents are set to `NULL` internally already,
+therefore there is no need to special-case shallow repositories here, as
+the merge-base logic will not try to access parent commits of shallow
+commits.
+
+Likewise, partial clones aren't an issue either: If a commit is missing
+during the revision walk in the merge-base logic, it is fetched via
+`promisor_remote_get_direct()`. And not only the single missing commit
+object: Due to the way the "promised" objects are fetched (in
+`fetch_objects()` in `promisor-remote.c`, using `fetch
+--filter=blob:none`), there is no actual way to fetch a single commit
+object, as the remote side will pass that commit OID to `pack-objects
+--revs [...]` which in turn passes it to `rev-list` which interprets
+this as a commit _range_ instead of a single object. Therefore, in
+partial clones (unless they are shallow in addition), all commits
+reachable from a commit that is in the local object database are also
+present in that local database.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- commit-reach.c        | 9 +++++----
- commit-reach.h        | 3 ++-
- remote.c              | 2 +-
- shallow.c             | 5 +++--
- t/helper/test-reach.c | 2 +-
- 5 files changed, 12 insertions(+), 9 deletions(-)
+ commit-reach.c | 16 ++++++++++++----
+ 1 file changed, 12 insertions(+), 4 deletions(-)
 
 diff --git a/commit-reach.c b/commit-reach.c
-index 7ea916f9ebd..5c1b5256598 100644
+index 5ff71d72d51..7112b10eeea 100644
 --- a/commit-reach.c
 +++ b/commit-reach.c
-@@ -467,7 +467,7 @@ int repo_is_descendant_of(struct repository *r,
- 
- 			other = with_commit->item;
- 			with_commit = with_commit->next;
--			if (repo_in_merge_bases_many(r, other, 1, &commit))
-+			if (repo_in_merge_bases_many(r, other, 1, &commit, 0))
- 				return 1;
- 		}
- 		return 0;
-@@ -478,17 +478,18 @@ int repo_is_descendant_of(struct repository *r,
-  * Is "commit" an ancestor of one of the "references"?
-  */
- int repo_in_merge_bases_many(struct repository *r, struct commit *commit,
--			     int nr_reference, struct commit **reference)
-+			     int nr_reference, struct commit **reference,
-+			     int ignore_missing_commits)
+@@ -53,7 +53,8 @@ static int queue_has_nonstale(struct prio_queue *queue)
+ static struct commit_list *paint_down_to_common(struct repository *r,
+ 						struct commit *one, int n,
+ 						struct commit **twos,
+-						timestamp_t min_generation)
++						timestamp_t min_generation,
++						int ignore_missing_commits)
  {
- 	struct commit_list *bases;
- 	int ret = 0, i;
- 	timestamp_t generation, max_generation = GENERATION_NUMBER_ZERO;
- 
- 	if (repo_parse_commit(r, commit))
--		return ret;
-+		return ignore_missing_commits ? 0 : -1;
- 	for (i = 0; i < nr_reference; i++) {
- 		if (repo_parse_commit(r, reference[i]))
--			return ret;
-+			return ignore_missing_commits ? 0 : -1;
- 
- 		generation = commit_graph_generation(reference[i]);
- 		if (generation > max_generation)
-diff --git a/commit-reach.h b/commit-reach.h
-index 35c4da49481..68f81549a44 100644
---- a/commit-reach.h
-+++ b/commit-reach.h
-@@ -30,7 +30,8 @@ int repo_in_merge_bases(struct repository *r,
- 			struct commit *reference);
- int repo_in_merge_bases_many(struct repository *r,
- 			     struct commit *commit,
--			     int nr_reference, struct commit **reference);
-+			     int nr_reference, struct commit **reference,
-+			     int ignore_missing_commits);
- 
- /*
-  * Takes a list of commits and returns a new list where those
-diff --git a/remote.c b/remote.c
-index abb24822beb..763c80f4a7d 100644
---- a/remote.c
-+++ b/remote.c
-@@ -2675,7 +2675,7 @@ static int is_reachable_in_reflog(const char *local, const struct ref *remote)
- 		if (MERGE_BASES_BATCH_SIZE < size)
- 			size = MERGE_BASES_BATCH_SIZE;
- 
--		if ((ret = repo_in_merge_bases_many(the_repository, commit, size, chunk)))
-+		if ((ret = repo_in_merge_bases_many(the_repository, commit, size, chunk, 0)))
- 			break;
+ 	struct prio_queue queue = { compare_commits_by_gen_then_commit_date };
+ 	struct commit_list *result = NULL;
+@@ -108,6 +109,13 @@ static struct commit_list *paint_down_to_common(struct repository *r,
+ 			if (repo_parse_commit(r, p)) {
+ 				clear_prio_queue(&queue);
+ 				free_commit_list(result);
++				/*
++				 * At this stage, we know that the commit is
++				 * missing: `repo_parse_commit()` uses
++				 * `OBJECT_INFO_DIE_IF_CORRUPT` and therefore
++				 * corrupt commits would already have been
++				 * dispatched with a `die()`.
++				 */
+ 				return NULL;
+ 			}
+ 			p->object.flags |= flags;
+@@ -143,7 +151,7 @@ static struct commit_list *merge_bases_many(struct repository *r,
+ 			return NULL;
  	}
  
-diff --git a/shallow.c b/shallow.c
-index ac728cdd778..dfcc1f86a7f 100644
---- a/shallow.c
-+++ b/shallow.c
-@@ -797,7 +797,7 @@ static void post_assign_shallow(struct shallow_info *info,
- 		for (j = 0; j < bitmap_nr; j++)
- 			if (bitmap[0][j] &&
- 			    /* Step 7, reachability test at commit level */
--			    !repo_in_merge_bases_many(the_repository, c, ca.nr, ca.commits)) {
-+			    !repo_in_merge_bases_many(the_repository, c, ca.nr, ca.commits, 1)) {
- 				update_refstatus(ref_status, info->ref->nr, *bitmap);
- 				dst++;
- 				break;
-@@ -828,7 +828,8 @@ int delayed_reachability_test(struct shallow_info *si, int c)
- 		si->reachable[c] = repo_in_merge_bases_many(the_repository,
- 							    commit,
- 							    si->nr_commits,
--							    si->commits);
-+							    si->commits,
-+							    1);
- 		si->need_reachability_test[c] = 0;
- 	}
- 	return si->reachable[c];
-diff --git a/t/helper/test-reach.c b/t/helper/test-reach.c
-index 3e173399a00..aa816e168ea 100644
---- a/t/helper/test-reach.c
-+++ b/t/helper/test-reach.c
-@@ -113,7 +113,7 @@ int cmd__reach(int ac, const char **av)
- 		       repo_in_merge_bases(the_repository, A, B));
- 	else if (!strcmp(av[1], "in_merge_bases_many"))
- 		printf("%s(A,X):%d\n", av[1],
--		       repo_in_merge_bases_many(the_repository, A, X_nr, X_array));
-+		       repo_in_merge_bases_many(the_repository, A, X_nr, X_array, 0));
- 	else if (!strcmp(av[1], "is_descendant_of"))
- 		printf("%s(A,X):%d\n", av[1], repo_is_descendant_of(r, A, X));
- 	else if (!strcmp(av[1], "get_merge_bases_many")) {
+-	list = paint_down_to_common(r, one, n, twos, 0);
++	list = paint_down_to_common(r, one, n, twos, 0, 0);
+ 
+ 	while (list) {
+ 		struct commit *commit = pop_commit(&list);
+@@ -214,7 +222,7 @@ static int remove_redundant_no_gen(struct repository *r,
+ 				min_generation = curr_generation;
+ 		}
+ 		common = paint_down_to_common(r, array[i], filled,
+-					      work, min_generation);
++					      work, min_generation, 0);
+ 		if (array[i]->object.flags & PARENT2)
+ 			redundant[i] = 1;
+ 		for (j = 0; j < filled; j++)
+@@ -504,7 +512,7 @@ int repo_in_merge_bases_many(struct repository *r, struct commit *commit,
+ 
+ 	bases = paint_down_to_common(r, commit,
+ 				     nr_reference, reference,
+-				     generation);
++				     generation, ignore_missing_commits);
+ 	if (commit->object.flags & PARENT2)
+ 		ret = 1;
+ 	clear_commit_marks(commit, all_flags);
 -- 
 gitgitgadget
 
