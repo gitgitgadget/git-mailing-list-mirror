@@ -1,120 +1,126 @@
-Received: from wfhigh2-smtp.messagingengine.com (wfhigh2-smtp.messagingengine.com [64.147.123.153])
+Received: from mout.gmx.net (mout.gmx.net [212.227.17.22])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B345C3E47E
-	for <git@vger.kernel.org>; Thu, 29 Feb 2024 06:10:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.153
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F5AF6086B
+	for <git@vger.kernel.org>; Thu, 29 Feb 2024 09:53:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.22
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709187004; cv=none; b=uOC2+tVReb8AS1H2QhlTIewIlkoD3LZWUPSQssTNDbbAUDwqTQwM07qiMabJNqeDDqo3/ZAXcTM7cvm2kupAUUkUsg0dYSf3tfr+NqcVVRSRTDKmkYJgBkh6N+Nv9xv/2Sn14wnzNGwanHsaOolIO7JNd6KZdHcwFc36oW2idmY=
+	t=1709200438; cv=none; b=p5dCXfrq7zMUZNr1uPsQPMgV7mcrTA4kHLiFaNm9d0gepVhZS0NC6qGLHAgHZKPPxWksEZ7EOsCL2DfkZOPXmhcR/xThw+US5rR0Y5r/NlOXR/to7uF/JJhJbM2S8YUDEnYm6CDS0nDDua4zfDcZKInic12p9/kj1VuxLM7JTM8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709187004; c=relaxed/simple;
-	bh=izIwa3qteZbsNFC8L418zBO0fShPI7gqWyh0VqTNk+g=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=uazQrEXYv5nnbgQZNbrHC1FMyfpCINzkA9BmM5iHcHa5B5HRAZpxWcBrhW2mqcXgp3hsQR0mKLUY7/dyS2BWge8nbi2QfVp5yNSd8VMwMuYRDORKW1Zz5R2EjsXau5N3rJc1iiH0h2WjBwfpKlelbN+RqyTVNjRSQqq+SW4UIvM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=joshtriplett.org; spf=pass smtp.mailfrom=joshtriplett.org; dkim=pass (2048-bit key) header.d=joshtriplett.org header.i=@joshtriplett.org header.b=OA63+Eq8; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=nbo4C4UQ; arc=none smtp.client-ip=64.147.123.153
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=joshtriplett.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=joshtriplett.org
+	s=arc-20240116; t=1709200438; c=relaxed/simple;
+	bh=aC2AJEk83OF9Q3RJ1QqffKVpqlphUQQyNbtPjjyotaY=;
+	h=Date:From:To:cc:Subject:In-Reply-To:Message-ID:References:
+	 MIME-Version:Content-Type; b=gLUIpU8ZPTfnhFuMZZYS4851wIZIyEkz0scGjIGQaSeEQLdXQgDWnBG47eOEbejJGvK2Gr2hMxMqjqVxBT7uw1wUFd/iKJYahCFb8PXApPbGq2is/UTwnmj9l0bHpNhD8K5Ocun7Gd9OGCv+VA41UNH6AOUdB9JtWHjU9KR3WHI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b=NWf8ze0E; arc=none smtp.client-ip=212.227.17.22
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=joshtriplett.org header.i=@joshtriplett.org header.b="OA63+Eq8";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="nbo4C4UQ"
-Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
-	by mailfhigh.west.internal (Postfix) with ESMTP id 974F518000A0;
-	Thu, 29 Feb 2024 01:10:00 -0500 (EST)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute4.internal (MEProxy); Thu, 29 Feb 2024 01:10:00 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	joshtriplett.org; h=cc:cc:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1709187000;
-	 x=1709273400; bh=Q9MLl3kajQnvcrinbmXvzt0kxmLJcVBdoiACd+a095E=; b=
-	OA63+Eq87nJxcgFn/SMLs3e3akt5Vt1ewiJqR8cMY9OUSdPpcBveLDIUPb3nYuXX
-	vdqvCxf8drluyMeNuK5JPbHfulDawfDe4sm5SGR6JR72E4EgH/1LcqezNUG2hb2M
-	SzrvWTiTumTNwXn7k7sfD/I+/lfUA1j+4REoaDYgHhcpCnS3VUWAsImNf+eFIk71
-	kueFNRNEPaG/thBtxCSA82qTopk+qbF6THnHciFzbIgiPI0j3dBIwKvt8BLGRBj0
-	PlcTq29Fg4v5d//O78G5lCEPiEULPJIkK0h77snZ6oEOmWqbTqMZQcV6hkTmOvjW
-	0sUIj0cmDw8Py6Y5dj40vA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1709187000; x=1709273400; bh=Q9MLl3kajQnvcrinbmXvzt0kxmLJ
-	cVBdoiACd+a095E=; b=nbo4C4UQ7caeduRWnWiBW9mg4K5f4kQB2ZqM47qMP6ex
-	yyEECaQT1dAJtEVHQ0k3olt0EvB0iuLSoC+78DIKpxrPTAbBtc6wMgcFZyiPHolz
-	0Ks8S+hzQORW8bAuIk60dhjshCrMURyubDAy6hCAxlZAKsMTkvLomangbrFRo+RQ
-	s1xYedVIyInm2uxoyB5r/XR7s4OJ3zLwvouGg5F9enddNGvM/kKlJIzjvRjfTFkH
-	+gzlG2zH5xryYfKHo+8N4ExTWBH2FVr5Gy4Ud8H54mmqQ3Ile+NVP4L2YgQ11FJQ
-	Q4zlrlo/bdQ4jRO6TZ8mTzkBQZzhMZXQS04FzdAkQg==
-X-ME-Sender: <xms:tx_gZZ0-coFFkgNgNkhFmuBtX6TG2iJDNRCmmMOapV4c7P88q9T93g>
-    <xme:tx_gZQHTl-hXQ0N6hM67eEoLgZs2TTb_ulQP_y8fRMm2pbKtuwfW6HjdLgu0Fly1j
-    yuUYbQL49vduVRADhQ>
-X-ME-Received: <xmr:tx_gZZ4VhMqWo3J-IgmYTwbQ6aZfmCDZwM0r8fDZilbmsXp2SuRlpZZ9nQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrgeekgdeklecutefuodetggdotefrodftvf
-    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
-    uegrihhlohhuthemuceftddtnecunecujfgurhepfffhvfevuffkfhggtggujgesthdtro
-    dttddtvdenucfhrhhomheplfhoshhhucfvrhhiphhlvghtthcuoehjohhshhesjhhoshhh
-    thhrihhplhgvthhtrdhorhhgqeenucggtffrrghtthgvrhhnpeehieduvedtvdehieegje
-    fhffevhfehheefgeehieeutdeiffejveegfeejtdefudenucffohhmrghinhepkhgvrhhn
-    vghlrdhorhhgnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrh
-    homhepjhhoshhhsehjohhshhhtrhhiphhlvghtthdrohhrgh
-X-ME-Proxy: <xmx:tx_gZW2UNBwUp_Z8-sT-wOwAk-nnpajms-j9cZbWNxJwSQ8JOAyn3g>
-    <xmx:tx_gZcHkfNZrhZJ70Kl3XjCYgOkZW38AeOAAqOmk0ytaWkXbmduiOQ>
-    <xmx:tx_gZX9ohUkP9xU-ZtT0a1gFUeEQ73XxsYfpg-yIl7GtVsZwsuldRw>
-    <xmx:uB_gZRRp3eNQNs1YBybUHAenhhJ_MNLSR5GjO9KG_Dsp_EMDbQgZe2ywq7M>
-Feedback-ID: i83e94755:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 29 Feb 2024 01:09:59 -0500 (EST)
-Date: Wed, 28 Feb 2024 22:09:58 -0800
-From: Josh Triplett <josh@joshtriplett.org>
+	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b="NWf8ze0E"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.de; s=s31663417;
+	t=1709200411; x=1709805211; i=johannes.schindelin@gmx.de;
+	bh=aC2AJEk83OF9Q3RJ1QqffKVpqlphUQQyNbtPjjyotaY=;
+	h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:
+	 References;
+	b=NWf8ze0EDAIWtLxdH1vmmDmKvSF8NCHfYhXr7FgZj9LHTsq5nHzoUlWHipCN+cz3
+	 nGDzqzLRiXE/M2JjS2x4qPYX12/cRiF+wpNLgphNfodXbtOcq2ZLreqV7HK3uZDz/
+	 s3fWdyAggseoxn2Z6gr6cjie/Il9oeEkD4jN4+WB9U1rQu74v7WLp9a10fB2x9AMD
+	 6N8QXo5J1IVowUGS+QmdceESE5DlWoZsbr0Jj6lz6vVRZC71JhZyloYenohqrZCi4
+	 sdIxzNXUsOvY9oG+9NLaY8Kb+LPW1pEuffG15/8MJjSoyYJokUiLD8r/nBBAcSLGI
+	 guAQWe4ZHFY2VQhJKg==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from [172.23.242.68] ([167.220.196.15]) by mail.gmx.net (mrgmx105
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1N79yG-1qnpAN2h1Y-017X13; Thu, 29
+ Feb 2024 10:53:31 +0100
+Date: Thu, 29 Feb 2024 10:53:29 +0100 (CET)
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH v2 1/2] commit: Avoid redundant scissor line with
- --cleanup=scissors -v
-Message-ID: <ZeAftoPPRsltswbS@localhost>
-References: <9c09cea2679e14258720ee63e932e3b9459dbd8c.1708921369.git.josh@joshtriplett.org>
- <xmqqbk83nlw5.fsf@gitster.g>
- <Zd2eLxPelxvP8FDk@localhost>
- <4f97933f173220544a5be2bf05c2bee2b044d2b1.1709024540.git.josh@joshtriplett.org>
- <xmqqjzmpu7k6.fsf@gitster.g>
- <ZeAFutaddf4M2wjM@localhost>
- <xmqqttlrj08t.fsf@gitster.g>
+cc: Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>, 
+    git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>, 
+    Dirk Gouders <dirk@gouders.net>
+Subject: Re: [PATCH v4 04/11] commit-reach(paint_down_to_common): prepare
+ for handling shallow commits
+In-Reply-To: <xmqqedcwjq04.fsf@gitster.g>
+Message-ID: <a044e7aa-6a71-0fa6-c6f9-db6a08d8c9f5@gmx.de>
+References: <pull.1657.v3.git.1709040497.gitgitgadget@gmail.com> <pull.1657.v4.git.1709113457.gitgitgadget@gmail.com> <837aa5a89c640427a5de064da93f1de4934d8212.1709113458.git.gitgitgadget@gmail.com> <xmqqedcwjq04.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqttlrj08t.fsf@gitster.g>
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:rjziY0G/fC1mQ5qHNUh6SWC5iJ6v03g0vPebiymMz3OME5RcJ8U
+ qCE6mx5iRL/pIwXM4V1NoazYcV1cGxRUcEfUzZmnjnhNE6dK4cgBg0fHm2mYh8RnqTc/1vX
+ bqp0HlVK+ey/nQMzl/ICoQye6YfaPjNX9YyOTf295sUY4DUzVwfNxjHka8N+8keI6F/Z/Wr
+ N0gNzfRJlfs7WOzCpqQUw==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:2jS2KdKgpsA=;xiFe2ylicKhh/nHGiFoGBaIYcuS
+ YEHRkv6YK/GT/KyzU97YsqkP1B2RV4eSS1fc0ZKWYKMK0ecIjdRcI5SPo39he09wZKUaPewRt
+ WzBKv8lpRFkSXhwwCQX902MPbSRSKjWLQQ7t2Ek/AJfqiH62K9m7Pc1Mi1Xez7ECG3rLoLnjd
+ MGS/+FajXsqy9MwECo3o2q0uolgRa8htFFFxZ7yLg8Gxe3Ob5iJ/rDh4zWLoDjewqN/JOpfJ8
+ cmhtuluXUWKxox/57S0EDBZb4Jh+Xgr8tVkTE/+WsP8Tp4WlxOlSRz1Xeya0IwpNEJDxVOt7O
+ 2yCJfnJ+QQfmEsMsYTdHMaLOo0BMC0P14ulSJ04wL8nLZS+SMnLSy+kb8EF1QZn7ha5OYtr5q
+ xQiHiLdrudnyNUCb0u6H095QPupAyPgkSIK5udkKwgN9wKdaheeaSN+r5lcOXKQOHDZGzP8gF
+ NMDTW8WXP1SvxVIA8fMjQviymFZOkxQ/u2mjgIpyplA5Eq5UbZIZS4tAmZU1MZiyxSeXiNywl
+ pfaT8oV+Xd3C9Xsn5KZJJTCbxMUGm5TEzcUDueXnT1ZmSJ0Xhzd2R7rmr2RhFsfTYtSQ/P1ZJ
+ fXr3vJ0dTQsBvJN8LssC40Ml0TUFPj4MGxwk94NZbMDUZiQkjwGebd33ugGo/4kxVNw+WnwVt
+ 1b2DKrsnsIoTLXfZ3MPhI4N117oZZPSlmgr/Sejk4uyPRk15eCAnMLDXIz1r+V4QUluvrgnS+
+ 8H/pW4McH4x8NGpvGxNrefsbFaw73343aHU9x3WE5aXc9Xg0xr5yR3+8EgADkOKaZLXRuKNZu
+ f07murpeXs1qIYDFJtJgBDOvv4OwqS8RB7EnevxRjt88o=
+Content-Transfer-Encoding: quoted-printable
 
-On Wed, Feb 28, 2024 at 09:41:22PM -0800, Junio C Hamano wrote:
-> Josh Triplett <josh@joshtriplett.org> writes:
-> > If you do end up needing a resend of any of them, I'm happy to do so.
+Hi Junio,
+
+On Wed, 28 Feb 2024, Junio C Hamano wrote:
+
+> "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+> writes:
 >
-> I do not think there is need for resending, but I think you promised
-> to add some tests earlier, so an updated patch may be in order ;-)
+> > From: Johannes Schindelin <johannes.schindelin@gmx.de>
+> >
+> > When `git fetch --update-shallow` needs to test for commit ancestry, i=
+t
+> > can naturally run into a missing object (e.g. if it is a parent of a
+> > shallow commit). For the purpose of `--update-shallow`, this needs to =
+be
+> > treated as if the child commit did not even have that parent, i.e. the
+> > commit history needs to be clamped.
+> >
+> > For all other scenarios, clamping the commit history is actually a bug=
+,
+> > as it would hide repository corruption (for an analysis regarding
+> > shallow and partial clones, see the analysis further down).
+> >
+> > Add a flag to optionally ask the function to ignore missing commits, a=
+s
+> > `--update-shallow` needs it to, while detecting missing objects as a
+> > repository corruption error by default.
+> >
+> > This flag is needed, and cannot replaced by `is_repository_shallow()` =
+to
 
-I did add a test; v2 that you replied to has this:
-> Add a test for this.
-[...]
->  t/t7502-commit-porcelain.sh |  5 +++++
-[...]
-> diff --git a/t/t7502-commit-porcelain.sh b/t/t7502-commit-porcelain.sh
-> index a87c211d0b..b37e2018a7 100755
-> --- a/t/t7502-commit-porcelain.sh
-> +++ b/t/t7502-commit-porcelain.sh
-> @@ -736,6 +736,11 @@ test_expect_success 'message shows date when it is explicitly set' '
->         .git/COMMIT_EDITMSG
->  '
->  
-> +test_expect_success 'message does not have multiple scissors lines' '
-> +     git commit --cleanup=scissors -v --allow-empty -e -m foo &&
-> +     test $(grep -c -e "--- >8 ---" .git/COMMIT_EDITMSG) -eq 1
-> +'
-> +
->  test_expect_success AUTOIDENT 'message shows committer when it is automatic' '
->  
->       echo >>negative &&
+Hrmpf. I just spotted the missing "be" between "cannot" and "replaced".
 
-https://lore.kernel.org/git/xmqqedcxvnn8.fsf@gitster.g/T/#Z2e.:..:4f97933f173220544a5be2bf05c2bee2b044d2b1.1709024540.git.josh::40joshtriplett.org:1t:t7502-commit-porcelain.sh
+Junio, would you kindly amend the commit message accordingly?
+
+> > indicate that situation, because that function would return 0 in the
+> > `--update-shallow` scenario: There is not actually a `shallow` file in
+> > that scenario, as demonstrated e.g. by t5537.10 ("add new shallow root
+> > with receive.updateshallow on") and t5538.4 ("add new shallow root wit=
+h
+> > receive.updateshallow on").
+>
+> Nicely written.
+>
+> The description above that has been totally revamped reads much much
+> clearer, at least to me, compared to the previous round.
+
+Thank you!
+
+> Should we declare the topic done and mark it for 'next'?
+
+After you looked over the correctness of the patches, I would be
+comfortable with that.
+
+Thanks!
+Johannes
