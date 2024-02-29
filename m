@@ -1,61 +1,65 @@
-Received: from mail-pl1-f175.google.com (mail-pl1-f175.google.com [209.85.214.175])
+Received: from mail-pl1-f177.google.com (mail-pl1-f177.google.com [209.85.214.177])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 847741EB46
-	for <git@vger.kernel.org>; Thu, 29 Feb 2024 15:05:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E606137756
+	for <git@vger.kernel.org>; Thu, 29 Feb 2024 15:05:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709219108; cv=none; b=A8LJOINm3vkqt2433Z8tjMBNVwlUBNRKEUNTN1UfUNJJiGSmFHzZa64Q12RENAP7N72KSWaVPtjpRsfcx+V87RT6gu0BYZVBue524pfwa3msYJqKwxaqIeYJ9KvrjKnN4O4sSwpSOoZqWqPaGOC/bPnEUv4PcXj2kQt+hdmIfA4=
+	t=1709219122; cv=none; b=aDHZfX2tmpxx6wy1MNWzpWS9QJxNJ8DeZVRqzwHMggXhq1zytxaQ5s7ztks0/s0BcQGmnVxvhEp7tys+qMHHv7BrG+iPB+dpmitDCtXB0j8+Y7WDZ1EY3toCL64Q+J3NM3PYKNoVXyeiUgK0n4E4sHoXk6NF9AmCqkJzxyBQSvI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709219108; c=relaxed/simple;
-	bh=pGyXkkzr03UaFdh/PhpErBHg9wKRIYZ9I1yM9qHHItE=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=md4xuFsV5UrXhfSY5Fk98y3C/8UiRFY8wVEZT3xN6G4W0cP6+XWR9GdVXhR6c21dzk01IgEIaseo4p+v2gHr/f7+TCdc1QOmo5Mvj94Kdd9QzEJEMZJr/OOdmj6g88VGCmXxXk/RjpLaestF1HtCYRaWMFEuWwWO5pmnID6c29c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RpdQfk0o; arc=none smtp.client-ip=209.85.214.175
+	s=arc-20240116; t=1709219122; c=relaxed/simple;
+	bh=fx4u10fHHOr7ICSjnnMB7fXSNdLyx/iFNWhk6l5OAaM=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=sY0bae+0JwE7dSuY1wNs5TdB9E7+ATlps72uoXFR5JhVeN0ecd0vqDKJRqPVh3SFtwd2iFhxy+vsWZli73W+HKLoGbbzTB0JqMseq33DM7GX4ljk1hOdk/BPr3gi/wSdnOZVOk67luw03HkFwLFOZBdTz/evWzYIPyLIhVhBl5E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=WmvposFC; arc=none smtp.client-ip=209.85.214.177
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RpdQfk0o"
-Received: by mail-pl1-f175.google.com with SMTP id d9443c01a7336-1dc5d0162bcso9738785ad.0
-        for <git@vger.kernel.org>; Thu, 29 Feb 2024 07:05:07 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WmvposFC"
+Received: by mail-pl1-f177.google.com with SMTP id d9443c01a7336-1dcd0431f00so7545375ad.3
+        for <git@vger.kernel.org>; Thu, 29 Feb 2024 07:05:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1709219106; x=1709823906; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=tVLKtJnFDQYZwttuuASipGVqH0xxJRN49O+1nhQroec=;
-        b=RpdQfk0oBGAyfFL4IfC5Fy1Kx/4zlDCHcQAg85gaAg5wKpjoEZTsH3nITg2SQJAAqF
-         vxZDQw/cU5bwLY+JGTpQjwJjf2/fzw1T5am5XDz0ACzTya7QqMS0iOnDF4fizKZRjyrF
-         QNZYfBP3xqPTLAnhxOeG1lYSgW0w5fT+OLfwgIl1/BejiN0AQu5kZYRURedQmnMJb5NU
-         dPDC0LibtiIRWLqLH0aVHhzYE30IC4cwLmJgf9aZG80O6guBpXBwQo3XW8YoG3PEk/h6
-         EBbmZMWSXDU/s3ysBzWKdfJbwk8hcJ3rjXae99lLP+56iSKRB/TMZSvnb4QDFShh+0kR
-         LvBA==
+        d=gmail.com; s=20230601; t=1709219120; x=1709823920; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=jsNk7T9978sxbE/4BQ+g8OQnTKhPchMsBQIHdLG2QZw=;
+        b=WmvposFCSUyGnW2nM4EwGRBQHEVILTm6IR2/xriJvFJxBePMr1sMyyd2C4//AOe6Y+
+         x8L5V4ITY/LF5uUOaEho33Fxm3bGWE3wQ9q7itqhd6l399xsEmkfienm9W5bvYyMAPpf
+         JCKMN1cwMRTF3hDz2Zav3Kd83BzOoo7A2fzbdXcYBGw//raaC2DQru4fIsq3BJ4OJmU1
+         NL3BKpjRTWtYnFJOxuhXwTZCBb/TvIe6Bxh93uPFOlTxuznCltE1HKK/OCCdCsaDC66k
+         nsS+zSf38dEFgQyOnXYOo1Ag1ggs1xkDp0KLBe6WO44ybPFbzUZLYGq6tnQqOGZIk2/4
+         ctQg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1709219106; x=1709823906;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=tVLKtJnFDQYZwttuuASipGVqH0xxJRN49O+1nhQroec=;
-        b=k+stccKdSF4rZNIv14i74jzE66dHFd5of52kjNqPcL6Za7eoGzVfCH1PsLpN/4NfVw
-         df0ZELTCRWwiU+/3EyWpJectuYpUNwGMw0PvFZXBYzXsooZ3SBfV5JECZj9R4pYySXCU
-         c/k1CMcwebSnJwoSLZ5vxtQWJ/hjJNz0yafFVDrP7Pigt5p9bz+9W5W/NMPV1xFmQcEr
-         4FoSjpl30O3Mu6yK+KCwBCEGf5cYqZPaEJPk4500e0hEyCMtJLVDgBfCmejm2hcVfdK/
-         IZYX4BDLBHiXOHtFkb+7g8LrK9+nFpObRRaCR3YLntssHwt6fU0C5p13RBbcXFWsJrzZ
-         u0mA==
-X-Gm-Message-State: AOJu0Yw0AVet5G63h8Yzx2hJlqHxadW46PH9eg0DAHl29O+TEMuN+Co7
-	toHhoYI8uuNjxfNtRY+Cl2O1RjezsK76KboYAsVWPcF3tbpbPh4sFAohz34xcq1Sbw==
-X-Google-Smtp-Source: AGHT+IH+bLOuYd81TSECPVnsCfTzeYYjdZS3VRdIWe2khjKt7ny1LKv00Hwr3IHHJsOzoSoxuPby3w==
-X-Received: by 2002:a17:902:f811:b0:1dc:2f30:e0dc with SMTP id ix17-20020a170902f81100b001dc2f30e0dcmr1924531plb.36.1709219106051;
-        Thu, 29 Feb 2024 07:05:06 -0800 (PST)
+        d=1e100.net; s=20230601; t=1709219120; x=1709823920;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=jsNk7T9978sxbE/4BQ+g8OQnTKhPchMsBQIHdLG2QZw=;
+        b=d3E+lm5W5m/oCUhCOUHDAfBQHbCcmomIhtYdSAlrh5i2QiW8KjyiixJ4wbtP8SMmw4
+         jwedpWmqgj1hXo6m1Y+vxoT6wsy7Yly/JUZVWoNsz0D85wmIJmcyAqQLMovXX2Q+L2rd
+         NitgZTVVN4/MSuCVHnxevhX+mbxgTK1QiOXunRlwjdRfYoA198fbmVBxaY+BiXKhR1D8
+         0jJMqqkBue7zQEJJC9R84a4rxk8m5jWgb9YqfGTYAyJh4ZYL8+CUDdQ0oiNYVfpZkgsy
+         bqU8Vtggt376qAlM70sLs8YGCnJ6JVdBDxTzlf4nRcCIHN1uCXG7Ca5cM1o7XHA4oun3
+         sG2g==
+X-Gm-Message-State: AOJu0YyRdtLUiJcWudzHgZf3K7c5Yo4jOtOFjMkvxeWtHew1u2ocT6xm
+	nW+IQUtssjBQfUEgJJnw2OSCXpkHZraspusid55sTpOFLHFuBOOx3XuzpZuox7925A==
+X-Google-Smtp-Source: AGHT+IH0VULWHJL2faaDtX0ItWDBH+B3fwKvrJdFD0sV8rb92ignWN3IuZ1ZUPhBcfv8G3GfdTwnlA==
+X-Received: by 2002:a17:903:181:b0:1dc:2d65:5fd1 with SMTP id z1-20020a170903018100b001dc2d655fd1mr2787486plg.2.1709219119946;
+        Thu, 29 Feb 2024 07:05:19 -0800 (PST)
 Received: from ArchLinux.localdomain ([2604:5040:11:69e::e973])
-        by smtp.gmail.com with ESMTPSA id f4-20020a170902684400b001db337d53ddsm1603014pln.56.2024.02.29.07.05.03
+        by smtp.gmail.com with ESMTPSA id f4-20020a170902684400b001db337d53ddsm1603014pln.56.2024.02.29.07.05.17
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 29 Feb 2024 07:05:05 -0800 (PST)
+        Thu, 29 Feb 2024 07:05:19 -0800 (PST)
 From: shejialuo <shejialuo@gmail.com>
 To: git@vger.kernel.org
 Cc: shejialuo <shejialuo@gmail.com>
-Subject: [GSoC][PATCH 0/1] microproject: Use test_path_is_* functions in test scripts
-Date: Thu, 29 Feb 2024 23:04:41 +0800
-Message-ID: <20240229150442.490649-1-shejialuo@gmail.com>
+Subject: [PATCH 1/1] [GSoC][PATCH] t3070: refactor test -e command
+Date: Thu, 29 Feb 2024 23:04:42 +0800
+Message-ID: <20240229150442.490649-2-shejialuo@gmail.com>
 X-Mailer: git-send-email 2.44.0
+In-Reply-To: <20240229150442.490649-1-shejialuo@gmail.com>
+References: <20240229150442.490649-1-shejialuo@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -64,33 +68,66 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Hello everyone,
+The "test_path_exists" function was proposed at 7e9055b. It provides
+parameter number check and more robust error messages.
 
-My name is Jialuo She, mastering in the software engineering. This is my
-last semester. And I will graduate this summer and works as a full time
-employee. So I wanna make good use of my time by contributing to open
-source software, and take this opportunity to continue contributing to
-Git after I start working in the future.
+This patch converts all "test -e" into "test_path_exists" to improve
+test debug when failure.
 
-My reason for choosing to participate in Git is actually quite simple.
-It's because I once wrote a toy version of Git myself.Throught this
-project, https://github.com/shejialuo/ugit-cpp. I came to understand
-the magic of Git. I also want to do my part and contribute to something
-meaningful.
-
-For myself, the most attractive GSoC idea for me is "Implement
-consistency checks for refs". I will dive into this idea soon.
-
-At last, Wish everyone good health and happiness every day.
-
-shejialuo (1):
-  [GSoC][PATCH] t3070: refactor test -e command
-
+Signed-off-by: shejialuo <shejialuo@gmail.com>
+---
  t/t3070-wildmatch.sh | 10 +++++-----
  1 file changed, 5 insertions(+), 5 deletions(-)
 
-
-base-commit: 0f9d4d28b7e6021b7e6db192b7bf47bd3a0d0d1d
+diff --git a/t/t3070-wildmatch.sh b/t/t3070-wildmatch.sh
+index 4dd42df38c..d18ddc1a52 100755
+--- a/t/t3070-wildmatch.sh
++++ b/t/t3070-wildmatch.sh
+@@ -107,7 +107,7 @@ match_with_ls_files() {
+ 
+ 	if test "$match_expect" = 'E'
+ 	then
+-		if test -e .git/created_test_file
++		if test_path_exists .git/created_test_file
+ 		then
+ 			test_expect_success EXPENSIVE_ON_WINDOWS "$match_function (via ls-files): match dies on '$pattern' '$text'" "
+ 				printf '%s' '$text' >expect &&
+@@ -118,7 +118,7 @@ match_with_ls_files() {
+ 		fi
+ 	elif test "$match_expect" = 1
+ 	then
+-		if test -e .git/created_test_file
++		if test_path_exists .git/created_test_file
+ 		then
+ 			test_expect_success EXPENSIVE_ON_WINDOWS "$match_function (via ls-files): match '$pattern' '$text'" "
+ 				printf '%s' '$text' >expect &&
+@@ -130,7 +130,7 @@ match_with_ls_files() {
+ 		fi
+ 	elif test "$match_expect" = 0
+ 	then
+-		if test -e .git/created_test_file
++		if test_path_exists .git/created_test_file
+ 		then
+ 			test_expect_success EXPENSIVE_ON_WINDOWS "$match_function (via ls-files): no match '$pattern' '$text'" "
+ 				>expect &&
+@@ -175,7 +175,7 @@ match() {
+ 	fi
+ 
+ 	test_expect_success EXPENSIVE_ON_WINDOWS 'cleanup after previous file test' '
+-		if test -e .git/created_test_file
++		if test_path_exists .git/created_test_file
+ 		then
+ 			git reset &&
+ 			git clean -df
+@@ -198,7 +198,7 @@ match() {
+ 			fi &&
+ 			git add -A &&
+ 			printf "%s" "$file" >.git/created_test_file
+-		elif test -e .git/created_test_file
++		elif test_path_exists .git/created_test_file
+ 		then
+ 			rm .git/created_test_file
+ 		fi
 -- 
 2.44.0
 
