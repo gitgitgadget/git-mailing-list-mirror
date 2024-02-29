@@ -1,109 +1,137 @@
-Received: from mout.gmx.net (mout.gmx.net [212.227.15.15])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f48.google.com (mail-lf1-f48.google.com [209.85.167.48])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84201634FD
-	for <git@vger.kernel.org>; Thu, 29 Feb 2024 10:03:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.15
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97EF05D462
+	for <git@vger.kernel.org>; Thu, 29 Feb 2024 10:11:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709201039; cv=none; b=Vry8F+0fYLNUjkTZCNcgNbuCRGU73vvNb+1XMR12xWgTfJljIRRrZorv6LrfM4/zwe2jRNQDzIJb2oZiHQJJQkFQL7GaGGSHux4jOrGWzOlGwyjab92Ybt/jO/vP9gXsvVMgx6Hl02p+HEHEnbQqKVqHckk5ntydS09wxfHE+kY=
+	t=1709201507; cv=none; b=DONH0Xi30QeRBL7jkn6eZCHKL4UUbsF2i8IhGLbCHzbBHiO2XIKIF9jQbgNabq2A/0ONXp/sDBWR8YC2fu6FhQAocptBd1bITg8gWzn929sWflkFA0p9D9bq+9wI4zjzVu+H2vbZKKJTFJWZiQpU+G7vXgNPe9ru0D6uaTgqKeE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709201039; c=relaxed/simple;
-	bh=vnSOaMxtBQOC8buvsyZCq55ty0UENrMrcOxApN7LKTI=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=YjdVtmAxzsyDgM5c7EeQjGIz/kIgzJGYSdIqtl+4RZDBz2OI3Iq1pHmh1ZXsTGAAXSg+CjxxuaW+c6GbdsP+7H3U5zn5L9swJjo+GM/dUP6g8OIRMiAGuZKSzLdxB1M5+HO33bRHtlD3IH6ZM5GU8zge57Dt8V9b3lQ+vO6A000=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=oswald.buddenhagen@gmx.de header.b=lpWYCgB+; arc=none smtp.client-ip=212.227.15.15
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
+	s=arc-20240116; t=1709201507; c=relaxed/simple;
+	bh=GpMQ1SMft51NDlrsoECa/kVwCMr7vJY741hZQm9yAkg=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=jzRmqQyLDwdRA5PbOUqAnujnPBCXkZQWX+LH+ftBO/30LDwkGEPJiatCokBRfloqK6rLjyRfKcm9RjOOlicw/UBmL1u2AuwOtSKLK1khqJBIrNPj7rgtOoLf73d545DNVso884k6+xfHm6FUjK16hZHkXbBncfeBH2PuotZKlEY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=T1HVIany; arc=none smtp.client-ip=209.85.167.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmx.de header.i=oswald.buddenhagen@gmx.de header.b="lpWYCgB+"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.de; s=s31663417;
-	t=1709201031; x=1709805831; i=oswald.buddenhagen@gmx.de;
-	bh=vnSOaMxtBQOC8buvsyZCq55ty0UENrMrcOxApN7LKTI=;
-	h=X-UI-Sender-Class:Date:From:To:Cc:Subject:References:
-	 In-Reply-To;
-	b=lpWYCgB+M9W+FbqhW5NqA/h6guqdvBT5cko/0qfJ9bUAeaci5h1jYqHJjUtUp9cs
-	 3z5ESfzWsOuS9s56XslO3Oa1zHXz7KDQuAJWwcI1NtiqPv0B1hzpkE+wrhLrP30Lb
-	 wxrKNuSD6DYZqLNRropapJmF72zRmHGqfwl63qfyx39GSKaaXGIQlzqEIeMFAqVNR
-	 Gw3XhT7mYQJz1GB514zFD0PfPRu4hp3wzKW5Tsqj+f9QaWpq7/Iuf0YG5zJrZqVfW
-	 Xbe2GTWC19S9MmpAxWA8HKutcgsitYenZNZuiymtM0/3fWgSb+fQdxmDUi1L31t1C
-	 2fBElwpH1IaLABS/kg==
-X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from ugly.fritz.box ([89.247.162.106]) by mail.gmx.net (mrgmx004
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MuUj2-1qpS5M3I2M-00rXTM; Thu, 29
- Feb 2024 11:03:50 +0100
-Received: by ugly.fritz.box (masqmail 0.3.6-dev, from userid 1000)
-	id 1rfdGY-Z09-00; Thu, 29 Feb 2024 11:03:50 +0100
-Date: Thu, 29 Feb 2024 11:03:50 +0100
-From: Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org
-Subject: Re: [RFD] should "git log --graph -g" work and if so how?
-Message-ID: <ZeBWhkSwec7PmQID@ugly>
-References: <xmqqo7c5n0ob.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="T1HVIany"
+Received: by mail-lf1-f48.google.com with SMTP id 2adb3069b0e04-512f54fc2dbso564988e87.1
+        for <git@vger.kernel.org>; Thu, 29 Feb 2024 02:11:44 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1709201503; x=1709806303; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=UdeWJlgeZNlv/W/UcwiQ71zspJyKjYBGFoawvvx4OlU=;
+        b=T1HVIanycdNv8G0eZl3tRZcuJ0DVG0lwdk1B75UEJQA+VCO1GbwvxRQPZ++PgCIJNl
+         igWueSCHYNvMUO9OG4Qf/Vl6MhKJMbjQwokfJYtxERknkK9Eck9HQSVWQkCanrc57qc2
+         Vj2wi5bMelURdJ9bV6DjyzPP/GqhD1f+F5MUl2S4FoXngGtONI26DtGRKMW6v9EmGMdc
+         gzN3WchyfSBiY3WACCVH8dYbGRlgYBDwvPoVv2E36vOKqweTDLLSPG2uEpxZCsDfqtsy
+         A9f+kGv1LGXOAl7uTJ4LwSNtonjTf365PKlAaljYnhx+PmZdGW86lsd5+squDjXemept
+         HNjQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1709201503; x=1709806303;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=UdeWJlgeZNlv/W/UcwiQ71zspJyKjYBGFoawvvx4OlU=;
+        b=sO0jtJFw0pCnqNKZVOqix8tPR+zg43uRwoo14lGG0As6AjBv6NQqPFdmKiBHLCXXpH
+         5Wdqqm5b14vaMNnnIzFp35no9Pk0krrjxhE0u5Xl9YteoiaruuAyRZhcElUVMRKqZg08
+         C5LSuZxM6wH8j5AJfp/fNAvkBRCqLkhlGhWwxvBHO/7XyktxIT/wkzQMA5Epf0ob+JmW
+         AcfXkYZudHZ2SFxlTGh0BFT7a3vo2LlUogfIWxuPC50ZfwiYiAOg9emeB6dQWmolwLgY
+         lWrF2RrIKmcpru9NBkW6hnQDf3ph9FerePPG7sF2/t/W6cK+BR4ROf9AnYWlufODz2oy
+         ++xg==
+X-Gm-Message-State: AOJu0YxkSEx5Vxoo6NrHtAyqK9Te5VIO7BeAyAVjQrynHqCw8cDQvoZB
+	PsC93bgp6AxluJg2yAx9gTzdCuTHXbsLOcQnkeMumV4+xiTdRB5rZ+qc9KmdOlawSQ==
+X-Google-Smtp-Source: AGHT+IH2Rt3J2QgZrSXpVcZwUAxb5cyLQ6vEK87ZMLY68TiL1rkv11j9lH4jNXZo1xI5PgJsfKqQFA==
+X-Received: by 2002:a05:6512:3125:b0:512:e535:d692 with SMTP id p5-20020a056512312500b00512e535d692mr1113332lfd.0.1709201502826;
+        Thu, 29 Feb 2024 02:11:42 -0800 (PST)
+Received: from host-sergy.. ([129.0.102.60])
+        by smtp.gmail.com with ESMTPSA id n33-20020a05600c3ba100b00412bca4cdf9sm1498296wms.36.2024.02.29.02.11.37
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 29 Feb 2024 02:11:42 -0800 (PST)
+From: Sergius Nyah <sergiusnyah@gmail.com>
+To: git@vger.kernel.org,
+	christian.couder@gmail.com,
+	gitster@pobox.com
+Cc: pk@pks.im,
+	shyamthakkar001@gmail.com,
+	Sergius Nyah <sergiusnyah@gmail.com>
+Subject: [GSOC][PATCH] userdiff: add builtin patterns for JavaScript.
+Date: Thu, 29 Feb 2024 11:11:31 +0100
+Message-ID: <20240229101131.445405-1-sergiusnyah@gmail.com>
+X-Mailer: git-send-email 2.43.2
+In-Reply-To: <xmqqttlsjvsi.fsf@gitster.g>
+References: <xmqqttlsjvsi.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Disposition: inline
-In-Reply-To: <xmqqo7c5n0ob.fsf@gitster.g>
-X-Provags-ID: V03:K1:tKDXwGqhgW79IZA7zw8ASLfgy4E+ffnD3SN3RFBNBpuEgze9TrQ
- cm+gPSjgKD+NAAIJfjKLmUmTboQUso7xuqYUKTQP5l5HLA7hn/BP4Mg/xYB1FrcOWy4nPyL
- RLjlUna+S71Kjqph9EWfFcHekXpoXasWK2x+jHaEb9s3/z1pM5UoeIYVQatP1JqVm/zu797
- x3JYW0GGnIn3YPDQZfbug==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:FIm1aUEpaQc=;QSVihdXFCudw5/d3c567prxJbNn
- NtpP17pfJCVPcvcRPLtC+8+gIlqU95WV7U86h8bASf4AM1Fhu2By9SwU3uLgOT8L5Yo5uYS1D
- 3FbehlJGrpNVztgPjcxeVrYbe6+2ihBhA8Tiu3U9cfYVA/78fURUnHifLjEqktA0H+EIZjy1Y
- DC0yLbLiKIsNw+/xp6aNIc3T2A112vC8PUywfSJkdj7MM4EaYLhr6sO6wPKyFuJnt1W2GnYKb
- kGNiHuFo993fZHXzH7pe+WaitasWe0EbB/T+40+L9fCUSi0k68E2z0pM/9k7ewBvIjt5qSo4/
- RboLh7mMYus9kOeuhuDFeZ5q4p6F3xmqfJ1gxBbBMJbjfYOa6WRRT46/kKzVfs01tPyan4g5U
- dfSz/YWTEB80BTE+nXmKoMF6ySoHPPybDOXIDqdHzF5cPyjgMgjK4OwNhore+ZZI9VWdbvpLT
- iL+nOGsN8U364gjKlCjAduAYrzC5XfnYcOvNzsLJc+H/cWp4/34OzDyJJLCZJEgfRAQlWwnIj
- Az9p7Gm7nhasv10CaOeGI/D6RF86h6VtUWz920GhRV29GCJxvTOgppDmgY2Q6vnwzPlQ1Qjvr
- YvPIRd/g1Gbpiw91osDZlia4dm4JXbj/+ume802edID75WKe8ik4lEQqu7Q3IPGk3++fhWXJx
- 4Z/+tgm9neBpP+oaCYyWB7g0o0UBHAVs2i1rV6NHnOn0wXq0QG6BW99NaO362jK1foepFxsI9
- X6/kTwYgHvlTrK06hVrqx5FMmZcXcoc+fBZ27T4NFXWLCzWKaY3PhkcCR4vxTOs9PXv+6C+Gq
- 1yhVmo6+7ngimwD5WrCGlNRj6WSN2E6KU3qEvURx+nMJI=
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 
-On Sat, Feb 24, 2024 at 11:04:52AM -0800, Junio C Hamano wrote:
->Now, if I could run
->
->    $ git log --oneline --graph -g --since=3D2024-02-20 --boundary
->
->on the result, such a history might look like this:
->
->    * snapshot as of 2024-02-24 (HEAD)
->    | * snapshot as of 2024-02-23 (HEAD@{1})
->    |/
->    | * snapshot as of 2024-02-22 (HEAD@{2})
->    |/
->    * add 'bar' (HEAD~1)
->    o add 'foo' (HEAD~2)
->
->to show the same history.
->
->Unfortunately, "--graph" and "-g" does not mix X-<.
->
->So, the RFD is,
->
-> (1) Should "git log" learn a trick to show a history like this in a
->     readable way?  Does it have utility outside this use case of
->     mine?  I am not interested in adding a new feature just for
->     myself ;-)
->
-i'm not sure i fully understand your use case; i failed to extract the
-conceptual requirements from your description.
+This commit introduces builtin patterns for JavaScript in userdiff.
 
-but as a "heavy revisionist", i would appreciate it very much if there
-was a convenient way to list and diff revisions of the same logical
-commit (ideally omitting empty rebases). sort of like a range-diff on
-steroids.
+It adds a new test case in t4018-diff-funcname.sh to verify the enhanced
+JavaScript function detection in Git diffs.
 
-this would certainly require correlating the reflog with some stable
-commit ids, like gerrit and jj maintain.
+Signed-off-by: Sergius Justus Chesami Nyah <sergiusnyah@gmail.com>
+---
+userdiff.c | 17 +++++++++++++++--
+t/t4018-diff-funcname.sh | 25 ++++++++-
+2 files changed, 38 insertions(+), 4 deletions(-)
 
+diff --git a/userdiff.c b/userdiff.c
+index e399543823..12e31ff14d 100644
+--- a/userdiff.c
++++ b/userdiff.c
+@@ -18,40 +16,19 @@
+#include "git-compat-util.h"
+#include "config.h"
+#include "userdiff.h"
+#include "strbuf.h"
 
+PATTERNS("javascript",
+      /* Looks for lines that start with optional whitespace, followed
+      * by 'function'* and any characters (for function declarations),
+      * or valid JavaScript identifiers, equals sign '=', 'function' keyword
+      * and any characters (for function expressions).
+      * Also considers functions defined inside blocks with '{...}'.
+      */
+      "^[ \t]*(function[ \t]*.*|[a-zA-Z_$][0-9a-zA-Z_$]*[ \t]*=[ \t]*function[ \t]*.*|(\\{[ \t]*)?)\n",
+      /* This pattern matches JavaScript identifiers */
+      "[a-zA-Z_$][0-9a-zA-Z_$]*"
+      "|[-+0-9.eE]+|0[xX][0-9a-fA-F]+"
+      "|[-+*/<>%&^|=!:]=|--|\\+\\+|<<=?|>>=?|&&|\\|\\|"),
+
+diff --git a/t/t4018-diff-funcname.sh b/t/t4018-diff-funcname.sh
+index 43593866bc..9c3b80665e 100644
+--- a/t/t4018-diff-funcname.sh
++++ b/t/t4018-diff-funcname.sh
+@@ -18,40 +16,19 @@
+test_expect_success 'identify builtin patterns in Javascript' '
+    # setup
+    echo "function myFunction() { return true; }" > test.js &&
+    echo "var myVar = function() { return false; }" >> test.js &&
+    git add test.js &&
+    git commit -m "add test.js" &&
+
+    # modify the file
+    echo "function myFunction() { return false; }" > test.js &&
+    echo "var myVar = function() { return true; }" >> test.js &&
+
+    # command under test
+    git diff >output &&
+
+    # check results
+    test_i18ngrep "function myFunction() { return true; }" output &&
+    test_i18ngrep "function myFunction() { return false; }" output &&
+    test_i18ngrep "var myVar = function() { return false; }" output &&
+    test_i18ngrep "var myVar = function() { return true; }" output
+'
+
+test_done
+--
+2.43.2
