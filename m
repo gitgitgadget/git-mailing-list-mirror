@@ -1,130 +1,88 @@
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f46.google.com (mail-ej1-f46.google.com [209.85.218.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE7E8A5F
-	for <git@vger.kernel.org>; Thu, 29 Feb 2024 19:33:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D10F32A8D7
+	for <git@vger.kernel.org>; Thu, 29 Feb 2024 19:44:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709235217; cv=none; b=ammLQhhrTp4QtRA+JZSzb7l2FognXQqM8MpomaG7cNKlv5H1XWKTBgRKA7eVBgcFkXwYSzen/cvhVT7KgQCE2EFpEE2QUFaWSccVfg2QkrvL6tOkaNNePDxy1iEMlhPQzRUICruGjBo8mFmhLYzdPq20Yosp+TfSfuANWv23m2Q=
+	t=1709235893; cv=none; b=FNNO81/OZgm7PiuUyRp5X2sH2hFNskjjydTvEEyjhO+57JS5cq23d/WRycmPDAWIx+DElx4PDeeePiStWeysS1bUbV9OWeau6rNUsjM9tyEl9/qu4oCBjU67FKCxmlCpxEkfq+dEF/ALLT9PIyMe624b+COgiOy/DvIbB7MMNzI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709235217; c=relaxed/simple;
-	bh=a3EZfexxhGOU2FcCLUB9r3Iy/1JQDm9mszf2eKw5z1Q=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=g8Vlag7hysQ74NXohQhlJHcv7BEWR6MpTbPTRFfMh2P6YnzqJopflFa6pSAmW2dM0zBL2b7Bn6tSzkYVipXthuxTuQTDYElbQxU0QjZ/GvfiUV69xhr2gTxpMt2aXiNYtQWSZAek9RKjO5QLipBK/65Nsor0M5KxTn8yD43vXM8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=eA3E9/Ur; arc=none smtp.client-ip=173.228.157.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1709235893; c=relaxed/simple;
+	bh=EHJIrAUzGzPJZTAombx759gtFk4Jkg4sepJQkr51mL8=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=V34CzFNXGlU42exn2nyhhit1K3OYdMpKskZ6Mhf8XwlDtVOG2LJNDUOdeF9+qbZbV1IPXzFv+cCCs1HcLjRNC+j0RYpNWRaf8KyzTvJc5pJhM6IbrrWesy4OgcBp0rvvEm3zBAz8LgUlr8mR3kRQaiS+TwGD/1eiP945Yln1X34=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=iprJ1Dvm; arc=none smtp.client-ip=209.85.218.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="eA3E9/Ur"
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id 7391735F4D;
-	Thu, 29 Feb 2024 14:33:29 -0500 (EST)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=a3EZfexxhGOU
-	2FcCLUB9r3Iy/1JQDm9mszf2eKw5z1Q=; b=eA3E9/UrGMcZ+gwX7gLKadbqmhVt
-	/vMw8Tc7eEvwvASlGvQQRQXDUbWD6DUpDV0tYPDkmN4L3S5epXPrukaYhKjT7Pqy
-	nYVnTMYZavEs5S6n7FMgj4QBB5zfmSoW9Q6y1trmHX74bibutXuWIzc8VGX2Xctf
-	ImVGNQQwP67jPBk=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id 6713635F4C;
-	Thu, 29 Feb 2024 14:33:29 -0500 (EST)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.176.30])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 044AB35F4B;
-	Thu, 29 Feb 2024 14:33:25 -0500 (EST)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: =?utf-8?Q?Rub=C3=A9n?= Justo <rjusto@gmail.com>
-Cc: Dragan Simic <dsimic@manjaro.org>,  git@vger.kernel.org
-Subject: Re: [PATCH] branch: adjust documentation
-In-Reply-To: <cbaf17e7-37a6-4c2e-82ba-65fe41dd86b1@gmail.com>
- (=?utf-8?Q?=22Rub=C3=A9n?= Justo"'s
-	message of "Thu, 29 Feb 2024 19:56:05 +0100")
-References: <3cbc78bb5729f304b30bf37a18d1762af553aa00.1708022441.git.dsimic@manjaro.org>
-	<e8fdd057-2670-4c93-b362-202a339d5f49@gmail.com>
-	<xmqq8r3lnzp0.fsf@gitster.g>
-	<2a4de8c4-4955-4891-859c-58730a41e5af@gmail.com>
-	<ea15a49aed7b5a74cd9b1bf8a5351df9@manjaro.org>
-	<c00f6efe-d1f4-4f2c-99cc-ac7a6d93c9ff@gmail.com>
-	<be91f3ad9305366c1385c2da4881537e@manjaro.org>
-	<xmqq8r3g8caz.fsf@gitster.g>
-	<35738a93f5cbace5b3235ce614b7afbf@manjaro.org>
-	<xmqqttm3ouxy.fsf@gitster.g>
-	<16c1f883-881f-4f8c-95b2-22fb4825b733@gmail.com>
-	<96f1afa6-f4ac-4593-9bf4-72dafe3cab85@gmail.com>
-	<b6d22f5a66de49efc623eceddbdc6faf@manjaro.org>
-	<d1f928b98238a60a96bee0d3f410deef@manjaro.org>
-	<xmqqttlsld4t.fsf@gitster.g>
-	<cbaf17e7-37a6-4c2e-82ba-65fe41dd86b1@gmail.com>
-Date: Thu, 29 Feb 2024 11:33:24 -0800
-Message-ID: <xmqqcysff4l7.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="iprJ1Dvm"
+Received: by mail-ej1-f46.google.com with SMTP id a640c23a62f3a-a3e7f7b3d95so199098666b.3
+        for <git@vger.kernel.org>; Thu, 29 Feb 2024 11:44:51 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1709235889; x=1709840689; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=zo8bWHg5dNEHK/3aJCdyg5kVpPoI9Pp2tfTo/eoQ5fE=;
+        b=iprJ1DvmQa/fD30mnuhM1lGX/EOF//jOfyrPecx0rzOU2J5ulqEEHMsVgzsS93Viyo
+         YNWIIB2pTfTbCRWImtU/r5GYng43Poh9QGF0QVMYzHXSQKtWtimhgZ7duNxAsXet4E8q
+         b/sjJEWRqj1k1wTmEJ+JIiOGtie4ii1YCeQ3Lvu5eFNYRWyNZWMk0Dhq9rtvQOvNCVbC
+         k6MphbGYy3IAytC8BIEVtbse8zhw0VB32a73bKj09q1ogaFfly7jjSwfOXWIRvJLMPqh
+         xYPrsjAJpgLIFK4c11yoqHKKscja/KPezdxWKT1CupkNHAi8dGBWDDeV9mBrxECbxuS6
+         GtMA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1709235889; x=1709840689;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=zo8bWHg5dNEHK/3aJCdyg5kVpPoI9Pp2tfTo/eoQ5fE=;
+        b=qQljJw5V3fNFugxur7SFiixrHpTY6TyDaUwCB88tgT9pLo8tUIfyHpmCjywsglDeuy
+         r6B1J6VvNEHJBUfDb03NLqpAncWh9gdXj33aWEp6dWHBn9Hso7uoooveJ+WAdFhW6QTz
+         dzf1eTAhAxWKb39ZtS3LBosXAO+oA03ucoj7g9c1LGDADR+kJJux9Ljbx+7y/DQc4lKX
+         DYOQoPbYBM9Szb/mRqqgNZUtKTnds0iGC97LmJRQpq9KhMd4yYc+/Yqnx4Uv7l/VCOpm
+         cHhzeEKwS6uXErastrhREc6ECKhfzHrzN+gvlHmNwRV68wbnUqtgUdBfDN6r9zDr/nYA
+         gGPA==
+X-Forwarded-Encrypted: i=1; AJvYcCUS5XTflvNpenBzqP+mwVu4rYFoMFm0CcJSLwumZUwb6dLU+P1g631ePLMsw81gqvY6BlYntIjpzLNosjFRG2PoHrDT
+X-Gm-Message-State: AOJu0YwG3yuIa8phbyyMbf8K6IXiohUQerbPuBQmxs92c/Opgvs2yVSo
+	Ild8iEQUd1n4FDrHzxV/tPNaIMPQnb7/Fb/p85fk6mEGzT/9AWnP
+X-Google-Smtp-Source: AGHT+IE90kq49rZbpitlO/aI3gFjs2ePaXp7HBOggMqDbl8qxgL+lsCpdN9X/BFGW/57V+6hX3o0sg==
+X-Received: by 2002:a17:906:a3d7:b0:a3e:590f:6348 with SMTP id ca23-20020a170906a3d700b00a3e590f6348mr1841724ejb.41.1709235889289;
+        Thu, 29 Feb 2024 11:44:49 -0800 (PST)
+Received: from eugenios-Air.homenet.telecomitalia.it.homenet.telecomitalia.it (host-95-235-237-78.retail.telecomitalia.it. [95.235.237.78])
+        by smtp.gmail.com with ESMTPSA id tj7-20020a170907c24700b00a413d1eda4bsm978787ejc.87.2024.02.29.11.44.48
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Thu, 29 Feb 2024 11:44:49 -0800 (PST)
+From: Eugenio Gigante <giganteeugenio2@gmail.com>
+To: gitster@pobox.com
+Cc: christian.couder@gmail.com,
+	giganteeugenio2@gmail.com,
+	git@vger.kernel.org,
+	sunshine@sunshineco.com
+Subject: [GSoC][PATCH v2 0/1] Use unsigned integral type for collection of bits.
+Date: Thu, 29 Feb 2024 20:44:43 +0100
+Message-ID: <20240229194444.8499-1-giganteeugenio2@gmail.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <xmqqsf1ekf34.fsf@gitster.g>
+References: <xmqqsf1ekf34.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID:
- 68701624-D739-11EE-8A35-A19503B9AAD1-77302942!pb-smtp21.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 
-Rub=C3=A9n Justo <rjusto@gmail.com> writes:
+Improve the commit log message
+based on reviewers feedback.
 
-> If we wisely choose the placeholder, perhaps we can write:
->
->     -m [<one>] <two>::
-> 	Renames <one> (the current branch is used when not given) to
-> 	a new name <two>, together with its reflog and configuration
-> 	settings ...
->
-> And if <one> is _good enough_ then "current branch is used when ..."
-> should seem somewhat redundant.  So it could be possible to end up
-> having something like:
->
->     -m [<one>] <two>::
-> 	Renames <one> to a new name <two>, together with its reflog
-> 	and configuration settings ...
+Eugenio Gigante (1):
+  add: use unsigned type for collection of bits
 
-If you use <the-current-branch-or-a-named-branch> or something
-awkward like that as <one>, surely you can.  But I do not think we
-want to go there.  And neither <branch-name> or <old-branch> would
-remove the need for "if omitted then the current branch is used", I
-am afraid, even though there may be a way to rephrase it more
-concisely, e.g. "Rename the current branch (or <one> when given)..."
+ builtin/add.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-> Are we going to say "the current branch is used when ..." in the
-> description for the other options too?  The description for "-c|-C",
-> "--edit-description", "--unset-upstream", ...  Perhaps we are, and it
-> will sound repetitive.
 
-Do not forget that the objective of the larger-picture-revamping of
-this page is to make the description of each option self-contained.
-Similarity between -m's description and -c's description does not
-count as being uselessly repetitive.
+base-commit: 2a540e432fe5dff3cfa9d3bf7ca56db2ad12ebb9
+-- 
+2.43.0
 
->> Even though the choice of words Rub=C3=A9n made in the patch under
->> discussion may work well in the current document structure.
->
-> My patch is mainly about CodingGuideLines:
->
-> 	If a placeholder has multiple words, they are separated by dashes:
-> 	  <new-branch-name>
-> 	  --template=3D<template-directory>
-
-Yes, and that will be something we want to address _after_ we pick
-what word or phrase would replace <one> or <two> in the above at the
-conceptual level.  If we picked a single word, say "branch", we do
-not even need to worry about dashes, and spell it just <branch>.  If
-we did not pick "old branch", then we'd use "<old-branch>", but doing
-such a conversion based on the current text is a wasted work, if we
-end up using say "original branch" as the phrase, for example.
-
-So if your patch is mainly about that part of the guideline, it is
-addressing the documentation update in a wrong order, creating
-possibly a wasted work.
