@@ -1,92 +1,89 @@
-Received: from mail-pf1-f202.google.com (mail-pf1-f202.google.com [209.85.210.202])
+Received: from mail-pl1-f202.google.com (mail-pl1-f202.google.com [209.85.214.202])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD1E742A8C
-	for <git@vger.kernel.org>; Thu, 29 Feb 2024 23:53:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.202
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A1AE44374
+	for <git@vger.kernel.org>; Thu, 29 Feb 2024 23:56:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.202
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709250788; cv=none; b=u82bsS9xQ+4psQODlmoQ2eLCMlbNe6++fP1j9tCZJUBdyZu/OPwJHaAz91MnkgcOsfPPSQ1YUbldB04Pl9zAIOS0O8bcvACkWWwswJcoIuayHMw7xEeJ8PL44kmzs4Uda/XDUNuI9OOelvgtMWLhYtfqVtDDjTu/nKh4AYQTjiA=
+	t=1709251018; cv=none; b=eFJ1XOuA2AYFQ75SzFvBQJ0I7I8JyIRpSM2RcjpukIo3+rPfMiQDRFKuFx/Pk3v6A8i4tZSu0IJbP7GH5DUzfongE6f95MXwZOiY8J8jkoDE9RNPot7JGKMMnnSNmIBpswsioBYc4w+YRf4IIqIsEcLctckpd3lFx+Ybkk1mmiM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709250788; c=relaxed/simple;
-	bh=syBomYuvU0JzrxMbKK25F99si8Wb7gizKgJ9rBhYBww=;
+	s=arc-20240116; t=1709251018; c=relaxed/simple;
+	bh=66EMacx5OHYcPlolfEE4pVYbydaEWf70PV4LQpz9WQE=;
 	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
-	 To:Cc:Content-Type; b=L96h7ixjG2xF03G5xHVr3ICMFXuCh4Bq8wMybm/2PQofdxfNdwGfdrFAi2WuOmmKGjG2fbkjcwJRd0vRmWvlOod5n3oWHOsLrc+tgaTfYbU6+OCodxwS9C7w9cHW45vUEYq9u7kMT0qSrSXBlZdve44SS0Imo1T706L/231HY7A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--linusa.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=ykswRDRo; arc=none smtp.client-ip=209.85.210.202
+	 To:Content-Type; b=HfV6qXw/Q4UXWLNPbvnr/CL0zISRJRbNW1LtSIM38zkJe5hpQD6Z2/EffeRtAVwGlNPqczzE39AlovKv4/Xj5hpdMREdlPzbJ+gT8A4e4L3v5GoEVdEY1zDmNeEOAsgRWg+xZqdNxVNB1Pg0Bgu3SY1Nd1kEvAZ0eVeZD4DhmyQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--linusa.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=xL10OtxL; arc=none smtp.client-ip=209.85.214.202
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--linusa.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="ykswRDRo"
-Received: by mail-pf1-f202.google.com with SMTP id d2e1a72fcca58-6e57168590aso1348337b3a.0
-        for <git@vger.kernel.org>; Thu, 29 Feb 2024 15:53:06 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="xL10OtxL"
+Received: by mail-pl1-f202.google.com with SMTP id d9443c01a7336-1dc4f385c16so14011265ad.1
+        for <git@vger.kernel.org>; Thu, 29 Feb 2024 15:56:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1709250786; x=1709855586; darn=vger.kernel.org;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=hblhF1gFvw3mKYSXoqTXTlpnkxXDZorchexQwuT2tLk=;
-        b=ykswRDRo2GwdKGLSLJIyROBeLNMDnnc94UVRO8rgU9fdbA1ntMKX5K4z1mWoNtl39N
-         YKkoyHNvN28mYhiuGGBpucNW+QR/wZjJFhHnADq7pFdVRbesddEQD5wcnBC3o8GXGP9o
-         Gf3iIEBR+SK9miebLIKOYg086gVKMaVEdG8AoVGYCKO/JeW5JAqqndCRRgz3BwuZ06qT
-         5+fcURRoo+5DY6I5zemX5wVwFQ3Y519unS26J2UVbeohGPwLnUtyLk2Rv3K9C5fvHZTt
-         F84XNWRIcJylYzBJT3whFAH4K06tZqmZ4VQxEndfPlY/632Z72z9xcSAp47mgSV/wMqJ
-         WdxQ==
+        d=google.com; s=20230601; t=1709251016; x=1709855816; darn=vger.kernel.org;
+        h=to:from:subject:message-id:references:mime-version:in-reply-to:date
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=5zz96UyalVVXP+/3tPOIKjp8BuAfRHxwcwatWiGkE40=;
+        b=xL10OtxLAZPpEJ4shW09TsQjYbEDIPK4vSf4lOiMC5/kZYkOeyLdjzLgBouj2RHdMT
+         xnCpqNYHAoEgPFKBynIe5d/fMTigKHZpTOcx7I3kEd9rHZhVpdvfNHWd2PQOOMmQ+Cek
+         Qhyrson99WfWmPyFUeN471fTt+r6jCeOgvRlEPQBfckvw5PXdI9OYZPQ6SMlPEZRpW+U
+         2vsKBiTlhJWx768Xtroaj869w5CTQoBo6q7r8myNNt30e1bkXbhKilJ8ps1D0c4R5/rZ
+         xLsWMaoy8qEpYOAXOsrOIZr7IA6FwSN65/LaFUwb49XIJaELAXGKq81/usOJH2UY9g1G
+         5o4g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1709250786; x=1709855586;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=hblhF1gFvw3mKYSXoqTXTlpnkxXDZorchexQwuT2tLk=;
-        b=qHWIFLxYboXZGcGSvMXOC97UvGsvXCz6DLIk8G8AY848pfW5xIABBAtjU95XmYGO5u
-         YPtbzhKA9eF36MTi+YlqQUhFOYMKbs1eESPX49z2zzhnLE0tM8x3zAP2JzxeCEFpaoqL
-         BX49N9Ls2QsGlA8+jaMbgJlktGbeBHCc1Q5/RuKYbPpu/widQnEQRza5APlBETWv6qnb
-         r5WCmAsZjdyoz4nEKVy1eqRsSCkrFLN6yZVTsrebpL5my7yTLEMdG8FDBjjhW4O6l4gN
-         VBmC5ncgm5LwLN13OGWucLbVKuAxH2GiOGtX4sNwFZmlxLOfZcE0KEDPjEscAO5G5Ma3
-         035g==
-X-Forwarded-Encrypted: i=1; AJvYcCWEYHItr6vcwmY24f8xcNt66uOphvmtRprgbQzn8nS/DrglBQx58fCV3a2XS5XTShuEWoNEPw4DEsdLBuSJ/yx4OMjI
-X-Gm-Message-State: AOJu0YyLrh3+ZFbH68qbiT4m35q2WoljLCD9p0n4HFgtl54GDd57sAdy
-	J9Pw450svvvnM1qITGjS+2Eyajt/YQKhfYZTAM/PToTkj1qpcwTaGsX/cW/QkifA4/KLFxBAtqg
-	E1Q==
-X-Google-Smtp-Source: AGHT+IHjS44H4ENWd9+dlC6eij6VB4JpKo/76hZou/21mRl0UKAmP+FNAeq/cS5lqtvIwKhiQpzvzXbpr+E=
+        d=1e100.net; s=20230601; t=1709251016; x=1709855816;
+        h=to:from:subject:message-id:references:mime-version:in-reply-to:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=5zz96UyalVVXP+/3tPOIKjp8BuAfRHxwcwatWiGkE40=;
+        b=GyplcHUv+o4RbC7hY808EX5yiEjlPoLuVXidor9ITT/A5cUqhrw0i0FnQ8xVBw9HXb
+         XUG7LHMOdsuJEVQrdU6RkAD/WKxuZWmVPoYSzXBoeXdrjugS2kuv24Yaeg3GxuzWTcIG
+         HV1//qY9yWLOzZPpkE8+mWKO6q6WHc9PISU5cLBmu3QsHIYEnbW2ahoGDc5po9KvQaHv
+         SHee0xLT6ChCqhrQ6XGXP7nWcZBhGNNnFkuqdgKVagsSeKiqMga97rqbXzkDNYK2poYy
+         +RVprUACN/cle6EEsmy7D7tLtP9HbeQh6J264+a/n5wrzrMIpPgCjEt7sHrAlBUB/Q7S
+         7BMg==
+X-Forwarded-Encrypted: i=1; AJvYcCXIVLL4O8FbjsRjp0AssycVqKy2w9OLgCE2+Q7TE+XZgi6QKYWwPDO/m5AnpI30b3/T0gJdk9vebolJEfeXSMd6kaNi
+X-Gm-Message-State: AOJu0Yy/lap0Vna1e2Y4/ZyFBq0nwAY+3lsnUdrvqeYmi/4kGLqK6qIi
+	Uv2fVIu/npuiAxR5gdFTlN/qLqzHljCjrcpu5L6MCXKIAi1QlObJqDWml3BjWG8NpIyExabsDml
+	60A==
+X-Google-Smtp-Source: AGHT+IF+gCtfmH3EW2bW9lo943HeYyco87x7POeBeLNz4VlIRxLjNrdPoWtIFt/g3QvSfRTFbkg8QfjkHiw=
 X-Received: from fine.c.googlers.com ([fda3:e722:ac3:cc00:7f:e700:c0a8:2221])
- (user=linusa job=sendgmr) by 2002:aa7:8887:0:b0:6e3:bd7c:7f44 with SMTP id
- z7-20020aa78887000000b006e3bd7c7f44mr7867pfe.5.1709250786206; Thu, 29 Feb
- 2024 15:53:06 -0800 (PST)
-Date: Thu, 29 Feb 2024 15:53:04 -0800
-In-Reply-To: <xmqqedcuc0w3.fsf@gitster.g>
+ (user=linusa job=sendgmr) by 2002:a17:903:2312:b0:1dc:cc01:747a with SMTP id
+ d18-20020a170903231200b001dccc01747amr110plh.12.1709251016331; Thu, 29 Feb
+ 2024 15:56:56 -0800 (PST)
+Date: Thu, 29 Feb 2024 15:56:55 -0800
+In-Reply-To: <xmqqjzmpm9b8.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 Mime-Version: 1.0
-References: <pull.1632.v4.git.1707196348.gitgitgadget@gmail.com>
- <pull.1632.v5.git.1708124950.gitgitgadget@gmail.com> <4372af244f02b71cc70f3a8e1b5591b3b9fec93a.1708124951.git.gitgitgadget@gmail.com>
- <CAP8UFD1dE2EiSxohose6U9SGn+zeHPyVB=KZ2xdQi-v-a8d1XQ@mail.gmail.com>
- <owlyttlq529h.fsf@fine.c.googlers.com> <xmqqedcuc0w3.fsf@gitster.g>
-Message-ID: <owlyle724ylb.fsf@fine.c.googlers.com>
-Subject: Re: [PATCH v5 3/9] trailer: prepare to expose functions as part of API
+References: <xmqqjzmpm9b8.fsf@gitster.g>
+Message-ID: <owlyil264yew.fsf@fine.c.googlers.com>
+Subject: Re: What's cooking in git.git (Feb 2024, #09; Tue, 27)
 From: Linus Arver <linusa@google.com>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Christian Couder <christian.couder@gmail.com>, 
-	Linus Arver via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
-	Christian Couder <chriscool@tuxfamily.org>, Emily Shaffer <nasamuffin@google.com>, 
-	Josh Steadmon <steadmon@google.com>, "Randall S. Becker" <rsbecker@nexbridge.com>, 
-	Kristoffer Haugsbakk <code@khaugsbakk.name>
+To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 
 Junio C Hamano <gitster@pobox.com> writes:
 
-> Linus Arver <linusa@google.com> writes:
+> [...]
+> 
+> * la/trailer-api (2024-02-16) 9 commits
+>   (merged to 'next' on 2024-02-21 at 631e28bbbc)
+>  + format_trailers_from_commit(): indirectly call trailer_info_get()
+>  + format_trailer_info(): move "fast path" to caller
+>  + format_trailers(): use strbuf instead of FILE
+>  + trailer_info_get(): reorder parameters
+>  + trailer: start preparing for formatting unification
+>  + trailer: move interpret_trailers() to interpret-trailers.c
+>  + trailer: prepare to expose functions as part of API
+>  + shortlog: add test for de-duplicating folded trailers
+>  + trailer: free trailer_info _after_ all related usage
 >
->>> Nit: this patch and the next one will become commits, so perhaps:
->>>
->>> s/In the next patch/In a following commit/
->>
->> TBH I've always wondered whether "patch" or "commit" matters --- I've
->> seen examples of patch series that referred to "commits" instead of
->> "patches", and vice versa. I was hoping to hear an opinion on this, so
->> I'm happy to see (and apply) your suggestion. Thanks.
+>  Code clean-up.
 >
-> I think it is just fine to use either; sticking to one you pick
-> consistently in the same series would have value.  If you prefer
-> commit, then fine.  If you like patch, that's fine too.
+>  Will merge to 'master'.
+>  source: <pull.1632.v5.git.1708124950.gitgitgadget@gmail.com>
 
-Makes sense, thanks.
+Doh, please wait for my v6 reroll (will send to the list in the next
+half hour) to clean up the commit messages. Thanks.
