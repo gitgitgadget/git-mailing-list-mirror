@@ -1,58 +1,58 @@
-Received: from mail-wr1-f43.google.com (mail-wr1-f43.google.com [209.85.221.43])
+Received: from mail-lj1-f171.google.com (mail-lj1-f171.google.com [209.85.208.171])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EF7C134421
-	for <git@vger.kernel.org>; Thu, 29 Feb 2024 18:56:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FCD42E3E1
+	for <git@vger.kernel.org>; Thu, 29 Feb 2024 19:00:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709232972; cv=none; b=OiP8aKmDxhs6MQHrPLuUrfYIbEEZOpsXgf8FknoS7HyypsMPZldyAyB/RDOdvmeuEARwYfq9okRf+9TIQCDGe1OD8oqEoB9gDMYpwEW1FtoK/r9RAsDgRHJeMo60ZkHTRYTGp2Wi6Kw2zMRFQll1YiNBMsS2tvfUbHe9A3MnrF0=
+	t=1709233259; cv=none; b=rG3Q99S2vkWyAKAf+GAalTSeGGGnRexuJz8lpI80yqdua6TFQN01w0z6Q9F3AfSTNmQQinKNaA0Iy0DmO578I6u2lbHoAvVvtr4N8PBhym92d9ZyXxMmuGmXaVWMAZrtUpthwTxSZrSwPtNjaYgvMLci9x1+WlItvZ+kkrLzguw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709232972; c=relaxed/simple;
-	bh=rw9LB1+3zn4AHCKr/IDAukJcqXIsUPL6eDo9BlVYon8=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=aUidpuVF9TAgywbqXD/LE6UbqMOUKJSei4WF4r8qVL3sAp0NzAcDANn6PuPLvWvz40k0w14vr4BBqIMEX5xpZ9p2DQu8ZZxSwFZq5mribjm0ETTm/gWJRNtN3NImXTMLpCu+ccwfffebOWPpUYIw4SxQtsP+snUH3rcfhauu37o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LXZntwRK; arc=none smtp.client-ip=209.85.221.43
+	s=arc-20240116; t=1709233259; c=relaxed/simple;
+	bh=S5iqm2SzMC8BCBgY2uc0R6bc/+xfHzlLWdmz/Zjebk8=;
+	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
+	 In-Reply-To:Content-Type; b=EUrMsAvNrPrWYvYO7WrJFc5KE1X3mf/qCWdwe61VnpnUMgWuJIh3oKtGbK2tPFtBDpR4Gxs1XjEbuYHhZ13J3ZgUS/YqUfzRoqQXYLiqjKNUZpbS1W/M/FZ6tK7S30mCfPVW16EBbA/TmDaJVhHhTnO5v5ZFGfe56CAqG1qW7ZU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=k5naxzH6; arc=none smtp.client-ip=209.85.208.171
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LXZntwRK"
-Received: by mail-wr1-f43.google.com with SMTP id ffacd0b85a97d-33d61e39912so632408f8f.3
-        for <git@vger.kernel.org>; Thu, 29 Feb 2024 10:56:09 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="k5naxzH6"
+Received: by mail-lj1-f171.google.com with SMTP id 38308e7fff4ca-2d208be133bso14628341fa.2
+        for <git@vger.kernel.org>; Thu, 29 Feb 2024 11:00:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1709232967; x=1709837767; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+        d=gmail.com; s=20230601; t=1709233228; x=1709838028; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:references:cc:to:from
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=j5fqTu9pOonc804bjPdv3b/HAZ+Gg+W68WXOXwOXExk=;
-        b=LXZntwRKP7kPF0uPiHF3SwfuRkN92cdTKAr6uyRC+BOw9CEGvK1XpbN3ycUlU+lP+Q
-         cXqHcYeFKNGwvGfU7a3m5k/mtKCV/I3Ouad9vylWWoBbiASPDI7thIAhYASb6cceIbSn
-         tFqhRbWagp953OTS1finkzSbsgN5cmbVxGK2wBaWRddIJD05U6t1AogL0PMMfUjeORaJ
-         gb/W8PsibUx8ZLRtGXmep2HqiRQpcUCHcCKjef4fu0sNNLnosYc9cAPbyG+q6paR9Wst
-         0OiHM3eP9UDnDsGjW88qxK9PSg4++HLl4FcSCGr0e0aIOSmp0BTXjg0w2OzJmCNBsibu
-         Cgog==
+        bh=0r4w4S5FcVMPaibmBmG5a8rAVfEtQ3nnnuwVHBPff6g=;
+        b=k5naxzH6H4MW8WiH8NdF8hwML91GyBiXL9Eiim5idcQXd3m6U6AxginjTnqLfUXAXX
+         3c8//pnS43HS6EXjovBbKT6I9tWD+7KUazMfhrgN7AUcmuBc5f7dwwKhqGARIBs/D1hN
+         yST+6lBBu6lSYY+hWyFGFmcuGxyAnmqUL3BlTcxSEmnqU6AJ2G6zseqTYhUD4+jrpwFs
+         IOQ49BBpYy5ciTpZ5LG7+BMBfYh2cRftk9CMqfznAMc+sidsT9PIeV9DsFb7bzb4zfl3
+         6Lu6Upe0dS+QStxXzE7GnMT3uh9cRdZpbKvBQNEqMK3IFGQ/WrsC4tP7loLox434I3U+
+         IP5w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1709232967; x=1709837767;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+        d=1e100.net; s=20230601; t=1709233228; x=1709838028;
+        h=content-transfer-encoding:in-reply-to:references:cc:to:from
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=j5fqTu9pOonc804bjPdv3b/HAZ+Gg+W68WXOXwOXExk=;
-        b=dwxr6lez+dgASP9Q6sDQAGd8RPVq5Vr6r5qGtez0btjYmgBcSzcAgbHk11T0ROINra
-         qDBwx8RYnhUXPAXcaigRMbJ9zfeGR+DuzTga4Ju6fM3JSOOlaAdU2/04RYwvFRUNAlTR
-         cIT3qr40Sf86L1uu9VwQlPt/B15ALcoXJsDnq7aR5SeHyPffKC/PrbexG6a1gMTBqTFr
-         yQcyv+8sqornadHglXcVxZGluarV2TFJuLhKaeY2xLuFIGbVSofQcr6WHaeQ4WHDpiCy
-         1LSfnPsUzQK0SfGWdxlU5E06daljroKNhueNLWK8Tw0prztkMTIB7oWg5n1TohPpl6pl
-         HzSg==
-X-Gm-Message-State: AOJu0Yx5S91CONr5YTb/k20WlHF1yc1HeH1G3nu4k7aNsSlyRX7HvCFp
-	5E2grPv18kCEO76P69QmkrzHwUaOimfS5XuUgWSAMQ/zP90+jT0fgL9ioLEO
-X-Google-Smtp-Source: AGHT+IGtvW6b0M38DHhNqhOD+9Bk+xIvBxTcqYqthoa4ICBQMcfvTs7yH27G5eq7dzLA6YpBEiZy7Q==
-X-Received: by 2002:adf:f052:0:b0:33e:999:58a6 with SMTP id t18-20020adff052000000b0033e099958a6mr2187316wro.31.1709232967429;
-        Thu, 29 Feb 2024 10:56:07 -0800 (PST)
+        bh=0r4w4S5FcVMPaibmBmG5a8rAVfEtQ3nnnuwVHBPff6g=;
+        b=dtuYHiMJ6KLMuWfXpSMdiCy67qPGQgQXlKcdIhrjOLBZQcDjXVlLxDzs+NZalg7NYQ
+         lGQ+SBMgYJcCd7XCcF0sUwCTLR6wKo9qk1Y2A29nvEfc88UmkWlCJ8A0JuUuSy6QLyTi
+         BU0veErLPcffWDrRafhsk9rp2XRD6RPemtln4ku+ubWETQ3pnRRO+yigOSX7itqfG3hT
+         3VWlVXaPulWn1OWMgESRlD38vdc1WpZfSMVldAbVcWPF7u7544MQIrZoyKIqQQ0TAHb+
+         2H586c4hAWxmi/K1KH5k9WyqDED3aDSjZzdAcClNOpLw17g4V0TeSEn5AIXaMwWmu4tj
+         gTzQ==
+X-Gm-Message-State: AOJu0YxTY9kkpmiQeV8MeuvI2/tINvhNN/XwJSeHnF8G7pFebGUqMnGE
+	XFnDDkD+mPgUdKfPTzFFaHXYlsgrFEYQoiv54AvsCLymbaUwxsD2PFwtwFcs
+X-Google-Smtp-Source: AGHT+IExmIjYuWUwGaw7XXVy1ySa8oYNkxX/jzNuGPGfmmhaXq0F+roUws2f9Q6KgGp9/oouU+FOrg==
+X-Received: by 2002:a2e:3c08:0:b0:2d2:d3de:44fd with SMTP id j8-20020a2e3c08000000b002d2d3de44fdmr2376383lja.29.1709233227973;
+        Thu, 29 Feb 2024 11:00:27 -0800 (PST)
 Received: from gmail.com (243.red-88-14-45.dynamicip.rima-tde.net. [88.14.45.243])
-        by smtp.gmail.com with ESMTPSA id a16-20020a5d53d0000000b0033de10c9efcsm2452092wrw.114.2024.02.29.10.56.06
+        by smtp.gmail.com with ESMTPSA id n9-20020a05600c3b8900b00412a813e4cfsm2892638wms.34.2024.02.29.11.00.27
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 29 Feb 2024 10:56:07 -0800 (PST)
-Message-ID: <cbaf17e7-37a6-4c2e-82ba-65fe41dd86b1@gmail.com>
-Date: Thu, 29 Feb 2024 19:56:05 +0100
+        Thu, 29 Feb 2024 11:00:27 -0800 (PST)
+Message-ID: <ff1c650b-5776-4881-ad0d-c39d311fa7e7@gmail.com>
+Date: Thu, 29 Feb 2024 20:00:26 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -60,119 +60,73 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] branch: adjust documentation
+Subject: Re: [PATCH 3/4] completion: reflog with implicit "show"
 Content-Language: en-US
-To: Junio C Hamano <gitster@pobox.com>, Dragan Simic <dsimic@manjaro.org>
-Cc: git@vger.kernel.org
-References: <3cbc78bb5729f304b30bf37a18d1762af553aa00.1708022441.git.dsimic@manjaro.org>
- <e8fdd057-2670-4c93-b362-202a339d5f49@gmail.com> <xmqq8r3lnzp0.fsf@gitster.g>
- <2a4de8c4-4955-4891-859c-58730a41e5af@gmail.com>
- <ea15a49aed7b5a74cd9b1bf8a5351df9@manjaro.org>
- <c00f6efe-d1f4-4f2c-99cc-ac7a6d93c9ff@gmail.com>
- <be91f3ad9305366c1385c2da4881537e@manjaro.org> <xmqq8r3g8caz.fsf@gitster.g>
- <35738a93f5cbace5b3235ce614b7afbf@manjaro.org> <xmqqttm3ouxy.fsf@gitster.g>
- <16c1f883-881f-4f8c-95b2-22fb4825b733@gmail.com>
- <96f1afa6-f4ac-4593-9bf4-72dafe3cab85@gmail.com>
- <b6d22f5a66de49efc623eceddbdc6faf@manjaro.org>
- <d1f928b98238a60a96bee0d3f410deef@manjaro.org> <xmqqttlsld4t.fsf@gitster.g>
 From: =?UTF-8?Q?Rub=C3=A9n_Justo?= <rjusto@gmail.com>
-In-Reply-To: <xmqqttlsld4t.fsf@gitster.g>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Git List <git@vger.kernel.org>
+References: <98daf977-dbad-4d3b-a293-6a769895088f@gmail.com>
+ <5991b58c-770c-4aaa-bce5-f396d9f7f16f@gmail.com> <xmqq8r4cnfju.fsf@gitster.g>
+ <dd106d87-3363-426a-90a2-16e1f2d04661@gmail.com> <xmqqwmqyr3mb.fsf@gitster.g>
+ <abe1c96d-48f7-4355-8688-e1fb05c67448@gmail.com>
+In-Reply-To: <abe1c96d-48f7-4355-8688-e1fb05c67448@gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-On Wed, Feb 28, 2024 at 09:20:02 -0800, Junio C Hamano wrote:
-
-> The current description section talks about option and its arguments
-> without showing the syntax, making it unnecessarily extra verbose.
-> For example, we see something like this:
+On Wed, Feb 21, 2024 at 07:06:36PM +0100, Rubén Justo wrote:
+> On Tue, Feb 20, 2024 at 17:46:20 -0800, Junio C Hamano wrote:
 > 
->     With a `-m` or `-M` option, <oldbranch> will be renamed to
->     <newbranch>.  If <oldbranch> had a corresponding reflog, it is
->     renamed to match ...
+> >     $ git reflog sho<TAB>
+> >     shot show
+> > 
+> > That is what I would expect.    
 > 
-> But in the final shape of the documentation, I would like to see the
-> description section not talk about these arguments, and would read
-> more like
+> Thank you for responding.
 > 
->     When given `-m` or `-M` options, the command renames an existing
->     branch to a different name.
+> Of course that's the logical expectation.
 > 
-
-Good.
-
-> among short descriptions made at the conceptual level on other modes
-> like "listing" mode, "delete" mode, etc. [*3*] 
+> However I'm not sure if it is sensible to offer completion for
+> sub-commands mixed with branch names.
 > 
-> And the option description would become something like [*]:
+> Furthermore, I am also worried that such an approach implies making the
+> user pay, probably unnecessarily many times, for __git_complete_refs in
+> cases such as:
 > 
->     -m [<one>] <two>::
-> 	Renames the branch <one> (the current branch is used when
-> 	not given) to a new name <two>, together with its reflog and
-> 	configuration settings for the branch. ...
+>     $ git reflog <TAB><TAB>  ;# the user may be just exploring the sub-commands
+>     $ git reflog s<TAB>      ;# the user may be lazy and just want "show "
+>     $ git reflog show<TAB>   ;# likewise, to complete the SP
+>     $ git reflog expir<TAB>  ;# how often a expir... branch is expected here?
+> 
+> The experienced user, if not most users, should be intuitive enough to
+> circumvent the corner cases:
+> 
+>     $ git reflog <TAB><TAB>
+>     delete expire show
+>     ...
+>     $ git reflog s<TAB>
+>     ...
+>     $ git reflog show s<TAB>
+>     ...
+>     $ git reflog show shot
+> 
+> This is why I choose to fallback to __git_complete_ref only when no
+> other option is available.
+> 
+> If you think, or anyone else, that these concerns don't make sense, I'm
+> open to make it work as you described.
 
-> Now in such a context, <one> and <two> placeholders having actually
-> the word "branch" in it would sound redundant and awkward to read,
+I am happy with the current iteration and I still think that mixing
+branch names with options is a source of confusion.
 
-Indeed.
+However, this topic in the latest 'What's cooking' is marked with:
 
-But I'm on the fence.  Do we have to use "Renames the branch <one>"?
+ Expecting a reroll.
+ cf. <dd106d87-3363-426a-90a2-16e1f2d04661@gmail.com>
+ source: <98daf977-dbad-4d3b-a293-6a769895088f@gmail.com>
 
-If we wisely choose the placeholder, perhaps we can write:
+I am confused about what the expectation is.
 
-    -m [<one>] <two>::
-	Renames <one> (the current branch is used when not given) to
-	a new name <two>, together with its reflog and configuration
-	settings ...
+Consider this message a ping as maybe the message I'm responding to has
+been missed.
 
-And if <one> is _good enough_ then "current branch is used when ..."
-should seem somewhat redundant.  So it could be possible to end up
-having something like:
-
-    -m [<one>] <two>::
-	Renames <one> to a new name <two>, together with its reflog
-	and configuration settings ...
-
-Are we going to say "the current branch is used when ..." in the
-description for the other options too?  The description for "-c|-C",
-"--edit-description", "--unset-upstream", ...  Perhaps we are, and it
-will sound repetitive.  However, even if we do, with the _good enough_
-placeholder the user will be able to fill the gaps we might leave in
-the documentation, like the one that presumably has bring us here:
-pull.1613.git.git.1701303891791.gitgitgadget@gmail.com.
-
-And finally;  Can't <one> and <two> be consistent with other bits we
-have in the documentation like the descriptions of "git switch <one>",
-"git checkout -b <two>" or "git init -b <three>"?
-
-After the revamp, I'll be less happy (but happy :-) nonetheless) if we
-end up having a SYNOPSIS similar to the one we have today:
-
- - Documentation/git-branch.txt:
-      'git branch' (-c | -C) [<one>] <two>
-      'git branch' (-d | -D) [-r] <three>...
-      'git branch' --edit-description [<three>]
-
-It seems to me to be made up of disconnected pieces.
-
-And for reference:
-
- - Documentation/git-switch.txt:
-      'git switch' [<options>] [--no-guess] <four>
-      'git switch' [<options>] --orphan <five>
-
- - Documentation/git-init.txt:
-      'git init' [--initial-branch=<six>]
-
-My apologies if I'm pushing too hard on this and being reiterative in
-my messages in this series.  My intention has been to explore the use
-we want of the placeholders.  Of course, this is not at odds with my
-sympathy for the vision proposed.  I agree on the direction.
-
-> Even though the choice of words Rubén made in the patch under
-> discussion may work well in the current document structure.
-
-My patch is mainly about CodingGuideLines:
-
-	If a placeholder has multiple words, they are separated by dashes:
-	  <new-branch-name>
-	  --template=<template-directory>
+Thanks.
