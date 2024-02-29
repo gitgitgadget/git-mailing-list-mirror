@@ -1,164 +1,104 @@
-Received: from impout001.msg.chrl.nc.charter.net (impout001aa.msg.chrl.nc.charter.net [47.43.20.25])
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CA1179933
-	for <git@vger.kernel.org>; Thu, 29 Feb 2024 19:04:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=47.43.20.25
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 448A1134431
+	for <git@vger.kernel.org>; Thu, 29 Feb 2024 19:06:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709233469; cv=none; b=XERVcs0Coc+DLx5V++PXWQy+1AH8ybIN2ywPQIo7DJv4aw2IAo39stkEN40HerOa9zJxx35NJbZL7R9oQQ0KrSi3J4vyqyCLWdtpcgLAAAuHzkvSbHGtyzGqH9S9Bh+G9n0o0jPKXJDAN1VaqjGKwbXlNXyAn+gCWIx9TUOEQ28=
+	t=1709233612; cv=none; b=CAOmmEkfhl1KGdInTXXQd4SHX3o019U/L4qTesHquhPySzR/T4g3+vft93+w4J/xDgPZCzrpbPs0zQ4uBN2Rk2U/XJ6US8Hc/9UOiH32yJw7IIEWOh9+OeN98PIbj1KIcF3D9rZeZx6JAA/ZkaQ6rzp+AzlxiXdBGunAATl48Fc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709233469; c=relaxed/simple;
-	bh=5zzq7MRtN83RC8w+jHy0gxTevr16t4QLDJEgRc2vEXQ=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=raGL6Sov9d61XUcgt0c2/UhBHxf/KZqCCqHEDRuWaR9ohzp8A6FJUXRuM4yTEJUKa9S1yQNegME3hA/MCx08/dUx+0IM0sPD1+2Vjp4kvSzJkquqy4n6VYmJ1CbWccWDFhGHws5bZVpAIiOH42BXvoVvkGFEmANfN1W+0yYENkQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=charter.net; spf=pass smtp.mailfrom=charter.net; dkim=pass (2048-bit key) header.d=charter.net header.i=@charter.net header.b=LTJfeRrq; arc=none smtp.client-ip=47.43.20.25
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=charter.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=charter.net
+	s=arc-20240116; t=1709233612; c=relaxed/simple;
+	bh=zwKRpVuia8gTOHFl5VxKmx3E+WsBkHAvSBydKXMH5hY=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=Pm+0CusGI5Fh308fcNMBZBZ3QTTwnCh0xYGmvLS4po/uNnAxCubWH/FkeUtLZix8XQ6GMJ4NZSjBmDLVRLYN9YG91d8p/q4Mo7pdK8lCydn10jFz4NS0vmRdQh2dDoUKw9YQQUf3feWyghh3gFDm+W9DOyiQ6VFDBVD7W3rFym4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=isgMmm2e; arc=none smtp.client-ip=64.147.108.70
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=charter.net header.i=@charter.net header.b="LTJfeRrq"
-Received: from localhost.localdomain ([97.71.114.58])
-	by cmsmtp with ESMTPA
-	id flfzrOVy3k96Zflg7rE5v1; Thu, 29 Feb 2024 19:02:49 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=charter.net;
-	s=c20240129; t=1709233369;
-	bh=5zzq7MRtN83RC8w+jHy0gxTevr16t4QLDJEgRc2vEXQ=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=LTJfeRrqVVWahzJRv7LPBep+iF7xt56YT9bwHq4KBtnh/CF27rntkCJveC0Uv7FLZ
-	 Q6rZ9suUS3+hpZEGeVhpRSPETyIGZL9j1iucpdEQ5kwWZT+G7AIqz5HXYuUuqhh/Mj
-	 gpbLxXkSe5VKnjZ2GQY+GGSswb+LG+9rFA/MtcNefjD0C+XLMv5N5ecJBdU1kOZ08B
-	 Gg4K9qKfOqSALgB2N2vVfL+FGxogb3yjG7JXu9mZQZ3pj+cGV9vtAYkaKTDKwjyjdM
-	 DsGvyScE7g/QYFZYP/TXzMkEVXW3JG1twso7sK4BSu0g5V4SEa69WT1+kvHcgFlW9K
-	 mnhbPszw11fZw==
-Authentication-Results: charter.net; auth=pass (LOGIN)
- smtp.auth=ericsunshine@charter.net
-X-Authority-Analysis: v=2.4 cv=VsYlAf2n c=1 sm=1 tr=0 ts=65e0d4d9
- a=4h87Vkt5vDwEBqoyvSX4iA==:117 a=4h87Vkt5vDwEBqoyvSX4iA==:17 a=BCjA09oAAAAA:8
- a=4_4KAXEiAAAA:8 a=kdyldk7IsPFzHzsP2zMA:9 a=jYKBPJSq9nmHKCndOPe9:22
- a=2dBW64JbcpvAzUZBiPf5:22
-From: Eric Sunshine <ericsunshine@charter.net>
-To: git@vger.kernel.org
-Cc: Eric Sunshine <sunshine@sunshineco.com>,
-	Bruno Haible <bruno@clisp.org>
-Subject: [PATCH] docs: sort configuration variable groupings alphabetically
-Date: Thu, 29 Feb 2024 14:02:29 -0500
-Message-ID: <20240229190229.20222-1-ericsunshine@charter.net>
-X-Mailer: git-send-email 2.44.0
-In-Reply-To: <6139934.yKrmzQ4Hd0@nimes>
-References: <6139934.yKrmzQ4Hd0@nimes>
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="isgMmm2e"
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id BC7491D15F7;
+	Thu, 29 Feb 2024 14:06:43 -0500 (EST)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=zwKRpVuia8gT
+	OHFl5VxKmx3E+WsBkHAvSBydKXMH5hY=; b=isgMmm2e65EC09hQ+iOUz0Lwa3Ft
+	de1ck/Lh7gqQscJnUvoPX/u2oJHhWpWkC9gAqhoaOF6a7s3J16LKOd/xzneE+Ulw
+	iuWtKl8g8SnadHyzAA+Cj/aXcDquWdCBII2AaRtJZ+eZMi1EyOJ0rY7PEUKwUtyp
+	9cm5DMxtn9xYLf8=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id B48E21D15F6;
+	Thu, 29 Feb 2024 14:06:43 -0500 (EST)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.176.30])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 29A011D15F5;
+	Thu, 29 Feb 2024 14:06:43 -0500 (EST)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Eric Sunshine <sunshine@sunshineco.com>
+Cc: shejialuo <shejialuo@gmail.com>,  git@vger.kernel.org
+Subject: Re: [PATCH 1/1] [GSoC][PATCH] t3070: refactor test -e command
+In-Reply-To: <CAPig+cR2-6qONkosu7=qEQSJa_fvYuVQ0to47D5qx904zW08Eg@mail.gmail.com>
+	(Eric Sunshine's message of "Thu, 29 Feb 2024 12:58:03 -0500")
+References: <20240229150442.490649-1-shejialuo@gmail.com>
+	<20240229150442.490649-2-shejialuo@gmail.com>
+	<CAPig+cR2-6qONkosu7=qEQSJa_fvYuVQ0to47D5qx904zW08Eg@mail.gmail.com>
+Date: Thu, 29 Feb 2024 11:06:41 -0800
+Message-ID: <xmqqzfvjf5tq.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-CMAE-Envelope: MS4xfLvrA1FdnCWRF0DPJYLfvUVqkUTz1v4T9Il5hpOGo3mSU0X53YEAHq3HTS6AU75u6JJQ2QCSDMdB6+a/dtuz/v3uUyUs3ZUa31oF6t7KgA/JhfOHh/so
- IoOWGUaF1jyNpk8gTXtc19rhdvWQBrMZSkJu21S0r5dLT5NjlXbri7FDwmFBZbVAwzeCkm3Kz80z5BWR2lbGB3zYi5LVn0wYS6an/6MM2M0NWihC1ec7+BUO
- 1X9KqAbeED8OJvZ9j6awcGPJyAeh2jPABBHbPqzDIXE=
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID:
+ AD10C50C-D735-11EE-881C-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
+Content-Transfer-Encoding: quoted-printable
 
-From: Eric Sunshine <sunshine@sunshineco.com>
+Eric Sunshine <sunshine@sunshineco.com> writes:
 
-By and large, variable groupings in Documentation/config.txt are sorted
-alphabetically, though a few are not. Those outliers make it more
-difficult to find a specific grouping when quickly running an eye over
-the list to locate a variable of interest. Address this shortcoming by
-sorting the groupings alphabetically.
+>> @@ -175,7 +175,7 @@ match() {
+>>         test_expect_success EXPENSIVE_ON_WINDOWS 'cleanup after previo=
+us file test' '
+>> -               if test -e .git/created_test_file
+>> +               if test_path_exists .git/created_test_file
+>>                 then
+>>                         git reset &&
+>
+> ... which _do_ use test_path_exists() within a `test_expect_success`
+> block. However, the changes are still undesirable because, as above,
+> this `test -e` is merely part of the normal control-flow; it's not
+> acting as an assertion, thus test_path_exists() -- which is an
+> assertion -- is not correct.
+>
+> Unfortunately, none of the uses of`test -e` in t3070 are being used as
+> assertions worthy of replacement with test_path_exists(), thus this
+> isn't a good script in which to make such changes.
 
-NOTE: This change only sorts the top-level groupings (i.e. "core.*"
-comes after "completion.*"); it does not touch the ordering of variables
-within each group since variables within individual groups might
-intentionally be ordered in some other fashion (such as
-most-common-first or most-important-first).
+It seems that there is a recurring confusion among mentorship
+program applicants that use test_path_* helpers as their practice
+material.  Perhaps the source of the information that suggests it as
+a microproject is poorly phrased and needs to be rewritten to avoid
+misleading them.
 
-Reported-by: Bruno Haible <bruno@clisp.org>
-Signed-off-by: Eric Sunshine <sunshine@sunshineco.com>
----
- Documentation/config.txt | 28 ++++++++++++++--------------
- 1 file changed, 14 insertions(+), 14 deletions(-)
+I found one at https://git.github.io/Outreachy-23-Microprojects/,
+which can be one source of such confusion:
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index e3a74dd1c1..782c2bab90 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -369,20 +369,18 @@ inventing new variables for use in your own tool, make sure their
- names do not conflict with those that are used by Git itself and
- other popular tools, and describe them in your documentation.
- 
--include::config/advice.txt[]
--
--include::config/attr.txt[]
--
--include::config/core.txt[]
--
- include::config/add.txt[]
- 
-+include::config/advice.txt[]
-+
- include::config/alias.txt[]
- 
- include::config/am.txt[]
- 
- include::config/apply.txt[]
- 
-+include::config/attr.txt[]
-+
- include::config/blame.txt[]
- 
- include::config/branch.txt[]
-@@ -405,10 +403,12 @@ include::config/commit.txt[]
- 
- include::config/commitgraph.txt[]
- 
--include::config/credential.txt[]
--
- include::config/completion.txt[]
- 
-+include::config/core.txt[]
-+
-+include::config/credential.txt[]
-+
- include::config/diff.txt[]
- 
- include::config/difftool.txt[]
-@@ -421,10 +421,10 @@ include::config/feature.txt[]
- 
- include::config/fetch.txt[]
- 
--include::config/format.txt[]
--
- include::config/filter.txt[]
- 
-+include::config/format.txt[]
-+
- include::config/fsck.txt[]
- 
- include::config/fsmonitor--daemon.txt[]
-@@ -435,10 +435,10 @@ include::config/gitcvs.txt[]
- 
- include::config/gitweb.txt[]
- 
--include::config/grep.txt[]
--
- include::config/gpg.txt[]
- 
-+include::config/grep.txt[]
-+
- include::config/gui.txt[]
- 
- include::config/guitool.txt[]
-@@ -519,10 +519,10 @@ include::config/splitindex.txt[]
- 
- include::config/ssh.txt[]
- 
--include::config/status.txt[]
--
- include::config/stash.txt[]
- 
-+include::config/status.txt[]
-+
- include::config/submodule.txt[]
- 
- include::config/tag.txt[]
--- 
-2.44.0
+    Find one test script that verifies the presence/absence of
+    files/directories with =E2=80=98test -(e|f|d|=E2=80=A6)=E2=80=99 and =
+replace them
+    with the appropriate test_path_is_file, test_path_is_dir,
+    etc. helper functions.
 
+but there may be others.
+
+This task specification does not differenciate "test -[efdx]" used
+as a conditional of a control flow statement (which should never be
+replaced by test_path_* helpers) and those used to directly fail the
+&&-chain in test_expect_success with their exit status (which is the
+target that test_path_* helpers are meant to improve).
