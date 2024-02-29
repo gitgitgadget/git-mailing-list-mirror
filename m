@@ -1,137 +1,109 @@
-Received: from mail-lf1-f48.google.com (mail-lf1-f48.google.com [209.85.167.48])
+Received: from mail-ej1-f46.google.com (mail-ej1-f46.google.com [209.85.218.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97EF05D462
-	for <git@vger.kernel.org>; Thu, 29 Feb 2024 10:11:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15DA57A71D
+	for <git@vger.kernel.org>; Thu, 29 Feb 2024 11:01:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709201507; cv=none; b=DONH0Xi30QeRBL7jkn6eZCHKL4UUbsF2i8IhGLbCHzbBHiO2XIKIF9jQbgNabq2A/0ONXp/sDBWR8YC2fu6FhQAocptBd1bITg8gWzn929sWflkFA0p9D9bq+9wI4zjzVu+H2vbZKKJTFJWZiQpU+G7vXgNPe9ru0D6uaTgqKeE=
+	t=1709204465; cv=none; b=O5GbCpaKHbUVO3Ro/pq6tvpCjs0xHOKiiSHBZGJkkQ1ER2eBcLI28SdUmPtDxZNZ3e/4rtk8UhAdgT4dSKDpUk5uxzISqjB/vfpaO+NGUQmlJhJAjlFrHxOuAGRqVwsfKdZ25haL3MFddPpTmI7aKffu9/uQkJLRld711zpfcls=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709201507; c=relaxed/simple;
-	bh=GpMQ1SMft51NDlrsoECa/kVwCMr7vJY741hZQm9yAkg=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jzRmqQyLDwdRA5PbOUqAnujnPBCXkZQWX+LH+ftBO/30LDwkGEPJiatCokBRfloqK6rLjyRfKcm9RjOOlicw/UBmL1u2AuwOtSKLK1khqJBIrNPj7rgtOoLf73d545DNVso884k6+xfHm6FUjK16hZHkXbBncfeBH2PuotZKlEY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=T1HVIany; arc=none smtp.client-ip=209.85.167.48
+	s=arc-20240116; t=1709204465; c=relaxed/simple;
+	bh=wIah4iRYRikTegOAjZBSegj6J5ya24VXB21hL4wzdEw=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=MYWwcr35bDp269c3dsPWYUqgMD+GaDJHzC9fztCFRKmrtGv7sL+VRXrNfzSijcIZKDQ3/FMLlCqUC/u4hORQVA9NEnh+3rXuDasNzCYpRcySeo83O5WHXOQTJ6r6LB72gDDapnUsndXOp5PKPdlo/HL3gbHAumfArT0f1zgMzhs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=b5rLpRmI; arc=none smtp.client-ip=209.85.218.46
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="T1HVIany"
-Received: by mail-lf1-f48.google.com with SMTP id 2adb3069b0e04-512f54fc2dbso564988e87.1
-        for <git@vger.kernel.org>; Thu, 29 Feb 2024 02:11:44 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="b5rLpRmI"
+Received: by mail-ej1-f46.google.com with SMTP id a640c23a62f3a-a445587b796so42466766b.1
+        for <git@vger.kernel.org>; Thu, 29 Feb 2024 03:01:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1709201503; x=1709806303; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1709204462; x=1709809262; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=UdeWJlgeZNlv/W/UcwiQ71zspJyKjYBGFoawvvx4OlU=;
-        b=T1HVIanycdNv8G0eZl3tRZcuJ0DVG0lwdk1B75UEJQA+VCO1GbwvxRQPZ++PgCIJNl
-         igWueSCHYNvMUO9OG4Qf/Vl6MhKJMbjQwokfJYtxERknkK9Eck9HQSVWQkCanrc57qc2
-         Vj2wi5bMelURdJ9bV6DjyzPP/GqhD1f+F5MUl2S4FoXngGtONI26DtGRKMW6v9EmGMdc
-         gzN3WchyfSBiY3WACCVH8dYbGRlgYBDwvPoVv2E36vOKqweTDLLSPG2uEpxZCsDfqtsy
-         A9f+kGv1LGXOAl7uTJ4LwSNtonjTf365PKlAaljYnhx+PmZdGW86lsd5+squDjXemept
-         HNjQ==
+        bh=wIah4iRYRikTegOAjZBSegj6J5ya24VXB21hL4wzdEw=;
+        b=b5rLpRmIyi5WoZrs8BjUdoYqTLn/MuwV+qNAYxejcJCYexnpKjcO1KeojK+uXprqi0
+         8Mp1VteriFpFJ9sPIMLX9iWmI+tyJ7MFS0HKgqvhwhhlUtczyLHs9j9YjezKCA2lPoMz
+         93YRryxKkDYl24yzd0D1WwQ1LhLsbnl2bTYyU6k9GXbm4job0YTyon9E6ewjcgdmj6mW
+         k1nPbEAC11F30IClBMWUAywyXOjEt020EPo2f+z+fsuOIkfDukLvzjXBzbSG3gjnfzuZ
+         zBF4yzwxjzKTe6ITCc85qRc4EvlBEW+FDKnkQEo0gDmAgM4sSG0Z/HAUqRV8t9CHY3Bp
+         gOuA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1709201503; x=1709806303;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+        d=1e100.net; s=20230601; t=1709204462; x=1709809262;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=UdeWJlgeZNlv/W/UcwiQ71zspJyKjYBGFoawvvx4OlU=;
-        b=sO0jtJFw0pCnqNKZVOqix8tPR+zg43uRwoo14lGG0As6AjBv6NQqPFdmKiBHLCXXpH
-         5Wdqqm5b14vaMNnnIzFp35no9Pk0krrjxhE0u5Xl9YteoiaruuAyRZhcElUVMRKqZg08
-         C5LSuZxM6wH8j5AJfp/fNAvkBRCqLkhlGhWwxvBHO/7XyktxIT/wkzQMA5Epf0ob+JmW
-         AcfXkYZudHZ2SFxlTGh0BFT7a3vo2LlUogfIWxuPC50ZfwiYiAOg9emeB6dQWmolwLgY
-         lWrF2RrIKmcpru9NBkW6hnQDf3ph9FerePPG7sF2/t/W6cK+BR4ROf9AnYWlufODz2oy
-         ++xg==
-X-Gm-Message-State: AOJu0YxkSEx5Vxoo6NrHtAyqK9Te5VIO7BeAyAVjQrynHqCw8cDQvoZB
-	PsC93bgp6AxluJg2yAx9gTzdCuTHXbsLOcQnkeMumV4+xiTdRB5rZ+qc9KmdOlawSQ==
-X-Google-Smtp-Source: AGHT+IH2Rt3J2QgZrSXpVcZwUAxb5cyLQ6vEK87ZMLY68TiL1rkv11j9lH4jNXZo1xI5PgJsfKqQFA==
-X-Received: by 2002:a05:6512:3125:b0:512:e535:d692 with SMTP id p5-20020a056512312500b00512e535d692mr1113332lfd.0.1709201502826;
-        Thu, 29 Feb 2024 02:11:42 -0800 (PST)
-Received: from host-sergy.. ([129.0.102.60])
-        by smtp.gmail.com with ESMTPSA id n33-20020a05600c3ba100b00412bca4cdf9sm1498296wms.36.2024.02.29.02.11.37
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 29 Feb 2024 02:11:42 -0800 (PST)
-From: Sergius Nyah <sergiusnyah@gmail.com>
-To: git@vger.kernel.org,
-	christian.couder@gmail.com,
-	gitster@pobox.com
-Cc: pk@pks.im,
-	shyamthakkar001@gmail.com,
-	Sergius Nyah <sergiusnyah@gmail.com>
-Subject: [GSOC][PATCH] userdiff: add builtin patterns for JavaScript.
-Date: Thu, 29 Feb 2024 11:11:31 +0100
-Message-ID: <20240229101131.445405-1-sergiusnyah@gmail.com>
-X-Mailer: git-send-email 2.43.2
-In-Reply-To: <xmqqttlsjvsi.fsf@gitster.g>
-References: <xmqqttlsjvsi.fsf@gitster.g>
+        bh=wIah4iRYRikTegOAjZBSegj6J5ya24VXB21hL4wzdEw=;
+        b=YhW9/5LXvcCY59z5d09HeKDH2GoaxDMObbHOIuBtJ12a0ZA8bEdIQ9RW1PG5Q7ciHo
+         AQzY/icIKDiMqEjQiBUdmOYPW3EeB75n87lAzYIts9RRBwfQXNpX53JyXe1w0Y7BtwfM
+         qox+CRtG2CuqcqF5mESFh9RQDqAVvvdarjz0o3MqDRcwm8jxfooQ3I/wTOe+khZVNHUy
+         AKui9z7azQhNuUN80V01+XTXHToSs6fnevmUw6tzsiTx4raiOsFpQHxghleS5xGvjf4O
+         LIrPXk/dpXSlaQ9J0uf2nq2XYI/pjGclBks4jyxEMpmG4M4pmZ6m/c/DqSZkUMUCNFfn
+         fidw==
+X-Forwarded-Encrypted: i=1; AJvYcCV4SUG1Qfp0S3oVu9NPCs6d3U4vOjbXyBNauVcl6Rl1KgqbSae48q/bgZPdV9sDoEI2RV6CEgu7FG5gKoknbI2S10z3
+X-Gm-Message-State: AOJu0YzknPLsQDF/ST5wJuxMVzZQaB7HU5IqC8BtaX0u+IwtfapTbYMp
+	TYEM4lz44LuID29KDBn8Ys/IPbI4Cs5oD9mPIh/cFqq8xxyGq4LPqqrMUvT107rgCu/BoQ58pTZ
+	Iyd67ERahV1kMKnaq8Tw2AQ+OCu8=
+X-Google-Smtp-Source: AGHT+IHveZ1AfvjKiUxIzBMWW/AR4QT8VSrQ0ZuE4BZEjp3zuPanOGDqMmgKbSzC5GnWow1Zy8KEPPzwsAf4MRj0V44=
+X-Received: by 2002:a17:906:f187:b0:a44:55e8:53b6 with SMTP id
+ gs7-20020a170906f18700b00a4455e853b6mr534927ejb.32.1709204462267; Thu, 29 Feb
+ 2024 03:01:02 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <CAOLTT8SQyBSWC=aqB2SRYmp3kR6RZ+L_-9yckWQf-X9rbzeNBw@mail.gmail.com>
+ <11783b8e-472d-4b75-bb48-88138daf16ae@app.fastmail.com>
+In-Reply-To: <11783b8e-472d-4b75-bb48-88138daf16ae@app.fastmail.com>
+From: ZheNing Hu <adlternative@gmail.com>
+Date: Thu, 29 Feb 2024 19:00:50 +0800
+Message-ID: <CAOLTT8Sn89Qq68YpTCsiK+_WAPdrsTN1xWxpkuEbhwBWpZgK=A@mail.gmail.com>
+Subject: Re: [Question] How to parse range-diff output
+To: Kristoffer Haugsbakk <code@khaugsbakk.name>
+Cc: Junio C Hamano <gitster@pobox.com>, Christian Couder <christian.couder@gmail.com>, 
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>, Git List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-This commit introduces builtin patterns for JavaScript in userdiff.
+Kristoffer Haugsbakk <code@khaugsbakk.name> =E4=BA=8E2024=E5=B9=B42=E6=9C=
+=8826=E6=97=A5=E5=91=A8=E4=B8=80 21:16=E5=86=99=E9=81=93=EF=BC=9A
+>
+> On Mon, Feb 26, 2024, at 08:25, ZheNing Hu wrote:
+> > Hi,
+> >
+> > I am currently looking to implement a service that provides a version
+> > range comparison based on git range-diff. I can easily parse out
+> > commit pair headers like "3: 0bf6289 ! 3: a076e88 dev5," but I am
+> > unsure how to parse the details in the subsequent diff patch body.
+> >
+> > It is not a standard diff output where one can parse out the filename
+> > from the diff header, It should be called a diff of diffs. We can see
+> > various headers with file names such as "@@ File1 (new)", "## File2
+> > (new) ##", or "@@ File3: function3" in different formats. This is
+> > confusing. How should we correctly parse a range-diff patch, and do
+> > you have any good suggestions?
+> >
+> > Thanks for any help.
+> > --
+> > ZheNing Hu
+>
+> Hi
+>
+> Note that =E2=80=9COutput Stability=E2=80=9D says that this output is not=
+ meant to be
+> machine-readable. It=E2=80=99s for human consumption. It=E2=80=99s not te=
+xtually stable.
+>
+> So a new version of Git might break your implementation without warning.
+>
 
-It adds a new test case in t4018-diff-funcname.sh to verify the enhanced
-JavaScript function detection in Git diffs.
+It is very regrettable that some crucial metadata from the range-diff
+patch cannot be extracted. I can only hope that future range-diff will have
+the capability of being machine-readable. Thank you!
 
-Signed-off-by: Sergius Justus Chesami Nyah <sergiusnyah@gmail.com>
----
-userdiff.c | 17 +++++++++++++++--
-t/t4018-diff-funcname.sh | 25 ++++++++-
-2 files changed, 38 insertions(+), 4 deletions(-)
-
-diff --git a/userdiff.c b/userdiff.c
-index e399543823..12e31ff14d 100644
---- a/userdiff.c
-+++ b/userdiff.c
-@@ -18,40 +16,19 @@
-#include "git-compat-util.h"
-#include "config.h"
-#include "userdiff.h"
-#include "strbuf.h"
-
-PATTERNS("javascript",
-      /* Looks for lines that start with optional whitespace, followed
-      * by 'function'* and any characters (for function declarations),
-      * or valid JavaScript identifiers, equals sign '=', 'function' keyword
-      * and any characters (for function expressions).
-      * Also considers functions defined inside blocks with '{...}'.
-      */
-      "^[ \t]*(function[ \t]*.*|[a-zA-Z_$][0-9a-zA-Z_$]*[ \t]*=[ \t]*function[ \t]*.*|(\\{[ \t]*)?)\n",
-      /* This pattern matches JavaScript identifiers */
-      "[a-zA-Z_$][0-9a-zA-Z_$]*"
-      "|[-+0-9.eE]+|0[xX][0-9a-fA-F]+"
-      "|[-+*/<>%&^|=!:]=|--|\\+\\+|<<=?|>>=?|&&|\\|\\|"),
-
-diff --git a/t/t4018-diff-funcname.sh b/t/t4018-diff-funcname.sh
-index 43593866bc..9c3b80665e 100644
---- a/t/t4018-diff-funcname.sh
-+++ b/t/t4018-diff-funcname.sh
-@@ -18,40 +16,19 @@
-test_expect_success 'identify builtin patterns in Javascript' '
-    # setup
-    echo "function myFunction() { return true; }" > test.js &&
-    echo "var myVar = function() { return false; }" >> test.js &&
-    git add test.js &&
-    git commit -m "add test.js" &&
-
-    # modify the file
-    echo "function myFunction() { return false; }" > test.js &&
-    echo "var myVar = function() { return true; }" >> test.js &&
-
-    # command under test
-    git diff >output &&
-
-    # check results
-    test_i18ngrep "function myFunction() { return true; }" output &&
-    test_i18ngrep "function myFunction() { return false; }" output &&
-    test_i18ngrep "var myVar = function() { return false; }" output &&
-    test_i18ngrep "var myVar = function() { return true; }" output
-'
-
-test_done
---
-2.43.2
+> --
+> Kristoffer Haugsbakk
