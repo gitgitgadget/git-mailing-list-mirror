@@ -1,167 +1,149 @@
-Received: from mx10.gouders.net (mx10.gouders.net [202.61.206.94])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f202.google.com (mail-pf1-f202.google.com [209.85.210.202])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3BC2200D2
-	for <git@vger.kernel.org>; Thu, 29 Feb 2024 22:35:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.61.206.94
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E128200A6
+	for <git@vger.kernel.org>; Thu, 29 Feb 2024 22:53:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.202
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709246149; cv=none; b=Xia4S/e+y0iRsVrQmFbqbzM9OijyyxujUzgRsN7LljrCyW2/gjB4mOYTimIhMdWG+eH1uRJhRIrafOEN9K2220hmMHf/8XzeKRdI+hyH4Nz9CMx0xNMJe7UDnn1+W0K0YZXNuMagOeGCLlxjShEjRJrEHY4mgWlYYNY/SewC2H4=
+	t=1709247209; cv=none; b=TVFXSG8MaDMBX+nXaicsQJ4poGR9zvMtsWk3UdKIEzZAkOFdk2SUW8m1g1nPsDP6S41HhPIYnSTplfDWptxDt7N0qydJxUwA6rBtRKwt8Jbz5RpJlB37uwnb2X1zDE3c1Xv++rFrN31FP6Qv2XovEOOVEYXpB5mTCDsseQII0Rw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709246149; c=relaxed/simple;
-	bh=V3EFuUTIP2ZyLZfo+4BhidNSUZApcRJjGul+MT9yLCs=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=pFfyCXYdBYcjl7kpzKyLEYAzYn9gcmixuBjVbz2Ra9Ry+90g9RL74fXWCXKD+9Slzud9xOEDn0gtie0OumY/baCIbb4JYjZXTJLgGX2rwzYWu24RUhiKAAiSxT1gtIafNDurk+gHpb8cgs9gWsQadIR8U5ltXgVFUG9RzNbe1r0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=gouders.net; spf=pass smtp.mailfrom=gouders.net; dkim=pass (1024-bit key) header.d=gouders.net header.i=@gouders.net header.b=fDV7BDtT; arc=none smtp.client-ip=202.61.206.94
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=gouders.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gouders.net
+	s=arc-20240116; t=1709247209; c=relaxed/simple;
+	bh=soWtPiifcwrnpH+VmRkIqgOC21IFuHrD2qbYxlkCKZE=;
+	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
+	 To:Cc:Content-Type; b=Lm2uI+xCB89WfrPMqurLUUV7pGYGFxAXB38oz3ofhB4vphT3/2FamAWDu2nY2+Q2EzTiTstlVlR2bVZj9vWTySPbX7zAhoEcXB/rSIKSIoUbibGq1mH1dcKPnX9rCerS/cb963Bd/Ww7dZaC0kkxhem5niNnltq36Jtio+ISCw8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--linusa.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=WFwjxY8Q; arc=none smtp.client-ip=209.85.210.202
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--linusa.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=gouders.net header.i=@gouders.net header.b="fDV7BDtT"
-Received: from localhost (ip-109-42-177-171.web.vodafone.de [109.42.177.171])
-	(authenticated bits=0)
-	by mx10.gouders.net (8.17.1.9/8.17.1.9) with ESMTPSA id 41TMZe8v022656
-	(version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NO);
-	Thu, 29 Feb 2024 23:35:40 +0100
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gouders.net; s=gnet;
-	t=1709246140; bh=V3EFuUTIP2ZyLZfo+4BhidNSUZApcRJjGul+MT9yLCs=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date;
-	b=fDV7BDtT550FxHdM0ZuRGkYUvhB9h9jQhRaTfVhg730wRkmsaD4Edydrjjn5E642j
-	 NyrNWSNdOAqkZhN3YMzwwoxr0oxFKepmvl6CYWmUeAmZkr7uO/4x0CIpMTNniAaKoY
-	 kmfJ/cxy9rg1GIA6Hbn8IaM/y792HwowY+0Wjr2Y=
-From: Dirk Gouders <dirk@gouders.net>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git list <git@vger.kernel.org>
-Subject: Re: [PATCH 1/1] Documentation/user-manual.txt: example for
- generating object hashes
-In-Reply-To: <xmqqil27c5p1.fsf@gitster.g> (Junio C. Hamano's message of "Thu,
-	29 Feb 2024 13:37:46 -0800")
-References: <cover.1709240261.git.dirk@gouders.net>
-	<a3902dad424983a4f0dfcda68e0b8bf64a0b2113.1709240261.git.dirk@gouders.net>
-	<xmqqil27c5p1.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
-Date: Thu, 29 Feb 2024 23:35:35 +0100
-Message-ID: <gha5nigaq0.fsf@gouders.net>
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="WFwjxY8Q"
+Received: by mail-pf1-f202.google.com with SMTP id d2e1a72fcca58-6e4e4572980so1302417b3a.3
+        for <git@vger.kernel.org>; Thu, 29 Feb 2024 14:53:28 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1709247208; x=1709852008; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:from:subject:message-id:references
+         :mime-version:in-reply-to:date:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=2+o1WPgtMBWV6D4+w760SpuODsIUs/JQ37lZS+kRbhA=;
+        b=WFwjxY8Qrb+9S0G50JK93Qb+nw3oKx2c8w8wAB6oC4Rp3d4+1YZP/CcRc9LXo4H7oP
+         thAmDTfd0qZOSIFhEtC99FLUyipJj++BkkYkLbFQguvlbgP18TsuC2iA0ja/kEpu/BEs
+         pTWRVYdN8FMpGpTv7F9JoHJMptZiU+fMIy2ficRsgAQFCvJEngswCEwRZ0SYMkdFxEfX
+         ib9gNkpFhIfNKK+ldZJIaZHbq8WV3SehOL3Al46T6b4xg8eSzW+n5M6J/iGPMfQMrVnE
+         V/3+xcIHd+rV4HNsD6nt9kyMsjoqqUMP9N+yNmB4M37/ct38yozp62b04WIyt3YHSRVu
+         e23A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1709247208; x=1709852008;
+        h=content-transfer-encoding:cc:to:from:subject:message-id:references
+         :mime-version:in-reply-to:date:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=2+o1WPgtMBWV6D4+w760SpuODsIUs/JQ37lZS+kRbhA=;
+        b=RAvDPRBBouSbrbmIrkkpg2lfAOw28Y4Rl88UEGNpoTmflrUUahRDuAQFKatI7f5dJj
+         tXtIu/v7j2TtbV+w+hfJQsgZfWl1fMJMhKOOSqlkVu7tUpr1rvDW5M0/WHR2e34ga6aw
+         ErllcygepnaMGjA5GK5fYnYCHScvKCvl5oOitk6rrx6T2hALfzOGAfnnG4GaqU5mTAdD
+         qk57IwNxh5QQMVn3PTaSbWodxpyp79PiW+mujgHUNWJv4x1RkGhIre37c9Moj8qUnpDZ
+         Vq2QPhjmOVxt4rrWLuJQRggjX/dDBB87FXfQjJlQXqx3dqBOdZcRYAH2d8jmF3jFXP2H
+         d51w==
+X-Gm-Message-State: AOJu0Yw7IOvgveZDpBrED7n60AnpX6x9tt6RKDmGHbEhf27wIaAuSAlh
+	DcyCP64BH4iMoxIm88Pq06bYx1pd0YEWLzhIS+vPXbKPGlD3/DSjm8YVe/XmRprpRUhsaaEbUyO
+	rFg==
+X-Google-Smtp-Source: AGHT+IFoKUlVh0e41j7ERyAtThZRoc9zG8NRqGEgnXoU+sZ+y+XeQGosLNOYAjkQY7CvcZ2azB+Eky3QfGo=
+X-Received: from fine.c.googlers.com ([fda3:e722:ac3:cc00:7f:e700:c0a8:2221])
+ (user=linusa job=sendgmr) by 2002:a05:6a00:1991:b0:6e5:d5b:3eff with SMTP id
+ d17-20020a056a00199100b006e50d5b3effmr1262pfl.0.1709247207604; Thu, 29 Feb
+ 2024 14:53:27 -0800 (PST)
+Date: Thu, 29 Feb 2024 14:53:25 -0800
+In-Reply-To: <CAP8UFD3KbbRApC3ktgegsi_oBDpzX_89v0QGvWoHQ057hKjbbg@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain
+Mime-Version: 1.0
+References: <pull.1632.v4.git.1707196348.gitgitgadget@gmail.com>
+ <pull.1632.v5.git.1708124950.gitgitgadget@gmail.com> <b2a0f7829a1c5f2822e9a896ffe3744587ff1298.1708124951.git.gitgitgadget@gmail.com>
+ <CAP8UFD3KbbRApC3ktgegsi_oBDpzX_89v0QGvWoHQ057hKjbbg@mail.gmail.com>
+Message-ID: <owlyr0gu51cq.fsf@fine.c.googlers.com>
+Subject: Re: [PATCH v5 5/9] trailer: start preparing for formatting unification
+From: Linus Arver <linusa@google.com>
+To: Christian Couder <christian.couder@gmail.com>, 
+	Linus Arver via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, Christian Couder <chriscool@tuxfamily.org>, 
+	Junio C Hamano <gitster@pobox.com>, Emily Shaffer <nasamuffin@google.com>, 
+	Josh Steadmon <steadmon@google.com>, "Randall S. Becker" <rsbecker@nexbridge.com>, 
+	Kristoffer Haugsbakk <code@khaugsbakk.name>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
 
-Junio C Hamano <gitster@pobox.com> writes:
+Christian Couder <christian.couder@gmail.com> writes:
 
-> Dirk Gouders <dirk@gouders.net> writes:
->
->> If someone spends the time to work through the documentation, the
->> subject "hashes" can lead to contradictions:
+> On Sat, Feb 17, 2024 at 12:09=E2=80=AFAM Linus Arver via GitGitGadget
+> <gitgitgadget@gmail.com> wrote:
 >>
->> The README of the initial commit states hashes are generated from
->> compressed data (which changed very soon), whereas
->> Documentation/user-manual.txt says they are generated from original
->> data.
+>> From: Linus Arver <linusa@google.com>
 >>
->> Don't give doubts a chance: clarify this and present a simple example
->> on how object hashes can be generated manually.
+>> Currently there are two functions for formatting trailers in
+>> <trailer.h>:
+>>
+>>     void format_trailers(const struct process_trailer_options *,
+>>                          struct list_head *trailers, FILE *outfile);
+>>
+>>     void format_trailers_from_commit(struct strbuf *out, const char *msg=
+,
+>>                                      const struct process_trailer_option=
+s *opts);
+>>
+>> and although they are similar enough (even taking the same
+>> process_trailer_options struct pointer) they are used quite differently.
+>> One might intuitively think that format_trailers_from_commit() builds on
+>> top of format_trailers(), but this is not the case. Instead
+>> format_trailers_from_commit() calls format_trailer_info() and
+>> format_trailers() is never called in that codepath.
+>>
+>> This is a preparatory refactor to help us deprecate format_trailers() in
+>> favor of format_trailer_info() (at which point we can rename the latter
+>> to the former). When the deprecation is complete, both
+>> format_trailers_from_commit(), and the interpret-trailers builtin will
+>> be able to call into the same helper function (instead of
+>> format_trailers() and format_trailer_info(), respectively). Unifying the
+>> formatters is desirable because it simplifies the API.
+>>
+>> Reorder parameters for format_trailers_from_commit() to prefer
+>>
+>>     const struct process_trailer_options *opts
+>>
+>> as the first parameter, because these options are intimately tied to
+>> formatting trailers. And take
+>>
+>>     struct strbuf *out
+>>
+>> last, because it's an "out parameter" (something that the caller wants
+>> to use as the output of this function).
 >
-> I'd rather not to waste readers' attention to historical wart.
+> Here also I think the subject could be more specific like for example:
+>
+> "trailer: reorder format_trailers_from_commit() parameters"
 
-Yes, but -- I should have mentioned it -- the document itself suggests
-to read the initial commit.
+Applied, thanks.
 
-But I don't mean to argue about that, perhaps I digged to deep into
-details.
+>> diff --git a/trailer.c b/trailer.c
+>> index d23afa0a65c..5025be97899 100644
+>> --- a/trailer.c
+>> +++ b/trailer.c
+>> @@ -1083,10 +1083,10 @@ void trailer_info_release(struct trailer_info *i=
+nfo)
+>>         free(info->trailers);
+>>  }
+>>
+>> -static void format_trailer_info(struct strbuf *out,
+>> +static void format_trailer_info(const struct process_trailer_options *o=
+pts,
+>>                                 const struct trailer_info *info,
+>>                                 const char *msg,
+>> -                               const struct process_trailer_options *op=
+ts)
+>> +                               struct strbuf *out)
+>
+> Ok, so it's not just format_trailers_from_commit() parameters that are
+> reordered, but also format_trailer_info() parameters. It would be nice
+> if the commit message mentioned it.
 
->> @@ -4095,6 +4095,39 @@ that is used to name the object is the hash of the original data
->>  plus this header, so `sha1sum` 'file' does not match the object name
->>  for 'file'.
->
-> The paragraph above (part of it is hidden before the hunk) clearly
-> states what the naming rules are.  We hash the original and then
-> compress.  If I use an implementation of Git that drives the zlib at
-> compression level 1, and if you clone from my repository with
-> another implementation of Git whose zlib is driven at compression
-> level 9, our .git/objects/01/2345...90 files may not be identical,
-> but when uncompressed they should store the same contents, so "hash
-> then compress" is the only sensible choice that is not affected by
-> the compression to give stable names to objects.
-
-Thank your for that detail.
-
->> +Starting with the initial commit, hashing was done on the compressed
->> +data and the file README of that commit explicitely states this:
->> +
->> +"The SHA1 hash is always the hash of the _compressed_ object, not the
->> +original one."
->> +
->> +This changed soon after that with commit
->> +d98b46f8d9a3 (Do SHA1 hash _before_ compression.).  Unfortunately, the
->> +commit message doesn't provide the detailed reasoning.
->
-> These three are about Git development history, which by itself may
-> be of interest for some people, but the main target audience of the
-> user-manual is probably different from them.  They may be interested
-> to learn how Git works, but it is only to feel that they understand
-> how the "magic" things Git does, like "a cryptographic hash of
-> contents is enough to uniquely identify the contents being tracked",
-> works well to trust their precious contents [*].
->
->     Side note: 
->     https://lore.kernel.org/git/Pine.LNX.4.58.0504200144260.6467@ppc970.osdl.org/
->     explains the reason behind the change to those who did not find
->     it obvious.
->
-> FYI, another "breaking" change we did earlier in the history of the
-> project was to update the sort order of paths in tree objects.  We
-> do not need to confuse readers by talking about the original and
-> updated sort order.  The only thing they need, when they want to get
-> the feeling that they understand how things work, is the description
-> of how things work in the version of Git they have ready access to.
-> Historical mistakes we made, corrections we made and why, are
-> certainly of interest but not for the target audience of this
-> document.
-
-Again thank you, very interesting reading.
-
-> On the other hand, ...
->
->> +The following is a short example that demonstrates how hashes can be
->> +generated manually:
->> +
->> +Let's asume a small text file with the content "Hello git.\n"
->> +-------------------------------------------------
->> +$ cat > hello.txt <<EOF
->> +Hello git.
->> +EOF
->> +-------------------------------------------------
->> +
->> +We can now manually generate the hash `git` would use for this file:
->> +
->> +- The object we want the hash for is of type "blob" and its size is
->> +  11 bytes.
->> +
->> +- Prepend the object header to the file content and feed this to
->> +  sha1sum(1):
->> +
->> +-------------------------------------------------
->> +$ printf "blob 11\0" | cat - hello.txt | sha1sum
->> +7217614ba6e5f4e7db2edaa2cdf5fb5ee4358b57 .
->> +-------------------------------------------------
->> +
->
-> ... something like the above (modulo coding style) would be a useful
-> addition to help those who want to convince themselves they
-> understand how (some parts of) Git works under the hood, and I think
-> it would be a welcome addition to some subset of such readers (the
-> rest of the world may feel it is way too much detail, though).
->
-> I would draw the line between this one and a similar description and
-> demonstration of historical mistakes, which is not as relevant as
-> how things work in the current system.  In other words, to me, it is
-> OK to dig a bit deep to show how the current scheme works but it is
-> way too much to do the same for versions of the system that do not
-> exist anymore.
->
-> But others may draw the line differently and consider even the above
-> a bit too much detail, which is a position I would also accept.
->
-> Thanks.
+Agreed. Will do.
