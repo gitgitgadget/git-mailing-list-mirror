@@ -1,165 +1,130 @@
-Received: from mail-pf1-f182.google.com (mail-pf1-f182.google.com [209.85.210.182])
+Received: from mail-wr1-f44.google.com (mail-wr1-f44.google.com [209.85.221.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE4107C6F6
-	for <git@vger.kernel.org>; Thu, 29 Feb 2024 12:01:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B26477D094
+	for <git@vger.kernel.org>; Thu, 29 Feb 2024 12:23:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709208113; cv=none; b=fQNnVxBjUx1uN3pRZsM/JnhniSBjhya45Vw1FQnxfhDv/VRaukPVXglL30my40iINPIwP5mTd71Yv6lRwaZCVMs4vRFowKu2D9MiHaD8oQJmutHff1V2wQ+ioxP3NziCTC+Bm3R5Km7ujdoS+3zhoytnL+d5WzcWEfKfWxPIpcQ=
+	t=1709209440; cv=none; b=ZAUOgGZe9kUcDBYFRG3x6HCgItDCjeTxUVQ8hq9lCA/kbNO748adU8NmdFJq6pwx2215/tsXVCsO6lBoJ9QorGIpSJFxLMklWDS5MxwOUc/w7kn7OO9EiulxLG5yRjFS3FdhA/Ym5sMJAEVbsOLZn2s1mKpPLjdEV+xlyOuIAy4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709208113; c=relaxed/simple;
-	bh=vj+aM7yDEAfT9/1I+/hAIkFP7aRr7b+unpbWLyJ7Vrw=;
-	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
-	 References:In-Reply-To; b=L+lmzWUjAbbvhkV+/hk+3Hal+6MKswj0pZeCRP0/FOK6ALjgQdDQs53Q38euzd83rFlW+5LzGtIOMYppKLkjo3Y1gOCPwTGJpfVH7boXbOiNaCndAN5stQWultOVoeE+ZsT9np4WBoE0PMLrS2teM9SxZd9giK4sQWMZiPd+Zvk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JhXfxWXE; arc=none smtp.client-ip=209.85.210.182
+	s=arc-20240116; t=1709209440; c=relaxed/simple;
+	bh=qgMo4xWcyOdWqhak+2yCx/2wr56+g6alcrMUgzUl1kw=;
+	h=Message-ID:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=ogSpIO0oRY1D30YZGVtwVqveg3NUzT5RRa9vhgN3W7fmKB/hgoj99uj07lxMK8gnIA5qLYJLSyf8buv/u3TC6+yMz067bc/2kZW3+Q+KnkKaJ0xBEWtwwAKhaM3yGhtSXrvXskwnYNJ1kRrXe1h4GldiFU99g4DZKhF4uRfrbHQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LYtuL6FV; arc=none smtp.client-ip=209.85.221.44
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JhXfxWXE"
-Received: by mail-pf1-f182.google.com with SMTP id d2e1a72fcca58-6e56d594b31so408121b3a.1
-        for <git@vger.kernel.org>; Thu, 29 Feb 2024 04:01:51 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LYtuL6FV"
+Received: by mail-wr1-f44.google.com with SMTP id ffacd0b85a97d-33ddd1624beso507700f8f.1
+        for <git@vger.kernel.org>; Thu, 29 Feb 2024 04:23:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1709208111; x=1709812911; darn=vger.kernel.org;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-transfer-encoding:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=rQ8Yz/jkGjyjSDIVvNksNhYPBGRlSE4L4EJXFPpMMdU=;
-        b=JhXfxWXEjBorCCSLJlhkB5xw8Exd2A2R3+K07fpG40lYUVTLrKRgg1pkTUnSeYmzjd
-         K2M2tbQlst8WlihlvwOEwGVk9cXEX61xxIdCA7YYgyWEAuyyBbZLPRkySNSySTSgcs/1
-         Ttv5oaK0Mow8Ojj8rSTg8OU5yiMYUFN+IMYvZZkWuBtbM7UCUlkD0yZZwwFI/a+RklAa
-         izbk6dpwj1+EzUTxx4lNeU4fvpptRM/sSv+QiCn8xFTiBxlhkLCg9oHzvTGnDBXn4rbJ
-         DIVH1qbPvwXTAFdPc1aA1lEAUiE13ESwxw+QefBFknKBb6D+RMUXinelGOCcDDeuG7gn
-         aXWg==
+        d=gmail.com; s=20230601; t=1709209436; x=1709814236; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=BryZW81biC0SOd3q1dNaYiIevu0dbTReNybK6+7KyaU=;
+        b=LYtuL6FVZWlvM5TuW5lgl50bmjiT8rKVQwKbLcOEiLuwL1hKI/heFGM07fmbV0vlvG
+         9+abpI1tC/TlBbqe9z1ZAAlO1M572114eH87S8n9oWunlNYDti+uiIN9RjV3r76B1Kp8
+         XOJBuFjT+BR99bsNAjtnPBHtOQuv1DONYHrP44wyXrH3MBiJIFquWVuTNSTwBz2qsX70
+         KpVZUEmqomVK4rKIsmtpeIhHN9hDSMtU5JezRJXfA2G+AaSG+z+OBjsZIi6UbEwD5Dmm
+         wpu8BIIFhfCknI+dbIwjnAtPiaN54/obS0M/SWSBKfCQvXHz3ka7pJWMpyCZG6WwdOc5
+         BRDQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1709208111; x=1709812911;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=rQ8Yz/jkGjyjSDIVvNksNhYPBGRlSE4L4EJXFPpMMdU=;
-        b=QjYo+k/nQEoqlyLpJKuPDHvVlhkEyQMQWbU0utqzVCquF+00vl6k/TZQcsEUiw/EU2
-         9X/SS/2w33pdzfwxM1e9hQxpzxy+F3seTjt2YHk+Z0DOovZV0nw3OtYd+JE4/ftSDgr1
-         HbeRJF4bDr/oXmriOuybYpR5fiTePgW5XjI831WrXWQCyOJSOGhDrb9a7ImwM9McMSoG
-         LLi+LV+bN7cOeT3Ik2yWrdipmvKe109qu9C8/Z6Bs5hf2GaJ7s7U4ymfK/9gCeUxWtQi
-         YtbwvWmA+AwP+6B3uJ4brmEO4P6gsKPKns9itL7cGmHMwwIYMGTcZ15Equ8aG0erileq
-         T4Vw==
-X-Forwarded-Encrypted: i=1; AJvYcCWhjBK2QQSnna5c71QUmhV71Sr3ThsosqHStWrM6BRekFr7+VL1OqFVkbqofxKiC2I9XKi9/smBqUuliXTeucUUxLgT
-X-Gm-Message-State: AOJu0YxKGfcht3srdsZrtw8orrVZD1zfXWIfCiqjqMKzTERxXIsPiQfE
-	DuZ7Tta1Oe9+CEAExyjUcsV5tChqrp38tYEDwoJmCkw83Kzdd3e4
-X-Google-Smtp-Source: AGHT+IHJc6lQXv7sIwr8krdhsCsNbXIMgwTQISivDwdLEfoxKtuPsKgfLxg/HiGhxGnDs7r5Tt/+3w==
-X-Received: by 2002:a05:6a00:84f:b0:6e5:a929:2cce with SMTP id q15-20020a056a00084f00b006e5a9292ccemr90253pfk.26.1709208111032;
-        Thu, 29 Feb 2024 04:01:51 -0800 (PST)
-Received: from localhost ([2402:a00:401:a99b:f188:2dd3:d960:a8ab])
-        by smtp.gmail.com with ESMTPSA id ks21-20020a056a004b9500b006e481014bf9sm1100561pfb.200.2024.02.29.04.01.46
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 29 Feb 2024 04:01:49 -0800 (PST)
+        d=1e100.net; s=20230601; t=1709209436; x=1709814236;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=BryZW81biC0SOd3q1dNaYiIevu0dbTReNybK6+7KyaU=;
+        b=BdOi0BpxCyriprHR2uY3OxmZYplXAz+2hRjqwyhCiU88VgJnYX0C+BQRpw5k7kf5fL
+         6k9+AmZ2l3+iOg6XOVM5l1oSgX1snesxUJ4tcKCuNJ4UkBzUOW/slajCcneRbgNmZTul
+         Cx5hRU0c3RifhvJpl/DX/ZhCRu+llUQDj+Ku02KKx2MslGrOeSSkalLJdN7pzpuIxAZL
+         7MBkSaBvbjA4dfc0gDmHbapf/Q39d+EFGhOxKFXcPmJBL1klb1lEr001gbotWwqdTVHA
+         ia0o7j0noqv+gnrcClRc1CjfAwxuklFEF7an4jJCJGDw7/AXyPi8cKPBH4Qq29pqMpdY
+         N45w==
+X-Gm-Message-State: AOJu0Yypd0Fmpkl0SCLS41jvLuGiSdd1gOt85TgRyFxZQX/iwQH21EUS
+	JdyaN7rr1NLSyjEns/tDHW3gVxk/nHytsrHqt8GrgjL/TPL27w4yamaCAZ4q
+X-Google-Smtp-Source: AGHT+IGecxlFmk4L2is2bggku8GaUIPdMcB929XBZyu7j9lnO5BQD+rGK38ygFwdIRbh0KrR+wx5nQ==
+X-Received: by 2002:adf:db51:0:b0:33d:eb13:9e27 with SMTP id f17-20020adfdb51000000b0033deb139e27mr1966710wrj.23.1709209436280;
+        Thu, 29 Feb 2024 04:23:56 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id n3-20020a5d4203000000b0033e12a67fb3sm942791wrq.50.2024.02.29.04.23.55
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 29 Feb 2024 04:23:56 -0800 (PST)
+Message-ID: <pull.1675.git.1709209435242.gitgitgadget@gmail.com>
+From: "Aryan Gupta via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Thu, 29 Feb 2024 12:23:55 +0000
+Subject: [PATCH] tests: modernize the test script t0010-racy-git.sh
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Thu, 29 Feb 2024 17:31:43 +0530
-Message-Id: <CZHJPF604DV9.X0A0VX1AB7P8@gmail.com>
-Cc: <pk@pks.im>
-Subject: Re: [GSOC][PATCH] userdiff: add builtin patterns for JavaScript.
-From: "Ghanshyam Thakkar" <shyamthakkar001@gmail.com>
-To: "Sergius Nyah" <sergiusnyah@gmail.com>, <git@vger.kernel.org>,
- <christian.couder@gmail.com>, <gitster@pobox.com>
-X-Mailer: aerc 0.15.2
-References: <xmqqttlsjvsi.fsf@gitster.g>
- <20240229101131.445405-1-sergiusnyah@gmail.com>
-In-Reply-To: <20240229101131.445405-1-sergiusnyah@gmail.com>
+MIME-Version: 1.0
+To: git@vger.kernel.org
+Cc: "Patrick Steinhardt [ ]" <ps@pks.im>,
+    "Michal =?UTF-8?Q?Such=C3=A1nek?= [ ]" <msuchanek@suse.de>,
+    "=?UTF-8?Q?Jean-No=C3=ABl?= AVILA [ ]" <jn.avila@free.fr>,
+    Kristoffer Haugsbakk <[code@khaugsbakk.name]>,
+    Aryan Gupta <garyan447@gmail.com>,
+    aryangupta701 <garyan447@gmail.com>
 
-On Thu Feb 29, 2024 at 3:41 PM IST, Sergius Nyah wrote:
-> This commit introduces builtin patterns for JavaScript in userdiff.
-"This commit introduces ..." -> "Introduce ...". I think describing which
-specification this adheres to (i.e. ECMA-262) would be helpful for the
-readers.
+From: aryangupta701 <garyan447@gmail.com>
 
-> It adds a new test case in t4018-diff-funcname.sh to verify the enhanced
-> JavaScript function detection in Git diffs.
+Modernize the formatting of the test script to align with current
+standards and improve its overall readability.
 
-"It adds ..." -> "Add ..."
+Signed-off-by: Aryan Gupta <garyan447@gmail.com>
+---
+    [GSOC] [PATCH] Modernize a test script
 
-> Signed-off-by: Sergius Justus Chesami Nyah <sergiusnyah@gmail.com>
-> ---
-> userdiff.c | 17 +++++++++++++++--
-> t/t4018-diff-funcname.sh | 25 ++++++++-
-> 2 files changed, 38 insertions(+), 4 deletions(-)
->
-> diff --git a/userdiff.c b/userdiff.c
-> index e399543823..12e31ff14d 100644
-> --- a/userdiff.c
-> +++ b/userdiff.c
-> @@ -18,40 +16,19 @@
-> #include "git-compat-util.h"
-> #include "config.h"
-> #include "userdiff.h"
-> #include "strbuf.h"
->
-> PATTERNS("javascript",
->       /* Looks for lines that start with optional whitespace, followed
->       * by 'function'* and any characters (for function declarations),
->       * or valid JavaScript identifiers, equals sign '=3D', 'function' ke=
-yword
->       * and any characters (for function expressions).
->       * Also considers functions defined inside blocks with '{...}'.
->       */
->       "^[ \t]*(function[ \t]*.*|[a-zA-Z_$][0-9a-zA-Z_$]*[ \t]*=3D[ \t]*fu=
-nction[ \t]*.*|(\\{[ \t]*)?)\n",
->       /* This pattern matches JavaScript identifiers */
->       "[a-zA-Z_$][0-9a-zA-Z_$]*"
->       "|[-+0-9.eE]+|0[xX][0-9a-fA-F]+"
->       "|[-+*/<>%&^|=3D!:]=3D|--|\\+\\+|<<=3D?|>>=3D?|&&|\\|\\|"),
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1675%2Faryangupta701%2Ftest-modernize-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1675/aryangupta701/test-modernize-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/1675
 
-It seems like you manually manipulated the diff/format-patch output that
-is not the commit message. Usually all the new lines have '+' sign
-prefixed and all the removed lines have '-' sign prefixed. git am gives
-the following error:
+ t/t0010-racy-git.sh | 15 +++++++--------
+ 1 file changed, 7 insertions(+), 8 deletions(-)
 
-    Applying: userdiff: add builtin patterns for JavaScript.
-    error: corrupt patch at line 11
-    Patch failed at 0022 userdiff: add builtin patterns for JavaScript.
+diff --git a/t/t0010-racy-git.sh b/t/t0010-racy-git.sh
+index 837c8b7228b..04dc1cf3ff5 100755
+--- a/t/t0010-racy-git.sh
++++ b/t/t0010-racy-git.sh
+@@ -1,6 +1,6 @@
+ #!/bin/sh
+ 
+-test_description='racy GIT'
++test_description='racy git'
+ 
+ TEST_PASSES_SANITIZE_LEAK=true
+ . ./test-lib.sh
+@@ -16,19 +16,18 @@ do
+ 	echo xyzzy >infocom
+ 
+ 	files=$(git diff-files -p)
+-	test_expect_success \
+-	"Racy GIT trial #$trial part A" \
+-	'test "" != "$files"'
++	test_expect_success 'Racy git trial #$trial part A' '
++		test "" != "$files"
++	'
+ 
+ 	sleep 1
+ 	echo xyzzy >cornerstone
+ 	git update-index --add cornerstone
+ 
+ 	files=$(git diff-files -p)
+-	test_expect_success \
+-	"Racy GIT trial #$trial part B" \
+-	'test "" != "$files"'
+-
++	test_expect_success 'Racy git trial #$trial part B' '
++		test "" != "$files"
++	'
+ done
+ 
+ test_done
 
-If you find it difficult to use send-email/format-patch, you can always
-make a pull request on git/git or gitgitgadget/git on GitHub and
-GitGitGadget[1] will take care of the rest. If you still want to use
-format-patch, it is a good practice to version your patches
-(i.e. [PATCH v2 1/2] ...) so that it is easy to follow.
-(cf. Documentation/SubmittingPatches or Documentation/MyFirstContribution)
-
-[1]: https://gitgitgadget.github.io/
-
-Thanks.
-> diff --git a/t/t4018-diff-funcname.sh b/t/t4018-diff-funcname.sh
-> index 43593866bc..9c3b80665e 100644
-> --- a/t/t4018-diff-funcname.sh
-> +++ b/t/t4018-diff-funcname.sh
-> @@ -18,40 +16,19 @@
-> test_expect_success 'identify builtin patterns in Javascript' '
->     # setup
->     echo "function myFunction() { return true; }" > test.js &&
->     echo "var myVar =3D function() { return false; }" >> test.js &&
->     git add test.js &&
->     git commit -m "add test.js" &&
->
->     # modify the file
->     echo "function myFunction() { return false; }" > test.js &&
->     echo "var myVar =3D function() { return true; }" >> test.js &&
->
->     # command under test
->     git diff >output &&
->
->     # check results
->     test_i18ngrep "function myFunction() { return true; }" output &&
->     test_i18ngrep "function myFunction() { return false; }" output &&
->     test_i18ngrep "var myVar =3D function() { return false; }" output &&
->     test_i18ngrep "var myVar =3D function() { return true; }" output
-> '
->
-> test_done
-> --
-> 2.43.2
-
+base-commit: 3c2a3fdc388747b9eaf4a4a4f2035c1c9ddb26d0
+-- 
+gitgitgadget
