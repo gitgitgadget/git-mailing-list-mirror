@@ -1,67 +1,101 @@
-Received: from mail-qv1-f51.google.com (mail-qv1-f51.google.com [209.85.219.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A60C134435
-	for <git@vger.kernel.org>; Thu, 29 Feb 2024 19:08:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 700CD7A125
+	for <git@vger.kernel.org>; Thu, 29 Feb 2024 19:15:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709233739; cv=none; b=IjKxcB03e9I8CA/klrBlrs0UwpC1mYa0N6Kdp50geP9LS6XOr3tDoK158A4QpmSmdYikO4H9tgDd9tO6RsIrpw00qrGLk3WW5+7RWwVbdee0TsTwKK55cEO8Q5AwFnSovzL7HQkylarOsSM9WJd1WNNLzWMqdqupgHnzc3fY0OE=
+	t=1709234139; cv=none; b=oiVnvBe9+oKMclsFBhaqMVoSV1oSh4RCXfI17UqVwD16i6MlPyy9OBXWy/GdtmuzgqdgVlpzeAkRJd8N9vcwMsw+JnjEC5fcCILA8vWbLerPDz8iuTo+uIjuUTGv4OpAHI5Y+XwtO6L6GU1VtnaRZ6mzosQyseQRLt9daC2+3jo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709233739; c=relaxed/simple;
-	bh=70I9inTMDsjOcLXHdck0Mu6fIWcHC+JxM7US0FKBsEU=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=iyzuTcFFxxzCRD3djqU6SBnL18yz/y03wiIXUwqADzmOQt4yBnTRcekpB4MGqwKr4jWNFuktsU1cqQI06GofZb5KXL1Qm/BhwN2T1pXxtWri1BPM2Zj56Y24GO/1UZCvsy48Mhd8fhhcHrU+eopzAp8mEj3XDdRQ/yRRp6LkBRc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.219.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-qv1-f51.google.com with SMTP id 6a1803df08f44-68f9c01a148so5707116d6.3
-        for <git@vger.kernel.org>; Thu, 29 Feb 2024 11:08:57 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1709233736; x=1709838536;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=Q2G6w1FHWAgghJ6f4ki0NSKwoSXmGvvYQFhKJcxUBjs=;
-        b=JnIkbez2L7viRdA7NZkkBciusGZHqHYcg2dKPtEcT+X3aiWckMFePjcRg5nO1IReH2
-         6a0g1Yb6ZpuupUDkEzP0h+wc3caQSHiEtxDzzkvePSpgsT9gYLlQTqirqAghnQ6cQxt+
-         61LAiBn9fGYUI5eOJNnW83pwfszlZty5jszHD8GbtwKhQBF3Lm/tynjLx7Q0w1g5Epr/
-         Cc32/Enoyvqq9Ruo0iWq2S4HYZGQq84b2ntGWzolTn9G1cp0MpoqbVXAnBZ7LKajxCBH
-         9o2oGKivRRm7LLuREYY8MBv6pzwULNVE0cuWMfOTfvGo0kJQgCluaieAK8YDCvzH87qQ
-         wFkA==
-X-Gm-Message-State: AOJu0Yy1WtI6egxQeKgOsJdx3R4VlnL9RAYn86J/WBvAE1z3Pk/a2pW3
-	/ixCA2UaOMqnrwH0pfFDghNri5VihEJe3/Y/qM3BsnIyf55PusrGZKEX329B8z3MpYh8FGL1s38
-	YcgS/D5lgG9ikh3pdq/aKH4afwvplDF/VuZI=
-X-Google-Smtp-Source: AGHT+IHa3UozqRILrZEjosG9IYltExXm8SymbDOBQhrl3oSXPyR8XjJkvyIH70a7meOfV6BF7VrFX7CdSaX/XFMHdYI=
-X-Received: by 2002:a0c:fa12:0:b0:68f:e924:ae08 with SMTP id
- q18-20020a0cfa12000000b0068fe924ae08mr3531931qvn.28.1709233736404; Thu, 29
- Feb 2024 11:08:56 -0800 (PST)
+	s=arc-20240116; t=1709234139; c=relaxed/simple;
+	bh=TY7npMdnHXtt83Za5D9Vlll1XLRKgVu+0qPBtpfOHwg=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=btC3+bF5vCcR6jmPbHKzf+IwS+2CfiXNoX6T6WZVNx7LVLJJexUUF8lBh+/7PvJ7rNjkCsGPXadSix8K4xuijD9JflUIHZaXcZQkqK3Fl9Ioe+ODC1S0NFnLpACp2btW4R0bqPVx1LexpJM/QonTLN7dgay6v76lmou7GUCJpbA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=dg1dixjd; arc=none smtp.client-ip=64.147.108.70
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="dg1dixjd"
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 5DDB31D16E5;
+	Thu, 29 Feb 2024 14:15:37 -0500 (EST)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=TY7npMdnHXtt83Za5D9Vlll1XLRKgVu+0qPBtp
+	fOHwg=; b=dg1dixjd4NJxCflbuL/C0Ep/mW8jtjh+cBCJPhObHGZfHz47amKzCr
+	RUYe4srLDaWVBTDsLqy/NcFIF/iPMp0tApwNeNe7Kp32SAY8vvQ5lqfOUREpwxVB
+	C5wjUdiDs4UWlXPHuH4SC/MpV72OZmFS0K1qXXCwWX8v7v4WCCJc4=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 551DC1D16E4;
+	Thu, 29 Feb 2024 14:15:37 -0500 (EST)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.176.30])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id B76331D16E3;
+	Thu, 29 Feb 2024 14:15:36 -0500 (EST)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Ghanshyam Thakkar <shyamthakkar001@gmail.com>
+Cc: git@vger.kernel.org,  johannes.schindelin@gmx.de,  newren@gmail.com,
+  christian.couder@gmail.com
+Subject: Re: [PATCH] setup: clarify TODO comment about ignoring core.bare
+In-Reply-To: <20240229134114.285393-2-shyamthakkar001@gmail.com> (Ghanshyam
+	Thakkar's message of "Thu, 29 Feb 2024 19:11:15 +0530")
+References: <85d4e83c-b6c4-4308-ac8c-a65c911c8a95@gmail.com>
+	<20240229134114.285393-2-shyamthakkar001@gmail.com>
+Date: Thu, 29 Feb 2024 11:15:35 -0800
+Message-ID: <xmqqsf1bf5ew.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <6139934.yKrmzQ4Hd0@nimes>
-In-Reply-To: <6139934.yKrmzQ4Hd0@nimes>
-From: Eric Sunshine <sunshine@sunshineco.com>
-Date: Thu, 29 Feb 2024 14:08:45 -0500
-Message-ID: <CAPig+cSFW0MrAx6n3=142X64UraErTDHQxjGpgc6hy-=pbDSpQ@mail.gmail.com>
-Subject: Re: git-config doc: variables sorting bug
-To: Bruno Haible <bruno@clisp.org>
-Cc: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ EB1B280A-D736-11EE-8D79-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
 
-On Wed, Feb 28, 2024 at 5:15=E2=80=AFAM Bruno Haible <bruno@clisp.org> wrot=
-e:
-> In https://git-scm.com/docs/git-config the variables (advice.* ...
-> worktree.guessRemote) are apparently meant to be in alphabetical order.
->
-> However,
->   filter.<driver>.clean
->   filter.<driver>.smudge
-> come after format.*. They should come before format.*, since 'i' < 'o'.
+Ghanshyam Thakkar <shyamthakkar001@gmail.com> writes:
 
-A possible fix has been posted here:
-https://lore.kernel.org/git/20240229190229.20222-1-ericsunshine@charter.net=
-/
+>  	/*
+> -	 * TODO: heed core.bare from config file in templates if no
+> -	 *       command-line override given
+> +	 * Note: The below line simply checks the presence of worktree (the
+> +	 * simplification of which is given after the line) and core.bare from
+> +	 * config file is not taken into account when deciding if the worktree
+> +	 * should be created or not, even if no command line override given.
+> +	 * That is intentional. Therefore, if in future we want to heed
+> +	 * core.bare from config file, we should do it before we create any
+> +	 * subsequent directories for worktree or repo because until this point
+> +	 * they should already be created.
+>  	 */
+>  	is_bare_repository_cfg = prev_bare_repository || !work_tree;
+
+I do not recall the discussion; others may want to discuss if the
+change above is desirable, before I come back to the topic later.
+
+But I see this long comment totally unnecessary and distracting.
+
+> -	/* TODO (continued):
+> +	/* Note (continued):
+>  	 *
+> -	 * Unfortunately, the line above is equivalent to
+> +	 * The line above is equivalent to
+>  	 *    is_bare_repository_cfg = !work_tree;
+> -	 * which ignores the config entirely even if no `--[no-]bare`
+> -	 * command line option was present.
+>  	 *
+>  	 * To see why, note that before this function, there was this call:
+>  	 *    prev_bare_repository = is_bare_repository()
+
+If it can be proven that the assignment can be simplified to lose
+the "prev_bare_repository ||" part, then the above comment can be
+used as part of the proposed log message for a commit that makes
+such a change.  There is no reason to leave such a long comment to
+leave the more complex "A || B" expression when it can be simplified
+to "B", no?
+
+Thanks.
