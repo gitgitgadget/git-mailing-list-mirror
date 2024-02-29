@@ -1,80 +1,78 @@
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qv1-f54.google.com (mail-qv1-f54.google.com [209.85.219.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4F82446C9
-	for <git@vger.kernel.org>; Thu, 29 Feb 2024 23:21:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4D767A139
+	for <git@vger.kernel.org>; Thu, 29 Feb 2024 23:23:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709248901; cv=none; b=HEmwqovfgvrP+4IUBYrircP5X2aEZtH2fXt9pBVRacVERkW49XPxuUVaKcPqB0iE6aN1uNmGptZTZtyOYg+80bew8S5Muxh1uD95p4twMbHNeEqvtEaB7+t3QLfsXCgswYnn01MWZjstQktUzgWXrF34VpQlhejdwBi/F5IDxvQ=
+	t=1709248990; cv=none; b=HAWjo9HJItW6nbCRA1AR7Ow9hGdAPn4wnqg7lIUvTGTY0cgSK0ypuH1BWbMUmgojPCzzB3D5UwUHY1AVVoJ3a8Xc9X6atKDILSwDVglpeCNmDnyTOqrcYf10oBdd8uEhlgVXfHhQ6AfhHh9lEQ+fJjJoISj0YtujgsebUfNOfLA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709248901; c=relaxed/simple;
-	bh=T9KEnGyqJdvr34cpCG0s81ae8SFFyZyJQwu0GeBMLpM=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=gjfQPVz9jCrqWlYtxVu/6FUGkFk1t6B9iiH2AM9e82025i5ayktQmnLu4BR4MELDjziYrHMiK91/5bEu4/Y1cGhAXmmHaeTR9mLtmC2LXPw4mRlF56Y8wqv7E5d9C2d1CPr/E0cJ57rFlSxMxCOCiaL/+9VQlgBHmzfkpWwrS+c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=nlBPy5/L; arc=none smtp.client-ip=173.228.157.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="nlBPy5/L"
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id 35BDE37634;
-	Thu, 29 Feb 2024 18:21:39 -0500 (EST)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=T9KEnGyqJdvr34cpCG0s81ae8SFFyZyJQwu0Ge
-	BMLpM=; b=nlBPy5/LTI5avaZmBdtZTx7wJi+XknOQCMMdE6p3GFa4wfFvWAMeMl
-	7BFoaaNi4GUFo1Om1F+6aylO7qtdOR16QgeLmeHqktspYtV6rjxHQ7xBdkhzd2oo
-	hImZnBlvkJKHvwGzYzV2efpz5BPiYSmXmTn+USK95ZdNJJR7XR0K0=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id 2EB3637633;
-	Thu, 29 Feb 2024 18:21:39 -0500 (EST)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.176.30])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 260B637632;
-	Thu, 29 Feb 2024 18:21:34 -0500 (EST)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Linus Arver <linusa@google.com>
-Cc: Christian Couder <christian.couder@gmail.com>,  Linus Arver via
- GitGitGadget <gitgitgadget@gmail.com>,  git@vger.kernel.org,  Christian
- Couder <chriscool@tuxfamily.org>,  Emily Shaffer <nasamuffin@google.com>,
-  Josh Steadmon <steadmon@google.com>,  "Randall S. Becker"
- <rsbecker@nexbridge.com>,  Kristoffer Haugsbakk <code@khaugsbakk.name>
-Subject: Re: [PATCH v5 3/9] trailer: prepare to expose functions as part of API
-In-Reply-To: <owlyttlq529h.fsf@fine.c.googlers.com> (Linus Arver's message of
-	"Thu, 29 Feb 2024 14:33:46 -0800")
-References: <pull.1632.v4.git.1707196348.gitgitgadget@gmail.com>
-	<pull.1632.v5.git.1708124950.gitgitgadget@gmail.com>
-	<4372af244f02b71cc70f3a8e1b5591b3b9fec93a.1708124951.git.gitgitgadget@gmail.com>
-	<CAP8UFD1dE2EiSxohose6U9SGn+zeHPyVB=KZ2xdQi-v-a8d1XQ@mail.gmail.com>
-	<owlyttlq529h.fsf@fine.c.googlers.com>
-Date: Thu, 29 Feb 2024 15:21:32 -0800
-Message-ID: <xmqqedcuc0w3.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	s=arc-20240116; t=1709248990; c=relaxed/simple;
+	bh=nGc5+i24MSB2LT66ayhvjyb2G+U0+wTFdRPA+VP9IdA=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=o23/zMYyNniEBQggaCH3bXtVFGJjwdRj7WJA3UqSdy0KCbiCl1/o8IRFrBGTxbyo5nnHOMPl2914LMphGdQYt72Lx4CmM+2jfIbAy4/KHB9rqm9ncK51DBrSVC83Bdfsn0TyaiN1G28wbxvs0kd/H0WAumUZrHBPEerV9IZTDdg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.219.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-qv1-f54.google.com with SMTP id 6a1803df08f44-690494d2e97so9003816d6.0
+        for <git@vger.kernel.org>; Thu, 29 Feb 2024 15:23:07 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1709248987; x=1709853787;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=lgA75ZC2u1lp04vfpUve4PzX3rwvLkvWvEJ22vUhwag=;
+        b=Q/E86pi2QhQOr3HkOneAJLtB+xOEHw+9L1GlcYTcxs6YUv3GMsAO7Q6AlPjxnyXxrK
+         5J0N+gEVkjv1FotHLC76ECvepTf0LA8uPVGpuL1Lx73FJAVlRuVVqehCoGfjRMJzjR32
+         Ne1UsJ7uXo6tNQEMZ5JT0+xv5/LDbH88gGLDeLc3xHQnMjnEBaPpMNiJR2wImcqfooUT
+         YcuQVEgT1vLqp3Gnz+o0RfYe00lAJbIkSp/htq8PlH/w/Usp8oioOLCSJ4Z08fesMHem
+         E2r/ySqW99c0y5opeJDQ139RhPqLja0qaay3bTSgpGMbVnyrX6HCK/Dte1vxq7qCu0DR
+         zmbA==
+X-Forwarded-Encrypted: i=1; AJvYcCVk33lI/Kq8HR0kCsCZmoA5MLkwwFFt0k9a4IjbLbKSMHdUDghmAL9+dv1PTYV5aQ7RLgrDs/UqYkx7okIVCSTnEwsQ
+X-Gm-Message-State: AOJu0Yz+QiPheAVrKhd+pLOFj7YdwwucyxIvBRY2BXfmX1Ws0k/cJW9j
+	qtJtgAsHJ2IHOVWeGiLOuS/LhvTBDL+mzNwfTrOujtkK+tND/0SzGfyNtN1n49JCXKCTpLL7xZu
+	HzpRqphQNMUT5Xu1xkGC6imIvwLM=
+X-Google-Smtp-Source: AGHT+IGmXSi10A3Z1IpoBkwo9UcK4XglQdSdeLPcO4rPlLgNBuCMB5DaiZ5ma2TpUr8DAUq0LUl/okTwnh8IGhajbsI=
+X-Received: by 2002:ad4:51ca:0:b0:690:47dc:cb4d with SMTP id
+ p10-20020ad451ca000000b0069047dccb4dmr5244193qvq.7.1709248986744; Thu, 29 Feb
+ 2024 15:23:06 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- 47343D62-D759-11EE-B453-A19503B9AAD1-77302942!pb-smtp21.pobox.com
+References: <pull.1675.git.1709209435242.gitgitgadget@gmail.com>
+ <pull.1675.v2.git.1709243831190.gitgitgadget@gmail.com> <xmqqle72c17i.fsf@gitster.g>
+In-Reply-To: <xmqqle72c17i.fsf@gitster.g>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Date: Thu, 29 Feb 2024 18:22:55 -0500
+Message-ID: <CAPig+cQ5m86=pLTpFrik0xS6XPyK4tZQx_wkc1xh2r9WDFkhuQ@mail.gmail.com>
+Subject: Re: [PATCH v2] tests: modernize the test script t0010-racy-git.sh
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Aryan Gupta via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
+	Patrick Steinhardt <ps@pks.im>, =?UTF-8?Q?Michal_Such=C3=A1nek?= <msuchanek@suse.de>, 
+	=?UTF-8?Q?Jean=2DNo=C3=ABl_AVILA?= <jn.avila@free.fr>, 
+	Kristoffer Haugsbakk <code@khaugsbakk.name>, Aryan Gupta <garyan447@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Linus Arver <linusa@google.com> writes:
-
->> Nit: this patch and the next one will become commits, so perhaps:
->>
->> s/In the next patch/In a following commit/
+On Thu, Feb 29, 2024 at 6:14=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
+wrote:
+> So, we may want to do it more like this, perhaps?
 >
-> TBH I've always wondered whether "patch" or "commit" matters --- I've
-> seen examples of patch series that referred to "commits" instead of
-> "patches", and vice versa. I was hoping to hear an opinion on this, so
-> I'm happy to see (and apply) your suggestion. Thanks.
+>         test_expect_success "Racy GIT trial #$trial part A" '
+>                 rm -f .git/index &&
+>                 echo frotz >infocom &&
+>                 git update-index --add infocom &&
+>                 echo xyzzy >infocom &&
+>
+>                 files=3D$(git diff-files -p) &&
+>                 test "" !=3D "$files"
+>         '
 
-I think it is just fine to use either; sticking to one you pick
-consistently in the same series would have value.  If you prefer
-commit, then fine.  If you like patch, that's fine too.
+If taking it to this extent, then the modernized version of the last
+couple lines would be:
+
+    git diff-files -p >out &&
+    test_file_not_empty out
