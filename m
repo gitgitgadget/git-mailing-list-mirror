@@ -1,58 +1,67 @@
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5AD6160641
-	for <git@vger.kernel.org>; Thu, 29 Feb 2024 19:22:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE7E8A5F
+	for <git@vger.kernel.org>; Thu, 29 Feb 2024 19:33:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709234537; cv=none; b=NEbMmIWXzQCOdMVkfgwXbSr74Z8XP6Nbs4qtQqHeEFL7pst0ZgMNG81xVX8O9odYW3dYKkfIyTpEAqYIG6EBZkoNdXqfM/5k2ypkCb9HJO9Y1gi/GnagODyET/daektA6rj/hTF/Wr1OlrWU56FmelEI/EA3W8cP74wh/dVsqrE=
+	t=1709235217; cv=none; b=ammLQhhrTp4QtRA+JZSzb7l2FognXQqM8MpomaG7cNKlv5H1XWKTBgRKA7eVBgcFkXwYSzen/cvhVT7KgQCE2EFpEE2QUFaWSccVfg2QkrvL6tOkaNNePDxy1iEMlhPQzRUICruGjBo8mFmhLYzdPq20Yosp+TfSfuANWv23m2Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709234537; c=relaxed/simple;
-	bh=W4O4Yg9CJWr2Gmpi79+qIrsYIYeX3kf/fnVAKwoYfWs=;
+	s=arc-20240116; t=1709235217; c=relaxed/simple;
+	bh=a3EZfexxhGOU2FcCLUB9r3Iy/1JQDm9mszf2eKw5z1Q=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=AciYGgSj/mmdNfdLx5Gen2gjFYrdNm5cMNcuxuwh5eJfxzqkmftsB1oRJMKk+6eHfv869hVzlUK8Uk4pT+CEHAZzp8Son8uX/vW3YxXw2EG+J456bEEp3e0PSNGOtOcfzVBDQZp1s/1JK85gngb8cD1s9lqLrW1FMSkKS4A5UFA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=cOkE0m5p; arc=none smtp.client-ip=64.147.108.70
+	 MIME-Version:Content-Type; b=g8Vlag7hysQ74NXohQhlJHcv7BEWR6MpTbPTRFfMh2P6YnzqJopflFa6pSAmW2dM0zBL2b7Bn6tSzkYVipXthuxTuQTDYElbQxU0QjZ/GvfiUV69xhr2gTxpMt2aXiNYtQWSZAek9RKjO5QLipBK/65Nsor0M5KxTn8yD43vXM8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=eA3E9/Ur; arc=none smtp.client-ip=173.228.157.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="cOkE0m5p"
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id A90641D1971;
-	Thu, 29 Feb 2024 14:22:14 -0500 (EST)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="eA3E9/Ur"
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id 7391735F4D;
+	Thu, 29 Feb 2024 14:33:29 -0500 (EST)
 	(envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=W4O4Yg9CJWr2
-	Gmpi79+qIrsYIYeX3kf/fnVAKwoYfWs=; b=cOkE0m5pJXPBKk+O026h8RXpmhDq
-	vN5US/Z40coDr5Cqs4IBKUs/wSFgluesETUGFPz+pKcDsC+WVnhdmcH970iacEld
-	v0mS42f65HkBN8oWls8BO2zlEpmQJ5JIe9m7/p5kbrtBfn6wB8pjWBWvbWwVOawr
-	15Qyz6RKfwtLyuo=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 9FE6F1D1970;
-	Thu, 29 Feb 2024 14:22:14 -0500 (EST)
+	:content-type:content-transfer-encoding; s=sasl; bh=a3EZfexxhGOU
+	2FcCLUB9r3Iy/1JQDm9mszf2eKw5z1Q=; b=eA3E9/UrGMcZ+gwX7gLKadbqmhVt
+	/vMw8Tc7eEvwvASlGvQQRQXDUbWD6DUpDV0tYPDkmN4L3S5epXPrukaYhKjT7Pqy
+	nYVnTMYZavEs5S6n7FMgj4QBB5zfmSoW9Q6y1trmHX74bibutXuWIzc8VGX2Xctf
+	ImVGNQQwP67jPBk=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id 6713635F4C;
+	Thu, 29 Feb 2024 14:33:29 -0500 (EST)
 	(envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.125.176.30])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 0A5F91D196E;
-	Thu, 29 Feb 2024 14:22:13 -0500 (EST)
+	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 044AB35F4B;
+	Thu, 29 Feb 2024 14:33:25 -0500 (EST)
 	(envelope-from junio@pobox.com)
 From: Junio C Hamano <gitster@pobox.com>
 To: =?utf-8?Q?Rub=C3=A9n?= Justo <rjusto@gmail.com>
-Cc: Git List <git@vger.kernel.org>
-Subject: Re: [PATCH 3/4] completion: reflog with implicit "show"
-In-Reply-To: <ff1c650b-5776-4881-ad0d-c39d311fa7e7@gmail.com>
+Cc: Dragan Simic <dsimic@manjaro.org>,  git@vger.kernel.org
+Subject: Re: [PATCH] branch: adjust documentation
+In-Reply-To: <cbaf17e7-37a6-4c2e-82ba-65fe41dd86b1@gmail.com>
  (=?utf-8?Q?=22Rub=C3=A9n?= Justo"'s
-	message of "Thu, 29 Feb 2024 20:00:26 +0100")
-References: <98daf977-dbad-4d3b-a293-6a769895088f@gmail.com>
-	<5991b58c-770c-4aaa-bce5-f396d9f7f16f@gmail.com>
-	<xmqq8r4cnfju.fsf@gitster.g>
-	<dd106d87-3363-426a-90a2-16e1f2d04661@gmail.com>
-	<xmqqwmqyr3mb.fsf@gitster.g>
-	<abe1c96d-48f7-4355-8688-e1fb05c67448@gmail.com>
-	<ff1c650b-5776-4881-ad0d-c39d311fa7e7@gmail.com>
-Date: Thu, 29 Feb 2024 11:22:12 -0800
-Message-ID: <xmqqo7bzf53v.fsf@gitster.g>
+	message of "Thu, 29 Feb 2024 19:56:05 +0100")
+References: <3cbc78bb5729f304b30bf37a18d1762af553aa00.1708022441.git.dsimic@manjaro.org>
+	<e8fdd057-2670-4c93-b362-202a339d5f49@gmail.com>
+	<xmqq8r3lnzp0.fsf@gitster.g>
+	<2a4de8c4-4955-4891-859c-58730a41e5af@gmail.com>
+	<ea15a49aed7b5a74cd9b1bf8a5351df9@manjaro.org>
+	<c00f6efe-d1f4-4f2c-99cc-ac7a6d93c9ff@gmail.com>
+	<be91f3ad9305366c1385c2da4881537e@manjaro.org>
+	<xmqq8r3g8caz.fsf@gitster.g>
+	<35738a93f5cbace5b3235ce614b7afbf@manjaro.org>
+	<xmqqttm3ouxy.fsf@gitster.g>
+	<16c1f883-881f-4f8c-95b2-22fb4825b733@gmail.com>
+	<96f1afa6-f4ac-4593-9bf4-72dafe3cab85@gmail.com>
+	<b6d22f5a66de49efc623eceddbdc6faf@manjaro.org>
+	<d1f928b98238a60a96bee0d3f410deef@manjaro.org>
+	<xmqqttlsld4t.fsf@gitster.g>
+	<cbaf17e7-37a6-4c2e-82ba-65fe41dd86b1@gmail.com>
+Date: Thu, 29 Feb 2024 11:33:24 -0800
+Message-ID: <xmqqcysff4l7.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -62,27 +71,60 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 X-Pobox-Relay-ID:
- D7E8A46E-D737-11EE-99AD-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
+ 68701624-D739-11EE-8A35-A19503B9AAD1-77302942!pb-smtp21.pobox.com
 Content-Transfer-Encoding: quoted-printable
 
 Rub=C3=A9n Justo <rjusto@gmail.com> writes:
 
-> I am happy with the current iteration and I still think that mixing
-> branch names with options is a source of confusion.
+> If we wisely choose the placeholder, perhaps we can write:
 >
-> However, this topic in the latest 'What's cooking' is marked with:
+>     -m [<one>] <two>::
+> 	Renames <one> (the current branch is used when not given) to
+> 	a new name <two>, together with its reflog and configuration
+> 	settings ...
 >
->  Expecting a reroll.
->  cf. <dd106d87-3363-426a-90a2-16e1f2d04661@gmail.com>
->  source: <98daf977-dbad-4d3b-a293-6a769895088f@gmail.com>
+> And if <one> is _good enough_ then "current branch is used when ..."
+> should seem somewhat redundant.  So it could be possible to end up
+> having something like:
 >
-> I am confused about what the expectation is.
+>     -m [<one>] <two>::
+> 	Renames <one> to a new name <two>, together with its reflog
+> 	and configuration settings ...
 
-Expectation is to show both possible commands and branch names
-available so that users with enough typing can pick from either, as
-I do see it even more confusing if only branch names (or only
-command names) are visible sometimes (namely, if the prefix is
-shared by both) but some other times command names (or branch names)
-are completed just fine (namely, if the prefix is unique to only one
-set of names between command names and branch names).
+If you use <the-current-branch-or-a-named-branch> or something
+awkward like that as <one>, surely you can.  But I do not think we
+want to go there.  And neither <branch-name> or <old-branch> would
+remove the need for "if omitted then the current branch is used", I
+am afraid, even though there may be a way to rephrase it more
+concisely, e.g. "Rename the current branch (or <one> when given)..."
 
+> Are we going to say "the current branch is used when ..." in the
+> description for the other options too?  The description for "-c|-C",
+> "--edit-description", "--unset-upstream", ...  Perhaps we are, and it
+> will sound repetitive.
+
+Do not forget that the objective of the larger-picture-revamping of
+this page is to make the description of each option self-contained.
+Similarity between -m's description and -c's description does not
+count as being uselessly repetitive.
+
+>> Even though the choice of words Rub=C3=A9n made in the patch under
+>> discussion may work well in the current document structure.
+>
+> My patch is mainly about CodingGuideLines:
+>
+> 	If a placeholder has multiple words, they are separated by dashes:
+> 	  <new-branch-name>
+> 	  --template=3D<template-directory>
+
+Yes, and that will be something we want to address _after_ we pick
+what word or phrase would replace <one> or <two> in the above at the
+conceptual level.  If we picked a single word, say "branch", we do
+not even need to worry about dashes, and spell it just <branch>.  If
+we did not pick "old branch", then we'd use "<old-branch>", but doing
+such a conversion based on the current text is a wasted work, if we
+end up using say "original branch" as the phrase, for example.
+
+So if your patch is mainly about that part of the guideline, it is
+addressing the documentation update in a wrong order, creating
+possibly a wasted work.
