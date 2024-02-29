@@ -1,149 +1,102 @@
-Received: from mail-pf1-f202.google.com (mail-pf1-f202.google.com [209.85.210.202])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E128200A6
-	for <git@vger.kernel.org>; Thu, 29 Feb 2024 22:53:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.202
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B3B17A158
+	for <git@vger.kernel.org>; Thu, 29 Feb 2024 22:57:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709247209; cv=none; b=TVFXSG8MaDMBX+nXaicsQJ4poGR9zvMtsWk3UdKIEzZAkOFdk2SUW8m1g1nPsDP6S41HhPIYnSTplfDWptxDt7N0qydJxUwA6rBtRKwt8Jbz5RpJlB37uwnb2X1zDE3c1Xv++rFrN31FP6Qv2XovEOOVEYXpB5mTCDsseQII0Rw=
+	t=1709247438; cv=none; b=GX6jpOtJMtnCM5s/2SYOzcL7XcfHn4F9uJRUbbUxZv+jegJCa091WsVUHGTXqaffAK4Zhaz4Ubp+ATfaDf/NMJP781U1+QpX4pwcSw9wyGnA3+QrS3cE9IIsy5E6kZaO7rpDRlcREJs4Gdiz+6abpVH+bnzu9S3Lo/+KWyR2XC8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709247209; c=relaxed/simple;
-	bh=soWtPiifcwrnpH+VmRkIqgOC21IFuHrD2qbYxlkCKZE=;
-	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
-	 To:Cc:Content-Type; b=Lm2uI+xCB89WfrPMqurLUUV7pGYGFxAXB38oz3ofhB4vphT3/2FamAWDu2nY2+Q2EzTiTstlVlR2bVZj9vWTySPbX7zAhoEcXB/rSIKSIoUbibGq1mH1dcKPnX9rCerS/cb963Bd/Ww7dZaC0kkxhem5niNnltq36Jtio+ISCw8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--linusa.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=WFwjxY8Q; arc=none smtp.client-ip=209.85.210.202
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--linusa.bounces.google.com
+	s=arc-20240116; t=1709247438; c=relaxed/simple;
+	bh=5T4jNpDcjk/o5T57kxnTiWke9PRlQnj1Rp/5HKhAdzQ=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=gTNoCR1oPM0+QGMVLwi+j3cVaRqXHhN8DZoVvxShfByC7JX27sId2rT+u+vFYWlGmU0iv5lvPdTunDX2FE5sR3fhnbyya1sqfTnk5/rhhRbxnWf9zTVwjA5M4ittkDSnE3Z1867M17wUsfYqCa/6ynjn7wiIsHY0wqtD4o3JkDM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=EAk+dO9S; arc=none smtp.client-ip=64.147.108.71
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="WFwjxY8Q"
-Received: by mail-pf1-f202.google.com with SMTP id d2e1a72fcca58-6e4e4572980so1302417b3a.3
-        for <git@vger.kernel.org>; Thu, 29 Feb 2024 14:53:28 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1709247208; x=1709852008; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:from:subject:message-id:references
-         :mime-version:in-reply-to:date:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=2+o1WPgtMBWV6D4+w760SpuODsIUs/JQ37lZS+kRbhA=;
-        b=WFwjxY8Qrb+9S0G50JK93Qb+nw3oKx2c8w8wAB6oC4Rp3d4+1YZP/CcRc9LXo4H7oP
-         thAmDTfd0qZOSIFhEtC99FLUyipJj++BkkYkLbFQguvlbgP18TsuC2iA0ja/kEpu/BEs
-         pTWRVYdN8FMpGpTv7F9JoHJMptZiU+fMIy2ficRsgAQFCvJEngswCEwRZ0SYMkdFxEfX
-         ib9gNkpFhIfNKK+ldZJIaZHbq8WV3SehOL3Al46T6b4xg8eSzW+n5M6J/iGPMfQMrVnE
-         V/3+xcIHd+rV4HNsD6nt9kyMsjoqqUMP9N+yNmB4M37/ct38yozp62b04WIyt3YHSRVu
-         e23A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1709247208; x=1709852008;
-        h=content-transfer-encoding:cc:to:from:subject:message-id:references
-         :mime-version:in-reply-to:date:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=2+o1WPgtMBWV6D4+w760SpuODsIUs/JQ37lZS+kRbhA=;
-        b=RAvDPRBBouSbrbmIrkkpg2lfAOw28Y4Rl88UEGNpoTmflrUUahRDuAQFKatI7f5dJj
-         tXtIu/v7j2TtbV+w+hfJQsgZfWl1fMJMhKOOSqlkVu7tUpr1rvDW5M0/WHR2e34ga6aw
-         ErllcygepnaMGjA5GK5fYnYCHScvKCvl5oOitk6rrx6T2hALfzOGAfnnG4GaqU5mTAdD
-         qk57IwNxh5QQMVn3PTaSbWodxpyp79PiW+mujgHUNWJv4x1RkGhIre37c9Moj8qUnpDZ
-         Vq2QPhjmOVxt4rrWLuJQRggjX/dDBB87FXfQjJlQXqx3dqBOdZcRYAH2d8jmF3jFXP2H
-         d51w==
-X-Gm-Message-State: AOJu0Yw7IOvgveZDpBrED7n60AnpX6x9tt6RKDmGHbEhf27wIaAuSAlh
-	DcyCP64BH4iMoxIm88Pq06bYx1pd0YEWLzhIS+vPXbKPGlD3/DSjm8YVe/XmRprpRUhsaaEbUyO
-	rFg==
-X-Google-Smtp-Source: AGHT+IFoKUlVh0e41j7ERyAtThZRoc9zG8NRqGEgnXoU+sZ+y+XeQGosLNOYAjkQY7CvcZ2azB+Eky3QfGo=
-X-Received: from fine.c.googlers.com ([fda3:e722:ac3:cc00:7f:e700:c0a8:2221])
- (user=linusa job=sendgmr) by 2002:a05:6a00:1991:b0:6e5:d5b:3eff with SMTP id
- d17-20020a056a00199100b006e50d5b3effmr1262pfl.0.1709247207604; Thu, 29 Feb
- 2024 14:53:27 -0800 (PST)
-Date: Thu, 29 Feb 2024 14:53:25 -0800
-In-Reply-To: <CAP8UFD3KbbRApC3ktgegsi_oBDpzX_89v0QGvWoHQ057hKjbbg@mail.gmail.com>
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="EAk+dO9S"
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 92E941E79C1;
+	Thu, 29 Feb 2024 17:57:15 -0500 (EST)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=5T4jNpDcjk/o5T57kxnTiWke9PRlQnj1Rp/5HK
+	hAdzQ=; b=EAk+dO9SsYf+sa9bkekNWn5EXuRsY82whU7BCNTzE4ad3aO1a0+geA
+	+8qCU9+5YIXvw++X1xzfNGOk9Cc4K4ykjcdQYZbssv5ZnRq1EuMMkqNUuFDN7qTh
+	2x975rISNdB2OdEhm7mrTSIAg3ojE7tpQBM7OKXUatporZQMPWc+8=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 895AA1E79C0;
+	Thu, 29 Feb 2024 17:57:15 -0500 (EST)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.176.30])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id F1DA91E79BE;
+	Thu, 29 Feb 2024 17:57:14 -0500 (EST)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Dirk Gouders <dirk@gouders.net>
+Cc: git list <git@vger.kernel.org>
+Subject: Re: [PATCH 1/1] Documentation/user-manual.txt: example for
+ generating object hashes
+In-Reply-To: <gha5nigaq0.fsf@gouders.net> (Dirk Gouders's message of "Thu, 29
+	Feb 2024 23:35:35 +0100")
+References: <cover.1709240261.git.dirk@gouders.net>
+	<a3902dad424983a4f0dfcda68e0b8bf64a0b2113.1709240261.git.dirk@gouders.net>
+	<xmqqil27c5p1.fsf@gitster.g> <gha5nigaq0.fsf@gouders.net>
+Date: Thu, 29 Feb 2024 14:57:13 -0800
+Message-ID: <xmqqedcudgl2.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-References: <pull.1632.v4.git.1707196348.gitgitgadget@gmail.com>
- <pull.1632.v5.git.1708124950.gitgitgadget@gmail.com> <b2a0f7829a1c5f2822e9a896ffe3744587ff1298.1708124951.git.gitgitgadget@gmail.com>
- <CAP8UFD3KbbRApC3ktgegsi_oBDpzX_89v0QGvWoHQ057hKjbbg@mail.gmail.com>
-Message-ID: <owlyr0gu51cq.fsf@fine.c.googlers.com>
-Subject: Re: [PATCH v5 5/9] trailer: start preparing for formatting unification
-From: Linus Arver <linusa@google.com>
-To: Christian Couder <christian.couder@gmail.com>, 
-	Linus Arver via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, Christian Couder <chriscool@tuxfamily.org>, 
-	Junio C Hamano <gitster@pobox.com>, Emily Shaffer <nasamuffin@google.com>, 
-	Josh Steadmon <steadmon@google.com>, "Randall S. Becker" <rsbecker@nexbridge.com>, 
-	Kristoffer Haugsbakk <code@khaugsbakk.name>
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ E179350C-D755-11EE-9589-25B3960A682E-77302942!pb-smtp2.pobox.com
 
-Christian Couder <christian.couder@gmail.com> writes:
+Dirk Gouders <dirk@gouders.net> writes:
 
-> On Sat, Feb 17, 2024 at 12:09=E2=80=AFAM Linus Arver via GitGitGadget
-> <gitgitgadget@gmail.com> wrote:
->>
->> From: Linus Arver <linusa@google.com>
->>
->> Currently there are two functions for formatting trailers in
->> <trailer.h>:
->>
->>     void format_trailers(const struct process_trailer_options *,
->>                          struct list_head *trailers, FILE *outfile);
->>
->>     void format_trailers_from_commit(struct strbuf *out, const char *msg=
-,
->>                                      const struct process_trailer_option=
-s *opts);
->>
->> and although they are similar enough (even taking the same
->> process_trailer_options struct pointer) they are used quite differently.
->> One might intuitively think that format_trailers_from_commit() builds on
->> top of format_trailers(), but this is not the case. Instead
->> format_trailers_from_commit() calls format_trailer_info() and
->> format_trailers() is never called in that codepath.
->>
->> This is a preparatory refactor to help us deprecate format_trailers() in
->> favor of format_trailer_info() (at which point we can rename the latter
->> to the former). When the deprecation is complete, both
->> format_trailers_from_commit(), and the interpret-trailers builtin will
->> be able to call into the same helper function (instead of
->> format_trailers() and format_trailer_info(), respectively). Unifying the
->> formatters is desirable because it simplifies the API.
->>
->> Reorder parameters for format_trailers_from_commit() to prefer
->>
->>     const struct process_trailer_options *opts
->>
->> as the first parameter, because these options are intimately tied to
->> formatting trailers. And take
->>
->>     struct strbuf *out
->>
->> last, because it's an "out parameter" (something that the caller wants
->> to use as the output of this function).
+>> I'd rather not to waste readers' attention to historical wart.
 >
-> Here also I think the subject could be more specific like for example:
->
-> "trailer: reorder format_trailers_from_commit() parameters"
+> Yes, but -- I should have mentioned it -- the document itself suggests
+> to read the initial commit.
 
-Applied, thanks.
+Ahh, yes, we'd need to hedge that part.  Good thinking.
 
->> diff --git a/trailer.c b/trailer.c
->> index d23afa0a65c..5025be97899 100644
->> --- a/trailer.c
->> +++ b/trailer.c
->> @@ -1083,10 +1083,10 @@ void trailer_info_release(struct trailer_info *i=
-nfo)
->>         free(info->trailers);
->>  }
->>
->> -static void format_trailer_info(struct strbuf *out,
->> +static void format_trailer_info(const struct process_trailer_options *o=
-pts,
->>                                 const struct trailer_info *info,
->>                                 const char *msg,
->> -                               const struct process_trailer_options *op=
-ts)
->> +                               struct strbuf *out)
->
-> Ok, so it's not just format_trailers_from_commit() parameters that are
-> reordered, but also format_trailer_info() parameters. It would be nice
-> if the commit message mentioned it.
+I am still not sure if the first hunk below is a good idea or it is
+too much detail.  The second hunk may be worth doing.
 
-Agreed. Will do.
+Thanks.
+
+ Documentation/user-manual.txt | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
+
+diff --git c/Documentation/user-manual.txt w/Documentation/user-manual.txt
+index 6433903491..1027055784 100644
+--- c/Documentation/user-manual.txt
++++ w/Documentation/user-manual.txt
+@@ -4093,7 +4093,8 @@ that not only specifies their type, but also provides size information
+ about the data in the object.  It's worth noting that the SHA-1 hash
+ that is used to name the object is the hash of the original data
+ plus this header, so `sha1sum` 'file' does not match the object name
+-for 'file'.
++for 'file' (the earliest versions of Git hashed slightly differently
++but the conclusion is still the same).
+ 
+ As a result, the general consistency of an object can always be tested
+ independently of the contents or the type of the object: all objects can
+@@ -4123,7 +4124,8 @@ $ git switch --detach e83c5163
+ ----------------------------------------------------
+ 
+ The initial revision lays the foundation for almost everything Git has
+-today, but is small enough to read in one sitting.
++today (even though details may differ in a few places), but is small
++enough to read in one sitting.
+ 
+ Note that terminology has changed since that revision.  For example, the
+ README in that revision uses the word "changeset" to describe what we
