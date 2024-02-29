@@ -1,179 +1,107 @@
-Received: from mail-qv1-f41.google.com (mail-qv1-f41.google.com [209.85.219.41])
+Received: from mail-qk1-f169.google.com (mail-qk1-f169.google.com [209.85.222.169])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D061160657
-	for <git@vger.kernel.org>; Thu, 29 Feb 2024 17:58:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62FA07A13C
+	for <git@vger.kernel.org>; Thu, 29 Feb 2024 18:11:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709229497; cv=none; b=FTsKOSCNaCOywfRWOTbpP3ewDbXUaVun+FTgBZTcHGUE4eL6oWtW2eAmoumEQrjYwphTEa9nt+VckVeIF0xYkwpzQK/feeH24LF9yRSDmpGPcGbMpsriF4CNS328lpQUpuoBfCkFMEYd6cG7FNYmLEEK0wpE53Y0Mylp4n6NHwY=
+	t=1709230321; cv=none; b=YAmy2TaTb1clyqeX1G1L5BR4aVGQ31wz8QqQyNOO3E0BnSC2Eueqb0+5NqhF//UabF0aBkVldu6k8qMElXSckg9uYguojGI/MNxgwxsJGhzw5YlMGwljS13Wdk5380azbvlxIHqxCJRGu9W3buXhrRatgaW4YNxa5hhonJkOdyo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709229497; c=relaxed/simple;
-	bh=O8pyYCkk81JFQJNLnAtnZaLww2bDKyYPoEL8hhwdO5o=;
+	s=arc-20240116; t=1709230321; c=relaxed/simple;
+	bh=PV5HwLQxKnRdhjJJrbQtT1e8c47CenNcJTqxOCwBa90=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=YQTpDLAAkQ1QEYI4KadiqEvjDH4Yffd87pOUyuGxFwQcgU70QnmNPvOwJgRJv4OEyv0XeYBeClthGBsoxGAKyvvBNqSfce5sQTMb9u+iiGVVusSyfjKDXwhCOiERiarMLrgSoz/l/KyvE/mk4L2EUEsNm/tETRM8MXXgdKNFHEU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.219.41
+	 To:Cc:Content-Type; b=D0u1Z3StBxfOkHDRL8wzbHNhq5PeTBVL7ZPLR1D7+Z2bDbWrz5d6LmmbJ/kHNY5wM0wkxP0CUKIAZTn6liavsdDz+bdqgchqCTrPJITJomgnysq4nGDQ5ERy0vow8xB9gyQ/6UTOiynK2Ds31sRdIxWlN/YDR2MAj4Snl1hteHg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.222.169
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-qv1-f41.google.com with SMTP id 6a1803df08f44-6901a6dca63so7031236d6.0
-        for <git@vger.kernel.org>; Thu, 29 Feb 2024 09:58:15 -0800 (PST)
+Received: by mail-qk1-f169.google.com with SMTP id af79cd13be357-787990149edso56982185a.3
+        for <git@vger.kernel.org>; Thu, 29 Feb 2024 10:11:59 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1709229494; x=1709834294;
+        d=1e100.net; s=20230601; t=1709230318; x=1709835118;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=md/oKuC9MWu6dbnEecURmnYi3m/yjQVlCOruW+7SA6U=;
-        b=fQbRmpYuEjHisLWmnOZa+DTqnppKXB5fo0GP8NcVbKIk/s6+oLJSZfpTiHlc+tDjHz
-         3MgIYjL25x6JXqLwAXn6tO1jdJwbC3aajw5uP05dF9/tthLxPApymLOJxeDrQMGZdmej
-         bm7uNiOHsM+78KCQfEg2PTXWOBa7e5dmLltWCU1PeRL7qmbJiCaGC3eeFml9SyqZTweo
-         aNeHWZ3Ae9XozXCmhtoT8UDOnbHXQQpKcVPM1Cdmdc3KI4gGTYwsh8l+8ZJYYgZFIbT9
-         nD0b/w7X5g2Srml+3Z7e3G3YsRVITs6trErkixJTamo+C614pCads99LnWerBVgu6JaB
-         fFtg==
-X-Gm-Message-State: AOJu0YxUUtmzu0W9eEa9WTP8sMLIzcn/HOdTbc1bMyEueIJ4yfqtkGin
-	nGpr7BO6HKRJloCgBdniAwnWGLQFpNMwQWYRfkJE5vE7lNIHbaPYkclRI3ZOm1e/Q7fPny99ipr
-	UgJqW2w6FsJ/2VyZErzdoF/VfDzRfARAncAs=
-X-Google-Smtp-Source: AGHT+IEwo1OA6KxPy0CAUjhiGskOmuI83IElBjPWLO1eOdrzZYZmM4HlGh1IxqNufNP9rhkfR6XmVOzC6zajgZVTpRE=
-X-Received: by 2002:a0c:cb85:0:b0:68f:6df2:3b6f with SMTP id
- p5-20020a0ccb85000000b0068f6df23b6fmr3022785qvk.44.1709229494506; Thu, 29 Feb
- 2024 09:58:14 -0800 (PST)
+        bh=xUBkGGGCj9x1iJpasbP4eqTYHhmdrPu/C+/yB6IBLUU=;
+        b=plJ7jGZVB9SmZ6ZRp7TFjny+qtPgiE6KkN/sLJvNtLPvU46VLb5he0y4nosTEBQwy+
+         lVaa8e2joe5/LOq7v1Bpy4NiynLFbgWmFLirSKzmk/3jLElhUmT4CVvhxeLYCM16knOo
+         7taA3uev3dIq5Nc00UHHe8v69PAYXnj5gaLYIJavXsbYMA3xKNdDMwP0MwDlra09nFz8
+         d4lPEBovrIpfC1XDxsPZnq8In8DFdRt25v2y8m2X3qVswWnVGyYg27mBt/8Vm0vzW/7K
+         sM1yPcHkM8UIbyd9SGKpJ77C/QIny/xzm+9ShYqP+1lhOdrSyXbRojtxfOn1JXPnUU+Z
+         Y0Jw==
+X-Gm-Message-State: AOJu0YxVHnFocssvJ/zbEeNcUeb7RFqbMLFJyLa+wf0Mg7ktYqqlrW1b
+	47fAm9YF1AfY5djzYScaS3KudnSIELHwyCcbcNNQsutmz/KCS1MPttn5ogtXQBtfwSmEsHcjBb7
+	wyKHMZh2k6jB1GIf4Z2NwJUpmNaM=
+X-Google-Smtp-Source: AGHT+IFaQGlpUmSRJPq5ALkd7soYfLK64dZiUOyb/70m2nUvyaKok1rNNgZWmSWBdWk7Gu+3XRdS20sH0e0Yuem27Lg=
+X-Received: by 2002:a0c:dd92:0:b0:68f:e4a3:27ab with SMTP id
+ v18-20020a0cdd92000000b0068fe4a327abmr3180560qvk.50.1709230318233; Thu, 29
+ Feb 2024 10:11:58 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240229150442.490649-1-shejialuo@gmail.com> <20240229150442.490649-2-shejialuo@gmail.com>
-In-Reply-To: <20240229150442.490649-2-shejialuo@gmail.com>
+References: <pull.1675.git.1709209435242.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1675.git.1709209435242.gitgitgadget@gmail.com>
 From: Eric Sunshine <sunshine@sunshineco.com>
-Date: Thu, 29 Feb 2024 12:58:03 -0500
-Message-ID: <CAPig+cR2-6qONkosu7=qEQSJa_fvYuVQ0to47D5qx904zW08Eg@mail.gmail.com>
-Subject: Re: [PATCH 1/1] [GSoC][PATCH] t3070: refactor test -e command
-To: shejialuo <shejialuo@gmail.com>
-Cc: git@vger.kernel.org
+Date: Thu, 29 Feb 2024 13:11:46 -0500
+Message-ID: <CAPig+cS5L=i2dYJnc+w5F-k0nSpOjdpqyk6T0gL7i0c01A40nQ@mail.gmail.com>
+Subject: Re: [PATCH] tests: modernize the test script t0010-racy-git.sh
+To: Aryan Gupta via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, "Patrick Steinhardt [ ]" <ps@pks.im>, 
+	=?UTF-8?B?TWljaGFsIFN1Y2jDoW5layBbIF0=?= <msuchanek@suse.de>, 
+	=?UTF-8?B?SmVhbi1Ob8OrbCBBVklMQSBbIF0=?= <jn.avila@free.fr>, 
+	aryangupta701 <garyan447@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Thu, Feb 29, 2024 at 10:05=E2=80=AFAM shejialuo <shejialuo@gmail.com> wr=
-ote:
-> t3070: refactor test -e command
->
-> The "test_path_exists" function was proposed at 7e9055b. It provides
-> parameter number check and more robust error messages.
->
-> This patch converts all "test -e" into "test_path_exists" to improve
-> test debug when failure.
+On Thu, Feb 29, 2024 at 7:24=E2=80=AFAM Aryan Gupta via GitGitGadget
+<gitgitgadget@gmail.com> wrote:
+> From: aryangupta701 <garyan447@gmail.com>
 
-Thanks for providing this GSoC submission. The aim of this patch makes
-sense, but it turns out that t3070 is not a good choice for this
-exercise. Before getting into that, though, a few minor comments about
-the commit message.
+The name in the "From:" header should match the name in the
+"Signed-off-by:" trailer.
 
-This patch isn't actually refactoring the code, so using "refactor" in
-the title is misleading.
+> Modernize the formatting of the test script to align with current
+> standards and improve its overall readability.
 
-Rather than mentioning only the object-ID, we normally reference other
-commits like this (using `git log --pretty=3Dreference -1 <object-id>`):
+The aim of this patch makes sense, but the implementation isn't quite corre=
+ct.
 
-    7e9055bb00 (t7406: prefer test_* helper functions to test -[feds],
-2018-08-08)
-
-In this case, it's not clear why you chose to reference that
-particular commit over any of the others which make similar changes.
-It probably would be simpler to drop mention of that commit and just
-copy its reasoning into your commit message.
-
-Taking all the above into account, a possible rewrite of the commit
-message might be:
-
-    t3070: prefer test_path_exists helper function
-
-    test -e does not provide a nice error message when we hit test
-    failures, so use test_path_exists instead.
-
-> Signed-off-by: shejialuo <shejialuo@gmail.com>
+> Signed-off-by: Aryan Gupta <garyan447@gmail.com>
 > ---
-> diff --git a/t/t3070-wildmatch.sh b/t/t3070-wildmatch.sh
-> @@ -107,7 +107,7 @@ match_with_ls_files() {
->         if test "$match_expect" =3D 'E'
->         then
-> -               if test -e .git/created_test_file
-> +               if test_path_exists .git/created_test_file
->                 then
->                         test_expect_success EXPENSIVE_ON_WINDOWS "$match_=
-function (via ls-files): match dies on '$pattern' '$text'" "
+> diff --git a/t/t0010-racy-git.sh b/t/t0010-racy-git.sh> @@ -16,19 +16,18 =
+@@ do
+>         files=3D$(git diff-files -p)
+> -       test_expect_success \
+> -       "Racy GIT trial #$trial part A" \
+> -       'test "" !=3D "$files"'
+> +       test_expect_success 'Racy git trial #$trial part A' '
+> +               test "" !=3D "$files"
+> +       '
 
-The point of functions such as test_path_exists() is to _assert_ that
-some condition is true, thus allowing the test to succeed; if the
-condition is not true, then the function prints an error message and
-the test aborts and fails. Here is how test_path_exists() is defined:
+The variable `trial` takes on values 0-4, and that value is meant to
+appear in the test title as the script runs:
 
-    test_path_exists () {
-        test "$#" -ne 1 && BUG "1 param"
-        if ! test -e "$1"
-        then
-            echo "Path $1 doesn't exist"
-            false
-        fi
-    }
+    Racy GIT trial #0 part A
+    Racy GIT trial #0 part B
+    Racy GIT trial #1 part A
+    Racy GIT trial #1 part B
+    ...
 
-It is meant to replace noisy code such as:
+However, by changing the title from a double-quote string to a
+single-quote string, you inhibit interpolation of the `trial` variable
+into the title, hence the test titles instead show up as:
 
-    if ! test -e bloop
-    then
-        echo >&2 "error message" &&
-        exit 1
-    fi &&
-    other-code
+    Racy GIT trial #$trial part A
+    Racy GIT trial #$trial part B
+    Racy GIT trial #$trial part A
+    Racy GIT trial #$trial part B
 
-with much simpler:
+which is undesirable.
 
-    test_path_exists bloop &&
-    other-code
+So, the title should continue using double-quotes, and not be changed
+to single-quotes.
 
-It is also meant to be used within `test_expect_success` (or
-`test_expect_failure`) blocks. So, the changes made by this patch are
-undesirable for a couple reasons...
-
-First, this code is outside a `test_expect_success` (or
-`test_expect_failure`) block.
-
-Second, as noted above, test_path_exists() is an _assertion_ which
-requires the file to exist, and aborts the test if the file does not
-exist. But the `test -e` being changed here is part of the proper
-control-flow of this logic; it is not asserting anything, but merely
-branching to one or another part of the code depending upon the result
-of the `test -e` test. Thus, replacing this control-flow check with
-the assertion function test_path_exists() changes the logic in an
-undesirable way.
-
-The above comments are applicable to most of the changes made by this
-patch. The only exceptions are the last two changes...
-
-> @@ -175,7 +175,7 @@ match() {
->         test_expect_success EXPENSIVE_ON_WINDOWS 'cleanup after previous =
-file test' '
-> -               if test -e .git/created_test_file
-> +               if test_path_exists .git/created_test_file
->                 then
->                         git reset &&
-
-... which _do_ use test_path_exists() within a `test_expect_success`
-block. However, the changes are still undesirable because, as above,
-this `test -e` is merely part of the normal control-flow; it's not
-acting as an assertion, thus test_path_exists() -- which is an
-assertion -- is not correct.
-
-Unfortunately, none of the uses of`test -e` in t3070 are being used as
-assertions worthy of replacement with test_path_exists(), thus this
-isn't a good script in which to make such changes. If you reroll, you
-may be able to find a good candidate script by searching for code
-which looks something like this:
-
-    foo &&
-    test -e path &&
-    bar &&
-
-and replacing it with:
-
-    foo &&
-    test_path_exists path &&
-    bar &&
+The other change, which fixes the style of the test's body, appears correct=
+.
