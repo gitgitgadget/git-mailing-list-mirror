@@ -1,129 +1,184 @@
-Received: from mail-pf1-f175.google.com (mail-pf1-f175.google.com [209.85.210.175])
+Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01B843FB88
-	for <git@vger.kernel.org>; Fri,  1 Mar 2024 13:03:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 502164086B
+	for <git@vger.kernel.org>; Fri,  1 Mar 2024 13:20:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709298232; cv=none; b=cqsbLEkCLH+Z5iXKz5AXhqnb2eGzlTkUaDG4WFBSr17P/foxchgYEglor3A0tEgA2XwR8bL+XoYeoE/GfZCNfpaSYRxlYAtw9yl5KPnYQtqeK0AbJqZn+m8q6UCn1hmLqyDwtimQ5h4VO8rRcAhn1lcJgbIaQhNEZlNLQtz1xNw=
+	t=1709299254; cv=none; b=YAtABjyltpqzee+RmnF0u+9EaIJpzQROOHyy3EBSU93tlbupgBXv5wq3LWQS1l9b7T5Efow/y2giLJvzQ3wwlMIl4IF3Ic/pjuhd/iWSexEcEYCGmAryL9bcEUToKbDftOPDyCsv0Yikl+3KRzjswjAheQzyCopD8ECM/RGOirY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709298232; c=relaxed/simple;
-	bh=oUowxy85RRwxPbkC4XvvMr08FGJRs/7OOFo2I73cKhM=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qVMSzrWBWfiGxvXWx5gdN439vgYhH2JKDdYLI3i+MjTYURpKbRk53TM7e7NXsdPz5SCy/P9nGW4hzTOwECb45Q7gVI8yT5pg5fShWVzi91mC7rBD9bUY1MkNh+ahVS1WZtzH4YwkzvnkF3xgLPzEEg+znMYmVWrgo63T4A2KvyE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=g2GDdGfo; arc=none smtp.client-ip=209.85.210.175
+	s=arc-20240116; t=1709299254; c=relaxed/simple;
+	bh=/rnzlQZLEgcOY8lAleivHCcrRKDkPvh8IMN3YLI5REU=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=UkasvyCsRS7kbFCWl/XEiQsZ2VAFvh+4XIwYuadhbp4Vw0TMaZ32A3OdvbHkU43ut5N+KSqWVhJetmB+caT79Ov5HR2jVLebqEOBV1ipnDPqXJARyBnPKD+T+1OnnIxM9xBm51FNZBKx7enigs+VAokZeGNHE05ie816HcmoWSA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=EnrNvpkb; arc=none smtp.client-ip=209.85.128.48
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="g2GDdGfo"
-Received: by mail-pf1-f175.google.com with SMTP id d2e1a72fcca58-6e5b1c6daa3so771744b3a.1
-        for <git@vger.kernel.org>; Fri, 01 Mar 2024 05:03:50 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EnrNvpkb"
+Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-412cbf58fdeso1011385e9.3
+        for <git@vger.kernel.org>; Fri, 01 Mar 2024 05:20:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1709298230; x=1709903030; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Vj9lomUybqsoPsCplvOIj3SllzJAay2YAAliwK4iE/M=;
-        b=g2GDdGfoPrEmyvAKPt+DTVGavfN1BEn0vwgZJPiRuEJQ2gaQglujzYmXd1rp8hcAl/
-         58A1biV8/O0b3jbUNGQwetSOyRLvBSy0nzhE+nWRlKxu1C/cyTWdnP958V+95njZjHWP
-         vN1jmjx3TM9aV/OHPni5kkjBiRXxaw/Yr+piLBt7BnPqWNxbe0QxY0i8CF5B9s9iEWqM
-         WEbnIYJMWfmclOV8nTo8cmECD+d3fke9587Tmgu1jL7jeUkaqBG/BJS7+Y2nI9UEJCMF
-         f4UhsUpm1WVIj06o6eRg67RiieeiO6nzcGnNeocU9o8P4XMkA3WuT4EKnn4vgvNZTj+7
-         GN+Q==
+        d=gmail.com; s=20230601; t=1709299250; x=1709904050; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=MbCEKBceNaJlsyQaGtP4pWZ0sDsq/Lx9BPBhQaBuEUs=;
+        b=EnrNvpkbPO/t0HvJDyeNqpA+St59kRujpuNStLGudIMo2yr1gmiJbXkS4s47bO8DcR
+         JUgBZUmIb8Ld2OyIHZ1yk+RoErDHET32WJSO6I6a1JcbmP/WtgYntFVeYNcckVURwzsE
+         c7DKkuoCvDxxOQMGWaFL4y5dNzcye7Ty63MvX9Nhvw4EJ0W4kAg9mEGE4Ku2oa+CIEKO
+         sL8IyIKUMCpjIQMIobkmQSa4hRRkTr+IXPZFrbieJwRV2dVMQqOiUxCRw//y/w5iO4HE
+         p2y7AJQOMgmMRTy49fT++KQi99q3p18dYkpvAgfrCiRspYrrdnkpyNu0FP52nU5JSlWL
+         GE5w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1709298230; x=1709903030;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=Vj9lomUybqsoPsCplvOIj3SllzJAay2YAAliwK4iE/M=;
-        b=BJo08XVZH+XsPTA4ieUygVsZPqAZ3xWHMyzF2ZHuVod3rW63aumBEOtkUlXNDG4BDo
-         0Z2r+MPG8+8grzopsCbWadvGceaUCLgdpIpPtnPwrNHmemes3w2xioxwU0mYt8EqID/g
-         7ChVEgfL+dGI1eIdo+9MtFXgRDtW9Tlayua43krnl2rsHhXqEqBDEoHC9hga3fmovovh
-         SfJ4YjTdu4eGIm7wr04xYwpeCGfVlTD9oecae3kIl7lA0pRikA3pjiDNw3/pSPdvq7a3
-         SDJJTdWcaSmgAFYJnvScabanIux8Bp42TQjkSYh3/rnggKvpqTL5+C+TnonMcgTlC06C
-         jgGA==
-X-Gm-Message-State: AOJu0Yy4Ib3yI02lBB3okRymfdNUS0zdmTli+4iCF9WNqkOytRZNZJ9T
-	YGFbHWMqRBcsa3+3bwU0Zt3GX6GLMH2ksmF2PJR6ZzknEoNFBPyFsjSfArebMw7g8g==
-X-Google-Smtp-Source: AGHT+IE60CMTHNZ2S5JL77BBFzPwOe+pLkD/XVgFmPLCL2+8azVHvtL5v7yj66R6mfSOpSU1qw9SRA==
-X-Received: by 2002:a05:6a21:9994:b0:1a0:e463:fcad with SMTP id ve20-20020a056a21999400b001a0e463fcadmr1771119pzb.2.1709298229947;
-        Fri, 01 Mar 2024 05:03:49 -0800 (PST)
-Received: from ArchLinux.localdomain ([2604:5040:11:69e::e973])
-        by smtp.gmail.com with ESMTPSA id u16-20020a170902e5d000b001dcc7f470a0sm3384254plf.96.2024.03.01.05.03.46
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 01 Mar 2024 05:03:49 -0800 (PST)
-From: shejialuo <shejialuo@gmail.com>
-To: git@vger.kernel.org
-Cc: Eric Sunshine <sunshine@sunshineco.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	shejialuo <shejialuo@gmail.com>
-Subject: [PATCH v3 1/1] [PATCH] t9117: prefer test_path_* helper functions
-Date: Fri,  1 Mar 2024 21:03:34 +0800
-Message-ID: <20240301130334.135773-2-shejialuo@gmail.com>
-X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240301130334.135773-1-shejialuo@gmail.com>
-References: <20240301034606.69673-1-shejialuo@gmail.com>
- <20240301130334.135773-1-shejialuo@gmail.com>
+        d=1e100.net; s=20230601; t=1709299250; x=1709904050;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=MbCEKBceNaJlsyQaGtP4pWZ0sDsq/Lx9BPBhQaBuEUs=;
+        b=h82q7fysNkMvbNO17WVD/FKDn8pCHQzr70Vt4kUXx8jQCkCBIgrdR2UO8PBBnJ+cwF
+         YxfK7WJgES3bwsmuuvIbyjfFOcbkgsnOqysFC6I+Q8KPnhwy8jONC5OuI13/++M1pzod
+         yd6yL2bTpobwaTB59prYgezhvJW/mbQpoW0QFmE96I6A9Vv+NQTlN4fOJ2sTmoyCRK7m
+         wTuWfsWyl3Tqxb/1E90iihwJ2JZE6aARN3Nder8XF0HkGSPYFxkmFKSoGyU65tO+qC8N
+         eMYMepUu8Nf9deoxV5vbeuxpZcIswVB7iznNfdQ7af1ZEG3JZIb2kJ/fjTqkITmQ9vS3
+         wzpA==
+X-Gm-Message-State: AOJu0YySgHbWSL4LGtGl34ZcYMTwptjmlS4Cmn9A4KYyPk+RY3h7hmdP
+	DNJK4AWjlFJGxVRG1ar/g7op6Ad/LjJ9Ii+vSs1O6zV4U/l5zDVWtiWiU3MxXgU=
+X-Google-Smtp-Source: AGHT+IGoMUOGmXNBZhMmUR5zMfFyxJMxJN12Pjty77rgJjC4Ym6aVq5yXPeCGK2xLloKY7asLObV5g==
+X-Received: by 2002:a05:600c:1c07:b0:412:b818:d136 with SMTP id j7-20020a05600c1c0700b00412b818d136mr1425278wms.29.1709299250150;
+        Fri, 01 Mar 2024 05:20:50 -0800 (PST)
+Received: from [192.168.3.191] ([92.173.128.58])
+        by smtp.googlemail.com with ESMTPSA id l22-20020a05600c4f1600b004128f41a13fsm5488044wmq.38.2024.03.01.05.20.48
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 01 Mar 2024 05:20:49 -0800 (PST)
+Message-ID: <51a196c0-ea57-4ec5-99ea-c3f09cd90962@gmail.com>
+Date: Fri, 1 Mar 2024 14:20:47 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] clean: improve -n and -f implementation and documentation
+Content-Language: fr
+To: Sergey Organov <sorganov@gmail.com>, Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org
+References: <xmqq34v6gswv.fsf@gitster.g> <875xy76qe1.fsf@osv.gnss.ru>
+From: =?UTF-8?Q?Jean-No=C3=ABl_Avila?= <avila.jn@gmail.com>
+In-Reply-To: <875xy76qe1.fsf@osv.gnss.ru>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-test -(e|f) does not provide a nice error message when we hit test
-failures, so use test_path_exists, test_path_is_dir instead.
+Putting my documentation/translator hat:
 
-Signed-off-by: shejialuo <shejialuo@gmail.com>
----
- t/t9117-git-svn-init-clone.sh | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+Le 29/02/2024 à 20:07, Sergey Organov a écrit :
+> What -n actually does in addition to its documented behavior is
+> ignoring of configuration variable clean.requireForce, that makes
+> sense provided -n prevents files removal anyway.
+> 
+> So, first, document this in the manual, and then modify implementation
+> to make this more explicit in the code.
+> 
+> Improved implementation also stops to share single internal variable
+> 'force' between command-line -f option and configuration variable
+> clean.requireForce, resulting in more clear logic.
+> 
+> The error messages now do not mention -n as well, as it seems
+> unnecessary and does not reflect clarified implementation.
+> 
+> Signed-off-by: Sergey Organov <sorganov@gmail.com>
+> ---
+>  Documentation/git-clean.txt |  2 ++
+>  builtin/clean.c             | 26 +++++++++++++-------------
+>  2 files changed, 15 insertions(+), 13 deletions(-)
+> 
+> diff --git a/Documentation/git-clean.txt b/Documentation/git-clean.txt
+> index 69331e3f05a1..662eebb85207 100644
+> --- a/Documentation/git-clean.txt
+> +++ b/Documentation/git-clean.txt
+> @@ -49,6 +49,8 @@ OPTIONS
+>  -n::
+>  --dry-run::
+>  	Don't actually remove anything, just show what would be done.
+> +	Configuration variable clean.requireForce is ignored, as
+> +	nothing will be deleted anyway.
 
-diff --git a/t/t9117-git-svn-init-clone.sh b/t/t9117-git-svn-init-clone.sh
-index 62de819a44..3b038c338f 100755
---- a/t/t9117-git-svn-init-clone.sh
-+++ b/t/t9117-git-svn-init-clone.sh
-@@ -17,32 +17,32 @@ test_expect_success 'setup svnrepo' '
- test_expect_success 'basic clone' '
- 	test ! -d trunk &&
- 	git svn clone "$svnrepo"/project/trunk &&
--	test -d trunk/.git/svn &&
--	test -e trunk/foo &&
-+	test_path_is_dir trunk/.git/svn &&
-+	test_path_exists trunk/foo &&
- 	rm -rf trunk
- 	'
- 
- test_expect_success 'clone to target directory' '
- 	test ! -d target &&
- 	git svn clone "$svnrepo"/project/trunk target &&
--	test -d target/.git/svn &&
--	test -e target/foo &&
-+	test_path_is_dir target/.git/svn &&
-+	test_path_exists target/foo &&
- 	rm -rf target
- 	'
- 
- test_expect_success 'clone with --stdlayout' '
- 	test ! -d project &&
- 	git svn clone -s "$svnrepo"/project &&
--	test -d project/.git/svn &&
--	test -e project/foo &&
-+	test_path_is_dir project/.git/svn &&
-+	test_path_exists project/foo &&
- 	rm -rf project
- 	'
- 
- test_expect_success 'clone to target directory with --stdlayout' '
- 	test ! -d target &&
- 	git svn clone -s "$svnrepo"/project target &&
--	test -d target/.git/svn &&
--	test -e target/foo &&
-+	test_path_is_dir target/.git/svn &&
-+	test_path_exists target/foo &&
- 	rm -rf target
- 	'
- 
--- 
-2.44.0
+Please use backticks for options, configuration and environment names:
+`clean.requireForce`
+>  
+>  -q::
+>  --quiet::
+> diff --git a/builtin/clean.c b/builtin/clean.c
+> index d90766cad3a0..fcc50d08ee9b 100644
+> --- a/builtin/clean.c
+> +++ b/builtin/clean.c
+> @@ -25,7 +25,7 @@
+>  #include "help.h"
+>  #include "prompt.h"
+>  
+> -static int force = -1; /* unset */
+> +static int require_force = -1; /* unset */
+>  static int interactive;
+>  static struct string_list del_list = STRING_LIST_INIT_DUP;
+>  static unsigned int colopts;
+> @@ -128,7 +128,7 @@ static int git_clean_config(const char *var, const char *value,
+>  	}
+>  
+>  	if (!strcmp(var, "clean.requireforce")) {
+> -		force = !git_config_bool(var, value);
+> +		require_force = git_config_bool(var, value);
+>  		return 0;
+>  	}
+>  
+> @@ -920,7 +920,7 @@ int cmd_clean(int argc, const char **argv, const char *prefix)
+>  {
+>  	int i, res;
+>  	int dry_run = 0, remove_directories = 0, quiet = 0, ignored = 0;
+> -	int ignored_only = 0, config_set = 0, errors = 0, gone = 1;
+> +	int ignored_only = 0, force = 0, errors = 0, gone = 1;
+>  	int rm_flags = REMOVE_DIR_KEEP_NESTED_GIT;
+>  	struct strbuf abs_path = STRBUF_INIT;
+>  	struct dir_struct dir = DIR_INIT;
+> @@ -946,21 +946,21 @@ int cmd_clean(int argc, const char **argv, const char *prefix)
+>  	};
+>  
+>  	git_config(git_clean_config, NULL);
+> -	if (force < 0)
+> -		force = 0;
+> -	else
+> -		config_set = 1;
+>  
+>  	argc = parse_options(argc, argv, prefix, options, builtin_clean_usage,
+>  			     0);
+>  
+> -	if (!interactive && !dry_run && !force) {
+> -		if (config_set)
+> -			die(_("clean.requireForce set to true and neither -i, -n, nor -f given; "
+> +	/* Dry run won't remove anything, so requiring force makes no sense */
+> +	if(dry_run)
+> +		require_force = 0;
+> +
+> +	if (!force && !interactive) {
+> +		if (require_force > 0)
+> +			die(_("clean.requireForce set to true and neither -f, nor -i given; "
+> +				  "refusing to clean"));
+> +		else if (require_force < 0)
+> +			die(_("clean.requireForce defaults to true and neither -f, nor -i given; "
+>  				  "refusing to clean"));
+> -		else
+> -			die(_("clean.requireForce defaults to true and neither -i, -n, nor -f given;"
+> -				  " refusing to clean"));
+>  	}
+>  
+
+The last two cases can be coalesced into a single case (the last one),
+because the difference in the messages does not bring more information
+to the user.
+
+
+
+>  	if (force > 1)
+> 
+> base-commit: 0f9d4d28b7e6021b7e6db192b7bf47bd3a0d0d1d
 
