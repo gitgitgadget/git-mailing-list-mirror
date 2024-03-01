@@ -1,94 +1,103 @@
-Received: from mail-pf1-f172.google.com (mail-pf1-f172.google.com [209.85.210.172])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout1-smtp.messagingengine.com (fout1-smtp.messagingengine.com [103.168.172.144])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 862BD3D65
-	for <git@vger.kernel.org>; Fri,  1 Mar 2024 14:39:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E12F470CA8
+	for <git@vger.kernel.org>; Fri,  1 Mar 2024 15:30:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709303972; cv=none; b=dOFmcKqHIGjHUJjhaYUmjsB2BDqpGveQD8hotTxHuIlBYUkH9OSiSua2N2ADE9tBGLxqHwJoG4Rkgh7denxfMqVHG/lacq4ia63umlWfLkAxqZSsrVsd/kMAmgNVJMk50vD/++8nzLc3NYxDlh+aYcXD2vilrnlLtmCMnXdSMYA=
+	t=1709307003; cv=none; b=U+4/Hqz/08lYtxXB6DmUznDW9XHRh+zc1ECfYPVm9TFmRmk7hKTiF5miXThTLv9fTC4KkHMfuLL7URNjsIsFcSe55dsWnDM2xneqTGGshEWp4t8Ma8fUB+rxttlowNZlFcmAG/yMRbk7EOzvgsknxqzdcK828UO/8QKff6zh7rs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709303972; c=relaxed/simple;
-	bh=4wCka2LbW6Zbk2mA64rSVsK5AUNOA6N0AXFjkBd3aWo=;
-	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
-	 References:In-Reply-To; b=tSwtyBkfzYkUqVwhl5sGEvheANpG7G8fT2OUG4bvE98jghC4HILoK8ESIrsPfbRZUYnWF/FWv/UGmZBPc0Pxb+KlBAM7iNnuKzacJEtH2vlcPafwhKK4ItQZNRofyQQUCo7b/4e3olk8gMLuKbZZ1rtBzSZ7eX/6w4akrrFbowk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jU1Fqm3c; arc=none smtp.client-ip=209.85.210.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1709307003; c=relaxed/simple;
+	bh=ArQ+ykASy33OulG8GLvu9eS7hu0DkpKiEpT734OZudo=;
+	h=MIME-Version:Message-Id:In-Reply-To:References:Date:From:To:Cc:
+	 Subject:Content-Type; b=l69PB8XjE1WNLxBTNWfcgI5W+xi/+F4PJXcrEu5WCvOpK5BPqwClmP5KtFovhMYutmB3V6l9nKJs2RrJzlBAKLJYa0iKIegxlv1BEdidH4Sbl4VVHGpQkBNwidjvcKz1SGoF9FyXTnwCESnbEr8HVB2954ZLVvSkCjNIwtb5q2E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=khaugsbakk.name; spf=pass smtp.mailfrom=khaugsbakk.name; dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b=OgE4cQyK; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=VCUnNrja; arc=none smtp.client-ip=103.168.172.144
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=khaugsbakk.name
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=khaugsbakk.name
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jU1Fqm3c"
-Received: by mail-pf1-f172.google.com with SMTP id d2e1a72fcca58-6e558a67f70so2135250b3a.0
-        for <git@vger.kernel.org>; Fri, 01 Mar 2024 06:39:30 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1709303970; x=1709908770; darn=vger.kernel.org;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-transfer-encoding:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=4wCka2LbW6Zbk2mA64rSVsK5AUNOA6N0AXFjkBd3aWo=;
-        b=jU1Fqm3cwhfz0iGfMRAmTcHm59XAv10Ce0wCtcgAVGnUVXkNBidA7ke0z4F9pYcChw
-         oltF6ruUV2UbkvZgUplxSxunXT1yWDvzpmU7aVP9eDsot5frjH9NzE3GK0xTSLhOewJc
-         fXuIH2uvkrXvNaG6PmrUe5WG28D6H158UHiX5Xqr//9IE8wXYZQqI107gh0UIugNnACa
-         H7UNv3RynV586nfmc7pYEcfuWN1wAhS4CVSZS28ut2j1uQn48n+8EfUxce6kk9Cy4I7f
-         r16Jf66F78TeSMURdutv+C3/xDjD/j/q6i/VMOpF/2/OlSagVALvWZNSWS24puukxsXU
-         cKVg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1709303970; x=1709908770;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=4wCka2LbW6Zbk2mA64rSVsK5AUNOA6N0AXFjkBd3aWo=;
-        b=ib1YdbZxkbgfCCtMBXQD6EVE8J5Dxpxm13BlYQpl4N/gvI+/3UygZmDZLfiQKSP+LE
-         aLwr0U3r0gqQQ1wHZQWPe1UWwce4qwJvZIe8Ubvem7sZLJUjECI54z8uxIn62otr+p5G
-         U3FUAGsQfxjaWswEOk0oVNSj2TgCYgqqGjzpl1ofmh/iIsxfxM3X3jAdT0pXz7acXTzT
-         pPKAOATiu+thb4S2azT61LywzgsucNgwJ4dolMKNkV/4NtelSg6CvqRpdau8JGGSQCg+
-         H5B2Dz+IPKCeIgbAGZ+ElvOnZATIdk5lL3kam7XXBL6PmI1HfApRNEG+ZXYJe8VKW7k5
-         ds5A==
-X-Forwarded-Encrypted: i=1; AJvYcCXEz1EHZJRO8OYuNyFjBrdhEoA9UlfLDIVhIFxSvXC3ID2Y2QvsdGRAktchOrvys+krtLgsef9rdptuw1hTuOPGv556
-X-Gm-Message-State: AOJu0Ywq/gnjGEQcX2ssI+GADrqzjHR8cu0qecmtTyb/IMkce7mjh0pt
-	AfQACm49yBoxybyBkoUck9L8KBgzTgx36pCsgp7TpnbpKpjVvOoG
-X-Google-Smtp-Source: AGHT+IGhh6UigQMPGUi2XXtW0bs8okptlSYcMioF121ZeJQkyZw6oD1++7L7pLB8E7sFH2oQPs64jg==
-X-Received: by 2002:a05:6a20:244a:b0:1a0:f096:4ece with SMTP id t10-20020a056a20244a00b001a0f0964ecemr1991596pzc.2.1709303970166;
-        Fri, 01 Mar 2024 06:39:30 -0800 (PST)
-Received: from localhost ([14.139.110.146])
-        by smtp.gmail.com with ESMTPSA id c17-20020aa78c11000000b006e5dc1b4866sm35822pfd.144.2024.03.01.06.39.27
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 01 Mar 2024 06:39:29 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b="OgE4cQyK";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="VCUnNrja"
+Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
+	by mailfout.nyi.internal (Postfix) with ESMTP id C70CE13800D2;
+	Fri,  1 Mar 2024 10:29:59 -0500 (EST)
+Received: from imap49 ([10.202.2.99])
+  by compute1.internal (MEProxy); Fri, 01 Mar 2024 10:29:59 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=khaugsbakk.name;
+	 h=cc:cc:content-transfer-encoding:content-type:content-type
+	:date:date:from:from:in-reply-to:in-reply-to:message-id
+	:mime-version:references:reply-to:subject:subject:to:to; s=fm3;
+	 t=1709306999; x=1709393399; bh=ArQ+ykASy33OulG8GLvu9eS7hu0DkpKi
+	EpT734OZudo=; b=OgE4cQyKC4iD6dYP3q8QIzvE6g5G7xD0PFEQYAI8uxmqzvNt
+	nXpY58vFCcAvpvp6uqxqXo4a0cUz+FIhsAVyAWxRXZOtBfI0nFjCeDOoA7H0tySW
+	K72BHwMrjVEhAPU9CRHsxCwSmJmF9Hqc7SKVnYGF0yEWUfCN/LjpFcDIykxtzRSM
+	fATR+me7zg29NYDlGrKXmS7V3nMwCtozLhP+2dpy6czOTciR5JupcDUrQIxJ4XFJ
+	KY6p4mF00WUQEZeFaQdGTm1mb3fO2Ri/yVcOhFKokWnGS/xcaIRIbG04nlIYFGGa
+	bwSzGLgbZcQyYlRqCjsG/7/VYqSOWKSjuIaoqQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1709306999; x=
+	1709393399; bh=ArQ+ykASy33OulG8GLvu9eS7hu0DkpKiEpT734OZudo=; b=V
+	CUnNrjaUEBo432Q5VCFVGP+Fc26OCwjXrK49fVBjNBiZAmoKs69xwFZVei6gh/95
+	VAcF8W3RNufPs2mJtMZFisqygMXjlbQU1eRk2CZVqGtI5SaooliWLahX6ooYFJhU
+	wKlxHTIGAZdBcIW1qOdt8kO54yWDLmdfk/eAwjctXFylZ/j23eHAwdcR1lmHmizl
+	uff1rIOLzfJHnVpueWEP7W1d8E3CfIzz6dY7FmC8YlezM1tnEOGlba0INkrtJC3K
+	gjLBHtvL5rgIHnhIPo6hSbDt/HCMzQYM62EPQSBSZbdVu1GpFWq/pvUIp/W4vpGR
+	L8krrjkKHwOOpc8Y5j6zg==
+X-ME-Sender: <xms:d_ThZfusTuETPHzMss0C9a-vfTN563RDbdgG8d3P6K3lmyqCshfLdqc>
+    <xme:d_ThZQdFQwehdCngOxfJ8p3FWrMc_TfzYj1OmzuvkCXFkbCi-rceOjwu36XAVLvmC
+    pJj2yD4bNST_SeQ_w>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrhedugdejiecutefuodetggdotefrodftvf
+    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
+    uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
+    fjughrpefofgggkfgjfhffhffvvefutgfgsehtqhertderreejnecuhfhrohhmpedfmfhr
+    ihhsthhofhhfvghrucfjrghughhssggrkhhkfdcuoegtohguvgeskhhhrghughhssggrkh
+    hkrdhnrghmvgeqnecuggftrfgrthhtvghrnhepvdevheeiudefheffvdetueevkeehhfel
+    iefgkedtieefudetueehueeftefffedunecuvehluhhsthgvrhfuihiivgeptdenucfrrg
+    hrrghmpehmrghilhhfrhhomheptghouggvsehkhhgruhhgshgsrghkkhdrnhgrmhgv
+X-ME-Proxy: <xmx:d_ThZSwGfTNPtllyLUurLs47loj7n-JZynRkmJZbCM-hcpUFhzuw3A>
+    <xmx:d_ThZeOUOl1dS23DKV2fHTdCfIGLSQv6Me6KoD4uU5bBlJMhkC5BVA>
+    <xmx:d_ThZf8aPaufzz1BaQmqlfDIFJY0E_4FugvzFT_jWVYMLRQy4VzNdw>
+    <xmx:d_ThZSZy4qP9K2u_cB0QjhWiAUCjEQs24IRVRhKan6yFwLpKJcjSFQ>
+Feedback-ID: i2671468f:Fastmail
+Received: by mailuser.nyi.internal (Postfix, from userid 501)
+	id 5C40715A0092; Fri,  1 Mar 2024 10:29:59 -0500 (EST)
+X-Mailer: MessagingEngine.com Webmail Interface
+User-Agent: Cyrus-JMAP/3.11.0-alpha0-205-g4dbcac4545-fm-20240301.001-g4dbcac45
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
+MIME-Version: 1.0
+Message-Id: <86ce3c89-4a58-42bf-a31a-96fa6b74e937@app.fastmail.com>
+In-Reply-To: <87frxam35f.fsf@osv.gnss.ru>
+References: <xmqq34v6gswv.fsf@gitster.g> <875xy76qe1.fsf@osv.gnss.ru>
+ <51a196c0-ea57-4ec5-99ea-c3f09cd90962@gmail.com> <87frxam35f.fsf@osv.gnss.ru>
+Date: Fri, 01 Mar 2024 16:29:38 +0100
+From: "Kristoffer Haugsbakk" <code@khaugsbakk.name>
+To: "Sergey Organov" <sorganov@gmail.com>
+Cc: "Junio C Hamano" <gitster@pobox.com>, git@vger.kernel.org,
+ =?UTF-8?Q?Jean-No=C3=ABl_Avila?= <avila.jn@gmail.com>
+Subject: Re: [PATCH] clean: improve -n and -f implementation and documentation
+Content-Type: text/plain;charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Fri, 01 Mar 2024 20:09:25 +0530
-Message-Id: <CZIHOPD4IVXH.32HVLZ4K0YNXY@gmail.com>
-Cc: "Kristoffer Haugsbakk" <code@khaugsbakk.name>, "Junio C Hamano"
- <gitster@pobox.com>
-Subject: Re: [PATCH v3] build: support z/OS (OS/390).
-From: "Ghanshyam Thakkar" <shyamthakkar001@gmail.com>
-To: "Haritha D" <Harithamma.D@ibm.com>, "git@vger.kernel.org"
- <git@vger.kernel.org>
-X-Mailer: aerc 0.15.2
-References: <pull.1663.v2.git.git.1708660111.gitgitgadget@gmail.com>
- <pull.1663.v3.git.git.1708841439516.gitgitgadget@gmail.com>
- <xmqq7circevo.fsf@gitster.g> <B3775704-6FCE-4994-8682-309D521FD2CB@ibm.com>
-In-Reply-To: <B3775704-6FCE-4994-8682-309D521FD2CB@ibm.com>
 
-On Fri Mar 1, 2024 at 2:39 PM IST, Haritha D wrote:
-> Hi Team,
+On Fri, Mar 1, 2024, at 15:34, Sergey Organov wrote:
+>> Please use backticks for options, configuration and environment names:
+>> `clean.requireForce`
 >
-> The win test(7) test case failed stating the reason as "The Operation can=
-celled". I saw that it failed after 5 hours 59 minutes of running the test =
-cases(build). How do I handle this?
->
-> Please suggest.
+> I did consider this. However, existing text already has exactly this o=
+ne
+> unquoted, so I just did the same. Hopefully it will be fixed altogether
+> later, or are you positive I better resend the patch with quotes?
 
-Hey,
+Sometimes I see widespread changes (like formatting many files) get
+rejected because it is considered _churn_. Not fixing this in this
+series and then maybe someone else fixing it later seems like churn as
+well. Isn=E2=80=99t it better to fix it while you are changing the text?
 
-This seems to be a recurring issue, as this happens to me majority
-of the time. Seems as though the vm just sits idle after finishing tests
-as 360 minutes is the timeout for github acitons.
-
-Usually, rerunning the failed tests from the actions tab works for me.
-
-Thanks.
+--=20
+Kristoffer Haugsbakk
