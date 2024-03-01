@@ -1,111 +1,107 @@
-Received: from mail-oa1-f42.google.com (mail-oa1-f42.google.com [209.85.160.42])
+Received: from mail-ot1-f53.google.com (mail-ot1-f53.google.com [209.85.210.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C94B5811C
-	for <git@vger.kernel.org>; Fri,  1 Mar 2024 10:54:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C24FE4438E
+	for <git@vger.kernel.org>; Fri,  1 Mar 2024 11:29:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709290481; cv=none; b=sr5NdEEksvfdaqKzLSGPCrtVLE1b9GNWtk1Xzxi7ES7T3rlX5tznDomMbhqJlFtjCBJOa6GJXBd7kilLgDCl33gNao0Mn4+e4H36c5Y8PCFT78ZPsqzDwzBW8HFwhp7oRjdOiKwfWQbz0JCl1RMDfwk9TU+oBj/YuxMcbSZGspI=
+	t=1709292564; cv=none; b=Zy5quCDXQtDpDzzAABDfMDSNOXOapIqeejz1NKYKozB3vNjIeUVSyjeHNLwjvc9lSnnm2YiTmN2gTaZjPL/WmXm7JjXPwmMw9ms+N9spnYNkUSs5pTSmt1NP3wcMWyOtxDG/euiLJO49v4O9a1S3jN0Dodwpwt+8vsZST1TSx+8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709290481; c=relaxed/simple;
-	bh=c4A+OmXAxiX4w6l//Hi+JxycdOOXb8oV/DO5wa7cUeU=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Content-Type; b=JXMDAvjm4ck5HKwImX33+COe9M0o4audjr2355w2AKj7JPo+pDK7hVMYGZhfs820N2MwDfP8wZso8/bTAaONAIMAWI9wHuOnlxGyjDmL5yW9DoYBqzbZfDlo+q940XA0KC2zHA+kb/BIiKNO8nbfyg3/wqGc4ylrG6dM5470KmA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=GcT2mwpn; arc=none smtp.client-ip=209.85.160.42
+	s=arc-20240116; t=1709292564; c=relaxed/simple;
+	bh=IJGJjgHDViZCSOte61jfeLsQVTBOkcz/pr+cHGDqsjY=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=qSH2c6kL23bllStAWYv6v1jEPgWKrTj58LbrgLoN29wTHbTEEESXZ0uedr+Zlvk9iagnm54MHbufJfIAdsuhMAq6ZcE99yZB/1qMiaC+DocZl7ryEz6uqPRq9ltxkl0JLVcARKU6C5ylOrEYiNreJ86HNOKI17ivVsSgsGve3kA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=k8MPZlMs; arc=none smtp.client-ip=209.85.210.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GcT2mwpn"
-Received: by mail-oa1-f42.google.com with SMTP id 586e51a60fabf-220461b7597so1072594fac.3
-        for <git@vger.kernel.org>; Fri, 01 Mar 2024 02:54:39 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="k8MPZlMs"
+Received: by mail-ot1-f53.google.com with SMTP id 46e09a7af769-6e49812ba77so956049a34.2
+        for <git@vger.kernel.org>; Fri, 01 Mar 2024 03:29:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1709290478; x=1709895278; darn=vger.kernel.org;
-        h=to:subject:message-id:date:mime-version:references:in-reply-to:from
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=oO+Uu/USUY+vMd11CgWiZ8wTVXRILKwPvqkXMfJ+Br8=;
-        b=GcT2mwpnq4Pwiyi27WzXVWuojMkUT2P0P9JP7GSYOWtn3QptSEMJRiXhP6IsiFung3
-         hInMnvHsWuJ4kYR25F+pM7eH9IJwiV4kSk5gkJS0WAvocd/RG+NZ9442v0bIXY8v0yEr
-         JVMVih8XNdMxShccjffvxL0yRzmhBO2YowSVKhPNxutpy0yNadz350FRNreQ3K/B69O2
-         wSStDwJFrE/AHZejJbt3O+QeVuPhMhMlrsbcYIJAkIIF1/l5HQR+fMZtxPRRpIXfpS1M
-         UGVi8y1lCf8kazCfGySBaLR1GDlniHz5Ao5So6llLp/rPsH17UmJZKxg9kggFeV8WVOK
-         KuQA==
+        d=gmail.com; s=20230601; t=1709292562; x=1709897362; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=fD2X4vp3J2G3WQtU1MZ4uy/HRKdGej6XLVaJlx4sAtI=;
+        b=k8MPZlMslxJPEvfsX6odTqA9RWzqpbW1CRDW/pIEjsXqbSB5rVy/JoAe6AV/apnMMo
+         j5tHkBv0isXT4t23Ygk9HFLrGesogJ0eUgTA8p8QcmKsV0iDaSxsh5NyXo8//HS2BQld
+         pE2mxadTSEdGuncXwriVmkfZol5J5ASOfzTeQF7tCAEbdF6v8/kH6HZ+GZjXcdpOOtXc
+         XzTxA11TS+yPyKH9eljnd9RF5oE3ZhATWhZ2Q9YY8ddOA7Y7/PdVUO+uzyLX2GV7iU3w
+         77Vvj14pB5bA0n3kF2u7hmTOcnbyxA139AGuNz9KGGFqlpqT7qY0NnPTQs0BhK+j44il
+         MXig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1709290478; x=1709895278;
-        h=to:subject:message-id:date:mime-version:references:in-reply-to:from
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=oO+Uu/USUY+vMd11CgWiZ8wTVXRILKwPvqkXMfJ+Br8=;
-        b=RoVDOYmjPI/MejtWOH28rGlfuaeOiQr6aeyG5r8gViXKWURdND5UYPOtPSRn/4br5R
-         /aBE5zkeMf2Ia0Ycxj+J/DCw6R0hyXB2VlJnkDpn1XGxy2OuPIMqwAiXomLbsKrEH9nO
-         DSUqhQen/oQkxdHBEB43WTkKrUpkXov8Sv9CJmi4JUfwo7wa3hAMidOLSb9rfN+dxV7y
-         FKomEQo2L23Ohi4HOvbXtoaW0lyG+XksKB6iP+RKjzqhK6LwxbvucAE08b8CKgh+xTcN
-         oz44TR/n99IdyRMuxEZ5t6Wk8sJUPe3vvFLmwrFYpUsJIpiHpE/EJN+rp/g9CbsBv8zc
-         MZvA==
-X-Forwarded-Encrypted: i=1; AJvYcCX07/ANjXGGOzlV1WUoYoHFJavVQ1xbyxffDtx6fBtnljHgV32ncvKpAQgX/x630tGIRVbzNA1I2ed6yL0EFgig0dxJ
-X-Gm-Message-State: AOJu0YzaBlRfsA6k0wuNH5ggtn1kvWm/Y9oet8xU8O8w2Myr+Zz9ZdKc
-	HEAcg4ZN896VhpCrEv0ZLX0V4nRKDDJYLAjv7K3I8/jYUQKDYvL39ypXhRFNcMoP8DwoXFlnkZs
-	tsI+vpd8yq+y27GYutTddgVoWgFn6G+JaBYI=
-X-Google-Smtp-Source: AGHT+IHBnEEHasqjUBtG63YPC6jjLtNIWD160BlRGp8yrCw/Ttj2ZeRX3szgr/VKbms7lgoEdFsy7XWiMgy7ldySmR8=
-X-Received: by 2002:a05:6871:5311:b0:220:6da1:8a38 with SMTP id
- hx17-20020a056871531100b002206da18a38mr1551818oac.7.1709290478368; Fri, 01
- Mar 2024 02:54:38 -0800 (PST)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Fri, 1 Mar 2024 02:54:37 -0800
-From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <xmqqjzmpm9b8.fsf@gitster.g>
-References: <xmqqjzmpm9b8.fsf@gitster.g>
+        d=1e100.net; s=20230601; t=1709292562; x=1709897362;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=fD2X4vp3J2G3WQtU1MZ4uy/HRKdGej6XLVaJlx4sAtI=;
+        b=rg7xnavdy+IyfrVTcx8MCTfQ/cPGcIc2/7ot+xhN7m9ds9b0h06Q4e7DTwzirtMHPm
+         gcTlOxMGzKXyhNMW8EFnX+InBP8eCU2cFQWMlq3Vc7QRhw0loVdvTGOWLEo0siCcihof
+         WcaveiDmGDPOyoI1jhw9+HSu5KkR8hscGvUkx61EBpDddsKnS2KqfGsfnveI15U14Clj
+         6BZpSfI3EMOqtBEFqp0Xw6f/PChJMQTvF0oiWQ+DIg7Z64sJu1r1Gl+SKA0k8OxGWiKN
+         vqGBDvH3hrVeC3Ixz6SSLAFrPCaNFCs9Vq9lWG7gTflSYL+T5DnqDwY/Dy1Rc/fO9qW5
+         nmmg==
+X-Gm-Message-State: AOJu0YzKJPzvRYO9BbyDSfLSZzbYKsXDxneS/asO4x5wJpipBvOzm1hY
+	ogQy3CbfGJkITNQETLkADJwf7ZZH9+SeqQq06TE+KPNDxxOEF0TX
+X-Google-Smtp-Source: AGHT+IGMcSEtHKhv5kIaxxeqRumTgrtjjSndTgKZmJF4OJsQFbKdgDkv3gRQvmlDBRZ7cC8diRx1Yg==
+X-Received: by 2002:a05:6808:f0e:b0:3c1:81ad:f45f with SMTP id m14-20020a0568080f0e00b003c181adf45fmr1629708oiw.28.1709292561818;
+        Fri, 01 Mar 2024 03:29:21 -0800 (PST)
+Received: from ArchLinux.localdomain ([2604:5040:11:69e::e973])
+        by smtp.gmail.com with ESMTPSA id d23-20020aa78697000000b006e484e13454sm2750395pfo.32.2024.03.01.03.29.18
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 01 Mar 2024 03:29:21 -0800 (PST)
+From: shejialuo <shejialuo@gmail.com>
+To: Eric Sunshine <sunshine@sunshineco.com>
+Cc: git@vger.kernel.org,
+	Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/1] t9117: prefer test_path_* helper functions
+Date: Fri,  1 Mar 2024 19:29:14 +0800
+Message-ID: <20240301112914.121184-1-shejialuo@gmail.com>
+X-Mailer: git-send-email 2.44.0
+In-Reply-To: <CAPig+cRfO8t1tdCL6MB4b9XopF3HkZ==hU83AFZ38b-2zsXDjQ@mail.gmail.com>
+References: <CAPig+cRfO8t1tdCL6MB4b9XopF3HkZ==hU83AFZ38b-2zsXDjQ@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Fri, 1 Mar 2024 02:54:37 -0800
-Message-ID: <CAOLa=ZQAxGFDrBmq0+Q77YcfT4hBivRu9oOGZF-r81F49P+00Q@mail.gmail.com>
-Subject: Re: What's cooking in git.git (Feb 2024, #09; Tue, 27)
-To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Content-Type: multipart/mixed; boundary="000000000000c80e0d061297333e"
+Content-Transfer-Encoding: 8bit
 
---000000000000c80e0d061297333e
-Content-Type: text/plain; charset="UTF-8"
+Thanks for your comment.
 
-Junio C Hamano <gitster@pobox.com> writes:
-> * kn/for-all-refs (2024-02-23) 6 commits
->   (merged to 'next' on 2024-02-27 at aef2406cca)
->  + for-each-ref: add new option to include root refs
->  + ref-filter: rename 'FILTER_REFS_ALL' to 'FILTER_REFS_REGULAR'
->  + refs: introduce `refs_for_each_include_root_refs()`
->  + refs: extract out `loose_fill_ref_dir_regular_file()`
->  + refs: introduce `is_pseudoref()` and `is_headref()`
->  + Merge branch 'ps/reftable-backend' into kn/for-all-refs
+> Although you make the test pass by using `!` to invert the result of
+> `test_path_is_dir`, the complaint will nevertheless get lodged, and
+> may very well be confusing for anyone scrutinizing the output of the
+> tests when running the script with `-v` or `-x`.
+
+I have run the script with `-v`, I have got the following result:
+
+  Directory trunk doesn't exist
+
+I come to realisize the fault with your dedicated comments. An assertion
+is an assertion.
+
+And I am impressed by the following idea:
+
+> Rather than asserting some initial condition at the start of the test,
+> it is more common and more robust simply to _ensure_ that the desired
+> initial condition holds. So, for instance, instead of asserting `test
+> ! -d target`, modern practice is to ensure that `target` doesn't
+> exist. Thus:
 >
->  "git for-each-ref" filters its output with prefixes given from the
->  command line, but it did not honor an empty string to mean "pass
->  everything", which has been corrected.
+>    test_expect_success 'clone to target directory' '
+>        rm -rf target &&
+>        git svn clone "$svnrepo"/project/trunk target &&
+>        ...
 >
->  Will merge to 'master'.
->  source: <20240223100112.44127-1-karthik.188@gmail.com>
+> is a more robust implementation. This also addresses the problem that
+> the `rm -rf target` at the very end of each test won't be executed if
+> any command earlier in the test fails (due to the short-circuiting
+> behavior of the &&-operator).
 
-Thanks, the description here needs to be modified since we moved from
-the `an empty string to mean "pass everything"` to providing the
-`--include-root-refs` option.
+The command `rm -rf target` ensures an exit status of 0 regardless of
+whether the `target` exists. Thus the code will elegant make sure the
+initial condition holds. I think I could add a patch to clean the code.
 
---000000000000c80e0d061297333e
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: 586a566d99f995de_0.1
-
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1YaHMrZ1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mMUZYQy80NlRNRG5oWkZERVRTRGtFNmNrcnVjYnIxWgoxTVRiN2oyWFk3
-Y0xGNWJFZG9ZcVlhQ2JhMk1lVGQ1ZFFHNFRPbjNjT0lSMWQybnphd081RmZlbnIrWE5nYTlLCm1S
-THlDaTNjRkIrRHptUWE3NXY5RzlZTyt4WGYwOFpaVEpvRi8vWERCcHJsWlM5Tm1ST3dNZ3Ewc2dK
-ZlFwUUcKUVRKdlNPR2FmdmgyMktLVFdOUHpEdWNvcHhtNVFkdzhKa3kvZnpBVXVoOUVrKzRjNGoy
-VGFIaGU5VkhoY1BxSwprelZpQ1o2WmFOVHQ3WmZTZkEzSkRFS1NsSTlSa1ZGYzhjd0dqVmMxNHM4
-YjFzWHJSSXU0akp0YnQyeUZPSGtICkxVbWN2OFM4alh4K3owN0ZjQW1ORzh2bWxsOTEzdFI3SHpL
-cjZEanJaSWRlVHM1Q2VCbnY3Um9Wbkx5NGZDRGgKZE5COGFtaDdwclZieXVVbUtUUXFpa1JyWS93
-ZTNrZjBrWkhsTmtJazJ2ZFhGNWQ0Z3NYRjJpU0tDTFQ2Z2lwRQorSEdzRXhrdzVIaThXeHdCTWp6
-UVIyWlFLZHYvOTdkTVlnTTk3ZjJSc1BYeTZkVEVzT1dWSkNyZWJobnUzNjAxCnhUL1BPTUg1TS9O
-M1o3ZjJCb2ZuOUN4OUlQOGZ1TXpCazRSQ3lBdz0KPU5ycnkKLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---000000000000c80e0d061297333e--
