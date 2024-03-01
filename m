@@ -1,205 +1,153 @@
-Received: from mail-pl1-f174.google.com (mail-pl1-f174.google.com [209.85.214.174])
+Received: from mail-qt1-f169.google.com (mail-qt1-f169.google.com [209.85.160.169])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E698D16FF42
-	for <git@vger.kernel.org>; Fri,  1 Mar 2024 03:46:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B156F51026
+	for <git@vger.kernel.org>; Fri,  1 Mar 2024 04:45:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709264799; cv=none; b=jqcUTPs4Ds+k1frS101Jys013MoCz+hEQ+uYHEwP2M7hkBhSxsSc61bDBxQnuZHz+S7nNX37Q1wTZmeJPhV1Bgch2JbqxWhJKzDMWpbvj+bhikWrpJy8oUhHGaCHIIdNRC2BnpJD8jgHteYmOJq/NT5HpCSImF/Dic+CPd3PpqQ=
+	t=1709268309; cv=none; b=s9drKtEyZZ6tsLPIo1STuAjIHum3xOXytoHtp9oghuDPLuBKrwq+Ooyt/yOSauECHR+/Bkbz2DnXrAt9LyiPr87utaxdeiVYOEJFxSM9XjYhPPnh2ndznF0wlqFfV8/ddGNSoSik+q55C7k0PyWukRgJPmteKoEEzkAmkmum+pA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709264799; c=relaxed/simple;
-	bh=zjRjpbpAeyc13S4Zpikk+fEow/AjJdR/NEZ/FCDy4Gg=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ev/GheJGrbTrqvU04pm5RSIj3iOkroq9qcjUSMVlI9ySFruOKrfaGmTajjiSi+c9wOmo2wN0HEpv62aFUFPLe26R1aWSdFKz4T4P22+5uipEUOMjKV4McyZHXyt2l2P1MJr2Ot8Ai8XEa7IUi05j/QSpufXDKxN9qKAN4PKzx/Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=D3/NWrAh; arc=none smtp.client-ip=209.85.214.174
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+	s=arc-20240116; t=1709268309; c=relaxed/simple;
+	bh=gdLYZ9cJj3oX1B9+nGAlkIs6/oe9RW5AaOtlt9iHYv4=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=FePXGqHEjXimF/R7xbtf8LnHLEZ3tft36TDEKYWDyCrlB5yOujnGiT2hdKDrPTV81aOpwBAsW6LdsY9G+qScJcQz2VS1D1MIL7ToAUXhcydBGY3SjtXpQBOT0lsqn9A2GFXZYSRuQ5s7XgUVmCl9ycpx91i/2VDh1BpPhpY0yiY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.160.169
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="D3/NWrAh"
-Received: by mail-pl1-f174.google.com with SMTP id d9443c01a7336-1dc1ff58fe4so14568405ad.1
-        for <git@vger.kernel.org>; Thu, 29 Feb 2024 19:46:37 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1709264796; x=1709869596; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Dpj4+SM9n+M27HcJliDgtNHjvlQrenBQgETipBmOgsg=;
-        b=D3/NWrAhV+orMzXCAXbz/UP/vg+mXwvo/jhn6U+2eFq4Eds3OXhsBOs0KSYKa3aOBD
-         knJnqPbDGDLhbrqBJStINKnfetx/HYuCgWMD3oi1/06U4GMaW0OlO8PUpbD9BaVQ77tu
-         Ga/IPH7UY/gDCczLQ9yxUwKEE6eidN1gu7AYhUHi8zKQU/aUCvGJM79173NB1hiCp1Jg
-         BWqLtSNJWo0aMUtQ4NX4n8ByNJGAGBch4MGLEOxWHbYZ//AOc02Y3nmlwUA7nYRNpr4O
-         i2hEeXrt6+JaEqS+HIIK2n5ItdAflLeSZZiL+mpn1vPvYMNyqr5QWQoxvxlqmw0V7Qve
-         AU8Q==
+Received: by mail-qt1-f169.google.com with SMTP id d75a77b69052e-42e5e1643adso10315871cf.3
+        for <git@vger.kernel.org>; Thu, 29 Feb 2024 20:45:06 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1709264796; x=1709869596;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+        d=1e100.net; s=20230601; t=1709268305; x=1709873105;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=Dpj4+SM9n+M27HcJliDgtNHjvlQrenBQgETipBmOgsg=;
-        b=AhOS6/XwybIWzDUhayZR8OhuDk/1DS7eCmkjh/gp3Whm2e+DPai889e70wmD1qgJW3
-         W6CS/O7Vvi3pZP/IhWI24bcUXePk2roC7TId9Q4LBs35PP+wTeQF3zJB6d/9yY4l8bPs
-         z5MpncDLCly6UJ/76xZnd6K8vr+Es/CFIo1w5ur1dmFgwA2j8pI4Br0AfkuWS2g9CyYR
-         Idv789Do5oDhOaFpuLUrgIORtOJR/v7yITyVpNL9nMce237TDs+gFSE4wMYbkF82Lj1C
-         iFF38p6xbJpO7zco61KOw89OWtTJgRYlOZASOYEbQ0tWSEYuNB95BXHw/Y7NhRPrKdgC
-         MOGw==
-X-Gm-Message-State: AOJu0Yy12edJ2qYe4PaPoPpZ8P2oLvt46hW0hJ1T+N8Qi34/7klztFjK
-	4ELcvNB0Xe2nDFQXjWclMLmUld8lMxcJ+q0YLnCEnx/HbJJbehT9qXF1QC6OFY8eVQ==
-X-Google-Smtp-Source: AGHT+IFWJMCffeskj95WQa29P4+QgScUQ6bGctiDAwhzwWjmAFRamq44vHcoJH/lxvr51RtEDZZA0w==
-X-Received: by 2002:a17:902:f54f:b0:1db:f696:b09 with SMTP id h15-20020a170902f54f00b001dbf6960b09mr587323plf.14.1709264796350;
-        Thu, 29 Feb 2024 19:46:36 -0800 (PST)
-Received: from ArchLinux.vdiclient.nvidia.com ([2604:5040:11:69e::e973])
-        by smtp.gmail.com with ESMTPSA id t5-20020a170902dcc500b001d949393c50sm2295746pll.187.2024.02.29.19.46.32
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 29 Feb 2024 19:46:35 -0800 (PST)
-From: shejialuo <shejialuo@gmail.com>
-To: git@vger.kernel.org
-Cc: Eric Sunshine <sunshine@sunshineco.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	shejialuo <shejialuo@gmail.com>
-Subject: [PATCH 1/1] t9117: prefer test_path_* helper functions
-Date: Fri,  1 Mar 2024 11:46:06 +0800
-Message-ID: <20240301034606.69673-2-shejialuo@gmail.com>
-X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240301034606.69673-1-shejialuo@gmail.com>
-References: <20240229150442.490649-1-shejialuo@gmail.com>
- <20240301034606.69673-1-shejialuo@gmail.com>
+        bh=16zA1qGrdtio9Ij79rTW0Jx13haEK63/rhn9lv5UBgA=;
+        b=jM4UBV0m0lG6HmvSTbe9wr2XtZ9V8dZ2JwMEf1srVnABXuEjXtlybltiMvTvmSYKXI
+         vk1InTJs4yF17NB5sLokhZ77WKZxuIJU4NFyOnrtV3fGLeZ/qCfRzd+uTjNXEmsaY/XH
+         xfjiifccsxTm+uYxsQhevNg9C/iYvZFODnweKoEIRBWJTicb/mcBJdig3rPYd0fpLLe2
+         Ts9x3sGftPjCBkCyeVupbeSsNqAiCoTmi4ExyNwlF+NS59Hsv+tId8K2eEar1PhEiIna
+         OeIfA1ZM1mKB20k7uGQ5DCILbmlgNWfwm2a+Y6GD6lKQoZP5yy0vc/E2uf9PWhTICVAF
+         0GoA==
+X-Gm-Message-State: AOJu0YxvG2OouHiGM8Tdp9BsQwCBBacOFDWA7l32frJ373Bgc1i5f7qL
+	3wc1aUIihWBZencrausjE1QKV5F6wfgxILBtspLbOxNuOq11SBN83FIlypTdLf8K3jH/fBkmkQd
+	L0Goy2XsEcocKPPBOXYt9+s6+uNw=
+X-Google-Smtp-Source: AGHT+IEy3nVBJCuh1UbYS29u/shY/HBZ+8yzhcuLD6JjMQohrewmq57/hs3QR5cJ0hQ92PKrJNvDZ9Ixg+6HkaaNZ5w=
+X-Received: by 2002:a05:622a:11d4:b0:42e:7a6e:825e with SMTP id
+ n20-20020a05622a11d400b0042e7a6e825emr649825qtk.61.1709268305585; Thu, 29 Feb
+ 2024 20:45:05 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20240229150442.490649-1-shejialuo@gmail.com> <20240301034606.69673-1-shejialuo@gmail.com>
+ <20240301034606.69673-2-shejialuo@gmail.com>
+In-Reply-To: <20240301034606.69673-2-shejialuo@gmail.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Date: Thu, 29 Feb 2024 23:44:53 -0500
+Message-ID: <CAPig+cRfO8t1tdCL6MB4b9XopF3HkZ==hU83AFZ38b-2zsXDjQ@mail.gmail.com>
+Subject: Re: [PATCH 1/1] t9117: prefer test_path_* helper functions
+To: shejialuo <shejialuo@gmail.com>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-test -(e|f|d) does not provide a nice error message when we hit test
-failures, so use test_path_exists, test_path_is_dir and
-test_path_is_file instead.
+On Thu, Feb 29, 2024 at 10:46=E2=80=AFPM shejialuo <shejialuo@gmail.com> wr=
+ote:
+> test -(e|f|d) does not provide a nice error message when we hit test
+> failures, so use test_path_exists, test_path_is_dir and
+> test_path_is_file instead.
 
-Signed-off-by: shejialuo <shejialuo@gmail.com>
----
- t/t9117-git-svn-init-clone.sh | 40 +++++++++++++++++------------------
- 1 file changed, 20 insertions(+), 20 deletions(-)
+Thanks for rerolling. t9117 is indeed a better choice[1] than t3070
+for the exercise of replacing `test -blah` with `test_path_foo`.
 
-diff --git a/t/t9117-git-svn-init-clone.sh b/t/t9117-git-svn-init-clone.sh
-index 62de819a44..2f964f66aa 100755
---- a/t/t9117-git-svn-init-clone.sh
-+++ b/t/t9117-git-svn-init-clone.sh
-@@ -15,39 +15,39 @@ test_expect_success 'setup svnrepo' '
- 	'
- 
- test_expect_success 'basic clone' '
--	test ! -d trunk &&
-+	! test_path_is_dir trunk &&
- 	git svn clone "$svnrepo"/project/trunk &&
--	test -d trunk/.git/svn &&
--	test -e trunk/foo &&
-+	test_path_is_dir trunk/.git/svn &&
-+	test_path_exists trunk/foo &&
- 	rm -rf trunk
- 	'
- 
- test_expect_success 'clone to target directory' '
--	test ! -d target &&
-+	! test_path_is_dir target &&
- 	git svn clone "$svnrepo"/project/trunk target &&
--	test -d target/.git/svn &&
--	test -e target/foo &&
-+	test_path_is_dir target/.git/svn &&
-+	test_path_exists target/foo &&
- 	rm -rf target
- 	'
- 
- test_expect_success 'clone with --stdlayout' '
--	test ! -d project &&
-+	! test_path_is_dir project &&
- 	git svn clone -s "$svnrepo"/project &&
--	test -d project/.git/svn &&
--	test -e project/foo &&
-+	test_path_is_dir project/.git/svn &&
-+	test_path_exists project/foo &&
- 	rm -rf project
- 	'
- 
- test_expect_success 'clone to target directory with --stdlayout' '
--	test ! -d target &&
-+	! test_path_is_dir target &&
- 	git svn clone -s "$svnrepo"/project target &&
--	test -d target/.git/svn &&
--	test -e target/foo &&
-+	test_path_is_dir target/.git/svn &&
-+	test_path_exists target/foo &&
- 	rm -rf target
- 	'
- 
- test_expect_success 'init without -s/-T/-b/-t does not warn' '
--	test ! -d trunk &&
-+	! test_path_is_dir trunk &&
- 	git svn init "$svnrepo"/project/trunk trunk 2>warning &&
- 	! grep -q prefix warning &&
- 	rm -rf trunk &&
-@@ -55,7 +55,7 @@ test_expect_success 'init without -s/-T/-b/-t does not warn' '
- 	'
- 
- test_expect_success 'clone without -s/-T/-b/-t does not warn' '
--	test ! -d trunk &&
-+	! test_path_is_dir trunk &&
- 	git svn clone "$svnrepo"/project/trunk 2>warning &&
- 	! grep -q prefix warning &&
- 	rm -rf trunk &&
-@@ -69,7 +69,7 @@ project/trunk:refs/remotes/${prefix}trunk
- project/branches/*:refs/remotes/${prefix}*
- project/tags/*:refs/remotes/${prefix}tags/*
- EOF
--	test ! -f actual &&
-+	! test_path_is_file actual &&
- 	git --git-dir=project/.git config svn-remote.svn.fetch >>actual &&
- 	git --git-dir=project/.git config svn-remote.svn.branches >>actual &&
- 	git --git-dir=project/.git config svn-remote.svn.tags >>actual &&
-@@ -78,7 +78,7 @@ EOF
- }
- 
- test_expect_success 'init with -s/-T/-b/-t assumes --prefix=origin/' '
--	test ! -d project &&
-+	! test_path_is_dir project &&
- 	git svn init -s "$svnrepo"/project project 2>warning &&
- 	! grep -q prefix warning &&
- 	test_svn_configured_prefix "origin/" &&
-@@ -87,7 +87,7 @@ test_expect_success 'init with -s/-T/-b/-t assumes --prefix=origin/' '
- 	'
- 
- test_expect_success 'clone with -s/-T/-b/-t assumes --prefix=origin/' '
--	test ! -d project &&
-+	! test_path_is_dir project &&
- 	git svn clone -s "$svnrepo"/project 2>warning &&
- 	! grep -q prefix warning &&
- 	test_svn_configured_prefix "origin/" &&
-@@ -96,7 +96,7 @@ test_expect_success 'clone with -s/-T/-b/-t assumes --prefix=origin/' '
- 	'
- 
- test_expect_success 'init with -s/-T/-b/-t and --prefix "" still works' '
--	test ! -d project &&
-+	! test_path_is_dir project &&
- 	git svn init -s "$svnrepo"/project project --prefix "" 2>warning &&
- 	! grep -q prefix warning &&
- 	test_svn_configured_prefix "" &&
-@@ -105,7 +105,7 @@ test_expect_success 'init with -s/-T/-b/-t and --prefix "" still works' '
- 	'
- 
- test_expect_success 'clone with -s/-T/-b/-t and --prefix "" still works' '
--	test ! -d project &&
-+	! test_path_is_dir project &&
- 	git svn clone -s "$svnrepo"/project --prefix "" 2>warning &&
- 	! grep -q prefix warning &&
- 	test_svn_configured_prefix "" &&
-@@ -114,7 +114,7 @@ test_expect_success 'clone with -s/-T/-b/-t and --prefix "" still works' '
- 	'
- 
- test_expect_success 'init with -T as a full url works' '
--	test ! -d project &&
-+	! test_path_is_dir project &&
- 	git svn init -T "$svnrepo"/project/trunk project &&
- 	rm -rf project
- 	'
--- 
-2.44.0
+[1]: https://lore.kernel.org/git/CAPig+cR2-6qONkosu7=3DqEQSJa_fvYuVQ0to47D5=
+qx904zW08Eg@mail.gmail.com/
 
+> Signed-off-by: shejialuo <shejialuo@gmail.com>
+> ---
+> diff --git a/t/t9117-git-svn-init-clone.sh b/t/t9117-git-svn-init-clone.s=
+h
+> @@ -15,39 +15,39 @@ test_expect_success 'setup svnrepo' '
+>  test_expect_success 'basic clone' '
+> -       test ! -d trunk &&
+> +       ! test_path_is_dir trunk &&
+
+Generally speaking, you don't want to use `!` to negate the result of
+a `path_is_foo` assertion function. To understand why, take a look at
+the definition of `test_path_is_dir`:
+
+    test_path_is_dir () {
+        if ! test -d "$1"
+        then
+            echo "Directory $1 doesn't exist"
+            false
+        fi
+    }
+
+The test in question (t9117: "basic clone") is using `test ! -d` to
+assert that the directory `trunk` does not yet exist when the test
+begins; indeed, under normal circumstances, this directory should not
+yet be present. However, the call to test_path_is_dir() asserts that
+the directory _does_ exist, which is the opposite of `test ! -d`, and
+complains ("Directory trunk doesn't exist") when it doesn't exist. So,
+in the normal and typical case for all the tests in this script,
+`test_path_is_dir` is going to be complaining even though the
+non-existence of that directory is an expected condition.
+
+Although you make the test pass by using `!` to invert the result of
+`test_path_is_dir`, the complaint will nevertheless get lodged, and
+may very well be confusing for anyone scrutinizing the output of the
+tests when running the script with `-v` or `-x`.
+
+So, `test_path_is_dir` is not a good fit for this case which wants to
+assert that the path `trunk` does not yet exist. A better choice for
+this particular case would be `test_path_is_missing`.
+
+>         git svn clone "$svnrepo"/project/trunk &&
+> -       test -d trunk/.git/svn &&
+> -       test -e trunk/foo &&
+> +       test_path_is_dir trunk/.git/svn &&
+> +       test_path_exists trunk/foo &&
+
+These two changes make sense and the intent directly corresponds to
+the original code.
+
+>  test_expect_success 'clone to target directory' '
+> -       test ! -d target &&
+> +       ! test_path_is_dir target &&
+>         git svn clone "$svnrepo"/project/trunk target &&
+> -       test -d target/.git/svn &&
+> -       test -e target/foo &&
+> +       test_path_is_dir target/.git/svn &&
+> +       test_path_exists target/foo &&
+>         rm -rf target
+>         '
+
+What follows is probably beyond the scope of your GSoC microproject,
+but there is a bit more of interest to note about these tests.
+
+Rather than asserting some initial condition at the start of the test,
+it is more common and more robust simply to _ensure_ that the desired
+initial condition holds. So, for instance, instead of asserting `test
+! -d target`, modern practice is to ensure that `target` doesn't
+exist. Thus:
+
+    test_expect_success 'clone to target directory' '
+        rm -rf target &&
+        git svn clone "$svnrepo"/project/trunk target &&
+        ...
+
+is a more robust implementation. This also addresses the problem that
+the `rm -rf target` at the very end of each test won't be executed if
+any command earlier in the test fails (due to the short-circuiting
+behavior of the &&-operator).
+
+As noted, this type of cleanup is probably overkill for your GSoC
+microproject so you need not tackle it. I mention it only for
+completeness. Also, if someone does tackle such a cleanup, it should
+be done as multiple patches, each making one distinct change (i.e. one
+patch dropping `test !-d` and moving `rm -rf` to the start of the
+test, and one which employs `test_path_foo` for the remaining `test
+-blah` invocations).
