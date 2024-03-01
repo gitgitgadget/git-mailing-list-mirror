@@ -1,179 +1,91 @@
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C0652D792
-	for <git@vger.kernel.org>; Fri,  1 Mar 2024 05:09:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DA64692FE
+	for <git@vger.kernel.org>; Fri,  1 Mar 2024 06:56:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709269795; cv=none; b=Vg9cxVQ4x4UmurAbtB4zwAoMILO49Mt6CffGmSObLZePtzagP6NQU9mV07u3hbhqFxJIGEX7utjZw0j35DkS9d6w0mnp+0ovQ4D6o5PDotumtJjQnOcyHjG+kQ7recol1h8CcwWXDKKGw6JieoxTNTvEHwr2cG63U27u/lS7v/I=
+	t=1709276219; cv=none; b=MogZiIRng4XKadq4NeUBJRIT28OPoWsfyhCof6a7CLr2sE8k6fw6xInyZC1bl0QwGeqrdXzzM9zJnhkxbi7ALnHzhkhAmqGqNJac+AYIx7vmfpF05nxm1kZvU6ZkLI5mruyFBSgwrOaiHhd4ePCuMwGgEafdPscvP75xlDDleBs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709269795; c=relaxed/simple;
-	bh=yJSSLo9aZ7INsc2W/y4QyuHwKJv3KkkPvYLLoZ76gRE=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=OrDvdB+NlNMdFJI+yxFmOO4Vkogn/iaGqgeKr4qoaZ8f3KVjqmcizkJ1CTQpx8hhKkT622Yi5fKtiYo9ugm4H0nr3/rKlgFE64gNOk2kqALMZMNc5rJWzMT15OrbcbHkYRdkZEoQvk/oRCmeGi5mj0SNRU3VlzMAW+iHlydl0zE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=WNRROH5h; arc=none smtp.client-ip=173.228.157.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="WNRROH5h"
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 989BD19A8C;
-	Fri,  1 Mar 2024 00:09:53 -0500 (EST)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=yJSSLo9aZ7INsc2W/y4QyuHwKJv3KkkPvYLLoZ
-	76gRE=; b=WNRROH5h+opQBkA71Q+YCFGcvuDDo5ZBjoU6JhFKFbHHIcgFoPkrIE
-	ZL+aCTJpd06UJElq/cMNfk6o6GlDJpI5moydfa5dEw26UvytixBWj52M8Ri+0F7M
-	avoe4u2WjkRQdDqZIvkwqsfZQ+Zk/uur8sHQjX7pnOkHifPsnvCI8=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 9148619A8B;
-	Fri,  1 Mar 2024 00:09:53 -0500 (EST)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.176.30])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 2F7ED19A89;
-	Fri,  1 Mar 2024 00:09:50 -0500 (EST)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: shejialuo <shejialuo@gmail.com>
-Cc: git@vger.kernel.org,  Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH 1/1] t9117: prefer test_path_* helper functions
-In-Reply-To: <20240301034606.69673-2-shejialuo@gmail.com>
-	(shejialuo@gmail.com's message of "Fri, 1 Mar 2024 11:46:06 +0800")
-References: <20240229150442.490649-1-shejialuo@gmail.com>
-	<20240301034606.69673-1-shejialuo@gmail.com>
-	<20240301034606.69673-2-shejialuo@gmail.com>
-Date: Thu, 29 Feb 2024 21:09:48 -0800
-Message-ID: <xmqqwmqm8rmr.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	s=arc-20240116; t=1709276219; c=relaxed/simple;
+	bh=M3Dz1UsGf0N4d8wrDMazsEpHO5j3ALPH4aHwHmOJOuY=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=b962poSmFKoTGXixieXez7Udi1kNGiXgGjEqpa9/mK1aAZIk2wPgknaa5rEi0nHRRJbV4Lq5sCv0y9GFemdFb3SXVfe9vb+H5JNI5xRY2+JCeQNrMjrHSbfK83bOiUS91o8mA+1O6KJU9W8inHDQf3pdn+ANOjqK0zSQpHaCGe4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+Received: (qmail 1982 invoked by uid 109); 1 Mar 2024 06:56:50 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 01 Mar 2024 06:56:50 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 9725 invoked by uid 111); 1 Mar 2024 06:56:52 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 01 Mar 2024 01:56:52 -0500
+Authentication-Results: peff.net; auth=none
+Date: Fri, 1 Mar 2024 01:56:47 -0500
+From: Jeff King <peff@peff.net>
+To: Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>,
+	Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH v2 03/11] Start reporting missing commits in
+ `repo_in_merge_bases_many()`
+Message-ID: <20240301065647.GA2680308@coredump.intra.peff.net>
+References: <pull.1657.git.1707813709.gitgitgadget@gmail.com>
+ <pull.1657.v2.git.1708608110.gitgitgadget@gmail.com>
+ <4dd214f91d4783f29b03908cc0034156253889a7.1708608110.git.gitgitgadget@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- EE3679CE-D789-11EE-840B-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <4dd214f91d4783f29b03908cc0034156253889a7.1708608110.git.gitgitgadget@gmail.com>
 
-shejialuo <shejialuo@gmail.com> writes:
+On Thu, Feb 22, 2024 at 01:21:42PM +0000, Johannes Schindelin via GitGitGadget wrote:
 
->  test_expect_success 'basic clone' '
-> -	test ! -d trunk &&
-> +	! test_path_is_dir trunk &&
+> @@ -1402,6 +1436,8 @@ static int merge_mode_and_contents(struct merge_options *opt,
+>  							&o->oid,
+>  							&a->oid,
+>  							&b->oid);
+> +			if (result->clean < 0)
+> +				return -1;
 
-This is not quite right.  Step back and think why we are trying to
-use the test_path_* helpers instead of "test [!] -d".  What are the
-differences between them?
+Coverity flagged this code as NO_EFFECT. The issue is that result->clean
+is an unsigned single-bit boolean, so it can never be negative. If we
+expand the context a bit, it's
 
-The answer is that, unlike "test [!] -d dir" that is silent whether
-"dir" exists or missing, "test_path_is_dir dir" is *not* always
-silent.  It gives useful messages as necessary.  When does it do so?
+                        result->clean = merge_submodule(opt, &result->blob.oid,
+                                                        o->path,
+                                                        &o->oid,
+                                                        &a->oid,
+                                                        &b->oid);
+                        if (result->clean < 0)
+                                return -1;
 
-Here is the definition, from t/test-lib-functions.sh around line
-930:
+So it's possible there's also a problem in the existing assignment, as a
+negative return from merge_submodule() would be truncated. But from my
+read of it, it will always return either 0 or 1 (if it sees errors from
+repo_in_merge_bases(), for example, it will output an error message and
+return 0).
 
-        test_path_is_dir () {
-                test "$#" -ne 1 && BUG "1 param"
-                if ! test -d "$1"
-                then
-                        echo "Directory $1 doesn't exist"
-                        false
-                fi
-        }
+So I think we'd want either:
 
-It succeeds silently when "test -d dir" is true, but it complains
-loudly when "test -d dir" does not hold.  You will be told that the
-test is unhappy because "dir" does not exist.  That would be easier
-to debug than one step among many in &&-chain silently fails.
+  1. Drop this hunk, and let result->clean stay as a pure boolean.
 
-Now, let's look at the original you rewrote again:
+  2. Propagate errors from merge_submodule() using -1, in which case the
+     code needs to be more like:
 
-> -	test ! -d trunk &&
+       int ret = merge_submodule(...);
+       if (ret < 0)
+               return -1;
+       result->clean = !!ret;
 
-It says "it is a failure if 'trunk' exists as a directory".  If
-'trunk' does not exist, it is a very happy state for us.  So instead
-of silently failing when 'trunk' exists as a directory, you would
-want to improve it so that you will get a complaint in such a case,
-saying "trunk should *not* exist but it does".
+I didn't follow the series closely enough to know which would be better.
+I guess alternatively it could be a tri-state that carries the error
+around (it looks like it is in ort's "struct merge_result"), but that
+probably means auditing all of the spots that look at "clean" to see
+what they would do with a negative value.
 
-Did you succeed to do so with this rewrite?
-
-> +	! test_path_is_dir trunk &&
-
-The helper "test_path_is_dir" is called with "trunk".  As we saw, we
-will see complaint when "trunk" does *NOT* exist.  When "trunk" does
-exist, it will be silent and "test_path_is_dir" will return a success,
-which will be inverted with "!" to make it a failure, causing &&-chain
-to fail.
-
-So the exit status is not wrong, but it issues a complaint under the
-wrong condition.  That is not an improvement.
-
-Let's step back one more time.  Is the original test happy when
-"trunk" existed as a regular file?  "test ! -d trunk" says so, but
-should it really be?  Think.
-
-I suspect that the test is not happy as long as 'trunk' exists,
-whether it is a directory or a regular file or a symbolic link.
-IOW, it says "I am unhappy if 'trunk' is a directory", but what it
-really meant to say was "I am unhappy if there is anything at the
-path 'trunk'".  IOW, "test ! -e trunk" would be what it really
-meant, no?
-
-So the correct rewrite for it would rather be something like
-
-	test_path_is_missing trunk &&
-
-instead.  This will fail if anything is at path 'trunk', with an
-error message saying there shouldn't be anything but there is.
-
-In a peculiar case, which I do not think this one is, a test may
-legitimately accept "path" to either (1) exist as long as it is not
-a directory, or (2) be missing, as success.  In such a case, the
-original construct '! test -d path" (or "test ! -d path") would be
-appropriate.
-
-But I do not think we have a suitable wrapper to express such a
-case, i.e. we do not have a helper like this.
-
-	test_path_is_not_dir () {
-		if test -d "$1"
-		then
-			echo "$1 is a directory but it should not be"
-			false
-		fi
-	}
-
-If such a use case were common, we might even do this:
-
-	# "test_path_is_dir <dir>" expects <dir> to be a directory.
-	# "test_path_is_dir ! <dir>"  expects <dir> not to be a
-	# directory.
-	# In either case, complain only when the expectation is not met.
-	test_path_is_dir () {
-		if test "$1" = "!"
-		then
-			shift
-                        if test -d "$1"
-			then
-				echo "$1 is a directory but it should not be"
-				return 1
-			fi
-		else
-			if test ! -d "$1"
-			then
-				echo "$1 is not a directory"
-				return 1
-			fi
-		fi
-		true
-	}
-
-but "we are happy even if path exists as long as it is not a
-directory" is a very uncommon thing we want to say in our tests, so
-that is why we do not have such a helper function.
-
-HTH.
+-Peff
