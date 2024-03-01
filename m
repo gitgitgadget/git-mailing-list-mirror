@@ -1,206 +1,94 @@
-Received: from mail-lj1-f176.google.com (mail-lj1-f176.google.com [209.85.208.176])
+Received: from mail-pf1-f172.google.com (mail-pf1-f172.google.com [209.85.210.172])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2651717D5
-	for <git@vger.kernel.org>; Fri,  1 Mar 2024 14:34:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 862BD3D65
+	for <git@vger.kernel.org>; Fri,  1 Mar 2024 14:39:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709303697; cv=none; b=Umxaq9LH2RfPMlObFuTHlXI/8fPBJBwAmzdk70+NuDVIwl6C59saUd9B6ZeFelcuQxceH7qNOlV2cYcRHKSdR3koERTDIjvr1H77YZU3CLKCKbEBDCFt3zZ/73FSaW944zCY8lsZxSBqvFnGYCzJmJUS1Ymg09IHxoMLgEmhGKM=
+	t=1709303972; cv=none; b=dOFmcKqHIGjHUJjhaYUmjsB2BDqpGveQD8hotTxHuIlBYUkH9OSiSua2N2ADE9tBGLxqHwJoG4Rkgh7denxfMqVHG/lacq4ia63umlWfLkAxqZSsrVsd/kMAmgNVJMk50vD/++8nzLc3NYxDlh+aYcXD2vilrnlLtmCMnXdSMYA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709303697; c=relaxed/simple;
-	bh=PekHqWCBFAX9HwiY0rmyGFIggsYeapDeJ+Hy4FeZjnA=;
-	h=From:To:Cc:Subject:References:Date:In-Reply-To:Message-ID:
-	 MIME-Version:Content-Type; b=EdwgxFkfsDuc3QWzPellvOxOavOzGbDF6TS9AnYf3//e9Dw0SGdRtgJZJrcfB9SuK7RiV9QrgW8iCULEL8NiRdBR9CitKuACIOnj83AHny7AVAmPRQRG5cqPtEwP7UimGL2ZqioC5l0nCkFypFrJHIpvHFDIB4NNKAvlMWKId5A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dwXXW7z2; arc=none smtp.client-ip=209.85.208.176
+	s=arc-20240116; t=1709303972; c=relaxed/simple;
+	bh=4wCka2LbW6Zbk2mA64rSVsK5AUNOA6N0AXFjkBd3aWo=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
+	 References:In-Reply-To; b=tSwtyBkfzYkUqVwhl5sGEvheANpG7G8fT2OUG4bvE98jghC4HILoK8ESIrsPfbRZUYnWF/FWv/UGmZBPc0Pxb+KlBAM7iNnuKzacJEtH2vlcPafwhKK4ItQZNRofyQQUCo7b/4e3olk8gMLuKbZZ1rtBzSZ7eX/6w4akrrFbowk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jU1Fqm3c; arc=none smtp.client-ip=209.85.210.172
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dwXXW7z2"
-Received: by mail-lj1-f176.google.com with SMTP id 38308e7fff4ca-2d09cf00214so24884391fa.0
-        for <git@vger.kernel.org>; Fri, 01 Mar 2024 06:34:55 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jU1Fqm3c"
+Received: by mail-pf1-f172.google.com with SMTP id d2e1a72fcca58-6e558a67f70so2135250b3a.0
+        for <git@vger.kernel.org>; Fri, 01 Mar 2024 06:39:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1709303694; x=1709908494; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:user-agent:message-id
-         :in-reply-to:date:references:subject:cc:to:from:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=BmMOpTTzqqX2vXbzNzJ4qEDg5Pk4aNNbR043HmV/rd4=;
-        b=dwXXW7z2CwW2hQNdtKDELhapFvVWw9s1mbs55QjvNiOmqF6QzA7xKG7a/L83c8FnYM
-         e9awtFfDgJ2oqxoG2ONhDLRIIWLlOICWG4Kvg3zen6AwNvN15zGgyB00ToefAxGAzsnF
-         ieoYgDqWhOoEa/8c93TVZWhG3wwhO2so0SNN+Y+QJ1/AYQ+pOpCm4AKmp+zFW3O6G+ZG
-         wNOQNuo7Ivo2BF7pnNofkxWePwZ2sJOljAO5+UV2+xSUtXeDrM3yvezH6KbvHGI6tgLi
-         d30ruI4uKyJ3BP1cm4NzsKK3EDgOQ5ENfZjEwcIgZGwpXv3jajEVJ1p+HalVIWZxDHwm
-         mNhw==
+        d=gmail.com; s=20230601; t=1709303970; x=1709908770; darn=vger.kernel.org;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-transfer-encoding:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=4wCka2LbW6Zbk2mA64rSVsK5AUNOA6N0AXFjkBd3aWo=;
+        b=jU1Fqm3cwhfz0iGfMRAmTcHm59XAv10Ce0wCtcgAVGnUVXkNBidA7ke0z4F9pYcChw
+         oltF6ruUV2UbkvZgUplxSxunXT1yWDvzpmU7aVP9eDsot5frjH9NzE3GK0xTSLhOewJc
+         fXuIH2uvkrXvNaG6PmrUe5WG28D6H158UHiX5Xqr//9IE8wXYZQqI107gh0UIugNnACa
+         H7UNv3RynV586nfmc7pYEcfuWN1wAhS4CVSZS28ut2j1uQn48n+8EfUxce6kk9Cy4I7f
+         r16Jf66F78TeSMURdutv+C3/xDjD/j/q6i/VMOpF/2/OlSagVALvWZNSWS24puukxsXU
+         cKVg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1709303694; x=1709908494;
-        h=content-transfer-encoding:mime-version:user-agent:message-id
-         :in-reply-to:date:references:subject:cc:to:from:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=BmMOpTTzqqX2vXbzNzJ4qEDg5Pk4aNNbR043HmV/rd4=;
-        b=TCodtSVZHw567IjgHVPO7b3tPXYodVkNFTPefa8Ok8l/ZEpb8Hr4hhyy0rPe/MmL6Z
-         YqgNUpFaNyA9bOF/kJKycuKsFP30NyogGB39IrAzLQSxKhd3Mq0wAdGmtW6MXgkikrHy
-         o7YEzSLpvf8f6FFIrrCpXMdpZ5aGQ0jo3LgGZ9A3zmwykDm1qu0kLZ60YTielAKSuBDg
-         a+Tl58H7mAnSQpmXVwXP9xWifnKD38dznx+UScwiH+sJ/X07oxt2d59pCzExaOreAYDw
-         ybVpcDcM2SLkmB3artnSNw+lCoN+TWOaxGgXdoo86dJwcASCgeH13Z02Tm8lODQH5Orx
-         J9gA==
-X-Forwarded-Encrypted: i=1; AJvYcCWo2Rt2HLHYHM8NteC5n3zbERmY8bvSnbyW7uRFfEJBWYTRnDyIM+GR7somzCwdOFPFuBtK6l+ZwZ7dKtV0HjGYqLJi
-X-Gm-Message-State: AOJu0Ywn3bgIQFbbU1pufnzJsqx4FqHwoVTeJl6zQDNNFRELHEjE6wqX
-	c9iOkRBDMe9tyO+CnmUrngwbScCb0e7z6MlGrrgiYXodKfrwDV3VjRd1+Szd
-X-Google-Smtp-Source: AGHT+IEtU0BD7snLlPjwZTqphd9UMbcwWPWBFDkAGCgrtnQToQczQezJli1FVOY33WZaBZNE7o031w==
-X-Received: by 2002:a19:f703:0:b0:513:2be5:1fca with SMTP id z3-20020a19f703000000b005132be51fcamr1536384lfe.29.1709303693518;
-        Fri, 01 Mar 2024 06:34:53 -0800 (PST)
-Received: from osv.localdomain ([89.175.180.246])
-        by smtp.gmail.com with ESMTPSA id t30-20020a192d5e000000b00512ed6cd31esm657018lft.85.2024.03.01.06.34.52
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 01 Mar 2024 06:34:53 -0800 (PST)
-From: Sergey Organov <sorganov@gmail.com>
-To: =?utf-8?Q?Jean-No=C3=ABl?= Avila <avila.jn@gmail.com>
-Cc: Junio C Hamano <gitster@pobox.com>,  git@vger.kernel.org
-Subject: Re: [PATCH] clean: improve -n and -f implementation and documentation
-References: <xmqq34v6gswv.fsf@gitster.g> <875xy76qe1.fsf@osv.gnss.ru>
-	<51a196c0-ea57-4ec5-99ea-c3f09cd90962@gmail.com>
-Date: Fri, 01 Mar 2024 17:34:52 +0300
-In-Reply-To: <51a196c0-ea57-4ec5-99ea-c3f09cd90962@gmail.com>
- (=?utf-8?Q?=22Jean-No=C3=ABl?=
-	Avila"'s message of "Fri, 1 Mar 2024 14:20:47 +0100")
-Message-ID: <87frxam35f.fsf@osv.gnss.ru>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
+        d=1e100.net; s=20230601; t=1709303970; x=1709908770;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=4wCka2LbW6Zbk2mA64rSVsK5AUNOA6N0AXFjkBd3aWo=;
+        b=ib1YdbZxkbgfCCtMBXQD6EVE8J5Dxpxm13BlYQpl4N/gvI+/3UygZmDZLfiQKSP+LE
+         aLwr0U3r0gqQQ1wHZQWPe1UWwce4qwJvZIe8Ubvem7sZLJUjECI54z8uxIn62otr+p5G
+         U3FUAGsQfxjaWswEOk0oVNSj2TgCYgqqGjzpl1ofmh/iIsxfxM3X3jAdT0pXz7acXTzT
+         pPKAOATiu+thb4S2azT61LywzgsucNgwJ4dolMKNkV/4NtelSg6CvqRpdau8JGGSQCg+
+         H5B2Dz+IPKCeIgbAGZ+ElvOnZATIdk5lL3kam7XXBL6PmI1HfApRNEG+ZXYJe8VKW7k5
+         ds5A==
+X-Forwarded-Encrypted: i=1; AJvYcCXEz1EHZJRO8OYuNyFjBrdhEoA9UlfLDIVhIFxSvXC3ID2Y2QvsdGRAktchOrvys+krtLgsef9rdptuw1hTuOPGv556
+X-Gm-Message-State: AOJu0Ywq/gnjGEQcX2ssI+GADrqzjHR8cu0qecmtTyb/IMkce7mjh0pt
+	AfQACm49yBoxybyBkoUck9L8KBgzTgx36pCsgp7TpnbpKpjVvOoG
+X-Google-Smtp-Source: AGHT+IGhh6UigQMPGUi2XXtW0bs8okptlSYcMioF121ZeJQkyZw6oD1++7L7pLB8E7sFH2oQPs64jg==
+X-Received: by 2002:a05:6a20:244a:b0:1a0:f096:4ece with SMTP id t10-20020a056a20244a00b001a0f0964ecemr1991596pzc.2.1709303970166;
+        Fri, 01 Mar 2024 06:39:30 -0800 (PST)
+Received: from localhost ([14.139.110.146])
+        by smtp.gmail.com with ESMTPSA id c17-20020aa78c11000000b006e5dc1b4866sm35822pfd.144.2024.03.01.06.39.27
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 01 Mar 2024 06:39:29 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Fri, 01 Mar 2024 20:09:25 +0530
+Message-Id: <CZIHOPD4IVXH.32HVLZ4K0YNXY@gmail.com>
+Cc: "Kristoffer Haugsbakk" <code@khaugsbakk.name>, "Junio C Hamano"
+ <gitster@pobox.com>
+Subject: Re: [PATCH v3] build: support z/OS (OS/390).
+From: "Ghanshyam Thakkar" <shyamthakkar001@gmail.com>
+To: "Haritha D" <Harithamma.D@ibm.com>, "git@vger.kernel.org"
+ <git@vger.kernel.org>
+X-Mailer: aerc 0.15.2
+References: <pull.1663.v2.git.git.1708660111.gitgitgadget@gmail.com>
+ <pull.1663.v3.git.git.1708841439516.gitgitgadget@gmail.com>
+ <xmqq7circevo.fsf@gitster.g> <B3775704-6FCE-4994-8682-309D521FD2CB@ibm.com>
+In-Reply-To: <B3775704-6FCE-4994-8682-309D521FD2CB@ibm.com>
 
-Jean-Noël Avila <avila.jn@gmail.com> writes:
-
-> Putting my documentation/translator hat:
+On Fri Mar 1, 2024 at 2:39 PM IST, Haritha D wrote:
+> Hi Team,
 >
-> Le 29/02/2024 à 20:07, Sergey Organov a écrit :
->> What -n actually does in addition to its documented behavior is
->> ignoring of configuration variable clean.requireForce, that makes
->> sense provided -n prevents files removal anyway.
->> 
->> So, first, document this in the manual, and then modify implementation
->> to make this more explicit in the code.
->> 
->> Improved implementation also stops to share single internal variable
->> 'force' between command-line -f option and configuration variable
->> clean.requireForce, resulting in more clear logic.
->> 
->> The error messages now do not mention -n as well, as it seems
->> unnecessary and does not reflect clarified implementation.
->> 
->> Signed-off-by: Sergey Organov <sorganov@gmail.com>
->> ---
->>  Documentation/git-clean.txt |  2 ++
->>  builtin/clean.c             | 26 +++++++++++++-------------
->>  2 files changed, 15 insertions(+), 13 deletions(-)
->> 
->> diff --git a/Documentation/git-clean.txt b/Documentation/git-clean.txt
->> index 69331e3f05a1..662eebb85207 100644
->> --- a/Documentation/git-clean.txt
->> +++ b/Documentation/git-clean.txt
->> @@ -49,6 +49,8 @@ OPTIONS
->>  -n::
->>  --dry-run::
->>  	Don't actually remove anything, just show what would be done.
->> +	Configuration variable clean.requireForce is ignored, as
->> +	nothing will be deleted anyway.
+> The win test(7) test case failed stating the reason as "The Operation can=
+celled". I saw that it failed after 5 hours 59 minutes of running the test =
+cases(build). How do I handle this?
 >
-> Please use backticks for options, configuration and environment names:
-> `clean.requireForce`
+> Please suggest.
 
-I did consider this. However, existing text already has exactly this one
-unquoted, so I just did the same. Hopefully it will be fixed altogether
-later, or are you positive I better resend the patch with quotes? 
+Hey,
 
->>  
->>  -q::
->>  --quiet::
->> diff --git a/builtin/clean.c b/builtin/clean.c
->> index d90766cad3a0..fcc50d08ee9b 100644
->> --- a/builtin/clean.c
->> +++ b/builtin/clean.c
->> @@ -25,7 +25,7 @@
->>  #include "help.h"
->>  #include "prompt.h"
->>  
->> -static int force = -1; /* unset */
->> +static int require_force = -1; /* unset */
->>  static int interactive;
->>  static struct string_list del_list = STRING_LIST_INIT_DUP;
->>  static unsigned int colopts;
->> @@ -128,7 +128,7 @@ static int git_clean_config(const char *var, const char *value,
->>  	}
->>  
->>  	if (!strcmp(var, "clean.requireforce")) {
->> -		force = !git_config_bool(var, value);
->> +		require_force = git_config_bool(var, value);
->>  		return 0;
->>  	}
->>  
->> @@ -920,7 +920,7 @@ int cmd_clean(int argc, const char **argv, const char *prefix)
->>  {
->>  	int i, res;
->>  	int dry_run = 0, remove_directories = 0, quiet = 0, ignored = 0;
->> -	int ignored_only = 0, config_set = 0, errors = 0, gone = 1;
->> +	int ignored_only = 0, force = 0, errors = 0, gone = 1;
->>  	int rm_flags = REMOVE_DIR_KEEP_NESTED_GIT;
->>  	struct strbuf abs_path = STRBUF_INIT;
->>  	struct dir_struct dir = DIR_INIT;
->> @@ -946,21 +946,21 @@ int cmd_clean(int argc, const char **argv, const char *prefix)
->>  	};
->>  
->>  	git_config(git_clean_config, NULL);
->> -	if (force < 0)
->> -		force = 0;
->> -	else
->> -		config_set = 1;
->>  
->>  	argc = parse_options(argc, argv, prefix, options, builtin_clean_usage,
->>  			     0);
->>  
->> -	if (!interactive && !dry_run && !force) {
->> -		if (config_set)
->> -			die(_("clean.requireForce set to true and neither -i, -n, nor -f given; "
->> +	/* Dry run won't remove anything, so requiring force makes no sense */
->> +	if(dry_run)
->> +		require_force = 0;
->> +
->> +	if (!force && !interactive) {
->> +		if (require_force > 0)
->> +			die(_("clean.requireForce set to true and neither -f, nor -i given; "
->> +				  "refusing to clean"));
->> +		else if (require_force < 0)
->> +			die(_("clean.requireForce defaults to true and neither -f, nor -i given; "
->>  				  "refusing to clean"));
->> -		else
->> -			die(_("clean.requireForce defaults to true and neither -i, -n, nor -f given;"
->> -				  " refusing to clean"));
->>  	}
->>  
->
-> The last two cases can be coalesced into a single case (the last one),
-> because the difference in the messages does not bring more information
-> to the user.
+This seems to be a recurring issue, as this happens to me majority
+of the time. Seems as though the vm just sits idle after finishing tests
+as 360 minutes is the timeout for github acitons.
 
-Did you misread the patch? There are only 2 cases here, the last (third)
-one is marked with '-' (removed). Too easy to misread this, I'd say. New
-code is:
+Usually, rerunning the failed tests from the actions tab works for me.
 
-		if (require_force > 0)
-			die(_("clean.requireForce set to true and neither -f, nor -i given; "
-				  "refusing to clean"));
-		else if (require_force < 0)
-			die(_("clean.requireForce defaults to true and neither -f, nor -i given; "
-
-and is basically unchanged from the original, except reference to '-n' has been
-removed. Btw, is now comma needed after -f, and isn't it better to
-substitute ':' for ';'?
-
-Thank you for review!
-
--- Sergey Organov
-
+Thanks.
