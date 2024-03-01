@@ -1,56 +1,51 @@
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2808B1C33
-	for <git@vger.kernel.org>; Fri,  1 Mar 2024 16:18:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF22970CB6
+	for <git@vger.kernel.org>; Fri,  1 Mar 2024 16:22:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709309938; cv=none; b=SEceK7WrWUMXhS7Lh48b/EmBnrPpSdKQMbFxhscAwhOO7ApRhs7lz9jZhrq50l9X4v4rRsytO+VjadaSgZc8cwAWx27PHfSa7gGC5XsRVAT0DLwve8jHIW0KefFeFhftJCUB3N+HUxv47v3vEKwkO4H1TWJNZuVMslQ42iGz44w=
+	t=1709310127; cv=none; b=iaM8kEJctDZxRvU/mHCT496vcNWR2+vwAtSxHtOTyh1bM2OVcNsMDfBr+alXXezMt6AkfGtm0F2tAJCePLe3OxYQ1Zf2aQBUm01tC1mrWOpC7HbqMWsSL6YRvl1Ecqv0eMuAOh+S10uRg8OftF3neEvbkZMibrt7+wWJ+Og5p1E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709309938; c=relaxed/simple;
-	bh=+zqPWYCSONFo6ARstJKnJB+uCKrj7nH/mYGvwmY9UWY=;
+	s=arc-20240116; t=1709310127; c=relaxed/simple;
+	bh=nFYskn4aFSLiqaF2PQhT/OQl14IWnevgTOEDNW4YCBA=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=CcKXpFUmpO3wvePP34HTnbkdD+sQidBxReV9smsyy07/XE00nLikQu9TOtK/UyWdaxgDXZQWotoS7BPTgEf+dGVWiG2Z/SwWQIGDJxAGJ8jf+1idFLfry6/nrNZ27SP46oY3SUWYEp8jmYWkxPkp+ejQAWKHTEB0i0EZHeQvCpo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=XBsQDixN; arc=none smtp.client-ip=173.228.157.53
+	 MIME-Version:Content-Type; b=mZsYphetFobn6S6h+CVzd9ajP869UrBqlReR58p2Q9tA4mmx00n4i2ciTmW0LI3pIpE+3/CJgyw3RfXWOi6ifrWBjIX9EhmZ2bzuphA6N8oRN37PgHIaDwIeBWhzZf5qnqKlwRdY2YNcBGjLDodNFf4ynVMusczjbv+8Ih/mSTA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=KtcwASu4; arc=none smtp.client-ip=173.228.157.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="XBsQDixN"
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id ACD6B1D3CC;
-	Fri,  1 Mar 2024 11:18:56 -0500 (EST)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="KtcwASu4"
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id 265521D63F;
+	Fri,  1 Mar 2024 11:22:05 -0500 (EST)
 	(envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=+zqPWYCSONFo6ARstJKnJB+uCKrj7nH/mYGvwm
-	Y9UWY=; b=XBsQDixNLE/envhK2OMJSBigKReMdf+iKkrZYKHrjYuxGhdYNu+nTY
-	+r3DjFftMnqZWX5dYQBHGR3j7GJIC4oKV+SLJ6lXd7SdO5A9nZNp+1Z6/xZlHYZz
-	vCnzagjBgltW6FeGmAXjFpb8YRNf2ovfQCFRt5PDX2PbYNxGdSLNo=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id A4E0F1D3CB;
-	Fri,  1 Mar 2024 11:18:56 -0500 (EST)
+	:content-type; s=sasl; bh=nFYskn4aFSLiqaF2PQhT/OQl14IWnevgTOEDNW
+	4YCBA=; b=KtcwASu4jIJjqxypZiV+BNUgTiXL6TVsxx3NzirOTBXkRw+wVYHOr0
+	dliBv0T47/9awiV2X4bKVTnBFCL2CT2E27VVxS9YVWF4VJtr93i5Srw/jhCN6kf9
+	+c/Luo1CjGKeX2pxAgQ/6KmqURdURFrr1wcvgyNTGCFWLOH06GKZ0=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id 1F6D31D63E;
+	Fri,  1 Mar 2024 11:22:05 -0500 (EST)
 	(envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.125.176.30])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id A168B1D3CA;
-	Fri,  1 Mar 2024 11:18:52 -0500 (EST)
+	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 259D91D63B;
+	Fri,  1 Mar 2024 11:22:01 -0500 (EST)
 	(envelope-from junio@pobox.com)
 From: Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
-Cc: Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-  git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>,  Dirk Gouders
- <dirk@gouders.net>,  Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH v4 03/11] commit-reach(repo_in_merge_bases_many): report
- missing commits
-In-Reply-To: <20240301065805.GB2680308@coredump.intra.peff.net> (Jeff King's
-	message of "Fri, 1 Mar 2024 01:58:05 -0500")
-References: <pull.1657.v3.git.1709040497.gitgitgadget@gmail.com>
-	<pull.1657.v4.git.1709113457.gitgitgadget@gmail.com>
-	<1938b317a49f4d688bfefd7e5a74ad750a55a91a.1709113458.git.gitgitgadget@gmail.com>
-	<20240301065805.GB2680308@coredump.intra.peff.net>
-Date: Fri, 01 Mar 2024 08:18:51 -0800
-Message-ID: <xmqqo7by7wno.fsf@gitster.g>
+To: Karthik Nayak <karthik.188@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: What's cooking in git.git (Feb 2024, #09; Tue, 27)
+In-Reply-To: <CAOLa=ZQAxGFDrBmq0+Q77YcfT4hBivRu9oOGZF-r81F49P+00Q@mail.gmail.com>
+	(Karthik Nayak's message of "Fri, 1 Mar 2024 02:54:37 -0800")
+References: <xmqqjzmpm9b8.fsf@gitster.g>
+	<CAOLa=ZQAxGFDrBmq0+Q77YcfT4hBivRu9oOGZF-r81F49P+00Q@mail.gmail.com>
+Date: Fri, 01 Mar 2024 08:21:59 -0800
+Message-ID: <xmqqjzml9b2w.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -60,33 +55,35 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 X-Pobox-Relay-ID:
- 64FCAD28-D7E7-11EE-849E-A19503B9AAD1-77302942!pb-smtp21.pobox.com
+ D5561D34-D7E7-11EE-8E24-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
 
-Jeff King <peff@peff.net> writes:
+Karthik Nayak <karthik.188@gmail.com> writes:
 
-> On Wed, Feb 28, 2024 at 09:44:09AM +0000, Johannes Schindelin via GitGitGadget wrote:
+> Junio C Hamano <gitster@pobox.com> writes:
+>> * kn/for-all-refs (2024-02-23) 6 commits
+>>   (merged to 'next' on 2024-02-27 at aef2406cca)
+>>  + for-each-ref: add new option to include root refs
+>>  + ref-filter: rename 'FILTER_REFS_ALL' to 'FILTER_REFS_REGULAR'
+>>  + refs: introduce `refs_for_each_include_root_refs()`
+>>  + refs: extract out `loose_fill_ref_dir_regular_file()`
+>>  + refs: introduce `is_pseudoref()` and `is_headref()`
+>>  + Merge branch 'ps/reftable-backend' into kn/for-all-refs
+>>
+>>  "git for-each-ref" filters its output with prefixes given from the
+>>  command line, but it did not honor an empty string to mean "pass
+>>  everything", which has been corrected.
+>>
+>>  Will merge to 'master'.
+>>  source: <20240223100112.44127-1-karthik.188@gmail.com>
 >
->> @@ -1402,6 +1436,8 @@ static int merge_mode_and_contents(struct merge_options *opt,
->>  							&o->oid,
->>  							&a->oid,
->>  							&b->oid);
->> +			if (result->clean < 0)
->> +				return -1;
->
-> Sorry, I accidentally commented on v2 of your series a moment ago,
-> rather than the most recent version. But this hunk was untouched between
-> the two, so the comment still applies:
->
->   https://lore.kernel.org/git/20240301065647.GA2680308@coredump.intra.peff.net/
->
-> -Peff
+> Thanks, the description here needs to be modified since we moved from
+> the `an empty string to mean "pass everything"` to providing the
+> `--include-root-refs` option.
 
-Thanks for spotting.
+Good point.  I just updated the draft for the next issue of
+'whats-cooking.txt' to read like this:
 
-The topic now is in 'next' so let's fix it incrementally while I'll
-hold it there.  If all of us thought it has seen enough eyeballs and
-is good enough for 'next', yet we later find there was something we
-all missed, that is worth a separate explanation, e.g., "The primary
-motivation behind the series is still good, but for such and such
-reasons we missed this case we are fixing."
+ "git for-each-ref" learned "--include-root-refs" option to show
+ even the stuff outside the 'refs/' hierarchy.
 
+Thanks.
