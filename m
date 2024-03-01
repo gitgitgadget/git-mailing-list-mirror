@@ -1,139 +1,100 @@
-Received: from fout3-smtp.messagingengine.com (fout3-smtp.messagingengine.com [103.168.172.146])
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EB4912B72
-	for <git@vger.kernel.org>; Fri,  1 Mar 2024 18:06:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39CCA210FB
+	for <git@vger.kernel.org>; Fri,  1 Mar 2024 18:06:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709316376; cv=none; b=Q2PHgDNnKd+ARARtIMYc9NR3E/5Wb3kc2ogAc/y7JXdHr22mqsAQXhRrhu3UI3DkPlb1AMUbmTIkNsO5nz4SFiVSjvb3Yv1BAWXqkZ7256mRwgPEQUI2NZq5ErEaicjOLxxU2lsL9twO83ghQETZv6zJZumx6gPue0YNST2wFQk=
+	t=1709316394; cv=none; b=X4T5LHRjWPatxlVAAkx+DCflL4kh30dhsk5aCpq1/uc0EYDbUsiESMYp6BGc5IaAdTVhOmKPvIeisLygAiM/wYB70CdLau4frAXCkU8vuZMLON5ZRBZuav388Zn/CjxgM8UnVdscVYvRri9iskz6lfwc35VNSESnDJ2itgFrCvc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709316376; c=relaxed/simple;
-	bh=DG8+N0xc6NGBDGrJr4YodQpC1+FPngV5y9r9xIu3x4U=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=b08VmM7WQMmF5fuDkjRZYvIzjYQPQ5FlE01+/ef6yO2rDXnwk38NcOeVTJKYJkGXWGnzBalCIHv9+ooJpKbHtz10ZaylQrBYjp8a7RBolh1GJ+qyf2e8InxoefUHnpMPAa7rNNmZYAnWF3x4X14GfsK6+0eT8QIv0UdIEQU6Lgo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=khaugsbakk.name; spf=pass smtp.mailfrom=khaugsbakk.name; dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b=PZsnNY5/; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=KNJgL/Th; arc=none smtp.client-ip=103.168.172.146
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=khaugsbakk.name
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=khaugsbakk.name
+	s=arc-20240116; t=1709316394; c=relaxed/simple;
+	bh=UfpJ6o/rz2lhpTnQ4p39h7YD3u8sSc5P9J8qkjGC69I=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=Xx/gNWvMyGB3NUEyH2bH90dgvzKF5JRZjbnnFI0WR1cNyFMaiU7jHk2lWYD4ZrU5QQ/GG4tvSSXxsEY0LlbExk/Cx6wdDxNCKTchS4+S59sYZ4HmbUSQ4nle5xQg7L9RSyQlXWu0POvBJrSiLXeaU/XhRaAMTT1pgiPiad6TkkI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=BGrxNUM3; arc=none smtp.client-ip=173.228.157.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b="PZsnNY5/";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="KNJgL/Th"
-Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
-	by mailfout.nyi.internal (Postfix) with ESMTP id 23F1F138010A;
-	Fri,  1 Mar 2024 13:06:12 -0500 (EST)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute3.internal (MEProxy); Fri, 01 Mar 2024 13:06:12 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=khaugsbakk.name;
-	 h=cc:cc:content-transfer-encoding:content-type:content-type
-	:date:date:from:from:in-reply-to:message-id:mime-version
-	:reply-to:subject:subject:to:to; s=fm3; t=1709316372; x=
-	1709402772; bh=2voU5o1daW4Xx0qoxw2z+lFD2vYc+MCaiSq//wb+U64=; b=P
-	ZsnNY5/itGCU3cVqeFNYwEnGBlUmAT4vUBqPIdto/NSX4sZKruevj6yRSxO9Bm7p
-	Fmlg712DUcaTrIlPuHQuy93mkM8oqy6E1dgrHSRAhCevkeS2l83qT/q0IrkIxZ1e
-	3GpT2k9eDySIayLQVYmfvzXMgOOr3jYxftb/ttsxrr+dJKPuMyT2oQVGeuVMlg+T
-	GNWfMAd2O39QEYo19dGN9ChQWbU2qdpr5Sj1iIOFrmMXh0oGKZ8Fxtfoxig0ola1
-	SZymNJIsS/fnnX4C9uReUGGnaEpM5JvtQDX/Uc7CrG4wA0tSDJ/GNz6GAsKb8jNN
-	6PMNHlJGYJ+zf9dmHUeQA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
-	:subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
-	:x-sasl-enc; s=fm1; t=1709316372; x=1709402772; bh=2voU5o1daW4Xx
-	0qoxw2z+lFD2vYc+MCaiSq//wb+U64=; b=KNJgL/ThWyfKS6TrrDXv6m/UjqWJI
-	j3vR3ROy2eGRHwIftCX4eTkvXGvre3qmdG49w2jqtvmW4g99ufup54qKuSnpupz1
-	EsOcm+bvnsTk3SmKE+JmW6zCxkHwuhvZgNGgQXhrFNAxXONU03raKppmRTqGrj1U
-	cHEcm/j+xFbzb2z8vhWhHeZDnfPLI9WXPA4dR8TUxcu3NQiOnbcGmfbFy278jSdB
-	27mNn47kBChUyoZ7RL/+IxkfMNoriMhkD5TifLytW7Rj9kdzRcoJ5UEDoXK7KX3D
-	g2crHYHldWj9u/bxfGb9w64jC09aOheviVUjr+E8m2l3yLpHF9STWqSAQ==
-X-ME-Sender: <xms:ExniZaJKMLaKCWJhJdugT_zDeVFGlVULvWX74BwQnaU0bVUHoxKHFdU>
-    <xme:ExniZSJv64bn5DzeiSsptc93rClcSe41C-wYvYF1OubZL5MpT1LiHBIPXbLPXPnpt
-    Qblum0dgUKtvCSNqA>
-X-ME-Received: <xmr:ExniZas1z94TMs8N7r65D5WovyOfa6r9_Z8sEsJnLm_Tu7Ty7Sz416zkfP96tmGvr-AJ5Xf2wSV83BzDevEyIOusodgdy1MlX6S6bLRrWQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrhedugddutdejucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    cujfgurhephffvvefufffkofggtgfgsehtkeertdertdejnecuhfhrohhmpefmrhhishht
-    ohhffhgvrhcujfgruhhgshgsrghkkhcuoegtohguvgeskhhhrghughhssggrkhhkrdhnrg
-    hmvgeqnecuggftrfgrthhtvghrnhepgfdvhefgffekgfeiheeivdetffelkefhheeitdej
-    hfelhffhkeevudfhleekvdeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpe
-    hmrghilhhfrhhomheptghouggvsehkhhgruhhgshgsrghkkhdrnhgrmhgv
-X-ME-Proxy: <xmx:FBniZfbn-BDj8Fha947Kz3LXJA5hHg-f1PbCak-jGe9bosAQnCETmw>
-    <xmx:FBniZRaMbUHlKCaSM1Qyac0UDGXnVE2jmRU_wdLP_byCIygwsKProw>
-    <xmx:FBniZbAFrwA7S0OxWFa8EQwNr_Fqjl60WgdtU8Plx_xWFQnTbrsFRQ>
-    <xmx:FBniZVFxMNMJV93jx4g5lVOK4lk5NKvjaHFo9lElDm9R6y-sztEakg>
-Feedback-ID: i2671468f:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 1 Mar 2024 13:06:10 -0500 (EST)
-From: Kristoffer Haugsbakk <code@khaugsbakk.name>
-To: git@vger.kernel.org
-Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>,
-	Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: [PATCH] =?UTF-8?q?gitcli:=20drop=20mention=20of=20=E2=80=9Cnon-da?= =?UTF-8?q?shed=20form=E2=80=9D?=
-Date: Fri,  1 Mar 2024 19:05:53 +0100
-Message-ID: <5b34bc4e22816f7f19bd26c15a08fe4c749b72f8.1709316230.git.code@khaugsbakk.name>
-X-Mailer: git-send-email 2.44.0.106.g650c15c891b
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="BGrxNUM3"
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id 771C41E12E;
+	Fri,  1 Mar 2024 13:06:32 -0500 (EST)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=UfpJ6o/rz2lhpTnQ4p39h7YD3u8sSc5P9J8qkj
+	GC69I=; b=BGrxNUM38AynJF1PyDfC5RdCe2BJWcGxuJaBsZ58aPf2F9d6fevShR
+	c4BGU5Ss5O9Nvasat0LfYJwjJy7Uk+pecSDmuFOfbb2Ed2BmapIEeUcdg34sxTb+
+	oEEvcGf9iuzj2eOg/mDoJfV6bmdtFRkw4ownsEUng8ZvgLHp2uuHM=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id 6FCFC1E12D;
+	Fri,  1 Mar 2024 13:06:32 -0500 (EST)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.176.30])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 83CDE1E12C;
+	Fri,  1 Mar 2024 13:06:29 -0500 (EST)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Kristoffer Haugsbakk <code@khaugsbakk.name>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH] branch: advise about ref syntax rules
+In-Reply-To: <d275d1d179b90592ddd7b5da2ae4573b3f7a37b7.1709307442.git.code@khaugsbakk.name>
+	(Kristoffer Haugsbakk's message of "Fri, 1 Mar 2024 16:38:41 +0100")
+References: <d275d1d179b90592ddd7b5da2ae4573b3f7a37b7.1709307442.git.code@khaugsbakk.name>
+Date: Fri, 01 Mar 2024 10:06:27 -0800
+Message-ID: <xmqq1q8t7roc.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-X-Commit-Hash: 5b34bc4e22816f7f19bd26c15a08fe4c749b72f8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 6D95E9C2-D7F6-11EE-A189-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
 
-Git builtins used to be called like e.g. `git-commit`, not `git
-commit` (*dashed form* and *non-dashed form*, respectively). The dashed
-form was deprecated in version 1.5.4 (2006). Now only a few commands
-have an alternative dashed form when `SKIP_DASHED_BUILT_INS` is
-active.[1]
+Kristoffer Haugsbakk <code@khaugsbakk.name> writes:
 
-The mention here is from 2f7ee089dff (parse-options: Add a gitcli(5) man
-page., 2007-12-13), back when the deprecation was relatively
-recent. These days though it seems like an irrelevant point to make to
-budding CLI scripters—you don’t have to warn against a style that
-probably doesn’t even work on their git(1) installation.
+> Notes (series):
+>     Hopefully I am using `advice.h` correctly here.
 
-† 1: 179227d6e21 (Optionally skip linking/copying the built-ins,
-    2020-09-21)
+Let's see.
 
-Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
----
+> -	if (strbuf_check_branch_ref(ref, name))
+> -		die(_("'%s' is not a valid branch name"), name);
+> +	if (strbuf_check_branch_ref(ref, name)) {
+> +		error(_("'%s' is not a valid branch name"), name);
+> +		advise(_("See `man git check-ref-format`"));
+> +		exit(1);
+> +	}
 
-Notes (series):
-    Now:
-    
-    ```
-    $ git grep --files-with-matches 'dashed form'
-    Documentation/RelNotes/1.5.4.txt
-    Documentation/RelNotes/2.16.0.txt
-    Makefile
-    t/README
-    ```
-    
-    For 179227d6e21 (Optionally skip linking/copying the built-ins,
-    2020-09-21):
-    
-    (sorry for the resend; I sent to my test address first)
-    
-    Cc: Johannes Schindelin <johannes.schindelin@gmx.de>
+This will give the message with "hint:" prefix, which is a good
+starting point.
 
- Documentation/gitcli.txt | 3 ---
- 1 file changed, 3 deletions(-)
+The message is given unconditionally, without any way to turn it
+off.  For those who ...
 
-diff --git a/Documentation/gitcli.txt b/Documentation/gitcli.txt
-index e5fac943227..7c709324ba9 100644
---- a/Documentation/gitcli.txt
-+++ b/Documentation/gitcli.txt
-@@ -81,9 +81,6 @@ you will.
- Here are the rules regarding the "flags" that you should follow when you are
- scripting Git:
- 
-- * It's preferred to use the non-dashed form of Git commands, which means that
--   you should prefer `git foo` to `git-foo`.
--
-  * Splitting short options to separate words (prefer `git foo -a -b`
-    to `git foo -ab`, the latter may not even work).
- 
--- 
-2.44.0.106.g650c15c891b
+> git-branch(1) will error out if you give it a bad ref name. But the user
+> might not understand why or what part of the name is illegal.
 
+... do not understand why, it is helpful, but once they learned, it
+is one extra line of unwanted text.  If you want to give it a way to
+squelch, see the comment before where enum advice_type is declared
+in advice.h header file.  The callsites would become something like
+
+	advise_if_enabled(ADVICE_VALID_REF_NAME,
+		_("See `man git check-ref-format` for valid refname syntax."));
+
+Another thing is that rewriting die() into error() + advice() +
+manual exit() is an anti-pattern these days.
+
+	int code = die_message(_("'%s' is not a valid branch name"), name);
+	advice_if_enabled(...); /* see above */
+	exit(code);
+
+In the same source file, you will find an existing example to mimic.
+
+Thanks.
