@@ -1,103 +1,89 @@
-Received: from mx10.gouders.net (mx10.gouders.net [202.61.206.94])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f47.google.com (mail-ed1-f47.google.com [209.85.208.47])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98A031876
-	for <git@vger.kernel.org>; Sat,  2 Mar 2024 07:08:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.61.206.94
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A2C512E52
+	for <git@vger.kernel.org>; Sat,  2 Mar 2024 09:57:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709363288; cv=none; b=mmAdatlX7DWqH3bzpUwBTsVdty28iREvhp39loZY4SzUur28SvQVNCv4Nw9XJglBqmlvf9+ULQBf+B5dK8oAlBLiwZ4+BfffMfag9b9LLTpOpSVqFHMcYs5FFZHtJHPfGOLJsVcwJ4NnuZAuMwYEzPdbM0pBCHWSm5tDgi8xd9Y=
+	t=1709373479; cv=none; b=eG969DIItezn+any1FXof4IB3LbSuefSZjV9KfezW846Bqd8ej1dFNZMPdPmzW+iFjGotGLSjWG8gtisJUdAiUpDgPCm+KkNbZ9VJz/J/OWSvQBHGAOH6NzyBHtf2kGHvmcDXo46mhfvZW10Ygq9uAy8sAZa3IsoxGQY/YgmYuM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709363288; c=relaxed/simple;
-	bh=v7tD9LkY0sEbOJrm/qhjowxA6EQxmw1qyHQYvXJMkJQ=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=qXRDBTlNSrKWDzaF1X4wGfo1vHxJ3I+NenRSgsNvwHMHXU8DDZFjntAdOVUzxGKbs6Rz10of6jiyxuUW9SH0LHrlxNESpnuRTXGEEXwzPsGM6oNATyHAueUINLNCzzyrauYD8YJG03BBHDyN48XDkeLuyjcDqXa2hWHkkipOLPU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=gouders.net; spf=pass smtp.mailfrom=gouders.net; dkim=pass (1024-bit key) header.d=gouders.net header.i=@gouders.net header.b=Mnh9qLGB; arc=none smtp.client-ip=202.61.206.94
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=gouders.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gouders.net
+	s=arc-20240116; t=1709373479; c=relaxed/simple;
+	bh=GDeuoC5bTXC5vFXFz9T2Z3qMV5s1XWKm6canprTXdKM=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=UFueC8spulzInVBU5uC6lbmL03wbxlcBJxt7Atdzm7XHldbMBT/aUx6l+N+sEl9zQfRRsKowGzChzaCQxJ3VtpS6d/b8M+JL/d7l2gfN9TrUKC3Kh+U/YTXITbuk7FxmPdsYwRbew/L2cqqzpA6D6VaP6sLXrEsyesm9Vqwlhmg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Vd5A+T63; arc=none smtp.client-ip=209.85.208.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=gouders.net header.i=@gouders.net header.b="Mnh9qLGB"
-Received: from localhost (ip-109-42-178-42.web.vodafone.de [109.42.178.42])
-	(authenticated bits=0)
-	by mx10.gouders.net (8.17.1.9/8.17.1.9) with ESMTPSA id 42277lDg006506
-	(version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NO);
-	Sat, 2 Mar 2024 08:07:48 +0100
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gouders.net; s=gnet;
-	t=1709363269; bh=v7tD9LkY0sEbOJrm/qhjowxA6EQxmw1qyHQYvXJMkJQ=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date;
-	b=Mnh9qLGBnO4CgtnFePUjCdHMg/wDQz8/92zdz3aRY9ZVPr2PSCMSupFlo3xhUDdEg
-	 V7x11Z73KvLZZKCXbPiY4kivuty3dI7mue1K0RAjuEqZwWqIbS65wCThNgPtMcNtwI
-	 mAtnjaIz6s9jJG7pUfvyzqhZ3PHRPTe9UzWbvtSc=
-From: Dirk Gouders <dirk@gouders.net>
-To: Eric Sunshine <sunshine@sunshineco.com>
-Cc: Junio C Hamano <gitster@pobox.com>,
-        Eric Sunshine
- <ericsunshine@charter.net>, git@vger.kernel.org,
-        Aryan Gupta
- <garyan447@gmail.com>
-Subject: Re: [PATCH] test-lib-functions: simplify `test_file_not_empty`
- failure message
-In-Reply-To: <CAPig+cSt4Q0e+DioFiy7yjBgn5+gWNqQOYc0eCAgdYrZUp8VBQ@mail.gmail.com>
-	(Eric Sunshine's message of "Fri, 1 Mar 2024 17:59:42 -0500")
-References: <20240301204922.40304-1-ericsunshine@charter.net>
-	<xmqqsf194n7a.fsf@gitster.g>
-	<CAPig+cSt4Q0e+DioFiy7yjBgn5+gWNqQOYc0eCAgdYrZUp8VBQ@mail.gmail.com>
-User-Agent: Gnus/5.13 (Gnus v5.13)
-Date: Sat, 02 Mar 2024 08:07:42 +0100
-Message-ID: <ghr0gtglhd.fsf@gouders.net>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Vd5A+T63"
+Received: by mail-ed1-f47.google.com with SMTP id 4fb4d7f45d1cf-563d56ee65cso4797025a12.2
+        for <git@vger.kernel.org>; Sat, 02 Mar 2024 01:57:57 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1709373476; x=1709978276; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Xa/SnXKc+2cZNpJqrEVnSIm5A1nE470zg23zEFwKlMA=;
+        b=Vd5A+T63pob6ag8Cki51idItZvBO7G2Bmp1qCgJ2AW0awDQLLIWB+gEYhMClUuWG+h
+         cmYa1rj1+XN0f1fmlaa9BQzsfpXhb7N+s2nhzWK/NQqcWZYih1e8OPXrSGL+vW1o/REX
+         jAZb6MPKa+mUTO3O1wztdBniaC5+NyGqGhO42D+gWUnQu3wB4jgKkRg2KwoD65j4FBt/
+         9nkrcTiji9pRozkxJK0nXL3D6yoxKHdKAXymccIO9x/AANYKtUKP1cvN8oMi7386zueO
+         PyXL6ogzgbnBqbrrA0Odl4wrderUu5us5qxK3hFAC+pwMK2PQpOmf2RSyiJM/UCzAqDe
+         mVNg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1709373476; x=1709978276;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=Xa/SnXKc+2cZNpJqrEVnSIm5A1nE470zg23zEFwKlMA=;
+        b=EQhhcSU/16wUqwPTdAWpC0ngMyrrHA4fpCxviK4XyejteJlhhZ+92TGTrJje75R9ti
+         DltmclG6l3Q69P4wZDNSun8HTKtLJ/giVPJNQyF/T3XqDXSOTLYlT0aCbyC8LWIJc+hN
+         u6VHubxl/8CQ4RIKTwdBcjEH5iwaJ+HrWb+RbnHOoM4reudM7s9EpumHs+wXcVYRp9SG
+         RHeCYlIEDb++1zA3264/qMarhNTkZc0Wfxv9W0uBkjXtB5SNuSxo+NP0SgOfqC4i8ypB
+         08GqCftwVuKK/pdOwQApCSl3wtYPsvTHMdAuKoRit+PjJ+iKmEOsp1jgULv45tgEVgSc
+         QIfA==
+X-Gm-Message-State: AOJu0Ywab+Cv3CEclDPd0IAwcKnTePBhXRQ0wtRj19/Thd73mrQDFux/
+	v4+docskLkgcAPUPWUfikSVuVfIq7tbg2KYpRhV5Q5U/YfPY77VqvUw70268dyA=
+X-Google-Smtp-Source: AGHT+IFIm+NegzmAR8MdWqwEMLAzjm5x3I4JF6771tNJ9xQ7Zwbtu6ay5m5kSaAfnDf3RQb2QQ5AzA==
+X-Received: by 2002:a17:906:6813:b0:a43:49ca:2473 with SMTP id k19-20020a170906681300b00a4349ca2473mr3121405ejr.0.1709373475531;
+        Sat, 02 Mar 2024 01:57:55 -0800 (PST)
+Received: from laptop.fritz.box ([2a02:2455:826e:4900:f403:1f77:2b7e:2436])
+        by smtp.gmail.com with ESMTPSA id o9-20020a17090608c900b00a42f36174c7sm2555693eje.92.2024.03.02.01.57.54
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 02 Mar 2024 01:57:55 -0800 (PST)
+From: Karthik Nayak <karthik.188@gmail.com>
+To: oliver@schinagl.nl
+Cc: git@vger.kernel.org,
+	Karthik Nayak <karthik.188@gmail.com>
+Subject: [PATCH 0/2] Support diff.wordDiff config  
+Date: Sat,  2 Mar 2024 10:57:49 +0100
+Message-ID: <20240302095751.123138-1-karthik.188@gmail.com>
+X-Mailer: git-send-email 2.43.1
+In-Reply-To: <a7be415d-5005-4fa7-9b2e-1974b7439a81@schinagl.nl>
+References: <a7be415d-5005-4fa7-9b2e-1974b7439a81@schinagl.nl>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 
-Eric Sunshine <sunshine@sunshineco.com> writes:
+This patch series adds the diff.wordDiff config option. This mimics the
+'--word-diff' option of `git-diff(1)`.
 
-> On Fri, Mar 1, 2024 at 5:11=E2=80=AFPM Junio C Hamano <gitster@pobox.com>=
- wrote:
->> Eric Sunshine <ericsunshine@charter.net> writes:
->> > A more accurate message might be "'foo' is empty but
->> > should not be (or doesn't exist)", but that's unnecessarily long-winded
->> > and adds little information that the test author couldn't discover by
->> > noticing the file's absence.
->>
->> The "adds little information" version may be
->>
->>                 echo "'$1' is either missing or empty, but should not be"
->>
->> And avoiding "X is Y, but should  be ~Y" construct, perhaps
->>
->>                 echo "'$1' should be a file with non-empty contents"
->>
->> would work better?  I dunno.
->
-> I find "'$1' is either missing or empty, but should not be" suggestion
-> clear and easily understood. I'll reroll with that.
+The first patch is more of a preparatory patch, which makes it easier to
+add tests when the actual config is added in patch 2.
 
-This is a view from a position with more distance:
+Karthik Nayak (2):
+  t4034: extract out `diff_with_opts`
+  diff: add 'diff.wordDiff' config option
 
-I find that not so easily understood -- the "but should not
-be" part is rather unexpected and I feel, it doesn't provide necessary
-information, e.g.:
+ Documentation/config/diff.txt |  4 +++
+ diff.c                        | 50 +++++++++++++++++++++------
+ t/t4034-diff-words.sh         | 63 ++++++++++++++++++++---------------
+ 3 files changed, 80 insertions(+), 37 deletions(-)
 
-test_path_is_executable () {
-...
-		echo "$1 is not executable"
-...
+-- 
+2.43.GIT
 
-also doesn't state what is wanted and I doubt that message doesn't
-clearly describe the problem.
-
-While I looked at it: there is another `test -s` in test_grep () that
-perhaps could be fixed the same way:
-
-	if test -s "$last_arg"
-	then
-		cat >&4 "$last_arg"
-	else
-		echo >&4 "<File '$last_arg' is empty>"
-	fi
-
-Dirk
