@@ -1,97 +1,160 @@
-Received: from mail-qt1-f177.google.com (mail-qt1-f177.google.com [209.85.160.177])
+Received: from mail-wr1-f42.google.com (mail-wr1-f42.google.com [209.85.221.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7292517576
-	for <git@vger.kernel.org>; Sat,  2 Mar 2024 16:32:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E37D5680
+	for <git@vger.kernel.org>; Sat,  2 Mar 2024 16:39:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709397146; cv=none; b=nFkfTzZi9mVvsmTHXuSe+/tgSX5uPhZ+xX2nHDFPVch3cg/EiQrE/f+GFxroW6A2BWNrIZ9kRoz1SeceV8ukrmy+kKdjuhDvTe8h9i3nHIfLf3qLKdgQjClfcOI6+r/UJ3fCq7+y1iCKh2dyIlQvnSIi8T4faJq5GDTdcr0c5do=
+	t=1709397551; cv=none; b=FRcDNU7qhpUiRFnVCbY7J7aiHgl/X474wlJZYn7y3P1GhsxyCr48IilGO9V3vm9L8vDrrB5w10QhlyC4p16sEp4P+Op2fLM9dxZX3FQQD8y4HEA/fR6F/TFwF75aMi0OuqdN2YVPJVoDGYo6xpDFTBCbsRVZ7pgB0w7NU+Ix/N0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709397146; c=relaxed/simple;
-	bh=hk2iiNc9jR9yxR5VZmEdxvevpgOyJ/PZ0+OHc7bi094=;
-	h=Subject:To:References:Cc:From:Message-ID:Date:MIME-Version:
-	 In-Reply-To:Content-Type; b=kqcNOu2HwEfuvArtpvGtI3zPsMfanLvexvHKj4JNDmc6L3O2FyXXOLDCGCc9kTq3KFR9avrbGwwJGDUIwy72wpbJeGQR7rO752ft9D0s/pGKe0KXUOHhkUb+1SQeiXpPRZDA2EkiTtvfKtpJyALoXWhIyzcMdzKiIpCjYlC5HTw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JiajJZa3; arc=none smtp.client-ip=209.85.160.177
+	s=arc-20240116; t=1709397551; c=relaxed/simple;
+	bh=dJ4w5UkzczghLWV9UMKf6BfbTeqMvWjX7Qs79d/yGl4=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=uavx4rp2Ly/NMAJAzlJt7xSciviHBYQnnAzVg5QfrThFFyt0MH3/aoo/t/kRdVLWQGllDBK1nXVwUtWenrxnr/oIoNFcdcS53YA7q9fw/Jk94X1/ueDYDq3/UJc2tl4H3KyBfJydVp1+jBs97kAuIXOuEW+vzGjgBC22Cu1iPfg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=BDghW0pI; arc=none smtp.client-ip=209.85.221.42
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JiajJZa3"
-Received: by mail-qt1-f177.google.com with SMTP id d75a77b69052e-42ee23c64e3so898381cf.2
-        for <git@vger.kernel.org>; Sat, 02 Mar 2024 08:32:25 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BDghW0pI"
+Received: by mail-wr1-f42.google.com with SMTP id ffacd0b85a97d-33d509ab80eso1314174f8f.3
+        for <git@vger.kernel.org>; Sat, 02 Mar 2024 08:39:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1709397144; x=1710001944; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-language:in-reply-to:mime-version
-         :user-agent:date:message-id:from:cc:references:to:subject:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=CKguXzC19OZ/31NRxZ9qH1yOfxxHGCK1kzg4KYHK3xE=;
-        b=JiajJZa3Sf0MnkzhlQC6zDUrwW7mmWa6vcFlVLUwq3GK792hKOuk3x40zAmPwaJdTI
-         LTGKfW48qX9NhPpG5mAT6kUXkmAwwWj93O60a0YZUerktDqwFeF1tfNAjo5juGEztP4N
-         k7nGBEyWPB20VSQAAe8hXGXq2MzRViSvTgDKY4v8B/4hO/2nSI4bgRWjjbotvvxmn66K
-         s5Tfpq0U17IHXw4SkWlxH9N2oUsLKuvN4JqsxLadpSZnuwpIMXBdJfV9YUWpL8wdCn6x
-         qsr466xBBx0alDvqEE0r9sBn5QeH3v48xZ9FDiROc/KxbH8OVjv/ufKKu9cxMsl8IqUq
-         +JYQ==
+        d=gmail.com; s=20230601; t=1709397548; x=1710002348; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=HbpmxGuLk44TmCYDMDAYz4jScFE2oiWj2vAB7640GeA=;
+        b=BDghW0pIu8kXSnv5kBDKn8yJGnT1y40i7Bl+Ajc/ob4wyw+qIr/9194SIOFouH0WNR
+         MttBHn9q54N5wwqLXtbUDrs31mpHycDyF1d50HudZS0YDoG/9gEMV721ZAQbi9haUVYb
+         oEus8jsOrQN/6iVJdU4mjrWc80z5htwNlldt7KA6kruG3iTGkK2cuM7AqXxD38pU4G1H
+         cHPNq1gUj2Ataxmmj79wzcdDDT0o0G2YMVgDQKJS0yVaQ6+UZ4FasyJGebtiW+5Ba2aj
+         UiygUa2hOh/uhwudUdlj2/brX/CL8mG0wwpgas3RwQNi6a2AkufGv/ZBSHuSbdu3R0ir
+         LjwQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1709397144; x=1710001944;
-        h=content-transfer-encoding:content-language:in-reply-to:mime-version
-         :user-agent:date:message-id:from:cc:references:to:subject
+        d=1e100.net; s=20230601; t=1709397548; x=1710002348;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=CKguXzC19OZ/31NRxZ9qH1yOfxxHGCK1kzg4KYHK3xE=;
-        b=GMw3bcnKhTTTj5NYZjLln7iFqEPAGe1T8sIFnju2ujiZthdasLImPTDR/NU0iyimBk
-         e/Fp+/pkrkvRXf8SQNJR5c7fzXyqwIF72FPTvj+lqTFpL+jAxj7ltFdsKumebWwLAqEO
-         wNNAC8mNDvBdNKpLYXVfm+oMp5KXWvj24HqIv/swp64SkUytjZ/l4I81dkqootZ/QcBD
-         /hI/oHEjU1NBISvzQym0P6GLt1gidDtLdsrvaQcck5N4cok/HwExzrKjYCGzpRHVHxLN
-         bTBEH2hhYaxoRkzh21Onb95Or9R7lRDl7lsGph5bh7A3g+IbD00/T+aAan166Jnnk5ls
-         EjHg==
-X-Forwarded-Encrypted: i=1; AJvYcCUswQ5AmNtKwLn/KVOZpYGnujsxo18PUE+vPcBVSdq6S5YgcwEME+hT+L5PQtgraaQshBnTbsrJTk2DVAX15mRuPxun
-X-Gm-Message-State: AOJu0YxMhl04G24yJ1VnlAbLUAqaaxMK4Rkdv1HotirxKgmp4l5baMP8
-	rbKQa6htRobYBqmHqfQvF4aw4NS2FVe/fsqtGY3+7oAoallDOknU
-X-Google-Smtp-Source: AGHT+IE3MuYfkXPfDGZpBb1VVVjjk5LAs779I5ch9A/ZA5qqet/EQ/pAysDOUzikrU2owpVe2+2x0Q==
-X-Received: by 2002:a05:622a:28a:b0:42e:8dee:6815 with SMTP id z10-20020a05622a028a00b0042e8dee6815mr5698349qtw.11.1709397144295;
-        Sat, 02 Mar 2024 08:32:24 -0800 (PST)
-Received: from ?IPv6:2606:6d00:11:ff90:4806:8044:1d22:cc7a? ([2606:6d00:11:ff90:4806:8044:1d22:cc7a])
-        by smtp.gmail.com with ESMTPSA id jd27-20020a05622a719b00b0042ecb2fa152sm1587823qtb.48.2024.03.02.08.32.23
+        bh=HbpmxGuLk44TmCYDMDAYz4jScFE2oiWj2vAB7640GeA=;
+        b=wKjfYk87wn5fc7Fn2A0NU7jVQUVS04gdU9L4/UfZp41CEA7YAH0k9MsHxobBFDL1kj
+         PbNkiuQowwZ8JJ5PcoiSzzK8EJ6/VUp4pKfaT6kwDDuJsjS+TKGYn8N4i/JVUtlEcBcM
+         AKjLPn09Y0A/gJktkHPor49HX5zuIoaMchWBQBBb88uqPXR6oJbNtIQcyCNWm5I9nBx2
+         j82kgTxc/Jah0ca+ItLEouxEb9QNBcOSSUb5kBgFBkhsTuIDaDRB8dZboaTU/aIukeYG
+         VIpHTNTzzRCe5k418Pp0tuzG8K4ADd6r/b9AkXn9Xzvrqglp5+RICETni6OkUW77z2lY
+         5/IA==
+X-Forwarded-Encrypted: i=1; AJvYcCUwoD4wp3MBmoE1R5vs6mMAQmfevdTFEB98NSSth/dfW0iQ9zB37jY8VHtS3mZxl8Ztzi5NfpRu50bW0YxsdR0AxTgr
+X-Gm-Message-State: AOJu0YwzUTOTEjpHjAkAjXxr1a0tFFqvkkhBMZYDzW/RPCIQPMuJQ1Pw
+	48aO4pfYYs6vx7KAlG6uE2xkgrUxZuWx+hxOjgxR8gcShtpWHVjK
+X-Google-Smtp-Source: AGHT+IGDsBLTdJs2riGur1Ty+BjRpwOEXkzrkRmF9dnztSZ2NJZ03feNWldmPVxwj7btIXbhZQOkmA==
+X-Received: by 2002:adf:b611:0:b0:33e:1904:fd37 with SMTP id f17-20020adfb611000000b0033e1904fd37mr2871544wre.70.1709397547905;
+        Sat, 02 Mar 2024 08:39:07 -0800 (PST)
+Received: from gmail.com (243.red-88-14-45.dynamicip.rima-tde.net. [88.14.45.243])
+        by smtp.gmail.com with ESMTPSA id d15-20020a5d644f000000b0033e052be14fsm7602451wrw.98.2024.03.02.08.39.02
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 02 Mar 2024 08:32:24 -0800 (PST)
-Subject: Re: [PATCH] sequencer: allow disabling conflict advice
-To: Philippe Blain via GitGitGadget <gitgitgadget@gmail.com>,
- git@vger.kernel.org
-References: <pull.1682.git.1709396291693.gitgitgadget@gmail.com>
-Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
- Elijah Newren <newren@gmail.com>, Phillip Wood <phillip.wood@dunelm.org.uk>,
- ZheNing Hu <adlternative@gmail.com>
-From: Philippe Blain <levraiphilippeblain@gmail.com>
-Message-ID: <16c57c5f-6296-041e-d747-881c5c670834@gmail.com>
-Date: Sat, 2 Mar 2024 11:32:23 -0500
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:78.0)
- Gecko/20100101 Thunderbird/78.14.0
+        Sat, 02 Mar 2024 08:39:07 -0800 (PST)
+Message-ID: <cf978790-4885-4103-946d-10f807048441@gmail.com>
+Date: Sat, 2 Mar 2024 17:38:57 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-In-Reply-To: <pull.1682.git.1709396291693.gitgitgadget@gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: fr
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] test-lib-functions: simplify `test_file_not_empty`
+ failure message
+Content-Language: en-US
+To: Eric Sunshine <ericsunshine@charter.net>, git@vger.kernel.org
+Cc: Junio C Hamano <gitster@pobox.com>, Aryan Gupta <garyan447@gmail.com>,
+ Eric Sunshine <sunshine@sunshineco.com>
+References: <20240301204922.40304-1-ericsunshine@charter.net>
+From: =?UTF-8?Q?Rub=C3=A9n_Justo?= <rjusto@gmail.com>
+In-Reply-To: <20240301204922.40304-1-ericsunshine@charter.net>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-Hi, 
-
-Le 2024-03-02 à 11:18, Philippe Blain via GitGitGadget a écrit :
-> From: Philippe Blain <levraiphilippeblain@gmail.com>
+On Fri, Mar 01, 2024 at 03:49:22PM -0500, Eric Sunshine wrote:
+> From: Eric Sunshine <sunshine@sunshineco.com>
 > 
-> Allow disabling the advice shown when a squencer operation results in a
-> merge conflict through a new config 'advice.sequencerConflict'.
+> The function `test_file_not_empty` asserts that a file exists and is not
+> empty. When the assertion fails, it complains:
 > 
-> Update the tests accordingly. Note that the body of the second test in
-> t3507-cherry-pick-conflict.sh is enclosed in double quotes, so we must
-> escape them in the added line.
+>     'foo' is not a non-empty file.
 > 
-> Signed-off-by: Philippe Blain <levraiphilippeblain@gmail.com>
+> which is difficult to interpret due to the double-negative. To make it
+> easier to understand the problem, simplify the message by dropping the
+> double-negative and stating the problem more directly:
+> 
+>     'foo' is empty but should not be
+> 
+> (The full-stop is also dropped from the message to reflect the style of
+> messages issued by other `test_path_*` functions.)
+> 
+> Note: Technically, the revised message is slightly less accurate since
+> the function asserts both that the file exists and that it is non-empty,
+> but the new message talks only about the emptiness of the file, not
+> whether it exists. A more accurate message might be "'foo' is empty but
+> should not be (or doesn't exist)", but that's unnecessarily long-winded
+> and adds little information that the test author couldn't discover by
+> noticing the file's absence.
 
-I meant to CC your addresses in https://lore.kernel.org/git/pull.1682.git.1709396291693.gitgitgadget@gmail.com/
-which I'm responding to, but the CC's did not get through somehow.
+To improve the accuracy of the message, I wonder if it is worth doing
+what we do in test_must_be_empty:
 
-Cheers,
+	test_must_be_empty () {
+		test "$#" -ne 1 && BUG "1 param"
+		test_path_is_file "$1" &&
+		if test -s "$1"
+		then
+			echo "'$1' is not empty, it contains:"
+			cat "$1"
+			return 1
+		fi
+	}
 
-Philippe.
+Perhaps:
+
+diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
+index b5eaf7fdc1..5b5ee0dc1d 100644
+--- a/t/test-lib-functions.sh
++++ b/t/test-lib-functions.sh
+@@ -989,9 +989,10 @@ test_dir_is_empty () {
+ # Check if the file exists and has a size greater than zero
+ test_file_not_empty () {
+        test "$#" = 2 && BUG "2 param"
++       test_path_is_file "$1" &&
+        if ! test -s "$1"
+        then
+-               echo "'$1' is not a non-empty file."
++		echo "'$1' is empty but should not be"
+                false
+        fi
+ }
+
+> 
+> Signed-off-by: Eric Sunshine <sunshine@sunshineco.com>
+> ---
+> 
+> This is a tangential follow-up to the discussion at [1].
+> 
+> [1]: https://lore.kernel.org/git/CAPig+cQ+JNBwydUq0CsTZGs8mHs3L3fJDuSosd+-WdKwWWw=gg@mail.gmail.com/
+> 
+>  t/test-lib-functions.sh | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
+> index b5eaf7fdc1..9e97b324c5 100644
+> --- a/t/test-lib-functions.sh
+> +++ b/t/test-lib-functions.sh
+> @@ -991,7 +991,7 @@ test_file_not_empty () {
+>  	test "$#" = 2 && BUG "2 param"
+>  	if ! test -s "$1"
+>  	then
+> -		echo "'$1' is not a non-empty file."
+> +		echo "'$1' is empty but should not be"
+>  		false
+>  	fi
+>  }
+> -- 
+> 2.44.0
+> 
