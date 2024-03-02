@@ -1,63 +1,63 @@
-Received: from mail-ej1-f42.google.com (mail-ej1-f42.google.com [209.85.218.42])
+Received: from mail-ej1-f48.google.com (mail-ej1-f48.google.com [209.85.218.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EC5712E58
-	for <git@vger.kernel.org>; Sat,  2 Mar 2024 09:57:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C158E154B1
+	for <git@vger.kernel.org>; Sat,  2 Mar 2024 09:58:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709373481; cv=none; b=dFVObbrGKlECom9NufTGQTwhulC97EG876pgMcfte0o6tIoIo+eqrxsqShjozx+Fuqvep4yYGXNH5iKJO70BUxV9mq9wf8JdMGRqUXfIu7WZvmJUFHB7gaN03xnjmKyjoBOOvM7XqviU/9SqnAwBjrUyu3frCdf8yW1Okq2rQWk=
+	t=1709373482; cv=none; b=ByL1XxJnSHPu0X49E9QUZ0euYVddMMPd9x6yY8IHpH+TbnIpDlOul3fd2hd8JPJ85gFwR/kGdviFjgnbfdfr0nLQroGW5hA3Pw6GJdbISrdAuDY/+kSVXswp0klvwgkch4k6owhdP9EDU9f8F5KT9xv8rThE4s5EVP7mSqZgu0Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709373481; c=relaxed/simple;
-	bh=8TskW4uwpX02HUIQtnlWjXiP2Pcx/8WHLrZbXlQ4g6I=;
+	s=arc-20240116; t=1709373482; c=relaxed/simple;
+	bh=eY0A5gUvzXxiLB43BBLnIzkZDNk1Kxzcqun99OFP60I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aQJsGGZ0MUTje6WlwwGlw65k03iaZ3hcBNSn01ZjN3bxFzU5l/jjiy/rgMGfe3nodL48TyZZfYMMH1tIk8yPwFTPU7KCZtCe+IIQrGm7Dt/nP6gJogoZfv125Fa7iHcUjcNjEyptvN01km83SaJdZu4CKSJ3yhBSbH7iIhzEqDo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=aHwqkQXe; arc=none smtp.client-ip=209.85.218.42
+	 MIME-Version; b=XHI86ECQ8n7UokO7RsaRYvAvyYIK39L9JZipwq/j/fNfp2D/+2FLxo6A4A/ELcUY/f1NkO6VFk5FvKFT5oFt97DrCvCAkzdfVaqQHDPMGan+3h45Cs1yVa3UEc4Zn1Oav6f7zIZx0ZsOd9uUgLe98RQEmteKVhlf1UUvp8IlDeA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=DUh7BFcP; arc=none smtp.client-ip=209.85.218.48
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="aHwqkQXe"
-Received: by mail-ej1-f42.google.com with SMTP id a640c23a62f3a-a2f22bfb4e6so503876566b.0
-        for <git@vger.kernel.org>; Sat, 02 Mar 2024 01:57:58 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DUh7BFcP"
+Received: by mail-ej1-f48.google.com with SMTP id a640c23a62f3a-a26fa294e56so540156566b.0
+        for <git@vger.kernel.org>; Sat, 02 Mar 2024 01:58:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1709373477; x=1709978277; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1709373479; x=1709978279; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=NkCOicRitwdj1WoSbtBAOQFj9VVvtAlnumdAohx+DRM=;
-        b=aHwqkQXecOIn4zCVwGUdDpnUzBP6Iqx6kIMSq+D+fSeuPCDaa/LfmRW3qm/ZPbr7s0
-         e79CH5RebMOmDHi6q4loAIOSxgre8DYxQ7n8zQjwkIUQPD2xVV0WMgmgB06+g679ZyuG
-         cYA5gFysnhvNYACp9v7dzpK3lcAVZKF+303Qd7HnqS/a8XerWbVGEh8mYlgf76Z3Fw7a
-         OiapNsj3jy9LMzaTPVHC2JPBbW+MLSmQyfXbeuZiUJ/vDxlLYGdbPyBizMav7Dcna0Mi
-         scNjZgLlv+EqzpWzb9cJZxN54+enp6YwcXj9DYKmaQzZIbvf8K1V4KAKkO7S4goAlkYe
-         H91w==
+        bh=laUOs8uce5ii0sJ1QLxlNgGIaIpNatRA3GTYB5zPncU=;
+        b=DUh7BFcP0vKVRZ+Z+At0UvLo0gseHlKTDPMNyCWD4C/lxsL/r5AfPMQalOaV0bAMm+
+         Nz+enxVLGQhS8rmKJuhqAiDHSiZUs6SqZxCZtCdvnZME6qiTINNtQpkJDyxt/DKy6S6n
+         8PwJ0D/i7l4GQcDhqOKSdjIEvZ4kjJF236RNji8qgtibZHjlP9NI3JQSpFTeveboMNKY
+         mDGLFToOHEKubMQJ2cZa2rgHY4bGVlYXxZCLhzGgq5Dwg1AH/QCwC7+0rLQ4gpErZ22m
+         qqzcmkQ+TjlzUkmZmKsrBgaL6PkYxExuuAl2KSqVscYeStlffdrHK8V4cqldDrBvaSia
+         Is0A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1709373477; x=1709978277;
+        d=1e100.net; s=20230601; t=1709373479; x=1709978279;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=NkCOicRitwdj1WoSbtBAOQFj9VVvtAlnumdAohx+DRM=;
-        b=kp4zKBbrSohiiFS9CtCUeCXtgjYJecQF9qoyW4HMOTWx0x5b433G93dp+e6MNS8xpf
-         pBXeLr1RtVyWOtoiU/1/jCghmRYWGq2/AYEiD2J/oPljZR2DG5ZvnLe5I/YaTQ4wR5nP
-         l9AcI2QmI5Hu0cOgnHzIiHn+5XXs5JQCIjM3DIVN0ytLG/hnPdnIo5GtUsBMXMp55zBv
-         0gPhMGN4dC58elLeUYucJsRgia+wzEA8O+nNWI8sluPoxBgKBmx9EXB0hdFjfL7qghyA
-         zZTTYSp7L06H01PzNyhY9/SINvSl1SF45zWZPLbLn9ViLxgUj1bNkZRSc3UwFuFPtqm7
-         8gqw==
-X-Gm-Message-State: AOJu0YzJVIhh0Npy8fM9/ev8CVpAmamLLhlwZagdNetNsVGM4hO6hllp
-	WjTy04bytcs6zGCBU2IKcXZIfD1YbDEQURzft50RkNCNNkP6WraA
-X-Google-Smtp-Source: AGHT+IFK6ZTnTPQABSrardPVb30EZiGspH30JWnW1lb+9xkA1AFTl3Rn3nAzcFFzzSxYCXYhg4GqrQ==
-X-Received: by 2002:a17:906:264b:b0:a43:d1a5:e907 with SMTP id i11-20020a170906264b00b00a43d1a5e907mr2861491ejc.58.1709373477085;
-        Sat, 02 Mar 2024 01:57:57 -0800 (PST)
+        bh=laUOs8uce5ii0sJ1QLxlNgGIaIpNatRA3GTYB5zPncU=;
+        b=tfBV5jZAsbJ+NJGA16gwSA/lSsxo89eH8JmCXPoQY04c5KfEVnpI4/yxvVHo/gMHFk
+         Y0ERatfyPRmsyYWqUJaBFH6NHWIGWE9Fy7FGMFEXkDuw7STiIZwfg4/m789eu9n6/ydx
+         r7/KzeZf3fSnPOtGu6LUF8OSLxyI7kRx9zGbIXgjTY4kXPAIVKZT//bM7v6rev8G9ZEP
+         RJC4tUKkam1zzSLxeSo03RHQvGn8UBncw+73Znv6ELJBgm/cYYT8gp3sele9P/f5U2dT
+         tRF/z7mTH8VTNTLz+oI3WuFDL50DEQY7l9ng4UQZ24tv3JUtQ2Q1MMKhAZzyQrtg1jOj
+         KIUg==
+X-Gm-Message-State: AOJu0YzU0nL4hi20PDJ1G0/qwcCpaS7HWGBfQt0w9oun0VRa23BZqAW8
+	h9udiQF4nHhYSlshOTInrGpGiLmrfnHU7sVTQLtHI1pNt0lgqkpZ1H0FvUgOJvU=
+X-Google-Smtp-Source: AGHT+IFLOQM1G5SkHLJXeW//Zmpzq3WnI6NqFk/IemMyJcpO6mItMUVvVftShpae5sB+yB6GUn0p0g==
+X-Received: by 2002:a17:906:c2c9:b0:a44:c510:44b3 with SMTP id ch9-20020a170906c2c900b00a44c51044b3mr1366316ejb.61.1709373478834;
+        Sat, 02 Mar 2024 01:57:58 -0800 (PST)
 Received: from laptop.fritz.box ([2a02:2455:826e:4900:f403:1f77:2b7e:2436])
-        by smtp.gmail.com with ESMTPSA id o9-20020a17090608c900b00a42f36174c7sm2555693eje.92.2024.03.02.01.57.56
+        by smtp.gmail.com with ESMTPSA id o9-20020a17090608c900b00a42f36174c7sm2555693eje.92.2024.03.02.01.57.58
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 02 Mar 2024 01:57:56 -0800 (PST)
+        Sat, 02 Mar 2024 01:57:58 -0800 (PST)
 From: Karthik Nayak <karthik.188@gmail.com>
 To: oliver@schinagl.nl
 Cc: git@vger.kernel.org,
 	Karthik Nayak <karthik.188@gmail.com>
-Subject: [PATCH 1/2] t4034: extract out `diff_with_opts`
-Date: Sat,  2 Mar 2024 10:57:50 +0100
-Message-ID: <20240302095751.123138-2-karthik.188@gmail.com>
+Subject: [PATCH 2/2] diff: add 'diff.wordDiff' config option
+Date: Sat,  2 Mar 2024 10:57:51 +0100
+Message-ID: <20240302095751.123138-3-karthik.188@gmail.com>
 X-Mailer: git-send-email 2.43.1
 In-Reply-To: <20240302095751.123138-1-karthik.188@gmail.com>
 References: <a7be415d-5005-4fa7-9b2e-1974b7439a81@schinagl.nl>
@@ -70,226 +70,148 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-The current `word_diff` function in t4034 uses the arguments provided to
-obtain the diff and compare them.
-
-Let's rename this to `diff_with_opts` and add a new function `word_diff`
-which is specific to the `--word-diff=` option. This function will act
-as a wrapper around `diff_with_opts`.
-
-In the following commit, when we introduce a config option for
-`--word-diff`, we'd want to test the existing tests also with the config
-option and at this point we can expand `word_diff` to test both config
-and command line options.
+The git-diff(1) command supports the `--word-diff` which allows the
+users to specify how to delimit word diffs. Provide this option also as
+a config param 'diff.wordDiff'.
 
 Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
 ---
- t/t4034-diff-words.sh | 54 +++++++++++++++++++++++--------------------
- 1 file changed, 29 insertions(+), 25 deletions(-)
+ Documentation/config/diff.txt |  4 +++
+ diff.c                        | 50 +++++++++++++++++++++++++++--------
+ t/t4034-diff-words.sh         | 11 ++++++--
+ 3 files changed, 52 insertions(+), 13 deletions(-)
 
+diff --git a/Documentation/config/diff.txt b/Documentation/config/diff.txt
+index bd5ae0c337..00459beee2 100644
+--- a/Documentation/config/diff.txt
++++ b/Documentation/config/diff.txt
+@@ -225,3 +225,7 @@ diff.colorMovedWS::
+ 	When moved lines are colored using e.g. the `diff.colorMoved` setting,
+ 	this option controls the `<mode>` how spaces are treated
+ 	for details of valid modes see '--color-moved-ws' in linkgit:git-diff[1].
++
++diff.wordDiff::
++	Show a word diff, using the `<mode>` to delimit changed words.
++	For details of valid modes see '--word-diff' in linkgit:git-diff[1].
+diff --git a/diff.c b/diff.c
+index e50def4538..050d83ef85 100644
+--- a/diff.c
++++ b/diff.c
+@@ -69,6 +69,7 @@ static int diff_dirstat_permille_default = 30;
+ static struct diff_options default_diff_options;
+ static long diff_algorithm;
+ static unsigned ws_error_highlight_default = WSEH_NEW;
++static int diff_word_diff_default;
+ 
+ static char diff_colors[][COLOR_MAXLEN] = {
+ 	GIT_COLOR_RESET,
+@@ -209,6 +210,23 @@ int git_config_rename(const char *var, const char *value)
+ 	return git_config_bool(var,value) ? DIFF_DETECT_RENAME : 0;
+ }
+ 
++static int parse_word_diff_value(const char *value)
++{
++	if (!value)
++		return -1;
++	else if (!strcmp(value, "plain"))
++		return DIFF_WORDS_PLAIN;
++	else if (!strcmp(value, "color")) {
++		return DIFF_WORDS_COLOR;
++	}
++	else if (!strcmp(value, "porcelain"))
++		return DIFF_WORDS_PORCELAIN;
++	else if (!strcmp(value, "none"))
++		return DIFF_WORDS_NONE;
++
++	return -1;
++}
++
+ long parse_algorithm_value(const char *value)
+ {
+ 	if (!value)
+@@ -452,6 +470,18 @@ int git_diff_ui_config(const char *var, const char *value,
+ 		return 0;
+ 	}
+ 
++	if (!strcmp(var, "diff.worddiff")) {
++		if (!value)
++			return config_error_nonbool(var);
++		diff_word_diff_default = parse_word_diff_value(value);
++		if (diff_word_diff_default < 0)
++			return error(_("unknown value for config '%s': %s"),
++				     var, value);
++		if (diff_word_diff_default == DIFF_WORDS_COLOR)
++			diff_use_color_default = 1;
++		return 0;
++	}
++
+ 	if (git_color_config(var, value, cb) < 0)
+ 		return -1;
+ 
+@@ -4724,6 +4754,7 @@ void repo_diff_setup(struct repository *r, struct diff_options *options)
+ 	options->use_color = diff_use_color_default;
+ 	options->detect_rename = diff_detect_rename_default;
+ 	options->xdl_opts |= diff_algorithm;
++	options->word_diff |= diff_word_diff_default;
+ 	if (diff_indent_heuristic)
+ 		DIFF_XDL_SET(options, INDENT_HEURISTIC);
+ 
+@@ -5504,21 +5535,18 @@ static int diff_opt_word_diff(const struct option *opt,
+ 			      const char *arg, int unset)
+ {
+ 	struct diff_options *options = opt->value;
++	int value;
+ 
+ 	BUG_ON_OPT_NEG(unset);
++
+ 	if (arg) {
+-		if (!strcmp(arg, "plain"))
+-			options->word_diff = DIFF_WORDS_PLAIN;
+-		else if (!strcmp(arg, "color")) {
+-			options->use_color = 1;
+-			options->word_diff = DIFF_WORDS_COLOR;
+-		}
+-		else if (!strcmp(arg, "porcelain"))
+-			options->word_diff = DIFF_WORDS_PORCELAIN;
+-		else if (!strcmp(arg, "none"))
+-			options->word_diff = DIFF_WORDS_NONE;
+-		else
++		value = parse_word_diff_value(arg);
++		if (value < 0)
+ 			return error(_("bad --word-diff argument: %s"), arg);
++		if (value == DIFF_WORDS_COLOR)
++			options->use_color = 1;
++
++		options->word_diff = value;
+ 	} else {
+ 		if (options->word_diff == DIFF_WORDS_NONE)
+ 			options->word_diff = DIFF_WORDS_PLAIN;
 diff --git a/t/t4034-diff-words.sh b/t/t4034-diff-words.sh
-index 74586f3813..4f70aa6e9f 100755
+index 4f70aa6e9f..2cc391c339 100755
 --- a/t/t4034-diff-words.sh
 +++ b/t/t4034-diff-words.sh
-@@ -51,7 +51,7 @@ cat >expect.non-whitespace-is-word <<-EOF
- 	<GREEN>aeff = aeff * ( aaa )<RESET>
- EOF
- 
--word_diff () {
-+diff_with_opts () {
- 	pre=$(git rev-parse --short $(git hash-object pre)) &&
+@@ -56,12 +56,19 @@ diff_with_opts () {
  	post=$(git rev-parse --short $(git hash-object post)) &&
  	test_must_fail git diff --no-index "$@" pre post >output &&
-@@ -60,6 +60,10 @@ word_diff () {
+ 	test_decode_color <output >output.decrypted &&
+-	sed -e "2s/index [^ ]*/index $pre..$post/" expect >expected
++	sed -e "2s/index [^ ]*/index $pre..$post/" expect >expected &&
  	test_cmp expected output.decrypted
  }
  
-+word_diff () {
-+	diff_with_opts "--word-diff=$1" $(echo "$@" | cut -d' ' -s -f 2-)
-+}
-+
- test_language_driver () {
- 	lang=$1
- 	test_expect_success "diff driver '$lang'" '
-@@ -67,11 +71,11 @@ test_language_driver () {
- 			"$TEST_DIRECTORY/t4034/'"$lang"'/post" \
- 			"$TEST_DIRECTORY/t4034/'"$lang"'/expect" . &&
- 		echo "* diff='"$lang"'" >.gitattributes &&
--		word_diff --color-words
-+		diff_with_opts --color-words
- 	'
- 	test_expect_success "diff driver '$lang' in Islandic" '
- 		LANG=is_IS.UTF-8 LANGUAGE=is LC_ALL="$is_IS_locale" \
--		word_diff --color-words
-+		diff_with_opts --color-words
- 	'
+ word_diff () {
+-	diff_with_opts "--word-diff=$1" $(echo "$@" | cut -d' ' -s -f 2-)
++	# Capture the rest of the arguments to passthrough.
++	rest=$(echo "$@" | cut -d' ' -s -f 2-) &&
++	# Test via the config route.
++	git config diff.wordDiff $1 &&
++	diff_with_opts $rest &&
++	git config --unset diff.wordDiff &&
++	# Test via the command option route.
++	diff_with_opts "--word-diff=$1" $rest
  }
  
-@@ -81,7 +85,7 @@ test_expect_success setup '
- 	git config diff.color.func magenta
- '
- 
--test_expect_success 'set up pre and post with runs of whitespace' '
-+test_expect_success 'setup pre and post with runs of whitespace' '
- 	cp pre.simple pre &&
- 	cp post.simple post
- '
-@@ -101,9 +105,9 @@ test_expect_success 'word diff with runs of whitespace' '
- 
- 		<GREEN>aeff = aeff * ( aaa )<RESET>
- 	EOF
--	word_diff --color-words &&
--	word_diff --word-diff=color &&
--	word_diff --color --word-diff=color
-+	diff_with_opts --color-words &&
-+	word_diff color &&
-+	diff_with_opts --color --word-diff=color
- '
- 
- test_expect_success '--word-diff=porcelain' '
-@@ -127,7 +131,7 @@ test_expect_success '--word-diff=porcelain' '
- 		+aeff = aeff * ( aaa )
- 		~
- 	EOF
--	word_diff --word-diff=porcelain
-+	word_diff porcelain
- '
- 
- test_expect_success '--word-diff=plain' '
-@@ -145,8 +149,8 @@ test_expect_success '--word-diff=plain' '
- 
- 		{+aeff = aeff * ( aaa )+}
- 	EOF
--	word_diff --word-diff=plain &&
--	word_diff --word-diff=plain --no-color
-+	diff_with_opts --word-diff=plain &&
-+	word_diff plain --no-color
- '
- 
- test_expect_success '--word-diff=plain --color' '
-@@ -164,7 +168,7 @@ test_expect_success '--word-diff=plain --color' '
- 
- 		<GREEN>{+aeff = aeff * ( aaa )+}<RESET>
- 	EOF
--	word_diff --word-diff=plain --color
-+	word_diff plain --color
- '
- 
- test_expect_success 'word diff without context' '
-@@ -181,17 +185,17 @@ test_expect_success 'word diff without context' '
- 
- 		<GREEN>aeff = aeff * ( aaa )<RESET>
- 	EOF
--	word_diff --color-words --unified=0
-+	diff_with_opts --color-words --unified=0
- '
- 
- test_expect_success 'word diff with a regular expression' '
- 	cp expect.letter-runs-are-words expect &&
--	word_diff --color-words="[a-z]+"
-+	diff_with_opts --color-words="[a-z]+"
- '
- 
- test_expect_success 'word diff with zero length matches' '
- 	cp expect.letter-runs-are-words expect &&
--	word_diff --color-words="[a-z${LF}]*"
-+	diff_with_opts --color-words="[a-z${LF}]*"
- '
- 
- test_expect_success 'set up a diff driver' '
-@@ -204,12 +208,12 @@ test_expect_success 'set up a diff driver' '
- 
- test_expect_success 'option overrides .gitattributes' '
- 	cp expect.letter-runs-are-words expect &&
--	word_diff --color-words="[a-z]+"
-+	diff_with_opts --color-words="[a-z]+"
- '
- 
- test_expect_success 'use regex supplied by driver' '
- 	cp expect.non-whitespace-is-word expect &&
--	word_diff --color-words
-+	diff_with_opts --color-words
- '
- 
- test_expect_success 'set up diff.wordRegex option' '
-@@ -218,7 +222,7 @@ test_expect_success 'set up diff.wordRegex option' '
- 
- test_expect_success 'command-line overrides config' '
- 	cp expect.letter-runs-are-words expect &&
--	word_diff --color-words="[a-z]+"
-+	diff_with_opts --color-words="[a-z]+"
- '
- 
- test_expect_success 'command-line overrides config: --word-diff-regex' '
-@@ -236,12 +240,12 @@ test_expect_success 'command-line overrides config: --word-diff-regex' '
- 
- 		<GREEN>{+aeff = aeff * ( aaa+}<RESET> )
- 	EOF
--	word_diff --color --word-diff-regex="[a-z]+"
-+	diff_with_opts --color --word-diff-regex="[a-z]+"
- '
- 
- test_expect_success '.gitattributes override config' '
- 	cp expect.non-whitespace-is-word expect &&
--	word_diff --color-words
-+	diff_with_opts --color-words
- '
- 
- test_expect_success 'setup: remove diff driver regex' '
-@@ -263,7 +267,7 @@ test_expect_success 'use configured regex' '
- 
- 		<GREEN>aeff = aeff * ( aaa<RESET> )
- 	EOF
--	word_diff --color-words
-+	diff_with_opts --color-words
- '
- 
- test_expect_success 'test parsing words for newline' '
-@@ -279,7 +283,7 @@ test_expect_success 'test parsing words for newline' '
- 		<CYAN>@@ -1 +1 @@<RESET>
- 		aaa (aaa) <GREEN>aaa<RESET>
- 	EOF
--	word_diff --color-words="a+"
-+	diff_with_opts --color-words="a+"
- '
- 
- test_expect_success 'test when words are only removed at the end' '
-@@ -295,7 +299,7 @@ test_expect_success 'test when words are only removed at the end' '
- 		<CYAN>@@ -1 +1 @@<RESET>
- 		(<RED>:<RESET>
- 	EOF
--	word_diff --color-words=.
-+	diff_with_opts --color-words=.
- '
- 
- test_expect_success '--word-diff=none' '
-@@ -312,7 +316,7 @@ test_expect_success '--word-diff=none' '
- 		-(:
- 		+(
- 	EOF
--	word_diff --word-diff=plain --word-diff=none
-+	word_diff plain --word-diff=none
- '
- 
- test_expect_success 'unset default driver' '
-@@ -363,7 +367,7 @@ test_expect_success 'word-diff with diff.sbe' '
- 	[-b-]{+c+}
- 	EOF
- 	test_config diff.suppress-blank-empty true &&
--	word_diff --word-diff=plain
-+	word_diff plain
- '
- 
- test_expect_success 'word-diff with no newline at EOF' '
-@@ -379,7 +383,7 @@ test_expect_success 'word-diff with no newline at EOF' '
- 	@@ -1 +1 @@
- 	a a [-a-]{+ab+} a a
- 	EOF
--	word_diff --word-diff=plain
-+	word_diff plain
- '
- 
- test_expect_success 'setup history with two files' '
+ test_language_driver () {
 -- 
 2.43.GIT
 
