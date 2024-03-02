@@ -1,141 +1,114 @@
-Received: from mout.web.de (mout.web.de [212.227.17.11])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f53.google.com (mail-lf1-f53.google.com [209.85.167.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88DFF3FE4E
-	for <git@vger.kernel.org>; Sat,  2 Mar 2024 22:00:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.11
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C20DF1E86C
+	for <git@vger.kernel.org>; Sat,  2 Mar 2024 23:49:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709416807; cv=none; b=ZyxVHPzonpjoECcHNWs5tWMJTvDlkAB9ls4HapG4e4Alt3/EK1errMXSGD/qJW8h+9OtoOuzQPs20nEMrRNkKvCrmFVk6FX+9wjd116z/db1qr0FF/+TTB9CxwlBBWQcT5dGgiTOnE+l2KAL2GpfaPiJ48mtNPpypP6DvBFECvs=
+	t=1709423342; cv=none; b=THC/OxjvRL/a230Qtsc6rDTeBxZgqam4cEbV614NggKhFKGEl2Aq9pzBo58k8xDaAB2dt6t31kkxi5BbktuVewL1t8sf+S50HjRRIMeoyBEtQ1Z9+otFqE0tsSIgy0JsGfFHY3SP/2ZTN17KJeH8xorzuL6fE/Hl7O+TDAEmF5o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709416807; c=relaxed/simple;
-	bh=ajCr6WMHveYaLNXEVs+bj2ciTXjv5vzLjng80OdYTkY=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:References:
-	 In-Reply-To:Content-Type; b=PzkKZ7Zw7p5aPgkvtawJoY6wm/ylRtBne+FHDrZ0Puk4JesjiUDK7Y2V9OvxJlJo2y0bSRosAoHnn6CodUFhUexdIpSxJ4hQh6Gu/WOj7YHupDmQl+Sl+SVC3/Ax7bFSWitTlZ7Qv91X39EzYhVi3WKQ1X2fvbkG6rd/Ouu4mqY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b=ngI76Xoi; arc=none smtp.client-ip=212.227.17.11
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
+	s=arc-20240116; t=1709423342; c=relaxed/simple;
+	bh=ao3+ALloN8+yJLkYvdIjYAUs0htANODHMCHSeHuQOdg=;
+	h=From:To:Cc:Subject:References:Date:In-Reply-To:Message-ID:
+	 MIME-Version:Content-Type; b=cY/NGCI4009m9Yy1K8dqU6JlNUZsk8fXYBCofpPo6cFUupdKVUkRSNceRW8JsqCAx7ejoBDJGDM3pyQRdVTRMgW4YD8VOgR7Dss0GQH7o0eUMyTsDbIUtr4KBW+u9nt7YV+RhXsodn3jdyP2QMkdRWFXbUTcMAI5rgbCX1yp+XE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=GHV47oiA; arc=none smtp.client-ip=209.85.167.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b="ngI76Xoi"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de; s=s29768273;
-	t=1709416800; x=1710021600; i=l.s.r@web.de;
-	bh=ajCr6WMHveYaLNXEVs+bj2ciTXjv5vzLjng80OdYTkY=;
-	h=X-UI-Sender-Class:Date:From:Subject:To:References:In-Reply-To;
-	b=ngI76Xoi993J40cTxu+uaiDRc1A3X9Mf+bZA3HB1lcPqrg/EBz+Z+t3Q9vKqGJiO
-	 N4M9vPWl5uZBwhj4uHf43dKfXzQh35I8zCOSzHeV+qlW1RA36+8vgfupk/CwYHpX7
-	 zs5Jyx1KAsbdu7iSW/RdXiyNcBe4vQgonJjVJ3d0p/VBey5lcpvfewkFwdxcqNjjx
-	 t3YXG/76ge2ATSNoH3EqsAnX+v19r0k953ahn9Ogajyi+5uM+epFC5p4LpizDoGJG
-	 vjDTtOFUVENhPhUrtLaEs0IS6FHzB/kbbBKn0GzB5cn4G7IA2Ka+v1vz2J/yIAQ6y
-	 hNtf39ILGXQpVX0wdg==
-X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
-Received: from [192.168.178.29] ([79.203.19.211]) by smtp.web.de (mrweb105
- [213.165.67.124]) with ESMTPSA (Nemesis) id 1MBSB3-1raC0F2l6F-00DADh; Sat, 02
- Mar 2024 23:00:00 +0100
-Message-ID: <bd48f19b-0600-4e64-835b-98d3a97bb7f2@web.de>
-Date: Sat, 2 Mar 2024 23:00:00 +0100
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GHV47oiA"
+Received: by mail-lf1-f53.google.com with SMTP id 2adb3069b0e04-5131316693cso4202906e87.0
+        for <git@vger.kernel.org>; Sat, 02 Mar 2024 15:49:00 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1709423338; x=1710028138; darn=vger.kernel.org;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=ao3+ALloN8+yJLkYvdIjYAUs0htANODHMCHSeHuQOdg=;
+        b=GHV47oiA9xC8fzUBXNit91OM3uNHrpeVle36YUZK3KhV8Fl5+Wda7vn46lxiJgB9Ks
+         vDiEx7xWvmy8o7NV8ZSe1cQqd8vn+gjw4tKmzmWzbUo34KV7R/ud0e2tEzq8tevUc8R4
+         xk2nXsR0vV+O9htG9RR7EEKzm8SBcBU+wL0hqQm3q/sIIZ8vDeIBQ1iFtU1IS06R15Yj
+         5QU1MEf0/mLXvRLjAt6Fybbkn6H3JYkQwo9rxLeJQS3gN+ysSMqtm4VC5RcSJMjpuMon
+         pIXB2jMQkxnmQPtdX1zUzZeBm3espznT0vTbI8shXadYyV3syh4yRi+1ZAgCHGXd9SeQ
+         0iBg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1709423338; x=1710028138;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=ao3+ALloN8+yJLkYvdIjYAUs0htANODHMCHSeHuQOdg=;
+        b=NTKr6i+EZ2USr12RgSDBkJXwmMwaIzn+c5Ocr6gZTCYWYdLko/a7ozlokQqR+qIZNK
+         MhfgZ6ukPR8jU81aaPLZXMU6sMkGQYUCqlA9DlSAb4gOajE9lof0GImi+RRRNanadrit
+         /ij/tHBIl/XW3e3hYyzDsytlj1Sbk0HTTHTrsZc1j4fnPXP0H9JkLGl92ophm3sYweAd
+         58ydNR10I/OKVdhWc/Sg1it3na1fBD9X1ErM6EBPogJIAXj6JlTWP8KvtKeDfZMuuMlq
+         NEYhDd0JtrKV6owCpXkXdsq+I13T2iUTeoGvGbODp+UYP59Bj9w3LK5+fAO81MnTepzk
+         kpkA==
+X-Forwarded-Encrypted: i=1; AJvYcCXVG/R1NpDD1wSDFhWnFw6BS59rJQbs1nMaLuYZO7RvSC4GrdWCWtjxd4Ij+6QOQZ2xnUVSH6rFg9VqfOJ/6KjIjU9Y
+X-Gm-Message-State: AOJu0Yx8afUH9bxCT0Of+lnKavomkD4uaNJYZALoKVn6lqFClce53/Js
+	uz+3zIUxCaq2M4PPfXjQMiAqwQmKshfbmrDOk8r4ptKHaVjhO7nrCn/hr2tDKIQ=
+X-Google-Smtp-Source: AGHT+IHkweanJwKoJOtY8KYf9U9Q45kNKOEAkYVKXykZLQghvHyMHZJjwyhPNWQhnXCsaCfTsmUWog==
+X-Received: by 2002:a05:6512:39ce:b0:511:54a8:3adb with SMTP id k14-20020a05651239ce00b0051154a83adbmr5178149lfu.2.1709423338349;
+        Sat, 02 Mar 2024 15:48:58 -0800 (PST)
+Received: from osv.localdomain ([89.175.180.246])
+        by smtp.gmail.com with ESMTPSA id q28-20020ac246fc000000b005130ece9099sm1113148lfo.277.2024.03.02.15.48.57
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 02 Mar 2024 15:48:57 -0800 (PST)
+From: Sergey Organov <sorganov@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: =?utf-8?Q?Jean-No=C3=ABl?= AVILA <avila.jn@gmail.com>,
+  git@vger.kernel.org
+Subject: Re: [PATCH] clean: improve -n and -f implementation and documentation
+References: <xmqq34v6gswv.fsf@gitster.g>
+	<51a196c0-ea57-4ec5-99ea-c3f09cd90962@gmail.com>
+	<87frxam35f.fsf@osv.gnss.ru> <6033073.lOV4Wx5bFT@cayenne>
+	<87r0gs8kgw.fsf@osv.gnss.ru> <xmqqwmqkwdef.fsf@gitster.g>
+Date: Sun, 03 Mar 2024 02:48:57 +0300
+In-Reply-To: <xmqqwmqkwdef.fsf@gitster.g> (Junio C. Hamano's message of "Sat,
+	02 Mar 2024 13:07:52 -0800")
+Message-ID: <87bk7w8aae.fsf@osv.gnss.ru>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
-Subject: Re: [PATCH 3/3] t-ctype: do one test per class and char
-To: Christian Couder <christian.couder@gmail.com>,
- Josh Steadmon <steadmon@google.com>, git@vger.kernel.org,
- Phillip Wood <phillip.wood123@gmail.com>, Achu Luma <ach.lumap@gmail.com>
-References: <20240225112722.89221-1-l.s.r@web.de>
- <20240225112722.89221-4-l.s.r@web.de>
- <CAP8UFD0Wi3ot-t0Q7ruMauwj4zkMfd89Xr9SmxYa4eQ3=2VKOw@mail.gmail.com>
- <d96aaf45-f073-42d0-b69c-703393634848@web.de> <ZdzfYPim2SP22eeS@google.com>
- <CAP8UFD2t1KRo01eenK_RVndyVx5Vp9F4FepTgnR+mwhTGTvXnw@mail.gmail.com>
-Content-Language: en-US
-In-Reply-To: <CAP8UFD2t1KRo01eenK_RVndyVx5Vp9F4FepTgnR+mwhTGTvXnw@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:b74qPnzr7gDqnHcGzTXXbv1NPW4B2Z/zTTHrdndE9YxrHBKb85H
- dPzrtF8VClECH4yU0Jt7P8WOONaAYZbkgq2vhdZE5/1/QL0bKtD21B/wcIIIDjxG/mlbtGk
- TydAqoWUF4ZSIrGeEDt0XPbpDJCZOVfJzqh5cDIq1pgkrZ4EYM8jHfiI7p1+a3FPh0BxGaB
- q80By9EosIIuilVRMYDsQ==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:w/hnj3rOCzE=;1c2AwjO/l08nCTRMBZ9llRx9nM6
- BhnmCPWdxZ5kvQQP1pTl8Abnr6cCbyd6oyRJcBOfUXzUUZ/RhT9wGclHIWiPpw/dNrLZ5Ub0u
- 5cccF+HI7uFk6TC4H/zYll2uhs6tjspgUCdoBwx4hCvmQpeOTCmU5ZV5eQ+nqRCk36ZRSsj6N
- 6NTYV6i43zR1q+DwX5X+tqh87Sq9YWEKh3D+SXW71eVb8LrBNWuEAo3srg//hvLINUX65vJsM
- zqgdlGeto1UOAwg2LZ/7oVqYN7yGdCt5ZfCh/tdVUQZI47LRIXDseKzyKZMVOnF8EqqPy0RHA
- 6lY3Uc0NiKTVJ/ubVrxOgcZad0XLu5trIhJNudkMmmIxD98vtJpTXsXrt6tdwgDglfXcEym8E
- 67T/kmQnk69w3qNHI6IDqeSTBH9zXHOJNb4eiP6ILX4kivSEOCg8dY8ktByxhVe/h+mw5kAzq
- Tk8uUGsbUY4hMXXz4000/bikMRvQoHqeyLIQBdVJntVcJpMhChNsCKiKUbcoTmVkEE0Jr2nOZ
- Q85nEV1WQ8Y0SRu3M70X9+qt+8oRzZU7+JHx65VG/1DqBnJOI4M5ptdY0Z9+eaA701nDdqJR2
- 7mIU7RiwdmekNjgb/1fo9CIOUpRm6a+QGIiSdwmqO1DrZtv79MJaOyuB+fvXh2t8QqL6f0OyH
- YDlZeDcdz8nvChCVJM861vcdpYGNfnGYMXaTH1a8t9ydVGmr4arNGFjdAq1ntR2gyo+j/mMkP
- fFm5+P6Kx3cxuyLKfGC5P9XNuuZBhOLptU6RWMsVFddeIg+UoW1vzCNvQJOF1waXxSv6i+gQ5
- zdZwWBMhxSwDyt+cppl7e02u0ceK6lejHZw4KX+kToYBI=
+Content-Type: text/plain
 
-Am 27.02.24 um 11:04 schrieb Christian Couder:
-> On Mon, Feb 26, 2024 at 7:58=E2=80=AFPM Josh Steadmon <steadmon@google.c=
-om> wrote:
->>
->> On 2024.02.26 18:26, Ren=C3=A9 Scharfe wrote:
+Junio C Hamano <gitster@pobox.com> writes:
+
+> Sergey Organov <sorganov@gmail.com> writes:
 >
->>> The output is clean as well, but there's a lot of it.  Perhaps too muc=
-h.
->>> The success messages are boring, though, and if all checks pass then t=
-he
->>> only useful information is the status code.  A TAP harness like prove
->>> summarizes that nicely:
->>>
->>>    $ prove t/unit-tests/bin/t-ctype
->>>    t/unit-tests/bin/t-ctype .. ok
->>>    All tests successful.
->>>    Files=3D1, Tests=3D3598,  0 wallclock secs ( 0.08 usr +  0.00 sys =
-=3D  0.08 CPU)
->>>    Result: PASS
->>>
->>> Filtering out passing checks e.g. with "| grep -v ^ok" would help when
->>> debugging a test failure. I vaguely miss the --immediate switch from t=
-he
->>> regular test library, however.
+>>> Oh, sorry, I misinterpreted the patch. But yet, I'm not sure that
+>>> specifying that this is the default or not is really useful. If the
+>>> configuration was set to true, it is was a no-op. If set to false, no
+>>> message will appear.
 >>
->> Yeah, I agree here. It's a lot of output but it's almost always going t=
-o
->> be consumed by a test harness rather than a human, and it's easy to
->> filter out the noise if someone does need to do some manual debugging.
+>> I'm not sure either, and as it's not the topic of this particular patch,
+>> I'd like to delegate the decision on the issue.
 >
-> Yeah, I know about TAP harnesses like prove, but the most
-> straightforward way to run the unit tests is still `make unit-tests`
-> in the t/ directory. Also when you add or change some tests, it's a
-> good idea to run `make unit-tests` to see what the output is, so you
-> still have to see that output quite often when you work on tests and
-> going through 3598 of mostly useless output instead of just 14 isn't
-> nice.
+> It is very much spot on the topic of simplifying and clarifying the
+> code to unify these remaining two messages into a single one.
 
-I was starting the programs from t/unit-tests/bin/ individually because
-I didn't know 'make unit-tests' exists.  This is much nicer, thank you!
-Especially after adding 'DEFAULT_UNIT_TEST_TARGET =3D unit-tests-prove' to
-config.mak to complement the 'DEFAULT_TEST_TARGET =3D prove' I added long
-ago.  It would be even nicer if the former was the default when the
-latter is set.
+I'm inclined to be more against merging than for it, as for me it'd be
+confusing to be told that a configuration variable is set to true when I
+didn't set it, nor there is any way to figure where it is set, because
+in fact it isn't, and it's rather the default that is in use.
 
-As unit tests are added, their output is surely going to grow to
-multiple screens with or without prove, no?  So someone writing or
-debugging tests will still go back to starting then individually
-eventually.
+Overall, to me the messages are fine as they are (except -n that doesn't
+belong there), I don't see compelling reason to hide information from
+the user, and thus I won't propose patch that gets rid of one of them.
 
-The size of the output in itself is not a problem, I assume, but that
-most of it is useless -- details of successful tests are uninteresting.
-A test harness can aggregate the output, but prove annoyed me when used
-with the regular tests by also aggregating error output and only showing
-the numbers of failed tests.  Finding their names involved running the
-test script again without prove.  Turns out it has an option for that.
-Added 'GIT_PROVE_OPTS =3D --failures' to config.mak as well, will see if
-it helps.
+> And involving the --interactive that allows users a chance to
+> rethink and refrain from removing some to the equation would also be
+> worth doing in the same topic,
 
-Is it too much to ask developers to use a test harness?  Perhaps: It's
-yet another dependency and not enabled by default.
+Worth doing what? I'm afraid I lost the plot here, as --interactive
+still looks fine to me.
 
-What's the right level of aggregation and how do we achieve it?
-Grouping by class is natural and follows the test definition.  We
-could stop after patch 2.  Dunno.
+> even though it might not fit your immediate agenda of crusade against
+> --dry-run.
 
-Ren=C3=A9
+I'm hopefully crusading for --dry-run, not against, trying to get rid of
+the cause of the original confusion that started -n/-f controversy.
+
+Thanks,
+-- Sergey Organov
