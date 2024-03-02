@@ -1,137 +1,208 @@
-Received: from fout3-smtp.messagingengine.com (fout3-smtp.messagingengine.com [103.168.172.146])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f44.google.com (mail-lf1-f44.google.com [209.85.167.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2BAC2C870
-	for <git@vger.kernel.org>; Sat,  2 Mar 2024 19:58:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64E5640BE3
+	for <git@vger.kernel.org>; Sat,  2 Mar 2024 20:00:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709409494; cv=none; b=qzWNuEPgsp8/VSeApCWihhY16XuQ9U6VPmYpma6Wkr/zwxMqv9he2Q+j6j2jYunMgwj3mseimqgWU1Yzxq0O7OSzGScbUN/11FnPxEuP4KT8gFOaeA0qS12I4ZikQmfsihjovWkENoe6IrH5AsZ+ER0bgolqxN1Y7rYvrbarcNg=
+	t=1709409605; cv=none; b=VRbjkpARAhCX+oSYXUAoOjWXImLdZZwgYCISc5ijFKemxF/4w7YgOI9t7fJbwbnHqfLiULQOBPDoknXM4+Qr0AawgQyz/6GbaTYRCofq6Xi72Ko1+X7/2f6shPFZI63GhNTjySCkoDzMe7emyz93MHq2QlOCMekNRifxwRLgA8o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709409494; c=relaxed/simple;
-	bh=zn1HkOD+oZ1nHAxl1xq0HYCf5A+YoSSmUoL6SYpUrXQ=;
-	h=MIME-Version:Message-Id:In-Reply-To:References:Date:From:To:Cc:
-	 Subject:Content-Type; b=RyevnR4u/i2oWQ1+CD8EoHPf4yaySHkQxqXQcDdd0M03cHnx7UKlD80Fe5oPQ+LlW5KC9xiH5QmyEBfA6x3/g143nA5LmM0qpk+xWpeljqL50fJjGBLob1u3bp7jGZmt0KpU/Rbro45m05O84pKytZSTfzoDcU6jcZwJN0zeFvk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=khaugsbakk.name; spf=pass smtp.mailfrom=khaugsbakk.name; dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b=PzxpCgk+; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=qPiZ3IiS; arc=none smtp.client-ip=103.168.172.146
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=khaugsbakk.name
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=khaugsbakk.name
+	s=arc-20240116; t=1709409605; c=relaxed/simple;
+	bh=yY/7G/YrWSjf8pLcUzhv+b76S8rQ5RnEG3Bjo5vagMM=;
+	h=From:To:Cc:Subject:References:Date:In-Reply-To:Message-ID:
+	 MIME-Version:Content-Type; b=MAz/oJNHDI8uxixK05gRMkH9rux1Ai53tS7FDaSd/0WLo0YmhtgnKRpS78OamqRaCwQwS0Dx74Ahk8UwBiMr3Q3dp6ajVJ8nvgiMh1f91z/SoIdzXzsNNCZ7JIJSxD5P4b6MduJTvP9RcQL4sXG3KLcwoW4K1S+KmQ41GZlRA0c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=kONOm4tt; arc=none smtp.client-ip=209.85.167.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b="PzxpCgk+";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="qPiZ3IiS"
-Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
-	by mailfout.nyi.internal (Postfix) with ESMTP id E9FE913800B2;
-	Sat,  2 Mar 2024 14:58:10 -0500 (EST)
-Received: from imap49 ([10.202.2.99])
-  by compute1.internal (MEProxy); Sat, 02 Mar 2024 14:58:10 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=khaugsbakk.name;
-	 h=cc:cc:content-transfer-encoding:content-type:content-type
-	:date:date:from:from:in-reply-to:in-reply-to:message-id
-	:mime-version:references:reply-to:subject:subject:to:to; s=fm3;
-	 t=1709409490; x=1709495890; bh=3T5EOzVi/vxpnQs5m11aJP6DjV2J3iYo
-	GWCGNPjRZ1Q=; b=PzxpCgk+wSb8BNKClT9N8/V4T00b4Uu7uMBeCmpaO3e1MMgC
-	phE1a4kpoO40DXu0O0Pc73L4QT2CyXSUHUVVcIPiZDhL3PVrkyVqVAWHBSq3UFz1
-	+GMPupoVQYF5e7jpm8lLZVSpJg0hRl3zF0wjTwp0sgDWCAx5Whj0P+0m3FGlOc8p
-	touOOuCeb62t+eGg8xhVfjlpHriAFZHSplLGfIyelxCw5wPeJuPVMtOhG3iWw31I
-	1AAdZBjFP+Vjf8pyCShhAZbwkgdWcIHHbt6yoClvqdhPm2Dc15Ug3TR0eThOvZ6b
-	KtIVmUDHxjEEcRHzqSulu2Lc/9BVhzoiGyj3GA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1709409490; x=
-	1709495890; bh=3T5EOzVi/vxpnQs5m11aJP6DjV2J3iYoGWCGNPjRZ1Q=; b=q
-	PiZ3IiSKOEm2iuozmNjy9sidCfFP/+QaF5IZ4SRlzOVhU2n6CzEHqAAkrz7l55gt
-	PoYIFYFR+ThY4N81z4hMgxCilsgGUT0Mdvn6yPZ8ExtA//v+YVPW6lcZA57/51gp
-	K5/upUSPgZY2VNEp0N0ZV6WLx157PhoDZ3scL7TLjJNmOV2lO2xI/7xd34tuMQmq
-	ZN97QTV/eiWYfr/LcWdriI1U4R+tMpk3ZLx6Aj5D2Alkk7hEHujhBLAF6oDfw3BF
-	OY9m1aCy5bP7CKM1YbWrVrDYcDPd7hO1eWnrj+js8gbJRTxcSqVTSS3N1Ss7359k
-	dG+jDlFBan3NT56Rbqf3g==
-X-ME-Sender: <xms:0oTjZY-vms_KGKezVoR_4JD1A6MCTZA8MMgv_PLXJDD3V97772uswU8>
-    <xme:0oTjZQtWYYCM46BLL1hClKhcYE_UrDcVaFtMmgIpvrlEaUz5S6I_T2fd6uY0SX_Gb
-    5EzPOucqJ9voqN4Sg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrheefgddufedtucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    cujfgurhepofgfggfkjghffffhvfevufgtgfesthhqredtreerjeenucfhrhhomhepfdfm
-    rhhishhtohhffhgvrhcujfgruhhgshgsrghkkhdfuceotghouggvsehkhhgruhhgshgsrg
-    hkkhdrnhgrmhgvqeenucggtffrrghtthgvrhhnpedtkeduvedthfelueevheffhedvveei
-    ueeiheehudehveegueetteduuddtfeelueenucffohhmrghinhepkhgvrhhnvghlrdhorh
-    hgnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomheptgho
-    uggvsehkhhgruhhgshgsrghkkhdrnhgrmhgv
-X-ME-Proxy: <xmx:0oTjZeDcQ_AOXDezfj-ylhZfyHkULZ9_S2S65-70b3IJ7e2A-E_euA>
-    <xmx:0oTjZYe3uWjrPy-pd-2u0MlTpXj9p5-zURklFoYUGfBPZThVS0CBdw>
-    <xmx:0oTjZdMyrvCubQ2D1EgBkzIlotBzKguFtI0uHC-iKxAzr4YBHDZelw>
-    <xmx:0oTjZerzVtmGK1OZ_eFM2Neq8piztpYH-9GP98gyq9tbdIK8_XKPBQ>
-Feedback-ID: i2671468f:Fastmail
-Received: by mailuser.nyi.internal (Postfix, from userid 501)
-	id 82E1315A0092; Sat,  2 Mar 2024 14:58:10 -0500 (EST)
-X-Mailer: MessagingEngine.com Webmail Interface
-User-Agent: Cyrus-JMAP/3.11.0-alpha0-205-g4dbcac4545-fm-20240301.001-g4dbcac45
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kONOm4tt"
+Received: by mail-lf1-f44.google.com with SMTP id 2adb3069b0e04-5133d26632fso627186e87.2
+        for <git@vger.kernel.org>; Sat, 02 Mar 2024 12:00:03 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1709409601; x=1710014401; darn=vger.kernel.org;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=UqvatQONOLQNuz2ugX5Cg/mZAmmGfq0sUz7doTp/MYU=;
+        b=kONOm4ttX34Rb2m8uTVr0kRZieIlj6TGHXSzTcDQfk1n7TXxgMHY1VQqhMZu6HBybS
+         bXrbqkzWJkaAPZdNcyDTTm0TqD2N/3DHX+BPmjrPJ3iFfR2ykqR2dG1htzvpnmieKkJC
+         2p7q4vYgzX1SP71eXqcqC9qB8MQP8ioNRE73r1n3XRh481arT7ZVbCGa9KG+Lj8Fek2C
+         ppermeoulOFPq3wH9LvK5+zR5kkzbVj6VXdZPB9vt1IWWYya7IquS/gLDBtFsUaE6A76
+         S8mlYS51nG3sRY1NLWWi+qa1G+dqmoK3EzPW6QNQKlf9OMBrUt/p7voUn5c5aFD1f9tF
+         gGCA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1709409601; x=1710014401;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=UqvatQONOLQNuz2ugX5Cg/mZAmmGfq0sUz7doTp/MYU=;
+        b=lAxlE8ixtr1cPMOUic2MWw7GVE9RLoABFh+OXSxqeSORZBrnGb+WB2cKBqaYROes6z
+         6scxnGJWT9WKVyUiVHcCDEVBF7xiCz9YLw0m3pD+yRIaXesiw5Y6E23bYvBKv3bRrNdn
+         9wiawCuR4t/Xy0BPNBlpFg2PE/CFNMl+4ZZoxhr14qsdCwglAb0vzLhgYwu1ncm72cxW
+         QkA3qx6pjgD0kWldqboniytcrNHSZ0PG0hQY1mI5pc1wpqtz/kt62W8CyEF862AD5ZlM
+         xvHSxYmx3hzgvke3zD1CV6IWlQjnDJHCpMkmfXEJbKIP3kOPhadYq/KAXv0LjDeK8YLM
+         H8Pg==
+X-Gm-Message-State: AOJu0Ywaysfadycgp4r9/c9kqIsJOvPXefOnyfxZ3ehzah0s2FxSrIAQ
+	YVTJyhPxWway69GJK2ioQezUKr8i+4gO3Og89POEdbKf5vOifwogfWkciNgkoo4=
+X-Google-Smtp-Source: AGHT+IFwAQAL45/koWvoNxL2VNtLbQ1ebpQp9AeSnJfjk0ADRi+o1ktOVn6sTgCrlwcuVhUFHsoaVA==
+X-Received: by 2002:ac2:424a:0:b0:512:fd2a:872e with SMTP id m10-20020ac2424a000000b00512fd2a872emr3152709lfl.18.1709409600822;
+        Sat, 02 Mar 2024 12:00:00 -0800 (PST)
+Received: from osv.localdomain ([89.175.180.246])
+        by smtp.gmail.com with ESMTPSA id u13-20020ac25bcd000000b005132359c699sm1076017lfn.70.2024.03.02.12.00.00
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 02 Mar 2024 12:00:00 -0800 (PST)
+From: Sergey Organov <sorganov@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH] clean: improve -n and -f implementation and documentation
+References: <xmqq34v6gswv.fsf@gitster.g> <875xy76qe1.fsf@osv.gnss.ru>
+	<xmqqv864zjbf.fsf@gitster.g>
+Date: Sat, 02 Mar 2024 22:59:59 +0300
+In-Reply-To: <xmqqv864zjbf.fsf@gitster.g> (Junio C. Hamano's message of "Sat,
+	02 Mar 2024 08:31:48 -0800")
+Message-ID: <87wmqk8kw0.fsf@osv.gnss.ru>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Message-Id: <34bb249d-4a4d-4cc7-b737-bb18398341d0@app.fastmail.com>
-In-Reply-To: 
- <CAOLa=ZR6tN8eQhByaUobj3kS9wwYegsOQNT8cjZYA-YATJJt7w@mail.gmail.com>
-References: <a7be415d-5005-4fa7-9b2e-1974b7439a81@schinagl.nl>
- <20240302095751.123138-1-karthik.188@gmail.com> <xmqqedcszhty.fsf@gitster.g>
- <CAOLa=ZR6tN8eQhByaUobj3kS9wwYegsOQNT8cjZYA-YATJJt7w@mail.gmail.com>
-Date: Sat, 02 Mar 2024 20:57:38 +0100
-From: "Kristoffer Haugsbakk" <code@khaugsbakk.name>
-To: "Karthik Nayak" <karthik.188@gmail.com>
-Cc: oliver@schinagl.nl, git@vger.kernel.org,
- "Junio C Hamano" <gitster@pobox.com>
-Subject: Re: [PATCH 0/2] Support diff.wordDiff config
-Content-Type: text/plain;charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-Hi
+Junio C Hamano <gitster@pobox.com> writes:
 
-On Sat, Mar 2, 2024, at 19:02, Karthik Nayak wrote:
-> On Sat, Mar 2, 2024 at 6:03=E2=80=AFPM Junio C Hamano <gitster@pobox.c=
-om> wrote:
->>
->> Karthik Nayak <karthik.188@gmail.com> writes:
->>
->> > This patch series adds the diff.wordDiff config option. This mimics=
- the
->> > '--word-diff' option of `git-diff(1)`.
->>
->> Is it even be sensible to introduce this configuration variable in
->> the first place?  What would this do to users who set this variable
->> and use third-party or their own scripts that run "git diff" under
->> the hood?
+> Sergey Organov <sorganov@gmail.com> writes:
 >
-> This is definitely a good question to ask. I'm primarily not a user of=
- this
-> option, and this patch series was more of to start this discussion, ba=
-sed
-> on the request. I'm comfortable dropping the patch series too if it do=
-esn't
-> make much sense.
+>> What -n actually does in addition to its documented behavior is
+>> ignoring of configuration variable clean.requireForce, that makes
+>> sense provided -n prevents files removal anyway.
+>
+> There is another thing I noticed.
+>
+> This part to get rid of "config_set" does make sense.
+>
+>>  	git_config(git_clean_config, NULL);
+>> -	if (force < 0)
+>> -		force = 0;
+>> -	else
+>> -		config_set = 1;
+>
+> We used to think "force" variable is the master switch to do
+> anything , and requireForce configuration was a way to flip its
+> default to 0 (so that you need to set it to 1 again from the command
+> line).  This separates "force" (which can only given via the command
+> line) and "require_force" (which controls when the "force" is used)
+> and makes the logic simpler.
+>
+>>  	argc = parse_options(argc, argv, prefix, options, builtin_clean_usage,
+>>  			     0);
+>
+> However.
+>
+>> -	if (!interactive && !dry_run && !force) {
+>> -		if (config_set)
+>> -			die(_("clean.requireForce set to true and neither -i, -n, nor -f given; "
+>> +	/* Dry run won't remove anything, so requiring force makes no sense */
+>> +	if(dry_run)
+>> +		require_force = 0;
+>
+> I am not sure if this is making things inconsistent.
 
-This looks similar to the discussion from a [stash] topic:
+I believe things rather got more consistent, see below.
 
-=E2=80=A2 Proposed introducing config variables which change how `git st=
-ash
-  push` and `git stash save` behave (what they save)
-=E2=80=A2 Concern about how that could break third-party scripts
+>
+> Dry run will be harmless, and we can be lenient and not require
+> force.  But below, we do not require force when going interactive,
+> either.
 
-Like here it would be opt-in. But the user might have no idea what kind
-of scripts/programs that they use that happen to use git-stash(1).
+Except, unlike dry-run, interactive is not harmless, similar to -f.
 
-(That=E2=80=99s at least how I read the thread)
+> So we could instead add
+>
+> 	if (dry_run || interactive)
+> 		require_force = 0;
+>
+> above, drop the "&& !interactive" from the guard for the
+> clean.requireForce block.
 
-I guess the concern might be worse for git-stash(1) since it seems very
-natural to use that command in scripts in order to deal with a working
-tree that might be in a who-knows condition: just get these things out
-of the way so I can do what I want.
+That'd be less consistent, as dry-run is harmless, whereas neither force
+nor interactive are.
 
-=F0=9F=94=97 [stash]: https://lore.kernel.org/git/xmqq34tnyhhf.fsf@gitst=
-er.g/
+> Or we can go the opposite way.  We do not have to tweak
+> require_force at all based on other conditions.  Instead we can
+> update the guard below to check "!force && !interactive && !dry_run"
+> before entering the clean.requireForce block, no?
 
---=20
-Kristoffer Haugsbakk
+No, we do need to tweak require_force, as another if() that is inside
+and produces error message does in fact check for require_force being
+either negative or positive, i.e., non-zero.
+
+>
+> But the code after this patch makes me feel that it is somewhere in
+> the middle between these two optimum places.
+
+I believe it's rather right in the spot. I left '-i' to stay with '-f',
+as it was before the patch, as both are very distinct (even if in
+different manner) when compared to '-n', so now only '-n' is now treated
+separately.
+
+The very idea of dry-run is that it is orthogonal to any other behavior,
+so if I were designing it, I'd left bailing-out without -f or -i in
+place even if -n were given, to show what exactly would happen without
+-n. With new code it'd be as simple as removing "if (dry_run)
+require_force = 0" line that introduces the original dependency.
+
+>
+> Another thing.  Stepping back and thinking _why_ the code can treat
+> dry_run and interactive the same way (either to make them drop
+> require_force above, or neither of them contributes to the value of
+> require_force), if we are dropping "you didn't give me --dry-run" in
+> the error message below, we should also drop "you didn't give me
+> --interactive, either" as well, when complaining about the lack of
+> "--force".
+
+In fact, the new code rather keep treating -f and -i somewhat similarly,
+rather than -i and -n, intentionally.
+
+That said, if somebody is going to re-consider -f vs -i issue, they now
+have more cleaner code that doesn't involve -n anymore.
+
+> One possible objection I can think of against doing so is that it
+> might not be so obvious why "interactive" does not have to require
+> "force" (even though it is clearly obvious to me).  But if that were
+> the objection, then to somebody else "dry-run does not have to
+> require force" may equally not be so obvious (at least it wasn't so
+> obvious to me during the last round of this discussion).
+
+I'm not sure about interactive not requiring force, and I intentionally
+avoided this issue in the patch in question, though I think the patch
+makes it easier to reason about -i vs -f in the future by removing -n
+handling from the picture.
+
+>
+> So I can live without the "drop 'nor -i'" part I suggested in the
+> above.  We would not drop "nor -i" and add "nor --dry-run" back to
+> the message instead.
+
+I'm afraid we can't meaningfully keep -n (--dry-run) in the messages. As
+it stands, having -n there was a mistake right from the beginning.
+Please consider the original message, but without -i and -f, for the
+sake of the argument:
+
+ "clean.requireForce set to true and -n is not given; refusing to clean"
+
+to me it sounds like nonsense, as it suggests that if were given -n,
+we'd perform cleanup, that is simply false as no cleanup is ever
+performed once -n is there. Adding -i and -f back to the message
+somewhat blurs the problem, yet -n still does not belong there.
+
+> So from that angle, the message after this patch makes me feel that
+> it is somewhere in the middle between two more sensible places.
+
+I don't think so, see above. I rather believe that even if everything
+else in the patch were denied, the -n should be removed from the error
+message, so I did exactly that, and only that (i.e., didn't merge 2
+messages into one).
+
+Thanks,
+-- Sergey Organov
