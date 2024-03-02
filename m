@@ -1,160 +1,96 @@
-Received: from mail-wr1-f42.google.com (mail-wr1-f42.google.com [209.85.221.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E37D5680
-	for <git@vger.kernel.org>; Sat,  2 Mar 2024 16:39:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C0C52BB04
+	for <git@vger.kernel.org>; Sat,  2 Mar 2024 17:03:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709397551; cv=none; b=FRcDNU7qhpUiRFnVCbY7J7aiHgl/X474wlJZYn7y3P1GhsxyCr48IilGO9V3vm9L8vDrrB5w10QhlyC4p16sEp4P+Op2fLM9dxZX3FQQD8y4HEA/fR6F/TFwF75aMi0OuqdN2YVPJVoDGYo6xpDFTBCbsRVZ7pgB0w7NU+Ix/N0=
+	t=1709399037; cv=none; b=TqNCFYdxnkqf8dCRhfZKf7p1ipkVmvf7q3R2VVJm5/7/2VeYCWXh1e5JlbZRdxyN0Jfc3UiaHBYl1R3BotbLWcyc4lB+f7MeOTQUDVhZl/qELxIMote+W+eDXznlEO0kvEFCtSPHA+8SHolzlv3aaNDze41Ml1rmdbcDSraZWUk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709397551; c=relaxed/simple;
-	bh=dJ4w5UkzczghLWV9UMKf6BfbTeqMvWjX7Qs79d/yGl4=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=uavx4rp2Ly/NMAJAzlJt7xSciviHBYQnnAzVg5QfrThFFyt0MH3/aoo/t/kRdVLWQGllDBK1nXVwUtWenrxnr/oIoNFcdcS53YA7q9fw/Jk94X1/ueDYDq3/UJc2tl4H3KyBfJydVp1+jBs97kAuIXOuEW+vzGjgBC22Cu1iPfg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=BDghW0pI; arc=none smtp.client-ip=209.85.221.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1709399037; c=relaxed/simple;
+	bh=PiNwMZKr/UT2A+bQQWXWbQa2zBQULjyeu8OZcSNqKNo=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=lc4J9IO8yLCptuQW7FGrpBTeRpjP52Eh8sgpgpwr5J9y6kCCB16w9ZU2ygRI5Ks2n0jOWv4pZx4wFv50Prvffuz5K8zDzX+1pIzqyt5JPPd4K962bhs31B/DpHGYSEvz+y3y0SIU6SIt/LNJlSV7h+kjqmiHyH8B1gduVDrrE9Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=wpmo7bRC; arc=none smtp.client-ip=64.147.108.71
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BDghW0pI"
-Received: by mail-wr1-f42.google.com with SMTP id ffacd0b85a97d-33d509ab80eso1314174f8f.3
-        for <git@vger.kernel.org>; Sat, 02 Mar 2024 08:39:09 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1709397548; x=1710002348; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=HbpmxGuLk44TmCYDMDAYz4jScFE2oiWj2vAB7640GeA=;
-        b=BDghW0pIu8kXSnv5kBDKn8yJGnT1y40i7Bl+Ajc/ob4wyw+qIr/9194SIOFouH0WNR
-         MttBHn9q54N5wwqLXtbUDrs31mpHycDyF1d50HudZS0YDoG/9gEMV721ZAQbi9haUVYb
-         oEus8jsOrQN/6iVJdU4mjrWc80z5htwNlldt7KA6kruG3iTGkK2cuM7AqXxD38pU4G1H
-         cHPNq1gUj2Ataxmmj79wzcdDDT0o0G2YMVgDQKJS0yVaQ6+UZ4FasyJGebtiW+5Ba2aj
-         UiygUa2hOh/uhwudUdlj2/brX/CL8mG0wwpgas3RwQNi6a2AkufGv/ZBSHuSbdu3R0ir
-         LjwQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1709397548; x=1710002348;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=HbpmxGuLk44TmCYDMDAYz4jScFE2oiWj2vAB7640GeA=;
-        b=wKjfYk87wn5fc7Fn2A0NU7jVQUVS04gdU9L4/UfZp41CEA7YAH0k9MsHxobBFDL1kj
-         PbNkiuQowwZ8JJ5PcoiSzzK8EJ6/VUp4pKfaT6kwDDuJsjS+TKGYn8N4i/JVUtlEcBcM
-         AKjLPn09Y0A/gJktkHPor49HX5zuIoaMchWBQBBb88uqPXR6oJbNtIQcyCNWm5I9nBx2
-         j82kgTxc/Jah0ca+ItLEouxEb9QNBcOSSUb5kBgFBkhsTuIDaDRB8dZboaTU/aIukeYG
-         VIpHTNTzzRCe5k418Pp0tuzG8K4ADd6r/b9AkXn9Xzvrqglp5+RICETni6OkUW77z2lY
-         5/IA==
-X-Forwarded-Encrypted: i=1; AJvYcCUwoD4wp3MBmoE1R5vs6mMAQmfevdTFEB98NSSth/dfW0iQ9zB37jY8VHtS3mZxl8Ztzi5NfpRu50bW0YxsdR0AxTgr
-X-Gm-Message-State: AOJu0YwzUTOTEjpHjAkAjXxr1a0tFFqvkkhBMZYDzW/RPCIQPMuJQ1Pw
-	48aO4pfYYs6vx7KAlG6uE2xkgrUxZuWx+hxOjgxR8gcShtpWHVjK
-X-Google-Smtp-Source: AGHT+IGDsBLTdJs2riGur1Ty+BjRpwOEXkzrkRmF9dnztSZ2NJZ03feNWldmPVxwj7btIXbhZQOkmA==
-X-Received: by 2002:adf:b611:0:b0:33e:1904:fd37 with SMTP id f17-20020adfb611000000b0033e1904fd37mr2871544wre.70.1709397547905;
-        Sat, 02 Mar 2024 08:39:07 -0800 (PST)
-Received: from gmail.com (243.red-88-14-45.dynamicip.rima-tde.net. [88.14.45.243])
-        by smtp.gmail.com with ESMTPSA id d15-20020a5d644f000000b0033e052be14fsm7602451wrw.98.2024.03.02.08.39.02
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 02 Mar 2024 08:39:07 -0800 (PST)
-Message-ID: <cf978790-4885-4103-946d-10f807048441@gmail.com>
-Date: Sat, 2 Mar 2024 17:38:57 +0100
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="wpmo7bRC"
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 582171E12AB;
+	Sat,  2 Mar 2024 12:03:55 -0500 (EST)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=PiNwMZKr/UT2A+bQQWXWbQa2zBQULjyeu8OZcS
+	NqKNo=; b=wpmo7bRC74hyUFmrM/qYz8s+y+Xo7Gd5BYlqzRnF0TS3D2KqL9i1rC
+	t0EVpcleby/UE1yWrDMuPxhtLrzp3DFrx0dJ/e+UUrVsPR/T2z9Jdx3c5RpjfcQd
+	+1Q7ITMi7cg3QJ1LdjQcxxjwWB8p6o/vLxm/7oInEW66Wl9tT3NH8=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 4F1E71E12AA;
+	Sat,  2 Mar 2024 12:03:55 -0500 (EST)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.176.30])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id B306A1E12A9;
+	Sat,  2 Mar 2024 12:03:54 -0500 (EST)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Karthik Nayak <karthik.188@gmail.com>
+Cc: oliver@schinagl.nl,  git@vger.kernel.org
+Subject: Re: [PATCH 0/2] Support diff.wordDiff config
+In-Reply-To: <20240302095751.123138-1-karthik.188@gmail.com> (Karthik Nayak's
+	message of "Sat, 2 Mar 2024 10:57:49 +0100")
+References: <a7be415d-5005-4fa7-9b2e-1974b7439a81@schinagl.nl>
+	<20240302095751.123138-1-karthik.188@gmail.com>
+Date: Sat, 02 Mar 2024 09:03:53 -0800
+Message-ID: <xmqqedcszhty.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] test-lib-functions: simplify `test_file_not_empty`
- failure message
-Content-Language: en-US
-To: Eric Sunshine <ericsunshine@charter.net>, git@vger.kernel.org
-Cc: Junio C Hamano <gitster@pobox.com>, Aryan Gupta <garyan447@gmail.com>,
- Eric Sunshine <sunshine@sunshineco.com>
-References: <20240301204922.40304-1-ericsunshine@charter.net>
-From: =?UTF-8?Q?Rub=C3=A9n_Justo?= <rjusto@gmail.com>
-In-Reply-To: <20240301204922.40304-1-ericsunshine@charter.net>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ D9F6060E-D8B6-11EE-B1EF-25B3960A682E-77302942!pb-smtp2.pobox.com
 
-On Fri, Mar 01, 2024 at 03:49:22PM -0500, Eric Sunshine wrote:
-> From: Eric Sunshine <sunshine@sunshineco.com>
-> 
-> The function `test_file_not_empty` asserts that a file exists and is not
-> empty. When the assertion fails, it complains:
-> 
->     'foo' is not a non-empty file.
-> 
-> which is difficult to interpret due to the double-negative. To make it
-> easier to understand the problem, simplify the message by dropping the
-> double-negative and stating the problem more directly:
-> 
->     'foo' is empty but should not be
-> 
-> (The full-stop is also dropped from the message to reflect the style of
-> messages issued by other `test_path_*` functions.)
-> 
-> Note: Technically, the revised message is slightly less accurate since
-> the function asserts both that the file exists and that it is non-empty,
-> but the new message talks only about the emptiness of the file, not
-> whether it exists. A more accurate message might be "'foo' is empty but
-> should not be (or doesn't exist)", but that's unnecessarily long-winded
-> and adds little information that the test author couldn't discover by
-> noticing the file's absence.
+Karthik Nayak <karthik.188@gmail.com> writes:
 
-To improve the accuracy of the message, I wonder if it is worth doing
-what we do in test_must_be_empty:
+> This patch series adds the diff.wordDiff config option. This mimics the
+> '--word-diff' option of `git-diff(1)`.
 
-	test_must_be_empty () {
-		test "$#" -ne 1 && BUG "1 param"
-		test_path_is_file "$1" &&
-		if test -s "$1"
-		then
-			echo "'$1' is not empty, it contains:"
-			cat "$1"
-			return 1
-		fi
-	}
+Is it even be sensible to introduce this configuration variable in
+the first place?  What would this do to users who set this variable
+and use third-party or their own scripts that run "git diff" under
+the hood?
 
-Perhaps:
+The usual answer is "these tools should be using the low-level
+plumbing commands like diff-files, diff-index, and diff-tree", so I
+am not worried about it too much myself, and the above is purely the
+devil's advocate comment.
 
-diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
-index b5eaf7fdc1..5b5ee0dc1d 100644
---- a/t/test-lib-functions.sh
-+++ b/t/test-lib-functions.sh
-@@ -989,9 +989,10 @@ test_dir_is_empty () {
- # Check if the file exists and has a size greater than zero
- test_file_not_empty () {
-        test "$#" = 2 && BUG "2 param"
-+       test_path_is_file "$1" &&
-        if ! test -s "$1"
-        then
--               echo "'$1' is not a non-empty file."
-+		echo "'$1' is empty but should not be"
-                false
-        fi
- }
+Having said that, running
 
-> 
-> Signed-off-by: Eric Sunshine <sunshine@sunshineco.com>
-> ---
-> 
-> This is a tangential follow-up to the discussion at [1].
-> 
-> [1]: https://lore.kernel.org/git/CAPig+cQ+JNBwydUq0CsTZGs8mHs3L3fJDuSosd+-WdKwWWw=gg@mail.gmail.com/
-> 
->  t/test-lib-functions.sh | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
-> index b5eaf7fdc1..9e97b324c5 100644
-> --- a/t/test-lib-functions.sh
-> +++ b/t/test-lib-functions.sh
-> @@ -991,7 +991,7 @@ test_file_not_empty () {
->  	test "$#" = 2 && BUG "2 param"
->  	if ! test -s "$1"
->  	then
-> -		echo "'$1' is not a non-empty file."
-> +		echo "'$1' is empty but should not be"
->  		false
->  	fi
->  }
-> -- 
-> 2.44.0
-> 
+	$ git grep -e 'git diff '
+
+in the collection of scripts I use [*] to work on this project, I am
+reminded that I may have to be a bit more conservative than I
+currently am about the risk of breaking scripts with the changes
+like the one being proposed.
+
+The proposed feature also may break those who use the git-prompt and
+diff-highlight available in conrib/, even though I am not sure how
+badly they would break, because I only looked at the lines given by
+this command:
+
+	$ git grep -e 'git diff ' -- \*.sh ':!t/'
+
+and didn't check how the output from 'git diff' is used.
+
+
+[Footnote]
+
+ * They can be seen in the 'todo' branch, if anybody is interested.
