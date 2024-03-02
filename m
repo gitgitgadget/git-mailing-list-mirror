@@ -1,223 +1,137 @@
-Received: from smtp4-g21.free.fr (smtp4-g21.free.fr [212.27.42.4])
+Received: from fout3-smtp.messagingengine.com (fout3-smtp.messagingengine.com [103.168.172.146])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF27D2C870
-	for <git@vger.kernel.org>; Sat,  2 Mar 2024 19:57:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.27.42.4
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2BAC2C870
+	for <git@vger.kernel.org>; Sat,  2 Mar 2024 19:58:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709409477; cv=none; b=N4QQZrLrQi/VW1lezknl8mZq2vUWm9JCUbzY8vPBtabY/La6eUlAfB8KVSXylXOgKChyfD3t5HcmRpbs0NLPZqUvnG9D+7L2+B5Wpt05PG7NUVnAEGDCRxxA3tvN+QWJZNZ1Bm4HP1OA8hhCafNIVMMew0Y/cM8AsxNnU2kT5SM=
+	t=1709409494; cv=none; b=qzWNuEPgsp8/VSeApCWihhY16XuQ9U6VPmYpma6Wkr/zwxMqv9he2Q+j6j2jYunMgwj3mseimqgWU1Yzxq0O7OSzGScbUN/11FnPxEuP4KT8gFOaeA0qS12I4ZikQmfsihjovWkENoe6IrH5AsZ+ER0bgolqxN1Y7rYvrbarcNg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709409477; c=relaxed/simple;
-	bh=2hL7wpzHorRuPfvgd9TG77onTUF10za4NfPMOEFRVtQ=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=CnPL2RHFVWyoQs2JXIy645pGdd/JYuFlHW02jheoDamDHjMagx06FAy7UXGdOIeaba+QQ6vZSQ6e8PEhW2HRC2WQF+0+7zN4oV5+TwlPX4f5cmU+UJlCd0u4esDuFwIX3DGDVBjOQJw/OmOlnQxsdM+SmDyMooy9GuzFE8wlk8g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=free.fr; spf=pass smtp.mailfrom=free.fr; dkim=pass (2048-bit key) header.d=free.fr header.i=@free.fr header.b=aG1ZVySl; arc=none smtp.client-ip=212.27.42.4
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=free.fr
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=free.fr
+	s=arc-20240116; t=1709409494; c=relaxed/simple;
+	bh=zn1HkOD+oZ1nHAxl1xq0HYCf5A+YoSSmUoL6SYpUrXQ=;
+	h=MIME-Version:Message-Id:In-Reply-To:References:Date:From:To:Cc:
+	 Subject:Content-Type; b=RyevnR4u/i2oWQ1+CD8EoHPf4yaySHkQxqXQcDdd0M03cHnx7UKlD80Fe5oPQ+LlW5KC9xiH5QmyEBfA6x3/g143nA5LmM0qpk+xWpeljqL50fJjGBLob1u3bp7jGZmt0KpU/Rbro45m05O84pKytZSTfzoDcU6jcZwJN0zeFvk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=khaugsbakk.name; spf=pass smtp.mailfrom=khaugsbakk.name; dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b=PzxpCgk+; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=qPiZ3IiS; arc=none smtp.client-ip=103.168.172.146
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=khaugsbakk.name
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=khaugsbakk.name
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=free.fr header.i=@free.fr header.b="aG1ZVySl"
-Received: from cayenne.localnet (unknown [IPv6:2a01:e0a:d1:f360:1c73:7714:ea27:1649])
-	(Authenticated sender: jn.avila@free.fr)
-	by smtp4-g21.free.fr (Postfix) with ESMTPSA id F14C719F593;
-	Sat,  2 Mar 2024 20:57:48 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=free.fr;
-	s=smtp-20201208; t=1709409472;
-	bh=2hL7wpzHorRuPfvgd9TG77onTUF10za4NfPMOEFRVtQ=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aG1ZVySlAlO80VKhwyvE8WlUJpi4SLUfuPfRVxjgdpVHl3nBZ3l2bsBFLZomKKm8J
-	 BZV2Zr9fiZy+10ifzKXztBV60dXIhsC42IBfYL70wtQV1NHkt+4AscujG+b2CYFrth
-	 JUd56mu+ImfjPCO+mJgldgnzaP3WfqdUVJx9roxa+OMdxY7u1LWVTmWUyvzeO7smwg
-	 suOtZmuFWt0L6XIR1vVLejk9mh78ErBuEFBaWg0SQu5iBYWIikAHwzKHJLfCLbCtRO
-	 0uFCcEYHhoZ4VQIvvlD79ZQafJQI5w8G5h3xd9eGA1/khBrSb6Sm4nkIkuDT8Y6jCi
-	 JHloFBPtxHLxA==
-From: =?ISO-8859-1?Q?Jean=2DNo=EBl?= AVILA <jn.avila@free.fr>
-To: oliver@schinagl.nl, Karthik Nayak <karthik.188@gmail.com>
-Cc: git@vger.kernel.org, Karthik Nayak <karthik.188@gmail.com>
-Subject: Re: [PATCH 2/2] diff: add 'diff.wordDiff' config option
-Date: Sat, 02 Mar 2024 20:57:48 +0100
-Message-ID: <4884140.GXAFRqVoOG@cayenne>
-In-Reply-To: <20240302095751.123138-3-karthik.188@gmail.com>
-References:
- <a7be415d-5005-4fa7-9b2e-1974b7439a81@schinagl.nl>
- <20240302095751.123138-1-karthik.188@gmail.com>
- <20240302095751.123138-3-karthik.188@gmail.com>
+	dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b="PzxpCgk+";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="qPiZ3IiS"
+Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
+	by mailfout.nyi.internal (Postfix) with ESMTP id E9FE913800B2;
+	Sat,  2 Mar 2024 14:58:10 -0500 (EST)
+Received: from imap49 ([10.202.2.99])
+  by compute1.internal (MEProxy); Sat, 02 Mar 2024 14:58:10 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=khaugsbakk.name;
+	 h=cc:cc:content-transfer-encoding:content-type:content-type
+	:date:date:from:from:in-reply-to:in-reply-to:message-id
+	:mime-version:references:reply-to:subject:subject:to:to; s=fm3;
+	 t=1709409490; x=1709495890; bh=3T5EOzVi/vxpnQs5m11aJP6DjV2J3iYo
+	GWCGNPjRZ1Q=; b=PzxpCgk+wSb8BNKClT9N8/V4T00b4Uu7uMBeCmpaO3e1MMgC
+	phE1a4kpoO40DXu0O0Pc73L4QT2CyXSUHUVVcIPiZDhL3PVrkyVqVAWHBSq3UFz1
+	+GMPupoVQYF5e7jpm8lLZVSpJg0hRl3zF0wjTwp0sgDWCAx5Whj0P+0m3FGlOc8p
+	touOOuCeb62t+eGg8xhVfjlpHriAFZHSplLGfIyelxCw5wPeJuPVMtOhG3iWw31I
+	1AAdZBjFP+Vjf8pyCShhAZbwkgdWcIHHbt6yoClvqdhPm2Dc15Ug3TR0eThOvZ6b
+	KtIVmUDHxjEEcRHzqSulu2Lc/9BVhzoiGyj3GA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1709409490; x=
+	1709495890; bh=3T5EOzVi/vxpnQs5m11aJP6DjV2J3iYoGWCGNPjRZ1Q=; b=q
+	PiZ3IiSKOEm2iuozmNjy9sidCfFP/+QaF5IZ4SRlzOVhU2n6CzEHqAAkrz7l55gt
+	PoYIFYFR+ThY4N81z4hMgxCilsgGUT0Mdvn6yPZ8ExtA//v+YVPW6lcZA57/51gp
+	K5/upUSPgZY2VNEp0N0ZV6WLx157PhoDZ3scL7TLjJNmOV2lO2xI/7xd34tuMQmq
+	ZN97QTV/eiWYfr/LcWdriI1U4R+tMpk3ZLx6Aj5D2Alkk7hEHujhBLAF6oDfw3BF
+	OY9m1aCy5bP7CKM1YbWrVrDYcDPd7hO1eWnrj+js8gbJRTxcSqVTSS3N1Ss7359k
+	dG+jDlFBan3NT56Rbqf3g==
+X-ME-Sender: <xms:0oTjZY-vms_KGKezVoR_4JD1A6MCTZA8MMgv_PLXJDD3V97772uswU8>
+    <xme:0oTjZQtWYYCM46BLL1hClKhcYE_UrDcVaFtMmgIpvrlEaUz5S6I_T2fd6uY0SX_Gb
+    5EzPOucqJ9voqN4Sg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrheefgddufedtucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+    cujfgurhepofgfggfkjghffffhvfevufgtgfesthhqredtreerjeenucfhrhhomhepfdfm
+    rhhishhtohhffhgvrhcujfgruhhgshgsrghkkhdfuceotghouggvsehkhhgruhhgshgsrg
+    hkkhdrnhgrmhgvqeenucggtffrrghtthgvrhhnpedtkeduvedthfelueevheffhedvveei
+    ueeiheehudehveegueetteduuddtfeelueenucffohhmrghinhepkhgvrhhnvghlrdhorh
+    hgnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomheptgho
+    uggvsehkhhgruhhgshgsrghkkhdrnhgrmhgv
+X-ME-Proxy: <xmx:0oTjZeDcQ_AOXDezfj-ylhZfyHkULZ9_S2S65-70b3IJ7e2A-E_euA>
+    <xmx:0oTjZYe3uWjrPy-pd-2u0MlTpXj9p5-zURklFoYUGfBPZThVS0CBdw>
+    <xmx:0oTjZdMyrvCubQ2D1EgBkzIlotBzKguFtI0uHC-iKxAzr4YBHDZelw>
+    <xmx:0oTjZerzVtmGK1OZ_eFM2Neq8piztpYH-9GP98gyq9tbdIK8_XKPBQ>
+Feedback-ID: i2671468f:Fastmail
+Received: by mailuser.nyi.internal (Postfix, from userid 501)
+	id 82E1315A0092; Sat,  2 Mar 2024 14:58:10 -0500 (EST)
+X-Mailer: MessagingEngine.com Webmail Interface
+User-Agent: Cyrus-JMAP/3.11.0-alpha0-205-g4dbcac4545-fm-20240301.001-g4dbcac45
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="us-ascii"
+Message-Id: <34bb249d-4a4d-4cc7-b737-bb18398341d0@app.fastmail.com>
+In-Reply-To: 
+ <CAOLa=ZR6tN8eQhByaUobj3kS9wwYegsOQNT8cjZYA-YATJJt7w@mail.gmail.com>
+References: <a7be415d-5005-4fa7-9b2e-1974b7439a81@schinagl.nl>
+ <20240302095751.123138-1-karthik.188@gmail.com> <xmqqedcszhty.fsf@gitster.g>
+ <CAOLa=ZR6tN8eQhByaUobj3kS9wwYegsOQNT8cjZYA-YATJJt7w@mail.gmail.com>
+Date: Sat, 02 Mar 2024 20:57:38 +0100
+From: "Kristoffer Haugsbakk" <code@khaugsbakk.name>
+To: "Karthik Nayak" <karthik.188@gmail.com>
+Cc: oliver@schinagl.nl, git@vger.kernel.org,
+ "Junio C Hamano" <gitster@pobox.com>
+Subject: Re: [PATCH 0/2] Support diff.wordDiff config
+Content-Type: text/plain;charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-Hello,
+Hi
 
-On Saturday, 2 March 2024 10:57:51 CET Karthik Nayak wrote:
-> The git-diff(1) command supports the `--word-diff` which allows the
-> users to specify how to delimit word diffs. Provide this option also as
-> a config param 'diff.wordDiff'.
-> 
-> Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
-> ---
->  Documentation/config/diff.txt |  4 +++
->  diff.c                        | 50 +++++++++++++++++++++++++++--------
->  t/t4034-diff-words.sh         | 11 ++++++--
->  3 files changed, 52 insertions(+), 13 deletions(-)
-> 
-> diff --git a/Documentation/config/diff.txt b/Documentation/config/diff.txt
-> index bd5ae0c337..00459beee2 100644
-> --- a/Documentation/config/diff.txt
-> +++ b/Documentation/config/diff.txt
-> @@ -225,3 +225,7 @@ diff.colorMovedWS::
->  	When moved lines are colored using e.g. the `diff.colorMoved` 
-setting,
->  	this option controls the `<mode>` how spaces are treated
->  	for details of valid modes see '--color-moved-ws' in linkgit:git-
-diff[1].
-> +
-> +diff.wordDiff::
-> +	Show a word diff, using the `<mode>` to delimit changed words.
-> +	For details of valid modes see '--word-diff' in linkgit:git-diff[1].
+On Sat, Mar 2, 2024, at 19:02, Karthik Nayak wrote:
+> On Sat, Mar 2, 2024 at 6:03=E2=80=AFPM Junio C Hamano <gitster@pobox.c=
+om> wrote:
+>>
+>> Karthik Nayak <karthik.188@gmail.com> writes:
+>>
+>> > This patch series adds the diff.wordDiff config option. This mimics=
+ the
+>> > '--word-diff' option of `git-diff(1)`.
+>>
+>> Is it even be sensible to introduce this configuration variable in
+>> the first place?  What would this do to users who set this variable
+>> and use third-party or their own scripts that run "git diff" under
+>> the hood?
+>
+> This is definitely a good question to ask. I'm primarily not a user of=
+ this
+> option, and this patch series was more of to start this discussion, ba=
+sed
+> on the request. I'm comfortable dropping the patch series too if it do=
+esn't
+> make much sense.
 
-Let's enforce the new formatting rules: placeholders are _emphasized_  and 
-options are `verbatim`
+This looks similar to the discussion from a [stash] topic:
 
-+
- +diff.wordDiff::
- +	Show a word diff, using the _<mode>_ to delimit changed words.
- +	For details of valid modes see `--word-diff` in linkgit:git-diff[1].
+=E2=80=A2 Proposed introducing config variables which change how `git st=
+ash
+  push` and `git stash save` behave (what they save)
+=E2=80=A2 Concern about how that could break third-party scripts
 
+Like here it would be opt-in. But the user might have no idea what kind
+of scripts/programs that they use that happen to use git-stash(1).
 
-> diff --git a/diff.c b/diff.c
-> index e50def4538..050d83ef85 100644
-> --- a/diff.c
-> +++ b/diff.c
-> @@ -69,6 +69,7 @@ static int diff_dirstat_permille_default = 30;
->  static struct diff_options default_diff_options;
->  static long diff_algorithm;
->  static unsigned ws_error_highlight_default = WSEH_NEW;
-> +static int diff_word_diff_default;
->  
->  static char diff_colors[][COLOR_MAXLEN] = {
->  	GIT_COLOR_RESET,
-> @@ -209,6 +210,23 @@ int git_config_rename(const char *var, const char 
-*value)
->  	return git_config_bool(var,value) ? DIFF_DETECT_RENAME : 0;
->  }
->  
-> +static int parse_word_diff_value(const char *value)
-> +{
-> +	if (!value)
-> +		return -1;
-> +	else if (!strcmp(value, "plain"))
-> +		return DIFF_WORDS_PLAIN;
-> +	else if (!strcmp(value, "color")) {
-> +		return DIFF_WORDS_COLOR;
-> +	}
-> +	else if (!strcmp(value, "porcelain"))
-> +		return DIFF_WORDS_PORCELAIN;
-> +	else if (!strcmp(value, "none"))
-> +		return DIFF_WORDS_NONE;
-> +
-> +	return -1;
-> +}
-> +
->  long parse_algorithm_value(const char *value)
->  {
->  	if (!value)
-> @@ -452,6 +470,18 @@ int git_diff_ui_config(const char *var, const char 
-*value,
->  		return 0;
->  	}
->  
-> +	if (!strcmp(var, "diff.worddiff")) {
-> +		if (!value)
-> +			return config_error_nonbool(var);
-> +		diff_word_diff_default = parse_word_diff_value(value);
-> +		if (diff_word_diff_default < 0)
-> +			return error(_("unknown value for config '%s': 
-%s"),
+(That=E2=80=99s at least how I read the thread)
 
-Thanks for reusing already an already existing translatable string.
+I guess the concern might be worse for git-stash(1) since it seems very
+natural to use that command in scripts in order to deal with a working
+tree that might be in a who-knows condition: just get these things out
+of the way so I can do what I want.
 
-> +				     var, value);
-> +		if (diff_word_diff_default == DIFF_WORDS_COLOR)
-> +			diff_use_color_default = 1;
-> +		return 0;
-> +	}
-> +
->  	if (git_color_config(var, value, cb) < 0)
->  		return -1;
->  
-> @@ -4724,6 +4754,7 @@ void repo_diff_setup(struct repository *r, struct 
-diff_options *options)
->  	options->use_color = diff_use_color_default;
->  	options->detect_rename = diff_detect_rename_default;
->  	options->xdl_opts |= diff_algorithm;
-> +	options->word_diff |= diff_word_diff_default;
->  	if (diff_indent_heuristic)
->  		DIFF_XDL_SET(options, INDENT_HEURISTIC);
->  
-> @@ -5504,21 +5535,18 @@ static int diff_opt_word_diff(const struct option 
-*opt,
->  			      const char *arg, int unset)
->  {
->  	struct diff_options *options = opt->value;
-> +	int value;
->  
->  	BUG_ON_OPT_NEG(unset);
-> +
->  	if (arg) {
-> -		if (!strcmp(arg, "plain"))
-> -			options->word_diff = DIFF_WORDS_PLAIN;
-> -		else if (!strcmp(arg, "color")) {
-> -			options->use_color = 1;
-> -			options->word_diff = DIFF_WORDS_COLOR;
-> -		}
-> -		else if (!strcmp(arg, "porcelain"))
-> -			options->word_diff = DIFF_WORDS_PORCELAIN;
-> -		else if (!strcmp(arg, "none"))
-> -			options->word_diff = DIFF_WORDS_NONE;
-> -		else
-> +		value = parse_word_diff_value(arg);
-> +		if (value < 0)
->  			return error(_("bad --word-diff argument: 
-%s"), arg);
-> +		if (value == DIFF_WORDS_COLOR)
-> +			options->use_color = 1;
-> +
-> +		options->word_diff = value;
->  	} else {
->  		if (options->word_diff == DIFF_WORDS_NONE)
->  			options->word_diff = DIFF_WORDS_PLAIN;
-> diff --git a/t/t4034-diff-words.sh b/t/t4034-diff-words.sh
-> index 4f70aa6e9f..2cc391c339 100755
-> --- a/t/t4034-diff-words.sh
-> +++ b/t/t4034-diff-words.sh
-> @@ -56,12 +56,19 @@ diff_with_opts () {
->  	post=$(git rev-parse --short $(git hash-object post)) &&
->  	test_must_fail git diff --no-index "$@" pre post >output &&
->  	test_decode_color <output >output.decrypted &&
-> -	sed -e "2s/index [^ ]*/index $pre..$post/" expect >expected
-> +	sed -e "2s/index [^ ]*/index $pre..$post/" expect >expected &&
->  	test_cmp expected output.decrypted
->  }
->  
->  word_diff () {
-> -	diff_with_opts "--word-diff=$1" $(echo "$@" | cut -d' ' -s -f 2-)
-> +	# Capture the rest of the arguments to passthrough.
-> +	rest=$(echo "$@" | cut -d' ' -s -f 2-) &&
-> +	# Test via the config route.
-> +	git config diff.wordDiff $1 &&
-> +	diff_with_opts $rest &&
-> +	git config --unset diff.wordDiff &&
-> +	# Test via the command option route.
-> +	diff_with_opts "--word-diff=$1" $rest
->  }
->  
->  test_language_driver () {
-> 
+=F0=9F=94=97 [stash]: https://lore.kernel.org/git/xmqq34tnyhhf.fsf@gitst=
+er.g/
 
-Thanks
-
-
+--=20
+Kristoffer Haugsbakk
