@@ -1,55 +1,55 @@
-Received: from fout1-smtp.messagingengine.com (fout1-smtp.messagingengine.com [103.168.172.144])
+Received: from fhigh4-smtp.messagingengine.com (fhigh4-smtp.messagingengine.com [103.168.172.155])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 269BD1DFCE
-	for <git@vger.kernel.org>; Sun,  3 Mar 2024 18:59:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 164FD1DFCE
+	for <git@vger.kernel.org>; Sun,  3 Mar 2024 18:59:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709492355; cv=none; b=Q+xQ8oHdC70w3SB57D1C85tAQSukOpD6ZV85T1iyIXcHOI9BXLgHw7aFjFm1e3IPD7ty4EG/Q+LODv4Dv7WlVt7uWnGHyt/x5gGA63kJ8HrhJsFksvigzkuSPJa0AkWI5hdCFn4GrIKXE6pl3U/qC++Qze/5rGZ5ESBG9WU3rn0=
+	t=1709492361; cv=none; b=MlqrSlqD8sVxxaRt0T1SPPWVFomH6HZzZLVlZBRezt4chCnNfbLWtJqGPw5/PHkhmWYjn+Y6+zhEgMpDnAfyJGkTauhgbC443TX3UCZ8/lSUjH8cfxySYPqhhQATd2tOGC2y8qyK0wnm06BAdmkf/OZIq7LeyK9JI7nh8b6BGH4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709492355; c=relaxed/simple;
-	bh=4Zjd+1vFjzBeFsXlv3NAl18JXBBN3I40IMW5IUSehgg=;
+	s=arc-20240116; t=1709492361; c=relaxed/simple;
+	bh=2UV3Q1BTCIQnFf3tN9ZW+M5Y7/CkR8w4wcwLQKLzLyw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=La8MTgeDtF+R5tuRF1iVqXHOUX7fjsDGqqPp0KoumkIQtWgqwgOtzyMpD9aobc/mWzty4J8WuqUKKXgHk5oD5qWeQpI6chR10rudbYfok/MOmwRDA5CwFv39ECBcwoKvsJOknNuwkLEN38vFCm/6MfAqYMmWmj16r9kEzwlr97E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=khaugsbakk.name; spf=pass smtp.mailfrom=khaugsbakk.name; dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b=CHfqOxuE; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=NW3/QTV/; arc=none smtp.client-ip=103.168.172.144
+	 MIME-Version:Content-Type; b=KLqHxW99Cprp4nHNURBT8Yh/FNIF0pnTxvTTZD4zqN0HBeE8bVJ+UszleUeNPmOq5qYA8jz3ZLr6oyD7SeIkYTxBU9OgC96qOc3YP9r18iwx9MD81FXfW2lbpRd0YPzJSvY64k3R+JCNbYJMK6JTujmofIKReC8z/yI/vXb9RMI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=khaugsbakk.name; spf=pass smtp.mailfrom=khaugsbakk.name; dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b=YkHr1a+2; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=CAJilHLS; arc=none smtp.client-ip=103.168.172.155
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=khaugsbakk.name
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=khaugsbakk.name
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b="CHfqOxuE";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="NW3/QTV/"
-Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
-	by mailfout.nyi.internal (Postfix) with ESMTP id 1B84113800CE;
-	Sun,  3 Mar 2024 13:59:12 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b="YkHr1a+2";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="CAJilHLS"
+Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
+	by mailfhigh.nyi.internal (Postfix) with ESMTP id 0F02E11400DD;
+	Sun,  3 Mar 2024 13:59:18 -0500 (EST)
 Received: from mailfrontend1 ([10.202.2.162])
-  by compute5.internal (MEProxy); Sun, 03 Mar 2024 13:59:12 -0500
+  by compute6.internal (MEProxy); Sun, 03 Mar 2024 13:59:18 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=khaugsbakk.name;
 	 h=cc:cc:content-transfer-encoding:content-type:content-type
 	:date:date:from:from:in-reply-to:in-reply-to:message-id
 	:mime-version:references:reply-to:subject:subject:to:to; s=fm3;
-	 t=1709492352; x=1709578752; bh=cN85bFBfYZbqdAU3pY/f3bBh3ZOdn28m
-	lksqy0kqp2k=; b=CHfqOxuEwG+ezmqSFJS8vNNXce9ux5zTiO7WK54y3aAbRkZQ
-	WigJw61af+zBnYKkur6+AMKpGfstOlg4l3jusH0d0WcW/4a487Ooy3acssDrDA6/
-	Z7Yi7QI/En2mJMWKolMUSMvDtIVMJGFzjIXPqzIS4FYjWRneEjcZuZiPTFMDgrF6
-	1rZZbCxG0i/yqEMbYo1D4xkDNhY+oqWgfGitthHl2sYg5Ep+axotqDCT2IDRz+ru
-	yABkZK/0CYJtaztaw8YVXCQq9k4byoSWlyAfrZtH1PfXowBmTVaYZFGoqNOP4yAf
-	Bw+Fj9L7E+bWevEFtA2ug/nPspiYoyi1nDWGwQ==
+	 t=1709492358; x=1709578758; bh=xkEoacpabcOyw1DB40rjJ44Ypi3fetlx
+	0zRhIEj7XZs=; b=YkHr1a+2hBfCz5ZnZH80zgCcT7pbHBxxFzKiPekNIu+0YX4o
+	Z/AeEdR6ZabSnG9jW099l+Yd0NlsxvZVM6H6IKD/S5npe/60x1g5sys9FaGKSKQD
+	DkfAQFS2a44RaCEGtlKaVXozuSKlnTyVZRcMdQjPRj4+Cy2799xz8t2jkbKP5QAj
+	wwhpoF8X/bxEausUnH6QHDQ9ByO4dUMVJzN5pjH8h/V5H0frm3X71f7IBbpo6A/5
+	rwgQCXtSDxZxhwvnz9Fev6mrGk1qaVkGFhDB1GDggZLFGaeuZZXhPLSHBpIMYmTT
+	STc8rDE4hVXMpw7zwdzQfQgLQ15CPnWJbGyOSQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1709492352; x=
-	1709578752; bh=cN85bFBfYZbqdAU3pY/f3bBh3ZOdn28mlksqy0kqp2k=; b=N
-	W3/QTV/tYJ+3gVtD2hnSq0hIyZugqf40/3EyUfxKqrhBmCBKMVLh7H9z00D1ruQ9
-	rv2DevtOomYF0HS73uRGQE7OkCUFRoXS26flxiw1inQbEAeDTSye4yx85C/lwzwP
-	2o6O6B14gecvyB/D9/c89Jlfu4NzO9c5/OdW/EzilJ80v6s7kI0jN2zcKythZVWW
-	3xKamHMYVAeVl9JdHqFaCUnRf7ZbYTjZrOPRWLs71pJ+RfMgCk/0x9dTxwi9ZLez
-	oEUziz6wPvIWV6SbeKkjIpYc0OvbliepEFEK/5DkFFswchJR4VoxLQFm9ACgB4Ul
-	3silW8E6NxUvcydaxFtMA==
-X-ME-Sender: <xms:f8jkZfWw2hsOLyYo5Xd75VrWY7vGp6c-_DorPgTRAjZ6uHIFEq0aTBw>
-    <xme:f8jkZXmS6zbuateYlRWBAyMOzPC0uIafCqp-_7J3i2pf5h708umVFo3cCo1DCOzu2
-    UM9b1W5ADiWe4L7cg>
-X-ME-Received: <xmr:f8jkZbZr0vTm3w8PzCdEvz5B1yrtkIamKQLPeUtcAJYOo5mNQgCWCgoYCEP7_nHT3y_eoqLv_29PhRLzvXarAKrjkH_GyE01KVCtCPEVghLuXdxlaPb23lZdaw>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1709492358; x=
+	1709578758; bh=xkEoacpabcOyw1DB40rjJ44Ypi3fetlx0zRhIEj7XZs=; b=C
+	AJilHLSTXhTsIPDfERwP4hMoVhLjNmAA2O6n+Ts9sUghtbNj6khmwiZgN8+/nL1L
+	LqcB7o/uL0ObzNYAMbKgvD4YGCHY9JW7gB6UEfwf1umD49k8SAJQEah8/5AlfRBM
+	1foGTMNw2xWV5C5Ge2cMXqXYAA/IZRVBUMQOiwoG5+wuNP4vhQ6XLugzFq43DtF0
+	NsQ+2BH03rh+4lVrGHJjr45NOvyiHxV17wooYZCXfVnl2oialEFD2bfe8llll2e+
+	DO1AAjBHMABUCWAOKGgV0N929u98rzxulhTWLCiJ45slsA1T20QGAtlpMxQ35XwR
+	H4x2I//gXgVnhih69vLDA==
+X-ME-Sender: <xms:hcjkZatje0qRIyyPzXtr3CGOc6z06vdSPoSLwKPQ9DYh-5ohuvq0j6c>
+    <xme:hcjkZfctrwW0oDl-9s3EnnvcCN0TDd7sw2AbIih9w684dTHri5JlAx90hVu-PhdF8
+    TEmQwHoSATixMxK_g>
+X-ME-Received: <xmr:hcjkZVzU9leeFYsUUJrT8wUlNDcNEMg2UpMOBzHR25jXQlWNNbjBvxPwRw5gc3C0_EeB8ECukz2o4qj5jcKuXRV-KAwZwDZv5sPMTbVRGgfV0WflVlFsif4Xmw>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrheehgdduudekucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
     uceurghilhhouhhtmecufedttdenucenucfjughrpefhvfevufffkffojghfgggtgfesth
@@ -58,22 +58,22 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrheehgdduudekucetufdoteggod
     elveeikeegjeeikeeuvefhleeiuddvleegfeekjedtkeevtdetgfffveettdenucevlhhu
     shhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpegtohguvgeskhhhrg
     hughhssggrkhhkrdhnrghmvg
-X-ME-Proxy: <xmx:f8jkZaXMCK_zOOTXWBBIR7b_uzwBagstUbEMnam1to-LmjOvs7NYzg>
-    <xmx:f8jkZZkk-2jlVyvMHP2G5iEhEkGjru8WUk7ZXw94Wzl-37nbC_6LBA>
-    <xmx:f8jkZXenwkF76rMgBVMT9esthV_kgMHaRgzFQGXPgArjY733u2u1Iw>
-    <xmx:gMjkZezLApIhvtcmeOhScyG9DxpDT-gp7415krXF6W4Itby-j-obKg>
+X-ME-Proxy: <xmx:hcjkZVN_lgjfQ6FxrcOX0i4w1KSYw-wK-ix3k_LTjuI5VMlCrOsvwg>
+    <xmx:hcjkZa-MQHX5m0YOtVu2qWnlFRHh0XUh3XH6-jqKwZDUanlquvs1bw>
+    <xmx:hcjkZdW8G9-b5zIRwrweMMbiT5UlQZiDD5DAs55w_3du9bxzfkhbKg>
+    <xmx:hsjkZcLgyPeSNzmYqGXq-jblaV2c7QgjnjPR3K9bXgszms_WNRax_w>
 Feedback-ID: i2671468f:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
- 3 Mar 2024 13:59:10 -0500 (EST)
+ 3 Mar 2024 13:59:16 -0500 (EST)
 From: Kristoffer Haugsbakk <code@khaugsbakk.name>
 To: git@vger.kernel.org
 Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>
-Subject: [PATCH v2 0/1] advise about ref syntax rules
-Date: Sun,  3 Mar 2024 19:58:20 +0100
-Message-ID: <cover.1709491818.git.code@khaugsbakk.name>
+Subject: [PATCH v2 1/1] branch: advise about ref syntax rules
+Date: Sun,  3 Mar 2024 19:58:21 +0100
+Message-ID: <4ad5d4190649dcb5f26c73a6f15ab731891b9dfd.1709491818.git.code@khaugsbakk.name>
 X-Mailer: git-send-email 2.44.0.64.g52b67adbeb2
-In-Reply-To: <d275d1d179b90592ddd7b5da2ae4573b3f7a37b7.1709307442.git.code@khaugsbakk.name>
-References: <d275d1d179b90592ddd7b5da2ae4573b3f7a37b7.1709307442.git.code@khaugsbakk.name>
+In-Reply-To: <cover.1709491818.git.code@khaugsbakk.name>
+References: <d275d1d179b90592ddd7b5da2ae4573b3f7a37b7.1709307442.git.code@khaugsbakk.name> <cover.1709491818.git.code@khaugsbakk.name>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -81,62 +81,31 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
+X-Commit-Hash: 4ad5d4190649dcb5f26c73a6f15ab731891b9dfd
+X-Previous-Commits: d275d1d179b90592ddd7b5da2ae4573b3f7a37b7
 Content-Transfer-Encoding: 8bit
 
-Point the user towards the ref/branch name syntax rules if they give an
-invalid name.
+git-branch(1) will error out if you give it a bad ref name. But the user
+might not understand why or what part of the name is illegal.
 
-§ git-replace(1)
+The user might know that there are some limitations based on the *loose
+ref* format (filenames), but there are also further rules for
+easier integration with shell-based tools, pathname expansion, and
+playing well with reference name expressions.
 
-I did not add a hint for a similar message in `builtin/replace.c`.
+The man page for git-check-ref-format(1) contains these rules. Let’s
+advise about it since that is not a command that you just happen
+upon. Also make this advise configurable since you might not want to be
+reminded every time you make a little typo.
 
-`builtin/replace.c` has an error message in `check_ref_valid` for an
-invalid ref name:
+Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
+---
 
-```
-return error(_("'%s' is not a valid ref name"), ref->buf);
-```
-
-But there doesn’t seem to be a point to placing a hint here.
-
-The preceding calls to `repo_get_oid` will catch both missing refs and
-existing refs with invalid names:
-
-```
- if (repo_get_oid(r, refname, &object))
-	 return error(_("failed to resolve '%s' as a valid ref"), refname);
-```
-
-Like for example this:
-
-```
-$ printf $(git rev-parse @~) > .git/refs/heads/hello..goodbye
-$ git replace @ hello..goodbye
-error: failed to resolve 'hello..goodbye' as a valid ref
-[…]
-$ git replace @ non-existing
-error: failed to resolve 'non-existing' as a valid ref
-```
-
-§ Alternatives (to this change)
-
-While working on this I also thought that it might be nice to have a
-man page `gitrefsyntax`. That one could use a lot of the content from
-`man git check-ref-format` verbatim. Then the hint could point towards
-that man page. And it seems that AsciiDoc supports _includes_ which
-means that the rules don’t have to be duplicated between the two man
-pages.
-
-§ Changes in v2
-
-• Make the advise optional via configuration
-  • At first I thought that this wasn’t needed but I imagine the advice
-    could get repetitive for typos and such
-• Propagate error properly with `die_message(…)` instead of `exit(1)`
-• Flesh out commit message a bit
-
-Kristoffer Haugsbakk (1):
-  branch: advise about ref syntax rules
+Notes (series):
+    v2:
+    • Make the advise optional via configuration
+    • Propagate error properly with `die_message(…)` instead of `exit(1)`
+    • Flesh out commit message a bit
 
  Documentation/config/advice.txt |  3 +++
  advice.c                        |  1 +
@@ -146,6 +115,102 @@ Kristoffer Haugsbakk (1):
  t/t3200-branch.sh               | 11 +++++++++++
  6 files changed, 28 insertions(+), 4 deletions(-)
 
+diff --git a/Documentation/config/advice.txt b/Documentation/config/advice.txt
+index c7ea70f2e2e..552cfbcd48c 100644
+--- a/Documentation/config/advice.txt
++++ b/Documentation/config/advice.txt
+@@ -94,6 +94,9 @@ advice.*::
+ 		'pushNonFFCurrent', 'pushNonFFMatching', 'pushAlreadyExists',
+ 		'pushFetchFirst', 'pushNeedsForce', and 'pushRefNeedsUpdate'
+ 		simultaneously.
++	refSyntax::
++		Point the user towards the ref syntax documentation if
++		they give an invalid ref name.
+ 	resetNoRefresh::
+ 		Advice to consider using the `--no-refresh` option to
+ 		linkgit:git-reset[1] when the command takes more than 2 seconds
+diff --git a/advice.c b/advice.c
+index 6e9098ff089..550c2968908 100644
+--- a/advice.c
++++ b/advice.c
+@@ -68,6 +68,7 @@ static struct {
+ 	[ADVICE_PUSH_UNQUALIFIED_REF_NAME]		= { "pushUnqualifiedRefName" },
+ 	[ADVICE_PUSH_UPDATE_REJECTED]			= { "pushUpdateRejected" },
+ 	[ADVICE_PUSH_UPDATE_REJECTED_ALIAS]		= { "pushNonFastForward" }, /* backwards compatibility */
++	[ADVICE_REF_SYNTAX]				= { "refSyntax" },
+ 	[ADVICE_RESET_NO_REFRESH_WARNING]		= { "resetNoRefresh" },
+ 	[ADVICE_RESOLVE_CONFLICT]			= { "resolveConflict" },
+ 	[ADVICE_RM_HINTS]				= { "rmHints" },
+diff --git a/advice.h b/advice.h
+index 9d4f49ae38b..d15fe2351ab 100644
+--- a/advice.h
++++ b/advice.h
+@@ -36,6 +36,7 @@ enum advice_type {
+ 	ADVICE_PUSH_UNQUALIFIED_REF_NAME,
+ 	ADVICE_PUSH_UPDATE_REJECTED,
+ 	ADVICE_PUSH_UPDATE_REJECTED_ALIAS,
++	ADVICE_REF_SYNTAX,
+ 	ADVICE_RESET_NO_REFRESH_WARNING,
+ 	ADVICE_RESOLVE_CONFLICT,
+ 	ADVICE_RM_HINTS,
+diff --git a/branch.c b/branch.c
+index 6719a181bd1..621019fcf4b 100644
+--- a/branch.c
++++ b/branch.c
+@@ -370,8 +370,12 @@ int read_branch_desc(struct strbuf *buf, const char *branch_name)
+  */
+ int validate_branchname(const char *name, struct strbuf *ref)
+ {
+-	if (strbuf_check_branch_ref(ref, name))
+-		die(_("'%s' is not a valid branch name"), name);
++	if (strbuf_check_branch_ref(ref, name)) {
++		int code = die_message(_("'%s' is not a valid branch name"), name);
++		advise_if_enabled(ADVICE_REF_SYNTAX,
++				  _("See `man git check-ref-format`"));
++		exit(code);
++	}
+ 
+ 	return ref_exists(ref->buf);
+ }
+diff --git a/builtin/branch.c b/builtin/branch.c
+index cfb63cce5fb..1c122ee8a7b 100644
+--- a/builtin/branch.c
++++ b/builtin/branch.c
+@@ -576,8 +576,12 @@ static void copy_or_rename_branch(const char *oldname, const char *newname, int
+ 		 */
+ 		if (ref_exists(oldref.buf))
+ 			recovery = 1;
+-		else
+-			die(_("invalid branch name: '%s'"), oldname);
++		else {
++			int code = die_message(_("invalid branch name: '%s'"), oldname);
++			advise_if_enabled(ADVICE_REF_SYNTAX,
++					  _("See `man git check-ref-format`"));
++			exit(code);
++		}
+ 	}
+ 
+ 	for (int i = 0; worktrees[i]; i++) {
+diff --git a/t/t3200-branch.sh b/t/t3200-branch.sh
+index de7d3014e4f..d21fdf09c90 100755
+--- a/t/t3200-branch.sh
++++ b/t/t3200-branch.sh
+@@ -1725,4 +1725,15 @@ test_expect_success '--track overrides branch.autoSetupMerge' '
+ 	test_cmp_config "" --default "" branch.foo5.merge
+ '
+ 
++cat <<\EOF >expect
++fatal: 'foo..bar' is not a valid branch name
++hint: See `man git check-ref-format`
++hint: Disable this message with "git config advice.refSyntax false"
++EOF
++
++test_expect_success 'errors if given a bad branch name' '
++	test_must_fail git branch foo..bar >actual 2>&1 &&
++	test_cmp expect actual
++'
++
+ test_done
 -- 
 2.44.0.64.g52b67adbeb2
 
