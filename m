@@ -1,186 +1,185 @@
-Received: from fout2-smtp.messagingengine.com (fout2-smtp.messagingengine.com [103.168.172.145])
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41C1679DAF
-	for <git@vger.kernel.org>; Sun,  3 Mar 2024 20:04:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7BDE43AB5
+	for <git@vger.kernel.org>; Sun,  3 Mar 2024 22:06:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709496248; cv=none; b=rNrTdJWZedwuy+61W94MXuLKkGczM4V5mxRcmk23co1ihD15oIB/5ABSt0N663MxA0fx2Wz3S/klvf7UzhWraLl9OCKU43WvuljNG4kgv3yoSaJf3P82Ih3UvCUlmywMqNL6zZxD/zKXwshhUrA2wsxdKF4cZSrj73cdWT1wMy4=
+	t=1709503573; cv=none; b=Ww2UFdAhwel1QLDVbqEIFFAZY1njXsSSN4UCXcP1q8E+fIAOanjNPEVnEXk3neNhOpTuYCcCnE/uNl74EmjHNrovUvy6Vbr3oPfHjJ7lIdJvsH2p7gt5zpI4h+sPN0rZT2cnbqdIvMfMD4YjeccwrzevwgYf1pFuyT7L+KSkVWo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709496248; c=relaxed/simple;
-	bh=AjLb+jTt4RTKYzVrYhHYEJGML6YAqCUMMaPSBIp6iew=;
+	s=arc-20240116; t=1709503573; c=relaxed/simple;
+	bh=8WMUJhl7MM80mXRftblRuab3bIuNgQ+/zcy+5+MSoRw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SWOCyszODDF43H3l9KONTspAWh8CtALafg3rEz6MBahJvDrIZv1nHOqLoD6tvV6Yp2/690jvDrlxEHyyeiyrPQQtMCDGsKHqlwJuVZ6J6sDI2ZU7eby6Kj4+AU8tpmUpQ9J7ySo4yFW7a9U0mKrAXX9eSpQeZqN4g6VdnNe+cPE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=khaugsbakk.name; spf=pass smtp.mailfrom=khaugsbakk.name; dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b=wHC1l6Pr; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=HShD7Pm6; arc=none smtp.client-ip=103.168.172.145
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=khaugsbakk.name
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=khaugsbakk.name
+	 MIME-Version; b=foMs+npA77K2ZWBn0osKN6CcfdJvnx5xFY6ish5DR7y1zi3WdcK9fOgp8r0ZqziIkWHS1Quo54jatSOh/gsFgH1o0JY3cGbyzGHtA0591QA2zaUGW54EXbnsP8P1Ob6HsD3ILYhw+sktJUQrrvCVNYYtTOWQITKsG2S3yD6py+Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=w4cu/PUZ; arc=none smtp.client-ip=173.228.157.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b="wHC1l6Pr";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="HShD7Pm6"
-Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
-	by mailfout.nyi.internal (Postfix) with ESMTP id 5C86713800CF;
-	Sun,  3 Mar 2024 15:04:05 -0500 (EST)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute1.internal (MEProxy); Sun, 03 Mar 2024 15:04:05 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=khaugsbakk.name;
-	 h=cc:cc:content-transfer-encoding:content-type:date:date:from
-	:from:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:subject:subject:to:to; s=fm3; t=1709496245; x=
-	1709582645; bh=CJFdQNRlbLQ13mpOcuMBFELdYMJJbvethsFHZCGeyRY=; b=w
-	HC1l6PrSY3gZnMy6rqxjEH+ZvoL70y6IkvdDn7xBrDgcTfp/1myTA8Fx8N/s2x5K
-	b92L1Ib7sp3ZvGLRVZvToInFRhD4P479/Odn29VKRoA3vpTPKfcNf/aWymqRpt+M
-	mh8F3/WRaKH5FNoZBchL1vga3Rp6WE3Buoh0crn3oDrVVM9PPiKlDebdf1dmTQ+l
-	kONj0mJHBgpQFXC5zR1yXguHbtS7UoE6cXqTyR1oigVkE8k6L/ufN81ieiuz3qj+
-	PzWs0ov5jdJuJUsSk9oug2jnukou/s5lxpIpTSuCDKr3lrNWfSSDciudDz+O/3w5
-	ErQtcTupuj/gHRnTIBvYg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:date:date:feedback-id:feedback-id:from:from
-	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1709496245; x=
-	1709582645; bh=CJFdQNRlbLQ13mpOcuMBFELdYMJJbvethsFHZCGeyRY=; b=H
-	ShD7Pm6P2ebaK0lqMBC4bU07JWZPtkiswjbLFxEJKADpH72o0TNysW62Ie9CRdLi
-	IqLGedp0a0aK7AhLKOj1SW14amQeJ8L5VMJ02O0oc+QIeL5RHYGqqfK9nxjkWxa9
-	f2OBC2D0Ot382VleaUNe867hFgLlgvfGKvkly/xv/fbNU+Rmum6UgNOXgsmhn4h2
-	8N78GPP8VTi/0kVY/q5dT5pDVmXrZGOQoryzO9ma8We9XAlG7Co2PB6to2ID/Zig
-	LM4ENbrS6pgDjFYz7JyIDK2CPGXuk7e82baz/4RI4V00v96GnbwckEUAY9wChWoT
-	zZfyFfCywhXLFuGt8luxw==
-X-ME-Sender: <xms:tdfkZSrghZkzjOgLzR0Lcil9i0A_200PTt9IaqVvC2KYvGUcG7x-07E>
-    <xme:tdfkZQpKFADkGOxbCeKECM5vAerX2oEdIl41WTE--6fA_hr-fZP9SV39gqv3b1msG
-    -xZQKT7qL2OZ978GA>
-X-ME-Received: <xmr:tdfkZXPawCcXwfy3q_mQBMJ6rna1Oviy_Gp8jPwYGFa5yigrQqI9RdDS5NCeWHMkAT3RG1iDLkZydrF3gfF7ombydUbe9fLVbhBzcvOrBxyt_qZz0-O06TBpng>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrheehgddufeduucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucenucfjughrpefhvfevufffkffojghfggfgsedtke
-    ertdertddtnecuhfhrohhmpefmrhhishhtohhffhgvrhcujfgruhhgshgsrghkkhcuoegt
-    ohguvgeskhhhrghughhssggrkhhkrdhnrghmvgeqnecuggftrfgrthhtvghrnhephedvle
-    ffhfefheeludegtefhhfegleevudeiveffkeeiveegfeekgfevieevhedvnecuffhomhgr
-    ihhnpegvgigvtgdrnhhrnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrg
-    hilhhfrhhomheptghouggvsehkhhgruhhgshgsrghkkhdrnhgrmhgv
-X-ME-Proxy: <xmx:tdfkZR7BR5IFFGYII4txJKAQt_IYK-1pJHp_BVXabJTAExN9UiGaEg>
-    <xmx:tdfkZR7y-Qf5kEorvBbn29sOVwlOsmjtpJpTJovyZwJdQgp7qcQusQ>
-    <xmx:tdfkZRinga2d5y392g0gjDLbjFC5EKTkZ--e1JNBYBOz8NUMK8h_Aw>
-    <xmx:tdfkZRHluaGn7eRLH4doOiKau2YZHUDtScoFaggPJ5zDgXX7FybQlw>
-Feedback-ID: i2671468f:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
- 3 Mar 2024 15:04:04 -0500 (EST)
-From: Kristoffer Haugsbakk <code@khaugsbakk.name>
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="w4cu/PUZ"
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id AAF0F30279;
+	Sun,  3 Mar 2024 17:06:05 -0500 (EST)
+	(envelope-from gitster@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:date:message-id:in-reply-to:references:mime-version
+	:content-transfer-encoding; s=sasl; bh=8WMUJhl7MM80mXRftblRuab3b
+	IuNgQ+/zcy+5+MSoRw=; b=w4cu/PUZjSac/K/jcRVYATv4hFIIyKBPmhvbGRkw6
+	/cfcGaRhqeiLrs0XVk9LlV5NSmZxM7sNvAn+trely4nYS8VNXhZQGBDXQmfySBVo
+	JIWd23miGs6ZJPUySTNn0P8n0vOrs/N4QPFM4FMx6cLlqji8SnC4XLGp1xup/+sU
+	M0=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id A304330278;
+	Sun,  3 Mar 2024 17:06:05 -0500 (EST)
+	(envelope-from gitster@pobox.com)
+Received: from pobox.com (unknown [34.125.176.30])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 40DBA30276;
+	Sun,  3 Mar 2024 17:06:02 -0500 (EST)
+	(envelope-from gitster@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
 To: git@vger.kernel.org
-Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>
-Subject: [PATCH 1/1] rebase: teach `--exec` about `GIT_REBASE_BRANCH`
-Date: Sun,  3 Mar 2024 21:03:37 +0100
-Message-ID: <4140fca4f454310d215df8bdac237caeb5c38521.1709495964.git.code@khaugsbakk.name>
-X-Mailer: git-send-email 2.44.0.64.g52b67adbeb2
-In-Reply-To: <cover.1709495964.git.code@khaugsbakk.name>
-References: <cover.1709495964.git.code@khaugsbakk.name>
+Cc: Sergey Organov <sorganov@gmail.com>,
+	=?UTF-8?q?Jean-No=C3=ABl=20AVILA?= <avila.jn@gmail.com>,
+	"Kristoffer Haugsbakk" <code@khaugsbakk.name>
+Subject: Re: [PATCH v2] clean: improve -n and -f implementation and documentation
+Date: Sun,  3 Mar 2024 14:05:59 -0800
+Message-ID: <20240303220600.2491792-1-gitster@pobox.com>
+X-Mailer: git-send-email 2.44.0-84-gb387623c12
+In-Reply-To: <7le6ziqzb.fsf_-_@osv.gnss.ru>
+References: <7le6ziqzb.fsf_-_@osv.gnss.ru>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-Commit-Hash: 4140fca4f454310d215df8bdac237caeb5c38521
-Content-Transfer-Encoding: 8bit
+X-Pobox-Relay-ID:
+ 3939C328-D9AA-11EE-9013-A19503B9AAD1-77302942!pb-smtp21.pobox.com
+Content-Transfer-Encoding: quoted-printable
 
-The command fed to `--exec` might need some contextual information from
-the branch name. But there is no convenient access to the branch name
-that we were on before starting the rebase; rebase operates in detached
-HEAD mode so we cannot ask for it directly. This means that we need to
-parse something like this from the first line of `git branch --list`:
+Sergey Organov <sorganov@gmail.com> writes:
 
-    (no branch, rebasing <branch>)
+> Changes since v1:
+>
+>  * Fixed style of the if() statement
+>
+>  * Merged two error messages into one
+>
+>  * clean.requireForce description changed accordingly
 
-This is a moderate amount of effort for something that git-rebase(1) can
-store for us.
+Excellent.
 
-To that end, teach `--exec` about an env. variable which stores the
-branch name for the rebase-in-progress, if applicable.
+> diff --git a/builtin/clean.c b/builtin/clean.c
+> index d90766cad3a0..41502dcb0dde 100644
+> --- a/builtin/clean.c
+> +++ b/builtin/clean.c
+> @@ -25,7 +25,7 @@
+>  #include "help.h"
+>  #include "prompt.h"
+> =20
+> -static int force =3D -1; /* unset */
+> +static int require_force =3D -1; /* unset */
+>  static int interactive;
+>  static struct string_list del_list =3D STRING_LIST_INIT_DUP;
+>  static unsigned int colopts;
+> @@ -128,7 +128,7 @@ static int git_clean_config(const char *var, const =
+char *value,
+>  	}
+> =20
+>  	if (!strcmp(var, "clean.requireforce")) {
+> -		force =3D !git_config_bool(var, value);
+> +		require_force =3D git_config_bool(var, value);
+>  		return 0;
+>  	}
+> =20
+> @@ -920,7 +920,7 @@ int cmd_clean(int argc, const char **argv, const ch=
+ar *prefix)
+>  {
+>  	int i, res;
+>  	int dry_run =3D 0, remove_directories =3D 0, quiet =3D 0, ignored =3D=
+ 0;
+> -	int ignored_only =3D 0, config_set =3D 0, errors =3D 0, gone =3D 1;
+> +	int ignored_only =3D 0, force =3D 0, errors =3D 0, gone =3D 1;
+>  	int rm_flags =3D REMOVE_DIR_KEEP_NESTED_GIT;
+>  	struct strbuf abs_path =3D STRBUF_INIT;
+>  	struct dir_struct dir =3D DIR_INIT;
+> @@ -946,22 +946,17 @@ int cmd_clean(int argc, const char **argv, const =
+char *prefix)
+>  	};
+> =20
+>  	git_config(git_clean_config, NULL);
+> -	if (force < 0)
+> -		force =3D 0;
+> -	else
+> -		config_set =3D 1;
 
-Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
----
- Documentation/git-rebase.txt |  4 ++++
- builtin/rebase.c             | 15 ++++++++++++++-
- t/t3409-rebase-environ.sh    | 19 +++++++++++++++++++
- 3 files changed, 37 insertions(+), 1 deletion(-)
+The above changes are a significant improvement.  Instead of a
+single "force" variable whose meaning is fuzzy, we now have
+"require_force" to track the config setting, and "force" to indicate
+the "--force" option.  THis makes the code's intent much clearer.
 
-diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
-index 06206521fc3..9b3d6ee8203 100644
---- a/Documentation/git-rebase.txt
-+++ b/Documentation/git-rebase.txt
-@@ -578,6 +578,10 @@ squash/fixup series.
- This uses the `--interactive` machinery internally, but it can be run
- without an explicit `--interactive`.
- +
-+The command has access to the environment variable `GIT_REBASE_BRANCH`
-+which stores the branch name that `HEAD` was pointing at when the rebase
-+started, if applicable.
-++
- See also INCOMPATIBLE OPTIONS below.
- 
- --root::
-diff --git a/builtin/rebase.c b/builtin/rebase.c
-index 5b086f651a6..0202130c2d7 100644
---- a/builtin/rebase.c
-+++ b/builtin/rebase.c
-@@ -1044,6 +1044,17 @@ static int check_exec_cmd(const char *cmd)
- 	return 0;
- }
- 
-+static void try_set_env_git_rebase_branch(void)
-+{
-+	const char *refname = resolve_ref_unsafe("HEAD", 0, NULL, NULL);
-+	const char *shortname = NULL;
-+
-+	if (refname)
-+		skip_prefix(refname, "refs/heads/", &shortname);
-+	if (shortname)
-+		xsetenv("GIT_REBASE_BRANCH", shortname, true);
-+}
-+
- int cmd_rebase(int argc, const char **argv, const char *prefix)
- {
- 	struct rebase_options options = REBASE_OPTIONS_INIT;
-@@ -1451,8 +1462,10 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
- 	if (gpg_sign)
- 		options.gpg_sign_opt = xstrfmt("-S%s", gpg_sign);
- 
--	if (options.exec.nr)
-+	if (options.exec.nr) {
- 		imply_merge(&options, "--exec");
-+		try_set_env_git_rebase_branch();
-+	}
- 
- 	if (options.type == REBASE_APPLY) {
- 		if (ignore_whitespace)
-diff --git a/t/t3409-rebase-environ.sh b/t/t3409-rebase-environ.sh
-index acaf5558dbe..5b1d78a255a 100755
---- a/t/t3409-rebase-environ.sh
-+++ b/t/t3409-rebase-environ.sh
-@@ -21,4 +21,23 @@ test_expect_success 'rebase --exec does not muck with GIT_WORK_TREE' '
- 	test_must_be_empty environ
- '
- 
-+test_expect_success 'rebase --exec cmd can access GIT_REBASE_BRANCH' '
-+	write_script cmd <<-\EOF &&
-+printf "%s\n" $GIT_REBASE_BRANCH >actual
-+EOF
-+	git branch --show-current >expect &&
-+	git rebase --exec ./cmd HEAD~1 &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'rebase --exec cmd has no GIT_REBASE_BRANCH when on detached HEAD' '
-+	test_when_finished git checkout - &&
-+	git checkout --detach &&
-+	write_script cmd <<-\EOF &&
-+printf "%s" $GIT_REBASE_BRANCH >environ
-+EOF
-+	git rebase --exec ./cmd HEAD~1 &&
-+	test_must_be_empty environ
-+'
-+
- test_done
--- 
-2.44.0.64.g52b67adbeb2
+>  	argc =3D parse_options(argc, argv, prefix, options, builtin_clean_usa=
+ge,
+>  			     0);
+> =20
+> -	if (!interactive && !dry_run && !force) {
+> -		if (config_set)
+> -			die(_("clean.requireForce set to true and neither -i, -n, nor -f gi=
+ven; "
+> -				  "refusing to clean"));
+> -		else
+> -			die(_("clean.requireForce defaults to true and neither -i, -n, nor =
+-f given;"
 
+And thanks to that, the above trick with an extra variable "config_set",
+which smells highly a round-about way, can be simplified.
+
+> +	/* Dry run won't remove anything, so requiring force makes no sense *=
+/
+> +	if (dry_run)
+> +		require_force =3D 0;
+> +	if (require_force !=3D 0 && !force && !interactive)
+
+However, the above logic could be improved.  The behaviour we have,
+for a user who does *not* explicitly disable config.requireForce,
+is, that when clean.requireForce is not set to 0, we would fail
+unless one of these is in effect: -f, -n, -i.  Even though using
+either -n or -i makes it unnecessary to use -f *exactly* the same
+way, the above treats dry_run and interactive separately with two if
+statements, which is suboptimal as a "code/logic clean-up".
+
+The reason for the behaviour can be explained this way:
+
+ * "git clean" (with neither -i nor -n.  The user wants the default
+   mode that has no built-in protection will be stopped without -f.
+
+ * "git clean -n".  The user wants the dry-run mode that has its own
+   protection, i.e. being always no-op to the files, so there is no
+   need to fail here for the lack of "-f".
+
+ * "git clean --interactive".  The user wants the interactive mode
+   that has its own protection, i.e. giving the end-user a chance to
+   say "oh, I didn't mean to remove these files, 'q'uit from this
+   mistake", so there is no need to fail here for the lack of "-f".
+
+> +		die(_("clean.requireForce is true and neither -f nor -i given:"
+>  				  " refusing to clean"));
+
+The message is certainly cleaner compared to the previous round, but
+this also can be improved.  Stepping back a bit and thinking who are
+the target audience of this message.  The only users who see this
+message are running "git clean" in its default (unprotected) mode,
+and they wanted to "clean" for real.  If they wanted to do dry-run,
+they would have said "-n" themselves, and that is why we can safely
+omit mention of "-n" we had in the original message.
+
+These users did not want to run the interractive clean, either---if
+they wanted to go interractive, they would have said "-i"
+themselves.  So we do not need to mention "-i" either for exactly
+the same logic.
+
+Based on the above observation,
+
+I'll send a follow-up patch to clean up the code around here (both
+implementation and documentation), taking '-i' into account as well.
