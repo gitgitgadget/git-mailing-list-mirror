@@ -1,49 +1,45 @@
 Received: from mout.web.de (mout.web.de [212.227.15.14])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86D64BE62
-	for <git@vger.kernel.org>; Sun,  3 Mar 2024 10:13:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC50AC13C
+	for <git@vger.kernel.org>; Sun,  3 Mar 2024 12:19:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.14
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709460840; cv=none; b=mGRjWOychpgEWUKTgsHdGatZQMWfXpkr2L+25E06S1dDrLHjVKj6olk/dfxFBFdMdTx2x8L/dRIHVvj84JYcw8HpSpFGyI7OVwcysuknUm5R4h0NRRlaRDGThH/koP/Gt29pKdgaULtS2ELMXpx7IjrC2ZMST72wYgZqxsccPV0=
+	t=1709468400; cv=none; b=H72eOErFjw9hEv++iAwSrY002iHanD7UJcl8FmKfmDouPNKFErApPluut3gRyavbpn8qYSZ6JKeSKFenM5wk9IYXP7heLBk67//0DiMC251QnpqY0TOcoJfA8eu6eet6VLlb7HsUL/g2CGkq+yy/shjGr555Hmg4k6aIJ1JtXGk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709460840; c=relaxed/simple;
-	bh=0pEbMqQOu33ZziNbxeWB0teo9gs5t939dKMTf1M3eZU=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=JQI5voDo+mdVbUUhz+/HJOoe+k1fIsEIwuqduPI1BQBplMIFZMDfXt+mQZdnhTf4fVsrFjyf9yAotH/aatWGfQJte5nesHMlW7qXWmHtEFt4mjxccGs3eFNtBzIRfURRrQygnqj8rJS/h62ALrftQLLsr+VH5gRLHSt29BqAr/I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b=i9ieRokd; arc=none smtp.client-ip=212.227.15.14
+	s=arc-20240116; t=1709468400; c=relaxed/simple;
+	bh=RoMlF32F9cMG0eaEdtMsrcQW1AITe0vez2c9SuVV3KM=;
+	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=ZsAvVqASe3uKOxySJmGnBhtoJCinDPMv6XbXZNBjvdV0QLffI+cMAiXEHFcOM2Zm1E70K761f3W/QYmrBrZBPI2lGmQjzPHtj4xPhIcAiyFRivD9eBjt1OwnXtOSXOhzOjkIcP0+B+2jd5NGyFEdolMYbe2CpvYKnAFD26BUmd4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b=bihRt+BR; arc=none smtp.client-ip=212.227.15.14
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b="i9ieRokd"
+	dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b="bihRt+BR"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de; s=s29768273;
-	t=1709460829; x=1710065629; i=l.s.r@web.de;
-	bh=0pEbMqQOu33ZziNbxeWB0teo9gs5t939dKMTf1M3eZU=;
-	h=X-UI-Sender-Class:From:To:Cc:Subject:Date:In-Reply-To:
-	 References;
-	b=i9ieRokdFXSvRp0S/Gym06LzTvzrxBjrG/SwUGw3XZfVF6ogOmjmVAUFDS4pFroC
-	 +p1mcIS44bzK2qhac8uj8snpRgzoEej1uTxXnzREkQDbZH2lQi+JdkBchmeTlJ2Ka
-	 xob4WKy/wokz7QmKMc7ApQ8w7bGrGLOS6k0KBbU94BDI3sbmelCm5ZhHBxEtH2HMf
-	 Mc0i4+P9VXLPkbBQwhdKMetoGdQeV+PPSWteso2G+pKqXJyja6pD9YlMUNLPytNU8
-	 XDGnr7qfUYQkKtdOG8hJBWCDrN6niClBahbaL17aRwUfrVeRlQPf4Zp/KHzbDFQy3
-	 PK1lUdm+9voQSqDh9A==
+	t=1709468394; x=1710073194; i=l.s.r@web.de;
+	bh=RoMlF32F9cMG0eaEdtMsrcQW1AITe0vez2c9SuVV3KM=;
+	h=X-UI-Sender-Class:From:To:Subject:Date:In-Reply-To:References;
+	b=bihRt+BRSHBV2+RdGx1mudXKQnc7AMltQP/01hXeXZQJyZbaoLdPXUVu0q7K/S6H
+	 XJeMScXVSzmQJqVn42TNqCPb5R1OahATimfipZwSRPpir7w6zYb2rSnu0WZaIuKBL
+	 LhNpdp0Mx6oFHlms/TsxIK1kVWYoApBun51KWUY1tZDBMARDimFOeYZGr5G//dJKg
+	 Q6X9S7TwJ/2nDMbmAhXY+hWrZQyT/cIAKPA0oSPe4/ByeRuxkfztN39+Z3F7N7YIQ
+	 wg48ERJ7erdm5CKDHykfjxf6WKZuP3lzME7q+f2xEfKFxDvUaN51HeTApcsLYi/DL
+	 q6ombYJlpr3eqGEgzw==
 X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
 Received: from Mini-von-Rene.fritz.box ([79.203.19.211]) by smtp.web.de
- (mrweb006 [213.165.67.108]) with ESMTPSA (Nemesis) id
- 1MtPvm-1qrdMh3DB8-00urj2; Sun, 03 Mar 2024 11:13:49 +0100
+ (mrweb005 [213.165.67.108]) with ESMTPSA (Nemesis) id
+ 1MxHUC-1qwdLl3Z9s-00xSTu for <git@vger.kernel.org>; Sun, 03 Mar 2024 13:19:53
+ +0100
 From: =?UTF-8?q?Ren=C3=A9=20Scharfe?= <l.s.r@web.de>
 To: git@vger.kernel.org
-Cc: Phillip Wood <phillip.wood123@gmail.com>,
-	Josh Steadmon <steadmon@google.com>,
-	Achu Luma <ach.lumap@gmail.com>,
-	Christian Couder <christian.couder@gmail.com>
-Subject: [PATCH v2 1/4] t-ctype: allow NUL anywhere in the specification string
-Date: Sun,  3 Mar 2024 11:13:25 +0100
-Message-ID: <20240303101330.20187-2-l.s.r@web.de>
+Subject: [PATCH v2 5/6] parse-options: normalize arg and long_name before comparison
+Date: Sun,  3 Mar 2024 13:19:42 +0100
+Message-ID: <20240303121944.20627-6-l.s.r@web.de>
 X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240303101330.20187-1-l.s.r@web.de>
-References: <20240225112722.89221-1-l.s.r@web.de>
- <20240303101330.20187-1-l.s.r@web.de>
+In-Reply-To: <20240303121944.20627-1-l.s.r@web.de>
+References: <20240224212953.44026-1-l.s.r@web.de>
+ <20240303121944.20627-1-l.s.r@web.de>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -52,71 +48,122 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:cSQfni6q8uN6JkenxEDsKe4NRK9lxNoKnVZk2WGvlfa2ptbgmxT
- 4/h/TAn1+tGLmJcTTBZDOorP2q79HtDA38DuMvFr70+u43/d6FnJlF6Co9umPcNWzflEp0Y
- 16c75I7F3WqyuUHGmhZ0Nq9mu/F7URE0u3LzUb92vsLF/28fu2hcGEgWO0z7keIVtlyzbqU
- nb1cxWh3J4ix0pULzGNbw==
+X-Provags-ID: V03:K1:/JedbBqZyWoGLdEkLJHDWCaF/z4sHCyX9cBuTZff22ns1gCNN6D
+ UrqSZbcMNA2QkHYKwfdkGOcuPxrCODYojNSHWpW4uHYKYGvdY7QhcNL53zw6YHdgYE78F61
+ 2tE882dQ6H0Dg+4gROdWrzfQ0X8uiFrKzS8qDQhgMk5IFfNLHhfZZmPUMskie4ZZLssBTBO
+ be1RdTQ8vP0QMg80g8Rsg==
 X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:fh+LqK6mkF8=;sQChWFWeg4MA2NtgVm9X+XOPHiV
- pQ1UtloVrfepfHzWJjIp1He0hkt6G+XpO53kfbuiycqvhWRfg1hXf5NYFc/qPSni4+2d8ilIj
- eZRABLXss1mUbDgQo8lPflJ6Y5oQZ1EJ39eTCXIUuHxjcj+shfMyn4vb6OZuN5EeeBcG8OBVz
- o4LJ/uRe7umAeBFR2bPYh3I5qUZdhQEZ5vLk7pC6o0s9RcU9VUi1gkWe4ASIUNWRbzdZYpraI
- QLni6GTBZfz01uGxry+EXnIhHe5XOQ+eLsKDvedqXIHgpN6jeETUaOgZVbYUtZTLB23pYL6D/
- p3V0XVhK9BwASbxi3iF1Bt9noVl5/gSOVzSAbKg0fXm0SzYF7HFqZnLl3HqNGrzmE7FDI25E2
- vcDg9QclOgPb+r6eJIxU4sCldF79C/NZFKKrzy4ki0N4zTWCxhO4xU9NgUx5VumjuxsDlcNbd
- r4WDH+FV98t5bu6RgW/T2RzQKUBrQJjZ36BFwCadXvzWAi6w1w7rPNMs+xqDDjFre6WIeQQCh
- G6XAix9W8fP+PM85zJNsIX756CiGMwXs/OFMz5TLNd/FDzRFHqcNaEjjjSFXUOg/G2jwWlx+q
- h0CxSiaq8mnWiI/QbeFiMPQbmdzsNd8Xw9BRbwYlUwPIdKCZhMny5/aE/gAA8ai7gn4cuKhDF
- 1hEaYbVJjTooH6Ul58UAQL+ErdwJ8r6FzfOXOgWvY2z2HCI8CNBdmvpyAovhbueFEGbKloza3
- +6qVciRyDNl/akUM5SvjX8O+tL5t/h7fZspnj7bNqKZNJL84XBlvx7iBYDLuXL9xumRHpSXsp
- Gq0RHjLLCLB/Ke9iBDub6O7mk6TIJnahqHQA/i55OkqN4=
+UI-OutboundReport: notjunk:1;M01:P0:B3eQ1VLbkxU=;68ltKJdFA/7TbDtb/PHSnCVXAbD
+ +BKjCgt8d5ZpY7ds+x0jXyf3CC16jIYGQhg01LmHPZtQSCxAg0hY2v2q8nCMWpTZ/pToEBfD5
+ lCIDrauc+DwL2w7LftAUTBkQv9oIO6LC4HAxTnDmixnKjTP+09bQvE/1WIWsHI9tlzcMe0xpL
+ dCNww5eiH1pU3XG+Kdy8ILgGQjMieng2S8+DdUkd/qqWCi6+1N8sxiRhDwLo7dScy2M3dWlXK
+ eQ0cwCRTUP7lLRABdS2IU4OkjQVMSxAhDWuRBuj38hWVPEN69EXkoZfQwMp2VK41McNGva3lA
+ cQY+2d5ksl3GLK60KjeNog6AT/fsE+trcvyxu9WqxPTW3idV+eqhUnl/2lE5HpBaYO4SY2dBr
+ 6Iz+WRtjxDFipjh77vm4oFyK0RDEL+MFU32vm7CcngmR3dMzITgnYm6JnpZlWtnJyDZFDoOml
+ 8yKZVhom3Eb3nQTWhO2KNX+bIWHz/h4FvLoEB/3Usj8TlWhuWnsUeD7nSs3geCUYy+Dcr9PMO
+ pL9dNSpGTlaU0uRb1JOxMofh2tWgy93FGK4lrRcRmhaBjo0rVCXbrSLqEn89xN5OXJz58nZ/J
+ sCk5Z50q3KbrPaKh0lWu4fT0V/uxUt14tPwag7AaAnikhh3+FT8+kP7uktolzja0GtMeZpz14
+ +pZPqpDaje51TNw4JElJpWFfqeZ47xt2L3w2YvzYpeay2ULKKeXXSx/2zGnpyVvt9RnOiI7Rh
+ hYAq83yrMO/Hey0eixy8Gziv1nsTS8AcAlRFWEGWI1wYr006p4gCGWyFJiHd9QLIoIsYWh9W1
+ NV+BsvVeYnrHet848odAyX6gqVefxYGM2tsgV+QZ6sbZY=
 
-Replace the custom function is_in() for looking up a character in the
-specification string with memchr(3) and sizeof.  This is shorter,
-simpler and allows NUL anywhere in the string, which may come in handy
-if we ever want to support more character classes that contain it.
+Strip "no-" from arg and long_name before comparing them.  This way we
+no longer have to repeat the comparison with an offset of 3 for negated
+arguments.
 
-Getting the string size using sizeof only works in a macro and with a
-string constant.  Use ARRAY_SIZE and compile-time checks to make sure we
-are not passed a string pointer.
+Note that we must not modify the "flags" value, which tracks whether arg
+is negated, inside the loop.  When registering "--n", "--no" or "--no-"
+as abbreviation for any negative option, we used to OR it with OPT_UNSET
+and end the loop.  We can simply hard-code OPT_UNSET and leave flags
+unchanged instead.
 
 Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
 =2D--
- t/unit-tests/t-ctype.c | 18 ++++--------------
- 1 file changed, 4 insertions(+), 14 deletions(-)
+ parse-options.c | 44 ++++++++++++++++++++++----------------------
+ 1 file changed, 22 insertions(+), 22 deletions(-)
 
-diff --git a/t/unit-tests/t-ctype.c b/t/unit-tests/t-ctype.c
-index f315489984..35473c41d8 100644
-=2D-- a/t/unit-tests/t-ctype.c
-+++ b/t/unit-tests/t-ctype.c
-@@ -1,23 +1,13 @@
- #include "test-lib.h"
+diff --git a/parse-options.c b/parse-options.c
+index 008c0f32cf..d45efa4e5c 100644
+=2D-- a/parse-options.c
++++ b/parse-options.c
+@@ -382,28 +382,42 @@ static enum parse_opt_result parse_long_opt(
+ 	const struct option *options)
+ {
+ 	const char *arg_end =3D strchrnul(arg, '=3D');
++	const char *arg_start =3D arg;
++	enum opt_parsed flags =3D OPT_LONG;
++	int arg_starts_with_no_no =3D 0;
+ 	struct parsed_option abbrev =3D { .option =3D NULL, .flags =3D OPT_LONG =
+};
+ 	struct parsed_option ambiguous =3D { .option =3D NULL, .flags =3D OPT_LO=
+NG };
 
--static int is_in(const char *s, int ch)
--{
--	/*
--	 * We can't find NUL using strchr. Accept it as the first
--	 * character in the spec -- there are no empty classes.
--	 */
--	if (ch =3D=3D '\0')
--		return ch =3D=3D *s;
--	if (*s =3D=3D '\0')
--		s++;
--	return !!strchr(s, ch);
--}
--
- /* Macro to test a character type */
- #define TEST_CTYPE_FUNC(func, string) \
- static void test_ctype_##func(void) { \
-+	size_t len =3D ARRAY_SIZE(string) - 1 + \
-+		BUILD_ASSERT_OR_ZERO(ARRAY_SIZE(string) > 0) + \
-+		BUILD_ASSERT_OR_ZERO(sizeof(string[0]) =3D=3D sizeof(char)); \
- 	for (int i =3D 0; i < 256; i++) { \
--		if (!check_int(func(i), =3D=3D, is_in(string, i))) \
-+		if (!check_int(func(i), =3D=3D, !!memchr(string, i, len))) \
- 			test_msg("       i: 0x%02x", i); \
- 	} \
- 	if (!check(!func(EOF))) \
++	if (skip_prefix(arg_start, "no-", &arg_start)) {
++		if (skip_prefix(arg_start, "no-", &arg_start))
++			arg_starts_with_no_no =3D 1;
++		else
++			flags |=3D OPT_UNSET;
++	}
++
+ 	for (; options->type !=3D OPTION_END; options++) {
+ 		const char *rest, *long_name =3D options->long_name;
+-		enum opt_parsed flags =3D OPT_LONG, opt_flags =3D OPT_LONG;
++		enum opt_parsed opt_flags =3D OPT_LONG;
++		int allow_unset =3D !(options->flags & PARSE_OPT_NONEG);
+
+ 		if (options->type =3D=3D OPTION_SUBCOMMAND)
+ 			continue;
+ 		if (!long_name)
+ 			continue;
+
+-		if (!starts_with(arg, "no-") &&
+-		    !(options->flags & PARSE_OPT_NONEG) &&
+-		    skip_prefix(long_name, "no-", &long_name))
++		if (skip_prefix(long_name, "no-", &long_name))
+ 			opt_flags |=3D OPT_UNSET;
++		else if (arg_starts_with_no_no)
++			continue;
++
++		if (((flags ^ opt_flags) & OPT_UNSET) && !allow_unset)
++			continue;
+
+-		if (!skip_prefix(arg, long_name, &rest))
++		if (!skip_prefix(arg_start, long_name, &rest))
+ 			rest =3D NULL;
+ 		if (!rest) {
+ 			/* abbreviated? */
+-			if (!strncmp(long_name, arg, arg_end - arg)) {
++			if (!strncmp(long_name, arg_start, arg_end - arg_start)) {
+ 				register_abbrev(p, options, flags ^ opt_flags,
+ 						&abbrev, &ambiguous);
+ 			}
+@@ -412,24 +426,10 @@ static enum parse_opt_result parse_long_opt(
+ 				continue;
+ 			/* negated and abbreviated very much? */
+ 			if (starts_with("no-", arg)) {
+-				flags |=3D OPT_UNSET;
+-				register_abbrev(p, options, flags ^ opt_flags,
++				register_abbrev(p, options, OPT_UNSET ^ opt_flags,
+ 						&abbrev, &ambiguous);
+-				continue;
+-			}
+-			/* negated? */
+-			if (!starts_with(arg, "no-"))
+-				continue;
+-			flags |=3D OPT_UNSET;
+-			if (!skip_prefix(arg + 3, long_name, &rest)) {
+-				/* abbreviated and negated? */
+-				if (!strncmp(long_name, arg + 3,
+-					     arg_end - arg - 3))
+-					register_abbrev(p, options,
+-							flags ^ opt_flags,
+-							&abbrev, &ambiguous);
+-				continue;
+ 			}
++			continue;
+ 		}
+ 		if (*rest) {
+ 			if (*rest !=3D '=3D')
 =2D-
 2.44.0
 
