@@ -1,107 +1,182 @@
-Received: from mail-lj1-f170.google.com (mail-lj1-f170.google.com [209.85.208.170])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mout.web.de (mout.web.de [212.227.15.3])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99A91EDC
-	for <git@vger.kernel.org>; Sun,  3 Mar 2024 09:54:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89B2CAD48
+	for <git@vger.kernel.org>; Sun,  3 Mar 2024 10:13:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.3
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709459649; cv=none; b=qKbzVCt5yYw7GRFLBniSopAot6czj5JI2PKuTwsItdyP1RDSI9JbQuumC6BZX3Czn7Xdg2IAHxd58i6rDkOy7f+XsNw/gHCDik0jvtF5PTtMP/HCUUu7U4XYea41Rl+Mt5O2sUhUSklMbweuSmK2aZAsEgdJ18y+GbpJc3jtkGQ=
+	t=1709460836; cv=none; b=nEmtidDHiwuUVgENG/BM+f1afFTknJd2oKkSe62MSfgoX4mzDfdI2Xbir2z0TaFzbU8J7IuT/tfbq2gfOolOomyEm6KpAIwHttDvlrQSbpJpaioiqaszXRQC1vOecZi2kqGxVgvrqNMfTfFfotdaI6iZPgthihHmDp30MyumZws=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709459649; c=relaxed/simple;
-	bh=aYVQXCWw8cG2ZVsddd4QiC+KH1TINJNVPmiBemuMrHs=;
-	h=From:To:Cc:Subject:References:Date:In-Reply-To:Message-ID:
-	 MIME-Version:Content-Type; b=P+Pqg4Jmjmbbb3kzXHlxRnOaNynkyBZ3ky+q5kxfcvZlFOnAARCOZNDSvDI16icC5wJVShfsHpwMYNcB9yz0YSYB8T/t8WQt8+DshYKjfr0SR33A6p6ES95epS4fmm66wySAwtiMdO3ZxASzaSk94N7H6gmSHlJU0Bkwf21oTGo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CqqANn9L; arc=none smtp.client-ip=209.85.208.170
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1709460836; c=relaxed/simple;
+	bh=UEmdIB6ikdr0DEu5xb/i4MEW+T+8cEC5yraf66w4/iI=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=ErIa8jy/x12f/WNmuG9otOFgqjzGSQSRFkbl7C3TBOa4J81wWJuJxAXDJkWw+KoPrSM3hbx47W/2nrfMQbPmTrJkpvm8OWAOa6jfTMrn+nXpy44LNj1oqwCvy3RBapobXJcMA+hzLOgFqTolzsgjSGpRjmk0RD3nVF0/nmmfl8U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b=NoDDDdDv; arc=none smtp.client-ip=212.227.15.3
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CqqANn9L"
-Received: by mail-lj1-f170.google.com with SMTP id 38308e7fff4ca-2d220e39907so51373641fa.1
-        for <git@vger.kernel.org>; Sun, 03 Mar 2024 01:54:07 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1709459645; x=1710064445; darn=vger.kernel.org;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=aYVQXCWw8cG2ZVsddd4QiC+KH1TINJNVPmiBemuMrHs=;
-        b=CqqANn9LVkzvIEOaO7KotM8qmM5ioWDRCPU/xef3eZdZxxRQa9xPH1vRKjR4eCQOp3
-         NERaYuzfaYmXbMZs7Fram9wtRNTW3D8xPIthz3DXK8c1PVV44cA4HXv9UwnonSbt6TDN
-         LfmrTMSVAxMzKK8cHEAiiSxszl3QTWORSea2dPj8q2IpliF11LDR1rFY01fM1QOc3m1B
-         UaY4Vye7pxBH7uTUmJFsPH4m++Unz8AgXLBbkiprZuiI8eloXGWHvYBvbTfKUzc7LoLe
-         UqOvVYWcXlaHlFSUxtzniBdJQKhzQJ+x57xVM9i6C/2Qbz0wmeF+E3VFqUO71cXuX7VO
-         NDLQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1709459645; x=1710064445;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=aYVQXCWw8cG2ZVsddd4QiC+KH1TINJNVPmiBemuMrHs=;
-        b=UHZZ63HQ+YOjTzX99M9Gt9K7QxeEOqVNy+ieebHMO7TRSDJmjIyYjfToJDwZ0e7On9
-         SaWZUqXmUYT7KSwKCsgzHkyUZ/z3fHBJFit7q/Vydr4AQbb1mxa/4Z+X0ZFFeIXxR3vG
-         RXao3gjxrSkkKfr+vGlt32wYhioavV5H0VdDRry+iUkw02kvmrJef2KEQ8XwYGVesfEH
-         BEEtdcdG6zVXU28NyimLw6MveDpKsA1QzAbfV9nUyuiwhreF/g/QTCnL+7uI56AeTFw4
-         2XkQFKCYefnrwYYSdE9wqFcRQmkweXH/C1IgsQig/iIpcuwd7OfbQFkcQUye0peGJ+Pg
-         f6yA==
-X-Forwarded-Encrypted: i=1; AJvYcCV2zbXWxwTqcH8apEEv27tWcoCil32CNB1oDxRXsj3v3v7QRZzaUzApOEeVgoeu/jwGmgz+vTqZaxC3EcwuHqZAsOIH
-X-Gm-Message-State: AOJu0Yxr3NRuhJjLuy10BUi/nDax3DE2RtyMp8y8tjOkd9ZU0RHeXF+W
-	QOEyAJrWwn2k20YK0IhRDOZ5L6sCzWmjU0aYy/zRSZW6g+Cv3fe6R7aRHzjaWBA=
-X-Google-Smtp-Source: AGHT+IHaf7KdsAyM74tKsahGGfdtk+HEGGsBJQVzvskLtHPMbpDaZfV6n4q3diMvtSNmpZqyiCNj+A==
-X-Received: by 2002:a05:651c:2128:b0:2d3:acd0:bb0e with SMTP id a40-20020a05651c212800b002d3acd0bb0emr570798ljq.43.1709459645242;
-        Sun, 03 Mar 2024 01:54:05 -0800 (PST)
-Received: from osv.localdomain ([89.175.180.246])
-        by smtp.gmail.com with ESMTPSA id d6-20020a2e8906000000b002d250e323edsm1282825lji.89.2024.03.03.01.54.04
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 03 Mar 2024 01:54:04 -0800 (PST)
-From: Sergey Organov <sorganov@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: =?utf-8?Q?Jean-No=C3=ABl?= AVILA <avila.jn@gmail.com>,
-  git@vger.kernel.org
-Subject: Re: [PATCH] clean: improve -n and -f implementation and documentation
-References: <xmqq34v6gswv.fsf@gitster.g>
-	<51a196c0-ea57-4ec5-99ea-c3f09cd90962@gmail.com>
-	<87frxam35f.fsf@osv.gnss.ru> <6033073.lOV4Wx5bFT@cayenne>
-	<87r0gs8kgw.fsf@osv.gnss.ru> <xmqqwmqkwdef.fsf@gitster.g>
-	<87bk7w8aae.fsf@osv.gnss.ru>
-Date: Sun, 03 Mar 2024 12:54:04 +0300
-In-Reply-To: <87bk7w8aae.fsf@osv.gnss.ru> (Sergey Organov's message of "Sun,
-	03 Mar 2024 02:48:57 +0300")
-Message-ID: <87h6hniqtf.fsf@osv.gnss.ru>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
+	dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b="NoDDDdDv"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de; s=s29768273;
+	t=1709460830; x=1710065630; i=l.s.r@web.de;
+	bh=UEmdIB6ikdr0DEu5xb/i4MEW+T+8cEC5yraf66w4/iI=;
+	h=X-UI-Sender-Class:From:To:Cc:Subject:Date:In-Reply-To:
+	 References;
+	b=NoDDDdDv3NqUg4Un9dqPWWSywnPeDUlxfjqZj2a0+I93qcOHJaSFWr+1BC0UEPrH
+	 7C/d6RqHRYA36bPClQiMHXReJV2DYqAY0lF6mTf0bu+SR8oROzjYAn+De6Yo2JxpN
+	 nSXiOUZsaK1dVovy27vjrIcdXrz19ZeKAcsVzyke14TOBK7KR4hQ1qzshwuzsFyUC
+	 OCdS0Rb6lCl2syZjnke9FKPHtMUnwOKXMxvftdBAWGIYr4wQbc7tfFGlcGFxbvYCo
+	 HAnW6OwYuVySVdcQXDj1a7MNPfCu7OiMuawlqMfGpgIJix6+Z8kNEqFpEfZplEHfl
+	 jfY6D0/2NXWu3A6uwQ==
+X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
+Received: from Mini-von-Rene.fritz.box ([79.203.19.211]) by smtp.web.de
+ (mrweb006 [213.165.67.108]) with ESMTPSA (Nemesis) id
+ 1MaHSb-1rJsNf1k3B-00WIfH; Sun, 03 Mar 2024 11:13:50 +0100
+From: =?UTF-8?q?Ren=C3=A9=20Scharfe?= <l.s.r@web.de>
+To: git@vger.kernel.org
+Cc: Phillip Wood <phillip.wood123@gmail.com>,
+	Josh Steadmon <steadmon@google.com>,
+	Achu Luma <ach.lumap@gmail.com>,
+	Christian Couder <christian.couder@gmail.com>
+Subject: [PATCH v2 4/4] t-ctype: avoid duplicating class names
+Date: Sun,  3 Mar 2024 11:13:28 +0100
+Message-ID: <20240303101330.20187-5-l.s.r@web.de>
+X-Mailer: git-send-email 2.44.0
+In-Reply-To: <20240303101330.20187-1-l.s.r@web.de>
+References: <20240225112722.89221-1-l.s.r@web.de>
+ <20240303101330.20187-1-l.s.r@web.de>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:8iS+SGIeRDv5JSc5UOGwyJve6pjt0CsURZHkgoKl/nk/7moHrLC
+ vPDOKuygcCCwWy5zdyNksdZZB386eP1SVpYFEnhX78nKGwPNukpmogICRSoNLIYww636bCN
+ 6U7+LbTYR7tSYDgDc6vQLf3OtSAg/JSF+LKXsQ2Tj9Voxz31Q7iCGChSfuDf75ms26IdBoy
+ f670pjHMfcQQ1eN92pXpQ==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:0jgFxh3H+I8=;wK/uMrnWP4kaOZ3i8oLN7b4/i/q
+ jCHJJiSk3C8qqOmwePJm8ndwac5qOy9v0PjujC41dvJXq4degsZO+/8gtt/TuHick1Crh5Tzp
+ 4TQQQqWD0bYSKGTIkMAKNrP9LTgVfLs62Nu66V+sQIq3tROCxGsYqmXfRqI+TMQEytXPsixXO
+ b+STEhftn69acI6HZW+QOXGzkI3+SnEqKSzvwY6qp9hwGJ+FAY/LmgrDY9wV3CFIxD6OObdOh
+ eXCTRAZ+Wb9WSyJc/jzqUe6VssbCooIfD099hbs/uZeREzBt9WDkJKqw8PW5KWNLChTJJzNrR
+ C6CEHfjgBESTiht5212yQYLDmkdwsJEbmrBYy4TlVuc5Klkc2TJhb9fi3KV5maZDNGEOaUDyJ
+ QuBID7gFPwIZwwrferfJ5RfMi19jT9F/CzxlcRs7hGGHvF1A1Dm3Ef53r93BPI6ONYZ4xgg0q
+ NMf8DjpQZDHcHtzt239VC3+XhCrn2vooUQO6mceoWo1P8YuQCisf66DRiA3WVlHt28kSBx3Ae
+ k00ICA4j0Pc1NCWvPGvaWHjh8CttrFHf4dmmvh/arntSWnAbmMRYABiWh9qanuWaPPui8I02x
+ od+ENbb1X+TdWUDnOxsmybnKcDbkwRn6T9ZOoTz/RMrHShawzQ1aYrfF7uTlDxuyp3W6dYqkM
+ GT2V0J1Wo7X0u4qsxnAlDUwxMUVsf+NKFzreNoJcziNw9pb17kShJecVGaPcDRiEv+wJ1X8s1
+ h92uzGEICpLjb4wC5jmTqSnrTAKIh5wjdkeZVsViNMm5+9U96a0f6WrIxHH5KKzx4DQtyjyf0
+ jHUP6pYmpTM1r0yZ7acHhWHM1DjklCLTTHpxZMz4kgnp8=
 
-Sergey Organov <sorganov@gmail.com> writes:
+TEST_CTYPE_FUNC defines a function for testing a character classifier,
+TEST_CHAR_CLASS calls it, causing the class name to be mentioned twice.
 
-> Junio C Hamano <gitster@pobox.com> writes:
->
->> Sergey Organov <sorganov@gmail.com> writes:
->>
->>>> Oh, sorry, I misinterpreted the patch. But yet, I'm not sure that
->>>> specifying that this is the default or not is really useful. If the
->>>> configuration was set to true, it is was a no-op. If set to false, no
->>>> message will appear.
->>>
->>> I'm not sure either, and as it's not the topic of this particular patch,
->>> I'd like to delegate the decision on the issue.
->>
->> It is very much spot on the topic of simplifying and clarifying the
->> code to unify these remaining two messages into a single one.
->
-> I'm inclined to be more against merging than for it, as for me it'd be
-> confusing to be told that a configuration variable is set to true when I
-> didn't set it, nor there is any way to figure where it is set, because
-> in fact it isn't, and it's rather the default that is in use.
->
-> Overall, to me the messages are fine as they are (except -n that doesn't
-> belong there), I don't see compelling reason to hide information from
-> the user, and thus I won't propose patch that gets rid of one of them.
+Avoid the need to define a class-specific function by letting
+TEST_CHAR_CLASS do all the work.  This is done by using the internal
+functions test__run_begin() and test__run_end(), but they do exist to be
+used in test macros after all.
 
-Nevertheless, as others are in favor of unification, I've merged these
-two messages in the v2 version of the patch, which see.
+Alternatively we could unroll the loop to provide a very long expression
+that tests all 256 characters and EOF and hand that to TEST, but that
+seems awkward and hard to read.
 
-Thanks,
--- Sergey Organov
+No change of behavior or output intended.
+
+Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
+=2D--
+ t/unit-tests/t-ctype.c | 64 ++++++++++++++++--------------------------
+ 1 file changed, 24 insertions(+), 40 deletions(-)
+
+diff --git a/t/unit-tests/t-ctype.c b/t/unit-tests/t-ctype.c
+index 02d8569aa3..d6ac1fe678 100644
+=2D-- a/t/unit-tests/t-ctype.c
++++ b/t/unit-tests/t-ctype.c
+@@ -1,19 +1,19 @@
+ #include "test-lib.h"
+
+-/* Macro to test a character type */
+-#define TEST_CTYPE_FUNC(func, string) \
+-static void test_ctype_##func(void) { \
++#define TEST_CHAR_CLASS(class, string) do { \
+ 	size_t len =3D ARRAY_SIZE(string) - 1 + \
+ 		BUILD_ASSERT_OR_ZERO(ARRAY_SIZE(string) > 0) + \
+ 		BUILD_ASSERT_OR_ZERO(sizeof(string[0]) =3D=3D sizeof(char)); \
+-	for (int i =3D 0; i < 256; i++) { \
+-		if (!check_int(func(i), =3D=3D, !!memchr(string, i, len))) \
+-			test_msg("      i: 0x%02x", i); \
++	int skip =3D test__run_begin(); \
++	if (!skip) { \
++		for (int i =3D 0; i < 256; i++) { \
++			if (!check_int(class(i), =3D=3D, !!memchr(string, i, len)))\
++				test_msg("      i: 0x%02x", i); \
++		} \
++		check(!class(EOF)); \
+ 	} \
+-	check(!func(EOF)); \
+-}
+-
+-#define TEST_CHAR_CLASS(class) TEST(test_ctype_##class(), #class " works"=
+)
++	test__run_end(!skip, TEST_LOCATION(), #class " works"); \
++} while (0)
+
+ #define DIGIT "0123456789"
+ #define LOWER "abcdefghijklmnopqrstuvwxyz"
+@@ -33,37 +33,21 @@ static void test_ctype_##func(void) { \
+ 	"\x10\x11\x12\x13\x14\x15\x16\x17\x18\x19\x1a\x1b\x1c\x1d\x1e\x1f" \
+ 	"\x7f"
+
+-TEST_CTYPE_FUNC(isdigit, DIGIT)
+-TEST_CTYPE_FUNC(isspace, " \n\r\t")
+-TEST_CTYPE_FUNC(isalpha, LOWER UPPER)
+-TEST_CTYPE_FUNC(isalnum, LOWER UPPER DIGIT)
+-TEST_CTYPE_FUNC(is_glob_special, "*?[\\")
+-TEST_CTYPE_FUNC(is_regex_special, "$()*+.?[\\^{|")
+-TEST_CTYPE_FUNC(is_pathspec_magic, "!\"#%&',-/:;<=3D>@_`~")
+-TEST_CTYPE_FUNC(isascii, ASCII)
+-TEST_CTYPE_FUNC(islower, LOWER)
+-TEST_CTYPE_FUNC(isupper, UPPER)
+-TEST_CTYPE_FUNC(iscntrl, CNTRL)
+-TEST_CTYPE_FUNC(ispunct, PUNCT)
+-TEST_CTYPE_FUNC(isxdigit, DIGIT "abcdefABCDEF")
+-TEST_CTYPE_FUNC(isprint, LOWER UPPER DIGIT PUNCT " ")
+-
+ int cmd_main(int argc, const char **argv) {
+-	/* Run all character type tests */
+-	TEST_CHAR_CLASS(isspace);
+-	TEST_CHAR_CLASS(isdigit);
+-	TEST_CHAR_CLASS(isalpha);
+-	TEST_CHAR_CLASS(isalnum);
+-	TEST_CHAR_CLASS(is_glob_special);
+-	TEST_CHAR_CLASS(is_regex_special);
+-	TEST_CHAR_CLASS(is_pathspec_magic);
+-	TEST_CHAR_CLASS(isascii);
+-	TEST_CHAR_CLASS(islower);
+-	TEST_CHAR_CLASS(isupper);
+-	TEST_CHAR_CLASS(iscntrl);
+-	TEST_CHAR_CLASS(ispunct);
+-	TEST_CHAR_CLASS(isxdigit);
+-	TEST_CHAR_CLASS(isprint);
++	TEST_CHAR_CLASS(isspace, " \n\r\t");
++	TEST_CHAR_CLASS(isdigit, DIGIT);
++	TEST_CHAR_CLASS(isalpha, LOWER UPPER);
++	TEST_CHAR_CLASS(isalnum, LOWER UPPER DIGIT);
++	TEST_CHAR_CLASS(is_glob_special, "*?[\\");
++	TEST_CHAR_CLASS(is_regex_special, "$()*+.?[\\^{|");
++	TEST_CHAR_CLASS(is_pathspec_magic, "!\"#%&',-/:;<=3D>@_`~");
++	TEST_CHAR_CLASS(isascii, ASCII);
++	TEST_CHAR_CLASS(islower, LOWER);
++	TEST_CHAR_CLASS(isupper, UPPER);
++	TEST_CHAR_CLASS(iscntrl, CNTRL);
++	TEST_CHAR_CLASS(ispunct, PUNCT);
++	TEST_CHAR_CLASS(isxdigit, DIGIT "abcdefABCDEF");
++	TEST_CHAR_CLASS(isprint, LOWER UPPER DIGIT PUNCT " ");
+
+ 	return test_done();
+ }
+=2D-
+2.44.0
+
