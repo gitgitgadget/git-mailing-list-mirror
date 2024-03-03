@@ -1,45 +1,45 @@
 Received: from mout.web.de (mout.web.de [212.227.15.3])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B893A94B
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B8CAAD2C
 	for <git@vger.kernel.org>; Sun,  3 Mar 2024 10:13:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.3
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709460836; cv=none; b=DlxqcLqV8Ni96fcg0MF8E7bAAF0e+l1Js9vwU6YRqrmV8rTx2kFzk21UcepjE+3gyji2ve7gcD9WStDzYexk4vMywwnmSM6bTxKT9zy3gxPdrmon27OyEiJvjTUJkrZcs38IEPZ+FMuCJjziq0uFB2tMX3gEp51hdfS0Cvb0ADc=
+	t=1709460836; cv=none; b=ltsWQ4qVlN9KO6cilUublonMYFEaAxKLkHeTG8HmuxnXkgMWCLV1yGJt6LWyEdySSB8mZ5B2wAg3pkE/E5/JPB1+orKYt6648v2M5LUKkgMWRGv0wE7Tbf2BWG0LL3N/D9XcAew+A90R6DzThEJCLPfxEyQ1QT3mlytJWnwXNn0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1709460836; c=relaxed/simple;
-	bh=yB7sWUiQxVJrF5JOIuKOLJ9enSP9v9LC+wrCASzSBLw=;
+	bh=J61+Zy6gVBjQi61CBhMyibG93fsTlznvmkd12KRexyI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=NeuSGvAxBT2N2n80zrQ2/+jHrtJs5858adBo2/pcsV5rcAlTVieL4l7ZPatw21qXKacpdnVTWvjGFd/ancz1jc9vYBg7can8MXbJh9J3MgHuW04+B/E0pqLKliYhnOtm079awtUFhEpYEHfBmogIoaQuOifi54fygweU/zzv31A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b=EosGHrnl; arc=none smtp.client-ip=212.227.15.3
+	 MIME-Version:Content-Type; b=VUqxJ3ToSYZ/w+yoLrwFSLp3tCvFUW1juDaFngMBDfhyd0C0xA7XcUzUikD+eslfmSvujgCluFsaQ8oGNlCyFEL9NB9edjoq5QNQp3NVj5bzZ3fbfPW0vUItb20H+18GpwvA/bYBk4fWZDnzymk30mSqNfl+87IT8HS+L0ixwow=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b=jRZEp+Bx; arc=none smtp.client-ip=212.227.15.3
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b="EosGHrnl"
+	dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b="jRZEp+Bx"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de; s=s29768273;
 	t=1709460830; x=1710065630; i=l.s.r@web.de;
-	bh=yB7sWUiQxVJrF5JOIuKOLJ9enSP9v9LC+wrCASzSBLw=;
+	bh=J61+Zy6gVBjQi61CBhMyibG93fsTlznvmkd12KRexyI=;
 	h=X-UI-Sender-Class:From:To:Cc:Subject:Date:In-Reply-To:
 	 References;
-	b=EosGHrnlrv2JVFlzIP92jPekTE8me1OH//ZEqGZc5ndi3wAIyHZrndTdZdDUWHi2
-	 h+tsbXVMWIYwXBrzHiat3MHzExvIuHY8KCZ9sr06/Aq7G4n4hOYo8H3OroTHVpQgY
-	 fWQV1YXJisFw+EV/H3dFDFws1t++GXXKNvnlUKm9RaVAM+BwCJz7Em4XXdlfT7KAI
-	 D7QfLO1dxmEhEh8TF49GNGJ7eVDwIUYEJ+pT+QFhwap9A6jKo8kl3kDemA4/dKTDA
-	 iPnvt5m+SeIrKyOEv9QgI/jpMQgs8vZdAKT9ch4vy8rv7mqlUuJNYIwxZVE3HbRHX
-	 /ylj4QFxcLPmRdhcPw==
+	b=jRZEp+Bxle7h8ZXFDSylcWQa70S5jsXN7EpTsrR+naNeNRR+th6SFS4vmCAscnf+
+	 OiagpG67ZbKWnTMtvuTEnrXAmJdoBcGjM4a9RslQl6B9+zFn/8+xeVJnK9i5an4pP
+	 hbl6v+HyKw1aRHBPGb0ZiJO3NWwrQNo7Ahph9Syw73qmDvizUefafJghjs7NMSEkj
+	 0I2VzbNEQ++nyhk11hL40UO6sc5UlrdmjQi+Kqbn5E2lSV5gVlluEQJHMEwnSFuP4
+	 FZWu451196LhPfrc6o6uYWJLnA5n/QmpeO9YXSwPWbi6CeSe+vU/9feM8go5XIHxn
+	 csF1NkbpwJ8JiyNmDA==
 X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
 Received: from Mini-von-Rene.fritz.box ([79.203.19.211]) by smtp.web.de
  (mrweb006 [213.165.67.108]) with ESMTPSA (Nemesis) id
- 1MyvB8-1quxod46eg-00vyBE; Sun, 03 Mar 2024 11:13:50 +0100
+ 1MGQC9-1rdje70opR-00GqBL; Sun, 03 Mar 2024 11:13:50 +0100
 From: =?UTF-8?q?Ren=C3=A9=20Scharfe?= <l.s.r@web.de>
 To: git@vger.kernel.org
 Cc: Phillip Wood <phillip.wood123@gmail.com>,
 	Josh Steadmon <steadmon@google.com>,
 	Achu Luma <ach.lumap@gmail.com>,
 	Christian Couder <christian.couder@gmail.com>
-Subject: [PATCH v2 2/4] t-ctype: simplify EOF check
-Date: Sun,  3 Mar 2024 11:13:26 +0100
-Message-ID: <20240303101330.20187-3-l.s.r@web.de>
+Subject: [PATCH v2 3/4] t-ctype: align output of i
+Date: Sun,  3 Mar 2024 11:13:27 +0100
+Message-ID: <20240303101330.20187-4-l.s.r@web.de>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240303101330.20187-1-l.s.r@web.de>
 References: <20240225112722.89221-1-l.s.r@web.de>
@@ -52,55 +52,54 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:02ZVcwmGUHR3/effSkVqzPfd1E6/Rj0KC2oePAk0FDot3yWzcXx
- d7BCbrV0rSgJhdIj9SPBCtcyTOUydbw/QYD88bnriwk38jII7pP5NJ1ZGVPbWWBdBH0N0EL
- JCd/ITVblfj47fNu6tOiHYRWSLNqPX7tuFfEwvOnXlRajpnon8Y6gY0TNtYxhbSRJHXnE/r
- MQY1Rqh/ayIlt4Q9EalEw==
+X-Provags-ID: V03:K1:BAj8Rinc1pnGywWckW4fSq2wzWEePniF7swZeHHA9u1HCW/hIEB
+ nxqkDxJOZgpeYIBuFuVkvkuNjdPz3MZzhAhE5Un/gn8l6QTsLxLL9/d8Z0AMox0XYy9zmhy
+ jDU6b/PdCWLrRXqBR96x8/PuxOju7YjeSjTNl8HQiWk8QEgtwmzLxcTC16841LImF9oBb8F
+ UDqyv7w/YcKZrXlSaJuNg==
 X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:bbgQRKwKIsk=;rNv9up158rlIp/p2Df4exPUKmow
- W0xNR7Nr4G8xfjrDs5Sgru6Uxhs5i9GZ0JeHuuqBkQW9P0T0lV3EfnQ1LsBjvM+XNLqTjgIno
- Fsew/4Z3X/CnWQ1H2aJT7ezCD4bv9kphmYhUjHBay3/5tY1cOtcOly8pWAmhjeUhz/yHe7QW8
- eRK72Lyth/GsRDk6LRUJJ6FXuG0w6nU6Au4hDnd70vQ4oA223pG8t11POVTuYIeiqq0CfxTMq
- 8Lt4BGDvyyPY5lESBh5lv1VRBfUCqJM8aW39nhKufwnMMao6CVycqfcvjxGug46kjQH0LPQ/i
- Q8aOGu6O1i47IFh0c2iASi79Kc24839JnEMbtM9K6F2KxRau1IZxG/8hNkrpbxUN+A4ClC19W
- wAfVbSHvA1toxBGNeuxrA8mKuN1uOcJEovVLpa0oD3KZ80r/nerDxijRTu7dv4r0NhL5dCY5u
- UYUqDOVEwRb8LMy+4QZSeUr0Tuwjf51rB3oZHo77OSMxEDnlAwvZtqpZwmnjy/xaqrviDPXwB
- 2bQ2oaQyRo/jxlW2e6rrIFhrrdDTY5xXqfdcFjYEH0OU+RGIHLhtLFpoVSYkH1J0i+JM7FoWF
- r6h4Cn7EqU1iD1lMFqF+VF4ELuTwKM2qVV03W6LKxJEbSGsfe2ckNl+Hd4qcK5VeZtKiCWmcM
- tBeuXvg5d1zRuH0i0BoNIhMR+NOWrka2q+T0891ToEzz1bVtCWqWy+PWhnL076WoVA1DMxxHC
- jTrhQD/+s4DBi+BlQ73iZoym4HPd26goM7XIohE+JgDDzB4KG1YAIhGEzyLc16SUDRuk7lM8U
- qVJcZt1So3QQJTjbwTVcGkv6+vum0+issqABfJtOKdQ5E=
+UI-OutboundReport: notjunk:1;M01:P0:u9egaJiJS2w=;MvKmTPvKmm8aSuo/wY5bH4BXnIe
+ KLNnwtxViDooeols/p4iGFwDCx4x8+vrf11MQU/KgWWJYNUfxrfK4mv9Ynyk87r4YW1PSDbTM
+ 1eG7L9vg1nOwPCSu7nuPnE/jM+naKxdur/7udsEf+/7oA7G7pTX2eJztGPbxipHUAZuAtM8U/
+ I0Qok3bg1bEHvBEaeqSSewxY2ndYhlCnoHVyRTMxiD1jGul8syrP3CAkndeZJNwswYRQOsCah
+ ll308BXu576A78m4KA6/r6aI3XBlpBFMWbr3r+/7s+88dywgRJu7TNa4Ze+OAPcyC3nWvQe76
+ xEWjZ5qQpVI37YHohB2uY4W+dqep9IFV1cJfDfPwWESoKVI/ZYNlTeuwdHCmcRHo1g0d5Fjvw
+ jG+9NLSundmhwOxDQMuEb7jafwuyaS0xDKKSak/LDq2yQIbcgVFp4oJcatFndfrpl7U7oj6ay
+ rNHld3DzJ5/IwaGTAMmCLVdApD/GG3SB84lxI71nnbg1wWTE2OqO7snDO+ETYW3lI+2of/7WA
+ A8V1kQvXRhI+i9llp09ctgB/IkLagHCCH9j/YbRmrkB16qdEeA72IvgZE0hMAkN44750jpXCi
+ BZK/MVQIYUyD32dpr3lGo/7qpGM0yar+9vspC4UHDgmYBvuYtH2k0MOXfiPf6llhgskfOBmQH
+ aDius5RlSgbNoj4muecieUW/5Vyj+UcgXex6Vgq2OIkEfKcXnL2kZSgOS0nZiNbArd8arE9iC
+ gjRNszM62GVB5ujJ/s2ES6DWOB47OmQKVRv8pWqFNmwG0R/WW+eR0pLyx10uejlQpGmvYYuy4
+ 1JA4uUWQBvV4ILQCHZBBvQ1b1vkz1e8I7HPAwkd2juV+Q=
 
-EOF is not a member of any character class.  If a classifier function
-returns a non-zero result for it, presumably by mistake, then the unit
-test check reports:
+The unit test reports misclassified characters like this:
 
-   # check "!iseof(EOF)" failed at t/unit-tests/t-ctype.c:53
-   #       i: 0xffffffff (EOF)
+   # check "isdigit(i) =3D=3D !!memchr("123456789", i, len)" failed at t/u=
+nit-tests/t-ctype.c:36
+   #    left: 1
+   #   right: 0
+   #        i: 0x30
 
-The numeric value of EOF is not particularly interesting in this
-context.  Stop printing the second line.
+Reduce the indent of i to put its colon directly below the ones in the
+preceding lines for consistency.
 
 Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
 =2D--
- t/unit-tests/t-ctype.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ t/unit-tests/t-ctype.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/t/unit-tests/t-ctype.c b/t/unit-tests/t-ctype.c
-index 35473c41d8..f0d61d6eb2 100644
+index f0d61d6eb2..02d8569aa3 100644
 =2D-- a/t/unit-tests/t-ctype.c
 +++ b/t/unit-tests/t-ctype.c
-@@ -10,8 +10,7 @@ static void test_ctype_##func(void) { \
+@@ -8,7 +8,7 @@ static void test_ctype_##func(void) { \
+ 		BUILD_ASSERT_OR_ZERO(sizeof(string[0]) =3D=3D sizeof(char)); \
+ 	for (int i =3D 0; i < 256; i++) { \
  		if (!check_int(func(i), =3D=3D, !!memchr(string, i, len))) \
- 			test_msg("       i: 0x%02x", i); \
+-			test_msg("       i: 0x%02x", i); \
++			test_msg("      i: 0x%02x", i); \
  	} \
--	if (!check(!func(EOF))) \
--			test_msg("      i: 0x%02x (EOF)", EOF); \
-+	check(!func(EOF)); \
+ 	check(!func(EOF)); \
  }
-
- #define TEST_CHAR_CLASS(class) TEST(test_ctype_##class(), #class " works"=
-)
 =2D-
 2.44.0
 
