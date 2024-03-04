@@ -1,151 +1,131 @@
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f52.google.com (mail-pj1-f52.google.com [209.85.216.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E087062140
-	for <git@vger.kernel.org>; Mon,  4 Mar 2024 18:16:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13E9F6166F
+	for <git@vger.kernel.org>; Mon,  4 Mar 2024 18:35:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709576191; cv=none; b=mkit8LIixp+mEkdX/7rMz25Oi1bWKtgBvNkSvLeNhrq/kBZpmRzMLDR+eq41ji+K9GDyMDrzkLKmUm7YTNaw3kg0QJdhniyPjSUXkKiipy6p4sGei/914KO3eweWF0wqWB74dut15aTnJrd8DDADpE/nIWOxhf/5lL+jatppEbU=
+	t=1709577325; cv=none; b=fqhheUnDjV0InnCcad6sii4j/tJ5E7F/yejCTEXC/QY4s7nC/ViKx7f6dr6udcpQ2O3Wcgh3aBXTY1ClvH9nq9NmrLl/lsynA7qHzMrgaIjC94itakkt6Zy1xD/RnJL2705gZ1YKty+nrfNJ5EY4k9g2/RgStZZSSUN6vuLaoLo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709576191; c=relaxed/simple;
-	bh=fBIW325emPYmNerowLGkdFquNxE+UIV01oEi2YGsYIU=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=gClmvggOcJmRQ2VDWD5nL8xTy00MZCOWeGnIBST548PC9/ksDl43SBV2/hW3NHffCI/4HzlWFsQnIWxV//RgKMvdFCsbJ5ltu3OjffClHRpbvwc+Cc3c+yJkcc/Z52s0+mNoj1W07onSwebYoaaq2JN/vUnrBXA8ojyH0nlbgqA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=sfWvol+b; arc=none smtp.client-ip=173.228.157.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1709577325; c=relaxed/simple;
+	bh=641yfLt4bs7XfaVp0WsBWDg68OOPt5PP7Ff7eiUGE4E=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=QJ/BEMf6I7yYTrgMmIFMevgcYMcVI4C45De8LSwPSTPB4Po5nmtaDEvFpJVenrjyd7d6Bmpw1xyOXGRggJ3TTjgUKf/JT6Ak2gOGJHcie/CedQ/1QOxDpwFuWhG1JCNVg9DX4e4xo9D5r1V+RPOL0KSEQ9FM2N4nuFonqX6DcfA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=Lm4vaDNC; arc=none smtp.client-ip=209.85.216.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="sfWvol+b"
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id 5259537ABA;
-	Mon,  4 Mar 2024 13:16:29 -0500 (EST)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=fBIW325emPYmNerowLGkdFquNxE+UIV01oEi2Y
-	GsYIU=; b=sfWvol+bGt+6EtWJQranEcNBG9Y5JmkhBqKRRh43GB7CXghDEx/3Bd
-	cOgBW3SXAmG1V0Wi68hf8sezfUpIqql191UmTf3GW45i5QXBPoRN4a/gLiVS2+X4
-	vxvIpKSxOvMSSABNZfcyvVeSNN5vFXlwbBBsIUvJaEghU0ouAkUMg=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id 48F8B37AB9;
-	Mon,  4 Mar 2024 13:16:29 -0500 (EST)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.176.30])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id D7E6937AB8;
-	Mon,  4 Mar 2024 13:16:25 -0500 (EST)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Ghanshyam Thakkar <shyamthakkar001@gmail.com>
-Cc: christian.couder@gmail.com,  git@vger.kernel.org,
-  johannes.schindelin@gmx.de,  newren@gmail.com
-Subject: Re: [PATCH v2] setup: remove unnecessary variable
-In-Reply-To: <20240304151811.511780-1-shyamthakkar001@gmail.com> (Ghanshyam
-	Thakkar's message of "Mon, 4 Mar 2024 20:48:11 +0530")
-References: <20240229134114.285393-2-shyamthakkar001@gmail.com>
-	<20240304151811.511780-1-shyamthakkar001@gmail.com>
-Date: Mon, 04 Mar 2024 10:16:24 -0800
-Message-ID: <xmqqjzmhq2vb.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="Lm4vaDNC"
+Received: by mail-pj1-f52.google.com with SMTP id 98e67ed59e1d1-29acdf99d5aso2239595a91.2
+        for <git@vger.kernel.org>; Mon, 04 Mar 2024 10:35:23 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1709577323; x=1710182123; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:mail-followup-to:message-id:subject:cc:to
+         :from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=BEPzLxNWrDg4km/XwPLXW6OCpbC2sbJQIfWYTFoRqCw=;
+        b=Lm4vaDNCI1WSgNi89CoAd2oxFNL7WxMx+HmEaWz3cLVUrLCOncdDtTdycvcIYfvCFj
+         mHru3fk4/1ZBCGbi/sDOau7Pd6KtQSRvOfdtrlFySsHhlhg9P6WQXBCXXOAvFrRTDrKn
+         VRQp8WzrVJmvhEufu4lI37UgGD/X6p8o16WAm4erl4z3aiI2uo+z0bRS+zrO5P6byrLr
+         Mnlxl8zy6QOt9KdQhAYpEViKNFGvzlthWNlachj5N/Z0WEpTd6iy2mIL6YWcmcpH3OIj
+         8pKKSvh2Nktp/dm9iWbAkaKHf9atN6kEwXNeKiKKoTkvOBhL9TQvc4VICdMHy/JmGpTI
+         zhPw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1709577323; x=1710182123;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:mail-followup-to:message-id:subject:cc:to
+         :from:date:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=BEPzLxNWrDg4km/XwPLXW6OCpbC2sbJQIfWYTFoRqCw=;
+        b=EpSasRbY+r0w0wBM9pFujCrxXmFT5zooQ3Zj1YuQdfm9AqOOlvNPngkh0kE7I9sWVZ
+         hvS6yT9HNzi+M62/NnY8jL05/NsND7lcl79rgOrl7px+eazhwRBEEP0RG1CtbfVRXDkI
+         fhZLa6LcI7igim1G7N6wq4i3oBOki+kRYdkWa148XJ1IuIDutr8Et2ZkCt/A2KBo4A1a
+         mA9vhPDhmC+NMy++F0zfv4j5ZvrWdbKMul7PP2NAY35wgbmJ2dDG0DPnE625U9kjstrQ
+         Wy8ErGD83h4MqPh0DpU7D1NuOUMP2m6AMabqWD+gIxS6T8ywIrx5Eol5m4Xv3lSawbjz
+         X99A==
+X-Forwarded-Encrypted: i=1; AJvYcCWbgAFwQHw6AjHtnXB/nLx5dH694hsQkfH29c8CLQcIpxQi+15mO/aM3sb8cN4/FZzy+bMEO+8ouIbuwKCvAx5Q0Sas
+X-Gm-Message-State: AOJu0YyOWjDkOJppKthNYz5QhePrFaEpAghNtneBe/LwcRBYtRtPCH76
+	+YY0j8xJ3p2aGGAiQQrGmttYjIRyVZUTXhd8JsrUOt5Bwnr0+9ryAX5tbdtIqA==
+X-Google-Smtp-Source: AGHT+IFPwAxZ6Zj5u0bu64qOnEIFWU1ku2Kojn2y1PgIfGuEBSv91aGJd3ysIRSY8j5I9cKRuHcGnw==
+X-Received: by 2002:a17:90b:955:b0:29a:de1f:e305 with SMTP id dw21-20020a17090b095500b0029ade1fe305mr7683536pjb.26.1709577323166;
+        Mon, 04 Mar 2024 10:35:23 -0800 (PST)
+Received: from google.com ([2620:15c:2d3:204:3ccb:2f09:89c5:5915])
+        by smtp.gmail.com with ESMTPSA id b6-20020a17090a990600b0029af4a029acsm8246553pjp.55.2024.03.04.10.35.22
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 04 Mar 2024 10:35:22 -0800 (PST)
+Date: Mon, 4 Mar 2024 10:35:17 -0800
+From: Josh Steadmon <steadmon@google.com>
+To: =?iso-8859-1?Q?Ren=E9?= Scharfe <l.s.r@web.de>
+Cc: Christian Couder <christian.couder@gmail.com>, git@vger.kernel.org,
+	Phillip Wood <phillip.wood123@gmail.com>,
+	Achu Luma <ach.lumap@gmail.com>
+Subject: Re: [PATCH 3/3] t-ctype: do one test per class and char
+Message-ID: <ZeYUZZ6Z8VtYnBn7@google.com>
+Mail-Followup-To: Josh Steadmon <steadmon@google.com>,
+	=?iso-8859-1?Q?Ren=E9?= Scharfe <l.s.r@web.de>,
+	Christian Couder <christian.couder@gmail.com>, git@vger.kernel.org,
+	Phillip Wood <phillip.wood123@gmail.com>,
+	Achu Luma <ach.lumap@gmail.com>
+References: <20240225112722.89221-1-l.s.r@web.de>
+ <20240225112722.89221-4-l.s.r@web.de>
+ <CAP8UFD0Wi3ot-t0Q7ruMauwj4zkMfd89Xr9SmxYa4eQ3=2VKOw@mail.gmail.com>
+ <d96aaf45-f073-42d0-b69c-703393634848@web.de>
+ <ZdzfYPim2SP22eeS@google.com>
+ <CAP8UFD2t1KRo01eenK_RVndyVx5Vp9F4FepTgnR+mwhTGTvXnw@mail.gmail.com>
+ <bd48f19b-0600-4e64-835b-98d3a97bb7f2@web.de>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- 5046B9E6-DA53-11EE-BD54-A19503B9AAD1-77302942!pb-smtp21.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <bd48f19b-0600-4e64-835b-98d3a97bb7f2@web.de>
 
-Ghanshyam Thakkar <shyamthakkar001@gmail.com> writes:
+On 2024.03.02 23:00, René Scharfe wrote:
+> Am 27.02.24 um 11:04 schrieb Christian Couder:
+> > On Mon, Feb 26, 2024 at 7:58 PM Josh Steadmon <steadmon@google.com> wrote:
+> >>
+> >> On 2024.02.26 18:26, René Scharfe wrote:
+> >
+> >>> The output is clean as well, but there's a lot of it.  Perhaps too much.
+> >>> The success messages are boring, though, and if all checks pass then the
+> >>> only useful information is the status code.  A TAP harness like prove
+> >>> summarizes that nicely:
+> >>>
+> >>>    $ prove t/unit-tests/bin/t-ctype
+> >>>    t/unit-tests/bin/t-ctype .. ok
+> >>>    All tests successful.
+> >>>    Files=1, Tests=3598,  0 wallclock secs ( 0.08 usr +  0.00 sys =  0.08 CPU)
+> >>>    Result: PASS
+> >>>
+> >>> Filtering out passing checks e.g. with "| grep -v ^ok" would help when
+> >>> debugging a test failure. I vaguely miss the --immediate switch from the
+> >>> regular test library, however.
+> >>
+> >> Yeah, I agree here. It's a lot of output but it's almost always going to
+> >> be consumed by a test harness rather than a human, and it's easy to
+> >> filter out the noise if someone does need to do some manual debugging.
+> >
+> > Yeah, I know about TAP harnesses like prove, but the most
+> > straightforward way to run the unit tests is still `make unit-tests`
+> > in the t/ directory. Also when you add or change some tests, it's a
+> > good idea to run `make unit-tests` to see what the output is, so you
+> > still have to see that output quite often when you work on tests and
+> > going through 3598 of mostly useless output instead of just 14 isn't
+> > nice.
+> 
+> I was starting the programs from t/unit-tests/bin/ individually because
+> I didn't know 'make unit-tests' exists.  This is much nicer, thank you!
+> Especially after adding 'DEFAULT_UNIT_TEST_TARGET = unit-tests-prove' to
+> config.mak to complement the 'DEFAULT_TEST_TARGET = prove' I added long
+> ago.  It would be even nicer if the former was the default when the
+> latter is set.
 
-> The TODO comment suggested to heed core.bare from template config file
-> if no command line override given. And the prev_bare_repository
-> variable seems to have been placed for this sole purpose as it is not
-> used anywhere else.
+After js/unit-test-suite-runner [1] is merged, then using
+'DEFAULT_TEST_TARGET = prove' will also run the unit tests alongside the
+shell test suite.
 
-OK.
-
-> However, it was clarified by Junio [1] that such values (including
-> core.bare) are ignored intentionally and does not make sense to
-> propagate them from template config to repository config. Also, the
-> directories for the worktree and repository are already created, and
-> therefore the bare/non-bare decision has already been made, by the
-> point we reach the codepath where the TODO comment is placed.
-
-Correct.  Who said it is much less interesting than what was said,
-so I would have written the first part of the paragraph more like
-
-	Values including core.bare from the template file are
-	ignored on purpose because they may not make sense for the
-	repository being created [1].  Also, the directories for ...
-
-but I'll let it pass.
-
-> diff --git a/t/t1301-shared-repo.sh b/t/t1301-shared-repo.sh
-> index b1eb5c01b8..29cf8a9661 100755
-> --- a/t/t1301-shared-repo.sh
-> +++ b/t/t1301-shared-repo.sh
-> @@ -52,7 +52,7 @@ test_expect_success 'shared=all' '
->  	test 2 = $(git config core.sharedrepository)
->  '
->  
-> -test_expect_failure 'template can set core.bare' '
-> +test_expect_success 'template cannot set core.bare' '
->  	test_when_finished "rm -rf subdir" &&
->  	test_when_finished "rm -rf templates" &&
->  	test_config core.bare true &&
-> @@ -60,18 +60,7 @@ test_expect_failure 'template can set core.bare' '
->  	mkdir -p templates/ &&
->  	cp .git/config templates/config &&
->  	git init --template=templates subdir &&
-> -	test_path_exists subdir/HEAD
-> +	test_path_is_missing subdir/HEAD
->  '
-
-So we used to say "subdir should be created as a bare repository but
-we fail to do so", but now "subdir should become a non-bare repository
-because 'git init' is run without the --bare option".  OK.
-
-> -
-> -test_expect_success 'template can set core.bare but overridden by command line' '
-> -	test_when_finished "rm -rf subdir" &&
-> -	test_when_finished "rm -rf templates" &&
-> -	test_config core.bare true &&
-> -	umask 0022 &&
-> -	mkdir -p templates/ &&
-> -	cp .git/config templates/config &&
-> -	git init --no-bare --template=templates subdir &&
-> -	test_path_exists subdir/.git/HEAD
-> -'
-
-This removal is a bit unexpected.  Is it because we established with
-the previous test that core.bare in the template should not affect
-the outcome, so this is not worth testing?
-
-> diff --git a/t/t5606-clone-options.sh b/t/t5606-clone-options.sh
-> index a400bcca62..e93e0d0cc3 100755
-> --- a/t/t5606-clone-options.sh
-> +++ b/t/t5606-clone-options.sh
-> @@ -120,14 +120,14 @@ test_expect_success 'prefers -c config over --template config' '
->  
->  '
->  
-> -test_expect_failure 'prefers --template config even for core.bare' '
-> +test_expect_success 'ignore --template config for core.bare' '
->  
->  	template="$TRASH_DIRECTORY/template-with-bare-config" &&
->  	mkdir "$template" &&
->  	git config --file "$template/config" core.bare true &&
->  	git clone "--template=$template" parent clone-bare-config &&
-> -	test "$(git -C clone-bare-config config --local core.bare)" = "true" &&
-> -	test_path_is_file clone-bare-config/HEAD
-> +	test "$(git -C clone-bare-config config --local core.bare)" = "false" &&
-> +	test_path_is_missing clone-bare-config/HEAD
->  '
-
-This is in the same spirit as the first change in t1301, which seems
-OK.
-
-Thanks.
+[1] https://lore.kernel.org/git/cover.1708728717.git.steadmon@google.com/
