@@ -1,80 +1,52 @@
-Received: from wfhigh1-smtp.messagingengine.com (wfhigh1-smtp.messagingengine.com [64.147.123.152])
+Received: from ring.crustytoothpaste.net (ring.crustytoothpaste.net [172.105.110.227])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9658436B1E
-	for <git@vger.kernel.org>; Mon,  4 Mar 2024 10:39:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.152
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AEC73717C
+	for <git@vger.kernel.org>; Mon,  4 Mar 2024 10:43:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.110.227
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709548774; cv=none; b=Zp3IUY+2SWiB96DKpR8LmadyLSTXQHiyytfXNMKLEeSpKwkIkk1vWsdQrAdrYtIPYeKYB4w2CCcZJl2qD1sdZlQ0wSZQxEsoIY1IOqh7hBoiNKrysKaShIbtPyL4RTepL2WzagU2U5uyzaBRr4SoFnLTEhElbrlvcc9Wcaa6rfg=
+	t=1709549031; cv=none; b=pY4yXpt4HczbyMVE5ZY/0KEIFV7gRzRuhezYqRB0gdbP0lDnV7WVEZXiiEoPN/9KLKYbwqWXD0rI3cct/B60ipHMh+FCibg/GFlWJI6IusnRsMxsY/XpxaSwL484EmhTXavJESKg42ftsU0kqTZCBbviFKRqDdcxqWaeU7Gtnwk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709548774; c=relaxed/simple;
-	bh=9q5cwCmidxnRI1SfnZ+XjLbyFo8qCnB/RhYHWwm0I4w=;
+	s=arc-20240116; t=1709549031; c=relaxed/simple;
+	bh=nd9l6e1yUFh10aBrFlSJ15Km83co+kKmtJRKDuRzSWY=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=iWpAu5piryBUOCSQTokGpU4mjd8Tjy/ZmnVTjkUsV4Yv+n5z0mB2vcEl5OH9/mIDCR94QHLhLUsuRv8yVEKMAOt62J5pCZzjZ8m0B5pAr1EZ9L2lyZyQmVxOZMNfX5wT6LCMZStNmHDGfgrBgsKQwa5oazzS1Kiqox06TC/JvBI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=X/kOKhij; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=WHJO0oNe; arc=none smtp.client-ip=64.147.123.152
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	 Content-Type:Content-Disposition:In-Reply-To; b=Q6N9785za37lBT3h1K0oZh0E3CGjLM+hnwP+k1hQHHwR5niDwx55jCKTjeVQmK23K7hDRNPLWB5XfAj0O1OUZ59MpF4tTzoGDe6ktlHXyPiIKNquKGjdcdNhTH5gz73X5imIioqs3CDjhz/q2x2cRq5zOH8R/+XXTGsDJN0ZA6I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=oYLt1x42; arc=none smtp.client-ip=172.105.110.227
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="X/kOKhij";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="WHJO0oNe"
-Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
-	by mailfhigh.west.internal (Postfix) with ESMTP id 0A58E180009B;
-	Mon,  4 Mar 2024 05:39:30 -0500 (EST)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute6.internal (MEProxy); Mon, 04 Mar 2024 05:39:31 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1709548770; x=1709635170; bh=mG912gQTmP
-	jz/3zMMn8Uzbaq1vD/pmHiJ9ZjxhV3dko=; b=X/kOKhijVk51H9oQkcp3FEjhbO
-	ikP1j0dF98dDEB3JTu+kuX8tBCoyZX2kIHEv2JrcLOsq/qRQCKmOuoHCKjo96gCj
-	o5H/9xu86LKxMhDVtjDcqdyB6omM998aVMxlHOKz5RMRQo2bkzWJ7LOFCwDFMWoj
-	02+nAqkgDVf2dPYYcW04RuJCCy+kvujawYJzwkyobGkcHHj2Kb/St8TFRS+dtGOz
-	hc3hgSuFKEBqEJfnToA+O1rq8qInlL4l7EoVsh1OUc1N+6flAFajWsbkB6AhWL3k
-	dHC45TivH0V41z1iBZf1QXTEvnvHAYMln54R1N7HhpgDp+CmtHSLqzSqOUGA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1709548770; x=1709635170; bh=mG912gQTmPjz/3zMMn8Uzbaq1vD/
-	pmHiJ9ZjxhV3dko=; b=WHJO0oNeH6AP/8U3sx+jjnK/pB0YR1T4K6eucFsP1z+k
-	LUQUSOk3p30l6Nac19fAqXhpbb64qxdqCRGO1GBYmzbrkSVQiIFAM7e73pmUm9CL
-	XNIkaFk+FrEZxdxvzs5LpWOs9Gk1b6pI4pVD8EPI5iIXb0bnbATI6vfrM/JP1z2H
-	aqjalMpC8Vwo58X3fRfH6U8UFjHaHKM7BDcYxsCX9+9e0FRluPIMC5sJNGY7ku+2
-	Qr65gTZ6rHiTDwDigjINfIWLP0EXXZXwL2NhvKrnyQX/emYKD2DnQ/P6TFT5AIbL
-	vYlhH8J6MAk9WPMQhIh8bFqtmztxz/5CO1F7NSikUg==
-X-ME-Sender: <xms:4qTlZQ4331GT5d18nxmI4hzjiTQ1yWXez9o7l0ElIEIKH95qoYjTGQ>
-    <xme:4qTlZR4hX5Qsm6d9QxEO6_ZZDqBbVtS3DQPXejRzarY9A7aY16k_8HgsAfWxIiO9F
-    1PC9zcVSlZX2yvVLA>
-X-ME-Received: <xmr:4qTlZfdlSieJ3V4iQQGdKCnmYwYC6_CWDj7V4wHdI4R4a3klw1FKmREg5efU8nuq8nEsaFFfssgSmSO7kNiPgNywihb6gbqWL2FTDnyTFW1bSIQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrheejgddujecutefuodetggdotefrodftvf
-    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
-    uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
-    fjughrpeffhffvvefukfhfgggtuggjsehgtderredttddvnecuhfhrohhmpefrrghtrhhi
-    tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
-    hnpeeukedtvedtffevleejtefgheehieegkeeluddvfeefgeehgfeltddtheejleffteen
-    ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
-    hkshdrihhm
-X-ME-Proxy: <xmx:4qTlZVLA4AgnpEHfsX1eXd9e0rprhdevBZsltobQD95L8yeXVq3nxQ>
-    <xmx:4qTlZUJTV1izR_liZq6sLoc8C--cukDNnY5Ccyirzk08RxlQ0coc4Q>
-    <xmx:4qTlZWxbuo_lQzKYa8A04NU2IrmpVQxbVY0oh85XKEB1O0Meks6iiA>
-    <xmx:4qTlZbXGTGN5AKCiN9EOmCBLvDt07rmQcusspCnOQGjnjrj5dfxLVUK4Lh8>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 4 Mar 2024 05:39:29 -0500 (EST)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 265e3f1b (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 4 Mar 2024 10:35:04 +0000 (UTC)
-Date: Mon, 4 Mar 2024 11:39:27 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: James Liu <james@jamesliu.io>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 09/12] reftable/record: reuse refname when decoding
-Message-ID: <ZeWk34iSgTQllpFc@tanuki>
-References: <cover.1707895758.git.ps@pks.im>
- <3ba697036c1db3837f46775823a7bd55602b4bac.1707895758.git.ps@pks.im>
- <CZG9VJKP1EA8.432Y9U39737O@jamesliu.io>
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="oYLt1x42"
+Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:e59a:3ed0:5f5c:31f3])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (P-256) server-signature RSA-PSS (3072 bits) server-digest SHA256)
+	(No client certificate requested)
+	by ring.crustytoothpaste.net (Postfix) with ESMTPSA id E9AB45B3C4;
+	Mon,  4 Mar 2024 10:34:06 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1709548446;
+	bh=nd9l6e1yUFh10aBrFlSJ15Km83co+kKmtJRKDuRzSWY=;
+	h=Date:From:To:Cc:Subject:References:Content-Type:
+	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+	 Content-Type:Content-Disposition;
+	b=oYLt1x42MduwJOV5ALdkYtA55I8ZCCVzoXoRgXm2VuOfxy25IIz7OX6tWXeICtrOs
+	 284nAxPDFiXJnJ1F+Yfs0TD0sUO0cYI7AakVqnM7X4/JCVaTQ+ARnBnlF+yFAfTuGr
+	 ecliFDYNRKhK2cgPYb4T0Uc17EesUA/g1TnOBXySQ2kL5k7b/UL9BRWnbaCKft3FSG
+	 hYHp/lrCEuehTffJtcjIbSco4YtK7oscc+RlwD2hSJZqqpIbBEgvQahRDd0Lqq6RuC
+	 ej0bdh+ScsH881B9iClcWTudfp8fYNK9HRFrW1KguMCkH9SHaE2bHliQhHPrYPJm0k
+	 BZGZ0PmxnFtZ+5KMHG3wClhmrAg7nqgEAPQyTwFF5wTefN+P8ao5cWr2SvXvpWH/O1
+	 q16fkyGbvJjojhIG9UVa8zgc+XAGo/WJ5aykOYZrN0sOeXcf+EpirAsRUyKub1H9e8
+	 M3bqQpjnr80ldmI+6SPmxvak79AucTsMMgfF3SCpDCdAz50IRm4
+Date: Mon, 4 Mar 2024 10:34:05 +0000
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+To: "Ayoub, Toufic" <toufic.ayoub@philips.com>
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: Support with finding git objects
+Message-ID: <ZeWjnaZ64DvTRldM@tapette.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	"Ayoub, Toufic" <toufic.ayoub@philips.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+References: <AMXP122MB01810E9B1195953D9AD0C8C48E5E2@AMXP122MB0181.EURP122.PROD.OUTLOOK.COM>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -82,78 +54,92 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="j35RJ/U3qompCoqe"
+	protocol="application/pgp-signature"; boundary="x7JlxpN9oLLgTWkh"
 Content-Disposition: inline
-In-Reply-To: <CZG9VJKP1EA8.432Y9U39737O@jamesliu.io>
+In-Reply-To: <AMXP122MB01810E9B1195953D9AD0C8C48E5E2@AMXP122MB0181.EURP122.PROD.OUTLOOK.COM>
+User-Agent: Mutt/2.2.12 (2023-09-09)
 
 
---j35RJ/U3qompCoqe
-Content-Type: text/plain; charset=us-ascii
+--x7JlxpN9oLLgTWkh
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Wed, Feb 28, 2024 at 11:06:52AM +1100, James Liu wrote:
-> On Wed Feb 14, 2024 at 6:46 PM AEDT, Patrick Steinhardt wrote:
-> > This refactoring is safe to do because all functions that assigning to
-> > the refname will first call `release_reftable_record()`, which will zero
-> > out the complete record after releasing memory.
->=20
-> s/release_reftable_record/reftable_ref_record_release
->=20
-> > Furthermore, with this change we now perform a mostly constant number of
-> > allocations when iterating.
->=20
-> That's awesome!
->=20
-> > +	SWAP(refname, r->refname);
-> > +	SWAP(refname_cap, r->refname_cap);
-> >  	reftable_ref_record_release(r);
-> > +	SWAP(refname, r->refname);
-> > +	SWAP(refname_cap, r->refname_cap);
->=20
-> What do you think about reversing the order of the `SWAP` arguments in
-> the last two invocations? If my understanding is correct that we're
-> preserving the `refname` and `refname_cap` fields so we can set them back
-> into a freshly initialised `r`, reversing the args might make that intent
-> a bit clearer.
+On 2024-03-01 at 19:06:29, Ayoub, Toufic wrote:
+> Hello everyone,
 
-Yeah, fair enough.
+Hey,
 
-> Also, since we're unconditionally `memcpy`ing the key into `r->refname`
-> below, can we avoid the `SWAP(refname, r->refname)` call altogether?
-
-No, otherwise `reftable_ref_record_release()` would have already
-released the underlying pointer of `r->refname` and the call to
-`REFTABLE_ALLOC_GROW()` would always have to reallocate it.
-
-Patrick
-
-> > -	assert(hash_size > 0);
-> > -
-> > -	r->refname =3D reftable_malloc(key.len + 1);
-> > +	REFTABLE_ALLOC_GROW(r->refname, key.len + 1, r->refname_cap);
-> >  	memcpy(r->refname, key.buf, key.len);
-> >  	r->refname[key.len] =3D 0;
+> Hope this message finds you. I need your support regarding an issue my te=
+am is facing.
+> We have a code in our SW which shall display the date of the git commit. =
+There is a path in the code that if it is executed on a platform where git =
+is not installed, that this commit date shall be found by looking at:
+> 1.      Reading from HEAD file the commit hash
+> 2.      Searching for this commit hash under .git/objects
+> The problem we are facing is that sometimes, when the default master bran=
+ch is updated with the newest commit, this commit will not be found locally=
+, even after doing git pull and so on...
+> The commit can be found with:
+> 1.      git log
+> 2.      git cat-file -t <commit hash> -> it returns "commit"
+> 3.      git reflog
 >=20
+> but the strange thing is that we can neither find it under .git/objects/ =
+nor under .git/objects/pack (although that is the newest commit and shall n=
+ot be packed).
 
---j35RJ/U3qompCoqe
+I think you're maybe making some assumptions about when loose objects
+are and are not created that Git doesn't guarantee.  For example, if
+you're doing a `git pull` or `git fetch`, it is entirely possible that
+the objects downloaded remain in a pack.  In fact, by default, Git will
+leave large fetches as packs to avoid an explosion of loose objects.
+
+Note that the name of a pack is based on the hash of the entire pack
+contents, not based on the items it contains (although obviously those
+influence the pack contents).
+
+> Can you please provide support by:
+> 1.      telling me it that is an issue or is it expected?
+
+I believe this is expected.
+
+> 2.      If that is expected, where shall we find this commit object to re=
+trieve the commit message and date from it (without running git commands)?
+
+Sorry, but you're going to need to use Git commands to do this.  You
+could also use libgit2, but that doesn't work with SHA-256 repositories
+or certain other features.
+
+> 3.      Or recommending me some other solution
+
+I assume that you're building this software on a machine that _does_
+have Git, so you could generate a file during the build process that
+includes the commit date, commit hash, and any other information you
+want.  This is easy to do for compiled languages, but it's also possible
+to generate something like a version.rb file for Ruby or the like as
+part of your build process.
+
+In the interests of reproducible builds, you will of course want to use
+the commit metadata and not the actual timestamp of building.
+
+If that doesn't work for you, maybe you could tell us a little bit about
+your goal with this process and what you're using it for, and we can
+help you more then.
+--=20
+brian m. carlson (he/him or they/them)
+Toronto, Ontario, CA
+
+--x7JlxpN9oLLgTWkh
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.4.4 (GNU/Linux)
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmXlpN4ACgkQVbJhu7ck
-PpQtZw//egLS/8xqDpe9qVBcTEfLQJ5LwT7eHMsHl2RIrkJj3jtsowRRu5lyBhPm
-5/OPnpNTApL8ch0f4qqhgWcWj2VLKUmeXQEZHGL3fUFXwOVFcj4gLe0HTIgF+lEX
-qpjZUQIm4w3lnEpllWUggKOh5OB/XBQ3PWAuQqK/qCY0bqJcy8v+R/XyclRHhikX
-L/02A0YOPyqfdbbuPJL81lwztU2WI0vttrXFQgnAHbcoblzGeY5y9fZAlseBLA52
-p5i6lPoxFjBiVr3Umy8DQNt24EcO3fpazHz5Mni2mp+dLdvRukesq/hrqDnkw4Gg
-V5PqTfNWrT4S/i97E6ypvJLo3zjXo75a6X8huSL2blIm7VEURO1PqxN7eSMBa8qQ
-xegKwpbwmygwBJY5V+RH3PHztiPJsBNwgd4tt7XwNq8X/oGJWSISo7E4Jz3YIALB
-7Bt6U8KQxM9OORMFHMlUDokwN2RUai2D3ejizwQiSYzW0IPMjBPYVfBiBkug7Xde
-9mMdtwCtp3uk2t6OdSucsKbKsnP1U45NN4eL6aPk8toiMKXivC+JnqYyleXH34jm
-hoQaD8lWE/wbe5/MI5mXuBl74xLfY9Y1IXlUERb7JhO0kncr3inNTy2W5f7YJGyz
-G27WcboWCda6+uXEVdJdvK9UT2NS44SAEKKnaWLfknhmZP0mPis=
-=v46y
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZeWjnAAKCRB8DEliiIei
+gcMUAP4m70U+iD01fkFr089K1AHy4hVpBxJV+qB+sFP3TRYxGQD/Z/VLXCLfaGuz
+oEc4ey4kvXJSD/IMZDZfFNk/Ztk9sw4=
+=2MMv
 -----END PGP SIGNATURE-----
 
---j35RJ/U3qompCoqe--
+--x7JlxpN9oLLgTWkh--
