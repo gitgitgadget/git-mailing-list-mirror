@@ -1,160 +1,142 @@
-Received: from wfout8-smtp.messagingengine.com (wfout8-smtp.messagingengine.com [64.147.123.151])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f54.google.com (mail-ej1-f54.google.com [209.85.218.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED92818EAD
-	for <git@vger.kernel.org>; Mon,  4 Mar 2024 10:00:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.151
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CDCE2208A
+	for <git@vger.kernel.org>; Mon,  4 Mar 2024 10:00:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709546423; cv=none; b=uafK8ncy5fD3Zz576QZShJiPwki+yrhdrFwQnp70d/qr5ZQ4qwgBiK25DtDjehPs1q6+OyOM+i9Qw/7Vz5qm8bJ94tucTPQjNf2LFJZi6VLlkNLvoM2eJRqVaIjbeUbQtJ8atYwljV4yXqSOhHBKS6i7ZpX9wQKMcLjs6cVb6s8=
+	t=1709546461; cv=none; b=QkdQnZ5f/+qipwtF9rYOsEBe9XVucLDNm2+r3kAPySSr0oLuZJNdt4MybwioDUQZvCTzZT+p6HREj4oFIVgEIXrB/2WlGZB5XphnVk91h13ZRncSeMy8uZFB/S2UBzACPH7OikenDONTvAgT8nIc+HeBE/G4MgeAf4fU6edOc14=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709546423; c=relaxed/simple;
-	bh=akMwqHCMx9A/hhqqgRYuj8iNZaGxh1exeOCzfN9csuw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=P74OoOEZSKZllKg+Vasl0NeslnU1z9xNWc+SeD860orDGreD/LXnUY21KD4e09Q0HMes14BFuyFZpISHas46b8BEA1PROjiEErjiIlGTBeO9KPTm5Wu3lzzFjUMJ3xLmSTdJMIcCHHGSEQ+0bsWaXgV5Ow2Q/yTdLM+f/evyO7M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=InvO8pFg; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=V2zIF8h+; arc=none smtp.client-ip=64.147.123.151
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1709546461; c=relaxed/simple;
+	bh=2jS5VG8VX4b1kSiDozeSXCHK0u3ys9ztkKwSAuHrXgA=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=NlhasFbQ1lOIK9+MG9KVUm704GxPtCsne+C8DQ2dkZ50YgyWry5zlRm/6vIJI6Vyf/sekyKhmUbC0PEQgUBDgNC9Ao95JiZQ/4hRoDeg3M8Uvcj/R7Z9QFK9FFfwMpu6fEmAJEaCPomV7FZy/k6VZbks+KbYrOlH28TFscY4mg4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XqO9qqww; arc=none smtp.client-ip=209.85.218.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="InvO8pFg";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="V2zIF8h+"
-Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
-	by mailfout.west.internal (Postfix) with ESMTP id 06B061C000B8;
-	Mon,  4 Mar 2024 05:00:20 -0500 (EST)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute6.internal (MEProxy); Mon, 04 Mar 2024 05:00:21 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1709546420; x=1709632820; bh=h9W5GqVkmw
-	OAjxL8sufJ49LetMyZNVjsWPgLFIcpmqY=; b=InvO8pFgPRHH4jLKfRCahDNAmC
-	wl9L09MgcdrZnPh1eioKv1Wg4ZuTPzeaSo9R+J/x3QMtN+9oMdjV0OXUiVaHwo9T
-	2StuumT8KokQ6E/wPmurGoUdhFQzLVvXBbAM+vfyZcoHOfZvbuWPhpAggpB7oVHO
-	p6CtnBBHho4Z1JmnzQX8AcNiM0FhjDHhaVIdPUxeQsestamoF81EZwGkKX+FHO3e
-	wjVEsRTKedeWc6mw1dm94iqKkEHAqzcqOqoj5pfZq0LzDBxTlodvMttd6aCsfAQ2
-	18qMPdxtuA0kl+NLP0elhk4hLAW5XoZ52evYvnddvb1HHn947l4xVT20CFWA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1709546420; x=1709632820; bh=h9W5GqVkmwOAjxL8sufJ49LetMyZ
-	NVjsWPgLFIcpmqY=; b=V2zIF8h+ahMC9Tawk7zXriku0sZExUH0537CD/9tUMdo
-	elnY6irjO/w06DK+LBhTivzgghdUoKjmoOb5dqZ5YTAG+b0jpta0TRVel0R6EFU/
-	7YzdVCvLlxDJWWESyTKoiCajSXIiGgWJjVKqcEbVe258XJis7ulhS7Hvnd/0TDM/
-	iJ3W2XXf9O4oeCZGsQflXehqL1kLZdNl66Z1rLPYPPAPRLwdzc9+wL5pGTUTTdlZ
-	i+IgThCfv1VEfB6eZGYxdP3+iKzqD/gFeznxb0YB0PqZTMmi5ujFJyVhE9U2zYjl
-	EqAujJanVwMsYjguDC6AudXZ7aMnpsvpRu2CapbAEg==
-X-ME-Sender: <xms:tJvlZZ5UjMrS59jheAEicFBcJwPqkSWq18xsS6JIOUqbog5gD5Otaw>
-    <xme:tJvlZW4XZJ9QJ9Iizf0f36J_KuRlBqP87zymg2c-AUH-EExxI7cojtMZfRCzVXdJ8
-    rjWvp-c-LYSRPbbcw>
-X-ME-Received: <xmr:tJvlZQcmc7_RdUSMxOAYc3J448DI3F5c2HBxq8F2fwuhjjAc4j4I7ta6XkZdQEPaAILQOyTLoU_skocB0_aDTFDSwJrW7cjZMk91CVpeMlnKxr4>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrheejgddutdcutefuodetggdotefrodftvf
-    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
-    uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
-    fjughrpeffhffvvefukfhfgggtuggjsehgtderredttddvnecuhfhrohhmpefrrghtrhhi
-    tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
-    hnpeeukedtvedtffevleejtefgheehieegkeeluddvfeefgeehgfeltddtheejleffteen
-    ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
-    hkshdrihhm
-X-ME-Proxy: <xmx:tJvlZSLniF16SCo5blsG-wV6riqsuyAghp0-RA8e55YxALsB4SRDlQ>
-    <xmx:tJvlZdK5jp7BzR2wLMHJS8iSItt9kJBPexFRpoupiu9LSJJt3PIXLA>
-    <xmx:tJvlZbxmNqh2hCfABAWLEdAzuBz0GTbz5lVlxpzU142GSWS_Mc-xGw>
-    <xmx:tJvlZd1npvtQ8tOYZBbjsVsyvLzwRTmvh_rZuxpxVWfZHMkcVtkxzsVG7c4>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 4 Mar 2024 05:00:19 -0500 (EST)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id c2dd08a6 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 4 Mar 2024 09:55:54 +0000 (UTC)
-Date: Mon, 4 Mar 2024 11:00:17 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: Jeff King <peff@peff.net>
-Cc: git@vger.kernel.org, Benjamin Flesch <benjaminflesch@icloud.com>
-Subject: Re: [PATCH 9/9] upload-pack: free tree buffers after parsing
-Message-ID: <ZeWbsVL0NF32rYAt@tanuki>
-References: <20240228223700.GA1157826@coredump.intra.peff.net>
- <20240228223907.GI1158131@coredump.intra.peff.net>
- <ZeWHdaZnhOHKs5QP@tanuki>
- <20240304095736.GA3723539@coredump.intra.peff.net>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XqO9qqww"
+Received: by mail-ej1-f54.google.com with SMTP id a640c23a62f3a-a45670f9508so54289066b.0
+        for <git@vger.kernel.org>; Mon, 04 Mar 2024 02:00:59 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1709546458; x=1710151258; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=oJ2GkAeS35dZnKBayvV8TsW7JM8uQZy8KWOFWmMw41U=;
+        b=XqO9qqww4VqsikuFOvTSoVcBZPvB/pJRqWlpCN3Zb1Jwlhe2zdLN6IotBeS2uFsSCj
+         g4PBZm4I/t5hlEbd66myHtRfgvGl3divYEVykUemJM4W3EGXTd77VD6hhQhFhJ0U2DB4
+         hyYbYcAloMlii9b+QvXq5kKK0bdlrpYwPNJOfk1BnjqNgHEhOL7/1/JQlasGDuCF22Zi
+         m5KmC+CaDt/EG/jYTZeh3ZDo9cZohEw7H4hd3LGAH9FTv7dY1YO4DkCiu/7PxBEV1Lxw
+         IJYnxk+DfzD3qKdKnleXwTmYIifDEm6PpTKlD2RU7n3cH+q6kjOxgSBk9Wk8VwvM44hX
+         WpyA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1709546458; x=1710151258;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=oJ2GkAeS35dZnKBayvV8TsW7JM8uQZy8KWOFWmMw41U=;
+        b=G1aHZKaeWkppaTsCvGZ+s8WiLayUAv7ttYn9C/BQpVxIca97DqN4niMxxzjGBQEFCS
+         lYle2oR3WfsumFIiQSek6TV/0gPeB2/60JXAZEELM3aOpQa9kQqlG0CmhmCc3JBVWWnJ
+         qGZtaO241CzL3pCiIi6h2yEUjehkxXPHQq3pZ30kVxSfD9pjVFeis5gyDvwWNMWbuiwv
+         UogdSIdkjNPfwjMioqz2y1jASO9A5DxdqjCvzWYG+mlTDot0/fDbfRWy4DnritpWyngb
+         ZX48C3IPwXi1Hz+4K12dmiDC6mmSN+bye77QY6vHu6d+Bh2G+u+5r9tdrhH9GgX9yrKB
+         V2HQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVNEfbrOX/FZzr4r9UYQX1jGSIG2NeEXOOgcW83xcchiDXQQcbjwsSfuCur5vfNH2c6utm4nYG4QPO+RvwE1XhlripF
+X-Gm-Message-State: AOJu0YzM0CcFrM6ME3x6dY4Ht98/mfs6u+dBYMI2qTce0FoSxmgO45a9
+	BndQpv3W/gp3Q46LzZWKMoaIQG/kb/1MHe4W8H/ByjeJK5LaRUuLR1Vq8UFQBxxKj79hUq58lrc
+	p40jF/l7Y56QVoXXJJWBrgk51ToU=
+X-Google-Smtp-Source: AGHT+IEkBf+BbqENshewz04ueJVax+yj0POCyR5PAW668uZXGrmz1z2gWjvjdNldF7In/FtvRvbWoaf0jcSu6q2TaZ8=
+X-Received: by 2002:a17:906:1114:b0:a3e:8300:1af3 with SMTP id
+ h20-20020a170906111400b00a3e83001af3mr5625503eja.30.1709546457679; Mon, 04
+ Mar 2024 02:00:57 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="Nw0E/p4iZd4s6APg"
-Content-Disposition: inline
-In-Reply-To: <20240304095736.GA3723539@coredump.intra.peff.net>
-
-
---Nw0E/p4iZd4s6APg
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+References: <20240225112722.89221-1-l.s.r@web.de> <20240225112722.89221-4-l.s.r@web.de>
+ <CAP8UFD0Wi3ot-t0Q7ruMauwj4zkMfd89Xr9SmxYa4eQ3=2VKOw@mail.gmail.com>
+ <d96aaf45-f073-42d0-b69c-703393634848@web.de> <ZdzfYPim2SP22eeS@google.com>
+ <CAP8UFD2t1KRo01eenK_RVndyVx5Vp9F4FepTgnR+mwhTGTvXnw@mail.gmail.com> <bd48f19b-0600-4e64-835b-98d3a97bb7f2@web.de>
+In-Reply-To: <bd48f19b-0600-4e64-835b-98d3a97bb7f2@web.de>
+From: Christian Couder <christian.couder@gmail.com>
+Date: Mon, 4 Mar 2024 11:00:45 +0100
+Message-ID: <CAP8UFD2M2+x-pRX2nzCXbLW=nKcW4_RWc9qua5q-fU8QbGu1oA@mail.gmail.com>
+Subject: Re: [PATCH 3/3] t-ctype: do one test per class and char
+To: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
+Cc: Josh Steadmon <steadmon@google.com>, git@vger.kernel.org, 
+	Phillip Wood <phillip.wood123@gmail.com>, Achu Luma <ach.lumap@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Mon, Mar 04, 2024 at 04:57:36AM -0500, Jeff King wrote:
-> On Mon, Mar 04, 2024 at 09:33:57AM +0100, Patrick Steinhardt wrote:
->=20
-> > > +	if (skip_hash && discard_tree &&
-> > > +	    (!obj || obj->type =3D=3D OBJ_TREE) &&
-> > > +	    oid_object_info(r, oid, NULL) =3D=3D OBJ_TREE) {
-> > > +		return &lookup_tree(r, oid)->object;
-> > > +	}
-> >=20
-> > The other condition for blobs does the same, but the condition here
-> > confuses me. Why do we call `oid_object_info()` if we have already
-> > figured out that `obj->type =3D=3D OBJ_TREE`? Feels like wasted effort =
-if
-> > the in-memory object has been determined to be a tree already anyway.
-> >=20
-> > I'd rather have expected it to look like the following:
-> >=20
-> > if (skip_hash && discard_tree &&
-> >     ((obj && obj->type =3D=3D OBJ_TREE) ||
-> >      (!obj && oid_object_info(r, oid, NULL)) =3D=3D OBJ_TREE)) {
-> > 		return &lookup_tree(r, oid)->object;
-> > }
-> >=20
-> > Am I missing some side effect that `oid_object_info()` provides?
->=20
-> Calling oid_object_info() will make sure the on-disk object exists and
-> has the expected type. Keep in mind that an in-memory "struct object"
-> may have a type that was just implied by another reference. E.g., if a
-> commit references some object X in its tree field, then we'll call
-> lookup_tree(X) to get a "struct tree" without actually touching the odb
-> at all. When it comes time to parse that object, that's when we'll see
-> if we really have it and if it's a tree.
->=20
-> In the case of skip_hash (and discard_tree) it might be OK to skip both
-> of those checks. If we do, I think we should probably do the same for
-> blobs (in the skip_hash case, we could just return the object we found
-> already).
->=20
-> But I'd definitely prefer to do that as a separate step (if at all).
+On Sat, Mar 2, 2024 at 11:00=E2=80=AFPM Ren=C3=A9 Scharfe <l.s.r@web.de> wr=
+ote:
+>
+> Am 27.02.24 um 11:04 schrieb Christian Couder:
 
-Thanks for the explanation!
+> > Yeah, I know about TAP harnesses like prove, but the most
+> > straightforward way to run the unit tests is still `make unit-tests`
+> > in the t/ directory. Also when you add or change some tests, it's a
+> > good idea to run `make unit-tests` to see what the output is, so you
+> > still have to see that output quite often when you work on tests and
+> > going through 3598 of mostly useless output instead of just 14 isn't
+> > nice.
+>
+> I was starting the programs from t/unit-tests/bin/ individually because
+> I didn't know 'make unit-tests' exists.  This is much nicer, thank you!
+> Especially after adding 'DEFAULT_UNIT_TEST_TARGET =3D unit-tests-prove' t=
+o
+> config.mak to complement the 'DEFAULT_TEST_TARGET =3D prove' I added long
+> ago.  It would be even nicer if the former was the default when the
+> latter is set.
+>
+> As unit tests are added, their output is surely going to grow to
+> multiple screens with or without prove, no?  So someone writing or
+> debugging tests will still go back to starting then individually
+> eventually.
 
-Patrick
+When t-ctype will be run individually from t/unit-tests/bin/, for
+example when adding or debugging ctype tests, it would still be better
+if there are only 14 lines in its output rather than 3598.
 
---Nw0E/p4iZd4s6APg
-Content-Type: application/pgp-signature; name="signature.asc"
+> The size of the output in itself is not a problem, I assume, but that
+> most of it is useless -- details of successful tests are uninteresting.
+> A test harness can aggregate the output, but prove annoyed me when used
+> with the regular tests by also aggregating error output and only showing
+> the numbers of failed tests.  Finding their names involved running the
+> test script again without prove.  Turns out it has an option for that.
+> Added 'GIT_PROVE_OPTS =3D --failures' to config.mak as well, will see if
+> it helps.
+>
+> Is it too much to ask developers to use a test harness?  Perhaps: It's
+> yet another dependency and not enabled by default.
 
------BEGIN PGP SIGNATURE-----
+Yeah, it's a dependency, and when running CI tests, it's sometimes
+better and simpler to have the canonical output rather than having the
+output processed by a test harness.
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmXlm7AACgkQVbJhu7ck
-PpR3VBAAj/k/n9CfM2937R6RWvFq7bKHVHZp6WSjQcYadjcOyS1XXsQH/4vL5FFl
-yZNGuQgYqhCkhiy9lHdBan0PHgtgrzd8BNNFx0RZIH3dm0D2Ew9ysFo15IjHfjEo
-YSVHr9iS0QX4Gkr4K5zlKZtfFoCWveBQbZX27/2GP0M58g6/c+DvFpWL8oKl9LCv
-InY3kBe1PhS+ZnZJqgQEclgox+vl47XDK8jSFSGgLiFdmV8M7vGGK64oXD9Go7S5
-wB16Pee0r6I+GXVKtqh94K6plFByfaP/UyQ4mF6xI1aSzLB75PQ4Q3KMFEKyYCAh
-DhXWMaYzz8NOoelAwX6p1mkeglSNbtW+CJ8Gl/k4KZDJ8EqdgktvTbgx1P5c3AqA
-+UOiNFidI1rG1E1LLujTSbCz4b4MApvH0z22OMF9y6KRpzcpaNetRBkZ7Kx+QH2t
-zDxa1YeggMODBdUWqNMl/mIVkn6/TMKJxYGUUFf5NmRawTSG4dQATLIoRDZ2Me3r
-EiNTa8tck8dfSIJEHQ4l1GdhkGj8mG/3sPxVKrEFwRnKmfFIjQEkWAf84JfFYB/i
-aZTCLswASqnH88XkmTUlhPeagLybHVR45FfZglA5UfXRlA4GG75it3eLpgXd6pI0
-+09vFlYfKKL6TCH9H0LxRpBh8m41dZzik9Z8o82nCiNwqp1/OrU=
-=LRYL
------END PGP SIGNATURE-----
+Also if we add some verbose or immediate modes (like -v and -i with
+the shell test framework) or perhaps other kinds of modes (checking
+for memory leaks or other errors using existing tools for example),
+these modes might not interact nicely with test harnesses but still be
+useful. Requiring to always use a test harness might restrict us for
+no good reason.
 
---Nw0E/p4iZd4s6APg--
+And anyway it doesn't make sense to have meaningful messages as second
+arguments to the TEST() macros if we always want to use a test harness
+that just discards them. Either:
+
+  - we decide that we will always use some test harness, and then we
+might just want to remove that second argument and yeah we can have
+thousands of tests output lines from a single binary, or
+  - we acknowledge that we don't always want to use a test harness,
+and then we want a relatively short and meaningful output from a
+single binary.
+
+> What's the right level of aggregation and how do we achieve it?
+> Grouping by class is natural and follows the test definition.  We
+> could stop after patch 2.  Dunno.
+
+I am Ok with just removing this patch like you did in v2. Thanks.
