@@ -1,281 +1,201 @@
-Received: from mail-wr1-f46.google.com (mail-wr1-f46.google.com [209.85.221.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 133127BAF3
-	for <git@vger.kernel.org>; Mon,  4 Mar 2024 22:52:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42F627869E
+	for <git@vger.kernel.org>; Mon,  4 Mar 2024 23:23:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709592724; cv=none; b=BwFB6uMQe222bVo/UQZEd9dazSjN8+W2PaHF7z3pNYLmGWW36eKguFiuj/Zsrg/QVAFzPHKfTCBUTLGRvflqhe1M4mAZ7teqQ7+6X2PDi5dyQBUFTf2DKKDb8b7vF+xPn3vqCJgeiauLow2rfJam//zJLl1Oqg9hXzRTrljeRKg=
+	t=1709594606; cv=none; b=dyvsCpJGEC7jIEWw94d+jGWhOl0U/pJXsokUDYu5kbdhB8d8X+oEIGn+bfwHrDAp2reAme062HmgiH3HqFRvHnDajO7Ff9f26KFm+y0irDkuz5Xumto+AeTrQUfXJW22ak2ZNuG6eDkefUtD6R5isMS+TE+NAnGs2qp/5O+kAEs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709592724; c=relaxed/simple;
-	bh=I7RjA4s+12ndD5O8Y4zXTXwDyGGpCRgtAh/fLOBVUyA=;
-	h=Message-ID:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=B5QbsOTce6flIPF+HvUpsygRgXDCkFv+m48RRTh2iAG7hsKM6GHSWT2NCqWrK6ktOmm8pji+3VXv2cRPi5nSh1DLmpA9E+LVhJBSmPf840NsetVY/eo3hoBCBzwOsMwWC/h3hF6YnaHoyMWaz7LltdNTttjC/xCPVqqKLz5UZsY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CRUQcQuw; arc=none smtp.client-ip=209.85.221.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1709594606; c=relaxed/simple;
+	bh=5/rCVsOCWhyy+1uFvcfQ+irT31neUVBKIAABSBc2r1U=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=THa/NtmIYuLEybt/QOQWTrzWKbWBodE97idh2ZEdC3BTvqH1WMWjuX+ajqs6DMmxQO5r1FaKp4oH41fcQDEHPkd1dJDPJ3y5HnB2UIAmUKbm3CfnhM0OUpSBZvtenlCNwQab5Ylwlq0YXDwu4EPR/ubc0CmFFXgV6uhobH7ffZs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=B8rXhrrc; arc=none smtp.client-ip=64.147.108.71
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CRUQcQuw"
-Received: by mail-wr1-f46.google.com with SMTP id ffacd0b85a97d-33d9c3f36c2so36363f8f.2
-        for <git@vger.kernel.org>; Mon, 04 Mar 2024 14:52:01 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1709592720; x=1710197520; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=9RdDtKCdsDAx7+oK7RBpBxTr4w6FP/DfxB3mqW+YbFA=;
-        b=CRUQcQuwydYHz6Z1TM9ygfQe/N0UMVvl4kAw5+mFhnQoAVZ+GmDFBCJ4bKV1/DveDr
-         30Q13SWKPjXjEPlv2eVGfm8FT8rFWqxnA0Hev/c2WIKhql4gIVMavSq9AaIoOaVqMVbq
-         6qtTeSsbj7/H1ZGf8/N0x5xqVC/AjbgA/9UadkKH7+chJiIlGUGOru5nDt39Y+XLKvav
-         AciB8DfQq2y23r8+Ucb+k4gdLej55YowZViygwbb8aQMMkG41megg8Op7Y58WWi104LO
-         BJpJpI5ep8pz8ccAtVu2dfDh/v4GJ98hV5DAEbQdBkaJA5ZSetwvmrn5+gSu/EdbJ5h+
-         Bxwg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1709592720; x=1710197520;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=9RdDtKCdsDAx7+oK7RBpBxTr4w6FP/DfxB3mqW+YbFA=;
-        b=R5e/hDMoS0lDsdVT8UuiVA+FfzrYXdQggBuu9SeYAvI3bUoP6xqRMvUNRBaiJVyA4V
-         Cf7vvQoEf12EN8T8QbdN8CWJUvoBuqT9QQxwWC4KEY+2KHUoVMJSeZ9oZKtOBuTHQ/8e
-         PabNEF8icqVygOLwGTUsTbO8Wbr9MEJ4CEudSN0QFSblDrrLcl1dO0MRGVwLMt8RnTfw
-         u6YJQU0P0pZSg+xUFtPZMoDirtJex+1AYNLgGLiqOEVGdpkn38wGV2Kv2d2ZxwV2pInR
-         02Yr6IteOJVZNawYGGkOTFgOdOG9JS+JYlp7YxTEalf2XvooCMAmKwYvGQxESyMnB7cv
-         KmAQ==
-X-Gm-Message-State: AOJu0YxYo5yJSwChoRXFCKF2tiIZW6Eu79vCk4hoWGk4LddDIXauOr/w
-	Iu9oLFm3tYllbj9xf7F3mEwqXkz9Y5jeQLN6Ezm4ShHt7gVRRw69jBjJRnIq
-X-Google-Smtp-Source: AGHT+IHDHTmL88xv4yKqN6qHYOooKnjaNLB3RWh4CNMzDzFKB/EN/ofvtMiJzZMtGMDc6pivAYrE4Q==
-X-Received: by 2002:adf:b649:0:b0:33e:1f2b:a468 with SMTP id i9-20020adfb649000000b0033e1f2ba468mr7141640wre.24.1709592719712;
-        Mon, 04 Mar 2024 14:51:59 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id h3-20020adfa4c3000000b0033dd2a7167fsm13404733wrb.29.2024.03.04.14.51.59
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 04 Mar 2024 14:51:59 -0800 (PST)
-Message-ID: <pull.1684.git.git.1709592718743.gitgitgadget@gmail.com>
-From: "John Cai via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Mon, 04 Mar 2024 22:51:58 +0000
-Subject: [PATCH] show-ref: add --unresolved option
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="B8rXhrrc"
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id E8FB91F5693;
+	Mon,  4 Mar 2024 18:23:22 -0500 (EST)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=5/rCVsOCWhyy+1uFvcfQ+irT31neUVBKIAABSB
+	c2r1U=; b=B8rXhrrc4qMbkfSuyvgDtRE8kL0TjR00OSQ4Q5Kw2/KeTJWpziW3VG
+	TPEqivjYhdZ5eIhhO4RRsUUC5tD50MgIRMwOcjToyG0e6NM3UDNz+vkikTaPkU0q
+	wNRkQxmmTwo4w7I/eG4HuN099YsNrlakqteelhSmvynaKoxcmlz9w=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id E07151F5692;
+	Mon,  4 Mar 2024 18:23:22 -0500 (EST)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.176.30])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 429071F5691;
+	Mon,  4 Mar 2024 18:23:22 -0500 (EST)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: "John Cai via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  John Cai <johncai86@gmail.com>
+Subject: Re: [PATCH] show-ref: add --unresolved option
+In-Reply-To: <pull.1684.git.git.1709592718743.gitgitgadget@gmail.com> (John
+	Cai via GitGitGadget's message of "Mon, 04 Mar 2024 22:51:58 +0000")
+References: <pull.1684.git.git.1709592718743.gitgitgadget@gmail.com>
+Date: Mon, 04 Mar 2024 15:23:21 -0800
+Message-ID: <xmqqplw9mviu.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: John Cai <johncai86@gmail.com>,
-    John Cai <johncai86@gmail.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 314C8F7C-DA7E-11EE-9B48-25B3960A682E-77302942!pb-smtp2.pobox.com
 
-From: John Cai <johncai86@gmail.com>
+"John Cai via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-For reftable development, it would be handy to have a tool to provide
-the direct value of any ref whether it be a symbolic ref or not.
-Currently there is git-symbolic-ref, which only works for symbolic refs,
-and git-rev-parse, which will resolve the ref. Let's add a --unresolved
-option that will only take one ref and return whatever it points to
-without dereferencing it.
+> From: John Cai <johncai86@gmail.com>
+>
+> For reftable development, it would be handy to have a tool to provide
+> the direct value of any ref whether it be a symbolic ref or not.
+> Currently there is git-symbolic-ref, which only works for symbolic refs,
+> and git-rev-parse, which will resolve the ref. Let's add a --unresolved
+> option that will only take one ref and return whatever it points to
+> without dereferencing it.
 
-Signed-off-by: John Cai <johncai86@gmail.com>
----
-    show-ref: add --unresolved option
-    
-    For reftable development, it would be handy to have a tool to provide
-    the direct value of any ref whether it be a symbolic ref or not.
-    Currently there is git-symbolic-ref, which only works for symbolic refs,
-    and git-rev-parse, which will resolve the ref. Let's add a --unresolved
-    option that will only take one ref and return whatever it points to
-    without dereferencing it.
+The approach may be reasonble, but the above description can use
+some improvements.
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1684%2Fjohn-cai%2Fjc%2Fshow-ref-direct-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1684/john-cai/jc/show-ref-direct-v1
-Pull-Request: https://github.com/git/git/pull/1684
+ * Even though the title of the patch says show-ref, the last
+   sentence is a bit too far from there and it was unclear to what
+   you are adding a new feature at least to me during my first read.
 
- Documentation/git-show-ref.txt |  8 ++++++
- builtin/show-ref.c             | 33 ++++++++++++++++--------
- t/t1403-show-ref.sh            | 47 ++++++++++++++++++++++++++++++++++
- 3 files changed, 77 insertions(+), 11 deletions(-)
+      Let's teach show-ref a `--unresolved` optionthat will ...
 
-diff --git a/Documentation/git-show-ref.txt b/Documentation/git-show-ref.txt
-index ba757470059..2f9b4de1346 100644
---- a/Documentation/git-show-ref.txt
-+++ b/Documentation/git-show-ref.txt
-@@ -16,6 +16,7 @@ SYNOPSIS
- 	     [--] [<ref>...]
- 'git show-ref' --exclude-existing[=<pattern>]
- 'git show-ref' --exists <ref>
-+'git show-ref' --unresolved <ref>
- 
- DESCRIPTION
- -----------
-@@ -76,6 +77,13 @@ OPTIONS
- 	it does, 2 if it is missing, and 1 in case looking up the reference
- 	failed with an error other than the reference being missing.
- 
-+--unresolved::
-+
-+	Prints out what the reference points to without resolving it. Returns
-+	an exit code of 0 if it does, 2 if it is missing, and 1 in case looking
-+	up the reference failed with an error other than the reference being
-+	missing.
-+
- --abbrev[=<n>]::
- 
- 	Abbreviate the object name.  When using `--hash`, you do
-diff --git a/builtin/show-ref.c b/builtin/show-ref.c
-index 1c15421e600..58efa078399 100644
---- a/builtin/show-ref.c
-+++ b/builtin/show-ref.c
-@@ -18,6 +18,7 @@ static const char * const show_ref_usage[] = {
- 	   "             [--] [<ref>...]"),
- 	N_("git show-ref --exclude-existing[=<pattern>]"),
- 	N_("git show-ref --exists <ref>"),
-+	N_("git show-ref --unresolved <ref>"),
- 	NULL
- };
- 
-@@ -220,11 +221,11 @@ static int cmd_show_ref__patterns(const struct patterns_options *opts,
- 	return 0;
- }
- 
--static int cmd_show_ref__exists(const char **refs)
-+static int cmd_show_ref__raw(const char **refs, int show)
- {
--	struct strbuf unused_referent = STRBUF_INIT;
--	struct object_id unused_oid;
--	unsigned int unused_type;
-+	struct strbuf referent = STRBUF_INIT;
-+	struct object_id oid;
-+	unsigned int type;
- 	int failure_errno = 0;
- 	const char *ref;
- 	int ret = 0;
-@@ -236,7 +237,7 @@ static int cmd_show_ref__exists(const char **refs)
- 		die("--exists requires exactly one reference");
- 
- 	if (refs_read_raw_ref(get_main_ref_store(the_repository), ref,
--			      &unused_oid, &unused_referent, &unused_type,
-+			      &oid, &referent, &type,
- 			      &failure_errno)) {
- 		if (failure_errno == ENOENT || failure_errno == EISDIR) {
- 			error(_("reference does not exist"));
-@@ -250,8 +251,16 @@ static int cmd_show_ref__exists(const char **refs)
- 		goto out;
- 	}
- 
-+		if (!show)
-+			goto out;
-+
-+		if (type & REF_ISSYMREF)
-+			printf("ref: %s\n", referent.buf);
-+		else
-+			printf("ref: %s\n", oid_to_hex(&oid));
-+
- out:
--	strbuf_release(&unused_referent);
-+	strbuf_release(&referent);
- 	return ret;
- }
- 
-@@ -284,11 +293,12 @@ int cmd_show_ref(int argc, const char **argv, const char *prefix)
- 	struct exclude_existing_options exclude_existing_opts = {0};
- 	struct patterns_options patterns_opts = {0};
- 	struct show_one_options show_one_opts = {0};
--	int verify = 0, exists = 0;
-+	int verify = 0, exists = 0, unresolved = 0;
- 	const struct option show_ref_options[] = {
- 		OPT_BOOL(0, "tags", &patterns_opts.tags_only, N_("only show tags (can be combined with heads)")),
- 		OPT_BOOL(0, "heads", &patterns_opts.heads_only, N_("only show heads (can be combined with tags)")),
- 		OPT_BOOL(0, "exists", &exists, N_("check for reference existence without resolving")),
-+		OPT_BOOL(0, "unresolved", &unresolved, N_("print out unresolved value of reference")),
- 		OPT_BOOL(0, "verify", &verify, N_("stricter reference checking, "
- 			    "requires exact ref path")),
- 		OPT_HIDDEN_BOOL('h', NULL, &patterns_opts.show_head,
-@@ -314,16 +324,17 @@ int cmd_show_ref(int argc, const char **argv, const char *prefix)
- 	argc = parse_options(argc, argv, prefix, show_ref_options,
- 			     show_ref_usage, 0);
- 
--	die_for_incompatible_opt3(exclude_existing_opts.enabled, "--exclude-existing",
-+	die_for_incompatible_opt4(exclude_existing_opts.enabled, "--exclude-existing",
- 				  verify, "--verify",
--				  exists, "--exists");
-+				  exists, "--exists",
-+				  unresolved, "--unresolved");
- 
- 	if (exclude_existing_opts.enabled)
- 		return cmd_show_ref__exclude_existing(&exclude_existing_opts);
- 	else if (verify)
- 		return cmd_show_ref__verify(&show_one_opts, argv);
--	else if (exists)
--		return cmd_show_ref__exists(argv);
-+	else if (exists || unresolved)
-+		return cmd_show_ref__raw(argv, unresolved);
- 	else
- 		return cmd_show_ref__patterns(&patterns_opts, &show_one_opts, argv);
- }
-diff --git a/t/t1403-show-ref.sh b/t/t1403-show-ref.sh
-index 33fb7a38fff..11811201738 100755
---- a/t/t1403-show-ref.sh
-+++ b/t/t1403-show-ref.sh
-@@ -218,6 +218,16 @@ test_expect_success 'show-ref sub-modes are mutually exclusive' '
- 	test_must_fail git show-ref --exclude-existing --exists 2>err &&
- 	grep "exclude-existing" err &&
- 	grep "exists" err &&
-+	grep "cannot be used together" err &&
-+
-+	test_must_fail git show-ref --exclude-existing --unresolved 2>err &&
-+	grep "exclude-existing" err &&
-+	grep "unresolved" err &&
-+	grep "cannot be used together" err &&
-+
-+	test_must_fail git show-ref --verify --unresolved 2>err &&
-+	grep "verify" err &&
-+	grep "unresolved" err &&
- 	grep "cannot be used together" err
- '
- 
-@@ -286,4 +296,41 @@ test_expect_success '--exists with existing special ref' '
- 	git show-ref --exists FETCH_HEAD
- '
- 
-+test_expect_success '--unresolved with existing reference' '
-+	commit_oid=$(git rev-parse refs/heads/$GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME) &&
-+	cat >expect <<-EOF &&
-+	ref: $commit_oid
-+	EOF
-+	git show-ref --unresolved refs/heads/$GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success '--unresolved with symbolic ref' '
-+	test_when_finished "git symbolic-ref -d SYMBOLIC_REF_A" &&
-+	cat >expect <<-EOF &&
-+	ref: refs/heads/$GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
-+	EOF
-+	git symbolic-ref SYMBOLIC_REF_A refs/heads/$GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME &&
-+	git show-ref --unresolved SYMBOLIC_REF_A >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success '--unresolved with nonexistent object ID' '
-+	oid=$(test_oid 002) &&
-+	test-tool ref-store main update-ref msg refs/heads/missing-oid-2 $oid $ZERO_OID REF_SKIP_OID_VERIFICATION &&
-+	cat >expect <<-EOF &&
-+	ref: $oid
-+	EOF
-+	git show-ref --unresolved refs/heads/missing-oid-2 >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success '--unresolved with nonexistent reference' '
-+	cat >expect <<-EOF &&
-+	error: reference does not exist
-+	EOF
-+	test_expect_code 2 git show-ref --unresolved refs/heads/not-exist 2>err &&
-+	test_cmp expect err
-+'
-+
- test_done
+   may make it easier to follow.
 
-base-commit: b387623c12f3f4a376e4d35a610fd3e55d7ea907
--- 
-gitgitgadget
+ * "Whatever it points to without dereferencing it" implied that it
+   assumes what it is asked to show can be dereferenced, which
+   invites a natural question: what happens to a thing that is not
+   dereferenceable in the first place?  The implementation seems to
+   show either symbolic-ref target (for symbolic refs) or the object
+   name (for others), but let's make it easier for readers.
+
+>  Documentation/git-show-ref.txt |  8 ++++++
+>  builtin/show-ref.c             | 33 ++++++++++++++++--------
+>  t/t1403-show-ref.sh            | 47 ++++++++++++++++++++++++++++++++++
+>  3 files changed, 77 insertions(+), 11 deletions(-)
+>
+> diff --git a/Documentation/git-show-ref.txt b/Documentation/git-show-ref.txt
+> index ba757470059..2f9b4de1346 100644
+> --- a/Documentation/git-show-ref.txt
+> +++ b/Documentation/git-show-ref.txt
+> @@ -16,6 +16,7 @@ SYNOPSIS
+>  	     [--] [<ref>...]
+>  'git show-ref' --exclude-existing[=<pattern>]
+>  'git show-ref' --exists <ref>
+> +'git show-ref' --unresolved <ref>
+>  
+>  DESCRIPTION
+>  -----------
+> @@ -76,6 +77,13 @@ OPTIONS
+>  	it does, 2 if it is missing, and 1 in case looking up the reference
+>  	failed with an error other than the reference being missing.
+>  
+> +--unresolved::
+> +
+> +	Prints out what the reference points to without resolving it. Returns
+> +	an exit code of 0 if it does, 2 if it is missing, and 1 in case looking
+> +	up the reference failed with an error other than the reference being
+> +	missing.
+
+Exactly the same issue as in the proposed log message, i.e. what is
+printed for what kind of ref is not really clear.
+
+> -static int cmd_show_ref__exists(const char **refs)
+> +static int cmd_show_ref__raw(const char **refs, int show)
+>  {
+> -	struct strbuf unused_referent = STRBUF_INIT;
+> -	struct object_id unused_oid;
+> -	unsigned int unused_type;
+> +	struct strbuf referent = STRBUF_INIT;
+> +	struct object_id oid;
+> +	unsigned int type;
+>  	int failure_errno = 0;
+>  	const char *ref;
+>  	int ret = 0;
+> @@ -236,7 +237,7 @@ static int cmd_show_ref__exists(const char **refs)
+>  		die("--exists requires exactly one reference");
+>  
+>  	if (refs_read_raw_ref(get_main_ref_store(the_repository), ref,
+> -			      &unused_oid, &unused_referent, &unused_type,
+> +			      &oid, &referent, &type,
+>  			      &failure_errno)) {
+>  		if (failure_errno == ENOENT || failure_errno == EISDIR) {
+>  			error(_("reference does not exist"));
+> @@ -250,8 +251,16 @@ static int cmd_show_ref__exists(const char **refs)
+>  		goto out;
+>  	}
+>  
+> +		if (!show)
+> +			goto out;
+> +
+> +		if (type & REF_ISSYMREF)
+> +			printf("ref: %s\n", referent.buf);
+> +		else
+> +			printf("ref: %s\n", oid_to_hex(&oid));
+
+If I create a symbolic ref whose value is deadbeef....deadbeef 40-hex,
+I cannot tell from this output if it is a symbolic ref of a ref that
+stores an object whose name is that hash.  Reserve the use of "ref: %s"
+to the symbolic refs (so that it will also match how the files backend
+stores them in modern Git), and use some other prefix (or no
+perfix).
+
+Actually, I am not sure if what is proposed is even a good
+interface.  Given a repository with these few refs:
+
+    $ git show-ref refs/heads/master
+    b387623c12f3f4a376e4d35a610fd3e55d7ea907 refs/heads/master
+    $ git show-ref refs/remotes/repo/HEAD
+    b387623c12f3f4a376e4d35a610fd3e55d7ea907 refs/remotes/repo/HEAD
+    $ git symbolic-ref refs/remotes/repo/HEAD
+    refs/remotes/repo/master
+
+I would think that the second command above shows the gap in feature
+set our current "show-ref" has.  If we could do
+
+    $ git show-ref --<option> refs/heads/master refs/remotes/repo/HEAD
+    b387623c12f3f4a376e4d35a610fd3e55d7ea907 refs/heads/master
+    ref:refs/remotes/repo/master refs/remotes/repo/HEAD
+
+or alternatively
+
+    $ git show-ref --<option> refs/heads/master refs/remotes/repo/HEAD
+    b387623c12f3f4a376e4d35a610fd3e55d7ea907 refs/heads/master
+    ref:refs/remotes/repo/master b387623c12f3f4a376e4d35a610fd3e55d7ea907 refs/remotes/repo/HEAD
+
+wouldn't it match the existing feature set better?  You also do not
+have to limit yourself to single ref query per process invocation.
+
+I am not sure if you need to worry about quoting of the values of
+symbolic-ref, though.  You _might_ need to move the (optional)
+symref information to the end, i.e. something like this you might
+prefer.  I dunno.
+
+    $ git show-ref --<option> refs/remotes/repo/HEAD
+    b387623c12f3f4a376e4d35a610fd3e55d7ea907 refs/remotes/repo/HEAD refs/remotes/repo/master 
+
+I do not know what the <option> should be called, either.  From an
+end-user's point of view, the option tells the command to also
+report which ref the ref points at, if it were a symbolic one.
+"unresolved" may be technically acceptable name to those who know
+the underlying implementation (i.e. we tell read_raw_ref not to
+resolve when it does its thing), but I am afraid that is a bit too
+opaque implementation detail for end-users who are expected to learn
+this option.
+
