@@ -1,131 +1,227 @@
-Received: from mail-pj1-f52.google.com (mail-pj1-f52.google.com [209.85.216.52])
+Received: from mail-lj1-f172.google.com (mail-lj1-f172.google.com [209.85.208.172])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13E9F6166F
-	for <git@vger.kernel.org>; Mon,  4 Mar 2024 18:35:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EBDF78696
+	for <git@vger.kernel.org>; Mon,  4 Mar 2024 18:39:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709577325; cv=none; b=fqhheUnDjV0InnCcad6sii4j/tJ5E7F/yejCTEXC/QY4s7nC/ViKx7f6dr6udcpQ2O3Wcgh3aBXTY1ClvH9nq9NmrLl/lsynA7qHzMrgaIjC94itakkt6Zy1xD/RnJL2705gZ1YKty+nrfNJ5EY4k9g2/RgStZZSSUN6vuLaoLo=
+	t=1709577586; cv=none; b=PN1VVjduKI7Ew1NTvFC4ylT08waHZVlT9exTEq81h1cMF+xjHLY3bEhbV3dBvilui9ZQbhVwbYADB/oQl0MGqlDmxApWWjwlvEiY4a79ad13Xhq7NXps0J4sZowCBWdHR5ADCwtEjNsiWvT4kfrcx3c6VwlML4IajDdjuXFILUA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709577325; c=relaxed/simple;
-	bh=641yfLt4bs7XfaVp0WsBWDg68OOPt5PP7Ff7eiUGE4E=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=QJ/BEMf6I7yYTrgMmIFMevgcYMcVI4C45De8LSwPSTPB4Po5nmtaDEvFpJVenrjyd7d6Bmpw1xyOXGRggJ3TTjgUKf/JT6Ak2gOGJHcie/CedQ/1QOxDpwFuWhG1JCNVg9DX4e4xo9D5r1V+RPOL0KSEQ9FM2N4nuFonqX6DcfA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=Lm4vaDNC; arc=none smtp.client-ip=209.85.216.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	s=arc-20240116; t=1709577586; c=relaxed/simple;
+	bh=b39mMc7smqzZnMG08uQ0dNOEeG0adK1nhXCRWBM2lTk=;
+	h=From:To:Cc:Subject:References:Date:In-Reply-To:Message-ID:
+	 MIME-Version:Content-Type; b=LZ+mlmgrQOffJDeK85Nle8acliMxy5lSPt8uUQMeIrdyVmlWW2Ax/mwxf8/ewROoL98osHV/XmEKPW8YHz0xkX/fQHfENTH92DgkUSCool80oJp30dh53155+kt45vOUkPAuZFmSqlsDGQWUCwD1tyXNspiTdAkGL/A0Ezqb60Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=M3bHVLTT; arc=none smtp.client-ip=209.85.208.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="Lm4vaDNC"
-Received: by mail-pj1-f52.google.com with SMTP id 98e67ed59e1d1-29acdf99d5aso2239595a91.2
-        for <git@vger.kernel.org>; Mon, 04 Mar 2024 10:35:23 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="M3bHVLTT"
+Received: by mail-lj1-f172.google.com with SMTP id 38308e7fff4ca-2d21cdbc85bso58737871fa.2
+        for <git@vger.kernel.org>; Mon, 04 Mar 2024 10:39:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1709577323; x=1710182123; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:mail-followup-to:message-id:subject:cc:to
-         :from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=BEPzLxNWrDg4km/XwPLXW6OCpbC2sbJQIfWYTFoRqCw=;
-        b=Lm4vaDNCI1WSgNi89CoAd2oxFNL7WxMx+HmEaWz3cLVUrLCOncdDtTdycvcIYfvCFj
-         mHru3fk4/1ZBCGbi/sDOau7Pd6KtQSRvOfdtrlFySsHhlhg9P6WQXBCXXOAvFrRTDrKn
-         VRQp8WzrVJmvhEufu4lI37UgGD/X6p8o16WAm4erl4z3aiI2uo+z0bRS+zrO5P6byrLr
-         Mnlxl8zy6QOt9KdQhAYpEViKNFGvzlthWNlachj5N/Z0WEpTd6iy2mIL6YWcmcpH3OIj
-         8pKKSvh2Nktp/dm9iWbAkaKHf9atN6kEwXNeKiKKoTkvOBhL9TQvc4VICdMHy/JmGpTI
-         zhPw==
+        d=gmail.com; s=20230601; t=1709577582; x=1710182382; darn=vger.kernel.org;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=jTQr5N4HCuLbB0NaHnG3IeymPlrufWW9XDPgSoTQXLw=;
+        b=M3bHVLTTN7RZEX8viGqOjZadzvV8tL2NIg/Yc39PwBH/C6eC3P0BvKA3piFArw0VJB
+         9zRDCbFdndgSk85WsVvpVXTpwTdoJlmF4qKuzDedaJxQTVWaw/fU8VKkYjK8/uG95bB/
+         cvE72Us/NNXtmu7JhICzZgISeM5F6I7BW1saWEwwSEYb58sg4ozSijTEKMLkEAxsCxjQ
+         2h9JVFEMUkNSuTF6BZSDZexyk0IkPc4NQJjmkvle05jgw3ALOzOPMG3pZAC0/I3NDrvN
+         Eu8gXSuBfIQwwDFwVilGvX3Yp36gbLIK+yoQ6cGJhVcSeMLJo2eY0wCBrag1D3C1uI0k
+         pUvA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1709577323; x=1710182123;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:mail-followup-to:message-id:subject:cc:to
-         :from:date:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=BEPzLxNWrDg4km/XwPLXW6OCpbC2sbJQIfWYTFoRqCw=;
-        b=EpSasRbY+r0w0wBM9pFujCrxXmFT5zooQ3Zj1YuQdfm9AqOOlvNPngkh0kE7I9sWVZ
-         hvS6yT9HNzi+M62/NnY8jL05/NsND7lcl79rgOrl7px+eazhwRBEEP0RG1CtbfVRXDkI
-         fhZLa6LcI7igim1G7N6wq4i3oBOki+kRYdkWa148XJ1IuIDutr8Et2ZkCt/A2KBo4A1a
-         mA9vhPDhmC+NMy++F0zfv4j5ZvrWdbKMul7PP2NAY35wgbmJ2dDG0DPnE625U9kjstrQ
-         Wy8ErGD83h4MqPh0DpU7D1NuOUMP2m6AMabqWD+gIxS6T8ywIrx5Eol5m4Xv3lSawbjz
-         X99A==
-X-Forwarded-Encrypted: i=1; AJvYcCWbgAFwQHw6AjHtnXB/nLx5dH694hsQkfH29c8CLQcIpxQi+15mO/aM3sb8cN4/FZzy+bMEO+8ouIbuwKCvAx5Q0Sas
-X-Gm-Message-State: AOJu0YyOWjDkOJppKthNYz5QhePrFaEpAghNtneBe/LwcRBYtRtPCH76
-	+YY0j8xJ3p2aGGAiQQrGmttYjIRyVZUTXhd8JsrUOt5Bwnr0+9ryAX5tbdtIqA==
-X-Google-Smtp-Source: AGHT+IFPwAxZ6Zj5u0bu64qOnEIFWU1ku2Kojn2y1PgIfGuEBSv91aGJd3ysIRSY8j5I9cKRuHcGnw==
-X-Received: by 2002:a17:90b:955:b0:29a:de1f:e305 with SMTP id dw21-20020a17090b095500b0029ade1fe305mr7683536pjb.26.1709577323166;
-        Mon, 04 Mar 2024 10:35:23 -0800 (PST)
-Received: from google.com ([2620:15c:2d3:204:3ccb:2f09:89c5:5915])
-        by smtp.gmail.com with ESMTPSA id b6-20020a17090a990600b0029af4a029acsm8246553pjp.55.2024.03.04.10.35.22
+        d=1e100.net; s=20230601; t=1709577582; x=1710182382;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=jTQr5N4HCuLbB0NaHnG3IeymPlrufWW9XDPgSoTQXLw=;
+        b=LyP6aBvuI1evAFYB9DMuLgCoqVSQE66/GZYJSMo44ApGGiAu9yeniCt7Q3IkFuFahP
+         ictAs5rB9AJrLS1JAFY85HQu1lzqN9nT88wHduvdgzweKQU6oOP+1C3LvcVnY1pSVCdV
+         kk5JQcLrCPTjEN9ZAFmbFfTZK5y9lYNcLjl/1MXre+U7dh6wt6cYUGkP0agIynMfSET3
+         hwwvGuuN7y+wl9fjrqPgfGibDmCvnJjoQYDQ5I37PNNLsirjSTzRwJUsIaIBzgtOUs85
+         SWX68p5a6/Ev5JXkZ0oQwRlmhHX62L2ZlB+Imyz6LT9yYVe9naAd94f+iDTujvJvVRLu
+         WkuA==
+X-Gm-Message-State: AOJu0Yz9On+EpHDLtCyJgrN+6grM2W4+lRdee4PN6VXDKkQ4wsanpeUW
+	7ipoSNDIwyXsuJ54FHKDuKr7CPr2tfmc4RAlAX6ppjSKI1vvraOf6I7LYZ/H
+X-Google-Smtp-Source: AGHT+IFfwhgw/qfgbRAwCRP+rOpmIt859dMKup3A5EeSuTlBjJszv+vv20L9HmQv1lE05BBxYYLyJg==
+X-Received: by 2002:a05:6512:3d91:b0:513:32b1:9654 with SMTP id k17-20020a0565123d9100b0051332b19654mr8416887lfv.25.1709577581932;
+        Mon, 04 Mar 2024 10:39:41 -0800 (PST)
+Received: from osv.localdomain ([89.175.180.246])
+        by smtp.gmail.com with ESMTPSA id ep2-20020a056512484200b005131434454bsm1817112lfb.228.2024.03.04.10.39.41
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 04 Mar 2024 10:35:22 -0800 (PST)
-Date: Mon, 4 Mar 2024 10:35:17 -0800
-From: Josh Steadmon <steadmon@google.com>
-To: =?iso-8859-1?Q?Ren=E9?= Scharfe <l.s.r@web.de>
-Cc: Christian Couder <christian.couder@gmail.com>, git@vger.kernel.org,
-	Phillip Wood <phillip.wood123@gmail.com>,
-	Achu Luma <ach.lumap@gmail.com>
-Subject: Re: [PATCH 3/3] t-ctype: do one test per class and char
-Message-ID: <ZeYUZZ6Z8VtYnBn7@google.com>
-Mail-Followup-To: Josh Steadmon <steadmon@google.com>,
-	=?iso-8859-1?Q?Ren=E9?= Scharfe <l.s.r@web.de>,
-	Christian Couder <christian.couder@gmail.com>, git@vger.kernel.org,
-	Phillip Wood <phillip.wood123@gmail.com>,
-	Achu Luma <ach.lumap@gmail.com>
-References: <20240225112722.89221-1-l.s.r@web.de>
- <20240225112722.89221-4-l.s.r@web.de>
- <CAP8UFD0Wi3ot-t0Q7ruMauwj4zkMfd89Xr9SmxYa4eQ3=2VKOw@mail.gmail.com>
- <d96aaf45-f073-42d0-b69c-703393634848@web.de>
- <ZdzfYPim2SP22eeS@google.com>
- <CAP8UFD2t1KRo01eenK_RVndyVx5Vp9F4FepTgnR+mwhTGTvXnw@mail.gmail.com>
- <bd48f19b-0600-4e64-835b-98d3a97bb7f2@web.de>
+        Mon, 04 Mar 2024 10:39:41 -0800 (PST)
+From: Sergey Organov <sorganov@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org,  =?utf-8?Q?Jean-No=C3=ABl?= AVILA
+ <avila.jn@gmail.com>,  "Kristoffer
+ Haugsbakk" <code@khaugsbakk.name>
+Subject: Re: [PATCH v2] clean: improve -n and -f implementation and
+ documentation
+References: <7le6ziqzb.fsf_-_@osv.gnss.ru>
+	<20240303220600.2491792-1-gitster@pobox.com>
+Date: Mon, 04 Mar 2024 21:39:40 +0300
+In-Reply-To: <20240303220600.2491792-1-gitster@pobox.com> (Junio C. Hamano's
+	message of "Sun, 3 Mar 2024 14:05:59 -0800")
+Message-ID: <87h6hl96z7.fsf@osv.gnss.ru>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <bd48f19b-0600-4e64-835b-98d3a97bb7f2@web.de>
+Content-Type: text/plain
 
-On 2024.03.02 23:00, René Scharfe wrote:
-> Am 27.02.24 um 11:04 schrieb Christian Couder:
-> > On Mon, Feb 26, 2024 at 7:58 PM Josh Steadmon <steadmon@google.com> wrote:
-> >>
-> >> On 2024.02.26 18:26, René Scharfe wrote:
-> >
-> >>> The output is clean as well, but there's a lot of it.  Perhaps too much.
-> >>> The success messages are boring, though, and if all checks pass then the
-> >>> only useful information is the status code.  A TAP harness like prove
-> >>> summarizes that nicely:
-> >>>
-> >>>    $ prove t/unit-tests/bin/t-ctype
-> >>>    t/unit-tests/bin/t-ctype .. ok
-> >>>    All tests successful.
-> >>>    Files=1, Tests=3598,  0 wallclock secs ( 0.08 usr +  0.00 sys =  0.08 CPU)
-> >>>    Result: PASS
-> >>>
-> >>> Filtering out passing checks e.g. with "| grep -v ^ok" would help when
-> >>> debugging a test failure. I vaguely miss the --immediate switch from the
-> >>> regular test library, however.
-> >>
-> >> Yeah, I agree here. It's a lot of output but it's almost always going to
-> >> be consumed by a test harness rather than a human, and it's easy to
-> >> filter out the noise if someone does need to do some manual debugging.
-> >
-> > Yeah, I know about TAP harnesses like prove, but the most
-> > straightforward way to run the unit tests is still `make unit-tests`
-> > in the t/ directory. Also when you add or change some tests, it's a
-> > good idea to run `make unit-tests` to see what the output is, so you
-> > still have to see that output quite often when you work on tests and
-> > going through 3598 of mostly useless output instead of just 14 isn't
-> > nice.
-> 
-> I was starting the programs from t/unit-tests/bin/ individually because
-> I didn't know 'make unit-tests' exists.  This is much nicer, thank you!
-> Especially after adding 'DEFAULT_UNIT_TEST_TARGET = unit-tests-prove' to
-> config.mak to complement the 'DEFAULT_TEST_TARGET = prove' I added long
-> ago.  It would be even nicer if the former was the default when the
-> latter is set.
+Junio C Hamano <gitster@pobox.com> writes:
 
-After js/unit-test-suite-runner [1] is merged, then using
-'DEFAULT_TEST_TARGET = prove' will also run the unit tests alongside the
-shell test suite.
+> Sergey Organov <sorganov@gmail.com> writes:
+>
+>> Changes since v1:
+>>
+>>  * Fixed style of the if() statement
+>>
+>>  * Merged two error messages into one
+>>
+>>  * clean.requireForce description changed accordingly
+>
+> Excellent.
+>
+>> diff --git a/builtin/clean.c b/builtin/clean.c
+>> index d90766cad3a0..41502dcb0dde 100644
+>> --- a/builtin/clean.c
+>> +++ b/builtin/clean.c
+>> @@ -25,7 +25,7 @@
+>>  #include "help.h"
+>>  #include "prompt.h"
+>>
+>> -static int force = -1; /* unset */
+>> +static int require_force = -1; /* unset */
+>>  static int interactive;
+>>  static struct string_list del_list = STRING_LIST_INIT_DUP;
+>>  static unsigned int colopts;
+>> @@ -128,7 +128,7 @@ static int git_clean_config(const char *var, const char *value,
+>>  	}
+>>
+>>  	if (!strcmp(var, "clean.requireforce")) {
+>> -		force = !git_config_bool(var, value);
+>> +		require_force = git_config_bool(var, value);
+>>  		return 0;
+>>  	}
+>>
+>> @@ -920,7 +920,7 @@ int cmd_clean(int argc, const char **argv, const char *prefix)
+>>  {
+>>  	int i, res;
+>>  	int dry_run = 0, remove_directories = 0, quiet = 0, ignored = 0;
+>> -	int ignored_only = 0, config_set = 0, errors = 0, gone = 1;
+>> +	int ignored_only = 0, force = 0, errors = 0, gone = 1;
+>>  	int rm_flags = REMOVE_DIR_KEEP_NESTED_GIT;
+>>  	struct strbuf abs_path = STRBUF_INIT;
+>>  	struct dir_struct dir = DIR_INIT;
+>> @@ -946,22 +946,17 @@ int cmd_clean(int argc, const char **argv, const char *prefix)
+>>  	};
+>>
+>>  	git_config(git_clean_config, NULL);
+>> -	if (force < 0)
+>> -		force = 0;
+>> -	else
+>> -		config_set = 1;
+>
+> The above changes are a significant improvement.  Instead of a
+> single "force" variable whose meaning is fuzzy, we now have
+> "require_force" to track the config setting, and "force" to indicate
+> the "--force" option.  THis makes the code's intent much clearer.
+>
+>>  	argc = parse_options(argc, argv, prefix, options, builtin_clean_usage,
+>>  			     0);
+>>
+>> -	if (!interactive && !dry_run && !force) {
+>> -		if (config_set)
+>> -			die(_("clean.requireForce set to true and neither -i, -n, nor -f given; "
+>> -				  "refusing to clean"));
+>> -		else
+>> -			die(_("clean.requireForce defaults to true and neither -i, -n, nor -f given;"
+>
+> And thanks to that, the above trick with an extra variable "config_set",
+> which smells highly a round-about way, can be simplified.
+>
+>> +	/* Dry run won't remove anything, so requiring force makes no sense */
+>> +	if (dry_run)
+>> +		require_force = 0;
+>> +	if (require_force != 0 && !force && !interactive)
+>
+> However, the above logic could be improved.  The behaviour we have,
+> for a user who does *not* explicitly disable config.requireForce,
+> is, that when clean.requireForce is not set to 0, we would fail
+> unless one of these is in effect: -f, -n, -i.  Even though using
+> either -n or -i makes it unnecessary to use -f *exactly* the same
+> way, the above treats dry_run and interactive separately with two if
+> statements, which is suboptimal as a "code/logic clean-up".
 
-[1] https://lore.kernel.org/git/cover.1708728717.git.steadmon@google.com/
+I wonder do you mean:
+
+	/* Dry run won't remove anything, so requiring force makes no
+	* sense. Interactive has its own means of protection, so don't
+	* require force as well */
+	if (dry_run || interactive)
+		require_force = 0;
+
+	if (require_force != 0 && !force)
+                die_();
+
+that looks fine to me, as it puts 'force' flag and corresponding
+configuration into one if(), whereas both exceptions are put into
+another. OTOH, having:
+
+     if (require_force != 0 && !force && !interactive && !dry_run)
+                die_();
+
+mixture looks less appealing to me, though I won't fight against it
+either.
+
+>
+> The reason for the behaviour can be explained this way:
+>
+>  * "git clean" (with neither -i nor -n.  The user wants the default
+>    mode that has no built-in protection will be stopped without -f.
+>
+>  * "git clean -n".  The user wants the dry-run mode that has its own
+>    protection, i.e. being always no-op to the files, so there is no
+>    need to fail here for the lack of "-f".
+>
+>  * "git clean --interactive".  The user wants the interactive mode
+>    that has its own protection, i.e. giving the end-user a chance to
+>    say "oh, I didn't mean to remove these files, 'q'uit from this
+>    mistake", so there is no need to fail here for the lack of "-f".
+
+Well, if we remove -i from error message as well, then yes, this makes
+sense.
+
+>
+>> +		die(_("clean.requireForce is true and neither -f nor -i given:"
+>>  				  " refusing to clean"));
+>
+> The message is certainly cleaner compared to the previous round, but
+> this also can be improved.  Stepping back a bit and thinking who are
+> the target audience of this message.  The only users who see this
+> message are running "git clean" in its default (unprotected) mode,
+> and they wanted to "clean" for real.  If they wanted to do dry-run,
+> they would have said "-n" themselves, and that is why we can safely
+> omit mention of "-n" we had in the original message.
+>
+> These users did not want to run the interractive clean, either---if
+> they wanted to go interractive, they would have said "-i"
+> themselves.  So we do not need to mention "-i" either for exactly
+> the same logic.
+
+I then suggest to consider to remove mention of -i from
+clean.requireForce description as well.
+
+>
+> Based on the above observation,
+>
+> I'll send a follow-up patch to clean up the code around here (both
+> implementation and documentation), taking '-i' into account as well.
+
+Fine, thanks!
+
+-- Sergey Organov
