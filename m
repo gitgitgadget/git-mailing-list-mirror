@@ -1,80 +1,78 @@
-Received: from wfout8-smtp.messagingengine.com (wfout8-smtp.messagingengine.com [64.147.123.151])
+Received: from fout2-smtp.messagingengine.com (fout2-smtp.messagingengine.com [103.168.172.145])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C44C620B27
-	for <git@vger.kernel.org>; Mon,  4 Mar 2024 09:31:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.151
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4055E1AADF
+	for <git@vger.kernel.org>; Mon,  4 Mar 2024 09:36:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709544719; cv=none; b=LyFvSGUgxHMtNRnE0R5MlKpabUJMqFL0FJZJkkr1PHw63+wnfpD2GjlaFAHPt2/HJFiF7lc6r89cZLmz/3BSHP+uS+bXSwRK5iMCsf9d6G7Ll8zsqCNE+EYpzQwsFJLhwAU+kdoDtFzJMrJGJ1I956AyQJkpTUGdz///HSf3GFw=
+	t=1709544992; cv=none; b=phpll8/WOWqoKsJ3+ASBYYdDMyWbCp/qubuVhlObpM2Ec5HZBWYWtne/UchTUtNjFGSMXIg2GxmCek46SJdaQBIdbQyu/K3Xjrp8IGwvVDNeZudFgp0tirRAT7iFFeSTVSEnveE0XPtQ6SM1da0WpXV9vEJPCMCIUozzsaUt2KA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709544719; c=relaxed/simple;
-	bh=z84MC+j7xoufltCyQn4dN/fhqtC0r7mYvzRuXzWMOGM=;
+	s=arc-20240116; t=1709544992; c=relaxed/simple;
+	bh=1VALZZxgnqXwAOpp4I7snS7GxfjjR828WelOj7dP/D0=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=CXplD8J3pel6oqpj9BoMm5j6+6FrWrlExZkfKqMypbPFwcpt06Bf4W+WWYtebff3BYq3Cs64ESa1R1/f1wwpzr42TDYsBQ8/9So72/oGhPccjot77xhWNKPUcbMKnzwgOuX+lgM19p41fVPCc797csf8/zWYBG0obx804ZeKOuQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=V21Uri8Y; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ZeqVHc3q; arc=none smtp.client-ip=64.147.123.151
+	 Content-Type:Content-Disposition:In-Reply-To; b=aa+KQSEsVQR4YrmRIbRt2M5xIAlJ0fJMi60HgHC1bSSfxJZGMl6VmYlYrCJd8YtzTBKpDgr9/RjOJEn1XK9P4gG9RE0cJmxPguD+LsIqHvGD66bHeMeglb+K7yL+ZRth0NgTJS76Hc44pa+1cU54tPjv6vCHoCfOKllz2LarbJ4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=DiBdGSTQ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=OR7oQdrE; arc=none smtp.client-ip=103.168.172.145
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="V21Uri8Y";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ZeqVHc3q"
-Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
-	by mailfout.west.internal (Postfix) with ESMTP id BED1C1C0007B;
-	Mon,  4 Mar 2024 04:31:55 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="DiBdGSTQ";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="OR7oQdrE"
+Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
+	by mailfout.nyi.internal (Postfix) with ESMTP id 46B1613800A1;
+	Mon,  4 Mar 2024 04:36:29 -0500 (EST)
 Received: from mailfrontend2 ([10.202.2.163])
-  by compute5.internal (MEProxy); Mon, 04 Mar 2024 04:31:55 -0500
+  by compute2.internal (MEProxy); Mon, 04 Mar 2024 04:36:29 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1709544715; x=1709631115; bh=a6KdT0j80P
-	T9jQhXebsj8D8afGYITl5C3xQtEqh9VsQ=; b=V21Uri8YZILtyljTy9iWMdGm03
-	KrmL93pVEQJeXSJeSWsGwR5GJ8ro4OAdRmYHYxhrCYflQ65E0+TzRSG62s/gVIEd
-	PisgRYtuRUbAeVNciW89F0qFlXNlQFBRwoxkFVJ7raGhcMEEWmDN1aLEKtn++ojC
-	AOspsvu571eHLs6fsOeIxgpKOsccAfp0asgzaq6uQzTVXSxnyFn8Nk05luwTNS9A
-	FUW4xhtKwFj7RvOqKGwmCKOj+qqQSF5ApL/vKv+1y5PiwiDXI8cDzqTp3l0gmfJQ
-	ckT7WGyRA72lVu6y15UksRztdxK6gYKlex3gKYeudydfto/dP+LCzFdbhxXg==
+	:subject:to:to; s=fm1; t=1709544989; x=1709631389; bh=1KGRf2W1FZ
+	DN0YF6ABqMSXvXMQTNVxIAN2oMoqZnIBU=; b=DiBdGSTQhJrNQEeQemC5vlZ37I
+	IcYPLp/Fhugw7pLB22hTHhInni2tmS7wrAHQ20zaQhvrcUC9WoY7IGRIW09cKCWr
+	oo94BBR7sK4uCZVan/XACQTzJ7IGC4IwPjEKQVgPLzdIu0/0/8R9rjo+Ngnum8tk
+	yIGS05a9x4AMZWbqD6dq/gQBCxbgiIrH19Zizad1UvR6sWI5yLHq+pg4pdBnnNRf
+	gjlRLaDEZgBpHkwpcaoDSMVV8glZYih6R7BK08rWyWQ5g25MvS4gZsFyQTWf5OWv
+	CiY7YzYZ1JPBExDp/r/uG5KCFQa/iQyCjZfZi/oG7fEdgV6yAXRk8IvcQT3g==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1709544715; x=1709631115; bh=a6KdT0j80PT9jQhXebsj8D8afGYI
-	Tl5C3xQtEqh9VsQ=; b=ZeqVHc3q4IvoBifQebaqrBJVXYcOuBHFvC+N0P4z2ya/
-	87qWkRJx0+SbLJ67UyYCpA5dHH917c9YfGJC4XKBZlReeZRLNQB03WagYdR+X6V3
-	UUp/tCv3333VIZ6jLvmYccZfEyo4JCzf1Oz9pBbZ1PMd15nr/pxBO39PKylsK3zZ
-	t5CsSFWbLdAoV93pyIo0Gcav/sTLjdsUT7wwjyUWu5sRcSEXBDCnGt4A4lN/Z4Ds
-	UVv8FN/cDnW3AwAwMviu9ewUmMKNZNRsp97j3+tyY3GdsEUCvulhvHfUjU+9EtmG
-	nXy7uvp8UK3sJWSEE4fyYlzOh6VR5tj50fWunsxjNw==
-X-ME-Sender: <xms:C5XlZU1ALa7cYWXYyniaicvpWpyhpkobzq_t7UjtAlwoShRm-YkYtg>
-    <xme:C5XlZfGq-yWA7pIr7CEoXxmiRo8FvjBrP-wNfPRVNnJoeOn4v4MYaR3drzNeLGyAb
-    PEUN5JuAxSSWRIm2Q>
-X-ME-Received: <xmr:C5XlZc6mSNPGDpwOuyDqultXpsUyyvtJ9t5nkk2Z5xT6obremIJrASbZYgRDNIdz8ebShP_vwSS0YbUG-UzTzaK_dsVsdDWS_sBWkcN__vK-KCU>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrheejgddtgecutefuodetggdotefrodftvf
+	fm1; t=1709544989; x=1709631389; bh=1KGRf2W1FZDN0YF6ABqMSXvXMQTN
+	VxIAN2oMoqZnIBU=; b=OR7oQdrEtcbJAJ5MvByi/Ue8Uq3Uii41n/ZwlrfuNXv/
+	gfItNqDlhpuun7c0mfp8gTZhY1NsBJSNsbDKCo2+CgeuL9Imdh3zFmlQnIAzDz3c
+	fgVOIb9zuYWFn1q3MrcDUvdXZqcyvuZkH54EcwDg63yB6LxZEO/g9BHnF30pvQGh
+	QZY4cxgWJFTzfULk3SrScpAYk3MiVVI2tby/bczrcRZ1da4uMGUQvlxLyWNYaPRo
+	esDMY3/xT1GVNny7leZL9+hMSbDjQangYGbSLLsjCcTNmltSURC+fIyfWXLsR4gS
+	LYHejNv42S/ZJxUxfuNVU8p5ed/oraPrNR1Z5JvycQ==
+X-ME-Sender: <xms:HZblZQImq7gVdd_G4lSW_n_TlrS5XSlXEnb81A2IwPIfja2vAfgNwQ>
+    <xme:HZblZQIX03JRXDugnMgWglLlrKDpTefrMlMTSJ0B_nvyieyDFBXWjMViiUbF7K_rU
+    0l-ri1VsdrSOqkbQg>
+X-ME-Received: <xmr:HZblZQvwxHOaPkju8OEMmxpUy0waVEIX8R-WUVdbuon-d38MBEi34c5PzAi9nV6tchIpGeZ7m47uxH2k1qIYSqXW5QeGRXMgt186KxebGvS2Q08>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrheejgddthecutefuodetggdotefrodftvf
     curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
     uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
-    fjughrpeffhffvvefukfhfgggtuggjsehgtderredttddvnecuhfhrohhmpefrrghtrhhi
+    fjughrpeffhffvvefukfhfgggtuggjsehgtdorredttddvnecuhfhrohhmpefrrghtrhhi
     tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
-    hnpeeukedtvedtffevleejtefgheehieegkeeluddvfeefgeehgfeltddtheejleffteen
-    ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
-    hkshdrihhm
-X-ME-Proxy: <xmx:C5XlZd2Fl-pCLBWQHTAmBg-eYtVoAP_rPmgEQegi5Kz16U0VlqJ7Kw>
-    <xmx:C5XlZXFRyE4SUAs33zkNSWmvX6AaYbOOwn5YiLYOk-TpyaG_OxK8TQ>
-    <xmx:C5XlZW_PiBeIK9B_b5bGwFYewPPy08yZc1USUy82ea7_CcfwJiraaA>
-    <xmx:C5XlZcS7h0MLNIO--elnKJF4DMPskyKxOHd7rx3AxSry51ZfmdI1KPrDdb8>
+    hnpeejfeeuueetiefhffeigeeiuefhtefguefgjeelffelhedvfeejjeehueefffeiteen
+    ucffohhmrghinhepghhithhhuhgsrdgtohhmnecuvehluhhsthgvrhfuihiivgeptdenuc
+    frrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimh
+X-ME-Proxy: <xmx:HZblZdaCi1MmSnNlwHjDJuyh7BWU54ey7nkq2XyiirILl6G0poImQA>
+    <xmx:HZblZXa9fldwrmd7zYcvNGR-9a4l1PVgA-1TN6E5jzrq4VtmCzVxCw>
+    <xmx:HZblZZBL3ZzvvCanRQ6c5mgkqTinWj4_6uEL6czt1Tf0yJvOmtDU6w>
+    <xmx:HZblZTGT7etQqAViubvkUE6MSmLQ_azKwb-W7KFeu2JDhl3hJSMZIQ>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 4 Mar 2024 04:31:54 -0500 (EST)
+ 4 Mar 2024 04:36:28 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 455015d2 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 4 Mar 2024 09:27:28 +0000 (UTC)
-Date: Mon, 4 Mar 2024 10:31:51 +0100
+	by vm-mail (OpenSMTPD) with ESMTPSA id b2c431cb (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 4 Mar 2024 09:32:03 +0000 (UTC)
+Date: Mon, 4 Mar 2024 10:36:26 +0100
 From: Patrick Steinhardt <ps@pks.im>
-To: Vincenzo Mezzela <vincenzo.mezzela@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: [GSOC][PATCH v2 1/1] t7301: use test_path_is_(missing|file)
-Message-ID: <ZeWVB5uKLONfp6cO@tanuki>
-References: <20240219172214.7644-1-vincenzo.mezzela@gmail.com>
- <20240227161734.52830-1-vincenzo.mezzela@gmail.com>
- <20240227161734.52830-2-vincenzo.mezzela@gmail.com>
+To: W Sero via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, W Sero <sane0r@outlook.com>
+Subject: Re: [PATCH] Fix  git-p4 decode() missing an assignment
+Message-ID: <ZeWWGrbskLJHrQZL@tanuki>
+References: <pull.1683.git.git.1709542455728.gitgitgadget@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -82,721 +80,100 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="50hmUNwy62p0cYTO"
+	protocol="application/pgp-signature"; boundary="OVBvJtfo5jx49086"
 Content-Disposition: inline
-In-Reply-To: <20240227161734.52830-2-vincenzo.mezzela@gmail.com>
+In-Reply-To: <pull.1683.git.git.1709542455728.gitgitgadget@gmail.com>
 
 
---50hmUNwy62p0cYTO
+--OVBvJtfo5jx49086
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Tue, Feb 27, 2024 at 05:17:34PM +0100, Vincenzo Mezzela wrote:
-> Refactor test -(f|e) to utilize the corresponding helper functions from
-
-Nit: you didn't convert any instances of `test -e`, so I'd simplify the
-message to just say `test -f` here.
-
-> test-lib-functions.sh. These functions perform indentical operations
-> while enhancing debugging capabilities in case of test failures.
->  =20
-> In the context of this file, 'test ! -f' is meant to check if the file
-> has been correctly cleaned, thus its usage is replaced with
-> 'test_path_is_missing' instead of '! test_path_is_file'.
-> =20
+On Mon, Mar 04, 2024 at 08:54:15AM +0000, W Sero via GitGitGadget wrote:
+> From: SaNeOr <sane0r@outlook.com>
 >=20
+> bugfix: When using git-p4 in the python2 environment,
+> some places decode() missing an assignment.
+>=20
+> Signed-off-by: W Sero <sane0r@outlook.com>
+> ---
+>     Fix git-p4 decode_path() missing an assignment
+>    =20
+>     When using git-p4 in the python2 environment, some places decode( )
+>     missing an assignment.
+>=20
+> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-168=
+3%2FSaNeOr%2Fmaster-v1
+> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1683/S=
+aNeOr/master-v1
+> Pull-Request: https://github.com/git/git/pull/1683
+>=20
+>  git-p4.py | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
+>=20
+> diff --git a/git-p4.py b/git-p4.py
+> index 28ab12c72b6..9fa4b9b104e 100755
+> --- a/git-p4.py
+> +++ b/git-p4.py
+> @@ -307,7 +307,7 @@ def decode_path(path):
+>          return path.decode(encoding, errors=3D'replace') if isinstance(p=
+ath, bytes) else path
+>      else:
+>          try:
+> -            path.decode('ascii')
+> +            path =3D path.decode('ascii')
 
-Another nit: There should only be a single empty line between body and
-trailer lines.
+Is this fixing an actual bug that you have encountered? I'm mostly
+asking because I think this actually works as inteded: we only try to
+decode the path using the specified encoding in case where it is not
+representable as ASCII. If it contained e.g. Unicode characters, then
+this statement here would throw and we end up decoding in the `except`
+branch. Otherwise, we know that the path only contains ASCII characters
+and thus we don't have to change it in the first place.
 
-Other than that this patch looks good to me, thanks!
+Whether that complexity is sensible might be a different question. But
+it at least shouldn't result in any user visible bug, no?
 
 Patrick
 
-> Signed-off-by: Vincenzo Mezzela <vincenzo.mezzela@gmail.com>
-> ---
->  t/t7301-clean-interactive.sh | 490 +++++++++++++++++------------------
->  1 file changed, 245 insertions(+), 245 deletions()
+>          except:
+>              path =3D path.decode(encoding, errors=3D'replace')
+>              if verbose:
+> @@ -3114,7 +3114,7 @@ def writeToGitStream(self, gitMode, relPath, conten=
+ts):
+> =20
+>      def encodeWithUTF8(self, path):
+>          try:
+> -            path.decode('ascii')
+> +            path =3D path.decode('ascii')
+>          except:
+>              encoding =3D 'utf8'
+>              if gitConfig('git-p4.pathEncoding'):
 >=20
-> diff --git a/t/t7301-clean-interactive.sh b/t/t7301-clean-interactive.sh
-> index d82a3210a1..4afe53c66a 100755
-> --- a/t/t7301-clean-interactive.sh
-> +++ b/t/t7301-clean-interactive.sh
-> @@ -25,18 +25,18 @@ test_expect_success 'git clean -i (c: clean hotkey)' '
->  	touch a.out src/part3.c src/part3.h src/part4.c src/part4.h \
->  	docs/manual.txt obj.o build/lib.so &&
->  	echo c | git clean -i &&
-> -	test -f Makefile &&
-> -	test -f README &&
-> -	test -f src/part1.c &&
-> -	test -f src/part2.c &&
-> -	test ! -f a.out &&
-> -	test -f docs/manual.txt &&
-> -	test ! -f src/part3.c &&
-> -	test ! -f src/part3.h &&
-> -	test ! -f src/part4.c &&
-> -	test ! -f src/part4.h &&
-> -	test -f obj.o &&
-> -	test -f build/lib.so
-> +	test_path_is_file Makefile &&
-> +	test_path_is_file README &&
-> +	test_path_is_file src/part1.c &&
-> +	test_path_is_file src/part2.c &&
-> +	test_path_is_missing a.out &&
-> +	test_path_is_file docs/manual.txt &&
-> +	test_path_is_missing src/part3.c &&
-> +	test_path_is_missing src/part3.h &&
-> +	test_path_is_missing src/part4.c &&
-> +	test_path_is_missing src/part4.h &&
-> +	test_path_is_file obj.o &&
-> +	test_path_is_file build/lib.so
-> =20
->  '
-> =20
-> @@ -46,18 +46,18 @@ test_expect_success 'git clean -i (cl: clean prefix)'=
- '
->  	touch a.out src/part3.c src/part3.h src/part4.c src/part4.h \
->  	docs/manual.txt obj.o build/lib.so &&
->  	echo cl | git clean -i &&
-> -	test -f Makefile &&
-> -	test -f README &&
-> -	test -f src/part1.c &&
-> -	test -f src/part2.c &&
-> -	test ! -f a.out &&
-> -	test -f docs/manual.txt &&
-> -	test ! -f src/part3.c &&
-> -	test ! -f src/part3.h &&
-> -	test ! -f src/part4.c &&
-> -	test ! -f src/part4.h &&
-> -	test -f obj.o &&
-> -	test -f build/lib.so
-> +	test_path_is_file Makefile &&
-> +	test_path_is_file README &&
-> +	test_path_is_file src/part1.c &&
-> +	test_path_is_file src/part2.c &&
-> +	test_path_is_missing a.out &&
-> +	test_path_is_file docs/manual.txt &&
-> +	test_path_is_missing src/part3.c &&
-> +	test_path_is_missing src/part3.h &&
-> +	test_path_is_missing src/part4.c &&
-> +	test_path_is_missing src/part4.h &&
-> +	test_path_is_file obj.o &&
-> +	test_path_is_file build/lib.so
-> =20
->  '
-> =20
-> @@ -67,18 +67,18 @@ test_expect_success 'git clean -i (quit)' '
->  	touch a.out src/part3.c src/part3.h src/part4.c src/part4.h \
->  	docs/manual.txt obj.o build/lib.so &&
->  	echo quit | git clean -i &&
-> -	test -f Makefile &&
-> -	test -f README &&
-> -	test -f src/part1.c &&
-> -	test -f src/part2.c &&
-> -	test -f a.out &&
-> -	test -f docs/manual.txt &&
-> -	test -f src/part3.c &&
-> -	test -f src/part3.h &&
-> -	test -f src/part4.c &&
-> -	test -f src/part4.h &&
-> -	test -f obj.o &&
-> -	test -f build/lib.so
-> +	test_path_is_file Makefile &&
-> +	test_path_is_file README &&
-> +	test_path_is_file src/part1.c &&
-> +	test_path_is_file src/part2.c &&
-> +	test_path_is_file a.out &&
-> +	test_path_is_file docs/manual.txt &&
-> +	test_path_is_file src/part3.c &&
-> +	test_path_is_file src/part3.h &&
-> +	test_path_is_file src/part4.c &&
-> +	test_path_is_file src/part4.h &&
-> +	test_path_is_file obj.o &&
-> +	test_path_is_file build/lib.so
-> =20
->  '
-> =20
-> @@ -88,18 +88,18 @@ test_expect_success 'git clean -i (Ctrl+D)' '
->  	touch a.out src/part3.c src/part3.h src/part4.c src/part4.h \
->  	docs/manual.txt obj.o build/lib.so &&
->  	echo "\04" | git clean -i &&
-> -	test -f Makefile &&
-> -	test -f README &&
-> -	test -f src/part1.c &&
-> -	test -f src/part2.c &&
-> -	test -f a.out &&
-> -	test -f docs/manual.txt &&
-> -	test -f src/part3.c &&
-> -	test -f src/part3.h &&
-> -	test -f src/part4.c &&
-> -	test -f src/part4.h &&
-> -	test -f obj.o &&
-> -	test -f build/lib.so
-> +	test_path_is_file Makefile &&
-> +	test_path_is_file README &&
-> +	test_path_is_file src/part1.c &&
-> +	test_path_is_file src/part2.c &&
-> +	test_path_is_file a.out &&
-> +	test_path_is_file docs/manual.txt &&
-> +	test_path_is_file src/part3.c &&
-> +	test_path_is_file src/part3.h &&
-> +	test_path_is_file src/part4.c &&
-> +	test_path_is_file src/part4.h &&
-> +	test_path_is_file obj.o &&
-> +	test_path_is_file build/lib.so
-> =20
->  '
-> =20
-> @@ -110,18 +110,18 @@ test_expect_success 'git clean -id (filter all)' '
->  	docs/manual.txt obj.o build/lib.so &&
->  	test_write_lines f "*" "" c |
->  	git clean -id &&
-> -	test -f Makefile &&
-> -	test -f README &&
-> -	test -f src/part1.c &&
-> -	test -f src/part2.c &&
-> -	test -f a.out &&
-> -	test -f docs/manual.txt &&
-> -	test -f src/part3.c &&
-> -	test -f src/part3.h &&
-> -	test -f src/part4.c &&
-> -	test -f src/part4.h &&
-> -	test -f obj.o &&
-> -	test -f build/lib.so
-> +	test_path_is_file Makefile &&
-> +	test_path_is_file README &&
-> +	test_path_is_file src/part1.c &&
-> +	test_path_is_file src/part2.c &&
-> +	test_path_is_file a.out &&
-> +	test_path_is_file docs/manual.txt &&
-> +	test_path_is_file src/part3.c &&
-> +	test_path_is_file src/part3.h &&
-> +	test_path_is_file src/part4.c &&
-> +	test_path_is_file src/part4.h &&
-> +	test_path_is_file obj.o &&
-> +	test_path_is_file build/lib.so
-> =20
->  '
-> =20
-> @@ -132,18 +132,18 @@ test_expect_success 'git clean -id (filter patterns=
-)' '
->  	docs/manual.txt obj.o build/lib.so &&
->  	test_write_lines f "part3.* *.out" "" c |
->  	git clean -id &&
-> -	test -f Makefile &&
-> -	test -f README &&
-> -	test -f src/part1.c &&
-> -	test -f src/part2.c &&
-> -	test -f a.out &&
-> -	test ! -f docs/manual.txt &&
-> -	test -f src/part3.c &&
-> -	test -f src/part3.h &&
-> -	test ! -f src/part4.c &&
-> -	test ! -f src/part4.h &&
-> -	test -f obj.o &&
-> -	test -f build/lib.so
-> +	test_path_is_file Makefile &&
-> +	test_path_is_file README &&
-> +	test_path_is_file src/part1.c &&
-> +	test_path_is_file src/part2.c &&
-> +	test_path_is_file a.out &&
-> +	test_path_is_missing docs/manual.txt &&
-> +	test_path_is_file src/part3.c &&
-> +	test_path_is_file src/part3.h &&
-> +	test_path_is_missing src/part4.c &&
-> +	test_path_is_missing src/part4.h &&
-> +	test_path_is_file obj.o &&
-> +	test_path_is_file build/lib.so
-> =20
->  '
-> =20
-> @@ -154,18 +154,18 @@ test_expect_success 'git clean -id (filter patterns=
- 2)' '
->  	docs/manual.txt obj.o build/lib.so &&
->  	test_write_lines f "* !*.out" "" c |
->  	git clean -id &&
-> -	test -f Makefile &&
-> -	test -f README &&
-> -	test -f src/part1.c &&
-> -	test -f src/part2.c &&
-> -	test ! -f a.out &&
-> -	test -f docs/manual.txt &&
-> -	test -f src/part3.c &&
-> -	test -f src/part3.h &&
-> -	test -f src/part4.c &&
-> -	test -f src/part4.h &&
-> -	test -f obj.o &&
-> -	test -f build/lib.so
-> +	test_path_is_file Makefile &&
-> +	test_path_is_file README &&
-> +	test_path_is_file src/part1.c &&
-> +	test_path_is_file src/part2.c &&
-> +	test_path_is_missing a.out &&
-> +	test_path_is_file docs/manual.txt &&
-> +	test_path_is_file src/part3.c &&
-> +	test_path_is_file src/part3.h &&
-> +	test_path_is_file src/part4.c &&
-> +	test_path_is_file src/part4.h &&
-> +	test_path_is_file obj.o &&
-> +	test_path_is_file build/lib.so
-> =20
->  '
-> =20
-> @@ -176,18 +176,18 @@ test_expect_success 'git clean -id (select - all)' '
->  	docs/manual.txt obj.o build/lib.so &&
->  	test_write_lines s "*" "" c |
->  	git clean -id &&
-> -	test -f Makefile &&
-> -	test -f README &&
-> -	test -f src/part1.c &&
-> -	test -f src/part2.c &&
-> -	test ! -f a.out &&
-> -	test ! -f docs/manual.txt &&
-> -	test ! -f src/part3.c &&
-> -	test ! -f src/part3.h &&
-> -	test ! -f src/part4.c &&
-> -	test ! -f src/part4.h &&
-> -	test -f obj.o &&
-> -	test -f build/lib.so
-> +	test_path_is_file Makefile &&
-> +	test_path_is_file README &&
-> +	test_path_is_file src/part1.c &&
-> +	test_path_is_file src/part2.c &&
-> +	test_path_is_missing a.out &&
-> +	test_path_is_missing docs/manual.txt &&
-> +	test_path_is_missing src/part3.c &&
-> +	test_path_is_missing src/part3.h &&
-> +	test_path_is_missing src/part4.c &&
-> +	test_path_is_missing src/part4.h &&
-> +	test_path_is_file obj.o &&
-> +	test_path_is_file build/lib.so
-> =20
->  '
-> =20
-> @@ -198,18 +198,18 @@ test_expect_success 'git clean -id (select - none)'=
- '
->  	docs/manual.txt obj.o build/lib.so &&
->  	test_write_lines s "" c |
->  	git clean -id &&
-> -	test -f Makefile &&
-> -	test -f README &&
-> -	test -f src/part1.c &&
-> -	test -f src/part2.c &&
-> -	test -f a.out &&
-> -	test -f docs/manual.txt &&
-> -	test -f src/part3.c &&
-> -	test -f src/part3.h &&
-> -	test -f src/part4.c &&
-> -	test -f src/part4.h &&
-> -	test -f obj.o &&
-> -	test -f build/lib.so
-> +	test_path_is_file Makefile &&
-> +	test_path_is_file README &&
-> +	test_path_is_file src/part1.c &&
-> +	test_path_is_file src/part2.c &&
-> +	test_path_is_file a.out &&
-> +	test_path_is_file docs/manual.txt &&
-> +	test_path_is_file src/part3.c &&
-> +	test_path_is_file src/part3.h &&
-> +	test_path_is_file src/part4.c &&
-> +	test_path_is_file src/part4.h &&
-> +	test_path_is_file obj.o &&
-> +	test_path_is_file build/lib.so
-> =20
->  '
-> =20
-> @@ -220,18 +220,18 @@ test_expect_success 'git clean -id (select - number=
-)' '
->  	docs/manual.txt obj.o build/lib.so &&
->  	test_write_lines s 3 "" c |
->  	git clean -id &&
-> -	test -f Makefile &&
-> -	test -f README &&
-> -	test -f src/part1.c &&
-> -	test -f src/part2.c &&
-> -	test -f a.out &&
-> -	test -f docs/manual.txt &&
-> -	test ! -f src/part3.c &&
-> -	test -f src/part3.h &&
-> -	test -f src/part4.c &&
-> -	test -f src/part4.h &&
-> -	test -f obj.o &&
-> -	test -f build/lib.so
-> +	test_path_is_file Makefile &&
-> +	test_path_is_file README &&
-> +	test_path_is_file src/part1.c &&
-> +	test_path_is_file src/part2.c &&
-> +	test_path_is_file a.out &&
-> +	test_path_is_file docs/manual.txt &&
-> +	test_path_is_missing src/part3.c &&
-> +	test_path_is_file src/part3.h &&
-> +	test_path_is_file src/part4.c &&
-> +	test_path_is_file src/part4.h &&
-> +	test_path_is_file obj.o &&
-> +	test_path_is_file build/lib.so
-> =20
->  '
-> =20
-> @@ -242,18 +242,18 @@ test_expect_success 'git clean -id (select - number=
- 2)' '
->  	docs/manual.txt obj.o build/lib.so &&
->  	test_write_lines s "2 3" 5 "" c |
->  	git clean -id &&
-> -	test -f Makefile &&
-> -	test -f README &&
-> -	test -f src/part1.c &&
-> -	test -f src/part2.c &&
-> -	test -f a.out &&
-> -	test ! -f docs/manual.txt &&
-> -	test ! -f src/part3.c &&
-> -	test -f src/part3.h &&
-> -	test ! -f src/part4.c &&
-> -	test -f src/part4.h &&
-> -	test -f obj.o &&
-> -	test -f build/lib.so
-> +	test_path_is_file Makefile &&
-> +	test_path_is_file README &&
-> +	test_path_is_file src/part1.c &&
-> +	test_path_is_file src/part2.c &&
-> +	test_path_is_file a.out &&
-> +	test_path_is_missing docs/manual.txt &&
-> +	test_path_is_missing src/part3.c &&
-> +	test_path_is_file src/part3.h &&
-> +	test_path_is_missing src/part4.c &&
-> +	test_path_is_file src/part4.h &&
-> +	test_path_is_file obj.o &&
-> +	test_path_is_file build/lib.so
-> =20
->  '
-> =20
-> @@ -264,18 +264,18 @@ test_expect_success 'git clean -id (select - number=
- 3)' '
->  	docs/manual.txt obj.o build/lib.so &&
->  	test_write_lines s "3,4 5" "" c |
->  	git clean -id &&
-> -	test -f Makefile &&
-> -	test -f README &&
-> -	test -f src/part1.c &&
-> -	test -f src/part2.c &&
-> -	test -f a.out &&
-> -	test -f docs/manual.txt &&
-> -	test ! -f src/part3.c &&
-> -	test ! -f src/part3.h &&
-> -	test ! -f src/part4.c &&
-> -	test -f src/part4.h &&
-> -	test -f obj.o &&
-> -	test -f build/lib.so
-> +	test_path_is_file Makefile &&
-> +	test_path_is_file README &&
-> +	test_path_is_file src/part1.c &&
-> +	test_path_is_file src/part2.c &&
-> +	test_path_is_file a.out &&
-> +	test_path_is_file docs/manual.txt &&
-> +	test_path_is_missing src/part3.c &&
-> +	test_path_is_missing src/part3.h &&
-> +	test_path_is_missing src/part4.c &&
-> +	test_path_is_file src/part4.h &&
-> +	test_path_is_file obj.o &&
-> +	test_path_is_file build/lib.so
-> =20
->  '
-> =20
-> @@ -285,11 +285,11 @@ test_expect_success 'git clean -id (select - filena=
-mes)' '
->  	touch a.out foo.txt bar.txt baz.txt &&
->  	test_write_lines s "a.out fo ba bar" "" c |
->  	git clean -id &&
-> -	test -f Makefile &&
-> -	test ! -f a.out &&
-> -	test ! -f foo.txt &&
-> -	test ! -f bar.txt &&
-> -	test -f baz.txt &&
-> +	test_path_is_file Makefile &&
-> +	test_path_is_missing a.out &&
-> +	test_path_is_missing foo.txt &&
-> +	test_path_is_missing bar.txt &&
-> +	test_path_is_file baz.txt &&
->  	rm baz.txt
-> =20
->  '
-> @@ -301,18 +301,18 @@ test_expect_success 'git clean -id (select - range)=
-' '
->  	docs/manual.txt obj.o build/lib.so &&
->  	test_write_lines s "1,3-4" 2 "" c |
->  	git clean -id &&
-> -	test -f Makefile &&
-> -	test -f README &&
-> -	test -f src/part1.c &&
-> -	test -f src/part2.c &&
-> -	test ! -f a.out &&
-> -	test ! -f src/part3.c &&
-> -	test ! -f src/part3.h &&
-> -	test -f src/part4.c &&
-> -	test -f src/part4.h &&
-> -	test ! -f docs/manual.txt &&
-> -	test -f obj.o &&
-> -	test -f build/lib.so
-> +	test_path_is_file Makefile &&
-> +	test_path_is_file README &&
-> +	test_path_is_file src/part1.c &&
-> +	test_path_is_file src/part2.c &&
-> +	test_path_is_missing a.out &&
-> +	test_path_is_missing src/part3.c &&
-> +	test_path_is_missing src/part3.h &&
-> +	test_path_is_file src/part4.c &&
-> +	test_path_is_file src/part4.h &&
-> +	test_path_is_missing docs/manual.txt &&
-> +	test_path_is_file obj.o &&
-> +	test_path_is_file build/lib.so
-> =20
->  '
-> =20
-> @@ -323,18 +323,18 @@ test_expect_success 'git clean -id (select - range =
-2)' '
->  	docs/manual.txt obj.o build/lib.so &&
->  	test_write_lines s "4- 1" "" c |
->  	git clean -id &&
-> -	test -f Makefile &&
-> -	test -f README &&
-> -	test -f src/part1.c &&
-> -	test -f src/part2.c &&
-> -	test ! -f a.out &&
-> -	test -f docs/manual.txt &&
-> -	test -f src/part3.c &&
-> -	test ! -f src/part3.h &&
-> -	test ! -f src/part4.c &&
-> -	test ! -f src/part4.h &&
-> -	test -f obj.o &&
-> -	test -f build/lib.so
-> +	test_path_is_file Makefile &&
-> +	test_path_is_file README &&
-> +	test_path_is_file src/part1.c &&
-> +	test_path_is_file src/part2.c &&
-> +	test_path_is_missing a.out &&
-> +	test_path_is_file docs/manual.txt &&
-> +	test_path_is_file src/part3.c &&
-> +	test_path_is_missing src/part3.h &&
-> +	test_path_is_missing src/part4.c &&
-> +	test_path_is_missing src/part4.h &&
-> +	test_path_is_file obj.o &&
-> +	test_path_is_file build/lib.so
-> =20
->  '
-> =20
-> @@ -345,18 +345,18 @@ test_expect_success 'git clean -id (inverse select)=
-' '
->  	docs/manual.txt obj.o build/lib.so &&
->  	test_write_lines s "*" "-5- 1 -2" "" c |
->  	git clean -id &&
-> -	test -f Makefile &&
-> -	test -f README &&
-> -	test -f src/part1.c &&
-> -	test -f src/part2.c &&
-> -	test ! -f a.out &&
-> -	test -f docs/manual.txt &&
-> -	test ! -f src/part3.c &&
-> -	test ! -f src/part3.h &&
-> -	test -f src/part4.c &&
-> -	test -f src/part4.h &&
-> -	test -f obj.o &&
-> -	test -f build/lib.so
-> +	test_path_is_file Makefile &&
-> +	test_path_is_file README &&
-> +	test_path_is_file src/part1.c &&
-> +	test_path_is_file src/part2.c &&
-> +	test_path_is_missing a.out &&
-> +	test_path_is_file docs/manual.txt &&
-> +	test_path_is_missing src/part3.c &&
-> +	test_path_is_missing src/part3.h &&
-> +	test_path_is_file src/part4.c &&
-> +	test_path_is_file src/part4.h &&
-> +	test_path_is_file obj.o &&
-> +	test_path_is_file build/lib.so
-> =20
->  '
-> =20
-> @@ -367,18 +367,18 @@ test_expect_success 'git clean -id (ask)' '
->  	docs/manual.txt obj.o build/lib.so &&
->  	test_write_lines a Y y no yes bad "" |
->  	git clean -id &&
-> -	test -f Makefile &&
-> -	test -f README &&
-> -	test -f src/part1.c &&
-> -	test -f src/part2.c &&
-> -	test ! -f a.out &&
-> -	test ! -f docs/manual.txt &&
-> -	test -f src/part3.c &&
-> -	test ! -f src/part3.h &&
-> -	test -f src/part4.c &&
-> -	test -f src/part4.h &&
-> -	test -f obj.o &&
-> -	test -f build/lib.so
-> +	test_path_is_file Makefile &&
-> +	test_path_is_file README &&
-> +	test_path_is_file src/part1.c &&
-> +	test_path_is_file src/part2.c &&
-> +	test_path_is_missing a.out &&
-> +	test_path_is_missing docs/manual.txt &&
-> +	test_path_is_file src/part3.c &&
-> +	test_path_is_missing src/part3.h &&
-> +	test_path_is_file src/part4.c &&
-> +	test_path_is_file src/part4.h &&
-> +	test_path_is_file obj.o &&
-> +	test_path_is_file build/lib.so
-> =20
->  '
-> =20
-> @@ -389,18 +389,18 @@ test_expect_success 'git clean -id (ask - Ctrl+D)' '
->  	docs/manual.txt obj.o build/lib.so &&
->  	test_write_lines a Y no yes "\04" |
->  	git clean -id &&
-> -	test -f Makefile &&
-> -	test -f README &&
-> -	test -f src/part1.c &&
-> -	test -f src/part2.c &&
-> -	test ! -f a.out &&
-> -	test -f docs/manual.txt &&
-> -	test ! -f src/part3.c &&
-> -	test -f src/part3.h &&
-> -	test -f src/part4.c &&
-> -	test -f src/part4.h &&
-> -	test -f obj.o &&
-> -	test -f build/lib.so
-> +	test_path_is_file Makefile &&
-> +	test_path_is_file README &&
-> +	test_path_is_file src/part1.c &&
-> +	test_path_is_file src/part2.c &&
-> +	test_path_is_missing a.out &&
-> +	test_path_is_file docs/manual.txt &&
-> +	test_path_is_missing src/part3.c &&
-> +	test_path_is_file src/part3.h &&
-> +	test_path_is_file src/part4.c &&
-> +	test_path_is_file src/part4.h &&
-> +	test_path_is_file obj.o &&
-> +	test_path_is_file build/lib.so
-> =20
->  '
-> =20
-> @@ -412,18 +412,18 @@ test_expect_success 'git clean -id with prefix and =
-path (filter)' '
->  	(cd build/ &&
->  	 test_write_lines f docs "*.h" "" c |
->  	 git clean -id ..) &&
-> -	test -f Makefile &&
-> -	test -f README &&
-> -	test -f src/part1.c &&
-> -	test -f src/part2.c &&
-> -	test ! -f a.out &&
-> -	test -f docs/manual.txt &&
-> -	test ! -f src/part3.c &&
-> -	test -f src/part3.h &&
-> -	test ! -f src/part4.c &&
-> -	test -f src/part4.h &&
-> -	test -f obj.o &&
-> -	test -f build/lib.so
-> +	test_path_is_file Makefile &&
-> +	test_path_is_file README &&
-> +	test_path_is_file src/part1.c &&
-> +	test_path_is_file src/part2.c &&
-> +	test_path_is_missing a.out &&
-> +	test_path_is_file docs/manual.txt &&
-> +	test_path_is_missing src/part3.c &&
-> +	test_path_is_file src/part3.h &&
-> +	test_path_is_missing src/part4.c &&
-> +	test_path_is_file src/part4.h &&
-> +	test_path_is_file obj.o &&
-> +	test_path_is_file build/lib.so
-> =20
->  '
-> =20
-> @@ -435,18 +435,18 @@ test_expect_success 'git clean -id with prefix and =
-path (select by name)' '
->  	(cd build/ &&
->  	 test_write_lines s ../docs/ ../src/part3.c ../src/part4.c "" c |
->  	 git clean -id ..) &&
-> -	test -f Makefile &&
-> -	test -f README &&
-> -	test -f src/part1.c &&
-> -	test -f src/part2.c &&
-> -	test -f a.out &&
-> -	test ! -f docs/manual.txt &&
-> -	test ! -f src/part3.c &&
-> -	test -f src/part3.h &&
-> -	test ! -f src/part4.c &&
-> -	test -f src/part4.h &&
-> -	test -f obj.o &&
-> -	test -f build/lib.so
-> +	test_path_is_file Makefile &&
-> +	test_path_is_file README &&
-> +	test_path_is_file src/part1.c &&
-> +	test_path_is_file src/part2.c &&
-> +	test_path_is_file a.out &&
-> +	test_path_is_missing docs/manual.txt &&
-> +	test_path_is_missing src/part3.c &&
-> +	test_path_is_file src/part3.h &&
-> +	test_path_is_missing src/part4.c &&
-> +	test_path_is_file src/part4.h &&
-> +	test_path_is_file obj.o &&
-> +	test_path_is_file build/lib.so
-> =20
->  '
-> =20
-> @@ -458,18 +458,18 @@ test_expect_success 'git clean -id with prefix and =
-path (ask)' '
->  	(cd build/ &&
->  	 test_write_lines a Y y no yes bad "" |
->  	 git clean -id ..) &&
-> -	test -f Makefile &&
-> -	test -f README &&
-> -	test -f src/part1.c &&
-> -	test -f src/part2.c &&
-> -	test ! -f a.out &&
-> -	test ! -f docs/manual.txt &&
-> -	test -f src/part3.c &&
-> -	test ! -f src/part3.h &&
-> -	test -f src/part4.c &&
-> -	test -f src/part4.h &&
-> -	test -f obj.o &&
-> -	test -f build/lib.so
-> +	test_path_is_file Makefile &&
-> +	test_path_is_file README &&
-> +	test_path_is_file src/part1.c &&
-> +	test_path_is_file src/part2.c &&
-> +	test_path_is_missing a.out &&
-> +	test_path_is_missing docs/manual.txt &&
-> +	test_path_is_file src/part3.c &&
-> +	test_path_is_missing src/part3.h &&
-> +	test_path_is_file src/part4.c &&
-> +	test_path_is_file src/part4.h &&
-> +	test_path_is_file obj.o &&
-> +	test_path_is_file build/lib.so
-> =20
->  '
-> =20
+> base-commit: 0f9d4d28b7e6021b7e6db192b7bf47bd3a0d0d1d
 > --=20
-> 2.34.1
->=20
+> gitgitgadget
 >=20
 
---50hmUNwy62p0cYTO
+--OVBvJtfo5jx49086
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmXllQYACgkQVbJhu7ck
-PpS4kQ/+Mr1Fe92RIgt0aIxVwtUqiWpanbUmiH4g+/huzs/xG4qa3SleEcNyug1P
-bFIk3jJyh/K/8O7ejLDx2Q88xs0KpxKaNecMp41EKWtJuY7tFELVmWKih4QouNwA
-YxzqcVEKPuzjmqqkBjsE/41TK85IHFuvGiBlssIXLGUThL4XbZqFtStmlxsyVvtO
-Viwa4kjkc1tCAGppgI389hJHxpEkB76BLLt7uu1TCpMCvO91T082MrU5DZ++bv8k
-7wrx+QQimOq8iwmJ/1p4gC595W8MpbuheOgom/0e4Unbw7TOgcQuNlGtNYy/KmIE
-V2XK2LxfyuhjtFEw/JFztQQuIGhP82xjrHH6eLjrpeqMpltMyCYOWPYhM6getAMo
-z9wbpNVgLFwtc4y+DX8Q1uEB01NtAdCzxFC8HVsP38hkqeL+MomwHGPSKW3cyyYk
-FEDe4mg7M9p7t5M/yDINOnuesG1dAx5GVusNKD7VO08NhnnnOPD/20p5WzGfg6hz
-ieGdD75GG9lpZ+CujLxmAm3CZ8VU7F8NF/EFAcwp1SeNBD7tS0n5K9IhkpGIdmki
-Vh38JJ/LiU07hMSGaUUn5krnPBrIAd52KCeUWpC1edfTHEe0dE+OmqciGB/+dkWz
-6+e6gKecRWx6RiZeuAG6KBIJ/OqSJjFW8Ut9xB2vf45ofUrW+rY=
-=JyIX
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmXllhkACgkQVbJhu7ck
+PpTprw//bZPGkhfD8Ic8BDQEEbjrRg9pLO7Dsc3CxHChs4D7heZMhytzv7W7FHPL
+iYzs/hN9x7lswyHlgZKUI6MXE98IxJDOjVEF0uMjKRgVzTr58138lLpMCs7O6yPg
+7YI/7XYB5agxKrQKy5fNPQcaQ6fdH4U0GcwqPTsT14NSCDzpcTce7yruPjqfws/w
+v15db4xSvTNVy/BVC1DO5urtjE0mjZ19X9ziB0OtVpfCaTghi3bLd6uCjoceODlA
+g9P3wHzQdRN93QM+r9Kv3T9D0ZIBEkg/kWbTMWyrGtpml49bzAIyW5V57hxQBuxq
+ViwjIfPLpPKN/JMWWEc2J0rIDBFZbKHB1TT/cpPiL9l8azvGQ1+hxJ8tUJln7pMy
+yTxfTVoV2XsibmBXx1307MRnZWXXr/BPLxu9PRQwFjJnmXOJEuYJtqnCyd9QV0YZ
+WRAUToRmk+GtEpTN+vsI5N1XUbNv7o0767LBRG3v7CabT/ch/h860qhjnEUOgX8D
+FHdJ44YnorP22RFigpwJdbs3K6K8QaoqwXK9SjkDrF8L7jyjjuBUYkIvEE+8LwsH
+kcUeCQR3+aLg0oAajW85BSOPSwT0sNvMx4pPJ852TbeCY7gbm0QJGVi/5DFJRHbv
+Qv5RpKLvMl/PQmkwytKbZkWwg6tCICxaQYQuo74sypvK9nNr8Gg=
+=BCsL
 -----END PGP SIGNATURE-----
 
---50hmUNwy62p0cYTO--
+--OVBvJtfo5jx49086--
