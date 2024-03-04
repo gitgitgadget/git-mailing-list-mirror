@@ -1,116 +1,95 @@
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f54.google.com (mail-lf1-f54.google.com [209.85.167.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6124F5CDC8
-	for <git@vger.kernel.org>; Mon,  4 Mar 2024 17:02:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EE20604AD
+	for <git@vger.kernel.org>; Mon,  4 Mar 2024 17:17:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709571733; cv=none; b=YJYrXHfV4yU6f32O9QI+q6C6P5lKlHWqHmlkfopvKvDqlPVmlIBcEt5jPmFHIVzNd03jAQCQGQKxg4x4o+DRvUcsff9FOie6Jur/3hEiQmJtcDNrx8mp0kUc7fnwiCLiYeNuLPYN0rHHkR6AUTUD+4I2y8a/BeZjCqyMrlEmMPY=
+	t=1709572664; cv=none; b=MLmQcnieRd7ut2xzVT1gpoA3MyjGVzaCiJg5ZqHDdc1IIil6HGDU7D3qv6vpVs6NXag9Vyg5qcBsqpEXCbjlhLYXBKbsltwLMLTdvH6CIUWQSaAwxF0Fz7mGaqfs6vNw2bn8GMV6E+RQqkArAj7kQVL/zBDx9iMUoWESdoZdR18=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709571733; c=relaxed/simple;
-	bh=7jeR2adCj1Doa1jHqMIETlChG3Dmvkj6OotYRocOeRY=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=MGvqxj6k44eAlRdkIAnCn0pnwqJy2RFVC3/YKf0zmFPZbwuSLussGvmBhak1OefAxi9vuFMuRhwbCDd54F2oOl0wP6YSK7UI7K8SpOOk/mjXHrZCvKt8RocgoBkwM/ebqBdt0jWLDRDpRpal7NiwSZJRoED2piWr2knaVV2OcMY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=xnNKyiEr; arc=none smtp.client-ip=64.147.108.70
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1709572664; c=relaxed/simple;
+	bh=ELYvZ3ADfkbeq4EmExbIr7WHYl3Th7av7xJ55bOAaSQ=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version; b=TySZO7BV0PKqqZqK8vCfGZhcWoxHusFMaYXWS+DZdDyLG8t/q0C/YdAxBuBwIokuvwJR4nVCr1EAMVtvw3r/BsVKd7k+fTii5wIH4GPkhXETNOmljWV6VbjEuExd6Tk6OubduckriYkm+3HaHrTMGrwOOgD8pEiArvk9VzbqQ6A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=iA1/SLkl; arc=none smtp.client-ip=209.85.167.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="xnNKyiEr"
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 67A771CE35E;
-	Mon,  4 Mar 2024 12:02:06 -0500 (EST)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=7jeR2adCj1Doa1jHqMIETlChG3Dmvkj6OotYRo
-	cOeRY=; b=xnNKyiEr72+K+wHMaYXIOew0eLdDKKe8kvqoF3AvNVZUJKnpvLWMWB
-	KTM4Q+BE5uCLWfg5HNUJ0on2w1ZQe6O6rl20JzJcUYLNLWkdY63b2X3UYLflKRQ9
-	KoJeiqH3mjzzwUSC+u2Rhxcr3ogIFdWFjMGHIIbE+Kf9Vxr5njROE=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 4EE2E1CE35C;
-	Mon,  4 Mar 2024 12:02:06 -0500 (EST)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.176.30])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 66AA51CE35A;
-	Mon,  4 Mar 2024 12:02:05 -0500 (EST)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org,  Christian Couder <christian.couder@gmail.com>,
-  Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-Subject: Re: [PATCH] SoC 2024: clarify `test_path_is_*` conversion microproject
-In-Reply-To: <84995a068640c72c8f17406ffa0441c7fdba4bdc.1709543804.git.ps@pks.im>
-	(Patrick Steinhardt's message of "Mon, 4 Mar 2024 10:16:55 +0100")
-References: <xmqqzfvjf5tq.fsf@gitster.g>
-	<84995a068640c72c8f17406ffa0441c7fdba4bdc.1709543804.git.ps@pks.im>
-Date: Mon, 04 Mar 2024 09:02:03 -0800
-Message-ID: <xmqqo7buq6b8.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="iA1/SLkl"
+Received: by mail-lf1-f54.google.com with SMTP id 2adb3069b0e04-5131c48055cso4703906e87.1
+        for <git@vger.kernel.org>; Mon, 04 Mar 2024 09:17:42 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1709572660; x=1710177460; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=ckorDQlzBbMeVjoJ8hnRXyBZ3sN+fqyAxk7PevGw8TY=;
+        b=iA1/SLkl4sAgY/qDMdGEJIPQxuFNOcqdAW2In5EhursyGLfDyyxbKmG2F0KNzgPKHm
+         Wf1mfXAeY21nqJtCw1VRrCdr85F8XTwRg3McXW2rQGKPPj9dm+5NtBRu7rtMp/ph0WeL
+         cv1TV1NM8kZEVBa0Gwz/NzcE7NwF/65kk+RiOZuIIml4xQkfSorY/tVLjue5xMKUIniI
+         RrtcwSz4lNkSXjA8MbtS7rH4bCaY6uY7oBH5dAJFD1bd4jwr+BLDvS4hw9MQzlxDWS7i
+         tSPMb8gVM9q/N36kgYRuO0rWPx5Dnm25F92Ed+9M7wPdx1RAtAmpB69EVZ4jYikOsRLP
+         Q+Zw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1709572660; x=1710177460;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=ckorDQlzBbMeVjoJ8hnRXyBZ3sN+fqyAxk7PevGw8TY=;
+        b=HohE544MNC/kRywh1yBPb7u520k8qMjuR/3fjVjXAaf9OowPufXXlTBe9pw5RWXwBZ
+         W4/bwy6lKKp9I+6mh89KnKcg4UvA+wYL2KAAsqrGTFnZ0jXndEDtUnvutKtNeW68VQNL
+         tQv0fc0wPrFlPKPjVuMConGR5Ddsv/KvkxKaOeB3sPsSwMg0/sPlH7Pnk1m2/H4/zAlo
+         JO43wtlmRDzCqNbctZurbXMn6J2Mis09CfoMpRY0YL1RuSZUsrdfjmnENrm3LJMgcCQm
+         uItUHOa9hyLMzvwQGD1dzAvfbx5oCRAGQlUy+f2aIITfNF3z8W6h1KeHp6MrsOsKavRN
+         2BIA==
+X-Gm-Message-State: AOJu0YwU7vDiZXzNlqZ0wySmtcr22LgEJUfvx9XKJiLP7NY43Dpc6HKR
+	DKPrjT5BIHSHdb06cpVyIfHRpV52oR1173QHUMM8UJHmUhQEDj9Qq3hq2qT7NEc=
+X-Google-Smtp-Source: AGHT+IFZGXLHpS5U+HGpENNfNCHn0ORrQVYBB9fADqW8frehu2f32zrGm1u9EJWr6mgopcqxk7i6Dw==
+X-Received: by 2002:ac2:4897:0:b0:513:26e7:43ff with SMTP id x23-20020ac24897000000b0051326e743ffmr5905744lfc.32.1709572660141;
+        Mon, 04 Mar 2024 09:17:40 -0800 (PST)
+Received: from sacco-Inspiron-5559.. (88-160-103-158.subs.proxad.net. [88.160.103.158])
+        by smtp.gmail.com with ESMTPSA id j10-20020ac253aa000000b0051325475bb1sm1789455lfh.229.2024.03.04.09.17.38
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 04 Mar 2024 09:17:39 -0800 (PST)
+From: Vincenzo Mezzela <vincenzo.mezzela@gmail.com>
+To: git@vger.kernel.org
+Cc: Vincenzo Mezzela <vincenzo.mezzela@gmail.com>
+Subject: [GSOC][PATCH v3 0/1] microproject: use test_path_is_* functions in test scripts 
+Date: Mon,  4 Mar 2024 18:17:31 +0100
+Message-Id: <20240304171732.64457-1-vincenzo.mezzela@gmail.com>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20240227161734.52830-1-vincenzo.mezzela@gmail.com>
+References: <20240227161734.52830-1-vincenzo.mezzela@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- EDA7A5D4-DA48-11EE-9739-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
+Content-Transfer-Encoding: 8bit
 
-Patrick Steinhardt <ps@pks.im> writes:
+Hi,
+Following previous discussions[1][2][3], this patch is submitted as a microproject
+for the application to the GSOC.
 
-> One of our proposed microprojects is to convert instances of `test -e`
-> and related functions to instead use `test_path_exists` or similar. This
-> conversion is only feasible when `test -e` is not used as part of a
-> control statement, as the replacement is used to _assert_ a condition
-> instead of merely testing for it.
->
-> Clarify the microproject's description accordingly.
->
-> Signed-off-by: Patrick Steinhardt <ps@pks.im>
-> ---
->  SoC-2024-Microprojects.md | 5 ++++-
->  1 file changed, 4 insertions(+), 1 deletion(-)
->
-> diff --git a/SoC-2024-Microprojects.md b/SoC-2024-Microprojects.md
-> index 644c0a6..782441f 100644
-> --- a/SoC-2024-Microprojects.md
-> +++ b/SoC-2024-Microprojects.md
-> @@ -41,7 +41,10 @@ to search, so that we can remove this microproject idea.
->  Find one test script that verifies the presence/absence of
->  files/directories with 'test -(e|f|d|...)' and replace them with the
->  appropriate `test_path_is_file`, `test_path_is_dir`, etc. helper
-> -functions.
-> +functions. Note that this conversion does not directly apply to control
-> +flow constructs like `if test -e ./path; then ...; fi` because the
-> +replacements are intended to assert the condition instead of merely
-> +testing for it.
+Thanks,
+Vincenzo
 
-Thanks for picking it up.  Of course there is one case in which we
-should use test_path_* helpers to replace such an if...then...fi
-construct; e.g., c431a235 (t9146: replace test -d/-e/-f with
-appropriate test_path_is_* function, 2024-02-14) did exactly that.
+Changes in V2:
+* Fixed commit message[2].
+Changes in V3:
+* Fixed commit message[3].
 
-I am not sure how best to express that in the already crowded
-description above, though.  Rewriting the existing test this way
+[1] https://lore.kernel.org/git/xmqqy1bo5k5h.fsf@gitster.g/
+[2] https://lore.kernel.org/git/20240219172214.7644-1-vincenzo.mezzela@gmail.com/
+[1] https://lore.kernel.org/git/ZeWVB5uKLONfp6cO@tanuki/
 
-	Find one test script that uses 'test [!] -(e|f|d|...)' to
-	assert the presence/absense of files/directories to make the
-	test fail directly with the exit status of such "test"
-	commands, and replace them with the appropriate helper
-	functions like `test_path_is_file`, that give more
-	informative error messages when they fail.
+Vincenzo Mezzela (1):
+  t7301: use test_path_is_(missing|file)
 
-would exclude use of "test -e" as a conditional in control statements,
-so we could mention what c431a235 did as an exception to the rule,
-perhaps like
+ t/t7301-clean-interactive.sh | 490 +++++++++++++++++------------------
+ 1 file changed, 245 insertions(+), 245 deletions(-)
 
-	Note that the above excludes "test -f" and friends used as a
-	condition in control statements such as "if test -e path
-	...", but as an exception, if such a "if" statement just
-	open-codes what these helpers do, replacing it is warranted.
+-- 
+2.34.1
 
-But that does not read very well, even to myself.  Sigh....
-
-Thanks.
