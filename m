@@ -1,96 +1,101 @@
-Received: from mail-pl1-f171.google.com (mail-pl1-f171.google.com [209.85.214.171])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D2386216C
-	for <git@vger.kernel.org>; Mon,  4 Mar 2024 18:57:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A798048CC7
+	for <git@vger.kernel.org>; Mon,  4 Mar 2024 19:03:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709578665; cv=none; b=W6oWwryQIdZqAr1Vx336xJo1WQBlVfEwwocO/S6gALnbnprt8R3FbUItj72zwovAHEh3g1mA+LfqNvfc3pCxvdmjeRnpjP14mRh15zjEXcIhiBXWUuTCVthClpLoKLtvoJuRii7MDyGIBd2EeeQg0nSqK3B4tuxgQUiiTqCfzls=
+	t=1709578998; cv=none; b=LrZ2friZ7KX0B3lEYSHWzYoNSzE3OBwKeUkXLMF1vpofmUOZK21drPE4kML5LUuYHUTh42RGosuWmaIOuA+g5SNPyqEQUDskXLHxBpOvosVc7tndzHxe3iGFEi65RjleoGYn04pQKpSmiey/Bx+BIdXqn3gnaOjiP03Rcvo3BpQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709578665; c=relaxed/simple;
-	bh=3r9uGlpCgQ8b6m65sWKadhx5SVDz1zJoVUqBl2FLdYQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=STlTx4fuYAKO/eAfdnJpsGYxuFPzU3ifyw0797jUGoQF8yEiP/P10ur1ZzJ72wwxC4nNxkXQh+qYQ9bgtXsKGFHbB+1ItxlZC4Ecbrpqq/4eOqS6vNbjjwlLUjLqKX6qopAT4cUVzCGBuAfVEipW0RrA5MigiOXlacbsb6ka8EI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=uQ5m7fhI; arc=none smtp.client-ip=209.85.214.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	s=arc-20240116; t=1709578998; c=relaxed/simple;
+	bh=6RUBVjLcM+tvnprk/p6FO5KcwMTBdBIeennnA24qeBo=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=m9NEqzhI+b1vjaj+zbQTmFuEcS5xpVhbV4OrK9pOzcgvdvDOrHtSCO8HegwBsH3t5OKAd29nGG1vwWtDoHFOYJl0D3o08W/5eZLZ+uklUcnKYPHNavJGhauVWFw15k47+ee0C3Or8UgsvVAz7HOEPHZMd++CuOphojvDrSJEM7I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=kZAorwfs; arc=none smtp.client-ip=64.147.108.71
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="uQ5m7fhI"
-Received: by mail-pl1-f171.google.com with SMTP id d9443c01a7336-1dba177c596so29772025ad.0
-        for <git@vger.kernel.org>; Mon, 04 Mar 2024 10:57:43 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1709578663; x=1710183463; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references
-         :mail-followup-to:message-id:subject:cc:to:from:date:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=3TXBSLenlj/Jg4hq2tvwL9BGjHfB9i9o2GNMuPb2y/k=;
-        b=uQ5m7fhIEavwMoJF6VzZv20q7yNqe6N+DgzAwwMdLBTNQF/deCSiGRUXh8ql63F8Gx
-         +9kj6Sfyj4qjYcreqXA/OHuI0WkH6qcwOUOCqzJMLbudF2gHsP8A6KEzKG8FTXHgeHnD
-         6bVgCP48k/Zu/tPVP6y1qnjBDeWeS4qYDM6T2ASqWaaM4y84F0a9OlDyUdfhTvTxjIhL
-         QGg3y6MsgRh2jJGy2mTLuX6zsifgH/nXmj3Qb+3kVWHr/MaFSCdZRGWkG/bh6i8uHFLD
-         CYmQE/2kOxJMbgg1EA2Jh6ximZFEbpHzknV/WqQPGwFL0vPbvPJPaNgp+E5ontg5Xsau
-         Q+MQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1709578663; x=1710183463;
-        h=in-reply-to:content-disposition:mime-version:references
-         :mail-followup-to:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=3TXBSLenlj/Jg4hq2tvwL9BGjHfB9i9o2GNMuPb2y/k=;
-        b=WnfGkAcmwNpQ1EA3/hqE3SVanwPMsB6eyrk4ctZSy7XhBQeIsTnKC4Oyq7tV4LYvS7
-         hj5KJ1wq1ccgWwu3TmmIO9acodYqtx875yzpJDyHiMevEZkoyRVXUdy+UpYhguZrA/b9
-         AL/ikk29ECGiWsh2DRK1Rp4CPzyGTd8a+RFIXvTHi8e9ZLSXWuLex//YzqbVEi2g+kmq
-         5dZeJnxIJQUH44h1gClfpQXu2O4BW8L08ne8QyibtmMyTykVA29pH0X6GxOlAT3daX4a
-         3gAprO3FPnxnuzz6Uu35fm8zs73qDXHnSXEqzr6Le9SmVT6qPbp0KbUCqa7J5tsWx53I
-         vo/Q==
-X-Gm-Message-State: AOJu0Yyobn52yFndOB63RCAlu/T7G1PnVE0vXAENRpmr9kM0pZburVco
-	1TQUs64UGrdUxXdxwr7kNfV+jysE7i13r1/vlXgDaqXYd5HmxmyX4UsBuTBzLtByV5RBGSA9v6+
-	n6w==
-X-Google-Smtp-Source: AGHT+IGCBJfW/kmr56OaocdrZQRty5Tr9z1qWmvCIVsO4cIVm5rssiqCvkN+Hh5JGDl/4kLOL32xeQ==
-X-Received: by 2002:a17:903:2344:b0:1dc:6073:a3a4 with SMTP id c4-20020a170903234400b001dc6073a3a4mr431624plh.3.1709578663361;
-        Mon, 04 Mar 2024 10:57:43 -0800 (PST)
-Received: from google.com ([2620:15c:2d3:204:3ccb:2f09:89c5:5915])
-        by smtp.gmail.com with ESMTPSA id n8-20020a170902d2c800b001d94678a76csm8874557plc.117.2024.03.04.10.57.42
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 04 Mar 2024 10:57:42 -0800 (PST)
-Date: Mon, 4 Mar 2024 10:57:38 -0800
-From: Josh Steadmon <steadmon@google.com>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 1/2] fuzz: fix fuzz test build rules
-Message-ID: <ZeYZolhLCftYALYU@google.com>
-Mail-Followup-To: Josh Steadmon <steadmon@google.com>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-References: <cover.1705700054.git.steadmon@google.com>
- <9332e225e44b29be25d10229b05f0b9775b85568.1705700054.git.steadmon@google.com>
- <xmqqcytxhrgs.fsf@gitster.g>
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="kZAorwfs"
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 672E11F39D5;
+	Mon,  4 Mar 2024 14:03:15 -0500 (EST)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=6RUBVjLcM+tvnprk/p6FO5KcwMTBdBIeennnA2
+	4qeBo=; b=kZAorwfsgCLtlkCUVspZC0iFSfQUVI6r/D5xZrtMp5RK8UlCYBkMyA
+	82w0BTIzKoZBGkXgf11qTT2wnej4LDbk4xj5ZW85Z1Z/tXOKjWup5TMHu17+tVMg
+	FLmbr5NkX6IKFCFKe/y6T3e2BPPX/h5I24xX1Tul3QpfnVhAAteHY=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 5DCD01F39D4;
+	Mon,  4 Mar 2024 14:03:15 -0500 (EST)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.176.30])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id B835D1F39D3;
+	Mon,  4 Mar 2024 14:03:14 -0500 (EST)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Sergey Organov <sorganov@gmail.com>
+Cc: git@vger.kernel.org,  =?utf-8?Q?Jean-No=C3=ABl?= AVILA
+ <avila.jn@gmail.com>,  "Kristoffer
+ Haugsbakk" <code@khaugsbakk.name>
+Subject: Re: [PATCH v2] clean: improve -n and -f implementation and
+ documentation
+In-Reply-To: <87h6hl96z7.fsf@osv.gnss.ru> (Sergey Organov's message of "Mon,
+	04 Mar 2024 21:39:40 +0300")
+References: <7le6ziqzb.fsf_-_@osv.gnss.ru>
+	<20240303220600.2491792-1-gitster@pobox.com>
+	<87h6hl96z7.fsf@osv.gnss.ru>
+Date: Mon, 04 Mar 2024 11:03:13 -0800
+Message-ID: <xmqqo7btom4u.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqcytxhrgs.fsf@gitster.g>
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ DA7E98DA-DA59-11EE-BE7C-25B3960A682E-77302942!pb-smtp2.pobox.com
 
-On 2024.01.19 14:46, Junio C Hamano wrote:
-> Josh Steadmon <steadmon@google.com> writes:
-> 
-> > @@ -762,7 +763,7 @@ fuzz-objs: $(FUZZ_OBJS)
-> >  # Always build fuzz objects even if not testing, to prevent bit-rot.
-> >  all:: $(FUZZ_OBJS)
-> 
-> So, this is what you referred to in your proposed log message.  We
-> do build objects to prevent bit-rot, but we do not link, so it is
-> merely half a protection.
-> 
-> > ...
-> >  fuzz-all: $(FUZZ_PROGRAMS)
-> 
-> But there is this target.  I wonder if it makes it even better to
-> update the "always build fuzz objects" one?  Given that some folks
-> may not have the necessary clang toochain for linking, it may
-> probably be a bit too much, perhaps?
+Sergey Organov <sorganov@gmail.com> writes:
 
-Indeed, this would have caught the previous common-main issue. I'll send
-a followup to fix this, thanks for the suggestion!
+>> The reason for the behaviour can be explained this way:
+>>
+>>  * "git clean" (with neither -i nor -n.  The user wants the default
+>>    mode that has no built-in protection will be stopped without -f.
+>>
+>>  * "git clean -n".  The user wants the dry-run mode that has its own
+>>    protection, i.e. being always no-op to the files, so there is no
+>>    need to fail here for the lack of "-f".
+>>
+>>  * "git clean --interactive".  The user wants the interactive mode
+>>    that has its own protection, i.e. giving the end-user a chance to
+>>    say "oh, I didn't mean to remove these files, 'q'uit from this
+>>    mistake", so there is no need to fail here for the lack of "-f".
+>
+> Well, if we remove -i from error message as well, then yes, this makes
+> sense.
+> ...
+> I then suggest to consider to remove mention of -i from
+> clean.requireForce description as well.
+
+The follow-up patch you just reviewed in the other thread does
+exactly that.
+
+This is a tangent, but before finalizing the version that complains
+"clean.requireForce is in effect and you did not give me -f" without
+mentioning "-i" or "-n", I asked gemini.google.com to proofread the
+patch and and one of its suggestion was to use this:
+
+    "clean.requireForce is true.  Use -f to override, or consider
+    using -n (dry-run) or -i (interactive) for a safer workflow."
+
+as a possibly cleaner message.  It is the opposite of what both of
+us concluded to be good in this exchange, but in some sense, it does
+sound more helpful to end users, which I somehow found amusing.
+
+
