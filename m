@@ -1,190 +1,537 @@
-Received: from mx0b-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com [148.163.158.5])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f43.google.com (mail-wm1-f43.google.com [209.85.128.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 014A7539E
-	for <git@vger.kernel.org>; Mon,  4 Mar 2024 04:19:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=148.163.158.5
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709525997; cv=fail; b=ZF+WW/fjYGjPizfbSEkzvYQF4loQhX5A1d+6wWfw6bIlpPHp6OD+hlrIXPoKYDalXZ8tgOKy2W0Em7ywqei3BfRIW3HQgkRIULnhYc/4iA/8rXrNt7P3PqdW9SGz/cLynISyysNQMxHneTBhOHlodmW6CdwPcdGNgrqWgrMgUKw=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709525997; c=relaxed/simple;
-	bh=8uzfOxRlefEO+Wvls0DrbCQ4U1Jl1lb/xhCVFYL2nDs=;
-	h=From:To:CC:Date:Message-ID:References:In-Reply-To:Content-Type:
-	 MIME-Version:Subject; b=S85loVMaZdnUnh+6OdjZ2AyDdrB3MrFbZy0NzvZXq/HkyVwT2xUPAiJQPA8OK2yB5X27YUivTKFEM4w7Xo9QI2yGPDnhj7X9Jov/9nF+AiLh03WAV1568AJTr/ZMa3qzNVEw3/ceC8tAxCjeJh6Qz2YjZatPaM0zzBNgQhK8dbg=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=ibm.com; spf=pass smtp.mailfrom=ibm.com; dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b=S4H0cV70; arc=fail smtp.client-ip=148.163.158.5
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=ibm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ibm.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 162DADF67
+	for <git@vger.kernel.org>; Mon,  4 Mar 2024 06:00:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.43
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1709532024; cv=none; b=JP/E0HpEepIz5QhyyokhHCo4Re7f1sBfJrGfq1pmusGsAJzEG6zCYwWtJVgODRFfsd48wTIRkxGCZgaV1e1EQ7lRNFzOfw2PKx0RN+FcPjBDqoOuFmru+aSTpU9YvxANFGjUZXqmgB2m0zMMqGcXIUsdMi6wnNdchOM53FHbJug=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1709532024; c=relaxed/simple;
+	bh=cnKWScpW6Fu0CvPSDFG9dc+j06VwApodkAmWAHT/mK4=;
+	h=Message-ID:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=ooo2EIaS1dWTy+3kPv0QmwRPbZbmTLbwZPXbAZ6tbBho+ffB27yi/ffddVeu48gEqJAQ0c6/x1idw25fvK9qoGDmBW3qjqrL5Eh4AaPxjyalFL7Qy+cOiFoGyyrATYnsAyZBv231KgTMsxF3DQo9WWfhhY13FiRJ2V8i48ePZaY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CNegqcs0; arc=none smtp.client-ip=209.85.128.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b="S4H0cV70"
-Received: from pps.filterd (m0353722.ppops.net [127.0.0.1])
-	by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 4244Hcxx021858;
-	Mon, 4 Mar 2024 04:19:52 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=from : to : cc : date :
- message-id : references : in-reply-to : content-type : content-id :
- content-transfer-encoding : mime-version : subject; s=pp1;
- bh=8uzfOxRlefEO+Wvls0DrbCQ4U1Jl1lb/xhCVFYL2nDs=;
- b=S4H0cV70iLGgXuf6B6vo2XmNw6bVJz9ZFTKoubHoByiJvKHLUMC8qrURP1Hf8OeUEySC
- QqQv2VcefM1odpcezEQqJm1/TkWig09diDKwi52dadQk0Y/sgGLgaWi4kdLaPuXRR0cx
- EGvL+4Kq4ma1yxCLwNuBF+X/XwrDc2OjcLftJIUaPxJ+NgKneUyfdXvnucDSqRxEiScS
- iLv0Wd6exFx8QRbXNNv4qlNAvIezRnTdlnK2g+mh8UhEl3mWTWWX2nlR2GEJ+UCjkaFa
- d5YQyIB5pE8snLnaWWtOtYkufQ5UjXzP9BHr4VKP4Ni3HLxBxG5gZ4j6ARK2z+7b3HZ/ qg== 
-Received: from pps.reinject (localhost [127.0.0.1])
-	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3wn751r0xb-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 04 Mar 2024 04:19:51 +0000
-Received: from m0353722.ppops.net (m0353722.ppops.net [127.0.0.1])
-	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 4244Jp53026884;
-	Mon, 4 Mar 2024 04:19:51 GMT
-Received: from nam11-bn8-obe.outbound.protection.outlook.com (mail-bn8nam11lp2168.outbound.protection.outlook.com [104.47.58.168])
-	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3wn751r0x4-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 04 Mar 2024 04:19:51 +0000
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=G3yK33ZxmI2ZrJgs0aew7L4VN43jlYSmLKamD2Jx+xpXMEl0da3AMz17Tcx8MjIlFDzYhEB78GZkPvcKfpOgiRhicwsYtr697sIO9ji2zzMzfZGI2YYspPcnVD8TF7cfmP32dVzpnbweI6ouwiKM9ZguZhmSHHipOCYrDvlBJ5iLbTXZ0fsDTJO/YRk5aDmzUt5vf+x2OhQ9euLS6QpSwx4oMvpyvJVM6VTKPoLI/UqR6sb0EvmmN9aOqf8JFq0re7LT+9Esh24ey+q61WXITaqPlLeeB85ol5XWVTf+WRjYPDWnMbcGvESFh1dI6UHTO6H30YaZRot6yr0ZLkCGbA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=8uzfOxRlefEO+Wvls0DrbCQ4U1Jl1lb/xhCVFYL2nDs=;
- b=G2rHseGnzUgZwNomPsVhPxmAmPU/ranE73h1rJSnhQF5I3fZOVx9ejYSh2rJsGZfjYVca+vMnlbpUUNvEQ/bfqNm+Bszd5xXBDZpHLwmij/N3Nl8KiSujfw/QNzXxSU7skq03p/vTMAUjF71Qxn1EJDp2YjfblyyQAbvu7C2gKn/xt7pEozE2D+b5fIf3r6vCdyvRw56sNiupdiVGhce+Z4LB7ZQT1U4JhuZw1TGCCH+1JIXH9d6woUTqfZptSCBxouZwmqm9T8GI5OIUCCkc8CsU3LcNoM15XSanAJCmoMDX94Cn2sRwzxDC4HyVWrVZ3+O7KxIJ2GgVEoP2G6J+w==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=ibm.com; dmarc=pass action=none header.from=ibm.com; dkim=pass
- header.d=ibm.com; arc=none
-Received: from DS0PR15MB5446.namprd15.prod.outlook.com (2603:10b6:8:ca::7) by
- MW4PR15MB4459.namprd15.prod.outlook.com (2603:10b6:303:104::8) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.7339.38; Mon, 4 Mar 2024 04:19:49 +0000
-Received: from DS0PR15MB5446.namprd15.prod.outlook.com
- ([fe80::845:c5fb:6101:b56a]) by DS0PR15MB5446.namprd15.prod.outlook.com
- ([fe80::845:c5fb:6101:b56a%7]) with mapi id 15.20.7339.035; Mon, 4 Mar 2024
- 04:19:49 +0000
-From: Haritha D <Harithamma.D@ibm.com>
-To: "rsbecker@nexbridge.com" <rsbecker@nexbridge.com>,
-        'Junio C Hamano'
-	<gitster@pobox.com>
-CC: "git@vger.kernel.org" <git@vger.kernel.org>,
-        'Kristoffer Haugsbakk'
-	<code@khaugsbakk.name>
-Thread-Topic: [EXTERNAL] RE: [PATCH v3] build: support z/OS (OS/390).
-Thread-Index: AQHaaNuoE+M1pSFCDky4b8aLMCgY57Ei+sKAgAA8bweAAAKlgIAEJwqA
-Date: Mon, 4 Mar 2024 04:19:49 +0000
-Message-ID: <9BAA31E9-858B-4F6F-9334-316C428EEE32@ibm.com>
-References: <pull.1663.v2.git.git.1708660111.gitgitgadget@gmail.com>
- <pull.1663.v3.git.git.1708841439516.gitgitgadget@gmail.com>
- <xmqq7circevo.fsf@gitster.g> <B3775704-6FCE-4994-8682-309D521FD2CB@ibm.com>
- <xmqqbk7x6cox.fsf@gitster.g> <04df01da6c05$caaa5dd0$5fff1970$@nexbridge.com>
-In-Reply-To: <04df01da6c05$caaa5dd0$5fff1970$@nexbridge.com>
-Accept-Language: en-IN, en-US
-Content-Language: en-GB
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: DS0PR15MB5446:EE_|MW4PR15MB4459:EE_
-x-ms-office365-filtering-correlation-id: 824158df-f80d-4737-b5e6-08dc3c02552c
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: 
- xL84Cp8YFFRkmBX/3hSx4gKZPcfXsZF5/dsrxaJqs4l4tgmqhh6EH3AzHRGyJP8KZ0nMh8C+cZ2WMtEkfJ87teBpGNsPoSEthkG+AQWJ14veCSlS96rlCcoNXUgT7TsllNZ6JWugO6nRKaosgUE44UY8E9IlWIWi81NUVM421F7I6yY1D/24Ml5vc3DXZLC5kKNxelmw0UBUl6NOB27INPtlGFd+/hmmrbF43jLfuVb6T6iitp2wSdmD2HyAP0+krGvYc/jXlCynWjjxqDvlJWme6g8sK+CPV9c6CTizG85Mg7WsxR8ZSdBt51WkWtRz/AlZvQqDu05iV9uWlIgKgwmyHUY+ZID2dl0bzGJfT2Z4M+y7nMopRrfk5Iovxi8riUbPZF0no9uqK2ORi9EM49XtUqkZ56jOp9b76r9PwYYTIVEwlFa/Sz4NcfAhLp+aaJ0L4g/DJh42H0OQRabojYsmIG2ulAJO+1kGVzlRfFSrZxXWeXWU2gyZHMD7HSMAmBEjFYq8tC92Xvbg4CSh5m0eKeqDv+lMFdpVsMUt8zKPaWtWLWAG29eewobpgnKVhyNmc1ZzxQVmND0Q429nTy1dJkOEcomM6tMnnXpYzc7e3BfNZh+F8WOKVAekPDPUHqQqHkvUiXT0Lo3acYT0RF9VfNReKizYexv7HtFzcgBhpW2vXr9KHfH//bAdBsQ2bXNJoDlbJPoUk6OclXQ9xfbivZJJgqbfqBukMGlSAn0=
-x-forefront-antispam-report: 
- CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DS0PR15MB5446.namprd15.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230031)(376005)(38070700009);DIR:OUT;SFP:1101;
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: 
- =?utf-8?B?TjhUd3VKYlBxRXhVSWtWRllJSVdZdHgybVl5WjdXVEt6TEZsTGpRSEE4dkpN?=
- =?utf-8?B?cmVLbENMekJ2bnZEQ2FSb04rOXVLL1J4WE1KS1VkdFZIRTZLQUQxekVkazJD?=
- =?utf-8?B?VkNxMVRINStDMXk1ckNLeVZJc28rR2VSRWpxdmVITVdFSm9ReXBUenNRUjVj?=
- =?utf-8?B?QThKU3pudk9HRXNheWVnT2pnWndPUVprUjFISnBycDhuT3pKRWViUUZuWmRn?=
- =?utf-8?B?TEZTSDN5Zm9ITmlrUjR3TzJGZ0llcTZ4dXVEK2JPT05Tc1lqYS8zQ0luNCti?=
- =?utf-8?B?eVptSW92ak5yem41RC9LbFIzdWxQV0FwQ1hEUWNFbGFxNk10K0pIcEVTeUlE?=
- =?utf-8?B?ZEVrSXg2QVMrTXFwU0lPTGlnMktsbkxwdWpLeTIwcmw5UHEvM2txaHdxWWth?=
- =?utf-8?B?V2p3S2RMYTJYVEE2RUpXaFh4bkhud0lualFiYnhXU1dyT3hqUTNQMXBlbCty?=
- =?utf-8?B?KzgzaEMxUk9IeE50NzhPR1VsZGpRK1lwUWJOU0IzS3NYZEZxZmkvODFiWUpy?=
- =?utf-8?B?Y21zSGdqbE9QcWdrMmJjZU9nS0ViNFNlamFtcldaeEl6czVUVG51L1NSSFUr?=
- =?utf-8?B?L2VxU0lSUW01RXF0VkpSZ0FUYTNPT2RXU2g0eU5iY3VySWlwY2thZTNjM3FF?=
- =?utf-8?B?bDRJc3NzTDlQWkhUaVlaSGhIOTBCaVVaald5c1dmZk0zTklsS1RWU3FkTlYr?=
- =?utf-8?B?RUZkMnpDbUpRNVRmV2ZXb0N3ejVCVFRiRXlBaEFtM21QWXBuRjFjVm8vbzFT?=
- =?utf-8?B?TUJBT05yWUdqczN6MzBzS3kxeDdjSXNpZlJyV2gycXJCT3ZmUEpMZEsvbW40?=
- =?utf-8?B?UXlGcDgwZmdFMUJrNE9iYlc5LzJTUVowVVYwR3J0VEJMU2lwcWJRZGlXK2pQ?=
- =?utf-8?B?Yk5HVkVITnNZM1hKdGZEb2pGcENnRkUxaWI0TkxjRHlZeWl6dVBrL3pXQ0p6?=
- =?utf-8?B?ZTh0MkIyUU45ZHVhVVdqa0dZRGdMdERlSUdUblMwVlMrcms1L3pEZFY0MWlT?=
- =?utf-8?B?QWt0YVYwY01sMHd4RWVTNVVjNW0wbUllckpiNEJNOEdubkxBOVU2akUyeUpz?=
- =?utf-8?B?V1Nnbi8rT3h1c2llZjFzd2k2SGdOZHRJSklORm5pOFRHaTVlMU9tWGNyYnIw?=
- =?utf-8?B?N3hhOHc5MHJVZ2ZkSUg2R0RBeU54cXpacVJUSFlpM2xMQUlJaFl3UzRTN0hz?=
- =?utf-8?B?T05tNE5vQVBvOGRsa2RLc3hjRWRIbGdhZCt1N1BJQzV1NkM0WmprdjR1RDJG?=
- =?utf-8?B?Y2RHai9sOExwWk5DNXM1cHNHdWcrU0t1d042blN2bjFWZjR0aWFDZHZOUVc3?=
- =?utf-8?B?aWRFUXp0M3VGVnY5Nkp0K01NVGpVcHh5N3FGRDVhSjVZeTRBV3JYT0tGcjRi?=
- =?utf-8?B?UG1EWUFadUp0ZVlZajl4eEJRTVhxcThBaEpKRm12citKWGk1andnVFNaWDhR?=
- =?utf-8?B?OEFoT2R5dlJURlhLcTJLVmg4aE5sYmFRRWNhUVVYUVR5ZmM5eUVHMmFrTXMx?=
- =?utf-8?B?WVRyanV0WE9VTzlVNldydkt4RXdKV1RHU29LNWJZa2ZKOTNGN0tGanNYQTFK?=
- =?utf-8?B?d2tpM2VkczNrVDNXbWdla2g3MnNVdjBlYmhTRmRjelVKVmI0S2FXcHBtYXlX?=
- =?utf-8?B?NHJ0MHBZcUhJdEI2SDVDajFyV2pvckRjc2sydHpSQm83QWwzdEJ5dGx0dk4r?=
- =?utf-8?B?YmRybHkzblVNRTFTT0tsSHJPWU9yQnJPYjRjSXdnSVAyNERkZzRYaHQyVnFI?=
- =?utf-8?B?Ykh3dUdzMVJSZ01hSFJWSXhEams5SkgzcVQ5RFE0WStpL2NhTm9JWmVKUEhq?=
- =?utf-8?B?WWcya2ZRTnk5c2dkRzdSQmZWS3lrQ0lkbkg4YjUwTUN5OHoySXBZZVltbkFU?=
- =?utf-8?B?bEg3WWgzWmxnR2dRNTIxQmk5bW5DV1ZkTFl1NkNXRFpRU2V4SWNycytRWnFN?=
- =?utf-8?B?WVdDOXFNeEJ3bk9LNVh3cC9UODU4OTdmSkEySm9BbTRvMXZ1WGx2eDkwQzVZ?=
- =?utf-8?B?WjZJckFIOWxRMjh1VUFjWG5EVFVPWjBCNm81ZmFIdWNhVXp1czJEclltVkNa?=
- =?utf-8?B?R2JmYUxZRXhUSDlEek9RZDdzT3B0SExUUzZBL2dlNVY2blFKYU4zc3lMS0dh?=
- =?utf-8?B?V0FOVmJ6SmVCUGFLbUNRMGFZQ3RkSHBFWm9PSE9vQmdnL0ZJMGhwV2NuQkZS?=
- =?utf-8?Q?Af+rRyQ9pP18nZVYeQ/xpBM=3D?=
-Content-Type: text/plain; charset="utf-8"
-Content-ID: <E7433AF36FBF664C9CF6BB2DF603E16C@namprd15.prod.outlook.com>
-X-OriginatorOrg: ibm.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: DS0PR15MB5446.namprd15.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 824158df-f80d-4737-b5e6-08dc3c02552c
-X-MS-Exchange-CrossTenant-originalarrivaltime: 04 Mar 2024 04:19:49.6050
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: fcf67057-50c9-4ad4-98f3-ffca64add9e9
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: xzHPYK5fupemjUpWBTdjIg6eFVYhGmw5+HYZFROUkMy/4nKeEY0LhtPrkZp6CkHdSYi2PJaZA+JSG2S1mQVYvw==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MW4PR15MB4459
-X-Proofpoint-ORIG-GUID: 2Nb_--ZRc9Tb7ZrOIAcsSf1fhFp5AUtS
-X-Proofpoint-GUID: -uORlKnDe4Em3KCZN7lh_Y56dJMGwUX2
-Content-Transfer-Encoding: base64
-X-Proofpoint-UnRewURL: 0 URL was un-rewritten
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CNegqcs0"
+Received: by mail-wm1-f43.google.com with SMTP id 5b1f17b1804b1-412e4619e5eso2612345e9.2
+        for <git@vger.kernel.org>; Sun, 03 Mar 2024 22:00:21 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1709532019; x=1710136819; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=uVtK9y5EkN2V8CRL9zs2D5SzmB46KhBWY6jC+OwO8P8=;
+        b=CNegqcs0SiHwl7K19P0VdP1zMXBUudW0vJu2v7RTNr7BdEjIL74qmLKJA5bJQk0r4u
+         8CzEapYJb+ETS8XYzNT1wBpuFSTp6vK+xWFRPlvvSCPzMCZ/WcmeUIm/PmS9F8KWVbAl
+         rshbghOD5wnBIxxNuQD4GLuNnG+fxKbPkAFNITByfn7vcyQ9kxa8Pw7aIhq8cLaOnl5f
+         ZdnOcDYCabegF9tdPzkVFkJ1lilmd+ab/auH624eAIpA5bkZGhIGB2sjf4SmhlMkLEFo
+         6y058bMQgjazZWY1SYVLjtX2lG6RMZ1Wn3SyM7MAyS7uS42sv22Jja4hmBuKBmqDWSmO
+         6shQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1709532019; x=1710136819;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=uVtK9y5EkN2V8CRL9zs2D5SzmB46KhBWY6jC+OwO8P8=;
+        b=L5Wosm28nJBjIbhAG4N0S3eaM0CT0C59J3/NcK+FuXas+Iv2+O9aPUKLyfdu5Mnf7q
+         Ld8LozFwiEOUcBfHkS5R4h9lGJy+veZbUWRMck5nPMMpLzJAFmDY6Yqkbw6QLU68BhW8
+         jy5dDeiRQKdgQpKQUSjdzNz4kO6gCIihkgRHdmFH8ny3CVtYY4y/ESbft5UfZezd3YQ3
+         UyDrdJDWNCUGbBvVoxz+NH7eQi1tlohTsz4SEk/8YcRCigqGsEX/Bx40h2KY9huk0utG
+         dyO6/2jYA61zhMeL27EYgELY1Dqn8pOJs1tGRIiasbbNSwGFpKKFQbXbul0OANcwT9Gm
+         udbA==
+X-Gm-Message-State: AOJu0YyyN93r0d1agYF0hOWjMeksqeYAByqpMf3ByHDSFq4rw0msAmu3
+	x52Vz0Xv8RI6uiNGWJOBn9V61oY6etP1xncz859m4DQXXHhBvcDwRnFV0lTt
+X-Google-Smtp-Source: AGHT+IFqDvK7SJ9wtRW0P3MlhRViHz+p9vlqFr2kgs1KMm4MQF67tIuLWZyyGA/XfLFQO7PDx0/9tw==
+X-Received: by 2002:a05:600c:4e0a:b0:412:e3a3:6e48 with SMTP id b10-20020a05600c4e0a00b00412e3a36e48mr871428wmq.24.1709532019218;
+        Sun, 03 Mar 2024 22:00:19 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id o39-20020a05600c512700b00412d60cb914sm6594567wms.5.2024.03.03.22.00.18
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 03 Mar 2024 22:00:18 -0800 (PST)
+Message-ID: <pull.1681.git.1709532018372.gitgitgadget@gmail.com>
+From: "Ralph Seichter via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Mon, 04 Mar 2024 06:00:17 +0000
+Subject: [PATCH] Allow git-config to append a comment
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Subject: RE: [PATCH v3] build: support z/OS (OS/390).
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2024-03-04_02,2024-03-01_03,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=999 adultscore=0
- phishscore=0 clxscore=1015 malwarescore=0 priorityscore=1501
- suspectscore=0 bulkscore=0 spamscore=0 impostorscore=0 mlxscore=0
- lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2311290000 definitions=main-2403040028
+To: git@vger.kernel.org
+Cc: Ralph Seichter <github@seichter.de>,
+    Ralph Seichter <github@seichter.de>
 
-TG9va3MgbGlrZSAsIEkgZG8gbm90IGhhdmUgc3VmZmljaWVudCBwZXJtaXNzaW9ucyB0byByZXJ1
-biB0aGUgdGVzdHMuIEhvdyBkbyBJIHByb2NlZWQ/DQoNClBsZWFzZSBzdWdnZXN0Lg0KIA0KVGhh
-bmsgeW91DQpIYXJpdGhhDQoNCu+7v09uIDAxLzAzLzI0LCAxMTo1NSBQTSwgInJzYmVja2VyQG5l
-eGJyaWRnZS5jb20gPG1haWx0bzpyc2JlY2tlckBuZXhicmlkZ2UuY29tPiIgPHJzYmVja2VyQG5l
-eGJyaWRnZS5jb20gPG1haWx0bzpyc2JlY2tlckBuZXhicmlkZ2UuY29tPj4gd3JvdGU6DQoNCg0K
-T24gRnJpZGF5LCBNYXJjaCAxLCAyMDI0IDE6MTUgUE0sIEp1bmlvIEMgSGFtYW5vIHdyb3RlOg0K
-Pkhhcml0aGEgRCA8SGFyaXRoYW1tYS5EQGlibS5jb20gPG1haWx0bzpIYXJpdGhhbW1hLkRAaWJt
-LmNvbT4+IHdyaXRlczoNCj4NCj4+IFRoZSB3aW4gdGVzdCg3KSB0ZXN0IGNhc2UgZmFpbGVkIHN0
-YXRpbmcgdGhlIHJlYXNvbiBhcyAiVGhlIE9wZXJhdGlvbg0KPj4gY2FuY2VsbGVkIi4gSSBzYXcg
-dGhhdCBpdCBmYWlsZWQgYWZ0ZXIgNSBob3VycyA1OSBtaW51dGVzIG9mIHJ1bm5pbmcNCj4+IHRo
-ZSB0ZXN0IGNhc2VzKGJ1aWxkKS4gSG93IGRvIEkgaGFuZGxlIHRoaXM/DQo+DQo+VGhvc2UgIndp
-biB0ZXN0IChuKSIsIGF0IGxlYXN0IHNvbWUgb2YgdGhlbSwgc2VlbSB0byBoYXZlIGJlZW4gc29t
-ZXdoYXQNCmZsYWt5IFsqMSpdLiBJZiB5b3UgYXJlIGNlcnRhaW4geW91IGRpZCBub3QgYnJlYWsg
-dGhlbSB3aXRoDQo+eW91ciBjaGFuZ2UsIHlvdSBkbyBub3QgaGF2ZSB0byBmaXggdGhlbSB5b3Vy
-c2VsZi4NCj4NCj5JIGFtIGEgd3JvbmcgcGVyc29uIHRvIGFzayBob3cgdGhlIHRlc3QgZmFpbHVy
-ZSB0aGF0IG1heSBbKjIqXSBibG9jayBHR0cNCnN1Ym1pc3Npb24gY2FuIGJlIGNpcmN1bXZlbnRl
-ZCwgYXMgSSBhbSBub3QgaW52b2x2ZWQgaW4gdGhhdA0KPm1hY2hpbmVyeSBhdCBhbGwuDQo+DQo+
-VGhhbmtzLg0KPg0KPg0KPltGb290bm90ZXNdDQo+DQo+KjEqIEFsc28gSSd2ZSBzZWVuIG9zeC1j
-bGFuZyBqb2IgdGltZS1vdXQgZnJvbSB0aW1lIHRvIHRpbWUsIHdpdGhvdXQNCj4gZmFpbGluZyBh
-bnkgc3BlY2lmaWMgdGVzdC4gUmUtcnVubmluZyBmYWlsZWQgam9icyBmcm9tIHRoZSBtZW51DQo+
-IG9mdGVuIG1ha2UgdGhlbSBwYXNzLCB3aGljaCBpcyB3aHkgSSBzYWlkICJzb21ld2hhdCBmbGFr
-eSIuDQo+DQo+KjIqIEkgZG8gbm90IGV2ZW4ga25vdyBpZiBHR0cgcmVmdXNlcyB0byBzdWJtaXQg
-YSBzZXJpZXMgd2l0aCBhIHRlc3QNCj4gZmFpbHVyZSwgbGV0IGFsb25lIGlmIGl0IGFsbG93cyB0
-byBvdmVycmlkZSBzdWNoIGEgc2FmZXR5IGlmDQo+IGV4aXN0cy4NCg0KDQpXaGljaCB0ZXN0cyBo
-YXZlIGJlZW4gaGFuZ2luZyBvbiBTMzkwPyBXZSBoYXZlIG9jY2FzaW9uYWwgaGFuZ3Mgb24gTm9u
-U3RvcA0KdGhhdCBlbmQgdXAgYmVpbmcgYXR0cmlidXRlZCB0byBvdXIgQ0kgYnVpbGQgc3lzdGVt
-IG5vdCBzdXBwbHlpbmcgcGlwZXMNCnByb3Blcmx5IHRvIGdpdC4gSXQgd291bGQgYmUgaW50ZXJl
-c3RpbmcgaWYgdGhlIHNhbWUgdGVzdHMgYXJlIGhhdmluZyBpc3N1ZXMNCm9uIGRpZmZlcmVudCBw
-bGF0Zm9ybXMuDQotLVJhbmRhbGwNCg0KDQoNCg0KDQo=
+From: Ralph Seichter <github@seichter.de>
+
+Introduce the ability to append comments to modifications
+made using git-config. Example usage:
+
+  git config --comment "I changed this. --A. Script" \
+    --add safe.directory /home/alice/somerepo.git
+
+The implementation ensures that a # character is always
+prepended to the provided comment string.
+
+Signed-off-by: Ralph Seichter <github@seichter.de>
+---
+    Allow git-config to append a comment
+    
+    Introduce the ability to append comments to modifications made using
+    git-config. Example usage:
+    
+    git config --comment "I changed this. --A. Script" \
+      --add safe.directory /home/alice/somerepo.git
+    
+    
+    The implementation ensures that a # character is always prepended to the
+    provided comment string.
+
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1681%2Frseichter%2Fissue-1680-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1681/rseichter/issue-1680-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/1681
+
+ Documentation/git-config.txt | 10 +++++++---
+ builtin/config.c             | 21 ++++++++++++++-------
+ builtin/gc.c                 |  4 ++--
+ builtin/submodule--helper.c  |  2 +-
+ builtin/worktree.c           |  4 ++--
+ config.c                     | 21 +++++++++++++--------
+ config.h                     |  4 ++--
+ sequencer.c                  | 28 ++++++++++++++--------------
+ submodule-config.c           |  2 +-
+ submodule.c                  |  2 +-
+ t/t1300-config.sh            |  9 +++++++--
+ worktree.c                   |  4 ++--
+ 12 files changed, 66 insertions(+), 45 deletions(-)
+
+diff --git a/Documentation/git-config.txt b/Documentation/git-config.txt
+index dff39093b5e..ee8cd251b24 100644
+--- a/Documentation/git-config.txt
++++ b/Documentation/git-config.txt
+@@ -9,9 +9,9 @@ git-config - Get and set repository or global options
+ SYNOPSIS
+ --------
+ [verse]
+-'git config' [<file-option>] [--type=<type>] [--fixed-value] [--show-origin] [--show-scope] [-z|--null] <name> [<value> [<value-pattern>]]
+-'git config' [<file-option>] [--type=<type>] --add <name> <value>
+-'git config' [<file-option>] [--type=<type>] [--fixed-value] --replace-all <name> <value> [<value-pattern>]
++'git config' [<file-option>] [--type=<type>] [--comment=<value>] [--fixed-value] [--show-origin] [--show-scope] [-z|--null] <name> [<value> [<value-pattern>]]
++'git config' [<file-option>] [--type=<type>] [--comment=<value>] --add <name> <value>
++'git config' [<file-option>] [--type=<type>] [--comment=<value>] [--fixed-value] --replace-all <name> <value> [<value-pattern>]
+ 'git config' [<file-option>] [--type=<type>] [--show-origin] [--show-scope] [-z|--null] [--fixed-value] --get <name> [<value-pattern>]
+ 'git config' [<file-option>] [--type=<type>] [--show-origin] [--show-scope] [-z|--null] [--fixed-value] --get-all <name> [<value-pattern>]
+ 'git config' [<file-option>] [--type=<type>] [--show-origin] [--show-scope] [-z|--null] [--fixed-value] [--name-only] --get-regexp <name-regex> [<value-pattern>]
+@@ -87,6 +87,10 @@ OPTIONS
+ 	values.  This is the same as providing '^$' as the `value-pattern`
+ 	in `--replace-all`.
+ 
++--comment::
++	Append a comment to new or modified lines. A '#' character
++	will be automatically prepended to the value.
++
+ --get::
+ 	Get the value for a given key (optionally filtered by a regex
+ 	matching the value). Returns error code 1 if the key was not
+diff --git a/builtin/config.c b/builtin/config.c
+index b55bfae7d66..2aab3c0baf3 100644
+--- a/builtin/config.c
++++ b/builtin/config.c
+@@ -44,6 +44,7 @@ static struct config_options config_options;
+ static int show_origin;
+ static int show_scope;
+ static int fixed_value;
++static const char *comment;
+ 
+ #define ACTION_GET (1<<0)
+ #define ACTION_GET_ALL (1<<1)
+@@ -173,6 +174,7 @@ static struct option builtin_config_options[] = {
+ 	OPT_BOOL(0, "show-origin", &show_origin, N_("show origin of config (file, standard input, blob, command line)")),
+ 	OPT_BOOL(0, "show-scope", &show_scope, N_("show scope of config (worktree, local, global, system, command)")),
+ 	OPT_STRING(0, "default", &default_value, N_("value"), N_("with --get, use default value when missing entry")),
++	OPT_STRING(0, "comment", &comment, N_("value"), N_("human-readable comment string (# will be prepended automatically)")),
+ 	OPT_END(),
+ };
+ 
+@@ -797,6 +799,11 @@ int cmd_config(int argc, const char **argv, const char *prefix)
+ 		usage_builtin_config();
+ 	}
+ 
++	if (comment && !(actions & (ACTION_ADD|ACTION_SET|ACTION_SET_ALL|ACTION_REPLACE_ALL))) {
++		error(_("--comment is only applicable to add/set/replace operations"));
++		usage_builtin_config();
++	}
++
+ 	/* check usage of --fixed-value */
+ 	if (fixed_value) {
+ 		int allowed_usage = 0;
+@@ -880,7 +887,7 @@ int cmd_config(int argc, const char **argv, const char *prefix)
+ 		check_write();
+ 		check_argc(argc, 2, 2);
+ 		value = normalize_value(argv[0], argv[1], &default_kvi);
+-		ret = git_config_set_in_file_gently(given_config_source.file, argv[0], value);
++		ret = git_config_set_in_file_gently(given_config_source.file, argv[0], comment, value);
+ 		if (ret == CONFIG_NOTHING_SET)
+ 			error(_("cannot overwrite multiple values with a single value\n"
+ 			"       Use a regexp, --add or --replace-all to change %s."), argv[0]);
+@@ -891,7 +898,7 @@ int cmd_config(int argc, const char **argv, const char *prefix)
+ 		value = normalize_value(argv[0], argv[1], &default_kvi);
+ 		ret = git_config_set_multivar_in_file_gently(given_config_source.file,
+ 							     argv[0], value, argv[2],
+-							     flags);
++							     comment, flags);
+ 	}
+ 	else if (actions == ACTION_ADD) {
+ 		check_write();
+@@ -900,7 +907,7 @@ int cmd_config(int argc, const char **argv, const char *prefix)
+ 		ret = git_config_set_multivar_in_file_gently(given_config_source.file,
+ 							     argv[0], value,
+ 							     CONFIG_REGEX_NONE,
+-							     flags);
++							     comment, flags);
+ 	}
+ 	else if (actions == ACTION_REPLACE_ALL) {
+ 		check_write();
+@@ -908,7 +915,7 @@ int cmd_config(int argc, const char **argv, const char *prefix)
+ 		value = normalize_value(argv[0], argv[1], &default_kvi);
+ 		ret = git_config_set_multivar_in_file_gently(given_config_source.file,
+ 							     argv[0], value, argv[2],
+-							     flags | CONFIG_FLAGS_MULTI_REPLACE);
++							     comment, flags | CONFIG_FLAGS_MULTI_REPLACE);
+ 	}
+ 	else if (actions == ACTION_GET) {
+ 		check_argc(argc, 1, 2);
+@@ -936,17 +943,17 @@ int cmd_config(int argc, const char **argv, const char *prefix)
+ 		if (argc == 2)
+ 			return git_config_set_multivar_in_file_gently(given_config_source.file,
+ 								      argv[0], NULL, argv[1],
+-								      flags);
++								      NULL, flags);
+ 		else
+ 			return git_config_set_in_file_gently(given_config_source.file,
+-							     argv[0], NULL);
++							     argv[0], NULL, NULL);
+ 	}
+ 	else if (actions == ACTION_UNSET_ALL) {
+ 		check_write();
+ 		check_argc(argc, 1, 2);
+ 		return git_config_set_multivar_in_file_gently(given_config_source.file,
+ 							      argv[0], NULL, argv[1],
+-							      flags | CONFIG_FLAGS_MULTI_REPLACE);
++							      NULL, flags | CONFIG_FLAGS_MULTI_REPLACE);
+ 	}
+ 	else if (actions == ACTION_RENAME_SECTION) {
+ 		check_write();
+diff --git a/builtin/gc.c b/builtin/gc.c
+index cb80ced6cb5..342907f7bdb 100644
+--- a/builtin/gc.c
++++ b/builtin/gc.c
+@@ -1553,7 +1553,7 @@ static int maintenance_register(int argc, const char **argv, const char *prefix)
+ 			die(_("$HOME not set"));
+ 		rc = git_config_set_multivar_in_file_gently(
+ 			config_file, "maintenance.repo", maintpath,
+-			CONFIG_REGEX_NONE, 0);
++			CONFIG_REGEX_NONE, NULL, 0);
+ 		free(global_config_file);
+ 
+ 		if (rc)
+@@ -1620,7 +1620,7 @@ static int maintenance_unregister(int argc, const char **argv, const char *prefi
+ 		if (!config_file)
+ 			die(_("$HOME not set"));
+ 		rc = git_config_set_multivar_in_file_gently(
+-			config_file, key, NULL, maintpath,
++			config_file, key, NULL, maintpath, NULL,
+ 			CONFIG_FLAGS_MULTI_REPLACE | CONFIG_FLAGS_FIXED_VALUE);
+ 		free(global_config_file);
+ 
+diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
+index fda50f2af1e..e4e18adb575 100644
+--- a/builtin/submodule--helper.c
++++ b/builtin/submodule--helper.c
+@@ -1283,7 +1283,7 @@ static void sync_submodule(const char *path, const char *prefix,
+ 	submodule_to_gitdir(&sb, path);
+ 	strbuf_addstr(&sb, "/config");
+ 
+-	if (git_config_set_in_file_gently(sb.buf, remote_key, sub_origin_url))
++	if (git_config_set_in_file_gently(sb.buf, remote_key, NULL, sub_origin_url))
+ 		die(_("failed to update remote for submodule '%s'"),
+ 		      path);
+ 
+diff --git a/builtin/worktree.c b/builtin/worktree.c
+index 9c76b62b02d..a20cc8820e5 100644
+--- a/builtin/worktree.c
++++ b/builtin/worktree.c
+@@ -365,12 +365,12 @@ static void copy_filtered_worktree_config(const char *worktree_git_dir)
+ 		if (!git_configset_get_bool(&cs, "core.bare", &bare) &&
+ 			bare &&
+ 			git_config_set_multivar_in_file_gently(
+-				to_file, "core.bare", NULL, "true", 0))
++				to_file, "core.bare", NULL, "true", NULL, 0))
+ 			error(_("failed to unset '%s' in '%s'"),
+ 				"core.bare", to_file);
+ 		if (!git_configset_get(&cs, "core.worktree") &&
+ 			git_config_set_in_file_gently(to_file,
+-							"core.worktree", NULL))
++							"core.worktree", NULL, NULL))
+ 			error(_("failed to unset '%s' in '%s'"),
+ 				"core.worktree", to_file);
+ 
+diff --git a/config.c b/config.c
+index 3cfeb3d8bd9..a22594eabd9 100644
+--- a/config.c
++++ b/config.c
+@@ -3001,6 +3001,7 @@ static ssize_t write_section(int fd, const char *key,
+ }
+ 
+ static ssize_t write_pair(int fd, const char *key, const char *value,
++			  const char *comment,
+ 			  const struct config_store_data *store)
+ {
+ 	int i;
+@@ -3041,7 +3042,10 @@ static ssize_t write_pair(int fd, const char *key, const char *value,
+ 			strbuf_addch(&sb, value[i]);
+ 			break;
+ 		}
+-	strbuf_addf(&sb, "%s\n", quote);
++	if (comment)
++		strbuf_addf(&sb, "%s #%s\n", quote, comment);
++	else
++		strbuf_addf(&sb, "%s\n", quote);
+ 
+ 	ret = write_in_full(fd, sb.buf, sb.len);
+ 	strbuf_release(&sb);
+@@ -3130,9 +3134,9 @@ static void maybe_remove_section(struct config_store_data *store,
+ }
+ 
+ int git_config_set_in_file_gently(const char *config_filename,
+-				  const char *key, const char *value)
++				  const char *key, const char *comment, const char *value)
+ {
+-	return git_config_set_multivar_in_file_gently(config_filename, key, value, NULL, 0);
++	return git_config_set_multivar_in_file_gently(config_filename, key, value, NULL, comment, 0);
+ }
+ 
+ void git_config_set_in_file(const char *config_filename,
+@@ -3153,7 +3157,7 @@ int repo_config_set_worktree_gently(struct repository *r,
+ 	if (r->repository_format_worktree_config) {
+ 		char *file = repo_git_path(r, "config.worktree");
+ 		int ret = git_config_set_multivar_in_file_gently(
+-					file, key, value, NULL, 0);
++					file, key, value, NULL, NULL, 0);
+ 		free(file);
+ 		return ret;
+ 	}
+@@ -3195,6 +3199,7 @@ void git_config_set(const char *key, const char *value)
+ int git_config_set_multivar_in_file_gently(const char *config_filename,
+ 					   const char *key, const char *value,
+ 					   const char *value_pattern,
++					   const char *comment,
+ 					   unsigned flags)
+ {
+ 	int fd = -1, in_fd = -1;
+@@ -3245,7 +3250,7 @@ int git_config_set_multivar_in_file_gently(const char *config_filename,
+ 		free(store.key);
+ 		store.key = xstrdup(key);
+ 		if (write_section(fd, key, &store) < 0 ||
+-		    write_pair(fd, key, value, &store) < 0)
++		    write_pair(fd, key, value, comment, &store) < 0)
+ 			goto write_err_out;
+ 	} else {
+ 		struct stat st;
+@@ -3399,7 +3404,7 @@ int git_config_set_multivar_in_file_gently(const char *config_filename,
+ 				if (write_section(fd, key, &store) < 0)
+ 					goto write_err_out;
+ 			}
+-			if (write_pair(fd, key, value, &store) < 0)
++			if (write_pair(fd, key, value, comment, &store) < 0)
+ 				goto write_err_out;
+ 		}
+ 
+@@ -3444,7 +3449,7 @@ void git_config_set_multivar_in_file(const char *config_filename,
+ 				     const char *value_pattern, unsigned flags)
+ {
+ 	if (!git_config_set_multivar_in_file_gently(config_filename, key, value,
+-						    value_pattern, flags))
++						    value_pattern, NULL, flags))
+ 		return;
+ 	if (value)
+ 		die(_("could not set '%s' to '%s'"), key, value);
+@@ -3467,7 +3472,7 @@ int repo_config_set_multivar_gently(struct repository *r, const char *key,
+ 	int res = git_config_set_multivar_in_file_gently(file,
+ 							 key, value,
+ 							 value_pattern,
+-							 flags);
++							 NULL, flags);
+ 	free(file);
+ 	return res;
+ }
+diff --git a/config.h b/config.h
+index 5dba984f770..a85a8271696 100644
+--- a/config.h
++++ b/config.h
+@@ -290,7 +290,7 @@ int git_config_pathname(const char **, const char *, const char *);
+ 
+ int git_config_expiry_date(timestamp_t *, const char *, const char *);
+ int git_config_color(char *, const char *, const char *);
+-int git_config_set_in_file_gently(const char *, const char *, const char *);
++int git_config_set_in_file_gently(const char *, const char *, const char *, const char *);
+ 
+ /**
+  * write config values to a specific config file, takes a key/value pair as
+@@ -336,7 +336,7 @@ int git_config_parse_key(const char *, char **, size_t *);
+ int git_config_set_multivar_gently(const char *, const char *, const char *, unsigned);
+ void git_config_set_multivar(const char *, const char *, const char *, unsigned);
+ int repo_config_set_multivar_gently(struct repository *, const char *, const char *, const char *, unsigned);
+-int git_config_set_multivar_in_file_gently(const char *, const char *, const char *, const char *, unsigned);
++int git_config_set_multivar_in_file_gently(const char *, const char *, const char *, const char *, const char *, unsigned);
+ 
+ /**
+  * takes four parameters:
+diff --git a/sequencer.c b/sequencer.c
+index f49a871ac06..4c91ca5a844 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -3460,54 +3460,54 @@ static int save_opts(struct replay_opts *opts)
+ 
+ 	if (opts->no_commit)
+ 		res |= git_config_set_in_file_gently(opts_file,
+-					"options.no-commit", "true");
++					"options.no-commit", NULL, "true");
+ 	if (opts->edit >= 0)
+-		res |= git_config_set_in_file_gently(opts_file, "options.edit",
++		res |= git_config_set_in_file_gently(opts_file, "options.edit", NULL,
+ 						     opts->edit ? "true" : "false");
+ 	if (opts->allow_empty)
+ 		res |= git_config_set_in_file_gently(opts_file,
+-					"options.allow-empty", "true");
++					"options.allow-empty", NULL, "true");
+ 	if (opts->allow_empty_message)
+ 		res |= git_config_set_in_file_gently(opts_file,
+-				"options.allow-empty-message", "true");
++				"options.allow-empty-message", NULL, "true");
+ 	if (opts->keep_redundant_commits)
+ 		res |= git_config_set_in_file_gently(opts_file,
+-				"options.keep-redundant-commits", "true");
++				"options.keep-redundant-commits", NULL, "true");
+ 	if (opts->signoff)
+ 		res |= git_config_set_in_file_gently(opts_file,
+-					"options.signoff", "true");
++					"options.signoff", NULL, "true");
+ 	if (opts->record_origin)
+ 		res |= git_config_set_in_file_gently(opts_file,
+-					"options.record-origin", "true");
++					"options.record-origin", NULL, "true");
+ 	if (opts->allow_ff)
+ 		res |= git_config_set_in_file_gently(opts_file,
+-					"options.allow-ff", "true");
++					"options.allow-ff", NULL, "true");
+ 	if (opts->mainline) {
+ 		struct strbuf buf = STRBUF_INIT;
+ 		strbuf_addf(&buf, "%d", opts->mainline);
+ 		res |= git_config_set_in_file_gently(opts_file,
+-					"options.mainline", buf.buf);
++					"options.mainline", NULL, buf.buf);
+ 		strbuf_release(&buf);
+ 	}
+ 	if (opts->strategy)
+ 		res |= git_config_set_in_file_gently(opts_file,
+-					"options.strategy", opts->strategy);
++					"options.strategy", NULL, opts->strategy);
+ 	if (opts->gpg_sign)
+ 		res |= git_config_set_in_file_gently(opts_file,
+-					"options.gpg-sign", opts->gpg_sign);
++					"options.gpg-sign", NULL, opts->gpg_sign);
+ 	for (size_t i = 0; i < opts->xopts.nr; i++)
+ 		res |= git_config_set_multivar_in_file_gently(opts_file,
+ 				"options.strategy-option",
+-				opts->xopts.v[i], "^$", 0);
++				opts->xopts.v[i], "^$", NULL, 0);
+ 	if (opts->allow_rerere_auto)
+ 		res |= git_config_set_in_file_gently(opts_file,
+-				"options.allow-rerere-auto",
++				"options.allow-rerere-auto", NULL,
+ 				opts->allow_rerere_auto == RERERE_AUTOUPDATE ?
+ 				"true" : "false");
+ 
+ 	if (opts->explicit_cleanup)
+ 		res |= git_config_set_in_file_gently(opts_file,
+-				"options.default-msg-cleanup",
++				"options.default-msg-cleanup", NULL,
+ 				describe_cleanup_mode(opts->default_msg_cleanup));
+ 	return res;
+ }
+diff --git a/submodule-config.c b/submodule-config.c
+index 54130f6a385..11428b4adad 100644
+--- a/submodule-config.c
++++ b/submodule-config.c
+@@ -978,7 +978,7 @@ int config_set_in_gitmodules_file_gently(const char *key, const char *value)
+ {
+ 	int ret;
+ 
+-	ret = git_config_set_in_file_gently(GITMODULES_FILE, key, value);
++	ret = git_config_set_in_file_gently(GITMODULES_FILE, key, NULL, value);
+ 	if (ret < 0)
+ 		/* Maybe the user already did that, don't error out here */
+ 		warning(_("Could not update .gitmodules entry %s"), key);
+diff --git a/submodule.c b/submodule.c
+index 213da79f661..86630932d09 100644
+--- a/submodule.c
++++ b/submodule.c
+@@ -2052,7 +2052,7 @@ void submodule_unset_core_worktree(const struct submodule *sub)
+ 	submodule_name_to_gitdir(&config_path, the_repository, sub->name);
+ 	strbuf_addstr(&config_path, "/config");
+ 
+-	if (git_config_set_in_file_gently(config_path.buf, "core.worktree", NULL))
++	if (git_config_set_in_file_gently(config_path.buf, "core.worktree", NULL, NULL))
+ 		warning(_("Could not unset core.worktree setting in submodule '%s'"),
+ 			  sub->path);
+ 
+diff --git a/t/t1300-config.sh b/t/t1300-config.sh
+index 31c38786870..daddaedd23c 100755
+--- a/t/t1300-config.sh
++++ b/t/t1300-config.sh
+@@ -69,13 +69,18 @@ test_expect_success 'replace with non-match (actually matching)' '
+ 
+ cat > expect << EOF
+ [section]
+-	penguin = very blue
+ 	Movie = BadPhysics
+ 	UPPERCASE = true
+-	penguin = kingpin
++	penguin = gentoo #Pygoscelis papua
++	disposition = peckish #find fish
+ [Sections]
+ 	WhatEver = Second
+ EOF
++test_expect_success 'append comments' '
++	git config --replace-all --comment="Pygoscelis papua" section.penguin gentoo &&
++	git config --comment="find fish" section.disposition peckish &&
++	test_cmp expect .git/config
++'
+ 
+ test_expect_success 'non-match result' 'test_cmp expect .git/config'
+ 
+diff --git a/worktree.c b/worktree.c
+index b02a05a74a3..cf5eea8c931 100644
+--- a/worktree.c
++++ b/worktree.c
+@@ -807,9 +807,9 @@ int should_prune_worktree(const char *id, struct strbuf *reason, char **wtpath,
+ static int move_config_setting(const char *key, const char *value,
+ 			       const char *from_file, const char *to_file)
+ {
+-	if (git_config_set_in_file_gently(to_file, key, value))
++	if (git_config_set_in_file_gently(to_file, key, NULL, value))
+ 		return error(_("unable to set %s in '%s'"), key, to_file);
+-	if (git_config_set_in_file_gently(from_file, key, NULL))
++	if (git_config_set_in_file_gently(from_file, key, NULL, NULL))
+ 		return error(_("unable to unset %s in '%s'"), key, from_file);
+ 	return 0;
+ }
+
+base-commit: 0f9d4d28b7e6021b7e6db192b7bf47bd3a0d0d1d
+-- 
+gitgitgadget
