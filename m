@@ -1,238 +1,209 @@
-Received: from wfhigh1-smtp.messagingengine.com (wfhigh1-smtp.messagingengine.com [64.147.123.152])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C405D2574F
-	for <git@vger.kernel.org>; Mon,  4 Mar 2024 09:51:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.152
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 048252574F
+	for <git@vger.kernel.org>; Mon,  4 Mar 2024 09:51:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709545895; cv=none; b=sxqFgh362CNc+rm6RHtE3WAQoNDibjjQB65BNFtnHB2pYI3k7tL8yL9Af21TVNJ0+7HXdJHDeA4jXZZzpaiKXaY/Oe2j5dTkQ/OyCnuEERUCQK9VLpObC7J1L2dLT/6tHS9SL6XST07J4PwHgtCPiFJW7YwUy0ZxKyIdP9SofjA=
+	t=1709545899; cv=none; b=rZhK8OI0aSkDf6cXtLcyCsW0QAo9+qH73kD2YNbwalViSfjF0a7tkws48pexgAvnVVtr9enKW3riQ4BMGNVMU3zbp3/0HL7uGNrpTNnTV1Ohmpavf367w9CEL2AL1XXME+HD5uQrxds7VuDKdxGQeFdr95qaTESA1O2BJuMsOAk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709545895; c=relaxed/simple;
-	bh=LqUEDTeB7p2wNAklZ6geD4UNq2O9OUI8+/DAheot4Lk=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=huNK57nAx3USLxn2Mrf+sT9i3Xixb4FEDcjdcQkkISq9+Orcivkill7PWr8XLNgZY+7fTpF0VUglLPzrnqCo0iNs72CoyMRdBC7gTD9dwKLvYSXk8JKC4eTeR3akcko+BVEYEjJpP2S9eqjUqvm+QhFs1JZlSS1Tp76sW2qphzk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=BOI5rpZq; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=NCXzayey; arc=none smtp.client-ip=64.147.123.152
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1709545899; c=relaxed/simple;
+	bh=7apdsBshhR56zOoGXxf+pwZSMKvuIau8l62HoPdpqvE=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=YKo7NZ21aJusc9A2aMKGucy31DwdstnfR/xUeFvoOItqR2SEM7maMcBYLgaf52sbJGQY3cTOHwpFRSv3HTbenOb/oZ+uDWDZe5408EEP5It5hxtmDKkEBe/on56ank0kHbcftnKVMhLhB+6POpyA9vViHT3P+Oh2kpd9pYrE3oM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=AXA0xnl3; arc=none smtp.client-ip=209.85.128.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="BOI5rpZq";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="NCXzayey"
-Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
-	by mailfhigh.west.internal (Postfix) with ESMTP id C7D961800082;
-	Mon,  4 Mar 2024 04:51:28 -0500 (EST)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute5.internal (MEProxy); Mon, 04 Mar 2024 04:51:29 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1709545888; x=1709632288; bh=LqUEDTeB7p
-	2wNAklZ6geD4UNq2O9OUI8+/DAheot4Lk=; b=BOI5rpZq1BXgvqjcXvcy2FhD3I
-	5+jpgHAyN/OkkBevzD6Uzt4nseqgVNVan0Lq/rX4NycKJi1+SNcxaydnOWsGvd59
-	zOBT0sr+6k7EU2EjSmSOlNJqn9bW2WKjjcvkyTagA1YgcKvfuaf32CHaxGD7+4Gv
-	f2ysQnkz0IccR2xmMuT46YqpUKPM2eiIDc290lUnMthAHSGB9JkQ2jkykGBPBj9F
-	MvfOYqMxvUtSNuGAOaZpyJj6Zk2IBn0BbkI3II84rA7BSLheb5BTXmfY4r8R7aMP
-	0SeE1uZ490LwcF6auiI2+LYRiKHCKNvbF7NBXEEoLM/tAs0bNVPaL39yW/pQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1709545888; x=1709632288; bh=LqUEDTeB7p2wNAklZ6geD4UNq2O9
-	OUI8+/DAheot4Lk=; b=NCXzayeyE62zN/GWLJpIrn6YnXrXJHSl1BWSquXewkXu
-	gr/jRlQfJHgXDM2bjdgcNE4JIE63FDi+q6s+1kHkl8dyRJvrM8hUYb2Elo0uG1QJ
-	ptkSki562qxq6TlxnE5tia5ifClCKMEUrJVqRhX4mogTBbJBsF9zFlgBrjCrIlwh
-	q0jywUMarDX4B6lKZZXso5/5LdE7OPm/Svt4KGxpuTfb7mizih4w59Z8Yt0j8jN1
-	S+T+YphY5I8fnY96K5HlhS/KRM7uGyAIgVVPK+9SLSppuAizpKOjxFOCyGc6r0Gq
-	H5U/xYZXSyuLa5KurKvpJI0O2Rn+UnC2f+hnZxOh6A==
-X-ME-Sender: <xms:oJnlZekMBM-v00ke48uYw9cUHzQMbsOwDFh-s24VmLatflyQuo5OkQ>
-    <xme:oJnlZV3xFAVM-hA8kATqTot1jqrKgCP5IiRKqouWLC5m1qR4OT3ymIEwagrQWMzRv
-    kdrp8FWDtm5djhdnQ>
-X-ME-Received: <xmr:oJnlZcqq4BmaFD_IOi36I10elRb6L9aHX46ApBjJ4DWZurWvdD2XrqQyL5g9jo-oKjDhIVTC6-r2ALsUESg1FZfRpRozoL5MzqJGT4cecM7Oyyk>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrheejgddtkecutefuodetggdotefrodftvf
-    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
-    uegrihhlohhuthemuceftddtnecunecujfgurhepfffhvfevuffkfhggtggujgesghdtre
-    ertddtjeenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehp
-    khhsrdhimheqnecuggftrfgrthhtvghrnhepvdekgeethfetuedthfelvdeufedvgfeile
-    evhfdvvdehfeeffeeuvedutddtvedunecuffhomhgrihhnpegurhgrfhhtrdhmugenucev
-    lhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhksh
-    drihhm
-X-ME-Proxy: <xmx:oJnlZSmgNcFyrf6PlY8hTo9hzgRHFZE8VgKX815EunUFDVTMJdjnAQ>
-    <xmx:oJnlZc3LyeFXvE_bUFD7B90PVjVt6gM4U0uWuRjlnJXRm7WTC80UYw>
-    <xmx:oJnlZZuQ6JeV-PK5pOq3ZDjleXP5EapyQCE5CXWHyq8P4rHXHQ2N-w>
-    <xmx:oJnlZaClA_Ug35GJywAY8OmJKTfyz_SjQXDNri_aTkKgbdcHwu4cf6TLLHk>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 4 Mar 2024 04:51:27 -0500 (EST)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 038d89ed (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 4 Mar 2024 09:47:00 +0000 (UTC)
-Date: Mon, 4 Mar 2024 10:51:23 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: Divyaditya Singh <divyadityasnaruka@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: Query about gitignore
-Message-ID: <ZeWZmyEcCTZ_u_tq@tanuki>
-References: <B7F364DA-27E7-4BDC-93EE-32E6430B6ACE@gmail.com>
- <ZcMYiOxBA-N0NwWT@tanuki>
- <7CEEE27C-6B5D-4DC2-B9EA-549185D7AB5C@gmail.com>
- <A0502A2F-970B-46F3-B216-E82B2258DF3A@gmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AXA0xnl3"
+Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-412e84e6d2fso686195e9.0
+        for <git@vger.kernel.org>; Mon, 04 Mar 2024 01:51:37 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1709545896; x=1710150696; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=lVUbtWOaVLL11Saj17PGXWnZvZifopl+XSlJ4+wiy14=;
+        b=AXA0xnl3pCTa4CuQazt3lFW3SK2g0amubMfEMHwgVuigIcF95YdGNdq2I3gBpm0Q6t
+         vRCFF553mTgvVUDWsnpV70ahXkKscqHWRZFs9qgsF/3p2OmUN7QGqsVHgwAjm1BCHY/M
+         PtA2PVB9Bgxl8d7K4ApjAzecEm5YcKfHlpxBtwc7XFHpv/13A2xPoYgG8/3saXtRUba5
+         4IpMB/KL8Xx2IQP2IIwkcKyYvb10ASw8aHA0tcsbnQ8C3uoZacGJFBRnZfrS3zIZc92E
+         yixlAj50dbZDnN/vZgNe3Ti4S4La5V+wYaBJx7qTxvwQ86cxcfSi3h14D17skNLUCWVD
+         WXig==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1709545896; x=1710150696;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=lVUbtWOaVLL11Saj17PGXWnZvZifopl+XSlJ4+wiy14=;
+        b=OjO/0NZGrFjxunzpGUY0TSN4+SXrO84sgs4+vKU4EHBav9L0rAZG5HfNU6nT2QrI4r
+         H+RbFmWMkpEYbwqv26tJRJnakG5cD1rd/0weq/w/G3H/PqmyFMd0gnEIdHcFVABUQBA+
+         x0H7IV2v6iGwm5+2IuBU3jlF6Nz3rspaQ14UScDj2bsrllb/gIBnoyKQBPQgHpGaU6qa
+         tU7U9ZjmSrxzuaJ4oAbc2elI+woNLH313l/WXhwqE/TjB3KDjjliGdquqbs2qIE6nWUQ
+         Hjbqf6LRyk+lfF1YEt+E2+pkhwVByVa/REjx/4catgb7Wgq5ubhZnZWBSarAHw9RITxE
+         aFkQ==
+X-Forwarded-Encrypted: i=1; AJvYcCXKi5xdbmVCifHDsok0olKPE+qJR3hB3xi42E/BX2EXsN0SP4H1TDJtpysr8FBd4ScxsnSC9Y7U5aKdDGLWQ5oz6vSe
+X-Gm-Message-State: AOJu0YzGdUYWjrzJ9WzaqcSOLCg/PAJ6VSt5cPmFfBggluydnm1QnAmj
+	Sj/72ZNtosCQEP955iIGYEwopERTGWRx03/K27JhcnoJvHOBiCCo
+X-Google-Smtp-Source: AGHT+IH2iWH1bMUScZWNYxuQpALeW0KiQSWpRG3F2DPyXme+3WPRtvSws5iJyhIqcrRCL+RjYA6vjQ==
+X-Received: by 2002:a05:600c:c1a:b0:412:b4c:58da with SMTP id fm26-20020a05600c0c1a00b004120b4c58damr6448669wmb.9.1709545896104;
+        Mon, 04 Mar 2024 01:51:36 -0800 (PST)
+Received: from ?IPV6:2a0a:ef40:6ca:8b01:80a6:cae7:d811:7244? ([2a0a:ef40:6ca:8b01:80a6:cae7:d811:7244])
+        by smtp.gmail.com with ESMTPSA id r4-20020a05600c298400b00412cfdc41f7sm2137392wmd.0.2024.03.04.01.51.35
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 04 Mar 2024 01:51:35 -0800 (PST)
+Message-ID: <0947cb09-8b07-4fcd-bbe2-ae37c2cd5ec7@gmail.com>
+Date: Mon, 4 Mar 2024 09:51:35 +0000
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="IPXe8j75rh84sgek"
-Content-Disposition: inline
-In-Reply-To: <A0502A2F-970B-46F3-B216-E82B2258DF3A@gmail.com>
+User-Agent: Mozilla Thunderbird
+From: Phillip Wood <phillip.wood123@gmail.com>
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v2 4/4] t-ctype: avoid duplicating class names
+To: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>, git@vger.kernel.org
+Cc: Josh Steadmon <steadmon@google.com>, Achu Luma <ach.lumap@gmail.com>,
+ Christian Couder <christian.couder@gmail.com>
+References: <20240225112722.89221-1-l.s.r@web.de>
+ <20240303101330.20187-1-l.s.r@web.de> <20240303101330.20187-5-l.s.r@web.de>
+Content-Language: en-US
+In-Reply-To: <20240303101330.20187-5-l.s.r@web.de>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
+Hi René
 
---IPXe8j75rh84sgek
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+On 03/03/2024 10:13, René Scharfe wrote:
+> TEST_CTYPE_FUNC defines a function for testing a character classifier,
+> TEST_CHAR_CLASS calls it, causing the class name to be mentioned twice.
+> 
+> Avoid the need to define a class-specific function by letting
+> TEST_CHAR_CLASS do all the work.  This is done by using the internal
+> functions test__run_begin() and test__run_end(), but they do exist to be
+> used in test macros after all.
 
-Hi,
+Those internal functions exist to implement the TEST() macro, they are 
+not really intended for use outside that (which is why they are marked 
+as private in the header file). If we ever want to update the 
+implementation of TEST() it will be a lot harder if we're using the 
+internal implementation directly in test files. Unit tests should be 
+wrapping TEST() if it is appropriate but not the internal implementation 
+directly.
 
-adding the Git mailing list back to Cc.
+Ideally we wouldn't need TEST_CTYPE_FUNC as there would only be a single 
+function that was passed a ctype predicate, an input array and an array 
+of expected results. Unfortunately I don't think that is possible due 
+the the way the ctype predicates are implemented. Having separate macros 
+to define the test function and to run the test is annoying but I don't 
+think it is really worth exposing the internal implementation just to 
+avoid it.
 
-On Thu, Feb 22, 2024 at 06:10:18PM +0530, Divyaditya Singh wrote:
-> Hello there, I wish you a wonderful day. It=E2=80=99s been a while since I
-> have written to you. I was curious if you had any suggestions or ideas
-> for my particular need?=20
->=20
-> Thank You
-> Divyaditya
+The other patches here look like useful improvements - thanks.
 
-sorry for my late reply, but I've been in office only sporadically
-during the last two weeks.
+Best Wishes
 
-My original question for your actual usecase was written with the intent
-to trigger other answers on the mailing list from potentially-interested
-folks. So kind of trying to gather ideas or alternative solutions from
-folks other than myself. Well, that didn't quite work out :)
+Phillip
 
-> > On 07-Feb-2024, at 11:52=E2=80=AFAM, Divyaditya Singh
-> > <divyadityasnaruka@gmail.com> wrote:
-> >=20
-> > Hello Patrick,
-> >=20
-> > Thank you so much for taking time to respond to my email.
-> >=20
-> > Yes, I basically want to ignore =E2=80=9Cdir/=E2=80=9C if and only if i=
-f =E2=80=9Cdir/a=E2=80=9D
-> > exists to match the pattern in the gitignore. I am not great at
-> > explaining but I would try to explain my use case to the best of my
-> > abilities.=20
-
-Okay. That is not currently possible with gitignore patterns.
-
-> > Some Context: I am a undergrad student and I am trying to currently
-> > build my portfolio website and I have planned some interesting stuff
-> > for the same and to showcase my abilities and working to potential
-> > future employers I have made the repository public.
-> >=20
-> > Use Case: While I am working on it, I plan to write some blogs about
-> > some interesting projects that I have been building along side that
-> > I am passionate about for which I am using markdown files to
-> > generate blog posts.=20
-> >=20
-> > Now, I set up my Next.js project such as the server scans the
-> > =E2=80=9Cposts/=E2=80=9C directory which will contain all my posts. Eac=
-h post is a
-> > directory with the post slug as the directory=E2=80=99s name and each
-> > directory contains the structure for my post with index.md as the
-> > post text and along with other files related to the post. Now, I
-> > don=E2=80=99t want to upload unfinished blogs to the github and want the
-> > ability to work on different blogs simultaneously with the changes
-> > reflecting on the local device while working on the portfolio
-> > website itself.=20
-> >=20
-> > So, in my original approach I thought it would be really simple it I
-> > could just name it as =E2=80=9Cindex.draft.md=E2=80=9D and the entire p=
-ost it not
-> > saved to git, instead of creating branches or work trees or creating
-> > an gitignored directory to store all incomplete posts and moving
-> > directories all the time.=20
-
-Well, my first thought regarding your usecase is "branches". They seem
-to fit the bill quite nicely: you have separate tracks of unfinished
-work which you don't yet want to be part of your main branch. So if
-every blog post lived on its own branch where you refine it until you
-are happy with it, then you can merge them into the main branch once
-done.
-
-The huge downside of gitignore is that those not-yet-finished blog posts
-would... well, be ignored. That is you cannot save intermediate state
-that you have, you cannot see how those blog posts evolved over time,
-you basically lose all that Git is designed to help you with.
-
-So I'd really recommend to give them a second thought, but in any case
-your mileage may vary.
-
-> > I apologise again if my approach or way of thinking is stupid and
-> > for bothering you with this long email.
-
-No worries, neither your approach nor your way of thinking is stupid.
-Everybody will have different workflows, and what works best for one
-person may not work at all for a different one.
-
-Patrick
-
-> >=20
-> > Thank You,
-> > Divyaditya Singh
-> >=20
-> >=20
-> >> On 07-Feb-2024, at 11:13=E2=80=AFAM, Patrick Steinhardt <ps@pks.im> wr=
-ote:
-> >>=20
-> >> Hi Divyaditya,
-> >>=20
-> >> On Wed, Feb 07, 2024 at 01:56:34AM +0530, Divyaditya Singh wrote:
-> >>> Hello there,
-> >>>=20
-> >>> I hope you are having a wonderful day.
-> >>>=20
-> >>> I apologize if this is inappropriate but I wanted to ask is there a
-> >>> way that I can make my .gitignore such that it ignores the entire
-> >>> parent directory of a matching file.
-> >>=20
-> >> Not inappropriate at all!
-> >>=20
-> >> Rephrasing what you say, you basically want to ignore "dir/" if and on=
-ly
-> >> if "dir/a" exists and matches a specific pattern in your gitignore,
-> >> right? If so, this is not something that you can currently achieve with
-> >> gitignores.
-> >>=20
-> >> Would you mind maybe explaining your particular usecase a bit more? Th=
-is
-> >> _could_ help to find a different solution for you. But even if there is
-> >> none it might motivate others to think about possible ways to implement
-> >> this in Git if there is interest.
-> >>=20
-> >> Patrick
-
---IPXe8j75rh84sgek
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmXlmZoACgkQVbJhu7ck
-PpSONA//T+mTId7eKbY1CbBGXQL9VvRztDmmnD2OyoHP1i/vls/VbpDGYCN8sahK
-qSLwpDtLrsxX39vLm4lD+CdPB90KoaDICkwa1xs6T0jYt1c9U87kBPjPcFDKntJl
-BmBQEtUlGXTPbPjZoYf58ED5GYDOw8i6peSvrtjkND65luWkHtWnhZ7Ga9tL6EMG
-6cgD1iUwy4Ktk/PQHpo5uYUGyS+6HMJCwz+Wovhifp8eZocOJRHI9wFedtiuJSWS
-7n5prDY/SHh6yil1F76Y2Xuv1+6Q0AlCvEtrHNXcNVMuYvS7o+W5lq3lNqgYQzcl
-lVSHyaslkGsV61Sxbpsay+IVoZ5rKF0TyBvZSooF+xmj4YUye72ItxxnzfFmDTgW
-tjv2f+1XmlCvfrbDOqLwBA/sSFNyjTrbvgDS+VPiEpufbvDmonwV4sLOX0Goqycs
-uCaAiCzuGQes6ln9BApsOXWJYh1rq8EBvjDI2IBsAjWgcDmrRFXcGBlPHtuTuSyC
-gUiNSyAxfTiq69nX+wnTvMsH7CwQsAcC4YLWialEWoWQWjgWOaqxvBjoEZK1R63g
-u75VDg3W14yZjJWlOJnkehtvJQ192RV+WUzfu4+49JcUpdyvhBZf/hEVnzdDqcRL
-2qUJVu6Pc4t+LOl1r6jodvzGOxWSPwqDRawio4h6yLHKHJbkaLw=
-=Yxa+
------END PGP SIGNATURE-----
-
---IPXe8j75rh84sgek--
+> Alternatively we could unroll the loop to provide a very long expression
+> that tests all 256 characters and EOF and hand that to TEST, but that
+> seems awkward and hard to read.
+> 
+> No change of behavior or output intended.
+> 
+> Signed-off-by: René Scharfe <l.s.r@web.de>
+> ---
+>   t/unit-tests/t-ctype.c | 64 ++++++++++++++++--------------------------
+>   1 file changed, 24 insertions(+), 40 deletions(-)
+> 
+> diff --git a/t/unit-tests/t-ctype.c b/t/unit-tests/t-ctype.c
+> index 02d8569aa3..d6ac1fe678 100644
+> --- a/t/unit-tests/t-ctype.c
+> +++ b/t/unit-tests/t-ctype.c
+> @@ -1,19 +1,19 @@
+>   #include "test-lib.h"
+> 
+> -/* Macro to test a character type */
+> -#define TEST_CTYPE_FUNC(func, string) \
+> -static void test_ctype_##func(void) { \
+> +#define TEST_CHAR_CLASS(class, string) do { \
+>   	size_t len = ARRAY_SIZE(string) - 1 + \
+>   		BUILD_ASSERT_OR_ZERO(ARRAY_SIZE(string) > 0) + \
+>   		BUILD_ASSERT_OR_ZERO(sizeof(string[0]) == sizeof(char)); \
+> -	for (int i = 0; i < 256; i++) { \
+> -		if (!check_int(func(i), ==, !!memchr(string, i, len))) \
+> -			test_msg("      i: 0x%02x", i); \
+> +	int skip = test__run_begin(); \
+> +	if (!skip) { \
+> +		for (int i = 0; i < 256; i++) { \
+> +			if (!check_int(class(i), ==, !!memchr(string, i, len)))\
+> +				test_msg("      i: 0x%02x", i); \
+> +		} \
+> +		check(!class(EOF)); \
+>   	} \
+> -	check(!func(EOF)); \
+> -}
+> -
+> -#define TEST_CHAR_CLASS(class) TEST(test_ctype_##class(), #class " works")
+> +	test__run_end(!skip, TEST_LOCATION(), #class " works"); \
+> +} while (0)
+> 
+>   #define DIGIT "0123456789"
+>   #define LOWER "abcdefghijklmnopqrstuvwxyz"
+> @@ -33,37 +33,21 @@ static void test_ctype_##func(void) { \
+>   	"\x10\x11\x12\x13\x14\x15\x16\x17\x18\x19\x1a\x1b\x1c\x1d\x1e\x1f" \
+>   	"\x7f"
+> 
+> -TEST_CTYPE_FUNC(isdigit, DIGIT)
+> -TEST_CTYPE_FUNC(isspace, " \n\r\t")
+> -TEST_CTYPE_FUNC(isalpha, LOWER UPPER)
+> -TEST_CTYPE_FUNC(isalnum, LOWER UPPER DIGIT)
+> -TEST_CTYPE_FUNC(is_glob_special, "*?[\\")
+> -TEST_CTYPE_FUNC(is_regex_special, "$()*+.?[\\^{|")
+> -TEST_CTYPE_FUNC(is_pathspec_magic, "!\"#%&',-/:;<=>@_`~")
+> -TEST_CTYPE_FUNC(isascii, ASCII)
+> -TEST_CTYPE_FUNC(islower, LOWER)
+> -TEST_CTYPE_FUNC(isupper, UPPER)
+> -TEST_CTYPE_FUNC(iscntrl, CNTRL)
+> -TEST_CTYPE_FUNC(ispunct, PUNCT)
+> -TEST_CTYPE_FUNC(isxdigit, DIGIT "abcdefABCDEF")
+> -TEST_CTYPE_FUNC(isprint, LOWER UPPER DIGIT PUNCT " ")
+> -
+>   int cmd_main(int argc, const char **argv) {
+> -	/* Run all character type tests */
+> -	TEST_CHAR_CLASS(isspace);
+> -	TEST_CHAR_CLASS(isdigit);
+> -	TEST_CHAR_CLASS(isalpha);
+> -	TEST_CHAR_CLASS(isalnum);
+> -	TEST_CHAR_CLASS(is_glob_special);
+> -	TEST_CHAR_CLASS(is_regex_special);
+> -	TEST_CHAR_CLASS(is_pathspec_magic);
+> -	TEST_CHAR_CLASS(isascii);
+> -	TEST_CHAR_CLASS(islower);
+> -	TEST_CHAR_CLASS(isupper);
+> -	TEST_CHAR_CLASS(iscntrl);
+> -	TEST_CHAR_CLASS(ispunct);
+> -	TEST_CHAR_CLASS(isxdigit);
+> -	TEST_CHAR_CLASS(isprint);
+> +	TEST_CHAR_CLASS(isspace, " \n\r\t");
+> +	TEST_CHAR_CLASS(isdigit, DIGIT);
+> +	TEST_CHAR_CLASS(isalpha, LOWER UPPER);
+> +	TEST_CHAR_CLASS(isalnum, LOWER UPPER DIGIT);
+> +	TEST_CHAR_CLASS(is_glob_special, "*?[\\");
+> +	TEST_CHAR_CLASS(is_regex_special, "$()*+.?[\\^{|");
+> +	TEST_CHAR_CLASS(is_pathspec_magic, "!\"#%&',-/:;<=>@_`~");
+> +	TEST_CHAR_CLASS(isascii, ASCII);
+> +	TEST_CHAR_CLASS(islower, LOWER);
+> +	TEST_CHAR_CLASS(isupper, UPPER);
+> +	TEST_CHAR_CLASS(iscntrl, CNTRL);
+> +	TEST_CHAR_CLASS(ispunct, PUNCT);
+> +	TEST_CHAR_CLASS(isxdigit, DIGIT "abcdefABCDEF");
+> +	TEST_CHAR_CLASS(isprint, LOWER UPPER DIGIT PUNCT " ");
+> 
+>   	return test_done();
+>   }
+> --
+> 2.44.0
+> 
