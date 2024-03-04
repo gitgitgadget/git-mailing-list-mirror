@@ -1,62 +1,62 @@
-Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com [209.85.128.49])
+Received: from mail-wr1-f46.google.com (mail-wr1-f46.google.com [209.85.221.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70EB153371
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0466535A5
 	for <git@vger.kernel.org>; Mon,  4 Mar 2024 15:40:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.49
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709566817; cv=none; b=QDH3aMFlQSPN789is4XNMyMQORTFsE5jWk/0ls0lkKv9MspkuVU83voxI1oP6A1nOy7NJQQZFE7NLNYsjQPJQFssIi5YfkYb1RCIsvZKIn57ncCF3F7l9AxOe/PuUWqFwwFd93ZEyzKcuq+I3qu7o1rLZIVKP+cltLVbTjsBBbI=
+	t=1709566817; cv=none; b=HgwzPdlPcLO3CTcmmXz7YcdS4njnu12FCKRDcJAJDGVkS2l4WGNLy0+Dw/6RTpH7e0BWKD1IbyKV/2ZJNySiOGUPJWW2wvTlrB73qjgQV/55QHUOTqOqmm9TuHk9FFm2HseNHgUCmXQZ3hw6m9W6hOWWCVnJG1EgarqoaVybUtE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1709566817; c=relaxed/simple;
-	bh=lNrxEkFKPGuAxmMK1ggXciDwS5CXYt2lWRAMpk8TSr4=;
+	bh=/6XjPCQfCK88zqSmtHg4thraqzB32RUGnA5qkqUfD1k=;
 	h=Message-ID:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=OZlcaNlxE7GRbIV8e0Yg4I60j8FcjfdRaySvUYXxYLe5NtfzPEuWMhkucnQ4d60fXOpw+of1ZF/z4msCBjXSqu3fMCQjn1yVEuC+sc7tOIIvP2XYPAsBNMe0P8XVzQMhBwGo0pTOvpWfIf3zVBbhzcjmPC95882SDaiLioSz+JU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fBRccRrk; arc=none smtp.client-ip=209.85.128.49
+	 MIME-Version:To:Cc; b=MPq2PJho1wcFbwboC03Hrw6Hwep5umQhAiG1nnCfQRl5aGl3FSOTRYiGpzMiVQETpBMuRBxXio65JiTCbkWPtBDQdQ1eKunWyVVsTYDLcs7luadvK1bKTLOeh/Cblh5DH2VRKpzQsxD1Yq1R6Z6HVITfOyosFzJzlklOcRCH10I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fqDUlFnG; arc=none smtp.client-ip=209.85.221.46
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fBRccRrk"
-Received: by mail-wm1-f49.google.com with SMTP id 5b1f17b1804b1-412e88369a0so3824725e9.0
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fqDUlFnG"
+Received: by mail-wr1-f46.google.com with SMTP id ffacd0b85a97d-33d38c9ca5bso2316550f8f.2
         for <git@vger.kernel.org>; Mon, 04 Mar 2024 07:40:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20230601; t=1709566813; x=1710171613; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=eEf419t5X95hibsTlXgcE37OBZrjlXQnHzO/EoEeR+M=;
-        b=fBRccRrk2U+aAkCpmjK70hG5CkH5SWAIAmAfAdaMkzppf/dm7AUSv+FKlNDky7/Nxr
-         iGUhkc2BoWddl19c2ir/P8kgpDvep9d6po0l47uuKi+uKK6x7ipNLFNNCzP4qw1syk1m
-         V2VnGwJ2uPv0AG0P9Ln7M559rWRiolrgCZh+ItxLa1KFfyRila9brGnEOyn29JeXvy93
-         IQ2IWMt16awVrgEECh1T0d/HE4ZYEpc0jlLTrJ2NJOEI8cAu0JYD5E0jcwKfbPHRWjRc
-         +6cusXpNyhSaRmpfrHFRiKRoOuiza63MnvO3Irf5a/k04ULSpY4l5jSIh4G3fDYsnvsT
-         H0/Q==
+        bh=lUC3q276op1jsCHLT3RlYgbnu50CJW0BM6mhbg0YK4s=;
+        b=fqDUlFnGcPDZR8qZUD+lOnXwP7CWledUYMbbGxx59e5BptaQ7dXEa/P20JWH4myaiB
+         yjQ6PYxVMNA7om7x/Lq2vX0OMxdL6xytoggEBlL2kPkSwdSNJvc4Lut7xpxLZA1ea835
+         Dk5f6aWrlTG1bmIyfkKvmBuNuskhhq1S847mwnCpgRKpUAOCDbkiXJ/m0r2YOzD1Lry0
+         Re0MaowzPzHdT6U/IBlgUJA9qWucVJ/Cepe1JePhN9WlHn+8F6sYB0jDWS1cu4kn30EN
+         TxbyAwq7JRnuWiH+8GWxj49AplGlkXbkWQqyh9Zq4IApXaekm0XyHsQ9WB3Zs7PdBlDJ
+         ncnw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20230601; t=1709566813; x=1710171613;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=eEf419t5X95hibsTlXgcE37OBZrjlXQnHzO/EoEeR+M=;
-        b=lMitXwyXC50d0au1Gql0YWGRSIlAUtLfNCA+vNGDAG6zNKaAIrAYF6bvM21ANhDqgs
-         8I+igfizupFr31/+IPQI/CN4laXr4pqcWlecn2LaB555BLXWi1Rf0gEoDHB27aq0b5Ag
-         10/ZzuYpBGYycQVlVhKPJYnAflVsja0Fd//rcklPCfD66zzGd5qXzRmX8ytikHbazWZx
-         EgSBPx7ESFnjvbrOp3+9v1h4TmsxGLV18QQ8bAbBicQid8Cvsic0Gv9H7Dx2CQZ4PMR/
-         c6g4afWdqCL66lnTA6SZ1BC0j/9kQtI/CBRUWmJcDQiUfbVLrk9stgOhY3JB7iEbS/it
-         vAsQ==
-X-Gm-Message-State: AOJu0YwYXGHsDGjk3L1QJb1ggbF/0xNEShouoSGlu29gdN9ilrNiGNCC
-	K9qoyh2QWXiTYAm4iov35+G/1JPpa9qj2l8pPSyyksi8/2OwUGKxb9PfjS6R
-X-Google-Smtp-Source: AGHT+IFTti8zKO6Vc5R8mZApAImB0lSodOw9EbXU6V/5TY6xwKhkDa3N4ndRYcGs3cCVtoZCzN7EbA==
-X-Received: by 2002:a05:600c:4f4a:b0:412:a8e0:ca38 with SMTP id m10-20020a05600c4f4a00b00412a8e0ca38mr6185443wmq.40.1709566813078;
+        bh=lUC3q276op1jsCHLT3RlYgbnu50CJW0BM6mhbg0YK4s=;
+        b=ED8RDicXp/ncher712SN+63YCCiNqxcXgKSAou19xQeQKzZYmzshPbFiaAw2l0c/+b
+         PMvvuSudn6cysA93OMaPEpVFLoiAunJLrrndo/r1D225O9CwpkUzdRTh4+jXBExN/Qbf
+         ghXpTg0AqEai1phxY9cjLz55vPRK1qkut/UjZt3G39m3nU07dfHc/e8c1in7ydScrXV6
+         mauxFNrBY0MaRh9R5kiyGPhrVvobKFFdVyZ9smcbUXoV/sb5tB900b7AB6kictbN5H/e
+         sdX6DfMIKBLY6Y6e/wIxL2lixXoxpz+NMPH2L3GrarazHh8g+u9rmuU0FCjBjhchc9fd
+         m5Bw==
+X-Gm-Message-State: AOJu0YxPnjAUVPTVTVbkbhTznDTkiSQRFeDO7q3mlhOI90TW9DXb7ZBB
+	f7Z5ARi0uMM7q1YThHL678ZRJJ6L1idlRDaGXDQXtSXc7jScu3nIaxG15egA
+X-Google-Smtp-Source: AGHT+IFleJ2pwCZkJ47cznuOmkz/TMzgx1rgh0qFQ8SKTO2S6EspUbXInUhd8L3RKL29T/nOOU/PgA==
+X-Received: by 2002:a5d:4b07:0:b0:33d:8ef8:c10c with SMTP id v7-20020a5d4b07000000b0033d8ef8c10cmr6355956wrq.23.1709566813562;
         Mon, 04 Mar 2024 07:40:13 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id s16-20020a05600c45d000b00412b67388f0sm17264944wmo.6.2024.03.04.07.40.12
+        by smtp.gmail.com with ESMTPSA id bw1-20020a0560001f8100b0033d6bc17d0esm12832598wrb.74.2024.03.04.07.40.13
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 04 Mar 2024 07:40:12 -0800 (PST)
-Message-ID: <9507184b4f1147be529898023d8d504819596f71.1709566808.git.gitgitgadget@gmail.com>
+        Mon, 04 Mar 2024 07:40:13 -0800 (PST)
+Message-ID: <e8528715ebf97c12622c2e73f914ab4228a0927c.1709566808.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1679.git.1709566808.gitgitgadget@gmail.com>
 References: <pull.1679.git.1709566808.gitgitgadget@gmail.com>
 From: "Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Mon, 04 Mar 2024 15:40:07 +0000
-Subject: [PATCH 3/4] trace2: emit 'def_param' set with 'cmd_name' event
+Date: Mon, 04 Mar 2024 15:40:08 +0000
+Subject: [PATCH 4/4] trace2: remove unneeded calls to generate 'def_param' set
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -72,68 +72,44 @@ Cc: Jeff Hostetler <jeffhostetler@github.com>,
 
 From: Jeff Hostetler <jeffhostetler@github.com>
 
-Some commands do not cause a set of 'def_param' events to be emitted.
-This includes "git-remote-https", "git-http-fetch", and various
-"query" commands, like "git --man-path".
-
-Since all of these commands do emit a 'cmd_name' event, add code to
-the "trace2_cmd_name()" function to generate the set of 'def_param'
-events.
-
-We can later remove explicit calls to "trace2_cmd_list_config()" and
-"trace2_cmd_list_env_vars()" in git.c.
+Now that "trace2_cmd_name()" implicitly calls "trace2_cmd_list_config()"
+and "trace2_cmd_list_env_vars()", we don't need to explicitly call them.
 
 Signed-off-by: Jeff Hostetler <jeffhostetler@github.com>
 ---
- t/t0211-trace2-perf.sh | 6 +++---
- trace2.c               | 3 +++
- 2 files changed, 6 insertions(+), 3 deletions(-)
+ git.c | 6 ------
+ 1 file changed, 6 deletions(-)
 
-diff --git a/t/t0211-trace2-perf.sh b/t/t0211-trace2-perf.sh
-index 7b353195396..13ef69b92f8 100755
---- a/t/t0211-trace2-perf.sh
-+++ b/t/t0211-trace2-perf.sh
-@@ -320,7 +320,7 @@ test_expect_success 'expect def_params for normal builtin command' '
- # Representative query command dispatched in handle_options()
- # in git.c
- #
--test_expect_failure 'expect def_params for query command' '
-+test_expect_success 'expect def_params for query command' '
- 	try_simple "git --man-path" "_query_"
- '
+diff --git a/git.c b/git.c
+index 7068a184b0a..a769d72ab8f 100644
+--- a/git.c
++++ b/git.c
+@@ -373,8 +373,6 @@ static int handle_alias(int *argcp, const char ***argv)
+ 			strvec_pushv(&child.args, (*argv) + 1);
  
-@@ -337,7 +337,7 @@ test_expect_failure 'expect def_params for query command' '
- # remote-curl.c rather than git.c.  Confirm that we get def_param
- # events from both layers.
- #
--test_expect_failure 'expect def_params for remote-curl and _run_dashed_' '
-+test_expect_success 'expect def_params for remote-curl and _run_dashed_' '
- 	test_when_finished "rm prop.perf actual" &&
+ 			trace2_cmd_alias(alias_command, child.args.v);
+-			trace2_cmd_list_config();
+-			trace2_cmd_list_env_vars();
+ 			trace2_cmd_name("_run_shell_alias_");
  
- 	test_config_global "trace2.configParams" "cfg.prop.*" &&
-@@ -366,7 +366,7 @@ test_expect_failure 'expect def_params for remote-curl and _run_dashed_' '
- # an executable built from http-fetch.c.  Confirm that we get
- # def_param events from both layers.
- #
--test_expect_failure 'expect def_params for http-fetch and _run_dashed_' '
-+test_expect_success 'expect def_params for http-fetch and _run_dashed_' '
- 	test_when_finished "rm prop.perf actual" &&
+ 			ret = run_command(&child);
+@@ -411,8 +409,6 @@ static int handle_alias(int *argcp, const char ***argv)
+ 		COPY_ARRAY(new_argv + count, *argv + 1, *argcp);
  
- 	test_config_global "trace2.configParams" "cfg.prop.*" &&
-diff --git a/trace2.c b/trace2.c
-index facce641ef3..f894532d053 100644
---- a/trace2.c
-+++ b/trace2.c
-@@ -433,6 +433,9 @@ void trace2_cmd_name_fl(const char *file, int line, const char *name)
- 	for_each_wanted_builtin (j, tgt_j)
- 		if (tgt_j->pfn_command_name_fl)
- 			tgt_j->pfn_command_name_fl(file, line, name, hierarchy);
-+
-+	trace2_cmd_list_config();
-+	trace2_cmd_list_env_vars();
- }
+ 		trace2_cmd_alias(alias_command, new_argv);
+-		trace2_cmd_list_config();
+-		trace2_cmd_list_env_vars();
  
- void trace2_cmd_mode_fl(const char *file, int line, const char *mode)
+ 		*argv = new_argv;
+ 		*argcp += count - 1;
+@@ -462,8 +458,6 @@ static int run_builtin(struct cmd_struct *p, int argc, const char **argv)
+ 
+ 	trace_argv_printf(argv, "trace: built-in: git");
+ 	trace2_cmd_name(p->cmd);
+-	trace2_cmd_list_config();
+-	trace2_cmd_list_env_vars();
+ 
+ 	validate_cache_entries(the_repository->index);
+ 	status = p->fn(argc, argv, prefix);
 -- 
 gitgitgadget
-
