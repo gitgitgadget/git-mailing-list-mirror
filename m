@@ -1,151 +1,72 @@
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oo1-f52.google.com (mail-oo1-f52.google.com [209.85.161.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 265307D07C
-	for <git@vger.kernel.org>; Mon,  4 Mar 2024 23:52:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E08CB7D07C
+	for <git@vger.kernel.org>; Mon,  4 Mar 2024 23:53:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709596343; cv=none; b=C0qsitMJuHF2qzpy61bos18W6Uwmwm68EhuLHEAfXxTdBwhSrgLJ6pxKWGfCydFCuqazFUVsLkPodjKxEnz5JE/dPYX02+SXwVwcoqJFBHDMCEr2cBC6OlTsnM94KkrU///MGczb8fABfn+1uGQlAyP5W026cNBY6OULJiAsmxE=
+	t=1709596403; cv=none; b=eFrmdU5wBHpXFZpO+tFwPfdIWrcJUQfkVapEZi7Kr4AV3e9EMnOjRi7hN1IlvOZOWHkG6eqP6PdZeK2C4nTdQGMnylTzOBJ3eNl73P1nwcye54e70HAaaFMXc3IO9e/1WQgRYpF4yJl2AkXjM/5VzL558NCHCX+JTf422U6FjC4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709596343; c=relaxed/simple;
-	bh=xodU5BU61oR0F8hDvtJszo2vOhb00bVPg5ttc2+ccYs=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=U6l2N4DqV/ORwVyoZ2/YAR6g/+GzvVKL6qwqRMZ4RKs7iK6qoVLhMBL5MvYhI0si8qHuXk+kLUdQDDj/qH17bJKSWXA0cDVY0kAr3NSobPPvwMt2lUAsuXOV7h2k93yfVxrblNmkwgVlUJb8HW1burj4HujcuUjGmPyepBOiLUg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=m5wGUaHa; arc=none smtp.client-ip=64.147.108.70
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="m5wGUaHa"
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 50CCC1D1C1E;
-	Mon,  4 Mar 2024 18:52:15 -0500 (EST)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=xodU5BU61oR0
-	F8hDvtJszo2vOhb00bVPg5ttc2+ccYs=; b=m5wGUaHapLCe0zlmzgfs5nCOrQX+
-	cUVf3U8Hy29hpKc8pPxbDiaq24gy6XMHD+G0YJEZFzkz3QODUvhBPXtUIzBG7c+q
-	Uoxyt7gUvik80MhbsAL6a5lfAWTT/CoogS9rV1kHHkql0SdhG/ZjkOjy4OU7DPJd
-	DPStXQaI9uBoc+Q=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 48E291D1C1D;
-	Mon,  4 Mar 2024 18:52:15 -0500 (EST)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.176.30])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id B35BB1D1C1C;
-	Mon,  4 Mar 2024 18:52:14 -0500 (EST)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Kristoffer Haugsbakk <code@khaugsbakk.name>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH v3 2/5] advice: make all entries stylistically consistent
-In-Reply-To: <d48b4719c275ef06da014b6d22983db9ae484db2.1709590037.git.code@khaugsbakk.name>
-	(Kristoffer Haugsbakk's message of "Mon, 4 Mar 2024 23:07:27 +0100")
-References: <4ad5d4190649dcb5f26c73a6f15ab731891b9dfd.1709491818.git.code@khaugsbakk.name>
-	<cover.1709590037.git.code@khaugsbakk.name>
-	<d48b4719c275ef06da014b6d22983db9ae484db2.1709590037.git.code@khaugsbakk.name>
-Date: Mon, 04 Mar 2024 15:52:13 -0800
-Message-ID: <xmqq4jdlmu6q.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	s=arc-20240116; t=1709596403; c=relaxed/simple;
+	bh=s8UpZs3oPfOfOtBcqz8F3a6x2IjKYZz7KV12Xdz1La8=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=ZNTPRx3lvS/kgFv+NEkzZvnWWL2GL658jvS4eQbmf/gFuKpim/Ome2ygG+m9TIl2Mv8Ng1vr3UKnL1a6KXlXkiBB7XWyZZJmFuTDB2BHuKR30qlQXAJWAGoi69oulO7I+37S3t02VglP7QNk903mlXTGcz7F5dS9o7CSv7RQXAc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.161.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-oo1-f52.google.com with SMTP id 006d021491bc7-59fb0b5b47eso2249519eaf.3
+        for <git@vger.kernel.org>; Mon, 04 Mar 2024 15:53:20 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1709596400; x=1710201200;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=s8UpZs3oPfOfOtBcqz8F3a6x2IjKYZz7KV12Xdz1La8=;
+        b=pGYOzplMBFetKCF+x+Hz1EHovodrCmCcT8CniPLCfs2el7EFgM95A+WJaxiiIwOmbo
+         lyjXirBurvuK9rXYt72f9Oe6sXf91lv69skgilnqyR54wtnoLiO+4jZk4ijMb8eydSAm
+         1OEerAfjuqnYm4Eo2hCXfXCm2HGc3Gweulws3d2P+vbSK1QfVcYtGYYK+FR5NNsYaPYF
+         BF8WEYdd0rhKEYdeeERTD5ReuFjrcCzg1pFGt4BszYDmOEGACMYnYBnSOnVVBYCTpVu8
+         TXV86Oa2wtT2aGhKtXpf5HhuSAvFhiYdm+xcFOE25WP1zEYhbrLZ3MBbVG8++rnOBZx4
+         /SBQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVG15UPwun9ZRRXFiA6SDEh5fqauqOKAxzPYbD+PFZx37cDEyksOu30+ipZN8ud4I6HVhg+0fqlwuKs41U+7EvXDB9f
+X-Gm-Message-State: AOJu0YxENLYnOUGu2IuSPpIkQnkdih4bOhriTGqQksgTZG+M6EL519EV
+	aZZfeqlCS+OhuMvOM5Gt4Yftlvc1Bw5UY0wWKWu73PLw5470zDrw1303azkdJ6TIeIC6Ssl/Swu
+	GV3j8EafP9IdiiTA73VCImhWZEes=
+X-Google-Smtp-Source: AGHT+IFiXW4K4ugBxt90JAbzahUWQe6HEfKhNda92rL2BabJQ7nFS/H9W5mwOd762k42XpVRygfShUzIRrb73CMzmSE=
+X-Received: by 2002:a05:6358:70b:b0:176:40d5:2bd5 with SMTP id
+ e11-20020a056358070b00b0017640d52bd5mr200157rwj.6.1709596399989; Mon, 04 Mar
+ 2024 15:53:19 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID:
- 39ED5040-DA82-11EE-B187-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
+References: <20240227161734.52830-1-vincenzo.mezzela@gmail.com>
+ <20240304171732.64457-1-vincenzo.mezzela@gmail.com> <20240304171732.64457-2-vincenzo.mezzela@gmail.com>
+ <xmqqcys9oedq.fsf@gitster.g>
+In-Reply-To: <xmqqcys9oedq.fsf@gitster.g>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Date: Mon, 4 Mar 2024 18:53:08 -0500
+Message-ID: <CAPig+cTMiFfwTf0H+X8wecDwcKnOR=TQX54NGNs1oXmKQ4TrUw@mail.gmail.com>
+Subject: Re: [GSOC][PATCH v3 1/1] t7301: use test_path_is_(missing|file)
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Vincenzo Mezzela <vincenzo.mezzela@gmail.com>, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-Kristoffer Haugsbakk <code@khaugsbakk.name> writes:
+On Mon, Mar 4, 2024 at 4:51=E2=80=AFPM Junio C Hamano <gitster@pobox.com> w=
+rote:
+> Vincenzo Mezzela <vincenzo.mezzela@gmail.com> writes:
+> > Refactor test -f to utilize the corresponding helper functions from
+>
+> As Eric pointed out to another GSoC applicant in a different thread,
+> this is not refactoring any code, so saying "refactor" is a bit
+> misleading.
 
-> 1. Use =E2=80=9Cshown=E2=80=9D instead of =E2=80=9Cadvice shown=E2=80=9D
->    =E2=80=A2 =E2=80=9Cadvice=E2=80=9D is implied and a bit repetitive
-> 2. Use =E2=80=9Cwhen=E2=80=9D instead of =E2=80=9Cif=E2=80=9D
-> 3. Lead with =E2=80=9CShown when=E2=80=9D and end the entry with the ef=
-fect it has,
->    where applicable
-> 4. Use =E2=80=9Cthe user=E2=80=9D instead of =E2=80=9Ca user=E2=80=9D o=
-r =E2=80=9Cyou=E2=80=9D
-> 5. detachedHead: connect clause with a semicolon to make the sentence
->    flow better in this new context
-> 6. implicitIdentity: rewrite description in order to lead with *when*
->    the advice is shown (see point (3))
-> 7. Prefer the present tense (with the exception of pushNonFFMatching)
-> 8. Use a colon to connect the last clause instead of a comma
-> 9. waitingForEditor: give example of relevance in this new context
-> 10. pushUpdateRejected: exception to the above principles
+This is probably a reference to [1], though I was definitely thinking
+of [2] when I wrote [1], so we come full-circle.
 
-I'll let others comment on these as general principles.  I do not
-immediately see anything objectionable, but I may change my mind
-after reading the updated text in the patch.
-
-> Suggested-by: Junio C Hamano <gitster@pobox.com>
-
-I am getting too much credit for this; I merely suggested to use
-"when" instead of "if" in the one you are newly adding.
-
->  	detachedHead::
-> -		Advice shown when you used
-> +		Shown when the user uses
->  		linkgit:git-switch[1] or linkgit:git-checkout[1]
-> -		to move to the detached HEAD state, to instruct how to
-> +		to move to the detached HEAD state; instruct how to
->  		create a local branch after the fact.
-
-I agree "Advice shown when" -> "Shown when" is a good change for
-brevity, but I do not think the other change is an improvement.
-
-This advice message is shown when the user does X, in order to
-instruct the user how to do Y after that.  And "to instruct" is a
-common way to say the same thing as "in order to instruct".
-
->  	implicitIdentity::
-> -		Advice on how to set your identity configuration when
-> -		your information is guessed from the system username and
-> -		domain name.
-> +		Shown when the user's information is guessed from the
-> +		system username and domain name: tell the user how to
-> +		set their identity configuration.
-
-Should that be a colon?  Stopping a half-sentence and connecting to
-another half-sentence is usually done with a semicolon (like you did
-in the new version of detachedHEAD above).
-
-	Shown when ... and domain name, to tell the user how to set
-	their identity configuration.
-
-perhaps?  There may be other similar entries whose updated text uses
-colon followed by an imperative sentence, but I didn't look very
-carefully.
-
->  	statusUoption::
-> -		Advise to consider using the `-u` option to linkgit:git-status[1]
-> -		when the command takes more than 2 seconds to enumerate untracked
-> -		files.
-> +		Shown when linkgit:git-status[1] takes more than 2
-> +		seconds to enumerate untracked files: consider using the
-> +		`-u` option.
-
-Earlier ones after a colon (or semicolon in detachedHEAD case), you
-gave an order to the advice message (e.g. "hey detachedHead advice,
-tell the user how to create a local branch"), but this one is giving
-an order to the end user, which feels inconsistent.
-
-I do not have a strong objection against giving an order to the
-advice message, as long as it is done consistently.  If we did so,
-the part after the colon would start with "instruct the user ..." or
-"tell the user ..." and the like, and the gist of what this one
-would say would be "shown when it is taking too long: suggest the
-user to consider `-u`".
-
-FWIW, my earlier "in order to" took an approach that is different
-from either of the two "giving an order" approaches.  I was trying
-to make the description explain what the message tries to do and/or
-why the message is given (e.g., "shown if it takes too long in order
-to suggest users to consider the -u option").
-
-Thanks.
+[1]: https://lore.kernel.org/git/CAPig+cR2-6qONkosu7=3DqEQSJa_fvYuVQ0to47D5=
+qx904zW08Eg@mail.gmail.com/
+[2]: https://lore.kernel.org/git/xmqqmst2nszq.fsf@gitster.g/
