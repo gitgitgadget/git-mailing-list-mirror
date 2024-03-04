@@ -1,78 +1,78 @@
-Received: from wfhigh1-smtp.messagingengine.com (wfhigh1-smtp.messagingengine.com [64.147.123.152])
+Received: from wfout1-smtp.messagingengine.com (wfout1-smtp.messagingengine.com [64.147.123.144])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF87537168
-	for <git@vger.kernel.org>; Mon,  4 Mar 2024 10:49:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.152
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0A4B374F7
+	for <git@vger.kernel.org>; Mon,  4 Mar 2024 10:49:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709549349; cv=none; b=T5Z762YpUnYVEJOHYZQA134LgTuTZUr5AdXhv7ek2SLcgwoPE5o3it8teYKigKrJe6oqtD9pjtpCl41izTvrXwzj8Xx3tCnG5cMBkCq5BoWQufcLhMdgxSWDBM3BtKK6nmS97Us8JW9t38IvzMvPhJ0cJKqZUOnW7sJ+89hIops=
+	t=1709549354; cv=none; b=SD4YeMqLCbUXjuue7zXUy8egI4r/QIkSHIxK7FDr0BVYImI7RmKhKNMBcLThXZXypjw3EgWQafnqTwphviAu8bmu+Qgz/Or4TSMtZ1LgDuySjnI0y9xbCiO2JnXGHs1PgcN+I3qN40nqWpvPSc1GIA9xxB6DDM/CYM9JLkTFS+0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709549349; c=relaxed/simple;
-	bh=w2DTV972ahOSJpinc5cfiFuyXQD22YGlKTjoOSE0yko=;
+	s=arc-20240116; t=1709549354; c=relaxed/simple;
+	bh=NcrkbZlSmigEVwHejqtTk0By0yABRtTg03F/Hf5q3nI=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=l6tW6XrdrEXL9bV1yZvJirGXrQU68bXXC4ssXlpKaWd51Pa4kpyB7iVtULFwP6WK6/81+hDURt9l3eYm9g/rUxQAT8Mx3nmWB5WKSSQJYxrbGGQgoTDC84TMhXG0VSP6X9GqXqLHY1adDU7SE+Qn339UsmHIgmD6hH7gI7VHvCU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=OEbfF549; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=TLm9Myde; arc=none smtp.client-ip=64.147.123.152
+	 Content-Type:Content-Disposition:In-Reply-To; b=JNyepQKCzv6lgs9GTQM0OL6rsdtBjUZ/gTWRg5l0yFqO5neoES2FdY8kO2iIqKdvQIU5jtlBtpS4SIBIqRnglECAJuZ6Kpetdc127Z+CMNeXzgbsKNDsyt7whNVQxsScZtawr4JoJ09YOuT1M6V8GZyjS8TwYvYQEkqZ8pQEEiw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=jeQgNV0y; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=f1ycUS7M; arc=none smtp.client-ip=64.147.123.144
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="OEbfF549";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="TLm9Myde"
-Received: from compute7.internal (compute7.nyi.internal [10.202.2.48])
-	by mailfhigh.west.internal (Postfix) with ESMTP id 9C8FC18000A9;
-	Mon,  4 Mar 2024 05:49:06 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="jeQgNV0y";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="f1ycUS7M"
+Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
+	by mailfout.west.internal (Postfix) with ESMTP id 9E9941C00077;
+	Mon,  4 Mar 2024 05:49:11 -0500 (EST)
 Received: from mailfrontend2 ([10.202.2.163])
-  by compute7.internal (MEProxy); Mon, 04 Mar 2024 05:49:06 -0500
+  by compute2.internal (MEProxy); Mon, 04 Mar 2024 05:49:11 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1709549346; x=1709635746; bh=XliPYTK0RB
-	f8NUWc6N7GoRYBP1y0xRXLd0RGjrIYWro=; b=OEbfF549TnTZd2UzSyiBztSt9R
-	stPpFPUvh10a+O+ftODhoBWv7ZGENWeNQIMO1h1r5iSLgO52QvTBTdO3ZMHHz1AE
-	+3Tx1lsnXE7dI0bYCQHC5sVeHvBuvlFR/4vygAeu31E3bPYPpLHxF4Jv9kHENiTO
-	Jl/WJOSvqf0/0aiCBfa1KpXZTnxqRti+knq75RhWd/HjGbYRS2fcA2PxbYg5wUwZ
-	2KkTPkGtUIjYXauodGPASKT6PCvJuE1XZ3m/IEV6Zq+YDVq1ppa9IeTyhEy8BoMz
-	4lb+Jn34c/5u0kBA6agou46geSAbIEPg2gXHMA1tW1cBWA2LciuaOiTBVpaQ==
+	:subject:to:to; s=fm1; t=1709549351; x=1709635751; bh=tIyRvDKLhw
+	FxkuLPYRQD9XSRYkmbf7xWGrEsn58SABk=; b=jeQgNV0yKgBGbSAKMHCaG3kI7D
+	tQv45hDndWh/CyMDApvaIwZ+OaaMZkSaTzGDWV8cAyAtQbVOLQqW6/zfptcqXj+n
+	YKRv4gFXOAgn+oGiZXm6alC+OuYwDICbamrK/BEHLMaktxOsnCQfUrogq5XQgYTi
+	Kc6HdUFWCTXFXj943KStX7ODyDd0QkDWfsnsB1U1X54LHrb0ltRJ3rUSxhwzn2gO
+	yKq4Qra1NxlFTlyuSOnT3w/MUh+DPPWOkZ+1i4xqt3iOwo9yd0IhiY4gEgz25SVA
+	FkbCb5LJODWCCRUa0UwLGdkl4FKkLyShD8FWVtlt9/JhKj5Lexyv//27vV6g==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1709549346; x=1709635746; bh=XliPYTK0RBf8NUWc6N7GoRYBP1y0
-	xRXLd0RGjrIYWro=; b=TLm9MydedhS7QRH4mFX8OF6C9ooMtgsyv+Hol2wStoPI
-	F6Sy6DMOFAYPtC566g2+PYwQVXE57spvn0iReQC4Og33H/FBEZbXNINzBU19T4J5
-	F4tVYhD5nQ5Lo5HLqM8VHHTAbKDbnAHZuklpPQOARTtbgCG2MarUx7O4Y6nmxoKd
-	/begxIKJmYvzejcJoH4eL/pK1rk6yJFhdqaFYvpIjcdPNlmM73S9rv8bPrGJVydh
-	EMVJwZNvAeEt110vsj/k5jkAf3fHcqO9sP+FeW3g5Ui0uh3ccUweXtxcLaCMkFZY
-	V7lDV1Wt3VSqj4L+JZzsDoPyd3CCGPDqJyv3+qprlw==
-X-ME-Sender: <xms:IaflZSeC4SBMVwd4zhMHNpmdIhboLZF_D0u7dQSOqNaEtMuT-i98zw>
-    <xme:IaflZcOQ3bBC9l2EVRV7HFrZaUYRxyFBzw0eNx9oTm0zBoitdQ9cQK0thQhvmVqOf
-    7_exVLNWVEFiy6NWA>
-X-ME-Received: <xmr:IaflZTgtiuNnSuTcEvyUsOpg4y1JH3PwdL6CCWsactiR3nRTf5c3-U5FuwSUQpM-iNdq0Cp1tLf57-L6967X7E6P1Cn1n3LZqQOUGPZvp4RHnc8>
+	fm1; t=1709549351; x=1709635751; bh=tIyRvDKLhwFxkuLPYRQD9XSRYkmb
+	f7xWGrEsn58SABk=; b=f1ycUS7McljeqaNXaL6U1pZIkg0vPD1NptSZWPjiclgp
+	ZX+6YvyKm0+XhP+kxHDp9ahyjg3R/1+ussPIKbBxO7DdMLOJ4kzWo7h4CG8OErQu
+	+WWHxngem8ICqh1okE4cy8rGZTq/FoUenEIs/4Lmx2QLtubEyBbtuB9WqIWzkJng
+	cfgOtJs7yObaLd8H+K+4jPmGL68EqP5LYCYMrvZgHw2KsdnBgivatYbO3GjEF44H
+	bQkct0kcS0VmWu6j8CMrmLuXl/OBdnf8lXIqiF/5M4tAfXS7QrFP+pCuggx82NGZ
+	5+zWAxnmCNILiKaovY9GCT+4UKwQE1502t6CsFFveA==
+X-ME-Sender: <xms:JqflZdGY2Iwv-ZzkegwFXMJ4AVTlAoNkB4hAddwwUCblZ7TZAIEYuQ>
+    <xme:JqflZSXzJvjQcjQFxQqvy9Qb4HdZ5utoYmIgT-aTdlLOPMlNk3VTRgCJdiZYrdYbZ
+    sLChoyNRghivaprMA>
+X-ME-Received: <xmr:JqflZfIchdqPkwfKnlQgC2GE3uBk9NgzOXgoOOIOem98Q_tjzHJWibq3T_az-CffYstbkt8hfIRgO6z4_gYWgTQBNyQVLPcDWEfpPwj8UTJ9w70>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrheejgddulecutefuodetggdotefrodftvf
     curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
     uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
-    fjughrpeffhffvvefukfhfgggtuggjsehgtderredttdejnecuhfhrohhmpefrrghtrhhi
+    fjughrpeffhffvvefukfhfgggtuggjsehgtderredttddvnecuhfhrohhmpefrrghtrhhi
     tghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrh
-    hnpeetueevhffhudefvdegieeuieelgedthfegfedtueevjeejtdfgjeehudejuedtuden
-    ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
+    hnpeeukedtvedtffevleejtefgheehieegkeeluddvfeefgeehgfeltddtheejleffteen
+    ucevlhhushhtvghrufhiiigvpedunecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesph
     hkshdrihhm
-X-ME-Proxy: <xmx:IqflZf_8-IrCAa7Rrz6sm8CRtvfxn7qKRUq5mzQ6nqYEyaz50bHk0A>
-    <xmx:IqflZeuWqHgqGLWnh6BGPog1CTymln8szyj12SpGRJc1kF-CsBMVlw>
-    <xmx:IqflZWEA6kIXkqBWqMvBn1zuNO_J56NpoT8oLsLgN4bp1SRjkqlAGw>
-    <xmx:IqflZSKxEylNHIPN5zpv7EupOGQjerRoIX01g7KbZJBM-jLBQi48p7GGX9c>
+X-ME-Proxy: <xmx:J6flZTErqnIusIQ11hQ4uc_EyJBPmTcxc4fwmMLZQdA-Hu4AuSfpMQ>
+    <xmx:J6flZTUuskBnvSnw-GE5RSfi5jTyYFck1dZSn7cWTcUWhkB62N29Rg>
+    <xmx:J6flZePmI7FzavylUxi4EsRKsbLUzD9ert2v7rklWTOQGiWzeG0mMQ>
+    <xmx:J6flZeQlf2MMisgRIKqbMhRXE3UWyUuCRRpWjiyKnS_dh1OAAPf318rbFcQ>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 4 Mar 2024 05:49:05 -0500 (EST)
+ 4 Mar 2024 05:49:10 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id af12d105 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 4 Mar 2024 10:44:40 +0000 (UTC)
-Date: Mon, 4 Mar 2024 11:49:03 +0100
+	by vm-mail (OpenSMTPD) with ESMTPSA id 7eadf927 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 4 Mar 2024 10:44:45 +0000 (UTC)
+Date: Mon, 4 Mar 2024 11:49:08 +0100
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
 Cc: Justin Tobler <jltobler@gmail.com>, James Liu <james@jamesliu.io>
-Subject: [PATCH v3 05/13] reftable/merged: remove unnecessary null check for
- subiters
-Message-ID: <b4130061591e71117a47f7d505e0f6f9e0b57df5.1709548907.git.ps@pks.im>
+Subject: [PATCH v3 06/13] reftable/merged: handle subiter cleanup on close
+ only
+Message-ID: <0ab1be740ef3f067b6464f9982324f5ff7815ee9.1709548907.git.ps@pks.im>
 References: <cover.1707895758.git.ps@pks.im>
  <cover.1709548907.git.ps@pks.im>
 Precedence: bulk
@@ -82,128 +82,84 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="CqAUBkS3kqdwqZ7O"
+	protocol="application/pgp-signature"; boundary="cLg4nf3LezLYeb+e"
 Content-Disposition: inline
 In-Reply-To: <cover.1709548907.git.ps@pks.im>
 
 
---CqAUBkS3kqdwqZ7O
-Content-Type: text/plain; charset=utf-8
+--cLg4nf3LezLYeb+e
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-Whenever we advance a subiter we first call `iterator_is_null()`. This
-is not needed though because we only ever advance subiters which have
-entries in the priority queue, and we do not end entries to the priority
-queue when the subiter has been exhausted.
+When advancing one of the subiters fails we immediately release
+resources associated with that subiter. This is not necessary though as
+we will release these resources when closing the merged iterator anyway.
 
-Drop the check as well as the now-unused function. This results in a
-surprisingly big speedup:
-
-    Benchmark 1: show-ref: single matching ref (revision =3D HEAD~)
-      Time (mean =C2=B1 =CF=83):     138.1 ms =C2=B1   4.4 ms    [User: 135=
-=2E1 ms, System: 2.8 ms]
-      Range (min =E2=80=A6 max):   133.4 ms =E2=80=A6 167.3 ms    1000 runs
-
-    Benchmark 2: show-ref: single matching ref (revision =3D HEAD)
-      Time (mean =C2=B1 =CF=83):     134.4 ms =C2=B1   4.2 ms    [User: 131=
-=2E5 ms, System: 2.8 ms]
-      Range (min =E2=80=A6 max):   130.0 ms =E2=80=A6 164.0 ms    1000 runs
-
-    Summary
-      show-ref: single matching ref (revision =3D HEAD) ran
-        1.03 =C2=B1 0.05 times faster than show-ref: single matching ref (r=
-evision =3D HEAD~)
+Drop the logic and only release resources when the merged iterator is
+done. This is a mere cleanup that should help reduce the cognitive load
+when reading through the code.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- reftable/iter.c   |  5 -----
- reftable/iter.h   |  4 ----
- reftable/merged.c | 10 +---------
- 3 files changed, 1 insertion(+), 18 deletions(-)
+ reftable/merged.c | 12 ++----------
+ 1 file changed, 2 insertions(+), 10 deletions(-)
 
-diff --git a/reftable/iter.c b/reftable/iter.c
-index 8b5ebf6183..7aa30c4a51 100644
---- a/reftable/iter.c
-+++ b/reftable/iter.c
-@@ -16,11 +16,6 @@ license that can be found in the LICENSE file or at
- #include "reader.h"
- #include "reftable-error.h"
-=20
--int iterator_is_null(struct reftable_iterator *it)
--{
--	return !it->ops;
--}
--
- static void filtering_ref_iterator_close(void *iter_arg)
- {
- 	struct filtering_ref_iterator *fri =3D iter_arg;
-diff --git a/reftable/iter.h b/reftable/iter.h
-index 47d67d84df..537431baba 100644
---- a/reftable/iter.h
-+++ b/reftable/iter.h
-@@ -16,10 +16,6 @@ license that can be found in the LICENSE file or at
- #include "reftable-iterator.h"
- #include "reftable-generic.h"
-=20
--/* Returns true for a zeroed out iterator, such as the one returned from
-- * iterator_destroy. */
--int iterator_is_null(struct reftable_iterator *it);
--
- /* iterator that produces only ref records that point to `oid` */
- struct filtering_ref_iterator {
- 	int double_check;
 diff --git a/reftable/merged.c b/reftable/merged.c
-index ae74234472..29ad09f3d8 100644
+index 29ad09f3d8..d9ed4a19dd 100644
 --- a/reftable/merged.c
 +++ b/reftable/merged.c
-@@ -70,8 +70,7 @@ static void merged_iter_close(void *p)
- 	reftable_free(mi->subiters);
- }
+@@ -46,11 +46,8 @@ static int merged_iter_init(struct merged_iter *mi)
+ 				    &mi->subiters[i].rec);
+ 		if (err < 0)
+ 			return err;
+-		if (err > 0) {
+-			reftable_iterator_destroy(&mi->subiters[i].iter);
+-			reftable_record_release(&mi->subiters[i].rec);
++		if (err > 0)
+ 			continue;
+-		}
 =20
--static int merged_iter_advance_nonnull_subiter(struct merged_iter *mi,
--					       size_t idx)
-+static int merged_iter_advance_subiter(struct merged_iter *mi, size_t idx)
- {
- 	struct pq_entry e =3D {
- 		.index =3D idx,
-@@ -92,13 +91,6 @@ static int merged_iter_advance_nonnull_subiter(struct me=
-rged_iter *mi,
- 	return 0;
- }
+ 		merged_iter_pqueue_add(&mi->pq, &e);
+ 	}
+@@ -79,13 +76,8 @@ static int merged_iter_advance_subiter(struct merged_ite=
+r *mi, size_t idx)
+ 	int err;
 =20
--static int merged_iter_advance_subiter(struct merged_iter *mi, size_t idx)
--{
--	if (iterator_is_null(&mi->subiters[idx].iter))
+ 	err =3D iterator_next(&mi->subiters[idx].iter, &mi->subiters[idx].rec);
+-	if (err < 0)
++	if (err)
+ 		return err;
+-	if (err > 0) {
+-		reftable_iterator_destroy(&mi->subiters[idx].iter);
+-		reftable_record_release(&mi->subiters[idx].rec);
 -		return 0;
--	return merged_iter_advance_nonnull_subiter(mi, idx);
--}
--
- static int merged_iter_next_entry(struct merged_iter *mi,
- 				  struct reftable_record *rec)
- {
+-	}
+=20
+ 	merged_iter_pqueue_add(&mi->pq, &e);
+ 	return 0;
 --=20
 2.44.0
 
 
---CqAUBkS3kqdwqZ7O
+--cLg4nf3LezLYeb+e
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmXlpx8ACgkQVbJhu7ck
-PpRfHw/+OWd3WLiH0BMF5/ZVYfkFxYYJGBB5/KcKvyRkvfwCJj+h6rH27KMiyY9I
-ZVozV7pDkcVLoo/SDFe/dXxmnbfSL0DyZjQbNdaETnBd3BHzX8uv+HiVGaNWQToF
-qjxht85L3E8LHBfDmCXorigsfuMYe6wsx3+oYfpHBfSpaSQ/sVmW0ir7O5r5cVqy
-oYq122XbLecLXtfOu7NrMttRHMiTds0xI1lhnmiJknpVMvg2/s7U6mF3Qg7voek4
-O9ufScyG6MpUkyzAiXlXXuOBEjB05zQ7/wP1j6qAwDnE2VDcjNDxOpIW3w6bwSwQ
-UQ/DpZ/br0eNMlKKw4q4XcJuxFvcYpf0dgnNs0RucP0gYOPSH65nMuxVm2ZUP3JS
-qLanSlxM53LBKWYxcGxTfnogoBikpSNgWUmoL6SEGwDrt29njlmbWOg9Yko/q/WX
-AbKyvW+lUZxPqDUq+ymL2HVWZKkkxGN0SHtHoM/dZ+pw9y7My9SpbtPJZs0ITv9e
-BAFB9GedpxMJCgpFcIDTUCqkqSLsvfRUdculHH+aOROT2W6pcjOQ3T6sURKV3ZAO
-BaI/4apdSKi8L5IjQTuuX0M3WM0d57hnYyS5AULiZ3jkOlWpc19CpOLMEjW7D89R
-LMRuD0QpCjcytMc/WT0sgUY2N4KdtjdTKoOmka9W4rk7meTVrtw=
-=j96v
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmXlpyMACgkQVbJhu7ck
+PpR+4w/+NeF2KZXpA7prERfu0TJHwBgJb1ADTlsAz6z6BeWukj+C3KxouxaNYYlZ
+ID7ow3Z/SNabOqqbaRiELJGLLVceq77OYnLyzhg3An/VSImYIQvYTgTFaHqn8btV
+MmIQh8R6GixL5/iOcL0BKZl4Jn4mW8Er2BqC+ylSXCDSX3jZNwDYuHzYGDqOXo0z
+HLMm/fuTbBNn9USZ/Zzp15RTc7IwdTgUrgggWNvK5fGAB75+hfmINELD6pkjH6ap
+vCvDir2Lvq9T5Ea/cg1wGe3Pfh+2VVTVshFLmsMNaUAOvkOQ+m7qSvN1jSUOSZIb
+MxTIF1A12aaSvNEc36PRh5hHTmfVY5CR66PUmgtedA/ayDGxU5A5WpkaxhbPQO8O
+3NhuX2pYNDRul8Zo6dJjsZnXjFZLg/YV3jrW+SobIR5r0VpO21kH+h0CRScbXJSa
+3BhN0XvyBDhwQEoH+i2zN0jkQsVGaq3V/tq46x9JfPaCHO34jCInt9f0UviSTVgd
+YcGWn8dCMfpUgvxu83iSxVJfxND4O6th0ZSt31Hqw8DIN9BXVJ5E/qM+l8Vlr6cl
+GB5EkojYmzEfCKHAINpCXsPsi8qpHG3ErM+tfYtQ5MiXBnHrWGYg3wmOm7oGiGhp
++g6PCvII5A5Q3DyT/rlPESp1aPKeWIS5Um3K78E9ZmBoi8N0bZo=
+=vx35
 -----END PGP SIGNATURE-----
 
---CqAUBkS3kqdwqZ7O--
+--cLg4nf3LezLYeb+e--
