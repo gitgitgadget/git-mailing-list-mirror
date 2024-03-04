@@ -1,260 +1,109 @@
-Received: from mail-pf1-f174.google.com (mail-pf1-f174.google.com [209.85.210.174])
+Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDF9B4C600
-	for <git@vger.kernel.org>; Mon,  4 Mar 2024 15:19:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63A7747A48
+	for <git@vger.kernel.org>; Mon,  4 Mar 2024 15:40:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709565554; cv=none; b=dHyE7SFP8Hd+pTDsApKON4B0piYrAqhVVhKFRC285U0TZ6MoO916ya3NKK2BkxghmvTuWghPuACNekdxBZwj2O/MROYS57U+TrfHCeMhaqAHU3ylgWzf41uvxc9LDJq47RPs5qh9GNlAYorNW9AtoSV9Y27CuBxTeAZLbREt9wo=
+	t=1709566815; cv=none; b=EwSsuSS4N4wecfgmdcAZPKRP6OwyrdJFN02vEgQWNG5WOOS4uMuGCmyigGvM0cEIVPfqWoLO2pVZI67dwEtgz5NX6uf1N5u9Vm0ndwKOyiqrR7+QdX3Okn+qic/fD+GC5ulEGYJ+2R8jNm9U80N8+Z32K28Iw9dp5r4+a71UtXI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709565554; c=relaxed/simple;
-	bh=T7vwequKLTAPz3Z08I4XI8wK9qT48K3p4v0rMHb8koo=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=K+UgYL5r73FhTCrzzqdrg2uWk7ee1wMPZkD/bNAvmaxCzWufGzGpjXTqbZ9nj4lPwRL6/B7zip7sWriYeuWlNo6ppIthYjlb6RACrBxTyzVCib+9kDurxZrtUSzpkgryhoXWxFZM3PyJa90OkHflds5TBjXY6+wjus9PWqr1KDM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=glvQzwQM; arc=none smtp.client-ip=209.85.210.174
+	s=arc-20240116; t=1709566815; c=relaxed/simple;
+	bh=kApzRBFcJHKzlQubnt/sublO9sRQSCVTa2dl/iPmfTA=;
+	h=Message-ID:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=enOzdR5AzSoh3ps7QlbPnCHuaNBoy/W9qegvWV0v8Pl4z1fRXOV6gzKZ0YX73SjYIawunXLXEinlrW+ZVQOba9S4GkAgQKcBCMqltbMaOmYqgk/kWoU52+0t5IbwDuZ5jEw10luRzpuF9gM5m1XK8W7lJqw3GCJ7EnBV4wODmpg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=KOS90nUL; arc=none smtp.client-ip=209.85.128.44
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="glvQzwQM"
-Received: by mail-pf1-f174.google.com with SMTP id d2e1a72fcca58-6e5dddd3b95so1676740b3a.1
-        for <git@vger.kernel.org>; Mon, 04 Mar 2024 07:19:12 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KOS90nUL"
+Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-412e2dfa502so8840025e9.2
+        for <git@vger.kernel.org>; Mon, 04 Mar 2024 07:40:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1709565552; x=1710170352; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=o/pS0j83tH4qL3uqnVqZqqSE07+nqFRnZFElS9FH3MI=;
-        b=glvQzwQMF9Jl3FP4doBheYexH8WeQNII5PwQyzMoKiTndSyPfmvpW7egOvNJj0yUma
-         9gnrFNL7O5GXtuhejaB27Zdr/sqWoQAvioMDc6dJsbMV05+aJoDSTH94Kbrz2DEeB875
-         miA50aPdgQpBgqE0ElARH4Sh4lW2tZ1OXCxbNbCUPCWIJHDw60j8YbqAy3P7o+yKtv2E
-         Q7Oylm7nKtC5Ol225ohZF5ImlmxVJtBMJj3XKwTp4gfReuidXVSVGyZid3bfdfhU2kZJ
-         HgZxJmfyrCfwI5DS0KwKQ8IBjc7NAWxrUcJVGlf98LpVy+U28ZTMg5SB1MPSTW9VIDAy
-         jH+g==
+        d=gmail.com; s=20230601; t=1709566811; x=1710171611; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=LQqpM0Ak1/IsYRLlvHCk49NACDVPmgokRIUb0FkIFzk=;
+        b=KOS90nUL9HnoJoFxVAk6rNi9jXYXpZSOH3nl89YXP34FX3/gk+cx1PBl55/OMv54Jr
+         iVFop82JAW7/jnlr23RLRDxoqwoCvX+Gc76ksijukKQZigw8EEp0s1XUcZkAiu9I8gW7
+         9K2wYkzyjREHIEJn5BSWGqELVdMV6DL2+A90p72x3JjwvDtV1csz07VXNrOMuaEEHQkA
+         qEBRX1jPooKcwytoc6x+sxz6kvLgSnlXWICahh/6zTl8ijEPHdkSxYxOn4BJcjZ1IWSb
+         5KZXyZmc41mdwwkbDSUuPAhLt2BYFXhzpQMSMyko4HQFs1CeSGLA9BOVQiwlk1mh5Qwx
+         5WWA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1709565552; x=1710170352;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=o/pS0j83tH4qL3uqnVqZqqSE07+nqFRnZFElS9FH3MI=;
-        b=ik+utteuUiFOEj/RaeA0U8KkqFW4+Q0HNnqNrZh8i4tPodZFTcblnkBE7gXG+TtodY
-         yWp+I2RTPq0WLDgvIQhufOKCf9pAN6Ka+M9KmxQNXFsY+0Wl28HuYLGnwWMtr4Ow/Apf
-         jnJ4PPTeYU7to+F+iLCzaEB3gHZ5XjcOdqod9KpNbY/ndaXjKlSHLUFLPo0fU5vLxqK3
-         8s7m7d8l1Oo0crDo6t1/WIjkioy+KjzatsHVVseM0TfzuUN+Mm4jW1XmGpr9ubEncsRY
-         2burYs9X0S7DsFDLDeAkYvu59sH7n+L0+6FU+7NmVZ9NUglE5V5Gg8kRNfHH12QvHV05
-         9zPA==
-X-Forwarded-Encrypted: i=1; AJvYcCV6iHyaXViL47hVfRp3G3GVJE31GzmFQs9ygY2KxJ79ZAWmYAoucEzRTWnLGKO/aYE+q1I4I8fEMrMaK/rXKdyPdKWX
-X-Gm-Message-State: AOJu0YyESuSeMUsxe3Eoxva6Nmf3duwvKv8IX3frM1YzzYvxpbtFb/xr
-	lBQeERKZ5eWNGf3uALM2ZY0eL6Y0osJKB8nVuyyIpWDcZxoFVlMd6KSUljEK
-X-Google-Smtp-Source: AGHT+IFPyyZ0KiiP1TDWW6DxTsQ69hPjBgBx2M+6eXcFzk4aQR9QmfXdJYjifOVOm8wOembrXn6cKA==
-X-Received: by 2002:aa7:9dc4:0:b0:6e4:68fa:f1f9 with SMTP id g4-20020aa79dc4000000b006e468faf1f9mr10070218pfq.2.1709565550541;
-        Mon, 04 Mar 2024 07:19:10 -0800 (PST)
-Received: from localhost.localdomain ([2402:a00:401:a99b:f188:2dd3:d960:a8ab])
-        by smtp.gmail.com with ESMTPSA id fn24-20020a056a002fd800b006e4d42e218csm7347195pfb.41.2024.03.04.07.19.07
+        d=1e100.net; s=20230601; t=1709566811; x=1710171611;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=LQqpM0Ak1/IsYRLlvHCk49NACDVPmgokRIUb0FkIFzk=;
+        b=hOXHjxDJSsUM1DHXglMTC75Ouzn4Pg6P95tf7NSdbNqCOi02KVnjKi21v2zaRduNGY
+         MJNjC0QrKZjKRznpRMjZCcb8ea+ZYnkI/vAF2760DhEE3PLUdSzeL7cn6w0xltRiucpX
+         VCouMlou88xa/ct9gWRUwPkMwckbcXwwn1Qb0xIOYIo2MsunnDreeFhPBU/ovmVHmqQy
+         j37Jmc7Ux7vaW6OndbG2UEGVeXGRZJQ0KcjBJkzv5/kU2H9Dej9UZ4BjPZuXqEbTGVE8
+         5JRZdi3xV3s8paASHLDiL5hyFkmDhwz+PSpyvUXCZRYVzCE4X5YQo1S4ZuX/lR4tteWB
+         LpUA==
+X-Gm-Message-State: AOJu0YxRHp3vqy9XXCe/zF0i5EReqfGDsYIOXwEppoJ3i7dJTQv9ocbU
+	QcBI/7St1Kh0KIxq6GzWNTK/M/UbMA4EETv3iLIwCwJ4w58yVPcHBPNxIzp8
+X-Google-Smtp-Source: AGHT+IEX6dzOsS/aFY7PGsEpbs2E41x/gCqyWaq59+966BAr+Fz5cyqmEIsUyskR4i9l1ak+6zDVZA==
+X-Received: by 2002:a05:600c:474c:b0:412:c9e5:b2d7 with SMTP id w12-20020a05600c474c00b00412c9e5b2d7mr5920090wmo.19.1709566810794;
+        Mon, 04 Mar 2024 07:40:10 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id j42-20020a05600c1c2a00b00412db03f182sm7112892wms.11.2024.03.04.07.40.09
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 04 Mar 2024 07:19:10 -0800 (PST)
-From: Ghanshyam Thakkar <shyamthakkar001@gmail.com>
-To: shyamthakkar001@gmail.com
-Cc: christian.couder@gmail.com,
-	git@vger.kernel.org,
-	gitster@pobox.com,
-	johannes.schindelin@gmx.de,
-	newren@gmail.com
-Subject: [PATCH v2] setup: remove unnecessary variable
-Date: Mon,  4 Mar 2024 20:48:11 +0530
-Message-ID: <20240304151811.511780-1-shyamthakkar001@gmail.com>
-X-Mailer: git-send-email 2.44.0
-In-Reply-To: <20240229134114.285393-2-shyamthakkar001@gmail.com>
-References: <20240229134114.285393-2-shyamthakkar001@gmail.com>
+        Mon, 04 Mar 2024 07:40:09 -0800 (PST)
+Message-ID: <pull.1679.git.1709566808.gitgitgadget@gmail.com>
+From: "Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Mon, 04 Mar 2024 15:40:04 +0000
+Subject: [PATCH 0/4] trace2: move 'def_param' events into 'cmd_name' and 'cmd_alias'
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+To: git@vger.kernel.org
+Cc: Jeff Hostetler <jeffhostetler@github.com>
 
-The TODO comment suggested to heed core.bare from template config file
-if no command line override given. And the prev_bare_repository
-variable seems to have been placed for this sole purpose as it is not
-used anywhere else.
+Some Git commands do not emit def_param events for interesting config and
+environment variable settings. Let's fix that.
 
-However, it was clarified by Junio [1] that such values (including
-core.bare) are ignored intentionally and does not make sense to
-propagate them from template config to repository config. Also, the
-directories for the worktree and repository are already created, and
-therefore the bare/non-bare decision has already been made, by the
-point we reach the codepath where the TODO comment is placed.
-Therefore, prev_bare_repository does not have a usecase with/without
-supporting core.bare from template. And the removal of
-prev_bare_repository is safe as proved by the later part of the
-comment:
+Builtin commands compiled into git.c have the normal control flow and emit a
+cmd_name event and then def_param events for each interesting config and
+environment variable. However, some special "query" commands, like
+--exec-path, or some forms of alias expansion, emitted a cmd_name but did
+not emit def_param events.
 
-    "Unfortunately, the line above is equivalent to
-        is_bare_repository_cfg = !work_tree;
-    which ignores the config entirely even if no `--[no-]bare`
-    command line option was present.
+Also, special commands git-remote-https is built from remote-curl.c and
+git-http-fetch is built from http-fetch.c and do not use the normal set up
+in git.c. These emitted a cmd_name but not def_param events.
 
-    To see why, note that before this function, there was this call:
-        prev_bare_repository = is_bare_repository()
-    expanding the right hand side:
-        = is_bare_repository_cfg && !get_git_work_tree()
-        = is_bare_repository_cfg && !work_tree
-    note that the last simplification above is valid because nothing
-    calls repo_init() or set_git_work_tree() between any of the
-    relevant calls in the code, and thus the !get_git_work_tree()
-    calls will return the same result each time.  So, what we are
-    interested in computing is the right hand side of the line of
-    code just above this comment:
-        prev_bare_repository || !work_tree
-        = is_bare_repository_cfg && !work_tree || !work_tree
-        = !work_tree
-    because "A && !B || !B == !B" for all boolean values of A & B."
+To minimize the footprint of this commit, move the calls to
+trace2_cmd_list_config() and trace2_cmd_list_env_vars() into
+trace2_cmd_name() and trace2_cmd_alias() so that we always get a set
+def_param events when a cmd_name or cmd_alias event is generated.
 
-Therefore, remove the TODO comment and remove prev_bare_repository
-variable. Also, update relevant testcases and remove one redundant
-testcase.
+Users can define local config settings on a repo to classify/name a repo
+(e.g. "project-foo" vs "personal") and use the def_param feature to label
+Trace2 data so that (a third-party) telemetry service does not collect data
+on personal repos or so that telemetry from one work repo is distinguishable
+from another work repo.
 
-[1]: https://lore.kernel.org/git/xmqqjzonpy9l.fsf@gitster.g/
+Jeff Hostetler (4):
+  t0211: demonstrate missing 'def_param' events for certain commands
+  trace2: avoid emitting 'def_param' set more than once
+  trace2: emit 'def_param' set with 'cmd_name' event
+  trace2: remove unneeded calls to generate 'def_param' set
 
-Helped-by: Elijah Newren <newren@gmail.com>
-Helped-by: Junio C Hamano <gitster@pobox.com>
-Signed-off-by: Ghanshyam Thakkar <shyamthakkar001@gmail.com>
----
- setup.c                  | 36 +++---------------------------------
- t/t1301-shared-repo.sh   | 15 ++-------------
- t/t5606-clone-options.sh |  6 +++---
- 3 files changed, 8 insertions(+), 49 deletions(-)
+ git.c                  |   6 --
+ t/t0211-trace2-perf.sh | 231 +++++++++++++++++++++++++++++++++++++++++
+ trace2.c               |  15 +++
+ 3 files changed, 246 insertions(+), 6 deletions(-)
 
-diff --git a/setup.c b/setup.c
-index b69b1cbc2a..81accd1213 100644
---- a/setup.c
-+++ b/setup.c
-@@ -1961,7 +1961,6 @@ void create_reference_database(unsigned int ref_storage_format,
- static int create_default_files(const char *template_path,
- 				const char *original_git_dir,
- 				const struct repository_format *fmt,
--				int prev_bare_repository,
- 				int init_shared_repository)
- {
- 	struct stat st1;
-@@ -1996,34 +1995,8 @@ static int create_default_files(const char *template_path,
- 	 */
- 	if (init_shared_repository != -1)
- 		set_shared_repository(init_shared_repository);
--	/*
--	 * TODO: heed core.bare from config file in templates if no
--	 *       command-line override given
--	 */
--	is_bare_repository_cfg = prev_bare_repository || !work_tree;
--	/* TODO (continued):
--	 *
--	 * Unfortunately, the line above is equivalent to
--	 *    is_bare_repository_cfg = !work_tree;
--	 * which ignores the config entirely even if no `--[no-]bare`
--	 * command line option was present.
--	 *
--	 * To see why, note that before this function, there was this call:
--	 *    prev_bare_repository = is_bare_repository()
--	 * expanding the right hand side:
--	 *                 = is_bare_repository_cfg && !get_git_work_tree()
--	 *                 = is_bare_repository_cfg && !work_tree
--	 * note that the last simplification above is valid because nothing
--	 * calls repo_init() or set_git_work_tree() between any of the
--	 * relevant calls in the code, and thus the !get_git_work_tree()
--	 * calls will return the same result each time.  So, what we are
--	 * interested in computing is the right hand side of the line of
--	 * code just above this comment:
--	 *     prev_bare_repository || !work_tree
--	 *        = is_bare_repository_cfg && !work_tree || !work_tree
--	 *        = !work_tree
--	 * because "A && !B || !B == !B" for all boolean values of A & B.
--	 */
-+
-+	is_bare_repository_cfg = !work_tree;
- 
- 	/*
- 	 * We would have created the above under user's umask -- under
-@@ -2175,7 +2148,6 @@ int init_db(const char *git_dir, const char *real_git_dir,
- 	int exist_ok = flags & INIT_DB_EXIST_OK;
- 	char *original_git_dir = real_pathdup(git_dir, 1);
- 	struct repository_format repo_fmt = REPOSITORY_FORMAT_INIT;
--	int prev_bare_repository;
- 
- 	if (real_git_dir) {
- 		struct stat st;
-@@ -2201,7 +2173,6 @@ int init_db(const char *git_dir, const char *real_git_dir,
- 
- 	safe_create_dir(git_dir, 0);
- 
--	prev_bare_repository = is_bare_repository();
- 
- 	/* Check to see if the repository version is right.
- 	 * Note that a newly created repository does not have
-@@ -2214,8 +2185,7 @@ int init_db(const char *git_dir, const char *real_git_dir,
- 	validate_ref_storage_format(&repo_fmt, ref_storage_format);
- 
- 	reinit = create_default_files(template_dir, original_git_dir,
--				      &repo_fmt, prev_bare_repository,
--				      init_shared_repository);
-+				      &repo_fmt, init_shared_repository);
- 
- 	/*
- 	 * Now that we have set up both the hash algorithm and the ref storage
-diff --git a/t/t1301-shared-repo.sh b/t/t1301-shared-repo.sh
-index b1eb5c01b8..29cf8a9661 100755
---- a/t/t1301-shared-repo.sh
-+++ b/t/t1301-shared-repo.sh
-@@ -52,7 +52,7 @@ test_expect_success 'shared=all' '
- 	test 2 = $(git config core.sharedrepository)
- '
- 
--test_expect_failure 'template can set core.bare' '
-+test_expect_success 'template cannot set core.bare' '
- 	test_when_finished "rm -rf subdir" &&
- 	test_when_finished "rm -rf templates" &&
- 	test_config core.bare true &&
-@@ -60,18 +60,7 @@ test_expect_failure 'template can set core.bare' '
- 	mkdir -p templates/ &&
- 	cp .git/config templates/config &&
- 	git init --template=templates subdir &&
--	test_path_exists subdir/HEAD
--'
--
--test_expect_success 'template can set core.bare but overridden by command line' '
--	test_when_finished "rm -rf subdir" &&
--	test_when_finished "rm -rf templates" &&
--	test_config core.bare true &&
--	umask 0022 &&
--	mkdir -p templates/ &&
--	cp .git/config templates/config &&
--	git init --no-bare --template=templates subdir &&
--	test_path_exists subdir/.git/HEAD
-+	test_path_is_missing subdir/HEAD
- '
- 
- test_expect_success POSIXPERM 'update-server-info honors core.sharedRepository' '
-diff --git a/t/t5606-clone-options.sh b/t/t5606-clone-options.sh
-index a400bcca62..e93e0d0cc3 100755
---- a/t/t5606-clone-options.sh
-+++ b/t/t5606-clone-options.sh
-@@ -120,14 +120,14 @@ test_expect_success 'prefers -c config over --template config' '
- 
- '
- 
--test_expect_failure 'prefers --template config even for core.bare' '
-+test_expect_success 'ignore --template config for core.bare' '
- 
- 	template="$TRASH_DIRECTORY/template-with-bare-config" &&
- 	mkdir "$template" &&
- 	git config --file "$template/config" core.bare true &&
- 	git clone "--template=$template" parent clone-bare-config &&
--	test "$(git -C clone-bare-config config --local core.bare)" = "true" &&
--	test_path_is_file clone-bare-config/HEAD
-+	test "$(git -C clone-bare-config config --local core.bare)" = "false" &&
-+	test_path_is_missing clone-bare-config/HEAD
- '
- 
- test_expect_success 'prefers config "clone.defaultRemoteName" over default' '
+
+base-commit: 0f9d4d28b7e6021b7e6db192b7bf47bd3a0d0d1d
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1679%2Fjeffhostetler%2Falways-emit-def-param-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1679/jeffhostetler/always-emit-def-param-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/1679
 -- 
-2.44.0
-
+gitgitgadget
