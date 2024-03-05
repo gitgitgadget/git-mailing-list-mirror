@@ -1,108 +1,143 @@
-Received: from ring.crustytoothpaste.net (ring.crustytoothpaste.net [172.105.110.227])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f53.google.com (mail-wm1-f53.google.com [209.85.128.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEB4D12BEAA
-	for <git@vger.kernel.org>; Tue,  5 Mar 2024 22:48:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.110.227
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22D2612D1FA
+	for <git@vger.kernel.org>; Tue,  5 Mar 2024 22:52:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709678933; cv=none; b=H+OwLqMsBH9fimCG/oybSRcSfb7yjRBiEMFvB6HHOdoT9UQ3h4qP0JNVQ9NmlXmUW+zga/xwlrl0+EI/rZkdtaNnjEuT/mLB7oMwWiwvWSS1hQXSAhUR/PIioM4bKnU/ge4m03h+0o9gSN4hRXvzhNCrdJVACFUCsqkGq6zDX9A=
+	t=1709679156; cv=none; b=LslDXAbyMXR06XpQFRcw+90F1nbaDMNA4y5DwHA8hbl2B38SGXuKyjXpDfy3Ayrm8hni+WZZlhjZ0+iGWE1dHFt/UAItKwAvVjEUCSiV81FzlRSWXgk7uAsRcc+mQ/CKa8oiWV/rt2pu4K8C+2tgY7Q8jV2Ic7WGfV1pD1ZJ/c8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709678933; c=relaxed/simple;
-	bh=L/63jKbK6UVT9BSZK7Xd7zT2xOBp2RTEHNIEw753gas=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=P8yoscyVCWvhxgtTeQip00ht5J4dmkADM4MSUyC2x+QRZuq29eat59Mh9BffkTHYNFSELlqd50dpWL0b0uPPnyBVuXeH1Kup4XK3KGQ/iy72X4F18DSSkNVHY43n8Py4v29FxOOvcLzc9bnq5YThDTaY/uwPxMgP5jjFRuSEDOM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=CuaBmcT2; arc=none smtp.client-ip=172.105.110.227
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
+	s=arc-20240116; t=1709679156; c=relaxed/simple;
+	bh=x5XSgAwByyZQa2dYotOz6IqdOeMJ/HjuTShSqW4sp1E=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=Hy+N8lAUIeD6uGWZtzhbCUhIFSqvDyqH2YpqOotUrFKq0oLUGl1bNYg0zUix482OW9wOHDRzoU0guIKjckUd3t6z1c/s7e1GjYomubdVzb7j9fMySEjC9zXkiMIT5Y/jiTqFCRjppnnFVKHvoHdFiD5xlrwlgFhmLsJZ6rBfmCs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=m8Y6qkHy; arc=none smtp.client-ip=209.85.128.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="CuaBmcT2"
-Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:e59a:3ed0:5f5c:31f3])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (P-256) server-signature RSA-PSS (3072 bits) server-digest SHA256)
-	(No client certificate requested)
-	by ring.crustytoothpaste.net (Postfix) with ESMTPSA id 2A1D05B3CB;
-	Tue,  5 Mar 2024 22:48:44 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1709678924;
-	bh=L/63jKbK6UVT9BSZK7Xd7zT2xOBp2RTEHNIEw753gas=;
-	h=Date:From:To:Cc:Subject:References:Content-Type:
-	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-	 Content-Type:Content-Disposition;
-	b=CuaBmcT26JdHD23in9owWHkqvo5E1rgYeJQKTsJptdQDzoe2UsrFLTdOkNaQXq8au
-	 emIjInPs20RWuWLWLPJ73c+e0mpFz0dYl3eVhoYJpgNA+Hs2MLwwE3ri716LN6KIYv
-	 zlNh1cdVGamuZLSGzHUT35YJJzRJdWPaWCuoY/JaZ5BDtdUd0ieWHsp+MvdWz7KPMF
-	 0ptNK8nYv9zd9eA37Ucf9p83hZzEe+aMAY5vOjBr6INojAda+ZHAtDOWxcWT6GH0HA
-	 QY9lfzWCIJiE9FUJw/8mUSkPam7vzM73iVOVAmuiKTs75YkilYIMxn7mvPXNaSewtz
-	 KUo0TrIa1WfCJnyGWXiUe8NmGL7Vq/UDX/bFRYxiLoIp3P5SsWjmSqy+0fdzpfSmig
-	 loOYc6uTjIBZzd0KmpFPIGv8MEZYL+g6QhLAvMQK2OfaEwOd9v3YzNrE0/m1A3e0eg
-	 t2zeJXn31kfwT1rj9d4z5V5TL3ONYks+1lfmMl0uM8G6AhFJo6G
-Date: Tue, 5 Mar 2024 22:48:42 +0000
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: Kristoffer Haugsbakk <code@khaugsbakk.name>
-Cc: Manlio Perillo <manlio.perillo@gmail.com>, git@vger.kernel.org
-Subject: Re: Clarify the meaning of "character" in the documentation
-Message-ID: <ZeehSl-u3qAXKjF_@tapette.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Kristoffer Haugsbakk <code@khaugsbakk.name>,
-	Manlio Perillo <manlio.perillo@gmail.com>, git@vger.kernel.org
-References: <CAAToxAEE-2B_8Wqrquk1peOnqTbOpV_8KZmsJ2dgk-mfCZXHiA@mail.gmail.com>
- <5e10f1e5-b87f-43cd-ac1e-d7c01b7dad21@app.fastmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="m8Y6qkHy"
+Received: by mail-wm1-f53.google.com with SMTP id 5b1f17b1804b1-412eeb018ffso8357275e9.1
+        for <git@vger.kernel.org>; Tue, 05 Mar 2024 14:52:34 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1709679153; x=1710283953; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=rRlqjD4P0ukjUTQRxcSro0liNlxeB7+nKAjiTv4orSo=;
+        b=m8Y6qkHySuVjha0Ob/5Zz0yfLnZOhkrm9uPI10g/8VKQbp+mdGJePhDE7/uazrpXJs
+         fP6HyMc9aSP+Bf+xpZPEsSmqZBPYeXMFcYzEof4jZGj4vYjLuLjyC+dziyWwHZw9UtmA
+         fRMWS9YeNDPKNET1cgnlxCa3KK4tTGyOz2bN6fDerlzMOHHDw9W8SmFzuJtZqr4gl7WH
+         RKOBb4Ob6RwRQ20G0UWy/tuacQtgNrFlSg6ln5n501QRZjBHzVqfgEyfkAtvlrpqAOE6
+         KFrsbknBj4PzWg4aKfj9XLD2AMvkZqr3hdGcDfOxX300FH+pOqElgzZ6YvXYXwkTjRta
+         IoIA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1709679153; x=1710283953;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=rRlqjD4P0ukjUTQRxcSro0liNlxeB7+nKAjiTv4orSo=;
+        b=p7Y0nedW5EldRUIO388oJYApDug43jj9HWLWvLkyHlejdNKcomhw56Yf9pEkPlfSfp
+         cWOVozwnVuHRWrxeevMn/+6PQWSRNgERsNDi2ui/WIRS3isEpzd+i9zHcWbZMOrQuXvi
+         PiNMfoMgl7q9mS2bA6+21onxgFbLijAmePHj/NOoZw9jtHepiIEEjo7Su4WRZ6F++4Fw
+         TdDkN/M/EF390RN8giPRUaSwjKWsYZdYWQ2IPYam19kQuZVbYd3FPrqRtIfHTh1+8qCI
+         O5dgDl2mvhIx87juS17KoA+yWBhCC2YRjfk8efffzcUe1qrA+FeTLH823jhczT3gKHff
+         I3wA==
+X-Forwarded-Encrypted: i=1; AJvYcCXnLNeQpzAmw6hrAikUmVedLZXkoTVfxZuYIYDEuqno+jC2pD/9kfxQaNc0UidoDkwNTemB1CAegohkn15Ea6RZEv7Y
+X-Gm-Message-State: AOJu0Yxgv8WWMkFN6f9/2J0GNwWY5b/0qxX6pZ7KjFZfbGiV8QzJfpZc
+	SqfHNXiPCKHxw6jpSvzu2b+81Gh1I9W9HSgTvK3iubvLrez+H+f5
+X-Google-Smtp-Source: AGHT+IGqNZ1h/XsIPFM2p45qvCkRxnoZ/JDs53LrWEB1Y7hxXObd0lQ6AipfkrA3W4/u0a5KCO8obw==
+X-Received: by 2002:adf:e589:0:b0:33d:ae69:715d with SMTP id l9-20020adfe589000000b0033dae69715dmr9258665wrm.27.1709679153340;
+        Tue, 05 Mar 2024 14:52:33 -0800 (PST)
+Received: from gmail.com (59.red-88-14-210.dynamicip.rima-tde.net. [88.14.210.59])
+        by smtp.gmail.com with ESMTPSA id h12-20020a05600c314c00b00412f0fa5c6asm1143679wmo.23.2024.03.05.14.52.27
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 05 Mar 2024 14:52:32 -0800 (PST)
+Message-ID: <8b9667e5-0d2f-4624-8f7c-f8400250a21e@gmail.com>
+Date: Tue, 5 Mar 2024 23:52:18 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="5UxUmwa7vptbVD5I"
-Content-Disposition: inline
-In-Reply-To: <5e10f1e5-b87f-43cd-ac1e-d7c01b7dad21@app.fastmail.com>
-User-Agent: Mutt/2.2.12 (2023-09-09)
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 14/22] t/t9*: avoid redundant uses of cat
+Content-Language: en-US
+To: Beat Bolli <bb@drbeat.li>, git@vger.kernel.org
+Cc: Junio C Hamano <gitster@pobox.com>, Beat Bolli <dev+git@drbeat.li>
+References: <20240305212533.12947-1-dev+git@drbeat.li>
+ <20240305212533.12947-15-dev+git@drbeat.li>
+From: =?UTF-8?Q?Rub=C3=A9n_Justo?= <rjusto@gmail.com>
+In-Reply-To: <20240305212533.12947-15-dev+git@drbeat.li>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
+On Tue, Mar 05, 2024 at 10:25:13PM +0100, Beat Bolli wrote:
+> Signed-off-by: Beat Bolli <dev+git@drbeat.li>
+> ---
+>  t/t9300-fast-import.sh          | 10 +++++-----
+>  t/t9350-fast-export.sh          |  2 +-
+>  t/t9400-git-cvsserver-server.sh | 35 +++++++++++++++------------------
+>  t/t9802-git-p4-filetype.sh      |  2 +-
+>  t/t9807-git-p4-submit.sh        |  2 +-
+>  t/t9824-git-p4-git-lfs.sh       |  4 ++--
+>  6 files changed, 26 insertions(+), 29 deletions(-)
+> 
+> diff --git a/t/t9300-fast-import.sh b/t/t9300-fast-import.sh
+> index dbb5042b0b8f..c03adbdd145f 100755
+> --- a/t/t9300-fast-import.sh
+> +++ b/t/t9300-fast-import.sh
+> @@ -986,7 +986,7 @@ test_expect_success 'L: nested tree copy does not corrupt deltas' '
+>  	test_when_finished "git update-ref -d refs/heads/L2" &&
+>  	git fast-import <input &&
+>  	git ls-tree L2 g/b/ >tmp &&
+> -	cat tmp | cut -f 2 >actual &&
+> +	cut -f 2 <tmp >actual &&
+>  	test_cmp expect actual &&
 
---5UxUmwa7vptbVD5I
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Nit: Maybe we can avoid tmp.
 
-On 2024-03-05 at 09:00:06, Kristoffer Haugsbakk wrote:
->=20
-> On Tue, Mar 5, 2024, at 09:43, Manlio Perillo wrote:
-> > I sent this email after reading the documentation of "git diff
-> > --color-moved=3Dblocks, where the text says:
-> >> Blocks of moved text of at least 20 alphanumeric characters are detect=
-ed greedily.
-> >
-> > In this case it is not clear if the number of characters are counted
-> > as UTF-8 or normal 8bit bytes.
->=20
-> Alphanumeric characters (a-z and A-Z and 0-9) are ASCII. And one ASCII
-> char is represented using one byte in UTF-8. This already looks precise
-> to me.
+>  	git fsck $(git rev-parse L2)
+>  '
+> @@ -2012,7 +2012,7 @@ test_expect_success 'Q: verify first notes tree' '
+>  	100644 blob $commit2
+>  	100644 blob $commit3
+>  	EOF
+> -	cat expect.unsorted | sort >expect &&
+> +	sort expect.unsorted >expect &&
 
-I don't believe that's an appropriate definition. =C3=A9 is an alphanumeric
-character, as is =C3=A7.  =C2=BD is numeric.  I would argue an alphanumeric
-character comprises at least Unicode classes Ll, Lm, Lo, Lt, Lu, and Nd.
-Unicode TR#18 agrees with my assessment.
+Nit: I wonder if we can also avoid the cat that just precedes this hunk.
 
-If we wanted to restrict it ASCII, we need to state that explicitly.
-Alternately, if the constraint is 20 UTF-8 octets or something else, we
-should state that instead.
---=20
-brian m. carlson (he/him or they/them)
-Toronto, Ontario, CA
+>  '
+> @@ -2053,7 +2053,7 @@ test_expect_success 'Q: verify second notes tree' '
+>  	100644 blob $commit2
+>  	100644 blob $commit3
+>  	EOF
+> -	cat expect.unsorted | sort >expect &&
+> +	sort expect.unsorted >expect &&
 
---5UxUmwa7vptbVD5I
-Content-Type: application/pgp-signature; name="signature.asc"
+Ditto.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.4.4 (GNU/Linux)
+>  	git cat-file -p refs/notes/foobar^^{tree} | sed "s/ [0-9a-f]*	/ /" >actual &&
+>  	test_cmp expect actual
+>  '
+> @@ -2091,7 +2091,7 @@ test_expect_success 'Q: verify third notes tree' '
+>  	cat >expect.unsorted <<-EOF &&
+>  	100644 blob $commit1
+>  	EOF
+> -	cat expect.unsorted | sort >expect &&
+> +	sort expect.unsorted >expect &&
 
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZeehSQAKCRB8DEliiIei
-gbTTAQDyb+8RoM0EA9UZWYTTZIw6WzGcolO92Xlzt7vr23s4uQD+L86Su+cGG94l
-2gylIDxN83vtnqnm+eCkRAN9YqKWWgU=
-=bQRW
------END PGP SIGNATURE-----
+Ditto.
 
---5UxUmwa7vptbVD5I--
+>  	git cat-file -p refs/notes/foobar2^{tree} | sed "s/ [0-9a-f]*	/ /" >actual &&
+>  	test_cmp expect actual
+>  '
+> @@ -2118,7 +2118,7 @@ test_expect_success 'Q: verify fourth notes tree' '
+>  	cat >expect.unsorted <<-EOF &&
+>  	100644 blob $commit2
+>  	EOF
+> -	cat expect.unsorted | sort >expect &&
+> +	sort expect.unsorted >expect &&
+
+Ditto.
