@@ -1,98 +1,102 @@
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+Received: from wfhigh4-smtp.messagingengine.com (wfhigh4-smtp.messagingengine.com [64.147.123.155])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1AA117581
-	for <git@vger.kernel.org>; Tue,  5 Mar 2024 17:37:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED2C317591
+	for <git@vger.kernel.org>; Tue,  5 Mar 2024 17:49:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709660258; cv=none; b=MAHRD8Q9mdOWl1Y0t8/e5DrT5PfD0hPAKdK6B0l7DBN/U/f55qnGjFQR5kQ2bL68kEjHZrILOsm8nTP4RyNo/iPpt0YB8jFiV3ZcAET4PpzACYOSJlUqieqlJQlE7kCN73EF1z6BFajThmbDDvV2mP0uGecDBxYLmH5H0m2Ht20=
+	t=1709660993; cv=none; b=JjvTZrhLe5DD2+aLjBXRufAhLT6s5Lu4ey5dJ/9WJ2ZAZc0qNnuXVaICVmASlSmzgY7+EM+6ID62o0E8zoUb0eUXwgAGoKGSpSiMNLGvS6BKyh6PAgsNVWTbd6ECVTth+/dbKskvULtOZzpG0GH0H6duMnw6sVU3gVtCnd50MXA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709660258; c=relaxed/simple;
-	bh=UFD6me//ahDz+RkFpI03jtQtTzvG0ryiknoSfSyKdJs=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=SatUtMcmnkQ4D7z5t7CU1KN0dBmnBaxmUdBQFGCTd+qTePNcE+/Nt/YJF2hfQJme0UycmlTfkXRHtu9yA/Ce+uPynD4EeBqeqd62r1oGU0I4N3vKKCySRIESscMjYRAtWAgxwe1lZ8j2Aq8lPV4guFhLGlMneId1pTobBXy5zdM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=XCMRZ7mE; arc=none smtp.client-ip=173.228.157.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1709660993; c=relaxed/simple;
+	bh=/GN0Mc1GDBtevxy4ckby+D52N/a8doSVedv6XnfEPqQ=;
+	h=MIME-Version:Message-Id:In-Reply-To:References:Date:From:To:Cc:
+	 Subject:Content-Type; b=ZUnwV7F3tuH9BfhLc/XZ7rXDIQhhpa6EeP1RttBwal+BDPsgtFueIWixcrW3IO1tG7XhMcEZNCd0wm+ioIdslXgV5SN7sDFAwPqyrCakcu47f6Fes5/FzbNoCiAFHZI+c7TV7N2X/OJGxEp2PKMXkquBoNP3iUWLMMT+rjBg2yg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=khaugsbakk.name; spf=pass smtp.mailfrom=khaugsbakk.name; dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b=vg9qh4qP; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=OsTe/Zre; arc=none smtp.client-ip=64.147.123.155
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=khaugsbakk.name
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=khaugsbakk.name
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="XCMRZ7mE"
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 6127D3E4C0;
-	Tue,  5 Mar 2024 12:37:36 -0500 (EST)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=UFD6me//ahDz+RkFpI03jtQtTzvG0ryiknoSfS
-	yKdJs=; b=XCMRZ7mE69FQTh37gcUPNl/nA1y+lplwy6xPWPUMtxXs7nqI4dfNyO
-	mqUkIx3I+w1KbzLDDzRhPiOeVqxNVK1LjJfIBDnXdmqmU4efSHDBKX+sp0hUuwAq
-	om9WuDDWsCK+36tCZ1D0HGkYstuEM3jYmpJYrGxlo1fNNXtSYEOzA=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 582323E4BF;
-	Tue,  5 Mar 2024 12:37:36 -0500 (EST)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.185.65])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id D32123E4BC;
-	Tue,  5 Mar 2024 12:37:31 -0500 (EST)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Kristoffer Haugsbakk <code@khaugsbakk.name>
-Cc: Manlio Perillo <manlio.perillo@gmail.com>,  git@vger.kernel.org
-Subject: Re: Clarify the meaning of "character" in the documentation
-In-Reply-To: <9633f9be5ddd9ab3df4b79ee934e1ed47e90bd1d.1709656683.git.code@khaugsbakk.name>
-	(Kristoffer Haugsbakk's message of "Tue, 5 Mar 2024 17:51:08 +0100")
-References: <xmqqsf1466eh.fsf@gitster.g>
-	<9633f9be5ddd9ab3df4b79ee934e1ed47e90bd1d.1709656683.git.code@khaugsbakk.name>
-Date: Tue, 05 Mar 2024 09:37:30 -0800
-Message-ID: <xmqqedco37hh.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b="vg9qh4qP";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="OsTe/Zre"
+Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
+	by mailfhigh.west.internal (Postfix) with ESMTP id A18FA18000A7;
+	Tue,  5 Mar 2024 12:49:50 -0500 (EST)
+Received: from imap49 ([10.202.2.99])
+  by compute1.internal (MEProxy); Tue, 05 Mar 2024 12:49:51 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=khaugsbakk.name;
+	 h=cc:cc:content-type:content-type:date:date:from:from
+	:in-reply-to:in-reply-to:message-id:mime-version:references
+	:reply-to:subject:subject:to:to; s=fm3; t=1709660990; x=
+	1709747390; bh=IgcQr5Ip7T3qxa3LT0feew0QvTWVBHs6zJCSmlNY7wc=; b=v
+	g9qh4qPkZ7f6LO4BQbB95lJCN8VlCK+legV7fVh4GnYuQuCC+DMM3nUnQnbH23e9
+	Nz1C6CYWjeNj3SkHLoGvndh7EhxfLr0bu7mjBQkRnWisLPqNzA6Tu8PAj0Rju/PR
+	wn+zgQmmzVxnua4nKHAESTllBcTwu95GDVQofDupj5uVassJIM55YxgXci7oUALQ
+	LUK+Njp0CQx8GTNKXbpw7lHJkCoZi3XVQHRwJH1ShBKqbKa7tTFtdb+tgiwpFbFH
+	vmXeOei034qBkEgf+OHxyyKi8lChLG1JMXuGgym+rrrzzpKCd1O9XVhRZKASUf0l
+	H+Pf9Tz8scqje81MzW03A==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm1; t=1709660990; x=1709747390; bh=IgcQr5Ip7T3qxa3LT0feew0QvTWV
+	BHs6zJCSmlNY7wc=; b=OsTe/ZreutF+I6AvDgMeFr1NmjuMr2lYY3D57zwqwmRo
+	DAZVQxdRXsmwv7ZNDPtSWGLabJfAPrOIcwVMMCxUVqETKZDDlmpU6DnseT+ZmPtF
+	sUvLE1G4h8mJuP8R2znaY+xKRYk5DYKkE44z5xtWLnt2n8c3fYjYqLQG8t4kLVwa
+	wWxocp4pMP/tk70odpoCXHVBzj40RJ4Z8b9qxZVDIk7rsLNC+suM/aGwfiPuYO+g
+	tut5bESvh22uvCbXRAnf2jbz/xwLT9dBrvfDIkKSqmTMHtNLo4e9IGQhM5A4VWZr
+	dZPKmBhmc9UBtd1xIjB2dolDCbOF1r8wXFs+HJ2JmQ==
+X-ME-Sender: <xms:PVvnZYtFDPrqO0SC2t1UsLWw_svadU9lUQlvERkIx-0PZPjz0SK2vIA>
+    <xme:PVvnZVeazmuIwpW20aotoeKtdrGAHY5DM5_8tautVDOJMA5SsAWhKlDSE-Ci3gQ90
+    c7Nvobm465Vdx4CKA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrheelgddutdduucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+    cujfgurhepofgfggfkjghffffhvfevufgtsehttdertderredtnecuhfhrohhmpedfmfhr
+    ihhsthhofhhfvghrucfjrghughhssggrkhhkfdcuoegtohguvgeskhhhrghughhssggrkh
+    hkrdhnrghmvgeqnecuggftrfgrthhtvghrnhepudejfedvtdekfedvveevueegfffghfei
+    tdekudekgfdujeeihfejjedtkeduteehnecuffhomhgrihhnpehgihhthhhusgdrtghomh
+    enucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpegtohgu
+    vgeskhhhrghughhssggrkhhkrdhnrghmvg
+X-ME-Proxy: <xmx:PlvnZTw5NjdQQ4PeTKdX354lk6wUImBpj5m16QMYEPb8fIUrlRU-lA>
+    <xmx:PlvnZbOytUmMquGb-p_Kx7n25saRDQDQ60f4qmVMKcDsObc0Mwrc0Q>
+    <xmx:PlvnZY-sMdQfXrMwqvGNKpKCUo8KOQpoHYecttlg0-cEzWOWvFlwtg>
+    <xmx:PlvnZXbGXkHzcBMYAs6kDTtOweQ9rJFB7Y89OX5E4NrMgJWPxELg3fmWhxU>
+Feedback-ID: i2671468f:Fastmail
+Received: by mailuser.nyi.internal (Postfix, from userid 501)
+	id DAEC315A0093; Tue,  5 Mar 2024 12:49:49 -0500 (EST)
+X-Mailer: MessagingEngine.com Webmail Interface
+User-Agent: Cyrus-JMAP/3.11.0-alpha0-208-g3f1d79aedb-fm-20240301.002-g3f1d79ae
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Message-Id: <33966e29-ca9e-4835-933a-9316b3c6c24b@app.fastmail.com>
+In-Reply-To: <xmqqedco37hh.fsf@gitster.g>
+References: <xmqqsf1466eh.fsf@gitster.g>
+ <9633f9be5ddd9ab3df4b79ee934e1ed47e90bd1d.1709656683.git.code@khaugsbakk.name>
+ <xmqqedco37hh.fsf@gitster.g>
+Date: Tue, 05 Mar 2024 18:49:29 +0100
+From: "Kristoffer Haugsbakk" <code@khaugsbakk.name>
+To: "Junio C Hamano" <gitster@pobox.com>
+Cc: "Manlio Perillo" <manlio.perillo@gmail.com>, git@vger.kernel.org,
+ "Dragan Simic" <dsimic@manjaro.org>
+Subject: Re: Clarify the meaning of "character" in the documentation
 Content-Type: text/plain
-X-Pobox-Relay-ID:
- 0B814244-DB17-11EE-B940-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
 
-Kristoffer Haugsbakk <code@khaugsbakk.name> writes:
-
->> I personally do not see a reason, however, why we need to be limited
->> to a single byte, though.  If a patch cleanly implements to allow us
->> to use any one-or-more-byte sequence as core.commentChar, I do not
->> offhand see a good reason to reject it---it would be fully backward
->> compatible and allows you to use a UTF-8 charcter outside ASCII, as
->> well as "//" and the like.
+On Tue, Mar 5, 2024, at 18:37, Junio C Hamano wrote:
+>> Maybe introduce `core.commentString` and make it a synonym for
+>> `core.commentChar`?
 >
-> Allow one codepoint or a string?
+> Yes, if we were to do so.  As I already said, this is not my itch,
+> but such a synonym would be part of the migration plan if somebody
+> seriously designs this as a new feature.
 
-I said "any one-or-more-byte sequence" and I meant it.  It does not
-even have to be a full and complete UTF-8 character.  As long as we
-correctly prefix the sequence and strip it from the front, I do not
-care if the user chooses to use a broken half-character ;-).
+Maybe someone will discover an itch:
 
-> Maybe introduce `core.commentString` and make it a synonym for
-> `core.commentChar`?
+https://github.com/gitgitgadget/git/issues/1685
 
-Yes, if we were to do so.  As I already said, this is not my itch,
-but such a synonym would be part of the migration plan if somebody
-seriously designs this as a new feature.
-
-> diff --git a/Documentation/config/core.txt b/Documentation/config/core.txt
-> index 0e8c2832bf9..2d4bbdb25fa 100644
-> --- a/Documentation/config/core.txt
-> +++ b/Documentation/config/core.txt
-> @@ -521,7 +521,7 @@ core.editor::
->  
->  core.commentChar::
->  	Commands such as `commit` and `tag` that let you edit
-> -	messages consider a line that begins with this character
-> +	messages consider a line that begins with this ASCII character
->  	commented, and removes them after the editor returns
->  	(default '#').
->  +
-
-Looks sensible.  Thanks.  Will queue.
+-- 
+Kristoffer Haugsbakk
 
