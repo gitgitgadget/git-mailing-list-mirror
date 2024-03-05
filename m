@@ -1,244 +1,117 @@
-Received: from mail-qt1-f181.google.com (mail-qt1-f181.google.com [209.85.160.181])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 706A01E4A2
-	for <git@vger.kernel.org>; Tue,  5 Mar 2024 04:29:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00FD44502F
+	for <git@vger.kernel.org>; Tue,  5 Mar 2024 05:20:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709613001; cv=none; b=eyMtIH3ENmW8xSZJRqCFR66QJm8AgRtM4Wz66yxD6RHpaauK8sOACDiLwzbt5zf89WlFAO/WEhInGELvVno7OKg5qhqoxAj+XTX8NKFxisocUJmn0ciAlItPYHvospL8U0uibZpKtkmc5sDtAFzddzX2B1pHEl3tcZYA8lVp7bQ=
+	t=1709616048; cv=none; b=FApDf1QI7TrxNouiCZXc+OMBkh48u4RsNEIQlynGQ/2Y496XyoHJoFIdfBqKEPkiv6QU2+hmI7rZS21ni/t646xww3aWJ0D53/TLHaN7dxSLWhq+Hf5HswKNV37WXP2LRoK7uc1tc/JkwHRlwv6LSfoB5tS2ETejt5Kk6vDXz6k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709613001; c=relaxed/simple;
-	bh=OwQJqKYjtnPzK9hdtzjloS40ucRh0vdmBpM0olQjnak=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=g7quRAZo0DYMAYyOwBLI0U+WNfXS3zqInpCoJVkGE/oBPTk9NXoQ8Ju9IcDPgzqAq6+nMODCWhHCQkar9F/3Si4KQuqqivdfrlVHAVEaW2b4lUInreeg5Nqklrwv1Kg8RmPcnxijAC6u0fmQJgkVvNe1Dy3xoXnUV7RJcFH3Ssk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.160.181
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-qt1-f181.google.com with SMTP id d75a77b69052e-42a0ba5098bso37574101cf.0
-        for <git@vger.kernel.org>; Mon, 04 Mar 2024 20:29:59 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1709612998; x=1710217798;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=yVp7ZBQxTbX2HXZcpTW+ONOFTORe9cosyn3cY0Z6lq0=;
-        b=G8/QYoKWopZDwTRBlmlUfJqMdx7pdvEunUKW7eB79lpxJ0p/Ewzo8B6lWVKnfAfjMs
-         XG5ibIe6n3RmjsKYdXh02UYpZUGoIbqpBvsY0wJ7JbUVp2m1zlZlY2Ev/ELadZOGtx5Z
-         Ehv8l8o6OYvpX3Xfh3OPl28YeJgbkr9W7vioBBrMo9RbHRMZtLF95aBUK73fLgzmeNlZ
-         +QOQIKhqYPYDeoeHL1k7ptvQ0Kb4O7RJnFRcbGiDpZFWY2IXL6OwmZzvOE0mIutI1wJr
-         6ZkeyP21mSZ31Trh4ukB2Dsx7IOXrRT8cxkz6feoYC6XLorlh/OWOd0uYg9Ulv52lr2f
-         DfnA==
-X-Gm-Message-State: AOJu0YxX818ngTCugW3JRkBpL8ctqnp5A2j9h2z6NemDP+0MqIjN1gbD
-	JT7RiawXJJ4J4Ugx4FOU7E6QWIYw65hkot2bfE69jDqkRpgaJGpF5kSmFHicZyDQ7v2e4bqvyAP
-	wKoFjiiUvcLsW3TX2iqyKFobk27U=
-X-Google-Smtp-Source: AGHT+IEJ+AeM1d8nwy5/uByjWX4PVqfGuzzG+uosRMkhG8qv55gy04wBY+e1arBUwRiIhRsNf0M1EhMoeIw7C3v5JJ0=
-X-Received: by 2002:a05:622a:146:b0:42e:febb:8cf4 with SMTP id
- v6-20020a05622a014600b0042efebb8cf4mr963621qtw.42.1709612998270; Mon, 04 Mar
- 2024 20:29:58 -0800 (PST)
+	s=arc-20240116; t=1709616048; c=relaxed/simple;
+	bh=8O08var39CmrtuARCwZh7UqT0JF0QflouxKajblDit4=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=rfBsAKUogq4smk1mvtLRbgyueP3dYuaWxXZrA2DxRl6HaICnD6/igNXEjpa2hw//KTGkVT95KHcLFI7g/PbGSZkdGFaycesovyOD1FpM/N5qCO/y3fCIsGqyIeqMj1sF9UtuQ22vSzkbWBUx8N9KVMKG7Wh6VqeHWt6PWTciBE4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=lsdM0bye; arc=none smtp.client-ip=64.147.108.71
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="lsdM0bye"
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id AF4BD1F7DF7;
+	Tue,  5 Mar 2024 00:20:45 -0500 (EST)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=8O08var39CmrtuARCwZh7UqT0JF0QflouxKajb
+	lDit4=; b=lsdM0byeWi1k54Ed18+Z9HKzdR/wGlbwGFmzud7oaQE4JPXHMwLYLO
+	9VWnxGjZxolOW+1R37XqVltLqy00qGNDD1xUkVuVP72UclLIXB9o8DXXH7hUzsXT
+	mvPUi2gvr4ukVrTM+/p5iTXhmM8GnY5ZHyXe7jUD6FqQ3997RPPXg=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id A72BB1F7DF6;
+	Tue,  5 Mar 2024 00:20:45 -0500 (EST)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.185.65])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 1E8F21F7DF5;
+	Tue,  5 Mar 2024 00:20:45 -0500 (EST)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Marco Sirabella <marco@sirabella.org>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH] gpg-interface: Look up signing keys with only email
+ address
+In-Reply-To: <20240305020815.2980-1-marco@sirabella.org> (Marco Sirabella's
+	message of "Mon, 4 Mar 2024 18:08:15 -0800")
+References: <20240305020815.2980-1-marco@sirabella.org>
+Date: Mon, 04 Mar 2024 21:20:43 -0800
+Message-ID: <xmqqy1ax5k5w.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240305012112.1598053-2-atneya@google.com> <20240305012112.1598053-3-atneya@google.com>
-In-Reply-To: <20240305012112.1598053-3-atneya@google.com>
-From: Eric Sunshine <sunshine@sunshineco.com>
-Date: Mon, 4 Mar 2024 23:29:46 -0500
-Message-ID: <CAPig+cQvyScjiWe1ghFrv9B=v2+JxkkErdCyYFSA_8dTrWu60g@mail.gmail.com>
-Subject: Re: [RFC PATCH 1/3] Make read_gitfile and resolve_gitfile thread safe
-To: Atneya Nair <atneya@google.com>
-Cc: git@vger.kernel.org, gitster@pobox.com, jeffhost@microsoft.com, 
-	me@ttaylorr.com, nasamuffin@google.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 1E3C2F96-DAB0-11EE-ADD0-25B3960A682E-77302942!pb-smtp2.pobox.com
 
-On Mon, Mar 4, 2024 at 8:22=E2=80=AFPM Atneya Nair <atneya@google.com> wrot=
-e:
-> Continue the work in commit: 3d7747e318532a36a263c61cdf92f2decb6424ff
-> to remove unsafe shared buffer usage in read_gitfile_gently.
+Marco Sirabella <marco@sirabella.org> writes:
+
+> Sometimes gpg signing key UIDs include a comment between the name and
+> parenthesis in the form of:
 >
-> Migrate read_gitfile_gently and resolve_gitfile_gently to take strbuf
-> out params to allocate their return values into, rather than returning
-> a view into a shared buffer.
+>   John Smith (example) jsmith@example.com
 >
-> Leave the shared buffer in case a caller passes null for this param (for
-> cases we haven't cleaned up yet).
->
-> Migrate callers of resolve_gitfile to resolve_gitfile_gently.
->
-> Signed-off-by: Atneya Nair <atneya@google.com>
-> ---
-> diff --git a/builtin/init-db.c b/builtin/init-db.c
-> @@ -198,11 +198,11 @@ int cmd_init_db(int argc, const char **argv, const =
-char *prefix)
-> -               const char *p;
-> +               struct strbuf gitfile =3D STRBUF_INIT;
->
-> -               p =3D read_gitfile_gently(git_dir, &err);
-> -               if (p && get_common_dir(&sb, p)) {
-> +               read_gitfile_gently(git_dir, &err, &gitfile);
-> +               if (!err && get_common_dir(&sb, gitfile.buf)) {
->                         struct strbuf mainwt =3D STRBUF_INIT;
+> There's no way for git to find signing keys associated with just these
+> UIDs, so look up a partial match on the email only.
 
-If you're going to adopt this idiom of checking `err` rather than the
-return code of read_gitfile_gently(), then you should document that
-`err` will be set to zero in the success case. Presently, the
-documentation for read_gitfile_gently() only talks about the failure
-case and doesn't mention that zero indicates success.
+This codepath is about finding the key for the current user who is
+in control of what committer is found by the git_committer_info()
+call, no?  It is not like we are finding the key that corresponds to
+a random name and e-mail address on "From:" line, right?
 
-> diff --git a/setup.c b/setup.c
-> @@ -830,7 +833,8 @@ void read_gitfile_error_die(int error_code, const cha=
-r *path, const char *dir)
->  /*
->   * Try to read the location of the git directory from the .git file,
-> - * return path to git directory if found. The return value comes from
-> + * return path to git directory if found. If passed a valid strbuf, the =
-return
-> + * value is is a ptr to within the buffer. If strbuf is null, the return=
- value comes from
->   * a shared buffer.
+Assuming that it is the case, it is unclear where the claim "There's
+no way for git to find" comes from.  It isn't a statement that is so
+obviously true, at least to me, without some explanation.
 
-What is "a valid strbuf"? Perhaps say instead "if `result_buf` is not
-NULL, ...". The "is not NULL" wording is consistent with the existing
-wording used below...
+> -	return git_committer_info(IDENT_STRICT | IDENT_NO_DATE);
+> +	return git_committer_info(IDENT_NO_NAME | IDENT_STRICT | IDENT_NO_DATE);
 
-Also...
-  s/is is/is/
-  s/ptr/pointer/
+With this change, those who use more than one identities associated
+with the same e-mail address, but different human-readable names,
+will get their workflow broken, won't they?
 
->   * On failure, if return_error_code is not NULL, return_error_code
+They may be using "Will <a@dd.re.ss>" when they work on a project,
+while using "Bill <a@dd.re.ss>" for another project, configured via
+their .git/config in the repositories used for these two projects.
+And each name+address combination they have may map to a distinct
+GPG key, used to sign for each project.  With this change, since the
+call no longer returns the name they were using to differentiate the
+two keys, one of the projects they manage would lose out, no?
 
-... "is not NULL" wording is already used here.
+In general, there may be more than one signing keys that correspond
+to a given human user, and the user may choose a specific key based
+on what project the signatures are made for, and in such a case,
+with or without the proposed change, the fallback code based on the
+git_committer_info() is an unreliable way to specify the key to be
+used, especially for an action as important as cryptographic
+signing.  I have always assumed that people use something like this
+in practice:
 
-> @@ -848,7 +852,10 @@ const char *read_gitfile_gently(const char *path, in=
-t *return_error_code)
-> -       static struct strbuf realpath =3D STRBUF_INIT;
-> +       static struct strbuf shared =3D STRBUF_INIT;
-> +       if (!result_buf) {
-> +               result_buf =3D &shared;
-> +       }
+    $ git config user.signingkey = 955980DA!
 
-Junio mentioned style violations in his response. Omit braces around
-one line `if` bodies.
+that can be used to more reliably identify a specific key in their
+keyring, among the ones associated with similar identifiers meant
+for human consumption such as name/e-mail pairs.
 
-> @@ -900,8 +907,10 @@ const char *read_gitfile_gently(const char *path, in=
-t *return_error_code)
-> -       strbuf_realpath(&realpath, dir, 1);
-> -       path =3D realpath.buf;
-> +       strbuf_realpath(result_buf, dir, 1);
-> +       path =3D result_buf->buf;
+So, I am not convinced that the patch is trying to address the right
+problem, and I have a mild suspicion that the proposed solution to
+tweak NO_NAME may simply be robbing Peter to pay Paul.  If you have
+named your GPG key in your keyring with a name-email pair that is
+different from how you configured your committer identity, the right
+solution for such a case already exists in the form of user.signingkey
+configuration variable already.
 
-It's a minor thing, but if you name the function argument `realpath`,
-then the diff becomes less noisy since changes such as these do not
-need to be made. On the other hand, if `realpath` isn't a good output
-variable name, then by all means choose a better name.
-
-> @@ -1316,12 +1325,13 @@ static enum discovery_result setup_git_directory_=
-gently_1(struct strbuf *dir,
-> +               struct strbuf gitdirenvbuf =3D STRBUF_INIT;
->                 gitdirenv =3D read_gitfile_gently(dir->buf, die_on_error =
-?
-> -                                               NULL : &error_code);
-> +                                               NULL : &error_code, &gitd=
-irenvbuf);
->                 if (!gitdirenv) {
-> @@ -1330,8 +1340,10 @@ static enum discovery_result setup_git_directory_g=
-ently_1(struct strbuf *dir,
-> -                       } else if (error_code !=3D READ_GITFILE_ERR_STAT_=
-FAILED)
-> +                       } else if (error_code !=3D READ_GITFILE_ERR_STAT_=
-FAILED) {
-> +                               strbuf_release(&gitdirenvbuf);
->                                 return GIT_DIR_INVALID_GITFILE;
-> +                       }
-
-Releasing the strbuf before `return`. Good.
-
-> @@ -1365,9 +1377,10 @@ static enum discovery_result setup_git_directory_g=
-ently_1(struct strbuf *dir,
->                         free(gitdir_path);
->                         free(gitfile);
-> +                       strbuf_release(&gitdirenvbuf);
->                         return ret;
-
-Likewise. Good.
-
->                 }
-> +               strbuf_release(&gitdirenvbuf);
->
->                 if (is_git_directory(dir->buf)) {
->                         trace2_data_string("setup", NULL, "implicit-bare-=
-repository", dir->buf);
-
-There are additional `return` statements (not shown in the context)
-following this code, but you make this final strbuf_release() call
-before any of those other `return` statements can be taken. Good.
-
-> diff --git a/submodule.c b/submodule.c
-> @@ -316,9 +316,10 @@ int is_submodule_populated_gently(const char *path, =
-int *return_error_code)
->         int ret =3D 0;
->         char *gitdir =3D xstrfmt("%s/.git", path);
->
-> -       if (resolve_gitdir_gently(gitdir, return_error_code))
-> +       struct strbuf resolved_gitdir_buf =3D STRBUF_INIT;
-> +       if (resolve_gitdir_gently(gitdir, return_error_code, &resolved_gi=
-tdir_buf))
->                 ret =3D 1;
-
-Style: Declare `resolved_gitdir_buf` along with `ret` and `gitdir`,
-then have a blank line before the actual code.
-
-> @@ -1879,22 +1880,25 @@ unsigned is_submodule_modified(const char *path, =
-int ignore_untracked)
-> +       struct strbuf gitdirbuf =3D STRBUF_INIT;
-> +               strbuf_release(&gitdirbuf);
->                 /* The submodule is not checked out, so it is not modifie=
-d */
->                 return 0;
->         }
-> +               strbuf_release(&gitdirbuf);
->         strbuf_reset(&buf);
-
-Style: Strange indentation?
-
-> @@ -1958,15 +1962,16 @@ int submodule_uses_gitfile(const char *path)
-> -       const char *git_dir;
-> +       struct strbuf gitfilebuf =3D STRBUF_INIT;
->
->         strbuf_addf(&buf, "%s/.git", path);
-> -       git_dir =3D read_gitfile(buf.buf);
-> -       if (!git_dir) {
-> +       read_gitfile_gently(buf.buf, NULL, &gitfilebuf);
-> +       if (!gitfilebuf.buf) {
->                 strbuf_release(&buf);
->                 return 0;
->         }
-
-Not sure what you're trying to do here. strbuf guarantees that its
-`buf` member will never be NULL, so the new `if (!gitfilebuf.buf)`
-conditional seems to be dead code. If you really want to check whether
-an error occurred, pass non-NULL for the second argument and check the
-return value of read_gitfile_gently() or check the error code.
-
-> diff --git a/worktree.c b/worktree.c
-> @@ -685,7 +684,7 @@ void repair_worktree_at_path(const char *path,
-> -       char *backlink =3D NULL;
-> +       struct strbuf backlink =3D STRBUF_INIT;
-> @@ -701,12 +700,12 @@ void repair_worktree_at_path(const char *path,
-> -       backlink =3D xstrdup_or_null(read_gitfile_gently(realdotgit.buf, =
-&err));
-> +       read_gitfile_gently(realdotgit.buf, &err, &backlink);
->         if (err =3D=3D READ_GITFILE_ERR_NOT_A_FILE) {
->                 fn(1, realdotgit.buf, _("unable to locate repository; .gi=
-t is not a file"), cb_data);
->                 goto done;
->         } else if (err =3D=3D READ_GITFILE_ERR_NOT_A_REPO) {
-> -               if (!(backlink =3D infer_backlink(realdotgit.buf))) {
-> +               if (!(backlink.buf =3D infer_backlink(realdotgit.buf))) {
-
-Don't do this. Never modify the internal state of strbuf directly;
-consider the state read-only. Modifications should only be made via
-the API. You'll need to rewrite this code a bit to make it work
-correctly with the changes proposed by this patch.
+Thanks.
