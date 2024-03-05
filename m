@@ -1,84 +1,127 @@
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ot1-f47.google.com (mail-ot1-f47.google.com [209.85.210.47])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FBFB12D1E3
-	for <git@vger.kernel.org>; Tue,  5 Mar 2024 22:29:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E2E013FEA
+	for <git@vger.kernel.org>; Tue,  5 Mar 2024 22:31:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709677757; cv=none; b=IMi7ngY7ots+1be7qECdIpq+9EGoss+NAWVmmv4MUcPWYxuxXCsm99gbeurrsJS9GX5ccngN2lK6NWbKYMmks+tTe/n6P8/3RxWQRTELslLZi4jYQa20ArVyxmEn98wGGwxZvWZ8ow7y4rBhwiYWKPPQRIIc12ECcwpR1izvduo=
+	t=1709677864; cv=none; b=R9jHVUOw7I672Hpc0d734TuhAS4gJM0+a95M2IwHpzY1NL+RV5vqD1IiVML2g3DZDqjXiJLmoEWoLR8fW+km4p4etGXyyhCK1OoC1sRyaq/T0ap5riB8DkFue+JwQpsDqLy89kYebSrTaKCGrfRoeEapo4iUpv/fUxnr7yIWHLI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709677757; c=relaxed/simple;
-	bh=GXJu/p3S5ODvh69lxLTqiA8kFtpQ+z8v6ydoWtYmPVc=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=ccMnPL30YKXmQ5XArIj5RAyxQK73p7qLw78bEqr94oROUKYP48sgV2NxYSLBLr7yjyQHZb1njIqpxhUVFmOmUpunHx3VKpLOK+R08GAvA0Eqz4KHDCp0y/fyK239umwcsUaiW5l42vuaXa1ubipGJTWfFjnLnx61jrmLLI2vrTM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=bGIboWHw; arc=none smtp.client-ip=64.147.108.71
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1709677864; c=relaxed/simple;
+	bh=JNLyLXKDUY24654wf65HmSuxEIgljGasgFGuwBWnBYE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=HNqwgN8m05IE6v+9E/jhCsPmOVV8S96zesZzlHWyegHfgEBIBY0FMwu3rsHmIuEf+oVdv5mJss6nrFQHTCOTRZIZwiTkG5eCYV3KR5J1M8cZgNm+d8EhGL7I8ac6L0xuKRvGU63/cTunSmGKBvAE15yy+hJatdJwB3mr5dEEOM8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=lxJNxkcJ; arc=none smtp.client-ip=209.85.210.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="bGIboWHw"
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 306061D04C1;
-	Tue,  5 Mar 2024 17:29:08 -0500 (EST)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=GXJu/p3S5ODvh69lxLTqiA8kFtpQ+z8v6ydoWt
-	YmPVc=; b=bGIboWHwfa32dIHNHThSvSn3haarJCPUyyDw2gHNHAl3Dxo7DsyuxS
-	j14vJ23HvOTh0h6Vt3XHcrpqxYeFEEu3iGP/EzBuu++T4I8Mfy3ifSr6yMhnW0mH
-	JY2bWtKwFo8/q8gOqAyadfSwiAUl9j73y9u9pCkGPGPQ24vjX1uy4=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 2753D1D04C0;
-	Tue,  5 Mar 2024 17:29:08 -0500 (EST)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.185.65])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 74CAE1D04BF;
-	Tue,  5 Mar 2024 17:29:07 -0500 (EST)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Beat Bolli" <bb@drbeat.li>
-Cc: git@vger.kernel.org,  Beat Bolli <dev+git@drbeat.li>
-Subject: Re: [PATCH 05/22] t/perf: avoid redundant use of cat
-In-Reply-To: <20240305212533.12947-6-dev+git@drbeat.li> (Beat Bolli's message
-	of "Tue, 5 Mar 2024 22:25:04 +0100")
-References: <20240305212533.12947-1-dev+git@drbeat.li>
-	<20240305212533.12947-6-dev+git@drbeat.li>
-Date: Tue, 05 Mar 2024 14:29:06 -0800
-Message-ID: <xmqqle6wxqh9.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lxJNxkcJ"
+Received: by mail-ot1-f47.google.com with SMTP id 46e09a7af769-6e125818649so3300136a34.1
+        for <git@vger.kernel.org>; Tue, 05 Mar 2024 14:31:02 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1709677862; x=1710282662; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references
+         :mail-followup-to:message-id:subject:cc:to:from:date:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=lSSXbIYWLQ+r0NLYFzAMYPjPpbGhl7dgJGRrGiBllos=;
+        b=lxJNxkcJsG7JFS1uwz0awB9AM+/GH92XlSSjZeagnkEiKQhru4RYW27PYSyEqphe03
+         fxar0vsqlMiiZjxyoXTgap8dKlEuRJxBC4JWZZdoWeMCZbn7UQ4WjGOVZLJ71EHIpaeC
+         yESb6QHEZaCeGAmt2K6gRDRXJ+D1L8/QTco5m0OYIor6MnrqyFcZxkMiWOicRxNUjBv+
+         761B8Ihv1FYLi0Q86vvC3eUBMHgARD84vlgDeeQJqJsjC7lKr+B2A9SFw1dcOFtSO4QV
+         ABTM1mrbc+1Ypse0UN4r/RxUkR1RRrQhLjJcY+bldIQQgSTVYw3zhD8c/Vy6Ck8XHGeI
+         jY/Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1709677862; x=1710282662;
+        h=in-reply-to:content-disposition:mime-version:references
+         :mail-followup-to:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=lSSXbIYWLQ+r0NLYFzAMYPjPpbGhl7dgJGRrGiBllos=;
+        b=Msu4bLmq+BS1bbC0Fspz4emame0ivNIxcTFmnJZJlFvfW7xCrd0YeYyWoMgEznIWgr
+         cAx9K2R2rhPgzO6REsfq2HwGGmM//OqNR5cIQf0jvfsawU2saO1NUJTkOZnHdzcgdVsk
+         wsEl1dVXLYFyoO3TO6x6lkCui2rVrzFtuvw9jd/x6bjgL/Y3gr1QGCEBxMGlXQQAb+ci
+         Ww26lt6sY8ICLLcpkmgKCv3T5aKiNQltUBS7u19lhWDGwU3zvL/XMIAb/X59wGAMzW97
+         yxxWsal+HGGzcat7pngFq8Pbv0J6K6YjoVxe5bHo9LCGI4iMvfImOUCXqSpz5jBchyw0
+         RHwA==
+X-Gm-Message-State: AOJu0Yy0dfPh6n21g3lQ3pn+6jFsGKqv4qGGMY/wAKpAwSxJA6FaeJ3y
+	BjzoXDMRK1P87Bs12V8dop60yUL5mLdx9dru0L7kxy46UKRSUNQOT2GMqsO8
+X-Google-Smtp-Source: AGHT+IF5bwdbTt4ZoanSBWXyJtcS1PW9Wn1KwxHnA9pLYIq455No1z2IeGa0hNMKKREeYWdP9Zo9ig==
+X-Received: by 2002:a05:6830:205a:b0:6e4:dd99:86b5 with SMTP id f26-20020a056830205a00b006e4dd9986b5mr3358305otp.27.1709677862030;
+        Tue, 05 Mar 2024 14:31:02 -0800 (PST)
+Received: from localhost ([136.50.225.32])
+        by smtp.gmail.com with ESMTPSA id z22-20020a056830129600b006e4e4360035sm818435otp.32.2024.03.05.14.31.01
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 05 Mar 2024 14:31:01 -0800 (PST)
+Date: Tue, 5 Mar 2024 16:30:18 -0600
+From: Justin Tobler <jltobler@gmail.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 2/4] reftable/stack: register new tables as tempfiles
+Message-ID: <6cw6d3ubo2kbogzdbniyoznij2zfoh5t3htwb4oaghaltcgeqg@kkrw4g6atr2k>
+Mail-Followup-To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
+References: <cover.1709549619.git.ps@pks.im>
+ <02bf41d419efd00e510a89a405e1b046b166ba20.1709549619.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- C7B474E0-DB3F-11EE-9907-25B3960A682E-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <02bf41d419efd00e510a89a405e1b046b166ba20.1709549619.git.ps@pks.im>
 
-"Beat Bolli" <bb@drbeat.li> writes:
-
-> Take care to redirect stdin, otherwise the output of wc would also contain
-> the file name.
->
-> Signed-off-by: Beat Bolli <dev+git@drbeat.li>
+On 24/03/04 12:10PM, Patrick Steinhardt wrote:
+> We do not register new tables which we're about to add to the stack with
+> the tempfile API. Those tables will thus not be deleted in case Git gets
+> killed.
+> 
+> Refactor the code to register tables as tempfiles.
+> 
+> Signed-off-by: Patrick Steinhardt <ps@pks.im>
 > ---
->  t/perf/repos/inflate-repo.sh | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/t/perf/repos/inflate-repo.sh b/t/perf/repos/inflate-repo.sh
-> index fcfc992b5b02..412e4b450b16 100755
-> --- a/t/perf/repos/inflate-repo.sh
-> +++ b/t/perf/repos/inflate-repo.sh
-> @@ -33,7 +33,7 @@ do
->  done
+>  reftable/stack.c | 29 ++++++++++++-----------------
+>  1 file changed, 12 insertions(+), 17 deletions(-)
+> 
+> diff --git a/reftable/stack.c b/reftable/stack.c
+> index b64e55648a..81544fbfa0 100644
+> --- a/reftable/stack.c
+> +++ b/reftable/stack.c
+> @@ -737,8 +737,9 @@ int reftable_addition_add(struct reftable_addition *add,
+>  	struct strbuf tab_file_name = STRBUF_INIT;
+>  	struct strbuf next_name = STRBUF_INIT;
+>  	struct reftable_writer *wr = NULL;
+> +	struct tempfile *tab_file = NULL;
+>  	int err = 0;
+> -	int tab_fd = 0;
+> +	int tab_fd;
 >  
->  git ls-tree -r HEAD >GEN_src_list
-> -nr_src_files=$(cat GEN_src_list | wc -l)
-> +nr_src_files=$(wc -l <GEN_src_list)
-
-Good thinking to explicitly redirect into the command.
-
+>  	strbuf_reset(&next_name);
+>  	format_name(&next_name, add->next_update_index, add->next_update_index);
+> @@ -746,17 +747,20 @@ int reftable_addition_add(struct reftable_addition *add,
+>  	stack_filename(&temp_tab_file_name, add->stack, next_name.buf);
+>  	strbuf_addstr(&temp_tab_file_name, ".temp.XXXXXX");
 >  
->  src_branch=$(git symbolic-ref --short HEAD)
+> -	tab_fd = mkstemp(temp_tab_file_name.buf);
+> -	if (tab_fd < 0) {
+> +	tab_file = mks_tempfile(temp_tab_file_name.buf);
+> +	if (!tab_file) {
+>  		err = REFTABLE_IO_ERROR;
+>  		goto done;
+>  	}
+>  	if (add->stack->config.default_permissions) {
+> -		if (chmod(temp_tab_file_name.buf, add->stack->config.default_permissions)) {
+> +		if (chmod(get_tempfile_path(tab_file),
+> +			  add->stack->config.default_permissions)) {
+>  			err = REFTABLE_IO_ERROR;
+>  			goto done;
+>  		}
+>  	}
+
+Since the tempfile is now being created through the tempfile API, I
+think the file mode can be set directly through `mks_tempfile_m()`
+instead of creating the tempfile and then using chmod. Just something I
+thought to mention.
+
+> +	tab_fd = get_tempfile_fd(tab_file);
+
+-Justin
