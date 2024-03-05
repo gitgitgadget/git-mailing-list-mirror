@@ -1,102 +1,113 @@
-Received: from wfhigh4-smtp.messagingengine.com (wfhigh4-smtp.messagingengine.com [64.147.123.155])
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED2C317591
-	for <git@vger.kernel.org>; Tue,  5 Mar 2024 17:49:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.155
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2007115491
+	for <git@vger.kernel.org>; Tue,  5 Mar 2024 18:03:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709660993; cv=none; b=JjvTZrhLe5DD2+aLjBXRufAhLT6s5Lu4ey5dJ/9WJ2ZAZc0qNnuXVaICVmASlSmzgY7+EM+6ID62o0E8zoUb0eUXwgAGoKGSpSiMNLGvS6BKyh6PAgsNVWTbd6ECVTth+/dbKskvULtOZzpG0GH0H6duMnw6sVU3gVtCnd50MXA=
+	t=1709661818; cv=none; b=UP7vDfk0GESlLiuGZV8dhLJVCOQAseQwtRDzs+XcmEispFZFnwT1G2AKSvKYZRZvRcM/FptefvtpqR1yCAecpzqRqqynrvt03GPAU36RPP80DRjAelO+q+ATcONnez0rNnKA1iarLgYU4WGMqFgbuDYevwExo02WbzfDfbEvlgU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709660993; c=relaxed/simple;
-	bh=/GN0Mc1GDBtevxy4ckby+D52N/a8doSVedv6XnfEPqQ=;
-	h=MIME-Version:Message-Id:In-Reply-To:References:Date:From:To:Cc:
-	 Subject:Content-Type; b=ZUnwV7F3tuH9BfhLc/XZ7rXDIQhhpa6EeP1RttBwal+BDPsgtFueIWixcrW3IO1tG7XhMcEZNCd0wm+ioIdslXgV5SN7sDFAwPqyrCakcu47f6Fes5/FzbNoCiAFHZI+c7TV7N2X/OJGxEp2PKMXkquBoNP3iUWLMMT+rjBg2yg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=khaugsbakk.name; spf=pass smtp.mailfrom=khaugsbakk.name; dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b=vg9qh4qP; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=OsTe/Zre; arc=none smtp.client-ip=64.147.123.155
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=khaugsbakk.name
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=khaugsbakk.name
+	s=arc-20240116; t=1709661818; c=relaxed/simple;
+	bh=TnIUqWndiei6jr/HeV8zYnR2YOOu7U9qBnqFpdg7TJo=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=PgNl4kb9vBRiZieJlIv+1ZgrEYF6kInWLgM9C8cMhpsQFpO01jgqONIC3pcMpgW7OI+UGQBaH87bk6S8dbm4IZLAkXwEnwF3mPx7fH35IiveqgE6Lc9KbeWtkHeiSaiX6y/KNCuiAIge+9xq72VG/Ol5TF1o/mC7GpUqGwOrbLA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=rmVR8yFF; arc=none smtp.client-ip=64.147.108.70
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b="vg9qh4qP";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="OsTe/Zre"
-Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
-	by mailfhigh.west.internal (Postfix) with ESMTP id A18FA18000A7;
-	Tue,  5 Mar 2024 12:49:50 -0500 (EST)
-Received: from imap49 ([10.202.2.99])
-  by compute1.internal (MEProxy); Tue, 05 Mar 2024 12:49:51 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=khaugsbakk.name;
-	 h=cc:cc:content-type:content-type:date:date:from:from
-	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:subject:subject:to:to; s=fm3; t=1709660990; x=
-	1709747390; bh=IgcQr5Ip7T3qxa3LT0feew0QvTWVBHs6zJCSmlNY7wc=; b=v
-	g9qh4qPkZ7f6LO4BQbB95lJCN8VlCK+legV7fVh4GnYuQuCC+DMM3nUnQnbH23e9
-	Nz1C6CYWjeNj3SkHLoGvndh7EhxfLr0bu7mjBQkRnWisLPqNzA6Tu8PAj0Rju/PR
-	wn+zgQmmzVxnua4nKHAESTllBcTwu95GDVQofDupj5uVassJIM55YxgXci7oUALQ
-	LUK+Njp0CQx8GTNKXbpw7lHJkCoZi3XVQHRwJH1ShBKqbKa7tTFtdb+tgiwpFbFH
-	vmXeOei034qBkEgf+OHxyyKi8lChLG1JMXuGgym+rrrzzpKCd1O9XVhRZKASUf0l
-	H+Pf9Tz8scqje81MzW03A==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1709660990; x=1709747390; bh=IgcQr5Ip7T3qxa3LT0feew0QvTWV
-	BHs6zJCSmlNY7wc=; b=OsTe/ZreutF+I6AvDgMeFr1NmjuMr2lYY3D57zwqwmRo
-	DAZVQxdRXsmwv7ZNDPtSWGLabJfAPrOIcwVMMCxUVqETKZDDlmpU6DnseT+ZmPtF
-	sUvLE1G4h8mJuP8R2znaY+xKRYk5DYKkE44z5xtWLnt2n8c3fYjYqLQG8t4kLVwa
-	wWxocp4pMP/tk70odpoCXHVBzj40RJ4Z8b9qxZVDIk7rsLNC+suM/aGwfiPuYO+g
-	tut5bESvh22uvCbXRAnf2jbz/xwLT9dBrvfDIkKSqmTMHtNLo4e9IGQhM5A4VWZr
-	dZPKmBhmc9UBtd1xIjB2dolDCbOF1r8wXFs+HJ2JmQ==
-X-ME-Sender: <xms:PVvnZYtFDPrqO0SC2t1UsLWw_svadU9lUQlvERkIx-0PZPjz0SK2vIA>
-    <xme:PVvnZVeazmuIwpW20aotoeKtdrGAHY5DM5_8tautVDOJMA5SsAWhKlDSE-Ci3gQ90
-    c7Nvobm465Vdx4CKA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrheelgddutdduucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    cujfgurhepofgfggfkjghffffhvfevufgtsehttdertderredtnecuhfhrohhmpedfmfhr
-    ihhsthhofhhfvghrucfjrghughhssggrkhhkfdcuoegtohguvgeskhhhrghughhssggrkh
-    hkrdhnrghmvgeqnecuggftrfgrthhtvghrnhepudejfedvtdekfedvveevueegfffghfei
-    tdekudekgfdujeeihfejjedtkeduteehnecuffhomhgrihhnpehgihhthhhusgdrtghomh
-    enucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpegtohgu
-    vgeskhhhrghughhssggrkhhkrdhnrghmvg
-X-ME-Proxy: <xmx:PlvnZTw5NjdQQ4PeTKdX354lk6wUImBpj5m16QMYEPb8fIUrlRU-lA>
-    <xmx:PlvnZbOytUmMquGb-p_Kx7n25saRDQDQ60f4qmVMKcDsObc0Mwrc0Q>
-    <xmx:PlvnZY-sMdQfXrMwqvGNKpKCUo8KOQpoHYecttlg0-cEzWOWvFlwtg>
-    <xmx:PlvnZXbGXkHzcBMYAs6kDTtOweQ9rJFB7Y89OX5E4NrMgJWPxELg3fmWhxU>
-Feedback-ID: i2671468f:Fastmail
-Received: by mailuser.nyi.internal (Postfix, from userid 501)
-	id DAEC315A0093; Tue,  5 Mar 2024 12:49:49 -0500 (EST)
-X-Mailer: MessagingEngine.com Webmail Interface
-User-Agent: Cyrus-JMAP/3.11.0-alpha0-208-g3f1d79aedb-fm-20240301.002-g3f1d79ae
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="rmVR8yFF"
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id ADBC11DA4EB;
+	Tue,  5 Mar 2024 13:03:35 -0500 (EST)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=TnIUqWndiei6jr/HeV8zYnR2YOOu7U9qBnqFpd
+	g7TJo=; b=rmVR8yFFqWSOmQl1Nl5xThvl6G22Oqq3lBUEBHV3Iil3y4xvZRC++r
+	OeLEH+kUEmD/uJilnGB+3tEzTJrOAFZ/aSoH76fjFQwsD/ABE3n1Bi5Gs1VvN68n
+	HBeNO8W4+1uaXmieC0dJpIaxxpwih1KlIDRxj8kio68DfBt6KC5iU=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id A38DA1DA4EA;
+	Tue,  5 Mar 2024 13:03:35 -0500 (EST)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.185.65])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id D2A391DA4E9;
+	Tue,  5 Mar 2024 13:03:34 -0500 (EST)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Linus Arver via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Christian Couder <chriscool@tuxfamily.org>,  Emily
+ Shaffer <nasamuffin@google.com>,  Josh Steadmon <steadmon@google.com>,
+  "Randall S. Becker" <rsbecker@nexbridge.com>,  Christian Couder
+ <christian.couder@gmail.com>,  Kristoffer Haugsbakk
+ <code@khaugsbakk.name>,  Linus Arver <linusa@google.com>
+Subject: Re: [PATCH v6 0/9] Enrich Trailer API
+In-Reply-To: <pull.1632.v6.git.1709252086.gitgitgadget@gmail.com> (Linus Arver
+	via GitGitGadget's message of "Fri, 01 Mar 2024 00:14:37 +0000")
+References: <pull.1632.v5.git.1708124950.gitgitgadget@gmail.com>
+	<pull.1632.v6.git.1709252086.gitgitgadget@gmail.com>
+Date: Tue, 05 Mar 2024 10:03:33 -0800
+Message-ID: <xmqq5xy036a2.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Message-Id: <33966e29-ca9e-4835-933a-9316b3c6c24b@app.fastmail.com>
-In-Reply-To: <xmqqedco37hh.fsf@gitster.g>
-References: <xmqqsf1466eh.fsf@gitster.g>
- <9633f9be5ddd9ab3df4b79ee934e1ed47e90bd1d.1709656683.git.code@khaugsbakk.name>
- <xmqqedco37hh.fsf@gitster.g>
-Date: Tue, 05 Mar 2024 18:49:29 +0100
-From: "Kristoffer Haugsbakk" <code@khaugsbakk.name>
-To: "Junio C Hamano" <gitster@pobox.com>
-Cc: "Manlio Perillo" <manlio.perillo@gmail.com>, git@vger.kernel.org,
- "Dragan Simic" <dsimic@manjaro.org>
-Subject: Re: Clarify the meaning of "character" in the documentation
 Content-Type: text/plain
+X-Pobox-Relay-ID:
+ AF2006C6-DB1A-11EE-9E67-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
 
-On Tue, Mar 5, 2024, at 18:37, Junio C Hamano wrote:
->> Maybe introduce `core.commentString` and make it a synonym for
->> `core.commentChar`?
+"Linus Arver via GitGitGadget" <gitgitgadget@gmail.com> writes:
+
+> This patch series is the first 9 patches of a larger cleanup/bugfix series
+> (henceforth "larger series") I've been working on. The main goal of this
+> series is to begin the process of "libifying" the trailer API. By "API" I
+> mean the interface exposed in trailer.h. The larger series brings a number
+> of additional cleanups (exposing and fixing some bugs along the way), and
+> builds on top of this series.
 >
-> Yes, if we were to do so.  As I already said, this is not my itch,
-> but such a synonym would be part of the migration plan if somebody
-> seriously designs this as a new feature.
+> When the larger series is merged, we will be in a good state to additionally
+> pursue the following goals:
+>
+>  1. "API reuse inside Git": make the API expressive enough to eliminate any
+>     need by other parts of Git to use the interpret-trailers builtin as a
+>     subprocess (instead they could just use the API directly);
+>  2. "API stability": add unit tests to codify the expected behavior of API
+>     functions; and
+>  3. "API documentation": create developer-focused documentation to explain
+>     how to use the API effectively, noting any API limitations or
+>     anti-patterns.
+>
+> In the future after libification is "complete", users external to Git will
+> be able to use the same trailer processing API used by the
+> interpret-trailers builtin. For example, a web server may want to parse
+> trailers the same way that Git would parse them, without having to call
+> interpret-trailers as a subprocess. This use case was the original
+> motivation behind my work in this area.
+>
+> With the libification-focused goals out of the way, let's turn to this patch
+> series in more detail.
+>
+> In summary this series breaks up "process_trailers()" into smaller pieces,
+> exposing many of the parts relevant to trailer-related processing in
+> trailer.h. This will force us to eventually introduce unit tests for these
+> API functions, but that is a good thing for API stability. We also perform
+> some preparatory refactors in order to help us unify the trailer formatting
+> machinery toward the end of this series.
+>
+>
+> Notable changes in v6
+> =====================
+>
+>  * Mainly wording changes to commit messages. Thanks to Christian for the
+>    suggestions.
 
-Maybe someone will discover an itch:
+It's been nearly a week since this was posted.  Any more comments,
+or is everybody happy with this iteration?  Otherwise I am tempted
+to mark the topic for 'next' soon.
 
-https://github.com/gitgitgadget/git/issues/1685
-
--- 
-Kristoffer Haugsbakk
-
+Thanks.
