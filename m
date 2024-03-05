@@ -1,51 +1,55 @@
 Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52B43C2D6
-	for <git@vger.kernel.org>; Tue,  5 Mar 2024 21:44:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8E0B134BD
+	for <git@vger.kernel.org>; Tue,  5 Mar 2024 21:58:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709675079; cv=none; b=sw0ju/FC3NORzHeDpnEHLU+Iw7aD/TGa6aBHxvnj+H1W6QISKKBX2Duj71Rx+VNfUhG4T6ez7OM5GsX0JjfkhO406HllxgMqmJGb9aylHnUwwrl0z6yIyrxbotkeKEjB6dy1qIp6HR5z4V2g5W5Rs+H/JOLVytaq2ZxMvyrLKho=
+	t=1709675924; cv=none; b=g3EmJeQMqHqsJyvleNzoBbJjwrviTtEtVtKNszKvSO8I+Ox0rtvwRMRT5mF7jk9DwK68a4SuhNL2p0990rPbQwgPGH1Luvy1siQtMIa3aiHIQ+Xx/yQ+gk4KJWCg13yVs/V1B9NQJLWcUyFDIvE197eClKwhrzM8PSMWfN3jsXc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709675079; c=relaxed/simple;
-	bh=OMQt3zMiqkk9caLrHkY2HiO37L+3QNKAF9hs8UKtSF0=;
+	s=arc-20240116; t=1709675924; c=relaxed/simple;
+	bh=W2FRJWPvFleuPrWhqx6Ggd8B90U5DRnE2+qcQfzmeRs=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=Bmf5idGF7I+jegRlOaIF1/q3wAhZKbjRfKvGHqM4TUUu2D2zfjJ2wVr1X2tmsVJ9+6dnbfUPgJXM+L8oba+tZYrygSCSckydddvHQjIHUcvXsyaQ4Z0zVf4SFQgHNfq1jmOWTkUJZ34KcSBZcfGMxFlxrUG4wgNEGnncqscqglg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=e9fv49rC; arc=none smtp.client-ip=64.147.108.70
+	 MIME-Version:Content-Type; b=ASsDb7PgzcdENUxkJteUQcqEK6GcW7pm+vSO026cQ9CqvkseJotIqlGKvzp/Ccgpaon7Pi3VccSQ/4lWjgQVVm0QqpbymKzdgjMtAnVnP2bSm9aaq6ZkaPVLHP8cLmSe035UFTN45+aMEjWgG8EEDSjDklXAjeztIyhYfSnGguQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=ni+5qp3I; arc=none smtp.client-ip=64.147.108.70
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="e9fv49rC"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="ni+5qp3I"
 Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 106091DC04A;
-	Tue,  5 Mar 2024 16:44:36 -0500 (EST)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id B0FDA1DC15D;
+	Tue,  5 Mar 2024 16:58:41 -0500 (EST)
 	(envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=OMQt3zMiqkk9caLrHkY2HiO37L+3QNKAF9hs8U
-	KtSF0=; b=e9fv49rCVCWtmzL/UjibI/zJzrj/SNMzGJ/UO4SIxTApqLbccUKy0S
-	VeTCy9PWUcJTrI3vt6nws3n6PJMLsU8A+8dcQGVg1v8Ynn5rMuqeux5qnhspolYH
-	a0v5/iV/ZzabuILOc2ctrzQ+Dazumtxf7BRC4n5gVGikVwzDku/IU=
+	:content-type; s=sasl; bh=W2FRJWPvFleuPrWhqx6Ggd8B90U5DRnE2+qcQf
+	zmeRs=; b=ni+5qp3ITpYSUKEyVlIDFGZCv5p7FnixsozsSqZGfKsVZu9L5XUi5C
+	kseRrx+L1jdGc8GpIUCNlttkf919AAzjYqA6enGslyWH3xqgEgPBaxz4JTK8E5av
+	zXEPSlrAW6cndOc0CfJbMH/ZWAtgvNrf6FVAv8cp7mjXarEtHa1I0=
 Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 084701DC049;
-	Tue,  5 Mar 2024 16:44:36 -0500 (EST)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id A951F1DC15C;
+	Tue,  5 Mar 2024 16:58:41 -0500 (EST)
 	(envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.125.185.65])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 509391DC048;
-	Tue,  5 Mar 2024 16:44:34 -0500 (EST)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 1B51D1DC15B;
+	Tue,  5 Mar 2024 16:58:41 -0500 (EST)
 	(envelope-from junio@pobox.com)
 From: Junio C Hamano <gitster@pobox.com>
-To: Josh Steadmon <steadmon@google.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 2/2] fuzz: link fuzz programs with `make all` on Linux
-In-Reply-To: <eef15e3d3da3ca6953fa8bf3ade190da8e68bf46.1709673020.git.steadmon@google.com>
-	(Josh Steadmon's message of "Tue, 5 Mar 2024 13:12:00 -0800")
-References: <cover.1709673020.git.steadmon@google.com>
-	<eef15e3d3da3ca6953fa8bf3ade190da8e68bf46.1709673020.git.steadmon@google.com>
-Date: Tue, 05 Mar 2024 13:44:33 -0800
-Message-ID: <xmqqplw8z73y.fsf@gitster.g>
+To: Britton Kerin <britton.kerin@gmail.com>
+Cc: Patrick Steinhardt <ps@pks.im>,  git@vger.kernel.org
+Subject: Re: [PATCH v2 1/1] completion: don't complete revs when
+ --no-format-patch
+In-Reply-To: <CAC4O8c88Z3ZqxH2VVaNPpEGB3moL5dJcg3cOWuLWwQ_hLrJMtA@mail.gmail.com>
+	(Britton Kerin's message of "Wed, 14 Feb 2024 11:49:08 -0900")
+References: <9627364b-c0c9-4b85-a81a-ba1ef0735c9a@smtp-relay.sendinblue.com>
+	<20240109010830.458775-1-britton.kerin@gmail.com>
+	<a718b5ee-afb0-44bd-a299-3208fac43506@smtp-relay.sendinblue.com>
+	<ZcSJaRczdHApmnVi@tanuki>
+	<CAC4O8c88Z3ZqxH2VVaNPpEGB3moL5dJcg3cOWuLWwQ_hLrJMtA@mail.gmail.com>
+Date: Tue, 05 Mar 2024 13:58:39 -0800
+Message-ID: <xmqqfrx4z6gg.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -55,96 +59,18 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 X-Pobox-Relay-ID:
- 8E620B72-DB39-11EE-BDF9-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
+ 871A6F56-DB3B-11EE-9B8F-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
 
-Josh Steadmon <steadmon@google.com> writes:
+Britton Kerin <britton.kerin@gmail.com> writes:
 
-> Since 5e47215080 (fuzz: add basic fuzz testing target., 2018-10-12), we
-> have compiled object files for the fuzz tests as part of the default
-> 'make all' target. This helps prevent bit-rot in lesser-used parts of
-> the codebase, by making sure that incompatible changes are caught at
-> build time.
+> On Wed, Feb 7, 2024 at 10:57 PM Patrick Steinhardt <ps@pks.im> wrote:
+>> ...
+>> Also, adding a test for git-send-email that exercises this new behaviour
+>> would be very much welcome, too.
 >
-> However, since we never linked the fuzzer executables, this did not
-> protect us from link-time errors. As of 8b9a42bf48 (fuzz: fix fuzz test
-> build rules, 2024-01-19), it's now possible to link the fuzzer
-> executables without using a fuzzing engine and a variety of
-> compiler-specific (and compiler-version-specific) flags, at least on
-> Linux. So let's add a platform-specific option in config.mak.uname to
-> link the executables as part of the default `make all` target.
->
-> Suggested-by: Junio C Hamano <gitster@pobox.com>
-> Signed-off-by: Josh Steadmon <steadmon@google.com>
-> ---
->  Makefile         | 14 +++++++++++---
->  config.mak.uname |  1 +
->  2 files changed, 12 insertions(+), 3 deletions(-)
->
-> diff --git a/Makefile b/Makefile
-> index 4e255c81f2..f74e96d7c2 100644
-> --- a/Makefile
-> +++ b/Makefile
-> @@ -409,6 +409,9 @@ include shared.mak
->  # to the "<name>" of the corresponding `compat/fsmonitor/fsm-settings-<name>.c`
->  # that implements the `fsm_os_settings__*()` routines.
->  #
-> +# Define LINK_FUZZ_PROGRAMS if you want `make all` to also build the fuzz test
-> +# programs in oss-fuzz/.
-> +#
->  # === Optional library: libintl ===
->  #
->  # Define NO_GETTEXT if you don't want Git output to be translated.
-> @@ -763,9 +766,6 @@ FUZZ_OBJS += oss-fuzz/fuzz-pack-idx.o
->  .PHONY: fuzz-objs
->  fuzz-objs: $(FUZZ_OBJS)
->  
-> -# Always build fuzz objects even if not testing, to prevent bit-rot.
-> -all:: $(FUZZ_OBJS)
-> -
->  FUZZ_PROGRAMS += $(patsubst %.o,%,$(filter-out %dummy-cmd-main.o,$(FUZZ_OBJS)))
->  
->  # Empty...
-> @@ -2368,6 +2368,14 @@ ifndef NO_TCLTK
->  endif
->  	$(QUIET_SUBDIR0)templates $(QUIET_SUBDIR1) SHELL_PATH='$(SHELL_PATH_SQ)' PERL_PATH='$(PERL_PATH_SQ)'
->  
-> +# Build fuzz programs if possible, or at least compile the object files; even
-> +# without the necessary fuzzing support, this prevents bit-rot.
-> +ifdef LINK_FUZZ_PROGRAMS
-> +all:: $(FUZZ_PROGRAMS)
-> +else
-> +all:: $(FUZZ_OBJS)
-> +endif
+> I'll look this one over again and add some tests eventually.
 
-It would have been easier on the eyes if we had the fuzz things
-together, perhaps like this simplified version?  We build FUZZ_OBJS
-either way, and when the LINK_FUZZ_PROGRAMS is requested, we follow
-the fuzz-all recipe, too.
+Just pinging the thread to keep it visible in the list of recent
+topics I need to keep an eye on.  No rush.
 
-diff --git c/Makefile w/Makefile
-index 4e255c81f2..46e457a7a8 100644
---- c/Makefile
-+++ w/Makefile
-@@ -409,6 +409,9 @@ include shared.mak
- # to the "<name>" of the corresponding `compat/fsmonitor/fsm-settings-<name>.c`
- # that implements the `fsm_os_settings__*()` routines.
- #
-+# Define LINK_FUZZ_PROGRAMS if you want `make all` to also build the fuzz test
-+# programs in oss-fuzz/.
-+#
- # === Optional library: libintl ===
- #
- # Define NO_GETTEXT if you don't want Git output to be translated.
-@@ -766,6 +769,12 @@ fuzz-objs: $(FUZZ_OBJS)
- # Always build fuzz objects even if not testing, to prevent bit-rot.
- all:: $(FUZZ_OBJS)
- 
-+# Build fuzz programs, even without the necessary fuzzing support,
-+# this prevents bit-rot.
-+ifdef LINK_FUZZ_PROGRAMS
-+all:: fuzz-all
-+endif
-+
- FUZZ_PROGRAMS += $(patsubst %.o,%,$(filter-out %dummy-cmd-main.o,$(FUZZ_OBJS)))
- 
- # Empty...
+Thanks.
