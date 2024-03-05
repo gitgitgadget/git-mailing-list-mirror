@@ -1,74 +1,91 @@
-Received: from mail.manjaro.org (mail.manjaro.org [116.203.91.91])
-	(using TLSv1.2 with cipher DHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-gateway-shared15.cyon.net (mail-gateway-shared15.cyon.net [194.126.200.68])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8BA4168DD
-	for <git@vger.kernel.org>; Tue,  5 Mar 2024 21:19:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=116.203.91.91
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61B1C129A99
+	for <git@vger.kernel.org>; Tue,  5 Mar 2024 21:26:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=194.126.200.68
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709673596; cv=none; b=kDRi6LViNYn95H2Y6Ze726jl9mrbTX9oV90CPmLMW4eKEiyr1ptRmGbBgZrJ44bPMrB0Bge+rwCKyy+n9+6w4i+Wc5bcFz4mBAm4JG1CBzSNmQm60rLSTyv1bm/AnoU7YQECP8wO/PUt/IPbLjskvedwDs50XizdEg/60vqNoUs=
+	t=1709673994; cv=none; b=nbDLoHB31+jYyft95lf1290UklWFZyoatsERIRGE3k9mA/+CSOag1U+tdIbDgvd5VfpGCeeVf9DIiMfjGkq4IOm/Ai5pD5xwxGIPIZyulIZzn+QtZr3YFBItuwOw15qT8xrSY0DFF+/ijKDZW8CbiPwpUwMAO/oGTSBMbTPHe84=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709673596; c=relaxed/simple;
-	bh=64OLFLxGl5re1hWjRjXvQkB8fnNZsG58ssSljO0Glrw=;
-	h=MIME-Version:Date:From:To:Cc:Subject:In-Reply-To:References:
-	 Message-ID:Content-Type; b=IoH59aocdKpV2zEMs5U2lp0GY/5jJz22b3e/fYwVtl1lCMtON+MhJj4zyCPv2q/x8mjYX9WOodTSjxkM20jZ5XJW8u39esU+g0SurROjZGfanVU8WW3PvTUAeALqojoqz/9xf5BWvRgN4nrkXiKbrR7yDbXLpUGcEerLeGf/T/k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org; spf=pass smtp.mailfrom=manjaro.org; dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b=KqxqEqEJ; arc=none smtp.client-ip=116.203.91.91
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=manjaro.org
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b="KqxqEqEJ"
+	s=arc-20240116; t=1709673994; c=relaxed/simple;
+	bh=xR+QIoXcuCkFMZo5dOZTZhD8mUNnJl1WrNy1JgNe8OM=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=kQYtePFwvvIgNfYz6inn/mM3GfRG4TJ/uhr4Q5d7HlcpkmBCJYS8UD4jOKRcC3WFvmZdHgl9S/NZ9PUXu1TTRYwURYNxxZ2szTGAIXKh6ht2j8YoOhQAS/JA8BnDfbnqyZO5sQYSFj8icz5cyxMBWpjYiSzY/DiTevWqCdDhJD4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=drbeat.li; spf=pass smtp.mailfrom=drbeat.li; arc=none smtp.client-ip=194.126.200.68
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=drbeat.li
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=drbeat.li
+Received: from s019.cyon.net ([149.126.4.28])
+	by mail-gateway-shared15.cyon.net with esmtpsa (TLS1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
+	(Exim)
+	(envelope-from <bb@drbeat.li>)
+	id 1rhcIt-000000002P3-2qzE
+	for git@vger.kernel.org;
+	Tue, 05 Mar 2024 22:26:28 +0100
+Received: from [10.20.10.231] (port=45192 helo=mail.cyon.ch)
+	by s019.cyon.net with esmtpa (Exim 4.96.2)
+	(envelope-from <bb@drbeat.li>)
+	id 1rhcIs-006KZM-1r;
+	Tue, 05 Mar 2024 22:26:26 +0100
+Received: from minibeat.bolli (minibeat.bolli [192.168.11.3])
+	by drbeat.li (Postfix) with SMTP id 49C3E180036;
+	Tue,  5 Mar 2024 22:26:25 +0100 (CET)
+Received: by minibeat.bolli (sSMTP sendmail emulation); Tue, 05 Mar 2024 22:26:25 +0100
+From: "Beat Bolli" <bb@drbeat.li>
+To: git@vger.kernel.org
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Beat Bolli <dev+git@drbeat.li>
+Subject: [PATCH 01/22] doc: avoid redundant use of cat
+Date: Tue,  5 Mar 2024 22:25:00 +0100
+Message-ID: <20240305212533.12947-2-dev+git@drbeat.li>
+X-Mailer: git-send-email 2.44.0
+In-Reply-To: <20240305212533.12947-1-dev+git@drbeat.li>
+References: <20240305212533.12947-1-dev+git@drbeat.li>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=manjaro.org; s=2021;
-	t=1709673591;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=iXVe2il9Q99EFpEsozeb/xU4UEgINugMaHlRe1FeNP8=;
-	b=KqxqEqEJICAt7ozkep+Ps1Tl7QpSo7GA1JoPX4yTZUCCywxaRMAwG3I++FmxA8bJLhQcv3
-	1fu8Fy7T/PJ+IJ/h3gAu36m+Wwr+TFjinACliDwXGansi16z+mFMHYVpNGsbbodB1V3GLk
-	uEHcor4+w2ewHwswGDz4Nh15bavmdukIweKE1HeXHaAooDq3VjO3jWgJMRUhZ3Ien6cRdU
-	giorsYBgTe5Z/ZlHh8pe1KUbAg1ICE+0AhQeJYHi81x7xEwKs2TlgnpDT/dk9bDy+Rpkgr
-	Z+utjF/3nRhF5NwB3VfMfDAQqnZ3lvkQpJRrqyxCfzW32lBFtdE+kcYCdo4QTQ==
-Date: Tue, 05 Mar 2024 22:19:51 +0100
-From: Dragan Simic <dsimic@manjaro.org>
-To: Kristoffer Haugsbakk <code@khaugsbakk.name>
-Cc: Manlio Perillo <manlio.perillo@gmail.com>, git@vger.kernel.org, Junio C
- Hamano <gitster@pobox.com>
-Subject: Re: Clarify the meaning of "character" in the documentation
-In-Reply-To: <6de8764e-9764-4c2b-ac2e-ca5e8480908a@app.fastmail.com>
-References: <CAAToxAEE-2B_8Wqrquk1peOnqTbOpV_8KZmsJ2dgk-mfCZXHiA@mail.gmail.com>
- <5e10f1e5-b87f-43cd-ac1e-d7c01b7dad21@app.fastmail.com>
- <xmqqsf1466eh.fsf@gitster.g> <52d6850914982ffaf15dda937d611ffb@manjaro.org>
- <3bef4fef-0a00-4ed8-878e-372c4d8f552d@app.fastmail.com>
- <1e71ce757c3d773fd7354cd12473b851@manjaro.org>
- <6de8764e-9764-4c2b-ac2e-ca5e8480908a@app.fastmail.com>
-Message-ID: <1c2ee0c45053e1b60e8ea64c19b6c292@manjaro.org>
-X-Sender: dsimic@manjaro.org
-Content-Type: text/plain; charset=UTF-8;
- format=flowed
 Content-Transfer-Encoding: 8bit
-Authentication-Results: ORIGINATING;
-	auth=pass smtp.auth=dsimic@manjaro.org smtp.mailfrom=dsimic@manjaro.org
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - s019.cyon.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - drbeat.li
+X-Get-Message-Sender-Via: s019.cyon.net: authenticated_id: ig@drbeat.li
+X-Authenticated-Sender: s019.cyon.net: ig@drbeat.li
 
-On 2024-03-05 18:37, Kristoffer Haugsbakk wrote:
-> On Tue, Mar 5, 2024, at 18:20, Dragan Simic wrote:
->> On 2024-03-05 17:58, Kristoffer Haugsbakk wrote:
->>> Personally I think it’s okay. `%` for example is a good candidate 
->>> since
->>> you seldom use that as a leading character in prose (after a
->>> whitespace), and it seems that `%` is often recommended as an
->>> alternative.
->> 
->> Isn't '%' actually an ASCII character?
-> 
-> I wasn’t clear: personally I think the status quo of only allowing 
-> ASCII
-> characters seems fine given that you can use something like `%` as an
-> alternative comment char.
+The update-hook-example.txt script uses this anti-pattern twice. Call grep
+with the input file name directy. While at it, merge the two consecutive
+grep calls.
 
-Ah, I see.  Thanks for the clarification.
+Signed-off-by: Beat Bolli <dev+git@drbeat.li>
+---
+ Documentation/howto/update-hook-example.txt | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/Documentation/howto/update-hook-example.txt b/Documentation/howto/update-hook-example.txt
+index 151ee84cebce..4e727deedd21 100644
+--- a/Documentation/howto/update-hook-example.txt
++++ b/Documentation/howto/update-hook-example.txt
+@@ -100,7 +100,7 @@ info "The user is: '$username'"
+ 
+ if test -f "$allowed_users_file"
+ then
+-  rc=$(cat $allowed_users_file | grep -v '^#' | grep -v '^$' |
++  rc=$(grep -Ev '^(#|$)' $allowed_users_file |
+     while read heads user_patterns
+     do
+       # does this rule apply to us?
+@@ -138,7 +138,7 @@ info "'$groups'"
+ 
+ if test -f "$allowed_groups_file"
+ then
+-  rc=$(cat $allowed_groups_file | grep -v '^#' | grep -v '^$' |
++  rc=$(grep -Ev '^(#|$)' $allowed_groups_file |
+     while read heads group_patterns
+     do
+       # does this rule apply to us?
+-- 
+2.44.0
+
