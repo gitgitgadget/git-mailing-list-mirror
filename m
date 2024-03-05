@@ -1,154 +1,94 @@
-Received: from mail-gateway-shared15.cyon.net (mail-gateway-shared15.cyon.net [194.126.200.68])
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA9FA26AD0
-	for <git@vger.kernel.org>; Tue,  5 Mar 2024 21:28:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=194.126.200.68
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21CE114012
+	for <git@vger.kernel.org>; Tue,  5 Mar 2024 21:29:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709674129; cv=none; b=LUFlIhvIE05Q3MTmTz3Qjxh9bCzSLjukbFeGk4VoKWnJZt9Bla4sP+1lFFeY51lHHgqtvUjtZ7VK2ldhS0GqMXBjdGXSCk1gU/57GXMHUO2vYgwNmbMMjZrpX5JUVCewJHofl/avLqKIMfuspV7Eym1jQd/TBXSfS+dYgjHVZPs=
+	t=1709674188; cv=none; b=eWle0F7hxzux0e+SF+GEv+XNVfIq/mC0VET920j4RNeUhkePb2u9OtGsmexd7f8zL5mpxVv5cJdjLV8ImeosgmX+shk7YRlvDsCO2AWkLSsHfqvJfCUhddaT2BhwjHfL+WjDRuwh3pxwasiNQOLSiLFpW/Z71KZDPzwatV9w1Hg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709674129; c=relaxed/simple;
-	bh=m9Wgwfvor+cH/1vckG8HvoRHsntYHHdlCtbfEPoF8rc=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=HPO8YoQwjvdNjQ1qx9HnbPlN5KWSVvhY1XO1WMSu7+OhN9jZ0SbCehJQUmYEcNK4ZrFLonzq+l7RGqGG3FIUnmW5g8AySBGLHfNkWg30y4/HUnqGjAGHMdNy2rUZxmNu+spD6zClXdFesY2mDBWzGPpfnvDtoZzovctVsc1WjHw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=drbeat.li; spf=pass smtp.mailfrom=drbeat.li; arc=none smtp.client-ip=194.126.200.68
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=drbeat.li
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=drbeat.li
-Received: from s019.cyon.net ([149.126.4.28])
-	by mail-gateway-shared15.cyon.net with esmtpsa (TLS1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
-	(Exim)
-	(envelope-from <bb@drbeat.li>)
-	id 1rhcIg-000000002Nk-0j5P
-	for git@vger.kernel.org;
-	Tue, 05 Mar 2024 22:26:14 +0100
-Received: from [10.20.10.230] (port=20122 helo=mail.cyon.ch)
-	by s019.cyon.net with esmtpa (Exim 4.96.2)
-	(envelope-from <bb@drbeat.li>)
-	id 1rhcIf-006KUt-07;
-	Tue, 05 Mar 2024 22:26:13 +0100
-Received: from minibeat.bolli (minibeat.bolli [192.168.11.3])
-	by drbeat.li (Postfix) with SMTP id 86F48180036;
-	Tue,  5 Mar 2024 22:26:11 +0100 (CET)
-Received: by minibeat.bolli (sSMTP sendmail emulation); Tue, 05 Mar 2024 22:26:11 +0100
-From: "Beat Bolli" <bb@drbeat.li>
-To: git@vger.kernel.org
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Beat Bolli <dev+git@drbeat.li>,
-	=?UTF-8?q?Ren=C3=A9=20Scharfe?= <l.s.r@web.de>,
-	Elijah Newren <newren@gmail.com>,
-	Philippe Blain <levraiphilippeblain@gmail.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH 00/22] avoid redundant pipelines
-Date: Tue,  5 Mar 2024 22:24:59 +0100
-Message-ID: <20240305212533.12947-1-dev+git@drbeat.li>
-X-Mailer: git-send-email 2.44.0
+	s=arc-20240116; t=1709674188; c=relaxed/simple;
+	bh=yHemRaO+fXaIpRqm2abUYnzTmwRGEfl+O3eSYwroEuk=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=VNRyIrIkltGgf2oplqYF5lbockl3ZSc6Fh5YxYTGohxRSOKaKIF88A7OHQEjBIlTyT2cZ+bKkj6Vr0da+ZvxxoJPrlwky0vHQQJG4QUNtB7njoOEgr0jX2qqzjZOT3Nk+GbupravL7w3IEhY500hVYNhlIjl+ym2gUI7Znes80E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=vdUCQjL3; arc=none smtp.client-ip=173.228.157.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="vdUCQjL3"
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id 981F21FA1F;
+	Tue,  5 Mar 2024 16:29:46 -0500 (EST)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=yHemRaO+fXaIpRqm2abUYnzTmwRGEfl+O3eSYw
+	roEuk=; b=vdUCQjL3WxmWMwbVnqv72wpiL2/Go6rorOdwgAysBAYlk9dyd/M+yV
+	D1ktD6FtLKbBeokdpVEQmnbkWnfdjXngDXiuys90mHOY7RgMpwE6dFXCY2dJRCC8
+	a5pKBnBvXyeTaqANQpT3jhivn4cqkJxgi85k+uMiklmON20ZGHzNA=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id 90F581FA1E;
+	Tue,  5 Mar 2024 16:29:46 -0500 (EST)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.185.65])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id E7CD31FA1D;
+	Tue,  5 Mar 2024 16:29:42 -0500 (EST)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: John Cai <johncai86@gmail.com>
+Cc: John Cai via GitGitGadget <gitgitgadget@gmail.com>,
+  git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>
+Subject: Re: [PATCH] show-ref: add --unresolved option
+In-Reply-To: <44609CA3-1215-4EAD-8456-DDD66A3B93A8@gmail.com> (John Cai's
+	message of "Tue, 05 Mar 2024 15:56:03 -0500")
+References: <pull.1684.git.git.1709592718743.gitgitgadget@gmail.com>
+	<xmqqplw9mviu.fsf@gitster.g>
+	<44609CA3-1215-4EAD-8456-DDD66A3B93A8@gmail.com>
+Date: Tue, 05 Mar 2024 13:29:41 -0800
+Message-ID: <xmqqzfvcz7sq.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - s019.cyon.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - drbeat.li
-X-Get-Message-Sender-Via: s019.cyon.net: authenticated_id: ig@drbeat.li
-X-Authenticated-Sender: s019.cyon.net: ig@drbeat.li
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 7B13F780-DB37-11EE-8522-A19503B9AAD1-77302942!pb-smtp21.pobox.com
 
-As follow-up to [1], here's a series that eliminates redundant
-pipelines, mostly under t/.
+John Cai <johncai86@gmail.com> writes:
 
-Spawning a process is notoriously slow on Windows, so this will improve
-test performance.
+> I think something like --no-dereference that was suggested in [1] could work
+> since the concept of dereferencing should be familiar to the user. However, this
+> maybe confusing because of the existing --dereference flag that is specific to
+> tags...
 
-1/22 to 14/22 remove redundant uses of "cat" where the shell handles
-input redirection from a file or the command can take a file argument.
+True.
 
-15/22 to 20/22 merge redundant uses of "grep" into the following "sed"
-or "awk" command. Both of these are capable of filtering themselves. I'm
-a bit on the fence about this part because readability suffers in some
-cases. It was a fun exercise, though :-)
+As a symbolic reference is like a symbolic link [*], another possibility
+is to use "follow", which often is used to refer to the action of
+reading the contents of a symbolic link and using it as the target
+pathname (e.g., O_NOFOLLOW flag forbids open(2) from following
+symbolic links).  Unfortunately the checkbox feature "--follow" the
+"git log" has refers to an entirely different kind of following, so
+it is just as confusing as --dereference.
 
-21/22 merges multiple "sed" calls into one and replaces a whole "cat |
-grep | awk" construct with a single "awk" call and uses "sort -u"
-instead of "sort | uniq".
+Perhaps "--readlink", if you are showing only "ref: refs/heads/main"
+instead of the usual object name in the output?  If we are showing
+both, we may want to use a name that signals the optional nature of
+the symref part of the output, e.g., "--with-symref-target" [*].
 
-22/22 finally is a bit of an outlier in that it replaces a subshell with
-a shell compound command.
 
-In the tests, I have completely arbitrarily separated the commits into
-thousands blocks to keep the commits and their reviews manageable.
+[Footnote]
 
-All tests that I was able to run still pass. I don't have p4 or cvs
-installed.
+ * In fact that is how the symbolic reference started out as.  We
+   literally used a symbolic link .git/HEAD that points at the
+   current branch, which can be seen in v0.99~418 (git-init-db: set
+   up the full default environment, 2005-05-30).
 
-[1] https://lore.kernel.org/git/20240216171046.927552-1-dev+git@drbeat.li/
-
-Beat Bolli (22):
-  doc: avoid redundant use of cat
-  contrib/subtree/t: avoid redundant use of cat
-  t/lib-cvs.sh: avoid redundant use of cat
-  t/annotate-tests.sh: avoid redundant use of cat
-  t/perf: avoid redundant use of cat
-  t/t0*: avoid redundant uses of cat
-  t/t1*: avoid redundant uses of cat
-  t/t3*: avoid redundant uses of cat
-  t/t4*: avoid redundant uses of cat
-  t/t5*: avoid redundant uses of cat
-  t/t6*: avoid redundant uses of cat
-  t/t7*: avoid redundant use of cat
-  t/t8*: avoid redundant use of cat
-  t/t9*: avoid redundant uses of cat
-  t/t1*: merge a "grep | sed" pipeline
-  t/t3*: merge a "grep | awk" pipeline
-  t/t4*: merge a "grep | sed" pipeline
-  t/t5*: merge a "grep | sed" pipeline
-  t/t8*: merge "grep | sed" pipelines
-  t/t9*: merge "grep | sed" pipelines
-  contrib/coverage-diff: avoid redundant pipelines
-  git-quiltimport: avoid an unnecessary subshell
-
- Documentation/howto/update-hook-example.txt |  4 +--
- contrib/coverage-diff.sh                    |  9 ++----
- contrib/subtree/t/t7900-subtree.sh          |  2 +-
- git-quiltimport.sh                          |  2 +-
- t/annotate-tests.sh                         |  2 +-
- t/lib-cvs.sh                                |  4 +--
- t/perf/repos/inflate-repo.sh                |  2 +-
- t/t0002-gitfile.sh                          |  2 +-
- t/t0011-hashmap.sh                          |  2 +-
- t/t0028-working-tree-encoding.sh            |  4 +--
- t/t0204-gettext-reencode-sanity.sh          |  2 +-
- t/t1007-hash-object.sh                      |  6 ++--
- t/t1091-sparse-checkout-builtin.sh          |  2 +-
- t/t1509/prepare-chroot.sh                   |  2 +-
- t/t3200-branch.sh                           |  2 +-
- t/t3321-notes-stripspace.sh                 |  8 ++---
- t/t3920-crlf-messages.sh                    |  4 +--
- t/t4002-diff-basic.sh                       |  2 +-
- t/t4020-diff-external.sh                    |  2 +-
- t/t4150-am.sh                               |  2 +-
- t/t4205-log-pretty-formats.sh               |  2 +-
- t/t4301-merge-tree-write-tree.sh            |  8 ++---
- t/t5100-mailinfo.sh                         |  2 +-
- t/t5317-pack-objects-filter-objects.sh      |  2 +-
- t/t5401-update-hooks.sh                     |  2 +-
- t/t5534-push-signed.sh                      |  2 +-
- t/t6112-rev-list-filters-objects.sh         |  2 +-
- t/t6413-merge-crlf.sh                       |  4 +--
- t/t7704-repack-cruft.sh                     |  2 +-
- t/t8010-cat-file-filters.sh                 |  2 +-
- t/t8013-blame-ignore-revs.sh                | 28 ++++++++---------
- t/t9118-git-svn-funky-branch-names.sh       |  2 +-
- t/t9300-fast-import.sh                      | 10 +++---
- t/t9350-fast-export.sh                      |  4 +--
- t/t9400-git-cvsserver-server.sh             | 35 ++++++++++-----------
- t/t9802-git-p4-filetype.sh                  |  2 +-
- t/t9807-git-p4-submit.sh                    |  2 +-
- t/t9824-git-p4-git-lfs.sh                   |  4 +--
- 38 files changed, 86 insertions(+), 94 deletions(-)
-
--- 
-2.44.0
+ * Yes, I know, I am terrible at naming things---my names may be
+   descriptive but end up being unusably long and verbose.
 
