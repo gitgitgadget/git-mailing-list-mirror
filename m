@@ -1,76 +1,78 @@
-Received: from mail.manjaro.org (mail.manjaro.org [116.203.91.91])
-	(using TLSv1.2 with cipher DHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F4B0127B5A
-	for <git@vger.kernel.org>; Tue,  5 Mar 2024 15:42:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=116.203.91.91
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D85C127B67
+	for <git@vger.kernel.org>; Tue,  5 Mar 2024 15:59:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709653340; cv=none; b=Ar9KFBsvu6nRzqPcxj6uSKgR6EHIccVmUv5IQHcrJW3tfk9yEz78dHe0ZqUPZOUfk/OETueTdwOijH9Y7twwxnLTmmYWC7Q9iaBeyMuT1cgoMvvtPDLPC1AzG2HGMAxPzP+w93+J+cg8/Ens7LLY7Z98f2dGGFmSFUhDCOkeg4g=
+	t=1709654376; cv=none; b=AyQq1ENmMVtyyCfBLk9b7oM3a9qdhVFrI9gFCljSFGpdaGifXep5mrP/V+NR+QwG/eOjvu5vA+XuVN/Mu83MJDH74cuLdWV6kFBqlqADi+2zHFDqo+o1Ym8kkJepK5XK87ZX1RiQK4DQR1EqVWZFenqxM1pNpRnYq+nDcFoSWes=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709653340; c=relaxed/simple;
-	bh=ly6C8h0hVJRTv7zQDI3/LNOmm4qt1mGPwAqqv39sbWc=;
-	h=MIME-Version:Date:From:To:Cc:Subject:In-Reply-To:References:
-	 Message-ID:Content-Type; b=HeK4ZfyXW4zZL0SnqxoXw7rds/CSOFhq2FgG3ejtpXekK1zO5jEZzy5693ShZJDbytxuzsGo+7msTLeoMwPvh/khK0k+BvMEvTw9C13GarNdA9nZ9WKKyeJXmleKeoK7ZBs3X8KBNKfFzia5srx0WeCk3FB9Z8TSYlRI98W1qro=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org; spf=pass smtp.mailfrom=manjaro.org; dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b=fo6yjjVQ; arc=none smtp.client-ip=116.203.91.91
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=manjaro.org
+	s=arc-20240116; t=1709654376; c=relaxed/simple;
+	bh=f3CR0+vTcLIcnwBA5j4lUVxe4Pj0/ybxWATXKA2C1YU=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=COZiBp0Epn0O908IXdSwAlLHXJmq0Z5P6WwHXff77wqJEYijKrodsBv6gZd4LoNefGAbHb1+kLK9TXdLozfvTCO8JVeadX0oc5tne4QzWt2FRjNnvof5slfBZoKrsTP2StW2nqJK98TIsPYCvqwqBerzjp3QOKc6H24udjQ7L0k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=ooFIcIoB; arc=none smtp.client-ip=64.147.108.71
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b="fo6yjjVQ"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="ooFIcIoB"
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id CC0341CCA8A;
+	Tue,  5 Mar 2024 10:59:32 -0500 (EST)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=f3CR0+vTcLIcnwBA5j4lUVxe4Pj0/ybxWATXKA
+	2C1YU=; b=ooFIcIoBHcQCzZDKWogUJOu6RMjrhgkTddj8zmIoWwf864bA7yyOBv
+	g/kfp6ULutGfcPQxg9Hhh7P1rLlzNTOQq0v7VR6Y/9P48VwMjzfzcJIl5tcqXSIM
+	mGh/T2HqR+Z6HiUIQC86nWbAPDqO/z7W9gF41F12PgA+CacJ0crr0=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id C2A871CCA89;
+	Tue,  5 Mar 2024 10:59:32 -0500 (EST)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.185.65])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 30FF31CCA88;
+	Tue,  5 Mar 2024 10:59:32 -0500 (EST)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: Karthik Nayak <karthik.188@gmail.com>,  git@vger.kernel.org,  Mike
+ Hommey <mh@glandium.org>
+Subject: Re: [PATCH 1/2] refs/reftable: don't fail empty transactions in
+ repo without HEAD
+In-Reply-To: <ZecFXXqUdGEQ3YhC@tanuki> (Patrick Steinhardt's message of "Tue,
+	5 Mar 2024 12:43:25 +0100")
+References: <cover.1709041721.git.ps@pks.im>
+	<95be968e10bd02c64448786e690bbefe5c082577.1709041721.git.ps@pks.im>
+	<CAOLa=ZSycN0iYbBP-rXKW5=tNJLaSd0q8+Vm=CzNfsP2nR0sJg@mail.gmail.com>
+	<ZeVtuqEAelfiA2J9@tanuki> <xmqq5xy2rmfy.fsf@gitster.g>
+	<ZecFXXqUdGEQ3YhC@tanuki>
+Date: Tue, 05 Mar 2024 07:59:31 -0800
+Message-ID: <xmqqmsrc655o.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=manjaro.org; s=2021;
-	t=1709653328;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=H9K4PFiDttAIH+lc0UcIEFIB0PimSXvMcpFbzGoUmu8=;
-	b=fo6yjjVQlAV2jOw1g/zjk2wVUeeGEk44N0oPp41xWNwbvPMAMJzdWioQeTvdiMGqqUSq6m
-	jEspkeLCpGc4wU5RTS/udvUNPCeMpAnibbZlhgGAnttqbtL1tKQwsDiL588WMIPcNYaSWW
-	QQkrneqESNXO8kkDM113imt/rkGtfis3vL7d8e4+/GO/AyHQJdIKxpCKJLuvSO3ErAJJfc
-	t3qZ2S/sdrVk/1FMX3NH+LWav1e2UTnHIuTyjKunVGOAYe3wmJih8amctGG9c1HQ4GNOje
-	SYc4X6ieLCUWK6MwCD1dQWXPqxsIfVCiGuKYSJG+03IY4fE/XnXiPviOiGRH5A==
-Date: Tue, 05 Mar 2024 16:42:07 +0100
-From: Dragan Simic <dsimic@manjaro.org>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>, Manlio Perillo
- <manlio.perillo@gmail.com>, git@vger.kernel.org
-Subject: Re: Clarify the meaning of "character" in the documentation
-In-Reply-To: <xmqqsf1466eh.fsf@gitster.g>
-References: <CAAToxAEE-2B_8Wqrquk1peOnqTbOpV_8KZmsJ2dgk-mfCZXHiA@mail.gmail.com>
- <5e10f1e5-b87f-43cd-ac1e-d7c01b7dad21@app.fastmail.com>
- <xmqqsf1466eh.fsf@gitster.g>
-Message-ID: <52d6850914982ffaf15dda937d611ffb@manjaro.org>
-X-Sender: dsimic@manjaro.org
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Authentication-Results: ORIGINATING;
-	auth=pass smtp.auth=dsimic@manjaro.org smtp.mailfrom=dsimic@manjaro.org
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 5AF3A014-DB09-11EE-8065-25B3960A682E-77302942!pb-smtp2.pobox.com
 
-On 2024-03-05 16:32, Junio C Hamano wrote:
-> "Kristoffer Haugsbakk" <code@khaugsbakk.name> writes:
->> I think this is more about `git config --add` not doing any
->> validation. It just sets things. You can do `git config --add
->> core.commentChar 'ffd'` and get the same effect.
-> 
-> As you said, we should document core.commentChar as limited to an
-> ASCII character, at least as a short term solution.
-> 
-> I personally do not see a reason, however, why we need to be limited
-> to a single byte, though.  If a patch cleanly implements to allow us
-> to use any one-or-more-byte sequence as core.commentChar, I do not
-> offhand see a good reason to reject it---it would be fully backward
-> compatible and allows you to use a UTF-8 charcter outside ASCII, as
-> well as "//" and the like.
+Patrick Steinhardt <ps@pks.im> writes:
 
-May I ask why would we want the comment character to possibly be
-a multibyte character?  I mean, I support localization, to make it all
-easier for the users who opt not to use English, but wouldn't allowing
-multibyte characters for the comment character simply be a bit unneeded?
+> So it's not uninitialized, it rather is stale.
 
-Maybe I'm missing something?
+What I wanted to say with "technically it is not" was that these two
+are moral equivalents in the code around there after the early return
+happened ;-).
+
+> I can send a follow-up patch to remove the useless variable assignment
+> in the test, but other than that I don't think anything needs to change
+> here.
+
+OK, thanks.
+
