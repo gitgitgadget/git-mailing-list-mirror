@@ -1,16 +1,16 @@
 Received: from mail-gateway-shared15.cyon.net (mail-gateway-shared15.cyon.net [194.126.200.68])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 418DE12DDB0
-	for <git@vger.kernel.org>; Tue,  5 Mar 2024 21:26:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6334912E1C7
+	for <git@vger.kernel.org>; Tue,  5 Mar 2024 21:26:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=194.126.200.68
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709674007; cv=none; b=CD/cjePoRL/FT5GpDU87vW94hrZxJRNZVcXr2cvLh5ZyXv2LOX1XBz+zpMxPImi4+SRsAHNuVnFSCPDJU7s2zmqaxSAto2UkrB06ba5YvXjhi49jQJwkqteV2WZEJiLL07/H9Go9/5ASrCHU2AeLZUiG9DUgQyw7tYL5xd4OLfk=
+	t=1709674009; cv=none; b=FY2tlQqTkDeKQVC9YFpU6HptWAsIiFnuHyPuljpb0fbWkSAmedpJ4GIiF5QBlvWaC5LFyDpEU6qvDYddwcZ7cJZYvm2lqkyDrf9AqQ81clKV8NASEabGv3m1qX1ZfsKKFQaZ/hafOlAVEGhZ6bvK+lS/UxC0GZbYwYmVUI7I3WI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709674007; c=relaxed/simple;
-	bh=T2rlWkZRvk88WPmyYUMhc6a8x+L+IwxMEMnTVvd4zF4=;
+	s=arc-20240116; t=1709674009; c=relaxed/simple;
+	bh=W6CSeRMnqWYkGsMI4yWcPedcxD3QaYJoQgAqhvtBrms=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ho6F+xcDRKlEQmrGXgkGKwxDFNUYRQ/jSs+YM1M0d0Ln0BBrIyh+wf3OwKjyrNvjQUj/g7Fo61MBTWlL7hSf2hb0p05NjZEq/0CvjBd6s1zFkPMUbMzNBjamX05CAo4e2/VgXUPOFCDr8a6zIVdZHEBU//0n+gKM8KTyKHSVTwo=
+	 MIME-Version; b=YkOU36bjHUwxg2GorjAB0Zr6KeoFrS5WWPaMrPA/UAfQGjdNZxrs73Fwx0ImKCseCw9vqMmDgmCxIsggRw5Nqy9wQR/aMzUJkQriHqf8E0hD/a19ZVxUtsZWbzlv+tLHjyxxDNk2ZQaBO1tOlLOxhL8tzTgvVtijmXdYb//C1JI=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=drbeat.li; spf=pass smtp.mailfrom=drbeat.li; arc=none smtp.client-ip=194.126.200.68
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=drbeat.li
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=drbeat.li
@@ -18,25 +18,25 @@ Received: from s019.cyon.net ([149.126.4.28])
 	by mail-gateway-shared15.cyon.net with esmtpsa (TLS1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
 	(Exim)
 	(envelope-from <bb@drbeat.li>)
-	id 1rhcJA-000000002Td-0HOf
+	id 1rhcJB-000000002Tp-0kY2
 	for git@vger.kernel.org;
-	Tue, 05 Mar 2024 22:26:44 +0100
-Received: from [10.20.10.232] (port=35456 helo=mail.cyon.ch)
+	Tue, 05 Mar 2024 22:26:45 +0100
+Received: from [10.20.10.231] (port=52390 helo=mail.cyon.ch)
 	by s019.cyon.net with esmtpa (Exim 4.96.2)
 	(envelope-from <bb@drbeat.li>)
-	id 1rhcJ8-006KgM-35;
-	Tue, 05 Mar 2024 22:26:42 +0100
+	id 1rhcJA-006Kgi-0E;
+	Tue, 05 Mar 2024 22:26:44 +0100
 Received: from minibeat.bolli (minibeat.bolli [192.168.11.3])
-	by drbeat.li (Postfix) with SMTP id 9E81218012F;
-	Tue,  5 Mar 2024 22:26:41 +0100 (CET)
-Received: by minibeat.bolli (sSMTP sendmail emulation); Tue, 05 Mar 2024 22:26:41 +0100
+	by drbeat.li (Postfix) with SMTP id B554D180036;
+	Tue,  5 Mar 2024 22:26:42 +0100 (CET)
+Received: by minibeat.bolli (sSMTP sendmail emulation); Tue, 05 Mar 2024 22:26:42 +0100
 From: "Beat Bolli" <bb@drbeat.li>
 To: git@vger.kernel.org
 Cc: Junio C Hamano <gitster@pobox.com>,
 	Beat Bolli <dev+git@drbeat.li>
-Subject: [PATCH 16/22] t/t3*: merge a "grep | awk" pipeline
-Date: Tue,  5 Mar 2024 22:25:15 +0100
-Message-ID: <20240305212533.12947-17-dev+git@drbeat.li>
+Subject: [PATCH 17/22] t/t4*: merge a "grep | sed" pipeline
+Date: Tue,  5 Mar 2024 22:25:16 +0100
+Message-ID: <20240305212533.12947-18-dev+git@drbeat.li>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240305212533.12947-1-dev+git@drbeat.li>
 References: <20240305212533.12947-1-dev+git@drbeat.li>
@@ -57,22 +57,22 @@ X-Authenticated-Sender: s019.cyon.net: ig@drbeat.li
 
 Signed-off-by: Beat Bolli <dev+git@drbeat.li>
 ---
- t/t3920-crlf-messages.sh | 2 +-
+ t/t4002-diff-basic.sh | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/t/t3920-crlf-messages.sh b/t/t3920-crlf-messages.sh
-index 5eed640a6825..50ae222f0842 100755
---- a/t/t3920-crlf-messages.sh
-+++ b/t/t3920-crlf-messages.sh
-@@ -97,7 +97,7 @@ test_expect_success 'branch: --verbose works with messages using CRLF' '
- 	git branch -v >tmp &&
- 	# Remove first two columns, and the line for the currently checked out branch
- 	current=$(git branch --show-current) &&
--	grep -v $current <tmp | awk "{\$1=\$2=\"\"}1"  >actual &&
-+	awk "/$current/ { next } { \$1 = \$2 = \"\" } 1" <tmp >actual &&
- 	test_cmp expect actual
- '
+diff --git a/t/t4002-diff-basic.sh b/t/t4002-diff-basic.sh
+index 7afc883ec374..cb3307010c1e 100755
+--- a/t/t4002-diff-basic.sh
++++ b/t/t4002-diff-basic.sh
+@@ -405,7 +405,7 @@ test_expect_success 'diff-tree -r B A == diff-tree -r -R A B' '
  
+ test_expect_success 'diff can read from stdin' '
+ 	test_must_fail git diff --no-index -- MN - < NN |
+-		grep -v "^index" | sed "s#/-#/NN#" >.test-a &&
++		sed "/^index/d; s#/-#/NN#" >.test-a &&
+ 	test_must_fail git diff --no-index -- MN NN |
+ 		grep -v "^index" >.test-b &&
+ 	test_cmp .test-a .test-b
 -- 
 2.44.0
 
