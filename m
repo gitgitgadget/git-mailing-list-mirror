@@ -1,104 +1,98 @@
-Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C707543AD0
-	for <git@vger.kernel.org>; Tue,  5 Mar 2024 22:58:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7971E12D213
+	for <git@vger.kernel.org>; Tue,  5 Mar 2024 23:02:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709679503; cv=none; b=qkL12A1m/laEQoZ9pBJFbsZh0Gj3ihT8X7axwu1UfJSDQiZSHwJ3e0NyFRpcmV+cIjqaThNizZjVIIzKdvaFyYCbP8PkcGl2BiKHnqz3V9BPMjC7NIhCuYXT7GkFYl/17O9Jn94lqfjEd5uKBIeVgFNmf8NvfrmxFIOcWANdUvA=
+	t=1709679778; cv=none; b=CmgO/wBVMrQWF/VkSlDH5KjHo5+OKwFZFEJFeUmhaOTC1Q64X7XoKUENOrHkgpIu5+obcDoSE3f7E/Puag8zV9zABIRIj9e03qrwPvWg2xtfenetyVDwtE3ufLInqx096trU0X5gXb15ZcySPDECnQcSSvsIAz6Va3i7hAwHQGg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709679503; c=relaxed/simple;
-	bh=kSCAMffYOL1D+jUWHr/uw9i1Jzbz9B1eZNmlgHlZkt0=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=l/8DwUWXfoqU5+U+m/zvdlYPQhoX3shccVTwqch7eHbK6M7o1c/s0GY4wgXvZNiPoRn6X0xXmTG+SNvk6zqE5b0IO2jbVrWqss1gg+w9nSp8T4UJHPDE8MTDG/Cj2aQzWblcBxmdIYU4vABHxikljl+5YbVNEcOSQ9q40KA8lPY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=UfiRVSWa; arc=none smtp.client-ip=209.85.128.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1709679778; c=relaxed/simple;
+	bh=VtAwUt+CDGCOHVYIC43j14NJShXXCBDWnstfUvzp9JE=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=SbXRUyOPoSxpZsRt1XzBc9Yj890HJqHgyTT7ESHLaDpKxNgiAXxL1Xu7CWYGQvRRIK/GfhbjCSfEH1oHqCEMEFH4QfPBjKpn/v0Jv9MIH+sxvF+8vLX0UzOF4SKoBFuiw0tYyMDh9txj8gh7ykhGEUp1COsQEKFZlvoqguMMEDs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=TrCwGP6S; arc=none smtp.client-ip=173.228.157.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UfiRVSWa"
-Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-412f56ffe3bso230915e9.2
-        for <git@vger.kernel.org>; Tue, 05 Mar 2024 14:58:21 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1709679500; x=1710284300; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=p744Gm0pnoiTv5N15xgIL0TQOXR+mQl2Ak8fnsKcQBA=;
-        b=UfiRVSWa0vpEphywt1XTz6kVksNjNM/udlk09wrIKRWcHVyczmf0FuyIEF8OUAYAFt
-         x0/dAgqZopHW7v4F+4a1FwP//7ml4DI6Iw6Wbczxg86P5/8uBkTdygmqoa1FBZwCoxZd
-         Us9YIrxNODGH5yq+u4p/ARUgoCBRxs2iJEKC4JpcCrtaSUNcD35GD6VH2wEIkYRkT5gQ
-         S8QP95B3lzAPb5PZAumwB1S/XAqSYTTF2trvWcovExJWieq5egt1WuTRFPb9ZTcdCPCM
-         IVFwyEefpDakoIOAFPehv+A0bM/PBsbzc5Ak8MC2ogY/o0ABeGI/hTE2LsdVmBpjfNP4
-         /Q3g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1709679500; x=1710284300;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=p744Gm0pnoiTv5N15xgIL0TQOXR+mQl2Ak8fnsKcQBA=;
-        b=gUQirw1Wfb8rdDK9ZxrMz3qVPjHRAGkGQUZid8tlMejZqlK93Bm7kt9KFufh5tZkhK
-         Z2wsEXGxf99SyMpfpnFec5XpXTWFz8xBklVyaGf0/md5ELnPgQ6Gp3dXc4tRHSPvK5LY
-         z8Aa1dZ1dV8/IOrcWPoNiTZURCPBdBHUC1/O+ta5rPdw8XJb/7+9lQAHIj5VXuzI/pdL
-         6eImoNSDUxjgPuB7Dos+1uqSwCDgw3v1VffaypZHERD469uSrubvKDG2n9EcF9DORuTH
-         q1la7t5Dyc1/kPA1UUibjkbJ1R/lGk/P6Q2v+wOpTKxXqJQtg2rsJfJr5pYlCdooQikE
-         pOeQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUUyidno+3o7v5BpeUpKxy8Tpg4DZjVCif4w/kysNae1WLf7BCEXpVPK74KaIPGJdkZHLxLi5UH198tWx3fVO4rxVjy
-X-Gm-Message-State: AOJu0Yw8AEJNqWR0c635Xn/hpOTcI5IybBKV2Gpr2XQ5PPHUHn2deeMW
-	MddlQaquuXiJ+3CBu8YG86yNnIc/C4NWBYq7JpjoQsCTEnBsu6BeC55YTsXD9Rs=
-X-Google-Smtp-Source: AGHT+IE1d5OiIC/bfIkCvFM1YsZDHieMjiKBsIT8+PBkthLI72cclU2KPQse+8B1T+Vjyyv7zcgjfQ==
-X-Received: by 2002:a05:600c:34ce:b0:412:f1ff:52a with SMTP id d14-20020a05600c34ce00b00412f1ff052amr536248wmq.24.1709679499858;
-        Tue, 05 Mar 2024 14:58:19 -0800 (PST)
-Received: from gmail.com (59.red-88-14-210.dynamicip.rima-tde.net. [88.14.210.59])
-        by smtp.gmail.com with ESMTPSA id v6-20020a05600c444600b00412ed9b621bsm3002017wmn.5.2024.03.05.14.58.10
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 05 Mar 2024 14:58:19 -0800 (PST)
-Message-ID: <0fbe2b2e-448d-4611-8183-ce706d5848ae@gmail.com>
-Date: Tue, 5 Mar 2024 23:58:04 +0100
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="TrCwGP6S"
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id B7ED6185B6;
+	Tue,  5 Mar 2024 18:02:50 -0500 (EST)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=VtAwUt+CDGCOHVYIC43j14NJShXXCBDWnstfUv
+	zp9JE=; b=TrCwGP6SWLlN1daWf55k6xiASh6m9sbyfrtRDoeEwfWE1f/WqlYKIt
+	0BV4rIbFV3iXfHbZNgH1xzQz33FVpSkZ9lfPQianOE68aRcP/qLSR5T6kjZFO+xK
+	M67myQUL77DtVzlOvo1tZzui4RBYnCf+68ilxy/M7JmHYpM3Eatxw=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id AEFEF185B5;
+	Tue,  5 Mar 2024 18:02:50 -0500 (EST)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.185.65])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 49501185AD;
+	Tue,  5 Mar 2024 18:02:47 -0500 (EST)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Aryan Gupta via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  "Patrick Steinhardt" <ps@pks.im>,  =?utf-8?Q?Mic?=
+ =?utf-8?Q?hal_Such=C3=A1nek?= <msuchanek@suse.de>,  =?utf-8?Q?Jean-No?=
+ =?utf-8?Q?=C3=ABl_AVILA?= <jn.avila@free.fr>,
+  Kristoffer Haugsbakk <code@khaugsbakk.name>,  Eric Sunshine
+ <sunshine@sunshineco.com>,  Aryan Gupta <garyan447@gmail.com>,
+    Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH v3] tests: modernize the test script t0010-racy-git.sh
+In-Reply-To: <pull.1675.v3.git.1709676557639.gitgitgadget@gmail.com> (Aryan
+	Gupta via GitGitGadget's message of "Tue, 05 Mar 2024 22:09:17 +0000")
+References: <pull.1675.v2.git.1709243831190.gitgitgadget@gmail.com>
+	<pull.1675.v3.git.1709676557639.gitgitgadget@gmail.com>
+Date: Tue, 05 Mar 2024 15:02:45 -0800
+Message-ID: <xmqqh6hkxox6.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 00/22] avoid redundant pipelines
-Content-Language: en-US
-To: Beat Bolli <bb@drbeat.li>, git@vger.kernel.org
-Cc: Junio C Hamano <gitster@pobox.com>, Beat Bolli <dev+git@drbeat.li>,
- =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
- Elijah Newren <newren@gmail.com>,
- Philippe Blain <levraiphilippeblain@gmail.com>,
- Johannes Schindelin <Johannes.Schindelin@gmx.de>
-References: <20240305212533.12947-1-dev+git@drbeat.li>
-From: =?UTF-8?Q?Rub=C3=A9n_Justo?= <rjusto@gmail.com>
-In-Reply-To: <20240305212533.12947-1-dev+git@drbeat.li>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 7B9C654A-DB44-11EE-BC20-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
 
-On Tue, Mar 05, 2024 at 10:24:59PM +0100, Beat Bolli wrote:
-> As follow-up to [1], here's a series that eliminates redundant
-> pipelines, mostly under t/.
-> 
-> Spawning a process is notoriously slow on Windows, so this will improve
-> test performance.
-> 
-> 1/22 to 14/22 remove redundant uses of "cat" where the shell handles
-> input redirection from a file or the command can take a file argument.
-> 
-> 15/22 to 20/22 merge redundant uses of "grep" into the following "sed"
-> or "awk" command. Both of these are capable of filtering themselves. I'm
-> a bit on the fence about this part because readability suffers in some
-> cases. It was a fun exercise, though :-)
-> 
-> 21/22 merges multiple "sed" calls into one and replaces a whole "cat |
-> grep | awk" construct with a single "awk" call and uses "sort -u"
-> instead of "sort | uniq".
-> 
-> 22/22 finally is a bit of an outlier in that it replaces a subshell with
-> a shell compound command.
+"Aryan Gupta via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-I have given it a cursory read and it looks a very good improvement.
+> From: Aryan Gupta <garyan447@gmail.com>
+>
+> Modernize the formatting of the test script to align with current
+> standards and improve its overall readability.
+>
+> Signed-off-by: Aryan Gupta <garyan447@gmail.com>
+> ---
 
-I've left a couple of nits, none of them deserve a re-roll.
+Both the above proposed commit log message and the proposed changes
+to the code look good.
 
-Thank you!
+This is a tangent but as can be seen at
+
+  https://lore.kernel.org/git/pull.1675.v3.git.1709676557639.gitgitgadget@gmail.com/raw
+
+your message has these headers that are not syntactically correct
+and may even cause responses to bounce unless editted.
+
+    Cc: "Patrick Steinhardt [ ]" <ps@pks.im>,
+        "Michal =?UTF-8?Q?Such=C3=A1nek?= [ ]" <msuchanek@suse.de>,
+        "=?UTF-8?Q?Jean-No=C3=ABl?= AVILA [ ]" <jn.avila@free.fr>,
+        Kristoffer Haugsbakk <[code@khaugsbakk.name]>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Aryan Gupta <garyan447@gmail.com>,
+        Aryan Gupta <garyan447@gmail.com>
+
+I cannot tell if this is a bug in GGG, or a fault of a corrupt pull
+request thrown at GGG, but it is annoying that recipients have to
+edit the addresses in e-mail header.  Can somebody take a look into
+it, please (or is it a known issue?).
+
+Thanks.
