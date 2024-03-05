@@ -1,16 +1,16 @@
 Received: from mail-gateway-shared15.cyon.net (mail-gateway-shared15.cyon.net [194.126.200.68])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86F2912BEA3
-	for <git@vger.kernel.org>; Tue,  5 Mar 2024 21:26:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66DB812CD8B
+	for <git@vger.kernel.org>; Tue,  5 Mar 2024 21:26:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=194.126.200.68
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709673996; cv=none; b=dVZ3wUYOVi6HYtg9beXeVMdgNGy7L+AzQHk63CjyzrcJzTWZ1lUPZ9ISbxhuAFUg62xc7nBRdOpEdlng9sYhZi7g+eED6Wa+d6JruLBL0U5TXJriDL25zHWZsDzlcwy/gB0Vx0Gz2JaADLH8NzLESnIeHIR+LpQbnDiXhY07Td4=
+	t=1709673997; cv=none; b=orYYuLRrTmbajMsgRVzhtWSrC2SuV+kXHYNOvF2OEd0W32zyb4YaaE702oTNOHzwZW+khy18RVWFrhuCPr+krdJvBGcsm/QpEucQL6AkKX0iADYGJUlR8/XpJfNN/LNiG/7tCXwebIUstMymyE1zSdzI0+EojCc7eE7Da7WVhhU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709673996; c=relaxed/simple;
-	bh=n+VW9olPmiDPnqzGmqm+lcCHo/bvpWFh/wizfy1/1EA=;
+	s=arc-20240116; t=1709673997; c=relaxed/simple;
+	bh=eNpX5PWTT2ye9/O6n05IALrMxhreaX+sAQLf45At9k8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=a9bxvLarMQWICyUxsQkuFqICiSNgT69IBnm8+jErnyWb1FvN/IEfeptPWN4Z+w5KJ29K4lbnSXcvR6PMrYN4DD5rC+7TqiwksAOr2O6eqB++FXn1+X8uQsBWDug52zTihqqnYsXwmdVQ7GZUpt1tr3u1irib64rs8R7ellTCErU=
+	 MIME-Version:Content-Type; b=KH46p3MFg9hOSTTKMa/I0rnJkJCa7GW9Om6oKPTUApmBTVmyGK1TvQkHwBtuGJ8OtzYgqh6yWLHIi/4hZFWWuCU0htWioXG5RHrjqd2npZAaNo+jj6t82OXOI52D8ZAzecfm4k09pTX8UP1M1Ixm5SlWLR4zBtlBYpDI+gjlixU=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=drbeat.li; spf=pass smtp.mailfrom=drbeat.li; arc=none smtp.client-ip=194.126.200.68
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=drbeat.li
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=drbeat.li
@@ -18,25 +18,25 @@ Received: from s019.cyon.net ([149.126.4.28])
 	by mail-gateway-shared15.cyon.net with esmtpsa (TLS1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
 	(Exim)
 	(envelope-from <bb@drbeat.li>)
-	id 1rhcIy-000000002Q2-02CM
+	id 1rhcIz-000000002QG-0dVO
 	for git@vger.kernel.org;
-	Tue, 05 Mar 2024 22:26:32 +0100
-Received: from [10.20.10.233] (port=49178 helo=mail.cyon.ch)
+	Tue, 05 Mar 2024 22:26:33 +0100
+Received: from [10.20.10.231] (port=47490 helo=mail.cyon.ch)
 	by s019.cyon.net with esmtpa (Exim 4.96.2)
 	(envelope-from <bb@drbeat.li>)
-	id 1rhcIw-006Kb5-2v;
-	Tue, 05 Mar 2024 22:26:30 +0100
+	id 1rhcIy-006KbR-09;
+	Tue, 05 Mar 2024 22:26:32 +0100
 Received: from minibeat.bolli (minibeat.bolli [192.168.11.3])
-	by drbeat.li (Postfix) with SMTP id 9FDBA180036;
-	Tue,  5 Mar 2024 22:26:29 +0100 (CET)
-Received: by minibeat.bolli (sSMTP sendmail emulation); Tue, 05 Mar 2024 22:26:29 +0100
+	by drbeat.li (Postfix) with SMTP id B424018012F;
+	Tue,  5 Mar 2024 22:26:30 +0100 (CET)
+Received: by minibeat.bolli (sSMTP sendmail emulation); Tue, 05 Mar 2024 22:26:30 +0100
 From: "Beat Bolli" <bb@drbeat.li>
 To: git@vger.kernel.org
 Cc: Junio C Hamano <gitster@pobox.com>,
 	Beat Bolli <dev+git@drbeat.li>
-Subject: [PATCH 05/22] t/perf: avoid redundant use of cat
-Date: Tue,  5 Mar 2024 22:25:04 +0100
-Message-ID: <20240305212533.12947-6-dev+git@drbeat.li>
+Subject: [PATCH 06/22] t/t0*: avoid redundant uses of cat
+Date: Tue,  5 Mar 2024 22:25:05 +0100
+Message-ID: <20240305212533.12947-7-dev+git@drbeat.li>
 X-Mailer: git-send-email 2.44.0
 In-Reply-To: <20240305212533.12947-1-dev+git@drbeat.li>
 References: <20240305212533.12947-1-dev+git@drbeat.li>
@@ -46,6 +46,7 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
 X-AntiAbuse: Primary Hostname - s019.cyon.net
@@ -55,27 +56,68 @@ X-AntiAbuse: Sender Address Domain - drbeat.li
 X-Get-Message-Sender-Via: s019.cyon.net: authenticated_id: ig@drbeat.li
 X-Authenticated-Sender: s019.cyon.net: ig@drbeat.li
 
-Take care to redirect stdin, otherwise the output of wc would also contain
-the file name.
-
 Signed-off-by: Beat Bolli <dev+git@drbeat.li>
 ---
- t/perf/repos/inflate-repo.sh | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ t/t0002-gitfile.sh                 | 2 +-
+ t/t0011-hashmap.sh                 | 2 +-
+ t/t0028-working-tree-encoding.sh   | 4 ++--
+ t/t0204-gettext-reencode-sanity.sh | 2 +-
+ 4 files changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/t/perf/repos/inflate-repo.sh b/t/perf/repos/inflate-repo.sh
-index fcfc992b5b02..412e4b450b16 100755
---- a/t/perf/repos/inflate-repo.sh
-+++ b/t/perf/repos/inflate-repo.sh
-@@ -33,7 +33,7 @@ do
- done
+diff --git a/t/t0002-gitfile.sh b/t/t0002-gitfile.sh
+index 736516cc6a47..bf3bf604abe3 100755
+--- a/t/t0002-gitfile.sh
++++ b/t/t0002-gitfile.sh
+@@ -40,7 +40,7 @@ test_expect_success 'final setup + check rev-parse --git-dir' '
  
- git ls-tree -r HEAD >GEN_src_list
--nr_src_files=$(cat GEN_src_list | wc -l)
-+nr_src_files=$(wc -l <GEN_src_list)
+ test_expect_success 'check hash-object' '
+ 	echo "foo" >bar &&
+-	SHA=$(cat bar | git hash-object -w --stdin) &&
++	SHA=$(git hash-object -w --stdin <bar) &&
+ 	test_path_is_file "$REAL/objects/$(objpath $SHA)"
+ '
  
- src_branch=$(git symbolic-ref --short HEAD)
+diff --git a/t/t0011-hashmap.sh b/t/t0011-hashmap.sh
+index 1cb6aa682432..46e74ad1072b 100755
+--- a/t/t0011-hashmap.sh
++++ b/t/t0011-hashmap.sh
+@@ -239,7 +239,7 @@ test_expect_success 'grow / shrink' '
+ 	echo value40 >> expect &&
+ 	echo size >> in &&
+ 	echo 64 39 >> expect &&
+-	cat in | test-tool hashmap > out &&
++	test-tool hashmap <in >out &&
+ 	test_cmp expect out
  
+ '
+diff --git a/t/t0028-working-tree-encoding.sh b/t/t0028-working-tree-encoding.sh
+index 1b55f59c237c..ad151a346708 100755
+--- a/t/t0028-working-tree-encoding.sh
++++ b/t/t0028-working-tree-encoding.sh
+@@ -131,8 +131,8 @@ do
+ 		test_when_finished "rm -f crlf.utf${i}.raw lf.utf${i}.raw" &&
+ 		test_when_finished "git reset --hard HEAD^" &&
+ 
+-		cat lf.utf8.raw | write_utf${i} >lf.utf${i}.raw &&
+-		cat crlf.utf8.raw | write_utf${i} >crlf.utf${i}.raw &&
++		write_utf${i} <lf.utf8.raw >lf.utf${i}.raw &&
++		write_utf${i} <crlf.utf8.raw >crlf.utf${i}.raw &&
+ 		cp crlf.utf${i}.raw eol.utf${i} &&
+ 
+ 		cat >expectIndexLF <<-EOF &&
+diff --git a/t/t0204-gettext-reencode-sanity.sh b/t/t0204-gettext-reencode-sanity.sh
+index 4f2e0dcb02bd..310a4500125f 100755
+--- a/t/t0204-gettext-reencode-sanity.sh
++++ b/t/t0204-gettext-reencode-sanity.sh
+@@ -82,7 +82,7 @@ test_expect_success GETTEXT_ISO_LOCALE 'gettext.c: git init UTF-8 -> ISO-8859-1'
+     printf "Bjó til tóma Git lind" >expect &&
+     LANGUAGE=is LC_ALL="$is_IS_iso_locale" git init repo >actual &&
+     test_when_finished "rm -rf repo" &&
+-    grep "^$(cat expect | iconv -f UTF-8 -t ISO8859-1) " actual
++    grep "^$(iconv -f UTF-8 -t ISO8859-1 <expect) " actual
+ '
+ 
+ test_done
 -- 
 2.44.0
 
