@@ -1,78 +1,57 @@
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+Received: from pv50p00im-ztdg10021901.me.com (pv50p00im-ztdg10021901.me.com [17.58.6.55])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 459C2BA50
-	for <git@vger.kernel.org>; Tue,  5 Mar 2024 19:41:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE94718639
+	for <git@vger.kernel.org>; Tue,  5 Mar 2024 19:44:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=17.58.6.55
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709667703; cv=none; b=eKesZikBkK87P6Ke8IN7eyl7GApkf4t7xtfqJyTdcWEFv/9UM2j5RyXjpqnvxrEO0CJGEzD8ViqKTx5EanZePkkSxu4nhFOLX2XvRA/ig/jHQdB9QUkeynfIthfcRJFiSCbYw5VjbyWqlK5BcqdDPnv4DPPIWD5XKr/aQAOOcXg=
+	t=1709667895; cv=none; b=lItW/20nLPTqs6d1OjtWGQsvLkmhnVVxo5Dy24TRNGrhktFOxeSwia/hfhPwkr+hO0hTlryahrA37Rch2JZwF2AADsoDl71ajagzNY1u29XneHcf1o48vBT6B8+7dRkNlvvzsWdOQcNCOGOAil4b7WseRkCioPWTWucoXsDMF3M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709667703; c=relaxed/simple;
-	bh=1QwAmycI+rXE1T+qzAlHbZzryF4j1rWpLqx9GuhP2no=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=uIEnWqi1dcHM1Y1YngjaCO0kBBTVnf6+r3jc8aV+DyQmH8CkrHKbn8NbKByaGRHPoA/L5FOUGILHwUzkDVI2SP8qnx24FwHxy7CBPFPE9sYkMRWwnbvMO0xyBc22Qhh6JSZF+gkpX11n+/KbZxXLWwBjq6pArZ3IQAALuRqgUhw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=gnlO8PZl; arc=none smtp.client-ip=173.228.157.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1709667895; c=relaxed/simple;
+	bh=dQUdIoy+HH5JD7K3B0VaqZ7OwORPy6apwetPoqJtGIw=;
+	h=Content-Type:From:Mime-Version:Date:Subject:Message-Id:To; b=NNTTtNC0iplLmqqaRbdNQomKWrFt3fMw/eB1lgoWAVDtqfRtRDz9WU+DYOyn74SO0X2kA31wSkVY7gxINVM55YVpD8C7+peObLGzIHsdMlgPQaUXabqMbbbtX5W3ONs5Tq1bCuoIM3vyn3NNu7lWbJYahb7Ayjr48gHik9oTUxI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=icloud.com; spf=pass smtp.mailfrom=icloud.com; dkim=pass (2048-bit key) header.d=icloud.com header.i=@icloud.com header.b=bdxb3pv1; arc=none smtp.client-ip=17.58.6.55
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=icloud.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=icloud.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="gnlO8PZl"
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id C4F6E3F1C2;
-	Tue,  5 Mar 2024 14:41:41 -0500 (EST)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=1QwAmycI+rXE1T+qzAlHbZzryF4j1rWpLqx9Gu
-	hP2no=; b=gnlO8PZlLVuwIV4Ox0b3RO926TjULcwup+bAN25yYHps9SREsNOF5F
-	5yfyYztyNQyj3fXLXMiva3lS9xX80lx2l4okNazpXOgFwchY1sYoFvNb9rzzSsRD
-	qSeEHQABJNrQdlHSpJTuHuWhe6bd0h7Es1AjZWziNsYNzru5JXAL0=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id BCE873F1C1;
-	Tue,  5 Mar 2024 14:41:41 -0500 (EST)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.185.65])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 63A593F1BF;
-	Tue,  5 Mar 2024 14:41:38 -0500 (EST)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Josh Steadmon <steadmon@google.com>
-Cc: Linus Arver via GitGitGadget <gitgitgadget@gmail.com>,
-  git@vger.kernel.org,  Christian Couder <chriscool@tuxfamily.org>,  Emily
- Shaffer <nasamuffin@google.com>,  "Randall S. Becker"
- <rsbecker@nexbridge.com>,  Christian Couder <christian.couder@gmail.com>,
-  Kristoffer Haugsbakk <code@khaugsbakk.name>,  Linus Arver
- <linusa@google.com>
-Subject: Re: [PATCH v6 0/9] Enrich Trailer API
-In-Reply-To: <Zedtd6esmIgayeoU@google.com> (Josh Steadmon's message of "Tue, 5
-	Mar 2024 11:07:35 -0800")
-References: <pull.1632.v5.git.1708124950.gitgitgadget@gmail.com>
-	<pull.1632.v6.git.1709252086.gitgitgadget@gmail.com>
-	<xmqq5xy036a2.fsf@gitster.g> <Zedtd6esmIgayeoU@google.com>
-Date: Tue, 05 Mar 2024 11:41:36 -0800
-Message-ID: <xmqqh6hk1n67.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=icloud.com header.i=@icloud.com header.b="bdxb3pv1"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=icloud.com;
+	s=1a1hai; t=1709667894;
+	bh=dQUdIoy+HH5JD7K3B0VaqZ7OwORPy6apwetPoqJtGIw=;
+	h=Content-Type:From:Mime-Version:Date:Subject:Message-Id:To;
+	b=bdxb3pv17eCLirk/sIvyOuydQwj9Wc6bHddOLLVla2wNkNcYHp3GpUExXsWeIv6fF
+	 7qrCvSwDyElqPW1UPItgJZcdnuyWptV+7zudGdMlqhUqKGW/qASsssBRGPrn8yX9Tb
+	 /O+7YffJgnFR6Fsu1d6m1nbrUV8zfJTBJlDNK23nE12/CJSyw36omS4QkOvKnz8BDQ
+	 SLDuYuo/bSnej92+d8JO1qARf85ClVS9fNg7B5SybvKyJiw7ZyA+mdRpqWnDXtN/9h
+	 ccYv0qkWT9CUg+Nt4wBB2RBZCcVZoEUwGKknuusnf/xL9BXr0d2eMYRmFJN08rocxE
+	 g9gz8Zf0A98pQ==
+Received: from smtpclient.apple (pv50p00im-dlb-asmtp-mailmevip.me.com [17.56.9.10])
+	by pv50p00im-ztdg10021901.me.com (Postfix) with ESMTPSA id 2908381373
+	for <git@vger.kernel.org>; Tue,  5 Mar 2024 19:44:52 +0000 (UTC)
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+From: Rifani mei <m4ichen@icloud.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- 61FDD144-DB28-11EE-8DB9-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
+Mime-Version: 1.0 (1.0)
+Date: Wed, 6 Mar 2024 02:44:39 +0700
+Subject: Tc
+Message-Id: <14BC30E5-DDCE-4B9D-B066-B9F7C2FB827F@icloud.com>
+To: git@vger.kernel.org
+X-Mailer: iPhone Mail (20H307)
+X-Proofpoint-ORIG-GUID: E2BbpxKRpwf-5CwpgZSXGC5X2jKE4TRN
+X-Proofpoint-GUID: E2BbpxKRpwf-5CwpgZSXGC5X2jKE4TRN
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-03-05_16,2024-03-05_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 spamscore=0 bulkscore=0 adultscore=0
+ phishscore=0 mlxscore=0 suspectscore=0 clxscore=1011 malwarescore=0
+ mlxlogscore=450 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2308100000 definitions=main-2403050159
 
-Josh Steadmon <steadmon@google.com> writes:
 
-> On 2024.03.05 10:03, Junio C Hamano wrote:
->> 
->> It's been nearly a week since this was posted.  Any more comments,
->> or is everybody happy with this iteration?  Otherwise I am tempted
->> to mark the topic for 'next' soon.
->> 
->> Thanks.
->
-> I scanned through v6 yesterday and have nothing new to add. LGTM.
 
-Thanks.
+Dikirim dari iPhone saya
