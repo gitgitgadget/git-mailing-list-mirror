@@ -1,102 +1,192 @@
-Received: from wfhigh4-smtp.messagingengine.com (wfhigh4-smtp.messagingengine.com [64.147.123.155])
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D29F512E6D
-	for <git@vger.kernel.org>; Tue,  5 Mar 2024 17:01:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.155
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5D1ADDDA
+	for <git@vger.kernel.org>; Tue,  5 Mar 2024 17:08:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709658086; cv=none; b=pnVWEIM199HOljuljpQM6vDjmWD7CTlCfkdDdgQkx8FbEciUgYIyvcpr7QaQWxnJ/o+PNx/Nn1MRqGSINQCa9cYs0PuSn/Miss1FxHy8qONeWoaFw4VN9tfRD+xAxgaFL+kOUaOhhtca+IIDipEwYizN1/LRjBfy4Bg9+0O8HoE=
+	t=1709658506; cv=none; b=GcfA+ZzUyj0X4mfN+K9oYo3l68jc8oeJLWhyIRxuvvuZcFVEKV7mhxbeqplULUa7dYUf3/BSYRubltb2tkK1Ic6XoX+YN82C/46dvK154SEN4XCSyKPxwHXZoJU9RDZbcg6S4X0j3ZIhNiLQIWNANBIgh37A2YA+ZI+g6IHwEUE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709658086; c=relaxed/simple;
-	bh=Yss1GtikzAH6m2TopQTq2VbMOmJTu/iDpJPv5Rq8Vvw=;
-	h=MIME-Version:Message-Id:In-Reply-To:References:Date:From:To:Cc:
-	 Subject:Content-Type; b=lnvLWBAPlwrZk87BibXLnt2AvgK36wNAjdXYbxy5+8Z6peWfu9m2rgLc+I5tEhBBhHMAPMPM4yzr6wFTRBclLZoo0jeRyozqExxg0/ZkGXcaf1eCAj/FoZ0F0oRiSsEAPKwvtr9Tm0fSNlKTycgiC2mMOaNE00ZSmboTLe+k+HY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=khaugsbakk.name; spf=pass smtp.mailfrom=khaugsbakk.name; dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b=SO2TqAyH; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=GlVJz62h; arc=none smtp.client-ip=64.147.123.155
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=khaugsbakk.name
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=khaugsbakk.name
+	s=arc-20240116; t=1709658506; c=relaxed/simple;
+	bh=OsMBwND2M1yE75rlzKbm2iM2ezuk36079H2KpgWjpzI=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=duWFj75t3eKM7EAbkh9jOhnmA+3EIaPRvare4kwv4hN9PmvjWfw3oGCXi99n+6dSHJ8bNWSHpQ+kxomOQNtpdU86hx7JVqdcO9Z6NluNZWTTZ9UPHGpZCBfQtb+eBOdxA+0iLdx8ASfWolXRzfBu2YS2xkRrGGHP+TnN78ssvNo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=LsYIDv6j; arc=none smtp.client-ip=64.147.108.70
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b="SO2TqAyH";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="GlVJz62h"
-Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
-	by mailfhigh.west.internal (Postfix) with ESMTP id A2CEF18000B1;
-	Tue,  5 Mar 2024 12:01:23 -0500 (EST)
-Received: from imap49 ([10.202.2.99])
-  by compute1.internal (MEProxy); Tue, 05 Mar 2024 12:01:24 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=khaugsbakk.name;
-	 h=cc:cc:content-type:content-type:date:date:from:from
-	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:subject:subject:to:to; s=fm3; t=1709658083; x=
-	1709744483; bh=Yss1GtikzAH6m2TopQTq2VbMOmJTu/iDpJPv5Rq8Vvw=; b=S
-	O2TqAyHHGq/KeEWsYMflgz8kCGcBm+v393Ek/YQFiXwZdE51I1x0bcyMOzxaqFHz
-	ljOKwR0C7OgzAuvkHQx2F7MZ160i/QJw9tBSTJXIyB7zp/YhOsro+KjAUPX+5NPu
-	jzOwdgH91AYNyUJSTB+xLh3J1w/ASF8JBkZqUXtPNwfFPWlrwXG1ZK0jKv6c+tYD
-	utnANUhOgghDg1AhgL6HAHVvA2/bxlB2h/acpV/S5Qf8WTQZAOQZByxrQwH8QEK5
-	oV/prj7iCZggut0G6sQr2s3bZtV8PFFCVa2GQrnv3GnkQ1qEORxQJ89aIoMBGrT/
-	2kH8ZJTOz7Hk+vZJLHvmg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1709658083; x=1709744483; bh=Yss1GtikzAH6m2TopQTq2VbMOmJT
-	u/iDpJPv5Rq8Vvw=; b=GlVJz62hQ0XI5aLXzb8Zj7DknjLqv61jOihxMXjQ+RoG
-	AjOepjzx8MPUTiE43MEtGtlc8fFQhy4KaegZs0W6kVSIsa2jfhnNxUgYWGIJR+Wj
-	vS9UDKQ1OuWVyo0gHWAIfjwzJB075Ps7x70ZGPI8w0wlOaumiDh2gULBiKu9DwHz
-	pfZbaWUwWBj75hcWRjd0kut/57RmRVuerItFKqAn5l66WB+tlJ+/rOZq9B6+bvs3
-	JjmLZl05cVXzXkEmX4iY7bd7FynvVZZxTJU77EhGMWQYEs2t30e521Zr+gEO/8lz
-	RWXJsxqLpGZ++hJnzQVc20A7DI05z8n1Pc2Nc4mz+w==
-X-ME-Sender: <xms:4k_nZUfd-hNGmysAOuuceWoiHtFbO3V9FrYFruY_p23g404PMcTKS60>
-    <xme:4k_nZWMdCLyljvBzw_kI6N3zzJxJOf4M5Xc2mSoOrk2o4lh5zjgq4rMAVnufhZdlC
-    aqTYY9zYpMsC2WgKg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrheelgdelvdcutefuodetggdotefrodftvf
-    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
-    uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
-    fjughrpefofgggkfgjfhffhffvvefutgesthdtredtreertdenucfhrhhomhepfdfmrhhi
-    shhtohhffhgvrhcujfgruhhgshgsrghkkhdfuceotghouggvsehkhhgruhhgshgsrghkkh
-    drnhgrmhgvqeenucggtffrrghtthgvrhhnpedtkedtjeeiffelteffheeiheeufffgheel
-    ueeftdejkeeufffgiefhgeekffffueenucevlhhushhtvghrufhiiigvpedtnecurfgrrh
-    grmhepmhgrihhlfhhrohhmpegtohguvgeskhhhrghughhssggrkhhkrdhnrghmvg
-X-ME-Proxy: <xmx:4k_nZVjNf0I1zdqYrYaLx-q-0yzYtpKyN3TAJkAwDbANqBW7Saxzzg>
-    <xmx:4k_nZZ_q6gSxm1RdSlgb8ct8Y2RHEx3eOIrUw0Ah_Yb9i4Xii2STMA>
-    <xmx:4k_nZQuEqI-gmkSOlqmyPdbZb93uFRrvYihVdiZ3pyNMsUOGrJjigw>
-    <xmx:40_nZcKbeqHOOOvRYYoEU68ug_X4aFbnXKMP6L1S4Ol3PqST2z0w-4VpDKU>
-Feedback-ID: i2671468f:Fastmail
-Received: by mailuser.nyi.internal (Postfix, from userid 501)
-	id 2151815A009E; Tue,  5 Mar 2024 12:01:22 -0500 (EST)
-X-Mailer: MessagingEngine.com Webmail Interface
-User-Agent: Cyrus-JMAP/3.11.0-alpha0-208-g3f1d79aedb-fm-20240301.002-g3f1d79ae
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="LsYIDv6j"
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 6342A1D9D51;
+	Tue,  5 Mar 2024 12:08:23 -0500 (EST)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=OsMBwND2M1yE75rlzKbm2iM2ezuk36079H2Kpg
+	WjpzI=; b=LsYIDv6jvLiSd9w52C3ExDGA+Bg0wj04Rr7PDQMWzBr5ALkrAhpy26
+	4Y6OehpFkRzKljXQG2Lt8IK7nzZCyJfRPNzBiijvsdzEFgsdONRzeJl0jjd6Fuf8
+	O33via0qI6zOyt7NE7VHZfSBxGfHGSoQOn4tofDTqTfwDXl9OV3uU=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 5ABA91D9D4F;
+	Tue,  5 Mar 2024 12:08:23 -0500 (EST)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.185.65])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id BB10D1D9D4E;
+	Tue,  5 Mar 2024 12:08:22 -0500 (EST)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Atneya Nair <atneya@google.com>
+Cc: git@vger.kernel.org,  jeffhost@microsoft.com,  me@ttaylorr.com,
+  nasamuffin@google.com,
+    Tanay Abhra <tanayabh@gmail.com>, Glen Choo <glencbz@gmail.com>
+Subject: Re: [RFC PATCH 2/3] Make ce_compare_gitlink thread-safe
+In-Reply-To: <20240305012112.1598053-4-atneya@google.com> (Atneya Nair's
+	message of "Mon, 4 Mar 2024 17:21:12 -0800")
+References: <20240305012112.1598053-2-atneya@google.com>
+	<20240305012112.1598053-4-atneya@google.com>
+Date: Tue, 05 Mar 2024 09:08:21 -0800
+Message-ID: <xmqqwmqg38u2.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Message-Id: <177596a5-dae3-4fb1-902e-7ad74a678ff1@app.fastmail.com>
-In-Reply-To: <a3de2b7b-4603-4604-a4d2-938a598e312e@gmail.com>
-References: <pull.1684.git.git.1709592718743.gitgitgadget@gmail.com>
- <a3de2b7b-4603-4604-a4d2-938a598e312e@gmail.com>
-Date: Tue, 05 Mar 2024 18:01:01 +0100
-From: "Kristoffer Haugsbakk" <code@khaugsbakk.name>
-To: "Phillip Wood" <phillip.wood@dunelm.org.uk>
-Cc: "John Cai" <johncai86@gmail.com>, "Josh Soref" <gitgitgadget@gmail.com>,
- git@vger.kernel.org
-Subject: Re: [PATCH] show-ref: add --unresolved option
 Content-Type: text/plain
+X-Pobox-Relay-ID:
+ F8F6B72A-DB12-11EE-9242-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
 
-On Tue, Mar 5, 2024, at 16:30, Phillip Wood wrote:
-> Hi John
->
-> On 04/03/2024 22:51, John Cai via GitGitGadget wrote:
->> From: John Cai <johncai86@gmail.com>
->>
->> For reftable development, it would be handy to have a tool to provide
->> the direct value of any ref whether it be a symbolic ref or not.
->> Currently there is git-symbolic-ref, which only works for symbolic refs,
->> and git-rev-parse, which will resolve the ref. Let's add a --unresolved
->> option that will only take one ref and return whatever it points to
->> without dereferencing it.
->
-> "--unresolved" makes me think of merge conflicts. I wonder if
-> "--no-dereference" would be clearer.
+Atneya Nair <atneya@google.com> writes:
 
-Yeah, a `--no`-style option looks more consistent.
+> To enable parallel update of the read cache for submodules,
+> ce_compare_gitlink must be thread safe (for different objects).
+>
+> Remove string interning in do_config_from (called from
+> repo_submodule_init) and add locking around accessing the ref_store_map.
+
+This step does two independent things, even though they may have
+dependencies, i.e., for one to be a solution for the problem it is
+tackling, the other may have to be there already.  E.g., even after
+calls to ce_compare_gitlink() get serialized via a mutex, it may for
+some reason not work without giving each kvi.filename its own copy
+[*], and if that is the case, you may need to have the "stop
+interning" step in a single patch with its own justification, and
+then "have mutex around ref_store calls" patch has to come after it.
+
+    Side note: I do not know if that is the case myself.  I didn't
+    write this commit, you did.  The above is just a sample to
+    illustrate the expected level of depth to explain your thinking
+    in the log message.
+
+Or if these two things must happen at the same time, please explain
+in the proposed log message why they have to happen in the same
+commit.  The two paragraphs you wrote there don't explain that, so I
+am assuming that it is not the case.
+
+The use of strintern() comes originally from 3df8fd62 (add line
+number and file name info to `config_set`, 2014-08-07) by Tanay
+Abhra <tanayabh@gmail.com>, and survived a handful of changes
+
+    809d8680 (config: pass ctx with config files, 2023-06-28)
+    a798a56c (config.c: plumb the_reader through callbacks, 2023-03-28)
+    c97f3ed2 (config.c: plumb config_source through static fns, 2023-03-28)
+
+all of which were done by Glen Choo <glencbz@gmail.com>, so they may
+know how safe the change on the config side would be (I still do
+not understand why you'd want to do this in the first place, though,
+especially if you are protecting the callsites with mutex).
+
+I also think Emily's (who you already have on the "CC:" line) group
+wants to libify the config machinery and suspect they may still be
+making changes to the code, so you may want to coordinate with them
+to avoid duplicated work and overlapping changes.
+
+> Signed-off-by: Atneya Nair <atneya@google.com>
+> ---
+>
+> Notes:
+>     Chasing down thread unsafe code was done using tsan.
+
+Very nice to know.
+
+>  config.c | 3 ++-
+>  config.h | 2 +-
+>  refs.c   | 9 +++++++++
+>  3 files changed, 12 insertions(+), 2 deletions(-)
+>
+> diff --git a/config.c b/config.c
+> index 3cfeb3d8bd..d7f73d8745 100644
+> --- a/config.c
+> +++ b/config.c
+> @@ -1017,7 +1017,7 @@ static void kvi_from_source(struct config_source *cs,
+>  			    enum config_scope scope,
+>  			    struct key_value_info *out)
+>  {
+> -	out->filename = strintern(cs->name);
+> +	out->filename = strdup(cs->name);
+>  	out->origin_type = cs->origin_type;
+>  	out->linenr = cs->linenr;
+>  	out->scope = scope;
+> @@ -1857,6 +1857,7 @@ static int do_config_from(struct config_source *top, config_fn_t fn,
+>  
+>  	strbuf_release(&top->value);
+>  	strbuf_release(&top->var);
+> +	free(kvi.filename);
+>  
+>  	return ret;
+>  }
+> diff --git a/config.h b/config.h
+> index 5dba984f77..b78f1b6667 100644
+> --- a/config.h
+> +++ b/config.h
+> @@ -118,7 +118,7 @@ struct config_options {
+>  
+>  /* Config source metadata for a given config key-value pair */
+>  struct key_value_info {
+> -	const char *filename;
+> +	char *filename;
+>  	int linenr;
+>  	enum config_origin_type origin_type;
+>  	enum config_scope scope;
+> diff --git a/refs.c b/refs.c
+> index c633abf284..cce8a31b22 100644
+> --- a/refs.c
+> +++ b/refs.c
+> @@ -2126,6 +2126,9 @@ struct ref_store *get_submodule_ref_store(const char *submodule)
+>  	size_t len;
+>  	struct repository *subrepo;
+>  
+> +	// TODO is this locking tolerable, and/or can we get any finer
+> +	static pthread_mutex_t lock = PTHREAD_MUTEX_INITIALIZER;
+> +
+>  	if (!submodule)
+>  		return NULL;
+>  
+> @@ -2139,7 +2142,9 @@ struct ref_store *get_submodule_ref_store(const char *submodule)
+>  		/* We need to strip off one or more trailing slashes */
+>  		submodule = to_free = xmemdupz(submodule, len);
+>  
+> +	pthread_mutex_lock(&lock);
+>  	refs = lookup_ref_store_map(&submodule_ref_stores, submodule);
+> +	pthread_mutex_unlock(&lock);
+>  	if (refs)
+>  		goto done;
+>  
+> @@ -2162,10 +2167,14 @@ struct ref_store *get_submodule_ref_store(const char *submodule)
+>  		free(subrepo);
+>  		goto done;
+>  	}
+> +
+> +	pthread_mutex_lock(&lock);
+> +	// TODO maybe lock this separately
+>  	refs = ref_store_init(subrepo, submodule_sb.buf,
+>  			      REF_STORE_READ | REF_STORE_ODB);
+>  	register_ref_store_map(&submodule_ref_stores, "submodule",
+>  			       refs, submodule);
+> +	pthread_mutex_unlock(&lock);
+>  
+>  done:
+>  	strbuf_release(&submodule_sb);
