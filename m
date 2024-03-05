@@ -1,220 +1,258 @@
-Received: from fhigh2-smtp.messagingengine.com (fhigh2-smtp.messagingengine.com [103.168.172.153])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qt1-f179.google.com (mail-qt1-f179.google.com [209.85.160.179])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 964AF12BE98
-	for <git@vger.kernel.org>; Tue,  5 Mar 2024 20:31:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4750DD268
+	for <git@vger.kernel.org>; Tue,  5 Mar 2024 20:56:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709670673; cv=none; b=uICzfrCYT4dUcWOctBX5AAhvGxud0qx129mqGbego2Ue4MxKvi+Hvq4e/XZWRJx68Tac6DFFIyKUMR9/Fx0paXLjCU+EsbdybwILAWmdKPgLc7BV/WLu9seEaoeh/6y5o9yF6GwgdyO3gygcZxSsUfG3djnZTRKBekR2H99TLDE=
+	t=1709672166; cv=none; b=kLu0Z16Cm+FpYwhJeuf4QQszwCyarw0DOQvHwYuqo34jIMqmjRNVmpi77OhxYYCdR+cI9UoJ+bTsUU4pQocTG1ZUKM+ym2AaEXoenlN5RoQA1KPAQZeZyYl0e8WdhYMFBoCTDXR3MfM1ahtJbhs4QdSMjyaMijSla5DnPx+5zlY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709670673; c=relaxed/simple;
-	bh=CAu2Cznz8dj54jHCkSOS5VkPWVqfpjEDPFniAcMcTOc=;
+	s=arc-20240116; t=1709672166; c=relaxed/simple;
+	bh=omhVxgQIcqPjCmldBMUiqht+mj4O7/XsuX4iMvOJe9Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=tKYqpog7871kk/fhtrJyxS337TO98dFAx1xJbNhLTl83gjRsR9AVNX41rZP2hjo6Vr10f5a22DbkkYA0OAi3sKxKE2t/1ORC7r2i75oG4G4YxyPEhGOeiMaPBhpwVfhbY5f/CF2jkfFayxg+51G9tPcyyhmFtyelS+6g4h62Has=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=khaugsbakk.name; spf=pass smtp.mailfrom=khaugsbakk.name; dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b=01wC+cSJ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=AW0mSPmZ; arc=none smtp.client-ip=103.168.172.153
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=khaugsbakk.name
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=khaugsbakk.name
+	 MIME-Version:Content-Type; b=V2pKSXCwBT6ciBTB21B1UFvhvIMB2lNG1CWkljUjpPVkq3pP5btctV9f1ikuM+r58ia3/gKVuUIR6gCMI/V47gkpuuS7zBo8s5Dxd3PdmDY1PzP4uxFAXALwUhtP6nTxyq2rgXjjQCweBrgk+V3v0vh3eVccihKUd93BuBi/jqo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Ts+hfzaY; arc=none smtp.client-ip=209.85.160.179
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b="01wC+cSJ";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="AW0mSPmZ"
-Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
-	by mailfhigh.nyi.internal (Postfix) with ESMTP id 23E4F11401B3;
-	Tue,  5 Mar 2024 15:31:10 -0500 (EST)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute4.internal (MEProxy); Tue, 05 Mar 2024 15:31:10 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=khaugsbakk.name;
-	 h=cc:cc:content-transfer-encoding:content-type:content-type
-	:date:date:from:from:in-reply-to:in-reply-to:message-id
-	:mime-version:references:reply-to:subject:subject:to:to; s=fm3;
-	 t=1709670670; x=1709757070; bh=E4kE6309FcVAHRwre8io7X/pNfglQE+5
-	qkNyheEtu/I=; b=01wC+cSJwKK0n6Y9te/fGY7uhWtCUhqU6zAraTvUJAfaAawZ
-	ezf6g8xaiWaFAp/9kYmu9j3E3Xgzkt6hE5RE+PIF2I9eJ7n5/sd/kWYbjWFa7heh
-	ebCvnWat0HWKhp0//g40J205APrO+TR4yhqzXg8bGJi0FbOaK8I5zS283k6tEf7y
-	K4m/Le1eJ9/8oFicRMij42bMge6S6iv1i3ASdTv145QxZVF1Qc+V+mFSju+LN0aS
-	39OeNfulpHGBDkcBBbIFy7sJ1hv+pWE1Dv6IurGqaL1UsLcIPhgzHAE9idNgRHrl
-	bEz9+1gGPlAYWOFU23V6rKk5W840GhELJ1t3LA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1709670670; x=
-	1709757070; bh=E4kE6309FcVAHRwre8io7X/pNfglQE+5qkNyheEtu/I=; b=A
-	W0mSPmZ2jmY+/+WfSPvgrsWh0w+JkawVOb7fNftfEye3YLdTVhnsDtrgZhkAqfGq
-	3BhBQBJ2WHNowe3HN8+Jyt6vdP2Pm/dYv+wKmh0ie4F0WD3DPE1lZgUfVMhmI1GM
-	rJQHCWSAOR1b3Az93v+s2YwC63KzsFEm0SrDriloVwO3nMgdgGxreYUYZ0StY4kE
-	kmIacLxABT28nhmsUZdVjIUAmd8Q3qF4CWCI0U9HAKS1m69/zLNRH5wl4GaDZvIW
-	a1JlFxvMhYfKxu+Woo2hBvvIic0NWXf0BjKJ4dIS46yo5t5Rsh/NRZjSPvyBccNx
-	H74RgmRU/swLcKrQVevRQ==
-X-ME-Sender: <xms:DYHnZbex9D5D0OoKSKWpM_CqUQjc8Ti63OFY9Is17OTkBkir2e25dpE>
-    <xme:DYHnZRMxhHQol_mOe6DTVz8tv0izdKSGJ2ANoAK5X1TFbtmmPioQcZJp7DYFBMpje
-    F5F9rT8LMJN-Xf8Dg>
-X-ME-Received: <xmr:DYHnZUhPRA_3ZUO1fKJGAm2S-8vBQ_pYZ-vRwAS42J_n3IiXN4uV62KL-rgMx7eG3sNUJB8-wvXBZ-Mj-zbqKelXJ_3JJVnGiP8cRTGW1Q>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrheelgddufeefucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucenucfjughrpefhvfevufffkffojghfgggtgfesth
-    ekredtredtjeenucfhrhhomhepmfhrihhsthhofhhfvghrucfjrghughhssggrkhhkuceo
-    tghouggvsehkhhgruhhgshgsrghkkhdrnhgrmhgvqeenucggtffrrghtthgvrhhnpeevgf
-    elveeikeegjeeikeeuvefhleeiuddvleegfeekjedtkeevtdetgfffveettdenucevlhhu
-    shhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpegtohguvgeskhhhrg
-    hughhssggrkhhkrdhnrghmvg
-X-ME-Proxy: <xmx:DoHnZc_dk6qwsVFoTwzKj7y7st2cmGauVXGSRtBw9GUx33ZxJsJjNg>
-    <xmx:DoHnZXsvVbPPiKDKA7DtCR7911rDCHOUDxLvCkkoMpQHIKLBAizaiw>
-    <xmx:DoHnZbFVONSRbqtTPZZSamRPy1sFDsHjHVgx-xKOlVlDbBThLLemoQ>
-    <xmx:DoHnZQ6RCgXQWOcupwJKr8MWBxmkik4QcdBqAg986QI5hxuaqpI_vw>
-Feedback-ID: i2671468f:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 5 Mar 2024 15:31:08 -0500 (EST)
-From: Kristoffer Haugsbakk <code@khaugsbakk.name>
-To: git@vger.kernel.org
-Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>
-Subject: [PATCH v4 5/5] branch: advise about ref syntax rules
-Date: Tue,  5 Mar 2024 21:29:43 +0100
-Message-ID: <97b53c04894578b23d0c650f69885f734699afc7.1709670287.git.code@khaugsbakk.name>
-X-Mailer: git-send-email 2.44.0.64.g52b67adbeb2
-In-Reply-To: <cover.1709670287.git.code@khaugsbakk.name>
-References: <cover.1709590037.git.code@khaugsbakk.name> <cover.1709670287.git.code@khaugsbakk.name>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Ts+hfzaY"
+Received: by mail-qt1-f179.google.com with SMTP id d75a77b69052e-42ef2251565so5114841cf.1
+        for <git@vger.kernel.org>; Tue, 05 Mar 2024 12:56:05 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1709672164; x=1710276964; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=sscj4Y+oqtL8ZE0Qrc43H+5zuPlhJiBvpX/pTZ94JbI=;
+        b=Ts+hfzaYqIXI1nyUYHrrGTg8WpHy5Z9F4RKE9JzjP75p3eUYYkivMurQoXKFEP2DBx
+         Svg9K7Vr7gxiXxg/06cHM6Pk8J6FoxoHm/qfIoeHtEnZ9CMBWwgk4fblXaM9dH02TXug
+         U12z9VJjI45JWtgA5vLtQe+wOOTO1x/jVYxrpXyU5psPs71JexfZjNOWlMXlBK/wunND
+         obifq426I61uuKM9qpyulfU1Z1/pNavsX1FLX3hsauMBdZ/VsWZKAOIQFWPqVJhcEYSS
+         Sh0GkxPYkLpPmy7eyiimXx2hUsufcYjUl3EhxRqUw0wOzJzNw0U2ddv1+81QI4/MlVcP
+         EDsQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1709672164; x=1710276964;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=sscj4Y+oqtL8ZE0Qrc43H+5zuPlhJiBvpX/pTZ94JbI=;
+        b=rABxsDYYik4n4dr7CFLYbiEDV1/pKJ8kkbBQ/LMyL3UL8ufV4i7gBKd+scuJPTcpZW
+         5T1PNbXf8pXlgqpKdAXlNaFcZDSAWlXmKj6276JzRJr2CEdMktxj+MIdrQMGCk9DBND7
+         LBH20H8//fPFCzZmmmmHyCxfB7EI9H7/bbgR1XKC3zDLdMrY2QRQq19WWYGrlXgfanvQ
+         9T4ELHoUL1ca+pofRepTggmHgRabWCCC4hbtPgUKHpd+Bfxxlg7macrfP4GzNvGAJJKw
+         UuqPCRpMD87X0Xg3bCKvh46lW9Alonc/vtdYl07PbpVzYIJi3tX5k+XDXeEawj4bwIxu
+         wBuQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUrf2ZVmFK03kXIf6a6wh+OPZHsUXFzxGuuY6rSNQQkJ5U4CyiurP+i5qBBicy8jy5EF11AxEOLBEOlWJwwLEbzWJNb
+X-Gm-Message-State: AOJu0YyThhrAbm2zj7caLLi0k9cXaS6UlOBHQayHVG5J96rGs7FNWVGk
+	Obym1aTVpMJBGXnDvQ7hn3irUg3Mug1LjWgDCK3D6lu38WaPsF8a
+X-Google-Smtp-Source: AGHT+IGwzQLHftl1kjfyTl+rssngLeGUp7JYZMUJH7rILDv66z3MSMGcJSOEUTTTRaAQX+fA5jm+9A==
+X-Received: by 2002:a05:622a:494:b0:42e:f4ab:fe07 with SMTP id p20-20020a05622a049400b0042ef4abfe07mr1616496qtx.1.1709672164208;
+        Tue, 05 Mar 2024 12:56:04 -0800 (PST)
+Received: from [172.16.0.225] (static-96-242-234-213.nwrknj.fios.verizon.net. [96.242.234.213])
+        by smtp.gmail.com with ESMTPSA id dq10-20020a05622a520a00b0042e703a8d74sm1084419qtb.56.2024.03.05.12.56.03
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 05 Mar 2024 12:56:03 -0800 (PST)
+From: John Cai <johncai86@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: John Cai via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org,
+ Patrick Steinhardt <ps@pks.im>
+Subject: Re: [PATCH] show-ref: add --unresolved option
+Date: Tue, 05 Mar 2024 15:56:03 -0500
+X-Mailer: MailMate (1.14r5937)
+Message-ID: <44609CA3-1215-4EAD-8456-DDD66A3B93A8@gmail.com>
+In-Reply-To: <xmqqplw9mviu.fsf@gitster.g>
+References: <pull.1684.git.git.1709592718743.gitgitgadget@gmail.com>
+ <xmqqplw9mviu.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-X-Commit-Hash: 97b53c04894578b23d0c650f69885f734699afc7
-X-Previous-Commits: 4ad5d4190649dcb5f26c73a6f15ab731891b9dfd d275d1d179b90592ddd7b5da2ae4573b3f7a37b7 402b7937951073466bf4527caffd38175391c7da
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+Content-Transfer-Encoding: quoted-printable
 
-git-branch(1) will error out if you give it a bad ref name. But the user
-might not understand why or what part of the name is illegal.
+Hi Junio,
 
-The user might know that there are some limitations based on the *loose
-ref* format (filenames), but there are also further rules for
-easier integration with shell-based tools, pathname expansion, and
-playing well with reference name expressions.
+On 4 Mar 2024, at 18:23, Junio C Hamano wrote:
 
-The man page for git-check-ref-format(1) contains these rules. Let’s
-advise about it since that is not a command that you just happen
-upon. Also make this advise configurable since you might not want to be
-reminded every time you make a little typo.
+> "John Cai via GitGitGadget" <gitgitgadget@gmail.com> writes:
+>
+>> From: John Cai <johncai86@gmail.com>
+>>
+>> For reftable development, it would be handy to have a tool to provide
+>> the direct value of any ref whether it be a symbolic ref or not.
+>> Currently there is git-symbolic-ref, which only works for symbolic ref=
+s,
+>> and git-rev-parse, which will resolve the ref. Let's add a --unresolve=
+d
+>> option that will only take one ref and return whatever it points to
+>> without dereferencing it.
+>
+> The approach may be reasonble, but the above description can use
+> some improvements.
+>
+>  * Even though the title of the patch says show-ref, the last
+>    sentence is a bit too far from there and it was unclear to what
+>    you are adding a new feature at least to me during my first read.
+>
+>       Let's teach show-ref a `--unresolved` optionthat will ...
+>
+>    may make it easier to follow.
+>
+>  * "Whatever it points to without dereferencing it" implied that it
+>    assumes what it is asked to show can be dereferenced, which
+>    invites a natural question: what happens to a thing that is not
+>    dereferenceable in the first place?  The implementation seems to
+>    show either symbolic-ref target (for symbolic refs) or the object
+>    name (for others), but let's make it easier for readers.
 
-Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
----
+Yeah good point. The language could be made more precise.
 
-Notes (series):
-    v4:
-    • Update refSyntax entry for consistency with the rest of the entries
-    v3:
-    • Tweak advice doc for the new entry
-    • Better test style
-    v2:
-    • Make the advise optional via configuration
-    • Propagate error properly with `die_message(…)` instead of `exit(1)`
-    • Flesh out commit message a bit
-
- Documentation/config/advice.txt |  3 +++
- advice.c                        |  1 +
- advice.h                        |  1 +
- branch.c                        |  8 ++++++--
- builtin/branch.c                |  8 ++++++--
- t/t3200-branch.sh               | 10 ++++++++++
- 6 files changed, 27 insertions(+), 4 deletions(-)
-
-diff --git a/Documentation/config/advice.txt b/Documentation/config/advice.txt
-index dd52041bc94..06c754899c5 100644
---- a/Documentation/config/advice.txt
-+++ b/Documentation/config/advice.txt
-@@ -94,6 +94,9 @@ advice.*::
- 		`pushNonFFCurrent`, `pushNonFFMatching`, `pushAlreadyExists`,
- 		`pushFetchFirst`, `pushNeedsForce`, and `pushRefNeedsUpdate`
- 		simultaneously.
-+	refSyntax::
-+		Shown when the user provides an illegal ref name, to
-+		tell the user about the ref syntax documentation.
- 	resetNoRefresh::
- 		Shown when linkgit:git-reset[1] takes more than 2
- 		seconds to refresh the index after reset, to tell the user
-diff --git a/advice.c b/advice.c
-index 6e9098ff089..550c2968908 100644
---- a/advice.c
-+++ b/advice.c
-@@ -68,6 +68,7 @@ static struct {
- 	[ADVICE_PUSH_UNQUALIFIED_REF_NAME]		= { "pushUnqualifiedRefName" },
- 	[ADVICE_PUSH_UPDATE_REJECTED]			= { "pushUpdateRejected" },
- 	[ADVICE_PUSH_UPDATE_REJECTED_ALIAS]		= { "pushNonFastForward" }, /* backwards compatibility */
-+	[ADVICE_REF_SYNTAX]				= { "refSyntax" },
- 	[ADVICE_RESET_NO_REFRESH_WARNING]		= { "resetNoRefresh" },
- 	[ADVICE_RESOLVE_CONFLICT]			= { "resolveConflict" },
- 	[ADVICE_RM_HINTS]				= { "rmHints" },
-diff --git a/advice.h b/advice.h
-index 9d4f49ae38b..d15fe2351ab 100644
---- a/advice.h
-+++ b/advice.h
-@@ -36,6 +36,7 @@ enum advice_type {
- 	ADVICE_PUSH_UNQUALIFIED_REF_NAME,
- 	ADVICE_PUSH_UPDATE_REJECTED,
- 	ADVICE_PUSH_UPDATE_REJECTED_ALIAS,
-+	ADVICE_REF_SYNTAX,
- 	ADVICE_RESET_NO_REFRESH_WARNING,
- 	ADVICE_RESOLVE_CONFLICT,
- 	ADVICE_RM_HINTS,
-diff --git a/branch.c b/branch.c
-index 6719a181bd1..621019fcf4b 100644
---- a/branch.c
-+++ b/branch.c
-@@ -370,8 +370,12 @@ int read_branch_desc(struct strbuf *buf, const char *branch_name)
-  */
- int validate_branchname(const char *name, struct strbuf *ref)
- {
--	if (strbuf_check_branch_ref(ref, name))
--		die(_("'%s' is not a valid branch name"), name);
-+	if (strbuf_check_branch_ref(ref, name)) {
-+		int code = die_message(_("'%s' is not a valid branch name"), name);
-+		advise_if_enabled(ADVICE_REF_SYNTAX,
-+				  _("See `man git check-ref-format`"));
-+		exit(code);
-+	}
- 
- 	return ref_exists(ref->buf);
- }
-diff --git a/builtin/branch.c b/builtin/branch.c
-index cfb63cce5fb..1c122ee8a7b 100644
---- a/builtin/branch.c
-+++ b/builtin/branch.c
-@@ -576,8 +576,12 @@ static void copy_or_rename_branch(const char *oldname, const char *newname, int
- 		 */
- 		if (ref_exists(oldref.buf))
- 			recovery = 1;
--		else
--			die(_("invalid branch name: '%s'"), oldname);
-+		else {
-+			int code = die_message(_("invalid branch name: '%s'"), oldname);
-+			advise_if_enabled(ADVICE_REF_SYNTAX,
-+					  _("See `man git check-ref-format`"));
-+			exit(code);
-+		}
- 	}
- 
- 	for (int i = 0; worktrees[i]; i++) {
-diff --git a/t/t3200-branch.sh b/t/t3200-branch.sh
-index 060b27097e8..dd7525d1b8c 100755
---- a/t/t3200-branch.sh
-+++ b/t/t3200-branch.sh
-@@ -1722,4 +1722,14 @@ test_expect_success '--track overrides branch.autoSetupMerge' '
- 	test_cmp_config "" --default "" branch.foo5.merge
- '
- 
-+test_expect_success 'errors if given a bad branch name' '
-+	cat <<-\EOF >expect &&
-+	fatal: '\''foo..bar'\'' is not a valid branch name
-+	hint: See `man git check-ref-format`
-+	hint: Disable this message with "git config advice.refSyntax false"
-+	EOF
-+	test_must_fail git branch foo..bar >actual 2>&1 &&
-+	test_cmp expect actual
-+'
+>
+>>  Documentation/git-show-ref.txt |  8 ++++++
+>>  builtin/show-ref.c             | 33 ++++++++++++++++--------
+>>  t/t1403-show-ref.sh            | 47 +++++++++++++++++++++++++++++++++=
 +
- test_done
--- 
-2.44.0.64.g52b67adbeb2
+>>  3 files changed, 77 insertions(+), 11 deletions(-)
+>>
+>> diff --git a/Documentation/git-show-ref.txt b/Documentation/git-show-r=
+ef.txt
+>> index ba757470059..2f9b4de1346 100644
+>> --- a/Documentation/git-show-ref.txt
+>> +++ b/Documentation/git-show-ref.txt
+>> @@ -16,6 +16,7 @@ SYNOPSIS
+>>  	     [--] [<ref>...]
+>>  'git show-ref' --exclude-existing[=3D<pattern>]
+>>  'git show-ref' --exists <ref>
+>> +'git show-ref' --unresolved <ref>
+>>
+>>  DESCRIPTION
+>>  -----------
+>> @@ -76,6 +77,13 @@ OPTIONS
+>>  	it does, 2 if it is missing, and 1 in case looking up the reference
+>>  	failed with an error other than the reference being missing.
+>>
+>> +--unresolved::
+>> +
+>> +	Prints out what the reference points to without resolving it. Return=
+s
+>> +	an exit code of 0 if it does, 2 if it is missing, and 1 in case look=
+ing
+>> +	up the reference failed with an error other than the reference being=
+
+>> +	missing.
+>
+> Exactly the same issue as in the proposed log message, i.e. what is
+> printed for what kind of ref is not really clear.
+>
+>> -static int cmd_show_ref__exists(const char **refs)
+>> +static int cmd_show_ref__raw(const char **refs, int show)
+>>  {
+>> -	struct strbuf unused_referent =3D STRBUF_INIT;
+>> -	struct object_id unused_oid;
+>> -	unsigned int unused_type;
+>> +	struct strbuf referent =3D STRBUF_INIT;
+>> +	struct object_id oid;
+>> +	unsigned int type;
+>>  	int failure_errno =3D 0;
+>>  	const char *ref;
+>>  	int ret =3D 0;
+>> @@ -236,7 +237,7 @@ static int cmd_show_ref__exists(const char **refs)=
+
+>>  		die("--exists requires exactly one reference");
+>>
+>>  	if (refs_read_raw_ref(get_main_ref_store(the_repository), ref,
+>> -			      &unused_oid, &unused_referent, &unused_type,
+>> +			      &oid, &referent, &type,
+>>  			      &failure_errno)) {
+>>  		if (failure_errno =3D=3D ENOENT || failure_errno =3D=3D EISDIR) {
+>>  			error(_("reference does not exist"));
+>> @@ -250,8 +251,16 @@ static int cmd_show_ref__exists(const char **refs=
+)
+>>  		goto out;
+>>  	}
+>>
+>> +		if (!show)
+>> +			goto out;
+>> +
+>> +		if (type & REF_ISSYMREF)
+>> +			printf("ref: %s\n", referent.buf);
+>> +		else
+>> +			printf("ref: %s\n", oid_to_hex(&oid));
+>
+> If I create a symbolic ref whose value is deadbeef....deadbeef 40-hex,
+> I cannot tell from this output if it is a symbolic ref of a ref that
+> stores an object whose name is that hash.  Reserve the use of "ref: %s"=
+
+> to the symbolic refs (so that it will also match how the files backend
+> stores them in modern Git), and use some other prefix (or no
+> perfix).
+>
+> Actually, I am not sure if what is proposed is even a good
+> interface.  Given a repository with these few refs:
+>
+>     $ git show-ref refs/heads/master
+>     b387623c12f3f4a376e4d35a610fd3e55d7ea907 refs/heads/master
+>     $ git show-ref refs/remotes/repo/HEAD
+>     b387623c12f3f4a376e4d35a610fd3e55d7ea907 refs/remotes/repo/HEAD
+>     $ git symbolic-ref refs/remotes/repo/HEAD
+>     refs/remotes/repo/master
+>
+> I would think that the second command above shows the gap in feature
+> set our current "show-ref" has.  If we could do
+>
+>     $ git show-ref --<option> refs/heads/master refs/remotes/repo/HEAD
+>     b387623c12f3f4a376e4d35a610fd3e55d7ea907 refs/heads/master
+>     ref:refs/remotes/repo/master refs/remotes/repo/HEAD
+
+I like this option. It makes it clear that it's a symbolic ref without ad=
+ding
+additional output to the command.
+
+cc'ing Patrick here for his thoughts as well since he has interest in thi=
+s topic.
+
+>
+> or alternatively
+>
+>     $ git show-ref --<option> refs/heads/master refs/remotes/repo/HEAD
+>     b387623c12f3f4a376e4d35a610fd3e55d7ea907 refs/heads/master
+>     ref:refs/remotes/repo/master b387623c12f3f4a376e4d35a610fd3e55d7ea9=
+07 refs/remotes/repo/HEAD
+>
+> wouldn't it match the existing feature set better?  You also do not
+> have to limit yourself to single ref query per process invocation.
+>
+> I am not sure if you need to worry about quoting of the values of
+> symbolic-ref, though.  You _might_ need to move the (optional)
+> symref information to the end, i.e. something like this you might
+> prefer.  I dunno.
+>
+>     $ git show-ref --<option> refs/remotes/repo/HEAD
+>     b387623c12f3f4a376e4d35a610fd3e55d7ea907 refs/remotes/repo/HEAD ref=
+s/remotes/repo/master
+>
+> I do not know what the <option> should be called, either.  From an
+> end-user's point of view, the option tells the command to also
+> report which ref the ref points at, if it were a symbolic one.
+> "unresolved" may be technically acceptable name to those who know
+> the underlying implementation (i.e. we tell read_raw_ref not to
+> resolve when it does its thing), but I am afraid that is a bit too
+> opaque implementation detail for end-users who are expected to learn
+> this option.
+
+I think something like --no-dereference that was suggested in [1] could w=
+ork
+since the concept of dereferencing should be familiar to the user. Howeve=
+r, this
+maybe confusing because of the existing --dereference flag that is specif=
+ic to
+tags...
+
+1. https://lore.kernel.org/git/a3de2b7b-4603-4604-a4d2-938a598e312e@gmail=
+=2Ecom/
+
+thanks
+John
 
