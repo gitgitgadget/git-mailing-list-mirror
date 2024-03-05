@@ -1,82 +1,57 @@
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+Received: from pv50p00im-hyfv10011601.me.com (pv50p00im-hyfv10011601.me.com [17.58.6.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D22A1862F
-	for <git@vger.kernel.org>; Tue,  5 Mar 2024 21:37:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A262212BF09
+	for <git@vger.kernel.org>; Tue,  5 Mar 2024 21:40:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=17.58.6.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709674651; cv=none; b=sSs+iEnXWq8+j/f8Y2mkRkT3cKVzRnxdem4Mldz9ug7ISILFWpuYOWb34kOs6NGEeOrbwOITKgbxUcpaW/E40zif36HB+Qz+yFV0XVeE2iCV4ZB0YPTabw1FRca++s/HJDNFl0uHjvTZUE9CNcWwj1S/2ku2FJtb9IxQYy8wbFk=
+	t=1709674840; cv=none; b=eiT4HyTgqvJeWe3tfrFyRC8ma7jdFPfZGE+Uw/45lNw4VMDHITaBbiU4cQ2lo+y1cnR3ho7MpBzT4iaraUArzUgblpxq0vQTDxJ9A1kzewYwX//njbeNq6QVqy5xncGdxNA6IUyTCsRNdkjRup/iUXdeYEmcsF28rgKb3KFXPJA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709674651; c=relaxed/simple;
-	bh=2W2sSsa+Vz9eRsbooM8weA1Y1PScVL/KDAElqwvkfiQ=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=puTM1drS62ouMyXz09+9ifH4KW5sltErJs4u1drIRxj7ihVN1YG/JojHcCxDh+PRBGlgJp2PMwLJ4c7vDfo8CLkBJvHmsJ5KOJQ1uzRkBd4meDPcocXz0blY0dhd93u8LntFt5/0UmFa/jxoqdyv2o2IIIZAJdvx3mD3WwTQp58=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=s8CNw+vX; arc=none smtp.client-ip=173.228.157.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1709674840; c=relaxed/simple;
+	bh=dQUdIoy+HH5JD7K3B0VaqZ7OwORPy6apwetPoqJtGIw=;
+	h=Content-Type:From:Mime-Version:Date:Subject:Message-Id:To; b=gADGZ5bsho/AOFqbBTD79Gp+uYrqb0+8UQpKYxBxf2Vi+pH26Er6fPP+EMjS3Uisf7m6pm18bvkWTNC05JP5xVWuU3RgWNyjs/mHKEJ5orTLJA3ixMaSZKzU1Z22OaXfvM12HzBTawuowvzGb9E7edTyq3PxZNjCiVPlmNTi+eI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=icloud.com; spf=pass smtp.mailfrom=icloud.com; dkim=pass (2048-bit key) header.d=icloud.com header.i=@icloud.com header.b=GUZ4YZNW; arc=none smtp.client-ip=17.58.6.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=icloud.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=icloud.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="s8CNw+vX"
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id 7A9F41FACB;
-	Tue,  5 Mar 2024 16:37:29 -0500 (EST)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=2W2sSsa+Vz9eRsbooM8weA1Y1PScVL/KDAElqw
-	vkfiQ=; b=s8CNw+vXKPE3PmGC+IJYCqo1ITdS6Ii+1VUkRpWn51gMzTWsdDecyr
-	WsQB5oQ+ZBXQVh8ttBBTXCDKYxuFoNyLBdHgcxFxsLIkJ2tzqoSjlc9ye4nYAEQq
-	Bc9Mmu7UCNiugxlGGdeItrShy16hXGi5eNo8oWeBMn4iy123YyWrI=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp21.pobox.com (Postfix) with ESMTP id 6E1351FACA;
-	Tue,  5 Mar 2024 16:37:29 -0500 (EST)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.185.65])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 0F0BC1FAC8;
-	Tue,  5 Mar 2024 16:37:26 -0500 (EST)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Josh Steadmon <steadmon@google.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 1/2] ci: also define CXX environment variable
-In-Reply-To: <75f98cbf98005b0a069977096ec5501f2f7830fe.1709673020.git.steadmon@google.com>
-	(Josh Steadmon's message of "Tue, 5 Mar 2024 13:11:59 -0800")
-References: <cover.1709673020.git.steadmon@google.com>
-	<75f98cbf98005b0a069977096ec5501f2f7830fe.1709673020.git.steadmon@google.com>
-Date: Tue, 05 Mar 2024 13:37:24 -0800
-Message-ID: <xmqqv860z7fv.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=icloud.com header.i=@icloud.com header.b="GUZ4YZNW"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=icloud.com;
+	s=1a1hai; t=1709674838;
+	bh=dQUdIoy+HH5JD7K3B0VaqZ7OwORPy6apwetPoqJtGIw=;
+	h=Content-Type:From:Mime-Version:Date:Subject:Message-Id:To;
+	b=GUZ4YZNWv9GXcsY3vSU8YNFd/jqLeZ/xW/NoX+eG3OokZi6aSFm2cy4ggmt0kHE3N
+	 Q+5ohdnn95s2lLlckP54LAGpDYgNgDtBsMeYbuNXzJg2RqpGE+d4I7qEvUgp5cwLXn
+	 btGWJ52srE7fEtgwdX9nCdSM35QcG3yOf2bWTDzlvoEiBAM3tQR2vCKQx6dcnl1nlb
+	 XpiiI4pAxoY0+zcb32WsZD2fmM8qMokN27E2jz458Ysc3IjdJg8ME6hIq04xkhhGZs
+	 fYsnnmBU3PI0NIvc1t9gK3Q2a7XTZJVh0A1WFEAR4LMiYxq1b6dQ9AbX4y7FtZV8io
+	 NrJQ9oPnH2gBw==
+Received: from smtpclient.apple (pv50p00im-dlb-asmtp-mailmevip.me.com [17.56.9.10])
+	by pv50p00im-hyfv10011601.me.com (Postfix) with ESMTPSA id F12BBC801D3
+	for <git@vger.kernel.org>; Tue,  5 Mar 2024 21:40:37 +0000 (UTC)
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+From: Rifani mei <m4ichen@icloud.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- 8F1D65D0-DB38-11EE-B8A2-A19503B9AAD1-77302942!pb-smtp21.pobox.com
+Mime-Version: 1.0 (1.0)
+Date: Wed, 6 Mar 2024 04:40:27 +0700
+Subject: Perorg
+Message-Id: <F3F8CFE7-B8D5-45B1-A51F-762210F5A47D@icloud.com>
+To: git@vger.kernel.org
+X-Mailer: iPhone Mail (20H307)
+X-Proofpoint-GUID: sX6gXzd2X-o_bdtFCtr4csEBVphhCWPR
+X-Proofpoint-ORIG-GUID: sX6gXzd2X-o_bdtFCtr4csEBVphhCWPR
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.272,Aquarius:18.0.1011,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2024-03-05_18,2024-03-05_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 spamscore=0 clxscore=1015 adultscore=0
+ mlxscore=0 mlxlogscore=450 malwarescore=0 phishscore=0 bulkscore=0
+ suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2308100000 definitions=main-2403050174
 
-Josh Steadmon <steadmon@google.com> writes:
 
-> In a future commit, we will build the fuzzer executables as part of the
-> default 'make all' target, which requires a C++ compiler. If we do not
-> explicitly set CXX, it defaults to g++ on GitHub CI. However, this can
-> lead to incorrect feature detection when CC=clang, since the
-> 'detect-compiler' script only looks at CC. Fix the issue by always
-> setting CXX to match CC in our CI config.
->
-> We only plan on building fuzzers on Linux, so none of the other CI
-> configs need a similar adjustment.
 
-Sounds fair.  It's not like we as the project decides to never build
-fuzzers on macOS and will forbid others from doing so.  Those who
-are not part of "we" are welcome to add support to build fuzzers on
-other platforms.  So perhaps
-
-    We only plan on building fuzzers on Linux with the next patch,
-    so for now, only adjust configuration for the Linux CI jobs.
-
-may convey our intention better to our future selves.
-
-Thanks.
+Dikirim dari iPhone saya
