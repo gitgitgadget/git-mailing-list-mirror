@@ -1,452 +1,370 @@
-Received: from mail-lf1-f44.google.com (mail-lf1-f44.google.com [209.85.167.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout8-smtp.messagingengine.com (fout8-smtp.messagingengine.com [103.168.172.151])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 542BD12D1FD
-	for <git@vger.kernel.org>; Tue,  5 Mar 2024 20:03:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E554A134BD
+	for <git@vger.kernel.org>; Tue,  5 Mar 2024 20:31:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709669032; cv=none; b=Atbgr2FIXjP6qDWHWELgvXM1YutvMuQQK4V4sVatxfcBT0ST/PK3JitEArP3k5Y4/Uuqy7julIyf2RTVE4YfGA5Pi7ekUewXPl2P01TfPXlSLLERAFS36NwP7oy94xDxyTHNbppm/Q/DM1KBzBPGOIietVbfyywCGp3lW87lDQ8=
+	t=1709670667; cv=none; b=KNKNcq6KGgV6LeRKf+vw5EGQHmi0ng1xYsUnw8efBQS6ro89C9SD4xm0GIf2i9MqjsUoLtJ+rek7tfLAeug6X4FP92C1QNKkSZP9uKFgdMBGUMvOis30ISyYjEuf3xDX8J47UE0NiKibbqlq69uwXwHG5GF4nRn9etrkW7/4k5A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709669032; c=relaxed/simple;
-	bh=PmiReAIMaIclIoZh4/04UotfgwQG3ykiFhrNgD2tbLU=;
-	h=Message-ID:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=KXEJmtqVYZShTnSxE/UfwJGi8V55GxqvfgEdyh4SpKBZ1n0Q2DlZ6i4RUanFKx8gLTj+KMyo+l/AGLOstQBfeUzXE6jJFfPNgt/j7+P4SPWYP3sttBWAn1T1/rj9J9gOZP4GKc7u0VtELiHnbFZDTu+QZFhwh1fIOpCz2IKWiHQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=WVSAnptc; arc=none smtp.client-ip=209.85.167.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1709670667; c=relaxed/simple;
+	bh=/ce9Vm4Gyoy1Pvs1ptDZON/tUkkgDWsIkwci08JDhmA=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=A8wrwYDRRRRoyYjR7lxdKEiNCNwkuMhX5PTqQ+eex1vgO2wWujEENRkhg3gP2Nw99VTqdhgbNZiU8XzH2SHTRA6leD3DupSwFetTlf/vBFnB6LRUFcjM1bdHyb2f4YDshGEnKPsw4rhmi1BkaSKNuwxxwgPOt5h7p5lsQXo3w9o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=khaugsbakk.name; spf=pass smtp.mailfrom=khaugsbakk.name; dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b=H8Nbg7Qp; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=kcVmQBKA; arc=none smtp.client-ip=103.168.172.151
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=khaugsbakk.name
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=khaugsbakk.name
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WVSAnptc"
-Received: by mail-lf1-f44.google.com with SMTP id 2adb3069b0e04-513173e8191so7653577e87.1
-        for <git@vger.kernel.org>; Tue, 05 Mar 2024 12:03:50 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1709669028; x=1710273828; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=NjdDKmM0somKyJ05ADlrCO1GJw8fQhL87bH2HfsHHH4=;
-        b=WVSAnptcWPNJYlf+7cjIGsWefJgRZqhHEZxWkPQCa2qpsu+awPJmJBiE3I0/AnSBF3
-         fmtWWT5IO09jwGoebSQoB/0gBopm1TFnVPP5LXeTXEbdGv47LFuDPSZZz85bXhBHwjRD
-         sbFveWzdzd78Jyq+pszDQpEIVVNqPFtfDlAMbddJ214F0PSdYg1wf0Ixe/b2hG8idEm5
-         zktbMJAxJJc1FTwXbzDUqMV8ewpbTiHix1oikn0wH5KL9/9ckVPWfrF7leeX9R8Q5ztF
-         jrJveZVF5qJA/4qyMTx1BBYOD5xr1p1KCS6XkbiMsF1pu6e+CY5oZ2/IXxznfntXQ0WY
-         /nMQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1709669028; x=1710273828;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=NjdDKmM0somKyJ05ADlrCO1GJw8fQhL87bH2HfsHHH4=;
-        b=av1Auvil/orWzHfkTL7WS0PsCwipnrOF6OUTad8nGQ2ZEQWBhgX8NotrZXpDW0V6Sa
-         gOFRIwkjFhj1kkiTXfcZx3M6afgG6tCnGI9LoCEdvjBH4RSnCHlRFpl8U+V0Pz6hSRQM
-         zaGgOkhT0a7z3Ufg2GCsslv11+TKQMxbrXgzduc8NoZIzqPkuov8Fl+I3sWPwLY9XbXG
-         Oc8j+YXagH7bq1CdlD2Rqp/s29zBxM3AVw8RA78oseJyLDOVMglmrv39x4rPXc2V7PDf
-         i/QYquISsh4rODuLZLBHUEPwJ1q5JqNRY+soKI4O93B3Hiju6vxTXhrnkZRmAuTlf2oX
-         4WvQ==
-X-Gm-Message-State: AOJu0YwMmTl2ArWlZrxmh6hm9+slA2enGxolV46Lavy5UqdOs/34phF3
-	9gDIc6SsANRZC5Zo7tFbvQlJ8PQ00akHBFW9n3TytPSrf/pbM2uTQ+viKRpZ
-X-Google-Smtp-Source: AGHT+IGwCdiTc6vbtsI2nc0Vnkoh9E+t9abmlxU2hHzghH0/yfDI08hImbVicCJQvDoWr695w7mi/A==
-X-Received: by 2002:a05:6512:3a83:b0:513:2137:a231 with SMTP id q3-20020a0565123a8300b005132137a231mr2344530lfu.67.1709669027289;
-        Tue, 05 Mar 2024 12:03:47 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id v15-20020a05600c444f00b00412eff2eb5bsm1607545wmn.13.2024.03.05.12.03.46
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 05 Mar 2024 12:03:46 -0800 (PST)
-Message-ID: <pull.1683.git.1709669025722.gitgitgadget@gmail.com>
-From: "Justin Tobler via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Tue, 05 Mar 2024 20:03:45 +0000
-Subject: [PATCH] reftable/stack: use geometric table compaction
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+	dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b="H8Nbg7Qp";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="kcVmQBKA"
+Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
+	by mailfout.nyi.internal (Postfix) with ESMTP id E9F03138012C;
+	Tue,  5 Mar 2024 15:31:03 -0500 (EST)
+Received: from mailfrontend2 ([10.202.2.163])
+  by compute6.internal (MEProxy); Tue, 05 Mar 2024 15:31:03 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=khaugsbakk.name;
+	 h=cc:cc:content-transfer-encoding:content-type:content-type
+	:date:date:from:from:in-reply-to:in-reply-to:message-id
+	:mime-version:references:reply-to:subject:subject:to:to; s=fm3;
+	 t=1709670663; x=1709757063; bh=8MXaT/OVksqV05ZKW/AAQumPcoviJlpd
+	KnxFGBtSO9k=; b=H8Nbg7QpMw8imDTwLB+K2xQOBtk6TsUCXg7NlZn9xrji6MDK
+	aTY6oFDWRKe7ZR3LmpK2pcahRoEnv08kVEPvabxXYm0vWr6/gXqM9Vufzq1vRDHX
+	aUU2Z+YQpiyIUR7KVJY7Pu9Aw21z6fpTQ/QZEqoqUWGKj6arHCRtaSg8bsawH8Up
+	6mnzjAoDVxSWbePjt3Bn05yMGDqYyy3pz+hEXMbqpukXq+eupIV+20XqXQ554BaZ
+	t+U6ImZ7XN6b5FlnVo7WEem9OEcWvqGG0YSnLgFrThFM0Ipu8CZQ1nkHSw9ffc7c
+	x4HKOPAG040BqOmrt4De5VWrbX2MTZ6yJeyu0w==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1709670663; x=
+	1709757063; bh=8MXaT/OVksqV05ZKW/AAQumPcoviJlpdKnxFGBtSO9k=; b=k
+	cVmQBKAJ5es6yaDGLWM66rEPzGT0v112HbOm9PrQygQMaY0GZMbP1iTi316sXHFs
+	TXMkXx8cG/DAMzRvMupJIWcpK/gL/d6Hgfbm3ws04C1y2ZK3vi9vWYN6SqcrHW09
+	69wrQy0Wwc5+fjqDkbvo2xYpvD6U/klLl6pGSvu0oEPOfvdnt0fUhQeI7CK1esL1
+	+K7Lm3dA0EyqbwzIsq5/sSW6n2Ty6U31rjqxOJo3oPNeHqvoVCGLzdoAZRe9nAEK
+	M/bbNLIfiN+lwHk5ROsHp7aWMt1yHSSeGXq+ijyZrmgaw+COaSYDVXWKYZ08mPHT
+	m33G7rmHIp0BBKzp+cVxQ==
+X-ME-Sender: <xms:B4HnZTRPdglml1s8TF5kU_CwRYM0-O6_fJXzRkdlzs1ZsaIpju6ASIQ>
+    <xme:B4HnZUyNbrafVH0v-Coh-c7qEWQ8yZY07BnM6_b07wIuQUtDKDCCiui9n1-FCyjWb
+    6fF5lCDF_1Q1YCNsw>
+X-ME-Received: <xmr:B4HnZY3JdCGZgewpqynoi3m6dmf0xkR_1aZdywz-lJIoxPIAq_w5qc8gW0D5OybM5GhUXuxT1iUllv0S6CVQi9xi3vUXb4DwpJHf-MDcLA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrheelgddufeegucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+    cujfgurhephffvvefufffkofgjfhggtgfgsehtkeertdertdejnecuhfhrohhmpefmrhhi
+    shhtohhffhgvrhcujfgruhhgshgsrghkkhcuoegtohguvgeskhhhrghughhssggrkhhkrd
+    hnrghmvgeqnecuggftrfgrthhtvghrnhepvefgleevieekgeejieekueevhfelieduvdel
+    geefkeejtdekvedttefgffevtedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrg
+    hmpehmrghilhhfrhhomheptghouggvsehkhhgruhhgshgsrghkkhdrnhgrmhgv
+X-ME-Proxy: <xmx:B4HnZTDrrYR01issu8SWeawTXGtjsMf4l8VJHqj3UoAIQL2K25umOg>
+    <xmx:B4HnZcgH3mvlzCaZQCbfppScL2ubtxhpJceh1miYGMNq_UvVPPihXA>
+    <xmx:B4HnZXqczYV_XLlyusjM8GFwwrhSM-rvF-59TadM6LE0fOvy0-kyiw>
+    <xmx:B4HnZUeT9xHJDPMHtuQu4mA7prxoC0AKsMNfDsrHvSj1qREa-ttzXQ>
+Feedback-ID: i2671468f:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 5 Mar 2024 15:31:01 -0500 (EST)
+From: Kristoffer Haugsbakk <code@khaugsbakk.name>
+To: git@vger.kernel.org
+Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>,
+	Elijah Newren <newren@gmail.com>,
+	=?UTF-8?q?Jean-No=C3=ABl=20Avila?= <avila.jn@gmail.com>
+Subject: [PATCH v4 0/5] advise about ref syntax rules
+Date: Tue,  5 Mar 2024 21:29:38 +0100
+Message-ID: <cover.1709670287.git.code@khaugsbakk.name>
+X-Mailer: git-send-email 2.44.0.64.g52b67adbeb2
+In-Reply-To: <cover.1709590037.git.code@khaugsbakk.name>
+References: <cover.1709590037.git.code@khaugsbakk.name>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Justin Tobler <jltobler@gmail.com>,
-    Justin Tobler <jltobler@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-From: Justin Tobler <jltobler@gmail.com>
+Point the user towards the ref/branch name syntax rules if they give an
+invalid name.
 
-To reduce the number of on-disk reftables, compaction is performed.
-Contiguous tables with the same binary log value of size are grouped
-into segments. The segment that has both the lowest binary log value and
-contains more than one table is set as the starting point when
-identifying the compaction segment.
+Also make some spatially-appropriate improvements:
 
-Since segments containing a single table are not initially considered
-for compaction, if the table appended to the list does not match the
-previous table log value, no compaction occurs for the new table. It is
-therefore possible for unbounded growth of the table list. This can be
-demonstrated by repeating the following sequence:
+• Test style
+• `advice.txt`
 
-git branch -f foo
-git branch -d foo
+§ git-replace(1)
 
-Each operation results in a new table being written with no compaction
-occurring until a separate operation produces a table matching the
-previous table log value.
+(see cover letter for v2)
 
-To avoid unbounded growth of the table list, walk through each table and
-evaluate if it needs to be included in the compaction segment to restore
-a geometric sequence.
+§ Alternatives (to this change)
 
-Some tests in `t0610-reftable-basics.sh` assert the on-disk state of
-tables and are therefore updated to specify the correct new table count.
-Since compaction is more aggressive in ensuring tables maintain a
-geometric sequence, the expected table count is reduced in these tests.
-In `reftable/stack_test.c` tests related to `sizes_to_segments()` are
-removed because the function is no longer needed. Also, the
-`test_suggest_compaction_segment()` test is updated to better showcase
-and reflect the new geometric compaction behavior.
+While working on this I also thought that it might be nice to have a
+man page `gitrefsyntax`. That one could use a lot of the content from
+`man git check-ref-format` verbatim. Then the hint could point towards
+that man page. And it seems that AsciiDoc supports _includes_ which
+means that the rules don’t have to be duplicated between the two man
+pages.
 
-Signed-off-by: Justin Tobler <jltobler@gmail.com>
----
-    reftable/stack: use geometric table compaction
+§ CC
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1683%2Fjltobler%2Fjt%2Freftable-geometric-compaction-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1683/jltobler/jt/reftable-geometric-compaction-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/1683
+For changes to `advice.txt`:
 
- reftable/stack.c           | 106 +++++++++++++++----------------------
- reftable/stack.h           |   3 --
- reftable/stack_test.c      |  66 +++++------------------
- t/t0610-reftable-basics.sh |  24 ++++-----
- 4 files changed, 70 insertions(+), 129 deletions(-)
+Cc: Elijah Newren <newren@gmail.com>
+Cc: Jean-Noël Avila <avila.jn@gmail.com>
 
-diff --git a/reftable/stack.c b/reftable/stack.c
-index b64e55648aa..e4ea8753977 100644
---- a/reftable/stack.c
-+++ b/reftable/stack.c
-@@ -1214,75 +1214,57 @@ static int segment_size(struct segment *s)
- 	return s->end - s->start;
- }
- 
--int fastlog2(uint64_t sz)
--{
--	int l = 0;
--	if (sz == 0)
--		return 0;
--	for (; sz; sz /= 2) {
--		l++;
--	}
--	return l - 1;
--}
--
--struct segment *sizes_to_segments(size_t *seglen, uint64_t *sizes, size_t n)
--{
--	struct segment *segs = reftable_calloc(n, sizeof(*segs));
--	struct segment cur = { 0 };
--	size_t next = 0, i;
--
--	if (n == 0) {
--		*seglen = 0;
--		return segs;
--	}
--	for (i = 0; i < n; i++) {
--		int log = fastlog2(sizes[i]);
--		if (cur.log != log && cur.bytes > 0) {
--			struct segment fresh = {
--				.start = i,
--			};
--
--			segs[next++] = cur;
--			cur = fresh;
--		}
--
--		cur.log = log;
--		cur.end = i + 1;
--		cur.bytes += sizes[i];
--	}
--	segs[next++] = cur;
--	*seglen = next;
--	return segs;
--}
--
- struct segment suggest_compaction_segment(uint64_t *sizes, size_t n)
- {
--	struct segment min_seg = {
--		.log = 64,
--	};
--	struct segment *segs;
--	size_t seglen = 0, i;
--
--	segs = sizes_to_segments(&seglen, sizes, n);
--	for (i = 0; i < seglen; i++) {
--		if (segment_size(&segs[i]) == 1)
--			continue;
-+	struct segment seg = { 0 };
-+	uint64_t bytes;
-+	size_t i;
- 
--		if (segs[i].log < min_seg.log)
--			min_seg = segs[i];
--	}
-+	/*
-+	 * If there are no tables or only a single one then we don't have to
-+	 * compact anything. The sequence is geometric by definition already.
-+	 */
-+	if (n <= 1)
-+		return seg;
- 
--	while (min_seg.start > 0) {
--		size_t prev = min_seg.start - 1;
--		if (fastlog2(min_seg.bytes) < fastlog2(sizes[prev]))
-+	/*
-+	 * Find the ending table of the compaction segment needed to restore the
-+	 * geometric sequence.
-+	 *
-+	 * To do so, we iterate backwards starting from the most recent table
-+	 * until a valid segment end is found. If the preceding table is smaller
-+	 * than the current table multiplied by the geometric factor (2), the
-+	 * current table is set as the compaction segment end.
-+	 */
-+	for (i = n - 1; i > 0; i--) {
-+		if (sizes[i - 1] < sizes[i] * 2) {
-+			seg.end = i;
-+			bytes = sizes[i];
- 			break;
-+		}
-+	}
-+
-+	/*
-+	 * Find the starting table of the compaction segment by iterating
-+	 * through the remaing tables and keeping track of the accumulated size
-+	 * of all tables seen from the segment end table.
-+	 *
-+	 * Note that we keep iterating even after we have found the first
-+	 * first starting point. This is because there may be tables in the
-+	 * stack preceding that first starting point which violate the geometric
-+	 * sequence.
-+	 */
-+	for (; i > 0; i--) {
-+		uint64_t curr = bytes;
-+		bytes += sizes[i - 1];
- 
--		min_seg.start = prev;
--		min_seg.bytes += sizes[prev];
-+		if (sizes[i - 1] < curr * 2) {
-+			seg.start = i - 1;
-+			seg.bytes = bytes;
-+		}
- 	}
- 
--	reftable_free(segs);
--	return min_seg;
-+	return seg;
- }
- 
- static uint64_t *stack_table_sizes_for_compaction(struct reftable_stack *st)
-@@ -1305,7 +1287,7 @@ int reftable_stack_auto_compact(struct reftable_stack *st)
- 		suggest_compaction_segment(sizes, st->merged->stack_len);
- 	reftable_free(sizes);
- 	if (segment_size(&seg) > 0)
--		return stack_compact_range_stats(st, seg.start, seg.end - 1,
-+		return stack_compact_range_stats(st, seg.start, seg.end,
- 						 NULL);
- 
- 	return 0;
-diff --git a/reftable/stack.h b/reftable/stack.h
-index d919455669e..656f896cc28 100644
---- a/reftable/stack.h
-+++ b/reftable/stack.h
-@@ -33,12 +33,9 @@ int read_lines(const char *filename, char ***lines);
- 
- struct segment {
- 	size_t start, end;
--	int log;
- 	uint64_t bytes;
- };
- 
--int fastlog2(uint64_t sz);
--struct segment *sizes_to_segments(size_t *seglen, uint64_t *sizes, size_t n);
- struct segment suggest_compaction_segment(uint64_t *sizes, size_t n);
- 
- #endif
-diff --git a/reftable/stack_test.c b/reftable/stack_test.c
-index 509f4866236..85600a9573e 100644
---- a/reftable/stack_test.c
-+++ b/reftable/stack_test.c
-@@ -720,59 +720,14 @@ static void test_reftable_stack_hash_id(void)
- 	clear_dir(dir);
- }
- 
--static void test_log2(void)
--{
--	EXPECT(1 == fastlog2(3));
--	EXPECT(2 == fastlog2(4));
--	EXPECT(2 == fastlog2(5));
--}
--
--static void test_sizes_to_segments(void)
--{
--	uint64_t sizes[] = { 2, 3, 4, 5, 7, 9 };
--	/* .................0  1  2  3  4  5 */
--
--	size_t seglen = 0;
--	struct segment *segs =
--		sizes_to_segments(&seglen, sizes, ARRAY_SIZE(sizes));
--	EXPECT(segs[2].log == 3);
--	EXPECT(segs[2].start == 5);
--	EXPECT(segs[2].end == 6);
--
--	EXPECT(segs[1].log == 2);
--	EXPECT(segs[1].start == 2);
--	EXPECT(segs[1].end == 5);
--	reftable_free(segs);
--}
--
--static void test_sizes_to_segments_empty(void)
--{
--	size_t seglen = 0;
--	struct segment *segs = sizes_to_segments(&seglen, NULL, 0);
--	EXPECT(seglen == 0);
--	reftable_free(segs);
--}
--
--static void test_sizes_to_segments_all_equal(void)
--{
--	uint64_t sizes[] = { 5, 5 };
--	size_t seglen = 0;
--	struct segment *segs =
--		sizes_to_segments(&seglen, sizes, ARRAY_SIZE(sizes));
--	EXPECT(seglen == 1);
--	EXPECT(segs[0].start == 0);
--	EXPECT(segs[0].end == 2);
--	reftable_free(segs);
--}
--
- static void test_suggest_compaction_segment(void)
- {
--	uint64_t sizes[] = { 128, 64, 17, 16, 9, 9, 9, 16, 16 };
-+	uint64_t sizes[] = { 512, 64, 17, 16, 9, 9, 9, 16, 2, 16 };
- 	/* .................0    1    2  3   4  5  6 */
- 	struct segment min =
- 		suggest_compaction_segment(sizes, ARRAY_SIZE(sizes));
--	EXPECT(min.start == 2);
--	EXPECT(min.end == 7);
-+	EXPECT(min.start == 1);
-+	EXPECT(min.end == 9);
- }
- 
- static void test_suggest_compaction_segment_nothing(void)
-@@ -884,6 +839,17 @@ static void test_empty_add(void)
- 	reftable_stack_destroy(st2);
- }
- 
-+static int fastlog2(uint64_t sz)
-+{
-+	int l = 0;
-+	if (sz == 0)
-+		return 0;
-+	for (; sz; sz /= 2) {
-+		l++;
-+	}
-+	return l - 1;
-+}
-+
- static void test_reftable_stack_auto_compaction(void)
- {
- 	struct reftable_write_options cfg = { 0 };
-@@ -1072,7 +1038,6 @@ static void test_reftable_stack_compaction_concurrent_clean(void)
- int stack_test_main(int argc, const char *argv[])
- {
- 	RUN_TEST(test_empty_add);
--	RUN_TEST(test_log2);
- 	RUN_TEST(test_names_equal);
- 	RUN_TEST(test_parse_names);
- 	RUN_TEST(test_read_file);
-@@ -1092,9 +1057,6 @@ int stack_test_main(int argc, const char *argv[])
- 	RUN_TEST(test_reftable_stack_update_index_check);
- 	RUN_TEST(test_reftable_stack_uptodate);
- 	RUN_TEST(test_reftable_stack_validate_refname);
--	RUN_TEST(test_sizes_to_segments);
--	RUN_TEST(test_sizes_to_segments_all_equal);
--	RUN_TEST(test_sizes_to_segments_empty);
- 	RUN_TEST(test_suggest_compaction_segment);
- 	RUN_TEST(test_suggest_compaction_segment_nothing);
- 	return 0;
-diff --git a/t/t0610-reftable-basics.sh b/t/t0610-reftable-basics.sh
-index 6a131e40b81..a3b1a04123e 100755
---- a/t/t0610-reftable-basics.sh
-+++ b/t/t0610-reftable-basics.sh
-@@ -293,7 +293,7 @@ test_expect_success 'ref transaction: writes cause auto-compaction' '
- 	test_line_count = 1 repo/.git/reftable/tables.list &&
- 
- 	test_commit -C repo --no-tag A &&
--	test_line_count = 2 repo/.git/reftable/tables.list &&
-+	test_line_count = 1 repo/.git/reftable/tables.list &&
- 
- 	test_commit -C repo --no-tag B &&
- 	test_line_count = 1 repo/.git/reftable/tables.list
-@@ -324,7 +324,7 @@ test_expect_success 'ref transaction: writes are synced' '
- 		git -C repo -c core.fsync=reference \
- 		-c core.fsyncMethod=fsync update-ref refs/heads/branch HEAD &&
- 	check_fsync_events trace2.txt <<-EOF
--	"name":"hardware-flush","count":2
-+	"name":"hardware-flush","count":4
- 	EOF
- '
- 
-@@ -334,8 +334,8 @@ test_expect_success 'pack-refs: compacts tables' '
- 
- 	test_commit -C repo A &&
- 	ls -1 repo/.git/reftable >table-files &&
--	test_line_count = 4 table-files &&
--	test_line_count = 3 repo/.git/reftable/tables.list &&
-+	test_line_count = 3 table-files &&
-+	test_line_count = 2 repo/.git/reftable/tables.list &&
- 
- 	git -C repo pack-refs &&
- 	ls -1 repo/.git/reftable >table-files &&
-@@ -367,7 +367,7 @@ do
- 			umask $umask &&
- 			git init --shared=true repo &&
- 			test_commit -C repo A &&
--			test_line_count = 3 repo/.git/reftable/tables.list
-+			test_line_count = 2 repo/.git/reftable/tables.list
- 		) &&
- 		git -C repo pack-refs &&
- 		test_expect_perms "-rw-rw-r--" repo/.git/reftable/tables.list &&
-@@ -737,10 +737,10 @@ test_expect_success 'worktree: pack-refs in main repo packs main refs' '
- 	test_commit -C repo A &&
- 	git -C repo worktree add ../worktree &&
- 
--	test_line_count = 3 repo/.git/worktrees/worktree/reftable/tables.list &&
--	test_line_count = 4 repo/.git/reftable/tables.list &&
-+	test_line_count = 1 repo/.git/worktrees/worktree/reftable/tables.list &&
-+	test_line_count = 1 repo/.git/reftable/tables.list &&
- 	git -C repo pack-refs &&
--	test_line_count = 3 repo/.git/worktrees/worktree/reftable/tables.list &&
-+	test_line_count = 1 repo/.git/worktrees/worktree/reftable/tables.list &&
- 	test_line_count = 1 repo/.git/reftable/tables.list
- '
- 
-@@ -750,11 +750,11 @@ test_expect_success 'worktree: pack-refs in worktree packs worktree refs' '
- 	test_commit -C repo A &&
- 	git -C repo worktree add ../worktree &&
- 
--	test_line_count = 3 repo/.git/worktrees/worktree/reftable/tables.list &&
--	test_line_count = 4 repo/.git/reftable/tables.list &&
-+	test_line_count = 1 repo/.git/worktrees/worktree/reftable/tables.list &&
-+	test_line_count = 1 repo/.git/reftable/tables.list &&
- 	git -C worktree pack-refs &&
- 	test_line_count = 1 repo/.git/worktrees/worktree/reftable/tables.list &&
--	test_line_count = 4 repo/.git/reftable/tables.list
-+	test_line_count = 1 repo/.git/reftable/tables.list
- '
- 
- test_expect_success 'worktree: creating shared ref updates main stack' '
-@@ -770,7 +770,7 @@ test_expect_success 'worktree: creating shared ref updates main stack' '
- 
- 	git -C worktree update-ref refs/heads/shared HEAD &&
- 	test_line_count = 1 repo/.git/worktrees/worktree/reftable/tables.list &&
--	test_line_count = 2 repo/.git/reftable/tables.list
-+	test_line_count = 1 repo/.git/reftable/tables.list
- '
- 
- test_expect_success 'worktree: creating per-worktree ref updates worktree stack' '
+§ Changes in v4
 
-base-commit: b387623c12f3f4a376e4d35a610fd3e55d7ea907
+Mostly about the style rewrite in `advice.txt`.
+
+• Patch 1:
+  • Drop `(setup)` change
+  • Drop superflouos bullet point
+  • Don’t use period to end bullet point
+• Patch 2:
+  • Drop trailer since this took on a life of its own
+  • Drop uses of colons and semicolons in favor of a “to <verb>”
+    clause (mostly “to tell”)
+  • Simplify some of the “effect clauses” by using “to tell” instead of
+    verbs like “instruct”
+• Patch 3:
+  • Also quote ref globs
+• Patch 5:
+  • Update refSyntax entry for consistency with the rest of the entries
+
+Kristoffer Haugsbakk (5):
+  t3200: improve test style
+  advice: make all entries stylistically consistent
+  advice: use backticks for verbatim
+  advice: use double quotes for regular quoting
+  branch: advise about ref syntax rules
+
+ Documentation/config/advice.txt |  95 ++++++++++++------------
+ advice.c                        |   1 +
+ advice.h                        |   1 +
+ branch.c                        |   8 ++-
+ builtin/branch.c                |   8 ++-
+ t/t3200-branch.sh               | 123 +++++++++++++++++---------------
+ 6 files changed, 128 insertions(+), 108 deletions(-)
+
+Range-diff against v3:
+1:  e6a2628ce57 ! 1:  ad101c72a60 t3200: improve test style
+    @@ Commit message
+         Also:
+     
+         • Remove a now-irrelevant comment about test placement and switch back
+    -      to `main` post-test.
+    +      to `main` post-test
+         • Prefer indented literal heredocs (`-\EOF`) except for a block which
+           says that this is intentional
+    -    • Move a `git config` command into the test and mark it as `setup` since
+    -      the next test depends on it
+     
+         Helped-by: Junio C Hamano <gitster@pobox.com>
+         Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
+     
+    +
+    + ## Notes (series) ##
+    +    v4:
+    +    • Drop `(setup)` change
+    +    • Drop superflouos bullet point
+    +    • Don’t use period to end bullet point
+    +
+      ## t/t3200-branch.sh ##
+     @@ t/t3200-branch.sh: test_expect_success 'git branch HEAD should fail' '
+      	test_must_fail git branch HEAD
+    @@ t/t3200-branch.sh: test_expect_success 'git branch -v with column.ui ignored' '
+     -
+     -git config branch.s/s.dummy Hello
+     -
+    --test_expect_success 'git branch -m s/s s should work when s/t is deleted' '
+    -+test_expect_success '(setup) git branch -m s/s s should work when s/t is deleted' '
+    + test_expect_success 'git branch -m s/s s should work when s/t is deleted' '
+     +	git config branch.s/s.dummy Hello &&
+      	git branch --create-reflog s/s &&
+      	git reflog exists refs/heads/s/s &&
+2:  d48b4719c27 ! 2:  7017ff3fff7 advice: make all entries stylistically consistent
+    @@ Metadata
+      ## Commit message ##
+         advice: make all entries stylistically consistent
+     
+    +    In general, rewrite entries to the following form:
+    +
+    +    1. Clause or sentence describing when the advice is shown
+    +    2. Optional “to <verb>” clause which says what the advice is
+    +       about (e.g. for resetNoRefresh: tell the user that they can use
+    +       `--no-refresh`)
+    +
+    +    Concretely:
+    +
+         1. Use “shown” instead of “advice shown”
+            • “advice” is implied and a bit repetitive
+         2. Use “when” instead of “if”
+         3. Lead with “Shown when” and end the entry with the effect it has,
+            where applicable
+         4. Use “the user” instead of “a user” or “you”
+    -    5. detachedHead: connect clause with a semicolon to make the sentence
+    -       flow better in this new context
+    -    6. implicitIdentity: rewrite description in order to lead with *when*
+    +    5. implicitIdentity: rewrite description in order to lead with *when*
+            the advice is shown (see point (3))
+    -    7. Prefer the present tense (with the exception of pushNonFFMatching)
+    -    8. Use a colon to connect the last clause instead of a comma
+    -    9. waitingForEditor: give example of relevance in this new context
+    -    10. pushUpdateRejected: exception to the above principles
+    +    6. Prefer the present tense (with the exception of pushNonFFMatching)
+    +    7. waitingForEditor: give example of relevance in this new context
+    +    8. pushUpdateRejected: exception to the above principles
+     
+    -    Suggested-by: Junio C Hamano <gitster@pobox.com>
+         Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
+     
+     
+      ## Notes (series) ##
+    -    Maybe the style that we eventually agree on should be documented outside the
+    -    commit log?
+    +    v4:
+    +    • Drop trailer since this took on a life of its own
+    +    • Drop uses of colons and semicolons in favor of a “to <verb>”
+    +      clause (mostly “to tell”)
+    +    • Simplify some of the “effect clauses” by using “to tell” instead of
+    +      verbs like “instruct”
+    +    v3:
+    +    • Comment: Maybe the style that we eventually agree on should be
+    +      documented outside the commit log?
+     
+      ## Documentation/config/advice.txt ##
+     @@ Documentation/config/advice.txt: advice.*::
+    @@ Documentation/config/advice.txt: advice.*::
+     -		Advice that shows the location of the patch file when
+     -		linkgit:git-am[1] fails to apply it.
+     +		Shown when linkgit:git-am[1] fails to apply a patch
+    -+		file: tell the location of the file.
+    ++		file, to tell the user the location of the file.
+      	ambiguousFetchRefspec::
+     -		Advice shown when a fetch refspec for multiple remotes maps to
+     +		Shown when a fetch refspec for multiple remotes maps to
+    @@ Documentation/config/advice.txt: advice.*::
+     +		Shown when the user uses
+      		linkgit:git-switch[1] or linkgit:git-checkout[1]
+     -		to move to the detached HEAD state, to instruct how to
+    -+		to move to the detached HEAD state; instruct how to
+    - 		create a local branch after the fact.
+    +-		create a local branch after the fact.
+    ++		to move to the detached HEAD state, to tell the user how
+    ++		to create a local branch after the fact.
+      	diverging::
+     -		Advice shown when a fast-forward is not possible.
+     +		Shown when a fast-forward is not possible.
+    @@ Documentation/config/advice.txt: advice.*::
+     -		your information is guessed from the system username and
+     -		domain name.
+     +		Shown when the user's information is guessed from the
+    -+		system username and domain name: tell the user how to
+    ++		system username and domain name, to tell the user how to
+     +		set their identity configuration.
+      	nestedTag::
+     -		Advice shown if a user attempts to recursively tag a tag object.
+    @@ Documentation/config/advice.txt: advice.*::
+     -		linkgit:git-reset[1] when the command takes more than 2 seconds
+     -		to refresh the index after reset.
+     +		Shown when linkgit:git-reset[1] takes more than 2
+    -+		seconds to refresh the index after reset: tell the user
+    ++		seconds to refresh the index after reset, to tell the user
+     +		that they can use the `--no-refresh` option.
+      	resolveConflict::
+     -		Advice shown by various commands when conflicts
+    @@ Documentation/config/advice.txt: advice.*::
+      	rmHints::
+     -		In case of failure in the output of linkgit:git-rm[1],
+     -		show directions on how to proceed from the current state.
+    -+		Shown on failure in the output of linkgit:git-rm[1]:
+    ++		Shown on failure in the output of linkgit:git-rm[1], to
+     +		give directions on how to proceed from the current state.
+      	sequencerInUse::
+     -		Advice shown when a sequencer command is already in progress.
+    @@ Documentation/config/advice.txt: advice.*::
+     -		when the command takes more than 2 seconds to enumerate untracked
+     -		files.
+     +		Shown when linkgit:git-status[1] takes more than 2
+    -+		seconds to enumerate untracked files: consider using the
+    -+		`-u` option.
+    ++		seconds to enumerate untracked files, to tell the user that
+    ++		they can use the `-u` option.
+      	submoduleAlternateErrorStrategyDie::
+     -		Advice shown when a submodule.alternateErrorStrategy option
+     +		Shown when a submodule.alternateErrorStrategy option
+    @@ Documentation/config/advice.txt: advice.*::
+     -		Advice shown when a user tries to create a worktree from an
+     -		invalid reference, to instruct how to create a new unborn
+     +		Shown when the user tries to create a worktree from an
+    -+		invalid reference: instruct how to create a new unborn
+    ++		invalid reference, to tell the user how to create a new unborn
+      		branch instead.
+      --
+3:  30d662a04c7 ! 3:  df9b872afd1 advice: use backticks for code
+    @@ Metadata
+     Author: Kristoffer Haugsbakk <code@khaugsbakk.name>
+     
+      ## Commit message ##
+    -    advice: use backticks for code
+    +    advice: use backticks for verbatim
+     
+    -    Use backticks for quoting code rather than single quotes.
+    +    Use backticks for inline-verbatim rather than single quotes. Also quote
+    +    the unquoted ref globs.
+     
+         Also replace “the add command” with “`git add`”.
+     
+         Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
+     
+    +
+    + ## Notes (series) ##
+    +    v4:
+    +    • Also quote ref globs
+    +
+      ## Documentation/config/advice.txt ##
+     @@ Documentation/config/advice.txt: advice.*::
+      	These variables control various optional help messages designed to
+    @@ Documentation/config/advice.txt: advice.*::
+      		it resulted in a non-fast-forward error.
+      	pushRefNeedsUpdate::
+     @@ Documentation/config/advice.txt: advice.*::
+    - 		refs/heads/* or refs/tags/* based on the type of the
+    + 		guess based on the source and destination refs what
+    + 		remote ref namespace the source belongs in, but where
+    + 		we can still suggest that the user push to either
+    +-		refs/heads/* or refs/tags/* based on the type of the
+    ++		`refs/heads/*` or `refs/tags/*` based on the type of the
+      		source object.
+      	pushUpdateRejected::
+     -		Set this variable to 'false' if you want to disable
+4:  3028713357f = 4:  15594b2a3a8 advice: use double quotes for regular quoting
+5:  402b7937951 ! 5:  97b53c04894 branch: advise about ref syntax rules
+    @@ Commit message
+     
+     
+      ## Notes (series) ##
+    +    v4:
+    +    • Update refSyntax entry for consistency with the rest of the entries
+         v3:
+         • Tweak advice doc for the new entry
+         • Better test style
+    @@ Documentation/config/advice.txt: advice.*::
+      		`pushFetchFirst`, `pushNeedsForce`, and `pushRefNeedsUpdate`
+      		simultaneously.
+     +	refSyntax::
+    -+		Shown when the user provides an illegal ref name: point
+    -+		towards the ref syntax documentation.
+    ++		Shown when the user provides an illegal ref name, to
+    ++		tell the user about the ref syntax documentation.
+      	resetNoRefresh::
+      		Shown when linkgit:git-reset[1] takes more than 2
+    - 		seconds to refresh the index after reset: tell the user
+    + 		seconds to refresh the index after reset, to tell the user
+     
+      ## advice.c ##
+     @@ advice.c: static struct {
 -- 
-gitgitgadget
+2.44.0.64.g52b67adbeb2
+
