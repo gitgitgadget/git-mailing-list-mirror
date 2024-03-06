@@ -1,460 +1,162 @@
-Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
+Received: from dd36226.kasserver.com (dd36226.kasserver.com [85.13.153.21])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2131E140E47
-	for <git@vger.kernel.org>; Wed,  6 Mar 2024 20:21:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0ABA1FA4
+	for <git@vger.kernel.org>; Wed,  6 Mar 2024 21:00:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=85.13.153.21
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709756499; cv=none; b=aKNrgRxtLFygL/fReHEcUPDALVOwlJ5BLm2/pVJuhQncndWVAaVhgCcjk1GrKAE4+yyNvh1I05JhveP5vZsBnUySSpTsdBdDhqBZObf+EOQIDJ+CeAvpEKtHwEJRup183MdcUwsppFFw3N2GuNTLjRyGJJNuMS4WUN/d1C1NEAE=
+	t=1709758842; cv=none; b=I7gMap89v5Xp4ViLsXZhFL/I8mEST4Q7sDIOYBV3O4pwtd8xWNjCSd2YyKTBVLfXnSfCXyaU/tE1jGqMY0DpMJXmOp7Chc2f6FXk6BIiL1Q4vKiXetDoc6mlJ+Wi/3neqJxjyyezr/uhKRthHKpcCYQP62EATejvrSJ+X0iP+B0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709756499; c=relaxed/simple;
-	bh=gQn5TB8I0J70Kn8J7yuSjIVlsz6kW9+g3qE89QLoPX0=;
-	h=Message-ID:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=Kad9J7MfWsjL9NuLv8/x4kVEeBgTLN9CXVtnl6Aj4Fm1pkKO14KuZ2GihjFbbxLxum5puqMOhyqpjeR48aq5cv/7Lwd/3EVi1kIw6uGzhiAFB+5u6Sm176T7yL/3timvRqyaVeIGSnCHDdjcrtipnnfP2CZXkfZDFeb77Htv8+w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=auJfTd9L; arc=none smtp.client-ip=209.85.128.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1709758842; c=relaxed/simple;
+	bh=s9TjvLKzzD6+7RKEbrb5Tm3DQw81WCkQ8hOZokWpz4o=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=o71EA0ug4qWbu9y4m64rVg/JNc3OY/S8OmLzzDF99Grr1ktjlQGAhELqpaW199ht0yUmvjNOFVTXWrOWuBp/LU+qQYiwhJQzLGf2Dg1CcUMJ8oeGQryGD22g8aFApmHMlumeY0cIyH7Ioy27BXbqfeUUCi9rUDyeXERnZkU2CRQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=haller-berlin.de; spf=pass smtp.mailfrom=haller-berlin.de; dkim=pass (2048-bit key) header.d=haller-berlin.de header.i=@haller-berlin.de header.b=eWjZo6y0; arc=none smtp.client-ip=85.13.153.21
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=haller-berlin.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=haller-berlin.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="auJfTd9L"
-Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-412fe981ef1so905415e9.1
-        for <git@vger.kernel.org>; Wed, 06 Mar 2024 12:21:36 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1709756495; x=1710361295; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Y+s9FYy4lcc4cYXifTX4hYxOrCuOE68inY3iWXRK48E=;
-        b=auJfTd9LIn1nNncdhos0DE2MyA43jQgMZbuCysk8wWNro6WreiVblGB9l7p+XqhjNp
-         KhkrcuqMOFyhfYF1AXrmZm2CQTK/kqvmfljiE69HfsHBfIvYWsfRxDWT9FflXcs/lPDQ
-         Mhk3WqArY571Sw40KS3/5OY+6DHNaGKt+pVbpOPQfROH5pC0X3C9ExM5wEYDySaxKKgs
-         KAag3EAr8GGqPd+G9+1kfyGOM7M3AqAMSqqwJ0lxYNA/WVoYsCdR5V5//4nf4KDQxYXy
-         eGlaSD3DtB4rCE+g0YPNrZg5LwadYjjw3y21c80WxDqh8ncxNSq0MAr9kTEHYWgl2rQy
-         goEQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1709756495; x=1710361295;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=Y+s9FYy4lcc4cYXifTX4hYxOrCuOE68inY3iWXRK48E=;
-        b=gLAQA3ydQMfjACz5c969127M+Qyhf/8WQfgZuMm2REg7w8/nIPnzT4L6tgx8ADjOlp
-         4psaOAe8oTbtPnnwa8nj8H6/8OEd9GUf0h7KJcZlK5zkvtgvxykOgY+u9DYGlNjYIRi/
-         ya2MZADgEQApCGu21cXzhn4pt5/ssdL9ZiZ99PhV8+6PJxo03hz9btDQRlfA7x0t+sxq
-         DqNYOXu7nUWv2f/s9MWKxIQYPFDmII3GRrYYLBWCtPyl5mtVyXUiubstPLMXG+tnjbVE
-         McOVetJdFjp4as6vhHJL/M+lVdlpTtQZZVAlT+DPR/LMXAVzHuO/acOnwEybI9wtM3m9
-         86CQ==
-X-Gm-Message-State: AOJu0Yygcjc4segIkbvYmw52hlCNue0vRcWHPPIkC2nBtv+lNpMbz5xZ
-	lLsvfBsHGo/iP/bK3PQaC4cIj9bNwAIki6ZXtwmUAYw7tlnhAbbitVrNJ6uL
-X-Google-Smtp-Source: AGHT+IEs9k6oqjxGHulFVTOOfIuY1XnlfJ5Oi6aThzTKgWLZv6uTcUJCWPsVI/pU39t1IgdjdE0Rmw==
-X-Received: by 2002:a05:600c:34d4:b0:412:eddd:12c1 with SMTP id d20-20020a05600c34d400b00412eddd12c1mr5354666wmq.14.1709756494983;
-        Wed, 06 Mar 2024 12:21:34 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id hg9-20020a05600c538900b00412f855bcc2sm296222wmb.43.2024.03.06.12.21.34
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 06 Mar 2024 12:21:34 -0800 (PST)
-Message-ID: <pull.1682.v2.git.git.1709756493673.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1682.git.git.1708882423691.gitgitgadget@gmail.com>
-References: <pull.1682.git.git.1708882423691.gitgitgadget@gmail.com>
-From: "Steven Jeuris via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Wed, 06 Mar 2024 20:21:33 +0000
-Subject: [PATCH v2] userdiff: better method/property matching for C#
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+	dkim=pass (2048-bit key) header.d=haller-berlin.de header.i=@haller-berlin.de header.b="eWjZo6y0"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=haller-berlin.de;
+	s=kas202402191026; t=1709758830;
+	bh=Eax/aCJa4entJiJLgtet884RJvUrbsZ3CtxmAnijhYo=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=eWjZo6y0C3ERQ5JIIH+uEkXBFK5siVH4Jph4ZN1DCKQ7u7serGK/4m6csWEUqceqn
+	 M6N1u1+OcEkTIulG7xhPBBkclIhha0T3CBBe3Un5xvzbeGpVWKdINZ2AS67hJvlEgn
+	 EOEFU32I5HbsPH77bDSpHFgL6Mlz7YyRLSrFQa6orvMvHxaveKhasNTSNvch5j0xGK
+	 p/9MpCpVrVLM/VNJbq2SHvs2Wa/n+nHvdCC1bBMfhL/iavTvBp1Oe2+7/tX3Y81xOi
+	 n4zAE6DuD9zuGu/n85rPNi7mWnSrc+kMMeI+ZRBL8QJJU3NLWAlgV5P+j/Vp9KL/Mu
+	 qsz8zuEB0GloQ==
+Received: from [192.168.42.22] (56-97-142-46.pool.kielnet.net [46.142.97.56])
+	by dd36226.kasserver.com (Postfix) with ESMTPSA id 180E13C1BC0;
+	Wed,  6 Mar 2024 22:00:30 +0100 (CET)
+Message-ID: <845ced9a-1f35-4100-a1ff-4243db2ba34f@haller-berlin.de>
+Date: Wed, 6 Mar 2024 22:00:29 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason <avarab@gmail.com>,
-    Jeff King <peff@peff.net>,
-    Steven Jeuris <steven.jeuris@gmail.com>,
-    Steven Jeuris <steven.jeuris@3shape.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: Should --update-refs exclude refs pointing to the current HEAD?
+Content-Language: de-DE, en-US
+To: Elijah Newren <newren@gmail.com>, Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, Derrick Stolee <derrickstolee@github.com>,
+ Phillip Wood <phillip.wood123@gmail.com>,
+ Christian Couder <christian.couder@gmail.com>
+References: <adb7f680-5bfa-6fa5-6d8a-61323fee7f53@haller-berlin.de>
+ <354f9fed-567f-42c8-9da9-148a5e223022@haller-berlin.de>
+ <xmqqsf144pi7.fsf@gitster.g>
+ <CABPp-BGO2ftEMHJDrf6yg3J4AfpKn=rpf_5Wt_WAS+Hi70KqPQ@mail.gmail.com>
+From: Stefan Haller <lists@haller-berlin.de>
+In-Reply-To: <CABPp-BGO2ftEMHJDrf6yg3J4AfpKn=rpf_5Wt_WAS+Hi70KqPQ@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spamd-Bar: ++
 
-From: Steven Jeuris <steven.jeuris@3shape.com>
+On 06.03.24 03:57, Elijah Newren wrote:
 
-- Support multi-line methods by not requiring closing parenthesis.
-- Support multiple generics (comma was missing before).
-- Add missing `foreach`, `lock` and  `fixed` keywords to skip over.
-- Remove `instanceof` keyword, which isn't C#.
-- Also detect non-method keywords not positioned at the start of a line.
-- Added tests; none existed before.
+> 1) What if there is a branch that is "just a copy" of one of the
+> branches earlier in the "stack"?  Since it's "just a copy", shouldn't
+> it be excluded for similar reasons to what you are arguing?  And, if
+> so, which branch is the copy?
 
-The overall strategy is to focus more on what isn't expected for
-method/property definitions, instead of what is, but is fully optional.
+This is a good point, but in my experience it's a lot more rare. Maybe
+I'm looking at all this just from my own experience, and there might be
+other usecases that are very different from mine, but as far as I am
+concerned, copies of branches are not long-lived. There is no point in
+having two branches point at the same commit. When I create a copy of a
+branch, I do that only to rebase the copy somewhere else _immediately_,
+leaving the original branch where it was. Which means that I encounter
+copied branches only at the top of the stack, not in the middle. Which
+means that I'm fine with keeping the current behavior of "rebase
+--update-ref" to update both copies of that middle-of-the-stack branch,
+because it never happens in practice for me.
 
-Signed-off-by: Steven Jeuris <steven.jeuris@gmail.com>
----
-    userdiff: better method/property matching for C#
-    
-    Change since v1: I removed "from" from the list of keywords to skip.
-    First, I considered adding "await", but I discovered both "await" and
-    "from" are "contextual keywords", which unlike the other keywords
-    currently listed, aren't reserved, and can thus cause false negatives.
-    I.e., it is valid to have a method named "await" or "from". In edge
-    cases, this may lead to false positives, but a different exclusion rule
-    will need to be added to handle these.
+> 2) Further, a "stack", to me at least, suggests a linear history
+> without branching (i.e. each commit has at most one parent _and_ at
+> most one child among the commits in the stack).  I designed `git
+> replay` to handle diverging histories (i.e. rebasing multiple branches
+> that _might_ share a subset of common history but none necessarily
+> need to fully contain the others, though perhaps the branches do share
+> some other contained branches), and I want it to handle replaying
+> merges as well.  While `git rebase --update-refs` is absolutely
+> limited to "stacks", and thus your argument might make sense in the
+> context of `git rebase`, since you are bringing `git replay` into the
+> mix, it needs to apply beyond a stack of commits.  It's not clear to
+> me how to genericize your suggestions to handle cases other than a
+> simple stack of commits, though.
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1682%2FWhathecode%2Fmaster-v2
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1682/Whathecode/master-v2
-Pull-Request: https://github.com/git/git/pull/1682
+I don't see a contradiction here. I don't tend to do this in practice,
+but I can totally imagine a tree of stacked branches that share some
+common base branches in the beginning and then diverge into different
+branches from there. It's true that "rebase --update-refs", when told to
+rebase one of the leaf branches, will destroy this tree because it pulls
+the base branches away from under the other leaf branches, but this is
+unrelated to my proposal, it has this problem today already. And it's
+awesome that git replay has a way to avoid this by rebasing the whole
+tree at once, keeping everything intact. Still, I don't see what's bad
+about excluding branches that point at the same commits as the leaf
+branches it is told to rebase when using "replay --contains". (I suppose
+what I'm suggesting is to treat "--contains" to mean "is included in the
+half-open interval from base to tip" of the revision range you are
+rebasing, rather than the closed interval.)
 
-Range-diff vs v1:
+Maybe I should make this more explicit again: I'm not trying to solve
+the problem of making a copy of a stack of branches, and rebasing that
+copy somewhere else. I think this can't be solved except by making
+branch stacks a new concept in git, which I'm not sure we want to do.
 
- 1:  cdd8dd4d871 ! 1:  00315519014 userdiff: better method/property matching for C#
-     @@ Commit message
-      
-          - Support multi-line methods by not requiring closing parenthesis.
-          - Support multiple generics (comma was missing before).
-     -    - Add missing `foreach`, `from`, `lock` and  `fixed` keywords to skip over.
-     +    - Add missing `foreach`, `lock` and  `fixed` keywords to skip over.
-          - Remove `instanceof` keyword, which isn't C#.
-          - Also detect non-method keywords not positioned at the start of a line.
-          - Added tests; none existed before.
-     @@ t/t4018/csharp-method-skip-body (new)
-      +		{
-      +		}
-      +		int[] numbers = [5, 4, 1, 3, 9, 8, 6, 7, 2, 0];
-     -+		var test =
-     -+			from num in Numbers(
-     -+		 	) select num;
-      +		
-      +		// Control
-      +		if (false)
-     @@ userdiff.c: PATTERNS("cpp",
-      +	  * Jump over keywords not used by methods which can be followed by parentheses without special characters in between,
-      +	  * making them look like methods.
-      +	  */
-     -+	 "!(^|[ \t]+)(do|while|for|foreach|from|if|else|new|default|return|switch|case|throw|catch|using|lock|fixed)([ \t(]+|$)\n"
-     ++	 "!(^|[ \t]+)(do|while|for|foreach|if|else|new|default|return|switch|case|throw|catch|using|lock|fixed)([ \t(]+|$)\n"
-      +	 /* Methods/constructors:
-      +	  * the strategy is to identify a minimum of two groups (any combination of keywords/type/name),
-      +	  * without intermediate or final characters which can't be part of method definitions before the opening parenthesis.
+> 3) This is mostly covered in (1) and (2), but to be explicit: `git
+> replay` is completely against the HEAD-is-special assumptions that are
+> pervasive within `git rebase`, and your problem is entirely phrased as
+> HEAD-is-special due to your call out of "the current branch".  Is your
+> argument limited to such special cases?  (If so, it might still be
+> valid for `git rebase`, of course.)
+
+No, I don't think I need HEAD to be special. "The thing that I'm
+rebasing" is special, and it is always HEAD for git rebase, but it can
+be something else for replay.
+
+> 4a) `git replay` does what Junio suggests naturally, since it doesn't
+> update the refs but instead gives commands which can be fed to `git
+> update-ref --stdin`.  Thus, users can inspect the output of `git
+> replay` and only perform the updates they want (by feeding a subset of
+> the lines to update-ref --stdin).
+
+At this point I probably need to explain that I'm rarely using the
+command line. I'm a user and co-maintainer of lazygit, and I want to
+make lazygit work in such a way that "it does the right thing" in as
+many cases as possible.
+
+> 4b) For `git replay`, --contained is just syntactic sugar -- it isn't
+> necessary.  git replay will allow you to list multiple branches that
+> you want replayed, so you can specify which branches are relevant to
+> you.
+
+That's great, even if it means that I have to redo some of the work that
+--contains would already do for me, just because I want a slightly
+different behavior.
+
+> 4c) For `git rebase --update-refs`, you can add `--interactive` and
+> then delete the `update-ref` line(s) corresponding to the refs you
+> don't want updated.
+
+Yes, that's what I always do today to work around the problem. It's just
+easy to forget, and I find it annoying that I have to take this extra
+step every time.
+
+One last remark: whenever I describe my use case involving copies of
+branches, people tell me not to do that, use detached heads instead, or
+other ways to achieve what I want. But then I don't understand why my
+proposal would make a difference for them. If you don't use copied
+branches, then why do you care whether "rebase --update-refs" or "replay
+--contained" moves those copies or not? I still haven't heard a good
+argument for why the current behavior is desirable, except for the one
+example of a degenerate stack that Phillip Wood described in [1].
+
+-Stefan
 
 
- t/t4018/csharp-method               |  10 +++
- t/t4018/csharp-method-explicit      |  12 +++
- t/t4018/csharp-method-generics      |  11 +++
- t/t4018/csharp-method-modifiers     |  13 ++++
- t/t4018/csharp-method-multiline     |  10 +++
- t/t4018/csharp-method-params        |  10 +++
- t/t4018/csharp-method-skip-body     | 112 ++++++++++++++++++++++++++++
- t/t4018/csharp-method-special-chars |  11 +++
- t/t4018/csharp-method-with-spacing  |  10 +++
- t/t4018/csharp-property             |  11 +++
- userdiff.c                          |  16 ++--
- 11 files changed, 221 insertions(+), 5 deletions(-)
- create mode 100644 t/t4018/csharp-method
- create mode 100644 t/t4018/csharp-method-explicit
- create mode 100644 t/t4018/csharp-method-generics
- create mode 100644 t/t4018/csharp-method-modifiers
- create mode 100644 t/t4018/csharp-method-multiline
- create mode 100644 t/t4018/csharp-method-params
- create mode 100644 t/t4018/csharp-method-skip-body
- create mode 100644 t/t4018/csharp-method-special-chars
- create mode 100644 t/t4018/csharp-method-with-spacing
- create mode 100644 t/t4018/csharp-property
-
-diff --git a/t/t4018/csharp-method b/t/t4018/csharp-method
-new file mode 100644
-index 00000000000..85ff0cb8b5b
---- /dev/null
-+++ b/t/t4018/csharp-method
-@@ -0,0 +1,10 @@
-+class Example
-+{
-+	string Method(int RIGHT)
-+	{
-+		// Filler
-+		// Filler
-+		
-+		return "ChangeMe";
-+	}
-+}
-diff --git a/t/t4018/csharp-method-explicit b/t/t4018/csharp-method-explicit
-new file mode 100644
-index 00000000000..083aa094ce2
---- /dev/null
-+++ b/t/t4018/csharp-method-explicit
-@@ -0,0 +1,12 @@
-+using System;
-+
-+class Example : IDisposable
-+{
-+	void IDisposable.Dispose() // RIGHT
-+	{
-+		// Filler
-+		// Filler
-+		
-+		// ChangeMe
-+	}
-+}
-diff --git a/t/t4018/csharp-method-generics b/t/t4018/csharp-method-generics
-new file mode 100644
-index 00000000000..c472d4a18df
---- /dev/null
-+++ b/t/t4018/csharp-method-generics
-@@ -0,0 +1,11 @@
-+class Example<T1, T2>
-+{
-+	Example<int, string> Method<TA, TB>(TA RIGHT, TB b)
-+	{
-+		// Filler
-+		// Filler
-+		
-+		// ChangeMe
-+		return null;
-+	}
-+}
-diff --git a/t/t4018/csharp-method-modifiers b/t/t4018/csharp-method-modifiers
-new file mode 100644
-index 00000000000..f1c008a4749
---- /dev/null
-+++ b/t/t4018/csharp-method-modifiers
-@@ -0,0 +1,13 @@
-+using System.Threading.Tasks;
-+
-+class Example
-+{
-+	static internal async Task Method(int RIGHT)
-+	{
-+		// Filler
-+		// Filler
-+		
-+		// ChangeMe
-+		await Task.Delay(1);
-+	}
-+}
-diff --git a/t/t4018/csharp-method-multiline b/t/t4018/csharp-method-multiline
-new file mode 100644
-index 00000000000..0a20b0cb49c
---- /dev/null
-+++ b/t/t4018/csharp-method-multiline
-@@ -0,0 +1,10 @@
-+class Example
-+{
-+	string Method_RIGHT(
-+		int a,
-+		int b,
-+		int c)
-+	{
-+		return "ChangeMe";
-+	}
-+}
-diff --git a/t/t4018/csharp-method-params b/t/t4018/csharp-method-params
-new file mode 100644
-index 00000000000..18598449008
---- /dev/null
-+++ b/t/t4018/csharp-method-params
-@@ -0,0 +1,10 @@
-+class Example
-+{
-+	string Method(int RIGHT, int b, int c = 42)
-+	{
-+		// Filler
-+		// Filler
-+		
-+		return "ChangeMe";
-+	}
-+}
-diff --git a/t/t4018/csharp-method-skip-body b/t/t4018/csharp-method-skip-body
-new file mode 100644
-index 00000000000..c8c9621634d
---- /dev/null
-+++ b/t/t4018/csharp-method-skip-body
-@@ -0,0 +1,112 @@
-+using System.Linq;
-+using System;
-+
-+class Example : IDisposable
-+{
-+	string Method(int RIGHT)
-+	{
-+		// Method calls
-+		MethodCall();
-+		MethodCall(1, 2);
-+		MethodCall(
-+			1, 2);
-+		
-+		// Assignments
-+		var constantAssignment = "test";
-+		var methodAssignment = MethodCall();
-+		var multiLineMethodAssignment = MethodCall(
-+			);
-+		
-+		// Initializations/disposal
-+		new Example();
-+		new Example(
-+			);
-+		new Example { };
-+		using (this) 
-+		{
-+		}
-+		var def =
-+			this is default(
-+				Example);
-+		
-+		// Iteration statements
-+		do { } while (true);
-+		do MethodCall(
-+			); while (true);
-+		while (true);
-+		while (true) {
-+			break;
-+		}
-+		for (int i = 0; i < 10; ++i)
-+		{
-+		}
-+		foreach (int i in Enumerable.Range(0, 10))
-+		{
-+		}
-+		int[] numbers = [5, 4, 1, 3, 9, 8, 6, 7, 2, 0];
-+		
-+		// Control
-+		if (false)
-+		{
-+			return "out";
-+		}
-+		else { }
-+		if (true) MethodCall(
-+			);
-+		else MethodCall(
-+			);
-+		switch ("test")
-+		{
-+			case "one":
-+				return MethodCall(
-+					);
-+			case "two":
-+				break;
-+		}
-+		(int, int) tuple = (1, 4);
-+		switch (tuple)
-+		{
-+			case (1, 4):
-+				MethodCall();
-+		}
-+		
-+		// Exceptions
-+		try
-+		{
-+			throw new Exception("fail");
-+		}
-+		catch (Exception)
-+		{
-+		}
-+		finally
-+		{
-+		}
-+		try { } catch (Exception) {}
-+		try
-+		{
-+			throw GetException(
-+				);
-+		}
-+		catch (Exception) { }
-+		
-+		// Others
-+		lock (this)
-+		{
-+		}
-+		unsafe
-+		{
-+			byte[] bytes = [1, 2, 3];
-+			fixed (byte* pointerToFirst = bytes)
-+			{
-+			}
-+		}
-+		
-+		return "ChangeMe";
-+	}
-+	
-+	public void Dispose() {}
-+	
-+	string MethodCall(int a = 0, int b = 0) => "test";
-+	Exception GetException() => new Exception("fail");
-+	int[] Numbers() => [0, 1];
-+}
-diff --git a/t/t4018/csharp-method-special-chars b/t/t4018/csharp-method-special-chars
-new file mode 100644
-index 00000000000..ec3565fd000
---- /dev/null
-+++ b/t/t4018/csharp-method-special-chars
-@@ -0,0 +1,11 @@
-+class @Some_Type
-+{
-+	@Some_Type @Method_With_Underscore(int RIGHT)
-+	{
-+		// Filler
-+		// Filler
-+		
-+		// ChangeMe
-+		return new @Some_Type();
-+	}
-+}
-diff --git a/t/t4018/csharp-method-with-spacing b/t/t4018/csharp-method-with-spacing
-new file mode 100644
-index 00000000000..4143929a711
---- /dev/null
-+++ b/t/t4018/csharp-method-with-spacing
-@@ -0,0 +1,10 @@
-+class Example
-+{
-+		string   Method 	( int 	RIGHT )
-+	{
-+		// Filler
-+		// Filler
-+		
-+		return "ChangeMe";
-+	}
-+}
-diff --git a/t/t4018/csharp-property b/t/t4018/csharp-property
-new file mode 100644
-index 00000000000..1792117f964
---- /dev/null
-+++ b/t/t4018/csharp-property
-@@ -0,0 +1,11 @@
-+class Example
-+{
-+	public bool RIGHT
-+    {
-+        get { return true; }
-+        set
-+        {
-+            // ChangeMe
-+        }
-+    }
-+}
-diff --git a/userdiff.c b/userdiff.c
-index e399543823b..5a9e8a0ef55 100644
---- a/userdiff.c
-+++ b/userdiff.c
-@@ -89,12 +89,18 @@ PATTERNS("cpp",
- 	 "|\\.[0-9][0-9]*([Ee][-+]?[0-9]+)?[fFlL]?"
- 	 "|[-+*/<>%&^|=!]=|--|\\+\\+|<<=?|>>=?|&&|\\|\\||::|->\\*?|\\.\\*|<=>"),
- PATTERNS("csharp",
--	 /* Keywords */
--	 "!^[ \t]*(do|while|for|if|else|instanceof|new|return|switch|case|throw|catch|using)\n"
--	 /* Methods and constructors */
--	 "^[ \t]*(((static|public|internal|private|protected|new|virtual|sealed|override|unsafe|async)[ \t]+)*[][<>@.~_[:alnum:]]+[ \t]+[<>@._[:alnum:]]+[ \t]*\\(.*\\))[ \t]*$\n"
-+	 /*
-+	  * Jump over keywords not used by methods which can be followed by parentheses without special characters in between,
-+	  * making them look like methods.
-+	  */
-+	 "!(^|[ \t]+)(do|while|for|foreach|if|else|new|default|return|switch|case|throw|catch|using|lock|fixed)([ \t(]+|$)\n"
-+	 /* Methods/constructors:
-+	  * the strategy is to identify a minimum of two groups (any combination of keywords/type/name),
-+	  * without intermediate or final characters which can't be part of method definitions before the opening parenthesis.
-+	  */
-+	 "^[ \t]*(([][[:alnum:]@_<>.,]*[^=:{ \t][ \t]+[][[:alnum:]@_<>.,]*)+\\([^;]*)$\n"
- 	 /* Properties */
--	 "^[ \t]*(((static|public|internal|private|protected|new|virtual|sealed|override|unsafe)[ \t]+)*[][<>@.~_[:alnum:]]+[ \t]+[@._[:alnum:]]+)[ \t]*$\n"
-+	 "^[ \t]*((([][[:alnum:]@_<>.,]+)[ \t]+[][[:alnum:]@_]*)+[^=:;,()]*)$\n"
- 	 /* Type definitions */
- 	 "^[ \t]*(((static|public|internal|private|protected|new|unsafe|sealed|abstract|partial)[ \t]+)*(class|enum|interface|struct|record)[ \t]+.*)$\n"
- 	 /* Namespace */
-
-base-commit: f41f85c9ec8d4d46de0fd5fded88db94d3ec8c11
--- 
-gitgitgadget
+[1] <https://public-inbox.org/git/
+     98548a5b-7d30-543b-b943-fd48d8926a33@gmail.com/>
