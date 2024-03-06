@@ -1,171 +1,166 @@
-Received: from mail-lf1-f52.google.com (mail-lf1-f52.google.com [209.85.167.52])
+Received: from mail-wm1-f41.google.com (mail-wm1-f41.google.com [209.85.128.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 127A017F5
-	for <git@vger.kernel.org>; Wed,  6 Mar 2024 02:57:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E606E179B5
+	for <git@vger.kernel.org>; Wed,  6 Mar 2024 05:44:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709693863; cv=none; b=X/CLhFVvgTtum5MboPcS6Dd7Xz8lU0wGS3o8JY6oeFEh4MskG5/WTRG90Fx4MymrqoP/dQxXzNEII29iAUX3+T/9WR/Y1+EMgSsgm0/HpxiGPDh6v1I86qtWE59OJY70oII9hZaCQozi3Dw1OMcoWsyuwOiV0jy0gIX2z8LtxoQ=
+	t=1709703863; cv=none; b=bp3uW4McaPLEKFUNPeZAAGqLVz5b+7xSra64sA3zMm+EycSY4fkJHboxjNLgkwZrj9cq5U6sIpW+vvT1GLKx7yl9DiRqRDLX7tNWHvrA9oiepoDAFPwOz7UbjgBmUEjWiK3QO7llWgm07DupJztACjjwr6n1mProh2/CmTrCtFA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709693863; c=relaxed/simple;
-	bh=hBSvVxHfGzlLisincQE4zlS06Rh98W0H6v7zLqsax3Q=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=QZXv7lRP1bjkEbdCfvvAnmtZwolMzUFbWPGPFb7C+9EcnpDS8JWm2a+pn6EesxN1fhvpa9+KIff2PO4tfm+CGt3PqqfuZqc68I6tyvQdExcO9iKIpsfFcunklut5VIB3MOQETnlg5lYnmbh6ByISALMSsyx90DX7NK6aIp1SYA8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=d/uDDPug; arc=none smtp.client-ip=209.85.167.52
+	s=arc-20240116; t=1709703863; c=relaxed/simple;
+	bh=0kE/Ig7ZbXYIzvxqPR0AvJympt4qG5icgy6YEWqO4XI=;
+	h=Message-ID:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=kYgNU6DjmA7aY0Q3/wHRcIADdSSdjwTPwu0GPAGJWKmDXl6S7hH/F2OgKHQbnxEAyGPktwra09B76jwfg99vhNueUFxwoWREYtYtcu5IInhB4jY35sAKou+sU31a5B3s3s8Yr9M7mMhRDmS0hQxX7oEoA6ASlNgyzO3lec2edsA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=BCJZyUsT; arc=none smtp.client-ip=209.85.128.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="d/uDDPug"
-Received: by mail-lf1-f52.google.com with SMTP id 2adb3069b0e04-512e4f4e463so7131114e87.1
-        for <git@vger.kernel.org>; Tue, 05 Mar 2024 18:57:40 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BCJZyUsT"
+Received: by mail-wm1-f41.google.com with SMTP id 5b1f17b1804b1-412e0feb40eso22433285e9.2
+        for <git@vger.kernel.org>; Tue, 05 Mar 2024 21:44:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1709693859; x=1710298659; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1709703859; x=1710308659; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=OKVoxa7AjNeozeZLDsNfpz5rBeEkKtNGTsxBlAaLB/0=;
-        b=d/uDDPugOlzQpMkRUK6ylD7oaxvmVZVauIA8hSiVyW/dQ/KAGTzg3TEPWwGz/AfC+z
-         zVAyGTT7/Z2t6v5Vz+9gDtejl8q8irZnDqfRcFlB58lXT3bW5FpLh/TlNJ5oqnqlqPaG
-         oTiu6T/wAgF+2KTKwfwOC8TiiFP1hne+nP1x+xRZDyF4RiYlXqzfzuXlp7B/DM01LcyV
-         fEfmT6ILEC+K3DDlvu72V0qkOeHqfQvWfju3BS52LR27vHEiznyPMH9WQ8UCYCJDIXFS
-         YUNNXFGFLXco6wRTGbsEeVH+1HBKNC8OGkoJAT3vhouiEhi2DHRuAuVN4xGaZGgJnphm
-         a2Zw==
+        bh=4pJ0oKFdT8Oy44kHn0T9YDt2NGNNtJteskApSllNkd0=;
+        b=BCJZyUsTmuwOCPwyCs0XDEfKCNx8gvQ1L8RwPJedSEJqCH1106kUGKds919JmB8Gs/
+         hBwuuWSqXTf5WGyMaD9+MHk5hicY2JG+4IzfVJPEByw2FHL5WocSWrOhlXL44L5Gzv9g
+         0SXchB4eHAvnh3jSBGTqSBYiQiGPRRGN0wSIL5BTAATW6XXWYX213IWMaFAyGrzGzXI1
+         iw1Kc5cKDBHgWeA6IWoPNUPlnD/zMDVQ8hJkOHf5K1Mn4ftIoHaPDx66It0EeoJ75Xe1
+         di4IRDtiRm6nKesNk535XRL/21HqP1E77ndbRBJ2h6k9UtISiY4lKGi/oyydVSXQoa9M
+         BHag==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1709693859; x=1710298659;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+        d=1e100.net; s=20230601; t=1709703859; x=1710308659;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=OKVoxa7AjNeozeZLDsNfpz5rBeEkKtNGTsxBlAaLB/0=;
-        b=PPO4S5lmazgAhLQ9mGRKP/lD0xsoV1y13SzuKV5kW8JqaJs0/tNzKYZY/o6H6BJmGU
-         I/ikmUH/gNl+rsreb675kIGtWOHsCzDh95nzQaplSTnnTj9zZnCIZj4y1M2nIvbNcRnW
-         J17t0GfBcr2I6NRJOxziHk7gbc4EO9jFd1fD9+uhYNA4nePnEEdjHM8dH3tGuKnGliX5
-         oauPEBV54mOkSsJKCYuWun8i6rq15G6YjtBSu9+U8kMTlU/a/UKzS30eo1DE1GoUQouB
-         bV/0HeX2FZsgy29Z04X76KEd5jCBiJ4YfiLNmLFX/xBquh+bAnCsaITKe6BAPB8dGxb5
-         Mz6A==
-X-Forwarded-Encrypted: i=1; AJvYcCUxuMA8Qi+PEiKfYOXYkSBRS6LNbsWA4NdlHwq5gQIF1P6I6YtKYNEa0DpNAcHgd95T5bA0uXOVbXjXgAxAlZU5/lk2
-X-Gm-Message-State: AOJu0Yypoguw0shr+KYviXCMZLq/jHWoRZzAbX9RkKq/UajRul33xK2N
-	Bl23hXLO+GKvdcY3Ne92EvnGGnKFT+G/mgIucAttCcc0iPmiskUcY9fE8BO4yUYcLLszj4idv30
-	mLmH55QeCPlRtln4lrYtZaH2BUMU=
-X-Google-Smtp-Source: AGHT+IHFLs840MHiNE1PjI/le0lWrcZh/y+ipIxkqYdFbVbPnlrvd2mtzreDKArPGxKD1Z7Ive05MpKhKjcc062y6Vg=
-X-Received: by 2002:a05:6512:b83:b0:513:3d35:bef6 with SMTP id
- b3-20020a0565120b8300b005133d35bef6mr3426912lfv.51.1709693858709; Tue, 05 Mar
- 2024 18:57:38 -0800 (PST)
+        bh=4pJ0oKFdT8Oy44kHn0T9YDt2NGNNtJteskApSllNkd0=;
+        b=Ae1zxVvZvc0LaL7/oQqOHFUtTNAS3ypZwXYXKpMuBk0ofFAzVH1xa4n5OmRClEQEbb
+         byM1+fzmh1RGoU1qN6ol3dSrt3tvexTxGp2+2wOssf6kcuMqoXxgoy1O5pCNk7CDUev/
+         sdqdzDRJAmq8KkhyFwWoxCCpahNv/JgkiLf2WPN1wrRA8VWeikKZ3kpsJ719HJ4lZLV4
+         SYKZmRHMzNzZ1kpDIK7F2CFEVaoRPowerqXyIRw5A6LCOKJ7LFD7CbQkKvnSvu1eliMc
+         B5nxrKZB36sgPGI++nOoNna+0xn8S+EoKiW5Al8Ud+MsCLRqnSp5by1NaikZE6r1m6z2
+         v/lw==
+X-Gm-Message-State: AOJu0Yx0kb8wYSeM/Kq0zcvmt2k1gjoC4bJLYTn99DDfkELfkvERktou
+	n8EErghJqded8qeDzd7Oi+4nwDByI39Pn6QukA/6toYBSxg04JQNbkgDDf8p
+X-Google-Smtp-Source: AGHT+IGS/r8BA+JgRk71HTQP2LH+MZiErR4VkNKmb+/qPwYEJMpdWrp8/qPrA+hTJ7kilCTGbQZfQA==
+X-Received: by 2002:a5d:5750:0:b0:33d:1145:8787 with SMTP id q16-20020a5d5750000000b0033d11458787mr9533528wrw.25.1709703859294;
+        Tue, 05 Mar 2024 21:44:19 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id bp22-20020a5d5a96000000b0033e56f97129sm632637wrb.32.2024.03.05.21.44.18
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 05 Mar 2024 21:44:18 -0800 (PST)
+Message-ID: <pull.1663.v4.git.git.1709703857881.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1663.v3.git.git.1708841439516.gitgitgadget@gmail.com>
+References: <pull.1663.v3.git.git.1708841439516.gitgitgadget@gmail.com>
+From: "Haritha  via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Wed, 06 Mar 2024 05:44:17 +0000
+Subject: [PATCH v4] build: support z/OS (OS/390).
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <adb7f680-5bfa-6fa5-6d8a-61323fee7f53@haller-berlin.de>
- <354f9fed-567f-42c8-9da9-148a5e223022@haller-berlin.de> <xmqqsf144pi7.fsf@gitster.g>
-In-Reply-To: <xmqqsf144pi7.fsf@gitster.g>
-From: Elijah Newren <newren@gmail.com>
-Date: Tue, 5 Mar 2024 18:57:26 -0800
-Message-ID: <CABPp-BGO2ftEMHJDrf6yg3J4AfpKn=rpf_5Wt_WAS+Hi70KqPQ@mail.gmail.com>
-Subject: Re: Should --update-refs exclude refs pointing to the current HEAD?
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Stefan Haller <lists@haller-berlin.de>, git@vger.kernel.org, 
-	Derrick Stolee <derrickstolee@github.com>, Phillip Wood <phillip.wood123@gmail.com>, 
-	Christian Couder <christian.couder@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+To: git@vger.kernel.org
+Cc: Haritha D <Harithamma.D@ibm.com>,
+    Ghanshyam Thakkar <shyamthakkar001@gmail.com>,
+    rsbecker@nexbridge.com,
+    Haritha  <harithamma.d@ibm.com>,
+    Haritha D <harithamma.d@ibm.com>
 
-[Restoring part of Stefan's earlier message so I can respond to both
-that piece, as well as add to the ideas Junio presents.]
+From: Haritha D <harithamma.d@ibm.com>
 
-Hi,
+Introduced z/OS (OS/390) as a platform in config.mak.uname
 
-On Tue, Mar 5, 2024 at 8:22=E2=80=AFAM Junio C Hamano <gitster@pobox.com> w=
-rote:
->
-> Stefan Haller <lists@haller-berlin.de> writes:
->
-> >> And I now see that "git replay --contained --onto" has the same proble=
-m,
-> >> which I find very unfortunate. In my opinion, "contained" should only
-> >> include refs that form a stack, but not copies of the current branch.
+Signed-off-by: Haritha D <harithamma.d@ibm.com>
+---
+    This PR enables a successful git build on z/OS.
+    
+    Introduced z/OS (OS/390) as a platform in config.mak.uname
 
-I wouldn't want to change the default.  Even if we were to add an
-option, I'm not entirely sure what it should even implement.  In
-addition to Phillip's previous response in the thread, and part of
-Junio's response below (which I'll add to):
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1663%2FHarithaIBM%2Fzos-v4
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1663/HarithaIBM/zos-v4
+Pull-Request: https://github.com/git/git/pull/1663
 
-1) What if there is a branch that is "just a copy" of one of the
-branches earlier in the "stack"?  Since it's "just a copy", shouldn't
-it be excluded for similar reasons to what you are arguing?  And, if
-so, which branch is the copy?
+Range-diff vs v3:
 
-2) Further, a "stack", to me at least, suggests a linear history
-without branching (i.e. each commit has at most one parent _and_ at
-most one child among the commits in the stack).  I designed `git
-replay` to handle diverging histories (i.e. rebasing multiple branches
-that _might_ share a subset of common history but none necessarily
-need to fully contain the others, though perhaps the branches do share
-some other contained branches), and I want it to handle replaying
-merges as well.  While `git rebase --update-refs` is absolutely
-limited to "stacks", and thus your argument might make sense in the
-context of `git rebase`, since you are bringing `git replay` into the
-mix, it needs to apply beyond a stack of commits.  It's not clear to
-me how to genericize your suggestions to handle cases other than a
-simple stack of commits, though.
+ 1:  2f1ad41bc14 ! 1:  cbc38a801e9 build: support z/OS (OS/390).
+     @@ Metadata
+       ## Commit message ##
+          build: support z/OS (OS/390).
+      
+     -    Since the z/OS linker does not support searching dynamic libraries,
+     -    and the current setting of CC_LD_DYNPATH results in a directory
+     -    to be supplied to the link step with no option as the suffix,
+     -    it causes a linker error because the z/OS LD linker
+     -    does not accept directories as input.
+     -    Therefore, -L option is added.
+     -    Also introduced z/OS (OS/390) as a platform in config.mak.uname
+     +    Introduced z/OS (OS/390) as a platform in config.mak.uname
+      
+          Signed-off-by: Haritha D <harithamma.d@ibm.com>
+      
+     @@ config.mak.uname: ifeq ($(uname_S),NONSTOP_KERNEL)
+       	SHELL_PATH = /usr/coreutils/bin/bash
+       endif
+      +ifeq ($(uname_S),OS/390)
+     -+        NO_SYS_POLL_H = YesPlease
+     -+        NO_STRCASESTR = YesPlease
+     -+        NO_REGEX = YesPlease
+     -+        NO_MMAP = YesPlease
+     -+        NO_NSEC = YesPlease
+     -+        NO_STRLCPY = YesPlease
+     -+        NO_MEMMEM = YesPlease
+     -+        NO_GECOS_IN_PWENT = YesPlease
+     -+        HAVE_STRINGS_H = YesPlease
+     -+       NEEDS_MODE_TRANSLATION = YesPlease
+     ++	NO_SYS_POLL_H = YesPlease
+     ++	NO_STRCASESTR = YesPlease
+     ++	NO_REGEX = YesPlease
+     ++	NO_MMAP = YesPlease
+     ++	NO_NSEC = YesPlease
+     ++	NO_STRLCPY = YesPlease
+     ++	NO_MEMMEM = YesPlease
+     ++	NO_GECOS_IN_PWENT = YesPlease
+     ++	HAVE_STRINGS_H = YesPlease
+     ++	NEEDS_MODE_TRANSLATION = YesPlease
+      +endif
+       ifeq ($(uname_S),MINGW)
+       	ifeq ($(shell expr "$(uname_R)" : '1\.'),2)
 
-3) This is mostly covered in (1) and (2), but to be explicit: `git
-replay` is completely against the HEAD-is-special assumptions that are
-pervasive within `git rebase`, and your problem is entirely phrased as
-HEAD-is-special due to your call out of "the current branch".  Is your
-argument limited to such special cases?  (If so, it might still be
-valid for `git rebase`, of course.)
 
-4) Aren't there easier ways to handle this -- for both rebase and
-replay?  I'll suggest some alternatives below...
+ config.mak.uname | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
-> >> Both of these cases could be fixed by --update-refs not touching any
-> >> refs that point to the current HEAD. I'm having a hard time coming up
-> >> with cases where you would ever want those to be updated, in fact.
->
-> The point of "update-refs", as I understand it, is that in addition
-> to the end point of the history (E in "git rebase --onto N O E"),
-> any branch tips that are between O..E can be migrated to point at
-> their rewritten counterparts.  So I am not sure how it fundamentally
-> solves much by protecting only refs that point at a single commit
-> ("the current HEAD" in your statement).
->
-> When I want to see how the rebased history would look like without
-> touching the original, I often rebase a detached HEAD (i.e. instead
-> of the earlier one, use "git rebase --onto N O E^0", or when
-> rebasing the current branch, "git rebase [--onto N] O HEAD^0") and
-> that would protect the current branch well, but --update-refs of
-> course would not work well.  There is no handy place like detached
-> HEAD that can be used to save rewritten version of these extra
-> branch tips.
->
-> If branch tips A, B, and C are involved in the range of commits
-> being rewritten, one way to help us in such a situation may be to
-> teach "git rebase" to (1) somehow create a new set of proposed-A,
-> proposed-B, and proposed-C refs (they do not have to be branches),
-> while keeping the original A, B, and C intact, (2) allow us to
-> inspect the resulting refs, compare the corresponding ones from
-> these two sets, and (3) allow us to promote (possibly a subset of)
-> proposed- ones to their counterpart real branches after we inspect
-> them.  The latter two do not have to be subcommands of "git rebase"
-> but can be separate and new commands.
+diff --git a/config.mak.uname b/config.mak.uname
+index dacc95172dc..d0dcca2ec55 100644
+--- a/config.mak.uname
++++ b/config.mak.uname
+@@ -638,6 +638,18 @@ ifeq ($(uname_S),NONSTOP_KERNEL)
+ 	SANE_TOOL_PATH = /usr/coreutils/bin:/usr/local/bin
+ 	SHELL_PATH = /usr/coreutils/bin/bash
+ endif
++ifeq ($(uname_S),OS/390)
++	NO_SYS_POLL_H = YesPlease
++	NO_STRCASESTR = YesPlease
++	NO_REGEX = YesPlease
++	NO_MMAP = YesPlease
++	NO_NSEC = YesPlease
++	NO_STRLCPY = YesPlease
++	NO_MEMMEM = YesPlease
++	NO_GECOS_IN_PWENT = YesPlease
++	HAVE_STRINGS_H = YesPlease
++	NEEDS_MODE_TRANSLATION = YesPlease
++endif
+ ifeq ($(uname_S),MINGW)
+ 	ifeq ($(shell expr "$(uname_R)" : '1\.'),2)
+ 		$(error "Building with MSys is no longer supported")
 
-Here, Junio is suggesting one alternative, and it's already
-implemented in `git replay`.  Let me extend upon it and add two other
-alternatives as well:
-
-4a) `git replay` does what Junio suggests naturally, since it doesn't
-update the refs but instead gives commands which can be fed to `git
-update-ref --stdin`.  Thus, users can inspect the output of `git
-replay` and only perform the updates they want (by feeding a subset of
-the lines to update-ref --stdin).
-
-4b) For `git replay`, --contained is just syntactic sugar -- it isn't
-necessary.  git replay will allow you to list multiple branches that
-you want replayed, so you can specify which branches are relevant to
-you.  (This doesn't help with `git rebase`, because `--update-refs` is
-the only way to get additional branches replayed.)
-
-4c) For `git rebase --update-refs`, you can add `--interactive` and
-then delete the `update-ref` line(s) corresponding to the refs you
-don't want updated.
+base-commit: b387623c12f3f4a376e4d35a610fd3e55d7ea907
+-- 
+gitgitgadget
