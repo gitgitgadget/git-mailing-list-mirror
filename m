@@ -1,146 +1,110 @@
-Received: from ra.horus-it.com (ra.horus-it.com [65.108.3.114])
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A368F1369B7
-	for <git@vger.kernel.org>; Wed,  6 Mar 2024 17:25:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=65.108.3.114
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AF6E132C36
+	for <git@vger.kernel.org>; Wed,  6 Mar 2024 17:27:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709745915; cv=none; b=HxZ1n73mvQ+gn0wDBVUAflpbGhDjf3CgJVWd4hxO8xfTa7XEewU6DRMMGDGMu14CI/PJmrr+7Uj83LAx4DzZnfN+yy715qfyD0KOBuFDzcCflqlGAe2zg2Dn3oY8HlLYyJ3Wx8NHfFRHgaFmFFTYxQCwluTtxk173+dGuzWP/h4=
+	t=1709746030; cv=none; b=Al71fi8ShIDEGfa15XK8aRqY9oOn4ZoGreL+PM8Elq44pZE9E5Nxi/R3glfkfjRoN9Ppv2vB34c2FxYBhZ/kKDeVMS+gVAVPIkDumg6+ZgP2s9yfpDRt3TkWacyB/L6GGO9OBLOTUJvNcfh2z77JVGCdZ3EB5izyf5fCo6iz4mA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709745915; c=relaxed/simple;
-	bh=HnRV/1NlT0mT3C/rGLa5QJ6UND0ilB1wDA0CPF7/KBs=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=M/9/zKEG3jStYIkN1/2GAFIUQi4FFPHyu+KNLgECz5qr4WtQL9XHrCedOFVKdzaHN/aAWxlvFnTchUdBuJgCbcNjqvQ0W4cjfxMkqYR6rU2fokTfPzOr+MrfBIqsXkhRPnDL4H01e8xPOpROSEmmztmMfU5b956qzaKRgooP+Js=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=seichter.de; spf=pass smtp.mailfrom=seichter.de; dkim=pass (2048-bit key) header.d=seichter.de header.i=@seichter.de header.b=ast9Kip3; arc=none smtp.client-ip=65.108.3.114
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=seichter.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=seichter.de
+	s=arc-20240116; t=1709746030; c=relaxed/simple;
+	bh=oRIAUPIQq42OdwjlO3grA60VqkYJc22u37r8EXZ6xng=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=K21C48fWTLmVBkzhvRhS7vPGxKqqBUWu7ICxJOOC2zoKrLaGpLDUEI8EGmlGFXndnXKsHhCBuKeozrBOegnOGyObeuRIjPutX8LwXB1DRyjMZ/ShbzJ+79PbBUQHwwNZPEtIUYAJR8fk6plBd6AzJ4jvG95iox1gj0mp0NRbyBo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=nhpvFYAJ; arc=none smtp.client-ip=64.147.108.70
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=seichter.de header.i=@seichter.de header.b="ast9Kip3"
-Received: from localhost (localhost [127.0.0.1])
-	by ra.horus-it.com (Postfix) with ESMTP id DE044BE0038;
-	Wed,  6 Mar 2024 18:24:59 +0100 (CET)
-X-Virus-Scanned: at horus-it.com
-Received: from [IPV6:2003:e2:d711:e600:65d5:d70:a603:789d] (p200300e2d711e60065d50d70a603789d.dip0.t-ipconnect.de [IPv6:2003:e2:d711:e600:65d5:d70:a603:789d])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (secp384r1) server-digest SHA384
-	 client-signature RSA-PSS (2048 bits) client-digest SHA256)
-	(Client CN "Ralph Seichter", Issuer "HORUS-IT Ralph Seichter - Primary Client CA" (verified OK))
-	by ra.horus-it.com (Postfix) with ESMTPSA id 87D00BE002A;
-	Wed,  6 Mar 2024 18:24:59 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=seichter.de; s=k23;
-	t=1709745899; bh=be2MmisGgNPxEjpo+NaKKQtScVuwWmcOGoUFX5yngfE=;
-	h=Message-ID:Date:User-Agent:Subject:To:References:Content-Language:
-	 From:In-Reply-To:Content-Type;
-	b=ast9Kip3NlmFiCSqyys2OPcMf9Nlm3DINPKLcB3B2+mDEmLkS1CIZwlp9ZCgm8Icw
-	 k+SMP8omnVZYJp4sUkEC3XKoblHZHIA1md2mOXT/BRAF8nnzsqsNLBDem8uPo3oD2U
-	 KPc1oj/YszRc+dN/vsWoIKNn8O+DYhD6vTbJmYFNw9VsVUbbbp95GhVMd21uiJDCAx
-	 byxR2yV9jRNSzXorlJQBg0OMTg8Wgp0DdaZAJJJagNLOHAJdBG7QaqAQMlejZTnc+p
-	 LMCxjGW4sRG4/zOm2H9t4CuHX4ZW/5pJ6kIZZdJC1PfRd1h1jh3Crow6TR0/hDW1zq
-	 IuTP+TGZuV50Q==
-Message-ID: <2560952c-4495-4a71-9497-aa40032e1d2b@seichter.de>
-Date: Wed, 6 Mar 2024 18:24:56 +0100
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="nhpvFYAJ"
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id DF1851E428C;
+	Wed,  6 Mar 2024 12:27:07 -0500 (EST)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=oRIAUPIQq42OdwjlO3grA60VqkYJc22u37r8EX
+	Z6xng=; b=nhpvFYAJ0W+QQSX6jx+BE/4nO4krlS5SBLr/29b5C4FW6qHCKdj9H5
+	y4ocV8mvua9uZRkQXisSF0ULrnpLQfMEw9O6s34ZK9SDWjocWUUTN6u5lbVyhbI8
+	GNYSqOeAJP4xbOfTOl5nrck24jmviWquLBY24ht9gUNl6cgeLs9sM=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id D54A91E428B;
+	Wed,  6 Mar 2024 12:27:07 -0500 (EST)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.185.65])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 277861E428A;
+	Wed,  6 Mar 2024 12:27:07 -0500 (EST)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Kyle Lippincott via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Kyle Lippincott <spectral@google.com>
+Subject: Re: [PATCH] setup: allow cwd=.git w/ bareRepository=explicit
+In-Reply-To: <pull.1645.git.1705709303098.gitgitgadget@gmail.com> (Kyle
+	Lippincott via GitGitGadget's message of "Sat, 20 Jan 2024 00:08:22
+	+0000")
+References: <pull.1645.git.1705709303098.gitgitgadget@gmail.com>
+Date: Wed, 06 Mar 2024 09:27:05 -0800
+Message-ID: <xmqqv85zqniu.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] Allow git-config to append a comment
-To: Junio C Hamano <gitster@pobox.com>,
- Ralph Seichter via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org
-References: <pull.1681.git.1709532018372.gitgitgadget@gmail.com>
- <xmqqttljtkn4.fsf@gitster.g>
-Content-Language: en-GB
-From: Ralph Seichter <github@seichter.de>
-In-Reply-To: <xmqqttljtkn4.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ C190F24C-DBDE-11EE-8E55-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
 
-* Junio C Hamano:
+"Kyle Lippincott via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
- > Make sure your title will mix well in "git shortlog --no-merges"
- > output from recent commits by other contributors.
+> Teach git to not reject uses of git inside of the .git directory: check
+> if cwd is .git (or a subdirectory of it) and allow it even if
+> safe.bareRepository=explicit.
 
-Thank you for your in-depth comment. This is the first time I have
-ever considered contributing to Git, so I have a lot to learn. My pull
-request [1] on GitGitGadget has been approved by Johannes Schindelin,
-by the way, and the PR is based on an issue Johannes created [2] after
-a brief discussion him and I had on Discord [3]. I have updated the
-subject line, as you suggested.
+> diff --git a/setup.c b/setup.c
+> index b38702718fb..b095e284979 100644
+> --- a/setup.c
+> +++ b/setup.c
+> @@ -1371,7 +1371,8 @@ static enum discovery_result setup_git_directory_gently_1(struct strbuf *dir,
+>  
+>  		if (is_git_directory(dir->buf)) {
+>  			trace2_data_string("setup", NULL, "implicit-bare-repository", dir->buf);
+> -			if (get_allowed_bare_repo() == ALLOWED_BARE_REPO_EXPLICIT)
+> +			if (get_allowed_bare_repo() == ALLOWED_BARE_REPO_EXPLICIT &&
+> +			    !ends_with_path_components(dir->buf, ".git"))
+>  				return GIT_DIR_DISALLOWED_BARE;
+>  			if (!ensure_valid_ownership(NULL, NULL, dir->buf, report))
+>  				return GIT_DIR_INVALID_OWNERSHIP;
 
-   [1] https://github.com/gitgitgadget/git/pull/1681
-   [2] https://github.com/gitgitgadget/git/issues/1680
-   [3] https://discord.com/channels/1042895022950994071/1213052410281467906
+I wish we had caught it much before we added DISALLOWED_BARE thing,
+but I wonder how well would this escape-hatch interact with
+secondary worktrees, where their git directory is not named ".git"
+and not immediately below the root level of the working tree?
 
-I don't know if it is the polite thing to ask you to please refer to
-the information I linked, or if I should duplicate the information
-here? The short version is that I need to be able to distinguish
-between config entries made by automation (like scripts, or Ansible
-in my particular case) and those made by a human.
+In a secondary worktree the root level of its working tree has a
+file ".git", whose contents may look like
 
- >> git config --comment "I changed this. --A. Script" \
- >>   --add safe.directory /home/alice/somerepo.git
- >
- > If you are illustrating a sample input, please also explain what
- > output it produces. What do the resulting lines in the config file
- > look like after you run this command?
+    gitdir: /home/gitster/git.git/.git/worktrees/git.old
 
-The result of running the above command looks as follows:
+where
 
-   [safe]
-	directory = /home/alice/somerepo.git #I changed this. --A. Script
+ - /home/gitster/git.git/ is the primary worktree with the
+   repository.
 
- > Why are you adding "# comment" to your config file? Who reads these
- > comments, with what tool, and for what purpose?
+ - /home/gitster/git.git/.git/worktrees/git.old looks like a bare
+   repository.
 
-I mentioned human-readable comments in the patch, and humans are
-indeed the intended audience. If a human finds changes made to a Git
-config file, and a comment states that the modification was e.g. made
-by automation, it adds beneficial information for said human. I can for
-example create a comment with a URL pointing to a website providing
-additional explanations.
+ - /home/gitster/git.git/.git/worktrees/git.old/gitdir gives a way
+   to discover the secondary worktree, whose contents just records
+   the path to the ".git" file, e.g., "/home/gitster/git.old/.git"
+   that had "gitdir: ..." in it.
 
- > Now how do we find out about this comment? "git config -l" would
- > not give us that. Are we expected to look at it in our editor or
- > pager?
+So perhaps we can also use the presence of "gitdir" file, check the
+contents of it tn ensure that ".git" file there takes us back to
+this (not quite) bare repository we are looking at, and allow access
+to it, or something?
 
-Yes. I routinely use cat/vim to inspect/modify my Git config
-files. They are suitable for human consumption, after all. Also,
-comments can already be manually added in creative ways, and are
-ignored when Git reads config data. Comments being read only by
-humans is pretty much their whole point, in my opinion.
+Thoughts?
 
- > Can we come up with a code that reliably decides when to remove the
- > first comment we see above?
-
-Your examples about difficulties removing comments hinge on there
-being multiline comments, as far as I can tell. My patch only supports
-single-line comments, and only as a suffix to newly added key-value
-pairs. This is a deliberate design choice.
-
- > The above is an illustration of what I want to see the author, who
- > comes up with this "wouldn't it be wonderful to teach git-config to
- > add comment?" idea, thinks through. The first patch might be to
- > just add a comment when a variable=value is added, but we want to
- > see the vision of how the whole end-user experience should look
- > like, in which this first small piece will fit.
-
-I don't have a greater vision for comments. Their use is to provide
-information for humans, no more, no less. There is also no idea of a
-user experience beyond pager/editor in my mind. The patch addresses
-specific needs of mine, and Johannes suggested it as a new feature,
-and that's all the motivation behind it.
-
- > And the amount of the change required for that tiny bit of
- > "improvement" (if we can call it, which is dubious) does not seem
- > worth it.
-
-As I mentioned in my PR, it also does not seem elegant to me to modify
-so many files. Alas, C does not offer expanding function signatures by
-adding parameters with default values, like Python does. Adding a new
-function like, perhaps, git_config_set_in_file_gently_with_comment()
-could be a remedy?
-
--Ralph
