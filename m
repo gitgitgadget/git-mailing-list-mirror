@@ -1,109 +1,98 @@
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oo1-f47.google.com (mail-oo1-f47.google.com [209.85.161.47])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E75B5C615
-	for <git@vger.kernel.org>; Wed,  6 Mar 2024 16:10:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10A00135A51
+	for <git@vger.kernel.org>; Wed,  6 Mar 2024 16:13:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709741430; cv=none; b=R4tKLQLwLHS0BojOXO9oH9cy6acVYo9EeUZ3Ds+TojwPt1HtpqIqF15kNVz3p/x1n460tAzqlWUiKVvUuf29HbZzpXX963abTPhxdjrSc0ko6jIXOpxGr5l7UAS/n9U8I/drVZAMj9UPUzYkXfYOXnmTwguhd15jrYw+0brmFG0=
+	t=1709741624; cv=none; b=OuIq/dY8JJZLlkrwG35OQGGF0yl8xLBKm+Ha8zepxEZnjlVvb4gQGSZDi75lRPCrYjVlFVUK1WWtxis9m2o6c8E8/+OWXYvd0cMTfcKwvUmEHEeTGrwAB9teM6/oYWM9zSUe/255iCNKnFxrawLZYcVDg9G1wdttaaZ9Vnp7wmY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709741430; c=relaxed/simple;
-	bh=9PQUM8t+h905GnzgFbrUhYuZwupVqkun7lYLcODeFVg=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=P2oYlUOPfQ8x/bWT0QRlQA1LZWeCf2XMOMlOnjUVmmlS9x5YfJLkjqZikLAbhorr3EZOiaau0W4GY/7uw+m08lxqRKSOYa8DpvFmWlmryDq5yDZqDTuOczBEwdNoFGdL94orJeUcdekJZ960JQenad09myF9dC8kLhJaVwYBPDs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=vVwyAV1s; arc=none smtp.client-ip=173.228.157.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1709741624; c=relaxed/simple;
+	bh=xBvyjPkdB/EXZ7XsF/HCERJtuMdzYPfV7swgjETuYjU=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Content-Type; b=NjZcwN651qXyY9+UFea6gPJ99SPvj4Vpx6/475Y5RlP+O+JKvEnCrz5y7+HUpczk9fjWW6yUVF4MuSYgjErWQqU8PeU3IyB25v6bgNdC4rCdhpPQ5j3oKluzXM/eePsITHLAPmeurVRik9pItJu1lt6k1/Mwf1bfCePe8UfaFc0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Iw4Z53cM; arc=none smtp.client-ip=209.85.161.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="vVwyAV1s"
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id B02C51E42F;
-	Wed,  6 Mar 2024 11:10:28 -0500 (EST)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=9PQUM8t+h905GnzgFbrUhYuZwupVqkun7lYLcO
-	DeFVg=; b=vVwyAV1sASePifrDJNzGFyz2vBTbxRTCDqiiHALNb1WCMw97aH5fEj
-	4MA5QmyvYfhUTMcjn6kFXPiLl7fryAZs1p4TQ0KnwiCYiUS6emP1Hf9wayor1hMa
-	zgWlwwj3h9o3xe8SCZcUkT4Fw4vlHtQOPWzsjXxgUQfGEXQE/M44I=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id A77541E42E;
-	Wed,  6 Mar 2024 11:10:28 -0500 (EST)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.185.65])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 310721E42D;
-	Wed,  6 Mar 2024 11:10:25 -0500 (EST)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Haritha via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Haritha D <Harithamma.D@ibm.com>,  Ghanshyam
- Thakkar <shyamthakkar001@gmail.com>,  rsbecker@nexbridge.com
-Subject: Re: [PATCH v4] build: support z/OS (OS/390).
-In-Reply-To: <pull.1663.v4.git.git.1709703857881.gitgitgadget@gmail.com>
-	(Haritha via GitGitGadget's message of "Wed, 06 Mar 2024 05:44:17
-	+0000")
-References: <pull.1663.v3.git.git.1708841439516.gitgitgadget@gmail.com>
-	<pull.1663.v4.git.git.1709703857881.gitgitgadget@gmail.com>
-Date: Wed, 06 Mar 2024 08:10:23 -0800
-Message-ID: <xmqqle6vtk7k.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Iw4Z53cM"
+Received: by mail-oo1-f47.google.com with SMTP id 006d021491bc7-5a159bd0cd2so398681eaf.1
+        for <git@vger.kernel.org>; Wed, 06 Mar 2024 08:13:42 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1709741622; x=1710346422; darn=vger.kernel.org;
+        h=to:subject:message-id:date:mime-version:references:in-reply-to:from
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=xBvyjPkdB/EXZ7XsF/HCERJtuMdzYPfV7swgjETuYjU=;
+        b=Iw4Z53cMZHvPiEOdW3x6y8a+eALVrT/tilFNfT1aBwDJ/laLYWra8b0ylOXUR0CI6v
+         vq/EXTxzm1K7J++iZ6guUkhyL4Mm18PE+0OEaEczldF+hkDBGAA4Q9S/5W8YpEW/9oBG
+         F6BhbWEOudcEFXA5WvA3kMGno8cIj6+qrwg/alscLCGkUSfxeIRCHyHn751Yg13fGRTB
+         X5lOvOVHQY1vvTlzhfdJThzSp2oIADMKhLKc4HlLF4JN/NcPBPE0QxCuTTIP3SBLXCmr
+         fFMm6xruk0aTBEJIEdPNpRFaxaKHBB8pKcvcXvheQuJdLFwSjZ14XUwrPgtIKG+lvKvr
+         604w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1709741622; x=1710346422;
+        h=to:subject:message-id:date:mime-version:references:in-reply-to:from
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=xBvyjPkdB/EXZ7XsF/HCERJtuMdzYPfV7swgjETuYjU=;
+        b=ipY3LEHfwtGCLvSvfEovNKJEd6GANdIhR2pWgrzzka0cMCcY4rCuidVIRniqZEfWpY
+         WThJ4NuaZHzQpM7wdhNkfOkmG98f9eSWCb1CCPc8N44VAAN0Q4/14NWgzyiFzwyJivkG
+         2NWgxikoz8RG+od1G15Im/kO7MOcneR6w7boad7Qui5EpaS5zTPieJJFY9IDmi1R96sx
+         5s4UowEdHzJKO26tREwiWIK8ybUHCLolp363Pvgq5NAhLVIIh+OCU91j+mU2ZvFOQXkb
+         vDPBi4rJuYcBwd+oeTl2KFGU74k8LtYSbrfMI0qc/7+khLGRwNxF37mvrKyBIj6xFtdc
+         ZN5Q==
+X-Forwarded-Encrypted: i=1; AJvYcCVBjDhgGD56/cgtJ8/iv0274/n3IdbQe29PHxUGYENlEN2nYH3DCL4s4zwVyD7ypVSAFN+Di+LEZqXnnkOPFJzd+Z+s
+X-Gm-Message-State: AOJu0YzqhlUTfQeTs6YvKUjXuBQDRN9NSHT69b03cqV2a9ampoHxUTdU
+	Zt1Nes4B3R5R155mOPIVtJxItFrPK/RT/ajf/EBRGbIg9brGzO7QGQKQ8m8mdxx2Jhjm1l1pM3L
+	WK5ztc03NNW80ChfA8Vrz3+vFuq2m7/iBrGo=
+X-Google-Smtp-Source: AGHT+IHKB6/RwwxGS8I3DnP3znjpGulvsOpHzlx+bWM4Zyzt7HccccEqQZEXVWq7ly6WlLXsoZ1Axx2Dspa0+S/ejH0=
+X-Received: by 2002:a05:6870:b018:b0:21a:2be7:65de with SMTP id
+ y24-20020a056870b01800b0021a2be765demr2564586oae.21.1709741620481; Wed, 06
+ Mar 2024 08:13:40 -0800 (PST)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Wed, 6 Mar 2024 08:13:39 -0800
+From: Karthik Nayak <karthik.188@gmail.com>
+In-Reply-To: <b0414221ecad1920c84f4ab498e55edec57f06b6.1709640322.git.ps@pks.im>
+References: <cover.1709640322.git.ps@pks.im> <b0414221ecad1920c84f4ab498e55edec57f06b6.1709640322.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- 0A954D72-DBD4-11EE-BC40-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
+Date: Wed, 6 Mar 2024 08:13:39 -0800
+Message-ID: <CAOLa=ZRQ6sYLBqjWiMXGS7rcv8pJ7jSEneiJ8ZcHtALrrcwMeg@mail.gmail.com>
+Subject: Re: [PATCH 1/7] refs/reftable: reload correct stack when creating
+ reflog iter
+To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
+Content-Type: multipart/mixed; boundary="000000000000f264e30613003ddd"
 
-"Haritha  via GitGitGadget" <gitgitgadget@gmail.com> writes:
+--000000000000f264e30613003ddd
+Content-Type: text/plain; charset="UTF-8"
 
-> From: Haritha D <harithamma.d@ibm.com>
->
-> Introduced z/OS (OS/390) as a platform in config.mak.uname
->
-> Signed-off-by: Haritha D <harithamma.d@ibm.com>
-> ---
->     This PR enables a successful git build on z/OS.
+Patrick Steinhardt <ps@pks.im> writes:
 
-Good.
+> When creating a new reflog iterator, we first have to reload the stack
+> that the iterator is being created. This is done so that any concurrent
 
->  config.mak.uname | 12 ++++++++++++
->  1 file changed, 12 insertions(+)
->
-> diff --git a/config.mak.uname b/config.mak.uname
-> index dacc95172dc..d0dcca2ec55 100644
-> --- a/config.mak.uname
-> +++ b/config.mak.uname
-> @@ -638,6 +638,18 @@ ifeq ($(uname_S),NONSTOP_KERNEL)
->  	SANE_TOOL_PATH = /usr/coreutils/bin:/usr/local/bin
->  	SHELL_PATH = /usr/coreutils/bin/bash
->  endif
-> +ifeq ($(uname_S),OS/390)
-> +	NO_SYS_POLL_H = YesPlease
-> +	NO_STRCASESTR = YesPlease
-> +	NO_REGEX = YesPlease
-> +	NO_MMAP = YesPlease
-> +	NO_NSEC = YesPlease
-> +	NO_STRLCPY = YesPlease
-> +	NO_MEMMEM = YesPlease
-> +	NO_GECOS_IN_PWENT = YesPlease
-> +	HAVE_STRINGS_H = YesPlease
-> +	NEEDS_MODE_TRANSLATION = YesPlease
-> +endif
+Nit: s/created./created for.
 
-I somehow expected you to throw in the -L thing in this block,
-perhaps like
+--000000000000f264e30613003ddd
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: b5ace808b6b8618c_0.1
 
-	CC_LD_DYNPATH =
-
-to help those who are on OS/390 but do not run configure (made from
-configure.ac) to create the config.mak.autogen file, but if you are
-always building with configure and not testing such a configuration,
-then doing so and shipping an untested code would not be prudent, so
-let's accept this patch as-is.
-
-Thanks for working on this.  Will queue.
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1Yb2xqRVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mMWFuQy85NWFoM04zS091V3AzNDRKQWw2eE9wVzR0awpNMzV2eTBtKzMx
+LzU0bE5VSUhMRHpPWURBdEs4d2ZxTW5teHpjYWFUMFg3TkV5Z3Zrbnl6QjZ3WUZxRkJRbmZFCktG
+a2x2SGY5MlNCQ2dJNllOQnp1ZUErZ1lyM0VpUXNtcnpKMHVCTUhGK3JpSlBiand1cU1SUURxUnZs
+b0Vlc3AKalFxMmNNaFVwS2lOYUVNTFdsSHVtZ2o0bXYxaEhVdDA0cjVlSDdKL3R5SjRNeXM4QzVv
+L2xQVnBiazZxZkpnKwozUlFxbXM3TWExYUlyRzJxQXdXSCttMjRPcEx2VEV4SDJoYmtwbWR0Wmlh
+MXpyL0NJb051azNEc1Z1eTRlOERRCmJ1d0U2NndITkRSTmkwNHRKbFN2Y3R1eXZIc2FEWnN0MzRn
+elVpLzRnYTNTd3RkdWVyZDU0QThyd295ckFncCsKMUkxdVNtbEhmZVExK3JVdG45enY5ZDZhRXdY
+L0NNdC90am9oT3RWemdNUkJSNTRoVGRoWVgvOWRNbTcwRng2Mwp0V1J6QkJERkpGUnZmU3BlbXMv
+U0VlL2ZJSXVRaEZHM3ZwZVphc1V4aW0vTkhSTnYxaUtDWUlvUkRpT1JZT2w2Ck1aeTVLcHpXa2pU
+OEVnRm5ybStOOHRsWUhFcXhwUFBncTE2Z3lIbz0KPURPR2YKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--000000000000f264e30613003ddd--
