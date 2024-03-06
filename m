@@ -1,58 +1,50 @@
 Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F009605DC
-	for <git@vger.kernel.org>; Wed,  6 Mar 2024 16:59:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB70E137935
+	for <git@vger.kernel.org>; Wed,  6 Mar 2024 17:06:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709744364; cv=none; b=HquIx1BUCFDCydSnFV1c12P+FolZRT/QoXBkWAyT9hvnFQOK+dgxY7AtnEgsaSjiGfdIhmxK8UUD2wSQgT4X9rUJ4s/K68kP6RO0w5MwSI2y6Egy+4ERQTjNjAlXifColLHvs/9CudgS7xmkgerRhVm4OPg0Ggaxf32b9dAjnVY=
+	t=1709744773; cv=none; b=EcTbVynk+41WEKO+PfL8qk+ELAao2cKerHMkkTYcQ8z49H9yEphat156xma+i0/Ywt3a5/IctoKoU+2ffOTF4HNnFbYmEGCQ/bOd9j8D5A+msucmLFXmVlbUuH7QLwaAxOvPz0pfQRpKbp7133f3mAwiVxpsmODe+yjPBtZME6w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709744364; c=relaxed/simple;
-	bh=XS/mb30qaLlZA9IsDnA45hoJG8CQjBqgZcTvEURK4Wc=;
+	s=arc-20240116; t=1709744773; c=relaxed/simple;
+	bh=ZHTOs9NdQsysacYq7ivIWWJM884R8WUcnR4wdx10h/o=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=nsDMivZT2KrS0Z5YsRON00zvt6xZzgmCEdzxD3EgIt565izgwE5mFXbKq4GHME1IT58JIieYz/oOuELRyjYa/yy2FkqauI3i/PbhyYeDd4Rja/yPF7IrSxXb3Mgl5HmbxNaOn/hap5YIa8STwXHnRNUaLlwhdd+HuKYnEru1Uu4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=CZDNTQP5; arc=none smtp.client-ip=64.147.108.70
+	 MIME-Version:Content-Type; b=uFUkwK5QfZStdyWkBrS6JYDIg0KsCMtLG+CVlWJZovbTAVrmSJqt1Kavz0L6EP6RNfJU0RvS9pMR9tAZvOJn+Ezijr/QohwtgJwFLXAxS1x6CnIf8cwmz6CnKhlNmfFmcWjVrohtHmfq3DrD6GY3KCDtkw0R4T+YJkXqQO3Rdag=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=ANqtWbXr; arc=none smtp.client-ip=64.147.108.70
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="CZDNTQP5"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="ANqtWbXr"
 Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id E53EE1E3EA9;
-	Wed,  6 Mar 2024 11:59:21 -0500 (EST)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id CFAC11E3F88;
+	Wed,  6 Mar 2024 12:06:09 -0500 (EST)
 	(envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=XS/mb30qaLlZ
-	A9IsDnA45hoJG8CQjBqgZcTvEURK4Wc=; b=CZDNTQP5Xy0U1SUg3SLAJ9NsWGEr
-	CosskD68WPI5fCiM80jl5aK9KXH6Z77Puz+dElSgJ/MxlLPblRb2I79tx0gqe8bf
-	zQRFEQSS6gAXl5YYfDMJ1psrafRpuvC4pUckUKvfwtaXTeo+PAMXBAkwfPfGDm7r
-	4scpwiyrV9uyF5U=
+	:content-type; s=sasl; bh=ZHTOs9NdQsysacYq7ivIWWJM884R8WUcnR4wdx
+	10h/o=; b=ANqtWbXrNOJ4b4XeKcHu0AuWeFDY7wJDWSR07INzVYITnEcZyb98Ap
+	VFWVh/pKFokGwOlJyQNo4TXCrMHMN3ny2Yurc6UXDRagOyFbTRSVaU3XgwTFs/dF
+	Yj+n6M3UIPb6Ij68CHbU3IX8gidnpQOPdb2GaC8HsLrTGprxixb68=
 Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id DC26A1E3EA8;
-	Wed,  6 Mar 2024 11:59:21 -0500 (EST)
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id C6FCC1E3F87;
+	Wed,  6 Mar 2024 12:06:09 -0500 (EST)
 	(envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.125.185.65])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 55F691E3EA7;
-	Wed,  6 Mar 2024 11:59:21 -0500 (EST)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 323E71E3F86;
+	Wed,  6 Mar 2024 12:06:09 -0500 (EST)
 	(envelope-from junio@pobox.com)
 From: Junio C Hamano <gitster@pobox.com>
-To: Christian Couder <christian.couder@gmail.com>
-Cc: Josh Steadmon <steadmon@google.com>,  Linus Arver via GitGitGadget
- <gitgitgadget@gmail.com>,  git@vger.kernel.org,  Christian Couder
- <chriscool@tuxfamily.org>,  Emily Shaffer <nasamuffin@google.com>,
-  "Randall S. Becker" <rsbecker@nexbridge.com>,  Kristoffer Haugsbakk
- <code@khaugsbakk.name>,  Linus Arver <linusa@google.com>
-Subject: Re: [PATCH v6 0/9] Enrich Trailer API
-In-Reply-To: <CAP8UFD1Zd+9q0z1JmfOf60S2vn5-sD3SafDvAJUzRFwHJKcb8A@mail.gmail.com>
-	(Christian Couder's message of "Wed, 6 Mar 2024 15:41:16 +0100")
-References: <pull.1632.v5.git.1708124950.gitgitgadget@gmail.com>
-	<pull.1632.v6.git.1709252086.gitgitgadget@gmail.com>
-	<xmqq5xy036a2.fsf@gitster.g> <Zedtd6esmIgayeoU@google.com>
-	<CAP8UFD1Zd+9q0z1JmfOf60S2vn5-sD3SafDvAJUzRFwHJKcb8A@mail.gmail.com>
-Date: Wed, 06 Mar 2024 08:59:20 -0800
-Message-ID: <xmqqplw7s3dj.fsf@gitster.g>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 0/8] builtin/config: introduce subcommands
+In-Reply-To: <cover.1709724089.git.ps@pks.im> (Patrick Steinhardt's message of
+	"Wed, 6 Mar 2024 12:31:30 +0100")
+References: <cover.1709724089.git.ps@pks.im>
+Date: Wed, 06 Mar 2024 09:06:08 -0800
+Message-ID: <xmqqil1zs327.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -60,26 +52,40 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain
 X-Pobox-Relay-ID:
- E0AAA550-DBDA-11EE-922C-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
-Content-Transfer-Encoding: quoted-printable
+ D3C42BBC-DBDB-11EE-B392-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
 
-Christian Couder <christian.couder@gmail.com> writes:
+Patrick Steinhardt <ps@pks.im> writes:
 
-> On Tue, Mar 5, 2024 at 8:07=E2=80=AFPM Josh Steadmon <steadmon@google.c=
-om> wrote:
->>
->> On 2024.03.05 10:03, Junio C Hamano wrote:
->> >
->> > It's been nearly a week since this was posted.  Any more comments,
->> > or is everybody happy with this iteration?  Otherwise I am tempted
->> > to mark the topic for 'next' soon.
->> >
->> > Thanks.
->>
->> I scanned through v6 yesterday and have nothing new to add. LGTM.
+>   - `git config foo.bar` -> `git config get foo.bar`
 >
-> I took another look at it, and I am fine with it now too. Acked.
+>   - `git config foo.bar value` -> `git config set foo.bar value`
 
-Thanks.
+I actually have been perfectly OK with the above two, but I agree
+that ...
+
+>   - `git config foo.bar value value-pattern` -> `git config set-all
+>     foo.bar value value-pattern`
+
+... this was less than discoverable, and would be a good update.
+This one ...
+
+>   - `git config --get-urlmatch` -> `git config get-urlmatch`.
+
+... is a Meh to me, personally.  I'd not actively push it
+enthusiastically, but I'd passively accept its existence.
+
+> Most importantly, this should help discoverability quite a lot by now
+> also having a proper synopsis in both the manpage, but also in `git
+> config -h`.
+>
+> Of course, backwards compatibility is a big concern. We don't want to
+> just switch over to the new syntax and break all existing scripts and
+> muscle memory. This patch series thus abuses the fact that the implicit
+> modes (`git config foo.bar`, `git config foo.bar value` and `git config
+> foo.bar value value-pattern`) all require a key as first argument. As
+> keys _must_ have a dot, this allows us to unambiguously discern those
+> from actual subcommands.
+
+Clever ;-).
