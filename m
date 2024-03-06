@@ -1,109 +1,88 @@
-Received: from mail-ej1-f48.google.com (mail-ej1-f48.google.com [209.85.218.48])
+Received: from mail-ej1-f52.google.com (mail-ej1-f52.google.com [209.85.218.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78AD11BDD3
-	for <git@vger.kernel.org>; Wed,  6 Mar 2024 14:25:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC1C5131759
+	for <git@vger.kernel.org>; Wed,  6 Mar 2024 14:41:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709735151; cv=none; b=UZwK5DhDh7FjORGXbypskqQ2Gx+HfKBTSYwFsmAX562f9RbdgDmlm6g97U2vUnsKKQfsHcEeS5zAAXIA0wvpp9R1KvtfVCdyfgWi9mUIENdf54Qh5wTZv0MQXw8OFxfGZmRQLx6CnAb7rwtJ88EE6MImWxO2AqHOwGsJpEox58g=
+	t=1709736093; cv=none; b=Y+i8yPqvdhOHGGYjRhRz5+BDWvQsZNhKvxiqxfkSnnyMEYVbSuFK1T494PtPY65V0XyHLuHfYT+jPRaw6z3rY+CC+Kdd6aE8ehvy6V8DTwiDHx9hjcGG7U1NXl0d0iECInk4hM8z+ENSZW9N3x4GN7un7bVH8/mc4dAowGSh4dA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709735151; c=relaxed/simple;
-	bh=pDx1Smwcq7AZltMhOv5jqZ4qwIyUyc+d3/7lN4xXzlk=;
+	s=arc-20240116; t=1709736093; c=relaxed/simple;
+	bh=42hnCcEakg2QxhaqiZvNtijCrAdlpSQ1CmdYJoniSSU=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=GkQOX4BbdLx3mmuBtBTgT2hceLmEpQ2R8PGgM6iXrELfgxGGF4v5A5qY37G5M+ETHPol1L/5w71BJJZwtxMEN2TiQGD3R/+I4ZrrCiYGrK1GZXR7KfgtslOCbGueflxTB9Z+0XiFwmi7/EYh3VdWVHtq8ENtx6OC/355yYdGoKw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RUvbFrRT; arc=none smtp.client-ip=209.85.218.48
+	 To:Content-Type; b=T+j4NJHPQK8vOY2RisvuAVA3z5S+q0NMoBqg0+IcFAlEgOk6/T0VP0gC0z+z5LHSZqVVnTeb1cVHw1ub75zmBRpJT0xmKbZzLoAQoBA5NJo9T+3feyTWD42OClF0QSz3GqnFr8YCwFtf5vOWBJFBAGFaRMtFRvTCJ5m5B2MEU9g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=F7yFn/0v; arc=none smtp.client-ip=209.85.218.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RUvbFrRT"
-Received: by mail-ej1-f48.google.com with SMTP id a640c23a62f3a-a450bedffdfso455692866b.3
-        for <git@vger.kernel.org>; Wed, 06 Mar 2024 06:25:49 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="F7yFn/0v"
+Received: by mail-ej1-f52.google.com with SMTP id a640c23a62f3a-a26ed1e05c7so1154214966b.2
+        for <git@vger.kernel.org>; Wed, 06 Mar 2024 06:41:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1709735148; x=1710339948; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+        d=gmail.com; s=20230601; t=1709736089; x=1710340889; darn=vger.kernel.org;
+        h=content-transfer-encoding:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=gsJ/mVOCta/fK+wzT6k5EBvKkMwsUgV8P08pJxAPpdA=;
-        b=RUvbFrRTa8oFYlQpqF2k6CTTZx+jqgnEEN8Z/6wPXn/qw7EnvPVcPjJt2P4ffbKbdF
-         iJrgkFF5Ape4N50E0JxJ1p44rG3yWFsfvMPzLZYADTKkLPRrwBCmO+p2+TbWphBKJykt
-         4qCdmBD3IDKTDQDmdOaALD64J4ry8v7mu8zW0q3yckI+0rhsn6eSVKLPzrmMk2npt6mt
-         BQdbEQlVk28oKeWlhAZYALJ9ChFDLVWTzyWx0cBBBzQ8v09h6gDh5yEFOHxeOyt9wQMq
-         Za+pI3ALdvi62+9lrNfaFd7o3rX1k5arRX0mgqhR0WxgRqVRG5bBthzuYTk49hjprE2W
-         +5gg==
+        bh=TgfEOqFrBntI7cXTi8KjV6/WAjtQRTbW+4TRhg14n+M=;
+        b=F7yFn/0vYtPq68+2TUtKOoUt8GXyyz0hxz6f3YrIp8DPGO2TSp2e6eFaI0y2Idefr/
+         6mnstBZULi/MPtGfRU9EFXkyeFIWO0ZMtOijCI1ysT/NtfhEeh9Um+yh1E+9r+th+bqc
+         nVnj2Q7YeY/lEO/TrtuljvQ31QZzFStiU9jv9jKyhTK49fz+EV0wQIkSIuo1VLW/pYgc
+         DkBZhavbRKnXZBb7ObvUKIr+ZmMmqrzGBHs+lZ0Z9q66hItfWSZMSZYW8eLA3QloG+jB
+         2klzHhikK0LIbndpTtrgymNVyhsTFPUUZbncG4Prc5Gt6Ge+W403DMJcwKQ2RBnNbBMl
+         SCyw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1709735148; x=1710339948;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+        d=1e100.net; s=20230601; t=1709736089; x=1710340889;
+        h=content-transfer-encoding:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=gsJ/mVOCta/fK+wzT6k5EBvKkMwsUgV8P08pJxAPpdA=;
-        b=Lqz+DS4E6sDnbyZ6KchY7Tec7IAsrR6yahtpUIpUpADwXZ0YF7WSeFWfaAPikJ6244
-         bDJgaeUUG4i9mjngORsBDDd7wWqxVOBRHZ/dvOP5JOyGpyFxx4uTfTPEfYE84u4SRIkB
-         wuvuD4UNZi9jOLEIO7XFwBZEXDlwyf8xWOPsxjHYsQAMXo3092TW6WGDc4Qbx84OjnpG
-         JM3pyDh4z0dfCzfcnPUndrRWCRMFcUWsCUFA6VmVXX3T8E8js3jOhu51ld9iUQRN0+vI
-         Qh9U04uBODcFhCcmCqIXK/7CnJEaYmYFuapGo96DUp27eTluioK4AusJAbDJB0dp873h
-         DaAw==
-X-Gm-Message-State: AOJu0YxnZNPnBE9YXMa4zEvLINxl+EVQQM7SacmTmmX2Xdag8FFCmOp1
-	91QR3pnL7XGhqpCKpE5PGcCoC/BpYmetVD+sI+9ND7x+IAfkq+BaoCYttQUZtzcVmUalNC0ij/0
-	99JebMVyX0KIq2K9S6/O9T0Er5e8=
-X-Google-Smtp-Source: AGHT+IEkh0iq5mjsQKk8zpfswl5OtrVMccLHMq9iNysFAGdIXmcvoz4udJbrpbOm9O4EGvW0LZsimo4ZLW8EyRUeHg4=
-X-Received: by 2002:a17:906:2548:b0:a43:7ea2:a289 with SMTP id
- j8-20020a170906254800b00a437ea2a289mr9551444ejb.55.1709735147544; Wed, 06 Mar
- 2024 06:25:47 -0800 (PST)
+        bh=TgfEOqFrBntI7cXTi8KjV6/WAjtQRTbW+4TRhg14n+M=;
+        b=KSsbglVmq/EoQg+qPWjL/P+uZ9WR0yAuuVY0ZYQJkcZoxiV9TTAUMW9PfFttNBwYpV
+         g1hTowSdE2A0RIskVkYRlCqCd3cHwXRYKjjNeyplIoyx/QygxCUQ25JumncjpI6LzSKj
+         ljh9jju76G58os+lgQKp9aOBIlEMpOGHoMjicze+hqXwg2vr/FS6de4A0h2/ATPRwI/i
+         dOL+/s2viZ7cYN/OhUEE3UyyIhAUX0/l2ZcHVK0HtJQ2nRyE0rDb8vqA5pOKvuDmh5Rp
+         +34kc7RZ4fmMSa9gRiz7/vZBJ6p16CyKRQS64A2wwUE1AkxX/x2zOW4qA4QQ5+0hfOAm
+         U4IA==
+X-Forwarded-Encrypted: i=1; AJvYcCVbk9IkvBqpWuwILMUU6nJ+4WS7rTIuXjb1/dNhvUxocTfhtKkXERaj84fHUEFCxlX5bKvMZf36iNcIZkRMsd+U3SBs
+X-Gm-Message-State: AOJu0YxsoMuYcmSk7hZfQ4HV2X2MwY1/EZSqzT5TJqZxBV6UNZjFRQd/
+	XQa5u2I8tYgThBQGu3vIOi0nzPZLcqa4uF7y1ZbhHdoXKhMjFhbjsRb2ANzAlQoH+9lCHayFlXr
+	gEndwzyCnEqSYQQl0ag53ICaMRnWBOElR
+X-Google-Smtp-Source: AGHT+IFqJa6s3K0DQcWpr5S8q138G/n2If2xHct8zEK+zZOHINrFWYyjyW9Ay3mzRMik8iBd8/bEjeJ6opQpQXaOBck=
+X-Received: by 2002:a17:906:71c7:b0:a45:182e:29ba with SMTP id
+ i7-20020a17090671c700b00a45182e29bamr6587092ejk.30.1709736089084; Wed, 06 Mar
+ 2024 06:41:29 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240226143350.3596-1-ach.lumap@gmail.com> <20240229054004.3807-1-ach.lumap@gmail.com>
- <20240229054004.3807-2-ach.lumap@gmail.com>
-In-Reply-To: <20240229054004.3807-2-ach.lumap@gmail.com>
+References: <pull.1632.v5.git.1708124950.gitgitgadget@gmail.com>
+ <pull.1632.v6.git.1709252086.gitgitgadget@gmail.com> <xmqq5xy036a2.fsf@gitster.g>
+ <Zedtd6esmIgayeoU@google.com>
+In-Reply-To: <Zedtd6esmIgayeoU@google.com>
 From: Christian Couder <christian.couder@gmail.com>
-Date: Wed, 6 Mar 2024 15:25:35 +0100
-Message-ID: <CAP8UFD0y4fsi8fsVAwjMNdBwWMinL4=wQ=d1pNW1nr1OVkGwGQ@mail.gmail.com>
-Subject: Re: [Outreachy][PATCH v2 2/2] Port helper/test-sha256.c and
- helper/test-sha1.c to unit-tests/t-hash.c
-To: Achu Luma <ach.lumap@gmail.com>
-Cc: git@vger.kernel.org, chriscool@tuxfamily.org, gitster@pobox.com
+Date: Wed, 6 Mar 2024 15:41:16 +0100
+Message-ID: <CAP8UFD1Zd+9q0z1JmfOf60S2vn5-sD3SafDvAJUzRFwHJKcb8A@mail.gmail.com>
+Subject: Re: [PATCH v6 0/9] Enrich Trailer API
+To: Josh Steadmon <steadmon@google.com>, Junio C Hamano <gitster@pobox.com>, 
+	Linus Arver via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
+	Christian Couder <chriscool@tuxfamily.org>, Emily Shaffer <nasamuffin@google.com>, 
+	"Randall S. Becker" <rsbecker@nexbridge.com>, Christian Couder <christian.couder@gmail.com>, 
+	Kristoffer Haugsbakk <code@khaugsbakk.name>, Linus Arver <linusa@google.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Thu, Feb 29, 2024 at 6:41=E2=80=AFAM Achu Luma <ach.lumap@gmail.com> wro=
-te:
+On Tue, Mar 5, 2024 at 8:07=E2=80=AFPM Josh Steadmon <steadmon@google.com> =
+wrote:
 >
-> In the recent codebase update (8bf6fbd (Merge branch
-> 'js/doc-unit-tests', 2023-12-09)), a new unit testing framework was
-> merged, providing a standardized approach for testing C code. Prior to
-> this update, some unit tests relied on the test helper mechanism,
-> lacking a dedicated unit testing framework. It's more natural to perform
-> these unit tests using the new unit test framework.
+> On 2024.03.05 10:03, Junio C Hamano wrote:
+> >
+> > It's been nearly a week since this was posted.  Any more comments,
+> > or is everybody happy with this iteration?  Otherwise I am tempted
+> > to mark the topic for 'next' soon.
+> >
+> > Thanks.
 >
-> This commit migrates the unit tests for hash functionality from the
-> legacy approach using the test-tool command `test-tool sha1`and
-> `test-tool sha256` in helper/test-sha256.c and helper/test-sha1.c to the
-> new unit testing framework (t/unit-tests/test-lib.h). Porting
-> t0013-sha1dc.sh is left for later.
->
-> The migration involves refactoring the tests to utilize the testing
-> macros provided by the framework (TEST() and check_*()).
->
-> Mentored-by: Christian Couder <chriscool@tuxfamily.org>
-> Signed-off-by: Achu Luma <ach.lumap@gmail.com>
-> ---
->  The change between version 1 and version 2 is:
->  - Deleted t/helper/test-sha256.c
->
->  Here is a diff between v1 and v2:
+> I scanned through v6 yesterday and have nothing new to add. LGTM.
 
-When sending a patch series, even a small one, I think it's better to
-have a cover letter (using for example `git format-patch
---cover-letter ...`) and list all the changes from the previous
-version in the cover letter, rather than listing some changes in each
-patch. Also, instead of `git diff`, `git range-diff` can be used and
-its output can be put into the cover letter too.
-
-I don't think it's worth resending the series just for this though.
-
-Maybe I missed it but it seems that this patch and patch 1/2
-(https://lore.kernel.org/git/20240229054004.3807-1-ach.lumap@gmail.com/)
-in the series fell into the cracks.
+I took another look at it, and I am fine with it now too. Acked.
