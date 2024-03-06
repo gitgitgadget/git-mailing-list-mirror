@@ -1,94 +1,75 @@
-Received: from mail-wm1-f53.google.com (mail-wm1-f53.google.com [209.85.128.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B6E41CA84
-	for <git@vger.kernel.org>; Wed,  6 Mar 2024 23:51:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94FE11C28F
+	for <git@vger.kernel.org>; Wed,  6 Mar 2024 23:52:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709769098; cv=none; b=HpOfFInFw8xRVOULgfvbFj9cgZdmQ3Mg9o8xSIwloK12URmqdEZ4nxRSbhpw8He/1ktWKxXyDcDSXjkd+BeWlDqDydmBjmQBF6XexNl1mA1T1Lli/ACWoANZl0qlnFbRNadbZRjJGTLSIwmqTVlxoCAMel+pameIVbgRUdzaZbA=
+	t=1709769148; cv=none; b=OBfS20KcO5InxA8sqFMmjGug98evGaAz23ictC5H2nw9b3vhUcin6/caElOUutCs7PxiQdiMkEhUw2BwaHpS8LVYgmdmdiGmODvJffR3N4Za7N3mAHeOLFmoRowSPRMs1k0L6ht6stEG7kGl4wxkmvGzcIMllVLIJAQ1jTXwY1I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709769098; c=relaxed/simple;
-	bh=TBXe/18dpZe7px65ODpWJdztnLk7YbMGKN6PHtow2jA=;
-	h=Message-ID:Date:MIME-Version:To:From:Subject:Content-Type; b=qJo/U+gcEn+pWrdkKYir4wU6STZqAS65VOUzNFsZj8S463G1iaOGF7Ozxj5Z0rsNaWLLCCpj9vNVfXEWHcb2fVRZySiI7ZjjAtKcDnslO8KE348Ha83yMLoqsac311E1ShQ1Tipkox9qZTRmVd4Ab/jfoXpk/d3TBSUDngcOHtw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OF1ZQhm/; arc=none smtp.client-ip=209.85.128.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1709769148; c=relaxed/simple;
+	bh=opdclPBNna53mckK4KNh2xYGU6iwVJAVSixApmaR6ec=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=WrQg52d4VtSJ645cIH79GO6sia46TzbF/6MsCwo5nTvkOFBsGVxTHl5P56Gho0mv4EQmRAFSoISQvBcMZw/YKW/li1TG7biRQ9hqOm/vOEPA0bzlEcuG2bMgCi7Jc/KChzIDdL/pRn51XToy1RI7eZ06fEtbvHUOllinsJVhqiI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=eK1gjRzi; arc=none smtp.client-ip=64.147.108.70
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OF1ZQhm/"
-Received: by mail-wm1-f53.google.com with SMTP id 5b1f17b1804b1-412e80e13abso2788935e9.3
-        for <git@vger.kernel.org>; Wed, 06 Mar 2024 15:51:36 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1709769094; x=1710373894; darn=vger.kernel.org;
-        h=content-transfer-encoding:autocrypt:subject:from:content-language
-         :to:user-agent:mime-version:date:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=BQMsy6Q/97LbsfhRzdqnmjhrDeO/i1rXpdCPJ9SQjKs=;
-        b=OF1ZQhm/WkwYbtFGKKxfTh88E3Snp7Rt0mJzY+HXsbVN7ZbPsZM4zq8Hbr3d/00azO
-         obnNB+kwY6+MkyDM2qxij98wuEm+KauZ+qvAidy96Vzk6nVkI8R64qXyyy4jb8ewefbl
-         Eo3zXsrmtK624/wVDxBwyVQCwKDzuYoXqYlSdr0aXjWJpxk5MrqJFjIEGSHEK6NPOZ7p
-         NNItNgFOw9qNZbawXc5Pd2VP/KKQh9kP2XA7wnPh77jtSssLVqFZx/bb49utAybZh55S
-         j7RvcVNWZ61guthVdodmKw5trjaF1bf+75CdQlkGJS+7slsDv/m281l9PdQTHeWD2bac
-         PaxQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1709769094; x=1710373894;
-        h=content-transfer-encoding:autocrypt:subject:from:content-language
-         :to:user-agent:mime-version:date:message-id:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=BQMsy6Q/97LbsfhRzdqnmjhrDeO/i1rXpdCPJ9SQjKs=;
-        b=PLDDzj9RG+aNjNvxHz0aBGuUWiJDAv/yLXq5c+f/AgegDfqWLbBPfTkAydOdJDdaRk
-         JkQXQcFlHgyvgEJUhiKjivknvzzH+RdGf9xIdwu2oL8eKxXdkE2CXmOOqxKPscSQ+kB+
-         PBh3j2Qi3bsvqd36AoMNQbFYTbF/A+xVrQNycOzKWSwBdzsjo48CyotrqhmkUpRH/rUC
-         z/vPdA6NxiEy0R8O5/gcgjw3jWdPoJrLx51nc8AOX5x59BD4RG86mG38j9Fds8x4uFJx
-         z6q/jblf6Rkze3OxdXdfJICb//8kgFFPLXIogL1jGkYBbzPLPXOP8rrCk44rcNw9SN8c
-         f2Fg==
-X-Gm-Message-State: AOJu0Yz7S2gV9BiO+E/cHTAr+BLq902kmq7Y6rHfcGqCFZLc8EGcm3FZ
-	Jt8aJ1LzwSzRDtWhKo500weviuloQX/rb6wAZWa8U0au9uhHFEpgW5xke4rEZu4=
-X-Google-Smtp-Source: AGHT+IEP33y+0nHcij1uCZLcmszA7HlGzvI5pa5953Q3mQeKvQRKTC8YzJ7y/BzRwTJgylI65rGsAw==
-X-Received: by 2002:adf:e7c8:0:b0:33b:302:c08 with SMTP id e8-20020adfe7c8000000b0033b03020c08mr11020903wrn.43.1709769094166;
-        Wed, 06 Mar 2024 15:51:34 -0800 (PST)
-Received: from ?IPV6:2a0d:6fc2:4043:b200:e3b9:8eb:5df9:c0dc? ([2a0d:6fc2:4043:b200:e3b9:8eb:5df9:c0dc])
-        by smtp.gmail.com with ESMTPSA id f15-20020a05600c4e8f00b00412ea52b102sm705359wmq.34.2024.03.06.15.51.33
-        for <git@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 06 Mar 2024 15:51:33 -0800 (PST)
-Message-ID: <0d741b90-8307-40cf-b0b3-163203651a57@gmail.com>
-Date: Thu, 7 Mar 2024 01:51:32 +0200
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="eK1gjRzi"
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 632E11E726E;
+	Wed,  6 Mar 2024 18:52:25 -0500 (EST)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=opdclPBNna53mckK4KNh2xYGU6iwVJAVSixApm
+	aR6ec=; b=eK1gjRziijRbiF6NibzrfXVf2ZAXVl3SiSUx+x0PbLHK6/zNOHvBQh
+	DXmPXLTlDKVCOZZfz6F144TAQ+AZV5fZVO0utQjhE0uCnDQnVKfatXiewB3PtRQ+
+	E3B/1/MmZhTxqyOZITnzQcrMTatZlocXhImqvOq0O7l3+JjMTprLw=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 5B2281E726D;
+	Wed,  6 Mar 2024 18:52:25 -0500 (EST)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.185.65])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id BEF371E726B;
+	Wed,  6 Mar 2024 18:52:24 -0500 (EST)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Taylor Blau <me@ttaylorr.com>
+Cc: Patrick Steinhardt <ps@pks.im>,  git@vger.kernel.org
+Subject: Re: [PATCH 0/8] builtin/config: introduce subcommands
+In-Reply-To: <ZekAWSqr9qb8FIAD@nand.local> (Taylor Blau's message of "Wed, 6
+	Mar 2024 18:46:33 -0500")
+References: <cover.1709724089.git.ps@pks.im> <xmqqil1zs327.fsf@gitster.g>
+	<ZekAWSqr9qb8FIAD@nand.local>
+Date: Wed, 06 Mar 2024 15:52:23 -0800
+Message-ID: <xmqq1q8mq5oo.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-To: git@vger.kernel.org
-Content-Language: en-US
-From: Victor Porton <porton.victor@gmail.com>
-Subject: Bug in Git
-Autocrypt: addr=porton.victor@gmail.com; keydata=
- xjMEZOOrBhYJKwYBBAHaRw8BAQdA+hStwyhZdwm4hT+azNakoYWDX9HxrZHyIiWEnL6Dcz/N
- J1ZpY3RvciBQb3J0b24gPHBvcnRvbi52aWN0b3JAZ21haWwuY29tPsKJBBMWCAAxFiEETzWE
- FkGWX07H657ywr523wwCDrYFAmTjqwYCGwMECwkIBwUVCAkKCwUWAgMBAAAKCRDCvnbfDAIO
- thNnAP4iVDlJffm/rF+1VzXZQvkXX7dq/09Onpn97vmLd34oCwEA1ia66qtessxOTqW3pFTp
- fcXUF5iE2t5uY3DCFsZmUQrOOARk46sHEgorBgEEAZdVAQUBAQdA0H6hs3jIOz01tcCCrvyo
- FgZ/FXAAvFsjDgU6/ut6K3MDAQgHwngEGBYIACAWIQRPNYQWQZZfTsfrnvLCvnbfDAIOtgUC
- ZOOrBwIbDAAKCRDCvnbfDAIOtiA0AP48A0g4+DUzzMY8gs0rfrrosFeDOwQy/9vpuC7gZbmu
- 5QEAw/BykABCY/LkxC3PVqyYBZJKqfDx+wgAFHO5s1YKkgM=
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 94BD94C4-DC14-11EE-BD29-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
 
-Recently updated Ubuntu 23.10:
+Taylor Blau <me@ttaylorr.com> writes:
 
-I tried it several times - the same result.
+> I don't have strong feelings about this, but I wonder if `--urlmatch`
+> (or `--url-match`) might be an argument to the "get" mode of this
+> sub-command instead. Something like `git config get --urlmatch` feels
+> much more natural to me than `git config get-urlmatch`.
 
-$ git clone https://github.com/dfinity/motoko
-Cloning into 'motoko'...
-remote: Enumerating objects: 104759, done.
-remote: Counting objects: 100% (5702/5702), done.
-remote: Compressing objects: 100% (2333/2333), done.
-error: RPC failed; curl 92 HTTP/2 stream 5 was not closed cleanly: 
-CANCEL (err 8)
-error: 1600 bytes of body are still expected
-fetch-pack: unexpected disconnect while reading sideband packet
-fatal: early EOF
-fatal: fetch-pack: invalid index-pack output
+I like that, too.
 
+"--get-regexp" may also be a good candidate to be folded into the
+base verb "get", with "--regexp" option to tweak what kind of key is
+used.
+
+Could "--get-color" and "--get-colorbool" become verb "get" with
+"--type=color"?  The other parameters they get are somewhat
+different from "get", so that may not work very well, I guess.
