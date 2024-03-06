@@ -1,132 +1,460 @@
-Received: from mail-oo1-f50.google.com (mail-oo1-f50.google.com [209.85.161.50])
+Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C38513E7E9
-	for <git@vger.kernel.org>; Wed,  6 Mar 2024 19:58:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2131E140E47
+	for <git@vger.kernel.org>; Wed,  6 Mar 2024 20:21:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709755088; cv=none; b=Zvmo5pAD81XqSHvNh4IREAtIGNfpeGi9javqx10Jb7wyZrQmcc5jXKRLRz4FZSGOS2HkFlOND0cmb7HFJGJrhI5gYLbcu2UF24zRDLjXn5lcIZdefPVcniEDbbABbhhMB++3mVfbNUgPZe/3XtBbuslCH7MSGos4W6vwWN9g1wk=
+	t=1709756499; cv=none; b=aKNrgRxtLFygL/fReHEcUPDALVOwlJ5BLm2/pVJuhQncndWVAaVhgCcjk1GrKAE4+yyNvh1I05JhveP5vZsBnUySSpTsdBdDhqBZObf+EOQIDJ+CeAvpEKtHwEJRup183MdcUwsppFFw3N2GuNTLjRyGJJNuMS4WUN/d1C1NEAE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709755088; c=relaxed/simple;
-	bh=rM0BZkKu+aVHFwgOznJGFEx+2cye43F6PQ+wWTruQUs=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=SdPzZJ9mNzyGk/AG5Nk+fLPqYKUc8ad+iQsvPqktKPwNjG4qso/EW71BctPJ8l8EV3zTZtyFuRXP7b1MXx9Mr3d8N1fbrN+TDryn2DTP5FyseqiIsUsyBPzZWht39084GRa3TeFKQ9OfVhXZCEre15f7IoaGKk4zTP2B1dcmAQU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=A+h95WW0; arc=none smtp.client-ip=209.85.161.50
+	s=arc-20240116; t=1709756499; c=relaxed/simple;
+	bh=gQn5TB8I0J70Kn8J7yuSjIVlsz6kW9+g3qE89QLoPX0=;
+	h=Message-ID:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=Kad9J7MfWsjL9NuLv8/x4kVEeBgTLN9CXVtnl6Aj4Fm1pkKO14KuZ2GihjFbbxLxum5puqMOhyqpjeR48aq5cv/7Lwd/3EVi1kIw6uGzhiAFB+5u6Sm176T7yL/3timvRqyaVeIGSnCHDdjcrtipnnfP2CZXkfZDFeb77Htv8+w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=auJfTd9L; arc=none smtp.client-ip=209.85.128.44
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="A+h95WW0"
-Received: by mail-oo1-f50.google.com with SMTP id 006d021491bc7-5a1ae3091aeso55316eaf.0
-        for <git@vger.kernel.org>; Wed, 06 Mar 2024 11:58:07 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="auJfTd9L"
+Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-412fe981ef1so905415e9.1
+        for <git@vger.kernel.org>; Wed, 06 Mar 2024 12:21:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1709755086; x=1710359886; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references
-         :mail-followup-to:message-id:subject:cc:to:from:date:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=djismc8qAVX3qv29Y50hz6u2ZcQsUvaA+/c8khDLS/A=;
-        b=A+h95WW06fUvFZh21/pJz9b9jc7VuQaqVHIkvvu59kStcTl6nUJraFnG88aa66hBrs
-         vbExvF1Wpvra2Pf/wFuLxjjkxrr24SPtOiyz3TIyAT87Z6f/WM159KMNzkfJaAcSKStT
-         FnfIc4FO39wXd5JlxEpMhChhUEz29vTpr3HT2dVSH0FtVI6nUMocrPG41FNbql4/2krV
-         YOyAwcqcacAWSCim1vqDT+Zjo4ZyVLzysWTZo4fu/HbNH/OPY/eJ7iphqbjMYsNr+jqQ
-         hhaGvmJKcbERPwhup61dDkiZM9CVJMugFgYbty3pIlaBRD2ASDaCiCseMTazgZlECU1h
-         BEFQ==
+        d=gmail.com; s=20230601; t=1709756495; x=1710361295; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Y+s9FYy4lcc4cYXifTX4hYxOrCuOE68inY3iWXRK48E=;
+        b=auJfTd9LIn1nNncdhos0DE2MyA43jQgMZbuCysk8wWNro6WreiVblGB9l7p+XqhjNp
+         KhkrcuqMOFyhfYF1AXrmZm2CQTK/kqvmfljiE69HfsHBfIvYWsfRxDWT9FflXcs/lPDQ
+         Mhk3WqArY571Sw40KS3/5OY+6DHNaGKt+pVbpOPQfROH5pC0X3C9ExM5wEYDySaxKKgs
+         KAag3EAr8GGqPd+G9+1kfyGOM7M3AqAMSqqwJ0lxYNA/WVoYsCdR5V5//4nf4KDQxYXy
+         eGlaSD3DtB4rCE+g0YPNrZg5LwadYjjw3y21c80WxDqh8ncxNSq0MAr9kTEHYWgl2rQy
+         goEQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1709755086; x=1710359886;
-        h=in-reply-to:content-disposition:mime-version:references
-         :mail-followup-to:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=djismc8qAVX3qv29Y50hz6u2ZcQsUvaA+/c8khDLS/A=;
-        b=A4VDHyDJKJFL+biUVwfSYt9y6AeVsxHI/UxsdTP2HLsAsZtTUSMUk49jzrjeuGK6tp
-         kjIMvy8RBCYpD/na19DVx8BmAcNc2/qtOdMoaZDZVQkZ0C5MxT4a640UjHYJ8woPk9xs
-         Z39+RtWcnTgEiMrO5pwQbcj7XYmdN4mzSDqGVRJQxDfVDQSlw637m19jgWXj/J+2hEd6
-         UN1m5YvlG+BqyAF4fBh3Kekk56nWX3BGE9ZfwlQ+MmphcglDMdYydlPleS7diB+9kbPW
-         OkDd2SGG79XRv09MBNb8LjEL1QhBpUhW9JyKzG+H3lDhU8L3ZkF3jKikwhxV5e+B6bV3
-         Fh9A==
-X-Gm-Message-State: AOJu0Yxq35TY5DwDNK3TqZ43vZJuVMVfyTMgxSjnSMI+ykWkUsq1BzlF
-	Nw0nuxrGqFMcYR1VT8vBSLhVnAYGAvMLp7y44Z+CzW1cxRrYkcONJt6V47J8
-X-Google-Smtp-Source: AGHT+IGt3g748c7it6LgmOTg8dxHhz/EK+foCZPqu2ML6mgChw+Ou90BRxWXkAAL1pOAD5KDAnL87w==
-X-Received: by 2002:a05:6820:296:b0:5a1:2a9f:c7a6 with SMTP id q22-20020a056820029600b005a12a9fc7a6mr5627008ood.0.1709755086375;
-        Wed, 06 Mar 2024 11:58:06 -0800 (PST)
-Received: from localhost ([136.50.225.32])
-        by smtp.gmail.com with ESMTPSA id bw10-20020a056820020a00b005a14eff813esm824839oob.7.2024.03.06.11.58.05
+        d=1e100.net; s=20230601; t=1709756495; x=1710361295;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=Y+s9FYy4lcc4cYXifTX4hYxOrCuOE68inY3iWXRK48E=;
+        b=gLAQA3ydQMfjACz5c969127M+Qyhf/8WQfgZuMm2REg7w8/nIPnzT4L6tgx8ADjOlp
+         4psaOAe8oTbtPnnwa8nj8H6/8OEd9GUf0h7KJcZlK5zkvtgvxykOgY+u9DYGlNjYIRi/
+         ya2MZADgEQApCGu21cXzhn4pt5/ssdL9ZiZ99PhV8+6PJxo03hz9btDQRlfA7x0t+sxq
+         DqNYOXu7nUWv2f/s9MWKxIQYPFDmII3GRrYYLBWCtPyl5mtVyXUiubstPLMXG+tnjbVE
+         McOVetJdFjp4as6vhHJL/M+lVdlpTtQZZVAlT+DPR/LMXAVzHuO/acOnwEybI9wtM3m9
+         86CQ==
+X-Gm-Message-State: AOJu0Yygcjc4segIkbvYmw52hlCNue0vRcWHPPIkC2nBtv+lNpMbz5xZ
+	lLsvfBsHGo/iP/bK3PQaC4cIj9bNwAIki6ZXtwmUAYw7tlnhAbbitVrNJ6uL
+X-Google-Smtp-Source: AGHT+IEs9k6oqjxGHulFVTOOfIuY1XnlfJ5Oi6aThzTKgWLZv6uTcUJCWPsVI/pU39t1IgdjdE0Rmw==
+X-Received: by 2002:a05:600c:34d4:b0:412:eddd:12c1 with SMTP id d20-20020a05600c34d400b00412eddd12c1mr5354666wmq.14.1709756494983;
+        Wed, 06 Mar 2024 12:21:34 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id hg9-20020a05600c538900b00412f855bcc2sm296222wmb.43.2024.03.06.12.21.34
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 06 Mar 2024 11:58:05 -0800 (PST)
-Date: Wed, 6 Mar 2024 13:57:23 -0600
-From: Justin Tobler <jltobler@gmail.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 3/4] reftable/stack: register lockfiles during compaction
-Message-ID: <tqr5merpvso5g7b53idhtfhy7wjipkbujxv6bmdij2absrtmmk@2lbfweqvldc4>
-Mail-Followup-To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
-References: <cover.1709549619.git.ps@pks.im>
- <45b5c3167fbfd64d8d1e14ed55bae94cb9cba28b.1709549619.git.ps@pks.im>
- <mwhby7dxpiyrvknqe2uoli4ulygjy6hbxcxpqt3alw3dthwntr@4o24tp5jp6h7>
- <ZehauDgP4L40QKcH@tanuki>
+        Wed, 06 Mar 2024 12:21:34 -0800 (PST)
+Message-ID: <pull.1682.v2.git.git.1709756493673.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1682.git.git.1708882423691.gitgitgadget@gmail.com>
+References: <pull.1682.git.git.1708882423691.gitgitgadget@gmail.com>
+From: "Steven Jeuris via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Wed, 06 Mar 2024 20:21:33 +0000
+Subject: [PATCH v2] userdiff: better method/property matching for C#
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <ZehauDgP4L40QKcH@tanuki>
+To: git@vger.kernel.org
+Cc: =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason <avarab@gmail.com>,
+    Jeff King <peff@peff.net>,
+    Steven Jeuris <steven.jeuris@gmail.com>,
+    Steven Jeuris <steven.jeuris@3shape.com>
 
-On 24/03/06 12:59PM, Patrick Steinhardt wrote:
+From: Steven Jeuris <steven.jeuris@3shape.com>
 
-> > Something not really related to this patch, but I noticed and had a
-> > question about.
-> > 
-> > If I'm understanding this correctly, when a newly compacted table is
-> > empty, it becomes possible for a range of indexes to no longer exist 
-> > within the stack. If this occurs in the middle of the stack, future
-> > compaction will likely combine the tables on either side and restore the
-> > missing index range. If the empty table was at the end of the stack,
-> > would this effectly reset the max index to something lower for future
-> > tables written to the stack? If so, could this lead to issues with
-> > separate concurrent table writes?
-> 
-> Very good question indeed, but I think we should be fine here. This is
-> mostly because concurrent writers will notice when "tables.list" has
-> changed, and, if so, abort the transaction with an out-of-date error.
-> 
-> A few scenarios with concurrent processes, one process which compacts
-> the stack (C) and one which modifies it (M):
-> 
->   - M acquires the lock before C compacts: M sees the whole stack and
->     uses the latest update index to update it, resulting in a newly
->     written table. When C then locks afterwards, it may decide to
->     compact and drop some tables in the middle of the stack. This may
->     lead to a gap in update indices, but this is fine.
-> 
->   - M acquires the lock while C compacts: M sees the whole stack and
->     uses the latest update index to update the stack. C then acquires
->     the lock to write the merged tables, notices that its compacted
->     tables still exist and are in the same order, and thus removes them.
->     We now have a gap in update indices, but this is totally fine.
-> 
->   - M acquires the lock after C compacts: M will refresh "tables.list"
->     after it has acquired the lock itself. Thus, it won't ever see the
->     now-dropped empty table.
-> 
-> M cannot write its table when C has the "tables.list" lock, so this
-> scenario cannot happen. In the same spirit, two Ms cannot race with each
-> other either as only one can have the "tables.list" lock, and the other
-> one would abort with an out-of-date error when it has subsequently
-> acquired the lock and found the "tables.list" contents to have been
-> updated concurrently.
+- Support multi-line methods by not requiring closing parenthesis.
+- Support multiple generics (comma was missing before).
+- Add missing `foreach`, `lock` and  `fixed` keywords to skip over.
+- Remove `instanceof` keyword, which isn't C#.
+- Also detect non-method keywords not positioned at the start of a line.
+- Added tests; none existed before.
 
-Thanks Patrick for the great explanation! Digging into this a bit
-further, I see that we return `REFTABLE_LOCK_ERROR` when the list file
-lock already exists or has changed when attempting to add a new table to
-the list. 
+The overall strategy is to focus more on what isn't expected for
+method/property definitions, instead of what is, but is fully optional.
 
-When performing compaction in `stack_compact_range()`, after initially
-acquiring the table list lock, we also check if the stack is up-to-date
-with `stack_uptodate()`. I noticed that this check is not performed
-again after the table list is locked for the second time. At first I
-thought this could be problematic, but I realized that this would only
-be an issue for concurrent compactions and because the tables are locked
-it should not matter.
+Signed-off-by: Steven Jeuris <steven.jeuris@gmail.com>
+---
+    userdiff: better method/property matching for C#
+    
+    Change since v1: I removed "from" from the list of keywords to skip.
+    First, I considered adding "await", but I discovered both "await" and
+    "from" are "contextual keywords", which unlike the other keywords
+    currently listed, aren't reserved, and can thus cause false negatives.
+    I.e., it is valid to have a method named "await" or "from". In edge
+    cases, this may lead to false positives, but a different exclusion rule
+    will need to be added to handle these.
 
--Justin
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1682%2FWhathecode%2Fmaster-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1682/Whathecode/master-v2
+Pull-Request: https://github.com/git/git/pull/1682
+
+Range-diff vs v1:
+
+ 1:  cdd8dd4d871 ! 1:  00315519014 userdiff: better method/property matching for C#
+     @@ Commit message
+      
+          - Support multi-line methods by not requiring closing parenthesis.
+          - Support multiple generics (comma was missing before).
+     -    - Add missing `foreach`, `from`, `lock` and  `fixed` keywords to skip over.
+     +    - Add missing `foreach`, `lock` and  `fixed` keywords to skip over.
+          - Remove `instanceof` keyword, which isn't C#.
+          - Also detect non-method keywords not positioned at the start of a line.
+          - Added tests; none existed before.
+     @@ t/t4018/csharp-method-skip-body (new)
+      +		{
+      +		}
+      +		int[] numbers = [5, 4, 1, 3, 9, 8, 6, 7, 2, 0];
+     -+		var test =
+     -+			from num in Numbers(
+     -+		 	) select num;
+      +		
+      +		// Control
+      +		if (false)
+     @@ userdiff.c: PATTERNS("cpp",
+      +	  * Jump over keywords not used by methods which can be followed by parentheses without special characters in between,
+      +	  * making them look like methods.
+      +	  */
+     -+	 "!(^|[ \t]+)(do|while|for|foreach|from|if|else|new|default|return|switch|case|throw|catch|using|lock|fixed)([ \t(]+|$)\n"
+     ++	 "!(^|[ \t]+)(do|while|for|foreach|if|else|new|default|return|switch|case|throw|catch|using|lock|fixed)([ \t(]+|$)\n"
+      +	 /* Methods/constructors:
+      +	  * the strategy is to identify a minimum of two groups (any combination of keywords/type/name),
+      +	  * without intermediate or final characters which can't be part of method definitions before the opening parenthesis.
+
+
+ t/t4018/csharp-method               |  10 +++
+ t/t4018/csharp-method-explicit      |  12 +++
+ t/t4018/csharp-method-generics      |  11 +++
+ t/t4018/csharp-method-modifiers     |  13 ++++
+ t/t4018/csharp-method-multiline     |  10 +++
+ t/t4018/csharp-method-params        |  10 +++
+ t/t4018/csharp-method-skip-body     | 112 ++++++++++++++++++++++++++++
+ t/t4018/csharp-method-special-chars |  11 +++
+ t/t4018/csharp-method-with-spacing  |  10 +++
+ t/t4018/csharp-property             |  11 +++
+ userdiff.c                          |  16 ++--
+ 11 files changed, 221 insertions(+), 5 deletions(-)
+ create mode 100644 t/t4018/csharp-method
+ create mode 100644 t/t4018/csharp-method-explicit
+ create mode 100644 t/t4018/csharp-method-generics
+ create mode 100644 t/t4018/csharp-method-modifiers
+ create mode 100644 t/t4018/csharp-method-multiline
+ create mode 100644 t/t4018/csharp-method-params
+ create mode 100644 t/t4018/csharp-method-skip-body
+ create mode 100644 t/t4018/csharp-method-special-chars
+ create mode 100644 t/t4018/csharp-method-with-spacing
+ create mode 100644 t/t4018/csharp-property
+
+diff --git a/t/t4018/csharp-method b/t/t4018/csharp-method
+new file mode 100644
+index 00000000000..85ff0cb8b5b
+--- /dev/null
++++ b/t/t4018/csharp-method
+@@ -0,0 +1,10 @@
++class Example
++{
++	string Method(int RIGHT)
++	{
++		// Filler
++		// Filler
++		
++		return "ChangeMe";
++	}
++}
+diff --git a/t/t4018/csharp-method-explicit b/t/t4018/csharp-method-explicit
+new file mode 100644
+index 00000000000..083aa094ce2
+--- /dev/null
++++ b/t/t4018/csharp-method-explicit
+@@ -0,0 +1,12 @@
++using System;
++
++class Example : IDisposable
++{
++	void IDisposable.Dispose() // RIGHT
++	{
++		// Filler
++		// Filler
++		
++		// ChangeMe
++	}
++}
+diff --git a/t/t4018/csharp-method-generics b/t/t4018/csharp-method-generics
+new file mode 100644
+index 00000000000..c472d4a18df
+--- /dev/null
++++ b/t/t4018/csharp-method-generics
+@@ -0,0 +1,11 @@
++class Example<T1, T2>
++{
++	Example<int, string> Method<TA, TB>(TA RIGHT, TB b)
++	{
++		// Filler
++		// Filler
++		
++		// ChangeMe
++		return null;
++	}
++}
+diff --git a/t/t4018/csharp-method-modifiers b/t/t4018/csharp-method-modifiers
+new file mode 100644
+index 00000000000..f1c008a4749
+--- /dev/null
++++ b/t/t4018/csharp-method-modifiers
+@@ -0,0 +1,13 @@
++using System.Threading.Tasks;
++
++class Example
++{
++	static internal async Task Method(int RIGHT)
++	{
++		// Filler
++		// Filler
++		
++		// ChangeMe
++		await Task.Delay(1);
++	}
++}
+diff --git a/t/t4018/csharp-method-multiline b/t/t4018/csharp-method-multiline
+new file mode 100644
+index 00000000000..0a20b0cb49c
+--- /dev/null
++++ b/t/t4018/csharp-method-multiline
+@@ -0,0 +1,10 @@
++class Example
++{
++	string Method_RIGHT(
++		int a,
++		int b,
++		int c)
++	{
++		return "ChangeMe";
++	}
++}
+diff --git a/t/t4018/csharp-method-params b/t/t4018/csharp-method-params
+new file mode 100644
+index 00000000000..18598449008
+--- /dev/null
++++ b/t/t4018/csharp-method-params
+@@ -0,0 +1,10 @@
++class Example
++{
++	string Method(int RIGHT, int b, int c = 42)
++	{
++		// Filler
++		// Filler
++		
++		return "ChangeMe";
++	}
++}
+diff --git a/t/t4018/csharp-method-skip-body b/t/t4018/csharp-method-skip-body
+new file mode 100644
+index 00000000000..c8c9621634d
+--- /dev/null
++++ b/t/t4018/csharp-method-skip-body
+@@ -0,0 +1,112 @@
++using System.Linq;
++using System;
++
++class Example : IDisposable
++{
++	string Method(int RIGHT)
++	{
++		// Method calls
++		MethodCall();
++		MethodCall(1, 2);
++		MethodCall(
++			1, 2);
++		
++		// Assignments
++		var constantAssignment = "test";
++		var methodAssignment = MethodCall();
++		var multiLineMethodAssignment = MethodCall(
++			);
++		
++		// Initializations/disposal
++		new Example();
++		new Example(
++			);
++		new Example { };
++		using (this) 
++		{
++		}
++		var def =
++			this is default(
++				Example);
++		
++		// Iteration statements
++		do { } while (true);
++		do MethodCall(
++			); while (true);
++		while (true);
++		while (true) {
++			break;
++		}
++		for (int i = 0; i < 10; ++i)
++		{
++		}
++		foreach (int i in Enumerable.Range(0, 10))
++		{
++		}
++		int[] numbers = [5, 4, 1, 3, 9, 8, 6, 7, 2, 0];
++		
++		// Control
++		if (false)
++		{
++			return "out";
++		}
++		else { }
++		if (true) MethodCall(
++			);
++		else MethodCall(
++			);
++		switch ("test")
++		{
++			case "one":
++				return MethodCall(
++					);
++			case "two":
++				break;
++		}
++		(int, int) tuple = (1, 4);
++		switch (tuple)
++		{
++			case (1, 4):
++				MethodCall();
++		}
++		
++		// Exceptions
++		try
++		{
++			throw new Exception("fail");
++		}
++		catch (Exception)
++		{
++		}
++		finally
++		{
++		}
++		try { } catch (Exception) {}
++		try
++		{
++			throw GetException(
++				);
++		}
++		catch (Exception) { }
++		
++		// Others
++		lock (this)
++		{
++		}
++		unsafe
++		{
++			byte[] bytes = [1, 2, 3];
++			fixed (byte* pointerToFirst = bytes)
++			{
++			}
++		}
++		
++		return "ChangeMe";
++	}
++	
++	public void Dispose() {}
++	
++	string MethodCall(int a = 0, int b = 0) => "test";
++	Exception GetException() => new Exception("fail");
++	int[] Numbers() => [0, 1];
++}
+diff --git a/t/t4018/csharp-method-special-chars b/t/t4018/csharp-method-special-chars
+new file mode 100644
+index 00000000000..ec3565fd000
+--- /dev/null
++++ b/t/t4018/csharp-method-special-chars
+@@ -0,0 +1,11 @@
++class @Some_Type
++{
++	@Some_Type @Method_With_Underscore(int RIGHT)
++	{
++		// Filler
++		// Filler
++		
++		// ChangeMe
++		return new @Some_Type();
++	}
++}
+diff --git a/t/t4018/csharp-method-with-spacing b/t/t4018/csharp-method-with-spacing
+new file mode 100644
+index 00000000000..4143929a711
+--- /dev/null
++++ b/t/t4018/csharp-method-with-spacing
+@@ -0,0 +1,10 @@
++class Example
++{
++		string   Method 	( int 	RIGHT )
++	{
++		// Filler
++		// Filler
++		
++		return "ChangeMe";
++	}
++}
+diff --git a/t/t4018/csharp-property b/t/t4018/csharp-property
+new file mode 100644
+index 00000000000..1792117f964
+--- /dev/null
++++ b/t/t4018/csharp-property
+@@ -0,0 +1,11 @@
++class Example
++{
++	public bool RIGHT
++    {
++        get { return true; }
++        set
++        {
++            // ChangeMe
++        }
++    }
++}
+diff --git a/userdiff.c b/userdiff.c
+index e399543823b..5a9e8a0ef55 100644
+--- a/userdiff.c
++++ b/userdiff.c
+@@ -89,12 +89,18 @@ PATTERNS("cpp",
+ 	 "|\\.[0-9][0-9]*([Ee][-+]?[0-9]+)?[fFlL]?"
+ 	 "|[-+*/<>%&^|=!]=|--|\\+\\+|<<=?|>>=?|&&|\\|\\||::|->\\*?|\\.\\*|<=>"),
+ PATTERNS("csharp",
+-	 /* Keywords */
+-	 "!^[ \t]*(do|while|for|if|else|instanceof|new|return|switch|case|throw|catch|using)\n"
+-	 /* Methods and constructors */
+-	 "^[ \t]*(((static|public|internal|private|protected|new|virtual|sealed|override|unsafe|async)[ \t]+)*[][<>@.~_[:alnum:]]+[ \t]+[<>@._[:alnum:]]+[ \t]*\\(.*\\))[ \t]*$\n"
++	 /*
++	  * Jump over keywords not used by methods which can be followed by parentheses without special characters in between,
++	  * making them look like methods.
++	  */
++	 "!(^|[ \t]+)(do|while|for|foreach|if|else|new|default|return|switch|case|throw|catch|using|lock|fixed)([ \t(]+|$)\n"
++	 /* Methods/constructors:
++	  * the strategy is to identify a minimum of two groups (any combination of keywords/type/name),
++	  * without intermediate or final characters which can't be part of method definitions before the opening parenthesis.
++	  */
++	 "^[ \t]*(([][[:alnum:]@_<>.,]*[^=:{ \t][ \t]+[][[:alnum:]@_<>.,]*)+\\([^;]*)$\n"
+ 	 /* Properties */
+-	 "^[ \t]*(((static|public|internal|private|protected|new|virtual|sealed|override|unsafe)[ \t]+)*[][<>@.~_[:alnum:]]+[ \t]+[@._[:alnum:]]+)[ \t]*$\n"
++	 "^[ \t]*((([][[:alnum:]@_<>.,]+)[ \t]+[][[:alnum:]@_]*)+[^=:;,()]*)$\n"
+ 	 /* Type definitions */
+ 	 "^[ \t]*(((static|public|internal|private|protected|new|unsafe|sealed|abstract|partial)[ \t]+)*(class|enum|interface|struct|record)[ \t]+.*)$\n"
+ 	 /* Namespace */
+
+base-commit: f41f85c9ec8d4d46de0fd5fded88db94d3ec8c11
+-- 
+gitgitgadget
