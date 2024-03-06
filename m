@@ -1,136 +1,81 @@
-Received: from mail-oi1-f174.google.com (mail-oi1-f174.google.com [209.85.167.174])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F2D08565B
-	for <git@vger.kernel.org>; Wed,  6 Mar 2024 16:35:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F52CF9EB
+	for <git@vger.kernel.org>; Wed,  6 Mar 2024 16:36:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709742925; cv=none; b=RIR7DAwX/Ud1JxQqfVcLjS82WvkbiKEmOwopkaLQTW8umxshkWt+ALKMvflRZqcdaHmKFcMu7JayzNYBGiZi7CgwQmee5x8yIBT2p3w3nZfVSTlJ0VX/htd718b5YIOtS7iHoyj7Br9+FbkzLREZCvfddL8h3+09lYkoDRpH+1g=
+	t=1709742990; cv=none; b=HL+O1JOp5Q4qdYMBZSIU+MEnJbWovJLcf7OC/O6p2VgSlJ0UURwsggPeAUdjyNNKCAyOGs/EUsn+kcjz18DQ1fXOfNFqdeQqvKsv20WCaxqbH2Ew5Z9zfEzPJ+8ml7RBtWNwm31Om0clb1t4eVJbsZUG4SEJgVozRfGO0ffUSr4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709742925; c=relaxed/simple;
-	bh=oxQ+KW5G1jQ+5jdna90K9mNj/pwxXoIlpBNwn4ymOKw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=D4C4kFbBKsZJjNauhI8YchmoHpS1KN9BuT3M27oZMxqaQPucjLo/sOXQoZEdJr4IiAnje4KWfGwwGo4nNJ7rfcxo1Dgn/EmfStzb/fkUJl8EjcIzoRT0rngT0+4xL3DOTokNYC8rzQj+U/Q0xdsKa9b71gLFKJm6KUWXjhPFoXg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=UXKRNpVQ; arc=none smtp.client-ip=209.85.167.174
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1709742990; c=relaxed/simple;
+	bh=WB6oiNfWxmhaAaCLZE+HBtya6wr9MxAITnMcOpAjXSA=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=t1jD3RgecpjhIpeJneBSw2Qy8Po1aJ+t7d1BgOk9stw3WUthxo+ecEvwth5RwHQz3QDAJl8lQiZSt15xwcwYJ/3ZniJoep+B+D1pIbGq5ix6YJ1uyr4tzO4gl4u3x3g6WxoFgdBDR2aBksVrw7MD8C0CQ8obcOqCON9NaxnL86o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=MITl20DW; arc=none smtp.client-ip=64.147.108.71
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UXKRNpVQ"
-Received: by mail-oi1-f174.google.com with SMTP id 5614622812f47-3c1a2f7e302so3896020b6e.0
-        for <git@vger.kernel.org>; Wed, 06 Mar 2024 08:35:23 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1709742922; x=1710347722; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references
-         :mail-followup-to:message-id:subject:cc:to:from:date:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=YgPlHqiB/1yyRsAut8LsgM7ElijUWSkKLdDSSG6h4rE=;
-        b=UXKRNpVQOABCJNIJwvH9Gf5Zt2YZaSHJ/cxEvm/0fOBj8Y3W8nUtFJdDrl78bbxyqc
-         AHYcJ1ykv5M+fIgSYweUCXeiZKbDvkAPcll/ELF1kAIQ9UKnQoh6D9WFWTMfqDG1sUkI
-         ftARvWSTVawHRgYxCEwfV1HpaphfsKtHKZPH8cOj0QdMPD6AFI8v4/qZlej3EWXsL5Cv
-         GIbcGQKAf9ghevxuS0GBXviGvQQXF0gsED/ddLVM8v4+SH/B0VuFSaqZ9LOBmtfzXK3B
-         W1CVuMiQnYF3e6M7WTIM/4dpxLspQxsosgp4t7wd3rdVra+87K9D35O7QnAFulZxiM9K
-         cFmQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1709742922; x=1710347722;
-        h=in-reply-to:content-disposition:mime-version:references
-         :mail-followup-to:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=YgPlHqiB/1yyRsAut8LsgM7ElijUWSkKLdDSSG6h4rE=;
-        b=Ia7Aj5Y0rmfzH3Hpqh+XFZgoiGAcMQDsLnHgTttIE0VZlUZC7fTVLGYYD8Q4qxsuyh
-         AAyIwuSv8JHLDQjwY/iOmIINzrOjUHTtpMDbwblgFUB/Qb0ylxCLsiw2DUJiXW5jgJ9n
-         LtSQPT/V8CyWWQbcVkfaz75hrk4sXj+VBDdkAwf5Ccmk0AHb1BrfsmOak0eLebCFlbkC
-         wTNEiPOegfbsi34DUGBunufbf7T4jx3whDUP6EGrdTYNtElccwAc1mIXn1pkJTtr/b1O
-         vnJODVgSVdzXIDe2+/cQ+zRzscMAVOK3Kfx3QXXvTUQU34OUryLklTX0gR0421BXTrmI
-         dpSw==
-X-Gm-Message-State: AOJu0YwSVt7W9kBzvtZGdaW+NhkSoTgjcM3OJG7nDObqIQJaNc5OtyYs
-	OoRIcCuOH9D8FG0cHHkDac5lLhg6UIQHrErItYoU15rVvT+N/cWH9Y9MCBWr
-X-Google-Smtp-Source: AGHT+IEtWmzG+6ru9TUh8vfIZOQ5XvHrm6tKhEzDctMDoETOqmFsM9UfEPw51sRswLsyshWTOgW8UQ==
-X-Received: by 2002:a05:6808:2184:b0:3c1:9371:dccc with SMTP id be4-20020a056808218400b003c19371dcccmr6627654oib.53.1709742922406;
-        Wed, 06 Mar 2024 08:35:22 -0800 (PST)
-Received: from localhost ([136.50.225.32])
-        by smtp.gmail.com with ESMTPSA id a3-20020aca1a03000000b003c1ea0c6636sm1093919oia.54.2024.03.06.08.35.21
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 06 Mar 2024 08:35:21 -0800 (PST)
-Date: Wed, 6 Mar 2024 10:34:39 -0600
-From: Justin Tobler <jltobler@gmail.com>
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="MITl20DW"
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 20F161D8938;
+	Wed,  6 Mar 2024 11:36:27 -0500 (EST)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=WB6oiNfWxmhaAaCLZE+HBtya6wr9MxAITnMcOp
+	AjXSA=; b=MITl20DWpmff5lvmwI3pKxEDcbrSiSuvTRV4+TJ1lX7mEbh/0+d6i0
+	S6HCcIqHEG865yQLLQ53eLmEHOHDGa8+9g73YT89i9II5tkZBKvf8AkudHPycrJQ
+	pkSfuETC/vUmeK2VOzQGw+EQjjfI29/kYm4RpYPw1x7ovyY5gI7XQ=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 1745F1D8937;
+	Wed,  6 Mar 2024 11:36:27 -0500 (EST)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.185.65])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 7C0B71D8936;
+	Wed,  6 Mar 2024 11:36:26 -0500 (EST)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
 To: Patrick Steinhardt <ps@pks.im>
 Cc: git@vger.kernel.org
 Subject: Re: [PATCH 2/4] reftable/stack: register new tables as tempfiles
-Message-ID: <wz2wdic24l6ssynni2vhdhbhgaljxhdk2afe2ooi42hj5bw4pi@yfxlsa4excu5>
-Mail-Followup-To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
+In-Reply-To: <Zehav4V_8GGZG94Q@tanuki> (Patrick Steinhardt's message of "Wed,
+	6 Mar 2024 12:59:59 +0100")
 References: <cover.1709549619.git.ps@pks.im>
- <02bf41d419efd00e510a89a405e1b046b166ba20.1709549619.git.ps@pks.im>
- <6cw6d3ubo2kbogzdbniyoznij2zfoh5t3htwb4oaghaltcgeqg@kkrw4g6atr2k>
- <Zehav4V_8GGZG94Q@tanuki>
+	<02bf41d419efd00e510a89a405e1b046b166ba20.1709549619.git.ps@pks.im>
+	<6cw6d3ubo2kbogzdbniyoznij2zfoh5t3htwb4oaghaltcgeqg@kkrw4g6atr2k>
+	<Zehav4V_8GGZG94Q@tanuki>
+Date: Wed, 06 Mar 2024 08:36:25 -0800
+Message-ID: <xmqqedcntj06.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <Zehav4V_8GGZG94Q@tanuki>
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ AD31F58C-DBD7-11EE-9228-25B3960A682E-77302942!pb-smtp2.pobox.com
 
-On 24/03/06 12:59PM, Patrick Steinhardt wrote:
-> On Tue, Mar 05, 2024 at 04:30:18PM -0600, Justin Tobler wrote:
-> > On 24/03/04 12:10PM, Patrick Steinhardt wrote:
-> > > We do not register new tables which we're about to add to the stack with
-> > > the tempfile API. Those tables will thus not be deleted in case Git gets
-> > > killed.
-> > > 
-> > > Refactor the code to register tables as tempfiles.
-> > > 
-> > > Signed-off-by: Patrick Steinhardt <ps@pks.im>
-> > > ---
-> > >  reftable/stack.c | 29 ++++++++++++-----------------
-> > >  1 file changed, 12 insertions(+), 17 deletions(-)
-> > > 
-> > > diff --git a/reftable/stack.c b/reftable/stack.c
-> > > index b64e55648a..81544fbfa0 100644
-> > > --- a/reftable/stack.c
-> > > +++ b/reftable/stack.c
-> > > @@ -737,8 +737,9 @@ int reftable_addition_add(struct reftable_addition *add,
-> > >  	struct strbuf tab_file_name = STRBUF_INIT;
-> > >  	struct strbuf next_name = STRBUF_INIT;
-> > >  	struct reftable_writer *wr = NULL;
-> > > +	struct tempfile *tab_file = NULL;
-> > >  	int err = 0;
-> > > -	int tab_fd = 0;
-> > > +	int tab_fd;
-> > >  
-> > >  	strbuf_reset(&next_name);
-> > >  	format_name(&next_name, add->next_update_index, add->next_update_index);
-> > > @@ -746,17 +747,20 @@ int reftable_addition_add(struct reftable_addition *add,
-> > >  	stack_filename(&temp_tab_file_name, add->stack, next_name.buf);
-> > >  	strbuf_addstr(&temp_tab_file_name, ".temp.XXXXXX");
-> > >  
-> > > -	tab_fd = mkstemp(temp_tab_file_name.buf);
-> > > -	if (tab_fd < 0) {
-> > > +	tab_file = mks_tempfile(temp_tab_file_name.buf);
-> > > +	if (!tab_file) {
-> > >  		err = REFTABLE_IO_ERROR;
-> > >  		goto done;
-> > >  	}
-> > >  	if (add->stack->config.default_permissions) {
-> > > -		if (chmod(temp_tab_file_name.buf, add->stack->config.default_permissions)) {
-> > > +		if (chmod(get_tempfile_path(tab_file),
-> > > +			  add->stack->config.default_permissions)) {
-> > >  			err = REFTABLE_IO_ERROR;
-> > >  			goto done;
-> > >  		}
-> > >  	}
-> > 
-> > Since the tempfile is now being created through the tempfile API, I
-> > think the file mode can be set directly through `mks_tempfile_m()`
-> > instead of creating the tempfile and then using chmod. Just something I
-> > thought to mention.
-> 
+Patrick Steinhardt <ps@pks.im> writes:
+
+>> Since the tempfile is now being created through the tempfile API, I
+>> think the file mode can be set directly through `mks_tempfile_m()`
+>> instead of creating the tempfile and then using chmod. Just something I
+>> thought to mention.
+>
 > Unfortunately not. The problem is that `mks_tempfile_m()` will munge
 > passed-in permissions via "core.sharedRepository", but we already pre
 > calculated the target mode in `config.default_permissions`. Thus, the
 > result would have wrong permissions if we used `mks_tempfile_m()`.
 
-Ah that makes sense. Thanks for the explanation!
+I somehow found that default_permissions thing always disturbing.
 
--Justin
+Even if we keep a separate mechanism for determining the file
+permission (perhaps in order to give ourselves a better separation
+as "an independent library" from the rest of Git), shouldn't the
+permission setting that is computed by the mechanism and stored in
+config.default_permissions be consistent with the permission the
+rest of git computes based on core.sharedRepository?
