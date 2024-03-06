@@ -1,53 +1,53 @@
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7264486621
-	for <git@vger.kernel.org>; Wed,  6 Mar 2024 16:03:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E75B5C615
+	for <git@vger.kernel.org>; Wed,  6 Mar 2024 16:10:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709741040; cv=none; b=hZr6LiOGbxThkW9/WyuTJUx/16zWsobttehuMwimuZHM18Tt3b15iWCvD7wDkxTvXJi1U2UdpNGBResRwm+SK63f2No3q6iHh1m0f2ygxiu7mo4kcnMihsqJKhyuJeGYtH5Dj5yssAl6Ke7VIHt2NYm/ZsvmW8vVZiDcyg7F0Z0=
+	t=1709741430; cv=none; b=R4tKLQLwLHS0BojOXO9oH9cy6acVYo9EeUZ3Ds+TojwPt1HtpqIqF15kNVz3p/x1n460tAzqlWUiKVvUuf29HbZzpXX963abTPhxdjrSc0ko6jIXOpxGr5l7UAS/n9U8I/drVZAMj9UPUzYkXfYOXnmTwguhd15jrYw+0brmFG0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709741040; c=relaxed/simple;
-	bh=EgQy0ks5W0/C5NXRZtg7cQQDOVVFXnplhxbJYs/iHto=;
+	s=arc-20240116; t=1709741430; c=relaxed/simple;
+	bh=9PQUM8t+h905GnzgFbrUhYuZwupVqkun7lYLcODeFVg=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=kWgGyEHAej0Sdn91T7bpqW1EHACRXp/PhrH5Ifu43ZpAwOeEQ2eTSUVkbvwItofihlbX4dyqZqXMAHLyBiH5hMMFg6G+N4Zpd8dHWu9ZsVFxL6+ORAEY5N0D2jldbCVbX2a18c5/U4EB1p6wkqAXi5z4wE7YyUWdwomFrUB958A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=TU/pCbrq; arc=none smtp.client-ip=64.147.108.70
+	 MIME-Version:Content-Type; b=P2oYlUOPfQ8x/bWT0QRlQA1LZWeCf2XMOMlOnjUVmmlS9x5YfJLkjqZikLAbhorr3EZOiaau0W4GY/7uw+m08lxqRKSOYa8DpvFmWlmryDq5yDZqDTuOczBEwdNoFGdL94orJeUcdekJZ960JQenad09myF9dC8kLhJaVwYBPDs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=vVwyAV1s; arc=none smtp.client-ip=173.228.157.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="TU/pCbrq"
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 58B181E3800;
-	Wed,  6 Mar 2024 11:03:58 -0500 (EST)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="vVwyAV1s"
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id B02C51E42F;
+	Wed,  6 Mar 2024 11:10:28 -0500 (EST)
 	(envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=EgQy0ks5W0/C5NXRZtg7cQQDOVVFXnplhxbJYs
-	/iHto=; b=TU/pCbrqbuR7jYHe5EDTAROYfDuj0MifhoxddbH3TlMT/Q86l4Dcrm
-	6cIPIIDT5ICXBoHUAby7Ns8xBJSZsauC4cG1DEk/o6FFTtWZWDigxdMN2UipvId5
-	dLdAe5WPKEjnJGx3YvBvbuDgyB6in1Kdf/zgHeIqaWOtDpGBj3b7k=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 4F6781E37FF;
-	Wed,  6 Mar 2024 11:03:58 -0500 (EST)
+	:content-type; s=sasl; bh=9PQUM8t+h905GnzgFbrUhYuZwupVqkun7lYLcO
+	DeFVg=; b=vVwyAV1sASePifrDJNzGFyz2vBTbxRTCDqiiHALNb1WCMw97aH5fEj
+	4MA5QmyvYfhUTMcjn6kFXPiLl7fryAZs1p4TQ0KnwiCYiUS6emP1Hf9wayor1hMa
+	zgWlwwj3h9o3xe8SCZcUkT4Fw4vlHtQOPWzsjXxgUQfGEXQE/M44I=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id A77541E42E;
+	Wed,  6 Mar 2024 11:10:28 -0500 (EST)
 	(envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.125.185.65])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id AE13D1E37FE;
-	Wed,  6 Mar 2024 11:03:57 -0500 (EST)
+	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 310721E42D;
+	Wed,  6 Mar 2024 11:10:25 -0500 (EST)
 	(envelope-from junio@pobox.com)
 From: Junio C Hamano <gitster@pobox.com>
-To: Todd Zullinger <tmz@pobox.com>
-Cc: Beat Bolli <bb@drbeat.li>,  git@vger.kernel.org,  Beat Bolli
- <dev+git@drbeat.li>
-Subject: Re: [PATCH 19/22] t/t8*: merge "grep | sed" pipelines
-In-Reply-To: <ZefSPAiTLrRVeXm6@pobox.com> (Todd Zullinger's message of "Tue, 5
-	Mar 2024 21:17:32 -0500")
-References: <20240305212533.12947-1-dev+git@drbeat.li>
-	<20240305212533.12947-20-dev+git@drbeat.li>
-	<xmqq8r2ww4xg.fsf@gitster.g> <ZefSPAiTLrRVeXm6@pobox.com>
-Date: Wed, 06 Mar 2024 08:03:56 -0800
-Message-ID: <xmqqplw7tkib.fsf@gitster.g>
+To: "Haritha via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Haritha D <Harithamma.D@ibm.com>,  Ghanshyam
+ Thakkar <shyamthakkar001@gmail.com>,  rsbecker@nexbridge.com
+Subject: Re: [PATCH v4] build: support z/OS (OS/390).
+In-Reply-To: <pull.1663.v4.git.git.1709703857881.gitgitgadget@gmail.com>
+	(Haritha via GitGitGadget's message of "Wed, 06 Mar 2024 05:44:17
+	+0000")
+References: <pull.1663.v3.git.git.1708841439516.gitgitgadget@gmail.com>
+	<pull.1663.v4.git.git.1709703857881.gitgitgadget@gmail.com>
+Date: Wed, 06 Mar 2024 08:10:23 -0800
+Message-ID: <xmqqle6vtk7k.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -57,26 +57,53 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 X-Pobox-Relay-ID:
- 239F749C-DBD3-11EE-BED5-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
+ 0A954D72-DBD4-11EE-BC40-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
 
-Todd Zullinger <tmz@pobox.com> writes:
+"Haritha  via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> Junio C Hamano wrote:
->> Isn't -E a GNUism?
-> ...
-> https://www.austingroupbugs.net/view.php?id=528 suggests
-> that -E has been adopted 
+> From: Haritha D <harithamma.d@ibm.com>
+>
+> Introduced z/OS (OS/390) as a platform in config.mak.uname
+>
+> Signed-off-by: Haritha D <harithamma.d@ibm.com>
+> ---
+>     This PR enables a successful git build on z/OS.
 
-Then that is OK.  Thanks for a good news.
+Good.
 
-> and, importanly, is more widely
-> supported than -r (if we were considering using that rather
-> than rewriting this to not use ERE syntax).
+>  config.mak.uname | 12 ++++++++++++
+>  1 file changed, 12 insertions(+)
+>
+> diff --git a/config.mak.uname b/config.mak.uname
+> index dacc95172dc..d0dcca2ec55 100644
+> --- a/config.mak.uname
+> +++ b/config.mak.uname
+> @@ -638,6 +638,18 @@ ifeq ($(uname_S),NONSTOP_KERNEL)
+>  	SANE_TOOL_PATH = /usr/coreutils/bin:/usr/local/bin
+>  	SHELL_PATH = /usr/coreutils/bin/bash
+>  endif
+> +ifeq ($(uname_S),OS/390)
+> +	NO_SYS_POLL_H = YesPlease
+> +	NO_STRCASESTR = YesPlease
+> +	NO_REGEX = YesPlease
+> +	NO_MMAP = YesPlease
+> +	NO_NSEC = YesPlease
+> +	NO_STRLCPY = YesPlease
+> +	NO_MEMMEM = YesPlease
+> +	NO_GECOS_IN_PWENT = YesPlease
+> +	HAVE_STRINGS_H = YesPlease
+> +	NEEDS_MODE_TRANSLATION = YesPlease
+> +endif
 
-At least I wasn't, so it is irrelevant to this review, but it still
-is nice to know about it [*].  Thanks.
+I somehow expected you to throw in the -L thing in this block,
+perhaps like
 
-[Footnote] 
+	CC_LD_DYNPATH =
 
- * or is the knowledge of '-r' itself also irrelevant, now '-E' is
-   kosher and widely usable?
+to help those who are on OS/390 but do not run configure (made from
+configure.ac) to create the config.mak.autogen file, but if you are
+always building with configure and not testing such a configuration,
+then doing so and shipping an untested code would not be prudent, so
+let's accept this patch as-is.
+
+Thanks for working on this.  Will queue.
