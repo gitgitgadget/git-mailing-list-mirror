@@ -1,84 +1,114 @@
-Received: from mail-gateway-shared03.cyon.net (mail-gateway-shared03.cyon.net [194.126.200.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oa1-f45.google.com (mail-oa1-f45.google.com [209.85.160.45])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC27B2FB2
-	for <git@vger.kernel.org>; Wed,  6 Mar 2024 21:03:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=194.126.200.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE6B61B81F
+	for <git@vger.kernel.org>; Wed,  6 Mar 2024 21:38:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709759021; cv=none; b=LgT1lDY8mETfZguY/vMsuiRFkWrwLp8wTAUjQUl9RvUQx/teJL8aXGryzgHItKe+Oc/tqmBRQCLk6lhLNBtZyE4HGrVvYlazbmC/JA9m5QCJ7a10bvoHz2U9mqCogMWfzhb5LM3fSQVXCspgnfJlGDhgbW5kYotqOh6WKOk2tuI=
+	t=1709761109; cv=none; b=UFvtCk2pZqSwcSDzIAWJ6yv+XYsUf1xU87dxG5ge223RsKtoPOjW/5YMIOm8IrD91oaKO9R8nACScFLSzog5kSqmyFOE5QNIy6DWMdc54oK7t7JWUxYrrDpKEPgQZnVQp7STqCI9TkwrlKp2ZuR0tmFQMa5xqxdAUTB01t4XJtA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709759021; c=relaxed/simple;
-	bh=EhyOo5N5QhawrPQo4HW4BEdikJ0dOor8dkm0CWna+Rs=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=iV5LhwXEQwy8Q5NoHyhgBmzQzwANnepux9jFAYGNvfEC/RY2kR4M4LK4+atrjwzGxa3TmjS+q4LhT6g2306m+EtztIaZabaTt6W/H1P7ogT61vH6EGEsSgU90HxLdTDnGxhNRaXk3jHiFBv0rmzBcOPUzcY6kteLyINEbcZTfi0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=drbeat.li; spf=pass smtp.mailfrom=drbeat.li; arc=none smtp.client-ip=194.126.200.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=drbeat.li
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=drbeat.li
-Received: from s019.cyon.net ([149.126.4.28])
-	by mail-gateway-shared03.cyon.net with esmtpsa (TLS1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
-	(Exim)
-	(envelope-from <dev+git@drbeat.li>)
-	id 1rhyLb-000000000A3-1lHo
-	for git@vger.kernel.org;
-	Wed, 06 Mar 2024 21:58:43 +0100
-Received: from [10.20.10.231] (port=12664 helo=mail.cyon.ch)
-	by s019.cyon.net with esmtpa (Exim 4.96.2)
-	(envelope-from <dev+git@drbeat.li>)
-	id 1rhyLa-006ZaS-0w;
-	Wed, 06 Mar 2024 21:58:42 +0100
-Message-ID: <b7cfeb02-eab6-4822-921f-89a00a66e4b0@drbeat.li>
-Date: Wed, 6 Mar 2024 21:58:41 +0100
+	s=arc-20240116; t=1709761109; c=relaxed/simple;
+	bh=c7sRNOHkKjHgPkVWudNMwCj9wJEkTOqKFZhS+aCz6yE=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Content-Type; b=ZBfFLtvugw04WZ0KQelR+VSwGalTZMDNNNEox1KLIxRcKk+9UcWxhNFHYwTcD97E1u8PrQEX3KK0ZPSgJnAuPdZrawYlc4KavnpCYwYhbWzF+dY0ZypgLzeOT9rJDVa5SG7+UrJeFEXwNCGZZJ2rLocCP/pQIOhLKykhr9DMdpk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=gOK+pL10; arc=none smtp.client-ip=209.85.160.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gOK+pL10"
+Received: by mail-oa1-f45.google.com with SMTP id 586e51a60fabf-22008177fbeso57198fac.2
+        for <git@vger.kernel.org>; Wed, 06 Mar 2024 13:38:27 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1709761107; x=1710365907; darn=vger.kernel.org;
+        h=to:subject:message-id:date:mime-version:references:in-reply-to:from
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=fgwE09/eIljQQREWnOD79tIDthPqzsXsyrU8PcCLFPk=;
+        b=gOK+pL10iMPMQ2xpoTCSr+BsoDM+3tkNUmePt67kNEpIDwbd/d4qJvLtR8EZSyprXT
+         8vYOnwa9q6L4mpFZ/8hp+Ghu5VemPf7vFhKtZjvapn4PGlTfDrtlo+Q5i1qe3bfLRNoV
+         yVlfneYBkqrvEMc3wTCzUN9FEIk4SS6aSuStjPjM9wKykKFrjPTenX5k7txAnCtA9iD+
+         1adPia4os/a+lDQi6GKIWO4sSEDvRnrI1dTGchE6pm1Yp+7RSNeflRqXvZ5SmkTkVjXa
+         YBmrrs79cyCTttK6k+OheMi37kQDUKZNjk/bUXv4PQS35HI7ffW/ufpvp4jtwORWjFmM
+         ycvQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1709761107; x=1710365907;
+        h=to:subject:message-id:date:mime-version:references:in-reply-to:from
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=fgwE09/eIljQQREWnOD79tIDthPqzsXsyrU8PcCLFPk=;
+        b=L0FsZYKNzx2o6r8lAw7sBDdLtxIv5vZvF2kQdb4slbyeRRRiopb4cpBcurMq+h8QMU
+         WPZbrsnovE+QrfMLAPtGhLzaaqukvC7mxR35Knl422/RsuCuzjof9F7DOzAuVb6ROKPr
+         awh/rThDj+xEKxwAY1eeRJWRied1lixFl2JS1V63xyJuAa3lKirR+edGZvwlMDBJIfbX
+         eWaCjpJ30I19ecD6Ded3OmKcPYKnDIHcKjVOblyP2M3WnuUVanDpWXw6cmVLgSZGCJIt
+         v6P0tjZIWXht/U9frZBBTTsduIELGqKuXHxNwOaodOmBWSq2OeRwms4PDdoqan/B1QeE
+         eJDw==
+X-Forwarded-Encrypted: i=1; AJvYcCXT2C/vF9weuMHuI6ysnBQ7unt39bZnM0ONVgKcqCvcy8NPiifVHj3Z/PYvUBdD8ArUy/OOwqwOYviQ2tT+ht+r4USG
+X-Gm-Message-State: AOJu0YxwxzlkpMKkrl9+apbnTx81TMlhQ7VfaK4in3802xW9FHmMK2gq
+	6pQ8DV96hIXangdHZNG8Zk+YUqhsfdYGO+wi0t4QN6N5SO1gKYkodspF3q7hX5Q0TNBScAvSeUT
+	ZNql9yeRzy22OoB7Gt0AgxPVyqR5tCut0gH4=
+X-Google-Smtp-Source: AGHT+IHSA8UmFow8f++SSEbsV7B4s+999cYR79okQrhoZm8NAmyK9aBH2SKr/K3DPHZEI2CfP1sQlZH1I3LQEqRXI1I=
+X-Received: by 2002:a05:6871:54a:b0:221:21ca:1523 with SMTP id
+ t10-20020a056871054a00b0022121ca1523mr6279145oal.17.1709761106653; Wed, 06
+ Mar 2024 13:38:26 -0800 (PST)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Wed, 6 Mar 2024 13:38:25 -0800
+From: Karthik Nayak <karthik.188@gmail.com>
+In-Reply-To: <f79c0f94e415de5c1c7b4120af5270fe4900d825.1709724089.git.ps@pks.im>
+References: <cover.1709724089.git.ps@pks.im> <f79c0f94e415de5c1c7b4120af5270fe4900d825.1709724089.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 09/22] t/t4*: avoid redundant uses of cat
-To: Eric Sunshine <sunshine@sunshineco.com>, Beat Bolli <bb@drbeat.li>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-References: <20240305212533.12947-1-dev+git@drbeat.li>
- <20240305212533.12947-10-dev+git@drbeat.li>
- <CAPig+cQ13SANfReDNxVRPmS2TbK+0ZU4mT6g1rw9kWJHzH-j2w@mail.gmail.com>
-Content-Language: de-CH
-From: Beat Bolli <dev+git@drbeat.li>
-In-Reply-To: <CAPig+cQ13SANfReDNxVRPmS2TbK+0ZU4mT6g1rw9kWJHzH-j2w@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - s019.cyon.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - drbeat.li
-X-Get-Message-Sender-Via: s019.cyon.net: authenticated_id: ig@drbeat.li
-X-Authenticated-Sender: s019.cyon.net: ig@drbeat.li
+Date: Wed, 6 Mar 2024 13:38:25 -0800
+Message-ID: <CAOLa=ZSg35atoTsBVtWj_j94n2Mt8otzfw3DYLYS9FCbNgp_Xg@mail.gmail.com>
+Subject: Re: [PATCH 6/8] builtin/config: introduce subcommands
+To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
+Content-Type: multipart/mixed; boundary="00000000000069cd1c061304c752"
 
-On 06.03.24 02:08, Eric Sunshine wrote:
-> On Tue, Mar 5, 2024 at 4:31 PM Beat Bolli <bb@drbeat.li> wrote:
->> diff --git a/t/t4020-diff-external.sh b/t/t4020-diff-external.sh
->> @@ -232,7 +232,7 @@ keep_only_cr () {
->>   test_expect_success 'external diff with autocrlf = true' '
->>          test_config core.autocrlf true &&
->>          GIT_EXTERNAL_DIFF=./fake-diff.sh git diff &&
->> -       test $(wc -l < crlfed.txt) = $(cat crlfed.txt | keep_only_cr | wc -c)
->> +       test $(wc -l < crlfed.txt) = $(keep_only_cr <crlfed.txt | wc -c)
->>   '
-> 
-> Could also fix the style problem (drop whitespace after existing `<`
-> operator) while here, but not at all worth a reroll.
-> 
->> diff --git a/t/t4150-am.sh b/t/t4150-am.sh
->> @@ -786,7 +786,7 @@ test_expect_success 'am takes patches from a Pine mailbox' '
->>          git checkout first &&
->> -       cat pine patch1 | git am &&
->> +       git am pine patch1 &&
-> 
-> As with Junio, the semantic change made here concerned me.
+--00000000000069cd1c061304c752
+Content-Type: text/plain; charset="UTF-8"
 
-I was even more on the fence about this hunk than the others, but then 
-the test was about 'am takes patches from a Pine mailbox', not 
-specifically about reading a Pine mailbox from stdin. But I can drop 
-this hunk in v2.
+Patrick Steinhardt <ps@pks.im> writes:
 
-Cheers, Beat
+> @@ -910,6 +930,20 @@ int cmd_config(int argc, const char **argv, const char *prefix)
+>  {
+>  	given_config_source.file = xstrdup_or_null(getenv(CONFIG_ENVIRONMENT));
+>
+> +	/*
+> +	 * This is somewhat hacky: we first parse the command line while
+> +	 * keeping all args intact in order to determine whether a subcommand
+> +	 * has been specified. If so, we re-parse it a second time, but this
+> +	 * time we drop KEEP_ARGV0. This is so that we don't munge the command
+> +	 * line in case no subcommand was given, which would otherwise confuse
+> +	 * us when parsing the implicit modes.
+> +	 */
+> +	argc = parse_options(argc, argv, prefix, builtin_subcommand_options, builtin_config_usage,
+> +			     PARSE_OPT_SUBCOMMAND_OPTIONAL|PARSE_OPT_KEEP_ARGV0|PARSE_OPT_KEEP_UNKNOWN_OPT);
+> +	if (subcommand)
+> +		argc = parse_options(argc, argv, prefix, builtin_subcommand_options, builtin_config_usage,
+> +				     PARSE_OPT_SUBCOMMAND_OPTIONAL|PARSE_OPT_KEEP_UNKNOWN_OPT);
+> +
+
+I wonder if we can drop the PARSE_OPT_SUBCOMMAND_OPTIONAL in the second
+iteration to make it stricter. But this is OK.
+
+--00000000000069cd1c061304c752
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: 831ccff3c59d5c46_0.1
+
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1YbzRsQVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mekZLQy93UFhZbCtwNnE5YndVYkdLOHM1RjJYUWVBUgpJcG85NGs3Wkpa
+YklGeDBBVUVqZkpwdXROcStCNkp6MWVNQXk3RlhFd2JLcTZIQUJTbHg4ci82cTFUUkJpT1hNClhV
+ajFWMk1teXJrMlRqb0JBbnpERTVaQUd6bWZQVUpacFp5dEVvUExrc0tKUytvL0k3cFVvKzZPSldu
+dmZjT0oKT0hvWTVkUXE2Z2tXMXJrUitCKzg5U0E1bE1xbCtFWEhvMzVOS0dwVWNVNDNNNjNHZXQ5
+UmEwYU43aGNuTEZyNwpOZldweHh2U1IxQzJtcXJTYTBOd3NtK2lxK05QemM4ekZSaERldS8rZTBu
+MUZlSFJveWNlU2VZdzhUaGtOb2VyCmY2eEY2RkRmekJxVXREQU5RYWZJWEE3aXBHM3ZvaEJsTGZz
+VzhWa0VOTjVLcGNIVTFlTURHTTI0Vys1L0tRdjEKYUlJZXc1WU9MalVINnBMQkJOZDVKU0V6Nm9F
+N0M0dHFzMS9DS0tIdWR5VXd4OTFwNFA4SGRLUVhpSUxYdnFwQwpKWGsyY1d6TWpvVkMyYUk3UVNx
+aWwyS3g2OUh5ZTZodEVrVzZRQ1NtYVNBakY1Z1N2NUduR0FKTkxqTmsyK0gwCk50cHVEanZBOC9s
+TlNkNTNlNS9KeDcvb2dreWVCZ3JaRThTaytaZz0KPTE5SlIKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--00000000000069cd1c061304c752--
