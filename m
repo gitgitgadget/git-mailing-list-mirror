@@ -1,120 +1,92 @@
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+Received: from wfhigh6-smtp.messagingengine.com (wfhigh6-smtp.messagingengine.com [64.147.123.157])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D17C1B94B
-	for <git@vger.kernel.org>; Wed,  6 Mar 2024 21:57:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82E071C68F
+	for <git@vger.kernel.org>; Wed,  6 Mar 2024 22:50:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709762255; cv=none; b=DuLA35/MmjexVcBoCqWY5Pe8zFI/J7CLpoEu1CqtFML0utJHf+FJtY7BYKn4Ij4ScqznVRaeFnS9C4msS3MVIfUwObXffFU+/bwlU0XX9eTMrwjXN3Y573qFQXQMTR2pYM014V3Ffp+wjvYBuJ5nFbUqF+yd6d6wS58kA8SeKW8=
+	t=1709765402; cv=none; b=iheDsDdMed9ff7SAhrr2++VmyJ5PFTC1Dha6FeQjZdjJ7KWrnlzhOC8740mc2DtJpbwR9j4WalRhsDBAph2fxcQzILWw47i/tdDd5iO6B5aPVRJ7RT/6rAYAK0gc/WXGkzQojH3JkDO3BCgW/Xbe1JKxMZIS3aUlSn4+uETeVCY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709762255; c=relaxed/simple;
-	bh=c/RM3dB16M13ZE0aBPDs8w6AFq4YdZf/cxXfNsKEiWE=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=kEFs7w/gDfq4EmxDivOE8TAUgyKCFqUAt943uoe9ps4xgJi3c3wy6pprhCu8zRYMtYV4ONq4DFvh3dkiawfYdFNr158bhtnRl+AcZ+yxvrQxk0MMK2QhNDo5QoXrkmAQA/E2nX8SuyskzuoeNhgV2FyzEiOOmvmPXeMPAcdQa+Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=X7VWJIsd; arc=none smtp.client-ip=64.147.108.71
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1709765402; c=relaxed/simple;
+	bh=yrS2EEDTEHdUyNOGpnKM7cTJcR7mtFjolAebX1a3V68=;
+	h=MIME-Version:Message-Id:In-Reply-To:References:Date:From:To:Cc:
+	 Subject:Content-Type; b=aBVNl+PE80ofKTE4LzcSw7aXItdRh4VyvFE+lQneKqwKaB3FfFLHUTWQfAV17FSTgElVMWo3NmibOfQqRGZuS6TkmdnUGuoEpUtQRowkVmG8Jtbl6+3YOmSesu+j7w4grN3bA6o0yW4+3zKyBwbYWdGM0jQ5/VliraE2RFEKAlo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=khaugsbakk.name; spf=pass smtp.mailfrom=khaugsbakk.name; dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b=Po1od2Cp; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=glGvhR3S; arc=none smtp.client-ip=64.147.123.157
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=khaugsbakk.name
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=khaugsbakk.name
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="X7VWJIsd"
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 171661DB436;
-	Wed,  6 Mar 2024 16:57:33 -0500 (EST)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=c/RM3dB16M13ZE0aBPDs8w6AFq4YdZf/cxXfNs
-	KEiWE=; b=X7VWJIsd+L6V7RjCazKM7JkWSlvK6azRAL7JPYZJMD6X/1GhRIfWmK
-	h6SvwpZ+/t5+N5ybQgMu1h+/vO6SSK82MxmrQjXrmBSifbMFz0hjW8UDasJ9JI4D
-	g201U/njkWc1olMAeJxiZmyi/GqJMJ3EaIKSHG5V9XjGWZbNwjOlc=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 0C7BC1DB435;
-	Wed,  6 Mar 2024 16:57:33 -0500 (EST)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.185.65])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 680AC1DB434;
-	Wed,  6 Mar 2024 16:57:32 -0500 (EST)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Josh Steadmon <steadmon@google.com>
-Cc: Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>,
-  git@vger.kernel.org,  Jeff Hostetler <jeffhostetler@github.com>
-Subject: Re: [PATCH 4/4] trace2: remove unneeded calls to generate
- 'def_param' set
-In-Reply-To: <ZejkVOVQBZhLVfHW@google.com> (Josh Steadmon's message of "Wed, 6
-	Mar 2024 13:47:00 -0800")
-References: <pull.1679.git.1709566808.gitgitgadget@gmail.com>
-	<e8528715ebf97c12622c2e73f914ab4228a0927c.1709566808.git.gitgitgadget@gmail.com>
-	<ZejkVOVQBZhLVfHW@google.com>
-Date: Wed, 06 Mar 2024 13:57:31 -0800
-Message-ID: <xmqqwmqfowfo.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b="Po1od2Cp";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="glGvhR3S"
+Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
+	by mailfhigh.west.internal (Postfix) with ESMTP id 6F67A18000A8;
+	Wed,  6 Mar 2024 17:49:59 -0500 (EST)
+Received: from imap49 ([10.202.2.99])
+  by compute1.internal (MEProxy); Wed, 06 Mar 2024 17:49:59 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=khaugsbakk.name;
+	 h=cc:cc:content-transfer-encoding:content-type:content-type
+	:date:date:from:from:in-reply-to:in-reply-to:message-id
+	:mime-version:references:reply-to:subject:subject:to:to; s=fm3;
+	 t=1709765398; x=1709851798; bh=yrS2EEDTEHdUyNOGpnKM7cTJcR7mtFjo
+	lAebX1a3V68=; b=Po1od2Cp+PFMm/iidpka6a9Y0qLaGx4CJKTnquRj4VcmQDiY
+	T5lPyzNhJFpPaiVHy1lJsIk36ADvYl2d+qwAd+f2Ocr37DIl+HUi1RmxwLmhx6gG
+	B9NgCmsORFpOvYnQZbjUpSygfiq3Dvouo2Ly6SaogZ7HWub8l8Qv9RU3SJ8nzt8F
+	H3DGhfhjMtXFRbFEdlfDa5r+gDMUSoDWVL4a74vyyr1b0DlEJkzDSSpS2p+PxpUb
+	izx7QgfgqMsOB+yyowvntolTfOPO80ctzAXhA3lM89Zqpka2Iv45sdtij5Ej/3wR
+	JPxxOTgEOGE2AeWScGUMZFOlgCALz7sBemtBGA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1709765398; x=
+	1709851798; bh=yrS2EEDTEHdUyNOGpnKM7cTJcR7mtFjolAebX1a3V68=; b=g
+	lGvhR3Skx5ubuzreq+PTISG6WuM4lj67NM04FlwLZcW5rwDpU+DCUbrURYswXqiY
+	0o2sikFkgkM/8XJYd2+Z9Om4jjHBaGmy2qbvPpTKhDBpNwLFRwDS3EFbai1NTk8c
+	ChOfKdA5WoQOu08TsHfzlf6CIOrTPQzixDfausy49UbtY4AodussODZmXmd2cl4d
+	k2SuMOhLwZJZjizBA+egVw39Jmk4B6HUmGQsMIA5ScVCaFDe0HpxMpQ7r1Y32Elt
+	JasPd7eI2h5ZlRy83xIJeFUmUEjSOYG3gaUQn5WTlAxNJ2zVaFFobYhtSp7YXQc1
+	xqPL4K6RHUfGxSWqurHEw==
+X-ME-Sender: <xms:FvPoZXQ6Ayx0zwZS3Y4txbtgHwvaNHhTdmL7qgn6aj1iozN2aFYDxQg>
+    <xme:FvPoZYw3ymat2cdgP3_UHzevs_Nuh3Z_dQOg6Lklgk2gELwqI-jagSE4C_H9Gx51U
+    fBT3DJRZibFCQ_QZQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledriedvgddtvdcutefuodetggdotefrodftvf
+    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
+    uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
+    fjughrpefofgggkfgjfhffhffvvefutgfgsehtqhertderreejnecuhfhrohhmpedfmfhr
+    ihhsthhofhhfvghrucfjrghughhssggrkhhkfdcuoegtohguvgeskhhhrghughhssggrkh
+    hkrdhnrghmvgeqnecuggftrfgrthhtvghrnhepvdevheeiudefheffvdetueevkeehhfel
+    iefgkedtieefudetueehueeftefffedunecuvehluhhsthgvrhfuihiivgeptdenucfrrg
+    hrrghmpehmrghilhhfrhhomheptghouggvsehkhhgruhhgshgsrghkkhdrnhgrmhgv
+X-ME-Proxy: <xmx:FvPoZc3GcQYLQHIQe6UOmXCMIEiAVpPbgLX4QRjU_7NMl_ePylteWA>
+    <xmx:FvPoZXA_7UaVgBosQftopnpzmW2-GGFu4kaN3MeAy9-QUDhvoIaAOQ>
+    <xmx:FvPoZQhnhjGgJeMvcOpGSpwGTsrLTcUSwjlWSB0sHz0ADca8OEXq2w>
+    <xmx:FvPoZcbIglXps8RKpyHvxZywbPptskTuwLlytDGrqg3rWlwGvtxon2hhPoQ>
+Feedback-ID: i2671468f:Fastmail
+Received: by mailuser.nyi.internal (Postfix, from userid 501)
+	id A97D915A0092; Wed,  6 Mar 2024 17:49:58 -0500 (EST)
+X-Mailer: MessagingEngine.com Webmail Interface
+User-Agent: Cyrus-JMAP/3.11.0-alpha0-251-g8332da0bf6-fm-20240305.001-g8332da0b
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- 889406A2-DC04-11EE-AB41-25B3960A682E-77302942!pb-smtp2.pobox.com
+Message-Id: <6d01b506-f3ce-4485-b9b1-c5d3ac976c00@app.fastmail.com>
+In-Reply-To: <cover.1709724089.git.ps@pks.im>
+References: <cover.1709724089.git.ps@pks.im>
+Date: Wed, 06 Mar 2024 23:49:38 +0100
+From: "Kristoffer Haugsbakk" <code@khaugsbakk.name>
+To: "Patrick Steinhardt" <ps@pks.im>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 0/8] builtin/config: introduce subcommands
+Content-Type: text/plain;charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-Josh Steadmon <steadmon@google.com> writes:
+Wow, this is great. I=E2=80=99ve always found git-config a bit hard to u=
+se.
 
-> On 2024.03.04 15:40, Jeff Hostetler via GitGitGadget wrote:
->> From: Jeff Hostetler <jeffhostetler@github.com>
->> 
->> Now that "trace2_cmd_name()" implicitly calls "trace2_cmd_list_config()"
->> and "trace2_cmd_list_env_vars()", we don't need to explicitly call them.
->> 
->> Signed-off-by: Jeff Hostetler <jeffhostetler@github.com>
->> ---
->>  git.c | 6 ------
->>  1 file changed, 6 deletions(-)
->> 
->> diff --git a/git.c b/git.c
->> index 7068a184b0a..a769d72ab8f 100644
->> --- a/git.c
->> +++ b/git.c
->> @@ -373,8 +373,6 @@ static int handle_alias(int *argcp, const char ***argv)
->>  			strvec_pushv(&child.args, (*argv) + 1);
->>  
->>  			trace2_cmd_alias(alias_command, child.args.v);
->> -			trace2_cmd_list_config();
->> -			trace2_cmd_list_env_vars();
->>  			trace2_cmd_name("_run_shell_alias_");
->>  
->>  			ret = run_command(&child);
->> @@ -411,8 +409,6 @@ static int handle_alias(int *argcp, const char ***argv)
->>  		COPY_ARRAY(new_argv + count, *argv + 1, *argcp);
->>  
->>  		trace2_cmd_alias(alias_command, new_argv);
->> -		trace2_cmd_list_config();
->> -		trace2_cmd_list_env_vars();
->>  
->>  		*argv = new_argv;
->>  		*argcp += count - 1;
->> @@ -462,8 +458,6 @@ static int run_builtin(struct cmd_struct *p, int argc, const char **argv)
->>  
->>  	trace_argv_printf(argv, "trace: built-in: git");
->>  	trace2_cmd_name(p->cmd);
->> -	trace2_cmd_list_config();
->> -	trace2_cmd_list_env_vars();
->>  
->>  	validate_cache_entries(the_repository->index);
->>  	status = p->fn(argc, argv, prefix);
->> -- 
->> gitgitgadget
->> 
->
-> I'd personally prefer to see this squashed into Patch 3, but I don't
-> feel too strongly about it. Either way, the series LGTM.
->
-> Reviewed-by: Josh Steadmon <steadmon@google.com>
+Thanks for this.
 
-Let's see what JeffH says about this.  I agree with you that making
-some stuff redundant in [Patch 3/4] and fixing the redundancy in
-this step does feel somewhat roundabout way of doing this.
-
-Thanks.
+--=20
+Kristoffer Haugsbakk
