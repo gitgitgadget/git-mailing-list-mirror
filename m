@@ -1,91 +1,144 @@
-Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B58B63AC
-	for <git@vger.kernel.org>; Wed,  6 Mar 2024 01:10:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C105D2F7
+	for <git@vger.kernel.org>; Wed,  6 Mar 2024 01:23:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709687451; cv=none; b=cKwgIn1Ly8hhQs62bouGZfQsHdISlisqNDzujXnbfbZ1fO5LlEY90fjcKMQo7vqUNESiR/FqDpJ7tptI+NQfFniC/3JdiWo5JplhrHk9n7ivyRlXIwFt9GrPEnG0fsTZFx1Etsc1QBq+OXWNKtNcJmdFmwewSdk+CSqEoVPTk4c=
+	t=1709688207; cv=none; b=p3athky7u7evOCKN8QEwqOMEC4JKBc8SmXV7BvX57aKuw+d8QUPmFHdSyTPmHiH6u9Ln+Gp+I9H5zI4QAkBNHNdHIuqnhk95q7XkabG5vRUuO8b1Sg9oqklz+Q2DV6P6K3pjtd9B6cOwcjxkPx9Wt+Ncg6kARUMnzOgiltFGBhU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709687451; c=relaxed/simple;
-	bh=8HWzg0X5YV9pclWJ5FslO+Vl++TZdkONV3b08TCvCLI=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=AS/aonKgtbnK3AUr+8Az9q5y+lrpJc/NjRyodZGqte03MzyZoOaVI3KJ7m6MqBTSHiZDPd7FViNuIUnjWaJ6IPM/ZTKX4PipaXN9+tQ/c1yh6m0q3tLboEIz9fZRIC/hq90HPMk2jzhIKUZE5PbDfQQMxrvNnaSjfwQ4PkMG6pE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=BeqbGXfA; arc=none smtp.client-ip=209.85.128.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BeqbGXfA"
-Received: by mail-wm1-f51.google.com with SMTP id 5b1f17b1804b1-412e84f501dso3644055e9.0
-        for <git@vger.kernel.org>; Tue, 05 Mar 2024 17:10:49 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1709687448; x=1710292248; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=1gAHFUHMznJNBkNG88pyfGoKAdGdAFHSVCwiafcBBXM=;
-        b=BeqbGXfAQikQvZUbgUtJTTqryi7u0qSUrnx9dk5+cFXkvPR+ebP2PMzCtuc3G+Rwvq
-         e4wcSvmdyi5QckLO1bxXGJs/F0ia8lzKA5B2M+tEH8O48CLF0FsHtRWGoXm5TatkjS64
-         VcP9ygEPA76Epn8V8fVHGnt75X+HBdJf0MBi6Lq8eptQ9i1ukY1DAQBUPYkswY8vyytr
-         2LgvmgihD30GsW6U7xLxxwibXGQ/aJBCKVV85w9Vd6vaMWlBqFhaL61XyAPnk1wchb8G
-         NuxRGXTH4Zgng9a/EQM6KKURaaD6ZmeQ9GHmyan1zRGonYx8qRARGKM+vAuy1rCVRoOL
-         EX1Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1709687448; x=1710292248;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=1gAHFUHMznJNBkNG88pyfGoKAdGdAFHSVCwiafcBBXM=;
-        b=H4HIYofYZOgf2ZHMRrqpZlIvDF01MzJLpNHzK4RE8zNq2LUzpdHb24MojuE7czetVQ
-         3p90v+OI0tYaH2ZMW3it00Ea31EBOi3JLTMi35l/yubPxry4q+xA7M0eKS478Av09WrZ
-         h8cOuGi+hSJUxLPrC79Is/bjsIGY8nbQwAEMSDZ+am1dc9aApvd49HPPsvyb1Yesb/ql
-         tdn5kzhp7uU18ygtM7s/BBVp2Skb/0pzw8V76LrpBJrWcmxMAHZqz7O+BXVP5/0fr9Te
-         mnvYr3RvkCkDLmT7bcbR/ZUNN2Sm+3I+Nvz/qq+7xODkvue+kfiBGu4Ui9lPmYO1HHmB
-         YKPQ==
-X-Forwarded-Encrypted: i=1; AJvYcCXk79QPu4db/+XqM4lixAyARYKMr1lO3+ZMOD2+dd2mwdjcz5z86LVehw18FZ/Y7jryy0QygGC3VWCG1JEXdBgqyVqq
-X-Gm-Message-State: AOJu0YzwDBQbViX5Heq8C9HSC/p5ISQ4LZ0DhuMzkdQrBHWh1FPgqGWo
-	oW/nS+gEev6ydNl5SEcMxx0xxYKvjPLrCwCGX14ATjmsfX5PvKfI
-X-Google-Smtp-Source: AGHT+IEqeOK8jVyOvIAj9cuTZy5lRKyPfbTLoLT18to3Ae9+u4MHcpXm0gKYYjiWPFxn77xSvhGJ1Q==
-X-Received: by 2002:a05:600c:4e0d:b0:412:e2a9:a44e with SMTP id b13-20020a05600c4e0d00b00412e2a9a44emr6068976wmq.21.1709687448228;
-        Tue, 05 Mar 2024 17:10:48 -0800 (PST)
-Received: from gmail.com (26.red-88-13-46.dynamicip.rima-tde.net. [88.13.46.26])
-        by smtp.gmail.com with ESMTPSA id m9-20020a05600c3b0900b0041294d015fbsm19317567wms.40.2024.03.05.17.10.46
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 05 Mar 2024 17:10:47 -0800 (PST)
-Message-ID: <c69350a7-027f-4834-8a6d-ff0e0632ce6c@gmail.com>
-Date: Wed, 6 Mar 2024 02:10:43 +0100
+	s=arc-20240116; t=1709688207; c=relaxed/simple;
+	bh=Q6otX8IetemkF39w9XPypBdlARvb+3faBjuLsBomqWc=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=SZR3Ow06Pbzc6r5ItBebS0MSszNWS8MEfhZ/UhK1KSNdGM1xVZWPbAVCS5ZmCCxohS4eKgu+J044XTCzjRgpUK3Xea3I/5qDqlShMyqjrcKHCclOqUXbXI9Sqr5zaby2cp/CdRNbro2fvr8VV2QK+JEJEDZJOprU3eQfg6ZSd04=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+Received: (qmail 23020 invoked by uid 109); 6 Mar 2024 01:23:24 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 06 Mar 2024 01:23:24 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 30641 invoked by uid 111); 6 Mar 2024 01:23:26 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 05 Mar 2024 20:23:26 -0500
+Authentication-Results: peff.net; auth=none
+Date: Tue, 5 Mar 2024 20:23:23 -0500
+From: Jeff King <peff@peff.net>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Atneya Nair <atneya@google.com>, git@vger.kernel.org,
+	jeffhost@microsoft.com, me@ttaylorr.com, nasamuffin@google.com,
+	Tanay Abhra <tanayabh@gmail.com>, Glen Choo <glencbz@gmail.com>
+Subject: Re: [RFC PATCH 2/3] Make ce_compare_gitlink thread-safe
+Message-ID: <20240306012323.GA3817803@coredump.intra.peff.net>
+References: <20240305012112.1598053-2-atneya@google.com>
+ <20240305012112.1598053-4-atneya@google.com>
+ <xmqqwmqg38u2.fsf@gitster.g>
+ <xmqqsf141pf5.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 14/22] t/t9*: avoid redundant uses of cat
-Content-Language: en-US
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Beat Bolli <bb@drbeat.li>, git@vger.kernel.org,
- Beat Bolli <dev+git@drbeat.li>
-References: <20240305212533.12947-1-dev+git@drbeat.li>
- <20240305212533.12947-15-dev+git@drbeat.li>
- <8b9667e5-0d2f-4624-8f7c-f8400250a21e@gmail.com> <xmqqwmqgw5oq.fsf@gitster.g>
-From: =?UTF-8?Q?Rub=C3=A9n_Justo?= <rjusto@gmail.com>
-In-Reply-To: <xmqqwmqgw5oq.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqsf141pf5.fsf@gitster.g>
 
-On Tue, Mar 05, 2024 at 04:43:33PM -0800, Junio C Hamano wrote:
-> Rubén Justo <rjusto@gmail.com> writes:
-> 
-> >>  	git ls-tree L2 g/b/ >tmp &&
-> >> -	cat tmp | cut -f 2 >actual &&
-> >> +	cut -f 2 <tmp >actual &&
-> >>  	test_cmp expect actual &&
-> >
-> > Nit: Maybe we can avoid tmp.
-> 
-> Piping "git ls-tree" output to "cut" would hide the exit status of
-> "git ls-tree" if it fails, which is not a good idea, so I do not
-> think of a way to avoid tmp so easily.
+On Tue, Mar 05, 2024 at 10:53:02AM -0800, Junio C Hamano wrote:
 
-Right.  Thanks for pointing that out.
+> Junio C Hamano <gitster@pobox.com> writes:
+> 
+> > The use of strintern() comes originally from 3df8fd62 ...
+> > ..., so they may
+> > know how safe the change on the config side would be (I still do
+> > not understand why you'd want to do this in the first place, though,
+> > especially if you are protecting the callsites with mutex).
+> 
+> The risks of turning code that uses strintern() to use strdup() are
+> 
+>  * you will leak the allocated string unless you explicitly free the
+>    string you now own.
+> 
+>  * you may consume too much memory if you are creating too many
+>    copies of the same string (e.g. if you need filename for each
+>    line in a file in an application, the memory consumption can
+>    become 1000-fold).
+> 
+>  * the code may be taking advantage of the fact that two such
+>    strings can be compared for (in)equality simply by comparing
+>    their addresses, which you would need to adjust to use !strcmp()
+>    and the like.
+
+There is one more, I think: if you _do_ free the allocated string to
+avoid the leak you mention, then some other code which was relying on
+the lifetime of that string to be effectively infinite will now have a
+user-after-free.
+
+And I think that may be the case here. The "kvi" struct itself is local
+to do_config_from(). But when we load the caching configset, we do so in
+configset_add_value() which makes a shallow copy of the kvi struct. And
+then that shallow copy may live on and be accessed with further calls to
+git_config().
+
+So doing just this:
+
+diff --git a/config.c b/config.c
+index 3cfeb3d8bd..2f6c83ffe7 100644
+--- a/config.c
++++ b/config.c
+@@ -1017,7 +1017,7 @@ static void kvi_from_source(struct config_source *cs,
+ 			    enum config_scope scope,
+ 			    struct key_value_info *out)
+ {
+-	out->filename = strintern(cs->name);
++	out->filename = xstrdup(cs->name);
+ 	out->origin_type = cs->origin_type;
+ 	out->linenr = cs->linenr;
+ 	out->scope = scope;
+@@ -1855,6 +1855,7 @@ static int do_config_from(struct config_source *top, config_fn_t fn,
+ 
+ 	ret = git_parse_source(top, fn, &kvi, data, opts);
+ 
++	free((char *)kvi.filename);
+ 	strbuf_release(&top->value);
+ 	strbuf_release(&top->var);
+ 
+
+will cause t4013.199 (among others) to fail when built with
+SANITIZE=address, as it detects the user-after-free. I think you'd need
+this on top:
+
+diff --git a/config.c b/config.c
+index 2f6c83ffe7..9854ca002d 100644
+--- a/config.c
++++ b/config.c
+@@ -2262,6 +2262,7 @@ static int configset_add_value(const struct key_value_info *kvi_p,
+ 	l_item->value_index = e->value_list.nr - 1;
+ 
+ 	*kv_info = *kvi_p;
++	kv_info->filename = xstrdup_or_null(kvi_p->filename); /* deep copy! */
+ 	si->util = kv_info;
+ 
+ 	return 0;
+
+though probably an actual kvi_copy() function would be less horrible.
+
+A few other things to note, looking at this code:
+
+  - isn't kvi->path in the same boat? We do not duplicate it at all, so
+    it seems like the shallow copy made in the configset could cause a
+    user-after-free.
+
+  - the "fix" I showed above hits your point 2: now we are making a lot
+    more copies of that string. I will note that we're already making a
+    lot of copies of the kvi struct in the first place, so unless you
+    have really long pathnames, it probably isn't a big difference.
+
+    But it possibly could make sense to have the configset own a single
+    duplicate string, and then let the kvi structs it holds point to
+    that string. But IMHO all of this should be details of the configset
+    code, and the main config-iteration code should not have to worry
+    about this at all. I.e., I think kvi_from_source() should not be
+    duplicating anything in the first place.
+
+-Peff
