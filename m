@@ -1,108 +1,125 @@
-Received: from fout6-smtp.messagingengine.com (fout6-smtp.messagingengine.com [103.168.172.149])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f46.google.com (mail-lf1-f46.google.com [209.85.167.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD2B91CD16
-	for <git@vger.kernel.org>; Thu,  7 Mar 2024 07:59:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF7043A8E4
+	for <git@vger.kernel.org>; Thu,  7 Mar 2024 08:22:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709798392; cv=none; b=ktmG7RX9o+LUF2n6fdm3LDid40ceqw31JOjBlyXIofVdG2snTkB1AI/GEt/mLw5WDvEvLXfbGXKm7Pk8yTyQJ+XlhENf2RPjiYFsJOC6kMuTuk2PB0mqIUcZ5jQxCv/H9AmzF88amqg19TevcWlsTiyCpImt0CK1JvY6Cew/dDQ=
+	t=1709799768; cv=none; b=gajm8u+dcWDX+YMCsroAONALAf9m7OQbhltnOTwjyAlZNgln3//eSERg3QkRWeCE8X24f7r7afOCDolAM8E2brYCF5uFHqIU1yQJv0WY//MGrmG016R+eso0JjRNSnQM0cMnc6QI6SD40gdAkPWuZGZBVDIFp3vehk/jN1kxjr0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709798392; c=relaxed/simple;
-	bh=hKgD3y/A1t8YjbrtQWr0v66EgX/utuNuN8DFtW/puTI=;
-	h=MIME-Version:Message-Id:In-Reply-To:References:Date:From:To:Cc:
-	 Subject:Content-Type; b=Zmiqy0tjjET1fMC2eOh3vDlXxKMv9Xu+8Ien5OhynP2czyNFAJWcfCtn/U8yIeelUzfufLSpoucyOQM8tMwYqneguQIyK/A+htzfR4LxWIbZguRY4+aeWxtRvxBoOtIf9UPImu1ohupXrn8odgXpPDK7YQ0B7dkJtc6F080nD6g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=khaugsbakk.name; spf=pass smtp.mailfrom=khaugsbakk.name; dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b=B+u2eDAL; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Tc52cwrF; arc=none smtp.client-ip=103.168.172.149
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=khaugsbakk.name
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=khaugsbakk.name
+	s=arc-20240116; t=1709799768; c=relaxed/simple;
+	bh=i+XPtjBLWdB/mUH2+x3uGEkpFmhmTtEke+T3BOgfuGs=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=Iidv3/yPN/S7mo2Gy/Q+h7jEuah9Aek3J6S/DSFViEWhxLUoi7EDAK8LcMisBxgZW4W5krEhLNOBEPUsfkqISG4FiARs1lGj8QoazPVh7i77L421nzExPzmrx8dgK78DkHB70wW9+b2ztn1R2TJFhD+y2I2I8M64dHKn7wqdtZ0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=d+7W3f9V; arc=none smtp.client-ip=209.85.167.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b="B+u2eDAL";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Tc52cwrF"
-Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
-	by mailfout.nyi.internal (Postfix) with ESMTP id BB45613800F9;
-	Thu,  7 Mar 2024 02:59:48 -0500 (EST)
-Received: from imap49 ([10.202.2.99])
-  by compute1.internal (MEProxy); Thu, 07 Mar 2024 02:59:48 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=khaugsbakk.name;
-	 h=cc:cc:content-transfer-encoding:content-type:content-type
-	:date:date:from:from:in-reply-to:in-reply-to:message-id
-	:mime-version:references:reply-to:subject:subject:to:to; s=fm3;
-	 t=1709798388; x=1709884788; bh=UpPV7PCkgbBWdIAUiUpYD/N2T+jtDeaZ
-	iRtEGXuU3LQ=; b=B+u2eDALnTiR2VlFpJMYxQDOdVd4BWJFiQH+7I+HzDyXmEnw
-	bsm89laPcl3b2YJqwv92ZJlGRE5uWZPfSoR7load85Fh+d+bIMqmO2Acm6TEtYVi
-	5cm9jVyYGIaQSilBdong1fUeV69fxtz2b2Lz9viICnZORtYi2tQJXben2w3TvsrW
-	HvmBPak5c0OHRZGNfI1LzlrS2hticucncLO+QBJwgIQGiQvdwWN1chIBYuQ0ze7P
-	vqaKjzhSk6RGUe9gYYv9XXFLsSbCYXjLMstfIk9sxM8ydcfPR1x0Kz+vLQO/HVKA
-	OL0LjMCL9ptIw+VinCUBecfmieVqT/tNobhyrA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1709798388; x=
-	1709884788; bh=UpPV7PCkgbBWdIAUiUpYD/N2T+jtDeaZiRtEGXuU3LQ=; b=T
-	c52cwrF83k/0Ib/RIvngvqHeTHZCJ2tkRraEqggn0WfS+rJM1rmxo4yCbHRmKw/W
-	RJkl8fpsHSpPQHDdZrYI2i0CQ1BKSdN+jAWFjqJYc2rdipq0cBLRVrWu5ymH/7Wh
-	fz3Vz4zJwQCL21mhT0/tLWjKthe93PkVdUdyTW1IuRJfhX1+Pk3BSGg99MRQazBp
-	aqtM9At9xVqoYm4nzp8YKTXWaZN/tEYzNu4pA0wetWNFyGeAQcT4srrgD4c8Lw+X
-	W2wxrMM9gea++1TeDyJDWUVsaoBAWJu/SilJoEJeag45dR8a4Loe9EueAabE75KU
-	wiReAvR12O0b5HsnO6a0w==
-X-ME-Sender: <xms:9HPpZciD3Tl8wWvEz1S-QNjeBc0u9XJ4U1sqXFlNVYSN4fEJtM7A8h0>
-    <xme:9HPpZVDoDNxnV3HY6ggAX-cuu4qWQuWhrZPTDdxKrvEo-VrHB5IokW6_houMMGtkh
-    DfrhzS3ZYJUSPuysQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledriedvgdduuddvucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    cujfgurhepofgfggfkjghffffhvfevufgtgfesthhqredtreerjeenucfhrhhomhepfdfm
-    rhhishhtohhffhgvrhcujfgruhhgshgsrghkkhdfuceotghouggvsehkhhgruhhgshgsrg
-    hkkhdrnhgrmhgvqeenucggtffrrghtthgvrhhnpedvveehiedufeehffdvteeuveekhefh
-    leeigfektdeifeduteeuheeufeetffefudenucevlhhushhtvghrufhiiigvpedtnecurf
-    grrhgrmhepmhgrihhlfhhrohhmpegtohguvgeskhhhrghughhssggrkhhkrdhnrghmvg
-X-ME-Proxy: <xmx:9HPpZUEiV8vMl3DFmG2wtX-pSXhRm6eDPzFOZJjGadEfQQ7YJOQvOA>
-    <xmx:9HPpZdRnrxPJl6ASd3fcb2bScmcqVIl9VtImmPHBkYX_gMA662LwIg>
-    <xmx:9HPpZZxxq8TcSO8LJiTeC_zdAcvQuTSLnwk7PVT9Yb8-mTu3VpHoHA>
-    <xmx:9HPpZcqQ5lg1x5rH2qzEjberlzR2e1P8y9a93qlv6AVXQVkalENZaQ>
-Feedback-ID: i2671468f:Fastmail
-Received: by mailuser.nyi.internal (Postfix, from userid 501)
-	id 2BFD315A0092; Thu,  7 Mar 2024 02:59:48 -0500 (EST)
-X-Mailer: MessagingEngine.com Webmail Interface
-User-Agent: Cyrus-JMAP/3.11.0-alpha0-251-g8332da0bf6-fm-20240305.001-g8332da0b
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="d+7W3f9V"
+Received: by mail-lf1-f46.google.com with SMTP id 2adb3069b0e04-512f54fc2dbso535569e87.1
+        for <git@vger.kernel.org>; Thu, 07 Mar 2024 00:22:46 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1709799765; x=1710404565; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=GEsikK/PMj5YxDZUOtbsrgPiFSyz1UST5o/mRNYq2so=;
+        b=d+7W3f9VuwpWKHHTKZ2KrbL9UgRGicw+nwrQoa3+UcqHIzoUyDkBLU1lTYUULynt8f
+         Nn/RQamqg+j+GoY+CsgJfXrasjuzLyyj1P9IEAvG5N2RWjxcbuuJY9UloXxlcgxNCaxe
+         gf3fGQmmUWgOyWj148pAa12Rx03VlMnl0HbkwDu485vJx4+bgjnWwVJj2R6IxfSTJfVs
+         Jxeci9Fd2seqwA800CPyIfh9JQ8Cvq3ZqMypn+8qq3Svibi3AK81bKEKitKbfXIu8no7
+         PoH8bAqGaVtcIFnQ+NIflgEBHLmKJyMbhbksL7jrIfw/b0+MHnCZCmGJ76No1KZ4m4BC
+         H10Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1709799765; x=1710404565;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=GEsikK/PMj5YxDZUOtbsrgPiFSyz1UST5o/mRNYq2so=;
+        b=otC/5IgX7YupeZ9mmWcvOHojhOpbnnIgHT+ETlM1X0nQjg22r5lRmYjN2LMgxSw4k1
+         +rWM/o5Ko9Y+lX7vyGrbaR61NyRe8vPxcDBJNteBkDszk/tdRKrqyNZA1r5aHTTIvBZa
+         54590dZige9We/CQSr5No/30cjtNUA62ccc7R3VqOh90agCEqeBZu8h3RP7vXu4Vtl+L
+         1+A086bQSIx4V2FdeDFFbMNC4AR6rpo64znYeAhsDGYvvdyTqSpWh/02QwU9WwKzB2ch
+         TKxYApZ54XkkHi/MM9ICS1CKt9soqF/IEtE1kRx1IG4t9dGoo4J98KfiWElbqMSAIqV9
+         aSlw==
+X-Forwarded-Encrypted: i=1; AJvYcCWhB2NVgx7MU/wT4lQ6bNXl6byhYxSpU9vK5bIIGpLPLXjXuc7Vm1XD15WR+irRybQIadccOOVxJVjURe+j39UHV2K8
+X-Gm-Message-State: AOJu0Yxtu/QL2Jmd7p3v5wmAEzNgbcBshnPzpP6tGDvepjAS2H62EJm0
+	ZOOrNZZsXtvKMI1fXvm97UuAQShoxZhiTBJAJA9GlB/bR3+bg1+5E4mLZY/72N5r4t9CeexWj9Z
+	/mm5R9C/mBt79D2oN7TM1ZSkN9r4=
+X-Google-Smtp-Source: AGHT+IFMrQCHCAHg8/MZl/0p5fq+m8xbiYt/ie4fJ4MPuBnJJA7IKpQb7XfGzgHbNJHeqqS7dxDxFGSW/eJAvtFSAQs=
+X-Received: by 2002:a05:6512:31cf:b0:513:3f2e:aaa8 with SMTP id
+ j15-20020a05651231cf00b005133f2eaaa8mr1097696lfe.36.1709799764496; Thu, 07
+ Mar 2024 00:22:44 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Message-Id: <25aa1b8d-79f6-4b33-be22-735a867367c0@app.fastmail.com>
-In-Reply-To: <354f9fed-567f-42c8-9da9-148a5e223022@haller-berlin.de>
 References: <adb7f680-5bfa-6fa5-6d8a-61323fee7f53@haller-berlin.de>
- <354f9fed-567f-42c8-9da9-148a5e223022@haller-berlin.de>
-Date: Thu, 07 Mar 2024 08:59:27 +0100
-From: "Kristoffer Haugsbakk" <code@khaugsbakk.name>
-To: "Stefan Haller" <lists@haller-berlin.de>
-Cc: "Derrick Stolee" <derrickstolee@github.com>,
- "Elijah Newren" <newren@gmail.com>,
- "Phillip Wood" <phillip.wood123@gmail.com>,
- "Christian Couder" <christian.couder@gmail.com>, git@vger.kernel.org
+ <354f9fed-567f-42c8-9da9-148a5e223022@haller-berlin.de> <25aa1b8d-79f6-4b33-be22-735a867367c0@app.fastmail.com>
+In-Reply-To: <25aa1b8d-79f6-4b33-be22-735a867367c0@app.fastmail.com>
+From: Elijah Newren <newren@gmail.com>
+Date: Thu, 7 Mar 2024 00:22:31 -0800
+Message-ID: <CABPp-BG6FZkiiFAT1YC_POqeWrKESmh5a1Sf1vUUQ2QvBYL8xg@mail.gmail.com>
 Subject: Re: Should --update-refs exclude refs pointing to the current HEAD?
-Content-Type: text/plain;charset=utf-8
+To: Kristoffer Haugsbakk <code@khaugsbakk.name>
+Cc: Stefan Haller <lists@haller-berlin.de>, Derrick Stolee <derrickstolee@github.com>, 
+	Phillip Wood <phillip.wood123@gmail.com>, Christian Couder <christian.couder@gmail.com>, 
+	git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Tue, Mar 5, 2024, at 08:40, Stefan Haller wrote:
-> Coming back to this after almost a year, I can say that I'm still
-> running into this problem relatively frequently, and it is annoying
-> every single time. Excluding refs pointing at the current head from
-> being updated, as proposed above, would be a big usability improvement
-> for me.
+Hi,
 
-Sounds like a ref-stash command is in order=E2=80=A6
+On Wed, Mar 6, 2024 at 11:59=E2=80=AFPM Kristoffer Haugsbakk
+<code@khaugsbakk.name> wrote:
+>
+> On Tue, Mar 5, 2024, at 08:40, Stefan Haller wrote:
+> > Coming back to this after almost a year, I can say that I'm still
+> > running into this problem relatively frequently, and it is annoying
+> > every single time. Excluding refs pointing at the current head from
+> > being updated, as proposed above, would be a big usability improvement
+> > for me.
+>
+> Sounds like a ref-stash command is in order=E2=80=A6
 
-    # I want a new branch
-    git checkout -b new
-    # But I don=E2=80=99t want it to be affected by the next rebase
-    git ref-stash push
-    git rebase [...]
-    # Now I=E2=80=99m done: put the ref back where it was
-    git ref-stash pop
+A what?
 
---=20
-Kristoffer Haugsbakk
+>     # I want a new branch
+>     git checkout -b new
+>     # But I don=E2=80=99t want it to be affected by the next rebase
+
+This doesn't make any sense; rebase always operates on the current
+branch, and Stefan wasn't asking for anything otherwise.  He was just
+concerned that with --update-refs, one of the other branches it also
+operated on was one he didn't want it to operate on.
+
+Perhaps you meant
+    git branch new
+for your first command?
+
+>     git ref-stash push
+>     git rebase [...]
+>     # Now I=E2=80=99m done: put the ref back where it was
+>     git ref-stash pop
+
+Leaving aside questions about how ref-stash is supposed to interact
+with each and every other command out there, and how it's supposed to
+know which branches it's operating on when you do pushes and pops...
+
+Why do we need to invent a new command, when we already have the
+reflog?  You could drop both ref-stash commands, and instead just have
+a
+   git branch -f new new@{1}
+at the end (assuming of course "git branch new" was used instead of
+your "git checkout -b new", as I suggested earlier) to put "new" back
+to where it was before the rebase.  That's fewer commands.
+
+Or, even simpler, drop the initial branch creation and both ref-stash
+commands by just not creating the branch until after the rebase.
+That'd make the entire set of commands just be:
+   git rebase --update-refs [...]
+   git branch new current_branch@{1}
+
+Plus, either solution works today and needs no new changes.
