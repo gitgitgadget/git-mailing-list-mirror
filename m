@@ -1,54 +1,41 @@
-Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+Received: from out-175.mta0.migadu.com (out-175.mta0.migadu.com [91.218.175.175])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1DF782D9C
-	for <git@vger.kernel.org>; Thu,  7 Mar 2024 12:12:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 707073233
+	for <git@vger.kernel.org>; Thu,  7 Mar 2024 12:39:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709813551; cv=none; b=XXvb9ns6CvHv/DPT2WpVtMuOnJ+/ec6HWuGceGXgjK+vq3b+uOQFlC8SY/E8uaE1QOGvRQgsOYRnXCZl3jROd/eobB3MkJ4YHDsdevMvAUuCg8RbKruIAHWHYAFzaNQi4pSbRZSgJbPL/HrDclAyXD+aXN6abxIBLsLOat3egt0=
+	t=1709815155; cv=none; b=KPi7s6Ate2Mgmxp3/yFDxxsoKyiwt3NPpT5Gn80aiCNM1yBbKgxYz+rLOBli3GbAQdq1buNj5vH74XuyyuBof3Kw7UCgUjPjtjrrz1GEGantc/+pA5096gKvwWjV4nq+/MIclRTqFiP6XGR8ErteJ7MEP09zvR7snXA/HkhJPGs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709813551; c=relaxed/simple;
-	bh=8QZazedIRS0fsoEhoYRRFLdoQf/m9gG0z0Jfx1SBFOY=;
+	s=arc-20240116; t=1709815155; c=relaxed/simple;
+	bh=o+T0pd+a354hwt9/yQPdSZXFo5trtDH6TFwiEzyC00w=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=k7BqcKgM+vhbELRA9PS0SdNqCqn7/0yDlnCj6ZeVuqmy52O16r4CLnVe4Kz6MlnBkZOvHabUJciGwS7L66tHNYDyeZOi4cxf5y6wDXKstBSUMMqIE8yiov+bdKTBLHsf6Uv4fzNh8rIPNNhV39iQacaHrLME7Top5rYfqQR+Iq8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=FnW7GhGH; arc=none smtp.client-ip=64.147.108.71
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	 MIME-Version:Content-Type; b=DsA2LM/ZYMSRrDW/dmSfcsxE28E1RNa7S153F1poFgLnDIy9leBoW+Gwgl1jAHxFzJKaTvURSpCKNk/1INoK39MLHn0IlpUveb7GEEQxaLo0YfJgsfc+YCGAajrL7Cu1OY+F80r4BdhLY2e5RS39XaSO3gbeFRO/TdSaHRJDOCc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com; spf=fail smtp.mailfrom=iotcl.com; dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b=n+HNj7jS; arc=none smtp.client-ip=91.218.175.175
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=iotcl.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="FnW7GhGH"
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 161971E15B2;
-	Thu,  7 Mar 2024 07:12:22 -0500 (EST)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=8QZazedIRS0fsoEhoYRRFLdoQf/m9gG0z0Jfx1
-	SBFOY=; b=FnW7GhGH8YIQLtDE3iOgQ9hNrttJlAN+cpWpk3ahSwebNN96FUew3I
-	Kdy4fcrcFHGODk+sEtitwjlfW0xMh1smrlMDwIZaL7eS+sXs/qk167z9YB0By7Uh
-	JE9iYuA0A7fT/VpVqBqW6a3Et7Pkx+P6hTq7LYdbbhlwSB7EdB6IY=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp2.pobox.com (Postfix) with ESMTP id 0DB481E15B1;
-	Thu,  7 Mar 2024 07:12:22 -0500 (EST)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.185.65])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 67F9F1E15B0;
-	Thu,  7 Mar 2024 07:12:21 -0500 (EST)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Ralph Seichter <github@seichter.de>
-Cc: Ralph Seichter via GitGitGadget <gitgitgadget@gmail.com>,
-  git@vger.kernel.org
-Subject: Re: [PATCH] Allow git-config to append a comment
-In-Reply-To: <2560952c-4495-4a71-9497-aa40032e1d2b@seichter.de> (Ralph
-	Seichter's message of "Wed, 6 Mar 2024 18:24:56 +0100")
-References: <pull.1681.git.1709532018372.gitgitgadget@gmail.com>
-	<xmqqttljtkn4.fsf@gitster.g>
-	<2560952c-4495-4a71-9497-aa40032e1d2b@seichter.de>
-Date: Thu, 07 Mar 2024 04:12:20 -0800
-Message-ID: <xmqqplw6nsuz.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b="n+HNj7jS"
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iotcl.com; s=key1;
+	t=1709815149;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=BVL0zSeX0ynTRrFhIXoGq5HOaSuBVL7ws6uGQ6AIAxs=;
+	b=n+HNj7jS5ArPATgAF5Czk8KzHUAQeukFsYSKfw4Jxz+b1uV01JhMXI8WUQaN+FcuBaCO/p
+	JVbPDRu8xX7VWtehdFg+EWBdp4Nb41varrxZ1MOD0EaSL5Nc19Gi2WTvQ3BeS1uymMG1EH
+	q+QqblC1snQ2hN7rT5xS30kYVd8Avss=
+From: Toon claes <toon@iotcl.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 4/4] reftable/stack: register compacted tables as tempfiles
+In-Reply-To: <b952d54a05e1c0cf47371f78e3901cfb2119e246.1709549619.git.ps@pks.im>
+	(Patrick Steinhardt's message of "Mon, 4 Mar 2024 12:10:59 +0100")
+References: <cover.1709549619.git.ps@pks.im>
+	<b952d54a05e1c0cf47371f78e3901cfb2119e246.1709549619.git.ps@pks.im>
+Date: Thu, 07 Mar 2024 13:38:56 +0100
+Message-ID: <87sf12fc7z.fsf@to1.studio>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -56,57 +43,34 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID:
- F334D30C-DC7B-11EE-9D87-25B3960A682E-77302942!pb-smtp2.pobox.com
+X-Migadu-Flow: FLOW_OUT
 
-Ralph Seichter <github@seichter.de> writes:
+> diff --git a/reftable/stack.c b/reftable/stack.c
+> index 977336b7d5..40129da16c 100644
+> --- a/reftable/stack.c
+> +++ b/reftable/stack.c
+> @@ -827,51 +827,57 @@ uint64_t reftable_stack_next_update_index(struct reftable_stack *st)
+>  
+>  static int stack_compact_locked(struct reftable_stack *st,
+>  				size_t first, size_t last,
+> -				struct strbuf *temp_tab,
+> -				struct reftable_log_expiry_config *config)
+> +				struct reftable_log_expiry_config *config,
+> +				struct tempfile **temp_table_out)
+>  {
+>  	struct strbuf next_name = STRBUF_INIT;
+> -	int tab_fd = -1;
+> +	struct strbuf table_path = STRBUF_INIT;
+>  	struct reftable_writer *wr = NULL;
+> +	struct tempfile *temp_table;
+> +	int temp_table_fd;
 
->> If you are illustrating a sample input, please also explain what
->> output it produces. What do the resulting lines in the config file
->> look like after you run this command?
->
-> The result of running the above command looks as follows:
->
->   [safe]
-> 	directory = /home/alice/somerepo.git #I changed this. --A. Script
-
-That would have been a crucial piece of information to have in the
-proposed log message, as limiting ourselves to a comment that is
-tucked after the same line as the value, things can become somewhat
-simplified.  We may not have to worry about deletion, even though the
-point about "we need to look at and typofix them with our viewers
-and editors" still stands.
-
-By the way, you may or may not have noticed it, but my example
-deliberately had a multi-line comment:
-
-    $ git config --global --comment 'the reason why I added ~alice/
-    is because ...' --add safe.directory /home/alice/somerepo.git
-
-How such a thing is handled also needs to be discussed in the
-proposed log message, and perhaps in the documentation as well.
-
-> ... My patch only supports
-> single-line comments, and only as a suffix to newly added key-value
-> pairs. This is a deliberate design choice.
-
-Such design choices need to be described in the proposed log message
-to help future developers who will be updating this feature, once it
-gets in.
-
-Thanks for writing quite a lot to answer _my_ questions, but these
-questions are samples of things that future developers would wonder
-and ask about when they want to fix bugs in, enhance, or otherwise
-modify the implementation of this "add comment" feature.  They may
-even be working on adding other features to complement the "add
-comment" feature, by designing support for viewing or typofixing
-existing comments.  When they do so, it would help them to know how
-this existing feature was expected to be used and how it would fit
-in a larger picture (which may not have yet existed back when the
-feature was invented).  Answering these anticipated questions is one
-of the greatest things that a commit log message can do to help
-them.
-
-Thanks.
+Just one small nit, if you don't mind? In PATCH 2/4 you use
+`struct tempfile *tab_file` and `int tab_fd`. I would like to see
+consistency and use similar names. Personally I don't like table being
+shortened to "tab", and I think you feel the same as you've renamed the
+parameter from this function.
 
 
+-- 
+Toon
