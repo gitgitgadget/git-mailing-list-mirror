@@ -1,76 +1,79 @@
-Received: from mail-qv1-f54.google.com (mail-qv1-f54.google.com [209.85.219.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEA6513A27D
-	for <git@vger.kernel.org>; Thu,  7 Mar 2024 21:09:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD6DA64AAA
+	for <git@vger.kernel.org>; Thu,  7 Mar 2024 21:13:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709845769; cv=none; b=ECWAhXCGV1DxNj7jqiAo9i32PTXlx85m6SJLsvSGXi6qoVFp3bAlVb6jFhcxkVyoXzUHyEF0RZIWvHh49ZC/R0ZRufsg7iG28LoHyrKdBT70taDvyWWtS8CciGGcHZHD2aWNvcqmp9LnwlEL5o10hldxOZyk76xM2u73OX08LkI=
+	t=1709845994; cv=none; b=TROzOFsjgQpZ7rk0KRrAcBE2wKVVfP4/lmMKXEbXjSymf6cfgLsxtCs5Zl7zcRt0qDWD+uxsoA2zY0Z6Ai/+m7YduHfniLaOSn3eiJD7adNY82Qox8uS37/orZqtqMH2QLd69JgRkaNqBVr+kXrA5FTSrCVRftHx1cq8csUuNQ4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709845769; c=relaxed/simple;
-	bh=WM/6XpXGqJhdvjcV9eohw1R+qQXEe19imzCh7LdiQ7s=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=L3JzqOpADNmrPoA/4kosEGA1oS6XiFkdWIOHAUYfAX6wkcawlyhulleZVkzZQ1WKSnwCVzR7oUw1+/9bUxKSUMkjVV24MCeqOx+qapVP6eNYnr6aLSDNxJRHIFO6uHzGRteC/C0imlpCeBFnl3lb1Q3P61i8CnhcorAzpLGnC7Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.219.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-qv1-f54.google.com with SMTP id 6a1803df08f44-6906a7870f3so990726d6.0
-        for <git@vger.kernel.org>; Thu, 07 Mar 2024 13:09:27 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1709845766; x=1710450566;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=Epu5c3fstoGTOu9EoOmiLLEWX2CPXvjvx0a1U9dJD70=;
-        b=shDzZSqIUjlLxKxwvV1LHMwvAUAy+GimU+/M4rVjhhpfSU0W7mte5nE/ruNsuTsW2i
-         fPOXqGGG6hnFuf3vmO4GtqHcC3ZJLETy+0Ce1DnJdWSmuUha+ZEKR8ihNg++b6aNSTmX
-         nWceLwKC8Z3vfQo3MJ/JXxQwzrIMPoC2gh6qBr036NU3BwpYJ4aRTcXOzxMT4ijj7ySj
-         dxd2KTy3VyyJo2zkJYYrMaPqb1fAvZTRhAMVTFqqpTKD1z9j0uoYAbD/vDBnIY9cvy9c
-         H+yuD+WX1Og2ISGZ202h1THa/KXmEUGuStKFCqhzXSRw5UTjkehA67bbP7a4Pynuo/a2
-         H2XA==
-X-Forwarded-Encrypted: i=1; AJvYcCWsDAV7TdaEu0FFxhiNTPvEYLk1iY+9uUTcjOYJJa7TI5o964s8WFvqt7JRzeErmQ8wEI1LTagUgNStRVnR1gJkVnqa
-X-Gm-Message-State: AOJu0YwRwrPahShlX+uironOwkRJBh6MQzAJ5SJFLeiiH9da1cDYkOxP
-	dmuXQHpIhCGpjKjrt3TCDKhxQPOPuZWSUnAZ8I+vuXi/iHq1fvibyLNXzgpVKJuui+bUn6RNSP7
-	Usz4pRtGC7sPZhIHty86SIzcoCMhwA52FQcQ=
-X-Google-Smtp-Source: AGHT+IEyJlES9DA/ddnkD5D3mx4+JQPLYqfL3WSF9Z/OR3Am4/tYTj4Mkyo3S6WFfoWZNeeiRSUex0elEYo7LagHDHk=
-X-Received: by 2002:a05:6214:716:b0:690:67fe:c38e with SMTP id
- c22-20020a056214071600b0069067fec38emr9075341qvz.16.1709845766599; Thu, 07
- Mar 2024 13:09:26 -0800 (PST)
+	s=arc-20240116; t=1709845994; c=relaxed/simple;
+	bh=YjTBIlyLLtWwdcRs8EjjH1rEKOZHjuCxio4hP45KUBg=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=k1TjKRqJ1GrrLDqbsHn3KjA9hmzdanJeHbPAhBF+46Vnb9H3qmqmrenaIRHedQDJwz6mUsmj0VkHOSTGYhLQW9Vng8BiNdgNtei2eQMB1spLe7qtIzQuRbWTd7C0DavS3NOcY9HKGKFASJENW1h4stuwiXyHlpFOnciXVlXzkIM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=aRGRcOy2; arc=none smtp.client-ip=64.147.108.70
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="aRGRcOy2"
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 873AE1EF8D4;
+	Thu,  7 Mar 2024 16:13:11 -0500 (EST)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=YjTBIlyLLtWwdcRs8EjjH1rEKOZHjuCxio4hP4
+	5KUBg=; b=aRGRcOy2M56UWa7PwMaz+5Ykn/5XN17XMDk/iLicjAdp7Zmd/X6W/6
+	npnpp3mDlmaPG8oQUStOkHN7QXVmNGzPcvQ8Yd4G4e8xs3vs/BcCiQEyDrgQb14d
+	ZjFV+LucRpWQZB4lrwmQYX797r1wYxWecuEHKTH+t6hnzlW7UtaAw=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp1.pobox.com (Postfix) with ESMTP id 7F7631EF8D3;
+	Thu,  7 Mar 2024 16:13:11 -0500 (EST)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.185.65])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id B44DA1EF8D2;
+	Thu,  7 Mar 2024 16:13:10 -0500 (EST)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Calvin Wan <calvinwan@google.com>
+Cc: git@vger.kernel.org,  Jonathan Tan <jonathantanmy@google.com>,
+  phillip.wood123@gmail.com, Jeff King <peff@peff.net>
+Subject: Re: [PATCH v5 3/3] test-stdlib: show that git-std-lib is independent
+In-Reply-To: <20240222175033.1489723-4-calvinwan@google.com> (Calvin Wan's
+	message of "Thu, 22 Feb 2024 17:50:33 +0000")
+References: <cover.1696021277.git.jonathantanmy@google.com>
+	<20240222175033.1489723-4-calvinwan@google.com>
+Date: Thu, 07 Mar 2024 13:13:09 -0800
+Message-ID: <xmqqsf11kaoq.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240307183743.219951-1-flosch@nutanix.com> <xmqq34t1n91w.fsf@gitster.g>
- <xmqq7cidlqg5.fsf@gitster.g>
-In-Reply-To: <xmqq7cidlqg5.fsf@gitster.g>
-From: Eric Sunshine <sunshine@sunshineco.com>
-Date: Thu, 7 Mar 2024 16:09:15 -0500
-Message-ID: <CAPig+cTgusL7OH=5DJY9ef4YuLw5WBKgDFcbSu=QKFjjkforkw@mail.gmail.com>
-Subject: Re: [PATCH] wt-status: Don't find scissors line beyond buf len
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Florian Schmidt <flosch@nutanix.com>, git@vger.kernel.org, 
-	Jonathan Davies <jonathan.davies@nutanix.com>, Phillip Wood <phillip.wood@dunelm.org.uk>, 
-	Denton Liu <liu.denton@gmail.com>, Linus Arver <linusa@google.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 80806D84-DCC7-11EE-AB7D-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
 
-On Thu, Mar 7, 2024 at 3:47=E2=80=AFPM Junio C Hamano <gitster@pobox.com> w=
-rote:
->  * So here is the version I queued.  I have a new paragraph at the
->    end of the log message to talk about use of strstr() and how it
->    is OK in the current codebase.
-> [jc: tweaked the commit log message and the implementation a bit]
->
-> From: Florian Schmidt <flosch@nutanix.com>
->
-> In general, if wt_status_locate_end() is given a piece of the memory
-> that lacks NUL at all, strstr() may continue across page boundaries
-> and run into an unmapped page.  For our current callers, this is not
-> a problem, as all of them except one uses a memory owned by a strbuf
-> (which guarantees an implicit NUL-termination after its payload),
-> and the one exeption in trailer.c:find_end_of_log_message() uses
-> strlen() to compute the length before calling this function.
+Calvin Wan <calvinwan@google.com> writes:
 
-s/exeption/exception/
+> +	strbuf_commented_addf(sb, '#', "%s", "foo");
+
+Of course, this will need to be adjusted when it meets the "let's
+allow more than one byte for a comment character" series by Peff.
+It should now read
+
+	strbuf_commented_addf(sb, "#", "%s", "foo");
+
+of course.
+
+This is a usual "a function changes in one topic, while the other
+topic adds more callers to it" problem a maintainer is expected to
+handle fine, so there is nothing special that needs to be done by
+contributors, but just giving you a head's up when you yourself test
+your updated version to ensure it works well with other topics in
+flight.
+
