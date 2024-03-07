@@ -1,97 +1,76 @@
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qv1-f54.google.com (mail-qv1-f54.google.com [209.85.219.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0EF924B33
-	for <git@vger.kernel.org>; Thu,  7 Mar 2024 21:06:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEA6513A27D
+	for <git@vger.kernel.org>; Thu,  7 Mar 2024 21:09:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709845575; cv=none; b=j3vqH+a9h/+Fjl0KjviNQpjTYbCab6h1fYeyJZJu0eoVKueG2FHP0yW+eG4WiJjSo03iMeGuUhJAU0hpeXeX/+lucYlt4QFyQEq8BixZfa09jb2vaxadYwgL1z8qyu5Ul12cRkttbsj4wtcnFT+LGWMCpsjrZCEcBJdE42vPoW0=
+	t=1709845769; cv=none; b=ECWAhXCGV1DxNj7jqiAo9i32PTXlx85m6SJLsvSGXi6qoVFp3bAlVb6jFhcxkVyoXzUHyEF0RZIWvHh49ZC/R0ZRufsg7iG28LoHyrKdBT70taDvyWWtS8CciGGcHZHD2aWNvcqmp9LnwlEL5o10hldxOZyk76xM2u73OX08LkI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709845575; c=relaxed/simple;
-	bh=vyOjyQwxKuJpHcoMZxY31+Opxq1wtnuYz0XZyiYbPCs=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=X4hsEYL8Yb+p43QSRq+fMrGJlUf4yDPNlN2KsQO+xRMiq/6SlUESh/Rj4NFDBL4SgAwY7uFbzo9xrgKFFV/rTyqj+8c/BOK98zaJ/L9gXYbIHluWQuBBB0dlRdVppDfO3BU0Lp9rJsiXBXY6CAzmMH94CWDLVeWqTCEcB9IZcms=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=AVIggp3s; arc=none smtp.client-ip=64.147.108.70
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="AVIggp3s"
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 924C21EF833;
-	Thu,  7 Mar 2024 16:06:12 -0500 (EST)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=vyOjyQwxKuJpHcoMZxY31+Opxq1wtnuYz0XZyi
-	YbPCs=; b=AVIggp3stNndTl72J7dF89NFysQF8pRpp14+vNeerjSGYziOjn5s3z
-	qvNlhy5zH3Nymk7kiI434rZ+b5XgMQrtGSCTXGmQgA0ygJFQrhZKIUkbyIX6Mmjl
-	728VG80KiOD8sEYPfEW1nU3k6/tWl7FP37pCb5n0GIpUaf7eQFsvM=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 89B1C1EF832;
-	Thu,  7 Mar 2024 16:06:12 -0500 (EST)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.185.65])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id E93DD1EF831;
-	Thu,  7 Mar 2024 16:06:11 -0500 (EST)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 2/4] reftable/stack: register new tables as tempfiles
-In-Reply-To: <Zeopa57o1fMxPoZg@framework> (Patrick Steinhardt's message of
-	"Thu, 7 Mar 2024 21:54:03 +0100")
-References: <cover.1709549619.git.ps@pks.im>
-	<02bf41d419efd00e510a89a405e1b046b166ba20.1709549619.git.ps@pks.im>
-	<6cw6d3ubo2kbogzdbniyoznij2zfoh5t3htwb4oaghaltcgeqg@kkrw4g6atr2k>
-	<Zehav4V_8GGZG94Q@tanuki> <xmqqedcntj06.fsf@gitster.g>
-	<Zelb8ldHh4Lnlh7Z@tanuki> <xmqqo7bpncrt.fsf@gitster.g>
-	<Zeopa57o1fMxPoZg@framework>
-Date: Thu, 07 Mar 2024 13:06:10 -0800
-Message-ID: <xmqqwmqdkb0d.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	s=arc-20240116; t=1709845769; c=relaxed/simple;
+	bh=WM/6XpXGqJhdvjcV9eohw1R+qQXEe19imzCh7LdiQ7s=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=L3JzqOpADNmrPoA/4kosEGA1oS6XiFkdWIOHAUYfAX6wkcawlyhulleZVkzZQ1WKSnwCVzR7oUw1+/9bUxKSUMkjVV24MCeqOx+qapVP6eNYnr6aLSDNxJRHIFO6uHzGRteC/C0imlpCeBFnl3lb1Q3P61i8CnhcorAzpLGnC7Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.219.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-qv1-f54.google.com with SMTP id 6a1803df08f44-6906a7870f3so990726d6.0
+        for <git@vger.kernel.org>; Thu, 07 Mar 2024 13:09:27 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1709845766; x=1710450566;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=Epu5c3fstoGTOu9EoOmiLLEWX2CPXvjvx0a1U9dJD70=;
+        b=shDzZSqIUjlLxKxwvV1LHMwvAUAy+GimU+/M4rVjhhpfSU0W7mte5nE/ruNsuTsW2i
+         fPOXqGGG6hnFuf3vmO4GtqHcC3ZJLETy+0Ce1DnJdWSmuUha+ZEKR8ihNg++b6aNSTmX
+         nWceLwKC8Z3vfQo3MJ/JXxQwzrIMPoC2gh6qBr036NU3BwpYJ4aRTcXOzxMT4ijj7ySj
+         dxd2KTy3VyyJo2zkJYYrMaPqb1fAvZTRhAMVTFqqpTKD1z9j0uoYAbD/vDBnIY9cvy9c
+         H+yuD+WX1Og2ISGZ202h1THa/KXmEUGuStKFCqhzXSRw5UTjkehA67bbP7a4Pynuo/a2
+         H2XA==
+X-Forwarded-Encrypted: i=1; AJvYcCWsDAV7TdaEu0FFxhiNTPvEYLk1iY+9uUTcjOYJJa7TI5o964s8WFvqt7JRzeErmQ8wEI1LTagUgNStRVnR1gJkVnqa
+X-Gm-Message-State: AOJu0YwRwrPahShlX+uironOwkRJBh6MQzAJ5SJFLeiiH9da1cDYkOxP
+	dmuXQHpIhCGpjKjrt3TCDKhxQPOPuZWSUnAZ8I+vuXi/iHq1fvibyLNXzgpVKJuui+bUn6RNSP7
+	Usz4pRtGC7sPZhIHty86SIzcoCMhwA52FQcQ=
+X-Google-Smtp-Source: AGHT+IEyJlES9DA/ddnkD5D3mx4+JQPLYqfL3WSF9Z/OR3Am4/tYTj4Mkyo3S6WFfoWZNeeiRSUex0elEYo7LagHDHk=
+X-Received: by 2002:a05:6214:716:b0:690:67fe:c38e with SMTP id
+ c22-20020a056214071600b0069067fec38emr9075341qvz.16.1709845766599; Thu, 07
+ Mar 2024 13:09:26 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- 86E2B55C-DCC6-11EE-AB6E-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
+References: <20240307183743.219951-1-flosch@nutanix.com> <xmqq34t1n91w.fsf@gitster.g>
+ <xmqq7cidlqg5.fsf@gitster.g>
+In-Reply-To: <xmqq7cidlqg5.fsf@gitster.g>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Date: Thu, 7 Mar 2024 16:09:15 -0500
+Message-ID: <CAPig+cTgusL7OH=5DJY9ef4YuLw5WBKgDFcbSu=QKFjjkforkw@mail.gmail.com>
+Subject: Re: [PATCH] wt-status: Don't find scissors line beyond buf len
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Florian Schmidt <flosch@nutanix.com>, git@vger.kernel.org, 
+	Jonathan Davies <jonathan.davies@nutanix.com>, Phillip Wood <phillip.wood@dunelm.org.uk>, 
+	Denton Liu <liu.denton@gmail.com>, Linus Arver <linusa@google.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Patrick Steinhardt <ps@pks.im> writes:
+On Thu, Mar 7, 2024 at 3:47=E2=80=AFPM Junio C Hamano <gitster@pobox.com> w=
+rote:
+>  * So here is the version I queued.  I have a new paragraph at the
+>    end of the log message to talk about use of strstr() and how it
+>    is OK in the current codebase.
+> [jc: tweaked the commit log message and the implementation a bit]
+>
+> From: Florian Schmidt <flosch@nutanix.com>
+>
+> In general, if wt_status_locate_end() is given a piece of the memory
+> that lacks NUL at all, strstr() may continue across page boundaries
+> and run into an unmapped page.  For our current callers, this is not
+> a problem, as all of them except one uses a memory owned by a strbuf
+> (which guarantees an implicit NUL-termination after its payload),
+> and the one exeption in trailer.c:find_end_of_log_message() uses
+> strlen() to compute the length before calling this function.
 
-> On Thu, Mar 07, 2024 at 09:59:50AM -0800, Junio C Hamano wrote:
->> Patrick Steinhardt <ps@pks.im> writes:
-> [snip]
->> I sense there might be some clean-up opportunities around here.
->> After all, lockfile is (or at least pretends to be) built on top of
->> tempfile, and it is for more permanent (as opposed to temporary)
->> files, but it somehow wasn't a good fit to wrap new tables in this
->> series?
-> ...
-> As lockfiles to me are rather about mutually exclusive locking I think
-> that using tempfiles directly is preferable. As far as I can see there
-> is also no real benefit with lockfiles in our context, except for the
-> mode handling. But given that we have "default_permissions" I'd say it
-> is preferable to consistently use these for now via chmod(3P).
-
-I wasn't talking about the use of temp or lock API in _this_ series,
-but was talking about the different permission bit handling between
-the two API.  The loose object codepath that uses the tempfile API
-is closer to what you are doing, which suffers from the same "at
-creation tempfile API does not bother with permission bits because
-it may be removed at the end".  The index codepath that uses the
-hold_lock_file_for_update() does not have to care, as it gets the
-permission right from the start.
-
-Because of these differences, the loose object codepath has to do
-the adjust_perm_bits() itself, and similarly, you have to fix the
-permission the same.
-
-These callers may become simpler if we give an option to the
-git_mkstemps_mode() to return a file whose permission bits are
-already correct from the start.
-
+s/exeption/exception/
