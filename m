@@ -1,98 +1,124 @@
-Received: from mail.manjaro.org (mail.manjaro.org [116.203.91.91])
-	(using TLSv1.2 with cipher DHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D65A54C6F
-	for <git@vger.kernel.org>; Thu,  7 Mar 2024 00:31:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=116.203.91.91
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 492547484
+	for <git@vger.kernel.org>; Thu,  7 Mar 2024 02:11:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709771482; cv=none; b=Vyv3kWdf06zyvgNGOEzmjUMngeMVhDj6whuz6BSHjucPx2UgDOELLV0AscF3ITX7pktMamZ22nnxESI1S3uJbIK+FPrnZFTGDt5n2ftMCKPdUyk6xRaDZlk6uyOTA6uc1uIxGM9EJh4jYwdM7ShlQ8dKGgHXC1xw4yFc7qtGocA=
+	t=1709777505; cv=none; b=AeDr46kP5AnA6h0Mhc2SqSArIcmkqvhBwDbF6xVyKAsZI/ukH7HL04G1UwMQygWnY53vzCN/oaMJxOVNYKnyovUyPQEm8rKE4NBDy/n9gPAv38cG8S0rFhHzKR6NCEq6J0xQDURwTgtB+6oHxDblezwo+cCR+rMgwD2GIyXFlwQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709771482; c=relaxed/simple;
-	bh=47gh3vUW/29bO3NZ8I1m7+3lHtPCep/8sGwBfh65nhQ=;
-	h=MIME-Version:Date:From:To:Cc:Subject:In-Reply-To:References:
-	 Message-ID:Content-Type; b=YCR+bOpfsMjg6TFESbHQzZS9E9Y4LMPY3fmJZY+eLPqL/B6u0tUqHOAYPBK+yLxu09sTvfas0YTt+Sk44kStToFmBA6V1i/diAsZypjgP7kXDrKXsjzqxX/MNUywoJbs0Gpevq96hhMItQwJeUj0G3vt6e4zPGiOOgY2Wx7KPkQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org; spf=pass smtp.mailfrom=manjaro.org; dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b=rCHfCp2u; arc=none smtp.client-ip=116.203.91.91
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=manjaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=manjaro.org
+	s=arc-20240116; t=1709777505; c=relaxed/simple;
+	bh=igd4ubkf4LGqzJeua54MS+pC7pWkFCtVJONoYosg/b4=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=Y7d2X4dhu2tgPYicZiu7N9fn54Fqo1DPA2TCFA2AiWcZ6dNLPPEHUecFcXLJrHhGYF1WaL6jj1R3AyXttizNYoTJzzRaoXV62JbQoQwSl24+AZWxqpNeyG6uA7xpQpeNnLrZMtPQ6FArI4QiQp/2bgbWXgRmAw+crbc/QOzbl6M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=fB9bbcwR; arc=none smtp.client-ip=173.228.157.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=manjaro.org header.i=@manjaro.org header.b="rCHfCp2u"
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="fB9bbcwR"
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id 1265922561;
+	Wed,  6 Mar 2024 21:11:38 -0500 (EST)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=igd4ubkf4LGqzJeua54MS+pC7pWkFCtVJONoYo
+	sg/b4=; b=fB9bbcwRf93WQDB10E12C2JDWv9dzomMCxRJe3LRFKa++QRhUBq5SW
+	9jmAesJyF7k4JEzo/6LfC8Ug8k8ScxqBNvo3wWcq/4hwE2GAZ+gcg2Zk6lWqWGUo
+	NWQ2eJxTQvoxSvi9bit417b4I86Iw36yoP04Y8c/t/kw8PN939Fgk=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id 0AD2C22560;
+	Wed,  6 Mar 2024 21:11:38 -0500 (EST)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.185.65])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 8834D2255D;
+	Wed,  6 Mar 2024 21:11:34 -0500 (EST)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Steven Jeuris via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason
+ <avarab@gmail.com>,  Jeff
+ King <peff@peff.net>,  Steven Jeuris <steven.jeuris@gmail.com>,  Steven
+ Jeuris <steven.jeuris@3shape.com>
+Subject: Re: [PATCH v2] userdiff: better method/property matching for C#
+In-Reply-To: <pull.1682.v2.git.git.1709756493673.gitgitgadget@gmail.com>
+	(Steven Jeuris via GitGitGadget's message of "Wed, 06 Mar 2024
+	20:21:33 +0000")
+References: <pull.1682.git.git.1708882423691.gitgitgadget@gmail.com>
+	<pull.1682.v2.git.git.1709756493673.gitgitgadget@gmail.com>
+Date: Wed, 06 Mar 2024 18:11:31 -0800
+Message-ID: <xmqqv85yokoc.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=manjaro.org; s=2021;
-	t=1709771471;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=cPgLqSpndPa/Uqg6iKaHTKUrkXM4i1j5jCRy/axc/y0=;
-	b=rCHfCp2uUTR4zHEY361XUVxC+Elut7zsj0Ss4E7MyUQZadZ/TPzA8TvLfQTl/2Kb9Xleht
-	9OnsrMOmabqSHL71dv/HS6aQ1njRkygNOmhf3JekZq3BD4c6IkNsAOAHbPHC96L/5arKSi
-	cNN1soQZjDyOMK9usJg1wFaErz5YhyFt982oKF94s4PnzUKdPTc0fzH7iFrHbBcKAXPe5h
-	DGCi/3lGpAS/3RIiVkME4LYovQrc0qa8HaU027TZbI5MV0bi/TR+LIzj7NpuOZIWnw0qju
-	iAKUIGSBu6UkmOO0gC5XLUwnvK8QQ8NdDKu3QWkrZL1O2Bmg3ziCugcbV/iGnw==
-Date: Thu, 07 Mar 2024 01:31:09 +0100
-From: Dragan Simic <dsimic@manjaro.org>
-To: Taylor Blau <me@ttaylorr.com>
-Cc: Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>,
- git@vger.kernel.org
-Subject: Re: [PATCH 0/8] builtin/config: introduce subcommands
-In-Reply-To: <ZekAWSqr9qb8FIAD@nand.local>
-References: <cover.1709724089.git.ps@pks.im> <xmqqil1zs327.fsf@gitster.g>
- <ZekAWSqr9qb8FIAD@nand.local>
-Message-ID: <d3ccbb84bf3b6074d25668b2d0cd1b94@manjaro.org>
-X-Sender: dsimic@manjaro.org
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Authentication-Results: ORIGINATING;
-	auth=pass smtp.auth=dsimic@manjaro.org smtp.mailfrom=dsimic@manjaro.org
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 05988538-DC28-11EE-9181-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
 
-Hello all,
+"Steven Jeuris via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-On 2024-03-07 00:46, Taylor Blau wrote:
-> On Wed, Mar 06, 2024 at 09:06:08AM -0800, Junio C Hamano wrote:
->> Patrick Steinhardt <ps@pks.im> writes:
->> 
->> >   - `git config foo.bar` -> `git config get foo.bar`
->> >
->> >   - `git config foo.bar value` -> `git config set foo.bar value`
->> 
->> I actually have been perfectly OK with the above two, but I agree
->> that ...
-> 
-> Same here, though I think that we are probably both biased by many 
-> years
-> of familiarity with the existing syntax.
+> From: Steven Jeuris <steven.jeuris@3shape.com>
+>
+> - Support multi-line methods by not requiring closing parenthesis.
+> - Support multiple generics (comma was missing before).
+> - Add missing `foreach`, `lock` and  `fixed` keywords to skip over.
+> - Remove `instanceof` keyword, which isn't C#.
+> - Also detect non-method keywords not positioned at the start of a line.
+> - Added tests; none existed before.
+>
+> The overall strategy is to focus more on what isn't expected for
+> method/property definitions, instead of what is, but is fully optional.
+>
 
-Ditto.  Though, having "get" and "set" commands will be nice, making it
-all more self descriptive.
+Roughly in other words, we assume that any file the end user throws
+at us is a well formed program, so instead of enumerating all valid
+keywords and limit the match exactly to them, use a pattern that
+would match valid keywords (both currently known ones, and anything
+the language might add in the future that we do not know about), to
+match with anything syntactically plausible to be a definition?
 
->> >   - `git config foo.bar value value-pattern` -> `git config set-all
->> >     foo.bar value value-pattern`
->> 
->> ... this was less than discoverable, and would be a good update.
->> This one ...
-> 
-> Agreed.
+It does make sense to start by assuming that the end user data is a
+valid C# program.
 
-Also agreed.  Having the point below in mind, perhaps we could actually
-end up with "set --all" instead of "set-all".
+> Signed-off-by: Steven Jeuris <steven.jeuris@gmail.com>
+> ---
 
->> >   - `git config --get-urlmatch` -> `git config get-urlmatch`.
->> 
->> ... is a Meh to me, personally.  I'd not actively push it
->> enthusiastically, but I'd passively accept its existence.
-> 
-> I don't have strong feelings about this, but I wonder if `--urlmatch`
-> (or `--url-match`) might be an argument to the "get" mode of this
-> sub-command instead. Something like `git config get --urlmatch` feels
-> much more natural to me than `git config get-urlmatch`.
+> diff --git a/userdiff.c b/userdiff.c
+> index e399543823b..5a9e8a0ef55 100644
+> --- a/userdiff.c
+> +++ b/userdiff.c
+> @@ -89,12 +89,18 @@ PATTERNS("cpp",
+>  	 "|\\.[0-9][0-9]*([Ee][-+]?[0-9]+)?[fFlL]?"
+>  	 "|[-+*/<>%&^|=!]=|--|\\+\\+|<<=?|>>=?|&&|\\|\\||::|->\\*?|\\.\\*|<=>"),
+>  PATTERNS("csharp",
+> -	 /* Keywords */
+> -	 "!^[ \t]*(do|while|for|if|else|instanceof|new|return|switch|case|throw|catch|using)\n"
+> -	 /* Methods and constructors */
+> -	 "^[ \t]*(((static|public|internal|private|protected|new|virtual|sealed|override|unsafe|async)[ \t]+)*[][<>@.~_[:alnum:]]+[ \t]+[<>@._[:alnum:]]+[ \t]*\\(.*\\))[ \t]*$\n"
+> +	 /*
+> +	  * Jump over keywords not used by methods which can be followed by parentheses without special characters in between,
+> +	  * making them look like methods.
+> +	  */
 
-Good point.  I'd vote for having "get --urlmatch" or "get --url-match",
-because it feels more natural to me, it doesn't "clog up" the command
-space, and such an approach, in general, allows git-config(1) to be
-expanded later easier with more new arguments for the existing commands.
+Overly long comments (I'll wrap them while queuing).
+
+> +	 "!(^|[ \t]+)(do|while|for|foreach|if|else|new|default|return|switch|case|throw|catch|using|lock|fixed)([ \t(]+|$)\n"
+> +	 /* Methods/constructors:
+> +	  * the strategy is to identify a minimum of two groups (any combination of keywords/type/name),
+> +	  * without intermediate or final characters which can't be part of method definitions before the opening parenthesis.
+> +	  */
+> +	 "^[ \t]*(([][[:alnum:]@_<>.,]*[^=:{ \t][ \t]+[][[:alnum:]@_<>.,]*)+\\([^;]*)$\n"
+>  	 /* Properties */
+> -	 "^[ \t]*(((static|public|internal|private|protected|new|virtual|sealed|override|unsafe)[ \t]+)*[][<>@.~_[:alnum:]]+[ \t]+[@._[:alnum:]]+)[ \t]*$\n"
+> +	 "^[ \t]*((([][[:alnum:]@_<>.,]+)[ \t]+[][[:alnum:]@_]*)+[^=:;,()]*)$\n"
+>  	 /* Type definitions */
+>  	 "^[ \t]*(((static|public|internal|private|protected|new|unsafe|sealed|abstract|partial)[ \t]+)*(class|enum|interface|struct|record)[ \t]+.*)$\n"
+>  	 /* Namespace */
+>
+> base-commit: f41f85c9ec8d4d46de0fd5fded88db94d3ec8c11
