@@ -1,35 +1,35 @@
 Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E53AA839E3
-	for <git@vger.kernel.org>; Thu,  7 Mar 2024 09:19:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89C5582D83
+	for <git@vger.kernel.org>; Thu,  7 Mar 2024 09:20:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709803165; cv=none; b=iXdQeLcAMbRQcjWLWwg0NJ7RC04h9wrqEuYuOgvIa9tfQFX7Pg33wurw8uRBxMg6XWB+eGc4nrbD3YxZuTY8rlS5ukyW7CtH2DTC3MahA4S/Vgb7cH5kzDaIkvzmcD1OqVmaRoBur1BDAsgbV+vFVz72Zwn8i0TWLnRaPDGFH+0=
+	t=1709803228; cv=none; b=Gy03UA/Ka+uxaDOr9V9pVj6zPfE4++zUyLKp5oQzgD7qRpD16rUmrXTvL73z6FXcuho48NlP/guQrxW4XYp9St8ibk+0ZvEk2HgM6ouJdfaHqz6rFSN2d0SD85PwkqcWlnqtV+abRGHmFG46mta1bYK8lbBAIDP2CL/T8ZVNr3Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709803165; c=relaxed/simple;
-	bh=XU73t0aytWrPkUc0m+/TL/QAtYhe0OToIAHc7v1fV+4=;
+	s=arc-20240116; t=1709803228; c=relaxed/simple;
+	bh=98qbewk4yJQQw7FLerZA4S0+D0u/XuiU1A5Fmw6oSvA=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=XoZ9wtno/wq85O70LLQ0TYWX1EkN7V2g3TvYv1od7NiO74N+bWm8redymAemVw+xWntzYRb8j5lx67Gs8PQyMp1l/bvslOC9CXkasy4S+zTH8f1sq702AMURxXa9p2yYdfplG9BEt1wZr5S2gE6Aifjp4v63+dnJcJmDAmLHvOo=
+	 Content-Type:Content-Disposition:In-Reply-To; b=dsJFFfK0DECLEpoc43XBQRMs6kirouw1R9q0Wuhx2Q4q/GCTOgAwepenuDzsV73y1dgLGEXqdCRkgVv+pNJS6oTdidPFr71tcthYhOdu2eIYsMg+6FF/HhGuXIQTCPJmt76JI/KyaE64viX+U08rgbyXGvnO2KvJPDFHrnGTNAc=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
-Received: (qmail 6876 invoked by uid 109); 7 Mar 2024 09:19:23 -0000
+Received: (qmail 6897 invoked by uid 109); 7 Mar 2024 09:20:25 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 07 Mar 2024 09:19:23 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 07 Mar 2024 09:20:25 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 12572 invoked by uid 111); 7 Mar 2024 09:19:27 -0000
+Received: (qmail 12611 invoked by uid 111); 7 Mar 2024 09:20:30 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 07 Mar 2024 04:19:27 -0500
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 07 Mar 2024 04:20:30 -0500
 Authentication-Results: peff.net; auth=none
-Date: Thu, 7 Mar 2024 04:19:22 -0500
+Date: Thu, 7 Mar 2024 04:20:24 -0500
 From: Jeff King <peff@peff.net>
 To: git@vger.kernel.org
 Cc: Junio C Hamano <gitster@pobox.com>, Dragan Simic <dsimic@manjaro.org>,
 	Kristoffer Haugsbakk <code@khaugsbakk.name>,
 	Manlio Perillo <manlio.perillo@gmail.com>
-Subject: [PATCH 04/15] strbuf: avoid shadowing global comment_line_char name
-Message-ID: <20240307091922.GD2080210@coredump.intra.peff.net>
+Subject: [PATCH 05/15] environment: store comment_line_char as a string
+Message-ID: <20240307092024.GE2080210@coredump.intra.peff.net>
 References: <20240307091407.GA2072522@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -41,117 +41,93 @@ Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 In-Reply-To: <20240307091407.GA2072522@coredump.intra.peff.net>
 
-Several comment-related strbuf functions take a comment_line_char
-parameter. There's also a global comment_line_char variable, which is
-closely related (most callers pass it in as this parameter). Let's avoid
-shadowing the global name. This makes it more obvious that we're not
-using the global value, and it will be especially helpful as we refactor
-the global in future patches (in particular, any macro trickery wouldn't
-work because the preprocessor doesn't respect scope).
+We'd like to eventually support multi-byte comment prefixes, but the
+comment_line_char variable is referenced in many spots, making the
+transition difficult.
 
-We'll use "comment_prefix". That should be descriptive enough, and as a
-bonus is more neutral with respect to the "char" type (since we'll
-eventually swap it out for a string).
+Let's start by storing the character in a NUL-terminated string. That
+will let us switch code over incrementally to the string format, and we
+can easily support the existing code with a macro wrapper (since we'll
+continue to allow only a single-byte prefix, this will behave
+identically).
+
+Once all references to the "char" variable have been converted, we can
+drop it and enable longer strings.
+
+We'll still have to touch all of the spots that create or set the
+variable in this patch, but there are only a few (reading the config,
+and the "auto" character selector).
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
- strbuf.c | 16 ++++++++--------
- strbuf.h |  8 ++++----
- 2 files changed, 12 insertions(+), 12 deletions(-)
+ builtin/commit.c | 4 ++--
+ config.c         | 2 +-
+ environment.c    | 2 +-
+ environment.h    | 3 ++-
+ 4 files changed, 6 insertions(+), 5 deletions(-)
 
-diff --git a/strbuf.c b/strbuf.c
-index ca80a2c77e..a33aed6c07 100644
---- a/strbuf.c
-+++ b/strbuf.c
-@@ -359,16 +359,16 @@ static void add_lines(struct strbuf *out,
+diff --git a/builtin/commit.c b/builtin/commit.c
+index d496980421..d8abbe48b1 100644
+--- a/builtin/commit.c
++++ b/builtin/commit.c
+@@ -685,7 +685,7 @@ static void adjust_comment_line_char(const struct strbuf *sb)
+ 	const char *p;
+ 
+ 	if (!memchr(sb->buf, candidates[0], sb->len)) {
+-		comment_line_char = candidates[0];
++		comment_line_str = xstrfmt("%c", candidates[0]);
+ 		return;
+ 	}
+ 
+@@ -706,7 +706,7 @@ static void adjust_comment_line_char(const struct strbuf *sb)
+ 	if (!*p)
+ 		die(_("unable to select a comment character that is not used\n"
+ 		      "in the current commit message"));
+-	comment_line_char = *p;
++	comment_line_str = xstrfmt("%c", *p);
  }
  
- void strbuf_add_commented_lines(struct strbuf *out, const char *buf,
--				size_t size, char comment_line_char)
-+				size_t size, char comment_prefix)
- {
- 	char prefix[2];
- 
--	prefix[0] = comment_line_char;
-+	prefix[0] = comment_prefix;
- 	prefix[1] = '\0';
- 	add_lines(out, prefix, buf, size, 1);
- }
- 
--void strbuf_commented_addf(struct strbuf *sb, char comment_line_char,
-+void strbuf_commented_addf(struct strbuf *sb, char comment_prefix,
- 			   const char *fmt, ...)
- {
- 	va_list params;
-@@ -379,7 +379,7 @@ void strbuf_commented_addf(struct strbuf *sb, char comment_line_char,
- 	strbuf_vaddf(&buf, fmt, params);
- 	va_end(params);
- 
--	strbuf_add_commented_lines(sb, buf.buf, buf.len, comment_line_char);
-+	strbuf_add_commented_lines(sb, buf.buf, buf.len, comment_prefix);
- 	if (incomplete_line)
- 		sb->buf[--sb->len] = '\0';
- 
-@@ -1001,10 +1001,10 @@ static size_t cleanup(char *line, size_t len)
-  *
-  * If last line does not have a newline at the end, one is added.
-  *
-- * Pass a non-NUL comment_line_char to skip every line starting
-+ * Pass a non-NUL comment_prefix to skip every line starting
-  * with it.
+ static void prepare_amend_commit(struct commit *commit, struct strbuf *sb,
+diff --git a/config.c b/config.c
+index 3cfeb3d8bd..e12ea68f24 100644
+--- a/config.c
++++ b/config.c
+@@ -1566,7 +1566,7 @@ static int git_default_core_config(const char *var, const char *value,
+ 		else if (!strcasecmp(value, "auto"))
+ 			auto_comment_line_char = 1;
+ 		else if (value[0] && !value[1]) {
+-			comment_line_char = value[0];
++			comment_line_str = xstrfmt("%c", value[0]);
+ 			auto_comment_line_char = 0;
+ 		} else
+ 			return error(_("core.commentChar should only be one ASCII character"));
+diff --git a/environment.c b/environment.c
+index 90632a39bc..0a9f5db407 100644
+--- a/environment.c
++++ b/environment.c
+@@ -110,7 +110,7 @@ int protect_ntfs = PROTECT_NTFS_DEFAULT;
+  * The character that begins a commented line in user-editable file
+  * that is subject to stripspace.
   */
--void strbuf_stripspace(struct strbuf *sb, char comment_line_char)
-+void strbuf_stripspace(struct strbuf *sb, char comment_prefix)
- {
- 	size_t empties = 0;
- 	size_t i, j, len, newlen;
-@@ -1017,8 +1017,8 @@ void strbuf_stripspace(struct strbuf *sb, char comment_line_char)
- 		eol = memchr(sb->buf + i, '\n', sb->len - i);
- 		len = eol ? eol - (sb->buf + i) + 1 : sb->len - i;
+-char comment_line_char = '#';
++const char *comment_line_str = "#";
+ int auto_comment_line_char;
  
--		if (comment_line_char && len &&
--		    sb->buf[i] == comment_line_char) {
-+		if (comment_prefix && len &&
-+		    sb->buf[i] == comment_prefix) {
- 			newlen = 0;
- 			continue;
- 		}
-diff --git a/strbuf.h b/strbuf.h
-index e959caca87..860fcec5fb 100644
---- a/strbuf.h
-+++ b/strbuf.h
-@@ -288,7 +288,7 @@ void strbuf_splice(struct strbuf *sb, size_t pos, size_t len,
+ /* Parallel index stat data preload? */
+diff --git a/environment.h b/environment.h
+index e5351c9dd9..3496474cce 100644
+--- a/environment.h
++++ b/environment.h
+@@ -8,7 +8,8 @@ struct strvec;
+  * The character that begins a commented line in user-editable file
+  * that is subject to stripspace.
   */
- void strbuf_add_commented_lines(struct strbuf *out,
- 				const char *buf, size_t size,
--				char comment_line_char);
-+				char comment_prefix);
+-extern char comment_line_char;
++#define comment_line_char (comment_line_str[0])
++extern const char *comment_line_str;
+ extern int auto_comment_line_char;
  
- 
- /**
-@@ -379,7 +379,7 @@ void strbuf_addf(struct strbuf *sb, const char *fmt, ...);
-  * blank to the buffer.
-  */
- __attribute__((format (printf, 3, 4)))
--void strbuf_commented_addf(struct strbuf *sb, char comment_line_char, const char *fmt, ...);
-+void strbuf_commented_addf(struct strbuf *sb, char comment_prefix, const char *fmt, ...);
- 
- __attribute__((format (printf,2,0)))
- void strbuf_vaddf(struct strbuf *sb, const char *fmt, va_list ap);
-@@ -513,11 +513,11 @@ int strbuf_getcwd(struct strbuf *sb);
- int strbuf_normalize_path(struct strbuf *sb);
- 
- /**
-- * Strip whitespace from a buffer. If comment_line_char is non-NUL,
-+ * Strip whitespace from a buffer. If comment_prefix is non-NUL,
-  * then lines beginning with that character are considered comments,
-  * thus removed.
-  */
--void strbuf_stripspace(struct strbuf *buf, char comment_line_char);
-+void strbuf_stripspace(struct strbuf *buf, char comment_prefix);
- 
- static inline int strbuf_strip_suffix(struct strbuf *sb, const char *suffix)
- {
+ /*
 -- 
 2.44.0.463.g71abcb3a9f
 
