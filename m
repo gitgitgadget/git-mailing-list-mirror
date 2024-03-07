@@ -1,137 +1,173 @@
-Received: from wfout8-smtp.messagingengine.com (wfout8-smtp.messagingengine.com [64.147.123.151])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f41.google.com (mail-wr1-f41.google.com [209.85.221.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA45912F361
-	for <git@vger.kernel.org>; Thu,  7 Mar 2024 15:19:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.151
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C772812FF9D
+	for <git@vger.kernel.org>; Thu,  7 Mar 2024 15:22:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709824758; cv=none; b=BReKgPaPRE/TQf96FMOP7vT8SSbIc1LEJ8nKu0gDJ9adMACgoaOzPhHZQAIItoc6MSk3D5H1hZCI40HYzk04bWw0nMp9bEJ4t9ZwjDTUiy03mNOw1A3u91ZMHhdq4P/GGeKtVx2Oq4pcVEi7mFGqPeDjSXkjyirYp9QdNtFHxCM=
+	t=1709824954; cv=none; b=BmNO17BWYpKpLGHl1gU8x5WP/uNu/h/WpCGSmFbhCfgdz0HU8u1e12IMn7lCV86CwGinSqvDfvlGbVmNgQ919PJUfu2th/85KlwKGq8weHEJ+OHZoKb8HZkwHG4sYT7Z23S+yNvMs70eVxkXNgmX1OYMNaP4fwzPS85f9NHixwQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709824758; c=relaxed/simple;
-	bh=QdrAOf1ENs3dAaow0AaBJbuKfjX4OKBqnbydVFPcBEo=;
-	h=MIME-Version:Message-Id:In-Reply-To:References:Date:From:To:Cc:
-	 Subject:Content-Type; b=HyMhmUWTlphTZ7SafBUBNJd5xBvjIfPoyBVlUir4OT8/HTFLdRInd8c3sTZO03lEWxyYZnQVIobU04GJ59kPQ+EV3FbhRaz/zm8JvwJbGX8eno27vaVL5AqkIA+5bsxzdjHF9hvHn2ONukvq4W2ipF+OjBsyKHaG7Ca22PevyVQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=khaugsbakk.name; spf=pass smtp.mailfrom=khaugsbakk.name; dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b=Wc3yx0kp; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=dvt/ax47; arc=none smtp.client-ip=64.147.123.151
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=khaugsbakk.name
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=khaugsbakk.name
+	s=arc-20240116; t=1709824954; c=relaxed/simple;
+	bh=X/ufTnHQjPGHD0k+vB/FIiFeV7NovwqRzfoUajcbhzY=;
+	h=Message-ID:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=EQmci3PDBGxFsrGgBLB8ku6kQeBaT9t/Va3lS61X25SzZmZPWBabhZ9j2oXEEVoOkEHZ3oh2ArQqTqxUshMhsIQ7Jjpl2aJRa+DLWEMkgvOZrQz+TszUjtQa5vEuXVicfUlk43wpFFH34aJOr0HkDMnPQnNqJqcxZUFS3hwgUCg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=j6enQXln; arc=none smtp.client-ip=209.85.221.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b="Wc3yx0kp";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="dvt/ax47"
-Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
-	by mailfout.west.internal (Postfix) with ESMTP id AB1F11C0007D;
-	Thu,  7 Mar 2024 10:19:14 -0500 (EST)
-Received: from imap49 ([10.202.2.99])
-  by compute1.internal (MEProxy); Thu, 07 Mar 2024 10:19:15 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=khaugsbakk.name;
-	 h=cc:cc:content-transfer-encoding:content-type:content-type
-	:date:date:from:from:in-reply-to:in-reply-to:message-id
-	:mime-version:references:reply-to:subject:subject:to:to; s=fm3;
-	 t=1709824754; x=1709911154; bh=NzCGxDDQjEHrUyUifM4Aavb+oAZUTzvn
-	K81Cc2yMUHQ=; b=Wc3yx0kpwRcJRUMBlni7uF9o3V1uheD+B+sgrBBEKscAAoj1
-	0koWtujy0ygr8bjQ0Q/B+AetG0rch3PB2GjZjKuFm+s4bNHIDQsRvylJoFRA0hSU
-	imwelrAPuOpSBxnFKg3OVoDEFa+czy3irwmgKyzAZIjrQlPswfrCEaEgGGv4BSD7
-	GDdLkfzv3HjdBlImMN69XgRO4DUXbDjkv+ar0tFpeK+VeBjmHnsexuR/k693is8z
-	vtgJTGDXZ12evVQ1s+b4ZJcY3DmON2J7JIcKc4Bq5Rb8VKWt1SuW0te0182lnBzd
-	Hoh+M6r3Rc5GmkN8YSsBfrZDUuJ5msrdbttFDg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1709824754; x=
-	1709911154; bh=NzCGxDDQjEHrUyUifM4Aavb+oAZUTzvnK81Cc2yMUHQ=; b=d
-	vt/ax47Pbo/RMuNJrtyxZcw1lirO3j9SbB5xMPDqNkKd5kh4js/iUXyXDKQW6bJ7
-	MVqaeDZmX/ShkoACGRRnTfDMNieKmYmz7J1g0tgB6UBfj1rDBfDdjoabnQ/hrrNU
-	5YCMz+uD/NaXnilA+Kn+cZnb0Ms2ZULtvqojBkBpL3ouujOnlj/KDFjAWecHxfBs
-	wl1LhEmfYSQXhsm5VFSE/rNgEnpSaKTXCXnxvxkZmR6BGDUtEy9oTb2BaupURl2w
-	XMhgT5eAUgCkLL7iuk/F6Zc36hMUFjYaf3DCPSqvQl+vhyZbAi1qhfYkTq1VMld9
-	C6WTkzG6IHm/0I6T25zfA==
-X-ME-Sender: <xms:8drpZXexsmev8n1WFkRinFsg5IVYqt6TWGp9S3kIpkebcF-ulMsXzK4>
-    <xme:8drpZdOVMMaYWlHqSnclFpwBQhOKK_HsvSV3cfnNCuUGMG8DUqTJUn5YkTaELMGtm
-    6LYwLklz9mtKAG5cA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrieefgdejgecutefuodetggdotefrodftvf
-    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
-    uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
-    fjughrpefofgggkfgjfhffhffvvefutgfgsehtqhertderreejnecuhfhrohhmpedfmfhr
-    ihhsthhofhhfvghrucfjrghughhssggrkhhkfdcuoegtohguvgeskhhhrghughhssggrkh
-    hkrdhnrghmvgeqnecuggftrfgrthhtvghrnhepvdevheeiudefheffvdetueevkeehhfel
-    iefgkedtieefudetueehueeftefffedunecuvehluhhsthgvrhfuihiivgeptdenucfrrg
-    hrrghmpehmrghilhhfrhhomheptghouggvsehkhhgruhhgshgsrghkkhdrnhgrmhgv
-X-ME-Proxy: <xmx:8trpZQi1LxnqE39rXSGpQXvftKQtaFNiEkHR_wsCXS3mdUpQEBgkGw>
-    <xmx:8trpZY-wOK6WYAbWxeNSeszhyjL5D2KxMNSSmz5FpYlCu3oOJQGG0Q>
-    <xmx:8trpZTtr2x5rXQZKJJ56zMz0XUCeSrKBFzrdJgWy_apgrJu5StlV2A>
-    <xmx:8trpZc6ENCPFrkKPg7ym2pccHVdRpLnlSZTPhh9saJUsYuUSgFsKneUN-UA>
-Feedback-ID: i2671468f:Fastmail
-Received: by mailuser.nyi.internal (Postfix, from userid 501)
-	id E1A8C15A0092; Thu,  7 Mar 2024 10:19:13 -0500 (EST)
-X-Mailer: MessagingEngine.com Webmail Interface
-User-Agent: Cyrus-JMAP/3.11.0-alpha0-251-g8332da0bf6-fm-20240305.001-g8332da0b
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="j6enQXln"
+Received: by mail-wr1-f41.google.com with SMTP id ffacd0b85a97d-33d36736d4eso694841f8f.1
+        for <git@vger.kernel.org>; Thu, 07 Mar 2024 07:22:32 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1709824951; x=1710429751; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=wo1jV/dYhctD1/a5cvr6xI4viazOG9wef/MoeNhIW0I=;
+        b=j6enQXlnBJ3tk6xgHfVfmdHCRYA3xQFx4Y8wwlyhknyuEFS5vDUc0AsHXjaonYO65s
+         o/yLb/GpfCG6V6FXPNnqG9R3Ji4jJ1aRy+KeI5UMaBys97xSvBhjE/4MO816XW8w1Faz
+         0OmaPrMOLYxQXTacQ4vRluBeABFaN5O0KUw2BpC/O9vKXoQMc9IuFlihH0hzjLQ3CB6U
+         tvh7yqA+Yhvtr70IOJs2/PNTv2NuHvTt0j+j3sfL2GOaHvaMWO0hBY/OABkS4jgu4B9q
+         2tmwv/RXlzKaFNKiwZ3wo9j8PA/OSXePeA9kvv34+RMmNNMg5lW7P5l+25365WEm2wp1
+         chHw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1709824951; x=1710429751;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=wo1jV/dYhctD1/a5cvr6xI4viazOG9wef/MoeNhIW0I=;
+        b=NQ0yx7f8zUGls1gOocagPcpEtTMqiWB75ti9o0WjjiHiajkhJKfR34UkrIqpj8mM9Q
+         L4/Q2jOYJsizlsl1gUJQFAU8ttMzhfQyZc1iXx4V92K8svEHgk/WThOlw2qqayn4eDTM
+         QLab7Neu86RIGjbtQ50mUKzD5n5DpxqUYH8eUS5Tu1Kl08O8TC5wzVx4t7PNs+rFG/e1
+         N1b+jNvW8UCLJn3A4HR+VuVREguiWCh9bC3awiFcrMUafAOyfl6OkhjeuYvvX6/tlwqI
+         s5wGI3jYogvd+eZKD6txNjCyWSnFLJ1tU+yRmwxxYox8Qi73o5ZoQTNx+AdlRvNMGYaE
+         Sp3g==
+X-Gm-Message-State: AOJu0YxHWduI0XHBU/p4afD3GKtr0dw9JGXKjjZ0wKdpRNOB2Sxs7iAB
+	jC7l4DKS3QbpEWHRVtHeX2/B4Y+gsSWAPGREK4BQ1ImR5rY+EU1Ugji+8ftY
+X-Google-Smtp-Source: AGHT+IGBPhsUF9n5lIRGcPYQ9OLWbtMCLPp7Y/tKO3DAgXQbiRmxaA02sKAN0MAeMDu0PWQZg4sVGg==
+X-Received: by 2002:adf:fecb:0:b0:33d:2d07:b567 with SMTP id q11-20020adffecb000000b0033d2d07b567mr12526399wrs.24.1709824950578;
+        Thu, 07 Mar 2024 07:22:30 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id d30-20020adfa41e000000b0033e73f09dffsm40109wra.25.2024.03.07.07.22.30
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 07 Mar 2024 07:22:30 -0800 (PST)
+Message-ID: <pull.1679.v2.git.1709824949.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1679.git.1709566808.gitgitgadget@gmail.com>
+References: <pull.1679.git.1709566808.gitgitgadget@gmail.com>
+From: "Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Thu, 07 Mar 2024 15:22:26 +0000
+Subject: [PATCH v2 0/3] trace2: move generation of 'def_param' events into code for 'cmd_name'
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Message-Id: <b2555c2c-0725-4d33-853b-e17022689977@app.fastmail.com>
-In-Reply-To: <xmqqo7buuce7.fsf@gitster.g>
-References: <cover.1709495964.git.code@khaugsbakk.name>
- <4140fca4f454310d215df8bdac237caeb5c38521.1709495964.git.code@khaugsbakk.name>
- <xmqqo7buuce7.fsf@gitster.g>
-Date: Thu, 07 Mar 2024 16:18:52 +0100
-From: "Kristoffer Haugsbakk" <code@khaugsbakk.name>
-To: "Junio C Hamano" <gitster@pobox.com>
-Cc: git@vger.kernel.org, "Phillip Wood" <phillip.wood123@gmail.com>
-Subject: Re: [PATCH 1/1] rebase: teach `--exec` about `GIT_REBASE_BRANCH`
-Content-Type: text/plain;charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+To: git@vger.kernel.org
+Cc: Josh Steadmon <steadmon@google.com>,
+    Jeff Hostetler <git@jeffhostetler.com>,
+    Jeff Hostetler <jeffhostetler@github.com>
 
-On Mon, Mar 4, 2024, at 00:24, Junio C Hamano wrote:
-> Kristoffer Haugsbakk <code@khaugsbakk.name> writes:
->
->> The command fed to `--exec` might need some contextual information fr=
-om
->> the branch name. But there is no convenient access to the branch name
->> that we were on before starting the rebase; rebase operates in detach=
-ed
->> HEAD mode so we cannot ask for it directly. This means that we need to
->> parse something like this from the first line of `git branch --list`:
->>
->>     (no branch, rebasing <branch>)
->>
->> This is a moderate amount of effort for something that git-rebase(1) =
-can
->> store for us.
->>
->> To that end, teach `--exec` about an env. variable which stores the
->> branch name for the rebase-in-progress, if applicable.
->
-> You seem to be saying that `git branch --list` output already
-> contains the necessary information but it is shown in a hard to use
-> format.  Is the information given at least always accurate and
-> reliable?
->
-> Assuming it is, do you know where "git branch --list" gets that
-> information when it says "(no branch, rebasing <branch>)"?
->
-> git-rebase(1) is already storing information sufficient to let "git
-> branch --list" to produce that information, and there are other ways
-> to inspect that state ("git status" gives the same information but
-> it also is in a "meant for humans" format).
->
-> So, isn't it just the matter of surfacing the information that we
-> are already recording and is already available in a fashion that is
-> easier to use?  For example, if "git status --porcelain=3D[version]"
-> does not give the information, perhaps you can add a line or two to
-> it, instead of duplicating the same information in two places?
->
-> It comes from wt-status.c:wt_status_check_rebase() where state->branch
-> is assigned to, by reading "$GIT_DIR/rebase-{apply,merge}/head-name".
+Here is version 2 of this series. The only change from V1 is to combine the
+last two commits as discussed.
 
-Okay, thanks for the code directions and input (both). I=E2=80=99ll try =
-to get
-back to a rewrite on this topic in a while.
+Thanks Jeff
 
-Cheers
+----------------------------------------------------------------------------
 
---=20
-Kristoffer Haugsbakk
+Some Git commands do not emit def_param events for interesting config and
+environment variable settings. Let's fix that.
+
+Builtin commands compiled into git.c have the normal control flow and emit a
+cmd_name event and then def_param events for each interesting config and
+environment variable. However, some special "query" commands, like
+--exec-path, or some forms of alias expansion, emitted a cmd_name but did
+not emit def_param events.
+
+Also, special commands git-remote-https is built from remote-curl.c and
+git-http-fetch is built from http-fetch.c and do not use the normal set up
+in git.c. These emitted a cmd_name but not def_param events.
+
+To minimize the footprint of this commit, move the calls to
+trace2_cmd_list_config() and trace2_cmd_list_env_vars() into
+trace2_cmd_name() so that we always get a set of def_param events when a
+cmd_name event is generated.
+
+Users can define local config settings on a repo to classify/name a repo
+(e.g. "project-foo" vs "personal") and use the def_param feature to label
+Trace2 data so that (a third-party) telemetry service does not collect data
+on personal repos or so that telemetry from one work repo is distinguishable
+from another work repo in database queries.
+
+Jeff Hostetler (3):
+  t0211: demonstrate missing 'def_param' events for certain commands
+  trace2: avoid emitting 'def_param' set more than once
+  trace2: emit 'def_param' set with 'cmd_name' event
+
+ git.c                  |   6 --
+ t/t0211-trace2-perf.sh | 231 +++++++++++++++++++++++++++++++++++++++++
+ trace2.c               |  15 +++
+ 3 files changed, 246 insertions(+), 6 deletions(-)
+
+
+base-commit: 0f9d4d28b7e6021b7e6db192b7bf47bd3a0d0d1d
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1679%2Fjeffhostetler%2Falways-emit-def-param-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1679/jeffhostetler/always-emit-def-param-v2
+Pull-Request: https://github.com/gitgitgadget/git/pull/1679
+
+Range-diff vs v1:
+
+ 1:  b378b93242a = 1:  b378b93242a t0211: demonstrate missing 'def_param' events for certain commands
+ 2:  65068e97597 = 2:  65068e97597 trace2: avoid emitting 'def_param' set more than once
+ 3:  9507184b4f1 ! 3:  178721cd4f0 trace2: emit 'def_param' set with 'cmd_name' event
+     @@ Commit message
+          the "trace2_cmd_name()" function to generate the set of 'def_param'
+          events.
+      
+     -    We can later remove explicit calls to "trace2_cmd_list_config()" and
+     -    "trace2_cmd_list_env_vars()" in git.c.
+     +    Remove explicit calls to "trace2_cmd_list_config()" and
+     +    "trace2_cmd_list_env_vars()" in git.c since they are no longer needed.
+      
+     +    Reviewed-by: Josh Steadmon <steadmon@google.com>
+          Signed-off-by: Jeff Hostetler <jeffhostetler@github.com>
+      
+     + ## git.c ##
+     +@@ git.c: static int handle_alias(int *argcp, const char ***argv)
+     + 			strvec_pushv(&child.args, (*argv) + 1);
+     + 
+     + 			trace2_cmd_alias(alias_command, child.args.v);
+     +-			trace2_cmd_list_config();
+     +-			trace2_cmd_list_env_vars();
+     + 			trace2_cmd_name("_run_shell_alias_");
+     + 
+     + 			ret = run_command(&child);
+     +@@ git.c: static int handle_alias(int *argcp, const char ***argv)
+     + 		COPY_ARRAY(new_argv + count, *argv + 1, *argcp);
+     + 
+     + 		trace2_cmd_alias(alias_command, new_argv);
+     +-		trace2_cmd_list_config();
+     +-		trace2_cmd_list_env_vars();
+     + 
+     + 		*argv = new_argv;
+     + 		*argcp += count - 1;
+     +@@ git.c: static int run_builtin(struct cmd_struct *p, int argc, const char **argv)
+     + 
+     + 	trace_argv_printf(argv, "trace: built-in: git");
+     + 	trace2_cmd_name(p->cmd);
+     +-	trace2_cmd_list_config();
+     +-	trace2_cmd_list_env_vars();
+     + 
+     + 	validate_cache_entries(the_repository->index);
+     + 	status = p->fn(argc, argv, prefix);
+     +
+       ## t/t0211-trace2-perf.sh ##
+      @@ t/t0211-trace2-perf.sh: test_expect_success 'expect def_params for normal builtin command' '
+       # Representative query command dispatched in handle_options()
+ 4:  e8528715ebf < -:  ----------- trace2: remove unneeded calls to generate 'def_param' set
+
+-- 
+gitgitgadget
