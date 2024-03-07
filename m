@@ -1,86 +1,103 @@
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f47.google.com (mail-ej1-f47.google.com [209.85.218.47])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B725B1D680
-	for <git@vger.kernel.org>; Thu,  7 Mar 2024 13:27:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88D6012C813
+	for <git@vger.kernel.org>; Thu,  7 Mar 2024 13:29:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709818075; cv=none; b=ZyfWLY+xdErRBYcB43J6yYLnJ+bJFBHXFpAruFXMJzGOJEEb1uiBoix2thBSxXoZYqVsymsi7Jpf1rRNl3mMKVCBu9Wd4yRl5FlxvKrqKFeG6JUNvlWkJCQ0NDR7tIlg1riLftV19enBLr9/XV6JWufe+EZ9nXCfXUGfUH9Ggko=
+	t=1709818142; cv=none; b=mcB44e4cPwhC6EZElc7N+S4ct+gpGqXIkg76/XBoywV6/5id0s0h3fwR6KaMeNwjTbM+uvg/OglHAXBA2+5IxlExcwK9/5cOHBgocGZP4Kp6MMwSsoI9U7OzOR7GzLslVoL/VvtWOz7oAkkq+2xM4OX1kmc6bdL0V0R3K/NMdLU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709818075; c=relaxed/simple;
-	bh=SXBBIcDyZzszojwzBtGcFlQzncgMxzLO88xC5i79By4=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=GO7eRMmU4rMk0Hm0gaR7nHUK3+pjr37bksTIJUd6ZnmqW3VE0pBwfiiNXHSbiNPIJkTIHHkgI9le+NocDzjn3TcYLnF7BEOv//NSUWdk5kIMXUAG7ZxZ/K7xs22wo2J+wuqrXIJ2EVJcBB7wHZSFeIJFy1oQAPHzC/2MHwAdFb4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=C9FKXGUK; arc=none smtp.client-ip=173.228.157.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1709818142; c=relaxed/simple;
+	bh=Fxpr+oNI/ghCLaFtMfRNfIf0QGJn6sul8PpwHilahFM=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=epsGVdFyrF+/UIhhdeSzKev9sF46AXWhaUGAS00PPahPfGd+qDk4Iul7/6t8PcTrUfzG8u+GUQlOsmQVFKIzGfxEP7Z5m+mb9AICmG3huo4dWnfW3LPpjdmCUI/7g3Uch4JXProa4iGnPzA9FDSZJjDn2Rf9UIy7qkbS88UqiUI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=FF8IsCJh; arc=none smtp.client-ip=209.85.218.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="C9FKXGUK"
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 28A242630F;
-	Thu,  7 Mar 2024 08:27:53 -0500 (EST)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=SXBBIcDyZzszojwzBtGcFlQzncgMxzLO88xC5i
-	79By4=; b=C9FKXGUKpzPcVrdP17OB6vYeg5ZLpcKFsZqFjK5vZm4C+YBTeUYmzo
-	M5xGBS9SK+qigypCbqeMWkxIh7Ttjve/N2IL2MOifU+h7hei2mdmp+mW67z0Ll1X
-	jkycTj9g5pftYf0BU6LohaTLCQJGblgHxWSbKzb7zSetHSCe0AjB0=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 218782630E;
-	Thu,  7 Mar 2024 08:27:53 -0500 (EST)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.185.65])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 9E5E02630D;
-	Thu,  7 Mar 2024 08:27:49 -0500 (EST)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Ralph Seichter <ralph@seichter.de>
-Cc: Ralph Seichter <github@seichter.de>,  Ralph Seichter via GitGitGadget
- <gitgitgadget@gmail.com>,  git@vger.kernel.org
-Subject: Re: [PATCH] Allow git-config to append a comment
-In-Reply-To: <87plw6xld7.fsf@ra.horus-it.com> (Ralph Seichter's message of
-	"Thu, 07 Mar 2024 13:44:04 +0100")
-References: <pull.1681.git.1709532018372.gitgitgadget@gmail.com>
-	<xmqqttljtkn4.fsf@gitster.g>
-	<2560952c-4495-4a71-9497-aa40032e1d2b@seichter.de>
-	<xmqqplw6nsuz.fsf@gitster.g> <87plw6xld7.fsf@ra.horus-it.com>
-Date: Thu, 07 Mar 2024 05:27:48 -0800
-Message-ID: <xmqqh6hinpd7.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FF8IsCJh"
+Received: by mail-ej1-f47.google.com with SMTP id a640c23a62f3a-a26ed1e05c7so135691366b.2
+        for <git@vger.kernel.org>; Thu, 07 Mar 2024 05:29:00 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1709818139; x=1710422939; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=QvnuZABzVjzu9f7fk9OiqM7f/BzBsQsF41QUu9RXuG4=;
+        b=FF8IsCJhRqByqvF8eosY/sJyuHFIP0oZrNF4yKZ91CwJZtxLMGqwb5slGOnaw6mvyJ
+         ZhoTTuOMwgNm/4YyvQQ5aVhBg3m1DEHHcbPI63KksY2Bedhn0n1oh9rBWnH9M/FwIk1d
+         6Ik0GZXTFZyix+vmV3DTskNMgH4WR5YOPRAm/vDsumjwZ/jNRykP25VdSa4oCcoHhgJf
+         JcRGk+mk1nEILk44Pr0yTgUiIUC2Pi5akt7aT4IXr7A9KjDIajb3srhAYayKnniIC9S7
+         6RWey4vyRyAtUJjL0N+YGZr9F61MRVHnMR45OnFjET54gE5I57Hmsm/00GvnRh0rhRzd
+         MA7Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1709818139; x=1710422939;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=QvnuZABzVjzu9f7fk9OiqM7f/BzBsQsF41QUu9RXuG4=;
+        b=R7QlFnQWEIjbfI4cGw4QFrCIvuAh9B7T11q0HGjngMN2kJvM2U4qZOt4TozDyQHn1F
+         bGowo109ieW8k0kyJ+O+0bxOIBsuzL3K/HWdbTuqAOVMdDKil8NqJEHeDb/5n6H/Lkdd
+         JmyXGP+A9FFAKpuo3bLsojPsqfzOYUM8EwNg44wY4nHXZybBQj9Gsdq0OxvgaBO66T22
+         ADplP2lMHtmzSSGFE+7EEXoyevsnWG8LzjUXPWPpwrnvWrVBxGhlGlDkrgbLhNneZs8Z
+         gfmi630+5/tRZyLNZCb5jlF376TAsXO9mt6VFW4fDMQcp/02H9OJvgFjnY3bHmb5E6Tk
+         aHxA==
+X-Gm-Message-State: AOJu0Yxa7iFYTt3HJYjp2FQ5RQbGCZzCqYUMNe6iQNSsfUpqvvBTksZ9
+	K3j39X9cVJaSTAKKD2iMgc8sPigyjLW+3jQuVI3bbFAvNKkgIx5JfDQhiZ3zrQJWm3jgBi4JW/h
+	q374vYY0jYRlnwqXhmPBY52c5X6Y=
+X-Google-Smtp-Source: AGHT+IHNmpTfsI/2w9kdQ8QfycMujzAbrB+JWcAnkbwM9hBTWDQnQ7ZauY0Wc9aQNJADuKQqcROlbz5K/LKTdafaOks=
+X-Received: by 2002:a17:906:270d:b0:a45:ab75:7628 with SMTP id
+ z13-20020a170906270d00b00a45ab757628mr5572481ejc.52.1709818138606; Thu, 07
+ Mar 2024 05:28:58 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- 7E3BD784-DC86-11EE-80E1-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
+References: <pull.1675.v3.git.1709676557639.gitgitgadget@gmail.com> <pull.1675.v4.git.1709716446874.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1675.v4.git.1709716446874.gitgitgadget@gmail.com>
+From: Christian Couder <christian.couder@gmail.com>
+Date: Thu, 7 Mar 2024 14:28:46 +0100
+Message-ID: <CAP8UFD31udQB2e=+G-LpCevuS+JxQdWqwaq=5qvGEn21595faQ@mail.gmail.com>
+Subject: Re: [PATCH v4] tests: modernize the test script t0010-racy-git.sh
+To: Aryan Gupta via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, "Patrick Steinhardt [ ]" <ps@pks.im>, 
+	=?UTF-8?B?TWljaGFsIFN1Y2jDoW5layBbIF0=?= <msuchanek@suse.de>, 
+	=?UTF-8?B?SmVhbi1Ob8OrbCBBVklMQSBbIF0=?= <jn.avila@free.fr>, 
+	Eric Sunshine <sunshine@sunshineco.com>, Aryan Gupta <garyan447@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Ralph Seichter <ralph@seichter.de> writes:
+On Wed, Mar 6, 2024 at 10:46=E2=80=AFAM Aryan Gupta via GitGitGadget
+<gitgitgadget@gmail.com> wrote:
+>
+> From: Aryan Gupta <garyan447@gmail.com>
+>
+> Modernize the formatting of the test script to align with current
+> standards and improve its overall readability.
+>
+> Signed-off-by: Aryan Gupta <garyan447@gmail.com>
+> ---
+>     [GSOC][PATCH] Modernize a test script
+>
+> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1675%2F=
+aryangupta701%2Ftest-modernize-v4
+> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1675/aryan=
+gupta701/test-modernize-v4
+> Pull-Request: https://github.com/gitgitgadget/git/pull/1675
+>
+> Range-diff vs v3:
+>
+>  1:  05ee9e8a458 =3D 1:  14c7137baea tests: modernize the test script t00=
+10-racy-git.sh
 
-> Just as a brief interjection: I am sorry that my inexperience with Git's
-> mailing-list based process caused me to leave out details which were
-> discussed earlier, be it on GitHub or Discord. However, me not
-> mentioning that I am aiming for single-line suffix comments only was due
-> to simple forgetfulness, without an excuse behind it. My bad.
+This tells us that nothing changed in the patch since v3, so we can
+only wonder why you sent this v4.
 
-Don't feel too bad.  It is not about discord vs mailing list vs
-github "reviews on the web".  It is about the end-product, the
-commit log messages, what future developers will see in their "git
-log" output.
+Did you fix some headers? Please explain.
 
-> I think it best I flesh out the commit message before anything else, and
-> then resubmit. That should bundle the necessary information.
+>  t/t0010-racy-git.sh | 31 +++++++++++++++----------------
+>  1 file changed, 15 insertions(+), 16 deletions(-)
 
-Yup.  Please do that.
-
-Communicating with reviewers and other contributors is not the
-primary goal of the review process.  It is done to help us reach a
-better end-product, the commit log messages that will help our future
-developers and future selves.
-
-Thanks.
+Otherwise, the patch looks good to me. Thanks.
