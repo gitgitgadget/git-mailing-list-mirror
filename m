@@ -1,35 +1,37 @@
 Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7068183A01
-	for <git@vger.kernel.org>; Thu,  7 Mar 2024 09:24:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B37F463409
+	for <git@vger.kernel.org>; Thu,  7 Mar 2024 09:26:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709803460; cv=none; b=WSDTxgqwQ+pg2u1tIE+Ndgh2V+2jTc6JBig3K2Rx4xONaLqSMm2kputf2xNiqr4aHYWqj1gIAt+7HX9UsOsPFJkIm+hHEb+VGS344exkblB0TFV8Wojf2m9FrLVJQLJFMEKTH31l7UsPsfmAubtqf4Z4JP8oijiS6GjhIoJzm7c=
+	t=1709803601; cv=none; b=cbb9TPp4QCPMITsVEbuPt5/uVN/AVFJDiC0LMBc3dLjourv0ab9ortVlFMdpEDfza/5GiL/4LonqQg4fx7/C+kqm7GfldhEfcGlQacuwNXswfg+sooxcmYtCaOvWAc5+ey+nUoU4K/PitP44E3SGB8k3MTaJB7sQa/sesOmLxMU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709803460; c=relaxed/simple;
-	bh=pp9ZP8ntWbKCVIScueQ85+Nxx3QM8WrJ64rzCW/qB/s=;
+	s=arc-20240116; t=1709803601; c=relaxed/simple;
+	bh=2AtI8LQdQY2VP8k2/VQY1qOwqY415H/HnQrNlgUDHvU=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=P6qFdN7Ec1c1fvl0LePmUkyKAScTQ+7K2JTQhAeAQMw0RN8P/geuFT5QIJN5KWBcWN/soB1KoHN8l4ZI0a8S8lRwztgOJtLaFe/CJL9dRqApdgvUgUy7IOqBvMyJ51XbRmRq5LheSMfVl5fBbqy1/vKmXF5PXBkQPozAP8yzSJc=
+	 Content-Type:Content-Disposition:In-Reply-To; b=rgNCFP5Eci7U+fn3aMUeob5Bz6yyMwfbRftBUpZ6JbVpoaDQGCEb4XeJDHaodPcgNeAKhtunrOlQO0ozHczyV44v4GrIuO/6wsvymTmmk85FRfwFTXLXH0utjK+hh/yFQ/KaHx3gbc9KpbfMGTt8ex3yEw5Kk+PEI+GdcizJRCE=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; arc=none smtp.client-ip=104.130.231.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=peff.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
-Received: (qmail 6995 invoked by uid 109); 7 Mar 2024 09:24:17 -0000
+Received: (qmail 7015 invoked by uid 109); 7 Mar 2024 09:26:39 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 07 Mar 2024 09:24:17 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 07 Mar 2024 09:26:39 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 12651 invoked by uid 111); 7 Mar 2024 09:24:22 -0000
+Received: (qmail 12710 invoked by uid 111); 7 Mar 2024 09:26:43 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 07 Mar 2024 04:24:21 -0500
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 07 Mar 2024 04:26:43 -0500
 Authentication-Results: peff.net; auth=none
-Date: Thu, 7 Mar 2024 04:24:16 -0500
+Date: Thu, 7 Mar 2024 04:26:38 -0500
 From: Jeff King <peff@peff.net>
 To: git@vger.kernel.org
-Cc: Junio C Hamano <gitster@pobox.com>, Dragan Simic <dsimic@manjaro.org>,
+Cc: =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
+	Junio C Hamano <gitster@pobox.com>,
+	Dragan Simic <dsimic@manjaro.org>,
 	Kristoffer Haugsbakk <code@khaugsbakk.name>,
 	Manlio Perillo <manlio.perillo@gmail.com>
-Subject: [PATCH 10/15] find multi-byte comment chars in NUL-terminated strings
-Message-ID: <20240307092416.GJ2080210@coredump.intra.peff.net>
+Subject: [PATCH 11/15] find multi-byte comment chars in unterminated buffers
+Message-ID: <20240307092638.GK2080210@coredump.intra.peff.net>
 References: <20240307091407.GA2072522@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -39,84 +41,161 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
 In-Reply-To: <20240307091407.GA2072522@coredump.intra.peff.net>
 
-Several parts of the code need to identify lines that begin with the
-comment character, and do so with a simple byte equality check. As part
-of the transition to handling multi-byte characters, we need to match
-all of the bytes. For cases where we are looking in a NUL-terminated
-string, we can just use starts_with(), which checks all of the
-characters in comment_line_str.
+As with the previous patch, we need to swap out single-byte matching for
+something like starts_with() to match all bytes of a multi-byte comment
+character. But for cases where the buffer is not NUL-terminated (and we
+instead have an explicit size or end pointer), it's not safe to use
+starts_with(), as it might walk off the end of the buffer.
 
-Note that we can drop the "line.len" check in wt-status.c's
-read_rebase_todolist(). The starts_with() function handles the case of
-an empty haystack buffer (it will always return false for a non-empty
-prefix).
+Let's introduce a new starts_with_mem() that does the same thing but
+also accepts the length of the "haystack" str and makes sure not to walk
+past it.
+
+Note that in most cases the existing code did not need a length check at
+all, since it was written in a way that knew we had at least one byte
+available (and that was all we checked). So I had to read each one to
+find the appropriate bounds. The one exception is sequencer.c's
+add_commented_lines(), where we can actually get rid of the length
+check. Just like starts_with(), our starts_with_mem() handles an empty
+haystack variable by not matching (assuming a non-empty prefix).
+
+A few notes on the implementation of starts_with_mem():
+
+  - it would be equally correct to take an "end" pointer (and indeed,
+    many of the callers have this and have to subtract to come up with
+    the length). I think taking a ptr/size combo is a more usual
+    interface for our codebase, though, and has the added benefit that
+    the function signature makes it harder to mix up the three
+    parameters.
+
+  - we could obviously build starts_with() on top of this by passing
+    strlen(str) as the length. But it's possible that starts_with() is a
+    relatively hot code path, and it should not pay that penalty (it can
+    generally return an answer proportional to the size of the prefix,
+    not the whole string).
+
+  - it naively feels like xstrncmpz() should be able to do the same
+    thing, but that's not quite true. If you pass the length of the
+    haystack buffer, then strncmp() finds that a shorter prefix string
+    is "less than" than the haystack, even if the haystack starts with
+    the prefix. If you pass the length of the prefix, then you risk
+    reading past the end of the haystack if it is shorter than the
+    prefix. So I think we really do need a new function.
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
-I think the main way these hunks could be wrong is if the buffer is not
-in fact NUL-terminated. In most cases we're working with a strbuf,
-though.
+Arguably starts_with() and this new function should both be inlined,
+like we do for skip_prefix(), but I think that's out of scope for this
+series.
 
- add-patch.c | 2 +-
- sequencer.c | 2 +-
- trailer.c   | 2 +-
- wt-status.c | 2 +-
- 4 files changed, 4 insertions(+), 4 deletions(-)
+And it's possible I was simply too dumb to figure out xstrncmpz() here.
+I'm waiting for René to show up and tell me how to do it. ;)
 
-diff --git a/add-patch.c b/add-patch.c
-index 4a10237d50..d599ca53e1 100644
---- a/add-patch.c
-+++ b/add-patch.c
-@@ -1139,7 +1139,7 @@ static int edit_hunk_manually(struct add_p_state *s, struct hunk *hunk)
- 	for (i = 0; i < s->buf.len; ) {
- 		size_t next = find_next_line(&s->buf, i);
+IMHO this is the trickiest commit of the whole series, as it would be
+easy to get the length computations subtly wrong.
+
+ commit.c    |  3 ++-
+ sequencer.c |  4 ++--
+ strbuf.c    | 11 +++++++++++
+ strbuf.h    |  1 +
+ trailer.c   |  4 ++--
+ 5 files changed, 18 insertions(+), 5 deletions(-)
+
+diff --git a/commit.c b/commit.c
+index ef679a0b93..531a666cba 100644
+--- a/commit.c
++++ b/commit.c
+@@ -1796,7 +1796,8 @@ size_t ignored_log_message_bytes(const char *buf, size_t len)
+ 		else
+ 			next_line++;
  
--		if (s->buf.buf[i] != comment_line_char)
-+		if (!starts_with(s->buf.buf + i, comment_line_str))
- 			strbuf_add(&s->plain, s->buf.buf + i, next - i);
- 		i = next;
- 	}
+-		if (buf[bol] == comment_line_char || buf[bol] == '\n') {
++		if (starts_with_mem(buf + bol, cutoff - bol, comment_line_str) ||
++		    buf[bol] == '\n') {
+ 			/* is this the first of the run of comments? */
+ 			if (!boc)
+ 				boc = bol;
 diff --git a/sequencer.c b/sequencer.c
-index 241e185f87..991a2dbe96 100644
+index 991a2dbe96..664986e3b2 100644
 --- a/sequencer.c
 +++ b/sequencer.c
-@@ -2003,7 +2003,7 @@ static int update_squash_messages(struct repository *r,
- 			return error(_("could not read '%s'"),
- 				rebase_path_squash_msg());
+@@ -1840,7 +1840,7 @@ static int is_fixup_flag(enum todo_command command, unsigned flag)
+ static void add_commented_lines(struct strbuf *buf, const void *str, size_t len)
+ {
+ 	const char *s = str;
+-	while (len > 0 && s[0] == comment_line_char) {
++	while (starts_with_mem(s, len, comment_line_str)) {
+ 		size_t count;
+ 		const char *n = memchr(s, '\n', len);
+ 		if (!n)
+@@ -2562,7 +2562,7 @@ static int parse_insn_line(struct repository *r, struct todo_item *item,
+ 	/* left-trim */
+ 	bol += strspn(bol, " \t");
  
--		eol = buf.buf[0] != comment_line_char ?
-+		eol = !starts_with(buf.buf, comment_line_str) ?
- 			buf.buf : strchrnul(buf.buf, '\n');
+-	if (bol == eol || *bol == '\r' || *bol == comment_line_char) {
++	if (bol == eol || *bol == '\r' || starts_with_mem(bol, eol - bol, comment_line_str)) {
+ 		item->command = TODO_COMMENT;
+ 		item->commit = NULL;
+ 		item->arg_offset = bol - buf;
+diff --git a/strbuf.c b/strbuf.c
+index 7c8f582127..291bdc2a65 100644
+--- a/strbuf.c
++++ b/strbuf.c
+@@ -24,6 +24,17 @@ int istarts_with(const char *str, const char *prefix)
+ 			return 0;
+ }
  
- 		strbuf_addf(&header, "%s ", comment_line_str);
++int starts_with_mem(const char *str, size_t len, const char *prefix)
++{
++	const char *end = str + len;
++	for (; ; str++, prefix++) {
++		if (!*prefix)
++			return 1;
++		else if (str == end || *str != *prefix)
++			return 0;
++	}
++}
++
+ int skip_to_optional_arg_default(const char *str, const char *prefix,
+ 				 const char **arg, const char *def)
+ {
+diff --git a/strbuf.h b/strbuf.h
+index 58dddf2777..3156d6ea8c 100644
+--- a/strbuf.h
++++ b/strbuf.h
+@@ -673,6 +673,7 @@ char *xstrfmt(const char *fmt, ...);
+ 
+ int starts_with(const char *str, const char *prefix);
+ int istarts_with(const char *str, const char *prefix);
++int starts_with_mem(const char *str, size_t len, const char *prefix);
+ 
+ /*
+  * If the string "str" is the same as the string in "prefix", then the "arg"
 diff --git a/trailer.c b/trailer.c
-index ef9df4af55..fe18faf6c5 100644
+index fe18faf6c5..f59c90b4b5 100644
 --- a/trailer.c
 +++ b/trailer.c
-@@ -1013,7 +1013,7 @@ static void parse_trailers(struct trailer_info *info,
- 	for (i = 0; i < info->trailer_nr; i++) {
- 		int separator_pos;
- 		char *trailer = info->trailers[i];
--		if (trailer[0] == comment_line_char)
-+		if (starts_with(trailer, comment_line_str))
+@@ -882,7 +882,7 @@ static size_t find_trailer_block_start(const char *buf, size_t len)
+ 
+ 	/* The first paragraph is the title and cannot be trailers */
+ 	for (s = buf; s < buf + len; s = next_line(s)) {
+-		if (s[0] == comment_line_char)
++		if (starts_with_mem(s, buf + len - s, comment_line_str))
  			continue;
- 		separator_pos = find_separator(trailer, separators);
- 		if (separator_pos >= 1) {
-diff --git a/wt-status.c b/wt-status.c
-index b66c30775b..084bfc584f 100644
---- a/wt-status.c
-+++ b/wt-status.c
-@@ -1382,7 +1382,7 @@ static int read_rebase_todolist(const char *fname, struct string_list *lines)
- 			  git_path("%s", fname));
- 	}
- 	while (!strbuf_getline_lf(&line, f)) {
--		if (line.len && line.buf[0] == comment_line_char)
-+		if (starts_with(line.buf, comment_line_str))
+ 		if (is_blank_line(s))
+ 			break;
+@@ -902,7 +902,7 @@ static size_t find_trailer_block_start(const char *buf, size_t len)
+ 		const char **p;
+ 		ssize_t separator_pos;
+ 
+-		if (bol[0] == comment_line_char) {
++		if (starts_with_mem(bol, buf + end_of_title - bol, comment_line_str)) {
+ 			non_trailer_lines += possible_continuation_lines;
+ 			possible_continuation_lines = 0;
  			continue;
- 		strbuf_trim(&line);
- 		if (!line.len)
 -- 
 2.44.0.463.g71abcb3a9f
 
