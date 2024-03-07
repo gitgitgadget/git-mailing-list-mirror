@@ -1,147 +1,113 @@
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+Received: from ring.crustytoothpaste.net (ring.crustytoothpaste.net [172.105.110.227])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90DDD634E4
-	for <git@vger.kernel.org>; Thu,  7 Mar 2024 21:40:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3185313E7CA
+	for <git@vger.kernel.org>; Thu,  7 Mar 2024 22:20:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.110.227
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709847611; cv=none; b=cG764wyZ+Lg8nEJP26AjDmdXVYOHtWOeiNAySpcRDJSDaWA3mRWZ4GiHSAIVK1yzglyCNFqIUv9juES3wxK+cYtpn3UlcjcfLJQo9wqbXFtrNVaZWJ70ctpZlfejSsdbOiEIYAweGKA9nZEE+d/DB/XXQfC6BQSQD8WL7e1aZHk=
+	t=1709850028; cv=none; b=iZHtRy/+UdumpwYDykZWBlGQLCIiaGtoIsyR0sCPHMuZuu3M3oC6k/tCc1MdunF/TDo8VAk8pX/XzvdcrGpFNIcuUfWfs7i8TToEFvCpXeFbUGCORvTCectnHbDvnJ8QTKVhmLX67ZUGwsJqlHr/1DcmRxhd0MKGG/bDY1AsSAM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709847611; c=relaxed/simple;
-	bh=OInqaWYtXAaFk+mdPujGdom0y6W+yUGM3daK3o4Da4s=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=ovQt5/Vq3z1IZDcsxSGb7migoVnK+bfvFfu/IUfXswt2Xvdv3kmdiGCF1VTPVvczkZLtnNvwHqfBN+FdUZHlM40PYcjFJRHXwcZPKgwSnQwKyrkti4t07Iys7B/v1L4Npmb6M9RUlByWtuiWe7UB+EfuAIufqqv3qyqutyzlfqg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=Qw6PNm9c; arc=none smtp.client-ip=64.147.108.70
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1709850028; c=relaxed/simple;
+	bh=LPbiwXDRpA4ezFagvXRiVttlSE1GRKsfOwyt1qpVbyA=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=KHGl6xKAHynqbP2Gi8QDEBpY48ZVo1kbgykQLuJACUCHaIcLSKDdoRSYxJ+qqf9KqTMW/xl7TGwGp9aBKKDd4JIBAcEybBKySFDQxU8LjM1PDPkXuqVophFSxilK699/9nwhkdOZ3f/gl09dmN1xsg6xljtpgH0yEYPu20DUD2k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=ot3X520t; arc=none smtp.client-ip=172.105.110.227
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="Qw6PNm9c"
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 1C21B1EFC10;
-	Thu,  7 Mar 2024 16:40:08 -0500 (EST)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=OInqaWYtXAaFk+mdPujGdom0y6W+yUGM3daK3o
-	4Da4s=; b=Qw6PNm9ca1FJCpixlVZyUQIF0Wvh7BVPruFVfY3VJ9Qewa/FMeVo0h
-	GrR/qpR3GfM+5SFiWfEGuSysSc2+GwvaVRSjrWt64j2PQj85kc0F+mIyQ39PyjS/
-	eNmfPU1G2BRnUbcCHm+KWfWnALzd9fcfiY3cO/psEGrgKbildC2Fo=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id B0E3C1EFC0F;
-	Thu,  7 Mar 2024 16:40:07 -0500 (EST)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.185.65])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="ot3X520t"
+Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:e59a:3ed0:5f5c:31f3])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (P-256) server-signature RSA-PSS (3072 bits) server-digest SHA256)
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 2ABC91EFC0E;
-	Thu,  7 Mar 2024 16:40:06 -0500 (EST)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Ignacio Encinas <ignacio@iencinas.com>
+	by ring.crustytoothpaste.net (Postfix) with ESMTPSA id 563565B3CF;
+	Thu,  7 Mar 2024 22:20:18 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1709850018;
+	bh=LPbiwXDRpA4ezFagvXRiVttlSE1GRKsfOwyt1qpVbyA=;
+	h=Date:From:To:Cc:Subject:References:Content-Type:
+	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+	 Content-Type:Content-Disposition;
+	b=ot3X520t7QLYbFwjWRICqha84mKYsjAANEpnKD/mnY54IztbOZ3L6ayG9UGAv1Yh4
+	 eOLiqd/9mnMKbrmOSNzqli1JNqVH3pNzZxyAaUPCG0RLdsvWizs3XWms4ULrLIVOA0
+	 H3l0RQ+9Jm46OTayFeu6xBVo4wPZ8fQ0h9YpJY0HwDRrQdAV0pJuRhXWlmlJJ0QWOg
+	 rUSgj/+ePkHo6vu2DK3AvQd+FNuOlRrTINL15RyP8EMrx03fp4Xy4hqyR6nutane62
+	 jhWVf3uVpl3JEC4zaaO0/t7xgAErncMccd2YJbCYrxtutFL/0RNcB3zkhQA4m/gfTu
+	 fw9tAqNuMU9wlBgvg0tX9XdjhSC51VyGvi8W+SXzD05Mbqf8q7q2TyzwP/l0t8Arht
+	 sg5TYl2LkBuDkI92RyAfWBLJpuMx8Yp9gIBCeJAv1cvafZ6dFoCfEubBfJCPcWY/aX
+	 p/2qMv2cykhAbILh35X7+vVSxd2kqqCe9Zq2uguFv9oV6K2t7z4
+Date: Thu, 7 Mar 2024 22:20:16 +0000
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+To: Jeff King <peff@peff.net>
 Cc: git@vger.kernel.org
-Subject: Re: [RFC PATCH 1/1] config: learn the "hostname:" includeIf condition
-In-Reply-To: <20240307205006.467443-2-ignacio@iencinas.com> (Ignacio Encinas's
-	message of "Thu, 7 Mar 2024 21:50:06 +0100")
-References: <20240307205006.467443-1-ignacio@iencinas.com>
-	<20240307205006.467443-2-ignacio@iencinas.com>
-Date: Thu, 07 Mar 2024 13:40:04 -0800
-Message-ID: <xmqqil1xk9fv.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+Subject: Re: [PATCH 2/2] doc/gitremote-helpers: match object-format option
+ docs to code
+Message-ID: <Zeo9oAkL6kxZRugN@tapette.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Jeff King <peff@peff.net>, git@vger.kernel.org
+References: <20240307084735.GA2072130@coredump.intra.peff.net>
+ <20240307085632.GB2072294@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- 43604650-DCCB-11EE-AD16-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="iPTnXuo69D64Prqy"
+Content-Disposition: inline
+In-Reply-To: <20240307085632.GB2072294@coredump.intra.peff.net>
+User-Agent: Mutt/2.2.12 (2023-09-09)
 
-Ignacio Encinas <ignacio@iencinas.com> writes:
 
-> Currently, customizing the configuration depending on the machine running
-> git has to be done manually.
->
-> Add support for a new includeIf keyword "hostname:" to conditionally
-> include configuration files depending on the hostname.
->
-> Signed-off-by: Ignacio Encinas <ignacio@iencinas.com>
+--iPTnXuo69D64Prqy
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+On 2024-03-07 at 08:56:32, Jeff King wrote:
+> Git's transport-helper code has always sent "option object-format\n",
+> and never provided the "true" or "algorithm" arguments. While the
+> "algorithm" request is something we might need or want to eventually
+> support, it probably makes sense for now to document the actual
+> behavior, especially as it has been in place for several years, since
+> 8b85ee4f47 (transport-helper: implement object-format extensions,
+> 2020-05-25).
+>=20
+> Signed-off-by: Jeff King <peff@peff.net>
 > ---
->  Documentation/config.txt  |  9 +++++++++
->  config.c                  | 16 ++++++++++++++++
->  t/t1305-config-include.sh | 22 ++++++++++++++++++++++
->  3 files changed, 47 insertions(+)
->
-> diff --git a/Documentation/config.txt b/Documentation/config.txt
-> index e3a74dd1c1..9a22fd2609 100644
-> --- a/Documentation/config.txt
-> +++ b/Documentation/config.txt
-> @@ -186,6 +186,11 @@ As for the naming of this keyword, it is for forwards compatibility with
->  a naming scheme that supports more variable-based include conditions,
->  but currently Git only supports the exact keyword described above.
+> As I discussed in patch 1, remote-curl does handle the "true" thing
+> correctly. And that's really the helper that matters in practice (it's
+> possible some third party helper is looking for the explicit "true", but
+> presumably they'd have reported their confusion to the list). So we
+> could probably just start tacking on the "true" in transport-helper.c
+> and leave that part of the documentation untouched.
+>=20
+> I'm less sure of the specific-algorithm thing, just because it seems
+> like remote-curl would never make use of it anyway (preferring instead
+> to match whatever algorithm is used by the http remote). But maybe there
+> are pending interoperability plans that depend on this?
 
-> +`hostname`::
-> +	The data that follows the keyword `hostname:` is taken to be a
-> +	pattern with standard globbing wildcards. If the current
-> +	hostname matches the pattern, the include condition is met.
-> +
+It was designed to allow indicating that we know how to support both
+SHA-1 and SHA-256 and we want one or the other (so we don't need to do
+an expensive conversion).  However, if it's not implemented, I agree we
+should document what's implemented, and then extend it when interop
+comes.
+--=20
+brian m. carlson (he/him or they/them)
+Toronto, Ontario, CA
 
-OK.  This seems to copy its phrasing from the existing text for
-"gitdir" and "onbranch", which greatly helps the description for
-these features consistent.
+--iPTnXuo69D64Prqy
+Content-Type: application/pgp-signature; name="signature.asc"
 
-> diff --git a/config.c b/config.c
-> index 3cfeb3d8bd..e0611fc342 100644
-> --- a/config.c
-> +++ b/config.c
-> @@ -317,6 +317,20 @@ static int include_by_branch(const char *cond, size_t cond_len)
->  	return ret;
->  }
->  
-> +static int include_by_hostname(const char *cond, size_t cond_len)
-> +{
-> +	int ret;
-> +	char my_host[HOST_NAME_MAX + 1];
-> +	struct strbuf pattern = STRBUF_INIT;
-> +	if (xgethostname(my_host, sizeof(my_host)))
-> +		return 0;
-> +
-> +	strbuf_add(&pattern, cond, cond_len);
-> +	ret = !wildmatch(pattern.buf, my_host, 0);
-> +	strbuf_release(&pattern);
-> +	return ret;
-> +}
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.4.4 (GNU/Linux)
 
-Have a blank line between the end of the decl block (our codebase
-frowns upon decl-after-statement) and the first statement,
-i.e. before "if (xgethostname...".
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZeo9nwAKCRB8DEliiIei
+gbTfAP4rvNvvMYopMGn4Tbs3yS1QqVdyPLMx9t6HFn5yrBoJAAD/VuGNaXSg5P3V
+HhQAIrH935jTtA9EQw/0yrK4WXTN9A8=
+=nmB8
+-----END PGP SIGNATURE-----
 
-Otherwise this looks reasonable to me.
-
-> diff --git a/t/t1305-config-include.sh b/t/t1305-config-include.sh
-> index 5cde79ef8c..ee78d9cade 100755
-> --- a/t/t1305-config-include.sh
-> +++ b/t/t1305-config-include.sh
-> @@ -357,4 +357,26 @@ test_expect_success 'include cycles are detected' '
->  	grep "exceeded maximum include depth" stderr
->  '
->  
-> +test_expect_success 'conditional include, hostname' '
-> +	echo "[includeIf \"hostname:$(hostname)a\"]path=bar12" >>.git/config &&
-> +	echo "[test]twelve=12" >.git/bar12 &&
-> +	test_must_fail git config test.twelve &&
-
-Emulating other tests in this file that uses here document may make
-it a bit easier to read?  E.g.,
-
-	cat >>.gitconfig <<-EOF &&
-	[includeIf "hostname:$(hostname)a"]
-		path = bar12
-	EOF
-
-> +	echo "[includeIf \"hostname:$(hostname)\"]path=bar12" >>.git/config &&
-
-Ditto for the remainder of the patch.
-
-Thanks.
-
+--iPTnXuo69D64Prqy--
