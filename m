@@ -1,53 +1,52 @@
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D3E1135A7C
-	for <git@vger.kernel.org>; Thu,  7 Mar 2024 19:20:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AE6A136991
+	for <git@vger.kernel.org>; Thu,  7 Mar 2024 19:35:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709839216; cv=none; b=G5jPaGAMcYpd/36DTBSRAd+trvPfaeTZdmgpXAM9tXg1jghGc7stRYDiv+bej32/E9DU4wdcjSgGitw0MHeNfz5RuwbJg2rdIu2/cd/T+GLSu0qSSHDL+Ze8IqH/mcp80u2s+KhLFmnnvYYEP1as2vYn8sfD6rcO40kOKjRTWZA=
+	t=1709840141; cv=none; b=BrJ7Z0SXFu8L95xs8bj4zEbLwZugGdxZFg1Kx2I3ktvavbsUCXwLBO4FIzobLYBuXh6/R0nmj1AKVn0U0NNgiI2CZVPRRbYEUSkDhh920fEHjbTK+x4VQd2UBiZtp1Okl33c1gtJgttpXAPC5R0Z/isepInhW7/SNzosL1GwbIw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709839216; c=relaxed/simple;
-	bh=y4b+iVebSI7IX0kT65Ooyn6p3mL415hOf0cdFmubxHQ=;
+	s=arc-20240116; t=1709840141; c=relaxed/simple;
+	bh=MVX4wB/pTsVcHcp4shfUHWLBFFxKmfZ0O50suqxuE6k=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=ipzHpelbkiZgXLMBDgHw6DKNK984tyJd+v8MlCOKFv2cnXmVMkEQGQB0hwL7orXl6ZbW+t/wKbtfB+LjzmRt8pQtrW+KJ+sdctn1euoVhc+WMeDnOd6bvtHLJpBFYCYLlDfVtrEzMbF67+KIEAg1EFt6r/+K6itPUpKDg9D/npU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=Bs7v/xHb; arc=none smtp.client-ip=64.147.108.70
+	 MIME-Version:Content-Type; b=OYEbl6mOc9uLCGbdNCbVuraY1HmXsUwsnfRGUAw5j4QSv/HIy4vS5yPv8XZzHoqvUNvOz7uorDmtsbqTMlV0CEELpG2DV4y2793mx39FbpSxmTORnM9PMs4DQxJL58r72e1an9/+9cDxcbBKXX0Mv2PYJddFRq9BnRlGVjzkAkA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=IOCmrDLI; arc=none smtp.client-ip=173.228.157.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="Bs7v/xHb"
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 1576F1EECCD;
-	Thu,  7 Mar 2024 14:20:13 -0500 (EST)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="IOCmrDLI"
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id C99AA288F8;
+	Thu,  7 Mar 2024 14:35:39 -0500 (EST)
 	(envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
 	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=y4b+iVebSI7IX0kT65Ooyn6p3mL415hOf0cdFm
-	ubxHQ=; b=Bs7v/xHbyAvESnn8KYwAhB6ORKogbgsPt4GivgIhdXPRpv9kn8Wyh8
-	hfmu+Eov1S7VdJxKqoLh43mZYLpUtf8huMMIrtyyDdM5uFkoANStM7m9BnzJ6frj
-	c2Z4abPbJzi8GvWQvr6j45+zy8aRnG2oMCt30QlLNrV+TK3SpH4BQ=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 0A6BB1EECCC;
-	Thu,  7 Mar 2024 14:20:13 -0500 (EST)
+	:content-type; s=sasl; bh=MVX4wB/pTsVcHcp4shfUHWLBFFxKmfZ0O50suq
+	xuE6k=; b=IOCmrDLIHFrmoFBIuYutPDuD11Sgcr1ahaOHNukbn4verD5XZEnpJV
+	yybm+BKibwtozNIUd8sWfoWBP6VBMkRm6TcO7m9dXRYnpxnzQlnPXazKcpEgSSxC
+	yfzOpPslcTdiRrQBScgbOaogOUsG1wLX0j8z7W695FAIzdsyeO/n0=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp20.pobox.com (Postfix) with ESMTP id C1F78288F7;
+	Thu,  7 Mar 2024 14:35:39 -0500 (EST)
 	(envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [34.125.185.65])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 6D7E61EECCA;
-	Thu,  7 Mar 2024 14:20:12 -0500 (EST)
+	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 5B5CF288F6;
+	Thu,  7 Mar 2024 14:35:36 -0500 (EST)
 	(envelope-from junio@pobox.com)
 From: Junio C Hamano <gitster@pobox.com>
 To: Florian Schmidt <flosch@nutanix.com>
 Cc: git@vger.kernel.org,  Jonathan Davies <jonathan.davies@nutanix.com>,
   Phillip Wood <phillip.wood@dunelm.org.uk>,  Denton Liu
- <liu.denton@gmail.com>,
-    Linus Arver <linusa@google.com>
+ <liu.denton@gmail.com>
 Subject: Re: [PATCH] wt-status: Don't find scissors line beyond buf len
 In-Reply-To: <20240307183743.219951-1-flosch@nutanix.com> (Florian Schmidt's
 	message of "Thu, 7 Mar 2024 18:37:38 +0000")
 References: <20240307183743.219951-1-flosch@nutanix.com>
-Date: Thu, 07 Mar 2024 11:20:11 -0800
-Message-ID: <xmqq34t1n91w.fsf@gitster.g>
+Date: Thu, 07 Mar 2024 11:35:34 -0800
+Message-ID: <xmqqsf11ltrt.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -57,88 +56,35 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 X-Pobox-Relay-ID:
- B853D1A2-DCB7-11EE-853D-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
+ DF071D02-DCB9-11EE-A668-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
 
 Florian Schmidt <flosch@nutanix.com> writes:
 
-> Currently, if
-> (a) There is a "---" divider in a commit message,
-> (b) At some point beyond that divider, there is a cut-line (that is,
->     "# ------------------------ >8 ------------------------") in the
->     commit message,
-> (c) the user does not explicitly set the "no-divider" option,
-> then "git interpret-trailers" will hang indefinitively.
+> Side remark: Since strstr() doesn't consider len, and will always search
+> up to a null byte, I now wonder whether it would be safer to create a
+> new strbuf that only contains the len bytes we want to operate on.
 
-You do not have to say "Currently, if"; just "If" is sufficient.
-Cf. Documentation/SubmittingPatches[[present-tense]]
+That is a valid concern in general, but does not seem to apply to
+the current codebase.  Thanks for being careful.
 
-> This is because when (a) is true, find_end_of_log_message() will invoke
-> ignored_log_message_bytes() with a len that is intended to make it
-> ignore the part of the commit message beyond the divider. However,
-> ignored_log_message_bytes() calls wt_status_locate_end(), and that
-> function ignores the length restriction when it tries to locate the cut
-> line. If it manages to find one, the returned cutoff value is greater
-> than len. At this point, ignored_log_message_bytes() goes into an
-> infinite loop, because it won't advance the string parsing beyond len,
-> but the exit condition expects to reach cutoff.
+Two of the three callers of wt_status_locate_end() feed the pointer
+into a piece of memory that is owned by strbuf, which guarantees
+that the memory has an extra NUL to terminate it as a string even if
+you did
 
-Good finding.  
+	strbuf buf = STRBUF_INIT;
+	strbuf_addch(&buf, 'A');
 
-> It seems sensible to expect that wt_status_locate_end() should honour
-> the length parameter passed in, and doing so fixes this issue.
+The other one is in commit.c:ignored_log_message_bytes() that still
+takes <buf, len> as input, but again, two of its three callers call
+it with a pointer that points at the beginning of memory held by an
+instance of strbuf.
 
-Thanks.  This is an ancient bug, not a retression from recent
-changes to the trailer library [linusa CC'ed to save him from
-wasting his time wondering if he broke anything].
+That leaves us trailer.c:find_end_of_log_message() the only one to
+worry about, but it uses strlen() on the pointer before calling
+ignored_log_message_bytes() so the region of the memory pointed at
+by the pointer is assumed to be NUL-terminated already, and
+presumably (I didn't follow the logic there too closely) the length
+is also computed within that NUL-terminated string.
 
-> diff --git a/wt-status.c b/wt-status.c
-> index b5a29083df..51a84575ed 100644
-> --- a/wt-status.c
-> +++ b/wt-status.c
-> @@ -1089,14 +1089,19 @@ size_t wt_status_locate_end(const char *s, size_t len)
->  {
->  	const char *p;
->  	struct strbuf pattern = STRBUF_INIT;
-> +	size_t result = len;
->  
->  	strbuf_addf(&pattern, "\n%c %s", comment_line_char, cut_line);
->  	if (starts_with(s, pattern.buf + 1))
-> -		len = 0;
-> -	else if ((p = strstr(s, pattern.buf)))
-> -		len = p - s + 1;
-> +		result = 0;
-> +	else if ((p = strstr(s, pattern.buf))) {
-> +		result = p - s + 1;
-> +		if (result > len) {
-> +			result = len;
-> +		}
-> +	}
->  	strbuf_release(&pattern);
-> -	return len;
-> +	return result;
->  }
 
-Looks correct, but we probably can make the fix a lot more isolated
-into a single block, like the attached patch.  How does this look?
-
- wt-status.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
-
-diff --git c/wt-status.c w/wt-status.c
-index b5a29083df..511f37cfe0 100644
---- c/wt-status.c
-+++ w/wt-status.c
-@@ -1093,8 +1093,11 @@ size_t wt_status_locate_end(const char *s, size_t len)
- 	strbuf_addf(&pattern, "\n%c %s", comment_line_char, cut_line);
- 	if (starts_with(s, pattern.buf + 1))
- 		len = 0;
--	else if ((p = strstr(s, pattern.buf)))
--		len = p - s + 1;
-+	else if ((p = strstr(s, pattern.buf))) {
-+		int newlen = p - s + 1;
-+		if (newlen < len)
-+			len = newlen;
-+	}
- 	strbuf_release(&pattern);
- 	return len;
- }
