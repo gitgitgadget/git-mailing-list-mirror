@@ -1,182 +1,156 @@
-Received: from wfout3-smtp.messagingengine.com (wfout3-smtp.messagingengine.com [64.147.123.146])
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50EBF13959D
-	for <git@vger.kernel.org>; Thu,  7 Mar 2024 20:36:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.123.146
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D79BD139597
+	for <git@vger.kernel.org>; Thu,  7 Mar 2024 20:47:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709843768; cv=none; b=bw5ez197E4iwG5dqS/ktnPOiiFmCGJtS5jJ/mjUg0RgsCrp7+ZJZbJgG7VJ5PqAbMnBJXvVI9123hePzUYet8UZZnePYHMH4vJjWzrm+VAOUT/iFuXCP0KaaL1s/QnwKgGAyVaVNd5pcKr2TYLLkOkol+Gr8qVoqFSeXFMnqplI=
+	t=1709844449; cv=none; b=kynjX5NeI4NHhmrWQOWQLEv9E07i7hs3juiWa/oNe4uNPDWVEoiSqe/0dYLi4iWqk9ieJHS93ZiAshskTnJCcU+bka6r2eAZ/NzwkvWIiCYaSKKsZJw4JIZXTRBeuI1k77DvSAVD8Kun4yexjgyisou86D4yJkw0zx5nqqCqqPc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709843768; c=relaxed/simple;
-	bh=rfGkUN9b6b0UGyJ4I6XbyyWkBeEry2eTNxa0pYZp/N0=;
-	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Vbx4n1S1t4AwK3CVPbkEccq5rF9eKkxvMR6rxns6GuSoAJDdEw1mtn3vXb1gVNN6nBFZNWYR9UP+y+tyM/mGGK6ZlQ+u9LFCsI6b0h9VM8IQvdTtYHvxh/vIyZ4nW+gpGhDeQAQMHpFVDyAjyxQNHpdpU+gxcrAA0ZaoKhQi2fM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=evQ+Ig0l; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=JxCXApaZ; arc=none smtp.client-ip=64.147.123.146
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1709844449; c=relaxed/simple;
+	bh=f8IYap0KrgVCKrsf5miL1Ul44PFVJxyT3RGO+ZgMlrg=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=XezmQwyR18Yo4FEJxaVF9iXP0JRIhIYgZ57gLRNDI+gRtRX7UtwN+M8GP/DtOUMWJunGhlLPkEBx83YsOU0OVZJp1WY9mBdAYQxIIjq+HDIoScdRp9wXorQTbPOiO646FNi8hfD8dCIWZupSQdL1B7SSn9jRn9WeVWrRkNPeG6o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=biiIupPp; arc=none smtp.client-ip=173.228.157.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="evQ+Ig0l";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="JxCXApaZ"
-Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
-	by mailfout.west.internal (Postfix) with ESMTP id 5691A1C000B3
-	for <git@vger.kernel.org>; Thu,  7 Mar 2024 15:36:05 -0500 (EST)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute6.internal (MEProxy); Thu, 07 Mar 2024 15:36:05 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1709843764; x=1709930164; bh=LFT4peYgex
-	UVtIUqJl80bljlEnxbilKthFXZL8JAp2s=; b=evQ+Ig0l0aSb7A3ItiA1EU9sf+
-	A4zsHIakdHpzj+xo3NcBEveb4O2Ua9tba9qqv5EiMMLjljahHVlQV2x3gvxp1M12
-	21+r3Wac1FjtFwGsXH2R6vZppwI+A+L4luhO/AG1+KkeYALW3f5o28ohk7F+ePWy
-	THAGYBAX3bie02pwo+F/YdvEbM64yrPMeVNS8R6ahd2XNjR/JxbO/WfrdJePoht4
-	/2b3B6ilb+d1u891JLWanv4dgdeKcsRA9KCBQoYFvyUuJL9w/wNvsSfW/cJJudC2
-	O2F9zLZfBxdPFkJ41v1slgvtlmzniitt3ueRuLK4uolQ1yG+f8xQgzDi8t/w==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1709843764; x=1709930164; bh=LFT4peYgexUVtIUqJl80bljlEnxb
-	ilKthFXZL8JAp2s=; b=JxCXApaZaJfpeAj/RhVEKQhLpjG9NRPGTNj6WXn7MU7n
-	cBF+riRb4KAxyxuH8xEDBUiQmKG9DeNsGUatAQHDEa9Jmr+fomRFADr1Qrs+FGFV
-	qzQiUuf+KhIUmwFtOyyJvwu6L6r67KOQN7inR1pa8pufqV41tGdcrDyBHlJT+kWi
-	QQtG79DVjj/lrdE4EEEpV/oOxZjIJrCPIa4b0u48TZryv1h/Y41m+v0GW1rqXOVh
-	Np9IOvM8UrJMGMnXaskw3dUhETe429KvaFSktwVJECrcRemgV4v8pwTIt3o4ejEe
-	l52ps3hHvFZ1FX28tRejKWJbbs8gD46eq6EY4LbGAA==
-X-ME-Sender: <xms:NCXqZWDCIF4y1m6H8OCwfjF5OnDpD1RgR6isAskAi76kzZwVFgUHSQ>
-    <xme:NCXqZQgfCzs_9i8qV6erJH_wRe9DM-6NICoB7Zvp8deH9uhRTi0gYARqCNyhCk5_3
-    SZmlgWTqbahNUqlrg>
-X-ME-Received: <xmr:NCXqZZm-XaR5C2DrfUBedaMZqkRNF2tDNp1cjU_i8TuD3JEPnqONILP4blW0kOO7aReZQTlNmZERttXf4wnmSSTpOptkhFdQ4wW2uDaHDR7VqQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrieefgddufeekucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvuffkfhggtggujgesghdtre
-    ertddtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehp
-    khhsrdhimheqnecuggftrfgrthhtvghrnhepheeghfdtfeeuffehkefgffduleffjedthf
-    dvjeektdfhhedvlefgtefgvdettdfhnecuvehluhhsthgvrhfuihiivgeptdenucfrrghr
-    rghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimh
-X-ME-Proxy: <xmx:NCXqZUwJF90b5PTZ-ss4dLQVI4lQugq__rRtZI0c0jKtmqZHChD3kQ>
-    <xmx:NCXqZbQBfYvX4ea-vJgR8m-62I8_mKdUnqcIHrRSPACLDWiM8b-zvg>
-    <xmx:NCXqZfYNmN7G7q3JHaDrlXeJBnMA7JTK4srYXDHZQ4dcUHsK5cxNsw>
-    <xmx:NCXqZSJyEXaz4qKa_7S1Q8lcxNIk-ePJZCR-C1qp1Ei6ZJ0dpWDFdWCLjWQ>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Thu, 7 Mar 2024 15:36:03 -0500 (EST)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 4f64b42f (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
-	for <git@vger.kernel.org>;
-	Thu, 7 Mar 2024 20:31:32 +0000 (UTC)
-Date: Thu, 7 Mar 2024 21:36:02 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: git@vger.kernel.org
-Subject: [PATCH v2 2/2] reftable/block: fix binary search over restart counter
-Message-ID: <370b608f9007abe9c0562d76894e2475d19867a1.1709843663.git.ps@pks.im>
-References: <a4312698cceab5f2438c9dd34465da21d719e256.1709825186.git.ps@pks.im>
- <cover.1709843663.git.ps@pks.im>
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="biiIupPp"
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id 59E7531CBE;
+	Thu,  7 Mar 2024 15:47:27 -0500 (EST)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=f8IYap0KrgVCKrsf5miL1Ul44PFVJxyT3RGO+Z
+	gMlrg=; b=biiIupPpT56fOmX01xQ8LY9ru8OgF274EgG5zvj2hI4CuyRf8tg1cu
+	f+nApmTwCsXh57WrilSHMqNtTQyEWEEQQ1iuEXhJn8HHASdl7bEFuKji1hK0Ktko
+	wRhPSYutbOyo/q6SBod1MXKhhtiyHVgYvafV7jWml5cEf8UZr55js=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id 52C4F31CBD;
+	Thu,  7 Mar 2024 15:47:27 -0500 (EST)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.185.65])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id DE39631CB9;
+	Thu,  7 Mar 2024 15:47:23 -0500 (EST)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Florian Schmidt <flosch@nutanix.com>
+Cc: git@vger.kernel.org,  Jonathan Davies <jonathan.davies@nutanix.com>,
+  Phillip Wood <phillip.wood@dunelm.org.uk>,  Denton Liu
+ <liu.denton@gmail.com>,  Linus Arver <linusa@google.com>
+Subject: Re: [PATCH] wt-status: Don't find scissors line beyond buf len
+In-Reply-To: <xmqq34t1n91w.fsf@gitster.g> (Junio C. Hamano's message of "Thu,
+	07 Mar 2024 11:20:11 -0800")
+References: <20240307183743.219951-1-flosch@nutanix.com>
+	<xmqq34t1n91w.fsf@gitster.g>
+Date: Thu, 07 Mar 2024 12:47:22 -0800
+Message-ID: <xmqq7cidlqg5.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="T2sD+gwJbjGEf3Dm"
-Content-Disposition: inline
-In-Reply-To: <cover.1709843663.git.ps@pks.im>
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ E684E532-DCC3-11EE-92CD-A19503B9AAD1-77302942!pb-smtp21.pobox.com
 
+From: Florian Schmidt <flosch@nutanix.com>
+Date: Thu, 7 Mar 2024 18:37:38 +0000
+Subject: [PATCH] wt-status: don't find scissors line beyond buf len
 
---T2sD+gwJbjGEf3Dm
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+If
 
-Records store their keys prefix-compressed. As many records will share a
-common prefix (e.g. "refs/heads/"), this can end up saving quite a bit
-of disk space. The downside of this is that it is not possible to just
-seek into the middle of a block and consume the corresponding record
-because it may depend on prefixes read from preceding records.
+  (a) There is a "---" divider in a commit message,
 
-To help with this usecase, the reftable format writes every n'th record
-without using prefix compression, which is called a "restart". The list
-of restarts is stored at the end of each block so that a reader can
-figure out entry points at which to read a full record without having to
-read all preceding records.
+  (b) At some point beyond that divider, there is a cut-line (that is,
+      "# ------------------------ >8 ------------------------") in the
+      commit message,
 
-This allows us to do a binary search over the records in a block when
-searching for a particular key by iterating through the restarts until
-we have found the section in which our record must be located. From
-thereon we perform a linear search to locate the desired record.
+  (c) the user does not explicitly set the "no-divider" option,
 
-This mechanism is broken though. In `block_reader_seek()` we call
-`binsearch()` over the count of restarts in the current block. The
-function we pass to compare records with each other computes the key at
-the current index and then compares it to our search key by calling
-`strbuf_cmp()`, returning its result directly. But `binsearch()` expects
-us to return a truish value that indicates whether the current index is
-smaller than the searched-for key. And unless our key exactly matches
-the value at the restart counter we always end up returning a truish
-value.
+then "git interpret-trailers" will hang indefinitively.
 
-The consequence is that `binsearch()` essentially always returns 0,
-indicacting to us that we must start searching right at the beginning of
-the block. This works by chance because we now always do a linear scan
-=66rom the start of the block, and thus we would still end up finding the
-desired record. But needless to say, this makes the optimization quite
-useless.
+This is because when (a) is true, find_end_of_log_message() will invoke
+ignored_log_message_bytes() with a len that is intended to make it
+ignore the part of the commit message beyond the divider. However,
+ignored_log_message_bytes() calls wt_status_locate_end(), and that
+function ignores the length restriction when it tries to locate the cut
+line. If it manages to find one, the returned cutoff value is greater
+than len. At this point, ignored_log_message_bytes() goes into an
+infinite loop, because it won't advance the string parsing beyond len,
+but the exit condition expects to reach cutoff.
 
-Fix this bug by returning whether the current key is smaller than the
-searched key. As the current behaviour was correct it is not possible to
-write a test. Furthermore it is also not really possible to demonstrate
-in a benchmark that this fix speeds up seeking records.
+Make wt_status_locate_end() honor the length parameter passed in, to
+fix this issue.
 
-This may cause the reader to question whether this binary search makes
-sense in the first place if it doesn't even help with performance. But
-it would end up helping if we were to read a reftable with a much larger
-block size. Blocks can be up to 16MB in size, in which case it will
-become much more important to avoid the linear scan. We are not yet
-ready to read or write such larger blocks though, so we have to live
-without a benchmark demonstrating this.
+In general, if wt_status_locate_end() is given a piece of the memory
+that lacks NUL at all, strstr() may continue across page boundaries
+and run into an unmapped page.  For our current callers, this is not
+a problem, as all of them except one uses a memory owned by a strbuf
+(which guarantees an implicit NUL-termination after its payload),
+and the one exeption in trailer.c:find_end_of_log_message() uses
+strlen() to compute the length before calling this function.
 
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
+Signed-off-by: Florian Schmidt <flosch@nutanix.com>
+Reviewed-by: Jonathan Davies <jonathan.davies@nutanix.com>
+[jc: tweaked the commit log message and the implementation a bit]
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- reftable/block.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/reftable/block.c b/reftable/block.c
-index 72eb73b380..1663030386 100644
---- a/reftable/block.c
-+++ b/reftable/block.c
-@@ -302,7 +302,7 @@ static int restart_key_less(size_t idx, void *args)
-=20
- 	result =3D strbuf_cmp(&a->key, &rkey);
- 	strbuf_release(&rkey);
--	return result;
-+	return result < 0;
+ * So here is the version I queued.  I have a new paragraph at the
+   end of the log message to talk about use of strstr() and how it
+   is OK in the current codebase.
+
+ t/t7513-interpret-trailers.sh | 14 ++++++++++++++
+ wt-status.c                   |  7 +++++--
+ 2 files changed, 19 insertions(+), 2 deletions(-)
+
+diff --git a/t/t7513-interpret-trailers.sh b/t/t7513-interpret-trailers.sh
+index 6602790b5f..5efe70d675 100755
+--- a/t/t7513-interpret-trailers.sh
++++ b/t/t7513-interpret-trailers.sh
+@@ -1476,4 +1476,18 @@ test_expect_success 'suppress --- handling' '
+ 	test_cmp expected actual
+ '
+ 
++test_expect_success 'handling of --- lines in conjunction with cut-lines' '
++	echo "my-trailer: here" >expected &&
++
++	git interpret-trailers --parse >actual <<-\EOF &&
++	subject
++
++	my-trailer: here
++	---
++	# ------------------------ >8 ------------------------
++	EOF
++
++	test_cmp expected actual
++'
++
+ test_done
+diff --git a/wt-status.c b/wt-status.c
+index 40b59be478..16c1b9b7ee 100644
+--- a/wt-status.c
++++ b/wt-status.c
+@@ -1007,8 +1007,11 @@ size_t wt_status_locate_end(const char *s, size_t len)
+ 	strbuf_addf(&pattern, "\n%c %s", comment_line_char, cut_line);
+ 	if (starts_with(s, pattern.buf + 1))
+ 		len = 0;
+-	else if ((p = strstr(s, pattern.buf)))
+-		len = p - s + 1;
++	else if ((p = strstr(s, pattern.buf))) {
++		size_t newlen = p - s + 1;
++		if (newlen < len)
++			len = newlen;
++	}
+ 	strbuf_release(&pattern);
+ 	return len;
  }
-=20
- void block_iter_copy_from(struct block_iter *dest, struct block_iter *src)
---=20
-2.43.1
+-- 
+2.44.0-117-g43072b4ca1
 
-
---T2sD+gwJbjGEf3Dm
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmXqJTEACgkQVbJhu7ck
-PpSJpg/9FrSmJ5IkG2NvnUdTtZVtWbHREFRfjazmqq+X5D/ZfRWenNZS2q8bTaR0
-exqK8OytX9As/e2DIN3Nsu42n6nbsIsRndqR3e0I2Ub20iqT5IOyWWADkLPhBg7Z
-vVLikoEmczELt7mRyvDyAoH071gW4+HoSFfqz+ch/UoqTsE+j3TXEBfQQ1W+z4UQ
-dj8DBapRGat0MezHmD8OtBlov9t/sRg+xGcsKIRvFBpUg0IAMRcE5cXsQqxBWHMo
-dpTxU3ha6peWsuC4Z56BDFlFjlSu7pD8l+H+9y9ZyhyRSpMueKZppuMhkCXCqj0/
-g1U0snw8CF7xlf345HP0qHRJC6OoSRgsy3bNbdkCTQGllQiBp5rhV5ybzXHj+OsS
-pxcYe4Dpvy7ds4zZB8V6nLHLki6H8TzOkzoBVctYbXIwDL0+Ld7V6oets+JjmFay
-/1sWHtm8QygdEnCZkToOx2sd4sIhoDy/4Qj0bNLRmp9TFGfwOEQIvhDyJfJLAtc+
-GAnkyBwca7moP3NuWip5e2SvLSZZyT8pxJtnlUPptigLK8FUGd/9DjPv0j8yr98L
-fR0bc7cwqMEgcbFIt32Lf3CHu2uAfiucbzoQj3YR5EOIDfQ/CAuUUQX4BePfIors
-WaHg40BI4jUqAvljcIP2M/BUqg/tFdpHFJnW97rRaaZLjyiwOkY=
-=X4UO
------END PGP SIGNATURE-----
-
---T2sD+gwJbjGEf3Dm--
