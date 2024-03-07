@@ -1,78 +1,79 @@
-Received: from fhigh7-smtp.messagingengine.com (fhigh7-smtp.messagingengine.com [103.168.172.158])
+Received: from fout5-smtp.messagingengine.com (fout5-smtp.messagingengine.com [103.168.172.148])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C822C136995
-	for <git@vger.kernel.org>; Thu,  7 Mar 2024 20:00:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23AB0138484
+	for <git@vger.kernel.org>; Thu,  7 Mar 2024 20:00:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709841621; cv=none; b=uWq69y9vif28XsRpzeppJdS5NbLscwq5MvLst0IkXx+ZPFsMWnMQWtWIMK1WJvKODBhrYtuEuw3Ijqg+kgxoA0rFZYokZEwtim9qYLTIh65Blrp8ZuGYY9zFlMXyfkB53bG3y9SAZORfDDx0nY+V1ZAIp3y1anKh2ssUvjTzAv8=
+	t=1709841622; cv=none; b=g5bw51qOUrQK8+07M6eatQZVBoW1lXkS38m5hSwv4XXnOxwagw+YmVivFsH8Q+HrzG6FtQaESWK0WIJCJxx9Bf0jSuyavRUB8Je5h71qsqN40QmmjZ7AgYbVtXA/NrZ61zpIHE5TIWgOOhT+hvGLkdPfV49tZKRkiC7vlrQM94A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709841621; c=relaxed/simple;
-	bh=pvCshwbdcSP04PxPAa7JlJyYNBYXiJliQBi9/jVGihU=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=bwich1M0jxPJUAtGThGD3j3LEOeA9cfZdCz6pmVfXtLCKVoyqDx6fiEPl6WIZzWJJMGuSL0IqlwYY4QRI3DKI/qgOULKY0v5EbNWrxkYbA4dcnZdV4A3SzAISK/+vWtyqEgikDUYYFJ4i/8va1Luz2TXWK+XSsRO0AeiCK715XI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=khaugsbakk.name; spf=pass smtp.mailfrom=khaugsbakk.name; dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b=nG9/mQZR; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=I99D4qw0; arc=none smtp.client-ip=103.168.172.158
+	s=arc-20240116; t=1709841622; c=relaxed/simple;
+	bh=BcZNKx1Y5GsB302yMqh5pZfqdAvKP6vd/HLEOuDoMw4=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=GAIKE3Vc/m+ZuM1z+IK2pc8nQeEIn838R2ywtRPQ6gi6HxYZzAEg+lH3gBbQ7yX3XQyq+inNEKIbXBPZVMsJ4FClHlZkS61Hwqk/T3C3wZ59v6Yh4jfONeXJKYJgLbcDAzMq+JHjk1QAn4GmbvXGdq/RiojZoWWY8ZzZ10KeBp0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=khaugsbakk.name; spf=pass smtp.mailfrom=khaugsbakk.name; dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b=YD3q6lAY; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=WpjkOLaD; arc=none smtp.client-ip=103.168.172.148
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=khaugsbakk.name
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=khaugsbakk.name
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b="nG9/mQZR";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="I99D4qw0"
-Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
-	by mailfhigh.nyi.internal (Postfix) with ESMTP id C5FF11140186;
-	Thu,  7 Mar 2024 15:00:17 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b="YD3q6lAY";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="WpjkOLaD"
+Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
+	by mailfout.nyi.internal (Postfix) with ESMTP id 0CD251380114;
+	Thu,  7 Mar 2024 15:00:19 -0500 (EST)
 Received: from mailfrontend1 ([10.202.2.162])
-  by compute6.internal (MEProxy); Thu, 07 Mar 2024 15:00:17 -0500
+  by compute4.internal (MEProxy); Thu, 07 Mar 2024 15:00:19 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=khaugsbakk.name;
 	 h=cc:cc:content-transfer-encoding:content-type:content-type
-	:date:date:from:from:in-reply-to:message-id:mime-version
-	:reply-to:subject:subject:to:to; s=fm3; t=1709841617; x=
-	1709928017; bh=V0VO/AgpcRW4zohvMkOJYQWFSfaMWX21lXTSJwLWmFE=; b=n
-	G9/mQZRSpWIEO2gHWOgxXi58HTUUkbOOHy0YbIm/ix7RiL538vwSAjcxsPyATLqy
-	P5J5ON/Klyt9op1dTG6Xfa0pwDNGEP6oRahDAe72CI5thOqAsSWL7PxfzPQ0cm3X
-	9lyvIPpSMYQPZZqSf5nSKigCqPHhIy5exKAmDte4Eqoiq1QcuczuWkHFS/M2tGxV
-	dUdnAflkRkdMFtkmuuqL3yugAYM7hoKgv1lOhleCi5XWMsso0R/umuVc+s9UFmZH
-	AUdJo7sNrnqXln9UgX/9SrV979cKoP6D9F/b6uTi88ff4gDC0OiDdkw+2n7bPwkT
-	U2qJ4RlUuLlIo5u92Ta8w==
+	:date:date:from:from:in-reply-to:in-reply-to:message-id
+	:mime-version:references:reply-to:subject:subject:to:to; s=fm3;
+	 t=1709841619; x=1709928019; bh=gcwrHNk4q8xm1qgVnUUJe9drgX4iZOAV
+	2m5Wxx5cNiw=; b=YD3q6lAYwC1Nrvg4MvIvTIxmxnVt5AesMnVE9tCbp9BzB4lI
+	jC3Xmk8ZDr11+1bL9jyIIbP8inMbnowJg5sAtexujOvEwZpZi8W15/ru53dCC0SU
+	Y+Jjd3k6KC+q6kHjpBPHIxqjrToMpmBD+satG2cE9YcIcWaYTVr/E+nabc1QCNrG
+	o7ixRIlYznLP78wTMSEi2A6jd5STzh8YBxyW4DL79v4ktgkdhYMsZDloE1ZcrUnL
+	2NwS/9iPVnv8xJxxEs48cRc2cwP+WO2hHjgqbH0hqMjmP7/uFjUhrEnSvFJEGeRf
+	AaV4fujDsuN9iPNh0Hn+gt07neerFV3ctsQr7g==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
-	:subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
-	:x-sasl-enc; s=fm1; t=1709841617; x=1709928017; bh=V0VO/AgpcRW4z
-	ohvMkOJYQWFSfaMWX21lXTSJwLWmFE=; b=I99D4qw0yvlEqXIEi5A8SuDhWq9oZ
-	k3bgUL1gWTeK5MW3LyqxDqzT/WoGQcYcsi2wy1a5Hb2ngpApFqnlQIqcS80L1cBu
-	TnLiErliF/kuNORfK848rUD9aIq1C9GvMfpcquX26+A+5EuksDiQ5xZYN/opWWbB
-	gp4BiESgt1wHCN0KCM4ASvOATXRZzJunX61GSOeSf92yEpFtG0PiNAH8b1jgLgtI
-	bB6c7SCAoqPqX+CbgL87+uGAwowN1R9SitRSXcvhqxAa7k18q2Cnmgk9Du4qcpnd
-	j3xp8huNPiiEsbcgl07zJ/uvg+0qeNTegkLhASFk02v7Fg4pMj/a6YAIA==
-X-ME-Sender: <xms:0RzqZbQxgzTrvhv3X--VrUlo97lctlqn313sJCxOOxwzJ_-AoNay6cA>
-    <xme:0RzqZcz9aWyd9P9R8nD0IJ3MhA7qGvhY0_K3uKw1WBq676m5L92KA5hFSAiaqsB-6
-    eXYwz_1UNN-n3UBbQ>
-X-ME-Received: <xmr:0RzqZQ2wljpv8pMv9mF-dFmyi2JX5-36TDwJCr9dfUbCWxwn_iMM4xqRzDJOBlq4BBVTLgfuQxZ8Jai8qFLfHNJv3mj22nQ3Yk3cWn1bgg>
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1709841619; x=
+	1709928019; bh=gcwrHNk4q8xm1qgVnUUJe9drgX4iZOAV2m5Wxx5cNiw=; b=W
+	pjkOLaDNajkVDal4BGdOjcxD7eWiuYJXDhk14bWYscDQ8rCBpi/cgZrY32mBabXt
+	Z7M8wM+v3VA9/k0XHPpP+t43FxaXd0fflxhJ1NIAr2lU5R+j/MN+d9rTZ6d875KI
+	4Va4dX0Xx+h7l20iY2K+AqoGjQ3PDPtxm1X3WUXop4CvhaRA6A8zhaeXiL2zYNcQ
+	yIEoioFqdPHHahlkAX7TM0XrbAtkTLKKDxzW/HRaCq1khTnLf3owjSgGhx8+XI85
+	7bYD/IOpUPUWOZS17B7ZfNZ4R9ADZ39vLwlANWbdV8JGXFPUj7q3ecRqPIVauWYm
+	wkLKl2GqDuSBXjbl8C0aw==
+X-ME-Sender: <xms:0hzqZbfKsKO4dp7E_3Y9-sqSIZiYCEpswGlk5lzDdzMqN-4kiMLiJu0>
+    <xme:0hzqZRPWEGOS4i5hp_RnjvbKJKhXokUoKV-_nmItP03QujLirEG1gw986pz2lHdej
+    5MoM4imcs3P7LpsQw>
+X-ME-Received: <xmr:0hzqZUiQZBmaQfdatih3XXX2EX0WONQ0lRNykBBTv84pwEuUwj-rBxWLsrU40UK6M4zsKci_zwjk3bT7Lny4bEO3CA7vwozpp8kwwBELLw>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvledrieefgddufedtucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    cujfgurhephffvvefufffkofggtgfgsehtkeertdertdejnecuhfhrohhmpefmrhhishht
-    ohhffhgvrhcujfgruhhgshgsrghkkhcuoegtohguvgeskhhhrghughhssggrkhhkrdhnrg
-    hmvgeqnecuggftrfgrthhtvghrnhepteegtdegheeiheefjedtlefhueeuieettdetgfet
-    hfevveeutdelvdefjeehveejnecuffhomhgrihhnpehkvghrnhgvlhdrohhrghenucevlh
-    hushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpegtohguvgeskhhh
-    rghughhssggrkhhkrdhnrghmvg
-X-ME-Proxy: <xmx:0RzqZbAPNCuK8P1nSLtmKI5Sr4PjIIZx7yd9t908kXEhbMjczJxtRQ>
-    <xmx:0RzqZUiSxn2ENH1W3kPWr08ylz1BgvO1Mp9S6aPSKPz1b8Ey0sE2Hg>
-    <xmx:0RzqZfqUP8DFtlEyuM5XtNxyyDTEA8wZzyWiFstrskqrmjub111YoA>
-    <xmx:0RzqZcexvNiz1Sdflf-zWzMh8A0CGPSyknG1DlsWwzOkr8jBmW-mbg>
+    uceurghilhhouhhtmecufedttdenucenucfjughrpefhvfevufffkffojghfgggtgfesth
+    ekredtredtjeenucfhrhhomhepmfhrihhsthhofhhfvghrucfjrghughhssggrkhhkuceo
+    tghouggvsehkhhgruhhgshgsrghkkhdrnhgrmhgvqeenucggtffrrghtthgvrhhnpeevgf
+    elveeikeegjeeikeeuvefhleeiuddvleegfeekjedtkeevtdetgfffveettdenucevlhhu
+    shhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpegtohguvgeskhhhrg
+    hughhssggrkhhkrdhnrghmvg
+X-ME-Proxy: <xmx:0hzqZc-KteD60glycxNZFFrD9fuia5-jYYTZkzI0VGl84KhxjHVCFA>
+    <xmx:0hzqZXvYGX0_z2dbXtsIqRHWYc-6AIHX-T1i7lrAPe3aDCGBawSVXg>
+    <xmx:0hzqZbFKyjiNL7OXXfScFMXqYUtkM56enS5YJbz8n4y33gsGg_bg3g>
+    <xmx:0xzqZQ5aW5mhoIp2ENQALIkMbrAsGOy2Uy9cOJcuhELQoG-g6wcFbQ>
 Feedback-ID: i2671468f:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 7 Mar 2024 15:00:16 -0500 (EST)
+ 7 Mar 2024 15:00:18 -0500 (EST)
 From: Kristoffer Haugsbakk <code@khaugsbakk.name>
 To: git@vger.kernel.org
-Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>,
-	Jeff King <peff@peff.net>,
-	Maxim Cournoyer <maxim.cournoyer@gmail.com>
-Subject: [PATCH 0/3] format-patch: teach `--header-cmd`
-Date: Thu,  7 Mar 2024 20:59:34 +0100
-Message-ID: <cover.1709841147.git.code@khaugsbakk.name>
+Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>
+Subject: [PATCH 1/3] log-tree: take ownership of pointer
+Date: Thu,  7 Mar 2024 20:59:35 +0100
+Message-ID: <3b12a8cf393b6d8f0877fd7d87173c565d7d5a90.1709841147.git.code@khaugsbakk.name>
 X-Mailer: git-send-email 2.44.0.64.g52b67adbeb2
+In-Reply-To: <cover.1709841147.git.code@khaugsbakk.name>
+References: <cover.1709841147.git.code@khaugsbakk.name>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -80,99 +81,38 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
+X-Commit-Hash: 3b12a8cf393b6d8f0877fd7d87173c565d7d5a90
 Content-Transfer-Encoding: 8bit
 
-(most of this is from the main commit with some elaboration in parts)
+The MIME header handling started using string buffers in
+d50b69b868d (log_write_email_headers: use strbufs, 2018-05-18). The
+subject buffer is given to `extra_headers` without that variable taking
+ownership; the commit “punts on that ownership” (in general, not just
+for this buffer).
 
-Teach git-format-patch(1) `--header-cmd` (with negation) and the
-accompanying config variable `format.headerCmd` which allows the user to
-add extra headers per-patch.
+In an upcoming commit we will first assign `extra_headers` to the owned
+pointer from another `strbuf`. In turn we need this variable to always
+contain an owned pointer so that we can free it in the calling
+function.
 
-§ Motivation
+Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
+---
+ log-tree.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-format-patch knows `--add-header`. However, that seems most useful for
-series-wide headers; you cannot really control what the header is like
-per patch or specifically for the cover letter. To that end, teach
-format-patch a new option which runs a command that has access to the
-hash of the current commit (if it is a code patch) and the patch count
-which is used for the patch files that this command outputs. Also
-include an environment variable which tells the version of this API so
-that the command can detect and error out in case the API changes.
-
-This is inspired by `--header-cmd` of git-send-email(1).
-
-§ Discussion
-
-One may already get the commit hash from the commit by looking at the message id created by format-patch:
-
-    Message-ID: <48c517ffb3dce2188aba5f0a2c1f4f9dc8df59f0.1709840255.git.code@khaugsbakk.name>
-
-However that does not seem to be documented behavior, and relying on the
-message id from various tools seems to have backfired before.[1]
-
-It’s also more convenient to not have to parse any output from
-format-patch.
-
-One may also be interested in finding some information based on the
-commit hash, not just simply to output the hash itself.
-
-🔗 1: https://lore.kernel.org/git/20231106153214.s5abourejkuiwk64@pengutronix.de/
-
-For example, the command could output a header for the current commit as
-well as another header for the previously-published commits:
-
-    X-Commit-Hash: 97b53c04894578b23d0c650f69885f734699afc7
-    X-Previous-Commits:
-        4ad5d4190649dcb5f26c73a6f15ab731891b9dfd
-        d275d1d179b90592ddd7b5da2ae4573b3f7a37b7
-        402b7937951073466bf4527caffd38175391c7da
-
-One can imagine that (1) these previous commit hashes were stored on every
-commit rewrite and (2) the commits that had been published previously
-were also stored. Then the command just needed the current commit hash
-in order to look up this information.
-
-Now interested parties can use this information to track where the
-patches come from.
-
-This information could of course be given between the
-three-dash/three-hyphen line and the patch proper. However, the
-hypoethetical project in question might prefer to use this part for
-extra patch information written by the author and leave the above
-information for tooling; this way the extra information does not need to
-disturb the reader.
-
-§ Demonstration
-
-The above current/previous hash example is taken from:
-
-https://lore.kernel.org/git/97b53c04894578b23d0c650f69885f734699afc7.1709670287.git.code@khaugsbakk.name/
-
-§ CC
-
-For patch “log-tree: take ownership of pointer”:
-
-Cc: Jeff King <peff@peff.net>
-
-For the git-send-email(1) `--header-cmd` topic:[1]
-
-Cc: Maxim Cournoyer <maxim.cournoyer@gmail.com>
-
-🔗 1: https://lore.kernel.org/git/20230423122744.4865-1-maxim.cournoyer@gmail.com/
-
-Kristoffer Haugsbakk (3):
-  log-tree: take ownership of pointer
-  format-patch: teach `--header-cmd`
-  format-patch: check if header output looks valid
-
- Documentation/config/format.txt    |  5 ++
- Documentation/git-format-patch.txt | 26 ++++++++++
- builtin/log.c                      | 76 ++++++++++++++++++++++++++++++
- log-tree.c                         | 18 ++++++-
- revision.h                         |  2 +
- t/t4014-format-patch.sh            | 55 +++++++++++++++++++++
- 6 files changed, 180 insertions(+), 2 deletions(-)
-
+diff --git a/log-tree.c b/log-tree.c
+index 337b9334cdb..2eabd19962b 100644
+--- a/log-tree.c
++++ b/log-tree.c
+@@ -519,7 +519,7 @@ void log_write_email_headers(struct rev_info *opt, struct commit *commit,
+ 			 extra_headers ? extra_headers : "",
+ 			 mime_boundary_leader, opt->mime_boundary,
+ 			 mime_boundary_leader, opt->mime_boundary);
+-		extra_headers = subject_buffer.buf;
++		extra_headers = strbuf_detach(&subject_buffer, NULL);
+ 
+ 		if (opt->numbered_files)
+ 			strbuf_addf(&filename, "%d", opt->nr);
 -- 
 2.44.0.169.gd259cac85a8
 
