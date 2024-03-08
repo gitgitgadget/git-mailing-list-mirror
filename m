@@ -1,55 +1,46 @@
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+Received: from mx10.gouders.net (mx10.gouders.net [202.61.206.94])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 342E45FB87
-	for <git@vger.kernel.org>; Fri,  8 Mar 2024 21:40:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A32961E515
+	for <git@vger.kernel.org>; Fri,  8 Mar 2024 22:12:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.61.206.94
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709934046; cv=none; b=q2oFGFVaAhcUNPRqgrKCumsDkIUqiWL2xYsudAv30/O8zgLppwfAgGDps0h/F2YfcFDqhRi+tmpLNEm4zazua/SvSVhorQbB6zYDlC5TvgTie9ciNYrBpMR73GotMMYs4DT6+M45BYhPssNV/KHNwVhA3hNcT+DXW6kpGdApYzw=
+	t=1709935931; cv=none; b=U+1r5XbJxM3yY//KhjOcY/JakL24RQm5nUd/sUNfU5eRe1uiQgESWscFX9v7NLaJtKOF72vYwlZl6cghywOIoDPqfmSNmxS1EwGy/+dcIVvcWs1GvxbXoWb3Yer9wILdgjqbSLl36UBhVUhR+EqSVXsCQp5J87Nd5ophgi2z9rg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709934046; c=relaxed/simple;
-	bh=3SXbWb5nSoeFeXW5Wzbn9tsG8sDBxitTPfeMyaDgALY=;
+	s=arc-20240116; t=1709935931; c=relaxed/simple;
+	bh=Qru64YNSeFUTTIJvdQh0jpbWgD6XVi4oayQQ3GrZ9u0=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=SDX5fJ/lam0bwWP2B+Wvj74HYi8dttmuRfX3QB9FmBXkJpRow4vjBarl/t7mSvbNGrKHeygoWIs7I0FnREmfKlWe4PIPlgVRg2Hc7oatu7dacbL+lHCWprnPDtXLmR4bymRKDKw7YMAxDPc2vzb7Pv4/QEH1tHO9Tjpym30Hn+g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=LE9S3gXc; arc=none smtp.client-ip=173.228.157.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	 MIME-Version:Content-Type; b=LCP07crEbyypD/+D9qiOo2OP1EZjijlpaTbVwrcl3wZRNaaK9eVb+2qGthvJ7FTSeJ8xTdlzgjflT1B2d74olJgoGV5jAdTMjJoF2WcFL9sM8vE3CUaGJM5BVoCkg+87jXMH2l8TBKa1ohaq1qP0a3U94QMEj3RyoPSQ+9tu9Aw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=gouders.net; spf=pass smtp.mailfrom=gouders.net; dkim=pass (1024-bit key) header.d=gouders.net header.i=@gouders.net header.b=h8aQSFL7; arc=none smtp.client-ip=202.61.206.94
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=gouders.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gouders.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="LE9S3gXc"
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 9A00B32815;
-	Fri,  8 Mar 2024 16:40:44 -0500 (EST)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=3SXbWb5nSoeFeXW5Wzbn9tsG8sDBxitTPfeMya
-	DgALY=; b=LE9S3gXcawXasWJq58dCoyy9OiKvWD9NwrU28J6OaRctXWOj1dgkq9
-	g84GDShbSzRYPPcAyT5jRt2HdrewyEb9FOHsD2o67abrB5iqKs50jOvge+9fBCMr
-	THKIm9iOWYezbEuoWM8o07BUZgg345mxzyDiYmlxmbnievjHLR1u4=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp20.pobox.com (Postfix) with ESMTP id 920F032814;
-	Fri,  8 Mar 2024 16:40:44 -0500 (EST)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.185.65])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 6CC9D32813;
-	Fri,  8 Mar 2024 16:40:39 -0500 (EST)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: phillip.wood123@gmail.com
-Cc: Phillip Wood via GitGitGadget <gitgitgadget@gmail.com>,
-  git@vger.kernel.org,  Phillip Wood <phillip.wood@dunelm.org.uk>
-Subject: Re: [PATCH 4/4] checkout: cleanup --conflict=<style> parsing
-In-Reply-To: <1fb1c84a-b6b3-4e3e-896f-5fb93cff57a6@gmail.com> (phillip's
-	message of "Fri, 8 Mar 2024 16:22:28 +0000")
-References: <pull.1684.git.1709907270.gitgitgadget@gmail.com>
-	<317bb7a70d023278087f4370b843d7f28f9ee2f6.1709907271.git.gitgitgadget@gmail.com>
-	<xmqq1q8khf8t.fsf@gitster.g>
-	<1fb1c84a-b6b3-4e3e-896f-5fb93cff57a6@gmail.com>
-Date: Fri, 08 Mar 2024 13:40:37 -0800
-Message-ID: <xmqqsf10flm2.fsf@gitster.g>
+	dkim=pass (1024-bit key) header.d=gouders.net header.i=@gouders.net header.b="h8aQSFL7"
+Received: from localhost (ip-109-42-178-228.web.vodafone.de [109.42.178.228])
+	(authenticated bits=0)
+	by mx10.gouders.net (8.17.1.9/8.17.1.9) with ESMTPSA id 428MC23r005495
+	(version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NO);
+	Fri, 8 Mar 2024 23:12:02 +0100
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gouders.net; s=gnet;
+	t=1709935922; bh=Qru64YNSeFUTTIJvdQh0jpbWgD6XVi4oayQQ3GrZ9u0=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date;
+	b=h8aQSFL7B5qB8tLez7BGB39E/L4921sK1VNuHMjy0zNRqpYcEtHMbTmQLOWrASMyC
+	 rNOwhJ/tZjFrzIXe3vS0MJMejFgHnhob1U7xwb+hcn2n0fvGkloNXn4qSLss9jKtrS
+	 vtMFg80ISrh1hMSw8GP8UV2SQlJrrM+eQqgbs05o=
+From: Dirk Gouders <dirk@gouders.net>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 1/1] Documentation/user-manual.txt: example for
+ generating object hashes
+In-Reply-To: <xmqqil1wiw5l.fsf@gitster.g> (Junio C. Hamano's message of "Fri,
+	08 Mar 2024 07:24:38 -0800")
+References: <cover.1709240261.git.dirk@gouders.net>
+	<a3902dad424983a4f0dfcda68e0b8bf64a0b2113.1709240261.git.dirk@gouders.net>
+	<xmqqil27c5p1.fsf@gitster.g> <ghbk7p43xq.fsf@gouders.net>
+	<xmqqil1wiw5l.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
+Date: Fri, 08 Mar 2024 23:11:56 +0100
+Message-ID: <gho7bo1ihf.fsf@gouders.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -57,30 +48,48 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID:
- 819E9290-DD94-11EE-A0EB-F515D2CDFF5E-77302942!pb-smtp20.pobox.com
 
-phillip.wood123@gmail.com writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> Hi Junio
+> Dirk Gouders <dirk@gouders.net> writes:
 >
-> On 08/03/2024 16:15, Junio C Hamano wrote:
->> "Phillip Wood via GitGitGadget" <gitgitgadget@gmail.com> writes:
->> We could use OPT_CALLBACK() to accept the incoming string, parse it
->> and store it in opts->conflict_style and that would be a way to
->> avoid the extra member.
->> 
->>> +		opts->conflict_style =
->>> +			parse_conflict_style(opts->conflict_style_name);
->> When I saw the change to xdiff-interface in an earlier step, I
->> thought parse_conflict_style() was a potentially confusing name.
->> You can imagine a function that is fed a file with conflict markers
->> and say "ah, this uses diff3 style with common ancestor version" vs
->> "this uses merge style with only two sides" to have such a name.
->> parse_conflict_style_name() that takes a name and returns
->> conflict_style enumeration constant would not risk such a confusion,
->> I guess.
+>> May I ask what you meant by "modulo coding style", e.g. where I should
+>> look at to make the code of similar style?
 >
-> Those are both good suggestions - I'll re-roll next week
+> Documentation/CodingGuidelines would be a good start, but
+>
+>  * A here-doc for a single liner is probably an overkill.  Why not
+>
+>     echo "Hello, world" >file
+>
+>    In either way, in our codebase a redirection operator '>' (or
+>    '<') has one whitespace before it, and no whitespace after it
+>    before the file.
+>
+>  * printf piped to "cat - file" whose output feeds another pipe
+>    looked unusual.  More usual way novices write may be
+>
+>     { printf ... ; cat file; } | sha1sum
+>
+> were the two things I noticed.
+>
+>> I would also add that git-hash-object(1) could be used to verify the
+>> result if you think that is OK.
+>
+> git hash-object can be used to replace that whole thing ;-)
+>
+>> In addition to a suggestion in another mail, the commit would
+>> consist of substantial content you suggested and perhaps, you could tell
+>> me how to express this; would a Helped-By be correct?
+>
+> I think many may prefer to downcase B in By, but if it is
+> "substantial", probably.  I do not think I gave much in this
+> discussion to become a substantial addition to the original, though.
 
-Thanks.
+Thank you for the explanation (some of which I should have found by
+myself).
+
+I will send the prepared v2 when I solved my struggling with range-diffs;
+that concept is new to me and I have a slow brain -- if one at all.
+
+Dirk
