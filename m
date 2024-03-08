@@ -1,122 +1,135 @@
-Received: from mail.kernel-space.org (mail.kernel-space.org [195.201.34.187])
+Received: from ring.crustytoothpaste.net (ring.crustytoothpaste.net [172.105.110.227])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91F513C32
-	for <git@vger.kernel.org>; Fri,  8 Mar 2024 19:33:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.201.34.187
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E3585A4C0
+	for <git@vger.kernel.org>; Fri,  8 Mar 2024 20:11:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.110.227
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709926392; cv=none; b=DTa0UDaovl61KEP2Vtka56MJd85vOhi+z2M9R7jpwzVHs0g87YAVKAajbAJ54/ogkVFpWRrsG8RWwKwi70jrdVdycnIY7yeUVZsjlf6GNnDszRdfqwY2z7yCnFIUWHAf68mMpSPvB3j3N9DRu84s/WB14pRBc9GO+hUHS9XmONM=
+	t=1709928679; cv=none; b=rGiV/AA1VMLrYwc3KEcEPY4kWLizfpoEkMPTqcV7Lp31k/H5YCz23d+fSo+fRQqexXZFnDTLXvL4IzVXsDc5JYVr9+tfaZIK/5Fhvx0/bQCKPkD2MAhLUvDDfYUvo7C2ygRsxkpHPMi+xJj6j1zXcBSg6eVLQsNfNbZ6dtEGwFU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709926392; c=relaxed/simple;
-	bh=bzlsFFGZQomgQIPoJwuuofLTd52XkAqMKpxg3BeILaM=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Content-Type; b=FLqaCm+Sz3M2+ktx8gkxWM6PESq58BH+aKoB0FYtZ6gCi73gZHCFbRtvxtjFTF1E2OB0zfSFdHNR9t91wzZwNHmV34hFaLKmeKcfXf2uvIxiOsJfAnO0q5PhEMhlw4rP841Fz/m6J6itOHeDGtDcF+ronmvc3oFuAFiEUcHtaYY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=kernel-space.org; spf=pass smtp.mailfrom=kernel-space.org; dkim=pass (1024-bit key) header.d=kernel-space.org header.i=@kernel-space.org header.b=1F+GBQBK; dkim=pass (1024-bit key) header.d=kernel-space.org header.i=@kernel-space.org header.b=VNcyMbCG; arc=none smtp.client-ip=195.201.34.187
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=kernel-space.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kernel-space.org
+	s=arc-20240116; t=1709928679; c=relaxed/simple;
+	bh=hBlg5uGlqVmz1ki/alts1cfBtdazvsa9SLLYI+iCRpA=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Px5/mv53cLobkAn5pePsQBI6tmfOEl9sNryEShao+5AgLez6baHT6bkFCGh6GZysLBq3kOJEqo99EGV7WI6V6Soi+DoweRR6epAJWlsAKKSpwnmZH4vRZ2rDVkgnBsOzpRNpyiIVe/plwqr2hI30fCQESXtMZ9cdXtYpHuJ2M1w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=AlsgaCCQ; arc=none smtp.client-ip=172.105.110.227
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=kernel-space.org header.i=@kernel-space.org header.b="1F+GBQBK";
-	dkim=pass (1024-bit key) header.d=kernel-space.org header.i=@kernel-space.org header.b="VNcyMbCG"
-Received: from kernel-space.org (localhost [127.0.0.1])
-	by kernel-space.org (OpenSMTPD) with ESMTP id a3e88ebf
-	for <git@vger.kernel.org>;
-	Fri, 8 Mar 2024 19:23:56 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=kernel-space.org; h=
-	message-id:date:mime-version:from:subject:to:content-type
-	:content-transfer-encoding; s=s1; bh=PxoYSfGixMA+uCt98qp1JNHJ9Qc
-	=; b=1F+GBQBKyevD18YCmrzN1ksQPU3Z/O2UsUmZqXdtBm3NIOLLXB3YNwHcLQl
-	8qSU7PAJATluJ4a0AcBGWsHqoxdlGbRyYRZUOKvUEvq5jR/HKEZr8YYmxgr/7BYX
-	YMQAYSfFnhYIzGnARCA8pybG/OdU46RV78+S5E0V/LF0zb0I=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=kernel-space.org; h=
-	message-id:date:mime-version:from:subject:to:content-type
-	:content-transfer-encoding; q=dns; s=s1; b=JxGQyykQWwcpoMjF2s5DI
-	M23dgwggpxb/iy4s0SK4s9MoEG9n9+3J41fQIM/dgH2JtKzzuo9WzzbvR/OvasUT
-	yA2cgKkWlwZz1XOht1dS8Bt+nq2ndKla0MjadA4AMYuQxuQ8I4sO3wS9X95M78tM
-	R1XjsT99zfK/NpNtHGADAA=
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel-space.org;
-	s=s1; t=1709925836;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding;
-	bh=4SKYGDlHnLdI/6iywg/kA/7+KdrqaPPYvVGkWASng8g=;
-	b=VNcyMbCGbq00VWLqlN77BiYJj8xXBU5M+I6yEBYkx2tePKOL+vLQ5y5GOnnWe82CR84+Qm
-	PplVXJHWuk2DqEo3FsZo7VrQ+RqaGUkF8n5nlTf0vCFKkblOXpzyfO32NknpcVsCG3dnfw
-	mXagvceoeXXxx5dOLX8wid5zwBl0qa4=
-Received: from [192.168.0.2] (host-79-51-238-97.retail.telecomitalia.it [79.51.238.97])
-	by kernel-space.org (OpenSMTPD) with ESMTPSA id c731093c (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
-	for <git@vger.kernel.org>;
-	Fri, 8 Mar 2024 19:23:56 +0000 (UTC)
-Message-ID: <72771da0-a0ef-4fd9-8071-6467cd7b6a6b@kernel-space.org>
-Date: Fri, 8 Mar 2024 20:25:52 +0100
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="AlsgaCCQ"
+Received: from tapette.crustytoothpaste.net (ipagstaticip-2d4b363b-56b8-9979-23b8-fd468af1db4c.sdsl.bell.ca [142.112.6.242])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (P-256) server-signature RSA-PSS (3072 bits) server-digest SHA256)
+	(No client certificate requested)
+	by ring.crustytoothpaste.net (Postfix) with ESMTPSA id EEAA45B3D1;
+	Fri,  8 Mar 2024 20:11:12 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1709928672;
+	bh=hBlg5uGlqVmz1ki/alts1cfBtdazvsa9SLLYI+iCRpA=;
+	h=Date:From:To:Cc:Subject:References:Content-Type:
+	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+	 Content-Type:Content-Disposition;
+	b=AlsgaCCQh3gYuNou4SPXVtFXPFFNzfGmS7Q+SpI1pzs8LjQrKHZYPEqK1tpvXpi1+
+	 FOpqgidvk1qF9XxyFdRiXOUueFNULmwm/kGtWhj2fdsYHk8QiyaWUSTZs3zGZ0bQAI
+	 gUza6/r2GGNap8VFBFSJEfj0rC+YAbAOh027cNtCbpGGxEJtQ5u5RAu0JuCPOEJKqc
+	 8qzdfKDoTFtRmJmRCRszNkTWHaqS36Nd7xeEO9IHf5Bl2W7nDKE/B2fj86vg10y6qF
+	 xpSMnZHcHfbfwxQfTflULN37UQohnrqNPZedGYAUlFcjXcc698vjgYqSAO0Ga05wdQ
+	 wHAYbYZremAjaZcNpxM0pYs8MUR/tXHSHRhF9SG86P7FZaF2qir041aCRtfDDaGqbZ
+	 IFmqPG6Cnha0dWrCtaAokr0pj5OSuCXA+SCgMf7QcJNECOtfiONcojrfzk4ZELzjul
+	 OEr/lHfjFqd+Sphoybj5rcU0ZYR0tRlIA0PQu2fwedfJul319XE
+Date: Fri, 8 Mar 2024 20:10:56 +0000
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+To: Angelo Dureghello <angelo@kernel-space.org>
+Cc: git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>
+Subject: Re: [BUG] cannot git clone with includeif onbranch
+Message-ID: <Zetw0I0NHgABR_PX@tapette.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Angelo Dureghello <angelo@kernel-space.org>, git@vger.kernel.org,
+	Patrick Steinhardt <ps@pks.im>
+References: <72771da0-a0ef-4fd9-8071-6467cd7b6a6b@kernel-space.org>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Betterbird/102.11.0
-From: Angelo Dureghello <angelo@kernel-space.org>
-Subject: [BUG] cannot git clone with includeif onbranch
-To: git@vger.kernel.org
-Content-Language: en-US, it
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-
-Hi,
-
-below the bug report, not totally sure this is a bug btw.
-
----
-
-Thank you for filling out a Git bug report!
-Please answer the following questions to help us understand your issue.
-
-What did you do before the bug happened? (Steps to reproduce your issue)
-
-Perform a git clone https with includeif onbranch in the .gitconfig
-
-Create a .gitconfig
-with
-[includeIf "onbranch:wip/pippo/**"]
-         path = ~/.gitconfig.pippo.inc
-
-git clone https://github.com/analogdevicesinc/no-OS.git
-
-Cloning into 'no-OS'...
-BUG: refs.c:2083: reference backend is unknown
-error: git-remote-https died of signal 6
-
-What did you expect to happen? (Expected behavior)
-Proper clone
-
-What happened instead? (Actual behavior)
-Error above
-
-What's different between what you expected and what actually happened?
-I cannot clone
-
-Anything else you want to add:
-I am assuming that cloning is outside from any gitdir so should ingnore
-onbranch.
-
-Please review the rest of the bug report below.
-You can delete any lines you don't wish to share.
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="cqllC+XpDcnCvTj4"
+Content-Disposition: inline
+In-Reply-To: <72771da0-a0ef-4fd9-8071-6467cd7b6a6b@kernel-space.org>
+User-Agent: Mutt/2.2.12 (2023-09-09)
 
 
-[System Info]
-git version:
-git version 2.44.0
-cpu: x86_64
-no commit associated with this build
-sizeof-long: 8
-sizeof-size_t: 8
-shell-path: /bin/sh
-uname: Linux 6.5.0-rc2-devel-00345-gc2782531397f #2 SMP PREEMPT_DYNAMIC 
-Sun Jul 23 12:25:41 CEST 2023 x86_64
-compiler info: gnuc: 13.2
-libc info: glibc: 2.39
-$SHELL (typically, interactive shell): /bin/zsh
+--cqllC+XpDcnCvTj4
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
+On 2024-03-08 at 19:25:52, Angelo Dureghello wrote:
+> Hi,
+>=20
+> below the bug report, not totally sure this is a bug btw.
+>=20
+> ---
+>=20
+> Thank you for filling out a Git bug report!
+> Please answer the following questions to help us understand your issue.
+>=20
+> What did you do before the bug happened? (Steps to reproduce your issue)
+>=20
+> Perform a git clone https with includeif onbranch in the .gitconfig
+>=20
+> Create a .gitconfig
+> with
+> [includeIf "onbranch:wip/pippo/**"]
+>         path =3D ~/.gitconfig.pippo.inc
+>=20
+> git clone https://github.com/analogdevicesinc/no-OS.git
+>=20
+> Cloning into 'no-OS'...
+> BUG: refs.c:2083: reference backend is unknown
+> error: git-remote-https died of signal 6
 
-[Enabled Hooks]
-not run from a git repository - no hooks to show
+Thanks for the report.
+
+I can definitely confirm this with a local Git 2.44.0 built out of my
+working tree.  It seems to trigger as long as there's a `path` entry
+whether the path exists or not.  It _doesn't_ seem to trigger with a
+`gitdir` check, but does trigger for `onbranch`.  v2.43.0 is not
+affected.
+
+I do definitely think this is a bug.  First of all, we should not
+trigger BUG conditions, even if the user has done something naughty, so
+we should fix it for that reason.  Second of all, this seems like a
+completely reasonable thing to want to do, and considering it triggers
+for existing files, and that it worked just fine in v2.43.0, I don't see
+a reason we shouldn't have this work.
+
+A bisection[0] leads us to 0fcc285c5e ("refs: refactor logic to look up
+storage backends", 2023-12-29).  I've CCed the author of that commit,
+who hopefully can provide some more helpful context.
+
+I have some guesses about what's going on here, but I haven't poked
+further into the situation, so I'll refrain from speculating for now.
+
+[0] git bisect run sh -c 'make -j12 && cd $TMPDIR && rm -fr no-OS && PATH=
+=3D"$HOME/checkouts/git/bin-wrappers:$PATH" git clone https://github.com/an=
+alogdevicesinc/no-OS.git; RET=3D$?; [ "$RET" -eq 128 ] && RET=3D1; exit $RE=
+T'
+--=20
+brian m. carlson (he/him or they/them)
+Toronto, Ontario, CA
+
+--cqllC+XpDcnCvTj4
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.4.4 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZetwzwAKCRB8DEliiIei
+gQOSAQDux3SSaEzihf0KQYvijpw8/kRV9ncdjDPxTN7KxaA9ZQD/bbJvxaz2qI8c
+POsRaPwb+ZjFWuh1Zaizhxvgdx/A9Qs=
+=ousQ
+-----END PGP SIGNATURE-----
+
+--cqllC+XpDcnCvTj4--
