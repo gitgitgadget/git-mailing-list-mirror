@@ -1,255 +1,113 @@
-Received: from mail-ej1-f46.google.com (mail-ej1-f46.google.com [209.85.218.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B5F82C1BA
-	for <git@vger.kernel.org>; Fri,  8 Mar 2024 23:10:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA38B1DA3A
+	for <git@vger.kernel.org>; Fri,  8 Mar 2024 23:32:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.71
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709939435; cv=none; b=aRGcJP/lX4v5AwBFerOQ8E5FFJMeybdK3h1aWcIl+m6SH101QPlqGKVSGln4BmS83BtML0mJS3xsLKoRNN1MKl8vDdEw9MmEun2zjkHdqS60nNLaZdsZvUK2CSQT1aEPu7iZ2DSY4YX8LqjECsVO+ayv9Xo75Sk6SEPHJAEz1ac=
+	t=1709940736; cv=none; b=WH+tio9grIWEZn+eailvzyq5MYUdOlX4yj0fNA0Wkhk8l4DGQAfcnxfE4P22knUVa/DUFFvm3W96Pida9OlWkLmB5THvwJpbX1moIOYIwRWSAVrNYnLpG8mKJzIw5KATroDyEUbXSZwMTuZrIbbxfx1ZTKMoxoJevFF6KwV/y2o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709939435; c=relaxed/simple;
-	bh=a65VO8DKDRnDZQukB/0ZUx0LD2LeAFvQn7/c0Q6t9z8=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=FwyzJGA1Y1vEtx/b1ujd4xm4yDv1C/kZoBc6UIc9f6dK1P84F4Q3m+d7i5BmT2SsUr5bRvBZNLtSja6dl2qCNPT3PlfLPI9pmaxhzzIHGpsGNuqeQuqBNmNBsqyIiPu85oYDSZX3eYP9ibT20LlBifz7gsS0ZKdiaLoW3SlQwJs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=sNoPJKGq; arc=none smtp.client-ip=209.85.218.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	s=arc-20240116; t=1709940736; c=relaxed/simple;
+	bh=hJIsR9t8NorZ0oP04ISEYL+G/NNGA2AEkl339MSYeJs=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=D6YDfXQUXilEIBT3yuGMKpCwf+lvBOadWY/ygx3LEeLRnVcAqWaTKgTakmcz0vVVV/H0eYvNH0fYwdWzdeI3ZFndkDp0xEY2hvOuYbgvwUoYVarC6/PRq34BRZDKMvFmw3HfFJgFDspGpGFbVD+yumiNKqsIovchsOmBer44dCA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=g5Qcft+8; arc=none smtp.client-ip=64.147.108.71
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="sNoPJKGq"
-Received: by mail-ej1-f46.google.com with SMTP id a640c23a62f3a-a45ecef71deso146984366b.2
-        for <git@vger.kernel.org>; Fri, 08 Mar 2024 15:10:33 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1709939432; x=1710544232; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=pbkZDRxegnsMShW+soKgJOK5NH6Va28OudvagmATcRs=;
-        b=sNoPJKGq8lKHfviM83qjy/DZCFC5/tHL2Jy5p/aOjXgXRrtNY2Ag8Xbv+qC9qsDuMC
-         7SiP9msSD5fa9hSn6MR+UumcCqM3R74Kta6TLNKp7uC17F+dTXM09RKR7EA99G04MXHT
-         R+hX/uvZs0UFNPCY+/VWMQyWd7b/XSgBj0kfl0//EL+aMhAoIz8GJ3tjWKLSZA4QmcDQ
-         EpKCgEdqQ5mqtgroJ0zVXFd0qCZbcjztsF8w763onzv1CEunpqS1udjzz0zNV5Xtik61
-         1B4aa5mzcKPpu3CDjYN9eyHEm6REIxlFLzatNHWR3Kp+ANOb8+7zETHOGwVICPT7L1mK
-         V9Ag==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1709939432; x=1710544232;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=pbkZDRxegnsMShW+soKgJOK5NH6Va28OudvagmATcRs=;
-        b=sZRclIT4vbRrPALjT7/Ocoz7fTKOcpuRz3S8WdjjBc71EgbjrdaEigmjjXo/WUwjXF
-         eNr6xJO6I9vz31rH2Un6sbC/hhrXasIhJCU1gA67Y7G84Y2gXu8MTEVSSVrKoO8PS7kp
-         8zLkQIM8VtiXP05ORWbcvZLrqhwrmoBbAaEK1GzIOzgNcRdJ/IKhJ5Ui0VaGc7WMvw11
-         fCNVeIdPgIWTYl+4DMMlFsjLzTFK6Cmzflnm0R+AbQC2xU8AQ8AJX5jigHe6B13j1xBy
-         +zrM8430NVAdLxYHplt6+fY1ZE5imWFu+bOwtiLzU8vBkvqUKGS5ruJfZ5VtD2Y3qmLI
-         tZGg==
-X-Gm-Message-State: AOJu0YyzEzrHuX75v4P4cRKFtrEH7Phc4ERRkPXYHbCVOwXJoGKM5Rsd
-	sWKUb7w+1e8NoN+O7msz2+VA1AHhwQwfBvWNMOnzd47Y686QyhW844KQXqYQZHNl9XisYkzJiB3
-	sFjo57SsbqZ6A2B7M2HNiIaGW2LrHnQ9D3rPQSfR0aL1OdQsGW4eF
-X-Google-Smtp-Source: AGHT+IE/2p5o9fSmO5tUxTfB2EIqsQLYIqwPUmRP4p1yCQ4zuz3i3pE2E+9P2kHmm46JN+796ucXrQZOpqeAJnwdoSo=
-X-Received: by 2002:a17:906:eb11:b0:a44:46a:e904 with SMTP id
- mb17-20020a170906eb1100b00a44046ae904mr55823ejb.50.1709939431730; Fri, 08 Mar
- 2024 15:10:31 -0800 (PST)
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="g5Qcft+8"
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 6BB2C1EFFD5;
+	Fri,  8 Mar 2024 18:32:13 -0500 (EST)
+	(envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:in-reply-to:references:date:message-id:mime-version
+	:content-type; s=sasl; bh=hJIsR9t8NorZ0oP04ISEYL+G/NNGA2AEkl339M
+	SYeJs=; b=g5Qcft+8nSc39GljHFgWzjSuXPueQPREKo7MfEUqi8E1mHpLi64+Bk
+	9VMNLvO802cf12waTJf1svDXJp2+duv/nUnVhH3PPs3pUWxI8Pb8kJTEYHJNnKGo
+	UUDdEjuyybAD9n9RNzVi97ZO5Lien987U91XXSvfsVW6o5kr4PYkk=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp2.pobox.com (Postfix) with ESMTP id 6325E1EFFD4;
+	Fri,  8 Mar 2024 18:32:13 -0500 (EST)
+	(envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.125.185.65])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp2.pobox.com (Postfix) with ESMTPSA id B9FFC1EFFD3;
+	Fri,  8 Mar 2024 18:32:12 -0500 (EST)
+	(envelope-from junio@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: Kyle Lippincott <spectral@google.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 2/2] setup: make bareRepository=explicit work in GIT_DIR
+ of a secondary worktree
+In-Reply-To: <CAO_smVjrKJeKr7QgQWryZRErStFk=Y+1T=dwrR_boXQD_X9_Mg@mail.gmail.com>
+	(Kyle Lippincott's message of "Fri, 8 Mar 2024 15:10:16 -0800")
+References: <xmqqv85zqniu.fsf@gitster.g>
+	<20240308211957.3758770-1-gitster@pobox.com>
+	<20240308211957.3758770-3-gitster@pobox.com>
+	<CAO_smVjrKJeKr7QgQWryZRErStFk=Y+1T=dwrR_boXQD_X9_Mg@mail.gmail.com>
+Date: Fri, 08 Mar 2024 15:32:11 -0800
+Message-ID: <xmqqy1ase1vo.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <xmqqv85zqniu.fsf@gitster.g> <20240308211957.3758770-1-gitster@pobox.com>
- <20240308211957.3758770-3-gitster@pobox.com>
-In-Reply-To: <20240308211957.3758770-3-gitster@pobox.com>
-From: Kyle Lippincott <spectral@google.com>
-Date: Fri, 8 Mar 2024 15:10:16 -0800
-Message-ID: <CAO_smVjrKJeKr7QgQWryZRErStFk=Y+1T=dwrR_boXQD_X9_Mg@mail.gmail.com>
-Subject: Re: [PATCH 2/2] setup: make bareRepository=explicit work in GIT_DIR
- of a secondary worktree
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID:
+ 1725AEAC-DDA4-11EE-A614-25B3960A682E-77302942!pb-smtp2.pobox.com
 
-On Fri, Mar 8, 2024 at 1:20=E2=80=AFPM Junio C Hamano <gitster@pobox.com> w=
-rote:
->
-> If you have /var/tmp/primary/ as a repository, and if you create a
-> secondary worktree of it at /var/tmp/secondary/, the layout would
-> look like this:
->
->     $ cd /var/tmp/
->     $ git init primary
->     $ cd primary
->     $ pwd
->     /var/tmp/primary
->     $ git worktree add ../secondary
->     $ cat ../seconary/.git
+Kyle Lippincott <spectral@google.com> writes:
 
-Nit: typo, should be `secondary` (missing the `d`)
+>>     $ cat ../seconary/.git
+>
+> Nit: typo, should be `secondary` (missing the `d`)
 
+Good eyes.  Thanks.
 
->     gitdir: /var/tmp/primary/.git/worktrees/secondary
->     $ ls /var/tmp/primary/.git/worktrees/secondary
->     commondir  gitdir  HEAD  index  refs
->     $ cat /var/tmp/primary/.git/worktrees/secondary/gitdir
->     /var/tmp/secondary/.git
+>> +       /*
+>> +        * We should be a subdirectory of /.git/worktrees inside
+>> +        * the $GIT_DIR of the primary worktree.
+>> +        *
+>> +        * NEEDSWORK: some folks create secondary worktrees out of a
+>> +        * bare repository; they don't count ;-), at least not yet.
+>> +        */
+>> +       if (!strstr(path, "/.git/worktrees/"))
 >
-> When the configuration variable 'safe.bareRepository=3Dexplicit' is
-> set to explicit, the change made by 45bb9162 (setup: allow cwd=3D.git
-> w/ bareRepository=3Dexplicit, 2024-01-20) allows you to work in the
-> /var/tmp/primary/.git directory (i.e., $GIT_DIR of the primary
-> worktree).  The idea is that if it is safe to work in the repository
-> in its working tree, it should be equally safe to work in the
-> ".git/" directory of that working tree, too.
->
-> Now, for the same reason, let's allow command execution from within
-> the $GIT_DIR directory of a secondary worktree.  This is useful for
-> tools working with secondary worktrees when the 'bareRepository'
-> setting is set to 'explicit'.
->
-> In the previous commit, we created a helper function to house the
-> logic that checks if a directory that looks like a bare repository
-> is actually a part of a non-bare repository.  Extend the helper
-> function to also check if the apparent bare-repository is a $GIT_DIR
-> of a secondary worktree, by checking three things:
->
->  * The path to the $GIT_DIR must be a subdirectory of
->    ".git/worktrees/", which is the primary worktree [*].
->
->  * Such $GIT_DIR must have file "gitdir", that records the path of
->    the ".git" file that is at the root level of the secondary
->    worktree.
->
->  * That ".git" file in turn points back at the $GIT_DIR we are
->    inspecting.
->
-> The latter two points are merely for checking sanity.  The security
-> lies in the first requirement.
->
-> Remember that a tree object with an entry whose pathname component
-> is ".git" is forbidden at various levels (fsck, object transfer and
-> checkout), so malicious projects cannot cause users to clone and
-> checkout a crafted ".git" directory in a shell directory that
-> pretends to be a working tree with that ".git" thing at its root
-> level.  That is where 45bb9162 (setup: allow cwd=3D.git w/
-> bareRepository=3Dexplicit, 2024-01-20) draws its security guarantee
-> from.  And the solution for secondary worktrees in this commit draws
-> its security guarantee from the same place.
->
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
-> ---
->  setup.c                         | 52 ++++++++++++++++++++++++++++++++-
->  t/t0035-safe-bare-repository.sh |  8 ++++-
->  2 files changed, 58 insertions(+), 2 deletions(-)
->
-> diff --git a/setup.c b/setup.c
-> index 3081be4970..68860dcd18 100644
-> --- a/setup.c
-> +++ b/setup.c
-> @@ -1231,9 +1231,59 @@ static const char *allowed_bare_repo_to_string(
->         return NULL;
->  }
->
-> +static int is_git_dir_of_secondary_worktree(const char *path)
-> +{
-> +       int result =3D 0; /* assume not */
-> +       struct strbuf gitfile_here =3D STRBUF_INIT;
-> +       struct strbuf gitfile_there =3D STRBUF_INIT;
-> +       const char *gitfile_contents;
-> +       int error_code =3D 0;
-> +
-> +       /*
-> +        * We should be a subdirectory of /.git/worktrees inside
-> +        * the $GIT_DIR of the primary worktree.
-> +        *
-> +        * NEEDSWORK: some folks create secondary worktrees out of a
-> +        * bare repository; they don't count ;-), at least not yet.
-> +        */
-> +       if (!strstr(path, "/.git/worktrees/"))
+> Do we need to be concerned about path separators being different on
+> Windows? Or have they already been normalized here?
 
-Do we need to be concerned about path separators being different on
-Windows? Or have they already been normalized here?
+I am not certain offhand, but if they need to tolerate different
+separators, they can send in patches.
 
-> +               goto out;
-> +
-> +       /*
-> +        * Does gitdir that points at the ".git" file at the root of
-> +        * the secondary worktree roundtrip here?
-> +        */
-
-What loss of security do we have if we don't have as stringent of a
-check? i.e. if we just did `return !!strstr(path, "/.git/worktrees/)`?
-Or maybe we even combine the existing ends_with(.git) check with this
-and do something like:
-
-static int is_under_dotgit_dir(const char *path) {
-        char *dotgit =3D strstr(path, "/.git");
-        return dotgit && (dotgit[5] =3D=3D '\0' || dotgit[5] =3D=3D '/');
-}
-
-
-
-> +       strbuf_addf(&gitfile_here, "%s/gitdir", path);
-> +       if (!file_exists(gitfile_here.buf))
-> +               goto out;
-> +       if (strbuf_read_file(&gitfile_there, gitfile_here.buf, 0) < 0)
-> +               goto out;
-> +       strbuf_trim_trailing_newline(&gitfile_there);
-> +
-> +       gitfile_contents =3D read_gitfile_gently(gitfile_there.buf, &erro=
-r_code);
-> +       if ((!gitfile_contents) || strcmp(gitfile_contents, path))
-> +               goto out;
-> +
-> +       /* OK, we are happy */
-> +       result =3D 1;
-> +
-> +out:
-> +       strbuf_release(&gitfile_here);
-> +       strbuf_release(&gitfile_there);
-> +       return result;
-> +}
-> +
->  static int is_repo_with_working_tree(const char *path)
->  {
-> -       return ends_with_path_components(path, ".git");
-> +       /* $GIT_DIR immediately below the primary working tree */
-> +       if (ends_with_path_components(path, ".git"))
-> +               return 1;
-> +
-> +       /* Are we in $GIT_DIR of a secondary worktree? */
-> +       if (is_git_dir_of_secondary_worktree(path))
-> +               return 1;
-> +
-> +       return 0;
->  }
+>> +               goto out;
+>> +
+>> +       /*
+>> +        * Does gitdir that points at the ".git" file at the root of
+>> +        * the secondary worktree roundtrip here?
+>> +        */
 >
->  /*
-> diff --git a/t/t0035-safe-bare-repository.sh b/t/t0035-safe-bare-reposito=
-ry.sh
-> index 8048856379..62cdfcefc1 100755
-> --- a/t/t0035-safe-bare-repository.sh
-> +++ b/t/t0035-safe-bare-repository.sh
-> @@ -31,7 +31,9 @@ expect_rejected () {
->
->  test_expect_success 'setup bare repo in worktree' '
->         git init outer-repo &&
-> -       git init --bare outer-repo/bare-repo
-> +       git init --bare outer-repo/bare-repo &&
-> +       git -C outer-repo worktree add ../outer-secondary &&
-> +       test_path_is_dir outer-secondary
->  '
->
->  test_expect_success 'safe.bareRepository unset' '
-> @@ -86,4 +88,8 @@ test_expect_success 'no trace when "bare repository" is=
- a subdir of .git' '
->         expect_accepted_implicit -C outer-repo/.git/objects
->  '
->
-> +test_expect_success 'no trace in $GIT_DIR of secondary worktree' '
-> +       expect_accepted_implicit -C outer-repo/.git/worktrees/outer-secon=
-dary
-> +'
-> +
->  test_done
-> --
-> 2.44.0-165-ge09f1254c5
->
+> What loss of security do we have if we don't have as stringent of a
+> check? i.e. if we just did `return !!strstr(path, "/.git/worktrees/)`?
+
+No loss of security.
+
+These "keep result the status we want to return if we want to return
+immediately here, and always jump to the out label instead of
+returning" patterns is mere a disciplined way to make it easier to
+write code that does not leak.  The very first one may not have to
+do the "goto out" and instead immediately return, but by writing
+this way, I do not need to be always looking out to shoot down
+patches that adds new check and/or allocations before this
+condition and early "out".
+
+> Or maybe we even combine the existing ends_with(.git) check with this
+
+At the mechanical level, perhaps, but I'd want logically separate
+things treated as distinct cases.  One is about being inside
+$GIT_DIR of the primary worktrees (where more than majority of users
+will encounter) and the new one is about being inside $GIT_DIR of
+secondaries.
