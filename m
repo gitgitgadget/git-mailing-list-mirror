@@ -1,102 +1,255 @@
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f46.google.com (mail-ej1-f46.google.com [209.85.218.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDAAD1D699
-	for <git@vger.kernel.org>; Fri,  8 Mar 2024 22:36:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B5F82C1BA
+	for <git@vger.kernel.org>; Fri,  8 Mar 2024 23:10:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709937386; cv=none; b=oN3937KjVk6APA2hYzRUyF+RyphJUnoChRh3cfkimiuzAqssUoEGotfu3spUp2uHIXRTrL1gj3B+54b9CfUar8iYvKTb5R9PuSBjTZ6/kC4UBvJSfp7tQuaAOCdkTL7mlwbc9eBK9QUzfb0ejdEIZdLxDxPNITxh1W1vsGJk8rE=
+	t=1709939435; cv=none; b=aRGcJP/lX4v5AwBFerOQ8E5FFJMeybdK3h1aWcIl+m6SH101QPlqGKVSGln4BmS83BtML0mJS3xsLKoRNN1MKl8vDdEw9MmEun2zjkHdqS60nNLaZdsZvUK2CSQT1aEPu7iZ2DSY4YX8LqjECsVO+ayv9Xo75Sk6SEPHJAEz1ac=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709937386; c=relaxed/simple;
-	bh=/p+fe/gVLDSiZz3BqMjRAgwkjrqNlP0OImjDc/7VozY=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=rh2SvtpEt9Nri0soLtXU2Mcjv+KjcnfZvigmjN+4d4RdiLhU0NuTaf64ca4Qo8BIX3jlyrHz9CRZ3hm1+LugEGq1zV1W2UqVWqkIA4676wYPVqO4IaUeAa0jHH7G/ny/4fU+ykx6QR3cqSBH9nUcjb9xyZtTAA7Xrq/p9ZYx8YY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=LU5NL4fM; arc=none smtp.client-ip=64.147.108.70
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1709939435; c=relaxed/simple;
+	bh=a65VO8DKDRnDZQukB/0ZUx0LD2LeAFvQn7/c0Q6t9z8=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=FwyzJGA1Y1vEtx/b1ujd4xm4yDv1C/kZoBc6UIc9f6dK1P84F4Q3m+d7i5BmT2SsUr5bRvBZNLtSja6dl2qCNPT3PlfLPI9pmaxhzzIHGpsGNuqeQuqBNmNBsqyIiPu85oYDSZX3eYP9ibT20LlBifz7gsS0ZKdiaLoW3SlQwJs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=sNoPJKGq; arc=none smtp.client-ip=209.85.218.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="LU5NL4fM"
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 075AE1E2E68;
-	Fri,  8 Mar 2024 17:36:24 -0500 (EST)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=/p+fe/gVLDSi
-	Zz3BqMjRAgwkjrqNlP0OImjDc/7VozY=; b=LU5NL4fMHBJN93O8M8HdovlozN0y
-	Xjw0fhUN/rrdYn+Q7Xq51/E08KOfZ396yMbj6qavQsMEuycNJBopYoGFU4IgaBhB
-	VxrOCS4fJBrctkLKx2Qc7cv20PYGUh7jTRK0orhbCgJq0aMOLA0ZAsMKo3/caUMM
-	aDb1rH1P94NKGxE=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id F387B1E2E67;
-	Fri,  8 Mar 2024 17:36:23 -0500 (EST)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.185.65])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 636C61E2E66;
-	Fri,  8 Mar 2024 17:36:23 -0500 (EST)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
-Cc: Patrick Steinhardt <ps@pks.im>,  git@vger.kernel.org,  =?utf-8?Q?Jean-?=
- =?utf-8?Q?R=C3=A9my?= Falleri
- <jr.falleri@gmail.com>
-Subject: Re: [PATCH v2] git-difftool--helper: honor `--trust-exit-code` with
- `--dir-diff`
-In-Reply-To: <20240308221229.GA1908@szeder.dev> ("SZEDER =?utf-8?Q?G=C3=A1?=
- =?utf-8?Q?bor=22's?= message of
-	"Fri, 8 Mar 2024 23:12:29 +0100")
-References: <976C9BF2-CB82-429A-B9FA-6A14BCFFCA3D@gmail.com>
-	<0fac668f8fc021af9f9c4df5134da59816307ccc.1708423309.git.ps@pks.im>
-	<20240308221229.GA1908@szeder.dev>
-Date: Fri, 08 Mar 2024 14:36:22 -0800
-Message-ID: <xmqqcys4fj15.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="sNoPJKGq"
+Received: by mail-ej1-f46.google.com with SMTP id a640c23a62f3a-a45ecef71deso146984366b.2
+        for <git@vger.kernel.org>; Fri, 08 Mar 2024 15:10:33 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1709939432; x=1710544232; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=pbkZDRxegnsMShW+soKgJOK5NH6Va28OudvagmATcRs=;
+        b=sNoPJKGq8lKHfviM83qjy/DZCFC5/tHL2Jy5p/aOjXgXRrtNY2Ag8Xbv+qC9qsDuMC
+         7SiP9msSD5fa9hSn6MR+UumcCqM3R74Kta6TLNKp7uC17F+dTXM09RKR7EA99G04MXHT
+         R+hX/uvZs0UFNPCY+/VWMQyWd7b/XSgBj0kfl0//EL+aMhAoIz8GJ3tjWKLSZA4QmcDQ
+         EpKCgEdqQ5mqtgroJ0zVXFd0qCZbcjztsF8w763onzv1CEunpqS1udjzz0zNV5Xtik61
+         1B4aa5mzcKPpu3CDjYN9eyHEm6REIxlFLzatNHWR3Kp+ANOb8+7zETHOGwVICPT7L1mK
+         V9Ag==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1709939432; x=1710544232;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=pbkZDRxegnsMShW+soKgJOK5NH6Va28OudvagmATcRs=;
+        b=sZRclIT4vbRrPALjT7/Ocoz7fTKOcpuRz3S8WdjjBc71EgbjrdaEigmjjXo/WUwjXF
+         eNr6xJO6I9vz31rH2Un6sbC/hhrXasIhJCU1gA67Y7G84Y2gXu8MTEVSSVrKoO8PS7kp
+         8zLkQIM8VtiXP05ORWbcvZLrqhwrmoBbAaEK1GzIOzgNcRdJ/IKhJ5Ui0VaGc7WMvw11
+         fCNVeIdPgIWTYl+4DMMlFsjLzTFK6Cmzflnm0R+AbQC2xU8AQ8AJX5jigHe6B13j1xBy
+         +zrM8430NVAdLxYHplt6+fY1ZE5imWFu+bOwtiLzU8vBkvqUKGS5ruJfZ5VtD2Y3qmLI
+         tZGg==
+X-Gm-Message-State: AOJu0YyzEzrHuX75v4P4cRKFtrEH7Phc4ERRkPXYHbCVOwXJoGKM5Rsd
+	sWKUb7w+1e8NoN+O7msz2+VA1AHhwQwfBvWNMOnzd47Y686QyhW844KQXqYQZHNl9XisYkzJiB3
+	sFjo57SsbqZ6A2B7M2HNiIaGW2LrHnQ9D3rPQSfR0aL1OdQsGW4eF
+X-Google-Smtp-Source: AGHT+IE/2p5o9fSmO5tUxTfB2EIqsQLYIqwPUmRP4p1yCQ4zuz3i3pE2E+9P2kHmm46JN+796ucXrQZOpqeAJnwdoSo=
+X-Received: by 2002:a17:906:eb11:b0:a44:46a:e904 with SMTP id
+ mb17-20020a170906eb1100b00a44046ae904mr55823ejb.50.1709939431730; Fri, 08 Mar
+ 2024 15:10:31 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID:
- 4AC681BC-DD9C-11EE-815D-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
+References: <xmqqv85zqniu.fsf@gitster.g> <20240308211957.3758770-1-gitster@pobox.com>
+ <20240308211957.3758770-3-gitster@pobox.com>
+In-Reply-To: <20240308211957.3758770-3-gitster@pobox.com>
+From: Kyle Lippincott <spectral@google.com>
+Date: Fri, 8 Mar 2024 15:10:16 -0800
+Message-ID: <CAO_smVjrKJeKr7QgQWryZRErStFk=Y+1T=dwrR_boXQD_X9_Mg@mail.gmail.com>
+Subject: Re: [PATCH 2/2] setup: make bareRepository=explicit work in GIT_DIR
+ of a secondary worktree
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-SZEDER G=C3=A1bor <szeder.dev@gmail.com> writes:
-
->> -test_expect_success 'difftool honors exit status if command not found=
-' '
->> -	test_config difftool.nonexistent.cmd i-dont-exist &&
->> -	test_config difftool.trustExitCode false &&
->> -	test_must_fail git difftool -y -t nonexistent branch
->> -'
->> +	test_expect_success "difftool ${opt} honors exit status if command n=
-ot found" "
->> +		test_config difftool.nonexistent.cmd i-dont-exist &&
->> +		test_config difftool.trustExitCode false &&
->> +		if test "${opt}" =3D '--dir-diff'
+On Fri, Mar 8, 2024 at 1:20=E2=80=AFPM Junio C Hamano <gitster@pobox.com> w=
+rote:
 >
-> The quoting doesn't quite work here.
+> If you have /var/tmp/primary/ as a repository, and if you create a
+> secondary worktree of it at /var/tmp/secondary/, the layout would
+> look like this:
+>
+>     $ cd /var/tmp/
+>     $ git init primary
+>     $ cd primary
+>     $ pwd
+>     /var/tmp/primary
+>     $ git worktree add ../secondary
+>     $ cat ../seconary/.git
 
-Thanks for looking at them carefully.
+Nit: typo, should be `secondary` (missing the `d`)
 
-In general, when you want to interpolate an variable that exists
-outside test_expect_success, you should write it this way:
 
-	for var in a "b c"
-	do
-		test_expect_success "message with $var interpolated" '
-			command and "$var" as its argument
-		'
-	done
+>     gitdir: /var/tmp/primary/.git/worktrees/secondary
+>     $ ls /var/tmp/primary/.git/worktrees/secondary
+>     commondir  gitdir  HEAD  index  refs
+>     $ cat /var/tmp/primary/.git/worktrees/secondary/gitdir
+>     /var/tmp/secondary/.git
+>
+> When the configuration variable 'safe.bareRepository=3Dexplicit' is
+> set to explicit, the change made by 45bb9162 (setup: allow cwd=3D.git
+> w/ bareRepository=3Dexplicit, 2024-01-20) allows you to work in the
+> /var/tmp/primary/.git directory (i.e., $GIT_DIR of the primary
+> worktree).  The idea is that if it is safe to work in the repository
+> in its working tree, it should be equally safe to work in the
+> ".git/" directory of that working tree, too.
+>
+> Now, for the same reason, let's allow command execution from within
+> the $GIT_DIR directory of a secondary worktree.  This is useful for
+> tools working with secondary worktrees when the 'bareRepository'
+> setting is set to 'explicit'.
+>
+> In the previous commit, we created a helper function to house the
+> logic that checks if a directory that looks like a bare repository
+> is actually a part of a non-bare repository.  Extend the helper
+> function to also check if the apparent bare-repository is a $GIT_DIR
+> of a secondary worktree, by checking three things:
+>
+>  * The path to the $GIT_DIR must be a subdirectory of
+>    ".git/worktrees/", which is the primary worktree [*].
+>
+>  * Such $GIT_DIR must have file "gitdir", that records the path of
+>    the ".git" file that is at the root level of the secondary
+>    worktree.
+>
+>  * That ".git" file in turn points back at the $GIT_DIR we are
+>    inspecting.
+>
+> The latter two points are merely for checking sanity.  The security
+> lies in the first requirement.
+>
+> Remember that a tree object with an entry whose pathname component
+> is ".git" is forbidden at various levels (fsck, object transfer and
+> checkout), so malicious projects cannot cause users to clone and
+> checkout a crafted ".git" directory in a shell directory that
+> pretends to be a working tree with that ".git" thing at its root
+> level.  That is where 45bb9162 (setup: allow cwd=3D.git w/
+> bareRepository=3Dexplicit, 2024-01-20) draws its security guarantee
+> from.  And the solution for secondary worktrees in this commit draws
+> its security guarantee from the same place.
+>
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> ---
+>  setup.c                         | 52 ++++++++++++++++++++++++++++++++-
+>  t/t0035-safe-bare-repository.sh |  8 ++++-
+>  2 files changed, 58 insertions(+), 2 deletions(-)
+>
+> diff --git a/setup.c b/setup.c
+> index 3081be4970..68860dcd18 100644
+> --- a/setup.c
+> +++ b/setup.c
+> @@ -1231,9 +1231,59 @@ static const char *allowed_bare_repo_to_string(
+>         return NULL;
+>  }
+>
+> +static int is_git_dir_of_secondary_worktree(const char *path)
+> +{
+> +       int result =3D 0; /* assume not */
+> +       struct strbuf gitfile_here =3D STRBUF_INIT;
+> +       struct strbuf gitfile_there =3D STRBUF_INIT;
+> +       const char *gitfile_contents;
+> +       int error_code =3D 0;
+> +
+> +       /*
+> +        * We should be a subdirectory of /.git/worktrees inside
+> +        * the $GIT_DIR of the primary worktree.
+> +        *
+> +        * NEEDSWORK: some folks create secondary worktrees out of a
+> +        * bare repository; they don't count ;-), at least not yet.
+> +        */
+> +       if (!strstr(path, "/.git/worktrees/"))
 
-The last parameter to test_expect_{success,failure} is eval'ed, so=20
-enclose it within a pair of single quotes, and let the eval to
-interpolate references to $variables at runtime (as opposed to when
-the parameters to test_expect_success are formulated) avoids a lot
-of surprises and headaches.
+Do we need to be concerned about path separators being different on
+Windows? Or have they already been normalized here?
 
-Perhaps we should have something like the above as a hint in
-t/README?
+> +               goto out;
+> +
+> +       /*
+> +        * Does gitdir that points at the ".git" file at the root of
+> +        * the secondary worktree roundtrip here?
+> +        */
+
+What loss of security do we have if we don't have as stringent of a
+check? i.e. if we just did `return !!strstr(path, "/.git/worktrees/)`?
+Or maybe we even combine the existing ends_with(.git) check with this
+and do something like:
+
+static int is_under_dotgit_dir(const char *path) {
+        char *dotgit =3D strstr(path, "/.git");
+        return dotgit && (dotgit[5] =3D=3D '\0' || dotgit[5] =3D=3D '/');
+}
+
+
+
+> +       strbuf_addf(&gitfile_here, "%s/gitdir", path);
+> +       if (!file_exists(gitfile_here.buf))
+> +               goto out;
+> +       if (strbuf_read_file(&gitfile_there, gitfile_here.buf, 0) < 0)
+> +               goto out;
+> +       strbuf_trim_trailing_newline(&gitfile_there);
+> +
+> +       gitfile_contents =3D read_gitfile_gently(gitfile_there.buf, &erro=
+r_code);
+> +       if ((!gitfile_contents) || strcmp(gitfile_contents, path))
+> +               goto out;
+> +
+> +       /* OK, we are happy */
+> +       result =3D 1;
+> +
+> +out:
+> +       strbuf_release(&gitfile_here);
+> +       strbuf_release(&gitfile_there);
+> +       return result;
+> +}
+> +
+>  static int is_repo_with_working_tree(const char *path)
+>  {
+> -       return ends_with_path_components(path, ".git");
+> +       /* $GIT_DIR immediately below the primary working tree */
+> +       if (ends_with_path_components(path, ".git"))
+> +               return 1;
+> +
+> +       /* Are we in $GIT_DIR of a secondary worktree? */
+> +       if (is_git_dir_of_secondary_worktree(path))
+> +               return 1;
+> +
+> +       return 0;
+>  }
+>
+>  /*
+> diff --git a/t/t0035-safe-bare-repository.sh b/t/t0035-safe-bare-reposito=
+ry.sh
+> index 8048856379..62cdfcefc1 100755
+> --- a/t/t0035-safe-bare-repository.sh
+> +++ b/t/t0035-safe-bare-repository.sh
+> @@ -31,7 +31,9 @@ expect_rejected () {
+>
+>  test_expect_success 'setup bare repo in worktree' '
+>         git init outer-repo &&
+> -       git init --bare outer-repo/bare-repo
+> +       git init --bare outer-repo/bare-repo &&
+> +       git -C outer-repo worktree add ../outer-secondary &&
+> +       test_path_is_dir outer-secondary
+>  '
+>
+>  test_expect_success 'safe.bareRepository unset' '
+> @@ -86,4 +88,8 @@ test_expect_success 'no trace when "bare repository" is=
+ a subdir of .git' '
+>         expect_accepted_implicit -C outer-repo/.git/objects
+>  '
+>
+> +test_expect_success 'no trace in $GIT_DIR of secondary worktree' '
+> +       expect_accepted_implicit -C outer-repo/.git/worktrees/outer-secon=
+dary
+> +'
+> +
+>  test_done
+> --
+> 2.44.0-165-ge09f1254c5
+>
