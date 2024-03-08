@@ -1,60 +1,60 @@
-Received: from mail-wm1-f41.google.com (mail-wm1-f41.google.com [209.85.128.41])
+Received: from mail-wm1-f43.google.com (mail-wm1-f43.google.com [209.85.128.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AE8721106
-	for <git@vger.kernel.org>; Fri,  8 Mar 2024 10:17:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5964753E06
+	for <git@vger.kernel.org>; Fri,  8 Mar 2024 10:20:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709893062; cv=none; b=M/gJOjyLT93MPZpSkSLkrAxG4Gz35vLLre0A2weVKhTXIIXZmSvcWR9yiVesk4t5tRqVx5Sitq7ogtgtr1KUduPNSSVP3/Sszd56SdeD4BJy+suX9ZSbQZAU0HxuEf78Yu586K9425e+klBTdbrvrB73yuvuXudyyq1CWSF5gfM=
+	t=1709893250; cv=none; b=nLOLLUf+hHEP9XogRvcBojTLBzLlCbNEJtjGDFYf9EGLTTuiRnUM+Qj51C/cQ5qyUOeX7he0o1OzngRi1wk+rA1llxdtBZIZnd+0MamkQU7mRLCOoRzenj8c76IKJLICMg3fI/6CxFPZ7jTAwZ4E93hW/ZqyBdPM1CNKrOwgmmY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709893062; c=relaxed/simple;
-	bh=AnvhvGvJPlPrYMH/oLXxY3e+HAEFv3lj+Yk+AxP+Reg=;
+	s=arc-20240116; t=1709893250; c=relaxed/simple;
+	bh=Qe5P3gl5aIBv6LnRMf051EiO2bC3IYMzPRdVXmLm6mk=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=pDKz3JnO5BJC46TBH9xsgxoGIHxdVIPTf++NT9S6TwXLA1bo3m9eBaPG4AvQN+KkwCpFh1OuPlmDKVPqwcgi1dQSxspDJtF65uawJ7Wl551vnCG1u0sMbotd5JgfR14b7xQcTbdU7f+WviOVMpDgtihyf489yzjiDJ49aOYkvw4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=do8O2EBG; arc=none smtp.client-ip=209.85.128.41
+	 In-Reply-To:Content-Type; b=d9YlhqTstHy+6GjWB3UgZ/rtp8X+JRyDOWYidDSnk9c+Sqfh3sICI+/SJML1WPiExv8B+Rn20mRR4h+Revtoi0Dyjb4I3/S+sxCMQpUsQ2SEyMmwdL+lqqg4Fp/XDUz3u3cE98CGwI7IPXs8m/DrC35A0aFV6QQO2sPJ8FFBhuM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=M5+dPFeU; arc=none smtp.client-ip=209.85.128.43
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="do8O2EBG"
-Received: by mail-wm1-f41.google.com with SMTP id 5b1f17b1804b1-412e784060cso17845215e9.1
-        for <git@vger.kernel.org>; Fri, 08 Mar 2024 02:17:40 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="M5+dPFeU"
+Received: by mail-wm1-f43.google.com with SMTP id 5b1f17b1804b1-4130ff11782so4750315e9.2
+        for <git@vger.kernel.org>; Fri, 08 Mar 2024 02:20:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1709893059; x=1710497859; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
+        d=gmail.com; s=20230601; t=1709893246; x=1710498046; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:reply-to:user-agent:mime-version:date
          :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=oavDcsFlXnS+6kjNg5ZDlrp0mawqTI56KUZDYuVTPW8=;
-        b=do8O2EBGIwyKDaNRdev7tuWCacryZyhm63LZ5dnhZrMTuwQyW+cUf9EPyXYXah2Pzr
-         D8Rc3fq+cJl4N8gpS7+6vvMcSYJXVM6jG4paIXNFn56raRwhy5o8+ejlvEqcXTWdAIbK
-         xBDFGt0GpOa/e5fkGCHGyVgR001ke/i1nm2K93fMaSvknKQfPsG/oXAKTYDJQvJHS4Ui
-         XR3NO5gCINKiWkZTFNtthz22wp6JE0/Fs+FnK14y1yLgL5rdy3nhYtM6vjH0I1WDkKm0
-         Gh3kzsFBrjXLnPaJaVX5IXdEHwNuxXYTAT126ZwruNOWC117ZptB0q4q+WxuxuZ/CpIF
-         /VDA==
+        bh=iiLXofH4kf/VK49KHqSnaMCC7e1RKUm3ji2muCiyASY=;
+        b=M5+dPFeUEHNf00Y29LVq9/CUW9zaVopdgocob41SUBZvPDdTzJcRzgAD63pfMOQAUv
+         AChu/B51dVNzgEgk3TjEnWBMZyeRUMZbZdn1f73BFnnW+4UhfRxajdI+LWHWX800z1D5
+         8+xxanRLh/KreaFjtOkzTUxz3tHMABe4TmnSR/aIIjx+qzn1crGpaw0MrqIkUXabk/XS
+         4DWJsvK39J7qAc1sS5WI5Ne5QE2BXpCrF6FAnafugnpLrbTifpfJ9eJjFPg26SiyZhQU
+         KyxLyhrAhb1dyECG2WtVFsLgewQh6NxFUfuY1MQJsGbe62tJuGxXhHZ7aUWasTo2tElZ
+         v/cQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1709893059; x=1710497859;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
+        d=1e100.net; s=20230601; t=1709893246; x=1710498046;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:reply-to:user-agent:mime-version:date
          :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=oavDcsFlXnS+6kjNg5ZDlrp0mawqTI56KUZDYuVTPW8=;
-        b=TlSajWERG00zXEpWBuUsPuTXyptp6AvJhljfQ20YCv0vMOFcNayPyVgp2s39j6cq/d
-         0lVFA55D1XNygBjx0+KaT7dy0SED522RCLPVesZ46xRSVQiLHKDjYdGdQHM9BKGlBjj7
-         FL5H4VzNsHTNxgEVm9EWI2yHpBtHhzndInhGVSgtdt7JOjz/ktiU2+qjZWQum4b5fv3a
-         8rhYwXC2c8+RL+PRTN/6f+7ViVZX/0llnkE/ru8lonpMYTSJwohVdr7sAvzNLPyU3+Tj
-         atew3IEyReL49s3gV+5j52sAxg0KVvi6UfQbNWBogLfXOv24v0QlKWdQ+dU6ZVY9BGWI
-         PKgg==
-X-Forwarded-Encrypted: i=1; AJvYcCX6CMj2LSQnn/yCDo8WHbtQuSL9G2VquOaWDEnYdzCwF+FPdyeDosuztSyVUtS/gOssgrwc8euojIA1A6SoXVtlTxRj
-X-Gm-Message-State: AOJu0YwutrYP/KQdMuDtFmwv4N/J0N3i69omDnjpnwPXpMwEDRbFeWA+
-	vl2cdvKub85H9RI6kbztvNGhmYE+VLVRR8VAtf3jcEyQEEE+ztvT1mktV41wQBA=
-X-Google-Smtp-Source: AGHT+IGeonUHKBC199248rKkLRBd3iOCyZy2Z37CgDZPl38RrQONRJPe7nYtFmiEbi5zTSCWK2Z82w==
-X-Received: by 2002:a05:600c:4589:b0:412:f82d:c9d7 with SMTP id r9-20020a05600c458900b00412f82dc9d7mr2625876wmo.6.1709893058631;
-        Fri, 08 Mar 2024 02:17:38 -0800 (PST)
+        bh=iiLXofH4kf/VK49KHqSnaMCC7e1RKUm3ji2muCiyASY=;
+        b=fzVy13RS7Q990yafbDaOUbdWB5Jn9C/Qf5ZrT+BySyGm0/PTAfLv2xUS3RW2DDe95i
+         IbIs369DHxQWa4fGK1JL1PsYOz9fCwu3DjlWjPHecxogBDBGp+BjkK/wsA/DIeFsDFEn
+         d1Y2QaWqSo82QDPLj3a+rCaiapjqHt9DSwQAwJsQ4NboiOH/9kaLsxnbgHqYfnKjeCZ3
+         RvUuBpf3naacw0pItobb0A2yGK5PmlFlIS35LhjMYNsUeQ/jt0PhzRQ0ROY2IjlVBOAB
+         CoE7OfGGjvhBg8e9cCDMRQ4T62xoQmaQp+GAPqmzYkaPvJq4CjVZXI/KyiU2nz5+yEZg
+         it6g==
+X-Forwarded-Encrypted: i=1; AJvYcCXDLiHBlbBzvp48cMSL/Rm6q3ujY2eSHj4tWOQUbr/UGaSINfeyR5beaCty9e1d6khg3soCwtNBQ6W7stzVRYOpggY+
+X-Gm-Message-State: AOJu0YyVFQ53kkCy86iNnGj4zlUgdLlUitK7iyrnDC15m/i9RcIDK/IH
+	sqBWWUNnq+VYu2IMuodnFc95cG0G3km5sEN8d6VwQN8xa8LP8BZ3
+X-Google-Smtp-Source: AGHT+IEbPH8EPhw4Oigu4blyNI/YrccgDHKZUz8v1NWeA7iwvRjM06S/YTwdWlAhrpX3ZcTM1Xllgw==
+X-Received: by 2002:a05:600c:4449:b0:413:c1d:af44 with SMTP id v9-20020a05600c444900b004130c1daf44mr3942495wmn.41.1709893246371;
+        Fri, 08 Mar 2024 02:20:46 -0800 (PST)
 Received: from ?IPV6:2a0a:ef40:6ca:8b01:80a6:cae7:d811:7244? ([2a0a:ef40:6ca:8b01:80a6:cae7:d811:7244])
-        by smtp.gmail.com with ESMTPSA id bp16-20020a5d5a90000000b0033e0567e90bsm23353391wrb.5.2024.03.08.02.17.38
+        by smtp.gmail.com with ESMTPSA id f15-20020a05600c4e8f00b00412ea52b102sm5627332wmq.34.2024.03.08.02.20.45
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 08 Mar 2024 02:17:38 -0800 (PST)
-Message-ID: <d82e11f2-15c1-4ecb-8c7c-19667d2c5fb4@gmail.com>
-Date: Fri, 8 Mar 2024 10:17:37 +0000
+        Fri, 08 Mar 2024 02:20:46 -0800 (PST)
+Message-ID: <43b7b21f-8d11-4c67-96a6-ff2c8f037263@gmail.com>
+Date: Fri, 8 Mar 2024 10:20:45 +0000
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -63,66 +63,76 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH 11/15] find multi-byte comment chars in unterminated
- buffers
-To: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>, Jeff King <peff@peff.net>,
- git@vger.kernel.org
+Subject: Re: [PATCH 12/15] sequencer: handle multi-byte comment characters
+ when writing todo list
+Content-Language: en-US
+To: Jeff King <peff@peff.net>, git@vger.kernel.org
 Cc: Junio C Hamano <gitster@pobox.com>, Dragan Simic <dsimic@manjaro.org>,
  Kristoffer Haugsbakk <code@khaugsbakk.name>,
  Manlio Perillo <manlio.perillo@gmail.com>
 References: <20240307091407.GA2072522@coredump.intra.peff.net>
- <20240307092638.GK2080210@coredump.intra.peff.net>
- <3f823e48-572c-4e19-ab76-e6d7cab9461f@web.de>
-Content-Language: en-US
+ <20240307092747.GL2080210@coredump.intra.peff.net>
 From: Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <3f823e48-572c-4e19-ab76-e6d7cab9461f@web.de>
+In-Reply-To: <20240307092747.GL2080210@coredump.intra.peff.net>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 
-Hi Peff and René
+Hi Peff
 
-On 07/03/2024 19:42, René Scharfe wrote:
-> Am 07.03.24 um 10:26 schrieb Jeff King:
->> diff --git a/sequencer.c b/sequencer.c
->> index 991a2dbe96..664986e3b2 100644
->> --- a/sequencer.c
->> +++ b/sequencer.c
->> @@ -1840,7 +1840,7 @@ static int is_fixup_flag(enum todo_command command, unsigned flag)
->>   static void add_commented_lines(struct strbuf *buf, const void *str, size_t len)
->>   {
->>   	const char *s = str;
->> -	while (len > 0 && s[0] == comment_line_char) {
->> +	while (starts_with_mem(s, len, comment_line_str)) {
->>   		size_t count;
->>   		const char *n = memchr(s, '\n', len);
->>   		if (!n)
->> @@ -2562,7 +2562,7 @@ static int parse_insn_line(struct repository *r, struct todo_item *item,
->>   	/* left-trim */
->>   	bol += strspn(bol, " \t");
->>
->> -	if (bol == eol || *bol == '\r' || *bol == comment_line_char) {
->> +	if (bol == eol || *bol == '\r' || starts_with_mem(bol, eol - bol, comment_line_str)) {
+On 07/03/2024 09:27, Jeff King wrote:
+> We already match multi-byte comment characters in parse_insn_line(),
+> thanks to the previous commit, yielding a TODO_COMMENT entry. But in
+> todo_list_to_strbuf(), we may call command_to_char() to convert that
+> back into something we can output.
 > 
-> If the strspn() call is safe (which it is, as the caller expects the
-> string to be NUL-terminated) then you could use starts_with() here and
-> avoid the length calculation.  But that would also match
-> comment_line_str values that contain LF, which the _mem version does not > and that's better.
+> We can't just return comment_line_char anymore, since it may require
+> multiple bytes. Instead, we'll return "0" for this case, which is the
+> same thing we'd return for a command which does not have a single-letter
+> abbreviation (e.g., "revert" or "noop"). In that case the caller then
+> falls back to outputting the full name via command_to_string(). So we
+> can handle TODO_COMMENT there, returning the full string.
 
-I agree with your analysis. I do wonder though if we should reject 
-whitespace and control characters when parsing core.commentChar, it 
-feels like accepting them is a bug waiting to happen. If 
-comment_line_char starts with ' ' or '\t' that part will be eaten by the 
-strspn() above and so starts_with_mem() wont match. Also we will never 
-match a comment if comment_line_str contains '\n'.
+If you do re-roll it might be helpful to emphasize that there is only 
+one caller.
 
-> Not sure why lines that start with CR are considered comment lines,
-> though.
+> Note that there are many other callers of command_to_string(), which
+> will now behave differently if they pass TODO_COMMENT. But we would not
+> expect that to happen; prior to this commit, the function just calls
+> die() in this case. And looking at those callers, that makes sense;
+> e.g., do_pick_commit() will only be called when servicing a pick
+> command, and should never be called for a comment in the first place.
 
-I think it is a lazy way of looking for an empty line ending in CR LF, 
-it should really be
-
-	|| (bol[0] == '\r' && bol[1] == '\n') ||
+I've checked the other callers and agree with your analysis. The fact 
+that it used to die() also makes it pretty clear that this should be safe.
 
 Best Wishes
 
 Phillip
+
+> Signed-off-by: Jeff King <peff@peff.net>
+> ---
+>   sequencer.c | 4 +++-
+>   1 file changed, 3 insertions(+), 1 deletion(-)
+> 
+> diff --git a/sequencer.c b/sequencer.c
+> index 664986e3b2..9e2851428b 100644
+> --- a/sequencer.c
+> +++ b/sequencer.c
+> @@ -1779,14 +1779,16 @@ static const char *command_to_string(const enum todo_command command)
+>   {
+>   	if (command < TODO_COMMENT)
+>   		return todo_command_info[command].str;
+> +	if (command == TODO_COMMENT)
+> +		return comment_line_str;
+>   	die(_("unknown command: %d"), command);
+>   }
+>   
+>   static char command_to_char(const enum todo_command command)
+>   {
+>   	if (command < TODO_COMMENT)
+>   		return todo_command_info[command].c;
+> -	return comment_line_char;
+> +	return 0;
+>   }
+>   
+>   static int is_noop(const enum todo_command command)
