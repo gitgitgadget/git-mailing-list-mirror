@@ -1,98 +1,122 @@
-Received: from mail-yb1-f202.google.com (mail-yb1-f202.google.com [209.85.219.202])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mail.kernel-space.org (mail.kernel-space.org [195.201.34.187])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20BE558AC5
-	for <git@vger.kernel.org>; Fri,  8 Mar 2024 19:11:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.202
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91F513C32
+	for <git@vger.kernel.org>; Fri,  8 Mar 2024 19:33:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.201.34.187
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709925101; cv=none; b=Sbcz4qp88cg4clYIpPeciQTNG13J9LWItFbds7nnHFbDpdotYTRXax7oZZqDtppR7aVhCmraUqCU8i8rKdJt4hLv0Gx8mPvTin/VpU2HSCLHc2BCEu0WbmcPw0Fgc4k65ym92cYXnaef0kh4kt+ljtOZBUBfaqruyilHVeq2zgs=
+	t=1709926392; cv=none; b=DTa0UDaovl61KEP2Vtka56MJd85vOhi+z2M9R7jpwzVHs0g87YAVKAajbAJ54/ogkVFpWRrsG8RWwKwi70jrdVdycnIY7yeUVZsjlf6GNnDszRdfqwY2z7yCnFIUWHAf68mMpSPvB3j3N9DRu84s/WB14pRBc9GO+hUHS9XmONM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709925101; c=relaxed/simple;
-	bh=98HkI2eOKIlxPiu2OunBWAFwth6Bf655wRuixty/Ets=;
-	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
-	 To:Cc:Content-Type; b=G7sc+/WFBZcsh6hyFIq2HfDGs91ONtF+KbUZkOAkEApA7cvnEgcP6+pTqpjuy3lyj7by18AplTIyMCvcRsi8ZkO0eoXrFkc4SCnMZcdVngOJQMwPbDp0bSzx6YLfgxQyCT1zeFZ0g7RMvhAVPPynxwvz+U1T94xrmRDwmlQ7V+Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--linusa.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=I4esVYoV; arc=none smtp.client-ip=209.85.219.202
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--linusa.bounces.google.com
+	s=arc-20240116; t=1709926392; c=relaxed/simple;
+	bh=bzlsFFGZQomgQIPoJwuuofLTd52XkAqMKpxg3BeILaM=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Content-Type; b=FLqaCm+Sz3M2+ktx8gkxWM6PESq58BH+aKoB0FYtZ6gCi73gZHCFbRtvxtjFTF1E2OB0zfSFdHNR9t91wzZwNHmV34hFaLKmeKcfXf2uvIxiOsJfAnO0q5PhEMhlw4rP841Fz/m6J6itOHeDGtDcF+ronmvc3oFuAFiEUcHtaYY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=kernel-space.org; spf=pass smtp.mailfrom=kernel-space.org; dkim=pass (1024-bit key) header.d=kernel-space.org header.i=@kernel-space.org header.b=1F+GBQBK; dkim=pass (1024-bit key) header.d=kernel-space.org header.i=@kernel-space.org header.b=VNcyMbCG; arc=none smtp.client-ip=195.201.34.187
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=kernel-space.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kernel-space.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="I4esVYoV"
-Received: by mail-yb1-f202.google.com with SMTP id 3f1490d57ef6-dc693399655so4528553276.1
-        for <git@vger.kernel.org>; Fri, 08 Mar 2024 11:11:39 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1709925099; x=1710529899; darn=vger.kernel.org;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=YJgvZcMuDiIYDocNRbK9GZ4HK6/VSXcPBf6QKI/ptZg=;
-        b=I4esVYoVHpIs2VWCOsWExXN31R+2uFcrcCOiPq/OAuApWF7/a+RIcZt78v6+SUQRIh
-         YUg3KcpJQcswJWsg8H+6Cd61NYZHSanVxFlpPLiWcPMXRVLuOHt4pK3Ua27c7tDoCWup
-         Mo4oYEUehRtvUUx0Kp7ayP+2t+Tejk9vCylOkflyOCZAqLzlq9LObqvygl0A55shiM7E
-         Qu3wOqCjIWWXihzno4WK+kdVB48Kk3JELintjdfgVivk04VpshCRBNoJlohhNB4aqm0N
-         Ow8cIcDyK2YgXfPAHK8NRMcWaYSDVqYuoN9EwQd4hKoMd1FG43XjVdcA/c8Dd4PxpTMF
-         Rzyw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1709925099; x=1710529899;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=YJgvZcMuDiIYDocNRbK9GZ4HK6/VSXcPBf6QKI/ptZg=;
-        b=BNb4tjUwcO+BZ/hKPdVjPuu0khraE9EvWXZ4xYzdU0kzSV4QhKLFUepG/qQqnlaZKn
-         iaPYNfxGttytCYU+aO1Xi0KSn2wtTDgW/czROLb7nrDtPB8XyUt2CtQDgEWe+o/wH++o
-         BU5Weyc0T6QbdXyq3MJejLgkVZWLTprPjxjDUXZ9qxZEX+EZlYxJTgPDjF9L9uQB2/vB
-         19hpYfu/FksdcyHks/gmJQCkVLQYdZfbLagtuyIj9TNqzYCyLxSOslj60wA9G8UOCRwI
-         JLsSNbKoVLZc1/KTmKSLOwHOWTi3OHMKkpvgLWaL4ZXDArNU4Q6APJwb9LTAja8lvvxn
-         /5Mw==
-X-Gm-Message-State: AOJu0YxjjdJY2x/KxHtUR5InRsYMBF0dDP6WmJRDu42rC/SibM7Eie2W
-	Vhh9cmWAmAgOnSBa0bA/iDSSnOBjSfx5MJwvnzJqxUyxL6nccVT4CQvnve49Q0hA6N+B4Y90MQp
-	BoQ==
-X-Google-Smtp-Source: AGHT+IHhQyIspBTHft7q/D2855+EOqe9RA3xTs1ahAH7pJtEkYU+PjTXr6wOUIZTE/L86vZhN5lhl1l0xyY=
-X-Received: from fine.c.googlers.com ([fda3:e722:ac3:cc00:7f:e700:c0a8:2221])
- (user=linusa job=sendgmr) by 2002:a05:6902:154d:b0:dcf:411d:67b9 with SMTP id
- r13-20020a056902154d00b00dcf411d67b9mr5571687ybu.5.1709925099066; Fri, 08 Mar
- 2024 11:11:39 -0800 (PST)
-Date: Fri, 08 Mar 2024 11:11:37 -0800
-In-Reply-To: <xmqqsf1a7wse.fsf@gitster.g>
+	dkim=pass (1024-bit key) header.d=kernel-space.org header.i=@kernel-space.org header.b="1F+GBQBK";
+	dkim=pass (1024-bit key) header.d=kernel-space.org header.i=@kernel-space.org header.b="VNcyMbCG"
+Received: from kernel-space.org (localhost [127.0.0.1])
+	by kernel-space.org (OpenSMTPD) with ESMTP id a3e88ebf
+	for <git@vger.kernel.org>;
+	Fri, 8 Mar 2024 19:23:56 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=kernel-space.org; h=
+	message-id:date:mime-version:from:subject:to:content-type
+	:content-transfer-encoding; s=s1; bh=PxoYSfGixMA+uCt98qp1JNHJ9Qc
+	=; b=1F+GBQBKyevD18YCmrzN1ksQPU3Z/O2UsUmZqXdtBm3NIOLLXB3YNwHcLQl
+	8qSU7PAJATluJ4a0AcBGWsHqoxdlGbRyYRZUOKvUEvq5jR/HKEZr8YYmxgr/7BYX
+	YMQAYSfFnhYIzGnARCA8pybG/OdU46RV78+S5E0V/LF0zb0I=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=kernel-space.org; h=
+	message-id:date:mime-version:from:subject:to:content-type
+	:content-transfer-encoding; q=dns; s=s1; b=JxGQyykQWwcpoMjF2s5DI
+	M23dgwggpxb/iy4s0SK4s9MoEG9n9+3J41fQIM/dgH2JtKzzuo9WzzbvR/OvasUT
+	yA2cgKkWlwZz1XOht1dS8Bt+nq2ndKla0MjadA4AMYuQxuQ8I4sO3wS9X95M78tM
+	R1XjsT99zfK/NpNtHGADAA=
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel-space.org;
+	s=s1; t=1709925836;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=4SKYGDlHnLdI/6iywg/kA/7+KdrqaPPYvVGkWASng8g=;
+	b=VNcyMbCGbq00VWLqlN77BiYJj8xXBU5M+I6yEBYkx2tePKOL+vLQ5y5GOnnWe82CR84+Qm
+	PplVXJHWuk2DqEo3FsZo7VrQ+RqaGUkF8n5nlTf0vCFKkblOXpzyfO32NknpcVsCG3dnfw
+	mXagvceoeXXxx5dOLX8wid5zwBl0qa4=
+Received: from [192.168.0.2] (host-79-51-238-97.retail.telecomitalia.it [79.51.238.97])
+	by kernel-space.org (OpenSMTPD) with ESMTPSA id c731093c (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	for <git@vger.kernel.org>;
+	Fri, 8 Mar 2024 19:23:56 +0000 (UTC)
+Message-ID: <72771da0-a0ef-4fd9-8071-6467cd7b6a6b@kernel-space.org>
+Date: Fri, 8 Mar 2024 20:25:52 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-References: <xmqqjzmpm9b8.fsf@gitster.g> <owlyil264yew.fsf@fine.c.googlers.com>
- <xmqq1q8ubtg6.fsf@gitster.g> <xmqqsf1a7wse.fsf@gitster.g>
-Message-ID: <owlycys44jyu.fsf@fine.c.googlers.com>
-Subject: Re: What's cooking in git.git (Feb 2024, #09; Tue, 27)
-From: Linus Arver <linusa@google.com>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Betterbird/102.11.0
+From: Angelo Dureghello <angelo@kernel-space.org>
+Subject: [BUG] cannot git clone with includeif onbranch
+To: git@vger.kernel.org
+Content-Language: en-US, it
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Junio C Hamano <gitster@pobox.com> writes:
+Hi,
 
-> Junio C Hamano <gitster@pobox.com> writes:
->
->>> Doh, please wait for my v6 reroll (will send to the list in the next
->>> half hour) to clean up the commit messages. Thanks.
->>
->> If we had communication gap and the topic was prematurely merged and
->> was caught within a day or two, I would be a bit more sympathetic,
->> but given that this was merged more than a week ago,
+below the bug report, not totally sure this is a bug btw.
 
-Doh, I didn't realize this when I posted my message in this thread.
+---
 
->> that's totally
->> unacceptable.
+Thank you for filling out a Git bug report!
+Please answer the following questions to help us understand your issue.
 
-Completely understandable. In the future I will check "how long has the
-topic been in 'next'?" before asking to replace it with a newer
-revision.
+What did you do before the bug happened? (Steps to reproduce your issue)
 
->> If you have improvements, please do so as incremental patches on
->> top.  I'll hold the topic in 'next' until we are ready.
->
-> Well, I changed my mind.  As we haven't rewound the tip of 'next'
-> post release, let's eject what is in 'next' and queue the latest,
-> pretending that the earlier round weren't in 'next' at all.
->
-> Thanks.
+Perform a git clone https with includeif onbranch in the .gitconfig
 
-Ah I see --- thanks for stating for the record (and not leaving any room
-for me to get confused). Much appreciated.
+Create a .gitconfig
+with
+[includeIf "onbranch:wip/pippo/**"]
+         path = ~/.gitconfig.pippo.inc
+
+git clone https://github.com/analogdevicesinc/no-OS.git
+
+Cloning into 'no-OS'...
+BUG: refs.c:2083: reference backend is unknown
+error: git-remote-https died of signal 6
+
+What did you expect to happen? (Expected behavior)
+Proper clone
+
+What happened instead? (Actual behavior)
+Error above
+
+What's different between what you expected and what actually happened?
+I cannot clone
+
+Anything else you want to add:
+I am assuming that cloning is outside from any gitdir so should ingnore
+onbranch.
+
+Please review the rest of the bug report below.
+You can delete any lines you don't wish to share.
+
+
+[System Info]
+git version:
+git version 2.44.0
+cpu: x86_64
+no commit associated with this build
+sizeof-long: 8
+sizeof-size_t: 8
+shell-path: /bin/sh
+uname: Linux 6.5.0-rc2-devel-00345-gc2782531397f #2 SMP PREEMPT_DYNAMIC 
+Sun Jul 23 12:25:41 CEST 2023 x86_64
+compiler info: gnuc: 13.2
+libc info: glibc: 2.39
+$SHELL (typically, interactive shell): /bin/zsh
+
+
+[Enabled Hooks]
+not run from a git repository - no hooks to show
