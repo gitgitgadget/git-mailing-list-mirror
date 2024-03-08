@@ -1,131 +1,94 @@
-Received: from mail.kernel-space.org (mail.kernel-space.org [195.201.34.187])
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A37D75D478
-	for <git@vger.kernel.org>; Fri,  8 Mar 2024 20:28:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.201.34.187
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B07154085D
+	for <git@vger.kernel.org>; Fri,  8 Mar 2024 21:20:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=173.228.157.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709929684; cv=none; b=d3wLODmAkI58vRiBTfjRWz6mlzsfxPrEdcw4vlw09BSGmg6/96cwnxbbOhFG9KS5m6DUxUmgsAi/OleRW1IoKsNbZGWRfcDugtQRrDPwtjyVB1u3x1xWaWSOHE1b9gR9pQ2shZsi1DBTAUPLfiU3c1t0INwuJbjxY4j77GAdOqg=
+	t=1709932811; cv=none; b=MFTbLNHuBnZWqsdOzWAiQxyqXzXpXlqIU9GPsnyqWFDZqhbF8ajwpzmRM1qmbSsZm4PyOT9tWLGbH/fE5fPQAfGnU3ESnxHz2GVFR/BnRiA22ecOygOWA/RIG6SMcjzNvGfWW9Lh47Lsgxj2C75UvAIHVah50onfobNu/p5+MBQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709929684; c=relaxed/simple;
-	bh=O9oQa1tpzy9GOyho+kLawTnZw3LDFDYfrnfSywy1DXs=;
-	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=E19yUWZdYMwXPseysxpnrb+EY9LEG/jrRkA3cwJT5dDK33n257yp9GfKpyRTO2ne831cj8VfTeaj/ghaVen1IsNzQmRY7Sl1E9bREKn4zhpewHZfG2O6glB7BfVOwExMHAwoXm+0FKQcxp8TQVFv5Dn/zZFlu5X0BAXNBfkgsN0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=kernel-space.org; spf=pass smtp.mailfrom=kernel-space.org; dkim=pass (1024-bit key) header.d=kernel-space.org header.i=@kernel-space.org header.b=HNgJ0Yl2; dkim=pass (1024-bit key) header.d=kernel-space.org header.i=@kernel-space.org header.b=D1tG0NH1; arc=none smtp.client-ip=195.201.34.187
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=kernel-space.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kernel-space.org
+	s=arc-20240116; t=1709932811; c=relaxed/simple;
+	bh=TAZSCHnKh6MlT+rv77RMAPa/h1PSIW8Ag1r11Ohrpqg=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=XOGxZDxswxtZSyn62pNoag7v1KaJxvyoAxa5ivR5BlgDKK6i0YjJke5+5UCqKBLXSO70YBQgOt1CV9qrK3q1nuSAs+CxhFAFY0r0onmADKPGO+g4DIDZ//UKwM45WUL9KubJvIdu0JmTTn1K3uaH395E6StlGGQq/yBVNuVmCIw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=jdfvnu/3; arc=none smtp.client-ip=173.228.157.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=kernel-space.org header.i=@kernel-space.org header.b="HNgJ0Yl2";
-	dkim=pass (1024-bit key) header.d=kernel-space.org header.i=@kernel-space.org header.b="D1tG0NH1"
-Received: from kernel-space.org (localhost [127.0.0.1])
-	by kernel-space.org (OpenSMTPD) with ESMTP id 72285bbc;
-	Fri, 8 Mar 2024 20:25:27 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=kernel-space.org; h=
-	message-id:date:mime-version:subject:to:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=s1; bh=4N
-	huhZkd9zd+u3/vs5KmcV7lp8s=; b=HNgJ0Yl2vqxVB9Qax2D/FSkn7sHjfsPhgK
-	9NYs0pduDNJJluKdpHbohiXK3lX4s+PELpaZSf1XpzP3Gd1JcLdRmZRD5SjrUJ6D
-	XLbiaEZQ0PnW6DFdBcdRCE5V6dSxN+QNuzf6SCmEqoWXCAs5vCURkyEFakCoJnrQ
-	Y9O2/iY5A=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=kernel-space.org; h=
-	message-id:date:mime-version:subject:to:references:from
-	:in-reply-to:content-type:content-transfer-encoding; q=dns; s=s1; b=
-	BepPo9o9jkwOjn/8nALueYEYQPicJvPx3OspkousHUlOUlTjOQN2m/tn/i7rmgFZ
-	cGiGl02akXNy5iXPshH+XpEwrQHyOgl6c/GxZNRobxtEdcMN6haZ8929EagS3//Z
-	DL2nkwNqMQXbDVop4Jqt7wjUJ1oklfvWGrFCKGBi8xw=
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel-space.org;
-	s=s1; t=1709929527;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=I6mSsyId8SZckwBsBrWoQsMUeLa2hRdBbWt1KVw+LDw=;
-	b=D1tG0NH1VRBdIZphzAbZSxWe05+zwBsxb8fdgif09Nq848X6Wn9jgz2YPgs/ICcd2H76jf
-	WWQJt4KOXLnZEhuCgTMOvJJ29aZ0D87U9Ps6QuVaU1WAOwmgvcydIP7kyeESpYhXSOG5wL
-	glbXWjuXcS3srkv2U1T4pNauaFNZY1E=
-Received: from [192.168.0.2] (host-79-51-238-97.retail.telecomitalia.it [79.51.238.97])
-	by kernel-space.org (OpenSMTPD) with ESMTPSA id 28c1ce56 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 8 Mar 2024 20:25:27 +0000 (UTC)
-Message-ID: <d5f9235a-aa27-dc82-8191-c3e4b73ebce9@kernel-space.org>
-Date: Fri, 8 Mar 2024 21:27:22 +0100
+	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="jdfvnu/3"
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id E83D73B156;
+	Fri,  8 Mar 2024 16:20:02 -0500 (EST)
+	(envelope-from gitster@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:date:message-id:in-reply-to:references:mime-version
+	:content-transfer-encoding; s=sasl; bh=TAZSCHnKh6MlT+rv77RMAPa/h
+	1PSIW8Ag1r11Ohrpqg=; b=jdfvnu/3bF59cq5TdK5pIOlRvE67yCJugKifOXjsZ
+	XXCYDsMpMci8G3TfUCk0PTazChRwu4l3uOII+I3HPrOpn1f2oV+rQSbnYFI/TaUs
+	0ZqJKlEQQCuLMESs+EF9l6W/IrGAIuFZlLRa+ClIY8XWM+RJVUQxlV8PKC7d3Mxb
+	x4=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+	by pb-smtp21.pobox.com (Postfix) with ESMTP id E217B3B155;
+	Fri,  8 Mar 2024 16:20:02 -0500 (EST)
+	(envelope-from gitster@pobox.com)
+Received: from pobox.com (unknown [34.125.185.65])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 5ECE83B151;
+	Fri,  8 Mar 2024 16:19:59 -0500 (EST)
+	(envelope-from gitster@pobox.com)
+From: Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+Cc: Kyle Lippincott <spectral@google.com>,
+	Glen Choo <glencbz@gmail.com>
+Subject: [PATCH 0/2] Loosening safe.bareRepository=explicit even further
+Date: Fri,  8 Mar 2024 13:19:55 -0800
+Message-ID: <20240308211957.3758770-1-gitster@pobox.com>
+X-Mailer: git-send-email 2.44.0-165-ge09f1254c5
+In-Reply-To: <xmqqv85zqniu.fsf@gitster.g>
+References: <xmqqv85zqniu.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Betterbird/102.11.0
-Subject: Re: [BUG] cannot git clone with includeif onbranch
-To: "brian m. carlson" <sandals@crustytoothpaste.net>, git@vger.kernel.org,
- Patrick Steinhardt <ps@pks.im>
-References: <72771da0-a0ef-4fd9-8071-6467cd7b6a6b@kernel-space.org>
- <Zetw0I0NHgABR_PX@tapette.crustytoothpaste.net>
-Content-Language: en-US, it
-From: Angelo Dureghello <angelo@kernel-space.org>
-In-Reply-To: <Zetw0I0NHgABR_PX@tapette.crustytoothpaste.net>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+X-Pobox-Relay-ID:
+ 9E7CCBDC-DD91-11EE-A9F4-A19503B9AAD1-77302942!pb-smtp21.pobox.com
+Content-Transfer-Encoding: quoted-printable
 
-Hi Brian,
+Earlier 45bb9162 (setup: allow cwd=3D.git w/ bareRepository=3Dexplicit,
+2024-01-20) loosened safe.bareRepository=3Dexplicit in such a way that
+working inside the ".git/" directory (or its subdirectories) of a
+repository that is not bare can be done without an explicit GIT_DIR
+or "git --git-dir=3D<path>".  The code needed for its change was
+almost trivial---when it looks like we encountered a bare
+repository, if the last path component of the discovered "$GIT_DIR"
+is ".git", then it cannot be anything but the $GIT_DIR of a non-bare
+repository, the root of whose working tree is the parent directory
+of that ".git" directory.  This is because projects cannot create a
+".git" directory in their working tree and cause clone/checkout to
+extract them in the victim's working tree.
 
-On 08/03/24 9:10 PM, brian m. carlson wrote:
-> On 2024-03-08 at 19:25:52, Angelo Dureghello wrote:
->> Hi,
->>
->> below the bug report, not totally sure this is a bug btw.
->>
->> ---
->>
->> Thank you for filling out a Git bug report!
->> Please answer the following questions to help us understand your issue.
->>
->> What did you do before the bug happened? (Steps to reproduce your issue)
->>
->> Perform a git clone https with includeif onbranch in the .gitconfig
->>
->> Create a .gitconfig
->> with
->> [includeIf "onbranch:wip/pippo/**"]
->>          path = ~/.gitconfig.pippo.inc
->>
->> git clone https://github.com/analogdevicesinc/no-OS.git
->>
->> Cloning into 'no-OS'...
->> BUG: refs.c:2083: reference backend is unknown
->> error: git-remote-https died of signal 6
-> 
-> Thanks for the report.
-> 
-> I can definitely confirm this with a local Git 2.44.0 built out of my
-> working tree.  It seems to trigger as long as there's a `path` entry
-> whether the path exists or not.  It _doesn't_ seem to trigger with a
-> `gitdir` check, but does trigger for `onbranch`.  v2.43.0 is not
-> affected.
-> 
-> I do definitely think this is a bug.  First of all, we should not
-> trigger BUG conditions, even if the user has done something naughty, so
-> we should fix it for that reason.  Second of all, this seems like a
-> completely reasonable thing to want to do, and considering it triggers
-> for existing files, and that it worked just fine in v2.43.0, I don't see
-> a reason we shouldn't have this work.
-> 
-> A bisection[0] leads us to 0fcc285c5e ("refs: refactor logic to look up
-> storage backends", 2023-12-29).  I've CCed the author of that commit,
-> who hopefully can provide some more helpful context.
-> 
-> I have some guesses about what's going on here, but I haven't poked
-> further into the situation, so I'll refrain from speculating for now.
-> 
-> [0] git bisect run sh -c 'make -j12 && cd $TMPDIR && rm -fr no-OS && PATH="$HOME/checkouts/git/bin-wrappers:$PATH" git clone https://github.com/analogdevicesinc/no-OS.git; RET=$?; [ "$RET" -eq 128 ] && RET=1; exit $RET'
+This almost works, until somebody starts using "git worktree add" to
+create a secondary worktree.  Their $GIT_DIR resides inside the
+$GIT_DIR of the primary worktree of the same repository, at
+$GIT_DIR/worktree/$name where $name is the name of the secondary
+worktree, which is not ".git".
 
-Thanks a lot.
+These two patches are to extend the "if you can work in its working
+tree, you should be able to work in its $GIT_DIR" for secondary
+worktrees.
 
-Actually i can work with  git clone git@github.com:..   that works,
-issue is only on http.
+Junio C Hamano (2):
+  setup: detect to be in $GIT_DIR with a new helper
+  setup: make bareRepository=3Dexplicit work in GIT_DIR of a secondary wo=
+rktree
 
-Regards, and if i can help, welcome.
-angelo
+ setup.c                         | 57 ++++++++++++++++++++++++++++++++-
+ t/t0035-safe-bare-repository.sh |  8 ++++-
+ 2 files changed, 63 insertions(+), 2 deletions(-)
 
-
+--=20
+2.44.0-165-ge09f1254c5
 
