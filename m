@@ -1,96 +1,85 @@
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yb1-f202.google.com (mail-yb1-f202.google.com [209.85.219.202])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D358139F
-	for <git@vger.kernel.org>; Fri,  8 Mar 2024 00:40:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=64.147.108.70
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0206024A05
+	for <git@vger.kernel.org>; Fri,  8 Mar 2024 02:21:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.202
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1709858450; cv=none; b=d+IYCyUXl3xK5U+9TX9BOomwTah91p0pdVcuPNV92iSsI96t94GQyiddbXk5wbTgOi4ZnDwMkooNMyPn4SbUVJsbYVDr7ur0/S5Fk1sPFs25vf05LTbXPYQwvbkXWcotzPFYUFUGhHNQ8nO2FZ1G1f0zSQZA2dbYko9UZS/mLtM=
+	t=1709864495; cv=none; b=VPA6DE7hS8LPQc/2BZumVzvfVIcG5S+Eurc7+xB1U/IwMAnE0LPlTqJh/ndPL3nDb/bb27upw0SbrJwQFpz6H13+pxSYqSu5VmN1OjUZMH68C+YG9bcQ4P7jYusGHaEOo9/1ll6MHnEPQvoH16Xe+rksd1u6rsT6dsy0SCw0cUc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1709858450; c=relaxed/simple;
-	bh=77BYhLg+gnWsWlJr5QkmfGt/4RxTFNN986XVXVv+1Gs=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=DQTFoUi7mPzFxz68toq2K2XFIDyG91UDyMPk3xHJvFmo+FcEhO0Rye44vkVHm5J/neqGsy4FBn2RdVg5zScDflerZrv+ozwr4VRLHg7kIENehJLVuQ46n1T4S7qNtEYaLnTJuSc4dc9ogtSvryo178s4kAuBUIKwvqoBg/AQQb8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b=is1std4P; arc=none smtp.client-ip=64.147.108.70
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1709864495; c=relaxed/simple;
+	bh=aOHntCZR3BdCyDjMG+PXTEPbcPoGrUodNwgQtol2mW0=;
+	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
+	 To:Cc:Content-Type; b=IgfMewQVa3TODUCJj0of6zsiTNbOksi4EE/BuGsu6W19P0hWQQ9I7q8LF+G6BrvWFJokT03DGIJynF1F6hoytpZ4PMXmYRWHoSxZC9L5jxYEGVY0+n/6kYb0OV9XYjWZD1bwp0pEWgmxSd3fJJzMvIYQUGFeIiIGL//KlaisCP8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--linusa.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=b5DV57eZ; arc=none smtp.client-ip=209.85.219.202
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--linusa.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=pobox.com header.i=@pobox.com header.b="is1std4P"
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 0D7F91D93B4;
-	Thu,  7 Mar 2024 19:40:48 -0500 (EST)
-	(envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:in-reply-to:references:date:message-id:mime-version
-	:content-type; s=sasl; bh=77BYhLg+gnWsWlJr5QkmfGt/4RxTFNN986XVXV
-	v+1Gs=; b=is1std4PdmnVo52K6OrS6NuNEZzkn2ayoiIRKfo4DhR1Qf0qpKWfxw
-	iVKQUC29NILcu/OrcO6O1eg6laYmcsfjphlvgsV6ypnMUm19rHyEcXQIjYXV4EZp
-	OBtFquX+9rCgFinfHOYiyOoYbecz3R1v4gRrZO4R1eaH9DjuFYB/Q=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-	by pb-smtp1.pobox.com (Postfix) with ESMTP id 05D951D93B3;
-	Thu,  7 Mar 2024 19:40:48 -0500 (EST)
-	(envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.125.185.65])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 7191A1D93B2;
-	Thu,  7 Mar 2024 19:40:47 -0500 (EST)
-	(envelope-from junio@pobox.com)
-From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH v2 2/2] reftable/block: fix binary search over restart
- counter
-In-Reply-To: <xmqq7cidk4e4.fsf@gitster.g> (Junio C. Hamano's message of "Thu,
-	07 Mar 2024 15:29:07 -0800")
-References: <a4312698cceab5f2438c9dd34465da21d719e256.1709825186.git.ps@pks.im>
-	<cover.1709843663.git.ps@pks.im>
-	<370b608f9007abe9c0562d76894e2475d19867a1.1709843663.git.ps@pks.im>
-	<xmqq7cidk4e4.fsf@gitster.g>
-Date: Thu, 07 Mar 2024 16:40:46 -0800
-Message-ID: <xmqq34t1k12p.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="b5DV57eZ"
+Received: by mail-yb1-f202.google.com with SMTP id 3f1490d57ef6-dc6b2682870so2789267276.0
+        for <git@vger.kernel.org>; Thu, 07 Mar 2024 18:21:33 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1709864493; x=1710469293; darn=vger.kernel.org;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:from:to:cc:subject:date:message-id:reply-to;
+        bh=aOHntCZR3BdCyDjMG+PXTEPbcPoGrUodNwgQtol2mW0=;
+        b=b5DV57eZ5Yl72i6hm/624s8A26lIK4mE7Xw57KKkjXUsbunkID4NR1utULcQXWfm5X
+         zVGNnytL2mO1MglCz6bet4Vlq2kNVl3Z4Zh7N5EH45+VkBtFSp8atPzLMb/+66b0bdp3
+         Uoqgn441ZjJnkTqwlSse+ao0cyot4xZYn3DEf6dWJIF8cEeOm/864akDmxsCkqxbXD0w
+         wYyM5J9A7cOlphCRfw4Ua3HMEmU/lFQSXtpJcAw1RX3RIsfXdqcH2ldQYQA4BalPSx2P
+         XHqkgrWlg3RI/soOLxK0Z8XF59CIEtiUQbFXciFroiUuAeU1byE907GfUBl9D1VyPwFq
+         +txg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1709864493; x=1710469293;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=aOHntCZR3BdCyDjMG+PXTEPbcPoGrUodNwgQtol2mW0=;
+        b=WR2ORcjlyCf/oIaTjHAgBGUHaqPug+Xx05Tdyb4KIBPcAEiuntdL/9rvFoNUxF9akb
+         ka8RefnjUIyGM92wlHmpO3sYruOOQqBbNv4I/okohWY45/j3FhDeSMy0zTxEBNcwVK/7
+         yhTdOWhm6Vtsh64puE3QNJax30qeqZWi7DeSepYmb/DsOj5W+8OAGxqBbnEklQV9I0BT
+         Dhro1p5Da3h/y73D+y7SoXR4HlWDri6hEI0QRjawgemtwbqKln9H2BL8NrOxnaKAg5LC
+         0MDXPeDHSDAQy6xGocwnarLT6H8rhgi4uPYtNNEkYWAN/xTtLOTmoYdB4WnIJGuVXW1H
+         NQFw==
+X-Forwarded-Encrypted: i=1; AJvYcCUleDXk3JLDOkKhigUaE48rwPYSnUuXH8TUnUZ6JProRMvkHGKfIfUtg+hrv8BfCubTsMOQAMXqSSLQymJCwfoGUGoF
+X-Gm-Message-State: AOJu0YwkzJyknSO2FtQp9yqCEmn14T8j0tIIma6V3MLV07pkdKxb8mNZ
+	40/lNpEZK9FD9XUWgFY+2yRD8sgUQOFLtKvg3n49IYmH9UwZ2817UTdedfL87DfPahJuLcNp8NX
+	OPg==
+X-Google-Smtp-Source: AGHT+IH2Zhw0mhxhEUaw6Pr1+QMR2OX21ERLPxLmUKhB7niFQkwxOyza30MlmJOkq7CWcowQe0/OeUFT59g=
+X-Received: from fine.c.googlers.com ([fda3:e722:ac3:cc00:7f:e700:c0a8:2221])
+ (user=linusa job=sendgmr) by 2002:a05:6902:1243:b0:dcf:b5b8:f825 with SMTP id
+ t3-20020a056902124300b00dcfb5b8f825mr5063631ybu.0.1709864492875; Thu, 07 Mar
+ 2024 18:21:32 -0800 (PST)
+Date: Thu, 07 Mar 2024 18:21:24 -0800
+In-Reply-To: <20240220010936.GA1793660@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID:
- 8149B83E-DCE4-11EE-9648-78DCEB2EC81B-77302942!pb-smtp1.pobox.com
+Mime-Version: 1.0
+References: <8b4738ad-62cd-789e-712e-bd45a151b4ac@gmail.com>
+ <20240217060434.GE539459@coredump.intra.peff.net> <ca6a73d3-58b4-e65c-4a8f-e6ddb3e86902@gmail.com>
+ <xmqqfrxo9ty2.fsf@gitster.g> <20240220010936.GA1793660@coredump.intra.peff.net>
+Message-ID: <owlyfrx14g63.fsf@fine.c.googlers.com>
+Subject: Re: [PATCH] trailer: fix comment/cut-line regression with opts->no_divider
+From: Linus Arver <linusa@google.com>
+To: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
+Cc: Philippe Blain <levraiphilippeblain@gmail.com>, Git mailing list <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 
-Junio C Hamano <gitster@pobox.com> writes:
+Jeff King <peff@peff.net> writes:
 
-> Patrick Steinhardt <ps@pks.im> writes:
+> On Mon, Feb 19, 2024 at 10:42:45AM -0800, Junio C Hamano wrote:
+> [...]
 >
->> The consequence is that `binsearch()` essentially always returns 0,
->> indicacting to us that we must start searching right at the beginning of
->> the block. This works by chance because we now always do a linear scan
->> from the start of the block, and thus we would still end up finding the
->> desired record. But needless to say, this makes the optimization quite
->> useless.
+> The fix itself is pretty simple: instead of returning early, no_divider
+> just skips the "---" handling but still calls ignored_log_message_bytes().
 
->> Fix this bug by returning whether the current key is smaller than the
->> searched key. As the current behaviour was correct it is not possible to
->> write a test. Furthermore it is also not really possible to demonstrate
->> in a benchmark that this fix speeds up seeking records.
->
-> This is an amusing bug.  
+I realize I am late to the discussion, but this fix (and patch)
+looks right to me. FWIW I independently discovered the same problem and
+figured out a fix locally in my larger refactor of this area (with the
+same fix, to always call ignored_log_message_bytes() regardless of
+no_divider). Thank you Peff!
 
-Having said all that.
-
-I have to wonder if it is the custom implementation of binsearch()
-the reftable/basic.c file has, not this particular comparison
-callback.  It makes an unusual expectation on the comparison
-function, unlike bsearch(3) whose compar(a,b) is expected to return
-an answer with the same sign as "a - b".
-
-I just checked the binary search loops we have in the core part of
-the system, like the one in hash-lookup.c (which takes advantage of
-the random and uniform nature of hashed values to converge faster
-than log2) and ones in builtin/pack-objects.c (both of which are
-absolute bog-standard).  Luckily, we do not use such an unusual
-convention (well, we avoid overhead of compar callbacks to begin
-with, so it is a bit of apples-to-oranges comparison).
-
+Sorry for introducing the regression. My enthusiasm in changing things
+up without unit tests is regrettable.
